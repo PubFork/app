@@ -8,11 +8,11 @@ class signal_thread :
 public:
 
 
-   DST * m_psignalizableDst;
-   void (DST::* m_pfnDst)(::message::message *);
-   SRC * m_psignalizableSrc;
-   void (SRC::* m_pfnSrc)(::message::message *);
-   ::message::message * m_pobj;
+   DST *                   m_psignalizableDst;
+   void (DST::*            m_pfnDst)(::message::message *);
+   SRC *                   m_psignalizableSrc;
+   void (SRC::*            m_pfnSrc)(::message::message *);
+   ::message::message *    m_pobj;
 
 
    signal_thread(::aura::application * papp,
@@ -22,26 +22,38 @@ public:
       object(papp),
       thread(papp)
    {
+      
       m_psignalizableDst = psignalizableDst;
+      
       m_pfnDst = pfnDst;
+      
       m_psignalizableSrc = psignalizableSrc;
+      
       m_pfnSrc = pfnSrc;
+      
       m_pobj = pobj;
+      
    }
 
 
-   int32_t run()
+   void run()
    {
+      
       try
       {
+         
          (m_psignalizableSrc->*m_pfnSrc)(m_pobj);
+         
          (m_psignalizableDst->*m_pfnDst)(m_pobj);
+         
       }
       catch (...)
       {
+         
       }
-      delete m_pobj;
-      return 0;
+      
+      ::aura::del(m_pobj);
+      
    }
 
 

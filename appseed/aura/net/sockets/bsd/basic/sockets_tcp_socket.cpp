@@ -273,13 +273,17 @@ namespace sockets
       output_debug_string("tcp_socket::open address = " + ad.get_display_number() + " : " + ::str::from(ad.get_service_number()));
       if(!ad.is_valid())
       {
+#ifdef DEBUG
          log("open",0,"Invalid ::net::address",::aura::log::level_fatal);
+#endif
          SetCloseAndDelete();
          return false;
       }
       if(Handler().get_count() >= FD_SETSIZE)
       {
+#ifdef DEBUG
          log("open",0,"no space left in fd_set",::aura::log::level_fatal);
+#endif
          SetCloseAndDelete();
          return false;
       }
@@ -302,7 +306,9 @@ namespace sockets
 
             oprop("from_pool") = true;
 
+#ifdef DEBUG
             log("SetCallOnConnect",0,"Found pooled connection",::aura::log::level_info);
+#endif
 
             return true;
 
@@ -337,7 +343,9 @@ namespace sockets
          {
             string sockshost;
             Session.sockets().net().convert(sockshost,GetSocks4Host());
+#ifdef DEBUG
             log("open",0,"Connecting to socks4 server @ " + sockshost + ":" + ::str::from(GetSocks4Port()),::aura::log::level_info);
+#endif
          }
          SetSocks4();
          n = connect(s,sa.sa(),sa.sa_len());
@@ -369,15 +377,19 @@ namespace sockets
          }
          else if(Reconnect())
          {
-            string strError = wsa_str_error(iError);
-            log("connect: failed, reconnect pending",iError,wsa_str_error(iError),::aura::log::level_info);
+            string strError = bsd_socket_error(iError);
+#ifdef DEBUG
+            log("connect: failed, reconnect pending",iError,bsd_socket_error(iError),::aura::log::level_info);
+#endif
             attach(s);
             SetConnecting(true); // this flag will control fd_set's
          }
          else
          {
-            string strError = wsa_str_error(iError);
-            log("connect: failed",iError,wsa_str_error(iError),::aura::log::level_fatal);
+            string strError = bsd_socket_error(iError);
+#ifdef DEBUG
+            log("connect: failed",iError,bsd_socket_error(iError),::aura::log::level_fatal);
+#endif
             SetCloseAndDelete();
             ::closesocket(s);
             return false;
@@ -419,20 +431,6 @@ namespace sockets
       }
       if(!Handler().ResolverEnabled() || Session.sockets().net().isipv4(host))
       {
-         goto ipv4_try;
-         {
-            in6_addr l;
-            if (!Session.sockets().net().convert(l, host))
-            {
-               goto ipv4_try;
-            }
-            ::net::address ad(l, port);
-            ::net::address addrLocal;
-            if (!open(ad, addrLocal))
-               goto ipv4_try;;
-            return true;
-         }
-ipv4_try:
          {
             in_addr l;
             if (!Session.sockets().net().convert(l, host))
@@ -474,13 +472,17 @@ ipv4_try:
          }
          else
          {
+#ifdef DEBUG
             log("OnResolved",0,"Resolver failed",::aura::log::level_fatal);
+#endif
             SetCloseAndDelete();
          }
       }
       else
       {
+#ifdef DEBUG
          log("OnResolved",id,"Resolver returned wrong job id",::aura::log::level_fatal);
+#endif
          SetCloseAndDelete();
       }
    }
@@ -488,10 +490,10 @@ ipv4_try:
 
 
 
-   memory_size_t tcp_socket::recv(void * buf,memory_size_t nBufSize)
+   int tcp_socket::recv(void * buf, int nBufSize)
    {
 
-      memory_size_t n = nBufSize;
+      int n = nBufSize;
 
 #ifdef HAVE_OPENSSL
 
@@ -555,7 +557,9 @@ ipv4_try:
          }
          else
          {
+#ifdef DEBUG
             log("tcp_socket::recv(ssl)",(int)n,"abnormal value from SSL_read",::aura::log::level_error);
+#endif
             TRACE("tcp_socket::recv ssl abnormal value from SSL_read(3)");
 
          }
@@ -572,12 +576,14 @@ ipv4_try:
 #endif
          if(n == -1)
          {
-            log("recv",Errno,wsa_str_error(Errno),::aura::log::level_fatal);
+#ifdef DEBUG
+            log("recv",Errno,bsd_socket_error(Errno),::aura::log::level_fatal);
+#endif
             OnDisconnect();
             SetCloseAndDelete(true);
             SetFlushBeforeClose(false);
             SetLost();
-            TRACE("tcp_socket::recv (B1) recv error(" + string(wsa_str_error(Errno)) + ")");
+            TRACE("tcp_socket::recv (B1) recv error(" + string(bsd_socket_error(Errno)) + ")");
          }
          else if(!n)
          {
@@ -606,7 +612,9 @@ ipv4_try:
          }
          else
          {
+#ifdef DEBUG
             log("tcp_socket::recv",(int32_t)n,"abnormal value from recv",::aura::log::level_error);
+#endif
             TRACE("tcp_socket::recv (B3) recv abnormal value from recv");
          }
 
@@ -617,10 +625,10 @@ ipv4_try:
    }
 
 
-   memory_size_t tcp_socket::read(void * buf,memory_size_t nBufSize)
+   int tcp_socket::read(void * buf, int nBufSize)
    {
 
-      memory_size_t n = nBufSize;
+      int n = (int) nBufSize;
 
       n = recv(buf,nBufSize);
 
@@ -649,7 +657,9 @@ ipv4_try:
             catch(...)
             {
 
+#ifdef DEBUG
                log("tcp_socket::read",0,"ibuf overflow",::aura::log::level_warning);
+#endif
 
             }
          }
@@ -657,7 +667,9 @@ ipv4_try:
       }
       else if(n < 0)
       {
+#ifdef DEBUG
          log("tcp_socket::read",(int32_t)n,"abnormal value from rcv",::aura::log::level_error);
+#endif
       }
 
       return n;
@@ -670,7 +682,7 @@ ipv4_try:
       char *buf = (char *) m_memRead.get_data();
 
 
-      int_ptr n = 0;
+      int n = 0;
 
       try
       {
@@ -690,7 +702,7 @@ ipv4_try:
    }
 
 
-   void tcp_socket::on_read(const void * buf,int_ptr n)
+   void tcp_socket::on_read(const void * buf, int n)
    {
 
       // unbuffered
@@ -756,7 +768,9 @@ ipv4_try:
             SetCallOnConnect();
             return;
          }
-         log("tcp: connect failed",err,wsa_str_error(err),::aura::log::level_fatal);
+#ifdef DEBUG
+         log("tcp: connect failed",err,bsd_socket_error(err),::aura::log::level_fatal);
+#endif
          set(false,false); // no more monitoring because connection failed
 
          // failed
@@ -865,8 +879,10 @@ ipv4_try:
                SetFlushBeforeClose(false);
                SetLost();
                const char *errbuf = ERR_error_string(errnr,NULL);
+#ifdef DEBUG
                log("OnWrite/SSL_write",errnr,errbuf,::aura::log::level_fatal);
-               //throw io_exception(get_app(), errbuf);
+#endif
+               //_throw(io_exception(get_app(), errbuf));
             }
             //return 0;
          }
@@ -879,7 +895,7 @@ ipv4_try:
             int32_t errnr = SSL_get_error(m_ssl,(int32_t)n);
             const char *errbuf = ERR_error_string(errnr,NULL);
             TRACE("SSL_write() returns 0: %d : %s\n",errnr,errbuf);
-            //throw io_exception(get_app(), errbuf);
+            //_throw(io_exception(get_app(), errbuf));
          }
       }
       else
@@ -888,7 +904,7 @@ ipv4_try:
 //         retry:
 #if defined(APPLEOS)
          int iSocket = GetSocket();
-         n = send(iSocket,buf,len,SO_NOSIGPIPE);
+         n = (int) (send(iSocket,buf,len,SO_NOSIGPIPE));
 #elif defined(SOLARIS)
          n = send(GetSocket(),(const char *)buf,(int)len,0);
 #else
@@ -906,12 +922,14 @@ ipv4_try:
             if(iError != EWOULDBLOCK)
 #endif
             {
-               log("send",Errno,wsa_str_error(Errno),::aura::log::level_fatal);
+#ifdef DEBUG
+               log("send",Errno,bsd_socket_error(Errno),::aura::log::level_fatal);
+#endif
                OnDisconnect();
                SetCloseAndDelete(true);
                SetFlushBeforeClose(false);
                SetLost();
-               //throw io_exception(get_app(), wsa_str_error(Errno));
+               //_throw(io_exception(get_app(), bsd_socket_error(Errno)));
             }
             //else
             //{
@@ -997,18 +1015,40 @@ ipv4_try:
 
       if(!Ready() && !Connecting())
       {
+#ifdef DEBUG
          log("write",-1,"Attempt to write to a non-ready socket"); // warning
-         if(GetSocket() == INVALID_SOCKET)
-            log("write",0," * GetSocket() == INVALID_SOCKET",::aura::log::level_info);
-         if(Connecting())
-            log("write",0," * Connecting()",::aura::log::level_info);
-         if(CloseAndDelete())
-            log("write",0," * CloseAndDelete()",::aura::log::level_info);
+#endif
+         if (GetSocket() == INVALID_SOCKET)
+         {
+#ifdef DEBUG
+            log("write", 0, " * GetSocket() == INVALID_SOCKET", ::aura::log::level_info);
+#endif
+
+         }
+         if (Connecting())
+         {
+#ifdef DEBUG
+
+            log("write", 0, " * Connecting()", ::aura::log::level_info);
+#endif
+         }
+         if (CloseAndDelete())
+         {
+#ifdef DEBUG
+
+            log("write", 0, " * CloseAndDelete()", ::aura::log::level_info);
+
+#endif
+
+         }
          return;
       }
       if(!IsConnected())
       {
+#ifdef DEBUG
+
          log("write",-1,"Attempt to write to a non-connected socket, will be sent on connect"); // warning
+#endif
          buffer(buf,(int) len);
          return;
       }
@@ -1089,7 +1129,11 @@ ipv4_try:
 
    void tcp_socket::OnSocks4ConnectFailed()
    {
+#ifdef DEBUG
+
       Handler().log(this,"OnSocks4ConnectFailed",0,"connection to socks4 server failed, trying direct connection",::aura::log::level_warning);
+
+#endif
       if(!Handler().Socks4TryDirect())
       {
          SetConnecting(false);
@@ -1136,18 +1180,27 @@ ipv4_try:
             {
             case 90:
                OnConnect();
+#ifdef DEBUG
+
                log("OnSocks4Read",0,"Connection established",::aura::log::level_info);
+#endif
                break;
             case 91:
             case 92:
             case 93:
+#ifdef DEBUG
+
                Handler().log(this,"OnSocks4Read",m_socks4_cd,"socks4 server reports connect failed",::aura::log::level_fatal);
+#endif
                SetConnecting(false);
                SetCloseAndDelete();
                OnConnectFailed();
                break;
             default:
+#ifdef DEBUG
+
                Handler().log(this,"OnSocks4Read",m_socks4_cd,"socks4 server unrecognized response",::aura::log::level_fatal);
+#endif
                SetCloseAndDelete();
                break;
             }
@@ -1364,7 +1417,10 @@ ipv4_try:
                   && x509_err != X509_V_ERR_SELF_SIGNED_CERT_IN_CHAIN
                   && x509_err != X509_V_ERR_UNABLE_TO_GET_ISSUER_CERT_LOCALLY)
             {
+#ifdef DEBUG
+
                log("SSLNegotiate/cert_common_name_check",0,"cert_common_name_check failed (error="+::str::from((int)x509_err)+",url=" + m_strUrl + ")",::aura::log::level_info);
+#endif
                SetSSLNegotiate(false);
                SetCloseAndDelete();
                OnSSLConnectFailed();
@@ -1407,7 +1463,10 @@ ipv4_try:
             {
                OnConnect();
             }
+#ifdef DEBUG
+
             log("SSLNegotiate/SSL_connect",0,"Connection established",::aura::log::level_info);
+#endif
 //            if(m_spsslclientcontext->m_psession == NULL)
             //          {
             //           m_spsslclientcontext->m_psession = SSL_get1_session(m_ssl);
@@ -1467,8 +1526,10 @@ ipv4_try:
 
                if (m_iSslCtxRetry == 0)
                {
+#ifdef DEBUG
 
                   log("SSLNegotiate/SSL_connect", 0, "Connection failed", ::aura::log::level_info);
+#endif
                   SetSSLNegotiate(false);
                   SetCloseAndDelete();
                   OnSSLConnectFailed();
@@ -1489,7 +1550,10 @@ ipv4_try:
             }
             else
             {
+#ifdef DEBUG
+
                log("SSLNegotiate/SSL_connect",-1,"Connection failed",::aura::log::level_info);
+#endif
                TRACE("SSL_connect() failed - closing socket, return code: %d\n",r);
                SetSSLNegotiate(false);
                SetCloseAndDelete(true);
@@ -1515,12 +1579,18 @@ ipv4_try:
                }
             }
             OnAccept();
+#ifdef DEBUG
+
             log("SSLNegotiate/SSL_accept",0,"Connection established",::aura::log::level_info);
+#endif
             return true;
          }
          else if(!r)
          {
+#ifdef DEBUG
+
             log("SSLNegotiate/SSL_accept",0,"Connection failed",::aura::log::level_info);
+#endif
             SetSSLNegotiate(false);
             SetCloseAndDelete();
             OnSSLAcceptFailed();
@@ -1536,7 +1606,10 @@ ipv4_try:
             }
             else
             {
+#ifdef DEBUG
+
                log("SSLNegotiate/SSL_accept",-1,"Connection failed",::aura::log::level_info);
+#endif
                TRACE("SSL_accept() failed - closing socket, return code: %d\n",r);
                SetSSLNegotiate(false);
                SetCloseAndDelete(true);
@@ -1560,7 +1633,10 @@ ipv4_try:
 
    void tcp_socket::InitSSLServer()
    {
+#ifdef DEBUG
+
       log("InitSSLServer",0,"You MUST implement your own InitSSLServer method",::aura::log::level_fatal);
+#endif
       SetCloseAndDelete();
    }
 
@@ -1778,9 +1854,10 @@ ipv4_try:
 
       if (GetSocket() == INVALID_SOCKET) // this could happen
       {
+#ifdef DEBUG
 
          log("socket::close", 0, "file descriptor invalid", ::aura::log::level_warning);
-
+#endif
          return;
 
       }
@@ -1796,7 +1873,9 @@ ipv4_try:
          {
 
             // failed...
-            log("shutdown", Errno, wsa_str_error(Errno), ::aura::log::level_error);
+#ifdef DEBUG
+            log("shutdown", Errno, bsd_socket_error(Errno), ::aura::log::level_error);
+#endif
 
          }
 
@@ -1810,8 +1889,9 @@ ipv4_try:
          if (n)
          {
 
+#ifdef DEBUG
             log("read() after shutdown", n, "bytes read", ::aura::log::level_warning);
-
+#endif
          }
 
       }
@@ -1852,9 +1932,9 @@ ipv4_try:
                 //pthread_t thread;
                   sigset_t set;
                   int s;
-
-                  /* Block SIGQUIT and SIGUSR1; other threads created by main()
-                     will inherit a copy of the signal mask. */
+         */
+         /* Block SIGQUIT and SIGUSR1; other threads created by main()
+            will inherit a copy of the signal mask. */
 #ifdef LINUX
          sigset_t set;
          sigemptyset(&set);
@@ -1897,15 +1977,25 @@ ipv4_try:
 #ifdef HAVE_OPENSSL
    SSL_CTX *tcp_socket::GetSslContext()
    {
-      if(!m_ssl_ctx)
-         log("GetSslContext",0,"SSL Context is NULL; check InitSSLServer/InitSSLClient",::aura::log::level_warning);
+      if (!m_ssl_ctx)
+      {
+#ifdef DEBUG
+
+         log("GetSslContext", 0, "SSL Context is NULL; check InitSSLServer/InitSSLClient", ::aura::log::level_warning);
+#endif
+      }
       return m_ssl_ctx;
    }
 
    SSL *tcp_socket::GetSsl()
    {
-      if(!m_ssl)
-         log("GetSsl",0,"SSL is NULL; check InitSSLServer/InitSSLClient",::aura::log::level_warning);
+      if (!m_ssl)
+      {
+#ifdef DEBUG
+
+         log("GetSsl", 0, "SSL is NULL; check InitSSLServer/InitSSLClient", ::aura::log::level_warning);
+#endif
+      }
       return m_ssl;
    }
 #endif
@@ -2019,12 +2109,17 @@ ipv4_try:
       int32_t optval = x ? 1 : 0;
       if(setsockopt(GetSocket(),IPPROTO_TCP,TCP_NODELAY,(char *)&optval,sizeof(optval)) == -1)
       {
-         log("setsockopt(IPPROTO_TCP, TCP_NODELAY)",Errno,wsa_str_error(Errno),::aura::log::level_fatal);
+#ifdef DEBUG
+
+         log("setsockopt(IPPROTO_TCP, TCP_NODELAY)",Errno,bsd_socket_error(Errno),::aura::log::level_fatal);
+#endif
          return false;
       }
       return true;
 #else
+#ifdef DEBUG
       log("socket option not available",0,"TCP_NODELAY",::aura::log::level_info);
+#endif
       return false;
 #endif
    }
@@ -2033,7 +2128,10 @@ ipv4_try:
 
    void tcp_socket::OnConnectTimeout()
    {
+#ifdef DEBUG
+
       log("connect",-1,"connect timeout",::aura::log::level_fatal);
+#endif
       m_estatus = status_connection_timed_out;
       if(Socks4())
       {
@@ -2103,7 +2201,9 @@ ipv4_try:
       // %! exception doesn't always mean something bad happened, this code should be reworked
       // errno valid here?
       int32_t err = SoError();
-      log("exception on select",err,wsa_str_error(err),::aura::log::level_fatal);
+#ifdef DEBUG
+      log("exception on select",err,bsd_socket_error(err),::aura::log::level_fatal);
+#endif
       SetCloseAndDelete();
    }
 #endif // _WIN32

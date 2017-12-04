@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace filemanager
@@ -34,42 +34,42 @@ namespace filemanager
       {
       case ::filemanager::state_start:
       {
-                                      if(m_fileoperationa[m_iOperation]->start())
-                                      {
-                                         m_estate = ::filemanager::state_step;
-                                      }
-                                      else
-                                      {
-                                         m_estate = ::filemanager::state_start;
-                                         m_iOperation++;
-                                      }
+         if(m_fileoperationa[m_iOperation]->start())
+         {
+            m_estate = ::filemanager::state_step;
+         }
+         else
+         {
+            m_estate = ::filemanager::state_start;
+            m_iOperation++;
+         }
       }
-         break;
+      break;
       case ::filemanager::state_step:
       {
-                                     if(m_fileoperationa[m_iOperation]->step())
-                                     {
-                                        m_estate = ::filemanager::state_step;
-                                     }
-                                     else
-                                     {
-                                        m_estate = ::filemanager::state_finish;
-                                     }
+         if(m_fileoperationa[m_iOperation]->step())
+         {
+            m_estate = ::filemanager::state_step;
+         }
+         else
+         {
+            m_estate = ::filemanager::state_finish;
+         }
       }
-         break;
+      break;
       case ::filemanager::state_finish:
       {
-                                       m_fileoperationa[m_iOperation]->finish();
-                                       single_lock sl(&m_mutexFileOperationA, TRUE);
-                                       m_estate = ::filemanager::state_start;
-                                       m_fileoperationa.remove_at(m_iOperation);
+         m_fileoperationa[m_iOperation]->finish();
+         single_lock sl(&m_mutexFileOperationA, TRUE);
+         m_estate = ::filemanager::state_start;
+         m_fileoperationa.remove_at(m_iOperation);
 
-                                       // m_iOperation++;
+         // m_iOperation++;
       }
-         break;
+      break;
       case ::filemanager::state_initial:
       {
-                                        return false;
+         return false;
       }
       default:
          ASSERT(FALSE);
@@ -145,34 +145,50 @@ namespace filemanager
       poperation->set_copy(stra,pszDstBase,pszSrcBase,bExpand);
 
       single_lock sl(&m_mutexFileOperationA,TRUE);
+
       m_fileoperationa.add(poperation);
+
    }
 
-   int32_t operation_thread::run()
+
+   void operation_thread::run()
    {
+
       int32_t iStepSetCount = 84;
+
       int32_t iStepSetSleep = 23;
+
       while(thread_get_run())
       {
+
          int32_t i = iStepSetCount;
+
          while(i > 0)
          {
-            if(!step())
-               goto exit;
-            i--;
-         }
-         m_pview->post_message(
-            operation_view::MessageMainPost,
-            operation_view::MessageMainPostFileOperation);
-         Sleep(iStepSetSleep);
-      }
-      m_pview->post_message(
-         operation_view::MessageMainPost,
-         operation_view::MessageMainPostFileOperationFinal);
-   exit:
 
-      return 1;
+            if (!step())
+            {
+
+               goto exit;
+
+            }
+
+            i--;
+
+         }
+
+         m_pview->post_message(operation_view::MessageMainPost, operation_view::MessageMainPostFileOperation);
+
+         Sleep(iStepSetSleep);
+
+      }
+
+      m_pview->post_message(operation_view::MessageMainPost,  operation_view::MessageMainPostFileOperationFinal);
+
+exit:;
+
    }
+
 
    double operation_thread::get_progress_rate()
    {

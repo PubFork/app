@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "framework.h" // from "axis/net/net_sockets.h"
 #include "fiasco_finder.h"
 
@@ -13,12 +13,12 @@ namespace axis
 
 
 
-   system::system(::aura::application * papp):
-      aura::system(this, NULL),
+   system::system(::aura::application * papp, app_core * pappcore):
+      aura::system(this, pappcore, NULL)//,
 //      m_httpsystem(this),
-m_visual(this),
+//      m_visual(this),
 
-      m_emaildepartment(this)
+      //m_emaildepartment(this)
    {
 
       m_paxissystem = this;
@@ -71,14 +71,6 @@ m_visual(this),
    }
 
 
-   void system::construct(const char * pszAppId)
-   {
-
-      ::axis::application::construct(pszAppId);
-
-   }
-
-
    system::~system()
    {
 
@@ -92,7 +84,7 @@ m_visual(this),
 
 
 
-   bool system::process_initialize()
+   bool system::process_init()
    {
 
 //#ifndef WINDOWS
@@ -116,10 +108,10 @@ m_visual(this),
       //}
 
 
-      if(!::axis::application::process_initialize())
+      if(!::axis::application::process_init())
          return false;
 
-      if(!::aura::system::process_initialize())
+      if(!::aura::system::process_init())
          return false;
 
 
@@ -134,20 +126,15 @@ m_visual(this),
    }
 
 
-   bool system::initialize1()
+   bool system::init1()
    {
 
-      if(!::aura::system::initialize1())
+      if(!::aura::system::init1())
          return false;
 
-      if(!::axis::application::initialize1())
+      if(!::axis::application::init1())
          return false;
 
-
-      m_visual.construct(this);
-
-      if (!m_visual.initialize1())
-         return false;
 
       Session.m_puserstrcontext->defer_ok(m_puserstr);
 
@@ -159,13 +146,13 @@ m_visual(this),
    }
 
 
-   bool system::initialize2()
+   bool system::init2()
    {
 
-      if(!::aura::system::initialize2())
+      if(!::aura::system::init2())
          return false;
 
-      if(!::axis::application::initialize2())
+      if(!::axis::application::init2())
          return false;
 
 
@@ -180,17 +167,17 @@ m_visual(this),
 
    }
 
-   bool system::initialize_application()
+   bool system::init_application()
    {
 
-      if (!::aura::system::initialize_application())
+      if (!::aura::system::init_application())
       {
 
          return false;
 
       }
 
-      if (!::axis::application::initialize_application())
+      if (!::axis::application::init_application())
       {
 
          return false;
@@ -202,12 +189,10 @@ m_visual(this),
    }
 
 
-   bool system::finalize()
+   void system::term()
    {
 
       __wait_threading_count_except(this,::millis((5000) * 77));
-
-      bool bOk = false;
 
       try
       {
@@ -223,20 +208,20 @@ m_visual(this),
       catch(...)
       {
 
-         bOk = false;
+         m_error.set_if_not_set(-1);
 
       }
 
       try
       {
 
-         bOk = ::axis::application::finalize();
+         ::axis::application::term();
 
       }
       catch(...)
       {
 
-         bOk = false;
+         m_error.set_if_not_set(-1);
 
       }
 
@@ -254,63 +239,67 @@ m_visual(this),
       catch(...)
       {
 
-         bOk = false;
+         m_error.set_if_not_set(-1);
 
       }
 
-      return bOk;
-
    }
-   bool system::initialize()
+
+
+   bool system::init()
    {
 
-      if (!::axis::application::initialize())
-         return false;
-      if (!::aura::system::initialize())
-         return false;
+      if (!::axis::application::init())
+      {
 
-      if (!m_visual.initialize())
          return false;
 
+      }
 
+      if (!::aura::system::init())
+      {
 
+         return false;
 
+      }
 
       return true;
+
    }
 
-   int32_t system::exit_application()
+
+   void system::term_application()
    {
 
       try
       {
-         
+
          for(auto & pair : System.m_appmap)
          {
-            
+
             try
             {
-               
+
                if(pair.m_element2->m_paxissystem == this)
                {
-                  
+
                   pair.m_element2->m_paxissystem = NULL;
-                  
+
                }
-               
+
             }
             catch(...)
             {
-               
+
             }
-            
+
          }
-         
+
       }
       catch(...)
       {
-   
-      }         
+
+      }
 
       __wait_threading_count(::millis((5000) * 8));
 
@@ -325,7 +314,7 @@ m_visual(this),
       catch(...)
       {
 
-         m_iReturnCode = -86;
+         m_error.set_if_not_set(-86);
 
       }
 
@@ -363,16 +352,16 @@ m_visual(this),
 
       m_serviceptra.remove_all();
 
-      int32_t iRet = m_iReturnCode;
-
       try
       {
 
-         iRet = ::axis::application::exit_application();
+         ::axis::application::term_application();
 
       }
       catch(...)
       {
+
+         m_error.set_if_not_set();
 
       }
 
@@ -390,6 +379,8 @@ m_visual(this),
       catch(...)
       {
 
+         m_error.set_if_not_set();
+
       }
 
       try
@@ -400,6 +391,8 @@ m_visual(this),
       }
       catch(...)
       {
+
+         m_error.set_if_not_set();
 
       }
 
@@ -412,6 +405,8 @@ m_visual(this),
       catch(...)
       {
 
+         m_error.set_if_not_set();
+
       }
 
       try
@@ -422,6 +417,8 @@ m_visual(this),
       }
       catch(...)
       {
+
+         m_error.set_if_not_set();
 
       }
 
@@ -439,10 +436,15 @@ m_visual(this),
       catch(...)
       {
 
+         m_error.set_if_not_set();
+
       }
 
+#ifdef DEBUG
 
       m_plog.release();
+
+#endif
 
 //#ifdef METROWIN
 //
@@ -455,7 +457,7 @@ m_visual(this),
       try
       {
 
-         ::aura::system::exit_application();
+         ::aura::system::term_application();
 
       }
       catch(...)
@@ -485,8 +487,6 @@ m_visual(this),
       {
 
       }
-
-      return iRet;
 
    }
 
@@ -520,9 +520,12 @@ m_visual(this),
 
       ::axis::system * psystem = (::axis::system *)p;
 
-      return psystem->main();
+      psystem->main();
+
+      return psystem->get_exit_code();
 
    }
+
 
    CLASS_DECL_AXIS void __start_system(::axis::system * psystem)
    {
@@ -540,12 +543,6 @@ m_visual(this),
    }
 
 
-   ::net::email_department & system::email()
-   {
-
-      return m_emaildepartment;
-
-   }
 
 
    void system::on_request(::create * pcreate)
@@ -596,18 +593,18 @@ namespace axis
 
 
 
-   ::user::document * system::place_hold(::user::interaction * pui)
-   {
+   //::user::document * system::place_hold(::user::interaction * pui)
+   //{
 
 
-      //if(m_pcubeInterface != NULL)
-      //{
-      // return m_pcubeInterface->hold(pui);
-      //}
+   //   //if(m_pcubeInterface != NULL)
+   //   //{
+   //   // return m_pcubeInterface->hold(pui);
+   //   //}
 
-      return NULL;
+   //   return NULL;
 
-   }
+   //}
 
 
    ::aura::session * system::query_session(index iEdge)
@@ -620,277 +617,8 @@ namespace axis
 
 
 
-   index system::get_main_monitor(LPRECT lprect)
-   {
 
-      index iMainMonitor = 0;
 
-#ifdef WINDOWSEX
-
-      HMONITOR hmonitorPrimary = GetPrimaryMonitorHandle();
-
-      for(index iMonitor = 0; iMonitor < get_monitor_count(); iMonitor++)
-      {
-
-         if(m_hmonitora[iMonitor] == hmonitorPrimary)
-         {
-
-            iMainMonitor = iMonitor;
-
-            break;
-
-         }
-
-      }
-
-
-#endif
-
-      if(lprect != NULL)
-      {
-
-         get_monitor_rect(iMainMonitor,lprect);
-
-      }
-
-      return iMainMonitor;
-
-   }
-
-
-   ::count system::get_monitor_count()
-   {
-
-#ifdef WINDOWSEX
-
-      return m_monitorinfoa.get_count();
-
-#elif defined(MACOS)
-
-      return GetScreenCount();
-
-#else
-
-      return 1;
-
-#endif
-
-   }
-
-
-   bool system::get_monitor_rect(index iMonitor,LPRECT lprect)
-   {
-
-#ifdef WINDOWSEX
-
-      if(iMonitor < 0 || iMonitor >= get_monitor_count())
-         return false;
-
-      *lprect = m_monitorinfoa[iMonitor].rcMonitor;
-
-#elif defined(METROWIN)
-
-
-      return false;
-
-
-#elif defined(LINUX)
-
-
-      return false;
-
-
-#elif defined(APPLEOS)
-
-      if(iMonitor < 0 || iMonitor >= get_monitor_count())
-         return false;
-
-      GetScreenRect(lprect,iMonitor);
-
-#else
-
-      lprect->left = 0;
-      lprect->top = 0;
-      lprect->right = m_pandroidinitdata->m_iScreenWidth;
-      lprect->bottom = m_pandroidinitdata->m_iScreenHeight;
-
-#endif
-
-      return true;
-
-   }
-
-
-   ::count system::get_desk_monitor_count()
-   {
-
-      return get_monitor_count();
-
-   }
-
-
-   bool system::get_desk_monitor_rect(index iMonitor,LPRECT lprect)
-   {
-
-      return get_monitor_rect(iMonitor,lprect);
-
-   }
-
-
-
-
-   index system::get_main_wkspace(LPRECT lprect)
-   {
-
-      index iMainWkspace = 0;
-
-#ifdef WINDOWSEX
-
-      HMONITOR hwkspacePrimary = GetPrimaryMonitorHandle();
-
-      for(index iWkspace = 0; iWkspace < get_wkspace_count(); iWkspace++)
-      {
-
-         if(m_hmonitora[iWkspace] == hwkspacePrimary)
-         {
-
-            iMainWkspace = iWkspace;
-
-            break;
-
-         }
-
-      }
-
-
-#endif
-
-      if(lprect != NULL)
-      {
-
-         get_wkspace_rect(iMainWkspace,lprect);
-
-      }
-
-      return iMainWkspace;
-
-   }
-
-
-   ::count system::get_wkspace_count()
-   {
-
-#ifdef WINDOWSEX
-
-      return m_monitorinfoa.get_count();
-
-#else
-
-      return get_monitor_count();
-
-#endif
-
-   }
-
-
-   bool system::get_wkspace_rect(index iWkspace,LPRECT lprect)
-   {
-
-#ifdef WINDOWSEX
-
-      if(iWkspace < 0 || iWkspace >= get_wkspace_count())
-         return false;
-
-      *lprect = m_monitorinfoa[iWkspace].rcWork;
-
-#elif defined(METROWIN)
-
-      return get_monitor_rect(iWkspace,lprect);
-
-//#elif defined(LINUX)
-//
-//return false;
-//
-#elif defined(APPLEOS)
-
-      if(iWkspace < 0 || iWkspace >= get_wkspace_count())
-         return false;
-
-      GetWkspaceRect(lprect,iWkspace);
-
-      //      lprect->top += ::mac::get_system_main_menu_bar_height();
-      //    lprect->bottom -= ::mac::get_system_dock_height();
-
-#else
-
-      //throw todo(get_app());
-
-      //::GetWindowRect(::GetDesktopWindow(),lprect);
-
-      get_monitor_rect(iWkspace, lprect);
-
-#endif
-
-      return true;
-
-   }
-
-
-   ::count system::get_desk_wkspace_count()
-   {
-
-      return get_wkspace_count();
-
-   }
-
-
-   bool system::get_desk_wkspace_rect(index iWkspace,LPRECT lprect)
-   {
-
-      return get_wkspace_rect(iWkspace,lprect);
-
-   }
-
-
-
-
-
-
-#ifdef METROWIN
-
-
-
-   CLASS_DECL_AXIS bool get_window_rect(::axis::system_window ^ pwindow,RECTD * lprect)
-   {
-
-      Windows::Foundation::Rect rect =  pwindow->get_window_rect();
-
-      lprect->left = rect.X;
-      lprect->top = rect.Y;
-      lprect->right = lprect->left + rect.Width;
-      lprect->bottom = lprect->top + rect.Height;
-
-      return true;
-   }
-
-
-   CLASS_DECL_AXIS bool get_window_rect(::axis::system_window ^ pwindow,LPRECT lprect)
-   {
-
-      rectd r;
-
-      if(!get_window_rect(pwindow,&r))
-         return false;
-
-      if(!::copy(lprect,r))
-         return false;
-
-      return true;
-
-   }
-
-
-#endif
 
 
 
@@ -905,89 +633,29 @@ namespace axis
 
    //}
 
-   ::user::interaction_impl * system::impl_from_handle(void * posdata)
-   {
+   //::user::interaction_impl * system::impl_from_handle(void * posdata)
+   //{
 
-      return NULL;
+   //   return NULL;
 
-   }
+   //}
 
-   ::user::interaction * system::ui_from_handle(void * posdata)
-   {
+   //::user::interaction * system::ui_from_handle(void * posdata)
+   //{
 
-      return NULL;
+   //   return NULL;
 
-   }
+   //}
 
 
    string system::url_encode(const string & str)
    {
 
-	   return m_purldepartment->url_encode(str);
+      return m_purldepartment->url_encode(str);
 
    }
 
 
-   void system::enum_display_monitors()
-   {
-
-#ifdef WINDOWSEX
-
-      m_monitorinfoa.remove_all();
-
-      ::EnumDisplayMonitors(NULL,NULL,&system::monitor_enum_proc,(LPARAM)(dynamic_cast < ::axis::system * > (this)));
-
-#else
-
-      // todo
-      //      m_monitorinfoa.remove_all();
-
-
-#endif
-
-   }
-
-
-
-#ifdef WINDOWSEX
-   BOOL CALLBACK system::monitor_enum_proc(HMONITOR hmonitor,HDC hdcMonitor,LPRECT lprcMonitor,LPARAM dwData)
-   {
-
-      ::axis::system * psystem = (::axis::system *) dwData;
-
-      psystem->monitor_enum(hmonitor,hdcMonitor,lprcMonitor);
-
-      return TRUE; // to enumerate all
-
-   }
-
-   void system::monitor_enum(HMONITOR hmonitor,HDC hdcMonitor,LPRECT lprcMonitor)
-   {
-
-      UNREFERENCED_PARAMETER(hdcMonitor);
-      UNREFERENCED_PARAMETER(lprcMonitor);
-
-      m_monitorinfoa.allocate(m_monitorinfoa.get_size() + 1);
-
-      ZERO(m_monitorinfoa.last());
-
-      m_hmonitora.add(hmonitor);
-
-      m_monitorinfoa.last().cbSize = sizeof(MONITORINFO);
-
-      ::GetMonitorInfo(hmonitor,&m_monitorinfoa.last());
-
-      MONITORINFO mi = m_monitorinfoa.last();
-
-      TRACE0("session::monitor_enum\n");
-      TRACE("upper_bound %d\n",m_monitorinfoa.get_upper_bound());
-      TRACE("rcMonitor(left, top, right, bottom) %d, %d, %d, %d\n",mi.rcMonitor.left,mi.rcMonitor.top,mi.rcMonitor.right,mi.rcMonitor.bottom);
-      TRACE("rcWork(left, top, right, bottom) %d, %d, %d, %d\n",mi.rcWork.left,mi.rcWork.top,mi.rcWork.right,mi.rcWork.bottom);
-
-   }
-
-
-#endif
 
 } // namespace axis
 

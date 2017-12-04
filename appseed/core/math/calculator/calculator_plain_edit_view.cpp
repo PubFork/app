@@ -144,7 +144,7 @@ namespace calculator
             {
 
                pelement = parser.parse(strExp);
-               //throw simple_exception(::get_thread_app(), "now a simple exception here");
+               //_throw(simple_exception(get_app(), "now a simple exception here"));
 
             }
             catch(const numeric_parser_exception & exp)

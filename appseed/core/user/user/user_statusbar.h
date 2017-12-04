@@ -140,23 +140,23 @@ namespace user
       virtual void DrawItem(LPDRAWITEMSTRUCT);
 #endif
 
-      virtual size CalcFixedLayout(bool bStretch, bool bHorz);
-      bool pre_create_window(::user::create_struct& cs);
+      virtual size CalcFixedLayout(bool bStretch, bool bHorz) override;
+      bool pre_create_window(::user::create_struct& cs) override;
       //bool AllocElements(int32_t nElements, int32_t cbElement);
       void CalcInsideRect(rect& rect, bool bHorz);
-      virtual void OnBarStyleChange(uint32_t dwOldStyle, uint32_t dwNewStyle);
+      virtual void OnBarStyleChange(uint32_t dwOldStyle, uint32_t dwNewStyle) override;
 
-   #ifdef DEBUG
-      virtual void assert_valid() const;
-      virtual void dump(dump_context & dumpcontext) const;
+      virtual void assert_valid() const override;
+      virtual void dump(dump_context & dumpcontext) const override;
       void EnableDocking(uint32_t dwDockStyle);
-   #endif
+
+
       virtual void on_command_probe(::user::frame_window * ptarget, bool bDisableIfNoHndler) override;
 
 
       __STATUSPANE* _GetPanePtr(int32_t nIndex);
       void UpdateAllPanes(bool bUpdateRects, bool bUpdateText);
-      virtual bool OnChildNotify(::message::base * pbase);
+      virtual bool OnChildNotify(::message::base * pbase) override;
 
       DECL_GEN_SIGNAL(_001OnNcHitTest);
       DECL_GEN_SIGNAL(_001OnNcCalcSize);
@@ -167,8 +167,8 @@ namespace user
       DECL_GEN_SIGNAL(_001OnGetTextLength);
       DECL_GEN_SIGNAL(_001OnSetMinHeight);
 
-      virtual void _001OnDraw(::draw2d::graphics * pgraphics);
-      virtual void install_message_routing(::message::sender * pinterface);
+      virtual void _001OnDraw(::draw2d::graphics * pgraphics) override;
+      virtual void install_message_routing(::message::sender * pinterface) override;
 
 
    };

@@ -81,7 +81,7 @@ bool script_interface::main_finalize()
 {
    if(m_pinstanceMain == this)
    {
-      return *((::file::file *) NULL);
+      _throw(interface_only_exception(get_app()));
    }
    else if(m_pinstanceMain != NULL)
    {
@@ -102,7 +102,7 @@ bool script_interface::main_finalize()
 {
    if(m_pinstanceMain == this)
    {
-      return *((::file::ostream *) NULL);
+      _throw(interface_only_exception(get_app()));
    }
    else if(m_pinstanceMain != NULL)
    {

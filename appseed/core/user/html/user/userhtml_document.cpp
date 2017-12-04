@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 html_document::html_document(::aura::application * papp) :
@@ -32,7 +32,7 @@ html_document::~html_document()
 
 
 
-#ifdef DEBUG
+
 void html_document::assert_valid() const
 {
    ::user::document::assert_valid();
@@ -42,7 +42,7 @@ void html_document::dump(dump_context & dumpcontext) const
 {
    ::user::document::dump(dumpcontext);
 }
-#endif //DEBUG
+
 
 /////////////////////////////////////////////////////////////////////////////
 // html_document serialization
@@ -129,7 +129,7 @@ bool html_document::on_open_document(var varFile)
    uh.m_strUrl = varFile;
    update_all_views(NULL, 0, &uh);
 
-   data_set(".local://LastOpenedFile", get_file_path());
+   data_set("&data_source=local&LastOpenedFile", get_file_path());
 
    
 
@@ -149,7 +149,7 @@ void html_document::soft_reload()
    {
       get_html_data()->m_propertyset.replace_gen(str);
    }
-   TRACE0(str);
+   TRACE("%s", str);
    get_html_data()->load(str);
    html_view_update_hint uh;
    uh.m_etype = html_view_update_hint::type_document_complete;

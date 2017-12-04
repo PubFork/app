@@ -1,7 +1,7 @@
 ﻿#include "framework.h"
 #include "aura/net/net_sockets.h"
 //#include "fiasco_finder.h"
-
+#include "aura/net/ftp/ftp_data_types.h"
 
 namespace axis
 {
@@ -41,9 +41,9 @@ namespace axis
 
 //      m_puserstyle                 = &m_schemasimple;
 
-  //    m_schemasimple.m_pfont.alloc(allocer());
+      //    m_schemasimple.m_pfont.alloc(allocer());
 
-    //  m_schemasimple.m_pfont->create_pixel_font(FONT_SANS,16);
+      //  m_schemasimple.m_pfont->create_pixel_font(FONT_SANS,16);
 
       m_puserpresence               = NULL;
 
@@ -66,10 +66,7 @@ namespace axis
 
 #endif
 
-      m_bDrawCursor                 = false;
 
-
-      m_bDrawCursor                 = false;
 
       m_puiMouseMoveCapture         = NULL;
 
@@ -158,12 +155,12 @@ namespace axis
 
 
 
-   bool session::process_initialize()
+   bool session::process_init()
    {
 
       thisstart;
 
-      if (!::aura::session::process_initialize())
+      if (!::aura::session::process_init())
       {
 
          thisfail << 1;
@@ -195,7 +192,7 @@ namespace axis
       if (m_pifs == NULL)
       {
 
-         m_pifs = new ifs(this, ""); 
+         m_pifs = new ifs(this, "");
 
       }
 
@@ -232,7 +229,7 @@ namespace axis
 
       thisok << 2;
 
-      if (!::axis::application::process_initialize())
+      if (!::axis::application::process_init())
       {
 
          thisfail << 3;
@@ -241,6 +238,8 @@ namespace axis
 
       }
 
+      fill_locale_schema(*str_context()->m_plocaleschema);
+
       thisend;
 
       return true;
@@ -248,7 +247,7 @@ namespace axis
    }
 
 
-   bool session::initialize1()
+   bool session::init1()
    {
 
       m_spfs = canew(::fs::fs(this));
@@ -266,10 +265,10 @@ namespace axis
       //if(!m_spcopydesk->initialize())
       //   return false;
 
-      if(!::aura::session::initialize1())
+      if(!::aura::session::init1())
          return false;
 
-      if(!::axis::application::initialize1())
+      if(!::axis::application::init1())
          return false;
 
       m_puserpresence = new ::userpresence::userpresence(this);
@@ -308,27 +307,19 @@ namespace axis
 
       }
 
-
-      str_context()->localeschema().m_idaLocale.add(get_locale());
-
-      str_context()->localeschema().m_idaSchema.add(get_schema());
-
-
       return true;
 
    }
 
 
-   bool session::initialize2()
+   bool session::init2()
    {
 
-      if(!::aura::session::initialize2())
+      if(!::aura::session::init2())
          return false;
 
-      if(!::axis::application::initialize2())
+      if(!::axis::application::init2())
          return false;
-
-      fill_locale_schema(*str_context()->m_plocaleschema);
 
       return true;
 
@@ -336,10 +327,10 @@ namespace axis
 
 
 
-   bool session::initialize_application()
+   bool session::init_application()
    {
 
-      if (!m_pfontopus->initialize_application())
+      if (!m_pfontopus->init_instance())
       {
 
          return false;
@@ -347,22 +338,22 @@ namespace axis
       }
 
       if(Application.handler()->m_varTopicQuery.has_property("uninstall")
-         || Application.handler()->m_varTopicQuery.has_property("install"))
+            || Application.handler()->m_varTopicQuery.has_property("install"))
       {
 
-         if(m_pfontopus->create_system_user("system") == NULL)
+         if(is_null(m_pfontopus->create_system_user("system")))
             return false;
 
       }
 
-      if (!::aura::session::initialize_application())
+      if (!::aura::session::init_application())
       {
 
          return false;
 
       }
 
-      if (!::axis::application::initialize_application())
+      if (!::axis::application::init_application())
       {
 
          return false;
@@ -374,17 +365,17 @@ namespace axis
    }
 
 
-   bool session::initialize()
+   bool session::init()
    {
 
-      if (!::aura::session::initialize())
+      if (!::aura::session::init())
       {
 
          return false;
 
       }
 
-      if (!::axis::application::initialize())
+      if (!::axis::application::init())
       {
 
          return false;
@@ -431,26 +422,20 @@ namespace axis
    }
 
 
-   bool session::finalize()
+   void session::term()
    {
-
-      bool bOk = true;
 
       try
       {
 
-         if(!::axis::application::finalize())
-         {
-
-            bOk = false;
-
-         }
+         ::axis::application::term();
 
       }
       catch(...)
       {
 
-         bOk = false;
+         m_error.set_if_not_set();
+
       }
 
 
@@ -463,6 +448,7 @@ namespace axis
       catch (...)
       {
 
+         m_error.set_if_not_set();
 
       }
 
@@ -475,7 +461,7 @@ namespace axis
             if (!m_puserpresence->finalize())
             {
 
-               bOk = false;
+               m_error.set_if_not_set();
 
             }
 
@@ -488,7 +474,8 @@ namespace axis
       catch (...)
       {
 
-         bOk = false;
+         m_error.set_if_not_set();
+
       }
 
 
@@ -501,7 +488,7 @@ namespace axis
       catch (...)
       {
 
-         bOk = false;
+         m_error.set_if_not_set();
 
       }
 
@@ -515,7 +502,7 @@ namespace axis
       catch (...)
       {
 
-         bOk = false;
+         m_error.set_if_not_set();
 
       }
 
@@ -528,7 +515,7 @@ namespace axis
       catch (...)
       {
 
-         bOk = false;
+         m_error.set_if_not_set();
 
       }
 
@@ -541,7 +528,7 @@ namespace axis
       catch (...)
       {
 
-         bOk = false;
+         m_error.set_if_not_set();
 
       }
 
@@ -557,7 +544,7 @@ namespace axis
          catch (...)
          {
 
-            bOk = false;
+            m_error.set_if_not_set();
 
          }
 
@@ -572,73 +559,70 @@ namespace axis
       catch (...)
       {
 
-         bOk = false;
+         m_error.set_if_not_set();
+
       }
 
       try
       {
+
          ::aura::del(m_psockets);
+
       }
       catch (...)
       {
 
-         bOk = false;
+         m_error.set_if_not_set();
 
       }
 
       try
       {
 
-         if(!::aura::session::finalize())
-         {
-
-            bOk = false;
-
-         }
+         ::aura::session::term();
 
       }
       catch(...)
       {
 
-         bOk = false;
-      }
+         m_error.set_if_not_set();
 
-      return bOk;
+      }
 
    }
 
 
-   int32_t session::exit_application()
+   void session::term_application()
    {
 
       try
       {
-         
+
          for(auto & pair : System.m_appmap)
          {
-            
+
             try
             {
-               
+
                if(pair.m_element2->m_paxissession == this)
                {
-                  
+
                   pair.m_element2->m_paxissession = NULL;
-                  
+
                }
-               
+
             }
             catch(...)
             {
-               
+
             }
-            
+
          }
-         
+
       }
       catch(...)
       {
-   
+
       }
 
       try
@@ -672,15 +656,13 @@ namespace axis
 
       ::aura::del(m_pkeyboard);
 
-      ::axis::application::exit_application();
+      ::axis::application::term_application();
 
-      ::aura::session::exit_application();
-
-      return 0;
+      ::aura::session::term_application();
 
    }
 
-   
+
    DWORD session::get_Long_PhRESSing_time()
    {
 
@@ -707,867 +689,9 @@ namespace axis
    }
 
 
-   COLORREF session::get_default_color(uint64_t ui)
-   {
 
-      switch(ui)
-      {
-      case COLOR_3DFACE:
-         return ARGB(127,192,192,184);
-      case COLOR_WINDOW:
-         return ARGB(127,255,255,255);
-      case COLOR_3DLIGHT:
-         return ARGB(127,218,218,210);
-      case COLOR_3DHIGHLIGHT:
-         return ARGB(127,238,238,230);
-      case COLOR_3DSHADOW:
-         return ARGB(127,138,138,130);
-      case COLOR_3DDKSHADOW:
-         return ARGB(127,90, 90, 80);
-      default:
-         break;
-      }
 
-      return ARGB(127,0,0,0);
 
-   }
-
-
-
-
-
-   ::user::copydesk & session::copydesk()
-   {
-
-      return *m_pcopydesk;
-
-   }
-
-
-
-   index session::get_main_wkspace(LPRECT lprect)
-   {
-
-      if(m_bSystemSynchronizedScreen)
-      {
-
-         if(m_iMainWkspace >= 0 && m_iMainWkspace < System.get_monitor_count())
-         {
-
-            return System.get_main_wkspace(lprect);
-
-         }
-         else
-         {
-
-            if(System.get_monitor_rect(m_iMainWkspace,lprect))
-            {
-
-               return m_iMainMonitor;
-
-            }
-            else
-            {
-
-               System.get_wkspace_rect(0,lprect);
-
-               return 0;
-
-            }
-
-         }
-
-      }
-      else
-      {
-
-         index iMainWkspace = m_iMainWkspace;
-
-         if(iMainWkspace < 0 || iMainWkspace >= m_rectaWkspace.get_count())
-         {
-
-            iMainWkspace = 0;
-
-         }
-
-         if(m_rectaWkspace.get_count() <= 0)
-         {
-
-            return -1;
-
-         }
-
-         *lprect = m_rectaWkspace[iMainWkspace];
-
-         return iMainWkspace;
-
-      }
-
-   }
-
-
-   bool session::set_main_wkspace(index iWkspace)
-   {
-
-      if(iWkspace == -1)
-      {
-
-         m_iMainWkspace = -1;
-
-         return true;
-
-      }
-      else if(iWkspace < 0 || iWkspace >= get_wkspace_count())
-      {
-
-         return false;
-
-      }
-      else
-      {
-
-         m_iMainWkspace = iWkspace;
-
-         return true;
-
-      }
-
-   }
-
-   index session::get_main_monitor(LPRECT lprect)
-   {
-
-      if(m_bSystemSynchronizedScreen)
-      {
-
-         if(m_iMainMonitor < 0 || m_iMainMonitor >= System.get_monitor_count())
-         {
-
-            return System.get_main_monitor(lprect);
-
-         }
-         else
-         {
-
-            if(System.get_monitor_rect(m_iMainMonitor,lprect))
-            {
-
-               return m_iMainMonitor;
-
-            }
-            else
-            {
-
-               System.get_monitor_rect(0,lprect);
-
-               return 0;
-
-            }
-
-         }
-
-      }
-      else
-      {
-
-         index iMainMonitor = m_iMainMonitor;
-
-         if(iMainMonitor < 0 || iMainMonitor >= m_rectaMonitor.get_count())
-         {
-
-            iMainMonitor = 0;
-
-         }
-
-         if(m_rectaMonitor.get_count() <= 0)
-         {
-
-            return -1;
-
-         }
-
-         *lprect = m_rectaMonitor[iMainMonitor];
-
-         return iMainMonitor;
-
-      }
-
-   }
-
-
-   bool session::set_main_monitor(index iMonitor)
-   {
-
-      if(iMonitor == -1)
-      {
-
-         m_iMainMonitor = -1;
-
-         return true;
-
-      }
-      else if(iMonitor < 0 || iMonitor >= get_monitor_count())
-      {
-
-         return false;
-
-      }
-      else
-      {
-
-         m_iMainMonitor = iMonitor;
-
-         return true;
-
-      }
-
-   }
-
-
-   ::count session::get_wkspace_count()
-   {
-
-      if(m_bSystemSynchronizedScreen)
-      {
-
-         return System.get_wkspace_count();
-
-      }
-      else
-      {
-
-         return m_rectaWkspace.get_count();
-
-      }
-
-   }
-
-
-   ::count session::get_monitor_count()
-   {
-
-      if(m_bSystemSynchronizedScreen)
-      {
-
-         return System.get_monitor_count();
-
-      }
-      else
-      {
-
-         return m_rectaMonitor.get_count();
-
-      }
-
-   }
-
-
-   bool session::get_monitor_rect(index iMonitor,LPRECT lprect)
-   {
-
-      if(m_bSystemSynchronizedScreen)
-      {
-
-         return System.get_monitor_rect(iMonitor,lprect);
-
-      }
-      else
-      {
-
-         if(iMonitor < 0 || iMonitor >= m_rectaMonitor.get_count())
-         {
-
-            return false;
-
-         }
-
-         *lprect = m_rectaMonitor[iMonitor];
-
-         return true;
-
-      }
-
-   }
-
-   bool session::wkspace_to_monitor(LPRECT lprect,index iMonitor,index iWkspace)
-   {
-
-      rect rect(lprect);
-
-      ::rect rectWkspace;
-
-      if(!get_wkspace_rect(iWkspace,rectWkspace))
-         return false;
-
-      rect -= rectWkspace.top_left();
-
-      ::rect rectMonitor;
-
-      if(!get_monitor_rect(iMonitor,rectMonitor))
-         return false;
-
-      rect += rectMonitor.top_left();
-
-      *lprect = rect;
-
-      return true;
-
-   }
-
-
-   bool session::wkspace_to_monitor(LPRECT lprect)
-   {
-
-      index iWkspace = get_best_wkspace(NULL,rect(lprect));
-
-      return wkspace_to_monitor(lprect,iWkspace,iWkspace);
-
-   }
-
-
-   bool session::monitor_to_wkspace(LPRECT lprect)
-   {
-
-      index iMonitor = get_best_monitor(NULL,rect(lprect));
-
-      return monitor_to_wkspace(lprect,iMonitor,iMonitor);
-
-   }
-
-
-   bool session::monitor_to_wkspace(LPRECT lprect,index iWkspace,index iMonitor)
-   {
-
-      rect rect(lprect);
-
-      ::rect rectMonitor;
-
-      if(!get_monitor_rect(iMonitor,rectMonitor))
-         return false;
-
-      rect -= rectMonitor.top_left();
-
-      ::rect rectWkspace;
-
-      if(!get_wkspace_rect(iWkspace,rectWkspace))
-         return false;
-
-      rect += rectWkspace.top_left();
-
-      *lprect = rect;
-
-      return true;
-
-   }
-
-
-
-
-   bool session::get_wkspace_rect(index iWkspace,LPRECT lprect)
-   {
-
-      if(m_bSystemSynchronizedScreen)
-      {
-
-         return System.get_wkspace_rect(iWkspace,lprect);
-
-      }
-      else
-      {
-
-         if(iWkspace < 0 || iWkspace >= m_rectaWkspace.get_count())
-         {
-
-            return false;
-
-         }
-
-         *lprect = m_rectaWkspace[iWkspace];
-
-         return true;
-
-      }
-
-   }
-
-   ::count session::get_desk_monitor_count()
-   {
-
-      return get_monitor_count();
-
-   }
-
-
-   bool session::get_desk_monitor_rect(index iMonitor,LPRECT lprect)
-   {
-
-      return get_monitor_rect(iMonitor,lprect);
-
-   }
-
-
-   void session::get_monitor(rect_array & rectaMonitor,rect_array & rectaIntersect,const RECT & rectParam)
-   {
-
-      for(index iMonitor = 0; iMonitor < get_monitor_count(); iMonitor++)
-      {
-
-         rect rectIntersect;
-
-         rect rectMonitor;
-
-         if(get_monitor_rect(iMonitor,rectMonitor))
-         {
-
-            if(rectIntersect.top_left_null_intersect(&rectParam,rectMonitor))
-            {
-
-               if(rectIntersect.area() >= 0)
-               {
-
-                  rectaMonitor.add(rectMonitor);
-
-                  rectaIntersect.add(rectIntersect);
-
-               }
-
-            }
-
-         }
-
-      }
-
-   }
-
-   index session::get_zoneing(LPRECT lprect,const RECT & rectParam,::user::e_appearance eappearance)
-   {
-
-      index iMonitor = get_best_wkspace(lprect,rectParam);
-
-      int cx = width(lprect);
-      int cy = height(lprect);
-
-      if(cx <= 0 || cy <= 0)
-      {
-
-         return -1;
-
-      }
-
-      if(width(rectParam) <= 0 || height(rectParam) <= 0)
-      {
-
-         return -1;
-
-      }
-
-
-      int midcx = cx / 2;
-      int midcy = cy / 2;
-
-      if(eappearance == ::user::appearance_top)
-      {
-         *lprect = rect_dim(0,0,cx,midcy) + top_left(lprect);
-      }
-      else if(eappearance == ::user::appearance_left)
-      {
-         *lprect = rect_dim(0,0,midcx,cy) + top_left(lprect);
-      }
-      else if(eappearance == ::user::appearance_right)
-      {
-         *lprect = rect_dim(midcx,0,midcx,cy) + top_left(lprect);
-      }
-      else if(eappearance == ::user::appearance_bottom)
-      {
-         *lprect = rect_dim(0,midcy,cx,midcy) + top_left(lprect);
-      }
-      else if(eappearance == ::user::appearance_top_left)
-      {
-         *lprect = rect_dim(0,0,midcx,midcy) + top_left(lprect);
-      }
-      else if(eappearance == ::user::appearance_top_right)
-      {
-         *lprect = rect_dim(midcx,0,midcx,midcy) + top_left(lprect);
-      }
-      else if(eappearance == ::user::appearance_bottom_left)
-      {
-         *lprect = rect_dim(0,midcy,midcx,midcy) + top_left(lprect);
-      }
-      else if(eappearance == ::user::appearance_bottom_right)
-      {
-         *lprect = rect_dim(midcx,midcy,midcx,midcy) + top_left(lprect);
-      }
-      else
-      {
-         return -1;
-      }
-
-      return iMonitor;
-
-   }
-
-   index session::get_best_zoneing(::user::e_appearance * peappearance,LPRECT lprect,const RECT & rectParam)
-   {
-
-      index iMonitor = get_best_monitor(lprect,rectParam);
-
-      int cx = width(lprect);
-      int cy = height(lprect);
-
-      if(cx <= 0 || cy <= 0)
-      {
-
-         *peappearance = ::user::appearance_zoomed;
-
-         return iMonitor;
-
-      }
-
-      if(width(rectParam) <= 0 || height(rectParam) <= 0)
-      {
-
-         *peappearance = ::user::appearance_zoomed;
-
-         return iMonitor;
-
-      }
-
-
-      int midcx = cx / 2;
-      int midcy = cy / 2;
-
-      rect_array recta;
-      array < ::user::e_appearance > aa;
-
-      aa.add(::user::appearance_top);
-      recta.add_dim(0,0,cx,midcy);
-
-      aa.add(::user::appearance_left);
-      recta.add_dim(0,0,midcx,cy);
-
-      aa.add(::user::appearance_right);
-      recta.add_dim(midcx,0,midcx,cy);
-
-      aa.add(::user::appearance_bottom);
-      recta.add_dim(0,midcy,cx,midcy);
-
-      aa.add(::user::appearance_top_left);
-      recta.add_dim(0,0,midcx,midcy);
-
-      aa.add(::user::appearance_top_right);
-      recta.add_dim(midcx,0,midcx,midcy);
-
-      aa.add(::user::appearance_bottom_left);
-      recta.add_dim(0,midcy,midcx,midcy);
-
-      aa.add(::user::appearance_bottom_right);
-      recta.add_dim(midcx,midcy,midcx,midcy);
-
-      index iFoundAppearance = recta.max_normal_intersect_area(rectParam,*lprect);
-
-      if(iFoundAppearance < 0)
-      {
-
-         *peappearance = ::user::appearance_zoomed;
-
-         return iMonitor;
-
-      }
-
-      if(lprect != NULL)
-      {
-
-         *lprect = recta[iFoundAppearance];
-
-      }
-
-      *peappearance = aa[iFoundAppearance];
-
-      return iMonitor;
-
-   }
-
-   index session::get_best_monitor(LPRECT lprect,const RECT & rectParam)
-   {
-
-      index iMatchingMonitor = -1;
-      int64_t iBestArea = -1;
-      rect rectMatch;
-      rect r(rectParam);
-
-      if(r.is_null())
-      {
-
-         get_cursor_pos((POINT *)&r.left);
-         *((POINT*)&r.right) = *((POINT*)&r.left);
-
-      }
-
-      for(index iMonitor = 0; iMonitor < get_monitor_count(); iMonitor++)
-      {
-
-         rect rectIntersect;
-
-         rect rectMonitor;
-
-         if(get_monitor_rect(iMonitor,rectMonitor))
-         {
-
-            if(rectIntersect.top_left_null_intersect(&r,rectMonitor))
-            {
-
-               if(rectIntersect.area() > iBestArea)
-               {
-
-                  iMatchingMonitor = iMonitor;
-
-                  iBestArea = rectIntersect.area();
-
-                  rectMatch = rectMonitor;
-
-               }
-
-            }
-            else if(rectMonitor.contains(r))
-            {
-
-               iMatchingMonitor = iMonitor;
-
-               rectMatch = rectMonitor;
-
-            }
-
-         }
-
-      }
-
-      if(iMatchingMonitor >= 0)
-      {
-
-         if(lprect != NULL)
-         {
-
-            *lprect = rectMatch;
-
-         }
-
-         return iMatchingMonitor;
-
-      }
-
-      iMatchingMonitor = get_main_monitor(lprect);
-
-      return iMatchingMonitor;
-
-   }
-
-
-   index session::get_best_wkspace(LPRECT lprect,const RECT & rectParam)
-   {
-
-      index iMatchingWkspace = -1;
-      int64_t iBestArea = -1;
-      rect rectMatch;
-      rect r(rectParam);
-
-      if(r.is_null())
-      {
-
-         get_cursor_pos((POINT *)&r.left);
-         *((POINT*)&r.right) = *((POINT*)&r.left);
-
-      }
-
-      for(index iWkspace = 0; iWkspace < get_wkspace_count(); iWkspace++)
-      {
-
-         rect rectIntersect;
-
-         rect rectMonitor;
-
-         if(get_wkspace_rect(iWkspace,rectMonitor))
-         {
-
-            if(rectIntersect.top_left_null_intersect(&r,rectMonitor))
-            {
-
-               if(rectIntersect.area() > iBestArea)
-               {
-
-                  iMatchingWkspace = iWkspace;
-
-                  iBestArea = rectIntersect.area();
-
-                  rectMatch = rectMonitor;
-
-               }
-
-            }
-            else if(rectMonitor.contains(r))
-            {
-
-               iMatchingWkspace = iWkspace;
-
-               rectMatch = rectMonitor;
-
-            }
-
-
-         }
-
-      }
-
-      if(iMatchingWkspace >= 0)
-      {
-
-         *lprect = rectMatch;
-
-         return iMatchingWkspace;
-
-      }
-
-      iMatchingWkspace = get_main_wkspace(lprect);
-
-      return iMatchingWkspace;
-
-   }
-
-
-   index session::get_good_iconify(LPRECT lprect,const RECT & rectParam)
-   {
-
-      rect rectMonitor;
-
-      index iMatchingMonitor = get_best_monitor(rectMonitor,rectParam);
-
-      lprect->left = rectMonitor.left;
-      lprect->top = rectMonitor.top;
-      lprect->right = rectMonitor.left;
-      lprect->bottom = rectMonitor.top;
-
-      return iMatchingMonitor;
-
-   }
-
-
-
-
-
-   bool session::on_create_frame_window()
-   {
-
-      if(m_pcopydesk != NULL)
-         return true;
-
-      alloc(m_pcopydesk);
-
-      if(!m_pcopydesk->initialize())
-         return false;
-
-      return true;
-
-   }
-
-
-
-
-
-
-
-
-
-
-   void session::get_cursor_pos(LPPOINT lppoint)
-   {
-
-
-      if(lppoint != NULL)
-      {
-
-         *lppoint = m_ptCursor;
-
-      }
-
-   }
-
-
-
-
-
-
-   bool session::is_key_pressed(::user::e_key ekey)
-   {
-
-      if(m_pmapKeyPressed == NULL)
-      {
-
-         m_pmapKeyPressed = new ::map < ::user::e_key,::user::e_key,bool,bool >;
-
-      }
-
-      bool bPressed = false;
-      if(ekey == ::user::key_shift)
-      {
-         m_pmapKeyPressed->Lookup(::user::key_shift,bPressed);
-         if(bPressed)
-            goto ret;
-         m_pmapKeyPressed->Lookup(::user::key_lshift,bPressed);
-         if(bPressed)
-            goto ret;
-         m_pmapKeyPressed->Lookup(::user::key_rshift,bPressed);
-         if(bPressed)
-            goto ret;
-      }
-      else if(ekey == ::user::key_control)
-      {
-         m_pmapKeyPressed->Lookup(::user::key_control,bPressed);
-         if(bPressed)
-            goto ret;
-         m_pmapKeyPressed->Lookup(::user::key_lcontrol,bPressed);
-         if(bPressed)
-            goto ret;
-         m_pmapKeyPressed->Lookup(::user::key_rcontrol,bPressed);
-         if(bPressed)
-            goto ret;
-      }
-      else if(ekey == ::user::key_alt)
-      {
-         m_pmapKeyPressed->Lookup(::user::key_alt,bPressed);
-         if(bPressed)
-            goto ret;
-         m_pmapKeyPressed->Lookup(::user::key_lalt,bPressed);
-         if(bPressed)
-            goto ret;
-         m_pmapKeyPressed->Lookup(::user::key_ralt,bPressed);
-         if(bPressed)
-            goto ret;
-      }
-      else
-      {
-
-         m_pmapKeyPressed->Lookup(ekey,bPressed);
-
-      }
-
-   ret:
-
-      return bPressed;
-
-   }
-
-   void session::set_key_pressed(::user::e_key ekey,bool bPressed)
-   {
-
-      if(m_pmapKeyPressed == NULL)
-      {
-
-         m_pmapKeyPressed = new ::map < ::user::e_key,::user::e_key,bool,bool >;
-
-      }
-
-      (*m_pmapKeyPressed)[ekey] = bPressed;
-
-   }
 
    /*::aura::str_context * session::str_context()
    {
@@ -1624,7 +748,7 @@ namespace axis
 
    //}
 
-   
+
    string session::fontopus_get_cred(::aura::application * papp,const string & strRequestUrlParam,const RECT & rect,string & strUsername,string & strPassword,string strToken,string strTitle,bool bInteractive, ::user::interactive * pinteractive)
    {
 
@@ -1649,10 +773,10 @@ namespace axis
          m_pkeyboard = new ::user::keyboard(m_pauraapp);
 
          if(m_pkeyboard == NULL)
-            throw simple_exception(get_app(),"Could not create keyboard");
+            _throw(simple_exception(get_app(),"Could not create keyboard"));
 
          if(!m_pkeyboard->initialize())
-            throw simple_exception(get_app(),"Could not initialize keyboard");
+            _throw(simple_exception(get_app(),"Could not initialize keyboard"));
 
          Application.on_create_keyboard();
 
@@ -1663,169 +787,6 @@ namespace axis
    }
 
 
-   ::user::elemental * session::get_keyboard_focus()
-   {
-
-      if(m_pauraapp == NULL)
-      {
-
-         return NULL;
-
-      }
-
-      if(Application.is_session())
-      {
-
-         sp(::user::elemental) puieFocus;
-
-         try
-         {
-
-            puieFocus = Session.get_focus_ui();
-
-         }
-         catch(...)
-         {
-
-         }
-
-         if(m_pkeyboardfocus != NULL && puieFocus != NULL)
-         {
-
-
-            if((bool)oprop("NativeWindowFocus") && puieFocus != m_pkeyboardfocus)
-            {
-
-               return NULL;
-
-            }
-
-            return m_pkeyboardfocus;
-
-         }
-         else
-         {
-
-            return NULL;
-
-         }
-
-      }
-      else if(Application.is_system())
-      {
-
-         return m_pkeyboardfocus;
-
-      }
-      else if(Application.m_pbasesession != NULL)
-      {
-
-         return Sess(get_app()).get_keyboard_focus();
-
-      }
-      else if(Application.m_pbasesystem != NULL)
-      {
-
-         return Sess(get_app()).get_keyboard_focus();
-
-      }
-      else
-      {
-
-         return NULL;
-
-      }
-
-   }
-
-
-   void session::set_keyboard_focus(::user::elemental * pkeyboardfocus)
-   {
-
-      if(m_pkeyboardfocus != NULL && m_pkeyboardfocus != pkeyboardfocus)
-      {
-
-         ::user::elemental * pkeyboardfocusOld = m_pkeyboardfocus;
-
-
-         try
-         {
-
-            if(pkeyboardfocusOld != NULL)
-            {
-
-               output_debug_string("axis::session::set_keyboard_focus pkeyboardfocusOld->keyboard_focus_OnKillFocus()\n");
-
-               if(!pkeyboardfocusOld->keyboard_focus_OnKillFocus())
-               {
-
-                  return;
-
-               }
-
-            }
-
-         }
-         catch(...)
-         {
-
-         }
-
-      }
-
-      if(pkeyboardfocus != NULL)
-      {
-
-         if(!pkeyboardfocus->keyboard_focus_OnSetFocus())
-         {
-
-            return;
-
-         }
-
-         if(pkeyboardfocus->get_wnd() != NULL)
-         {
-
-            if(!pkeyboardfocus->get_wnd_elemental()->on_keyboard_focus(pkeyboardfocus))
-            {
-
-               return;
-
-            }
-
-         }
-
-      }
-
-      m_pkeyboardfocus = pkeyboardfocus;
-
-      on_finally_focus_set(pkeyboardfocus);
-
-   }
-
-
-   void session::on_finally_focus_set(::user::elemental * pelementalFocus)
-   {
-
-      
-
-   }
-
-   ::user::primitive * session::get_active_ui()
-   {
-
-      return NULL;
-
-   }
-
-
-   ::user::primitive * session::get_focus_ui()
-   {
-
-      return NULL;
-
-   }
-
 
    string session::fontopus_get_user_sessid(const string & str)
    {
@@ -1835,12 +796,13 @@ namespace axis
    }
 
 
-   void session::_001OnDefaultTabPaneDrawTitle(::user::tab_pane & pane, ::user::tab * ptab, ::draw2d::graphics * pgraphics, LPCRECT lpcrect, ::draw2d::brush_sp & brushText)
+   void session::translate_os_key_message(::user::key * pkey)
    {
-      
-      throw interface_only_exception(this);
+
+      Session.keyboard().translate_os_key_message(pkey);
 
    }
+
 
 
 } // namespace axis

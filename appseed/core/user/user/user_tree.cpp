@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include <math.h>
 
 
@@ -263,7 +263,7 @@ namespace user
                data,
                tree_element_text);
             rectUnion.unite(rect, rectUnion);
-            class imaging & imaging = System.visual().imaging();
+            class imaging & imaging = Application.imaging();
             COLORREF crTranslucid = RGB(0, 0, 0);
             imaging.color_blend(
                data.m_pdc,
@@ -298,7 +298,7 @@ namespace user
 
          ::draw2d::brush_sp brushText(allocer());
 
-         COLORREF crText = _001GetColor(color_text, ARGB(255, 0, 0, 0));
+         //COLORREF crText = _001GetColor(color_text, ARGB(255, 0, 0, 0));
 
          if(bSelected) // selected
          {
@@ -729,7 +729,23 @@ namespace user
 
             index iLastChildIndex = iParentIndex + pitem->get_proper_descendant_count();
 
-            index iLastVisibleIndex = (index) (ptOffset.y / _001GetItemHeight() + _001GetVisibleItemCount()) + 1;
+            index iDivision;
+
+            if (_001GetItemHeight() == 0)
+            {
+
+               // height is zero?!?!
+               iDivision = 1;
+
+            }
+            else
+            {
+
+               iDivision = ptOffset.y / _001GetItemHeight();
+
+            }
+
+            index iLastVisibleIndex = (index) (iDivision + _001GetVisibleItemCount()) + 1;
 
 
 
@@ -1125,7 +1141,7 @@ namespace user
       index nOffset;
 
       if (_001GetItemHeight() == 0)
-         return NULL;
+         return 0;
 
       point ptOffset = get_viewport_offset();
 
@@ -1167,7 +1183,7 @@ namespace user
          iItemHeight = MAX(size.cy, iItemHeight);
       }
 
-      convert(m_iItemHeight, iItemHeight * _001GetDouble(::user::double_height_rate));
+      m_iItemHeight = (int32_t) (iItemHeight * _001GetDouble(::user::double_height_rate));
 
       on_ui_event(event_calc_item_height, object_tree, this);
 

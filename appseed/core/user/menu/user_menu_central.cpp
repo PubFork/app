@@ -18,12 +18,12 @@ BaseMenuCentral::BaseMenuCentral(::aura::application * papp) :
 #ifdef WINDOWSEX
    if(!MenuV033GetImageList()->create(16, 16, ILC_COLOR24 | ILC_MASK, 0, 10))
    {
-      throw simple_exception(papp, "resource exception BaseMenuCentral constructor");
+      _throw(simple_exception(papp, "resource exception BaseMenuCentral constructor"));
    }
 #else
    if(!MenuV033GetImageList()->create(16, 16, 0, 0, 10))
    {
-      throw simple_exception(papp, "resource exception BaseMenuCentral constructor");
+      _throw(simple_exception(papp, "resource exception BaseMenuCentral constructor"));
    }
 #endif
 
@@ -56,7 +56,7 @@ BaseMenuCentral * BaseMenuCentral::GetMenuCentral(::aura::application * papp)
    ::draw2d::graphics_sp spgraphics(allocer());
    spgraphics->CreateCompatibleDC(NULL);
 
-   System.visual().imaging().CreateHueImageList(
+   Application.imaging().CreateHueImageList(
       &spgraphics,
       MenuV033GetImageListHueLight(),
       MenuV033GetImageList(),
@@ -100,7 +100,7 @@ bool BaseMenuCentral::MenuV033AddImageMap(sp(::xml::node) lpnode)
    ::draw2d::graphics_sp spgraphics(allocer());
    spgraphics->CreateCompatibleDC(NULL);
 
-   class imaging & imaging = System.visual().imaging();
+   class imaging & imaging = Application.imaging();
 
    imaging.CreateHueImageList(
       spgraphics,
@@ -239,7 +239,7 @@ bool BaseMenuCentralContainer::initialize_central_container(::aura::application 
 {
    m_pmenucentral = new BaseMenuCentral(papp);
    if(!m_pmenucentral)
-      throw memory_exception(papp);
+      _throw(memory_exception(papp));
    return true;
 }
 

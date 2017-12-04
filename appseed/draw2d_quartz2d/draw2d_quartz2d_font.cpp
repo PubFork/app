@@ -53,18 +53,21 @@ namespace draw2d_quartz2d
    }
    
    
+#ifdef DEBUG
+
    void font::dump(dump_context & dumpcontext) const
    {
       
       ::draw2d::font::dump(dumpcontext);
       
    }
-   
+
+#endif
    
    void * font::get_os_data() const
    {
       
-      throw interface_only_exception(get_app());
+      _throw(interface_only_exception(get_app()));
       
       return NULL;
       

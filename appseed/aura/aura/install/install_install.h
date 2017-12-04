@@ -1,12 +1,10 @@
 #pragma once
 
 
-#if defined(INSTALL_SUBSYSTEM)
-
-
 namespace install
 {
 
+   class install_net;
 
    class CLASS_DECL_AURA install :
       virtual public ::aura::department
@@ -22,8 +20,8 @@ namespace install
 
       class trace                         m_trace;
 
-      ::sockets::socket_handler *         m_psockethandler;
-      spa(::sockets::http_session)        m_httpsessionptra;
+
+      ::install::install_net *            m_pinstallnet;
 
 
       install(::aura::application * papp);
@@ -72,11 +70,5 @@ namespace install
 
 
 } // namespace spa
-
-
-#endif
-
-
-
 
 

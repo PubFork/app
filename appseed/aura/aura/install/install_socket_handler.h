@@ -1,7 +1,8 @@
 #pragma once
 
 
-#ifdef INSTALL_SUBSYSTEM
+#include "aura/net/netserver/netserver_socket_handler.h"
+
 
 namespace install
 {
@@ -12,7 +13,7 @@ namespace install
    {
    public:
 
-      
+
       socket_handler(::aura::application * papp);
 
 
@@ -23,4 +24,4 @@ namespace install
 
 
 
-#endif
+

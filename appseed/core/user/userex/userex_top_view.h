@@ -18,14 +18,12 @@ namespace userex
       top_view(::aura::application * papp);
       virtual ~top_view();
 
+      virtual void assert_valid() const override;
+      virtual void dump(dump_context & dumpcontext) const override;
 
-      virtual void assert_valid() const;
+      void on_create_views() override;
 
-      virtual void dump(dump_context & dumpcontext) const;
-
-      void on_create_views();
-
-      virtual void on_update(::user::impact * pSender, LPARAM lHint, object* pHint);
+      virtual void on_update(::user::impact * pSender, LPARAM lHint, object* pHint) override;
 
       virtual bool is_this_visible() override;
 

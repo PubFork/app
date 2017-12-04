@@ -28,7 +28,7 @@ namespace console
    }
 
 
-   #ifdef DEBUG
+
    void prompt_frame::assert_valid() const
    {
 	   simple_frame_window::assert_valid();
@@ -39,8 +39,6 @@ namespace console
 	   simple_frame_window::dump(dumpcontext);
    }
 
-
-   #endif //DEBUG
 
 
    void prompt_frame::_001OnTimer(::timer * ptimer)
@@ -73,7 +71,7 @@ namespace console
 //
 //#else
 //
-//         throw todo(get_app());
+//         _throw(todo(get_app()));
 //
 //#endif
 //
@@ -218,17 +216,16 @@ namespace console
       IGUI_MSG_LINK(WM_APP + 2000  , pinterface, this, &prompt_frame::_001OnApp2000);
    }
 
+
    void prompt_frame::_001OnCreate(::message::message * pobj)
    {
-
-      SCAST_PTR(::message::create, pcreate, pobj);
 
       pobj->previous();
 
       if(pobj->m_bRet)
          return;
 
-      if(!data_get(".local://DockPosition", (int32_t &) m_eposition))
+      if(!data_get("&data_source=local&DockPosition", (int32_t &) m_eposition))
       {
 
          m_eposition = position_left;

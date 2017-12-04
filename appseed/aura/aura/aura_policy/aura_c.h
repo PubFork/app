@@ -47,11 +47,13 @@ CLASS_DECL_AURA int throw_assert_exception(const char * lpszFileName,int iLineNu
 /* We use the name _ASSUME to avoid name clashes */
 #define _ASSUME(cond)       do { bool _gen__condVal=!!(cond); ASSERT(_gen__condVal); __analysis_assume(_gen__condVal); } while(0)
 //#define ASSERT_VALID(pOb)  DEBUG_ONLY((::assert_valid_object(pOb, THIS_FILE, __LINE__)))
-#define ASSERT_VALID(pOb)  ::assert_valid_object(pOb, __FILE__, __LINE__)
+#define ASSERT_VALID(pOb)  ::__assert_valid_object(pOb, __FILE__, __LINE__)
 #else
 #define ASSERT(f)
 #define _ASSUME(cond)
-#if defined(ANDROID) || defined(APPLEOS)
+#if defined(ANDROID)
+#define ASSERT_VALID(cond)
+#elif defined(APPLEOS)
 #define ASSERT_VALID(cond)
 #else
 #define ASSERT_VALID(cond) __noop;
@@ -134,9 +136,10 @@ inline int type_is_null(const T * p)
 #include "aura/aura/os/macos/macos.h"
 #elif defined(LINUX)
 #include "aura/aura/os/linux/linux.h"
+#include "aura/aura/os/linux/linux_c.h"
 #elif defined(METROWIN)
 #include "aura/aura/os/metrowin/metrowin.h"
-#elif defined(WINDOWS)
+#elif defined(WINDOWSEX)
 #include "aura/aura/os/windows/windows.h"
 #elif defined(SOLARIS)
 #include "aura/aura/os/solaris/solaris.h"
@@ -221,7 +224,7 @@ END_EXTERN_C
 #include "aura/primitive/api/api.h"
 
 
-#include "aura/charguess/charguess_c.h"
+//#include "aura/charguess/charguess_c.h"
 
 #include "multimedia/multimedia_c.h"
 

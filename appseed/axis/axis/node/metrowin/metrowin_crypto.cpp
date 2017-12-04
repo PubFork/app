@@ -292,7 +292,7 @@ namespace metrowin
 //         mutex * pmutex = NULL;
 //         if(!::metrowin::g_pmapMutex->Lookup(n,pmutex))
 //         {
-//            ::metrowin::g_pmapMutex->operator [](n) = new mutex(get_thread_app());
+//            ::metrowin::g_pmapMutex->operator [](n) = new mutex(get_app());
 //            if(!::metrowin::g_pmapMutex->Lookup(n,pmutex))
 //            {
 //               return;

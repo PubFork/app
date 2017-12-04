@@ -1,11 +1,12 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include <stdio.h>
 #ifdef WINDOWS
 #include <Shlobj.h>
 #endif
 
 
-#if defined(INSTALL_SUBSYSTEM)
+#include "install_net.h"
+#include "aura/net/sockets/http/sockets_http_session.h"
 
 
 namespace install
@@ -17,7 +18,9 @@ namespace install
       m_xmldocStringTable(papp)
    {
 
-      m_psockethandler = new ::sockets::socket_handler(papp);
+      m_pnet = new net();
+
+      m_pnet->m_psockethandler = new ::sockets::socket_handler(papp);
 
       m_daProgress.add(0.0);
       m_iaProgress.add(0);
@@ -37,7 +40,7 @@ namespace install
 
       m_pathBaseUrl = "http://server.ca2.cc/ccvotagus/" + System.get_system_configuration() + "/";
 
-      m_phttpsession = NULL;
+      //m_m_phttpsession = NULL;
 
    }
 
@@ -45,7 +48,7 @@ namespace install
    installer::~installer()
    {
 
-      ::aura::del(m_psockethandler);
+      ::aura::del(m_pnet);
 
    }
 
@@ -805,7 +808,7 @@ retry_host:
       {
 
          stringa.filter_out(
-            [&](const string & strCurrent)
+         [&](const string & strCurrent)
          {
 
             if (::str::ends_ci(strCurrent, ".expand_fileset"))
@@ -1180,11 +1183,11 @@ retry_host:
 
       set["raw_http"] = true;
 
-      sp(::sockets::http_session) & psession = m_httpsessionptra.element_at_grow(0);
+      sp(::sockets::http_session) & psession = m_pnet->m_httpsessionptra.element_at_grow(0);
 
       System.install().trace().trace_add("\ndownloading " + strUrl + "\n");
 
-      return Application.http().download(*m_psockethandler, psession, strUrl, (dir + file), set);
+      return Application.http().download(*m_pnet->m_psockethandler, psession, strUrl, (dir + file), set);
 
    }
 
@@ -1332,7 +1335,7 @@ retry_host:
 
       // then finally try to download the entire file
 
-      sp(::sockets::http_session) & psession = m_httpsessionptra.element_at_grow(0);
+      sp(::sockets::http_session) & psession = m_pnet->m_httpsessionptra.element_at_grow(0);
 
       if (!bOk)
       {
@@ -1360,7 +1363,7 @@ retry_host:
 
             System.install().trace().trace_add("\ndownloading " + (::file::path(url_in + "." + pszMd5)) + "\n");
 
-            bOk = Application.http().download(*m_psockethandler, psession, ::file::path(url_in + "." + pszMd5), ::file::path(dir + file + "." + pszMd5), set);
+            bOk = Application.http().download(*m_pnet->m_psockethandler, psession, ::file::path(url_in + "." + pszMd5), ::file::path(dir + file + "." + pszMd5), set);
 
             if (!bOk)
             {
@@ -2141,7 +2144,7 @@ retry_host:
 
 #ifdef METROWIN
 
-         throw "todo";
+         _throw(simple_exception(get_app(), "todo"));
 
 #else
 
@@ -2166,7 +2169,7 @@ retry_host:
 
 #ifdef METROWIN
 
-         throw "todo";
+         _throw(simple_exception(get_app(), "todo"));
 
 #else
          ::aura::shell_launcher launcher(m_pwindow == NULL ? NULL : m_pwindow->get_safe_handle(), "open", strStage, (" : " + str2.substr(0, iPos) + " usehostlogin"), dir::name(strStage), SW_SHOWNORMAL);
@@ -2185,11 +2188,11 @@ retry_host:
 
 #ifdef METROWIN
 
-      throw "todo";
+      _throw(simple_exception(get_app(), "todo"));
 
 #elif defined(WINDOWS)
 
-      ::aura::ipc::tx txchannel(get_thread_app());
+      ::aura::ipc::tx txchannel(get_app());
 
       if (!txchannel.open("core/spaboot_install_callback"))
          return;
@@ -2511,11 +2514,11 @@ RetryBuildNumber:
 
       file.seek_to_begin();
 
-      sp(::sockets::http_session) & psession = m_httpsessionptra.element_at_grow(0);
+      sp(::sockets::http_session) & psession = m_pnet->m_httpsessionptra.element_at_grow(0);
 
       System.install().trace().trace_add("\ndownloading " + strUrl + "\n");
 
-      if (!Application.http().download(*m_psockethandler, psession, strUrl, &file, set))
+      if (!Application.http().download(*m_pnet->m_psockethandler, psession, strUrl, &file, set))
       {
          Sleep(200);
          goto RetryBuildNumber;
@@ -2768,7 +2771,7 @@ retry_host:
       strMutex = "Global\\ca2_application_global_mutex:";
       strMutex += psz;
 
-      ::mutex mutex(get_thread_app(), false, strMutex);
+      ::mutex mutex(get_app(), false, strMutex);
       bool bOpened = ::GetLastError() == ERROR_ALREADY_EXISTS;
       if (bOpened)
       {
@@ -2797,13 +2800,13 @@ retry_host:
    {
 
       return
-         is_application_opened("winactionarea")
-         || is_application_opened("winservice_1")
-         || is_application_opened("winutil")
-         || is_application_opened("winshelllink")
-         || is_application_opened("command")
-         || is_application_opened("winservice_filesystemsize")
-         || is_application_opened("filemanager");
+      is_application_opened("winactionarea")
+      || is_application_opened("winservice_1")
+      || is_application_opened("winutil")
+      || is_application_opened("winshelllink")
+      || is_application_opened("command")
+      || is_application_opened("winservice_filesystemsize")
+      || is_application_opened("filemanager");
 
    }
 
@@ -2947,7 +2950,7 @@ retry_host:
 
 #else
 
-      throw todo(get_app());
+      _throw(todo(get_app()));
 
 #endif
 
@@ -3004,7 +3007,7 @@ retry_host:
 
 #else
 
-      throw todo(get_app());
+      _throw(todo(get_app()));
 
 #endif
 
@@ -3147,7 +3150,7 @@ retry_host:
 
       set["raw_http"] = true;
 
-      if (!System.http().request(*m_psockethandler, m_phttpsession, strUrl, set))
+      if (!System.http().request(*m_pnet->m_psockethandler, m_pnet->m_phttpsession, strUrl, set))
       {
 
          return "";
@@ -3160,15 +3163,6 @@ retry_host:
 
 
 } // namespace app_app_admin
-
-
-
-
-#endif
-
-
-
-
 
 
 

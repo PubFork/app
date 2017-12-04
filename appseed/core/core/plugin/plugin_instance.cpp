@@ -1,9 +1,6 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "core/user/user/user.h"
 //#include "plugin_instance.h"
-
-
-#ifdef HOTPLUGIN_SUBSYSTEM
 
 
 ::hotplugin::plugin * new_hotplugin(::aura::application * papp);
@@ -31,7 +28,7 @@ namespace plugin
 
 //      m_lpbMemory       = NULL;
 
-  //    m_iMemory         = -1;
+      //    m_iMemory         = -1;
 
       m_puiHost         = NULL;
 
@@ -115,9 +112,5 @@ namespace plugin
    return new ::plugin::instance(papp);
 
 }
-
-
-#endif
-
 
 

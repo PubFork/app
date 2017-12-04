@@ -608,9 +608,12 @@ namespace user
    void combo_box::_001OnKeyUp(::message::message * pobj)
    {
 
-      SCAST_PTR(::message::key,pkey,pobj);
+      //SCAST_PTR(::message::key,pkey,pobj);
+      
+      UNREFERENCED_PARAMETER(pobj);
 
    }
+   
 
    void combo_box::_001OnLButtonDown(::message::message * pobj)
    {
@@ -768,7 +771,7 @@ namespace user
          if(m_plist == NULL)
          {
             pca.release();
-            throw resource_exception(get_app());
+            _throw(resource_exception(get_app()));
          }
 
          m_plist->m_pcombo = this;
@@ -783,7 +786,7 @@ namespace user
             
             m_plist.release();
             
-            throw resource_exception(get_app());
+            _throw(resource_exception(get_app()));
 
          }
          sp(::user::interaction_impl) pimpl = m_plist->m_pimpl;
@@ -959,28 +962,28 @@ namespace user
 #ifdef WINODWSEX
          DrawItem((LPDRAWITEMSTRUCT)pbase->m_lparam);
 #else
-         throw todo(get_app());
+         _throw(todo(get_app()));
 #endif
          break;
       case WM_MEASUREITEM:
 #ifdef WINODWSEX
          MeasureItem((LPMEASUREITEMSTRUCT)pbase->m_lparam);
 #else
-         throw todo(get_app());
+         _throw(todo(get_app()));
 #endif
          break;
       case WM_COMPAREITEM:
 #ifdef WINODWSEX
          *pResult = CompareItem((LPCOMPAREITEMSTRUCT)pbase->m_lparam);
 #else
-         throw todo(get_app());
+         _throw(todo(get_app()));
 #endif
          break;
       case WM_DELETEITEM:
 #ifdef WINODWSEX
          DeleteItem((LPDELETEITEMSTRUCT)pbase->m_lparam);
 #else
-         throw todo(get_app());
+         _throw(todo(get_app()));
 #endif
          break;
       default:

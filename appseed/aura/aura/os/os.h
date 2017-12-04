@@ -1,6 +1,14 @@
 #pragma once
 
 
+#ifdef __cplusplus
+
+CLASS_DECL_AURA void defer_dock_application(bool bDock);
+
+#endif
+
+
+
 #include "os_threading.h"
 
 #include "cross.h"

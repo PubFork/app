@@ -1,17 +1,23 @@
 #pragma once
 
-//#ifdef BSD_STYLE_SOCKETS
-//#include <openssl/ssl.h>
-//#endif
+
+
+#ifdef BSD_STYLE_SOCKETS
+#include <openssl/ssl.h>
+#endif
+
+#include "aura/net/sockets/bsd/basic/sockets_ssl_client_context.h"
+
 
 #if defined(LINUX)
 //struct ucred {
-  //  pid_t pid;    /* process ID of the sending process */
-    //uid_t uid;    /* user ID of the sending process */
-    //gid_t gid;    /* group ID of the sending process */
+//  pid_t pid;    /* process ID of the sending process */
+//uid_t uid;    /* user ID of the sending process */
+//gid_t gid;    /* group ID of the sending process */
 //};
 #endif // defined
 
+//#include "aura/net/sockets/bsd/basic/sockets_socket_handler.h"
 
 namespace sockets
 {
@@ -65,11 +71,11 @@ namespace sockets
 
          virtual ~socket_thread();
 
-         virtual bool initialize_thread() override;
+         virtual bool init_thread() override;
 
          sp(base_socket) get_socket() const { return m_spsocket; }
 
-         virtual int run();
+         virtual void run() override;
 
       };
 
@@ -145,13 +151,11 @@ namespace sockets
 
       bool                    m_bIpv6; ///< This is an ipv6 base_socket if this one is true
 
-#ifdef ENABLE_POOL
       int                     m_iSocketType; ///< Type of base_socket, from base_socket() call
       string                  m_strSocketProtocol; ///< Protocol, from base_socket() call
       bool                    m_bClient; ///< only client connections are pooled
       bool                    m_bRetain; ///< keep connection on close
       bool                    m_bEnablePool; ///< true if this socket may enter in a pool
-#endif
 
       bool                    m_bSocks4; ///< socks4 negotiation mode (tcp_socket)
       in_addr                 m_socks4_host; ///< socks4 server ::net::address
@@ -197,14 +201,12 @@ namespace sockets
 
       // ENABLE_IPV6
       SOCK_IPV6 =          0x0100, ///< This is an ipv6 base_socket if this one is true
-      // ENABLE_POOL
       SOCK_CLIENT =          0x0200, ///< only client connections are pooled
       SOCK_RETAIN =          0x0400, ///< keep connection on close
       SOCK_LOST =          0x0800, ///< connection lost
 
       // ENABLE_SOCKS4
       SOCK_SOCKS4 =          0x1000, ///< socks4 negotiation mode (tcp_socket)
-      // ENABLE_DETACH
       SOCK_DETACH =          0x2000, ///< base_socket ordered to detach flag
       SOCK_DETACHED =       0x4000, ///< base_socket has been detached
       // stream_socket
@@ -759,8 +761,11 @@ namespace sockets
       virtual void run();
       virtual void step();
 
+#ifdef DEBUG
 
       virtual void log(const string & strUser, int32_t err, const string & strSystem, ::aura::log::e_level elevel = ::aura::log::level_warning);
+
+#endif
 
 
       virtual string get_short_description();
@@ -774,7 +779,5 @@ namespace sockets
 
 
 } // namespace sockets
-
-
 
 

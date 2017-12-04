@@ -1,8 +1,6 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 #include <stdio.h>
-
-
 
 
 namespace exception
@@ -24,18 +22,22 @@ namespace exception
 
       m_pszException = NULL;
 
+      m_pszFile = NULL;
+
+      m_iLine = -1;
+
    }
 
    exception::exception(e_context_switcher_failed efail)
    {
       //debug_print("log:exception");
       //::MessageBox(NULL,"abc123","abc123",MB_OK);
-      m_bLog = efail != failure_no_log;
+      //m_bLog = efail != failure_no_log;
 
-      if(m_bLog)
-      {
-         debug_print("log:exception");
-      }
+      //if(m_bLog)
+      //{
+      //   debug_print("log:exception");
+      //}
 
       m_bHandled = false;
 
@@ -51,32 +53,32 @@ namespace exception
 
    exception::~exception()
    {
-      if(m_bLog)
-      {
+      //if(m_bLog)
+      //{
 
-         if(m_bContinue)
-         {
-            cat_exception("-continue");
-         }
-         else
-         {
-            cat_exception("-should_not_continue(fatal_exception_instance_candidate)");
-         }
+      //if(m_bContinue)
+      //{
+      //   cat_exception("-continue");
+      //}
+      //else
+      //{
+      //   cat_exception("-should_not_continue(fatal_exception_instance_candidate)");
+      //}
 
-         if(m_bHandled)
-         {
-            cat_exception("-explicitly_handled");
-         }
-         else
-         {
-            cat_exception("-not_handled_explicitly");
-         }
+      //if(m_bHandled)
+      //{
+      //   cat_exception("-explicitly_handled");
+      //}
+      //else
+      //{
+      //   cat_exception("-not_handled_explicitly");
+      //}
 
-         debug_print(m_pszException);
+      //debug_print(m_pszException);
 
-         debug_print("\n");
+      //debug_print("\n");
 
-      }
+      ///}
 
 
       if (m_pszException != NULL)
@@ -93,6 +95,13 @@ namespace exception
 
       }
 
+      if (m_pszFile != NULL)
+      {
+
+         free((void *)m_pszFile);
+
+      }
+
    }
 
 
@@ -105,6 +114,21 @@ namespace exception
 
    }
 
+   const char * exception::set_file(const char * pszFile)
+   {
+
+      if (m_pszFile != NULL)
+      {
+
+         free((void *) m_pszFile);
+
+      }
+
+      m_pszFile = strdup(pszFile);
+
+      return m_pszFile;
+
+   }
 
    const char * exception::cat_exception(const char * pszException)
    {
@@ -123,14 +147,8 @@ namespace exception
 
    }
 
-   void rethrow(exception * pe)
-   {
 
-      throw pe;
-
-   }
-
-   const char * exception::what() const throw()
+   const char * exception::what() const NOTHROW
    {
 
       return m_pszMessage;
@@ -182,21 +200,21 @@ errno_t c_runtime_error_check(errno_t error)
 {
    switch(error)
    {
-      case ENOMEM:
-         throw memory_exception(get_thread_app());
-         break;
-      case EINVAL:
-      case ERANGE:
-         throw invalid_argument_exception(get_thread_app());
-         break;
+   case ENOMEM:
+      _throw(memory_exception(get_app()));
+      break;
+   case EINVAL:
+   case ERANGE:
+      _throw(invalid_argument_exception(get_app()));
+      break;
 #if defined(WINDOWS)
-      case STRUNCATE:
+   case STRUNCATE:
 #endif
-      case 0:
-         break;
-      default:
-         throw invalid_argument_exception(get_thread_app());
-         break;
+   case 0:
+      break;
+   default:
+      _throw(invalid_argument_exception(get_app()));
+      break;
    }
    return error;
 }
@@ -218,12 +236,12 @@ namespace exception
 
    CLASS_DECL_AURA void throw_interface_only(::aura::application * papp)
    {
-      throw interface_only_exception(papp);
+      _throw(interface_only_exception(papp));
    }
 
    CLASS_DECL_AURA void throw_not_implemented(::aura::application * papp)
    {
-      throw not_implemented(papp);
+      _throw(not_implemented(papp));
    }
 
 
@@ -253,48 +271,56 @@ namespace exception
 
          this->pred_each(
 
-            [&](auto & pe)
+         [&](auto & pe)
+         {
+
+            str += ::str::from(++i);
+
+            str += ". ";
+
+            str += pe->m_pszMessage;
+
+            str += ";";
+
+            if (i < c)
             {
 
-               str += ::str::from(++i);
-
-               str += ". ";
-
-               str += pe->m_pszMessage;
-
-               str += ";";
-
-               if (i < c)
-               {
-
-                  str += " ";
-
-               }
+               str += " ";
 
             }
+
+         }
 
          );
 
          return str;
 
       }
-   
+
+   }
+
+
+   void exception_sp::rethrow_exit()
+   {
+
+      if (is_exit())
+      {
+
+         throw *this;
+
+      }
+
    }
 
 
 } // namespace exception
 
 
+void _rethrow(::exception::exception * pexception)
+{
 
+   throw ::esp(pexception);
 
-
-
-
-
-
-
-
-
-
+}
 
 

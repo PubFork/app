@@ -142,6 +142,13 @@ void * system_heap_realloc_normal(void * p, size_t size)
 
 }
 
+size_t system_heap_alloc_size(void * p)
+{
+
+   return ::os_size(p);
+
+}
+
 #ifdef MEMDLEAK
 
 void * system_heap_realloc_dbg(void * p,  size_t size, int32_t nBlockUse, const char * pszFileName, int32_t iLine)
@@ -315,7 +322,7 @@ void system_heap_free(void * p)
 
 #if MEMDLEAK
 
-   throw simple_exception(get_thread_app(), "plex_heap_alloc_array::get_mem_info member function is available only with \"memdleak\" builds - MEMDLEAK defined");
+   _throw(simple_exception(get_app(), "plex_heap_alloc_array::get_mem_info member function is available only with \"memdleak\" builds - MEMDLEAK defined"));
 
 
    synch_lock lock(g_pmutgen);
@@ -380,7 +387,7 @@ void system_heap_free(void * p)
 //
 //#ifndef MEMDLEAK
 //
-//   throw simple_exception(get_thread_app(), "plex_heap_alloc_array::get_mem_info member function is available only with \"memdleak\" builds - MEMDLEAK defined");
+//   _throw(simple_exception(get_app(), "plex_heap_alloc_array::get_mem_info member function is available only with \"memdleak\" builds - MEMDLEAK defined"));
 //
 //#endif
 //

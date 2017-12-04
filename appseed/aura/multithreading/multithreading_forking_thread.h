@@ -40,12 +40,10 @@ class forking_thread:
 
       }
 
-      int32_t run()
+      void run()
       {
 
          m_pred();
-
-         return 0;
 
       }
 
@@ -226,7 +224,7 @@ class forking_count_thread :
       void construct()
       {
 
-         m_dwThreadAffinityMask = translate_processor_affinity(convert < int > (m_iOrder));
+         m_dwThreadAffinityMask = translate_processor_affinity(int (m_iOrder));
 
       }
 
@@ -235,12 +233,10 @@ class forking_count_thread :
 
       }
 
-      int32_t run()
+      void run()
       {
 
          m_pred(m_iOrder, m_iIndex, m_iCount, m_iScan);
-
-         return 0;
 
       }
 

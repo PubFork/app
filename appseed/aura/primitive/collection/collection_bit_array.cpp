@@ -166,7 +166,7 @@ void bit_array::clear_bit_array(bit_array & ba)
 {
   if(m_pdata == NULL)
      return;
-  if(&ba == NULL || ba.m_pdata == NULL)
+  if(is_null(ba) || ba.m_pdata == NULL)
      return;
   if(int_ptr(ba.m_pdata) == 1)
   {

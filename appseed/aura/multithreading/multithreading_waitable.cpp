@@ -126,7 +126,7 @@
 //
 //   if(!lock(duration::infinite()))
 //      if(!lock(duration::infinite()))
-//         throw "failure to lock object";
+//         _throw(simple_exception(get_app(), "failure to lock object"));
 //
 //}
 //

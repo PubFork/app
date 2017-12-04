@@ -1,9 +1,6 @@
 #pragma once
 
 
-#if !defined(METROWIN)
-
-
 namespace aura
 {
 
@@ -33,12 +30,6 @@ namespace aura
 
 
 } // namespace aura
-
-
-
-#endif
-
-
 
 
 

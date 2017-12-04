@@ -583,13 +583,7 @@
     <ClCompile Include="axis\node\windows\windows_factory_exchange.cpp">
       <Filter>Source Files\axis\node\windows</Filter>
     </ClCompile>
-    <ClCompile Include="axis\node\windows\windows_ip_enum.cpp">
-      <Filter>Source Files\axis\node\windows</Filter>
-    </ClCompile>
     <ClCompile Include="axis\node\windows\windows_port_forward.cpp">
-      <Filter>Source Files\axis\node\windows</Filter>
-    </ClCompile>
-    <ClCompile Include="axis\node\windows\windows_crypto.cpp">
       <Filter>Source Files\axis\node\windows</Filter>
     </ClCompile>
     <ClCompile Include="axis\axis\axis_application.cpp">
@@ -724,9 +718,6 @@
     <ClCompile Include="database\sqlitedb\sqlitedb_set.cpp">
       <Filter>Source Files\database\sqlitedb</Filter>
     </ClCompile>
-    <ClCompile Include="database\database\_database.cpp">
-      <Filter>Source Files\database\database</Filter>
-    </ClCompile>
     <ClCompile Include="database\simpledb\_simpledb.cpp">
       <Filter>Source Files\database\simpledb</Filter>
     </ClCompile>
@@ -756,9 +747,6 @@
     </ClCompile>
     <ClCompile Include="axis\axis\_axis_axis_axis.cpp">
       <Filter>Source Files\axis\axis</Filter>
-    </ClCompile>
-    <ClCompile Include="axis\_axis_axis.cpp">
-      <Filter>Source Files\axis</Filter>
     </ClCompile>
     <ClCompile Include="axis\os\_os.cpp">
       <Filter>Source Files\axis\os</Filter>
@@ -804,9 +792,6 @@
     </ClCompile>
     <ClCompile Include="filesystem\filesystem\_filesystem.cpp">
       <Filter>Source Files\filesystem\filesystem</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\_filesystem.cpp">
-      <Filter>Source Files\filesystem</Filter>
     </ClCompile>
     <ClCompile Include="app_install_launcher.cpp">
       <Filter>Source Files</Filter>
@@ -889,8 +874,26 @@
     <ClCompile Include="axis\os\windows\windows_window_gdi.cpp">
       <Filter>Source Files\axis\os\windows</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\visual\_visual.cpp">
-      <Filter>Source Files\graphics</Filter>
+    <ClCompile Include="filesystem\_file.cpp">
+      <Filter>Source Files\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="axis\_axis.cpp">
+      <Filter>Source Files\axis</Filter>
+    </ClCompile>
+    <ClCompile Include="database\_database.cpp">
+      <Filter>Source Files\database</Filter>
+    </ClCompile>
+    <ClCompile Include="database\database\_database_database.cpp">
+      <Filter>Source Files\database\database</Filter>
+    </ClCompile>
+    <ClCompile Include="database\sqlitedb\_sqlitedb.cpp">
+      <Filter>Source Files\database\sqlitedb</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\visual\visual_windows_image.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\_user.cpp">
+      <Filter>Source Files\user\user</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

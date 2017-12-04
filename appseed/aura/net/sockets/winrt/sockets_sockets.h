@@ -10,7 +10,7 @@ namespace sockets
    {
    public:
 
-      int32_t                                      m_iReturnCode;
+      int32_t                                      m_iErrorCode;
 #ifdef HAVE_OPENSSL
       ssl_client_context_map                       m_clientcontextmap;
 #endif
@@ -30,7 +30,7 @@ namespace sockets
       sockets(::aura::application * papp);
 
 
-      bool initialize1();
+      bool init1();
       bool finalize();
 
 

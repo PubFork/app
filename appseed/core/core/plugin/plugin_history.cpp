@@ -1,8 +1,5 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "core/user/user/user.h"
-
-
-#ifdef HOTPLUGIN_SUBSYSTEM
 
 
 namespace plugin
@@ -14,8 +11,8 @@ namespace plugin
       m_pplugin(pplugin)
    {
    }
-         
-   
+
+
    bool history::hist(const char * pszUrl)
    {
       if(m_pplugin != NULL)
@@ -29,8 +26,5 @@ namespace plugin
 
 } // namespace plugin
 
-
-
-#endif
 
 

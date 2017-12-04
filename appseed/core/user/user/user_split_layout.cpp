@@ -630,7 +630,7 @@ namespace user
       for (index i = 0; i < get_pane_count(); i++)
       {
 
-         if (is_pane_visible(convert < int > (i)))
+         if (is_pane_visible((int) (i)))
          {
 
             c++;
@@ -794,7 +794,7 @@ namespace user
       while (i <= iIndex)
       {
 
-         if (is_pane_visible(convert < int > (i)))
+         if (is_pane_visible((int)(i)))
          {
 
             nPos = m_splitbara[iIndex]->m_dwPosition;
@@ -1178,7 +1178,7 @@ namespace user
       if (iPane < 0 || iPane >= get_pane_count())
       {
 
-         return *((rect*)NULL);
+         _throw(invalid_argument_exception(get_app()));
 
       }
 

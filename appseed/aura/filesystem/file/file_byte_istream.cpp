@@ -77,7 +77,7 @@ namespace file
    {
 
       if(m_spfile->read(&ch, sizeof(ch)) != sizeof(ch))
-         throw io_exception(get_app(), "byte_istream::read");
+         _throw(io_exception(get_app(), "byte_istream::read"));
 
 
 

@@ -53,57 +53,25 @@ void simple_list_header_control::install_message_routing(::message::sender * pin
 
 void simple_list_header_control::_001OnEndTrack(::message::message * pobj)
 {
-#ifdef WINDOWSEX
+
    SCAST_PTR(::message::notify, pnotify, pobj);
-#else
-   throw todo(get_app());
-#endif
-   /*CTransparentWndInterface * ptwi = NULL;
-   GetParent()->SendMessage(
-      WM_APP_GET_TRANSPARENT_INTERFACE, (WPARAM) &ptwi, 0);
-   if(ptwi != NULL)
-   {
-      sp(::user::interaction) plist = dynamic_cast<sp(::user::interaction)>(ptwi);
-      if(plist != NULL)
-      {
-         plist->PostMessage(::user::list::MESSAGE_ENDCOLUMNHEADERTRACK);
-      }
-   }*/
 
    GetParent()->send_message(::user::list::MESSAGE_ENDCOLUMNHEADERTRACK);
-#ifdef WINDOWSEX
+
    pnotify->m_bRet = false;
-#else
-   throw todo(get_app());
-#endif
+
 }
+
 
 void simple_list_header_control::_001OnTrack(::message::message * pobj)
 {
-#ifdef WINDOWSEX
-   SCAST_PTR(::message::notify, pnotify, pobj);
-#else
-   throw todo(get_app());
-#endif
 
-/*   CTransparentWndInterface * ptwi = NULL;
-   GetParent()->SendMessage(
-      WM_APP_GET_TRANSPARENT_INTERFACE, (WPARAM) &ptwi, 0);
-   if(ptwi != NULL)
-   {
-      sp(::user::interaction) plist = dynamic_cast<sp(::user::interaction)>(ptwi);
-      if(plist != NULL)
-      {
-         plist->PostMessage(::user::list::MESSAGE_COLUMNHEADERTRACK);
-      }
-   }*/
+   SCAST_PTR(::message::notify, pnotify, pobj);
 
    GetParent()->send_message(::user::list::MESSAGE_COLUMNHEADERTRACK);
-#ifdef WINDOWSEX
+
    pnotify->m_bRet = false;
-#else
-   throw todo(get_app());
-#endif
+
 }
 
 
@@ -112,8 +80,6 @@ void simple_list_header_control::_001OnCreate(::message::message * pobj)
 
    SCAST_PTR(::message::create, pcreate, pobj);
 
-//   ::user::list_header::m_font->operator = (*System.visual().fonts().GetListCtrlFont());
-   
    pcreate->m_bRet = false;
 
 }
@@ -121,47 +87,15 @@ void simple_list_header_control::_001OnCreate(::message::message * pobj)
 
 void simple_list_header_control::_001OnEndDrag(::message::message * pobj)
 {
-#ifdef WINDOWSEX
+
    SCAST_PTR(::message::notify, pnotify, pobj);
-#else
-   throw todo(get_app());
-#endif
-//   LPNMHEADER lpnmhd = (LPNMHEADER) pnotify->get_lpnmhdr();
+
    GetParent()->send_message(::user::list::MESSAGE_ENDCOLUMNHEADERDRAG);
-/*   CTransparentWndInterface * ptwi = NULL;
-   GetParent()->SendMessage(
-      WM_APP_GET_TRANSPARENT_INTERFACE, (WPARAM) &ptwi, 0);
-   if(ptwi != NULL)
-   {
-      sp(::user::interaction) plist = dynamic_cast<sp(::user::interaction)>(ptwi);
-      if(plist != NULL)
-      {
-         plist->PostMessage(::user::list::MESSAGE_ENDCOLUMNHEADERDRAG);
-      }*/
-/*      if(plist != NULL)
-      {
-         HDITEM hditem;
 
-         hditem.mask = HDI_ORDER;
-
-         hditem.iOrder = lpnmhd->iItem;
-         ASSERT(lpnmhd->pitem->mask & HDI_ORDER);
-         SetItem(
-            lpnmhd->pitem->iOrder, 
-            &hditem);
-
-         plist->OnEndColumnDrag();
-         *pResult = TRUE;
-         return;
-      }*/
-      
-//   }
-#ifdef WINDOWSEX
    pnotify->set_lresult(FALSE);
+   
    pnotify->m_bRet = false;
-#else
-   throw todo(get_app());
-#endif
+   
 }
 
 /*void simple_list_header_control::OnGetDispInfo(NMHDR* pNMHDR, LRESULT* pResult)

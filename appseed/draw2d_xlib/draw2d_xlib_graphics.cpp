@@ -126,13 +126,13 @@ namespace draw2d_xlib
 
    bool graphics::CreateDC(const char * lpszDriverName, const char * lpszDeviceName, const char * lpszOutput, const void * lpInitData)
    {
-      throw not_supported_exception(get_app());
+      _throw(not_supported_exception(get_app()));
       //return Attach(::CreateDC(lpszDriverName, lpszDeviceName, lpszOutput, (const DEVMODE*)lpInitData));
    }
 
    bool graphics::CreateIC(const char * lpszDriverName, const char * lpszDeviceName, const char * lpszOutput, const void * lpInitData)
    {
-      throw not_supported_exception(get_app());
+      _throw(not_supported_exception(get_app()));
       //return Attach(::CreateIC(lpszDriverName, lpszDeviceName, lpszOutput, (const DEVMODE*) lpInitData));
    }
 
@@ -234,7 +234,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
 
 //       ASSERT(get_handle1() != NULL);
 //       return ::ExcludeUpdateRgn(get_handle1(), WIN_WINDOW(pWnd)->get_handle());
-         throw not_implemented(get_app());
+         _throw(not_implemented(get_app()));
          return 0;
 
    }
@@ -244,7 +244,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    {
 /*      ASSERT(get_handle2() != NULL);
       return ::GetDevicecaps(get_handle2(), nIndex);*/
-         throw not_implemented(get_app());
+         _throw(not_implemented(get_app()));
          return 0;
    }
 
@@ -254,7 +254,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
       POINT point;
       VERIFY(::GetBrushOrgEx(get_handle1(), &point));
       return point;*/
-         throw not_implemented(get_app());
+         _throw(not_implemented(get_app()));
          return point(0, 0);
 
    }
@@ -265,7 +265,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
       POINT point;
       VERIFY(::SetBrushOrgEx(get_handle1(), x, y, &point));
       return point;*/
-         throw not_implemented(get_app());
+         _throw(not_implemented(get_app()));
          return point(0, 0);
 
    }
@@ -275,7 +275,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
 /*      ASSERT(get_handle1() != NULL);
       VERIFY(::SetBrushOrgEx(get_handle1(), point.x, point.y, &point));
       return point;*/
-         throw not_implemented(get_app());
+         _throw(not_implemented(get_app()));
          return ::point(0, 0);
 
    }
@@ -284,7 +284,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    {
 /*      ASSERT(get_handle2() != NULL);
       return ::EnumObjects(get_handle2(), nObjectType, (GOBJENUMPROC)lpfn, lpData);*/
-         throw not_implemented(get_app());
+         _throw(not_implemented(get_app()));
          return 0;
 
    }
@@ -385,7 +385,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
 
    COLORREF graphics::GetNearestColor(COLORREF crColor) const
    {
-      //throw not_implemented(get_app());
+      //_throw(not_implemented(get_app()));
       return crColor;
 //      return ::GetNearestColor(get_handle2(), crColor);
    }
@@ -518,7 +518,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::FillRgn(::draw2d::region* pRgn, ::draw2d::brush* pBrush)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       //return ::FillRgn(get_handle1(), (HRGN)pRgn->get_os_data(), (HBRUSH)pBrush->get_os_data()) != FALSE;
       return false;
 
@@ -528,7 +528,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    {
 
 //      return ::FrameRgn(get_handle1(), (HRGN)pRgn->get_os_data(), (HBRUSH)pBrush->get_os_data(), nWidth, nHeight) != FALSE;
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
    }
@@ -539,7 +539,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
   //    ASSERT(get_handle1() != NULL);
 
 //      return ::InvertRgn(get_handle1(), (HRGN)pRgn->get_os_data()) != FALSE;
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 
@@ -551,7 +551,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
 //      ASSERT(get_handle1() != NULL);
 
   //    return ::PaintRgn(get_handle1(), (HRGN)pRgn->get_os_data())  != FALSE;
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
    }
@@ -562,7 +562,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
   //    ASSERT(get_handle1() != NULL);
 
 //      return ::PtVisible(get_handle1(), x, y) != FALSE;
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
    }
@@ -574,7 +574,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
 
 //      return PtVisible(point.x, point.y);
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
    }
@@ -586,7 +586,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
 
 //      return ::RectVisible(get_handle1(), lpRect) != FALSE;
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
    }
@@ -597,7 +597,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
 //      POINT point;
 //      VERIFY(::GetCurrentPositionEx(get_handle2(), &point));
 //      return point;
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return ::point(0, 0);
 
    }
@@ -652,7 +652,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
 
       return ::Polyline(get_handle1(), lpPoints, nCount) != FALSE;*/
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
    }
@@ -665,7 +665,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
       XFillRectangle(m_pdc->m_pdisplay, m_pdc->m_drawable, m_pdc->m_gc,
          lpRect->left + m_pdc->m_ptOffset.x, lpRect->top + m_pdc->m_ptOffset.y,
          width(lpRect), height(lpRect));
-//      throw not_implemented(get_app());
+//      _throw(not_implemented(get_app()));
   //    return;
 
 //      ASSERT(get_handle1() != NULL); ::FillRect(get_handle1(), lpRect, (HBRUSH)pBrush->get_os_data());
@@ -674,7 +674,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    void graphics::FrameRect(LPCRECT lpRect, ::draw2d::brush* pBrush)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return;
 
 //       ASSERT(get_handle1() != NULL); ::FrameRect(get_handle1(), lpRect, (HBRUSH)pBrush->get_os_data());
@@ -707,7 +707,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    void graphics::InvertRect(LPCRECT lpRect)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return;
 
 //      ASSERT(get_handle1() != NULL); ::InvertRect(get_handle1(), lpRect);
@@ -717,7 +717,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::DrawIcon(int32_t x, int32_t y, ::visual::icon * picon)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 
@@ -733,7 +733,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::DrawIcon(POINT point, ::visual::icon * picon)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 /*      ASSERT(get_handle1() != NULL);
 
@@ -859,7 +859,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::DrawState(point pt, size size, HBITMAP hBitmap, UINT nFlags, HBRUSH hBrush)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 //      ASSERT(get_handle1() != NULL);
 //      return ::DrawState(get_handle1(), hBrush, NULL, (LPARAM)hBitmap, 0, pt.x, pt.y, size.cx, size.cy, nFlags|DST_BITMAP) != FALSE;
@@ -869,7 +869,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::DrawState(point pt, size size, ::draw2d::bitmap* pBitmap, UINT nFlags, ::draw2d::brush* pBrush)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 //      ASSERT(get_handle1() != NULL);
 //      return ::DrawState(get_handle1(), (HBRUSH)pBrush->get_os_data(), NULL, (LPARAM)pBitmap->get_os_data(), 0, pt.x, pt.y, size.cx, size.cy, nFlags|DST_BITMAP) != FALSE;
@@ -879,7 +879,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
 /*   bool graphics::DrawState(point pt, size size, HICON hIcon, UINT nFlags, HBRUSH hBrush)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 //      ASSERT(get_handle1() != NULL);
 //      return ::DrawState(get_handle1(), hBrush, NULL, (LPARAM)hIcon, 0, pt.x, pt.y, size.cx, size.cy, nFlags|DST_ICON) != FALSE;
@@ -890,7 +890,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::DrawState(point pt, size size, HICON hIcon, UINT nFlags, ::draw2d::brush* pBrush)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 //      ASSERT(get_handle1() != NULL);
 //      return ::DrawState(get_handle1(), (HBRUSH)pBrush->get_os_data(), NULL, (LPARAM)hIcon, 0, pt.x, pt.y, size.cx, size.cy, nFlags|DST_ICON) != FALSE;
@@ -900,7 +900,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::DrawState(point pt, size size, const char * lpszText, UINT nFlags, bool bPrefixText, int32_t nTextLen, HBRUSH hBrush)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 //      ASSERT(get_handle1() != NULL);
 //      return ::DrawState(get_handle1(), hBrush,  NULL, (LPARAM)lpszText, (WPARAM)nTextLen, pt.x, pt.y, size.cx, size.cy, nFlags|(bPrefixText ? DST_PREFIXTEXT : DST_TEXT)) != FALSE;
@@ -910,7 +910,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::DrawState(point pt, size size, const char * lpszText, UINT nFlags, bool bPrefixText, int32_t nTextLen, ::draw2d::brush* pBrush)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 //      ASSERT(get_handle1() != NULL);
 //      return ::DrawState(get_handle1(), (HBRUSH)pBrush->get_os_data(), NULL, (LPARAM)lpszText, (WPARAM)nTextLen, pt.x, pt.y, size.cx, size.cy, nFlags|(bPrefixText ? DST_PREFIXTEXT : DST_TEXT)) != FALSE;
@@ -922,7 +922,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::DrawState(point pt, size size, DRAWSTATEPROC lpDrawProc, LPARAM lData, UINT nFlags, HBRUSH hBrush)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ASSERT(get_handle1() != NULL);
@@ -933,7 +933,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::DrawState(point pt, size size, DRAWSTATEPROC lpDrawProc, LPARAM lData, UINT nFlags, ::draw2d::brush* pBrush)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ASSERT(get_handle1() != NULL);
@@ -946,7 +946,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::DrawEdge(LPRECT lpRect, UINT nEdge, UINT nFlags)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ASSERT(get_handle1() != NULL);
@@ -957,7 +957,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::DrawFrameControl(LPRECT lpRect, UINT nType, UINT nState)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 //      ASSERT(get_handle1() != NULL);
 //      return ::DrawFrameControl(get_handle1(), lpRect, nType, nState) != FALSE;
@@ -966,7 +966,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
 
    bool graphics::Chord(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x3, int32_t y3, int32_t x4, int32_t y4)
    {
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ASSERT(get_handle1() != NULL);
@@ -976,7 +976,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::Chord(LPCRECT lpRect, POINT ptStart, POINT ptEnd)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
       //ASSERT(get_handle1() != NULL);
@@ -987,7 +987,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    void graphics::DrawFocusRect(LPCRECT lpRect)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
 
       //ASSERT(get_handle1() != NULL); ::DrawFocusRect(get_handle1(), lpRect);
 
@@ -1088,7 +1088,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::Pie(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x3, int32_t y3, int32_t x4, int32_t y4)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 /*      ASSERT(get_handle1() != NULL);
@@ -1099,7 +1099,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::Pie(LPCRECT lpRect, POINT ptStart, POINT ptEnd)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 
@@ -1253,7 +1253,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::PolyPolygon(const POINT* lpPoints, const INT* lpPolyCounts, int32_t nCount)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
    //   ASSERT(get_handle1() != NULL); return ::PolyPolygon(get_handle1(), lpPoints, lpPolyCounts, nCount) != FALSE;
 
@@ -1335,7 +1335,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::RoundRect(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x3, int32_t y3)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ASSERT(get_handle1() != NULL);
@@ -1348,7 +1348,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
 
       //ASSERT(get_handle1() != NULL);
       //return ::RoundRect(get_handle1(), lpRect->left, lpRect->top, lpRect->right, lpRect->bottom, point.x, point.y) != FALSE;
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 
@@ -1360,7 +1360,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
 //      ASSERT(get_handle1() != NULL);
 //      return ::PatBlt(get_handle1(), x, y, nWidth, nHeight, dwRop) != FALSE;
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 
@@ -1374,7 +1374,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
 
       if(m_pdibAlphaBlend != NULL)
       {
-         throw not_implemented(get_app());
+         _throw(not_implemented(get_app()));
 
          /*rect rectIntersect(m_ptAlphaBlend, m_pdibAlphaBlend->size());
 
@@ -1587,7 +1587,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    COLORREF graphics::GetPixel(int32_t x, int32_t y) const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ASSERT(get_handle1() != NULL);
@@ -1598,7 +1598,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    COLORREF graphics::GetPixel(POINT point) const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ASSERT(get_handle1() != NULL);
@@ -1609,7 +1609,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    COLORREF graphics::SetPixel(int32_t x, int32_t y, COLORREF crColor)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ASSERT(get_handle1() != NULL);
@@ -1620,7 +1620,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    COLORREF graphics::SetPixel(POINT point, COLORREF crColor)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ASSERT(get_handle1() != NULL);
@@ -1631,7 +1631,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::FloodFill(int32_t x, int32_t y, COLORREF crColor)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ASSERT(get_handle1() != NULL);
@@ -1642,7 +1642,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::ExtFloodFill(int32_t x, int32_t y, COLORREF crColor, UINT nFillType)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ASSERT(get_handle1() != NULL);
@@ -1662,7 +1662,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
 
       if(m_pdibAlphaBlend != NULL)
       {
-         throw not_implemented(get_app());
+         _throw(not_implemented(get_app()));
          //if(GetBkMode() == TRANSPARENT)
 /*         {
          //   return TRUE;
@@ -1778,7 +1778,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::ExtTextOut(int32_t x, int32_t y, UINT nOptions, LPCRECT lpRect, const char * lpszString, UINT nCount, LPINT lpDxWidths)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ASSERT(get_handle1() != NULL);
@@ -1789,7 +1789,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::ExtTextOut(int32_t x, int32_t y, UINT nOptions, LPCRECT lpRect, const string & str, LPINT lpDxWidths)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ASSERT(get_handle1() != NULL);
@@ -1800,7 +1800,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    size graphics::TabbedTextOut(int32_t x, int32_t y, const char * lpszString, int32_t nCount, int32_t nTabPositions, LPINT lpnTabStopPositions, int32_t nTabOrigin)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return ::size(0, 0);
 
 //      ASSERT(get_handle1() != NULL);
@@ -1811,7 +1811,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    size graphics::TabbedTextOut(int32_t x, int32_t y, const string & str, int32_t nTabPositions, LPINT lpnTabStopPositions, int32_t nTabOrigin)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return ::size(0, 0);
 
 //      ASSERT(get_handle1() != NULL);
@@ -1823,7 +1823,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    size graphics::GetTabbedTextExtent(const char * lpszString, strsize nCount, int32_t nTabPositions, LPINT lpnTabStopPositions) const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return ::size(0, 0);
 
 //      ASSERT(get_handle2() != NULL);
@@ -1834,7 +1834,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    size graphics::GetTabbedTextExtent(const string & str, int32_t nTabPositions, LPINT lpnTabStopPositions) const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return ::size(0, 0);
 
 //      ASSERT(get_handle2() != NULL);
@@ -1845,7 +1845,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    size graphics::GetOutputTabbedTextExtent(const char * lpszString, strsize nCount, int32_t nTabPositions, LPINT lpnTabStopPositions) const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return ::size(0, 0);
 
 //      ASSERT(get_handle1() != NULL);
@@ -1856,7 +1856,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    size graphics::GetOutputTabbedTextExtent(const string & str, int32_t nTabPositions, LPINT lpnTabStopPositions) const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return ::size(0, 0);
 
 //      ASSERT(get_handle1() != NULL);
@@ -1867,7 +1867,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::GrayString(::draw2d::brush* pBrush, bool (CALLBACK* lpfnOutput)(HDC, LPARAM, int32_t), LPARAM lpData, int32_t nCount,int32_t x, int32_t y, int32_t nWidth, int32_t nHeight)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ASSERT(get_handle1() != NULL);
@@ -1878,7 +1878,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    UINT graphics::GetTextAlign() const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 //      ASSERT(get_handle2() != NULL);
@@ -1889,7 +1889,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    int32_t graphics::GetTextFace(int32_t nCount, LPTSTR lpszFacename) const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 //      ASSERT(get_handle2() != NULL);
@@ -1900,7 +1900,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    int32_t graphics::GetTextFace(string & rString) const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 //      ASSERT(get_handle2() != NULL);
@@ -1969,7 +1969,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::get_output_text_metrics(::draw2d::text_metric * lpMetrics) const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ASSERT(get_handle1() != NULL);
@@ -1981,7 +1981,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    int32_t graphics::GetTextCharacterExtra() const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 //      ASSERT(get_handle2() != NULL);
@@ -1992,7 +1992,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::GetCharWidth(UINT nFirstChar, UINT nLastChar, LPINT lpBuffer) const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ASSERT(get_handle2() != NULL);
@@ -2003,7 +2003,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::GetOutputCharWidth(UINT nFirstChar, UINT nLastChar, LPINT lpBuffer) const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ASSERT(get_handle1() != NULL);
@@ -2014,7 +2014,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    uint32_t graphics::GetFontLanguageInfo() const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 //      ASSERT(get_handle1() != NULL);
@@ -2027,7 +2027,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    uint32_t graphics::GetCharacterPlacement(const char * lpString, int32_t nCount, int32_t nMaxExtent, LPGCP_RESULTS lpResults, uint32_t dwFlags) const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 //      ASSERT(get_handle1() != NULL);
@@ -2038,7 +2038,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    uint32_t graphics::GetCharacterPlacement(string & str, int32_t nMaxExtent, LPGCP_RESULTS lpResults, uint32_t dwFlags) const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 //      ASSERT(get_handle1() != NULL);
@@ -2051,7 +2051,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    size graphics::GetAspectRatioFilter() const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return size(0, 0);
 
 //      ASSERT(get_handle2() != NULL);
@@ -2065,7 +2065,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::ScrollDC(int32_t dx, int32_t dy, LPCRECT lpRectScroll, LPCRECT lpRectClip, ::draw2d::region* pRgnUpdate, LPRECT lpRectUpdate)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ASSERT(get_handle1() != NULL);
@@ -2077,7 +2077,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    int32_t graphics::Escape(int32_t nEscape, int32_t nCount, const char * lpszInData, LPVOID lpOutData)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 //      ASSERT(get_handle1() != NULL);
@@ -2089,7 +2089,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    UINT graphics::SetBoundsRect(LPCRECT lpRectBounds, UINT flags)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 //      ASSERT(get_handle1() != NULL);
@@ -2100,7 +2100,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    UINT graphics::GetBoundsRect(LPRECT lpRectBounds, UINT flags)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 //      ASSERT(get_handle2() != NULL);
@@ -2113,7 +2113,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::ResetDC(const DEVMODE* lpDevMode)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //    ASSERT(get_handle2() != NULL);
@@ -2124,7 +2124,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    UINT graphics::GetOutlineTextMetrics(UINT cbData, LPOUTLINETEXTMETRICW lpotm) const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 //      ASSERT(get_handle2() != NULL);
@@ -2135,7 +2135,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::GetCharABCWidths(UINT nFirstChar, UINT nLastChar, LPABC lpabc) const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ASSERT(get_handle2() != NULL);
@@ -2148,7 +2148,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    uint32_t graphics::GetFontData(uint32_t dwTable, uint32_t dwOffset, LPVOID lpData, uint32_t cbData) const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 //      ASSERT(get_handle2() != NULL);
@@ -2161,7 +2161,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    int32_t graphics::GetKerningPairs(int32_t nPairs, LPKERNINGPAIR lpkrnpair) const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 //      ASSERT(get_handle2() != NULL);
@@ -2172,7 +2172,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    uint32_t graphics::GetGlyphOutline(UINT nChar, UINT nFormat, LPGLYPHMETRICS lpgm, uint32_t cbBuffer, LPVOID lpBuffer, const MAT2* lpmat2) const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 //      ASSERT(get_handle2() != NULL);
@@ -2188,7 +2188,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    int32_t graphics::StartDoc(LPDOCINFO lpDocInfo)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 //      ASSERT(get_handle1() != NULL);
@@ -2201,7 +2201,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    int32_t graphics::StartPage()
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 //      ASSERT(get_handle1() != NULL);
@@ -2212,7 +2212,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    int32_t graphics::EndPage()
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 //      ASSERT(get_handle1() != NULL);
@@ -2223,7 +2223,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    int32_t graphics::SetAbortProc(bool (CALLBACK* lpfn)(HDC, int32_t))
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 //      ASSERT(get_handle1() != NULL);
@@ -2234,7 +2234,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    int32_t graphics::AbortDoc()
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 //      ASSERT(get_handle1() != NULL);
@@ -2245,7 +2245,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    int32_t graphics::EndDoc()
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 //      ASSERT(get_handle1() != NULL);
@@ -2256,7 +2256,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::MaskBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, ::draw2d::bitmap& maskBitmap, int32_t xMask, int32_t yMask, uint32_t dwRop)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ASSERT(get_handle1() != NULL);
@@ -2267,7 +2267,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::PlgBlt(LPPOINT lpPoint, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nWidth, int32_t nHeight, ::draw2d::bitmap& maskBitmap, int32_t xMask, int32_t yMask)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ASSERT(get_handle1() != NULL);
@@ -2278,7 +2278,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::SetPixelV(int32_t x, int32_t y, COLORREF crColor)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ASSERT(get_handle1() != NULL);
@@ -2289,7 +2289,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::SetPixelV(POINT point, COLORREF crColor)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ASSERT(get_handle1() != NULL);
@@ -2300,7 +2300,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::AngleArc(int32_t x, int32_t y, int32_t nRadius, float fStartAngle, float fSweepAngle)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ASSERT(get_handle1() != NULL);
@@ -2311,7 +2311,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::ArcTo(LPCRECT lpRect, POINT ptStart, POINT ptEnd)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ASSERT(get_handle1() != NULL);
@@ -2322,7 +2322,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    int32_t graphics::GetArcDirection() const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 //      ASSERT(get_handle2() != NULL);
@@ -2333,7 +2333,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::PolyPolyline(const POINT* lpPoints, const uint32_t* lpPolyPoints, int32_t nCount)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ASSERT(get_handle1() != NULL);
@@ -2346,7 +2346,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::GetColorAdjustment(LPCOLORADJUSTMENT lpColorAdjust) const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ASSERT(get_handle2() != NULL);
@@ -2395,7 +2395,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::PolyBezier(const POINT* lpPoints, int32_t nCount)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ASSERT(get_handle1() != NULL);
@@ -2406,7 +2406,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    int32_t graphics::DrawEscape(int32_t nEscape, int32_t nInputSize, const char * lpszInputData)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 //      ASSERT(get_handle1() != NULL);
@@ -2417,7 +2417,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    int32_t graphics::Escape(int32_t nEscape, int32_t nInputSize, const char * lpszInputData,  int32_t nOutputSize, char * lpszOutputData)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 //       ASSERT(get_handle1() != NULL);
@@ -2430,7 +2430,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::GetCharABCWidths(UINT nFirstChar, UINT nLastChar, LPABCFLOAT lpABCF) const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ASSERT(get_handle2() != NULL);
@@ -2443,7 +2443,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::GetCharWidth(UINT nFirstChar, UINT nLastChar, float* lpFloatBuffer) const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ASSERT(get_handle2() != NULL);
@@ -2454,7 +2454,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::AbortPath()
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 /*
@@ -2471,7 +2471,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::BeginPath()
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 /*
@@ -2488,7 +2488,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::CloseFigure()
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 /*
@@ -2500,7 +2500,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::EndPath()
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 /*
@@ -2517,7 +2517,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::FillPath()
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      return m_pgraphics->FillPath(gdiplus_brush(), m_ppath) == Gdiplus::Status::Ok;
@@ -2527,7 +2527,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::FlattenPath()
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      return m_ppath->Flatten() == Gdiplus::Status::Ok;
@@ -2537,7 +2537,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    float graphics::GetMiterLimit() const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0.f;
 
 //      ASSERT(get_handle1() != NULL);
@@ -2550,7 +2550,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    int32_t graphics::GetPath(LPPOINT lpPoints, LPBYTE lpTypes, int32_t nCount) const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 //      ASSERT(get_handle1() != NULL);
@@ -2561,7 +2561,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::SetMiterLimit(float fMiterLimit)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ASSERT(get_handle1() != NULL);
@@ -2572,7 +2572,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::StrokeAndFillPath()
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      bool bOk1 = m_pgraphics->FillPath(gdiplus_brush(), m_ppathPaint) == Gdiplus::Status::Ok;
@@ -2586,7 +2586,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::StrokePath()
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      return m_pgraphics->DrawPath(gdiplus_pen(), m_ppathPaint) == Gdiplus::Status::Ok;
@@ -2596,7 +2596,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::WidenPath()
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      return m_ppath->Widen(gdiplus_pen()) == Gdiplus::Status::Ok;
@@ -2628,7 +2628,7 @@ if(psurfaceNew == xlib_keep::g_xlibsurface)
    bool graphics::AddMetaFileComment(UINT nDataSize, const BYTE* pCommentData)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ASSERT(get_handle1() != NULL);
@@ -2679,7 +2679,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    bool graphics::PlayMetaFile(HENHMETAFILE hEnhMF, LPCRECT lpBounds)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 
@@ -2720,7 +2720,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       if(m_pdibAlphaBlend != NULL)
       {
 
-         throw not_implemented(get_app());
+         _throw(not_implemented(get_app()));
 
 /*
          rect rectIntersect(m_ptAlphaBlend, m_pdibAlphaBlend->size());
@@ -2847,7 +2847,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, BLENDFUNCTION blend)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       //if(get_handle1() == NULL)
         // return false;
 
@@ -2932,7 +2932,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    bool graphics::TransparentBlt(int32_t xDest, int32_t yDest, int32_t nDestWidth, int32_t nDestHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, UINT crTransparent)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ASSERT(get_handle1() != NULL);
@@ -2943,7 +2943,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    bool graphics::GradientFill(TRIVERTEX* pVertices, ULONG nVertices, void * pMesh, ULONG nMeshElements, uint32_t dwMode)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ASSERT(get_handle1() != NULL);
@@ -2959,7 +2959,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    COLORREF graphics::GetDCBrushColor() const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 //      ASSERT(get_handle1() != NULL);
@@ -2970,7 +2970,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    COLORREF graphics::SetDCBrushColor(COLORREF crColor)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 //      ASSERT(get_handle1() != NULL);
@@ -2981,7 +2981,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    COLORREF graphics::GetDCPenColor() const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 //       ASSERT(get_handle1() != NULL);
@@ -2991,7 +2991,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    COLORREF graphics::SetDCPenColor(COLORREF crColor)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 //      ASSERT(get_handle1() != NULL);
@@ -3006,7 +3006,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    bool graphics::GetCharABCWidthsI(UINT giFirst, UINT cgi, LPWORD pgi, LPABC lpabc) const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ASSERT(get_handle1() != NULL);
@@ -3017,7 +3017,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    bool graphics::GetCharWidthI(UINT giFirst, UINT cgi, LPWORD pgi, LPINT lpBuffer) const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ASSERT(get_handle1() != NULL);
@@ -3032,7 +3032,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    bool graphics::GetTextExtentExPointI(LPWORD pgiIn, int32_t cgi, int32_t nMaxExtent, LPINT lpnFit, LPINT alpDx, LPSIZE lpSize) const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ENSURE(lpSize != NULL);
@@ -3045,7 +3045,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    bool graphics::GetTextExtentPointI(LPWORD pgiIn, int32_t cgi, LPSIZE lpSize) const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 //      ENSURE(lpSize != NULL);
@@ -3066,7 +3066,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    void graphics::DPtoHIMETRIC(LPSIZE lpSize) const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
 
 /*
       ASSERT(__is_valid_address(lpSize, sizeof(SIZE)));
@@ -3107,7 +3107,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    void graphics::HIMETRICtoDP(LPSIZE lpSize) const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
 
 /*      ASSERT(__is_valid_address(lpSize, sizeof(SIZE)));
 
@@ -3190,7 +3190,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    void graphics::DrawDragRect(LPCRECT lpRect, SIZE size, LPCRECT lpRectLast, SIZE sizeLast, ::draw2d::brush* pBrush, ::draw2d::brush* pBrushLast)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
 
 /*
       ASSERT(__is_valid_address(lpRect, sizeof(RECT), FALSE));
@@ -3452,7 +3452,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    int32_t graphics::StartDoc(const char * lpszDocName)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 /*
@@ -3468,7 +3468,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    int32_t graphics::SaveDC()
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 /*
@@ -3485,7 +3485,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    bool graphics::RestoreDC(int32_t nSavedDC)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 /*
@@ -3576,7 +3576,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    int32_t graphics::SelectObject(::draw2d::region* pRgn)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 /*
@@ -3600,7 +3600,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    int32_t graphics::SetPolyFillMode(int32_t nPolyFillMode)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 /*
@@ -3617,7 +3617,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    int32_t graphics::SetROP2(int32_t nDrawMode)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 /*
@@ -3634,7 +3634,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    int32_t graphics::SetStretchBltMode(int32_t nStretchMode)
    {
 
-      //throw not_implemented(get_app());
+      //_throw(not_implemented(get_app()));
 //      return 0;
 
 m_nStretchBltMode = nStretchMode;
@@ -3652,7 +3652,7 @@ return 1;
    int32_t graphics::SetGraphicsMode(int32_t iMode)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 /*
@@ -3673,7 +3673,7 @@ return 1;
    bool graphics::SetWorldTransform(const XFORM* pXform)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 /*
@@ -3694,7 +3694,7 @@ return 1;
    bool graphics::ModifyWorldTransform(const XFORM* pXform,uint32_t iMode)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 
@@ -3716,7 +3716,7 @@ return 1;
    int32_t graphics::SetMapMode(int32_t nMapMode)
    {
 
-      //throw not_implemented(get_app());
+      //_throw(not_implemented(get_app()));
       return 0;
 
 
@@ -3766,7 +3766,7 @@ return 1;
    size graphics::SetViewportExt(int32_t x, int32_t y)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return ::size(0, 0);
 
 /*
@@ -3782,7 +3782,7 @@ return 1;
    size graphics::ScaleViewportExt(int32_t xNum, int32_t xDenom, int32_t yNum, int32_t yDenom)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return ::size(0, 0);
 
 /*
@@ -3799,7 +3799,7 @@ return 1;
    point graphics::SetWindowOrg(int32_t x, int32_t y)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return ::point(0, 0);
 
 /*
@@ -3815,7 +3815,7 @@ return 1;
    point graphics::OffsetWindowOrg(int32_t nWidth, int32_t nHeight)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return ::point(0, 0);
 
 /*
@@ -3832,7 +3832,7 @@ return 1;
    size graphics::SetWindowExt(int32_t x, int32_t y)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return ::size(0, 0);
 
 /*
@@ -3849,7 +3849,7 @@ return 1;
    size graphics::ScaleWindowExt(int32_t xNum, int32_t xDenom, int32_t yNum, int32_t yDenom)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return ::size(0, 0);
 
 /*
@@ -3866,7 +3866,7 @@ return 1;
    int32_t graphics::GetClipBox(LPRECT lpRect) const
    {
 
-      //throw not_implemented(get_app());
+      //_throw(not_implemented(get_app()));
       return 0;
 
 /*      return ::GetClipBox(get_handle1(), lpRect);*/
@@ -3910,7 +3910,7 @@ return 1;
    int32_t graphics::ExcludeClipRect(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 /*
@@ -3927,7 +3927,7 @@ return 1;
    int32_t graphics::ExcludeClipRect(LPCRECT lpRect)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 /*
@@ -3946,7 +3946,7 @@ return 1;
    int32_t graphics::IntersectClipRect(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 /*
@@ -3963,7 +3963,7 @@ return 1;
    int32_t graphics::IntersectClipRect(LPCRECT lpRect)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 /*      int32_t nRetVal = ERROR;
@@ -3979,7 +3979,7 @@ return 1;
    int32_t graphics::OffsetClipRgn(int32_t x, int32_t y)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 /*
@@ -3996,7 +3996,7 @@ return 1;
    int32_t graphics::OffsetClipRgn(SIZE size)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 /*
@@ -4036,7 +4036,7 @@ return 1;
    UINT graphics::SetTextAlign(UINT nFlags)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 /*
@@ -4053,7 +4053,7 @@ return 1;
    int32_t graphics::SetTextJustification(int32_t nBreakExtra, int32_t nBreakCount)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 /*
@@ -4070,7 +4070,7 @@ return 1;
    int32_t graphics::SetTextCharacterExtra(int32_t nCharExtra)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 /*
@@ -4088,7 +4088,7 @@ return 1;
    uint32_t graphics::SetMapperFlags(uint32_t dwFlag)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 /*
@@ -4109,7 +4109,7 @@ return 1;
    uint32_t graphics::GetLayout() const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 /*
@@ -4135,7 +4135,7 @@ return 1;
    uint32_t graphics::SetLayout(uint32_t dwSetLayout)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 /*
@@ -4183,7 +4183,7 @@ return 1;
    bool graphics::ArcTo(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x3, int32_t y3, int32_t x4, int32_t y4)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 /*
@@ -4204,7 +4204,7 @@ return 1;
    {
 
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 /*
@@ -4222,7 +4222,7 @@ return 1;
    bool graphics::PolyDraw(const POINT* lpPoints, const BYTE* lpTypes, int32_t nCount)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 /*
@@ -4242,7 +4242,7 @@ return 1;
    bool graphics::PolylineTo(const POINT* lpPoints, int32_t nCount)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 /*
@@ -4263,7 +4263,7 @@ return 1;
    bool graphics::SetColorAdjustment(const COLORADJUSTMENT* lpColorAdjust)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 /*
@@ -4281,7 +4281,7 @@ return 1;
    bool graphics::PolyBezierTo(const POINT* lpPoints, int32_t nCount)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 /*
@@ -4301,7 +4301,7 @@ return 1;
    bool graphics::SelectClipPath(int32_t nMode)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 /*
@@ -4331,7 +4331,7 @@ return 1;
    int32_t graphics::SelectClipRgn(::draw2d::region* pRgn, int32_t nMode)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 /*      ASSERT(get_handle1() != NULL);
@@ -4417,7 +4417,7 @@ return 1;
                if (hObjOld == hStockFont)
                {
                   // got the stock object back, so must be selecting a font
-                  throw not_implemented(get_thread_app());
+                  _throw(not_implemented(get_app()));
 //                  (dynamic_cast<::win::graphics * >(pgraphics))->SelectObject(::win::font::from_handle(pgraphics->get_app(), (HFONT)hObject));
                   break;  // don't play the default record
                }
@@ -4433,7 +4433,7 @@ return 1;
             {
                // play back as graphics::SelectObject(::draw2d::font*)
 //               (dynamic_cast<::win::graphics * >(pgraphics))->SelectObject(::win::font::from_handle(pgraphics->get_app(), (HFONT)hObject));
-               throw not_implemented(get_thread_app());
+               _throw(not_implemented(get_app()));
                break;  // don't play the default record
             }
          }
@@ -4452,7 +4452,7 @@ return 1;
    bool graphics::PlayMetaFile(HMETAFILE hMF)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return false;
 
 /*
@@ -4474,7 +4474,7 @@ return 1;
    void graphics::LPtoDP(LPSIZE lpSize) const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return;
 
 /*
@@ -4491,7 +4491,7 @@ return 1;
    void graphics::DPtoLP(LPSIZE lpSize) const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return;
 
 /*
@@ -4623,7 +4623,7 @@ return 1;
    int32_t graphics::draw_text_ex(LPTSTR lpszString, int32_t nCount, LPRECT lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0 ;
 
 /*
@@ -4640,7 +4640,7 @@ return 1;
    int32_t graphics::draw_text_ex(const string & str, LPRECT lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams)
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return 0;
 
 /*
@@ -4722,7 +4722,7 @@ return 1;
    size graphics::GetOutputTextExtent(const char * lpszString, strsize nCount) const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return ::size(0, 0);
 
 /*
@@ -4739,7 +4739,7 @@ return 1;
    size graphics::GetOutputTextExtent(const string & str) const
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       return ::size(0, 0);
 
 /*
@@ -4811,7 +4811,7 @@ return 1;
       ASSERT(pWnd == NULL || ::IsWindow(WIN_WINDOW(pWnd)->get_handle1()));
 
       if (!Attach(::GetDC(m_hWnd = WIN_WINDOW(pWnd)->GetSafeHwnd())))
-         throw resource_exception();
+         _throw(resource_exception());
    }
 
    CClientDC::~CClientDC()
@@ -4841,7 +4841,7 @@ return 1;
       ASSERT(pWnd == NULL || ::IsWindow(WIN_WINDOW(pWnd)->get_handle1()));
 
       if (!Attach(::GetWindowDC(m_hWnd = WIN_WINDOW(pWnd)->GetSafeHwnd())))
-         throw resource_exception();
+         _throw(resource_exception());
    }
 
    CWindowDC::~CWindowDC()
@@ -4876,7 +4876,7 @@ return 1;
       ASSERT(::IsWindow(WIN_WINDOW(pWnd)->get_handle1()));
 
       if (!Attach(::BeginPaint(m_hWnd = WIN_WINDOW(pWnd)->get_handle1(), &m_ps)))
-         throw resource_exception();
+         _throw(resource_exception());
    }
 
    CPaintDC::~CPaintDC()
@@ -5603,7 +5603,7 @@ ok:
          }
          break;
       default:
-         throw "unexpected simple os graphics element type";
+         _throw(simple_exception(get_app(), "unexpected simple os graphics element type"));
       }*/
 
       return false;

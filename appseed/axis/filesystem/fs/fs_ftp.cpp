@@ -1,19 +1,24 @@
-#include "framework.h" // from "axis/net/net_sockets.h"
-//#include "axis/net/net_sockets.h"
+﻿#include "framework.h" // from "axis/net/net_sockets.h"
+#include "fs_ftp_net.h"
 
 
 ftpfs::ftpfs(::aura::application * papp, const char * pszRoot) :
    ::object(papp),
    ::data::data(papp),
-   ::fs::data(papp),
-   m_sockethandler(papp)
-{
+   ::fs::data(papp)
 
+{
+   m_pftpnet = new ftpnet(papp);
    m_strRoot = pszRoot;
    m_bInitialized = false;
 
    m_straFtpServer.add("localhost");
 
+}
+
+ftpfs::~ftpfs()
+{
+   ::aura::del(m_pftpnet);
 }
 
 
@@ -72,9 +77,11 @@ bool ftpfs::has_subdir(const ::file::path & path)
 ::file::listing & ftpfs::root_ones(::file::listing & listing)
 {
 
-   ::file::path & path = listing[listing.add("ftp://")];
+   ::file::path path;
 
-   UNUSED(path);
+   path = "ftp://";
+
+   listing.add(path);
 
    listing.m_straTitle.add("FTP sites");
 
@@ -153,7 +160,7 @@ bool ftpfs::has_subdir(const ::file::path & path)
    //   if (str == "You have not logged in! Exiting!")
    //   {
 
-   //      throw string("uftpfs:// You have not logged in!");
+   //      _throw(string("uftpfs:// You have not logged in!"));
 
    //   }
 
@@ -466,16 +473,16 @@ void ftpfs::defer_initialize(::ftp::client_socket ** ppclient, string strPath)
    strToken.replace(":", "-");
    strToken.replace("/", "_");
 
-   sp(::ftp::client_socket) & client = m_mapClient[strToken];
+   sp(::ftp::client_socket) & client = m_pftpnet->m_mapClient[strToken];
 
    int iTry = 0;
 
    if (client.is_null())
    {
 
-      client = canew(::ftp::client_socket(m_sockethandler));
+      client = canew(::ftp::client_socket(m_pftpnet->m_sockethandler));
 
-      sp(::ftp::output) & output = m_mapOutput[strToken];
+      sp(::ftp::output) & output = m_pftpnet->m_mapOutput[strToken];
 
       output = canew(::ftp::output(get_app()));
 

@@ -68,7 +68,7 @@ namespace aura
    {
    return "";
 
-      throw todo(get_app());
+      _throw(todo(get_app()));
 
 /*      char lpszModuleFilePath[MAX_PATH + 1];
       GetModuleFileName(NULL, lpszModuleFilePath, MAX_PATH + 1);
@@ -155,7 +155,7 @@ namespace aura
 
 
 
-   bool application::impl_process_initialize()
+   bool application::impl_process_init()
    {
 
       return true;
@@ -163,7 +163,7 @@ namespace aura
    }
 
 
-   bool application::impl_initialize1()
+   bool application::impl_init1()
    {
 
 //      set_run();
@@ -173,7 +173,7 @@ namespace aura
    }
 
 
-   bool application::impl_initialize2()
+   bool application::impl_init2()
    {
 
       return true;
@@ -181,7 +181,7 @@ namespace aura
    }
 
 
-   bool application::impl_initialize3()
+   bool application::impl_init3()
    {
 
       return true;
@@ -189,7 +189,28 @@ namespace aura
    }
 
 
-   int32_t application::impl_exit_instance() // default will 'delete this'
+   void application::impl_term1()
+   {
+
+
+   }
+
+
+   void application::impl_term2()
+   {
+
+
+   }
+
+
+   void application::impl_term3()
+   {
+
+
+   }
+
+
+   void application::impl_process_term() // default will 'delete this'
    {
 
       // avoid calling CloseHandle() on our own thread handle
@@ -199,13 +220,13 @@ namespace aura
       //m_pimpl->m_bRun = false;
       //LNX_THREAD(m_pimpl->::thread_sp::m_p)->m_bRun = false;
 
-      //int32_t iRet = ::aura::application::exit_application();
+      //int32_t iRet = ::aura::application::term_instance();
 
       //::ca2::smart_pointer<::ca2::application>::destroy();
 
 
 
-      return 0;
+      //return 0;
    }
 /*
    // Advanced: exception handling
@@ -313,13 +334,13 @@ namespace aura
 //      DWORD dwRet = ::GetModuleFileName(m_hInstance, szBuff, _MAX_PATH);
 //      ASSERT( dwRet != 0 && dwRet != _MAX_PATH );
 //      if( dwRet == 0 || dwRet == _MAX_PATH )
-//         throw aura_exception();*/
+//         _throw(aura_exception());*/
 //
 //      /*
 //      LPTSTR lpszExt = ::PathFindExtension(szBuff);
 //      ASSERT(lpszExt != NULL);
 //      if( lpszExt == NULL )
-//         throw aura_exception();
+//         _throw(aura_exception());
 //
 //      ASSERT(*lpszExt == '.');
 //      *lpszExt = 0;       // no suffix

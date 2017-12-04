@@ -233,7 +233,7 @@ namespace user
       if (Session.is_key_pressed(::user::key_lbutton))
          return;
 #else
-      throw todo(get_app());
+      _throw(todo(get_app()));
 #endif
 
    }
@@ -288,7 +288,7 @@ namespace user
 
       UINT message;
 
-      convert(message, pbase->m_id.int64());
+      message = UINT(pbase->m_id.int64());
 
       // handle CBRS_FLYBY style (status bar flyby help)
       if (((m_dwStyle & CBRS_FLYBY) ||
@@ -298,7 +298,7 @@ namespace user
       {
       }
 #else
-//      throw todo(get_app());
+//      _throw(todo(get_app()));
 #endif
 
       // don't translate dialog messages when in Shift+F1 help mode
@@ -343,7 +343,7 @@ namespace user
 
       UINT uiMessage;
 
-      convert(uiMessage, pbase->m_id.int64());
+      uiMessage = (UINT)(pbase->m_id.int64());
 
       switch (uiMessage)
       {
@@ -381,7 +381,7 @@ namespace user
 //               }
 //            }
 //#else
-//            throw todo(get_app());
+//            _throw(todo(get_app()));
 //#endif
          return;
       }
@@ -941,7 +941,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      _throw(todo(get_app()));
 
 #endif
 
@@ -1061,7 +1061,7 @@ namespace user
    /////////////////////////////////////////////////////////////////////////////
    // control_bar diagnostics
 
-#ifdef DEBUG
+
    void control_bar::assert_valid() const
    {
       ::user::interaction::assert_valid();
@@ -1083,7 +1083,7 @@ namespace user
       dumpcontext << "\n";
    }
 
-#endif
+
 
    sp(::user::frame_window) control_bar::GetDockingFrame()
    {

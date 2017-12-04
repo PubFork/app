@@ -299,15 +299,15 @@ namespace sockets
          else
          if (Reconnect())
          {
-            string strError = StrError(iError);
-            log("connect: failed, reconnect pending", iError, StrError(iError), ::aura::log::level_info);
+            string strError = bsd_socket_error(iError);
+            log("connect: failed, reconnect pending", iError, bsd_socket_error(iError), ::aura::log::level_info);
             attach(s);
             SetConnecting( true ); // this flag will control fd_set's
          }
          else
          {
-            string strError = StrError(iError);
-            log("connect: failed", iError, StrError(iError), ::aura::log::level_fatal);
+            string strError = bsd_socket_error(iError);
+            log("connect: failed", iError, bsd_socket_error(iError), ::aura::log::level_fatal);
             SetCloseAndDelete();
             ::closesocket(s);
             return false;
@@ -556,7 +556,7 @@ namespace sockets
             SetCallOnConnect();
             return;
          }
-         log("tcp: connect failed", err, StrError(err), ::aura::log::level_fatal);
+         log("tcp: connect failed", err, bsd_socket_error(err), ::aura::log::level_fatal);
          Set(false, false); // no more monitoring because connection failed
 
          // failed
@@ -683,7 +683,7 @@ namespace sockets
             if (Errno != EWOULDBLOCK)
    #endif
             {
-               log("send", Errno, StrError(Errno), ::aura::log::level_fatal);
+               log("send", Errno, bsd_socket_error(Errno), ::aura::log::level_fatal);
                OnDisconnect();
                SetCloseAndDelete(true);
                SetFlushBeforeClose(false);
@@ -1290,7 +1290,7 @@ namespace sockets
          if (shutdown(GetSocket(), SHUT_WR) == -1)
          {
             // failed...
-            log("shutdown", Errno, StrError(Errno), ::aura::log::level_error);
+            log("shutdown", Errno, bsd_socket_error(Errno), ::aura::log::level_error);
          }
       }
       //
@@ -1430,7 +1430,7 @@ namespace sockets
       int optval = x ? 1 : 0;
       if (setsockopt(GetSocket(), IPPROTO_TCP, TCP_NODELAY, (char *)&optval, sizeof(optval)) == -1)
       {
-         log("setsockopt(IPPROTO_TCP, TCP_NODELAY)", Errno, StrError(Errno), ::aura::log::level_fatal);
+         log("setsockopt(IPPROTO_TCP, TCP_NODELAY)", Errno, bsd_socket_error(Errno), ::aura::log::level_fatal);
          return false;
       }
       return true;
@@ -1518,7 +1518,7 @@ namespace sockets
       // %! exception doesn't always mean something bad happened, this code should be reworked
       // errno valid here?
       int err = SoError();
-      log("exception on select", err, StrError(err), ::aura::log::level_fatal);
+      log("exception on select", err, bsd_socket_error(err), ::aura::log::level_fatal);
       SetCloseAndDelete();
    }
    #endif // _WIN32

@@ -74,7 +74,7 @@ namespace user
 //#ifdef WINDOWSEX
 //      ::DeleteObject((HGDIOBJ*)&m_hbmImageWell);
 //#else
-  //    throw todo(get_app());
+  //    _throw(todo(get_app()));
 //#endif
       delete m_pStringMap;
 
@@ -146,7 +146,7 @@ namespace user
       ASSERT(IsWindow());
       DefWindowProc(TB_SETPARENT, (WPARAM)pOwnerWnd.m_p, 0);
 #else
-      throw todo(get_app());
+      _throw(todo(get_app()));
 
 #endif
       return ::user::control_bar::SetOwner(pOwnerWnd);
@@ -173,7 +173,7 @@ namespace user
          //VERIFY(send_message(TB_SETBITMAPSIZE, 0, MAKELONG(sizeImage.cx, sizeImage.cy)));
          //VERIFY(send_message(TB_SETBUTTONSIZE, 0, MAKELONG(sizeButton.cx, sizeButton.cy)));
 #else
-         //throw todo(get_app());
+         //_throw(todo(get_app()));
 #endif
         // Invalidate();   // just to be nice if called when toolbar is visible
       }
@@ -202,7 +202,7 @@ namespace user
       m_cyTopBorder = cyHeight - m_sizeButton.cy - m_cyBottomBorder;
       if (m_cyTopBorder < 0)
       {
-         TRACE1("Warning: toolbar::SetHeight(%d) is smaller than button.\n",
+         TRACE("Warning: toolbar::SetHeight(%d) is smaller than button.",
             nHeight);
          m_cyBottomBorder += m_cyTopBorder;
          m_cyTopBorder = 0;  // will clip at bottom
@@ -262,7 +262,7 @@ namespace user
          m_hbmImageWell = hbmImageWell;
       }
 #else
-      throw todo(get_app());
+      _throw(todo(get_app()));
 #endif*/
       return bResult;
    }
@@ -322,7 +322,7 @@ namespace user
    //   m_nCount = (int32_t)DefWindowProc(TB_BUTTONCOUNT, 0, 0);
       m_bDelayedButtonLayout = TRUE;
 #else
-      throw todo(get_app());
+      _throw(todo(get_app()));
 #endif
       return TRUE;
    }
@@ -391,7 +391,7 @@ namespace user
       toolbar* pBar = (toolbar*)this;
       return (int32_t)pBar->DefWindowProc(TB_COMMANDTOINDEX, nIDFind, 0);
 #else
-      throw todo(get_app());
+      _throw(todo(get_app()));
 #endif
    }
 
@@ -405,7 +405,7 @@ namespace user
       _GetButton(nIndex, &button);
       return button.idCommand;
 #else
-      throw todo(get_app());
+      _throw(todo(get_app()));
 #endif
    }
 
@@ -424,7 +424,7 @@ namespace user
       if (!pBar->DefWindowProc(TB_GETITEMRECT, nIndex, (LPARAM)lpRect))
          ::SetRectEmpty(lpRect);
 #else
-      throw todo(get_app());
+      _throw(todo(get_app()));
 #endif
    }
 
@@ -455,7 +455,7 @@ namespace user
       _GetButton(nIndex, &button);
       return MAKELONG(button.fsStyle, button.fsState);
 #else
-      throw todo(get_app());
+      _throw(todo(get_app()));
 #endif
    }
 
@@ -475,7 +475,7 @@ namespace user
          m_bDelayedButtonLayout = TRUE;
       }
 #else
-      throw todo(get_app());
+      _throw(todo(get_app()));
 #endif
    }
 
@@ -884,7 +884,7 @@ namespace user
       }
       return sizeResult;
 #else
-throw todo(get_app());
+_throw(todo(get_app()));
 #endif
    }
 
@@ -918,7 +918,7 @@ throw todo(get_app());
       nStyle = MAKELONG(button.fsStyle, button.fsState);
       iImage = button.iBitmap;
 #else
-      throw todo(get_app());
+      _throw(todo(get_app()));
 #endif
    }
 
@@ -940,7 +940,7 @@ throw todo(get_app());
          m_bDelayedButtonLayout = TRUE;
       }
 #else
-      throw todo(get_app());
+      _throw(todo(get_app()));
 #endif
 
    }
@@ -997,7 +997,7 @@ throw todo(get_app());
       string str;
       GetButtonText(nIndex, str);
 #else
-      throw todo(get_app());
+      _throw(todo(get_app()));
 #endif
 
       return TRUE;
@@ -1034,7 +1034,7 @@ throw todo(get_app());
       }
       rWString.Empty();
 #else
-      throw todo(get_app());
+      _throw(todo(get_app()));
 #endif
    }
 
@@ -1070,7 +1070,7 @@ throw todo(get_app());
       pnccalcsize->m_pparams->rgrc[0].right += rect.right;
       pnccalcsize->m_pparams->rgrc[0].bottom += rect.bottom;
 #else
-      throw todo(get_app());
+      _throw(todo(get_app()));
 #endif
    }
 
@@ -1126,7 +1126,7 @@ throw todo(get_app());
          Invalidate();
       }
 #else
-      throw todo(get_app());
+      _throw(todo(get_app()));
 #endif
    }
 
@@ -1194,15 +1194,19 @@ throw todo(get_app());
       if (bModify)
          set_window_long(GWL_STYLE, dwStyle);
 #else
-      throw todo(get_app());
+      _throw(todo(get_app()));
 #endif
       return lResult;
    }
 
+   
    void toolbar::_001OnPreserveZeroBorderHelper(::message::message * pobj)
    {
+      
       LRESULT lResult = 0;
+      
       SCAST_PTR(::message::base, pbase, pobj);
+      
 #ifdef LRESULT
 
       bool bModify = FALSE;
@@ -1215,11 +1219,13 @@ throw todo(get_app());
       if (bModify)
          SetWindowLong(GWL_STYLE, dwStyle);
 #else
-      throw todo(get_app());
+      //_throw(todo(get_app()));
 #endif
 
       pbase->set_lresult(lResult);
+      
    }
+   
 
    void toolbar::_001OnSysColorChange(::message::message * pobj)
    {
@@ -1274,7 +1280,7 @@ throw todo(get_app());
    /////////////////////////////////////////////////////////////////////////////
    // toolbar diagnostics
 
-   #ifdef DEBUG
+  
    void toolbar::assert_valid() const
    {
       // Note: ::user::control_bar::assert_valid is not called because it checks for
@@ -1316,14 +1322,14 @@ throw todo(get_app());
             dumpcontext << "\n}";
          }
 #else
-         throw todo(get_app());
+         _throw(todo(get_app()));
 
 #endif
       }
 
       dumpcontext << "\n";
    }
-   #endif
+
 
    // IMPLEMENT_DYNAMIC(toolbar, ::user::control_bar)
 
@@ -1388,7 +1394,7 @@ throw todo(get_app());
 
 #else
 
-      throw todo(get_app());
+      _throw(todo(get_app()));
 
 #endif
 
@@ -1544,7 +1550,7 @@ throw todo(get_app());
 
 //#else
 
-  //    throw todo(get_app());
+  //    _throw(todo(get_app()));
 
 //#endif
 

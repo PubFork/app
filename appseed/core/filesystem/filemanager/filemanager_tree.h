@@ -50,16 +50,16 @@ namespace filemanager
       virtual ~tree();
 
 
-      virtual void assert_valid() const;
-      virtual void dump(dump_context & dumpcontext) const;
+      virtual void assert_valid() const override;
+      virtual void dump(dump_context & dumpcontext) const override;
 
-      virtual void _001InsertColumns();
+      virtual void _001InsertColumns() override;
       //virtual void _polishing_step(::data::tree_item * pitem, bool bLowLatency, e_step estep);
 
-      void _001OnTimer(::timer * ptimer);
+      void _001OnTimer(::timer * ptimer) override;
 
 
-      void install_message_routing(::message::sender * pinterface);
+      void install_message_routing(::message::sender * pinterface) override;
 
       // tree_polishing
       //void _polishing_start(::user::tree * pusertree);
@@ -67,9 +67,9 @@ namespace filemanager
       //bool _polishing_step(::data::tree_item * pitem, bool bLowLatency);
 
       // user::tree
-      virtual void _001OnOpenItem(::data::tree_item * pitem, ::action::context actioncontext);
-      virtual void _001OnItemExpand(::data::tree_item * pitem, ::action::context actioncontext);
-      virtual void _001OnItemCollapse(::data::tree_item * pitem, ::action::context actioncontext);
+      virtual void _001OnOpenItem(::data::tree_item * pitem, ::action::context actioncontext) override;
+      virtual void _001OnItemExpand(::data::tree_item * pitem, ::action::context actioncontext) override;
+      virtual void _001OnItemCollapse(::data::tree_item * pitem, ::action::context actioncontext) override;
 
 
       virtual void _017OpenFolder(::fs::item * pitem, ::action::context actioncontext) override;
@@ -87,10 +87,10 @@ namespace filemanager
       virtual void StartAnimation();
       DECL_GEN_SIGNAL(_001OnMainPostMessage);
       void GetSelectedFilePath(stringa & stra);
-      virtual bool _001IsTranslucent();
+      virtual bool _001IsTranslucent() override;
 
       
-      virtual void browse_sync(::action::context actioncontext);
+      virtual void browse_sync(::action::context actioncontext) override;
       virtual void knowledge(const ::file::path & strPath,::action::context actioncontext,bool bOnlyParent = false);
       virtual void filemanager_tree_insert(const ::file::path & strPath,::file::listing & listing, ::action::context actioncontext,bool bOnlyParent = false, bool bVoidTreeDataChangeEvent = true);
       void _017EnsureVisible(const ::file::path & path, ::action::context actioncontext);
@@ -105,7 +105,7 @@ namespace filemanager
 
       void RenameFile(int32_t iLine, string & str, ::action::context actioncontext);
 
-      virtual void on_update(::user::impact * pSender, LPARAM lHint, object* pHint);
+      virtual void on_update(::user::impact * pSender, LPARAM lHint, object* pHint) override;
 
 
       DECL_GEN_SIGNAL(_001OnLButtonDblClk);
@@ -114,8 +114,8 @@ namespace filemanager
       DECL_GEN_SIGNAL(_001OnShellCommand);
 
 
-      virtual void on_merge_user_tree(::user::tree * pusertree);
-      virtual void on_bind_user_tree(::user::tree * pusertree);
+      virtual void on_merge_user_tree(::user::tree * pusertree) override;
+      virtual void on_bind_user_tree(::user::tree * pusertree) override;
 
 
    };

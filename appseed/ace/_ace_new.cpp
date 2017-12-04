@@ -21,6 +21,7 @@ extern "C"
 
 }
 
+
 #ifdef WINDOWS
 
 void * operator new(size_t nSize)
@@ -31,6 +32,8 @@ void * operator new(size_t nSize)
 }
 
 #else
+
+
 
 void * operator new(size_t nSize) new_throw_spec
 {
@@ -88,28 +91,26 @@ void operator delete(void * p, size_t n) del_throw_spec
 
 
 
-
-
-struct openssl_exception
-{
-
-   char * file;
-   int line;
-   char * assertion;
-   char * message;
-
-};
-
-extern "C"
-void openssl_throw_exception(struct openssl_exception * pe)
-{
-
-   openssl_exception e;
-
-   e = *pe;
-
-   throw e;
-
-}
+//struct openssl_exception
+//{
+//
+//   char * file;
+//   int line;
+//   char * assertion;
+//   char * message;
+//
+//};
+//
+//extern "C"
+//void openssl_throw_exception(struct openssl_exception * pe)
+//{
+//
+//   openssl_exception * peNew = new openssl_exception;
+//
+//   *peNew = *pe;
+//
+//   throw peNew;
+//
+//}
 
 

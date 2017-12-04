@@ -42,7 +42,7 @@ inline void critical_section::lock()
    }
    //catch(...)
    //{
-     // throw resource_exception(get_app());
+     // _throw(resource_exception(get_app()));
    //}
 }
 

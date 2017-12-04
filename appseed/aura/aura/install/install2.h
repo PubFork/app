@@ -1,9 +1,6 @@
 #pragma once
 
 
-#if defined(INSTALL_SUBSYSTEM)
-
-
 namespace install
 {
 
@@ -30,16 +27,12 @@ namespace install
 
 #include "install_window.h"
 #include "install_install_item.h"
-#include "install_socket.h"
-#include "install_socket_handler.h"
-#include "install_socket_thread.h"
+//#include "install_socket.h"
+//#include "install_socket_handler.h"
+//#include "install_socket_thread.h"
 #include "install_trace.h"
 
 
-#include "install_tool.h"
-
-
-#include "install_bootstrap.h"
 
 
 #include "install_installer.h"
@@ -48,4 +41,4 @@ namespace install
 #include "install_application.h"
 
 
-#endif
+

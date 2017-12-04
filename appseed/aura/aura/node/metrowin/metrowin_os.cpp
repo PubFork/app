@@ -149,7 +149,7 @@ namespace metrowin
 
       }
 #else
-      throw todo(get_app());
+      _throw(todo(get_app()));
 #endif
    }
 
@@ -211,7 +211,7 @@ namespace metrowin
 
       CloseHandle( hProcess );
 #else
-      throw todo(get_app());
+      _throw(todo(get_app()));
 #endif
       return strName;
    }
@@ -234,7 +234,7 @@ namespace metrowin
          dwa.set_size(cbNeeded / sizeof(DWORD));
       }
 #else
-      throw todo(get_app());
+      _throw(todo(get_app()));
 #endif
    }
 
@@ -257,7 +257,7 @@ namespace metrowin
          strPath.ReleaseBuffer();
       }
 #else
-      throw todo(get_app());
+      _throw(todo(get_app()));
 #endif
       return strPath;
    }
@@ -325,7 +325,7 @@ namespace metrowin
 
 #else
 
-      throw todo(get_app());
+      _throw(todo(get_app()));
 
 #endif
 
@@ -345,7 +345,7 @@ namespace metrowin
 
 #else
 
-      throw todo(get_app());
+      _throw(todo(get_app()));
 
 #endif
 
@@ -364,7 +364,7 @@ namespace metrowin
 
 #else
 
-      throw todo(get_app());
+      _throw(todo(get_app()));
 
 #endif
 
@@ -383,7 +383,7 @@ namespace metrowin
 
 #else
 
-      throw todo(get_app());
+      _throw(todo(get_app()));
 
 #endif
 
@@ -428,7 +428,7 @@ namespace metrowin
 
 #else
 
-      throw todo(get_app());
+      _throw(todo(get_app()));
 
 #endif
 
@@ -498,7 +498,7 @@ namespace metrowin
 
 #else
 
-      throw todo(get_app());
+      _throw(todo(get_app()));
 
 #endif
 
@@ -533,7 +533,7 @@ namespace metrowin
 
 #else
 
-      throw todo(get_app());
+      _throw(todo(get_app()));
 
 #endif
 
@@ -571,7 +571,7 @@ namespace metrowin
 
 #else
 
-      throw todo(get_app());
+      _throw(todo(get_app()));
 
 #endif
 
@@ -619,7 +619,7 @@ namespace metrowin
 
 #else
 
-      throw todo(get_app());
+      _throw(todo(get_app()));
 
 #endif
 
@@ -672,7 +672,7 @@ namespace metrowin
 
 #else
 
-      throw todo(get_app());
+      _throw(todo(get_app()));
 
 #endif
 
@@ -727,7 +727,7 @@ namespace metrowin
 
 #else
 
-      throw todo(get_app());
+      _throw(todo(get_app()));
 
 #endif
 
@@ -774,7 +774,7 @@ namespace metrowin
 
 #else
 
-      throw todo(get_app());
+      _throw(todo(get_app()));
 
 #endif
 
@@ -822,7 +822,7 @@ namespace metrowin
 
 #else
 
-      throw todo(get_app());
+      _throw(todo(get_app()));
 
 #endif
 
@@ -875,7 +875,7 @@ namespace metrowin
 
 #else
 
-      throw todo(get_app());
+      _throw(todo(get_app()));
 
 #endif
 

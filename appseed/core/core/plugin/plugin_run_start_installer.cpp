@@ -1,8 +1,5 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "core/user/user/user.h"
-
-
-#ifdef HOTPLUGIN_SUBSYSTEM
 
 
 namespace plugin
@@ -13,15 +10,12 @@ namespace plugin
    {
       UNREFERENCED_PARAMETER(papp);
    }
-         
+
    void run_start_installer::run_start_install(const char * pszStart)
    {
       m_pplugin->run_start_install(pszStart);
    }
 
 } // namespace plugin
-
-
-#endif
 
 

@@ -330,9 +330,6 @@
     <ClCompile Include="user\user\user_mesh_cache_interface.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
-    <ClCompile Include="user\user\user_multiple_document_template.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
     <ClCompile Include="user\user\user_network_configuration.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
@@ -349,9 +346,6 @@
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
     <ClCompile Include="user\user\user_shell.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_single_document_template.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
     <ClCompile Include="user\user\user_split_bar.cpp">
@@ -957,6 +951,9 @@
     <ClCompile Include="user\simple\simple_mesh_data.cpp">
       <Filter>Source Files\user\simple</Filter>
     </ClCompile>
+    <ClCompile Include="user\_user.cpp">
+      <Filter>Source Files\user</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="core.def">
@@ -1162,9 +1159,6 @@
     <ClInclude Include="user\user\user_mesh_cache_interface.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
-    <ClInclude Include="user\user\user_multiple_document_template.h">
-      <Filter>Header Files\user\user</Filter>
-    </ClInclude>
     <ClInclude Include="user\user\user_network_configuration.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
@@ -1184,9 +1178,6 @@
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
     <ClInclude Include="user\user\user_simple_list_data.h">
-      <Filter>Header Files\user\user</Filter>
-    </ClInclude>
-    <ClInclude Include="user\user\user_single_document_template.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
     <ClInclude Include="user\user\user_split_bar.h">
@@ -1626,6 +1617,9 @@
     </ClInclude>
     <ClInclude Include="filesystem\filemanager\filemanager.h">
       <Filter>Header Files\filesystem\filemanager</Filter>
+    </ClInclude>
+    <ClInclude Include="core\core\core_session.h">
+      <Filter>Header Files\core\core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

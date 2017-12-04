@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include <math.h>
 
 
@@ -627,10 +627,10 @@ class var & var::operator = (const class var & var)
          prop()   = ((class var &)var).prop();
          break;
       case type_element:
-         {
-            m_sp = ((class var &)var).m_sp;
-         }
-         break;
+      {
+         m_sp = ((class var &)var).m_sp;
+      }
+      break;
       case type_id:
          m_id    = var.m_id;
          break;
@@ -879,94 +879,94 @@ void var::read(::file::istream & is)
    case type_pstring:
       set_type(type_string, false);
    case type_string:
-      {
-         strsize size;
-         is >> size;
-         char * lpsz = m_str.GetBuffer(size + 2);
-         is.read(lpsz, (size + 1) * sizeof(CHAR));
-         m_str.ReleaseBuffer();
-      }
-      break;
+   {
+      strsize size;
+      is >> size;
+      char * lpsz = m_str.GetBuffer(size + 2);
+      is.read(lpsz, (size + 1) * sizeof(CHAR));
+      m_str.ReleaseBuffer();
+   }
+   break;
    case type_int32:
-      {
-         is >> m_i32;
-      }
-      break;
+   {
+      is >> m_i32;
+   }
+   break;
    case type_int64:
-      {
-         is >> m_i64;
-      }
-      break;
+   {
+      is >> m_i64;
+   }
+   break;
    case type_uint64:
-      {
-         is >> m_ui64;
-      }
-         break;
+   {
+      is >> m_ui64;
+   }
+   break;
    case type_bool:
-      {
-         is >> m_b;
-      }
-      break;
+   {
+      is >> m_b;
+   }
+   break;
    case type_double:
-      {
-         is >> m_d;
-      }
-      break;
+   {
+      is >> m_d;
+   }
+   break;
    case type_new:
    case type_null:
    case type_empty:
       break;
    case type_inta:
+   {
+      int32_t iCount;
+      is >> iCount;
+      inta().allocate(iCount);
+      for(int32_t i = 0; i < m_pia->get_count(); i++)
       {
-         int32_t iCount;
-         is >> iCount;
-         inta().allocate(iCount);
-         for(int32_t i = 0; i < m_pia->get_count(); i++)
-         {
-            is >> (int32_t &) m_pia->element_at(i);
-         }
+         is >> (int32_t &) m_pia->element_at(i);
       }
-      break;
+   }
+   break;
    case type_memory:
-      {
-         is >> memory();
-      }
-      break;
+   {
+      is >> memory();
+   }
+   break;
    case type_stra:
-      {
-         is >> stra();
-      }
-      break;
+   {
+      is >> stra();
+   }
+   break;
    case type_propset:
-      {
-         is >> propset();
-      }
-      break;
+   {
+      is >> propset();
+   }
+   break;
    case type_id:
-      {
-         is >> m_id;
-      }
-      break;
+   {
+      is >> m_id;
+   }
+   break;
    case type_element:
+   {
+      sp(type) info;
+      is >> info;
+      m_sp = Sys(is.m_spfile->get_app()).alloc(info);
+      if(m_sp.is_null())
       {
-         sp(type) info;
-         is >> info;
-         m_sp = Sys(is.m_spfile->get_app()).alloc(info);
-         if(m_sp.is_null())
-         {
-            throw "object allocation is not implemented";
-         }
-         ::file::serializable * pserializable = m_sp.cast < ::file::serializable >();
-         if(pserializable != NULL)
-         {
-            pserializable->read(is);
-         }
-         else
-         {
-            throw io_exception(is.m_spfile->get_app(), "object serialization is not implemented");
-         }
+         _throw(simple_exception(get_app(), "object allocation is not implemented"));
       }
-      break;
+      ::file::serializable * pserializable = m_sp.cast < ::file::serializable >();
+      if(pserializable != NULL)
+      {
+         pserializable->read(is);
+      }
+      else
+      {
+         _throw(io_exception(is.m_spfile->get_app(), "object serialization is not implemented"));
+      }
+   }
+   break;
    default:
       is.setstate(::file::failbit); // stream corrupt
       break;
@@ -980,12 +980,12 @@ void var::write(::file::ostream & ostream) const
    switch(get_type())
    {
    case type_string:
-      {
-         strsize len = m_str.get_length();
-         ostream << len;
-         ostream.write((const char *) m_str, m_str.get_length() + 1);
-      }
-      break;
+   {
+      strsize len = m_str.get_length();
+      ostream << len;
+      ostream.write((const char *) m_str, m_str.get_length() + 1);
+   }
+   break;
    case type_pstring:
    {
       strsize len = m_pstr->get_length();
@@ -1013,14 +1013,14 @@ void var::write(::file::ostream & ostream) const
    case type_empty:
       break;
    case type_inta:
+   {
+      ostream << inta().get_count();
+      for(int32_t i = 0; i < m_pia->get_count(); i++)
       {
-         ostream << inta().get_count();
-         for(int32_t i = 0; i < m_pia->get_count(); i++)
-         {
-            ostream << m_pia->element_at(i);
-         }
+         ostream << m_pia->element_at(i);
       }
-      break;
+   }
+   break;
    case type_memory:
       ostream << memory();
       break;
@@ -1034,24 +1034,24 @@ void var::write(::file::ostream & ostream) const
       ostream << m_id;
       break;
    case type_element:
+   {
+      sp(type) info(Sys(ostream.m_spfile->get_app()).get_type_info(typeid(*m_sp.m_p)));
+      ostream << info;
+
+      ::file::serializable * pserializable = m_sp.cast < ::file::serializable > ();
+
+      if(pserializable != NULL)
       {
-         sp(type) info(Sys(ostream.m_spfile->get_app()).get_type_info(typeid(*m_sp.m_p)));
-         ostream << info;
-
-         ::file::serializable * pserializable = m_sp.cast < ::file::serializable > ();
-
-         if(pserializable != NULL)
-         {
-            pserializable->write(ostream);
-         }
-         else
-         {
-            throw io_exception(ostream.m_spfile->get_app(), "object is not serializable");
-         }
+         pserializable->write(ostream);
       }
-      break;
+      else
+      {
+         _throw(io_exception(ostream.m_spfile->get_app(), "object is not serializable"));
+      }
+   }
+   break;
    default:
-         throw simple_exception(::get_thread_app(), "var::write var type not recognized");
+      _throw(simple_exception(get_app(), "var::write var type not recognized"));
    }
 }
 
@@ -1743,17 +1743,17 @@ int32_t var::int32(int32_t iDefault) const
    case type_pstring:
       return atoi(*m_pstr);
    case type_id:
-      {
-         if(!is32integer((int64_t) m_id))
-            throw overflow_error(get_thread_app(), "var contains id that does not fit 32 bit integer");
-         return (int32_t) (int64_t) m_id;
-      }
+   {
+      if(!is32integer((int64_t) m_id))
+         _throw(overflow_error(get_app(), "var contains id that does not fit 32 bit integer"));
+      return (int32_t) (int64_t) m_id;
+   }
    case type_pid:
-      {
-         if(!is32integer((int64_t) *m_pid))
-            throw overflow_error(get_thread_app(), "var contains id that does not fit 32 bit integer");
-         return (int32_t) (int64_t) *m_pid;
-      }
+   {
+      if(!is32integer((int64_t) *m_pid))
+         _throw(overflow_error(get_app(), "var contains id that does not fit 32 bit integer"));
+      return (int32_t) (int64_t) *m_pid;
+   }
    default:
       return iDefault;
    }
@@ -1802,6 +1802,14 @@ int64_t var::int64(int64_t iDefault) const
       return m_i64;
    case type_uint64:
       return m_ui64;
+   case type_pint32:
+      return *m_pi32;
+   case type_puint32:
+      return *m_pui32;
+   case type_pint64:
+      return *m_pi64;
+   case type_puint64:
+      return *m_pui64;
    case type_element:
       return iDefault;
    case type_pvar:
@@ -2030,7 +2038,7 @@ const class memory & var::memory() const
 {
    if(get_type() != type_memory)
    {
-      throw 0;
+      _throw(simple_exception(get_app(), "integer_exception 122" ));
    }
    return *dynamic_cast < const class memory * > (m_sp.m_p);
 }
@@ -2225,7 +2233,7 @@ var var::key(index i) const
    case type_propset:
       return i;
    default:
-      throw "not supported";
+      _throw(simple_exception(get_app(), "not supported"));
    }
 }
 
@@ -2272,7 +2280,7 @@ var var::at(index i) const
       }
       else
       {
-         throw "index out of bounds";
+         _throw(simple_exception(get_app(), "index out of bounds"));
       }
    }
 }
@@ -2298,7 +2306,7 @@ var var::at(index i)
       }
       else
       {
-         throw "index out of bounds";
+         _throw(simple_exception(get_app(), "index out of bounds"));
       }
    }
 }
@@ -2316,16 +2324,16 @@ bool var::array_contains(const char * psz, index find, ::count count) const
    case type_propset:
       return propset().contains_value(psz, find, count);
    default:
+   {
+      index upperbound = MIN(array_get_upper_bound(), find + count - 1);
+      for(index i = find; i <= upperbound; i++)
       {
-         index upperbound = MIN(array_get_upper_bound(), find + count - 1);
-         for(index i = find; i <= upperbound; i++)
+         if(at(i) == psz)
          {
-            if(at(i) == psz)
-            {
-               return true;
-            }
+            return true;
          }
       }
+   }
    }
    return false;
 }
@@ -2345,16 +2353,16 @@ bool var::array_contains_ci(const char * psz, index find, index last) const
    case type_propset:
       return propset().contains_value_ci(psz, find, last);
    default:
+   {
+      index upperbound = MIN(array_get_upper_bound(), last);
+      for(index i = find; i <= upperbound; i++)
       {
-         index upperbound = MIN(array_get_upper_bound(), last);
-         for(index i = find; i <= upperbound; i++)
+         if(at(i).get_string().compare_ci(psz) == 0)
          {
-            if(at(i).get_string().compare_ci(psz) == 0)
-            {
-               return true;
-            }
+            return true;
          }
       }
+   }
    }
    return false;
 }
@@ -2725,9 +2733,9 @@ var operator / (uint64_t ul, const class var & var)
    switch(var.m_etype)
    {
    case ::var::type_null:
-      throw simple_exception(get_thread_app(), "division by zero");
+      _throw(simple_exception(get_app(), "division by zero"));
    case ::var::type_empty:
-      throw simple_exception(get_thread_app(), "division by zero");
+      _throw(simple_exception(get_app(), "division by zero"));
    case ::var::type_int32:
       return (int_ptr) ul / var.m_i32;
    case ::var::type_uint32:
@@ -2745,7 +2753,7 @@ var operator / (uint64_t ul, const class var & var)
    case ::var::type_pvar:
       return operator / (ul, *var.m_pvar);
    default:
-      throw simple_exception(get_thread_app(), "division by zero");
+      _throw(simple_exception(get_app(), "division by zero"));
    }
 
 }
@@ -3611,17 +3619,17 @@ var::operator bool() const
 {
 
    if (m_etype == type_new
-      || m_etype == type_null
-      || m_etype == type_empty
-      || m_etype == type_empty_argument)
+         || m_etype == type_null
+         || m_etype == type_empty
+         || m_etype == type_empty_argument)
    {
 
       return false;
 
    }
    else if (m_etype == type_key_exists
-    || m_etype == type_filetime
-    || m_etype == type_time)
+            || m_etype == type_filetime
+            || m_etype == type_time)
    {
 
       return true;
@@ -3679,14 +3687,14 @@ var::operator bool() const
    {
 
       return (m_id.is_text() && m_id.m_psz != NULL && stricmp(m_id.m_psz, "true"))
-         || (m_id.is_integer() && m_id.m_i != 0);
+             || (m_id.is_integer() && m_id.m_i != 0);
 
    }
    else if (m_etype == type_pid)
    {
 
-      return m_pid != NULL && (m_pid->is_text() && m_pid->m_psz != NULL && stricmp(m_pid->m_psz, "true"))
-         || (m_pid->is_integer() && m_pid->m_i != 0);
+      return m_pid != NULL && ((m_pid->is_text() && m_pid->m_psz != NULL && stricmp(m_pid->m_psz, "true"))
+                               || (m_pid->is_integer() && m_pid->m_i != 0));
 
    }
    else if (m_etype == type_inta)
@@ -4469,7 +4477,7 @@ bool var::is_numeric() const
       return false;
 
    default:
-      throw not_implemented(get_thread_app());
+      _throw(not_implemented(get_app()));
 
    };
 
@@ -4620,32 +4628,32 @@ bool var::is_false() const
 // and avoid duplicate
 void var::_001Add(const stringa & straParam)
 {
-   
+
    if(straParam.get_count() <= 0)
    {
-    
+
       return;
-      
+
    }
-   
+
    if(straParam.get_count() == 1)
    {
-      
+
       if(get_string().compare_ci(straParam[0]) == 0)
       {
-      
+
          return;
-         
+
       }
       else if(is_empty())
       {
-         
+
          operator = (straParam[0]);
-         
+
          return;
-         
+
       }
-      
+
    }
 
    stra().add_unique_ci(straParam);

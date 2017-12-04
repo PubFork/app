@@ -2,12 +2,15 @@
 
 #ifdef WINDOWS
 
+#ifdef METROWIN
+[MTAThread]
+#endif
 extern "C" int32_t WINAPI DllMain(HINSTANCE hInstance, uint32_t dwReason, LPVOID)
 {
 
    if (dwReason == DLL_PROCESS_ATTACH)
    {
-      
+
       ::output_debug_string(L"ca2.dll Initializing");
 
    }

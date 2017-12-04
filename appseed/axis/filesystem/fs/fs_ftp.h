@@ -1,7 +1,17 @@
-#pragma once
+﻿#pragma once
 
 
 // ifs - implementation of file system interface - file.ca2.cc
+
+class ftpnet;
+
+namespace ftp
+{
+
+   class client_socket;
+
+}
+
 
 class CLASS_DECL_AXIS ftpfs :
    virtual public ::fs::data
@@ -15,8 +25,8 @@ public:
 
    stringa        m_straFtpServer;
 
-   string_map < sp(::ftp::output) > m_mapOutput;
-   string_map < sp(::ftp::client_socket) > m_mapClient;
+   ftpnet *       m_pftpnet;
+
 
 
    class CLASS_DECL_AXIS dir_listing :
@@ -31,7 +41,6 @@ public:
 
    filepathmap(dir_listing)     m_map;
 
-   ::sockets::socket_handler     m_sockethandler;
 
    //file_path_map < uint32_t >    m_mapdirTimeout;
    //file_path_map < uint32_t >    m_mapfileTimeout;
@@ -47,7 +56,7 @@ public:
 
 
    ftpfs(::aura::application * papp, const char * pszRoot);
-
+   virtual ~ftpfs();
 
    virtual bool has_subdir(const ::file::path & pszPath);
    virtual bool fast_has_subdir(const ::file::path  & pszPath);

@@ -72,11 +72,37 @@ namespace aura
 
    };
 
-} // namespace system
+   class library;
 
+   class application;
+
+#if defined(APPLE_IOS)
+   extern "C"
+#endif
+   typedef ::aura::library * (*PFN_GET_NEW_LIBRARY)(::aura::application * papp);
+
+#if defined(APPLE_IOS)
+   extern "C"
+#endif
+   typedef ::aura::application * (*PFN_GET_NEW_APP)(::aura::application * papp);
+
+} // namespace aura
+
+extern "C"
+CLASS_DECL_AURA void register_library(const char * psz, ::aura::PFN_GET_NEW_LIBRARY pfnNewLibrary);
+
+
+#define DECL_LIB(X) extern "C" \
+::aura::library * X##_get_new_library(::aura::application * papp)
+
+#define SET_LIB(X) g_pfnNewLibrary = &X##_get_new_library
+
+#define REG_LIB(X) register_library(#X, &X##_get_new_library)
 
 namespace install
 {
+
+
 
    class installer;
 
@@ -153,7 +179,17 @@ namespace user
 
    class interactive;
 
+#if defined(METROWIN) || defined(APPLE_IOS) || defined(ANDROID)
+
+   class native_window_initialize;
+
+#endif
+
+
 } // namespace user
+
+
+
 
 
 namespace aura
@@ -191,8 +227,6 @@ namespace user
 } // namespace aura
 
 
-#if defined(INSTALL_SUBSYSTEM)
-
 namespace install
 {
 
@@ -202,9 +236,6 @@ namespace install
 
 
 } // namespace install
-
-#endif
-
 
 namespace data
 {
@@ -241,6 +272,7 @@ class compress_department; // only usable from axis.dll and dependants
 class command_target;
 
 class dump_context;
+
 //class string_interface;
 class id_space;
 class type;
@@ -339,15 +371,13 @@ namespace file
 
 class machine_event_data;
 
-#ifdef HOTPLUGIN_SUBSYSTEM
-
 namespace hotplugin
 {
+
    class host;
    class plugin;
-}
 
-#endif
+}
 
 
 
@@ -358,6 +388,19 @@ namespace html
 
 } // namespace html
 
+
+namespace multimedia
+{
+
+   namespace audio_plugin
+   {
+
+      class plugin;
+
+   } // namespace audio_plugin
+
+
+} // namespace multimedia
 
 #include "aura/aura/aura/aura_auto.h"
 #include "aura/primitive/comparison/comparison_compare.h"
@@ -482,7 +525,7 @@ namespace aura
 
 } // namespace aura
 
-
+#include "aura/aura/aura/aura_malloc.h"
 
 class image_list;
 
@@ -570,7 +613,11 @@ namespace core
 
 }
 
-typedef ::aura::system * CREATE_SYSTEM();
+
+class app_core;
+
+
+typedef ::aura::system * CREATE_SYSTEM(app_core * pappcore);
 typedef CREATE_SYSTEM * LPFN_CREATE_SYSTEM;
 
 CLASS_DECL_AURA extern LPFN_CREATE_SYSTEM g_pfn_create_system;
@@ -641,21 +688,11 @@ namespace draw2d
 
 class random_access_iterator
 {
-   public:
+public:
 };
 
 
-#ifdef WINDOWS
 
-typedef HANDLE HTHREAD;
-
-#else
-
-#ifndef LINUX
-typedef pthread_t HTHREAD;
-#endif
-
-#endif
 
 
 class event;
@@ -693,20 +730,20 @@ namespace html
 
 #define CaSys(pca) (*pca->m_pauraapp->m_paurasystem)
 #define Sys(pauraapp) (*pauraapp->m_paurasystem)
-#define System (Sys(this->m_pauraapp))
-#define threadSystem (Sys(get_thread_app()))
+#define System (Sys(get_app()))
+#define threadSystem (System)
 
 
 #define Sess(pauraapp) (*pauraapp->m_paurasession)
-#define Session (Sess(m_pauraapp))
+#define Session (Sess(get_app()))
 
 
 #undef App
 #define App(pauraapp) (*pauraapp)
-#define Application (App(m_pauraapp))
+#define Application (App(get_app()))
 
 #define AppUser(pauraapp) (*pauraapp->m_paurasession->fontopus()->get_user())
-#define ApplicationUser (AppUser(m_pauraapp))
+#define ApplicationUser (AppUser(get_app()))
 
 
 // return - result - if not ok
@@ -714,9 +751,9 @@ namespace html
 #define RINOK(x) { int32_t __result__ = (x); if (__result__ != 0) return __result__; }
 #endif
 
-// throw - exception - result exception - if not ok
+// _throw( - exception - result exception - if not ok
 #ifndef TINOK
-#define TINOK(e, x) { int32_t __result__ = (x); if (__result__ != 0) throw new e(get_app(), __result__); }
+#define TINOK(e, x) { int32_t __result__ = (x); if (__result__ != 0) _throw(e(get_app(), __result__)); }
 #endif
 
 
@@ -731,12 +768,18 @@ typedef void * HDWP;
 
 #endif
 
+#ifdef APPLE_IOS
+
+struct plane_system;
+
+#endif
 
 typedef  void(*PFN_ca2_factory_exchange)(::aura::application * papp);
 
 #ifdef WINDOWS
 CLASS_DECL_AURA bool defer_co_initialize_ex(bool bMultiThread);
 #endif
+
 
 CLASS_DECL_AURA bool aura_init();
 CLASS_DECL_AURA bool aura_term();
@@ -747,8 +790,13 @@ CLASS_DECL_AURA bool __node_aura_pos_init();
 CLASS_DECL_AURA bool __node_aura_pre_term();
 CLASS_DECL_AURA bool __node_aura_pos_term();
 
+extern "C"
+CLASS_DECL_AURA ::aura::PFN_GET_NEW_LIBRARY get_library_factory(const char * psz);
 
-CLASS_DECL_AURA ::aura::application * get_thread_app();
+extern "C"
+CLASS_DECL_AURA void register_library(const char * psz, ::aura::PFN_GET_NEW_LIBRARY p);
+
+CLASS_DECL_AURA ::aura::application * get_app();
 
 #include "aura/primitive/primitive_cflag.h"
 
@@ -763,16 +811,45 @@ CLASS_DECL_AURA ::aura::application * get_thread_app();
 
 
 
-template <class TYPE>
-inline bool is_null(const TYPE & ref)
+template < typename TYPE >
+bool is_null(const TYPE * p)
 {
-   return &ref == NULL;
+   return (((int_ptr)p) < ((sizeof(TYPE) + sizeof(int_ptr)) * 2));
 }
 
-#define NULL_REF(class) (*((class *) NULL))
+template < typename TYPE >
+bool is_set(const TYPE * p)
+{
+   return !is_null(p);
+}
 
 
-#include "aura/aura/aura/aura_pointer.h"
+template < typename TYPE >
+bool is_null(const TYPE & t)
+{
+   return (((int_ptr)&t) < ((sizeof(TYPE) + sizeof(int_ptr)) * 2));
+}
+
+template < typename TYPE >
+bool is_set(const TYPE & t)
+{
+   return !is_null(t);
+}
+
+
+template <class t>
+inline void delptr(t *& p)
+{
+   if(p != NULL)
+   {
+      delete p;
+      p = NULL;
+   }
+}
+
+
+
+#include "aura/aura/aura/aura_auto_pointer.h"
 
 #include "aura/aura/aura/aura_smart_pointer1.h"
 #include "aura/aura/aura/aura_smart_pointer2.h"
@@ -889,6 +966,11 @@ namespace file
 
 
 #include "aura/aura/exception/exception.h"
+
+
+template<class TYPE>
+inline void dump_elements(dump_context & dumpcontext, const TYPE* pElements, ::count nCount);
+
 #include "aura/aura/aura/aura_common.h"
 #include "aura/filesystem/filesystem/filesystem_path.h"
 
@@ -956,6 +1038,30 @@ namespace file
 
 #include "aura/aura/aura/aura_gudo.h"
 
+namespace aura
+{
+
+#if defined METROWIN && defined(__cplusplus_winrt)
+
+   interface class system_window
+      {
+
+         virtual Windows::Foundation::Rect get_window_rect() = 0;
+         virtual Windows::Foundation::Point get_cursor_pos() = 0;
+
+
+
+      };
+
+   CLASS_DECL_AURA bool get_window_rect(system_window ^ pwindow, RECTD * lprect);
+   CLASS_DECL_AURA bool get_window_rect(system_window ^ pwindow, LPRECT lprect);
+
+#endif
+
+
+   class session;
+
+} // namespace aura
 
 
 
@@ -981,7 +1087,7 @@ namespace file
 #include "aura/os/ansios/ansios.h"
 #include "aura/os/android/android.h"
 
-#elif defined(WINDOWS)
+#elif defined(WINDOWSEX)
 
 #include "aura/aura/os/windows/windows.h"
 
@@ -1009,14 +1115,14 @@ namespace file
 
 class CLASS_DECL_AURA openweather_city
 {
-   public:
+public:
 
-      index    m_iIndex;
-      string   m_strCnt;
-      string   m_strCit;
-      int64_t  m_iId;
-      double   m_dLat;
-      double   m_dLon;
+   index    m_iIndex;
+   string   m_strCnt;
+   string   m_strCit;
+   int64_t  m_iId;
+   double   m_dLat;
+   double   m_dLon;
 
 };
 
@@ -1044,7 +1150,7 @@ CLASS_DECL_AURA string get_system_error_message(uint32_t dwError);
 #include "aura/aura/message/message_base.h"
 #include "aura/aura/message/message_timer.h"
 
-#include "aura/user/user/user_const.h"
+//#include "aura/user/user/user_const.h"
 
 #include "aura/user/user/user_command.h"
 //#include "aura/aura/aura/aura_::user::command.h"
@@ -1064,7 +1170,7 @@ CLASS_DECL_AURA string get_system_error_message(uint32_t dwError);
 //#include "user/user/user_buffer.h"
 #include "aura/aura/aura/aura_keep.h"
 #include "aura/aura/aura/aura_restore.h"
-#include "aura/aura/aura/aura_md5.h"
+//#include "aura/aura/aura/aura_md5.h"
 #include "aura/filesystem/file/file_stream2.h"
 //#include "user/user/user_interaction.h"
 //#include "user/user/user_interaction_impl_base.h"
@@ -1221,20 +1327,6 @@ CLASS_DECL_AURA string get_exe_path();
 #include "aura/user/user/user_interactive.h"
 
 
-//#include "aura/aura/aura/aura_application_interface.h"
-#include "aura/aura/aura/aura_application.h"
-#include "aura/aura/aura/aura_application_ptra.h"
-
-
-#include "aura/aura/aura/aura_gudo_application.inl"
-
-
-#include "aura/aura/aura/aura_application_message.h"
-
-#include "aura/aura/fontopus/fontopus.h"
-
-#include "aura/aura/aura/aura_session.h"
-
 
 
 #include "aura/aura/exception/exception_engine.h"
@@ -1276,9 +1368,45 @@ CLASS_DECL_AURA string get_exe_path();
 #include "aura/aura/aura/aura_cregexp.h"
 #include "aura/aura/aura/aura_cregexp_util.h"
 
+
+class CLASS_DECL_AURA ptra :
+   virtual public spa(object)
+{
+public:
+
+
+};
+
+
+typedef ::map < sp(object), sp(object), sp(object), sp(object) > element_map;
+typedef ::map < sp(object), sp(object), ptra, ptra > map_many;
+
+struct install_status
+{
+
+   int         m_iCheck;
+   bool        m_bOk;
+
+   install_status()
+   {
+
+      m_iCheck = 0;
+      m_bOk = false;
+
+   }
+
+
+   DWORD calc_when_is_good_to_check_again();
+
+};
+
+
+
+#include "aura/aura/os/os_text.h"
+
 #ifdef VSNORD
 
-#include "aura/aura/os/android/android_init_data.h"
+#include "aura/aura/os/android/android_data_exchange.h"
 
 #endif
 
@@ -1297,6 +1425,34 @@ CLASS_DECL_AURA string get_exe_path();
 #include "aura/aura/crypto/crypto.h"
 
 #include "aura/multimedia/multimedia.h"
+
+#include "aura/aura/aura/aura_console_window.h"
+
+#include "aura/primitive/primitive_color.h"
+
+#include "aura/graphics/graphics.h"
+
+#include "aura/user/user/user.h"
+
+//#include "aura/aura/aura/aura_application_interface.h"
+#include "aura/aura/aura/aura_application.h"
+#include "aura/aura/aura/aura_application_ptra.h"
+
+
+#include "aura/aura/aura/aura_gudo_application.inl"
+
+
+#include "aura/aura/aura/aura_application_message.h"
+
+#include "aura/aura/fontopus/fontopus.h"
+
+
+
+
+#include "aura/aura/aura/aura_session.h"
+
+#include "aura/net/net_email_department.h"
+
 
 #include "aura/aura/aura/aura_system.h"
 
@@ -1342,13 +1498,13 @@ CLASS_DECL_AURA string get_exe_path();
 template < typename T >
 inline T get_maximum_value()
 {
-throw not_implemented(get_thread_app());
+_throw(not_implemented(get_app()));
 }
 
 template < typename T >
 inline T get_minimum_value()
 {
-throw not_implemented(get_thread_app());
+_throw(not_implemented(get_app()));
 }
 template < typename T >
 inline T get_null_value()
@@ -1416,7 +1572,7 @@ inline void string_format::format(const char * & s,const T & value,Args... args)
 
    }
 
-   throw simple_exception(get_thread_app(),"extra arguments provided to format");
+   _throw(simple_exception(get_app(),"extra arguments provided to format"));
 
 
 }
@@ -1648,7 +1804,7 @@ namespace std
    }
 
    template < typename T >
-   using auto_ptr = ::pointer < T >;
+   using auto_ptr = ::auto_pointer < T >;
 
    template < typename T >
    using stack = ::stack < T >;
@@ -1819,19 +1975,18 @@ CLASS_DECL_AURA ::aura::application * get_aura(void * p);
 #include "aura/aura/os/os_cpp.h"
 
 
-#include "aura/user/user.h"
+#include "aura/user/user/user.h"
 
 
-#include "aura/pcre/pcre.h"
+//#include "aura/pcre/pcre.h"
 
 
-#include "aura/charguess/charguess.h"
+//#include "aura/charguess/charguess.h"
 
 
 #include "aura/net/net.h"
 
 
-#include "aura/net/net_email_department.h"
 
 
 #include "aura/aura/scripting/javascript/javascript.h"
@@ -1851,19 +2006,11 @@ CLASS_DECL_AURA ::aura::application * get_aura(void * p);
 
 #include "aura/user/user/user_controller.h"
 
+#if !defined(METROWIN)
 
-template < typename TYPE >
-void function_call(const TYPE * p)
-{
+#include "aura/aura/aura/aura_serial.h"
 
-   const char * psz = reinterpret_cast < const char * > (p);
-
-}
-
-
-template < >
-CLASS_DECL_AURA void function_call(const ::object * p);
-
+#endif
 
 
 
@@ -1890,9 +2037,16 @@ namespace user
 
 #include "aura/primitive/primitive.inl"
 
+#include "aura/primitive/geometry/geometry.inl"
+
 #include "aura/filesystem/filesystem.inl"
 
 #include "aura/net/net.inl"
+
+#include "aura/graphics/visual/visual.inl"
+
+#include "aura/aura/exception/exception.inl"
+
 
 
 

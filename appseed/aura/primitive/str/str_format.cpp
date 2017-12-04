@@ -104,7 +104,7 @@ void string_format::allocate_add_up(strsize iLenAddUp)
    }
 
    if(m_pszBuffer == NULL)
-      throw memory_exception(get_thread_app());
+      _throw(memory_exception(get_app()));
 
 
    memset(&m_pszBuffer[m_iLength], 0, m_iAllocation - m_iLength);
@@ -144,7 +144,7 @@ bool string_format::parse(const char * & s)
       }
       if(*s == '\0')
       {
-         throw simple_exception(get_thread_app(), "unfineshed argument specifier");
+         _throw(simple_exception(get_app(), "unfineshed argument specifier"));
       }
       const char * start = s;
       while(*s != '\0')
@@ -166,7 +166,7 @@ bool string_format::parse(const char * & s)
       }
       if(*s == '\0')
       {
-         throw simple_exception(get_thread_app(), "unfineshed argument specifier");
+         _throw(simple_exception(get_app(), "unfineshed argument specifier"));
       }
       if(s > start)
       {
@@ -200,7 +200,7 @@ bool string_format::parse(const char * & s)
       }
       if(*s == '\0')
       {
-         throw simple_exception(get_thread_app(), "unfineshed argument specifier");
+         _throw(simple_exception(get_app(), "unfineshed argument specifier"));
       }
       if(s > start)
       {
@@ -217,7 +217,7 @@ bool string_format::parse(const char * & s)
       }
       if(*s == '\0')
       {
-         throw simple_exception(get_thread_app(), "unfineshed argument specifier");
+         _throw(simple_exception(get_app(), "unfineshed argument specifier"));
       }
       if(*s == 'c' || *s == 'd' || *s == 'i'
       || *s == 'e' || *s == 'E' || *s == 'f'
@@ -236,13 +236,13 @@ bool string_format::parse(const char * & s)
       }
       else
       {
-         throw simple_exception(get_thread_app(), "unfineshed format specifier");
+         _throw(simple_exception(get_app(), "unfineshed format specifier"));
       }
       return false;
    }
    else
    {
-      throw "invalid state";
+      _throw(simple_exception(get_app(), "invalid state"));
    }
 
 
@@ -255,7 +255,7 @@ void string_format::format(const char * & s)
    {
 
       if (*s == '%' && *(++s) != '%')
-         throw simple_exception(get_thread_app(), "invalid format string: missing arguments");
+         _throw(simple_exception(get_app(), "invalid format string: missing arguments"));
 
       append(*s++);
 
@@ -707,10 +707,60 @@ void string_format::format(const char * & s)
           ::str::format(pformat, (int_ptr)lparam.m_lparam);
 
       }
+      
+      
+      void format(string_format * pformat, const var & var)
+      {
+         
+         if(pformat->m_chLength == 's' || pformat->m_chLength == 'S')
+         {
+         
+            pformat->append(var.get_string());
+            
+         }
+         else if(pformat->m_chLength == 'x')
+         {
+            
+            pformat->append(::hex::lower_from(var.int64()));
+            
+         }
+         else if(pformat->m_chLength == 'X')
+         {
+            
+            pformat->append(::hex::upper_from(var.int64()));
+            
+         }
+         else if(pformat->m_chLength == 'd')
+         {
+            
+            pformat->append(::str::from(var.int64()));
+            
+         }
+         else if(pformat->m_chLength == 'f')
+         {
+            
+            pformat->append(::str::from(var.get_double()));
+            
+         }
+         else
+         {
+         
+            pformat->append(var.get_string());
+            
+         }
+
+      }
+
+      
+      void format(string_format * pformat, const property & property)
+      {
+         
+         format(pformat, property.get_value());
+         
+      }
+      
 
    } // namespace str
-
-
 
 
 #endif

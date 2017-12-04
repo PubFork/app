@@ -1,34 +1,11 @@
 #pragma once
 
 
-
-#if defined(METROWIN)
-
-#define OPENSSL_CRYPTO
-
-#else
-
-#define OPENSSL_CRYPTO
-
-#endif
-
-//CLASS_DECL_AURA bool crypt_file_get(const char * pszFile, string & str, const char * pszSalt);
-
-#ifdef MACOS_DEPRECATED
-
-#define AXIS_RSA_KEY SecKeyRef
-
-#elif defined(OPENSSL_CRYPTO)
-
-
+#if defined(HAVE_OPENSSL)
 
 typedef struct rsa_st RSA;
 
 #define AXIS_RSA_KEY RSA *
-
-#elif defined(METROWIN)
-
-#define AXIS_RSA_KEY ::Windows::Security::Cryptography::Core::CryptographicKey ^
 
 #else
 
@@ -36,24 +13,10 @@ typedef struct rsa_st RSA;
 
 #endif
 
-
-
-//#include "crypto_nessie.h"
-//#include "crypto_md5.h"
-
-
-
-
 #include "crypto_crypto.h"
 
-
-
-
-//CLASS_DECL_AURA bool hex_to_memory(memory & memory, const char * pszHex);
-//CLASS_DECL_AURA void memory_to_hex(string & strHex, memory & memory);
-
-
 int32_t crypto_encrypt(memory & storageEncrypt, const memory & storageDecrypt, memory & key);
+
 int32_t crypto_decrypt(memory & storageDecrypt, const memory & storageEncrypt, memory & key);
 
 

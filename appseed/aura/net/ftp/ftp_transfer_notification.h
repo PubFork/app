@@ -1,6 +1,9 @@
 #pragma once
 
 
+#include "ftp_interface.h"
+
+
 namespace ftp
 {
 

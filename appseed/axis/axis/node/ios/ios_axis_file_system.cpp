@@ -218,7 +218,7 @@ namespace ios
 //         {
 //            System.dir().mk(str, papp);
 //            if(!System.dir().is(str, papp))
-//               throw "time square dir does not exist";
+//               _throw(simple_exception(get_app(), "time square dir does not exist"));
 //            straTitle.remove_all();
 //            System.dir().ls(papp, str, NULL, &straTitle);
 //            if(i < iMaxLevel)
@@ -684,7 +684,7 @@ namespace ios
 //         if(bFailIfExists)
 //         {
 //            if(exists(pszNew, papp))
-//               throw "Failed to copy file";
+//               _throw(simple_exception(get_app(), "Failed to copy file"));
 //         }
 //         if(System.dir().is(psz, papp) && (eextract == extract_first || eextract == extract_all || !(::str::ends_ci(psz, ".zip"))))
 //         {
@@ -744,7 +744,7 @@ namespace ios
 //            {
 //               string strError;
 //               strError.Format("Failed to copy file \"%s\" to \"%s\" bFailIfExists=%d error=could not open output file", psz, pszNew, bFailIfExists);
-//               throw strError;
+//               _throw(strError);
 //            }
 //            
 //            ::file::file_sp ifile;
@@ -753,7 +753,7 @@ namespace ios
 //            {
 //               string strError;
 //               strError.Format("Failed to copy file \"%s\" to \"%s\" bFailIfExists=%d error=could not open input file", psz, pszNew, bFailIfExists);
-//               throw strError;
+//               _throw(strError);
 //            }
 //            
 //            ::file::output_stream ostream(ofile);
@@ -795,20 +795,20 @@ namespace ios
 //               {
 //                  string strError;
 //                  strError.Format("During copy, failed to close both input file \"%s\" and output file \"%s\" bFailIfExists=%d", psz, pszNew, bFailIfExists);
-//                  throw strError;
+//                  _throw(strError);
 //               }
 //               else
 //               {
 //                  string strError;
 //                  strError.Format("During copy, failed to close input file \"%s\" bFailIfExists=%d", psz, bFailIfExists);
-//                  throw strError;
+//                  _throw(strError);
 //               }
 //            }
 //            else if(bOutputFail)
 //            {
 //               string strError;
 //               strError.Format("During copy, failed to close output file \"%s\" bFailIfExists=%d", pszNew, bFailIfExists);
-//               throw strError;
+//               _throw(strError);
 //            }
 //            
 //         }
@@ -825,14 +825,14 @@ namespace ios
 //            uint32_t dwError = ::GetLastError();
 //            string strError;
 //            strError.Format("Failed to move file \"%s\" to \"%s\" error=%d", psz, pszNew, dwError);
-//            throw strError;
+//            _throw(strError);
 //         }
 //#elif defined(METROWIN)
 //         
 //         ::Windows::Storage::StorageFile ^ file = get_os_file(psz,  0, 0, NULL, OPEN_EXISTING, 0, NULL);
 //         
 //         if(file == nullptr)
-//            throw "file::file_system::move Could not move file, could not open source file";
+//            _throw(simple_exception(get_app(), "file::file_system::move Could not move file, could not open source file"));
 //         
 //         string strDirOld     = System.dir().name(psz);
 //         string strDirNew     = System.dir().name(pszNew);
@@ -870,7 +870,7 @@ namespace ios
 //            int32_t err = errno;
 //            string strError;
 //            strError.Format("Failed to delete file error=%d", err);
-//            throw strError;
+//            _throw(strError);
 //         }
 //#endif
 //      }
@@ -886,7 +886,7 @@ namespace ios
 //               return;
 //            string strError;
 //            strError.Format("Failed to delete file \"%s\" error=%d", psz, dwError);
-//            throw strError;
+//            _throw(strError);
 //         }
 //#else
 //         if(remove(psz) != 0)
@@ -894,7 +894,7 @@ namespace ios
 //            int32_t err = errno;
 //            string strError;
 //            strError.Format("Failed to delete file error=%d", err);
-//            throw strError;
+//            _throw(strError);
 //         }
 //#endif
 //         
@@ -1151,7 +1151,7 @@ namespace ios
 //         
 //#elif defined(METROWIN)
 //         
-//         throw todo(get_app());
+//         _throw(todo(get_app()));
 //         
 //#else
 //         
@@ -1223,7 +1223,7 @@ namespace ios
 //         ::file::file_sp fileOut = App(papp).file().get_file(name, ::file::mode_create | ::file::type_binary | ::file::mode_write);
 //         
 //         if(fileOut.is_null())
-//            throw ::file::exception(papp, -1, ::file::exception::none, name);
+//            _throw(::file::exception(papp, -1, ::file::exception::none, name));
 //         
 //         return fileOut;
 //         

@@ -14,6 +14,12 @@
 #endif
 
 
+#ifdef MACOS
+
+CLASS_DECL_CORE stringa macos_get_user_wallpaper(void);
+
+#endif
+
 namespace html
 {
 
@@ -226,11 +232,6 @@ class COleDataObject;   // forward reference (see afxole.h)
 #include "user_keyboard_layout_cfg.h"
 
 
-//#include "user_document_template_interface.h"
-//#include "user_document_template.h"
-#include "user_single_document_template.h"
-#include "user_multiple_document_template.h"
-
 
 #include "user_document_manager.h"
 
@@ -328,7 +329,7 @@ namespace user
 #include "user_document_manager.h"
 
 #ifdef LINUX
-      typedef struct _AppIndicator AppIndicator;
+typedef struct _AppIndicator AppIndicator;
 #endif
 
 
@@ -336,8 +337,6 @@ namespace user
 #include "user_notify_icon.h"
 #include "user_notify_icon_listener.h"
 
-#include "user_single_document_template.h"
-#include "user_multiple_document_template.h"
 
 
 
@@ -416,6 +415,11 @@ namespace core
       void close_all_documents();
 
    };
+
+
+   session_docs * create_session_docs();
+   void destroy_session_docs(session_docs * pdocs);
+
 
 } // namespace core
 

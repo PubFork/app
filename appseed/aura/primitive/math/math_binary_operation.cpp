@@ -18,7 +18,7 @@ namespace math
 
    void binary_operation::set_value_string(const char * psz)
    {
-      throw "not implemented";
+      _throw(simple_exception(get_app(), "not implemented"));
    }
 
    string binary_operation::get_value_string(e_get_value egetvalue)

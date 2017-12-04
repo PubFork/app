@@ -28,7 +28,7 @@ namespace user
       ::DeleteObject(m_hfontHidden);
       ::DeleteObject(m_hfontRegular);
 #else
-//      throw todo(get_app());
+//      _throw(todo(get_app()));
 #endif
    }
 
@@ -51,11 +51,10 @@ namespace user
       m_pil16 = canew(image_list(papp));
       m_pil16->create(16,16,ILC_COLOR24,16,16);
 
-#else
-      throw todo(get_app());
 #endif
 
       ListTrayIcons();
+      
    }
 
    void notification_area::ListTrayIcons(int32_t defindex /*= 0*/)
@@ -155,7 +154,7 @@ namespace user
       //      LVIS_FOCUSED|LVIS_SELECTED,
       //      LVIS_FOCUSED|LVIS_SELECTED);
 #else
-      throw todo(get_app());
+      _throw(todo(get_app()));
 #endif
    }
 
@@ -211,7 +210,7 @@ namespace user
          ListTrayIcons(iItem - 1);
       }
 #else
-      throw todo(get_app());
+      _throw(todo(get_app()));
 #endif
    }
 
@@ -224,7 +223,7 @@ namespace user
          ListTrayIcons(iItem + 1);
       }
 #else
-      throw todo(get_app());
+      _throw(todo(get_app()));
 #endif
    }
 

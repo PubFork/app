@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////////
 //
 // The official specification of the File Transfer Protocol (FTP) is the RFC 959.
 // Most of the documentation are taken from this RFC.
@@ -6,15 +6,15 @@
 // platform independent. For the communication i used the classes blocking_socket,
 // address, ... from David J. Kruglinski (Inside Visual C++). These classes are
 // only small wrappers for the sockets-API.
-// Further I used a smart pointer-implementation from Scott Meyers (Effective C++, 
+// Further I used a smart pointer-implementation from Scott Meyers (Effective C++,
 // More Effective C++, Effective STL).
-// The implementation of the logon-sequence (with firewall support) was published 
-// in an article on Codeguru by Phil Anderson. 
-// The code for the parsing of the different FTP LIST responses is taken from 
+// The implementation of the logon-sequence (with firewall support) was published
+// in an article on Codeguru by Phil Anderson.
+// The code for the parsing of the different FTP LIST responses is taken from
 // D. J. Bernstein (http://cr.yp.to/ftpparse.html). I only wrapped the c-code in
 // a class.
 // I have tested the code on Windows and Linux (Kubuntu).
-// 
+//
 // Copyright (c) 2004-2012 Thomas Oswald
 //
 // Permission to copy, use, sell and distribute this software is granted
@@ -30,6 +30,26 @@
 
 #pragma once
 
+
+#include "aura/net/sockets/bsd/basic/sockets_tcp_socket.h"
+
+#include "aura/primitive/util.h"
+
+#include "ftp_data_types.h"
+
+#include "ftp_file_list_parser.h"
+
+#include "ftp_file_status.h"
+
+#include "ftp_transfer_notification.h"
+
+
+namespace sockets
+{
+
+   class transfer_socket;
+
+} // namespace sockets
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Namespace for all FTP-related classes.
@@ -89,12 +109,12 @@ namespace ftp
 
       e_state                    m_estate;
 
-      
-      
+
+
 
       client_socket(::sockets::base_socket_handler & handler,
-         unsigned int uiTimeout = 10, unsigned int uiBufferSize = 2048,
-         unsigned int uiResponseWait = 0, const string& strRemoteDirectorySeparator = _T("/"));
+                    unsigned int uiTimeout = 10, unsigned int uiBufferSize = 2048,
+                    unsigned int uiResponseWait = 0, const string& strRemoteDirectorySeparator = _T("/"));
       virtual ~client_socket();
 
       virtual long cert_common_name_check(const char * common_name) override;
@@ -123,24 +143,24 @@ namespace ftp
       int  Move(const string& strFullSourceFilePath, const string& strFullTargetFilePath);
 
       bool DownloadFile(const string& strRemoteFile, itransfer_notification& Observer,
-         const representation& repType = representation(type::Image()), bool fPasv = false);
+                        const representation& repType = representation(type::Image()), bool fPasv = false);
       bool DownloadFile(const string& strRemoteFile, const string& strLocalFile,
-         const representation& repType = representation(type::Image()), bool fPasv = false);
+                        const representation& repType = representation(type::Image()), bool fPasv = false);
       bool DownloadFile(const string& strSourceFile, client_socket& TargetFtpServer,
-         const string& strTargetFile, const representation& repType = representation(type::Image()),
-         bool fPasv = true);
+                        const string& strTargetFile, const representation& repType = representation(type::Image()),
+                        bool fPasv = true);
 
       bool UploadFile(itransfer_notification& Observer, const string& strRemoteFile, bool fStoreUnique = false,
-         const representation& repType = representation(type::Image()), bool fPasv = false);
+                      const representation& repType = representation(type::Image()), bool fPasv = false);
       bool UploadFile(const string& strLocalFile, const string& strRemoteFile, bool fStoreUnique = false,
-         const representation& repType = representation(type::Image()), bool fPasv = false);
+                      const representation& repType = representation(type::Image()), bool fPasv = false);
       bool UploadFile(client_socket& SourceFtpServer, const string& strSourceFile,
-         const string& strTargetFile, const representation& repType = representation(type::Image()),
-         bool fPasv = true);
+                      const string& strTargetFile, const representation& repType = representation(type::Image()),
+                      bool fPasv = true);
 
       static bool TransferFile(client_socket& SourceFtpServer, const string& strSourceFile,
-         client_socket& TargetFtpServer, const string& strTargetFile,
-         const representation& repType = representation(type::Image()), bool fSourcePasv = false);
+                               client_socket& TargetFtpServer, const string& strTargetFile,
+                               const representation& repType = representation(type::Image()), bool fSourcePasv = false);
 
       int RemoveDirectory(const string& strDirectory);
       int MakeDirectory(const string& strDirectory);
@@ -171,7 +191,7 @@ namespace ftp
       int FileModificationTime(const string& strPath, string& strModificationTime);
 
       bool ExecuteDatachannelCommand(const command& crDatachannelCmd, const string& strPath, const representation& representation,
-         bool fPasv, DWORD dwByteOffset, itransfer_notification& Observer);
+                                     bool fPasv, DWORD dwByteOffset, itransfer_notification& Observer);
 
       observer_array& GetObservers();
 
@@ -188,7 +208,7 @@ namespace ftp
       bool SendCommand(const command& Command, const stringa & Arguments, reply& Reply);
       bool GetResponse(reply& Reply);
       bool GetSingleResponseLine(string& strResponse);
-      void OnLine(const string & strLine);
+      void OnLine(const string & strLine) override;
 
       bool OpenControlChannel(const string& strServerHost, WINUSHORT ushServerPort = DEFAULT_FTP_PORT);
       void CloseControlChannel();
@@ -202,7 +222,7 @@ namespace ftp
    ///
    /// Derive your class from this base-class and register this class on client.
    /// For example you can use this for logging the sended and received commands.
-   class client_socket::notification : 
+   class client_socket::notification :
       virtual public ::observer < client_socket::observer_array, client_socket::notification>
    {
    public:

@@ -2,7 +2,7 @@
 
 string get_error_message(DWORD dwError)
 {
-   LPSTR lpBuffer = "";
+   LPCSTR lpBuffer = "";
 //   FormatMessage(
 //                 FORMAT_MESSAGE_ALLOCATE_BUFFER |
 //                 FORMAT_MESSAGE_FROM_SYSTEM,

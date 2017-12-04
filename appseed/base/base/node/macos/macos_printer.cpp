@@ -76,7 +76,7 @@ namespace macos
   //    m_pdevmode = (DEVMODE *) malloc(iSize);
     //  if(!DocumentProperties(NULL, pprinter->m_hPrinter, (LPSTR) (LPCSTR) pprinter->m_strName, m_pdevmode, NULL, DM_OUT_BUFFER))
       //{
-        // throw "failed to get printer DocumentProperties";
+        // _throw(simple_exception(get_app(), "failed to get printer DocumentProperties"));
          return false;
       //}
       //return true;
@@ -86,7 +86,7 @@ namespace macos
    {
       if(m_hdc != NULL)
       {
-         throw todo(get_app());
+         _throw(todo(get_app()));
 //         ::DeleteDC(m_hdc);
          m_hdc = NULL;
       }

@@ -315,10 +315,10 @@ class CComCritSecLock
 {
 public:
    CComCritSecLock( TLock& cs, bool bInitialLock = true );
-   ~CComCritSecLock() throw();
+   ~CComCritSecLock() NOTHROW;
 
-   HRESULT lock() throw();
-   void unlock() throw();
+   HRESULT lock() NOTHROW;
+   void unlock() NOTHROW;
 
 // Implementation
 private:
@@ -326,8 +326,8 @@ private:
    bool m_bLocked;
 
 // Private to avoid accidental use
-   CComCritSecLock( const CComCritSecLock& ) throw();
-   CComCritSecLock& operator=( const CComCritSecLock& ) throw();
+   CComCritSecLock( const CComCritSecLock& ) NOTHROW;
+   CComCritSecLock& operator=( const CComCritSecLock& ) NOTHROW;
 };
 
 template< class TLock >
@@ -342,13 +342,13 @@ inline CComCritSecLock< TLock >::CComCritSecLock( TLock& cs, bool bInitialLock )
       hr = lock();
       if( FAILED( hr ) )
       {
-         throw hresult_exception( hr );
+         _throw(hresult_exception( hr ));
       }
    }
 }
 
 template< class TLock >
-inline CComCritSecLock< TLock >::~CComCritSecLock() throw()
+inline CComCritSecLock< TLock >::~CComCritSecLock() NOTHROW
 {
    if( m_bLocked )
    {
@@ -357,7 +357,7 @@ inline CComCritSecLock< TLock >::~CComCritSecLock() throw()
 }
 
 template< class TLock >
-inline HRESULT CComCritSecLock< TLock >::lock() throw()
+inline HRESULT CComCritSecLock< TLock >::lock() NOTHROW
 {
    HRESULT hr;
 
@@ -373,7 +373,7 @@ inline HRESULT CComCritSecLock< TLock >::lock() throw()
 }
 
 template< class TLock >
-inline void CComCritSecLock< TLock >::unlock() throw()
+inline void CComCritSecLock< TLock >::unlock() NOTHROW
 {
    ASSUME( m_bLocked );
    m_cs.unlock();
@@ -383,8 +383,8 @@ inline void CComCritSecLock< TLock >::unlock() throw()
 /*class CComMultiThreadModelNoCS
 {
 public:
-   static ULONG WINAPI Increment(LPLONG p) throw() {return InterlockedIncrement(p);}
-   static ULONG WINAPI Decrement(LPLONG p) throw() {return InterlockedDecrement(p);}
+   static ULONG WINAPI Increment(LPLONG p) NOTHROW {return InterlockedIncrement(p);}
+   static ULONG WINAPI Decrement(LPLONG p) NOTHROW {return InterlockedDecrement(p);}
    typedef CComFakeCriticalSection AutoCriticalSection;
    typedef CComFakeCriticalSection AutoDeleteCriticalSection;
    typedef CComFakeCriticalSection CriticalSection;
@@ -394,8 +394,8 @@ public:
 /*class CComMultiThreadModel
 {
 public:
-   static ULONG WINAPI Increment(LPLONG p) throw() {return InterlockedIncrement(p);}
-   static ULONG WINAPI Decrement(LPLONG p) throw() {return InterlockedDecrement(p);}
+   static ULONG WINAPI Increment(LPLONG p) NOTHROW {return InterlockedIncrement(p);}
+   static ULONG WINAPI Decrement(LPLONG p) NOTHROW {return InterlockedDecrement(p);}
    typedef CComAutoCriticalSection AutoCriticalSection;
    typedef CComAutoDeleteCriticalSection AutoDeleteCriticalSection;
    typedef CComCriticalSection CriticalSection;
@@ -405,8 +405,8 @@ public:
 /*class CComSingleThreadModel
 {
 public:
-   static ULONG WINAPI Increment(LPLONG p) throw() {return ++(*p);}
-   static ULONG WINAPI Decrement(LPLONG p) throw() {return --(*p);}
+   static ULONG WINAPI Increment(LPLONG p) NOTHROW {return ++(*p);}
+   static ULONG WINAPI Decrement(LPLONG p) NOTHROW {return --(*p);}
    typedef CComFakeCriticalSection AutoCriticalSection;
    typedef CComFakeCriticalSection AutoDeleteCriticalSection;
    typedef CComFakeCriticalSection CriticalSection;
@@ -588,7 +588,7 @@ const char * gen_DebugGetClassName(T*)
    {
       if(i1 > 0 && i2 > 0 && (i1 + i2) < 0)
       {
-         throw 0;
+         _throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
       }
       return i1 + i2;
    }

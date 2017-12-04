@@ -63,7 +63,7 @@ namespace file
       buf.allocate(uiBufSize);
 
       if(buf.get_data() == NULL)
-         throw memory_exception(get_app());
+         _throw(memory_exception(get_app()));
 
       try
       {

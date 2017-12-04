@@ -36,6 +36,8 @@ namespace user
 
          };
 
+         string m_strEmpty;
+         string   m_strFoo;
          bool                                                        m_bStarted;
          delay_thread *                                              m_pdelayRelease;
          ref_array < image_key >                                     m_keyptra;

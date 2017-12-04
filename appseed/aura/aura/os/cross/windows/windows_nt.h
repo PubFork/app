@@ -2509,7 +2509,7 @@ static inline struct _TEB * WINAPI NtCurrentTeb(void)
   __asm mov teb, rax;
   return teb;
 }
-#elif defined(LINUX)
+#elif defined(LINUX) && !defined(RASPBIAN)
 #if defined(__x86_64__)
 static inline struct _TEB * WINAPI NtCurrentTeb(void)
 {

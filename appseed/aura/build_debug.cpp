@@ -4,7 +4,7 @@
 char g_strDebugPuts[1024];
 int g_iDebugPuts;
 // GCC 4.8 doesn't know that puts() is nothrow; we must give it a hint.
-void debug_puts(const char*psz) throw()
+void debug_puts(const char*psz) NOTHROW
 {
    while(*psz)
    {
@@ -19,20 +19,29 @@ void debug_puts(const char*psz) throw()
 
 void foo()
 {
-   throw simple_exception(::get_thread_app());
+   _throw(simple_exception(get_app()));
 }
 
-void aura_auto_debug_teste() {
-   return;
+void aura_auto_debug_teste()
+{
+   
+   if(!file_exists_dup("/ca2/debug_test"))
+   {
+      
+      return;
+      
+   }
+   
    try
    {
-      if(true) {
+      if(true)
+      {
          AUTO(debug_puts("two"));
-         debug_puts("one"); // compiler knows this doesn't throw
+         debug_puts("one"); // compiler knows this doesn't _throw(
       }
       if(true) {
          AUTO(debug_puts("three"));
-         foo(); // might throw an exception
+         foo(); // might _throw( an exception
       }
    }
    catch(...)

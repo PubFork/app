@@ -5,13 +5,13 @@ static ::user::notify_icon * g_pnotifyiconLast = NULL;
 
 #ifdef LINUX
 
-   #include <dlfcn.h>
-   BEGIN_EXTERN_C
-   typedef void * BASECORE_APP_INDICATOR_NEW(const char *, const char *, const char *, i_close_quit *);
-   typedef void BASECORE_APP_INDICATOR_TERM(void *);
-   typedef void BASECORE_APP_INDICATOR_STEP(void *);
-   END_EXTERN_C
-   extern void * g_pbasecore;
+#include <dlfcn.h>
+BEGIN_EXTERN_C
+typedef void * BASECORE_APP_INDICATOR_NEW(const char *, const char *, const char *, i_close_quit *);
+typedef void BASECORE_APP_INDICATOR_TERM(void *);
+typedef void BASECORE_APP_INDICATOR_STEP(void *);
+END_EXTERN_C
+extern void * g_pbasecore;
 
 #endif
 
@@ -114,7 +114,7 @@ namespace user
 #elif defined(APPLE_IOS)
 
 #else
-      throw todo(get_app());
+      _throw(todo(get_app()));
 
 #endif
 
@@ -294,15 +294,16 @@ namespace user
 
       }
 
-#else
-
-      throw todo(get_app());
-
-#endif
-
       m_piconCurrent = hicon;
 
       return true;
+
+#else
+
+      _throw(todo(get_app()));
+
+#endif
+
 
    }
 
@@ -338,6 +339,8 @@ namespace user
 
       DestroyWindow();
 
+      return true;
+
 #elif defined(LINUX)
 
       {
@@ -352,16 +355,16 @@ namespace user
 
       notify_icon_destroy();
 
-#else
-
-
-      throw todo(get_app());
-
-#endif
-
       m_bCreated = false;
 
       return true;
+
+#else
+
+
+      _throw(todo(get_app()));
+
+#endif
 
    }
 

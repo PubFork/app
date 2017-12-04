@@ -2,6 +2,7 @@
 
 #ifdef WINDOWS
 #include <io.h>
+#include <stdio.h>
 #else
 #include <sys/stat.h>
 //Copy file using mmap()
@@ -11,7 +12,7 @@
 #include <fcntl.h>
 
 //#include <unistd.h>
-#define PACKAGE "mmap"
+//#define PACKAGE "mmap"
 //#include <wchar.h>
 //#include <fcntl.h>
 //#include <sys/stat.h>
@@ -88,53 +89,53 @@ int_bool file_exists_dup(const char * path1)
 
 int_bool file_put_contents_dup(const char * path, const char * contents, ::count len)
 {
-   
+
    bool bOk = false;
-   
+
    dir::mk(dir::name(path));
 
    wstring wstr(path);
 
    FILE * file = fopen_dup(path, "w+");
-   
+
    if(file == NULL)
    {
-      
+
       return false;
-      
+
    }
-   
+
    try
    {
-      
+
       size_t dwWrite;
-   
+
       if(len < 0)
       {
-       
+
          dwWrite = strlen_dup(contents);
-         
+
       }
       else
       {
-      
+
          dwWrite = len;
-         
+
       }
-   
+
       size_t dwWritten = ::fwrite(contents, 1, (uint32_t) dwWrite, file);
-      
+
       bOk = dwWritten == dwWrite;
-      
+
    }
    catch(...)
    {
-      
-      
+
+
    }
 
    ::fclose(file);
-   
+
    return bOk;
 
 }
@@ -199,7 +200,7 @@ bool file_get_memory_dup(::primitive::memory_base & memory, const char * path)
 
       int iRead;
 
-      while((iRead = fread(mem.get_data(),1,mem.get_size(),f)) > 0)
+      while((iRead = (int) fread(mem.get_data(),1,mem.get_size(),f)) > 0)
       {
 
          memory.append(mem.get_data(), iRead);
@@ -405,7 +406,7 @@ string file_module_path_dup()
 bool file_copy_dup(const string & strNew, const string & strSrc, bool bOverwrite)
 {
 
-    return file_copy_dup(strNew.c_str(), strSrc.c_str(), bOverwrite ? TRUE : FALSE) ? true : false;
+   return file_copy_dup(strNew.c_str(), strSrc.c_str(), bOverwrite ? TRUE : FALSE) ? true : false;
 
 }
 
@@ -427,14 +428,14 @@ int_bool file_copy_dup(const char * pszNew, const char * pszSrc, int_bool bOverw
       flags |= O_EXCL;
    if((output = open(pszNew, flags, 0666)) == -1)
    {
-      fprintf(stderr, "%s: Error: opening file: %s\n", PACKAGE, pszNew);
+      fprintf(stderr, "Error: opening file: %s\n", pszNew);
       return false;
    }
 
 
    if((input = open(pszSrc, O_RDONLY)) == -1)
    {
-      fprintf(stderr, "%s: Error: opening file: %s\n", PACKAGE, pszSrc);
+      fprintf(stderr, "Error: opening file: %s\n", pszSrc);
       return false;
    }
 
@@ -462,7 +463,7 @@ int_bool file_copy_dup(const char * pszNew, const char * pszSrc, int_bool bOverw
    munmap(source, filesize);
    munmap(target, filesize);
 
-    fsync(output);
+   fsync(output);
 
    close(input);
    close(output);
@@ -480,7 +481,7 @@ int_bool file_is_equal_path_dup(const char * psz1, const char * psz2)
    if(stricmp_dup(psz1, psz2) == 0)
       return true;
 
-   throw " // TODO: it should follow links ";
+   _throw(simple_exception(get_app(), " // TODO: it should follow links "));
 
    return false;
 
@@ -489,7 +490,7 @@ int_bool file_is_equal_path_dup(const char * psz1, const char * psz2)
 
 CLASS_DECL_AURA string file_get_mozilla_firefox_plugin_container_path()
 {
-   throw " todo ";
+   _throw(simple_exception(get_app(), " todo "));
 
    return "";
 
@@ -520,21 +521,21 @@ int_bool file_is_equal_path(const char * psz1,const char * psz2)
    wstring pwsz1 = ::str::international::utf8_to_unicode(psz1);
    wstring pwsz2 = ::str::international::utf8_to_unicode(psz2);
 //   unichar * pwszFile1;
-  // unichar * pwszFile2;
+   // unichar * pwszFile2;
    unichar * pwszPath1 = new unichar[iBufSize];
    unichar * pwszPath2 = new unichar[iBufSize];
    int32_t iCmp = -1;
 //   if(GetFullPathNameW(pwsz1,iBufSize,pwszPath1,&pwszFile1))
-  // {
-    //  if(GetFullPathNameW(pwsz2,iBufSize,pwszPath2,&pwszFile2))
-      //{
-         string p1 = ::str::international::unicode_to_utf8(pwszPath1);
-         string p2 = ::str::international::unicode_to_utf8(pwszPath2);
-         iCmp = stricmp_dup(p1,p2);
-      //}
+   // {
+   //  if(GetFullPathNameW(pwsz2,iBufSize,pwszPath2,&pwszFile2))
+   //{
+   string p1 = ::str::international::unicode_to_utf8(pwszPath1);
+   string p2 = ::str::international::unicode_to_utf8(pwszPath2);
+   iCmp = stricmp_dup(p1,p2);
    //}
-   delete pwszPath1;
-   delete pwszPath2;
+   //}
+   delete[] pwszPath1;
+   delete[] pwszPath2;
    return iCmp == 0;
 
 }
@@ -637,3 +638,54 @@ END_EXTERN_C
 
 
 
+
+
+
+#ifdef __cplusplus
+
+string file_first_line_dup(const string & strPath)
+{
+
+   string line;
+
+   FILE * file = fopen_dup(strPath, "r");
+
+   if(file == NULL)
+   {
+
+      return "";
+
+   }
+
+   try
+   {
+
+   int c;
+
+   do
+   {
+
+      c = fgetc (file);
+
+      if (c == '\n') break;
+
+      if (c == '\r') break;
+
+      line += (char) c;
+
+   } while (c != EOF);
+
+   }
+   catch(...)
+   {
+
+   }
+
+   fclose(file);
+
+   return line;
+
+}
+
+
+#endif

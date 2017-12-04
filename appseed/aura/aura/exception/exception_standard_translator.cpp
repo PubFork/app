@@ -1,4 +1,4 @@
-/*
+﻿/*
 Copyright (ca) 2001
 Author: Konstantin Boukreev
 E-mail: konstantin@mail.primorye.ru
@@ -48,7 +48,7 @@ void InstallUncaughtExceptionHandler();
 #define EXCEPTION_NO_MEMORY STATUS_NO_MEMORY
 
 LPTOP_LEVEL_EXCEPTION_FILTER WINAPI MyDummySetUnhandledExceptionFilter(
-   LPTOP_LEVEL_EXCEPTION_FILTER lpTopLevelExceptionFilter)
+LPTOP_LEVEL_EXCEPTION_FILTER lpTopLevelExceptionFilter)
 {
    UNREFERENCED_PARAMETER(lpTopLevelExceptionFilter);
    return NULL;
@@ -123,45 +123,58 @@ namespace exception
 #endif
    }
 
+
 #ifdef WINDOWS
+
+
    void __cdecl translator::filter2(uint32_t uiCode, EXCEPTION_POINTERS * ppointers)
    {
-      if(g_bExiting)
+
+      if (g_bExiting)
+      {
+
          return;
+
+      }
+
       UNREFERENCED_PARAMETER(uiCode);
-      ::aura::application * papp = get_thread_app();
+
+      ::aura::application * papp = ::get_app();
+
       switch (ppointers->ExceptionRecord->ExceptionCode)
       {
 #ifdef WINDOWSEX
-      case EXCEPTION_NO_MEMORY:                 throw standard_no_memory(papp, ppointers);                  break;
+      case EXCEPTION_NO_MEMORY:                 _throw(standard_no_memory(papp, ppointers));                  break;
 #endif
-      case EXCEPTION_ACCESS_VIOLATION:          throw standard_access_violation(papp, ppointers);           break;
-      case EXCEPTION_DATATYPE_MISALIGNMENT:     throw standard_datatype_misalignment(papp, ppointers);      break;
-      case EXCEPTION_BREAKPOINT:                throw standard_breakpoint(papp, ppointers);                 break;
-      case EXCEPTION_SINGLE_STEP:               throw standard_single_step(papp, ppointers);                break;
-      case EXCEPTION_ARRAY_BOUNDS_EXCEEDED:     throw standard_array_bounds_exceeded(papp, ppointers);      break;
-      case EXCEPTION_FLT_DENORMAL_OPERAND:      throw standard_flt_denormal_operand(papp, ppointers);       break;
-      case EXCEPTION_FLT_DIVIDE_BY_ZERO:        throw standard_flt_divide_by_zero(papp, ppointers);         break;
-      case EXCEPTION_FLT_INEXACT_RESULT:        throw standard_flt_inexact_result(papp, ppointers);         break;
-      case EXCEPTION_FLT_INVALID_OPERATION:     throw standard_flt_invalid_operation(papp, ppointers);      break;
-      case EXCEPTION_FLT_OVERFLOW:              throw standard_flt_overflow(papp, ppointers);               break;
-      case EXCEPTION_FLT_STACK_CHECK:           throw standard_flt_stack_check(papp, ppointers);            break;
-      case EXCEPTION_FLT_UNDERFLOW:             throw standard_flt_underflow(papp, ppointers);              break;
-      case EXCEPTION_INT_DIVIDE_BY_ZERO:        throw standard_int_divide_by_zero(papp, ppointers);         break;
-      case EXCEPTION_INT_OVERFLOW:              throw standard_int_overflow(papp, ppointers);               break;
-      case EXCEPTION_PRIV_INSTRUCTION:          throw standard_priv_instruction(papp, ppointers);           break;
-      case EXCEPTION_IN_PAGE_ERROR:             throw standard_in_page_error(papp, ppointers);              break;
-      case EXCEPTION_ILLEGAL_INSTRUCTION:       throw standard_illegal_instruction(papp, ppointers);        break;
-      case EXCEPTION_NONCONTINUABLE_EXCEPTION:  throw standard_noncontinuable_exception(papp, ppointers);   break;
-      case EXCEPTION_STACK_OVERFLOW:            throw standard_stack_overflow(papp, ppointers);             break;
-      case EXCEPTION_INVALID_DISPOSITION:       throw standard_invalid_disposition(papp, ppointers);        break;
-      case EXCEPTION_GUARD_PAGE:                throw standard_guard_page(papp, ppointers);                 break;
-      case EXCEPTION_INVALID_HANDLE:            throw standard_invalid_handle(papp, ppointers);             break;
-      case 0xE06D7363:                          throw standard_microsoft_cpp(papp, ppointers);              break;
-      case 0x40080201:                          throw standard_winrt_originate_error(papp, ppointers);      break;
-      default:                                  throw standard_exception(papp, ppointers);                  break;
+      case EXCEPTION_ACCESS_VIOLATION:          _throw(standard_access_violation(papp, ppointers));           break;
+      case EXCEPTION_DATATYPE_MISALIGNMENT:     _throw(standard_datatype_misalignment(papp, ppointers));      break;
+      case EXCEPTION_BREAKPOINT:                _throw(standard_breakpoint(papp, ppointers));                 break;
+      case EXCEPTION_SINGLE_STEP:               _throw(standard_single_step(papp, ppointers));                break;
+      case EXCEPTION_ARRAY_BOUNDS_EXCEEDED:     _throw(standard_array_bounds_exceeded(papp, ppointers));      break;
+      case EXCEPTION_FLT_DENORMAL_OPERAND:      _throw(standard_flt_denormal_operand(papp, ppointers));       break;
+      case EXCEPTION_FLT_DIVIDE_BY_ZERO:        _throw(standard_flt_divide_by_zero(papp, ppointers));         break;
+      case EXCEPTION_FLT_INEXACT_RESULT:        _throw(standard_flt_inexact_result(papp, ppointers));         break;
+      case EXCEPTION_FLT_INVALID_OPERATION:     _throw(standard_flt_invalid_operation(papp, ppointers));      break;
+      case EXCEPTION_FLT_OVERFLOW:              _throw(standard_flt_overflow(papp, ppointers));               break;
+      case EXCEPTION_FLT_STACK_CHECK:           _throw(standard_flt_stack_check(papp, ppointers));            break;
+      case EXCEPTION_FLT_UNDERFLOW:             _throw(standard_flt_underflow(papp, ppointers));              break;
+      case EXCEPTION_INT_DIVIDE_BY_ZERO:        _throw(standard_int_divide_by_zero(papp, ppointers));         break;
+      case EXCEPTION_INT_OVERFLOW:              _throw(standard_int_overflow(papp, ppointers));               break;
+      case EXCEPTION_PRIV_INSTRUCTION:          _throw(standard_priv_instruction(papp, ppointers));           break;
+      case EXCEPTION_IN_PAGE_ERROR:             _throw(standard_in_page_error(papp, ppointers));              break;
+      case EXCEPTION_ILLEGAL_INSTRUCTION:       _throw(standard_illegal_instruction(papp, ppointers));        break;
+      case EXCEPTION_NONCONTINUABLE_EXCEPTION:  _throw(standard_noncontinuable_exception(papp, ppointers));   break;
+      case EXCEPTION_STACK_OVERFLOW:            _throw(standard_stack_overflow(papp, ppointers));             break;
+      case EXCEPTION_INVALID_DISPOSITION:       _throw(standard_invalid_disposition(papp, ppointers));        break;
+      case EXCEPTION_GUARD_PAGE:                _throw(standard_guard_page(papp, ppointers));                 break;
+      case EXCEPTION_INVALID_HANDLE:            _throw(standard_invalid_handle(papp, ppointers));             break;
+      case 0xE06D7363:                          _throw(standard_microsoft_cpp(papp, ppointers));              break;
+      case 0x40080201:                          _throw(standard_winrt_originate_error(papp, ppointers));      break;
+      default:                                  _throw(standard_exception(papp, ppointers));                  break;
       };
+
    }
+
 
 #endif
 
@@ -185,7 +198,7 @@ namespace exception
          //PreventSetUnhandledExceptionFilter();
          //EnforceFilter(true);
 #else
-         
+
 #if defined(APPLEOS)
          ::InstallUncaughtExceptionHandler();
 #endif
@@ -197,9 +210,9 @@ namespace exception
          m_sig.m_saSeg.sa_sigaction = &filter_sigsegv;
          if(sigaction(SIGSEGV,&m_sig.m_saSeg,&m_sig.m_saSegOld) < 0)
          {
-            
+
             output_debug_string("failed to install segmentation fault signal handler");
-            
+
          }
 
          ZERO(m_sig.m_saFpe);
@@ -207,9 +220,9 @@ namespace exception
          m_sig.m_saFpe.sa_sigaction = &filter_sigfpe;
          if(sigaction(SIGFPE,&m_sig.m_saFpe,&m_sig.m_saFpeOld) < 0)
          {
-            
+
             output_debug_string("failed to install floating point exception signal handler");
-            
+
          }
 
          ZERO(m_sig.m_saPipe);
@@ -217,9 +230,9 @@ namespace exception
          m_sig.m_saPipe.sa_sigaction = &filter_sigpipe;
          if(sigaction(SIGPIPE,&m_sig.m_saPipe,&m_sig.m_saPipeOld) < 0)
          {
-            
+
             output_debug_string("failed to install pipe signal handler");
-            
+
          }
 
 
@@ -243,30 +256,30 @@ namespace exception
 #ifdef WINDOWS
 
          _set_se_translator(m_pfn);
-         
+
 #else
-         
+
          sigaction(SIGSEGV,&m_sig.m_saSegOld,NULL);
-         
+
          sigaction(SIGFPE,&m_sig.m_saFpeOld,NULL);
-         
+
 #endif
-         
+
          m_bSet = false;
-         
+
          return true;
-         
+
       }
       else
       {
-         
+
          return false;
-         
+
       }
-      
+
    }
-   
-   
+
+
 #ifdef WINDOWS
    void translator::filter(uint32_t uiCode, EXCEPTION_POINTERS * ppointers)
    {
@@ -274,33 +287,30 @@ namespace exception
       switch (ppointers->ExceptionRecord->ExceptionCode)
       {
 #ifdef WINDOWSEX
-      case EXCEPTION_NO_MEMORY:                 throw standard_no_memory(get_app(), ppointers);                  break;
+      case EXCEPTION_NO_MEMORY:                 _throw(standard_no_memory(get_app(), ppointers));                  break;
 #endif
-      case EXCEPTION_ACCESS_VIOLATION:          throw standard_access_violation(get_app(), ppointers);           break;
-      case EXCEPTION_DATATYPE_MISALIGNMENT:     throw standard_datatype_misalignment(get_app(), ppointers);      break;
-      case EXCEPTION_BREAKPOINT:                throw standard_breakpoint(get_app(), ppointers);                 break;
-      case EXCEPTION_SINGLE_STEP:               throw standard_single_step(get_app(), ppointers);                break;
-      case EXCEPTION_ARRAY_BOUNDS_EXCEEDED:     throw standard_array_bounds_exceeded(get_app(), ppointers);      break;
-      case EXCEPTION_FLT_DENORMAL_OPERAND:      throw standard_flt_denormal_operand(get_app(), ppointers);       break;
-      case EXCEPTION_FLT_DIVIDE_BY_ZERO:        throw standard_flt_divide_by_zero(get_app(), ppointers);         break;
-      case EXCEPTION_FLT_INEXACT_RESULT:        throw standard_flt_inexact_result(get_app(), ppointers);         break;
-      case EXCEPTION_FLT_INVALID_OPERATION:     throw standard_flt_invalid_operation(get_app(), ppointers);      break;
-      case EXCEPTION_FLT_OVERFLOW:              throw standard_flt_overflow(get_app(), ppointers);               break;
-      case EXCEPTION_FLT_STACK_CHECK:           throw standard_flt_stack_check(get_app(), ppointers);            break;
-      case EXCEPTION_FLT_UNDERFLOW:             throw standard_flt_underflow(get_app(), ppointers);              break;
-      case EXCEPTION_INT_DIVIDE_BY_ZERO:        throw standard_int_divide_by_zero(get_app(), ppointers);         break;
-      case EXCEPTION_INT_OVERFLOW:              throw standard_int_overflow(get_app(), ppointers);               break;
-      case EXCEPTION_PRIV_INSTRUCTION:          throw standard_priv_instruction(get_app(), ppointers);           break;
-      case EXCEPTION_IN_PAGE_ERROR:             throw standard_in_page_error(get_app(), ppointers);              break;
-      case EXCEPTION_ILLEGAL_INSTRUCTION:       throw standard_illegal_instruction(get_app(), ppointers);        break;
-      case EXCEPTION_NONCONTINUABLE_EXCEPTION:  throw standard_noncontinuable_exception(get_app(), ppointers);   break;
-      case EXCEPTION_STACK_OVERFLOW:            throw standard_stack_overflow(get_app(), ppointers);             break;
-      case EXCEPTION_INVALID_DISPOSITION:       throw standard_invalid_disposition(get_app(), ppointers);        break;
-      case EXCEPTION_GUARD_PAGE:                throw standard_guard_page(get_app(), ppointers);                 break;
-      case EXCEPTION_INVALID_HANDLE:            throw standard_invalid_handle(get_app(), ppointers);             break;
-      case 0xE06D7363:                          throw standard_microsoft_cpp(get_app(), ppointers);              break;
-      default:                                  throw standard_exception(get_app(), ppointers);                  break;
+      case EXCEPTION_ACCESS_VIOLATION:          _throw(standard_access_violation(get_app(), ppointers));           break;
+      case EXCEPTION_DATATYPE_MISALIGNMENT:     _throw(standard_datatype_misalignment(get_app(), ppointers));      break;
+      case EXCEPTION_BREAKPOINT:                _throw(standard_breakpoint(get_app(), ppointers));                 break;
+      case EXCEPTION_SINGLE_STEP:               _throw(standard_single_step(get_app(), ppointers));                break;
+      case EXCEPTION_ARRAY_BOUNDS_EXCEEDED:     _throw(standard_array_bounds_exceeded(get_app(), ppointers));      break;
+      case EXCEPTION_FLT_DENORMAL_OPERAND:      _throw(standard_flt_denormal_operand(get_app(), ppointers));       break;
+      case EXCEPTION_FLT_DIVIDE_BY_ZERO:        _throw(standard_flt_divide_by_zero(get_app(), ppointers));         break;
+      case EXCEPTION_FLT_INEXACT_RESULT:        _throw(standard_flt_inexact_result(get_app(), ppointers));         break;
+      case EXCEPTION_FLT_INVALID_OPERATION:     _throw(standard_flt_invalid_operation(get_app(), ppointers));      break;
+      case EXCEPTION_FLT_OVERFLOW:              _throw(standard_flt_overflow(get_app(), ppointers));               break;
+      case EXCEPTION_FLT_STACK_CHECK:           _throw(standard_flt_stack_check(get_app(), ppointers));            break;
+      case EXCEPTION_FLT_UNDERFLOW:             _throw(standard_flt_underflow(get_app(), ppointers));              break;
+      case EXCEPTION_INT_DIVIDE_BY_ZERO:        _throw(standard_int_divide_by_zero(get_app(), ppointers));         break;
+      case EXCEPTION_INT_OVERFLOW:              _throw(standard_int_overflow(get_app(), ppointers));               break;
+      case EXCEPTION_PRIV_INSTRUCTION:          _throw(standard_priv_instruction(get_app(), ppointers));           break;
+      case EXCEPTION_IN_PAGE_ERROR:             _throw(standard_in_page_error(get_app(), ppointers));              break;
+      case EXCEPTION_ILLEGAL_INSTRUCTION:       _throw(standard_illegal_instruction(get_app(), ppointers));        break;
+      case EXCEPTION_NONCONTINUABLE_EXCEPTION:  _throw(standard_noncontinuable_exception(get_app(), ppointers));   break;
+      case EXCEPTION_STACK_OVERFLOW:            _throw(standard_stack_overflow(get_app(), ppointers));             break;
+      case EXCEPTION_INVALID_DISPOSITION:       _throw(standard_invalid_disposition(get_app(), ppointers));        break;
       };
+
    }
 
    string translator::name(uint32_t uiCode)
@@ -435,8 +445,8 @@ namespace exception
       return str;
 
    }
-   
-   
+
+
 #else
 
    void filter_sigsegv(int32_t signal, siginfo_t * psiginfo, void * pc)
@@ -447,7 +457,7 @@ namespace exception
 //      sigaddset(&set, SIGSEGV);
 //      pthread_sigmask(SIG_UNBLOCK, &set, NULL);
 
-      throw standard_access_violation(::aura::system::g_p, signal, psiginfo, pc);
+      _throw(standard_access_violation(::aura::system::g_p, signal, psiginfo, pc));
 
    }
 
@@ -459,7 +469,7 @@ namespace exception
       //sigaddset(&set, SIGSEGV);
       //sigprocmask(SIG_UNBLOCK, &set, NULL);
 
-      throw standard_sigfpe(::aura::system::g_p, signal, psiginfo, pc);
+      _throw(standard_sigfpe(::aura::system::g_p, signal, psiginfo, pc));
 
    }
 
@@ -472,7 +482,7 @@ namespace exception
 //      sigaddset(&set, SIGSEGV);
 //      sigprocmask(SIG_UNBLOCK, &set, NULL);
 
-      //throw standard_sigfpe(NULL, signal, psiginfo, pc);
+      //_throw(standard_sigfpe(NULL, signal, psiginfo, pc));
 
    }
 
@@ -590,27 +600,27 @@ const ucontext_t *   standard_exception::context() const
 //
 //void translator_signal_handler(int signal)
 //{
-//   
+//
 //   if(signal == SIGSEGV)
 //   {
-//      
-//      throw exception::standard_access_violation(NULL, NULL, NULL, NULL);
-//      
+//
+//      _throw(exception::standard_access_violation(NULL, NULL, NULL, NULL));
+//
 //   }
 //   else if(signal == SIGFPE)
 //   {
-//      
-//      throw exception::standard_sigfpe(NULL, NULL, NULL, NULL);
-//      
+//
+//      _throw(exception::standard_sigfpe(NULL, NULL, NULL, NULL));
+//
 //   }
 //   else
 //   {
-//      
-//      throw simple_exception(NULL);
-//      
+//
+//      _throw(simple_exception(NULL));
+//
 //   }
-//   
-//   
+//
+//
 //}
 //
 //

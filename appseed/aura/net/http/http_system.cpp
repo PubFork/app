@@ -13,7 +13,7 @@ namespace http
    {
 
 //      m_phandler = new ::sockets::socket_handler(get_app());
-  //    m_phandler->EnablePool();
+      //    m_phandler->EnablePool();
       oprop("dw") = ::get_tick_count();
 
       m_pmutexPac = NULL;
@@ -31,7 +31,7 @@ namespace http
 
    system::~system()
    {
-      
+
 //      ::aura::del(m_phandler);
 
    }
@@ -48,46 +48,46 @@ namespace http
    {
 
       return;
-      if(i == 0)
-      {
-      }
-      else if(i == 1)
-      {
-         // telmico: no proxy
-         string str = Application.file().as_string(System.dir().appdata() / "machine/proxy.xml");
-         if(str.has_char() && str.find("<") >= 0 && str.find(">") > 0)
-         {
-            Application.file().copy(System.dir().appdata()/ "proxy_original.xml", System.dir().element()/ "proxy.xml", false);
-         }
-         if(Application.file().exists(System.dir().appdata()/ "proxy.xml"))
-         {
-            try
-            {
-               Application.file().del(System.dir().appdata()/ "proxy.xml");
-            }
-            catch(...)
-            {
-            }
-         }
-      }
-      else if(i == 2)
-      {
-         // telmico: original proxy configuration
-         if(Application.file().exists(System.dir().appdata()/ "proxy_original.xml"))
-         {
-            Application.file().copy(System.dir().appdata()/ "proxy.xml", System.dir().appdata()/"proxy_original.xml", false);
-         }
-      }
-      else
-      {
-         // telmico: simple default proxy configuration : hostname=>proxy - try etc/hosts port=>80  - assume HTTP proxy
-         string str = Application.file().as_string(System.dir().appdata()/"proxy.xml");
-         if(str.has_char() && str.find("<") >= 0 && str.find(">") > 0)
-         {
-            Application.file().copy(System.dir().appdata()/"proxy_original.xml", System.dir().appdata()/"proxy.xml", false);
-         }
-         Application.file().put_contents(System.dir().appdata()/"proxy.xml", "proxy");
-      }
+//      if(i == 0)
+//      {
+//      }
+//      else if(i == 1)
+//      {
+//         // telmico: no proxy
+//         string str = Application.file().as_string(System.dir().appdata() / "machine/proxy.xml");
+//         if(str.has_char() && str.find("<") >= 0 && str.find(">") > 0)
+//         {
+//            Application.file().copy(System.dir().appdata()/ "proxy_original.xml", System.dir().element()/ "proxy.xml", false);
+//         }
+//         if(Application.file().exists(System.dir().appdata()/ "proxy.xml"))
+//         {
+//            try
+//            {
+//               Application.file().del(System.dir().appdata()/ "proxy.xml");
+//            }
+//            catch(...)
+//            {
+//            }
+//         }
+//      }
+//      else if(i == 2)
+//      {
+//         // telmico: original proxy configuration
+//         if(Application.file().exists(System.dir().appdata()/ "proxy_original.xml"))
+//         {
+//            Application.file().copy(System.dir().appdata()/ "proxy.xml", System.dir().appdata()/"proxy_original.xml", false);
+//         }
+//      }
+//      else
+//      {
+//         // telmico: simple default proxy configuration : hostname=>proxy - try etc/hosts port=>80  - assume HTTP proxy
+//         string str = Application.file().as_string(System.dir().appdata()/"proxy.xml");
+//         if(str.has_char() && str.find("<") >= 0 && str.find(">") > 0)
+//         {
+//            Application.file().copy(System.dir().appdata()/"proxy_original.xml", System.dir().appdata()/"proxy.xml", false);
+//         }
+//         Application.file().put_contents(System.dir().appdata()/"proxy.xml", "proxy");
+//      }
    }
 
    void system::defer_auto_initialize_proxy_configuration()
@@ -463,55 +463,55 @@ namespace http
       }
 
 
-      if(!bOk)
-      {
-
-         //bool bAutoDetect = System.os().connection_settings_get_auto_detect();
-
-         //if(bAutoDetect)
-         //{
-
-         //   TRACE("proxy auto_detect true");
-
-         //   string strUrl = System.os().connection_settings_get_auto_config_url();
-
-         //   if(strUrl.has_char())
-         //   {
-
-         //      TRACE("get_auto_config_url : %s",strUrl);
-
-         //      if(try_pac_script(strUrl,pszUrl,pproxy))
-         //         return;
-
-         //   }
-
-         //}
-         //else
-         //{
-
-         //   TRACE("proxy auto_detect false");
-
-         //   string strUrl = System.os().connection_settings_get_auto_config_url();
-
-         //   if(strUrl.has_char())
-         //   {
-
-         //      TRACE("get_auto_config_url : %s",strUrl);
-
-         //      if(try_pac_script(strUrl,pszUrl,pproxy))
-         //         return;
-
-         //   }
-
-         //   if(try_pac_script("http://wpad/wpad.dat",pszUrl,pproxy))
-         //      return;
-
-         //}
-
-
-         pproxy->m_bDirect = true;
-
-      }
+//      if(!bOk)
+//      {
+//
+//         //bool bAutoDetect = System.os().connection_settings_get_auto_detect();
+//
+//         //if(bAutoDetect)
+//         //{
+//
+//         //   TRACE("proxy auto_detect true");
+//
+//         //   string strUrl = System.os().connection_settings_get_auto_config_url();
+//
+//         //   if(strUrl.has_char())
+//         //   {
+//
+//         //      TRACE("get_auto_config_url : %s",strUrl);
+//
+//         //      if(try_pac_script(strUrl,pszUrl,pproxy))
+//         //         return;
+//
+//         //   }
+//
+//         //}
+//         //else
+//         //{
+//
+//         //   TRACE("proxy auto_detect false");
+//
+//         //   string strUrl = System.os().connection_settings_get_auto_config_url();
+//
+//         //   if(strUrl.has_char())
+//         //   {
+//
+//         //      TRACE("get_auto_config_url : %s",strUrl);
+//
+//         //      if(try_pac_script(strUrl,pszUrl,pproxy))
+//         //         return;
+//
+//         //   }
+//
+//         //   if(try_pac_script("http://wpad/wpad.dat",pszUrl,pproxy))
+//         //      return;
+//
+//         //}
+//
+//
+//         pproxy->m_bDirect = true;
+//
+//      }
 
 
 
@@ -610,7 +610,7 @@ namespace http
 
                if(domainFontopus.m_strRadix == "ca2")
                {
-                  
+
                   puser = &AppUser(papp);
 
                   if(puser != NULL && (strSessId = puser->get_sessid(strUrl, !set["interactive_user"].is_new() && (bool)set["interactive_user"])).has_char() &&
@@ -682,7 +682,7 @@ namespace http
 
          uint32_t dwTimeProfile2 = get_tick_count();
 
-         TRACE0("Not Opened/Connected Result Total time ::http::system::get(\"" + strUrl.Left(MIN(255,strUrl.get_length())) + "\")  " + ::str::from(dwTimeProfile2 - dwTimeProfile1));
+         TRACE("Not Opened/Connected Result Total time ::http::system::get(\"%s\")", strUrl.Left(MIN(255,strUrl.get_length())), dwTimeProfile2 - dwTimeProfile1);
 
          return NULL;
 
@@ -760,7 +760,7 @@ retry:
 
          if (psession == NULL)
          {
-            
+
             bSeemsOk = false;
 
          }
@@ -926,6 +926,15 @@ retry:
          psession->m_strHost  =System.url().get_server(pszRequest);
          psession->m_request.m_propertysetHeader[__id(host)] = psession->m_host;
 
+         set["http_body_size_downloaded"] = &psession->m_body_size_downloaded;
+
+         psession->m_scalarsourceDownloadedRate.m_plistener = set["http_downloaded_rate_listener"].cast < ::double_scalar_source::listener >();
+
+         psession->m_scalarsourceDownloadedRate.m_id = set["http_downloaded_rate_id"].get_id();
+
+         psession->m_scalarsourceDownloaded.m_plistener = set["http_downloaded_listener"].cast < ::int_scalar_source::listener >();
+
+         psession->m_scalarsourceDownloaded.m_id = set["http_downloaded_id"].get_id();
 
          bool bPost;
          bool bPut;
@@ -981,11 +990,41 @@ retry:
          while((handler.get_count() > 0 && !psession->m_bRequestComplete) && (::get_thread() == NULL || ::get_thread_run()))
             //while(psession->m_phandler->get_count() > 0 && !psession->m_bRequestComplete) // should only exit in case of process exit signal
          {
+
             dw1 = ::get_tick_count();
+
             handler.select(240, 0);
+
             keeplive.keep_alive();
+
+            set["http_content_length"] = psession->m_content_length;
+
+            double dRateDownloaded = 0.0;
+
+            int64_t iContentLength = set["http_content_length"].int64();
+
+            int64_t iBodySizeDownloaded = set["http_body_size_downloaded"].int64();
+
+            if (iContentLength > 0)
+            {
+
+               if (iBodySizeDownloaded > 0.0)
+               {
+
+                  dRateDownloaded = (double) iBodySizeDownloaded / (double) iContentLength;
+
+               }
+
+            }
+
+            set["http_rate_downloaded"] = dRateDownloaded;
+
+            psession->m_scalarsourceDownloadedRate.set_scalar(::scalar_none, dRateDownloaded);
+
+            psession->m_scalarsourceDownloaded.set_scalar(::scalar_none, iBodySizeDownloaded);
+
             if(psession->m_estatus == ::sockets::socket::status_connection_timed_out
-               || psession->m_estatus == ::sockets::socket::status_timed_out)
+                  || psession->m_estatus == ::sockets::socket::status_timed_out)
             {
 
                break;
@@ -1058,7 +1097,7 @@ retry:
          }
          else if(iStatusCode != 200)
          {
-            
+
             if(iTry < 8)
             {
 
@@ -1088,27 +1127,41 @@ retry:
          {
             if(psession != NULL)
             {
+
                string strCa2Realm = psession->outheader("ca2realm-x");
+
                if(::str::begins_ci(strCa2Realm,"not licensed: "))
                {
+
                   uint32_t dwTimeProfile2 = get_tick_count();
-                  TRACE0("Not Licensed Result Total time ::http::system::get(\"" + strUrl.Left(MIN(255,strUrl.get_length())) + "\") " + ::str::from(dwTimeProfile2 - dwTimeProfile1));
+
+                  TRACE("Not Licensed Result Total time ::http::system::get(\"%s\") %d", strUrl.Left(MIN(255,strUrl.get_length())), dwTimeProfile2 - dwTimeProfile1);
+
                   string strLocation = psession->outheader("Location");
+
                   psession.release();
-                  throw not_licensed(get_app(),strCa2Realm,strLocation);
+
+                  _throw(not_licensed(get_app(),strCa2Realm,strLocation));
+
                   return NULL;
+
                }
+
             }
+
          }
          else
          {
+
             estatus = status_fail;
+
          }
 
          set["get_status"] = (int64_t)estatus;
 
          uint32_t dwTimeProfile2 = get_tick_count();
-         TRACE0("Total time ::http::system::get(\"" + strUrl.Left(MIN(255,strUrl.get_length())) + "\") " + ::str::from(dwTimeProfile2 - dwTimeProfile1));
+
+         TRACE("Total time ::http::system::get(\"%s\") %d", strUrl.Left(MIN(255,strUrl.get_length())), dwTimeProfile2 - dwTimeProfile1);
 
       }
       catch(...)
@@ -1312,7 +1365,8 @@ retry:
       string strServer = System.url().get_root(pszUrl);
       string strProtocol = System.url().get_protocol(pszUrl);
       string strObject = System.url().get_object(pszUrl);
-      sp(::aura::application) papp = set["app"].cast < application >();
+      sp(::aura::application) papp = set["app"].cast < ::aura::application >();
+      sp(::aura::application) pappAgent = papp;
       int32_t iPort;
       if(strProtocol == "https")
       {
@@ -1332,12 +1386,12 @@ retry:
 
 
       string strUrl(pszUrl);
-/*      if (Session.fontopus()->m_strBestApiServer.has_char() && strUrl.find_ci("://api.ca2.cc/") > 0)
-      {
+      /*      if (Session.fontopus()->m_strBestApiServer.has_char() && strUrl.find_ci("://api.ca2.cc/") > 0)
+            {
 
-         strUrl.replace("://api.ca2.cc/", "://" + Session.fontopus()->m_strBestApiServer + "/");
+               strUrl.replace("://api.ca2.cc/", "://" + Session.fontopus()->m_strBestApiServer + "/");
 
-      }*/
+            }*/
 
 
       string strIp;
@@ -1377,8 +1431,8 @@ retry_session:
                      {
                         set["user"] = &AppUser(papp);
                         if (set["user"].cast < ::fontopus::user >() != NULL && (strSessId = set["user"].cast < ::fontopus::user >()->get_sessid(strUrl, !set["interactive_user"].is_new()
-                           && (bool)set["interactive_user"])).has_char() &&
-                           if_then(set.has_property("optional_ca2_login"), !(bool)set["optional_ca2_login"]))
+                              && (bool)set["interactive_user"])).has_char() &&
+                              if_then(set.has_property("optional_ca2_login"), !(bool)set["optional_ca2_login"]))
                         {
                            System.url().string_set(strUrl, "sessid", strSessId);
                         }
@@ -1388,16 +1442,16 @@ retry_session:
 
                }
                else if (set["user"].cast < ::fontopus::user >() != NULL &&
-                  (strSessId = set["user"].cast < ::fontopus::user >()->get_sessid(strUrl, !set["interactive_user"].is_new() && (bool)set["interactive_user"])).has_char() &&
-                  if_then(set.has_property("optional_ca2_login"), !(bool)set["optional_ca2_login"]))
+                        (strSessId = set["user"].cast < ::fontopus::user >()->get_sessid(strUrl, !set["interactive_user"].is_new() && (bool)set["interactive_user"])).has_char() &&
+                        if_then(set.has_property("optional_ca2_login"), !(bool)set["optional_ca2_login"]))
                {
-               
-                  if (0)
-                  {
 
-                     strSessId += "a";
-
-                  }
+//                  if (0)
+//                  {
+//
+//                     strSessId += "a";
+//
+//                  }
 
                   System.url().string_set(strUrl, "sessid", strSessId);
                   string strHost;
@@ -1468,7 +1522,7 @@ retry_session:
 
       if (strUrl.find_ci("://account.ca2.cc/") > 0 && Session.fontopus()->m_strBestFontopusServerIp.has_char())
       {
-         
+
          strIp = Session.fontopus()->m_strBestFontopusServerIp;
 
       }
@@ -1508,6 +1562,14 @@ retry_session:
       }
 
       //psocket->m_output_length = 1; // at least one to trigger write and in case it is not set (in case of reuse currently);
+
+      if (pappAgent.is_set())
+      {
+
+         psocket->set_app(pappAgent);
+
+      }
+
 
       psocket->m_bEnablePool = handler.PoolEnabled();
 
@@ -1593,10 +1655,20 @@ retry_session:
          psocket->EnableSSL();
       }
       uint32_t dw1 = ::get_tick_count();
-      
+
       bool bConfigProxy = !set.has_property("no_proxy_config") || !(bool)set["no_proxy_config"];
-      
+
       int32_t iTimeout = set["timeout"];
+
+      set["http_body_size_downloaded"] = &psocket->m_body_size_downloaded;
+
+      psocket->m_scalarsourceDownloadedRate.m_plistener = set["http_downloaded_rate_listener"].cast < ::double_scalar_source::listener >();
+
+      psocket->m_scalarsourceDownloadedRate.m_id = set["http_downloaded_rate_id"].get_id();
+
+      psocket->m_scalarsourceDownloaded.m_plistener = set["http_downloaded_listener"].cast < ::int_scalar_source::listener >();
+
+      psocket->m_scalarsourceDownloaded.m_id = set["http_downloaded_id"].get_id();
 
       if (iTimeout == 0)
       {
@@ -1630,16 +1702,16 @@ retry_session:
       {
 
          straProxy.explode(":", set["proxy"].get_string());
-         
+
          if (straProxy.get_count() != 2 || !psocket->proxy_open(straProxy[0], atoi(straProxy[1])))
          {
-            
+
             set["get_status"] = (int64_t)status_failed;
-            
+
             uint32_t dwTimeProfile2 = get_tick_count();
-            
-            TRACE0("Not Opened/Connected Result Total time ::http::system::get(\"" + strUrl.Left(MIN(255, strUrl.get_length())) + "\")  " + ::str::from(dwTimeProfile2 - dwTimeProfile1));
-            
+
+            TRACE("Not Opened/Connected Result Total time ::http::system::get(\"%s\") %d", strUrl.Left(MIN(255, strUrl.get_length())), dwTimeProfile2 - dwTimeProfile1);
+
             return NULL;
 
          }
@@ -1652,12 +1724,12 @@ retry_session:
 
          uint32_t dwTimeProfile2 = get_tick_count();
 
-         TRACE0("Not Opened/Connected Result Total time ::http::system::get(\"" + strUrl.Left(MIN(255,strUrl.get_length())) + "\")  " + ::str::from(dwTimeProfile2 - dwTimeProfile1));
+         TRACE("Not Opened/Connected Result Total time ::http::system::get(\"%s\") %d", strUrl.Left(MIN(255,strUrl.get_length())), dwTimeProfile2 - dwTimeProfile1);
 
          return NULL;
 
       }
-      
+
       uint32_t dw2 = ::get_tick_count();
 
       TRACE("system::get open time %d\n", dw2 - dw1);
@@ -1689,16 +1761,47 @@ retry_session:
 
       while(handler.get_count() > 0 && (::get_thread() == NULL || ::get_thread_run()))
       {
+
          dw1 = ::get_tick_count();
+
          handler.select(iTimeout, 0);
+
+         set["http_content_length"] = psocket->m_content_length;
+
+         double dRateDownloaded = 0.0;
+
+         int64_t iContentLength = set["http_content_length"].int64();
+
+         int64_t iBodySizeDownloaded = set["http_body_size_downloaded"].int64();
+
+         if (iContentLength > 0)
+         {
+
+            if (iBodySizeDownloaded > 0.0)
+            {
+
+               dRateDownloaded = (double)iBodySizeDownloaded / (double)iContentLength;
+
+            }
+
+         }
+
+         set["http_rate_downloaded"] = dRateDownloaded;
+
+         psocket->m_scalarsourceDownloadedRate.set_scalar(::scalar_none, dRateDownloaded);
+
+         psocket->m_scalarsourceDownloaded.set_scalar(::scalar_none, iBodySizeDownloaded);
+
          keeplive.keep_alive();
+
          if(psocket->m_estatus == ::sockets::socket::status_connection_timed_out
-            || psocket->m_estatus == ::sockets::socket::status_timed_out)
+               || psocket->m_estatus == ::sockets::socket::status_timed_out)
          {
 
             break;
 
          }
+
          if (psocket->m_b_complete)
          {
 
@@ -1751,7 +1854,7 @@ retry_session:
          }
       }
 #endif
-      
+
       if (psocket->m_estatus == ::sockets::socket::status_connection_timed_out)
       {
          estatus = status_connection_timed_out;
@@ -1770,10 +1873,10 @@ retry_session:
          if(::str::begins_ci(strCa2Realm, "not licensed: "))
          {
             uint32_t dwTimeProfile2 = get_tick_count();
-            TRACE0("Not Licensed Result Total time ::http::system::get(\"" + strUrl.Left(MIN(255,strUrl.get_length())) + "\") " + ::str::from(dwTimeProfile2 - dwTimeProfile1));
+            TRACE("Not Licensed Result Total time ::http::system::get(\"%s\") %d", strUrl.Left(MIN(255,strUrl.get_length())), dwTimeProfile2 - dwTimeProfile1);
             string strLocation = psocket->outheader("Location");
 //            delete psocket;
-            throw not_licensed(get_app(), strCa2Realm, strLocation);
+            _throw(not_licensed(get_app(), strCa2Realm, strLocation));
             return NULL;
          }
          string strLocation = psocket->outheader("location");
@@ -1809,7 +1912,7 @@ retry_session:
             Session.fontopus()->m_mapFontopusSessId[Session.fontopus()->m_strFirstFontopusServer].Empty();
 
             Session.fontopus()->m_authmap.remove_key(set["user"].cast < ::fontopus::user >()->m_strLogin);
-               
+
             set["user"].cast < ::fontopus::user >()->m_sessionidmap[System.url().get_server(pszUrl)].Empty();
 
             set["user"].cast < ::fontopus::user >()->m_sessionidmap[System.url().get_server(strUrl)].Empty();
@@ -1893,16 +1996,16 @@ retry_session:
          }
 
       }
-      
+
 //      if (ptimeoutbuffer != NULL && ptimeoutbuffer->m_uiExpectedSize == (uint_ptr)-1)
 //      {
-//         
+//
 //         ptimeoutbuffer->m_uiExpectedSize = 0;
-//         
+//
 //      }
 
       uint32_t dwTimeProfile2 = get_tick_count();
-      TRACE0("Total time ::http::system::get(\"" + strUrl.Left(MIN(255,strUrl.get_length())) + "\") " + ::str::from(dwTimeProfile2 - dwTimeProfile1));
+      TRACE("Total time ::http::system::get(\"%s\") %d", strUrl.Left(MIN(255,strUrl.get_length())), dwTimeProfile2 - dwTimeProfile1);
 
       return true;
 
@@ -2023,7 +2126,7 @@ retry_session:
    {
 
       ::file::file_sp spfile = set.cast < ::aura::application >("app",get_app())->m_paurasession->file().get_file(varFile,
-                                 ::file::type_binary | ::file::mode_create | ::file::mode_read_write | ::file::defer_create_directory);
+                               ::file::type_binary | ::file::mode_create | ::file::mode_read_write | ::file::defer_create_directory);
 
       set["file"] = spfile;
 
@@ -2048,7 +2151,7 @@ retry_session:
       {
 
          ::file::file_sp spfile = set.cast < ::aura::application >("app", get_app())->m_paurasession->file().get_file(varFile,
-            ::file::type_binary | ::file::mode_create | ::file::mode_read_write | ::file::defer_create_directory);
+                                  ::file::type_binary | ::file::mode_create | ::file::mode_read_write | ::file::defer_create_directory);
 
          set["file"] = spfile;
 
@@ -2106,7 +2209,7 @@ retry_session:
       }
 
       sp(::sockets::http_client_socket) psocket;
-      
+
       if (!get(handler, psocket, pszUrl, set))
       {
          sl.lock();
@@ -2240,7 +2343,7 @@ retry_session:
    void system::clean_proxy_auth(::fontopus::user * puser)
    {
       string strSection;
-      strSection.Format("proxy_auth\\%s.%s", puser->m_strLogin.c_str() , "proxy_auth");
+      strSection.Format("proxy_auth\\%s.%s", puser->m_strLogin.c_str(), "proxy_auth");
       Application.file().del(System.dir().appdata() / strSection + "_1");
       Application.file().del(System.dir().appdata() / strSection + "_2");
    }
@@ -2293,7 +2396,7 @@ retry_session:
 
 
       sp(::sockets::http_client_socket) psocket;
-      
+
       if (!System.http().get(sockethandler, psocket, pszUrl, set))
       {
 

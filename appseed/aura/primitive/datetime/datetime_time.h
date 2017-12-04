@@ -15,102 +15,102 @@ namespace datetime
 
    class CLASS_DECL_AURA time
    {
-   public:
+      public:
 
-#if defined(ANDROID) || defined(APPLEOS) || defined(SOLARIS)
-      time_t         m_time;
+#if defined(ANDROID) || defined(APPLEOS) || defined(SOLARIS) || defined(RASPBIAN)
+         time_t         m_time;
 #else
-      __time64_t m_time;
+         __time64_t m_time;
 #endif
 
 
-      static time WINAPI get_current_time() NOTHROW;
-      static bool WINAPI is_valid_FILETIME(const FILETIME& ft) NOTHROW;
+         static time WINAPI get_current_time() NOTHROW;
+         static bool WINAPI is_valid_FILETIME(const FILETIME& ft) NOTHROW;
 
 
-      time() NOTHROW;
-      time(__time64_t time) NOTHROW;
-      time(int32_t nYear, int32_t nMonth, int32_t nDay, int32_t nHour, int32_t nMin, int32_t nSec, int32_t nDST = -1);
-      time(WORD wDosDate, WORD wDosTime, int32_t nDST = -1);
-      time(const SYSTEMTIME& st, int32_t nDST = -1);
-      time(const FILETIME& ft, int32_t nDST = -1);
+         time() NOTHROW;
+         time(__time64_t time) NOTHROW;
+         time(int32_t nYear, int32_t nMonth, int32_t nDay, int32_t nHour, int32_t nMin, int32_t nSec, int32_t nDST = -1);
+         time(WORD wDosDate, WORD wDosTime, int32_t nDST = -1);
+         time(const SYSTEMTIME& st, int32_t nDST = -1);
+         time(const FILETIME& ft, int32_t nDST = -1);
 
 
-      time& operator=( __time64_t time ) NOTHROW;
+         time& operator=( __time64_t time ) NOTHROW;
 
-      time& operator+=( date_span span );
-      time& operator-=( date_span span );
+         time& operator+=( date_span span );
+         time& operator-=( date_span span );
 
-      time& operator+=( time_span span ) NOTHROW;
-      time& operator-=( time_span span ) NOTHROW;
+         time& operator+=( time_span span ) NOTHROW;
+         time& operator-=( time_span span ) NOTHROW;
 
-      time& operator+=( const duration & span ) NOTHROW;
-      time& operator-=( const duration & span ) NOTHROW;
+         time& operator+=( const duration & span ) NOTHROW;
+         time& operator-=( const duration & span ) NOTHROW;
 
-      time_span operator-( time time ) const NOTHROW;
-      time operator-( time_span span ) const NOTHROW;
-      time operator+( time_span span ) const NOTHROW;
+         time_span operator-( time time ) const NOTHROW;
+         time operator-( time_span span ) const NOTHROW;
+         time operator+( time_span span ) const NOTHROW;
 
-      time operator-( date_span span ) const;
-      time operator+( date_span span ) const;
+         time operator-( date_span span ) const;
+         time operator+( date_span span ) const;
 
-      time operator-(const duration & duration) const;
-      time operator+(const duration & duration) const;
+         time operator-(const duration & duration) const;
+         time operator+(const duration & duration) const;
 
-      bool operator==( time time ) const NOTHROW;
-      bool operator!=( time time ) const NOTHROW;
-      bool operator<( time time ) const NOTHROW;
-      bool operator>( time time ) const NOTHROW;
-      bool operator<=( time time ) const NOTHROW;
-      bool operator>=( time time ) const NOTHROW;
+         bool operator==( time time ) const NOTHROW;
+         bool operator!=( time time ) const NOTHROW;
+         bool operator<( time time ) const NOTHROW;
+         bool operator>( time time ) const NOTHROW;
+         bool operator<=( time time ) const NOTHROW;
+         bool operator>=( time time ) const NOTHROW;
 
-      struct ::tm* GetGmtTm( struct ::tm* ptm ) const;
-      struct ::tm* GetLocalTm( struct ::tm* ptm ) const;
-      /*
-      #if !_SECURE_TEMPLATE
-      _INSECURE_DEPRECATE("Pass an output time structure to time::GetGmtTm")
-      struct tm* GetGmtTm() const NOTHROW;
-      _INSECURE_DEPRECATE("Pass an output time structure to time::GetLocalTm")
-      struct tm* GetLocalTm() const NOTHROW;
-      #endif
-      */
+         struct ::tm* GetGmtTm( struct ::tm* ptm ) const;
+         struct ::tm* GetLocalTm( struct ::tm* ptm ) const;
+         /*
+         #if !_SECURE_TEMPLATE
+         _INSECURE_DEPRECATE("Pass an output time structure to time::GetGmtTm")
+         struct tm* GetGmtTm() const NOTHROW;
+         _INSECURE_DEPRECATE("Pass an output time structure to time::GetLocalTm")
+         struct tm* GetLocalTm() const NOTHROW;
+         #endif
+         */
 
-      bool get_as_system_time( SYSTEMTIME& st ) const NOTHROW;
+         bool get_as_system_time( SYSTEMTIME& st ) const NOTHROW;
 
-      __time64_t get_time() const NOTHROW;
+         __time64_t get_time() const NOTHROW;
 
-      int32_t GetYear() const NOTHROW;
-      int32_t GetMonth() const NOTHROW;
-      int32_t GetDay() const NOTHROW;
-      int32_t GetHour() const NOTHROW;
-      int32_t GetMinute() const NOTHROW;
-      int32_t GetSecond() const NOTHROW;
-      int32_t GetDayOfWeek() const NOTHROW; // 1 = Sunday, 7 = Saturday
+         int32_t GetYear() const NOTHROW;
+         int32_t GetMonth() const NOTHROW;
+         int32_t GetDay() const NOTHROW;
+         int32_t GetHour() const NOTHROW;
+         int32_t GetMinute() const NOTHROW;
+         int32_t GetSecond() const NOTHROW;
+         int32_t GetDayOfWeek() const NOTHROW; // 1 = Sunday, 7 = Saturday
 
-      int32_t GetGmtYear() const NOTHROW;
-      int32_t GetGmtMonth() const NOTHROW;
-      int32_t GetGmtDay() const NOTHROW;
-      int32_t GetGmtHour() const NOTHROW;
-      int32_t GetGmtMinute() const NOTHROW;
-      int32_t GetGmtSecond() const NOTHROW;
-      int32_t GetGmtDayOfWeek() const NOTHROW;
+         int32_t GetGmtYear() const NOTHROW;
+         int32_t GetGmtMonth() const NOTHROW;
+         int32_t GetGmtDay() const NOTHROW;
+         int32_t GetGmtHour() const NOTHROW;
+         int32_t GetGmtMinute() const NOTHROW;
+         int32_t GetGmtSecond() const NOTHROW;
+         int32_t GetGmtDayOfWeek() const NOTHROW;
 
-      string Format(string & str, const string & strFormat) const;
-      string FormatGmt(string & str, const string & strFormat) const;
-      string Format(const string & strFormat);
-      string FormatGmt(const string & strFormat);
+         string Format(string & str, const string & strFormat) const;
+         string FormatGmt(string & str, const string & strFormat) const;
+         string Format(const string & strFormat);
+         string FormatGmt(const string & strFormat);
 
-      time get_sunday() const;
+         time get_sunday() const;
 
-      __time64_t GetTimeOfDay() const NOTHROW;
-      __time64_t GetGmtTimeOfDay() const NOTHROW;
+         __time64_t GetTimeOfDay() const NOTHROW;
+         __time64_t GetGmtTimeOfDay() const NOTHROW;
 
-      int64_t GetDaySig() const NOTHROW;
-      int64_t GetGmtDaySig() const NOTHROW;
+         int64_t GetDaySig() const NOTHROW;
+         int64_t GetGmtDaySig() const NOTHROW;
 
 
-      FILETIME to_file_time() const;
-      SYSTEMTIME to_system_time() const;
+         FILETIME to_file_time() const;
+         SYSTEMTIME to_system_time() const;
 
    };
 
@@ -141,47 +141,47 @@ namespace datetime
       return str;
    }
 
-   inline bool time::operator==(time time) const throw()
+   inline bool time::operator==(time time) const NOTHROW
    {
       return(m_time == time.m_time);
    }
 
-   inline bool time::operator!=(time time) const throw()
+   inline bool time::operator!=(time time) const NOTHROW
    {
       return(m_time != time.m_time);
    }
 
-   inline bool time::operator<(time time) const throw()
+   inline bool time::operator<(time time) const NOTHROW
    {
       return(m_time < time.m_time);
    }
 
-   inline bool time::operator>(time time) const throw()
+   inline bool time::operator>(time time) const NOTHROW
    {
       return(m_time > time.m_time);
    }
 
-   inline bool time::operator<=(time time) const throw()
+   inline bool time::operator<=(time time) const NOTHROW
    {
       return(m_time <= time.m_time);
    }
 
-   inline bool time::operator>=(time time) const throw()
+   inline bool time::operator>=(time time) const NOTHROW
    {
       return(m_time >= time.m_time);
    }
 
-   inline time_span time::operator-(time time) const throw()
+   inline time_span time::operator-(time time) const NOTHROW
    {
       return(time_span(m_time - time.m_time));
    }
 
-   inline ::datetime::time time::operator-(time_span span) const throw()
+   inline ::datetime::time time::operator-(time_span span) const NOTHROW
    {
       return(time(m_time - span.GetTimeSpan()));
    }
 
-   inline ::datetime::time time::operator+(time_span span) const throw()
+   inline ::datetime::time time::operator+(time_span span) const NOTHROW
    {
       return m_time + span.m_timeSpan;
    }
@@ -196,12 +196,12 @@ namespace datetime
       return time(m_time + duration.GetTimeSpan());
    }
 
-   inline time::time() throw() :
+   inline time::time() NOTHROW :
       m_time(0)
    {
    }
 
-   inline time::time(__time64_t time)  throw() :
+   inline time::time(__time64_t time)  NOTHROW :
       m_time(time)
    {
    }
@@ -210,9 +210,10 @@ namespace datetime
 } // namespace datetime
 
 
-
+#ifdef DEBUG
 CLASS_DECL_AURA dump_context & operator <<(dump_context & dumpcontext, ::datetime::time time);
 CLASS_DECL_AURA dump_context & operator <<(dump_context & dumpcontext, ::datetime::time_span time);
+#endif
 
 CLASS_DECL_AURA ::file::ostream & operator <<(::file::ostream & os, ::datetime::time time);
 CLASS_DECL_AURA ::file::istream & operator >>(::file::istream & is, ::datetime::time & time);

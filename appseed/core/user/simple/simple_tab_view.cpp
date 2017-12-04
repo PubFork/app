@@ -17,19 +17,18 @@ simple_tab_view::~simple_tab_view()
 
 // simple_tab_view diagnostics
 
-#ifdef DEBUG
+
 void simple_tab_view::assert_valid() const
 {
    ::user::impact::assert_valid();
 }
 
-#ifndef _WIN32_WCE
+
 void simple_tab_view::dump(dump_context & dumpcontext) const
 {
    ::user::impact::dump(dumpcontext);
 }
-#endif
-#endif //DEBUG
+
 
 void simple_tab_view::on_layout()
 {

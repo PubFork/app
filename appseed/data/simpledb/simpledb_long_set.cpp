@@ -204,7 +204,7 @@ db_long_set::~db_long_set()
 
 }
 
-// Adiciona na matriz System nomes dos diretórios de imagens.
+// Adiciona na matriz System nomes dos diretï¿½rios de imagens.
 bool db_long_set::load(const char * lpKey, int64_t * plValue)
 {
 
@@ -568,7 +568,7 @@ bool db_long_set::SaveWindowRect_(const char * lpKey, ::window_sp pwindow)
 
 #else
 
-   throw todo(get_thread_app());
+   _throw(todo(get_app()));
 
 #endif
 
@@ -741,7 +741,7 @@ bool db_long_set::SetWindowPlacement(const char * lpKey, ::window_sp pwindow)
 
 #else
 
-   throw todo(get_thread_app());
+   _throw(todo(get_app()));
 
 #endif
 
@@ -778,7 +778,7 @@ bool db_long_set::SaveWindowPlacement(const char * lpKey, ::window_sp pwindow)
 
 #else
 
-   throw todo(get_thread_app());
+   _throw(todo(get_app()));
 
 #endif
 

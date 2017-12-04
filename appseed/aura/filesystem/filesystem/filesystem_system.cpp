@@ -56,7 +56,7 @@ namespace file
 
    }
 
-   
+
 
    bool system::exists(const ::file::path & pszPath, ::aura::application * papp)
    {
@@ -175,7 +175,7 @@ namespace file
       else
       {
 
-         varRet = stat.st_size;
+         varRet = (int_ptr)stat.st_size;
 
       }
 
@@ -249,7 +249,7 @@ restart:
          if (!System.dir().is(str, papp))
          {
 
-            throw "time square dir does not exist";
+            _throw(simple_exception(get_app(), "time square dir does not exist"));
 
          }
 
@@ -324,7 +324,7 @@ restart:
             }
             else if(iMax == 99)
             {
-               
+
                iIncLevel = iMaxLevel - 1;
 
                goto restart;
@@ -384,7 +384,7 @@ restart:
                continue;
 
             }
-            
+
             if(!isdigit((uchar) str[0]) || !isdigit((uchar) str[1]))
             {
 
@@ -533,7 +533,7 @@ restart:
             }
 
             ::memory_file memfile(papp, &storage);
-            
+
             zip::in_file infile(papp);
 
             if (!infile.unzip_open(strFilePath, 0))
@@ -578,7 +578,7 @@ restart:
 
          }
          else if (::str::begins(strFilePath, astr.strHttpProtocol)
-            || ::str::begins(strFilePath, astr.strHttpsProtocol))
+                  || ::str::begins(strFilePath, astr.strHttpsProtocol))
          {
 
             if (!exists(strFilePath, &varQuery, papp))
@@ -636,16 +636,16 @@ restart:
       string strResult;
 
       if (storage.get_size() >= 2
-         && storage.get_data()[0] == 255
-         && storage.get_data()[1] == 60)
+            && storage.get_data()[0] == 255
+            && storage.get_data()[1] == 60)
       {
 
          ::str::international::unicode_to_utf8(strResult, (const unichar *)&storage.get_data()[2], (int32_t)(storage.get_size() - 2));
 
       }
       else if (storage.get_size() >= 2
-         && storage.get_data()[0] == 255
-         && storage.get_data()[1] == 254)
+               && storage.get_data()[0] == 255
+               && storage.get_data()[1] == 254)
       {
 
 #ifdef VSNORD
@@ -660,17 +660,17 @@ restart:
 
       }
       else if (storage.get_size() >= 3
-         && storage.get_data()[0] == 0xef
-         && storage.get_data()[1] == 0xbb
-         && storage.get_data()[2] == 0xbf)
+               && storage.get_data()[0] == 0xef
+               && storage.get_data()[1] == 0xbb
+               && storage.get_data()[2] == 0xbf)
       {
-         
+
          strResult = string((const char *)(const unichar *)&storage.get_data()[3], (int32_t)(storage.get_size() - 3));
 
       }
       else
       {
-         
+
          strResult = string((const char *)storage.get_data(), (int32_t)storage.get_size());
 
       }
@@ -752,7 +752,7 @@ restart:
          if (filesize > ::numeric_info < memory_size_t> ::max())
          {
 
-            throw memory_exception(papp);
+            _throw(memory_exception(papp));
 
          }
 
@@ -1075,7 +1075,7 @@ restart:
          {
             string strError;
             strError.Format("Failed to copy file \"%s\" to \"%s\" bFailIfExists=%d error=could not open output file", psz, pszNew, bFailIfExists);
-            throw strError;
+            _throw(io_exception(papp, strError));
          }
 
          ::file::file_sp ifile;
@@ -1084,7 +1084,7 @@ restart:
          {
             string strError;
             strError.Format("Failed to copy file \"%s\" to \"%s\" bFailIfExists=%d error=could not open input file", psz, pszNew, bFailIfExists);
-            throw strError;
+            _throw(io_exception(papp, strError));
          }
 
          ::file::ostream ostream(ofile);
@@ -1163,20 +1163,20 @@ restart:
             {
                string strError;
                strError.Format("During copy, failed to close both input file \"%s\" and output file \"%s\" bFailIfExists=%d", psz, pszNew, bFailIfExists);
-               throw strError;
+               _throw(io_exception(papp, strError));
             }
             else
             {
                string strError;
                strError.Format("During copy, failed to close input file \"%s\" bFailIfExists=%d", psz, bFailIfExists);
-               throw strError;
+               _throw(io_exception(papp, strError));
             }
          }
          else if (bOutputFail)
          {
             string strError;
             strError.Format("During copy, failed to close output file \"%s\" bFailIfExists=%d", pszNew, bFailIfExists);
-            throw strError;
+            _throw(io_exception(papp, strError));
          }
 
       }
@@ -1201,8 +1201,8 @@ restart:
 #ifdef WINDOWSEX
 
       if (!::MoveFileW(
-         ::str::international::utf8_to_unicode(psz),
-         ::str::international::utf8_to_unicode(pszNew)))
+            ::str::international::utf8_to_unicode(psz),
+            ::str::international::utf8_to_unicode(pszNew)))
       {
 
          uint32_t dwError = ::GetLastError();
@@ -1211,9 +1211,9 @@ restart:
          {
 
             if (::CopyFileW(
-               ::str::international::utf8_to_unicode(psz),
-               ::str::international::utf8_to_unicode(pszNew),
-               FALSE))
+                  ::str::international::utf8_to_unicode(psz),
+                  ::str::international::utf8_to_unicode(pszNew),
+                  FALSE))
             {
 
                if (!::DeleteFileW(::str::international::utf8_to_unicode(psz)))
@@ -1225,7 +1225,7 @@ restart:
 
                   strError.Format("Failed to delete the file to move \"%s\" error=%d", psz, dwError);
 
-                  TRACE0(strError);
+                  TRACE("%s", strError);
 
                }
 
@@ -1241,7 +1241,7 @@ restart:
 
          strError.Format("Failed to move file \"%s\" to \"%s\" error=%d", psz, pszNew, dwError);
 
-         throw strError;
+         _throw(io_exception(papp, strError));
 
       }
 
@@ -1254,7 +1254,7 @@ restart:
 
          output_debug_string("test");
 
-         throw "file::system::move Could not move file, could not open source file";
+         _throw(simple_exception(get_app(), "file::system::move Could not move file, could not open source file"));
 
       }
 
@@ -1294,7 +1294,7 @@ restart:
          int32_t err = errno;
          string strError;
          strError.Format("Failed to delete file error=%d", err);
-         throw strError;
+         _throw(simple_exception(get_app(), strError));
       }
 #endif
 
@@ -1341,7 +1341,7 @@ restart:
       return;
       string strError;
       strError.Format("Failed to delete file \"%s\" error=%d", psz, dwError);
-      throw io_exception(papp, strError);
+      _throw(io_exception(papp, strError));
       }*/
 
 
@@ -1354,7 +1354,7 @@ restart:
          {
             string strError;
             strError.Format("Failed to delete file error=%d", err);
-            throw strError;
+            _throw(simple_exception(get_app(), strError));
          }
       }
 #endif
@@ -1408,22 +1408,22 @@ restart:
 
    ::file::path system::paste(const ::file::path & pathLocation,const ::file::path & path,::aura::application * papp)
    {
-      
+
       ::file::path pathDir = path.folder();
-      
+
       ::file::path pathDst = pathLocation;
-      
+
       ::file::path pathSrc = pathDir;
-      
+
       if (pathDst == pathSrc)
       {
-         
+
          return duplicate(path, papp);
 
       }
       else
       {
-         
+
          ::file::path pathNew = pathDst / path.name();
 
          copy(pathNew, path, false, extract_all, papp);
@@ -1481,7 +1481,7 @@ restart:
 
       UNREFERENCED_PARAMETER(path);
       UNREFERENCED_PARAMETER(status);
-      throw interface_only_exception(papp);
+      _throw(interface_only_exception(papp));
 
    }
 
@@ -1491,7 +1491,7 @@ restart:
 
       UNREFERENCED_PARAMETER(path);
       UNREFERENCED_PARAMETER(status);
-      throw interface_only_exception(papp);
+      _throw(interface_only_exception(papp));
 
    }
 
@@ -1547,7 +1547,7 @@ restart:
 
 #elif defined(METROWIN)
 
-      throw todo(get_app());
+      _throw(todo(get_app()));
 
 #else
 
@@ -1624,7 +1624,7 @@ restart:
       ::file::file_sp fileOut = App(papp).file().get_file(name, ::file::mode_create | ::file::type_binary | ::file::mode_write);
 
       if(fileOut.is_null())
-         throw ::file::exception(papp, ::file::exception::none,-1L, name);
+         _throw(::file::exception(papp, ::file::exception::none,-1L, name));
 
       return fileOut;
 
@@ -1670,8 +1670,8 @@ restart:
       }
 
       while(str.has_char() &&
-         (str.Right(1) == "\\" ||
-         str.Right(1) == "/"))
+            (str.Right(1) == "\\" ||
+             str.Right(1) == "/"))
       {
          str = str.Left(str.get_length() - 1);
       }
@@ -1732,7 +1732,7 @@ restart:
       ::file::file_sp spfile = App(papp).file().get_file(pszFile, ::file::mode_create | ::file::mode_write | ::file::type_binary);
 
       if (spfile.is_null())
-         throw "failed";
+         _throw(simple_exception(get_app(), "failed"));
 
       string strVersion;
 
@@ -1770,7 +1770,7 @@ restart:
          string strRelative = stra[i].relative();
          write_gen_string(spfile, &ctx, strRelative);
          if (file2->open(stra[i], ::file::mode_read | ::file::type_binary).failed())
-            throw "failed";
+            _throw(simple_exception(get_app(), "failed"));
          write_n_number(spfile, &ctx, (int32_t)file2->get_length());
          while ((uiRead = file2->read(buf, iBufSize)) > 0)
          {
@@ -1797,7 +1797,7 @@ restart:
       ::file::file_sp spfile = App(papp).file().get_file(pszFile, ::file::mode_read | ::file::type_binary);
 
       if (spfile.is_null())
-         throw "failed";
+         _throw(simple_exception(get_app(), "failed"));
 
       read_gen_string(spfile, NULL, strVersion);
 
@@ -1826,7 +1826,7 @@ restart:
             ::file::path strPath = ::file::path(pszDir) / strRelative;
             App(papp).dir().mk(strPath.folder());
             if (file2->open(strPath, ::file::mode_create | ::file::type_binary | ::file::mode_write).failed())
-               throw "failed";
+               _throw(simple_exception(get_app(), "failed"));
             read_n_number(spfile, &ctx, iLen);
             while (iLen > 0)
             {
@@ -1840,7 +1840,7 @@ restart:
             file2->close();
             strMd5New = ::str::from(ctx);
             if (strMd5 != strMd5New)
-               throw "failed";
+               _throw(simple_exception(get_app(), "failed"));
          }
       }
 
@@ -1892,7 +1892,7 @@ restart:
       }
 
       if (ch != 'n')
-         throw "failed";
+         _throw(simple_exception(get_app(), "failed"));
 
       if (pctx != NULL)
       {
@@ -2063,7 +2063,7 @@ restart:
    bool system::get_last_write_time(FILETIME * pfiletime,const string & strFilename)
    {
 
-      throw interface_only_exception(get_app());
+      _throw(interface_only_exception(get_app()));
 
    }
 
@@ -2517,11 +2517,21 @@ restart:
 
                bool bRawHttp1 = (bool)varFile["http_set"]["raw_http"];
 
-               UNUSED(bRawHttp1);
+               if(bRawHttp1)
+               {
+
+                  output_debug_string("\nbRawHttp1");
+
+               }
 
                bool bRawHttp2 = (bool)spfile->oprop("http_set")["raw_http"];
 
-               UNUSED(bRawHttp2);
+               if(bRawHttp2)
+               {
+
+                  output_debug_string("\nbRawHttp2");
+
+               }
 
                if (Application.http().get(strPath, *pfile->get_memory(), set))
                {
@@ -2590,7 +2600,7 @@ restart:
          else
          {
 
-          //  return NULL;
+            //  return NULL;
 
 
 

@@ -1,8 +1,5 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "base/user/user.h"
-
-
-#ifdef HOTPLUGIN_SUBSYSTEM
 
 
 namespace hotplugin
@@ -11,7 +8,7 @@ namespace hotplugin
 
    container_launcher::container_launcher(string strPlatform, const char * pszChannel)
    {
-      
+
       m_strChannel   = pszChannel;
 
       m_strPlatform  = strPlatform;
@@ -36,11 +33,5 @@ namespace hotplugin
 
 
 } // namespace hotplugin
-
-
-#endif
-
-
-
 
 

@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace simpledb
@@ -16,19 +16,19 @@ namespace simpledb
       m_strName = pszName;
       m_pdatabase = pdatabase;
 
-      
+
 
       string strMetaPath;
 
       strMetaPath = System.dir().element() / "database" / m_pdatabase->getDatabase() / m_strName/ "meta.xml";
 
       if(!m_spfileMeta->open(strMetaPath, ::file::type_binary | ::file::mode_read_write | ::file::share_exclusive))
-         throw 0;
+         _throw(simple_exception(get_app(), "integer_exception 1"));
 
       ::file::istream is(m_spfileMeta);
 
       if(!m_xmldocumentMeta.load(is))
-         throw 0;
+         _throw(simple_exception(get_app(), "integer_exception 1"));
 
       sp(::xml::node) pfields = m_xmldocumentMeta.get_root()->get_child("fields");
 
@@ -47,8 +47,8 @@ namespace simpledb
          strFixedPath = strMetaPath = System.dir().element() / "database" / m_pdatabase->getDatabase() /  m_strName/"fixed.txt";
 
       if(!m_spfileFixed->open(strMetaPath, ::file::mode_create | ::file::mode_no_truncate | ::file::type_binary | ::file::mode_read_write | ::file::share_exclusive |
-         ::file::defer_create_directory))
-         throw 0;
+                              ::file::defer_create_directory))
+         _throw(simple_exception(get_app(), "integer_exception 1"));
 
    }
 

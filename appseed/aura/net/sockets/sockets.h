@@ -4,7 +4,7 @@
 
 
 #if defined(BSD_STYLE_SOCKETS)
-#include "bsd/sockets_config.h"
+//#include "bsd/sockets_config.h"
 
 
 
@@ -39,7 +39,7 @@
 
 #if defined(BSD_STYLE_SOCKETS)
 #include "bsd/sockets_bsd.h"
-#if defined(METROWIN) || defined(LINUX) 
+#if defined(METROWIN) || defined(LINUX)
 
 extern "C"
 CLASS_DECL_AURA const SSL_METHOD * TLS_client_method();
@@ -67,7 +67,7 @@ CLASS_DECL_AURA const SSL_METHOD * TLS_server_method();
 
 
 
-#include "aura/net/mail/mail.h"
+//#include "aura/net/mail/mail.h"
 
 
 

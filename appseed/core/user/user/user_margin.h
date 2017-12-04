@@ -44,7 +44,7 @@ namespace user
       {
       }
 
-      virtual void install_message_routing(::message::sender * pinterface)
+      virtual void install_message_routing(::message::sender * pinterface) override
       {
 
          ::user::margin_base::install_message_routing(pinterface);
@@ -78,7 +78,7 @@ namespace user
       }
 
 
-      void set_viewport_offset(int x,int y)
+      void set_viewport_offset(int x,int y) override
       {
 
          BASE::set_viewport_offset(x - m_rectMargin.left, y - m_rectMargin.top);

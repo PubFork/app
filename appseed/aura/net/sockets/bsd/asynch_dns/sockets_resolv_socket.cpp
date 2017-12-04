@@ -31,16 +31,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "aura/net/net_sockets.h"
 #include <time.h>
 
+#ifdef APPLEOS
+#include <netdb.h>
+#endif
+
 
 namespace sockets
 {
 
 
-   #ifdef DEBUG
-   #define DEB(x) x
-   #else
-   #define DEB(x)
-   #endif
+#ifdef DEBUG
+#define DEB(x) x
+#else
+#define DEB(x)
+#endif
 
 
    resolv_socket::resolv_socket(base_socket_handler& h) :
@@ -66,12 +70,12 @@ namespace sockets
       socket(h),
       stream_socket(h),
       tcp_socket(h)
-   ,m_bServer(false)
-   ,m_parent(parent)
-   ,m_resolv_host(host)
-   ,m_resolv_port(port)
-   ,m_resolve_ipv6(ipv6)
-   ,m_cached(false)
+      ,m_bServer(false)
+      ,m_parent(parent)
+      ,m_resolv_host(host)
+      ,m_resolv_port(port)
+      ,m_resolve_ipv6(ipv6)
+      ,m_cached(false)
    {
 
       SetLineProtocol();
@@ -102,12 +106,12 @@ namespace sockets
       socket(h),
       stream_socket(h),
       tcp_socket(h)
-   ,m_bServer(false)
-   ,m_parent(parent)
-   ,m_resolv_port(0)
-   ,m_resolve_ipv6(true)
-   ,m_resolv_address6(a)
-   ,m_cached(false)
+      ,m_bServer(false)
+      ,m_parent(parent)
+      ,m_resolv_port(0)
+      ,m_resolve_ipv6(true)
+      ,m_resolv_address6(a)
+      ,m_cached(false)
    {
       SetLineProtocol();
    }
@@ -120,16 +124,16 @@ namespace sockets
 
    void resolv_socket::OnLine(const string & line)
    {
-      
+
       ::str::parse pa(line, ":");
 
       if (m_bServer)
       {
-         
+
          m_query = pa.getword();
-         
+
          m_data = pa.getrest();
-         
+
          TRACE(" *** resolv_socket server; query=%s, data=%s\n", m_query.c_str(), m_data.c_str());
 
          // %! check cache
@@ -183,16 +187,15 @@ namespace sockets
       }
       string key = pa.getword();
       string value = pa.getrest();
-   TRACE(" *** resolv_socket response;  %s: %s\n", key.c_str(), value.c_str());
+      TRACE(" *** resolv_socket response;  %s: %s\n", key.c_str(), value.c_str());
 
       if (key == "Cached")
       {
          m_cached = true;
       }
-      else
-      if (key == "Failed" && m_parent)
+      else if (key == "Failed" && m_parent)
       {
-   TRACE(" ************ Resolve failed\n");
+         TRACE(" ************ Resolve failed\n");
          if (Handler().Resolving(m_parent) || Handler().Valid(m_parent))
          {
             m_parent -> OnResolveFailed(m_resolv_id);
@@ -208,8 +211,7 @@ namespace sockets
          }
          m_parent = NULL;
       }
-      else
-      if (key == "Name" && !m_resolv_host.get_length() && m_parent)
+      else if (key == "Name" && !m_resolv_host.get_length() && m_parent)
       {
          if (Handler().Resolving(m_parent) || Handler().Valid(m_parent))
          {
@@ -219,14 +221,13 @@ namespace sockets
          if (!m_cached)
          {
             single_lock lock(&Session.sockets().m_mutexResolvCache, true);
-   TRACE(" *** Update cache for [%s][%s] = '%s'\n", m_query.c_str(), m_data.c_str(), value.c_str());
+            TRACE(" *** Update cache for [%s][%s] = '%s'\n", m_query.c_str(), m_data.c_str(), value.c_str());
             Session.sockets().m_resolvcache[m_query][m_data] = value;
             Session.sockets().m_resolvtimeout[m_query][m_data] = time(NULL);
          }
          m_parent = NULL;
       }
-      else
-      if (key == "A" && m_parent)
+      else if (key == "A" && m_parent)
       {
          if (Handler().Resolving(m_parent) || Handler().Valid(m_parent))
          {
@@ -267,7 +268,7 @@ namespace sockets
 
    void resolv_socket::OnDetached()
    {
-   TRACE(" *** resolv_socket::OnDetached(); query=%s, data=%s\n", m_query.c_str(), m_data.c_str());
+      TRACE(" *** resolv_socket::OnDetached(); query=%s, data=%s\n", m_query.c_str(), m_data.c_str());
       if (m_query == "gethostbyname")
       {
          struct in_addr sa;
@@ -298,8 +299,7 @@ namespace sockets
          }
          write("\n");
       }
-      else
-      if (m_query == "gethostbyaddr")
+      else if (m_query == "gethostbyaddr")
       {
          if (Session.sockets().net().isipv4( m_data ))
          {
@@ -350,7 +350,9 @@ namespace sockets
       else
       {
          string msg = "Unknown query type: " + m_query;
+#ifdef DEBUG
          log("OnDetached", 0, msg);
+#endif
          write("Unknown\n\n");
       }
       SetCloseAndDelete();
@@ -398,9 +400,9 @@ namespace sockets
          {
             single_lock lock(&Session.sockets().m_mutexResolvCache, true);
             string value;
-   TRACE(" *** Update cache for [%s][%s] = '%s'\n", m_query.c_str(), m_data.c_str(), value.c_str());
-   Session.sockets().m_resolvcache[m_query][m_data] = value;
-   Session.sockets().m_resolvtimeout[m_query][m_data] = time(NULL);
+            TRACE(" *** Update cache for [%s][%s] = '%s'\n", m_query.c_str(), m_data.c_str(), value.c_str());
+            Session.sockets().m_resolvcache[m_query][m_data] = value;
+            Session.sockets().m_resolvtimeout[m_query][m_data] = time(NULL);
          }
          m_parent = NULL;
       }

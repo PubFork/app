@@ -3,10 +3,10 @@
 
 
 #if defined(ANDROID)
-//#include <sys/wait.h>
-//#include <unistd.h>
-//#include <pthread.h>
-//#include <stdlib.h>
+#include <sys/wait.h>
+#include <unistd.h>
+#include <pthread.h>
+#include <stdlib.h>
 #elif defined(LINUX)
 #include <sys/wait.h>
 #include <unistd.h>
@@ -130,7 +130,7 @@ namespace ansios
 
             env.add((char *) psz);
 
-            iPrevious = i;
+            iPrevious = (int) i;
 
             i++;
 
@@ -178,12 +178,12 @@ namespace ansios
 
 #else
 
-      char *	cmd_line;
+      char *   cmd_line;
 
       cmd_line = (char *) malloc(strlen(pszCmdLine ) + 1 );
 
       if(cmd_line == NULL)
-      return 0;
+         return 0;
 
       strcpy_dup(cmd_line, pszCmdLine);
 
@@ -192,49 +192,49 @@ namespace ansios
       if((m_iPid = ::fork()) == 0)
       {
 
-      if(bPiped)
-      {
-         dup2(m_pipe.m_sppipeOut.cast < pipe >()->m_fd[1],STDOUT_FILENO);
-         dup2(m_pipe.m_sppipeOut.cast < pipe >()->m_fd[1],STDERR_FILENO);
-         dup2(m_pipe.m_sppipeIn.cast < pipe >()->m_fd[0],STDIN_FILENO);
-      }
+         if(bPiped)
+         {
+            dup2(m_pipe.m_sppipeOut.cast < pipe >()->m_fd[1],STDOUT_FILENO);
+            dup2(m_pipe.m_sppipeOut.cast < pipe >()->m_fd[1],STDERR_FILENO);
+            dup2(m_pipe.m_sppipeIn.cast < pipe >()->m_fd[0],STDIN_FILENO);
+         }
 
 
-      // child
-      char		*pArg, *pPtr;
-      char		*argv[1024 + 1];
-      int32_t		 argc;
-      if( ( pArg = strrchr_dup( exec_path_name, '/' ) ) != NULL )
-      pArg++;
-      else
-      pArg = exec_path_name;
-      argv[0] = pArg;
-      argc = 1;
+         // child
+         char     *pArg, *pPtr;
+         char     *argv[1024 + 1];
+         int32_t      argc;
+         if( ( pArg = strrchr_dup( exec_path_name, '/' ) ) != NULL )
+            pArg++;
+         else
+            pArg = exec_path_name;
+         argv[0] = pArg;
+         argc = 1;
 
-      if( cmd_line != NULL && *cmd_line != '\0' )
-      {
-      pArg = strtok_r_dup(cmd_line, " ", &pPtr);
-      while( pArg != NULL )
-      {
-      argv[argc] = pArg;
-      argc++;
-      if( argc >= 1024 )
-      break;
-      pArg = strtok_r_dup(NULL, " ", &pPtr);
-      }
-      }
-      argv[argc] = NULL;
+         if( cmd_line != NULL && *cmd_line != '\0' )
+         {
+            pArg = strtok_r_dup(cmd_line, " ", &pPtr);
+            while( pArg != NULL )
+            {
+               argv[argc] = pArg;
+               argc++;
+               if( argc >= 1024 )
+                  break;
+               pArg = strtok_r_dup(NULL, " ", &pPtr);
+            }
+         }
+         argv[argc] = NULL;
 
-      execv(exec_path_name, argv);
-      free(cmd_line);
-      exit( -1 );
+         execv(exec_path_name, argv);
+         free(cmd_line);
+         exit( -1 );
       }
       else if(m_iPid == -1)
       {
-      // in parent, but error
-      m_iPid = 0;
-      free(cmd_line);
-      return 0;
+         // in parent, but error
+         m_iPid = 0;
+         free(cmd_line);
+         return 0;
       }
       // in parent, success
       return 1;
@@ -251,14 +251,14 @@ namespace ansios
       //      bool bExited;
 
       int32_t wpid = waitpid(m_iPid,&iExitCode,
-         0
+                             0
 #ifdef WNOHANG
-         | WNOHANG
+                             | WNOHANG
 #endif
 #ifdef WCONTINUED
-         | WCONTINUED
+                             | WCONTINUED
 #endif
-         );
+                            );
 
       if(wpid == -1)
          return true;
@@ -301,7 +301,7 @@ namespace ansios
 
    }
 
-   int32_t process::synch_elevated(const char * pszCmdLineParam,int iShow,const ::duration & durationTimeOut,bool * pbTimeOut)
+   uint32_t process::synch_elevated(const char * pszCmdLineParam,int iShow,const ::duration & durationTimeOut,bool * pbTimeOut)
    {
 
 #if defined(MACOS)
@@ -415,7 +415,7 @@ namespace ansios
       AuthorizationItem right = {kAuthorizationRightExecute, 0, NULL, 0};
       AuthorizationRights rights = {1, &right};
       AuthorizationFlags flags = kAuthorizationFlagDefaults | kAuthorizationFlagInteractionAllowed |
-         kAuthorizationFlagPreAuthorize | kAuthorizationFlagExtendRights;
+                                 kAuthorizationFlagPreAuthorize | kAuthorizationFlagExtendRights;
 
 
 
@@ -483,10 +483,10 @@ namespace ansios
 
 //      int i = setuid(0);
 
-  //    if(i != 0)
-    //  {
+      //    if(i != 0)
+      //  {
       //   TRACE("Failed to setuid: %d", i);
-        // return -1;
+      // return -1;
       //}
 
 
@@ -566,9 +566,9 @@ namespace ansios
       if(pipe != NULL)
       {
 
- //        int pptp_pid = 0;
+//        int pptp_pid = 0;
 
-  //       fscanf(pipe, "%d", &pptp_pid);
+         //       fscanf(pipe, "%d", &pptp_pid);
          bool bNewLine = true;
          index i = 0;
          while(i < 1000)
@@ -601,13 +601,13 @@ namespace ansios
 
 //         pid_t pptp_pid = 0;
 
-  //       fread(&pptp_pid,sizeof(pptp_pid),1,pipe); // get pid
+         //       fread(&pptp_pid,sizeof(pptp_pid),1,pipe); // get pid
 
-    //     m_iPid = pptp_pid;
+         //     m_iPid = pptp_pid;
 
          DWORD dwStart = get_tick_count();
 
-         DWORD dwTimeOut = durationTimeOut.get_total_milliseconds();
+         DWORD dwTimeOut = (DWORD) durationTimeOut.get_total_milliseconds();
 
          char sz[1025];
 
@@ -640,32 +640,32 @@ namespace ansios
             }
          }
 
-/*         char c;
+         /*         char c;
 
-         int iRead;
+                  int iRead;
 
-         string strRead;
+                  string strRead;
 
-         while(true)
-         {
-            iRead = fread(&c,1,1, pipe);
-            if(iRead == 1)
-            {
-               strRead += c;
-            }
-            else if(ferror(pipe))
-            {
-               TRACE("Error reading from file");
-               break;
-            }
-            else
-            {
-            }
-         }
+                  while(true)
+                  {
+                     iRead = fread(&c,1,1, pipe);
+                     if(iRead == 1)
+                     {
+                        strRead += c;
+                     }
+                     else if(ferror(pipe))
+                     {
+                        TRACE("Error reading from file");
+                        break;
+                     }
+                     else
+                     {
+                     }
+                  }
 
-         fclose(pipe);
+                  fclose(pipe);
 
-         TRACE0(strRead);*/
+                  TRACE0(strRead);*/
 
 
       }
@@ -685,24 +685,25 @@ namespace ansios
       return dwExitCode;
 #else
 
-       stringa straParam;
+      stringa straParam;
 
-       ref_array < char > argv;
+      ref_array < char > argv;
 
 #ifdef MACOS
 
-       straParam.add("/usr/bin/osascript");
-       straParam.add("-e");
-       straParam.add("'do shell script \"" + string(pszCmdLineParam) + "\" with administrator privileges'");
+      straParam.add("/usr/bin/osascript");
+      straParam.add("-e");
+      straParam.add("'do shell script \"" + string(pszCmdLineParam) + "\" with administrator privileges'");
 
-       argv.add((char *) (const char *) straParam[0]);
-       argv.add((char *) (const char *) straParam[1]);
-       argv.add((char *) (const char *) straParam[2]);
-       argv.add(NULL);
+      argv.add((char *) (const char *) straParam[0]);
+      argv.add((char *) (const char *) straParam[1]);
+      argv.add((char *) (const char *) straParam[2]);
+      argv.add(NULL);
 
 #else
 
-      if (access("/usr/bin/gksu", X_OK) != 0) {
+      if (access("/usr/bin/gksu", X_OK) != 0)
+      {
          ::simple_message_box(NULL,"gksu is not installed, please install gksu.","Please, install gksu.",MB_ICONINFORMATION);
          return -1;
       }
@@ -734,31 +735,31 @@ namespace ansios
       debug_print("synch_elevated : posix_spawn return status %d", status);
 
 
-    DWORD dwStart = get_tick_count();
+      DWORD dwStart = get_tick_count();
 
-        while(!has_exited() && get_tick_count() - dwStart < durationTimeOut.get_total_milliseconds())
-        {
-            Sleep(100);
-        }
-        DWORD dwExitCode = 0;
-        if(!has_exited(&dwExitCode))
-        {
-        if(pbTimeOut != NULL)
-        {
-        *pbTimeOut = true;
-        }
-        }
+      while(!has_exited() && get_tick_count() - dwStart < durationTimeOut.get_total_milliseconds())
+      {
+         Sleep(100);
+      }
+      DWORD dwExitCode = 0;
+      if(!has_exited(&dwExitCode))
+      {
+         if(pbTimeOut != NULL)
+         {
+            *pbTimeOut = true;
+         }
+      }
 
       return dwExitCode;
 
 #else
 
-      char *	cmd_line;
+      char *   cmd_line;
 
       cmd_line = (char *) memory_alloc(strlen(pszCmdLine ) + 1 );
 
       if(cmd_line == NULL)
-      return 0;
+         return 0;
 
       strcpy_dup(cmd_line, pszCmdLine);
 
@@ -767,49 +768,49 @@ namespace ansios
       if((m_iPid = ::fork()) == 0)
       {
 
-      //if(bPiped)
-      //{
-      //   dup2(m_pipe.m_sppipeOut.cast < pipe >()->m_fd[1],STDOUT_FILENO);
-      //   dup2(m_pipe.m_sppipeOut.cast < pipe >()->m_fd[1],STDERR_FILENO);
-      //   dup2(m_pipe.m_sppipeIn.cast < pipe >()->m_fd[0],STDIN_FILENO);
-      //}
+         //if(bPiped)
+         //{
+         //   dup2(m_pipe.m_sppipeOut.cast < pipe >()->m_fd[1],STDOUT_FILENO);
+         //   dup2(m_pipe.m_sppipeOut.cast < pipe >()->m_fd[1],STDERR_FILENO);
+         //   dup2(m_pipe.m_sppipeIn.cast < pipe >()->m_fd[0],STDIN_FILENO);
+         //}
 
 
-      // child
-      char		*pArg, *pPtr;
-      char		*argv[1024 + 1];
-      int32_t		 argc;
-      if( ( pArg = strrchr_dup( exec_path_name, '/' ) ) != NULL )
-      pArg++;
-      else
-      pArg = exec_path_name;
-      argv[0] = pArg;
-      argc = 1;
+         // child
+         char     *pArg, *pPtr;
+         char     *argv[1024 + 1];
+         int32_t      argc;
+         if( ( pArg = strrchr_dup( exec_path_name, '/' ) ) != NULL )
+            pArg++;
+         else
+            pArg = exec_path_name;
+         argv[0] = pArg;
+         argc = 1;
 
-      if( cmd_line != NULL && *cmd_line != '\0' )
-      {
-      pArg = strtok_r_dup(cmd_line, " ", &pPtr);
-      while( pArg != NULL )
-      {
-      argv[argc] = pArg;
-      argc++;
-      if( argc >= 1024 )
-      break;
-      pArg = strtok_r_dup(NULL, " ", &pPtr);
-      }
-      }
-      argv[argc] = NULL;
+         if( cmd_line != NULL && *cmd_line != '\0' )
+         {
+            pArg = strtok_r_dup(cmd_line, " ", &pPtr);
+            while( pArg != NULL )
+            {
+               argv[argc] = pArg;
+               argc++;
+               if( argc >= 1024 )
+                  break;
+               pArg = strtok_r_dup(NULL, " ", &pPtr);
+            }
+         }
+         argv[argc] = NULL;
 
-      execv(exec_path_name, argv);
-      free(cmd_line);
-      exit( -1 );
+         execv(exec_path_name, argv);
+         free(cmd_line);
+         exit( -1 );
       }
       else if(m_iPid == -1)
       {
-      // in parent, but error
-      m_iPid = 0;
-      free(cmd_line);
-      return 0;
+         // in parent, but error
+         m_iPid = 0;
+         free(cmd_line);
+         return 0;
       }
       // in parent, success
       return 1;

@@ -18,8 +18,11 @@ namespace file
       ::file::path         m_strFullName;   // absolute path name
 
 
+#ifdef DEBUG
+
       void dump(dump_context & dumpcontext) const;
 
+#endif
 
    };
 

@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace filemanager
@@ -61,12 +61,12 @@ namespace filemanager
             {
 
                //if (m_viewmap.get_count() == 0)
-               {
+               //{
 
                //   set_cur_tab_by_id(0);
 
-               }
-               
+               //}
+
             }
 
          }
@@ -80,48 +80,45 @@ namespace filemanager
 
                string str;
 
-               str.Format("frame(%d,%d)",filemanager_manager().get_filemanager_data()->m_iTemplate,filemanager_manager().get_filemanager_data()->m_iDocument);
+               str.Format("(%d,%d)",filemanager_manager().get_filemanager_data()->m_iTemplate,filemanager_manager().get_filemanager_data()->m_iDocument);
 
-               sp(frame) pframe = ((::window_sp) GetParentFrame());
+               sp(::database::client) pclient = GetParentFrame();
 
-               if (pframe != NULL)
+               if (pclient.is_set())
                {
 
-                  pframe->m_dataid = str;
+                  pclient->set_data_key_modifier(str);
 
                }
 
             }
             else if (puh->is_type_of(update_hint::TypePop))
             {
-               //OnActivateFrame(WA_INACTIVE, ((GetParentFrame())));
-               if (GetTypedParent < main_frame >() != NULL)
-               {
-                  //GetTypedParent < main_frame >()->InitialUpdateFrame(NULL, TRUE);
-                  //GetTypedParent < main_frame >()->ShowWindow(SW_SHOW);
-                  //GetTypedParent < main_frame >()->ActivateFrame(SW_SHOW);
-               }
-               else
+
+               sp(::user::frame_window) pframe = GetParentFrame();
+
+               if (pframe.is_set())
                {
 
-                  sp(::user::frame_window) spframewindow = GetParentFrame();
+                  pframe->InitialUpdateFrame(NULL, TRUE);
 
-                  if (spframewindow.is_set())
-                  {
-                     spframewindow->InitialUpdateFrame(NULL, TRUE);
-                     spframewindow->ShowWindow(SW_SHOW);
-                     spframewindow->ActivateFrame(SW_SHOW);
-                  }
+                  pframe->ShowWindow(SW_SHOW);
+
+                  pframe->ActivateFrame(SW_SHOW);
 
                }
-               //OnActivateView(TRUE, this, this);
-               RedrawWindow();
+
             }
+
          }
+
       }
+
       if (lHint == manager::hint_add_location)
       {
+
          set_cur_tab_by_id("add_location");
+
       }
       else if (lHint == manager::hint_replace_name)
       {
@@ -138,19 +135,19 @@ namespace filemanager
    void tab_view::on_create_view(::user::view_creator_data * pcreatordata)
    {
 
-      
+
       if(pcreatordata->m_id.is_null())
       {
          return;
       }
       else if (pcreatordata->m_id == "add_location"
-         || pcreatordata->m_id == "replace_name"
-         || pcreatordata->m_id == "new_folder")
+               || pcreatordata->m_id == "replace_name"
+               || pcreatordata->m_id == "new_folder")
       {
          sp(::create) createcontext(allocer());
          createcontext->m_bMakeVisible = false;
          createcontext->m_puiParent = pcreatordata->m_pholder;
-         
+
          Session.filemanager().m_ptemplateForm->request_create(createcontext);
 
          sp(::user::document) pdoc = ::user::get_document(createcontext);
@@ -182,13 +179,13 @@ namespace filemanager
          pdoc->update_all_views(NULL, 0, &uh);
 
          pformview->m_pmanager = dynamic_cast < ::filemanager::manager * > ( m_pviewdata->m_pdoc);
-         
+
          pcreatordata->m_pdoc = pdoc;
 
       }
       else if(pcreatordata->m_id == "filemanager::operation")
       {
-         
+
          sp(::create) createcontext(allocer());
 
          createcontext->m_bMakeVisible = false;
@@ -208,7 +205,7 @@ namespace filemanager
          }
 
          sp(::user::impact) pview = pdoc->get_view(0);
-         
+
          pcreatordata->m_pwnd = (pview->GetParentFrame());
 
          pcreatordata->m_pdoc = pdoc;
@@ -221,7 +218,7 @@ namespace filemanager
 
          pfilemanagerdata->m_pcallback = &Session.filemanager();
 
-         pfilemanagerdata->m_pmanagertemplate = &Session.filemanager().std();
+         pfilemanagerdata->m_pmanagertemplate = Session.filemanager();
 
          pfilemanagerdata->m_bFileSize = true;
 
@@ -252,9 +249,9 @@ namespace filemanager
 
          createcontext->m_spCommandLine->m_varFile = strVarFile;
 
-         Session.filemanager().std().m_pdoctemplateChild->m_bQueueDocumentOpening = false;
+         Session.filemanager()->m_pdoctemplateChild->m_bQueueDocumentOpening = false;
 
-         Session.filemanager().std().m_pdoctemplateChild->request_create(createcontext);
+         Session.filemanager()->m_pdoctemplateChild->request_create(createcontext);
 
          sp(manager) pmanager = ::user::get_document(createcontext);
 
@@ -265,11 +262,20 @@ namespace filemanager
 
             m_pfilemanager = pmanager;
 
-            pmanager->get_filemanager_data()->m_iTemplate = Session.filemanager().std().m_iTemplate;
+            pmanager->get_filemanager_data()->m_iTemplate = Session.filemanager()->m_iTemplate;
 
-            pmanager->get_filemanager_data()->m_iDocument = Session.filemanager().std().m_iNextDocument++;
+            pmanager->get_filemanager_data()->m_iDocument = Session.filemanager()->m_iNextDocument++;
 
-            pmanager->get_filemanager_template()->m_strDISection.Format("filemanager(%d)",pmanager->get_filemanager_data()->m_iDocument);
+            if (pmanager->get_filemanager_template()->m_strDataKeyModifier.is_empty())
+            {
+
+               string strDataKeyModifier;
+
+               strDataKeyModifier.Format("filemanager(%d)", pmanager->get_filemanager_data()->m_iDocument);
+
+               pmanager->get_filemanager_template()->m_strDataKeyModifier = strDataKeyModifier;
+
+            }
 
             sp(::user::impact) pview = pmanager->get_view(0);
 

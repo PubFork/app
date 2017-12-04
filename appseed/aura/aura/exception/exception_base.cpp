@@ -110,7 +110,7 @@ namespace exception
    }
 
 
-   const char * base::getMessage() const throw()
+   const char * base::getMessage() const NOTHROW
    {
 
       return what();

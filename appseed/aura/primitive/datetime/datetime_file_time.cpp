@@ -5,25 +5,25 @@ namespace datetime
 {
 
 
-   file_time::file_time() throw()
+   file_time::file_time() NOTHROW
    {
       dwLowDateTime = 0;
       dwHighDateTime = 0;
    }
 
-   file_time::file_time(const FILETIME& ft) throw()
+   file_time::file_time(const FILETIME& ft) NOTHROW
    {
       dwLowDateTime = ft.dwLowDateTime;
       dwHighDateTime = ft.dwHighDateTime;
    }
 
-   file_time::file_time(ULONGLONG nTime) throw()
+   file_time::file_time(ULONGLONG nTime) NOTHROW
    {
       dwLowDateTime = uint32_t(nTime);
       dwHighDateTime = uint32_t(nTime >> 32);
    }
 
-   file_time& file_time::operator=(const FILETIME& ft) throw()
+   file_time& file_time::operator=(const FILETIME& ft) NOTHROW
    {
       dwLowDateTime = ft.dwLowDateTime;
       dwHighDateTime = ft.dwHighDateTime;
@@ -31,84 +31,84 @@ namespace datetime
       return *this;
    }
 
-   file_time WINAPI file_time::get_current_time() throw()
+   file_time WINAPI file_time::get_current_time() NOTHROW
    {
       file_time ft;
       GetSystemTimeAsFileTime(&ft);
       return ft;
    }
 
-   file_time& file_time::operator+=(file_time_span span) throw()
+   file_time& file_time::operator+=(file_time_span span) NOTHROW
    {
       SetTime(get_time() + span.GetTimeSpan());
 
       return *this;
    }
 
-   file_time& file_time::operator-=(file_time_span span) throw()
+   file_time& file_time::operator-=(file_time_span span) NOTHROW
    {
       SetTime(get_time() - span.GetTimeSpan());
 
       return *this;
    }
 
-   file_time file_time::operator+(file_time_span span) const throw()
+   file_time file_time::operator+(file_time_span span) const NOTHROW
    {
       return(file_time(get_time() + span.GetTimeSpan()));
    }
 
-   file_time file_time::operator-(file_time_span span) const throw()
+   file_time file_time::operator-(file_time_span span) const NOTHROW
    {
       return(file_time(get_time() - span.GetTimeSpan()));
    }
 
-   file_time_span file_time::operator-(file_time ft) const throw()
+   file_time_span file_time::operator-(file_time ft) const NOTHROW
    {
       return(file_time_span(get_time() - ft.get_time()));
    }
 
-   bool file_time::operator==(file_time ft) const throw()
+   bool file_time::operator==(file_time ft) const NOTHROW
    {
       return(get_time() == ft.get_time());
    }
 
-   bool file_time::operator!=(file_time ft) const throw()
+   bool file_time::operator!=(file_time ft) const NOTHROW
    {
       return(get_time() != ft.get_time());
    }
 
-   bool file_time::operator<(file_time ft) const throw()
+   bool file_time::operator<(file_time ft) const NOTHROW
    {
       return(get_time() < ft.get_time());
    }
 
-   bool file_time::operator>(file_time ft) const throw()
+   bool file_time::operator>(file_time ft) const NOTHROW
    {
       return(get_time() > ft.get_time());
    }
 
-   bool file_time::operator<=(file_time ft) const throw()
+   bool file_time::operator<=(file_time ft) const NOTHROW
    {
       return(get_time() <= ft.get_time());
    }
 
-   bool file_time::operator>=(file_time ft) const throw()
+   bool file_time::operator>=(file_time ft) const NOTHROW
    {
       return(get_time() >= ft.get_time());
    }
 
-   ULONGLONG file_time::get_time() const throw()
+   ULONGLONG file_time::get_time() const NOTHROW
    {
       return((ULONGLONG(dwHighDateTime) << 32) | dwLowDateTime);
    }
 
-   void file_time::SetTime(ULONGLONG nTime) throw()
+   void file_time::SetTime(ULONGLONG nTime) NOTHROW
    {
       dwLowDateTime = uint32_t(nTime);
       dwHighDateTime = uint32_t(nTime >> 32);
    }
 
-   file_time file_time::UTCToLocal() const throw()
+   file_time file_time::UTCToLocal() const NOTHROW
    {
       file_time ftLocal;
 
@@ -117,7 +117,7 @@ namespace datetime
       return(ftLocal);
    }
 
-   file_time file_time::LocalToUTC() const throw()
+   file_time file_time::LocalToUTC() const NOTHROW
    {
       
       file_time ftUTC;

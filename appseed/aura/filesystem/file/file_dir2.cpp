@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 #ifdef WINDOWSEX
@@ -104,7 +104,7 @@ namespace windows
 
 #elif defined(VSNORD)
 
-   path = ::aura::system::g_p->m_pandroidinitdata->m_pszCacheDir;
+   path = ::aura::system::g_p->m_pdataexchange->m_pszCacheDir;
 
 #elif defined(APPLEOS)
 

@@ -92,10 +92,10 @@ namespace datetime
 
 class dump_context;
 
-
 // ::datetime::time_span diagnostics and serialization
 CLASS_DECL_AURA dump_context & operator<<(dump_context & dumpcontext, const ::datetime::time_span & dateSpanSrc);
 CLASS_DECL_AURA dump_context & operator<<(dump_context & dumpcontext, const ::datetime::time & dateSrc);
+
 
 
 #if defined(DEBUG) && !defined(___NO_DEBUG_CRT)
@@ -187,16 +187,26 @@ extern CLASS_DECL_AURA bool g_bTraceEnabled;
 
 
 #ifdef DEBUG
+
+
 #define DEBUG_NOTE __FILE__
+
 #ifdef __MCRTDBG
 #define AURA_NEW new
 #else
 #define AURA_NEW new(DEBUG_NOTE, __LINE__)
 #endif
+
 #define THREAD_NOTE __get_thread_note()
 #define SET_THREAD_NOTE(x) __set_thread_note(x);
+
+
 #else
+
+
 #define SET_THREAD_NOTE(x)
+
+
 #endif
 
 
@@ -205,44 +215,7 @@ CLASS_DECL_AURA void __set_thread_note(const char * pszNote);
 
 
 
-/////////////////////////////////////////////////////////////////////////////
-// Diagnostic support
-
-
-
-CLASS_DECL_AURA int __assert_failed_line(const char * lpszFileName, int nLine);
-
-CLASS_DECL_AURA void c_cdecl __trace(const char * lpszFormat, ...);
-// Note: file names are still ANSI strings (filenames rarely need UNICODE)
-CLASS_DECL_AURA void assert_valid_object(const object* pOb,
-            const char * lpszFileName, int32_t nLine);
-CLASS_DECL_AURA void __dump(const object* pOb); // dump an object from CodeView
-
-#define THIS_FILE          __FILE__
-
-
-// extern ::core::CTrace TRACE;
 #ifdef DEBUG
-#ifndef TRACE
-#define TRACE ::aura::trace_add_file_and_line(m_pauraapp, __FILE__, __LINE__)
-#define APPTRACE ::aura::trace_add_file_and_line(papp, __FILE__, __LINE__)
-//#define TRACE2 TRACE
-#endif
-//#define VERIFY(f)          ASSERT(f)
-//#define DEBUG_ONLY(f)      (f)
-
-// The following trace macros are provided for backward compatiblity
-//  (they also take a fixed number of parameters which provides
-//   some amount of extra error checking)
-#define TRACE0(sz)              TRACE("%s", (const char *) (sz))
-#define TRACE1(sz, p1)          TRACE(sz, p1)
-#define TRACE2(sz, p1, p2)      TRACE(sz, p1, p2)
-#define TRACE3(sz, p1, p2, p3)  TRACE(sz, p1, p2, p3)
-
-// These __dump macros also provided for backward compatibility
-#define __dump0(spgraphics, sz)   dumpcontext << _T(sz)
-#define __dump1(spgraphics, sz, p1) dumpcontext << _T(sz) << p1
-
 
 #define DEBUG_ONLY(f)      f
 
@@ -250,25 +223,9 @@ CLASS_DECL_AURA void __dump(const object* pOb); // dump an object from CodeView
 
 #define DEBUG_ONLY(f)
 
-//#define VERIFY(f)          ((void)(f))
-//#define DEBUG_ONLY(f)      ((void)0)
-#pragma warning(push)
-#pragma warning(disable : 4793)
-inline void c_cdecl __trace(...) { }
-#pragma warning(pop)
-#if defined(APPLEOS) || defined(ANDROID)
-#define TRACE
-#define APPTRACE
-#else
-#define TRACE              __noop
-#define APPTRACE           __noop
-#endif
-#define TRACE0(sz)
-#define TRACE1(sz, p1)
-#define TRACE2(sz, p1, p2)
-#define TRACE3(sz, p1, p2, p3)
-
 #endif // !DEBUG*/
+
+
 
 #include "exception_debug.h"
 
@@ -277,13 +234,13 @@ inline void c_cdecl __trace(...) { }
 // Debug ASSERTs then throws. Retail throws if condition not met
 #define ENSURE_THROW(cond, exception)   \
    do { int32_t _gen__condVal=!!(cond); ASSERT(_gen__condVal); if (!(_gen__condVal)){exception;} } while (false)
-#define ENSURE(cond)      ENSURE_THROW(cond, throw invalid_argument_exception(get_thread_app()) )
-#define ENSURE_ARG(cond)   ENSURE_THROW(cond, throw invalid_argument_exception(get_thread_app()) )
+#define ENSURE(cond)      ENSURE_THROW(cond, _throw( invalid_argument_exception(get_app()) ))
+#define ENSURE_ARG(cond)   ENSURE_THROW(cond, _throw( invalid_argument_exception(get_app()) ))
 
 // Debug ASSERT_VALIDs then throws. Retail throws if pOb is NULL
 #define ENSURE_VALID_THROW(pOb, exception)   \
    do { ASSERT_VALID(pOb); if (!(pOb)){exception;} } while (false)
-#define ENSURE_VALID(pOb)   ENSURE_VALID_THROW(pOb, throw invalid_argument_exception(get_thread_app()) )
+#define ENSURE_VALID(pOb)   ENSURE_VALID_THROW(pOb, _throw( invalid_argument_exception(get_app()) ))
 
 #define ASSERT_POINTER(p, type) \
    ASSERT(((p) != NULL) && __is_valid_address((p), sizeof(type), FALSE))
@@ -299,12 +256,12 @@ inline void c_cdecl __trace(...) { }
 #elif defined(_MSC_VER)
 #  define UNUSED_ALWAYS(x)
 #else
-#	define UNUSED_ALWAYS(x) x
+#  define UNUSED_ALWAYS(x) x
 #endif
 
 
 #ifdef DEBUG
-#	define UNUSED(x) x
+#  define UNUSED(x) x
 #else
 #  define UNUSED(x) UNUSED_ALWAYS(x)
 #endif
@@ -367,6 +324,47 @@ do { \
 
 CLASS_DECL_AURA errno_t c_runtime_error_check(errno_t error);
 CLASS_DECL_AURA void __cdecl __clearerr_s(FILE *stream);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Diagnostic support
+CLASS_DECL_AURA int __assert_failed_line(const char * lpszFileName, int nLine);
+//CLASS_DECL_AURA void c_cdecl __trace(const char * lpszFormat, ...);
+CLASS_DECL_AURA void __assert_valid_object(const object* pOb, const char * lpszFileName, int32_t nLine);
+CLASS_DECL_AURA void __dump(const object* pOb);
+
+#define THIS_FILE          __FILE__
+
+//#ifdef DEBUG
+#define TRACE ::aura::trace_add_file_and_line(m_pauraapp, __FILE__, __LINE__)
+#define APPTRACE ::aura::trace_add_file_and_line(papp, __FILE__, __LINE__)
+//#else
+//#ifdef WINDOWS
+//#define TRACE(...) __noop
+//#define APPTRACE(...) __noop
+//#else
+//#define TRACE(...)
+//#define APPTRACE(...)
+//#endif
+//#endif
+
+
+
+
 
 
 

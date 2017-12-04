@@ -61,7 +61,7 @@ void html_view::install_message_routing(::message::sender * pinterface)
 /////////////////////////////////////////////////////////////////////////////
 // html_view diagnostics
 
-#ifdef DEBUG
+
 void html_view::assert_valid() const
 {
    ::user::impact::assert_valid();
@@ -71,7 +71,7 @@ void html_view::dump(dump_context & dumpcontext) const
 {
    ::user::impact::dump(dumpcontext);
 }
-#endif //DEBUG
+
 
 
 bool html_view::pre_create_window(::user::create_struct& cs)
@@ -79,41 +79,61 @@ bool html_view::pre_create_window(::user::create_struct& cs)
    cs.style &= ~WS_EX_CLIENTEDGE;
    return ::user::impact::pre_create_window(cs);
 }
-void html_view::_001OnInitialUpdate() 
+void html_view::_001OnInitialUpdate()
 {
 
    ::user::impact::_001OnInitialUpdate();
 
 }
 
-void html_view::on_update(::user::impact * pSender, LPARAM lHint, object* phint) 
+
+void html_view::on_update(::user::impact * pSender, LPARAM lHint, object* phint)
 {
-   
+
    ::html_form::on_update(pSender, lHint, phint);
 
    if(phint != NULL)
    {
-      html_view_update_hint * puh = dynamic_cast < html_view_update_hint * >
-         (phint);
+
+      html_view_update_hint * puh = dynamic_cast < html_view_update_hint * > (phint);
+
       if(puh != NULL)
       {
+
          if(puh->m_etype == html_view_update_hint::type_document_complete)
          {
 
-            on_layout();
+            {
 
-            RedrawWindow();
+               synch_lock sl(m_pmutex);
+
+               if(get_html_data() == NULL)
+               {
+
+                  return;
+
+               }
+
+               get_html_data()->implement(this);
+
+            }
 
             on_document_complete(puh->m_strUrl);
 
-         }
-      }
-   }
+            set_need_layout();
 
+            set_need_redraw();
+
+         }
+
+      }
+
+   }
 
 }
 
-void html_view::_001OnDestroy(::message::message * pobj) 
+
+void html_view::_001OnDestroy(::message::message * pobj)
 {
    ::user::impact::_001OnDestroy(pobj);
 
@@ -123,7 +143,7 @@ void html_view::_001OnDestroy(::message::message * pobj)
 
 
 
-void html_view::_001OnCreate(::message::message * pobj) 
+void html_view::_001OnCreate(::message::message * pobj)
 {
    if(pobj->previous())
       return;
@@ -134,7 +154,7 @@ void html_view::_001OnCreate(::message::message * pobj)
 
 
 }
-void html_view::_001OnContextMenu(::message::message * pobj) 
+void html_view::_001OnContextMenu(::message::message * pobj)
 {
    //   SCAST_PTR(::message::context_menu, pcontextmenu, pobj);
    //   point point = pcontextmenu->GetPoint();
@@ -143,7 +163,7 @@ void html_view::_001OnContextMenu(::message::message * pobj)
 
 
 
-void html_view::_001OnSetCursor(::message::message * pobj) 
+void html_view::_001OnSetCursor(::message::message * pobj)
 {
 
    SCAST_PTR(::message::mouse, pmouse, pobj);

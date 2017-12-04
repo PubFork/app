@@ -160,33 +160,6 @@ uint32_t atoui_dup(const char *psz, const char ** pszEnd)
 
 }
 
-/*int64_t atoi64_dup(const char *str)
-{
-return atol64_dup(str, NULL, 10);
-/*    while (isspace_dup(*str))			// skip whitespace
-++str;
-
-int32_t cur = *str++;
-int32_t neg = cur;					// Save the negative sign, if it exists
-
-if (cur == '-' || cur == '+')
-cur = *str++;
-
-// While we have digits, add 'em up.
-
-long total = 0;
-while (isdigit_dup(cur))
-{
-total = 10*total + (cur-'0');			// add this digit to the total.
-cur = *str++;							// Do the next character.
-}
-
-// If we have a negative sign, convert the value.
-if (neg == '-')
-return -total;
-else
-return total;*/
-//}
 
 
 
@@ -396,33 +369,6 @@ int32_t natoi_dup(const char *psz, const char ** pszEnd, size_t iLen)
 }
 
 
-/*int64_t atoi64_dup(const char *str)
-{
-return atol64_dup(str, NULL, 10);
-/*    while (isspace_dup(*str))			// skip whitespace
-++str;
-
-int32_t cur = *str++;
-int32_t neg = cur;					// Save the negative sign, if it exists
-
-if (cur == '-' || cur == '+')
-cur = *str++;
-
-// While we have digits, add 'em up.
-
-long total = 0;
-while (isdigit_dup(cur))
-{
-total = 10*total + (cur-'0');			// add this digit to the total.
-cur = *str++;							// Do the next character.
-}
-
-// If we have a negative sign, convert the value.
-if (neg == '-')
-return -total;
-else
-return total;*/
-//}
 
 
 

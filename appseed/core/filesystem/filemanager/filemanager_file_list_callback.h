@@ -17,7 +17,7 @@ namespace filemanager
       file_list_callback();
       virtual ~file_list_callback();
 
-      virtual bool initialize();
+      virtual bool initialize_file_list_callback();
 
       virtual int32_t GetActionButtonCount();
       virtual sp(image_list) GetActionButtonImageList(id i);

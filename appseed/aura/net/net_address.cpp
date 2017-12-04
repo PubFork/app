@@ -3,7 +3,12 @@
 
 #if defined(__arm__)
 
+#if !defined(RASPBIAN)
+
 #include <sys/endian.h>
+
+#endif
+
 #include <arpa/inet.h>
 
 #endif
@@ -419,7 +424,7 @@ namespace net
 //
 //#else
 
-      ::aura::application * pappThread = ::get_thread_app();
+      ::aura::application * pappThread = get_app();
 
       auto * psession = pappThread->m_paurasession;
 
@@ -458,7 +463,7 @@ namespace net
 
    string tmp;
 
-   Sess(get_thread_app()).sockets().net().reverse((sockaddr *) &m_sa, sa_len(), tmp);
+   Session.sockets().net().reverse((sockaddr *) &m_sa, sa_len(), tmp);
 
    return tmp;
 
@@ -525,12 +530,12 @@ namespace net
       a.u.m_addr6.sin6_family = AF_INET6;
       a.u.m_addr6.sin6_port = port;
       memcpy(&a.u.m_addr6.sin6_addr, p128bits, sizeof(a.u.m_addr6.sin6_addr));
-      
+
       a.sync_os_address();
       a.sync_os_service();
-   
+
       return a;
-   
+
    }
 
 

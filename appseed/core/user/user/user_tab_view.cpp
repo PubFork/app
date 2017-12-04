@@ -493,6 +493,15 @@ namespace user
 
       }
 
+      if (m_pviewdata->m_pwnd != NULL)
+      {
+
+         m_pviewdata->m_pwnd->set_need_layout();
+
+         m_pviewdata->m_pwnd->set_need_redraw();
+
+      }
+
       ::user::impact * pview = NULL;
 
       if (m_pviewdata->m_pwnd != NULL)
@@ -850,7 +859,7 @@ namespace user
 
 
 
-//      class imaging & imaging = System.visual().imaging();
+//      class imaging & imaging = Application.imaging();
 
       COLORREF crBorder = ARGB(84, 127, 127, 80);
       COLORREF crBorderSel = ARGB(84, 40, 40, 20);

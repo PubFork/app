@@ -1,19 +1,16 @@
 #pragma once
 
 
-#if defined(INSTALL_SUBSYSTEM)
-
-
 namespace install
 {
 
 
    struct install_status
    {
-      LONG     m_lTotal;
-      LONG     m_lProcessing;
-      LONG     m_lOk;
-      LONG     m_lBad;
+      int_ptr     m_lTotal;
+      int_ptr     m_lProcessing;
+      int_ptr     m_lOk;
+      int_ptr     m_lBad;
 
 
       install_status() { ZEROP(this); }
@@ -56,8 +53,5 @@ namespace install
 
 
 } // namespace install
-
-
-#endif
 
 

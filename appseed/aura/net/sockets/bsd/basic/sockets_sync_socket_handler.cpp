@@ -6,7 +6,7 @@ namespace sockets
 {
 
 
-   sync_socket_handler::sync_socket_handler(::aura::application * papp, logger * plog) :
+   sync_socket_handler::sync_socket_handler(::aura::application * papp, ::aura::log * plog) :
       ::object(papp),
       m_handler(papp, plog),
       m_file(papp)
@@ -28,7 +28,7 @@ namespace sockets
    void sync_socket_handler::handle(socket * psocket)
    {
       if(m_psocket != NULL)
-         throw simple_exception(get_app()); // busy
+         _throw(simple_exception(get_app())); // busy
       m_psocket = psocket;
       m_psocket->m_pcallback = this;
       m_handler.add(m_psocket);
@@ -115,12 +115,12 @@ namespace sockets
          iTimeout = m_iDefaultTimeout;
       uint32_t uiLen = 0;
       if(read(&uiLen, 4) != 4)
-         throw simple_exception(get_app());
+         _throw(simple_exception(get_app()));
       ntohl((u_long) uiLen);
       memory memory;
       memory.allocate(uiLen);
       if(read(memory, uiLen) != uiLen)
-        throw simple_exception(get_app());
+         _throw(simple_exception(get_app()));
       memory.to_string(xml_payload);
    }
 

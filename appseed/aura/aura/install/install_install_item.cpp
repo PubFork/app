@@ -1,7 +1,10 @@
 #include "framework.h"
 
 
-#if defined(INSTALL_SUBSYSTEM)
+//#if defined()
+
+
+#include "install_bootstrap.h"
 
 
 namespace install
@@ -40,7 +43,7 @@ namespace install
       catch (...)
       {
 
-         _gen_InterlockedDecrement(&pitem->m_pstatus->m_lProcessing);
+         _gen_InterlockedDecrement((int_ptr_atomic) &pitem->m_pstatus->m_lProcessing);
 
       }
 
@@ -81,14 +84,14 @@ namespace install
          {
 
             output_debug_string("op_spa spaadmin Success\r\n");
-            _gen_InterlockedIncrement(&m_pstatus->m_lOk);
+            _gen_InterlockedIncrement((int_ptr_atomic) &m_pstatus->m_lOk);
 
          }
          else
          {
 
             output_debug_string("op_spa spaadmin Failed\r\n");
-            _gen_InterlockedIncrement(&m_pstatus->m_lBad);
+            _gen_InterlockedIncrement((int_ptr_atomic)&m_pstatus->m_lBad);
 
          }
 
@@ -100,13 +103,13 @@ namespace install
          {
 
             output_debug_string("op_spa install Success\r\n");
-            _gen_InterlockedIncrement(&m_pstatus->m_lOk);
+            _gen_InterlockedIncrement((int_ptr_atomic)&m_pstatus->m_lOk);
 
          }
          else
          {
             output_debug_string("op_spa install Failed\r\n");
-            _gen_InterlockedIncrement(&m_pstatus->m_lBad);
+            _gen_InterlockedIncrement((int_ptr_atomic)&m_pstatus->m_lBad);
 
          }
 
@@ -119,13 +122,13 @@ namespace install
          {
 
             output_debug_string("op_spa vcredist Success\r\n");
-            InterlockedIncrement(&m_pstatus->m_lOk);
+            InterlockedIncrement((int_ptr_atomic)&m_pstatus->m_lOk);
 
          }
          else
          {
             output_debug_string("op_spa vcredist Failed\r\n");
-            InterlockedIncrement(&m_pstatus->m_lBad);
+            InterlockedIncrement((int_ptr_atomic)&m_pstatus->m_lBad);
 
          }
 
@@ -219,7 +222,7 @@ namespace install
 
       }
 
-      _gen_InterlockedDecrement(&m_pstatus->m_lProcessing);
+      _gen_InterlockedDecrement((int_ptr_atomic)&m_pstatus->m_lProcessing);
 
       progress();
 
@@ -227,9 +230,5 @@ namespace install
 
 
 } // namespace install
-
-
-#endif
-
 
 

@@ -156,7 +156,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_AXIS_LIBRARY;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>USE_OS_IMAGE_LOADER;_AXIS_LIBRARY;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <AdditionalIncludeDirectories>$(SolutionDir)../../../include;$(SolutionDir)../../../nodeapp/$(PlatformName)/include/;$(SolutionDir)../../../nodeapp/include/;$(SolutionDir)../../../app/include/;.;$(SolutionDir)../../../;$(SolutionDir)../../../app;$(SolutionDir)../../../app/axis;$(SolutionDir)../../../app/appseed/aura;$(SolutionDir)../../../app/axis/include;$(SolutionDir)../../../app/thirdparty/appseed;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../../nodeapp/thirdparty/include;$(SolutionDir)../../../nodeapp/thirdparty/appseed;$(SolutionDir)../../;$(ProjectDir)../../appseed;$(ProjectDir)../../;$(ProjectDir)../;$(ProjectDir);$(ProjectDir)../../axis/freetype/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
@@ -188,7 +188,7 @@
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
     <Link>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <AdditionalDependencies>bzip2.lib;libcrypto.lib;libssl.lib;sqlite.lib;winmm.lib;windowscodecs.lib;gdiplus.lib;Crypt32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>./$(ProjectName).def</ModuleDefinitionFile>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -229,7 +229,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_AXIS_LIBRARY;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>USE_OS_IMAGE_LOADER;_AXIS_LIBRARY;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <AdditionalIncludeDirectories>$(SolutionDir)../../../include;$(SolutionDir)../../../nodeapp/$(PlatformName)/include/;$(SolutionDir)../../../nodeapp/include/;$(SolutionDir)../../../app/include/;.;$(SolutionDir)../../../;$(SolutionDir)../../../app;$(SolutionDir)../../../app/axis;$(SolutionDir)../../../app/appseed/aura;$(SolutionDir)../../../app/axis/include;$(SolutionDir)../../../app/thirdparty/appseed;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../../nodeapp/thirdparty/include;$(SolutionDir)../../../nodeapp/thirdparty/appseed;$(SolutionDir)../../;$(ProjectDir)../../appseed;$(ProjectDir)../../;$(ProjectDir)../;$(ProjectDir);$(ProjectDir)../../axis/freetype/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
@@ -261,7 +261,7 @@
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
     <Link>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <AdditionalDependencies>bzip2.lib;libcrypto.lib;libssl.lib;sqlite.lib;winmm.lib;windowscodecs.lib;gdiplus.lib;Crypt32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>./$(ProjectName).def</ModuleDefinitionFile>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -302,7 +302,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_AXIS_LIBRARY;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>USE_OS_IMAGE_LOADER;_AXIS_LIBRARY;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <AdditionalIncludeDirectories>$(SolutionDir)../../../include;$(SolutionDir)../../../nodeapp/$(PlatformName)/include/;$(SolutionDir)../../../nodeapp/include/;$(SolutionDir)../../../app/include/;.;$(SolutionDir)../../../;$(SolutionDir)../../../app;$(SolutionDir)../../../app/axis;$(SolutionDir)../../../app/appseed/aura;$(SolutionDir)../../../app/axis/include;$(SolutionDir)../../../app/thirdparty/appseed;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../../nodeapp/thirdparty/include;$(SolutionDir)../../../nodeapp/thirdparty/appseed;$(SolutionDir)../../;$(ProjectDir)../../appseed;$(ProjectDir)../../;$(ProjectDir)../;$(ProjectDir);$(ProjectDir)../../axis/freetype/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>MaxSpeed</Optimization>
@@ -337,7 +337,7 @@
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
     <Link>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <AdditionalDependencies>bzip2.lib;libcrypto.lib;libssl.lib;sqlite.lib;winmm.lib;windowscodecs.lib;gdiplus.lib;Crypt32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>./$(ProjectName).def</ModuleDefinitionFile>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -357,7 +357,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='basis|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_AXIS_LIBRARY;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>USE_OS_IMAGE_LOADER;_AXIS_LIBRARY;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <AdditionalIncludeDirectories>$(SolutionDir)../../../include;$(SolutionDir)../../../nodeapp/$(PlatformName)/include/;$(SolutionDir)../../../nodeapp/include/;$(SolutionDir)../../../app/include/;.;$(SolutionDir)../../../;$(SolutionDir)../../../app;$(SolutionDir)../../../app/axis;$(SolutionDir)../../../app/appseed/aura;$(SolutionDir)../../../app/axis/include;$(SolutionDir)../../../app/thirdparty/appseed;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../../nodeapp/thirdparty/include;$(SolutionDir)../../../nodeapp/thirdparty/appseed;$(SolutionDir)../../;$(ProjectDir)../../appseed;$(ProjectDir)../../;$(ProjectDir)../;$(ProjectDir);$(ProjectDir)../../axis/freetype/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -390,7 +390,7 @@
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
     <Link>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <AdditionalDependencies>bzip2.lib;libcrypto.lib;libssl.lib;sqlite.lib;winmm.lib;windowscodecs.lib;gdiplus.lib;Crypt32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>./$(ProjectName).def</ModuleDefinitionFile>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -430,7 +430,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='cover|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_AXIS_LIBRARY;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>USE_OS_IMAGE_LOADER;_AXIS_LIBRARY;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <AdditionalIncludeDirectories>$(SolutionDir)../../../include;$(SolutionDir)../../../nodeapp/$(PlatformName)/include/;$(SolutionDir)../../../nodeapp/include/;$(SolutionDir)../../../app/include/;.;$(SolutionDir)../../../;$(SolutionDir)../../../app;$(SolutionDir)../../../app/axis;$(SolutionDir)../../../app/appseed/aura;$(SolutionDir)../../../app/axis/include;$(SolutionDir)../../../app/thirdparty/appseed;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../../nodeapp/thirdparty/include;$(SolutionDir)../../../nodeapp/thirdparty/appseed;$(SolutionDir)../../;$(ProjectDir)../../appseed;$(ProjectDir)../../;$(ProjectDir)../;$(ProjectDir);$(ProjectDir)../../axis/freetype/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -463,7 +463,7 @@
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
     <Link>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <AdditionalDependencies>bzip2.lib;libcrypto.lib;libssl.lib;sqlite.lib;winmm.lib;windowscodecs.lib;gdiplus.lib;Crypt32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>./$(ProjectName).def</ModuleDefinitionFile>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -502,7 +502,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='stage|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_AXIS_LIBRARY;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>USE_OS_IMAGE_LOADER;_AXIS_LIBRARY;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <AdditionalIncludeDirectories>$(SolutionDir)../../../include;$(SolutionDir)../../../nodeapp/$(PlatformName)/include/;$(SolutionDir)../../../nodeapp/include/;$(SolutionDir)../../../app/include/;.;$(SolutionDir)../../../;$(SolutionDir)../../../app;$(SolutionDir)../../../app/axis;$(SolutionDir)../../../app/appseed/aura;$(SolutionDir)../../../app/axis/include;$(SolutionDir)../../../app/thirdparty/appseed;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../../nodeapp/thirdparty/include;$(SolutionDir)../../../nodeapp/thirdparty/appseed;$(SolutionDir)../../;$(ProjectDir)../../appseed;$(ProjectDir)../../;$(ProjectDir)../;$(ProjectDir);$(ProjectDir)../../axis/freetype/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -539,7 +539,7 @@
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
     <Link>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <AdditionalDependencies>bzip2.lib;libcrypto.lib;libssl.lib;sqlite.lib;winmm.lib;windowscodecs.lib;gdiplus.lib;Crypt32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>./$(ProjectName).def</ModuleDefinitionFile>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -592,50 +592,6 @@
     </ClCompile>
     <ClCompile Include="filesystem\fs\fs_ftp_file.cpp">
     </ClCompile>
-    <ClCompile Include="graphics\dib_console.cpp">
-    </ClCompile>
-    <ClCompile Include="graphics\visual\antialias_8bit.cpp">
-    </ClCompile>
-    <ClCompile Include="graphics\visual\detect_8bit_borders.cpp">
-    </ClCompile>
-    <ClCompile Include="graphics\visual\freeimage.cpp">
-    </ClCompile>
-    <ClCompile Include="graphics\visual\load_gif_frame.cpp">
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_api.cpp">
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_buffered_graphics.cpp">
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_dib.cpp">
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_fastblur.cpp">
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_font.cpp">
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_font_department.cpp">
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_font_enumeration.cpp">
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_font_list_data.cpp">
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_FreeImageFileProc.cpp">
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_glyph.cpp">
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_glyph_set.cpp">
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_graphics_extension.cpp">
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_image_list.cpp">
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_imaging.cpp">
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_rgb_quad_array.cpp">
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_visual.cpp">
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_water_routine.cpp">
-    </ClCompile>
     <ClCompile Include="html_lite\html\html_html.cpp">
     </ClCompile>
     <ClCompile Include="html_lite\html_lite\html_lite_html_attributes.cpp">
@@ -650,18 +606,9 @@
     </ClCompile>
     <ClCompile Include="user\userpresence\userpresence_user_presence.cpp">
     </ClCompile>
-    <ClCompile Include="user\user\user_copydesk.cpp">
-    </ClCompile>
-    <ClCompile Include="user\user\user_elemental.cpp">
-    </ClCompile>
-    <ClCompile Include="user\user\user_job.cpp" />
     <ClCompile Include="user\user\user_keyboard.cpp">
     </ClCompile>
     <ClCompile Include="user\user\user_keyboard_layout.cpp">
-    </ClCompile>
-    <ClCompile Include="user\user\user_print_job.cpp">
-    </ClCompile>
-    <ClCompile Include="user\user\user_validate.cpp">
     </ClCompile>
     <ClInclude Include="axis\axis\axis.h" />
     <ClInclude Include="axis\axis\axis_application.h" />
@@ -755,12 +702,14 @@
     <ClInclude Include="filesystem\fs\fs_fs.h" />
     <ClInclude Include="filesystem\fs\fs_ftp.h" />
     <ClInclude Include="filesystem\fs\fs_ftp_file.h" />
+    <ClInclude Include="filesystem\fs\fs_ftp_net.h" />
     <ClInclude Include="filesystem\fs\fs_ifs.h" />
     <ClInclude Include="filesystem\fs\fs_ifs_file.h" />
     <ClInclude Include="filesystem\fs\fs_item.h" />
     <ClInclude Include="filesystem\fs\fs_item_array.h" />
     <ClInclude Include="filesystem\fs\fs_link.h" />
     <ClInclude Include="filesystem\fs\fs_native_fs.h" />
+    <ClInclude Include="filesystem\fs\fs_net.h" />
     <ClInclude Include="filesystem\fs\fs_remote_native_file.h" />
     <ClInclude Include="filesystem\fs\fs_remote_native_fs.h" />
     <ClInclude Include="filesystem\fs\fs_set.h" />
@@ -789,27 +738,6 @@
     <ClCompile Include="axis\node\windows\windows_port_forward.cpp">
     </ClCompile>
     <ClInclude Include="framework.h" />
-    <ClInclude Include="graphics\dib_console.h" />
-    <ClInclude Include="graphics\graphics.h" />
-    <ClInclude Include="graphics\visual\visual.h" />
-    <ClInclude Include="graphics\visual\visual_api.h" />
-    <ClInclude Include="graphics\visual\visual_buffered_graphics.h" />
-    <ClInclude Include="graphics\visual\visual_dib.h" />
-    <ClInclude Include="graphics\visual\visual_dib_pal.h" />
-    <ClInclude Include="graphics\visual\visual_fastblur.h" />
-    <ClInclude Include="graphics\visual\visual_font.h" />
-    <ClInclude Include="graphics\visual\visual_font_department.h" />
-    <ClInclude Include="graphics\visual\visual_font_enumeration.h" />
-    <ClInclude Include="graphics\visual\visual_font_list_data.h" />
-    <ClInclude Include="graphics\visual\visual_FreeImageFileProc.h" />
-    <ClInclude Include="graphics\visual\visual_glyph.h" />
-    <ClInclude Include="graphics\visual\visual_glyph_set.h" />
-    <ClInclude Include="graphics\visual\visual_graphics_extension.h" />
-    <ClInclude Include="graphics\visual\visual_image_list.h" />
-    <ClInclude Include="graphics\visual\visual_imaging.h" />
-    <ClInclude Include="graphics\visual\visual_rgb_quad_array.h" />
-    <ClInclude Include="graphics\visual\visual_visual.h" />
-    <ClInclude Include="graphics\visual\visual_water_routine.h" />
     <ClInclude Include="html_lite\html\html.h" />
     <ClInclude Include="html_lite\html\html_enum.h" />
     <ClInclude Include="html_lite\html\html_html.h" />
@@ -928,14 +856,8 @@
     <ClInclude Include="user\userpresence\userpresence.h" />
     <ClInclude Include="user\userpresence\userpresence_userpresence.h" />
     <ClInclude Include="user\userpresence\userpresence_user_presence.h" />
-    <ClInclude Include="user\user\user_elemental.h" />
-    <ClInclude Include="user\user\user_enum.h" />
-    <ClInclude Include="user\user\user_job.h" />
     <ClInclude Include="user\user\user_keyboard.h" />
     <ClInclude Include="user\user\user_keyboard_layout.h" />
-    <ClInclude Include="user\user\user_key_enum.h" />
-    <ClInclude Include="user\user\user_print_job.h" />
-    <ClInclude Include="user\user\user_validate.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="filesystem\fs\fs_data.cpp">
@@ -962,7 +884,6 @@
   <ItemGroup>
     <None Include="axis.def" />
     <None Include="axis\axis\axis.inl" />
-    <None Include="graphics\visual\visual.inl" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ace\ace.vcxproj">
@@ -976,9 +897,6 @@
     </ProjectReference>
     <ProjectReference Include="..\aura\aura.vcxproj">
       <Project>{03e5b8e7-9e3b-44dd-9ede-e0a74d52c1c5}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\freeimage\axisfreeimage.vcxproj">
-      <Project>{b39ed2b3-d53a-4077-b957-930979a3577d}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

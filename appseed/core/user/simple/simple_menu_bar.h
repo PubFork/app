@@ -37,7 +37,7 @@ public:
 
 
    using ::simple_toolbar::create_window;
-   bool create_window(sp(::user::interaction) pParentWnd,uint32_t dwStyle = WS_CHILD | WS_VISIBLE | CBRS_TOP,UINT nID = __IDW_TOOLBAR);
+   bool create_window(sp(::user::interaction) pParentWnd,uint32_t dwStyle = WS_CHILD | WS_VISIBLE | CBRS_TOP,UINT nID = __IDW_TOOLBAR) override;
    using ::simple_toolbar::create_window_ex;
    bool create_window_ex(sp(::user::interaction) pParentWnd, uint32_t dwCtrlStyle = TBSTYLE_FLAT,uint32_t dwStyle = WS_CHILD | WS_VISIBLE | CBRS_ALIGN_TOP,const RECT & rect = ::null_rect(),UINT nID = __IDW_TOOLBAR);
 
@@ -49,12 +49,12 @@ public:
         );
 
    virtual void _001OnCmdMsg(::user::command * pcommand) override;
-   virtual void pre_translate_message(::message::message * pobj);
+   virtual void pre_translate_message(::message::message * pobj) override;
    protected:
-   virtual bool pre_create_window(::user::create_struct& cs);
+   virtual bool pre_create_window(::user::create_struct& cs) override;
 
-   virtual int32_t _001GetHoverItem();
-   virtual void OnUpdateHover();
+   virtual int32_t _001GetHoverItem() override;
+   virtual void OnUpdateHover() override;
    void _001OnClick(index iItem);
    void _001OnDropDown(int32_t iItem);
    //int32_t _001GetHoverItem();
@@ -95,13 +95,13 @@ public:
    DECL_GEN_SIGNAL(_001OnMenuChar);
    DECL_GEN_SIGNAL(_001OnLButtonDown);
    DECL_GEN_SIGNAL(_001OnAppLanguage);
-   void _001OnTimer(::timer * ptimer);
+   void _001OnTimer(::timer * ptimer) override;
 
    //virtual int32_t OnMessage(MPARAM mparam, NPARAM nparam, OPARAM oparam);
 
    //DECL_GEN_SIGNAL(_001OnAppLanguage);
 
-   virtual void install_message_routing(::message::sender * psender);
+   virtual void install_message_routing(::message::sender * psender) override;
 
 
 };

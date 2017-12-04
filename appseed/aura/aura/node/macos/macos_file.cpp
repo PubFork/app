@@ -40,7 +40,7 @@ namespace macos
       ASSERT(__is_valid_string(lpszFileName));
 
       if(!open(lpszFileName, nOpenFlags))
-         throw ::file::exception(papp, ::file::exception::none, -1, lpszFileName);
+         _throw(::file::exception(papp, ::file::exception::none, -1, lpszFileName));
 
    }
 
@@ -432,7 +432,12 @@ namespace macos
       file* pFile = (file*)this;
       dwCur = pFile->seek(0L, ::file::seek_current);
       dwLen = pFile->seek_to_end();
-      VERIFY(dwCur == (uint64_t)pFile->seek((file_offset_t) dwCur, ::file::seek_begin));
+      if(dwCur != (uint64_t)pFile->seek((file_offset_t) dwCur, ::file::seek_begin))
+      {
+         
+         _throw(io_exception(get_app(), "failed to seek back to the original position on get_length"));
+         
+      }
 
       return (file_size_t) dwLen;
    }
@@ -793,7 +798,7 @@ namespace macos
 
 
          //if (m_strFileName.is_empty())
-         // throw todo(get_app());
+         // _throw(todo(get_app()));
          rStatus.m_attribute = 0;
          /*         else
           {
@@ -1281,7 +1286,7 @@ bool CLASS_DECL_AURA vfxFullPath(wstring & wstrFullPath, const wstring & wstrPat
 
 CLASS_DECL_AURA void vfxGetModuleShortFileName(HINSTANCE hInst, string& strShortName)
 {
-   throw todo(::get_thread_app());
+   _throw(todo(get_app()));
    //link_map * plm;
 
    //dlinfo(hInst, RTLD_DI_LINKMAP, &plm);
@@ -1687,7 +1692,7 @@ void CLASS_DECL_AURA vfxThrowFileException(::aura::application * papp, ::file::e
       lpsz = ::macos::szUnknown;
    //   TRACE3("file exception: %hs, file %s, App error information = %ld.\n", lpsz, (lpszFileName == NULL) ? "Unknown" : lpszFileName, lOsError);
 #endif
-   throw ::file::exception(papp, cause, lOsError, lpszFileName);
+   _throw(::file::exception(papp, cause, lOsError, lpszFileName));
 }
 
 ::file::exception * CLASS_DECL_AURA get_FileException(::aura::application * papp, ::file::exception::e_cause cause, LONG lOsError, const char * lpszFileName /* == NULL */)

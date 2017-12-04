@@ -15,8 +15,6 @@ namespace user
       {
 
          m_iIcon = 0x80000000;
-         m_pszPath = "";
-         m_pszShellThemePrefix = "";
 
       }
 
@@ -30,12 +28,12 @@ namespace user
 
          m_oswindow = key.m_oswindow;
          m_cr = key.m_cr;
-         m_pszPath = strdup(key.m_pszPath);
+         m_strPath = key.m_strPath;
          m_iIcon = key.m_iIcon;
          m_eattribute = key.m_eattribute;
          m_eicon = key.m_eicon;
-         m_pszExtension = strdup(key.m_pszExtension);
-         m_pszShellThemePrefix = strdup(key.m_pszShellThemePrefix);
+         m_strExtension = key.m_strExtension;
+         m_strShellThemePrefix = key.m_strShellThemePrefix;
 
       }
 
@@ -43,33 +41,13 @@ namespace user
       image_key_store::~image_key_store()
       {
 
-         if (m_pszPath != NULL)
-         {
-
-            free(m_pszPath);
-
-         }
-
-         if (m_pszPath != NULL)
-         {
-
-            free(m_pszExtension);
-
-         }
-
-         if (m_pszPath != NULL)
-         {
-
-            free(m_pszShellThemePrefix);
-
-         }
 
       }
 
       void image_key::set_path(const string & strPath, bool bSetExtension)
       {
 
-         m_pszPath = (char *)strPath.c_str();
+         m_strPath = strPath;
 
          set_extension(strPath);
 
@@ -83,7 +61,7 @@ namespace user
          index iFind2 = strPath.rfind('\\');
          index iFind = MAX(iFind1, iFind2) + 1;
 
-         m_pszExtension = (char *)&strPath[strPath.find('.', iFind) + 1];
+         m_strExtension = (char *)&strPath[strPath.find('.', iFind) + 1];
 
       }
 
@@ -130,22 +108,22 @@ namespace user
       {
 
 
-         single_lock sl(m_pmutex, true);
-
-         int iImage;
-         for (auto iSize : m_iaSize)
-         {
-
-            iImage = GetImageList(iSize)->add_matter("filemanager\\check_off_16.png");
-
-            add_hover_image(iSize, iImage, 0);
-
-
-            iImage = GetImageList(iSize)->add_matter("filemanager\\check_on_16.png");
-
-            add_hover_image(iSize, iImage, 0);
-
-         }
+//         single_lock sl(m_pmutex, true);
+//
+//         int iImage;
+//         for (auto iSize : m_iaSize)
+//         {
+//
+//            iImage = GetImageList(iSize)->add_matter("filemanager\\check_off_16.png");
+//
+//            add_hover_image(iSize, iImage, 0);
+//
+//
+//            iImage = GetImageList(iSize)->add_matter("filemanager\\check_on_16.png");
+//
+//            add_hover_image(iSize, iImage, 0);
+//
+//         }
 
       }
 
@@ -283,7 +261,7 @@ namespace userex
 
 #else
 
-         #error "Implement for your platform."
+#error "Implement for your platform."
 
 #endif
 

@@ -29,10 +29,10 @@ namespace file
    enum e_iostate
    {
       goodbit        = 0x00,
-	   eofbit         = 0x01,
-	   failbit        = 0x02,
-	   badbit         = 0x04,
-	   _Hardfail      = 0x10
+      eofbit         = 0x01,
+      failbit        = 0x02,
+      badbit         = 0x04,
+      _Hardfail      = 0x10
    };
 
 
@@ -118,9 +118,9 @@ namespace file
 
 
       e_iostate rdstate() const
-		{
-		   return m_iostate;
-		}
+      {
+         return m_iostate;
+      }
 
       bool operator ! ()
       {

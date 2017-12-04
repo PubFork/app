@@ -20,7 +20,6 @@ public:
    virtual void OnDraw(::draw2d::graphics * pgraphics);     
    virtual bool pre_create_window(::user::create_struct& cs);
    
-   
    virtual void assert_valid() const;
    virtual void dump(dump_context & dumpcontext) const;
 

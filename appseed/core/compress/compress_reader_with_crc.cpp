@@ -34,7 +34,7 @@ memory_size_t input_stream_with_crc::read(void *data, memory_size_t size)
 file_position_t input_stream_with_crc::seek(file_offset_t offset, ::file::e_seek seekOrigin)
 {
   if (seekOrigin != ::file::seek_begin || offset != 0)
-    throw E_FAIL;
+    _throw(E_FAIL);
   _size = 0;
   _crc = CRC_INIT_VAL;
   return _stream->seek(offset, seekOrigin);

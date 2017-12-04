@@ -556,7 +556,7 @@ namespace html
 
          int iExtraCy;
 
-         convert(iExtraCy, m_pimpl->get_extra_content_cy());
+         iExtraCy = (int) (m_pimpl->get_extra_content_cy());
 
          if (iExtraCy > 0)
          {
@@ -999,7 +999,7 @@ namespace html
             psz++;
          if (*psz != '/' && *psz != '>')
          {
-            throw "run tag fixer tabjs";
+            _throw(simple_exception(get_app(), "run tag fixer tabjs"));
          }
          if (*psz == '/')
          {
@@ -1008,7 +1008,7 @@ namespace html
                psz++;
             if (*psz != '>')
             {
-               throw "run tag fixer tabjs";
+               _throw(simple_exception(get_app(), "run tag fixer tabjs"));
             }
             return true;
          }
@@ -1053,7 +1053,7 @@ namespace html
          psz++;
       if (*psz != '<')
       {
-         throw "run tag fixer tabjs";
+         _throw(simple_exception(get_app(), "run tag fixer tabjs"));
       }
       psz++;
       // skip white space
@@ -1071,7 +1071,7 @@ namespace html
          return true;
       }
 
-      throw "invalid xml file";
+      _throw(simple_exception(get_app(), "invalid xml file"));
 
    }
 

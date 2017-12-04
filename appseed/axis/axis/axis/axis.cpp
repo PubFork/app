@@ -1,13 +1,13 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "fiasco_finder.h"
 #ifdef BSD_STYLE_SOCKETS
 #include "openssl/err.h"
 #endif
 
-//#ifndef METROWIN
-
-#include "freeimage/Source/FreeImage.h"
-
+//#ifndef SMALLCODE
+//
+//#include "Freeimage/FreeImage.h"
+//
 //#endif
 
 
@@ -25,10 +25,10 @@ CLASS_DECL_AXIS int get_axis_init()
 
 }
 
-::aura::system * axis_create_aura_system()
+::aura::system * axis_create_aura_system(app_core * pappcore)
 {
 
-   return new ::axis::system(NULL);
+   return new ::axis::system(NULL, pappcore);
 
 }
 
@@ -39,23 +39,6 @@ CLASS_DECL_AXIS int_bool defer_axis_init()
 
    if(!defer_aura_init())
       return false;
-
-
-
-   try
-   {
-
-      FreeImage_Initialise(FALSE);
-
-   }
-   catch (...)
-   {
-
-      ::simple_message_box(NULL, "Failure to initialize FreeImage (::core::init_core)", "FreeImage_Initialise failure", MB_ICONEXCLAMATION);
-
-      return false;
-
-   }
 
 
    g_iAxisRefCount++;
@@ -97,19 +80,6 @@ CLASS_DECL_AXIS int_bool defer_axis_term()
 
    ::axis::static_start::term();
 
-   try
-   {
-
-      FreeImage_DeInitialise();
-
-   }
-   catch (...)
-   {
-
-   }
-
-
-
    defer_aura_term();
 
    return TRUE;
@@ -124,7 +94,7 @@ bool axis_init()
    g_axisoninitthread = &axis_on_init_thread;
    g_axisontermthread = &axis_on_term_thread;
    //if(!defer_axis_init())
-     // return false;
+   // return false;
 
    //::axis::static_start::init();
 
@@ -151,7 +121,7 @@ bool axis_init()
 //#ifndef WINDOWS
 
    // todo (casey tips) : do real/explicit dynamic linking
-   //throw todo(get_thread_app());
+   //_throw(todo(get_app()));
    //try
    //{
 
@@ -181,13 +151,13 @@ bool axis_term()
 //#ifndef WINDOWS
 
 //#ifdef BSD_STYLE_SOCKETS
-//   
+//
 //   ERR_remove_state(::GetCurrentProcessId());
 //
 //#endif
 
    // todo (casey tips) : do real/explicit dynamic linking
-   //throw todo(get_thread_app());
+   //_throw(todo(get_app()));
    //try
    //{
 
@@ -229,17 +199,17 @@ void axis_on_term_thread()
 {
 
 #ifdef BSD_STYLE_SOCKETS
-   
+
    if (thread_has_sockets())
    {
-      
+
 #if OPENSSL_API_COMPAT < 0x10100000L
-    
+
       ERR_free_strings();
-      
+
 #endif
 //      CRYPTO_THREADID tid;
-  //    CRYPTO_THREADID_current(&tid);
+      //    CRYPTO_THREADID_current(&tid);
       //ERR_remove_thread_state(&tid);
 
    }

@@ -6,8 +6,10 @@
 
 class string;
 
+
 namespace exception
 {
+   
 
    class CLASS_DECL_AURA base :
       virtual public ::exception::exception,
@@ -38,7 +40,7 @@ namespace exception
       //void operator delete(void * pbData);
       //void operator delete(void * pbData, const char * lpszFileName, int32_t nLine);
 
-      virtual const char * getMessage() const throw();
+      virtual const char * getMessage() const NOTHROW;
 
 
       void defer_dump_back_trace();

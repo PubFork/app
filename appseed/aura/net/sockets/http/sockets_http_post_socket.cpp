@@ -101,7 +101,9 @@ namespace sockets
       }
       else
       {
-         log("AddFile", Errno, wsa_str_error(Errno), ::aura::log::level_fatal);
+#ifdef DEBUG
+         log("AddFile", Errno, bsd_socket_error(Errno), ::aura::log::level_fatal);
+#endif
          SetCloseAndDelete();
       }
    }
@@ -411,7 +413,7 @@ namespace sockets
 
             memory m;
 
-            m.allocate(::convert<uint32_t> (content_length));
+            m.allocate((uint32_t) (content_length));
 
             pair.m_element2.m_spfile->read(m.get_data(), m.get_size());
 

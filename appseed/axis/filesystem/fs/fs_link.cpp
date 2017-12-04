@@ -161,7 +161,7 @@ namespace fs
       if(spfile->open(varFile.get_string(),nOpenFlags).failed())
       {
 
-         throw new ::file::exception(get_app(),::file::exception::none,01,varFile.get_string());
+         _throw(::file::exception(get_app(),::file::exception::none,01,varFile.get_string()));
 
       }
 

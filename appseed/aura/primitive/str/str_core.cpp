@@ -45,7 +45,7 @@ string_manager * __get_string_manager()
 //{
 //   UNREFERENCED_PARAMETER(str);
 //   UNREFERENCED_PARAMETER(actioncontext);
-//   throw "cannot set const string";
+//   _throw(simple_exception(get_app(), "cannot set const string"));
 //}
 //
 //namespace str

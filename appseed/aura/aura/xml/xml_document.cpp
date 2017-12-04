@@ -6,9 +6,9 @@ namespace xml
 
 
    document::document(::aura::application * papp, parse_info * pparseinfo) :
-      object(papp != NULL ? papp : get_thread_app()),
-      node(papp != NULL ? papp : get_thread_app()),
-      data(papp != NULL ? papp : get_thread_app())
+      object(papp != NULL ? papp : get_app()),
+      node(papp != NULL ? papp : get_app()),
+      data(papp != NULL ? papp : get_app())
    {
 
       m_pdoc         = this;
@@ -152,7 +152,7 @@ namespace xml
       }
       if(ent.is_empty() && extEnt.is_empty())
       {
-          throw "Undefined Entity Reference";
+         _throw(simple_exception(get_app(), "Undefined Entity Reference"));
       }
       if(ent.has_char())
       {
@@ -169,7 +169,7 @@ namespace xml
 
    // the additional parameter must end with , NULL
    // the parameters are pointers based on m_strData that should be offset because m_strData will be edited by entity ref patch
-   char * document::patch_entity_ref(const char * & pszXml, bool useExtEnt, ...)
+   char * document::patch_entity_ref(const char * & pszXml, int bUseExtEnt, ...)
    {
       // pszXml must be a valid portion of and point to an entity ref in:
       // m_strData of this document
@@ -178,11 +178,11 @@ namespace xml
       ASSERT(iPos < m_strData.get_length() && iPos >= 0);
       string strName;
       bool bExt = false;
-      string strValue = consume_entity_ref(pszXml, strName, useExtEnt, bExt);
+      string strValue = consume_entity_ref(pszXml, strName, bUseExtEnt, bExt);
       m_strData = m_strData.Left(iPos) + strValue + m_strData.Mid(iPos + strName.get_length() + 2);
       strsize iOffset = ((const char *)m_strData) - pszOldData;
       va_list ptr;
-      va_start(ptr, useExtEnt);
+      va_start(ptr, bUseExtEnt);
       int_ptr p;
       while((p = va_arg(ptr, int_ptr)) != 0)
       {
@@ -197,7 +197,7 @@ namespace xml
          }
          else
          {
-            throw "pointer to be offset cannot lie inside the entity ref";
+            _throw(simple_exception(get_app(), "pointer to be offset cannot lie inside the entity ref"));
          }
       }
       va_end(ptr);
@@ -212,7 +212,7 @@ namespace xml
 
 
       if(pedit == NULL)
-         throw simple_exception(get_app(), "edit exception");
+         _throw(simple_exception(get_app(), "edit exception"));
 
 
       sp(::xml::node) pnode;
@@ -231,40 +231,40 @@ namespace xml
             {
 
             case ::xml::set_name:
-               {
-                  pnode = get_node_from_indexed_path(pitem->m_iaPath);
-                  if(pnode == NULL)
-                     return;
-                  pnode->set_name(pitem->m_strValue);
-               }
-               break;
+            {
+               pnode = get_node_from_indexed_path(pitem->m_iaPath);
+               if(pnode == NULL)
+                  return;
+               pnode->set_name(pitem->m_strValue);
+            }
+            break;
 
             case ::xml::set_value:
-               {
-                  pnode = get_node_from_indexed_path(pitem->m_iaPath);
-                  if(pnode == NULL)
-                     return;
-                  pnode->set_value(pitem->m_strValue);
-               }
-               break;
+            {
+               pnode = get_node_from_indexed_path(pitem->m_iaPath);
+               if(pnode == NULL)
+                  return;
+               pnode->set_value(pitem->m_strValue);
+            }
+            break;
 
             case ::xml::set_attr:
-               {
-                  pnode = get_node_from_indexed_path(pitem->m_iaPath);
-                  if(pnode == NULL)
-                     return;
-                  pnode->set_attr(pitem->m_strName,pitem->m_strValue);
-               }
-               break;
+            {
+               pnode = get_node_from_indexed_path(pitem->m_iaPath);
+               if(pnode == NULL)
+                  return;
+               pnode->set_attr(pitem->m_strName,pitem->m_strValue);
+            }
+            break;
 
             case ::xml::add_attr:
-               {
-                  pnode = get_node_from_indexed_path(pitem->m_iaPath);
-                  if(pnode == NULL)
-                     return;
-                  pnode->add_attr(pitem->m_strName, pitem->m_strValue);
-               }
-               break;
+            {
+               pnode = get_node_from_indexed_path(pitem->m_iaPath);
+               if(pnode == NULL)
+                  return;
+               pnode->add_attr(pitem->m_strName, pitem->m_strValue);
+            }
+            break;
 
             }
 

@@ -52,7 +52,7 @@ namespace filemanager
    /////////////////////////////////////////////////////////////////////////////
    // folder_list diagnostics
 
-#ifdef DEBUG
+
    void folder_list::assert_valid() const
    {
       ::user::impact::assert_valid();
@@ -62,29 +62,42 @@ namespace filemanager
    {
       ::user::impact::dump(dumpcontext);
    }
-#endif //DEBUG
+
+
 
    void folder_list::on_update(::user::impact * pSender, LPARAM lHint, object * phint)
    {
+
       ::filemanager::impact::on_update(pSender, lHint, phint);
+
       if(phint != NULL)
       {
+
          if(base_class < update_hint > :: bases(phint))
          {
+
             update_hint * puh = (update_hint *) phint;
+
             if(puh->is_type_of(update_hint::TypeInitialize))
             {
-               string str;
-               str.Format("folder_list(%s)", get_filemanager_data()->m_strDISection);
-               m_dataid = str;
+
+               set_data_key_modifier(get_filemanager_data()->m_strDataKeyModifier);
+
                if(get_filemanager_data()->m_bPassBk)
                {
+
                   ::user::list::m_bBackgroundBypass = true;
+
                }
+
                _001UpdateColumns();
+
             }
+
          }
+
       }
+
    }
 
 
@@ -366,10 +379,11 @@ namespace filemanager
 
    COLORREF folder_list::get_background_color()
    {
+
       if (get_filemanager_data()->is_topic())
       {
 
-         COLORREF cr;
+         COLORREF cr = 0;
 
          if (m_pmanager->m_emode == manager::mode_saving)
          {
@@ -397,11 +411,15 @@ namespace filemanager
          }
 
          return cr;
+
       }
       else
       {
+
          return RGB(200, 255, 255);
+
       }
+
    }
 
 

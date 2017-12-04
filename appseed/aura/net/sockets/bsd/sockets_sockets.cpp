@@ -19,7 +19,7 @@ namespace sockets
       System.math().random_bytes(m_baTicketKey, sizeof(m_baTicketKey));
 
 
-      m_iReturnCode = -1;
+      m_iErrorCode = -1;
 
       m_psslinit = NULL;
 
@@ -74,7 +74,7 @@ namespace sockets
    }
 
 
-   bool sockets::initialize1()
+   bool sockets::init1()
    {
 
       m_psslinit = new ::sockets::SSLInitializer(get_app());
@@ -85,7 +85,7 @@ namespace sockets
       if(m_spnet.is_null())
       {
 
-         m_iReturnCode = -1986;
+         m_iErrorCode = -1986;
 
          return false;
 
@@ -95,7 +95,7 @@ namespace sockets
       if(!m_spnet->initialize())
          return false;
 
-      if(!::aura::department::initialize1())
+      if(!::aura::department::init1())
          return false;
 
 
@@ -133,7 +133,7 @@ namespace sockets
          if(!m_spnet->gudo_set())
          {
 
-            m_iReturnCode = -87;
+            m_iErrorCode = -87;
 
          }
 
@@ -141,7 +141,7 @@ namespace sockets
       catch(...)
       {
 
-         m_iReturnCode = -87;
+         m_iErrorCode = -87;
 
       }
       try
@@ -176,7 +176,7 @@ namespace sockets
          if(!m_spnet->finalize())
          {
 
-            m_iReturnCode = -87;
+            m_iErrorCode = -87;
 
          }
 
@@ -184,7 +184,7 @@ namespace sockets
       catch(...)
       {
 
-         m_iReturnCode = -87;
+         m_iErrorCode = -87;
 
       }
 
@@ -197,7 +197,7 @@ namespace sockets
       catch(...)
       {
 
-         m_iReturnCode = -86;
+         m_iErrorCode = -86;
 
       }
 

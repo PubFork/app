@@ -6383,7 +6383,7 @@ typedef svn_error_t *(*svn_wc_canonicalize_svn_prop_get_file_t)(
  * value @a propval.
  *
  * If the property is not appropriate for a node of kind @a kind, or
- * is otherwise invalid, throw an error.  Otherwise, set @a *propval_p
+ * is otherwise invalid, _throw( an error.  Otherwise, set @a *propval_p
  * to a canonicalized version of the property value.
  *
  * The exact set of canonicalizations and checks may vary across different

@@ -9,7 +9,11 @@
 
 #endif
 
+#ifdef MACOS
 
+#include <netdb.h>
+
+#endif
 
 static geoipv6_t IPV6_NULL;
 
@@ -928,7 +932,7 @@ _GeoIP_lookupaddress_v6(const char *host)
    return ipnum;
 #else
 
-   throw todo(get_thread_app());
+   _throw(todo(get_app()));
 
 #endif
 

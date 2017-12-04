@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace database
@@ -7,9 +7,8 @@ namespace database
 
    client::client()
    {
+
       m_pdataserver = NULL;
-
-
 
    }
 
@@ -123,7 +122,7 @@ namespace database
       }
       return false;
    }
-   
+
 #ifdef APPLEOS
 
    bool client::data_set(class id id, long l, update_hint * puh)
@@ -135,7 +134,7 @@ namespace database
       }
       return false;
    }
-   
+
 #endif
 
 
@@ -385,45 +384,155 @@ namespace database
 
    void client_array::remove_client(client *pclient)
    {
-      
+
       remove(pclient);
 
    }
 
+
    string client::calc_data_key(::database::id & id)
    {
+
       string str;
-      str = get_data_id().m_id;
+
+      str = get_data_id();
+
       str += ".";
-      str += ::str::from(id.m_id);
+
+      str += ::str::from(id);
+
       return str;
+
    }
 
 
    id client::get_data_id()
    {
 
-      return m_dataid;
+      if (m_dataid2.m_id.is_empty() || m_bDataKeyModified)
+      {
+
+         update_data_id();
+
+      }
+
+      return m_dataid2;
 
    }
+
 
    string client::calc_data_id()
    {
 
-      return "";
+      return calc_default_data_id();
 
    }
 
 
-   void client::defer_update_data_id()
+   void client::update_data_id()
    {
 
-      //if(m_dataid.m_id.is_empty())
+      string strDataKey = calc_data_id();
+
+      if (strDataKey.is_empty())
       {
 
-         m_dataid = calc_data_id();
+         strDataKey = calc_default_data_id();
 
       }
+
+      if (strDataKey.replace_ci_count("&data_source=local", "") > 0)
+      {
+
+         strDataKey += "&data_source=local&";
+
+      }
+
+      m_dataid2 = strDataKey;
+
+      m_bDataKeyModified = false;
+
+   }
+
+
+   string client::calc_default_data_id()
+   {
+
+      string str;
+
+      str = Application.m_strAppName;
+
+      if (string(Application.get_data_id().m_id).find_ci("&data_source=local") >= 0)
+      {
+
+         str += "&data_source=local&";
+
+      }
+      else
+      {
+
+         str += "://";
+
+      }
+
+      {
+
+         string strType = typeid(*this).name();
+
+         ::str::begins_eat_ci(strType, "class ");
+
+         str += strType;
+
+      }
+
+      if (m_strDataKeyModifier.has_char())
+      {
+
+         str += "/";
+
+         str += m_strDataKeyModifier;
+
+      }
+
+      return str;
+
+   }
+
+
+   void client::set_data_key_modifier(string strDataKeyModifier)
+   {
+
+      m_strDataKeyModifier = strDataKeyModifier;
+
+      m_bDataKeyModified = true;
+
+   }
+
+   string client::get_data_key_modifier()
+   {
+
+      return m_strDataKeyModifier;
+
+   }
+
+
+   void client::add_up_data_key_modifier(string strDataKeyModifier)
+   {
+
+      if (get_data_key_modifier().find_ci(strDataKeyModifier) < 0)
+      {
+
+         set_data_key_modifier(get_data_key_modifier() + strDataKeyModifier);
+
+      }
+
+   }
+
+
+   void client::set_local_data_key_modifier()
+   {
+
+      add_up_data_key_modifier("&data_source=local&");
 
    }
 
@@ -435,13 +544,13 @@ namespace database
 namespace file
 {
 
-   
+
    data_trigger_ostream::data_trigger_ostream(data_trigger_ostream && d):
       byte_stream(::move(d)),
       m_file(::move(d.m_file)),
       m_id(::move(d.m_id))
    {
-      
+
       m_spfile = &m_file;
       m_pclient = d.m_pclient;
       d.m_pclient = NULL;

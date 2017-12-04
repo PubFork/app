@@ -1,7 +1,6 @@
 #pragma once
 
 
-//#include "compare.h"
 #include "comparison_equals.h"
 #include "comparison_less.h"
 #include "comparison_compare.h"
@@ -9,6 +8,7 @@
 #include "comparison_binary.h"
 #include "comparison_var_strict.h"
 
+#define unequal(a, b, n) ((a - n < b && b < a + n) || (b - n < a && a < b + n))
 
 
 template < typename ARG_KEY >

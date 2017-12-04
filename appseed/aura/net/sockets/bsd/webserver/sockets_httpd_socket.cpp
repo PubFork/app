@@ -33,8 +33,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 namespace sockets
 {
 
-
-   #define TMPSIZE 10000
+#undef TMPSIZE
+#define TMPSIZE 10000
 
 
    httpd_socket::httpd_socket(base_socket_handler& h) :
@@ -74,15 +74,15 @@ namespace sockets
 
    void httpd_socket::Send64(const string & str64, const string & type)
    {
-   //   Base64 bb;
+      //   Base64 bb;
 
-   /*   if (request().headers()["if-modified-since"].get_string().compare_ci(m_start) == 0)
-      {
-         m_response.attr("http_status_code") = 304;
-         m_response.attr("http_status") = "Not Modified";
-         SendResponse();
-      }
-      else*/
+      /*   if (request().headers()["if-modified-since"].get_string().compare_ci(m_start) == 0)
+         {
+            m_response.attr("http_status_code") = 304;
+            m_response.attr("http_status") = "Not Modified";
+            SendResponse();
+         }
+         else*/
       {
          memory mem;
          System.base64().decode(mem, str64);
@@ -91,7 +91,7 @@ namespace sockets
 
          m_response.header("Content-length") = (int64_t) mem.get_size();
          m_response.header(__id(content_type)) = type;
-   //      m_response.header("Last-modified") = m_start;
+         //      m_response.header("Last-modified") = m_start;
          SendResponse();
 
          write((char *)mem.get_data(), (int32_t) mem.get_size());
@@ -105,11 +105,12 @@ namespace sockets
       time_t t;
       const char *days[] = { "Sun","Mon","Tue","Wed","Thu","Fri","Sat" };
       const char *months[] = { "Jan","Feb","Mar","Apr","May","Jun",
-                         "Jul","Aug","Sep","Oct","Nov","Dec" };
+                               "Jul","Aug","Sep","Oct","Nov","Dec"
+                             };
       int32_t i;
       char s[40];
 
-   /* 1997-12-16 09:50:40 */
+      /* 1997-12-16 09:50:40 */
 
       if (dt.get_length() == 19)
       {
@@ -126,15 +127,17 @@ namespace sockets
          t = mktime(&tp);
          if (t == -1)
          {
+#ifdef DEBUG
             log("datetime2httpdate", 0, "mktime() failed");
+#endif
          }
 
          sprintf(s,"%s, %02d %s %d %02d:%02d:%02d GMT",
-          days[tp.tm_wday],
-          tp.tm_mday,
-          months[tp.tm_mon],
-          tp.tm_year + 1900,
-          tp.tm_hour,tp.tm_min,tp.tm_sec);
+                 days[tp.tm_wday],
+                 tp.tm_mday,
+                 months[tp.tm_mon],
+                 tp.tm_year + 1900,
+                 tp.tm_hour,tp.tm_min,tp.tm_sec);
       }
       else
       {
@@ -148,17 +151,17 @@ namespace sockets
    {
       time_t t = time(NULL);
       struct tm tp;
-   #ifdef _WIN32
+#ifdef _WIN32
       memcpy(&tp, localtime(&t), sizeof(tp));
-   #else
+#else
       localtime_r(&t, &tp);
-   #endif
+#endif
       char slask[40]; // yyyy-mm-dd hh:mm:ss
       sprintf(slask,"%d-%02d-%02d %02d:%02d:%02d",
-         tp.tm_year + 1900,
-         tp.tm_mon + 1,
-         tp.tm_mday,
-         tp.tm_hour,tp.tm_min,tp.tm_sec);
+              tp.tm_year + 1900,
+              tp.tm_mon + 1,
+              tp.tm_mday,
+              tp.tm_hour,tp.tm_min,tp.tm_sec);
       return slask;
    }
 
@@ -201,10 +204,10 @@ namespace sockets
          strId = "cat://" + System.crypto().md5(strId);
 
       }
-	  InitializeContext(strId, m_strCat, "", TLS_server_method());
+      InitializeContext(strId, m_strCat, "", TLS_server_method());
 
 
-	 // SSL_CTX_set_min_proto_version(m_ssl_ctx, TLS1_VERSION);
+      // SSL_CTX_set_min_proto_version(m_ssl_ctx, TLS1_VERSION);
 
       //synch_lock sl(m_pmutexSslCtx);
 
@@ -363,34 +366,34 @@ namespace sockets
          }
          else
          {
-			 if (response().ostream().get_position() == 0)
-			 {
+            if (response().ostream().get_position() == 0)
+            {
 
-				 response().m_strFile = lpcsz;
-             outattr(__id(http_status_code)) = 200;
-             outattr(__id(http_status)) = "OK";
-             //outattr(__id(content_length)) = Application.file().length(lpcsz);
+               response().m_strFile = lpcsz;
+               outattr(__id(http_status_code)) = 200;
+               outattr(__id(http_status)) = "OK";
+               //outattr(__id(content_length)) = Application.file().length(lpcsz);
 
-			 }
-			 else
-			 {
+            }
+            else
+            {
 
-				 ::file::file_sp spfile(allocer());
-				try
-				{
-				   if(spfile->open(lpcsz,::file::type_binary | ::file::mode_read | ::file::share_deny_none).failed())
-				   {
-					  return false;
-				   }
-				}
-				catch(...)
-				{
-				   return false;
-				}
-			
-				response().ostream().transfer_from(*spfile);
+               ::file::file_sp spfile(allocer());
+               try
+               {
+                  if(spfile->open(lpcsz,::file::type_binary | ::file::mode_read | ::file::share_deny_none).failed())
+                  {
+                     return false;
+                  }
+               }
+               catch(...)
+               {
+                  return false;
+               }
 
-			}
+               response().ostream().transfer_from(*spfile);
+
+            }
          }
       }
       else

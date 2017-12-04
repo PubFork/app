@@ -12,10 +12,10 @@ namespace draw2d_quartz2d
    public:
       
       
-      COLORREF *              m_pdata;
-      ::size                  m_size;
-      CGContextRef            m_context;
-      int32_t                 scan;
+      COLORREF *                    m_pdata;
+      ::size                        m_size;
+      CGContextRef                  m_pdc;
+      int32_t                       m_iScan;
       
       
       bitmap(sp(::aura::application) papp);
@@ -35,8 +35,8 @@ namespace draw2d_quartz2d
       bool CreateBitmapIndirect(::draw2d::graphics * pgraphics, LPBITMAP lpBitmap);
       bool CreateCompatibleBitmap(::draw2d::graphics * pgraphics, int32_t nWidth, int32_t nHeight);
       bool CreateDiscardableBitmap(::draw2d::graphics * pgraphics, int32_t nWidth, int32_t nHeight);
-      bool CreateDIBSection(::draw2d::graphics * pgraphics, const BITMAPINFO * lpbmi, UINT usage, void **ppvBits, int * piStride, HANDLE hSection, uint32_t offset);
-      bool CreateDIBitmap(::draw2d::graphics * pgraphics, const BITMAPINFOHEADER *pbmih, DWORD flInit, const void *pjBits, const BITMAPINFO *pbmi, UINT iUsage);
+      bool CreateDIBSection(::draw2d::graphics * pgraphics, int cx, int cy, UINT usage, void **ppvBits, int * piStride, HANDLE hSection, uint32_t offset);
+      bool CreateDIBitmap(::draw2d::graphics * pgraphics, int cx, int cy, DWORD flInit, const void *pjBits, UINT iUsage);
       
       int32_t GetBitmap(BITMAP* pBitMap);
       
@@ -45,7 +45,10 @@ namespace draw2d_quartz2d
       class size SetBitmapDimension(int32_t nWidth, int32_t nHeight);
       class size GetBitmapDimension() const;
       
+#ifdef DEBUG
+
       virtual void dump(dump_context & dumpcontext) const;
+#endif
       
       virtual bool Attach(void * posdata);
       

@@ -476,12 +476,12 @@ namespace user
          }
 
          pcontrol->SetWindowPos(
-            ZORDER_TOP,
-            rectControl.left,
-            rectControl.top,
-            rectControl.width(),
-            rectControl.height(),
-            SWP_SHOWWINDOW | (bOnlySizeAndPosition ? SWP_CHANGEVIEWPORTOFFSET : 0));
+         ZORDER_TOP,
+         rectControl.left,
+         rectControl.top,
+         rectControl.width(),
+         rectControl.height(),
+         SWP_SHOWWINDOW | (bOnlySizeAndPosition ? SWP_CHANGEVIEWPORTOFFSET : 0));
 
          if (bOnlySizeAndPosition)
          {
@@ -1155,22 +1155,22 @@ namespace user
 
       //      item.m_iDisplayItem = DisplayToStrict(pcontrol->m_iEditItem);
       //    item.m_iItem = pcontrol->m_iEditItem;
-      item.m_iDisplayItem = DisplayToStrict(pcontrol->m_iEditItem);
-
-      item.m_iSubItem = pcontrol->descriptor().m_iSubItem;
-      item.m_iOrder = _001MapSubItemToOrder(item.m_iSubItem);
-      item.m_iListItem = -1;
-      //_001GetElementRect(&item, ::user::mesh::element_sub_item);
-      rectControl = item.m_rectSubItem;
-      ClientToScreen(rectControl);
-      rect64 rectForm;
-      GetWindowRect(rectForm);
-      rect64 rectClient;
-      rectClient.top = rectForm.top;
-      rectClient.bottom = rectForm.bottom;
-      rectClient.left = rectControl.left;
-      rectClient.right = rectControl.right;
-      return rectClient.contains(point) != FALSE;
+//      item.m_iDisplayItem = DisplayToStrict(pcontrol->m_iEditItem);
+//
+//      item.m_iSubItem = pcontrol->descriptor().m_iSubItem;
+//      item.m_iOrder = _001MapSubItemToOrder(item.m_iSubItem);
+//      item.m_iListItem = -1;
+//      //_001GetElementRect(&item, ::user::mesh::element_sub_item);
+//      rectControl = item.m_rectSubItem;
+//      ClientToScreen(rectControl);
+//      rect64 rectForm;
+//      GetWindowRect(rectForm);
+//      rect64 rectClient;
+//      rectClient.top = rectForm.top;
+//      rectClient.bottom = rectForm.bottom;
+//      rectClient.left = rectControl.left;
+//      rectClient.right = rectControl.right;
+//      return rectClient.contains(point) != FALSE;
    }
 
 
@@ -1765,7 +1765,7 @@ namespace user
 
             }
 
-            bool bOk;
+            bool bOk = false;
 
             if (pkey->m_ekey == key_left)
             {
@@ -1799,9 +1799,7 @@ namespace user
 
                _001PlaceControl(pcontrol, iItem);
 
-
                sp(::user::plain_edit) pedit = m_pcontrolEdit;
-
 
                if(pedit.is_set())
                {

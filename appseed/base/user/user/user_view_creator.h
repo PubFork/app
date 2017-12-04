@@ -1,10 +1,8 @@
-#pragma once
+﻿#pragma once
 
 
 namespace user
 {
-
-
 
 
    class CLASS_DECL_BASE view_creator :
@@ -13,7 +11,8 @@ namespace user
    public:
 
 
-      class CLASS_DECL_BASE create_exception
+      class CLASS_DECL_BASE create_exception :
+         virtual public ::exception::exception
       {
       public:
 
@@ -31,6 +30,7 @@ namespace user
          public id_map < ::user::view_creator_data * >
       {
       public:
+
       };
 
 
@@ -51,9 +51,9 @@ namespace user
 
       virtual void on_update(::user::document * pdocument, ::user::impact * pSender, LPARAM lHint, object* pHint);
 
-      virtual ::user::interaction * get_view();
+      virtual ::user::interaction * get_view() override;
 
-      virtual id get_view_id();
+      virtual id get_view_id() override;
 
       virtual ::user::view_creator_data * get(id id);
 
@@ -62,6 +62,7 @@ namespace user
       virtual ::user::view_creator_data * allocate_creator_data(id id, LPCRECT lpcrectCreate);
 
       virtual ::user::view_creator_data * create_impact(id id, LPCRECT lpcrectCreate, ::user::frame_window * pframewindow);
+
       virtual ::user::view_creator_data * create_impact(id id, LPCRECT lpcrectCreate);
 
       virtual ::user::view_creator_data * get_impact(id id, LPCRECT lpcrectCreate);
@@ -73,23 +74,38 @@ namespace user
       template < class T > T *
       get_typed_document()
       {
+
          T * pdoc;
+
          ::user::view_creator_data * pcreatordata;
+
          id key;
+
          POSITION pos = m_viewmap.get_start_position();
+
          while(pos != NULL)
          {
+
             m_viewmap.get_next_assoc(pos, key, pcreatordata);
+
             if(pcreatordata->m_pdoc != NULL)
             {
+
                pdoc = dynamic_cast < T * > (pcreatordata->m_pdoc);
+
                if(pdoc != NULL)
                {
+
                   return pdoc;
+
                }
+
             }
+
          }
+
          return NULL;
+
       }
 
 

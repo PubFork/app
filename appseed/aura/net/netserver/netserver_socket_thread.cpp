@@ -1,4 +1,6 @@
-#include "framework.h"
+﻿#include "framework.h"
+#include "netserver_socket_thread.h"
+#include "netserver_socket.h"
 
 
 namespace netserver
@@ -48,7 +50,7 @@ namespace netserver
       m_plistensocket->m_bDetach = true;
 
       if (m_plistensocket->m_strCat.has_char() &&
-         (m_iSsl > 0 || (m_iSsl < 0 && (m_iPort == 443 || ::str::ends(::str::from(m_iPort), "443")))))
+            (m_iSsl > 0 || (m_iSsl < 0 && (m_iPort == 443 || ::str::ends(::str::from(m_iPort), "443")))))
       {
 
          m_plistensocket->EnableSSL();
@@ -59,17 +61,16 @@ namespace netserver
 
    }
 
-   int32_t socket_thread::run()
-   {
 
-       
+   void socket_thread::run()
+   {
 
       while (thread_get_run())
       {
-         
+
          try
          {
-            
+
             m_psockethandler = create_socket_handler();
 
             m_psockethandler->EnablePool();
@@ -122,7 +123,7 @@ namespace netserver
 
       }
 
-      return 0;
+      //return 0;
 
    }
 

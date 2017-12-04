@@ -405,7 +405,7 @@ int32_t simple_scroll_bar::GetTrackSize(size &size)
 int32_t simple_scroll_bar::SetTrackingPos(point point)
 {
 
-   int32_t nPos;
+   int32_t nPos = 0;
 
    size sizeTrack;
 

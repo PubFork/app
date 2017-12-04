@@ -93,7 +93,7 @@ void url_domain_axis::create(const char * pszServerName)
    }
    else
    {
-      throw "not_expected";
+      _throw(simple_exception(get_app(), "not_expected"));
    }
    const char * pszPreTopLevel2 = NULL;
    int32_t iLenPreTopLevel2 = 0;
@@ -113,7 +113,7 @@ void url_domain_axis::create(const char * pszServerName)
       }
       else
       {
-         throw "not_expected";
+         _throw(simple_exception(get_app(), "not_expected"));
       }
       if(m_iCount >= 5)
       {
@@ -129,7 +129,7 @@ void url_domain_axis::create(const char * pszServerName)
          }
          else
          {
-            throw "not_expected";
+            _throw(simple_exception(get_app(), "not_expected"));
          }
       }
    }

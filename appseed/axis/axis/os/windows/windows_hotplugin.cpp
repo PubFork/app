@@ -10,7 +10,7 @@ namespace hotplugin
 
 #if 0
 
-      throw "TODO trying to get rid of GDI PLUS dependency on Windows, is it possible to use GDI with coached alpha extensions?";
+      _throw(simple_exception(get_app(), "TODO trying to get rid of GDI PLUS dependency on Windows, is it possible to use GDI with coached alpha extensions?"));
 
 #else
 

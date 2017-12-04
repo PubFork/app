@@ -22,5 +22,9 @@ void __node_base_factory_exchange(::aura::application * papp);
 
 #include "metrowin/metrowin.h"
 
+#elif defined(ANDROID)
+
+#include "android/android.h"
+
 #endif
 

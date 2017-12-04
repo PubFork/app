@@ -1,4 +1,5 @@
 #include "framework.h"
+// at Ubuntu - libidn11-dev
 #include "idna.h"
 
 
@@ -1456,7 +1457,7 @@ namespace url
 
       if (rc != IDNA_SUCCESS)
       {
-         throw idna_strerror(rc);
+         _throw(simple_exception(::get_app(), idna_strerror(rc)));
       }
 
       string str(p);
@@ -1511,7 +1512,7 @@ namespace url
 
       if (rc != IDNA_SUCCESS)
       {
-         throw idna_strerror(rc);
+         _throw(simple_exception(::get_app(), idna_strerror(rc)));
       }
 
       string str(p);

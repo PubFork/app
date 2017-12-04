@@ -9,11 +9,11 @@ inline lparam::lparam(::object * p)
 
 
 template<class TYPE>
-void dump_elements(dump_context & dumpcontext, const TYPE* pElements, ::count nCount)
+inline void dump_elements(dump_context & dumpcontext, const TYPE* pElements, ::count nCount)
 {
    ENSURE((nCount == 0) || (pElements != NULL));
    ASSERT((nCount == 0) ||
-      __is_valid_address(pElements, (size_t)nCount * sizeof(TYPE), FALSE));
+          __is_valid_address(pElements, (size_t)nCount * sizeof(TYPE), FALSE));
 #ifdef WINDOWS
    &dumpcontext; // not used
    pElements;  // not used
@@ -21,6 +21,7 @@ void dump_elements(dump_context & dumpcontext, const TYPE* pElements, ::count nC
 #endif
    // default does nothing
 }
+
 
 
 template<class TYPE>
@@ -34,6 +35,7 @@ inline void CopyElements(TYPE* pDest, const TYPE* pSrc, ::count nCount)
    while (nCount--)
       *pDest++ = *pSrc++;
 }
+
 
 #undef new
 
@@ -67,15 +69,15 @@ inline void __cdecl operator delete(void * p, void * palloc) del_throw_spec
 
 class CLASS_DECL_AURA c_class
 {
-public:
+   public:
 
 
-   static c_class s_cclass;
+      static c_class s_cclass;
 
 
-   c_class();
-   c_class(const c_class &);
-   virtual ~c_class();
+      c_class();
+      c_class(const c_class &);
+      virtual ~c_class();
 
 
 };
@@ -176,33 +178,33 @@ namespace xml
 
    template < int32_t m_iNodeNameIndex,class TYPE >
    void
-      smart_pointer_array<m_iNodeNameIndex,TYPE>::
-      xml_export(output_tree & xmlof)
+   smart_pointer_array<m_iNodeNameIndex,TYPE>::
+   xml_export(output_tree & xmlof)
    {
-         xmlof.set_attr("count",this->get_size());
-         for(int32_t i = 0; i < this->get_size(); i++)
-         {
-            node * pnode = xmlof.export_node(xmlof.get_node_name(m_iNodeNameIndex),this->operator()(i));
-            pnode->add_attr("array_index",i);
-         }
+      xmlof.set_attr("count",this->get_size());
+      for(int32_t i = 0; i < this->get_size(); i++)
+      {
+         node * pnode = xmlof.export_node(xmlof.get_node_name(m_iNodeNameIndex),this->operator()(i));
+         pnode->add_attr("array_index",i);
       }
+   }
 
 
    template < int32_t m_iNodeNameIndex,class TYPE >
    void
-      smart_pointer_array<m_iNodeNameIndex,TYPE>::
-      xml_import(input_tree & xmlif)
+   smart_pointer_array<m_iNodeNameIndex,TYPE>::
+   xml_import(input_tree & xmlif)
    {
-         int32_t iSize;
-         xmlif.get_attr("count",iSize);
-         this->set_size_create(iSize);
-         for(int32_t i = 0; i < this->get_size(); i++)
-         {
-            attr_array attra(this->get_app());
-            attra.set_at("array_index",i);
-            xmlif.import_node(xmlif.get_node_name(m_iNodeNameIndex),attra,this->operator()(i));
-         }
+      int32_t iSize;
+      xmlif.get_attr("count",iSize);
+      this->set_size_create(iSize);
+      for(int32_t i = 0; i < this->get_size(); i++)
+      {
+         attr_array attra(this->get_app());
+         attra.set_at("array_index",i);
+         xmlif.import_node(xmlif.get_node_name(m_iNodeNameIndex),attra,this->operator()(i));
       }
+   }
 
 } // namespace xml
 
@@ -271,38 +273,24 @@ namespace xml
 //
 
 
-
-
-
-
-
-
-
-
-
 namespace aura
 {
 
-   // impl
+
    template < class APP >
    sp(::aura::application) single_application_library < APP > ::get_new_application(const char * pszAppId)
    {
 
       if(!contains_app(pszAppId))
+      {
+
          return NULL;
+
+      }
 
       sp(::aura::application) papp = canew(APP());
 
       if(papp == NULL)
-         return NULL;
-
-      try
-      {
-
-         papp->construct(pszAppId);
-
-      }
-      catch(...)
       {
 
          return NULL;
@@ -312,6 +300,7 @@ namespace aura
       return papp;
 
    }
+
 
    template < typename T >
    void application::alloc(T * & pt)
@@ -331,6 +320,7 @@ namespace aura
       pt->add_ref();
 
    }
+
 
 } // namespace aura
 
@@ -427,53 +417,53 @@ void memcnts_dec(T * pthis)
 
 namespace message
 {
-   
+
 
    template < typename RECEIVER >
    void sender::add_route (RECEIVER * preceiverDerived, void (RECEIVER::* phandler)(::message::message * pmessage), ::message::id id)
    {
-   
+
       synch_lock sl(m_pmutexIdRoute);
-   
+
       void * pvoidReceiver = preceiverDerived;
-      
+
       sp(type) ptypeReceiver = System.type_info < RECEIVER >();
-   
+
       if (m_idroute[id].pred_find_first([=](auto proute)
-                                     {
-                                        return proute->m_pvoidReceiver == pvoidReceiver
-                                        && proute->m_ptypeReceiver == ptypeReceiver;
-                                     }) >= 0)
+   {
+      return proute->m_pvoidReceiver == pvoidReceiver
+             && proute->m_ptypeReceiver == ptypeReceiver;
+   }) >= 0)
       {
-      
+
          return;
-   
+
       }
-   
+
       ::message::receiver * preceiver = dynamic_cast < ::message::receiver * >(preceiverDerived);
-   
+
       if (preceiver == NULL)
       {
-      
+
          ASSERT(FALSE);
-      
+
          return;
-      
+
       }
-   
+
       auto pred = [=](::message::message * pmessage)
       {
-      
+
          (preceiverDerived->*phandler)(pmessage);
-      
+
       };
-   
+
       route * proute = create_pred_route(preceiver, pvoidReceiver, pred, ptypeReceiver);
-   
+
       m_idroute[id].add(proute);
-   
+
       preceiver->m_sendera.add_unique(this);
-      
+
    }
 
 

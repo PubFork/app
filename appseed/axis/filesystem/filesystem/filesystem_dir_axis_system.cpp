@@ -59,7 +59,7 @@ namespace file
          //   UNREFERENCED_PARAMETER(psz2);
          //   UNREFERENCED_PARAMETER(iLen2);
          //   UNREFERENCED_PARAMETER(bUrl);
-         //   throw interface_only_exception(get_app(), "this is an interface");
+         //   _throw(interface_only_exception(get_app(), "this is an interface"));
          //}
 
          //string system::path(const char * pszFolder, strsize iLenFolder, const char * pszRelative, strsize iLenRelative, bool bUrl)
@@ -377,14 +377,14 @@ namespace file
          //   UNREFERENCED_PARAMETER(lpcszSource);
          //   UNREFERENCED_PARAMETER(lpcszRelative);
          //   UNREFERENCED_PARAMETER(psz2);
-         //   throw interface_only_exception(get_app(), "this is an interface");
+         //   _throw(interface_only_exception(get_app(), "this is an interface"));
          //}
 
          //void system::root_ones(stringa & patha, stringa & straTitle, ::aura::application * papp)
          //{
          //   UNREFERENCED_PARAMETER(patha);
          //   UNREFERENCED_PARAMETER(straTitle);
-         //   throw interface_only_exception(get_app(), "this is an interface");
+         //   _throw(interface_only_exception(get_app(), "this is an interface"));
          //}
 
 
@@ -606,112 +606,112 @@ namespace file
                //{
                //   UNREFERENCED_PARAMETER(lpcsz);
                //   UNREFERENCED_PARAMETER(lpcsz2);
-               //   throw interface_only_exception(get_app(), "this is an interface");
+               //   _throw(interface_only_exception(get_app(), "this is an interface"));
                //}
 
                //string system::stage(const char * lpcsz, const char * lpcsz2)
                //{
                //   UNREFERENCED_PARAMETER(lpcsz);
                //   UNREFERENCED_PARAMETER(lpcsz2);
-               //   throw interface_only_exception(get_app(), "this is an interface");
+               //   _throw(interface_only_exception(get_app(), "this is an interface"));
                //}
 
                //string system::stageapp(const char * lpcsz, const char * lpcsz2)
                //{
                //   UNREFERENCED_PARAMETER(lpcsz);
                //   UNREFERENCED_PARAMETER(lpcsz2);
-               //   throw interface_only_exception(get_app(), "this is an interface");
+               //   _throw(interface_only_exception(get_app(), "this is an interface"));
                //}
 
                //string system::netseed(const char * lpcsz, const char * lpcsz2)
                //{
                //   UNREFERENCED_PARAMETER(lpcsz);
                //   UNREFERENCED_PARAMETER(lpcsz2);
-               //   throw interface_only_exception(get_app(), "this is an interface");
+               //   _throw(interface_only_exception(get_app(), "this is an interface"));
                //}
 
                //string system::element(const char * lpcsz, const char * lpcsz2)
                //{
                //   UNREFERENCED_PARAMETER(lpcsz);
                //   UNREFERENCED_PARAMETER(lpcsz2);
-               //   throw interface_only_exception(get_app(), "this is an interface");
+               //   _throw(interface_only_exception(get_app(), "this is an interface"));
                //}
 
                //string system::element(const string & str, const char * lpcsz2)
                //{
                //   UNREFERENCED_PARAMETER(str);
                //   UNREFERENCED_PARAMETER(lpcsz2);
-               //   throw interface_only_exception(get_app(), "this is an interface");
+               //   _throw(interface_only_exception(get_app(), "this is an interface"));
                //}
 
                //string system::element(const char * lpcsz, const string & str2)
                //{
                //   UNREFERENCED_PARAMETER(lpcsz);
                //   UNREFERENCED_PARAMETER(str2);
-               //   throw interface_only_exception(get_app(), "this is an interface");
+               //   _throw(interface_only_exception(get_app(), "this is an interface"));
                //}
 
                //string system::element(const string & str, const string & str2)
                //{
                //   UNREFERENCED_PARAMETER(str);
                //   UNREFERENCED_PARAMETER(str2);
-               //   throw interface_only_exception(get_app(), "this is an interface");
+               //   _throw(interface_only_exception(get_app(), "this is an interface"));
                //}
 
                //string system::element(const string & str)
                //{
                //   UNREFERENCED_PARAMETER(str);
-               //   throw interface_only_exception(get_app(), "this is an interface");
+               //   _throw(interface_only_exception(get_app(), "this is an interface"));
                //}
 
                //string system::element()
                //{
-               //   throw interface_only_exception(get_app(), "this is an interface");
+               //   _throw(interface_only_exception(get_app(), "this is an interface"));
                //}
 
                //string system::module(const char * lpcsz, const char * lpcsz2)
                //{
                //   UNREFERENCED_PARAMETER(lpcsz);
                //   UNREFERENCED_PARAMETER(lpcsz2);
-               //   throw interface_only_exception(get_app(), "this is an interface");
+               //   _throw(interface_only_exception(get_app(), "this is an interface"));
                //}
 
                //string system::ca2module(const char * lpcsz, const char * lpcsz2)
                //{
                //   UNREFERENCED_PARAMETER(lpcsz);
                //   UNREFERENCED_PARAMETER(lpcsz2);
-               //   throw interface_only_exception(get_app(), "this is an interface");
+               //   _throw(interface_only_exception(get_app(), "this is an interface"));
                //}
 
                //void system::time_square(string &str)
                //{
                //   UNREFERENCED_PARAMETER(str);
-               //   throw interface_only_exception(get_app(), "this is an interface");
+               //   _throw(interface_only_exception(get_app(), "this is an interface"));
                //}
 
                //string system::time_log(const char * pszId)
                //{
                //   UNREFERENCED_PARAMETER(pszId);
-               //   throw interface_only_exception(get_app(), "this is an interface");
+               //   _throw(interface_only_exception(get_app(), "this is an interface"));
                //}
 
                //bool system::mk(const char * lpcsz, ::aura::application * papp)
                //{
                //   UNREFERENCED_PARAMETER(lpcsz);
-               //   throw interface_only_exception(get_app(), "this is an interface");
+               //   _throw(interface_only_exception(get_app(), "this is an interface"));
                //}
 
                //bool system::rm(::aura::application * papp, const char * psz, bool bRecursive)
                //{
                //   UNREFERENCED_PARAMETER(psz);
                //   UNREFERENCED_PARAMETER(bRecursive);
-               //   throw interface_only_exception(get_app(), "this is an interface");
+               //   _throw(interface_only_exception(get_app(), "this is an interface"));
                //}
 
                //string system::name(const char * path1)
                //{
                //   UNREFERENCED_PARAMETER(path1);
-               //   throw interface_only_exception(get_app(), "this is an interface");
+               //   _throw(interface_only_exception(get_app(), "this is an interface"));
                //}
 
          ::file::path system::locale_schema(::aura::application * papp, const string & strLocale, const string & strSchema)
@@ -1468,476 +1468,479 @@ namespace file
 
          ::file::path system::matter(::aura::application * papp, const ::file::path & str, bool bDir, const ::file::path & root, const ::file::path & domain)
          {
-
-            ::aura::str_context * pcontext = Sess(papp).str_context();
-
-            string strLocale;
-
-            string strSchema;
-
-            ::file::path strLs;
-
-            ::file::path strPath;
-
-            ::file::path strFile;
-
-            ::file::patha straLs;
-
-            string strExistsQuestion;
-
-            if (root.has_char() && domain.has_char())
-            {
-
-               if (Session.m_bMatterFromHttpCache)
-               {
-
-                  ::file::patha patha;
-
-                  strLocale = pcontext->m_plocaleschema->m_idLocale;
-                  strSchema = pcontext->m_plocaleschema->m_idSchema;
-                  straLs = locale_schema_matter(papp, strLocale, strSchema, root, domain);
-
-                  strFile = System.dir().commonappdata() / "cache" / papp->m_paxissession->get_locale_schema_dir(strLocale, strSchema) / str + ".map_question";
-
-                  strsize iFind = strFile.find(DIR_SEPARATOR);
-
-                  if (iFind > 0)
-                  {
-
-                     strFile.replace(":", "_", iFind + 1);
-
-                  }
-
-                  strPath = Application.file().as_string(strFile);
-
-                  if (strPath.has_char())
-                  {
-                     // todo: keep cache timeout information;
-                     return strPath;
-                  }
-
-
-                  for (int k = 0; k < straLs.get_count(); k++)
-                  {
-
-                     strLs = straLs[k];
-
-                     patha.add(strLs / str);
-                  }
-
-                  for (int32_t i = 0; i < pcontext->localeschema().m_idaLocale.get_count(); i++)
-                  {
-                     strLocale = pcontext->localeschema().m_idaLocale[i];
-                     strSchema = pcontext->localeschema().m_idaSchema[i];
-                     straLs = locale_schema_matter(papp, strLocale, strSchema, root, domain);
-                     for (int k = 0; k < straLs.get_count(); k++)
-                     {
-
-                        strLs = straLs[k];
-
-                        patha.add(strLs / str);
-                     }
-                  }
-
-                  straLs = locale_schema_matter(papp, "en", "en");
-                  for (int k = 0; k < straLs.get_count(); k++)
-                  {
-
-                     strLs = straLs[k];
-
-                     patha.add(strLs / str);
-                  }
-
-                  property_set set(papp);
-
-                  set["raw_http"] = true;
-
-
-                  string strCandidate = patha.implode("|");
-
-                  string strParam = System.url().url_encode(strCandidate);
-
-                  if (bDir)
-                  {
-                     strPath = Sess(papp).http().get("http://" + get_api_cc() + "/api/matter/query_dir?candidate=" + strCandidate, set);
-                  }
-                  else
-                  {
-                     strPath = Sess(papp).http().get("http://" + get_api_cc() + "/api/matter/query_file?candidate=" + strCandidate, set);
-                  }
-
-                  strPath.trim();
-
-                  if (strPath.has_char())
-                     goto ret;
-
-               }
-
-               else
-
-               {
-
-                  strLocale = pcontext->m_plocaleschema->m_idLocale;
-                  strSchema = pcontext->m_plocaleschema->m_idSchema;
-                  straLs = locale_schema_matter(papp, strLocale, strSchema, root, domain);
-
-                  for (index l = 0; l < straLs.get_count(); l++)
-                  {
-                     strLs = straLs[l];
-
-                     strPath = strLs / str;
-                     if (bDir)
-                     {
-                        if (System.dir().is(strPath, papp))
-                           goto ret;
-                     }
-                     else
-                     {
-                        if (System.file().exists(strPath, papp))
-                           goto ret;
-                     }
-
-                  }
-
-
-                  for (int32_t i = 0; i < pcontext->localeschema().m_idaLocale.get_count(); i++)
-                  {
-
-                     strLocale = pcontext->localeschema().m_idaLocale[i];
-                     strSchema = pcontext->localeschema().m_idaSchema[i];
-                     straLs = locale_schema_matter(papp, strLocale, strSchema, root, domain);
-
-                     for (index l = 0; l < straLs.get_count(); l++)
-                     {
-                        strLs = straLs[l];
-
-                        strPath = strLs / str;
-                        if (bDir)
-                        {
-                           if (System.dir().is(strPath, papp))
-                              goto ret;
-                        }
-                        else
-                        {
-                           if (System.file().exists(strPath, papp))
-                              goto ret;
-                        }
-                     }
-
-                  }
-
-
-                  straLs = locale_schema_matter(papp, "en", "en", root, domain);
-
-                  for (index l = 0; l < straLs.get_count(); l++)
-                  {
-                     strLs = straLs[l];
-
-                     strPath = strLs / str;
-                     if (bDir)
-                     {
-                        if (System.dir().is(strPath, papp))
-                           goto ret;
-                     }
-                     else
-                     {
-                        if (System.file().exists(strPath, papp))
-                           goto ret;
-                     }
-                  }
-
-               }
-
-
-
-
-            }
-
-
-            if (Session.m_bMatterFromHttpCache)
-            {
-
-
-               ::file::patha patha;
-
-               strLocale = pcontext->m_plocaleschema->m_idLocale;
-               strSchema = pcontext->m_plocaleschema->m_idSchema;
-               straLs = locale_schema_matter(papp, strLocale, strSchema);
-
-               strFile = System.dir().commonappdata() / "cache" / papp->m_paxissession->get_locale_schema_dir(strLocale, strSchema) / str + ".map_question";
-
-               strsize iFind = strFile.find(DIR_SEPARATOR);
-
-               if (iFind > 0)
-               {
-
-                  strFile.replace(":", "_", iFind + 1);
-
-               }
-
-               strPath = Application.file().as_string(strFile);
-
-               if (strPath.has_char())
-               {
-                  // todo: keep cache timeout information;
-                  return strPath;
-               }
-
-
-               for (int k = 0; k < straLs.get_count(); k++)
-               {
-
-                  strLs = straLs[k];
-
-                  patha.add(strLs / str);
-
-               }
-
-               for (int32_t i = 0; i < pcontext->localeschema().m_idaLocale.get_count(); i++)
-               {
-                  strLocale = pcontext->localeschema().m_idaLocale[i];
-                  strSchema = pcontext->localeschema().m_idaSchema[i];
-                  straLs = locale_schema_matter(papp, strLocale, strSchema);
-                  for (int k = 0; k < straLs.get_count(); k++)
-                  {
-
-                     strLs = straLs[k];
-
-                     patha.add(strLs / str);
-                  }
-               }
-
-               straLs = locale_schema_matter(papp, "en", "en");
-               for (int k = 0; k < straLs.get_count(); k++)
-               {
-
-                  strLs = straLs[k];
-
-                  patha.add(strLs / str);
-               }
-
-               string strUrl;
-               
-               string strCandidate = patha.implode("|");
-
-               string strParam = System.url().url_encode(strCandidate);
-
-               if (bDir)
-               {
-                  strUrl = "https://ca2.cc/api/matter/query_dir?candidate=" + strParam;
-               }
-               else
-               {
-                  strUrl = "https://ca2.cc/api/matter/query_file?candidate=" + strParam;
-               }
-
-               property_set set(papp);
-
-               set["raw_http"] = true;
-               
-               output_debug_string("\n");
-               output_debug_string(strUrl);
-               output_debug_string("\n");
-
-               auto & http = App(papp).http();
-
-               strPath = http.get(strUrl, set);
-
-               strPath.trim();
-
-               if (strPath.has_char())
-                  goto ret;
-
-            }
-
-            else
-
-            {
-
-               strLocale = pcontext->m_plocaleschema->m_idLocale;
-               strSchema = pcontext->m_plocaleschema->m_idSchema;
-               straLs = locale_schema_matter(papp, strLocale, strSchema);
-
-               for (index l = 0; l < straLs.get_count(); l++)
-               {
-                  strLs = straLs[l];
-
-                  strPath = strLs / str;
-                  if (bDir)
-                  {
-                     if (System.dir().is(strPath, papp))
-                        goto ret;
-                  }
-                  else
-                  {
-                     if (System.file().exists(strPath, papp))
-                        goto ret;
-                  }
-
-               }
-
-
-               for (int32_t i = 0; i < pcontext->localeschema().m_idaLocale.get_count(); i++)
-               {
-
-                  strLocale = pcontext->localeschema().m_idaLocale[i];
-                  strSchema = pcontext->localeschema().m_idaSchema[i];
-                  straLs = locale_schema_matter(papp, strLocale, strSchema);
-
-                  for (index l = 0; l < straLs.get_count(); l++)
-                  {
-                     strLs = straLs[l];
-
-                     strPath = strLs / str;
-                     if (bDir)
-                     {
-                        if (System.dir().is(strPath, papp))
-                           goto ret;
-                     }
-                     else
-                     {
-                        if (System.file().exists(strPath, papp))
-                           goto ret;
-                     }
-
-                  }
-
-               }
-
-
-               straLs = locale_schema_matter(papp, "en", "en");
-
-               for (index l = 0; l < straLs.get_count(); l++)
-               {
-                  strLs = straLs[l];
-
-                  strPath = strLs / str;
-                  if (bDir)
-                  {
-                     if (System.dir().is(strPath, papp))
-                        goto ret;
-                  }
-                  else
-                  {
-                     if (System.file().exists(strPath, papp))
-                        goto ret;
-                  }
-
-               }
-
-
-               if (papp->m_paxissession != NULL && papp->m_paxissession != papp &&
-                  (sp(::aura::application)) papp->m_paxissystem != (sp(::aura::application)) papp
-                  && papp->m_paxissession->m_bAxisInitialize1)
-               {
-                  strPath = matter(papp->m_paxissession, str, bDir);
-                  if (bDir)
-                  {
-                     if (System.dir().is(strPath, papp))
-                        goto ret;
-                  }
-                  else
-                  {
-                     if (System.file().exists(strPath, papp))
-                        goto ret;
-                  }
-               }
-
-            }
-
-
-
-            if (papp->m_paxissystem != NULL && papp->m_paxissystem != papp &&
-               dynamic_cast < ::aura::application * >(papp->m_paxissystem) != dynamic_cast < ::aura::application * >(papp->m_paxissession)
-               && papp->m_paxissystem->m_bAxisInitialize1)
-            {
-               strPath = matter(papp->m_paxissystem, str, bDir);
-               if (bDir)
-               {
-                  if (System.dir().is(strPath, get_app()))
-                     goto ret;
-               }
-               else
-               {
-                  if (System.file().exists(strPath, get_app()))
-                     goto ret;
-               }
-
-            }
-
-            strPath = strLs / str;
-
-         ret:
-
-            if (Session.m_bMatterFromHttpCache)
-
-            {
-               Application.file().put_contents(strFile, strPath);
-
-               strFile = strPath;
-
-               strFile.replace(":", "_");
-               strFile.replace("//", "/");
-               strFile.replace("?", "%19");
-               strFile = System.dir().appdata() / "cache" / strFile + ".exists_question";
-
-               Application.file().put_contents(strFile, "yes");
-
-
-            }
-
-            return strPath;
-
-
-            /*static const string strEn("en");
-            //static const string strStd("_std");
-            //static const string strEmpty("");
-            string strPath;
-            string strLs = locale_schema_matter(papp, strEmpty, strEmpty);
-            strPath = strLs / str;
-            if(System.file().exists(strPath, papp))
-               return strPath;
-            strLs = locale_schema_matter(papp, strEn, strEmpty);
-            strPath = strLs / str;
-            if(System.file().exists(strPath, papp))
-               return strPath;
-            strPath = path(locale_schema_matter(papp, strStd, strEmpty), str);
-            if(System.file().exists(strPath, papp))
-               return strPath;
-            strPath = path(locale_schema_matter(papp, strEmpty, App(papp).get_locale()), str);
-            if(System.file().exists(strPath, papp))
-               return strPath;
-            strPath = path(locale_schema_matter(papp, strEmpty, strEn), str);
-            if(System.file().exists(strPath, papp))
-               return strPath;
-            strPath = path(locale_schema_matter(papp, strEmpty, strStd), str);
-            if(System.file().exists(strPath, papp))
-               return strPath;
-            strLs = locale_schema_matter(papp, strEn, strEn);
-            strPath = strLs / str;
-            if(System.file().exists(strPath, papp))
-               return strPath;
-            strPath = path(locale_schema_matter(papp, strStd, strStd), str);
-            if(System.file().exists(strPath, papp))
-               return strPath;
-            strPath = path(locale_schema_matter(papp, "se", "se"), str);
-            if(System.file().exists(strPath, papp))
-               return strPath;
-            if(papp->m_psession != NULL && papp->m_psession != papp &&
-               (sp(::aura::application)) papp->m_psystem != (sp(::aura::application)) papp)
-            {
-               strPath = matter(papp->m_psession, str);
-               if(System.file().exists(strPath, papp))
-                  return strPath;
-            }
-            if(papp->m_psystem != NULL && papp->m_psystem != papp &&
-               (sp(::aura::application)) papp->m_psystem != (sp(::aura::application)) papp->m_psession)
-            {
-               strPath = matter(papp->m_psystem, str);
-               if(System.file().exists(strPath, papp))
-                  return strPath;
-            }
-            return path(locale_schema_matter(papp, strEmpty, strEmpty), str);*/
+            
+            
+            return ::file::dir::system::matter(papp, str, bDir, root, domain);
+
+//            ::aura::str_context * pcontext = Sess(papp).str_context();
+//
+//            string strLocale;
+//
+//            string strSchema;
+//
+//            ::file::path strLs;
+//
+//            ::file::path strPath;
+//
+//            ::file::path strFile;
+//
+//            ::file::patha straLs;
+//
+//            string strExistsQuestion;
+//
+//            if (root.has_char() && domain.has_char())
+//            {
+//
+//               if (Session.m_bMatterFromHttpCache)
+//               {
+//
+//                  ::file::patha patha;
+//
+//                  strLocale = pcontext->m_plocaleschema->m_idLocale;
+//                  strSchema = pcontext->m_plocaleschema->m_idSchema;
+//                  straLs = locale_schema_matter(papp, strLocale, strSchema, root, domain);
+//
+//                  strFile = System.dir().commonappdata() / "cache" / papp->m_paxissession->get_locale_schema_dir(strLocale, strSchema) / str + ".map_question";
+//
+//                  strsize iFind = strFile.find(DIR_SEPARATOR);
+//
+//                  if (iFind > 0)
+//                  {
+//
+//                     strFile.replace(":", "_", iFind + 1);
+//
+//                  }
+//
+//                  strPath = Application.file().as_string(strFile);
+//
+//                  if (strPath.has_char())
+//                  {
+//                     // todo: keep cache timeout information;
+//                     return strPath;
+//                  }
+//
+//
+//                  for (int k = 0; k < straLs.get_count(); k++)
+//                  {
+//
+//                     strLs = straLs[k];
+//
+//                     patha.add(strLs / str);
+//                  }
+//
+//                  for (int32_t i = 0; i < pcontext->localeschema().m_idaLocale.get_count(); i++)
+//                  {
+//                     strLocale = pcontext->localeschema().m_idaLocale[i];
+//                     strSchema = pcontext->localeschema().m_idaSchema[i];
+//                     straLs = locale_schema_matter(papp, strLocale, strSchema, root, domain);
+//                     for (int k = 0; k < straLs.get_count(); k++)
+//                     {
+//
+//                        strLs = straLs[k];
+//
+//                        patha.add(strLs / str);
+//                     }
+//                  }
+//
+//                  straLs = locale_schema_matter(papp, "en", "en");
+//                  for (int k = 0; k < straLs.get_count(); k++)
+//                  {
+//
+//                     strLs = straLs[k];
+//
+//                     patha.add(strLs / str);
+//                  }
+//
+//                  property_set set(papp);
+//
+//                  set["raw_http"] = true;
+//
+//
+//                  string strCandidate = patha.implode("|");
+//
+//                  string strParam = System.url().url_encode(strCandidate);
+//
+//                  if (bDir)
+//                  {
+//                     strPath = Sess(papp).http().get("http://" + get_api_cc() + "/api/matter/query_dir?candidate=" + strCandidate, set);
+//                  }
+//                  else
+//                  {
+//                     strPath = Sess(papp).http().get("http://" + get_api_cc() + "/api/matter/query_file?candidate=" + strCandidate, set);
+//                  }
+//
+//                  strPath.trim();
+//
+//                  if (strPath.has_char())
+//                     goto ret;
+//
+//               }
+//
+//               else
+//
+//               {
+//
+//                  strLocale = pcontext->m_plocaleschema->m_idLocale;
+//                  strSchema = pcontext->m_plocaleschema->m_idSchema;
+//                  straLs = locale_schema_matter(papp, strLocale, strSchema, root, domain);
+//
+//                  for (index l = 0; l < straLs.get_count(); l++)
+//                  {
+//                     strLs = straLs[l];
+//
+//                     strPath = strLs / str;
+//                     if (bDir)
+//                     {
+//                        if (System.dir().is(strPath, papp))
+//                           goto ret;
+//                     }
+//                     else
+//                     {
+//                        if (System.file().exists(strPath, papp))
+//                           goto ret;
+//                     }
+//
+//                  }
+//
+//
+//                  for (int32_t i = 0; i < pcontext->localeschema().m_idaLocale.get_count(); i++)
+//                  {
+//
+//                     strLocale = pcontext->localeschema().m_idaLocale[i];
+//                     strSchema = pcontext->localeschema().m_idaSchema[i];
+//                     straLs = locale_schema_matter(papp, strLocale, strSchema, root, domain);
+//
+//                     for (index l = 0; l < straLs.get_count(); l++)
+//                     {
+//                        strLs = straLs[l];
+//
+//                        strPath = strLs / str;
+//                        if (bDir)
+//                        {
+//                           if (System.dir().is(strPath, papp))
+//                              goto ret;
+//                        }
+//                        else
+//                        {
+//                           if (System.file().exists(strPath, papp))
+//                              goto ret;
+//                        }
+//                     }
+//
+//                  }
+//
+//
+//                  straLs = locale_schema_matter(papp, "en", "en", root, domain);
+//
+//                  for (index l = 0; l < straLs.get_count(); l++)
+//                  {
+//                     strLs = straLs[l];
+//
+//                     strPath = strLs / str;
+//                     if (bDir)
+//                     {
+//                        if (System.dir().is(strPath, papp))
+//                           goto ret;
+//                     }
+//                     else
+//                     {
+//                        if (System.file().exists(strPath, papp))
+//                           goto ret;
+//                     }
+//                  }
+//
+//               }
+//
+//
+//
+//
+//            }
+//
+//
+//            if (Session.m_bMatterFromHttpCache)
+//            {
+//
+//
+//               ::file::patha patha;
+//
+//               strLocale = pcontext->m_plocaleschema->m_idLocale;
+//               strSchema = pcontext->m_plocaleschema->m_idSchema;
+//               straLs = locale_schema_matter(papp, strLocale, strSchema);
+//
+//               strFile = System.dir().commonappdata() / "cache" / papp->m_paxissession->get_locale_schema_dir(strLocale, strSchema) / str + ".map_question";
+//
+//               strsize iFind = strFile.find(DIR_SEPARATOR);
+//
+//               if (iFind > 0)
+//               {
+//
+//                  strFile.replace(":", "_", iFind + 1);
+//
+//               }
+//
+//               strPath = Application.file().as_string(strFile);
+//
+//               if (strPath.has_char())
+//               {
+//                  // todo: keep cache timeout information;
+//                  return strPath;
+//               }
+//
+//
+//               for (int k = 0; k < straLs.get_count(); k++)
+//               {
+//
+//                  strLs = straLs[k];
+//
+//                  patha.add(strLs / str);
+//
+//               }
+//
+//               for (int32_t i = 0; i < pcontext->localeschema().m_idaLocale.get_count(); i++)
+//               {
+//                  strLocale = pcontext->localeschema().m_idaLocale[i];
+//                  strSchema = pcontext->localeschema().m_idaSchema[i];
+//                  straLs = locale_schema_matter(papp, strLocale, strSchema);
+//                  for (int k = 0; k < straLs.get_count(); k++)
+//                  {
+//
+//                     strLs = straLs[k];
+//
+//                     patha.add(strLs / str);
+//                  }
+//               }
+//
+//               straLs = locale_schema_matter(papp, "en", "en");
+//               for (int k = 0; k < straLs.get_count(); k++)
+//               {
+//
+//                  strLs = straLs[k];
+//
+//                  patha.add(strLs / str);
+//               }
+//
+//               string strUrl;
+//
+//               string strCandidate = patha.implode("|");
+//
+//               string strParam = System.url().url_encode(strCandidate);
+//
+//               if (bDir)
+//               {
+//                  strUrl = "https://ca2.cc/api/matter/query_dir?candidate=" + strParam;
+//               }
+//               else
+//               {
+//                  strUrl = "https://ca2.cc/api/matter/query_file?candidate=" + strParam;
+//               }
+//
+//               property_set set(papp);
+//
+//               set["raw_http"] = true;
+//               
+//               output_debug_string("\n");
+//               output_debug_string(strUrl);
+//               output_debug_string("\n");
+//
+//               auto & http = App(papp).http();
+//
+//               strPath = http.get(strUrl, set);
+//
+//               strPath.trim();
+//
+//               if (strPath.has_char())
+//                  goto ret;
+//
+//            }
+//
+//            else
+//
+//            {
+//
+//               strLocale = pcontext->m_plocaleschema->m_idLocale;
+//               strSchema = pcontext->m_plocaleschema->m_idSchema;
+//               straLs = locale_schema_matter(papp, strLocale, strSchema);
+//
+//               for (index l = 0; l < straLs.get_count(); l++)
+//               {
+//                  strLs = straLs[l];
+//
+//                  strPath = strLs / str;
+//                  if (bDir)
+//                  {
+//                     if (System.dir().is(strPath, papp))
+//                        goto ret;
+//                  }
+//                  else
+//                  {
+//                     if (System.file().exists(strPath, papp))
+//                        goto ret;
+//                  }
+//
+//               }
+//
+//
+//               for (int32_t i = 0; i < pcontext->localeschema().m_idaLocale.get_count(); i++)
+//               {
+//
+//                  strLocale = pcontext->localeschema().m_idaLocale[i];
+//                  strSchema = pcontext->localeschema().m_idaSchema[i];
+//                  straLs = locale_schema_matter(papp, strLocale, strSchema);
+//
+//                  for (index l = 0; l < straLs.get_count(); l++)
+//                  {
+//                     strLs = straLs[l];
+//
+//                     strPath = strLs / str;
+//                     if (bDir)
+//                     {
+//                        if (System.dir().is(strPath, papp))
+//                           goto ret;
+//                     }
+//                     else
+//                     {
+//                        if (System.file().exists(strPath, papp))
+//                           goto ret;
+//                     }
+//
+//                  }
+//
+//               }
+//
+//
+//               straLs = locale_schema_matter(papp, "en", "en");
+//
+//               for (index l = 0; l < straLs.get_count(); l++)
+//               {
+//                  strLs = straLs[l];
+//
+//                  strPath = strLs / str;
+//                  if (bDir)
+//                  {
+//                     if (System.dir().is(strPath, papp))
+//                        goto ret;
+//                  }
+//                  else
+//                  {
+//                     if (System.file().exists(strPath, papp))
+//                        goto ret;
+//                  }
+//
+//               }
+//
+//
+//               if (papp->m_paxissession != NULL && papp->m_paxissession != papp &&
+//                  (sp(::aura::application)) papp->m_paxissystem != (sp(::aura::application)) papp
+//                  && papp->m_paxissession->m_bAxisInitialize1)
+//               {
+//                  strPath = matter(papp->m_paxissession, str, bDir);
+//                  if (bDir)
+//                  {
+//                     if (System.dir().is(strPath, papp))
+//                        goto ret;
+//                  }
+//                  else
+//                  {
+//                     if (System.file().exists(strPath, papp))
+//                        goto ret;
+//                  }
+//               }
+//
+//            }
+//
+//
+//
+//            if (papp->m_paxissystem != NULL && papp->m_paxissystem != papp &&
+//               dynamic_cast < ::aura::application * >(papp->m_paxissystem) != dynamic_cast < ::aura::application * >(papp->m_paxissession)
+//               && papp->m_paxissystem->m_bAxisInitialize1)
+//            {
+//               strPath = matter(papp->m_paxissystem, str, bDir);
+//               if (bDir)
+//               {
+//                  if (System.dir().is(strPath, get_app()))
+//                     goto ret;
+//               }
+//               else
+//               {
+//                  if (System.file().exists(strPath, get_app()))
+//                     goto ret;
+//               }
+//
+//            }
+//
+//            strPath = strLs / str;
+//
+//         ret:
+//
+//            if (Session.m_bMatterFromHttpCache)
+//
+//            {
+//               Application.file().put_contents(strFile, strPath);
+//
+//               strFile = strPath;
+//
+//               strFile.replace(":", "_");
+//               strFile.replace("//", "/");
+//               strFile.replace("?", "%19");
+//               strFile = System.dir().appdata() / "cache" / strFile + ".exists_question";
+//
+//               Application.file().put_contents(strFile, "yes");
+//
+//
+//            }
+//
+//            return strPath;
+//
+//
+//            /*static const string strEn("en");
+//            //static const string strStd("_std");
+//            //static const string strEmpty("");
+//            string strPath;
+//            string strLs = locale_schema_matter(papp, strEmpty, strEmpty);
+//            strPath = strLs / str;
+//            if(System.file().exists(strPath, papp))
+//               return strPath;
+//            strLs = locale_schema_matter(papp, strEn, strEmpty);
+//            strPath = strLs / str;
+//            if(System.file().exists(strPath, papp))
+//               return strPath;
+//            strPath = path(locale_schema_matter(papp, strStd, strEmpty), str);
+//            if(System.file().exists(strPath, papp))
+//               return strPath;
+//            strPath = path(locale_schema_matter(papp, strEmpty, App(papp).get_locale()), str);
+//            if(System.file().exists(strPath, papp))
+//               return strPath;
+//            strPath = path(locale_schema_matter(papp, strEmpty, strEn), str);
+//            if(System.file().exists(strPath, papp))
+//               return strPath;
+//            strPath = path(locale_schema_matter(papp, strEmpty, strStd), str);
+//            if(System.file().exists(strPath, papp))
+//               return strPath;
+//            strLs = locale_schema_matter(papp, strEn, strEn);
+//            strPath = strLs / str;
+//            if(System.file().exists(strPath, papp))
+//               return strPath;
+//            strPath = path(locale_schema_matter(papp, strStd, strStd), str);
+//            if(System.file().exists(strPath, papp))
+//               return strPath;
+//            strPath = path(locale_schema_matter(papp, "se", "se"), str);
+//            if(System.file().exists(strPath, papp))
+//               return strPath;
+//            if(papp->m_psession != NULL && papp->m_psession != papp &&
+//               (sp(::aura::application)) papp->m_psystem != (sp(::aura::application)) papp)
+//            {
+//               strPath = matter(papp->m_psession, str);
+//               if(System.file().exists(strPath, papp))
+//                  return strPath;
+//            }
+//            if(papp->m_psystem != NULL && papp->m_psystem != papp &&
+//               (sp(::aura::application)) papp->m_psystem != (sp(::aura::application)) papp->m_psession)
+//            {
+//               strPath = matter(papp->m_psystem, str);
+//               if(System.file().exists(strPath, papp))
+//                  return strPath;
+//            }
+//            return path(locale_schema_matter(papp, strEmpty, strEmpty), str);*/
          }
 
          //string system::matter(::aura::application * papp, const char * psz, bool bDir, const char * pszRoot, const char * pszApp)
@@ -2306,25 +2309,25 @@ namespace file
 
          //class ::file::path & system::path()
          //{
-         //   throw interface_only_exception(get_app(), "this is an interface");
+         //   _throw(interface_only_exception(get_app(), "this is an interface"));
          //}
 
          //bool system::initialize()
          //{
-         //   throw interface_only_exception(get_app(), "this is an interface");
+         //   _throw(interface_only_exception(get_app(), "this is an interface"));
          //}
 
          //string system::trash_that_is_not_trash(const char * lpcsz)
          //{
          //   UNREFERENCED_PARAMETER(lpcsz);
-         //   throw interface_only_exception(get_app(), "this is an interface");
+         //   _throw(interface_only_exception(get_app(), "this is an interface"));
          //}
 
          //string system::appdata(const char * lpcsz, const char * lpcsz2)
          //{
          //   UNREFERENCED_PARAMETER(lpcsz);
          //   UNREFERENCED_PARAMETER(lpcsz2);
-         //   throw interface_only_exception(get_app(), "this is an interface");
+         //   _throw(interface_only_exception(get_app(), "this is an interface"));
          //}
 
 
@@ -2375,7 +2378,7 @@ namespace file
          //   UNREFERENCED_PARAMETER(lpcszPrefix);
          //   UNREFERENCED_PARAMETER(lpcsz);
          //   UNREFERENCED_PARAMETER(lpcsz2);
-         //   throw interface_only_exception(get_app(), "this is an interface");
+         //   _throw(interface_only_exception(get_app(), "this is an interface"));
          //}
 
          //string system::userappdata(::aura::application * papp, const char * lpcsz, const char * lpcsz2)
@@ -2383,7 +2386,7 @@ namespace file
          //   UNREFERENCED_PARAMETER(papp);
          //   UNREFERENCED_PARAMETER(lpcsz);
          //   UNREFERENCED_PARAMETER(lpcsz2);
-         //   throw interface_only_exception(get_app(), "this is an interface");
+         //   _throw(interface_only_exception(get_app(), "this is an interface"));
          //}
 
          //string system::userdata(::aura::application * papp, const char * lpcsz, const char * lpcsz2)
@@ -2391,7 +2394,7 @@ namespace file
          //   UNREFERENCED_PARAMETER(papp);
          //   UNREFERENCED_PARAMETER(lpcsz);
          //   UNREFERENCED_PARAMETER(lpcsz2);
-         //   throw interface_only_exception(get_app(), "this is an interface");
+         //   _throw(interface_only_exception(get_app(), "this is an interface"));
          //}
 
          //string system::userfolder(::aura::application * papp, const char * lpcsz, const char * lpcsz2)
@@ -2399,13 +2402,13 @@ namespace file
          //   UNREFERENCED_PARAMETER(papp);
          //   UNREFERENCED_PARAMETER(lpcsz);
          //   UNREFERENCED_PARAMETER(lpcsz2);
-         //   throw interface_only_exception(get_app(), "this is an interface");
+         //   _throw(interface_only_exception(get_app(), "this is an interface"));
          //}
 
          //string system::default_os_user_path_prefix(::aura::application * papp)
          //{
          //   UNREFERENCED_PARAMETER(papp);
-         //   throw interface_only_exception(get_app(), "this is an interface");
+         //   _throw(interface_only_exception(get_app(), "this is an interface"));
          //}
 
          //string system::default_userappdata(::aura::application * papp, const char * lpcszPrefix, const char * lpcszLogin, const char * pszRelativePath)
@@ -2414,7 +2417,7 @@ namespace file
          //   UNREFERENCED_PARAMETER(lpcszPrefix);
          //   UNREFERENCED_PARAMETER(lpcszLogin);
          //   UNREFERENCED_PARAMETER(pszRelativePath);
-         //   throw interface_only_exception(get_app(), "this is an interface");
+         //   _throw(interface_only_exception(get_app(), "this is an interface"));
          //}
 
          //string system::default_userdata(::aura::application * papp, const char * lpcszPrefix, const char * lpcszLogin, const char * pszRelativePath)
@@ -2423,7 +2426,7 @@ namespace file
          //   UNREFERENCED_PARAMETER(lpcszPrefix);
          //   UNREFERENCED_PARAMETER(lpcszLogin);
          //   UNREFERENCED_PARAMETER(pszRelativePath);
-         //   throw interface_only_exception(get_app(), "this is an interface");
+         //   _throw(interface_only_exception(get_app(), "this is an interface"));
          //}
 
          //string system::default_userfolder(::aura::application * papp, const char * lpcszPrefix, const char * lpcszLogin, const char * pszRelativePath)
@@ -2432,7 +2435,7 @@ namespace file
          //   UNREFERENCED_PARAMETER(lpcszPrefix);
          //   UNREFERENCED_PARAMETER(lpcszLogin);
          //   UNREFERENCED_PARAMETER(pszRelativePath);
-         //   throw interface_only_exception(get_app(), "this is an interface");
+         //   _throw(interface_only_exception(get_app(), "this is an interface"));
          //}
 
          //string system::userquicklaunch(::aura::application * papp, const char * lpcszRelativePath, const char * lpcsz2)
@@ -2440,7 +2443,7 @@ namespace file
          //   UNREFERENCED_PARAMETER(papp);
          //   UNREFERENCED_PARAMETER(lpcszRelativePath);
          //   UNREFERENCED_PARAMETER(lpcsz2);
-         //   throw interface_only_exception(get_app(), "this is an interface");
+         //   _throw(interface_only_exception(get_app(), "this is an interface"));
          //}
 
          //string system::userprograms(::aura::application * papp, const char * lpcsz, const char * lpcsz2)
@@ -2448,27 +2451,27 @@ namespace file
          //   UNREFERENCED_PARAMETER(papp);
          //   UNREFERENCED_PARAMETER(lpcsz);
          //   UNREFERENCED_PARAMETER(lpcsz2);
-         //   throw interface_only_exception(get_app(), "this is an interface");
+         //   _throw(interface_only_exception(get_app(), "this is an interface"));
          //}
 
          //string system::commonprograms(const char * lpcsz, const char * lpcsz2)
          //{
          //   UNREFERENCED_PARAMETER(lpcsz);
          //   UNREFERENCED_PARAMETER(lpcsz2);
-         //   throw interface_only_exception(get_app(), "this is an interface");
+         //   _throw(interface_only_exception(get_app(), "this is an interface"));
          //}
 
          //bool system::is_inside_time(const char * pszPath, ::aura::application * papp)
          //{
          //   UNREFERENCED_PARAMETER(pszPath);
-         //   throw interface_only_exception(get_app(), "this is an interface");
+         //   _throw(interface_only_exception(get_app(), "this is an interface"));
          //}
 
          //bool system::is_inside(const char * pszDir, const char * pszPath, ::aura::application * papp)
          //{
          //   UNREFERENCED_PARAMETER(pszDir);
          //   UNREFERENCED_PARAMETER(pszPath);
-         //   throw interface_only_exception(get_app(), "this is an interface");
+         //   _throw(interface_only_exception(get_app(), "this is an interface"));
          //}
 
          //string system::pathfind(const char * pszEnv, const char * pszTopic, const char * pszMode, ::aura::application * papp)

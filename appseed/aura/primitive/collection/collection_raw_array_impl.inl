@@ -75,7 +75,7 @@ inline ::count raw_array < TYPE, ARG_TYPE, ALLOCATOR >::remove_all()
 
 template<class TYPE, class ARG_TYPE, class ALLOCATOR >
 void raw_array < TYPE, ARG_TYPE, ALLOCATOR >::
-   clear()
+clear()
 {
    remove_all();
 }
@@ -92,14 +92,14 @@ inline TYPE& raw_array < TYPE, ARG_TYPE, ALLOCATOR >::get_at(index nIndex)
 {
    //   if(nIndex >= 0 && nIndex < m_nSize)
    return get_data()[nIndex];
-   //   throw invalid_argument_exception(get_app());
+   //   _throw(invalid_argument_exception(get_app()));
 }
 template<class TYPE, class ARG_TYPE, class ALLOCATOR >
 inline const TYPE& raw_array < TYPE, ARG_TYPE, ALLOCATOR >::get_at(index nIndex) const
 {
    //   if(nIndex >= 0 && nIndex < m_nSize)
    return get_data()[nIndex];
-   // throw invalid_argument_exception(get_app());
+   // _throw(invalid_argument_exception(get_app()));
 }
 template<class TYPE, class ARG_TYPE, class ALLOCATOR >
 inline void raw_array < TYPE, ARG_TYPE, ALLOCATOR >::set_at(index nIndex, ARG_TYPE newElement)
@@ -107,7 +107,7 @@ inline void raw_array < TYPE, ARG_TYPE, ALLOCATOR >::set_at(index nIndex, ARG_TY
    //   if(nIndex >= 0 && nIndex < m_nSize)
    get_data()[nIndex] = newElement;
    // else
-   //  throw invalid_argument_exception(get_app());
+   //  _throw(invalid_argument_exception(get_app()));
 }
 
 
@@ -151,11 +151,11 @@ inline index raw_array < TYPE, ARG_TYPE, ALLOCATOR >::add_new(::count count)
 template<class TYPE, class ARG_TYPE, class ALLOCATOR >
 inline TYPE & raw_array < TYPE, ARG_TYPE, ALLOCATOR >::add_new()
 {
-   
+
    this->allocate(this->m_nSize + 1);
-   
+
    return this->last();
-   
+
 }
 
 
@@ -197,18 +197,18 @@ inline void raw_array < TYPE, ARG_TYPE, ALLOCATOR >::push_back(ARG_TYPE newEleme
 template<class TYPE, class ARG_TYPE, class ALLOCATOR >
 inline const TYPE& raw_array < TYPE, ARG_TYPE, ALLOCATOR >::operator[](index nIndex) const
 {
-   
+
    return this->element_at(nIndex);
-   
+
 }
 
 
 template<class TYPE, class ARG_TYPE, class ALLOCATOR >
 inline TYPE& raw_array < TYPE, ARG_TYPE, ALLOCATOR >::operator[](index nIndex)
 {
-   
+
    return this->element_at(nIndex);
-   
+
 }
 
 
@@ -236,13 +236,13 @@ inline raw_array < TYPE, ARG_TYPE, ALLOCATOR > & raw_array < TYPE, ARG_TYPE, ALL
 
 template<class TYPE, class ARG_TYPE, class ALLOCATOR >
 raw_array < TYPE, ARG_TYPE, ALLOCATOR >::raw_array(::aura::application * papp, ::count nGrowBy) :
-object(papp),
-array_base < TYPE, ARG_TYPE, ALLOCATOR > (papp)
+   object(papp),
+   array_base < TYPE, ARG_TYPE, ALLOCATOR > (papp)
 {
 }
 
 template<class TYPE,class ARG_TYPE,class ALLOCATOR >
-inline raw_array < TYPE,ARG_TYPE,ALLOCATOR >::raw_array(::std::initializer_list < TYPE >  l) 
+inline raw_array < TYPE,ARG_TYPE,ALLOCATOR >::raw_array(::std::initializer_list < TYPE >  l)
 {
    forallref(l)
    {
@@ -254,14 +254,14 @@ inline raw_array < TYPE,ARG_TYPE,ALLOCATOR >::raw_array(::std::initializer_list 
 
 template<class TYPE, class ARG_TYPE, class ALLOCATOR >
 raw_array < TYPE, ARG_TYPE, ALLOCATOR >::raw_array(const raw_array <TYPE, ARG_TYPE, ALLOCATOR> & a) :
-object(a.get_app())
+   object(a.get_app())
 {
    ::array_base < TYPE, ARG_TYPE, ALLOCATOR >::operator = (a);
 }
 
 template<class TYPE, class ARG_TYPE, class ALLOCATOR >
 raw_array < TYPE,ARG_TYPE,ALLOCATOR >::raw_array(raw_array <TYPE,ARG_TYPE,ALLOCATOR> && a):
-object(a.get_app())
+   object(a.get_app())
 {
 
    this->m_nGrowBy = a.m_nGrowBy;
@@ -293,16 +293,16 @@ raw_array < TYPE, ARG_TYPE, ALLOCATOR >::raw_array(ARG_TYPE t, ::count n)
 template<class TYPE, class ARG_TYPE, class ALLOCATOR >
 raw_array < TYPE, ARG_TYPE, ALLOCATOR >::raw_array(TYPE * ptypea, ::count n)
 {
-   
+
    this->allocate(n);
-   
+
    for(int i = 0; i < n; i++)
    {
-      
+
       this->element_at(i) = ptypea[i];
-      
+
    }
-   
+
 }
 
 
@@ -365,7 +365,7 @@ raw_array < TYPE, ARG_TYPE, ALLOCATOR >::~raw_array()
 //   ASSERT(nNewSize >= 0);
 //
 //   if(nNewSize < 0 )
-//      throw invalid_argument_exception(get_app());
+//      _throw(invalid_argument_exception(get_app()));
 //
 //   if (nGrowBy >= 0)
 //      m_nGrowBy = nGrowBy;  // set new size
@@ -388,7 +388,7 @@ raw_array < TYPE, ARG_TYPE, ALLOCATOR >::~raw_array()
 //      // m_nGrowBy elements, whichever is larger.
 //#ifdef SIZE_T_MAX
 //      if(nNewSize > SIZE_T_MAX/sizeof(TYPE))
-//         throw memory_exception(get_app());
+//         _throw(memory_exception(get_app()));
 //      ASSERT(nNewSize <= SIZE_T_MAX/sizeof(TYPE));    // no overflow
 //#endif
 //      ::count nAllocSize = MAX(nNewSize, m_nGrowBy);
@@ -441,7 +441,7 @@ raw_array < TYPE, ARG_TYPE, ALLOCATOR >::~raw_array()
 //      ASSERT(nNewMax >= m_nMaxSize);  // no wrap around
 //
 //      if(nNewMax  < m_nMaxSize)
-//         throw invalid_argument_exception(get_app());
+//         _throw(invalid_argument_exception(get_app()));
 //
 //#ifdef SIZE_T_MAX
 //      ASSERT(nNewMax <= SIZE_T_MAX/sizeof(TYPE)); // no overflow
@@ -506,7 +506,7 @@ void raw_array < TYPE, ARG_TYPE, ALLOCATOR >::set_at_grow(index nIndex, ARG_TYPE
    //ASSERT(nIndex >= 0);
 
    if(nIndex < 0)
-      throw invalid_argument_exception(this->get_app());
+      _throw(invalid_argument_exception(this->get_app()));
 
    if (nIndex >= this->m_nSize)
       this->allocate(nIndex+1, -1);
@@ -532,7 +532,7 @@ inline TYPE & raw_array < TYPE, ARG_TYPE, ALLOCATOR >::element_at_grow(index nIn
 template<class TYPE, class ARG_TYPE, class ALLOCATOR >
 index raw_array < TYPE, ARG_TYPE, ALLOCATOR >::insert_at(index nIndex, ARG_TYPE newElement, ::count nCount /*=1*/)
 {
-   
+
    return array_base < TYPE, ARG_TYPE, ALLOCATOR >::insert_at(nIndex, newElement,nCount);
 
 }
@@ -547,7 +547,7 @@ index raw_array < TYPE, ARG_TYPE, ALLOCATOR >::insert_at(index nIndex, ARG_TYPE 
 //   ASSERT(nStartIndex >= 0);
 //
 //   if(pNewArray == NULL || nStartIndex < 0)
-//      throw invalid_argument_exception(get_app());
+//      _throw(invalid_argument_exception(get_app()));
 //
 //   if (pNewArray->get_size() > 0)
 //   {
@@ -594,6 +594,7 @@ void raw_array < TYPE, ARG_TYPE, ALLOCATOR >::assert_valid() const
       ASSERT(__is_valid_address(this->m_pData, this->m_nMaxSize * sizeof(TYPE)));
    }
 }
+
 
 template<class TYPE, class ARG_TYPE, class ALLOCATOR >
 typename raw_array < TYPE, ARG_TYPE, ALLOCATOR >::iterator raw_array < TYPE, ARG_TYPE, ALLOCATOR >::erase(iterator pos)
@@ -700,7 +701,7 @@ template<class TYPE, class ARG_TYPE, class ALLOCATOR >
 inline raw_array < TYPE, ARG_TYPE, ALLOCATOR > & raw_array < TYPE, ARG_TYPE, ALLOCATOR >::operator =(raw_array && a)
 {
 
-	return move(::move(a));
+   return move(::move(a));
 
 }
 
@@ -712,20 +713,20 @@ template<class TYPE, class ARG_TYPE, class ALLOCATOR >
 inline raw_array < TYPE, ARG_TYPE, ALLOCATOR > & raw_array < TYPE, ARG_TYPE, ALLOCATOR >::move(raw_array && a)
 {
 
-	if (&a != this)
-	{
-		this->destroy();
+   if (&a != this)
+   {
+      this->destroy();
 
-		this->m_nGrowBy = a.m_nGrowBy;
-		this->m_pData = a.m_pData;
-		this->m_nSize = a.m_nSize;
-		this->m_nMaxSize = a.m_nMaxSize;
+      this->m_nGrowBy = a.m_nGrowBy;
+      this->m_pData = a.m_pData;
+      this->m_nSize = a.m_nSize;
+      this->m_nMaxSize = a.m_nMaxSize;
 
-		a.m_pData = NULL;
+      a.m_pData = NULL;
 
-	}
+   }
 
-	return *this;
+   return *this;
 
 }
 

@@ -274,7 +274,7 @@ CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (sp(::aura
       {
          pTemp = pfnAllocator(papp, h);
          if (pTemp == NULL)
-            throw memory_exception(get_app());
+            _throw(memory_exception(get_app()));
       }
       else
       {
@@ -282,7 +282,7 @@ CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (sp(::aura
    //      ASSERT((UINT)m_pClass->m_nObjectSize == m_alloc.GetAllocSize());
          pTemp = (CT*)m_alloc.Alloc();
          if (pTemp == NULL)
-            throw memory_exception(get_app());
+            _throw(memory_exception(get_app()));
 
          // now construct the object in place
          ASSERT(m_pfnConstructObject != NULL);

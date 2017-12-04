@@ -1,5 +1,5 @@
-#include "framework.h" // from "axis/net/net_sockets.h"
-//#include "axis/net/net_sockets.h"
+﻿#include "framework.h"
+#include "fs_net.h"
 
 
 ifs::ifs(::aura::application * papp, const char * pszRoot) :
@@ -126,7 +126,7 @@ bool ifs::has_subdir(const ::file::path & path)
       if(str == "You have not logged in! Exiting!")
       {
 
-         throw string("uifs:// You have not logged in!");
+         _throw(simple_exception(get_app(), "uifs:// You have not logged in!"));
 
       }
 

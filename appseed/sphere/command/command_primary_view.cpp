@@ -155,7 +155,7 @@ namespace prompt
 
 #else
 
-                  throw todo(get_app());
+                  _throw(todo(get_app()));
 
 #endif
 

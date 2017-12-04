@@ -101,7 +101,7 @@ namespace aura
 
       set_os_data(NULL);
 
-      return m_iReturnCode;
+      return m_iErrorCode;
 
    }
 

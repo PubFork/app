@@ -26,7 +26,7 @@ namespace sockets
    {
 
       m_bEnablePool = false;
-      m_strProtocol                 = protocol,
+      m_strProtocol                 = protocol;
       m_host                        = host;
 
       inattr(__id(http_protocol))   = protocol;

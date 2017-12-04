@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 template < typename T >
@@ -29,20 +29,21 @@ private:
    ::Windows::Foundation::IAsyncOperation < T > ^     m_operation;
    ::Windows::Foundation::AsyncStatus                 m_status;
    T                                                  m_result;
+   HRESULT                                            m_hresult;
 
 
 public:
 
 
    waiter_for_Windows_Foundation_IAsyncOperation(::Windows::Foundation::IAsyncOperation < T > ^ operation, CallbackContext callbackcontext = CallbackContext::Any) :
-      m_event(get_thread_app())
+      m_event(get_app())
    {
 
       m_operation             = operation;
 
       m_operation->Completed  = ref new ::Windows::Foundation::AsyncOperationCompletedHandler < T > ([this](::Windows::Foundation::IAsyncOperation < T > ^ operation, ::Windows::Foundation::AsyncStatus status)
       {
-      
+
          m_status = status;
 
          m_event.set_event();
@@ -56,15 +57,21 @@ public:
    {
 
    }
-   
-   
+
+
    T wait(unsigned int dwMillis = INFINITE, ::Windows::Foundation::AsyncStatus * pstatus = NULL)
    {
 
       m_event.wait(millis(dwMillis));
 
-      if(pstatus != NULL)
+      if (pstatus != NULL)
+      {
+
          *pstatus = m_status;
+
+      }
+
+      m_hresult = m_operation->ErrorCode.Value;
 
       if(m_status == ::Windows::Foundation::AsyncStatus::Completed)
       {
@@ -84,13 +91,13 @@ public:
       }
 
    }
-   
+
 internal:
 
    template < typename PRED >
    void wait(PRED pred,unsigned int dwMillis = INFINITE, ::Windows::Foundation::AsyncStatus * pstatus = NULL)
    {
-      
+
       pred(wait(dwMillis, pstatus));
 
    }
@@ -115,7 +122,7 @@ public:
 
 
    waiter_for_Windows_Foundation_IAsyncOperationWithProgress(::Windows::Foundation::IAsyncOperationWithProgress < T, T2 > ^ operation, CallbackContext callbackcontext = CallbackContext::Any) :
-      m_event(get_thread_app())
+      m_event(get_app())
    {
 
       m_operation = operation;
@@ -181,7 +188,7 @@ public:
 
 
    waiter_for_Windows_Foundation_IAsyncAction(::Windows::Foundation::IAsyncAction ^ action, CallbackContext callbackcontext = CallbackContext::Any) :
-      m_event(get_thread_app())
+      m_event(get_app())
    {
 
       m_action                = action;
@@ -258,9 +265,9 @@ inline void wait_then(::Windows::Foundation::IAsyncOperation < T > ^ operation, 
 template < typename T >
 inline T wait(::Windows::Foundation::IAsyncOperation < T > ^ operation, DWORD dwMillis = INFINITE, ::Windows::Foundation::AsyncStatus * pstatus = NULL, CallbackContext callbackcontext = CallbackContext::Any)
 {
-   
+
    waiter_for_Windows_Foundation_IAsyncOperation < T > waiter(operation, callbackcontext);
-      
+
    return waiter.wait(dwMillis, pstatus);
 
 }
@@ -279,64 +286,14 @@ inline T wait(::Windows::Foundation::IAsyncOperationWithProgress < T, T2 > ^ ope
 
 inline ::Windows::Foundation::AsyncStatus wait(::Windows::Foundation::IAsyncAction ^ action,  DWORD dwMillis = INFINITE, CallbackContext callbackcontext = CallbackContext::Any)
 {
-   
+
    ::Windows::Foundation::AsyncStatus status;
-   
+
    waiter_for_Windows_Foundation_IAsyncAction waiter(action, callbackcontext);
-   
+
    waiter.wait(dwMillis, &status);
 
    return status;
 
 }
-
-
-
-//class CLASS_DECL_AURA mq
-//{
-//public:
-//
-//   mutex                      m_mutex;
-//   message_array              ma;
-//   manual_reset_event         m_eventNewMessage;
-//
-//   mq() : m_eventNewMessage(get_thread_app()) {}
-//
-//
-//
-//};
-
-//CLASS_DECL_AURA mq * __get_mq(HTHREAD h);
-
-
-
-// Stored data for CREATE_SUSPENDED and ResumeThread.
-//struct PendingThreadInfo
-//{
-//
-//
-//   LPTHREAD_START_ROUTINE       m_pfn;
-//   void *            m_pv;
-//   event *           m_peventCompletion;
-//   event *           m_peventSuspension;
-//   HTHREAD           m_hthread;
-//   int               m_iPriority;
-//
-//
-//   PendingThreadInfo()
-//   {
-//
-//      m_peventSuspension = NULL;
-//      m_peventCompletion = NULL;
-//
-//   }
-//
-//
-//};
-//
-//
-//CLASS_DECL_AURA IDWriteFactory * global_draw_get_write_factory();
-//
-//CLASS_DECL_AURA ID2D1Factory1 * get_d2d1_factory1();
-
 

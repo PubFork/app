@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "framework.h"
 
 
@@ -11,7 +11,7 @@ namespace filemanager
       object(papp),
       simple_list_view(papp)
    {
-   
+
       m_bRecursive = true;
 
    }
@@ -23,34 +23,40 @@ namespace filemanager
 
    void folder_list_view::install_message_routing(::message::sender * psender)
    {
-      
+
       ::filemanager::impact::install_message_routing(psender);
       ::simple_list_view::install_message_routing(psender);
-      
+
    }
-   
-   void folder_list_view::Initialize(::database::id  datakey,bool bRecursive)
+
+   void folder_list_view::initialize(string strDataKeyModifier,bool bRecursive)
    {
-      
+
+      set_data_key_modifier(strDataKeyModifier);
+
       m_bRecursive = bRecursive;
-      
-      m_dataid = datakey + ".ListView";
 
       if(bRecursive)
       {
-         
-         SetDataInterface(canew(folder_list_data(get_app())));
-         sp(folder_list_data) pdata = m_pmeshdata.cast <folder_list_data > ();
-         pdata->m_dataid = datakey;
+
+         sp(folder_list_data) pdata = canew(folder_list_data(get_app()));
+
+         SetDataInterface(pdata);
+
+         pdata->set_data_key_modifier(strDataKeyModifier);
+
          pdata->initialize_data_client(&Application.dataserver());
 
       }
       else
       {
-      
-         SetDataInterface(canew(databaseuser::data_key_mesh_data(get_app())));
-         sp(databaseuser::data_key_mesh_data) pdata = m_pmeshdata.cast  < ::databaseuser::data_key_mesh_data >();
-         pdata->m_dataid = datakey;
+
+         sp(databaseuser::data_key_mesh_data) pdata = canew(databaseuser::data_key_mesh_data(get_app()));
+
+         SetDataInterface(pdata);
+
+         pdata->set_data_key_modifier(strDataKeyModifier);
+
          pdata->initialize_data_client(&Application.dataserver());
 
       }
@@ -61,6 +67,12 @@ namespace filemanager
 
    }
 
+   string folder_list_view::calc_data_id()
+   {
+
+      return ::database::client::calc_data_id() + "." + m_strDataKeyModifier;
+
+   }
 
    void folder_list_view::_001InsertColumns()
    {
@@ -82,9 +94,9 @@ namespace filemanager
 
    bool folder_list_view::add_unique(const stringa & stra)
    {
-      
+
       if(m_bRecursive)
-         throw "incorrect usage of this class object";
+         _throw(simple_exception(get_app(), "incorrect usage of this class object"));
 
       if(stra.get_size() == 0)
          return true;
@@ -103,9 +115,9 @@ namespace filemanager
 
    bool folder_list_view::add_unique(const stringa & stra,bool_array & baRecursive)
    {
-      
+
       if(!m_bRecursive)
-         throw "incorrect usage of this class object";
+         _throw(simple_exception(get_app(), "incorrect usage of this class object"));
 
       if(stra.get_size() == 0)
          return true;
@@ -124,13 +136,13 @@ namespace filemanager
 
    bool folder_list_view::remove(const stringa & stra)
    {
-      
+
       if(stra.get_size() == 0)
          return true;
 
       if(m_bRecursive)
       {
-         
+
          sp(folder_list_data) pdata = m_pmeshdata.cast <folder_list_data >();
 
          if(!pdata->remove(stra))
@@ -139,7 +151,7 @@ namespace filemanager
       }
       else
       {
-         
+
          sp(databaseuser::data_key_mesh_data) pdata = m_psimplemeshdata.cast <databaseuser::data_key_mesh_data > ();
 
          if(!pdata->remove(stra))
@@ -156,17 +168,17 @@ namespace filemanager
 
    void folder_list_view::GetSel(stringa & stra)
    {
-      
+
       if(m_bRecursive)
       {
-         
+
          sp(folder_list_data) pdata = m_pmeshdata.cast <folder_list_data >();
          pdata->GetSel(this,stra);
 
       }
       else
       {
-         
+
          sp(databaseuser::data_key_mesh_data) pdata = m_psimplemeshdata.cast <databaseuser::data_key_mesh_data >();
          pdata->GetSel(this,stra);
 
@@ -190,18 +202,18 @@ namespace filemanager
 
 
                m_pauraapp = get_app()->m_pcoreapp;
-    //           db_server * pcentral = dynamic_cast < db_server * > (&System.m_simpledb.db());
-      //         if(pcentral == NULL)
-        //          return;
+               //           db_server * pcentral = dynamic_cast < db_server * > (&System.m_simpledb.db());
+               //         if(pcentral == NULL)
+               //          return;
 //               string str;
-  //             str.Format(".local://file_list(%s)",get_filemanager_data()->m_strDISection);
+               //             str.Format("&data_source=local&file_list(%s)",get_filemanager_data()->m_strDISection);
                if(get_filemanager_data()->m_bPassBk)
                {
                   ::user::list::m_bBackgroundBypass = true;
                }
-          //     m_dataid = str;
+               //     m_dataid = str;
 
-               Initialize(get_filemanager_data()->m_id,get_filemanager_data()->m_bEnableRecursiveFolderSelectionList);
+               initialize(get_filemanager_data()->m_id,get_filemanager_data()->m_bEnableRecursiveFolderSelectionList);
 
             }
             //else if(!m_bStatic && puh->is_type_of(update_hint::TypeSynchronizePath))

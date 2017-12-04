@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace core
@@ -8,9 +8,9 @@ namespace core
    class CLASS_DECL_CORE system :
       virtual public ::core::application,
       virtual public ::base::system
-      #ifdef LINUX
+#ifdef LINUX
       , virtual public ::exception::translator
-      #endif
+#endif
    {
    public:
 
@@ -31,15 +31,11 @@ namespace core
 
       mutex                                        m_mutexDelete;
 //      class ::core::stra                           m_stra;
-  //    class ::core::service                        m_service;
+      //    class ::core::service                        m_service;
 
       class ::core::patch   *                      m_ppatch;
 
-#ifdef INSTALL_SUBSYSTEM
-      
       sp(::core::run_start_installer)              m_prunstartinstaller;
-
-#endif
 
       sp(::core::session::map)                     m_pbergedgemap;
       spa(::core::session)                         m_planesessionptra;
@@ -68,34 +64,32 @@ namespace core
 #endif
 
 
-      system(::aura::application * papp = NULL, void * pinitdata = NULL);
+      system(::aura::application * papp = NULL, app_core * pappcore = NULL, void * pinitdata = NULL);
       virtual ~system();
 
-
-      virtual void construct(const char * pszAppId) override;
 
       virtual void discard_to_factory(sp(object) pca);
 
       virtual bool is_system() override;
 
-      virtual bool process_initialize() override;
+      virtual bool process_init() override;
 
-      virtual bool initialize2() override;
+      virtual bool init2() override;
 
-      virtual bool initialize_application() override;
+      virtual bool init_application() override;
 
-      virtual bool finalize() override;
+      virtual void term() override;
 
-      virtual int32_t exit_application() override;
+      virtual void term_application() override;
 
 
 
       //virtual int32_t main();
-      virtual bool InitApplication();
+      virtual bool InitApplication() override;
 
-      virtual bool initialize() override;
-      virtual bool initialize1() override;
-      virtual bool initialize3() override;
+      virtual bool init() override;
+      virtual bool init1() override;
+      virtual bool init3() override;
 
       virtual bool bergedge_start() override;
 
@@ -133,12 +127,12 @@ namespace core
       virtual void on_allocation_error(::aura::application * papp, ::type * ptype) override;
 
 
-      
+
       virtual ::aura::session * on_create_session() override;
 
 
 //      ::core::stra                           & stra();
-  //    ::core::service                        & service();
+      //    ::core::service                        & service();
       ::core::history                        & hist();
 
       class ::core::patch                    & patch();
@@ -147,7 +141,7 @@ namespace core
 
       ::filehandler::handler                 & filehandler();
 
-      
+
 
 
 
@@ -159,7 +153,7 @@ namespace core
 
 
 
-      uint32_t guess_code_page(const string & str);
+//      uint32_t guess_code_page(const string & str);
 
 #ifdef METROWIN
 
@@ -195,11 +189,11 @@ namespace core
       virtual bool process_command(::command::command * pcommand) override;
 
 
-
       void assert_valid() const override;
       void dump(dump_context & context) const override;
 
-      virtual int32_t main() override;
+
+      virtual void main() override;
       virtual void hist_hist(const char * psz) override;
 
 
@@ -214,7 +208,7 @@ namespace core
 
       virtual void on_map_application_library(::aura::library & library) override;
 
-      
+
    };
 
 

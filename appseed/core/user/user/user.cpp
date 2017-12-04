@@ -1,5 +1,5 @@
-#include "framework.h"
-#include "base/os/windows/windows_system_interaction_impl.h"
+﻿#include "framework.h"
+#include "aura/aura/os/windows/windows_system_interaction_impl.h"
 
 
 #ifdef MACOS
@@ -16,7 +16,7 @@ CLASS_DECL_CORE stringa macos_get_user_wallpaper()
    long long ll = mm_get_user_wallpaper(&ppsz);
 
    stra.c_add(ppsz, ll);
-   
+
    return stra;
 
 }
@@ -28,11 +28,11 @@ namespace user
 
 
    CLASS_DECL_CORE sp(::user::interaction) create_virtual_window(::aura::application * papp, uint32_t dwExStyle, const char * lpClassName, const char * lpWindowName, uint32_t dwStyle,
-                                                             const RECT & rect, sp(::user::interaction) puiParent, id id, HINSTANCE hInstance, LPVOID lpParam);
+         const RECT & rect, sp(::user::interaction) puiParent, id id, HINSTANCE hInstance, LPVOID lpParam);
 
 
    CLASS_DECL_CORE sp(::user::interaction) create_virtual_window(::aura::application * papp, uint32_t dwExStyle, const char * lpClassName, const char * lpWindowName, uint32_t dwStyle,
-      const RECT & rect, sp(::user::interaction) puiParent, id id, HINSTANCE hInstance, LPVOID lpParam)
+         const RECT & rect, sp(::user::interaction) puiParent, id id, HINSTANCE hInstance, LPVOID lpParam)
    {
       UNREFERENCED_PARAMETER(dwExStyle);
       UNREFERENCED_PARAMETER(lpClassName);
@@ -87,37 +87,37 @@ namespace user
       switch(get_edesktop())
       {
 
-         case desktop_gnome:
-         case desktop_unity_gnome:
+      case desktop_gnome:
+      case desktop_unity_gnome:
 
-            return gsettings_set("org.gnome.desktop.background", "picture-uri", "file://" + strLocalImagePath);
+         return gsettings_set("org.gnome.desktop.background", "picture-uri", "file://" + strLocalImagePath);
 
-         case desktop_mate:
+      case desktop_mate:
 
-            return gsettings_set("org.mate.background", "picture-filename", strLocalImagePath);
+         return gsettings_set("org.mate.background", "picture-filename", strLocalImagePath);
 
-         case desktop_lxde:
+      case desktop_lxde:
 
-            call_async("pcmanfm", "-w " + strLocalImagePath, NULL, SW_HIDE, false);
+         call_async("pcmanfm", "-w " + strLocalImagePath, NULL, SW_HIDE, false);
 
-            break;
+         break;
 
-         case desktop_xfce:
-            {
+      case desktop_xfce:
+      {
 //        Q_FOREACH(QString entry, Global::getOutputOfCommand("xfconf-query", QStringList() << "-c" << "xfce4-desktop" << "-p" << "/backdrop" << "-l").split("\n")){
-  //          if(entry.contains("image-path") || entry.contains("last-image")){
-    //            QProcess::startDetached("xfconf-query", QStringList() << "-c" << "xfce4-desktop" << "-p" << entry << "-s" << image);
-      //      }
-        //}
+         //          if(entry.contains("image-path") || entry.contains("last-image")){
+         //            QProcess::startDetached("xfconf-query", QStringList() << "-c" << "xfce4-desktop" << "-p" << entry << "-s" << image);
+         //      }
+         //}
 
-            }
+      }
 
-            //break;
+      //break;
 
-         default:
+      default:
 
-            output_debug_string("Failed to change wallpaper. If your Desktop Environment is not listed at \"Preferences->Integration-> Current Desktop Environment\", then it is not supported.");
-            return false;
+         output_debug_string("Failed to change wallpaper. If your Desktop Environment is not listed at \"Preferences->Integration-> Current Desktop Environment\", then it is not supported.");
+         return false;
 
       }
 
@@ -138,41 +138,41 @@ namespace user
       switch(get_edesktop())
       {
 
-         case desktop_gnome:
-         case desktop_unity_gnome:
+      case desktop_gnome:
+      case desktop_unity_gnome:
 
-            gsettings_get(sz, sizeof(sz), "org.gnome.desktop.background", "picture-uri");
+         gsettings_get(sz, sizeof(sz), "org.gnome.desktop.background", "picture-uri");
 
-            break;
+         break;
 
-         case desktop_mate:
+      case desktop_mate:
 
-            gsettings_get(sz, sizeof(sz), "org.mate.background", "picture-filename");
+         gsettings_get(sz, sizeof(sz), "org.mate.background", "picture-filename");
 
-            break;
+         break;
 
-         case desktop_lxde:
+      case desktop_lxde:
 
-            //call_async("pcmanfm", "-w " + strLocalImagePath, NULL, SW_HIDE, false);
+         //call_async("pcmanfm", "-w " + strLocalImagePath, NULL, SW_HIDE, false);
 
-            break;
+         break;
 
-         case desktop_xfce:
-            {
+      case desktop_xfce:
+      {
 //        Q_FOREACH(QString entry, Global::getOutputOfCommand("xfconf-query", QStringList() << "-c" << "xfce4-desktop" << "-p" << "/backdrop" << "-l").split("\n")){
-  //          if(entry.contains("image-path") || entry.contains("last-image")){
-    //            QProcess::startDetached("xfconf-query", QStringList() << "-c" << "xfce4-desktop" << "-p" << entry << "-s" << image);
-      //      }
-        //}
+         //          if(entry.contains("image-path") || entry.contains("last-image")){
+         //            QProcess::startDetached("xfconf-query", QStringList() << "-c" << "xfce4-desktop" << "-p" << entry << "-s" << image);
+         //      }
+         //}
 
-            }
+      }
 
-            //break;
+      //break;
 
-         default:
+      default:
 
-            output_debug_string("Failed to get wallpaper setting. If your Desktop Environment is not listed at \"Preferences->Integration-> Current Desktop Environment\", then it is not supported.");
-            //return "";
+         output_debug_string("Failed to get wallpaper setting. If your Desktop Environment is not listed at \"Preferences->Integration-> Current Desktop Environment\", then it is not supported.");
+         //return "";
 
       }
 
@@ -198,6 +198,13 @@ namespace user
 
    }
 
+   CLASS_DECL_CORE stringa get_wallpaper()
+   {
+
+      return stringa();
+
+   }
+
 #elif defined(ANDROID)
 
    CLASS_DECL_CORE bool set_wallpaper(string strLocalImagePath)
@@ -206,6 +213,25 @@ namespace user
       return ::aura::system::g_p->android_set_user_wallpaper(strLocalImagePath);
 
    }
+
+   CLASS_DECL_CORE stringa get_wallpaper()
+   {
+
+      stringa stra;
+
+      string strLocalImagePath;
+
+      if( ::aura::system::g_p->android_get_user_wallpaper(strLocalImagePath) && strLocalImagePath.has_char())
+      {
+
+         stra.add(strLocalImagePath);
+
+      }
+
+      return stra;
+
+   }
+
 
 #elif defined(METROWIN)
 
@@ -217,6 +243,13 @@ namespace user
       // Cold Water...
 
       return false;
+
+   }
+
+   CLASS_DECL_CORE stringa get_wallpaper()
+   {
+
+      return stringa();
 
    }
 
@@ -256,7 +289,7 @@ namespace core
 
    void application::close(e_end eend)
    {
-      
+
       close_dependent_threads(seconds(15));
 
       if (m_pdocmanager != NULL)
@@ -317,7 +350,7 @@ namespace core
       catch (...)
       {
 
-         m_iReturnCode = -2;
+         m_error.set_if_not_set(-2);
 
       }
 
@@ -352,7 +385,7 @@ namespace core
       catch (...)
       {
 
-         m_iReturnCode = -2;
+         m_error.set_if_not_set(-2);
 
       }
 
@@ -387,6 +420,7 @@ namespace core
 
    }
 
+
    session_docs::~session_docs()
    {
 
@@ -394,33 +428,41 @@ namespace core
 
    }
 
+
    void session_docs::close_all_documents()
    {
 
       if (m_pnaturedocument != NULL)
       {
+
          m_pnaturedocument.cast < ::user::document>()->on_close_document();
+
       }
 
       if (m_pplatformdocument != NULL)
       {
+
          m_pplatformdocument.cast < ::user::document>()->on_close_document();
+
       }
 
       if (m_pbergedgedocument != NULL)
       {
+
          m_pbergedgedocument.cast < ::user::document>()->on_close_document();
+
       }
 
-
    }
+
 
    session_docs * create_session_docs()
    {
-      
+
       return new session_docs();
 
    }
+
 
    void destroy_session_docs(session_docs * pdocs)
    {
@@ -429,8 +471,10 @@ namespace core
 
    }
 
+
    void session::on_app_request_bergedge_callback(::aura::application * papp)
    {
+
       if (&App(papp) != NULL)
       {
 
@@ -487,8 +531,11 @@ namespace core
 
    sp(::user::document) session::get_document()
    {
+
       return m_pdocs->m_pbergedgedocument;
+
    }
+
 
    sp(::user::impact) session::get_view()
    {
@@ -603,8 +650,8 @@ namespace core
       }*/
 
       if (pcreate->m_bClientOnly ||
-         Application.handler()->m_varTopicQuery.has_property("client_only") ||
-         pcreate->m_bOuterPopupAlertLike)
+            Application.handler()->m_varTopicQuery.has_property("client_only") ||
+            pcreate->m_bOuterPopupAlertLike)
       {
          return puiParent;
       }

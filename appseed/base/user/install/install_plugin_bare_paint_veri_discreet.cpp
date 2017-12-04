@@ -1,11 +1,8 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "base/user/user.h"
 
 
 //#include <math.h>
-
-
-#ifdef HOTPLUGIN_SUBSYSTEM
 
 
 namespace hotplugin
@@ -26,11 +23,11 @@ namespace hotplugin
 
       RECT rectWindow;
       GetWindowRect(&rectWindow);
-    //  int32_t cx = rectWindow.right - rectWindow.left;
+      //  int32_t cx = rectWindow.right - rectWindow.left;
       //int32_t cy = rectWindow.bottom - rectWindow.top;
       RECT rect = lprect;
 
-      
+
 
       pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
       int h = 33;
@@ -134,8 +131,5 @@ namespace hotplugin
 
 
 } // namespace hotplugin
-
-
-#endif
 
 

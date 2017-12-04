@@ -181,18 +181,18 @@ namespace exception
    class standard_access_violation : public standard_exception
    {
    public:
-#if defined(ANDROID)
-      
-      
+#if defined(ANDROID) || defined(RASPBIAN)
+
+
       standard_access_violation (::aura::application * papp, int32_t signal, void * psiginfo, void * pc) :
          object(papp),
          ::call_stack(papp),
          ::exception::base(papp),
          ::standard_exception(papp, signal, psiginfo, pc)
       {
-         
+
          debug_print(":standard");
-      
+
       }
 
 
@@ -221,9 +221,9 @@ namespace exception
          ::exception::base(papp),
          ::standard_exception(papp, signal, psiginfo, pc)
       {
-         
+
          debug_print(":standard");
-   
+
       }
 
 /*       sig_ucontext_t * uc = (sig_ucontext_t *)ucontext;
@@ -235,8 +235,8 @@ namespace exception
                  itohex_dup(info->si_addr) + " from " + itohex_dup(caller_address) + "\n\n";*/
 
    #else
-      
-      
+
+
       standard_access_violation (::aura::application * papp, EXCEPTION_POINTERS * ppointers) :
          object(papp),
          ::call_stack(papp, DEFAULT_SE_EXCEPTION_CALL_STACK_SKIP),
@@ -254,22 +254,22 @@ namespace exception
       uint_ptr inaccessible_address() const { return info()->ExceptionRecord->ExceptionInformation [1]; }
    #endif
    };
-   #if defined(ANDROID)
+   #if defined(ANDROID) || defined(RASPBIAN)
 
    class standard_sigfpe : public standard_exception
    {
    public:
-      
-      
+
+
       standard_sigfpe(::aura::application * papp,int32_t iSignal,void * psiginfo,void * pc):
          object(papp),
       ::call_stack(papp),
          ::exception::base(papp),
          standard_exception(papp, iSignal, psiginfo, pc)
       {
-         
+
          debug_print(":sigfpe");
-      
+
       }
 
 
@@ -305,9 +305,9 @@ namespace exception
          ::exception::base(papp),
          standard_exception(papp, iSignal, psiginfo, pc)
       {
-         
+
          debug_print(":sigfpe");
-      
+
       }
 
 
@@ -324,8 +324,8 @@ namespace exception
    class standard_no_memory : public standard_exception
    {
    public:
-      
-      
+
+
       standard_no_memory (::aura::application * papp, EXCEPTION_POINTERS * ppointers) :
          object(papp),
          ::call_stack(papp, DEFAULT_SE_EXCEPTION_CALL_STACK_SKIP),

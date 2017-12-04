@@ -13,6 +13,8 @@ bool wm_set_icon(oswindow w, ::draw2d::dib * p);
 bool wm_set_icon(oswindow w, stringa & straMatter);
 extern CLASS_DECL_CORE thread_int_ptr < DWORD_PTR > t_time1;
 
+bool load_icon(::visual::dib_sp & d, ::aura::application * papp, stringa & straMatter, string strIcon);
+
 manual_reset_event * simple_frame_window::helper_task::g_pevent = NULL;
 
 simple_frame_window::helper_task::helper_task(simple_frame_window * pframe) :
@@ -33,12 +35,11 @@ simple_frame_window::helper_task::helper_task(simple_frame_window * pframe) :
 }
 
 
-int simple_frame_window::helper_task::run()
+void simple_frame_window::helper_task::run()
 {
 
    while(thread_get_run())
    {
-
 
       g_pevent->wait(millis(84));
 
@@ -47,7 +48,7 @@ int simple_frame_window::helper_task::run()
       {
 
          if( // slim and clean people (no drugs) do not like fatty acids double check in the bag( unless they are slim and clean?!?!?!)
-            ::get_tick_count() - m_pframe->m_dwLastSizeMove > 284)// the tester (without UPS) can loose a save specially here (where is the error, sixes or 666) // Halloween is coming
+         ::get_tick_count() - m_pframe->m_dwLastSizeMove > 284)// the tester (without UPS) can loose a save specially here (where is the error, sixes or 666) // Halloween is coming
             // this a reason for using manual_reset_event for every simple_frame_window, accepts the candy, and the trick? you get both, this the whole trick!!!
          {
 
@@ -76,17 +77,17 @@ int simple_frame_window::helper_task::run()
          }
 
       }
+
       //Sleep(200); // the tester (without UPS) can loose a save here
 
    }
-
-   return 0;
 
 }
 
 
 void simple_frame_window::helper_task::defer_save_window_rect()
 {
+
 }
 
 
@@ -95,6 +96,8 @@ simple_frame_window::simple_frame_window(::aura::application * papp) :
    m_dibBk(allocer()),
    m_fastblur(allocer())
 {
+
+   m_bDefaultCreateToolbar = true;
 
    m_etranslucency = ::user::translucency_undefined;
 
@@ -105,21 +108,39 @@ simple_frame_window::simple_frame_window(::aura::application * papp) :
    m_bTransparentFrame = false;
 
    m_bblur_Background = false;
+
    m_bCustomFrameBefore = true;
+
+#if defined(APPLE_IOS) || defined(VSNORD)
+
+   m_bWindowFrame = false;
+
+#else
+
    m_bWindowFrame = true;
+
+#endif
+
    m_bLayered = true;
+
    m_pframeschema = NULL;
+
    m_pdocumenttemplate = NULL;
 
    //m_phelpertask = new helper_task(this);
 
 }
 
+
 simple_frame_window::~simple_frame_window()
 {
+
    //m_phelpertask->m_pframe = NULL;
+
    //m_phelpertask->m_bRun = false;
+
 }
+
 
 void simple_frame_window::assert_valid() const
 {
@@ -353,12 +374,16 @@ void simple_frame_window::_001OnCreate(::message::message * pobj)
 
    SCAST_PTR(::message::create, pcreate, pobj);
 
+#if !defined(APPLE_IOS) && !defined(VSNORD)
+
    if (m_pdocumenttemplate->m_strMatter.has_char())
    {
 
       m_varFrame = Application.file().as_json("matter://" + m_pdocumenttemplate->m_strMatter + "/frame.json");
 
    }
+
+#endif
 
    if (m_varFrame["schema"].is_empty())
    {
@@ -469,12 +494,17 @@ void simple_frame_window::_001OnCreate(::message::message * pobj)
          pinteractionframe = create_frame_schema();
 
       }
-      catch (not_installed & e)
+      catch (esp esp)
       {
 
-         System.remove_frame(this);
+         if (esp.is < not_installed >())
+         {
 
-         throw e;
+            System.remove_frame(this);
+
+            _rethrow(esp);
+
+         }
 
       }
       catch (...)
@@ -540,10 +570,10 @@ void simple_frame_window::_001OnCreate(::message::message * pobj)
       m_pframeschema = pinteractionframe;
       m_workset.AttachFrameSchema(m_pframeschema);
       if (!m_workset.update(
-               this,
-               this,
-               this,
-               this))
+            this,
+            this,
+            this,
+            this))
       {
          pcreate->m_bRet = false;
          return;
@@ -709,10 +739,16 @@ void simple_frame_window::_001OnShowWindow(::message::message * pobj)
 
    SCAST_PTR(::message::show_window, pshow, pobj);
 
-   if(!pshow->m_bShow)
+   if(pshow->m_bShow)
    {
 
-      output_debug_string("test07");
+      output_debug_string("\nsimple_frame_window::_001OnShowWindow TRUE " + string(typeid(*this).name()));
+
+   }
+   else
+   {
+
+      output_debug_string("\nsimple_frame_window::_001OnShowWindow FALSE " + string(typeid(*this).name()));
 
    }
 
@@ -860,7 +896,7 @@ void simple_frame_window::_001OnGetMinMaxInfo(::message::message * pobj)
       lpMMI->ptMaxTrackSize.x = lpMMI->ptMaxSize.x;
    }
 #else
-   throw todo(get_app());
+   _throw(todo(get_app()));
 #endif
 }
 
@@ -1232,29 +1268,13 @@ void simple_frame_window::_001OnClose(::message::message * pobj)
 
    }
 
-
-
-   if (m_iModalCount > 0)
+   if (m_bModal)
    {
       EndModalLoop(IDOK);
       pobj->m_bRet = true;
       return;
    }
-   else if (GetTopLevelFrame() != NULL
-            && (GetTopLevelFrame()->m_iModalCount > 0))
-   {
-      GetTopLevelFrame()->EndModalLoop(IDOK);
-      pobj->m_bRet = true;
-      return;
-   }
-   else if (m_iModalCount > 0)
-   {
-      m_pimpl->EndModalLoop(IDOK);
-      pobj->m_bRet = true;
-      ShowWindow(SW_HIDE);
-      return;
-   }
-   else if (GetTopLevelFrame() != NULL && GetTopLevelFrame()->m_iModalCount > 0)
+   else if (GetTopLevelFrame() != NULL && GetTopLevelFrame()->m_bModal)
    {
       GetTopLevelFrame()->EndModalLoop(IDOK);
       pobj->m_bRet = true;
@@ -1263,7 +1283,9 @@ void simple_frame_window::_001OnClose(::message::message * pobj)
 
    if (pobj)
    {
+
       pobj->m_bRet = true;
+
    }
 
    bool bDestroyWindow = false;
@@ -1349,7 +1371,9 @@ void simple_frame_window::_001OnActivateApp(::message::message * pobj)
    SCAST_PTR(::message::base, pbase, pobj);
 
    pbase->previous();
-   bool bActive = pbase->m_wparam != FALSE;
+
+   //bool bActive = pbase->m_wparam != FALSE;
+
    if (GetParent() == NULL && GetExStyle() & WS_EX_LAYERED)
    {
 
@@ -1379,7 +1403,7 @@ void simple_frame_window::_001OnActivate(::message::message * pobj)
 
    pactivate->previous();
 
-   bool bMinimized = HIWORD(pactivate->m_lparam);
+//   bool bMinimized = HIWORD(pactivate->m_lparam);
 
    int iActive = LOWORD(pactivate->m_wparam);
    if (iActive)
@@ -1533,7 +1557,14 @@ bool simple_frame_window::LoadFrame(const char * pszMatter, uint32_t dwDefaultSt
 
    }
 
-   m_bLayoutEnable = false;
+   if(pParentWnd == NULL)
+   {
+
+      m_bLayoutEnable = false;
+
+   }
+
+   output_debug_string("\nm_bLayoutEnable FALSE");
 
    if (!create_window_ex(0L, NULL, lpszTitle, dwDefaultStyle, rectFrame, pParentWnd, /*nIDResource*/ 0, pcreate))
    {
@@ -1686,76 +1717,87 @@ void simple_frame_window::pre_translate_message(::message::message * pmessage)
 void simple_frame_window::InitialFramePosition(bool bForceRestore)
 {
 
-   if(m_bFrameMoveEnable)
+   try
    {
 
-      if(Application.handler()->m_varTopicQuery.has_property("wfi_maximize")
-            && (GetParent() == NULL
+      if(m_bFrameMoveEnable)
+      {
+
+         if(Application.handler()->m_varTopicQuery.has_property("wfi_maximize")
+               && (GetParent() == NULL
 #if defined(ANDROID) || defined(METROWIN) || defined(APPLE_IOS)
-                || GetParent() == System.m_possystemwindow->m_pui
+                   || GetParent() == System.m_possystemwindow->m_pui
 #endif
-               ))
-      {
-
-         WfiMaximize();
-
-      }
-      else if(Application.handler()->m_varTopicQuery.has_property("client_only")
-              || Application.handler()->m_varTopicQuery.has_property("full_screen"))
-      {
-
-         if(m_workset.IsAppearanceEnabled())
+                  ))
          {
 
-            WfiFullScreen();
+            WfiMaximize();
+
+         }
+         else if(Application.handler()->m_varTopicQuery.has_property("client_only")
+                 || Application.handler()->m_varTopicQuery.has_property("full_screen"))
+         {
+
+            if(m_workset.IsAppearanceEnabled())
+            {
+
+               WfiFullScreen();
+
+            }
+            else
+            {
+
+               best_monitor(NULL,::null_rect(),true);
+
+            }
 
          }
          else
          {
 
-            best_monitor(NULL,::null_rect(),true);
+
+            WindowDataLoadWindowRect(bForceRestore,true);
+
+            WindowDataEnableSaveWindowRect(true);
 
          }
 
       }
-      else
+
+      ActivateTopParent();
+
+      BringToTop(-1);
+
+      if (m_workset.IsAppearanceEnabled())
       {
 
+         if (m_workset.get_appearance() != NULL && m_workset.GetAppearance() == ::user::appearance_iconic)
+         {
 
-         WindowDataLoadWindowRect(bForceRestore,true);
+            WfiRestore(false);
 
-         WindowDataEnableSaveWindowRect(true);
+         }
+
+      }
+
+      //on_layout();
+
+      if (m_palphasource != NULL)
+      {
+
+         m_palphasource->on_alpha_target_initial_frame_position();
 
       }
 
    }
-
-   ActivateTopParent();
-
-   BringToTop(-1);
-
-   if (m_workset.IsAppearanceEnabled())
+   catch(...)
    {
-
-      if (m_workset.get_appearance() != NULL && m_workset.GetAppearance() == ::user::appearance_iconic)
-      {
-
-         WfiRestore(false);
-
-      }
 
    }
 
    m_bLayoutEnable = true;
 
-   //on_layout();
-
-   if (m_palphasource != NULL)
-   {
-
-      m_palphasource->on_alpha_target_initial_frame_position();
-
-   }
+   output_debug_string("\nm_bLayoutEnable TRUE");
 
    m_bInitialFramePosition = false;
 
@@ -1934,7 +1976,7 @@ void simple_frame_window::_001OnDraw(::draw2d::graphics * pgraphics)
    if(m_bblur_Background)
    {
 
-      class imaging & imaging = System.visual().imaging();
+      class imaging & imaging = Application.imaging();
 
       rect rectClient;
 
@@ -1973,12 +2015,12 @@ void simple_frame_window::_001OnDraw(::draw2d::graphics * pgraphics)
             m_fastblur->get_graphics()->BitBlt(0,0,rectClient.width(),rectClient.height(),pgraphics,0,0,SRCCOPY);
             m_fastblur.blur();
             imaging.bitmap_blend(
-               m_fastblur->get_graphics(),
-               null_point(),
-               rectClient.size(),
-               m_dibBk->get_graphics(),
-               null_point(),
-               49);
+            m_fastblur->get_graphics(),
+            null_point(),
+            rectClient.size(),
+            m_dibBk->get_graphics(),
+            null_point(),
+            49);
             pgraphics->from(rectClient.size(),
                             m_fastblur->get_graphics(),
                             null_point(),
@@ -2259,7 +2301,7 @@ void simple_frame_window::_001OnUser184(::message::message * pobj)
    else if(pbase->m_wparam == 2)
    {
 
-      throw simple_exception(get_app());
+      _throw(simple_exception(get_app()));
 
    }
    else if(pbase->m_wparam == 123)
@@ -2687,7 +2729,7 @@ void simple_frame_window::NotifyFloatingWindows(uint32_t dwFlags)
    }
 
 #else
-   throw todo(get_app());
+   _throw(todo(get_app()));
 #endif
 }
 
@@ -3158,9 +3200,9 @@ void simple_frame_window::on_simple_command(::message::simple_command * psimplec
 class ::mini_dock_frame_window* simple_frame_window::CreateFloatingFrame(uint32_t dwStyle)
 {
 
-      UNREFERENCED_PARAMETER(dwStyle);
+   UNREFERENCED_PARAMETER(dwStyle);
 
-      return NULL;
+   return NULL;
 
 }
 
@@ -3213,6 +3255,13 @@ bool simple_frame_window::create_bars()
 
 bool simple_frame_window::on_create_bars()
 {
+
+   if(!m_bDefaultCreateToolbar)
+   {
+
+      return true;
+
+   }
 
    ::file::path path = Application.dir().matter(m_pdocumenttemplate->m_strMatter / "toolbar.xml");
 

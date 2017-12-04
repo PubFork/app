@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace filehandler
@@ -7,7 +7,7 @@ namespace filehandler
 
    application::application()
    {
-      
+
       m_ptemplateMenu   = NULL;
       m_ppaneview       = NULL;
 
@@ -29,7 +29,7 @@ namespace filehandler
 
    }
 
-   bool application::initialize_application()
+   bool application::init_instance()
    {
 
 
@@ -38,17 +38,17 @@ namespace filehandler
       System.factory().creatable_small < frame >();
       System.factory().creatable_small < view >();
 
-      if(!::asphere::application::initialize_application())
+      if(!::asphere::application::init_instance())
          return false;
 
 
 
       ::user::single_document_template* pdoctemplate = new ::user::single_document_template(
-         this,
-         "html/frame",
-         System.type_info < document > (),
-         System.type_info < frame > (),       // top level SDI frame::user::interaction_impl
-         System.type_info < pane_view > ());
+      this,
+      "html/frame",
+      System.type_info < document > (),
+      System.type_info < frame > (),       // top level SDI frame::user::interaction_impl
+      System.type_info < pane_view > ());
       add_document_template(pdoctemplate);
       m_ptemplateMenu = pdoctemplate;
 
@@ -56,41 +56,39 @@ namespace filehandler
       return TRUE;
    }
 
-   int32_t application::exit_application()
-   {
 
-      int32_t iExitCode = 0;
+   void application::term_instance()
+   {
 
       try
       {
 
-         iExitCode = ::asphere::application::exit_application();
+         ::asphere::application::term_instance();
 
       }
       catch(...)
       {
 
-         iExitCode = -1;
-
       }
 
-      return  iExitCode;
-
    }
+
 
    void application::on_request(::create * pcreate)
    {
 
       if(m_ppaneview == NULL)
       {
-         
+
          m_ptemplateMenu->request_create(pcreate);
 
       }
 
       if(m_ppaneview != NULL && pcreate->m_spCommandLine->m_varFile.get_type() == var::type_string)
       {
+
          m_ppaneview->set_cur_tab_by_id("default_file_handler://" + pcreate->m_spCommandLine->m_varFile.get_string());
+
       }
 
    }

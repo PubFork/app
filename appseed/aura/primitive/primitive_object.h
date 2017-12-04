@@ -1,12 +1,12 @@
-#pragma once
+﻿#pragma once
 
 
 //class CLASS_DECL_AURA ::object :
 class CLASS_DECL_AURA mini_object
-   // virtual public element
-   //class CLASS_DECL_AURA waitable :
-   //class CLASS_DECL_AURA object
-   //   virtual public ::object
+// virtual public element
+//class CLASS_DECL_AURA waitable :
+//class CLASS_DECL_AURA object
+//   virtual public ::object
 {
 public:
 
@@ -29,6 +29,10 @@ public:
 
       return InterlockedIncrement64(&m_countReference);
 
+#elif defined(RASPBIAN) && defined(OS32BIT)
+
+      return __sync_add_and_fetch_4(&m_countReference,1);
+
 #else
 
       return __sync_add_and_fetch(&m_countReference, 1);
@@ -45,9 +49,13 @@ public:
 
       return InterlockedDecrement64(&m_countReference);
 
+#elif defined(RASPBIAN) && defined(OS32BIT)
+
+      return __sync_sub_and_fetch_4(&m_countReference,1);
+
 #else
 
-      return  __sync_sub_and_fetch(&m_countReference, 1);
+      return __sync_sub_and_fetch(&m_countReference, 1);
 
 #endif
 
@@ -123,6 +131,12 @@ public:
    virtual ~object();  // virtual destructors are necessary
 
 
+   virtual void assert_valid() const;
+   virtual void dump(dump_context & dumpcontext) const;
+
+
+
+
    template < typename PRED >
    inline ::thread * fork(PRED pred);
 
@@ -194,7 +208,7 @@ public:
    virtual int64_t dec_ref();
    virtual int64_t release();
 
-   
+
    virtual void add_line(::command::command * pcommand, application_bias * pbiasCreate = NULL);
    virtual void add_line(const char * pszCommandLine, application_bias * pbiasCreate = NULL);
    virtual void add_line_uri(const char * pszCommandLine,application_bias * pbiasCreate = NULL);
@@ -209,7 +223,7 @@ public:
    virtual void request_file_query(var & varFile,var & varQuery);
    virtual void request_command(command_line * pcommandline);
    virtual void request_create(::create * pcreate);
-   
+
    virtual void handle(::command::command * pcommand);
    virtual void handle(::create * pcreate);
 
@@ -217,7 +231,8 @@ public:
    virtual void on_handle(::create * pcreate);
 
    virtual void threadrefa_add(::thread * pthread);
-   virtual void threadrefa_post_quit_and_wait(::duration duration);
+   virtual void threadrefa_post_quit();
+   virtual void threadrefa_wait(duration duration);
    virtual void threadrefa_remove(::thread * pthread);
 
    // main loosely coupled semantics :
@@ -227,7 +242,7 @@ public:
    virtual void on_request(::create * pcreate);
 
 
-   virtual string lstr(id id, const string & strDefault = (const string &) *((const string *) NULL ));
+   virtual string lstr(id id, string strDefault = "");
 
    //void common_construct();
 
@@ -238,9 +253,6 @@ public:
    property & oprop(const char * psz) const;
    property_set & oprop_set();
 
-
-   virtual void assert_valid() const;
-   virtual void dump(dump_context & dumpcontext) const;
 
    inline sp(::handler) handler();
 
@@ -290,45 +302,6 @@ namespace aura
 
 
 
-//class CLASS_DECL_AURA object :
-//   virtual public waitable
-//{
-//public:
-//
-//
-//   property_set *     m_psetObject;
-//
-//
-//   object();
-//   object(const object & objectSrc);              // no implementation
-//   virtual ~object();  // virtual destructors are necessary
-//
-//
-//   void common_construct();
-//
-//   bool IsSerializable() const;
-//
-//
-//   property & oprop(const char * psz);
-//   property & oprop(const char * psz) const;
-//   property_set & oprop_set();
-//
-//
-//   virtual void assert_valid() const;
-//   virtual void dump(dump_context & dumpcontext) const;
-//
-//   object & operator = (const object & objectSrc);       // no implementation
-//
-//
-//   inline sp(::handler) handler();
-//
-//
-//   DECLARE_AND_IMPLEMENT_DEFAULT_ALLOCATION
-//
-//};
-//
-
-
 
 
 
@@ -375,33 +348,6 @@ inline int64_t ref_count(c_derived * pca)
       return -1;
    return pca->get_ref_count();
 }
-
-
-template < class TYPE >
-bool is_null(TYPE * p)
-{
-   return (((int_ptr)p) < sizeof(TYPE));
-}
-
-
-template < class TYPE >
-bool is_null(TYPE & t)
-{
-   return (((int_ptr)&t) < sizeof(TYPE));
-}
-
-
-template <class t>
-inline void delptr(t *& p)
-{
-   if(p != NULL)
-   {
-      delete p;
-      p = NULL;
-   }
-}
-
-
 
 
 #define canew(x) dereference_no_delete(new x)

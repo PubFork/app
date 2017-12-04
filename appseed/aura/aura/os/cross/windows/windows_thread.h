@@ -37,19 +37,7 @@
 
 
 
-//#if !defined(LINUX) && !defined(SOLARIS)
-//typedef struct hthread * HTHREAD;
-//#endif
 
-#ifdef WINDOWS
-
-typedef uint32_t IDTHREAD;
-
-#else
-
-typedef HTHREAD IDTHREAD;
-
-#endif
 
 #ifndef METROWIN
 

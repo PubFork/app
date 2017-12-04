@@ -98,7 +98,7 @@ namespace userfs
    }
 
 
-#ifdef DEBUG
+
    void list::assert_valid() const
    {
       ::user::form_list_view::assert_valid();
@@ -108,7 +108,7 @@ namespace userfs
    {
       ::user::form_list_view::dump(dumpcontext);
    }
-#endif //DEBUG
+
 
    void list::on_update(::user::impact * pSender, LPARAM lHint, object * phint)
    {

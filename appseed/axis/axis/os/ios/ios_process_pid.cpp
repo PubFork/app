@@ -1,7 +1,7 @@
 #include <sys/types.h>
 #include <sys/param.h>
 #define user user_struct
-#include <sys/user.h>
+//#include <sys/user.h>
 #include <sys/sysctl.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -48,7 +48,7 @@ int get_process_pid(const char * csProcessName)
                 if (sNewProcesses == 0) {
                         if (sProcesses)
                                 free(sProcesses);
-                                throw "could not reallocate memory";
+                                _throw(simple_exception(get_app(), "could not reallocate memory"));
                 }
                 sProcesses = sNewProcesses;
                 iRetCode = sysctl(aiNames, (u_int) iNamesLength, sProcesses, &iSize, NULL, 0);

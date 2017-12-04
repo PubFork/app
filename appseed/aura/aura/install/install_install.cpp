@@ -1,7 +1,8 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
-#if defined(INSTALL_SUBSYSTEM)
+#include "install_net.h"
+#include "aura/net/sockets/http/sockets_http_session.h"
 
 
 namespace install
@@ -14,9 +15,11 @@ namespace install
       m_trace(papp)
    {
 
+      m_pinstallnet = new install_net();
+
       defer_create_mutex();
 
-      m_psockethandler = NULL;
+      //m_pinstallnet->m_psockethandler = NULL;
 
       m_bAdmin = false;
 
@@ -28,7 +31,7 @@ namespace install
    install::~install()
    {
 
-      ::aura::del(m_psockethandler);
+      aura::del(m_pinstallnet);
 
    }
 
@@ -152,7 +155,7 @@ namespace install
    int32_t install::spalib_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int32_t nCmdShow)
    {
 
-      throw todo(get_app());
+      _throw(todo(get_app()));
 
       /*      install::installer installer(get_app());
 
@@ -189,12 +192,12 @@ namespace install
 
    void install::app_install_call_sync(const char * pszCommand)
    {
-      
+
       bool bLaunch;
 
       if (stricmp_dup(pszCommand, "exit") == 0 || stricmp_dup(pszCommand, "quit") == 0)
       {
-         
+
          bLaunch = false;
 
       }
@@ -215,7 +218,7 @@ namespace install
 
 #ifdef METROWIN
 
-      throw "todo";
+      _throw(simple_exception(get_app(), "todo"));
 
 #else
 
@@ -243,7 +246,7 @@ namespace install
 
 #ifdef METROWIN
 
-      throw "todo";
+      _throw(simple_exception(get_app(), "todo"));
 
 #else
 
@@ -284,7 +287,7 @@ namespace install
 
    bool install::is_admin()
    {
-      
+
       return m_bAdmin;
 
    }
@@ -330,7 +333,7 @@ namespace install
 
 #ifdef METROWIN
 
-      throw "todo";
+      _throw(simple_exception(get_app(), "todo"));
 
 #else
 
@@ -443,7 +446,7 @@ namespace install
          //m_bCa2Installed = libraryOs.open(dir::path(strStage, "os"));
          //if (m_bCa2Installed)
          //{
-         
+
          ::aura::library libraryAura(get_app());
 
          m_bCa2Installed = libraryAura.open(dir::stage(process_platform_dir_name()) / "aura");
@@ -657,9 +660,11 @@ namespace install
 
 #else
 
-      throw "TODO";
+      _throw(simple_exception(get_app(), "TODO"));
 
 #endif
+
+#ifdef WINDOWSEX
 
       if (!file_exists_dup(::dir::system() / "config\\plugin\\do_not_download_file_list.txt") && bPrivileged)
       {
@@ -710,7 +715,7 @@ namespace install
 
          int iMd5Retry = 0;
 
-      md5retry:
+md5retry:
 
          if (!System.install().is_file_ok(straDownload, straFile, straMd5, iaLen, iMd5Retry))
          {
@@ -769,6 +774,8 @@ namespace install
 
       }
 
+#endif
+
       return strPath;
 
    }
@@ -787,7 +794,7 @@ namespace install
 
 #else
 
-      throw "TODO";
+      _throw(simple_exception(get_app(), "TODO"));
 
 #endif
 
@@ -825,10 +832,6 @@ namespace install
 
 
 } // namespace install
-
-
-
-#endif
 
 
 

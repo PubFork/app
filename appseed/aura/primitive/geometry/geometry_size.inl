@@ -18,7 +18,7 @@
 
 
 // size
-inline size::size() throw()
+inline size::size() NOTHROW
 {
 
    /* NOT random filled ANYMORE */
@@ -30,7 +30,7 @@ inline size::size() throw()
 }
 
 
-inline size::size(no_init) throw()
+inline size::size(no_init) NOTHROW
 {
 
    /* random filled*/
@@ -39,7 +39,7 @@ inline size::size(no_init) throw()
 }
 
 
-inline size::size(int64_t initCX,int64_t initCY) throw()
+inline size::size(int64_t initCX,int64_t initCY) NOTHROW
 {
 
    cx = (int32_t)initCX;
@@ -49,7 +49,7 @@ inline size::size(int64_t initCX,int64_t initCY) throw()
 }
 
 
-inline size::size(SIZE initSize) throw()
+inline size::size(SIZE initSize) NOTHROW
 {
 
    *(SIZE*)this = initSize;
@@ -57,7 +57,7 @@ inline size::size(SIZE initSize) throw()
 }
 
 
-inline size::size(const SIZE * pinitSize) throw()
+inline size::size(const SIZE * pinitSize) NOTHROW
 {
 
    *this = *pinitSize;
@@ -65,7 +65,7 @@ inline size::size(const SIZE * pinitSize) throw()
 }
 
 
-inline size::size(const RECT & rect) throw()
+inline size::size(const RECT & rect) NOTHROW
 {
 
    cx = width(rect);
@@ -75,7 +75,7 @@ inline size::size(const RECT & rect) throw()
 }
 
 
-inline size::size(LPCRECT lpcrect) throw()
+inline size::size(LPCRECT lpcrect) NOTHROW
 {
 
    if(lpcrect == NULL)
@@ -98,7 +98,7 @@ inline size::size(LPCRECT lpcrect) throw()
 }
 
 
-inline size::size(SIZE64  initSize) throw()
+inline size::size(SIZE64  initSize) NOTHROW
 {
 
    cx = (int32_t)initSize.cx;
@@ -108,7 +108,7 @@ inline size::size(SIZE64  initSize) throw()
 }
 
 
-inline size::size(const SIZE64 *  pinitSize) throw()
+inline size::size(const SIZE64 *  pinitSize) NOTHROW
 {
 
    cx = (int32_t)pinitSize->cx;
@@ -118,7 +118,7 @@ inline size::size(const SIZE64 *  pinitSize) throw()
 }
 
 
-inline size::size(SIZED  initSize) throw()
+inline size::size(SIZED  initSize) NOTHROW
 {
 
    cx = (int32_t)initSize.cx;
@@ -128,7 +128,7 @@ inline size::size(SIZED  initSize) throw()
 }
 
 
-inline size::size(const SIZED *  pinitSize) throw()
+inline size::size(const SIZED *  pinitSize) NOTHROW
 {
 
    cx = (int32_t)pinitSize->cx;
@@ -138,7 +138,7 @@ inline size::size(const SIZED *  pinitSize) throw()
 }
 
 
-inline size::size(POINT initPt) throw()
+inline size::size(POINT initPt) NOTHROW
 {
 
    *(POINT*)this = initPt;
@@ -146,7 +146,7 @@ inline size::size(POINT initPt) throw()
 }
 
 
-inline size::size(uint32_t dwSize) throw()
+inline size::size(uint32_t dwSize) NOTHROW
 {
 
    cx = (int16_t)LOWORD(dwSize);
@@ -156,7 +156,7 @@ inline size::size(uint32_t dwSize) throw()
 }
 
 
-inline size::operator SIZE *() throw()
+inline size::operator SIZE *() NOTHROW
 {
 
    return this;
@@ -164,7 +164,7 @@ inline size::operator SIZE *() throw()
 }
 
 
-inline size::operator const SIZE *() const throw()
+inline size::operator const SIZE *() const NOTHROW
 {
 
    return this;
@@ -172,7 +172,7 @@ inline size::operator const SIZE *() const throw()
 }
 
 
-inline bool size::operator==(SIZE size) const throw()
+inline bool size::operator==(SIZE size) const NOTHROW
 {
 
    return (cx == size.cx && cy == size.cy);
@@ -180,7 +180,7 @@ inline bool size::operator==(SIZE size) const throw()
 }
 
 
-inline bool size::operator!=(SIZE size) const throw()
+inline bool size::operator!=(SIZE size) const NOTHROW
 {
 
    return (cx != size.cx || cy != size.cy);
@@ -188,7 +188,7 @@ inline bool size::operator!=(SIZE size) const throw()
 }
 
 
-inline void size::operator+=(SIZE size) throw()
+inline void size::operator+=(SIZE size) NOTHROW
 {
 
    cx += size.cx;
@@ -198,7 +198,7 @@ inline void size::operator+=(SIZE size) throw()
 }
 
 
-inline void size::operator-=(SIZE size) throw()
+inline void size::operator-=(SIZE size) NOTHROW
 {
 
    cx -= size.cx;
@@ -207,7 +207,7 @@ inline void size::operator-=(SIZE size) throw()
 
 }
 
-inline void size::set_size(int32_t CX,int32_t CY) throw()
+inline void size::set_size(int32_t CX,int32_t CY) NOTHROW
 {
 
    cx = CX;
@@ -217,7 +217,7 @@ inline void size::set_size(int32_t CX,int32_t CY) throw()
 }
 
 
-inline class size size::operator+(SIZE size) const throw()
+inline class size size::operator+(SIZE size) const NOTHROW
 {
 
    class size sizeRet;
@@ -231,7 +231,7 @@ inline class size size::operator+(SIZE size) const throw()
 }
 
 
-inline size size::operator-(SIZE size) const throw()
+inline size size::operator-(SIZE size) const NOTHROW
 {
 
    class size sizeRet;
@@ -245,7 +245,7 @@ inline size size::operator-(SIZE size) const throw()
 }
 
 
-inline size size::operator-() const throw()
+inline size size::operator-() const NOTHROW
 {
 
    return size(-cx,-cy);
@@ -253,7 +253,7 @@ inline size size::operator-() const throw()
 }
 
 
-inline point size::operator+(POINT point) const throw()
+inline point size::operator+(POINT point) const NOTHROW
 {
 
    class point pointRet;
@@ -267,7 +267,7 @@ inline point size::operator+(POINT point) const throw()
 }
 
 
-inline point size::operator-(POINT point) const throw()
+inline point size::operator-(POINT point) const NOTHROW
 {
 
    class point pointRet;
@@ -281,7 +281,7 @@ inline point size::operator-(POINT point) const throw()
 }
 
 
-inline rect size::operator+(LPCRECT lpRect) const throw()
+inline rect size::operator+(LPCRECT lpRect) const NOTHROW
 {
 
    return rect(lpRect) + *this;
@@ -289,7 +289,7 @@ inline rect size::operator+(LPCRECT lpRect) const throw()
 }
 
 
-inline rect size::operator-(LPCRECT lpRect) const throw()
+inline rect size::operator-(LPCRECT lpRect) const NOTHROW
 {
 
    return rect(lpRect) - *this;
@@ -297,7 +297,7 @@ inline rect size::operator-(LPCRECT lpRect) const throw()
 }
 
 
-inline int64_t size::area() const throw()
+inline int64_t size::area() const NOTHROW
 {
 
    return (cx < 0 && cy < 0 ? -1 : 1) * cx * cy;
@@ -305,7 +305,7 @@ inline int64_t size::area() const throw()
 }
 
 
-inline uint32_t  size::  ui32() const throw()
+inline uint32_t  size::  ui32() const NOTHROW
 {
 
    return MAKELONG((int32_t)cx,(int32_t)cy);
@@ -313,7 +313,7 @@ inline uint32_t  size::  ui32() const throw()
 }
 
 
-inline uint64_t  size::  ui64() const throw()
+inline uint64_t  size::  ui64() const NOTHROW
 {
 
    return MAKELONG64((int32_t)cx,(int32_t)cy);
@@ -321,7 +321,7 @@ inline uint64_t  size::  ui64() const throw()
 }
 
 
-inline LPARAM    size::lparam() const throw()
+inline LPARAM    size::lparam() const NOTHROW
 {
 
    return MAKELPARAM((int32_t)cx,(int32_t)cy);
@@ -331,7 +331,7 @@ inline LPARAM    size::lparam() const throw()
 
 
 
-inline size64::operator SIZE() throw()
+inline size64::operator SIZE() NOTHROW
 {
 
    SIZE sz = { (LONG)cx, (LONG)cy };

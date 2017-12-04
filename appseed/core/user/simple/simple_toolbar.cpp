@@ -207,7 +207,7 @@ size simple_toolbar::CalcSimpleLayout()
 
 #else
 
-   throw todo(get_app());
+   _throw(todo(get_app()));
 
 #endif
 
@@ -296,7 +296,7 @@ void simple_toolbar::TransparentEraseNonClient(::draw2d::graphics * pgraphics)
    rectWindow.offset(-rectWindow.top_left());
    if (m_bTransparentBackground)
    {
-      class imaging & imaging = System.visual().imaging();
+      class imaging & imaging = Application.imaging();
       if (m_iHover >= -1)
       {
          imaging.color_blend(
@@ -476,7 +476,7 @@ size simple_toolbar::CalcSize(int32_t nCount)
 
    rect rBorder = get_bar_border();
 
-   size sPress = get_press_shift();
+   //size sPress = get_press_shift();
 
    size sSpacing = get_item_spacing();
 
@@ -514,7 +514,7 @@ size simple_toolbar::CalcSize(int32_t nCount)
 
       ::user::toolbar_item & item = m_itema(i);
 
-      int32_t cySep = item.m_iImage;
+      //int32_t cySep = item.m_iImage;
 
       if (m_itema[i]->m_fsStyle & TBSTYLE_SEP)
       {
@@ -550,9 +550,9 @@ size simple_toolbar::CalcSize(int32_t nCount)
 
          size = pgraphics->GetTextExtent(str);
 
-         convert_add(buttonx, size.cx + EXTRA_TEXT_CX);
+         buttonx += (int32_t) (size.cx + EXTRA_TEXT_CX);
 
-         convert_add(buttony, size.cy + EXTRA_TEXT_CY);
+         buttony += (int32_t) (size.cy + EXTRA_TEXT_CY);
 
       }
 
@@ -766,9 +766,9 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
 
    }
 
-   int iOffsetX = 0;
-
-   int iOffsetY = 0;
+//   int iOffsetX = 0;
+//
+//   int iOffsetY = 0;
 
    _001GetElementRect(iItem, rectItem, eelement);
 
@@ -805,7 +805,7 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
 
             if ((m_dwCtrlStyle & TBSTYLE_FLAT) == TBSTYLE_FLAT)
             {
-               System.visual().imaging().color_blend(
+               Application.imaging().color_blend(
                   pgraphics,
                   rectItem.left,
                   rectItem.top,
@@ -871,7 +871,7 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
 
                _001GetElementRect(iItem, rect, ElementImageHover);
 
-               System.visual().imaging().color_blend(pgraphics, rect.top_left(), rect.size(), item.m_spdib->get_graphics(), null_point(), 0.84);
+               Application.imaging().color_blend(pgraphics, rect.top_left(), rect.size(), item.m_spdib->get_graphics(), null_point(), 0.84);
 
             }
             else if (uiImage != 0xffffffffu)
@@ -919,7 +919,7 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
 
             _001GetElementRect(iItem, rect, ElementImagePress);
 
-            System.visual().imaging().color_blend(pgraphics, rect.top_left(), rect.size(), item.m_spdib->get_graphics(), null_point(), 1.0);
+            Application.imaging().color_blend(pgraphics, rect.top_left(), rect.size(), item.m_spdib->get_graphics(), null_point(), 1.0);
 
          }
          else if (uiImage != 0xffffffff)
@@ -956,7 +956,7 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
 
             _001GetElementRect(iItem, rect, element_image);
 
-            System.visual().imaging().color_blend(pgraphics, rect.top_left(), rect.size(), item.m_spdib->get_graphics(), null_point(), 0.23);
+            Application.imaging().color_blend(pgraphics, rect.top_left(), rect.size(), item.m_spdib->get_graphics(), null_point(), 0.23);
 
          }
          else if (uiImage != 0xffffffff)
@@ -1031,7 +1031,7 @@ bool simple_toolbar::_001GetElementRect(int32_t iItem, LPRECT lprect, e_element 
 
    rect rItemPad = get_item_pad();
 
-   size sPress = get_press_shift();
+//   size sPress = get_press_shift();
 
    int iImageSpacing = get_image_spacing();
 
@@ -1039,9 +1039,9 @@ bool simple_toolbar::_001GetElementRect(int32_t iItem, LPRECT lprect, e_element 
 
    ::user::toolbar_item & item = m_itema(iItem);
 
-   BaseMenuCentral * pmenucentral = BaseMenuCentral::GetMenuCentral(get_app());
+//   BaseMenuCentral * pmenucentral = BaseMenuCentral::GetMenuCentral(get_app());
 
-   UINT uiImage = pmenucentral->CommandToImage(item.m_id);
+//   UINT uiImage = pmenucentral->CommandToImage(item.m_id);
 
    if ((item.m_fsStyle & TBSTYLE_SEP) != 0)
    {
@@ -1154,19 +1154,19 @@ void simple_toolbar::SetSizes(SIZE sizeButton, SIZE sizeImage)
    ASSERT(sizeButton.cy >= sizeImage.cy + 6);
 
    //   if (::IsWindow(get_handle()))
-   if (false)
-   {
-      // set the sizes via TB_SETBITMAPSIZE and TB_SETBUTTONSIZE
-#ifdef WINDOWSEX
-      VERIFY(send_message(TB_SETBITMAPSIZE, 0, MAKELONG(sizeImage.cx, sizeImage.cy)));
-      VERIFY(send_message(TB_SETBUTTONSIZE, 0, MAKELONG(sizeButton.cx, sizeButton.cy)));
-#else
-      throw todo(get_app());
-#endif
-
-      Invalidate();   // just to be nice if called when toolbar is visible
-   }
-   else
+//   if (false)
+//   {
+//      // set the sizes via TB_SETBITMAPSIZE and TB_SETBUTTONSIZE
+//#ifdef WINDOWSEX
+//      VERIFY(send_message(TB_SETBITMAPSIZE, 0, MAKELONG(sizeImage.cx, sizeImage.cy)));
+//      VERIFY(send_message(TB_SETBUTTONSIZE, 0, MAKELONG(sizeButton.cx, sizeButton.cy)));
+//#else
+//      //_throw(todo(get_app()));
+//#endif
+//
+//      Invalidate();   // just to be nice if called when toolbar is visible
+//   }
+//   else
    {
       // just set our internal values for later
       m_sizeButton = sizeButton;
@@ -1264,7 +1264,7 @@ void simple_toolbar::on_layout()
 
    }
 
-   if (m_dwCtrlStyle &TBSTYLE_ALIGN_CENTER)
+   if (m_dwCtrlStyle & TBSTYLE_ALIGN_CENTER)
    {
 
       output_debug_string("please_center_align");
@@ -1273,7 +1273,7 @@ void simple_toolbar::on_layout()
 
       GetClientRect(rectClient);
 
-      size s = CalcSize(convert < int32_t > (m_itema.get_count()));
+      CalcSize((int32_t) (m_itema.get_count()));
 
       for (index i = 0; i < m_itema.get_count(); i++)
       {
@@ -1621,7 +1621,7 @@ void simple_toolbar::_001OnImageListAttrib()
 
    spgraphics->CreateDC("DISPLAY", NULL, NULL, NULL);
 
-   System.visual().imaging().CreateHueImageList(
+   Application.imaging().CreateHueImageList(
       &spgraphics,
       m_pimagelistHue,
       m_pimagelist,
@@ -1636,7 +1636,7 @@ void simple_toolbar::_001OnImageListAttrib()
 
    }
 
-   System.visual().imaging().Createcolor_blend_ImageList(
+   Application.imaging().Createcolor_blend_ImageList(
       m_pimagelistBlend,
       m_pimagelist,
       RGB(255, 255, 240),
@@ -1650,7 +1650,7 @@ void simple_toolbar::_001OnImageListAttrib()
 
    }
 
-   System.visual().imaging().CreateHueImageList(
+   Application.imaging().CreateHueImageList(
       &spgraphics,
       m_pimagelistHueLight,
       m_pimagelist,
@@ -1843,7 +1843,7 @@ void simple_toolbar::_001OnNcCalcSize(::message::message * pobj)
 
 #else
 
-   throw todo(get_app());
+   _throw(todo(get_app()));
 
 #endif
 
@@ -1882,7 +1882,7 @@ int32_t simple_toolbar::WrapToolBar(int32_t nCount, int32_t nWidth)
 
    size sSpacing = get_item_spacing();
 
-   size sPress = get_press_shift();
+   //size sPress = get_press_shift();
 
    rect rItemPad = get_item_pad();
 
@@ -1940,7 +1940,7 @@ int32_t simple_toolbar::WrapToolBar(int32_t nCount, int32_t nWidth)
 
             sized size = pgraphics->GetTextExtent(str);
 
-            convert(dx, size.cx + EXTRA_TEXT_CX);
+            dx = (int32_t)  (size.cx + EXTRA_TEXT_CX);
 
          }
 
@@ -2578,28 +2578,28 @@ rect simple_toolbar::get_item_pad()
    if (r.left < 0)
    {
 
-      convert(r.left, m_dFontSize / 3);
+      r.left = (LONG)(m_dFontSize / 3);
 
    }
 
    if (r.right < 0)
    {
 
-      convert(r.right, m_dFontSize / 3);
+      r.right = (LONG) (m_dFontSize / 3);
 
    }
 
    if (r.top < 0)
    {
 
-      convert(r.top, m_dFontSize / 3);
+      r.top = (LONG) (m_dFontSize / 3);
 
    }
 
    if (r.bottom < 0)
    {
 
-      convert(r.bottom, m_dFontSize / 3);
+      r.bottom = (LONG) (m_dFontSize / 3);
 
    }
 
@@ -2618,25 +2618,25 @@ rect simple_toolbar::get_bar_border()
    if (r.left < 0)
    {
 
-      convert(r.left, m_dFontSize / 3);
+      r.left = (LONG) (m_dFontSize / 3);
 
    }
    if (r.right < 0)
    {
 
-      convert(r.right, m_dFontSize / 3);
+      r.right = (LONG) (m_dFontSize / 3);
 
    }
    if (r.top < 0)
    {
 
-      convert(r.top, m_dFontSize / 3);
+      r.top = (LONG) (m_dFontSize / 3);
 
    }
    if (r.bottom < 0)
    {
 
-      convert(r.bottom, m_dFontSize / 3);
+      r.bottom = (LONG)(m_dFontSize / 3);
 
    }
 
@@ -2705,14 +2705,14 @@ size simple_toolbar::get_separator_size()
    if (s.cx < 0)
    {
 
-      convert(s.cx, m_dFontSize * 2 / 3);
+      s.cx = LONG(m_dFontSize * 2 / 3);
 
    }
 
    if (s.cy < 0)
    {
 
-      convert(s.cy, m_dFontSize * 2 / 3);
+      s.cy = LONG(m_dFontSize * 2 / 3);
 
    }
 
@@ -2732,7 +2732,7 @@ int simple_toolbar::get_image_spacing()
    if (i < 0)
    {
 
-      convert(i, m_dFontSize / 4);
+      i = (int)(m_dFontSize / 4);
 
    }
 

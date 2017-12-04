@@ -30,7 +30,7 @@ namespace userex
       virtual ~pane_view();
 
 
-      void on_create_view(::user::view_creator_data * pcreatordata);
+      void on_create_view(::user::view_creator_data * pcreatordata) override;
 
 
       void set_new_pane_info(id id, const char * pszMatter);

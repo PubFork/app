@@ -36,6 +36,9 @@ namespace ios
       
       virtual void construct(oswindow hwnd);
       
+      virtual void assert_valid() const override;
+      virtual void dump(dump_context & dumpcontext) const override;
+      
       
       virtual bool create_message_queue(::user::interaction * pui,const char * pszName) override;
       
@@ -158,6 +161,7 @@ namespace ios
       //      void SetFont(::draw2d::font* pFont, bool bRedraw = TRUE);
       //    ::draw2d::font* GetFont();
       
+      virtual void defer_update_text_view();
       
       // oswindow size and position Functions
       virtual bool WfiIsIconic() override;
@@ -619,8 +623,6 @@ namespace ios
       static_function bool PASCAL ReflectLastMsg(oswindow hWndChild, LRESULT* pResult = NULL);
       
       virtual bool CheckAutoCenter() override;
-      virtual void assert_valid() const override;
-      virtual void dump(dump_context & dumpcontext) const override;
       static_function bool PASCAL GrayCtlColor(HDC hDC, oswindow hWnd, UINT nCtlColor,
                                                HBRUSH hbrGray, COLORREF clrText);
       
@@ -681,6 +683,7 @@ namespace ios
       
       
       void _001UpdateWindow();
+      void _001UpdateScreen() override;
       
       
       void _001OnTriggerMouseInside() override;
@@ -695,6 +698,7 @@ namespace ios
       virtual bool round_window_key_down(::user::e_key ekey) override;
       virtual bool round_window_key_up(::user::e_key ekey) override;
       virtual bool round_window_on_text(const char * pszText) override;
+      virtual bool round_window_on_sel_text(int iBeg, int iEnd) override;
 
       
       virtual void round_window_resized(CGRect rect) override;
@@ -713,7 +717,7 @@ namespace ios
       virtual bool on_keyboard_focus(::user::elemental * pfocus) override;
       
       
-      virtual bool has_pending_graphical_update();
+      virtual bool has_pending_graphical_update() override;
       
    };
    

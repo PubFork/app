@@ -88,7 +88,7 @@ void command_target::_001SendCommandProbe(::user::command * pcommand)
 void command_target::_001OnCmdMsg(::user::command * pcommand)
 {
 
-   if (pcommand->m_id.m_etype == ::message::type_command)
+   if (pcommand->m_id.m_emessagetype == ::message::type_command)
    {
 
       on_command_probe(pcommand);
@@ -106,7 +106,7 @@ void command_target::_001OnCmdMsg(::user::command * pcommand)
       on_command(pcommand);
 
    }
-   else if (pcommand->m_id.m_etype == ::message::type_command_probe)
+   else if (pcommand->m_id.m_emessagetype == ::message::type_command_probe)
    {
 
       on_command_probe(pcommand);
@@ -117,7 +117,7 @@ void command_target::_001OnCmdMsg(::user::command * pcommand)
    else
    {
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
 
    }
 

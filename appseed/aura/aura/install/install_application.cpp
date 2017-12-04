@@ -1,8 +1,9 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 #define ID_ONE 1
 
-#if defined(INSTALL_SUBSYSTEM)
+#include "install_net.h"
+#include "aura/net/sockets/http/sockets_http_session.h"
 
 
 namespace install
@@ -14,22 +15,23 @@ namespace install
    {
 
       m_bRunMainLoop = true;
-      
+
       m_pwindow = NULL;
 
       m_bAdmin = false;
 
       m_dProgress = -1.0;
-      
+
       m_dProgress1 = -1.0;
-      
+
       m_dProgress2 = -1.0;
 
       m_pthreadSsl = NULL;
+
 #ifdef WINDOWS
 
       m_hinstance = ::GetModuleHandleA(NULL);
-      
+
 #endif
 
       m_hmutexSpabootInstall = NULL;
@@ -37,9 +39,6 @@ namespace install
       m_emessage = message_none;
 
       m_bInstallerInstalling = false;
-
-      construct(NULL);
-
 
    }
 
@@ -97,7 +96,7 @@ namespace install
       if (m_spmutexAppInstall->already_exists())
       {
 
-         m_iReturnCode = -202;
+         m_error.set(-202);
 
          return false;
 
@@ -114,7 +113,7 @@ namespace install
       if (!m_rxchannel.create(strChannel))
       {
 
-         m_iReturnCode = -1;
+         m_error.set(-1);
 
          return false;
 
@@ -125,7 +124,7 @@ namespace install
    }
 
 
-   bool application::start_instance()
+   bool application::init_instance()
    {
 
       defer_show_debug_box();
@@ -146,7 +145,7 @@ namespace install
 
 #ifdef WINDOWS
       ::CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
-      
+
 #endif
 
       // this is currently hard-coded:
@@ -177,7 +176,7 @@ namespace install
 
 #ifdef WINDOWS
                ::CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
-               
+
 #endif
 
                m_bootstrap["admin:x86"] = new bootstrap(this);
@@ -254,7 +253,9 @@ namespace install
 
          m_strInstallTraceLabel = "install-" + System.get_system_configuration() + "-" + ::str::from(OSBIT);
 
-         m_iReturnCode = app_app_main();
+         //m_iErrorCode = app_app_main();
+
+         app_app_main();
 
       }
 
@@ -266,12 +267,12 @@ namespace install
 
       {
 
-         ::mutex mutexCommandFile(get_thread_app(), "Local\\ca2_spa_command:" + process_platform_dir_name2());
+         ::mutex mutexCommandFile(get_app(), "Local\\ca2_spa_command:" + process_platform_dir_name2());
 
          ::file::path path = ::dir::system() / process_platform_dir_name2() / "spa_command.txt";
 
          stringa stra;
-         
+
          if(file_load_stra(path, stra, false))
          {
 
@@ -289,7 +290,7 @@ namespace install
    string application::pick_command_line()
    {
 
-      ::mutex mutexCommandFile(get_thread_app(), "Local\\ca2_spa_command:" + process_platform_dir_name2());
+      ::mutex mutexCommandFile(get_app(), "Local\\ca2_spa_command:" + process_platform_dir_name2());
 
       ::file::path path = ::dir::system() / process_platform_dir_name2() / "spa_command.txt";
 
@@ -331,7 +332,7 @@ namespace install
          m_pwindow = new window(this);
 
       }
-      
+
 #ifdef WINDOWS
 
       if (!::IsWindow(m_pwindow->m_hwnd))
@@ -352,7 +353,7 @@ namespace install
          return false;
 
       }
-      
+
 #endif
 
       return true;
@@ -369,7 +370,7 @@ namespace install
          return true;
 
       }
-      
+
 #ifdef WINDOWS
 
       if (!::IsWindow(m_pwindow->m_hwnd))
@@ -385,7 +386,7 @@ namespace install
          return false;
 
       }
-      
+
 #endif
 
       return true;
@@ -393,7 +394,7 @@ namespace install
    }
 
 
-   int application::app_app_main()
+   void application::app_app_main()
    {
 
       ::install::mutex mutex(process_platform_dir_name2());
@@ -403,7 +404,9 @@ namespace install
 
          add_command_line(System.os().get_command_line());
 
-         return -34;
+         m_error.set(-34);
+
+         return;
 
       }
 
@@ -415,7 +418,7 @@ namespace install
          if (check_soon_launch(str, true, m_dwInstallGoodToCheckAgain))
          {
 
-            return 0;
+            return;
 
          }
 
@@ -426,7 +429,9 @@ namespace install
       if (!show_window())
       {
 
-         return -1;
+         m_error.set(-1);
+
+         return;
 
       }
 
@@ -435,33 +440,35 @@ namespace install
       if (!start_app_app(process_platform_dir_name2()))
       {
 
-         return -2;
+         m_error.set(-2);
+
+         return;
 
       }
 
       m_pwindow->main();
 
-      return m_iReturnCode;
+      //return m_iErrorCode;
 
    }
 
-   
 
 
-   int application::start_app_app(string strPlatform)
+
+   bool application::start_app_app(string strPlatform)
    {
 
       m_bFinished = false;
 
       m_bootstrap[strPlatform] = new bootstrap(this);
 
-      m_bootstrap[strPlatform]->m_pthreadInstall = ::fork(this, [=]()
+      m_bootstrap[strPlatform]->m_pthreadInstall = fork([=]()
       {
-         
+
 #ifdef WINDOWS
-         
+
          ::CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
-         
+
 #endif
 
          m_bootstrap[strPlatform]->m_strPlatform = strPlatform;
@@ -471,11 +478,21 @@ namespace install
          try
          {
 
-            m_iReturnCode = m_bootstrap[strPlatform]->install();
+
+            int iErrorCode = m_bootstrap[strPlatform]->install();
+
+            if(iErrorCode != 0)
+            {
+
+               m_error.set(iErrorCode);
+
+            }
 
          }
          catch (...)
          {
+
+            m_error.set(-1);
 
          }
 
@@ -483,17 +500,17 @@ namespace install
 
          m_bFinished = true;
 
-         return m_iReturnCode;
+         //return m_iErrorCode;
 
       });
 
-      return 1;
+      return true;
 
    }
 
 
 
-   
+
    void application::start_web_server()
    {
 
@@ -505,7 +522,7 @@ namespace install
          m_pthreadSsl->m_iSsl = 1;
 
          m_pthreadSsl->m_strIp = "127.0.0.1";
-         
+
 #ifdef WINDOWS
 
          m_pthreadSsl->m_strCat = "cat://" + read_resource_as_string_dup(NULL, ID_ONE, "CAT");
@@ -554,7 +571,7 @@ namespace install
             }
 #endif
          }
-         
+
 #endif
 
          m_pthreadSsl->begin();
@@ -566,7 +583,7 @@ namespace install
 
    bool application::install_get_admin()
    {
-      
+
       return m_bAdmin;
 
    }
@@ -584,7 +601,7 @@ namespace install
    bool application::is_user_service_running()
    {
 
-      ::mutex mutex(get_thread_app(), "Local\\ca2_application_local_mutex:application-core/user_service");
+      ::mutex mutex(get_app(), "Local\\ca2_application_local_mutex:application-core/user_service");
 
       return mutex.already_exists();
 
@@ -631,7 +648,7 @@ namespace install
 
 
 
-   
+
    void application::install_set_id(const char * psz)
    {
 
@@ -728,7 +745,7 @@ namespace install
 
    //}
 
-   
+
 
 
 
@@ -802,10 +819,10 @@ namespace install
    }
 
 
-   int32_t application::exit_application()
+   void application::term_instance()
    {
 
-      ::aura::application::exit_application();
+      ::aura::application::term_instance();
 
 
       if(m_pwindow != NULL)
@@ -818,7 +835,7 @@ namespace install
 
       ::aura::del(m_pinstaller);
 
-      return true;
+//      return true;
 
    }
 
@@ -982,13 +999,5 @@ DWORD install_status::calc_when_is_good_to_check_again()
    return dwGoodToCheckAgain;
 
 }
-
-
-
-
-
-
-#endif
-
 
 

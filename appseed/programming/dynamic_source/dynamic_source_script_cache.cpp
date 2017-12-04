@@ -116,21 +116,21 @@ void script_cache::cache(script * pscript)
 void script_cache::set_all_out_of_date()
 {
    return;
-   single_lock sl(&m_cs, TRUE);
-   sp(script) pscript;
-   string strName;
-   POSITION pos = m_map.get_start_position();
-   while(pos != NULL)
-   {
-      m_map.get_next_assoc(pos, strName, pscript);
-
-      ds_script * pdsscript = dynamic_cast < ds_script * > (pscript.m_p);
-      if(pdsscript != NULL)
-      {
-         pdsscript->m_bShouldBuild = true;
-      }
-
-   }
+//   single_lock sl(&m_cs, TRUE);
+//   sp(script) pscript;
+//   string strName;
+//   POSITION pos = m_map.get_start_position();
+//   while(pos != NULL)
+//   {
+//      m_map.get_next_assoc(pos, strName, pscript);
+//
+//      ds_script * pdsscript = dynamic_cast < ds_script * > (pscript.m_p);
+//      if(pdsscript != NULL)
+//      {
+//         pdsscript->m_bShouldBuild = true;
+//      }
+//
+//   }
 }
 
 

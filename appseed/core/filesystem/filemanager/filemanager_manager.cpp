@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 
@@ -158,9 +158,9 @@ namespace filemanager
       ::user::document(papp),
       ::userfs::document(papp)
    {
-      
+
       m_bFullBrowse = false;
-      
+
       m_pfilewatcherlistenerthread = NULL;
 
       //command_signalid id;
@@ -401,10 +401,11 @@ namespace filemanager
 
    }
 
+
    void manager::defer_check_manager_id(string strManagerId)
    {
 
-      if (Session.filemanager().std().m_pathFilemanagerProject.has_char())
+      if (Session.filemanager()->m_pathFilemanagerProject.has_char())
       {
 
          if (!is_valid_manager_id(m_strManagerId) || is_valid_manager_id(strManagerId))
@@ -423,17 +424,16 @@ namespace filemanager
 
             }
 
-            m_dataid = string(Application.m_dataid.m_id.m_psz) + "/filemanager/document/" + m_strManagerId;
+            set_data_key_modifier(m_strManagerId);
 
             sp(main_frame) pframe = get_view()->GetTypedParent < main_frame >();
 
             if (pframe.is_set())
             {
 
-               pframe->m_dataid = string(Application.m_dataid.m_id.m_psz) + "/filemanager/main_frame/" + m_strManagerId;
+               pframe->set_data_key_modifier(m_strManagerId);
 
             }
-
 
          }
 
@@ -459,20 +459,13 @@ namespace filemanager
 
    void manager::FileManagerTopicOK()
    {
+
    }
+
 
    void manager::FileManagerTopicCancel()
    {
-   }
 
-
-   string manager::calc_data_key(::database::id & id)
-   {
-      string str;
-      str += m_dataid.m_id;
-      str += ".";
-      str += id.m_id;
-      return str;
    }
 
 
@@ -595,19 +588,19 @@ namespace filemanager
       {
 
          if (::str::begins(strPath, astr.strUifsProtocol)
-            || ::str::begins(strPath, astr.strFsProtocol))
+               || ::str::begins(strPath, astr.strFsProtocol))
          {
 
-            if (Session.filemanager().std().m_pathFilemanagerProject.is_empty())
+            if (Session.filemanager()->m_pathFilemanagerProject.is_empty())
             {
 
-               data_set(".local://InitialBrowsePath", strPath);
+               data_set("&data_source=local&InitialBrowsePath", strPath);
 
             }
             else
             {
 
-               Session.filemanager().std().save_filemanager_project();
+               Session.filemanager()->save_filemanager_project();
 
             }
 
@@ -616,7 +609,7 @@ namespace filemanager
          {
 
 
-            if (Session.filemanager().std().m_pathFilemanagerProject.is_empty())
+            if (Session.filemanager()->m_pathFilemanagerProject.is_empty())
             {
 
                id idMachine;
@@ -627,15 +620,15 @@ namespace filemanager
                idMachine = "Windows Desktop";
 #endif
 
-               data_set(".local://InitialBrowsePath", "machinefs://");
-               data_set(".local://InitialBrowsePath." + idMachine, strPath);
-               //               data_set(".local://InitialBrowsePath", strPath);
+               data_set("&data_source=local&InitialBrowsePath", "machinefs://");
+               data_set("&data_source=local&InitialBrowsePath." + idMachine, strPath);
+               //               data_set("&data_source=local&InitialBrowsePath", strPath);
 
             }
             else
             {
 
-               Session.filemanager().std().save_filemanager_project();
+               Session.filemanager()->save_filemanager_project();
 
             }
 
@@ -662,7 +655,7 @@ namespace filemanager
    {
 
       if (get_filemanager_data() != NULL
-         && get_filemanager_template() != NULL)
+            && get_filemanager_template() != NULL)
       {
          //         ::schema * ptemplate = get_filemanager_template();
          if (pcommand->m_id.m_psz == get_filemanager_template()->m_strLevelUp)
@@ -672,7 +665,7 @@ namespace filemanager
             return;
          }
       }
-      
+
       ::user::document::on_command(pcommand);
 
    }
@@ -738,7 +731,7 @@ namespace filemanager
    void manager::_001OnNewManager(::message::message * pobj)
    {
 
-      Session.filemanager().std().add_manager("", canew(::create(Application.handler())));
+      Session.filemanager()->add_manager("", canew(::create(Application.handler())));
 
       pobj->m_bRet = true;
 
@@ -778,7 +771,7 @@ namespace filemanager
 
       }
 
-      Session.filemanager().std().remove_manager(pdoc.m_p);
+      Session.filemanager()->remove_manager(pdoc.m_p);
 
       pobj->m_bRet = true;
 
@@ -993,13 +986,7 @@ namespace filemanager
    void manager::Initialize(bool bMakeVisible, bool bInitialBrowsePath)
    {
 
-      //m_bInitialBrowsePath = true;
-
-      string str;
-
-      str.Format("manager(%s)", get_filemanager_data()->m_strDISection);
-
-      m_dataid = str;
+      set_data_key_modifier(get_filemanager_data()->m_strDataKeyModifier);
 
       CreateViews();
 
@@ -1010,7 +997,9 @@ namespace filemanager
       if (bInitialBrowsePath)
       {
 
-         if (data_get(".local://InitialBrowsePath", str))
+         string str;
+
+         if (data_get("&data_source=local&InitialBrowsePath", str))
          {
 
             if (str == "machinefs://")
@@ -1024,7 +1013,7 @@ namespace filemanager
                idMachine = "Windows Desktop";
 #endif
 
-               if (data_get(".local://InitialBrowsePath." + idMachine, str))
+               if (data_get("&data_source=local&InitialBrowsePath." + idMachine, str))
                {
 
                   FileManagerBrowse(str, ::action::source::database_default());
@@ -1123,10 +1112,10 @@ namespace filemanager
       update_all_views(NULL, 0, &uh);
    }
 
-   
+
    bool manager::HandleDefaultFileManagerItemCmdMsg(::user::command * pcommand, ::fs::item_array & itema)
    {
-      
+
       if (pcommand->m_id.m_emessagetype == ::message::type_command)
       {
 
@@ -1147,7 +1136,7 @@ namespace filemanager
          {
 
             get_filemanager_data()->m_pcallback->OnFileManagerItemCommand(get_filemanager_data(), pcommand->m_id, itema);
-            
+
             return true;
 
          }
@@ -1162,7 +1151,7 @@ namespace filemanager
    operation_document * manager::get_operation_doc(bool bSwitch)
    {
 
-      ::filemanager::tab_view * ptabview = Session.filemanager().std().m_pdoctemplateMain->get_document(0)->get_typed_view < ::filemanager::tab_view >();
+      ::filemanager::tab_view * ptabview = Session.filemanager()->m_pdoctemplateMain->get_document(0)->get_typed_view < ::filemanager::tab_view >();
 
       if (ptabview == NULL)
          return NULL;
@@ -1299,7 +1288,7 @@ namespace filemanager
       if (!pframe->LoadToolBar("filemanager", strToolbar))
       {
 
-         TRACE0("Failed to create filemanager toolbar\n");
+         TRACE("Failed to create filemanager toolbar");
 
          return false;      // fail to create
 

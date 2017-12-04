@@ -656,14 +656,14 @@ class CefV8Value : public virtual CefBase {
   virtual bool ClearException() =0;
 
   ///
-  // Returns true if this object will re-throw future exceptions. This attribute
+  // Returns true if this object will re-_throw( future exceptions. This attribute
   // exists only in the scope of the current CEF value object.
   ///
   /*--cef()--*/
   virtual bool WillRethrowExceptions() =0;
 
   ///
-  // Set whether this object will re-throw future exceptions. By default
+  // Set whether this object will re-_throw( future exceptions. By default
   // exceptions are not re-thrown. If a exception is re-thrown the current
   // context should not be accessed again until after the exception has been
   // caught and not re-thrown. Returns true on success. This attribute exists

@@ -1,8 +1,8 @@
-﻿#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
-#include "aura/user/colorertake5/colorertake5.h"
+//include "aura/user/colorertake5/colorertake5.h"
 
-extern CLASS_DECL_BASE thread_int_ptr < DWORD_PTR > t_time1;
+extern CLASS_DECL_AURA thread_int_ptr < DWORD_PTR > t_time1;
 
 namespace user
 {
@@ -45,9 +45,9 @@ namespace user
    plain_edit::~plain_edit()
    {
 
-      ::aura::del(m_pcolorereditor);
+      //::aura::del(m_pcolorereditor);
 
-      ::aura::del(m_plines);
+      //::aura::del(m_plines);
 
       ::aura::del(m_pinternal);
 
@@ -66,10 +66,11 @@ namespace user
       m_pinsert = NULL;
 
       m_bColorerTake5 = false;
-      m_pcolorereditor = NULL;
-      m_plines = new colorertake5::text_lines;
+      //m_pcolorereditor = NULL;
+      //m_plines = new colorertake5::text_lines;
 
-      m_plines->lines.set_size(10, 100);
+//      m_plines->lines.set_size(10, 100);
+      m_straLines.set_size(10, 100);
 
       m_daExtent.set_size(10, 100);
 
@@ -105,24 +106,24 @@ namespace user
    }
 
 
-   colorertake5::base_editor * plain_edit::colorertake5()
-   {
+   //colorertake5::base_editor * plain_edit::colorertake5()
+   //{
 
-      if(m_bColorerTake5)
-      {
+   //   if(m_bColorerTake5)
+   //   {
 
-         if (m_pcolorereditor == NULL)
-         {
+   //      if (m_pcolorereditor == NULL)
+   //      {
 
-            m_pcolorereditor = new colorertake5::base_editor(get_app());
+   //         m_pcolorereditor = new colorertake5::base_editor(get_app());
 
-         }
+   //      }
 
-      }
+   //   }
 
-      return m_pcolorereditor;
+   //   return m_pcolorereditor;
 
-   }
+   //}
 
 
    void plain_edit::install_message_routing(::message::sender * pinterface)
@@ -363,7 +364,8 @@ namespace user
       //size size3;
       //size3 = pgraphics->GetTextExtent(unitext("gGYIﾍ"));
       int32_t iLineHeight = m_iLineHeight;
-      stringa & straLines = m_plines->lines;
+//      stringa & straLines = m_plines->lines;
+      stringa & straLines = m_straLines;
       string str1;
       string str2;
       string str3;
@@ -381,7 +383,7 @@ namespace user
 
       string strLineGraphics;
 
-      ::colorertake5::base_editor * pcolorer = colorertake5();
+      //::colorertake5::base_editor * pcolorer = colorertake5();
 
       for (index iLine = m_iLineStart; iLine < m_iLineEnd; i++, iLine++)
       {
@@ -390,62 +392,62 @@ namespace user
 
          strLineGraphics = strLine;
 
-         colorertake5::LineRegion * pregion = NULL;
+         //colorertake5::LineRegion * pregion = NULL;
 
-         if (m_bColorerTake5)
+         //if (m_bColorerTake5)
+         //{
+
+         //   pregion = pcolorer->getLineRegions(i);
+
+         //}
+
+         //if (pregion != NULL)
+         //{
+
+         //   for (; pregion != NULL; pregion = pregion->next)
+         //   {
+         //      if (pregion->special || pregion->rdef == NULL)
+         //         continue;
+         //      index end = pregion->end;
+         //      if (end == -1)
+         //         end = strLine.get_length();
+         //      strsize x = pregion->start;
+         //      strsize len = end - pregion->start;
+         //      if (x < 0)
+         //      {
+         //         len += x;
+         //         x = 0;
+         //      }
+         //      if (len < 0)
+         //         continue;
+         //      string strExtent1;
+         //      strExtent1 = strLine.Left(x);
+         //      string strExtent2;
+         //      strExtent2 = strLine.Mid(x, len);
+         //      int x1;
+         //      x1 = (int)(get_line_extent(iLine, x));
+         //      if (pregion->styled()->bback)
+         //      {
+         //         pgraphics->FillSolidRect((int32_t)(left + x1), (int32_t)y, x1, m_iLineHeight, pregion->styled()->back);
+         //      }
+         //      ::draw2d::brush_sp brushText(allocer());
+         //      if (pregion->styled()->bfore)
+         //      {
+         //         brushText->create_solid(pregion->styled()->fore);
+         //         pgraphics->SelectObject(brushText);
+         //      }
+         //      else
+         //      {
+         //         pgraphics->SelectObject(brushTextCr);
+         //      }
+         //      pgraphics->text_out(left + x1, y, strExtent2);
+
+         //   }
+         //}
+         //else
          {
 
-            pregion = pcolorer->getLineRegions(i);
-
-         }
-
-         if (pregion != NULL)
-         {
-
-            for (; pregion != NULL; pregion = pregion->next)
-            {
-               if (pregion->special || pregion->rdef == NULL)
-                  continue;
-               index end = pregion->end;
-               if (end == -1)
-                  end = strLine.get_length();
-               strsize x = pregion->start;
-               strsize len = end - pregion->start;
-               if (x < 0)
-               {
-                  len += x;
-                  x = 0;
-               }
-               if (len < 0)
-                  continue;
-               string strExtent1;
-               strExtent1 = strLine.Left(x);
-               string strExtent2;
-               strExtent2 = strLine.Mid(x, len);
-               int x1;
-               convert(x1, get_line_extent(iLine, x));
-               if (pregion->styled()->bback)
-               {
-                  pgraphics->FillSolidRect((int32_t)(left + x1), (int32_t)y, x1, m_iLineHeight, pregion->styled()->back);
-               }
-               ::draw2d::brush_sp brushText(allocer());
-               if (pregion->styled()->bfore)
-               {
-                  brushText->create_solid(pregion->styled()->fore);
-                  pgraphics->SelectObject(brushText);
-               }
-               else
-               {
-                  pgraphics->SelectObject(brushTextCr);
-               }
-               pgraphics->text_out(left + x1, y, strExtent2);
-
-            }
-         }
-         else
-         {
-
-            COLORREF crOverride;
+            COLORREF crOverride = ARGB(255, 0, 0, 0);
 
             bool bOverride = false;
 
@@ -527,7 +529,7 @@ namespace user
             if (m_bPassword)
             {
 
-               strLine = ::str::block('*', convert < int32_t > (strLine.get_length()));
+               strLine = ::str::block('*', int32_t (strLine.get_length()));
 
             }
 
@@ -538,7 +540,7 @@ namespace user
             if (m_bPassword)
             {
 
-               strLineGraphics = ::str::block('*', convert < int32_t > (strLineGraphics.get_length()));
+               strLineGraphics = ::str::block('*', int32_t (strLineGraphics.get_length()));
 
             }
 
@@ -672,14 +674,14 @@ namespace user
       Session.keyboard(); // trigger keyboard creationg
 #endif
 
-      if (m_bColorerTake5)
-      {
+      //if (m_bColorerTake5)
+      //{
 
-         ::colorertake5::base_editor * pcolorer = colorertake5();
-         pcolorer->colorertake5::base_editor::initialize(m_plines);
-         pcolorer->colorertake5::base_editor::setRegionMapper("rgb", "default");
+      //   ::colorertake5::base_editor * pcolorer = colorertake5();
+      //   pcolorer->colorertake5::base_editor::initialize(m_plines);
+      //   pcolorer->colorertake5::base_editor::setRegionMapper("rgb", "default");
 
-      }
+      //}
 
       if (m_ptree == NULL)
       {
@@ -1118,7 +1120,7 @@ namespace user
 
       synch_lock sl(m_pmutex);
 
-      return convert < strsize > (m_ptree->m_editfile.get_length());
+      return strsize (m_ptree->m_editfile.get_length());
 
    }
 
@@ -1273,7 +1275,7 @@ namespace user
 
       index xEnd = 0;
 
-      convert(xEnd, get_line_extent(iLine, m_iaLineLen[iLine]));
+      xEnd = index (get_line_extent(iLine, m_iaLineLen[iLine]));
 
       rect rectClient;
 
@@ -1548,7 +1550,7 @@ namespace user
 
       select_font(pgraphics, font_plain_edit);
 
-      const int iLenUniText = 14;
+      //const int iLenUniText = 14;
 
       sized sizeUniText;
 
@@ -1660,7 +1662,8 @@ namespace user
 
       strsize iStrLen;
 
-      m_plines->lines.set_size(m_iLineEnd - m_iLineStart);
+      //m_plines->lines.set_size(m_iLineEnd - m_iLineStart);
+      m_straLines.set_size(m_iLineEnd - m_iLineStart);
 
       i = 0;
 
@@ -1695,10 +1698,12 @@ namespace user
 
          string strLine = string((const char *)&mem.get_data()[iPos], iStrLen);
 
-         if (strLine != m_plines->lines[i])
+         //if (strLine != m_plines->lines[i])
+         if (strLine != m_straLines[i])
          {
 
-            m_plines->lines[i] = strLine;
+            //m_plines->lines[i] = strLine;
+            m_straLines[i] = strLine;
 
             m_daExtent[i + iLineStart].set_size(0);
 
@@ -1725,16 +1730,18 @@ namespace user
 
       m_y = ptOffset.y;
 
-      ::colorertake5::base_editor * pcolorer = colorertake5();
+      //::colorertake5::base_editor * pcolorer = colorertake5();
 
-      if (pcolorer != NULL)
-      {
+      //if (pcolorer != NULL)
+      //{
 
-         pcolorer->visibleTextEvent(m_iLineStart, m_iLineCount);
+      //   pcolorer->visibleTextEvent(m_iLineStart, m_iLineCount);
 
-      }
+      //}
 
-      stringa & straLines = m_plines->lines;
+      //stringa & straLines = m_plines->lines;
+
+      stringa & straLines = m_straLines;
 
       if (iLineUpdate < 0)
       {
@@ -1781,7 +1788,7 @@ namespace user
          if (m_daExtent[m_iLineStart + i].get_size() <= 0)
          {
 
-            m_daExtent[m_iLineStart + i].set_size(strLine.get_length());
+            m_daExtent[m_iLineStart + i].set_size(strLine.get_length() + 1);
 
             while (*pszNext != '\0')
             {
@@ -1917,7 +1924,7 @@ namespace user
 
       select_font(pgraphics, font_plain_edit);
 
-      const int iLenUniText = 14;
+      //const int iLenUniText = 14;
 
       sized sizeUniText;
 
@@ -2029,7 +2036,11 @@ namespace user
 
       strsize iStrLen;
 
-      m_plines->lines.set_size(m_iLineEnd - m_iLineStart);
+      //m_plines->lines.set_size(m_iLineEnd - m_iLineStart);
+
+      stringa & straLines = m_straLines;
+
+      straLines.set_size(m_iLineEnd - m_iLineStart);
 
       i = 0;
 
@@ -2064,10 +2075,13 @@ namespace user
 
          string strLine = string((const char *)&mem.get_data()[iPos], iStrLen);
 
-         if (strLine != m_plines->lines[i])
+         stringa & straLines = m_straLines;
+
+         //if (strLine != m_plines->lines[i])
+         if (strLine != straLines[i])
          {
 
-            m_plines->lines[i] = strLine;
+            straLines[i] = strLine;
 
             m_daExtent[i + iLineStart].set_size(0);
 
@@ -2097,16 +2111,17 @@ namespace user
 
       m_y = ptOffset.y;
 
-      ::colorertake5::base_editor * pcolorer = colorertake5();
+      //::colorertake5::base_editor * pcolorer = colorertake5();
 
-      if (pcolorer != NULL)
-      {
+      //if (pcolorer != NULL)
+      //{
 
-         pcolorer->visibleTextEvent(m_iLineStart, m_iLineCount);
+      //   pcolorer->visibleTextEvent(m_iLineStart, m_iLineCount);
 
-      }
+      //}
 
-      stringa & straLines = m_plines->lines;
+//      stringa & straLines = m_plines->lines;
+//      stringa & straLines = m_straLines;
 
       if (iLineUpdate < 0)
       {
@@ -2218,7 +2233,7 @@ namespace user
       if (iLineUpdate < 0)
       {
 
-         convert(m_sizeTotal.cy, (((int32_t)m_iaLineLen.get_count() + (m_bMultiLine ? MAX(5, m_iLineCount) : 0)) * m_iLineHeight));
+         m_sizeTotal.cy = (LONG) ((((int32_t)m_iaLineLen.get_count() + (m_bMultiLine ? MAX(5, m_iLineCount) : 0)) * m_iLineHeight));
 
          class size sizePage;
 
@@ -2379,7 +2394,7 @@ namespace user
 
             strsize iRel = iSel - i1;
 
-            convert(x, get_line_extent(iLine, iRel));
+            x = (int32_t) (get_line_extent(iLine, iRel));
 
             return iLine;
 
@@ -2417,7 +2432,8 @@ namespace user
 
       }
 
-      stringa & straLines = m_plines->lines;
+//      stringa & straLines = m_plines->lines;
+      stringa & straLines = m_straLines;
 
       if (iLine >= straLines.get_size())
       {
@@ -2524,7 +2540,7 @@ namespace user
 
             int x;
 
-            convert(x, get_line_extent(iLine, iRel));
+            x = (int) (get_line_extent(iLine, iRel));
 
             x = rectClient.left + x;
 
@@ -2544,7 +2560,7 @@ namespace user
 
       synch_lock sl(m_pmutex);
 
-      stringa & straLines = m_plines->lines;
+      //stringa & straLines = m_plines->lines;
 
       strsize i1;
 
@@ -2670,7 +2686,7 @@ namespace user
 
       int32_t lim = 0;
 
-      bool bFound = false;
+      //bool bFound = false;
 
       string strLine = get_line(iLine);
 
@@ -2710,7 +2726,7 @@ namespace user
 
          int x;
 
-         convert(x, get_line_extent(iLine, strExtent.length()));
+         x = (int) (get_line_extent(iLine, strExtent.length()));
 
          lim2 = x;
 
@@ -2863,7 +2879,7 @@ end:
          else if (::comparison::gt(iSelStart, m_ptree->m_editfile.get_length()))
          {
 
-            convert(iSelStart, m_ptree->m_editfile.get_length());
+            iSelStart = (strsize) (m_ptree->m_editfile.get_length());
 
          }
 
@@ -2876,7 +2892,7 @@ end:
          else if (::comparison::gt(iSelEnd, m_ptree->m_editfile.get_length()))
          {
 
-            convert(iSelEnd, m_ptree->m_editfile.get_length());
+            iSelEnd = (strsize) (m_ptree->m_editfile.get_length());
 
          }
 
@@ -3208,7 +3224,7 @@ end:
 
                }
 
-               iLastR = 0;
+               //iLastR = 0;
 
             }
             else
@@ -3400,6 +3416,207 @@ finished_update:
 
    }
 
+   void plain_edit::_001DeleteSel()
+   {
+
+      bool bFullUpdate = true;
+
+      index iLineUpdate = -1;
+
+      if(_001DeleteSel(bFullUpdate, iLineUpdate))
+      {
+
+         internal_edit_update(bFullUpdate, iLineUpdate);
+
+      }
+
+   }
+
+
+   bool plain_edit::_001DeleteSel(bool & bFullUpdate, index & iLineUpdate)
+   {
+
+      strsize i1 = m_ptree->m_iSelStart;
+
+      strsize i2 = m_ptree->m_iSelEnd;
+
+      ::sort::sort_non_negative(i1, i2);
+
+      if(i1 < 0 || i1 > _001GetTextLength())
+      {
+
+         i1  = _001GetTextLength();
+
+      }
+
+      if(i2 < 0 || i2 > _001GetTextLength())
+      {
+
+         i2 = _001GetTextLength();
+
+      }
+
+      if(i1 >= i2)
+      {
+
+         return false;
+
+      }
+
+      plain_text_set_sel_command * psetsel = canew(plain_text_set_sel_command);
+
+      psetsel->m_iPreviousSelStart = m_ptree->m_iSelStart;
+
+      psetsel->m_iPreviousSelEnd = m_ptree->m_iSelEnd;
+
+      string strSel;
+
+      _001GetSelText(strSel, i1, i2);
+
+      bFullUpdate = strSel.find('\n') >= 0 || strSel.find('\r') >= 0;
+
+      if (!bFullUpdate)
+      {
+
+         iLineUpdate = SelToLine(i1);
+
+      }
+
+      m_ptree->m_editfile.seek(i1, ::file::seek_begin);
+
+      m_ptree->m_editfile.Delete((memory_size_t)(i2 - i1));
+
+      m_pinsert = NULL;
+
+      IndexRegisterDelete(i1, i2 - i1);
+
+      m_ptree->m_iSelEnd = i1;
+
+      m_ptree->m_iSelStart = m_ptree->m_iSelEnd;
+
+      psetsel->m_iSelStart = m_ptree->m_iSelStart;
+
+      psetsel->m_iSelEnd = m_ptree->m_iSelEnd;
+
+      MacroBegin();
+
+      MacroRecord(psetsel);
+
+      MacroRecord(canew(plain_text_file_command()));
+
+      MacroEnd();
+
+      return true;
+
+   }
+
+
+   void plain_edit::_001ReplaceSel(const char * pszText)
+   {
+
+      bool bFullUpdate = true;
+
+      index iLineUpdate = -1;
+
+      if(_001ReplaceSel(pszText, bFullUpdate, iLineUpdate))
+      {
+
+         internal_edit_update(bFullUpdate, iLineUpdate);
+
+      }
+
+   }
+
+
+   bool plain_edit::_001ReplaceSel(const char * pszText, bool & bFullUpdate, index & iLineUpdate)
+   {
+
+      strsize i1 = m_ptree->m_iSelStart;
+
+      strsize i2 = m_ptree->m_iSelEnd;
+
+      ::sort::sort_non_negative(i1, i2);
+
+      if(i1 < 0 || i1 > _001GetTextLength())
+      {
+
+         i1  = _001GetTextLength();
+
+      }
+
+      if(i2 < 0 || i2 > _001GetTextLength())
+      {
+
+         i2 = _001GetTextLength();
+
+      }
+
+      if(i2 < i1)
+      {
+
+         return false;
+
+      }
+
+      plain_text_set_sel_command * psetsel = canew(plain_text_set_sel_command);
+
+      psetsel->m_iPreviousSelStart = m_ptree->m_iSelStart;
+
+      psetsel->m_iPreviousSelEnd = m_ptree->m_iSelEnd;
+
+      string strSel;
+
+      _001GetSelText(strSel, i1, i2);
+
+      bFullUpdate = strSel.find('\n') >= 0 || strSel.find('\r') >= 0;
+
+      if (!bFullUpdate)
+      {
+
+         iLineUpdate = SelToLine(i1);
+
+      }
+
+      m_ptree->m_editfile.seek(i1, ::file::seek_begin);
+
+      if(i2 > i1)
+      {
+
+         m_ptree->m_editfile.Delete((memory_size_t)(i2 - i1));
+
+         IndexRegisterDelete(i1, i2);
+
+      }
+
+      m_ptree->m_editfile.Insert(pszText, strlen_dup(pszText));
+
+      IndexRegisterInsert(i1, pszText);
+
+      m_pinsert = NULL;
+
+      IndexRegisterDelete(i1, i2 - i1);
+
+      m_ptree->m_iSelEnd = i1;
+
+      m_ptree->m_iSelStart = m_ptree->m_iSelEnd;
+
+      psetsel->m_iSelStart = m_ptree->m_iSelStart;
+
+      psetsel->m_iSelEnd = m_ptree->m_iSelEnd;
+
+      MacroBegin();
+
+      MacroRecord(psetsel);
+
+      MacroRecord(canew(plain_text_file_command()));
+
+      MacroEnd();
+
+      return true;
+
+   }
+
+
    void plain_edit::_001OnChar(::message::message * pobj)
    {
 
@@ -3549,37 +3766,15 @@ finished_update:
 
                   if (!m_bReadOnly)
                   {
+
                      strsize i1 = m_ptree->m_iSelStart;
+
                      strsize i2 = m_ptree->m_iSelEnd;
+
                      if (i1 != i2)
                      {
-                        plain_text_set_sel_command * psetsel = canew(plain_text_set_sel_command);
-                        psetsel->m_iPreviousSelStart = m_ptree->m_iSelStart;
-                        psetsel->m_iPreviousSelEnd = m_ptree->m_iSelEnd;
-                        ::sort::sort_non_negative(i1, i2);
 
-                        string strSel;
-                        _001GetSelText(strSel, i1, i2);
-                        bFullUpdate = strSel.find('\n') >= 0 || strSel.find('\r') >= 0;
-                        if (!bFullUpdate)
-                        {
-                           iLineUpdate = SelToLine(i1);
-                        }
-
-                        m_ptree->m_editfile.seek(i1, ::file::seek_begin);
-                        m_ptree->m_editfile.Delete((memory_size_t)(i2 - i1));
-
-                        m_pinsert = NULL;
-
-                        IndexRegisterDelete(i1, i2 - i1);
-                        m_ptree->m_iSelEnd = i1;
-                        m_ptree->m_iSelStart = m_ptree->m_iSelEnd;
-                        psetsel->m_iSelStart = m_ptree->m_iSelStart;
-                        psetsel->m_iSelEnd = m_ptree->m_iSelEnd;
-                        MacroBegin();
-                        MacroRecord(psetsel);
-                        MacroRecord(canew(plain_text_file_command()));
-                        MacroEnd();
+                        _001DeleteSel();
 
                      }
                      else if (m_ptree->m_iSelEnd >= 0 && m_ptree->m_editfile.get_length() > 0)
@@ -3815,7 +4010,7 @@ finished_update:
 
                   index iLine = m_iaLineBeg.get_upper_bound();
 
-                  m_ptree->m_iSelEnd = LineXToSel(iLine, convert < int32_t > (m_iaLineLen[iLine]));
+                  m_ptree->m_iSelEnd = LineXToSel(iLine, int32_t (m_iaLineLen[iLine]));
 
                   _001EnsureVisibleLine(iLine);
 
@@ -3870,8 +4065,11 @@ finished_update:
                   }
                   else if (pkey->m_ekey == ::user::key_refer_to_text_member)
                   {
-
                      str = pkey->m_strText;
+//                     if(bShift)
+//                     {
+//                        str.make_upper();
+//                     }
                   }
                   else
                   {
@@ -4114,12 +4312,12 @@ finished_update:
          auto iLen = _001GetTextLength();
 
          if (m_ptree->m_iSelStart > iLen)
-            convert(m_ptree->m_iSelStart, iLen);
+            m_ptree->m_iSelStart = (strsize) (iLen);
          else if (m_ptree->m_iSelStart < 0)
             m_ptree->m_iSelStart = 0;
 
          if (m_ptree->m_iSelEnd > iLen)
-            convert(m_ptree->m_iSelEnd, iLen);
+            m_ptree->m_iSelEnd = (strsize) (iLen);
          else if (m_ptree->m_iSelEnd < 0)
             m_ptree->m_iSelEnd = 0;
 
@@ -4131,14 +4329,14 @@ finished_update:
 
          _001OnCalcLayout();
 
-         ::colorertake5::base_editor * pcolorer = colorertake5();
+         //::colorertake5::base_editor * pcolorer = colorertake5();
 
-         if (pcolorer != NULL)
-         {
+         //if (pcolorer != NULL)
+         //{
 
-            pcolorer->lineCountEvent(m_plines->lines.get_count());
+         //   pcolorer->lineCountEvent(m_plines->lines.get_count());
 
-         }
+         //}
 
       }
 
@@ -4183,12 +4381,12 @@ finished_update:
          auto iLen = _001GetTextLength();
 
          if (m_ptree->m_iSelStart > iLen)
-            convert(m_ptree->m_iSelStart, iLen);
+            m_ptree->m_iSelStart = (strsize) (iLen);
          else if (m_ptree->m_iSelStart < 0)
             m_ptree->m_iSelStart = 0;
 
          if (m_ptree->m_iSelEnd > iLen)
-            convert(m_ptree->m_iSelEnd, iLen);
+            m_ptree->m_iSelEnd = (strsize) (iLen);
          else if (m_ptree->m_iSelEnd < 0)
             m_ptree->m_iSelEnd = 0;
 
@@ -4540,28 +4738,28 @@ finished_update:
          sp(::user::document) pdoc = pview->get_document();
          if (type == NULL)
          {
-            string textStart;
-            strsize totalLength = 0;
-            for (int32_t i = 0; i < 4 && i < m_plines->getLineCount(); i++)
-            {
-               string iLine = m_plines->getLine(i);
-               textStart += iLine;
-               textStart += "\n";
-               totalLength += iLine.get_length();
-               if (totalLength > 500) break;
-            }
-            type = System.parser_factory().getHRCParser()->chooseFileType(pdoc->get_file_path(), textStart, 0);
+            //string textStart;
+            //strsize totalLength = 0;
+            //for (int32_t i = 0; i < 4 && i < m_plines->getLineCount(); i++)
+            //{
+            //   string iLine = m_plines->getLine(i);
+            //   textStart += iLine;
+            //   textStart += "\n";
+            //   totalLength += iLine.get_length();
+            //   if (totalLength > 500) break;
+            //}
+            //type = System.parser_factory().getHRCParser()->chooseFileType(pdoc->get_file_path(), textStart, 0);
          }
       }
 
-      if (type != NULL)
-      {
+      /*    if (type != NULL)
+          {
 
-         type->getBaseScheme();
+             type->getBaseScheme();
 
-         colorertake5()->setFileType(type);
+             colorertake5()->setFileType(type);
 
-      }
+          }*/
 
       return type;
 
@@ -4802,7 +5000,7 @@ finished_update:
       if (nCmdShow != SW_HIDE)
       {
 
-         TRACE0("Going to Show plain_edit");
+         TRACE("Going to Show plain_edit");
 
       }
 
@@ -4869,7 +5067,8 @@ finished_update:
       if (iLine >= m_iLineStart && iLine < m_iLineEnd)
       {
 
-         strLine = m_plines->lines[iLine - m_iLineStart];
+//         strLine = m_plines->lines[iLine - m_iLineStart];
+         strLine = m_straLines[iLine - m_iLineStart];
 
       }
       else

@@ -56,7 +56,7 @@ namespace filehandler
 
 
 
-#ifdef DEBUG
+
    void pane_view::assert_valid() const
    {
       ::user::impact::assert_valid();
@@ -66,7 +66,7 @@ namespace filehandler
    {
       ::user::impact::dump(dumpcontext);
    }
-#endif //DEBUG
+
 
    /////////////////////////////////////////////////////////////////////////////
    // pane_view message handlers

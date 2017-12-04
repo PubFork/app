@@ -13,7 +13,7 @@ namespace draw2d
 
 } // namespace draw2d
 
-#if defined(CUBE) || defined(VSNORD)
+#if (defined(CUBE) || defined(VSNORD)) 
 
 
 extern "C"

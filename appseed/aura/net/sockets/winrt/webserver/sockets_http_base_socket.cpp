@@ -64,29 +64,41 @@ namespace sockets
       {
          TRACE0("accept-language: " + m_request.header("accept-language") + "\n");
       }
+
       if (m_body_size_left > 0)
       {
+
          m_request.InitBody( m_body_size_left );
+
       }
       else
       {
-         // execute
+         
          Execute();
+
       }
+      
    }
 
 
    void http_base_socket::OnData(const char *buf,size_t sz)
    {
+      
       m_request.write( buf, sz );
+      
       m_body_size_left -= sz;
+
+      m_body_size_downloaded += sz;
+
       if (!m_body_size_left)
       {
+
          m_request.CloseBody();
 
-         // execute
          Execute();
+
       }
+
    }
 
 
@@ -190,8 +202,13 @@ namespace sockets
    // --------------------------------------------------------------------------------------
    void http_base_socket::Reset()
    {
+
       http_socket::Reset();
+
       m_body_size_left = 0;
+
+      m_body_size_downloaded = 0;
+
    }
 
 

@@ -370,7 +370,7 @@ namespace user
 #ifdef WINDOWSEX
                      ::SetCursorPos(ptCursor.x,ptCursor.y);
 #else
-                     throw todo(get_app());
+                     _throw(todo(get_app()));
 #endif
                   }
 

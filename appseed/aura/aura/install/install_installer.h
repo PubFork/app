@@ -1,12 +1,10 @@
 #pragma once
 
 
-#if defined(INSTALL_SUBSYSTEM)
-
-
 namespace install
 {
 
+   class net;
 
    class installer :
       virtual public ::http::listener,
@@ -112,10 +110,7 @@ namespace install
 
       stringa                          m_straHttpFailure;
 
-
-      sp(::sockets::http_session)      m_phttpsession;
-      ::sockets::socket_handler *      m_psockethandler;
-      spa(::sockets::http_session)     m_httpsessionptra;
+      ::install::net *                 m_pnet;
 
       int                              m_iInstallResult;
 
@@ -216,8 +211,5 @@ namespace install
 
 } // namespace install
 
-
-
-#endif
 
 

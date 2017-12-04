@@ -143,9 +143,9 @@ namespace macos
            
            ::dir::ls(straPath, listing.m_path);
            
-           //            file_find file_find;
+           // file_find file_find;
            
-           //          bool bWorking = file_find.FindFile(listing.m_path / listing.os_pattern()) != FALSE;
+           // bool bWorking = file_find.FindFile(listing.m_path / listing.os_pattern()) != FALSE;
            
            for(auto & strPath : straPath)
            {
@@ -165,13 +165,12 @@ namespace macos
               }
               
            }
-
-            
-        }
+           
+       }
         
-        return listing;
+       return listing;
         
-    }
+   }
 
     
 
@@ -182,39 +181,26 @@ namespace macos
 
       DWORD dwLastError;
 
-      if(m_isdirmap.lookup(lpcszPath, bIsDir, dwLastError))
-      {
-
-         if(!bIsDir)
-         {
-
-            SetLastError(dwLastError);
-
-         }
-
-         return bIsDir;
-
-      }
+//      if(m_isdirmap.lookup(lpcszPath, bIsDir, dwLastError))
+//      {
+//
+//         if(!bIsDir)
+//         {
+//
+//            SetLastError(dwLastError);
+//
+//         }
+//
+//         return bIsDir;
+//
+//      }
 
 
       if(::file::dir::system::is(lpcszPath, papp))
          return true;
 
 
-      string strPath(lpcszPath);
-      if(strPath.get_length() >= MAX_PATH)
-      {
-         if(::str::begins(strPath, "\\\\"))
-         {
-            strPath = "\\\\?\\UNC" + strPath.Mid(1);
-         }
-         else
-         {
-            strPath = "\\\\?\\" + strPath;
-         }
-      }
-
-      bIsDir = ::dir::is(strPath);
+      bIsDir = ::dir::is(lpcszPath);
 
       m_isdirmap.set(lpcszPath, bIsDir, bIsDir ? 0 : ::GetLastError());
 
@@ -364,7 +350,7 @@ namespace macos
          if(!is(stra[i], papp))
          {
 
-            if(!::dir::mk(stra[i]))
+            if(!::dir::mkdir(stra[i]))
             {
                
                DWORD dwError = ::GetLastError();
@@ -373,7 +359,7 @@ namespace macos
                {
                   
                   string str;
-                  str = "\\\\?\\" + stra[i];
+                  str = stra[i];
                   str.trim_right("\\/");
                   try
                   {
@@ -392,7 +378,7 @@ namespace macos
                   {
                   }
                   //if(::CreateDirectory(::str::international::utf8_to_unicode("\\\\?\\" + stra[i]), NULL))
-                  if(::dir::mk("\\\\?\\" + stra[i]))
+                  if(::dir::mkdir(stra[i]))
                   {
                      m_isdirmap.set(stra[i], true, 0);
                      goto try1;
@@ -1202,7 +1188,7 @@ namespace macos
        }
           
        if(m_strTimeFolder.is_empty())
-          m_strTimeFolder = appdata() / "time";
+          m_strTimeFolder = ::file::path(getenv("HOME")) /"Library" / "ca2"/"time";
           
        if(m_strNetSeedFolder.is_empty())
           m_strNetSeedFolder = element() / "net";
@@ -1212,7 +1198,11 @@ namespace macos
        if(!is(m_strTimeFolder, get_app()))
           return false;
           
-       string strTime = m_strTimeFolder / "time";
+      ::file::path strTime;
+      
+      strTime = m_strTimeFolder;
+      
+      strTime /= "time";
           
        mk(strTime, get_app());
           

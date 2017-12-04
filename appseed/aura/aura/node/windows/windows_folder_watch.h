@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace windows
@@ -10,7 +10,7 @@ namespace windows
       virtual public ::thread
    {
    public:
-      
+
 
       folder_watch(::aura::application * papp);
 
@@ -19,7 +19,8 @@ namespace windows
 
       virtual e_action translate_os_action(int32_t iAction);
 
-      virtual int32_t run();
+      virtual void run() override;
+
 
    };
 

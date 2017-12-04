@@ -1,6 +1,39 @@
 #pragma once
 
 
+class CLASS_DECL_AURA error :
+   virtual public object
+{
+public:
+
+
+   int_array                                    m_iaErrorCode2;
+   index_map < sp(::exception::exception) >     m_mapError2;
+
+
+   error();
+   virtual ~error();
+
+
+   error & operator =(const error & error);
+
+
+   void set(int iErrorCode, ::exception::exception * pexception);
+
+   void set(int iErrorCode);
+
+   void set(::exception::exception * pexception);
+
+   void set_last_error();
+
+   void set_if_not_set(int iErrorCode = -1);
+
+
+   int get_exit_code();
+
+   ::exception::exception * get_exception();
+
+};
 
 
 ///
@@ -37,7 +70,7 @@ public:
 
    };
 
-   
+
    class CLASS_DECL_AURA file_info :
       virtual public object
    {
@@ -69,8 +102,8 @@ public:
    //bool                                 m_bAutoDelete;       // enables 'delete this' after thread termination
    uint_ptr                               m_dwAlive;
    bool                                   m_bReady;
-   int32_t                                m_iReturnCode;
-   ::user::primitive *                    m_puiMain;           // main interaction_impl (usually same System.m_puiMain)
+   error                                  m_error;
+   ::user::primitive *                       m_puiMain;           // main interaction_impl (usually same System.m_puiMain)
    ::user::primitive *                    m_puiActive;         // active main interaction_impl (may not be m_puiMain)
    //property_set                           m_set;
    string                                 m_strWorkUrl;
@@ -87,7 +120,7 @@ public:
    sp(file_info) m_pfileinfo;
 
 
-   #ifndef WINDOWSEX
+#ifndef WINDOWSEX
 
    mq *                                      m_mq;
 
@@ -129,6 +162,10 @@ public:
    virtual ~thread();
 
 
+   virtual void assert_valid() const override;
+   virtual void dump(dump_context & dumpcontext) const override;
+
+
    thread_tools * tools();
    thread_toolset * toolset(e_tool etool);
 
@@ -138,7 +175,9 @@ public:
    ::duration set_file_sharing_violation_timeout(::duration duration);
 
 
-   ///  \brief		starts thread on first call
+   virtual void threadrefa_add(::thread * pthread) override;
+
+   ///  \brief    starts thread on first call
    virtual void start();
 
    virtual void * get_os_data() const;
@@ -157,14 +196,8 @@ public:
 
    void CommonConstruct();
 
-
-//   virtual bool finalize();
-
-//   virtual int32_t exit();
-
-
-   virtual void on_keep_alive();
-   virtual bool is_alive();
+   virtual void on_keep_alive() override;
+   virtual bool is_alive() override;
 
 
    virtual bool has_message();
@@ -180,13 +213,13 @@ public:
    ::user::interactive * interactive();
    //virtual bool is_auto_delete();
 
-   virtual bool begin(int32_t epriority = ::multithreading::priority_normal, uint_ptr nStackSize = 0, uint32_t dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL, IDTHREAD * puiId = NULL);
+   virtual bool begin(int32_t epriority = ::multithreading::priority_normal, uint_ptr nStackSize = 0, uint32_t dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL, IDTHREAD * puiId = NULL, error * perror = NULL);
 
-   virtual bool create_thread(int32_t epriority = ::multithreading::priority_normal,uint_ptr nStackSize = 0,uint32_t dwCreateFlags = 0,LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL, IDTHREAD * puiId = NULL);
+   virtual bool create_thread(int32_t epriority = ::multithreading::priority_normal,uint_ptr nStackSize = 0, uint32_t dwCreateFlags = 0,LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL, IDTHREAD * puiId = NULL, error * perror = NULL);
 
-   virtual bool begin_synch(int32_t *piStartupError = NULL, int32_t epriority = ::multithreading::priority_normal,uint_ptr nStackSize = 0,uint32_t dwCreateFlags = 0,LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL, IDTHREAD * puiId = NULL);
+   virtual bool begin_synch(int32_t epriority = ::multithreading::priority_normal,uint_ptr nStackSize = 0, uint32_t dwCreateFlags = 0,LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL, IDTHREAD * puiId = NULL, error * perror = NULL);
 
-   virtual bool create_thread_synch(int32_t *piStartupError,int32_t epriority = ::multithreading::priority_normal,uint_ptr nStackSize = 0,uint32_t dwCreateFlags = 0,LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL, IDTHREAD * puiId = NULL);
+   virtual bool create_thread_synch(int32_t epriority = ::multithreading::priority_normal,uint_ptr nStackSize = 0, uint32_t dwCreateFlags = 0,LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL, IDTHREAD * puiId = NULL, error * perror = NULL);
 
 
    virtual int32_t get_thread_priority();
@@ -211,9 +244,9 @@ public:
       return post_object(message_system, system_message_pred, dynamic_cast < pred_holder_base *>(canew(pred_holder < PRED >(get_app(), pred))));
    }
 
-   virtual bool on_run_exception(::exception::exception &);
+   virtual bool on_run_exception(::exception::exception * pexception);
 
-   virtual message::e_prototype GetMessagePrototype(UINT uiMessage, UINT uiCode);
+   virtual message::e_prototype GetMessagePrototype(UINT uiMessage, UINT uiCode) override;
 
    // running and idle processing
    virtual void pre_translate_message(::message::message * pobj);
@@ -225,11 +258,11 @@ public:
    virtual bool is_idle_message(::message::message * pobj);  // checks for special messages
    virtual bool is_idle_message(LPMESSAGE lpmessage);  // checks for special messages
 
-   virtual bool initialize_thread();
-   virtual bool on_before_run_thread();
-   virtual int32_t run();
-   virtual bool on_after_run_thread();
-   virtual int32_t exit_thread();
+   virtual bool init_thread();
+   virtual bool on_pre_run_thread();
+   virtual void run();
+   virtual void on_pos_run_thread();
+   virtual void term_thread();
 
    virtual void close_dependent_threads(const ::duration & dur);
 
@@ -250,14 +283,12 @@ public:
    //virtual bool on_run_step();
 
 
-   virtual void assert_valid() const;
-   virtual void dump(dump_context & dumpcontext) const;
    virtual void Delete();
    // 'delete this' only if m_bAutoDelete == TRUE
 
    virtual void dispatch_thread_message(::message::message * pobj);  // helper
 
-   virtual int32_t main();
+   virtual void main();
 
 
 
@@ -276,9 +307,9 @@ public:
    virtual void post_to_all_threads(UINT message,WPARAM wparam,LPARAM lparam);
 
 
-   virtual void register_dependent_thread(::thread * pthread);
+   virtual bool register_dependent_thread(::thread * pthread);
    virtual void unregister_dependent_thread(::thread * pthread);
-   virtual void on_register_dependent_thread(::thread * pthread);
+   virtual bool on_register_dependent_thread(::thread * pthread);
    virtual void on_unregister_dependent_thread(::thread * pthread);
    virtual void signal_close_dependent_threads();
    virtual void wait_close_dependent_threads(const duration & duration);
@@ -290,7 +321,7 @@ public:
 
    virtual bool thread_get_run();
    virtual bool should_enable_thread();
-   virtual bool post_quit();
+   virtual void post_quit();
 
    virtual bool kick_thread();
 
@@ -310,7 +341,7 @@ public:
    virtual bool is_session();
    virtual bool is_system();
 
-   virtual void delete_this();
+   virtual void delete_this() override;
 
    /// thread implementation
    virtual int32_t thread_startup(::thread_startup * pstartup);
@@ -319,15 +350,15 @@ public:
    virtual int32_t thread_term();
    virtual void thread_delete();
    operator HTHREAD() const;
-   
+
    void construct();
-   
+
    void construct(__THREADPROC pfnthread_implProc, LPVOID pParam);
-   
-   virtual bool begin_thread(bool bSynch = false,int32_t * piStartupError = NULL,int32_t epriority= ::multithreading::priority_normal,uint_ptr nStackSize = 0,uint32_t dwCreateFlagsParam = 0,LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL, IDTHREAD * puiId = NULL);
-   
+
+   virtual bool begin_thread(bool bSynch = false, int32_t epriority= ::multithreading::priority_normal,uint_ptr nStackSize = 0,uint32_t dwCreateFlagsParam = 0,LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL, IDTHREAD * puiId = NULL, error * perror = NULL);
+
    virtual bool initialize_message_queue();
-   
+
    virtual void message_handler(::message::base * pbase);
 
    ::handler * handler();
@@ -335,8 +366,11 @@ public:
    virtual void handle_command(::command::command * pcommand);
 
    virtual void on_create(::create * pcreate);
-   
-   virtual void request_create(::create * pcreate);
+
+   virtual void request_create(::create * pcreate) override;
+
+
+   virtual int get_exit_code();
 
 };
 
@@ -364,60 +398,13 @@ public:
 namespace multithreading
 {
 
-   
-   CLASS_DECL_AURA bool post_quit();
-   CLASS_DECL_AURA bool post_quit_and_wait(const duration & duration);
-   
-   
-   CLASS_DECL_AURA bool post_quit(::thread * pthread);
-   CLASS_DECL_AURA bool post_quit_and_wait(::thread * pthread, const duration & duration);
+
+   CLASS_DECL_AURA void post_quit();
+   CLASS_DECL_AURA void post_quit_and_wait(const duration & duration);
 
 
-   template < typename THREAD >
-   inline bool post_quit(THREAD & pthread)
-   {
-
-      bool bOk = post_quit((::thread *) pthread);
-
-      try
-      {
-
-         pthread = NULL;
-
-      }
-      catch (...)
-      {
-
-
-      }
-
-      return bOk;
-
-   }
-
-
-   template < typename THREAD >
-   inline bool post_quit_and_wait(THREAD & pthread, const duration & duration)
-   {
-
-      bool bOk = post_quit_and_wait((::thread *) pthread, duration);
-
-      try
-      {
-
-         pthread = NULL;
-
-      }
-      catch (...)
-      {
-
-      }
-
-      return bOk;
-
-   }
-
-
+   CLASS_DECL_AURA void post_quit(::thread * pthread);
+   CLASS_DECL_AURA void post_quit_and_wait(::thread * pthread, const duration & duration);
 
 
 } // namespace multithreading

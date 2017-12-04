@@ -64,7 +64,7 @@ namespace simple_ui
    void tap::_001OnCreate(::message::message * pobj)
    {
 
-      SCAST_PTR(::message::create, pcreate, pobj);
+      //SCAST_PTR(::message::create, pcreate, pobj);
 
       pobj->previous();
 
@@ -268,6 +268,10 @@ namespace simple_ui
 
 #else
 
+             if (timeNow.GetHour() >= 6 && timeNow.GetHour() <= 17)
+             {
+                 
+
             crOut = ARGB(184 + 49, 230, 255, 225);
 
             crIn = ARGB(255, 133, 255, 77 + 49);
@@ -275,6 +279,17 @@ namespace simple_ui
             crBorderOut = ARGB(184, 100, 150, 100);
 
             crBorderIn = ARGB(184, 240, 255, 235);
+             }
+        else {
+            crOut = ARGB(184 + 49, 230, 255, 225);
+            
+            crIn = ARGB(255, 133, 255, 77 + 49);
+            
+            crBorderOut = ARGB(184, 100, 150, 100);
+            
+            crBorderIn = ARGB(184, 240, 255, 235);
+
+                 }
 
 #endif
 

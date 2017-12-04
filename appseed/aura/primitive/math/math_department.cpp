@@ -263,7 +263,7 @@ namespace math
 
          int32_t v2 = (int32_t)time(NULL);
 
-         int32_t v3 = (int32_t) ((uint32_t)chronometer.getTimeInMicroSec() % 0xffffffff, (const byte *)&d1, sizeof(double));
+         int32_t v3 = (int32_t) ((uint32_t)chronometer.getTimeInMicroSec() % 0xffffffff);
 
          iValue = abs(v1 + v2 + v3) % (iMax - iMin);
 

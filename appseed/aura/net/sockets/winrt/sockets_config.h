@@ -9,11 +9,8 @@
 #undef ENABLE_IPV6
 #undef USE_SCTP
 #undef NO_GETADDRINFO
-#undef ENABLE_POOL
 #undef ENABLE_SOCKS4
-#undef ENABLE_RESOLVER
 #undef ENABLE_RECONNECT
-#undef ENABLE_DETACH
 #undef ENABLE_TRIGGERS
 #undef ENABLE_EXCEPTIONS
 #endif // _RUN_DP
@@ -35,16 +32,11 @@ the "getaddrinfo" and "getnameinfo" function calls. */
 //#define NO_GETADDRINFO
 
 
-/* Connection pool support. */
-#define ENABLE_POOL
-
 
 /* Socks4 client support. */
 //#define ENABLE_SOCKS4
 
 
-/* Asynchronous resolver. */
-#define ENABLE_RESOLVER
 
 
 /* Enable TCP reconnect on lost connection.
@@ -54,8 +46,6 @@ socket::OnDisconnect
 #define ENABLE_RECONNECT
 
 
-/* Enable socket thread detach functionality. */
-#define ENABLE_DETACH
 
 
 /* Enable socket to socket triggers. Not yet in use. */
@@ -64,12 +54,6 @@ socket::OnDisconnect
 
 /* Enabled exceptions. */
 #define ENABLE_EXCEPTIONS
-
-
-/* Resolver uses the detach function so either enable both or disable both. */
-#ifndef ENABLE_DETACH
-#undef ENABLE_RESOLVER
-#endif
 
 
 
@@ -100,7 +84,7 @@ in read operations - helps on ECOS */
 // because some System's will already have one or more of the type defined.
 typedef int SOCKET;
 #define Errno errno
-#define StrError strerror
+#define bsd_socket_error strerror
 
 #ifdef sockets
 namespace sockets {
@@ -201,7 +185,7 @@ namespace sockets {
 
 #elif defined(METROWIN)
 
-CLASS_DECL_AURA const char *StrError(int x);
+CLASS_DECL_AURA const char *bsd_socket_error(int x);
 #define Errno GetLastError()
 
 #elif defined(WINDOWSEX)
@@ -217,7 +201,7 @@ CLASS_DECL_AURA const char *StrError(int x);
 #define SHUT_WR 1
 
 #define Errno WSAGetLastError()
-CLASS_DECL_AXIS const char *StrError(int x);
+CLASS_DECL_AXIS const char *bsd_socket_error(int x);
 
 namespace sockets
 {

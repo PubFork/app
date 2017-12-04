@@ -11,7 +11,7 @@ public:
 
    static plex_heap* create(plex_heap*& head, uint_ptr nMax, uint_ptr cbElement);
          // like 'calloc' but no zero fill
-         // may throw memory exceptions
+         // may _throw( memory exceptions
 
    void FreeDataChain();       // free this one and links
 };

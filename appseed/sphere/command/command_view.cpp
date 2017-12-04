@@ -59,7 +59,7 @@ namespace prompt
    /////////////////////////////////////////////////////////////////////////////
    // view diagnostics
 
-   #ifdef DEBUG
+
    void view::assert_valid() const
    {
 	   ::user::impact::assert_valid();
@@ -69,7 +69,7 @@ namespace prompt
    {
 	   ::user::impact::dump(dumpcontext);
    }
-   #endif //DEBUG
+
 
    /////////////////////////////////////////////////////////////////////////////
    // view message handlers

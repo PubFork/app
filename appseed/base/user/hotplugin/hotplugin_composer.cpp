@@ -1,8 +1,5 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "base/user/user.h"
-
-
-#ifdef HOTPLUGIN_SUBSYSTEM
 
 
 namespace hotplugin
@@ -35,7 +32,7 @@ namespace hotplugin
       m_bResponsive           = true;
       m_bWrite                = false;
       m_bEntryHallTextStarted = false;
-      
+
       m_pcomposersystem       = NULL;
 
       m_paxishost             = NULL;
@@ -43,8 +40,8 @@ namespace hotplugin
       m_bHostInit             = false;
 
    }
-   
-   
+
+
    composer::~composer()
    {
 
@@ -87,12 +84,12 @@ namespace hotplugin
                if(::hotplugin::get_axis_system()->m_bReady)
                {
 
-                  if(::hotplugin::get_axis_system()->m_iReturnCode != 0)
+                  if(::hotplugin::get_axis_system()->get_exit_code() != 0)
                   {
 
                      string str;
-                     
-                     str.Format("::hotplugin::g_pbasesystem initialization error %d",::hotplugin::get_axis_system()->m_iReturnCode);
+
+                     str.Format("::hotplugin::g_pbasesystem initialization error %d",::hotplugin::get_axis_system()->get_exit_code());
 
                      ::output_debug_string(str);
 
@@ -138,12 +135,12 @@ namespace hotplugin
                if(get_composer_system()->m_bReady)
                {
 
-                  if(get_composer_system()->m_iReturnCode != 0)
+                  if(get_composer_system()->get_exit_code() != 0)
                   {
 
                      string str;
 
-                     str.Format("m_pcomposersystem initialization error %d",get_composer_system()->m_iReturnCode);
+                     str.Format("m_pcomposersystem initialization error %d",get_composer_system()->get_exit_code());
 
                      ::output_debug_string(str);
 
@@ -192,12 +189,12 @@ namespace hotplugin
                if(m_paxishost->m_bReady)
                {
 
-                  if(m_paxishost->m_iReturnCode != 0)
+                  if(m_paxishost->get_exit_code() != 0)
                   {
 
                      string str;
 
-                     str.Format("::hotplugin::composer::m_paxishost initialization error %d",::hotplugin::get_axis_system()->m_iReturnCode);
+                     str.Format("::hotplugin::composer::m_paxishost initialization error %d",::hotplugin::get_axis_system()->get_exit_code());
 
                      ::output_debug_string(str);
 
@@ -261,7 +258,7 @@ namespace hotplugin
 
             if(on_composer_init_window())
             {
-               
+
                m_bWindowOk = true;
 
             }
@@ -343,7 +340,7 @@ namespace hotplugin
    }
 
 
-   // if composer on paint returns (returns true), it has painted something meaningful : no other painting is needed or even desired (finally when system, and host are ok, 
+   // if composer on paint returns (returns true), it has painted something meaningful : no other painting is needed or even desired (finally when system, and host are ok,
    // if host returns in a fashion-timed way the response for bitmap, it draw this bitmap, and not the default waiting [hall] screen painted by this composer).
 
 #ifdef WINDOWS
@@ -382,7 +379,7 @@ namespace hotplugin
 
       m_bEntryHallTextStarted = false;
 
-      /*else 
+      /*else
       {
 
          m_paxishost->m_bOnPaint = true;
@@ -402,7 +399,7 @@ namespace hotplugin
          m_paxishost->m_bOnPaint = false;
 
       }*/
-      
+
       return false;
 
 
@@ -422,7 +419,7 @@ namespace hotplugin
 
    }
 
-   
+
    bool composer::is_active()
    {
 
@@ -445,38 +442,38 @@ namespace hotplugin
       if(m_pcomposersystem != NULL)
          return true;
 
-      try
-      {
+      _throw(todo(NULL));
 
-         m_pcomposersystem = new ::axis::system(NULL);
-
-         ::axis::system * paxissystem = m_pcomposersystem;
-
-         paxissystem->m_bMatterFromHttpCache = true;
-
-         paxissystem->m_bSystemSynchronizedCursor = false;
-
-         paxissystem->construct(NULL);
-
-#ifdef WINDOWS
-
-         paxissystem->m_hinstance = (HINSTANCE)get_hinstance();
-
-#endif
-
-         xxdebug_box("box1","box1",MB_ICONINFORMATION);
-
-         paxissystem->m_bReady = false;
-
-         ::create_thread(NULL,0,&::hotplugin::composer::composer_system_main,paxissystem,0,NULL);
-
-      }
-      catch(...)
-      {
-
-         return false;
-
-      }
+//      try
+//      {
+//
+//         m_pcomposersystem = new ::axis::system(NULL);
+//
+//         ::axis::system * paxissystem = m_pcomposersystem;
+//
+//         paxissystem->m_bMatterFromHttpCache = true;
+//
+//         paxissystem->m_bSystemSynchronizedCursor = false;
+//
+//#ifdef WINDOWS
+//
+//         paxissystem->m_hinstance = (HINSTANCE)get_hinstance();
+//
+//#endif
+//
+//         xxdebug_box("box1","box1",MB_ICONINFORMATION);
+//
+//         paxissystem->m_bReady = false;
+//
+//         ::create_thread(NULL,0,&::hotplugin::composer::composer_system_main,paxissystem,0,NULL);
+//
+//      }
+//      catch(...)
+//      {
+//
+//         return false;
+//
+//      }
 
       return true;
 
@@ -496,12 +493,7 @@ namespace hotplugin
          if(!paxissystem->pre_run())
          {
 
-            if(paxissystem->m_iReturnCode == 0)
-            {
-
-               paxissystem->m_iReturnCode = -1;
-
-            }
+            paxissystem->m_error.set_if_not_set();
 
             paxissystem->m_bReady = true;
 
@@ -513,12 +505,7 @@ namespace hotplugin
       catch(...)
       {
 
-         if(paxissystem->m_iReturnCode == 0)
-         {
-
-            paxissystem->m_iReturnCode = -1;
-
-         }
+         paxissystem->m_error.set_if_not_set();
 
          paxissystem->m_bReady = true;
 
@@ -526,7 +513,9 @@ namespace hotplugin
 
       }
 
-      return paxissystem->main();
+      paxissystem->main();
+
+      return paxissystem->get_exit_code();
 
    }
 
@@ -547,8 +536,5 @@ namespace hotplugin
 
 
 } // namespace hotplugin
-
-
-#endif
 
 

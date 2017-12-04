@@ -25,7 +25,7 @@
 //
 // Use at your own risk!
 // ==========================================================
-#include  "freeimage/Source/FreeImage/FreeImageFramework.h"
+#include  "aura/graphics/freeimage/Source/FreeImage/FreeImageFramework.h"
 
 #ifdef _MSC_VER
 #pragma warning (disable : 4786) // identifier was truncated to 'number' characters
@@ -678,7 +678,8 @@ jpeg_read_jfxx(FIBITMAP *dib, const BYTE *dataptr, unsigned int datalen) {
 	unsigned remaining = datalen - id_length;
 
 	const BYTE type = *data;
-	++data, --remaining;
+   ++data;
+   --remaining;
 
 	switch(type) {
 		case JFXX_TYPE_JPEG:
@@ -778,7 +779,7 @@ jpeg_write_comment(j_compress_ptr cinfo, FIBITMAP *dib) {
 
 		if(NULL != tag_value) {
 			for(long i = 0; i < (long)strlen(tag_value); i+= MAX_BYTES_IN_MARKER) {
-				jpeg_write_marker(cinfo, JPEG_COM, (BYTE*)tag_value + i, MIN((long)strlen(tag_value + i), MAX_BYTES_IN_MARKER));
+				jpeg_write_marker(cinfo, JPEG_COM, (BYTE*)tag_value + i, (unsigned int) MIN((long)strlen(tag_value + i), MAX_BYTES_IN_MARKER));
 			}
 			return TRUE;
 		}
@@ -804,7 +805,7 @@ jpeg_write_icc_profile(j_compress_ptr cinfo, FIBITMAP *dib) {
 		memcpy(profile, icc_signature, 12);
 
 		for(long i = 0; i < (long)iccProfile->size; i += MAX_DATA_BYTES_IN_MARKER) {
-			unsigned length = MIN((long)(iccProfile->size - i), MAX_DATA_BYTES_IN_MARKER);
+			unsigned length = (unsigned) MIN((long)(iccProfile->size - i), MAX_DATA_BYTES_IN_MARKER);
 			// sequence number
 			profile[12] = (BYTE) ((i / MAX_DATA_BYTES_IN_MARKER) + 1);
 			// number of markers
@@ -840,8 +841,8 @@ jpeg_write_iptc_profile(j_compress_ptr cinfo, FIBITMAP *dib) {
 
 			// write the profile
 			for(long i = 0; i < (long)profile_size; i += 65517L) {
-				unsigned length = MIN((long)profile_size - i, 65517L);
-				unsigned roundup = length & 0x01;	// needed for Photoshop
+				unsigned length = (unsigned) MIN((long)profile_size - i, 65517L);
+				unsigned roundup = (unsigned) (length & 0x01);	// needed for Photoshop
 				BYTE *iptc_profile = (BYTE*)malloc(length + roundup + tag_length);
 				if(iptc_profile == NULL) break;
 				// Photoshop identification string
@@ -895,7 +896,7 @@ jpeg_write_xmp_profile(j_compress_ptr cinfo, FIBITMAP *dib) {
 			memcpy(profile, xmp_signature, xmp_header_size);
 
 			for(DWORD i = 0; i < tag_length; i += 65504L) {
-				unsigned length = MIN((long)(tag_length - i), 65504L);
+				unsigned length = (unsigned) MIN((long)(tag_length - i), 65504L);
 
 				memcpy(profile + xmp_header_size, tag_value + i, length);
 				jpeg_write_marker(cinfo, EXIF_MARKER, profile, (length + xmp_header_size));
@@ -938,7 +939,7 @@ jpeg_write_exif_profile_raw(j_compress_ptr cinfo, FIBITMAP *dib) {
 			if(profile == NULL) return FALSE;
 
 			for(DWORD i = 0; i < tag_length; i += 65504L) {
-				unsigned length = MIN((long)(tag_length - i), 65504L);
+				unsigned length = (unsigned) MIN((long)(tag_length - i), 65504L);
 
 				memcpy(profile, tag_value + i, length);
 				jpeg_write_marker(cinfo, EXIF_MARKER, profile, length);
@@ -1180,7 +1181,7 @@ Load(FreeImageIO *io, fi_handle handle, int page, int flags, void *data) {
 				// If we get here, the JPEG code has signaled an error.
 				// We need to clean up the JPEG object, close the input file, and return.
 				jpeg_destroy_decompress(&cinfo);
-				throw (const char*)NULL;
+				_throw((const char*)NULL);
 			}
 
 			jpeg_create_decompress(&cinfo);
@@ -1240,17 +1241,17 @@ Load(FreeImageIO *io, fi_handle handle, int page, int flags, void *data) {
 				if((flags & JPEG_CMYK) == JPEG_CMYK) {
 					// load as CMYK
 					dib = FreeImage_AllocateHeader(header_only, cinfo.output_width, cinfo.output_height, 32, FI_RGBA_RED_MASK, FI_RGBA_GREEN_MASK, FI_RGBA_BLUE_MASK);
-					if(!dib) throw FI_MSG_ERROR_DIB_MEMORY;
+					if(!dib) _throw(FI_MSG_ERROR_DIB_MEMORY);
 					FreeImage_GetICCProfile(dib)->flags |= FIICC_COLOR_IS_CMYK;
 				} else {
 					// load as CMYK and convert to RGB
 					dib = FreeImage_AllocateHeader(header_only, cinfo.output_width, cinfo.output_height, 24, FI_RGBA_RED_MASK, FI_RGBA_GREEN_MASK, FI_RGBA_BLUE_MASK);
-					if(!dib) throw FI_MSG_ERROR_DIB_MEMORY;
+					if(!dib) _throw(FI_MSG_ERROR_DIB_MEMORY);
 				}
 			} else {
 				// RGB or greyscale image
 				dib = FreeImage_AllocateHeader(header_only, cinfo.output_width, cinfo.output_height, 8 * cinfo.output_components, FI_RGBA_RED_MASK, FI_RGBA_GREEN_MASK, FI_RGBA_BLUE_MASK);
-				if(!dib) throw FI_MSG_ERROR_DIB_MEMORY;
+				if(!dib) _throw(FI_MSG_ERROR_DIB_MEMORY);
 
 				if (cinfo.output_components == 1) {
 					// build a greyscale palette
@@ -1412,13 +1413,13 @@ Save(FreeImageIO *io, FIBITMAP *dib, fi_handle handle, int page, int flags, void
 			WORD bpp = (WORD)FreeImage_GetBPP(dib);
 
 			if ((bpp != 24) && (bpp != 8)) {
-				throw sError;
+				_throw(sError);
 			}
 
 			if(bpp == 8) {
 				// allow grey, reverse grey and palette
 				if ((color_type != FIC_MINISBLACK) && (color_type != FIC_MINISWHITE) && (color_type != FIC_PALETTE)) {
-					throw sError;
+					_throw(sError);
 				}
 			}
 
@@ -1438,7 +1439,7 @@ Save(FreeImageIO *io, FIBITMAP *dib, fi_handle handle, int page, int flags, void
 				// If we get here, the JPEG code has signaled an error.
 				// We need to clean up the JPEG object, close the input file, and return.
 				jpeg_destroy_compress(&cinfo);
-				throw (const char*)NULL;
+				_throw((const char*)NULL);
 			}
 
 			// Now we can initialize the JPEG compression object
@@ -1585,7 +1586,7 @@ Save(FreeImageIO *io, FIBITMAP *dib, fi_handle handle, int page, int flags, void
 				unsigned pitch = FreeImage_GetPitch(dib);
 				BYTE *target = (BYTE*)malloc(pitch * sizeof(BYTE));
 				if (target == NULL) {
-					throw FI_MSG_ERROR_MEMORY;
+					_throw(FI_MSG_ERROR_MEMORY);
 				}
 
 				while (cinfo.next_scanline < cinfo.image_height) {
@@ -1617,7 +1618,7 @@ Save(FreeImageIO *io, FIBITMAP *dib, fi_handle handle, int page, int flags, void
 				RGBQUAD *palette = FreeImage_GetPalette(dib);
 				BYTE *target = (BYTE*)malloc(cinfo.image_width * 3);
 				if (target == NULL) {
-					throw FI_MSG_ERROR_MEMORY;
+					_throw(FI_MSG_ERROR_MEMORY);
 				}
 
 				while (cinfo.next_scanline < cinfo.image_height) {
@@ -1645,7 +1646,7 @@ Save(FreeImageIO *io, FIBITMAP *dib, fi_handle handle, int page, int flags, void
 				BYTE reverse[256];
 				BYTE *target = (BYTE *)malloc(cinfo.image_width);
 				if (target == NULL) {
-					throw FI_MSG_ERROR_MEMORY;
+					_throw(FI_MSG_ERROR_MEMORY);
 				}
 
 				for(i = 0; i < 256; i++) {
@@ -1712,11 +1713,13 @@ void DLL_CALLCONV FreeImage_InitPlugin_image_decode_jpeg(Plugin *plugin,int form
 }
 
 
+
 }
-
-
 
 void DLL_CALLCONV InitJPEG(Plugin *plugin, int format_id)
 {
    FreeImage_InitPlugin_image_decode_jpeg(plugin, format_id);
 }
+
+
+

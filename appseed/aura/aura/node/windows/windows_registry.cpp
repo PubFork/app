@@ -1,5 +1,4 @@
-#include "framework.h"
-//#include "windows.h"
+﻿#include "framework.h"
 
 
 namespace windows
@@ -154,7 +153,7 @@ namespace windows
       wstring wstr(strValue);
       return ERROR_SUCCESS ==
              RegSetValueExW(m_hkey, wstring(lpcszValueName), 0, REG_SZ,
-                            (LPBYTE)wstr.c_str(), convert < DWORD > ((wstr.get_length() + 1)*sizeof(WCHAR)));
+                            (LPBYTE)wstr.c_str(), (DWORD) ((wstr.get_length() + 1)*sizeof(WCHAR)));
    }
 
    bool registry::Key::SetValue(
@@ -164,7 +163,7 @@ namespace windows
       wstring wstr(pszValue);
       return ERROR_SUCCESS ==
              RegSetValueExW(m_hkey, wstring(lpcszValueName), 0, REG_SZ,
-                            (LPBYTE)wstr.c_str(), convert < DWORD > ((wstr.get_length() + 1) * sizeof(WCHAR)));
+                            (LPBYTE)wstr.c_str(), (DWORD) ((wstr.get_length() + 1) * sizeof(WCHAR)));
    }
 
    bool registry::Key::SetValue(const char * lpcszValueName, const memory & memValue)
@@ -177,7 +176,7 @@ namespace windows
                 0,
                 REG_BINARY,
                 (LPBYTE)memValue.get_data(),
-                convert < DWORD > (memValue.get_size())
+                (DWORD) (memValue.get_size())
              );
 
    }

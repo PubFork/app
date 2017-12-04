@@ -20,9 +20,9 @@ namespace metrowin
 
    };
 
-   ref class directx_application : 
+   ref class directx_application :
       public Windows::ApplicationModel::Core::IFrameworkView,
-      public ::axis::system_window
+      public ::aura::system_window
    {
    internal:
 
@@ -34,7 +34,7 @@ namespace metrowin
       Agile < Windows::UI::Core::CoreWindow >   m_window;
 
       directx_base ^                            m_directx;
-      
+
       bool                                      m_bFontopusShift;
 
       mutex                                     m_mutex;
@@ -56,7 +56,7 @@ namespace metrowin
 
       directx_application(::base::system * psystem,String ^ strId);
 
-      
+
       void init_part_2ex();
 
       void install_message_routing_2ex();
@@ -74,33 +74,33 @@ namespace metrowin
       virtual void Uninitialize();
       virtual Windows::Foundation::Rect get_window_rect();
       virtual Windows::Foundation::Point get_cursor_pos();
-      
+
 
    private:
       // Event Handlers
       void OnWindowSizeChanged(
-         _In_ Windows::UI::Core::CoreWindow^ sender,
-         _In_ Windows::UI::Core::WindowSizeChangedEventArgs^ args
-         );
+      _In_ Windows::UI::Core::CoreWindow^ sender,
+      _In_ Windows::UI::Core::WindowSizeChangedEventArgs^ args
+      );
 
       void DpiChanged(::Windows::Graphics::Display::DisplayInformation ^ sender, Object ^ obj);
 
       void DisplayContentsInvalidated(::Windows::Graphics::Display::DisplayInformation ^ sender, Object ^ obj);
 
       void OnActivated(
-         _In_ Windows::ApplicationModel::Core::CoreApplicationView^ applicationView,
-         _In_ Windows::ApplicationModel::Activation::IActivatedEventArgs^ args
-         );
+      _In_ Windows::ApplicationModel::Core::CoreApplicationView^ applicationView,
+      _In_ Windows::ApplicationModel::Activation::IActivatedEventArgs^ args
+      );
 
       void OnSuspending(
-         _In_ Object^ sender,
-         _In_ Windows::ApplicationModel::SuspendingEventArgs^ args
-         );
+      _In_ Object^ sender,
+      _In_ Windows::ApplicationModel::SuspendingEventArgs^ args
+      );
 
       void OnResuming(
-         _In_ Object^ sender,
-         _In_ Object^ args
-         );
+      _In_ Object^ sender,
+      _In_ Object^ args
+      );
 
       void OnPointerMoved(Windows::UI::Core::CoreWindow^, Windows::UI::Core::PointerEventArgs^ args);
 
@@ -116,7 +116,7 @@ namespace metrowin
       //Microsoft::WRL::ComPtr<IDWriteTypography>                       m_textTypography;
       //Microsoft::WRL::ComPtr<IDWriteTextLayout>                       m_textLayout;
       //SampleOverlay^                                                  m_sampleOverlay;
-      
+
    };
 
 

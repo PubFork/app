@@ -1,11 +1,11 @@
-#pragma once
-
-
-#if defined(INSTALL_SUBSYSTEM)
+﻿#pragma once
 
 
 namespace install
 {
+
+
+   class socket_thread;
 
 
    class CLASS_DECL_AURA application :
@@ -55,11 +55,11 @@ namespace install
       virtual ~application();
 
 
-      virtual bool start_instance();
+      virtual bool init_instance() override;
 
-      virtual int32_t exit_application();
+      virtual void term_instance() override;
 
-      virtual void on_request(::create * pcreate);
+      virtual void on_request(::create * pcreate) override;
 
 
       void add_command_line(string str);
@@ -71,10 +71,10 @@ namespace install
       void install_set_id(const char * psz);
 
 
-      virtual int app_app_main();
-      virtual int start_app_app(string strPlatform);
+      virtual void app_app_main();
+      virtual bool start_app_app(string strPlatform);
 
-      virtual bool install_get_admin();
+      virtual bool install_get_admin() override;
       virtual void install_set_admin(bool bSet);
 
       virtual bool show_window();
@@ -95,14 +95,14 @@ namespace install
 
       virtual void defer_show_debug_box();
 
-      
+
       bool are_ca2_framework_shared_libraries_busy();
 
-      
 
 
 
-      virtual void on_receive(::aura::ipc::rx * prx, const char * pszMessage);
+
+      virtual void on_receive(::aura::ipc::rx * prx, const char * pszMessage) override;
 
       virtual bool initialize_app_install();
 
@@ -111,12 +111,6 @@ namespace install
 
 
 } // namespace install
-
-
-
-#endif
-
-
 
 
 

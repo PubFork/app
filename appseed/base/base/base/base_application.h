@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace base
@@ -7,14 +7,11 @@ namespace base
 
    class CLASS_DECL_BASE application :
       virtual public ::axis::application,
-      virtual public ::user::form_callback,
-      virtual public ::user::style
+      virtual public ::user::form_callback
    {
    public:
 
 
-      mutex                                           m_mutexFrame;
-      ::user::interaction_spa *                       m_puiptraFrame;
 
 
 
@@ -38,29 +35,15 @@ namespace base
 
 
 
-      virtual bool process_initialize() override;
+      virtual bool process_init() override;
 
 
 
       virtual sp(type) user_default_controltype_to_typeinfo(::user::e_control_type e_type);
 
 
-      virtual sp(::message::base) get_message_base(LPMESSAGE lpmsg);
-
-      virtual ::user::interaction * main_window();
-
       virtual void on_create_view(::user::view_creator_data * pcreatordata);
-      void process_message_filter(int32_t code,::message::message * pobj);
-
-      virtual bool get_frame(sp(::user::interaction) & pui);
-      virtual void add_frame(::user::interaction * pwnd);
-      virtual void remove_frame(::user::interaction * pwnd);
-
-      virtual bool send_message_to_windows(UINT message, WPARAM wparam, LPARAM lparam); // with tbs in <3
-      virtual bool route_message_to_windows(::message::message * pmessage); // with tbs in <3
-
-
-      virtual void send_language_change_message();
+      void process_message_filter(int32_t code,::message::message * pobj) override;
 
 
 
@@ -70,27 +53,22 @@ namespace base
 
       virtual bool on_thread_on_idle(::thread_impl * pimpl,LONG lCount);
 
-      virtual bool is_window(::user::primitive * pui);
+      virtual bool is_window(::user::primitive * pui) override;
 
       using ::aura::application::send_message;
-      virtual LRESULT send_message(::user::primitive * pui,UINT message,WPARAM wparam = 0,lparam lparam = 0);
+      virtual LRESULT send_message(::user::primitive * pui,UINT message,WPARAM wparam = 0,lparam lparam = 0) override;
 
-      virtual oswindow get_safe_handle(::user::primitive * pui);
+      virtual oswindow get_safe_handle(::user::primitive * pui) override;
       virtual void dispatch_user_message(::user::message * pmessage);
-      virtual void dispatch_user_message_object(::object * pobject);
+      virtual void dispatch_user_message_object(::object * pobject) override;
       virtual ::user::interaction * get_parent(::user::interaction * pui);
-      virtual bool enable_window(::user::primitive * pui,bool bEnable = true);
+      virtual bool enable_window(::user::primitive * pui,bool bEnable = true) override;
       virtual bool set_window_text(::user::interaction * pui,const string & strText);
 
-      virtual void process_message(::message::base * pbase) override;
+      //virtual void process_message(::message::base * pbase) override;
       virtual bool process_message(LPMESSAGE lpmessage) override;
 
-
-#ifdef HOTPLUGIN_SUBSYSTEM
-
-      int32_t hotplugin_host_host_starter_start_sync(const char * pszCommandLine,::aura::application * papp,::hotplugin::host * phost,::hotplugin::plugin * pplugin);
-
-#endif
+      int32_t hotplugin_host_host_starter_start_sync(const char * pszCommandLine,::aura::application * papp,::hotplugin::host * phost,::hotplugin::plugin * pplugin) override;
 
       virtual ::user::interaction * FindWindow(const char * lpszClassName,const char * lpszWindowName);
       virtual ::user::interaction * FindWindowEx(oswindow oswindowParent,oswindow oswindowChildAfter,const char * lpszClass,const char * lpszWindow);
@@ -104,24 +82,22 @@ namespace base
 
       virtual void remove_document_template(::user::impact_system * pimpactsystem);
 
-      virtual string preferred_userschema();
-
 //      virtual ::user::style * userstyle();
-//      
+//
 //      virtual ::user::style * userstyle(::user::e_schema estyle);
 
       //virtual int32_t exit_instance();
-      
-      virtual int32_t exit_application() override;
-      
-      
+
+      virtual void term_application() override;
+
+
       virtual void SetCurrentHandles() override;
-      
-      virtual ::visual::icon * set_icon(object * pobject, ::visual::icon * picon, bool bBigIcon);
-      
-      
-      virtual ::visual::icon * get_icon(object * pobject, bool bBigIcon) const;
-  
+
+      virtual ::visual::icon * set_icon(object * pobject, ::visual::icon * picon, bool bBigIcon) override;
+
+
+      virtual ::visual::icon * get_icon(object * pobject, bool bBigIcon) const override;
+
       virtual bool BaseOnControlEvent(::user::form_window * pview, ::user::control_event * pevent) override;
 
       virtual ::user::interaction * create_menu_interaction();

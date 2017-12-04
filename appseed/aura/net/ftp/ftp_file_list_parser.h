@@ -20,7 +20,7 @@
 // NetWare.
 // MSDOS.
 //
-// Definitely not covered: 
+// Definitely not covered:
 // Long VMS filenames, with information split across two lines.
 // NCSA Telnet FTP server. Has LIST = NLST (and bad NLST for directories).
 //
@@ -28,7 +28,7 @@
 
 #pragma once
 
-
+#include "ftp_interface.h"
 
 namespace ftp
 {

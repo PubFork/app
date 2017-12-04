@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "metrowin.h"
 //#include "sal.h"
 
@@ -12,11 +12,11 @@ CLASS_DECL_AURA int ca2_main();
 
 void CLASS_DECL_AURA __cdecl _ca2_purecall()
 {
-    throw simple_exception(::get_thread_app());
+   _throw(simple_exception(get_app()));
 }
 
 
-void __cdecl _null_se_translator(unsigned int uiCode, EXCEPTION_POINTERS * ppointers);
+CLASS_DECL_AURA void __cdecl _null_se_translator(unsigned int uiCode, EXCEPTION_POINTERS * ppointers);
 
 
 //::aura::application *     win_application_create(::aura::application * pappSystem, const char * pszId);
@@ -52,7 +52,7 @@ int CLASS_DECL_AURA win_main(::aura::system * psystem, ::Array < ::String ^ > ^ 
    //pinitmaindata->m_strCommandLine        = ::str::international::unicode_to_utf8(::GetCommandLineW());
    //pinitmaindata->m_nCmdShow              = nCmdShow;
 
-   
+
    psystem->startup_command(pcommand);
 
    //MessageBox(NULL, "box1", "box1", MB_ICONINFORMATION);
@@ -86,20 +86,20 @@ int CLASS_DECL_AURA win_main(::aura::system * psystem, ::Array < ::String ^ > ^ 
    catch(...)
    {
    }
-/*   try
-   {
-      delete __get_module_state()->m_pmapHDC;
-   }
-   catch(...)
-   {
-   }*/
-/*   try
-   {
-      delete __get_module_state()->m_pmapHGDIOBJ;
-   }
-   catch(...)
-   {
-   }*/
+   /*   try
+      {
+         delete __get_module_state()->m_pmapHDC;
+      }
+      catch(...)
+      {
+      }*/
+   /*   try
+      {
+         delete __get_module_state()->m_pmapHGDIOBJ;
+      }
+      catch(...)
+      {
+      }*/
 //      delete __get_module_state()->m_pmapHMENU;
 
    //try
@@ -109,20 +109,20 @@ int CLASS_DECL_AURA win_main(::aura::system * psystem, ::Array < ::String ^ > ^ 
    //catch(...)
    //{
    //}
-/*   try
-   {
-      __get_module_state()->m_pmapHDC      = NULL;
-   }
-   catch(...)
-   {
-   }*/
-/*   try
-   {
-      __get_module_state()->m_pmapHGDIOBJ  = NULL;
-   }
-   catch(...)
-   {
-   }*/
+   /*   try
+      {
+         __get_module_state()->m_pmapHDC      = NULL;
+      }
+      catch(...)
+      {
+      }*/
+   /*   try
+      {
+         __get_module_state()->m_pmapHGDIOBJ  = NULL;
+      }
+      catch(...)
+      {
+      }*/
 
 
 //   set_heap_mutex(NULL);
@@ -234,7 +234,7 @@ int CLASS_DECL_AURA win_main(::aura::system * psystem, ::Array < ::String ^ > ^ 
 //
 //
 
-void __cdecl _null_se_translator(unsigned int uiCode, EXCEPTION_POINTERS * ppointers)
+void CLASS_DECL_AURA __cdecl _null_se_translator(unsigned int uiCode, EXCEPTION_POINTERS * ppointers)
 {
    UNREFERENCED_PARAMETER(uiCode);
    UNREFERENCED_PARAMETER(ppointers);

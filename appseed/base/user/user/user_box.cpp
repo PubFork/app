@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace user
@@ -8,8 +8,8 @@ namespace user
    box::box() :
       ::object(get_app())
    {
-      
-      m_strWindowRectDataAddUp = ".local://";
+
+      m_strWindowRectDataAddUp = "&data_source=local&";
 
    }
 
@@ -41,7 +41,7 @@ namespace user
       if (pobj->previous())
          return;
 
-      set_data_server(&System.dataserver());
+      initialize_data_client(&System.dataserver());
 
       if (m_id.is_empty())
       {
@@ -49,8 +49,6 @@ namespace user
          m_id = typeid(*this).name();
 
       }
-
-      defer_update_data_id();
 
    }
 
@@ -88,7 +86,7 @@ namespace user
 
          defer_update_display();
 
-         ::id idKey = m_strWindowRectDataAddUp + m_dataid.m_id + ".WindowRect." + m_strDisplay;
+         ::id idKey = m_strWindowRectDataAddUp + get_data_id().m_id + ".WindowRect." + m_strDisplay;
 
          //sl.unlock();
 
@@ -111,7 +109,7 @@ namespace user
 
       defer_update_display();
 
-      ::id idKey = m_strWindowRectDataAddUp + m_dataid.m_id + ".WindowRect." + m_strDisplay;
+      ::id idKey = m_strWindowRectDataAddUp + get_data_id().m_id + ".WindowRect." + m_strDisplay;
 
       //sl.unlock();
 
@@ -255,9 +253,22 @@ namespace user
          return true;
 
       }
-      catch (exit_exception & e)
+      catch (esp esp)
       {
-         throw e;
+
+         if (esp.is < exit_exception >())
+         {
+
+            throw esp;
+
+         }
+         else
+         {
+
+            return false;
+
+         }
+
       }
       catch (...)
       {
@@ -382,7 +393,7 @@ namespace user
       if (m_strDisplay.is_empty())
       {
 
-         if (!data_get(m_strWindowRectDataAddUp + m_dataid.m_id + ".lastdisplay", m_strDisplay) || m_strDisplay.is_empty())
+         if (!data_get(m_strWindowRectDataAddUp + get_data_id().m_id + ".lastdisplay", m_strDisplay) || m_strDisplay.is_empty())
          {
 
             m_strDisplay = calc_display();
@@ -395,22 +406,22 @@ namespace user
 
          m_strDisplay = calc_display();
 
-         data_set(m_strWindowRectDataAddUp + m_dataid.m_id + ".lastdisplay", m_strDisplay);
+         data_set(m_strWindowRectDataAddUp + get_data_id().m_id + ".lastdisplay", m_strDisplay);
 
       }
 
    }
 
-   
+
    void box::on_simple_command(::message::simple_command * psimplecommand)
    {
 
       switch (psimplecommand->m_esimplecommand)
       {
       case simple_command_load_window_rect:
-         
+
          WindowDataLoadWindowRect(psimplecommand->m_lparam != FALSE);
-         
+
          psimplecommand->m_bRet = true;
 
          break;
@@ -469,15 +480,24 @@ namespace user
 
       }
 
-      defer_update_data_id();
-
    }
 
 
    string box::calc_data_id()
    {
 
-      return ::simple_ui::interaction::calc_data_id();
+      string str;
+
+      str = Application.get_data_id();
+
+      if (str.has_char())
+      {
+
+         str += ".";
+
+      }
+
+      return str + m_id;
 
    }
 

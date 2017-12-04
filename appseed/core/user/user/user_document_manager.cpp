@@ -428,7 +428,7 @@ namespace user
 
       }
 
-      ::count count2 = m_templateptra.get_count();
+      //::count count2 = m_templateptra.get_count();
 
       if (bEndApp)
       {
@@ -695,7 +695,7 @@ namespace user
 
       if(pcreate->m_spCommandLine->m_varFile.is_empty())
       {
-         throw invalid_argument_exception(get_app());
+         _throw(invalid_argument_exception(get_app()));
       }
 
       // find the highest confidence
@@ -906,7 +906,7 @@ namespace core
       if (ptemplate == NULL)
       {
 
-         throw invalid_argument_exception(this, "impact system template should be valid");
+         _throw(invalid_argument_exception(this, "impact system template should be valid"));
 
          return;
 

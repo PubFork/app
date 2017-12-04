@@ -186,15 +186,15 @@
             }
             if (bind(s, ad, ad) == -1)
             {
-               log("bind() failed for port " + ::ca::str::from(ad.GetPort()), Errno, StrError(Errno), ::ca::log::level_fatal);
+               log("bind() failed for port " + ::ca::str::from(ad.GetPort()), Errno, bsd_socket_error(Errno), ::ca::log::level_fatal);
                ::closesocket(s);
                return -1;
             }
             if (listen(s, depth) == -1)
             {
-               log("listen", Errno, StrError(Errno), ::ca::log::level_fatal);
+               log("listen", Errno, bsd_socket_error(Errno), ::ca::log::level_fatal);
                ::closesocket(s);
-               throw simple_exception(get_app(), "listen() failed for port " + ::ca::str::from(ad.GetPort()) + ": " + StrError(Errno));
+               _throw(simple_exception(get_app(), "listen() failed for port " + ::ca::str::from(ad.GetPort()) + ": " + bsd_socket_error(Errno)));
                return -1;
             }*/
             m_depth = depth;
@@ -226,7 +226,7 @@
 
             if (a_s == INVALID_SOCKET)
             {
-               log("accept", Errno, StrError(Errno), ::ca::log::level_error);
+               log("accept", Errno, bsd_socket_error(Errno), ::ca::log::level_error);
                return;
             }
             if (!Handler().OkToAccept(this))

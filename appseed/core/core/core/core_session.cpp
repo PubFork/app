@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "core/user/user/user.h"
 //#include "core/filesystem/filemanager/filemanager.h"
 
@@ -60,6 +60,12 @@ namespace core
       m_puserex                           = NULL;
       m_pfilemanager = NULL;
 
+      m_strAppName         = "session";
+      m_strBaseSupportId   = "ca2_bergedge";
+      m_strInstallToken    = "session";
+      m_bLicense           = false;
+      m_eexclusiveinstance = ExclusiveInstanceNone;
+
    }
 
    session::~platform_parent
@@ -71,18 +77,18 @@ namespace core
    }
 
 
-   void session::construct(const char * pszAppId)
-   {
-
-      ::core::application::construct("session");
-
-      m_strAppName         = "session";
-      m_strBaseSupportId   = "ca2_bergedge";
-      m_strInstallToken    = "session";
-      m_bLicense           = false;
-      m_eexclusiveinstance = ExclusiveInstanceNone;
-
-   }
+//   void session::construct(const char * pszAppId)
+//   {
+//
+//      ::core::application::construct("session");
+//
+//      m_strAppName         = "session";
+//      m_strBaseSupportId   = "ca2_bergedge";
+//      m_strInstallToken    = "session";
+//      m_bLicense           = false;
+//      m_eexclusiveinstance = ExclusiveInstanceNone;
+//
+//   }
 
 
    void session::install_message_routing(::message::sender * psender)
@@ -94,13 +100,13 @@ namespace core
    }
 
 
-   bool session::process_initialize()
+   bool session::process_init()
    {
 
-      if(!::core::application::process_initialize())
+      if(!::core::application::process_init())
          return false;
 
-      if(!::base::session::process_initialize())
+      if(!::base::session::process_init())
          return false;
 
       if (!process_initialize_userex())
@@ -117,13 +123,13 @@ namespace core
    }
 
 
-   bool session::initialize1()
+   bool session::init1()
    {
 
-      if(!::core::application::initialize1())
+      if(!::core::application::init1())
          return false;
 
-      if(!::base::session::initialize1())
+      if(!::base::session::init1())
          return false;
 
       if (!initialize1_userex())
@@ -140,46 +146,62 @@ namespace core
    }
 
 
-   bool session::initialize()
+   bool session::init()
    {
 
-      if(!::core::application::initialize())
-         return false;
-
-      if(!::base::session::initialize())
-         return false;
-
-      return true;
-
-   }
-
-
-   bool session::initialize2()
-   {
-
-      if(!::core::application::initialize2())
-         return false;
-
-      if(!::base::session::initialize2())
-         return false;
-
-      return true;
-
-   }
-
-
-
-   bool session::initialize_application()
-   {
-
-      if (!::core::application::initialize_application())
+      if (!::core::application::init())
       {
 
          return false;
 
       }
 
-      if (!::base::session::initialize_application())
+      if (!::base::session::init())
+      {
+
+         return false;
+
+      }
+
+      return true;
+
+   }
+
+
+   bool session::init2()
+   {
+
+      if (!::core::application::init2())
+      {
+
+         return false;
+
+      }
+
+      if (!::base::session::init2())
+      {
+
+         return false;
+
+      }
+
+      return true;
+
+   }
+
+
+
+   bool session::init_application()
+   {
+
+      if (!::core::application::init_application())
+      {
+
+         return false;
+
+      }
+
+      if (!::base::session::init_application())
       {
 
          return false;
@@ -216,42 +238,37 @@ namespace core
    }
 
 
-   bool session::finalize()
+   void session::term()
    {
 
 
-      bool bOk = true;
-
       try
       {
 
-         bOk = ::base::session::finalize();
+         ::base::session::term();
 
       }
       catch(...)
       {
 
-         bOk = false;
+         m_error.set_if_not_set();
+
       }
 
       try
       {
 
-         bOk = ::core::application::finalize();
+         ::core::application::term();
 
       }
       catch(...)
       {
 
-         bOk = false;
+         m_error.set_if_not_set();
 
       }
-
-      return bOk;
 
    }
-
-
 
 
    bool session::bergedge_start()
@@ -444,7 +461,7 @@ namespace core
    //
    //#else
    //
-   //          throw todo(get_app());
+   //          _throw(todo(get_app()));
    //
    //#endif
    //
@@ -509,14 +526,14 @@ namespace core
    catch(::exit_exception & e)
    {
 
-   throw e;
+   _throw(e);
 
    }
    catch(::exception::exception &)
    {
 
    if(!Application.on_run_exception(e))
-   throw exit_exception(get_app());
+   _throw(exit_exception(get_app()));
 
    }
    catch(...)
@@ -596,7 +613,7 @@ namespace core
       }
       else
       {
-         throw "not expected e_mouse value";
+         _throw(simple_exception(get_app(), "not expected e_mouse value"));
       }
 
 
@@ -637,13 +654,13 @@ namespace core
 
       //if(m_pdatabase == NULL)
       //{
-      //   TRACE("VmpLightApp::initialize_instance failed to instatiate LightDB\n");
+      //   TRACE("VmpLightApp::init_instance failed to instatiate LightDB\n");
       //   return false;
       //}
 
       //if(!m_pdatabase->Initialize())
       //{
-      //   TRACE("VmpLightApp::initialize_instance failed to initialize LightDB\n");
+      //   TRACE("VmpLightApp::init_instance failed to initialize LightDB\n");
       //   return false;
       //}
 
@@ -672,7 +689,7 @@ namespace core
 
 #else
 
-         throw todo(get_app());
+         _throw(todo(get_app()));
 
 #endif
 
@@ -723,19 +740,15 @@ namespace core
             papp = create_application(pszAppId, bSynch, pbiasCreate);
 
          }
-         catch(::exit_exception & e)
+         catch(esp esp)
          {
 
-            throw e;
+            esp.rethrow_exit();
 
-         }
-         catch(::exception::exception & e)
-         {
-
-            if (!App(this).on_run_exception(e))
+            if (!App(this).on_run_exception(esp))
             {
 
-               throw exit_exception(get_app());
+               papp = NULL;
 
             }
 
@@ -772,14 +785,18 @@ namespace core
    }
 
 
-
    void session::check_topic_file_change()
    {
+
       if(Session.m_varCurrentViewFile != Session.m_varTopicFile && !Session.m_varTopicFile.is_empty())
       {
+
          Session.m_varCurrentViewFile = Session.m_varTopicFile;
+
          request_topic_file();
+
       }
+
    }
 
 
@@ -881,7 +898,7 @@ namespace core
    }
 
 
-   bool session::on_uninstall()
+   bool session::on_unstall()
    {
 
 
@@ -890,7 +907,7 @@ namespace core
 
       try
       {
-         bOk1 = ::core::application::on_uninstall();
+         bOk1 = ::core::application::on_unstall();
       }
       catch(...)
       {
@@ -924,17 +941,7 @@ namespace core
    }
 
 
-   ::visual::cursor * session::get_cursor()
-   {
 
-      if(m_pbasesession->m_ecursor == ::visual::cursor_none)
-         return NULL;
-      else if(m_pbasesession->m_ecursor == ::visual::cursor_default)
-         return System.visual().get_cursor(m_pbasesession->m_ecursorDefault);
-      else
-         return System.visual().get_cursor(m_pbasesession->m_ecursor);
-
-   }
 
 
    ::visual::cursor * session::get_default_cursor()
@@ -945,20 +952,12 @@ namespace core
    }
 
 
-   int32_t session::main()
+   void session::main()
    {
 
-
-      return ::core::application::main();
-
+      ::core::application::main();
 
    }
-
-   /*   ::core::filehandler::handler & system::filehandler()
-   {
-   return *m_spfilehandler;
-   }*/
-
 
 
    void session::register_bergedge_application(::aura::application * papp)
@@ -971,11 +970,13 @@ namespace core
 
       Session.m_appptra.add_unique(papp);
 
-      if(System.is_installing() || System.is_uninstalling())
+      if (System.is_installing() || System.is_unstalling())
+      {
+
          System.m_bDoNotExitIfNoApplications = false;
-      else if(!papp->is_session()
-         && !papp->is_system()
-         && !papp->is_serviceable())
+
+      }
+      else if(!papp->is_session() && !papp->is_system() && !papp->is_serviceable())
       {
 
          System.m_bDoNotExitIfNoApplications = false;
@@ -983,6 +984,7 @@ namespace core
       }
 
    }
+
 
    void session::unregister_bergedge_application(::aura::application * papp)
    {

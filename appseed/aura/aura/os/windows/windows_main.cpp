@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include <stdio.h>
 
 #include <time.h>
@@ -7,13 +7,61 @@
 #endif
 
 
+
+//#ifdef WINDOWSEX
+//
+//typedef int32_t(*PFN_APP_CORE_MAIN)(HINSTANCE hInstance, HINSTANCE hPrevInstance, const char * lpCmdLine, int32_t nCmdShow, app_core & appcore);
+//
+//CLASS_DECL_AURA int32_t app_common_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow, app_core & appcore);
+//CLASS_DECL_AURA int32_t app_common_main(int argc, char *argv[], app_core & appcore);
+//
+//#else // WINDOWS
+//
+//typedef int32_t(*PFN_APP_CORE_MAIN)(const char * lpCmdLine, int32_t nCmdShow, app_core & appcore);
+//
+//#endif
+//
+
+
+//class windows_main_data :
+//   public aura_main_data
+//{
+//public:
+//
+//
+//   HINSTANCE      m_hinstance;
+//   HINSTANCE      m_hPrevInstance;
+//   LPTSTR         m_lpCmdLine;
+//   int32_t        m_nCmdShow;
+//
+//
+//   windows_main_data(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow)
+//   {
+//
+//      m_bConsole = false;
+//
+//      m_hinstance = hinstance;
+//
+//      m_hPrevInstance = hPrevInstance;
+//
+//      m_lpCmdLine = lpCmdLine;
+//
+//      m_nCmdShow = nCmdShow;
+//
+//   }
+//
+//
+//
+//};
+
+
 CLASS_DECL_AURA int32_t ca2_main();
 
 
 void CLASS_DECL_AURA __cdecl _ca2_purecall()
 {
 
-   throw simple_exception(get_thread_app());
+   _throw(simple_exception(get_app()));
 
 }
 
@@ -33,274 +81,268 @@ void __cdecl _null_se_translator(uint32_t uiCode, EXCEPTION_POINTERS * ppointers
 
 
 
-CLASS_DECL_AURA int32_t __win_main(sp(::aura::system) psystem, ::windows::command * pmaininitdata)
+
+
+
+
+
+#undef new
+
+
+#ifdef _WIN32
+extern "C"
 {
-
-   psystem->construct(NULL);
-
-   if (pmaininitdata == NULL)
-   {
-      psystem->m_hinstance;
-   }
-
-   psystem->startup_command(pmaininitdata);
-
-   xxdebug_box("box1", "box1", MB_ICONINFORMATION);
-
-   set_main_thread(GetCurrentThread());
-
-   set_main_thread_id(GetCurrentThreadId());
-
-   if (!psystem->pre_run())
-   {
-
-      return psystem->m_iReturnCode;
-
-   }
-
-   int32_t nReturnCode = psystem->main();
-
-   try
-   {
-
-      psystem->exit_thread();
-
-   }
-   catch (...)
-   {
-
-
-   }
-
-   return nReturnCode;
-
+#undef APPMACROS_ONLY
+#include <openssl/ms/applink.c>
 }
-
-
-int app_core::start()
-{
-
-   if (!defer_aura_init())
-   {
-
-      ::output_debug_string("Failed to defer_core_init");
-
-      return -4;
-
-   }
-
-   m_dwStartTime = ::get_first_tick();
-   
-   m_dwAfterApplicationFirstRequest = m_dwStartTime;
-
-   if (file_exists_dup("C:\\ca2\\config\\system\\wait_on_beg.txt"))
-   {
-
-      Sleep(10000);
-
-   }
-
-   if (file_exists_dup("C:\\ca2\\config\\system\\beg_debug_box.txt"))
-   {
-
-      debug_box("zzzAPPzzz app", "zzzAPPzzz app", MB_ICONINFORMATION);
-
-   }
-
-   return 0;
-
-}
-
-
-int app_core::end()
-{
-
-   int iRet = 0;
-
-   if (!defer_aura_term())
-   {
-
-      ::output_debug_string("Failed to defer_core_term");
-
-      iRet -= 10000;
-
-   }
-
-   DWORD dwEnd = ::get_tick_count();
-
-   char szTimeMessage[2048];
-
-   ::time_t timet = ::time(NULL);
-
-   tm t;
-
-   errno_t err = _localtime64_s(&t, &timet);
-
-   char szTime[2048];
-
-   sprintf(szTime, "%04d-%02d-%02d %02d:%02d:%02d", t.tm_year + 1900, t.tm_mon + 1, t.tm_mday, t.tm_hour, t.tm_min, t.tm_sec);
-
-   sprintf(szTimeMessage, "\n\n\n---------------------------------------------------------------------------------------------\n|\n|\n|  Just After First Application Request Completion %d", (uint32_t)m_dwAfterApplicationFirstRequest - m_dwStartTime);
-   ::output_debug_string(szTimeMessage);
-   printf(szTimeMessage);
-
-   int iMillisecondsTotal = dwEnd - m_dwStartTime;
-
-   sprintf(szTimeMessage, "\n|  Total Elapsed Time %d ms", (uint32_t)iMillisecondsTotal);
-   ::output_debug_string(szTimeMessage);
-   printf(szTimeMessage);
-
-   int iMilliseconds = iMillisecondsTotal % 1000;
-   int iSecondsTotal = iMillisecondsTotal / 1000;
-   int iSeconds = iSecondsTotal % 60;
-   int iMinutesTotal = iSecondsTotal / 60;
-   int iMinutes = iMinutesTotal % 60;
-   int iHoursTotal = iMinutesTotal / 60;
-   int iHours = iHoursTotal % 24;
-   int iDays = iHoursTotal / 24;
-
-   if (iDays > 0)
-   {
-
-      sprintf(szTimeMessage, "\n|  Total Elapsed Time %d days %02d:%02d:%02d %03d ms", iDays, iHours, iMinutes, iSeconds, iMilliseconds);
-
-   }
-   else if (iHours > 0)
-   {
-
-      sprintf(szTimeMessage, "\n|  Total Elapsed Time %02d:%02d:%02d %03d ms", iHours, iMinutes, iSeconds, iMilliseconds);
-
-   }
-   else if (iMinutes > 0)
-   {
-
-      sprintf(szTimeMessage, "\n|  Total Elapsed Time %02d:%02d %03d ms", iMinutes, iSeconds, iMilliseconds);
-
-   }
-   else
-   {
-
-      sprintf(szTimeMessage, "\n|  Total Elapsed Time %02ds %03d ms", iSeconds, iMilliseconds);
-
-   }
-
-   ::output_debug_string(szTimeMessage);
-   printf(szTimeMessage);
-
-   sprintf(szTimeMessage, "\n|");
-   ::output_debug_string(szTimeMessage);
-   printf(szTimeMessage);
-
-   sprintf(szTimeMessage, "\n|  %s", szTime);
-   ::output_debug_string(szTimeMessage);
-   printf(szTimeMessage);
-
-   sprintf(szTimeMessage, "\n|");
-   ::output_debug_string(szTimeMessage);
-   printf(szTimeMessage);
-
-   sprintf(szTimeMessage, "\n|");
-   ::output_debug_string(szTimeMessage);
-   printf(szTimeMessage);
-
-   sprintf(szTimeMessage, "\n-------------------------------------------------------------------------------------------- - ");
-   ::output_debug_string(szTimeMessage);
-   printf(szTimeMessage);
-
-   sprintf(szTimeMessage, "\n");
-   ::output_debug_string(szTimeMessage);
-   printf(szTimeMessage);
-
-   sprintf(szTimeMessage, "\n");
-   ::output_debug_string(szTimeMessage);
-   printf(szTimeMessage);
-
-   sprintf(szTimeMessage, "\n");
-   ::output_debug_string(szTimeMessage);
-   printf(szTimeMessage);
-
-   sprintf(szTimeMessage, "\n");
-   ::output_debug_string(szTimeMessage);
-   printf(szTimeMessage);
-
-
-   if (file_exists_raw("C:\\ca2\\config\\system\\show_elapsed.txt"))
-   {
-      char szUTCTime[2048];
-      //      char szLocalTime[2048];
-      time_t rawtime;
-      struct tm * l;
-      struct tm * g;
-      time(&rawtime);
-      l = localtime(&rawtime);
-      g = gmtime(&rawtime);
-      sprintf(szUTCTime, "%04d-%02d-%02d %02d:%02d:%02d UTC", g->tm_year + 1900, g->tm_mon, g->tm_mday, g->tm_hour, g->tm_min, g->tm_sec);
-      //   sprintf(szLocalTime,"%04d-%02d-%02d %02d:%02d:%02d local : ",l->tm_year + 1900,l->tm_mon,l->tm_mday,l->tm_hour,l->tm_min,l->tm_sec);
-      char szTimeMessage1[2048];
-      sprintf(szTimeMessage1, " Just After First Application Request Completion %d", (uint32_t)m_dwAfterApplicationFirstRequest - m_dwStartTime);
-      if (file_length_raw("C:\\ca2\\config\\system\\show_elapsed.txt") > 0)
-      {
-         file_add_contents_raw("C:\\ca2\\config\\system\\show_elapsed.txt", "\n");
-      }
-      file_add_contents_raw("C:\\ca2\\config\\system\\show_elapsed.txt", szUTCTime);
-      file_add_contents_raw("C:\\ca2\\config\\system\\show_elapsed.txt", szTimeMessage1);
-      //file_add_contents_raw("C:\\ca2\\config\\system\\show_elapsed.txt",szLocalTime);
-      file_add_contents_raw("C:\\ca2\\config\\system\\show_elapsed.txt", "\n");
-      char szTimeMessage2[2048];
-      sprintf(szTimeMessage2, " Total Elapsed Time %d", (uint32_t)dwEnd - m_dwStartTime);
-      file_add_contents_raw("C:\\ca2\\config\\system\\show_elapsed.txt", szUTCTime);
-      file_add_contents_raw("C:\\ca2\\config\\system\\show_elapsed.txt", szTimeMessage2);
-
-   }
-#ifdef __MCRTDBG
-   _CrtDumpMemoryLeaks();
 #endif
 
-   return iRet;
 
-}
+//
+//
+//
+//
+//
+//#include "aura/node/windows/windows.h"
+//
+//
+//
+
+#define new AURA_NEW
 
 
-CLASS_DECL_AURA int node_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow)
+
+
+
+
+
+
+//
+//
+//CLASS_DECL_AURA int32_t app_common_main(int argc, char *argv[], app_core & appcore)
+//{
+//
+//   int iError = 0;
+//
+//   ::windows::command * pmaininitdata = NULL;
+//
+//   ::aura::system * psystem = app_common_prelude(iError, pmaininitdata, appcore);
+//
+//   if (psystem == NULL)
+//   {
+//
+//      return iError;
+//
+//   }
+//
+//   iError = __win_main(psystem, pmaininitdata);
+//
+//   return app_common_term(iError, psystem, appcore);
+//
+//}
+//
+//
+//
+//
+//
+//
+
+
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//#include "aura/node/windows/windows.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+//CLASS_DECL_AURA int32_t app_common_main(int argc, char *argv[], app_core & appcore)
+//{
+//
+//   int iError = 0;
+//
+//   ::windows::command * pmaininitdata = NULL;
+//
+//   ::aura::system * psystem = app_common_prelude(iError, pmaininitdata, appcore);
+//
+//   if (psystem == NULL)
+//   {
+//
+//      return iError;
+//
+//   }
+//
+//   iError = __win_main(psystem, pmaininitdata);
+//
+//   return app_common_term(iError, psystem, appcore);
+//
+//}
+
+
+
+
+bool node_fill(app_core * pappcore)
 {
 
-   app_core appcore;
+   string strAppId;
 
-   int iError = appcore.start();
+   //if (hinstance == NULL)
+   //{
 
-   if (iError != 0)
+   //   hinstance = ::GetModuleHandle(NULL);
+
+   //}
+
+   //if (::GetProcAddress(hinstance, "get_acid_app") != NULL)
+   //{
+
+   //   strAppId = "acid";
+
+   //}
+
+   if (strAppId.is_empty())
    {
 
-      return iError;
+      strAppId = read_resource_as_string_dup(pappcore->m_pmaindata->m_hinstance, 1, "APPID");
+
+      if (strAppId.is_empty())
+      {
+
+         get_command_line_param(strAppId, string(::GetCommandLineW()), "app");
+
+         if (strAppId.is_empty())
+         {
+
+            strAppId = "acid";
+
+         }
+
+      }
 
    }
 
-   iError = app_common_main(hinstance, hPrevInstance, (char *)(const char *)  ::str::international::unicode_to_utf8(::GetCommandLineW()), nCmdShow, appcore);
-
-   return appcore.end();
-
-}
-
-
-CLASS_DECL_AURA int node_main(int argc, char * argv[])
-{
-
-   app_core appcore;
-
-   int iError = 0;
-
-   iError = appcore.start();
-
-   if (iError != NOERROR)
+   if (strAppId.has_char())
    {
 
-      return iError;
+      HMODULE hmodule = NULL;
+
+      bool bInApp = strAppId.compare_ci("acid") == 0;
+
+      if (!bInApp)
+      {
+
+         string strLibrary = ::process::app_id_to_app_name(strAppId);
+
+         hmodule = ::LoadLibrary(strLibrary + ".dll");
+
+      }
+
+      if (hmodule != NULL || bInApp)
+      {
+
+         PFN_DEFER_INIT defer_init = NULL;
+
+         if ((hmodule = ::GetModuleHandle("core.dll")) != NULL)
+         {
+
+            defer_init = (PFN_DEFER_INIT) ::GetProcAddress(hmodule, "defer_core_init");
+
+         }
+         else if ((hmodule = ::GetModuleHandle("base.dll")) != NULL)
+         {
+
+            defer_init = (PFN_DEFER_INIT) ::GetProcAddress(hmodule, "defer_base_init");
+
+         }
+         else if ((hmodule = ::GetModuleHandle("axis.dll")) != NULL)
+         {
+
+            defer_init = (PFN_DEFER_INIT) ::GetProcAddress(hmodule, "defer_axis_init");
+
+         }
+
+         if (defer_init != NULL && !defer_init())
+         {
+
+            pappcore->on_result(-3);
+
+            return NULL;
+
+         }
+
+      }
 
    }
 
-   iError = app_common_main(argc, argv, appcore);
+   ::windows::command * pmaininitdata = new ::windows::command;
 
-   return appcore.end();
+   pmaininitdata->m_hInstance = pappcore->m_pmaindata->m_hinstance;
+   pmaininitdata->m_hPrevInstance = pappcore->m_pmaindata->m_hPrevInstance;
+   pmaininitdata->m_nCmdShow = pappcore->m_pmaindata->m_nCmdShow;
+   pmaininitdata->m_strAppId = strAppId;
+
+   //if (pszCmdLine == NULL)
+   //{
+
+   //pmaininitdata->m_strCommandLine = ::path::module() + " : app=" + strAppId;
+
+   //}
+   //else
+   //{
+
+   //pmaininitdata->m_strCommandLine = pszCmdLine;
+   pmaininitdata->m_strCommandLine = ::GetCommandLineW();
+
+
+   //}
+
+   pappcore->m_pmaindata->m_pmaininitdata = pmaininitdata;
+
+   return true;
 
 }
+
+
+
+//int app_common_term(int iError, ::aura::system * psystem, app_core & appcore)
+//{
+//
+//   appcore.m_dwAfterApplicationFirstRequest = psystem->m_dwAfterApplicationFirstRequest;
+//
+//   try
+//   {
+//
+//      delete psystem;
+//
+//   }
+//   catch (...)
+//   {
+//
+//   }
+//
+//   psystem = NULL;
+//
+//
+//   return iError;
+//
+//}
+//
+
 

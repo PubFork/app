@@ -14,15 +14,16 @@ namespace aura
 
       string                                 m_strApp;
       string_map < sp(::aura::ipc::tx) >     m_txmap;
-      string_map < sp(mutex) >                 m_mapAppMutex;
-      //string_map < sp(::aura::ipc::tx) >     m_txmodules;
+      string_map < sp(mutex) >               m_mapAppMutex;
+      //string_map < sp(::aura::ipc::tx) >   m_txmodules;
       ::aura::ipc::rx                        m_rx;
       stringa                                m_straModule;
 
+      
       ipi(::aura::application * papp, const string & strApp);
 
+      
       void defer_add_module(const string & strModule, int iPid);
-
 
       template<typename T, typename... Args>
       int_map < var > ecall(const string & strApp, int_array iaExcludePid, const string & strObject, const string & strMember, const T & t, Args... args)
@@ -36,7 +37,7 @@ namespace aura
 
       }
 
-      virtual int_map < var > ecall(const string & strApp, int_array iaExcludePid, const string & strObject, const string & strMember, var_array & va, duration durationTimeOut = one_second());
+      virtual int_map < var > ecall(const string & strApp, int_array iaExcludePid, const string & strObject, const string & strMember, var_array & va, duration durationTimeOut = one_minute());
 
       template<typename T, typename... Args>
       int_map < var > call(const string & strApp, const string & strObject, const string & strMember, const T & t, Args... args)
@@ -50,9 +51,9 @@ namespace aura
 
       }
 
-      virtual int_map < var > call(const string & strApp, const string & strObject, const string & strMember, var_array & va, duration durationTimeOut = one_second());
+      virtual int_map < var > call(const string & strApp, const string & strObject, const string & strMember, var_array & va, duration durationTimeOut = one_minute());
 
-      virtual int_map < var > call(const stringa & straApp, const string & strObject, const string & strMember, var_array & va, duration durationTimeOut = one_second());
+      virtual int_map < var > call(const stringa & straApp, const string & strObject, const string & strMember, var_array & va, duration durationTimeOut = one_minute());
 
       template<typename T, typename... Args>
       int_map < var > scall(bool bAutoLaunch, const string & strApp, const string & strObject, const string & strMember, const T & t, Args... args)
@@ -66,7 +67,6 @@ namespace aura
 
       }
 
-
       template<typename T, typename... Args>
       int_map < var > scall(bool bAutoLaunch, duration durationTimeout, const string & strApp, const string & strObject, const string & strMember, const T & t, Args... args)
       {
@@ -79,8 +79,7 @@ namespace aura
 
       }
 
-
-      virtual int_map < var > scall(bool bAutoLaunch, const string & strApp, const string & strObject, const string & strMember, var_array & va, duration durationTimeout = one_second());
+      virtual int_map < var > scall(bool bAutoLaunch, const string & strApp, const string & strObject, const string & strMember, var_array & va, duration durationTimeout = one_minute());
 
       template<typename T, typename... Args>
       var call(const string & strApp, int iPid, const string & strObject, const string & strMember, const T & t, Args... args)
@@ -94,7 +93,7 @@ namespace aura
 
       }
 
-      virtual var call(const string & strApp, int iPid, const string & strObject, const string & strMember, var_array & va, duration durationTimeout = one_second());
+      virtual var call(const string & strApp, int iPid, const string & strObject, const string & strMember, var_array & va, duration durationTimeout = one_minute());
 
       ::aura::ipc::tx & tx(const string & strApp, int iPid);
 
@@ -114,8 +113,6 @@ namespace aura
       virtual bool connect(const string & strApp, int iPid);
 
       virtual void on_new_instance(const string & strModule, int iPid);
-
-
 
    };
 

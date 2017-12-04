@@ -19,7 +19,7 @@ namespace music
          virtual ~sequence_thread();
 
 
-         void install_message_routing(::message::sender * pinterface);
+         void install_message_routing(::message::sender * pinterface) override;
 
          ::music::midi::sequence * get_sequence();
          void Stop(imedia_time msEllapse);
@@ -38,8 +38,8 @@ namespace music
          void PostTempoChange();
          void SendTempoChange();
 
-         void ExecuteCommand(::smart_pointer < ::music::midi::player::command > pcommand);
-         void _ExecuteCommand(::smart_pointer < ::music::midi::player::command > pcommand);
+         void ExecuteCommand(::smart_pointer < ::music::midi::player::command > pcommand) override;
+         void _ExecuteCommand(::smart_pointer < ::music::midi::player::command > pcommand) override;
 
          virtual bool initialize_thread() override;
          virtual int32_t exit_thread() override;

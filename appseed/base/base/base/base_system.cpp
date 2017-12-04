@@ -1,7 +1,10 @@
-#include "framework.h" // from "axis/user/user.h"
-#include "base/user/user/user_windowing.h"
+﻿#include "framework.h" // from "axis/user/user.h"
+//#include "base/user/user/user_windowing.h"
 #include "base/user/user.h"
 #include "base/node/node.h"
+#ifdef WINDOWSEX
+#include "aura/aura/os/windows/windows_system_interaction_impl.h"
+#endif
 
 
 #ifndef WINDOWS
@@ -11,11 +14,15 @@
 
 CLASS_DECL_BASE void black_body(float * r, float * g, float * b, DWORD dwTemp);
 
+CLASS_DECL_BASE int os_get_monitor_count();
+CLASS_DECL_BASE bool os_get_monitor_rect(index i, LPRECT lprect);
+CLASS_DECL_BASE int os_get_screen_size(int& width, int& height);
+
 #ifdef WINDOWSEX
 
 
 
-#include "base/os/windows/windows_system_interaction_impl.h"
+//#include "base/os/windows/windows_system_interaction_impl.h"
 
 
 #include <HighLevelMonitorConfigurationAPI.h>
@@ -83,33 +90,6 @@ MC_COLOR_TEMPERATURE kelvin_mc_color(DWORD kelvin)
 
 #elif defined(LINUX)
 
-#define pointer x11_pointer
-#include <X11/extensions/Xrandr.h>
-#include <X11/extensions/Xinerama.h>
-#undef pointer
-
-int xrr_GetScreenSize(int& width, int& height)
-{
-
-   int num_sizes;
-   Rotation original_rotation;
-
-   Display *dpy = XOpenDisplay(NULL);
-   Window root = RootWindow(dpy, 0);
-   XRRScreenSize *xrrs = XRRSizes(dpy, 0, &num_sizes);
-   //
-   //     GET CURRENT RESOLUTION AND FREQUENCY
-   //
-   XRRScreenConfiguration *conf = XRRGetScreenInfo(dpy, root);
-   short original_rate = XRRConfigCurrentRate(conf);
-   SizeID original_size_id = XRRConfigCurrentConfiguration(conf, &original_rotation);
-
-   width = xrrs[original_size_id].width;
-   height = xrrs[original_size_id].height;
-
-   XCloseDisplay(dpy);
-   return 0;    //Return a value that can be used for error checking.
-}
 
 #endif
 
@@ -117,20 +97,11 @@ int xrr_GetScreenSize(int& width, int& height)
 namespace base
 {
 
-#ifdef METROWIN
-   system::os_system_window::os_system_window()
-   {
-
-      m_bWindowSizeChange = false;
-
-   }
-
-#endif
 
 
-   system::system(::aura::application * papp) :
-      ::aura::system(this, NULL),
-      ::axis::system(this)
+   system::system(::aura::application * papp, app_core * pappcore) :
+      ::aura::system(this, pappcore, NULL),
+      ::axis::system(this, pappcore)
    {
 
       factory().creatable_small < ::visual::icon >();
@@ -186,39 +157,38 @@ namespace base
    }
 
 
-
-   int32_t system::exit_application()
+   void system::term_application()
    {
 
       try
       {
-         
+
          for(auto & pair : System.m_appmap)
          {
-            
+
             try
             {
-               
+
                if(pair.m_element2->m_pbasesystem == this)
                {
-                  
+
                   pair.m_element2->m_pbasesystem = NULL;
-                  
+
                }
-               
+
             }
             catch(...)
             {
-               
+
             }
-            
+
          }
-         
+
       }
       catch(...)
       {
-   
-      }         
+
+      }
 
 #ifdef WINDOWSEX
 
@@ -231,17 +201,13 @@ namespace base
       catch (...)
       {
 
-         m_iReturnCode = -2;
+         m_error.set_if_not_set();
 
       }
 
-
 #endif
-      axis::system::exit_application();
 
-
-
-      return m_iReturnCode;
+      axis::system::term_application();
 
    }
 
@@ -256,72 +222,7 @@ namespace base
 
 
 
-   bool system::defer_create_system_frame_window()
-   {
 
-
-#ifdef WINDOWSEX
-
-      if (m_psystemwindow != NULL)
-         return true;
-
-      m_psystemwindow = new system_interaction_impl(this);
-
-#endif
-
-
-
-#ifdef WINDOWSEX
-
-      dappy(string(typeid(*this).name()) + " : Going to ::axis::system::m_spwindow->create_window_ex : " + ::str::from(m_iReturnCode));
-
-      if (!m_psystemwindow->create_window_ex(0, NULL, NULL, 0, null_rect(), NULL, "::axis::system::interaction_impl::no_twf"))
-      {
-
-         dappy(string(typeid(*this).name()) + " : ::axis::system::m_spwindow->create_window_ex failure : " + ::str::from(m_iReturnCode));
-
-         return false;
-
-      }
-
-#endif
-
-      return true;
-
-   }
-
-
-
-
-   index system::get_ui_wkspace(::user::interaction * pui)
-   {
-
-      index iMainWkspace = 0;
-
-#ifdef WINDOWSEX
-
-      HMONITOR hwkspacePrimary = GetUiMonitorHandle(pui->get_handle());
-
-      for (index iWkspace = 0; iWkspace < get_wkspace_count(); iWkspace++)
-      {
-
-         if (m_hmonitora[iWkspace] == hwkspacePrimary)
-         {
-
-            iMainWkspace = iWkspace;
-
-            break;
-
-         }
-
-      }
-
-
-#endif
-
-      return iMainWkspace;
-
-   }
 
 
 
@@ -424,34 +325,7 @@ namespace base
 
 #ifdef LINUX
 
-      int heads = 0;
-
-      xdisplay  d;
-
-      if (!d.open(NULL))
-      {
-
-         return 1;
-
-      }
-
-      int dummy1, dummy2;
-
-      if (XineramaQueryExtension(d, &dummy1, &dummy2))
-      {
-
-         if (XineramaIsActive(d))
-         {
-
-            XineramaScreenInfo *p = XineramaQueryScreens(d, &heads);
-
-            XFree(p);
-
-         }
-
-      }
-
-      return MAX(1, heads);
+      return os_get_monitor_count();
 
 #else
 
@@ -623,9 +497,9 @@ namespace base
 
       // Get the number of physical monitors.
       BOOL bSuccess = GetNumberOfPhysicalMonitorsFromHMONITOR(
-         m_hmonitora[iMonitor],
-         &cPhysicalMonitors
-      );
+                      m_hmonitora[iMonitor],
+                      &cPhysicalMonitors
+                      );
 
       if (!bSuccess || cPhysicalMonitors <= 0)
       {
@@ -761,7 +635,7 @@ namespace base
       }
 
       int iRepeat = 0;
-      repeat:
+repeat:
 
       bDifferent = false;
 
@@ -858,10 +732,12 @@ namespace base
 
       }
       Sleep(500);
-   finalize:;
+finalize:
+      ;
       DestroyPhysicalMonitors(1, &monitor);
       return true;
-error:;
+error:
+      ;
       Sleep(500);
       // Close the monitor handles.
       DestroyPhysicalMonitors(1, &monitor);
@@ -883,69 +759,8 @@ error:;
 
 #elif defined(LINUX)
 
-      xdisplay  d;
+      return os_get_monitor_rect(iMonitor, lprect);
 
-      if (!d.open(NULL))
-         return false;
-
-      //int iCount = ScreenCount(d.m_pdata->m_pdisplay);
-      //Display *d= ScreenCount(d.m_pdata->m_pdisplay);
-
-      bool success = false;
-
-      int dummy1, dummy2;
-
-      if (XineramaQueryExtension(d, &dummy1, &dummy2))
-      {
-
-         if (XineramaIsActive(d))
-         {
-
-            int heads = 0;
-
-            XineramaScreenInfo *p = XineramaQueryScreens(d, &heads);
-
-            if (iMonitor >= 0 && iMonitor < heads)
-            {
-
-               lprect->left = p[iMonitor].x_org;
-               lprect->top = p[iMonitor].y_org;
-               lprect->right = lprect->left + p[iMonitor].width;
-               lprect->bottom = lprect->top + p[iMonitor].height;
-               //      lprect->right = WidthOfScreen(DefaultScreenOfDisplay(d.m_pdata->m_pdisplay));
-               //      lprect->top = 0;
-               //      lprect->bottom= HeightOfScreen(DefaultScreenOfDisplay(d.m_pdata->m_pdisplay));
-
-               //					for (int x=0; x<heads; ++x)
-               //						cout << "Head " << x+1 << " of " << heads << ": " <<
-               //							p[x].width << "x" << p[x].height << " at " <<
-               //							p[x].x_org << "," << p[x].y_org << endl;
-               success = true;
-            }
-
-            XFree(p);
-
-         }
-
-      }
-
-      if (success)
-      {
-
-         return true;
-
-      }
-
-      int iCount;
-
-      XRRScreenSize * psize = XRRSizes(d.m_pdata->m_pdisplay, 0, &iCount);
-
-      lprect->left = 0;
-      lprect->right = WidthOfScreen(DefaultScreenOfDisplay(d.m_pdata->m_pdisplay));
-      lprect->top = 0;
-      lprect->bottom = HeightOfScreen(DefaultScreenOfDisplay(d.m_pdata->m_pdisplay));
-
-      return true;
 
 #else
 
@@ -982,54 +797,19 @@ error:;
    }
 
 
-   ::user::interaction_impl * system::impl_from_handle(void * pdata)
-   {
-
-      return oswindow_get((oswindow)pdata);
-
-   }
-
-   ::user::interaction * system::ui_from_handle(void * pdata)
-   {
-
-      ::user::interaction_impl * pimpl = impl_from_handle(pdata);
-
-      if (pimpl == NULL)
-      {
-
-         return NULL;
-
-      }
-
-      try
-      {
-
-         return pimpl->m_pui;
-
-      }
-      catch (...)
-      {
-
-         throw resource_exception(this, "not good window anymore");
-
-      }
-
-      return NULL;
-
-   }
 
    void system::on_setting_changed(::aura::e_setting esetting)
    {
 
       sp(::user::interaction) pui;
-      
+
       ::base::session * psession = m_pbasesession;
-      
+
       if(psession == NULL)
       {
-         
+
          return;
-         
+
       }
 
       while(psession->get_frame(pui))
@@ -1044,7 +824,7 @@ error:;
 
 
 
-   bool system::process_initialize()
+   bool system::process_init()
    {
 
 #ifndef WINDOWS
@@ -1058,8 +838,6 @@ error:;
 
 #endif
 
-      enum_display_monitors();
-
       //if (m_peengine != NULL)
       //{
 
@@ -1068,15 +846,15 @@ error:;
       //}
 
 
-      if (!::base::application::process_initialize())
+      if (!::base::application::process_init())
          return false;
 
-      if (!::axis::system::process_initialize())
+      if (!::axis::system::process_init())
          return false;
 
-      
+
       //System.factory().cloneable_large < ::OS::window_buffer >   (System.type_info < ::window_graphics > ());
-      
+
 
 
       m_spos.alloc(allocer());
@@ -1089,6 +867,19 @@ error:;
 
    }
 
+
+   bool system::initialize_native_window1()
+   {
+
+#if !defined(LINUX) && !defined(WINDOWSEX) && !defined(MACOS)
+
+      m_possystemwindow->m_pui = new ::user::interaction(this);
+
+#endif
+
+      return true;
+
+   }
 
 
 } // namespace base
@@ -1107,27 +898,28 @@ error:;
 
 
 
-  /* colorramp.c -- color temperature calculation source
-  This file is part of Redshift.
-  Redshift is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-  Redshift is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-  You should have received a copy of the GNU General Public License
-  along with Redshift.  If not, see <http://www.gnu.org/licenses/>.
-  Copyright (c) 2013-2014  Jon Lund Steffensen <jonlst@gmail.com>
-  Copyright (c) 2013  Ingo Thies <ithies@astro.uni-bonn.de>
-  */
+/* colorramp.c -- color temperature calculation source
+This file is part of Redshift.
+Redshift is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+Redshift is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with Redshift.  If not, see <http://www.gnu.org/licenses/>.
+Copyright (c) 2013-2014  Jon Lund Steffensen <jonlst@gmail.com>
+Copyright (c) 2013  Ingo Thies <ithies@astro.uni-bonn.de>
+*/
 
-  /* Whitepoint values for temperatures at 100K intervals.
-  These will be interpolated for the actual temperature.
-  This table was provided by Ingo Thies, 2013. See
-  the file README-colorramp for more information. */
-static const float g_fa_blackbody_color[] = {
+/* Whitepoint values for temperatures at 100K intervals.
+These will be interpolated for the actual temperature.
+This table was provided by Ingo Thies, 2013. See
+the file README-colorramp for more information. */
+static const float g_fa_blackbody_color[] =
+{
    1.00000000,  0.18172716,  0.00000000, /* 1000K */
    1.00000000,  0.25503671,  0.00000000, /* 1100K */
    1.00000000,  0.30942099,  0.00000000, /* 1200K */

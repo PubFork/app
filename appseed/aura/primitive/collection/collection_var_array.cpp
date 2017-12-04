@@ -1,10 +1,6 @@
 #include "framework.h"
 
 
-#define ROUND(x,y) (((x)+(y-1))&~(y-1))
-#define ROUND16(x) ROUND(x, 16)
-
-
 var_array::var_array(::aura::application * papp) :
    object(papp)
 {
@@ -137,7 +133,7 @@ bool var_array::contains_ci(const char * lpcsz, index find, index last, ::count 
 {
    ::count count = 0;
    while((count < countMin || (countMax >= 0 && count <= countMax))
-      && (find = find_first_ci(lpcsz, find, last)) >= 0)
+         && (find = find_first_ci(lpcsz, find, last)) >= 0)
       count++;
    return count >= countMin && conditional(countMax >= 0, count <= countMax);
 }
@@ -146,7 +142,7 @@ bool var_array::contains(const char * lpcsz, index find, index last, ::count cou
 {
    ::count count = 0;
    while((count < countMin || (countMax >= 0 && count <= countMax))
-      && (find = find_first(lpcsz, find, last)) >= 0)
+         && (find = find_first(lpcsz, find, last)) >= 0)
       count++;
    return count >= countMin && conditional(countMax >= 0, count <= countMax);
 }
@@ -155,7 +151,7 @@ bool var_array::contains(const var & var, index find, index last, ::count countM
 {
    ::count count = 0;
    while((count < countMin || (countMax >= 0 && count <= countMax))
-      && (find = find_first(var, find, last)) >= 0)
+         && (find = find_first(var, find, last)) >= 0)
       count++;
    return count >= countMin && conditional(countMax >= 0, count <= countMax);
 }
@@ -187,7 +183,7 @@ bool var_array::contains(const var & var, index find, index last, ::count countM
    ::count count = 0;
    if(contains_ci(lpcsz, find, last, countMin, countMax))
       while(conditional(countMax >= 0, count < countMax)
-         && (find = remove_first_ci(lpcsz, find, last)) >= 0)
+            && (find = remove_first_ci(lpcsz, find, last)) >= 0)
          count++;
    return count;
 }
@@ -198,7 +194,7 @@ bool var_array::contains(const var & var, index find, index last, ::count countM
    ::count count = 0;
    if(contains(lpcsz, find, last, countMin, countMax))
       while(conditional(countMax >= 0, count < countMax)
-         && (find = remove_first(lpcsz, find, last)) >= 0)
+            && (find = remove_first(lpcsz, find, last)) >= 0)
          count++;
    return count;
 }
@@ -209,7 +205,7 @@ bool var_array::contains(const var & var, index find, index last, ::count countM
    ::count count = 0;
    if(contains(var, find, last, countMin, countMax))
       while(conditional(countMax >= 0, count < countMax)
-         && (find = remove_first(var, find, last)) >= 0)
+            && (find = remove_first(var, find, last)) >= 0)
          count++;
    return count;
 }
@@ -370,7 +366,7 @@ void var_array::parse_json(const char * & pszJson, const char * pszEnd)
       {
          string str = "not expected character : ";
          str += pszJson;
-         throw str;
+         _throw(simple_exception(get_app(), str));
       }
    }
 }
@@ -403,7 +399,7 @@ void var_array::skip_json(const char * & pszJson, const char * pszEnd)
       {
          string str = "not expected character : ";
          str += pszJson;
-         throw str;
+         _throw(simple_exception(::get_app(), str));
       }
    }
 }

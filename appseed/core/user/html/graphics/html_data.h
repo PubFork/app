@@ -32,8 +32,8 @@ namespace html
       class CLASS_DECL_CORE load_image
       {
       public:
-         
-         
+
+
          image *     m_pimage;
          data *      m_pdocument;
 
@@ -185,6 +185,8 @@ namespace html
       void on_layout(::draw2d::graphics * pgraphics);
       void _001OnDraw(::draw2d::graphics * pgraphics);
 
+      void implement(html_form * pform);
+      void layout(html_form * pform);
       void implement_and_layout(html_form * pform);
 
       DECL_GEN_SIGNAL(_001OnKeyDown);

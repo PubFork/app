@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 class string_manager;
@@ -10,7 +10,7 @@ struct CLASS_DECL_AURA string_data
    string_manager * pstringmanager;  // string manager for this string_data
    strsize nDataLength;  // Length of currently used data in XCHARs (not including terminating NULL)
    strsize nAllocLength;  // Length of allocated data in XCHARs (not including terminating NULL)
-   long nRefs;     // Reference count: negative == locked
+   int_ptr nRefs;     // Reference count: negative == locked
    // char data[nAllocLength+1]  // A string_data is always followed in memory by the actual array of character data
 
    inline char * data() NOTHROW;
@@ -114,17 +114,17 @@ inline string_data * string_manager::allocate(strsize nChars)
    //try
    //{
 //      pData = (string_data *) m_palloca->alloc(nTotalSize);
-      pData = (string_data *) memory_alloc_no_track(nChars + 1 + sizeof(string_data));
+   pData = (string_data *) memory_alloc_no_track(nChars + 1 + sizeof(string_data));
    //}
    //catch(...)
    //{
-      //return NULL;
+   //return NULL;
    //}
 
    //__enable_memory_tracking(bEnable);
 
    //if (pData == NULL)
-     // return NULL;
+   // return NULL;
    pData->pstringmanager = this;
    pData->nRefs = 1;
    pData->nAllocLength = nChars;
@@ -167,7 +167,7 @@ inline string_data * string_manager::Reallocate(string_data * pOldData, strsize 
    //{
 
 //      pNewData = (string_data *) m_palloca->realloc(pOldData, nOldTotalSize, nNewTotalSize);
-      string_data *   pNewData = (string_data *)memory_realloc(pOldData,nChars + 1 + sizeof(string_data));
+   string_data *   pNewData = (string_data *)memory_realloc(pOldData,nChars + 1 + sizeof(string_data));
 
    //}
    //catch(...)
@@ -179,7 +179,7 @@ inline string_data * string_manager::Reallocate(string_data * pOldData, strsize 
 
    //if(pNewData == NULL)
    //{
-     // return NULL;
+   // return NULL;
    //}
 
    pNewData->nAllocLength = nChars;
@@ -264,40 +264,45 @@ namespace str
 }*/
 
 
-      struct string_data;
+struct string_data;
 
 #if defined(SOLARIS)
-      #include <atomic.h>
+#include <atomic.h>
 #if defined(OS64BIT)
-   #define _gen_InterlockedIncrement(ptr) atomic_inc_64(ptr)
-   #define _gen_InterlockedDecrement(ptr) atomic_dec_64(ptr)
+#define _gen_InterlockedIncrement(ptr) atomic_inc_64(ptr)
+#define _gen_InterlockedDecrement(ptr) atomic_dec_64(ptr)
 #else
-   #define _gen_InterlockedIncrement(ptr) atomic_inc_32((volatile uint32_t *) ptr)
-   #define _gen_InterlockedDecrement(ptr) atomic_dec_32((volatile uint32_t *) ptr)
+#define _gen_InterlockedIncrement(ptr) atomic_inc_32((volatile uint32_t *) ptr)
+#define _gen_InterlockedDecrement(ptr) atomic_dec_32((volatile uint32_t *) ptr)
 #endif
 #elif defined(LINUX) || defined(APPLEOS) || defined(ANDROID)
-   #define _gen_InterlockedIncrement(ptr) __sync_add_and_fetch(ptr, 1)
-   #define _gen_InterlockedDecrement(ptr) __sync_sub_and_fetch(ptr, 1)
+#if defined(RASPBIAN) && defined(OS32BIT)
+#define _gen_InterlockedIncrement(ptr) __sync_add_and_fetch_4(ptr, 1)
+#define _gen_InterlockedDecrement(ptr) __sync_sub_and_fetch_4(ptr, 1)
 #else
-   #ifdef _M_IX86
-      #ifndef _M_CEE
-         #define _gen_InterlockedIncrement InterlockedIncrement
-         #define _gen_InterlockedDecrement InterlockedDecrement
-      #else
-         #define _gen_InterlockedIncrement InterlockedIncrement
-         #define _gen_InterlockedDecrement InterlockedDecrement
-         /* managed code must use the non-intrinsics */
-         #ifdef InterlockedIncrement
-            #undef InterlockedIncrement
-         #endif
-         #ifdef InterlockedDecrement
-            #undef InterlockedDecrement
-         #endif
-      #endif  // !_M_CEE
-   #else
-      #define _gen_InterlockedIncrement InterlockedIncrement
-      #define _gen_InterlockedDecrement InterlockedDecrement
-   #endif  // _M_IX86_
+#define _gen_InterlockedIncrement(ptr) __sync_add_and_fetch(ptr, 1)
+#define _gen_InterlockedDecrement(ptr) __sync_sub_and_fetch(ptr, 1)
+#endif
+#else
+#ifdef _M_IX86
+#ifndef _M_CEE
+#define _gen_InterlockedIncrement InterlockedIncrement
+#define _gen_InterlockedDecrement InterlockedDecrement
+#else
+#define _gen_InterlockedIncrement InterlockedIncrement
+#define _gen_InterlockedDecrement InterlockedDecrement
+/* managed code must use the non-intrinsics */
+#ifdef InterlockedIncrement
+#undef InterlockedIncrement
+#endif
+#ifdef InterlockedDecrement
+#undef InterlockedDecrement
+#endif
+#endif  // !_M_CEE
+#else
+#define _gen_InterlockedIncrement InterlockedIncrement
+#define _gen_InterlockedDecrement InterlockedDecrement
+#endif  // _M_IX86_
 #endif // ! LINUX
 
 
@@ -316,11 +321,11 @@ namespace str
 
 
 template< const strsize t_nSize >
-   class static_string
+class static_string
 {
 public:
-static_string(const char* psz ) :
-   m_psz( psz )
+   static_string(const char* psz ) :
+      m_psz( psz )
    {
    }
 
@@ -335,11 +340,11 @@ static_string(const char* psz ) :
    }
 
 private:
-const char* m_psz;
+   const char* m_psz;
 
 private:
-static_string( const static_string& str ) NOTHROW;
-static_string& operator=( const static_string& str ) NOTHROW;
+   static_string( const static_string& str ) NOTHROW;
+   static_string& operator=( const static_string& str ) NOTHROW;
 };
 
 
@@ -385,7 +390,7 @@ public:
 
 
 
-      class string_file;
+class string_file;
 
 class CLASS_DECL_AURA simple_string
 {
@@ -471,7 +476,7 @@ public:
       return *this;
    }
    template< strsize t_nSize >
-      simple_string& operator+=(const static_string< t_nSize >& strSrc )
+   simple_string& operator+=(const static_string< t_nSize >& strSrc )
    {
       append( static_cast<const char *>(strSrc), strSrc.get_length() );
 
@@ -761,7 +766,7 @@ public:
    }
    inline void ReleaseBufferSetLength(strsize nNewLength );
    inline void Truncate(strsize nNewLength );
-inline   void set_at(strsize iChar,char ch );
+   inline   void set_at(strsize iChar,char ch );
    inline void SetManager(string_manager * pstringmanager );
    void SetString(const char * pszSrc )
    {
@@ -771,8 +776,8 @@ inline   void set_at(strsize iChar,char ch );
 
 public:
    friend simple_string operator+(
-      const simple_string& str1,
-      const simple_string& str2 )
+   const simple_string& str1,
+   const simple_string& str2 )
    {
       simple_string s( str1.GetManager() );
 
@@ -782,8 +787,8 @@ public:
    }
 
    friend simple_string operator+(
-      const simple_string& str1,
-      const char * psz2 )
+   const simple_string& str1,
+   const char * psz2 )
    {
       simple_string s( str1.GetManager() );
 
@@ -793,8 +798,8 @@ public:
    }
 
    friend simple_string operator+(
-      const char * psz1,
-      const simple_string& str2 )
+   const char * psz1,
+   const simple_string& str2 )
    {
       simple_string s( str2.GetManager() );
 
@@ -835,9 +840,9 @@ public:
    }
 #endif
 
-   inline static strsize __cdecl StringLength(const char * psz ) NOTHROW
+   inline static strsize __cdecl StringLength(const char * psz )
    {
-      return psz == NULL ? 0 : strlen(psz);
+      return psz == NULL || *psz == '\0' ? 0 : strlen(psz);
       //strsize nLength = 0;
       //if( psz != NULL )
       //{
@@ -881,7 +886,7 @@ protected:
       string_data* pNewData = pOldData->pstringmanager->Clone()->allocate( nLength );
       //if( pNewData == NULL )
       //{
-        // throw_memory_exception();
+      // throw_memory_exception();
       //}
       strsize nCharsToCopy = ((nOldLength < nLength) ? nOldLength : nLength)+1;  // copy '\0'
 #if _SECURE_TEMPLATE
@@ -900,7 +905,7 @@ protected:
    char * PrepareWrite(strsize nLength )
    {
       string_data * pOldData = get_data();
-      long nShared = 1-pOldData->nRefs;  // nShared < 0 means true, >= 0 means false
+      strsize nShared = 1-pOldData->nRefs;  // nShared < 0 means true, >= 0 means false
       strsize nTooShort = pOldData->nAllocLength-nLength;  // nTooShort < 0 means true, >= 0 means false
       if( (nShared|nTooShort) < 0 )  // If either sign bit is set (i.e. either is less than zero), we need to copy data
       {
@@ -944,7 +949,7 @@ protected:
    {
 
       //ASSERT(nLength < 0);
-         //throw_error_exception("simple_string::set_length nLength < 0");
+      //throw_error_exception("simple_string::set_length nLength < 0");
       ASSERT(nLength <= get_data()->nAllocLength);
       //throw_error_exception("simple_string::set_length nLength > get_data()->nAllocLength");
 
@@ -999,23 +1004,23 @@ public:
    };
 
 public:
-   explicit string_file(simple_string& str ) THROWS :
+explicit string_file(simple_string& str ) THROWS :
    m_str( str ),
-      m_pszBuffer( NULL ),
-      m_nLength( str.get_length() )
+          m_pszBuffer( NULL ),
+          m_nLength( str.get_length() )
 #ifdef DEBUG
-      ,m_nBufferLength(str.get_length())
+          ,m_nBufferLength(str.get_length())
 #endif
    {
       m_pszBuffer = m_str.GetBuffer();
    }
 
-   string_file(simple_string & str,strsize nMinLength,uint32_t dwFlags = AUTO_LENGTH ) THROWS :
+string_file(simple_string & str,strsize nMinLength,uint32_t dwFlags = AUTO_LENGTH ) THROWS :
    m_str( str ),
-      m_pszBuffer( NULL ),
-      m_nLength( (dwFlags&AUTO_LENGTH) ? -1 : nMinLength )
+   m_pszBuffer( NULL ),
+   m_nLength( (dwFlags&AUTO_LENGTH) ? -1 : nMinLength )
 #ifdef DEBUG
-      ,m_nBufferLength(nMinLength)
+   ,m_nBufferLength(nMinLength)
 #endif
    {
       if( dwFlags&SET_LENGTH )

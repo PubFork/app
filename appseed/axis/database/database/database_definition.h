@@ -1,4 +1,4 @@
-#ifndef CA2_APP_BASE_DATABASE_DEFINITION_H
+﻿#ifndef CA2_APP_BASE_DATABASE_DEFINITION_H
 #define CA2_APP_BASE_DATABASE_DEFINITION_H
 
 
@@ -31,14 +31,15 @@ namespace database
                error handling
 
    ******************************************************************/
-   class CLASS_DECL_AXIS DbErrors
+   class CLASS_DECL_AXIS DbErrors :
+      virtual public ::exception::exception
    {
 
    public:
 
-   /* constructor */
-     DbErrors();
-     DbErrors(const char *msg, ...);
+      /* constructor */
+      DbErrors();
+      DbErrors(const char *msg, ...);
 
    };
 

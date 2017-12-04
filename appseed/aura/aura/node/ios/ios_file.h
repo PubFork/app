@@ -56,7 +56,11 @@ namespace ios
       file(::aura::application * papp, const char * lpszFileName, UINT nOpenFlags);
       virtual ~file();
       
-      
+
+      virtual void assert_valid() const;
+      virtual void dump(dump_context & dumpcontext) const;
+
+
       virtual file_position_t get_position() const;
       
       
@@ -90,8 +94,6 @@ namespace ios
       virtual void close();
       
       virtual bool IsOpened();
-      virtual void assert_valid() const;
-      virtual void dump(dump_context & dumpcontext) const;
       
       virtual uint64_t GetBufferPtr(UINT nCommand, uint64_t nCount = 0, void ** ppBufStart = NULL, void ** ppBufMax = NULL);
       

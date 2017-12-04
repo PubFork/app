@@ -231,7 +231,7 @@ namespace user
 
       if(str.is_empty())
       {
-         TRACE0("unable to load os keyboard on_layout");
+         TRACE("unable to load os keyboard on_layout");
          if(is_debugger_attached())
          {
 
@@ -245,7 +245,7 @@ namespace user
 
       if(!doc.load(str))
       {
-         TRACE0("unable to load os keyboard on_layout");
+         TRACE("unable to load os keyboard on_layout");
          if(is_debugger_attached())
          {
 
@@ -604,7 +604,7 @@ namespace user
 
 #else
 
-      //throw todo(get_app());
+      //_throw(todo(get_app()));
 
 #endif
 

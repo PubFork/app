@@ -93,28 +93,28 @@ LPWAVEOUT waveout_open(int iChannel, LPAUDIOFORMAT pformat, LPWAVEOUT_CALLBACK p
 }
 
 
-int waveout_start(LPWAVEOUT pwaveout)
+CLASS_DECL_AURA int waveout_start(LPWAVEOUT pwaveout)
 {
 
    return (*pwaveout->waveout_start)(pwaveout->waveoutcontext);
 
 }
 
-int waveout_write(LPWAVEOUT pwaveout, const void * pdata, unsigned int s)
+CLASS_DECL_AURA int waveout_write(LPWAVEOUT pwaveout, const void * pdata, unsigned int s)
 {
 
    return (*pwaveout->waveout_write)(pwaveout->waveoutcontext, pdata, s);
 
 }
 
-int waveout_stop(LPWAVEOUT pwaveout)
+CLASS_DECL_AURA int waveout_stop(LPWAVEOUT pwaveout)
 {
 
    return (*pwaveout->waveout_stop)(pwaveout->waveoutcontext);
 
 }
 
-int waveout_close(LPWAVEOUT pwaveout)
+CLASS_DECL_AURA int waveout_close(LPWAVEOUT pwaveout)
 {
 
    return (*pwaveout->waveout_close)(pwaveout->waveoutcontext);

@@ -1,6 +1,6 @@
-﻿#include "framework.h"// from "base/user/user.h"
+#include "framework.h"// from "base/user/user.h"
 //#include "base/user/user.h"
-#include "aura/user/colorertake5/colorertake5.h"
+//#include "aura/user/colorertake5/colorertake5.h"
 
 
 
@@ -16,7 +16,7 @@ namespace simple_ui
       ::user::plain_edit(papp),
       edit_box(papp)
    {
-         m_bPassword = true;
+      m_bPassword = true;
    }
 
    password::~password()
@@ -29,7 +29,7 @@ namespace simple_ui
    void password::_001OnDraw(::draw2d::graphics * pgraphics)
    {
 
-      
+
 
       //return;
 
@@ -83,7 +83,7 @@ namespace simple_ui
       {
 
       pgraphics->blur(true, 4, rectClient);
-      //class imaging & imaging = System.visual().imaging();
+      //class imaging & imaging = Application.imaging();
       //rect rectClient;
       //         GetWindowRect(rectClient);
       //       rectClient.offset(rectClient.top_left());
@@ -115,7 +115,7 @@ namespace simple_ui
       /*}
       else
       {
-      class imaging & imaging = System.visual().imaging();
+      class imaging & imaging = Application.imaging();
       //_001DrawBackground(pgraphics, rectClipBox);
       imaging.color_blend(
       pgraphics,
@@ -180,7 +180,7 @@ namespace simple_ui
       rectClient.right = rectClient.left + m_size.cx;*/
       //      pgraphics->FillSolidRect(rectClient, crBk);
 
-//      
+//
 
       double y = rectClient.top;
       _001GetViewSel(iSelStart,iSelEnd);
@@ -190,7 +190,8 @@ namespace simple_ui
       size size3;
       size3 = pgraphics->GetTextExtent(unitext("gGYIﾍ"));
       int32_t iLineHeight = size3.cy;
-      stringa & straLines = m_plines->lines;
+//      stringa & straLines = m_plines->lines;
+      stringa & straLines = m_straLines;
       stringa straLineFeed;
       string strLine;
       string str1;

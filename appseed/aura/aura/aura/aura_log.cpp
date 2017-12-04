@@ -1,4 +1,7 @@
-#include "framework.h"
+﻿#include "framework.h"
+#include "aura/net/net_sockets.h"
+
+
 #include <stdio.h>
 // #include <stdarg.h>
 
@@ -11,7 +14,7 @@ namespace aura
 {
 
 
-   
+
 
 
    log::log(::aura::application * papp) :
@@ -19,16 +22,28 @@ namespace aura
       m_mutexTrace(papp)
    {
 
+#if !ENABLE_TRACE
+
+      m_bTrace = false;
+
+#else
+
       ::file::path pathTrace = ::dir::appdata("system") / "trace.txt";
+
+#ifdef DEBUG
 
       if (!file_exists_dup(pathTrace))
       {
 
-         ::file_put_contents_dup(pathTrace, "no");
+         ::file_put_contents_dup(pathTrace, "yes");
 
       }
 
+#endif
+
       m_bTrace = ::is_debugger_attached() || ::file_is_true_dup(pathTrace);
+
+#endif
 
       m_pmutex          = new mutex(papp);
       m_ptrace          = new ::aura::trace::trace(papp);
@@ -78,15 +93,15 @@ namespace aura
 
 
       set_trace_category(::aura::trace::category_AppMsg, "AppMsg", 0);        // main message pump trace (includes DDE)
-      set_trace_category(::aura::trace::category_WinMsg , "category_WinMsg", 0);        // Windows message tracing
-      set_trace_category(::aura::trace::category_CmdRouting , "category_CmdRouting", 0);    // Windows command routing trace
-      set_trace_category(::aura::trace::category_Ole , "category_Ole", 0);          // special OLE callback trace
-      set_trace_category(::aura::trace::category_Database , "category_Database", 0);     // special database trace
-      set_trace_category(::aura::trace::category_Internet , "category_Internet", 0);     // special Internet client trace
-      set_trace_category(::aura::trace::category_dumpContext , "category_dumpContext", 0);   // traces from dump_context
-      set_trace_category(::aura::trace::category_Memory , "category_Memory", 0);      // generic non-kernel memory traces
-      set_trace_category(::aura::trace::category_Html , "category_Html", 0);         // Html traces
-      set_trace_category(::aura::trace::category_Socket , "category_Socket", 0);      // socket traces
+      set_trace_category(::aura::trace::category_WinMsg, "category_WinMsg", 0);         // Windows message tracing
+      set_trace_category(::aura::trace::category_CmdRouting, "category_CmdRouting", 0);     // Windows command routing trace
+      set_trace_category(::aura::trace::category_Ole, "category_Ole", 0);           // special OLE callback trace
+      set_trace_category(::aura::trace::category_Database, "category_Database", 0);      // special database trace
+      set_trace_category(::aura::trace::category_Internet, "category_Internet", 0);      // special Internet client trace
+      set_trace_category(::aura::trace::category_dumpContext, "category_dumpContext", 0);    // traces from dump_context
+      set_trace_category(::aura::trace::category_Memory, "category_Memory", 0);       // generic non-kernel memory traces
+      set_trace_category(::aura::trace::category_Html, "category_Html", 0);          // Html traces
+      set_trace_category(::aura::trace::category_Socket, "category_Socket", 0);       // socket traces
 
    }
 
@@ -103,7 +118,7 @@ namespace aura
 
    CLASS_DECL_AURA int32_t SimpleDebugReport(int32_t iReportType, const char * pszFileName,int32_t iLine,const char *,const char * pszFormat, va_list list)
    {
-      #ifdef WIN32
+#ifdef WIN32
 
       if(iReportType == _CRT_ASSERT)
       {
@@ -146,9 +161,9 @@ namespace aura
 
       }
 
-      #else
+#else
       vprintf(pszFormat, list);
-      #endif
+#endif
       return 0;
    }
 
@@ -255,16 +270,16 @@ namespace aura
       {
          strTick.Format(" %d.%03ds ", uiSeconds, uiMillis);
       }
-      else 
+      else
       {
          strTick.Format(" %3dms ", uiMillis);
       }
 
       //sl.lock();
       if(plog->m_pfile == NULL
-      || plog->m_iYear != time.GetYear()
-      || plog->m_iMonth != time.GetMonth()
-      || plog->m_iDay != time.GetDay())
+            || plog->m_iYear != time.GetYear()
+            || plog->m_iMonth != time.GetMonth()
+            || plog->m_iDay != time.GetDay())
       {
          if(plog->m_pfile != NULL)
          {
@@ -273,15 +288,15 @@ namespace aura
             plog->m_pfile = NULL;
          }
          int32_t iRetry = 0;
-         retry:
+retry:
          string strRelative;
          time.Format(strRelative, "%Y/%m/%d");
          string strIndex;
-         #ifdef WINDOWS
+#ifdef WINDOWS
          strIndex.Format("%d-%05d", GetCurrentProcessId(), iRetry);
-         #else
+#else
          strIndex.Format("%d-%05d", getpid(), iRetry);
-         #endif
+#endif
 
          string strPath;
 
@@ -376,7 +391,7 @@ namespace aura
          plog->print("<log>Starting Log</log>"); // <<  this is one of the "...possible_recursive_impossible_logging_in_file"...
       }
 
-   skip_further_possible_recursive_impossible_logging_in_file:
+skip_further_possible_recursive_impossible_logging_in_file:
 
       if(plog->m_pfile != NULL)
       {
@@ -417,13 +432,13 @@ namespace aura
 
    }
 
-/*   void log::trace_v(const char *pszFileName, int32_t nLine, uint32_t dwCategory, uint32_t nLevel, const unichar * pszFmt, va_list args) const
-   {
-   }*/
+   /*   void log::trace_v(const char *pszFileName, int32_t nLine, uint32_t dwCategory, uint32_t nLevel, const unichar * pszFmt, va_list args) const
+      {
+      }*/
 
-/*   void log::set_trace_category(uint32_t dwCategory, const char * pszName, uint32_t uiLevel)
-   {
-   }*/
+   /*   void log::set_trace_category(uint32_t dwCategory, const char * pszName, uint32_t uiLevel)
+      {
+      }*/
 
    void log::trace2(uint32_t dwCategory, UINT nLevel, const char * pszFormat, ...)
    {
@@ -433,8 +448,24 @@ namespace aura
       va_start(ptr, pszFormat);
       trace_v(NULL, -1, dwCategory, nLevel, pszFormat, ptr);
       va_end(ptr);
+
    }
 
+   void log::sockets_log(::sockets::base_socket_handler * phandler, ::sockets::base_socket * sock, const string & strUser, int32_t iError, const string & strSystem, ::aura::log::e_level elevel)
+   {
+
+      string strLevel = ::log_level_name(elevel);
+
+      if (sock)
+      {
+         trace("fd %d :: %s: %d %s (%s)\n", sock->GetSocket(), strUser.c_str(), iError, strSystem.c_str(), strLevel.c_str());
+      }
+      else
+      {
+         trace("%s: %d %s (%s)\n", strUser.c_str(), iError, strSystem.c_str(), strLevel.c_str());
+      }
+
+   }
 
 
    void log::print(const char * pszFormat, ...)
@@ -456,7 +487,7 @@ namespace aura
       if(m_bInitialized)
          return false;
       //if(!::aura::log::initialize(id))
-        // return false;
+      // return false;
       m_id = id;
       m_bInitialized = true;
       if(file_exists_dup(::dir::appdata(process_platform_dir_name2()) / "debug.txt"))
@@ -493,126 +524,6 @@ namespace aura
    }
 
 
-/*   void log::trace_v(const char *pszFileName, int32_t nLine, uint32_t dwCategory, uint32_t nLevel, const char * pszFormat, va_list args) const
-   {
-      if(!m_bTrace)
-         return;
-      UNREFERENCED_PARAMETER(nLevel);
-      UNREFERENCED_PARAMETER(nLine);
-      UNREFERENCED_PARAMETER(pszFileName);
-      single_lock sl(&((log *)this)->m_csTrace, TRUE);
-
-      //((log * )this)->print(pszFormat, args);
-      //m_trace.TraceV(pszFileName, nLine, dwCategory, nLevel, pszFmt, args);
-      log * plog = (log *) this;
-      ::aura::trace::category & category = plog->m_trace.m_map[dwCategory];
-      if(category.m_estatus == ::aura::trace::status_disabled || category.m_uiLevel > category.m_uiLevel)
-         return;
-      string str;
-      str.FormatV(pszFormat, args);
-      va_end(args);
-      stringa stra;
-      stra.add_smallest_tokens(str, plog->m_straSeparator, FALSE);
-      /*for(int32_t i = 0; i < stra.get_size(); i++)
-      {
-         if(stra[i].get_length() > 200)
-         {
-            string & strLine = stra[i];
-            const char * psz = strLine;
-            int32_t j = 200;
-            while(*psz != NULL && j >= 0 && !::str::ch::is_space_char(psz))
-            {
-               j--;
-               psz = ::str::utf8_inc(psz);
-            }
-            if(j <= 0)
-               j = 200;
-            stra.insert_at(i + 1, string(strLine, psz - (LPCSTR)strLine));
-            stra[i] = stra[i].Left(j);
-            continue;
-         }
-      }*/
-  /*    string strPre;
-      ::datetime::time time;
-      time = time.get_current_time();
-      time.Format(strPre, "%Y-%m-%d %H:%M:%S");
-      string strTick;
-      strTick.Format(" %011d ", ::get_tick_count() - g_dwFirstTick);
-
-      if(!plog->m_spfile->IsOpened()
-      || plog->m_iYear != time.GetYear()
-      || plog->m_iMonth != time.GetMonth()
-      || plog->m_iDay != time.GetDay())
-      {
-         if(plog->m_spfile->IsOpened())
-         {
-            plog->m_spfile->flush();
-            plog->m_spfile->close();
-         }
-         int32_t iRetry = 0;
-         retry:
-         string strRelative;
-         time.Format(strRelative, "%Y/%m/%d");
-         string strIndex;
-         strIndex.Format("%05d", iRetry);
-         plog->m_strLogPath = ::dir_path(
-                           System.dir().time_log(m_id),
-                           strRelative + "-" + strIndex + ".log");
-
-         try
-         {
-            if(plog->m_spfile->open(m_strLogPath, ::file::type_text
-               | ::file::mode_write
-               | ::file::share_deny_write | ::file::mode_create | ::file::mode_no_truncate
-               | ::file::defer_create_directory).faile())
-            {
-               if(plog->m_spfile->IsOpened())
-               {
-                  plog->m_spfile->close();
-               }
-               iRetry++;
-               if(iRetry >= 100000)
-                  return;
-               goto retry;
-            }
-         }
-         catch(...)
-         {
-            try
-            {
-               if(plog->m_spfile->IsOpened())
-               {
-                  plog->m_spfile->close();
-               }
-               iRetry++;
-               if(iRetry >= 100000)
-                  return;
-               goto retry;
-            }
-            catch(...)
-            {
-            }
-         }
-         plog->m_iYear     = time.GetYear();
-         plog->m_iMonth    = time.GetMonth();
-         plog->m_iDay      = time.GetDay();
-         plog->print("<log>Starting Log</log>");
-      }
-      plog->m_spfile->seek_to_end();
-      for(int32_t i = 0; i < stra.get_size(); i++)
-      {
-         string strLine = strPre + strTick + stra[i] + "\r\n";
-         try
-         {
-            ::output_debug_string(::str::international::utf8_to_unicode(strLine));
-            plog->m_spfile->write(strLine, strLine.get_length());
-         }
-         catch(::exception::exception &)
-         {
-            // Ignore exception here because this class/function is used for debugging
-         }
-      }
-   }*/
 
    void log::set_trace_category(uint32_t dwCategory, const char * pszName, uint32_t uiLevel)
    {
@@ -626,7 +537,7 @@ namespace aura
 
    void log::trace(const char * pszFormat, ...)
    {
-      
+
       if (void_ptr_is_null(this))
       {
          va_list ptr;
@@ -655,3 +566,6 @@ namespace aura
    }*/
 
 } // namespace core
+
+
+

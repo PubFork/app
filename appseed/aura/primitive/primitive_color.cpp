@@ -18,10 +18,10 @@ color::color(COLORREF cr)
    operator = (cr);
 }
 
-color::color(RGBQUAD quad)
-{
-   operator = (quad);
-}
+//color::color(RGBQUAD quad)
+//{
+//   operator = (quad);
+//}
 
 color::~color()
 {
@@ -309,28 +309,6 @@ void color::get_hls(
    */
 }
 
-/* utility routine for HLStoRGB */
-
-/*double HueToRGB(
-   double d1,
-   double d2,
-   double dHue)
-{
-   /* range check: note values passed add/subtract thirds of range */
-   /*   if (dHue < 0.0)
-         dHue += HLSMAX;
-      if (dHue > HLSMAX)
-         dHue -= HLSMAX;
-      /* return r,g, or b value from this tridrant */
-      /*   if (dHue < (HLSMAX/6))
-            return ( d1 + (((d2-d1)*dHue+(HLSMAX/12))/(HLSMAX/6)) );
-         if (dHue < (HLSMAX/2))
-            return ( d2 );
-         if (dHue < ((HLSMAX*2)/3))
-            return ( d1 + (((d2-d1)*(((HLSMAX*2)/3)-dHue)+(HLSMAX/12))/(HLSMAX/6)));
-         else
-            return ( d1 );
-      } */
 
 double primitive_color_round(double d)
 {
@@ -508,25 +486,25 @@ uint32_t color::get_bgra() const
    return m_uchB | (m_uchG << 8) | (m_uchR << 16) | (m_uchA << 24);
 }
 
-RGBQUAD color::get_rgbquad() const
-{
-   RGBQUAD quad;
-   quad.rgbBlue      = m_uchB;
-   quad.rgbGreen     = m_uchG;
-   quad.rgbRed       = m_uchR;
-   quad.rgbReserved  = m_uchA;
-   return quad;
-}
+//RGBQUAD color::get_rgbquad() const
+//{
+//   RGBQUAD quad;
+//   quad.rgbBlue      = m_uchB;
+//   quad.rgbGreen     = m_uchG;
+//   quad.rgbRed       = m_uchR;
+//   quad.rgbReserved  = m_uchA;
+//   return quad;
+//}
 
 color::operator COLORREF() const
 {
    return get_rgba();
 }
 
-color::operator RGBQUAD() const
-{
-   return get_rgbquad();
-}
+//color::operator RGBQUAD() const
+//{
+//   return get_rgbquad();
+//}
 
 void color::set_rgb(COLORREF cr)
 {
@@ -588,7 +566,7 @@ void color::hue_offset(double dRadians)
    m_uchB = clampAndConvert((.299 - .3*U + 1.25*W)*oldr
       + (.587 - .588*U - 1.05*W)*oldg
       + (.114 + .886*U - .203*W)*oldb);
-   
+
 
 
 }
@@ -606,17 +584,17 @@ void color::set_bgr(uint32_t bgr)
 }
 
 
-void color::set_rgbquad(RGBQUAD quad)
-{
-   m_uchR   = quad.rgbRed;
-   m_uchG   = quad.rgbGreen;
-   m_uchB   = quad.rgbBlue;
-   m_uchA   = quad.rgbReserved;
-   m_dR     = m_uchR / 255.0;
-   m_dG     = m_uchG / 255.0;
-   m_dB     = m_uchB / 255.0;
-   m_dA     = m_uchA / 255.0;
-}
+//void color::set_rgbquad(RGBQUAD quad)
+//{
+//   m_uchR   = quad.rgbRed;
+//   m_uchG   = quad.rgbGreen;
+//   m_uchB   = quad.rgbBlue;
+//   m_uchA   = quad.rgbReserved;
+//   m_dR     = m_uchR / 255.0;
+//   m_dG     = m_uchG / 255.0;
+//   m_dB     = m_uchB / 255.0;
+//   m_dA     = m_uchA / 255.0;
+//}
 
 void color::hls_rate(double dRateH,double dRateL,double dRateS)
 {
@@ -859,11 +837,11 @@ color & color::operator = (COLORREF cr)
    return *this;
 }
 
-color & color::operator = (RGBQUAD rgbquad)
-{
-   set_rgbquad(rgbquad);
-   return *this;
-}
+//color & color::operator = (RGBQUAD rgbquad)
+//{
+//   set_rgbquad(rgbquad);
+//   return *this;
+//}
 
 
 #define duplicate_color_nible(nible) ((nible << 4) | (nible))
@@ -949,9 +927,9 @@ bool color::parse_color(const char * psz)
 
 CLASS_DECL_AURA COLORREF alpha_color(BYTE bAlpha, COLORREF cr)
 {
-   
+
    return (cr & 0xffffff) | ((bAlpha & 0xff) << 24);
-   
+
 }
 
 CLASS_DECL_AURA COLORREF alpha_color(BYTE bAlpha, e_color ecolor)
@@ -963,9 +941,9 @@ CLASS_DECL_AURA COLORREF alpha_color(BYTE bAlpha, e_color ecolor)
 
 CLASS_DECL_AURA COLORREF pure_color(e_color ecolor)
 {
-   
+
    COLORREF cr;
-   
+
    switch(ecolor)
    {
       case color_black:
@@ -998,22 +976,22 @@ CLASS_DECL_AURA COLORREF pure_color(e_color ecolor)
          cr = 0;
          break;
    };
-   
+
    return cr;
-   
-   
+
+
 }
 
 CLASS_DECL_AURA COLORREF opaque_color(COLORREF cr)
 {
-   
+
    return alpha_color(255, cr);
-   
+
 }
 
 CLASS_DECL_AURA COLORREF opaque_color(e_color ecolor)
 {
-   
+
    return opaque_color(pure_color(ecolor));
-   
+
 }

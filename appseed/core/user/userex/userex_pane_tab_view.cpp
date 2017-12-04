@@ -32,10 +32,10 @@ namespace userex
    {
    }
 
-   
+
    ::user::interaction * pane_tab_view::get_view_uie()
    {
-      
+
       return ::user::tab_view::get_view_uie();
 
    }
@@ -90,7 +90,7 @@ namespace userex
       }
       else if(m_pviewdata->m_iExtendOnParent < 0)
       {
-         
+
          sp(::user::interaction) pui = m_pviewdata->m_pwnd;
 
          sp(::user::interaction) puiNext = m_pviewdata->m_pwnd;
@@ -114,7 +114,7 @@ namespace userex
             pui = puiNext;
 
          }
-         
+
          pui = wnda[wnda.get_size() + m_pviewdata->m_iExtendOnParent];
 
          pui->GetWindowRect(lprect);
@@ -170,14 +170,21 @@ namespace userex
       ::user::view_creator::on_show_view();
       if(m_pviewdataOld != NULL && ::str::begins_ci(m_pviewdataOld->m_id, "file_manager"))
       {
-         if(GetParentFrame()->ContinueModal(0))
+
+         if(GetParentFrame()->ContinueModal())
          {
+
             GetParentFrame()->EndModalLoop("yes");
+
          }
-         if(&filemanager_manager() != NULL)
+
+         if(is_set(filemanager_manager()))
          {
+
             filemanager_manager().get_filemanager_data()->m_pdocumentTopic = NULL;
+
          }
+
       }
 
       if (m_pviewdata != NULL)
@@ -232,11 +239,11 @@ namespace userex
 
       }
 
-      
+
 
    }
 
-   
+
    bool pane_tab_view::on_prepare_view_creator_data(::user::view_creator_data * pcreatordata)
    {
 
@@ -316,10 +323,10 @@ namespace userex
 
    bool pane_tab_view::on_hold(::user::interaction * pui,::user::place_holder * pholder)
    {
-      
+
       if (!::user::place_holder_container::on_hold(pui, pholder))
       {
-       
+
          return false;
 
       }
@@ -363,10 +370,10 @@ namespace userex
       ::user::view_creator_data * pcreatordata = get_impact(id, get_data()->m_rectTabClient);
 
       if(pcreatordata == NULL)
-      { 
+      {
 
          return -1;
-      
+
       }
 
       index iTab = id_tab(pcreatordata->m_id);
@@ -402,7 +409,7 @@ namespace userex
 
          if (pview.is_set())
          {
-            
+
             pcreatordata->m_pdoc = get_document();
 
             pcreatordata->m_pwnd = pview;
@@ -417,7 +424,7 @@ namespace userex
 
          Session.use_font_sel();
 
-         auto pdoc = Session.userex()->m_ptemplateFontSel->open_document_file(NULL, false, pcreatordata->m_pholder);
+         auto pdoc = Session.userex()->m_ptemplateFontSel->open_document_file(::var::type_null, false, pcreatordata->m_pholder);
 
          m_pfontview = pdoc->get_typed_view<font_view>();
 
@@ -425,9 +432,9 @@ namespace userex
 
       }
       else if(::str::begins_ci(pcreatordata->m_id, "file_manager")
-         || pcreatordata->m_id == "left_file"
-         || pcreatordata->m_id == "right_file"
-         || pcreatordata->m_id == "pick_file")
+              || pcreatordata->m_id == "left_file"
+              || pcreatordata->m_id == "right_file"
+              || pcreatordata->m_id == "pick_file")
       {
 
          ::filemanager::data * pfilemanagerdata = oprop("data." + pcreatordata->m_id.str()).cast < ::filemanager::data >();
@@ -446,8 +453,8 @@ namespace userex
          pfilemanagerdata->m_id = pcreatordata->m_id;
 
          if (m_psetObject != NULL
-            && m_psetObject->has_property("filemanager_toolbar") 
-            && m_psetObject->operator[]("filemanager_toolbar").m_element2.m_etype == ::var::type_propset)
+               && m_psetObject->has_property("filemanager_toolbar")
+               && m_psetObject->operator[]("filemanager_toolbar").m_element2.m_etype == ::var::type_propset)
          {
 
             property_set & set = m_psetObject->operator[]("filemanager_toolbar").m_element2.propset();
@@ -484,9 +491,7 @@ namespace userex
 
          }
 
-         pfilemanagerdata->m_strDISection = Application.m_strAppName;
-
-         sp(::filemanager::manager) pmanager = Session.filemanager().std().open_child(true,pfilemanagerdata->m_bTransparentBackground,pcreatordata->m_pholder,pfilemanagerdata,get_app()->m_pcoreapp);
+         sp(::filemanager::manager) pmanager = Session.filemanager()->open_child(true,pfilemanagerdata->m_bTransparentBackground,pcreatordata->m_pholder,pfilemanagerdata,get_app()->m_pcoreapp);
 
          if(pmanager != NULL)
          {
@@ -520,7 +525,7 @@ namespace userex
          cc->m_bMakeVisible               = true;
          cc->m_puiParent                  = pcreatordata->m_pholder;
 
-         sp(::filemanager::manager) pmanager = Session.filemanager().std().open(-1, cc);
+         sp(::filemanager::manager) pmanager = Session.filemanager()->open(-1, cc);
 
          if(pmanager != NULL)
          {
@@ -597,8 +602,8 @@ namespace userex
 
       ::user::tab::_001OnTabClose(iTab);
 
-      if(GetParentFrame()->ContinueModal(0) && &filemanager_manager() != NULL
-         && filemanager_manager().get_filemanager_data()->m_pdocumentTopic!= NULL)
+      if(GetParentFrame()->ContinueModal() && is_set(filemanager_manager())
+            && filemanager_manager().get_filemanager_data()->m_pdocumentTopic!= NULL)
       {
          GetParentFrame()->EndModalLoop("yes");
       }
@@ -641,7 +646,34 @@ namespace userex
 
    }
 
+   bool pane_tab_view::BaseOnControlEvent(::user::control_event * pevent)
+   {
 
+      if (pevent->m_eevent == ::user::event_context_menu_close)
+      {
+
+         if (m_pviewdataOld != NULL)
+         {
+
+            set_cur_tab_by_id(m_pviewdataOld->m_id);
+
+            return true;
+
+         }
+
+      }
+
+
+      if (::user::tab_view::BaseOnControlEvent(pevent))
+      {
+
+         return true;
+
+      }
+
+      return false;
+
+   }
 
    bool pane_tab_view::create_app_options(::user::view_creator_data * pcreatordata)
    {

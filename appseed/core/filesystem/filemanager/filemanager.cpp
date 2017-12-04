@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 namespace core
 {
@@ -6,7 +6,7 @@ namespace core
 
    // prompt for file name - used for open and save as
    bool application::do_prompt_file_name(var & varFile, UINT nIDSTitle, uint32_t lFlags, bool bOpenFileDialog, ::user::impact_system * ptemplate, ::user::document * pdocument)
-      // if ptemplate==NULL => all document templates
+   // if ptemplate==NULL => all document templates
    {
       if (Session.m_pfilemanager != NULL)
       {
@@ -30,11 +30,12 @@ namespace core
 
          if (!m_pfilemanager->initialize())
          {
+
             return false;
 
          }
 
-         filemanager().std().m_strLevelUp = "levelup";
+         filemanager()->m_strLevelUp = "levelup";
 
       }
 

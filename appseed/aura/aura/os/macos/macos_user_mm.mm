@@ -157,7 +157,7 @@ int GetScreenRect(LPRECT lprect, int iMonitor)
 int GetScreenCount()
 {
    
-   return [[NSScreen screens] count];
+   return (int) [[NSScreen screens] count];
    
 }
 
@@ -176,7 +176,7 @@ int GetWkspaceRect(LPRECT lprect, int iMonitor)
 int GetWkspaceCount()
 {
    
-   return [[NSScreen screens] count];
+   return (int) [[NSScreen screens] count];
    
 }
 
@@ -191,3 +191,72 @@ void ns_app_run()
 }
 
 
+
+
+
+
+
+oswindow SetActiveWindow(oswindow window);
+
+
+
+CGContextRef get_nswindow_cgcontext(oswindow oswindow)
+{
+   
+   return (CGContextRef) [[oswindow->window() graphicsContext] graphicsPort];
+   
+}
+
+
+
+
+
+WINBOOL SetForegroundWindow(oswindow window)
+{
+   
+   if(!::IsWindow(window))
+      return FALSE;
+   
+   [[NSApp dd_invokeOnMainThreadAndWaitUntilDone:FALSE] activateIgnoringOtherApps:YES];
+   
+   //   [NSApp setWindow : window->window()];
+   
+   [[window->window() dd_invokeOnMainThreadAndWaitUntilDone:FALSE] makeKeyWindow];
+   
+   [[window->window() dd_invokeOnMainThreadAndWaitUntilDone:FALSE] makeMainWindow];
+   
+   SetActiveWindow(window);
+   
+   return TRUE;
+   
+}
+
+
+WINBOOL BringWindowToTop(oswindow window)
+{
+   
+   if(!::IsWindow(window))
+      return FALSE;
+   
+   [[window->window() dd_invokeOnMainThreadAndWaitUntilDone:FALSE] orderFront: NSApp];
+   
+   [[window->window() dd_invokeOnMainThreadAndWaitUntilDone:FALSE] orderFrontRegardless];
+   
+   return TRUE;
+   
+}
+
+
+
+
+const char * mm_keyboard_input_source()
+{
+   
+   TISInputSourceRef source = TISCopyCurrentKeyboardInputSource();
+   NSString *s = (__bridge NSString *)(TISGetInputSourceProperty(source, kTISPropertyInputSourceID));
+   
+   if(s == nil)
+      return strdup("");
+   
+   return strdup([s UTF8String]);
+}

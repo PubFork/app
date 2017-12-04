@@ -60,7 +60,7 @@ namespace user
       virtual ~split_layout();
 
 
-      virtual void install_message_routing(::message::sender * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface) override;
 
       virtual int32_t get_normal_dimension();
       virtual int32_t get_ortogonal_dimension();
@@ -92,7 +92,7 @@ namespace user
       int32_t get_position(index iIndex);
       void set_position(index iIndex, int32_t nPos);
       void set_position_rate(index iIndex, double dRate, double dMinimumRate = 0.1, double dMaximumRate = 0.9);
-      void on_layout();
+      void on_layout() override;
       int32_t GetMaxPos();
       int32_t GetMinPos();
       int32_t GetPos(int32_t xPos, int32_t yPos);
@@ -108,7 +108,7 @@ namespace user
 
       virtual void draw_control_background(::draw2d::graphics * pgraphics) override;
 
-      virtual void _001OnDraw(::draw2d::graphics * pgraphics);
+      virtual void _001OnDraw(::draw2d::graphics * pgraphics) override;
 
 
    };

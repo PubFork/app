@@ -8,71 +8,71 @@ namespace aura
    class CLASS_DECL_AURA library:
       virtual public ::object
    {
-   public:
+      public:
 
 
-      void *            m_plibrary;
-      library *         m_pca2library;
-      string            m_strCa2Name;
-      string            m_strRoot;
-      ::file::path      m_strPath;
-      string            m_strMessage;
-      bool              m_bAutoUnload;
-
-
-
-      library(::aura::application * papp);
-      library(::aura::application * papp,int iDesmabi, const char * pszRoot);
-      virtual ~library();
-
-      virtual bool open(const char * pszPath,bool bAutoClose = true,bool bCa2Path = false);
-
-      virtual bool open_ca2_library();
-
-      library * get_ca2_library();
-
-
-      virtual bool close();
-
-      virtual void * get_os_data();
-
-
-      virtual bool is_opened();
-      virtual bool is_closed();
-
-      template < typename TARGET >
-      TARGET get(const char * pszEntryName)
-      {
-         return reinterpret_cast <TARGET>(raw_get(pszEntryName));
-      }
-
-      void * raw_get(const char * pszEntryName);
+         void *            m_plibrary;
+         sp(library)       m_pca2library;
+         string            m_strCa2Name;
+         string            m_strRoot;
+         ::file::path      m_strPath;
+         string            m_strMessage;
+         bool              m_bAutoUnload;
 
 
 
+         library(::aura::application * papp);
+         library(::aura::application * papp,int iDesmabi, const char * pszRoot);
+         virtual ~library();
 
-      virtual bool contains_app(const char * pszAppId);
+         virtual bool open(const char * pszPath,bool bAutoClose = true,bool bCa2Path = false);
 
+         virtual bool open_ca2_library();
 
-      virtual void get_create_view_id_list(::array < id > & ida);
-
-
-      virtual string get_root();
-
-
-      // impl
-      virtual sp(::aura::application) get_new_application(const char * pszAppId);
-      virtual void get_app_list(stringa & stra);
+         library * get_ca2_library();
 
 
-      virtual sp(::object) create_object(::aura::application * papp, const char * pszClass, object * p);
-      virtual bool has_object_class(const char * pszClass);
+         virtual bool close();
+
+         virtual void * get_os_data();
 
 
-      virtual string get_library_name();
+         virtual bool is_opened();
+         virtual bool is_closed();
 
-      virtual string get_app_id(const char * pszAppName);
-      virtual string get_app_name(const char * pszAppId);
+         template < typename TARGET >
+         TARGET get(const char * pszEntryName)
+         {
+            return reinterpret_cast <TARGET>(raw_get(pszEntryName));
+         }
+
+         void * raw_get(const char * pszEntryName);
+
+
+
+
+         virtual bool contains_app(const char * pszAppId);
+
+
+         virtual void get_create_view_id_list(::array < id > & ida);
+
+
+         virtual string get_root();
+
+
+         // impl
+         virtual sp(::aura::application) get_new_application(const char * pszAppId);
+         virtual void get_app_list(stringa & stra);
+
+
+         virtual sp(::object) create_object(::aura::application * papp, const char * pszClass, object * p);
+         virtual bool has_object_class(const char * pszClass);
+
+
+         virtual string get_library_name();
+
+         virtual string get_app_id(const char * pszAppName);
+         virtual string get_app_name(const char * pszAppId);
 
 
    };
@@ -89,21 +89,16 @@ namespace aura
    class single_application_library:
       virtual public library
    {
-   public:
+      public:
 
-      single_application_library(::aura::application * papp,const char * pszRoot): object(papp),::aura::library(papp,0, pszRoot) {}
+         single_application_library(::aura::application * papp,const char * pszRoot): object(papp),::aura::library(papp,0, pszRoot) {}
 
-      // impl
-      virtual sp(::aura::application) get_new_application(const char * pszAppId);
+         // impl
+         virtual sp(::aura::application) get_new_application(const char * pszAppId);
 
 
    };
 
-
-
-   typedef class library * (* PFN_GET_NEW_LIBRARY)(::aura::application * papp);
-
-   typedef class application * (*PFN_GET_NEW_APP)(::aura::application * papp);
 
 
 } // namespace aura

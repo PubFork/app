@@ -11,7 +11,7 @@ namespace base
       ::base::system(this)
    {
 
-      m_iReturnCode = 0;
+      m_iErrorCode = 0;
 
    }
 
@@ -76,7 +76,7 @@ namespace base
 
 #endif
 
-      return m_iReturnCode;
+      return m_iErrorCode;
 
    }
 
@@ -91,8 +91,8 @@ namespace base
          if(!initialize())
          {
 
-            if(m_iReturnCode > 0)
-               m_iReturnCode = -1;
+            if(m_iErrorCode > 0)
+               m_iErrorCode = -1;
 
             return;
 
@@ -102,8 +102,8 @@ namespace base
       catch(...)
       {
 
-         if(m_iReturnCode > 0)
-            m_iReturnCode = -1;
+         if(m_iErrorCode > 0)
+            m_iErrorCode = -1;
 
          return;
 
@@ -112,14 +112,14 @@ namespace base
       try
       {
 
-         m_iReturnCode = run();
+         m_iErrorCode = run();
 
       }
       catch(...)
       {
 
-         if(m_iReturnCode > 0)
-            m_iReturnCode = -1;
+         if(m_iErrorCode > 0)
+            m_iErrorCode = -1;
 
          return;
 

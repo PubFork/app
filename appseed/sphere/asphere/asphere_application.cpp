@@ -1,8 +1,9 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 //#if defined(LINUX) || defined(APPLEOS)
 //#include <dlfcn.h>
 //#endif
+
 
 
 
@@ -40,22 +41,24 @@ namespace asphere
 
    }
 
+
    application::~application()
    {
+
    }
 
 
-   bool application::initialize_application()
+   bool application::init_instance()
    {
 
-      if (!::core::application::initialize_application())
+      if (!::core::application::init_instance())
       {
 
          return false;
 
       }
 
-
+#if !defined(APPLE_IOS)
 
       Sess(this).userex()->shell()->m_straThemeableIconName.add("google-android.ico");
       Sess(this).userex()->shell()->m_straThemeableIconName.add("Folders-OS-Windows-8-Metro.ico");
@@ -85,21 +88,23 @@ namespace asphere
 
       connect_command("theme", &application::_001OnTheme);
 
-      calc_theme();
+#endif
 
-      ::fork(this, [&]()
+      sync_context_theme();
+
+      fork([&]()
       {
 
          while (get_thread_run())
          {
 
-            calc_theme();
+            sync_context_theme();
 
             Sleep(1000);
 
          }
 
-         TRACE("finished calc theme thread");
+         TRACE("finished sync context theme thread");
 
       });
 
@@ -108,28 +113,31 @@ namespace asphere
    }
 
 
-
-
-   bool application::initialize1()
+   bool application::init1()
    {
 
-      if(!::core::application::initialize1())
+      if(!::core::application::init1())
          return false;
 
       return true;
 
    }
 
-   bool application::initialize()
+
+   bool application::init()
    {
 
-      if(!::core::application::initialize())
+      if (!::core::application::init())
+      {
+
          return false;
 
+      }
 
       return true;
 
    }
+
 
    void application::_001OnTheme(::message::message * pobj)
    {
@@ -171,9 +179,7 @@ namespace asphere
 
       strTheme = m_straTheme[iFind];
 
-      set_theme(strTheme);
-
-//      reload_theme();
+      set_context_theme(strTheme);
 
    }
 
@@ -206,6 +212,7 @@ namespace asphere
       m_crFg = m_mapFg[strTheme];
       m_crBg = m_mapBg[strTheme];
       m_crMg = m_mapMg[strTheme];
+
       m_crIconGlow = m_mapIconGlow[strTheme];
 
       if (!m_mapText.Lookup(get_theme(), m_crText))
@@ -227,15 +234,20 @@ namespace asphere
    }
 
 
+   void application::sync_context_theme()
+   {
+
+      set_context_theme(get_current_context_theme());
+
+   }
 
 
-
-   void application::calc_theme(string strTheme)
+   string application::get_theme_context()
    {
 
       string strEtime = Application.file().as_string(::dir::system() / "weather_etime.txt");
 
-      string strModifier;
+      string strContext;
 
       if (strEtime.is_empty())
       {
@@ -244,97 +256,132 @@ namespace asphere
 
       }
 
-      strModifier += "." + strEtime;
+      strContext += "." + strEtime;
 
-      string strMain1 = Application.file().as_string(::dir::system() / "config/weather_main1.txt");
+      ::file::path path = ::dir::system() / "config/weather_main1.txt";
 
-      if (strMain1.has_char())
+      if (Application.file().exists(path))
       {
-         if (strMain1.find_ci("cloud") >= 0 && strMain1.find_ci("partly") < 0)
+
+         string strMain1 = Application.file().as_string(path);
+
+         if (strMain1.has_char())
          {
-            strModifier += ".dampened";
-         }
-         else if (strMain1.find_ci("rain") >= 0)
-         {
-            strModifier += ".dampened";
+
+            if (strMain1.find_ci("cloud") >= 0 && strMain1.find_ci("partly") < 0)
+            {
+
+               strContext += ".dampened";
+
+            }
+            else if (strMain1.find_ci("rain") >= 0)
+            {
+
+               strContext += ".dampened";
+
+            }
+
          }
 
       }
+
+      return strContext;
+
+   }
+
+
+   string application::get_context_default_theme()
+   {
+
+      string strTheme;
+
+      string strContext = get_theme_context();
+
+      if (strContext.find_ci(".night") >= 0 && m_straTheme.contains_ci("dark"))
+      {
+
+         strTheme = "dark";
+
+      }
+      else if (strContext.find_ci(".dampened") && m_straTheme.contains_ci("blue"))
+      {
+
+         strTheme = "blue";
+
+      }
+      else if (strContext.find_ci(".day") && m_straTheme.contains_ci("lite"))
+      {
+
+         strTheme = "lite";
+
+      }
+      else if (m_straTheme.contains_ci("dark"))
+      {
+
+         strTheme = "dark";
+
+      }
+      else if (m_straTheme.contains_ci("lite"))
+      {
+
+         strTheme = "blue";
+
+      }
+      else if(m_straTheme.has_elements())
+      {
+
+         strTheme = m_straTheme[0];
+
+      }
+
+      return strTheme;
+
+   }
+
+
+   string application::get_current_context_theme()
+   {
+
+      string strTheme = app_get("theme-" + get_theme_context());
 
       if (strTheme.is_empty())
       {
 
-         strTheme = sys_get("theme" + strModifier);
-
-         if (strTheme.is_empty() && m_straTheme.get_size() > 0)
-         {
-
-            if (m_strTheme.has_char())
-            {
-
-               strTheme = m_strTheme;
-
-            }
-            else if (strModifier.find_ci(".night") >= 0 && m_straTheme.contains_ci("dark"))
-            {
-
-               strTheme = "dark";
-
-            }
-            else if (strModifier.find_ci(".dampened") && m_straTheme.contains_ci("blue"))
-            {
-
-               strTheme = "blue";
-
-            }
-            else if (strModifier.find_ci(".day") && m_straTheme.contains_ci("lite"))
-            {
-
-               strTheme = "lite";
-
-            }
-            else
-            {
-
-               strTheme = m_straTheme[0];
-
-            }
-
-         }
+         strTheme = get_context_default_theme();
 
       }
 
-      if (strTheme != m_strTheme)
-      {
-
-         string strThemeStored;
-
-         strThemeStored = sys_get("theme" + strModifier);
-
-         if (strThemeStored != strTheme)
-         {
-
-            sys_set("theme" + strModifier, strTheme);
-
-         }
-
-         m_strTheme = strTheme;
-
-         on_change_theme();
-
-      }
+      return strTheme;
 
    }
 
 
-   void application::set_theme(string str)
+   void application::set_context_theme(string strTheme)
    {
 
-      calc_theme(str);
+      if (strTheme == m_strTheme)
+      {
+
+         return;
+
+      }
+
+      string strContextTheme;
+
+      strContextTheme = get_current_context_theme();
+
+      if (strContextTheme != strTheme)
+      {
+
+         app_set("theme-" + get_theme_context(), strTheme);
+
+      }
+
+      m_strTheme = strTheme;
+
+      on_change_theme();
 
    }
-
-
 
 
    string application::get_theme()
@@ -344,41 +391,63 @@ namespace asphere
 
    }
 
-   //void application::set_theme(::sphere::e_theme etheme)
-   //{
+//void application::set_theme(::sphere::e_theme etheme)
+//{
 
-   //   int iTheme = (int)etheme;
+//   int iTheme = (int)etheme;
 
-   //   int iThemeCount = (int)::sphere::theme_count;
+//   int iThemeCount = (int)::sphere::theme_count;
 
-   //   if (iTheme < 0)
-   //   {
+//   if (iTheme < 0)
+//   {
 
-   //      iTheme = 0;
+//      iTheme = 0;
 
-   //   }
-   //   else
-   //   {
+//   }
+//   else
+//   {
 
-   //      iTheme %= iThemeCount;
+//      iTheme %= iThemeCount;
 
-   //   }
+//   }
 
-   //   m_etheme = (::sphere::e_theme) iTheme;
+//   m_etheme = (::sphere::e_theme) iTheme;
 
-   //   data_save("application.theme", iTheme);
+//   data_save("application.theme", iTheme);
 
-   //   output_debug_string("theme set to " + ::str::from(iTheme) + "\n");
+//   output_debug_string("theme set to " + ::str::from(iTheme) + "\n");
 
-   //}
+//}
 
-   //::sphere::e_theme application::get_theme()
-   //{
+//::sphere::e_theme application::get_theme()
+//{
 
-   //   return m_etheme;
+//   return m_etheme;
 
-   //}
+//}
 
+
+   uint32_t application::guess_code_page(const string & str)
+   {
+
+      return charguess(str)();
+
+   }
+
+
+   colorertake5::ParserFactory & application::parser_factory()
+   {
+
+      if(m_pparserfactory == NULL)
+      {
+
+         m_pparserfactory = new colorertake5::ParserFactory(this);
+
+      }
+
+      return *m_pparserfactory;
+
+   }
 
 
 } //namespace sphere

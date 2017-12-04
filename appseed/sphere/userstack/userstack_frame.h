@@ -40,10 +40,10 @@ namespace userstack
       void ShowControlBars(bool bShow);
 
       virtual ~frame();
-   #ifdef DEBUG
+   
       virtual void assert_valid() const;
       virtual void dump(dump_context & dumpcontext) const;
-   #endif
+   
 
       virtual void pre_translate_message(::message::message * pobj);
 

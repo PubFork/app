@@ -34,12 +34,12 @@ namespace music
 
             }
 
-            bool player::initialize_instance()
+            bool player::init_instance()
             {
 
                m_psequencethread->ResumeThread();
 
-               TRACE("player::initialize_instance %X\n", get_os_int());
+               TRACE("player::init_instance %X\n", get_os_int());
                //SetMainWnd(NULL);
                //ASSERT(GetMainWnd() == NULL);
 
@@ -153,7 +153,7 @@ namespace music
                if(success != (mmrc = get_sequence()->CloseFile()) && mmrc != EFunctionNotSupported)
                {
 
-                  throw new exception(get_app(), EMidiPlayerClose);
+                  _throw(exception(get_app(), EMidiPlayerClose));
 
                }
 
@@ -274,7 +274,7 @@ namespace music
                if((mmrc = get_sequence()->SaveFile(lpszPathName)) != success)
                {
 
-                  throw new exception(get_app(), EMidiPlayerSave);
+                  _throw(exception(get_app(), EMidiPlayerSave));
 
                }
 

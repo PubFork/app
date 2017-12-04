@@ -34,18 +34,34 @@ inline DWORD GetTickCount()
 #include <mach/clock.h>
 #include <mach/mach.h>
 
-uint64_t get_nanos()
+//uint64_t get_nanos()
+//{
+//   
+//   clock_serv_t cclock;
+//   mach_timespec_t mts;
+//   host_get_clock_service(mach_host_self(), CALENDAR_CLOCK, &cclock);
+//   clock_get_time(cclock, &mts);
+//   mach_port_deallocate(mach_task_self(), cclock);
+//   
+//   return ((uint64_t) mts.tv_sec * (uint64_t)1000 * (uint64_t)1000 * (uint64_t)1000 )+ ((uint64_t) mts.tv_nsec);
+//   
+//}
+//
+
+
+
+CLASS_DECL_AURA void sleep(const duration & duration)
 {
    
-   clock_serv_t cclock;
-   mach_timespec_t mts;
-   host_get_clock_service(mach_host_self(), CALENDAR_CLOCK, &cclock);
-   clock_get_time(cclock, &mts);
-   mach_port_deallocate(mach_task_self(), cclock);
-   
-   return ((uint64_t) mts.tv_sec * (uint64_t)1000 * (uint64_t)1000 * (uint64_t)1000 )+ ((uint64_t) mts.tv_nsec);
+   usleep((unsigned int) duration.get_total_milliseconds() * 1000);
    
 }
 
 
+CLASS_DECL_AURA void Sleep(unsigned int dwMillis)
+{
+   
+   usleep(dwMillis * 1000);
+   
+}
 

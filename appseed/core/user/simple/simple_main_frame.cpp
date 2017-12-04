@@ -17,7 +17,7 @@ simple_main_frame::~simple_main_frame()
 {
 }
 
-#ifdef DEBUG
+
 void simple_main_frame::assert_valid() const
 {
    simple_frame_window::assert_valid();
@@ -27,7 +27,7 @@ void simple_main_frame::dump(dump_context & dumpcontext) const
 {
    simple_frame_window::dump(dumpcontext);
 }
-#endif //DEBUG
+
 
 void simple_main_frame::install_message_routing(::message::sender * pinterface)
 {

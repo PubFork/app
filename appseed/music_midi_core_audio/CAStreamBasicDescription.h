@@ -50,6 +50,14 @@
 #include <CoreAudio/CoreAudioTypes.h>
 #include <CoreFoundation/CoreFoundation.h>
 
+#if !CA_PREFER_FIXED_POINT
+typedef Float32     CoreAudioSampleType;
+typedef Float32     CoreAudioUnitSampleType;
+#else
+typedef SInt16      CoreAudioSampleType;
+typedef SInt32      CoreAudioUnitSampleType;
+#define kAudioUnitSampleFractionBits 24
+#endif
 
 extern char *CAStringForOSType (OSType t, char *writeLocation);
 
@@ -146,8 +154,8 @@ public:
    // note: leaves sample rate untouched
    {
       mFormatID = kAudioFormatLinearPCM;
-      int sampleSize = sizeof(AudioSampleType);
-      mFormatFlags = kAudioFormatFlagsCanonical;
+      int sampleSize = sizeof(CoreAudioSampleType);
+      mFormatFlags = kAudioFormatFlagIsFloat | kAudioFormatFlagsNativeEndian | kAudioFormatFlagIsPacked;
       mBitsPerChannel = 8 * sampleSize;
       mChannelsPerFrame = nChannels;
       mFramesPerPacket = 1;
@@ -165,8 +173,8 @@ public:
       UInt32 reqFormatFlags;
       UInt32 flagsMask = (kLinearPCMFormatFlagIsFloat | kLinearPCMFormatFlagIsBigEndian | kLinearPCMFormatFlagIsSignedInteger | kLinearPCMFormatFlagIsPacked | kLinearPCMFormatFlagIsAlignedHigh | kLinearPCMFormatFlagsSampleFractionMask);
       bool interleaved = (mFormatFlags & kAudioFormatFlagIsNonInterleaved) == 0;
-      unsigned sampleSize = sizeof(AudioSampleType);
-      reqFormatFlags = kAudioFormatFlagsCanonical;
+      unsigned sampleSize = sizeof(CoreAudioSampleType);
+      reqFormatFlags = kAudioFormatFlagIsFloat | kAudioFormatFlagsNativeEndian | kAudioFormatFlagIsPacked;
       UInt32 reqFrameSize = interleaved ? (mChannelsPerFrame * sampleSize) : sampleSize;
       
       return ((mFormatFlags & flagsMask) == reqFormatFlags
@@ -182,15 +190,15 @@ public:
 #if CA_PREFER_FIXED_POINT
       mFormatFlags = kAudioFormatFlagsCanonical | (kAudioUnitSampleFractionBits << kLinearPCMFormatFlagsSampleFractionShift);
 #else
-      mFormatFlags = kAudioFormatFlagsCanonical;
+      mFormatFlags = kAudioFormatFlagIsFloat | kAudioFormatFlagsNativeEndian | kAudioFormatFlagIsPacked;
 #endif
       mChannelsPerFrame = nChannels;
       mFramesPerPacket = 1;
-      mBitsPerChannel = 8 * sizeof(AudioUnitSampleType);
+      mBitsPerChannel = 8 * sizeof(CoreAudioUnitSampleType);
       if (interleaved)
-         mBytesPerPacket = mBytesPerFrame = nChannels * sizeof(AudioUnitSampleType);
+         mBytesPerPacket = mBytesPerFrame = nChannels * sizeof(CoreAudioUnitSampleType);
       else {
-         mBytesPerPacket = mBytesPerFrame = sizeof(AudioUnitSampleType);
+         mBytesPerPacket = mBytesPerFrame = sizeof(CoreAudioUnitSampleType);
          mFormatFlags |= kAudioFormatFlagIsNonInterleaved;
       }
    }

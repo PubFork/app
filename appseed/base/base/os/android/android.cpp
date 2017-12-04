@@ -1,3 +1,6 @@
+#include "framework.h"
+
+
 
 bool __node_base_pre_init()
 {

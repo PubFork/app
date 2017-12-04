@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 /*
@@ -18,13 +18,13 @@ public:
       gDoneEvent = CreateEvent(NULL,TRUE,FALSE,NULL);
       if(NULL == gDoneEvent)
       {
-         throw - 1;
+         _throw(- 1);
       }
       // Create the timer queue.
       hTimerQueue = CreateTimerQueue();
       if(NULL == hTimerQueue)
       {
-         throw - 1;
+         _throw(- 1);
       }
    }
 
@@ -110,96 +110,96 @@ namespace multimedia
          virtual public ::multimedia::audio::wave_out,
          virtual public IXAudio2VoiceCallback
       {
-         public:
+      public:
 
 
 
-            //HANDLE streamEndEventHandle;
-            //VoiceCallback(): streamEndEventHandle(CreateEvent(NULL,FALSE,FALSE,NULL)){}
-            //~VoiceCallback()
-            //{
-            //CloseHandle(streamEndEventHandle);
-            //}
+         //HANDLE streamEndEventHandle;
+         //VoiceCallback(): streamEndEventHandle(CreateEvent(NULL,FALSE,FALSE,NULL)){}
+         //~VoiceCallback()
+         //{
+         //CloseHandle(streamEndEventHandle);
+         //}
 
-            // Called when the voice has just finished playing a contiguous audio stream.
-            STDMETHOD_(void,OnStreamEnd());
+         // Called when the voice has just finished playing a contiguous audio stream.
+         STDMETHOD_(void,OnStreamEnd());
 
-            // Unused methods in this application
-            STDMETHOD_(void,OnVoiceProcessingPassEnd());
-            STDMETHOD_(void,OnVoiceProcessingPassStart(UINT32 SamplesRequired)) ;
-            STDMETHOD_(void,OnBufferEnd(void * pBufferContext))  ;
-            STDMETHOD_(void,OnBufferStart(void * pBufferContext));
-            STDMETHOD_(void,OnLoopEnd(void * pBufferContext));
-            STDMETHOD_(void,OnVoiceError(void * pBufferContext,HRESULT Error));
-            //class run_step_thread :
-            //   virtual public ::thread
-            //{
-            //public:
+         // Unused methods in this application
+         STDMETHOD_(void,OnVoiceProcessingPassEnd());
+         STDMETHOD_(void,OnVoiceProcessingPassStart(UINT32 SamplesRequired)) ;
+         STDMETHOD_(void,OnBufferEnd(void * pBufferContext))  ;
+         STDMETHOD_(void,OnBufferStart(void * pBufferContext));
+         STDMETHOD_(void,OnLoopEnd(void * pBufferContext));
+         STDMETHOD_(void,OnVoiceError(void * pBufferContext,HRESULT Error));
+         //class run_step_thread :
+         //   virtual public ::thread
+         //{
+         //public:
 
-            //   wave_out * m_pout;
+         //   wave_out * m_pout;
 
-            //   run_step_thread(wave_out * pout);
+         //   run_step_thread(wave_out * pout);
 
-            //   virtual int32_t run();
+         //   virtual int32_t run();
 
-            //};
+         //};
 
-            ::windows::comptr<IXAudio2>                        m_pxaudio;
-            IXAudio2MasteringVoice *                           m_pvoice;
-            IXAudio2SourceVoice *                              m_psourcevoice;
+         ::windows::comptr<IXAudio2>                        m_pxaudio;
+         IXAudio2MasteringVoice *                           m_pvoice;
+         IXAudio2SourceVoice *                              m_psourcevoice;
 
 //         run_step_thread *                m_prunstepthread;
 
-            int                              m_iBuffer;
+         int                              m_iBuffer;
 
-            WAVEFORMATEX                     m_waveformatex;
-
-
-
-            wave_out(sp(::axis::application) papp);
-            virtual ~wave_out();
+         WAVEFORMATEX                     m_waveformatex;
 
 
-            ::multimedia::e_result wave_out_start(const imedia_position & position);
-            //virtual bool  on_run_step();
-            void install_message_routing(::message::sender * pinterface);
 
-            virtual imedia_time wave_out_get_position_millis() override;
-            virtual imedia_position wave_out_get_position() override;
-            virtual void wave_out_buffer_ready(index iBuffer) override;
-            //virtual void wave_out_buffer_ready(LPWAVEHDR lpwavehdr);
+         wave_out(sp(::axis::application) papp);
+         virtual ~wave_out();
 
-            virtual ::multimedia::e_result wave_out_open(::thread * pthreadCallback, ::count iBufferCount, ::count iBufferSampleCount) override;
-            virtual ::multimedia::e_result wave_out_open_ex(::thread * pthreadCallback, ::count iBufferCount, ::count iBufferSampleCount, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample,::multimedia::audio::e_purpose epurpose) override;
-            virtual ::multimedia::e_result wave_out_stop() override;
-            virtual ::multimedia::e_result wave_out_close() override;
-            virtual ::multimedia::e_result wave_out_pause() override;
-            virtual ::multimedia::e_result wave_out_restart() override;
-            virtual void * get_os_data();
-            //HWAVEOUT wave_out_get_safe_HWAVEOUT();
 
-            virtual void wave_out_on_playback_end() override;
-            virtual void wave_out_free(index iBuffer) override;
-            //virtual void wave_out_free(LPWAVEHDR lpwavehdr);
+         ::multimedia::e_result wave_out_start(const imedia_position & position);
+         //virtual bool  on_run_step();
+         void install_message_routing(::message::sender * pinterface);
 
-            virtual bool initialize_thread() override;
-            //virtual int32_t exit_instance();
+         virtual imedia_time wave_out_get_position_millis() override;
+         virtual imedia_position wave_out_get_position() override;
+         virtual void wave_out_buffer_ready(index iBuffer) override;
+         //virtual void wave_out_buffer_ready(LPWAVEHDR lpwavehdr);
 
-            ::count wave_out_get_buffered_buffer_count() override;
+         virtual ::multimedia::e_result wave_out_open(::thread * pthreadCallback, ::count iBufferCount, ::count iBufferSampleCount) override;
+         virtual ::multimedia::e_result wave_out_open_ex(::thread * pthreadCallback, ::count iBufferCount, ::count iBufferSampleCount, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample,::multimedia::audio::e_purpose epurpose) override;
+         virtual ::multimedia::e_result wave_out_stop() override;
+         virtual ::multimedia::e_result wave_out_close() override;
+         virtual ::multimedia::e_result wave_out_pause() override;
+         virtual ::multimedia::e_result wave_out_restart() override;
+         virtual void * get_os_data();
+         //HWAVEOUT wave_out_get_safe_HWAVEOUT();
 
-            //virtual int32_t run();
+         virtual void wave_out_on_playback_end() override;
+         virtual void wave_out_free(index iBuffer) override;
+         //virtual void wave_out_free(LPWAVEHDR lpwavehdr);
 
-            //DECL_GEN_SIGNAL(OnMultimediaOpen);
-            //DECL_GEN_SIGNAL(OnMultimediaDone);
-            //DECL_GEN_SIGNAL(OnMultimediaClose);
+         virtual bool init_thread() override;
+         //virtual int32_t exit_instance();
+
+         ::count wave_out_get_buffered_buffer_count() override;
+
+         //virtual int32_t run();
+
+         //DECL_GEN_SIGNAL(OnMultimediaOpen);
+         //DECL_GEN_SIGNAL(OnMultimediaDone);
+         //DECL_GEN_SIGNAL(OnMultimediaClose);
 
 //         virtual void wave_out_out_buffer_done(int iBuffer);
-            //       virtual void wave_out_out_buffer_done(LPWAVEHDR lpwavehdr);
+         //       virtual void wave_out_out_buffer_done(LPWAVEHDR lpwavehdr);
 
-            WAVEFORMATEX * wave_format();
-            //LPWAVEHDR wave_hdr(int iBuffer);
-            //virtual void wave_out_run_step();
-            virtual void wave_out_prebuffer_eof() override;
+         WAVEFORMATEX * wave_format();
+         //LPWAVEHDR wave_hdr(int iBuffer);
+         //virtual void wave_out_run_step();
+         virtual void wave_out_prebuffer_eof() override;
 
       };
 

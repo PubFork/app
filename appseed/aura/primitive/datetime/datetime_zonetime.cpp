@@ -6,7 +6,7 @@ namespace datetime
 {
 
 
-   ::datetime::zonetime WINAPI zonetime::get_current_time(__time64_t iZoneOffset) throw()
+   ::datetime::zonetime WINAPI zonetime::get_current_time(__time64_t iZoneOffset) NOTHROW
    {
 
       zonetime t;
@@ -27,7 +27,7 @@ namespace datetime
 
    }
 
-   zonetime::zonetime() throw() :
+   zonetime::zonetime() NOTHROW :
       time(0),
       m_iZoneOffset(0)
    {
@@ -35,7 +35,7 @@ namespace datetime
    }
 
 
-   zonetime::zonetime(const zonetime & zonetime) throw() :
+   zonetime::zonetime(const zonetime & zonetime) NOTHROW :
       time(zonetime.m_time),
       m_iZoneOffset(zonetime.m_iZoneOffset)
    {
@@ -44,7 +44,7 @@ namespace datetime
    }
 
 
-   zonetime::zonetime(__time64_t zonetime, int iZoneOffset) throw() :
+   zonetime::zonetime(__time64_t zonetime, int iZoneOffset) NOTHROW :
       time(zonetime),
       m_iZoneOffset(iZoneOffset)
    {
@@ -89,7 +89,7 @@ namespace datetime
       ASSUME(m_time != -1);   */    // indicates an illegal input zonetime
       if (m_time == -1)
       {
-         throw invalid_argument_exception(get_thread_app());
+         _throw(invalid_argument_exception(get_app()));
       }
    }
 
@@ -138,7 +138,7 @@ namespace datetime
          if (ptmTemp == NULL)
             return NULL;
 
-         // but don't throw exception or generate error...
+         // but don't _throw( exception or generate error...
          // (reason for commenting out below, fat to be removed...)
          //         if(errno != 0)
          //          return NULL;
@@ -272,6 +272,8 @@ namespace datetime
 } // namespace datetime
 
 
+#ifdef DEBUG
+
 
 dump_context & operator <<(dump_context & dumpcontext, ::datetime::zonetime zonetime)
 {
@@ -292,6 +294,7 @@ dump_context & operator <<(dump_context & dumpcontext, ::datetime::zonetime zone
    return dumpcontext << "::datetime::zonetime(\"" << psz << "\")";
 }
 
+#endif
 
 ::file::ostream & operator <<(::file::ostream & os, ::datetime::zonetime zonetime)
 {

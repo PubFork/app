@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 lite_html_tag::lite_html_tag(lite_html_tag &rSource, bool bCopy)
@@ -12,18 +12,26 @@ lite_html_tag::lite_html_tag(lite_html_tag &rSource, bool bCopy)
    }
    else if (rSource.m_pcollAttr != NULL)
    {
+
       /** DEEP COPY BEGIN */
+
       try
       {
+
          m_pcollAttr = new LiteHTMLAttributes(*(rSource.m_pcollAttr), true);
+
       }
       catch(memory_exception * pe)
       {
-         ::exception::rethrow(pe);
+
+         _rethrow(pe);
+
       }
 
       /** DEEP COPY END */
+
    }
+
 }
 
 lite_html_tag::~lite_html_tag()
@@ -47,9 +55,9 @@ lite_html_tag::~lite_html_tag()
  * @author Gurmeet S. Kochar
  */
 UINT lite_html_tag::parseFromStr(::lite_html_reader * preader, const string & strString, strsize iPos,
-                              bool &bIsOpeningTag,
-                              bool &bIsClosingTag,
-                              bool bParseAttrib /* = true */)
+                                 bool &bIsOpeningTag,
+                                 bool &bIsClosingTag,
+                                 bool bParseAttrib /* = true */)
 {
 
 
@@ -58,7 +66,7 @@ UINT lite_html_tag::parseFromStr(::lite_html_reader * preader, const string & st
    LiteHTMLAttributes   *pcollAttr = NULL;
    string            strTagName;
    UINT            nRetVal = 0U,
-                  nTemp = 0U;
+                   nTemp = 0U;
    const char *            lpszBegin = &strString[iPos];
    const char *            lpszEnd = NULL;
 
@@ -100,8 +108,8 @@ UINT lite_html_tag::parseFromStr(::lite_html_reader * preader, const string & st
       // tag name may contain letters (a-z, A-Z), digits (0-9),
       // underscores '_', hyphen '-', colons ':', and periods '.'
       if ((!(*lpszEnd >= 0 && ::isalnum(*lpszEnd))) &&
-          (*lpszEnd != '-') && (*lpszEnd != ':') &&
-          (*lpszEnd != '_') && (*lpszEnd != '.') )
+            (*lpszEnd != '-') && (*lpszEnd != ':') &&
+            (*lpszEnd != '_') && (*lpszEnd != '.') )
       {
 
          if(lpszEnd == lpszBegin)
@@ -111,8 +119,8 @@ UINT lite_html_tag::parseFromStr(::lite_html_reader * preader, const string & st
          // greater-than symbol, or a forward-slash can break
          // a tag name
          if (*lpszEnd == '\0' || ::isspace(*lpszEnd) ||
-            *lpszEnd == '>' ||
-            (*lpszEnd == '/' && (!bClosingTag)) )
+               *lpszEnd == '>' ||
+               (*lpszEnd == '/' && (!bClosingTag)) )
          {
             break;
          }
@@ -164,7 +172,7 @@ UINT lite_html_tag::parseFromStr(::lite_html_reader * preader, const string & st
          if ((pcollAttr = new LiteHTMLAttributes) == NULL)
          {
 //            TRACE0("(Error) lite_html_tag::parseFromStr: Out of memory.\n");
-            throw memory_exception(get_thread_app());
+            _throw(memory_exception(get_app()));
             return (0U);
          }
 
@@ -173,8 +181,8 @@ UINT lite_html_tag::parseFromStr(::lite_html_reader * preader, const string & st
       }
 
       if (nTemp == 0)   // attribute/value pair parsing is disabled?
-                  //   - OR -
-                  // attribute/value pairs could not be parsed?
+         //   - OR -
+         // attribute/value pairs could not be parsed?
       {
          SAFE_DELETE_POINTER(pcollAttr);
          if ((lpszEnd = ::strstr(lpszBegin, "/>")) == NULL)

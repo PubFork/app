@@ -7,7 +7,8 @@
 //
 
 #import "macos_mm.h"
-
+int file_put_contents_dup(const char * path, const char * contents);
+void file_add_contents_raw(const char * path, const char * psz);
 int32_t defer_run_system();
 
 int32_t defer_run_system(const char * pszFileName);
@@ -17,8 +18,18 @@ int32_t defer_run_system(char * * psza, int c);
 void macos_on_app_activate();
 
 
+
 @implementation RoundWindowApp
 
+
+@synthesize windowcontroller;
+
+- (void)applicationWillFinishLaunching:(NSNotification *)notification
+{
+NSAppleEventManager *appleEventManager = [NSAppleEventManager sharedAppleEventManager];// 1
+[appleEventManager setEventHandler:self andSelector:@selector(handleGetURLEvent:withReplyEvent:) forEventClass:kInternetEventClass andEventID:kAEGetURL];
+   
+}
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
@@ -30,8 +41,7 @@ void macos_on_app_activate();
 }
 
 
-- (BOOL)applicationShouldHandleReopen:(NSApplication *)sender
-                    hasVisibleWindows:(BOOL)flag
+- (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
 {
    
    //MessageBox(NULL, "applicationShouldHandleReopen", "applicationShouldHandleReopen", MB_OK);
@@ -46,6 +56,7 @@ void macos_on_app_activate();
 - (BOOL)applicationOpenUntitledFile:(NSApplication *)sender
 {
    
+   file_put_contents_dup("/eco/001.txt", "applicationOpenUntitledFile");
    //MessageBox(NULL, "applicationOpenUntitledFile", "applicationOpenUntitledFile", MB_OK);
    
    defer_run_system();
@@ -55,9 +66,13 @@ void macos_on_app_activate();
 }
 
 
+
 - (BOOL)application:(NSApplication *)sender openFile:(NSString *)filename
 {
    
+   file_put_contents_dup("/eco/002.txt", "applicationOpenFile");
+   file_put_contents_dup("/eco/003.txt", [filename UTF8String]);
+
    //MessageBox(NULL, "application: openFile", "application: openFile", MB_OK);
    
    defer_run_system([filename UTF8String]);
@@ -71,6 +86,7 @@ void macos_on_app_activate();
 - (void)application:(NSApplication *)sender openFiles:(NSArray<NSString *> *)filenames
 {
    
+   file_put_contents_dup("/eco/004.txt", "openFiles");
    unsigned long ulCount = [filenames count];
    
    if(ulCount <= 0)
@@ -85,15 +101,75 @@ void macos_on_app_activate();
    for(unsigned long ul = 0; ul < ulCount; ul++)
    {
       
-      psza[ul] = strdup([[filenames objectAtIndex:ul] UTF8String]);
+      char * psz = strdup([[filenames objectAtIndex:ul] UTF8String]);
+      
+      NSLog(@"XXXXX %s", psz);
+      
+      file_add_contents_raw("/eco/004.txt", psz);
+
+      
+      psza[ul] = psz;
       
    }
    
-   defer_run_system(psza, ulCount);
+   defer_run_system(psza, (int) ulCount);
    
    
 }
+- (void)application:(NSApplication *)application open:(NSURL * )url
+{
+   file_put_contents_dup("/eco/006.txt", "open");
+   file_add_contents_raw("/eco/006.txt", [[url absoluteString] UTF8String]);
+   
+   //MessageBox(NULL, "application: openFile", "application: openFile", MB_OK);
+   
+   defer_run_system([[url absoluteString] UTF8String]);
+}
 
+- (BOOL)application:(id)sender
+  openFileWithoutUI:(NSString *)filename;
+{
+   file_put_contents_dup("/eco/007.txt", "openFileWithoutUI");
+   file_add_contents_raw("/eco/007.txt", [filename UTF8String]);
+   
+   //MessageBox(NULL, "application: openFile", "application: openFile", MB_OK);
+   
+   defer_run_system([filename UTF8String]);
+}
+
+- (void)application:(NSApplication *)application openURLs:(NSArray<NSURL *> *)urls
+{
+   file_put_contents_dup("/eco/005.txt", "openURLs");
+   unsigned long ulCount = [urls count];
+   
+   if(ulCount <= 0)
+   {
+      
+      return;
+      
+   }
+   
+   char ** psza = (char **) malloc(ulCount * sizeof(char*));
+   
+   for(unsigned long ul = 0; ul < ulCount; ul++)
+   {
+      
+      char * psz = strdup([[[urls objectAtIndex:ul] absoluteString] UTF8String]);
+      
+      NSLog(@"XXXXX %s", psz);
+      
+      file_add_contents_raw("/eco/005.txt", psz);
+      
+      
+      psza[ul] = psz;
+      
+   }
+   
+   defer_run_system(psza, (int) ulCount);
+   
+   
+
+}
 
 
 //- (void)sendEvent:(NSEvent *)theEvent
@@ -134,7 +210,18 @@ void macos_on_app_activate();
 //   [super sendEvent:theEvent];
 //   
 //}
-
-
-
+- (void)handleGetURLEvent:(NSAppleEventDescriptor *)event
+           withReplyEvent:(NSAppleEventDescriptor *)replyEvent {
+   
+   // Extract the URL from the Apple event and handle it here.
+   NSString* url = [[event paramDescriptorForKeyword:keyDirectObject] stringValue];
+   NSLog(@"%@", url);
+   
+   file_put_contents_dup("/eco/008.txt", "handleGetURLEvent");
+   file_add_contents_raw("/eco/008.txt", [url UTF8String]);
+   
+   //MessageBox(NULL, "application: openFile", "application: openFile", MB_OK);
+   
+   defer_run_system([url UTF8String]);
+}
 @end

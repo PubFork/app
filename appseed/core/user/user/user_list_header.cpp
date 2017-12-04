@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 //CLASS_DECL_CORE COLORREF Session.get_default_color(uint32_t dw);
 
@@ -86,26 +86,26 @@ namespace user
    index list_header::MapItemToOrder(index iItem)
    {
 //#ifdef WINDOWSEX
-  //    HDITEM hditem;
+      //    HDITEM hditem;
 
 
       //hditem.mask = HDI_ORDER| HDI_TEXT;
 
-    //  hditem.mask = HDI_ORDER;
+      //  hditem.mask = HDI_ORDER;
 
-   //   char pszText[1024];
+      //   char pszText[1024];
 
-   //   hditem.pszText = pszText;
-   //   hditem.cchTextMax = 1024;
+      //   hditem.pszText = pszText;
+      //   hditem.cchTextMax = 1024;
 
-   //   get_item(iItem, &hditem);
+      //   get_item(iItem, &hditem);
 
-   //   return hditem.iOrder;
+      //   return hditem.iOrder;
       return iItem;
 
 //#else
 
-      //throw todo(get_app());
+      //_throw(todo(get_app()));
 
 //#endif
 
@@ -187,7 +187,7 @@ namespace user
 
 
       if(eelementLButtonDown == ElementItemBox
-         && eelement == ElementItemBox)
+            && eelement == ElementItemBox)
       {
          if(iItem == iItemLButtonDown)
          {
@@ -311,7 +311,7 @@ namespace user
 
    index list_header::ItemToColumnKey(index iItem)
    {
-      
+
       list * plist = m_plistctrlinterface;
 
       return plist->_001MapColumnToOrder(iItem);
@@ -321,12 +321,12 @@ namespace user
 
    bool list_header::DIDDXLayout(bool bSave)
    {
-      
+
       bool bFail = false;
-      
+
       if(!DIDDXColumn(bSave))
          bFail = true;
-   
+
       return !bFail;
 
    }
@@ -337,7 +337,7 @@ namespace user
 
       string strDataAddUp;
 
-      strDataAddUp = ".local://";
+      strDataAddUp = "&data_source=local&";
 
       string str;
 
@@ -372,14 +372,14 @@ namespace user
 
          }
 
-         if (!data_save(str + m_plistctrlinterface->m_dataid.m_id, iaWidth))
+         if (!data_save(str, iaWidth))
             return false;
 
       }
       else
       {
 
-         if (data_load(str + m_plistctrlinterface->m_dataid.m_id, iaWidth))
+         if (data_load(str, iaWidth))
          {
 
             ::count c = MIN(iaWidth.get_count(), m_plistctrlinterface->_001GetColumnCount());
@@ -436,7 +436,7 @@ namespace user
          if(hit_test(ptCursor, eelement, iItem))
          {
             if(m_eelementLButtonDown == ElementItemBox
-               && eelement == ElementItemBox)
+                  && eelement == ElementItemBox)
             {
                if(iItem == m_iItemLButtonDown)
                {
@@ -512,7 +512,7 @@ namespace user
 
       if(m_bLButtonDown)
       {
-           if(m_eelementLButtonDown == ElementDivider)
+         if(m_eelementLButtonDown == ElementDivider)
          {
             rect rect;
             GetItemRect(rect, element_item, m_iItemLButtonDown);
@@ -547,10 +547,10 @@ namespace user
       e_element eelement;
       index iItem;
       if(hit_test(
-         ptCursor,
-         eelement,
-         iItem)
-         )
+               ptCursor,
+               eelement,
+               iItem)
+        )
       {
          if(eelement == ElementItemBox)
          {
@@ -653,7 +653,7 @@ namespace user
       catch (...)
       {
 
-         throw simple_exception(::get_thread_app(), "no more a window");
+         _throw(simple_exception(get_app(), "no more a window"));
 
       }
 

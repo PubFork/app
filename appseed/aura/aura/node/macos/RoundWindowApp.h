@@ -29,4 +29,7 @@
 }
 
 
+@property(strong) NSWindowController *windowcontroller;
+
+
 @end

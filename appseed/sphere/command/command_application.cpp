@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace prompt
@@ -27,7 +27,7 @@ namespace prompt
    }
 
 
-   bool application::initialize_application()
+   bool application::init_instance()
    {
 
       System.factory().creatable_small < prompt::document >();
@@ -36,21 +36,21 @@ namespace prompt
       System.factory().creatable_small < prompt::pane_view >();
       System.factory().creatable_small < prompt::primary_view >();
 
-      if(!::asphere::application::initialize_application())
+      if(!::asphere::application::init_instance())
          return false;
 
-      Session.filemanager().std().m_strLevelUp = "levelup";
+      Session.filemanager()->m_strLevelUp = "levelup";
 
       if(m_strId == "command")
       {
 
-	      ::user::single_document_template* pDocTemplate;
-	      pDocTemplate = new ::user::single_document_template(
-            this,
-		      "system/form",
-		      System.type_info < prompt::document > (),
-		      System.type_info < prompt::frame > (),
-		      System.type_info < prompt::pane_view > ());
+         ::user::single_document_template* pDocTemplate;
+         pDocTemplate = new ::user::single_document_template(
+         this,
+         "system/form",
+         System.type_info < prompt::document > (),
+         System.type_info < prompt::frame > (),
+         System.type_info < prompt::pane_view > ());
          add_document_template(pDocTemplate);
          m_ptemplateCommandMain = pDocTemplate;
 
@@ -61,12 +61,15 @@ namespace prompt
       return true;
    }
 
-   int32_t application::exit_application()
+
+   void application::term_instance()
    {
-      return 0;
+
+      asphere::application::term_instance();
+
    }
 
-   
+
    void application::_001OnCmdMsg(::user::command * pcommand)
    {
 
@@ -84,16 +87,16 @@ namespace prompt
 #ifdef WINDOWSEX
 
          ::ShellExecuteW(
-            NULL,
-            L"open",
-            ::str::international::utf8_to_unicode(itema[0]->m_filepath),
-            NULL,
-            ::str::international::utf8_to_unicode(itema[0]->m_filepath.folder()),
-            SW_SHOW);
+         NULL,
+         L"open",
+         ::str::international::utf8_to_unicode(itema[0]->m_filepath),
+         NULL,
+         ::str::international::utf8_to_unicode(itema[0]->m_filepath.folder()),
+         SW_SHOW);
 
 #else
 
-         throw todo(get_app());
+         _throw(todo(get_app()));
 
 #endif
 

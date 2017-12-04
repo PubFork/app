@@ -11,16 +11,16 @@ public:
    simple_tree_view(::aura::application * papp);   
    virtual ~simple_tree_view();
 
-   virtual void install_message_routing(::message::sender * pinterface);
+   virtual void install_message_routing(::message::sender * pinterface) override;
 
 
    DECL_GEN_SIGNAL(_001OnCreate);
 
    virtual void on_update(::user::impact * pSender,LPARAM lHint,::object* pHint) override;
    
-#ifdef DEBUG
-   virtual void assert_valid() const;
-   virtual void dump(dump_context & dumpcontext) const;
-#endif
+
+   virtual void assert_valid() const override;
+   virtual void dump(dump_context & dumpcontext) const override;
+
 
 };

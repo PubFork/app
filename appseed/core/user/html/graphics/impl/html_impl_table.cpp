@@ -101,21 +101,21 @@ namespace html
 
          strWidth.trim();
 
-         if (false && str::ends_eat(strWidth, "%"))
-         {
-
-            strWidth.trim();
-
-            float percent = var(strWidth).get_float();
-
-            float cx = m_bound.get_cx();
-
-            cx *= percent / 100.0f;
-
-            return cx;
-
-
-         }
+//         if (false && str::ends_eat(strWidth, "%"))
+//         {
+//
+//            strWidth.trim();
+//
+//            float percent = var(strWidth).get_float();
+//
+//            float cx = m_bound.get_cx();
+//
+//            cx *= percent / 100.0f;
+//
+//            return cx;
+//
+//
+//         }
          
          float cx = 0.f;
 

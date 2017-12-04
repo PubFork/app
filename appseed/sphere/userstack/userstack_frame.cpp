@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace userstack
@@ -38,11 +38,7 @@ namespace userstack
 
       m_bWindowFrame = true;
 
-#ifdef HOTPLUGIN_SUBSYSTEM
-
       m_bWindowFrame = GetTypedParent < ::plugin::host_interaction >() == NULL;
-
-#endif
 
       if(pobj->previous())
          return;
@@ -83,7 +79,7 @@ namespace userstack
    }
 
 
-#ifdef DEBUG
+
    void frame::assert_valid() const
    {
       simple_frame_window::assert_valid();
@@ -93,7 +89,7 @@ namespace userstack
    {
       simple_frame_window::dump(dumpcontext);
    }
-#endif //DEBUG
+
 
 
    void frame::_001OnTimer(::timer * ptimer)
@@ -249,7 +245,7 @@ namespace userstack
             Session.open_by_file_extension(strPath);
          }
 #else
-         throw todo(get_app());
+         _throw(todo(get_app()));
 #endif
       }
 
@@ -289,7 +285,7 @@ namespace userstack
                ShowWindow(SW_HIDE);
             }
 #else
-            throw todo(get_app());
+            _throw(todo(get_app()));
 #endif
          }
       }
@@ -363,7 +359,7 @@ namespace userstack
 #ifdef WINDOWSEX
          pbase->set_lresult((LRESULT) GetTopLevelFrame()->get_safe_handle());
 #else
-         throw todo(get_app());
+         _throw(todo(get_app()));
 #endif
       }
       pbase->m_bRet = true;
@@ -457,7 +453,7 @@ namespace userstack
 
 #else
 
-      throw todo(get_app());
+      _throw(todo(get_app()));
 
 #endif
 

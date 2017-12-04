@@ -2,6 +2,7 @@
 
 
 #include "netserver_socket_handler.h"
+#include "aura/net/sockets/bsd/basic/sockets_listen_socket.h"
 
 
 namespace netserver
@@ -32,7 +33,7 @@ namespace netserver
       ~socket_thread();
 
 
-      virtual int32_t run() override;
+      virtual void run() override;
 
       virtual ::netserver::socket_handler * create_socket_handler();
       virtual ::sockets::listen_socket_base * create_listen_socket();

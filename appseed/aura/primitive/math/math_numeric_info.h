@@ -365,6 +365,7 @@ namespace numeric_info_internal
 
    };
 
+   #ifndef LINUX
 
    template < >
    class CLASS_DECL_AURA numeric_info < int64_t > :
@@ -437,6 +438,9 @@ namespace numeric_info_internal
          static const bool is_signed = false;
 
    };
+
+
+      #endif
 
 
    template < >

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace filemanager
@@ -33,7 +33,7 @@ namespace filemanager
 
       bool step();
 
-      int32_t run();
+      virtual void run() override;
 
    };
 

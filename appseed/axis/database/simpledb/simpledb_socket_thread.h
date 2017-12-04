@@ -1,4 +1,7 @@
-#pragma once
+﻿#pragma once
+
+
+#include "aura/net/sockets/bsd/basic/sockets_socket_handler.h"
 
 
 namespace simpledb
@@ -9,7 +12,7 @@ namespace simpledb
    class service;
 
 
-   class CLASS_DECL_AXIS socket_thread : 
+   class CLASS_DECL_AXIS socket_thread :
       public thread,
       public ::sockets::socket_handler
    {
@@ -46,10 +49,10 @@ namespace simpledb
       virtual ~socket_thread();
 
 
-      virtual bool initialize_thread() override;
+      virtual bool init_thread() override;
 
 
-      void install_message_routing(::message::sender * pinterface);
+      void install_message_routing(::message::sender * pinterface) override;
 
 
       DECL_GEN_SIGNAL(OnApp);

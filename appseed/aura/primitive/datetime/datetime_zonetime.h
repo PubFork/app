@@ -53,8 +53,9 @@ namespace datetime
 } // namespace datetime
 
 
-
+#ifdef DEBUG
 CLASS_DECL_AURA dump_context & operator <<(dump_context & dumpcontext, ::datetime::zonetime time);
+#endif
 
 CLASS_DECL_AURA::file::ostream & operator <<(::file::ostream & os, ::datetime::zonetime time);
 CLASS_DECL_AURA::file::istream & operator >> (::file::istream & is, ::datetime::zonetime & time);

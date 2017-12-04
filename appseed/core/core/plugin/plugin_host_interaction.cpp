@@ -1,8 +1,5 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "core/user/user/user.h"
-
-
-#ifdef HOTPLUGIN_SUBSYSTEM
 
 
 #ifdef Application
@@ -38,9 +35,9 @@ namespace plugin
 
       ::user::interaction::install_message_routing(pinterface);
 
-      IGUI_MSG_LINK(WM_MOUSEMOVE         , pinterface, this, &host_interaction::_001OnMouseMove);
-      IGUI_MSG_LINK(message_check        , pinterface, this, &host_interaction::_001OnCheck);
-      IGUI_MSG_LINK(WM_CREATE            , pinterface, this, &host_interaction::_001OnCreate);
+      IGUI_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &host_interaction::_001OnMouseMove);
+      IGUI_MSG_LINK(message_check, pinterface, this, &host_interaction::_001OnCheck);
+      IGUI_MSG_LINK(WM_CREATE, pinterface, this, &host_interaction::_001OnCreate);
 
       /*
       IGUI_MSG_LINK(WM_WINDOWPOSCHANGED  , pinterface, this, &host_interaction::on_ignore_message);
@@ -65,9 +62,9 @@ namespace plugin
 
    void host_interaction::_001OnCreate(::message::message * pobj)
    {
-      
+
       UNREFERENCED_PARAMETER(pobj);
-      
+
       Session.m_bSystemSynchronizedCursor = false;
 
    }
@@ -96,7 +93,7 @@ namespace plugin
          // do the following if desired on calling System open linnk, will try to create plugin::system::get_host_location_url
          // else if(setQuery["ruri"].get_string().get_length() <= 0)
          //{
-            //System.url().string_set(strLink, "ruri", (const char *) m_pplugin->get_host_location_url());
+         //System.url().string_set(strLink, "ruri", (const char *) m_pplugin->get_host_location_url());
          //}
          m_pplugin->open_link(strLink, "");
          delete pstrLink;
@@ -176,8 +173,8 @@ namespace plugin
             }
             //else
             //{
-              // pui->ShowWindow(SW_SHOW);
-               //pui->on_layout();
+            // pui->ShowWindow(SW_SHOW);
+            //pui->on_layout();
             //}
          }
       }
@@ -200,16 +197,16 @@ namespace plugin
          return false;
 
       }
-      
+
       RECT rect;
-      
+
       if(!m_pplugin->GetWindowRect(&rect))
       {
 
          return false;
 
       }
-      
+
       ::copy(lprect, &rect);
 
       return true;
@@ -219,7 +216,7 @@ namespace plugin
 
    bool host_interaction::GetClientRect(RECT64 * lprect)
    {
-      
+
       if(m_pplugin == NULL)
       {
 
@@ -259,12 +256,12 @@ namespace plugin
       return System.ui_from_handle(m_pplugin->get_host_window());
    }
 
-   
+
    void host_interaction::_user_message_handler(::message::base * pbase)
    {
-      
+
       ::user::interaction::message_handler(pbase);
-      
+
       pbase->m_bRet = true;
 
    }
@@ -308,10 +305,10 @@ namespace plugin
    {
 
       if (uiMessage == WM_NCCREATE || uiMessage == WM_CREATE)
-/*      || uiMessage == WM_SIZE
-      || uiMessage == WM_MOVE
-      || uiMessage == WM_WINDOWPOSCHANGING
-      || uiMessage == WM_WINDOWPOSCHANGED)*/
+         /*      || uiMessage == WM_SIZE
+               || uiMessage == WM_MOVE
+               || uiMessage == WM_WINDOWPOSCHANGING
+               || uiMessage == WM_WINDOWPOSCHANGED)*/
       {
 
          return ::user::interaction::DefWindowProc(uiMessage, wparam, lparam);
@@ -326,14 +323,11 @@ namespace plugin
 
    }
 
-   
+
 } // namespace plugin
 
 
 #undef Application
 #define Application App(m_pauraapp)
-
-
-#endif
 
 

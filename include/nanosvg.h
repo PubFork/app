@@ -977,10 +977,10 @@ static void nsvg__addShape(NSVGparser* p)
    if (p->plist == NULL)
       return;
 
-   if (p->plist->id != NULL)
-   {
-
-   }
+//   if (p->plist->id != NULL)
+//   {
+//
+//   }
 
    shape = (NSVGshape*)malloc(sizeof(NSVGshape));
    if (shape == NULL) goto error;

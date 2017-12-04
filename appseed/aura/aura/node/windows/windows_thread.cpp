@@ -1,15 +1,4 @@
-
-//#include <openssl/err.h>
-
-#include "framework.h"
-//#include "windows.h"
-//#include <ddeml.h>  // for MSGF_DDEMGR
-
-
-//__declspec(thread) HHOOK t_hHookOldMsgFilter = NULL;
-
-
-//LRESULT CALLBACK __message_filter_hook(int32_t code,WPARAM wParam,LPARAM lParam);
+﻿#include "framework.h"
 
 
 void CLASS_DECL_AURA __init_thread()

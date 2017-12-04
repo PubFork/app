@@ -9,7 +9,7 @@ namespace datetime
    const char * const szInvalidDateTime = "Invalid DateTime";
 
 
-   ::datetime::time WINAPI time::get_current_time() throw()
+   ::datetime::time WINAPI time::get_current_time() NOTHROW
    {
 
 #ifdef WINDOWS
@@ -24,7 +24,7 @@ namespace datetime
 
    }
 
-   bool WINAPI time::is_valid_FILETIME(const FILETIME& fileTime) throw()
+   bool WINAPI time::is_valid_FILETIME(const FILETIME& fileTime) NOTHROW
    {
       FILETIME localTime;
       if (!FileTimeToLocalFileTime(&fileTime, &localTime))
@@ -44,7 +44,7 @@ namespace datetime
 
 
    time::time(int32_t nYear, int32_t nMonth, int32_t nDay, int32_t nHour, int32_t nMin, int32_t nSec,
-      int32_t nDST)
+              int32_t nDST)
    {
 #pragma warning (push)
 #pragma warning (disable: 4127)  // conditional expression constant
@@ -83,7 +83,7 @@ namespace datetime
       ASSUME(m_time != -1);   */    // indicates an illegal input time
       if(m_time == -1)
       {
-         throw invalid_argument_exception(get_thread_app());
+         _throw(invalid_argument_exception(get_app()));
       }
    }
 
@@ -113,7 +113,7 @@ namespace datetime
       ASSUME(m_time != -1);       // indicates an illegal input time
 
       if(m_time == -1)
-         throw invalid_argument_exception(get_thread_app());
+         _throw(invalid_argument_exception(get_app()));
 
    }
 
@@ -142,7 +142,7 @@ namespace datetime
       if (!FileTimeToLocalFileTime(&fileTime, &localTime))
       {
          m_time = 0;
-         throw invalid_argument_exception(get_thread_app());
+         _throw(invalid_argument_exception(get_app()));
          return;
       }
 
@@ -151,7 +151,7 @@ namespace datetime
       if (!FileTimeToSystemTime(&localTime, &sysTime))
       {
          m_time = 0;
-         throw invalid_argument_exception(get_thread_app());
+         _throw(invalid_argument_exception(get_app()));
          return;
       }
 
@@ -160,35 +160,35 @@ namespace datetime
       *this = timeT;
    }
 
-   ::datetime::time & time::operator=( __time64_t time ) throw()
+   ::datetime::time & time::operator=( __time64_t time ) NOTHROW
    {
       m_time = time;
 
       return *this;
    }
 
-   ::datetime::time & time::operator+=( time_span span ) throw()
+   ::datetime::time & time::operator+=( time_span span ) NOTHROW
    {
       m_time += span.GetTimeSpan();
 
       return *this;
    }
 
-   ::datetime::time & time::operator-=( time_span span ) throw()
+   ::datetime::time & time::operator-=( time_span span ) NOTHROW
    {
       m_time -= span.GetTimeSpan();
 
       return *this;
    }
 
-   ::datetime::time & time::operator+=(const  duration & duration ) throw()
+   ::datetime::time & time::operator+=(const  duration & duration ) NOTHROW
    {
       m_time += duration.GetTimeSpan();
 
       return *this;
    }
 
-   ::datetime::time & time::operator-=(const  duration & duration ) throw()
+   ::datetime::time & time::operator-=(const  duration & duration ) NOTHROW
    {
       m_time -= duration.GetTimeSpan();
 
@@ -198,7 +198,7 @@ namespace datetime
    ::datetime::time & time::operator+=( date_span span )
    {
       UNREFERENCED_PARAMETER(span);
-      throw not_implemented(get_thread_app());
+      _throw(not_implemented(get_app()));
 
       return *this;
    }
@@ -206,7 +206,7 @@ namespace datetime
    ::datetime::time& time::operator-=( date_span span )
    {
       UNREFERENCED_PARAMETER(span);
-      throw not_implemented(get_thread_app());
+      _throw(not_implemented(get_app()));
 
       return *this;
    }
@@ -215,13 +215,13 @@ namespace datetime
    ::datetime::time time::operator-( date_span span ) const
    {
       UNREFERENCED_PARAMETER(span);
-      throw not_implemented(get_thread_app());
+      _throw(not_implemented(get_app()));
    }
 
    ::datetime::time time::operator+( date_span span ) const
    {
       UNREFERENCED_PARAMETER(span);
-      throw not_implemented(get_thread_app());
+      _throw(not_implemented(get_app()));
    }
 
 
@@ -257,7 +257,7 @@ namespace datetime
          if(ptmTemp == NULL)
             return NULL;
 
-         // but don't throw exception or generate error...
+         // but don't _throw( exception or generate error...
          // (reason for commenting out below, fat to be removed...)
 //         if(errno != 0)
          //          return NULL;
@@ -331,7 +331,7 @@ namespace datetime
 
    }
 
-   bool time::get_as_system_time(SYSTEMTIME& timeDest) const throw()
+   bool time::get_as_system_time(SYSTEMTIME& timeDest) const NOTHROW
    {
       struct tm ttm;
       struct tm* ptm;
@@ -496,14 +496,14 @@ namespace datetime
       }
 
       str.ReleaseBuffer();
-      
+
       return str;
-      
+
 #elif defined(APPLEOS)
 
-   #if __WORDSIZE != 64
-   #pragma error "error: long should 8-byte on APPLEOS"
-   #endif
+#if __WORDSIZE != 64
+#pragma error "error: long should 8-byte on APPLEOS"
+#endif
 
       char * szBuffer = str.GetBufferSetLength(maxTimeBufferSize);
 
@@ -515,15 +515,15 @@ namespace datetime
          szBuffer[0] = '\0';
 
       }
-      
+
       str.ReleaseBuffer();
-      
+
       return str;
 
 #elif _SECURE_TEMPLATE
 
       char * szBuffer = str.GetBufferSetLength(maxTimeBufferSize);
-      
+
       struct tm ptmTemp;
 
       errno_t err = _localtime64_s(&ptmTemp, &m_time);
@@ -534,12 +534,12 @@ namespace datetime
          szBuffer[0] = '\0';
 
       }
-      
-      
+
+
       str.ReleaseBuffer();
-      
+
       return str;
-      
+
 //#elif defined(ANDROID) || defined(SOLARIS)
 //
 //      struct tm* ptmTemp = localtime(&m_time);
@@ -554,7 +554,7 @@ namespace datetime
 #else
 
       str = strFormat;
-      
+
       str.replace("%Y",::str::from(GetYear()));
       str.replace("%m",::str::zero_pad(::str::from(GetMonth()), 2));
       str.replace("%d",::str::zero_pad(::str::from(GetDay()),2));
@@ -636,7 +636,7 @@ namespace datetime
    SYSTEMTIME time::to_system_time() const
    {
 
-      SYSTEMTIME st ={};
+      SYSTEMTIME st = {};
 
       struct tm ttm;
 
@@ -661,7 +661,7 @@ namespace datetime
 
    FILETIME time::to_file_time() const
    {
-      
+
       SYSTEMTIME st = to_system_time();
 
       FILETIME ft;
@@ -669,7 +669,7 @@ namespace datetime
       SystemTimeToFileTime(&st,&ft);
 
       return ft;
-      
+
    }
 
 
@@ -731,6 +731,8 @@ namespace datetime
 
 
 
+#ifdef DEBUG
+
 dump_context & operator <<(dump_context & dumpcontext, ::datetime::time time)
 {
    char psz[32];
@@ -750,6 +752,7 @@ dump_context & operator <<(dump_context & dumpcontext, ::datetime::time time)
    return dumpcontext << "::datetime::time(\"" << psz << "\")";
 }
 
+#endif
 
 ::file::ostream & operator <<(::file::ostream & os, ::datetime::time time)
 {

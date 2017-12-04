@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "simpledb_socket.h"
 
 
@@ -24,16 +24,15 @@ namespace simpledb
 
    }
 
+
    manager::~manager()
    {
+
    }
 
 
-
-   bool manager::initialize_thread()
+   bool manager::init_thread()
    {
-
-//      m_spqueue->create_message_queue("::core::netnode::ca2");
 
       return true;
 
@@ -70,9 +69,9 @@ namespace simpledb
       if(pbase->m_id == WM_APP + 13)
       {
          //if(wparam == 0)
-           // ((script *) lparam)->Load(false);
+         // ((script *) lparam)->Load(false);
          //else if(wparam == 13)
-           // ((script *) lparam)->Unload(false);
+         // ((script *) lparam)->Unload(false);
          pbase->m_bRet = true;
       }
       else if(pbase->m_id == WM_APP + 14)

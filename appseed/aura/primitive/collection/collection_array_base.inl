@@ -65,7 +65,7 @@ index array_base < TYPE, ARG_TYPE, ALLOCATOR >::remove_at(index nIndex,::count n
    index nUpperBound = nIndex + nCount;
 
    if(nIndex < 0 || nCount < 0 || (nUpperBound > m_nSize) || (nUpperBound < nIndex) || (nUpperBound < nCount))
-      throw invalid_argument_exception(get_app());
+      _throw(invalid_argument_exception(get_app()));
 
    // just remove a range
    ::count nMoveCount = m_nSize - (nUpperBound);
@@ -178,21 +178,27 @@ index array_base < TYPE, ARG_TYPE, ALLOCATOR >::insert_at(index nIndex,const TYP
       return -1;
 
    if(nIndex < 0)
-      throw invalid_argument_exception(get_app());
+      _throw(invalid_argument_exception(get_app()));
 
    if(nIndex >= m_nSize)
    {
+
       // adding after the end of the array
       set_size(nIndex + nCount,-1);   // grow so nIndex is valid
+
    }
    else
    {
+
       // inserting in the middle of the array
       ::count nOldSize = m_nSize;
+
       set_size(m_nSize + nCount,-1);  // grow it to new size
       // destroy intial data before copying over it
       // shift old data up to fill gap
       ::aura::memmove_s(m_pData + nIndex + nCount,(nOldSize - nIndex) * sizeof(TYPE),m_pData + nIndex,(nOldSize - nIndex) * sizeof(TYPE));
+
+      ::zero(m_pData + nIndex, nCount* sizeof(TYPE));
 
       ALLOCATOR::construct(&m_pData[nIndex],nCount);
 
@@ -334,7 +340,7 @@ void array_base < TYPE, ARG_TYPE, ALLOCATOR >::remove_descending_indexes(const i
 template < class TYPE, class ARG_TYPE, class ALLOCATOR >
 index array_base < TYPE, ARG_TYPE, ALLOCATOR >::insert_at(index nIndex,array_base < TYPE, ARG_TYPE, ALLOCATOR > * pNewArray)
 {
-   
+
    ASSERT_VALID(this);
    ASSERT(pNewArray != NULL);
    ASSERT_VALID(pNewArray);
@@ -346,21 +352,27 @@ index array_base < TYPE, ARG_TYPE, ALLOCATOR >::insert_at(index nIndex,array_bas
       return -1;
 
    if (nIndex < 0)
-      throw invalid_argument_exception(get_app());
+      _throw(invalid_argument_exception(get_app()));
 
    if (nIndex >= m_nSize)
    {
+
       // adding after the end of the array
       set_size(nIndex + nCount, -1);   // grow so nIndex is valid
+
    }
    else
    {
+
       // inserting in the middle of the array
       ::count nOldSize = m_nSize;
+
       set_size(m_nSize + nCount, -1);  // grow it to new size
                                        // destroy intial data before copying over it
                                        // shift old data up to fill gap
       ::aura::memmove_s(m_pData + nIndex + nCount, (nOldSize - nIndex) * sizeof(TYPE), m_pData + nIndex, (nOldSize - nIndex) * sizeof(TYPE));
+
+      ::zero(m_pData + nIndex, nCount* sizeof(TYPE));
 
       ALLOCATOR::construct(&m_pData[nIndex], nCount);
 
@@ -394,7 +406,7 @@ template < class TYPE, class ARG_TYPE, class ALLOCATOR >
    ASSERT(nNewSize >= 0);
 
    if(nNewSize < 0)
-      throw invalid_argument_exception(get_app());
+      _throw(invalid_argument_exception(get_app()));
 
    if(nGrowBy >= 0)
       m_nGrowBy = nGrowBy;  // set new size
@@ -415,7 +427,7 @@ template < class TYPE, class ARG_TYPE, class ALLOCATOR >
       // m_nGrowBy elements, whichever is larger.
 #ifdef SIZE_T_MAX
       if (nNewSize > SIZE_T_MAX / sizeof(TYPE))
-         throw memory_exception(get_app());
+         _throw(memory_exception(get_app()));
       ASSERT(nNewSize <= SIZE_T_MAX / sizeof(TYPE));    // no overflow
 #endif
       ::count nAllocSize = MAX(nNewSize, m_nGrowBy);
@@ -476,7 +488,7 @@ template < class TYPE, class ARG_TYPE, class ALLOCATOR >
       ASSERT(nNewMax >= m_nMaxSize);  // no wrap around
 
       if(nNewMax  < m_nMaxSize)
-         throw invalid_argument_exception(get_app());
+         _throw(invalid_argument_exception(get_app()));
 
 #ifdef SIZE_T_MAX
       ASSERT(nNewMax <= SIZE_T_MAX / sizeof(TYPE)); // no overflow
@@ -532,14 +544,24 @@ template < class TYPE, class ARG_TYPE, class ALLOCATOR >
 {
 
    ::count countOld = get_count();
+
    ASSERT_VALID(this);
+
    ASSERT(nNewSize >= 0);
 
    if(nNewSize < 0)
-      throw invalid_argument_exception(get_app());
+   {
+
+      _throw(invalid_argument_exception(get_app()));
+
+   }
 
    if(nGrowBy >= 0)
+   {
+
       m_nGrowBy = nGrowBy;  // set new size
+
+   }
 
 
    if(nNewSize == m_nSize)
@@ -562,50 +584,73 @@ template < class TYPE, class ARG_TYPE, class ALLOCATOR >
          m_pData = NULL;
 
       }
+
       m_nSize = m_nMaxSize = 0;
+
    }
    else if(m_pData == NULL)
    {
+
       // create buffer big enough to hold number of requested elements or
       // m_nGrowBy elements, whichever is larger.
 #ifdef SIZE_T_MAX
       if(::comparison::gt(nNewSize, SIZE_T_MAX / sizeof(TYPE)))
-         throw memory_exception(get_app());
+         _throw(memory_exception(get_app()));
       ASSERT(::comparison::lt(nNewSize, SIZE_T_MAX / sizeof(TYPE)));    // no overflow
 #endif
 
       ::count nAllocSize = MAX(nNewSize,m_nGrowBy);
+
       #if MEMDLEAK  || defined(__MCRTDBG)
+
       if(::get_thread() != NULL)
       {
+
 #if defined(__MCRTDBG)
+
          if(::get_thread()->m_strFile.has_char())
          {
+
             m_pData = ALLOCATOR::alloc(nAllocSize, ::get_thread()->m_strFile, ::get_thread()->m_iLine);
+
          }
          else
          {
+
             m_pData = ALLOCATOR::alloc(nAllocSize, __FILE__, __LINE__);
+
          }
+
 #else
+
          if (::get_thread()->m_strDebug.has_char())
          {
+
             m_pData = ALLOCATOR::alloc(nAllocSize, "thread://" + demangle(typeid(*::get_thread()).name()) + ", " + ::get_thread()->m_strDebug + ", " + string(__FILE__), __LINE__);
+
          }
          else
          {
+
             m_pData = ALLOCATOR::alloc(nAllocSize, "thread://" + demangle(typeid(*::get_thread()).name()) + ", " + string(__FILE__), __LINE__);
+
          }
+
 #endif
+
       }
       else
       {
-      m_pData = ALLOCATOR::alloc(nAllocSize, __FILE__, __LINE__);
+
+         m_pData = ALLOCATOR::alloc(nAllocSize, __FILE__, __LINE__);
+
       }
 
 
       #else
+
       m_pData = ALLOCATOR::alloc(nAllocSize);
+
       #endif
 
       ALLOCATOR::construct(m_pData,nNewSize);
@@ -647,51 +692,85 @@ template < class TYPE, class ARG_TYPE, class ALLOCATOR >
       }
       ::count nNewMax;
       if(nNewSize < m_nMaxSize + nGrowBy)
+      {
+
          nNewMax = m_nMaxSize + nGrowBy;  // granularity
+
+      }
       else
+      {
+
          nNewMax = nNewSize;  // no slush
+
+      }
 
       ASSERT(nNewMax >= m_nMaxSize);  // no wrap around
 
       if(nNewMax  < m_nMaxSize)
-         throw invalid_argument_exception(get_app());
+      {
+
+         _throw(invalid_argument_exception(get_app()));
+
+      }
 
 #ifdef SIZE_T_MAX
+
       ASSERT(::comparison::lt(nNewMax, SIZE_T_MAX / sizeof(TYPE))); // no overflow
+
 #endif
-      #if MEMDLEAK || defined(__MCRTDBG)
+
+#if MEMDLEAK || defined(__MCRTDBG)
+
       TYPE* pNewData =  NULL;
+
       if(::get_thread() != NULL)
       {
-         #if defined(__MCRTDBG)
+
+#if defined(__MCRTDBG)
+
          if(::get_thread()->m_strFile.has_char())
          {
+
             pNewData = ALLOCATOR::alloc(nNewMax * sizeof(TYPE), ::get_thread()->m_strFile,::get_thread()->m_iLine);
+
          }
          else
          {
+
             pNewData = ALLOCATOR::alloc(nNewMax * sizeof(TYPE), __FILE__, __LINE__);
+
          }
+
 #else
+
          if (::get_thread()->m_strDebug.has_char())
          {
+
             pNewData = ALLOCATOR::alloc(nNewMax * sizeof(TYPE), "thread://" + demangle(typeid(*::get_thread()).name()) + ", " + ::get_thread()->m_strDebug + ", " + string(__FILE__), __LINE__);
+
          }
          else
          {
+
             pNewData = ALLOCATOR::alloc(nNewMax * sizeof(TYPE), "thread://" + demangle(typeid(*::get_thread()).name()) + ", " + string(__FILE__), __LINE__);
+
          }
 
 #endif
+
       }
       else
       {
-      pNewData = ALLOCATOR::alloc(nNewMax * sizeof(TYPE), __FILE__, __LINE__);
+
+         pNewData = ALLOCATOR::alloc(nNewMax * sizeof(TYPE), __FILE__, __LINE__);
+
       }
 
 
       #else
+
       TYPE* pNewData = (TYPE *)ALLOCATOR::alloc(nNewMax * sizeof(TYPE));
+
       #endif
 
       // copy new data from old
@@ -709,11 +788,17 @@ template < class TYPE, class ARG_TYPE, class ALLOCATOR >
 
       // get rid of old stuff (note: no destructors called)
       ALLOCATOR::_free(m_pData);
+
       m_pData = pNewData;
+
       m_nSize = nNewSize;
+
       m_nMaxSize = nNewMax;
+
    }
+
    return countOld;
+
 }
 
 

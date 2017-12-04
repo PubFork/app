@@ -46,7 +46,7 @@ namespace html
       ::aura::del(m_ptag);
 
       m_pform = NULL;
-      
+
    }
 
 
@@ -56,8 +56,8 @@ namespace html
       return ::object::add_ref();
 
    }
-   
-   
+
+
    int64_t data::dec_ref()
    {
 
@@ -201,7 +201,7 @@ namespace html
       lite_html_reader htmlreader(get_app());
       ::html::reader reader;
       htmlreader.setEventHandler(&reader);
-      
+
       htmlreader.read_html_document(psz);
 
       if(m_ptag != NULL)
@@ -281,7 +281,7 @@ namespace html
 
    void data::on_layout(::draw2d::graphics * pgraphics)
    {
-      
+
       synch_lock sl(m_pmutex);
 
       int32_t iCount = 24;
@@ -571,46 +571,46 @@ namespace html
       synch_lock lock(m_pmutex);
 
 restart:
-      
+
          if(m_strPathName.has_char())
          {
-      
+
             if (varFile.get_type() == var::type_propset && varFile.propset()["url"].get_string().has_char())
             {
-         
+
                varFile["url"] = defer_solve_relative_name(varFile["url"], m_strPathName);
-      
+
             }
             else if (varFile.get_type() == var::type_string || varFile.get_type() == var::type_pstring)
             {
-         
+
                varFile = defer_solve_relative_name(varFile, m_strPathName);
-      
+
             }
-            
+
          }
 
             string strPathName;
 
             if(varFile.get_type() == var::type_propset && varFile.propset()["url"].get_string().has_char())
             {
-               
+
                strPathName = varFile.propset()["url"];
-            
+
             }
             else if(varFile.cast < ::file::binary_file > () != NULL)
             {
-         
+
                strPathName = System.datetime().international().get_gmt_date_time() + ".html";
-      
+
             }
             else
             {
-         
+
                strPathName = varFile;
-      
+
             }
-      
+
             if(strPathName.Mid(3) == "wb:")
                return FALSE;
 
@@ -713,7 +713,7 @@ restart:
       {
         m_propertyset.replace_gen(str);
       }
-      TRACE0(str);
+      TRACE("%s", str);
       if(str.has_char())
       {
          load(str);
@@ -769,6 +769,44 @@ restart:
 
    }
 
+   void data::implement(html_form * pform)
+   {
+
+      ::draw2d::dib_sp pdib(allocer());
+
+      pdib->create(50, 50);
+
+      synch_lock lock(m_pmutex);
+
+      m_pui  = pform;
+
+      m_pform  = pform;
+
+      implement(pdib->get_graphics());
+
+   }
+
+   void data::layout(html_form * pform)
+   {
+
+      ::draw2d::dib_sp pdib(allocer());
+
+      pdib->create(50, 50);
+
+      synch_lock lock(m_pmutex);
+
+      m_pui  = pform;
+
+      m_pform  = pform;
+
+      pform->GetClientBox(m_box);
+
+      if(m_box.area() <= 0.f)
+         return;
+
+      on_layout(pdib->get_graphics());
+
+   }
 
 } // namespace html
 

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #define WM_APPEXIT WM_APP + 1444
 
@@ -52,7 +52,7 @@ public:
       helper_task(simple_frame_window * pframe);
 
 
-      int32_t run();
+      virtual void run() override;
 
       // very loose defer - "I know what you are doing and how you are performing, I have confidence on you!!"
       // but this _new implementation which does not respond promptly on set event cat daemons relying on manual_reset_event consuming resources
@@ -64,7 +64,7 @@ public:
 
    };
 
-
+   bool                                m_bDefaultCreateToolbar;
    helper_task *                       m_phelpertask;
    bool                                m_bFullScreenAlt;
    bool                                m_bFullScreenCtrl;
@@ -72,7 +72,7 @@ public:
    bool                                m_bCustomFrameBefore;
    rect                                m_FullScreenWindowRect;
    visual::fastblur                    m_fastblur;
-   ::user::e_translucency               m_etranslucency;
+   ::user::e_translucency              m_etranslucency;
 
 
    map < ::id, const ::id &, ::user::toolbar * > m_toolbarmap;
@@ -104,27 +104,27 @@ public:
    virtual bool create_bars();
    virtual bool on_create_bars();
 
-   virtual void install_message_routing(::message::sender * pinterface);
+   virtual void install_message_routing(::message::sender * pinterface) override;
 
    virtual bool on_before_set_parent(sp(::user::interaction) pinterface);
    virtual void on_set_parent(::user::interaction * puiParent) override;
 
-   virtual bool GetClientRect(LPRECT lprect);
+   virtual bool GetClientRect(LPRECT lprect) override;
 
    virtual bool is_application_main_window();
-   
+
    virtual bool get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement, ::user::interaction * pui) override;
 
    bool GetCustomFrame();
    void SetCustomFrame(bool bCustom);
-   void SetBorderRect(const RECT & rect);
-   virtual void GetBorderRect(LPRECT lprect);
+   void SetBorderRect(const RECT & rect) override;
+   virtual void GetBorderRect(LPRECT lprect) override;
    void ViewOnActivateFrame(sp(::user::impact) pview, UINT user, sp(::user::interaction) pframe);
 
    virtual void ToggleFullScreen();
-   virtual bool IsFullScreen();
-   virtual void WfiOnFullScreen();
-   virtual void WfiOnExitFullScreen();
+   virtual bool IsFullScreen() override;
+   virtual void WfiOnFullScreen() override;
+   virtual void WfiOnExitFullScreen() override;
    virtual void ShowControlBars(bool bShow = true, bool bLeaveFullScreenBarsOnHide = false);
 
    virtual bool IsNotifyIconEnabled() override;
@@ -140,7 +140,7 @@ public:
    DECL_GEN_SIGNAL(_001OnDisplayChange);
    DECL_GEN_SIGNAL(_001OnTaskbarCreated);
 
-   void _001OnDeferPaintLayeredWindowBackground(::draw2d::graphics * pgraphics);
+   void _001OnDeferPaintLayeredWindowBackground(::draw2d::graphics * pgraphics) override;
 
    virtual void defer_create_notification_icon();
 
@@ -149,29 +149,29 @@ public:
    template < class TOOLBAR >
    bool LoadToolBar(id idToolBar,const char * pszToolBar,uint32_t dwCtrlStyle = TBSTYLE_FLAT,uint32_t dwStyle = WS_CHILD | WS_VISIBLE | CBRS_ALIGN_TOP);
 
-   virtual bool LoadToolBar(id idToolBar,const char * pszToolBar,uint32_t dwCtrlStyle = TBSTYLE_FLAT,uint32_t dwStyle = WS_CHILD | WS_VISIBLE | CBRS_ALIGN_TOP)
+   virtual bool LoadToolBar(id idToolBar,const char * pszToolBar,uint32_t dwCtrlStyle = TBSTYLE_FLAT,uint32_t dwStyle = WS_CHILD | WS_VISIBLE | CBRS_ALIGN_TOP) override
    {
       return LoadToolBar < simple_toolbar >(idToolBar,pszToolBar,dwCtrlStyle,dwStyle);
    }
 
 
-   virtual void InitialFramePosition(bool bForceRestore = false);
+   virtual void InitialFramePosition(bool bForceRestore = false) override;
 
    sp(::user::interaction) WindowDataGetWnd();
-   virtual void on_layout();
-   virtual void ActivateFrame(int32_t nCmdShow = -1);
-   virtual bool on_create_client(::user::create_struct * lpcs, ::create * pcreate);
-   virtual bool pre_create_window(::user::create_struct& cs);
-   virtual void pre_translate_message(::message::message * pobj);
+   virtual void on_layout() override;
+   virtual void ActivateFrame(int32_t nCmdShow = -1) override;
+   virtual bool on_create_client(::user::create_struct * lpcs, ::create * pcreate) override;
+   virtual bool pre_create_window(::user::create_struct& cs) override;
+   virtual void pre_translate_message(::message::message * pobj) override;
 
-   virtual void _000OnDraw(::draw2d::graphics * pgraphics);
+   virtual void _000OnDraw(::draw2d::graphics * pgraphics) override;
    virtual void _010OnDraw(::draw2d::graphics * pgraphics);
 
-   virtual void _001OnDraw(::draw2d::graphics * pgraphics);
+   virtual void _001OnDraw(::draw2d::graphics * pgraphics) override;
    virtual void _011OnDraw(::draw2d::graphics * pgraphics);
 
 
-   virtual void _001OnClip(::draw2d::graphics * pgraphics);
+   virtual void _001OnClip(::draw2d::graphics * pgraphics) override;
 
 
 
@@ -202,32 +202,35 @@ public:
 
    // persistent frame implemenation using updowntarget
 
-   virtual bool WndFrameworkDownUpGetUpEnable();
-   virtual bool WndFrameworkDownUpGetDownEnable();
+   virtual bool WndFrameworkDownUpGetUpEnable() override;
+   virtual bool WndFrameworkDownUpGetDownEnable() override;
 
    using ::user::wndfrm::frame::WorkSetListener::attach;
    DECL_GEN_SIGNAL(guserbaseOnInitialUpdate);
 
    virtual class mini_dock_frame_window* CreateFloatingFrame(uint32_t dwStyle);
-   virtual void NotifyFloatingWindows(uint32_t dwFlags);
+   virtual void NotifyFloatingWindows(uint32_t dwFlags) override;
 
 
-   virtual void WfiOnDown();
-   virtual void WfiOnUp();
+   virtual void WfiOnDown() override;
+   virtual void WfiOnUp() override;
 
-   virtual bool WfiIsMoving();
-   virtual bool WfiIsSizing();
+   virtual bool WfiIsMoving() override;
+   virtual bool WfiIsSizing() override;
 
-   virtual bool calc_layered();
+   virtual bool calc_layered() override;
 
 
-   virtual string get_window_default_matter();
+   virtual string get_window_default_matter() override;
 
-   virtual void assert_valid() const;
-   virtual void dump(dump_context & dumpcontext) const;
+
+   virtual void assert_valid() const override;
+   virtual void dump(dump_context & dumpcontext) const override;
+
+
    void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
    void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
-   virtual void on_simple_command(::message::simple_command * psimplecommand);
+   virtual void on_simple_command(::message::simple_command * psimplecommand) override;
 
 #ifdef WINDOWSEX
    virtual void OnDropFiles(HDROP hDropInfo);
@@ -236,16 +239,16 @@ public:
 #endif
 
 
-   LRESULT OnDDEInitiate(WPARAM wParam, LPARAM lParam);
-   LRESULT OnDDEExecute(WPARAM wParam, LPARAM lParam);
-   LRESULT OnDDETerminate(WPARAM wParam, LPARAM lParam);
+   LRESULT OnDDEInitiate(WPARAM wParam, LPARAM lParam) override;
+   LRESULT OnDDEExecute(WPARAM wParam, LPARAM lParam) override;
+   LRESULT OnDDETerminate(WPARAM wParam, LPARAM lParam) override;
 
    void _001OnQueryEndSession(::message::message * pobj);
 
-   virtual bool BaseOnControlEvent(::user::control_event * pevent);
+   virtual bool BaseOnControlEvent(::user::control_event * pevent) override;
 
-   virtual bool WfiOnMove(bool bTracking);
-   virtual bool WfiOnSize(bool bTracking);
+   virtual bool WfiOnMove(bool bTracking) override;
+   virtual bool WfiOnSize(bool bTracking) override;
 
    virtual void WfiOnClose() override;
    virtual void WfiOnMaximize() override;
@@ -261,11 +264,11 @@ public:
 
 
 
-   virtual bool set_appearance(::user::e_appearance eappearance);
+   virtual bool set_appearance(::user::e_appearance eappearance) override;
 
-   virtual void InitialUpdateFrame(::user::document * pDoc,bool bMakeVisible);
+   virtual void InitialUpdateFrame(::user::document * pDoc,bool bMakeVisible) override;
 
-   virtual void _001OnTimer(::timer * ptimer);
+   virtual void _001OnTimer(::timer * ptimer) override;
 
    virtual bool WfiToggleTransparentFrame() override;
 
@@ -273,22 +276,22 @@ public:
    virtual bool frame_is_transparent() override;
 
 
-   virtual void OnNotifyIconClose(UINT uiNotifyIcon);
-   virtual void OnNotifyIconQuit(UINT uiNotifyIcon);
+   virtual void OnNotifyIconClose(UINT uiNotifyIcon) override;
+   virtual void OnNotifyIconQuit(UINT uiNotifyIcon) override;
 
 
 
 
-   virtual void OnNotifyIconContextMenu(UINT uiNotifyIcon);
-   virtual void OnNotifyIconLButtonDblClk(UINT uiNotifyIcon);
-   virtual void OnNotifyIconLButtonDown(UINT uiNotifyIcon);
+   virtual void OnNotifyIconContextMenu(UINT uiNotifyIcon) override;
+   virtual void OnNotifyIconLButtonDblClk(UINT uiNotifyIcon) override;
+   virtual void OnNotifyIconLButtonDown(UINT uiNotifyIcon) override;
 
-   virtual bool __close_is_closed();
-   virtual bool notify_icon_frame_is_opened();
+   virtual bool __close_is_closed() override;
+   virtual bool notify_icon_frame_is_opened() override;
 
 
 
-   virtual void OnInitialFrameUpdate(bool bMakeVisible);
+   virtual void OnInitialFrameUpdate(bool bMakeVisible) override;
 
    virtual void OnUpdateToolWindow(bool bVisible);
 

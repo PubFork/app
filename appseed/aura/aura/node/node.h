@@ -21,6 +21,10 @@
 
 #include "linux/linux.h"
 
+#elif defined(ANDROID)
+
+#include "android/android.h"
+
 #endif
 
 

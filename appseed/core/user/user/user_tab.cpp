@@ -128,11 +128,11 @@ namespace user
          return false;
       }*/
    //   tab_pane.m_pcontainer = pcontainer;
-     // tab_pane.m_typeinfo = NULL;
-     /* tab_pane.m_iImage = -1;
+   // tab_pane.m_typeinfo = NULL;
+   /* tab_pane.m_iImage = -1;
 
-      get_data()->m_panea.add(tab_pane);
-      return true;
+    get_data()->m_panea.add(tab_pane);
+    return true;
    }*/
 
 
@@ -159,7 +159,7 @@ namespace user
 
    }
 
-   
+
    bool tab::SetTitleById(id id, const char * lpcsz)
    {
 
@@ -171,7 +171,7 @@ namespace user
          return false;
 
       }
-      
+
       get_data()->m_panea[iPane]->m_istrTitleEx = lpcsz;
 
       return true;
@@ -534,7 +534,7 @@ namespace user
          return;
 
       }
-      
+
 
       if (!m_puserstyle->_001TabOnDrawSchema01(pgraphics, this))
       {
@@ -839,7 +839,7 @@ namespace user
    void tab::_001OnDrawStandard(::draw2d::graphics * pgraphics)
    {
 
-      
+
 
       class rect rect;
       class rect rectBorder;
@@ -944,9 +944,9 @@ namespace user
 
             if(get_element_rect(iVisiblePane, rectIcon, element_icon))
             {
-               
+
                pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
-               
+
                tab_pane.m_dib->bitmap_blend(pgraphics, rectIcon);
 
             }
@@ -973,31 +973,31 @@ namespace user
             else
             {
 
-::draw2d::pen_sp pen(allocer());
+               ::draw2d::pen_sp pen(allocer());
 
-pen->create_solid(1.0, ARGB(255, 0, 0, 0));
+               pen->create_solid(1.0, ARGB(255, 0, 0, 0));
 
-pgraphics->SelectObject(pen);
+               pgraphics->SelectObject(pen);
 
 //pgraphics->MoveTo(rect.left, rectBorder.bottom);
 //pgraphics->LineTo(rect.right, rectBorder.bottom);
-pgraphics->MoveTo(rectBorder.left, rectClient.bottom);
-pgraphics->LineTo(rectBorder.left, rectBorder.top);
-pgraphics->LineTo(rectClient.right, rectBorder.top);
-pgraphics->LineTo(rectBorder.right, rectBorder.top + (rectBorder.right - rectClient.right));
-pgraphics->LineTo(rectBorder.right - 1, rectClient.bottom);
-pgraphics->LineTo(rectBorder.left, rectClient.bottom);
+               pgraphics->MoveTo(rectBorder.left, rectClient.bottom);
+               pgraphics->LineTo(rectBorder.left, rectBorder.top);
+               pgraphics->LineTo(rectClient.right, rectBorder.top);
+               pgraphics->LineTo(rectBorder.right, rectBorder.top + (rectBorder.right - rectClient.right));
+               pgraphics->LineTo(rectBorder.right - 1, rectClient.bottom);
+               pgraphics->LineTo(rectBorder.left, rectClient.bottom);
 
-if (iVisiblePane == m_iHover && m_eelementHover != element_close_tab_button)
-{
-   pgraphics->set_font(get_data()->m_fontUnderline);
-   brushText->create_solid(ARGB(255, 0, 127, 255));
-}
-else
-{
-   pgraphics->set_font(get_data()->m_font);
-   brushText = get_data()->m_brushText;
-}
+               if (iVisiblePane == m_iHover && m_eelementHover != element_close_tab_button)
+               {
+                  pgraphics->set_font(get_data()->m_fontUnderline);
+                  brushText->create_solid(ARGB(255, 0, 127, 255));
+               }
+               else
+               {
+                  pgraphics->set_font(get_data()->m_font);
+                  brushText = get_data()->m_brushText;
+               }
             }
 
          }
@@ -1184,14 +1184,14 @@ else
          }
 
          iTabWidth += get_data()->m_rectBorder.left + get_data()->m_rectBorder.right +
-               get_data()->m_rectMargin.left + get_data()->m_rectMargin.right +
-               get_data()->m_rectTextMargin.left + get_data()->m_rectTextMargin.right;
+                      get_data()->m_rectMargin.left + get_data()->m_rectMargin.right +
+                      get_data()->m_rectTextMargin.left + get_data()->m_rectTextMargin.right;
 
          get_data()->m_iTabWidth = iTabWidth;
 
          iTabHeight += get_data()->m_rectBorder.top + get_data()->m_rectBorder.bottom +
-               get_data()->m_rectMargin.top + get_data()->m_rectMargin.bottom +
-               get_data()->m_rectTextMargin.top + get_data()->m_rectTextMargin.bottom;
+                       get_data()->m_rectMargin.top + get_data()->m_rectMargin.bottom +
+                       get_data()->m_rectTextMargin.top + get_data()->m_rectTextMargin.bottom;
 
          get_data()->m_iTabHeight = iTabHeight;
 
@@ -1203,13 +1203,13 @@ else
          get_data()->m_rectTab.right      = get_data()->m_rectTab.left + get_data()->m_iTabWidth;
          get_data()->m_rectTab.bottom     = rectClient.bottom;
 
-   /*      m_pui->SetWindowPos(
-            ZORDER_TOP,
-            m_rectTab.left,
-            m_rectTab.top,
-            m_rectTab.width(),
-            m_rectTab.height(),
-            0);*/
+         /*      m_pui->SetWindowPos(
+                  ZORDER_TOP,
+                  m_rectTab.left,
+                  m_rectTab.top,
+                  m_rectTab.width(),
+                  m_rectTab.height(),
+                  0);*/
 
          get_data()->m_rectTabClient.left       = m_bShowTabs ? get_data()->m_rectTab.right : rectClient.left;
          get_data()->m_rectTabClient.top        = get_data()->m_rectTab.top;
@@ -1283,9 +1283,9 @@ else
 
 
             tab_pane.m_size.cx = size.cx + ixAdd
-                                     + get_data()->m_rectBorder.left + get_data()->m_rectBorder.right
-                                     + get_data()->m_rectMargin.left + get_data()->m_rectMargin.right
-                                     + get_data()->m_rectTextMargin.left + get_data()->m_rectTextMargin.right;
+                                 + get_data()->m_rectBorder.left + get_data()->m_rectBorder.right
+                                 + get_data()->m_rectMargin.left + get_data()->m_rectMargin.right
+                                 + get_data()->m_rectTextMargin.left + get_data()->m_rectTextMargin.right;
 
             x += tab_pane.m_size.cx;
          }
@@ -1298,7 +1298,7 @@ else
          }
 
          iTabHeight += get_data()->m_rectBorder.top + get_data()->m_rectBorder.bottom +
-               get_data()->m_rectMargin.top + get_data()->m_rectMargin.bottom + get_data()->m_iHeightAddUp;
+                       get_data()->m_rectMargin.top + get_data()->m_rectMargin.bottom + get_data()->m_iHeightAddUp;
 
          get_data()->m_iTabHeight = iTabHeight;
 
@@ -1319,13 +1319,13 @@ else
          get_data()->m_rectTab.right      = rectClient.right;
          get_data()->m_rectTab.bottom     = get_data()->m_rectTab.top + get_data()->m_iTabHeight;
 
-   /*      SetWindowPos(
-            ZORDER_TOP,
-            m_rectTab.left,
-            m_rectTab.top,
-            m_rectTab.width(),
-            m_rectTab.height(),
-            0);*/
+         /*      SetWindowPos(
+                  ZORDER_TOP,
+                  m_rectTab.left,
+                  m_rectTab.top,
+                  m_rectTab.width(),
+                  m_rectTab.height(),
+                  0);*/
 
          rect & rectTabClient = get_data()->m_rectTabClient;
 
@@ -1337,12 +1337,12 @@ else
          //TRACE0("rectTabClient");
       }
 
-            {
+      {
 
 //               DWORD dwTime2 = ::get_tick_count();
 
-               //TRACE("message_handler call time0= %d ms",dwTime2 - t_time1.operator DWORD_PTR());
-               //TRACE("usertab::on_layout call time2= %d ms",dwTime2 - t_time1.operator DWORD_PTR());
+         //TRACE("message_handler call time0= %d ms",dwTime2 - t_time1.operator DWORD_PTR());
+         //TRACE("usertab::on_layout call time2= %d ms",dwTime2 - t_time1.operator DWORD_PTR());
       }
 
 
@@ -1385,8 +1385,8 @@ else
 
       ScreenToClient(rectWindow);
 
-      pholder->SetWindowPos(ZORDER_TOP, rectChild.left, rectChild.top, rectChild.width(), rectChild.height(), 
-         (bDisplay && !pholder->is_this_visible() ? 0 : SWP_NOZORDER ));
+      pholder->SetWindowPos(ZORDER_TOP, rectChild.left, rectChild.top, rectChild.width(), rectChild.height(),
+                            (bDisplay && !pholder->is_this_visible() ? 0 : SWP_NOZORDER ));
 
       if (bDisplay)
       {
@@ -1471,18 +1471,18 @@ else
             get_data()->m_pcallback->_001DropTargetWindowRelay(this);
          }
       }
-/*      if(m_iHover < 0)
-      {
-         track_mouse_hover();
-      }
+      /*      if(m_iHover < 0)
+            {
+               track_mouse_hover();
+            }
 
-      index iHover = hit_test(point, m_eelementHover);
+            index iHover = hit_test(point, m_eelementHover);
 
-      if(iHover != m_iHover)
-      {
-         m_iHover = iHover;
-         RedrawWindow();
-      }*/
+            if(iHover != m_iHover)
+            {
+               m_iHover = iHover;
+               RedrawWindow();
+            }*/
 
    }
 
@@ -1499,7 +1499,7 @@ else
 
    bool tab::get_element_rect(::index iTab, LPRECT lprect, e_element eelement)
    {
-      
+
       if (iTab < 0)
       {
 
@@ -1511,7 +1511,7 @@ else
 
       if(eelement == element_border)
       {
-       
+
          if (!get_element_rect(iTab, lprect, element_tab))
          {
 
@@ -1524,7 +1524,7 @@ else
          return true;
 
       }
-      
+
       if(eelement == element_client)
       {
 
@@ -1570,7 +1570,7 @@ else
 
          if (!get_element_rect(iTab, lprect, element_client))
          {
-          
+
             return false;
 
          }
@@ -1606,11 +1606,11 @@ else
 
          if (get_data()->m_panea[iPane]->m_bPermanent)
          {
-          
+
             return false;
 
          }
-         
+
          if (get_data()->get_visible_tab_count() <= 1 && !get_data()->m_bEnableCloseAll)
          {
 
@@ -1662,7 +1662,7 @@ else
          lprect->top = tab_pane.m_pt.y;
          lprect->right = tab_pane.m_pt.x + tab_pane.m_size.cx;
          lprect->bottom = tab_pane.m_pt.y + tab_pane.m_size.cy;
-         
+
       }
 
       return true;
@@ -1736,8 +1736,8 @@ else
 
 #else
       ::window_sp pwnd;
-   //   if((pwnd = m_pui->GetOwner()) != NULL)
-     //    return pwnd;
+      //   if((pwnd = m_pui->GetOwner()) != NULL)
+      //    return pwnd;
       if((pwnd = GetParent()->get_wnd()) != NULL)
          return pwnd;
       return NULL;
@@ -1780,7 +1780,7 @@ else
       get_data()->m_fontUnderline->create_point_font(FONT_SANS, 10, FW_NORMAL, false, true);
 
       //m_puserstyle = Application.userstyle();
-   //  m_pimagelist = new image_list(get_app());
+      //  m_pimagelist = new image_list(get_app());
 
       get_data()->m_bCreated = true;
 
@@ -1849,14 +1849,14 @@ else
 
       ::user::control::install_message_routing(psender);
 
-      IGUI_MSG_LINK(WM_LBUTTONDOWN              , psender, this, &tab::_001OnLButtonDown);
-      IGUI_MSG_LINK(WM_LBUTTONUP                , psender, this, &tab::_001OnLButtonUp);
-      IGUI_MSG_LINK(WM_MOUSEMOVE                , psender, this, &tab::_001OnMouseMove);
-      IGUI_MSG_LINK(WM_MOUSELEAVE               , psender, this, &tab::_001OnMouseLeave);
-      IGUI_MSG_LINK(WM_CREATE                   , psender, this, &tab::_001OnCreate);
-      IGUI_MSG_LINK(WM_SHOWWINDOW               , psender, this, &tab::_001OnShowWindow);
-      MSG_TYPE_LINK(::message::type_language    , psender, this, &tab::_001OnAppLanguage);
-      IGUI_MSG_LINK(message_start_tab_drag      , psender, this,&tab::_001OnStartTabDrag);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN, psender, this, &tab::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_LBUTTONUP, psender, this, &tab::_001OnLButtonUp);
+      IGUI_MSG_LINK(WM_MOUSEMOVE, psender, this, &tab::_001OnMouseMove);
+      IGUI_MSG_LINK(WM_MOUSELEAVE, psender, this, &tab::_001OnMouseLeave);
+      IGUI_MSG_LINK(WM_CREATE, psender, this, &tab::_001OnCreate);
+      IGUI_MSG_LINK(WM_SHOWWINDOW, psender, this, &tab::_001OnShowWindow);
+      MSG_TYPE_LINK(::message::type_language, psender, this, &tab::_001OnAppLanguage);
+      IGUI_MSG_LINK(message_start_tab_drag, psender, this,&tab::_001OnStartTabDrag);
 
 
       ////IGUI_MSG_LINK(WM_TIMER, psender, this, &tab::_001OnTimer);
@@ -2101,7 +2101,7 @@ else
 
       if (ppane == NULL)
       {
-       
+
          return false;
 
       }
@@ -2117,7 +2117,7 @@ else
 
    bool tab::show_pane(::index iPane, bool bShow)
    {
-      
+
       ::user::tab_pane * ppane = get_pane(iPane);
 
       if (ppane == NULL)
@@ -2135,7 +2135,7 @@ else
 
    }
 
-   
+
    bool tab::hide_tab(::index iTab)
    {
 
@@ -2162,7 +2162,7 @@ else
 
    ::user::interaction * tab::tab_window(::index iPane)
    {
-      
+
       sp(place_holder) pholder = tab_holder(iPane);
 
       if (pholder.is_null())
@@ -2176,7 +2176,7 @@ else
 
    }
 
-   
+
    ::user::place_holder * tab::tab_holder(::index iTab)
    {
 
@@ -2263,21 +2263,21 @@ else
       }
 
       return get_data()->m_panea.element_at(iPane);
-      
+
    }
 
 
    void tab::_001SelectTab(::index iPane)
    {
 //      if(get_tab_holder(_001GetSel()) != NULL)
-  //    {
-    //     get_tab_holder(_001GetSel())->ShowWindow(SW_HIDE);
-     // }
+      //    {
+      //     get_tab_holder(_001GetSel())->ShowWindow(SW_HIDE);
+      // }
       _001SetSel(iPane);
-     // if(get_tab_holder(_001GetSel()) != NULL)
+      // if(get_tab_holder(_001GetSel()) != NULL)
       //{
-        // get_tab_holder(_001GetSel())->ShowWindow(SW_SHOW);
-     // }
+      // get_tab_holder(_001GetSel())->ShowWindow(SW_SHOW);
+      // }
 
       on_layout();
 
@@ -2286,7 +2286,7 @@ else
 
    void tab::on_show_view()
    {
-      
+
       if(get_data()->m_pcallback != NULL && dynamic_cast < ::user::tab * > (get_data()->m_pcallback) != this)
       {
 
@@ -2317,10 +2317,10 @@ else
          get_data()->m_rectTextMargin.set(3, 0, 1, 0);
 
          get_data()->m_iTabHeight += get_data()->m_rectBorder.top + get_data()->m_rectBorder.bottom +
-               get_data()->m_rectMargin.top + get_data()->m_rectMargin.bottom;
+                                     get_data()->m_rectMargin.top + get_data()->m_rectMargin.bottom;
 
          get_data()->m_iTabWidth += get_data()->m_rectBorder.left + get_data()->m_rectBorder.right +
-               get_data()->m_rectMargin.left + get_data()->m_rectMargin.right;
+                                    get_data()->m_rectMargin.left + get_data()->m_rectMargin.right;
       }
       else
       {
@@ -2329,10 +2329,10 @@ else
          get_data()->m_rectTextMargin.set(3, 0, 1, 0);
 
          get_data()->m_iTabHeight += get_data()->m_rectBorder.top + get_data()->m_rectBorder.bottom +
-               get_data()->m_rectMargin.top + get_data()->m_rectMargin.bottom;
+                                     get_data()->m_rectMargin.top + get_data()->m_rectMargin.bottom;
 
          get_data()->m_iTabWidth += get_data()->m_rectBorder.left + get_data()->m_rectBorder.right +
-               get_data()->m_rectMargin.left + get_data()->m_rectMargin.right;
+                                    get_data()->m_rectMargin.left + get_data()->m_rectMargin.right;
       }
    }
 
@@ -2341,7 +2341,7 @@ else
       UNREFERENCED_PARAMETER(psender);
    }
 
-   
+
    id tab::get_cur_tab_id()
    {
 
@@ -2446,7 +2446,7 @@ else
          return id();
 
       }
-         
+
       return get_data()->m_panea[iPane]->m_id;
 
    }
@@ -2566,14 +2566,10 @@ else
          _001SetSel(iTab);
 
       }
-      catch(::exit_exception & e)
+      catch(esp esp)
       {
 
-         throw e;
-
-      }
-      catch(::exception::exception &)
-      {
+         esp.rethrow_exit();
 
          return false;
 
@@ -2626,39 +2622,39 @@ else
       switch(eposition)
       {
       case position_top:
-         {
-            lprect->top = get_data()->m_rectTabClient.top;
-            lprect->left = get_data()->m_rectTabClient.left + get_data()->m_rectTabClient.width() / 3;
-            lprect->right = lprect->left + get_data()->m_rectTabClient.width() / 3;
-            lprect->bottom = lprect->top + get_data()->m_rectTabClient.height() / 3;
-         }
-         break;
+      {
+         lprect->top = get_data()->m_rectTabClient.top;
+         lprect->left = get_data()->m_rectTabClient.left + get_data()->m_rectTabClient.width() / 3;
+         lprect->right = lprect->left + get_data()->m_rectTabClient.width() / 3;
+         lprect->bottom = lprect->top + get_data()->m_rectTabClient.height() / 3;
+      }
+      break;
       case position_left:
-         {
-            lprect->top = get_data()->m_rectTabClient.top + get_data()->m_rectTabClient.height() / 3;
-            lprect->left = get_data()->m_rectTabClient.left;
-            lprect->right = lprect->left + get_data()->m_rectTabClient.width() / 3;
-            lprect->bottom = lprect->top + get_data()->m_rectTabClient.height() / 3;
-         }
-         break;
+      {
+         lprect->top = get_data()->m_rectTabClient.top + get_data()->m_rectTabClient.height() / 3;
+         lprect->left = get_data()->m_rectTabClient.left;
+         lprect->right = lprect->left + get_data()->m_rectTabClient.width() / 3;
+         lprect->bottom = lprect->top + get_data()->m_rectTabClient.height() / 3;
+      }
+      break;
       case position_right:
-         {
-            lprect->top = get_data()->m_rectTabClient.top + get_data()->m_rectTabClient.height() / 3;
-            lprect->left = get_data()->m_rectTabClient.left + get_data()->m_rectTabClient.width() * 2 / 3;
-            lprect->right = lprect->left + get_data()->m_rectTabClient.width() / 3;
-            lprect->bottom = lprect->top + get_data()->m_rectTabClient.height() / 3;
-         }
-         break;
+      {
+         lprect->top = get_data()->m_rectTabClient.top + get_data()->m_rectTabClient.height() / 3;
+         lprect->left = get_data()->m_rectTabClient.left + get_data()->m_rectTabClient.width() * 2 / 3;
+         lprect->right = lprect->left + get_data()->m_rectTabClient.width() / 3;
+         lprect->bottom = lprect->top + get_data()->m_rectTabClient.height() / 3;
+      }
+      break;
       case position_bottom:
-         {
-            lprect->top = get_data()->m_rectTabClient.top + get_data()->m_rectTabClient.height() * 2 / 3;
-            lprect->left = get_data()->m_rectTabClient.left + get_data()->m_rectTabClient.width() / 3;
-            lprect->right = lprect->left + get_data()->m_rectTabClient.width() / 3;
-            lprect->bottom = lprect->top + get_data()->m_rectTabClient.height() / 3;
-         }
+      {
+         lprect->top = get_data()->m_rectTabClient.top + get_data()->m_rectTabClient.height() * 2 / 3;
+         lprect->left = get_data()->m_rectTabClient.left + get_data()->m_rectTabClient.width() / 3;
+         lprect->right = lprect->left + get_data()->m_rectTabClient.width() / 3;
+         lprect->bottom = lprect->top + get_data()->m_rectTabClient.height() / 3;
+      }
+      break;
+      default:
          break;
-         default:
-            break;
       }
    }
 
@@ -2692,6 +2688,8 @@ else
 
       if(ptimer->m_nIDEvent == 5432187)
       {
+         // hey hey hey
+         //return;
          get_data()->m_bDrag = true;
          KillTimer(5432187);
          post_message(message_start_tab_drag);
@@ -2716,10 +2714,10 @@ else
 
    void tab::_000OnMouse(::message::mouse * pmouse)
    {
-      
+
       if(m_bShowTabs)
       {
-         
+
          // these try catchs are needed for multi threading supporting: multi threaded windows: an endeavour
          // Now I understand why Microsoft (TM) Windows (R) windows are single threaded.
          // to debug, enable catch exceptions in debugger
@@ -2768,10 +2766,10 @@ else
       {
 
       }
-      
+
       sp(::user::interaction) pui;
 
-      
+
       while(rget_child(pui))
       {
 
@@ -2800,7 +2798,7 @@ else
                }
 
             }
-            
+
          }
          catch(...)
          {
@@ -2840,7 +2838,7 @@ else
 
    ::index tab::create_tab_by_id(id id)
    {
-      
+
       if (!add_tab("", id))
       {
 
@@ -2858,7 +2856,7 @@ else
       }
 
       return iTab;
-      
+
    }
 
    /// array - if you want, you can hint on_change_pane_count
@@ -2906,36 +2904,36 @@ else
       if (m_bDisableSavingRestorableTabs)
          return;
 
-         if (get_data()->m_matchanyRestore.get_count() > 0)
-         {
+      if (get_data()->m_matchanyRestore.get_count() > 0)
+      {
 
-            var_array vara;
+         var_array vara;
 
-            get_restore_tab(vara);
+         get_restore_tab(vara);
 
-            //if (vara.get_size() > 0)
-            //{
-            //   TRACE(".");
-            //   for (index i = 0; i < 200; i++)
-            //   {
-
-
-                  data_save("restore_tab", vara);
-            //   }
-            //}
-            //else
-            //{
-            //   TRACE("o");
-            //   for (index i = 0; i < 200; i++)
-            //   {
+         //if (vara.get_size() > 0)
+         //{
+         //   TRACE(".");
+         //   for (index i = 0; i < 200; i++)
+         //   {
 
 
-            //      data_save("restore_tab", vara);
-            //   }
+         data_save("restore_tab", vara);
+         //   }
+         //}
+         //else
+         //{
+         //   TRACE("o");
+         //   for (index i = 0; i < 200; i++)
+         //   {
 
-            //}
 
-         }
+         //      data_save("restore_tab", vara);
+         //   }
+
+         //}
+
+      }
 
 
    }
@@ -2954,7 +2952,7 @@ else
 
    void tab::get_suffixed_ci_id(stringa & stra, const char * pszSuffix)
    {
-      
+
       get_presuffixed_ci_id(stra, NULL, pszSuffix);
 
    }
@@ -2962,7 +2960,7 @@ else
 
    void tab::get_presuffixed_ci_id(stringa & stra, const char * pszPrefix, const char * pszSuffix)
    {
-   
+
       string strPrefix(pszPrefix);
 
       string strSuffix(pszSuffix);
@@ -2975,7 +2973,7 @@ else
       {
 
          ::user::tab_pane & tab_pane = panea(i);
-         
+
          strPath = tab_pane.m_id;
 
          if(strPrefix.is_empty() || ::str::begins_ci(strPath, strPrefix))
@@ -3024,7 +3022,7 @@ else
 
       for(int32_t i = 0; i < panea.get_count(); i++)
       {
-         
+
          ::user::tab_pane & tab_pane = panea(i);
 
          strPath = tab_pane.m_id;
@@ -3075,7 +3073,7 @@ else
       return true;
 
    }
-   
+
    void tab::get_restore_tab(var_array & vara)
    {
 
@@ -3087,7 +3085,7 @@ else
       {
 
          varId = panea[i]->m_id;
-         
+
          if(matches_restorable_tab(varId, panea[i]->m_pholder))
          {
 
@@ -3143,7 +3141,7 @@ else
 
          //if(stra.add_unique(vara[i]) >= 0)
          //{
-            //create_tab_by_id(stra.last());
+         //create_tab_by_id(stra.last());
 
          set_cur_tab_by_id(vara[i].get_id());
 
@@ -3157,7 +3155,7 @@ else
 
    }
 
-   
+
    void tab::_001CloseTab(::index iTab)
    {
 

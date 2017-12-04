@@ -29,7 +29,7 @@ namespace prompt
    }
 
 
-#ifdef DEBUG
+
    void frame::assert_valid() const
    {
       simple_frame_window::assert_valid();
@@ -40,8 +40,6 @@ namespace prompt
       simple_frame_window::dump(dumpcontext);
    }
 
-
-#endif //DEBUG
 
 
    void frame::_001OnTimer(::timer * ptimer)
@@ -77,7 +75,7 @@ namespace prompt
 
 #else
 
-         throw todo(get_app());
+         _throw(todo(get_app()));
 
 #endif
 

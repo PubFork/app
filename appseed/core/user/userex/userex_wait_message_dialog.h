@@ -20,11 +20,11 @@ namespace userex
       virtual ~wait_message_dialog();
 
 
-      virtual void install_message_routing(::message::sender * psender);
+      virtual void install_message_routing(::message::sender * psender) override;
 
       virtual void on_show(const char * pszMatter, property_set * propertyset) override;
 
-      virtual bool BaseOnControlEvent(::user::control_event * pevent);
+      virtual bool BaseOnControlEvent(::user::control_event * pevent) override;
 
       virtual void _001OnTimer(::timer * ptimer) override;
 

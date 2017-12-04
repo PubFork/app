@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include <Shlobj.h>
 #if defined(APPLEOS)
 #include <sys/stat.h>
@@ -8,7 +8,30 @@
 #include <link.h>
 #include <sys/stat.h>
 #include <dirent.h>
+#elif defined(ANDROID)
+#include <sys/stat.h>
+#include <dirent.h>
 #endif
+
+
+void TranslateLastError()
+{
+
+   if(errno == EEXIST)
+   {
+
+      SetLastError(ERROR_ALREADY_EXISTS);
+
+   }
+   else
+   {
+
+      SetLastError(0);
+
+   }
+
+
+}
 
 #ifdef WINDOWS
 
@@ -19,15 +42,15 @@ bool __win_file_find_is_dots(WIN32_FIND_DATA & data);
 
 #if defined(METROWIN)
 
-   #pragma push_macro("System")
+#pragma push_macro("System")
 
-   #undef System
+#undef System
 
-   using namespace ::Windows::System;
+using namespace ::Windows::System;
 
-   #pragma pop_macro("System")
+#pragma pop_macro("System")
 
-   CLASS_DECL_AURA::Windows::Storage::StorageFolder ^ winrt_folder(string & strPath, string & strPrefix);
+CLASS_DECL_AURA::Windows::Storage::StorageFolder ^ winrt_folder(string & strPath, string & strPrefix);
 
 #endif
 
@@ -99,10 +122,10 @@ bool __win_file_find_is_dots(WIN32_FIND_DATA & data);
       PWSTR pwstr = NULL;
 
       HRESULT hr = SHGetKnownFolderPath(
-         FOLDERID_ProgramFilesX86,
-         KF_FLAG_DEFAULT,
-         NULL,
-         &pwstr);
+                   FOLDERID_ProgramFilesX86,
+                   KF_FLAG_DEFAULT,
+                   NULL,
+                   &pwstr);
 
       wcscpy(lpszModuleFilePath, pwstr);
 
@@ -193,7 +216,7 @@ found:
 
 #else
 
-   char lpszModuleFolder[MAX_PATH * 8];
+   hstring lpszModuleFolder(MAX_PATH * 8);
 
    void * handle = dlopen("libaura.so", RTLD_NOW);
 
@@ -264,10 +287,10 @@ found:
 
          string buf;
 
-         throw metrowin_todo();
+         _throw(metrowin_todo());
          //HRESULT hr = SHGetKnownFolderPath(FOLDERID_ProgramFiles, KF_FLAG_NO_ALIAS, NULL, wtostring(buf, 4096));
          //if(FAILED(hr))
-         // throw "dir::ca2_module_dup : SHGetKnownFolderPath failed";
+         // _throw(simple_exception(get_app(), "dir::ca2_module_dup : SHGetKnownFolderPath failed"));
 
          strcpy(lpszModuleFilePath, buf.c_str());
 
@@ -289,18 +312,18 @@ found:
 
       }
 
-      throw metrowin_todo();
+      _throw(metrowin_todo());
       //GetModuleFileName(hmodule, lpszModuleFilePath, sizeof(lpszModuleFilePath));
 
       // xxx   LPTSTR lpszModuleFileName;
 
-      throw metrowin_todo();
+      _throw(metrowin_todo());
       //GetFullPathName(lpszModuleFilePath, sizeof(lpszModuleFilePath), lpszModuleFolder, &lpszModuleFileName);
 
-      throw metrowin_todo();
+      _throw(metrowin_todo());
       //lpszModuleFolder[lpszModuleFileName - lpszModuleFolder] = '\0';
 
-      throw metrowin_todo();
+      _throw(metrowin_todo());
       /*
       if(strlen_dup(lpszModuleFolder) > 0)
       {
@@ -337,10 +360,10 @@ found:
       {
 
          SHGetSpecialFolderPathW(
-            NULL,
-            lpszModuleFilePath,
-            CSIDL_PROGRAM_FILES,
-            FALSE);
+         NULL,
+         lpszModuleFilePath,
+         CSIDL_PROGRAM_FILES,
+         FALSE);
 
       }
 
@@ -390,13 +413,13 @@ found:
 
 #else
 
-   unichar lpszModuleFolder[MAX_PATH * 8];
+   hwstring lpszModuleFolder(MAX_PATH * 8);
 
-   throw todo(::get_thread_app());
+   _throw(todo(get_app()));
 
 //   wcscpy_dup(lpszModuleFolder, unitext("/core/"));
 
-   return lpszModuleFolder;
+   return (unichar *) lpszModuleFolder;
 
 #endif
 
@@ -484,12 +507,12 @@ string calc_ca2_module_folder_dup()
 
 #ifdef WINDOWSEX
 
-   unichar lpszModuleFilePath[MAX_PATH + 1];
+   hwstring lpszModuleFilePath(MAX_PATH * 8);
    GetModuleFileNameW(::GetModuleHandleA("ca.dll"), lpszModuleFilePath, MAX_PATH + 1);
-   unichar lpszModuleFolder[MAX_PATH + 1];
-   LPWSTR lpszModuleFileName;
+   hwstring lpszModuleFolder(MAX_PATH * 8);
+   unichar * lpszModuleFileName = NULL;
    GetFullPathNameW(lpszModuleFilePath, MAX_PATH + 1, lpszModuleFolder, &lpszModuleFileName);
-   str = string(lpszModuleFolder, lpszModuleFileName - lpszModuleFolder);
+   str = wstring(lpszModuleFolder, lpszModuleFileName - lpszModuleFolder);
 
 #elif defined(LINUX)
 
@@ -567,11 +590,11 @@ string ca2_module_dup()
 
 #ifdef WINDOWSEX
 
-   unichar lpszModuleFilePath[MAX_PATH + 1];
+   hwstring lpszModuleFilePath(MAX_PATH * 8);
 
    GetModuleFileNameW(::GetModuleHandleA("aura.dll"), lpszModuleFilePath, MAX_PATH + 1);
 
-   str = lpszModuleFilePath;
+   str = (const unichar *) lpszModuleFilePath;
 
 #elif defined(LINUX)
 
@@ -599,6 +622,13 @@ string ca2_module_dup()
    {
 
       str = get_exe_path();
+
+      if(str.has_char())
+      {
+
+         goto found;
+
+      }
 
       str = ::dir::pathfind(::file::path(str).folder(), "libaura.dylib", "rfs"); // readable - normal file - non zero sized
 
@@ -672,95 +702,159 @@ found:
 
 }
 
-bool dir::mk(const ::file::path & lpcsz)
+
+bool dir::mkdir(const ::file::path & path)
 {
 
-#ifdef WINDOWS
-
-   if(is(lpcsz))
+   if(is(path))
    {
 
       return true;
 
    }
 
-   string url(lpcsz);
-   string tmp;
-   string dir;
-   index oldpos = -1;
-   index pos = url.find("\\");
-   string unc("\\\\?\\");
-   while (pos >= 0)
+   if(file_exists_dup(path))
    {
-      tmp = url.substr(oldpos + 1, pos - oldpos -1 );
-      dir += tmp + "\\";
-      wstring wstr;
-      if(is_absolute_path(dir))
+
+      if(!file_delete_dup(path))
       {
-         wstr = unc + dir;
+
+         return false;
+
       }
-      else
-      {
-         wstr = dir;
-      }
-      uint32_t dw = ::GetFileAttributesW(wstr);
-      if(dw == INVALID_FILE_ATTRIBUTES)
-      {
-         ::CreateDirectoryW(wstr, NULL);
-      }
-      oldpos = pos;
-      pos = url.find("\\", oldpos + 1);
 
    }
-   tmp = url.substr(oldpos + 1);
-   dir += tmp + "\\";
-   wstring wstr(unc + dir);
-   if(::GetFileAttributesW(wstr) == INVALID_FILE_ATTRIBUTES)
+
+#ifdef WINDOWS
+
+   wstring wstr;
+
+   if(is_absolute_path(path))
    {
-      ::CreateDirectoryW(wstr, NULL);
+
+      wstr = "\\\\?\\" + path;
+
    }
-   return true;
+   else
+   {
+
+      wstr = path;
+
+   }
+
+   if(!::CreateDirectoryW(wstr, NULL))
+   {
+
+      return false;
+
+   }
 
 #else
 
-   // stat -> Sir And Arthur - Serenato
-   struct stat st;
-
-   string url(lpcsz);
-   string tmp;
-   string dir;
-   ::index oldpos = -1;
-   ::index pos = url.find("/");
-   while (pos >= 0)
+   if(::mkdir(path, S_IRWXU | S_IRWXG | S_IRWXO) != 0)
    {
-      tmp = url.substr(oldpos + 1, pos - oldpos -1 );
-      dir += tmp + "/";
-      if(stat(dir, &st))
-      {
-         mkdir(dir, S_IRWXU | S_IRWXG | S_IRWXO);
-      }
-      oldpos = pos;
-      pos = url.find("/", oldpos + 1);
+
+      TranslateLastError();
+
+      return false;
 
    }
-   tmp = url.substr(oldpos + 1);
-   dir += tmp + "/";
-   if(stat(dir, &st))
-   {
-      mkdir(dir, S_IRWXU | S_IRWXG | S_IRWXO);
-   }
-   return true;
 
 #endif
 
+   return true;
+
 }
+
+
+bool dir::mk(const ::file::path & path)
+{
+
+   if(is(path))
+   {
+
+      return true;
+
+   }
+
+   string strName;
+
+   ::file::path pathDir;
+
+   strsize iLastPos = -1;
+
+   while (true)
+   {
+
+      strsize iPos = path.find(::file::path_sep(::file::path_file), iLastPos + 1);
+
+      if(iPos == 0)
+      {
+
+         iPos = path.find(::file::path_sep(::file::path_file), 1);
+
+      }
+
+      if(iPos < 0)
+      {
+
+         strName = path.substr(iLastPos + 1);
+
+      }
+      else
+      {
+
+         strName = path.substr(iLastPos + 1, iPos - iLastPos - 1);
+
+      }
+
+      if (pathDir.is_empty())
+      {
+
+         pathDir = strName;
+
+      }
+      else
+      {
+
+         pathDir /= strName;
+
+      }
+
+      if(!::dir::is(pathDir))
+      {
+
+         if(!::dir::mkdir(pathDir))
+         {
+
+            return false;
+
+         }
+
+      }
+
+      if(iPos < 0)
+      {
+
+         return true;
+
+      }
+
+      iLastPos = iPos;
+
+   }
+
+   return true;
+
+}
+
 
 ::file::path dir::module()
 {
 
 #ifdef WINDOWS
 
-   unichar path[MAX_PATH * 4];
+   hwstring path(MAX_PATH * 8);
 
    if(!GetModuleFileNameW(NULL,path,sizeof(path) / sizeof(unichar)))
    {
@@ -875,19 +969,45 @@ bool dir::is(const ::file::path & path1)
 
 
 #elif defined(WINDOWSEX)
-   string str;
 
-   str = "\\\\?\\";
-   str += path1;
+   WCHAR szVolumeName[128];
 
-   while(str_ends_dup(str, "\\") || str_ends_dup(str, "/"))
+   string strVolume = path1;
+
+   if (!str::ends(strVolume, "\\"))
    {
-      str = str.substr(0, str.length() - 1);
+
+      strVolume += "\\";
+
    }
 
-   uint32_t dwFileAttributes = ::GetFileAttributesW(wstring(str));
-   if(dwFileAttributes != INVALID_FILE_ATTRIBUTES &&
-         dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+   wstring wstr = wstring(strVolume);
+
+   if (GetVolumeNameForVolumeMountPointW(wstr, szVolumeName, sizeof(szVolumeName)))
+   {
+
+      wstr = szVolumeName;
+
+   }
+   else
+   {
+
+      string str;
+
+      str = "\\\\?\\";
+      str += path1;
+
+      while (str_ends_dup(str, "\\") || str_ends_dup(str, "/"))
+      {
+         str = str.substr(0, str.length() - 1);
+      }
+
+   }
+
+
+   uint32_t dwFileAttributes = ::GetFileAttributesW(wstr);
+
+   if(dwFileAttributes != INVALID_FILE_ATTRIBUTES && dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
       return true;
    else
       return false;
@@ -1385,12 +1505,95 @@ void dir::ls_dir(::file::patha & stra,const ::file::path & psz)
 
 }
 
+void dir::ls_file(::file::patha & stra,const ::file::path & psz)
+{
+
+#if defined(LINUX) || defined(APPLEOS) || defined(ANDROID)
+
+   DIR * dirp = opendir(psz);
+
+   if(dirp == NULL)
+      return;
+
+   dirent * dp;
+
+   while ((dp = readdir(dirp)) != NULL)
+   {
+      if(dp->d_name[0] == '.')
+      {
+         if(dp->d_name[1] == '\0')
+            continue;
+         if(dp->d_name[1] == '.')
+         {
+            if(dp->d_name[2] == '\0')
+               continue;
+         }
+      }
+      ::file::path strPath = psz /  dp->d_name;
+      if(!is(strPath))
+      {
+         stra.add(strPath);
+      }
+
+   }
+
+   closedir(dirp);
+
+#elif defined(METROWIN)
+
+   ::Windows::Storage::StorageFolder ^ folder = wait(::Windows::Storage::StorageFolder::GetFolderFromPathAsync(string(psz)));
+
+   ::Windows::Foundation::Collections::IVectorView < ::Windows::Storage::StorageFolder ^ > ^ a = wait(folder->GetFoldersAsync());
+
+   for(uint32_t ui = 0; ui < a->Size; ui++)
+   {
+      stra.add(begin(a->GetAt(ui)->Path));
+   }
+
+
+#else
+
+   WIN32_FIND_DATA FindFileData;
+
+   HANDLE hFind;
+
+   hFind = FindFirstFile(psz, &FindFileData);
+
+   if (hFind == INVALID_HANDLE_VALUE)
+      return;
+
+   while(true)
+   {
+
+      if(!__win_file_find_is_dots(FindFileData) && (FindFileData.dwFileAttributes != INVALID_FILE_ATTRIBUTES) && (FindFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) != 0)
+      {
+      }
+      else
+      {
+         stra.add(FindFileData.cFileName);
+         }
+
+
+      stra.add(FindFileData.cFileName);
+
+      if(!FindNextFile(hFind, &FindFileData))
+         break;
+
+   }
+
+   FindClose(hFind);
+
+#endif
+
+
+}
+
 
 ::file::path dir::default_os_user_path_prefix()
 {
 #if defined(WINDOWSEX)
-   unichar buf[MAX_PATH];
-   ULONG ulSize = sizeof(buf) / sizeof(unichar);
+   hwstring buf(MAX_PATH * 8);
+   ULONG ulSize = buf.count();
    if(!::GetUserNameExW(NameCanonical, buf, &ulSize))
    {
       if(!::GetUserNameW(buf, &ulSize))
@@ -1609,10 +1812,10 @@ retry:
    {
 
       SHGetSpecialFolderPathW(
-         NULL,
-         lpszModuleFilePath,
-         CSIDL_PROGRAM_FILES,
-         FALSE);
+      NULL,
+      lpszModuleFilePath,
+      CSIDL_PROGRAM_FILES,
+      FALSE);
 
    }
 

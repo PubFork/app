@@ -61,7 +61,7 @@ svn_token__to_word(const svn_token_map_t *map,
    string is not recognized, then a MALFUNCTION will occur.
 
    Note: this function is for persisted string values. Because this function
-   will throw a MALFUNCTION, it should not be used for network input or
+   will _throw( a MALFUNCTION, it should not be used for network input or
    user input.  */
 int
 svn_token__from_word_strict(const svn_token_map_t *map,

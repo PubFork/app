@@ -65,7 +65,7 @@ namespace userstack
    /////////////////////////////////////////////////////////////////////////////
    // ::view diagnostics
 
-   #ifdef DEBUG
+
    void view::assert_valid() const
    {
       ::user::impact::assert_valid();
@@ -75,7 +75,7 @@ namespace userstack
    {
       ::user::impact::dump(dumpcontext);
    }
-   #endif //DEBUG
+
 
    /////////////////////////////////////////////////////////////////////////////
    // ::view message handlers
@@ -308,7 +308,7 @@ namespace userstack
       m_oswindowWinutil           =  ::FindWindow(NULL, "::ca2::fontopus::message_wnd::winutil");
       m_oswindowBergedge          =  ::FindWindow(NULL, "::ca2::fontopus::message_wnd::bergedge");
 #else
-      throw todo(get_app());
+      _throw(todo(get_app()));
 #endif
    }
 

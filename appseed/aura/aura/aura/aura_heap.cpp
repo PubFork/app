@@ -1,7 +1,14 @@
 #include "framework.h"
 
+#ifdef RASPBIAN
 
 #define AXIS_MEMORY_MANAGEMENT TRUE
+
+#else
+
+#define AXIS_MEMORY_MANAGEMENT TRUE
+
+#endif
 
 
 #if !AXIS_MEMORY_MANAGEMENT
@@ -21,23 +28,7 @@
 
 #endif
 
-
-#ifdef APPLEOS
-
-
-#define ALIGN_BYTE_COUNT (sizeof(size_t) * 2)
-
-
-#else
-
-
-//#define ALIGN_BYTE_COUNT (sizeof(size_t))
-
-
-#define ALIGN_BYTE_COUNT 16
-
-
-#endif
+#include "align_byte_count.h"
 
 
 plex_heap_alloc_array * g_pheap = NULL;
@@ -77,3 +68,26 @@ plex_heap_alloc_array * g_pheap = NULL;
 
 
 #endif
+
+
+
+const int heap_memory::m_iPaddingAfter = 16;
+
+
+
+
+
+c_class c_class::s_cclass;
+
+
+c_class::c_class()
+{
+}
+
+c_class::c_class(const c_class &)
+{
+}
+
+c_class::~c_class()
+{
+}

@@ -25,7 +25,7 @@ string GeoIP_get_host_or_proxy ();
  */
 const char *GeoIPUpdateHost = "updates.maxmind.com";
 /* This is the direct, or proxy port number. */
-static int32_t GeoIPHTTPPort = 80;
+//static int32_t GeoIPHTTPPort = 80;
 /* License-only format (OLD) */
 const char *GeoIPHTTPRequest = "GET %s%s/app/update?license_key=%s&md5=%s HTTP/1.0\nHost: updates.maxmind.com\n\n";
 /* General DB Types formats */
@@ -145,9 +145,9 @@ void GeoIP_printf(void (*f)(char *), const char *str,...) {
  */
 
 /* The Protocol is usually "" OR "http://" with a proxy. */
-static const char * GeoIPProxyHTTP = "";
+//static const char * GeoIPProxyHTTP = "";
 /* GeoIP Hostname where proxy forwards requests. */
-static const char * GeoIPProxiedHost = "";
+//static const char * GeoIPProxiedHost = "";
 
 /* read http_proxy env. var & parse it.
  * -----------------------------------------
@@ -281,7 +281,7 @@ int16_t GeoIP_update_database (char * license_key, int32_t verbose, void (*f)( c
 //
 //      //MD5_Init(&ctx);
 //
-//      //::crypto::md5::context ctx(get_thread_app());
+//      //::crypto::md5::context ctx(get_app());
 //
 //
 //      MD5_Init(&context);
@@ -511,7 +511,7 @@ int16_t GeoIP_update_database (char * license_key, int32_t verbose, void (*f)( c
 //
 //#else
 //
-//   throw todo(::get_thread_app());
+//   _throw(todo(get_app()));
 //
 //#endif
 //
@@ -626,7 +626,7 @@ int16_t GeoIP_update_database_general (::aura::application * papp, char * user_i
 //   if ((cur_db_fh = fopen (geoipfilename, "rb")) == NULL) {
 //    GeoIP_printf(f, NoCurrentDB, geoipfilename);
 //   } else {
-////      ::crypto::md5::context ctx(get_thread_app());
+////      ::crypto::md5::context ctx(get_app());
 //      MD5_Init(&context);
 //      while ((len = fread (buffer, 1, 1024, cur_db_fh)) > 0)
 //        // ctx.update(buffer, len);
@@ -716,7 +716,7 @@ int16_t GeoIP_update_database_general (::aura::application * papp, char * user_i
 //   /* make a md5 sum of ip address and license_key and store it in hex_digest2 */
 //   request_uri_len = sizeof(char) * 2036;
 //   request_uri = (char *) malloc(request_uri_len);
-//   //::crypto::md5::context ctx2(get_thread_app());
+//   //::crypto::md5::context ctx2(get_app());
 //   MD5_Init(&context2);
 //   uchar bufMd5[16];
 ////   ctx2.update(license_key,12);
@@ -1017,7 +1017,7 @@ int16_t GeoIP_update_database_general (::aura::application * papp, char * user_i
 //
 //#else
 //
-//   throw todo(papp);
+//   _throw(todo(papp));
 //
 //#endif
 //

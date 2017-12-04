@@ -12,6 +12,9 @@
 #include <unistd.h>
 #endif
 
+#ifdef APPLEOS
+#include <netdb.h>
+#endif
 
 namespace sockets
 {
@@ -51,11 +54,7 @@ namespace sockets
       //   Handler().remove(this);
       //}
 
-      if (m_socket != INVALID_SOCKET
-#ifdef ENABLE_POOL
-         && !m_bRetain
-#endif
-         )
+      if (m_socket != INVALID_SOCKET            && !m_bRetain         )
       {
          close();
       }
@@ -87,7 +86,7 @@ namespace sockets
          //if(!is_null(Handler()))
          //{
          //   // failed...
-         //   log("close", Errno, wsa_str_error(Errno), ::aura::log::level_error);
+         //   log("close", Errno, bsd_socket_error(Errno), ::aura::log::level_error);
          //}
       }
       //if(!is_null(Handler()))
@@ -100,19 +99,19 @@ namespace sockets
       //   Handler().AddList(m_socket, LIST_CLOSE, false);
       //}
       m_socket = INVALID_SOCKET;
-      //throw n;
+      //_throw(n);
    }
 
 
    SOCKET socket::CreateSocket(int32_t af, int32_t iType, const string & strProtocol)
    {
-      
+
       SOCKET s;
 
       m_iSocketType = iType;
 
       m_strSocketProtocol = strProtocol;
-      
+
       int32_t protno;
 
 #ifdef ANDROID
@@ -142,11 +141,13 @@ namespace sockets
             if (p == NULL)
             {
 
-               log("getprotobyname", Errno, wsa_str_error(Errno), ::aura::log::level_fatal);
+#ifdef DEBUG
+               log("getprotobyname", Errno, bsd_socket_error(Errno), ::aura::log::level_fatal);
+#endif
 
                SetCloseAndDelete();
 
-               throw simple_exception(get_app(), string("getprotobyname() failed: ") + wsa_str_error(Errno));
+               _throw(simple_exception(get_app(), string("getprotobyname() failed: ") + bsd_socket_error(Errno)));
 
                return INVALID_SOCKET;
 
@@ -169,9 +170,11 @@ namespace sockets
 
       if (s == INVALID_SOCKET)
       {
-         log("socket", Errno, wsa_str_error(Errno), ::aura::log::level_fatal);
+#ifdef DEBUG
+         log("socket", Errno, bsd_socket_error(Errno), ::aura::log::level_fatal);
+#endif
          SetCloseAndDelete();
-         throw simple_exception(get_app(), string("socket() failed: ") + wsa_str_error(Errno));
+         _throw(simple_exception(get_app(), string("socket() failed: ") + bsd_socket_error(Errno)));
          return INVALID_SOCKET;
       }
       attach(s);
@@ -207,21 +210,25 @@ namespace sockets
 
    bool socket::SetNonblocking(bool bNb, SOCKET s)
    {
-   #ifdef _WIN32
+#ifdef _WIN32
       u_long l = bNb ? 1 : 0;
       int32_t n = ioctlsocket(s, FIONBIO, &l);
       if (n != 0)
       {
+#ifdef DEBUG
          log("ioctlsocket(FIONBIO)", Errno, "");
+#endif
          return false;
       }
       return true;
-   #else
+#else
       if (bNb)
       {
          if (fcntl(s, F_SETFL, O_NONBLOCK) == -1)
          {
-            log("fcntl(F_SETFL, O_NONBLOCK)", Errno, wsa_str_error(Errno), ::aura::log::level_error);
+#ifdef DEBUG
+            log("fcntl(F_SETFL, O_NONBLOCK)", Errno, bsd_socket_error(Errno), ::aura::log::level_error);
+#endif
             return false;
          }
       }
@@ -229,12 +236,14 @@ namespace sockets
       {
          if (fcntl(s, F_SETFL, 0) == -1)
          {
-            log("fcntl(F_SETFL, 0)", Errno, wsa_str_error(Errno), ::aura::log::level_error);
+#ifdef DEBUG
+            log("fcntl(F_SETFL, 0)", Errno, bsd_socket_error(Errno), ::aura::log::level_error);
+#endif
             return false;
          }
       }
       return true;
-   #endif
+#endif
    }
 
 
@@ -248,7 +257,7 @@ namespace sockets
       socklen_t nLengthAddr = sizeof(SOCKADDR);
       if (getpeername(GetSocket(), psa.sa(), &nLengthAddr) == SOCKET_ERROR)
       {
-         throw transfer_socket_exception(get_app(), _T("GetPeerName"));
+         _throw(transfer_socket_exception(get_app(), _T("GetPeerName")));
       }
       return psa;
    }
@@ -263,7 +272,7 @@ namespace sockets
       socklen_t nLengthAddr = sizeof(SOCKADDR);
       if (getsockname(GetSocket(), psa.sa(), &nLengthAddr) == SOCKET_ERROR)
       {
-         throw transfer_socket_exception(get_app(), _T("GetSockName"));
+         _throw(transfer_socket_exception(get_app(), _T("GetSockName")));
       }
       return psa;
    }

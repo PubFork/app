@@ -20,6 +20,8 @@
 #define user user_struct
 #include <sys/sysctl.h>
 
+#include "aura/aura/os/apple/apple_ns_exception.h"
+
 int __node_is_debugger_attached()
 // Returns true if the current process is being debugged (either
 // running under the debugger or has a debugger attached post facto).
@@ -115,3 +117,13 @@ output_debug_string(
     
     
 }
+
+
+void throw_ns_exception()
+{
+
+   _throw(ns_exception());
+   
+}
+
+

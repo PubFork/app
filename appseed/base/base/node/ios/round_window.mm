@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 ca2 Desenvolvimento de Sofware Ltda. All rights reserved.
 //
 #import "ios_mm.h"
-#import "AppDelegate.h"
+#import "aura/aura/node/ios/RoundWindowApp.h"
 
 
 #import "aura/aura/os/apple/DDInvocationGrabber.h"
@@ -167,6 +167,84 @@ void round_window::round_window_get_title(char * pszTitle, int iSize)
 }
 
 
+void round_window::round_window_set_sel(int iBeg, int iEnd)
+{
+   
+   UITextView * pview = m_proundwindow->m_controller->childContentView;
+   
+   UITextPosition * beg = [pview beginningOfDocument];
+   
+   UITextPosition * selbeg = [pview endOfDocument];
+   
+   UITextPosition * selend = selbeg;
+   
+   int iLen = strlen([[pview text] UTF8String]);
+   
+   if(iBeg >= 0 && iBeg < iLen)
+   {
+   
+      selbeg = [pview positionFromPosition: beg offset: iBeg];
+      
+   }
+   
+   if(iEnd >= 0 && iEnd < iLen)
+   {
+      
+      selend = [pview positionFromPosition: beg offset: iEnd];
+      
+   }
+   
+   UITextRange * sel = [pview textRangeFromPosition: selbeg toPosition: selend];
+   
+   [pview setSelectedTextRange: sel];
+   
+}
+
+
+void round_window::round_window_get_sel(int & iBeg, int & iEnd)
+{
+   
+   UITextView * pview = m_proundwindow->m_controller->childContentView;
+   
+   UITextPosition * beg = [pview beginningOfDocument];
+   
+   UITextPosition * selbeg = [[pview selectedTextRange] start];
+   
+   UITextPosition * selend = [[pview selectedTextRange] start];
+   
+   iBeg = [pview offsetFromPosition: beg toPosition: selbeg];
+   
+   iEnd = [pview offsetFromPosition: beg toPosition: selend];
+   
+}
+
+
+void round_window::round_window_set_text(const char * pszText)
+{
+   
+   NSString * text = [[NSString alloc] initWithUTF8String:pszText];
+   
+   [m_proundwindow->m_controller->childContentView setText: text];
+   
+}
+
+void round_window::round_window_get_text(char * pszText, int iSize)
+{
+   
+   strncpy(pszText, [[m_proundwindow->m_controller->childContentView text] UTF8String], iSize);
+   
+}
+
+
+int round_window::round_window_get_text_length()
+{
+   
+   return strlen([[m_proundwindow->m_controller->childContentView text] UTF8String]);
+   
+}
+
+
+
 void ui_application_main(int argc, char * argv[])
 {
    
@@ -175,7 +253,7 @@ void ui_application_main(int argc, char * argv[])
    
       // return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
       
-      UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
+      UIApplicationMain(argc, argv, nil, NSStringFromClass([RoundWindowApp class]));
    
    }
    

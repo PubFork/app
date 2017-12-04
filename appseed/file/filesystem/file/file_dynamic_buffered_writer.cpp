@@ -38,7 +38,7 @@ namespace file
          return;
       byte *buf = GetBufPtrForWriting(size);
       if (!buf)
-         throw memory_exception(get_app());
+         _throw(memory_exception(get_app()));
       memcpy(buf, data, size);
       UpdateSize(size);
       if (processedSize)

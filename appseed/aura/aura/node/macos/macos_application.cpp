@@ -77,23 +77,48 @@ namespace aura
 
 
 
-   bool application::impl_process_initialize()
+   bool application::impl_process_init()
    {
 
       return true;
 
    }
 
+   void application::impl_process_term()
+   {
+      
+   }
 
-   bool application::impl_initialize1()
+
+   bool application::impl_init1()
    {
 
       return true;
 
    }
 
+   
+   void application::impl_term1()
+   {
+      
+   }
 
-   bool application::impl_initialize2()
+   
+   bool application::impl_init2()
+   {
+       
+      return true;
+       
+   }
+
+   
+   void application::impl_term2()
+   {
+      
+   }
+
+
+   bool application::impl_init3()
    {
        
       return true;
@@ -101,29 +126,26 @@ namespace aura
    }
     
 
-   bool application::impl_initialize3()
+   void application::impl_term3()
    {
-       
-      return true;
-       
+      
    }
-    
 
    // thread termination
-   int32_t application::impl_exit_instance() // default will 'delete this'
-   {
-
-      // avoid calling CloseHandle() on our own thread handle
-      // during the thread destructor
-      set_os_data(NULL);
-
-
-  //    int32_t iRet = ::aura::application::exit_application();
-
-       int iRet = 0;
-
-      return iRet;
-   }
+//   void application::impl_term_instance() // default will 'delete this'
+//   {
+//
+//      // avoid calling CloseHandle() on our own thread handle
+//      // during the thread destructor
+//      set_os_data(NULL);
+//
+//
+//  //    int32_t iRet = ::aura::application::term_instance();
+//
+//       int iRet = 0;
+//
+//      return iRet;
+//   }
 
 
 //   ::thread * application::GetThread()
@@ -166,13 +188,13 @@ namespace aura
 //      DWORD dwRet = ::GetModuleFileName(m_hInstance, szBuff, _MAX_PATH);
 //      ASSERT( dwRet != 0 && dwRet != _MAX_PATH );
 //      if( dwRet == 0 || dwRet == _MAX_PATH )
-//      throw user_exception();*/
+//      _throw(user_exception());*/
 //
 //      /*
 //      LPTSTR lpszExt = ::PathFindExtension(szBuff);
 //      ASSERT(lpszExt != NULL);
 //      if( lpszExt == NULL )
-//      throw user_exception();
+//      _throw(user_exception());
 //
 //      ASSERT(*lpszExt == '.');
 //      *lpszExt = 0;       // no suffix

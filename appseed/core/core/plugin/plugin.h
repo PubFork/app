@@ -1,7 +1,4 @@
-#pragma once
-
-
-#ifdef HOTPLUGIN_SUBSYSTEM
+﻿#pragma once
 
 
 // plugin - core plugin
@@ -17,10 +14,5 @@
 #include "plugin_host_interaction.h"
 #include "plugin_system.h"
 #include "plugin_instance.h"
-
-
-#endif
-
-
 
 

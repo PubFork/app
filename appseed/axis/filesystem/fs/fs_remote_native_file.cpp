@@ -1,5 +1,6 @@
-#include "framework.h" // from "axis/net/net_sockets.h"
+﻿#include "framework.h" // from "axis/net/net_sockets.h"
 //#include "axis/net/net_sockets.h"
+#include "fs_net.h"
 
 
 namespace fs
@@ -68,14 +69,14 @@ namespace fs
    {
       /*if(m_nOpenFlags & ::file::mode_write)
       {
-      throw "Cannot open remote_native_file for reading and writing simultaneously due the characteristic of possibility of extreme delayed streaming. The way it is implemented would also not work.\n It is build with this premisse.";
+      _throw(simple_exception(get_app(), "Cannot open remote_native_file for reading and writing simultaneously due the characteristic of possibility of extreme delayed streaming. The way it is implemented would also not work.\n It is build with this premisse."));
       return;
       }*/
 
       string strUrl;
 
       strUrl = "http://fs.veriwell.net/fs/get?path=" + System.url().url_encode(System.url().get_script(m_strPath))
-         + "&server=" + System.url().url_encode(System.url().get_server(m_strPath));
+               + "&server=" + System.url().url_encode(System.url().get_server(m_strPath));
 
       uint32_t dwAdd = 0;
 
@@ -85,9 +86,9 @@ namespace fs
       }
 
       m_httpfile.open(strUrl, ::file::type_binary | ::file::mode_read | dwAdd);
-      
+
    }
-   
+
 
    void remote_native_file::set_file_data()
    {
@@ -98,7 +99,7 @@ namespace fs
       {
 
          strUrl = "http://fs.veriwell.net/fs/xmledit?path=" + System.url().url_encode(System.url().get_script(m_varFile["url"]))
-            + "&server=" + System.url().url_encode(System.url().get_server(m_varFile["url"]));
+                  + "&server=" + System.url().url_encode(System.url().get_server(m_varFile["url"]));
 
          property_set setRequest(get_app());
 
@@ -122,7 +123,7 @@ namespace fs
             return;
 
          strUrl = "http://fs.veriwell.net/fs/set?path=" + System.url().url_encode(System.url().get_script(m_varFile["url"]))
-            + "&server=" + System.url().url_encode(System.url().get_server(m_varFile["url"]));
+                  + "&server=" + System.url().url_encode(System.url().get_server(m_varFile["url"]));
 
          property_set setPut(get_app());
 
@@ -133,7 +134,7 @@ namespace fs
 
 
       strUrl = "http://fs.veriwell.net/fs/set?path=" + System.url().url_encode(System.url().get_script(m_strPath))
-         + "&server=" + System.url().url_encode(System.url().get_server(m_strPath));
+               + "&server=" + System.url().url_encode(System.url().get_server(m_strPath));
 
       property_set set(get_app());
 

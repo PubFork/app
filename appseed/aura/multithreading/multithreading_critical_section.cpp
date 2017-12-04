@@ -27,7 +27,7 @@ critical_section::critical_section()
 
    bSuccess = Init();
    if (!bSuccess)
-      throw memory_exception(get_thread_app());
+      _throw(memory_exception(get_app()));
 }
 
 critical_section::operator CRITICAL_SECTION*()
@@ -87,7 +87,7 @@ critical_section::critical_section()
 
    bSuccess = Init();
    if (!bSuccess)
-      throw memory_exception(get_thread_app());
+      _throw(memory_exception(get_app()));
 }
 
 critical_section::operator pthread_mutex_t()
@@ -116,7 +116,7 @@ critical_section::~critical_section()
 //   catch(...)
 //   {
 //
-//      throw memory_exception(get_app());
+//      _throw(memory_exception(get_app()));
 //
 //   }
 //

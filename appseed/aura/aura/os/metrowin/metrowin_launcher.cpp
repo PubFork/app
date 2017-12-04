@@ -1,7 +1,7 @@
 #include "framework.h"
 //#include "metrowin.h"
 
-#if defined(INSTALL_SUBSYSTEM)
+#if defined()
 
 bool launcher::start()
 {
@@ -17,7 +17,7 @@ bool launcher::start()
 
 #ifdef METROWIN
 
-   throw "todo";
+   _throw(simple_exception(get_app(), "todo"));
 
 #else
 

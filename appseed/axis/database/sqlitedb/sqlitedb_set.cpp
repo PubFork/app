@@ -8,11 +8,13 @@
 #include "sqlite3.h"
 
 
+extern "C" int32_t axis_sqlite_callback(void * res_ptr,int32_t ncol, char** reslt,char** cols);
+
+
 namespace sqlite
 {
 
 
-   extern int32_t callback(void * res_ptr,int32_t ncol, char** reslt,char** cols);
 
 
    set::set(::aura::application * papp) :
@@ -76,7 +78,7 @@ namespace sqlite
             db->start_transaction();
 
          if(db == NULL)
-            throw database::DbErrors("No base Connection");
+            _throw(database::DbErrors("No base Connection"));
 
          //close();
 
@@ -90,7 +92,7 @@ namespace sqlite
             {
                fprintf(stderr,"Error: %s",err);
                sqlite3_free(err);
-               throw database::DbErrors(db->getErrorMsg());
+               _throw(database::DbErrors(db->getErrorMsg()));
             }
          } // end of for
 
@@ -179,7 +181,7 @@ namespace sqlite
       exec_res.record_header.remove_all();
       exec_res.records.remove_all();
       //if ((strncmp("select",sql,6) == 0) || (strncmp("SELECT",sql,6) == 0))
-      if((m_iLastResult = db->setErr(sqlite3_exec((sqlite3 *) handle(),sql,&callback,&exec_res,&errmsg))) == SQLITE_OK)
+      if((m_iLastResult = db->setErr(sqlite3_exec((sqlite3 *) handle(),sql,&axis_sqlite_callback,&exec_res,&errmsg))) == SQLITE_OK)
       {
          m_strQueryErrorMessage = "";
          m_strDatabaseErrorMessage = "";
@@ -251,7 +253,7 @@ namespace sqlite
 
       char * errmsg = NULL;
       
-      int iResult =sqlite3_exec((sqlite3 *) handle(),query,&callback,&result,&errmsg);
+      int iResult =sqlite3_exec((sqlite3 *) handle(),query,&axis_sqlite_callback,&result,&errmsg);
       
       db->setErr(iResult);
 
@@ -452,7 +454,7 @@ namespace sqlite
          }
          if (!found)
          {
-            throw database::DbErrors("Field not found: %s",f_name);
+            _throw(database::DbErrors("Field not found: %s",f_name));
          }
          return true;
       }
@@ -460,7 +462,7 @@ namespace sqlite
       {
          return set::SetFieldValue(f_name, value);
       }
-//      throw database::DbErrors("Not in Insert or Edit or Select state");
+//      _throw(database::DbErrors("Not in Insert or Edit or Select state"));
 //      //  return false;
    }
 
@@ -475,7 +477,7 @@ namespace sqlite
          }
          else
          {
-            throw database::DbErrors("Field not found: %d",iFieldIndex);
+            _throw(database::DbErrors("Field not found: %d",iFieldIndex));
          }
       }
       else
@@ -483,7 +485,7 @@ namespace sqlite
          ASSERT(FALSE);
          //      return set::SetFieldValue(f_name, value);
       }
-      throw database::DbErrors("Not in Insert or Edit or Select state");
+      _throw(database::DbErrors("Not in Insert or Edit or Select state"));
       //  return false;
    }
 
@@ -497,7 +499,7 @@ namespace sqlite
          }
          else
          {
-            throw database::DbErrors("Field not found: %d",iFieldIndex);
+            _throw(database::DbErrors("Field not found: %d",iFieldIndex));
          }
       }
       //   else
@@ -506,7 +508,7 @@ namespace sqlite
          //return set::SetFieldValue(f_name, value);
 
       }
-      throw database::DbErrors("Not in Insert or Edit or Select state");
+      //_throw(database::DbErrors("Not in Insert or Edit or Select state"));
       //  return false;
    }
 
@@ -543,7 +545,7 @@ namespace sqlite
                iFound = i;
                break;
             }
-            if (iFound < 0) throw database::DbErrors("Field not found: %s",fieldname);
+            if (iFound < 0) _throw(database::DbErrors("Field not found: %s",fieldname));
             ::count iNumRows = num_rows();
             for(i=0; i < iNumRows; i++)
                if(result.records[i][iFound] == value)
@@ -554,7 +556,7 @@ namespace sqlite
 
                return false;
       }
-      throw database::DbErrors("not in Select state");
+      _throw(database::DbErrors("not in Select state"));
    }
 
    void set::query_items(stringa & stra, const char * pszSql)
@@ -571,106 +573,109 @@ namespace sqlite
    }
 
 
-   /**********************************************************************
-   * Copyright (ca) 2002, Leo Seib, Hannover
-   *
-   * Project:CSQLiteDataset C++ Dynamic Library
-   * Module: CSQLiteDataset class realisation file
-   * Author: Leo Seib      E-Mail: lev@almaty.pointstrike.net
-   * begin: 5/04/2002
-   *
-   * Permission is hereby granted, free of charge, to any person obtaining a copy
-   * of this software and associated documentation files (the "Software"), to deal
-   * in the Software without restriction, including without limitation the rights
-   * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-   * copies of the Software, and to permit persons to whom the Software is
-   * furnished to do so, subject to the following conditions:
-   *
-   * The above copyright notice and this permission notice shall be included in
-   * all copies or substantial portions of the Software.
-   *
-   * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-   * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-   * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
-   * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-   * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-   * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-   * THE SOFTWARE.
-   *
-   **********************************************************************/
-   //************* Callback function ***************************
 
-   int32_t callback(void * res_ptr,int32_t ncol, char** reslt,char** cols){
 
-      database::result_set* r = (database::result_set*)res_ptr;//dynamic_cast<result_set*>(res_ptr);
-      ::count sz = r->records.get_size();
+} // namespace sqlite
 
-      //if (reslt == NULL ) cout << "EMPTY!!!\n";
-      if (r->record_header.get_size() <= 0)
+
+/**********************************************************************
+ * Copyright (ca) 2002, Leo Seib, Hannover
+ *
+ * Project:CSQLiteDataset C++ Dynamic Library
+ * Module: CSQLiteDataset class realisation file
+ * Author: Leo Seib      E-Mail: lev@almaty.pointstrike.net
+ * begin: 5/04/2002
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ **********************************************************************/
+//************* Callback function ***************************
+
+extern "C"
+int32_t axis_sqlite_callback(void * res_ptr,int32_t ncol, char** reslt,char** cols){
+   
+   database::result_set* r = (database::result_set*)res_ptr;//dynamic_cast<result_set*>(res_ptr);
+   ::count sz = r->records.get_size();
+   
+   //if (reslt == NULL ) cout << "EMPTY!!!\n";
+   if (r->record_header.get_size() <= 0)
+   {
+      r->record_header.set_size(ncol, 32);
+      for (index i=0; i < ncol; i++)
       {
-         r->record_header.set_size(ncol, 32);
-         for (index i=0; i < ncol; i++)
-         {
-            r->record_header[i].name = cols[i];
-            if(cols[i + ncol] != NULL)
-            {
-               string str(cols[i + ncol]);
-               str.make_lower();
-               if(str == "integer")
-               {
-                  r->record_header[i].type = database::DataTypeLong;
-               }
-               else if(str == "string")
-               {
-                  r->record_header[i].type = database::DataTypeString;
-               }
-               else if(str == "numeric")
-               {
-                  r->record_header[i].type = database::DataTypeDouble;
-               }
-            }
-         }
+         r->record_header[i].name = cols[i];
+//         if(cols[i + ncol] != NULL)
+//         {
+//            string str(cols[i + ncol]);
+//            str.make_lower();
+//            if(str == "integer")
+//            {
+//               r->record_header[i].type = database::DataTypeLong;
+//            }
+//            else if(str == "string")
+//            {
+//               r->record_header[i].type = database::DataTypeString;
+//            }
+//            else if(str == "numeric")
+//            {
+//               r->record_header[i].type = database::DataTypeDouble;
+//            }
+//         }
       }
-
-
-      database::record rec;
-      var v;
-
-      if (reslt != NULL)
-      {
-         for (int32_t i=0; i<ncol; i++)
-         {
-            if (reslt[i] == NULL)
-            {
-               v = "";
-               v.set_type(var::type_null);
-            }
-            else
-            {
-               //if(r->record_header[i].type == vmssqlite::DataTypeDouble)
-               //{
-               // v.SetDouble(strtod(reslt[i], NULL));
-               //}
-               //if(r->record_header[i].type == vmssqlite::DataTypeLong)
-               //{
-               // v.SetLong(atoi(reslt[i]));
-               //}
-               //else
-               //{
-               // string str;
-               //::str::international::utf8_to_unicode(str, reslt[i]);
-               v = reslt[i];
-               //}
-            }
-            rec.set_at_grow(i, v);//(long)5;//reslt[i];
-         }
-         r->records.set_at_grow(sz, rec);
-      }
-      //cout <<"Fsz:"<<r->record_header.size()<<"\n";
-      // cout << "Recs:"<<r->records.size() <<" m_value |" <<reslt<<"|"<<cols<<"|"<<"\n\n";
-      return 0;
    }
+   
+   
+   database::record rec;
+   var v;
+   
+   if (reslt != NULL)
+   {
+      for (int32_t i=0; i<ncol; i++)
+      {
+         if (reslt[i] == NULL)
+         {
+            v = "";
+            v.set_type(var::type_null);
+         }
+         else
+         {
+            //if(r->record_header[i].type == vmssqlite::DataTypeDouble)
+            //{
+            // v.SetDouble(strtod(reslt[i], NULL));
+            //}
+            //if(r->record_header[i].type == vmssqlite::DataTypeLong)
+            //{
+            // v.SetLong(atoi(reslt[i]));
+            //}
+            //else
+            //{
+            // string str;
+            //::str::international::utf8_to_unicode(str, reslt[i]);
+            v = reslt[i];
+            //}
+         }
+         rec.set_at_grow(i, v);//(long)5;//reslt[i];
+      }
+      r->records.set_at_grow(sz, rec);
+   }
+   //cout <<"Fsz:"<<r->record_header.size()<<"\n";
+   // cout << "Recs:"<<r->records.size() <<" m_value |" <<reslt<<"|"<<cols<<"|"<<"\n\n";
+   return 0;
+}
 
-
-
-} // namespace vmssqlite

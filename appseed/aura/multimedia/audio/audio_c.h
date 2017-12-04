@@ -40,20 +40,29 @@ typedef void WAVEOUT_CALLBACK(LPWAVEOUT pwaveout, unsigned int uiMessage, void *
 
 typedef WAVEOUT_CALLBACK * LPWAVEOUT_CALLBACK;
 
-
+#ifndef CLASS_DECL_AURA
+#if defined(_ACID_LIBRARY)
+#define CLASS_DECL_AURA
+#elif defined(_AURA_LIBRARY)
+#define CLASS_DECL_AURA  __declspec(dllexport)
+#define LIBIDN_BUILDING
+#else
+#define CLASS_DECL_AURA  __declspec(dllimport)
+#endif
+#endif
 
 typedef LPWAVEOUT( * LPWAVEOUT_OPEN )(int iChanel, LPAUDIOFORMAT pformat, LPWAVEOUT_CALLBACK pcallback);
 
 
-LPWAVEOUT waveout_open(int iChanel, LPAUDIOFORMAT pformat, LPWAVEOUT_CALLBACK pcallback);
+CLASS_DECL_AURA LPWAVEOUT waveout_open(int iChanel, LPAUDIOFORMAT pformat, LPWAVEOUT_CALLBACK pcallback);
 
-int waveout_start(LPWAVEOUT pwaveout);
+CLASS_DECL_AURA int waveout_start(LPWAVEOUT pwaveout);
 
-int waveout_write(LPWAVEOUT pwaveout, const void * pdata, unsigned int s);
+CLASS_DECL_AURA int waveout_write(LPWAVEOUT pwaveout, const void * pdata, unsigned int s);
 
-int waveout_stop(LPWAVEOUT pwaveout);
+CLASS_DECL_AURA int waveout_stop(LPWAVEOUT pwaveout);
 
-int waveout_close(LPWAVEOUT pwaveout);
+CLASS_DECL_AURA int waveout_close(LPWAVEOUT pwaveout);
 
 
 

@@ -1,4 +1,4 @@
-/**
+﻿/**
  **   \file Ajp13Socket.cpp
  **   \date  2007-10-05
  **   \author grymse@alhem.net
@@ -28,11 +28,11 @@ namespace sockets
 {
 
 
-   #ifdef DEBUG
-   #define DEB(x) x
-   #else
-   #define DEB(x)
-   #endif
+#ifdef DEBUG
+#define DEB(x) x
+#else
+#define DEB(x)
+#endif
 
 
    Ajp13Socket::Ajp13Socket(base_socket_handler& h) :
@@ -90,12 +90,12 @@ namespace sockets
          msg[0] = 'A';
          msg[1] = 'B';
 
-   // reply codes
-   //   0x3 Send Body Chunk
-   //   0x4 Send Headers
-   //   0x5 End Response
-   //   0x6 get Body Chunk   <------
-   //   0x9 CPong Reply
+         // reply codes
+         //   0x3 Send Body Chunk
+         //   0x4 Send Headers
+         //   0x5 End Response
+         //   0x6 get Body Chunk   <------
+         //   0x9 CPong Reply
 
          put_byte(msg, ptr, 0x06); // GET_BODY_CHUNK;
          put_integer(msg, ptr, 1000); // request 1000 bytes
@@ -152,15 +152,15 @@ namespace sockets
          switch ( (uchar)buf[ptr]) // 0xa0
          {
          case 0xa0:
+         {
+            uint16_t x = (uint16_t)get_integer(buf, ptr);
+            if (!Session.sockets().m_pajpaxissocketinit->header.Lookup(x, key))
             {
-               uint16_t x = (uint16_t)get_integer(buf, ptr);
-               if (!Session.sockets().m_pajpaxissocketinit->header.Lookup(x, key))
-               {
-                  TRACE("Unknown header key value: %x\n", x);
-                  SetCloseAndDelete();
-               }
+               TRACE("Unknown header key value: %x\n", x);
+               SetCloseAndDelete();
             }
-            break;
+         }
+         break;
 
          default: // string
             key = get_string(buf, ptr);
@@ -186,13 +186,13 @@ namespace sockets
             key = get_string(buf, ptr);
             break;
          default:
+         {
+            if(!Session.sockets().m_pajpaxissocketinit->Attribute.Lookup(code, key))
             {
-               if(!Session.sockets().m_pajpaxissocketinit->Attribute.Lookup(code, key))
-               {
-                  TRACE("Unknown attribute key: 0x%02x\n", buf[ptr]);
-                  SetCloseAndDelete();
-               }
+               TRACE("Unknown attribute key: 0x%02x\n", buf[ptr]);
+               SetCloseAndDelete();
             }
+         }
          }
          key.make_lower();
          m_request.attrs()[key] = get_string(buf, ptr);
@@ -254,12 +254,12 @@ namespace sockets
       msg[0] = 'A';
       msg[1] = 'B';
 
-   // reply codes
-   //   0x3 Send Body Chunk
-   //   0x4 Send Headers
-   //   0x5 End Response
-   //   0x6 get Body Chunk
-   //   0x9 CPong Reply
+      // reply codes
+      //   0x3 Send Body Chunk
+      //   0x4 Send Headers
+      //   0x5 End Response
+      //   0x6 get Body Chunk
+      //   0x9 CPong Reply
 
       // check content length
       if (!m_response.ContentLength() && m_response.file().get_length())
@@ -277,7 +277,7 @@ namespace sockets
          for(auto property : m_response.m_propertysetHeader)
          {
             string strNameLower(property.name());
-            strNameLower;
+            strNameLower.make_lower();
             int32_t iValue;
             if(Session.sockets().m_pajpaxissocketinit->ResponseHeader.Lookup(strNameLower, iValue))
             {
@@ -290,22 +290,22 @@ namespace sockets
             put_string(msg, ptr, property.name());
          }
          ::exception::throw_not_implemented(get_app());
-   /*      list<string> vec = m_response.CookieNames();
-         {
-            for (list<string>::iterator it = vec.begin(); it != vec.end(); it++)
-            {
-               Utility::ncmap<int32_t>::const_iterator it2 = dynamic_cast < application_interface * >(::get_app())->m_pajpaxissocketinit->ResponseHeader.find( __id(set_cookie) );
-               if (it2 != dynamic_cast < application_interface * >(::get_app())->m_pajpaxissocketinit->ResponseHeader.end())
+         /*      list<string> vec = m_response.CookieNames();
                {
-                  put_integer(msg, ptr, it2 -> m_element2);
-               }
-               else
-               {
-                  put_string(msg, ptr, __id(set_cookie));
-               }
-               put_string(msg, ptr, m_response.Cookie(*it) );
-            }
-         }*/
+                  for (list<string>::iterator it = vec.begin(); it != vec.end(); it++)
+                  {
+                     Utility::ncmap<int32_t>::const_iterator it2 = dynamic_cast < application_interface * >(::get_app())->m_pajpaxissocketinit->ResponseHeader.find( __id(set_cookie) );
+                     if (it2 != dynamic_cast < application_interface * >(::get_app())->m_pajpaxissocketinit->ResponseHeader.end())
+                     {
+                        put_integer(msg, ptr, it2 -> m_element2);
+                     }
+                     else
+                     {
+                        put_string(msg, ptr, __id(set_cookie));
+                     }
+                     put_string(msg, ptr, m_response.Cookie(*it) );
+                  }
+               }*/
 
          int16_t len = htons((u_short) ( ptr - 4 ));
          memcpy( msg + 2, &len, 2 );

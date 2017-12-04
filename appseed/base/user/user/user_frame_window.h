@@ -1,75 +1,6 @@
 #pragma once
 
 
-#ifndef TBSTYLE_FLAT
-#define TBSTYLE_BUTTON          0x0000  // obsolete; use BTNS_BUTTON instead
-#define TBSTYLE_SEP             0x0001  // obsolete; use BTNS_SEP instead
-#define TBSTYLE_CHECK           0x0002  // obsolete; use BTNS_CHECK instead
-#define TBSTYLE_GROUP           0x0004  // obsolete; use BTNS_GROUP instead
-#define TBSTYLE_CHECKGROUP      (TBSTYLE_GROUP | TBSTYLE_CHECK)     // obsolete; use BTNS_CHECKGROUP instead
-#define TBSTYLE_DROPDOWN        0x0008  // obsolete; use BTNS_DROPDOWN instead
-#define TBSTYLE_AUTOSIZE        0x0010  // obsolete; use BTNS_AUTOSIZE instead
-#define TBSTYLE_NOPREFIX        0x0020  // obsolete; use BTNS_NOPREFIX instead
-
-#define TBSTYLE_TOOLTIPS        0x0100
-#define TBSTYLE_WRAPABLE        0x0200
-#define TBSTYLE_ALTDRAG         0x0400
-#define TBSTYLE_FLAT            0x0800
-#define TBSTYLE_LIST            0x1000
-#define TBSTYLE_CUSTOMERASE     0x2000
-#define TBSTYLE_REGISTERDROP    0x4000
-#define TBSTYLE_TRANSPARENT     0x8000
-#endif
-
-/////////////////////////////////////////////////////////////////////////////
-// General style bits etc
-
-// ControlBar styles
-#define CBRS_ALIGN_LEFT     0x1000L
-#define CBRS_ALIGN_TOP      0x2000L
-#define CBRS_ALIGN_RIGHT    0x4000L
-#define CBRS_ALIGN_BOTTOM   0x8000L
-#define CBRS_ALIGN_ANY      0xF000L
-
-#define CBRS_BORDER_LEFT    0x0100L
-#define CBRS_BORDER_TOP     0x0200L
-#define CBRS_BORDER_RIGHT   0x0400L
-#define CBRS_BORDER_BOTTOM  0x0800L
-#define CBRS_BORDER_ANY     0x0F00L
-
-#define CBRS_TOOLTIPS       0x0010L
-#define CBRS_FLYBY          0x0020L
-#define CBRS_FLOAT_MULTI    0x0040L
-#define CBRS_BORDER_3D      0x0080L
-#define CBRS_HIDE_INPLACE   0x0008L
-#define CBRS_SIZE_DYNAMIC   0x0004L
-#define CBRS_SIZE_FIXED     0x0002L
-#define CBRS_FLOATING       0x0001L
-
-#define CBRS_GRIPPER        0x00400000L
-#define CBRS_LEAVEONFULLSCREEN     0x10000000L
-
-#define CBRS_ORIENT_HORZ    (CBRS_ALIGN_TOP|CBRS_ALIGN_BOTTOM)
-#define CBRS_ORIENT_VERT    (CBRS_ALIGN_LEFT|CBRS_ALIGN_RIGHT)
-#define CBRS_ORIENT_ANY     (CBRS_ORIENT_HORZ|CBRS_ORIENT_VERT)
-
-#define CBRS_ALL            0x0040FFFFL
-//#define CBRS_ALL            0x1140FFFFL
-
-// the CBRS_ style is made up of an alignment style and a draw border style
-//  the alignment styles are mutually exclusive
-//  the draw border styles may be combined
-#define CBRS_NOALIGN        0x00000000L
-#define CBRS_LEFT           (CBRS_ALIGN_LEFT|CBRS_BORDER_RIGHT)
-#define CBRS_TOP            (CBRS_ALIGN_TOP|CBRS_BORDER_BOTTOM)
-#define CBRS_RIGHT          (CBRS_ALIGN_RIGHT|CBRS_BORDER_LEFT)
-#define CBRS_BOTTOM         (CBRS_ALIGN_BOTTOM|CBRS_BORDER_TOP)
-
-
-// Frame interaction_impl styles
-#define FWS_ADDTOTITLE  0x00008000L // modify title based on content
-#define FWS_PREFIXTITLE 0x00004000L // show document name before cast name
-#define FWS_SNAPTOBARS  0x00002000L // snap size to size of contained bars
 
 
 namespace user
@@ -102,6 +33,7 @@ namespace user
    };
 
    class CLASS_DECL_BASE frame_window :
+      virtual public ::user::frame,
       virtual public ::user::box
    {
    public:
@@ -125,6 +57,7 @@ namespace user
          idleLayout = 8
 
       };
+      spa(::user::control_bar)                    m_barptra; // array of all control bars that have this interaction_impl as their dock site
 
       bool                                m_bblur_Background;
 
@@ -147,7 +80,6 @@ namespace user
       ::user::frame_window *     m_pNextFrameWnd; // next frame_window in cast global list
       rect                       m_rectBorder;         // for OLE border space negotiation
 
-      spa(control_bar)           m_barptra; // array of all control bars that have this interaction_impl as their dock site
       int32_t                    m_nShowDelay;           // SW_ command for delay show/hide
 
       bool                       m_bFrameMoveEnable;
@@ -168,13 +100,18 @@ namespace user
 
       ::user::impact *           m_pviewMain;
 
-      
+
 
 
       frame_window();
       virtual ~frame_window();
 
-      void CommonConstruct();
+
+      void common_construct();
+
+
+      virtual void assert_valid() const override;
+      virtual void dump(dump_context & dc) const override;
 
 
       virtual void OnInitialFrameUpdate(bool bMakeVisible);
@@ -184,19 +121,19 @@ namespace user
       virtual void GetBorderRect(LPRECT lprect);
       virtual bool _001IsFrameWnd();
 
-
+      virtual bool IsFullScreen() override;
       //virtual ::user::OleFrameHook * GetNotifyHook();
       virtual void NotifyFloatingWindows(uint32_t dwFlags);
 
-      virtual string get_window_default_matter();
-      virtual ::user::interaction::e_type get_window_type();
+      virtual string get_window_default_matter() override;
+      virtual ::user::interaction::e_type get_window_type() override;
 
 
       virtual void on_simple_command(::message::simple_command * psimplecommand) override;
       virtual void on_command(::user::command * pcommand) override;
       //virtual void _000OnDraw(::draw2d::graphics * pgraphics);
       //virtual void _001OnDraw(::draw2d::graphics * pgraphics);
-      virtual void install_message_routing(::message::sender * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface) override;
 
       DECL_GEN_SIGNAL(_guserbaseOnInitialUpdate);
       DECL_GEN_SIGNAL(guserbaseOnInitialUpdate);
@@ -206,30 +143,28 @@ namespace user
       virtual void defer_synch_layered();
       virtual bool calc_layered();
 
-      virtual void assert_valid() const;
-      virtual void dump(dump_context & dc) const;
 
 
-
+      virtual void _001OnDraw(::draw2d::graphics * pgraphics) override;
 
       bool LoadAccelTable(const char * lpszResourceName);
       virtual bool create_window(const char * lpszClassName, const char * lpszWindowName, uint32_t dwStyle, const RECT & rect = ::null_rect(), ::user::interaction * puiParent = NULL, const char * lpszMenuName = NULL, uint32_t dwExStyle = 0, ::create * pcreate = NULL);
 
       // dynamic creation - load frame and associated resources
       virtual bool LoadFrame(const char * pszMatter,
-         uint32_t dwDefaultStyle = WS_OVERLAPPEDWINDOW | FWS_ADDTOTITLE,
-         ::user::interaction * pParentWnd = NULL,
-         ::create * pcreate = NULL);
+                             uint32_t dwDefaultStyle = WS_OVERLAPPEDWINDOW | FWS_ADDTOTITLE,
+                             ::user::interaction * pParentWnd = NULL,
+                             ::create * pcreate = NULL);
 
-      virtual bool ShowWindow(int32_t nCmdShow);
+      virtual bool ShowWindow(int32_t nCmdShow) override;
 
 
       // Attributes
       virtual ::user::document * GetActiveDocument();
 
       // Active child ::user::impact maintenance
-      sp(::user::impact) GetActiveView() const;           // active ::user::impact or NULL
-      void SetActiveView(sp(::user::impact) pViewNew, bool bNotify = TRUE);
+      virtual ::user::impact * GetActiveView() const override;           // active ::user::impact or NULL
+      virtual void SetActiveView(::user::impact * pViewNew, bool bNotify = TRUE) override;
       // active ::user::impact or NULL, bNotify == FALSE if focus should not be set
 
       // Active frame (for frames within frames -- MDI)
@@ -244,8 +179,8 @@ namespace user
       bool IsTracking() const;
 
       // Operations
-      virtual void on_layout();
-      virtual void ActivateFrame(int32_t nCmdShow = -1);
+      virtual void on_layout() override;
+      virtual void ActivateFrame(int32_t nCmdShow = -1) override;
       virtual void InitialUpdateFrame(::user::document * pDoc, bool bMakeVisible);
       virtual void InitialFramePosition(bool bForceRestore = false);
       void set_title(const char * lpszTitle);
@@ -274,13 +209,13 @@ namespace user
       void OnUpdateControlBarMenu(::user::command* pCmdUI);
       bool OnBarCheck(UINT nID);
 
-      virtual bool LoadToolBar(id idToolBar, const char * pszToolBar, uint32_t dwCtrlStyle = TBSTYLE_FLAT, uint32_t dwStyle = WS_CHILD | WS_VISIBLE | CBRS_ALIGN_TOP);
+      virtual bool LoadToolBar(id idToolBar, const char * pszToolBar, uint32_t dwCtrlStyle = TBSTYLE_FLAT, uint32_t dwStyle = WS_CHILD | WS_VISIBLE | CBRS_ALIGN_TOP) override;
 
       virtual void _001OnCmdMsg(::user::command * pcommand) override;
       virtual void on_update_frame_title(bool bAddToTitle);
       virtual void OnUpdateFrameMenu(HMENU hMenuAlt);
       virtual HACCEL GetDefaultAccelerator();
-      virtual void pre_translate_message(::message::message * pobj);
+      virtual void pre_translate_message(::message::message * pobj) override;
 
       virtual void DelayUpdateFrameMenu(HMENU hMenuAlt);
       void DelayUpdateFrameTitle();
@@ -288,15 +223,15 @@ namespace user
 
       // for Shift+F1 help support
       bool CanEnterHelpMode();
-      virtual void ExitHelpMode();
+      virtual void ExitHelpMode() override;
 
 
       void UpdateFrameTitleForDocument(const char * lpszDocName);
-      virtual bool pre_create_window(::user::create_struct& cs);
+      virtual bool pre_create_window(::user::create_struct& cs) override;
       //virtual bool OnCommand(WPARAM wParam, LPARAM lParam);
-      virtual void PostNcDestroy();   // default to delete this.
+      virtual void PostNcDestroy() override;   // default to delete this.
       int32_t OnCreateHelper(::user::create_struct * lpcs, ::create * pcreate);
-      void BringToTop(int32_t nCmdShow);
+      void BringToTop(int32_t nCmdShow) override;
       // bring interaction_impl to top for SW_ commands which affect z-order
 
       // implementation helpers for Shift+F1 help mode
@@ -325,9 +260,9 @@ namespace user
       bool OnEraseBkgnd(::draw2d::dib * pdib);
       //void OnActivate(UINT nState, sp(::user::interaction) pWndOther, bool bMinimized);
       DECL_GEN_SIGNAL(_001OnActivate);
-         DECL_GEN_SIGNAL(_001OnNcActivate);
-         //bool OnNcActivate(bool bActive);
-         void OnSysCommand(UINT nID, LPARAM lParam);
+      DECL_GEN_SIGNAL(_001OnNcActivate);
+      //bool OnNcActivate(bool bActive);
+      void OnSysCommand(UINT nID, LPARAM lParam);
       bool OnQueryEndSession();
       void OnEndSession(bool bEnding);
 #ifdef WINDOWSEX
@@ -351,10 +286,10 @@ namespace user
 
 
 
-      virtual void _000OnDraw(::draw2d::graphics * pgraphics);
+      virtual void _000OnDraw(::draw2d::graphics * pgraphics) override;
 
 
-      virtual bool BaseOnControlEvent(::user::control_event * pevent);
+      virtual bool BaseOnControlEvent(::user::control_event * pevent) override;
 
 
       sp(::user::interaction) WindowDataGetWnd();
@@ -373,13 +308,13 @@ namespace user
       void data_on_after_change(::message::message * pobj);
 
 
-      virtual bool _001HasCommandHandler(::user::command * pcommand);
+      virtual bool _001HasCommandHandler(::user::command * pcommand) override;
 
 
-      virtual bool get_window_minimum_size(::size & sizeMin);
+      virtual bool get_window_minimum_size(::size & sizeMin) override;
 
 
-      virtual ::user::style * userstyle();
+      virtual ::user::style * userstyle() override;
 
 
    };

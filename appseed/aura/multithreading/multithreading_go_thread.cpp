@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 #if defined(LINUX) || defined(ANDROID)
@@ -22,18 +22,16 @@ go_thread::~go_thread()
 
 void go_thread::start()
 {
-   
+
    begin();
 
 }
 
 
-int32_t go_thread::run()
+void go_thread::run()
 {
-   
-   go();
 
-   return 0;
+   go();
 
 }
 

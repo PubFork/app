@@ -35,7 +35,7 @@ namespace message
       virtual void route_message(message * pmessage)
       {
 
-         throw interface_only_exception(NULL);
+         _throw(interface_only_exception(NULL));
          // has been the pred_route implementation deleted?
 
       }

@@ -11,7 +11,7 @@ plex* plex::create(plex*& pHead, uint_ptr nMax, uint_ptr cbElement)
 
    memory_size_t size = sizeof(plex) + nMax * cbElement + CA2_PALACE_SAFE_ZONE_BORDER_SIZE * 2;
    plex* p = (plex*) memory_alloc(size);
-   // may throw exception
+   // may _throw( exception
    p->pNext = pHead;
    pHead = p;  // change head (adds in reverse order for simplicity)
    return p;

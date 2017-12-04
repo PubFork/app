@@ -19,6 +19,7 @@ namespace sphere
 
       virtual bool get_color(COLORREF & cr, ::user::e_color ecolor, ::user::interaction * pui) override;
 
+      virtual bool has_pending_graphical_update() override;
 
    };
 

@@ -2,7 +2,7 @@
 
 
 
-#include "user_windowing.h"
+//#include "user_windowing.h"
 
 
 // Note: afxData.cxBorder and afxData.cyBorder aren't used anymore
@@ -60,7 +60,8 @@ class mini_dock_frame_window;
 
 
 // flags for wParam in the WM_FLOATSTATUS message
-enum {
+enum
+{
    FS_SHOW = 0x01, FS_HIDE = 0x02,
    FS_ACTIVATE = 0x04, FS_DEACTIVATE = 0x08,
    FS_ENABLE = 0x10, FS_DISABLE = 0x20,
@@ -68,14 +69,7 @@ enum {
 };
 
 
-namespace user
-{
 
-
-   CLASS_DECL_BASE void __reposition_window(SIZEPARENTPARAMS * lpLayout,::user::interaction * pui,LPCRECT lpRect);
-
-
-} // namespace user
 
 
 #ifndef LAYOUT_LTR
@@ -93,9 +87,9 @@ namespace user
 //#include "user_print_job.h"
 
 
-#include "user_menu_item.h"
-#include "user_menu_command.h"
-#include "user_menu.h"
+//#include "user_menu_item.h"
+//#include "user_menu_command.h"
+//#include "user_menu.h"
 
 
 
@@ -119,7 +113,7 @@ namespace user
    class CLASS_DECL_BASE map_form_window :
       virtual public strsp(::user::form_window)
    {
-   public:
+      public:
 
    };
 

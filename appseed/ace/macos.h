@@ -9,5 +9,5 @@
 #pragma once
 
 
-int get_processor_count();
+int get_processor_count(void);
 

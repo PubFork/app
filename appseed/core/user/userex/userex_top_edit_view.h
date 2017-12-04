@@ -17,15 +17,15 @@ namespace userex
       top_edit_view(::aura::application * papp);
       virtual ~top_edit_view();
 
-      virtual void _001OnAfterChangeText(::action::context actioncontext);
+      virtual void _001OnAfterChangeText(::action::context actioncontext) override;
 
-      void on_update(::user::impact * pSender, LPARAM lHint, object* phint);
+      void on_update(::user::impact * pSender, LPARAM lHint, object* phint) override;
 
-      virtual void install_message_routing(::message::sender * psender);
+      virtual void install_message_routing(::message::sender * psender) override;
 
       DECL_GEN_SIGNAL(_001OnCreate);
 
-      bool keyboard_focus_is_focusable();
+      bool keyboard_focus_is_focusable() override;
 
       //virtual int64_t add_ref();
 

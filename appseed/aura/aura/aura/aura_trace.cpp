@@ -27,7 +27,7 @@ namespace aura
       CLASS_DECL_AURA void raw_trace_v(const char *pszFileName, int32_t nLine, uint32_t dwCategory, uint32_t nLevel, const char * pszFmt, va_list args);
       CLASS_DECL_AURA PFN_trace_v trace_v = &raw_trace_v;
 
-      /*   category::category( const char * pszCategoryName, UINT nStartingLevel ) throw() :
+      /*   category::category( const char * pszCategoryName, UINT nStartingLevel ) NOTHROW :
       m_dwCategory( 0 )
       {
       m_dwCategory = ::core::CTrace::s_trace.RegisterCategory( pszCategoryName );
@@ -113,7 +113,7 @@ namespace aura
       }
 
 
-      void category::SetLevel( UINT nLevel ) throw()
+      void category::SetLevel( UINT nLevel ) NOTHROW
       {
          
          m_uiLevel = nLevel;
@@ -121,7 +121,7 @@ namespace aura
       }
 
       
-      e_status category::GetStatus() const throw()
+      e_status category::GetStatus() const NOTHROW
       {
          
          return m_estatus;
@@ -129,7 +129,7 @@ namespace aura
       }
 
       
-      void category::SetStatus( e_status eStatus ) throw()
+      void category::SetStatus( e_status eStatus ) NOTHROW
       {
          
          m_estatus = eStatus;
@@ -137,13 +137,13 @@ namespace aura
       }
 
 
-      category::operator uint32_t() const throw()
+      category::operator uint32_t() const NOTHROW
       {
          return( m_dwCategory );
       }
 
 
-      UINT category::GetLevel() const throw()
+      UINT category::GetLevel() const NOTHROW
       {
          
          return m_uiLevel;

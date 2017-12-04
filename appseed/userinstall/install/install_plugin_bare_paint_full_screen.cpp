@@ -2,7 +2,7 @@
 //#include "base/user/user.h"
 
 
-#ifdef HOTPLUGIN_SUBSYSTEM
+#ifdef 
 
 
 namespace hotplugin

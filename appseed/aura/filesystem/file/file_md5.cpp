@@ -1,5 +1,7 @@
 #include "framework.h"
+#include "aura/aura/crypto/crypto_openssl.h"
 #include <stdio.h>
+#include <openssl/md5.h>
 
 
 /////////////////////////////////////////////////////
@@ -20,36 +22,22 @@ string file_md5_dup(const char * psz)
       bufMd5 = new unsigned char[iBufSize];
    }
    unsigned char * buf = bufMd5;
-   aura::md5 alg;
+   MD5_CTX ctx;
+   MD5_Init(&ctx);
    UINT_PTR iRead;
    while((iRead = fread(buf,1,iBufSize,f)) > 0)
    {
-      alg.update(buf,iRead);
+      MD5_Update(&ctx, buf,iRead);
    }
-   alg.finalize();
    fclose(f);
-   string str;
-   char chbuf[32];
-   for(int i = 0; i < 16; i++)
-   {
-      sprintf(chbuf,"%02x",alg.digest()[i]);
-      str += chbuf;
-   }
-   return str;
+   return ::str::from(ctx);
 }
 
 string str_md5_dup(const char * psz)
 {
-   aura::md5 alg;
-   alg.update((void *) psz,strlen(psz));
-   alg.finalize();
-   string str;
-   char chbuf[32];
-   for(int i = 0; i < 16; i++)
-   {
-      sprintf(chbuf,"%02x",alg.digest()[i]);
-      str += chbuf;
-   }
-   return str;
+   MD5_CTX ctx;
+   MD5_Init(&ctx);
+   MD5_Update(&ctx,   (void *) psz,strlen(psz));
+   return str::from(ctx);
 }
 

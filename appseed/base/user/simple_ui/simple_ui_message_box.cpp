@@ -135,7 +135,7 @@ namespace simple_ui
       rectFontopus.bottom = rectFontopus.top + h;
 
       if(!create_window_ex(WS_EX_LAYERED,NULL,NULL,0,rectFontopus,puiParent,"fontopus"))
-         throw simple_exception(get_app(),"not excepted! Failing Message box!!");
+         _throw(simple_exception(get_app(),"not excepted! Failing Message box!!"));
 
       TRACE("(1) Just after create_window_ex for simple_message_box (m_pimpl.m_p) : %d",m_pimpl.m_p);
       TRACE("(2) Just after create_window_ex for simple_message_box (m_pimpl->m_pui) : %d",m_pimpl->m_pui);
@@ -512,9 +512,9 @@ int32_t simple_ui_message_box(oswindow interaction_impl,const char * lpText,cons
 
 #endif
 
-//   if(::get_thread_app() == NULL || ::get_thread_app()->m_pbasesession == NULL
-  //    || &Sys(::get_thread_app()) == NULL || Sys(::get_thread_app()).get_twf() == NULL)
-   if(::get_thread_app() == NULL || ::get_thread_app()->m_paxissession == NULL || ::user::g_pmapImpl == NULL)
+//   if(get_app() == NULL || get_app()->m_pbasesession == NULL
+  //    || &System == NULL || System.get_twf() == NULL)
+   if(get_app() == NULL || get_app()->m_paxissession == NULL || ::user::g_pmapImpl == NULL)
    {
 
       return system_message_box(interaction_impl,lpText,lpCaption,uiFlags);
@@ -525,20 +525,20 @@ int32_t simple_ui_message_box(oswindow interaction_impl,const char * lpText,cons
 
    {
 
-      ::simple_ui::message_box * pmessagebox = new ::simple_ui::message_box(::get_thread_app(),lpText,lpCaption,uiFlags);
+      ::simple_ui::message_box * pmessagebox = new ::simple_ui::message_box(get_app(),lpText,lpCaption,uiFlags);
 
       try
       {
 
 
-         //__begin_thread(::get_thread_app(),&thread_proc_simple_ui_message_box,pmessagebox);
+         //__begin_thread(get_app(),&thread_proc_simple_ui_message_box,pmessagebox);
          thread_proc_simple_ui_message_box(pmessagebox);
          //pmessagebox->show();
 
          //while(!pmessagebox->m_evReady.wait(millis(23)).signaled())
          //{
 
-           // ::get_thread_app()->defer_pump_message();
+           // get_app()->defer_pump_message();
 
          //}
 

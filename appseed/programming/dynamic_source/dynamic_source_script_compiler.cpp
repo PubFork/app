@@ -263,7 +263,7 @@ void script_compiler::prepare_compile_and_link_environment()
 
 //#ifdef METROWIN
 //
-//   throw todo(get_app());
+//   _throw(todo(get_app()));
 //
 //#elif defined(LINUX)
 //#else
@@ -290,7 +290,7 @@ void script_compiler::prepare_compile_and_link_environment()
 #endif
 //#elif defined(METROWIN)
 //
-//   throw todo(get_app());
+//   _throw(todo(get_app()));
 //
 //#else
 //   str += getenv("PATH");
@@ -300,7 +300,7 @@ void script_compiler::prepare_compile_and_link_environment()
 //   bResult = SetEnvironmentVariable("PATH", str) != FALSE;
 //#elif defined(METROWIN)
 //
-//   throw todo(get_app());
+//   _throw(todo(get_app()));
 //
 //#elif defined(LINUX)
 //#else
@@ -568,7 +568,7 @@ void script_compiler::compile(ds_script * pscript)
    }
    catch(string strError)
    {
-      TRACE0(strError + "\n");
+      TRACE("%s", strError);
    }
    try
    {
@@ -579,7 +579,7 @@ void script_compiler::compile(ds_script * pscript)
    }
    catch(string strError)
    {
-      TRACE0(strError + "\n");
+      TRACE("%s", strError);
    }
    try
    {
@@ -590,7 +590,7 @@ void script_compiler::compile(ds_script * pscript)
    }
    catch(string strError)
    {
-      TRACE0(strError + "\n");
+      TRACE("%s", strError);
    }
 #ifndef LINUX
 
@@ -793,7 +793,7 @@ void script_compiler::compile(ds_script * pscript)
 
       }
 
-      strBuildCmd;
+      //strBuildCmd;
 
 #ifdef LINUX
       strBuildCmd.Format(System.dir().element() / "nodeapp\\stage\\dynamic_source" / m_strDynamicSourceConfiguration + "_cl" + m_strPlat1 + ".bash");
@@ -2202,7 +2202,7 @@ string script_compiler::cppize2(const string & psz,bool bScript,stringa & straId
                   strResult += ":*<invalid-syntax>*:"; // fatal;
                   break;
                   break;
-                  //throw simple_exception(get_app(), "invalid syntax.");
+                  //_throw(simple_exception(get_app(), "invalid syntax."));
                }
             }
             continue;

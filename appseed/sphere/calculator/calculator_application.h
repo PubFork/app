@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace calculator
@@ -17,7 +17,7 @@ namespace calculator
       virtual ~application();
 
 
-      bool initialize();
+      virtual bool init_instance() override;
 
 
 

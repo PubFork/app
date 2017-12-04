@@ -1,8 +1,16 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include <stdio.h>
 
 
+namespace user
+{
 
+
+   CLASS_DECL_AURA void init_windowing();
+   CLASS_DECL_AURA void term_windowing();
+
+
+} // namespace user
 
 //CLASS_DECL_AURA aura_str_pool * s_paurastrpool = NULL;
 
@@ -28,7 +36,7 @@ CLASS_DECL_AURA void debug_print(const char * pszFormat,...)
    {
 
       return;
-   
+
    }
 
    //if (strstr(pszFormat, "%") == NULL)
@@ -62,14 +70,14 @@ CLASS_DECL_AURA void debug_print(const char * pszFormat,...)
 //
 //} // namespace std
 
-int32_t ___()
-{
-
-   simple_message_box(NULL,"___ library of ca","___ library of ca",MB_ICONINFORMATION | MB_OK);
-
-   return 0;
-
-}
+//int32_t ___()
+//{
+//
+//   simple_message_box(NULL,"___ library of ca","___ library of ca",MB_ICONINFORMATION | MB_OK);
+//
+//   return 0;
+//
+//}
 
 
 void __post_quit_message(int32_t nExitCode)
@@ -81,21 +89,36 @@ void __post_quit_message(int32_t nExitCode)
 
 #else
 
-   ::multithreading::post_quit(get_thread_app());
+   ::multithreading::post_quit(get_app());
 
 #endif
 
 }
 
-string_map < INT_PTR,INT_PTR > * g_pmapLibrary = NULL;
+string_map < ::aura::PFN_GET_NEW_LIBRARY, ::aura::PFN_GET_NEW_LIBRARY  > * g_pmapLibrary = NULL;
 
-string_map < INT_PTR, INT_PTR > & __library()
+extern "C"
+CLASS_DECL_AURA string_map < ::aura::PFN_GET_NEW_LIBRARY, ::aura::PFN_GET_NEW_LIBRARY  > & __library()
 {
+
    return *g_pmapLibrary;
+
 }
 
+extern "C"
+CLASS_DECL_AURA::aura::PFN_GET_NEW_LIBRARY get_library_factory(const char * psz)
+{
 
+   return __library()[psz];
 
+}
+
+extern "C"
+CLASS_DECL_AURA void register_library(const char * psz, ::aura::PFN_GET_NEW_LIBRARY p)
+{
+   __library()[psz] = p;
+
+}
 
 
 int g_iAuraRefCount = 0;
@@ -109,10 +132,10 @@ CLASS_DECL_AURA int get_aura_init()
 }
 
 
-::aura::system * aura_create_aura_system()
+CLASS_DECL_AURA ::aura::system * aura_create_aura_system(app_core * pappcore)
 {
 
-   return new ::aura::system(NULL, NULL);
+   return new ::aura::system(NULL, pappcore, NULL);
 
 }
 
@@ -132,7 +155,10 @@ CLASS_DECL_AURA int_bool defer_aura_init()
 
    s_paurastrpool = new aura_str_pool();
 
+
+   ::user::init_windowing();
    g_bAura = 1;
+
 
 
    return TRUE;
@@ -147,6 +173,8 @@ CLASS_DECL_AURA int_bool defer_aura_term()
 
    if(g_iAuraRefCount >= 1)
       return TRUE;
+
+   ::user::term_windowing();
 
    g_bAura = 0;
 
@@ -285,21 +313,29 @@ CLASS_DECL_AURA const char * g_pszCooperativeLevel;
 
 CLASS_DECL_AURA int g_iDerivedApplication = 0;
 
-::aura::system * create_aura_system()
+::aura::system * create_aura_system(app_core * pappcore)
 {
 
-   return g_pfn_create_system();
+   return g_pfn_create_system(pappcore);
 
 }
 
 
-
-int __cdecl debug_report(int,char const *,int,char const *,char const *,...)
+int __cdecl debug_report(int, char const *, int, char const *, char const *,...)
 {
 
    return 1;
 
 }
+
+
+int __cdecl debug_report(int, wchar_t const *, int, wchar_t const *, wchar_t const *, ...)
+{
+
+   return 1;
+
+}
+
 
 CLASS_DECL_AURA void writeln(const char * psz)
 {
@@ -323,13 +359,13 @@ CLASS_DECL_AURA void c_function_call(void * p)
 END_EXTERN_C
 
 
-template < >
-CLASS_DECL_AURA void function_call(const ::object * p)
-{
-
-   const char * psz = reinterpret_cast< const char * > (p);
-
-}
+//template < >
+//CLASS_DECL_AURA void function_call(const ::object * p)
+//{
+//
+//   const char * psz = reinterpret_cast< const char * > (p);
+//
+//}
 
 
 
@@ -342,6 +378,8 @@ CLASS_DECL_AURA int is_ptr_null(const void * p, size_t s)
    return (((size_t) p) < s);
 
 }
+
+
 
 
 

@@ -42,7 +42,7 @@ CLASS_DECL_AURA void attach_thread_input_to_main_thread(int_bool bAttach);
 
 BEGIN_EXTERN_C
 
-   
+
 //CLASS_DECL_AURA char* getenv(const char* name);
 //CLASS_DECL_AURA HANDLE WINAPI CreateMutex(_In_opt_ LPSECURITY_ATTRIBUTES lpMutexAttributes, _In_ BOOL bInitialOwner, _In_opt_ LPCSTR lpName  );
 END_EXTERN_C

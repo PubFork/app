@@ -48,10 +48,10 @@ namespace base
 
 //      _term_args();
 
-      //::simple_message_box(NULL,"t3=" + ::str::from(m_iReturnCode),"t3",MB_OK);
+      //::simple_message_box(NULL,"t3=" + ::str::from(m_iErrorCode),"t3",MB_OK);
 
 
-      return m_iReturnCode;
+      return m_iErrorCode;
 
    }
 
@@ -61,7 +61,7 @@ namespace base
 
       try
       {
-         if((m_iReturnCode = simple_app_pre_run()) != 0)
+         if((m_iErrorCode = simple_app_pre_run()) != 0)
          {
             return;
 
@@ -70,8 +70,8 @@ namespace base
       catch(...)
       {
 
-         if(m_iReturnCode == 0)
-            m_iReturnCode = -1;
+         if(m_iErrorCode == 0)
+            m_iErrorCode = -1;
 
          return;
 
@@ -88,25 +88,25 @@ namespace base
          if(!pre_run())
          {
 
-            if(m_iReturnCode == 0)
-               m_iReturnCode = -1;
+            if(m_iErrorCode == 0)
+               m_iErrorCode = -1;
 
             return;
 
          }
 
-         dappy(string(typeid(*this).name()) + " : s_app pre_runned : " + ::str::from(m_iReturnCode));
+         dappy(string(typeid(*this).name()) + " : s_app pre_runned : " + ::str::from(m_iErrorCode));
 
          SetCurrentHandles();
 
-         dappy(string(typeid(*this).name()) + " : handles set s_app : " + ::str::from(m_iReturnCode));
+         dappy(string(typeid(*this).name()) + " : handles set s_app : " + ::str::from(m_iErrorCode));
 
       }
       catch(...)
       {
 
-         if(m_iReturnCode == 0)
-            m_iReturnCode = -1;
+         if(m_iErrorCode == 0)
+            m_iErrorCode = -1;
 
          return;
 
@@ -116,26 +116,26 @@ namespace base
       try
       {
 
-         dappy(string(typeid(*this).name()) + " : s_app going to intro : " + ::str::from(m_iReturnCode));
+         dappy(string(typeid(*this).name()) + " : s_app going to intro : " + ::str::from(m_iErrorCode));
 
          if(!intro())
          {
 
-            if(m_iReturnCode == 0)
-               m_iReturnCode = -1;
+            if(m_iErrorCode == 0)
+               m_iErrorCode = -1;
 
             return;
 
          }
 
-         dappy(string(typeid(*this).name()) + " : s_app introduced : " + ::str::from(m_iReturnCode));
+         dappy(string(typeid(*this).name()) + " : s_app introduced : " + ::str::from(m_iErrorCode));
 
       }
       catch(...)
       {
 
-         if(m_iReturnCode == 0)
-            m_iReturnCode = -1;
+         if(m_iErrorCode == 0)
+            m_iErrorCode = -1;
 
          return;
 
@@ -144,14 +144,14 @@ namespace base
       try
       {
 
-         m_iReturnCode = run();
+         m_iErrorCode = run();
 
       }
       catch(...)
       {
 
-         if(m_iReturnCode == 0)
-            m_iReturnCode = -1;
+         if(m_iErrorCode == 0)
+            m_iErrorCode = -1;
 
          return;
 
@@ -194,13 +194,13 @@ namespace base
       try
       {
 
-         m_iReturnCode = exit_thread();
+         m_iErrorCode = exit_thread();
 
       }
       catch(...)
       {
 
-         m_iReturnCode = -1;
+         m_iErrorCode = -1;
 
       }
 

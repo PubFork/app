@@ -1,7 +1,7 @@
 #include "framework.h"
 
 
-#if defined(INSTALL_SUBSYSTEM)
+#include "install_socket_handler.h"
 
 
 namespace install
@@ -18,10 +18,5 @@ namespace install
 
 
 } // namespace install
-
-
-#endif
-
-
 
 

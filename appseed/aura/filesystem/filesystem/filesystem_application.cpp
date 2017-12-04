@@ -61,22 +61,22 @@ namespace file
    }
 
 
- /*  bool application::exists(const string & strPath)
-   {
+   /*  bool application::exists(const string & strPath)
+     {
 
-      return m_pauraapp->m_paurasystem->m_spfile->exists(strPath, m_pauraapp);
+        return m_pauraapp->m_paurasystem->m_spfile->exists(strPath, m_pauraapp);
 
-   }
+     }
 
-   bool application::exists(const var & var)
-   {
+     bool application::exists(const var & var)
+     {
 
-      const string & strPath = var.get_string();
+        const string & strPath = var.get_string();
 
 
-      return m_pauraapp->m_paurasystem->m_spfile->exists(strPath, m_pauraapp);
+        return m_pauraapp->m_paurasystem->m_spfile->exists(strPath, m_pauraapp);
 
-   }*/
+     }*/
 
 
    var application::length(const ::file::path & pszPath)
@@ -229,7 +229,7 @@ namespace file
 
       if (varFile.get_type() == var::type_element)
       {
-         
+
          spfile = varFile.cast < ::file::file >();
 
          if (spfile.is_set())
@@ -305,7 +305,7 @@ namespace file
       else if(::str::begins_eat_ci(strPath, "matter://"))
       {
 
-          spfile = get_file(App(m_pauraapp).dir().matter(strPath), nOpenFlags);
+         spfile = get_file(App(m_pauraapp).dir().matter(strPath), nOpenFlags);
 
       }
       else
@@ -347,13 +347,13 @@ namespace file
 
    }
 
-/*   ::file::byte_stream application::get_byte_stream(var varFile, UINT nOpenFlags)
-   {
+   /*   ::file::byte_stream application::get_byte_stream(var varFile, UINT nOpenFlags)
+      {
 
-      return get_file(varFile, nOpenFlags);
+         return get_file(varFile, nOpenFlags);
 
-   }
-   */
+      }
+      */
 
    void application::dtf(const ::file::path & pszFile,const ::file::path & pszDir)
    {
@@ -382,17 +382,17 @@ namespace file
    bool application::crypto_set(var varFile,const char * pszData,const char * pszSalt)
    {
 
-      throw interface_only_exception(get_app());
+      _throw(interface_only_exception(get_app()));
 
       return false;
 
    }
-   
-   
+
+
    bool application::crypto_get(var varFile,string & str,const char * pszSalt)
    {
 
-      throw interface_only_exception(get_app());
+      _throw(interface_only_exception(get_app()));
 
       return false;
 

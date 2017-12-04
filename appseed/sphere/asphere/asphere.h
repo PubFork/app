@@ -11,9 +11,9 @@
 
 
 #ifdef __SPHERE__LIBRARY
-   #define CLASS_DECL_SPHERE  CLASS_DECL_EXPORT
+#define CLASS_DECL_SPHERE  CLASS_DECL_EXPORT
 #else
-   #define CLASS_DECL_SPHERE  CLASS_DECL_IMPORT
+#define CLASS_DECL_SPHERE  CLASS_DECL_IMPORT
 #endif
 
 
@@ -44,6 +44,13 @@ namespace sphere
 
 #undef App
 #define App(pcaapp) (pcaapp->cast_app < ::sphere::application > ())
+
+
+#include "app/appseed/sphere/charguess/charguess.h"
+#include "app/appseed/sphere/colorertake5/colorertake5.h"
+#include "app/appseed/sphere/net/mail/mail.h"
+//#include "app/appseed/sphere/net/sockets/bsd/sip/"
+#include "app/appseed/sphere/pcre/pcre.h"
 
 
 #include "asphere_application.h"

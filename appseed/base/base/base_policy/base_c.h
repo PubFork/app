@@ -30,7 +30,6 @@ CLASS_DECL_BASE int_bool defer_base_term();
 #if defined(LINUX)
 
 #include "base/os/ansios/ansios_c.h"
-#include "base/os/linux/linux_c.h"
 
 #elif defined(METROWIN)
 
@@ -39,7 +38,7 @@ CLASS_DECL_BASE int_bool defer_base_term();
 #elif defined(MACOS)
 
 #include "base/os/ansios/ansios_c.h"
-#include "base/os/macos/macos_c.h"
+//#include "base/os/macos/macos_c.h"
 
 #elif defined(ANDROID)
 

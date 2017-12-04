@@ -32,7 +32,7 @@ CLASS_DECL_CORE bool throw_numeric_parser_exception(const string & strMessage)
    if(get_avoid_numeric_parser_exception())
       return false;
 
-   throw numeric_parser_exception(::get_thread_app(),strMessage);
+   _throw(numeric_parser_exception(get_app(),strMessage));
 
    return true;
 

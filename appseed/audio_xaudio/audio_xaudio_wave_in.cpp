@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace multimedia
@@ -23,18 +23,18 @@ namespace multimedia
 
       }
 
-      
+
       wave_in::~wave_in()
       {
 
       }
 
 
-      bool wave_in::initialize_thread()
+      bool wave_in::init_thread()
       {
-         
-         TRACE("wave_in::initialize_instance %X\n", get_os_int());
-         
+
+         TRACE("wave_in::init_instance %X\n", get_os_int());
+
          //SetMainWnd(NULL);
 
          //ASSERT(GetMainWnd() == NULL);
@@ -48,12 +48,12 @@ namespace multimedia
       }
 
 
-      int32_t wave_in::exit_thread()
+      void wave_in::term_thread()
       {
 
          m_eventExitInstance.SetEvent();
 
-         return thread::exit_thread();
+         thread::term_thread();
 
       }
 

@@ -81,10 +81,9 @@ namespace userfs
       DECL_GEN_SIGNAL(_001OnLButtonDblClk);
       DECL_GEN_SIGNAL(_001OnCancelMode);
 
-#ifdef DEBUG
+
       virtual void assert_valid() const;
       virtual void dump(dump_context & dumpcontext) const;
-#endif
 
       ::user::list_data * create_mesh_data();
 

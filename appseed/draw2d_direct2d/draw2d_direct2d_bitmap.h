@@ -5,10 +5,10 @@ namespace draw2d_direct2d
 {
 
 
-   class CLASS_DECL_DRAW2D_DIRECT2D bitmap : 
+   class CLASS_DECL_DRAW2D_DIRECT2D bitmap :
       virtual public ::draw2d_direct2d::object,
       virtual public ::draw2d::bitmap
-      
+
    {
    public:
 
@@ -47,8 +47,10 @@ namespace draw2d_direct2d
       virtual bool CreateBitmapIndirect(::draw2d::graphics * pgraphics, LPBITMAP lpBitmap);
       virtual bool CreateCompatibleBitmap(::draw2d::graphics * pgraphics, int nWidth, int nHeight);
       virtual bool CreateDiscardableBitmap(::draw2d::graphics * pgraphics, int nWidth, int nHeight);
-      virtual bool CreateDIBSection(::draw2d::graphics * pgraphics, const BITMAPINFO * lpbmi, UINT usage, void **ppvBits, int * stride, HANDLE hSection, uint32_t offset);
-      virtual bool CreateDIBitmap(::draw2d::graphics * pgraphics, const BITMAPINFOHEADER *pbmih, uint32_t flInit, const void *pjBits, const BITMAPINFO *pbmi, UINT iUsage);
+      //virtual bool CreateDIBSection(::draw2d::graphics * pgraphics, const BITMAPINFO * lpbmi, UINT usage, void **ppvBits, int * stride, HANDLE hSection, uint32_t offset);
+      //virtual bool CreateDIBitmap(::draw2d::graphics * pgraphics, const BITMAPINFOHEADER *pbmih, uint32_t flInit, const void *pjBits, const BITMAPINFO *pbmi, UINT iUsage);
+      virtual bool CreateDIBSection(::draw2d::graphics * pgraphics, int cx, int cy, UINT usage, void **ppvBits, int * stride, HANDLE hSection, uint32_t offset) override;
+      virtual bool CreateDIBitmap(::draw2d::graphics * pgraphics, int cx, int cy, uint32_t flInit, const void *pjBits, UINT iUsage) override;
 
       virtual bool attach(void * posdata);
       virtual void * detach();

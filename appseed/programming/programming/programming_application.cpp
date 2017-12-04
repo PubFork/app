@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace programming
@@ -25,17 +25,15 @@ namespace programming
 
       SCAST_PTR(::aura::application_message, psignal, pobj);
 
-      if (psignal->m_esignal == ::aura::application_message_process_initialize)
+      if (psignal->m_esignal == ::aura::application_message_process_init)
       {
 
       }
-      else if (psignal->m_esignal == ::aura::application_message_initialize1)
+      else if (psignal->m_esignal == ::aura::application_message_init1)
       {
 
-
-
       }
-      else  if (psignal->m_esignal == ::aura::application_message_exit_instance)
+      else  if (psignal->m_esignal == ::aura::application_message_term_instance)
       {
 
       }
@@ -51,7 +49,7 @@ namespace programming
       {
 
          ::introjection::compiler *  pcompiler = canew(::introjection::compiler(this));
-         
+
          bool bNew;
 
          ::aura::library & lib = pcompiler->compile(::dir::system() / "config\\xmpp_resident\\room\\ca2@livecoding.tv\\xmpp_bot.cpp", bNew);
@@ -60,7 +58,7 @@ namespace programming
          {
 
             return;
-            
+
 
          }
 

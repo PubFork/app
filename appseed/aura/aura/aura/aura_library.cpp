@@ -1,7 +1,7 @@
 #include "framework.h"
 
 
-string_map < INT_PTR,INT_PTR > & __library();
+
 
 
 namespace aura
@@ -40,12 +40,12 @@ namespace aura
       {
 
          m_strRoot = pszRoot;
-         
+
          if(m_strRoot.find('/') > 0)
          {
-         
+
             m_strRoot = m_strRoot.substr(0, m_strRoot.find('/'));
-            
+
          }
 
       }
@@ -66,11 +66,16 @@ namespace aura
 
       m_strMessage.Empty();
 
-#if defined(CUBE)
+      auto pfn_get_new_library = get_library_factory(pszPath);
 
-      m_strPath = pszPath;
+      if (pfn_get_new_library != NULL)
+      {
 
-#else
+         m_strPath = pszPath;
+
+         return true;
+
+      }
 
       try
       {
@@ -109,8 +114,6 @@ namespace aura
 
       }
 
-#endif
-
       thisend << m_strMessage;
 
       return true;
@@ -129,24 +132,34 @@ namespace aura
       PFN_GET_NEW_LIBRARY pfn_get_new_library = NULL;
 
       try
-
       {
-#if defined(CUBE)
-         pfn_get_new_library = (PFN_GET_NEW_LIBRARY)(INT_PTR)__library()[m_strPath + "_get_new_library"];
-#else
-         string strPath = m_strPath.title();
-         if((pfn_get_new_library = get < PFN_GET_NEW_LIBRARY >(strPath + "_get_new_library")) == NULL)
+
+         pfn_get_new_library = get_library_factory(m_strPath);
+
+         if (pfn_get_new_library == NULL)
          {
-            if(::str::begins_eat(strPath, "lib"))
+
+            string strPath = m_strPath.title();
+
+            if ((pfn_get_new_library = get < PFN_GET_NEW_LIBRARY >(strPath + "_get_new_library")) == NULL)
             {
-               pfn_get_new_library = get < PFN_GET_NEW_LIBRARY >(strPath + "_get_new_library");
+               if (::str::begins_eat(strPath, "lib"))
+               {
+
+                  pfn_get_new_library = get < PFN_GET_NEW_LIBRARY >(strPath + "_get_new_library");
+
+               }
+
+               if (pfn_get_new_library == NULL)
+               {
+
+                  pfn_get_new_library = get < PFN_GET_NEW_LIBRARY >("get_new_library");
+
+               }
+
             }
-            if(pfn_get_new_library == NULL)
-            {
-               pfn_get_new_library = get < PFN_GET_NEW_LIBRARY >("get_new_library");
-            }
+
          }
-#endif
 
       }
       catch(...)
@@ -254,10 +267,10 @@ namespace aura
 
    }
 
-void * library::get_os_data()
-{
-   return m_plibrary;
-}
+   void * library::get_os_data()
+   {
+      return m_plibrary;
+   }
    bool library::close()
    {
       try
@@ -265,20 +278,7 @@ void * library::get_os_data()
 
          bool bOk = true;
 
-         try
-         {
-
-            ::aura::del(m_pca2library);
-
-         }
-         catch(...)
-         {
-
-            m_pca2library = NULL;
-
-            bOk = false;
-
-         }
+         m_pca2library.release();
 
          if (m_bAutoUnload)
          {
@@ -478,10 +478,10 @@ void * library::get_os_data()
       {
 
          string strAppId = m_strCa2Name;
-         
+
          stra.add(strAppId);
-         
-//         
+
+//
 //
 //         string strPrefix = get_root();
 //
@@ -632,7 +632,7 @@ string_map < sp(::aura::library) > * g_pmapLibCall = NULL;
 
    if(lib.is_null())
    {
-      lib = canew(::aura::library(::get_thread_app()));
+      lib = canew(::aura::library(get_app()));
       lib->open(psz);
    }
 
@@ -644,25 +644,29 @@ string_map < sp(::aura::library) > * g_pmapLibCall = NULL;
 
 #if defined(LINUX)
 
-::file::path libfilename(const string & str) {
+::file::path libfilename(const string & str)
+{
    return "lib" + str + ".so";
 }
 
 #elif defined(VSNORD)
 
-::file::path libfilename(const string & str) {
+::file::path libfilename(const string & str)
+{
    return "lib" + str + ".so";
 }
 
 #elif defined(WINDOWS)
 
-::file::path libfilename(const string & str) {
+::file::path libfilename(const string & str)
+{
    return str + ".dll";
 }
 
 #elif defined(APPLEOS)
 
-::file::path libfilename(const string & str) {
+::file::path libfilename(const string & str)
+{
    return "lib" + str + ".dylib";
 }
 

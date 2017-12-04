@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace axis
@@ -7,11 +7,13 @@ namespace axis
 
    class CLASS_DECL_AXIS application :
       virtual public ::aura::application,
+      virtual public ::user::interactive,
       virtual public ::database::client
    {
    public:
 
-      bool m_bInitializeDataCentral;
+
+      bool                                            m_bInitializeDataCentral;
       bool                                            m_bAxisProcessInitialize;
       bool                                            m_bAxisProcessInitializeResult;
 
@@ -55,11 +57,16 @@ namespace axis
       application();
       virtual ~application();
 
+
+      virtual void assert_valid() const override;
+      virtual void dump(dump_context & dumpcontext) const override;
+
+
       virtual bool app_data_get(class id id, ::file::ostream & os);
       virtual bool app_data_set(class id id, ::file::istream & is);
 
-      virtual bool app_data_set(class id id, ::file::serializable & obj);
-      virtual bool app_data_get(class id id, ::file::serializable & obj);
+      virtual bool app_data_set(class id id, ::file::serializable & obj) override;
+      virtual bool app_data_get(class id id, ::file::serializable & obj) override;
 
 
       virtual string fontopus_get_cred(::aura::application * papp, const string & strRequestUrl, const RECT & rect, string & strUsername, string & strPassword, string strToken, string strTitle, bool bInteractive, ::user::interactive * pinteractive) override;
@@ -67,14 +74,14 @@ namespace axis
       virtual void set_cred(string strToken, const char * pszUsername, const char * pszPassword);
       virtual void set_cred_ok(string strToken, bool bOk);
 
-
+      virtual string calc_data_id() override;
 
       virtual string load_string(id id) override;
       virtual bool load_string(string & str, id id) override;
       virtual void load_string_table() override;
-      virtual      bool load_cached_string(string & str, id id, bool bLoadStringTable) override;
-      virtual   bool load_cached_string_by_id(string & str, id id, bool bLoadStringTable) override;
-      virtual   void load_string_table(const string & pszApp, const string & pszId) override;
+      virtual bool load_cached_string(string & str, id id, bool bLoadStringTable) override;
+      virtual bool load_cached_string_by_id(string & str, id id, bool bLoadStringTable) override;
+      virtual void load_string_table(const string & pszApp, const string & pszId) override;
 
 
 
@@ -83,52 +90,52 @@ namespace axis
       virtual bool is_serviceable() override;
 
 
-
-
-
-
-
-
       inline class ::simpledb::simpledb         & simpledb() { return m_simpledb; }
       inline ::database::server &               dataserver() { return *m_simpledb.get_data_server(); }
-
-
 
 
       virtual bool verb() override;
 
 
-
-
       virtual bool Ex2OnAppInstall() override;
       virtual bool Ex2OnAppUninstall() override;
 
+      virtual bool init_application() override;
+
+      virtual bool init1() override;
+      virtual bool init2() override;
+      virtual bool init3() override;
 
 
-      virtual bool initialize1() override;
-      virtual bool initialize2() override;
-      virtual bool initialize3() override;
-
-      virtual bool initialize_application();
-      virtual int32_t exit_application() override;
-
-      virtual bool initialize() override;
-      virtual bool finalize() override;
+      virtual bool init() override;
 
 
+      virtual bool init_instance() override;
 
-      virtual int32_t run() override;
 
-      virtual int32_t main() override;
-      virtual int32_t on_run() override;
-      virtual int32_t application_pre_run() override;
+      virtual void run() override;
+
+      virtual void main() override;
+      virtual void on_run() override;
+      virtual bool application_pre_run() override;
       virtual bool initial_check_directrix() override;
       virtual bool os_native_bergedge_start() override;
+
+
+
+
+      virtual void term() override;
+
+
+      virtual void term_application() override;
+
+
+
 
       virtual bool InitApplication() override;
 
       virtual bool on_install() override;
-      virtual bool on_uninstall() override;
+      virtual bool on_unstall() override;
 
 
 
@@ -150,10 +157,9 @@ namespace axis
 
 
 
-      virtual void assert_valid() const override;
-      virtual void dump(dump_context & dumpcontext) const override;
 
-      virtual bool final_handle_exception(::exception::exception & e) override;
+
+      virtual bool final_handle_exception(::exception::exception * pe) override;
 
 
 
@@ -208,10 +214,7 @@ namespace axis
 
 
 
-      virtual void construct(const char * pszAppId) override;
-
-
-      virtual bool process_initialize() override;
+      virtual bool process_init() override;
 
 
 
@@ -226,9 +229,9 @@ namespace axis
       virtual sp(::aura::printer) get_printer(const char * pszDeviceName);
 
 
-      virtual ::visual::icon * set_icon(object * pobject, ::visual::icon * picon, bool bBigIcon);
+      virtual ::visual::icon * set_icon(object * pobject, ::visual::icon * picon, bool bBigIcon) override;
 
-      virtual ::visual::icon * get_icon(object * pobject, bool bBigIcon) const;
+      virtual ::visual::icon * get_icon(object * pobject, bool bBigIcon) const override;
 
       virtual void on_service_request(::create * pcreate) override;
 
@@ -242,31 +245,19 @@ namespace axis
 
       virtual bool set_keyboard_layout(const char * pszPath, ::action::context actioncontext);
 
-#ifdef HOTPLUGIN_SUBSYSTEM
-
       virtual int32_t hotplugin_host_starter_start_sync(const char * pszCommandLine, ::aura::application * papp, hotplugin::host * phost, hotplugin::plugin * pplugin = NULL) override;
       virtual int32_t hotplugin_host_host_starter_start_sync(const char * pszCommandLine, ::aura::application * papp, hotplugin::host * phost, hotplugin::plugin * pplugin = NULL);
 
-#endif
+      virtual void on_update_view(::user::impact * pview, ::user::impact * pviewSender, LPARAM lHint, object* pHint);
 
       virtual bool BaseOnControlEvent(::user::control_event * pevent);
 
-      virtual void on_update_view(::user::impact * pview, ::user::impact * pviewSender, LPARAM lHint, object* pHint);
-
-      virtual bool keyboard_focus_is_focusable(::user::elemental * pue);
-      virtual bool keyboard_focus_OnSetFocus(::user::elemental * pue);
 
 
       virtual bool on_open_document(::user::document * pdocument, var varFile);
       virtual bool on_save_document(::user::document * pdocument, var varFile);
 
-
-
-#ifdef INSTALL_SUBSYSTEM
-
       virtual bool check_install() override;
-
-#endif
 
       inline ::html::html * html() { return m_pauraapp->m_paurasystem->m_phtml; }
 
@@ -275,10 +266,10 @@ namespace axis
       virtual string http_get(const string & strUrl, ::property_set & set) override;
 
       virtual bool compress_ungz(::file::ostream & ostreamUncompressed, const ::file::path & lpcszGzFileCompressed) override;
-      virtual bool compress_ungz(::primitive::memory_base & mem);
-      virtual bool compress_gz(::file::file * pfileOut, const ::file::path & lpcszUncompressed, int iLevel = 6);
-      virtual bool compress_gz(::file::file * pfileOut, ::file::file * pfileIn, int iLevel = 6);
-      
+      virtual bool compress_ungz(::primitive::memory_base & mem) override;
+      virtual bool compress_gz(::file::file * pfileOut, const ::file::path & lpcszUncompressed, int iLevel = 6) override;
+      virtual bool compress_gz(::file::file * pfileOut, ::file::file * pfileIn, int iLevel = 6) override;
+
 
 
    };

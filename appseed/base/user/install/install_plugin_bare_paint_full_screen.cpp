@@ -1,8 +1,5 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "base/user/user.h"
-
-
-#ifdef HOTPLUGIN_SUBSYSTEM
 
 
 namespace hotplugin
@@ -45,7 +42,7 @@ namespace hotplugin
 
       ::draw2d::brush_sp br(allocer());
 
-      
+
 
       {
 
@@ -92,9 +89,5 @@ namespace hotplugin
 
 
 } // namespace hotplugin
-
-
-#endif
-
 
 

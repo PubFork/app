@@ -69,7 +69,7 @@ namespace primitive
             if(!m_spmemory->allocate(dwNewLength))
             {
 
-               throw memory_exception(get_app());
+               _throw(memory_exception(get_app()));
 
             }
 
@@ -86,7 +86,7 @@ namespace primitive
          if(m_spmemory.is_null())
          {
 
-            throw memory_exception(get_app());
+            _throw(memory_exception(get_app()));
 
          }
 
@@ -95,7 +95,7 @@ namespace primitive
       if(!m_spmemory->allocate(dwNewLength))
       {
 
-         throw memory_exception(get_app());
+         _throw(memory_exception(get_app()));
 
       }
 
@@ -109,7 +109,7 @@ namespace primitive
          m_spmemory = canew(memory(this));
          if(m_spmemory.is_null())
          {
-            throw memory_exception(get_app());
+            _throw(memory_exception(get_app()));
          }
       }
       m_spmemory->allocate_internal(dwNewLength);

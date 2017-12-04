@@ -21,19 +21,12 @@ namespace html
 } // namespace html
 
 
-
-#if defined(INSTALL_SUBSYSTEM)
-
-
 namespace install
 {
 
    class install;
 
 } // namespace install
-
-
-#endif
 
 
 namespace message
@@ -46,8 +39,6 @@ namespace message
 } // namespace message
 
 
-#ifdef HOTPLUGIN_SUBSYSTEM
-
 namespace hotplugin
 {
 
@@ -55,8 +46,6 @@ namespace hotplugin
    class plugin;
 
 }
-
-#endif
 
 namespace user
 {
@@ -73,8 +62,8 @@ namespace user
    class control_event;
    class form_window;
    class style;
-   
-   
+
+
 } // namespace user
 
 
@@ -89,7 +78,7 @@ typedef sp(::user::interaction_impl) window_sp;
 #undef Sys
 #define CaSys(pca) (*pca->m_pauraapp->m_paxissystem)
 #define Sys(paxisapp) (*paxisapp->m_paxissystem)
-#define threadSystem (Sys(get_thread_app()))
+#define threadSystem (System)
 
 #undef Sess
 #define Sess(paxisapp) (*paxisapp->m_paxissession)
@@ -104,31 +93,6 @@ typedef sp(::user::interaction_impl) window_sp;
 
 
 
-
-namespace axis
-{
-
-#if defined METROWIN && defined(__cplusplus_winrt)
-
-   interface class system_window
-   {
-
-      virtual Windows::Foundation::Rect get_window_rect() = 0;
-      virtual Windows::Foundation::Point get_cursor_pos() = 0;
-
-
-
-   };
-
-   CLASS_DECL_AXIS bool get_window_rect(system_window ^ pwindow,RECTD * lprect);
-   CLASS_DECL_AXIS bool get_window_rect(system_window ^ pwindow,LPRECT lprect);
-
-#endif
-
-
-   class session;
-
-} // namespace axis
 
 
 
@@ -206,9 +170,9 @@ CLASS_DECL_AXIS bool __node_axis_pos_term();
 
 
 
-#include "axis/user/user/user_enum.h"
+//#include "axis/user/user/user_enum.h"
 
-#include "axis/user/user/user_key_enum.h"
+//#include "axis/user/user/user_key_enum.h"
 
 #include "axis/user/user/user_keyboard_layout.h"
 
@@ -246,7 +210,7 @@ CLASS_DECL_AXIS bool __node_axis_pos_term();
 
 //#include "axis/axis/crypto/crypto.h"
 
-#include "axis/graphics/graphics.h"
+#include "aura/graphics/graphics.h"
 
 #include "axis_system.h"
 
@@ -284,6 +248,24 @@ CLASS_DECL_AXIS bool __node_axis_pos_term();
 #include "app/appseed/axis/axis/node/node.h"
 
 
+namespace user
+{
+
+   //inline oswindow primitive::get_safe_handle() const
+   //{
+   //   if (((byte *)this) < (byte *)(((byte *)NULL) + (16 * 1024))) // consider invalid
+   //   {
+   //      return NULL;
+   //   }
+   //   return get_handle();
+   //}
+
+
+
+
+
+
+} // namespace user
 
 
 #include "primitive/data/data_tree_item.h"
@@ -308,7 +290,7 @@ CLASS_DECL_AXIS bool __node_axis_pos_term();
 #include "axis.inl"
 
 
-#include "axis/graphics/visual/visual.inl"
+
 
 
 

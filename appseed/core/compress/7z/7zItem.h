@@ -48,7 +48,7 @@ namespace n7z
          for (index i = UnpackSizes.get_count() - 1; i >= 0; i--)
             if (FindBindPairForOutStream((::n7z::CNum) i) < 0)
                return UnpackSizes[i];
-         throw 1;
+         _throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
       }
 
       CNum GetNumOutStreams() const

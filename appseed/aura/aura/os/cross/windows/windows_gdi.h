@@ -125,13 +125,13 @@ typedef struct tagBITMAP
    LPVOID      bmBits;
 } BITMAP,*PBITMAP,NEAR *NPBITMAP,FAR *LPBITMAP;
 
-//#include <pshpack1.h>
-typedef struct tagRGBTRIPLE {
-   BYTE    rgbtBlue;
-   BYTE    rgbtGreen;
-   BYTE    rgbtRed;
-} RGBTRIPLE,*PRGBTRIPLE,NEAR *NPRGBTRIPLE,FAR *LPRGBTRIPLE;
-//#include "poppack.h"
+////#include <pshpack1.h>
+//typedef struct tagRGBTRIPLE {
+//   BYTE    rgbtBlue;
+//   BYTE    rgbtGreen;
+//   BYTE    rgbtRed;
+//} RGBTRIPLE,*PRGBTRIPLE,NEAR *NPRGBTRIPLE,FAR *LPRGBTRIPLE;
+////#include "poppack.h"
 
 
 /* ICM Color Definitions */
@@ -159,15 +159,15 @@ typedef CIEXYZTRIPLE    FAR *LPCIEXYZTRIPLE;
 //typedef DWORD   *LPCOLORREF;
 
 
-
-typedef struct tagRGBQUAD {
-   BYTE    rgbBlue;
-   BYTE    rgbGreen;
-   BYTE    rgbRed;
-   BYTE    rgbReserved;
-} RGBQUAD;
-typedef RGBQUAD FAR* LPRGBQUAD;
-
+//
+//typedef struct tagRGBQUAD {
+//   BYTE    rgbBlue;
+//   BYTE    rgbGreen;
+//   BYTE    rgbRed;
+//   BYTE    rgbReserved;
+//} RGBQUAD;
+//typedef RGBQUAD FAR* LPRGBQUAD;
+//
 
 
 typedef struct tagPALETTEENTRY {
@@ -517,25 +517,25 @@ typedef struct tagBITMAPCOREHEADER {
    WORD    bcBitCount;
 } BITMAPCOREHEADER,FAR *LPBITMAPCOREHEADER,*PBITMAPCOREHEADER;
 
-typedef struct tagBITMAPINFOHEADER{
-   DWORD      biSize;
-   LONG       biWidth;
-   LONG       biHeight;
-   WORD       biPlanes;
-   WORD       biBitCount;
-   DWORD      biCompression;
-   DWORD      biSizeImage;
-   LONG       biXPelsPerMeter;
-   LONG       biYPelsPerMeter;
-   DWORD      biClrUsed;
-   DWORD      biClrImportant;
-} BITMAPINFOHEADER,FAR *LPBITMAPINFOHEADER,*PBITMAPINFOHEADER;
+//typedef struct tagBITMAPINFOHEADER{
+//   DWORD      biSize;
+//   LONG       biWidth;
+//   LONG       biHeight;
+//   WORD       biPlanes;
+//   WORD       biBitCount;
+//   DWORD      biCompression;
+//   DWORD      biSizeImage;
+//   LONG       biXPelsPerMeter;
+//   LONG       biYPelsPerMeter;
+//   DWORD      biClrUsed;
+//   DWORD      biClrImportant;
+//} BITMAPINFOHEADER,FAR *LPBITMAPINFOHEADER,*PBITMAPINFOHEADER;
 
-typedef struct tagBITMAPINFO {
-   BITMAPINFOHEADER bmiHeader;
-   RGBQUAD          bmiColors[1];
-} BITMAPINFO,*PBITMAPINFO;
-
+//typedef struct tagBITMAPINFO {
+//   BITMAPINFOHEADER bmiHeader;
+//   RGBQUAD          bmiColors[1];
+//} BITMAPINFO,*PBITMAPINFO;
+//
 
 #if(WINVER >= 0x0400)
 typedef struct {
@@ -723,9 +723,9 @@ WINBOOL GetWindowRect(oswindow hwnd,LPRECT lprect);
 
 int32_t FillRect(HDC hDC,const RECT *lprc,HBRUSH hbr);
 
-WINBOOL ReleaseDC(oswindow hwnd,HDC hdc);
+//WINBOOL ReleaseDC(oswindow hwnd,HDC hdc);
 
-HDC GetWindowDC(oswindow hwnd);
+//HDC GetWindowDC(oswindow hwnd);
 
 
 HBRUSH CreateSolidBrush(COLORREF color);

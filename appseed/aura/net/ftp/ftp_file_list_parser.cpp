@@ -27,6 +27,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "framework.h"
+#include "ftp_file_status.h"
+#include "ftp_file_list_parser.h"
 #include <time.h>
 
 
@@ -57,13 +59,13 @@ namespace ftp
    file_list_parser::file_list_parser() :
       m_lCurrentYear(-1)
    {
-      
+
       m_tmBase = 0;
-      
+
       tm tm = { 0 };
 
       time_t t = time(NULL);
-      
+
       gmtime_r(&t, &tm);
 
       m_tmBase = -(ToTAI(tm.tm_year + 1900, tm.tm_mon, tm.tm_mday) +

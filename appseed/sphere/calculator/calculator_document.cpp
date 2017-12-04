@@ -31,7 +31,6 @@ namespace calculator
 
 
 
-   #ifdef DEBUG
    void document::assert_valid() const
    {
       ::user::document::assert_valid();
@@ -41,8 +40,7 @@ namespace calculator
    {
       ::user::document::dump(dumpcontext);
    }
-   #endif //DEBUG
-
+   
    /////////////////////////////////////////////////////////////////////////////
    // document serialization
 

@@ -2672,7 +2672,7 @@ return true;
          keep < ::draw2d::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
 
 
-         return System.visual().imaging().true_blend(this, ptDest, size, pdibWork->get_graphics(), ptSrc);
+         return Application.imaging().true_blend(this, ptDest, size, pdibWork->get_graphics(), ptSrc);
 
 
       }
@@ -4112,7 +4112,7 @@ return true;
                if (hObjOld == hStockFont)
                {
                   // got the stock object back, so must be selecting a font
-                  throw not_implemented(get_thread_app());
+                  _throw(not_implemented(get_app()));
 //                  (dynamic_cast<::draw2d_opengl::graphics * >(pgraphics))->SelectObject(::draw2d_opengl::font::from_handle(pgraphics->get_app(), (HFONT)hObject));
                   break;  // don't play the default record
                }
@@ -4128,7 +4128,7 @@ return true;
             {
                // play back as graphics::SelectObject(::draw2d::font*)
 //               (dynamic_cast<::draw2d_opengl::graphics * >(pgraphics))->SelectObject(::draw2d_opengl::font::from_handle(pgraphics->get_app(), (HFONT)hObject));
-               throw not_implemented(get_thread_app());
+               _throw(not_implemented(get_app()));
                break;  // don't play the default record
             }
          }

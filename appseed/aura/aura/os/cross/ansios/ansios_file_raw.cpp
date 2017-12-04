@@ -75,7 +75,7 @@ void file_beg_contents_raw(const char * path, const char * psz)
 
    long lLen;
 
-   convert(lLen, strlen(psz));
+   lLen = (long) ( strlen(psz));
 
    fseek(f, lLen, SEEK_END);
 

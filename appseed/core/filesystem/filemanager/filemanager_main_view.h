@@ -22,15 +22,15 @@ namespace filemanager
       virtual ~main_view();
       
       
-      virtual void install_message_routing(::message::sender * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface) override;
 
 
-      virtual void assert_valid() const;
-      virtual void dump(dump_context & dumpcontext) const;
+      virtual void assert_valid() const override;
+      virtual void dump(dump_context & dumpcontext) const override;
 
-      virtual void _001OnDraw(::draw2d::graphics * pgraphics);
+      virtual void _001OnDraw(::draw2d::graphics * pgraphics) override;
 
-      void on_create_views();
+      void on_create_views() override;
 
       void FileManagerBrowse(const char * lpcwstr,::action::context actioncontext);
 
@@ -38,7 +38,7 @@ namespace filemanager
 
       virtual void OpenSelectionProperties();
 
-      virtual void on_update(::user::impact * pSender,LPARAM lHint,object* pHint);
+      virtual void on_update(::user::impact * pSender,LPARAM lHint,object* pHint) override;
 
 
    };

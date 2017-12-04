@@ -1,9 +1,6 @@
 ﻿#include "framework.h"
 
 
-#ifdef HOTPLUGIN_SUBSYSTEM
-
-
 #ifdef WINDOWSEX
 
 #include "coated/gdiplus.h"
@@ -13,7 +10,7 @@
 
 namespace hotplugin
 {
-   
+
    uint32_t g_entry_hall_windows_on_paint_dwSync = 0;
    int32_t g_entry_hall_windows_on_paint_iDelta = 5000;
 
@@ -216,8 +213,5 @@ namespace hotplugin
 
 
 } // namespace hotplugin
-
-
-#endif
 
 

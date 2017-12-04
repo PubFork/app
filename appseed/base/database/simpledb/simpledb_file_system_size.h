@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 class db_server;
@@ -129,7 +129,7 @@ public:
 
    FileSystemSizeServerThread(::aura::application * papp);
 
-   bool initialize_thread() override;
+   bool init_thread() override;
 
 };
 

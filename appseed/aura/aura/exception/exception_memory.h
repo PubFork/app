@@ -29,11 +29,11 @@ namespace std
 
 
       bad_alloc() :
-         object(::get_thread_app()),
-         ::call_stack(::get_thread_app()),
-         ::exception::base(::get_thread_app()),
-         simple_exception(::get_thread_app()),
-         memory_exception(::get_thread_app())
+         object(get_app()),
+         ::call_stack(get_app()),
+         ::exception::base(get_app()),
+         simple_exception(get_app()),
+         memory_exception(get_app())
       {
 
       }

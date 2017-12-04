@@ -774,3 +774,7 @@ CLASS_DECL_AURA bool is_shared_library_busy(const stringa & stra)
 
 }
 
+
+
+
+CLASS_DECL_AURA int32_t ca2_main();

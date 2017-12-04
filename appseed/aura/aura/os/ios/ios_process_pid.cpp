@@ -1,7 +1,7 @@
 #include <sys/types.h>
 #include <sys/param.h>
 #define user user_struct
-#include <sys/user.h>
+//#include <sys/user.h>
 #include <sys/sysctl.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -48,7 +48,7 @@
 //                if (sNewProcesses == 0) {
 //                        if (sProcesses)
 //                                free(sProcesses);
-//                                throw "could not reallocate memory";
+//                                _throw(simple_exception(get_app(), "could not reallocate memory"));
 //                }
 //                sProcesses = sNewProcesses;
 //                iRetCode = sysctl(aiNames, (u_int) iNamesLength, sProcesses, &iSize, NULL, 0);
@@ -84,7 +84,7 @@
 //#include <sys/sysctl.h>
 //#include <stdio.h>
 //#include <stdlib.h>
-#include <libproc.h>
+//#include <libproc.h>
 
 
 extern int strncmp_dup(const char * sz1, const char * sz2, int_ptr iLen);
@@ -128,7 +128,7 @@ extern int strncmp_dup(const char * sz1, const char * sz2, int_ptr iLen);
 //                if (sNewProcesses == 0) {
 //                        if (sProcesses)
 //                                free(sProcesses);
-//                                throw "could not reallocate memory";
+//                                _throw(simple_exception(get_app(), "could not reallocate memory"));
 //                }
 //                sProcesses = sNewProcesses;
 //                iRetCode = sysctl(aiNames, (u_int) iNamesLength, sProcesses, &iSize, NULL, 0);
@@ -156,38 +156,88 @@ extern int strncmp_dup(const char * sz1, const char * sz2, int_ptr iLen);
 //} /* end of getProcessId() */
 //
 
-// http://stackoverflow.com/questions/3018054/retrieve-names-of-running-processes
-// http://stackoverflow.com/users/115730/dave-delong
-// http://stackoverflow.com/users/237188/v%C3%A1clav-slav%C3%ADk
-// https://github.com/vslavik/
+//https://stackoverflow.com/questions/9342578/how-to-get-the-active-processes-running-in-ios
+
+#import <mach/mach.h>
+#import <mach/mach_host.h>
+#import <sys/sysctl.h>
+
 
 int_array get_pids()
 {
    
-   int_array pids;
+   return int_array();
    
-   array < pid_t > pida;
-   
-   int numberOfProcesses = proc_listpids(PROC_ALL_PIDS, 0, NULL, 0);
-   
-   pida.set_size(numberOfProcesses);
-   
-   proc_listpids(PROC_ALL_PIDS, 0, pids, sizeof(pids));
-   
-   for(auto pid : pida)
-   {
-      if(pid == 0)
-      {
-         
-         continue;
-         
-      }
-      
-      pids.add(pid);
-      
-   }
-   
-   return pids;
+//   int_array pids;
+//
+//   array < pid_t > pida;
+//
+//   memory m;
+//
+//   int mib[4] = {CTL_KERN, KERN_PROC, KERN_PROC_ALL, 0};
+//
+//   u_int miblen = 4;
+//
+//   size_t size;
+//
+//   int st = sysctl(mib, miblen, NULL, &size, NULL, 0);
+//
+//   struct kinfo_proc * process = NULL;
+//
+//   struct kinfo_proc * newprocess = NULL;
+//
+//   do
+//   {
+//
+//      size += size / 10;
+//
+//      m.allocate(size);
+//
+//      newprocess = (kinfo_proc *) m.get_data();
+//
+//      if (!newprocess)
+//      {
+//
+//         return int_array();
+//
+//      }
+//
+//      process = newprocess;
+//
+//      st = sysctl(mib, miblen, process, &size, NULL, 0);
+//
+//   } while (st == -1 && errno == ENOMEM);
+//
+//   if (st == 0)
+//   {
+//
+//      if (size % sizeof(struct kinfo_proc) == 0)
+//      {
+//
+//         size_t nprocess = size / sizeof(struct kinfo_proc);
+//
+//         if (nprocess)
+//         {
+//
+//            for (size_t i = 0; i < nprocess; i++)
+//            {
+//
+//               pids.add(process[i].kp_proc.p_pid);
+////               NSString * processID = [[NSString alloc] initWithFormat:@"%d", process[i].kp_proc.p_pid];
+////               NSString * processName = [[NSString alloc] initWithFormat:@"%s", process[i].kp_proc.p_comm];
+////
+////               NSDictionary * dict = [[NSDictionary alloc] initWithObjects:[NSArray arrayWithObjects:processID, processName, nil]
+////                                                                   forKeys:[NSArray arrayWithObjects:@"ProcessID", @"ProcessName", nil]];
+////               [array addObject:dict];
+//            }
+//
+//         }
+//
+//      }
+//
+//   }
+//
+//   return pids;
    
 }
 
@@ -195,27 +245,29 @@ int_array get_pids()
 int_array module_path_get_pid(const char * csProcessName)
 {
    
-   int_array iaPid;
+   return int_array();
    
-   int_array pids = get_pids();
-   
-   string strPath;
-   
-   for(auto iCurrentPid : pids)
-   {
-      
-      strPath = module_path_from_pid(iCurrentPid);
-      
-      if(strPath.compare_ci(csProcessName) == 0 )
-      {
-         
-         iaPid.add(iCurrentPid);
-         
-      }
-      
-   }
-   
-   return iaPid;
+//   int_array iaPid;
+//
+//   int_array pids = get_pids();
+//
+//   string strPath;
+//
+//   for(auto iCurrentPid : pids)
+//   {
+//
+//      strPath = module_path_from_pid(iCurrentPid);
+//
+//      if(strPath.compare_ci(csProcessName) == 0 )
+//      {
+//
+//         iaPid.add(iCurrentPid);
+//
+//      }
+//
+//   }
+//
+//   return iaPid;
    
 }
 
@@ -225,31 +277,31 @@ int_array module_path_get_pid(const char * csProcessName)
 string module_path_from_pid(unsigned int uiPid)
 {
    
-   
-   pid_t pid = uiPid;
-   
-   int ret;
-   
-   char pathbuf[PROC_PIDPATHINFO_MAXSIZE];
-   
-   ret = proc_pidpath (pid, pathbuf, sizeof(pathbuf));
-   
-   if ( ret <= 0 )
-   {
-      
-      fprintf(stderr, "PID %d: proc_pidpath ();\n", pid);
-      
-      fprintf(stderr,	"    %s\n", strerror(errno));
-      
-      return "";
-      
-   }
-   else
-   {
-      
-      return pathbuf;
-      
-   }
+   return "";
+//   pid_t pid = uiPid;
+//
+//   int ret;
+//
+//   char pathbuf[PROC_PIDPATHINFO_MAXSIZE];
+//
+//   ret = proc_pidpath (pid, pathbuf, sizeof(pathbuf));
+//
+//   if ( ret <= 0 )
+//   {
+//
+//      fprintf(stderr, "PID %d: proc_pidpath ();\n", pid);
+//
+//      fprintf(stderr,   "    %s\n", strerror(errno));
+//
+//      return "";
+//
+//   }
+//   else
+//   {
+//
+//      return pathbuf;
+//
+//   }
    
 }
 
@@ -258,59 +310,7 @@ string module_path_from_pid(unsigned int uiPid)
 int_array app_get_pid(const char * psz)
 {
    
-   int_array ia;
-   
-   int_array pids = get_pids();
-   
-   string str(psz);
-   
-   str = "app=" + str;
-   
-   string strApp(psz);
-   
-   strApp.replace("-", "_");
-   
-   strApp.replace("/", "_");
-   
-   for(auto pid : pids)
-   {
-      
-      if(pid <= 0)
-      {
-         
-         continue;
-         
-      }
-      
-      ::file::path path = module_path_from_pid(pid);
-      
-      if(path.title() == strApp)
-      {
-         
-         ia.add(pid);
-         
-      }
-      else
-      {
-         
-         stringa straCmdLine = cmdline_from_pid(pid);
-         
-         string strCmdLine;
-         
-         strCmdLine = straCmdLine.implode(" ");
-         
-         if(straCmdLine.find_first(str) > 0)
-         {
-            
-            ia.add(pid);
-            
-         }
-         
-      }
-      
-   }
-   
-   return ia;
+   return int_array();
    
 }
 
@@ -323,12 +323,13 @@ int_array app_get_pid(const char * psz)
 
 string get_cmdline(unsigned int uiPid)
 {
-   
-   struct proc_taskallinfo info = {};
-   
-   int ret = proc_pidinfo((pid_t) uiPid, PROC_PIDTASKALLINFO, SHOW_ZOMBIES, &info, sizeof(struct proc_taskallinfo));
-   
-   return info.pbsd.pbi_comm;
+
+   return "";
+//   struct proc_taskallinfo info = {};
+//
+//   int ret = proc_pidinfo((pid_t) uiPid, PROC_PIDTASKALLINFO, SHOW_ZOMBIES, &info, sizeof(struct proc_taskallinfo));
+//
+//   return info.pbsd.pbi_comm;
    
 }
 
@@ -336,152 +337,154 @@ string get_cmdline(unsigned int uiPid)
 stringa cmdline_from_pid(unsigned int uiPid)
 {
    
-   string strCmdLine = get_cmdline(uiPid);
+//   string strCmdLine = get_cmdline(uiPid);
+//
+//   stringa stra;
+//
+//   string strArg;
+//
+//   const char * psz = strCmdLine;
+//
+//   string strChar;
+//
+//   while(*psz != '\0')
+//   {
+//
+//      strChar = ::str::get_utf8_char(psz);
+//
+//      if(strChar.is_empty())
+//      {
+//
+//         break;
+//
+//      }
+//
+//      psz += strChar.get_length();
+//
+//      if(strChar == "\"")
+//      {
+//
+//         while(*psz != '\0')
+//         {
+//
+//            strChar = ::str::get_utf8_char(psz);
+//
+//            if(strChar.is_empty())
+//            {
+//
+//               goto end;
+//
+//            }
+//            else if(strChar == "\"")
+//            {
+//
+//               break;
+//
+//            }
+//
+//            psz += strChar.get_length();
+//
+//
+//            if(strChar == "\\")
+//            {
+//
+//               strChar = ::str::get_utf8_char(psz);
+//
+//               if(strChar.is_empty())
+//               {
+//
+//                  goto end;
+//
+//               }
+//
+//               psz += strChar.get_length();
+//
+//               if(strChar == "n")
+//               {
+//
+//                  strArg += "\n";
+//
+//               }
+//               else
+//               {
+//
+//                  strArg += strChar;
+//
+//               }
+//
+//            }
+//            else
+//            {
+//
+//               strArg += strChar;
+//
+//            }
+//
+//         }
+//
+//         stra.add(strArg);
+//
+//         strArg.Empty();
+//
+//      }
+//      else if(strChar == " ")
+//      {
+//
+//         stra.add(strArg);
+//
+//         strArg.Empty();
+//
+//      }
+//      else if(strChar == "\\")
+//      {
+//
+//         strChar = ::str::get_utf8_char(psz);
+//
+//         if(strChar.is_empty())
+//         {
+//
+//            goto end;
+//
+//         }
+//
+//         psz += strChar.get_length();
+//
+//         if(strChar == "n")
+//         {
+//
+//            strArg += "\n";
+//
+//         }
+//         else
+//         {
+//
+//            strArg += strChar;
+//
+//         }
+//
+//      }
+//      else
+//      {
+//
+//         strArg += strChar;
+//
+//      }
+//
+//
+//   }
+//
+//end:
+//
+//   if(strArg.has_char())
+//   {
+//
+//      stra.add(strArg);
+//
+//   }
+//
+//   return stra;
    
-   stringa stra;
-   
-   string strArg;
-   
-   const char * psz = strCmdLine;
-   
-   string strChar;
-   
-   while(*psz != '\0')
-   {
-      
-      strChar = ::str::get_utf8_char(psz);
-      
-      if(strChar.is_empty())
-      {
-         
-         break;
-         
-      }
-      
-      psz += strChar.get_length();
-      
-      if(strChar == "\"")
-      {
-         
-         while(*psz != '\0')
-         {
-            
-            strChar = ::str::get_utf8_char(psz);
-            
-            if(strChar.is_empty())
-            {
-               
-               goto end;
-               
-            }
-            else if(strChar == "\"")
-            {
-               
-               break;
-               
-            }
-            
-            psz += strChar.get_length();
-            
-            
-            if(strChar == "\\")
-            {
-               
-               strChar = ::str::get_utf8_char(psz);
-               
-               if(strChar.is_empty())
-               {
-                  
-                  goto end;
-                  
-               }
-               
-               psz += strChar.get_length();
-               
-               if(strChar == "n")
-               {
-                  
-                  strArg += "\n";
-                  
-               }
-               else
-               {
-                  
-                  strArg += strChar;
-                  
-               }
-               
-            }
-            else
-            {
-               
-               strArg += strChar;
-               
-            }
-            
-         }
-         
-         stra.add(strArg);
-         
-         strArg.Empty();
-         
-      }
-      else if(strChar == " ")
-      {
-         
-         stra.add(strArg);
-         
-         strArg.Empty();
-         
-      }
-      else if(strChar == "\\")
-      {
-         
-         strChar = ::str::get_utf8_char(psz);
-         
-         if(strChar.is_empty())
-         {
-            
-            goto end;
-            
-         }
-         
-         psz += strChar.get_length();
-         
-         if(strChar == "n")
-         {
-            
-            strArg += "\n";
-            
-         }
-         else
-         {
-            
-            strArg += strChar;
-            
-         }
-         
-      }
-      else
-      {
-         
-         strArg += strChar;
-         
-      }
-      
-      
-   }
-   
-end:
-   
-   if(strArg.has_char())
-   {
-      
-      stra.add(strArg);
-      
-   }
-   
-   return stra;
+   return stringa();
    
 }
 

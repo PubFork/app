@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 // thank you (casey) : tahnk oy coed prjsoetc China Cai Tao
 
 namespace multimedia
@@ -41,10 +41,10 @@ namespace multimedia
       }
 
 
-      bool wave_out::initialize_thread()
+      bool wave_out::init_thread()
       {
 
-         if(!::multimedia::audio::wave_out::initialize_thread())
+         if(!::multimedia::audio::wave_out::init_thread())
             return false;
 
          set_thread_priority(::multithreading::priority_time_critical);
@@ -211,10 +211,10 @@ namespace multimedia
          wave_out_get_buffer()->PCMOutOpen(this, uiBufferSize, uiBufferCount, 2048,m_pwaveformat, m_pwaveformat);
 
          m_pprebuffer->open(
-            this, // callback thread (thread)
-            m_pwaveformat->nChannels, // channel count
-            uiBufferCount, // group count
-            iBufferSampleCount); // group sample count
+         this, // callback thread (thread)
+         m_pwaveformat->nChannels, // channel count
+         uiBufferCount, // group count
+         iBufferSampleCount); // group sample count
 
          // TODO(casey): DSBCAPS_GETCURRENTPOSITION2
 
@@ -291,7 +291,7 @@ namespace multimedia
          if(mmr != ::multimedia::result_success)
          {
 
-            TRACE0(::multimedia::strerror(mmr));
+            TRACE(::multimedia::strerror(mmr));
 
             return mmr;
 
@@ -518,7 +518,7 @@ namespace multimedia
          ZERO(b);
 
          b.pContext = pbuffer;
-         convert(b.AudioBytes, pwbuffer->m_uiBufferSize);
+         b.AudioBytes = (UINT32) (pwbuffer->m_uiBufferSize);
          b.pAudioData = (const BYTE *)pbuffer->m_pData;
          b.Flags = m_bEOS ? XAUDIO2_END_OF_STREAM : 0;
 

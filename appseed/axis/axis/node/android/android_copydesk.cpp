@@ -1,4 +1,4 @@
-
+#include "framework.h"
 
 
 namespace android
@@ -24,14 +24,14 @@ namespace android
    void copydesk::get_filea(::file::patha & patha)
    {
 
-      stra.add("this_file_does_not_exist_please_implement_android_copydesk_get_filea.txt");
+      patha.add("this_file_does_not_exist_please_implement_android_copydesk_get_filea.txt");
 
    }
 
    void copydesk::set_filea(const ::file::patha & patha)
    {
 
-      throw todo(get_app());
+      _throw(todo(get_app()));
 
    }
 
@@ -58,9 +58,9 @@ namespace android
 
 //      if(::window_sp::is_set() && ::window_sp::m_p->IsWindow())
       {
-  //       bOk = ::window_sp::m_p->DestroyWindow() != FALSE;
+         //       bOk = ::window_sp::m_p->DestroyWindow() != FALSE;
       }
-    //  else
+      //  else
       {
          bOk = false;
       }
@@ -72,7 +72,7 @@ namespace android
    void copydesk::set_plain_text(const char * psz)
    {
 
-      throw todo(get_app());
+      _throw(todo(get_app()));
 
 
    }
@@ -88,7 +88,7 @@ namespace android
    bool copydesk::desk_to_dib(::draw2d::dib * pdib)
    {
 
-      throw todo(get_app());
+      _throw(todo(get_app()));
 
    }
 

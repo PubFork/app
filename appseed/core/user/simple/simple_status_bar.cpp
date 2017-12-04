@@ -34,34 +34,34 @@ bool simple_status_bar::OnEraseBkgnd(::draw2d::graphics * pgraphics)
 void simple_status_bar::_001OnDraw(::draw2d::graphics * pgraphics)
 {
    return;
-   rect rectClient;
-
-   GetClientRect(rectClient);
-
-   
-
-   class imaging & imaging = System.visual().imaging();
-#ifdef WINDOWSEX
-   imaging.color_blend(
-      pgraphics,
-      rectClient.left,
-      rectClient.top,
-      rectClient.width(),
-      rectClient.height(),
-      Session.get_default_color(COLOR_3DFACE),
-      208);
-#else
-   imaging.color_blend(
-      pgraphics,
-      rectClient.left,
-      rectClient.top,
-      rectClient.width(),
-      rectClient.height(),
-      ARGB(255, 184, 184, 177),
-      208);
-#endif
-
-
+//   rect rectClient;
+//
+//   GetClientRect(rectClient);
+//
+//   
+//
+//   class imaging & imaging = Application.imaging();
+//#ifdef WINDOWSEX
+//   imaging.color_blend(
+//      pgraphics,
+//      rectClient.left,
+//      rectClient.top,
+//      rectClient.width(),
+//      rectClient.height(),
+//      Session.get_default_color(COLOR_3DFACE),
+//      208);
+//#else
+//   imaging.color_blend(
+//      pgraphics,
+//      rectClient.left,
+//      rectClient.top,
+//      rectClient.width(),
+//      rectClient.height(),
+//      ARGB(255, 184, 184, 177),
+//      208);
+//#endif
+//
+//
 
 }
 

@@ -59,7 +59,7 @@ namespace sockets
 
       virtual long cert_common_name_check(const char * common_name) override;
 
-      virtual void OnDataComplete();
+      virtual void OnDataComplete() override;
 
       virtual void write(const void *buf, memory_size_t c) override;
 

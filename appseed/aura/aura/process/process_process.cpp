@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace process
@@ -93,7 +93,7 @@ namespace process
    }
 
 
-   int32_t process::synch_elevated(const char * pszCmdLine,int iShow,const ::duration & durationTimeOut,bool * pbTimeOut)
+   uint32_t process::synch_elevated(const char * pszCmdLine,int iShow,const ::duration & durationTimeOut,bool * pbTimeOut)
    {
 
       return 0;
@@ -108,32 +108,32 @@ namespace process
 
    }
 
-   
+
    string app_id_to_app_name(string strId)
    {
-      
+
       string strName;
-      
+
       for (index i = 0; i < strId.length(); i++)
       {
-         
+
          if (strId[i] == L'-' || strId[i] == L'/' || strId[i] == L'\\')
          {
-            
+
             strName += L"_";
-            
+
          }
          else
          {
-            
+
             strName += strId[i];
-            
+
          }
-         
+
       }
-      
+
       return strName;
-      
+
    }
 
 

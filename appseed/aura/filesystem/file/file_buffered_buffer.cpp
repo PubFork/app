@@ -91,7 +91,7 @@ namespace file
       }
       else
       {
-         throw invalid_argument_exception(get_app(), "::file::buffered_file::seek invalid seek option");
+         _throw(invalid_argument_exception(get_app(), "::file::buffered_file::seek invalid seek option"));
       }
 
       if(uiNewPos >= uiBegBufPosition

@@ -11,7 +11,7 @@ void fd_ensure_file_size(int32_t fd, int64_t iSize)
 {
 
    if(ftruncate(fd, iSize) == -1)
-      throw "fd_ensure_file_size exception";
+      _throw(simple_exception(get_app(), "fd_ensure_file_size exception"));
 
 }
 
@@ -60,6 +60,18 @@ CLASS_DECL_AURA void dll_processes(uint_array & dwa, stringa & straProcesses, co
 ::file::path dir::home()
 {
 
-   return getenv("HOME");
+   //return getenv("HOME");
+   return "/data/home";
 
 }
+
+
+
+::file::path dir::favorites()
+{
+
+   return ::dir::local() / "localconfig/favorites";
+
+}
+
+

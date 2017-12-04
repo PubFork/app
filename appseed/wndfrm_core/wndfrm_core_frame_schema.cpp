@@ -268,7 +268,7 @@ namespace user
 
                sp(::user::interaction) pwndiDraw = m_pworkset->get_draw_window();
 
-               class imaging & imaging = System.visual().imaging();
+               class imaging & imaging = Application.imaging();
 
                class rect rectClient(lprect);
 
@@ -354,7 +354,7 @@ namespace user
                Gdiplus::SolidBrush solidBrush(Gdiplus::Color(bAlpha, argb_get_r_value(cr), argb_get_g_value(cr), argb_get_b_value(cr)));
                g.FillRectangle(&solidBrush, lprect->left, lprect->top, lprect->right - lprect->left, lprect->bottom - lprect->top);*/
                
-               System.visual().imaging().color_blend(pgraphics, lprect, cr, bAlpha);
+               Application.imaging().color_blend(pgraphics, lprect, cr, bAlpha);
 
             }
 

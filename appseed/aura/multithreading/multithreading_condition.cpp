@@ -17,7 +17,7 @@ sync_object(NULL)
 
 
    if(papp == NULL)
-      throw invalid_argument_exception(get_thread_app());
+      _throw(invalid_argument_exception(get_app()));
 
 #ifdef WINDOWS
 
@@ -365,7 +365,7 @@ bool condition::is_signaled() const
 #endif
 
 
-    throw not_supported_exception(get_app());
+    _throw(not_supported_exception(get_app()));
 
 }
 
@@ -470,6 +470,6 @@ bool condition::unlock()
 void * condition::get_os_data() const
 {
 
-   throw not_supported_exception(get_app());
+   _throw(not_supported_exception(get_app()));
 
 }

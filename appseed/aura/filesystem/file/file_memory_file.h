@@ -31,45 +31,48 @@ class CLASS_DECL_AURA memory_file :
       virtual ~memory_file();
 
 
+      virtual void assert_valid() const override;
+      virtual void dump(dump_context & dumpcontext) const override;
+
+
+
+
       virtual bool IsValid() const;
       memory_size_t remove_begin(void * lpBuf, memory_size_t uiCount);
       void load_string(string & str);
       void create(memory_size_t iSize = -1);
-      file_position_t seek(file_offset_t lOff, ::file::e_seek  nFrom);
-      file_position_t get_position() const;
+      file_position_t seek(file_offset_t lOff, ::file::e_seek  nFrom) override;
+      file_position_t get_position() const override;
 
-      virtual string GetFilePath() const;
+      virtual string GetFilePath() const override;
 
-      virtual ::primitive::memory_base * create_memory();
+      virtual ::primitive::memory_base * create_memory() override;
 
-      void set_length(file_size_t dwNewLen);
-      file_size_t get_length() const;
+      void set_length(file_size_t dwNewLen) override;
+      file_size_t get_length() const override;
       void Truncate(file_size_t iPosition);
       void clear();
 
       using ::file::file::read;
-      virtual memory_size_t read(void *lpBuf, memory_size_t nCount);
+      virtual memory_size_t read(void *lpBuf, memory_size_t nCount) override;
 
       using ::file::file::write;
-      virtual void write(const void * lpBuf, memory_size_t nCount);
-      virtual void write_from_hex(const void * lpBuf,memory_size_t nCount);
+      virtual void write(const void * lpBuf, memory_size_t nCount) override;
+      virtual void write_from_hex(const void * lpBuf,memory_size_t nCount) override;
 
-      virtual uint64_t GetBufferPtr(UINT nCommand, uint64_t nCount = 0, void ** ppBufStart = NULL, void ** ppBufMax = NULL);
+      virtual uint64_t GetBufferPtr(UINT nCommand, uint64_t nCount = 0, void ** ppBufStart = NULL, void ** ppBufMax = NULL) override;
 
-      void flush();
+      void flush() override;
 
 
       virtual void full_load(var varFile);
 
-      virtual void assert_valid() const;
-      virtual void dump(dump_context & dumpcontext) const;
-
       using ::file::file::get_internal_data;
-      virtual void * get_internal_data();
-      virtual memory_size_t get_internal_data_size() const;
-      virtual bool set_internal_data_size(memory_size_t c);
+      virtual void * get_internal_data() override;
+      virtual memory_size_t get_internal_data_size() const override;
+      virtual bool set_internal_data_size(memory_size_t c) override;
 
-      virtual void transfer_to(writer & writer, memory_size_t uiBufferSize = 1024 * 1024);
+      virtual void transfer_to(writer & writer, memory_size_t uiBufferSize = 1024 * 1024) override;
 
       void copy_this(const memory_file & file);
 

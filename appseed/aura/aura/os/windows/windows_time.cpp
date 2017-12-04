@@ -120,7 +120,7 @@ BOOLEAN nanosleep(LONGLONG ns)
    /* Create timer */
    if (!(timer = CreateWaitableTimer(NULL, TRUE, NULL)))
    {
-      Sleep(::convert<DWORD> (ns / (1000 * 1000)));
+      Sleep((DWORD) (ns / (1000 * 1000)));
       return TRUE;
    }
    /* Set timer properties */

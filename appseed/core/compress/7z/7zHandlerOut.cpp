@@ -290,7 +290,7 @@ namespace n7z
                   return E_INVALIDARG;
                else
                {
-                  throw "should implement below line";
+                  _throw(simple_exception(get_app(), "should implement below line"));
                   //ui.Name = NItemName::MakeLegalName(prop.bstrVal);
                   nameIsDefined = true;
                }

@@ -39,7 +39,7 @@ namespace filemanager
 
 
 
-         #ifdef DEBUG
+
          void tree::assert_valid() const
          {
             ::data::tree::assert_valid();
@@ -49,7 +49,7 @@ namespace filemanager
          {
             ::data::tree::dump(dumpcontext);
          }
-         #endif //DEBUG
+
 
 
          void tree::parse(const char * lpszSource)

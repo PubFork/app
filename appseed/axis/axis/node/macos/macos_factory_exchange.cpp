@@ -19,7 +19,7 @@ namespace macos
          System.factory().cloneable < dir                        >   (System.type_info < ::file::dir::system     > (), 1);
          System.factory().creatable < port_forward               >   (System.type_info < ::net::port_forward     > (), 1);
          System.factory().creatable < crypto                     >   (System.type_info < ::crypto::crypto           > (), 1);
-         System.factory().creatable < ip_enum                     >   (System.type_info < ::net::ip_enum     > (), 1);
+//         System.factory().creatable < ip_enum                     >   (System.type_info < ::net::ip_enum     > (), 1);
          
          System.factory().creatable < copydesk                    >   (System.type_info < ::user::copydesk           > (), 1);
 //         System.factory().creatable < printer                     >   (System.type_info < ::user::printer            > (), 1);

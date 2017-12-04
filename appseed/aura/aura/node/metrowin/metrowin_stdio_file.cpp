@@ -301,7 +301,7 @@ namespace metrowin
       ASSERT_VALID(this);
       ASSERT(m_pStream != NULL);
 
-      throw not_supported_exception(get_app());
+      _throw(not_supported_exception(get_app()));
       return NULL;
    }
 
@@ -310,7 +310,7 @@ namespace metrowin
       ASSERT_VALID(this);
       ASSERT(m_pStream != NULL);
 
-      throw not_supported_exception(get_app());
+      _throw(not_supported_exception(get_app()));
    }
 
    void stdio_file::UnlockRange(file_position_t /* dwPos */, file_size_t /* dwCount */)
@@ -318,7 +318,7 @@ namespace metrowin
       ASSERT_VALID(this);
       ASSERT(m_pStream != NULL);
 
-      throw not_supported_exception(get_app());
+      _throw(not_supported_exception(get_app()));
    }
 
 

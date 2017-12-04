@@ -83,6 +83,22 @@ namespace message
 
          }
 
+
+         bool operator == (const string & str) const
+         {
+
+            return is_text() && str.compare(m_psz) == 0;
+
+         }
+
+
+         bool operator == (const char * psz) const
+         {
+
+            return is_text() && !strcmp(m_psz, psz);
+
+         }
+
          bool operator == (const id & id) const
          {
 
@@ -129,6 +145,6 @@ template <  >
 inline UINT HashKey < const ::message::id & >(const ::message::id & key)
 {
 
-   return ((int64_t)key.m_emessagetype) ^ HashKey < const ::id & >((const ::id &) key);
+   return (UINT) (((int64_t)key.m_emessagetype) ^ HashKey < const ::id & >((const ::id &) key));
 
 }

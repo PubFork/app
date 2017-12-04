@@ -103,7 +103,7 @@ namespace user
 //         HFONT hFont = (HFONT)send_message(WM_GETFONT);
       ::draw2d::graphics_sp spgraphicsScreen(allocer());
 
-      throw todo(get_app());
+      //_throw(todo(get_app()));
       /*         HGDIOBJ hOldFont = NULL;
                if (hFont != NULL)
                   hOldFont = spgraphicsScreen->SelectObject(hFont);*/
@@ -122,7 +122,7 @@ namespace user
                            bResult = FALSE;
                            break;
                         } */
-            convert(pSBP->cxText, spgraphicsScreen->GetTextExtent(pSBP->strText).cx);
+            pSBP->cxText = (int32_t) (spgraphicsScreen->GetTextExtent(pSBP->strText).cx);
             ASSERT(pSBP->cxText >= 0);
             if (!SetPaneText(i, pSBP->strText, FALSE))
             {
@@ -139,7 +139,7 @@ namespace user
             if (i == 0)
                pSBP->nStyle |= (SBPS_STRETCH | SBPS_NOBORDERS);
 #else
-            throw todo(get_app());
+            _throw(todo(get_app()));
 #endif
          }
          ++pSBP;
@@ -205,7 +205,7 @@ namespace user
                        ::GetSystemMetrics(SM_CXBORDER) * 2;
       }
 #else
-      throw todo(get_app());
+      _throw(todo(get_app()));
 #endif
    }
 
@@ -287,7 +287,7 @@ namespace user
          }
       }
 #else
-      throw todo(get_app());
+      _throw(todo(get_app()));
 #endif
    }
 
@@ -331,7 +331,7 @@ namespace user
       if (!pBar->DefWindowProc(SB_GETRECT, nIndex, (LPARAM)lpRect))
          ::SetRectEmpty(lpRect);
 #else
-      throw todo(get_app());
+      _throw(todo(get_app()));
 #endif
    }
 
@@ -541,7 +541,7 @@ namespace user
       pnccalcsize->m_pparams->rgrc[0].right += rect.right;
       pnccalcsize->m_pparams->rgrc[0].bottom += rect.bottom;
 #else
-      throw todo(get_app());
+      _throw(todo(get_app()));
 #endif
    }
 
@@ -630,7 +630,7 @@ namespace user
       pwindowpos->previous();
       m_dwStyle = dwStyle;
 #else
-      throw todo(get_app());
+      _throw(todo(get_app()));
 #endif
    }
 
@@ -744,18 +744,18 @@ namespace user
 
    void status_command::SetCheck(check::e_check echeck) // "checking" will pop out the text
    {
+
+#ifdef WINDOWSEX
       status_bar* pStatusBar = dynamic_cast < status_bar * > (m_puiOther);
       ASSERT(pStatusBar != NULL);
       ASSERT_KINDOF(status_bar, pStatusBar);
       ASSERT(m_iIndex < m_iCount);
-
-#ifdef WINDOWSEX
       UINT nNewStyle = pStatusBar->GetPaneStyle((int32_t) m_iIndex) & ~SBPS_POPOUT;
       if (echeck != check::unchecked)
          nNewStyle |= SBPS_POPOUT;
       pStatusBar->SetPaneStyle((int32_t) m_iIndex, nNewStyle);
 #else
-      throw todo(get_app());
+      _throw(todo(get_app()));
 #endif
 
    }
@@ -804,7 +804,7 @@ namespace user
    /////////////////////////////////////////////////////////////////////////////
    // status_bar diagnostics
 
-#ifdef DEBUG
+
    void status_bar::assert_valid() const
    {
       ::user::control_bar::assert_valid();
@@ -829,7 +829,7 @@ namespace user
       }
       dumpcontext << "\n";
    }
-#endif //DEBUG
+
 
 #ifdef __INIT_SEG
 #pragma code_seg(__INIT_SEG)

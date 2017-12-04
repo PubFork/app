@@ -7,9 +7,9 @@ namespace user
 {
 
 
-	bool is_descendant(::user::interaction * puiParent, ::user::interaction * pui)
-      // helper for detecting whether child descendent of parent
-      //  (works with owned popups as well)
+   bool is_descendant(::user::interaction * puiParent, ::user::interaction * pui)
+   // helper for detecting whether child descendent of parent
+   //  (works with owned popups as well)
    {
 
       if(pui == NULL)
@@ -26,7 +26,8 @@ namespace user
          if(puiParent == puiAscendant)
             return true;
 
-      } while(puiAscendant != NULL);
+      }
+      while(puiAscendant != NULL);
 
 
       puiAscendant = pui;
@@ -40,7 +41,8 @@ namespace user
          if(puiParent == puiAscendant)
             return true;
 
-      } while(puiAscendant != NULL);
+      }
+      while(puiAscendant != NULL);
 
 
       return false;

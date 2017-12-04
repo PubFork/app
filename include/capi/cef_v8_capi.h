@@ -484,13 +484,13 @@ typedef struct _cef_v8value_t {
   int (CEF_CALLBACK *clear_exception)(struct _cef_v8value_t* self);
 
   ///
-  // Returns true (1) if this object will re-throw future exceptions. This
+  // Returns true (1) if this object will re-_throw( future exceptions. This
   // attribute exists only in the scope of the current CEF value object.
   ///
   int (CEF_CALLBACK *will_rethrow_exceptions)(struct _cef_v8value_t* self);
 
   ///
-  // Set whether this object will re-throw future exceptions. By default
+  // Set whether this object will re-_throw( future exceptions. By default
   // exceptions are not re-thrown. If a exception is re-thrown the current
   // context should not be accessed again until after the exception has been
   // caught and not re-thrown. Returns true (1) on success. This attribute

@@ -2,9 +2,6 @@
 //#include "base/user/user.h"
 
 
-#ifdef HOTPLUGIN_SUBSYSTEM
-
-
 #undef new
 
 
@@ -242,7 +239,7 @@ namespace hotplugin
 
 #elif defined(LINUX) || defined(SOLARIS)
 
-   int32_t plugin::message_handler(XEvent * pevent)
+   int32_t plugin::x11_message_handler(void  * pevent)
    {
       return 0;
    }
@@ -280,7 +277,7 @@ namespace hotplugin
 
 #else
 
-         throw "not implemented";
+         _throw(simple_exception(get_app(), "not implemented"));
 
 #endif
 
@@ -799,7 +796,7 @@ namespace hotplugin
             if(bCreate)
             {
 
-               throw "resource_exception";
+               _throw(simple_exception(get_app(), "resource_exception"));
 
             }
 
@@ -836,7 +833,7 @@ namespace hotplugin
 //            if(bCreateFile)
 //            {
 //
-//               throw "resource exception";
+//               _throw(simple_exception(get_app(), "resource exception"));
 //
 //            }
 //            else
@@ -866,7 +863,7 @@ namespace hotplugin
 //         {
 //            CloseHandle(m_hfileBitmap);
 //            m_hfileBitmap = INVALID_HANDLE_VALUE;
-//            throw "resource exception";
+//            _throw(simple_exception(get_app(), "resource exception"));
 //         }
 //
 //#elif defined(WINDOWS)
@@ -885,7 +882,7 @@ namespace hotplugin
 //         {
 //            CloseHandle(m_hfileBitmap);
 //            m_hfileBitmap = INVALID_HANDLE_VALUE;
-//            throw "resource exception";
+//            _throw(simple_exception(get_app(), "resource exception"));
 //         }
 //#else
 //
@@ -926,10 +923,10 @@ namespace hotplugin
 //            ::close(m_hfileBitmap);
 //            m_hfileBitmap = -1;
 //#endif
-//            throw "resource exception";
+//            _throw(simple_exception(get_app(), "resource exception"));
 //         }
 
-         m_pmutexBitmap = new mutex(get_thread_app(), false, string("Global\\app_app_nest-") + hex::lower_from((int_ptr)this));
+         m_pmutexBitmap = new mutex(get_app(), false, string("Global\\app_app_nest-") + hex::lower_from((int_ptr)this));
 
       }
 
@@ -1071,7 +1068,7 @@ namespace hotplugin
 
       LPARAM lparam;
 
-      convert(message, pbase->m_id.int64());
+      message = (UINT) (LPARAM) pbase->m_id.int64();
 
       wparam     = pbase->m_wparam;
 
@@ -1141,12 +1138,5 @@ namespace hotplugin
 
 
 } // namespace hotplugin
-
-
-#endif
-
-
-
-
 
 

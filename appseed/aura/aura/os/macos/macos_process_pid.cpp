@@ -49,7 +49,7 @@ extern int strncmp_dup(const char * sz1, const char * sz2, int_ptr iLen);
 //                if (sNewProcesses == 0) {
 //                        if (sProcesses)
 //                                free(sProcesses);
-//                                throw "could not reallocate memory";
+//                                _throw(simple_exception(get_app(), "could not reallocate memory"));
 //                }
 //                sProcesses = sNewProcesses;
 //                iRetCode = sysctl(aiNames, (u_int) iNamesLength, sProcesses, &iSize, NULL, 0);
@@ -93,7 +93,7 @@ int_array get_pids()
    
    pida.set_size(numberOfProcesses);
    
-   proc_listpids(PROC_ALL_PIDS, 0, pida.get_data(), pida.get_size());
+   proc_listpids(PROC_ALL_PIDS, 0, pida.get_data(), (int) (pida.get_size()));
    
    for(auto pid : pida)
    {
@@ -474,7 +474,7 @@ int get_process_pid(const char * csProcessName)
       if (sNewProcesses == 0) {
          if (sProcesses)
             free(sProcesses);
-         throw "could not reallocate memory";
+         throw ::simple_exception(get_app(), "could not reallocate memory");
       }
       sProcesses = sNewProcesses;
       iRetCode = sysctl(aiNames, (u_int) iNamesLength, sProcesses, &iSize, NULL, 0);
@@ -509,7 +509,7 @@ int get_process_pid(const char * csProcessName)
 int get_current_process_affinity_order()
 {
    
-   int numCPU = sysconf(_SC_NPROCESSORS_ONLN);
+   int numCPU = (int) (sysconf(_SC_NPROCESSORS_ONLN));
    
    return numCPU;
 }

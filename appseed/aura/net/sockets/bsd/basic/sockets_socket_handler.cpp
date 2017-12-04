@@ -28,7 +28,7 @@ namespace sockets
    //#endif
 
 
-   socket_handler::socket_handler(::aura::application * papp, logger *plogger) :
+   socket_handler::socket_handler(::aura::application * papp, ::aura::log *plogger) :
       ::object(papp),
       base_socket_handler(papp, plogger),
       m_b_use_mutex(false)
@@ -182,7 +182,9 @@ namespace sockets
 
       if (p->GetSocket() == INVALID_SOCKET)
       {
+#ifdef DEBUG
          log(p, "add", -1, "Invalid socket", ::aura::log::level_warning);
+#endif
          if (p->CloseAndDelete())
          {
             m_delete.add_tail(p);
@@ -192,7 +194,9 @@ namespace sockets
       sp(base_socket) plookup;
       if (m_add.Lookup(p->GetSocket(), plookup))
       {
+#ifdef DEBUG
          log(p, "add", (int32_t)p->GetSocket(), "Attempt to add socket already in add queue", ::aura::log::level_info);
+#endif
          //m_delete.add_tail(p);
          return;
       }
@@ -271,11 +275,11 @@ namespace sockets
    {
 
       if (m_fds_callonconnect.get_size() ||
-         (!m_slave && m_fds_detach.get_size()) ||
-         m_fds_timeout.get_size() ||
-         m_fds_retry.get_size() ||
-         m_fds_close.get_size() ||
-         m_fds_erase.get_size())
+            (!m_slave && m_fds_detach.get_size()) ||
+            m_fds_timeout.get_size() ||
+            m_fds_retry.get_size() ||
+            m_fds_close.get_size() ||
+            m_fds_erase.get_size())
       {
          return select(0, 200000);
       }
@@ -329,7 +333,9 @@ namespace sockets
             sp(base_socket) psocket;
             if (!m_sockets.Lookup(socket, psocket)) // not found
             {
+#ifdef DEBUG
                log(NULL, "GetSocket/handler/4", (int32_t)socket, "Did not find expected socket using file descriptor", ::aura::log::level_warning);
+#endif
                AddList(psocket->GetSocket(), LIST_CALLONCONNECT, false);
             }
             if (psocket != NULL)
@@ -342,27 +348,28 @@ namespace sockets
                      psocket->SetConnected(); // moved here from inside if (tcp) check below
                      if (psocket->IsSSL()) // SSL Enabled socket
                         psocket->OnSSLConnect();
+                     else if (psocket->Socks4())
+                        psocket->OnSocks4Connect();
                      else
-                        if (psocket->Socks4())
-                           psocket->OnSocks4Connect();
-                        else
-                        {
+                     {
 
-                           if (tcp)
+                        if (tcp)
+                        {
+                           if (tcp->GetOutputLength())
                            {
-                              if (tcp->GetOutputLength())
-                              {
-                                 psocket->OnWrite();
-                              }
-                           }
-                           if (tcp && tcp->IsReconnect())
-                              psocket->OnReconnect();
-                           else
-                           {
-                              log(tcp, "Calling OnConnect", 0, "Because CallOnConnect", ::aura::log::level_info);
-                              psocket->OnConnect();
+                              psocket->OnWrite();
                            }
                         }
+                        if (tcp && tcp->IsReconnect())
+                           psocket->OnReconnect();
+                        else
+                        {
+#ifdef DEBUG
+                           log(tcp, "Calling OnConnect", 0, "Because CallOnConnect", ::aura::log::level_info);
+#endif
+                           psocket->OnConnect();
+                        }
+                     }
                      tcp->SetCallOnConnect(false);
                      AddList(psocket->GetSocket(), LIST_CALLONCONNECT, false);
                   }
@@ -405,7 +412,7 @@ namespace sockets
 
       uint32_t dw1, dw2;
 
-   start_processing_adding:
+start_processing_adding:
 
       auto ppair = m_add.PGetFirstAssoc();
 
@@ -415,7 +422,9 @@ namespace sockets
          if (m_sockets.get_size() >= FD_SETSIZE)
          {
 
+#ifdef DEBUG
             log(NULL, "Select", (int32_t)m_sockets.get_size(), "FD_SETSIZE reached", ::aura::log::level_warning);
+#endif
 
             goto end_processing_adding;
 
@@ -430,7 +439,9 @@ namespace sockets
          if (m_sockets.Lookup(p->GetSocket(), plookup))
          {
 
+#ifdef DEBUG
             log(p, "add", (int32_t)p->GetSocket(), "Attempt to add socket already in controlled queue", ::aura::log::level_fatal);
+#endif
 
             m_add.remove_key(s);
 
@@ -468,7 +479,9 @@ namespace sockets
          else
          {
 
+#ifdef DEBUG
             log(p, "add", (int32_t)p->GetSocket(), "Trying to add socket with SetCloseAndDelete() true", ::aura::log::level_warning);
+#endif
 
          }
 
@@ -490,7 +503,7 @@ namespace sockets
 
       }
 
-   end_processing_adding:
+end_processing_adding:
 
       fd_set rfds;
       fd_set wfds;
@@ -545,7 +558,9 @@ namespace sockets
          if (m_maxsock > 0 && (m_iSelectErrno != m_iPreviousError || dwNow - m_dwLastError > 5000))
          {
 
-            log(NULL, "select", m_iSelectErrno, wsa_str_error(m_iSelectErrno));
+#ifdef DEBUG
+            log(NULL, "select", m_iSelectErrno, bsd_socket_error(m_iSelectErrno));
+#endif
 
             int32_t iError = m_iSelectErrno;
 #ifdef LINUX
@@ -630,7 +645,9 @@ namespace sockets
                      if (n == -1)
                      {
                         // %! bad fd, remove
+#ifdef DEBUG
                         log(psocket, "Select", (int32_t)s, "Bad fd in fd_set (2)"); // , LOG_LEVEL_ERROR);
+#endif
                         m_fds_erase.push_back(s);
                      }
                      else
@@ -654,7 +671,9 @@ namespace sockets
                         if (!bAnySet)
                         {
                            // %! none set
+#ifdef DEBUG
                            log(psocket, "Select", (int32_t)s, "No fd in fd_set"); // , LOG_LEVEL_ERROR);
+#endif
                            m_fds_erase.push_back(s);
                         }
                      }
@@ -662,7 +681,9 @@ namespace sockets
                   else
                   {
                      // %! mismatch
+#ifdef DEBUG
                      log(psocket, "Select", (int32_t)s, "Bad fd in fd_set (3)"); // , LOG_LEVEL_ERROR);
+#endif
                      m_fds_erase.push_back(s);
                   }
 
@@ -670,7 +691,9 @@ namespace sockets
                catch (...)
                {
                   // general error
+#ifdef DEBUG
                   log(psocket, "Select", (int32_t)s, "Bad fd in fd_set (3)"); // , LOG_LEVEL_ERROR);
+#endif
                   m_fds_erase.push_back(s);
                }
             }
@@ -713,7 +736,9 @@ namespace sockets
                }
                else
                {
+#ifdef DEBUG
                   log(NULL, "GetSocket/handler/1", (int32_t)socket, "Did not find expected socket using file descriptor", ::aura::log::level_warning);
+#endif
                }
                n--;
             }
@@ -734,7 +759,9 @@ namespace sockets
                }
                else
                {
+#ifdef DEBUG
                   log(NULL, "GetSocket/handler/2", (int32_t)socket, "Did not find expected socket using file descriptor", ::aura::log::level_warning);
+#endif
                }
                n--;
             }
@@ -760,7 +787,9 @@ namespace sockets
                }
                else
                {
+#ifdef DEBUG
                   log(NULL, "GetSocket/handler/3", (int32_t)socket, "Did not find expected socket using file descriptor", ::aura::log::level_warning);
+#endif
                }
                n--;
             }
@@ -833,7 +862,9 @@ namespace sockets
                {
                   if (!m_add.Lookup(socket, psocket))
                   {
+#ifdef DEBUG
                      log(NULL, "GetSocket/handler/6", (int32_t)socket, "Did not find expected socket using file descriptor", ::aura::log::level_warning);
+#endif
                      AddList(socket, LIST_TIMEOUT, false);
                   }
                }
@@ -864,7 +895,9 @@ namespace sockets
             sp(base_socket) p;;
             if (m_sockets.Lookup(socket, p))
             {
+#ifdef DEBUG
                log(NULL, "GetSocket/handler/7", (int32_t)socket, "Did not find expected socket using file descriptor", ::aura::log::level_warning);
+#endif
             }
             if (p)
             {
@@ -885,7 +918,9 @@ namespace sockets
                      }
                      else
                      {
+#ifdef DEBUG
                         log(p, "RetryClientConnect", 0, "no address", ::aura::log::level_error);
+#endif
                      }
                      add(p);
                      m_fds_erase.add_tail(nn);
@@ -908,7 +943,9 @@ namespace sockets
             {
                if (!m_add.Lookup(socket, p))
                {
+#ifdef DEBUG
                   log(NULL, "GetSocket/handler/8", (int32_t)socket, "Did not find expected socket using file descriptor", ::aura::log::level_warning);
+#endif
                }
             }
             if (p)
@@ -918,89 +955,96 @@ namespace sockets
                   sp(tcp_socket)tcp = (p);
                   // new graceful tcp - flush and close timeout 5s
                   if (tcp && p->IsConnected() && tcp->GetFlushBeforeClose() &&
-                     !tcp->IsSSL() &&
-                     p->TimeSinceClose() < 5)
+                        !tcp->IsSSL() &&
+                        p->TimeSinceClose() < 5)
                   {
                      //TRACE(" close(1)\n");
                      if (tcp->GetOutputLength())
                      {
+#ifdef DEBUG
                         log(p, "Closing", (int32_t)tcp->GetOutputLength(), "Sending all data before closing", ::aura::log::level_info);
+#endif
                      }
                      else // shutdown write when output buffer is is_empty
                         if (!(tcp->GetShutdown() & SHUT_WR))
                         {
                            if (socket != INVALID_SOCKET && shutdown(socket, SHUT_WR) == -1)
                            {
-                              log(p, "graceful shutdown", Errno, wsa_str_error(Errno), ::aura::log::level_error);
+#ifdef DEBUG
+                              log(p, "graceful shutdown", Errno, bsd_socket_error(Errno), ::aura::log::level_error);
+#endif
                            }
                            tcp->SetShutdown(SHUT_WR);
                         }
                   }
-                  else
-                     if (tcp && p->IsConnected() && tcp->Reconnect())
+                  else if (tcp && p->IsConnected() && tcp->Reconnect())
+                  {
+                     //SOCKET nn = *it; //(*it3).m_element1;
+                     //TRACE(" close(2) fd %d\n", socket);
+                     p->SetCloseAndDelete(false);
+                     tcp->SetIsReconnect();
+                     p->SetConnected(false);
+                     //TRACE("close() before reconnect\n");
+                     p->close(); // dispose of old file descriptor (open creates a new)
+                     p->OnDisconnect();
+                     ::net::address ad = p->GetClientRemoteAddress();
+                     if (ad.is_valid())
                      {
-                        //SOCKET nn = *it; //(*it3).m_element1;
-      //TRACE(" close(2) fd %d\n", socket);
-                        p->SetCloseAndDelete(false);
-                        tcp->SetIsReconnect();
-                        p->SetConnected(false);
-                        //TRACE("close() before reconnect\n");
-                        p->close(); // dispose of old file descriptor (open creates a new)
-                        p->OnDisconnect();
-                        ::net::address ad = p->GetClientRemoteAddress();
-                        if (ad.is_valid())
-                        {
-                           tcp->open(ad);
-                        }
-                        else
-                        {
-                           log(p, "Reconnect", 0, "no address", ::aura::log::level_error);
-                        }
-                        tcp->ResetConnectionRetries();
-                        add(p);
-                        m_fds_erase.add_tail(socket);
+                        tcp->open(ad);
                      }
                      else
                      {
-                        //TRACE(" close(3) fd %d GetSocket() %d\n", socket, p -> GetSocket());
-                        if (tcp && p->IsConnected() && tcp->GetOutputLength())
-                        {
-                           log(p, "Closing", (int32_t)tcp->GetOutputLength(), "Closing socket while data still left to send", ::aura::log::level_warning);
-                        }
-                        if (p->Retain() && !p->Lost())
-                        {
+#ifdef DEBUG
+                        log(p, "Reconnect", 0, "no address", ::aura::log::level_error);
+#endif
+                     }
+                     tcp->ResetConnectionRetries();
+                     add(p);
+                     m_fds_erase.add_tail(socket);
+                  }
+                  else
+                  {
+                     //TRACE(" close(3) fd %d GetSocket() %d\n", socket, p -> GetSocket());
+                     if (tcp && p->IsConnected() && tcp->GetOutputLength())
+                     {
+#ifdef DEBUG
+                        log(p, "Closing", (int32_t)tcp->GetOutputLength(), "Closing socket while data still left to send", ::aura::log::level_warning);
+#endif
+                     }
+                     if (p->Retain() && !p->Lost())
+                     {
 
-                           synch_lock sl(&Session.sockets().m_mutexPool);
+                        synch_lock sl(&Session.sockets().m_mutexPool);
 
-                           sp(pool_socket) ppoolsocket = canew(pool_socket(*this, p));
+                        sp(pool_socket) ppoolsocket = canew(pool_socket(*this, p));
 
-                           ppoolsocket->SetDeleteByHandler();
+                        ppoolsocket->SetDeleteByHandler();
 
-                           Session.sockets().m_pool.set_at(ppoolsocket->m_socket, ppoolsocket);
+                        Session.sockets().m_pool.set_at(ppoolsocket->m_socket, ppoolsocket);
 
-                           ppoolsocket->SetCloseAndDelete(false); // added - remove from m_fds_close
+                        ppoolsocket->SetCloseAndDelete(false); // added - remove from m_fds_close
 
-                           //p -> SetCloseAndDelete(false); // added - remove from m_fds_close
-
-                        }
-                        else if (p.cast < http_session >() != NULL && !p->Lost())
-                        {
-                           p->SetCloseAndDelete(false);
-                           continue;
-                        }
-                        else
-                        {
-                           set(p->GetSocket(), false, false, false);
-                           //TRACE("close() before OnDelete\n");
-                           p->close();
-                        }
-                        p->OnDelete();
-                        if (p->DeleteByHandler())
-                        {
-                           p->SetErasedByHandler();
-                        }
+                        //p -> SetCloseAndDelete(false); // added - remove from m_fds_close
 
                      }
+                     else if (p.cast < http_session >() != NULL && !p->Lost())
+                     {
+                        p->SetCloseAndDelete(false);
+                        continue;
+                     }
+                     else
+                     {
+                        set(p->GetSocket(), false, false, false);
+                        //TRACE("close() before OnDelete\n");
+                        p->close();
+                     }
+                     p->OnDelete();
+                     if (p->DeleteByHandler())
+                     {
+                        p->SetErasedByHandler();
+                     }
+
+                  }
                }
             }
             m_fds_erase.add_tail(socket);
@@ -1065,7 +1109,7 @@ namespace sockets
          sp(socket) p = m_delete.pop_head();
          p->OnDelete();
          if (p->DeleteByHandler()
-            && !(m_slave ^ p->IsDetached())
+               && !(m_slave ^ p->IsDetached())
             )
          {
             p->SetErasedByHandler();
@@ -1098,7 +1142,8 @@ namespace sockets
                      break;
                   }
                }
-            } while (again);
+            }
+            while (again);
          }
       }
       return n;
@@ -1185,7 +1230,9 @@ namespace sockets
       Session.sockets().net().convert(addrLocal, "127.0.0.1");
       if (!resolv->open(::net::address(addrLocal, m_resolver_port)))
       {
+#ifdef DEBUG
          log(resolv, "Resolve", -1, "Can't connect to local resolve server", ::aura::log::level_fatal);
+#endif
       }
       add(resolv);
       m_resolve_q[p] = true;
@@ -1204,7 +1251,9 @@ namespace sockets
       Session.sockets().net().convert(addrLocal, "127.0.0.1");
       if (!resolv->open(::net::address(addrLocal, m_resolver_port)))
       {
+#ifdef DEBUG
          log(resolv, "Resolve", -1, "Can't connect to local resolve server", ::aura::log::level_fatal);
+#endif
       }
       add(resolv);
       m_resolve_q[p] = true;
@@ -1222,7 +1271,9 @@ namespace sockets
       Session.sockets().net().convert(addrLocal, "127.0.0.1");
       if (!resolv->open(::net::address(addrLocal, m_resolver_port)))
       {
+#ifdef DEBUG
          log(resolv, "Resolve", -1, "Can't connect to local resolve server", ::aura::log::level_fatal);
+#endif
       }
       add(resolv);
       m_resolve_q[p] = true;
@@ -1240,7 +1291,9 @@ namespace sockets
       Session.sockets().net().convert(addrLocal, "127.0.0.1");
       if (!resolv->open(::net::address(addrLocal, m_resolver_port)))
       {
+#ifdef DEBUG
          log(resolv, "Resolve", -1, "Can't connect to local resolve server", ::aura::log::level_fatal);
+#endif
       }
       add(resolv);
       m_resolve_q[p] = true;
@@ -1320,9 +1373,9 @@ namespace sockets
          {
 
             if (psocket->GetSocketType() == type &&
-               psocket->GetSocketProtocol() == protocol &&
-               // %!             pools -> GetClientRemoteAddress() &&
-               psocket->GetClientRemoteAddress() == ad)
+                  psocket->GetSocketProtocol() == protocol &&
+                  // %!             pools -> GetClientRemoteAddress() &&
+                  psocket->GetClientRemoteAddress() == ad)
             {
 
                Session.sockets().m_pool.remove_key(ppair->m_element1);
@@ -1370,7 +1423,9 @@ namespace sockets
       {
          if (ppair->m_element2 == p)
          {
+#ifdef DEBUG
             log(p, "remove", -1, "socket destructor called while still in use", ::aura::log::level_warning);
+#endif
             m_sockets.remove_key(ppair->m_element1);
             return;
          }
@@ -1381,7 +1436,9 @@ namespace sockets
       {
          if (ppair2->m_element2 == p)
          {
+#ifdef DEBUG
             log(p, "remove", -2, "socket destructor called while still in use", ::aura::log::level_warning);
+#endif
             m_add.remove_key(ppair2->m_element1);
             return;
          }
@@ -1389,7 +1446,9 @@ namespace sockets
       }
       if (m_delete.remove(p) > 0)
       {
+#ifdef DEBUG
          log(p, "remove", -3, "socket destructor called while still in use", ::aura::log::level_warning);
+#endif
          return;
       }
    }
@@ -1486,10 +1545,14 @@ namespace sockets
             m_trigger_dst[id][dst] = true;
             return true;
          }
+#ifdef DEBUG
          log(dst, "Subscribe", id, "Already subscribed", ::aura::log::level_info);
+#endif
          return false;
       }
+#ifdef DEBUG
       log(dst, "Subscribe", id, "Trigger id not found", ::aura::log::level_info);
+#endif
       return false;
    }
 
@@ -1503,10 +1566,14 @@ namespace sockets
             m_trigger_dst[id].remove_key(dst);
             return true;
          }
+#ifdef DEBUG
          log(dst, "Unsubscribe", id, "Not subscribed", ::aura::log::level_info);
+#endif
          return false;
       }
+#ifdef DEBUG
       log(dst, "Unsubscribe", id, "Trigger id not found", ::aura::log::level_info);
+#endif
       return false;
    }
 
@@ -1534,7 +1601,9 @@ namespace sockets
       }
       else
       {
+#ifdef DEBUG
          log(NULL, "Trigger", id, "Trigger id not found", ::aura::log::level_info);
+#endif
       }
    }
 

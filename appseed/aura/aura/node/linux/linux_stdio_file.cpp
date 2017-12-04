@@ -322,25 +322,25 @@ sp(::file::file) stdio_file::Duplicate() const
    ASSERT_VALID(this);
    ASSERT(m_pStream != NULL);
 
-   throw not_supported_exception(get_app());
+   _throw(not_supported_exception(get_app()));
    return NULL;
 }
 
 
-void stdio_file::LockRange(DWORD_PTR /* dwPos */, DWORD_PTR /* dwCount */)
+void stdio_file::LockRange(file_position_t /* dwPos */, file_position_t /* dwCount */)
 {
    ASSERT_VALID(this);
    ASSERT(m_pStream != NULL);
 
-   throw not_supported_exception(get_app());
+   _throw(not_supported_exception(get_app()));
 }
 
-void stdio_file::UnlockRange(DWORD_PTR /* dwPos */, DWORD_PTR /* dwCount */)
+void stdio_file::UnlockRange(file_position_t /* dwPos */, file_position_t /* dwCount */)
 {
    ASSERT_VALID(this);
    ASSERT(m_pStream != NULL);
 
-   throw not_supported_exception(get_app());
+   _throw(not_supported_exception(get_app()));
 }
 
 #ifdef _DEBUG
@@ -355,7 +355,7 @@ void stdio_file::dump(dump_context & dumpcontext) const
 
 
 
-DWORD_PTR stdio_file::get_length() const
+file_position_t stdio_file::get_length() const
 {
    ASSERT_VALID(this);
 

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #include "setup/debug.h"
@@ -11,9 +11,8 @@
 
 #include "aura_types.h"
 
-#if !defined(METROWIN)
+#if !defined(METROWIN) && !defined(APPLE_IOS) && !defined(VSNORD) && !defined(SMALLCODE) && !defined(RASPBIAN)
 
-#define INSTALL_SUBSYSTEM
 #define HOTPLUGIN_SUBSYSTEM
 
 #endif
@@ -39,12 +38,4 @@
 #include "aura/aura/aura_policy/aura_policy.h"
 
 #define new AURA_NEW
-
-
-
-
-
-
-
-
 

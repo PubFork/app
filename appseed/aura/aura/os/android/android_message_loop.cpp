@@ -19,25 +19,6 @@ public:
 
 
 
-void _c_simple_message_loop()
-{
-
-
-   MESSAGE msg;
-
-	while(GetMessage(&msg))
-	{
-
-		TranslateMessage(&msg);
-
-		DispatchMessage(&msg);
-
-	}
-
-
-}
-
-
 
 
 int_bool sys_message_queue::GetMessage(MESSAGE * pmsg)
@@ -123,24 +104,3 @@ bool TranslateMessage(LPMESSAGE lpmessage)
 }
 
 
-
-/*
-void _c_simple_message_loop()
-{
-
-   MESSAGE msg;
-
-	while(GetMessage(&msg, NULL, 0, 0))
-	{
-
-		TranslateMessage(&msg);
-
-		DispatchMessage(&msg);
-
-	}
-
-
-}
-
-
-*/

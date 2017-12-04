@@ -1,5 +1,4 @@
-#include "framework.h"
-//#include "windows.h"
+﻿#include "framework.h"
 
 
 namespace windows
@@ -193,7 +192,7 @@ namespace windows
          m_pchBuf = (char *)malloc(1025);
 
          if(m_pchBuf == NULL)
-            throw memory_exception(get_thread_app());
+            _throw(memory_exception(get_app()));
 
       }
 

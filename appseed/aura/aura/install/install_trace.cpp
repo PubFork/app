@@ -1,8 +1,5 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include <stdio.h>
-
-
-#if defined(INSTALL_SUBSYSTEM)
 
 
 namespace install
@@ -203,8 +200,5 @@ namespace install
 
 } // namespace install
 
-
-
-#endif
 
 

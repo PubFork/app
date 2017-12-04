@@ -40,6 +40,11 @@ public:
    template < class T2 >
    smart_pointer(T2 * p)
    {
+      if(p == NULL)
+      {
+         m_p = NULL;
+         return;
+      }
       m_p = dynamic_cast < T * > (p);
       if(m_p != NULL) ::add_ref(p);
    }
@@ -48,6 +53,11 @@ public:
    template < class T2 >
    smart_pointer(const T2 * p)
    {
+      if(p == NULL)
+      {
+         m_p = NULL;
+         return;
+      }
       m_p = dynamic_cast < T * > ((T2 *) p);
       if(m_p != NULL) ::add_ref(p);
    }
@@ -160,6 +170,11 @@ public:
       return dynamic_cast < T2 * > (m_p);
    }
 
+   template < class T2 >
+   inline bool is() const
+   {
+      return cast < T2 > () != NULL;
+   }
 
 //      bool operator ==(const smart_pointer & p) const { return m_p == p.m_p; }
 //      bool operator !=(const smart_pointer & p) const { return m_p != p.m_p; }
@@ -181,7 +196,7 @@ public:
 
 
    //sp(T) clone() const;
-   
+
    void alloc(const ::aura::allocatorsp & spallocator);
 
 

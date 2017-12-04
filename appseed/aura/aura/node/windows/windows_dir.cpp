@@ -1,5 +1,4 @@
-#include "framework.h"
-#include "windows.h"
+﻿#include "framework.h"
 
 
 

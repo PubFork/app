@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #ifdef WINDOWS
 #include <shellapi.h>
 #include <shlobj.h>
@@ -66,7 +66,7 @@ bool get_os_bit(bool & b64)
 #endif
 
 
-#if defined(INSTALL_SUBSYSTEM)
+#include "install_bootstrap.h"
 
 
 namespace install
@@ -918,7 +918,7 @@ command_retry:
       straFile.add("vcredist");
 #endif
 
-      convert(status.m_lTotal, straFile.size());
+      status.m_lTotal = (LONG) (straFile.size());
       status.m_lProcessing = status.m_lTotal;
       status.m_lOk = 0;
       status.m_lBad = 0;
@@ -998,7 +998,7 @@ command_retry:
          }
 #else
 
-         throw todo(get_app());
+         _throw(todo(get_app()));
 
 #endif
 
@@ -1563,7 +1563,7 @@ command_retry:
    bool bootstrap::is_user_service_running()
    {
 
-      ::mutex mutex(get_thread_app(), false, "Local\\ca2_application_local_mutex:app-core/user_service");
+      ::mutex mutex(get_app(), false, "Local\\ca2_application_local_mutex:app-core/user_service");
 
       return mutex.already_exists();
 
@@ -1625,15 +1625,7 @@ command_retry:
    }
 
 
-
-
-
 } // namespace install
-
-
-
-#endif
-
 
 
 

@@ -75,7 +75,7 @@ memory_size_t memory_file::read(void *lpBuf, memory_size_t nCount)
 {
 
    return read_inline(lpBuf, nCount);
-   
+
 }
 
 
@@ -215,7 +215,7 @@ file_size_t memory_file::get_length() const
 file_position_t memory_file::get_position() const
 {
    if (!IsValid())
-      throw io_exception(get_app(), "memory_file::get_position");
+      _throw(io_exception(get_app(), "memory_file::get_position"));
    return (file_position_t)m_dwPosition;
 }
 
@@ -236,41 +236,41 @@ file_position_t memory_file::seek(file_offset_t lOff, ::file::e_seek nFrom)
    case ::file::seek_begin:
       if(lOff < 0)
       {
-         
+
          dwNew = 0;
-         
+
       }
-         else
-         {
-      dwNew = (memory_position_t)lOff;
-            
-         }
+      else
+      {
+         dwNew = (memory_position_t)lOff;
+
+      }
       break;
    case ::file::seek_end:
-         if(lOff < -(memory_offset_t)get_length())
-         {
-            
-            dwNew = 0;
-            
-         }
-         else
-         {
-            dwNew = (memory_position_t)(get_length() + lOff);
-         }
+      if(lOff < -(memory_offset_t)get_length())
+      {
+
+         dwNew = 0;
+
+      }
+      else
+      {
+         dwNew = (memory_position_t)(get_length() + lOff);
+      }
       break;
    case ::file::seek_current:
-         if(lOff < -(memory_offset_t)m_dwPosition)
-         {
-            
-            dwNew = 0;
-            
-         }
-         else
-         {
-            
-            dwNew = (memory_position_t)(m_dwPosition + lOff);
-            
-         }
+      if(lOff < -(memory_offset_t)m_dwPosition)
+      {
+
+         dwNew = 0;
+
+      }
+      else
+      {
+
+         dwNew = (memory_position_t)(m_dwPosition + lOff);
+
+      }
       break;
    default:
       return m_dwPosition;
@@ -279,7 +279,7 @@ file_position_t memory_file::seek(file_offset_t lOff, ::file::e_seek nFrom)
    m_dwPosition = dwNew;
 
    //if(dwNew > this->get_size())
-      //allocate((memory_size_t) dwNew);
+   //allocate((memory_size_t) dwNew);
 
    return (file_position_t)dwNew;
 }
@@ -376,6 +376,8 @@ void memory_file::set_length(file_size_t dwNewLen)
 }
 
 
+
+
 void memory_file::assert_valid() const
 {
    file::assert_valid();
@@ -388,8 +390,6 @@ void memory_file::dump(dump_context & dumpcontext) const
 
 
 
-
-
 void memory_file::full_load(var varFile)
 {
 
@@ -398,7 +398,7 @@ void memory_file::full_load(var varFile)
    ASSERT(IsValid());
 
    ::file::file_sp spfile = Application.file().get_file(varFile, ::file::type_binary | ::file::mode_read | ::file::share_deny_none);
-   
+
    if (spfile.is_null())
    {
 
@@ -498,7 +498,7 @@ memory_file & memory_file::operator = (const memory_file & file)
 
    if (&file == this)
    {
-    
+
       return *this;
 
    }

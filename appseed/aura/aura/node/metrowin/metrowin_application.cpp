@@ -192,7 +192,7 @@ namespace aura
 //#ifdef WINDOWSEX
 //      return ::LoadCursor(NULL, lpszCursorName);
 //#else
-//      throw todo(get_app());
+//      _throw(todo(get_app()));
 //#endif
 //   }
 //
@@ -201,7 +201,7 @@ namespace aura
 //#ifdef WINDOWSEX
 //      return ::LoadCursor(NULL, MAKEINTRESOURCE(nIDCursor));
 //#else
-//      throw todo(get_app());
+//      _throw(todo(get_app()));
 //#endif
 //   }
 //
@@ -220,7 +220,7 @@ namespace aura
 //#ifdef WINDOWSEX
 //      return ::LoadIcon(NULL, lpszIconName);
 //#else
-//      throw todo(get_app());
+//      _throw(todo(get_app()));
 //#endif
 //   }
 //
@@ -229,7 +229,7 @@ namespace aura
 //#ifdef WINDOWSEX
 //      return ::LoadIcon(NULL, MAKEINTRESOURCE(nIDIcon));
 //#else
-//      throw todo(get_app());
+//      _throw(todo(get_app()));
 //#endif
 //   }
 
@@ -304,7 +304,7 @@ namespace aura
 
    // Overridables
    // thread initialization
-   bool application::initialize_application()
+   bool application::init_application()
    {
       return ::metrowin::thread::initialize_thread();
    }
@@ -366,7 +366,7 @@ namespace aura
       // avoid calling CloseHandle() on our own thread handle
       // during the thread destructor
       set_os_data(NULL);
-      //int32_t iRet = ::aura::application::exit_application();
+      //int32_t iRet = ::aura::application::term_instance();
 
       //smart_pointer < application_base >::destroy();
 

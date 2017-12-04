@@ -78,20 +78,20 @@ public:
    {
    }
 
-   tuple(const tuple&) throw()
+   tuple(const tuple&) NOTHROW
    {
    }
 
-   void swap(TUPLE_TYPE&) throw()
+   void swap(TUPLE_TYPE&) NOTHROW
    {
    }
 
-   bool equals(const TUPLE_TYPE&) throw()
+   bool equals(const TUPLE_TYPE&) NOTHROW
    {
       return true;
    }
 
-   bool less(const TUPLE_TYPE&)throw()
+   bool less(const TUPLE_TYPE&)NOTHROW
    {
       return false;
    }
@@ -392,7 +392,7 @@ tuple < TYPES&&... > make_tuple(TYPES&&... args)
 
 template<class... TYPES> inline
 tuple<TYPES&...>
-tie(TYPES&... args) throw()
+tie(TYPES&... args) NOTHROW
 {
 
    typedef tuple<TYPES&...> TUPLE_TYPE;

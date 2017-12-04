@@ -2,8 +2,6 @@
 //#include "base/user/user.h"
 
 
-#ifdef HOTPLUGIN_SUBSYSTEM
-
 #include <math.h>
 
 
@@ -41,7 +39,7 @@ namespace hotplugin
 
       brush->m_etype = ::draw2d::brush::type_null;
 
-      
+
 
       pgraphics->SelectObject(pen);
 
@@ -331,8 +329,5 @@ namespace hotplugin
 
 
 } // namespace hotplugin
-
-
-#endif
 
 

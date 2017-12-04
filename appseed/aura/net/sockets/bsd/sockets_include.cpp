@@ -33,9 +33,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifdef WINDOWS
 
 
-CLASS_DECL_AURA string wsa_str_error(int32_t x)
+CLASS_DECL_AURA string bsd_socket_error(int32_t x)
 {
-   
+
    switch (x)
    {
    case 10004: return "Interrupted function call.";

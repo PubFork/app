@@ -64,7 +64,7 @@ namespace calculator
       token * token;
       token = new class token;
       if(token == NULL)
-         throw memory_exception(get_app());
+         _throw(memory_exception(get_app()));
       while(::str::ch::is_space_char(input))
          input = ::str::utf8_inc(input);
       if(*input == '\0')

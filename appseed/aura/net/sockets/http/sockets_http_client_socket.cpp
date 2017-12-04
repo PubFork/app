@@ -89,7 +89,7 @@ namespace sockets
       m_request.attr(__id(request_uri))         = strRequestUri;
       m_response.attr(__id(request_uri))        = strRequestUri;
       m_strUrl                                  = strUrlParam;
-      
+
       if (m_host.is_empty())
       {
 
@@ -136,7 +136,9 @@ namespace sockets
    {
       if (!IsResponse())
       {
+#ifdef DEBUG
          log("OnFirst", 0, "Response expected but not received - aborting", ::aura::log::level_fatal);
+#endif
          SetCloseAndDelete();
       }
       m_content = m_response.attr(__id(http_version)) + " " +
@@ -174,12 +176,12 @@ namespace sockets
       if(m_content_length != ((size_t) (-1)))
       {
          m_memoryfile.allocate_internal(m_content_length);
-          if(outheader(__id(content_encoding)).compare_value_ci("gzip") != 0
-             && (m_response.attr(__id(http_status_code)) < 300 || m_response.attr(__id(http_status_code)) >= 400))
-          {
+         if(outheader(__id(content_encoding)).compare_value_ci("gzip") != 0
+               && (m_response.attr(__id(http_status_code)) < 300 || m_response.attr(__id(http_status_code)) >= 400))
+         {
 
-              m_iFinalSize = m_content_length;
-          }
+            m_iFinalSize = m_content_length;
+         }
       }
 
       m_memoryfile.seek_to_begin();
@@ -230,7 +232,7 @@ namespace sockets
       }
 
       if(m_pfile != NULL && (m_response.attr(__id(http_status_code)) < 300 || m_response.attr(__id(http_status_code)) >= 400))
-      { 
+      {
 
          m_pfile->write(m_memoryfile.get_data(), m_memoryfile.get_size());
 
@@ -551,54 +553,78 @@ namespace sockets
    string http_client_socket::MyUseragent()
    {
 
-      string str;
+      string strAddUp;
 
-      string strSockets = "ca2-sockets/0.1";
-
-      string strOpSys = op_sys();
-
-      if (Application.m_strAppName.has_char())
+      if (Application.m_strHttpUserAgentToken.has_char() && Application.m_strHttpUserAgentVersion.has_char())
       {
 
-         str += Application.m_strAppName;
-
-         str += " (";
-
-         if (strOpSys.has_char())
-         {
-
-            str += strOpSys;
-
-            str += ";";
-
-         }
-
-         str += strSockets;
-
-         str += ";)";
+         strAddUp = Application.m_strHttpUserAgentToken + "/" + Application.m_strHttpUserAgentVersion;
 
       }
       else
       {
 
-         str += strSockets;
-
-         str += " (";
-
-         if (strOpSys.has_char())
-         {
-
-            str += strOpSys;
-
-            str += ";";
-
-         }
-
-         str += ")";
+         strAddUp = "ca2/1.0";
 
       }
 
-      return str;
+#ifdef WINDOWS
+      return "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (ca2, like Gecko) " + strAddUp;
+#elif defined(MACOS)
+      return "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12) AppleWebKit/537.36 (ca2, like Gecko) " + strAddUp;
+#elif defined(LINUX)
+      return "Mozilla/5.0 (Linux; x86_64) AppleWebKit/537.36 (ca2, like Gecko) " + strAddUp;
+#else
+      _throw(todo(get_app()));
+#endif
+//      string str;
+//
+//      string strSockets = "ca2-sockets/0.1";
+//
+//      string strOpSys = op_sys();
+//
+//      if (Application.m_strAppName.has_char())
+//      {
+//
+//         str += Application.m_strAppName;
+//
+//         str += " (";
+//
+//         if (strOpSys.has_char())
+//         {
+//
+//            str += strOpSys;
+//
+//            str += ";";
+//
+//         }
+//
+//         str += strSockets;
+//
+//         str += ";)";
+//
+//      }
+//      else
+//      {
+//
+//         str += strSockets;
+//
+//         str += " (";
+//
+//         if (strOpSys.has_char())
+//         {
+//
+//            str += strOpSys;
+//
+//            str += ";";
+//
+//         }
+//
+//         str += ")";
+//
+//      }
+//
+//      return str;
 
    }
 

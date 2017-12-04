@@ -724,7 +724,7 @@ namespace os
       m_rect.top = m_pt.y;
       m_rect.bottom = m_pt.y + m_size.cy;
 
-      m_dib.create(::get_thread_app()->allocer());
+      m_dib.create(get_app()->allocer());
       m_dib->create(m_size.cx, m_size.cy);
 
       m_xlib.create(m_window, cx, cy);

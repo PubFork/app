@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace sphere
@@ -15,48 +15,23 @@ namespace sphere
 
    application::application(const char * pszId)
    {
-      construct(pszId);
+
    }
 
 
    application::~application()
    {
+
    }
+
 
    sp(::aura::application) application::get_system()
    {
       return new application();
    }
 
-   void application::construct(const char * pszAppId)
-   {
-      string strId = pszAppId;
-      m_strId = pszAppId;
-      char chFirst = '\0';
-      if(strId.get_length() > 0)
-      {
-         chFirst = strId[0];
-      }
-      if(chFirst == 'd')
-      {
-         if(strId == "default_file_handler")
-         {
-            return ::filehandler::application::construct();
-         }
-      }
-      else if(chFirst == 'u')
-      {
-         if(strId == "userstack")
-         {
-            return ::userstack::application::construct();
-         }
-      }
 
-
-   }
-
-
-   bool application::initialize_application()
+   bool application::init_instance()
    {
 
 
@@ -73,62 +48,46 @@ namespace sphere
       {
          if(strId == "default_file_handler")
          {
-            return ::filehandler::application::initialize_application();
+            return ::filehandler::application::init_instance();
          }
       }
       else if(chFirst == 'u')
       {
          if(strId == "userstack")
          {
-            return ::userstack::application::initialize_application();
+            return ::userstack::application::init_instance();
          }
       }
 
+      return asphere::application::init_instance();
 
-
-      return asphere::application::initialize_application();
    }
 
-   int32_t application::exit_application()
+
+   void application::term_instance()
    {
 
+      asphere::application::term_instance();
 
-      System.factory().creatable_small < main_frame >();
-
-      string strId = m_strId;
-      char chFirst = '\0';
-      if(strId.get_length() > 0)
-      {
-         chFirst = strId[0];
-      }
-      if(chFirst == 'd')
-      {
-         if(strId == "default_file_handler")
-         {
-            return ::filehandler::application::exit_application();
-         }
-      }
-      else if(chFirst == 'u')
-      {
-         if(strId == "userstack")
-         {
-            return ::userstack::application::exit_application();
-         }
-      }
-
-
-      return asphere::application::exit_application();
    }
+
 
    void application::_001OnFileNew()
    {
+
       string strId = m_strId;
+
       char chFirst = '\0';
+
       if(strId.get_length() > 0)
       {
+
          chFirst = strId[0];
+
       }
+
       ::asphere::application::_001OnFileNew();
+
    }
 
 
@@ -184,7 +143,7 @@ namespace sphere
       return asphere::application::on_install();
    }
 
-   bool application::on_uninstall()
+   bool application::on_unstall()
    {
       string strId = m_strId;
       char chFirst = '\0';
@@ -196,18 +155,18 @@ namespace sphere
       {
          if(strId == "default_file_handler")
          {
-            return ::filehandler::application::on_uninstall();
+            return ::filehandler::application::on_unstall();
          }
       }
       else if(chFirst == 'u')
       {
          if(strId == "userstack")
          {
-            return ::userstack::application::on_uninstall();
+            return ::userstack::application::on_unstall();
          }
       }
 
-      return asphere::application::on_uninstall();
+      return asphere::application::on_unstall();
    }
 
 
@@ -264,7 +223,7 @@ namespace sphere
          }
 
       }
-      
+
       return ::asphere::application::is_serviceable();
 
    }
@@ -284,7 +243,7 @@ namespace sphere
             return ::filehandler::application::allocate_new_service();
          }
       }
-      
+
       return ::asphere::application::allocate_new_service();
    }
 
@@ -313,10 +272,10 @@ namespace sphere
    }
 
 
-   int32_t application::run()
+   void application::run()
    {
 
-      return ::asphere::application::run();
+      ::asphere::application::run();
 
    }
 

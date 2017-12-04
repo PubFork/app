@@ -44,7 +44,7 @@ namespace calculator
 
    }
 
-#ifdef DEBUG
+
    void view::assert_valid() const
    {
       ::user::impact::assert_valid();
@@ -54,7 +54,7 @@ namespace calculator
    {
       ::user::impact::dump(dumpcontext);
    }
-#endif //DEBUG
+
 
    /////////////////////////////////////////////////////////////////////////////
    // view message handlers

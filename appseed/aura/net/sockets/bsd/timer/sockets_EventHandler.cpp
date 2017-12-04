@@ -35,9 +35,10 @@ namespace sockets
 {
 
 
-   EventHandler::EventHandler(::aura::application * papp, logger *p) :
+   EventHandler::EventHandler(::aura::application * papp, ::aura::log *p) :
       ::object(papp),
-      socket_handler(papp, p), m_quit(false), m_socket(NULL)
+      socket_handler(papp, p),
+      m_quit(false), m_socket(NULL)
    {
 
    }
@@ -167,7 +168,8 @@ namespace sockets
             }
          }
          m_events.remove_all();
-      } while (repeat);
+      }
+      while (repeat);
    }
 
 
@@ -224,9 +226,9 @@ namespace sockets
          m_socket -> SetDeleteByHandler();
          m_socket -> SetConnectTimeout(5);
          m_socket -> SetConnectionRetry(-1);
-   #ifdef ENABLE_RECONNECT
+#ifdef ENABLE_RECONNECT
          m_socket -> SetReconnect(true);
-   #endif
+#endif
          m_socket -> open(::net::address("127.0.0.1", m_port));
          socket_handler::add(m_socket);
       }

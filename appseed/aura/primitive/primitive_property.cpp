@@ -70,7 +70,7 @@ property::property()
 //         return pair_set_interface_get_value(iFind);
 //   }
 //
-//   throw "cannot reference absent property";
+//   _throw(simple_exception(get_app(), "cannot reference absent property"));
 //
 //}
 //
@@ -448,7 +448,7 @@ var property::element_at(index iIndex) const
    default:
       if(const_cast<property *>(this)->get_count() == 1)
          return const_cast<property *>(this)->get_value();
-      throw "unsuported!!";
+      _throw(simple_exception(get_app(), "unsuported!!"));
    }
 }
 
@@ -1452,7 +1452,7 @@ string property::get_xml(::xml::disp_option * opt /*= &optDefault*/ )
    if(opt == ((::xml::disp_option *) 1))
    {
       
-      opt = Sys(::get_thread_app()).xml().m_poptionDefault;
+      opt = System.xml().m_poptionDefault;
 
    }
 

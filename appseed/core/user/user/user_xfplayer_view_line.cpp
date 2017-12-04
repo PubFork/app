@@ -337,7 +337,7 @@ bool xfplayer_view_line::to(::draw2d::graphics * pgraphics, bool bDraw, const RE
             }
          }
 
-         if (&rectaModified != NULL)
+         if (is_set(rectaModified))
          {
             ::rect baserect;
             rgn.get_bounding_box(baserect);
@@ -1421,10 +1421,10 @@ void xfplayer_view_line::EmbossedTextOut(::draw2d::graphics * pgraphics, const c
       m_dc1.SetTextColor(RGB(255, 255, 255));
       ::TextOutW(m_dc1.get_os_data(), 0, 0, lpcsz, iLen);
 
-      System.visual().imaging().channel_gray_blur(&m_dc1,0, 0, size.cx, size.cy,
+      Application.imaging().channel_gray_blur(&m_dc1,0, 0, size.cx, size.cy,
          &m_dc1, 0, 0, 0, 2);
 
-      System.visual().imaging().clip_color_blend(pgraphics, iLeft, iTop, size.cx, size.cy,
+      Application.imaging().clip_color_blend(pgraphics, iLeft, iTop, size.cx, size.cy,
          crOutline, &m_dc1, 0, 0);
 
 
@@ -1519,7 +1519,7 @@ void xfplayer_view_line::EmbossedTextOut(::draw2d::graphics * pgraphics, ::draw2
 
       pt.y = (LONG) (iTop - 1 - (m_font->m_dFontSize > 8 ? 32 / m_font->m_dFontSize : 0));
 
-      System.visual().imaging().color_blend(pgraphics, pt, m_dibMain->m_size, m_dibMain->get_graphics(), point(iLeft, 0), dBlend);
+      Application.imaging().color_blend(pgraphics, pt, m_dibMain->m_size, m_dibMain->get_graphics(), point(iLeft, 0), dBlend);
 
       if (m_bColonPrefix)
       {
@@ -1530,7 +1530,7 @@ void xfplayer_view_line::EmbossedTextOut(::draw2d::graphics * pgraphics, ::draw2
 
          size = pgraphics->GetTextExtent(m_strPrefix);
 
-         System.visual().imaging().AlphaTextOut(pgraphics, iLeft, iTop + m_rect.height() - size.cy, m_strPrefix, (int32_t)m_strPrefix.get_length(), cr, dBlend);
+         Application.imaging().AlphaTextOut(pgraphics, iLeft, iTop + m_rect.height() - size.cy, m_strPrefix, (int32_t)m_strPrefix.get_length(), cr, dBlend);
 
          pgraphics->SelectFont(m_font);
 
@@ -1549,7 +1549,7 @@ void xfplayer_view_line::EmbossedTextOut(::draw2d::graphics * pgraphics, ::draw2
 
          }
 
-         System.visual().imaging().AlphaTextOut(pgraphics, iLeft + iOffset, iTop, m_strRoot, (int32_t)m_strRoot.get_length(), cr, dBlend);
+         Application.imaging().AlphaTextOut(pgraphics, iLeft + iOffset, iTop, m_strRoot, (int32_t)m_strRoot.get_length(), cr, dBlend);
 
 
 
@@ -1559,7 +1559,7 @@ void xfplayer_view_line::EmbossedTextOut(::draw2d::graphics * pgraphics, ::draw2
 
          pgraphics->SelectFont(m_font);
 
-         System.visual().imaging().AlphaTextOut(pgraphics, iLeft, iTop, lpcsz, (int32_t)iLen, cr, dBlend);
+         Application.imaging().AlphaTextOut(pgraphics, iLeft, iTop, lpcsz, (int32_t)iLen, cr, dBlend);
 
       }
 
@@ -1652,17 +1652,17 @@ void xfplayer_view_line::CacheEmboss(::draw2d::graphics * pgraphics, const char 
    }
 
 
-   System.visual().imaging().channel_spread_set_color(pdcCache, null_point(), size, pdcCache, null_point(), 0, int32_t(MAX(1.0, m_floatRateX * 2.0 + 2)), ARGB(23, 23, 23, 23));
+   Application.imaging().channel_spread_set_color(pdcCache, null_point(), size, pdcCache, null_point(), 0, int32_t(MAX(1.0, m_floatRateX * 2.0 + 2)), ARGB(23, 23, 23, 23));
 
    pdcCache->set_alpha_mode(::draw2d::alpha_mode_blend);
-   System.visual().imaging().channel_alpha_gray_blur(pdcCache, null_point(), size, pdcCache, null_point(), 0, int32_t(MAX(1.0, m_floatRateX * 2.5)));
-   System.visual().imaging().channel_alpha_gray_blur(pdcCache, null_point(), size, pdcCache, null_point(), 0, int32_t(MAX(1.0, m_floatRateX * 2.5)));
+   Application.imaging().channel_alpha_gray_blur(pdcCache, null_point(), size, pdcCache, null_point(), 0, int32_t(MAX(1.0, m_floatRateX * 2.5)));
+   Application.imaging().channel_alpha_gray_blur(pdcCache, null_point(), size, pdcCache, null_point(), 0, int32_t(MAX(1.0, m_floatRateX * 2.5)));
 
    /*pdibCache->fill_channel(92, ::visual::rgba::channel_blue);
    pdibCache->fill_channel(92, ::visual::rgba::channel_green);
    pdibCache->fill_channel(92, ::visual::rgba::channel_red);*/
 
-   //System.visual().imaging().pre_color_blend(pdcCache, pdcCache, ARGB(92, 92, 92, 92));
+   //Application.imaging().pre_color_blend(pdcCache, pdcCache, ARGB(92, 92, 92, 92));
 
    pdibCache->set(0, 0, 0);
 

@@ -1,7 +1,12 @@
 #pragma once
 
+
+#include "ftp_transfer_notification.h"
+
+
 namespace ftp
 {
+
 
    class CLASS_DECL_AURA file :
       virtual public itransfer_notification

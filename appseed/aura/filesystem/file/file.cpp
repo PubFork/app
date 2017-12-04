@@ -597,7 +597,7 @@ bool write_memory_to_file(FILE * file,const void * lpBuf,memory_size_t nCount,me
 
       dwWrite = (DWORD)MIN(nCount - uiWrittenTotal,0xffffffffu);
 
-      convert(dw, fwrite(&((byte *)lpBuf)[pos],1, dwWrite, file));
+      dw = (DWORD) (fwrite(&((byte *)lpBuf)[pos],1, dwWrite, file));
 
       if(dw != dwWrite)
       {

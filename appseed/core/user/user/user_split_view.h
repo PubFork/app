@@ -14,10 +14,8 @@ namespace user
       split_view(::aura::application * papp);
       virtual ~split_view();
 
-
       virtual void assert_valid() const;
       virtual void dump(dump_context & dumpcontext) const;
-
 
       virtual void install_message_routing(::message::sender * pinterface);
       virtual bool pre_create_window(::user::create_struct& cs);

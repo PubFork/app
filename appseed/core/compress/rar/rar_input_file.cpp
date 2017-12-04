@@ -28,7 +28,7 @@ namespace rar
 
    void input_file::ThrowExceptionWithCode(input_file_exception::CCauseType cause)
    {
-      throw input_file_exception(get_app(), cause);
+      _throw(input_file_exception(get_app(), cause));
    }
 
    HRESULT input_file::Open(::file::input_stream *inStream, const file_position_t *searchHeaderSizeLimit)
@@ -42,7 +42,7 @@ namespace rar
          Close();
          return res;
       }
-      catch(...) { Close(); throw; }
+      catch(...) { Close(); _throw(; }
    }
 
    void input_file::Close()
@@ -226,7 +226,7 @@ namespace rar
    byte input_file::ReadByte()
    {
       if (m_CurPos >= m_PosLimit)
-         throw input_file_exception(get_app(), input_file_exception::kIncorrectArchive);
+         _throw(input_file_exception(get_app(), input_file_exception::kIncorrectArchive));
       return m_CurData[m_CurPos++];
    }
 

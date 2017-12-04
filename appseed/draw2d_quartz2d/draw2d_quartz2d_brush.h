@@ -26,9 +26,11 @@ namespace draw2d_quartz2d
       virtual bool create();
 
       virtual bool destroy();
-      
+     
+#ifdef DEBUG
+
       virtual void dump(dump_context & dumpcontext) const;
-      
+#endif
 
    };
 

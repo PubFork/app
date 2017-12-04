@@ -1,11 +1,12 @@
 #include "framework.h"
-
+#ifdef WINDOWSEX
+#include "aura/aura/os/windows/windows_system_interaction_impl.h"
+#endif
 
 #ifdef LINUX
 #include <sys/stat.h>
 #include <fcntl.h>
 #endif
-
 
 extern "C"
 {
@@ -84,17 +85,28 @@ namespace aura
 
    }
 
+
    application::application() :
       m_allocer(this),
       m_mutexMatterLocator(this),
       m_mutexStr(this)
    {
 
+      // default value for acid apps
+      // (but any acid app can have installer, just change this flag to true in the derived application class constructor).
+      m_bAppHasInstallerProtected = true;
+      m_bAppHasInstallerChangedProtected = false;
+
+
+      m_strHttpUserAgentToken = "ca2";
+      m_strHttpUserAgentVersion = "1.0";
+
       m_http.set_app(this);
 
       m_eexclusiveinstance = ExclusiveInstanceNone;
 
-      m_peventReady = NULL;
+      m_pevAppBeg = NULL;
+      m_pevAppEnd = NULL;
 
       m_bAgreeExit = true;
       m_bAgreeExitOk = true;
@@ -113,7 +125,9 @@ namespace aura
       m_pcoreapp = NULL;
       m_pcoresystem = NULL;
       m_pcoresession = NULL;
-      m_peventReady = NULL;
+      //m_peventReady = NULL;
+      m_pimaging = NULL;
+
 
 #ifdef WINDOWS
 
@@ -216,18 +230,27 @@ namespace aura
    }
 
 
-   application::~application()
+   void application::set_has_installer(bool bSet)
    {
 
-      if (m_peventReady != NULL)
-      {
+      m_bAppHasInstallerProtected = bSet;
 
-         delete m_peventReady;
-
-      }
+      m_bAppHasInstallerChangedProtected = true;
 
    }
 
+
+   application::~application()
+   {
+
+//      if (m_peventReady != NULL)
+//      {
+//
+//         delete m_peventReady;
+//
+//      }
+
+   }
 
    void application::assert_valid() const
    {
@@ -256,12 +279,20 @@ namespace aura
 
    }
 
-
    void application::install_message_routing(::message::sender * psender)
    {
 
       ::message::receiver::install_message_routing(psender);
+
       ::thread::install_message_routing(psender);
+
+   }
+
+
+   imaging & application::imaging()
+   {
+
+      return *m_pimaging;
 
    }
 
@@ -332,7 +363,7 @@ namespace aura
    void application::throw_not_installed()
    {
 
-      throw not_installed(get_app(), m_strAppId, "application");
+      _throw(not_installed(get_app(), m_strAppId, "application"));
 
    }
 
@@ -346,62 +377,32 @@ namespace aura
       try
       {
 
-         if (pcreate->m_spCommandLine.is_set()
-               && (pcreate->m_spCommandLine->m_varQuery.has_property("install")
-                   || pcreate->m_spCommandLine->m_varQuery.has_property("uninstall")))
+         on_request(pcreate);
+
+      }
+      catch (esp esp)
+      {
+
+         if(esp.is < not_installed >())
          {
 
-            if (!is_system() && !is_session())
-            {
+            System.on_run_exception(esp);
 
-#ifdef INSTALL_SUBSYSTEM
-
-               check_install();
-
-#endif
-
-               ::multithreading::post_quit(&System);
-
-            }
-            else
-            {
-
-               on_request(pcreate);
-
-            }
+            _throw(exit_exception(esp->get_app(), ::exit_application));
 
          }
-         else
+         else if(esp.is < exit_exception > ())
          {
 
-            on_request(pcreate);
+            throw esp;
 
          }
+         else if (!Application.on_run_exception(esp))
+         {
 
-      }
-      catch (not_installed & e)
-      {
+            _throw(exit_exception(esp->get_app(), ::exit_application));
 
-         System.on_run_exception(e);
-
-         throw exit_exception(e.get_app());
-
-      }
-      catch (::exit_exception & e)
-      {
-
-         throw e;
-
-      }
-      catch (::exception::exception & e)
-      {
-
-         if (!Application.on_run_exception(e))
-            throw exit_exception(get_app());
-
-      }
-      catch (...)
-      {
+         }
 
       }
 
@@ -492,7 +493,7 @@ namespace aura
 
    // lang string
    // load string
-   string application::lstr(id id, const string & strDefault)
+   string application::lstr(id id, string strDefault)
    {
 
       string str;
@@ -771,14 +772,14 @@ namespace aura
 
    class open_browser_enum
    {
-      public:
+   public:
 
-         string                           m_strWindowEnd;
-         string                           m_strTopic;
-         string                           m_strCounterTopic;
-         oswindow                         m_hwnd;
-         comparable_array < oswindow >    m_hwndaTopic;
-         comparable_array < oswindow >    m_hwndaCounterTopic;
+      string                           m_strWindowEnd;
+      string                           m_strTopic;
+      string                           m_strCounterTopic;
+      oswindow                         m_hwnd;
+      comparable_array < oswindow >    m_hwndaTopic;
+      comparable_array < oswindow >    m_hwndaCounterTopic;
 
    };
 
@@ -1838,14 +1839,24 @@ namespace aura
 
          string strOpenUrl;
 
-         if (System.m_pandroidinitdata->m_pszOpenUrl != NULL)
+         if (System.m_pdataexchange->m_pszOpenUrl != NULL)
          {
 
-            strOpenUrl = System.m_pandroidinitdata->m_pszOpenUrl;
+            strOpenUrl = System.m_pdataexchange->m_pszOpenUrl;
 
-            ::free((void *)System.m_pandroidinitdata->m_pszOpenUrl);
+            try
+            {
 
-            System.m_pandroidinitdata->m_pszOpenUrl = NULL;
+               ::free((void *)System.m_pdataexchange->m_pszOpenUrl);
+
+            }
+            catch (...)
+            {
+
+
+            }
+
+            System.m_pdataexchange->m_pszOpenUrl = NULL;
 
          }
 
@@ -1857,7 +1868,7 @@ namespace aura
 
             // System.m_pandroidinitdata->m_pszOpenUrl = strdup(strLink);
 
-            System.m_pandroidinitdata->m_pszOpenUrl = strdup(strUrl);
+            System.m_pdataexchange->m_pszOpenUrl = strdup(strUrl);
 
          }
 
@@ -2319,12 +2330,6 @@ namespace aura
    }
 
 
-   void application::construct(const char * pszAppId)
-   {
-
-   }
-
-
    void application::TermThread(HINSTANCE hInstTerm)
    {
 
@@ -2335,17 +2340,21 @@ namespace aura
 
    void application::SetCurrentHandles()
    {
+      
+      if(m_hthread == NULL)
+      {
 
-      dappy(string(typeid(*this).name()) + " : SetCurrentHandles 1 : " + ::str::from(m_iReturnCode));
+      //dappy(string(typeid(*this).name()) + " : SetCurrentHandles 1 : " + ::str::from(m_iErrorCode));
 
       set_os_data((void *) ::get_current_thread());
 
-      dappy(string(typeid(*this).name()) + " : SetCurrentHandles 2 : " + ::str::from(m_iReturnCode));
+      //dappy(string(typeid(*this).name()) + " : SetCurrentHandles 2 : " + ::str::from(m_iErrorCode));
 
       set_os_int(::get_current_thread_id());
 
-      dappy(string(typeid(*this).name()) + " : SetCurrentHandles impled : " + ::str::from(m_iReturnCode));
-
+      //dappy(string(typeid(*this).name()) + " : SetCurrentHandles impled : " + ::str::from(m_iErrorCode));
+      }
+      
    }
 
 
@@ -2406,6 +2415,8 @@ namespace aura
 
 
 
+
+
    void application::process_machine_event_data(machine_event_data * pdata)
    {
 
@@ -2422,7 +2433,7 @@ namespace aura
    void application::_001CloseApplication()
    {
 
-      throw todo(get_app());
+      _throw(todo(get_app()));
 
    }
 
@@ -2474,7 +2485,7 @@ namespace aura
 //   string CLASS_DECL_AURA application::get_cred(const string & strRequestUrl, const RECT & rect, string & strUsername, string & strPassword, string strToken, string strTitle, bool bInteractive)
    // {
 
-   //  throw not_implemented(this);
+   //  _throw(not_implemented(this));
 
    //}
 
@@ -2484,7 +2495,7 @@ namespace aura
    bool application::get_temp_file_name_template(string & strRet, const char * pszName, const char * pszExtension, const char * pszTemplate)
    {
 
-      throw not_implemented(this);
+      _throw(not_implemented(this));
 
       return false;
 
@@ -2508,16 +2519,18 @@ namespace aura
 
 
 
-   bool application::final_handle_exception(::exception::exception & e)
+   bool application::final_handle_exception(::exception::exception * pe)
    {
-      UNREFERENCED_PARAMETER(e);
+
+      UNREFERENCED_PARAMETER(pe);
+
       //linux      exit(-1);
 
       if (!is_system())
       {
 
          // get_app() may be it self, it is ok...
-         if (Sys(get_app()).final_handle_exception((::exception::exception &) e))
+         if (System.final_handle_exception(pe))
             return true;
 
 
@@ -2527,12 +2540,8 @@ namespace aura
    }
 
 
-
-
-
-   int32_t application::main()
+   void application::main()
    {
-
 
       TRACE(string(typeid(*this).name()) + " main");;
 
@@ -2542,25 +2551,45 @@ namespace aura
       {
 
          TRACE(string(typeid(*this).name()) + " on_run");;
-         dappy(string(typeid(*this).name()) + " : going to on_run : " + ::str::from(m_iReturnCode));
-         m_iReturnCode = 0;
+
+         //dappy(string(typeid(*this).name()) + " : going to on_run : " + ::str::from(m_iErrorCode));
+
+         //m_iErrorCode = 0;
+
          m_bReady = true;
-         m_iReturnCode = on_run();
-         if(m_iReturnCode != 0)
-         {
-            dappy(string(typeid(*this).name()) + " : on_run failure : " + ::str::from(m_iReturnCode));
-            ::output_debug_string("application::main on_run termination failure\n");
-         }
+
+         on_run();
+
+//         if(m_iErrorCode != 0)
+//         {
+//
+//            dappy(string(typeid(*this).name()) + " : on_run failure : " + ::str::from(m_iErrorCode));
+//
+//            ::output_debug_string("application::main on_run termination failure\n");
+//
+//         }
 
       }
-      catch(::exit_exception &)
+      catch(esp esp)
       {
 
-         dappy(string(typeid(*this).name()) + " : on_run exit_exception");
+//         thisexit << "exit_exception: " << m_iErrorCode;
+//
 
-         ::multithreading::post_quit(&System);
+         if (esp.is_exit())
+         {
 
-         goto exit_application;
+            //m_error.set(&e);
+
+            dappy(string(typeid(*this).name()) + " : on_run exit_exception");
+
+            esp.cast < ::exit_exception > ()->post_quit();
+
+         }
+         else
+         {
+
+         }
 
       }
       catch(...)
@@ -2568,152 +2597,12 @@ namespace aura
 
          dappy(string(typeid(*this).name()) + " : on_run general exception");
 
-         goto exit_application;
-
       }
-
-      try
-      {
-
-         if(is_system())
-         {
-
-            dappy(string(typeid(*this).name()) + " : quiting main");
-
-            //::aura::post_quit_thread(&System);
-
-            //Sleep(5000);
-
-         }
-
-      }
-      catch(...)
-      {
-
-      }
-
-exit_application:
-
-
-      try
-      {
-
-         m_iReturnCode = exit_thread();
-
-      }
-      catch(::exit_exception &)
-      {
-
-         ::multithreading::post_quit(&System);
-
-         m_iReturnCode = -1;
-
-      }
-      catch(...)
-      {
-
-         m_iReturnCode = -1;
-
-      }
-
-#ifdef MACOS
-
-      ns_app_terminate();
-
-#elif defined(APPLEIOS)
-
-      ui_app_terminate();
-
-#endif
-
-      return m_iReturnCode;
-
-//
-//      TRACE(string(typeid(*this).name()) + " main");;
-//
-//      dappy(string(typeid(*this).name()) + " : application::main 1");
-//
-//      try
-//      {
-//
-//         TRACE(string(typeid(*this).name()) + " on_run");;
-//         dappy(string(typeid(*this).name()) + " : going to on_run : " + ::str::from(m_iReturnCode));
-//         m_iReturnCode = 0;
-//         m_bReady = true;
-//         m_iReturnCode = on_run();
-//         if (m_iReturnCode != 0)
-//         {
-//            dappy(string(typeid(*this).name()) + " : on_run failure : " + ::str::from(m_iReturnCode));
-//            ::output_debug_string("application::main on_run termination failure");
-//         }
-//
-//      }
-//      catch (::exit_exception &)
-//      {
-//
-//         dappy(string(typeid(*this).name()) + " : on_run exit_exception");
-//
-//         ::multithreading::post_quit(&System);
-//
-//         goto exit_application;
-//
-//      }
-//      catch (...)
-//      {
-//
-//         dappy(string(typeid(*this).name()) + " : on_run general exception");
-//
-//         goto exit_application;
-//
-//      }
-//
-//      try
-//      {
-//
-//         if (is_system())
-//         {
-//
-//            dappy(string(typeid(*this).name()) + " : quiting main");
-//
-//
-//         }
-//
-//      }
-//      catch (...)
-//      {
-//
-//      }
-//
-//   exit_application:
-//
-//      try
-//      {
-//
-//         m_iReturnCode = exit_application();
-//
-//      }
-//      catch(::exit_exception &)
-//      {
-//
-//         ::multithreading::post_quit(&System);
-//
-//         m_iReturnCode = -1;
-//
-//      }
-//      catch(...)
-//      {
-//
-//         m_iReturnCode = -1;
-//
-//      }
-//
-//      return m_iReturnCode;
-
-
 
    }
 
-   bool application::initialize_thread()
+
+   bool application::init_thread()
    {
 
       try
@@ -2725,6 +2614,14 @@ exit_application:
             return false;
 
          }
+
+      }
+      catch (esp esp)
+      {
+
+         esp.rethrow_exit();
+
+         return false;
 
       }
       catch (...)
@@ -2739,9 +2636,8 @@ exit_application:
    }
 
 
-   int32_t application::exit_thread()
+   void application::term_thread()
    {
-
 
       try
       {
@@ -2765,42 +2661,16 @@ exit_application:
 
       }
 
-      bool bErrorFinalize = false;
-
       try
       {
 
-         if (!finalize())
-         {
-
-            bErrorFinalize = true;
-
-         }
+         pos_run();
 
       }
       catch (...)
       {
 
-         bErrorFinalize = true;
-
       }
-
-      int32_t iExitCode;
-
-      try
-      {
-
-         iExitCode = exit_application();
-
-      }
-      catch (...)
-      {
-
-         iExitCode = -1;
-
-      }
-
-      return iExitCode;
 
    }
 
@@ -2815,12 +2685,13 @@ exit_application:
 
          m_dwAlive = ::get_tick_count();
 
-         int32_t m_iReturnCode = application_pre_run();
+         //int32_t m_iErrorCode = application_pre_run();
 
-         if (m_iReturnCode < 0)
+         //if (m_iErrorCode < 0)
+         if(!application_pre_run())
          {
 
-            thisfail << 1 << m_iReturnCode;
+            //thisfail << 1 << m_iErrorCode;
 
             m_bReady = true;
 
@@ -2830,19 +2701,19 @@ exit_application:
 
          xxdebug_box("pre_run 1 ok", "pre_run 1 ok", MB_ICONINFORMATION);
 
-         thisok << 1 << m_iReturnCode;
+         //thisok << 1 << m_iErrorCode;
 
          if (!initial_check_directrix())
          {
 
-            thisfail << 2 << m_iReturnCode;
+            //thisfail << 2 << m_iErrorCode;
 
-            if (m_iReturnCode >= 0)
-            {
-
-               m_iReturnCode = -1;
-
-            }
+//            if (m_iErrorCode >= 0)
+//            {
+//
+//               m_iErrorCode = -1;
+//
+//            }
 
             m_bReady = true;
 
@@ -2850,21 +2721,21 @@ exit_application:
 
          }
 
-         thisok << 2 << m_iReturnCode;
+         //thisok << 2 << m_iErrorCode;
 
          m_dwAlive = ::get_tick_count();
 
          if (!os_native_bergedge_start())
          {
 
-            thisfail << 3 << m_iReturnCode;
-
-            if (m_iReturnCode >= 0)
-            {
-
-               m_iReturnCode = -1;
-
-            }
+//            thisfail << 3 << m_iErrorCode;
+//
+//            if (m_iErrorCode >= 0)
+//            {
+//
+//               m_iErrorCode = -1;
+//
+//            }
 
             m_bReady = true;
 
@@ -2877,10 +2748,12 @@ exit_application:
          return true;
 
       }
-      catch (::exit_exception &)
+      catch (esp esp)
       {
 
-         thisexc << 4;
+         thisexcall << 3.9;
+
+         esp.rethrow_exit();
 
       }
       catch (...)
@@ -2895,17 +2768,13 @@ exit_application:
    }
 
 
-
-
-   int32_t application::on_run()
+   void application::on_run()
    {
-
-      int32_t m_iReturnCode = 0;
 
       try
       {
 
-         application_message message(application_message_start);
+         application_message message(application_message_beg);
 
          route_message(&message);
 
@@ -2915,197 +2784,155 @@ exit_application:
 
       }
 
-      thisstart << m_iReturnCode;
+      //thisstart << m_iErrorCode;
 
       thread * pthread = ::get_thread();
 
       install_message_routing(pthread);
 
-      thisok << 1 << m_iReturnCode;
+      //thisok << 1 << m_iErrorCode;
 
       try
       {
 
-         try
+         m_bReady = true;
+
+         if (m_pevAppBeg != NULL)
          {
 
-            m_bReady = true;
-
-            if (m_peventReady != NULL)
-            {
-
-               m_peventReady->SetEvent();
-
-            }
+            m_pevAppBeg->SetEvent();
 
          }
-         catch (...)
-         {
 
-         }
+      }
+      catch (...)
+      {
+
+      }
+
+      try
+      {
 
 run:
 
          try
          {
 
-            m_iReturnCode = run();
+            run();
 
          }
-         catch (::exit_exception & e)
+         catch (esp esp)
          {
 
-            throw e;
+            if(esp.is < exit_exception > ())
+            {
+
+               throw esp;
+
+            }
+            else
+            {
+
+               if (on_run_exception(esp))
+               {
+
+                  goto run;
+
+               }
+
+               if (final_handle_exception(esp))
+               {
+
+                  goto run;
+
+               }
+
+            }
 
          }
-         catch (const ::exception::exception & e)
-         {
-
-            if (on_run_exception((::exception::exception &) e))
-            {
-
-               goto run;
-
-            }
-
-            if (final_handle_exception((::exception::exception &) e))
-            {
-
-               goto run;
-
-            }
-
-            try
-            {
-
-               m_iReturnCode = exit_thread();
-
-            }
-            catch (::exit_exception & e)
-            {
-
-               throw e;
-
-            }
-            catch (...)
-            {
-
-               m_iReturnCode = -1;
-
-            }
-
-            goto InitFailure;
-
-         }
-
-      }
-      catch (::exit_exception & e)
-      {
-
-         throw e;
 
       }
       catch (...)
       {
-         // linux-like exit style on crash, differently from general windows error message approach
-         // to prevent or correct from crash, should:
-         // - look at dumps - to do;
-         // - look at trace and log - always doing;
-         // - look at debugger with the visual or other tool atashed - to doing;
-         // - fill other possibilities;
-         // - restart and send information in the holy back, and stateful or self-heal as feedback from below;
-         // - ...
-         // - ..
-         // - .
-         // - .
-         // - .
-         // - .
-         // -  .
-         // - ...
-         // - ...
-         // - ...
-         // to pro-activia and overall benefits workaround:
-         // - stateful applications:
-         //      - browser urls, tabs, entire history, in the ca2computing cloud;
-         //      - uint16_t - html document to simplify here - with all history of undo and redos per document optimized by cvs, svn, syllomatter;
-         //           - not directly related but use date and title to name document;
-         //      - save forms after every key press in .undo.redo.form file parallel to appmatter / form/undo.redo.file parity;
-         //      - last ::ikaraoke::karaoke song and scoring, a little less motivated at time of writing;
-         //
-         // - ex-new-revolut-dynamic-news-self-healing
-         //      - pre-history, antecendentes
-         //            - sometimes we can't recover from the last state
-         //            - to start from the beggining can be too heavy, waity, worky, bory(ing)
-         //      - try to creativetily under-auto-domain with constrained-learning, or heuristcally recover from restart, shutdown, login, logoff;
-         //           - reification :
-         //           - if the document is corrupted, try to open the most of it
-         //           - if can only detect that the document cannot be opened or damaged, should creatively workarounds as it comes, as could it be
-         //              done, for example search in the web for a proper solution?
-         //           - ::ikaraoke::karaoke file does not open? can open next? do it... may animate with a temporary icon...
-         //           - import a little as pepper for the meal, prodevian technology into estamira, so gaming experience relativity can open ligh
-         //               speed into cartesian dimensions of
-         //               core, estamira and prodevian. Take care not to flood prodevian brand black ink over the floor of the estamira office...
-         //               black letters, or colorful and pink are accepted and sometimes desired, for example, hello kity prodevian, pirarucu games,
-         //               I think no one likes to be boring, but a entire background in black... I don't know... only for your personal office, may be...
-         //           - could an online colaborator investigate crashes promptly in a funny way, and make news and jokes? Like terra and UOL for the real world?
-         //               - new crash, two documents lost, weathers fault, too hot, can't think, my mother was angry with me, lead to buggy code;
-         //               - new version with bug fixes;
-         //      - new versions
-         //      - automatic updates
-         //      - upgrades
-         //      - rearrangemntes
-         //      - downgrade in the form of retro
-         // - ...
-         // - ..
-         // - .
-         // - .
-         // - .
-         // - .
-         // -  .
-         // - ...
-         // - ...
-         // - ...
 
+         // here was a comment about recovering from bug...
+         // kinda : universe in eletron? OMG
+         // (no problem, but continue to be eletron...)
+         // more real example? a PC for controlling sensor of refrigerator... no problem... bias agains it?!
+         // (yes I have bias against someone that supposedly has intelligence but behave as dumb...)
+         // (but javascript brogrammers probably will do it because they will forget the laws of physics
+         // and create rust/node/swift/java alliance effort with great AI to gather just the temperature...)
+         // (but then there is the button... and it will be ch(i)(ea)p anyway, so one PC for each PC component, and sure each eletron will have one PC (remember 10e23 atoms per mol of component...)
+         // ...
+         // ..
+         // .
+         // PS. assembly mul byte_volts = temperature * constant(byte255) (but WTF is it? it is not from alliance <3 <==3 <======3 )
+         // the only thing I know (and not one of the things) .....
+         // (oh other P.S. now I am burning, firing... but some people want to die...)
+         // their strange thought: because your human byte_volts extreme_high, do you want cup of milk exactly
+         // now? how are you, fine(d)?... and you shouldn't commit z-degree extermination... z->8 lay down...
+         // and it is what exactly what exactly ca2 ca2 is about, this can of mean thing... so you stop at 8 ca2...
+         // what you have back support? C++ and machines and components and reality stack...
       }
-InitFailure:
+
       try
       {
-         if (m_peventReady != NULL)
-            m_peventReady->SetEvent();
-      }
-      catch (...)
-      {
-      }
-      try
-      {
-         thread * pthread = this;
-         if (pthread != NULL && pthread->m_pevReady != NULL)
+
+         if (m_pevAppEnd != NULL)
          {
-            pthread->m_pevReady->SetEvent();
+
+            m_pevAppEnd->SetEvent();
+
          }
+
       }
       catch (...)
       {
-      }
-      /*try
-      {
-      thread * pthread = dynamic_cast < thread * > (this);
-      ::SetEvent((HANDLE) pthread->m_peventReady);
-      }
-      catch(...)
-      {
-      }*/
 
-      // let translator run undefinetely
-      /*if(is_system())
-      {
-      translator::detach();
-      }*/
+      }
 
-      return m_iReturnCode;
    }
 
-   bool application::start_instance()
+
+   void application::pos_run()
+   {
+
+      thisstart;
+
+      try
+      {
+
+         m_dwAlive = ::get_tick_count();
+
+         application_pos_run();
+
+//         if (m_iErrorCode < 0)
+//         {
+//
+//            thisfail << 1 << m_iErrorCode;
+//
+//         }
+
+         xxdebug_box("pre_run 1 ok", "pre_run 1 ok", MB_ICONINFORMATION);
+
+         //thisok << 1 << m_iErrorCode;
+
+         //return true;
+
+      }
+      catch (...)
+      {
+
+         thisexcall << 4;
+
+      }
+
+      //return false;
+
+   }
+
+
+   bool application::init_instance()
    {
 
       return true;
@@ -3113,7 +2940,44 @@ InitFailure:
    }
 
 
-   int32_t application::application_pre_run()
+   void application::term_instance()
+   {
+
+
+   }
+
+   bool application::ca_init3()
+   {
+
+      application_message message(application_message_init3);
+
+      route_message(&message);
+
+      return message.m_bOk;
+
+   }
+
+
+   void application::ca_process_term()
+   {
+
+      application_message message(application_message_process_term);
+
+      route_message(&message);
+
+      //return message.m_bOk;
+
+   }
+
+
+   void application::TermApplication()
+   {
+
+
+   }
+
+
+   bool application::application_pre_run()
    {
 
       thisstart;
@@ -3127,12 +2991,14 @@ InitFailure:
 
       if (!is_system() && (bool)oprop("SessionSynchronizedInput"))
       {
+
          ::AttachThreadInput(GetCurrentThreadId(), (uint32_t)System.get_os_int(), TRUE);
+
       }
 
 #endif
 
-      m_iReturnCode = 0;
+//      m_iErrorCode = 0;
 
       m_dwAlive = ::get_tick_count();
 
@@ -3142,25 +3008,27 @@ InitFailure:
          if (!InitApplication())
          {
 
-            thisfail << 1 << m_iReturnCode;
+            //thisfail << 1 << m_iErrorCode;
 
             goto InitFailure;
 
          }
 
       }
-      catch (::exit_exception & e)
+      catch (::exit_exception * pe)
       {
 
-         thisexit << 1 << m_iReturnCode;
+         //thisexit << 1 << m_iErrorCode;
 
-         throw e;
+         throw pe;
 
       }
-      catch (const ::exception::exception &)
+      catch (const ::exception::exception * pe)
       {
 
-         thisexc << 1 << m_iReturnCode;
+         //thisexc << 1 << m_iErrorCode;
+
+         ::aura::del(pe);
 
          goto InitFailure;
 
@@ -3168,41 +3036,43 @@ InitFailure:
       catch (...)
       {
 
-         thisexcall << 1 << m_iReturnCode;
+         //thisexcall << 1 << m_iErrorCode;
 
          goto InitFailure;
 
       }
 
-      thisok << 1 << m_iReturnCode;
+      //thisok << 1 << m_iErrorCode;
 
       m_dwAlive = ::get_tick_count();
 
       try
       {
 
-         if (!process_initialize())
+         if (!process_init())
          {
 
-            thisfail << 2 << m_iReturnCode;
+            //thisfail << 2 << m_iErrorCode;
 
             goto InitFailure;
 
          }
 
       }
-      catch (::exit_exception & e)
+      catch (::exit_exception * pe)
       {
 
-         thisexit << 2 << m_iReturnCode;
+         //thisexit << 2 << m_iErrorCode;
 
-         throw e;
+         throw pe;
 
       }
-      catch (const ::exception::exception &)
+      catch (const ::exception::exception * pe)
       {
 
-         thisexc << 2 << m_iReturnCode;
+         //thisexc << 2 << m_iErrorCode;
+
+         ::aura::del(pe);
 
          goto InitFailure;
 
@@ -3210,13 +3080,13 @@ InitFailure:
       catch (...)
       {
 
-         thisexcall << 2 << m_iReturnCode;
+         //thisexcall << 2 << m_iErrorCode;
 
          goto InitFailure;
 
       }
 
-      thisinfo << 2 << m_iReturnCode;
+      //thisinfo << 2 << m_iErrorCode;
 
       System.install_progress_add_up();
 
@@ -3225,55 +3095,60 @@ InitFailure:
       try
       {
 
-         if (!initialize_application())
+         if (!init_application())
          {
 
-            thisfail << 3 << m_iReturnCode;
+            //thisfail << 3 << m_iErrorCode;
 
             goto InitFailure;
 
          }
 
       }
-      catch (::exit_exception & e)
+      catch (esp esp)
       {
 
-         thisexit << 3 << m_iReturnCode;
+         if (esp.is < exit_exception >())
+         {
 
-         throw e;
+            throw esp;
 
-      }
-      catch (const ::exception::exception &)
-      {
+         }
+         else
+         {
 
-         thisexc << 3 << m_iReturnCode;
+            goto InitFailure;
 
-         goto InitFailure;
+         }
 
       }
       catch (...)
       {
 
-         thisexcall << 3 << m_iReturnCode;
-
          goto InitFailure;
 
       }
-
-      thisok << 3 << m_iReturnCode;
 
       m_dwAlive = ::get_tick_count();
 
       try
       {
 
-         if (!is_installing() && !is_uninstalling())
+         if ((is_installing() || is_unstalling()) && !is_system() && !is_session())
          {
 
-            if (!start_instance())
-            {
+            //Sleep(15000);
 
-               thisfail << 3.1 << m_iReturnCode;
+            check_install();
+
+            _throw_exit(exit_system);
+
+         }
+         else
+         {
+
+            if (!init_instance())
+            {
 
                goto InitFailure;
 
@@ -3282,18 +3157,10 @@ InitFailure:
          }
 
       }
-      catch (::exit_exception & e)
+      catch (esp esp)
       {
 
-         thisexit << 3.1 << m_iReturnCode;
-
-         throw e;
-
-      }
-      catch (const ::exception::exception &)
-      {
-
-         thisexc << 3.1 << m_iReturnCode;
+         esp.rethrow_exit();
 
          goto InitFailure;
 
@@ -3301,31 +3168,125 @@ InitFailure:
       catch (...)
       {
 
-         thisexcall << 3.1 << m_iReturnCode;
-
          goto InitFailure;
 
       }
 
-      thisend << m_iReturnCode;
-
-      return 0;
+      return true;
 
 InitFailure:
 
-      if (m_iReturnCode == 0)
-      {
-
-         m_iReturnCode = -1;
-
-      }
-
-      thiserr << "end failure " << m_iReturnCode;
-
-      return m_iReturnCode;
+      return false;
 
    }
 
+
+   void application::application_pos_run()
+   {
+
+      thisstart;
+
+      //m_iErrorCode = 0;
+
+      m_dwAlive = ::get_tick_count();
+
+//      thisok << 1 << m_iErrorCode;
+//
+//      m_dwAlive = ::get_tick_count();
+
+      try
+      {
+
+         if (!is_installing() && !is_unstalling())
+         {
+
+            //if (!exit_instance())
+
+            term_instance();
+            //{
+
+            //thisfail << 3.1 << m_iErrorCode;
+
+            //}
+
+         }
+
+      }
+      catch (...)
+      {
+
+         //thisexcall << 3.1 << m_iErrorCode;
+
+         //goto InitFailure;
+
+      }
+
+      try
+      {
+
+         //if (!finalize_application())
+         term_application();
+//         {
+//
+//            thisfail << 2 << m_iErrorCode;
+//
+//         }
+
+      }
+      catch (...)
+      {
+
+         //thisexcall << 3 << m_iErrorCode;
+
+      }
+
+      //thisok << 4 << m_iErrorCode;
+
+      m_dwAlive = ::get_tick_count();
+
+      try
+      {
+
+         //if (!process_finalize())
+         process_term();
+//         {
+//
+//            thisfail << 5 << m_iErrorCode;
+//
+//         }
+
+      }
+      catch (...)
+      {
+
+         //thisexcall << 6 << m_iErrorCode;
+
+      }
+
+      try
+      {
+
+         //if (!TermApplication())
+         TermApplication();
+//         {
+//
+//            thisfail << 7 << m_iErrorCode;
+//
+//         }
+
+      }
+      catch (...)
+      {
+
+         //thisexcall << 8 << m_iErrorCode;
+
+      }
+
+      //thisend << m_iErrorCode;
+
+      //return m_iErrorCode;
+
+   }
 
 
    bool application::InitApplication()
@@ -3336,8 +3297,6 @@ InitFailure:
    }
 
 
-
-#ifdef INSTALL_SUBSYSTEM
 
    bool application::check_install()
    {
@@ -3350,7 +3309,9 @@ InitFailure:
 
             ::output_debug_string("Failed at on_install : " + m_strAppId + "\n\n");
 
-            System.m_iReturnCode = -1;
+            //System.m_iErrorCode = -1;
+
+            System.m_error.set(-1);
 
             return false;
 
@@ -3413,18 +3374,14 @@ InitFailure:
       else if (handler()->m_varTopicQuery.has_property("uninstall"))
       {
 
-         if (!on_uninstall())
+         if (!on_unstall())
          {
 
             return false;
 
          }
 
-#ifdef INSTALL_SUBSYSTEM
-
          System.install().remove_spa_start(m_strAppId);
-
-#endif
 
       }
 
@@ -3433,12 +3390,9 @@ InitFailure:
    }
 
 
-#endif
-
 
    bool application::initial_check_directrix()
    {
-
 
       string strLicense = get_license_id();
 
@@ -3518,10 +3472,10 @@ retry_license:
    }
 
 
-   bool application::on_uninstall()
+   bool application::on_unstall()
    {
 
-      //bool bOk = axis::application::on_uninstall();
+      //bool bOk = axis::application::on_unstall();
 
       bool bOk = true;
 
@@ -3558,8 +3512,6 @@ retry_license:
       string strSystemSchema = System.m_strSchema;
       stringa straLocale = m_phandler->m_varTopicQuery["locale"].stra();
       stringa straSchema = m_phandler->m_varTopicQuery["schema"].stra();
-
-#if defined(INSTALL_SUBSYSTEM)
 
       System.install().remove_spa_start(strId);
       System.install().add_app_install(strId, strBuild, strSystemLocale, m_strSchema);
@@ -3614,11 +3566,10 @@ retry_license:
 
       System.install().add_app_install(strId, strBuild, "", "");
 
-#endif
-
       return true;
 
    }
+
 
    bool application::os_native_bergedge_start()
    {
@@ -3645,7 +3596,8 @@ retry_license:
 
    }
 
-   int32_t application::run()
+
+   void application::run()
    {
 
       if (!is_system() && !is_session())
@@ -3666,13 +3618,11 @@ retry_license:
 
             m_pservice->Start(0);
 
-            return ::thread::run();
-
          }
 
       }
 
-      return ::thread::run();
+      ::thread::run();
 
    }
 
@@ -3764,13 +3714,27 @@ retry_license:
    bool application::is_installing()
    {
 
+      if (handler() == NULL)
+      {
+
+         return false;
+
+      }
+
       return handler()->has_property("install");
 
    }
 
 
-   bool application::is_uninstalling()
+   bool application::is_unstalling()
    {
+
+      if (handler() == NULL)
+      {
+
+         return false;
+
+      }
 
       return handler()->has_property("uninstall");
 
@@ -3828,36 +3792,49 @@ retry_license:
    {
 
       if (!is_serviceable())
+      {
+
          return;
+
+      }
 
       if (pcreate->m_spCommandLine->m_varQuery.has_property("create_service"))
       {
+
          create_service();
+
       }
       else if (pcreate->m_spCommandLine->m_varQuery.has_property("start_service"))
       {
+
          start_service();
+
       }
       else if (pcreate->m_spCommandLine->m_varQuery.has_property("stop_service"))
       {
+
          stop_service();
+
       }
       else if (pcreate->m_spCommandLine->m_varQuery.has_property("remove_service"))
       {
-         remove_service();
-      }
 
+         remove_service();
+
+      }
 
    }
 
 
-
-
-
-
-
-   bool application::process_initialize()
+   bool application::process_init()
    {
+
+      if (!m_bAppHasInstallerChangedProtected)
+      {
+
+         set_has_installer(!m_paurasystem->m_pappcore->m_bAcidApp);
+
+      }
 
       if (m_bAuraProcessInitialize)
       {
@@ -3895,7 +3872,7 @@ retry_license:
 
       }
 
-      if (!ca_process_initialize())
+      if (!ca_process_init())
       {
 
          thisfail << 1;
@@ -3904,7 +3881,7 @@ retry_license:
 
       }
 
-      if (!impl_process_initialize())
+      if (!impl_process_init())
       {
 
          thisfail << 2;
@@ -3922,7 +3899,139 @@ retry_license:
    }
 
 
-   bool application::initialize_application()
+   void application::process_term()
+   {
+
+      try
+      {
+
+         impl_process_term();
+
+      }
+      catch(...)
+      {
+
+      }
+
+      try
+      {
+
+         ca_process_term();
+
+      }
+      catch(...)
+      {
+
+      }
+
+      try
+      {
+
+         release_exclusive();
+
+      }
+      catch(...)
+      {
+
+      }
+
+      m_phandler.release();
+
+//      try
+//      {
+//
+//         route_message(&message);
+//
+//      }
+//      catch (...)
+//      {
+//
+//      }
+
+      try
+      {
+
+         if (!is_session() && !is_system())
+         {
+
+            if (m_paurasystem != NULL && m_paurasystem->m_phandler.is_set())
+            {
+
+               m_paurasystem->m_phandler->handle(::command_check_exit);
+
+            }
+
+         }
+
+      }
+      catch(...)
+      {
+
+      }
+
+      try
+      {
+
+         for (auto & p : m_stringtable)
+         {
+
+            ::aura::del(p.m_element2);
+
+         }
+
+         m_stringtable.remove_all();
+
+         for (auto & p : m_stringtableStd)
+         {
+
+            ::aura::del(p.m_element2);
+
+         }
+
+         m_stringtableStd.remove_all();
+
+      }
+      catch(...)
+      {
+
+      }
+
+      m_spfile.release();
+
+      m_spdir.release();
+
+      ::aura::del(m_pimaging);
+
+      if (!is_session() && !is_system())
+      {
+
+         try
+         {
+
+            if (Session.appptra().get_count() <= 1)
+            {
+
+               if (System.thread::get_os_data() != NULL)
+               {
+
+                  ::multithreading::post_quit(&System);
+
+               }
+
+            }
+
+         }
+         catch (...)
+         {
+
+         }
+
+      }
+
+   }
+
+
+   bool application::init_application()
    {
 
       if (m_bAuraInitializeInstance)
@@ -3938,15 +4047,15 @@ retry_license:
 
       m_bAuraInitializeInstanceResult = false;
 
-
       m_dwAlive = ::get_tick_count();
 
-      //::simple_message_box(NULL,"e2.b","e2.b",MB_OK);
-
-      if (!initialize1())
+      if (!init1())
       {
-         dappy(string(typeid(*this).name()) + " : initialize1 failure : " + ::str::from(m_iReturnCode));
+
+         //dappy(string(typeid(*this).name()) + " : init1 failure : " + ::str::from(m_iErrorCode));
+
          return false;
+
       }
 
       xxdebug_box("check_exclusive", "check_exclusive", MB_ICONINFORMATION);
@@ -3972,7 +4081,7 @@ retry_license:
          if (!check_exclusive(bHandled))
          {
 
-            if (!bHandled && (is_debugger_attached() && !System.handler()->m_varTopicQuery.has_property("install")
+            if (!bHandled && (!System.handler()->m_varTopicQuery.has_property("install")
                               && !System.handler()->m_varTopicQuery.has_property("uninstall")))
             {
 
@@ -3994,7 +4103,7 @@ retry_license:
 
             thisfail << 0.2;
 
-            return false;
+            _throw(exit_exception(m_paurasession, ::exit_application));
 
          }
 
@@ -4025,94 +4134,79 @@ retry_license:
 
       xxdebug_box("check_exclusive ok", "check_exclusive ok", MB_ICONINFORMATION);
 
-
-      //::simple_message_box(NULL,"e3","e3",MB_OK);
-
-
       System.install_progress_add_up(); // 2
 
-      xxdebug_box("initialize1 ok", "initialize1 ok", MB_ICONINFORMATION);
-
-      /*
-      string strWindow;
-
-      if(m_strAppName.has_char())
-      strWindow = m_strAppName;
-      else
-      strWindow = typeid(*this).name();
-
-      #ifndef METROWIN
-
-      if(!create_message_queue(this,strWindow))
-      {
-      dappy(string(typeid(*this).name()) + " : create_message_queue failure : " + ::str::from(m_iReturnCode));
-      TRACE("Fatal error: could not initialize application message interaction_impl (name=\"%s\").",strWindow.c_str());
-      return false;
-      }
-
-      #endif
-      */
+      xxdebug_box("init1 ok", "init1 ok", MB_ICONINFORMATION);
 
       m_dwAlive = ::get_tick_count();
 
-      if (!initialize2())
+      if (!init2())
       {
-         dappy(string(typeid(*this).name()) + " : initialize2 failure : " + ::str::from(m_iReturnCode));
+
+         //dappy(string(typeid(*this).name()) + " : init2 failure : " + ::str::from(m_iErrorCode));
+
          return false;
+
       }
 
       System.install_progress_add_up(); // 3
 
-      xxdebug_box("initialize2 ok", "initialize2 ok", MB_ICONINFORMATION);
+      xxdebug_box("init2 ok", "init2 ok", MB_ICONINFORMATION);
 
       m_dwAlive = ::get_tick_count();
 
-      if (!initialize3())
+      if (!init3())
       {
-         dappy(string(typeid(*this).name()) + " : initialize3 failure : " + ::str::from(m_iReturnCode));
+
+         //dappy(string(typeid(*this).name()) + " : init3 failure : " + ::str::from(m_iErrorCode));
+
          return false;
+
       }
 
       System.install_progress_add_up(); // 4
 
-      xxdebug_box("initialize3 ok", "initialize3 ok", MB_ICONINFORMATION);
+      xxdebug_box("init3 ok", "init3 ok", MB_ICONINFORMATION);
 
       m_dwAlive = ::get_tick_count();
 
+      //dappy(string(typeid(*this).name()) + " : init3 ok : " + ::str::from(m_iErrorCode));
 
-      dappy(string(typeid(*this).name()) + " : initialize3 ok : " + ::str::from(m_iReturnCode));
       try
       {
 
-         if (!initialize())
+         if (!init())
          {
-            dappy(string(typeid(*this).name()) + " : initialize failure : " + ::str::from(m_iReturnCode));
+
+            //dappy(string(typeid(*this).name()) + " : initialize failure : " + ::str::from(m_iErrorCode));
+
             return false;
+
          }
+
       }
       catch (const char * psz)
       {
+
          if (!strcmp(psz, "You have not logged in! Exiting!"))
          {
-            return false;
-         }
-         return false;
-      }
 
+            return false;
+
+         }
+
+         return false;
+
+      }
 
       System.install_progress_add_up(); // 5
 
       m_bAuraInitializeInstanceResult = true;
 
-      //#ifndef METROWIN
-
-      //#endif
-
       return true;
 
    }
 
-   //#ifndef METROWIN
 
    ::aura::ipi * application::create_ipi()
    {
@@ -4132,9 +4226,8 @@ retry_license:
 
    }
 
-   //#endif
 
-   bool application::initialize1()
+   bool application::init1()
    {
 
       g_pf1 = (void *)(uint_ptr) ::str::to_uint64(file().as_string(::dir::system() / "config\\system\\pf1.txt"));
@@ -4150,11 +4243,33 @@ retry_license:
 
       m_straMatterLocator.add_unique(System.dir_appmatter_locator(this));
 
-      if (!ca_initialize1())
+      if (!ca_init1())
+      {
+
          return false;
 
-      if (!impl_initialize1())
+      }
+
+      if (!impl_init1())
+      {
+
          return false;
+
+      }
+
+      if (m_pimaging == NULL)
+      {
+
+         m_pimaging = new class imaging(get_app());
+
+         if (m_pimaging == NULL)
+         {
+
+            _throw(memory_exception(get_app()));
+
+         }
+
+      }
 
       string strLocaleSystem;
 
@@ -4289,21 +4404,82 @@ retry_license:
    }
 
 
-   bool application::initialize2()
+   void application::term1()
    {
 
-      if (!impl_initialize2())
+      try
+      {
+
+         impl_term1();
+
+      }
+      catch (...)
+      {
+
+      }
+
+      try
+      {
+
+         ca_term1();
+
+      }
+      catch(...)
+      {
+
+      }
+
+   }
+
+   bool application::init2()
+   {
+
+      if (!impl_init2())
+      {
+
          return false;
 
-      if (!ca_initialize2())
+      }
+
+      if (!ca_init2())
+      {
+
          return false;
+
+      }
 
       return true;
 
    }
 
+   void application::term2()
+   {
 
-   bool application::initialize3()
+      try
+      {
+
+         impl_term2();
+
+      }
+      catch (...)
+      {
+
+      }
+
+      try
+      {
+
+         ca_term2();
+
+      }
+      catch(...)
+      {
+
+      }
+
+   }
+
+   bool application::init3()
    {
 
       string strFolder = m_strAppName;
@@ -4314,53 +4490,43 @@ retry_license:
 
       m_strRelativeFolder = strFolder;
 
-      if (!impl_initialize3())
+      if (!impl_init3())
+      {
+
          return false;
 
-      if (!ca_initialize3())
+      }
+
+      if (!ca_init3())
+      {
+
          return false;
+
+      }
 
       return true;
 
    }
 
 
-   bool application::initialize()
+   void application::term3()
    {
-
-      return true;
-
-
-   }
-
-
-   int32_t application::exit_application()
-   {
-
 
       try
       {
 
-         for(auto & pair : System.m_appmap)
-         {
+         impl_term3();
 
-            try
-            {
+      }
+      catch (...)
+      {
 
-               if(pair.m_element2->m_pauraapp == this)
-               {
+      }
 
-                  pair.m_element2->m_pauraapp = NULL;
+      try
+      {
 
-               }
-
-            }
-            catch(...)
-            {
-
-            }
-
-         }
+         ca_term3();
 
       }
       catch(...)
@@ -4368,224 +4534,85 @@ retry_license:
 
       }
 
-
-      try
-      {
-
-
-         //destroy_message_queue();
-
-      }
-      catch (...)
-      {
-
-         m_iReturnCode = -1;
-
-      }
-
-
-
-
-      try
-      {
-
-
-         /*      try
-         {
-         if(m_plemonarray != NULL)
-         {
-         delete m_plemonarray;
-         }
-         }
-         catch(...)
-         {
-         }
-         m_plemonarray = NULL;
-         */
-
-         release_exclusive();
-
-         m_phandler.release();
-
-
-         //         if(m_spuiMessage.is_set())
-         {
-
-            //if(!destroy_message_queue())
-            {
-
-               // TRACE("Could not finalize message interaction_impl");
-
-            }
-
-         }
-
-
-         application_message message(application_message_exit_instance);
-
-         try
-         {
-
-            route_message(&message);
-
-         }
-         catch (...)
-         {
-
-         }
-
-         if (!is_session() && !is_system())
-         {
-
-            if (m_paurasystem != NULL && m_paurasystem->m_phandler.is_set())
-            {
-
-               m_paurasystem->m_phandler->handle(::command_check_exit);
-
-            }
-
-         }
-
-         for (auto & p : m_stringtable)
-         {
-
-            delete p.m_element2;
-
-         }
-
-         m_stringtable.remove_all();
-
-         for (auto & p : m_stringtableStd)
-         {
-
-            delete p.m_element2;
-
-         }
-
-         m_stringtableStd.remove_all();
-
-         try
-         {
-
-            //            sp(thread_impl) pthread = m_pthreadimpl;
-            //
-            //            if(pthread != NULL)
-            //            {
-            //
-            //               try
-            //               {
-            // avoid calling CloseHandle() on our own thread handle
-            // during the thread destructor
-            // avoid thread object data auto deletion on thread termination,
-            // letting thread function terminate
-            //m_bAutoDelete = false;
-
-            post_quit();
-
-            ::thread::exit_thread();
-
-            //               }
-            //               catch(...)
-            //               {
-            //
-            //               }
-            //
-            //            }
-
-         }
-         catch (...)
-         {
-
-         }
-
-         /*try
-         {
-
-            m_pthreadimpl.release();
-
-         }
-         catch(...)
-         {
-
-         }
-         */
-
-         m_spfile.release();
-
-         m_spdir.release();
-
-         try
-         {
-
-            //application   * papp = m_pappimpl.detach();
-
-            //if(papp != NULL && papp != this && !papp->is_system())
-            //{
-
-            //   try
-            //   {
-
-            impl_exit_instance();
-
-            //   }
-            //   catch(...)
-            //   {
-
-            //   }
-
-            //}
-
-         }
-         catch (...)
-         {
-
-         }
-
-         return 0;
-
-
-      }
-      catch (...)
-      {
-
-         m_iReturnCode = -1;
-
-      }
-
-      try
-      {
-
-         if (Session.appptra().get_count() <= 1)
-         {
-
-            if (System.thread::get_os_data() != NULL)
-            {
-
-               ::multithreading::post_quit(&System);
-
-            }
-
-         }
-
-      }
-      catch (...)
-      {
-
-         m_iReturnCode = -1;
-
-      }
-
-      return m_iReturnCode;
-
    }
 
 
-   bool application::finalize()
+   bool application::init()
    {
 
-      bool bOk = true;
+      return true;
 
-      return bOk;
+
+   }
+
+
+   void application::term()
+   {
+
+      ::aura::del(m_pimaging);
+
+//      bool bOk = true;
+//
+//      return bOk;
+
+   }
+
+
+
+   void application::term_application()
+   {
+
+      try
+      {
+
+         term();
+
+      }
+      catch(...)
+      {
+
+
+      }
+
+      try
+      {
+
+         term3();
+
+      }
+      catch(...)
+      {
+
+
+      }
+
+      try
+      {
+
+         term2();
+
+      }
+      catch(...)
+      {
+
+
+      }
+
+      try
+      {
+
+         term1();
+
+      }
+      catch(...)
+      {
+
+
+      }
+//
+//
+//
+//      return m_iErrorCode;
 
    }
 
@@ -4594,10 +4621,71 @@ retry_license:
 
 
 
+//   bool application::impl_process_init()
+//   {
+//
+//      return true;
+//
+//   }
+
+//   bool application::impl_init1()
+//   {
+//
+//      //set_run();
+//
+//      return true;
+//
+//   }
+
+//   bool application::impl_init2()
+//   {
+//      return true;
+//   }
+
+//   bool application::impl_init3()
+//   {
+//      return true;
+//   }
+
+   // thread termination
+//   void application::impl_process_term() // default will 'delete this'
+//   {
+//
+//      set_os_data(NULL);
+//
+//      //int32_t iRet = ::aura::application::term_instance();
+//
+//      //return 0;
+//
+//   }
+
+
+//   void application::impl_term3()
+//   {
+//
+//
+//   }
+//
+//
+//   void application::impl_term2()
+//   {
+//
+//
+//   }
+//
+//
+//   void application::impl_term1()
+//   {
+//
+//
+//   }
    bool application::is_running()
    {
+
       return is_alive();
+
    }
+
 
    service_base * application::allocate_new_service()
    {
@@ -4607,15 +4695,10 @@ retry_license:
    }
 
 
-
-
-
-
-
-   bool application::ca_initialize2()
+   bool application::ca_init2()
    {
 
-      application_message message(application_message_initialize2);
+      application_message message(application_message_init2);
 
       route_message(&message);
 
@@ -4623,18 +4706,27 @@ retry_license:
 
    }
 
-
-   bool application::ca_initialize3()
+   void application::ca_term2()
    {
 
-      application_message message(application_message_initialize3);
+      application_message message(application_message_term2);
 
       route_message(&message);
 
-      if (!message.m_bOk)
-         return false;
+   }
 
-      return true;
+
+   void application::ca_term3()
+   {
+
+      application_message message(application_message_init3);
+
+      route_message(&message);
+
+//      if (!message.m_bOk)
+//         return false;
+//
+//      return true;
 
    }
 
@@ -4801,11 +4893,21 @@ retry_license:
             {
                // Should in some way activate the other instance
                TRACE("A instance of the application:<br><br>           - " + string(m_strAppName) + "<br><br>seems to be already running at the same account.<br>Only one instance of this application can run locally: at the same account.<br><br>Exiting this new instance.");
+
                bHandled = on_exclusive_instance_conflict(ExclusiveInstanceLocal);
+
             }
             catch (...)
             {
             }
+
+            if(bHandled)
+            {
+
+               _throw(exit_exception(this, exit_application));
+
+            }
+
             //::aura::post_quit_thread(&System);
             return false;
          }
@@ -4875,10 +4977,10 @@ retry_license:
 
 
 
-   bool application::ca_process_initialize()
+   bool application::ca_process_init()
    {
 
-      application_message message(application_message_process_initialize);
+      application_message message(application_message_process_init);
 
       route_message(&message);
 
@@ -4887,10 +4989,10 @@ retry_license:
    }
 
 
-   bool application::ca_initialize1()
+   bool application::ca_init1()
    {
 
-      application_message message(application_message_initialize1);
+      application_message message(application_message_init1);
 
       route_message(&message);
 
@@ -4900,10 +5002,10 @@ retry_license:
 
 
 
-   bool application::ca_finalize()
+   void application::ca_term1()
    {
 
-      application_message message(application_message_finalize);
+      application_message message(application_message_term1);
 
       try
       {
@@ -4916,7 +5018,7 @@ retry_license:
 
       }
 
-      return message.m_bOk;
+      //return message.m_bOk;
 
    }
 
@@ -5001,10 +5103,15 @@ retry_license:
 
             int_map < var > map = m_pipi->ecall(m_pipi->m_strApp, { System.os().get_pid() }, "application", "on_exclusive_instance_local_conflict", System.file().module(), System.os().get_pid(), string(System.handler()->m_spcommandline->m_strCommandLine));
 
-            if (!map[System.os().get_pid()].is_new())
+            for(auto & p : map)
             {
 
-               return true;
+               if((bool) p.element2())
+               {
+
+                  return true;
+
+               }
 
             }
 
@@ -5599,27 +5706,27 @@ retry_license:
 
    //}
 
-   sp(::message::base) application::get_message_base(LPMESSAGE lpmsg)
-   {
+   //sp(::message::base) application::get_message_base(LPMESSAGE lpmsg)
+   //{
 
-      sp(::message::base) pbase = canew(::message::base(get_app()));
+   //   sp(::message::base) pbase = canew(::message::base(get_app()));
 
-      if (pbase == NULL)
-         return NULL;
+   //   if (pbase == NULL)
+   //      return NULL;
 
-      pbase->set(NULL, lpmsg->message, lpmsg->wParam, lpmsg->lParam);
+   //   pbase->set(NULL, lpmsg->message, lpmsg->wParam, lpmsg->lParam);
 
-      return pbase;
+   //   return pbase;
 
-   }
+   //}
 
 
-   void application::process_message(::message::base * pbase)
-   {
+   //void application::process_message(::message::base * pbase)
+   //{
 
-      message_handler(pbase);
+   //   message_handler(pbase);
 
-   }
+   //}
 
 
    void application::set_locale(const string & lpcsz, ::action::context actioncontext)
@@ -5874,8 +5981,6 @@ retry_license:
 
          papp = create_platform(m_pauraapp->m_paurasession);
 
-         papp->construct("session");
-
          papp->m_strAppId = "session";
 
       }
@@ -5885,7 +5990,11 @@ retry_license:
          papp = Session.get_new_application(pbias == NULL ? this : pbias->get_app(), strAppId);
 
          if (papp == NULL)
+         {
+
             return NULL;
+
+         }
 
          papp->m_paurasession = m_paurasession;
 
@@ -5936,8 +6045,6 @@ retry_license:
 
       }
 
-#if defined(INSTALL_SUBSYSTEM)
-
       if ((papp == NULL || papp->m_strAppId != strAppId)
             &&
             (!Application.handler()->m_varTopicQuery.has_property("install")
@@ -5958,13 +6065,11 @@ retry_license:
 
          System.start_installation(strCommand);
 
-         throw installing_exception(get_app());
+         _throw(installing_exception(get_app()));
 
          return NULL;
 
       }
-
-#endif
 
       return papp;
 
@@ -6035,42 +6140,25 @@ retry_license:
 
    bool application::start_application(bool bSynch, application_bias * pbias)
    {
-      /*      try
-      {
-      if(pbias != NULL)
-      {
-      papp->m_pcoreapp->m_puiInitialPlaceHolderContainer = pbias->m_puiParent;
-      }
-      }
-      catch(...)
-      {
-      }*/
+
       try
       {
+
          if (pbias != NULL)
          {
+
             if (pbias->m_pcallback != NULL)
             {
+
                pbias->m_pcallback->connect_to(this);
+
             }
+
          }
       }
       catch (...)
       {
       }
-
-      manual_reset_event * peventReady = NULL;
-
-      if (bSynch)
-      {
-         peventReady = new manual_reset_event(get_app());
-         m_peventReady = peventReady;
-         peventReady->ResetEvent();
-      }
-
-      //      m_pthreadimpl.alloc(allocer());
-      //
-      //      m_pthreadimpl->m_pthread = this;
 
       if (pbias != NULL)
       {
@@ -6082,8 +6170,12 @@ retry_license:
       if (bSynch)
       {
 
-         if (!begin_synch(&m_iReturnCode))
+         if (!begin_synch())
+         {
+
             return false;
+
+         }
 
       }
       else
@@ -6100,24 +6192,24 @@ retry_license:
 
 
 
-   bool application::on_run_exception(::exception::exception & e)
+   bool application::on_run_exception(::exception::exception * pe)
    {
 
       ::output_debug_string("aura::application::on_run_exception An unexpected error has occurred and no special exception handling is available.");
 
-      if (e.m_bHandled)
+      if (pe->m_bHandled)
       {
 
-         return !e.m_bContinue;
+         return pe->m_bContinue;
 
       }
 
-      if (typeid(e) == typeid(not_installed))
+      if (typeid(*pe) == typeid(not_installed))
       {
 
-         not_installed & notinstalled = dynamic_cast <not_installed &> (e);
+         not_installed * pnotinstalled = dynamic_cast <not_installed *> (pe);
 
-         return handle_not_installed(notinstalled);
+         return handle_not_installed(pnotinstalled);
 
       }
 
@@ -6128,12 +6220,12 @@ retry_license:
    }
 
 
-   bool application::handle_not_installed(::not_installed & notinstalled)
+   bool application::handle_not_installed(::not_installed * pnotinstalled)
    {
 
-      notinstalled.m_bHandled = true;
+      pnotinstalled->m_bHandled = true;
 
-      notinstalled.m_bContinue = true;
+      pnotinstalled->m_bContinue = true;
 
       bool bDebuggerCheck = true;
 
@@ -6220,7 +6312,7 @@ retry_license:
             //#if defined(APPLEOS)
             //                   strPath = "/usr/bin/open -n " + strPath + " --args : app=" + notinstalled.m_strId + " install build=" + strBuild + " locale=" + notinstalled.m_strLocale + " schema=" + //notinstalled.m_strSchema;
             //#else
-            strParam = " : install app=" + notinstalled.m_strAppId + " platform="+ notinstalled.m_strPlatform + " configuration=" + notinstalled.m_strConfiguration + " locale=" + notinstalled.m_strLocale + " schema=" + notinstalled.m_strSchema;
+            strParam = " : install app=" + pnotinstalled->m_strAppId + " platform="+ pnotinstalled->m_strPlatform + " configuration=" + pnotinstalled->m_strConfiguration + " locale=" + pnotinstalled->m_strLocale + " schema=" + pnotinstalled->m_strSchema;
             //#endif
 
             //               if(App(notinstalled.get_app()).is_serviceable() && !App(notinstalled.get_app()).is_user_service())
@@ -6311,19 +6403,11 @@ retry_license:
                if (!(bool)System.oprop("not_installed_message_already_shown"))
                {
 
-                  if ((App(notinstalled.get_app()).is_serviceable() && !App(notinstalled.get_app()).is_user_service())
-                        || (IDYES == (iRet = ::simple_message_box(NULL, "Debug only message, please install:\n\n\n\t" + notinstalled.m_strAppId + "\n\tconfiguration = " + notinstalled.m_strConfiguration + "\n\tplatform = " + notinstalled.m_strPlatform + "\n\tlocale = " + notinstalled.m_strLocale + "\n\tschema = " + notinstalled.m_strSchema + "\n\n\nThere are helper scripts under <solution directory>/nodeapp/stage/install/", "Debug only message, please install.", MB_ICONINFORMATION | MB_YESNO))))
+                  if ((App(pnotinstalled->get_app()).is_serviceable() && !App(pnotinstalled->get_app()).is_user_service())
+                        || (IDYES == (iRet = ::simple_message_box(NULL, "Debug only message, please install:\n\n\n\t" + pnotinstalled->m_strAppId + "\n\tconfiguration = " + pnotinstalled->m_strConfiguration + "\n\tplatform = " + pnotinstalled->m_strPlatform + "\n\tlocale = " + pnotinstalled->m_strLocale + "\n\tschema = " + pnotinstalled->m_strSchema + "\n\n\nThere are helper scripts under <solution directory>/nodeapp/stage/install/", "Debug only message, please install.", MB_ICONINFORMATION | MB_YESNO))))
                   {
 
                      ::duration durationWait = minutes(1);
-
-                     //#ifdef MACOS
-
-                     //                   TRACE0(strPath);
-
-                     //                 DWORD dwExitCode = System.process().synch(strPath,SW_HIDE,durationWait,&bTimedOut);
-
-                     //#else
 
 #ifdef LINUX
 
@@ -6335,34 +6419,32 @@ retry_license:
 
 #endif
 
-                     //#endif
-
                   }
-
 
                }
 
             }
+
             if (iRet == IDNO)
             {
 
-               notinstalled.m_bContinue = false;
+               pnotinstalled->m_bContinue = false;
 
             }
             else if (bTimedOut)
             {
 
-               ::simple_message_box(NULL, " - " + notinstalled.m_strAppId + "\nhas timed out while trying to install.\n\nFor developers it is recommended to\nfix this installation timeout problem.\n\nIt is recommended to kill manually :\n - \"" + string(path) + strParam + "\"\nif it has not been terminated yet.", "Debug only message, please install.", MB_ICONINFORMATION | MB_OK);
+               ::simple_message_box(NULL, " - " + pnotinstalled->m_strAppId + "\nhas timed out while trying to install.\n\nFor developers it is recommended to\nfix this installation timeout problem.\n\nIt is recommended to kill manually :\n - \"" + string(path) + strParam + "\"\nif it has not been terminated yet.", "Debug only message, please install.", MB_ICONINFORMATION | MB_OK);
 
-               notinstalled.m_bContinue = false;
+               pnotinstalled->m_bContinue = false;
 
             }
             else if (dwExitCode == 0)
             {
 
-               ::simple_message_box(NULL, "Successfully run : " + string(path) + strParam, "Debug only message, please install.", MB_ICONINFORMATION | MB_OK);
+               ::simple_message_box(NULL, "Successfully run : " + string(path) + strParam, "Installation Succesful", MB_ICONINFORMATION | MB_OK);
 
-               notinstalled.m_bContinue = false;
+               pnotinstalled->m_bContinue = false;
 
             }
             else
@@ -6370,10 +6452,9 @@ retry_license:
 
                ::simple_message_box(NULL, string(path) + strParam + "\n\nFailed return code : " + ::str::from((uint32_t)dwExitCode), "Debug only message, please install.", MB_ICONINFORMATION | MB_OK);
 
-               notinstalled.m_bContinue = false;
+               pnotinstalled->m_bContinue = false;
 
             }
-
 
          }
          catch (...)
@@ -6384,8 +6465,6 @@ retry_license:
       }
       else
       {
-
-#ifdef HOTPLUGIN_SUBSYSTEM
 
          string strAddUp;
 
@@ -6407,22 +6486,16 @@ retry_license:
 
          }
 
-         hotplugin_host_starter_start_sync(": app=" + notinstalled.m_strAppId + " install locale=" + notinstalled.m_strLocale + " schema=" + notinstalled.m_strSchema + " configuration=" + notinstalled.m_strConfiguration + " platform=" + notinstalled.m_strPlatform + strAddUp, get_app(), NULL);
-
-#else
-
-         throw todo(get_app());
-
-#endif
+         hotplugin_host_starter_start_sync(": app=" + pnotinstalled->m_strAppId + " install locale=" + pnotinstalled->m_strLocale + " schema=" + pnotinstalled->m_strSchema + " configuration=" + pnotinstalled->m_strConfiguration + " platform=" + pnotinstalled->m_strPlatform + strAddUp, get_app(), NULL);
 
       }
+
+      _throw_exit(exit_system);
 
       return false;
 
    }
 
-
-#ifdef HOTPLUGIN_SUBSYSTEM
 
    int32_t application::hotplugin_host_starter_start_sync(const char * pszCommandLine, ::aura::application * papp, hotplugin::host * phost, hotplugin::plugin * pplugin)
    {
@@ -6430,8 +6503,6 @@ retry_license:
       return -1;
 
    }
-
-#endif
 
 
    bool application::is_application()
@@ -6473,7 +6544,7 @@ retry_license:
    void application::dispatch_user_message_object(::object * pobject)
    {
 
-      throw interface_only_exception(this);
+      _throw(interface_only_exception(this));
 
    }
 
@@ -6581,9 +6652,7 @@ retry_license:
    bool application::compress_ungz(::file::ostream & ostreamUncompressed, const ::file::path & lpcszGzFileCompressed)
    {
 
-      throw interface_only_exception(this);
-
-      return false;
+      return System.compress().ungz(this, ostreamUncompressed, lpcszGzFileCompressed);
 
    }
 
@@ -6591,9 +6660,7 @@ retry_license:
    bool application::compress_ungz(::primitive::memory_base & mem)
    {
 
-      throw interface_only_exception(this);
-
-      return false;
+      return System.compress().ungz(this, mem);
 
    }
 
@@ -6601,9 +6668,7 @@ retry_license:
    bool application::compress_gz(::file::file * pfileOut, const ::file::path & lpcszUncompressed, int iLevel)
    {
 
-      throw interface_only_exception(this);
-
-      return false;
+      return System.compress().gz(this, pfileOut, lpcszUncompressed, iLevel);
 
    }
 
@@ -6611,12 +6676,9 @@ retry_license:
    bool application::compress_gz(::file::file * pfileOut, ::file::file * pfileIn, int iLevel)
    {
 
-      throw interface_only_exception(this);
-
-      return false;
+      return System.compress().gz(this, pfileOut, pfileIn, iLevel);
 
    }
-
 
    string application::fontopus_get_cred(::aura::application * papp, const string & strRequestUrl, const RECT & rect, string & strUsername, string & strPassword, string strToken, string strTitle, bool bInteractive, ::user::interactive * pinteractive)
    {
@@ -6867,8 +6929,6 @@ finalize:
    }
 
 
-#ifdef INSTALL_SUBSYSTEM
-
    bool application::is_application_updated(string strAppId, DWORD & dwGoodToCheckAgain)
    {
 
@@ -6983,8 +7043,8 @@ finalize:
          output_debug_string("Could not create or open a registrty key\n");
          return 0;
       }
-      RegSetValueExW(hkey, L"", 0, REG_SZ, (BYTE*)desc.c_str(), convert < DWORD > (desc.length() * sizeof(wchar_t))); // default vlaue is description of file extension
-      RegSetValueExW(hkey, L"ContentType", 0, REG_SZ, (BYTE*)content_type.c_str(), convert < DWORD > (content_type.length() * sizeof(wchar_t))); // default vlaue is description of file extension
+      RegSetValueExW(hkey, L"", 0, REG_SZ, (BYTE*)desc.c_str(), DWORD (desc.length() * sizeof(wchar_t))); // default vlaue is description of file extension
+      RegSetValueExW(hkey, L"ContentType", 0, REG_SZ, (BYTE*)content_type.c_str(), DWORD (content_type.length() * sizeof(wchar_t))); // default vlaue is description of file extension
       RegCloseKey(hkey);
 
 
@@ -6996,7 +7056,7 @@ finalize:
          output_debug_string("Could not create or open a registrty key\n");
          return 0;
       }
-      RegSetValueExW(hkey, L"", 0, REG_SZ, (BYTE*)app.c_str(), convert < DWORD > (app.length() * sizeof(wchar_t)));
+      RegSetValueExW(hkey, L"", 0, REG_SZ, (BYTE*)app.c_str(), DWORD(app.length() * sizeof(wchar_t)));
       RegCloseKey(hkey);
 
 
@@ -7007,7 +7067,7 @@ finalize:
          output_debug_string("Could not create or open a registrty key\n");
          return 0;
       }
-      RegSetValueExW(hkey, L"", 0, REG_SZ, (BYTE*)icon.c_str(), convert < DWORD > (icon.length() * sizeof(wchar_t)));
+      RegSetValueExW(hkey, L"", 0, REG_SZ, (BYTE*)icon.c_str(), DWORD (icon.length() * sizeof(wchar_t)));
       RegCloseKey(hkey);
 
       wstring wstr(dir::stage("x86") / "spa_register.txt");
@@ -7094,7 +7154,7 @@ finalize:
    string application::install_pick_command_line()
    {
 
-      throw interface_only_exception(this);
+      _throw(interface_only_exception(this));
 
       return "";
 
@@ -7187,9 +7247,6 @@ finalize:
    }
 
 
-#endif
-
-
    string application::get_app_id(string wstr)
    {
 
@@ -7247,9 +7304,6 @@ finalize:
       return psz;
 
    }
-
-
-#ifdef INSTALL_SUBSYSTEM
 
 
    int application::check_soon_file_launch(string wstr, bool bLaunch, DWORD & dwGoodToCheckAgain)
@@ -7473,7 +7527,7 @@ finalize:
    bool application::install_get_admin()
    {
 
-      throw interface_only_exception(this);
+      _throw(interface_only_exception(this));
 
       return false;
 
@@ -7483,23 +7537,506 @@ finalize:
    string application::install_get_id()
    {
 
-      throw interface_only_exception(this);
+      _throw(interface_only_exception(this));
 
       return "";
 
    }
 
 
-#endif
-
    LPWAVEOUT application::waveout_open(int iChannel, LPAUDIOFORMAT pformat, LPWAVEOUT_CALLBACK pcallback)
    {
 
-      throw interface_only_exception(NULL);
+      _throw(interface_only_exception(NULL));
 
       return NULL;
 
    }
+
+
+   bool application::keyboard_focus_is_focusable(::user::elemental * pue)
+   {
+
+      return false;
+
+   }
+
+
+   bool application::keyboard_focus_OnSetFocus(::user::elemental * pue)
+   {
+
+      return true;
+
+   }
+
+   bool application::get_frame(sp(::user::interaction) & pui)
+   {
+
+#ifdef VSNORD
+
+      if (System.m_possystemwindow != NULL)
+      {
+
+         if (System.m_possystemwindow->m_pui != NULL)
+         {
+
+            return System.m_possystemwindow->m_pui->m_uiptraChild.get_child(pui);
+
+         }
+
+      }
+
+#endif
+
+      synch_lock sl(&m_mutexFrame);
+
+      return m_puiptraFrame->get_child(pui);
+
+   }
+
+
+
+
+   void application::add_frame(::user::interaction * pwnd)
+   {
+
+#if !defined(LINUX) && !defined(METROWIN) && !defined(APPLEOS) && !defined(VSNORD)
+
+      if (dynamic_cast <::user::system_interaction_impl *>(pwnd) != NULL)
+      {
+
+         return;
+
+      }
+
+#endif
+
+      if (pwnd == NULL)
+      {
+
+         return;
+
+      }
+
+      synch_lock sl(&m_mutexFrame); // recursive lock (on m_framea.add(pwnd)) but m_puiMain is "cared" by m_frame.m_mutex
+
+      if (m_puiptraFrame->add_unique(pwnd))
+      {
+
+         TRACE("::base::application::add_frame ::user::interaction = %0x016x (%s) app=%s", pwnd, typeid(*pwnd).name(), typeid(*this).name());
+
+         System.defer_create_system_frame_window();
+
+         Session.on_create_frame_window();
+
+         if (m_puiMain == NULL)
+         {
+
+            m_puiMain = pwnd;
+
+         }
+
+      }
+
+   }
+
+
+   void application::remove_frame(::user::interaction * pwnd)
+   {
+
+      synch_lock sl(&m_mutexFrame); // recursive lock (on m_framea.remove(pwnd)) but m_puiMain is "cared" by m_frame.m_mutex
+
+
+      //if(get_active_uie() == pwnd)
+      //{
+
+      //   set_a
+
+      //}
+
+
+      if (m_puiMain == pwnd)
+      {
+
+         m_puiMain = NULL;
+
+      }
+
+      if (m_puiptraFrame != NULL)
+      {
+
+         if (m_puiptraFrame->remove(pwnd) > 0)
+         {
+
+            TRACE("::base::application::remove_frame ::user::interaction = %0x016x (%s) app=%s", pwnd, typeid(*pwnd).name(), typeid(*this).name());
+
+         }
+
+      }
+
+
+   }
+
+
+
+   bool application::send_message_to_windows(UINT message, WPARAM wparam, LPARAM lparam) // with tbs in <3
+   {
+
+      sp(::user::interaction) pwnd;
+
+      try
+      {
+
+         while (get_frame(pwnd))
+         {
+
+            try
+            {
+
+               if (pwnd != NULL && pwnd->IsWindow())
+               {
+
+                  try
+                  {
+
+                     pwnd->send_message(message, wparam, lparam);
+
+                  }
+                  catch (...)
+                  {
+
+                  }
+
+                  try
+                  {
+
+                     pwnd->send_message_to_descendants(message, wparam, lparam);
+
+                  }
+                  catch (...)
+                  {
+
+
+                  }
+
+               }
+
+            }
+            catch (...)
+            {
+
+            }
+
+         }
+
+      }
+      catch (...)
+      {
+
+      }
+
+      return true;
+
+   }
+
+
+   bool application::route_message_to_windows(::message::message * pmessage) // with tbs in <3
+   {
+
+      sp(::user::interaction) pwnd;
+
+      try
+      {
+
+         while (get_frame(pwnd))
+         {
+
+            try
+            {
+
+               if (pwnd != NULL && pwnd->IsWindow())
+               {
+
+                  try
+                  {
+
+                     pwnd->route_message(pmessage);
+
+                  }
+                  catch (...)
+                  {
+
+                  }
+
+                  try
+                  {
+
+                     pwnd->route_message_to_descendants(pmessage);
+
+                  }
+                  catch (...)
+                  {
+
+
+                  }
+
+               }
+
+            }
+            catch (...)
+            {
+
+            }
+
+         }
+
+      }
+      catch (...)
+      {
+
+
+      }
+
+      return true;
+
+   }
+
+
+   void application::send_language_change_message()
+   {
+
+      ::message::message message(::message::type_language);
+
+      route_message_to_windows(&message);
+
+   }
+
+
+
+   sp(::message::base) application::get_message_base(LPMESSAGE lpmsg)
+   {
+
+      ::user::interaction * pui = NULL;
+
+      if (pui == NULL && lpmsg->hwnd != NULL)
+      {
+
+         if (lpmsg->message == 126)
+         {
+
+            TRACE("WM_DISPLAYCHANGE");
+
+         }
+
+         ::user::interaction_impl * pimpl = System.impl_from_handle(lpmsg->hwnd);
+
+         if (pimpl != NULL)
+         {
+
+            try
+            {
+
+               pui = pimpl->m_pui;
+
+            }
+            catch (...)
+            {
+
+               pui = NULL;
+
+            }
+
+         }
+
+         if (pui == NULL)
+            return NULL;
+
+      }
+
+      if (pui != NULL)
+      {
+
+         return pui->get_message_base(lpmsg->message, lpmsg->wParam, lpmsg->lParam);
+
+      }
+
+      sp(::message::base) pbase = canew(::message::base(get_app()));
+
+      if (pbase == NULL)
+         return NULL;
+
+      pbase->set(NULL, lpmsg->message, lpmsg->wParam, lpmsg->lParam);
+
+      return pbase;
+
+
+
+   }
+
+
+   void application::process_message(::message::base * pbase)
+   {
+
+      if (pbase->m_pwnd == NULL)
+      {
+
+         try
+         {
+
+            message_handler(pbase);
+
+         }
+         catch (esp esp)
+         {
+
+            TRACE("application::process_message : error processing application thread message (const ::exception::exception & )");
+
+            if (App(this).on_run_exception(esp))
+               goto run;
+
+            if (App(this).final_handle_exception(esp))
+               goto run;
+
+            __post_quit_message(-1);
+
+            pbase->set_lresult(-1);
+
+            return;
+
+         }
+         catch (::exception::base * pe)
+         {
+
+            process_window_procedure_exception(pe, pbase);
+
+            TRACE(::aura::trace::category_AppMsg, 0, "Warning: Uncaught exception in message_handler (returning %ld) (application::process_message : error processing application thread message).\n", (int_ptr)pbase->get_lresult());
+
+            pe->Delete();
+
+         }
+         catch (...)
+         {
+
+            TRACE("application::process_message : error processing application thread message (...)");
+
+         }
+
+         return;
+
+      }
+
+      try
+      {
+
+         pbase->m_pwnd->m_puiThis->message_handler(pbase);
+
+      }
+      catch (esp esp)
+      {
+
+         TRACE("application::process_message : error processing window message (const ::exception::exception & )");
+
+         if (App(this).on_run_exception(esp))
+            goto run;
+
+         if (App(this).final_handle_exception(esp))
+            goto run;
+
+         __post_quit_message(-1);
+
+         pbase->set_lresult(-1);
+
+         return;
+
+      }
+      catch (::exception::base * pe)
+      {
+
+         process_window_procedure_exception(pe, pbase);
+
+         TRACE(::aura::trace::category_AppMsg, 0, "Warning: Uncaught exception in message_handler (returning %ld) (application::process_message : error processing window message).\n", (int_ptr)pbase->get_lresult());
+
+         pe->Delete();
+
+      }
+      catch (...)
+      {
+
+         TRACE("application::process_message : error processing window message (...)");
+
+      }
+
+run:
+      ;
+
+   }
+
+
+   ::user::interaction * application::main_window()
+   {
+
+      if (m_puiMain == NULL)
+         return NULL;
+
+      return m_puiMain->m_puiThis;
+
+   }
+   string application::preferred_userschema()
+   {
+
+      return "";
+
+   }
+
+   ::user::document *application::place_hold(::user::interaction * pui)
+   {
+
+      return NULL;
+
+   }
+
+
+   ::visual::icon * application::set_icon(object * pobject, ::visual::icon * picon, bool bBigIcon)
+   {
+
+      ::visual::icon * piconOld = get_icon(pobject, bBigIcon);
+
+      if (bBigIcon)
+      {
+
+         pobject->oprop("big_icon").operator =((sp(object)) picon);
+
+      }
+      else
+      {
+
+         pobject->oprop("small_icon").operator =((sp(object)) picon);
+
+      }
+
+      return piconOld;
+
+   }
+
+
+   ::visual::icon * application::get_icon(object * pobject, bool bBigIcon) const
+   {
+
+      if (bBigIcon)
+      {
+
+         return const_cast <object *> (pobject)->oprop("big_icon").cast < ::visual::icon >();
+
+      }
+      else
+      {
+
+         return const_cast <object *> (pobject)->oprop("small_icon").cast < ::visual::icon >();
+
+      }
+
+   }
+
 
 } // namespace install
 

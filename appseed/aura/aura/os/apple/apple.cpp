@@ -7,6 +7,7 @@
 //
 
 #include "framework.h"
+#include "apple_main.h"
 
 // ThomasBS-LiveEdu.TV(LiveCoding.TV)
 
@@ -68,6 +69,109 @@ void ReleaseDispatch(void * p)
 {
    
    dispatch_release((dispatch_object_t) p);
+   
+}
+
+
+
+
+
+static bool g_bRunSystem = false;
+
+int32_t defer_run_system()
+{
+   
+   if(g_bRunSystem)
+   {
+      
+      return 0;
+      
+   }
+   
+   g_bRunSystem = true;
+   
+   return __start_system_with_file(NULL);
+   
+}
+
+
+int32_t defer_run_system(const char * pszFileName)
+{
+   
+   return __start_system_with_file(pszFileName);
+   
+}
+
+
+int32_t defer_run_system(char ** pszaFileName, int iFileCount)
+{
+   
+   return __start_system_with_file((const char **) pszaFileName, iFileCount);
+   
+}
+
+
+
+
+
+void apple_on_app_activate()
+{
+   
+   ::aura::system::g_p->on_setting_changed(::aura::setting_app_activation);
+   
+}
+
+
+void apple_on_new_file()
+{
+   
+   ::aura::system::g_p->on_open_file(var::type_empty, "");
+   
+}
+
+// iMillisDelay default 500ms good
+void apple_accumulate_on_open_file(const char ** psza, int iCount, const char * pszExtra, int iMillisDelay)
+{
+   
+   stringa stra;
+   
+   stra.c_add((char **) psza, iCount);
+   
+   ::aura::system::g_p->accumulate_on_open_file(stra, pszExtra, iMillisDelay);
+   
+}
+
+
+
+void apple_on_open_file(const char ** psza, int iCount, const char * pszExtra)
+{
+   
+   if(iCount <= 0)
+   {
+      
+      apple_on_new_file();
+      
+   }
+   else if(iCount == 1)
+   {
+      
+      ::aura::system::g_p->on_open_file(psza[0], pszExtra);
+      
+      ::free((void *) psza[0]);
+      
+      ::free(psza);
+      
+   }
+   else
+   {
+      
+      stringa stra;
+      
+      stra.c_add((char **) psza, iCount);
+      
+      ::aura::system::g_p->on_open_file(stra, pszExtra);
+      
+   }
    
 }
 

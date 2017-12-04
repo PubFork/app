@@ -460,9 +460,12 @@ class map :
       assoc * get_assoc_at(ARG_KEY, UINT&, UINT&) const;
 
       virtual ~map();
-//      void Serialize(CArchive&);
-      void dump(dump_context &) const;
-      void assert_valid() const;
+
+
+      virtual void assert_valid() const override;
+      virtual void dump(dump_context & dumpcontext) const override;
+
+
 
       template < class ARRAY >
       bool remove_key_array(ARRAY a)
@@ -1503,7 +1506,7 @@ void map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::get_next_assoc(POSITION& rNex
    {
       passocRet = m_passocHead;
       if(passocRet == NULL)
-         throw error_exception(get_app(), "map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::get_next_assoc : must find something");
+         _throw(error_exception(get_app(), "map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::get_next_assoc : must find something"));
    }
 
    rNextPosition = (POSITION) passocRet->m_pnext;
@@ -1608,6 +1611,7 @@ set_at(newKey[0], newValue[0]);
 }
 */
 
+
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class PAIR >
 void map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::dump(dump_context & dumpcontext) const
 {
@@ -1641,8 +1645,6 @@ void map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::assert_valid() const
    ASSERT(m_nCount == 0 || m_hashtable.m_ppassocHash != NULL);
    // non-is_empty map should have hash table
 }
-
-
 
 
 

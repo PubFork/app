@@ -6,7 +6,7 @@
 //#include <dde.h>        // for DDE execute shell requests
 #endif
 
-extern CLASS_DECL_BASE thread_int_ptr < DWORD_PTR > t_time1;
+extern CLASS_DECL_AURA thread_int_ptr < DWORD_PTR > t_time1;
 
 namespace user
 {
@@ -66,6 +66,11 @@ namespace user
       return true;
    }
 
+   bool frame_window::IsFullScreen()
+   {
+      return false;
+   }
+
    void frame_window::GetBorderRect(LPRECT lprect)
    {
       UNREFERENCED_PARAMETER(lprect);
@@ -110,15 +115,15 @@ namespace user
       switch (psimplecommand->m_esimplecommand)
       {
       case simple_command_update_frame_title:
-         
+
          on_update_frame_title(psimplecommand->m_lparam != FALSE);
-         
+
          psimplecommand->m_bRet = true;
 
          break;
 
       default:
-         
+
          break;
       }
 
@@ -129,7 +134,7 @@ namespace user
 
       }
 
-      ::user::box::on_simple_command(psimplecommand);
+      ::user::interaction::on_simple_command(psimplecommand);
 
    }
 
@@ -146,7 +151,7 @@ namespace user
 
       }
 
-      ::user::box::on_command(pcommand);
+      ::user::interaction::on_command(pcommand);
 
    }
 
@@ -215,9 +220,10 @@ namespace user
    void frame_window::on_set_parent(::user::interaction * puiParent)
    {
 
-      ::user::box::on_set_parent(puiParent);
+      ::user::interaction::on_set_parent(puiParent);
 
    }
+
 
    void frame_window::assert_valid() const
    {
@@ -228,14 +234,14 @@ namespace user
       catch (...)
       {
       }
-      try
-      {
-         if (m_pviewActive != NULL)
-            ASSERT_VALID(m_pviewActive);
-      }
-      catch (...)
-      {
-      }
+      //try
+      //{
+      //   if (m_pviewActive != NULL)
+      //      ASSERT_VALID(m_pviewActive);
+      //}
+      //catch (...)
+      //{
+      //}
 
    }
 
@@ -255,7 +261,6 @@ namespace user
 
       dumpcontext << "\n";
    }
-
 
 
 
@@ -364,7 +369,7 @@ namespace user
    void frame_window::pre_translate_message(::message::message * pobj)
    {
       ENSURE_ARG(pobj != NULL);
-      // check for special cancel modes for combo boxes
+      // check for special cancel modes for combo interactiones
       //if (pMsg->message == WM_LBUTTONDOWN || pMsg->message == WM_NCLBUTTONDOWN)
       //   __cancel_modes(pMsg->oswindow);    // filter clicks
 
@@ -660,7 +665,7 @@ namespace user
       //         ::SetFocus(NULL);
       //#else
       //
-      //         throw todo(get_app());
+      //         _throw(todo(get_app()));
       //
       //#endif
       //
@@ -669,27 +674,27 @@ namespace user
       //      }
 
 
-            // this causes modal dialogs to be "truly modal"
-            //if (!bEnable && !InModalState())
-            //{
-            //   ASSERT((m_nFlags & WF_MODALDISABLE) == 0);
-            //   m_nFlags |= WF_MODALDISABLE;
-            //   BeginModalState();
-            //}
-            //else if (bEnable && (m_nFlags & WF_MODALDISABLE))
-            //{
-            //   m_nFlags &= ~WF_MODALDISABLE;
-            //   EndModalState();
+      // this causes modal dialogs to be "truly modal"
+      //if (!bEnable && !InModalState())
+      //{
+      //   ASSERT((m_nFlags & WF_MODALDISABLE) == 0);
+      //   m_nFlags |= WF_MODALDISABLE;
+      //   BeginModalState();
+      //}
+      //else if (bEnable && (m_nFlags & WF_MODALDISABLE))
+      //{
+      //   m_nFlags &= ~WF_MODALDISABLE;
+      //   EndModalState();
 
-            //   // cause normal focus logic to kick in
-            //   if (System.get_active_ui() == this)
-            //      send_message(WM_ACTIVATE, WA_ACTIVE);
-            //}
+      //   // cause normal focus logic to kick in
+      //   if (System.get_active_ui() == this)
+      //      send_message(WM_ACTIVATE, WA_ACTIVE);
+      //}
 
-            //// force WM_NCACTIVATE because Windows may think it is unecessary
-            //if (bEnable && (m_nFlags & WF_STAYACTIVE))
-            //   send_message(WM_NCACTIVATE, TRUE);
-            //// force WM_NCACTIVATE for floating windows too
+      //// force WM_NCACTIVATE because Windows may think it is unecessary
+      //if (bEnable && (m_nFlags & WF_STAYACTIVE))
+      //   send_message(WM_NCACTIVATE, TRUE);
+      //// force WM_NCACTIVATE for floating windows too
    }
 
    /////////////////////////////////////////////////////////////////////////////
@@ -771,6 +776,8 @@ namespace user
 
       pcreatemessage->m_bRet = pcreatemessage->get_lresult() == -1;
 
+      defer_synch_layered();
+
    }
 
 
@@ -819,10 +826,67 @@ namespace user
    bool frame_window::LoadFrame(const char * pszMatter, uint32_t dwDefaultStyle, ::user::interaction * puiParent, ::create * pcreate)
    {
 
-      UNREFERENCED_PARAMETER(pszMatter);
-      UNREFERENCED_PARAMETER(dwDefaultStyle);
       UNREFERENCED_PARAMETER(puiParent);
-      UNREFERENCED_PARAMETER(pcreate);
+
+      // only do this once
+      //   ASSERT_VALID_IDR(nIDResource);
+      //   ASSERT(m_nIDHelp == 0 || m_nIDHelp == nIDResource);
+
+      m_strMatterHelp = pszMatter;    // ID for help context (+HID_BASE_RESOURCE)
+
+      //   string strFullString;
+      //   if (strFullString.load_string(nIDResource))
+      //      __extract_sub_string(m_strTitle, strFullString, 0);    // first sub-string
+
+      const char * lpszTitle = m_strTitle;
+
+      dwDefaultStyle &= ~WS_VISIBLE;
+
+      ::rect rectFrame;
+
+      sp(::user::place_holder) pholder;
+
+      if (puiParent != NULL && (pholder = puiParent).is_set())
+      {
+
+         pholder->GetClientRect(rectFrame);
+
+      }
+      else
+      {
+
+         rectFrame = null_rect();
+
+      }
+
+      if (puiParent == NULL)
+      {
+
+         m_bLayoutEnable = false;
+
+      }
+
+      output_debug_string("\nm_bLayoutEnable FALSE");
+
+      if (!create_window_ex(0L, NULL, lpszTitle, dwDefaultStyle, rectFrame, puiParent, /*nIDResource*/ 0, pcreate))
+      {
+
+         return false;   // will self destruct on failure normally
+
+      }
+
+
+      /* trans   // save the default menu handle
+      ASSERT(get_handle() != NULL);
+      m_hMenuDefault = ::GetMenu(get_handle()); */
+
+      // load accelerator resource
+      //   LoadAccelTable(MAKEINTRESOURCE(nIDResource));
+
+      if (pcreate == NULL)   // send initial update
+         send_message_to_descendants(WM_INITIALUPDATE, 0, (LPARAM)0, TRUE, TRUE);
+
+      return TRUE;
 
       return false;
 
@@ -926,9 +990,9 @@ namespace user
       on_update_frame_title(TRUE);
 
       if (GetParent() != NULL
-         && GetParent()->is_place_holder()
-         && (!oprop("should_not_be_automatically_holded_on_initial_update_frame").is_set()
-            || !oprop("should_not_be_automatically_holded_on_initial_update_frame")))
+            && GetParent()->is_place_holder()
+            && (!oprop("should_not_be_automatically_holded_on_initial_update_frame").is_set()
+                || !oprop("should_not_be_automatically_holded_on_initial_update_frame")))
       {
          GetParent()->place(this);
          //GetParent()->on_layout();
@@ -945,7 +1009,7 @@ namespace user
       if (m_bFrameMoveEnable)
       {
 
-         //         good_restore(NULL, true);
+         _001WindowRestore();
 
       }
       ActivateTopParent();
@@ -1077,8 +1141,8 @@ namespace user
 
 
       // deactivate current active ::user::impact
-      thread *pThread = get_thread();
-      ASSERT(pThread);
+      //thread *pThread = get_thread();
+      //ASSERT(pThread);
       sp(::user::impact) pActiveView = GetActiveView();
       if (pActiveView == NULL)
          pActiveView = GetActiveFrame()->GetActiveView();
@@ -1107,10 +1171,10 @@ namespace user
 
 
       bool bStayActive =
-         (pTopLevel == pActive ||
-         (pActive && pTopLevel == pActive->GetTopLevelFrame() &&
-            (pActive == pTopLevel ||
-            (pActive && pActive->send_message(WM_FLOATSTATUS, FS_SYNCACTIVE) != 0))));
+      (pTopLevel == pActive ||
+       (pActive && pTopLevel == pActive->GetTopLevelFrame() &&
+        (pActive == pTopLevel ||
+         (pActive && pActive->send_message(WM_FLOATSTATUS, FS_SYNCACTIVE) != 0))));
       //pTopLevel->m_nFlags &= ~WF_STAYACTIVE;
       //if (bStayActive)
       //   pTopLevel->m_nFlags |= WF_STAYACTIVE;
@@ -1254,7 +1318,7 @@ namespace user
    /////////////////////////////////////////////////////////////////////////////
    // frame_window attributes
 
-   sp(::user::impact) frame_window::GetActiveView() const
+   ::user::impact * frame_window::GetActiveView() const
    {
 
       ASSERT(m_pviewActive == NULL || base_class < ::user::impact >::bases(m_pviewActive));
@@ -1264,7 +1328,7 @@ namespace user
    }
 
 
-   void frame_window::SetActiveView(sp(::user::impact) pViewNew, bool bNotify)
+   void frame_window::SetActiveView(::user::impact * pViewNew, bool bNotify)
    {
 #ifdef DEBUG
       if (pViewNew != NULL)
@@ -1542,48 +1606,48 @@ namespace user
 
    /////////////////////////////////////////////////////////////////////////////
 
-/*   void frame_window::OnSetPreviewMode(bool bPreview, CPrintPreviewState* pState)
-   {
-      ENSURE_ARG(pState != NULL);
-      // default implementation changes control bars, menu and main pane interaction_impl
-
-
-      // set visibility of standard ControlBars (only the first 32)
-      //   uint32_t dwOldStates = 0;
-
-      if (bPreview)
+   /*   void frame_window::OnSetPreviewMode(bool bPreview, CPrintPreviewState* pState)
       {
-         // Entering Print Preview
+         ENSURE_ARG(pState != NULL);
+         // default implementation changes control bars, menu and main pane interaction_impl
 
 
-         // show any modeless dialogs, popup windows, float tools, etc
-         ShowOwnedWindows(FALSE);
+         // set visibility of standard ControlBars (only the first 32)
+         //   uint32_t dwOldStates = 0;
 
-         // Hide the main pane
-      }
-      else
-      {
-         // Leaving Preview
-         m_lpfnCloseProc = NULL;
-
-         // shift original "pane_first" back to its rightful ID
-         /*      sp(::user::interaction) oswindow = get_child_by_id(__IDW_PANE_SAVE);
-         if (oswindow != NULL)
+         if (bPreview)
          {
-         sp(::user::interaction) oswindow_Temp = get_child_by_id("pane_first");
-         if (oswindow_Temp != NULL)
-         __set_dialog_control_id_(oswindow_Temp, __IDW_PANE_SAVE);
-         __set_dialog_control_id_(oswindow, "pane_first");
-         }*/
-
-         /*         on_layout();
+            // Entering Print Preview
 
 
-                  // show any modeless dialogs, popup windows, float tools, etc
-                  ShowOwnedWindows(TRUE);
-               }
-            }
-            */
+            // show any modeless dialogs, popup windows, float tools, etc
+            ShowOwnedWindows(FALSE);
+
+            // Hide the main pane
+         }
+         else
+         {
+            // Leaving Preview
+            m_lpfnCloseProc = NULL;
+
+            // shift original "pane_first" back to its rightful ID
+            /*      sp(::user::interaction) oswindow = get_child_by_id(__IDW_PANE_SAVE);
+            if (oswindow != NULL)
+            {
+            sp(::user::interaction) oswindow_Temp = get_child_by_id("pane_first");
+            if (oswindow_Temp != NULL)
+            __set_dialog_control_id_(oswindow_Temp, __IDW_PANE_SAVE);
+            __set_dialog_control_id_(oswindow, "pane_first");
+            }*/
+
+   /*         on_layout();
+
+
+            // show any modeless dialogs, popup windows, float tools, etc
+            ShowOwnedWindows(TRUE);
+         }
+      }
+      */
 
    void frame_window::DelayUpdateFrameMenu(HMENU hMenuAlt)
    {
@@ -1612,8 +1676,8 @@ namespace user
 
          //         DWORD dwTime2 = ::get_tick_count();
 
-                  //TRACE("message_handler call time0= %d ms",dwTime2 - t_time1.operator DWORD_PTR());
-                  //TRACE("userframewindow call time1= %d ms",dwTime2 - t_time1.operator DWORD_PTR());
+         //TRACE("message_handler call time0= %d ms",dwTime2 - t_time1.operator DWORD_PTR());
+         //TRACE("userframewindow call time1= %d ms",dwTime2 - t_time1.operator DWORD_PTR());
 
       }
 
@@ -1642,8 +1706,8 @@ namespace user
 
             //            DWORD dwTime2 = ::get_tick_count();
 
-                        //TRACE("message_handler call time0= %d ms",dwTime2 - t_time1.operator DWORD_PTR());
-                        //TRACE("userframewindoB call time2= %d ms",dwTime2 - t_time1.operator DWORD_PTR());
+            //TRACE("message_handler call time0= %d ms",dwTime2 - t_time1.operator DWORD_PTR());
+            //TRACE("userframewindoB call time2= %d ms",dwTime2 - t_time1.operator DWORD_PTR());
 
          }
 
@@ -1664,7 +1728,7 @@ namespace user
       case borderGet:
          ASSERT(lpRectBorder != NULL);
          RepositionBars(0, 0xffff, "pane_first", reposQuery,
-            lpRectBorder);
+                        lpRectBorder);
          break;
 
       case borderRequest:
@@ -1731,11 +1795,13 @@ namespace user
          lResult = send_message(WM_MOUSEWHEEL, (wParam << 16) | keyState, lParam);
       else
       {
-         do {
+         do
+         {
             lResult = ::SendMessage(hwFocus, WM_MOUSEWHEEL,
-               (wParam << 16) | keyState, lParam);
+                                    (wParam << 16) | keyState, lParam);
             hwFocus = ::GetParent(hwFocus);
-         } while (lResult == 0 && hwFocus != NULL && hwFocus != hwDesktop);
+         }
+         while (lResult == 0 && hwFocus != NULL && hwFocus != hwDesktop);
       }
 
 #else
@@ -1750,7 +1816,7 @@ namespace user
 
 
    void frame_window::ActivateFrame(int32_t nCmdShow)
-      // nCmdShow is the normal show mode this frame should be in
+   // nCmdShow is the normal show mode this frame should be in
    {
       // translate default nCmdShow (-1)
       if (nCmdShow == -1)
@@ -1821,7 +1887,7 @@ namespace user
    {
       bool bResult = interaction::ShowWindow(nCmdShow);
       if (GetParent() != NULL
-         && nCmdShow == SW_RESTORE)
+            && nCmdShow == SW_RESTORE)
       {
          InitialFramePosition(true);
       }
@@ -1896,7 +1962,7 @@ namespace user
    }
 
 
-   void frame_window::CommonConstruct()
+   void frame_window::common_construct()
    {
       // trans ASSERT(get_handle() == NULL);
 
@@ -1963,6 +2029,7 @@ namespace user
    void frame_window::RemoveControlBar(::user::control_bar *pBar)
    {
       m_barptra.remove(pBar);
+
    }
 
 
@@ -2103,6 +2170,16 @@ namespace user
 //    }
 
 
+   void frame_window::_001OnDraw(::draw2d::graphics * pgraphics)
+   {
+
+      if (m_bWindowFrame && !Session.savings().is_trying_to_save(::aura::resource_display_bandwidth))
+      {
+
+      }
+
+
+   }
 
    void frame_window::_001OnSize(::message::message * pobj)
    {
@@ -2161,7 +2238,91 @@ namespace user
    void frame_window::_000OnDraw(::draw2d::graphics * pgraphics)
    {
 
-      UNREFERENCED_PARAMETER(pgraphics);
+      defer_check_layout();
+
+      defer_check_zorder();
+
+      if (!IsWindowVisible() || WfiIsIconic())
+         return;
+
+      rect rectClient;
+
+      GetWindowRect(rectClient);
+
+      rectClient -= rectClient.top_left();
+
+      //bool bDib = false;
+
+      //double dAlpha = get_alpha();
+
+      if (m_puserstyle != NULL && m_puserstyle->_001OnDrawMainFrameBackground(pgraphics, this))
+      {
+
+         _001DrawThis(pgraphics);
+
+         _001DrawChildren(pgraphics);
+
+         _008CallOnDraw(pgraphics);
+
+      }
+      else if (m_bblur_Background)
+      {
+
+         _001DrawThis(pgraphics);
+
+         _001DrawChildren(pgraphics);
+
+         _008CallOnDraw(pgraphics);
+
+      }
+      else if (!Session.savings().is_trying_to_save(::aura::resource_processing)
+               && !Session.savings().is_trying_to_save(::aura::resource_display_bandwidth)
+               && !Session.savings().is_trying_to_save(::aura::resource_memory))
+         //&& (GetParent() != NULL || (this->GetExStyle() & WS_EX_LAYERED) != 0))
+      {
+
+#if TEST
+
+         pgraphics->FillSolidRect(0, 0, 100, 100, ARGB(128, 255, 0, 0));
+
+#endif
+
+         _001DrawThis(pgraphics);
+
+         _001DrawChildren(pgraphics);
+
+         _008CallOnDraw(pgraphics);
+
+#if TEST
+
+         pgraphics->FillSolidRect(0, 100, 100, 100, ARGB(128, 0, 0, 255));
+
+#endif
+
+      }
+      else
+      {
+
+#if TEST
+
+         pgraphics->FillSolidRect(60, 10, 50, 50, ARGB(128, 184, 180, 90));
+
+#endif
+
+         _001DrawThis(pgraphics);
+
+         _001DrawChildren(pgraphics);
+
+         _008CallOnDraw(pgraphics);
+
+#if TEST
+
+         pgraphics->FillSolidRect(10, 60, 50, 50, ARGB(128, 184, 180, 90));
+
+#endif
+
+      }
+
 
    }
 
@@ -2239,7 +2400,7 @@ namespace user
    ::user::style * frame_window::userstyle()
    {
 
-      return ::user::box::userstyle();
+      return ::user::interaction::userstyle();
 
    }
 

@@ -102,11 +102,11 @@ namespace user
       list_header(::aura::application * papp);
       virtual ~list_header();
 
-      void install_message_routing(::message::sender * pinterface);
+      void install_message_routing(::message::sender * pinterface) override;
       void SetBaseListCtrlInterface(list * pinterface);
 
-      virtual void _001OnClip(::draw2d::graphics * pgraphics);
-      virtual void _001OnDraw(::draw2d::graphics * pgraphics);
+      virtual void _001OnClip(::draw2d::graphics * pgraphics) override;
+      virtual void _001OnDraw(::draw2d::graphics * pgraphics) override;
       virtual void DrawItem(::draw2d::item * pdrawitem);
 
 
@@ -118,15 +118,9 @@ namespace user
       virtual int32_t GetDividerWidth();
 
 
-      bool GetItemRect(
-         LPRECT lprect,
-         e_element eelement,
-         index iItem);
+      bool GetItemRect(LPRECT lprect, e_element eelement, index iItem);
 
-      bool GetItemRect(
-         LPRECT lprect,
-         e_element eelementLButtonDown,
-         index iItemLButtonDown,
+      bool GetItemRect(LPRECT lprect, e_element eelementLButtonDown, index iItemLButtonDown,
          e_element eelement,
          index iItem);
 

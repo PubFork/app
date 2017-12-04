@@ -96,7 +96,7 @@ namespace sockets
       bool               is_ssl = get_boolean(buf, ptr);
 
       string method_str = ::str::from( method );
-      Sess(get_app()).sockets().m_pajpbasesocketinit->Method.Lookup(method, method_str);
+      Session.sockets().m_pajpbasesocketinit->Method.Lookup(method, method_str);
       m_request.attr("http_method") = method_str;
       m_request.attr("http_protocol") = protocol;
       m_request.attr("request_uri") = req_uri;
@@ -116,7 +116,7 @@ namespace sockets
          case 0xa0:
             {
                unsigned short x = (unsigned short)get_integer(buf, ptr);
-               if (!Sess(get_app()).sockets().m_pajpbasesocketinit->header.Lookup(x, key))
+               if (!Session.sockets().m_pajpbasesocketinit->header.Lookup(x, key))
                {
                   TRACE("Unknown header key value: %x\n", x);
                   SetCloseAndDelete();
@@ -149,7 +149,7 @@ namespace sockets
             break;
          default:
             {
-               if(!Sess(get_app()).sockets().m_pajpbasesocketinit->Attribute.Lookup(code, key))
+               if(!Session.sockets().m_pajpbasesocketinit->Attribute.Lookup(code, key))
                {
                   TRACE("Unknown attribute key: 0x%02x\n", buf[ptr]);
                   SetCloseAndDelete();
@@ -247,7 +247,7 @@ namespace sockets
 
             int iValue;
 
-            if(Sess(get_app()).sockets().m_pajpbasesocketinit->ResponseHeader.Lookup(strNameLower, iValue))
+            if(Session.sockets().m_pajpbasesocketinit->ResponseHeader.Lookup(strNameLower, iValue))
             {
 
                put_integer(msg, ptr, (short) iValue);
@@ -263,7 +263,7 @@ namespace sockets
             put_string(msg, ptr, prop.name());
 
          }
-         throw not_implemented(get_app());
+         _throw(not_implemented(get_app()));
    /*      list<string> vec = m_response.CookieNames();
          {
             for (list<string>::iterator it = vec.begin(); it != vec.end(); it++)
@@ -350,9 +350,13 @@ namespace sockets
       // check body size left to read, if non-zero packet is body data
       if (m_body_size_left) // must be a body packet
       {
+            
          ReceiveBody(buf, sz);
+
          return;
+
       }
+
       switch (*buf)
       {
       case 0x2: // Forward Request

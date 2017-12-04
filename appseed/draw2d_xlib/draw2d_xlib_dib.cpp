@@ -220,7 +220,7 @@ namespace draw2d_xlib
          pgraphics->SelectObject(pbitmap);
          return false;
       }
-      throw todo(get_app());
+      _throw(todo(get_app()));
       // xxx bool bOk = GetDIBits(LNX_HDC(pgraphics), (HBITMAP) pbitmap->get_os_data(), 0, cy, m_pcolorref, &(m_info), DIB_RGB_COLORS) != FALSE;
       // xxx pgraphics->SelectObject(pbitmap);
       // xxx return bOk;
@@ -2428,7 +2428,7 @@ namespace draw2d_xlib
    void dib::stretch_dib(::draw2d::dib * pdib)
    {
 
-      throw todo(get_app());
+      _throw(todo(get_app()));
 
       /* xxx
 

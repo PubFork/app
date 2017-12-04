@@ -407,7 +407,7 @@ namespace user
 
             pfork->m_pfolder = lpsf;
 
-            pfork->m_strFolder = ::file::path(imagekey.m_pszPath).folder();
+            pfork->m_strFolder = ::file::path(imagekey.m_strPath).folder();
 
          }
 
@@ -418,7 +418,7 @@ namespace user
 
          }
 
-         if (::str::find_ci("Dreamweaver ", imagekey.m_pszPath) > 0)
+         if (::str::find_ci("Dreamweaver ", imagekey.m_strPath) > 0)
          {
 
             output_debug_string("1484 *test*");
@@ -441,7 +441,7 @@ namespace user
             return 0x80000000;
          }
 
-         string strFileParam(imagekey.m_pszPath);
+         string strFileParam(imagekey.m_strPath);
 
          string strResource;
 
@@ -513,7 +513,7 @@ namespace user
 
                   imagekey.set_extension(strFileParam);
 
-                  imagekey.m_pszPath = "";
+                  imagekey.m_strPath = "";
 
                }
                else
@@ -525,7 +525,7 @@ namespace user
 
                   imagekey.m_iIcon = iIcon;
 
-                  imagekey.m_pszExtension = "";
+                  imagekey.m_strExtension = "";
 
                }
 
@@ -559,7 +559,7 @@ namespace user
 
                   imagekey.set_extension(strFileParam);
 
-                  imagekey.m_pszPath = "";
+                  imagekey.m_strPath = "";
 
                }
                else
@@ -569,7 +569,7 @@ namespace user
 
                   imagekey.m_iIcon = iIndex;
 
-                  imagekey.m_pszExtension = "";
+                  imagekey.m_strExtension = "";
 
                }
 
@@ -612,7 +612,7 @@ namespace user
 
                   imagekey.set_path(strFileParam);
 
-                  imagekey.m_pszPath = "";
+                  imagekey.m_strPath = "";
 
                }
                else
@@ -622,7 +622,7 @@ namespace user
 
                   imagekey.m_iIcon = 0;
 
-                  imagekey.m_pszExtension = "";
+                  imagekey.m_strExtension = "";
 
                }
 
@@ -1033,7 +1033,7 @@ namespace user
 
          imagekey.set_extension(strFileParam);
 
-         imagekey.m_pszPath = NULL;
+         imagekey.m_strPath = NULL;
 
          imagekey.m_iIcon = 0;
 
@@ -1054,9 +1054,9 @@ namespace user
 
          wstring wstrFilePath;
 
-         imagekey.m_pszPath = "foo";
+         imagekey.m_strPath = "foo";
 
-         imagekey.m_pszShellThemePrefix = (char *)m_strShellThemePrefix.c_str();
+         imagekey.m_strShellThemePrefix = m_strShellThemePrefix;
 
          {
 
@@ -1096,7 +1096,7 @@ namespace user
          else
          {
 
-            wstrFilePath = wstring(L"foo.") + wstring(imagekey.m_pszExtension);
+            wstrFilePath = wstring(L"foo.") + wstring(imagekey.m_strExtension);
 
             SHGetFileInfoW(
                wstrFilePath,
@@ -1684,7 +1684,7 @@ namespace user
 
          int32_t iImage = 0x80000000;
 
-         if (::str::begins_ci(imagekey.m_pszPath, "uifs:"))
+         if (::str::begins_ci(imagekey.m_strPath, "uifs:"))
          {
 
             ::file::path path = Application.dir().matter("cloud.ico");
@@ -1698,7 +1698,7 @@ namespace user
             return iImage;
 
          }
-         else if (::str::begins_ci(imagekey.m_pszPath, "fs:"))
+         else if (::str::begins_ci(imagekey.m_strPath, "fs:"))
          {
 
             ::file::path path = Application.dir().matter("remote.ico");
@@ -1712,7 +1712,7 @@ namespace user
             return iImage;
 
          }
-         else if (::str::begins_ci(imagekey.m_pszPath, "ftp:"))
+         else if (::str::begins_ci(imagekey.m_strPath, "ftp:"))
          {
 
             ::file::path path = Application.dir().matter("ftp.ico");
@@ -1731,9 +1731,9 @@ namespace user
 
 
 
-         if (::str::ends_ci(imagekey.m_pszPath, ".core"))
+         if (::str::ends_ci(imagekey.m_strPath, ".core"))
          {
-            string str = Application.file().as_string(imagekey.m_pszPath);
+            string str = Application.file().as_string(imagekey.m_strPath);
             if (::str::begins_eat_ci(str, "ca2prompt\r\n"))
             {
                str.trim();
@@ -1746,7 +1746,7 @@ namespace user
 
                if (crBk == 0)
                {
-               System.visual().imaging().Createcolor_blend_ImageList(
+               Application.imaging().Createcolor_blend_ImageList(
                m_pil48,
                m_pil48Hover,
                RGB(255, 255, 240),
@@ -1762,11 +1762,11 @@ namespace user
          }
          // try to find "uifs:// http:// ftp:// like addresses"
          // then should show icon by extension or if is folder
-         strsize iFind = imagekey.m_pszPath == NULL ? -1 : ::str::find_ci("://", imagekey.m_pszPath);
-         strsize iFind2 = imagekey.m_pszPath == NULL ? -1 : ::str::find_ci(":", imagekey.m_pszPath);
+         strsize iFind = imagekey.m_strPath.find_ci("://");
+         strsize iFind2 = imagekey.m_strPath.find_ci(":");
          if (iFind >= 0 || iFind2 >= 2)
          {
-            string strProtocol = string(imagekey.m_pszPath).Left(MAX(iFind, iFind2));
+            string strProtocol = imagekey.m_strPath.Left(MAX(iFind, iFind2));
             int32_t i = 0;
 
             while (i < strProtocol.get_length() && isalnum_dup(strProtocol[i]))
@@ -1795,7 +1795,7 @@ namespace user
 
          string strExtension;
 
-         if (::str::ends_ci(imagekey.m_pszPath, ".sln"))
+         if (::str::ends_ci(imagekey.m_strPath, ".sln"))
          {
 
             output_debug_string("test");
@@ -1803,7 +1803,7 @@ namespace user
          }
 
 
-         string str(imagekey.m_pszPath);
+         string str(imagekey.m_strPath);
 
 
          if (str == "foo")
@@ -1820,7 +1820,7 @@ namespace user
 
          }
 
-         ::file::path path = imagekey.m_pszPath;
+         ::file::path path = imagekey.m_strPath;
 
          ::file::path pathFolder = path.folder();
 
@@ -1840,7 +1840,7 @@ namespace user
 
          }
 
-         _017ItemIDListParsePath(pfork, oswindow, &pfork->m_lpiidl, imagekey.m_pszPath);
+         _017ItemIDListParsePath(pfork, oswindow, &pfork->m_lpiidl, imagekey.m_strPath);
 
          LPITEMIDLIST lpiidlChild = _017ItemIDListGetLast(pfork, pfork->m_lpiidl);
 
@@ -2053,7 +2053,7 @@ namespace user
 
             imagekey.set_path(strPath);
 
-            imagekey.m_pszShellThemePrefix = (char *)m_strShellThemePrefix.c_str();
+            imagekey.m_strShellThemePrefix = m_strShellThemePrefix;
 
             imagekey.m_eattribute = eattribute;
 
@@ -2304,11 +2304,11 @@ namespace user
 
             image_key imagekey;
 
-            imagekey.m_pszPath = "foo";
+            imagekey.m_strPath = "foo";
 
-            imagekey.m_pszShellThemePrefix = (char *)m_strShellThemePrefix.c_str();
+            imagekey.m_strShellThemePrefix = m_strShellThemePrefix;
 
-            imagekey.m_pszExtension = (char *)strExtension.c_str();
+            imagekey.m_strExtension = strExtension;
 
             imagekey.m_eattribute = eattribute;
 
@@ -2351,7 +2351,7 @@ namespace user
 
             return m_pilHover[iSize]->pred_add_image([&](auto dib)
             {
-               System.visual().imaging().Createcolor_blend_dib(dib, RGB(255, 255, 240), 64);
+               Application.imaging().Createcolor_blend_dib(dib, RGB(255, 255, 240), 64);
             }
             , m_pil[iSize], iImage);
 

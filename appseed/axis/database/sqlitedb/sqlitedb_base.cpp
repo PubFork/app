@@ -11,11 +11,11 @@
 //#include <unistd.h>
 //#endif
 
+extern "C" int32_t axis_sqlite_callback(void * res_ptr,int32_t ncol, char** reslt,char** cols);
 
 namespace sqlite
 {
 
-   extern int32_t callback(void * res_ptr,int32_t ncol, char** reslt,char** cols);
 
    base::base(::aura::application * papp) :
       ::object(papp)
@@ -31,7 +31,7 @@ namespace sqlite
       port = "";
       db = "sqlite.db";
       login = "root";
-      passwd, "";
+      passwd = "";
       conn = NULL;
    }
 
@@ -118,22 +118,22 @@ namespace sqlite
          if(setErr(sqlite3_exec((sqlite3 *) getHandle(),"PRAGMA empty_result_callbacks=ON",NULL,NULL,&err)) != SQLITE_OK)
          {
             fprintf(stderr,"Error: %s",err);
-            throw database::DbErrors(getErrorMsg());
+            _throw(database::DbErrors(getErrorMsg()));
          }
          if (setErr(sqlite3_exec((sqlite3 *)getHandle(), "PRAGMA cache_size=-20000", NULL, NULL, &err)) != SQLITE_OK)
          {
             fprintf(stderr, "Error: %s", err);
-            throw database::DbErrors(getErrorMsg());
+            _throw(database::DbErrors(getErrorMsg()));
          }
          if (setErr(sqlite3_exec((sqlite3 *)getHandle(), "PRAGMA synchronous=OFF", NULL, NULL, &err)) != SQLITE_OK)
          {
             fprintf(stderr, "Error: %s", err);
-            throw database::DbErrors(getErrorMsg());
+            _throw(database::DbErrors(getErrorMsg()));
          }
          if (setErr(sqlite3_exec((sqlite3 *)getHandle(), "PRAGMA temp_store=MEMORY", NULL, NULL, &err)) != SQLITE_OK)
          {
             fprintf(stderr, "Error: %s", err);
-            throw database::DbErrors(getErrorMsg());
+            _throw(database::DbErrors(getErrorMsg()));
          }
          active = true;
          return DB_CONNECTION_OK;
@@ -200,7 +200,7 @@ namespace sqlite
 
       sprintf(sqlcmd,"select nextid from %s where seq_name = '%s'",sequence_table.c_str(), sname);
 
-      if ((last_err = sqlite3_exec((sqlite3 *) getHandle(),sqlcmd,&callback,&res,NULL) != SQLITE_OK))
+      if ((last_err = sqlite3_exec((sqlite3 *) getHandle(),sqlcmd,&axis_sqlite_callback,&res,NULL) != SQLITE_OK))
       {
 
          return DB_UNEXPECTED_RESULT;

@@ -51,16 +51,16 @@ void dump_context::output_string(const char * lpsz)
    // use C-runtime/output_debug_string when m_pfile is NULL
    if (m_pfile == NULL)
    {
-      
+
       ::output_debug_string(lpsz);
-      
+
       return;
-      
+
    }
 
    ASSERT( lpsz != NULL );
    if( lpsz == NULL )
-      throw user_exception(get_app());
+      _throw(user_exception(get_app()));
    // otherwise, write the string to the file
 #ifdef WINDOWSEX
    m_pfile->write(lpsz, lstrlen(lpsz)*sizeof(char));
@@ -94,7 +94,7 @@ dump_context & dump_context::operator<<(const char * lpsz)
 
    ASSERT( lpsz != NULL );
    if( lpsz == NULL )
-      throw user_exception(get_app());
+      _throw(user_exception(get_app()));
 
    if (m_pfile == NULL)
    {
@@ -406,16 +406,16 @@ void dump_context::hex_dump(const char * lpszLine, BYTE* pby, int32_t nBytes, in
 {
    ASSERT(nBytes > 0);
    if( nBytes <= 0 )
-      throw invalid_argument_exception(get_app());
+      _throw(invalid_argument_exception(get_app()));
    ASSERT(nWidth > 0);
    if( nWidth <= 0 )
-      throw invalid_argument_exception(get_app());
+      _throw(invalid_argument_exception(get_app()));
    ASSERT(__is_valid_string(lpszLine));
    if( lpszLine == NULL )
-      throw invalid_argument_exception(get_app());
+      _throw(invalid_argument_exception(get_app()));
    ASSERT(__is_valid_address(pby, nBytes, FALSE));
    if( pby == NULL )
-      throw invalid_argument_exception(get_app());
+      _throw(invalid_argument_exception(get_app()));
 
    int32_t nRow = 0;
    string str;
@@ -464,3 +464,6 @@ dump_context & dump_context::operator << (string str)
    operator <<((const char *) str);
    return *this;
 }
+
+
+

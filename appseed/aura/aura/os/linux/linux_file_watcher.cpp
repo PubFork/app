@@ -87,9 +87,9 @@ namespace file_watcher
 		if (wd < 0)
 		{
 			if(errno == ENOENT)
-				throw file_not_found_exception(directory);
+				_throw(file_not_found_exception(directory));
 			else
-				throw exception(strerror(errno));
+				_throw(exception(strerror(errno)));
 
 //			fprintf (stderr, "Error: %s\n", strerror(errno));
 //			return -1;
@@ -119,9 +119,9 @@ namespace file_watcher
             if(inaw < 0)
             {
                if(errno == ENOENT)
-                  throw file_not_found_exception(directory);
+                  _throw(file_not_found_exception(directory));
                else
-                  throw exception(strerror(errno));
+                  _throw(exception(strerror(errno)));
             }
 
             watch_struct* pWatch = new watch_struct();

@@ -1,6 +1,7 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "simpledb_socket.h"
 #include "simpledb_socket_thread.h"
+#include "aura/net/sockets/bsd/basic/sockets_listen_socket.h"
 
 
 namespace simpledb
@@ -21,7 +22,7 @@ namespace simpledb
 
    }
 
-   
+
    socket_thread::~socket_thread()
    {
 
@@ -36,8 +37,9 @@ namespace simpledb
    }
 
 
-   bool socket_thread::initialize_thread()
+   bool socket_thread::init_thread()
    {
+
       //Application.::simpledb::application::m_pmanager->LoadEnv();
 
 

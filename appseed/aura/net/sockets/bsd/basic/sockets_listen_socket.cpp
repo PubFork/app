@@ -6,10 +6,10 @@ namespace sockets
 {
 
 
-   listen_socket_base::listen_socket_base(base_socket_handler & h) : 
-      object(h.get_app()), 
+   listen_socket_base::listen_socket_base(base_socket_handler & h) :
+      object(h.get_app()),
       base_socket(h),
-      socket(h), 
+      socket(h),
       m_depth(0),
       m_bDetach(false)
    {
@@ -17,7 +17,7 @@ namespace sockets
    }
 
 
-   listen_socket_base::~listen_socket_base() 
+   listen_socket_base::~listen_socket_base()
    {
 
    }
@@ -39,7 +39,7 @@ namespace sockets
    /** Bind and listen to any interface.
    \param port Port (0 is random)
    \param depth Listen queue depth */
-   int32_t listen_socket_base::Bind(port_t port,int32_t depth) 
+   int32_t listen_socket_base::Bind(port_t port,int32_t depth)
    {
       if (IsIpv6())
       {
@@ -93,7 +93,9 @@ namespace sockets
       {
          return Bind(ad, depth);
       }
+#ifdef DEBUG
       log("Bind", 0, "name resolution of interface name failed", ::aura::log::level_fatal);
+#endif
       return -1;
    }
 
@@ -109,7 +111,9 @@ namespace sockets
       {
          return Bind(ad, protocol, depth);
       }
+#ifdef DEBUG
       log("Bind", 0, "name resolution of interface name failed", ::aura::log::level_fatal);
+#endif
       return -1;
    }
 
@@ -143,7 +147,7 @@ namespace sockets
    \param a Ipv6 interface address
    \param port Port (0 is random)
    \param depth Listen queue depth */
-   int32_t listen_socket_base::Bind(in6_addr a,port_t port,int32_t depth) 
+   int32_t listen_socket_base::Bind(in6_addr a,port_t port,int32_t depth)
    {
       ::net::address ad(a, port);
 #ifdef USE_SCTP
@@ -181,7 +185,7 @@ namespace sockets
       //::net::address a = ad;
       //if (ad.get_family() == AF_INET6)
       //{
-      //   
+      //
       //   ::net::ip_enum_sp e(allocer());
 
       //   ::array < ::net::address > ipa;
@@ -211,15 +215,19 @@ namespace sockets
 
       if (bind(s, ad.sa(), ad.sa_len()) == -1)
       {
-         log("bind() failed for port " + ::str::from(ad.get_service_number()), Errno, wsa_str_error(Errno), ::aura::log::level_fatal);
+#ifdef DEBUG
+         log("bind() failed for port " + ::str::from(ad.get_service_number()), Errno, bsd_socket_error(Errno), ::aura::log::level_fatal);
+#endif
          close_socket(s);
          return -1;
       }
       if (listen(s, depth) == -1)
       {
-         log("listen", Errno, wsa_str_error(Errno), ::aura::log::level_fatal);
+#ifdef DEBUG
+         log("listen", Errno, bsd_socket_error(Errno), ::aura::log::level_fatal);
+#endif
          close_socket(s);
-         throw simple_exception(get_app(), "listen() failed for port " + ::str::from(ad.get_service_number()) + ": " + wsa_str_error(Errno));
+         _throw(simple_exception(get_app(), "listen() failed for port " + ::str::from(ad.get_service_number()) + ": " + bsd_socket_error(Errno)));
          return -1;
       }
       m_depth = depth;
@@ -249,18 +257,24 @@ namespace sockets
 
       if (a_s == INVALID_SOCKET)
       {
-         log("accept", Errno, wsa_str_error(Errno), ::aura::log::level_error);
+#ifdef DEBUG
+         log("accept", Errno, bsd_socket_error(Errno), ::aura::log::level_error);
+#endif
          return;
       }
       if (!Handler().OkToAccept(this))
       {
+#ifdef DEBUG
          log("accept", -1, "Not OK to accept", ::aura::log::level_warning);
+#endif
          close_socket(a_s);
          return;
       }
       if (Handler().get_count() >= FD_SETSIZE)
       {
+#ifdef DEBUG
          log("accept", (int32_t)Handler().get_count(), "base_socket_handler fd_set limit reached", ::aura::log::level_fatal);
+#endif
          close_socket(a_s);
          return;
       }
@@ -310,8 +324,8 @@ namespace sockets
    }
 
    bool listen_socket_base:: HasCreator()
-   { 
-      return false; 
+   {
+      return false;
    }
 
    void listen_socket_base::OnOptions(int32_t,int32_t,int32_t,SOCKET)

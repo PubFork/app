@@ -30,7 +30,7 @@ namespace simpledb
 
 
 
-   bool manager::initialize_instance()
+   bool manager::init_instance()
    {
 
       m_spqueue->create_message_queue("::core::netnode::ca2");

@@ -473,7 +473,7 @@ namespace n7z
    static void FromUpdateItemToFileItem(const CUpdateItem &ui,
       CFileItem &file, CFileItem2 &file2)
    {
-      throw "implement below";
+      _throw(simple_exception(get_app(), "implement below"));
       /*file.Name = NItemName::MakeLegalName(ui.Name);*/
       if (ui.AttribDefined)
          file.SetAttrib(ui.Attrib);
@@ -594,20 +594,20 @@ namespace n7z
             if (_rem == 0)
             {
                if(FAILED(hr = CloseFileAndSetResult()))
-                  throw hr;
+                  _throw(hr);
                if(FAILED(hr = ProcessEmptyFiles()))
-                  throw hr;
+                  _throw(hr);
                continue;
             }
          }
          else
          {
             if(FAILED(hr = (ProcessEmptyFiles())))
-               throw hr;
+               _throw(hr);
             if (_currentIndex == _extractStatuses->get_count())
             {
                // we don't support partial extracting
-               throw E_FAIL;
+               _throw(E_FAIL);
             }
             OpenFile();
          }
@@ -821,7 +821,7 @@ namespace n7z
                   needEncryptedRepack = true;
             }
          }
-         throw "should implement below";
+         _throw(simple_exception(get_app(), "should implement below"));
          //folderRefs.Sort(CompareFolderRepacks, (void *)db);
       }
 
@@ -860,7 +860,7 @@ namespace n7z
          threadDecoder._codecsInfo = codecsInfo;
          threadDecoder._externalCodecs = *externalCodecs;
 #endif
-         throw "should check/implement below";
+         _throw(simple_exception(get_app(), "should check/implement below"));
          //RINOK(threadDecoder.Create());
       }
 
@@ -1033,7 +1033,7 @@ namespace n7z
                   sbInStream, NULL, &inSizeForReduce, newFolder,
                   archive.SeqStream, newDatabase.PackSizes, progress));
 
-               throw "should implement below";
+               _throw(simple_exception(get_app(), "should implement below"));
 //               threadDecoder.WaitFinish();
 
                RINOK(threadDecoder.Result);
@@ -1088,7 +1088,7 @@ namespace n7z
          bool sortByType = (numSolidFiles > 1);
          for (i = 0; i < numFiles; i++)
             refItems.add(new CRefItem(group.Indices[i], updateItems[group.Indices[i]], sortByType));
-         throw "should implement below";
+         _throw(simple_exception(get_app(), "should implement below"));
          //refItems.Sort(CompareUpdateItems, (void *)&sortByType);
 
          array<uint32_t> indices;
@@ -1228,7 +1228,7 @@ namespace n7z
                continue;
             emptyRefs.add(i);
          }
-         throw "should implement below";
+         _throw(simple_exception(get_app(), "should implement below"));
          //emptyRefs.Sort(CompareEmptyItems, (void *)&updateItems);
          for (i = 0; i < emptyRefs.get_count(); i++)
          {
@@ -1242,7 +1242,7 @@ namespace n7z
             newDatabase.AddFile(file, file2);
          }
       }
-      throw "should implement below";
+      _throw(simple_exception(get_app(), "should implement below"));
       //newDatabase.ReserveDown();
       return S_OK;
    }

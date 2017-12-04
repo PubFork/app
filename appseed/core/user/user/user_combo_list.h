@@ -23,7 +23,6 @@ namespace user
 
       bool                                m_bComboList;
       combo_box *                         m_pcombo;
-      int32_t                             m_iItemHeight;
       index                               m_iHover;
       int                                 m_iBorder;
       //::draw2d::font_sp                   m_spfont;
@@ -36,10 +35,10 @@ namespace user
       virtual ~combo_list();
 
       
-      virtual void install_message_routing(::message::sender * psender);
+      virtual void install_message_routing(::message::sender * psender) override;
 
       void _001OnShowWindow(::message::message * pobj);
-      virtual void _001OnDraw(::draw2d::graphics * pgraphics);
+      virtual void _001OnDraw(::draw2d::graphics * pgraphics) override;
 
       virtual void _001OnDrawVerisimple(::draw2d::graphics * pgraphics);
       virtual void _001OnDrawSimply(::draw2d::graphics * pgraphics);
@@ -51,11 +50,11 @@ namespace user
 
       virtual int32_t _001GetItemHeight() const;
 
-      bool pre_create_window(::user::create_struct & cs);
+      bool pre_create_window(::user::create_struct & cs) override;
 
 
       using ::user::control::GetClientRect;
-      virtual bool GetClientRect(RECT64 * lprect);
+      virtual bool GetClientRect(RECT64 * lprect) override;
 
 
       DECL_GEN_SIGNAL(_001OnSetFocus);
@@ -72,14 +71,14 @@ namespace user
       DECL_GEN_SIGNAL(_001OnMouseMove);
 
 
-      virtual index hit_test(point pt, e_element & eelement);
+      virtual index hit_test(point pt, e_element & eelement) override;
 
 
-      virtual bool keyboard_focus_is_focusable();
-      virtual bool keyboard_focus_OnKillFocus();
+      virtual bool keyboard_focus_is_focusable() override;
+      virtual bool keyboard_focus_OnKillFocus() override;
 
 
-      virtual bool ShowWindow(int nCmdShow);
+      virtual bool ShowWindow(int nCmdShow) override;
 
       virtual bool has_pending_graphical_update() override;
 

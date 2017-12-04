@@ -580,7 +580,7 @@ bool file_put_array(const char * path, const ARRAY & a, ::aura::application * pa
       if (papp == NULL)
       {
 
-         papp = ::get_thread_app();
+         papp = get_app();
 
       }
 
@@ -637,7 +637,7 @@ bool file_as_array(ARRAY & a, const char * path, ::aura::application * papp)
       if (papp == NULL)
       {
 
-         papp = ::get_thread_app();
+         papp = get_app();
 
       }
 

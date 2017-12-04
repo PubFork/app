@@ -18,6 +18,10 @@
 #include <libkern/OSAtomic.h>
 #include <execinfo.h>
 
+
+void throw_ns_exception();
+
+
 volatile int32_t UncaughtExceptionCount = 0;
 const int32_t UncaughtExceptionMaximum = 10;
 
@@ -49,8 +53,7 @@ const int32_t UncaughtExceptionMaximum = 10;
 void HandleException(NSException *exception)
 {
 
-
-   throw ns_exception();
+   throw_ns_exception();
 
 }
 

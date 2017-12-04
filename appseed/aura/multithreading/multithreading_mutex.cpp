@@ -49,7 +49,7 @@ mutex::mutex(::aura::application * papp, bool bInitiallyOwn, const char * pstrNa
 
          DWORD dwError2 = ::GetLastError();
 
-         throw resource_exception(papp);
+         _throw(resource_exception(papp));
 
       }
 
@@ -119,7 +119,7 @@ mutex::mutex(::aura::application * papp, bool bInitiallyOwn, const char * pstrNa
          if (err != EEXIST)
          {
 
-            throw resource_exception(get_app());
+            _throw(resource_exception(get_app()));
 
          }
 
@@ -130,7 +130,7 @@ mutex::mutex(::aura::application * papp, bool bInitiallyOwn, const char * pstrNa
          if (m_psem == SEM_FAILED)
          {
 
-            throw resource_exception(get_app());;
+            _throw(resource_exception(get_app()););
 
          }
 
@@ -160,7 +160,7 @@ mutex::mutex(::aura::application * papp, bool bInitiallyOwn, const char * pstrNa
 
 #ifdef ANDROID
 
-         path = ::file::path(::aura::system::g_p->m_pandroidinitdata->m_pszCacheDir) / "var/tmp/ca2/lock/mutex" / string(pstrName);
+         path = ::file::path(::aura::system::g_p->m_pdataexchange->m_pszCacheDir) / "var/tmp/ca2/lock/mutex" / string(pstrName);
 
 #else
 
@@ -174,7 +174,7 @@ mutex::mutex(::aura::application * papp, bool bInitiallyOwn, const char * pstrNa
 
 #ifdef ANDROID
 
-         path = ::file::path(::aura::system::g_p->m_pandroidinitdata->m_pszCacheDir) / "home/user/ca2/lock/mutex" / string(pstrName);
+         path = ::file::path(::aura::system::g_p->m_pdataexchange->m_pszCacheDir) / "home/user/ca2/lock/mutex" / string(pstrName);
 
 #else
 
@@ -200,7 +200,7 @@ mutex::mutex(::aura::application * papp, bool bInitiallyOwn, const char * pstrNa
 
          const char * pszError = strerror(iErr);
 
-         throw resource_exception(get_app());
+         _throw(resource_exception(get_app()));
 
       }
 
@@ -255,16 +255,16 @@ mutex::mutex(::aura::application * papp, bool bInitiallyOwn, const char * pstrNa
 
       bool bAlreadyExists;
 
-      get_existing:
+get_existing:
 
       SetLastError(0);
 
       m_semid = semget(
-                  m_key, // a unique identifier to identify semaphore set
-                  1,  // number of semaphore in the semaphore set
-                  0// permissions (rwxrwxrwx) on the new
-                       //semaphore set and creation flag
-                  );
+                m_key, // a unique identifier to identify semaphore set
+                1,  // number of semaphore in the semaphore set
+                0// permissions (rwxrwxrwx) on the new
+                //semaphore set and creation flag
+                );
 
       if(m_semid >= 0)
       {
@@ -275,7 +275,7 @@ mutex::mutex(::aura::application * papp, bool bInitiallyOwn, const char * pstrNa
 
          if(bAlreadyExists)
          {
-                  SetLastError(ERROR_ALREADY_EXISTS);
+            SetLastError(ERROR_ALREADY_EXISTS);
 
          }
 
@@ -286,11 +286,11 @@ mutex::mutex(::aura::application * papp, bool bInitiallyOwn, const char * pstrNa
          bAlreadyExists = false;
 
          m_semid = semget(
-                     m_key, // a unique identifier to identify semaphore set
-                     1,  // number of semaphore in the semaphore set
-                     0777 | IPC_CREAT | IPC_EXCL// permissions (rwxrwxrwx) on the new
-                          //semaphore set and creation flag
-                     );
+                   m_key, // a unique identifier to identify semaphore set
+                   1,  // number of semaphore in the semaphore set
+                   0777 | IPC_CREAT | IPC_EXCL// permissions (rwxrwxrwx) on the new
+                   //semaphore set and creation flag
+                   );
 
          if(m_semid == -1 && errno == EEXIST)
          {
@@ -304,7 +304,7 @@ mutex::mutex(::aura::application * papp, bool bInitiallyOwn, const char * pstrNa
       if(m_semid < 0)
       {
 
-         throw resource_exception(get_app());
+         _throw(resource_exception(get_app()));
 
       }
 
@@ -361,8 +361,8 @@ mutex::mutex(::aura::application * papp, const char * pstrName, void * h, bool b
 }
 
 mutex::mutex(const mutex & m):
-object(m.get_app()),
-sync_object(m.m_pszName)
+   object(m.get_app()),
+   sync_object(m.m_pszName)
 {
    m_bOwner = false;
    m_object = m.m_object;
@@ -509,7 +509,7 @@ mutex::~mutex()
 
          semun ignored_argument;
 
-         semctl(m_semid, 1, IPC_RMID , ignored_argument);
+         semctl(m_semid, 1, IPC_RMID, ignored_argument);
 
       }
 
@@ -571,7 +571,7 @@ wait_result mutex::wait(const duration & duration)
       return wait();
 
    }
-   
+
 #if defined(MUTEX_NAMED_POSIX)
 
    if (m_psem != SEM_FAILED)
@@ -719,11 +719,11 @@ wait_result mutex::wait(const duration & duration)
 
       }
 
-      int iError = pthread_mutex_unlock(&m_mutex);
-
-      ASSERT(iError == 0);
-
-      return wait_result(wait_result::Failure);
+//      int iError = pthread_mutex_unlock(&m_mutex);
+//
+//      ASSERT(iError == 0);
+//
+//      return wait_result(wait_result::Failure);
 
    }
    else
@@ -1061,11 +1061,11 @@ bool mutex::lock()
 
       }
 
-      int iError = pthread_mutex_unlock(&m_mutex);
-
-      ASSERT(iError == 0);
-
-      return false;
+//      int iError = pthread_mutex_unlock(&m_mutex);
+//
+//      ASSERT(iError == 0);
+//
+//      return false;
 
    }
    else
@@ -1299,7 +1299,7 @@ bool mutex::unlock()
 
 #ifdef MUTEX_COND_TIMED
 
-  {
+   {
 
       int rc = pthread_mutex_lock(&m_mutex);
 
@@ -1412,8 +1412,8 @@ mutex * mutex::open_mutex(::aura::application * papp,  const char * pstrName)
       if (psem == SEM_FAILED)
       {
 
-         //throw resource_exception(papp,"failed to create named mutex");
-         throw resource_exception(papp);
+         //_throw(resource_exception(papp,"failed to create named mutex"));
+         _throw(resource_exception(papp));
 
       }
 
@@ -1460,7 +1460,7 @@ mutex * mutex::open_mutex(::aura::application * papp,  const char * pstrName)
    if (iFd < 0)
    {
 
-      throw resource_exception(::get_thread_app());
+      _throw(resource_exception(::get_app()));
 
    }
 
@@ -1488,11 +1488,11 @@ mutex * mutex::open_mutex(::aura::application * papp,  const char * pstrName)
    key_t key = ftok(strName, 0); //Generate a unique key or supply a value
 
    int32_t semid = semget(
-               key, // a unique identifier to identify semaphore set
-               1,  // number of semaphore in the semaphore set
-               0666 // permissions (rwxrwxrwx) on the new
-                    //semaphore set and creation flag
-                  );
+                   key, // a unique identifier to identify semaphore set
+                   1,  // number of semaphore in the semaphore set
+                   0666 // permissions (rwxrwxrwx) on the new
+                   //semaphore set and creation flag
+                   );
    if(semid < 0)
    {
 
@@ -1512,7 +1512,7 @@ mutex * mutex::open_mutex(::aura::application * papp,  const char * pstrName)
 void wait_until_mutex_does_not_exist(const char * pszName)
 {
 
-   mutex * pmutex = new mutex(get_thread_app(), false, "Global\\::ca::fontopus::ca2_spa::7807e510-5579-11dd-ae16-0800200c7784");
+   mutex * pmutex = new mutex(get_app(), false, "Global\\::ca::fontopus::ca2_spa::7807e510-5579-11dd-ae16-0800200c7784");
 
    if(::GetLastError() == ERROR_ALREADY_EXISTS)
    {
@@ -1524,7 +1524,7 @@ void wait_until_mutex_does_not_exist(const char * pszName)
 
          Sleep(200);
 
-         pmutex = new mutex(get_thread_app(), false, "Global\\::ca::fontopus::ca2_spa::7807e510-5579-11dd-ae16-0800200c7784");
+         pmutex = new mutex(get_app(), false, "Global\\::ca::fontopus::ca2_spa::7807e510-5579-11dd-ae16-0800200c7784");
 
       }
 
@@ -1539,7 +1539,7 @@ mutex * g_pmutexUiDestroyed = NULL;
 CLASS_DECL_AURA mutex * get_ui_destroyed_mutex()
 {
 
-  return g_pmutexUiDestroyed;
+   return g_pmutexUiDestroyed;
 
 }
 
@@ -1580,8 +1580,6 @@ null_dacl_security_attributes::null_dacl_security_attributes()
 #endif
 
 
-#if defined(INSTALL_SUBSYSTEM)
-
 namespace install
 {
 
@@ -1590,7 +1588,7 @@ namespace install
       ::mutex(NULL, false, "Global\\::ca2::fontopus::ccvotagus::install::" + strPlatform + "::200010001951042219770204-11dd-ae16-0800200c7784" + strSuffix, &m_securityattributes)
       , sync_object("Global\\::ca2::fontopus::ccvotagus::install::" + strPlatform + "::200010001951042219770204-11dd-ae16-0800200c7784" + strSuffix)
 #else
-   ::mutex(NULL, false, "Global\\::ca2::fontopus::ccvotagus::spa::" + strPlatform + "::200010001951042219770204-11dd-ae16-0800200c7784" + strSuffix, (LPSECURITY_ATTRIBUTES)NULL)
+      ::mutex(NULL, false, "Global\\::ca2::fontopus::ccvotagus::spa::" + strPlatform + "::200010001951042219770204-11dd-ae16-0800200c7784" + strSuffix, (LPSECURITY_ATTRIBUTES)NULL)
       , sync_object("Global\\::ca2::fontopus::ccvotagus::spa::" + strPlatform + "::200010001951042219770204-11dd-ae16-0800200c7784" + strSuffix)
 #endif
 
@@ -1614,6 +1612,4 @@ namespace install
 
 } // namespace install
 
-
-#endif
 

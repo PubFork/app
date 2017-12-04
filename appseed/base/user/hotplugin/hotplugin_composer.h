@@ -1,7 +1,4 @@
-#pragma once
-
-
-#ifdef HOTPLUGIN_SUBSYSTEM
+﻿#pragma once
 
 
 namespace hotplugin
@@ -69,7 +66,7 @@ namespace hotplugin
 
       ::axis::system *                       m_pcomposersystem;
 
-      
+
       composer();
       virtual ~composer();
 
@@ -82,7 +79,7 @@ namespace hotplugin
 
       virtual void deferred_prodevian_redraw();
 
-      // if composer on paint returns (returns true), it has painted something meaningful : no other painting is needed or even desired (finally when system, and host are ok, 
+      // if composer on paint returns (returns true), it has painted something meaningful : no other painting is needed or even desired (finally when system, and host are ok,
       // if host returns in a fashion-timed way the response for bitmap, it draw this bitmap, and not the default waiting [hall] screen painted by this composer).
 
 #ifdef WINDOWS
@@ -97,18 +94,15 @@ namespace hotplugin
       virtual bool      _open_link(const string & strLink,const string & pszTarget);
 
       virtual bool is_active();
-   
+
       virtual ::axis::system * get_composer_system();
       virtual bool defer_start_composer_system();
       static_function uint32_t c_cdecl composer_system_main(LPVOID lpVoid);
       virtual void defer_stop_composer_system();
-      
+
    };
 
 
 } // namespace hotplugin
-
-
-#endif
 
 

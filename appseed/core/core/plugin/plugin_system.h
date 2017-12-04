@@ -1,7 +1,4 @@
-#pragma once
-
-
-#ifdef HOTPLUGIN_SUBSYSTEM
+﻿#pragma once
 
 
 namespace plugin
@@ -20,11 +17,11 @@ namespace plugin
       plugin * m_pplugin;
 
 
-      system(::aura::application * papp);
+      system(::aura::application * papp, app_core * pappcore);
 
 
       virtual bool open_link(const string & pszLink, const string & pszTarget);
-      
+
       virtual bool os_native_bergedge_start();
 
       virtual bool verb();
@@ -35,9 +32,5 @@ namespace plugin
 
 
 } // namespace plugin
-
-
-#endif
-
 
 

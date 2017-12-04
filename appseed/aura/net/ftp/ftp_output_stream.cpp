@@ -1,4 +1,7 @@
 #include "framework.h"
+#include "ftp_output_stream.h"
+
+
 
 namespace ftp
 {
@@ -34,7 +37,7 @@ namespace ftp
 
    void output_stream::implementation::OnPreBytesSend(byte * pszBuffer, size_t bufferSize, size_t& bytesToSend)
    {
-      
+
       for (bytesToSend = 0; m_iCurrentPos < m_vBuffer.get_length() && bytesToSend < bufferSize; ++m_iCurrentPos, ++bytesToSend)
       {
 

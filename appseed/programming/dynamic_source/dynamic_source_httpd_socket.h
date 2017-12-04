@@ -1,4 +1,7 @@
-#pragma once
+﻿#pragma once
+
+
+#include "aura/net/netserver/netserver.h"
 
 
 namespace dynamic_source

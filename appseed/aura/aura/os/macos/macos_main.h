@@ -9,10 +9,6 @@
 #pragma once
 
 
-uint32_t __start_system_with_file(const char ** psza, int iCount);
-uint32_t __start_system_with_file(const char * pszFile);
-
-
 
 struct main_param
 {

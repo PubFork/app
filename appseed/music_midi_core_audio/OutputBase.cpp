@@ -36,9 +36,9 @@
 //#include <AudioToolbox/AudioToolbox.h> //for AUGraph
 //#include <CoreMIDI/CoreMIDI.h>
 
-const int PITCH_BEND_LOWEST = 0;
+//const int PITCH_BEND_LOWEST = 0;
 const int PITCH_BEND_CENTER = 8192;
-const int PITCH_BEND_HIGHEST = 16383;
+//const int PITCH_BEND_HIGHEST = 16383;
 
 class wxTimer
 {

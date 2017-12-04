@@ -8,6 +8,9 @@
 #if defined(APPLEOS)
 #define  NI_MAXHOST  1025
 #define  NI_MAXSERV  32
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netdb.h>
 #endif
 //#define __USE_MISC
 //#include <ctype.h>
@@ -219,7 +222,7 @@ namespace sockets
 
       single_lock sl(&m_mutexCache, true);
       dns_cache_item item;
-      if(m_mapCache.Lookup(str, item) && (!item.m_bTimeout || ((::get_tick_count() - item.m_dwLastChecked) < (5 * 60 * 1000))))
+      if(m_mapCache.Lookup(str, item) && (item.r && (!item.m_bTimeout || ((::get_tick_count() - item.m_dwLastChecked) < (5 * 60 * 1000)))))
       {
          if (item.r)
          {

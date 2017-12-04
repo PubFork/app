@@ -1,7 +1,4 @@
-#pragma once
-
-
-#ifdef HOTPLUGIN_SUBSYSTEM
+﻿#pragma once
 
 
 namespace plugin
@@ -29,7 +26,7 @@ namespace plugin
       plugin *                m_pplugin;
 
 
-      
+
 
       host_interaction(::aura::application * papp);
       virtual ~host_interaction();
@@ -41,15 +38,15 @@ namespace plugin
       virtual bool defer_check(e_check echeck);
       virtual void on_layout();
 
-      
+
       using ::user::box::GetWindowRect;
       virtual bool GetWindowRect(RECT64 * lprect);
 
-      
+
       using ::user::box::GetClientRect;
       virtual bool GetClientRect(RECT64 * lprect);
 
-      
+
       virtual bool IsWindowVisible();
 
       DECL_GEN_SIGNAL(_001OnMouseMove);
@@ -77,8 +74,5 @@ namespace plugin
 
 } // namespace plugin
 
-
-
-#endif
 
 

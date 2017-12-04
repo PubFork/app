@@ -18,7 +18,7 @@ namespace estamira
       virtual ~application();
 
 
-      virtual bool initialize_application();
+      virtual bool init_instance();
       virtual int32_t  exit_application() override;
 
    };

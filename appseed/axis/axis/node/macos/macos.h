@@ -81,9 +81,9 @@ DWORD _AfxGetComCtlVersion();
 #include "macos_factory_exchange.h"
 #include "macos_port_forward.h"
 #include "macos_crypto.h"
-#include "macos_ip_enum.h"
+//#include "macos_ip_enum.h"
 
-#define NULL_REF(class) (*((class *) NULL))
+//#define NULL_REF(class) (*((class *) NULL))
 // xxx CLASS_DECL_AXIS WNDPROC AfxGetAfxWndProc();
 #define AfxWndProc (*AfxGetAfxWndProc())
 

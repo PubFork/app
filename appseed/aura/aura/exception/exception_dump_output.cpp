@@ -2,6 +2,8 @@
 #include <stdio.h>
 
 
+#ifdef DEBUG
+
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -11,6 +13,8 @@ void __dump(const object* pOb)
 {
    *::aura::system::g_p->m_pdumpcontext << pOb;
 }
+
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
 // Diagnostic Trace
@@ -32,7 +36,11 @@ void c_cdecl __trace(const char * lpszFormat, ...)
    // was there an error? was the expanded string too long?
    ASSERT(nBuf >= 0);
 
+#ifdef DEBUG
+
    *::aura::system::g_p->m_pdumpcontext << szBuffer;
+
+#endif
 
    va_end(args);
 }

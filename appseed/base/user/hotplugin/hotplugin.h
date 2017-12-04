@@ -1,8 +1,6 @@
 #pragma once
 
 
-#ifdef HOTPLUGIN_SUBSYSTEM
-
 
 // hotplugin
 // interface for a hot plugin
@@ -10,6 +8,7 @@
 //
 // hot plugin plugin - represents plugin interface
 // hot plugin host - is a plugin - also - that can host a plugin by forwarding calls
+
 
 
 namespace hotplugin
@@ -67,9 +66,5 @@ namespace hotplugin
 #endif
 
 } // namespace ca2plugin_container
-
-
-#endif
-
 
 

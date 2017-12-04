@@ -1,4 +1,4 @@
-#include "framework.h" // from "base/user/user.h"
+﻿#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 
@@ -117,19 +117,24 @@ namespace user
             m_pviewcontainer->on_prepare_view_creator_data(pcreatordata);
 
          }
-         catch (::exit_exception & e)
+         catch (esp esp)
          {
 
-            throw e;
-
-         }
-         catch (::exception::exception & e)
-         {
-
-            if (!Application.on_run_exception(e))
+            if (esp.is < exit_exception >())
             {
 
-               throw exit_exception(get_app());
+               throw esp;
+
+            }
+            else
+            {
+
+               if (!Application.on_run_exception(esp))
+               {
+
+                  _throw(exit_exception(get_app(), exit_application));
+
+               }
 
             }
 
@@ -150,19 +155,24 @@ namespace user
             on_prepare_view_creator_data(pcreatordata);
 
          }
-         catch (::exit_exception & e)
+         catch (esp esp)
          {
 
-            throw e;
-
-         }
-         catch (::exception::exception & e)
-         {
-
-            if (!Application.on_run_exception(e))
+            if (esp.is < exit_exception >())
             {
 
-               throw exit_exception(get_app());
+               throw esp;
+
+            }
+            else
+            {
+
+               if (!Application.on_run_exception(esp))
+               {
+
+                  _throw(exit_exception(get_app(), exit_application));
+
+               }
 
             }
 
@@ -190,34 +200,41 @@ namespace user
          on_create_view(pcreatordata);
 
       }
-      catch(create_exception & e)
+      catch(esp esp)
       {
 
-         if(e.m_id == idInitialize)
+         if (esp.is < create_exception >())
          {
 
-            delete pcreatordata;
+            sp(create_exception) pcreateexception = esp;
 
-            return NULL;
+            if (pcreateexception->m_id == idInitialize)
+            {
+
+               ::aura::del(pcreatordata);
+
+               return NULL;
+
+            }
+
+            _rethrow(esp);
 
          }
-
-         throw e;
-
-      }
-      catch(::exit_exception & e)
-      {
-
-         throw e;
-
-      }
-      catch(::exception::exception & e)
-      {
-
-         if (!Application.on_run_exception(e))
+         else if (esp.is < exit_exception >())
          {
-         
-            throw exit_exception(get_app());
+
+            _rethrow(esp);
+
+         }
+         else
+         {
+
+            if (!Application.on_run_exception(esp))
+            {
+
+               _exit(exit_application);
+
+            }
 
          }
 
@@ -226,7 +243,7 @@ namespace user
       {
 
       }
-      
+
       if (!pcreatordata->m_bOk)
       {
 
@@ -245,19 +262,15 @@ namespace user
             m_pviewcontainer->on_after_create_view_creator_data(pcreatordata);
 
          }
-         catch (::exit_exception & e)
+         catch (esp esp)
          {
 
-            throw e;
+            esp.rethrow_exit();
 
-         }
-         catch (::exception::exception & e)
-         {
-
-            if (!Application.on_run_exception(e))
+            if (!Application.on_run_exception(esp))
             {
 
-               throw exit_exception(get_app());
+               _throw(exit_exception(get_app(), exit_application));
 
             }
 
@@ -278,19 +291,15 @@ namespace user
             on_after_create_view_creator_data(pcreatordata);
 
          }
-         catch (::exit_exception & e)
+         catch (esp esp)
          {
 
-            throw e;
+            esp.rethrow_exit();
 
-         }
-         catch (::exception::exception & e)
-         {
-
-            if (!Application.on_run_exception(e))
+            if (!Application.on_run_exception(esp))
             {
 
-               throw exit_exception(get_app());
+               _throw_exit(exit_application);
 
             }
 
@@ -325,10 +334,12 @@ namespace user
          Application.on_create_view(pcreatordata);
 
       }
-      catch (create_exception & e)
+      catch (esp esp)
       {
 
-         if (e.m_id == pcreatordata->m_id)
+         esp.rethrow_exit();
+
+         if (esp.is < create_exception >())
          {
 
             delete pcreatordata;
@@ -337,22 +348,10 @@ namespace user
 
          }
 
-         throw e;
-
-      }
-      catch (::exit_exception & e)
-      {
-
-         throw e;
-
-      }
-      catch (::exception::exception & e)
-      {
-
-         if (!Application.on_run_exception(e))
+         if (!Application.on_run_exception(esp))
          {
 
-            throw exit_exception(get_app());
+            _throw_exit(exit_application);
 
          }
 
@@ -385,7 +384,7 @@ namespace user
 
    void view_creator::on_create_view(::user::view_creator_data * pcreatordata)
    {
-      
+
       UNREFERENCED_PARAMETER(pcreatordata);
 
    }
@@ -395,7 +394,7 @@ namespace user
    {
    }
 
-   
+
    ::user::interaction * view_creator::get_view()
    {
 

@@ -1,4 +1,131 @@
-#include "framework.h"
+﻿#include "framework.h"
+
+
+error::error()
+{
+
+}
+
+
+error::~error()
+{
+
+}
+
+
+void error::set(int iErrorCode, ::exception::exception * pexception)
+{
+
+   if(pexception != NULL)
+   {
+
+      if(iErrorCode == 0)
+      {
+
+         iErrorCode = -1;
+
+      }
+
+      m_mapError2[m_iaErrorCode2.get_size()] = pexception;
+
+   }
+   else if(iErrorCode == 0)
+   {
+
+      return;
+
+   }
+
+   m_iaErrorCode2.add(iErrorCode);
+
+}
+
+
+void error::set(int iErrorCode)
+{
+
+   set(iErrorCode, NULL);
+
+}
+
+
+void error::set_last_error()
+{
+
+#ifdef WINDOWS
+
+   set(::GetLastError());
+
+#else
+
+   set(errno);
+
+#endif
+
+}
+
+
+void error::set_if_not_set(int iErrorCode)
+{
+
+   if (get_exit_code() == 0)
+   {
+
+      set(iErrorCode);
+
+   }
+
+
+}
+
+
+void error::set(::exception::exception * pexception)
+{
+
+   set(-3, pexception);
+
+}
+
+
+error & error::operator =(const error & error)
+{
+
+   if(this == &error)
+   {
+
+      return *this;
+
+   }
+
+   m_iaErrorCode2     = error.m_iaErrorCode2;
+
+   m_mapError2        = error.m_mapError2;
+
+   return *this;
+
+}
+
+
+::exception::exception * error::get_exception()
+{
+
+   for(index i = 0; i < m_iaErrorCode2.get_count(); i++)
+   {
+
+      auto & spe = m_mapError2[i];
+
+      if(m_mapError2[i].is_set())
+      {
+
+         return spe.m_p;
+
+      }
+
+   }
+
+   return NULL;
+
+}
 
 
 #ifdef LINUX
@@ -90,8 +217,8 @@ DWORD thread::get_file_sharing_violation_timeout_total_milliseconds()
 
 
 thread::thread() :
-   ::object(::get_thread_app()),
-   m_mutexUiPtra(::get_thread_app())
+   ::object(get_app()),
+   m_mutexUiPtra(get_app())
 {
 
    construct();
@@ -187,8 +314,8 @@ void thread::CommonConstruct()
    m_puiActive = NULL;
    m_puiMain = NULL;
 
-   m_iReturnCode = 0;
-
+//   m_iErrorCode = 0;
+//
    m_bZipIsDir = true;
 
    m_pslUser = NULL;
@@ -225,34 +352,12 @@ thread::~thread()
    try
    {
 
-      for (auto * pobject : m_objectrefaDependent)
+      synch_lock sl(m_objectrefaDependent.m_pmutex);
+
+      for (auto pobject : m_objectrefaDependent)
       {
 
-         try
-         {
-
-            if (pobject == NULL)
-            {
-
-               continue;
-
-            }
-
-            if (pobject->m_pthreadrefa != NULL)
-            {
-
-               synch_lock sl(pobject->m_pmutex);
-
-               pobject->m_pthreadrefa->remove(this);
-
-            }
-
-         }
-         catch (...)
-         {
-
-         }
-
+         pobject->threadrefa_remove(this);
 
       }
 
@@ -310,12 +415,22 @@ HTHREAD thread::get_os_handle() const
 
 
 
-bool thread::on_after_run_thread()
+void thread::on_pos_run_thread()
 {
+
+   try
+   {
+
+      threadrefa_post_quit();
+
+   }
+   catch (...)
+   {
+
+   }
 
    {
 
-      synch_lock sl(m_objectrefaDependent.m_pmutex);
 
       for(auto pobject : m_objectrefaDependent)
       {
@@ -328,17 +443,17 @@ bool thread::on_after_run_thread()
 
    close_dependent_threads(minutes(1));
 
-   return true;
+   //return true;
 
 }
 
 
 
 
-int32_t thread::exit_thread()
+void thread::term_thread()
 {
 
-   return 0;
+//   return 0;
 
 }
 
@@ -389,7 +504,7 @@ CLASS_DECL_AURA void thread_alloc_ready(bool bReady)
 
 
 
-int32_t thread::run()
+void thread::run()
 {
 
    ASSERT_VALID(this);
@@ -409,9 +524,9 @@ int32_t thread::run()
 
    }
 
-   thisend << m_iReturnCode;
+//   thisend << m_iErrorCode;
 
-   return m_iReturnCode;
+//   return m_iErrorCode;
 
 }
 
@@ -443,23 +558,28 @@ bool thread::pump_message()
       return true;
 
    }
-   catch(exit_exception & e)
+   catch(esp esp)
    {
 
-      throw e;
+      if(esp.is < exit_exception >())
+      {
 
-   }
-   catch(const ::exception::exception & e)
-   {
+         throw esp;
 
-      if(on_run_exception((::exception::exception &) e))
-         return true;
+      }
+      else
+      {
 
-      // get_app() may be it self, it is ok...
-      if(App(get_app()).final_handle_exception((::exception::exception &) e))
-         return true;
+         if(on_run_exception(esp))
+            return true;
 
-      return false;
+         // get_app() may be it self, it is ok...
+         if(Application.final_handle_exception(esp))
+            return true;
+
+         return false;
+
+      }
 
    }
    catch(...)
@@ -621,14 +741,14 @@ bool thread::on_thread_on_idle(thread *pimpl, LONG lCount)
 //   //catch (::exit_exception & e)
 //   //{
 //
-//   //   throw e;
+//   //   _throw(e);
 //
 //   //}
 //   //catch (::exception::exception & e)
 //   //{
 //
 //   //   if (!Application.on_run_exception(e))
-//   //      throw exit_exception(get_app());
+//   //      _throw(exit_exception(get_app()));
 //
 //   //}
 //   //catch (...)
@@ -651,11 +771,18 @@ void thread::Delete()
 
 }
 
-void thread::register_dependent_thread(::thread * pthreadDependent)
+bool thread::register_dependent_thread(::thread * pthreadDependent)
 {
 
+   if (pthreadDependent == this)
+   {
+
+      return true;
+
+   }
+
    //post_thread_message(message_system, 90, (LPARAM) pthreadDependent);
-   on_register_dependent_thread(pthreadDependent);
+   return on_register_dependent_thread(pthreadDependent);
 
 }
 
@@ -667,31 +794,37 @@ void thread::unregister_dependent_thread(::thread * pthreadDependent)
 
 }
 
-void thread::on_register_dependent_thread(::thread * pthreadDependent)
+
+bool thread::on_register_dependent_thread(::thread * pthreadDependent)
 {
 
-   if(pthreadDependent == this)
-      return;
+   if (pthreadDependent == this)
+   {
 
-   if(pthreadDependent == NULL)
-      return;
+      return false;
+
+   }
+
+   if (pthreadDependent == NULL)
+   {
+
+      return false;
+
+   }
 
    {
 
-      synch_lock slThread(pthreadDependent->m_threadrefaRequired.m_pmutex);
+      synch_lock slRequired(pthreadDependent->m_threadrefaRequired.m_pmutex);
+
+      synch_lock slDependent(m_threadrefaDependent.m_pmutex);
+
+      m_threadrefaDependent.add_unique(pthreadDependent);
 
       pthreadDependent->m_threadrefaRequired.add_unique(this);
 
    }
 
-   {
-
-      synch_lock sl(m_threadrefaDependent.m_pmutex);
-
-      m_threadrefaDependent.add_unique(pthreadDependent);
-
-   }
-
+   return true;
 
 }
 
@@ -705,15 +838,11 @@ void thread::on_unregister_dependent_thread(::thread * pthreadDependent)
 
    {
 
-      synch_lock sl(m_threadrefaDependent.m_pmutex);
+      synch_lock slRequired(pthreadDependent->m_threadrefaRequired.m_pmutex);
+
+      synch_lock slDependent(m_threadrefaDependent.m_pmutex);
 
       m_threadrefaDependent.remove(pthreadDependent);
-
-   }
-
-   {
-
-      synch_lock sl(pthreadDependent->m_threadrefaRequired.m_pmutex);
 
       pthreadDependent->m_threadrefaRequired.remove(this);
 
@@ -746,8 +875,6 @@ void thread::signal_close_dependent_threads()
 
       thread * pthread = m_threadrefaDependent[i];
 
-      sl.unlock();
-
       try
       {
 
@@ -766,10 +893,7 @@ void thread::signal_close_dependent_threads()
 
       }
 
-      sl.lock();
-
    }
-
 
 }
 
@@ -786,8 +910,12 @@ void thread::wait_close_dependent_threads(const duration & duration)
 
          synch_lock sl(m_threadrefaDependent.m_pmutex);
 
-         if(m_threadrefaDependent.get_count() <= 0)
+         if (m_threadrefaDependent.get_count() <= 0)
+         {
+
             break;
+
+         }
 
          output_debug_string(string("-------------------------\n"));
 
@@ -856,42 +984,36 @@ bool thread::register_at_required_threads()
       if(&System != NULL)
       {
 
-         if(!System.m_bRunThisThread)
+         if(!System.register_dependent_thread(this))
          {
 
             return false;
 
          }
-
-         System.register_dependent_thread(this);
 
       }
 
       if(&Session != NULL)
       {
 
-         if(!Session.m_bRunThisThread)
+         if(!Session.register_dependent_thread(this))
          {
 
             return false;
 
          }
-
-         Session.register_dependent_thread(this);
 
       }
 
       if(&Application != NULL)
       {
 
-         if(!Application.m_bRunThisThread)
+         if(!Application.register_dependent_thread(this))
          {
 
             return false;
 
          }
-
-         Application.register_dependent_thread(this);
 
       }
 
@@ -978,41 +1100,50 @@ bool thread::should_enable_thread()
 }
 
 
-bool thread::post_quit()
+void thread::post_quit()
 {
 
-   string strName = demangle(typeid(*this).name());
-
-   if (strName == "::core::system")
+   try
    {
 
-      ::output_debug_string("\n\n\nWM_QUIT at ::core::system\n\n\n");
+      synch_lock sl(m_pmutex);
+
+      string strName = demangle(typeid(*this).name());
+
+      if (strName == "::core::system")
+      {
+
+         ::output_debug_string("\n\n\nWM_QUIT at ::core::system\n\n\n");
+
+      }
+      else if (strName == "multimedia::audio_core_audio::wave_out")
+      {
+
+         ::output_debug_string("\n\n\nWM_QUIT at multimedia::audio_core_audio::wave_out\n\n\n");
+
+      }
+      else if (strName == "multimedia::audio::wave_out")
+      {
+
+         ::output_debug_string("\n\n\nWM_QUIT at multimedia::audio::wave_out\n\n\n");
+
+      }
+      else if (strName == "multimedia::audio::wave_player")
+      {
+
+         ::output_debug_string("\n\n\nWM_QUIT at multimedia::audio::wave_player\n\n\n");
+
+      }
+
+      m_bRunThisThread = false;
+
+      ::PostThreadMessage(m_uiThread, WM_QUIT, 0, 0);
 
    }
-   else if (strName == "multimedia::audio_core_audio::wave_out")
+   catch (...)
    {
 
-      ::output_debug_string("\n\n\nWM_QUIT at multimedia::audio_core_audio::wave_out\n\n\n");
-
    }
-   else if (strName == "multimedia::audio::wave_out")
-   {
-
-      ::output_debug_string("\n\n\nWM_QUIT at multimedia::audio::wave_out\n\n\n");
-
-   }
-   else if (strName == "multimedia::audio::wave_player")
-   {
-
-      ::output_debug_string("\n\n\nWM_QUIT at multimedia::audio::wave_player\n\n\n");
-
-   }
-
-   m_bRunThisThread = false;
-
-   ::PostThreadMessage(m_uiThread, WM_QUIT, 0, 0);
-
-   return true;
 
 }
 
@@ -1023,7 +1154,7 @@ bool thread::thread_get_run()
    try
    {
 
-      if(!get_app()->m_bRunThisThread)
+      if(!Application.m_bRunThisThread)
       {
 
          return false;
@@ -1034,7 +1165,45 @@ bool thread::thread_get_run()
    catch (...)
    {
 
+      return false;
+
    }
+
+   //try
+   //{
+
+   //   if (!Session.m_bRunThisThread)
+   //   {
+
+   //      return false;
+
+   //   }
+
+   //}
+   //catch (...)
+   //{
+
+   //   return false;
+
+   //}
+
+   //try
+   //{
+
+   //   if (!System.m_bRunThisThread)
+   //   {
+
+   //      return false;
+
+   //   }
+
+   //}
+   //catch (...)
+   //{
+
+   //   return false;
+
+   //}
 
    return m_bRunThisThread;
 
@@ -1175,7 +1344,7 @@ void thread::construct(__THREADPROC pfnThreadProc, LPVOID pParam)
 
 
 
-bool thread::initialize_thread()
+bool thread::init_thread()
 {
 
    return true;
@@ -1183,7 +1352,7 @@ bool thread::initialize_thread()
 }
 
 
-bool thread::on_before_run_thread()
+bool thread::on_pre_run_thread()
 {
 
    if(!register_at_required_threads())
@@ -1268,7 +1437,7 @@ wait_result thread::wait(const duration & duration)
       else
       {
 
-         DWORD dwDelay = duration.total_milliseconds();
+         DWORD dwDelay = (DWORD) duration.total_milliseconds();
 
          DWORD dwStep = MIN(MAX(dwDelay / 10, 1), 100);
 
@@ -1324,17 +1493,19 @@ void thread::pre_translate_message(::message::message * pobj)
             m_pauraapp->m_paurasession->frame_pre_translate_message(pobj);
          }
       }
-      catch(exit_exception & e)
+      catch(ap(exit_exception) pe)
       {
-         throw e;
+
+         throw pe;
+
       }
       catch(...)
       {
       }
    }
-   catch(exit_exception & e)
+   catch(ap(exit_exception) pe)
    {
-      throw e;
+      throw pe;
    }
    catch(...)
    {
@@ -1409,9 +1580,7 @@ thread_startup::thread_startup(::aura::application * papp) :
    m_event2(papp)
 {
 
-   m_iError = 0;
    m_bSynch = false;
-
 
 }
 
@@ -1424,8 +1593,17 @@ thread_startup::~thread_startup()
 
 
 
-bool thread::begin_thread(bool bSynch,int32_t * piStartupError,int32_t epriority,uint_ptr nStackSize,uint32_t dwCreateFlagsParam,LPSECURITY_ATTRIBUTES lpSecurityAttrs, IDTHREAD * puiId)
+bool thread::begin_thread(bool bSynch, int32_t epriority,uint_ptr nStackSize,uint32_t dwCreateFlagsParam,LPSECURITY_ATTRIBUTES lpSecurityAttrs, IDTHREAD * puiId, error * perror)
 {
+
+   error error;
+
+   if(perror == NULL)
+   {
+
+      perror = &error;
+
+   }
 
    m_bRunThisThread = true;
 
@@ -1449,7 +1627,20 @@ bool thread::begin_thread(bool bSynch,int32_t * piStartupError,int32_t epriority
 
    add_ref();
 
-   m_hthread = (HTHREAD)(uint_ptr) ::create_thread(lpSecurityAttrs,nStackSize,&__thread_entry,pstartup.m_p,dwCreateFlags,&m_uiThread);
+   HTHREAD hthread = ::create_thread(lpSecurityAttrs,nStackSize,&__thread_entry,pstartup.m_p,dwCreateFlags,&m_uiThread);
+
+   m_hthread = hthread;
+
+#ifndef WINDOWS
+
+   if(m_hthread == m_uiThread)
+   {
+
+      output_debug_string("Thread IS OK!!!\n");
+
+   }
+
+#endif
 
    if(m_hthread == (HTHREAD) NULL)
    {
@@ -1457,10 +1648,16 @@ bool thread::begin_thread(bool bSynch,int32_t * piStartupError,int32_t epriority
       try
       {
 
-         if (piStartupError != NULL)
+         if (perror == &error)
          {
 
-            *piStartupError = pstartup->m_iError;
+            perror = &pstartup->m_error;
+
+         }
+         else
+         {
+
+            *perror = pstartup->m_error;
 
          }
 
@@ -1471,6 +1668,15 @@ bool thread::begin_thread(bool bSynch,int32_t * piStartupError,int32_t epriority
       }
 
       release();
+
+      auto pexitexception = perror->get_exception();
+
+      if(pexitexception != NULL)
+      {
+
+         throw pexitexception;
+
+      }
 
       return false;
 
@@ -1487,18 +1693,23 @@ bool thread::begin_thread(bool bSynch,int32_t * piStartupError,int32_t epriority
 
    }
 
-
    pstartup->m_event2.SetEvent();
 
    pstartup->m_event.wait();
 
    if(pstartup->m_bError)
    {
+
       try
       {
 
-         if(piStartupError != NULL)
-            *piStartupError = pstartup->m_iError;
+         if (perror != NULL)
+         {
+
+            *perror = pstartup->m_error;
+
+         }
+
       }
       catch(...)
       {
@@ -1513,26 +1724,26 @@ bool thread::begin_thread(bool bSynch,int32_t * piStartupError,int32_t epriority
 }
 
 
-bool thread::create_thread(int32_t epriority,uint_ptr nStackSize,uint32_t dwCreateFlags,LPSECURITY_ATTRIBUTES lpSecurityAttrs, IDTHREAD * puiId)
+bool thread::create_thread(int32_t epriority,uint_ptr nStackSize,uint32_t dwCreateFlags,LPSECURITY_ATTRIBUTES lpSecurityAttrs, IDTHREAD * puiId, error * perror)
 {
 
-   return begin_thread(false,NULL,epriority,nStackSize, dwCreateFlags,lpSecurityAttrs, puiId);
+   return begin_thread(false,epriority,nStackSize, dwCreateFlags,lpSecurityAttrs, puiId, perror);
 
 }
 
 
-bool thread::create_thread_synch(int32_t * piStartupError,int32_t epriority,uint_ptr nStackSize,uint32_t dwCreateFlags,LPSECURITY_ATTRIBUTES lpSecurityAttrs, IDTHREAD * puiId)
+bool thread::create_thread_synch(int32_t epriority,uint_ptr nStackSize,uint32_t dwCreateFlags,LPSECURITY_ATTRIBUTES lpSecurityAttrs, IDTHREAD * puiId, error * perror)
 {
 
-   return begin_thread(true,piStartupError,epriority,nStackSize, dwCreateFlags,lpSecurityAttrs, puiId);
+   return begin_thread(true, epriority,nStackSize, dwCreateFlags,lpSecurityAttrs, puiId, perror);
 
 }
 
 
-bool thread::begin(int32_t epriority,uint_ptr nStackSize,uint32_t dwCreateFlags,LPSECURITY_ATTRIBUTES lpSecurityAttrs, IDTHREAD * puiId)
+bool thread::begin(int32_t epriority,uint_ptr nStackSize,uint32_t dwCreateFlags,LPSECURITY_ATTRIBUTES lpSecurityAttrs, IDTHREAD * puiId, error * perror)
 {
 
-   if(!create_thread(epriority,nStackSize,dwCreateFlags, lpSecurityAttrs, puiId))
+   if(!create_thread(epriority,nStackSize,dwCreateFlags, lpSecurityAttrs, puiId, perror))
    {
 
       return false;
@@ -1544,10 +1755,10 @@ bool thread::begin(int32_t epriority,uint_ptr nStackSize,uint32_t dwCreateFlags,
 }
 
 
-bool thread::begin_synch(int32_t * piStartupError,int32_t epriority,uint_ptr nStackSize,uint32_t dwCreateFlags,LPSECURITY_ATTRIBUTES lpSecurityAttrs, IDTHREAD * puiId)
+bool thread::begin_synch(int32_t epriority,uint_ptr nStackSize,uint32_t dwCreateFlags,LPSECURITY_ATTRIBUTES lpSecurityAttrs, IDTHREAD * puiId, error * perror)
 {
 
-   if(!create_thread_synch(piStartupError, epriority,nStackSize, dwCreateFlags,lpSecurityAttrs, puiId))
+   if(!create_thread_synch(epriority,nStackSize, dwCreateFlags,lpSecurityAttrs, puiId, perror))
    {
 
       return false;
@@ -1588,6 +1799,8 @@ uint32_t __thread_entry(void * pparam)
 
    UINT uiRet = 0;
 
+   ::thread * pthread = NULL;
+
    try
    {
 
@@ -1598,7 +1811,7 @@ uint32_t __thread_entry(void * pparam)
       //ASSERT(pstartup->m_pthreadimpl != NULL);
       ASSERT(!pstartup->m_bError);
 
-      ::thread * pthread = pstartup->m_pthread;
+      pthread = pstartup->m_pthread;
 
       set_thread_on(::GetCurrentThreadId());
 //#ifndef MACOS
@@ -1625,8 +1838,8 @@ uint32_t __thread_entry(void * pparam)
 #if defined(WINDOWSEX) || defined(LINUX)
 
             WINBOOL bOk =
-               ::SetThreadAffinityMask(::GetCurrentThread(), pthread->m_dwThreadAffinityMask) == 0
-               || ::GetLastError() == 0;
+            ::SetThreadAffinityMask(::GetCurrentThread(), pthread->m_dwThreadAffinityMask) == 0
+            || ::GetLastError() == 0;
 
             if (bOk)
             {
@@ -1724,9 +1937,11 @@ uint32_t __thread_entry(void * pparam)
 
          pstartup->m_bError = TRUE;
 
-         if(pstartup->m_iError == 0)
+         if(pstartup->m_error.get_exit_code() == 0)
          {
-            pstartup->m_iError = -1;
+
+            pstartup->m_error.set(-1);
+
          }
 
          pstartup->m_event.set_event();
@@ -1763,8 +1978,34 @@ uint32_t __thread_entry(void * pparam)
          }
 
       }
-      catch(::exit_exception &)
+      catch(esp esp)
       {
+
+         if (esp.is_exit())
+         {
+
+            try
+            {
+
+               uiRet = ::multithreading::__on_thread_finally(pthread);
+
+            }
+            catch (...)
+            {
+
+            }
+
+            // allow the creating thread to return from thread::create_thread
+            pstartup->m_event.set_event();
+
+            esp.cast < exit_exception >()->post_quit();
+
+            return uiRet;
+
+         }
+
+
+         pthread->m_error.set(esp);
 
          bError = true;
 
@@ -1777,7 +2018,7 @@ uint32_t __thread_entry(void * pparam)
          if(bSynch)
          {
 
-            pstartup->m_iError = pthread->m_iReturnCode;
+            pstartup->m_error = pthread->m_error;
 
             pstartup->m_bError = true;
 
@@ -1822,13 +2063,30 @@ uint32_t __thread_entry(void * pparam)
       return ::multithreading::__on_thread_finally(pthread);
 
    }
-   catch (const ::exception::exception & e)
+   catch (esp esp)
    {
 
-      if (stricmp(e.what(),"rethrow")==0)
+      try
       {
 
-         throw e;
+         ::multithreading::__on_thread_finally(pthread);
+
+      }
+      catch (...)
+      {
+
+      }
+
+      if (esp.is_exit())
+      {
+
+         esp.cast < exit_exception > ()->post_quit();
+
+      }
+      else if (stricmp(esp->what(), "rethrow")==0)
+      {
+
+         throw esp;
 
       }
 
@@ -1836,11 +2094,9 @@ uint32_t __thread_entry(void * pparam)
    catch(...)
    {
 
-      return -1;
-
    }
 
-   return uiRet;
+   return ::multithreading::__on_thread_finally(pthread);
 
 }
 
@@ -1894,15 +2150,19 @@ void thread::post_to_all_threads(UINT message,WPARAM wparam,LPARAM lparam)
 
          try
          {
+
             pthread = dynamic_cast < thread * >(threadptra[i]);
+
             pthread->post_quit();
+
          }
          catch(...)
          {
+
          }
 
-
       }
+
       sl.unlock();
 
       return;
@@ -1958,7 +2218,7 @@ bool thread::post_object(UINT message, WPARAM wParam, lparam lParam)
    if (m_hthread == (HTHREAD)NULL || !thread_get_run())
    {
 
-      if (lParam != NULL)
+      if (lParam != 0)
       {
 
          sp(object) spo((lparam)lParam);
@@ -2009,7 +2269,7 @@ bool thread::send_object(UINT message, WPARAM wParam, lparam lParam, ::duration 
    if (m_hthread == (HTHREAD)NULL || !thread_get_run())
    {
 
-      if (lParam != NULL)
+      if (lParam != 0)
       {
 
          sp(object) spo((lparam)lParam);
@@ -2130,12 +2390,20 @@ bool thread::thread_entry()
    try
    {
 
-      if(!initialize_thread())
+      if(!init_thread())
       {
 
          bError = true;
 
       }
+
+   }
+   catch (esp esp)
+   {
+
+      esp.rethrow_exit();
+
+      bError = true;
 
    }
    catch(...)
@@ -2155,8 +2423,7 @@ bool thread::thread_entry()
    try
    {
 
-
-      if (!on_before_run_thread())
+      if (!on_pre_run_thread())
       {
 
          bError = true;
@@ -2190,66 +2457,80 @@ error:
 }
 
 
-
-
-int32_t thread::main()
+void thread::main()
 {
 
-
-
-
    // first -- check for simple worker thread
+
    DWORD nResult = 0;
+
    if(m_pfnThreadProc != NULL)
    {
+
       nResult = (*m_pfnThreadProc)(m_pThreadParams);
+
    }
-   // else -- check for thread with message loop
    else
    {
+
+      // else check for thread with message loop
+
       ASSERT_VALID(this);
+
 run:
+
       try
       {
+
          m_bReady = true;
-         nResult = run();
-      }
-      catch(::exit_exception & e)
-      {
 
-         try
-         {
-
-            thread_exit();
-
-         }
-         catch(...)
-         {
-
-         }
-
-         throw e;
+         run();
 
       }
-      catch(const ::exception::exception & e)
+      catch(esp esp)
       {
 
-         if (stricmp(e.what(), "rethrow") ==0)
+         if(esp.is < exit_exception > ())
          {
 
-            throw e;
+            try
+            {
+
+               thread_exit();
+
+            }
+            catch(...)
+            {
+
+            }
+
+            throw esp;
+
+         }
+         else
+         {
+
+            if (stricmp(esp->what(), "rethrow") ==0)
+            {
+
+               throw esp;
+
+            }
+
+            if(on_run_exception(esp))
+               goto run;
+
+            if(Application.final_handle_exception(esp))
+               goto run;
 
          }
 
-         if(on_run_exception((::exception::exception &) e))
-            goto run;
-
-         if(App(get_app()).final_handle_exception((::exception::exception &) e))
-            goto run;
       }
       catch(...)
       {
+
       }
+
    }
 
    try
@@ -2272,11 +2553,12 @@ run:
    catch(...)
    {
 
-      nResult = (DWORD)-1;
+      m_error.set_if_not_set(-1);
+      //nResult = (DWORD)-1;
 
    }
 
-   return nResult;
+//   return nResult;
 
 }
 
@@ -2300,7 +2582,7 @@ void thread::dump(dump_context & dumpcontext) const
 int32_t thread::thread_term()
 {
 
-   int32_t iResult = m_iReturnCode;
+   int32_t iResult = m_error.get_exit_code();
 
    try
    {
@@ -2328,26 +2610,35 @@ int32_t thread::thread_term()
 
 }
 
-int32_t thread::thread_exit()
+
+void thread::threadrefa_add(::thread * pthread)
 {
 
-   bool bErrorAfterRunThread = false;
+   if (pthread == this)
+   {
+
+      return;
+
+   }
+
+   command_target::threadrefa_add(pthread);
+
+}
+
+
+int32_t thread::thread_exit()
+{
 
    try
    {
 
-      if (!on_after_run_thread())
-      {
-
-         bErrorAfterRunThread = true;
-
-      }
+      on_pos_run_thread();
 
    }
    catch (...)
    {
 
-      bErrorAfterRunThread = true;
+      m_error.set(-27);
 
    }
 
@@ -2356,13 +2647,13 @@ int32_t thread::thread_exit()
    try
    {
 
-      iExitCode = exit_thread();
+      term_thread();
 
    }
    catch (...)
    {
 
-      iExitCode = -1;
+      m_error.set(-21);
 
    }
 
@@ -2374,7 +2665,7 @@ int32_t thread::thread_exit()
 thread::operator HTHREAD() const
 {
 
-   return this == NULL ? (HTHREAD) NULL : m_hthread;
+   return is_null(*this) ? (HTHREAD) NULL : m_hthread;
 
 }
 
@@ -2459,7 +2750,7 @@ bool thread::initialize_message_queue()
 //
 ////stop_run:
 //
-//   return m_iReturnCode;
+//   return m_iErrorCode;
 //
 //}
 
@@ -2583,10 +2874,10 @@ bool thread::process_message(LPMESSAGE lpmessage)
                      return true;
 
                }
-               catch(exit_exception & e)
+               catch(exit_exception * pe)
                {
 
-                  throw e;
+                  throw pe;
 
                }
                catch(...)
@@ -2716,23 +3007,28 @@ bool thread::process_message(LPMESSAGE lpmessage)
       return true;
 
    }
-   catch(exit_exception & e)
+   catch(esp esp)
    {
 
-      throw e;
+      if(esp.is < exit_exception > ())
+      {
 
-   }
-   catch(const ::exception::exception & e)
-   {
+         throw esp;
 
-      if(on_run_exception((::exception::exception &) e))
-         return true;
+      }
+      else
+      {
 
-      // get_app() may be it self, it is ok...
-      if(App(get_app()).final_handle_exception((::exception::exception &) e))
-         return true;
+         if(on_run_exception(esp))
+            return true;
 
-      return false;
+         // get_app() may be it self, it is ok...
+         if(Application.final_handle_exception(esp))
+            return true;
+
+         return false;
+
+      }
 
    }
    catch(...)
@@ -2884,7 +3180,7 @@ void thread::set_priority(int32_t priority)
 {
 
    if (::SetThreadPriority(m_hthread, priority) == 0)
-      throw runtime_error(get_app(), "Thread::set_priority: Couldn't set thread priority.");
+      _throw(runtime_error(get_app(), "Thread::set_priority: Couldn't set thread priority."));
 
 }
 
@@ -2913,7 +3209,7 @@ int32_t thread::priority()
 
 
 
-bool thread::on_run_exception(::exception::exception &)
+bool thread::on_run_exception(::exception::exception * pexception)
 {
 
    return false;
@@ -3036,25 +3332,21 @@ void thread::on_create(::create * pcreate)
       request_create(pcreate);
 
    }
-   catch (not_installed & e)
+   catch (esp pe)
    {
 
-      System.on_run_exception(e);
+      if(pe.is < exit_exception > ())
+      {
 
-      throw exit_exception(e.get_app());
+         throw pe;
 
-   }
-   catch (::exit_exception & e)
-   {
+      }
+      else if(!Application.on_run_exception(pe))
+      {
 
-      throw e;
+         _throw(exit_exception(get_app(), exit_thread));
 
-   }
-   catch (::exception::exception & e)
-   {
-
-      if (!Application.on_run_exception(e))
-         throw exit_exception(get_app());
+      }
 
    }
    catch (...)
@@ -3137,7 +3429,7 @@ CLASS_DECL_AURA void forking_count_thread_null_end(int iOrder)
    if (m_ptools.is_null())
    {
 
-      m_ptools = new thread_tools(::get_thread_app());
+      m_ptools = new thread_tools(get_app());
 
    }
 
@@ -3245,3 +3537,31 @@ CLASS_DECL_AURA bool thread_sleep(DWORD dwMillis)
 }
 
 
+int error::get_exit_code()
+{
+
+   if(m_iaErrorCode2.get_count() <= 0)
+   {
+
+      return 0;
+
+   }
+
+   if(m_iaErrorCode2.get_count() == 1)
+   {
+
+      return m_iaErrorCode2[0];
+
+   }
+
+   return -100000 - (int) m_iaErrorCode2.get_count();
+
+}
+
+
+int thread::get_exit_code()
+{
+
+   return m_error.get_exit_code();
+
+}

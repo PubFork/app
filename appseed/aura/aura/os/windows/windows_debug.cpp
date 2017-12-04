@@ -29,7 +29,7 @@ CLASS_DECL_AURA void windows_install_crash_dump_reporting(::aura::application * 
    {
       ::file::path str = dir::system() / "CrashDumps" / m;
       wstring wstr = str;
-      RegSetValueExW(k.m_hkey, L"DumpFolder", 0, REG_EXPAND_SZ, (LPBYTE)wstr.c_str(), convert < DWORD > ((wcslen(wstr) + 1) * sizeof(wchar_t)));
+      RegSetValueExW(k.m_hkey, L"DumpFolder", 0, REG_EXPAND_SZ, (LPBYTE)wstr.c_str(),  DWORD ((wcslen(wstr) + 1) * sizeof(wchar_t)));
       DWORD dw = 10;
       RegSetValueExW(k.m_hkey, L"DumpCount", 0, REG_DWORD, (LPBYTE)&dw, sizeof(dw));
       dw = 2;

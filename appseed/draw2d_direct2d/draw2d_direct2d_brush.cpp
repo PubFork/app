@@ -59,13 +59,13 @@ namespace draw2d_direct2d
    //   void brush::construct(COLORREF crColor)
    //   {
    ////      if (!Attach(::CreateSolidBrush(crColor)))
-   //  //       throw resource_exception();
+   //  //       _throw(resource_exception());
    //   }
    //
    //   void brush::construct(int nIndex, COLORREF crColor)
    //   {
    //    //  if (!Attach(::CreateHatchBrush(nIndex, crColor)))
-   //      //   throw resource_exception();
+   //      //   _throw(resource_exception());
    //   }
    //
    //   void brush::construct(::draw2d::bitmap* pBitmap)
@@ -73,7 +73,7 @@ namespace draw2d_direct2d
    //      //ASSERT_VALID(pBitmap);
    //
    //      //if (!Attach(::CreatePatternBrush((HBITMAP)pBitmap->get_os_data())))
-   //        // throw resource_exception();
+   //        // _throw(resource_exception());
    //   }
    //
    //   bool brush::CreateDIBPatternBrush(HGLOBAL hPackedDIB, UINT nUsage)
@@ -264,9 +264,9 @@ namespace draw2d_direct2d
 
                hr = pgraphics->m_prendertarget->CreateRadialGradientBrush(
                        D2D1::RadialGradientBrushProperties(
-                          D2D1::Point2F(convert < FLOAT > (centerx), convert < FLOAT > (centery)),
-                          D2D1::Point2F(convert < FLOAT > (originx), convert < FLOAT > (originy)),
-                          convert < FLOAT > (radiusx), convert < FLOAT > (radiusy)),
+                          D2D1::Point2F((FLOAT) (centerx), (FLOAT)(centery)),
+                          D2D1::Point2F((FLOAT)(originx), (FLOAT)(originy)),
+                          (FLOAT)(radiusx), (FLOAT)(radiusy)),
                        pgradientstops,
                        & ((brush *) this)->m_pradialgradientbrush
                     );

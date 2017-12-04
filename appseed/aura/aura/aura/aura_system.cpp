@@ -1,5 +1,15 @@
 ﻿#include "framework.h" // previously aura/user/user.h
-#include "aura/user/colorertake5/colorertake5.h"
+//#include "aura/user/colorertake5/colorertake5.h"
+
+
+void os_init_imaging();
+
+void os_term_imaging();
+
+void os_init_windowing();
+
+void os_term_windowing();
+
 
 #if defined(LINUX) || defined(ANDROID)
 
@@ -33,24 +43,41 @@ namespace aura
 {
 
 
+
+#ifdef METROWIN
+
+   system::os_system_window::os_system_window()
+   {
+
+      m_bWindowSizeChange = false;
+
+   }
+
+#endif
+
    class ::id system::idEmpty;
 
    system * system::g_p = NULL;
 
 
-   system::system(::aura::application * papp, void * pdata) :
+   system::system(::aura::application * papp, app_core * pappcore, void * pdata) :
       m_process(this),
       m_base64(this),
-      m_httpsystem(this)
+      m_httpsystem(this),
+      m_emaildepartment(this)
    {
+
+      m_pappcore = pappcore;
 
       m_bThreadToolsForIncreasedFps = false;
 
       m_typemap.InitHashTable(2048);
 
-      m_bAcid = false;
+#ifdef DEBUG
 
       m_pdumpcontext = new dump_context();
+
+#endif
 
 #ifndef WINDOWS
 
@@ -60,7 +87,7 @@ namespace aura
 
 #ifdef VSNORD
 
-      m_pandroidinitdata = (android_init_data *) pdata;
+      m_pdataexchange = (android_data_exchange *) pdata;
 
 #endif
 
@@ -137,15 +164,18 @@ namespace aura
       strId = "ca2log";
 
 
-      xxdebug_box("Going to start Log","Just before initialize log",0);
+      xxdebug_box("Going to start Log","Just before (initialize) log",0);
 
-      // log starts here
+      // log starts here - ENABLE_TRACE macro should be non-zero during
+      // compilation to enable log tracing
       if(!initialize_log(strId))
       {
-         xxdebug_box("Could not initialize log","Failed to initialize log",0);
-         throw "failed to initialize log";
-      }
 
+         xxdebug_box("Could not initialize log","Failed to initialize log",0);
+
+         _throw(simple_exception(get_app(), "failed to initialize log"));
+
+      }
 
       /*
       if(psystemParent == NULL)
@@ -195,11 +225,11 @@ namespace aura
 
       m_pxml->construct(this);
 
-      if(!m_pxml->initialize1())
-         throw simple_exception(this,"failed to construct system m_pxml->initialize1()");
+      if(!m_pxml->init1())
+         _throw(simple_exception(this,"failed to construct system m_pxml->init1()"));
 
-      if(!m_pxml->initialize())
-         throw simple_exception(this,"failed to construct system m_pxml->initialize()");
+      if(!m_pxml->init())
+         _throw(simple_exception(this,"failed to construct system m_pxml->initialize()"));
 
 
 //      m_spmutexFactory = canew(mutex(get_app()));
@@ -226,11 +256,7 @@ namespace aura
 
       ::draw2d::dib::static_initialize();
 
-#if defined(INSTALL_SUBSYSTEM)
-
       m_spinstall = canew(::install::install(this));
-
-#endif
 
 
    }
@@ -265,7 +291,7 @@ namespace aura
       }
       catch (...)
       {
-         TRACE("system::exit_application: Potentially catastrophical error : error disabling simple factory request");
+         TRACE("system::~system: Potentially catastrophical error : error disabling simple factory request");
       }
 
       if (g_p == this)
@@ -281,9 +307,11 @@ namespace aura
 
 #endif
 
+#ifdef DEBUG
+
       ::aura::del(m_pdumpcontext);
 
-
+#endif
 
 
 
@@ -390,28 +418,6 @@ namespace aura
 
    }
 
-//
-//
-//   bool system::verb()
-//   {
-//
-//
-//      return (this->*m_pfnVerb)();
-//
-//
-//   }
-
-
-   void system::construct(const char * pszAppId)
-   {
-
-
-      ::aura::application::construct(pszAppId);
-
-   }
-
-
-
 
    base_factory & system::factory()
    {
@@ -421,19 +427,13 @@ namespace aura
    }
 
 
-   //::exception::engine & system::eengine()
-   //{
-
-   //   return *m_peengine;
-
-   //}
-
    ::datetime::department & system::datetime()
    {
 
       return *m_pdatetime;
 
    }
+
 
    ::aura::str & system::str()
    {
@@ -444,8 +444,17 @@ namespace aura
 
 
 
-   bool system::process_initialize()
+   bool system::process_init()
    {
+
+
+#ifdef LINUX
+
+      os_init_windowing();
+
+      os_init_imaging();
+
+#endif
 
 
       //m_peengine = new ::exception::engine(this);
@@ -457,7 +466,7 @@ namespace aura
       m_pfactory->cloneable_large < mutex >();
       m_pfactory->cloneable_large < event >();
 
-      if(!::aura::application::process_initialize())
+      if(!::aura::application::process_init())
          return false;
 
       m_spos.alloc(allocer());
@@ -469,7 +478,7 @@ namespace aura
 
       }
 
-      if(is_installing() || is_uninstalling())
+      if(is_installing() || is_unstalling())
       {
 
 #ifdef MACOS
@@ -479,7 +488,7 @@ namespace aura
 
                   uid_t uid = getuid();
 
-                  string str("installing or uninstalling as root : getuid() %d", uid);
+                  string str("installing or unstalling as root : getuid() %d", uid);
 
                   ::dir::mk("/ca2core");
 
@@ -488,8 +497,10 @@ namespace aura
 #endif
 
 #if 0
+
          // Create authorization reference
          OSStatus status;
+
          AuthorizationRef authorizationRef;
 
          // AuthorizationCreate and pass NULL as the initial
@@ -499,40 +510,66 @@ namespace aura
          // http://developer.apple.com/qa/qa2001/qa1172.html
          status = AuthorizationCreate(NULL, kAuthorizationEmptyEnvironment,
                                       kAuthorizationFlagDefaults, &authorizationRef);
-         if (status != errAuthorizationSuccess)
+
+         if(status != errAuthorizationSuccess)
          {
             TRACE("Error Creating Initial Authorization: %d", status);
+
             return false;
+
          }
 
          // kAuthorizationRightExecute == "system.privilege.admin"
          AuthorizationItem right = {kAuthorizationRightExecute, 0, NULL, 0};
+
          AuthorizationRights rights = {1, &right};
+
          AuthorizationFlags flags = kAuthorizationFlagDefaults |
                                     kAuthorizationFlagInteractionAllowed |
                                     kAuthorizationFlagPreAuthorize |
                                     kAuthorizationFlagExtendRights;
 
          // Call AuthorizationCopyRights to determine or extend the allowable rights.
+
          status = AuthorizationCopyRights(authorizationRef, &rights, NULL, flags, NULL);
+
          if (status != errAuthorizationSuccess)
          {
+
             TRACE("Copy Rights Unsuccessful: %d", status);
+
             return false;
+
          }
+
 #endif
+
       }
 
 
       if(m_pmachineeventcentral == NULL)
       {
+
 #ifndef APPLE_IOS
+
          m_pmachineeventcentral = canew(::machine_event_central(this));
+
          if(!m_pmachineeventcentral->initialize())
+         {
+
             return false;
+
+         }
+
          if(m_pmachineeventcentral->is_close_application())
+         {
+
             return false;
+
+         }
+
 #endif
+
       }
 
       m_spfile.alloc(allocer());
@@ -557,14 +594,12 @@ namespace aura
 
       }
 
-
       output_debug_string("CommonAppData (matter) : " + System.dir().commonappdata()  + "\n");
       output_debug_string("commonappdata (matter) : " + System.dir().commonappdata() + "\n");
       output_debug_string("Common App Data (matter) : " + System.dir().commonappdata() + "\n");
       output_debug_string("common app data (matter) : " + System.dir().commonappdata() + "\n");
 
-      dappy(string(typeid(*this).name()) + " : Going to ::axis::session " + ::str::from(m_iReturnCode));
-
+      //dappy(string(typeid(*this).name()) + " : Going to ::axis::session " + ::str::from(m_iErrorCode));
 
       if(!alloc_session())
       {
@@ -575,14 +610,14 @@ namespace aura
 
       }
 
-
-      //m_spcrypto.alloc(allocer());
-
       m_spcrypto = canew(::crypto::crypto(this));
 
       if (!m_spcrypto.is_set())
+      {
+
          return false;
 
+      }
 
       bool bOk = true;
 
@@ -599,17 +634,52 @@ namespace aura
 
       }
 
+      m_pvisual = canew(::visual::visual(this));
+
+      m_pvisual->construct(this);
+
+      if (!m_pvisual->init1())
+      {
+
+         return false;
+
+      }
+
+      enum_display_monitors();
 
       return true;
 
    }
 
-   bool system::initialize1()
+
+   bool system::init()
+   {
+
+      if (!::aura::application::init1())
+      {
+
+         return false;
+
+      }
+
+      if (!m_pvisual->init())
+      {
+
+         return false;
+
+      }
+
+      return true;
+
+   }
+
+
+   bool system::init1()
    {
 
       //m_spwaveout = canew(::aura::audio::wave_out(this));
 
-      if(!::aura::application::initialize1())
+      if(!::aura::application::init1())
          return false;
 
       m_puserstr = canew(::aura::str(this));
@@ -620,14 +690,17 @@ namespace aura
       if(!str().initialize())
          return false;
 
+
+
+
       return true;
 
    }
 
-   bool system::initialize2()
+   bool system::init2()
    {
 
-      if (!::aura::application::initialize2())
+      if (!::aura::application::init2())
       {
 
          return false;
@@ -639,22 +712,22 @@ namespace aura
    }
 
 
-   bool system::initialize_application()
+   bool system::init_application()
    {
 
-      if(!m_paurasession->begin_synch(&m_iReturnCode))
+      //if(!m_paurasession->begin_synch(&m_iErrorCode))
+      if(!m_paurasession->begin_synch())
       {
 
          return false;
 
       }
 
-      dappy(string(typeid(*this).name()) + " : ::aura::session OK " + ::str::from(m_iReturnCode));
-
+      //dappy(string(typeid(*this).name()) + " : ::aura::session OK " + ::str::from(m_iErrorCode));
 
       m_pfactory->enable_simple_factory_request();
 
-      if (!::aura::application::initialize_application())
+      if (!::aura::application::init_application())
       {
 
          return false;
@@ -666,34 +739,27 @@ namespace aura
    }
 
 
-   bool system::finalize()
+   void system::term()
    {
 
       __wait_threading_count_except(this,::millis((5000) * 77));
 
-      bool bOk = false;
-
       try
       {
 
-         bOk = ::aura::application::finalize();
+         ::aura::application::term();
 
       }
       catch(...)
       {
 
-         bOk = false;
-
       }
-
-      return bOk;
 
    }
 
 
-   int32_t system::exit_application()
+   void system::term_application()
    {
-
 
       try
       {
@@ -754,10 +820,9 @@ namespace aura
       catch(...)
       {
 
-         m_iReturnCode = -86;
+         m_error.set(-86);
 
       }
-
 
       for(int i = 0; i < m_serviceptra.get_size(); i++)
       {
@@ -793,6 +858,25 @@ namespace aura
 
 //      m_basesessionptra.remove_all();
 
+      try
+      {
+
+         if (m_pvisual.is_set())
+         {
+
+            m_pvisual->term();
+
+         }
+
+      }
+      catch(...)
+      {
+
+
+      }
+
+      m_pvisual.release();
+
       m_spfile.release();
 
       m_spdir.release();
@@ -807,16 +891,18 @@ namespace aura
 
       }
 
+#ifdef DEBUG
+
       m_plog.release();
 
-      m_pmath.release();
+#endif
 
-      int32_t iRet = 0;
+      m_pmath.release();
 
       try
       {
 
-         iRet = ::aura::application::exit_application();
+         ::aura::application::term_application();
 
       }
       catch(...)
@@ -854,10 +940,11 @@ namespace aura
       }
 
 
+#ifdef DEBUG
 
       m_plog.release();
 
-
+#endif
 
       {
 
@@ -869,9 +956,16 @@ namespace aura
 
       }
 
+#ifdef LINUX
+
+      os_term_windowing();
+
+      os_term_imaging();
+
+#endif
 
 
-      ::aura::application::exit_application();
+      ::aura::application::term_application();
 
 #ifdef METROWIN
 //      m_pdevicecontext = nullptr;
@@ -893,7 +987,7 @@ namespace aura
       //    ns_app_terminate();
 //#endif
 
-      return iRet;
+//      return iRet;
 
    }
 
@@ -933,10 +1027,6 @@ namespace aura
       return true;
 
    }
-
-
-
-
 
 
    int32_t system::_001OnDebugReport(int32_t i1,const char * psz1,int32_t i2,const char * psz2,const char * psz3,va_list args)
@@ -1042,6 +1132,7 @@ namespace aura
       UNREFERENCED_PARAMETER(iLine);
       return true;
    }
+
 
    mutex * system::get_openweather_city_mutex()
    {
@@ -1178,18 +1269,17 @@ namespace aura
    class ::str::base64 & system::base64()
    {
 
-         return m_base64;
+      return m_base64;
 
    }
-
 
 
    ::aura::log & system::log()
    {
+
       return *m_plog;
+
    }
-
-
 
 
 
@@ -1246,7 +1336,6 @@ namespace aura
       //      ::core::trace_v = &::core::system_log_trace_v;
       return true;
    }
-
 
 
 
@@ -1316,7 +1405,7 @@ namespace aura
 
 #else
 
-            throw todo(get_app());
+            _throw(todo(get_app()));
 
 #endif
 
@@ -1339,7 +1428,7 @@ namespace aura
 
 #if defined(METROWIN)
 
-            throw todo(get_app());
+            _throw(todo(get_app()));
 
 #else
 
@@ -1377,7 +1466,7 @@ namespace aura
 
 #ifdef METROWIN
 
-            throw todo(get_app());
+            _throw(todo(get_app()));
 
 #else
 
@@ -1409,7 +1498,7 @@ namespace aura
 
 #ifdef METROWIN
 
-            throw todo(get_app());
+            _throw(todo(get_app()));
 
 #else
 
@@ -1521,11 +1610,11 @@ namespace aura
 //
 //#elif defined(METROWIN)
 //
-//      throw todo(this);
+//      _throw(todo(this));
 //
 //#elif defined(ANDROID)
 //
-//      throw todo(this);
+//      _throw(todo(this));
 //
 //#else
 //
@@ -1628,19 +1717,19 @@ namespace aura
 
    //}
 
-   colorertake5::ParserFactory & system::parser_factory()
-   {
+   //colorertake5::ParserFactory & system::parser_factory()
+   //{
 
-      if(m_pparserfactory == NULL)
-      {
+   //   if(m_pparserfactory == NULL)
+   //   {
 
-         m_pparserfactory = new colorertake5::ParserFactory(this);
+   //      m_pparserfactory = new colorertake5::ParserFactory(this);
 
-      }
+   //   }
 
-      return *m_pparserfactory;
+   //   return *m_pparserfactory;
 
-   }
+   //}
 
 
    ::file::path system::dir_appmatter_locator(::aura::application * papp)
@@ -1666,7 +1755,9 @@ namespace aura
 
       ::aura::system * psystem = (::aura::system *)p;
 
-      return psystem->main();
+      psystem->main();
+
+      return psystem->get_exit_code();
 
    }
 
@@ -1864,16 +1955,12 @@ RetryBuildNumber:
    }
 
 
-#if defined(INSTALL_SUBSYSTEM)
-
    int32_t system::start_installation(const char * pszCommand)
    {
 
       return install().start(pszCommand);
 
    }
-
-#endif
 
 
    //int32_t system::install_start(const char * pszCommandLine, const char * pszBuild)
@@ -1968,9 +2055,7 @@ RetryBuildNumber:
 
       ::output_debug_string("::aura::system::on_request session = " + demangle(typeid(*psession).name()) + "("+::str::from((int_ptr) psession)+")\n\n");
 
-
       psession->request_create(pcreate);
-
 
    }
 
@@ -2011,72 +2096,72 @@ RetryBuildNumber:
 
       /*      m_spfilehandler(new ::core::filehandler::handler(this));*/
 
-      m_mapAppLibrary.remove_all();
-
-      string strLibraryId;
-
-      ::file::listing straTitle(this);
-
-      ::file::path pathCa2Module = System.dir().ca2module();
-
-      ::output_debug_string("\n\n::aura::system::find_applications_to_cache\n\n");
-
-      ::output_debug_string("ca2 module folder : " + pathCa2Module);
-
-      ::output_debug_string("\n\n\n");
-
-      straTitle.ls_pattern(pathCa2Module, { "*.*" });
-
-      for(int32_t i = 0; i < straTitle.get_count(); i++)
-      {
-
-         strLibraryId = straTitle[i];
-
-
-         if(::str::ends_eat_ci(strLibraryId,".dll")
-               || ::str::ends_eat_ci(strLibraryId,".so")
-               || ::str::ends_eat_ci(strLibraryId,".dylib"))
-         {
-
-            if(::str::begins_ci(strLibraryId,"libdraw2d_")
-                  || ::str::begins_ci(strLibraryId,"libbase"))
-            {
-               continue;
-            }
-
-            ::output_debug_string("library("+::str::from(i)+") : " + strLibraryId+"\n\n");
-
-            map_application_library(strLibraryId);
-
-         }
-
-      }
-
-      if(!bSave)
-         return true;
-
-      ::file::file_sp file;
-
-      try
-      {
-
-         file = Session.file().get_file(System.dir().appdata() / "applibcache.bin",::file::defer_create_directory | ::file::type_binary | ::file::mode_create | ::file::mode_write);
-
-      }
-      catch(::exception::base &)
-      {
-
-         return false;
-
-      }
-
-      ::file::byte_ostream os(file);
-
-      os << m_mapAppLibrary;
-
-      on_end_find_applications_to_cache(os);
-
-      return true;
+//      m_mapAppLibrary.remove_all();
+//
+//      string strLibraryId;
+//
+//      ::file::listing straTitle(this);
+//
+//      ::file::path pathCa2Module = System.dir().ca2module();
+//
+//      ::output_debug_string("\n\n::aura::system::find_applications_to_cache\n\n");
+//
+//      ::output_debug_string("ca2 module folder : " + pathCa2Module);
+//
+//      ::output_debug_string("\n\n\n");
+//
+//      straTitle.ls_pattern(pathCa2Module, { "*.*" });
+//
+//      for(int32_t i = 0; i < straTitle.get_count(); i++)
+//      {
+//
+//         strLibraryId = straTitle[i];
+//
+//
+//         if(::str::ends_eat_ci(strLibraryId,".dll")
+//               || ::str::ends_eat_ci(strLibraryId,".so")
+//               || ::str::ends_eat_ci(strLibraryId,".dylib"))
+//         {
+//
+//            if(::str::begins_ci(strLibraryId,"libdraw2d_")
+//                  || ::str::begins_ci(strLibraryId,"libbase"))
+//            {
+//               continue;
+//            }
+//
+//            ::output_debug_string("library("+::str::from(i)+") : " + strLibraryId+"\n\n");
+//
+//            map_application_library(strLibraryId);
+//
+//         }
+//
+//      }
+//
+//      if(!bSave)
+//         return true;
+//
+//      ::file::file_sp file;
+//
+//      try
+//      {
+//
+//         file = Session.file().get_file(System.dir().appdata() / "applibcache.bin",::file::defer_create_directory | ::file::type_binary | ::file::mode_create | ::file::mode_write);
+//
+//      }
+//      catch(::exception::base &)
+//      {
+//
+//         return false;
+//
+//      }
+//
+//      ::file::byte_ostream os(file);
+//
+//      os << m_mapAppLibrary;
+//
+//      on_end_find_applications_to_cache(os);
+//
+//      return true;
 
    }
 
@@ -2547,11 +2632,11 @@ RetryBuildNumber:
          city_auto_pointer = new openweather_city;
 
          city_auto_pointer->m_iIndex = openweather_find_city2(
-                                          strQuery,
-                                          city_auto_pointer->m_strCit,
-                                          city_auto_pointer->m_iId,
-                                          city_auto_pointer->m_dLat,
-                                          city_auto_pointer->m_dLon);
+                                       strQuery,
+                                       city_auto_pointer->m_strCit,
+                                       city_auto_pointer->m_iId,
+                                       city_auto_pointer->m_dLat,
+                                       city_auto_pointer->m_dLon);
 
       }
 
@@ -2819,7 +2904,7 @@ found:
    string system::url_encode(const string & str)
    {
 
-      //throw interface_only_exception(this);
+      //_throw(interface_only_exception(this));
 
       return url_encode_dup(str);
 
@@ -2830,18 +2915,78 @@ found:
    bool system::android_set_user_wallpaper(string strUrl)
    {
 
-      m_pandroidinitdata->m_pszUserWallpaper = strdup(strUrl);
+      m_pdataexchange->m_pszUserWallpaper = strdup(strUrl);
 
       return true;
 
    }
+
+   bool system::android_get_user_wallpaper(string & strUrl)
+   {
+
+      if (m_pdataexchange->m_pszGetUserWallpaper != NULL)
+      {
+
+         goto success;
+
+      }
+
+      m_pdataexchange->m_pszGetUserWallpaper = NULL;
+
+      m_pdataexchange->m_bGetUserWallpaper = true;
+
+      for(int i = 0; i < 10; i++)
+      {
+
+         if (m_pdataexchange->m_pszGetUserWallpaper != NULL)
+         {
+
+            break;
+
+         }
+
+         Sleep(50);
+
+      }
+
+      m_pdataexchange->m_bGetUserWallpaper = false;
+
+      if (m_pdataexchange->m_pszGetUserWallpaper == NULL)
+      {
+
+         return false;
+
+      }
+
+success:
+
+      strUrl = m_pdataexchange->m_pszGetUserWallpaper;
+
+      try
+      {
+
+         free(m_pdataexchange->m_pszGetUserWallpaper);
+
+      }
+      catch (...)
+      {
+
+
+      }
+
+      m_pdataexchange->m_pszGetUserWallpaper = NULL;
+
+      return true;
+
+   }
+
 
 #endif
 
    class ::crypto::crypto & system::crypto()
    {
 
-         return *m_spcrypto;
+      return *m_spcrypto;
 
    }
 
@@ -2850,6 +2995,110 @@ found:
    {
 
       return m_userset;
+
+   }
+
+
+   bool system::accumulate_on_open_file(stringa stra, string strExtra, int iMillisDelay)
+   {
+
+      synch_lock sl(m_pmutex);
+
+      m_dwCommandLineLast = get_tick_count();
+
+      m_iCommandLineDelay = MAX(1000, iMillisDelay);
+
+      index iIndex = stra.find_first(":");
+
+      if(iIndex >= 0)
+      {
+
+         if(iIndex > 0)
+         {
+
+            m_straCommandLineAccumul.add(stra.slice(0, iIndex));
+
+         }
+
+         m_straCommandLineExtra.add(stra.slice(iIndex));
+
+      }
+      else
+      {
+
+         if(m_straCommandLineExtra.has_elements())
+         {
+
+            m_straCommandLineExtra.add(stra);
+
+         }
+         else
+         {
+
+            m_straCommandLineAccumul.add(stra);
+
+         }
+
+      }
+
+      if(m_pthreadCommandLine.is_null())
+      {
+
+         m_pthreadCommandLine = fork([&]()
+         {
+
+            while(::get_thread_run())
+            {
+
+               {
+
+                  synch_lock sl(m_pmutex);
+
+                  if((m_straCommandLineAccumul.has_elements() ||
+                        m_straCommandLineExtra.has_elements())
+                        && ::comparison::gt(get_tick_count() - m_dwCommandLineLast, m_iCommandLineDelay))
+                  {
+
+                     stringa straAccumul = m_straCommandLineAccumul;
+
+                     stringa straExtra = m_straCommandLineExtra;
+
+                     m_straCommandLineAccumul.remove_all();
+
+                     m_straCommandLineExtra.remove_all();
+
+                     sl.unlock();
+
+                     if(straExtra.has_elements())
+                     {
+
+                        on_open_file(
+                        straAccumul,
+                        straExtra.slice(1).implode(" "));
+
+                     }
+                     else
+                     {
+
+                        on_open_file(
+                        straAccumul,
+                        "");
+
+                     }
+
+                  }
+
+               }
+
+               Sleep(300);
+
+            }
+
+         });
+
+      }
+
+      return true;
 
    }
 
@@ -2905,6 +3154,476 @@ found:
       return get_appptra()[0]->waveout_open(iChannel, pformat, pcallback);
 
    }
+
+
+   bool system::initialize_native_window1()
+   {
+
+      return true;
+
+   }
+
+
+   void * system::initialize_native_window2(LPCRECT lpcrect)
+   {
+
+      return NULL;
+
+   }
+
+
+   void system::on_os_text(e_os_text etext, string strText)
+   {
+
+
+   }
+
+
+
+#ifdef METROWIN
+
+
+
+   CLASS_DECL_AURA bool get_window_rect(::aura::system_window ^ pwindow, RECTD * lprect)
+   {
+
+      Windows::Foundation::Rect rect = pwindow->get_window_rect();
+
+      lprect->left = rect.X;
+      lprect->top = rect.Y;
+      lprect->right = lprect->left + rect.Width;
+      lprect->bottom = lprect->top + rect.Height;
+
+      return true;
+   }
+
+
+   CLASS_DECL_AURA bool get_window_rect(::aura::system_window ^ pwindow, LPRECT lprect)
+   {
+
+      rectd r;
+
+      if (!get_window_rect(pwindow, (RECTD *)&r))
+         return false;
+
+      if (!::copy(lprect, r))
+         return false;
+
+      return true;
+
+   }
+
+
+#endif
+
+
+
+   ::user::interaction_impl * system::impl_from_handle(void * pdata)
+   {
+
+      return oswindow_get((oswindow)pdata);
+
+   }
+
+   ::user::interaction * system::ui_from_handle(void * pdata)
+   {
+
+      ::user::interaction_impl * pimpl = impl_from_handle(pdata);
+
+      if (pimpl == NULL)
+      {
+
+         return NULL;
+
+      }
+
+      try
+      {
+
+         return pimpl->m_pui;
+
+      }
+      catch (...)
+      {
+
+         _throw(resource_exception(this, "not good window anymore"));
+
+      }
+
+      return NULL;
+
+   }
+
+
+
+
+   bool system::defer_create_system_frame_window()
+   {
+
+
+#ifdef WINDOWSEX
+
+      if (m_psystemwindow != NULL)
+         return true;
+
+      m_psystemwindow = new ::user::system_interaction_impl(this);
+
+#endif
+
+
+
+#ifdef WINDOWSEX
+
+//      dappy(string(typeid(*this).name()) + " : Going to ::axis::system::m_spwindow->create_window_ex : " + ::str::from(m_iErrorCode));
+
+      if (!m_psystemwindow->create_window_ex(0, NULL, NULL, 0, null_rect(), NULL, "::axis::system::interaction_impl::no_twf"))
+      {
+
+         //       dappy(string(typeid(*this).name()) + " : ::axis::system::m_spwindow->create_window_ex failure : " + ::str::from(m_iErrorCode));
+
+         return false;
+
+      }
+
+#endif
+
+      return true;
+
+   }
+
+   ::net::email_department & system::email()
+   {
+
+      return m_emaildepartment;
+
+   }
+   void system::enum_display_monitors()
+   {
+
+#ifdef WINDOWSEX
+
+      m_monitorinfoa.remove_all();
+
+      ::EnumDisplayMonitors(NULL, NULL, &system::monitor_enum_proc, (LPARAM)(dynamic_cast < ::aura::system * > (this)));
+
+#else
+
+      // todo
+      //      m_monitorinfoa.remove_all();
+
+
+#endif
+
+   }
+
+
+
+#ifdef WINDOWSEX
+   BOOL CALLBACK system::monitor_enum_proc(HMONITOR hmonitor, HDC hdcMonitor, LPRECT lprcMonitor, LPARAM dwData)
+   {
+
+      ::aura::system * psystem = (::aura::system *) dwData;
+
+      psystem->monitor_enum(hmonitor, hdcMonitor, lprcMonitor);
+
+      return TRUE; // to enumerate all
+
+   }
+
+   void system::monitor_enum(HMONITOR hmonitor, HDC hdcMonitor, LPRECT lprcMonitor)
+   {
+
+      UNREFERENCED_PARAMETER(hdcMonitor);
+      UNREFERENCED_PARAMETER(lprcMonitor);
+
+      m_monitorinfoa.allocate(m_monitorinfoa.get_size() + 1);
+
+      ZERO(m_monitorinfoa.last());
+
+      m_hmonitora.add(hmonitor);
+
+      m_monitorinfoa.last().cbSize = sizeof(MONITORINFO);
+
+      ::GetMonitorInfo(hmonitor, &m_monitorinfoa.last());
+
+      MONITORINFO mi = m_monitorinfoa.last();
+
+      TRACE("session::monitor_enum\n");
+      TRACE("upper_bound %d\n", m_monitorinfoa.get_upper_bound());
+      TRACE("rcMonitor(left, top, right, bottom) %d, %d, %d, %d\n", mi.rcMonitor.left, mi.rcMonitor.top, mi.rcMonitor.right, mi.rcMonitor.bottom);
+      TRACE("rcWork(left, top, right, bottom) %d, %d, %d, %d\n", mi.rcWork.left, mi.rcWork.top, mi.rcWork.right, mi.rcWork.bottom);
+
+   }
+
+
+#endif
+
+
+   index system::get_main_monitor(LPRECT lprect)
+   {
+
+      index iMainMonitor = 0;
+
+#ifdef WINDOWSEX
+
+      HMONITOR hmonitorPrimary = GetPrimaryMonitorHandle();
+
+      for (index iMonitor = 0; iMonitor < get_monitor_count(); iMonitor++)
+      {
+
+         if (m_hmonitora[iMonitor] == hmonitorPrimary)
+         {
+
+            iMainMonitor = iMonitor;
+
+            break;
+
+         }
+
+      }
+
+
+#endif
+
+      if (lprect != NULL)
+      {
+
+         get_monitor_rect(iMainMonitor, lprect);
+
+      }
+
+      return iMainMonitor;
+
+   }
+
+
+   ::count system::get_monitor_count()
+   {
+
+#ifdef WINDOWSEX
+
+      return m_monitorinfoa.get_count();
+
+#elif defined(MACOS)
+
+      return GetScreenCount();
+
+#else
+
+      return 1;
+
+#endif
+
+   }
+
+
+   bool system::get_monitor_rect(index iMonitor, LPRECT lprect)
+   {
+
+#ifdef WINDOWSEX
+
+      if (iMonitor < 0 || iMonitor >= get_monitor_count())
+         return false;
+
+      *lprect = m_monitorinfoa[iMonitor].rcMonitor;
+
+#elif defined(METROWIN)
+
+
+      return false;
+
+
+#elif defined(LINUX)
+
+
+      return false;
+
+
+#elif defined(APPLEOS)
+
+      if (iMonitor < 0 || iMonitor >= get_monitor_count())
+         return false;
+
+      GetScreenRect(lprect, (int) iMonitor);
+
+#else
+
+      lprect->left = 0;
+      lprect->top = 0;
+      lprect->right = m_pdataexchange->m_iScreenWidth;
+      lprect->bottom = m_pdataexchange->m_iScreenHeight;
+
+#endif
+
+      return true;
+
+   }
+
+
+   ::count system::get_desk_monitor_count()
+   {
+
+      return get_monitor_count();
+
+   }
+
+
+   bool system::get_desk_monitor_rect(index iMonitor, LPRECT lprect)
+   {
+
+      return get_monitor_rect(iMonitor, lprect);
+
+   }
+
+
+
+
+   index system::get_main_wkspace(LPRECT lprect)
+   {
+
+      index iMainWkspace = 0;
+
+#ifdef WINDOWSEX
+
+      HMONITOR hwkspacePrimary = GetPrimaryMonitorHandle();
+
+      for (index iWkspace = 0; iWkspace < get_wkspace_count(); iWkspace++)
+      {
+
+         if (m_hmonitora[iWkspace] == hwkspacePrimary)
+         {
+
+            iMainWkspace = iWkspace;
+
+            break;
+
+         }
+
+      }
+
+
+#endif
+
+      if (lprect != NULL)
+      {
+
+         get_wkspace_rect(iMainWkspace, lprect);
+
+      }
+
+      return iMainWkspace;
+
+   }
+
+
+   ::count system::get_wkspace_count()
+   {
+
+#ifdef WINDOWSEX
+
+      return m_monitorinfoa.get_count();
+
+#else
+
+      return get_monitor_count();
+
+#endif
+
+   }
+
+
+   bool system::get_wkspace_rect(index iWkspace, LPRECT lprect)
+   {
+
+#ifdef WINDOWSEX
+
+      if (iWkspace < 0 || iWkspace >= get_wkspace_count())
+         return false;
+
+      *lprect = m_monitorinfoa[iWkspace].rcWork;
+
+#elif defined(METROWIN)
+
+      return get_monitor_rect(iWkspace, lprect);
+
+      //#elif defined(LINUX)
+      //
+      //return false;
+      //
+#elif defined(APPLEOS)
+
+      if (iWkspace < 0 || iWkspace >= get_wkspace_count())
+         return false;
+
+      GetWkspaceRect(lprect, (int) iWkspace);
+
+      //      lprect->top += ::mac::get_system_main_menu_bar_height();
+      //    lprect->bottom -= ::mac::get_system_dock_height();
+
+#else
+
+      //_throw(todo(get_app()));
+
+      //::GetWindowRect(::GetDesktopWindow(),lprect);
+
+      get_monitor_rect(iWkspace, lprect);
+
+#endif
+
+      return true;
+
+   }
+
+
+   ::count system::get_desk_wkspace_count()
+   {
+
+      return get_wkspace_count();
+
+   }
+
+
+   bool system::get_desk_wkspace_rect(index iWkspace, LPRECT lprect)
+   {
+
+      return get_wkspace_rect(iWkspace, lprect);
+
+   }
+
+   index system::get_ui_wkspace(::user::interaction * pui)
+   {
+
+      index iMainWkspace = 0;
+
+#ifdef WINDOWSEX
+
+      HMONITOR hwkspacePrimary = GetUiMonitorHandle(pui->get_handle());
+
+      for (index iWkspace = 0; iWkspace < get_wkspace_count(); iWkspace++)
+      {
+
+         if (m_hmonitora[iWkspace] == hwkspacePrimary)
+         {
+
+            iMainWkspace = iWkspace;
+
+            break;
+
+         }
+
+      }
+
+
+#endif
+
+      return iMainWkspace;
+
+   }
+
+
+
+
+
 
 
 } // namespace aura

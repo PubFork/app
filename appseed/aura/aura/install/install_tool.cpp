@@ -1,7 +1,7 @@
 #include "framework.h"
 
 
-#if defined(INSTALL_SUBSYSTEM)
+#include "install_tool.h"
 
 
 namespace install
@@ -52,11 +52,11 @@ namespace install
 
 #ifdef METROWIN
 
-      throw "todo";
+      _throw(simple_exception(get_app(), "todo"));
 
 #else
 
-      ::aura::ipc::tx txchannel(::get_thread_app());
+      ::aura::ipc::tx txchannel(get_app());
 
       ::install::launcher launcher(pszPlatform, "", "");
 
@@ -444,12 +444,5 @@ namespace install
 
 
 } // namespace install
-
-
-#endif
-
-
-
-
 
 

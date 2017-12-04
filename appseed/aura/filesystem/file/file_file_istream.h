@@ -13,7 +13,7 @@ namespace file
 
 
       file_istream();
-      file_istream(const char * lpszFileName,uint32_t nOpenFlags,::aura::application * papp = ::get_thread_app());
+      file_istream(const char * lpszFileName,uint32_t nOpenFlags,::aura::application * papp = ::get_app());
       file_istream(file * preader);
       file_istream(const file_istream & preader);
       virtual ~file_istream();

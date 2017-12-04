@@ -72,12 +72,12 @@ namespace aura
          ~category();
 
 
-         UINT GetLevel() const throw();
-         void SetLevel(UINT nLevel) throw();
-         e_status GetStatus() const throw();
-         void SetStatus(e_status eStatus) throw();
+         UINT GetLevel() const NOTHROW;
+         void SetLevel(UINT nLevel) NOTHROW;
+         e_status GetStatus() const NOTHROW;
+         void SetStatus(e_status eStatus) NOTHROW;
 
-         operator uint32_t() const throw();
+         operator uint32_t() const NOTHROW;
 
          uint32_t      m_dwCategory;
          string            m_strCategory;
@@ -90,7 +90,7 @@ namespace aura
       {
       public:
 
-         sp(::aura::application) m_pauraapp;
+         ::aura::application * m_pauraapp;
 
          trace(::aura::application * papp)
          {
@@ -125,7 +125,7 @@ namespace aura
       CLASS_DECL_AURA void __cdecl __trace(const unichar * pszFormat,...);
       CLASS_DECL_AURA void __cdecl __trace(uint_ptr dwCategory,UINT nLevel,const char * pszFormat,...);
       CLASS_DECL_AURA void __cdecl __trace(uint_ptr dwCategory,UINT nLevel,const unichar * pszFormat,...);
-      
+
    } // namespace trace
 
 

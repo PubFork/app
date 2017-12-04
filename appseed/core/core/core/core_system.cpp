@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "core/user/user/user.h"
 ////#include "axis/net/net_sockets.h"
 //#include "charguess.h"
@@ -26,11 +26,11 @@ namespace core
 {
 
 
-   system::system(::aura::application * papp, void * pdata):
+   system::system(::aura::application * papp, app_core * pappcore, void * pdata):
       ::object(papp),
-      ::aura::system(papp, pdata),
-      ::axis::system(papp),
-      ::base::system(papp),
+      ::aura::system(papp, pappcore, pdata),
+      ::axis::system(papp, pappcore),
+      ::base::system(papp, pappcore),
       m_mutexDelete(this),
       m_mutex(this)
    {
@@ -41,33 +41,30 @@ namespace core
 
 
 #ifdef METROWIN
-         m_window                                  = nullptr;
+      m_window                                  = nullptr;
 #endif
 
-         m_pcoresystem                            = this;
-         set_app(this);
+      m_pcoresystem                            = this;
+      set_app(this);
 
 
-         if(papp == NULL)
-         {
+      if(papp == NULL)
+      {
 
-            oprop("parent_system") = (sp(object)) NULL;
+         oprop("parent_system") = (sp(object)) NULL;
 
-         }
-         else
-         {
+      }
+      else
+      {
 
-            oprop("parent_system") = papp->m_pcoresystem;
+         oprop("parent_system") = papp->m_pcoresystem;
 
-         }
+      }
 
-         string strId;
-         //strId = m_strAppName;
-         //strId += ::str::has_char(m_strAppId, ".");
-         //strId += ::str::has_char(m_strBaseSupportId, ".");
-
-
-
+      string strId;
+      //strId = m_strAppName;
+      //strId += ::str::has_char(m_strAppId, ".");
+      //strId += ::str::has_char(m_strBaseSupportId, ".");
 
 
 
@@ -75,37 +72,40 @@ namespace core
 
 
 
-         m_userset.set_app(this);
-         //      m_email.set_app(this);
+
+
+
+      m_userset.set_app(this);
+      //      m_email.set_app(this);
 
 
 
 
 
 
-         m_bInitApplication         = false;
-         m_bInitApplicationResult   = FALSE;
-         m_bProcessInitialize       = false;
-         m_bProcessInitializeResult = false;
+      m_bInitApplication         = false;
+      m_bInitApplicationResult   = FALSE;
+      m_bProcessInitialize       = false;
+      m_bProcessInitializeResult = false;
 
-         //m_puserstr                 = NULL;
+      //m_puserstr                 = NULL;
 
-         m_pparserfactory           = NULL;
+      m_pparserfactory           = NULL;
 
-         m_bLicense                 = false;
+      m_bLicense                 = false;
 
-         //m_prunstartinstaller       = NULL;
-         m_bLicense                 = false;
+      //m_prunstartinstaller       = NULL;
+      m_bLicense                 = false;
 
 #ifdef WINDOWSEX
 
-         m_uiWindowsTaskbarCreatedMessage = 0;
+      m_uiWindowsTaskbarCreatedMessage = 0;
 
 #endif
 
 
 
-      }
+   }
 
 
    system::~system()
@@ -116,22 +116,11 @@ namespace core
    }
 
 
-
-   void system::construct(const char * pszAppId)
-   {
-
-      ::core::application::construct(pszAppId);
-
-      ::base::system::construct(pszAppId);
-
-   }
-
-
-
-
    void system::discard_to_factory(sp(object) pca)
    {
+
       UNREFERENCED_PARAMETER(pca);
+
    }
 
 
@@ -142,13 +131,13 @@ namespace core
 
    }
 
-   bool system::initialize2()
+   bool system::init2()
    {
 
-      if(!::core::application::initialize2())
+      if(!::core::application::init2())
          return false;
 
-      if(!::base::system::initialize2())
+      if(!::base::system::init2())
          return false;
 
       return true;
@@ -171,7 +160,7 @@ namespace core
    }
 
 
-   bool system::process_initialize()
+   bool system::process_init()
    {
 
       if (m_bProcessInitialize)
@@ -198,7 +187,7 @@ namespace core
 
 #endif
 
-      if (!::core::application::process_initialize())
+      if (!::core::application::process_init())
       {
 
          thiserr << "end failure (1)";
@@ -207,7 +196,7 @@ namespace core
 
       }
 
-      if (!::base::system::process_initialize())
+      if (!::base::system::process_init())
       {
 
          thiserr << "end failure (2)";
@@ -220,17 +209,17 @@ namespace core
 
 #ifdef LINUX
 
-   ::fork(get_app(),[=]()
-         {
+      ::fork(get_app(),[=]()
+      {
 
-            ::get_thread()->unregister_from_required_threads();
+         ::get_thread()->unregister_from_required_threads();
 
          g_pbasecore = dlopen("libbasecore.so", RTLD_LOCAL | RTLD_NOW);
          BASECORE_INIT * f =  (BASECORE_INIT *) dlsym(g_pbasecore, "basecore_init");
          (*f)();
-output_debug_string("gtk_main exited");
+         output_debug_string("gtk_main exited");
 
-         });
+      });
 
 #endif
 
@@ -252,50 +241,48 @@ output_debug_string("gtk_main exited");
    }
 
 
-   bool system::initialize()
+   bool system::init()
    {
-
-
 
 #ifndef APPLEOS
 
       if(m_pparserfactory == NULL)
       {
 
-
-
       }
 
 #endif
 
+      if (!::core::application::init())
+      {
 
-      if(!::core::application::initialize())
          return false;
 
-
+      }
 
       return true;
+
    }
 
 
-
-   bool system::initialize1()
+   bool system::init1()
    {
-
-
-
-
 
       m_pfilehandler = new ::filehandler::handler(this);
 
+      if (!::core::application::init1())
+      {
 
-
-
-      if(!::core::application::initialize1())
          return false;
 
-      if(!::base::system::initialize1())
+      }
+
+      if (!::base::system::init1())
+      {
+
          return false;
+
+      }
 
       //if(Session.fontopus()->create_system_user("system") == NULL)
       // return false;
@@ -319,13 +306,9 @@ output_debug_string("gtk_main exited");
       //if(!m_phtml->initialize())
       //   return false;
 
-
-
       return true;
 
    }
-
-
 
 
    ::filehandler::handler & system::filehandler()
@@ -363,10 +346,10 @@ output_debug_string("gtk_main exited");
 
    }
 
-   bool system::initialize3()
+   bool system::init3()
    {
 
-      if(!::core::application::initialize3())
+      if(!::core::application::init3())
          return false;
 
       if(m_phistory == NULL)
@@ -379,10 +362,10 @@ output_debug_string("gtk_main exited");
    }
 
 
-   bool system::initialize_application()
+   bool system::init_application()
    {
 
-      if(!::base::system::initialize_application())
+      if(!::base::system::init_application())
       {
 
          return false;
@@ -398,7 +381,7 @@ output_debug_string("gtk_main exited");
       set_enum_name(var::type_bool      , "bool");
       set_enum_name(var::type_double    , "double");*/
 
-      if (!::core::application::initialize_application())
+      if (!::core::application::init_application())
       {
 
          return false;
@@ -427,39 +410,38 @@ output_debug_string("gtk_main exited");
    }
 
 
-   int32_t system::exit_application()
+   void system::term_application()
    {
-
 
       try
       {
-         
+
          for(auto & pair : System.m_appmap)
          {
-            
+
             try
             {
-               
+
                if(pair.m_element2->m_pcoresystem == this)
                {
-                  
+
                   pair.m_element2->m_pcoresystem = NULL;
-                  
+
                }
-               
+
             }
             catch(...)
             {
-               
+
             }
-            
+
          }
-         
+
       }
       catch(...)
       {
-   
-      }     
+
+      }
 
       __wait_threading_count(::millis((5000) * 8));
 
@@ -470,16 +452,16 @@ output_debug_string("gtk_main exited");
 
 #endif
 
-      int32_t iRet = m_iReturnCode;
-
       try
       {
 
-         iRet = ::base::system::exit_application();
+         ::base::system::term_application();
 
       }
       catch(...)
       {
+
+         m_error.set_if_not_set();
 
       }
 
@@ -497,6 +479,8 @@ output_debug_string("gtk_main exited");
       catch(...)
       {
 
+         m_error.set_if_not_set();
+
       }
 
       try
@@ -507,6 +491,8 @@ output_debug_string("gtk_main exited");
       }
       catch(...)
       {
+
+         m_error.set_if_not_set();
 
       }
 
@@ -519,6 +505,8 @@ output_debug_string("gtk_main exited");
       catch(...)
       {
 
+         m_error.set_if_not_set();
+
       }
 
       try
@@ -530,6 +518,8 @@ output_debug_string("gtk_main exited");
       catch(...)
       {
 
+         m_error.set_if_not_set();
+
       }
 
       m_plog.release();
@@ -537,8 +527,6 @@ output_debug_string("gtk_main exited");
       m_typemap.remove_all();
 
       m_typemap.release();
-
-      return iRet;
 
    }
 
@@ -646,36 +634,25 @@ output_debug_string("gtk_main exited");
    }
 
 
-   bool system::finalize()
+   void system::term()
    {
 
       ::aura::del(m_phistory);
 
       ::aura::del(m_pfilehandler);
 
-      bool bOk = true;
-
       try
       {
 
-         m_visual.finalize();
+         ::base::system::term();
 
       }
-      catch (...)
+      catch(...)
       {
 
+         m_error.set_if_not_set();
 
       }
-
-
-      if(!::base::system::finalize())
-      {
-
-         bOk = false;
-
-      }
-
-      return bOk;
 
    }
 
@@ -697,7 +674,7 @@ output_debug_string("gtk_main exited");
    void system::on_request(::create * pcreate)
    {
 
-      ::core::session * pplatform = get_platform(pcreate->m_spCommandLine->m_iEdge,pcreate->m_spCommandLine->m_pbiasCreate);
+      get_platform(pcreate->m_spCommandLine->m_iEdge,pcreate->m_spCommandLine->m_pbiasCreate);
 
       ::base::system::on_request(pcreate);
 
@@ -798,12 +775,6 @@ output_debug_string("gtk_main exited");
    }
 
 
-   uint32_t system::guess_code_page(const string & str)
-   {
-
-      return charguess(str)();
-
-   }
 
 
    ::user::document * system::place_hold(::user::interaction * pui)
@@ -958,12 +929,10 @@ output_debug_string("gtk_main exited");
    }
 
 
-   int32_t system::main()
+   void system::main()
    {
 
-      int iRet = ::base::system::main();
-
-      return iRet;
+      ::base::system::main();
 
    }
 
@@ -1009,7 +978,9 @@ uint32_t _thread_proc_start_core_system_main(void * p)
 
    ::set_thread(psystem);
 
-   return pplanesystem->::core::system::main();
+   pplanesystem->::core::system::main();
+
+   return pplanesystem->get_exit_code();
 
 }
 

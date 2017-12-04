@@ -1,7 +1,7 @@
 #pragma once
 
 
-#if defined(INSTALL_SUBSYSTEM)
+#if defined()
 
 
 int32_t spaboot_start(const char * pszVersion, const char * pszId);
@@ -38,7 +38,7 @@ namespace install
 
          //virtual bool on_run_step();
 
-         virtual int32_t run() override;
+         virtual void run() override;
 
 
       } ;

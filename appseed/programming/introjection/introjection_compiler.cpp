@@ -282,12 +282,15 @@ namespace introjection
 
 #ifdef METROWIN
 
-      throw todo(get_app());
+      _throw(todo(get_app()));
 
 #elif defined(LINUX)
+
 #else
+
       var var = System.process().get_output("\"" + m_strEnv + "\" " + m_strPlat2 + " 10.0.15063.0");
-      TRACE0(var.get_string());
+
+      TRACE("%s", var.get_string());
 
 #endif
 
@@ -307,7 +310,7 @@ namespace introjection
       delete lpsz;
 #elif defined(METROWIN)
 
-      throw todo(get_app());
+      _throw(todo(get_app()));
 
 #else
       str += getenv("PATH");
@@ -317,7 +320,7 @@ namespace introjection
       //bResult = SetEnvironmentVariable("PATH",str) != FALSE;
 #elif defined(METROWIN)
 
-      throw todo(get_app());
+      _throw(todo(get_app()));
 
 #elif defined(LINUX)
 #else
@@ -454,7 +457,7 @@ namespace introjection
       if (m_strApp.is_empty())
       {
 
-         throw simple_exception(get_app(), "call compiler::initialize");
+         _throw(simple_exception(get_app(), "call compiler::initialize"));
 
       }
 
@@ -781,7 +784,9 @@ namespace introjection
       }
       catch(string strError)
       {
-         TRACE0(strError + "\n");
+
+         TRACE("%s", strError + "\n");
+
       }
       //try
       //{
@@ -983,7 +988,7 @@ namespace introjection
       }
 
 
-      int err = errno;
+      //int err = errno;
       strLog= file_as_string_dup(strClog);
 
 #else
@@ -1162,9 +1167,9 @@ namespace introjection
          //process->create_child_process(strLCmd,false,NULL,::multithreading::priority_highest);
 #endif
 
-         uint32_t dwStart = ::get_tick_count();
+         //uint32_t dwStart = ::get_tick_count();
 
-         uint32_t dwExitCode;
+         //uint32_t dwExitCode;
 
          string strLog;
 #ifdef MACOS

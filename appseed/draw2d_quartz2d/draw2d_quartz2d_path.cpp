@@ -236,7 +236,7 @@ namespace draw2d_quartz2d
             internal_end_figure(e.u.m_end.m_bClose);
             break;
          default:
-            throw "unexpected simple os graphics element type";
+            _throw(simple_exception(get_app(), "unexpected simple os graphics element type"));
       }
       
       return false;

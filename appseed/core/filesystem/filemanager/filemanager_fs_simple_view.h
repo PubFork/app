@@ -43,10 +43,8 @@ namespace filemanager
 
             void set_request_interface(::object * prequestinterface);
 
-         #ifdef DEBUG
             virtual void assert_valid() const;
             virtual void dump(dump_context & dumpcontext) const;
-         #endif
 
             DECL_GEN_SIGNAL(on_request_response);
 

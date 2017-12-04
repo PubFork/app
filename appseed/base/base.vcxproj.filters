@@ -21,9 +21,6 @@
     <Filter Include="Source Files\base\base">
       <UniqueIdentifier>{b15f9423-6971-4587-b04f-ca13192a9bcf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\base\message">
-      <UniqueIdentifier>{b9bf68d4-d81e-4040-a63c-b2b470c06acd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\base\node">
       <UniqueIdentifier>{57540175-8b21-49ef-a8b9-0ccf5f3f4a56}</UniqueIdentifier>
     </Filter>
@@ -117,26 +114,11 @@
     <Filter Include="Header Files\database\database">
       <UniqueIdentifier>{4c91bf10-f540-4f53-bdb6-f6785fea6c7c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\graphics">
-      <UniqueIdentifier>{7aefbb5d-16e2-442f-a2ba-9f463c405209}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\graphics">
-      <UniqueIdentifier>{1ae520e2-f29c-4184-84ab-8b007029926e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\database\simpledb">
       <UniqueIdentifier>{126f6e4e-e5ff-4630-bc2a-474f42a7c519}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\database\simpledb">
       <UniqueIdentifier>{e777b449-2a9a-4e55-8350-ac4b81364f65}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\base\message">
-      <UniqueIdentifier>{2d9db8ba-ff44-481c-9f6f-f277e12685bb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\user\wndfrm">
-      <UniqueIdentifier>{38d9abef-7afa-4abd-8c38-cf8433f41404}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\user\wndfrm\frame">
-      <UniqueIdentifier>{97c95238-fc7c-4ac5-81e6-94add3751806}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\user\wndfrm">
       <UniqueIdentifier>{a0ffbbf1-2d0e-448b-bd22-f412d7aaaaa5}</UniqueIdentifier>
@@ -386,20 +368,11 @@
     <ClInclude Include="user\user\user_windowing.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
-    <ClInclude Include="base\node\windows\windows_interaction_impl.h">
-      <Filter>Header Files\base\node\windows</Filter>
-    </ClInclude>
-    <ClInclude Include="base\os\windows\windows_system_interaction_impl.h">
-      <Filter>Header Files\base\os\windows</Filter>
-    </ClInclude>
     <ClInclude Include="user\user\user_message_queue.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
     <ClInclude Include="user\user\user_message_queue_listener.h">
       <Filter>Header Files\user\user</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\graphics_window_graphics.h">
-      <Filter>Header Files\graphics</Filter>
     </ClInclude>
     <ClInclude Include="base\os\windows\windows_internal.h">
       <Filter>Header Files\base\os\windows</Filter>
@@ -416,9 +389,6 @@
     <ClInclude Include="database\database\database.h">
       <Filter>Header Files\database\database</Filter>
     </ClInclude>
-    <ClInclude Include="base\message\message_user.h">
-      <Filter>Header Files\base\message</Filter>
-    </ClInclude>
     <ClInclude Include="user\user\user_tooltip.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
@@ -427,18 +397,6 @@
     </ClInclude>
     <ClInclude Include="user\user\user_box.h">
       <Filter>Header Files\user\user</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\graphics.h">
-      <Filter>Header Files\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\graphics_window.h">
-      <Filter>Header Files\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\graphics_window_buffer.h">
-      <Filter>Header Files\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\graphics_window_dc.h">
-      <Filter>Header Files\graphics</Filter>
     </ClInclude>
     <ClInclude Include="base\os\windows\windows_c.h">
       <Filter>Header Files\base\os\windows</Filter>
@@ -463,9 +421,6 @@
     </ClInclude>
     <ClInclude Include="user\user\user_const.h">
       <Filter>Header Files\user\user</Filter>
-    </ClInclude>
-    <ClInclude Include="base\os\windows\windows_window_buffer.h">
-      <Filter>Header Files\base\os\windows</Filter>
     </ClInclude>
     <ClInclude Include="user\user.h">
       <Filter>Header Files\user</Filter>
@@ -544,9 +499,6 @@
     <ClCompile Include="user\hotplugin\hotplugin_windows.cpp">
       <Filter>Source Files\user\hotplugin</Filter>
     </ClCompile>
-    <ClCompile Include="user\install\_install.cpp">
-      <Filter>Source Files\user\install</Filter>
-    </ClCompile>
     <ClCompile Include="user\install\install_plugin.cpp">
       <Filter>Source Files\user\install</Filter>
     </ClCompile>
@@ -595,9 +547,6 @@
     <ClCompile Include="user\user\user_control_bar.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
-    <ClCompile Include="user\user\user_control_event.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
     <ClCompile Include="user\user\user_document.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
@@ -622,28 +571,7 @@
     <ClCompile Include="user\user\user_impact_update_hint.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
-    <ClCompile Include="user\user\user_interaction.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_interaction_base.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_interaction_child.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_interaction_impl.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_interaction_impl_base.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
     <ClCompile Include="user\user\user_message.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_place_holder.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_place_holder_container.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
     <ClCompile Include="user\user\user_plain_edit.cpp">
@@ -673,29 +601,11 @@
     <ClCompile Include="user\user\user_wait_cursor.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
-    <ClCompile Include="user\user\user_window_map.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_window_util.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_windowing.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="base\os\windows\windows_system_interaction_impl.cpp">
-      <Filter>Source Files\base\os\windows</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\windows\windows_interaction_impl.cpp">
-      <Filter>Source Files\base\node\windows</Filter>
-    </ClCompile>
     <ClCompile Include="database\database\database_user_interaction.cpp">
       <Filter>Source Files\database\database</Filter>
     </ClCompile>
     <ClCompile Include="user\user\user_message_queue.cpp">
       <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\graphics_window_graphics.cpp">
-      <Filter>Source Files\graphics</Filter>
     </ClCompile>
     <ClCompile Include="base\os\windows\windows_gdi.cpp">
       <Filter>Source Files\base\os\windows</Filter>
@@ -703,23 +613,8 @@
     <ClCompile Include="database\simpledb\simpledb_file_system_size.cpp">
       <Filter>Source Files\database\simpledb</Filter>
     </ClCompile>
-    <ClCompile Include="base\message\message_user.cpp">
-      <Filter>Source Files\base\message</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_tooltip.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
     <ClCompile Include="user\user\user_box.cpp">
       <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\graphics_window_buffer.cpp">
-      <Filter>Source Files\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\graphics_window_dc.cpp">
-      <Filter>Source Files\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="user\wndfrm\frame\wndfrm_frame_updowninterface.cpp">
-      <Filter>Source Files\user\wndfrm\frame</Filter>
     </ClCompile>
     <ClCompile Include="user\fontopus\fontopus_dialog.cpp">
       <Filter>Source Files\user\fontopus</Filter>
@@ -731,9 +626,6 @@
       <Filter>Source Files\base\install</Filter>
     </ClCompile>
     <ClCompile Include="base\os\windows\windows_extract_icon.cpp">
-      <Filter>Source Files\base\os\windows</Filter>
-    </ClCompile>
-    <ClCompile Include="base\os\windows\windows_window_buffer.cpp">
       <Filter>Source Files\base\os\windows</Filter>
     </ClCompile>
     <ClCompile Include="user\hotplugin\hotplugin.cpp">
@@ -754,21 +646,6 @@
     <ClCompile Include="user\simple_ui\simple_ui_top.cpp">
       <Filter>Source Files\user\simple_ui</Filter>
     </ClCompile>
-    <ClCompile Include="user\user\user_menu.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_menu_item.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_style.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_style_base.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_style_composite.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
     <ClCompile Include="user\user\user_button.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
@@ -778,7 +655,7 @@
     <ClCompile Include="user\user\user_control_descriptor.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
-    <ClCompile Include="user\user\user_menu_command.cpp">
+    <ClCompile Include="user\user\_user.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,5 +1,7 @@
 #include "framework.h"
 
+#include "align_byte_count.h"
+#include "aura_heap_memory.h"
 
 #undef new
 
@@ -12,7 +14,7 @@ plex_heap * plex_heap::create(plex_heap*& pHead, uint_ptr nMax, uint_ptr cbEleme
    ASSERT(nMax > 0 && cbElement > 0);
    if (nMax == 0 || cbElement == 0)
    {
-      throw invalid_argument_exception(get_thread_app());
+      _throw(invalid_argument_exception(get_app()));
    }
 
    plex_heap* p = (plex_heap*) system_heap_alloc(sizeof(plex_heap) + nMax * cbElement);
@@ -20,7 +22,7 @@ plex_heap * plex_heap::create(plex_heap*& pHead, uint_ptr nMax, uint_ptr cbEleme
 #ifdef DEBUG
    Alloc_check_pointer_in_cpp(p);
 #endif
-         // may throw exception
+         // may _throw( exception
    p->pNext = pHead;
    pHead = p;  // change head (adds in reverse order for simplicity)
    return p;
@@ -326,7 +328,6 @@ plex_heap_alloc_array::plex_heap_alloc_array()
       g_pheap = this;
 
    }
-
 //   ::zero(m_aa,sizeof(m_aa));
   // ::zero(m_bb,sizeof(m_bb));
    //::zero(m_aaSize,sizeof(m_aaSize));
@@ -359,6 +360,13 @@ plex_heap_alloc_array::plex_heap_alloc_array()
    add(new plex_heap_alloc(768, 48));
    add(new plex_heap_alloc(1024, 48));
    add(new plex_heap_alloc(1024 * 2, 2 * 1024));
+
+//   #ifdef RASPBIAN
+//
+//   return;
+//
+//   #endif
+
 //   m_bbSize[2] = last()->GetAllocSize();
 //
 //
@@ -565,6 +573,13 @@ void * plex_heap_alloc_array::_realloc(void * p, size_t size, size_t sizeOld, in
 
       pNew = (size_t *) ::system_heap_realloc(p, size);
 
+      if(size > sizeOld)
+      {
+
+         memset(&((byte *)pNew)[sizeOld], 0, size - sizeOld);
+
+      }
+
    }
    else if (pallocOld == pallocNew)
    {
@@ -586,44 +601,24 @@ void * plex_heap_alloc_array::_realloc(void * p, size_t size, size_t sizeOld, in
 
          pNew = (size_t *) ::system_heap_alloc(size);
 
+         if(size > sizeOld)
+         {
+
+            memset(&((byte *)pNew)[sizeOld], 0, size - sizeOld);
+
+         }
+
       }
 
       if (align > 0)
       {
 
-         int_ptr oldSize = (((int_ptr) p & ((int_ptr) align - 1)));
+         int_ptr oldSize = sizeOld - heap_memory::aligned_provision_get_size(0);
 
-         if(oldSize > 0)
-         {
+         int_ptr newSize = size - heap_memory::aligned_provision_get_size(0);
 
-            oldSize = sizeOld - (align - oldSize);
-
-         }
-         else
-         {
-
-            oldSize = sizeOld;
-
-         }
-
-         int_ptr newSize = (((int_ptr) pNew & ((int_ptr) align - 1)));
-
-         if(newSize > 0)
-         {
-
-            newSize = size - (align - newSize);
-
-         }
-         else
-         {
-
-            newSize = size;
-
-         }
-
-         memcpy(
-                (void *)(((int_ptr)pNew + align - 1) & ~((int_ptr)align - 1)),
-                (void *)(((int_ptr)p + align - 1) & ~((int_ptr)align - 1)),
+         memcpy(heap_memory::aligned(pNew,newSize,0),
+                heap_memory::aligned(p,oldSize,0),
                 MIN(oldSize, newSize));
 
       }
@@ -725,7 +720,7 @@ void Free_check_pointer_in_cpp(void * p)
 
    }
 
-   
+
 
 }
 

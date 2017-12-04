@@ -1,4 +1,4 @@
-#include "framework.h" // from "axis/user/user.h"
+﻿#include "framework.h" // from "axis/user/user.h"
 #include "base/user/user.h"
 //#include "base/user/common_user.h"
 
@@ -38,22 +38,7 @@ namespace base
 #endif
 
 
-      m_ecursorDefault = ::visual::cursor_arrow;
 
-      m_ecursor = ::visual::cursor_default;
-
-      m_ecursorDefault = ::visual::cursor_arrow;
-
-      m_ecursor = ::visual::cursor_default;
-
-      m_bDrawCursor = false;
-
-
-      m_bDrawCursor = false;
-
-      m_ecursorDefault = ::visual::cursor_arrow;
-
-      m_ecursor = ::visual::cursor_default;
 
       m_puiMouseMoveCapture = NULL;
 
@@ -83,8 +68,8 @@ namespace base
       //m_puserstyle           = NULL;
 
       m_pcopydesk = NULL;
-
    }
+
 
 
    //void session::construct(::aura::application * papp, int iPhase)
@@ -100,176 +85,13 @@ namespace base
    }
 
 
-   void session::defer_create_user_style(const char * pszUiInteractionLibrary)
-   {
 
-      if (m_puserstyle == NULL)
-      {
-
-         m_puserstyle = get_user_style(pszUiInteractionLibrary);
-
-         if (m_puserstyle == NULL)
-         {
-
-            thisfail << 1;
-
-            throw resource_exception(this);
-
-         }
-
-      }
-
-   }
-
-
-   void session::set_cursor(::visual::cursor * pcursor)
-   {
-
-      m_ecursor = ::visual::cursor_visual;
-
-#ifdef WINDOWSEX
-
-      m_pcursor = pcursor;
-
-      if (pcursor != NULL)
-      {
-
-         ::SetCursor(pcursor->get_HCURSOR());
-
-      }
-
-#endif
-
-   }
-
-   void session::set_cursor(::visual::e_cursor ecursor)
-   {
-
-      m_ecursor = ecursor;
-
-#ifdef WINDOWSEX
-
-      ::visual::cursor * pcursor = get_cursor();
-
-      if (pcursor != NULL)
-      {
-
-         ::SetCursor(pcursor->get_HCURSOR());
-
-      }
-      else
-      {
-
-         ::SetCursor(NULL);
-
-      }
-
-#endif
-
-   }
-
-
-   void session::set_default_cursor(::visual::e_cursor ecursor)
-   {
-
-      if (ecursor == ::visual::cursor_default)
-      {
-
-         m_ecursorDefault = ::visual::cursor_arrow;
-
-      }
-      else
-      {
-
-         m_ecursorDefault = ecursor;
-
-      }
-
-   }
-
-
-
-
-
-   bool session::on_ui_mouse_message(::user::mouse * pmouse)
-   {
-
-
-      //::axis::session::on_ui_mouse_message(pmouse);
-
-      if (pmouse->m_pt == pmouse->m_ptDesired)
-      {
-
-         m_ptCursor = pmouse->m_pt;
-
-      }
-
-
-
-      // user presence status activity reporting
-      if (pmouse->get_message() == WM_LBUTTONDOWN
-         || pmouse->get_message() == WM_RBUTTONDOWN
-         || pmouse->get_message() == WM_MBUTTONDOWN
-         || pmouse->get_message() == WM_MOUSEMOVE)
-      {
-
-         if (fontopus() != NULL && fontopus()->m_puser != NULL)
-         {
-
-            if (ApplicationUser.m_ppresence != NULL)
-            {
-
-               try
-               {
-
-                  ApplicationUser.m_ppresence->report_activity();
-
-               }
-               catch (...)
-               {
-
-               }
-
-            }
-
-         }
-
-      }
-
-      return true;
-
-   }
-
-
-   ::visual::cursor * session::get_cursor()
-   {
-
-      if (m_ecursor == ::visual::cursor_visual)
-      {
-
-         return m_pcursor;
-
-      }
-
-      return NULL;
-
-   }
-
-
-   ::visual::cursor * session::get_default_cursor()
-   {
-
-      return NULL;
-
-   }
-
-
-   bool session::process_initialize()
+   bool session::process_init()
    {
 
       thisstart;
 
-      if (!::axis::session::process_initialize())
+      if (!::axis::session::process_init())
       {
 
          thisfail << 2;
@@ -278,7 +100,7 @@ namespace base
 
       }
 
-      if (!::base::application::process_initialize())
+      if (!::base::application::process_init())
       {
 
          thisfail << 3;
@@ -308,27 +130,27 @@ namespace base
    }
 
 
-   bool session::initialize1()
+   bool session::init1()
    {
 
 
-      if (!::axis::session::initialize1())
+      if (!::axis::session::init1())
          return false;
 
-      if (!::base::application::initialize1())
+      if (!::base::application::init1())
          return false;
 
       //if (m_puserstyle.is_null())
       //{
-      //   
+      //
       //   defer_create_user_style(preferred_userschema());
-      //   
+      //
       //}
 
-      if (!m_puser->initialize1())
+      if (!m_puser->init1())
          return false;
 
-      if (!m_puser->initialize2())
+      if (!m_puser->init2())
          return false;
 
 
@@ -337,18 +159,29 @@ namespace base
    }
 
 
-   bool session::initialize()
+   bool session::init()
    {
 
-      if (!::axis::session::initialize())
+      if (!::axis::session::init())
+      {
+
          return false;
 
-      if (!::base::application::initialize())
+      }
+
+      if (!::base::application::init())
+      {
+
          return false;
 
-      if (!m_puser->initialize())
+      }
+
+      if (!m_puser->init())
+      {
+
          return false;
 
+      }
 
       ::set_simple_message_box(&::simple_ui_message_box);
 
@@ -357,7 +190,7 @@ namespace base
    }
 
 
-   int32_t session::exit_application()
+   void session::term_application()
    {
 
       try
@@ -390,14 +223,14 @@ namespace base
 
       }
 
-      ::base::application::exit_application();
+      ::base::application::term_application();
 
-      ::axis::session::exit_application();
+      ::axis::session::term_application();
 
       try
       {
 
-         m_puser->finalize();
+         m_puser->term();
 
       }
       catch (...)
@@ -407,203 +240,64 @@ namespace base
 
       ::release(m_puser);
 
-      return m_iReturnCode;
-
    }
 
 
-   index session::get_ui_wkspace(::user::interaction * pui)
+
+
+   bool session::prepare_menu_button(::user::menu_item * pitem)
    {
 
-      if (m_bSystemSynchronizedScreen)
+      sp(::user::button) pbutton = pitem->m_pui;
+
+      if (pbutton->m_id == "close")
       {
 
-         return System.get_ui_wkspace(pui);
+         pbutton->set_user_schema(::user::schema_menu_close);
+
+         pbutton->resize_to_fit();
+
+         pbutton->set_stock_icon(stock_icon_close);
+
+         return true;
 
       }
       else
       {
 
-         ::rect rect;
+         pbutton->set_user_schema(::user::schema_menu_button);
 
-         pui->GetWindowRect(rect);
+         int cx = pbutton->width();
 
-         return get_best_wkspace(NULL, rect);
+         int cy = pbutton->height();
+
+         pbutton->m_pmenuitem = pitem;
+
+         rect rectMargin = pbutton->_001GetRect(::user::rect_menu_margin);
+
+         int iCheckBoxSize = pbutton->_001GetInt(::user::int_check_box_size);
+
+         int iElementPadding = pbutton->_001GetInt(::user::int_element_padding);
+
+         auto & rectCheckBox = pbutton->m_rectCheckBox;
+
+         rectCheckBox.left = rectMargin.left;
+         rectCheckBox.top = rectMargin.top;
+         rectCheckBox.bottom = cy - rectMargin.bottom;
+         rectCheckBox.right = rectCheckBox.left + iCheckBoxSize;
+
+         auto & rectText = pbutton->m_rectText;
+
+         rectText.left = rectCheckBox.right + iElementPadding;
+         rectText.top = rectMargin.top;
+         rectText.bottom = cy - rectMargin.bottom;
+         rectText.right = cx - rectMargin.right;
 
       }
 
+      return true;
 
    }
-
-
-   index session::initial_frame_position(LPRECT lprect, const RECT & rectParam, bool bMove, ::user::interaction * pui)
-   {
-
-      rect rectRestore(rectParam);
-
-      rect rectMonitor;
-
-      index iMatchingMonitor = get_best_monitor(rectMonitor, rectParam);
-
-      ::size sizeMin;
-
-      if (pui != NULL)
-      {
-
-         pui->get_window_minimum_size(sizeMin);
-
-      }
-      else
-      {
-
-         get_window_minimum_size(&sizeMin);
-
-      }
-
-      rect rectIntersect;
-
-      if (bMove)
-      {
-
-         rect_array rectaMonitor;
-
-         rect_array rectaIntersect;
-
-         get_monitor(rectaMonitor, rectaIntersect, rectParam);
-
-         rectaIntersect.get_box(rectIntersect);
-
-      }
-      else
-      {
-
-         rectIntersect.intersect(rectMonitor, &rectParam);
-
-      }
-
-      if (rectIntersect.width() < sizeMin.cx
-         || rectIntersect.height() < sizeMin.cy)
-      {
-
-         if (rectMonitor.width() / 7 + MAX(sizeMin.cx, rectMonitor.width() * 2 / 5) > rectMonitor.width()
-            || rectMonitor.height() / 7 + MAX(sizeMin.cy, rectMonitor.height() * 2 / 5) > rectMonitor.width())
-         {
-
-            rectRestore = rectMonitor;
-
-         }
-         else
-         {
-
-            rectRestore.left = rectMonitor.left + rectMonitor.width() / 7;
-
-            rectRestore.top = rectMonitor.top + rectMonitor.height() / 7;
-
-            rectRestore.right = rectRestore.left + MAX(sizeMin.cx, rectMonitor.width() * 2 / 5);
-
-            rectRestore.bottom = rectRestore.top + MAX(sizeMin.cy, rectMonitor.height() * 2 / 5);
-
-            if (rectRestore.right > rectMonitor.right - rectMonitor.width() / 7)
-            {
-
-               rectRestore.offset(rectMonitor.right - rectMonitor.width() / 7 - rectRestore.right, 0);
-
-            }
-
-            if (rectRestore.bottom > rectMonitor.bottom - rectMonitor.height() / 7)
-            {
-
-               rectRestore.offset(0, rectMonitor.bottom - rectMonitor.height() / 7 - rectRestore.bottom);
-
-            }
-
-         }
-
-         *lprect = rectRestore;
-
-         return iMatchingMonitor;
-
-      }
-      else
-      {
-
-         if (!bMove)
-         {
-
-            *lprect = rectIntersect;
-
-         }
-
-         return -1;
-
-      }
-
-   }
-
-   index session::get_good_restore(LPRECT lprect, const RECT & rectParam, ::user::interaction * pui)
-   {
-
-      return initial_frame_position(lprect, rectParam, false, pui);
-
-   }
-
-
-   index session::get_good_move(LPRECT lprect, const RECT & rectParam, ::user::interaction * pui)
-   {
-
-      index iMatchingMonitor = initial_frame_position(lprect, rectParam, true, pui);
-
-      if (memcmp(lprect, &rectParam, sizeof(RECT)))
-      {
-
-         return iMatchingMonitor;
-
-      }
-      else
-      {
-
-         return -1;
-
-      }
-
-
-   }
-
-
-
-
-
-   ::user::primitive * session::GetFocus()
-   {
-
-#ifdef METROWIN
-
-      return System.ui_from_handle(::WinGetFocus());
-
-#else
-
-      return System.ui_from_handle(::GetFocus());
-
-#endif
-
-   }
-
-
-   ::user::primitive * session::GetActiveWindow()
-   {
-
-#ifdef METROWIN
-
-      return System.ui_from_handle(::WinGetActiveWindow());
-
-#else
-
-      return System.ui_from_handle(::GetActiveWindow());
-
-#endif
-
-   }
-
 
    void session::frame_pre_translate_message(::message::message * pobj)
    {
@@ -630,10 +324,10 @@ namespace base
                }
 
             }
-            catch (exit_exception & e)
+            catch (esp esp)
             {
 
-               throw e;
+               _rethrow(esp);
 
             }
             catch (...)
@@ -643,10 +337,10 @@ namespace base
          }
 
       }
-      catch (exit_exception & e)
+      catch (esp esp)
       {
 
-         throw e;
+         _rethrow(esp);
 
       }
       catch (...)
@@ -712,411 +406,6 @@ namespace base
 
 
 
-   bool session::ReleaseCapture()
-   {
-
-#ifdef METROWIN
-      oswindow oswindowCapture = ::WinGetCapture();
-#else
-      oswindow oswindowCapture = ::GetCapture();
-#endif
-
-      if (oswindowCapture == NULL)
-         return false;
-
-#ifdef METROWIN
-      ::WinReleaseCapture();
-#else
-      ::ReleaseCapture();
-#endif
-
-      m_puiCapture = NULL;
-
-      return true;
-
-
-   }
-
-
-   sp(::user::interaction) session::GetCapture()
-   {
-
-#ifdef METROWIN
-      oswindow oswindowCapture = ::WinGetCapture();
-#else
-      oswindow oswindowCapture = ::GetCapture();
-#endif
-
-      if (oswindowCapture == NULL)
-         return NULL;
-
-      sp(::user::interaction) pui = System.ui_from_handle(oswindowCapture);
-
-      if (pui == NULL)
-         return NULL;
-
-      return pui->GetCapture();
-
-   }
-
-
-
-
-
-   ::user::elemental * session::get_keyboard_focus()
-   {
-
-      if (m_pauraapp == NULL)
-         return NULL;
-
-
-      if (m_pkeyboardfocus == NULL)
-         return NULL;
-
-      //sp(::user::elemental) puieFocus;
-
-      //try
-      //{
-
-      //   puieFocus = System.ui_.get_focus_ui();
-
-      //}
-      //catch(...)
-      //{
-
-      //}
-
-      //if(puieFocus == NULL)
-      //   return NULL;
-
-      //sp(::user::interaction) puiFocus = m_pkeyboardfocus;
-
-      //if(puiFocus.is_null())
-      //   return NULL;
-
-      //if(!puiFocus->is_descendant_of(puieFocus.cast < ::user::interaction >()))
-      //   return NULL;
-
-
-      //if((bool)oprop("NativeWindowFocus") && puieFocus != m_pkeyboardfocus)
-      //   return NULL;
-      return m_pkeyboardfocus;
-
-   }
-
-   sp(::user::style) session::get_user_style(const char * pszUinteractionLibrary, ::aura::application * papp)
-   {
-
-      sp(::user::style) & p = m_mapStyle[pszUinteractionLibrary];
-
-      if (p.is_null())
-      {
-
-         p = create_new_user_style(pszUinteractionLibrary, papp);
-
-      }
-
-      return p;
-
-   }
-
-   sp(::user::style) session::create_new_user_style(const char * pszUinteractionLibrary, ::aura::application * papp)
-   {
-
-      thisstart;
-
-      if (papp == NULL)
-      {
-
-         papp = get_app();
-
-      }
-
-      stringa straLibrary;
-
-      {
-
-         string strId(pszUinteractionLibrary);
-
-         if (strId.has_char())
-         {
-
-            straLibrary.add(strId);
-
-         }
-
-      }
-
-
-      {
-
-         string strId(App(papp).preferred_userschema());
-
-         if (strId.has_char())
-         {
-
-            straLibrary.add(strId);
-
-         }
-
-      }
-
-      {
-
-         string strConfig = Application.handler()->m_varTopicQuery["wndfrm"];
-
-         if (strConfig.has_char())
-         {
-
-            string strLibrary = string("wndfrm_") + strConfig;
-
-            straLibrary.add(strConfig);
-
-         }
-
-      }
-
-
-
-      {
-
-         string strWndFrm = App(papp).file().as_string(::dir::system() / "config" / App(papp).m_strAppName / "wndfrm.txt");
-
-         if (strWndFrm.has_char())
-         {
-
-            straLibrary.add(strWndFrm);
-
-         }
-
-      }
-
-      {
-
-         string strWndFrm = App(papp).file().as_string(::dir::system() / "config" / ::file::path(App(papp).m_strAppName).folder() / "wndfrm.txt");
-
-         if (strWndFrm.has_char())
-         {
-
-            straLibrary.add(strWndFrm);
-
-         }
-
-      }
-
-      {
-
-         string strWndFrm = App(papp).file().as_string(::dir::system() / "config" / ::file::path(App(papp).m_strAppName).name() / "wndfrm.txt");
-
-         if (strWndFrm.has_char())
-         {
-
-            straLibrary.add(strWndFrm);
-
-         }
-
-      }
-
-
-      {
-
-         string strWndFrm = App(papp).file().as_string(::dir::system() / "config/system/wndfrm.txt");
-
-         if (strWndFrm.has_char())
-         {
-
-            straLibrary.add(strWndFrm);
-
-         }
-
-      }
-
-      straLibrary.add("wndfrm_metro");
-
-      straLibrary.add("wndfrm_rootkiller");
-
-      straLibrary.add("wndfrm_hyper");
-
-      straLibrary.add("wndfrm_core");
-
-      sp(::user::style) pschema;
-
-      for (string strLibrary : straLibrary)
-      {
-
-         ::aura::library * plibrary = new ::aura::library(papp, 0, NULL);
-
-         strLibrary.replace("-", "_");
-
-         strLibrary.replace("/", "_");
-
-         if (!str::begins_ci(strLibrary, "wndfrm_"))
-         {
-
-            strLibrary = "wndfrm_" + strLibrary;
-
-         }
-
-         if (!plibrary->open(strLibrary, false))
-         {
-
-            thisinfo << "Failed to load " << strLibrary;
-
-            ::aura::del(plibrary);
-
-            continue;
-
-         }
-
-         if (!plibrary->open_ca2_library())
-         {
-
-            thisinfo << "Failed to load (2) " << strLibrary;
-
-            ::aura::del(plibrary);
-
-            continue;
-
-         }
-
-         stringa stra;
-
-         plibrary->get_app_list(stra);
-
-         if (stra.get_size() != 1)
-         {
-
-            // a wndfrm OSLibrary should have one wndfrm
-            thisinfo << "a wndfrm OSLibrary should have one wndfrm " << strLibrary;
-
-            ::aura::del(plibrary);
-
-            continue;
-
-         }
-
-         string strAppId = stra[0];
-
-         if (strAppId.is_empty())
-         {
-
-            // trivial validity check
-            thisinfo << "app id should not be empty " << strLibrary;
-
-            ::aura::del(plibrary);
-
-            continue;
-
-         }
-
-         pschema = plibrary->create_object(papp, "user_style", NULL);
-
-         if (pschema.is_null())
-         {
-
-            thisinfo << "could not create user_style from " << strLibrary;
-
-            ::aura::del(plibrary);
-
-            continue;
-
-         }
-
-         pschema->m_plibrary = plibrary;
-
-         break;
-
-      }
-
-      if (pschema.is_null())
-      {
-
-         pschema = canew(::user::style(this));
-
-      }
-
-      return pschema;
-
-   }
-
-
-   void session::on_finally_focus_set(::user::elemental * pelementalFocus)
-   {
-
-      if (pelementalFocus == NULL)
-         return;
-
-      sp(::user::interaction) puiFocus = pelementalFocus;
-
-      if (puiFocus.is_set())
-      {
-
-         if (puiFocus->GetActiveWindow() != puiFocus->get_wnd())
-         {
-
-            puiFocus->get_wnd()->SetActiveWindow();
-
-         }
-
-         if (puiFocus->GetFocus() != puiFocus->get_wnd())
-         {
-
-            puiFocus->get_wnd()->SetFocus();
-
-         }
-
-         puiFocus->send_message(WM_SETFOCUS);
-
-      }
-
-
-   }
-
-
-   void session::get_cursor_pos(LPPOINT lppoint)
-   {
-
-      if (m_bSystemSynchronizedCursor)
-      {
-
-#ifdef METROWIN
-
-         Windows::Foundation::Point p;
-
-         p = System.m_possystemwindow->m_pwindow->get_cursor_pos();
-
-         m_ptCursor.x = (LONG)p.X;
-
-         m_ptCursor.y = (LONG)p.Y;
-
-#else
-
-         ::GetCursorPos(&m_ptCursor);
-
-#endif
-
-      }
-
-      ::axis::session::get_cursor_pos(lppoint);
-
-   }
-
-
-   oswindow session::get_capture()
-   {
-
-#ifdef METROWIN
-
-      return ::WinGetCapture();
-
-#else
-
-      return ::GetCapture();
-
-#endif
-
-   }
-
 
    sp(::user::impact) session::get_view()
    {
@@ -1130,7 +419,7 @@ namespace base
    void session::_001OnDefaultTabPaneDrawTitle(::user::tab_pane & pane, ::user::tab * ptab, ::draw2d::graphics * pgraphics, LPCRECT lpcrect, ::draw2d::brush_sp & brushText)
    {
 
-      throw interface_only_exception(this);
+      _throw(interface_only_exception(this));
 
    }
 
@@ -1141,37 +430,59 @@ namespace base
       return canew(::user::button(get_app()));
 
    }
+   void session::on_finally_focus_set(::user::elemental * pelementalFocus)
+   {
+
+      user()->set_mouse_focus_LButtonDown(pelementalFocus);
+
+
+   }
+
+
+   bool session::on_ui_mouse_message(::user::mouse * pmouse)
+   {
+
+
+      ::axis::session::on_ui_mouse_message(pmouse);
+
+
+
+
+      // user presence status activity reporting
+      if (pmouse->get_message() == WM_LBUTTONDOWN
+            || pmouse->get_message() == WM_RBUTTONDOWN
+            || pmouse->get_message() == WM_MBUTTONDOWN
+            || pmouse->get_message() == WM_MOUSEMOVE)
+      {
+
+         if (fontopus() != NULL && fontopus()->m_puser != NULL)
+         {
+
+            if (ApplicationUser.m_ppresence != NULL)
+            {
+
+               try
+               {
+
+                  ApplicationUser.m_ppresence->report_activity();
+
+               }
+               catch (...)
+               {
+
+               }
+
+            }
+
+         }
+
+      }
+
+      return true;
+
+   }
+
 
 } // namespace base
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

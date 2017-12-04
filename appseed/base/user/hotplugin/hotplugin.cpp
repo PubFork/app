@@ -1,9 +1,6 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "base/user/user.h"
 //#include "hotplugin.h"
-
-
-#ifdef HOTPLUGIN_SUBSYSTEM
 
 
 namespace hotplugin
@@ -21,7 +18,7 @@ namespace hotplugin
 
    CLASS_DECL_BASE ::axis::system * get_axis_system()
    {
-      
+
       return g_paxissystem;
 
    }
@@ -35,63 +32,63 @@ namespace hotplugin
 
       g_iSystemCount++;
 
-      try
-      {
+      _throw(todo(NULL));
 
-         g_paxissystem = new ::axis::system(NULL);
+//      try
+//      {
 
-         if(file_exists_dup(::dir::system() / "config\\plugin\\npca2_beg_debug_box.txt"))
-         {
+//         g_paxissystem = new ::axis::system(NULL, );
 
-            debug_box("hotplugin boxmain NP_Initialize","ZZZzzz hotplugin box",MB_OK);
+//         if(file_exists_dup(::dir::system() / "config\\plugin\\npca2_beg_debug_box.txt"))
+//         {
 
-         }
-         if(file_exists_dup(::dir::system() / "config\\plugin\\npca2_beg_sleep.txt"))
-         {
+//            debug_box("hotplugin boxmain NP_Initialize","ZZZzzz hotplugin box",MB_OK);
 
-            Sleep(10000);
+//         }
+//         if(file_exists_dup(::dir::system() / "config\\plugin\\npca2_beg_sleep.txt"))
+//         {
 
-         }
+//            Sleep(10000);
 
-         ::set_thread(g_paxissystem);
+//         }
 
-         g_paxissystem->m_bMatterFromHttpCache = true;
+//         ::set_thread(g_paxissystem);
 
-         g_paxissystem->m_bSystemSynchronizedCursor = false;
+//         g_paxissystem->m_bMatterFromHttpCache = true;
 
-         g_paxissystem->construct(NULL);
+//         g_paxissystem->m_bSystemSynchronizedCursor = false;
 
-#ifdef WINDOWS
+// #ifdef WINDOWS
 
-         g_paxissystem->m_hinstance = (HINSTANCE)get_hinstance();
+//         g_paxissystem->m_hinstance = (HINSTANCE)get_hinstance();
 
-#endif
+// #endif
 
-         xxdebug_box("box1","box1",MB_ICONINFORMATION);
+//         xxdebug_box("box1","box1",MB_ICONINFORMATION);
 
-#ifdef WINDOWS
+// #ifdef WINDOWS
 
-         set_main_thread((HTHREAD) GetCurrentThread());
+//         set_main_thread((HTHREAD) GetCurrentThread());
 
-         set_main_thread_id(GetCurrentThreadId());
+//         set_main_thread_id(GetCurrentThreadId());
 
-#endif
+// #endif
 
-         g_paxissystem->m_bReady = false;
+//         g_paxissystem->m_bReady = false;
 
-         ::create_thread(NULL,0,&base_system_main,NULL,0,NULL);
-         
-      }
-      catch(...)
-      {
+//         ::create_thread(NULL,0,&base_system_main,NULL,0,NULL);
 
-         return false;
+//      }
+//      catch(...)
+//      {
 
-         // debug_box("failed to create system", "npca2", 0);
-         //      return NULL;
-      }
+//         return false;
 
-      return true;
+//         // debug_box("failed to create system", "npca2", 0);
+//         //      return NULL;
+//      }
+
+//      return true;
 
    }
 
@@ -107,12 +104,7 @@ namespace hotplugin
          if(!g_paxissystem->pre_run())
          {
 
-            if(g_paxissystem->m_iReturnCode == 0)
-            {
-
-               g_paxissystem->m_iReturnCode = -1;
-
-            }
+            g_paxissystem->m_error.set_if_not_set();
 
             g_paxissystem->m_bReady = true;
 
@@ -124,12 +116,7 @@ namespace hotplugin
       catch(...)
       {
 
-         if(g_paxissystem->m_iReturnCode == 0)
-         {
-
-            g_paxissystem->m_iReturnCode = -1;
-
-         }
+         g_paxissystem->m_error.set_if_not_set();
 
          g_paxissystem->m_bReady = true;
 
@@ -137,7 +124,9 @@ namespace hotplugin
 
       }
 
-      return g_paxissystem->main();
+      g_paxissystem->main();
+
+      return g_paxissystem->get_exit_code();
 
    }
 
@@ -191,9 +180,5 @@ namespace hotplugin
    }
 
 } // namespace hotplugin
-
-
-#endif
-
 
 

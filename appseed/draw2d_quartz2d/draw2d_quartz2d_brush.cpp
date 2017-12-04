@@ -22,7 +22,8 @@ namespace draw2d_quartz2d
    {
    }
    
-   
+#ifdef DEBUG
+
    
    void brush::dump(dump_context & dumpcontext) const
    {
@@ -41,6 +42,7 @@ namespace draw2d_quartz2d
        */
    }
    
+#endif
    
    bool brush::destroy()
    {

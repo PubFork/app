@@ -126,7 +126,7 @@ namespace primitive
       if (hGlobalMemory == NULL)
       {
 
-         throw invalid_argument_exception(get_app());
+         _throw(invalid_argument_exception(get_app()));
 
       }
 
@@ -197,7 +197,7 @@ namespace primitive
    //LPBYTE * shared_memory::detach()
    //{
 
-   //   throw not_supported_exception(get_app(),"not valid for Global Memory(\"HGLOBAL\")");
+   //   _throw(not_supported_exception(get_app(),"not valid for Global Memory(\"HGLOBAL\")"));
 
    //}
 

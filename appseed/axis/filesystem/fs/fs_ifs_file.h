@@ -1,5 +1,6 @@
-#pragma once
+﻿#pragma once
 
+#include "aura/net/sockets/sockets_http_batch_buffer.h"
 
 class CLASS_DECL_AXIS ifs_file :
    virtual public ::sockets::http_batch_buffer

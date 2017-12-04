@@ -19,26 +19,6 @@ public:
 
 
 
-void _c_simple_message_loop()
-{
-
-
-   MESSAGE msg;
-
-	while(GetMessage(&msg))
-	{
-
-		TranslateMessage(&msg);
-
-		DispatchMessage(&msg);
-
-	}
-
-
-}
-
-
-
 
 WINBOOL sys_message_queue::GetMessage(MESSAGE * pmsg)
 {
@@ -130,25 +110,6 @@ LRESULT DispatchMessage(LPMESSAGE lpmessage)
       return false;
 
    return lpmessage->hwnd->get_user_interaction_base()->message_handler(lpmessage);
-
-}
-
-
-
-void _c_simple_message_loop()
-{
-
-   MESSAGE msg;
-
-	while(GetMessage(&msg, NULL, 0, 0))
-	{
-
-		TranslateMessage(&msg);
-
-		DispatchMessage(&msg);
-
-	}
-
 
 }
 

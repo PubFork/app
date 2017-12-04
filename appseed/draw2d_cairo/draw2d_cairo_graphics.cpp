@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include <math.h>
 
 
@@ -188,7 +188,7 @@ namespace draw2d_cairo
    bool graphics::CreateDC(const char * lpszDriverName, const char * lpszDeviceName, const char * lpszOutput, const void * lpInitData)
    {
 
-      throw not_supported_exception(get_app());
+      _throw(not_supported_exception(get_app()));
 
    }
 
@@ -196,7 +196,7 @@ namespace draw2d_cairo
    bool graphics::CreateIC(const char * lpszDriverName, const char * lpszDeviceName, const char * lpszOutput, const void * lpInitData)
    {
 
-      throw not_supported_exception(get_app());
+      _throw(not_supported_exception(get_app()));
 
    }
 
@@ -4281,7 +4281,7 @@ namespace draw2d_cairo
                   if (hObjOld == hStockFont)
                   {
                      // got the stock object back, so must be selecting a font
-                     throw not_implemented(get_thread_app());
+                     _throw(not_implemented(get_app()));
    //                  (dynamic_cast<::win::graphics * >(pgraphics))->SelectObject(::win::font::from_handle_dup(pgraphics->get_app(), (HFONT)hObject));
                      break;  // don't play the default record
                   }
@@ -4297,7 +4297,7 @@ namespace draw2d_cairo
                {
                   // play back as graphics::SelectObject(::draw2d::font*)
    //               (dynamic_cast<::win::graphics * >(pgraphics))->SelectObject(::win::font::from_handle_dup(pgraphics->get_app(), (HFONT)hObject));
-                  throw not_implemented(get_thread_app());
+                  _throw(not_implemented(get_app()));
                   break;  // don't play the default record
                }
             }
@@ -4841,8 +4841,8 @@ namespace draw2d_cairo
    {
 
       ::rect r = ::rect_dim(
-                    convert < LONG > (x),
-                    convert < LONG > (y),
+                    LONG(x),
+                    LONG(y),
                     65535,
                     65535
                  );
@@ -5308,7 +5308,7 @@ namespace draw2d_cairo
 
          pfont->m_ft = NULL;
 
-         iError = FT_New_Face((FT_Library)Sys(get_app()).ftlibrary(), strPath, 0, &pfont->m_ft);
+         iError = FT_New_Face((FT_Library)System.ftlibrary(), strPath, 0, &pfont->m_ft);
 
          if (iError == 0)
          {
@@ -5585,7 +5585,7 @@ namespace draw2d_cairo
       }
       break;
       default:
-         throw "unexpected simple os graphics element type";
+         _throw(simple_exception(get_app(), "unexpected simple os graphics element type"));
       }
 
       return false;
@@ -5655,8 +5655,8 @@ namespace draw2d_cairo
       ((graphics *) this)->set(stringpath.m_spfont);
 
       ::rect r = ::rect_dim(
-                    convert < LONG > (stringpath.m_x),
-                    convert < LONG > (stringpath.m_y),
+                    LONG (stringpath.m_x),
+                    LONG (stringpath.m_y),
                     65535,
                     65535);
 
@@ -5970,9 +5970,33 @@ namespace draw2d_cairo
 
       ::draw2d::wingdi_enum_fonts(itema, false, true, false);
 
+#elif defined(ANDROID)
+
+      ::draw2d::font::enum_item item;
+
+      item.m_ecs = ::draw2d::font::cs_default;
+
+      item.m_strFile = "monospace";
+
+      item.m_strName = "monospace";
+
+      itema.add(item);
+
+      item.m_strFile = "serif";
+
+      item.m_strName = "serif";
+
+      itema.add(item);
+
+      item.m_strFile = "normal";
+
+      item.m_strName = "normal";
+
+      itema.add(item);
+
 #else
 
-      throw not_implemented(get_app());
+      _throw(not_implemented(get_app()));
 
 #endif
 

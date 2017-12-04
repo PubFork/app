@@ -1,4 +1,4 @@
-//
+﻿//
 //  base_static_start.cpp
 //  aura
 //
@@ -7,8 +7,9 @@
 
 #include "framework.h"
 
+extern string_map < ::aura::PFN_GET_NEW_LIBRARY, ::aura::PFN_GET_NEW_LIBRARY  > * g_pmapLibrary;
 
-#ifdef MACOS
+#ifdef __APPLE__
 
 // http://stackoverflow.com/questions/5167269/clock-gettime-alternative-in-mac-os-x
 // http://stackoverflow.com/users/346736/jbenet
@@ -24,6 +25,9 @@ double g_machtime_conversion_factor;
 #endif
 
 mutex * g_pmutexCred = NULL;
+
+void os_init_windowing();
+void os_term_windowing();
 
 
 //extern mutex * g_pmutexSignal;
@@ -52,8 +56,6 @@ namespace str
 extern ::map < void *, void *,::aura::application *, ::aura::application * > * g_pmapAura;
 
 extern string_map < sp(::aura::library) > * g_pmapLibCall;
-
-extern string_map < INT_PTR,INT_PTR > * g_pmapLibrary;
 
 extern plex_heap_alloc_array * g_pheap;
 
@@ -101,8 +103,6 @@ extern mutex * g_pmutexOutputDebugStringA;
 
 extern mutex * g_pmutexMq;
 
-extern map < HTHREAD,HTHREAD,mq *,mq * > * g_pmapMq;
-
 #endif
 
 #if defined(LINUX) || defined(APPLEOS) || defined(METROWIN) || defined(ANDROID)
@@ -127,15 +127,10 @@ extern mutex * g_pmutexTlsData;
 
 extern mutex * g_pmutexTz;
 
-//extern map < HTHREAD, HTHREAD, PendingThreadInfo, PendingThreadInfo > * g_ppendingThreads;
-
 extern mutex * g_pmutexThreadHandleLock;
 
 #endif // defined(LINUX) || defined(APPLEOS)
 
-#if defined(LINUX)
-
-#endif
 
 
 /*
@@ -179,7 +174,7 @@ namespace aura
 
          QueryPerformanceFrequency(&g_freq);
 
-#elif defined(MACOS)
+#elif defined(__APPLE__)
 
 
          {
@@ -196,7 +191,7 @@ namespace aura
 
          xxdebug_box("aura.dll base_static_start (0)", "box", MB_OK);
 
-         g_pexceptionengine = (class ::exception::engine *) malloc(sizeof(class exception::engine));
+         g_pexceptionengine = (class ::exception::engine *) ::malloc(sizeof(class exception::engine));
 
          new(g_pexceptionengine) class ::exception::engine(NULL);
 
@@ -298,8 +293,6 @@ namespace aura
 
          g_pmutexMq = new mutex;
 
-         g_pmapMq = new map < HTHREAD,HTHREAD,mq *,mq * >;
-
 #endif
 
 #if defined(LINUX) || defined(APPLEOS) || defined(METROWIN)
@@ -346,7 +339,7 @@ namespace aura
 
          ::str::international::g_pmapRTL = new ::map < ::id,const ::id &,::id,const ::id & >();
 
-         g_pmapLibrary = new string_map < INT_PTR,INT_PTR >();
+         g_pmapLibrary = new string_map < ::aura::PFN_GET_NEW_LIBRARY, ::aura::PFN_GET_NEW_LIBRARY >();
 
          g_pmutexFactory = new mutex;
 #ifndef METROWIN
@@ -377,6 +370,8 @@ namespace aura
          g_iMemoryCountersStartable = 0;
 
 #endif
+
+
 
       }
 
@@ -427,6 +422,7 @@ namespace aura
 
       CLASS_DECL_AURA void term()
       {
+
 
          delete g_pmapLibCall;
 
@@ -502,9 +498,6 @@ namespace aura
 #if defined(LINUX) || defined(APPLEOS) || defined(ANDROID)
 
          ::aura::del(g_pmutexMq);
-
-         ::aura::del(g_pmapMq);
-
 
 #endif // defined(LINUX) || defined(APPLEOS) || defined(ANDROID)
 
@@ -615,9 +608,12 @@ namespace aura
 
       }
 
-      ::aura::system * aura_create_system()
+
+      ::aura::system * aura_create_system(app_core * pappcore)
       {
-         return new ::aura::system(NULL, NULL);
+
+         return new ::aura::system(NULL, pappcore, NULL);
+
       }
 
 

@@ -1,4 +1,4 @@
-#include "framework.h" // from "base/user/user.h"
+﻿#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 
@@ -23,7 +23,7 @@ namespace user
    }
 
 
-   bool user::initialize1()
+   bool user::init1()
    {
 
       //m_pufeschema = new ::user::front_end_schema(get_app());
@@ -32,18 +32,10 @@ namespace user
 
 
       System.factory().creatable_small < ::user::document >();
-     // System.factory().creatable_small < ::user::application_as_proxy_document >();
+      // System.factory().creatable_small < ::user::application_as_proxy_document >();
       System.factory().creatable_small < ::user::message_queue >();
 
 
-      if(m_pauraapp->is_session())
-      {
-         m_pwindowmap = canew(class ::user::window_map(get_app()));
-      }
-      else
-      {
-         m_pwindowmap = Session.user()->m_pwindowmap;
-      }
 
       if(m_pauraapp->is_system())
       {
@@ -52,7 +44,7 @@ namespace user
 
       }
 
-      if(!::aura::department::initialize1())
+      if(!::aura::department::init1())
          return false;
 
       return true;
@@ -60,11 +52,15 @@ namespace user
    }
 
 
-   bool user::initialize()
+   bool user::init()
    {
 
-      if(!::aura::department::initialize())
+      if (!::aura::department::init())
+      {
+
          return false;
+
+      }
 
       TRACE("::user::application::initialize");
 
@@ -114,7 +110,22 @@ namespace user
 
       debug_print("user::initialize bHasUninstall %c", bHasUninstall);
 
-      if(!::aura::department::initialize())
+      if (!::aura::department::init())
+      {
+
+         return false;
+
+      }
+
+      return true;
+
+   }
+
+
+   bool user::init2()
+   {
+
+      if(!::aura::department::init2())
          return false;
 
       return true;
@@ -122,20 +133,9 @@ namespace user
    }
 
 
-   bool user::initialize2()
+   void user::term()
    {
 
-      if(!::aura::department::initialize2())
-         return false;
-
-      return true;
-
-   }
-
-
-   bool user::finalize()
-   {
-      
 
       //m_puserstyle.release();
 //      ::aura::del(m_pufeschema);
@@ -146,15 +146,13 @@ namespace user
       try
       {
 
-         ::aura::department::finalize();
+         ::aura::department::term();
 
       }
       catch(...)
       {
 
       }
-
-      return true;
 
    }
 
@@ -190,12 +188,7 @@ namespace user
 
    }
 
-   class window_map & user::window_map()
-   {
 
-      return *m_pwindowmap;
-
-   }
 
 
    void user::SendMessageToWindows(UINT message,WPARAM wparam,LPARAM lparam)
@@ -222,18 +215,7 @@ namespace user
    }
 
 
-#ifdef LINUX
 
-   sp(::message::base) user::get_base(XEvent * pevent,::user::interaction * pwnd)
-   {
-
-      throw todo(get_app());
-
-      return NULL;
-
-   }
-
-#endif
 
 //   ::user::front_end_schema * GetUfeSchema(::aura::application * papp)
 //   {
@@ -294,20 +276,20 @@ namespace user
 
    }
 
-   
+
 //   sp(::user::impact) user::get_view()
 //   {
-//   
+//
 //      return NULL;
-//      
+//
 //   }
 
-   
+
 //   ::user::style * user::get_user_style()
 //   {
-//      
+//
 //      retu
-//      
+//
 //   }
 
 } //namespace user

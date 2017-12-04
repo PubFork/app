@@ -15,7 +15,16 @@ namespace exception
       bool           m_bContinue;
       const char *   m_pszMessage;
       const char *   m_pszException;
-      bool           m_bLog;
+
+      // A exception class is meant to be a small utility/tool class.
+      // m_bLog -> too much managing (micro-managing and also big-managing)
+      // from utility/tool small class of the Logging System.
+      // General-ever Log can be done by final handlers at main Loop and crash handlers
+      // Log can be supressed or translated at optional middle-stack handlers.
+      // bool        m_bLog;
+
+      const char *   m_pszFile;
+      int            m_iLine;
 
 
       exception();
@@ -26,15 +35,11 @@ namespace exception
 
       const char * cat_message(const char * pszMessage);
       const char * cat_exception(const char * pszException);
+      const char * set_file(const char * pszFile);
 
-
-      virtual const char * what () const throw ();
-
+      virtual const char * what () const NOTHROW;
 
    };
-
-
-   void CLASS_DECL_AURA rethrow(exception * pe);
 
 
    class CLASS_DECL_AURA result:
@@ -52,12 +57,18 @@ namespace exception
          add(canew(exception(e)));
       }
       result(std::initializer_list < exception * > list);
-      ~result() { release(); }
+      ~result()
+      {
+         release();
+      }
 
-      
+
       string get_all_messages();
 
-      operator bool() { return get_count() <= 0; }
+      operator bool()
+      {
+         return get_count() <= 0;
+      }
 
    };
 
@@ -89,26 +100,39 @@ namespace exception
             m_p->add_ref();
          }
       }
-      #if defined(__GNUC__) // weak
-      template < typename T >
-      result_sp(sp(T) t)
+//#if defined(__GNUC__) // weak
+//      template < typename T >
+//      result_sp(sp(T) t)
+//      {
+//         exception * pexception = t.template cast < exception >();
+//         if(pexception == NULL)
+//         {
+//
+//            _throw(simple_exception(get_app(), "smart pointer is not exception"));
+//
+//         }
+//         m_p = canew(result({pexception}));
+//         if(m_p != NULL)
+//         {
+//            m_p->add_ref();
+//         }
+//      }
+//#endif
+      ~result_sp()
       {
-            exception * pexception = t.template cast < exception >();
-         if(pexception == NULL)
-            throw "smart pointer is not exception";
-         m_p = canew(result({pexception}));
-         if(m_p != NULL)
-         {
-            m_p->add_ref();
-         }
+         release();
       }
-      #endif
-      ~result_sp() { release(); }
 
 
-      bool succeeded() const { return is_null(); }
+      bool succeeded() const
+      {
+         return is_null();
+      }
 
-      bool failed() const {return !is_null();}
+      bool failed() const
+      {
+         return !is_null();
+      }
 
       void add(exception * pexception)
       {
@@ -131,9 +155,55 @@ namespace exception
    };
 
 
+   class CLASS_DECL_AURA exception_sp :
+      public sp(exception)
+   {
+   public:
+
+
+      exception_sp() { }
+      exception_sp(exception * pexception) : sp(exception)(pexception) { }
+      exception_sp(const sp(exception)  spexception) : sp(exception)(spexception) { }
+      ~exception_sp() { }
+
+
+      inline bool is_exit();
+      void rethrow_exit();
+
+
+   };
+
+
 } // namespace exception
 
 
+#if defined(APPLEOS)
+class ns_exception :
+virtual public ::exception::exception
+{
+public:
+   
+   int m_iCode;
+   
+   ns_exception();
+   ~ns_exception();
+   
+};
+
+#endif
 
 
 typedef ::exception::result_sp cres;
+
+typedef ::exception::exception_sp esp;
+
+#define _throw(EXCEPTION_WITH_OPTIONAL_CONSTRUCTION) throw ::esp((canew(EXCEPTION_WITH_OPTIONAL_CONSTRUCTION)))
+
+void CLASS_DECL_AURA _rethrow(::exception::exception * pe);
+
+#define _throw_exit(e) _throw(exit_exception(get_app(), e))
+
+
+
+
+

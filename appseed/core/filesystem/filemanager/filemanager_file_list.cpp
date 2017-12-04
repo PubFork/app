@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "framework.h"
 
 #include "base/database/simpledb/simpledb.h"
@@ -24,7 +24,7 @@ namespace filemanager
       m_bShow = false;
       m_dwLastFileSize = ::get_tick_count();
 
-      bool bDoubleClickInWebView = true;
+      //bool bDoubleClickInWebView = true;
 
       //#ifdef WINDOWSEX
       //
@@ -90,7 +90,7 @@ namespace filemanager
    }
 
 
-#ifdef DEBUG
+
    void file_list::assert_valid() const
    {
       ::user::impact::assert_valid();
@@ -100,7 +100,7 @@ namespace filemanager
    {
       ::user::impact::dump(dumpcontext);
    }
-#endif //DEBUG
+
 
 
    void file_list::on_update(::user::impact * pSender, LPARAM lHint, object* phint)
@@ -150,27 +150,40 @@ namespace filemanager
       {
          _001SetView(view_icon);
       }
+
       if (phint != NULL)
       {
+
          if (base_class < update_hint >::bases(phint))
          {
+
             update_hint * puh = (update_hint *)phint;
+
             if (puh->is_type_of(update_hint::TypeInitialize))
             {
 
-
                m_pauraapp = get_app()->m_pcoreapp;
+
                db_server * pcentral = dynamic_cast <db_server *> (&System.m_simpledb.db());
+
                if (pcentral == NULL)
+               {
+
                   return;
-               string str;
-               str.Format(".local://file_list(%s)", get_filemanager_data()->m_strDISection);
+
+               }
+
                if (get_filemanager_data()->m_bPassBk)
                {
+
                   ::user::list::m_bBackgroundBypass = true;
+
                }
-               m_dataid = str;
+
+               set_data_key_modifier(get_filemanager_data()->m_strDataKeyModifier);
+
                _001UpdateColumns();
+
                _001OnUpdateItemCount();
 
             }
@@ -436,7 +449,7 @@ namespace filemanager
       DBFileSystemSizeSet * pset = pcentral->m_pfilesystemsizeset;
 
       int32_t i;
-      while (true)
+      while (::get_thread_run())
       {
          i = 0;
          while (i < get_fs_mesh_data()->m_itema.get_count() || IsWindowVisible())
@@ -445,7 +458,7 @@ namespace filemanager
             bool bPendingSize;
             single_lock lock(m_pauraapp->m_pmutex);
             if (!lock.lock(millis(1984)))
-               return;
+               break;
             if (i >= get_fs_mesh_data()->m_itema.get_count())
                i = 0;
             bPendingSize = false;
@@ -913,17 +926,7 @@ namespace filemanager
 
          ::file::path filepath = itema[0]->m_filepath;
 
-#ifdef WINDOWSEX
-
-         ::aura::shell_launcher launcher(NULL, "open", m_straOpenWith[iPos], filepath, filepath.name(), SW_SHOW);
-
-         launcher.execute();
-
-#else
-
-         throw todo(get_app());
-
-#endif
+         System.os().file_open(filepath);
 
          pcommand->m_bRet = true;
 
@@ -958,7 +961,7 @@ namespace filemanager
       for (int32_t i = 0; i < itema.get_size(); i++)
       {
 
-         if (Application.dir().is(itema[i]->m_filepath) && itema[i]->m_filepath.name() != ".svn")
+         if (Application.dir().is(itema[i]->m_filepath) && strcmp(itema[i]->m_filepath.name(), ".svn"))
          {
 
             straSub.rls(itema[i]->m_filepath);
@@ -1027,7 +1030,7 @@ namespace filemanager
       for (int32_t i = 0; i < pdata->m_itema.get_count(); i++)
       {
          if (::userfs::list::get_document()->get_fs_data()->is_dir(pdata->m_itema.get_item(i).m_filepath)
-               && pdata->m_itema.get_item(i).m_filepath.name() != ".svn")
+               && strcmp(pdata->m_itema.get_item(i).m_filepath.name(), ".svn"))
          {
             straSub.rls(pdata->m_itema.get_item(i).m_filepath);
             for (int32_t j = 0; j < straSub.get_size(); j++)
@@ -1404,7 +1407,7 @@ namespace filemanager
    //
    //      ::file::path path = m_plist->get_filemanager_path();
    //
-   //      Sess(get_app()).userex()->shell()->open_folder(m_plist->get_handle(), path);
+   //      Session.userex()->shell()->open_folder(m_plist->get_handle(), path);
    //
    //      try
    //      {
@@ -1435,7 +1438,7 @@ namespace filemanager
    //
    //      }
    //
-   //      Sess(get_app()).userex()->shell()->close_folder(path);
+   //      Session.userex()->shell()->close_folder(path);
    //
    //   }
 
@@ -1808,7 +1811,7 @@ namespace filemanager
          // Animation Drawing
          rect rectClipBox;
          pgraphics->GetClipBox(rectClipBox);
-         class imaging & imaging = System.visual().imaging();
+         class imaging & imaging = Application.imaging();
          imaging.color_blend(
             pgraphics,
             rectClipBox,

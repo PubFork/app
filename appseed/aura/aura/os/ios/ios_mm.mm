@@ -12,7 +12,7 @@ bool GetImagePixelData(unsigned int * pcr, int cx, int cy, int iScan, CGImageRef
 int _get_exe_path_len()
 {
    
-   return strlen([[[NSBundle mainBundle] executablePath] UTF8String]);
+   return (int) strlen([[[NSBundle mainBundle] executablePath] UTF8String]);
    
 }
 
@@ -116,10 +116,39 @@ bool _ui_get_executable_path(char * psz, unsigned int * puiSize)
       
    }
    
-   *puiSize = strlen([pstr UTF8String]);
+   *puiSize = (unsigned int) strlen([pstr UTF8String]);
    
    strncpy(psz, [pstr UTF8String], *puiSize);
                  
    return true;
 
 }
+
+NSString * applicationDocumentsDirectory()
+{
+   return [[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject] path];
+}
+
+
+bool _ui_library_dir(char * psz, unsigned int * puiSize)
+{
+
+   NSString * pstr = [NSHomeDirectory() stringByAppendingString:@"/Library"];
+   
+   if(pstr == NULL)
+   {
+      
+      return false;
+      
+   }
+   
+   *puiSize = (unsigned int) strlen([pstr UTF8String]);
+   
+   strncpy(psz, [pstr UTF8String], *puiSize);
+   
+   return true;
+   
+}
+
+
+

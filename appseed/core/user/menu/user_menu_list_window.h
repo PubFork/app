@@ -18,21 +18,18 @@ namespace user
       menu_list_window(::aura::application * papp, menu_item * pitem);
       virtual ~menu_list_window();
 
-      void on_layout();
 
-      virtual void install_message_routing(::message::sender * pinterface);
+      void on_layout() override;
 
-      virtual bool get_color(COLORREF & cr, e_color ecolor, ::user::interaction * pui) override;
+      virtual void install_message_routing(::message::sender * pinterface) override;
 
       DECL_GEN_SIGNAL(_001OnCreate);
       DECL_GEN_SIGNAL(_001OnDestroy);
       DECL_GEN_SIGNAL(_001OnClose);
       
-      void _001OnTimer(::timer * ptimer);
+      void _001OnTimer(::timer * ptimer) override;
 
-      void _001OnDraw(::draw2d::graphics * pgraphics);
-
-      //bool BaseOnControlEvent(::user::control_event * pevent);
+      void _001OnDraw(::draw2d::graphics * pgraphics) override;
 
       virtual void calc_size(menu_item * pitemParent, ::draw2d::graphics * pgraphics, int32_t & iMaxWidth, int32_t & iMaxHeight);
 

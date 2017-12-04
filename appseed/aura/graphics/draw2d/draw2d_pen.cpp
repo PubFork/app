@@ -26,11 +26,15 @@ namespace draw2d
    }
 
 
+#ifdef DEBUG
+
    void pen::dump(dump_context & dumpcontext) const
    {
       UNREFERENCED_PARAMETER(dumpcontext);
       ::exception::throw_interface_only(get_app());
    }
+
+#endif
 
    bool pen::create_null()
    {
@@ -48,9 +52,9 @@ namespace draw2d
    {
 
       if (m_etype == type_solid
-         && dWidth >= (m_dWidth - 0.1)
-         && dWidth <= (m_dWidth + 0.1)
-         && m_cr == crColor)
+            && dWidth >= (m_dWidth - 0.1)
+            && dWidth <= (m_dWidth + 0.1)
+            && m_cr == crColor)
          return true;
 
       m_etype                 = type_solid;

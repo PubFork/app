@@ -305,7 +305,7 @@ namespace fontopus
 
          pgraphics->StretchBlt(
             (int)(49 * rx), (int)(49 * ry) + 2 - 11,
-            convert < int32_t >(m_dib->m_size.cx * r), convert < int32_t > (m_dib->m_size.cy * r),
+            int32_t (m_dib->m_size.cx * r), int32_t (m_dib->m_size.cy * r),
             m_dib->get_graphics(),
             0, 0, m_dib->m_size.cx, m_dib->m_size.cy, 0);
 

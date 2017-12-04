@@ -1,5 +1,6 @@
-#pragma once
+﻿#pragma once
 
+#include "aura/net/sockets/base/sockets_base_socket_handler.h"
 
 namespace sockets
 {
@@ -9,14 +10,12 @@ namespace sockets
    class resolv_server;
 
 
-   class CLASS_DECL_AURA socket_handler : 
+   class CLASS_DECL_AURA socket_handler :
       public base_socket_handler
    {
    public:
 
-      
-      sp(logger)           m_splogger; ///< Registered log class, or NULL
-
+      sp(::aura::log)           m_splogger; ///< Registered log class, or NULL
 
       socket_map           m_sockets; ///< Active sockets map
       socket_map           m_add; ///< Sockets to be added to sockets map
@@ -55,8 +54,7 @@ namespace sockets
       bool                 m_slave; ///< Indicates that this is a base_socket_handler run in socket_thread
 
 
-      socket_handler(::aura::application * papp, logger * plogger = NULL);
-      //socket_handler(::aura::application * papp, mutex & mutex, logger * plogger = NULL);
+      socket_handler(::aura::application * papp, ::aura::log * plogger = NULL);
       virtual ~socket_handler();
 
 

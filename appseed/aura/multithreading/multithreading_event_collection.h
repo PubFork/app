@@ -53,7 +53,7 @@ public:
    //{
    //	if ( m_objecta.size() > MAXIMUM_WAIT_OBJECTS ) {
    //		m_objecta.clear();
-   //		throw invalid_argument_exception("event_collection: too many wait objects");
+   //		_throw(invalid_argument_exception("event_collection: too many wait objects"));
    //	}
    //}
 

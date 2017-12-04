@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 simple_thread::simple_thread(::aura::application * papp) :
@@ -15,13 +15,13 @@ simple_thread::simple_thread(::aura::application * papp) :
 
 simple_thread::~simple_thread()
 {
-   
+
    ::multithreading::post_quit(this);
 
 }
 
 
-bool simple_thread::initialize_thread()
+bool simple_thread::init_thread()
 {
 
    return true;

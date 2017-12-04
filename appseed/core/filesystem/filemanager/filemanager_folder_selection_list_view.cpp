@@ -48,7 +48,7 @@ namespace filemanager
 
    //   m_plistview->Initialize(m_dataid + datakey,bRecursive);
 
-   //   if(data_get(".local://InitialBrowsePath",str))
+   //   if(data_get("&data_source=local&InitialBrowsePath",str))
    //   {
    //      get_filemanager_manager()->FileManagerBrowse(str,::action::source::database_default());
    //   }

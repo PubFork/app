@@ -46,10 +46,10 @@ namespace draw2d_direct2d
 
       pgraphics2d->m_prendertarget->GetDpi(&props.dpiX, &props.dpiY); // Thank you https://repo.anl-external.org/repos/BlueTBB/tbb41_20130314oss/examples/common/gui/d2dvideo.cpp
 
-                                                                      //props.bitmapOptions = D2D1_BITMAP_OPTIONS_TARGET | D2D1_BITMAP_OPTIONS_CANNOT_DRAW;
-                                                                      //props.colorContext = NULL;
+      //props.bitmapOptions = D2D1_BITMAP_OPTIONS_TARGET | D2D1_BITMAP_OPTIONS_CANNOT_DRAW;
+      //props.colorContext = NULL;
 
-                                                                      //if(ppdata != NULL)
+      //if(ppdata != NULL)
       {
          // g.m_pdc->CreateBitmap(size, *ppdata, cx * sizeof(COLORREF), props, &m_pbitmap);
       }
@@ -79,7 +79,7 @@ namespace draw2d_direct2d
    }
 
 
-   bool bitmap::CreateDIBSection(::draw2d::graphics * pgraphics, const BITMAPINFO * lpbmi, UINT usage, void **ppvBits, int * stride, HANDLE hSection, uint32_t offset)
+   bool bitmap::CreateDIBSection(::draw2d::graphics * pgraphics, int cx, int cy, UINT usage, void **ppvBits, int * stride, HANDLE hSection, uint32_t offset)
    {
 
       ::draw2d::lock draw2dlock;
@@ -93,8 +93,8 @@ namespace draw2d_direct2d
 
       D2D1_SIZE_U size;
 
-      size.width = abs(lpbmi->bmiHeader.biWidth);
-      size.height = abs(lpbmi->bmiHeader.biHeight);
+      size.width = abs(cx);
+      size.height = abs(cy);
 
       D2D1_BITMAP_PROPERTIES1 props;
 
@@ -165,7 +165,7 @@ namespace draw2d_direct2d
    }
 
 
-   bool bitmap::CreateDIBitmap(::draw2d::graphics * pgraphics, const BITMAPINFOHEADER *pbmih, uint32_t flInit, const void *pjBits, const BITMAPINFO *pbmi, UINT iUsage)
+   bool bitmap::CreateDIBitmap(::draw2d::graphics * pgraphics, int cx, int cy, uint32_t flInit, const void *pjBits, UINT iUsage)
    {
       return FALSE;
    }
@@ -218,12 +218,12 @@ namespace draw2d_direct2d
 
    bool bitmap::LoadBitmap(UINT nIDResource)
    {
-      //return Attach(::LoadBitmap(::core::FindResourceHandle(MAKEINTRESOURCE(nIDResource), RT_BITMAP), MAKEINTRESOURCE(nIDResource))); 
+      //return Attach(::LoadBitmap(::core::FindResourceHandle(MAKEINTRESOURCE(nIDResource), RT_BITMAP), MAKEINTRESOURCE(nIDResource)));
       return FALSE;
    }
    bool bitmap::LoadOEMBitmap(UINT nIDBitmap)
    {
-      //return Attach(::LoadBitmap(NULL, MAKEINTRESOURCE(nIDBitmap))); 
+      //return Attach(::LoadBitmap(NULL, MAKEINTRESOURCE(nIDBitmap)));
       return FALSE;
    }
    bool bitmap::CreateCompatibleBitmap(::draw2d::graphics * pgraphics, int nWidth, int nHeight)

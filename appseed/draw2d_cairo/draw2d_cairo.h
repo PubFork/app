@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "base/base/base.h" // System.ftlibrary()
+#include "aura/aura/aura/aura.h" // System.ftlibrary()
 
 
 #include "cairo-features.h"
@@ -18,9 +18,9 @@ void destroy_cairo_mutex();
 
 
 #ifdef _DRAW2D_CAIRO_LIBRARY
-    #define CLASS_DECL_DRAW2D_CAIRO  CLASS_DECL_EXPORT
+#define CLASS_DECL_DRAW2D_CAIRO  CLASS_DECL_EXPORT
 #else
-    #define CLASS_DECL_DRAW2D_CAIRO  CLASS_DECL_IMPORT
+#define CLASS_DECL_DRAW2D_CAIRO  CLASS_DECL_IMPORT
 #endif
 
 

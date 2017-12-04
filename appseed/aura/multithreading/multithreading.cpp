@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace multithreading
@@ -72,30 +72,52 @@ namespace multithreading
    CLASS_DECL_AURA uint32_t __on_thread_finally(thread * pthread)
    {
 
-      //try
-      //{
+      if (pthread == NULL)
+      {
 
-      //   single_lock sl(&pthread->m_mutexUiPtra, TRUE);
+         return -1;
 
-      //   if (pthread->m_spuiptra.is_set())
-      //   {
+      }
 
-      //      while (pthread->m_spuiptra->has_elements())
-      //      {
+      try
+      {
 
-      //         pthread->remove(pthread->m_spuiptra->element_at(0));
+         synch_lock sl(pthread->m_objectrefaDependent.m_pmutex);
 
-      //      }
+         for (auto pobject : pthread->m_objectrefaDependent)
+         {
 
-      //      pthread->m_spuiptra.release();
+            pobject->threadrefa_remove(pthread);
 
-      //   }
+         }
 
-      //}
-      //catch (...)
-      //{
+      }
+      catch (...)
+      {
 
-      //}
+      }
+
+      try
+      {
+
+         pthread->threadrefa_post_quit();
+
+      }
+      catch (...)
+      {
+
+      }
+
+      try
+      {
+
+         pthread->threadrefa_wait(one_minute());
+
+      }
+      catch (...)
+      {
+
+      }
 
       int nExitCode = -1;
 
@@ -121,30 +143,18 @@ namespace multithreading
 
          ::aura::application * papp = pthread->get_app();
 
-         nExitCode = pthread->m_iReturnCode;
+         nExitCode = pthread->m_error.get_exit_code();
 
          try
          {
 
             pthread->m_idroute.remove_all();
-//            pthread->m_signala.remove_all();
 
          }
          catch(...)
          {
 
          }
-
-         //try
-         //{
-
-         //   pthread->m_signala.remove_all();
-
-         //}
-         //catch(...)
-         //{
-
-         //}
 
          try
          {
@@ -162,14 +172,6 @@ namespace multithreading
 
          try
          {
-
-//            if(pthread->m_bAutoDelete)
-  //          {
-
-      //         ::aura::del(pthread);
-                  
-
-    //        }
 
             ::release(pthread);
 
@@ -211,14 +213,14 @@ thread_pointer < ::thread > t_pthread;
 
 bool get_thread_run()
 {
-   
+
    if(t_pthread == NULL) // system threads don't have generally associated ca2 thread object
    {
       // and have short life, so it is safe to keep it running
       return true;
-      
+
    }
-   
+
    try
    {
 
@@ -239,39 +241,37 @@ namespace multithreading
 {
 
 
-   CLASS_DECL_AURA bool post_quit()
+   CLASS_DECL_AURA void post_quit()
    {
 
-      return post_quit(t_pthread);
+      post_quit(t_pthread);
 
    }
 
 
-   CLASS_DECL_AURA bool post_quit_and_wait(const duration & duration)
+   CLASS_DECL_AURA void post_quit_and_wait(const duration & duration)
    {
 
-      return post_quit_and_wait(t_pthread, duration);
+      post_quit_and_wait(t_pthread, duration);
 
    }
 
 
-   
-   bool post_quit(::thread * pthread)
+
+   void post_quit(::thread * pthread)
    {
 
       if (pthread == NULL)
       {
 
-         return true;
+         return;
 
       }
-
-      bool bOk = false;
 
       try
       {
 
-         bOk = pthread->post_quit();
+         pthread->post_quit();
 
       }
       catch (...)
@@ -280,34 +280,18 @@ namespace multithreading
 
       }
 
-      try
-      {
-
-         pthread = NULL;
-
-      }
-      catch (...)
-      {
-
-
-      }
-
-      return bOk;
-
    }
 
-   
-   bool post_quit_and_wait(::thread * pthread, const duration & duration)
+
+   void post_quit_and_wait(::thread * pthread, const duration & duration)
    {
 
       if (pthread == NULL)
       {
 
-         return true;
+         return;
 
       }
-
-      bool bOk = false;
 
       try
       {
@@ -326,7 +310,7 @@ namespace multithreading
          if (pthread != NULL)
          {
 
-            bOk = pthread->wait(duration).succeeded();
+            pthread->wait(duration).succeeded();
 
          }
 
@@ -335,20 +319,6 @@ namespace multithreading
       {
 
       }
-
-      try
-      {
-
-         pthread = NULL;
-
-      }
-      catch (...)
-      {
-
-
-      }
-
-      return bOk;
 
    }
 
@@ -370,7 +340,7 @@ void set_thread(::thread* pthread)
 
 
 
-thread* __begin_thread(::aura::application * papp,__THREADPROC pfnThreadProc,LPVOID pParam,int32_t epriority,UINT nStackSize,uint32_t dwCreateFlags,LPSECURITY_ATTRIBUTES lpSecurityAttrs, IDTHREAD * puiId)
+thread* __begin_thread(::aura::application * papp,__THREADPROC pfnThreadProc,LPVOID pParam,int32_t epriority,UINT nStackSize,uint32_t dwCreateFlags,LPSECURITY_ATTRIBUTES lpSecurityAttrs, IDTHREAD * puiId, error * perror)
 {
 
    ASSERT(pfnThreadProc != NULL);
@@ -379,7 +349,7 @@ thread* __begin_thread(::aura::application * papp,__THREADPROC pfnThreadProc,LPV
 
    ASSERT_VALID(pThread);
 
-   if(!pThread->create_thread(epriority,nStackSize, dwCreateFlags,lpSecurityAttrs, puiId))
+   if(!pThread->create_thread(epriority,nStackSize, dwCreateFlags,lpSecurityAttrs, puiId, perror))
    {
 
       pThread->Delete();
@@ -420,7 +390,7 @@ mutex & message_dispatch_mutex()
 
 
 
-::aura::application * get_thread_app()
+::aura::application * get_app()
 {
 
    thread * pthread = get_thread();
@@ -462,99 +432,35 @@ void do_events(const duration & duration)
 
 
 
-
-
-bool thread_refa::post_quit_and_wait(const duration & duration)
+void thread_refa::post_quit()
 {
-
-   bool bOk = true;
-
-   ::datetime::time timeEnd = ::datetime::time::get_current_time() + MAX(2, duration.get_total_seconds());
-
-   single_lock sl(m_pmutex);
 
    try
    {
-      
-      ::count cCount = get_count();
-      
-      ::datetime::time timeNow = ::datetime::time::get_current_time();
 
-      while (cCount &&  timeNow < timeEnd)
+      synch_lock sl(m_pmutex);
+
+      for (index i = 0; i < get_count(); i++)
       {
 
-         sl.lock();
+         ::thread * pthread = element_at(i);
 
-      restart1:
-
-         for (index i = 0; i < get_count(); i++)
+         try
          {
 
-            ::thread * pthread = element_at(i);
+            synch_lock slThread(pthread->m_pmutex);
 
-            sl.unlock();
-
-            try
-            {
-
-               pthread->post_quit();
-
-            }
-            catch (...)
-            {
-
-               sl.lock();
-
-               remove(pthread);
-
-               goto restart1;
-
-            }
-
-            sl.lock();
+            pthread->post_quit();
 
          }
-
-      restart2:
-
-         for (index i = 0; i < get_count(); i++)
+         catch (...)
          {
 
-            ::thread * pthread = element_at(i);
+            remove(pthread);
 
-            sl.unlock();
-
-            try
-            {
-
-               if (pthread->wait(one_second()).succeeded())
-               {
-
-                  sl.lock();
-
-                  remove(pthread);
-
-                  goto restart2;
-
-               }
-
-            }
-            catch (...)
-            {
-
-               sl.lock();
-
-               remove(pthread);
-
-               goto restart2;
-
-            }
+            break;
 
          }
-         
-         timeNow = ::datetime::time::get_current_time();
-         
-         cCount = get_count();
 
       }
 
@@ -562,10 +468,59 @@ bool thread_refa::post_quit_and_wait(const duration & duration)
    catch (...)
    {
 
-      bOk = false;
-
    }
 
-   return bOk;
+}
+
+
+void thread_refa::wait(const duration & duration, ::sync_interface * psyncParent)
+{
+
+   ::datetime::time timeEnd = ::datetime::time::get_current_time() + MAX(2, duration.get_total_seconds());
+
+   try
+   {
+
+      synch_lock sl(m_pmutex);
+
+      ::count cCount = get_count();
+
+      ::datetime::time timeNow = ::datetime::time::get_current_time();
+
+      while (cCount > 0 &&  timeNow < timeEnd)
+      {
+
+
+         sl.unlock();
+
+         if (psyncParent != NULL)
+         {
+
+            psyncParent->unlock();
+
+         }
+
+         timeNow = ::datetime::time::get_current_time();
+
+         cCount = get_count();
+
+         Sleep(200);
+
+         if (psyncParent != NULL)
+         {
+
+            psyncParent->lock();
+
+         }
+
+         sl.lock();
+
+      }
+
+   }
+   catch (...)
+   {
+
+   }
 
 }

@@ -42,7 +42,7 @@ static CFStringRef EndpointName(MIDIEndpointRef endpoint, bool isExternal)
    
    MIDIEntityRef entity = NULL;
    MIDIEndpointGetEntity(endpoint, &entity);
-   if (entity == NULL)
+   if (entity == 0)
       // probably virtual
       return result;
    
@@ -58,13 +58,13 @@ static CFStringRef EndpointName(MIDIEndpointRef endpoint, bool isExternal)
    // now consider the device's name
    MIDIDeviceRef device = NULL;
    MIDIEntityGetDevice(entity, &device);
-   if (device == NULL)
+   if (device == 0)
       return result;
    
    str = NULL;
    MIDIObjectGetStringProperty(device, kMIDIPropertyName, &str);
    if (str != NULL) {
-      // if an external device has only one entity, throw away
+      // if an external device has only one entity, _throw( away
       // the endpoint name and just use the device name
       if (isExternal && MIDIDeviceGetNumberOfEntities(device) < 2) {
          CFRelease(result);
@@ -104,7 +104,7 @@ CFStringRef ConnectedEndpointName(MIDIEndpointRef endpoint)
    if (connections != NULL) {
       // It has connections, follow them
       // Concatenate the names of all connected devices
-      nConnected = CFDataGetLength(connections) / sizeof(MIDIUniqueID);
+      nConnected = (int) (CFDataGetLength(connections) / sizeof(MIDIUniqueID));
       if (nConnected) {
          const SInt32 *pid = (SInt32*) CFDataGetBytePtr(connections);
          for (i = 0; i < nConnected; ++i, ++pid) {
@@ -178,11 +178,14 @@ const std::vector<CoreMidiOutput::Destination>& CoreMidiOutput::getDestinations(
 
 CoreMidiOutput::CoreMidiOutput(string driver) : OutputBase()
 {
-   OSStatus result = MIDIOutputPortCreate(m_client,
+//   OSStatus result = MIDIOutputPortCreate(m_client,
+//                                          CFSTR("ariaport"),
+//                                          &m_port);
+   MIDIOutputPortCreate(m_client,
                                           CFSTR("ariaport"),
                                           &m_port);
-   //if (result != 0) fprintf(stderr, "MIDIOutputPortCreate failed with code /%i (%s, %s)\n", (int)result,
-                            //GetMacOSStatusErrorString(result), GetMacOSStatusCommentString(result));
+//   if (result != 0) fprintf(stderr, "MIDIOutputPortCreate failed with code /%i (%s, %s)\n", (int)result);;;,
+//                            GetMacOSStatusErrorString(result), GetMacOSStatusCommentString(result));
    
    bool found = false;
    getDestinations();

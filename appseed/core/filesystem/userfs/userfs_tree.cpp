@@ -24,7 +24,7 @@ namespace userfs
    }
 
 
-#ifdef DEBUG
+
    void tree::assert_valid() const
    {
    }
@@ -32,7 +32,7 @@ namespace userfs
    void tree::dump(dump_context &) const
    {
    }
-#endif //DEBUG
+
 
 
    void tree::install_message_routing(::message::sender * pinterface)

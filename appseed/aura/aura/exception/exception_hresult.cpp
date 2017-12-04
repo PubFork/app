@@ -24,7 +24,7 @@ hresult_exception::~hresult_exception()
 CLASS_DECL_AURA int trace_hr(const char * psz,HRESULT hr)
 {
    
-   ::aura::application * m_pauraapp = ::get_thread_app();
+   ::aura::application * m_pauraapp = get_app();
 
    string strError = get_system_error_message(hr);
    

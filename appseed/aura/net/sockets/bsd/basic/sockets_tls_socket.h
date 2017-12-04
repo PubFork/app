@@ -1,28 +1,29 @@
-#pragma once
+﻿#pragma once
 
 
+#include "sockets_tcp_socket.h"
 
 
-   namespace sockets
+namespace sockets
+{
+
+   class CLASS_DECL_AURA tls_socket :
+      virtual public tcp_socket
    {
-
-      class CLASS_DECL_AURA tls_socket : 
-         virtual public tcp_socket
-      {
-      public:
+   public:
 
 
-         tls_socket(base_socket_handler& );
-         ~tls_socket();
+      tls_socket(base_socket_handler& );
+      ~tls_socket();
 
 
-         virtual void InitSSLClient();
+      virtual void InitSSLClient();
 
-      };
+   };
 
 
 
-   } // namespace sockets
+} // namespace sockets
 
 
 

@@ -7,6 +7,8 @@
 //
 #pragma once
 
+#include "aura/aura/aura/aura.h"
+
 #ifdef DEBUG
 #undef DEBUG
 #define DEBUG 1
@@ -29,6 +31,7 @@
 //#include "NSObject+DDExtensions.h"
 //#include "DDInvocationGrabber.h"
 #include "mmos.h"
+#include "macos_user.h"
 
 
 //#include "macos_windowing.h"

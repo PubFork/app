@@ -23,7 +23,7 @@ namespace user
 
       namespace frame
       {
-         
+
          class WorkSetClientInterface;
 
          class WorkSetUpDownInterface;
@@ -53,13 +53,7 @@ namespace user
 
    class interaction_spa;
 
-#if defined(METROWIN) || defined(APPLE_IOS) || defined(ANDROID)
 
-   class native_window_initialize;
-
-#endif
-
-   CLASS_DECL_BASE bool is_docking_appearance(::user::e_appearance eappearance);
 
 
 } // namespace user
@@ -98,8 +92,6 @@ namespace visual
 } // namespace visual
 
 
-
-using window_sp = sp(::user::interaction_impl);
 
 
 namespace plane
@@ -249,7 +241,7 @@ typedef smart_pointer < thread_impl > thread_impl_sp;
 #undef Sys
 #define Sys(pauraapp) (*pauraapp->m_pbasesystem)
 //#define System (Sys(this->m_pauraapp))
-//#define threadSystem (Sys(get_thread_app()))
+//#define threadSystem (System)
 
 #undef Sess
 #define Sess(pauraapp) (*pauraapp->m_pbasesession)
@@ -273,7 +265,7 @@ CLASS_DECL_BASE bool __node_base_pos_init();
 CLASS_DECL_BASE bool __node_base_pre_term();
 CLASS_DECL_BASE bool __node_base_pos_term();
 
-#include "base/graphics/graphics.h"
+//#include "base/graphics/graphics.h"
 
 
 #if defined(LINUX)

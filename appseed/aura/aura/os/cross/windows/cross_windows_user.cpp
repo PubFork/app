@@ -1,5 +1,8 @@
 #include "framework.h"
-#if defined(APPLEOS) || defined(LINUX)
+#if defined(LINUX)
+#include "aura/aura/os/linux/linux_user_impl.h"
+#endif
+#if defined(APPLEOS) || defined(LINUX) || defined(ANDROID)
 #include <iconv.h>
 #else
 //#include "atom/iconv/include/iconv.h"
@@ -11,14 +14,14 @@ CLASS_DECL_AURA COLORREF GetSysColor(DWORD dw)
 
    switch(dw)
    {
-      case COLOR_HIGHLIGHT:
-         return ARGB(255, 200, 200, 196);
-      case COLOR_BTNSHADOW:
-         return ARGB(84, 192, 192, 187);
-      case COLOR_BTNTEXT:
-         return ARGB(255, 0, 0, 0);
-      default:
-         return ARGB(255, 0, 0, 0);
+   case COLOR_HIGHLIGHT:
+      return ARGB(255, 200, 200, 196);
+   case COLOR_BTNSHADOW:
+      return ARGB(84, 192, 192, 187);
+   case COLOR_BTNTEXT:
+      return ARGB(255, 0, 0, 0);
+   default:
+      return ARGB(255, 0, 0, 0);
    };
 
 }
@@ -61,7 +64,7 @@ CLASS_DECL_AURA int_bool CopyRect(LPRECT prectDest, LPCRECT pcrectSrc)
 CLASS_DECL_AURA int_bool PtInRect(LPCRECT prect, POINT point)
 {
    return point.x >= prect->left && point.x <= prect->right
-   && point.y >= prect->top && point.y <= prect->bottom;
+          && point.y >= prect->top && point.y <= prect->bottom;
 
 }
 
@@ -87,29 +90,29 @@ CLASS_DECL_AURA int_bool SetRectEmpty(LPRECT prect)
 
 CLASS_DECL_AURA int_bool EqualRect(LPCRECT prect1, LPCRECT prect2)
 {
-      return prect1->left == prect2->left
-         &&  prect1->top == prect2->top
-         &&  prect1->right == prect2->right
-         &&  prect1->bottom == prect2->bottom;
+   return prect1->left == prect2->left
+          &&  prect1->top == prect2->top
+          &&  prect1->right == prect2->right
+          &&  prect1->bottom == prect2->bottom;
 }
 
 
 CLASS_DECL_AURA int_bool InflateRect(LPRECT prect, int32_t x, int32_t y)
 {
-      prect->left -= x;
-      prect->top -= y;
-      prect->right += x;
-      prect->bottom += y;
-      return true;
+   prect->left -= x;
+   prect->top -= y;
+   prect->right += x;
+   prect->bottom += y;
+   return true;
 }
 
 CLASS_DECL_AURA int_bool OffsetRect(LPRECT prect, int32_t x, int32_t y)
 {
-      prect->left += x;
-      prect->top += y;
-      prect->right += x;
-      prect->bottom += y;
-      return true;
+   prect->left += x;
+   prect->top += y;
+   prect->right += x;
+   prect->bottom += y;
+   return true;
 }
 
 /*
@@ -183,16 +186,15 @@ string iconv_charset_from_windows_code_page(UINT CodePage)
 
 }
 
-#ifndef APPLE_IOS
 int32_t
 WINAPI
 MultiByteToWideChar(
-    UINT     CodePage,
-    DWORD    dwFlags,
-    LPCSTR   lpMultiByteStr,
-    int32_t      cbMultiByte,
-    LPWSTR  lpWideCharStr,
-    int32_t      cchWideChar)
+UINT     CodePage,
+DWORD    dwFlags,
+LPCSTR   lpMultiByteStr,
+int32_t      cbMultiByte,
+LPWSTR  lpWideCharStr,
+int32_t      cchWideChar)
 {
    string str(lpMultiByteStr, cbMultiByte);
 
@@ -274,7 +276,7 @@ MultiByteToWideChar(
 
          iconv_close(iconvPlease);
 
-         return ((sOutIn - sOut) / sizeof(unichar)) + (cbMultiByte < 0 ? 1 : 0);
+         return (int32_t) (((sOutIn - sOut) / sizeof(unichar)) + (cbMultiByte < 0 ? 1 : 0));
 
       }
       else
@@ -292,7 +294,7 @@ MultiByteToWideChar(
 
          iconv_close(iconvPlease);
 
-         return ((sOutIn - sOut) / sizeof(unichar))  + (cbMultiByte < 0 ? 1 : 0);
+         return (int32_t) (((sOutIn - sOut) / sizeof(unichar))  + (cbMultiByte < 0 ? 1 : 0));
 
       }
 
@@ -309,14 +311,14 @@ MultiByteToWideChar(
 int32_t
 WINAPI
 WideCharToMultiByte(
-    UINT     CodePage,
-    DWORD    dwFlags,
-    LPCWSTR  lpWideCharStr,
-    int32_t      cchWideChar,
-    LPSTR   lpMultiByteStr,
-    int32_t      cbMultiByte,
-    LPCSTR   lpDefaultChar,
-    LPBOOL  lpUsedDefaultChar)
+UINT     CodePage,
+DWORD    dwFlags,
+LPCWSTR  lpWideCharStr,
+int32_t      cchWideChar,
+LPSTR   lpMultiByteStr,
+int32_t      cbMultiByte,
+LPCSTR   lpDefaultChar,
+LPBOOL  lpUsedDefaultChar)
 {
 
    wstring wstr(lpWideCharStr, cchWideChar);
@@ -394,7 +396,6 @@ WideCharToMultiByte(
 
 }
 
-#endif
 
 CLASS_DECL_AURA string get_system_error_message(uint32_t dwError)
 {
@@ -409,46 +410,47 @@ CLASS_DECL_AURA string get_system_error_message(uint32_t dwError)
 #endif
 
 
-/*
-CLASS_DECL_AURA int_bool TranslateMessage(const MESSAGE * pmsg)
-{
+// please include ansios_message_loop.
+//CLASS_DECL_AURA int_bool TranslateMessage(const MESSAGE * pmsg)
+//{
+//
+//   if(pmsg == NULL)
+//      return FALSE;
+//
+//   if(pmsg->hwnd == NULL)
+//      return FALSE;
+//
+//   if(pmsg->hwnd->m_pimpl == NULL)
+//      return FALSE;
+//
+//   if (pmsg->hwnd->m_pimpl->m_pui == NULL)
+//      return FALSE;
+//
+//   return FALSE;
+//
+//}
+//
+// please include ansios_message_loop.
+//CLASS_DECL_AURA LRESULT DispatchMessage(const MESSAGE * pmsg)
+//{
+//
+//   if(pmsg == NULL)
+//      return 0;
+//
+//   if(pmsg->hwnd == NULL)
+//      return 0;
+//
+//   if(pmsg->hwnd->m_pimpl == NULL)
+//      return 0;
+//
+//   if (pmsg->hwnd->m_pimpl->m_pui == NULL)
+//      return 0;
+//
+//   return pmsg->hwnd->m_pimpl->m_pui->send_message(pmsg->message,pmsg->wParam,pmsg->lParam);
+//
+//}
+//
 
-   if(pmsg == NULL)
-      return FALSE;
-
-   if(pmsg->hwnd == NULL)
-      return FALSE;
-
-   if(pmsg->hwnd->get_user_interaction() == NULL)
-      return FALSE;
-
-   return FALSE;
-
-}
-*/
-
-/*
-
-CLASS_DECL_AURA int_bool DispatchMessage(const MESSAGE * pmsg)
-{
-
-   if(pmsg == NULL)
-      return FALSE;
-
-   if(pmsg->hwnd == NULL)
-      return FALSE;
-
-   if(pmsg->hwnd->get_user_interaction() == NULL)
-      return FALSE;
-
-
-   pmsg->hwnd->get_user_interaction()->send_message(pmsg->message,pmsg->wParam,pmsg->lParam);
-
-    return TRUE;
-
-}
-
-*/
 
 
 
@@ -460,4 +462,76 @@ CLASS_DECL_AURA int_bool IsRectEmpty(LPCRECT lpcrect)
 
 }
 
+
+
+
+
+
+WINBOOL IsChild(oswindow oswindowParent, ::oswindow oswindowcandidateChildOrDescendant)
+{
+   return oswindowParent->is_child(oswindowcandidateChildOrDescendant);
+}
+
+oswindow WINAPI GetParent(::oswindow oswindow)
+{
+   return oswindow->get_parent();
+}
+
+oswindow WINAPI SetParent(::oswindow oswindow, ::oswindow oswindowNewParent)
+{
+   return oswindow->set_parent(oswindowNewParent);
+}
+
+WINBOOL ShowWindow(::oswindow oswindow, int nCmdShow)
+{
+   return oswindow->show_window(nCmdShow);
+}
+
+LONG WINAPI GetWindowLongA(::oswindow oswindow, int nIndex)
+{
+   return (LONG) oswindow->get_window_long_ptr(nIndex);
+}
+
+LONG WINAPI SetWindowLongA(::oswindow oswindow, int nIndex, LONG l)
+{
+   return (LONG) oswindow->set_window_long_ptr(nIndex, (LONG) l);
+}
+
+LONG_PTR WINAPI GetWindowLongPtrA(::oswindow oswindow, int nIndex)
+{
+   return oswindow->get_window_long_ptr(nIndex);
+}
+
+LONG_PTR WINAPI SetWindowLongPtrA(::oswindow oswindow, int nIndex, LONG_PTR l)
+{
+   return oswindow->set_window_long_ptr(nIndex, l);
+}
+
+WINBOOL WINAPI ClientToScreen(::oswindow oswindow, LPPOINT lppoint)
+{
+   return oswindow->client_to_screen(lppoint);
+}
+
+WINBOOL WINAPI ScreenToClient(::oswindow oswindow, LPPOINT lppoint)
+{
+   return oswindow->screen_to_client(lppoint);
+}
+
+WINBOOL WINAPI IsIconic(::oswindow oswindow)
+{
+   return oswindow->is_iconic();
+}
+
+WINBOOL WINAPI IsWindowVisible(::oswindow oswindow)
+{
+   return oswindow->is_window_visible();
+}
+
+
+#define GetWindowLong GetWindowLongA
+#define SetWindowLong SetWindowLongA
+
+
+
+CLASS_DECL_AURA WINBOOL IsWindow(oswindow oswindow);
 

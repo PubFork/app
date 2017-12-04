@@ -22,6 +22,10 @@ namespace metrowin
       file_find();
       virtual ~file_find();
 
+      void dump(dump_context & dumpcontext) const;
+      void assert_valid() const;
+      
+
       int64_t get_length() const;
       virtual string GetFileName() const;
       virtual string GetFilePath() const;
@@ -57,8 +61,6 @@ namespace metrowin
       virtual void CloseContext();
 
 
-      void dump(dump_context & dumpcontext) const;
-      void assert_valid() const;
 
 
    };

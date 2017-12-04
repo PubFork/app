@@ -28,7 +28,7 @@ int_progress::~int_progress()
 void int_progress::trace_progress(int64_t iStep)
 {
 
-   m_scalar = iStep;
+   m_scalar.set(iStep);
 
 }
 

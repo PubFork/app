@@ -77,11 +77,10 @@ then it supports leap seconds; otherwise it probably doesn't.  */
 #endif
 
 #ifndef TIME_T_MIN
-#define TIME_T_MIN (0 < (time_t) -1 ? (time_t) 0 \
-   : ~ (time_t)0 << (sizeof (time_t)* CHAR_BIT - 1))
+#define TIME_T_MIN (::numeric_info < time_t >::minimum())
 #endif
 #ifndef TIME_T_MAX
-#define TIME_T_MAX (~ (time_t) 0 - TIME_T_MIN)
+#define TIME_T_MAX (::numeric_info < time_t >::maximum())
 #endif
 
 #define TM_YEAR_BASE 1900

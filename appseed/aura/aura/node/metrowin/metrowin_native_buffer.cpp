@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "metrowin.h"
 
 
@@ -193,16 +193,16 @@ namespace metrowin
       ASSERT(__is_valid_string(lpszfileName));
 
       if(!open(lpszfileName,nOpenFlags))
-         throw ::file::exception(papp,::file::exception::none,-1,lpszfileName);
+         _throw(::file::exception(papp,::file::exception::none,-1,lpszfileName));
       m_dwAccess = 0;
 
    }
 
    native_buffer::~native_buffer()
    {
-      
+
       close();
-      
+
 
    }
 
@@ -218,7 +218,7 @@ namespace metrowin
       //{
       //   delete pnative_buffer;
       //   //xxx      Ex1WinFileException::ThrowOsError(get_app(), (LONG)::GetLastError());
-      //   throw 0;
+      //   _throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
       //}
       //pnative_buffer->m_hnative_buffer = (UINT)hnative_buffer;
       //ASSERT(pnative_buffer->m_hnative_buffer != (UINT)hnative_bufferNull);
@@ -354,24 +354,25 @@ namespace metrowin
       sa.lpSecurityDescriptor = NULL;
       sa.bInheritHandle = (nOpenFlags & ::file::mode_no_inherit) == 0;
 
+      folder = m_folder;
+
       // ::map creation flags
-      DWORD dwCreateFlag;
+      //DWORD dwCreateFlag;
       if(nOpenFlags & ::file::mode_create)
       {
          if(nOpenFlags & ::file::mode_no_truncate)
-            dwCreateFlag = OPEN_ALWAYS;
+            m_file = ::wait(folder->CreateFileAsync(strName, Windows::Storage::CreationCollisionOption::OpenIfExists));
          else
-            dwCreateFlag = CREATE_ALWAYS;
+            m_file = ::wait(folder->CreateFileAsync(strName, Windows::Storage::CreationCollisionOption::ReplaceExisting));
       }
       else
-         dwCreateFlag = OPEN_EXISTING;
+         m_file = ::wait(folder->GetFileAsync(strName));
 
       // attempt native_buffer creation
       //HANDLE hnative_buffer = shell::Createnative_buffer(::str::international::utf8_to_unicode(m_strFileName), dwAccess, dwShareMode, &sa, dwCreateFlag, native_buffer_ATTRIBUTE_NORMAL, NULL);
 
-      folder = m_folder;
 
-      m_file = ::wait(folder->GetFileAsync(strName));
+
 
 
       if(m_file == nullptr)
@@ -404,7 +405,7 @@ namespace metrowin
          break;
       }
 
-      
+
       if(m_stream == nullptr)
       {
          m_file = nullptr;
@@ -451,7 +452,7 @@ namespace metrowin
       if (ui != nCount)
       {
 
-         throw io_exception(get_app());
+         _throw(io_exception(get_app()));
 
       }
 
@@ -484,7 +485,7 @@ namespace metrowin
 
    void native_buffer::Flush()
    {
-      
+
       ::wait(m_stream->FlushAsync());
 
    }
@@ -499,7 +500,7 @@ namespace metrowin
          Flush();
 
       }
-      
+
       m_stream    = nullptr;
 
       m_file      = nullptr;

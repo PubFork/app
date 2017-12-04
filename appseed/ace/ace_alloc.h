@@ -46,15 +46,15 @@ CLASS_DECL_ACE void  ace_set_alloc(PFN_MEMORY_ALLOC palloc, PFN_MEMORY_REALLOC p
 
    CLASS_DECL_EXPORT void android_set_cache_dir(const char * pszDir);
    
-   CLASS_DECL_EXPORT const char * android_get_cache_dir();
+   CLASS_DECL_EXPORT const char * android_get_cache_dir(void);
    
    CLASS_DECL_EXPORT void ios_set_home(const char * pszDir);
    
-   CLASS_DECL_EXPORT const char * ios_get_home();
+   CLASS_DECL_EXPORT const char * ios_get_home(void);
    
    CLASS_DECL_EXPORT void ios_set_temp(const char * pszDir);
    
-   CLASS_DECL_EXPORT const char * ios_get_temp();
+   CLASS_DECL_EXPORT const char * ios_get_temp(void);
    
 
 

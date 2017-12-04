@@ -40,7 +40,7 @@ namespace aura
       {
       }
 
-#if defined(INSTALL_SUBSYSTEM)
+#if defined()
 
       bool tx::open(const char * pszChannel, launcher * plauncher)
       {
@@ -78,7 +78,7 @@ namespace aura
 
          return true;
 
-   }
+      }
 
 
 #endif
@@ -106,7 +106,7 @@ namespace aura
 
          Uri ^uri = ref new Uri(anotherappURI);
 
-         ::wait(Launcher::LaunchUriAsync(uri), durationTimeout.get_total_milliseconds());
+         ::wait(Launcher::LaunchUriAsync(uri), (DWORD) durationTimeout.get_total_milliseconds());
 
          return true;
 
@@ -132,7 +132,7 @@ namespace aura
 
          memory m;
 
-         
+
 
          string anotherappURI = m_strBaseChannel + "://send?messagebin=" + ::str::from(message)+ "," + ::aura::system::g_p->url_encode(::aura::system::g_p->base64().encode((byte *)pdata, len));
 
@@ -271,7 +271,7 @@ namespace aura
 
       }
 
-      
+
       ipc::ipc(::aura::application * papp) :
          object(papp),
          base(papp),
@@ -290,7 +290,7 @@ namespace aura
       }
 
 
-#ifdef INSTALL_SUBSYSTEM
+#ifdef 
 
 
       bool ipc::open_ab(const char * pszChannel, const char * pszModule, launcher * plauncher)

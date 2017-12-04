@@ -164,7 +164,7 @@ typedef struct _cef_request_context_t {
       struct _cef_request_context_t* self);
 
   ///
-  // Tells all renderer processes associated with this context to throw away
+  // Tells all renderer processes associated with this context to _throw( away
   // their plugin list cache. If |reload_pages| is true (1) they will also
   // reload all pages with plugins.
   // cef_request_tContextHandler::OnBeforePluginLoad may be called to rebuild

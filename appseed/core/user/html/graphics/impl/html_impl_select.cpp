@@ -168,13 +168,13 @@ namespace html
 
          LONG x, y, cx, cy;
 
-         convert(x, m_box.left);
+         x = LONG(m_box.left);
 
-         convert(y, m_box.top);
+         y = LONG(m_box.top);
 
-         convert(cx, m_box.get_cx());
+         cx = LONG(m_box.get_cx());
 
-         convert(cy, m_box.get_cy());
+         cy = LONG(m_box.get_cy());
 
          m_pcombo->SetWindowPos(0, x, y, cx, cy, SWP_NOREDRAW);
 
@@ -215,13 +215,13 @@ namespace html
 
          LONG x, y, cx, cy;
 
-         convert(x, m_box.left);
+         x = LONG(m_box.left);
 
-         convert(y, m_box.top);
+         y = LONG(m_box.top);
 
-         convert(cx, m_box.get_cx());
+         cx = LONG(m_box.get_cx());
 
-         convert(cy, m_box.get_cy());
+         cy = LONG(m_box.get_cy());
 
          m_pcombo->SetWindowPos(0, x, y, cx, cy, SWP_NOREDRAW);
 

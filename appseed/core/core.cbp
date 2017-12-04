@@ -88,7 +88,6 @@
 			<Add option="-lX11" />
 			<Add option="-laura" />
 			<Add option="-lsqlite3" />
-			<Add option="-laxisfreeimage" />
 			<Add option="-lfreetype" />
 			<Add option="-lbz2" />
 			<Add option="-laxis" />

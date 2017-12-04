@@ -470,7 +470,7 @@ void serialize_read(::file::istream & istream, map < t1, t2, t3, t4 > & m)
    catch(const char * psz)
    {
       m.remove_all();
-      throw psz;
+      _throw(::simple_exception(get_app(), psz));
    }
 }
 
@@ -529,7 +529,7 @@ void biunique < T, T_to_T > ::read(::file::istream & istream)
       m_iEmptyB = - 1;
       m_iMaxA = -1;
       m_iMaxB = -1;
-      throw psz;
+      _throw(::simple_exception(get_app(), psz));
    }
 }
 

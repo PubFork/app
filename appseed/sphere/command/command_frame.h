@@ -29,10 +29,10 @@ namespace prompt
 
 	   void ShowControlBars(bool bShow);
 	  
-   #ifdef DEBUG
+   
 	   virtual void assert_valid() const;
 	   virtual void dump(dump_context & dumpcontext) const;
-   #endif
+   
 
       bool m_bHoverMouse;
       uint32_t m_dwLastHover;

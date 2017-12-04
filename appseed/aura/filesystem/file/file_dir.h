@@ -30,8 +30,10 @@ namespace dir
    CLASS_DECL_AURA::file::path public_root(); // writable common root (non-bin, non-exe)
    CLASS_DECL_AURA bool is(const ::file::path & path);
    CLASS_DECL_AURA bool mk(const  ::file::path & path);
+   CLASS_DECL_AURA bool mkdir(const  ::file::path & path); // only creates if parent dir already exists
    CLASS_DECL_AURA void ls(::file::patha & patha,const ::file::path & path);
    CLASS_DECL_AURA void ls_dir(::file::patha & patha,const ::file::path & path);
+   CLASS_DECL_AURA void ls_file(::file::patha & patha,const ::file::path & path);
    CLASS_DECL_AURA void rls(::file::patha & patha,const ::file::path & path);
    CLASS_DECL_AURA void rls_dir(::file::patha & patha,const ::file::path & path);
    CLASS_DECL_AURA ::file::path favorites();

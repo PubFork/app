@@ -152,7 +152,7 @@ namespace aura
 
             DWORD_PTR dwptr;
 
-            if(!::SendMessageTimeout(m_oswindow,WM_COPYDATA,(WPARAM)0,(LPARAM)&cds,SMTO_BLOCK, ::convert<UINT>(durationTimeout.get_total_milliseconds()),&dwptr))
+            if(!::SendMessageTimeout(m_oswindow,WM_COPYDATA,(WPARAM)0,(LPARAM)&cds,SMTO_BLOCK, (UINT)(durationTimeout.get_total_milliseconds()),&dwptr))
                return false;
 
             unsigned int dwError = ::GetLastError();
@@ -202,7 +202,7 @@ namespace aura
 
             DWORD_PTR dwptr;
 
-            if(!::SendMessageTimeout(m_oswindow,WM_COPYDATA,(WPARAM)0,(LPARAM)&cds,SMTO_BLOCK, ::convert<UINT>(durationTimeout.get_total_milliseconds()), &dwptr))
+            if(!::SendMessageTimeout(m_oswindow,WM_COPYDATA,(WPARAM)0,(LPARAM)&cds,SMTO_BLOCK, (UINT)(durationTimeout.get_total_milliseconds()), &dwptr))
                return false;
 
             unsigned int dwError = ::GetLastError();

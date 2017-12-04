@@ -1,4 +1,4 @@
-/** \file http_get_socket.h
+﻿/** \file http_get_socket.h
 **   \date  2004-02-13
 **   \author grymse@alhem.net
 **/
@@ -30,26 +30,28 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #pragma once
 
 
-   namespace sockets
+#include "sockets_http_client_socket.h"
+
+namespace sockets
+{
+
+
+   /** get http page.
+   \ingroup http */
+   class CLASS_DECL_AURA http_get_socket :
+      virtual public http_client_socket
    {
+   public:
+      http_get_socket(base_socket_handler&);
+      http_get_socket(base_socket_handler&,const string & url);
+      http_get_socket(base_socket_handler&,const string & host,port_t port,const string & url);
+      ~http_get_socket();
+
+      void step();
+
+   };
 
 
-      /** get http page.
-      \ingroup http */
-      class CLASS_DECL_AURA http_get_socket :
-         virtual public http_client_socket
-      {
-      public:
-         http_get_socket(base_socket_handler&);
-         http_get_socket(base_socket_handler&,const string & url);
-         http_get_socket(base_socket_handler&,const string & host,port_t port,const string & url);
-         ~http_get_socket();
-
-         void step();
-
-      };
-
-
-   } // namespace sockets
+} // namespace sockets
 
 

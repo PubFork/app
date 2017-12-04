@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace userstack
@@ -12,11 +12,11 @@ namespace userstack
       m_bDrawCursor              = true;
       m_bShowPlatform            = false;
       m_pappCurrent              = NULL;
-      m_bLicense				      = false;
+      m_bLicense                 = false;
 
       m_ppaneview = NULL;
 
-      m_strAppName               = "userstack";
+      m_strAppName               = "app/userstack";
 
    }
 
@@ -38,73 +38,82 @@ namespace userstack
 
    }
 
-   bool application::initialize_application()
+
+   bool application::init_instance()
    {
 
-      if(!::asphere::application::initialize_application())
+      if(!::asphere::application::init_instance())
          return false;
 
-
-      m_dataid += ".local://";
+      set_data_key_modifier("&data_source=local&");
 
       initialize_bergedge_application_interface();
 
-
-      Session.filemanager().std().m_strLevelUp = "levelup";
-
+      Session.filemanager()->m_strLevelUp = "levelup";
 
       SetRegistryKey("ca2core");
 
-
       return true;
-
 
    }
 
-   int32_t application::exit_application()
+
+   void application::term_instance()
    {
-      try
-      {
-         ::asphere::application::exit_application();
-      }
-      catch(...)
-      {
-      }
+
 
       string strId;
+
       sp(::aura::application) pcaapp;
 
       POSITION pos = m_mapApplication.get_start_position();
 
-      while(pos != NULL)
+      while (pos != NULL)
       {
 
          strId.Empty();
+
          pcaapp = NULL;
 
          m_mapApplication.get_next_assoc(pos, strId, pcaapp);
 
-         sp(::aura::application) papp =  (pcaapp);
+         sp(::aura::application) papp = (pcaapp);
 
          papp->m_pcoreapp->post_quit();
+
       }
 
-      return 0;
+      try
+      {
+
+         ::asphere::application::term_instance();
+
+      }
+      catch(...)
+      {
+
+      }
+
+
 
    }
+
 
    bool application::bergedge_start()
    {
+
       return true;
+
    }
-
-
 
 
    void application::OnFileManagerOpenFile(::filemanager::data * pdata, ::fs::item_array & itema)
    {
+
       UNREFERENCED_PARAMETER(pdata);
+
    }
+
 
    void application::load_string_table()
    {
@@ -113,8 +122,8 @@ namespace userstack
    }
 
    bool application::file_manager_open_file(
-            ::filemanager::data * pdata,
-            ::fs::item_array & itema)
+   ::filemanager::data * pdata,
+   ::fs::item_array & itema)
    {
       UNREFERENCED_PARAMETER(pdata);
       if(itema.get_size() > 0)
@@ -136,11 +145,11 @@ namespace userstack
       System.factory().creatable < ::userstack::frame > (iCount);
 
       m_ptemplate_pane    = new ::user::single_document_template(
-         this,
-         "bergedge/frame",
-         System.type_info < document > (),
-         System.type_info < frame > (),
-         System.type_info < pane_view > ());
+      this,
+      "bergedge/frame",
+      System.type_info < document > (),
+      System.type_info < frame > (),
+      System.type_info < pane_view > ());
 
    }
 
@@ -171,84 +180,90 @@ namespace userstack
    bool application::on_exclusive_instance_conflict(::EExclusiveInstance eexclusive)
    {
 
-      if(eexclusive == ::ExclusiveInstanceLocalId)
+      if (m_strAppName == "app/userstack")
       {
+
+         if (eexclusive == ::ExclusiveInstanceLocalId)
+         {
 #ifdef WINDOWSEX
-         ::memory_file file(get_app());
-         file.from_string(handler()->m_varTopicFile);
-         COPYDATASTRUCT data;
-         data.dwData = 2000;
-         data.cbData = (uint32_t) file.get_length();
-         data.lpData = file.get_data();
-         ::oswindow oswindow = ::FindWindowA(NULL, "::ca2::fontopus::message_wnd::application::");
+            ::memory_file file(get_app());
+            file.from_string(handler()->m_varTopicFile);
+            COPYDATASTRUCT data;
+            data.dwData = 2000;
+            data.cbData = (uint32_t)file.get_length();
+            data.lpData = file.get_data();
+            ::oswindow oswindow = ::FindWindowA(NULL, "::ca2::fontopus::message_wnd::application::");
 
-         ::SendMessage(oswindow, WM_COPYDATA, (WPARAM) 0, (LPARAM) &data);
+            ::SendMessage(oswindow, WM_COPYDATA, (WPARAM)0, (LPARAM)&data);
 
-         return true;
+            return true;
 #else
-         throw todo(get_app());
+            _throw(todo(get_app()));
 #endif
+         }
+
       }
 
-      return false;
+      return ::prompt::application::on_exclusive_instance_conflict(eexclusive);
 
    }
 
 
-/*   void application::request(::create * pcreate)
-   {
 
-      if(m_pappCurrent != NULL && m_pappCurrent != this
-         && (pcreate->m_spCommandLine->m_strApp.is_empty()
-         ||App(m_pappCurrent).m_strAppName == pcreate->m_spCommandLine->m_strApp))
+   /*   void application::request(::create * pcreate)
       {
-         if(get_document() != NULL && get_document()->get_typed_view < pane_view >() != NULL)
-         {
-            get_document()->get_typed_view < pane_view >()->set_cur_tab_by_id("app:" + App(m_pappCurrent).m_strAppName);
-         }
-         App(m_pappCurrent).request(pcreate);
-         if(pcreate->m_spCommandLine->m_varQuery["document"].cast < ::user::document > () == NULL)
-         {
-            goto alt1;
-         }
 
-      }
-      else
-      {
-         alt1:
-         if(pcreate->m_spCommandLine->m_varFile.get_type() == var::type_string)
+         if(m_pappCurrent != NULL && m_pappCurrent != this
+            && (pcreate->m_spCommandLine->m_strApp.is_empty()
+            ||App(m_pappCurrent).m_strAppName == pcreate->m_spCommandLine->m_strApp))
          {
-            if(::str::ends_ci(pcreate->m_spCommandLine->m_varFile, ".ca2"))
+            if(get_document() != NULL && get_document()->get_typed_view < pane_view >() != NULL)
             {
-               string strCommand = Application.file().as_string(pcreate->m_spCommandLine->m_varFile);
-               if(::str::begins_eat(strCommand, "ca2prompt\r")
-               || ::str::begins_eat(strCommand, "ca2prompt\n"))
-               {
-                  strCommand.trim();
-                  handler()->add_fork_uri(strCommand);
-               }
-               return;
+               get_document()->get_typed_view < pane_view >()->set_cur_tab_by_id("app:" + App(m_pappCurrent).m_strAppName);
             }
-            else
-            {
-               on_request(pcreate);
-            }
-         }
-         else if(pcreate->m_spCommandLine->m_strApp.has_char() &&
-            get_document() != NULL && get_document()->get_typed_view < pane_view >() != NULL
-            && (!pcreate->m_spApplicationBias.is_set() || pcreate->m_spApplicationBias->m_puiParent == NULL))
-         {
-            //simple_message_box(NULL, "request3", "request3", MB_ICONEXCLAMATION);
-            get_document()->get_typed_view < pane_view >()->set_cur_tab_by_id("app:" + pcreate->m_spCommandLine->m_strApp);
             App(m_pappCurrent).request(pcreate);
+            if(pcreate->m_spCommandLine->m_varQuery["document"].cast < ::user::document > () == NULL)
+            {
+               goto alt1;
+            }
+
          }
          else
          {
-            //simple_message_box(NULL, "request4", "request4", MB_ICONEXCLAMATION);
-            on_request(pcreate);
+            alt1:
+            if(pcreate->m_spCommandLine->m_varFile.get_type() == var::type_string)
+            {
+               if(::str::ends_ci(pcreate->m_spCommandLine->m_varFile, ".ca2"))
+               {
+                  string strCommand = Application.file().as_string(pcreate->m_spCommandLine->m_varFile);
+                  if(::str::begins_eat(strCommand, "ca2prompt\r")
+                  || ::str::begins_eat(strCommand, "ca2prompt\n"))
+                  {
+                     strCommand.trim();
+                     handler()->add_fork_uri(strCommand);
+                  }
+                  return;
+               }
+               else
+               {
+                  on_request(pcreate);
+               }
+            }
+            else if(pcreate->m_spCommandLine->m_strApp.has_char() &&
+               get_document() != NULL && get_document()->get_typed_view < pane_view >() != NULL
+               && (!pcreate->m_spApplicationBias.is_set() || pcreate->m_spApplicationBias->m_puiParent == NULL))
+            {
+               //simple_message_box(NULL, "request3", "request3", MB_ICONEXCLAMATION);
+               get_document()->get_typed_view < pane_view >()->set_cur_tab_by_id("app:" + pcreate->m_spCommandLine->m_strApp);
+               App(m_pappCurrent).request(pcreate);
+            }
+            else
+            {
+               //simple_message_box(NULL, "request4", "request4", MB_ICONEXCLAMATION);
+               on_request(pcreate);
+            }
          }
-      }
-   }*/
+      }*/
 
    void application::request_topic_file(var & varQuery)
    {
@@ -279,7 +294,7 @@ namespace userstack
          return NULL;
 
       }
-       
+
       papp = NULL;
 
       try
@@ -301,18 +316,18 @@ namespace userstack
          return NULL;
 
       }
-       
-      if(&App(papp) == NULL)
+
+      if(is_null(App(papp)))
       {
-      
+
          return NULL;
 
       }
-      
+
       m_mapApplication.set_at(strAppId, papp);
 
       Session.m_mapApplication.set_at(strAppId, papp);
-      
+
       return papp;
 
    }
@@ -381,11 +396,11 @@ namespace userstack
    }
 
 
-   bool application::initialize1()
+   bool application::init1()
    {
 
 
-      if(!::asphere::application::initialize1())
+      if(!::asphere::application::init1())
          return false;
 
 
@@ -394,18 +409,21 @@ namespace userstack
 
    }
 
-   bool application::initialize()
+
+   bool application::init()
    {
 
+      if (!::asphere::application::init())
+      {
 
-      if(!::asphere::application::initialize())
          return false;
 
+      }
 
       return true;
 
-
    }
+
 
    bool application::os_native_bergedge_start()
    {
@@ -414,51 +432,57 @@ namespace userstack
 
    }
 
-   int32_t application::main()
+
+   void application::main()
    {
 
-
-      return ::asphere::application::main();
-
+      ::asphere::application::main();
 
    }
 
-   bool application::on_uninstall()
+
+   bool application::on_unstall()
    {
 
-      bool bOk1 = false;
-
+      bool bOk = true;
 
       try
       {
-         bOk1 = ::asphere::application::on_uninstall();
+
+         if (!::asphere::application::on_unstall())
+         {
+
+            bOk = false;
+
+         }
+
       }
       catch(...)
       {
-         bOk1 = false;
+
+         m_error.set_if_not_set();
+
+         bOk = false;
+
       }
 
-
-      return bOk1;
-
+      return bOk;
 
    }
+
 
    bool application::is_serviceable()
    {
 
-
       return false;
 
-
    }
+
 
    service_base * application::allocate_new_service()
    {
 
-
       return NULL;
-
 
    }
 

@@ -36,10 +36,10 @@ namespace d2d1
    {
 
       return D2D1::Rect<FLOAT>(
-                convert<FLOAT>(lpcrect->left),
-                convert<FLOAT>(lpcrect->top),
-                convert<FLOAT>(lpcrect->right),
-                convert<FLOAT>(lpcrect->bottom)
+             (FLOAT)(lpcrect->left),
+             (FLOAT)(lpcrect->top),
+             (FLOAT)(lpcrect->right),
+             (FLOAT)(lpcrect->bottom)
              );
 
    }
@@ -49,8 +49,8 @@ namespace d2d1
    {
 
       return Point2F(
-                convert<FLOAT>(x),
-                convert<FLOAT>(y)
+             (FLOAT)(x),
+             (FLOAT)(y)
              );
 
    }
@@ -74,9 +74,9 @@ namespace draw2d_direct2d
    {
 
       if(FAILED(hr))
-         throw hresult_exception(get_thread_app(), hr);
+         _throw(hresult_exception(get_app(), hr));
       //if(FAILED(hr))
-      // throw hr;
+      // _throw(hr);
 
    }
 
@@ -85,7 +85,7 @@ namespace draw2d_direct2d
 
 
 
-#include "draw2d_direct2d_global.h"
+#include "aura/aura/os/windows_common/draw2d_direct2d_global.h"
 
 
 #include "draw2d_direct2d_factory_exchange.h"

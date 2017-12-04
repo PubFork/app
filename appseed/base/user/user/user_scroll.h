@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "base/user/user/user_interaction.h"
+//#include "base/user/user/user_interaction.h"
 
 
 namespace user
@@ -13,14 +13,14 @@ namespace user
 
    class CLASS_DECL_BASE scroll_data
    {
-   public:
+      public:
 
 
-      LONG        m_iPage;
-      LONG        m_iLine;
-      bool        m_bScroll;
-      int32_t     m_iWidth;
-      bool        m_bScrollEnable;
+         LONG        m_iPage;
+         LONG        m_iLine;
+         bool        m_bScroll;
+         int32_t     m_iWidth;
+         bool        m_bScrollEnable;
 
 
    };
@@ -29,34 +29,34 @@ namespace user
    class CLASS_DECL_BASE scroll_x :
       virtual public interaction
    {
-   public:
+      public:
 
 
-      sp(scroll_bar)    m_pscrollbarHorz;
-      scroll_data       m_scrolldataHorz;
+         sp(scroll_bar)    m_pscrollbarHorz;
+         scroll_data       m_scrolldataHorz;
 
 
-      scroll_x();
-      virtual ~scroll_x();
+         scroll_x();
+         virtual ~scroll_x();
 
 
-      virtual void install_message_routing(::message::sender * pinterface);
+         virtual void install_message_routing(::message::sender * pinterface);
 
 
 
-      //virtual void GetScrollRect(LPRECT lprect);
-      virtual void on_change_view_size();
-      virtual void on_change_viewport_offset();
-      virtual void create_x_scroll_bar(const RECT & rect);
-      virtual void layout_scroll_bar();
-      virtual void _001DeferCreateXScrollBar();
-      virtual void _001OnDeferCreateXScrollBar();
-      virtual void _001ConstrainXScrollPosition();
+         //virtual void GetScrollRect(LPRECT lprect);
+         virtual void on_change_view_size();
+         virtual void on_change_viewport_offset();
+         virtual void create_x_scroll_bar(const RECT & rect);
+         virtual void layout_scroll_bar();
+         virtual void _001DeferCreateXScrollBar();
+         virtual void _001OnDeferCreateXScrollBar();
+         virtual void _001ConstrainXScrollPosition();
 
 
-      DECL_GEN_SIGNAL(_001OnHScroll);
+         DECL_GEN_SIGNAL(_001OnHScroll);
 
-      virtual int get_final_x_scroll_bar_width();
+         virtual int get_final_x_scroll_bar_width();
 
    };
 
@@ -85,37 +85,37 @@ namespace user
    class CLASS_DECL_BASE scroll_y :
       virtual public interaction
    {
-   public:
+      public:
 
-      //int                  m_iVScrollOffset;
-      sp(scroll_bar)       m_pscrollbarVert;
-      scroll_data          m_scrolldataVert;
-      int16_t              m_iWheelDelta;
-
-
-      scroll_y();
-      virtual ~scroll_y();
+         //int                  m_iVScrollOffset;
+         sp(scroll_bar)       m_pscrollbarVert;
+         scroll_data          m_scrolldataVert;
+         int16_t              m_iWheelDelta;
 
 
-      virtual void install_message_routing(::message::sender * pinterface);
+         scroll_y();
+         virtual ~scroll_y();
 
 
-      //virtual void GetScrollRect(LPRECT lprect);
-      virtual void on_change_view_size();
-      virtual void on_change_viewport_offset();
-      virtual int32_t get_wheel_scroll_delta();
-      virtual void create_y_scroll_bar(const RECT & rect);
-      virtual void layout_scroll_bar();
-      virtual void _001DeferCreateYScrollBar();
-      virtual void _001OnDeferCreateYScrollBar();
-      virtual void _001ConstrainYScrollPosition();
+         virtual void install_message_routing(::message::sender * pinterface);
 
 
-      DECL_GEN_SIGNAL(_001OnVScroll);
-      DECL_GEN_SIGNAL(_001OnMouseWheel);
+         //virtual void GetScrollRect(LPRECT lprect);
+         virtual void on_change_view_size();
+         virtual void on_change_viewport_offset();
+         virtual int32_t get_wheel_scroll_delta();
+         virtual void create_y_scroll_bar(const RECT & rect);
+         virtual void layout_scroll_bar();
+         virtual void _001DeferCreateYScrollBar();
+         virtual void _001OnDeferCreateYScrollBar();
+         virtual void _001ConstrainYScrollPosition();
 
 
-      virtual int get_final_y_scroll_bar_width();
+         DECL_GEN_SIGNAL(_001OnVScroll);
+         DECL_GEN_SIGNAL(_001OnMouseWheel);
+
+
+         virtual int get_final_y_scroll_bar_width();
 
 
    };
@@ -124,34 +124,34 @@ namespace user
       virtual public ::user::scroll_x,
       virtual public ::user::scroll_y
    {
-   public:
+      public:
 
 
-      ::size            m_sizeTotal;
+         ::size            m_sizeTotal;
 
 
-      scroll();
-      scroll(::aura::application * papp);
-      virtual ~scroll();
+         scroll();
+         scroll(::aura::application * papp);
+         virtual ~scroll();
 
 
-      void on_change_view_size();
-      void on_change_viewport_offset();
-      void layout_scroll_bar();
+         void on_change_view_size();
+         void on_change_viewport_offset();
+         void layout_scroll_bar();
 
-      virtual void install_message_routing(::message::sender * pinterface);
-
-
-      //void GetScrollRect(LPRECT lprect);
-
-      virtual bool GetClientRect(LPRECT lprect);
-
-      virtual bool GetFocusRect(LPRECT lprect);
+         virtual void install_message_routing(::message::sender * pinterface);
 
 
-      virtual ::size get_total_size();
+         //void GetScrollRect(LPRECT lprect);
 
-      virtual void defer_draw_scroll_gap(::draw2d::graphics * pgraphics);
+         virtual bool GetClientRect(LPRECT lprect);
+
+         virtual bool GetFocusRect(LPRECT lprect);
+
+
+         virtual ::size get_total_size();
+
+         virtual void defer_draw_scroll_gap(::draw2d::graphics * pgraphics);
 
    };
 

@@ -34,12 +34,6 @@
     <Filter Include="Header Files\filesystem\filesystem">
       <UniqueIdentifier>{bc0a9193-3de6-4c94-b8a5-1bee8f009ef9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\graphics">
-      <UniqueIdentifier>{2c743536-cedf-4362-9ae7-fe6a2600ecd9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\graphics\visual">
-      <UniqueIdentifier>{ec9e1055-f5e3-49c0-8e6f-0762b041c412}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\database">
       <UniqueIdentifier>{92e2a612-c8bc-4256-ac1e-d33912289e3f}</UniqueIdentifier>
     </Filter>
@@ -63,12 +57,6 @@
     </Filter>
     <Filter Include="Source Files\filesystem\filesystem">
       <UniqueIdentifier>{d9bac111-f5bd-466a-8eb9-23f0a48f4d74}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\graphics">
-      <UniqueIdentifier>{b5aea3d9-77fd-4a52-90cb-c7f243921437}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\graphics\visual">
-      <UniqueIdentifier>{25f46071-cee7-4918-a102-02afb28db8a7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\axis">
       <UniqueIdentifier>{334b3820-f23b-4e44-82ad-cbde8866e65a}</UniqueIdentifier>
@@ -270,54 +258,6 @@
     <ClInclude Include="filesystem\filesystem\filesystem_dir_axis_system.h">
       <Filter>Header Files\filesystem\filesystem</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\visual\visual.h">
-      <Filter>Header Files\graphics\visual</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\visual\visual_api.h">
-      <Filter>Header Files\graphics\visual</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\visual\visual_buffered_graphics.h">
-      <Filter>Header Files\graphics\visual</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\visual\visual_dib.h">
-      <Filter>Header Files\graphics\visual</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\visual\visual_dib_pal.h">
-      <Filter>Header Files\graphics\visual</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\visual\visual_fastblur.h">
-      <Filter>Header Files\graphics\visual</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\visual\visual_font.h">
-      <Filter>Header Files\graphics\visual</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\visual\visual_FreeImageFileProc.h">
-      <Filter>Header Files\graphics\visual</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\visual\visual_glyph.h">
-      <Filter>Header Files\graphics\visual</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\visual\visual_glyph_set.h">
-      <Filter>Header Files\graphics\visual</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\visual\visual_graphics_extension.h">
-      <Filter>Header Files\graphics\visual</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\visual\visual_image_list.h">
-      <Filter>Header Files\graphics\visual</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\visual\visual_imaging.h">
-      <Filter>Header Files\graphics\visual</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\visual\visual_rgb_quad_array.h">
-      <Filter>Header Files\graphics\visual</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\visual\visual_visual.h">
-      <Filter>Header Files\graphics\visual</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\visual\visual_water_routine.h">
-      <Filter>Header Files\graphics\visual</Filter>
-    </ClInclude>
     <ClInclude Include="database\database\database.h">
       <Filter>Header Files\database\database</Filter>
     </ClInclude>
@@ -508,48 +448,6 @@
     <ClCompile Include="filesystem\filesystem\filesystem_dir_axis_system.cpp">
       <Filter>Source Files\filesystem\filesystem</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\dib_console.cpp">
-      <Filter>Source Files\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_api.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_buffered_graphics.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_dib.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_fastblur.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_font.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_glyph.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_glyph_set.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_graphics_extension.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_image_list.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_imaging.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_rgb_quad_array.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_visual.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_water_routine.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
     <ClCompile Include="axis\os\metrowin\metrowin.cpp">
       <Filter>Source Files\axis\os\metrowin</Filter>
     </ClCompile>
@@ -594,9 +492,6 @@
     </ClCompile>
     <ClCompile Include="axis\geoip\geoip_update.cpp">
       <Filter>Source Files\axis\geoip</Filter>
-    </ClCompile>
-    <ClCompile Include="axis\node\metrowin\metrowin_copydesk.cpp">
-      <Filter>Source Files\axis\node\metrowin</Filter>
     </ClCompile>
     <ClCompile Include="axis\node\metrowin\metrowin_crypto.cpp">
       <Filter>Source Files\axis\node\metrowin</Filter>
@@ -727,15 +622,6 @@
     <ClCompile Include="database\sqlitedb\sqlitedb_set.cpp">
       <Filter>Source Files\database\sqlitedb</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\visual\freeimage.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\load_gif_frame.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\detect_8bit_borders.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
     <ClCompile Include="filesystem\fs\fs_ftp.cpp">
       <Filter>Source Files\filesystem\fs</Filter>
     </ClCompile>
@@ -754,25 +640,10 @@
     <ClCompile Include="html_lite\html\html_html.cpp">
       <Filter>Source Files\html_lite\html</Filter>
     </ClCompile>
-    <ClCompile Include="user\user\user_copydesk.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_elemental.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_job.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
     <ClCompile Include="user\user\user_keyboard.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
     <ClCompile Include="user\user\user_keyboard_layout.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_print_job.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_validate.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
     <ClCompile Include="user\userpresence\userpresence_user_presence.cpp">
@@ -784,17 +655,68 @@
     <ClCompile Include="filesystem\fs\fs_ftp_file.cpp">
       <Filter>Source Files\filesystem\fs</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\visual\visual_font_list_data.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
+    <ClCompile Include="axis\node\metrowin\metrowin_copydesk.cpp">
+      <Filter>Source Files\axis\node\metrowin</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\visual\visual_font_department.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
+    <ClCompile Include="user\_user.cpp">
+      <Filter>Source Files\user</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\visual\visual_font_enumeration.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
+    <ClCompile Include="user\userpresence\_userpresence.cpp">
+      <Filter>Source Files\user\userpresence</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\visual\visual_FreeImageFileProc.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
+    <ClCompile Include="user\user\_user.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="html_lite\html_lite\_html_lite.cpp">
+      <Filter>Source Files\html_lite\html_lite</Filter>
+    </ClCompile>
+    <ClCompile Include="html_lite\_html_lite.cpp">
+      <Filter>Source Files\html_lite</Filter>
+    </ClCompile>
+    <ClCompile Include="html_lite\html\_html.cpp">
+      <Filter>Source Files\html_lite\html</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\fs\_fs.cpp">
+      <Filter>Source Files\filesystem\fs</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\filesystem\_filesystem.cpp">
+      <Filter>Source Files\filesystem\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\_file.cpp">
+      <Filter>Source Files\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="database\_database.cpp">
+      <Filter>Source Files\database</Filter>
+    </ClCompile>
+    <ClCompile Include="database\sqlitedb\_sqlitedb.cpp">
+      <Filter>Source Files\database\sqlitedb</Filter>
+    </ClCompile>
+    <ClCompile Include="database\simpledb\_simpledb.cpp">
+      <Filter>Source Files\database\simpledb</Filter>
+    </ClCompile>
+    <ClCompile Include="database\database\_database_database.cpp">
+      <Filter>Source Files\database\database</Filter>
+    </ClCompile>
+    <ClCompile Include="axis\_axis.cpp">
+      <Filter>Source Files\axis</Filter>
+    </ClCompile>
+    <ClCompile Include="axis\os\_os.cpp">
+      <Filter>Source Files\axis\os</Filter>
+    </ClCompile>
+    <ClCompile Include="axis\node\_node.cpp">
+      <Filter>Source Files\axis\node</Filter>
+    </ClCompile>
+    <ClCompile Include="axis\geoip\_geoip.cpp">
+      <Filter>Source Files\axis\geoip</Filter>
+    </ClCompile>
+    <ClCompile Include="axis\axis\_axis_axis.cpp">
+      <Filter>Source Files\axis\axis</Filter>
+    </ClCompile>
+    <ClCompile Include="axis\os\metrowin\_os_metrowin.cpp">
+      <Filter>Source Files\axis\os\metrowin</Filter>
+    </ClCompile>
+    <ClCompile Include="axis\node\metrowin\_node_metrowin.cpp">
+      <Filter>Source Files\axis\node\metrowin</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

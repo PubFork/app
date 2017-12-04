@@ -49,8 +49,11 @@ namespace draw2d_quartz2d
       
       virtual void * get_os_data() const;
       
+#ifdef DEBUG
+
       virtual void dump(dump_context & dumpcontext) const;
-      
+#endif
+
       
    };
    

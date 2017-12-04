@@ -448,8 +448,8 @@ namespace user
          size size = pgraphics->GetTextExtent(str);
 
          rect rect(0,0,0,0);
-         convert(rect.right, size.cx * 1.6);
-         convert(rect.bottom, size.cy * 1.4);
+         rect.right = LONG(size.cx * 1.6);
+         rect.bottom = LONG(size.cy * 1.4);
 
          SetWindowPos(0,0,0,rect.width(),rect.height(),SWP_NOMOVE);
 
@@ -468,9 +468,9 @@ namespace user
 
          ::size sizeTotal = calc_text_size();
 
-         convert_multiply(sizeTotal.cx, 1.6);
+         sizeTotal.cx = (LONG) (sizeTotal.cx * 1.6);
 
-         convert_multiply(sizeTotal.cy, 1.4);
+         sizeTotal.cy = (LONG) (sizeTotal.cy * 1.4);
 
          SetWindowPos(0,0,0,sizeTotal.cx,sizeTotal.cy,SWP_NOMOVE);
 
@@ -586,7 +586,7 @@ namespace user
 
       if(_001IsTranslucent())
       {
-         class imaging & imaging = System.visual().imaging();
+         class imaging & imaging = Application.imaging();
          imaging.color_blend(
             pgraphics,
             rectClient,
@@ -850,7 +850,7 @@ namespace user
          colorExt1BR.hls_rate(0.0,- 0.5,0.0);
       }
 
-      class imaging & imaging = System.visual().imaging();
+      class imaging & imaging = Application.imaging();
 
       rect rect = rectClient;
       imaging.color_blend_3dRect(pgraphics,rect,colorExt1TL,215,colorExt1BR,215);

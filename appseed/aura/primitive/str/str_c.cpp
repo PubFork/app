@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 ////#include "ca/x/x_defines.h"
 ////#include "ca/x/x_tables.h"
 ////#include "ca/x/x_charcategory_names.h"
@@ -727,13 +727,6 @@ void __cdecl parse_cmdline(char *cmdstart, char **argv, char *args, int32_t * nu
       while ( (*(++p) != DQUOTECHAR) && (*p != NULCHAR) )
       {
 
-         /*#ifdef _MBCS
-                         if (_ismbblead(*p)) {
-                             ++*numchars;
-                             if ( args )
-                                 *args++ = *p++;
-                         }
-         #endif  /* _MBCS */
          ++*numchars;
          if ( args )
             *args++ = *p;
@@ -757,14 +750,7 @@ void __cdecl parse_cmdline(char *cmdstart, char **argv, char *args, int32_t * nu
             *args++ = *p;
 
          c = (char) *p++;
-         /*#ifdef _MBCS
-                         if (_ismbblead(c)) {
-                             ++*numchars;
-                             if (args)
-                                 *args++ = *p;   /* copy 2nd byte too */
-         //                p++;  /* skip over trail byte */
-         //              }
-//#endif  /* _MBCS */
+
 
       }
       while ( c != SPACECHAR && c != NULCHAR && c != TABCHAR );
@@ -857,25 +843,6 @@ void __cdecl parse_cmdline(char *cmdstart, char **argv, char *args, int32_t * nu
          if (*p == NULCHAR || (!inquote && (*p == SPACECHAR || *p == TABCHAR)))
             break;
 
-         /* copy character into argument */
-         /*#ifdef _MBCS
-                     if (copychar) {
-                         if (args) {
-                             if (_ismbblead(*p)) {
-                                 *args++ = *p++;
-                                 ++*numchars;
-                             }
-                             *args++ = *p;
-                         } else {
-                             if (_ismbblead(*p)) {
-                                 ++p;
-                                 ++*numchars;
-                             }
-                         }
-                         ++*numchars;
-                     }
-                     ++p;
-         #else  /* _MBCS */
          if (copychar)
          {
             if (args)
@@ -1285,7 +1252,7 @@ strsize utf16_to_utf32(unichar32 * output, const unichar *input, strsize input_s
          else
          {
 
-            throw simple_exception(get_thread_app(), "utf16_to_utf32_len");
+            _throw(simple_exception(get_app(), "utf16_to_utf32_len"));
 
          }
 
@@ -1328,7 +1295,7 @@ strsize utf16_to_utf32_len(const unichar *input, strsize input_size)
          else
          {
 
-            throw simple_exception(get_thread_app(), "utf16_to_utf32_len");
+            _throw(simple_exception(get_app(), "utf16_to_utf32_len"));
 
          }
 
@@ -1457,11 +1424,32 @@ strsize utf32_to_utf8_len(const unichar32 * pwsz, strsize input_size)
    return len;
 }
 
+strsize utf32_len(const unichar32 * pwsz)
+{
+
+   if (pwsz == NULL)
+   {
+      return 0;
+   }
+   strsize s = 0;
+   while (*pwsz != 0)
+   {
+      s++;
+      pwsz++;
+   }
+   return s;
+}
 strsize utf32_to_utf8(char * psz,const unichar32 * pwsz, strsize srclen)
 {
    //unsigned short * pwsz = (unsigned short *)pwszParam;
    strsize c = 0;
    int32_t n;
+   if (srclen < 0)
+   {
+
+      srclen = utf32_len(pwsz);
+
+   }
    while(srclen > 0 && *pwsz != L'\0')
    {
       n = uni_to_utf8(psz,*pwsz);
@@ -1598,9 +1586,9 @@ strsize utf32_to_utf16_len(const unichar32 * codepoints, strsize input_size)
       {
 
          // invalid code_point, do something !
-         throw simple_exception(::get_thread_app(), "utf32_to_utf16_len :: invalid code_point, do something ! ");
+         _throw(simple_exception(get_app(), "utf32_to_utf16_len :: invalid code_point, do something ! "));
 
-         ++len;
+         //++len;
 
       }
 
@@ -1780,7 +1768,7 @@ extern "C"
          }
          else
          {
-            throw "not_expected, check wildcard_next_stop function";
+            _throw(simple_exception(get_app(), "not_expected, check wildcard_next_stop function"));
          }
 
 
@@ -1862,7 +1850,7 @@ extern "C"
          }
          else
          {
-            throw "not_expected, check wildcard_next_stop function";
+            _throw(simple_exception(get_app(), "not_expected, check wildcard_next_stop function"));
          }
 
 

@@ -76,41 +76,6 @@ namespace user
 
    class scroll_bar;
 
-   enum e_object
-   {
-
-      object_list,
-      object_tree
-
-   };
-
-
-   enum e_theme
-   {
-
-      theme_lite,
-      theme_blue,
-      theme_dark
-
-   };
-
-
-   enum e_schema
-   {
-
-      schema_default,
-      schema_menu,
-      schema_button,
-      schema_menu_button,
-      schema_menu_close,
-      schema_menu_popup,
-      schema_system_menu_button,
-      schema_system_menu_close,
-      schema_system_menu_popup,
-
-   };
-
-   using style_sp = sp(style);
 
 } // namespace user
 
@@ -144,7 +109,7 @@ namespace user
 
 
       Agile<Windows::UI::Core::CoreWindow> window;
-      ::axis::system_window ^ pwindow;
+      ::aura::system_window ^ pwindow;
 
 
    };
@@ -183,55 +148,6 @@ namespace user
 namespace user
 {
 
-   class CLASS_DECL_BASE create_struct :
-#ifdef WINDOWSEX
-      public CREATESTRUCTW
-#else
-      public CREATESTRUCTA
-#endif
-   {
-   public:
-
-
-      create_struct & operator = (const RECT & rect)
-      {
-
-         x = rect.left;
-         y = rect.top;
-         cx = rect.right - rect.left;
-         cy = rect.bottom - rect.top;
-
-         return *this;
-
-      }
-
-
-      create_struct & operator = (LPCRECT lpcrect)
-      {
-
-         if (lpcrect == NULL)
-         {
-
-            x = 0;
-            y = 0;
-            cx = 0;
-            cy = 0;
-
-         }
-         else
-         {
-
-            operator = (*lpcrect);
-
-         }
-
-         return *this;
-
-      }
-
-
-   };
-
 
 } // namespace user
 
@@ -256,36 +172,36 @@ namespace user
 #endif
 
 
-#include "user/user_mouse.h"
+//#include "user/user_mouse.h"
 
 
-#include "user/user_style_base.h"
-#include "user/user_style_composite.h"
-#include "user/user_style.h"
+//#include "user/user_style_base.h"
+//#include "user/user_style_composite.h"
+//#include "user/user_style.h"
 
 
-#include "base/base/message/message_user.h"
+//#include "base/base/message/message_user.h"
 
 
 
 
 #include "base/user/user/user_message_queue_listener.h"
 
-  //#include "user/user/user_keyboard_focus.h"
-  //#include "user/user/user_mouse_focus.h"
-  //#include "base/user/user/user_elemental.h"
-  //#include "user/user/user_check_interface.h"
-  //#include "base/user/user/user_style_simple_impl.h"
-  //#include "base/user/user/user_style_layered_frame.h"
-  //#include "user/user/user_text_interface.h"
-  //#include "user/user/user_draw_interface.h"
-#include "base/user/user/user_window_util.h"
-#include "base/user/user/user_interaction_base.h"
-  //#include "user/user/user_buffer.h"
-#include "base/user/user/user_interaction.h"
-#include "base/user/user/user_interaction_impl_base.h"
-#include "base/user/user/user_interaction_child.h"
-#include "base/user/user/user_interaction_impl.h"
+//#include "user/user/user_keyboard_focus.h"
+//#include "user/user/user_mouse_focus.h"
+//#include "base/user/user/user_elemental.h"
+//#include "user/user/user_check_interface.h"
+//#include "base/user/user/user_style_simple_impl.h"
+//#include "base/user/user/user_style_layered_frame.h"
+//#include "user/user/user_text_interface.h"
+//#include "user/user/user_draw_interface.h"
+//#include "base/user/user/user_window_util.h"
+//#include "base/user/user/user_interaction_base.h"
+//#include "user/user/user_buffer.h"
+//#include "base/user/user/user_interaction.h"
+//#include "base/user/user/user_interaction_impl_base.h"
+//nclude "base/user/user/user_interaction_child.h"
+//#include "base/user/user/user_interaction_impl.h"
 
 #endif
 
@@ -299,8 +215,8 @@ namespace user
 
 #if defined(__cplusplus) || defined(__cplusplus_winrt)
 
-  //#include "base/user/user/user_front_end_style.h"
-  //#include "base/user/user/user_front_end.h"
+//#include "base/user/user/user_front_end_style.h"
+//#include "base/user/user/user_front_end.h"
 #include "base/user/user/user_control_bar.h"
 #include "base/user/user/user_wait_cursor.h"
 #include "simple_ui/simple_ui_style.h"
@@ -311,16 +227,19 @@ namespace user
 #include "base/user/user/user_server.h"
 #include "base/user/user/user_impact_system.h"
 
-
-#include "base/user/user/user_tooltip.h"
-
-
-#ifdef WINDOWSEX
+#include "base/user/user/user_single_document_template.h"
+#include "base/user/user/user_multiple_document_template.h"
 
 
+//#include "base/user/user/user_tooltip.h"
 
 
-#endif
+//#ifdef WINDOWSEX
+//
+//
+//
+//
+//#endif
 
 
 
@@ -330,22 +249,22 @@ namespace user
 
 #include "base/user/user/user_document_data_map.h"
 #include "base/user/user/user_document.h"
-  //#include "base/user/user/user_application_as_proxy_document.h"
+//#include "base/user/user/user_application_as_proxy_document.h"
 #include "base/user/user/user_impact.h"
 
 
 
 
 
-  //#if defined(METROWIN)
-  //
-  //#include "app/appseed/base/base/os/metrowin/metrowin_sockets.h"
-  //
-  //#endif
+//#if defined(METROWIN)
+//
+//#include "app/appseed/base/base/os/metrowin/metrowin_sockets.h"
+//
+//#endif
 
 
 
-#include "base/user/user/user_window_map.h"
+//#include "base/user/user/user_window_map.h"
 
 
 

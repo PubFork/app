@@ -68,7 +68,7 @@ namespace draw2d
       };
 
 
-      BITMAPINFO        m_info;
+      //BITMAPINFO        m_info;
       COLORREF *        m_pcolorref;
       class ::size      m_size;
       int32_t           m_iScan;
@@ -330,7 +330,7 @@ namespace draw2d
 
       //virtual bool update_window(::aura::draw_interface * pui,::message::message * pobj,bool bTransferBuffer = true);
       //virtual bool print_window(::aura::draw_interface * pui,::message::message * pobj);
-      
+
 
       static void static_initialize();
 

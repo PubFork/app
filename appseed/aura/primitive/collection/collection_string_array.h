@@ -30,6 +30,9 @@ class string_array :
       virtual ~string_array();
 
 
+      void dump(dump_context &) const;
+      void assert_valid() const;
+
 
       ::count get_size() const;
       ::count get_count() const;
@@ -320,9 +323,6 @@ class string_array :
 
       Type & get_json(Type & str, bool bNewLine = true) const;
 
-      void dump(dump_context &) const;
-
-      void assert_valid() const;
 
       typedef Type BASE_TYPE;
 
@@ -659,7 +659,7 @@ else if (this->m_pData == NULL)
 // create one with exact size
 #ifdef SIZE_T_MAX
 if(nNewSize > SIZE_T_MAX/sizeof(Type))
-throw new memory_exception(get_app());
+_throw(memory_exception(get_app()));
 ASSERT(nNewSize <= SIZE_T_MAX/sizeof(Type));    // no overflow
 #endif
 
@@ -1003,9 +1003,6 @@ ar >> this->m_pData[i];
 }
 */
 
-
-
-
 template < typename Type, typename RawType >
 void string_array < Type, RawType >::dump(dump_context & dumpcontext) const
 {
@@ -1040,9 +1037,6 @@ void string_array < Type, RawType >::assert_valid() const
       ASSERT(__is_valid_address(this->m_pData,this->m_nMaxSize * sizeof(Type)));
    }
 }
-
-
-
 
 
 template < typename Type, typename RawType >
@@ -1607,9 +1601,6 @@ void string_array < Type, RawType > ::_001AddTokens(const char * lpcsz)
    }
 
 }
-
-
-extern int32_t g_add_smallest_tokens;
 
 
 template < class Type, class RawType >
@@ -3089,7 +3080,7 @@ template < class Type, class RawType >
 Type & string_array < Type, RawType > ::random_element()
 {
    if(this->get_size() <= 0)
-      throw "invalid call";
+      _throw(::simple_exception(get_app(), "invalid call"));
    return this->element_at(get_random_index());
 }
 
@@ -3098,7 +3089,7 @@ template < class Type, class RawType >
 const Type & string_array < Type, RawType > ::random_element() const
 {
    if(this->get_size() <= 0)
-      throw "invalid call";
+      _throw(::simple_exception(get_app(), "invalid call"));
    return this->element_at(get_random_index());
 }
 
@@ -3107,7 +3098,7 @@ template < class Type, class RawType >
 Type string_array < Type, RawType > ::pop_random_element()
 {
    if(this->get_size() <= 0)
-      throw "invalid call";
+      _throw(::simple_exception(get_app(), "invalid call"));
    index i = get_random_index();
    Type str = this->element_at(i);
    this->remove_at(i);
@@ -3613,7 +3604,7 @@ template < class Type, class RawType >
 void string_array < Type, RawType > ::sort_ci()
 {
 
-   pred_sort([](Type & a, Type & b)
+   this->pred_sort([](Type & a, Type & b)
    {
       return a.compare_ci(b) < 0;
    });
@@ -3625,7 +3616,7 @@ template < class Type, class RawType >
 void string_array < Type, RawType > ::collate_sort()
 {
 
-   pred_sort([](Type & a, Type & b)
+   this->pred_sort([](Type & a, Type & b)
    {
       return a.collate(b) < 0;
    });
@@ -3637,7 +3628,7 @@ template < class Type, class RawType >
 void string_array < Type, RawType > ::collate_sort_ci()
 {
 
-   pred_sort([](Type & a, Type & b)
+   this->pred_sort([](Type & a, Type & b)
    {
       return a.collate_ci(b) < 0;
    });

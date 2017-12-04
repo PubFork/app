@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #include "app/appseed/base/base/base/base.h"
@@ -150,11 +150,7 @@ namespace dynamic_source
 namespace core
 {
 
-#ifdef INSTALL_SUBSYSTEM
-
    class run_start_installer;
-
-#endif
 
    CLASS_DECL_CORE bool init_core();
 
@@ -168,6 +164,28 @@ bool defer_core_init();
 
 extern "C"
 CLASS_DECL_CORE bool defer_core_term();
+
+
+namespace core
+{
+
+
+   namespace static_start
+   {
+
+
+      CLASS_DECL_CORE void init(void);
+
+      CLASS_DECL_CORE void term(void);
+
+
+   } // namespace static_start
+
+
+} // namespace core
+
+
+
 
 
 #undef App
@@ -235,7 +253,7 @@ struct memory_state;
 
 
 class resource_exception;
-class user_exception;   
+class user_exception;
 namespace aura
 {
    class menu;                 // a menu
@@ -291,18 +309,18 @@ namespace geometry
 } // namespace geometry
 class dialog;          // a dialog
 
-                       // standard windows controls
+// standard windows controls
 class CStatic;          // Static control
 class CListBox;         // ListBox control
 class CCheckListBox;// special listbox with checks
 class CScrollBar;       // ScrollBar control
 
-                        // frame windows
+// frame windows
 class CMDIFrameWnd; // standard MDI frame
 class CMDIChildWnd; // standard MDI child
 class CMiniFrameWnd;// half-height caption frame wnd
 
-                    // views on a document
+// views on a document
 class CScrollView;  // a scrolling ::user::impact
 
 class single_document_template;

@@ -28,8 +28,11 @@ namespace macos
       virtual char * read_string(char * lpsz, UINT nMax);
       virtual bool read_string(string & rString);
       
-      
+#ifdef DEBUG
       void dump(dump_context & dumpcontext) const;
+      
+#endif
+      
       virtual file_position_t get_position() const;
       virtual cres open(const ::file::path & lpszFileName, UINT nOpenFlags);
       virtual memory_size_t read(void * lpBuf, memory_size_t nCount);

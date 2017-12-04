@@ -1,5 +1,6 @@
-#include "framework.h" // from "axis/net/net_sockets.h"
-//#include "axis/net/net_sockets.h"
+﻿#include "framework.h"
+#include "fs_net.h"
+
 
 
 namespace fs
@@ -99,7 +100,7 @@ namespace fs
          if(str == "You have not logged in! Exiting!")
          {
 
-            throw string("uifs:// You have not logged in!");
+            _throw(simple_exception(get_app(), string("uifs:// You have not logged in!")));
 
          }
 

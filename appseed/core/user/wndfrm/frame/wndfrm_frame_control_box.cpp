@@ -757,28 +757,28 @@ namespace user
             return (e_stock_icon)((int) ebutton - (int)button_begin + (int) stock_icon_control_box_begin);
 
 
-            switch (ebutton)
-            {
-               case button_close:
-                  return stock_icon_close;
-/*               case button_up:
-                  return stock_icon_level_up;
-               case button_down:
-                  return stock_icon_level_up;
-               case button_minimize:
-                  return stock_icon_iconify;
-               case button_maximize:
-                  return stock_icon_maximize;
-               case button_restore:
-                  return stock_icon_restore;
-               case button_notify_icon:
-                  return stock_icon_notify;
-               case button_dock:
-                  return stock_icon_dock;
-                  */
-               default:
-                  return stock_icon_none;
-            }
+//            switch (ebutton)
+//            {
+//               case button_close:
+//                  return stock_icon_close;
+///*               case button_up:
+//                  return stock_icon_level_up;
+//               case button_down:
+//                  return stock_icon_level_up;
+//               case button_minimize:
+//                  return stock_icon_iconify;
+//               case button_maximize:
+//                  return stock_icon_maximize;
+//               case button_restore:
+//                  return stock_icon_restore;
+//               case button_notify_icon:
+//                  return stock_icon_notify;
+//               case button_dock:
+//                  return stock_icon_dock;
+//                  */
+//               default:
+//                  return stock_icon_none;
+//            }
 
          }
 
@@ -1111,7 +1111,7 @@ namespace user
             catch (...)
             {
 
-               throw simple_exception(::get_thread_app(), "no more a window");
+               _throw(simple_exception(get_app(), "no more a window"));
 
             }
 

@@ -177,7 +177,7 @@ bool uncompress_gz::transfer(::file::ostream & ostreamUncompressed, ::file::istr
 
    uint32_t uiRead;
 
-   convert(uiRead, istreamGzFileCompressed.read(memIn.get_data(), memIn.get_size()));
+   uiRead = (uint32_t) (istreamGzFileCompressed.read(memIn.get_data(), memIn.get_size()));
 
    z_stream zstream;
 
@@ -232,7 +232,7 @@ bool uncompress_gz::transfer(::file::ostream & ostreamUncompressed, ::file::istr
       }
       while (zstream.avail_out == 0 || zstream.avail_in > 0);
 
-      convert(uiRead, istreamGzFileCompressed.read(memIn.get_data(), memIn.get_size()));
+      uiRead = (uint32_t) (istreamGzFileCompressed.read(memIn.get_data(), memIn.get_size()));
 
       zstream.next_in = (byte *)memIn.get_data();
 

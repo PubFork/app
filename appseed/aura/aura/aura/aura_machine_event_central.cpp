@@ -1,8 +1,8 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 machine_event_central::machine_event_central(::aura::application * papp) :
-   object(papp), 
+   object(papp),
    thread(papp),
    simple_thread(papp)
 {
@@ -41,7 +41,7 @@ bool machine_event_central::initialize()
 }
 
 
-int32_t machine_event_central::run()
+void machine_event_central::run()
 {
 
    // todo (camilo) instead of sleeping, wait for change messages pooling in the machine event data file.
@@ -69,14 +69,14 @@ int32_t machine_event_central::run()
 
 #endif
 
-   return 0;
+//   return 0;
 
 }
 
 
 bool machine_event_central::is_close_application()
 {
-   
+
    synch_lock lockMachineEvent(&m_machineevent.m_mutex);
 
    machine_event_data data;
@@ -92,9 +92,9 @@ bool machine_event_central::is_close_application()
 
 void machine_event_central::command(sp(::xml::node) pnode)
 {
-   
+
    synch_lock lockMachineEvent(&m_machineevent.m_mutex);
-   
+
    machine_event_data data;
 
    m_machineevent.read(&data);

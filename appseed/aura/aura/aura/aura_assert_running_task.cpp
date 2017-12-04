@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace aura
@@ -23,7 +23,7 @@ namespace aura
    }
 
 
-   int32_t assert_running_task::run()
+   void assert_running_task::run()
    {
 
       while(thread_get_run())
@@ -54,7 +54,7 @@ namespace aura
 
       }
 
-      return 0;
+//      return 0;
 
    }
 

@@ -24,14 +24,22 @@ namespace draw2d
       bitmap();
       virtual ~bitmap();
 
+#ifdef DEBUG
+
+      virtual void dump(dump_context & dumpcontext) const;
+
+#endif
 
       virtual bool CreateBitmap(::draw2d::graphics * pgraphics, int32_t nWidth, int32_t nHeight, UINT nPlanes, UINT nBitcount, const void * lpBits, int32_t stride);
       virtual bool CreateBitmapIndirect(::draw2d::graphics * pgraphics, LPBITMAP lpBitmap);
       virtual bool CreateCompatibleBitmap(::draw2d::graphics * pgraphics, int32_t nWidth, int32_t nHeight);
       virtual bool CreateDiscardableBitmap(::draw2d::graphics * pgraphics, int32_t nWidth, int32_t nHeight);
-      virtual bool CreateDIBSection(::draw2d::graphics * pgraphics, const BITMAPINFO * lpbmi, UINT usage, void ** ppcolorref, int * piScan, HANDLE hSection, uint32_t offset);
-      virtual bool HostDIBSection(::draw2d::graphics * pgraphics, const BITMAPINFO * lpbmi, UINT usage, void * pcolorref, int iScan, HANDLE hSection, uint32_t offset);
-      virtual bool CreateDIBitmap(::draw2d::graphics * pgraphics, const BITMAPINFOHEADER *pbmih, uint32_t flInit, const void *pjBits, const BITMAPINFO *pbmi, UINT iUsage);
+//         virtual bool CreateDIBSection(::draw2d::graphics * pgraphics, const BITMAPINFO * lpbmi, UINT usage, void ** ppcolorref, int * piScan, HANDLE hSection, uint32_t offset);
+      //       virtual bool HostDIBSection(::draw2d::graphics * pgraphics, const BITMAPINFO * lpbmi, UINT usage, void * pcolorref, int iScan, HANDLE hSection, uint32_t offset);
+      //     virtual bool CreateDIBitmap(::draw2d::graphics * pgraphics, const BITMAPINFOHEADER *pbmih, uint32_t flInit, const void *pjBits, const BITMAPINFO *pbmi, UINT iUsage);
+      virtual bool CreateDIBSection(::draw2d::graphics * pgraphics, int cx, int cy, UINT usage, void ** ppcolorref, int * piScan, HANDLE hSection, uint32_t offset);
+      virtual bool HostDIBSection(::draw2d::graphics * pgraphics, int cx, int cy, UINT usage, void * pcolorref, int iScan, HANDLE hSection, uint32_t offset);
+      virtual bool CreateDIBitmap(::draw2d::graphics * pgraphics, int cx, int cy, uint32_t flInit, const void *pjBits, UINT iUsage);
 
       virtual bool attach(void * posdata);
       virtual void * detach();
@@ -43,11 +51,10 @@ namespace draw2d
       virtual class size get_size() const;
       virtual class size size() const;
 
-   // Operations
+      // Operations
       virtual uint32_t SetBitmapBits(uint32_t dwCount, const void * lpBits);
       virtual uint32_t GetBitmapBits(uint32_t dwCount, LPVOID lpBits) const;
 
-      virtual void dump(dump_context & dumpcontext) const;
 
 
 #ifdef WINDOWSEX

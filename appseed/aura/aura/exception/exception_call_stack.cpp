@@ -3,11 +3,15 @@
 
 #if defined(APPLE_IOS)
 
-bool call_stack::s_bDoStackTrace = true;
+bool call_stack::s_bDoStackTrace = false;
 
 #elif defined(VSNORD)
 
 bool call_stack::s_bDoStackTrace = true;
+
+#elif defined(MACOS)
+
+bool call_stack::s_bDoStackTrace = false;
 
 #else
 
@@ -36,7 +40,7 @@ call_stack::call_stack(::aura::application * papp, uint32_t uiSkip) :
    if (m_pauraapp == NULL)
    {
 
-      m_pauraapp = get_thread_app();
+      m_pauraapp = get_app();
 
    }
 

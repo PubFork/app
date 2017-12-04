@@ -1,8 +1,5 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "core/user/user/user.h"
-
-
-#ifdef HOTPLUGIN_SUBSYSTEM
 
 
 #ifdef WINDOWS
@@ -25,7 +22,7 @@ void CLASS_DECL_CORE __cdecl _ca2_purecall_();
 
 void CLASS_DECL_CORE __cdecl _ca2_purecall_()
 {
-    throw simple_exception(get_thread_app());
+   _throw(simple_exception(get_app()));
 }
 
 namespace plugin
@@ -100,7 +97,7 @@ namespace plugin
 
 #ifdef METROWIN
 
-      throw todo(get_app());
+      _throw(todo(get_app()));
 
       return 0;
 
@@ -110,7 +107,7 @@ namespace plugin
 
       ::str::begins_eat_ci(strMutex, "\\core\\");
 
-      m_pmutexBitmap = new mutex(get_thread_app(), false, "Global\\" + strMutex);
+      m_pmutexBitmap = new mutex(get_app(), false, "Global\\" + strMutex);
 
       bool bNew = false;
 
@@ -137,15 +134,15 @@ namespace plugin
 
 //         int32_t nReturnCode = 0;
 
-/*         ::win::main_init_data * pinitmaindata  = new ::win::main_init_data;
+         /*         ::win::main_init_data * pinitmaindata  = new ::win::main_init_data;
 
-         pinitmaindata->m_hInstance             = hInstance;
-         pinitmaindata->m_hPrevInstance         = hPrevInstance;
-         pinitmaindata->m_strCommandLine        = ::str::international::unicode_to_utf8(::GetCommandLineW());
-         pinitmaindata->m_nCmdShow              = nCmdShow;
+                  pinitmaindata->m_hInstance             = hInstance;
+                  pinitmaindata->m_hPrevInstance         = hPrevInstance;
+                  pinitmaindata->m_strCommandLine        = ::str::international::unicode_to_utf8(::GetCommandLineW());
+                  pinitmaindata->m_nCmdShow              = nCmdShow;
 
 
-         psystem->init_main_data(pinitmaindata);*/
+                  psystem->init_main_data(pinitmaindata);*/
 
 #ifdef WINDOWS
 
@@ -156,7 +153,7 @@ namespace plugin
          if(!psystem->InitApplication())
             return 0;
 
-         if(!psystem->process_initialize())
+         if(!psystem->process_init())
             return 0;
 
          psystem->start_application(true, NULL);
@@ -184,13 +181,13 @@ namespace plugin
       m_puiHost->on_layout();
 
 //      if(m_pbReady == NULL)
-  //       m_pbReady = (bool *) memory_alloc(sizeof(bool));
+      //       m_pbReady = (bool *) memory_alloc(sizeof(bool));
 
 
 #ifdef WINDOWS
       // Create Message Queue
       MESSAGE msg;
-	   PeekMessage(&msg, NULL, 0, 0xffffffffu, FALSE);
+      PeekMessage(&msg, NULL, 0, 0xffffffffu, FALSE);
 #endif
 
 
@@ -444,7 +441,7 @@ namespace plugin
       {
 //         int32_t * pi = (int32_t *) p;
 //         simple_http_status * ps = (simple_http_status *) dw;
-  //       *pi = ps->m_dwStatusCode;
+         //       *pi = ps->m_dwStatusCode;
       }
 
    }
@@ -582,9 +579,9 @@ namespace plugin
          // TODO |) : Should parse Content-type:
          // ALSO: this case only happens if all file has been downloaded before the plugin has initialized
          if(::str::ends_ci(strPluginScript, ".mp3")
-         || ::str::ends_ci(strPluginScript, ".mid")
-         || ::str::ends_ci(strPluginScript, ".karaoke")
-         || ::str::ends_ci(strPluginScript, ".st3"))
+               || ::str::ends_ci(strPluginScript, ".mid")
+               || ::str::ends_ci(strPluginScript, ".karaoke")
+               || ::str::ends_ci(strPluginScript, ".st3"))
          {
             //System.m_puiInitialPlaceHolderContainer = m_puiHost;
             application_bias * pbiasCreate = new application_bias;
@@ -629,7 +626,7 @@ namespace plugin
             }
 
             string strAppId = str2;
-            
+
             strsize iFind = strAppId.find("?");
 
             if(iFind >= 0)
@@ -659,44 +656,44 @@ namespace plugin
 
             }
 
-                  //Sleep(15 * 1000);
+            //Sleep(15 * 1000);
             if(str1 == "ca2login")
             {
                // graphical - 2 - user interface for login - fontopus - through the plugin
                /*if(!System.install().is(NULL, strBuild, "application", "app/core/fontopus", strLocale, strSchema))
                {
-/*                  System.install().start(": app=session session_start=app/core/fontopus app_type=application install");
-#ifdef WINDOWS
+               /*                  System.install().start(": app=session session_start=app/core/fontopus app_type=application install");
+               #ifdef WINDOWS
                   ::TerminateProcess(::GetCurrentProcess(), 0);
-#else
+               #else
                   kill(0, SIGSTOP);
-#endif
+               #endif
                   m_bMainReady = false;*/
 
-/*                  string strCommandLine(": app=session session_start=app/core/fontopus app_type=application install ruri=\"" + strRuri + "\" locale=" + strLocale + " schema=" + strSchema);
+               /*                  string strCommandLine(": app=session session_start=app/core/fontopus app_type=application install ruri=\"" + strRuri + "\" locale=" + strLocale + " schema=" + strSchema);
 
 
-#ifdef WINDOWSEX
-                  PostMessage(m_phost->::::aura::ipc::tx::m_oswindow, WM_USER + 100, 1, 1);
-#else
-                  ::exception::throw_not_implemented(get_app());
-#endif
-                  System.install().start(strCommandLine);
+               #ifdef WINDOWSEX
+                                 PostMessage(m_phost->::::aura::ipc::tx::m_oswindow, WM_USER + 100, 1, 1);
+               #else
+                                 ::exception::throw_not_implemented(get_app());
+               #endif
+                                 System.install().start(strCommandLine);
 
-                  m_phost->m_bReload = true;
+                                 m_phost->m_bReload = true;
 
-#ifdef WINDOWSEX
-         //          ::TerminateProcess(::GetCurrentProcess(), 0);
-#else
-            //        kill(0, SIGSTOP);
-#endif
+               #ifdef WINDOWSEX
+                        //          ::TerminateProcess(::GetCurrentProcess(), 0);
+               #else
+                           //        kill(0, SIGSTOP);
+               #endif
 
-                  m_bMainReady = false;
+                                 m_bMainReady = false;
 
 
 
-                  return;
-               }*/
+                                 return;
+                              }*/
                m_strCa2LoginRuri = string(lpszEnd + 1, iCount - (lpszEnd - lpszStart) - 1);
                start_ca2_login();
             }
@@ -707,36 +704,36 @@ namespace plugin
                {
                   /*
                   System.install().start(": app=session session_start=app/core/fontopus app_type=application install");
-#ifdef WINDOWS
+               #ifdef WINDOWS
                   ::TerminateProcess(::GetCurrentProcess(), 0);
-#else
+               #else
                   kill(0, SIGSTOP);
-#endif
+               #endif
                   m_bMainReady = false;*/
 
-/*                  string strCommandLine(": app=session session_start=app/core/fontopus app_type=application install ruri=\"" + strRuri + "\" locale=" + strLocale + " schema=" + strSchema);
+               /*                  string strCommandLine(": app=session session_start=app/core/fontopus app_type=application install ruri=\"" + strRuri + "\" locale=" + strLocale + " schema=" + strSchema);
 
-#ifdef WINDOWSEX
-                  PostMessage(m_phost->::::aura::ipc::tx::m_oswindow, WM_USER + 100, 1, 1);
-#else
-                  ::exception::throw_not_implemented(get_app());
-#endif
+               #ifdef WINDOWSEX
+                                 PostMessage(m_phost->::::aura::ipc::tx::m_oswindow, WM_USER + 100, 1, 1);
+               #else
+                                 ::exception::throw_not_implemented(get_app());
+               #endif
 
-                  System.install().start(strCommandLine);
+                                 System.install().start(strCommandLine);
 
-                  m_phost->m_bReload = true;
+                                 m_phost->m_bReload = true;
 
-#ifdef WINDOWSEX
-         //          ::TerminateProcess(::GetCurrentProcess(), 0);
-#else
-            //        kill(0, SIGSTOP);
-#endif
+               #ifdef WINDOWSEX
+                        //          ::TerminateProcess(::GetCurrentProcess(), 0);
+               #else
+                           //        kill(0, SIGSTOP);
+               #endif
 
-                  m_bMainReady = false;
+                                 m_bMainReady = false;
 
 
-                  return;
-               }*/
+                                 return;
+                              }*/
                m_strCa2LogoutRuri = string(lpszEnd + 1, iCount - (lpszEnd - lpszStart) - 1);
                start_ca2_logout();
             }
@@ -864,9 +861,9 @@ namespace plugin
                         //m_phost->m_bReload = true;
 
 #ifdef WINDOWSEX
-  //                      ExitProcess(0);
+                        //                      ExitProcess(0);
 #else
-                //        kill(0, SIGSTOP);
+                        //        kill(0, SIGSTOP);
 #endif
 
                         //m_bMainReady = false;
@@ -888,16 +885,16 @@ namespace plugin
                         {
 
                            if(!property.get_string().has_char()
-                              &&
-                              (property.name() == "build"
-                              || property.name() == "app_type"
-                              || property.name() == "locale"
-                              || property.name() == "schema"
-                              || property.name() == "app"
-                              || property.name() == "session_start"
-                              || property.name() == "version"
-                              )
-                              )
+                                 &&
+                                 (property.name() == "build"
+                                  || property.name() == "app_type"
+                                  || property.name() == "locale"
+                                  || property.name() == "schema"
+                                  || property.name() == "app"
+                                  || property.name() == "session_start"
+                                  || property.name() == "version"
+                                 )
+                             )
                               continue;
 
 
@@ -927,7 +924,7 @@ namespace plugin
                         }
                         else if(dwExitCode == 0)
                         {
-                         //  ::simple_message_box(NULL,"Successfully run : " + strPath,"Debug only message, please install.",MB_ICONINFORMATION | MB_OK);
+                           //  ::simple_message_box(NULL,"Successfully run : " + strPath,"Debug only message, please install.",MB_ICONINFORMATION | MB_OK);
                         }
                         else
                         {
@@ -940,7 +937,7 @@ namespace plugin
                      {
                         m_puiHost->KillTimer(19841115);
                         //Sleep(15 * 1000);
-   //                     System.m_puiInitialPlaceHolderContainer = m_puiHost;
+                        //                     System.m_puiInitialPlaceHolderContainer = m_puiHost;
                         xxdebug_box("plugin", "open_ca2_string", 0);
                         application_bias * pbiasCreate = new application_bias;
                         pbiasCreate->m_set["NativeWindowFocus"] = false;
@@ -955,11 +952,11 @@ namespace plugin
       catch(installing_exception &)
       {
          m_bReload = true;
-/*#ifdef WINDOWS
-         ::TerminateProcess(::GetCurrentProcess(), 0);
-#else
-         kill(0, SIGSTOP);
-#endif*/
+         /*#ifdef WINDOWS
+                  ::TerminateProcess(::GetCurrentProcess(), 0);
+         #else
+                  kill(0, SIGSTOP);
+         #endif*/
       }
    }
 
@@ -1034,21 +1031,21 @@ namespace plugin
       //}
 
 #ifdef WINDOWS
-/*      while(true)
-      {
-         try
-         {
-            if(!::FreeLibrary(g_hmoduleOs))
+      /*      while(true)
             {
-               break;
-            }
+               try
+               {
+                  if(!::FreeLibrary(g_hmoduleOs))
+                  {
+                     break;
+                  }
 
-         }
-         catch(...)
-         {
-         }
+               }
+               catch(...)
+               {
+               }
 
-      }*/
+            }*/
 #endif
 
 
@@ -1114,9 +1111,5 @@ namespace plugin
 
 
 } // namespace plugin
-
-
-#endif
-
 
 

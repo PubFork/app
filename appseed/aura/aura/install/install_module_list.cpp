@@ -1,9 +1,6 @@
 #include "framework.h"
 
 
-#if defined(INSTALL_SUBSYSTEM)
-
-
 namespace install
 {
 
@@ -80,11 +77,6 @@ namespace install
 
 
 } // namespace install
-
-
-
-#endif
-
 
 
 

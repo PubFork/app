@@ -7,7 +7,7 @@ namespace sockets
 {
 
 
-   http_put_socket::http_put_socket(base_socket_handler& h) : 
+   http_put_socket::http_put_socket(base_socket_handler& h) :
       object(h.get_app()),
       base_socket(h),
       socket(h),
@@ -23,7 +23,7 @@ namespace sockets
    }
 
 
-   http_put_socket::http_put_socket(base_socket_handler& h,const string & url_in) : 
+   http_put_socket::http_put_socket(base_socket_handler& h,const string & url_in) :
       object(h.get_app()),
       base_socket(h),
       socket(h),
@@ -50,16 +50,18 @@ namespace sockets
 
       if(Application.file().exists(file))
       {
-         
+
          m_filename = file;
-         
+
          m_content_length = Application.file().length(file);
 
       }
       else
       {
 
-         log("SetFile", Errno, wsa_str_error(Errno), ::aura::log::level_fatal);
+#ifdef DEBUG
+         log("SetFile", Errno, bsd_socket_error(Errno), ::aura::log::level_fatal);
+#endif
 
          SetCloseAndDelete();
 
@@ -122,7 +124,7 @@ namespace sockets
             fclose(fil);
          }
       }
-      
+
    }
 
 }

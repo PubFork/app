@@ -1,18 +1,4 @@
-#pragma once
-
-
-
-class CLASS_DECL_AURA ptra:
-   virtual public spa(object)
-{
-   public:
-
-
-};
-
-
-typedef ::map < sp(object),sp(object),sp(object),sp(object) > element_map;
-typedef ::map < sp(object),sp(object),ptra,ptra > map_many;
+﻿#pragma once
 
 
 namespace aura
@@ -25,469 +11,576 @@ namespace aura
       ,virtual public ::exception::translator
 #endif
    {
+   public:
+
+#if defined METROWIN && defined(__cplusplus_winrt)
+
+      class CLASS_DECL_AURA os_system_window
+      {
       public:
 
+         bool                                         m_bWindowSizeChange;
 
-         bool                                      m_bAcid;
+         sp(::user::interaction)                      m_pui;
+
+         ::aura::system_window ^                      m_pwindow;
+
+         os_system_window();
+
+      };
+
+#elif defined(APPLE_IOS)
+
+      class os_system_window
+      {
+      public:
+
+         sp(::user::interaction)                      m_pui;
+
+      };
+
+#elif defined(VSNORD)
+
+      class os_system_window
+      {
+      public:
+
+         sp(::user::interaction)                      m_pui;
+
+         oswindow                                     m_oswindow;
+
+      };
+
+#else
+
+      class os_system_window;
+
+#endif
+
+#ifdef WINDOWSEX
+
+      ::user::system_interaction_impl *      m_psystemwindow;
+
+#endif
+
+      os_system_window *                     m_possystemwindow;
 
 
-         ::dump_context *                          m_pdumpcontext;
+#ifdef APPLE_IOS
+
+      plane_system *                        m_pplanesystem;
+
+#endif
+
+      ::app_core *                                 m_pappcore;
+
+#ifdef DEBUG
+
+      ::dump_context *                             m_pdumpcontext;
+
+#endif
+
+      ::aura::session::map                         m_aurabergedgemap;
+
+      ::object *                                   m_pDraw2dFactoryExchange;
+      sp(::visual::visual)                         m_pvisual;
 
 
 
+      sp(class ::datetime::department)             m_pdatetime;
+      ::crypto::crypto_sp                          m_spcrypto;
+      class ::fontopus::user_set                   m_userset;
 
-         ::aura::session::map                         m_aurabergedgemap;
 
-         ::object *                                   m_pDraw2dFactoryExchange;
-
-
-         sp(class ::datetime::department)            m_pdatetime;
-         ::crypto::crypto_sp                          m_spcrypto;
-         class ::fontopus::user_set                   m_userset;
 
 
 //         sp(::aura::audio::wave_out)                  m_spwaveout;
 
-         stridsp(type)                                m_typemap;
-         spa(service_base)                            m_serviceptra;
-         sp(base_factory)                             m_pfactory;
-         sp(class ::xml::department)                 m_pxml;
-         const id_pool                                m_cidpool;
-         sp(class ::aura::log)                        m_plog;
-         sp(math::math)                               m_pmath;
-         sp(geometry::geometry)                       m_pgeometry;
+      stridsp(type)                                m_typemap;
+      spa(service_base)                            m_serviceptra;
+      sp(base_factory)                             m_pfactory;
+      sp(class ::xml::department)                  m_pxml;
+      const id_pool                                m_cidpool;
+      sp(class ::aura::log)                        m_plog;
+      sp(math::math)                               m_pmath;
+      sp(geometry::geometry)                       m_pgeometry;
 
-         sp(::aura::str)                              m_puserstr;
+      sp(::aura::str)                              m_puserstr;
 
 
-         static class id                              idEmpty;
-         class ::str::base64                          m_base64;
+      static class id                              idEmpty;
+      class ::str::base64                          m_base64;
 
-         ::string_to_string                           m_mapAppLibrary;
-         sp(class machine_event_central)              m_pmachineeventcentral;
-         string_map < int_to_string >                 m_mapEnumToName;
-         string_map < string_to_int >                 m_mapNameToEnum;
-         ::aura::os_sp                                m_spos;
-         //array < ::aura::session * >                  m_basesessionptra;
-         colorertake5::ParserFactory *                m_pparserfactory;
+      ::string_to_string                           m_mapAppLibrary;
+      sp(class machine_event_central)              m_pmachineeventcentral;
+      string_map < int_to_string >                 m_mapEnumToName;
+      string_map < string_to_int >                 m_mapNameToEnum;
+      ::aura::os_sp                                m_spos;
+      //array < ::aura::session * >                  m_basesessionptra;
+      colorertake5::ParserFactory *                m_pparserfactory;
 
-         static system *                              g_p;
+      static system *                              g_p;
 
 #ifdef WINDOWS
-         float                                        m_dpi;
-         //ID2D1DeviceContext *                         m_pdevicecontext;
-         //mutex                                        m_mutexDc;
+      float                                        m_dpi;
+      //ID2D1DeviceContext *                         m_pdevicecontext;
+      //mutex                                        m_mutexDc;
 #elif defined(VSNORD)
-         android_init_data *                          m_pandroidinitdata;
+      android_data_exchange *                      m_pdataexchange;
 #endif
 
-         void *                                       m_ftlibrary;
+      void *                                       m_ftlibrary;
 
 
 
-         sp(mutex)                                    m_spmutexUserAppData;
-         sp(mutex)                                    m_spmutexSystemAppData;
+      sp(mutex)                                    m_spmutexUserAppData;
+      sp(mutex)                                    m_spmutexSystemAppData;
 
 
 
-         mutex                                        m_mutexFactory;
+      mutex                                        m_mutexFactory;
 
 
-         bool                                         m_bMatterFromHttpCache;
-         bool                                         m_bGudoNetCache;
+      bool                                         m_bMatterFromHttpCache;
+      bool                                         m_bGudoNetCache;
 
 
-         ::process::department                       m_process;
+      ::process::department                       m_process;
 
 
-         int32_t                                      m_nCmdShow;
-         size_t                                       m_nSafetyPoolSize;      // ideal size
+      int32_t                                      m_nCmdShow;
+      size_t                                       m_nSafetyPoolSize;      // ideal size
 //      ::html::html *                               m_phtml; // only defined  in core;
 
 
-         bool                                         m_bDoNotExitIfNoApplications;
+      bool                                         m_bDoNotExitIfNoApplications;
 
-         bool (system::*                              m_pfnVerb)();
+      bool (system::*                              m_pfnVerb)();
 
-         ::html::html *                               m_phtml; // only defined and set in html library/component
-         ::url::department *                          m_purldepartment;
-         ::compress_department *                      m_pcompress;
+      ::html::html *                               m_phtml; // only defined and set in html library/component
+      ::url::department *                          m_purldepartment;
+      ::compress_department *                      m_pcompress;
 
-         ::file::system_sp                            m_spfile;
-         ::file::dir::system_sp                       m_spdir;
+      ::file::system_sp                            m_spfile;
+      ::file::dir::system_sp                       m_spdir;
 
-         ::http::system                               m_httpsystem;
-
-
-
-         string                                       m_strInstallVersion;
-         string                                       m_strInstallPlatform;
-
-         DWORD                                        m_dwMainStartTime;
-         DWORD                                        m_dwAfterApplicationFirstRequest;
+      ::http::system                               m_httpsystem;
 
 
-         sp(mutex)                                    m_spmutexOpenweatherCity;
 
-         stringa                                      m_straCityLo;
-         stringa                                      m_straCity;
-         int64_array                                  m_iaIds;
-         double_array                                 m_daLon;
-         double_array                                 m_daLat;
+      string                                       m_strInstallVersion;
+      string                                       m_strInstallPlatform;
 
-         string_map < sp(::aura::library) >           m_mapLibrary;
+      DWORD                                        m_dwMainStartTime;
+      DWORD                                        m_dwAfterApplicationFirstRequest;
 
-         string_map < openweather_city * >            m_mapCity;
 
-         string                                       m_strIosHome;
-         string                                       m_strIosTemp;
-         string_to_string                             m_mapCachedLatestBuild;
+      sp(mutex)                                    m_spmutexOpenweatherCity;
 
-#if !defined(METROWIN)
+      stringa                                      m_straCityLo;
+      stringa                                      m_straCity;
+      int64_array                                  m_iaIds;
+      double_array                                 m_daLon;
+      double_array                                 m_daLat;
 
-         sp(::install::install)                       m_spinstall;
+      string_map < sp(::aura::library) >           m_mapLibrary;
+
+      string_map < openweather_city * >            m_mapCity;
+
+      string                                       m_strIosHome;
+      string                                       m_strIosTemp;
+      string_to_string                             m_mapCachedLatestBuild;
+
+      sp(::install::install)                       m_spinstall;
+
+      ::net::email_department                     m_emaildepartment;
+
+      stringa                                      m_straCommandLineAccumul;
+      stringa                                      m_straCommandLineExtra;
+      DWORD                                        m_dwCommandLineLast;
+      int                                          m_iCommandLineDelay;
+      sp(::thread)                                 m_pthreadCommandLine;
+
+
+      bool                                         m_bSystemSynchronizedCursor;
+      bool                                         m_bSystemSynchronizedScreen;
+
+
+#ifdef WINDOWSEX
+
+
+      raw_array < MONITORINFO >                    m_monitorinfoa;
+      raw_array < HMONITOR >                       m_hmonitora;
+      raw_array < MONITORINFO >                    m_monitorinfoaDesk;
 
 #endif
 
 
+      system(::aura::application * papp, app_core * pappcore, void * pdata);
+      virtual ~system();
 
-         system(::aura::application * papp, void * pdata);
-         virtual ~system();
 
+      virtual bool init_application() override;
+      virtual void term_application() override;
 
+      virtual void term() override;
 
+      application_ptra                                get_appptra();
 
 
+      //spa(::aura::session)                         &  basesessionptra();
 
-         virtual void construct(const char * pszAppId) override;
 
-         virtual bool initialize_application() override;
-         virtual int32_t exit_application() override;
+      class ::aura::os                             &  os();
+      class base_factory                           &  factory();
 
-         virtual bool finalize() override;
 
-         application_ptra                                get_appptra();
+      ::aura::str                                  & str();
+      ::process::department                       &  process();
 
 
-         //spa(::aura::session)                         &  basesessionptra();
+      ::xml::department                            &  xml();
+      class ::str::base64                          &  base64();
+      class ::aura::log                            &  log();
+      class ::machine_event_central                &  machine_event_central();
 
+      geometry::geometry                           &  geometry()
+      {
+         return *m_pgeometry;
+      }
+      math::math                                   &  math()
+      {
+         return *m_pmath;
+      }
 
-         class ::aura::os                             &  os();
-         class base_factory                           &  factory();
+      inline class ::visual::visual                & visual() { return *m_pvisual; }
 
+      //::colorertake5::ParserFactory                &  parser_factory();
+      inline ::url::department                     &  url()
+      {
+         return *m_purldepartment;   // only usable from base.dll and dependants
+      }
+      inline class ::compress_department           &  compress()
+      {
+         return *m_pcompress;   // only usable from base.dll and dependants
+      }
 
-         ::aura::str                                  & str();
-         ::process::department                       &  process();
+      inline ::file::system                        &  file()
+      {
+         return *m_spfile;
+      }
+      inline ::file::dir::system                   &  dir()
+      {
+         return *m_spdir;
+      }
+      ::net::email_department               & email();
 
+      ::fontopus::user_set                         & userset();
 
-         ::xml::department                            &  xml();
-         class ::str::base64                          &  base64();
+      ::datetime::department                       &  datetime();
 
-         class ::aura::log                            &  log();
+      virtual string url_encode(const string & str);
 
-         class ::machine_event_central                &  machine_event_central();
+      virtual void on_allocation_error(::aura::application * papp, ::type * ptype);
+      //   sp(object) alloc(::aura::application * papp, sp(type) info);
+      object * alloc(::aura::application * papp,const std_type_info & info);
+      //   virtual sp(object) on_alloc(::aura::application * papp, sp(type) info);
 
-         geometry::geometry                           &  geometry()
-         {
-            return *m_pgeometry;
-         }
-         math::math                                   &  math()
-         {
-            return *m_pmath;
-         }
-         ::colorertake5::ParserFactory                &  parser_factory();
-         inline ::url::department                     &  url()
-         {
-            return *m_purldepartment;   // only usable from base.dll and dependants
-         }
-         inline class ::compress_department           &  compress()
-         {
-               return *m_pcompress;   // only usable from base.dll and dependants
-         }
+      mutex * get_openweather_city_mutex();
 
-         inline ::file::system                        &  file()
-         {
-            return *m_spfile;
-         }
-         inline ::file::dir::system                   &  dir()
-         {
-            return *m_spdir;
-         }
+      using ::aura::application::alloc;
+      virtual object * alloc(::aura::application * papp,::type * ptype);
+      virtual object * alloc(::aura::application * papp,const class id & idType);
 
-         ::fontopus::user_set                         & userset();
+      virtual object * on_alloc(::aura::application * papp,::type * ptype);
+      virtual object * clone() override;
 
-         ::datetime::department                       &  datetime();
 
-         virtual string url_encode(const string & str);
+      template < typename T >
+      inline T * cast_clone(T * pt)
+      {
 
-         virtual void on_allocation_error(::aura::application * papp, ::type * ptype);
-         //   sp(object) alloc(::aura::application * papp, sp(type) info);
-         object * alloc(::aura::application * papp,const std_type_info & info);
-         //   virtual sp(object) on_alloc(::aura::application * papp, sp(type) info);
+         return ::clone(pt);
 
-         mutex * get_openweather_city_mutex();
+      }
 
-         using ::aura::application::alloc;
-         virtual object * alloc(::aura::application * papp,::type * ptype);
-         virtual object * alloc(::aura::application * papp,const class id & idType);
 
-         virtual object * on_alloc(::aura::application * papp,::type * ptype);
-         virtual object * clone() override;
+      template < class T >
+      ::type * type_info()
+      {
 
+         return get_type_info(typeid(T));
 
-         template < typename T >
-         inline T * cast_clone(T * pt)
-         {
+      }
 
-            return ::clone(pt);
 
-         }
+      virtual ::type * get_type_info(const ::std_type_info & info);
 
+      ::type * get_type_info(const class id & idType)
+      {
 
-         template < class T >
-         ::type * type_info()
-         {
+         if(idType.is_empty())
+            return NULL;
 
-            return get_type_info(typeid(T));
+         synch_lock sl(&m_mutexFactory);
 
-         }
+         return m_typemap[idType].m_p;
 
+      }
 
-         virtual ::type * get_type_info(const ::std_type_info & info);
 
-         ::type * get_type_info(const class id & idType)
-         {
+      virtual void discard_to_factory(::object * pca);
 
-            if(idType.is_empty())
-               return NULL;
 
-            synch_lock sl(&m_mutexFactory);
 
-            return m_typemap[idType].m_p;
 
-         }
 
+      virtual UINT os_post_to_all_threads(UINT uiMessage,WPARAM wparam = 0,lparam lparam = 0);
 
-         virtual void discard_to_factory(::object * pca);
+      virtual bool process_init() override;
 
+      virtual bool init() override;
 
+      virtual bool init1() override;
 
+      virtual bool init2() override;
 
 
-         virtual UINT os_post_to_all_threads(UINT uiMessage,WPARAM wparam = 0,lparam lparam = 0);
+      //virtual bool verb();
+      //virtual bool common_verb();
+      //virtual bool install_uninstall_verb();
 
-         virtual bool process_initialize() override;
 
-         virtual bool initialize1() override;
 
-         virtual bool initialize2() override;
+      virtual bool is_system() override;
 
 
-         //virtual bool verb();
-         //virtual bool common_verb();
-         //virtual bool install_uninstall_verb();
 
+      static inline class id id(const ::std_type_info & info);
+      static inline class id id(const char * psz);
+      static inline class id id(const string & str);
+      static inline class id id(int64_t i);
+      static inline class id_space & id();
+      inline class id id(const var & var);
+      inline class id id(const property & prop);
 
 
-         virtual bool is_system() override;
+      virtual int32_t _001OnDebugReport(int32_t i1,const char * psz1,int32_t i2,const char * psz2,const char * psz3,va_list args);
+      virtual int32_t _debug_logging_report(int32_t iReportType, const char * pszFilename, int32_t iLinenumber, const char * iModuleName, const char * pszFormat, va_list list);
+      virtual bool assert_failed_line(const char * lpszFileName,int32_t iLine);
+      virtual bool on_assert_failed_line(const char * pszFileName,int32_t iLine);
 
 
+      void set_enum_name(sp(type) etype,int32_t i,const char * psz)
+      {
+         m_mapEnumToName[etype->name()][i] = psz;
+         m_mapNameToEnum[etype->name()][psz] = i;
+      }
+      string get_enum_name(sp(type) info,int32_t i)
+      {
+         return m_mapEnumToName[info->name()].get(i,"");
+      }
 
-         static inline class id id(const ::std_type_info & info);
-         static inline class id id(const char * psz);
-         static inline class id id(const string & str);
-         static inline class id id(int64_t i);
-         static inline class id_space & id();
-         inline class id id(const var & var);
-         inline class id id(const property & prop);
+      template < class E,E edefault>
+      void from_name(base_enum < E,edefault > & b,const char * psz,E iDefault = edefault)
+      {
+         b = enum_from_name(System.type_info < E >(),psz,iDefault);
+      }
 
+      template < class E,E edefault>
+      string get_name(const base_enum < E,edefault > & b)
+      {
+         return get_enum_name(System.type_info < E >(),(int32_t)(E)b);
+      }
 
-         virtual int32_t _001OnDebugReport(int32_t i1,const char * psz1,int32_t i2,const char * psz2,const char * psz3,va_list args);
-         virtual int32_t _debug_logging_report(int32_t iReportType, const char * pszFilename, int32_t iLinenumber, const char * iModuleName, const char * pszFormat, va_list list);
-         virtual bool assert_failed_line(const char * lpszFileName,int32_t iLine);
-         virtual bool on_assert_failed_line(const char * pszFileName,int32_t iLine);
-
-
-         void set_enum_name(sp(type) etype,int32_t i,const char * psz)
-         {
-            m_mapEnumToName[etype->name()][i] = psz;
-            m_mapNameToEnum[etype->name()][psz] = i;
-         }
-         string get_enum_name(sp(type) info,int32_t i)
-         {
-            return m_mapEnumToName[info->name()].get(i,"");
-         }
-
-         template < class E,E edefault>
-         void from_name(base_enum < E,edefault > & b,const char * psz,E iDefault = edefault)
-         {
-            b = enum_from_name(System.type_info < E >(),psz,iDefault);
-         }
-
-         template < class E,E edefault>
-         string get_name(const base_enum < E,edefault > & b)
-         {
-            return get_enum_name(System.type_info < E >(),(int32_t)(E)b);
-         }
-
-         template < class ENUM >
-         ENUM enum_from_name(sp(type) info,const char * psz,int32_t iDefault = 0)
-         {
-            return (ENUM)m_mapNameToEnum[info->name()].get(psz,iDefault);
-         }
-         int32_t enum_from_name(sp(type) info,const char * psz,int32_t iDefault = 0)
-         {
-            return m_mapNameToEnum[info->name()].get(psz,iDefault);
-         }
-         int32_t enum_from_name(const std_type_info & info,const char * psz,int32_t iDefault = 0)
-         {
+      template < class ENUM >
+      ENUM enum_from_name(sp(type) info,const char * psz,int32_t iDefault = 0)
+      {
+         return (ENUM)m_mapNameToEnum[info->name()].get(psz,iDefault);
+      }
+      int32_t enum_from_name(sp(type) info,const char * psz,int32_t iDefault = 0)
+      {
+         return m_mapNameToEnum[info->name()].get(psz,iDefault);
+      }
+      int32_t enum_from_name(const std_type_info & info,const char * psz,int32_t iDefault = 0)
+      {
 #ifdef WINDOWS
-            return m_mapNameToEnum[info.name()].get(psz,iDefault);
+         return m_mapNameToEnum[info.name()].get(psz,iDefault);
 #else
-            return m_mapNameToEnum[info.name()].get(psz, iDefault);
+         return m_mapNameToEnum[info.name()].get(psz, iDefault);
 #endif
-         }
+      }
 
-         template < class TYPE >
-         void set_enum_name(sp(type) etype,TYPE e,const char * psz)
-         {
-            set_enum_name(etype,(int32_t)e,psz);
-         }
-         template < class TYPE >
-         string get_enum_name(sp(type) etype,TYPE e)
-         {
-            return get_enum_name(etype,(int32_t)e);
-         }
+      template < class TYPE >
+      void set_enum_name(sp(type) etype,TYPE e,const char * psz)
+      {
+         set_enum_name(etype,(int32_t)e,psz);
+      }
+      template < class TYPE >
+      string get_enum_name(sp(type) etype,TYPE e)
+      {
+         return get_enum_name(etype,(int32_t)e);
+      }
 
-         template < class TYPE >
-         void set_enum_name(const std_type_info & info,TYPE e,const char * psz)
-         {
-            set_enum_name(get_type_info(info),(int32_t)e,psz);
-         }
-         template < class TYPE >
-         string get_enum_name(const std_type_info & info,TYPE e)
-         {
-            return get_enum_name(get_type_info(info),(int32_t)e);
-         }
+      template < class TYPE >
+      void set_enum_name(const std_type_info & info,TYPE e,const char * psz)
+      {
+         set_enum_name(get_type_info(info),(int32_t)e,psz);
+      }
+      template < class TYPE >
+      string get_enum_name(const std_type_info & info,TYPE e)
+      {
+         return get_enum_name(get_type_info(info),(int32_t)e);
+      }
 
-         template < class TYPE >
-         void set_enum_name(TYPE e,const char * psz)
-         {
-            set_enum_name(System.type_info < TYPE >(),(int32_t)e,psz);
-         }
-         template < class TYPE >
-         string get_enum_name(TYPE e)
-         {
-            return get_enum_name(System.type_info < TYPE >(),(int32_t)e);
-         }
+      template < class TYPE >
+      void set_enum_name(TYPE e,const char * psz)
+      {
+         set_enum_name(System.type_info < TYPE >(),(int32_t)e,psz);
+      }
+      template < class TYPE >
+      string get_enum_name(TYPE e)
+      {
+         return get_enum_name(System.type_info < TYPE >(),(int32_t)e);
+      }
 
-         virtual ::aura::session * query_session(index iEdge);
+      virtual ::aura::session * query_session(index iEdge);
 
-         virtual bool initialize_log(const char * pszId);
-
-
-         virtual void appa_load_string_table();
-         virtual void appa_set_locale(const char * pszLocale,::action::context actioncontext);
-         virtual void appa_set_schema(const char * pszStyle,::action::context actioncontext);
-
-         virtual bool assert_running_global(const char * pszAppName,const char * pszId = NULL);
-         virtual bool assert_running_local(const char * pszAppName,const char * pszId = NULL);
+      virtual bool initialize_log(const char * pszId);
 
 
+      virtual void appa_load_string_table();
+      virtual void appa_set_locale(const char * pszLocale,::action::context actioncontext);
+      virtual void appa_set_schema(const char * pszStyle,::action::context actioncontext);
 
-         virtual ::count get_application_count();
-
-
-         //virtual ::file::path get_ca2_module_folder();
-         //virtual ::file::path get_ca2_module_file_path();
-         //virtual ::file::path get_module_folder();
-         //virtual ::file::path get_module_file_path();
-         //virtual ::file::path get_module_title();
-         //virtual ::file::path get_module_name();
+      virtual bool assert_running_global(const char * pszAppName,const char * pszId = NULL);
+      virtual bool assert_running_local(const char * pszAppName,const char * pszId = NULL);
 
 
-         virtual ::file::path dir_appmatter_locator(::aura::application * papp);
 
-         virtual string crypto_md5_text(const string & str);
-
-         inline class ::http::system                  & http()
-         {
-               return m_httpsystem;
-         }
-
-         class ::crypto::crypto                       & crypto();
-
-         virtual void * & ftlibrary();
-
-#if !defined(METROWIN)
-
-         ::install::install                           & install()
-         {
-            return *m_spinstall;
-         }
-
-#endif
+      virtual ::count get_application_count();
 
 
-         virtual bool find_applications_from_cache();
-         virtual bool find_applications_to_cache(bool bSave = true);
-         virtual bool map_application_library(const char * pszLibrary);
+      //virtual ::file::path get_ca2_module_folder();
+      //virtual ::file::path get_ca2_module_file_path();
+      //virtual ::file::path get_module_folder();
+      //virtual ::file::path get_module_file_path();
+      //virtual ::file::path get_module_title();
+      //virtual ::file::path get_module_name();
 
 
-         virtual void install_progress_add_up(int iAddUp = 1);
+      virtual ::file::path dir_appmatter_locator(::aura::application * papp);
 
-         virtual bool alloc_session();
+      virtual string crypto_md5_text(const string & str);
 
-         virtual ::aura::session * on_create_session();
+      inline class ::http::system                  & http()
+      {
+         return m_httpsystem;
+      }
 
+      class ::crypto::crypto                       & crypto();
 
-         virtual ::aura::session *             get_session(index iEdge,application_bias * pbiasCreation = NULL);
+      virtual void * & ftlibrary();
 
-
-         virtual void on_request(::create * pcreate) override;
-
-
-         virtual string get_system_platform();
-         virtual string get_system_configuration();
-         virtual bool is_application_installed(const char * pszAppId, const char * pszBuild = NULL, const char * pszPlatform = NULL, const char * pszConfiguration = NULL, const char * pszLocale = NULL, const char * pszSchema = NULL);
-         virtual string get_latest_build_number(const char * pszConfiguration);
-
-#if defined(INSTALL_SUBSYSTEM)
-         virtual int32_t start_installation(const char * pszCommand);
-#endif
+      ::install::install                           & install()
+      {
+         return *m_spinstall;
+      }
 
 
-         virtual void on_start_find_applications_from_cache();
-         virtual void on_end_find_applications_from_cache(::file::byte_istream & is);
+      virtual bool find_applications_from_cache();
+      virtual bool find_applications_to_cache(bool bSave = true);
+      virtual bool map_application_library(const char * pszLibrary);
 
-         virtual void on_end_find_applications_to_cache(::file::byte_ostream & os);
 
-         virtual void on_map_application_library(::aura::library & library);
+      virtual void install_progress_add_up(int iAddUp = 1);
 
-         virtual bool process_command(::command::command * command) override;
+      virtual bool alloc_session();
 
-         virtual void request_exit();
+      virtual ::aura::session * on_create_session();
 
-         virtual void defer_check_exit();
 
-         virtual void handle_command(::command::command * pcommand) override;
+      virtual ::aura::session *             get_session(index iEdge,application_bias * pbiasCreation = NULL);
 
-         virtual void defer_check_openweather_city_list();
 
-         virtual openweather_city * openweather_find_city(string strQuery);
-         virtual index openweather_find_city2(string strQuery, string & strCit, int64_t & iId, double & dLat, double & dLon);
-         virtual index openweather_find_city2(string strQ1, string strQ2, string & strCit, int64_t & iId, double & dLat, double & dLon, bool bPrefix);
+      virtual void on_request(::create * pcreate) override;
+
+
+      virtual string get_system_platform();
+      virtual string get_system_configuration();
+      virtual bool is_application_installed(const char * pszAppId, const char * pszBuild = NULL, const char * pszPlatform = NULL, const char * pszConfiguration = NULL, const char * pszLocale = NULL, const char * pszSchema = NULL);
+      virtual string get_latest_build_number(const char * pszConfiguration);
+
+      virtual int32_t start_installation(const char * pszCommand);
+
+
+      virtual void on_start_find_applications_from_cache();
+      virtual void on_end_find_applications_from_cache(::file::byte_istream & is);
+
+      virtual void on_end_find_applications_to_cache(::file::byte_ostream & os);
+
+      virtual void on_map_application_library(::aura::library & library);
+
+      virtual bool process_command(::command::command * command) override;
+
+      virtual void request_exit();
+
+      virtual void defer_check_exit();
+
+      virtual void handle_command(::command::command * pcommand) override;
+
+      virtual void defer_check_openweather_city_list();
+
+      virtual openweather_city * openweather_find_city(string strQuery);
+      virtual index openweather_find_city2(string strQuery, string & strCit, int64_t & iId, double & dLat, double & dLon);
+      virtual index openweather_find_city2(string strQ1, string strQ2, string & strCit, int64_t & iId, double & dLat, double & dLon, bool bPrefix);
 
 #ifdef VSNORD
 
-         virtual bool android_set_user_wallpaper(string strUrl);
+      virtual bool android_set_user_wallpaper(string strUrl);
+      virtual bool android_get_user_wallpaper(string & strUrl);
 
 #endif
 
+      virtual bool accumulate_on_open_file(stringa stra, string strExtra, int iMillisDelay);
 
-         virtual bool on_open_file(var varFile, string strExtra);
+      virtual bool on_open_file(var varFile, string strExtra);
 
-         virtual LPWAVEOUT waveout_open(int iChannel, LPAUDIOFORMAT pformat, LPWAVEOUT_CALLBACK pcallback);
+      virtual LPWAVEOUT waveout_open(int iChannel, LPAUDIOFORMAT pformat, LPWAVEOUT_CALLBACK pcallback) override;
+
+      virtual bool initialize_native_window1();
+
+      virtual void * initialize_native_window2(LPCRECT lpcrect);
+
+      virtual void on_os_text(e_os_text etext, string strText);
+
+      virtual ::user::interaction_impl * impl_from_handle(void * posdata);
+      virtual ::user::interaction * ui_from_handle(void * posdata);
+
+      virtual bool defer_create_system_frame_window();
+
+      void enum_display_monitors();
+
+#if defined(WINDOWS)
+      static_function BOOL CALLBACK monitor_enum_proc(HMONITOR hmonitor, HDC hdcMonitor, LPRECT lprcMonitor, LPARAM dwData);
+      void monitor_enum(HMONITOR hmonitor, HDC hdcMonitor, LPRECT lprcMonitor);
+#endif
+
+      virtual index get_main_monitor(LPRECT lprect = NULL);
+      virtual ::count get_monitor_count();
+      virtual bool  get_monitor_rect(index iMonitor, LPRECT lprect);
+      virtual ::count get_desk_monitor_count();
+      virtual bool  get_desk_monitor_rect(index iMonitor, LPRECT lprect);
+
+      virtual index get_main_wkspace(LPRECT lprect = NULL);
+      virtual ::count get_wkspace_count();
+      virtual bool  get_wkspace_rect(index iWkspace, LPRECT lprect);
+      virtual ::count get_desk_wkspace_count();
+      virtual bool  get_desk_wkspace_rect(index iWkspace, LPRECT lprect);
+      virtual index get_ui_wkspace(::user::interaction * pui);
+
+
+
 
 
    };
@@ -498,6 +591,6 @@ namespace aura
 
 
 
-CLASS_DECL_AURA ::aura::system * create_aura_system();
+CLASS_DECL_AURA ::aura::system * create_aura_system(app_core * pappcore);
 
 

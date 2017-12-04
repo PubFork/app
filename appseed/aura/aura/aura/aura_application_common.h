@@ -4,7 +4,7 @@
 class service_base;
 class not_installed;
 
-#ifdef HOTPLUGIN_SUBSYSTEM
+#ifdef 
 
 namespace hotplugin
 {

@@ -1,24 +1,83 @@
-#include "framework.h"
-//#include "windows.h"
+﻿#include "framework.h"
 
 
 namespace aura
 {
-//
-//
-//   application::application(::aura::application * papp) :
-//      object(papp)
-//   {
-//
-//      //m_pthreadimpl.alloc(allocer());
-//
-//      //m_pthreadimpl->m_pthread = this;
-//
-//      m_paurasystem                    =  papp->m_pauraapp->m_paurasystem;
-//
-//      m_atomApp = m_atomSystemTopic    = NULL;
-//
-//   }
+
+   bool application::impl_process_init()
+   {
+
+      return true;
+
+   }
+
+   bool application::impl_init1()
+   {
+
+      //set_run();
+
+      return true;
+
+   }
+
+   bool application::impl_init2()
+   {
+      return true;
+   }
+
+   bool application::impl_init3()
+   {
+      return true;
+   }
+
+   // thread termination
+   void application::impl_process_term() // default will 'delete this'
+   {
+
+      set_os_data(NULL);
+
+      //int32_t iRet = ::aura::application::term_instance();
+
+      //return 0;
+
+   }
+
+
+   void application::impl_term3()
+   {
+
+
+   }
+
+
+   void application::impl_term2()
+   {
+
+
+   }
+
+
+   void application::impl_term1()
+   {
+
+
+   }
+
+   //
+   //
+   //   application::application(::aura::application * papp) :
+   //      object(papp)
+   //   {
+   //
+   //      //m_pthreadimpl.alloc(allocer());
+   //
+   //      //m_pthreadimpl->m_pthread = this;
+   //
+   //      m_paurasystem                    =  papp->m_pauraapp->m_paurasystem;
+   //
+   //      m_atomApp = m_atomSystemTopic    = NULL;
+   //
+   //   }
 
 
    //application::~application()
@@ -78,58 +137,59 @@ namespace aura
 
       DWORD dw;
 
-      DWORD dwResSize = GetFileVersionInfoSizeW(      
-         lpszModuleFilePath,
-         &dw);
+      DWORD dwResSize = GetFileVersionInfoSizeW(
+                        lpszModuleFilePath,
+                        &dw);
 
 
-      if(dwResSize > 0)
+      if (dwResSize > 0)
       {
          LPVOID lpdata = new BYTE[dwResSize];
-         if(GetFileVersionInfoW(      
-            lpszModuleFilePath,
-            0,
-            dwResSize,
-            lpdata))
+         if (GetFileVersionInfoW(
+               lpszModuleFilePath,
+               0,
+               dwResSize,
+               lpdata))
          {
             UINT cbTranslate;
-            struct LANGANDCODEPAGE {
+            struct LANGANDCODEPAGE
+            {
                WORD wLanguage;
                WORD wCodePage;
             } *lpTranslate;
 
             // read the list of languages and code pages.
 
-            VerQueryValue(lpdata, 
-               TEXT("\\VarFileInfo\\Translation"),
-               (LPVOID*)&lpTranslate,
-               &cbTranslate);
+            VerQueryValue(lpdata,
+                          TEXT("\\VarFileInfo\\Translation"),
+                          (LPVOID*)&lpTranslate,
+                          &cbTranslate);
 
             string strKey;
             //for( i=0; i < (cbTranslate/sizeof(struct LANGANDCODEPAGE)); i++ )
-            for(int32_t i=0; i < 1; i++ )
+            for (int32_t i = 0; i < 1; i++)
             {
                LPTSTR lpsz;
                UINT uiSize;
 
                strKey.Format(
-                  TEXT("\\StringFileInfo\\%04x%04x\\FileDescription"),
-                  lpTranslate[i].wLanguage,
-                  lpTranslate[i].wCodePage);
+               TEXT("\\StringFileInfo\\%04x%04x\\FileDescription"),
+               lpTranslate[i].wLanguage,
+               lpTranslate[i].wCodePage);
 
 
 
 
                strKey.Format(
-                  TEXT("\\StringFileInfo\\%04x%04x\\FileVersion"),
-                  lpTranslate[i].wLanguage,
-                  lpTranslate[i].wCodePage);
+               TEXT("\\StringFileInfo\\%04x%04x\\FileVersion"),
+               lpTranslate[i].wLanguage,
+               lpTranslate[i].wCodePage);
 
-               // Retrieve file description for language and code page "i". 
-               VerQueryValue(lpdata, 
-                  (LPTSTR) (const char *) strKey, 
-                  (LPVOID *)&lpsz, 
-                  &uiSize); 
+               // Retrieve file description for language and code page "i".
+               VerQueryValue(lpdata,
+                             (LPTSTR)(const char *)strKey,
+                             (LPVOID *)&lpsz,
+                             &uiSize);
 
 
                string strVersion(lpsz, uiSize);
@@ -137,7 +197,7 @@ namespace aura
                return strVersion;
             }
          }
-         delete [] (LPBYTE) lpdata;
+         delete[](LPBYTE) lpdata;
       }
 
 
@@ -146,34 +206,34 @@ namespace aura
    }
 
 
-//   bool application::Ex2OnAppInstall()
-//   {
-//#ifdef IMPLEMENT_VISTA_TOOLS
-//      if(VistaTools::IsVista())
-//      {
-//         if(VistaTools::IsElevated() != S_OK)
-//         {
-//            TRACE0("Error! Installing application ( : (un)install run parameter ) without Elevation (required since Vista Windows version)");
-//            return false;
-//         }
-//      }
-//#endif 
-//      return true;
-//   }
-//
-//
-//   bool application::Ex2OnAppUninstall()
-//   {
-//      if(VistaTools::IsVista())
-//      {
-//         if(VistaTools::IsElevated() != S_OK)
-//         {
-//            TRACE0("Error! Installing application ( : (un)install run parameter ) without Elevation (required since Vista Windows version)");
-//            return false;
-//         }
-//      }
-//      return true;
-//   }
+   //   bool application::Ex2OnAppInstall()
+   //   {
+   //#ifdef IMPLEMENT_VISTA_TOOLS
+   //      if(VistaTools::IsVista())
+   //      {
+   //         if(VistaTools::IsElevated() != S_OK)
+   //         {
+   //            TRACE0("Error! Installing application ( : (un)install run parameter ) without Elevation (required since Vista Windows version)");
+   //            return false;
+   //         }
+   //      }
+   //#endif
+   //      return true;
+   //   }
+   //
+   //
+   //   bool application::Ex2OnAppUninstall()
+   //   {
+   //      if(VistaTools::IsVista())
+   //      {
+   //         if(VistaTools::IsElevated() != S_OK)
+   //         {
+   //            TRACE0("Error! Installing application ( : (un)install run parameter ) without Elevation (required since Vista Windows version)");
+   //            return false;
+   //         }
+   //      }
+   //      return true;
+   //   }
 
 
    //void application::TermThread(HINSTANCE hInstTerm)
@@ -185,53 +245,13 @@ namespace aura
 
 
 
-   bool application::impl_process_initialize()
-   {
-
-      return true;
-
-   }
-
-   bool application::impl_initialize1()
-   {
-
-      //set_run();
-
-      return true;
-
-   }
-
-   bool application::impl_initialize2()
-   {
-      return true;
-   }
-
-   bool application::impl_initialize3()
-   {
-      return true;
-   }
-
-   // thread termination
-   int32_t application::impl_exit_instance() // default will 'delete this'
-   {
-
-      set_os_data(NULL);
-
-      //int32_t iRet = ::aura::application::exit_application();
-
-      return 0;
-
-   }
-
-
-
 
    //void application::BaseSetCurrentHandles()
    //{
 
    //   //string strExeName;
    //   //strExeName = System.get_module_title();
-   //   dappy(string(typeid(*this).name()) + " : got module title windows application : " + ::str::from(m_iReturnCode));
+   //   dappy(string(typeid(*this).name()) + " : got module title windows application : " + ::str::from(m_iErrorCode));
 
    //   __init_thread();
 
@@ -256,7 +276,7 @@ namespace aura
 
    void application::get_time(struct timeval *p)
    {
-   #ifdef _WIN32
+#ifdef _WIN32
       FILETIME ft; // Contains a 64-bit value representing the number of 100-nanosecond intervals since January 1, 1601 (UTC).
       GetSystemTimeAsFileTime(&ft);
       uint64_t tt;
@@ -264,14 +284,14 @@ namespace aura
       tt /= 10; // make it usecs
       p->tv_sec = (long)tt / 1000000;
       p->tv_usec = (long)tt % 1000000;
-   #else
+#else
       gettimeofday(p, NULL);
-   #endif
+#endif
    }
 
-   void application::set_env_var(const string & var,const string & value)
+   void application::set_env_var(const string & var, const string & value)
    {
-   #if (defined(SOLARIS8) || defined(SOLARIS))
+#if (defined(SOLARIS8) || defined(SOLARIS))
       {
          static stdmap<string, char *> vmap;
          if (vmap.find(var) != vmap.end())
@@ -280,16 +300,16 @@ namespace aura
          }
          vmap[var] = new char[var.get_length() + 1 + value.get_length() + 1];
          sprintf(vmap[var], "%s=%s", var, value);
-         putenv( vmap[var] );
+         putenv(vmap[var]);
       }
-   #elif defined _WIN32
+#elif defined _WIN32
       {
          string slask = var + "=" + value;
-         _putenv( (const char *)slask);
+         _putenv((const char *)slask);
       }
-   #else
+#else
       setenv(var, value, 1);
-   #endif
+#endif
    }
 
    uint32_t application::get_thread_id()
@@ -304,7 +324,7 @@ namespace aura
 
       // m_pmaininitdata = pauradata;
 
-      if(m_pcommand != NULL && m_pauraapp->is_system())
+      if (m_pcommand != NULL && m_pauraapp->is_system())
       {
 
          ::windows::command * pdata = m_pcommand.cast < ::windows::command >();
@@ -355,25 +375,25 @@ namespace aura
    void application::ShowWaitCursor(bool bShow)
    {
 
-      if(bShow)
+      if (bShow)
       {
 
-         HCURSOR hcursorWait =  ::LoadCursor(NULL, IDC_WAIT);
+         HCURSOR hcursorWait = ::LoadCursor(NULL, IDC_WAIT);
 
          HCURSOR hcursorPrevious = ::SetCursor(hcursorWait);
-         
-    //     if(hcursorPrevious != hcursorWait)
-  //         m_hcurWaitCursorRestore = hcursorPrevious;
+
+         //     if(hcursorPrevious != hcursorWait)
+         //         m_hcurWaitCursorRestore = hcursorPrevious;
 
       }
       else
       {
 
-//         ::SetCursor(m_hcurWaitCursorRestore);
+         //         ::SetCursor(m_hcurWaitCursorRestore);
       }
 
    }
-   
+
 
    string application::veriwell_multimedia_music_midi_get_default_library_name()
    {
@@ -390,7 +410,7 @@ namespace aura
 
       string str;
 
-      if(file_exists_dup(::dir::system() / "config\\system\\audio.txt"))
+      if (file_exists_dup(::dir::system() / "config\\system\\audio.txt"))
       {
 
          str = file_as_string_dup(::dir::system() / "config\\system\\audio.txt");
@@ -407,7 +427,7 @@ namespace aura
 
       }
 
-      if(str.has_char())
+      if (str.has_char())
          return "audio_" + str;
       else
          return "audio_mmsystem";
@@ -436,7 +456,7 @@ namespace aura
 
       }
 
-      if(str.has_char())
+      if (str.has_char())
          return "draw2d_" + str;
       else
          return "draw2d_gdiplus";
@@ -450,7 +470,7 @@ namespace aura
 
 
 
-void __node_init_main_data(::aura::application * papp,HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLine,int32_t nCmdShow)
+void __node_init_main_data(::aura::application * papp, HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow)
 {
 
 
