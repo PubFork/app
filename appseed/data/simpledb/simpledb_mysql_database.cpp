@@ -130,7 +130,7 @@ namespace mysql
    void database::trace_error1(const char * pszPrefix)
    {
 	   m_strLastError += error1(pszPrefix);
-      TRACE0(m_strLastError);
+      TRACE("%s", m_strLastError);
    }
 
    sp(::simpledb::result) database::query(const char * pszSql)

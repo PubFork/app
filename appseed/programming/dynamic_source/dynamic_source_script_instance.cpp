@@ -20,23 +20,31 @@ script_instance::~script_instance()
 
 void script_instance::destroy()
 {
-   single_lock sl(&m_pscriptScriptInstance->m_mutex);
+
+   single_lock sl(m_pscriptScriptInstance->m_pmutex);
+   
    try
    {
+
       sl.lock(minutes(1.0));
+
    }
    catch(...)
    {
+
    }
+
    try
    {
+
       m_pscriptScriptInstance->m_scriptinstanceptra.remove(this);
+
    }
    catch(...)
    {
+
    }
-   //m_pscriptScriptInstance.release();
-//      m_pscript.release();
+
 }
 
 
