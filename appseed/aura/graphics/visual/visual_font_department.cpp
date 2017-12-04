@@ -51,6 +51,13 @@ bool font_department::Initialize()
       return false;
 
    ::draw2d::graphics_sp spgraphics(allocer());
+
+   if (spgraphics.is_null())
+   {
+
+      return false;
+
+   }
    
    spgraphics->CreateCompatibleDC(NULL);
 

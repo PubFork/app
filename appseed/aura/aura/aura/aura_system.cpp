@@ -641,7 +641,8 @@ namespace aura
       if (!m_pvisual->init1())
       {
 
-         return false;
+         output_debug_string("non fatal here");
+         //return false;
 
       }
 
