@@ -186,9 +186,6 @@ namespace aura
    void log::trace_v(const char *pszFileName, int32_t nLine, uint32_t dwCategory, uint32_t nLevel, const char * pszFormat, va_list args) const
    {
 
-      if(!m_bTrace)
-         return;
-
       string str;
 
       str.FormatV(pszFormat, args);
@@ -199,9 +196,6 @@ namespace aura
 
    void log::trace_str(const char *pszFileName, int32_t nLine, uint32_t dwCategory, uint32_t nLevel, const char * psz) const
    {
-
-      if(!m_bTrace)
-         return;
 
       UNREFERENCED_PARAMETER(nLevel);
       UNREFERENCED_PARAMETER(nLine);
@@ -276,7 +270,7 @@ namespace aura
       }
 
       //sl.lock();
-      if(plog->m_pfile == NULL
+      if(m_bTrace && plog->m_pfile == NULL
             || plog->m_iYear != time.GetYear()
             || plog->m_iMonth != time.GetMonth()
             || plog->m_iDay != time.GetDay())
@@ -393,7 +387,7 @@ retry:
 
 skip_further_possible_recursive_impossible_logging_in_file:
 
-      if(plog->m_pfile != NULL)
+      if(m_bTrace && plog->m_pfile != NULL)
       {
 
          fseek(plog->m_pfile,0,SEEK_END);
@@ -413,7 +407,7 @@ skip_further_possible_recursive_impossible_logging_in_file:
             ::output_debug_string(strLine);
 #endif
 
-            if(plog->m_pfile)
+            if(m_bTrace && plog->m_pfile)
             {
 
                fputs(strLine,plog->m_pfile);
@@ -547,8 +541,6 @@ skip_further_possible_recursive_impossible_logging_in_file:
          return;
       }
 
-      if(!m_bTrace)
-         return;
       va_list ptr;
       va_start(ptr, pszFormat);
       trace_v(NULL, -1, ::aura::trace::category_General, 0, pszFormat, ptr);
