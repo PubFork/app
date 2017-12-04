@@ -3,21 +3,81 @@
 
 namespace aura
 {
-//
-//
-//   application::application(::aura::application * papp) :
-//      object(papp)
-//   {
-//
-//      //m_pthreadimpl.alloc(allocer());
-//
-//      //m_pthreadimpl->m_pthread = this;
-//
-//      m_paurasystem                    =  papp->m_pauraapp->m_paurasystem;
-//
-//      m_atomApp = m_atomSystemTopic    = NULL;
-//
-//   }
+
+   bool application::impl_process_init()
+   {
+
+      return true;
+
+   }
+
+   bool application::impl_init1()
+   {
+
+      //set_run();
+
+      return true;
+
+   }
+
+   bool application::impl_init2()
+   {
+      return true;
+   }
+
+   bool application::impl_init3()
+   {
+      return true;
+   }
+
+   // thread termination
+   void application::impl_process_term() // default will 'delete this'
+   {
+
+      set_os_data(NULL);
+
+      //int32_t iRet = ::aura::application::term_instance();
+
+      //return 0;
+
+   }
+
+
+   void application::impl_term3()
+   {
+
+
+   }
+
+
+   void application::impl_term2()
+   {
+
+
+   }
+
+
+   void application::impl_term1()
+   {
+
+
+   }
+
+   //
+   //
+   //   application::application(::aura::application * papp) :
+   //      object(papp)
+   //   {
+   //
+   //      //m_pthreadimpl.alloc(allocer());
+   //
+   //      //m_pthreadimpl->m_pthread = this;
+   //
+   //      m_paurasystem                    =  papp->m_pauraapp->m_paurasystem;
+   //
+   //      m_atomApp = m_atomSystemTopic    = NULL;
+   //
+   //   }
 
 
    //application::~application()
@@ -82,10 +142,10 @@ namespace aura
                         &dw);
 
 
-      if(dwResSize > 0)
+      if (dwResSize > 0)
       {
          LPVOID lpdata = new BYTE[dwResSize];
-         if(GetFileVersionInfoW(
+         if (GetFileVersionInfoW(
                lpszModuleFilePath,
                0,
                dwResSize,
@@ -107,7 +167,7 @@ namespace aura
 
             string strKey;
             //for( i=0; i < (cbTranslate/sizeof(struct LANGANDCODEPAGE)); i++ )
-            for(int32_t i=0; i < 1; i++ )
+            for (int32_t i = 0; i < 1; i++)
             {
                LPTSTR lpsz;
                UINT uiSize;
@@ -127,7 +187,7 @@ namespace aura
 
                // Retrieve file description for language and code page "i".
                VerQueryValue(lpdata,
-                             (LPTSTR) (const char *) strKey,
+                             (LPTSTR)(const char *)strKey,
                              (LPVOID *)&lpsz,
                              &uiSize);
 
@@ -137,7 +197,7 @@ namespace aura
                return strVersion;
             }
          }
-         delete [] (LPBYTE) lpdata;
+         delete[](LPBYTE) lpdata;
       }
 
 
@@ -146,34 +206,34 @@ namespace aura
    }
 
 
-//   bool application::Ex2OnAppInstall()
-//   {
-//#ifdef IMPLEMENT_VISTA_TOOLS
-//      if(VistaTools::IsVista())
-//      {
-//         if(VistaTools::IsElevated() != S_OK)
-//         {
-//            TRACE0("Error! Installing application ( : (un)install run parameter ) without Elevation (required since Vista Windows version)");
-//            return false;
-//         }
-//      }
-//#endif
-//      return true;
-//   }
-//
-//
-//   bool application::Ex2OnAppUninstall()
-//   {
-//      if(VistaTools::IsVista())
-//      {
-//         if(VistaTools::IsElevated() != S_OK)
-//         {
-//            TRACE0("Error! Installing application ( : (un)install run parameter ) without Elevation (required since Vista Windows version)");
-//            return false;
-//         }
-//      }
-//      return true;
-//   }
+   //   bool application::Ex2OnAppInstall()
+   //   {
+   //#ifdef IMPLEMENT_VISTA_TOOLS
+   //      if(VistaTools::IsVista())
+   //      {
+   //         if(VistaTools::IsElevated() != S_OK)
+   //         {
+   //            TRACE0("Error! Installing application ( : (un)install run parameter ) without Elevation (required since Vista Windows version)");
+   //            return false;
+   //         }
+   //      }
+   //#endif
+   //      return true;
+   //   }
+   //
+   //
+   //   bool application::Ex2OnAppUninstall()
+   //   {
+   //      if(VistaTools::IsVista())
+   //      {
+   //         if(VistaTools::IsElevated() != S_OK)
+   //         {
+   //            TRACE0("Error! Installing application ( : (un)install run parameter ) without Elevation (required since Vista Windows version)");
+   //            return false;
+   //         }
+   //      }
+   //      return true;
+   //   }
 
 
    //void application::TermThread(HINSTANCE hInstTerm)
@@ -229,7 +289,7 @@ namespace aura
 #endif
    }
 
-   void application::set_env_var(const string & var,const string & value)
+   void application::set_env_var(const string & var, const string & value)
    {
 #if (defined(SOLARIS8) || defined(SOLARIS))
       {
@@ -240,12 +300,12 @@ namespace aura
          }
          vmap[var] = new char[var.get_length() + 1 + value.get_length() + 1];
          sprintf(vmap[var], "%s=%s", var, value);
-         putenv( vmap[var] );
+         putenv(vmap[var]);
       }
 #elif defined _WIN32
       {
          string slask = var + "=" + value;
-         _putenv( (const char *)slask);
+         _putenv((const char *)slask);
       }
 #else
       setenv(var, value, 1);
@@ -264,7 +324,7 @@ namespace aura
 
       // m_pmaininitdata = pauradata;
 
-      if(m_pcommand != NULL && m_pauraapp->is_system())
+      if (m_pcommand != NULL && m_pauraapp->is_system())
       {
 
          ::windows::command * pdata = m_pcommand.cast < ::windows::command >();
@@ -315,10 +375,10 @@ namespace aura
    void application::ShowWaitCursor(bool bShow)
    {
 
-      if(bShow)
+      if (bShow)
       {
 
-         HCURSOR hcursorWait =  ::LoadCursor(NULL, IDC_WAIT);
+         HCURSOR hcursorWait = ::LoadCursor(NULL, IDC_WAIT);
 
          HCURSOR hcursorPrevious = ::SetCursor(hcursorWait);
 
@@ -329,7 +389,7 @@ namespace aura
       else
       {
 
-//         ::SetCursor(m_hcurWaitCursorRestore);
+         //         ::SetCursor(m_hcurWaitCursorRestore);
       }
 
    }
@@ -350,7 +410,7 @@ namespace aura
 
       string str;
 
-      if(file_exists_dup(::dir::system() / "config\\system\\audio.txt"))
+      if (file_exists_dup(::dir::system() / "config\\system\\audio.txt"))
       {
 
          str = file_as_string_dup(::dir::system() / "config\\system\\audio.txt");
@@ -367,7 +427,7 @@ namespace aura
 
       }
 
-      if(str.has_char())
+      if (str.has_char())
          return "audio_" + str;
       else
          return "audio_mmsystem";
@@ -396,7 +456,7 @@ namespace aura
 
       }
 
-      if(str.has_char())
+      if (str.has_char())
          return "draw2d_" + str;
       else
          return "draw2d_gdiplus";
@@ -410,7 +470,7 @@ namespace aura
 
 
 
-void __node_init_main_data(::aura::application * papp,HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLine,int32_t nCmdShow)
+void __node_init_main_data(::aura::application * papp, HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow)
 {
 
 

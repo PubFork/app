@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 error::error()
@@ -1627,16 +1627,20 @@ bool thread::begin_thread(bool bSynch, int32_t epriority,uint_ptr nStackSize,uin
 
    add_ref();
 
-  HTHREAD hthread = ::create_thread(lpSecurityAttrs,nStackSize,&__thread_entry,pstartup.m_p,dwCreateFlags,&m_uiThread);
-   
+   HTHREAD hthread = ::create_thread(lpSecurityAttrs,nStackSize,&__thread_entry,pstartup.m_p,dwCreateFlags,&m_uiThread);
+
    m_hthread = hthread;
-   
+
+#ifndef WINDOWS
+
    if(m_hthread == m_uiThread)
    {
-      
+
       output_debug_string("Thread IS OK!!!\n");
-      
+
    }
+
+#endif
 
    if(m_hthread == (HTHREAD) NULL)
    {

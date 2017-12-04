@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include <time.h>
 
 
@@ -511,14 +511,14 @@ bool aura_prelude::defer_call_prelude(app_core * pappcore)
    if(s_pprelude == NULL)
    {
 
-      return NULL;
+      return true;
 
    }
 
    if(!s_pprelude->prelude(pappcore))
    {
 
-      return NULL;
+      return false;
 
    }
 

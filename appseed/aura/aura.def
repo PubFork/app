@@ -2,7 +2,6 @@
 
 
 EXPORTS
-WinMain
 o_debug_string
 defer_aura_init
 waveout_open
