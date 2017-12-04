@@ -166,7 +166,7 @@ namespace sort
                {
                   if(iMPos == iUPos)
                      break;
-                  if(FIRST::Compare(&a.element_at(iMPos), &a.element_at(iUPos)))
+                  if(FIRST::Compare(&a.element_at(iMPos), &a.element_at(iUPos)) <= 0)
                      iUPos--;
                   else
                   {
@@ -183,7 +183,7 @@ namespace sort
                {
                   if(iMPos == iLPos)
                      break;
-                  if(FIRST::Compare(&a.element_at(iLPos), &a.element_at(iMPos)))
+                  if(FIRST::Compare(&a.element_at(iLPos), &a.element_at(iMPos)) <= 0)
                      iLPos++;
                   else
                   {

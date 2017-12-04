@@ -223,7 +223,7 @@ public:
    inline void   set(const var & var);
 
 
-   bool get_id(const char * pszOnNull = NULL) const
+   ::id get_id(const char * pszOnNull = NULL) const
    {
       return m_element2.get_id(pszOnNull);
    }
