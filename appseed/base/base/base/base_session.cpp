@@ -324,10 +324,16 @@ namespace base
                }
 
             }
-            catch (esp esp)
+            catch (exit_exception * pexception)
             {
 
-               _rethrow(esp);
+               _rethrow(pexception);
+
+            }
+            catch (::exception::exception * pexception)
+            {
+
+               esp671 esp(pexception);
 
             }
             catch (...)
@@ -337,10 +343,16 @@ namespace base
          }
 
       }
-      catch (esp esp)
+      catch (exit_exception * pexception)
       {
 
-         _rethrow(esp);
+         _rethrow(pexception);
+
+      }
+      catch (::exception::exception * pexception)
+      {
+
+         esp671 esp(pexception);
 
       }
       catch (...)

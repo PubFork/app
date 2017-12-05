@@ -934,85 +934,73 @@ run:
             run();
 
          }
-         catch(esp esp)
+         catch (exit_exception * pexception)
          {
 
-            if (esp.is < exit_exception >())
+            _rethrow(pexception);
+
+         }
+         catch (::exception::exception * pexception)
+         {
+
+            esp671 esp(pexception);
+
+            if (on_run_exception(esp))
             {
 
-               throw esp;
+               goto run;
 
             }
-            else
+
+            if (final_handle_exception(esp))
             {
 
-               if (on_run_exception(esp))
-               {
+               goto run;
 
-                  goto run;
+            }
 
-               }
+            try
+            {
 
-               if (final_handle_exception(esp))
-               {
+               term_thread();
 
-                  goto run;
+            }
+            catch (exit_exception * pexception)
+            {
 
-               }
+               _rethrow(pexception);
 
-               try
-               {
+            }
+            catch (::exception::exception * pexception)
+            {
 
-                  term_thread();
+               esp671 esp(pexception);
 
-               }
-               catch (::esp esp)
-               {
+               m_error.set(-1);
 
-                  if (esp.is < ::exit_exception >())
-                  {
-
-                     throw esp;
-
-                  }
-                  else
-                  {
-
-                     m_error.set(-1);
-
-                  }
-
-                  goto InitFailure;
-
-               }
+               goto InitFailure;
 
             }
 
          }
 
       }
-      catch(esp esp)
+      catch (exit_exception * pexception)
       {
 
-         if (esp.is < exit_exception >())
-         {
+         _rethrow(pexception);
 
-            throw esp;
+      }
+      catch (::exception::exception * pexception)
+      {
 
-         }
-         else
-         {
-
-
-         }
+         esp671 esp(pexception);
 
       }
       catch (...)
       {
 
-
       }
-
 
 InitFailure:
 

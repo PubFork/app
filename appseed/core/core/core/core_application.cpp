@@ -694,17 +694,24 @@ namespace core
    }
 
 
-   void application::process_window_procedure_exception(::exception::base* e, ::message::message * pobj)
+   void application::process_window_procedure_exception(::exception::exception * pexception, ::message::message * pobj)
    {
-      ENSURE_ARG(e != NULL);
+
+      ENSURE_ARG(pexception != NULL);
+
       ENSURE_ARG(pobj != NULL);
+
       SCAST_PTR(::message::base, pbase, pobj);
+
       // handle certain messages in thread
+
       switch (pbase->m_id)
       {
       case WM_CREATE:
       case WM_PAINT:
-         return thread::process_window_procedure_exception(e, pobj);
+
+         return thread::process_window_procedure_exception(pexception, pobj);
+
       }
 
       // handle all the rest
@@ -718,15 +725,24 @@ namespace core
             nIDP = "Command Failure";
          pbase->set_lresult((LRESULT)TRUE);        // pretend the command was handled
       }
-      if (base_class < memory_exception >::bases(e))
+
+      sp(::exception::base) pbaseexception = pexception;
+
+      if (pbaseexception.is < memory_exception >())
       {
-         e->ReportError(MB_ICONEXCLAMATION | MB_SYSTEMMODAL, nIDP);
+
+         pbaseexception->ReportError(MB_ICONEXCLAMATION | MB_SYSTEMMODAL, nIDP);
+
       }
-      else if (base_class < user_exception >::bases(e))
+      else if (pbaseexception.is < user_exception >())
       {
+
          // ::fontopus::user has not been alerted yet of this catastrophic problem
-         e->ReportError(MB_ICONSTOP, nIDP);
+
+         pbaseexception->ReportError(MB_ICONSTOP, nIDP);
+
       }
+
    }
 
 

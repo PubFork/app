@@ -117,24 +117,21 @@ namespace user
             m_pviewcontainer->on_prepare_view_creator_data(pcreatordata);
 
          }
-         catch (esp esp)
+         catch (exit_exception * pexception)
          {
 
-            if (esp.is < exit_exception >())
+            _rethrow(pexception);
+
+         }
+         catch (::exception::exception * pexception)
+         {
+
+            esp671 esp(pexception);
+
+            if (!Application.on_run_exception(esp))
             {
 
-               throw esp;
-
-            }
-            else
-            {
-
-               if (!Application.on_run_exception(esp))
-               {
-
-                  _throw(exit_exception(get_app(), exit_application));
-
-               }
+               _throw(exit_exception(get_app(), exit_application));
 
             }
 
@@ -155,24 +152,21 @@ namespace user
             on_prepare_view_creator_data(pcreatordata);
 
          }
-         catch (esp esp)
+         catch (exit_exception * pexception)
          {
 
-            if (esp.is < exit_exception >())
+            _rethrow(pexception);
+
+         }
+         catch (::exception::exception * pexception)
+         {
+
+            esp671 esp(pexception);
+
+            if (!Application.on_run_exception(esp))
             {
 
-               throw esp;
-
-            }
-            else
-            {
-
-               if (!Application.on_run_exception(esp))
-               {
-
-                  _throw(exit_exception(get_app(), exit_application));
-
-               }
+               _throw(exit_exception(get_app(), exit_application));
 
             }
 
@@ -200,41 +194,38 @@ namespace user
          on_create_view(pcreatordata);
 
       }
-      catch(esp esp)
+      catch (create_exception * pexception)
       {
 
-         if (esp.is < create_exception >())
+         if (pexception->m_id == idInitialize)
          {
 
-            sp(create_exception) pcreateexception = esp;
+            esp671 esp(pexception);
 
-            if (pcreateexception->m_id == idInitialize)
-            {
+            ::aura::del(pcreatordata);
 
-               ::aura::del(pcreatordata);
-
-               return NULL;
-
-            }
-
-            _rethrow(esp);
+            return NULL;
 
          }
-         else if (esp.is < exit_exception >())
+
+         _rethrow(pexception);
+
+      }
+      catch (exit_exception * pexception)
+      {
+
+         _rethrow(pexception);
+
+      }
+      catch (::exception::exception * pexception)
+      {
+
+         esp671 esp(pexception);
+
+         if (!Application.on_run_exception(esp))
          {
 
-            _rethrow(esp);
-
-         }
-         else
-         {
-
-            if (!Application.on_run_exception(esp))
-            {
-
-               _exit(exit_application);
-
-            }
+            _exit(exit_application);
 
          }
 
@@ -262,10 +253,16 @@ namespace user
             m_pviewcontainer->on_after_create_view_creator_data(pcreatordata);
 
          }
-         catch (esp esp)
+         catch (exit_exception * pexception)
          {
 
-            esp.rethrow_exit();
+            _rethrow(pexception);
+
+         }
+         catch (::exception::exception * pexception)
+         {
+
+            esp671 esp(pexception);
 
             if (!Application.on_run_exception(esp))
             {
@@ -291,10 +288,16 @@ namespace user
             on_after_create_view_creator_data(pcreatordata);
 
          }
-         catch (esp esp)
+         catch (exit_exception * pexception)
          {
 
-            esp.rethrow_exit();
+            _rethrow(pexception);
+
+         }
+         catch (::exception::exception * pexception)
+         {
+
+            esp671 esp(pexception);
 
             if (!Application.on_run_exception(esp))
             {
@@ -334,19 +337,26 @@ namespace user
          Application.on_create_view(pcreatordata);
 
       }
-      catch (esp esp)
+      catch (exit_exception * pexception)
       {
 
-         esp.rethrow_exit();
+         _rethrow(pexception);
 
-         if (esp.is < create_exception >())
-         {
+      }
+      catch (create_exception * pexception)
+      {
 
-            delete pcreatordata;
+         esp671 esp(pexception);
 
-            return NULL;
+         ::aura::del(pcreatordata);
 
-         }
+         return NULL;
+
+      }
+      catch (::exception::exception * pexception)
+      {
+
+         esp671 esp(pexception);
 
          if (!Application.on_run_exception(esp))
          {

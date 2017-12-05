@@ -558,36 +558,31 @@ bool thread::pump_message()
       return true;
 
    }
-   catch(esp esp)
+   catch (exit_exception * pexception)
    {
 
-      if(esp.is < exit_exception >())
-      {
+      _rethrow(pexception);
 
-         throw esp;
+   }
+   catch (::exception::exception * pexception)
+   {
 
-      }
-      else
-      {
+      esp671 esp(pexception);
 
-         if(on_run_exception(esp))
-            return true;
+      if(on_run_exception(esp))
+         return true;
 
-         // get_app() may be it self, it is ok...
-         if(Application.final_handle_exception(esp))
-            return true;
-
-         return false;
-
-      }
+      // get_app() may be it self, it is ok...
+      if(Application.final_handle_exception(esp))
+         return true;
 
    }
    catch(...)
    {
 
-      return false;
-
    }
+
+   return false;
 
 //   if(m_pthreadimpl.is_null())
 //   {
@@ -1519,7 +1514,7 @@ void thread::pre_translate_message(::message::message * pobj)
 
 
 
-void thread::process_window_procedure_exception(::exception::base*,::message::message * pobj)
+void thread::process_window_procedure_exception(::exception::exception *,::message::message * pobj)
 {
 
    SCAST_PTR(::message::base,pbase,pobj);
@@ -1978,39 +1973,41 @@ uint32_t __thread_entry(void * pparam)
          }
 
       }
-      catch(esp esp)
+      catch (::exit_exception * pexception)
       {
 
-         if (esp.is_exit())
+         esp671 esp(pexception);
+
+
+         try
          {
 
-            try
-            {
+            uiRet = ::multithreading::__on_thread_finally(pthread);
 
-               uiRet = ::multithreading::__on_thread_finally(pthread);
-
-            }
-            catch (...)
-            {
-
-            }
-
-            // allow the creating thread to return from thread::create_thread
-            pstartup->m_event.set_event();
-
-            esp.cast < exit_exception >()->post_quit();
-
-            return uiRet;
+         }
+         catch (...)
+         {
 
          }
 
+         // allow the creating thread to return from thread::create_thread
+         pstartup->m_event.set_event();
+
+         pexception->post_quit();
+
+         return uiRet;
+
+      }
+      catch (::exception::exception * pexception)
+      {
+
+         esp671 esp(pexception);
 
          pthread->m_error.set(esp);
 
          bError = true;
 
       }
-
 
       if(bError)
       {
@@ -2063,8 +2060,10 @@ uint32_t __thread_entry(void * pparam)
       return ::multithreading::__on_thread_finally(pthread);
 
    }
-   catch (esp esp)
+   catch (exit_exception * pexception)
    {
+
+      esp671 esp(pexception);
 
       try
       {
@@ -2077,18 +2076,13 @@ uint32_t __thread_entry(void * pparam)
 
       }
 
-      if (esp.is_exit())
-      {
+      pexception->post_quit();
 
-         esp.cast < exit_exception > ()->post_quit();
+   }
+   catch (::exception::exception * pexception)
+   {
 
-      }
-      else if (stricmp(esp->what(), "rethrow")==0)
-      {
-
-         throw esp;
-
-      }
+      esp671 esp(pexception);
 
    }
    catch(...)
@@ -2407,7 +2401,7 @@ bool thread::thread_entry()
    catch (::exception::exception * pexception)
    {
 
-      esp esp(pexception);
+      esp671 esp(pexception);
 
       bError = true;
 
@@ -2493,43 +2487,23 @@ run:
          run();
 
       }
-      catch(esp esp)
+      catch (::exit_exception * pexception)
       {
 
-         if(esp.is < exit_exception > ())
-         {
+         esp671 esp(pexception);
 
-            try
-            {
 
-               thread_exit();
+      }
+      catch (::exception::exception * pexception)
+      {
 
-            }
-            catch(...)
-            {
+         esp671 esp(pexception);
 
-            }
+         if(on_run_exception(esp))
+            goto run;
 
-            throw esp;
-
-         }
-         else
-         {
-
-            if (stricmp(esp->what(), "rethrow") ==0)
-            {
-
-               throw esp;
-
-            }
-
-            if(on_run_exception(esp))
-               goto run;
-
-            if(Application.final_handle_exception(esp))
-               goto run;
-
-         }
+         if(Application.final_handle_exception(esp))
+            goto run;
 
       }
       catch(...)
@@ -2548,8 +2522,8 @@ run:
 
    }
 
-   // let translator run undefinetely
-   //translator::detach();
+// let translator run undefinetely
+//translator::detach();
    try
    {
 
@@ -3013,36 +2987,31 @@ bool thread::process_message(LPMESSAGE lpmessage)
       return true;
 
    }
-   catch(esp esp)
+   catch (exit_exception * pexception)
    {
 
-      if(esp.is < exit_exception > ())
-      {
+      _rethrow(pexception);
 
-         throw esp;
+   }
+   catch (::exception::exception * pexception)
+   {
 
-      }
-      else
-      {
+      esp671 esp(pexception);
 
-         if(on_run_exception(esp))
-            return true;
+      if(on_run_exception(esp))
+         return true;
 
-         // get_app() may be it self, it is ok...
-         if(Application.final_handle_exception(esp))
-            return true;
-
-         return false;
-
-      }
+      // get_app() may be it self, it is ok...
+      if(Application.final_handle_exception(esp))
+         return true;
 
    }
    catch(...)
    {
 
-      return false;
-
    }
+
+   return false;
 
 }
 
@@ -3338,16 +3307,18 @@ void thread::on_create(::create * pcreate)
       request_create(pcreate);
 
    }
-   catch (esp pe)
+   catch (exit_exception * pexception)
    {
 
-      if(pe.is < exit_exception > ())
-      {
+      _rethrow(pexception);
 
-         throw pe;
+   }
+   catch (::exception::exception * pexception)
+   {
 
-      }
-      else if(!Application.on_run_exception(pe))
+      esp671 esp(pexception);
+
+      if(!Application.on_run_exception(esp))
       {
 
          _throw(exit_exception(get_app(), exit_thread));

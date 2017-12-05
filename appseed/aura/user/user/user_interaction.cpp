@@ -6232,30 +6232,29 @@ restart:
          message_handler(spbase);
 
       }
-      catch (esp esp)
+      catch (exit_exception * pexception)
       {
 
-         if (esp.is < exit_exception >())
+         esp671 esp(pexception);
+
+         pexception->post_quit();
+
+      }
+      catch (::exception::exception * pexception)
+      {
+
+         esp671 esp(pexception);
+
+         if (!Application.on_run_exception(esp))
          {
 
-            esp.cast < exit_exception >()->post_quit();
-
-         }
-         else
-         {
-
-            if (!Application.on_run_exception(esp))
-            {
-
-               ::multithreading::post_quit(&System);
-
-               return -1;
-
-            }
+            ::multithreading::post_quit(&System);
 
             return -1;
 
          }
+
+         return -1;
 
       }
       catch (...)

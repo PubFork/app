@@ -494,17 +494,18 @@ void simple_frame_window::_001OnCreate(::message::message * pobj)
          pinteractionframe = create_frame_schema();
 
       }
-      catch (esp esp)
+      catch (not_installed * pexception)
       {
 
-         if (esp.is < not_installed >())
-         {
+         System.remove_frame(this);
 
-            System.remove_frame(this);
+         _rethrow(pexception);
 
-            _rethrow(esp);
+      }
+      catch (::exception::exception * pexception)
+      {
 
-         }
+         esp671 esp(pexception);
 
       }
       catch (...)

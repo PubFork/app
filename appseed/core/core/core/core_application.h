@@ -171,7 +171,7 @@ namespace core
 
       // overrides for implementation
       virtual bool on_idle(LONG lCount); // return TRUE if more idle processing
-      virtual void process_window_procedure_exception(::exception::base* e,::message::message * pobj) override;
+      virtual void process_window_procedure_exception(::exception::exception * pexception, ::message::message * pobj) override;
 
 
       void EnableModelessEx(bool bEnable);

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 class CLASS_DECL_AURA error :
@@ -266,7 +266,7 @@ public:
 
    virtual void close_dependent_threads(const ::duration & dur);
 
-   virtual void process_window_procedure_exception(::exception::base*,::message::message * pobj);
+   virtual void process_window_procedure_exception(::exception::exception *, ::message::message * pobj);
 
    virtual void process_message_filter(int32_t code, ::message::message * pobj);
 

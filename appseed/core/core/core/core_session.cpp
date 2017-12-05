@@ -740,10 +740,16 @@ namespace core
             papp = create_application(pszAppId, bSynch, pbiasCreate);
 
          }
-         catch(esp esp)
+         catch (exit_exception * pexception)
          {
 
-            esp.rethrow_exit();
+            _rethrow(pexception);
+
+         }
+         catch (::exception::exception * pexception)
+         {
+
+            esp671 esp(pexception);
 
             if (!App(this).on_run_exception(esp))
             {

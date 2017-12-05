@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #ifdef WINDOWSEX
 #include "aura/aura/os/windows/windows_system_interaction_impl.h"
 #endif
@@ -380,24 +380,28 @@ namespace aura
          on_request(pcreate);
 
       }
-      catch (esp esp)
+      catch (not_installed * pexception)
       {
 
-         if(esp.is < not_installed >())
-         {
+         esp671 esp(pexception);
 
-            System.on_run_exception(esp);
+         System.on_run_exception(esp);
 
-            _throw(exit_exception(esp->get_app(), ::exit_application));
+         _throw(exit_exception(esp->get_app(), ::exit_application));
 
-         }
-         else if(esp.is < exit_exception > ())
-         {
+      }
+      catch(exit_exception * pexception)
+      {
 
-            throw esp;
+         throw pexception;
 
-         }
-         else if (!Application.on_run_exception(esp))
+      }
+      catch(::exception::exception * pexception)
+      {
+
+         esp671 esp(pexception);
+
+         if (!Application.on_run_exception(esp))
          {
 
             _throw(exit_exception(esp->get_app(), ::exit_application));
@@ -405,7 +409,6 @@ namespace aura
          }
 
       }
-
 
       // Verry Sory for the per request overhead here for the needed information of only first request
       if (System.m_dwAfterApplicationFirstRequest == 0)
@@ -2340,21 +2343,21 @@ namespace aura
 
    void application::SetCurrentHandles()
    {
-      
+
       if(m_hthread == NULL)
       {
 
-      //dappy(string(typeid(*this).name()) + " : SetCurrentHandles 1 : " + ::str::from(m_iErrorCode));
+         //dappy(string(typeid(*this).name()) + " : SetCurrentHandles 1 : " + ::str::from(m_iErrorCode));
 
-      set_os_data((void *) ::get_current_thread());
+         set_os_data((void *) ::get_current_thread());
 
-      //dappy(string(typeid(*this).name()) + " : SetCurrentHandles 2 : " + ::str::from(m_iErrorCode));
+         //dappy(string(typeid(*this).name()) + " : SetCurrentHandles 2 : " + ::str::from(m_iErrorCode));
 
-      set_os_int(::get_current_thread_id());
+         set_os_int(::get_current_thread_id());
 
-      //dappy(string(typeid(*this).name()) + " : SetCurrentHandles impled : " + ::str::from(m_iErrorCode));
+         //dappy(string(typeid(*this).name()) + " : SetCurrentHandles impled : " + ::str::from(m_iErrorCode));
       }
-      
+
    }
 
 
@@ -2570,29 +2573,28 @@ namespace aura
 //         }
 
       }
-      catch(esp esp)
+      catch(exit_exception * pexception)
       {
+
+         esp671 esp(pexception);
 
 //         thisexit << "exit_exception: " << m_iErrorCode;
 //
 
-         if (esp.is_exit())
-         {
+         //m_error.set(&e);
 
-            //m_error.set(&e);
+         dappy(string(typeid(*this).name()) + " : on_run exit_exception");
 
-            dappy(string(typeid(*this).name()) + " : on_run exit_exception");
-
-            esp.cast < ::exit_exception > ()->post_quit();
-
-         }
-         else
-         {
-
-         }
+         esp.cast < ::exit_exception > ()->post_quit();
 
       }
-      catch(...)
+      catch(::exception::exception *pexception)
+      {
+
+         esp671 esp(pexception);
+
+      }
+      catch (...)
       {
 
          dappy(string(typeid(*this).name()) + " : on_run general exception");
@@ -2616,10 +2618,16 @@ namespace aura
          }
 
       }
-      catch (esp esp)
+      catch (exit_exception * pexception)
       {
 
-         esp.rethrow_exit();
+         throw pexception;
+
+      }
+      catch (::exception::exception  * pexception)
+      {
+
+         esp671 esp(pexception);
 
          return false;
 
@@ -2748,12 +2756,18 @@ namespace aura
          return true;
 
       }
-      catch (esp esp)
+      catch (exit_exception * pexception)
       {
 
-         thisexcall << 3.9;
+         _rethrow(pexception);
 
-         esp.rethrow_exit();
+      }
+      catch(::exception::exception * pexception)
+      {
+
+         esp671 esp(pexception);
+
+         thisexcall << 3.9;
 
       }
       catch (...)
@@ -2821,31 +2835,28 @@ run:
             run();
 
          }
-         catch (esp esp)
+         catch (exit_exception * pexception)
          {
 
-            if(esp.is < exit_exception > ())
+            throw pexception;
+
+         }
+         catch(::exception::exception * pexception)
+         {
+
+            esp671 esp(pexception);
+
+            if (on_run_exception(esp))
             {
 
-               throw esp;
+               goto run;
 
             }
-            else
+
+            if (final_handle_exception(esp))
             {
 
-               if (on_run_exception(esp))
-               {
-
-                  goto run;
-
-               }
-
-               if (final_handle_exception(esp))
-               {
-
-                  goto run;
-
-               }
+               goto run;
 
             }
 
@@ -3105,21 +3116,18 @@ run:
          }
 
       }
-      catch (esp esp)
+      catch (exit_exception * pexception)
       {
 
-         if (esp.is < exit_exception >())
-         {
+         _rethrow(pexception);
 
-            throw esp;
+      }
+      catch(::exception::exception * pexception)
+      {
 
-         }
-         else
-         {
+         esp671 esp(pexception);
 
-            goto InitFailure;
-
-         }
+         goto InitFailure;
 
       }
       catch (...)
@@ -3157,10 +3165,16 @@ run:
          }
 
       }
-      catch (esp esp)
+      catch (exit_exception * pexception)
       {
 
-         esp.rethrow_exit();
+         _rethrow(pexception);
+
+      }
+      catch(::exception::exception * pexception)
+      {
+
+         esp671 esp(pexception);
 
          goto InitFailure;
 
@@ -7886,8 +7900,12 @@ finalize:
             message_handler(pbase);
 
          }
-         catch (esp esp)
+         catch (::exception::exception * pexception)
          {
+
+            esp671 esp(pexception);
+
+            process_window_procedure_exception(pexception, pbase);
 
             TRACE("application::process_message : error processing application thread message (const ::exception::exception & )");
 
@@ -7902,16 +7920,6 @@ finalize:
             pbase->set_lresult(-1);
 
             return;
-
-         }
-         catch (::exception::base * pe)
-         {
-
-            process_window_procedure_exception(pe, pbase);
-
-            TRACE(::aura::trace::category_AppMsg, 0, "Warning: Uncaught exception in message_handler (returning %ld) (application::process_message : error processing application thread message).\n", (int_ptr)pbase->get_lresult());
-
-            pe->Delete();
 
          }
          catch (...)
@@ -7931,8 +7939,12 @@ finalize:
          pbase->m_pwnd->m_puiThis->message_handler(pbase);
 
       }
-      catch (esp esp)
+      catch (::exception::exception * pexception)
       {
+
+         esp671 esp(pexception);
+
+         process_window_procedure_exception(pexception, pbase);
 
          TRACE("application::process_message : error processing window message (const ::exception::exception & )");
 
@@ -7947,16 +7959,6 @@ finalize:
          pbase->set_lresult(-1);
 
          return;
-
-      }
-      catch (::exception::base * pe)
-      {
-
-         process_window_procedure_exception(pe, pbase);
-
-         TRACE(::aura::trace::category_AppMsg, 0, "Warning: Uncaught exception in message_handler (returning %ld) (application::process_message : error processing window message).\n", (int_ptr)pbase->get_lresult());
-
-         pe->Delete();
 
       }
       catch (...)
