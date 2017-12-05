@@ -3846,7 +3846,15 @@ retry_license:
       if (!m_bAppHasInstallerChangedProtected)
       {
 
+#ifdef METROWIN
+
+         set_has_installer(false);
+
+#else
+
          set_has_installer(!m_paurasystem->m_pappcore->m_bAcidApp);
+
+#endif
 
       }
 
@@ -7029,7 +7037,7 @@ finalize:
    bool application::register_spa_file_type()
    {
 
-#ifdef WINDOWS
+#ifdef WINDOWSEX
 
       HKEY hkey;
 
@@ -7136,7 +7144,7 @@ finalize:
    void application::start_program_files_app_app_admin(string strPlatform)
    {
 
-#ifdef WINDOWS
+#ifdef WINDOWSEX
 
       SHELLEXECUTEINFOW sei = {};
 
@@ -7389,7 +7397,7 @@ finalize:
 
             string strDll = dir::stage(process_platform_dir_name()) / strName + ".dll";
 
-#ifdef WINDOWS
+#ifdef WINDOWSEX
 
             HMODULE hmodule = ::LoadLibraryW(wstring(strDll));
 
@@ -7408,7 +7416,7 @@ finalize:
 
          }
 
-#ifdef WINDOWS
+#ifdef WINDOWSEX
 
          SHELLEXECUTEINFOW sei = {};
 
@@ -7474,7 +7482,7 @@ finalize:
             {
 
 
-#ifdef WINDOWS
+#ifdef WINDOWSEX
                // if dll loads consider good state
 
                HMODULE hmodule = ::LoadLibraryW(wstring(strDll));
@@ -7493,7 +7501,7 @@ finalize:
 
             }
 
-#ifdef WINDOWS
+#ifdef WINDOWSEX
 
             wstring wstrParams(": app=" + strId);
 

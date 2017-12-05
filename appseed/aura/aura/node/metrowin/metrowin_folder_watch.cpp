@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "metrowin.h"
 
 
@@ -25,14 +25,15 @@ namespace metrowin
       return true;
    }
 
-   int folder_watch::run() // thread procedure
+
+   void folder_watch::run() // thread procedure
    {
 
 #ifdef WINDOWSEX
       HANDLE hDirectory = ::CreateFileW(::str::international::utf8_to_unicode(m_strPath),
-                      FILE_LIST_DIRECTORY,
-                      FILE_SHARE_READ|FILE_SHARE_WRITE|FILE_SHARE_DELETE,
-                      NULL, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, NULL);
+                                        FILE_LIST_DIRECTORY,
+                                        FILE_SHARE_READ|FILE_SHARE_WRITE|FILE_SHARE_DELETE,
+                                        NULL, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, NULL);
 
       if(INVALID_HANDLE_VALUE == hDirectory)
       {
@@ -94,7 +95,7 @@ namespace metrowin
       case FILE_ACTION_RENAMED_NEW_NAME:
          // The file was renamed and this is the new name.
          return action_renamed_new_name;
-         // ...
+      // ...
       default:
          return action_unexpected;
       }

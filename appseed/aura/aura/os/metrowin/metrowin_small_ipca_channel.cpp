@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "metrowin.h"
 //#ifndef METROWIN
 
@@ -15,8 +15,8 @@ namespace aura
 
 
       extern bool (WINAPI * g_pfnChangeWindowMessageFilter)(
-         _In_ UINT message,
-         _In_ DWORD dwFlag);
+      _In_ UINT message,
+      _In_ DWORD dwFlag);
 
 
       base::base(::aura::application * papp) :
@@ -40,28 +40,24 @@ namespace aura
       {
       }
 
-#if defined()
+      //bool tx::open(const char * pszChannel, launcher * plauncher)
+      //{
 
-      bool tx::open(const char * pszChannel, launcher * plauncher)
-      {
+      //   UNREFERENCED_PARAMETER(plauncher);
 
-         UNREFERENCED_PARAMETER(plauncher);
+      //   if (m_strBaseChannel.has_char())
+      //      close();
 
-         if (m_strBaseChannel.has_char())
-            close();
+      //   // LaunchUri protocol is m_strBaseChannel
 
-         // LaunchUri protocol is m_strBaseChannel
+      //   m_strBaseChannel = pszChannel;
 
-         m_strBaseChannel = pszChannel;
+      //   m_strBaseChannel.replace("_", "-");
+      //   m_strBaseChannel.replace("/", "-");
 
-         m_strBaseChannel.replace("_", "-");
-         m_strBaseChannel.replace("/", "-");
+      //   return true;
 
-         return true;
-
-      }
-
-#else
+      //}
 
       bool tx::open(const char * pszChannel)
       {
@@ -80,8 +76,6 @@ namespace aura
 
       }
 
-
-#endif
 
       bool tx::close()
       {
@@ -290,69 +284,65 @@ namespace aura
       }
 
 
-#ifdef 
+      //bool ipc::open_ab(const char * pszChannel, const char * pszModule, launcher * plauncher)
+      //{
+
+      //   m_strChannel = pszChannel;
+
+      //   m_rx.m_preceiver = this;
+
+      //   string strChannelRx = m_strChannel;
+
+      //   string strChannelTx = m_strChannel;
+
+      //   if (!m_rx.create(strChannelRx))
+      //   {
+
+      //      return false;
+
+      //   }
+
+      //   if (!tx::open(strChannelTx, plauncher))
+      //   {
+
+      //      return false;
+
+      //   }
+
+      //   return true;
+
+      //}
 
 
-      bool ipc::open_ab(const char * pszChannel, const char * pszModule, launcher * plauncher)
-      {
+      //bool ipc::open_ba(const char * pszChannel, const char * pszModule, launcher * plauncher)
+      //{
 
-         m_strChannel = pszChannel;
+      //   m_strChannel = pszChannel;
 
-         m_rx.m_preceiver = this;
+      //   m_rx.m_preceiver = this;
 
-         string strChannelRx = m_strChannel;
+      //   string strChannelRx = m_strChannel;
 
-         string strChannelTx = m_strChannel;
+      //   string strChannelTx = m_strChannel;
 
-         if (!m_rx.create(strChannelRx))
-         {
+      //   if (!m_rx.create(strChannelRx))
+      //   {
 
-            return false;
+      //      return false;
 
-         }
+      //   }
 
-         if (!tx::open(strChannelTx, plauncher))
-         {
+      //   if (!tx::open(strChannelTx, plauncher))
+      //   {
 
-            return false;
+      //      return false;
 
-         }
+      //   }
 
-         return true;
+      //   return true;
 
-      }
+      //}
 
-
-      bool ipc::open_ba(const char * pszChannel, const char * pszModule, launcher * plauncher)
-      {
-
-         m_strChannel = pszChannel;
-
-         m_rx.m_preceiver = this;
-
-         string strChannelRx = m_strChannel;
-
-         string strChannelTx = m_strChannel;
-
-         if (!m_rx.create(strChannelRx))
-         {
-
-            return false;
-
-         }
-
-         if (!tx::open(strChannelTx, plauncher))
-         {
-
-            return false;
-
-         }
-
-         return true;
-
-      }
-
-#else
 
       bool ipc::open_ab(const char * pszChannel, const char * pszModule)
       {
@@ -414,7 +404,6 @@ namespace aura
       }
 
 
-#endif
 
 
       bool ipc::is_rx_tx_ok()

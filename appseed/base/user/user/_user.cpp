@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 #include "user.cpp"
@@ -17,7 +17,7 @@
 #include "user_impact_system.cpp"
 #include "user_impact_update_hint.cpp"
 #include "user_message.cpp"
-#include "user_message_queue.cpp"
+//#include "user_message_queue.cpp"
 #include "user_multiple_document_template.cpp"
 #include "user_plain_edit.cpp"
 #include "user_plain_text_data.cpp"

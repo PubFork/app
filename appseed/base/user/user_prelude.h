@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 
@@ -96,63 +96,6 @@ namespace simple_ui
 typedef sp(::user::interaction_impl) window_sp;
 
 
-namespace user
-{
-
-   class place_holder;
-
-#if defined METROWIN
-
-   class CLASS_DECL_BASE native_window_initialize
-   {
-   public:
-
-
-      Agile<Windows::UI::Core::CoreWindow> window;
-      ::aura::system_window ^ pwindow;
-
-
-   };
-
-#elif defined(APPLE_IOS) || defined(ANDROID)
-
-   class CLASS_DECL_BASE native_window_initialize
-   {
-   public:
-
-      RECT   m_rect;
-
-   };
-
-#else
-
-   class native_window_initialize;
-
-#endif
-
-
-   class control_event;
-   class frame_window;
-
-
-   CLASS_DECL_BASE bool is_descendant(::user::interaction * puiParent, ::user::interaction * puiChild);
-
-
-} // namespace user
-
-
-
-#if defined(__cplusplus) || defined(__cplusplus_winrt)
-
-
-namespace user
-{
-
-
-} // namespace user
-
-
-#endif
 
 
 
@@ -185,7 +128,7 @@ namespace user
 
 
 
-#include "base/user/user/user_message_queue_listener.h"
+//#include "base/user/user/user_message_queue_listener.h"
 
 //#include "user/user/user_keyboard_focus.h"
 //#include "user/user/user_mouse_focus.h"

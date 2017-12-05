@@ -1,5 +1,7 @@
-#include "framework.h"
+﻿#include "framework.h"
+#if !defined(METROWIN)
 #include <pthread.h>
+#endif
 
 static DWORD nextTlsIndex = 0;
 
@@ -41,11 +43,11 @@ CLASS_DECL_AURA int_bool WINAPI GetMessageW(LPMESSAGE lpMsg,oswindow oswindow,UI
       wMsgFilterMax = (UINT)-1;
 
 #if defined(LINUX) || defined(ANDROID)
-   
+
    HTHREAD hthread = ::GetCurrentThread();
-   
+
    DWORD idThre = ::GetCurrentThreadId();
-   
+
 #endif
 
 restart:
@@ -66,14 +68,14 @@ restart:
 
          return FALSE;
       }
-      
+
       if(oswindow != NULL && oswindow_get(oswindow) == NULL)
       {
-         
+
          pmq->ma.remove_at(i);
-         
+
          continue;
-         
+
       }
 
       if((oswindow == NULL || msg.hwnd == oswindow) && msg.message >= wMsgFilterMin && msg.message <= wMsgFilterMax)

@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "metrowin.h"
 //#include <Shellapi.h>
 //#include <string.h>
@@ -6,10 +6,10 @@
 #ifdef WINDOWSEX
 
 CLASS_DECL_BOOT int call_async(
-   const char * pszPath, 
-   const char * pszParam, 
-   const char * pszDir,
-   int iShow)
+const char * pszPath,
+const char * pszParam,
+const char * pszDir,
+int iShow)
 {
 
    SHELLEXECUTEINFOA infoa;
@@ -32,14 +32,14 @@ CLASS_DECL_BOOT int call_async(
 
 #ifdef WINDOWSEX
 CLASS_DECL_BOOT DWORD call_sync(
-   const char * pszPath, 
-   const char * pszParam, 
-   const char * pszDir,
-   int iShow,
-   int iRetry, 
-   int iSleep, 
-   int (* pfnOnRetry)(int iTry, dword_ptr dwParam),
-   dword_ptr dwParam)
+const char * pszPath,
+const char * pszParam,
+const char * pszDir,
+int iShow,
+int iRetry,
+int iSleep,
+int (* pfnOnRetry)(int iTry, dword_ptr dwParam),
+dword_ptr dwParam)
 {
 
    SHELLEXECUTEINFOA infoa;
@@ -58,7 +58,7 @@ CLASS_DECL_BOOT DWORD call_sync(
    ::ShellExecuteExA(&infoa);
 
    DWORD dwExitCode;
-   
+
    int iTry = 0;
 
    while(iRetry < 0 || iTry <= iRetry)
@@ -99,7 +99,7 @@ int get_current_processor_index()
 
 int get_current_process_maximum_affinity()
 {
-   
+
    dword_ptr dwProcessAffinityMask;
    dword_ptr dwSystemAffinityMask;
    if(!GetProcessAffinityMask(::GetCurrentProcess(), &dwProcessAffinityMask, & dwSystemAffinityMask))
@@ -128,8 +128,8 @@ int get_current_process_maximum_affinity()
 
 int get_current_process_affinity_order()
 {
-   
-   
+
+
    dword_ptr dwProcessAffinityMask;
    dword_ptr dwSystemAffinityMask;
    if(!GetProcessAffinityMask(::GetCurrentProcess(), &dwProcessAffinityMask, & dwSystemAffinityMask))
@@ -160,11 +160,11 @@ int get_current_process_affinity_order()
 
 bool process_modules(stringa & stra, DWORD processID)
 {
-   
+
    HANDLE hProcess;
-   
+
    DWORD cbNeeded;
-   
+
    unsigned int i;
 
    hProcess = OpenProcess( PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, processID );
@@ -173,7 +173,7 @@ bool process_modules(stringa & stra, DWORD processID)
       return false;
 
    const int iMaxModuleCount = 1024 * 8;
-   
+
    HMODULE * hMods = new HMODULE[iMaxModuleCount];
 
    const int iImageSize = MAX_PATH * 8;
@@ -188,7 +188,7 @@ bool process_modules(stringa & stra, DWORD processID)
 
          if(GetModuleFileNameEx( hProcess, hMods[i], szImage, iImageSize / sizeof(char)))
          {
-            
+
             stra.add(szImage);
 
          }
@@ -223,7 +223,7 @@ bool load_modules_diff(stringa & straOld, stringa & straNew, const char * pszExc
 
    if(pszExceptDir != NULL)
    {
-      
+
       iLenExcept = strlen_dup(pszExceptDir);
 
    }
@@ -241,13 +241,13 @@ bool load_modules_diff(stringa & straOld, stringa & straNew, const char * pszExc
 
       if(iLenExcept > 0)
       {
-         
+
          if(strlen_dup(straOld[i]) > iLenExcept)
          {
-         
+
             if(_strnicmp(straOld[i], pszExceptDir, iLenExcept) == 0)
             {
-            
+
                continue;
 
             }
@@ -261,7 +261,7 @@ bool load_modules_diff(stringa & straOld, stringa & straNew, const char * pszExc
 
          if(stricmp(straOld[i], straNew[j]) == 0)
          {
-         
+
             bFound = true;
 
             break;
@@ -272,7 +272,7 @@ bool load_modules_diff(stringa & straOld, stringa & straNew, const char * pszExc
 
       if(!bFound)
       {
-         
+
          hmodule = NULL;
 
          // double check, ensure, that the module has not been already loaded
@@ -337,3 +337,27 @@ CLASS_DECL_AURA int ui_open_url(const char * pszUrl)
    return 0;
 
 }
+
+
+
+
+CLASS_DECL_AURA bool is_shared_library_busy(const stringa & stra)
+{
+
+   return true;
+
+}
+
+
+
+
+bool shell_execute_sync(const char * pszFile, const char * pszParams, ::duration durationTimeout)
+{
+
+   return false;
+
+   //return call_sync(pszFile, pszParams, ::file::path(pszFile).folder(), 0, false, (int)durationTimeout.get_total_milliseconds());
+
+}
+
+

@@ -1,4 +1,4 @@
-// THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF
+﻿// THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF
 // ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO
 // THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
 // PARTICULAR PURPOSE.
@@ -109,7 +109,7 @@ void attach_thread_input_to_main_thread(int_bool bAttach)
 
 void _on_aura_thread_detach()
 {
-   
+
    //synch_lock mlThreadId(g_pmutexThreadIdLock);
    //
    //HTHREAD hthread = ::GetCurrentThread();
@@ -155,19 +155,19 @@ namespace core
 {
 
 ///  \brief		global function to set thread priority for current thread
-	///  \param		new priority
-	bool set_thread_priority(int32_t priority)
-	{
+   ///  \param		new priority
+   bool set_thread_priority(int32_t priority)
+   {
       return ( ::SetThreadPriority(::get_current_thread(), priority) != 0 );
 
-	}
+   }
 
 
-	///  \brief		global function to get thread priority for current thread
-	///  \return	priority of current thread
+   ///  \brief		global function to get thread priority for current thread
+   ///  \return	priority of current thread
 
-	int32_t thread_priority()
-	{
+   int32_t thread_priority()
+   {
 
       return ::GetThreadPriority(::get_current_thread());
 
@@ -237,7 +237,7 @@ bool __os_init_thread()
    //__clear_mq();
 
    //if(!defer_co_initialize_ex())
-     // return false;
+   // return false;
 
    return true;
 
@@ -342,7 +342,7 @@ DWORD WinMsgWaitForMultipleObjects(DWORD dwSize,const HANDLE * lphandles,DWORD d
 
    memcpy(ph,lphandles,sizeof(HANDLE) *dwSize);
 
-   ph[dwSize] = (HANDLE) __get_mq()->m_eventNewMessage.m_object;
+   ph[dwSize] = (HANDLE) __get_mq(get_current_thread_id(), true)->m_eventNewMessage.m_object;
 
    DWORD r = ::WaitForMultipleObjectsEx(dwSize + 1,ph,dwFlags & MWMO_WAITALL,dwTimeout,dwWakeMask & MWMO_ALERTABLE);
 

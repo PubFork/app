@@ -821,7 +821,7 @@ namespace aura
 
       sp(::aura::application) papp;
 
-      if (System.m_pappcore->m_pfnNewApp != NULL)
+      if (System.m_pappcore != NULL && System.m_pappcore->m_pfnNewApp != NULL)
       {
 
          papp = System.m_pappcore->m_pfnNewApp(pappParent);
@@ -875,7 +875,7 @@ namespace aura
          if (plibrary == NULL)
          {
 
-            if (System.m_pappcore->m_pfnNewLibrary != NULL)
+            if (System.m_pappcore != NULL && System.m_pappcore->m_pfnNewLibrary != NULL)
             {
 
                plibrary = System.m_pappcore->m_pfnNewLibrary(pappParent);

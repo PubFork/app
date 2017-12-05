@@ -67,7 +67,7 @@ namespace install
    int installer::install(string strCommand)
    {
 
-#ifdef WINDOWS
+#ifdef WINDOWSEX
 
       System.install().trace().ensure_trace_file();
 
@@ -2923,7 +2923,7 @@ retry_host:
    bool installer::reboot()
    {
 
-#ifdef WINDOWS
+#ifdef WINDOWSEX
       HANDLE hToken;
 
       TOKEN_PRIVILEGES tkp;
@@ -2981,7 +2981,7 @@ retry_host:
 
       }
 
-#ifdef WINDOWS
+#ifdef WINDOWSEX
 
       SHELLEXECUTEINFOW sei = {};
 

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #include "aura/aura/aura/aura.h"
@@ -64,9 +64,9 @@ namespace d2d1
 namespace draw2d_direct2d
 {
 
-   void initialize();
+   CLASS_DECL_AURA void initialize();
 
-   void finalize();
+   CLASS_DECL_AURA void finalize();
 
    class graphics;
 

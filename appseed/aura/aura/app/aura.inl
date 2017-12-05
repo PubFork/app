@@ -1,6 +1,30 @@
 ﻿#include "aura/aura/aura/aura.h"
 
 
+#ifdef METROWIN
+
+//#include "core/core/core.h"
+//
+//#undef CoreApplication
+//
+
+#undef new
+
+[MTAThread]
+int main(Array<String^>^)
+{
+
+   ap(aura_main_data) pmaindata = new aura_main_data(MAIN_STRING);
+
+   return (int)aura_aura(pmaindata);
+
+}
+
+#include "include/applink.cpp"
+
+#else
+
+
 #undef new
 
 int main(int argc, char * argv[])
@@ -31,5 +55,5 @@ END_EXTERN_C
 #endif
 
 
-
+#endif
 

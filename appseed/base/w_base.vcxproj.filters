@@ -118,6 +118,15 @@
     <Filter Include="Header Files\user\simple_ui">
       <UniqueIdentifier>{b9fbd78a-be3d-406e-abb6-82f3403f6802}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\user\hotplugin">
+      <UniqueIdentifier>{2b3bed5e-9fb7-48db-a0ef-85a72b58afd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\user\install">
+      <UniqueIdentifier>{108203dc-a6d0-4bd2-8253-0b5301134a98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\base\install">
+      <UniqueIdentifier>{f805cac7-36a1-4126-ac20-3b8cef9395a0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -165,16 +174,7 @@
     <ClInclude Include="base\node\metrowin\metrowin.h">
       <Filter>Header Files\base\node\metrowin</Filter>
     </ClInclude>
-    <ClInclude Include="base\node\metrowin\metrowin_directx.h">
-      <Filter>Header Files\base\node\metrowin</Filter>
-    </ClInclude>
-    <ClInclude Include="base\node\metrowin\metrowin_directx_application.h">
-      <Filter>Header Files\base\node\metrowin</Filter>
-    </ClInclude>
     <ClInclude Include="base\node\metrowin\metrowin_factory_exchange.h">
-      <Filter>Header Files\base\node\metrowin</Filter>
-    </ClInclude>
-    <ClInclude Include="base\node\metrowin\metrowin_interaction_impl.h">
       <Filter>Header Files\base\node\metrowin</Filter>
     </ClInclude>
     <ClInclude Include="base\base\base.h">
@@ -478,16 +478,7 @@
     <ClCompile Include="base\base\base_system.cpp">
       <Filter>Source Files\base\base</Filter>
     </ClCompile>
-    <ClCompile Include="base\node\metrowin\metrowin_directx.cpp">
-      <Filter>Source Files\base\node\metrowin</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\metrowin\metrowin_directx_application.cpp">
-      <Filter>Source Files\base\node\metrowin</Filter>
-    </ClCompile>
     <ClCompile Include="base\node\metrowin\metrowin_factory_exchange.cpp">
-      <Filter>Source Files\base\node\metrowin</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\metrowin\metrowin_interaction_impl.cpp">
       <Filter>Source Files\base\node\metrowin</Filter>
     </ClCompile>
     <ClCompile Include="database\database\database_user_interaction.cpp">
@@ -546,6 +537,39 @@
     </ClCompile>
     <ClCompile Include="user\fontopus\_fontopus.cpp">
       <Filter>Source Files\user\fontopus</Filter>
+    </ClCompile>
+    <ClCompile Include="user\hotplugin\hotplugin.cpp">
+      <Filter>Source Files\user\hotplugin</Filter>
+    </ClCompile>
+    <ClCompile Include="user\hotplugin\hotplugin_composer.cpp">
+      <Filter>Source Files\user\hotplugin</Filter>
+    </ClCompile>
+    <ClCompile Include="user\hotplugin\hotplugin_container_launcher.cpp">
+      <Filter>Source Files\user\hotplugin</Filter>
+    </ClCompile>
+    <ClCompile Include="user\hotplugin\hotplugin_host.cpp">
+      <Filter>Source Files\user\hotplugin</Filter>
+    </ClCompile>
+    <ClCompile Include="user\hotplugin\hotplugin_plugin.cpp">
+      <Filter>Source Files\user\hotplugin</Filter>
+    </ClCompile>
+    <ClCompile Include="user\install\install_plugin.cpp">
+      <Filter>Source Files\user\install</Filter>
+    </ClCompile>
+    <ClCompile Include="user\install\install_plugin_bare_paint_discreet.cpp">
+      <Filter>Source Files\user\install</Filter>
+    </ClCompile>
+    <ClCompile Include="user\install\install_plugin_bare_paint_full_screen.cpp">
+      <Filter>Source Files\user\install</Filter>
+    </ClCompile>
+    <ClCompile Include="user\install\install_plugin_bare_paint_veri_discreet.cpp">
+      <Filter>Source Files\user\install</Filter>
+    </ClCompile>
+    <ClCompile Include="user\install\install_starter_start.cpp">
+      <Filter>Source Files\user\install</Filter>
+    </ClCompile>
+    <ClCompile Include="base\install\install_canvas.cpp">
+      <Filter>Source Files\base\install</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

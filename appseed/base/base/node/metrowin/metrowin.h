@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #include "axis/axis/node/metrowin/metrowin.h"
@@ -57,7 +57,7 @@
 ////#include "metrowin1.h"
 #include "metrowin_factory_exchange.h"
 //#include "metrowin_window_draw.h"
-#include "metrowin_interaction_impl.h"
+//#include "metrowin_interaction_impl.h"
 //
 //#include "base/node/windows/windows_message_queue.h"
 //
@@ -85,12 +85,12 @@
 ////#pragma comment(lib, "oleaut32.lib")
 ////#pragma comment(lib, "uuid.lib")
 ////#pragma comment(lib, "shlwapi.lib")
-////#pragma comment(lib, "vfw32.lib") 
-////#pragma comment(lib, "opengl32.lib") 
-////#pragma comment(lib, "Wtsapi32.lib") 
-////#pragma comment(lib, "Secur32.lib") 
-////#pragma comment(lib, "Msimg32.lib") 
-////#pragma comment(lib, "Psapi.lib") 
+////#pragma comment(lib, "vfw32.lib")
+////#pragma comment(lib, "opengl32.lib")
+////#pragma comment(lib, "Wtsapi32.lib")
+////#pragma comment(lib, "Secur32.lib")
+////#pragma comment(lib, "Msimg32.lib")
+////#pragma comment(lib, "Psapi.lib")
 //
 ////CLASS_DECL_BASE void __trace_message(const char * lpszPrefix, ::message::message * pobj);
 ////CLASS_DECL_BASE void __trace_message(const char * lpszPrefix, LPMESSAGE lpmsg);
@@ -110,6 +110,6 @@
 
 
 
-#include "metrowin_directx.h"
-#include "metrowin_directx_application.h"
+//#include "metrowin_directx.h"
+//#include "metrowin_directx_application.h"
 

@@ -62,6 +62,15 @@ public:
 
 #endif
 
+   aura_main_data(LPTSTR lpCmdLine)
+   {
+
+      m_bConsole = false;
+
+      m_lpCmdLine = lpCmdLine;
+
+   }
+
    void * operator new(size_t sz)
    {
 

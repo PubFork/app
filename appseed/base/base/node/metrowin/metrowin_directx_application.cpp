@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "base/user/user.h"
 //#include "metrowin.h"
 
@@ -379,11 +379,15 @@ uint_ptr virtualkey_to_code(::Windows::System::VirtualKey e)
    return (int)e;
 }
 
+
 UINT system_main(LPVOID lp)
 {
+
    ::base::system * m_psystem = (::base::system *) lp;
+
    try
    {
+
       //m_psystem->set_thread(m_psystem);
       m_psystem->m_iErrorCode = 0;
       m_psystem->m_bReady = true;
