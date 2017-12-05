@@ -26,12 +26,34 @@ class dxgidebug
 {
 public:
 
-   Microsoft::WRL::ComPtr<IDXGIDebug1> d;
+   Microsoft::WRL::ComPtr<IDXGIDebug> d;
 
    void init()
    {
 
+#ifdef METROWIN
       HRESULT hr = DXGIGetDebugInterface1(0, IID_IDXGIDebug1, &d);
+#else
+
+      Microsoft::WRL::ComPtr<IDXGIInfoQueue> dxgiInfoQueue;
+
+      typedef HRESULT(WINAPI * LPDXGIGETDEBUGINTERFACE)(REFIID, void **);
+
+      HMODULE dxgidebug = LoadLibraryEx(L"dxgidebug.dll", nullptr, LOAD_LIBRARY_SEARCH_SYSTEM32);
+      if (dxgidebug)
+      {
+         auto dxgiGetDebugInterface = reinterpret_cast<LPDXGIGETDEBUGINTERFACE>(
+                                      reinterpret_cast<void*>(GetProcAddress(dxgidebug, "DXGIGetDebugInterface")));
+         d = dxgiGetDebugInterface;
+         //if (SUCCEEDED(dxgiGetDebugInterface(IID_PPV_ARGS(dxgiInfoQueue.GetAddressOf()))))
+         //{
+         // dxgiInfoQueue->SetBreakOnSeverity(DXGI_DEBUG_ALL, DXGI_INFO_QUEUE_MESSAGE_SEVERITY_ERROR, true);
+         //dxgiInfoQueue->SetBreakOnSeverity(DXGI_DEBUG_ALL, DXGI_INFO_QUEUE_MESSAGE_SEVERITY_CORRUPTION, true);
+         //}
+      }
+
+#endif
+
 
    }
 
