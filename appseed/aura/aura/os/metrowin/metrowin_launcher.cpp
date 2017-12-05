@@ -1,7 +1,5 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "metrowin.h"
-
-#if defined()
 
 bool launcher::start()
 {
@@ -10,7 +8,7 @@ bool launcher::start()
       return false;
 
    string strPath(get_executable_path());
-   
+
    string strDir(dir::name(strPath));
 
    string strParams = get_params();
@@ -28,8 +26,4 @@ bool launcher::start()
    return true;
 
 }
-
-#endif
-
-
 

@@ -343,7 +343,7 @@ namespace hotplugin
    // if composer on paint returns (returns true), it has painted something meaningful : no other painting is needed or even desired (finally when system, and host are ok,
    // if host returns in a fashion-timed way the response for bitmap, it draw this bitmap, and not the default waiting [hall] screen painted by this composer).
 
-#ifdef WINDOWS
+#ifdef WINDOWSEX
 
    bool composer::windows_on_paint(HDC hdc)
    {
@@ -369,7 +369,11 @@ namespace hotplugin
 
             //::SetViewportOrgEx(hdc, rect.left, rect.top, &pt);
 
+#if !defined (METROWIN)
+
             ::hotplugin::entry_hall_windows_on_paint(hdc,m_rect,m_strEntryHallText);
+
+#endif
 
          }
 

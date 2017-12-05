@@ -44,8 +44,9 @@ namespace install
       if (!ensure_executable())
          return;
 
-
+#if !defined(METROWIN)
       call_async(m_strPath, NULL, ::file::path(m_strPath).folder(), SW_HIDE, false);
+#endif
 
 //      string strDir = dir::name(m_strPath.c_str());
 //

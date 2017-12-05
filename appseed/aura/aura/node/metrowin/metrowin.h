@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #define SECURITY_WIN32
 
@@ -79,5 +79,14 @@ CLASS_DECL_AURA void __try_cleanup();
 #include "metrowin_tts_speaker.h"
 
 #include "metrowin_application.h"
+
+
+#include "metrowin_directx.h"
+
+#include "metrowin_directx_application.h"
+
+#include "metrowin_interaction_impl.h"
+
+
 
 

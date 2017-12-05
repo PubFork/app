@@ -436,6 +436,12 @@ CLASS_DECL_AURA void aura_main(app_core * pappcore)
 
    }
 
+#elif defined(METROWIN)
+
+   auto source = ::metrowin::new_directx_application_source(pappcore->m_psystem, pappcore->m_pmaindata->m_pmaininitdata->m_strCommandLine);
+
+   ::Windows::ApplicationModel::Core::CoreApplication::Run(source);
+
 #else
 
    pappcore->run();

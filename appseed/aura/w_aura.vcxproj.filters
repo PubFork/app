@@ -2028,6 +2028,18 @@
     <ClInclude Include="user\user\user_windowing.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
+    <ClInclude Include="aura\node\metrowin\metrowin_directx.h">
+      <Filter>Header Files\aura\node\metrowin</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\metrowin\metrowin_directx_application.h">
+      <Filter>Header Files\aura\node\metrowin</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\metrowin\metrowin_interaction_impl.h">
+      <Filter>Header Files\aura\node\metrowin</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_prelude.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="primitive\primitive_factory_impl.inl">
@@ -3978,6 +3990,18 @@
     </ClCompile>
     <ClCompile Include="aura\compress\_compress_internal.cpp">
       <Filter>Source Files\aura\compress</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\metrowin\metrowin_directx_application.cpp">
+      <Filter>Source Files\aura\node\metrowin</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\metrowin\metrowin_directx.cpp">
+      <Filter>Source Files\aura\node\metrowin</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\metrowin\metrowin_interaction_impl.cpp">
+      <Filter>Source Files\aura\node\metrowin</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_app_core.cpp">
+      <Filter>Source Files\aura\aura</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

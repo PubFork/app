@@ -37,10 +37,10 @@ namespace colorertake5
       {
          parseHRC(pszSource);
       }
-      catch(esp esp)
+      catch (::exception::exception * pexception)
       {
 
-         _rethrow(esp);
+         _rethrow(pexception);
 
       }
       m_strCurrentSourceLocation = strPreviousSourceLocation;

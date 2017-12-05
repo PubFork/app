@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 namespace metrowin
 {
@@ -8,14 +8,14 @@ namespace metrowin
       virtual public ::thread
    {
    public:
-      
+
       folder_watch(::aura::application * papp);
 
       virtual bool watch(const char * pszPath);
 
       virtual e_action translate_os_action(int iAction);
 
-      virtual int run();
+      virtual void run() override;
 
    };
 

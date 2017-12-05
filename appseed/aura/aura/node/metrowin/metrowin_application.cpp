@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "metrowin.h"
 
 
@@ -42,9 +42,9 @@ namespace aura
    void application::_001EnableShellOpen()
    {
       //ASSERT(m_atomApp == NULL && m_atomSystemTopic == NULL); // do once
-/*
-      m_atomApp            = ::GlobalAddAtomW(::str::international::utf8_to_unicode(m_strAppName));
-      m_atomSystemTopic    = ::GlobalAddAtomW(L"system");*/
+      /*
+            m_atomApp            = ::GlobalAddAtomW(::str::international::utf8_to_unicode(m_strAppName));
+            m_atomSystemTopic    = ::GlobalAddAtomW(L"system");*/
    }
 
    //bool application::_001OnDDECommand(const char * lpcsz)
@@ -67,21 +67,22 @@ namespace aura
       DWORD dw;
 
       DWORD dwResSize = GetFileVersionInfoSize(
-         lpszModuleFilePath,
-         &dw);
+                        lpszModuleFilePath,
+                        &dw);
 
 
       if(dwResSize > 0)
       {
          LPVOID lpdata = new BYTE[dwResSize];
          if(GetFileVersionInfo(
-            lpszModuleFilePath,
-            0,
-            dwResSize,
-            lpdata))
+               lpszModuleFilePath,
+               0,
+               dwResSize,
+               lpdata))
          {
             UINT cbTranslate;
-            struct LANGANDCODEPAGE {
+            struct LANGANDCODEPAGE
+            {
                WORD wLanguage;
                WORD wCodePage;
             } *lpTranslate;
@@ -89,9 +90,9 @@ namespace aura
             // read the list of languages and code pages.
 
             VerQueryValue(lpdata,
-               TEXT("\\VarFileInfo\\Translation"),
-               (LPVOID*)&lpTranslate,
-               &cbTranslate);
+                          TEXT("\\VarFileInfo\\Translation"),
+                          (LPVOID*)&lpTranslate,
+                          &cbTranslate);
 
             string strKey;
             //for( i=0; i < (cbTranslate/sizeof(struct LANGANDCODEPAGE)); i++ )
@@ -101,23 +102,23 @@ namespace aura
                UINT uiSize;
 
                strKey.Format(
-                  TEXT("\\StringFileInfo\\%04x%04x\\FileDescription"),
-                  lpTranslate[i].wLanguage,
-                  lpTranslate[i].wCodePage);
+               TEXT("\\StringFileInfo\\%04x%04x\\FileDescription"),
+               lpTranslate[i].wLanguage,
+               lpTranslate[i].wCodePage);
 
 
 
 
                strKey.Format(
-                  TEXT("\\StringFileInfo\\%04x%04x\\FileVersion"),
-                  lpTranslate[i].wLanguage,
-                  lpTranslate[i].wCodePage);
+               TEXT("\\StringFileInfo\\%04x%04x\\FileVersion"),
+               lpTranslate[i].wLanguage,
+               lpTranslate[i].wCodePage);
 
                // Retrieve file description for language and code page "i".
                VerQueryValue(lpdata,
-                  (LPTSTR) (const char *) strKey,
-                  (LPVOID *)&lpsz,
-                  &uiSize);
+                             (LPTSTR) (const char *) strKey,
+                             (LPVOID *)&lpsz,
+                             &uiSize);
 
 
                string strVersion(lpsz, uiSize);
@@ -335,32 +336,32 @@ namespace aura
    {
       return ::metrowin::thread::is_idle_message(pMsg);
    }
-*/
-   bool application::impl_process_initialize()
+   */
+   bool application::impl_process_init()
    {
 
       return true;
    }
 
-   bool application::impl_initialize1()
+   bool application::impl_init1()
    {
 
       return true;
 
    }
 
-   bool application::impl_initialize2()
+   bool application::impl_init2()
    {
       return true;
    }
 
-   bool application::impl_initialize3()
+   bool application::impl_init3()
    {
       return true;
    }
 
    // thread termination
-   int application::impl_exit_instance() // default will 'delete this'
+   void application::impl_process_term() // default will 'delete this'
    {
 
       // avoid calling CloseHandle() on our own thread handle
@@ -371,62 +372,79 @@ namespace aura
       //smart_pointer < application_base >::destroy();
 
       //return iRet;
-      return 0;
+      //return 0;
 
    }
-/*
-   // Advanced: exception handling
-   LRESULT application::ProcessWndProcException(::exception::aura* e, const MSG* pMsg)
+
+   void application::impl_term3()
    {
-      return   ::metrowin::thread::ProcessWndProcException(e, pMsg);
+
    }
 
-
-   // Advanced: handling messages sent to message filter hook
-   bool application::ProcessMessageFilter(int code, LPMSG lpMsg)
+   void application::impl_term2()
    {
-      return  ::metrowin::thread::ProcessMessageFilter(code, lpMsg);
+
    }
 
 
-   // Advanced: access to GetMainWnd()
-   ::user::interaction* application::GetMainWnd()
+   void application::impl_term1()
    {
-      return ::metrowin::thread::GetMainWnd();
+
    }
 
+   /*
+      // Advanced: exception handling
+      LRESULT application::ProcessWndProcException(::exception::aura* e, const MSG* pMsg)
+      {
+         return   ::metrowin::thread::ProcessWndProcException(e, pMsg);
+      }
 
 
-   void application::assert_valid() const
-   {
-      ::metrowin::thread::assert_valid();
-   }
-
-   void application::dump(dump_context & dumpcontext) const
-   {
-      ::metrowin::thread::dump(dumpcontext);
-   }
+      // Advanced: handling messages sent to message filter hook
+      bool application::ProcessMessageFilter(int code, LPMSG lpMsg)
+      {
+         return  ::metrowin::thread::ProcessMessageFilter(code, lpMsg);
+      }
 
 
-   void application::CommonConstruct()
-   {
-      ::metrowin::thread::CommonConstruct();
-   }
-   void application::Delete()
-   {
-      ::metrowin::thread::Delete();
-   }
-   // 'delete this' only if m_bAutoDelete == TRUE
+      // Advanced: access to GetMainWnd()
+      ::user::interaction* application::GetMainWnd()
+      {
+         return ::metrowin::thread::GetMainWnd();
+      }
 
-   bool application::DispatchThreadMessageEx(MSG* msg)  // helper
-   {
-      return ::metrowin::thread::DispatchThreadMessageEx(msg);
-   }*/
 
-/*   ::draw2d::graphics * application::graphics_from_os_data(void * pdata)
-   {
-      return ::metrowin::graphics::from_handle((HDC) pdata);
-   }*/
+
+      void application::assert_valid() const
+      {
+         ::metrowin::thread::assert_valid();
+      }
+
+      void application::dump(dump_context & dumpcontext) const
+      {
+         ::metrowin::thread::dump(dumpcontext);
+      }
+
+
+      void application::CommonConstruct()
+      {
+         ::metrowin::thread::CommonConstruct();
+      }
+      void application::Delete()
+      {
+         ::metrowin::thread::Delete();
+      }
+      // 'delete this' only if m_bAutoDelete == TRUE
+
+      bool application::DispatchThreadMessageEx(MSG* msg)  // helper
+      {
+         return ::metrowin::thread::DispatchThreadMessageEx(msg);
+      }*/
+
+   /*   ::draw2d::graphics * application::graphics_from_os_data(void * pdata)
+      {
+         return ::metrowin::graphics::from_handle((HDC) pdata);
+      }*/
 
 
    /*void application::BaseSetCurrentHandles()
@@ -437,12 +455,12 @@ namespace aura
 
 
    }
-*/
+   */
 
 
    void application::get_time(struct timeval *p)
    {
-   #ifdef WINDOWS
+#ifdef WINDOWS
       FILETIME ft; // Contains a 64-bit value representing the number of 100-nanosecond intervals since January 1, 1601 (UTC).
       GetSystemTimeAsFileTime(&ft);
       uint64_t tt;
@@ -450,14 +468,14 @@ namespace aura
       tt /= 10; // make it usecs
       p->tv_sec = (long)tt / 1000000;
       p->tv_usec = (long)tt % 1000000;
-   #else
+#else
       gettimeofday(p, NULL);
-   #endif
+#endif
    }
 
    void application::set_env_var(const string & var,const string & value)
    {
-   #if (defined(SOLARIS8) || defined(SOLARIS))
+#if (defined(SOLARIS8) || defined(SOLARIS))
       {
          static std::map<string, char *> vmap;
          if (vmap.find(var) != vmap.end())
@@ -468,17 +486,17 @@ namespace aura
          sprintf(vmap[var], "%s=%s", var, value);
          putenv( vmap[var] );
       }
-   #elif defined WINDOWSEX
+#elif defined WINDOWSEX
       {
          string slask = var + "=" + value;
          _putenv( (const char *)slask);
       }
-   #elif defined METROWIN
+#elif defined METROWIN
 
 
-   #else
+#else
       setenv(var, value, 1);
-   #endif
+#endif
    }
 
 

@@ -253,30 +253,24 @@ namespace user
          return true;
 
       }
-      catch (esp esp)
+      catch (exit_exception * pexception)
       {
 
-         if (esp.is < exit_exception >())
-         {
+         _rethrow(pexception);
 
-            throw esp;
+      }
+      catch (::exception::exception * pexception)
+      {
 
-         }
-         else
-         {
-
-            return false;
-
-         }
+         esp671 esp(pexception);
 
       }
       catch (...)
       {
 
-         return false;
-
       }
 
+      return false;
 
    }
 

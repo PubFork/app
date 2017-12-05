@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 
@@ -30,11 +30,11 @@
 
 typedef struct tag_MSG
 {
-oswindow    hwnd;
-UINT        message;
-WPARAM      wParam;
-LPARAM      lParam;
-POINT       pt;
+   oswindow    hwnd;
+   UINT        message;
+   WPARAM      wParam;
+   LPARAM      lParam;
+   POINT       pt;
 } MESSAGE, * LPMESSAGE;
 #endif
 
@@ -59,7 +59,7 @@ CLASS_DECL_AURA void WINAPI TlsShutdown();
 
 class mq;
 
-CLASS_DECL_AURA mq * __get_mq();
+//CLASS_DECL_AURA mq * __get_mq();
 CLASS_DECL_AURA mq * __get_mq(IDTHREAD iThreadId, bool bCreate);
 
 

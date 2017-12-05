@@ -2566,10 +2566,16 @@ namespace user
          _001SetSel(iTab);
 
       }
-      catch(esp esp)
+      catch (::exit_exception * pexception)
       {
 
-         esp.rethrow_exit();
+         _rethrow(pexception);
+
+      }
+      catch (::exception::exception * pexception)
+      {
+
+         esp671 esp(pexception);
 
          return false;
 

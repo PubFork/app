@@ -2,8 +2,6 @@
 #include "aura/net/sockets/bsd/sockets_sockets.h"
 
 
-
-
 namespace aura
 {
 
@@ -742,10 +740,16 @@ namespace aura
             papp = create_application(pszAppId, bSynch, pbiasCreate);
 
          }
-         catch (esp esp)
+         catch (exit_exception * pexception)
          {
 
-            esp.rethrow_exit();
+            _rethrow(pexception);
+
+         }
+         catch (::exception::exception * pexception)
+         {
+
+            esp671 esp(pexception);
 
             // aura::session, axis::session and ::base::session, could get more specialized handling in core::application (core::system)
             // Thank you Mummi (em São Paulo, cuidando do Lucinho e ajudando um monte a Carô 2015-02-03) !! Thank you God!!
@@ -817,7 +821,7 @@ namespace aura
 
       sp(::aura::application) papp;
 
-      if (System.m_pappcore->m_pfnNewApp != NULL)
+      if (System.m_pappcore != NULL && System.m_pappcore->m_pfnNewApp != NULL)
       {
 
          papp = System.m_pappcore->m_pfnNewApp(pappParent);
@@ -871,7 +875,7 @@ namespace aura
          if (plibrary == NULL)
          {
 
-            if (System.m_pappcore->m_pfnNewLibrary != NULL)
+            if (System.m_pappcore != NULL && System.m_pappcore->m_pfnNewLibrary != NULL)
             {
 
                plibrary = System.m_pappcore->m_pfnNewLibrary(pappParent);

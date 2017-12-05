@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 //#if defined()
@@ -114,7 +114,7 @@ namespace install
          }
 
       }
-#ifdef WINDOWS
+#ifdef WINDOWSEX
       else if (m_strFile == "vcredist")
       {
 

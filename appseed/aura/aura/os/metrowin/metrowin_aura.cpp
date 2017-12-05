@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "metrowin.h"
 //#include <winternl.h>
 //#include <VersionHelpers.h>
@@ -9,33 +9,33 @@
 
 int MessageBoxW(oswindow window,const unichar * pszMessage,const unichar * pszTitle,int iFlags)
 {
-  
+
 
    ::wait(Windows::ApplicationModel::Core::CoreApplication::MainView->CoreWindow->Dispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new Windows::UI::Core::DispatchedHandler ([=]()
    {
-   
+
       Windows::UI::Popups::MessageDialog ^ msg = ref new Windows::UI::Popups::MessageDialog(wstring(pszMessage), wstring(pszTitle));
 
 //UICommand^ continueCommand = ref new UICommand(
-  //      "Try again", 
-    //    ref new UICommandInvokedHandler(this, &CancelCommand::CommandInvokedHandler));
-   Windows::UI::Popups::UICommand ^ upgradeCommand = ref new Windows::UI::Popups::UICommand(
-        "OK");
+      //      "Try again",
+      //    ref new UICommandInvokedHandler(this, &CancelCommand::CommandInvokedHandler));
+      Windows::UI::Popups::UICommand ^ upgradeCommand = ref new Windows::UI::Popups::UICommand(
+            "OK");
 
-    // Add the commands to the dialog
-    //msg->Commands->Append(continueCommand);
-    msg->Commands->Append(upgradeCommand);
+      // Add the commands to the dialog
+      //msg->Commands->Append(continueCommand);
+      msg->Commands->Append(upgradeCommand);
 
-    // Set the command that will be invoked by default
-    msg->DefaultCommandIndex = 0;
+      // Set the command that will be invoked by default
+      msg->DefaultCommandIndex = 0;
 
-    // Set the command to be invoked when escape is pressed
-    msg->CancelCommandIndex = 0;
-  
-   Windows::UI::Popups::IUICommand ^ command = wait(msg->ShowAsync());
+      // Set the command to be invoked when escape is pressed
+      msg->CancelCommandIndex = 0;
 
-      })));
-   
+      Windows::UI::Popups::IUICommand ^ command = wait(msg->ShowAsync());
+
+   })));
+
    return 0;
 
 }
@@ -58,15 +58,15 @@ VOID WINAPI Sleep(DWORD dwMilliseconds)
       sleepEvent = CreateEventEx(nullptr, nullptr, CREATE_EVENT_MANUAL_RESET, EVENT_ALL_ACCESS);
 
       if (!sleepEvent)
-            return;
+         return;
 
       HANDLE previousEvent = InterlockedCompareExchangePointerRelease(&singletonEvent, sleepEvent, nullptr);
-            
+
       if (previousEvent)
       {
-            // Back out if multiple threads try to demand create at the same time.
-            CloseHandle(sleepEvent);
-            sleepEvent = previousEvent;
+         // Back out if multiple threads try to demand create at the same time.
+         CloseHandle(sleepEvent);
+         sleepEvent = previousEvent;
       }
    }
 
@@ -77,14 +77,14 @@ VOID WINAPI Sleep(DWORD dwMilliseconds)
 
 typedef bool
 (WINAPI * LPFN_ChangeWindowMessageFilter)(
-    _In_ UINT message,
-    _In_ DWORD dwFlag);
+_In_ UINT message,
+_In_ DWORD dwFlag);
 
 
 LPFN_ChangeWindowMessageFilter g_pfnChangeWindowMessageFilter = NULL;
 
 /*
-typedef  
+typedef
 LSTATUS
 ( APIENTRY * LPFN_RegGetValueW) (
     HKEY hkey,
@@ -130,7 +130,7 @@ bool os_initialize()
 
    return TRUE;
 
-} 
+}
 
 
 bool os_finalize()
@@ -190,39 +190,39 @@ int_bool main_initialize()
 
    //Sleep(15 * 1000);
 
-/*   g_pgdiplusStartupInput     = new Gdiplus::GdiplusStartupInput();
-   g_pgdiplusStartupOutput    = new Gdiplus::GdiplusStartupOutput();
-   g_gdiplusToken             = NULL;
-   g_gdiplusHookToken         = NULL;
+   /*   g_pgdiplusStartupInput     = new Gdiplus::GdiplusStartupInput();
+      g_pgdiplusStartupOutput    = new Gdiplus::GdiplusStartupOutput();
+      g_gdiplusToken             = NULL;
+      g_gdiplusHookToken         = NULL;
 
-   //MessageBox(NULL, "Gdiplus Failed to Startup. ca2 cannot continue.", "Gdiplus Failure", MB_ICONERROR);
+      //MessageBox(NULL, "Gdiplus Failed to Startup. ca2 cannot continue.", "Gdiplus Failure", MB_ICONERROR);
 
-   g_pgdiplusStartupInput->SuppressBackgroundThread = TRUE;
+      g_pgdiplusStartupInput->SuppressBackgroundThread = TRUE;
 
-   // Initialize GDI+.
-   Gdiplus::Status statusStartup = GdiplusStartup(&g_gdiplusToken, g_pgdiplusStartupInput, g_pgdiplusStartupOutput);
+      // Initialize GDI+.
+      Gdiplus::Status statusStartup = GdiplusStartup(&g_gdiplusToken, g_pgdiplusStartupInput, g_pgdiplusStartupOutput);
 
-   if(statusStartup != Gdiplus::Ok)
-   {
-      
-      MessageBox(NULL, "Gdiplus Failed to Startup. ca2 cannot continue.", "Gdiplus Failure", MB_ICONERROR);
-      
-      return FALSE;
+      if(statusStartup != Gdiplus::Ok)
+      {
 
-   }
+         MessageBox(NULL, "Gdiplus Failed to Startup. ca2 cannot continue.", "Gdiplus Failure", MB_ICONERROR);
 
-   statusStartup = g_pgdiplusStartupOutput->NotificationHook(&g_gdiplusHookToken);
-   
+         return FALSE;
 
-   if(statusStartup != Gdiplus::Ok)
-   {
-      
-      MessageBox(NULL, "Gdiplus Failed to Hook. ca2 cannot continue.", "Gdiplus Failure", MB_ICONERROR);
-      
-      return FALSE;
+      }
 
-   }
-   */
+      statusStartup = g_pgdiplusStartupOutput->NotificationHook(&g_gdiplusHookToken);
+
+
+      if(statusStartup != Gdiplus::Ok)
+      {
+
+         MessageBox(NULL, "Gdiplus Failed to Hook. ca2 cannot continue.", "Gdiplus Failure", MB_ICONERROR);
+
+         return FALSE;
+
+      }
+      */
 
    //t_phthread = new hthread();
 
@@ -233,7 +233,7 @@ int_bool main_initialize()
 
    return TRUE;
 
-} 
+}
 
 
 int_bool main_finalize()
@@ -245,45 +245,45 @@ int_bool main_finalize()
 }
 
 
-int g_iMouse = -1;
+//int g_iMouse = -1;
 
 
-WINBOOL GetCursorPos(LPPOINT lppoint)
-{
-   
-   lppoint->x = 0;
-
-   lppoint->y = 0;
-
-   if(g_iMouse < 0)
-      return FALSE;
-
-   Windows::Foundation::Collections::IVectorView < Windows::Devices::Input::PointerDevice ^ > ^ deva = ::Windows::Devices::Input::PointerDevice::GetPointerDevices();
-
-   for(unsigned int ui = 0; ui < deva->Size; ui++)
-   {
-
-      Windows::Devices::Input::PointerDevice ^ dev = deva->GetAt(ui);
-
-      if(dev->PointerDeviceType == ::Windows::Devices::Input::PointerDeviceType::Mouse)
-      {
-
-          Windows::UI::Input::PointerPoint ^ pointerPoint = Windows::UI::Input::PointerPoint::GetCurrentPoint(g_iMouse);
-
-          lppoint->x = (LONG) pointerPoint->RawPosition.X;
-
-          lppoint->y = (LONG) pointerPoint->RawPosition.Y;
-
-          return TRUE; 
-
-      }
-
-   }
-
-   return FALSE;
-
-}
-
+//WINBOOL GetCursorPos(LPPOINT lppoint)
+//{
+//
+//   lppoint->x = 0;
+//
+//   lppoint->y = 0;
+//
+//   if(g_iMouse < 0)
+//      return FALSE;
+//
+//   Windows::Foundation::Collections::IVectorView < Windows::Devices::Input::PointerDevice ^ > ^ deva = ::Windows::Devices::Input::PointerDevice::GetPointerDevices();
+//
+//   for(unsigned int ui = 0; ui < deva->Size; ui++)
+//   {
+//
+//      Windows::Devices::Input::PointerDevice ^ dev = deva->GetAt(ui);
+//
+//      if(dev->PointerDeviceType == ::Windows::Devices::Input::PointerDeviceType::Mouse)
+//      {
+//
+//         Windows::UI::Input::PointerPoint ^ pointerPoint = Windows::UI::Input::PointerPoint::GetCurrentPoint(g_iMouse);
+//
+//         lppoint->x = (LONG) pointerPoint->RawPosition.X;
+//
+//         lppoint->y = (LONG) pointerPoint->RawPosition.Y;
+//
+//         return TRUE;
+//
+//      }
+//
+//   }
+//
+//   return FALSE;
+//
+//}
+//
 
 string normalize_path(const char * lpcszPath)
 {
@@ -372,13 +372,13 @@ string get_system_error_message(uint32_t dwError)
    wstring wstr;
    wstr.alloc(64 * 1024 / sizeof(unichar));
    FormatMessageW(
-      FORMAT_MESSAGE_FROM_SYSTEM,
-      NULL,
-      dwError,
-      0,
-      (LPWSTR) (LPCWSTR) wstr,
-      wstr.get_storage_size() / sizeof(unichar),
-      NULL);
+   FORMAT_MESSAGE_FROM_SYSTEM,
+   NULL,
+   dwError,
+   0,
+   (LPWSTR) (LPCWSTR) wstr,
+   wstr.get_storage_size() / sizeof(unichar),
+   NULL);
    string str(wstr);
    return str;
 }
@@ -389,7 +389,7 @@ string get_system_error_message(uint32_t dwError)
 
 //void output_debug_string(const char * psz)
 //{
-//   
+//
 //   ::output_debug_string(wstring(psz));
 //
 //}

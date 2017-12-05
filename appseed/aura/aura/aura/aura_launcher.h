@@ -1,9 +1,6 @@
 #pragma once
 
 
-#if !defined(METROWIN)
-
-
 class CLASS_DECL_AURA launcher
 {
 public:
@@ -27,9 +24,6 @@ public:
 };
 
 
-
-
-#endif
 
 
 

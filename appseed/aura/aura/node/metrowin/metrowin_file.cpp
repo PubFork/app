@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "metrowin.h"
 
 
@@ -59,11 +59,11 @@ namespace metrowin
       sp(file) pFile = canew(file(get_app(), hFileNull));
       HANDLE hFile;
       if (!::DuplicateHandle(::GetCurrentProcess(), (HANDLE)m_hFile,
-         ::GetCurrentProcess(), &hFile, 0, FALSE, DUPLICATE_SAME_ACCESS))
+                             ::GetCurrentProcess(), &hFile, 0, FALSE, DUPLICATE_SAME_ACCESS))
       {
          delete pFile;
          //xxx      Ex1WinFileException::ThrowOsError(get_app(), (LONG)::GetLastError());
-         _throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
+         _throw(simple_exception(get_app(), "integer_exception 1"));
       }
       pFile->m_hFile = (UINT)hFile;
       ASSERT(pFile->m_hFile != (UINT)hFileNull);
@@ -383,7 +383,7 @@ namespace metrowin
       ASSERT(m_hFile != (UINT)hFileNull);
 
 //      if (!::LockFile((HANDLE)m_hFile, LODWORD(dwPos), HIDWORD(dwPos), LODWORD(dwCount), HIDWORD(dwCount)))
-  //       WinFileException::ThrowOsError(get_app(), (LONG)::GetLastError());
+      //       WinFileException::ThrowOsError(get_app(), (LONG)::GetLastError());
    }
 
    void file::UnlockRange(file_position_t dwPos, file_size_t dwCount)
@@ -391,7 +391,7 @@ namespace metrowin
       ASSERT_VALID(this);
       ASSERT(m_hFile != (UINT)hFileNull);
 
-    //  if (!::UnlockFile((HANDLE)m_hFile,  LODWORD(dwPos), HIDWORD(dwPos), LODWORD(dwCount), HIDWORD(dwCount)))
+      //  if (!::UnlockFile((HANDLE)m_hFile,  LODWORD(dwPos), HIDWORD(dwPos), LODWORD(dwCount), HIDWORD(dwCount)))
       //   WinFileException::ThrowOsError(get_app(), (LONG)::GetLastError());
    }
 
@@ -423,7 +423,7 @@ namespace metrowin
 
    // file does not support direct buffering (CMemFile does)
    uint64_t file::GetBufferPtr(UINT nCommand, uint64_t /*nCount*/,
-      void ** /*ppBufStart*/, void ** /*ppBufMax*/)
+                               void ** /*ppBufStart*/, void ** /*ppBufMax*/)
    {
       ASSERT(nCommand == bufferCheck);
       UNUSED(nCommand);    // not used in retail build
@@ -450,9 +450,9 @@ namespace metrowin
    {
       CHAR szCLSID[256];
       sprintf(szCLSID, "{%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X}",
-         rclsid.Data1, rclsid.Data2, rclsid.Data3,
-         rclsid.Data4[0], rclsid.Data4[1], rclsid.Data4[2], rclsid.Data4[3],
-         rclsid.Data4[4], rclsid.Data4[5], rclsid.Data4[6], rclsid.Data4[7]);
+              rclsid.Data1, rclsid.Data2, rclsid.Data3,
+              rclsid.Data4[0], rclsid.Data4[1], rclsid.Data4[2], rclsid.Data4[3],
+              rclsid.Data4[4], rclsid.Data4[5], rclsid.Data4[6], rclsid.Data4[7]);
       return szCLSID;
    }
 
@@ -468,13 +468,13 @@ namespace metrowin
          {
             HKEY hKeyInProc = NULL;
             if (RegOpenKey(hKeyCLSID, "InProcServer32", &hKeyInProc) ==
-               ERROR_SUCCESS)
+                  ERROR_SUCCESS)
             {
                LPTSTR lpsz = str.GetBuffer(_MAX_PATH);
                DWORD dwSize = _MAX_PATH * sizeof(char);
                DWORD dwType;
                LONG lRes = ::RegQueryValueEx(hKeyInProc, "",
-                  NULL, &dwType, (BYTE*)lpsz, &dwSize);
+                                             NULL, &dwType, (BYTE*)lpsz, &dwSize);
                str.ReleaseBuffer();
                b = (lRes == ERROR_SUCCESS);
                RegCloseKey(hKeyInProc);
@@ -493,9 +493,9 @@ namespace metrowin
 
    // turn a file, relative path or other into an absolute path
    bool CLASS_DECL_AURA vfxFullPath(unichar * lpszPathOut, const unichar * lpszFileIn)
-      // lpszPathOut = buffer of _MAX_PATH
-      // lpszFileIn = file, relative path or absolute path
-      // (both in ANSI character set)
+   // lpszPathOut = buffer of _MAX_PATH
+   // lpszFileIn = file, relative path or absolute path
+   // (both in ANSI character set)
    {
       ASSERT(__is_valid_address(lpszPathOut, _MAX_PATH));
 #ifdef WINDOWSEX
@@ -981,7 +981,7 @@ namespace metrowin
    UINT CLASS_DECL_AURA vfxGetFileName(const unichar * lpszPathName, unichar * lpszTitle, UINT nMax)
    {
       ASSERT(lpszTitle == NULL ||
-         __is_valid_address(lpszTitle, _MAX_FNAME));
+             __is_valid_address(lpszTitle, _MAX_FNAME));
       ASSERT(__is_valid_string(lpszPathName));
 
       // always capture the complete file name including extension (if present)
@@ -1037,7 +1037,7 @@ namespace metrowin
       //   TRACE3("file exception: %hs, file %s, App error information = %ld.\n", lpsz, (lpszFileName == NULL) ? "Unknown" : lpszFileName, lOsError);
 #endif
 
-      _throw(::file::exception(papp,WinFileException::OsErrorToException(lOsError),lOsError ,lpszFileName));
+      _throw(::file::exception(papp,WinFileException::OsErrorToException(lOsError),lOsError,lpszFileName));
 
    }
 
@@ -1523,27 +1523,43 @@ namespace metrowin
 
 
 
-   // turn a file, relative path or other into an absolute path
-   bool CLASS_DECL_AURA vfxFullPath(wstring & wstrFullPath, const wstring & wstrPath)
-      // lpszPathOut = buffer of _MAX_PATH
-      // lpszFileIn = file, relative path or absolute path
-      // (both in ANSI character set)
-   {
+// turn a file, relative path or other into an absolute path
+bool CLASS_DECL_AURA vfxFullPath(wstring & wstrFullPath, const wstring & wstrPath)
+// lpszPathOut = buffer of _MAX_PATH
+// lpszFileIn = file, relative path or absolute path
+// (both in ANSI character set)
+{
 
 
 #ifdef WINDOWSEX
 
 
-      strsize dwAllocLen = wstrPath.get_length() + _MAX_PATH;
+   strsize dwAllocLen = wstrPath.get_length() + _MAX_PATH;
 
-      wstrFullPath.alloc(dwAllocLen);
+   wstrFullPath.alloc(dwAllocLen);
 
-      // first, fully qualify the path name
-      unichar * lpszFilePart;
+   // first, fully qualify the path name
+   unichar * lpszFilePart;
 
-      strsize dwLen = GetFullPathNameW(wstrPath, (DWORD) dwAllocLen, wstrFullPath, &lpszFilePart);
+   strsize dwLen = GetFullPathNameW(wstrPath, (DWORD) dwAllocLen, wstrFullPath, &lpszFilePart);
 
-      if(dwLen == 0)
+   if(dwLen == 0)
+   {
+#ifdef DEBUG
+      //      if (lpszFileIn[0] != '\0')
+      //       TRACE1("Warning: could not parse the path '%s'.\n", lpszFileIn);
+#endif
+      wstrFullPath = wstrPath; // take it literally
+      return FALSE;
+   }
+   else if(dwLen > dwAllocLen)
+   {
+
+      dwAllocLen = dwLen + _MAX_PATH;
+
+      dwLen = GetFullPathNameW(wstrPath, (DWORD) dwAllocLen, wstrFullPath, &lpszFilePart);
+
+      if(dwLen == 0 || dwLen > dwAllocLen)
       {
 #ifdef DEBUG
          //      if (lpszFileIn[0] != '\0')
@@ -1552,169 +1568,153 @@ namespace metrowin
          wstrFullPath = wstrPath; // take it literally
          return FALSE;
       }
-      else if(dwLen > dwAllocLen)
-      {
-
-         dwAllocLen = dwLen + _MAX_PATH;
-
-         dwLen = GetFullPathNameW(wstrPath, (DWORD) dwAllocLen, wstrFullPath, &lpszFilePart);
-
-         if(dwLen == 0 || dwLen > dwAllocLen)
-         {
-#ifdef DEBUG
-            //      if (lpszFileIn[0] != '\0')
-            //       TRACE1("Warning: could not parse the path '%s'.\n", lpszFileIn);
-#endif
-            wstrFullPath = wstrPath; // take it literally
-            return FALSE;
-         }
-
-      }
-
-      wstring wstrRoot;
-      // determine the root name of the volume
-      vfxGetRoot(wstrRoot, wstrFullPath);
-
-      // get file system information for the volume
-      DWORD dwFlags, dwDummy;
-      if (!GetVolumeInformationW(wstrRoot, NULL, 0, NULL, &dwDummy, &dwFlags, NULL, 0))
-      {
-         //      TRACE1("Warning: could not get volume information '%s'.\n", strRoot);
-         return FALSE;   // preserving case may not be correct
-      }
-
-      // not all characters have complete uppercase/lowercase
-      if (!(dwFlags & FS_CASE_IS_PRESERVED))
-         CharUpperW(wstrFullPath);
-
-      // assume non-UNICODE file systems, use OEM character set
-      if (!(dwFlags & FS_UNICODE_STORED_ON_DISK))
-      {
-         WIN32_FIND_DATAW data;
-         HANDLE h = FindFirstFileW(wstrPath, &data);
-         if (h != INVALID_HANDLE_VALUE)
-         {
-            FindClose(h);
-            int iLenFileName = lstrlenW(data.cFileName);
-            if(iLenFileName >=  MAX_PATH)
-            {
-               wstring wstrBackup = wstrFullPath;
-               strsize iFilePart = lpszFilePart - wstrFullPath;
-               wstrFullPath.alloc(iFilePart + iLenFileName + 32); // arrange more space with more 32 extra wchars
-               lstrcpynW(wstrFullPath, wstrBackup, (int) iFilePart);
-               lpszFilePart = (unichar *) wstrFullPath + iFilePart;
-            }
-            lstrcpyW(lpszFilePart, data.cFileName);
-            wstrFullPath.release_buffer();
-         }
-      }
-
-#else
-
-      wstrFullPath = wstrPath;
-
-#endif
-
-      return TRUE;
 
    }
 
+   wstring wstrRoot;
+   // determine the root name of the volume
+   vfxGetRoot(wstrRoot, wstrFullPath);
 
-
-   bool CLASS_DECL_AURA vfxResolveShortcut(string & strTarget, const char * pszSource, ::user::primitive * puiMessageParentOptional)
+   // get file system information for the volume
+   DWORD dwFlags, dwDummy;
+   if (!GetVolumeInformationW(wstrRoot, NULL, 0, NULL, &dwDummy, &dwFlags, NULL, 0))
    {
+      //      TRACE1("Warning: could not get volume information '%s'.\n", strRoot);
+      return FALSE;   // preserving case may not be correct
+   }
+
+   // not all characters have complete uppercase/lowercase
+   if (!(dwFlags & FS_CASE_IS_PRESERVED))
+      CharUpperW(wstrFullPath);
+
+   // assume non-UNICODE file systems, use OEM character set
+   if (!(dwFlags & FS_UNICODE_STORED_ON_DISK))
+   {
+      WIN32_FIND_DATAW data;
+      HANDLE h = FindFirstFileW(wstrPath, &data);
+      if (h != INVALID_HANDLE_VALUE)
+      {
+         FindClose(h);
+         int iLenFileName = lstrlenW(data.cFileName);
+         if(iLenFileName >=  MAX_PATH)
+         {
+            wstring wstrBackup = wstrFullPath;
+            strsize iFilePart = lpszFilePart - wstrFullPath;
+            wstrFullPath.alloc(iFilePart + iLenFileName + 32); // arrange more space with more 32 extra wchars
+            lstrcpynW(wstrFullPath, wstrBackup, (int) iFilePart);
+            lpszFilePart = (unichar *) wstrFullPath + iFilePart;
+         }
+         lstrcpyW(lpszFilePart, data.cFileName);
+         wstrFullPath.release_buffer();
+      }
+   }
+
+#else
+
+   wstrFullPath = wstrPath;
+
+#endif
+
+   return TRUE;
+
+}
+
+
+
+bool CLASS_DECL_AURA vfxResolveShortcut(string & strTarget, const char * pszSource, ::user::primitive * puiMessageParentOptional)
+{
 
 #ifdef WINDOWSEX
 
-      ::user::interaction * pui = puiMessageParentOptional;
+   ::user::interaction * pui = puiMessageParentOptional;
 
-      wstring wstrFileOut;
-      wstring wstrFileIn = ::str::international::utf8_to_unicode(pszSource);
+   wstring wstrFileOut;
+   wstring wstrFileIn = ::str::international::utf8_to_unicode(pszSource);
 
-      DWORD dwVersion = GetVersion();
+   DWORD dwVersion = GetVersion();
 
-      // get the Windows version.
+   // get the Windows version.
 
-      DWORD dwWindowsMajorVersion =  (DWORD)(LOBYTE(LOWORD(dwVersion)));
-      DWORD dwWindowsMinorVersion =  (DWORD)(HIBYTE(LOWORD(dwVersion)));
+   DWORD dwWindowsMajorVersion =  (DWORD)(LOBYTE(LOWORD(dwVersion)));
+   DWORD dwWindowsMinorVersion =  (DWORD)(HIBYTE(LOWORD(dwVersion)));
 
-      // get the build number.
+   // get the build number.
 
-      DWORD dwBuild;
+   DWORD dwBuild;
 
-      if (dwVersion < 0x80000000)              // Windows NT
-         dwBuild = (DWORD)(HIWORD(dwVersion));
-      else if (dwWindowsMajorVersion < 4)      // Win32s
-         dwBuild = (DWORD)(HIWORD(dwVersion) & ~0x8000);
-      else                                     // Windows Me/98/95
-         dwBuild =  0;
+   if (dwVersion < 0x80000000)              // Windows NT
+      dwBuild = (DWORD)(HIWORD(dwVersion));
+   else if (dwWindowsMajorVersion < 4)      // Win32s
+      dwBuild = (DWORD)(HIWORD(dwVersion) & ~0x8000);
+   else                                     // Windows Me/98/95
+      dwBuild =  0;
 
-      bool bNativeUnicode;
-      if (dwVersion < 0x80000000)              // Windows NT
-         bNativeUnicode = TRUE;
-      else if (dwWindowsMajorVersion < 4)      // Win32s
-         bNativeUnicode = FALSE;
-      else                                     // Windows Me/98/95
-         bNativeUnicode = FALSE;
+   bool bNativeUnicode;
+   if (dwVersion < 0x80000000)              // Windows NT
+      bNativeUnicode = TRUE;
+   else if (dwWindowsMajorVersion < 4)      // Win32s
+      bNativeUnicode = FALSE;
+   else                                     // Windows Me/98/95
+      bNativeUnicode = FALSE;
 
 
-      //   __COM com;
-      IShellLinkW* psl;
-      wstrFileOut = L"";
+   //   __COM com;
+   IShellLinkW* psl;
+   wstrFileOut = L"";
 
-      SHFILEINFOW info;
-      if ((shell::SHGetFileInfo(wstrFileIn, 0, &info, sizeof(info),
-         SHGFI_ATTRIBUTES) == 0) || !(info.dwAttributes & SFGAO_LINK))
-      {
-         return FALSE;
-      }
-
-      HRESULT hr ;
-      if (FAILED(hr = CoCreateInstance(CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER, IID_IShellLinkW,
-         (LPVOID*)&psl)))
-      {
-         return FALSE;
-      }
-
-      IPersistFile *ppf;
-      if (SUCCEEDED(psl->QueryInterface(IID_IPersistFile, (LPVOID*)&ppf)))
-      {
-         if (SUCCEEDED(ppf->Load(wstrFileIn, STGM_READ)))
-         {
-            /* Resolve the link, this may post UI to find the link */
-            if (SUCCEEDED(psl->Resolve(pui == NULL ? NULL : (oswindow) pui->get_os_data(),
-               SLR_ANY_MATCH | (pui == NULL ? (SLR_NO_UI | (8400 << 16)) : 0))))
-            {
-               wstrFileOut.alloc(MAX_PATH);
-               bool bOk;
-               if(SUCCEEDED(psl->GetPath(wstrFileOut, MAX_PATH, NULL, 0)))
-               {
-                  bOk = true;
-                  wstrFileOut.release_buffer();
-                  strTarget = ::str::international::unicode_to_utf8((LPCWSTR) wstrFileOut);
-               }
-               else
-               {
-                  bOk = false;
-               }
-               ppf->Release();
-               psl->Release();
-               return bOk;
-            }
-         }
-         ppf->Release();
-      }
-      psl->Release();
+   SHFILEINFOW info;
+   if ((shell::SHGetFileInfo(wstrFileIn, 0, &info, sizeof(info),
+                             SHGFI_ATTRIBUTES) == 0) || !(info.dwAttributes & SFGAO_LINK))
+   {
       return FALSE;
+   }
+
+   HRESULT hr ;
+   if (FAILED(hr = CoCreateInstance(CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER, IID_IShellLinkW,
+                                    (LPVOID*)&psl)))
+   {
+      return FALSE;
+   }
+
+   IPersistFile *ppf;
+   if (SUCCEEDED(psl->QueryInterface(IID_IPersistFile, (LPVOID*)&ppf)))
+   {
+      if (SUCCEEDED(ppf->Load(wstrFileIn, STGM_READ)))
+      {
+         /* Resolve the link, this may post UI to find the link */
+         if (SUCCEEDED(psl->Resolve(pui == NULL ? NULL : (oswindow) pui->get_os_data(),
+                                    SLR_ANY_MATCH | (pui == NULL ? (SLR_NO_UI | (8400 << 16)) : 0))))
+         {
+            wstrFileOut.alloc(MAX_PATH);
+            bool bOk;
+            if(SUCCEEDED(psl->GetPath(wstrFileOut, MAX_PATH, NULL, 0)))
+            {
+               bOk = true;
+               wstrFileOut.release_buffer();
+               strTarget = ::str::international::unicode_to_utf8((LPCWSTR) wstrFileOut);
+            }
+            else
+            {
+               bOk = false;
+            }
+            ppf->Release();
+            psl->Release();
+            return bOk;
+         }
+      }
+      ppf->Release();
+   }
+   psl->Release();
+   return FALSE;
 
 #else
 
-      _throw(todo(get_app()));
+   _throw(todo(get_app()));
 
 
 #endif
 
-   }
+}
 
 
 

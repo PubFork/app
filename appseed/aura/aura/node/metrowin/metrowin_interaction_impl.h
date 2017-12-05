@@ -1,18 +1,18 @@
-#pragma once
+﻿#pragma once
 
 
 namespace metrowin
 {
 
 
-   CLASS_DECL_BASE LRESULT CALLBACK __send_message_hook(int, WPARAM, LPARAM);
-   //CLASS_DECL_BASE void _gen::StandardSubclass(oswindow);
-   CLASS_DECL_BASE LRESULT CALLBACK __cbt_filter_hook(int, WPARAM, LPARAM);
-   CLASS_DECL_BASE LRESULT __call_window_procedure(::user::interaction * pWnd, oswindow hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
+   CLASS_DECL_AURA LRESULT CALLBACK __send_message_hook(int, WPARAM, LPARAM);
+   //CLASS_DECL_AURA void _gen::StandardSubclass(oswindow);
+   CLASS_DECL_AURA LRESULT CALLBACK __cbt_filter_hook(int, WPARAM, LPARAM);
+   CLASS_DECL_AURA LRESULT __call_window_procedure(::user::interaction * pWnd, oswindow hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
 
    ref class directx_application;
 
-   class CLASS_DECL_BASE interaction_impl :
+   class CLASS_DECL_AURA interaction_impl :
       virtual public ::user::interaction_impl
    {
    public:
@@ -38,7 +38,7 @@ namespace metrowin
 
       virtual void assert_valid() const;
       virtual void dump(dump_context & dumpcontext) const;
-      
+
 
       virtual bool has_pending_graphical_update();
       virtual void on_after_graphical_update();
@@ -116,10 +116,10 @@ namespace metrowin
       bool ExecuteDlgInit(LPVOID lpResource);
 
       virtual bool create_window(const char * lpszClassName,
-                          const char * lpszWindowName, uint32_t dwStyle,
-                          const RECT& rect,
-                          ::user::interaction * pParentWnd, id id,
-                          ::create * pContext = NULL) override;
+                                 const char * lpszWindowName, uint32_t dwStyle,
+                                 const RECT& rect,
+                                 ::user::interaction * pParentWnd, id id,
+                                 ::create * pContext = NULL) override;
 
       virtual bool CreateEx(uint32_t dwExStyle, const char * lpszClassName,
                             const char * lpszWindowName, uint32_t dwStyle,
@@ -452,10 +452,10 @@ namespace metrowin
       // dialog support
       void UpdateDialogControls(command_target* pTarget, bool bDisableIfNoHndler);
       void CenterWindow(::user::interaction * pAlternateOwner = NULL);
-      virtual id   RunModalLoop(uint32_t dwFlags = 0, ::object * pliveobject = NULL);
-      virtual bool ContinueModal(int iLevel);
-      virtual void EndModalLoop(id nResult);
-      virtual void EndAllModalLoops(id nResult);
+      virtual id RunModalLoop(uint32_t dwFlags = 0) override;
+      virtual bool ContinueModal() override;
+      virtual void EndModalLoop(id nResult) override;
+      //virtual void EndAllModalLoops(id nResult);
 
       // Window-Management message handler member functions
       virtual bool OnCommand(WPARAM wParam, LPARAM lParam);
@@ -675,10 +675,10 @@ namespace metrowin
 
 
       // implementation of message dispatch/hooking
-      CLASS_DECL_BASE friend LRESULT CALLBACK __send_message_hook(int, WPARAM, LPARAM);
-      //CLASS_DECL_BASE friend void _gen::StandardSubclass(oswindow);
-      CLASS_DECL_BASE friend LRESULT CALLBACK __cbt_filter_hook(int, WPARAM, LPARAM);
-      CLASS_DECL_BASE friend LRESULT __call_window_procedure(::user::interaction * pWnd, oswindow hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
+      CLASS_DECL_AURA friend LRESULT CALLBACK __send_message_hook(int, WPARAM, LPARAM);
+      //CLASS_DECL_AURA friend void _gen::StandardSubclass(oswindow);
+      CLASS_DECL_AURA friend LRESULT CALLBACK __cbt_filter_hook(int, WPARAM, LPARAM);
+      CLASS_DECL_AURA friend LRESULT __call_window_procedure(::user::interaction * pWnd, oswindow hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
 
       // standard message implementation
       LRESULT OnNTCtlColor(WPARAM wParam, LPARAM lParam);

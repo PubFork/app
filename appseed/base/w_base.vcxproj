@@ -49,10 +49,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="base\node\metrowin\metrowin.h" />
-    <ClInclude Include="base\node\metrowin\metrowin_directx.h" />
-    <ClInclude Include="base\node\metrowin\metrowin_directx_application.h" />
     <ClInclude Include="base\node\metrowin\metrowin_factory_exchange.h" />
-    <ClInclude Include="base\node\metrowin\metrowin_interaction_impl.h" />
     <ClInclude Include="base\node\node.h" />
     <ClInclude Include="base\os\ansios\ansios.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
@@ -131,10 +128,8 @@
     <ClCompile Include="base\base\base_session.cpp" />
     <ClCompile Include="base\base\base_static_start.cpp" />
     <ClCompile Include="base\base\base_system.cpp" />
-    <ClCompile Include="base\node\metrowin\metrowin_directx.cpp" />
-    <ClCompile Include="base\node\metrowin\metrowin_directx_application.cpp" />
+    <ClCompile Include="base\install\install_canvas.cpp" />
     <ClCompile Include="base\node\metrowin\metrowin_factory_exchange.cpp" />
-    <ClCompile Include="base\node\metrowin\metrowin_interaction_impl.cpp" />
     <ClCompile Include="base\os\metrowin\metrowin.cpp" />
     <ClCompile Include="base\os\metrowin\metrowin_multithreading.cpp" />
     <ClCompile Include="base\os\metrowin\metrowin_simple_app.cpp" />
@@ -182,6 +177,16 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="user\fontopus\_fontopus.cpp" />
+    <ClCompile Include="user\hotplugin\hotplugin.cpp" />
+    <ClCompile Include="user\hotplugin\hotplugin_composer.cpp" />
+    <ClCompile Include="user\hotplugin\hotplugin_container_launcher.cpp" />
+    <ClCompile Include="user\hotplugin\hotplugin_host.cpp" />
+    <ClCompile Include="user\hotplugin\hotplugin_plugin.cpp" />
+    <ClCompile Include="user\install\install_plugin.cpp" />
+    <ClCompile Include="user\install\install_plugin_bare_paint_discreet.cpp" />
+    <ClCompile Include="user\install\install_plugin_bare_paint_full_screen.cpp" />
+    <ClCompile Include="user\install\install_plugin_bare_paint_veri_discreet.cpp" />
+    <ClCompile Include="user\install\install_starter_start.cpp" />
     <ClCompile Include="user\simple\simple_scroll_bar.cpp" />
     <ClCompile Include="user\simple_ui\simple_ui_edit_box.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>

@@ -70,7 +70,7 @@ namespace install
 
       virtual int check_user_service(string strPlatform, bool bLaunch, DWORD & dwGoodToCheckAgain);
 
-#ifdef WINDOWS
+#ifdef WINDOWSEX
 
       virtual int check_vcredist(string strPlatform);
       virtual int download_vcredist(string strPlatform);

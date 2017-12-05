@@ -28,7 +28,7 @@ namespace install
 
       m_pthreadSsl = NULL;
 
-#ifdef WINDOWS
+#ifdef WINDOWSEX
 
       m_hinstance = ::GetModuleHandleA(NULL);
 
@@ -333,7 +333,7 @@ namespace install
 
       }
 
-#ifdef WINDOWS
+#ifdef WINDOWSEX
 
       if (!::IsWindow(m_pwindow->m_hwnd))
       {
@@ -371,7 +371,7 @@ namespace install
 
       }
 
-#ifdef WINDOWS
+#ifdef WINDOWSEX
 
       if (!::IsWindow(m_pwindow->m_hwnd))
       {
@@ -523,7 +523,7 @@ namespace install
 
          m_pthreadSsl->m_strIp = "127.0.0.1";
 
-#ifdef WINDOWS
+#ifdef WINDOWSEX
 
          m_pthreadSsl->m_strCat = "cat://" + read_resource_as_string_dup(NULL, ID_ONE, "CAT");
 
@@ -865,7 +865,7 @@ namespace install
    void application::get_system_locale_schema(string & strLocale, string & strSchema)
    {
 
-#if defined(WINDOWS)
+#if defined(WINDOWSEX)
 
       LANGID langid = ::GetUserDefaultLangID();
 

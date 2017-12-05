@@ -74,7 +74,7 @@ namespace install
    bool window::initialize(int cx, int cy)
    {
 
-#ifdef WINDOWS
+#ifdef WINDOWSEX
 
       BITMAPINFO info = {};
 
@@ -540,7 +540,7 @@ namespace install
    bool window::update_layered_window()
    {
 
-#ifdef WINDOWS
+#ifdef WINDOWSEX
 
       RECT rect;
 
@@ -602,7 +602,7 @@ namespace install
    LRESULT window::message_handler(UINT message, WPARAM wParam, LPARAM lParam)
    {
 
-#ifdef WINDOWS
+#ifdef WINDOWSEX
 
       switch (message)
       {
@@ -684,10 +684,9 @@ namespace install
 
       }
 
-      return 0;
-
-
 #endif
+
+      return 0;
 
    }
 
@@ -695,7 +694,7 @@ namespace install
    void window::drag()
    {
 
-#ifdef WINDOWS
+#ifdef WINDOWSEX
       POINT ptCursor;
 
       ::GetCursorPos(&ptCursor);
@@ -734,7 +733,7 @@ namespace install
    bool window::show()
    {
 
-#ifdef WINDOWS
+#ifdef WINDOWSEX
 
       ShowWindow(m_hwnd, SW_SHOW);
 
@@ -748,7 +747,7 @@ namespace install
    bool window::hide()
    {
 
-#ifdef WINDOWS
+#ifdef WINDOWSEX
 
       ShowWindow(m_hwnd, SW_HIDE);
 
@@ -764,7 +763,7 @@ namespace install
    {
 
 
-#ifdef WINDOWS
+#ifdef WINDOWSEX
 
       m_wstrWindowTitle = L"";
 
@@ -833,7 +832,7 @@ namespace install
 
    }
 
-#ifdef WINDOWS
+#ifdef WINDOWSEX
 
    LRESULT CALLBACK window::window_procedure(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)
    {
@@ -855,7 +854,7 @@ namespace install
    ATOM window::register_class()
    {
 
-#ifdef WINDOWS
+#ifdef WINDOWSEX
 
       HINSTANCE hinstance = System.m_hinstance;
 

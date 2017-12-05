@@ -315,12 +315,14 @@ namespace exception
 
 } // namespace exception
 
-
-void _rethrow(::exception::exception * pexception)
-{
-
-   throw ::esp(pexception);
-
-}
-
+//template < typename T >
+//void _rethrow(T * pexception)
+//{
+//
+////   throw ::esp(pexception);
+//
+//   throw pexception;
+//
+//}
+//
 

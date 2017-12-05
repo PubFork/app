@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 #include "user_command.cpp"
@@ -35,4 +35,5 @@
 #include "user_window_util.cpp"
 
 
+#include "user_message_queue.cpp"
 

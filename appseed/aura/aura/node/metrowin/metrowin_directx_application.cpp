@@ -3,7 +3,7 @@
 //#include "metrowin.h"
 
 
-CLASS_DECL_BASE int g_iMouse;
+CLASS_DECL_AURA int g_iMouse;
 
 #undef System
 #undef Platform
@@ -383,30 +383,40 @@ uint_ptr virtualkey_to_code(::Windows::System::VirtualKey e)
 UINT system_main(LPVOID lp)
 {
 
-   ::base::system * m_psystem = (::base::system *) lp;
+   ::aura::system * m_psystem = (::aura::system *) lp;
 
    try
    {
 
-      //m_psystem->set_thread(m_psystem);
-      m_psystem->m_iErrorCode = 0;
       m_psystem->m_bReady = true;
-      m_psystem->m_iErrorCode = m_psystem->on_run();
-      if(m_psystem->m_iErrorCode != 0)
+
+      m_psystem->on_run();
+
+      if(m_psystem->m_error.get_exit_code() != 0)
       {
+
          ::output_debug_string(L"application::main on_run termination failure");
+
       }
+
       if(m_psystem->is_system())
       {
+
          m_psystem->post_quit();
+
       }
+
       try
       {
-         m_psystem->m_iErrorCode = m_psystem->exit_thread();
+
+         m_psystem->term_thread();
+
       }
       catch(...)
       {
-         m_psystem->m_iErrorCode = -1;
+
+         m_psystem->m_error.set_if_not_set(-1);
+
       }
 
    }
@@ -418,15 +428,15 @@ UINT system_main(LPVOID lp)
    }
 
    return 0;
-}
 
+}
 
 
 namespace metrowin
 {
 
 
-   directx_application::directx_application(::base::system * psystem,::String ^ strId):
+   directx_application::directx_application(::aura::system * psystem, ::String ^ strId):
       m_mutex(NULL)
    {
 
@@ -450,9 +460,9 @@ namespace metrowin
 
       m_pdxi = new directx_interaction(m_psystem);
 
-      m_psystem->m_pbasesystem->m_possystemwindow->m_pui = m_pdxi;
+      m_psystem->m_possystemwindow->m_pui = m_pdxi;
 
-      m_psystem->m_pbasesystem->m_possystemwindow->m_pwindow = this;
+      m_psystem->m_possystemwindow->m_pwindow = this;
 
       m_papp = m_psystem;
 
@@ -505,12 +515,11 @@ namespace metrowin
       if (!m_psystem->begin_synch())
       {
 
-         _throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
+         _throw(simple_exception(get_app(), "integer_exception 1"));
 
       }
 
       m_directx->defer_init();
-
 
       ::user::native_window_initialize initialize;
 
@@ -751,7 +760,7 @@ namespace metrowin
 
                         memory m;
 
-                        System.base64().decode(m, m_psystem->url().url_decode(str.Mid(iFind + 1)));
+                        papp->m_paurasystem->base64().decode(m, m_psystem->url().url_decode(str.Mid(iFind + 1)));
 
                         papp->m_pipi->on_receive(&papp->m_pipi->m_rx, message, m.get_data(), m.get_size());
 
@@ -1085,10 +1094,11 @@ namespace metrowin
 
    }
 
-   directx_application_source::directx_application_source(::base::system * paxissystem, const string & strId)
+
+   directx_application_source::directx_application_source(::aura::system * paxissystem, const string & strId)
    {
 
-      m_pbasesystem     = paxissystem;
+      m_paurasystem     = paxissystem;
 
       m_strId           = strId;
 
@@ -1098,12 +1108,12 @@ namespace metrowin
    Windows::ApplicationModel::Core::IFrameworkView^ directx_application_source::CreateView()
    {
 
-      return ref new directx_application(m_pbasesystem,m_strId);
+      return ref new directx_application(m_paurasystem,m_strId);
 
    }
 
 
-   directx_application_source ^ new_directx_application_source(::base::system * paxissystem, const string & strId)
+   directx_application_source ^ new_directx_application_source(::aura::system * paurasystem, const string & strId)
    {
 
       string str = strId;
@@ -1112,7 +1122,7 @@ namespace metrowin
 
       //str += " full_screen";
 
-      return ref new directx_application_source(paxissystem, str);
+      return ref new directx_application_source(paurasystem, str);
 
    }
 
