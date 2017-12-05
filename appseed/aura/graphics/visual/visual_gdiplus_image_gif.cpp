@@ -117,7 +117,7 @@ bool freeimage_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file
 
    pfile->read(m.get_data(), m.get_size());
 
-   hr = piStream->InitializeFromMemory(m.get_data(), m.get_size());
+   hr = piStream->InitializeFromMemory(m.get_data(), (DWORD) m.get_size());
 
    if (hr != S_OK)
    {
@@ -334,7 +334,8 @@ bool freeimage_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file
          PropVariantInit(&propValue);
 
          // Retrieve the current frame
-         HRESULT hr = piDecoder->GetFrame(uFrameIndex, &pWicFrame);
+         HRESULT hr = piDecoder->GetFrame((UINT) uFrameIndex, &pWicFrame);
+
          if (SUCCEEDED(hr))
          {
             // Format convert to 32bppPBGRA which D2D expects
