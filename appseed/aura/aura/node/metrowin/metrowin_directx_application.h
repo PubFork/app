@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace metrowin
@@ -39,9 +39,9 @@ namespace metrowin
 
       mutex                                     m_mutex;
 
-      ::base::system *                          m_psystem;
+      ::aura::system *                          m_psystem;
 
-      ::base::application *                     m_papp;
+      ::aura::application *                     m_papp;
 
       directx_interaction *                     m_pdxi;
 
@@ -54,7 +54,7 @@ namespace metrowin
       Windows::Foundation::Rect                 m_rectLastWindowRect;
 
 
-      directx_application(::base::system * psystem,String ^ strId);
+      directx_application(::aura::system * psystem,String ^ strId);
 
 
       void init_part_2ex();
@@ -125,11 +125,11 @@ namespace metrowin
    {
    internal:
 
-      ::base::system * m_pbasesystem;
+      ::aura::system * m_paurasystem;
 
       string m_strId;
 
-      directx_application_source(::base::system * paxissystem,const string & strId);
+      directx_application_source(::aura::system * paxissystem,const string & strId);
 
    public:
 
@@ -138,7 +138,7 @@ namespace metrowin
    };
 
 
-   CLASS_DECL_BASE directx_application_source ^ new_directx_application_source(::base::system * psystem, const string & str);
+   CLASS_DECL_AURA directx_application_source ^ new_directx_application_source(::aura::system * psystem, const string & str);
 
 
 } // namespace metrowin

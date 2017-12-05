@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "base/user/user.h"
 #include "metrowin.h"
 
@@ -360,7 +360,7 @@ namespace metrowin
 
       install_message_routing(this);
 
-      m_pthreadDraw = ::fork(get_app(), [&]()
+      m_pthreadDraw = fork([&]()
       {
 
          bool bDrawing = false;
@@ -376,10 +376,10 @@ namespace metrowin
 
             dwLastRedraw = ::get_tick_count();
 
-            if (::aura::system::g_p->m_pbasesystem->m_possystemwindow->m_bWindowSizeChange)
+            if (::aura::system::g_p->m_possystemwindow->m_bWindowSizeChange)
             {
 
-               ::aura::system::g_p->m_pbasesystem->m_possystemwindow->m_bWindowSizeChange = false;
+               ::aura::system::g_p->m_possystemwindow->m_bWindowSizeChange = false;
 
                m_xapp->m_directx->OnWindowSizeChange();
 
@@ -511,7 +511,7 @@ namespace metrowin
    interaction_impl::~interaction_impl()
    {
 
-      if(m_pauraapp != NULL && m_pauraapp->m_pbasesession != NULL && m_pauraapp->m_pbasesession->user() != NULL && m_pauraapp->m_paurasession->m_pwindowmap != NULL)
+      if(m_pauraapp != NULL && m_pauraapp->m_paurasession != NULL && m_pauraapp->m_paurasession->m_pwindowmap != NULL)
       {
 
          m_pauraapp->m_paurasession->m_pwindowmap->m_map.remove_key((int_ptr)(void *)get_handle());
@@ -1203,7 +1203,7 @@ namespace metrowin
       if(is_frame_window())
       {
          // frame_window windows should be allowed to exit help mode first
-         sp(::user::frame_window) pFrameWnd = this;
+         sp(::user::frame) pFrameWnd = m_pui;
          pFrameWnd->ExitHelpMode();
       }
 
@@ -1213,8 +1213,8 @@ namespace metrowin
 
       // need to use top level parent (for the case where get_handle() is in DLL)
       ::user::interaction * pWnd = EnsureTopLevel();
-      WIN_WINDOW(pWnd)->send_message(WM_CANCELMODE);
-      WIN_WINDOW(pWnd)->send_message_to_descendants(WM_CANCELMODE,0,0,TRUE,TRUE);
+      pWnd->send_message(WM_CANCELMODE);
+      pWnd->send_message_to_descendants(WM_CANCELMODE,0,0,TRUE,TRUE);
 
       _throw(todo(get_app()));
       // attempt to cancel capture
@@ -1422,10 +1422,10 @@ namespace metrowin
             {
                m_pui->GetWindowRect(rectWindow);
             }
-            if(System.get_monitor_count() > 0)
+            if(m_pauraapp->m_paurasystem->get_monitor_count() > 0)
             {
                rect rcMonitor;
-               System.get_monitor_rect(0,&rcMonitor);
+               m_pauraapp->m_paurasystem->get_monitor_rect(0,&rcMonitor);
                if(rectWindow.left >= rcMonitor.left)
                   pmouse->m_pt.x += (LONG)rectWindow.left;
                if(rectWindow.top >= rcMonitor.top)
@@ -2189,7 +2189,7 @@ return TRUE;
    ::user::interaction * interaction_impl::GetDescendantWindow(::user::interaction * hWnd,id id)
    {
 
-      _throw(todo(get_app()));
+      _throw(todo(::get_app()));
 
       //single_lock sl(&hWnd->m_pthread->m_pthread->m_mutex, TRUE);
       //// GetDlgItem recursive (return first found)
@@ -2238,7 +2238,7 @@ return TRUE;
    void interaction_impl::send_message_to_descendants(oswindow hWnd,UINT message,WPARAM wParam,LPARAM lParam,bool bDeep,bool bOnlyPerm)
    {
 
-      _throw(todo(get_app()));
+      _throw(todo(::get_app()));
 
       // walk through HWNDs to avoid creating temporary interaction_impl objects
       // unless we need to call this function recursively
@@ -3034,7 +3034,7 @@ return TRUE;
    void interaction_impl::get_app_wnda(user::oswindow_array & wnda)
    {
 
-      _throw(todo(get_app()));
+      _throw(todo(::get_app()));
 
       //      EnumWindows(GetAppsEnumWindowsProc, (LPARAM) &wnda);
    }
@@ -3073,7 +3073,7 @@ return TRUE;
 
       static_function UINT c_cdecl s_print_window(LPVOID pvoid)
       {
-         _throw(todo(get_app()));
+         _throw(todo(::get_app()));
 
          //print_window * pprintwindow = (print_window *) pvoid;
          //try
@@ -3274,11 +3274,14 @@ return TRUE;
 
    HBRUSH interaction_impl::OnCtlColor(::draw2d::graphics *,::user::interaction_impl * pWnd,UINT)
    {
-      ASSERT(pWnd != NULL && WIN_WINDOW(pWnd)->get_handle() != NULL);
-      LRESULT lResult;
-      if(WIN_WINDOW(pWnd)->SendChildNotifyLastMsg(&lResult))
-         return (HBRUSH)lResult;     // eat it
-      return (HBRUSH)Default();
+      //ASSERT(pWnd != NULL && pWnd->get_handle() != NULL);
+      //LRESULT lResult;
+      //if(pWnd->SendChildNotifyLastMsg(&lResult))
+      //   return (HBRUSH)lResult;     // eat it
+      //return (HBRUSH)Default();
+
+      return NULL;
+
    }
 
    // implementation of OnCtlColor for default gray backgrounds
@@ -3321,7 +3324,7 @@ return TRUE;
       //return TRUE;
 
 
-      _throw(todo(get_app()));
+      _throw(todo(::get_app()));
 
 
    }
@@ -3644,9 +3647,8 @@ return TRUE;
    }
 
 
-   id interaction_impl::RunModalLoop(uint32_t dwFlags,::object * pliveobject)
+   id interaction_impl::RunModalLoop(uint32_t dwFlags)
    {
-
 
       // for tracking the idle time state
       bool bIdle = TRUE;
@@ -3654,24 +3656,35 @@ return TRUE;
 //      bool bShowIdle = (dwFlags & MLF_SHOWONIDLE) && !(GetStyle() & WS_VISIBLE);
       bool bShowIdle = !(GetStyle() & WS_VISIBLE);
       oswindow hWndParent = oswindow_get(GetParent()->m_pimpl.cast < ::user::interaction_impl >());
-      m_pui->m_iModal = m_pui->m_iModalCount;
-      int iLevel = m_pui->m_iModal;
-      oprop(string("RunModalLoop.thread(") + ::str::from(iLevel) + ")") = ::get_thread();
-      m_pui->m_iModalCount++;
+//      m_pui->m_iModal = m_pui->m_iModalCount;
+      //    int iLevel = m_pui->m_iModal;
+      //oprop(string("RunModalLoop.thread(") + ::str::from(iLevel) + ")") = ::get_thread();
+      //  m_pui->m_iModalCount++;
 
-      m_pui->m_threadptraModal.add(::get_thread());
+      //m_pui->m_threadptraModal.add(::get_thread());
       ::aura::application * pappThis1 = dynamic_cast <::aura::application *> (m_pauraapp);
       ::aura::application * pappThis2 = dynamic_cast <::aura::application *> (m_pauraapp);
       // acquire and dispatch messages until the modal state is done
       MESSAGE msg;
       for(;;)
       {
-         ASSERT(ContinueModal(iLevel));
+
+         if (!ContinueModal())
+         {
+
+            break;
+
+         }
 
          // phase1: check to see if we can do idle work
          while(bIdle && !::PeekMessage(&msg,NULL,NULL,NULL,PM_NOREMOVE))
          {
-            ASSERT(ContinueModal(iLevel));
+            if (!ContinueModal())
+            {
+
+               break;
+
+            }
 
             // show the dialog when the message queue goes idle
             if(bShowIdle)
@@ -3704,17 +3717,13 @@ return TRUE;
             {
                pappThis1->m_dwAlive = get_thread()->m_dwAlive;
             }
-            if(pliveobject != NULL)
-            {
-               pliveobject->keep_alive();
-            }
          }
 
 
          // phase2: pump messages while available
          do
          {
-            if(!ContinueModal(iLevel))
+            if(!ContinueModal())
                goto ExitModal;
 
             if(!get_thread()->pump_message())
@@ -3732,7 +3741,7 @@ return TRUE;
                bShowIdle = FALSE;
             }
 
-            if(!ContinueModal(iLevel))
+            if(!ContinueModal())
                goto ExitModal;
 
             //// reset "no idle" state after pumping "normal" message
@@ -3751,15 +3760,6 @@ return TRUE;
             {
                pappThis2->m_dwAlive = get_thread()->m_dwAlive;
             }
-            if(pliveobject != NULL)
-            {
-               pliveobject->keep_alive();
-            }
-
-            /*            if(pliveobject != NULL)
-            {
-            pliveobject->keep();
-            }*/
 
          }
          while(::PeekMessage(&msg,NULL,NULL,NULL,PM_NOREMOVE) != FALSE);
@@ -3769,22 +3769,26 @@ return TRUE;
          {
 //            m_pauraapp->step_timer();
          }
-         if(!ContinueModal(iLevel))
+         if(!ContinueModal())
             goto ExitModal;
 
 
       }
 
 ExitModal:
-      m_pui->m_threadptraModal.remove_first(::get_thread());
-      m_pui->m_iModal = m_pui->m_iModalCount;
+
       return m_nModalResult;
+
    }
 
-   bool interaction_impl::ContinueModal(int iLevel)
+
+   bool interaction_impl::ContinueModal()
    {
-      return iLevel < m_pui->m_iModalCount;
+
+      return m_pui->ContinueModal();
+
    }
+
 
    void interaction_impl::EndModalLoop(id nResult)
    {
@@ -3793,36 +3797,36 @@ ExitModal:
 
    }
 
-   void interaction_impl::EndAllModalLoops(id nResult)
-   {
+   //void interaction_impl::EndAllModalLoops(id nResult)
+   //{
 
-      //_throw(todo(get_app()));
+   //   _throw(todo(get_app()));
 
-      //ASSERT(::WinIsWindow(get_handle()));
+   //   ASSERT(::WinIsWindow(get_handle()));
 
-      // this result will be returned from interaction_impl::RunModalLoop
-      m_pui->m_idModalResult = nResult;
+   //    this result will be returned from interaction_impl::RunModalLoop
+   //   m_pui->m_idModalResult = nResult;
 
-      // make sure a message goes through to exit the modal loop
-      if(m_pui->m_iModalCount > 0)
-      {
-         int iLevel = m_pui->m_iModalCount - 1;
-         m_pui->m_iModalCount = 0;
-         m_pui->kick_queue();
-         ::get_thread()->kick_thread();
-         for(int i = iLevel; i >= 0; i--)
-         {
-            ::thread * pthread = oprop(string("RunModalLoop.thread(") + ::str::from(i) + ")").cast < ::thread >();
-            try
-            {
-               pthread->kick_thread();
-            }
-            catch(...)
-            {
-            }
-         }
-      }
-   }
+   //    make sure a message goes through to exit the modal loop
+   //   if(m_pui->m_iModalCount > 0)
+   //   {
+   //      int iLevel = m_pui->m_iModalCount - 1;
+   //      m_pui->m_iModalCount = 0;
+   //      m_pui->kick_queue();
+   //      ::get_thread()->kick_thread();
+   //      for(int i = iLevel; i >= 0; i--)
+   //      {
+   //         ::thread * pthread = oprop(string("RunModalLoop.thread(") + ::str::from(i) + ")").cast < ::thread >();
+   //         try
+   //         {
+   //            pthread->kick_thread();
+   //         }
+   //         catch(...)
+   //         {
+   //         }
+   //      }
+   //   }
+   //}
 
 
    /////////////////////////////////////////////////////////////////////////////
@@ -4409,12 +4413,17 @@ ExitModal:
    { return this == NULL ? NULL : get_handle(); }*/
    bool interaction_impl::operator==(const ::user::interaction_impl& wnd) const
    {
-      return ((oswindow)WIN_WINDOW(const_cast <::user::interaction_impl *> (&wnd))->get_handle()) == get_handle();
+
+      return wnd.get_handle() == get_handle();
+
    }
+
 
    bool interaction_impl::operator!=(const ::user::interaction_impl& wnd) const
    {
-      return ((oswindow)WIN_WINDOW(const_cast <::user::interaction_impl *> (&wnd))->get_handle()) != get_handle();
+
+      return wnd.get_handle() != get_handle();
+
    }
 
 
@@ -4532,9 +4541,9 @@ ExitModal:
    bool interaction_impl::post_message(UINT message,WPARAM wParam,lparam lParam)
    {
 
-      //      _throw(todo(get_app()));
+//      return ::PostMessageW(get_handle(),message,wParam,lParam) != FALSE;
+      return m_pui->post_message(message, wParam, lParam);
 
-      return ::PostMessageW(get_handle(),message,wParam,lParam) != FALSE;
    }
 
    bool interaction_impl::DragDetect(POINT pt) const
@@ -5319,7 +5328,7 @@ ExitModal:
    sp(::user::interaction_impl) interaction_impl::FindWindow(const char * lpszClassName,const char * lpszWindowName)
    {
 
-      _throw(todo(get_app()));
+      _throw(todo(::get_app()));
 
       //return ::metrowin::interaction_impl::from_handle(::FindWindow(lpszClassName, lpszWindowName));
 
@@ -5328,7 +5337,7 @@ ExitModal:
    sp(::user::interaction_impl) interaction_impl::FindWindowEx(oswindow hwndParent,oswindow hwndChildAfter,const char * lpszClass,const char * lpszWindow)
    {
 
-      _throw(todo(get_app()));
+      _throw(todo(::get_app()));
 
       //return ::metrowin::interaction_impl::from_handle(::FindWindowEx(hwndParent, hwndChildAfter, lpszClass, lpszWindow));
 
@@ -5395,7 +5404,7 @@ ExitModal:
    sp(::user::interaction_impl) interaction_impl::WindowFromPoint(POINT point)
    {
 
-      _throw(todo(get_app()));
+      _throw(todo(::get_app()));
 
       //return ::metrowin::interaction_impl::from_handle(::WindowFromPoint(point));
 
@@ -5448,7 +5457,7 @@ ExitModal:
    ::user::interaction_impl * interaction_impl::GetOpenClipboardWindow()
    {
 
-      _throw(todo(get_app()));
+      _throw(todo(::get_app()));
 
       //return ::metrowin::interaction_impl::from_handle(::GetOpenClipboardWindow());
 
@@ -5457,7 +5466,7 @@ ExitModal:
    ::user::interaction_impl * interaction_impl::GetClipboardOwner()
    {
 
-      _throw(todo(get_app()));
+      _throw(todo(::get_app()));
 
       //return ::metrowin::interaction_impl::from_handle(::GetClipboardOwner());
 
@@ -5466,7 +5475,7 @@ ExitModal:
    ::user::interaction_impl * interaction_impl::GetClipboardViewer()
    {
 
-      _throw(todo(get_app()));
+      _throw(todo(::get_app()));
 
       //return ::metrowin::interaction_impl::from_handle(::GetClipboardViewer());
 
@@ -5508,7 +5517,7 @@ ExitModal:
    point interaction_impl::GetCaretPos()
    {
 
-      _throw(todo(get_app()));
+      _throw(todo(::get_app()));
 
       //point point;
 
@@ -5519,7 +5528,7 @@ ExitModal:
    void interaction_impl::SetCaretPos(POINT point)
    {
 
-      _throw(todo(get_app()));
+      _throw(todo(::get_app()));
 
       //::SetCaretPos(point.x, point.y);
 
@@ -5555,7 +5564,7 @@ ExitModal:
    sp(::user::interaction_impl) interaction_impl::GetForegroundWindow()
    {
 
-      _throw(todo(get_app()));
+      _throw(todo(::get_app()));
 
       //return ::metrowin::interaction_impl::from_handle(::GetForegroundWindow());
 
@@ -6180,7 +6189,7 @@ ExitModal:
    oswindow interaction_impl::GetSafeOwner_(oswindow hParent,oswindow* pWndTop)
    {
 
-      _throw(todo(get_app()));
+      _throw(todo(::get_app()));
 
       //// get ::user::interaction_impl to start with
       //oswindow hWnd = hParent;
