@@ -2,8 +2,6 @@
 #include "aura/net/sockets/bsd/sockets_sockets.h"
 
 
-
-
 namespace aura
 {
 

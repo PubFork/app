@@ -1978,6 +1978,23 @@ uint32_t __thread_entry(void * pparam)
 
          esp671 esp(pexception);
 
+         // let translator run undefinetely
+         //translator::detach();
+         try
+         {
+
+            pthread->thread_exit();
+
+         }
+         catch (...)
+         {
+
+            pthread->m_error.set_if_not_set(-1);
+            //nResult = (DWORD)-1;
+
+         }
+
+         //   return nResult;
 
          try
          {
@@ -1990,8 +2007,18 @@ uint32_t __thread_entry(void * pparam)
 
          }
 
-         // allow the creating thread to return from thread::create_thread
-         pstartup->m_event.set_event();
+
+         if (bSynch)
+         {
+
+            pstartup->m_error = pthread->m_error;
+
+            pstartup->m_bError = true;
+
+            // allow the creating thread to return from thread::create_thread
+            pstartup->m_event.set_event();
+
+         }
 
          pexception->post_quit();
 
@@ -2011,6 +2038,25 @@ uint32_t __thread_entry(void * pparam)
 
       if(bError)
       {
+
+
+         // let translator run undefinetely
+         //translator::detach();
+         try
+         {
+
+            pthread->thread_exit();
+
+         }
+         catch (...)
+         {
+
+            pthread->m_error.set_if_not_set(-1);
+            //nResult = (DWORD)-1;
+
+         }
+
+         //   return nResult;
 
          if(bSynch)
          {
