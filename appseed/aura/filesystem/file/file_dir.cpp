@@ -1591,19 +1591,29 @@ void dir::ls_file(::file::patha & stra,const ::file::path & psz)
 
 ::file::path dir::default_os_user_path_prefix()
 {
+
 #if defined(WINDOWSEX)
+
    hwstring buf(MAX_PATH * 8);
-   ULONG ulSize = buf.count();
+
+   ULONG ulSize = (ULONG) buf.count();
+
    if(!::GetUserNameExW(NameCanonical, buf, &ulSize))
    {
+
       if(!::GetUserNameW(buf, &ulSize))
       {
+
          memset(buf, 0, sizeof(buf));
+
       }
+
    }
+
    string str;
-   //str.attach(::str::international::unicode_to_utf8(buf));
+   
    str = str::international::unicode_to_utf8(buf);
+
    return str;
 
 #elif defined(METROWIN)

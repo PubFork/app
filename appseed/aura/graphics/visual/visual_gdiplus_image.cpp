@@ -796,7 +796,7 @@ bool imaging::_load_image(::draw2d::dib * pdib, ::file::file * pfile)
 
    pfile->read(m.get_data(), m.get_size());
 
-   hr = piStream->InitializeFromMemory(m.get_data(), m.get_size());
+   hr = piStream->InitializeFromMemory(m.get_data(), (DWORD) m.get_size());
 
    if (hr != S_OK)
    {
