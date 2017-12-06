@@ -69,6 +69,9 @@ namespace dynamic_source
       m_mutexImageSize(papp)
    {
 
+
+      defer_create_mutex();
+
       m_bCompiler = true;
       m_pcompiler = NULL;
       m_pcache = NULL;

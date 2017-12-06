@@ -9,6 +9,9 @@ namespace dynamic_source
 script_instance::script_instance(script * pscript) :
    ::object(pscript->get_app())
 {
+
+   synch_lock sl(pscript->m_pmutex);
+
    m_pscript = pscript;
    m_pscriptScriptInstance = pscript;
    m_pscriptScriptInstance->m_scriptinstanceptra.add(this);

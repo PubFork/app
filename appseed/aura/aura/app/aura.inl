@@ -1,4 +1,4 @@
-﻿#include "aura/aura/aura/aura.h"
+#include "aura/aura/aura/aura.h"
 
 
 #ifdef METROWIN
@@ -19,8 +19,6 @@ int main(Array<String^>^)
    return (int)aura_aura(pmaindata);
 
 }
-
-#include "include/applink.cpp"
 
 #else
 
@@ -56,4 +54,13 @@ END_EXTERN_C
 
 
 #endif
+
+
+
+#ifdef WINDOWS
+
+#include "include/applink.cpp"
+
+#endif
+
 
