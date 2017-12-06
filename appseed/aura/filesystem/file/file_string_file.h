@@ -45,7 +45,12 @@ namespace file
 
       virtual void close();
 
+      bool is_empty() const
+      {
 
+         return m_pstr == NULL || m_pstr->is_empty();
+
+      }
 
 
 
