@@ -1,4 +1,4 @@
-﻿/** \file base_socket.cpp
+/** \file base_socket.cpp
 **   \date  2004-02-13
 **   \author grymse@alhem.net
 **/
@@ -1195,7 +1195,9 @@ namespace sockets
       int optval = x ? 1 : 0;
       if (setsockopt(GetSocket(), IPPROTO_IP, IP_RECVERR, (char *)&optval, sizeof(optval)) == -1)
       {
+#ifdef DEBUG
          log("setsockopt(IPPROTO_IP, IP_RECVERR)", Errno, bsd_socket_error(Errno), ::aura::log::level_fatal);
+#endif
          return false;
       }
       return true;
@@ -1226,7 +1228,9 @@ namespace sockets
       socklen_t len = sizeof(mtu);
       if (getsockopt(GetSocket(), IPPROTO_IP, IP_MTU, (char *)&mtu, &len) == -1)
       {
+#ifdef DEBUG
          log("getsockopt(IPPROTO_IP, IP_MTU)", Errno, bsd_socket_error(Errno), ::aura::log::level_fatal);
+#endif
       }
       return mtu;
    }
