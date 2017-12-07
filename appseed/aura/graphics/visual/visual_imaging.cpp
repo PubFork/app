@@ -6239,7 +6239,12 @@ bool imaging::load_image(::draw2d::dib * pdib, var varFile)
 bool imaging::save_image(var varFile, ::draw2d::dib * pdib, ::visual::save_image * psaveimage)
 {
 
-   ::file::file_sp file = Application.file().get_file(varFile, ::file::type_binary | ::file::mode_write | ::file::share_exclusive);
+   ::file::file_sp file = Application.file().get_file(varFile, 
+      ::file::type_binary 
+     | ::file::mode_write 
+      |       ::file::share_deny_write 
+      | ::file::defer_create_directory
+   | ::file::mode_create);
 
    if (file.is_null())
    {
