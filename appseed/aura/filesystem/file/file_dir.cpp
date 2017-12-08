@@ -11,6 +11,8 @@
 #elif defined(ANDROID)
 #include <sys/stat.h>
 #include <dirent.h>
+#elif defined(METROWIN)
+#include "aura/aura/os/metrowin/metrowin_file_winrt.h"
 #endif
 
 
@@ -772,7 +774,7 @@ bool dir::mkdir(const ::file::path & path)
 bool dir::mk(const ::file::path & path)
 {
 
-   if(is(path))
+   if (is(path))
    {
 
       return true;
@@ -783,15 +785,29 @@ bool dir::mk(const ::file::path & path)
 
    ::file::path pathDir;
 
-   string strPath = path;
+   strsize iLastPos;
 
-   string strPrefix;
+#ifdef METROWIN
 
-   winrt_folder(strPath, strPrefix);
+   {
 
-   pathDir = strPrefix;
+      string strPath = path;
 
-   strsize iLastPos = strPrefix.get_length();
+      string strPrefix;
+
+      winrt_folder(strPath, strPrefix);
+
+      pathDir = strPrefix;
+
+      iLastPos = strPrefix.get_length();
+
+   }
+
+#else
+
+   iLastPos = -1;
+
+#endif
 
    while (true)
    {
