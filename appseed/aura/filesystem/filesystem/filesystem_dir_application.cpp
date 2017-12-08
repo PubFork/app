@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace zip
@@ -181,15 +181,26 @@ namespace file
       }
 
 
-      bool application::mk(const ::file::path & lpcsz)
+      bool application::mk(const ::file::path & path)
       {
-         return m_pauraapp->m_paurasystem->m_spdir.m_p->mk(lpcsz, m_pauraapp);
+
+         if (path.is_empty())
+         {
+
+            return true;
+
+         }
+
+         return m_pauraapp->m_paurasystem->m_spdir.m_p->mk(path, m_pauraapp);
+
       }
 
 
-      bool application::rm(const ::file::path & psz,bool bRecursive)
+      bool application::rm(const ::file::path & path,bool bRecursive)
       {
-         return m_pauraapp->m_paurasystem->m_spdir.m_p->rm(m_pauraapp, psz, bRecursive);
+
+         return m_pauraapp->m_paurasystem->m_spdir.m_p->rm(m_pauraapp, path, bRecursive);
+
       }
 
 

@@ -5,7 +5,7 @@
 #pragma once
 
 
-CLASS_DECL_AURA ::Windows::Storage::StorageFolder ^ winrt_folder(string & strPath, string & strPrefix)
+CLASS_DECL_AURA::Windows::Storage::StorageFolder ^ winrt_folder1(string & strPath, string & strPrefix)
 {
 
    if (str::begins_eat_ci(strPath, "winmetro-Pictures://"))
@@ -40,34 +40,69 @@ CLASS_DECL_AURA ::Windows::Storage::StorageFolder ^ winrt_folder(string & strPat
       return ::Windows::Storage::KnownFolders::DocumentsLibrary;
 
    }
-   else
+   else if (str::begins_eat_ci(strPath, ::dir::sys_temp()))
    {
 
-      ::file::patha patha;
+      strPrefix = ::dir::sys_temp();
 
-      ::file::path path(strPath);
+      return ::Windows::Storage::ApplicationData::Current->TemporaryFolder;
 
-      patha = path.ascendants_path();
+   }
+   else if (::str::begins_eat_ci(strPath, string(begin(::Windows::Storage::ApplicationData::Current->LocalFolder->Path))))
+   {
 
-      for (auto & pathFolder : patha)
-      {
+      strPrefix = begin(::Windows::Storage::ApplicationData::Current->LocalFolder->Path);
 
-         ::Windows::Storage::StorageFolder ^ folder = ::wait(::Windows::Storage::StorageFolder::GetFolderFromPathAsync(pathFolder));
+      return ::Windows::Storage::ApplicationData::Current->LocalFolder;
 
-         if (folder != nullptr)
-         {
-
-            strPrefix = pathFolder;
-
-            return folder;
-
-         }
-
-      }
+   }
+   else
+   {
 
       return nullptr;
 
    }
+
+}
+
+
+
+CLASS_DECL_AURA ::Windows::Storage::StorageFolder ^ winrt_folder(string & strPath, string & strPrefix)
+{
+
+   ::Windows::Storage::StorageFolder ^ folder = winrt_folder1(strPath, strPrefix);
+
+   if (folder != nullptr)
+   {
+
+      return folder;
+
+   }
+
+   
+   ::file::patha patha;
+
+   ::file::path path(strPath);
+
+   patha = path.ascendants_path();
+
+   for (auto & pathFolder : patha)
+   {
+
+      ::Windows::Storage::StorageFolder ^ folder = ::wait(::Windows::Storage::StorageFolder::GetFolderFromPathAsync(pathFolder));
+
+      if (folder != nullptr)
+      {
+
+         strPrefix = pathFolder;
+
+         return folder;
+
+      }
+
+   }
+
+   return nullptr;
 
 }
 

@@ -524,6 +524,8 @@ namespace multimedia
 
          //single_lock sLock(m_pmutex,TRUE);
 
+#if 0
+
          char sz[256];
 
          ZERO(sz);
@@ -534,6 +536,8 @@ namespace multimedia
             output_debug_string("too much zeros in audio buffer\n");
 
          }
+
+#endif
 
          static DWORD g_dwLastBuffer;
 

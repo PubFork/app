@@ -50,6 +50,8 @@ using namespace ::Windows::System;
 
 #pragma pop_macro("System")
 
+CLASS_DECL_AURA::Windows::Storage::StorageFolder ^ winrt_folder1(string & strPath, string & strPrefix);
+
 CLASS_DECL_AURA::Windows::Storage::StorageFolder ^ winrt_folder(string & strPath, string & strPrefix);
 
 #endif
@@ -781,7 +783,15 @@ bool dir::mk(const ::file::path & path)
 
    ::file::path pathDir;
 
-   strsize iLastPos = -1;
+   string strPath = path;
+
+   string strPrefix;
+
+   winrt_folder(strPath, strPrefix);
+
+   pathDir = strPrefix;
+
+   strsize iLastPos = strPrefix.get_length();
 
    while (true)
    {

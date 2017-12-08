@@ -4561,7 +4561,13 @@ ExitModal:
    void interaction_impl::set_window_text(const char * lpszString)
    {
 
-      m_strWindowText = lpszString;
+      {
+
+         synch_lock sl(m_pui->m_pmutex);
+
+         m_strWindowText = lpszString;
+
+      }
 
       m_window->Dispatcher->RunAsync(
       CoreDispatcherPriority::Normal,
@@ -4570,7 +4576,13 @@ ExitModal:
 
          Windows::UI::ViewManagement::ApplicationView ^ applicationview = Windows::UI::ViewManagement::ApplicationView::GetForCurrentView();
 
-         applicationview->Title = m_strWindowText;
+         {
+
+            synch_lock sl(m_pui->m_pmutex);
+
+            applicationview->Title = m_strWindowText;
+
+         }
 
       }));
 

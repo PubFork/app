@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "metrowin.h"
 
 
@@ -135,7 +135,9 @@ namespace metrowin
 
       }
 
-      //if(::str::begins_ci(strPath, "winmetro-Document://") || ::str::begins_ci(strPath,"winmetro-Pictures://") || ::str::begins_ci(strPath, "winmetro-Music://") || ::str::begins_ci(strPath, "winmetro-Videos://"))
+      string strPrefix;
+
+      if(winrt_folder1(strPath, strPrefix) != nullptr)
       {
 
          spfile = canew(::metrowin::native_buffer(papp));

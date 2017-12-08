@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 #include "aura/aura/compress/zip/zip.h"
@@ -902,19 +902,19 @@ namespace file
       }
 
 
-      bool system::mk(const ::file::path & psz,::aura::application * papp)
+      bool system::mk(const ::file::path & path,::aura::application * papp)
       {
 
-         UNREFERENCED_PARAMETER(psz);
+         UNREFERENCED_PARAMETER(path);
          _throw(interface_only_exception(get_app(), "this is an interface"));
 
       }
 
 
-      bool system::rm(::aura::application * papp,const ::file::path & psz,bool bRecursive)
+      bool system::rm(::aura::application * papp,const ::file::path & path,bool bRecursive)
       {
 
-         UNREFERENCED_PARAMETER(psz);
+         UNREFERENCED_PARAMETER(path);
          UNREFERENCED_PARAMETER(bRecursive);
          _throw(interface_only_exception(get_app(), "this is an interface"));
 
