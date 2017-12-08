@@ -245,6 +245,12 @@ namespace asphere
    string application::get_theme_context()
    {
 
+#ifdef METROWIN
+
+      return "day.";
+
+#endif
+
       string strEtime = Application.file().as_string(::dir::system() / "weather_etime.txt");
 
       string strContext;
