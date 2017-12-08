@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #ifdef WINDOWSEX
 #include "aura/aura/node/windows/windows_registry.h"
 #endif
@@ -180,7 +180,7 @@ namespace introjection
 
          }
 
-         m_strVCVersion = "10.0.15063.0";
+         m_strVCVersion = "10.0.16299.0";
 
       }
       else if (m_strVs == "2015")
@@ -288,7 +288,7 @@ namespace introjection
 
 #else
 
-      var var = System.process().get_output("\"" + m_strEnv + "\" " + m_strPlat2 + " 10.0.15063.0");
+      var var = System.process().get_output("\"" + m_strEnv + "\" " + m_strPlat2 + " 10.0.16299.0");
 
       TRACE("%s", var.get_string());
 
@@ -351,7 +351,7 @@ namespace introjection
       else if (m_strVs == "2017")
       {
 
-         strBuildCmd = "\"" + strBuildCmd + "\" " + m_strPlat2 + " 10.0.15063.0";
+         strBuildCmd = "\"" + strBuildCmd + "\" " + m_strPlat2 + " 10.0.16299.0";
 
       }
 
