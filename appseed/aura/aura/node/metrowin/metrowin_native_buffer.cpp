@@ -263,7 +263,7 @@ namespace metrowin
    }
 
 
-   ::cres native_buffer::open(const ::file::path & path,UINT nOpenFlags)
+   ::cres native_buffer::open(const ::file::path & path, UINT nOpenFlags)
    {
 
       m_dwAccess = 0;
@@ -284,18 +284,41 @@ namespace metrowin
 
       ::Windows::Storage::StorageFolder ^ folder = winrt_folder(strPath, strPrefix);
 
-      if(folder == nullptr)
+      if (folder == nullptr)
       {
 
          return failure;
 
       }
 
-      ::file::path pathFolder = strPath;
+      return open(folder, strPath, nOpenFlags);
 
-      string strName = pathFolder.name();
+   }
 
-      pathFolder -= 1;
+
+   ::cres native_buffer::open(::Windows::Storage::StorageFolder ^ folder, const ::file::path & pathFileArgument, UINT nOpenFlags)
+   {
+
+      ::file::path pathFile(pathFileArgument);
+
+      pathFile.trim("\\/");
+
+      string strPrefix = begin(folder->Path);
+
+      ::file::path path(strPrefix);
+
+      path /= pathFile;
+
+      if (nOpenFlags & ::file::defer_create_directory)
+      {
+
+         Application.dir().mk(path.folder());
+
+      }
+
+      string strName = path.name();
+
+      ::file::path pathFolder = path.folder();
 
       string strRelative = pathFolder;
 
@@ -323,19 +346,12 @@ namespace metrowin
 
       }
 
-      ::file::path lpszfileName(strPath);
-      if(nOpenFlags & ::file::defer_create_directory)
-      {
-
-         Application.dir().mk(path.folder());
-
-      }
 
       m_bCloseOnDelete = FALSE;
       //m_hnative_buffer = (UINT)hnative_bufferNull;
       m_strFileName.Empty();
 
-      m_strFileName     = lpszfileName;
+      m_strFileName  = path;
       //      m_wstrnative_bufferName    = ::str::international::utf8_to_unicode(m_strFileName);
 
       ASSERT(sizeof(HANDLE) == sizeof(uint_ptr));

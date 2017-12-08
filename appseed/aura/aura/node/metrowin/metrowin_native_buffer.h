@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace metrowin
@@ -51,6 +51,7 @@ namespace metrowin
       virtual string GetFilePath() const;
       virtual void SetFilePath(const char * lpszNewName);
 
+      virtual ::cres open(::Windows::Storage::StorageFolder ^ folder, const ::file::path & lpszfileName, UINT nOpenFlags);
       virtual ::cres open(const ::file::path & lpszfileName,UINT nOpenFlags);
 
       virtual bool GetStatus(const ::file::path & lpszfileName,::file::file_status& rStatus);

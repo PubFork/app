@@ -138,12 +138,18 @@ namespace metrowin
 
       string strPrefix;
 
-      if(winrt_folder1(strPath, strPrefix) != nullptr)
+      auto folder = winrt_folder1(strPath, strPrefix);
+
+      if(folder != nullptr)
       {
 
-         spfile = canew(::metrowin::native_buffer(papp));
+         auto pbuffer = canew(::metrowin::native_buffer(papp));
 
-         cres cres = spfile->open(strPath,nOpenFlags);
+         //cres cres = spfile->open(folder, strPath,nOpenFlags);
+
+         cres cres = pbuffer->open(folder, strPath, nOpenFlags);
+
+         spfile = pbuffer;
 
          if (cres.succeeded())
          {
