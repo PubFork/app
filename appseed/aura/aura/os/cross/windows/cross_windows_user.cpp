@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #if defined(LINUX)
 #include "aura/aura/os/linux/linux_user_impl.h"
 #endif
@@ -528,10 +528,12 @@ WINBOOL WINAPI IsWindowVisible(::oswindow oswindow)
 }
 
 
+#ifndef METROWIN
+
 #define GetWindowLong GetWindowLongA
 #define SetWindowLong SetWindowLongA
 
-
+#endif
 
 CLASS_DECL_AURA WINBOOL IsWindow(oswindow oswindow);
 

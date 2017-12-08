@@ -1,4 +1,6 @@
-#include "framework.h"
+﻿#include "framework.h"
+
+#ifndef METROWIN
 
 CLASS_DECL_AURA int32_t __cdecl _CrtReportBlockType(const void * p);
 
@@ -14,6 +16,7 @@ CLASS_DECL_AURA int32_t __cdecl _CrtDumpMemoryLeaks();
 
 CLASS_DECL_AURA int32_t DECL_C _CrtCheckMemory();
 
+#endif
 
 /*
 void * DECL_C _malloc_dbg(size_t _Size, int32_t _BlockType, const char * _Filename, int32_t _LineNumber)
@@ -60,6 +63,8 @@ free(_Memory);
 //}
 
 
+#ifndef METROWIN
+
 CLASS_DECL_AURA int32_t __cdecl _CrtReportBlockType(const void * p)
 {
    return ___CLIENT_BLOCK;
@@ -94,3 +99,6 @@ CLASS_DECL_AURA int32_t DECL_C _CrtCheckMemory()
 {
    return 1;
 }
+
+// #ifndef METROWIN
+#endif 

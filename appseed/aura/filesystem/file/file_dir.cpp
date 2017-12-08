@@ -52,10 +52,6 @@ using namespace ::Windows::System;
 
 #pragma pop_macro("System")
 
-CLASS_DECL_AURA::Windows::Storage::StorageFolder ^ winrt_folder1(string & strPath, string & strPrefix);
-
-CLASS_DECL_AURA::Windows::Storage::StorageFolder ^ winrt_folder(string & strPath, string & strPrefix);
-
 #endif
 
 

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 CLASS_DECL_AURA ::Windows::Storage::StorageFolder ^ get_os_folder(const char * lpcszDirName);
@@ -7,4 +7,7 @@ CLASS_DECL_AURA bool get_file_time(::Windows::Storage::StorageFile ^ file, LPFIL
 CLASS_DECL_AURA ::Windows::Storage::StorageFolder ^ winrt_get_folder(const string & strFolder);
 CLASS_DECL_AURA ::Windows::Storage::StorageFolder ^ winrt_get_folder(const string & strFolder, string & strPrefix);
 CLASS_DECL_AURA ::Windows::Storage::StorageFolder ^ winrt_get_folder(const string & strFolder, string & strPrefix, string & strRelative);
+
+CLASS_DECL_AURA ::Windows::Storage::StorageFolder ^ winrt_folder1(string & strPath, string & strPrefix);
+CLASS_DECL_AURA ::Windows::Storage::StorageFolder ^ winrt_folder(string & strPath, string & strPrefix);
 
