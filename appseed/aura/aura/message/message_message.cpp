@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace message
@@ -35,6 +35,7 @@ namespace message
       m_iRouteIndex = -1;
       m_iParam = 0;
       m_bRet = false;
+      m_uiMessageFlags = 0;
 
    }
 

@@ -971,7 +971,12 @@ restart:
             try
             {
 
-               m_uiptraChild[i]->user_interaction_on_hide();
+               if (m_uiptraChild[i].is_set())
+               {
+
+                  m_uiptraChild[i]->user_interaction_on_hide();
+
+               }
 
             }
             catch (...)
@@ -2276,6 +2281,22 @@ restart:
 
    void interaction::_000OnKey(::message::key * pkey)
    {
+
+      if (!(pkey->m_uiMessageFlags & 1)) // message already pre translated
+      {
+
+         pre_translate_message(pkey);
+
+         if(pkey->m_bRet)
+         {
+
+            return;
+
+         }
+
+         pkey->m_uiMessageFlags |= 1;
+
+      }
 
       point ptCursor;
 
@@ -4332,6 +4353,44 @@ restart:
 
    void interaction::message_handler(::message::base * pbase)
    {
+
+      auto psystemwindow = System.m_possystemwindow;
+
+      if ((psystemwindow == NULL || psystemwindow->m_pui != this))
+      {
+
+         if (!(pbase->m_uiMessageFlags & 2)) // message already pre translated
+         {
+
+            Application.pre_translate_message(pbase);
+
+            if (pbase->m_bRet)
+            {
+
+               return;
+
+            }
+
+         }
+
+         if (!(pbase->m_uiMessageFlags & 1)) // message already pre translated
+         {
+
+            pre_translate_message(pbase);
+
+            if (pbase->m_bRet)
+            {
+
+               return;
+
+            }
+
+            pbase->m_uiMessageFlags |= 1;
+
+         }
+
+      }
+
 
       if (m_pimpl == NULL)
       {

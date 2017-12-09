@@ -413,35 +413,7 @@ namespace core
    void system::term_application()
    {
 
-      try
-      {
 
-         for(auto & pair : System.m_appmap)
-         {
-
-            try
-            {
-
-               if(pair.m_element2->m_pcoresystem == this)
-               {
-
-                  pair.m_element2->m_pcoresystem = NULL;
-
-               }
-
-            }
-            catch(...)
-            {
-
-            }
-
-         }
-
-      }
-      catch(...)
-      {
-
-      }
 
       __wait_threading_count(::millis((5000) * 8));
 
@@ -464,69 +436,6 @@ namespace core
          m_error.set_if_not_set();
 
       }
-
-      try
-      {
-
-         if(m_spos.is_set())
-         {
-
-            m_spos.release();
-
-         }
-
-      }
-      catch(...)
-      {
-
-         m_error.set_if_not_set();
-
-      }
-
-      try
-      {
-
-         m_spdir.release();
-
-      }
-      catch(...)
-      {
-
-         m_error.set_if_not_set();
-
-      }
-
-      try
-      {
-
-         m_spos.release();
-
-      }
-      catch(...)
-      {
-
-         m_error.set_if_not_set();
-
-      }
-
-      try
-      {
-
-         m_spdir.release();
-
-      }
-      catch(...)
-      {
-
-         m_error.set_if_not_set();
-
-      }
-
-      m_plog.release();
-
-      m_typemap.remove_all();
-
-      m_typemap.release();
 
    }
 

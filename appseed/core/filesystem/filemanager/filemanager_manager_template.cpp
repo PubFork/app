@@ -773,7 +773,6 @@ namespace filemanager
 
       createcontext->oprop("filemanager::data") = pfilemanagerdata;
 
-
       pfilemanagerdata->m_pmanagertemplate = this;
       pfilemanagerdata->m_pcallback = pcallback != NULL ? pcallback : &Session.filemanager();
       pfilemanagerdata->m_pfilemanager = &Session.filemanager();
@@ -819,47 +818,47 @@ namespace filemanager
       m_iTemplate = iTemplate;
 
       m_pdoctemplateMain = canew(::user::multiple_document_template(
-                                    get_app(),
-                                    pszMatter,
-                                    System.type_info < manager >(),
-                                    System.type_info < main_frame >(),       // main SDI frame window
-                                    System.type_info < tab_view >()));
+                                 get_app(),
+                                 pszMatter,
+                                 System.type_info < manager >(),
+                                 System.type_info < main_frame >(),       // main SDI frame window
+                                 System.type_info < tab_view >()));
 
       Application.add_document_template(m_pdoctemplateMain);
 
       m_pdoctemplate = canew(::user::multiple_document_template(
-                                get_app(),
-                                pszMatter,
-                                System.type_info < manager >(),
-                                System.type_info < main_frame >(),
-                                System.type_info < view >()));
+                             get_app(),
+                             pszMatter,
+                             System.type_info < manager >(),
+                             System.type_info < main_frame >(),
+                             System.type_info < view >()));
 
       Application.add_document_template(m_pdoctemplate);
 
       m_pdoctemplateChild = canew(::user::multiple_document_template(
-                                     get_app(),
-                                     pszMatter,
-                                     System.type_info < manager >(),
-                                     System.type_info < child_frame >(),
-                                     System.type_info < view >()));
+                                  get_app(),
+                                  pszMatter,
+                                  System.type_info < manager >(),
+                                  System.type_info < child_frame >(),
+                                  System.type_info < view >()));
 
       Application.add_document_template(m_pdoctemplateChild);
 
       m_pdoctemplateChildList = canew(::user::multiple_document_template(
-                                         get_app(),
-                                         pszMatter,
-                                         System.type_info < manager >(),
-                                         System.type_info < child_frame >(),
-                                         System.type_info < file_list >()));
+                                      get_app(),
+                                      pszMatter,
+                                      System.type_info < manager >(),
+                                      System.type_info < child_frame >(),
+                                      System.type_info < file_list >()));
 
       Application.add_document_template(m_pdoctemplateChildList);
 
       m_pdoctemplateFolderSelectionList = canew(::user::multiple_document_template(
-                                             get_app(),
-                                             pszMatter,
-                                             System.type_info < manager >(),
-                                             System.type_info < child_frame >(),
-                                             System.type_info < folder_selection_list_view >()));
+                                          get_app(),
+                                          pszMatter,
+                                          System.type_info < manager >(),
+                                          System.type_info < child_frame >(),
+                                          System.type_info < folder_selection_list_view >()));
 
       Application.add_document_template(m_pdoctemplateFolderSelectionList);
 

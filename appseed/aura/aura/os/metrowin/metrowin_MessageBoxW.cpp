@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 #undef new
 
@@ -15,12 +15,12 @@ public:
 
    int do_modal(String ^ text, String ^ caption, unsigned int uiFlags);
 
-   
+
 };
 
 message_box_w::message_box_w()
 {
- 
+
 }
 
 #define create_a_button(id,text) \
@@ -74,17 +74,37 @@ int message_box_w::do_modal(String ^ text,String ^ caption,unsigned int uiFlags)
    }
 
 
-   // Set the command that will be invoked by default 
+   // Set the command that will be invoked by default
    msg->DefaultCommandIndex = 0;
 
    if (iCancel >= 0)
    {
-      // Set the command to be invoked when escape is pressed 
+      // Set the command to be invoked when escape is pressed
       msg->CancelCommandIndex = iCancel;
    }
 
-   // Show the message dialog 
-   IUICommand ^ cmd = ::wait(msg->ShowAsync());
+   // Show the message dialog
+   IUICommand ^ cmd = nullptr;
+
+   Windows::Foundation::IAsyncOperation<Windows::UI::Popups::IUICommand^>^ op = nullptr;
+
+   ::wait(Windows::ApplicationModel::Core::CoreApplication::MainView->CoreWindow->Dispatcher->RunAsync(
+          CoreDispatcherPriority::Normal,
+          ref new Windows::UI::Core::DispatchedHandler([&]()
+   {
+
+      op = msg->ShowAsync();
+
+   })));
+
+   if (op != nullptr)
+   {
+
+      cmd = ::wait(op);
+
+   }
+
+
 
    if (cmd == nullptr)
    {

@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 
@@ -23,6 +23,7 @@ namespace message
       ::message::message(papp)
    {
 
+      m_uiMessageFlags     = 0;
       m_pwnd               = NULL;
       m_lresult            = 0;
       m_bDestroyed         = false;
@@ -37,6 +38,7 @@ namespace message
       ::message::message(papp)
    {
 
+      m_uiMessageFlags     = 0;
       m_pwnd               = NULL;
       m_lresult            = 0;
       m_bDestroyed         = false;
@@ -51,6 +53,7 @@ namespace message
    base::base(const base & base)
    {
 
+      m_uiMessageFlags     = base.m_uiMessageFlags;
       m_pwnd               = base.m_pwnd;
       m_id                 = base.m_id;
       m_wparam             = base.m_wparam;

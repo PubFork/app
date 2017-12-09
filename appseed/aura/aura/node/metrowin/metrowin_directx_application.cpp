@@ -380,56 +380,54 @@ uint_ptr virtualkey_to_code(::Windows::System::VirtualKey e)
 }
 
 
-UINT system_main(LPVOID lp)
-{
-
-   ::aura::system * m_psystem = (::aura::system *) lp;
-
-   try
-   {
-
-      m_psystem->m_bReady = true;
-
-      m_psystem->on_run();
-
-      if(m_psystem->m_error.get_exit_code() != 0)
-      {
-
-         ::output_debug_string(L"application::main on_run termination failure");
-
-      }
-
-      if(m_psystem->is_system())
-      {
-
-         m_psystem->post_quit();
-
-      }
-
-      try
-      {
-
-         m_psystem->term_thread();
-
-      }
-      catch(...)
-      {
-
-         m_psystem->m_error.set_if_not_set(-1);
-
-      }
-
-   }
-   catch(::exit_exception &)
-   {
-
-      m_psystem->post_quit();
-
-   }
-
-   return 0;
-
-}
+//UINT system_main(::aura::system * psystem)
+//{
+//
+//   try
+//   {
+//
+//      psystem->m_bReady = true;
+//
+//      psystem->on_run();
+//
+//      if(psystem->m_error.get_exit_code() != 0)
+//      {
+//
+//         ::output_debug_string(L"application::main on_run termination failure");
+//
+//      }
+//
+//      //if(psystem->is_system())
+//      //{
+//
+//      //   m_psystem->post_quit();
+//
+//      //}
+//
+//      try
+//      {
+//
+//         psystem->term_thread();
+//
+//      }
+//      catch(...)
+//      {
+//
+//         psystem->m_error.set_if_not_set(-1);
+//
+//      }
+//
+//   }
+//   catch(::exit_exception &)
+//   {
+//
+//      //m_psystem->post_quit();
+//
+//   }
+//
+//   return 0;
+//
+//}
 
 
 namespace metrowin
@@ -512,12 +510,12 @@ namespace metrowin
 
       int nReturnCode = 0;
 
-      if (!m_psystem->begin_synch())
-      {
+      //if (!m_psystem->begin_synch())
+      //{
 
-         _throw(simple_exception(get_app(), "integer_exception 1"));
+      //   _throw(simple_exception(get_app(), "integer_exception 1"));
 
-      }
+      //}
 
       m_directx->defer_init();
 
@@ -534,38 +532,39 @@ namespace metrowin
 
       //m_psystem->m_ptwf->twf_start();
 
-      stringa straLibrary = m_psystem->handler()->m_varTopicQuery["app"].stra();
+      //stringa straLibrary = m_psystem->handler()->m_varTopicQuery["app"].stra();
 
-      for(int i = 0; i < m_psystem->handler()->m_varTopicQuery["app"].get_count(); i++)
-      {
-         string strApp = m_psystem->handler()->m_varTopicQuery["app"].stra()[i];
-      }
+      //for(int i = 0; i < m_psystem->handler()->m_varTopicQuery["app"].get_count(); i++)
+      //{
+      //   string strApp = m_psystem->handler()->m_varTopicQuery["app"].stra()[i];
+      //}
 
-      straLibrary.replace("\\", "_");
-      straLibrary.replace("-", "_");
+      //straLibrary.replace("\\", "_");
+      //straLibrary.replace("-", "_");
 
-      for(int i = 0; i < straLibrary.get_count(); i++)
-      {
-         string strLibrary = straLibrary[i];
-         int iFind = strLibrary.find("/");
-         if(iFind >= 0)
-            strLibrary = strLibrary.Left(iFind) + '_' + strLibrary.Mid(iFind + 1);
-         iFind = strLibrary.find("/", iFind + 1);
-         if(iFind >= 0)
-            strLibrary.Truncate(iFind);
-         m_psystem->m_mapAppLibrary[m_psystem->handler()->m_varTopicQuery["app"][i]] = strLibrary;
-      }
+      //for(int i = 0; i < straLibrary.get_count(); i++)
+      //{
+      //   string strLibrary = straLibrary[i];
+      //   int iFind = strLibrary.find("/");
+      //   if(iFind >= 0)
+      //      strLibrary = strLibrary.Left(iFind) + '_' + strLibrary.Mid(iFind + 1);
+      //   iFind = strLibrary.find("/", iFind + 1);
+      //   if(iFind >= 0)
+      //      strLibrary.Truncate(iFind);
+      //   m_psystem->m_mapAppLibrary[m_psystem->handler()->m_varTopicQuery["app"][i]] = strLibrary;
+      //}
 
-      for(int i = 0; i < m_psystem->handler()->m_varTopicQuery["app"].get_count(); i++)
-      {
-         string strApp = m_psystem->handler()->m_varTopicQuery["app"][i];
-      }
+      //for(int i = 0; i < m_psystem->handler()->m_varTopicQuery["app"].get_count(); i++)
+      //{
+      //   string strApp = m_psystem->handler()->m_varTopicQuery["app"][i];
+      //}
 
-      m_psystem->m_mapAppLibrary["app/ca2/cube"] = "ca2";
-      m_psystem->m_mapAppLibrary["app/ca2/bergedge"] = "ca2";
+      //m_psystem->m_mapAppLibrary["app/ca2/cube"] = "ca2";
+      //m_psystem->m_mapAppLibrary["app/ca2/bergedge"] = "ca2";
 
-      __begin_thread(m_psystem, &system_main, m_psystem);
+      //__begin_thread(m_psystem, &system_main, m_psystem);
 
+      //system_main(m_psystem);
 
    }
 

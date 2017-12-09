@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "framework.h"
 
 
@@ -10,6 +10,9 @@ namespace filemanager
       object(papp),
       simple_child_frame(papp)
    {
+
+
+
    }
 
 
@@ -20,12 +23,12 @@ namespace filemanager
 
    void child_frame::install_message_routing(::message::sender * psender)
    {
-      
+
       simple_child_frame::install_message_routing(psender);
 
-      MSG_TYPE_LINK(::message::type_language , psender, this, &child_frame::_001OnAppLanguage);
-      IGUI_MSG_LINK(WM_SHOWWINDOW            , psender, this, &child_frame::_001OnShowWindow);
-      IGUI_MSG_LINK(WM_CREATE                , psender, this, &child_frame::_001OnCreate);
+      MSG_TYPE_LINK(::message::type_language, psender, this, &child_frame::_001OnAppLanguage);
+      IGUI_MSG_LINK(WM_SHOWWINDOW, psender, this, &child_frame::_001OnShowWindow);
+      IGUI_MSG_LINK(WM_CREATE, psender, this, &child_frame::_001OnCreate);
 
    }
 
@@ -39,7 +42,7 @@ namespace filemanager
 
    }
 
-   
+
    bool child_frame::DestroyBars()
    {
 

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace message
@@ -19,7 +19,6 @@ namespace message
       bool                       m_bDoSystemDefault;
       LRESULT *                  m_plresult;
       LRESULT                    m_lresult;
-
 
       //base(class ::message::sender * psignal);
       //base(::aura::application * papp, class ::message::sender * psignal = NULL);

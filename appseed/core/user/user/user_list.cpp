@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace user
@@ -92,16 +92,16 @@ namespace user
          if (!m_plistheader->IsWindow())
          {
             bool bOk = m_plistheader->create_window(
-                          NULL,
-                          "",
-                          WS_CHILD
-                          | WS_VISIBLE
-                          | HDS_FULLDRAG
-                          | HDS_HOTTRACK
-                          | HDS_DRAGDROP,
-                          null_rect(),
-                          this,
-                          1023) != 0;
+                       NULL,
+                       "",
+                       WS_CHILD
+                       | WS_VISIBLE
+                       | HDS_FULLDRAG
+                       | HDS_HOTTRACK
+                       | HDS_DRAGDROP,
+                       null_rect(),
+                       this,
+                       1023) != 0;
             //if (bOk)
             //{
             //   m_plistheader->m_font = m_font;
@@ -1006,10 +1006,10 @@ namespace user
                rect.right = rectClient.right;
             else
                rect.right = (LONG)MIN(
-                               rectClient.left +
-                               m_nItemCount * itemFirst.m_rectItem.width() * m_iItemHeight /
-                               rectClient.height()
-                               + itemFirst.m_rectItem.width(), MAXLONG);
+                            rectClient.left +
+                            m_nItemCount * itemFirst.m_rectItem.width() * m_iItemHeight /
+                            rectClient.height()
+                            + itemFirst.m_rectItem.width(), MAXLONG);
          }
       }
       else if (m_eview == view_report)
@@ -1556,7 +1556,7 @@ namespace user
    {
 
       if (m_pmeshdata.is_null())
-         return -1;
+         return 0;
 
       return m_pmeshdata->_001GetItemCount();
 
@@ -3398,12 +3398,12 @@ namespace user
       else if (get_form() != NULL)
       {
          get_form()->send_message(
-            ::message::message_event, 0, (LPARAM)&ev);
+         ::message::message_event, 0, (LPARAM)&ev);
       }
       else
       {
          GetParent()->send_message(
-            ::message::message_event, 0, (LPARAM)&ev);
+         ::message::message_event, 0, (LPARAM)&ev);
       }
       return false;
    }
@@ -3501,8 +3501,8 @@ namespace user
    }
 
    void list::_001GetSelection(
-      ::database::id & key,
-      ::database::selection &selection)
+   ::database::id & key,
+   ::database::selection &selection)
    {
       if (!_001HasConfigId(key))
          return;
@@ -5414,9 +5414,9 @@ namespace user
       draw_list_item item(this);
 
       for (
-         iFilter1Step = m_iFilter1Step;
-         iFilter1Step < iItemCount;
-         iFilter1Step++)
+      iFilter1Step = m_iFilter1Step;
+      iFilter1Step < iItemCount;
+      iFilter1Step++)
       {
          for (index j = 0; j < m_columna.get_count(); j++)
          {
@@ -6057,22 +6057,22 @@ namespace user
 
    class size list::get_item_size()
    {
-         if (m_eview == view_icon)
+      if (m_eview == view_icon)
+      {
+         if (m_columna.get_count() == 0)
          {
-            if (m_columna.get_count() == 0)
-            {
-               return size(32, 32);
-            }
-            index iIconSize = MAX(32, m_columna[0]->m_sizeIcon.cy);
-            index iItemSize = iIconSize * 2;
-            return size(iItemSize, iItemSize);
+            return size(32, 32);
          }
-         else
-         {
-            // not implemented
-            ASSERT(FALSE);
-            return size(0, 0);
-         }
+         index iIconSize = MAX(32, m_columna[0]->m_sizeIcon.cy);
+         index iItemSize = iIconSize * 2;
+         return size(iItemSize, iItemSize);
+      }
+      else
+      {
+         // not implemented
+         ASSERT(FALSE);
+         return size(0, 0);
+      }
    }
 
    void list::auto_arrange(bool bAutoArrange)
@@ -6305,15 +6305,15 @@ namespace user
       }
       else
       {
-         
+
          synch_lock sl(get_image_list()->m_pmutex);
-         
+
          if(get_image_list()->m_spdib.is_null()
-            || get_image_list()->m_spdib->area() <= 0)
+               || get_image_list()->m_spdib->area() <= 0)
          {
-          
+
             return false;
-            
+
          }
 
          if ((m_plist->m_iIconBlur > 0 && m_plist->m_iIconBlurRadius > 0)
@@ -6534,17 +6534,17 @@ namespace user
                visual::fastblur & dib2 = m_plist->m_mapBlur[m_iItem];
 
                if (Sys(m_plist->get_app()).visual().embossed_text_out(
-                        m_pgraphics,
-                        m_rectText,
-                        m_strText,
-                        dib2,
-                        m_pgraphics->m_spfont,
-                        m_iDrawTextFlags,
-                        m_crText,
-                        m_crTextBackground,
-                        m_plist->m_iTextSpreadRadius, m_plist->m_iTextBlurRadius,
-                        m_plist->m_iTextBlur,
-                        m_strText != m_plist->m_mapText[m_iItem] || m_crTextBackground != m_plist->m_mapBackColor[m_iItem]))
+                     m_pgraphics,
+                     m_rectText,
+                     m_strText,
+                     dib2,
+                     m_pgraphics->m_spfont,
+                     m_iDrawTextFlags,
+                     m_crText,
+                     m_crTextBackground,
+                     m_plist->m_iTextSpreadRadius, m_plist->m_iTextBlurRadius,
+                     m_plist->m_iTextBlur,
+                     m_strText != m_plist->m_mapText[m_iItem] || m_crTextBackground != m_plist->m_mapBackColor[m_iItem]))
                {
 
                   m_plist->m_mapText[m_iItem] = m_strText;

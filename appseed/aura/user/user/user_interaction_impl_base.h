@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #include "user_interaction_base.h"
@@ -29,6 +29,7 @@ namespace user
       bool                                m_bIgnoreMoveEvent;
       ap(critical_section)                m_apcsDisplay;
 
+      mutex                               m_mutexLongPtr;
       int_ptr_to_int_ptr                  m_longptr;
 
       interaction_impl_base();

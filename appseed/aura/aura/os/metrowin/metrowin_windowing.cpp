@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "metrowin_window_impl.h"
 //#include "base/user/user.h"
 
@@ -469,3 +469,16 @@ CLASS_DECL_AURA::user::interaction_impl * oswindow_get(oswindow oswindow)
 
 }
 
+
+void os_init_windowing()
+{
+
+
+}
+
+
+void os_term_windowing()
+{
+
+
+}

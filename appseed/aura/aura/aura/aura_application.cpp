@@ -2669,6 +2669,10 @@ namespace aura
 
       }
 
+      thisstart;
+
+      m_dwAlive = ::get_tick_count();
+
       try
       {
 
@@ -2693,13 +2697,8 @@ namespace aura
 
          m_dwAlive = ::get_tick_count();
 
-         //int32_t m_iErrorCode = application_pre_run();
-
-         //if (m_iErrorCode < 0)
          if(!application_pre_run())
          {
-
-            //thisfail << 1 << m_iErrorCode;
 
             m_bReady = true;
 
@@ -2709,19 +2708,8 @@ namespace aura
 
          xxdebug_box("pre_run 1 ok", "pre_run 1 ok", MB_ICONINFORMATION);
 
-         //thisok << 1 << m_iErrorCode;
-
          if (!initial_check_directrix())
          {
-
-            //thisfail << 2 << m_iErrorCode;
-
-//            if (m_iErrorCode >= 0)
-//            {
-//
-//               m_iErrorCode = -1;
-//
-//            }
 
             m_bReady = true;
 
@@ -2729,21 +2717,10 @@ namespace aura
 
          }
 
-         //thisok << 2 << m_iErrorCode;
-
          m_dwAlive = ::get_tick_count();
 
          if (!os_native_bergedge_start())
          {
-
-//            thisfail << 3 << m_iErrorCode;
-//
-//            if (m_iErrorCode >= 0)
-//            {
-//
-//               m_iErrorCode = -1;
-//
-//            }
 
             m_bReady = true;
 
@@ -2905,6 +2882,12 @@ run:
    }
 
 
+   void application::on_pos_run_thread()
+   {
+
+   }
+
+
    void application::pos_run()
    {
 
@@ -2917,18 +2900,7 @@ run:
 
          application_pos_run();
 
-//         if (m_iErrorCode < 0)
-//         {
-//
-//            thisfail << 1 << m_iErrorCode;
-//
-//         }
-
          xxdebug_box("pre_run 1 ok", "pre_run 1 ok", MB_ICONINFORMATION);
-
-         //thisok << 1 << m_iErrorCode;
-
-         //return true;
 
       }
       catch (...)
@@ -2937,8 +2909,6 @@ run:
          thisexcall << 4;
 
       }
-
-      //return false;
 
    }
 
@@ -3009,8 +2979,6 @@ run:
 
 #endif
 
-//      m_iErrorCode = 0;
-
       m_dwAlive = ::get_tick_count();
 
       try
@@ -3019,8 +2987,6 @@ run:
          if (!InitApplication())
          {
 
-            //thisfail << 1 << m_iErrorCode;
-
             goto InitFailure;
 
          }
@@ -3028,8 +2994,6 @@ run:
       }
       catch (::exit_exception * pe)
       {
-
-         //thisexit << 1 << m_iErrorCode;
 
          throw pe;
 
@@ -3053,8 +3017,6 @@ run:
 
       }
 
-      //thisok << 1 << m_iErrorCode;
-
       m_dwAlive = ::get_tick_count();
 
       try
@@ -3062,8 +3024,6 @@ run:
 
          if (!process_init())
          {
-
-            //thisfail << 2 << m_iErrorCode;
 
             goto InitFailure;
 
@@ -3073,15 +3033,11 @@ run:
       catch (::exit_exception * pe)
       {
 
-         //thisexit << 2 << m_iErrorCode;
-
          throw pe;
 
       }
       catch (const ::exception::exception * pe)
       {
-
-         //thisexc << 2 << m_iErrorCode;
 
          ::aura::del(pe);
 
@@ -3091,13 +3047,9 @@ run:
       catch (...)
       {
 
-         //thisexcall << 2 << m_iErrorCode;
-
          goto InitFailure;
 
       }
-
-      //thisinfo << 2 << m_iErrorCode;
 
       System.install_progress_add_up();
 
@@ -3108,8 +3060,6 @@ run:
 
          if (!init_application())
          {
-
-            //thisfail << 3 << m_iErrorCode;
 
             goto InitFailure;
 
@@ -3144,8 +3094,6 @@ run:
 
          if ((is_installing() || is_unstalling()) && !is_system() && !is_session())
          {
-
-            //Sleep(15000);
 
             check_install();
 
@@ -3197,31 +3145,13 @@ InitFailure:
 
    void application::application_pos_run()
    {
-
-      thisstart;
-
-      //m_iErrorCode = 0;
-
-      m_dwAlive = ::get_tick_count();
-
-//      thisok << 1 << m_iErrorCode;
-//
-//      m_dwAlive = ::get_tick_count();
-
       try
       {
 
          if (!is_installing() && !is_unstalling())
          {
 
-            //if (!exit_instance())
-
             term_instance();
-            //{
-
-            //thisfail << 3.1 << m_iErrorCode;
-
-            //}
 
          }
 
@@ -3229,79 +3159,46 @@ InitFailure:
       catch (...)
       {
 
-         //thisexcall << 3.1 << m_iErrorCode;
-
-         //goto InitFailure;
-
       }
 
       try
       {
 
-         //if (!finalize_application())
          term_application();
-//         {
-//
-//            thisfail << 2 << m_iErrorCode;
-//
-//         }
 
       }
       catch (...)
       {
 
-         //thisexcall << 3 << m_iErrorCode;
-
       }
-
-      //thisok << 4 << m_iErrorCode;
 
       m_dwAlive = ::get_tick_count();
 
       try
       {
 
-         //if (!process_finalize())
          process_term();
-//         {
-//
-//            thisfail << 5 << m_iErrorCode;
-//
-//         }
 
       }
       catch (...)
       {
-
-         //thisexcall << 6 << m_iErrorCode;
 
       }
 
       try
       {
 
-         //if (!TermApplication())
          TermApplication();
-//         {
-//
-//            thisfail << 7 << m_iErrorCode;
-//
-//         }
 
       }
       catch (...)
       {
 
-         //thisexcall << 8 << m_iErrorCode;
-
       }
 
-      //thisend << m_iErrorCode;
 
-      //return m_iErrorCode;
 
    }
-
 
    bool application::InitApplication()
    {

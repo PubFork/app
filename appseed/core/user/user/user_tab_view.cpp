@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace user
@@ -640,6 +640,8 @@ namespace user
          }
 
          //on_change_pane_count();
+
+         set_need_layout();
 
       }
 

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace message
@@ -19,6 +19,7 @@ namespace message
       index                      m_iRouteIndex;
       index                      m_iParam;
       bool                       m_bRet;
+      unsigned int               m_uiMessageFlags;
 
 
 

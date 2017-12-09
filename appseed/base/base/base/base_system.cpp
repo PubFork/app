@@ -160,53 +160,6 @@ namespace base
    void system::term_application()
    {
 
-      try
-      {
-
-         for(auto & pair : System.m_appmap)
-         {
-
-            try
-            {
-
-               if(pair.m_element2->m_pbasesystem == this)
-               {
-
-                  pair.m_element2->m_pbasesystem = NULL;
-
-               }
-
-            }
-            catch(...)
-            {
-
-            }
-
-         }
-
-      }
-      catch(...)
-      {
-
-      }
-
-#ifdef WINDOWSEX
-
-      try
-      {
-
-         ::aura::del(m_psystemwindow);
-
-      }
-      catch (...)
-      {
-
-         m_error.set_if_not_set();
-
-      }
-
-#endif
-
       axis::system::term_application();
 
    }

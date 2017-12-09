@@ -9,35 +9,35 @@ namespace filemanager
       virtual public simple_list_view,
       virtual public ::filemanager::impact
    {
-      public:
+   public:
 
 
-         bool                             m_bRecursive;
-
-         bool                             m_bRecursiveColumn;
-
-         folder_list_view(::aura::application * papp);
-         virtual ~folder_list_view();
+      bool                             m_bRecursive;
+      bool                             m_bRecursiveColumn;
 
 
-         virtual void install_message_routing(::message::sender * pinterface);
+      folder_list_view(::aura::application * papp);
+      virtual ~folder_list_view();
 
 
-         void initialize(string strDataKeyModifier,bool bRecursive);
+      virtual void install_message_routing(::message::sender * pinterface);
 
 
-         virtual string calc_data_id();
-
-         void _001InsertColumns();
-
-         bool add_unique(const stringa & stra);
-         bool add_unique(const stringa & stra,bool_array & baRecursive);
-         bool remove(const stringa & stra);
+      virtual void initialize(string strDataKeyModifier,bool bRecursive);
 
 
-         void GetSel(stringa & stra);
+      virtual string calc_data_id();
 
-         void on_update(::user::impact * pSender,LPARAM lHint,object* phint);
+      virtual void _001InsertColumns() override;
+
+      bool add_unique(const stringa & stra);
+      bool add_unique(const stringa & stra, bool_array & baRecursive);
+      bool remove(const stringa & stra);
+
+
+      virtual void GetSel(stringa & stra);
+
+      virtual void on_update(::user::impact * pSender,LPARAM lHint,object* phint) override;
 
 
    };

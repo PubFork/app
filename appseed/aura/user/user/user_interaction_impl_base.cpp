@@ -1,4 +1,4 @@
-#include "framework.h" // from "base/user/user.h"
+﻿#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 
@@ -9,7 +9,8 @@ namespace user
    interaction_impl_base::interaction_impl_base() :
       ::aura::timer_array(get_app()),
       m_rectParentClient(0,0,0,0),
-      m_rectParentClientRequest(0, 0, 0, 0)
+      m_rectParentClientRequest(0, 0, 0, 0),
+      m_mutexLongPtr(get_app())
    {
 
       m_bZ                 = false;
@@ -1184,6 +1185,8 @@ namespace user
    LONG_PTR interaction_impl_base::get_window_long_ptr(int32_t nIndex) const
    {
 
+      synch_lock sl(&((interaction_impl_base*)this)->m_mutexLongPtr);
+
       return (LONG_PTR)m_longptr[nIndex];
 
    }
@@ -1192,7 +1195,7 @@ namespace user
    LONG_PTR interaction_impl_base::set_window_long_ptr(int32_t nIndex,LONG_PTR lValue)
    {
 
-      //LONG_PTR valOld = m_longptr[nIndex];
+      synch_lock sl(&m_mutexLongPtr);
 
       m_longptr[nIndex] = lValue;
 
@@ -1852,9 +1855,7 @@ namespace user
    void interaction_impl_base::queue_message_handler(::message::base * pbase)
    {
 
-
       return m_pui->message_handler(pbase);
-
 
    }
 

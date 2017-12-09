@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 simple_child_frame::simple_child_frame(::aura::application * papp) :
@@ -7,6 +7,7 @@ simple_child_frame::simple_child_frame(::aura::application * papp) :
 {
 
    m_bWindowFrame       = false;
+   m_bAutoWindowFrame = false;
 
 }
 
@@ -15,9 +16,9 @@ simple_child_frame::~simple_child_frame()
 }
 
 
-bool simple_child_frame::pre_create_window(::user::create_struct& cs) 
+bool simple_child_frame::pre_create_window(::user::create_struct& cs)
 {
-   
+
    cs.style |= WS_CHILD;
    cs.style |= WS_CLIPCHILDREN;
    cs.style &= ~WS_BORDER;
@@ -45,7 +46,7 @@ bool simple_child_frame::pre_create_window(::user::create_struct& cs)
 }
 
 
-void simple_child_frame::_001OnCmdMsg(::user::command * pcommand)  
+void simple_child_frame::_001OnCmdMsg(::user::command * pcommand)
 {
 
    simple_frame_window::_001OnCmdMsg(pcommand);
@@ -68,7 +69,7 @@ bool simple_child_frame::get_translucency(::user::e_translucency & etranslucency
    // etranslucency = ::user::translucency_present for children that may ask the translucency guideline for this as parent,
    // but simple_child_frame, at the moment of this remark writing, itself draw transparently.
 
-   etranslucency = ::user::translucency_present; 
+   etranslucency = ::user::translucency_present;
 
    return true;
 

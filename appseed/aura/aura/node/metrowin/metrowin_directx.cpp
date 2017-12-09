@@ -257,8 +257,9 @@ namespace metrowin
 
       m_window->Dispatcher->RunAsync(CoreDispatcherPriority::Normal,ref new Windows::UI::Core::DispatchedHandler([this]()
       {
+         OnWindowSizeChange();
 
-         ::aura::system::g_p->m_paurasystem->m_possystemwindow->m_bWindowSizeChange = true;
+//         ::aura::system::g_p->m_paurasystem->m_possystemwindow->m_bWindowSizeChange = true;
 
       }));
 
@@ -279,11 +280,6 @@ namespace metrowin
          {
 
             ::draw2d::lock draw2dlock;
-
-            m_d2dTargetBitmap = nullptr;
-            m_d3dRenderTargetView = nullptr;
-            m_d3dDepthStencilView = nullptr;
-            m_windowSizeChangeInProgress = true;
 
             CreateWindowSizeDependentResources();
 
@@ -310,6 +306,7 @@ namespace metrowin
    // Allocate all memory resources that change on a window SizeChanged event.
    void directx_base::CreateWindowSizeDependentResources()
    {
+      
       ::draw2d::device_lock devicelock;
 
       // Store the window bounds so the next time we get a SizeChanged event we can
@@ -319,12 +316,39 @@ namespace metrowin
 
       if(m_swapChain != nullptr)
       {
+
+         ID3D11RenderTargetView* nullViews[] = { nullptr };
+         m_d3dContext->OMSetRenderTargets(ARRAYSIZE(nullViews), nullViews, nullptr);
+         m_d3dRenderTargetView = nullptr;
+         m_pd2d1devicecontext->SetTarget(nullptr);
+         m_d2dTargetBitmap = nullptr;
+         m_d3dDepthStencilView = nullptr;
+         m_d3dContext->Flush();
+
+         m_pd2d1devicecontext = nullptr;
+         m_d2dTargetBitmap = nullptr;
+         m_d3dRenderTargetView = nullptr;
+         m_d3dDepthStencilView = nullptr;
+         m_windowSizeChangeInProgress = true;
+
+
+         HRESULT hr;
+         //m_d3dContext->Flush();
+         m_d3dContext->ClearState();
+         //m_d2dDevice->ClearResources();
+         //{
+         //   Microsoft::WRL::ComPtr < ID3D11CommandList > pcommandlist;
+         //   hr = m_d3dContext->FinishCommandList(FALSE, &pcommandlist);
+         //   if (SUCCEEDED(hr))
+         //   {
+         //   }
+         //}
          // If the swap chain already exists, resize it.
-         HRESULT hr = m_swapChain->ResizeBuffers(
-                      2,
+         hr = m_swapChain->ResizeBuffers(
+                      0,
                       0, // If you specify zero, DXGI will use the width of the client area of the target window.
                       0, // If you specify zero, DXGI will use the height of the client area of the target window.
-                      DXGI_FORMAT_UNKNOWN, // Set this value to DXGI_FORMAT_UNKNOWN to preserve the existing format of the back buffer.
+            DXGI_FORMAT_UNKNOWN, // Set this value to DXGI_FORMAT_UNKNOWN to preserve the existing format of the back buffer.
                       0);
 
          if(hr == DXGI_ERROR_DEVICE_REMOVED)
@@ -350,8 +374,8 @@ namespace metrowin
       {
          // Otherwise, create a new one using the same adapter as the existing Direct3D device.
          DXGI_SWAP_CHAIN_DESC1 swapChainDesc = {0};
-         swapChainDesc.Width = 0;                                     // Use automatic sizing.
-         swapChainDesc.Height = 0;
+         //swapChainDesc.Width = m_size.cx;                                     // Use automatic sizing.
+         //swapChainDesc.Height = m_size.cy;
          swapChainDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;           // This is the most common swap chain format.
          swapChainDesc.Stereo = false;
          swapChainDesc.SampleDesc.Count = 1;                          // Don't use multi-sampling.

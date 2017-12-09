@@ -10,6 +10,11 @@ void os_init_windowing();
 
 void os_term_windowing();
 
+#ifdef METROWIN
+
+void os_term_application();
+
+#endif
 
 #if defined(LINUX) || defined(ANDROID)
 
@@ -49,7 +54,7 @@ namespace aura
    system::os_system_window::os_system_window()
    {
 
-      m_bWindowSizeChange = false;
+//      m_bWindowSizeChange = false;
 
    }
 
@@ -315,7 +320,6 @@ namespace aura
 
 
 
-
    }
 
 
@@ -448,14 +452,9 @@ namespace aura
    {
 
 
-#ifdef LINUX
-
       os_init_windowing();
 
       os_init_imaging();
-
-#endif
-
 
       //m_peengine = new ::exception::engine(this);
 
@@ -743,7 +742,7 @@ namespace aura
    void system::term()
    {
 
-      __wait_threading_count_except(this,::millis((5000) * 77));
+      __wait_threading_count_except(this,one_minute());
 
       try
       {
@@ -758,20 +757,29 @@ namespace aura
 
    }
 
-
-   void system::term_application()
+   void system::term1()
    {
+
+      ::aura::application::term1();
+
+   }
+
+
+   void system::term2()
+   {
+
+      ::aura::application::term2();
 
       try
       {
 
-         for(auto & pair : System.m_appmap)
+         for (auto & pair : System.m_appmap)
          {
 
             try
             {
 
-               if(pair.m_element2->m_paurasystem == this)
+               if (pair.m_element2->m_paurasystem == this)
                {
 
                   pair.m_element2->m_paurasystem = NULL;
@@ -779,7 +787,7 @@ namespace aura
                }
 
             }
-            catch(...)
+            catch (...)
             {
 
             }
@@ -787,7 +795,7 @@ namespace aura
          }
 
       }
-      catch(...)
+      catch (...)
       {
 
       }
@@ -798,34 +806,19 @@ namespace aura
       try
       {
 
-
-         /*      try
-         {
-         if(m_plemonarray != NULL)
-         {
-         delete m_plemonarray;
-         }
-         }
-         catch(...)
-         {
-         }
-         m_plemonarray = NULL;
-         */
-
-
          m_pmath.release();
 
          m_pgeometry.release();
 
       }
-      catch(...)
+      catch (...)
       {
 
          m_error.set(-86);
 
       }
 
-      for(int i = 0; i < m_serviceptra.get_size(); i++)
+      for (int i = 0; i < m_serviceptra.get_size(); i++)
       {
 
          try
@@ -834,7 +827,7 @@ namespace aura
             m_serviceptra[i]->Stop(0);
 
          }
-         catch(...)
+         catch (...)
          {
 
          }
@@ -842,22 +835,25 @@ namespace aura
       }
 
 
-      for(int i = 0; i < m_serviceptra.get_size(); i++)
+      for (int i = 0; i < m_serviceptra.get_size(); i++)
       {
+
          try
          {
+
             m_serviceptra[i]->Stop((5000) * 2);
+
          }
-         catch(...)
+         catch (...)
          {
+
          }
+
       }
 
       m_serviceptra.remove_all();
 
       multithreading::post_quit_and_wait(m_paurasession, seconds(60));
-
-//      m_basesessionptra.remove_all();
 
       try
       {
@@ -870,7 +866,7 @@ namespace aura
          }
 
       }
-      catch(...)
+      catch (...)
       {
 
 
@@ -882,13 +878,23 @@ namespace aura
 
       m_spdir.release();
 
+      try
       {
 
-         mutex m(get_app(), false, "Global\\ca2_datetime_departament");
+#ifndef METROWIN
+
+         // The Global namespace is not availabel for Windows Store App
+         mutex m(this, false, "Global\\ca2_datetime_departament");
 
          synch_lock sl(&m);
 
+#endif
+
          m_pdatetime.release();
+
+      }
+      catch (...)
+      {
 
       }
 
@@ -900,17 +906,45 @@ namespace aura
 
       m_pmath.release();
 
+#ifdef WINDOWSEX
+
       try
       {
 
-         ::aura::application::term_application();
+         ::aura::del(m_psystemwindow);
 
       }
-      catch(...)
+      catch (...)
+      {
+
+         m_error.set_if_not_set();
+
+      }
+
+#endif
+
+      try
+      {
+
+         if (m_mapLibrary["draw2d"]->is_opened())
+         {
+
+            if (m_pDraw2dFactoryExchange != NULL)
+            {
+
+               delete m_pDraw2dFactoryExchange;
+
+               m_pDraw2dFactoryExchange = NULL;
+
+            }
+
+         }
+
+      }
+      catch (...)
       {
 
       }
-
 
       try
       {
@@ -918,16 +952,15 @@ namespace aura
          m_spos.release();
 
       }
-      catch(...)
+      catch (...)
       {
 
       }
 
-
       try
       {
 
-         if(m_pmachineeventcentral != NULL)
+         if (m_pmachineeventcentral != NULL)
          {
 
             m_pmachineeventcentral->post_quit();
@@ -935,11 +968,10 @@ namespace aura
          }
 
       }
-      catch(...)
+      catch (...)
       {
 
       }
-
 
 #ifdef DEBUG
 
@@ -957,24 +989,33 @@ namespace aura
 
       }
 
-#ifdef LINUX
+   }
 
-      os_term_windowing();
 
-      os_term_imaging();
-
-#endif
-
+   void system::term_application()
+   {
 
       ::aura::application::term_application();
 
+   }
+
+
+   void system::TermApplication()
+   {
+
+      ::aura::application::TermApplication();
+
+      os_term_imaging();
+
+      os_term_windowing();
+
+      os_term_application();
+
 #ifdef METROWIN
-//      m_pdevicecontext = nullptr;
+      //      m_pdevicecontext = nullptr;
 
-//      m_pmutexDc.release();
+      //      m_pmutexDc.release();
 #endif
-
-
 
       //if(m_peengine != NULL)
       //{
@@ -984,11 +1025,9 @@ namespace aura
       //   m_peengine = NULL;
 
       //}
-//#ifdef MACOS
+      //#ifdef MACOS
       //    ns_app_terminate();
-//#endif
-
-//      return iRet;
+      //#endif
 
    }
 

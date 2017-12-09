@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "metrowin.h"
 
 
@@ -409,6 +409,13 @@ namespace metrowin
 
       int i = stra.get_upper_bound();
 
+      if (i < 0)
+      {
+
+         return true;
+
+      }
+
       bool bIsDir = false;
 
       for (; i >= 0; i--)
@@ -426,6 +433,13 @@ namespace metrowin
             break;
 
          }
+
+      }
+
+      if (i < 0)
+      {
+
+         i = 0;
 
       }
 

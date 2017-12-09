@@ -913,6 +913,16 @@ bool __node_aura_pos_term()
 
 }
 
+void os_term_application()
+{
+
+   ::Windows::ApplicationModel::Core::CoreApplication::Exit();
+
+}
+
+
+
+
 
 
 

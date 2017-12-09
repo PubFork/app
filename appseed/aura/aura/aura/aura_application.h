@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace aura
@@ -109,12 +109,12 @@ namespace aura
       string                                          m_strLocale;
       string                                          m_strSchema;
 
-         // Initial state of the application's interaction_impl; normally,
-         // this is an argument to ShowWindow().
-         manual_reset_event *                            m_pevAppBeg;
-         manual_reset_event *                            m_pevAppEnd;
-         string                                          m_strInstallToken;
-         mutex                                           m_mutexMatterLocator;
+      // Initial state of the application's interaction_impl; normally,
+      // this is an argument to ShowWindow().
+      manual_reset_event *                            m_pevAppBeg;
+      manual_reset_event *                            m_pevAppEnd;
+      string                                          m_strInstallToken;
+      mutex                                           m_mutexMatterLocator;
 
 
 
@@ -200,22 +200,22 @@ namespace aura
       virtual bool load_cached_string_by_id(string & str,id id,bool bLoadStringTable);
       virtual void load_string_table(const string & pszApp,const string & pszId);
 
-         virtual int32_t hotplugin_host_starter_start_sync(const char * pszCommandLine,::aura::application * papp,hotplugin::host * phost,hotplugin::plugin * pplugin = NULL);
+      virtual int32_t hotplugin_host_starter_start_sync(const char * pszCommandLine,::aura::application * papp,hotplugin::host * phost,hotplugin::plugin * pplugin = NULL);
 
-         inline class ::file::dir::application &   dir()
-         {
-               return *m_spdir;
-         }
-         inline class ::file::application &        file()
-         {
-               return *m_spfile;
-         }
-         inline class ::http::application &        http()
-         {
-               return m_http;
-         }
-      
-         virtual class imaging & imaging();
+      inline class ::file::dir::application &   dir()
+      {
+         return *m_spdir;
+      }
+      inline class ::file::application &        file()
+      {
+         return *m_spfile;
+      }
+      inline class ::http::application &        http()
+      {
+         return m_http;
+      }
+
+      virtual class imaging & imaging();
 
 
 
@@ -295,9 +295,9 @@ namespace aura
       template < class APP >
       APP & cast_app()
       {
-            
+
          return *dynamic_cast < APP * > (this);
-            
+
       }
 
       virtual void _001CloseApplication();
@@ -364,6 +364,7 @@ namespace aura
       virtual bool pre_run();
       virtual bool application_pre_run();
 
+      virtual void on_pos_run_thread() override;
       virtual void pos_run();
       virtual void application_pos_run();
 
@@ -376,7 +377,7 @@ namespace aura
       virtual bool system_add_app_install(const char * pszId, const char * pszBuild);
 
       virtual void TermThread(HINSTANCE hInstTerm);
- 
+
       virtual void SetCurrentHandles();
 
       virtual void set_env_var(const string & var,const string & value);
@@ -457,192 +458,192 @@ namespace aura
 
       virtual void on_request(::create * pcreate) override;
 
-         // name by Mummi (Japanese -> Guddo : from English : Good, ca2 interpretation : Goods).
-         // get/set serializables to user directory
-         bool gudo_get(const string & strKey,::file::serializable & obj);
-         bool gudo_set(const string & strKey,::file::serializable & obj);
+      // name by Mummi (Japanese -> Guddo : from English : Good, ca2 interpretation : Goods).
+      // get/set serializables to user directory
+      bool gudo_get(const string & strKey,::file::serializable & obj);
+      bool gudo_set(const string & strKey,::file::serializable & obj);
 
 
-         virtual bool assert_user_logged_in();
+      virtual bool assert_user_logged_in();
 
-         virtual bool startup_command(::command::command * pcommand);
+      virtual bool startup_command(::command::command * pcommand);
 
-         virtual bool process_command(::command::command * pcommand);
+      virtual bool process_command(::command::command * pcommand);
 
-         virtual string http_get_locale_schema(const char * pszUrl,const char * pszLocale,const char * pszSchema);
+      virtual string http_get_locale_schema(const char * pszUrl,const char * pszLocale,const char * pszSchema);
 
-         virtual sp(::message::base) get_message_base(LPMESSAGE lpmsg);
+      virtual sp(::message::base) get_message_base(LPMESSAGE lpmsg);
 
 #ifdef LINUX
 
-         virtual sp(::message::base) get_message_base(void * pevent,::user::interaction * pwnd = NULL);
+      virtual sp(::message::base) get_message_base(void * pevent,::user::interaction * pwnd = NULL);
 
 #endif
 
 
-         virtual void process_message(::message::base * base);
+      virtual void process_message(::message::base * base);
 
-         virtual void message_handler(::message::base * pbase) override;
-
-
-         virtual string get_locale();
-         virtual string get_schema();
-         virtual ::file::path get_locale_schema_dir(const string & strLocale,const string & strSchema);
-         virtual ::file::path get_locale_schema_dir(const string & strLocale);
-         virtual ::file::path get_locale_schema_dir();
-
-         virtual void set_locale(const string & lpcsz,::action::context actioncontext);
-         virtual void set_schema(const string & lpcsz,::action::context actioncontext);
-         virtual void on_set_locale(const string & lpcsz,::action::context actioncontext);
-         virtual void on_set_schema(const string & lpcsz,::action::context actioncontext);
+      virtual void message_handler(::message::base * pbase) override;
 
 
-         virtual void fill_locale_schema(::str::international::locale_schema & localeschema);
-         virtual void fill_locale_schema(::str::international::locale_schema & localeschema,const string & pszLocale,const string & pszSchema);
+      virtual string get_locale();
+      virtual string get_schema();
+      virtual ::file::path get_locale_schema_dir(const string & strLocale,const string & strSchema);
+      virtual ::file::path get_locale_schema_dir(const string & strLocale);
+      virtual ::file::path get_locale_schema_dir();
+
+      virtual void set_locale(const string & lpcsz,::action::context actioncontext);
+      virtual void set_schema(const string & lpcsz,::action::context actioncontext);
+      virtual void on_set_locale(const string & lpcsz,::action::context actioncontext);
+      virtual void on_set_schema(const string & lpcsz,::action::context actioncontext);
 
 
-         //virtual void defer_add_thread_run_wait(sync_object_ptra & soa) override;
+      virtual void fill_locale_schema(::str::international::locale_schema & localeschema);
+      virtual void fill_locale_schema(::str::international::locale_schema & localeschema,const string & pszLocale,const string & pszSchema);
 
 
-         //DECL_GEN_SIGNAL(_001OnApplicationRequest);
+      //virtual void defer_add_thread_run_wait(sync_object_ptra & soa) override;
 
 
+      //DECL_GEN_SIGNAL(_001OnApplicationRequest);
 
 
 
 
 
-         virtual bool platform_open_by_file_extension(index iEdge, const char * pszPathName,application_bias * pbiasCreate = NULL);
-         virtual bool platform_open_by_file_extension(index iEdge,::create * pcc);
 
 
-         virtual sp(::aura::application) instantiate_application(const char * pszAppId, application_bias * pbias);
-         virtual sp(::aura::application) create_application(const char * pszAppId, bool bSynch, application_bias * pbias);
-         virtual sp(::aura::application) create_platform(::aura::session * psession);
-         virtual bool start_application(bool bSynch, application_bias * pbias);
-
-         virtual bool on_start_application();
-
-         virtual bool is_application() override;
-
-         virtual ::file::listing & perform_file_listing(::file::listing & listing) override;
-         virtual ::file::listing & perform_file_relative_name_listing(::file::listing & listing) override;
-
-         virtual bool _001OnAgreeExit();
-         virtual void _001OnFranceExit();
-
-         virtual string lstr(id id, string strDefault = "") override;
+      virtual bool platform_open_by_file_extension(index iEdge, const char * pszPathName,application_bias * pbiasCreate = NULL);
+      virtual bool platform_open_by_file_extension(index iEdge,::create * pcc);
 
 
-         void handle_command(::command::command * pcommand) override;
-         void on_create(::create * pcreate) override;
+      virtual sp(::aura::application) instantiate_application(const char * pszAppId, application_bias * pbias);
+      virtual sp(::aura::application) create_application(const char * pszAppId, bool bSynch, application_bias * pbias);
+      virtual sp(::aura::application) create_platform(::aura::session * psession);
+      virtual bool start_application(bool bSynch, application_bias * pbias);
 
-         virtual bool is_application_installed(string strAppId, DWORD & dwGoodToCheckAgain);
+      virtual bool on_start_application();
 
-         virtual bool is_application_updated(string strAppId, DWORD & dwGoodToCheckAgain);
+      virtual bool is_application() override;
 
-         ::install::installer & installer()
-         {
-            return *m_pinstaller;
-         }
+      virtual ::file::listing & perform_file_listing(::file::listing & listing) override;
+      virtual ::file::listing & perform_file_relative_name_listing(::file::listing & listing) override;
 
-         virtual bool check_install();
+      virtual bool _001OnAgreeExit();
+      virtual void _001OnFranceExit();
 
-         virtual void dispatch_user_message_object(::object * pobject);
-
-         virtual void throw_not_installed();
-
-         virtual void play_audio(var varFile, bool bSynch = false);
-
-         virtual void post_critical_error_message(const char * pszMessage, bool bShowLog = true);
-
-         virtual void show_critical_error_log();
-
-         virtual string get_app_user_friendly_task_bar_name();
-
-         virtual void on_setting_changed(::aura::e_setting esetting);
-
-         virtual string http_get(const string & strUrl, ::property_set & set);
-
-         virtual bool compress_ungz(::file::ostream & ostreamUncompressed, const ::file::path & lpcszGzFileCompressed);
-         virtual bool compress_ungz(::primitive::memory_base & mem);
-         virtual bool compress_gz(::file::file * pfileOut, const ::file::path & lpcszUncompressed, int iLevel = 6);
-         virtual bool compress_gz(::file::file * pfileOut, ::file::file * pfileIn, int iLevel = 6);
+      virtual string lstr(id id, string strDefault = "") override;
 
 
-         virtual string fontopus_get_cred(::aura::application * papp, const string & strRequestUrl, const RECT & rect, string & strUsername, string & strPassword, string strToken, string strTitle, bool bInteractive, ::user::interactive * pinteractive = NULL) override;
+      void handle_command(::command::command * pcommand) override;
+      void on_create(::create * pcreate) override;
 
-         virtual void draw2d_factory_exchange();
+      virtual bool is_application_installed(string strAppId, DWORD & dwGoodToCheckAgain);
 
-         virtual ::file::path get_executable_path();
-         virtual string get_executable_extension();
-         virtual string get_executable_title();
-         virtual string get_executable_appid();
+      virtual bool is_application_updated(string strAppId, DWORD & dwGoodToCheckAgain);
 
-         virtual bool http_download(const char * pszUrl, const char * pszFile);
-         virtual string http_get(const char * pszUrl);
+      ::install::installer & installer()
+      {
+         return *m_pinstaller;
+      }
 
+      virtual bool check_install();
 
-         virtual bool on_open_document_file(var varFile);
+      virtual void dispatch_user_message_object(::object * pobject);
 
-         virtual string get_app_id(string wstr);
+      virtual void throw_not_installed();
 
+      virtual void play_audio(var varFile, bool bSynch = false);
 
-         virtual void install_trace(const string & str);
-         virtual void install_trace(double dRate);
-         virtual bool register_spa_file_type();
+      virtual void post_critical_error_message(const char * pszMessage, bool bShowLog = true);
 
-         virtual bool low_is_app_app_admin_running(string strPlatform);
-         virtual void defer_start_program_files_app_app_admin(string strPlatform);
-         virtual void start_program_files_app_app_admin(string strPlatform);
+      virtual void show_critical_error_log();
 
-         virtual string install_pick_command_line();
+      virtual string get_app_user_friendly_task_bar_name();
 
+      virtual void on_setting_changed(::aura::e_setting esetting);
 
-         virtual string install_get_title(string strTitle);
+      virtual string http_get(const string & strUrl, ::property_set & set);
 
-         virtual string install_get_build();
-
-         virtual int check_soon_launch(string str, bool bLaunch, DWORD & dwGoodToCheckAgain);
-         virtual int check_soon_file_launch(string wstr, bool bLaunch, DWORD & dwGoodToCheckAgain);
-         virtual int check_soon_app_id(string wstr, bool bLaunch, DWORD & dwGoodToCheckAgain);
-         virtual int check_soon_app_id1(string wstr, bool bLaunch, DWORD & dwGoodToCheckAgain);
-         virtual int check_soon_app_id2(string wstr, bool bLaunch, DWORD & dwGoodToCheckAgain);
+      virtual bool compress_ungz(::file::ostream & ostreamUncompressed, const ::file::path & lpcszGzFileCompressed);
+      virtual bool compress_ungz(::primitive::memory_base & mem);
+      virtual bool compress_gz(::file::file * pfileOut, const ::file::path & lpcszUncompressed, int iLevel = 6);
+      virtual bool compress_gz(::file::file * pfileOut, ::file::file * pfileIn, int iLevel = 6);
 
 
+      virtual string fontopus_get_cred(::aura::application * papp, const string & strRequestUrl, const RECT & rect, string & strUsername, string & strPassword, string strToken, string strTitle, bool bInteractive, ::user::interactive * pinteractive = NULL) override;
 
-         virtual bool install_get_admin();
-         virtual string install_get_id();
+      virtual void draw2d_factory_exchange();
 
-         virtual bool keyboard_focus_is_focusable(::user::elemental * pue);
-         virtual bool keyboard_focus_OnSetFocus(::user::elemental * pue);
+      virtual ::file::path get_executable_path();
+      virtual string get_executable_extension();
+      virtual string get_executable_title();
+      virtual string get_executable_appid();
 
-         virtual ::user::interaction * main_window();
+      virtual bool http_download(const char * pszUrl, const char * pszFile);
+      virtual string http_get(const char * pszUrl);
+
+
+      virtual bool on_open_document_file(var varFile);
+
+      virtual string get_app_id(string wstr);
+
+
+      virtual void install_trace(const string & str);
+      virtual void install_trace(double dRate);
+      virtual bool register_spa_file_type();
+
+      virtual bool low_is_app_app_admin_running(string strPlatform);
+      virtual void defer_start_program_files_app_app_admin(string strPlatform);
+      virtual void start_program_files_app_app_admin(string strPlatform);
+
+      virtual string install_pick_command_line();
+
+
+      virtual string install_get_title(string strTitle);
+
+      virtual string install_get_build();
+
+      virtual int check_soon_launch(string str, bool bLaunch, DWORD & dwGoodToCheckAgain);
+      virtual int check_soon_file_launch(string wstr, bool bLaunch, DWORD & dwGoodToCheckAgain);
+      virtual int check_soon_app_id(string wstr, bool bLaunch, DWORD & dwGoodToCheckAgain);
+      virtual int check_soon_app_id1(string wstr, bool bLaunch, DWORD & dwGoodToCheckAgain);
+      virtual int check_soon_app_id2(string wstr, bool bLaunch, DWORD & dwGoodToCheckAgain);
+
+
+
+      virtual bool install_get_admin();
+      virtual string install_get_id();
+
+      virtual bool keyboard_focus_is_focusable(::user::elemental * pue);
+      virtual bool keyboard_focus_OnSetFocus(::user::elemental * pue);
+
+      virtual ::user::interaction * main_window();
 
 //         virtual sp(::message::base) get_message_base(LPMESSAGE lpmsg) override;
 
-         virtual bool get_frame(sp(::user::interaction) & pui);
-         virtual void add_frame(::user::interaction * pwnd);
-         virtual void remove_frame(::user::interaction * pwnd);
+      virtual bool get_frame(sp(::user::interaction) & pui);
+      virtual void add_frame(::user::interaction * pwnd);
+      virtual void remove_frame(::user::interaction * pwnd);
 
-         virtual bool send_message_to_windows(UINT message, WPARAM wparam, LPARAM lparam); // with tbs in <3
-         virtual bool route_message_to_windows(::message::message * pmessage); // with tbs in <3
-
-
-         virtual void send_language_change_message();
+      virtual bool send_message_to_windows(UINT message, WPARAM wparam, LPARAM lparam); // with tbs in <3
+      virtual bool route_message_to_windows(::message::message * pmessage); // with tbs in <3
 
 
-         virtual LPWAVEOUT waveout_open(int iChannel, LPAUDIOFORMAT pformat, LPWAVEOUT_CALLBACK pcallback);
+      virtual void send_language_change_message();
 
 
-         virtual string preferred_userschema();
+      virtual LPWAVEOUT waveout_open(int iChannel, LPAUDIOFORMAT pformat, LPWAVEOUT_CALLBACK pcallback);
 
 
-         virtual ::user::document * place_hold(::user::interaction * pui);
+      virtual string preferred_userschema();
 
 
-         virtual ::visual::icon * set_icon(object * pobject, ::visual::icon * picon, bool bBigIcon);
-         virtual ::visual::icon * get_icon(object * pobject, bool bBigIcon) const;
+      virtual ::user::document * place_hold(::user::interaction * pui);
+
+
+      virtual ::visual::icon * set_icon(object * pobject, ::visual::icon * picon, bool bBigIcon);
+      virtual ::visual::icon * get_icon(object * pobject, bool bBigIcon) const;
 
 
    };

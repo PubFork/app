@@ -1,5 +1,14 @@
 ﻿#include "framework.h"
 
+#if OS64BIT
+
+#define STRFPTR "0x%016x"
+
+#else
+
+#define STRFPTR "0x%08x"
+
+#endif
 
 error::error()
 {
@@ -896,12 +905,23 @@ void thread::signal_close_dependent_threads()
 void thread::wait_close_dependent_threads(const duration & duration)
 {
 
+   static mutex * g_pmutex = NULL;
+
+   if (g_pmutex == NULL)
+   {
+
+      g_pmutex = new mutex(::aura::system::g_p);
+
+   }
+
    DWORD dwStart = ::get_tick_count();
 
    while(::get_tick_count() - dwStart < duration.get_total_milliseconds())
    {
 
       {
+
+         synch_lock slLog(g_pmutex);
 
          synch_lock sl(m_threadrefaDependent.m_pmutex);
 
@@ -932,9 +952,9 @@ void thread::wait_close_dependent_threads(const duration & duration)
             try
             {
 
-               strSupporter.Format("supporter : %s (%d)\n", typeid(*this).name(), (int_ptr) this);
+               strSupporter.Format("supporter : " STRFPTR " Id=%d %s\n", (int_ptr)(::thread *)this, m_uiThread, typeid(*this).name());
 
-               strDependent.Format("dependent : %s (%d)\n", typeid(*pthread).name(), (int_ptr) pthread);
+               strDependent.Format("dependent : " STRFPTR " Id=%d %s\n", (int_ptr)pthread, pthread->m_uiThread, typeid(*pthread).name());
 
             }
             catch(...)
@@ -979,36 +999,21 @@ bool thread::register_at_required_threads()
       if(&System != NULL)
       {
 
-         if(!System.register_dependent_thread(this))
-         {
-
-            return false;
-
-         }
+         System.register_dependent_thread(this);
 
       }
 
       if(&Session != NULL)
       {
 
-         if(!Session.register_dependent_thread(this))
-         {
-
-            return false;
-
-         }
+         Session.register_dependent_thread(this);
 
       }
 
       if(&Application != NULL)
       {
 
-         if(!Application.register_dependent_thread(this))
-         {
-
-            return false;
-
-         }
+         Application.register_dependent_thread(this);
 
       }
 
@@ -1464,8 +1469,11 @@ wait_result thread::wait(const duration & duration)
 void thread::pre_translate_message(::message::message * pobj)
 {
 
+   pobj->m_uiMessageFlags |= 2;
+
    try
    {
+
       SCAST_PTR(::message::base,pbase,pobj);
 
       //   ASSERT_VALID(this);

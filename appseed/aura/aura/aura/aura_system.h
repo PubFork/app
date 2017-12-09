@@ -19,7 +19,7 @@ namespace aura
       {
       public:
 
-         bool                                         m_bWindowSizeChange;
+         //bool                                         m_bWindowSizeChange;
 
          sp(::user::interaction)                      m_pui;
 
@@ -220,11 +220,6 @@ namespace aura
       virtual ~system();
 
 
-      virtual bool init_application() override;
-      virtual void term_application() override;
-
-      virtual void term() override;
-
       application_ptra                                get_appptra();
 
 
@@ -337,6 +332,8 @@ namespace aura
 
       virtual UINT os_post_to_all_threads(UINT uiMessage,WPARAM wparam = 0,lparam lparam = 0);
 
+      virtual bool init_application() override;
+
       virtual bool process_init() override;
 
       virtual bool init() override;
@@ -346,10 +343,15 @@ namespace aura
       virtual bool init2() override;
 
 
-      //virtual bool verb();
-      //virtual bool common_verb();
-      //virtual bool install_uninstall_verb();
+      virtual void term_application() override;
 
+      virtual void term2() override;
+
+      virtual void term1() override;
+
+      virtual void term() override;
+
+      virtual void TermApplication() override;
 
 
       virtual bool is_system() override;

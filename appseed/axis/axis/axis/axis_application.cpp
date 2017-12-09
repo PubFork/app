@@ -1582,9 +1582,12 @@ InitFailure:
 
       m_dwAlive = ::get_tick_count();
 
-      if(!::aura::application::init1())
+      if (!::aura::application::init1())
+      {
+
          return false;
 
+      }
 
       if (!m_paurasystem->m_phtml->initialize())
       {

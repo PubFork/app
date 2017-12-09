@@ -18,7 +18,9 @@ namespace metrowin
 
 
    interaction_impl::interaction_impl() :
-      ::aura::timer_array(get_app())
+      ::aura::timer_array(get_app()),
+      m_mutexQueue(get_app()),
+      m_evQueue(get_app())
    {
 
       m_bScreenRelativeMouseMessagePosition  = false;
@@ -47,7 +49,9 @@ namespace metrowin
 
    interaction_impl::interaction_impl(::aura::application * papp):
       ::object(papp),
-      ::aura::timer_array(papp)
+      ::aura::timer_array(papp),
+      m_mutexQueue(papp),
+      m_evQueue(papp)
    {
 
       m_bScreenRelativeMouseMessagePosition  = false;
@@ -360,12 +364,64 @@ namespace metrowin
 
       install_message_routing(this);
 
+      fork([&]()
+      {
+
+         while (::get_thread_run())
+         {
+
+            {
+
+               synch_lock sl(&m_mutexQueue);
+
+               if (m_messageaQueue.has_elements())
+               {
+
+                  sp(::message::base) pmessage = m_messageaQueue[0];
+
+                  m_messageaQueue.remove_at(0);
+
+                  if (m_messageaQueue.is_empty())
+                  {
+
+                     m_evQueue.ResetEvent();
+
+                  }
+
+                  sl.unlock();
+
+                  m_pui->message_handler(pmessage);
+
+               }
+               else
+               {
+
+                  do
+                  {
+
+                     sl.unlock();
+
+                     m_evQueue.wait(millis(300));
+
+                     sl.lock();
+
+                  }
+                  while (m_messageaQueue.is_empty() && ::get_thread_run());
+
+               }
+
+            }
+
+         }
+
+      });
+
       m_pthreadDraw = fork([&]()
       {
 
          bool bDrawing = false;
 
-         DWORD dwLastRedraw;
+         DWORD dwLastSync;
 
          manual_reset_event evDraw(get_app());
 
@@ -374,16 +430,15 @@ namespace metrowin
          while (::get_thread_run())
          {
 
-            dwLastRedraw = ::get_tick_count();
+            dwLastSync = ::get_tick_count();
 
-            if (::aura::system::g_p->m_possystemwindow->m_bWindowSizeChange)
-            {
+            //if (::aura::system::g_p->m_possystemwindow->m_bWindowSizeChange)
+            //{
 
-               ::aura::system::g_p->m_possystemwindow->m_bWindowSizeChange = false;
+            //   ::aura::system::g_p->m_possystemwindow->m_bWindowSizeChange = false;
 
-               m_xapp->m_directx->OnWindowSizeChange();
 
-            }
+            //}
 
             if (!bDrawing && (m_pui->has_pending_graphical_update()
                               || m_pui->defer_check_layout()))
@@ -441,7 +496,7 @@ namespace metrowin
                do
                {
 
-                  DWORD dwTick = ::get_tick_count() - dwLastRedraw;
+                  DWORD dwTick = ::get_tick_count() - dwLastSync;
 
                   if (dwTick < dwEllapse)
                   {
@@ -457,10 +512,10 @@ namespace metrowin
 
                   }
 
-                  dwLastRedraw = ::get_tick_count();
+                  dwLastSync = ::get_tick_count();
 
                }
-               while (!evDraw.wait(millis((int) dwEllapse)).succeeded());
+               while (!evDraw.wait(millis((int) dwEllapse)).succeeded() && ::get_thread_run());
 
             }
 
@@ -1289,19 +1344,19 @@ namespace metrowin
 
       }
 
-      if(m_pui != NULL)
-      {
+      //if(m_pui != NULL)
+      //{
 
-         m_pui->pre_translate_message(pbase);
+      //   m_pui->pre_translate_message(pbase);
 
-         if(pbase->m_bRet)
-         {
+      //   if(pbase->m_bRet)
+      //   {
 
-            return;
+      //      return;
 
-         }
+      //   }
 
-      }
+      //}
 
       if(m_plistener != NULL)
       {
@@ -3006,8 +3061,11 @@ return TRUE;
 
    void interaction_impl::_001OnCreate(::message::message * pobj)
    {
+
       UNREFERENCED_PARAMETER(pobj);
+
       Default();
+
 
 
    }
@@ -7291,6 +7349,18 @@ namespace metrowin
          p->on_after_graphical_update();
 
       }
+
+   }
+
+
+   void interaction_impl::queue_message_handler(::message::base * pbase)
+   {
+
+      synch_lock sl(&m_mutexQueue);
+
+      m_messageaQueue.add(pbase);
+
+      m_evQueue.set_event();
 
    }
 

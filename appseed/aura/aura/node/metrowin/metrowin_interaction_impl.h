@@ -27,6 +27,10 @@ namespace metrowin
       ::thread *                                m_pthreadDraw;
 
       int_ptr_to_int_ptr                        m_mapLong;
+      mutex                                     m_mutexQueue;
+      manual_reset_event                        m_evQueue;
+      spa(::message::base)                      m_messageaQueue;
+
 
       interaction_impl();
       interaction_impl(::aura::application * papp);
@@ -710,6 +714,7 @@ namespace metrowin
 
       void offset_view_port_org(LPRECT lprectScreen);
 
+      virtual void queue_message_handler(::message::base * pbase) override;
 
    };
 

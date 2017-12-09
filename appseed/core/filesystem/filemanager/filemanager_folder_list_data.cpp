@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "framework.h"
 
 
@@ -52,7 +52,7 @@ namespace filemanager
       pitem->m_bOk = true;
    }
 
-   void folder_list_data::GetSel(::user::list * plist , stringa & stra)
+   void folder_list_data::GetSel(::user::list * plist, stringa & stra)
    {
       stringa wstraTotal;
       if(!data_load(::aura::system::idEmpty, wstraTotal))
@@ -72,12 +72,21 @@ namespace filemanager
       }
    }
 
+
    ::count folder_list_data::_001GetItemCount()
    {
+
       stringa straTotal;
-      if(!data_load(::aura::system::idEmpty, straTotal))
-         return -1;
+
+      if (!data_load(::aura::system::idEmpty, straTotal))
+      {
+
+         return 0;
+
+      }
+
       return straTotal.get_size();
+
    }
 
 

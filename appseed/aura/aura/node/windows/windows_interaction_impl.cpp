@@ -1492,6 +1492,7 @@ namespace windows
 
       if (m_pui != NULL)
       {
+
          if (m_pui->WfiIsMoving())
          {
             //TRACE("moving: skip pre translate message");
@@ -1507,6 +1508,8 @@ namespace windows
 
             if (pbase->m_bRet)
                return;
+
+            pbase->m_uiMessageFlags |= 1;
 
          }
       }
