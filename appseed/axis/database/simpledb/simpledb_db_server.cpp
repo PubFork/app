@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "db_str_set.h"
 
 
@@ -94,7 +94,11 @@ bool db_server::initialize()
 
    m_pdb          = canew(::sqlite::base(get_app()));
 
-   string strAppName = System.handler()->m_spcommandline->m_strApp;
+   sp(::handler) phandler = System.handler();
+
+   sp(command_line) pcommandline = phandler->m_spcommandline;
+
+   string strAppName = pcommandline->m_strApp;
 
    ::file::path str;
 
