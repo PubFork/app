@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 /*
 namespace visual
@@ -32,6 +32,9 @@ namespace visual
 
 namespace visual
 {
+
+
+   double visual::g_dEmboss = 2.0;
 
 
    visual::visual(::aura::application * papp) :
@@ -121,9 +124,9 @@ namespace visual
 
       if (!::aura::department::init())
       {
-         
+
          return false;
-         
+
       }
 
       ////if(Application.dir().is(System.dir().commonappdata("")))
