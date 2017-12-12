@@ -34,7 +34,7 @@
 #ifndef _ID3LIB_GLOBALS_H_
 #define _ID3LIB_GLOBALS_H_
 
-#include "aura/aura/aura.h"
+#include "aura/aura/aura/aura.h"
 
 #include <stdlib.h>
 

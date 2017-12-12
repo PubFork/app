@@ -251,6 +251,13 @@ class string_array :
       // csstidy: Same as explode, but not within a Type
       string_array & csstidy_explode_ws(char sep,const char * psz);
 
+   
+      template < typename PRED >
+      void pred_implode(Type & rwstr,PRED pred, const char * lpcszSeparator = NULL,index iStart = 0,::count iCount = -1) const;
+   
+      template < typename PRED >
+      Type pred_implode(PRED pred, const char * lpcszSeparator = NULL,index iStart = 0,::count iCount = -1) const;
+   
       void implode(Type & rwstr,const char * lpcszSeparator = NULL,index iStart = 0,::count iCount = -1) const;
       Type implode(const char * lpcszSeparator = NULL,index iStart = 0,::count iCount = -1) const;
       void reverse_implode(Type & rwstr,const char * lpcszSeparator = NULL,index iStart = 0,::count iCount = -1) const;
@@ -393,6 +400,48 @@ class string_array :
 
 
 };
+
+
+
+template < class Type, class RawType >
+template < typename PRED >
+void string_array < Type, RawType > ::pred_implode(Type & str, PRED pred, const char * lpcszSeparator,index start,::count count) const
+{
+   str.Empty();
+   Type strSeparator(lpcszSeparator);
+   if(start < 0)
+   {
+      start += this->get_size();
+   }
+   index last;
+   if(count < 0)
+   {
+      last = this->get_size() + count;
+   }
+   else
+   {
+      last = start + count - 1;
+   }
+   for(index i = start; i <= last; i++)
+   {
+      if(i > start)
+      {
+         str += strSeparator;
+      }
+      str += pred(this->element_at(i));
+   }
+}
+
+
+template < class Type, class RawType >
+template < typename PRED >
+Type string_array < Type, RawType > ::pred_implode(PRED pred, const char * lpcszSeparator,index iStart,index iEnd) const
+{
+   Type str;
+   pred_implode(str, pred,lpcszSeparator,iStart,iEnd);
+   return str;
+}
+
 
 
 template < class Type, class RawType >

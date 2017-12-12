@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include "base/database/simpledb/simpledb.h"
 
 
@@ -1458,8 +1458,13 @@ finished:
 
       try
       {
+         
+         if(m_puserex != NULL)
+         {
 
-         m_puserex->term();
+            m_puserex->term();
+            
+         }
 
       }
       catch (...)

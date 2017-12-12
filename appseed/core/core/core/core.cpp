@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 #ifdef WINDOWS
 //#include <cderr.h>      // Commdlg Error definitions
@@ -9,8 +9,7 @@
 // CLASS_DECL_CORE string astr.strNote;
 
 
-::aura::system * core_create_aura_system(void);
-
+::aura::system * core_create_aura_system(app_core * pappcore);
 
 namespace core
 {

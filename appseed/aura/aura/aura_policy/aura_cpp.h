@@ -1,4 +1,4 @@
-﻿/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 //
 //  ca2
 //
@@ -902,7 +902,7 @@ namespace file
 #include "aura/aura/aura/aura_debug.h"
 
 
-#include "aura/aura/aura_app_core.h"
+#include "aura/aura/aura/aura_app_core.h"
 
 
 
@@ -1079,8 +1079,8 @@ namespace aura
 
 #elif defined(MACOS)
 
-#include "aura/os/ansios/ansios.h"
-#include "aura/os/macos/macos.h"
+#include "aura/aura/os/ansios/ansios.h"
+#include "aura/aura/os/macos/macos.h"
 
 #elif defined(ANDROID)
 
@@ -1236,11 +1236,11 @@ CLASS_DECL_AURA string get_system_error_message(uint32_t dwError);
 #include "aura/multithreading/multithreading_forking_thread.h"
 #include "aura/multithreading/multithreading_delay_thread.h"
 #include "aura/multithreading/multithreading_tools.h"
-#include "aura/aura/aura_timer_callback.h"
+#include "aura/aura/aura/aura_timer_callback.h"
 #include "aura/aura/aura/aura_timer_item.h"
 #include "aura/aura/aura/aura_timer_array.h"
-#include "aura/aura/aura_timer.h"
-#include "aura/aura/aura_timer_event.h"
+#include "aura/aura/aura/aura_timer.h"
+#include "aura/aura/aura/aura_timer_event.h"
 
 #include "aura/multithreading/multithreading_thread_impl.h"
 #include "aura/multithreading/multithreading_simple_thread.h"
@@ -1460,7 +1460,7 @@ struct install_status
 
 #include "aura/aura/aura/aura_system_str.h"
 
-#include "aura/os/os_process.h"
+#include "aura/aura/os/os_process.h"
 
 
 
@@ -1486,9 +1486,9 @@ struct install_status
 
 #include "aura/primitive/str/str.inl"
 
-#include "aura/aura/aura.inl"
+#include "aura/aura/aura/aura.inl"
 
-#include "primitive/collection/collection.inl"
+#include "aura/primitive/collection/collection.inl"
 
 
 /*namespace numeric_info
@@ -1588,7 +1588,7 @@ inline void string_format::format(const char * & s,const T & value,Args... args)
 
 #ifndef WINDOWSEX
 
-#include "aura/os/cross/windows/windows_thread_impl.h"
+#include "aura/aura/os/cross/windows/windows_thread_impl.h"
 
 #endif
 
@@ -1672,7 +1672,7 @@ inline void string_format::format(const char * & s,const T & value,Args... args)
 #include "aura/aura/aura/aura_file_watcher_impl.h"
 
 
-#include "aura/aura/aura_console_window.h"
+#include "aura/aura/aura/aura_console_window.h"
 
 
 #include "aura/aura/aura/os.h"
@@ -1721,7 +1721,7 @@ CLASS_DECL_AURA string get_system_error_message(uint32_t dwError);
 #include "aura/aura/aura/aura_profiler.h"
 
 
-#include "aura/os/os2.h"
+#include "aura/aura/os/os2.h"
 
 
 #include "aura/aura/aura/aura_speaker.h"
@@ -1968,7 +1968,7 @@ CLASS_DECL_AURA string get_error_string(uint64_t uiError);
 CLASS_DECL_AURA void set_aura(void * p,::aura::application * papp);
 CLASS_DECL_AURA ::aura::application * get_aura(void * p);
 
-#include "aura/aura/aura_error.h"
+#include "aura/aura/aura/aura_error.h"
 #include "aura/primitive/primitive.h"
 
 
@@ -2001,7 +2001,7 @@ CLASS_DECL_AURA ::aura::application * get_aura(void * p);
 #include "aura/graphics/graphics.h"
 
 
-#include "aura/install/install2.h"
+#include "aura/aura/install/install2.h"
 
 
 #include "aura/user/user/user_controller.h"

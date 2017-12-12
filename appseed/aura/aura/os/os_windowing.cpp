@@ -18,3 +18,6 @@ oswindow get_splash()
    return g_oswindowSplash;
 
 }
+
+
+

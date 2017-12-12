@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include <stdio.h>
 
 const int string::npos = -1;
@@ -2846,16 +2846,17 @@ void string::FormatV(const char * pszFormat,va_list args)
 
    if(pszFormat == NULL)
       _throw(invalid_argument_exception(get_app()));
-
+   va_list ptr;
+   va_copy(ptr, args);
    strsize nLength = string_trait::GetFormattedLength(pszFormat,args);
    char * pszBuffer = GetBuffer(nLength);
 #if _SECURE_TEMPLATE || defined(LINUX)
-   string_trait::Format(pszBuffer,nLength + 1,pszFormat,args);
+   string_trait::Format(pszBuffer,nLength + 1,pszFormat,ptr);
 #else
-   string_trait::Format(pszBuffer,pszFormat,args);
+   string_trait::Format(pszBuffer,pszFormat,ptr);
 #endif
    ReleaseBufferSetLength(nLength);
-
+   va_end(ptr);
 }
 
 // Format a message using format string 'pszFormat' and va_list

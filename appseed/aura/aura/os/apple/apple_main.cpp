@@ -8,7 +8,108 @@
 #include "framework.h"
 #include "apple.h"
 
+//m_plibrary = __node_library_open_ca2(pszPath, m_strMessage);
 
+string transform_to_c_arg(const char * psz)
+{
+
+   if(strstr(psz, " ") != NULL)
+   {
+    
+      return string("\"") + ::str::replace(psz, "\"", "\\\"") + "\"";
+      
+   }
+   else
+   {
+      
+      return psz;
+      
+   }
+
+}
+
+
+string merge_colon_args(const array < stringa > str2a)
+{
+
+   stringa straBeforeColon;
+   
+   stringa straAfterColon;
+   
+   string strCommandLine;
+
+   for(auto & stra : str2a)
+   {
+      
+      index iFindColon = stra.find_first(":");
+      
+      if(stra.get_size() > 0 && iFindColon != 0)
+      {
+         
+         if(strCommandLine.is_empty())
+         {
+            
+            strCommandLine = transform_to_c_arg(stra[0]);
+            
+         }
+         
+      }
+      
+      iFindColon = iFindColon < 0 ? stra.get_size() : 1;
+      
+      for(index i = 1; i < stra.get_count(); i++)
+      {
+         
+         if(i < iFindColon)
+         {
+            
+            straBeforeColon.add(stra[i]);
+            
+         }
+         else if(i > iFindColon)
+         {
+            
+            string str = stra[i];
+            
+            if(::str::begins_eat_ci(str, "app="))
+            {
+               
+               if(straAfterColon.find_first_begins("app=") >= 0) // fixed case when added below :D..O
+               {
+                  
+                  straAfterColon.add("fallback_app=" + str);
+                  
+               }
+               else
+               {
+                  
+                  straAfterColon.add("app=" + str); // fixed case :) (excuses, excuses...)
+                  
+               }
+               
+            }
+            else
+            {
+            
+               straAfterColon.add(str);
+               
+            }
+            
+         }
+         
+      }
+      
+   }
+
+   strCommandLine += straBeforeColon.pred_implode(&transform_to_c_arg, " ");
+   
+   strCommandLine += " : ";
+
+   strCommandLine += straAfterColon.pred_implode(&transform_to_c_arg, " ");
+
+   return strCommandLine;
+
+}
 
 
 uint32_t __start_system_with_file(const char ** pszaFile, int iCount);
@@ -164,301 +265,21 @@ uint32_t __start_system_with_file(const char ** pszaFile, int iCount)
 
 
 
-
+string ca2_command_line();
 
 
 bool node_fill(app_core * pappcore)
 {
    
-      setlocale(LC_ALL,"");
+   setlocale(LC_ALL,"");
       
-   int argc = pappcore->m_pmaindata->m_argc;
+   string strCommandLine = merge_colon_args({
+      get_c_args(pappcore->m_pmaindata->m_argc, pappcore->m_pmaindata->m_argv),
+      get_c_args(ca2_command_line()),
+      get_c_args(pappcore->m_pmaindata->m_lpCmdLine)
+   });
    
-   char * * argv = pappcore->m_pmaindata->m_argv;
-      //pid_t processid;
-   
-   string strCommandLine;
-   
-   strCommandLine = argv[0];
-   
-   if(strCommandLine.find(' ') >= 0)
-   {
-      
-      strCommandLine = "\"" + strCommandLine + "\"";
-      
-   }
-   
-   //string strP = pszParams;
-   
-   //strsize iFind = strP.find(':');
-   
-//   if(iFind == 0)
-//   {
-//   }
-//   else
-//   {
-//      int iQuote;
-//      while(iFind > 0)
-//      {
-//         
-//         iQuote = 0;
-//         const char * psz = &strP[iFind];
-//         for(; psz >= strP.c_str(); psz = ::str::utf8_dec(strP, psz))
-//         {
-//            if(*psz == '\"')
-//            {
-//               iQuote++;
-//            }
-//         }
-//         
-//         if(iQuote % 2 == 0)
-//         {
-//            break;
-//            
-//         }
-//         iFind = strP.find(':', iFind + 1);
-//         
-//      }
-//      
-//      
-//      
-//   }
-   
-   
-   string str1;
-   
-   string str2;
-   
-//   if(iFind >= 0)
-//   {
-//      
-//      str1 = strP.Left(iFind);
-//      
-//      if(str1.has_char())
-//      {
-//         
-//         str1 = " " + str1 + " ";
-//         
-//      }
-//      
-//      str2 = strP.Mid(iFind + 1);
-//      
-//      if(str2.has_char())
-//      {
-//         
-//         str2 = " " + str2 + " ";
-//         
-//      }
-//      
-//   }
-   
-   string strA;
-   
-   string strB;
-   
-   //processid = getpid();
-   
-   //printf("%d\n", processid);
-   
-   string strAddUp;
-   
-   bool bColon = false;
-   
-   bool bOverride = false;
-   
-   for(index i = 1; i < argc; i++)
-   {
-      
-      if(strcmp(argv[i], ":") == 0)
-      {
-         
-         bColon = true;
-         
-      }
-      else
-      {
-         if(!bColon)
-         {
-            
-            if(argv[i][0] == '-')
-            {
-               
-               bColon = true;
-               
-            }
-            
-         }
-         
-         if(!bColon)
-         {
-            
-            //if(strstr(argv[i], " ") != 0)
-            {
-               
-               strA += " \"" + string(argv[i]) + "\"";
-               
-            }
-            //            else
-            //            {
-            //
-            //               strA += string(" ") + argv[i];
-            //
-            //            }
-            
-         }
-         else
-         {
-            
-            if(::str::begins_ci(argv[i], "app="))
-            {
-               
-               bOverride = true;
-               
-            }
-            
-            strB += string(" ") + argv[i];
-            
-         }
-         
-      }
-      
-   }
-   
-   if(bOverride)
-   {
-      
-      str2.replace_ci("app=", "fallback_app=");
-      
-   }
-   
-   strCommandLine += str1 + strA + " : " + str2 + strB;
-   
-   string strAppId;
-   
-   get_command_line_param(strAppId, strCommandLine, "app");
-   
-   if(strAppId.is_empty() && pappcore->m_bAcidApp)
-   {
-    
-      strCommandLine += " app=acid";
-      
-   }
-
-set_command_line_dup(strCommandLine);
-
-//   string strAppId;
-//   
-//   //if (hinstance == NULL)
-//   //{
-//   
-//   //   hinstance = ::GetModuleHandle(NULL);
-//   
-//   //}
-//   
-//   //if (::GetProcAddress(hinstance, "get_acid_app") != NULL)
-//   //{
-//   
-//   //   strAppId = "acid";
-//   
-//   //}
-//   
-//   if (strAppId.is_empty())
-//   {
-//      
-//      strAppId = read_resource_as_string_dup(pappcore->m_pmaindata->m_hinstance, 1, "APPID");
-//      
-//      if (strAppId.is_empty())
-//      {
-//         
-//         get_command_line_param(strAppId, string(::GetCommandLineW()), "app");
-//         
-//         if (strAppId.is_empty())
-//         {
-//            
-//            strAppId = "acid";
-//            
-//         }
-//         
-//      }
-//      
-//   }
-//   
-//   if (strAppId.has_char())
-//   {
-//      
-//      HMODULE hmodule = NULL;
-//      
-//      bool bInApp = strAppId.compare_ci("acid") == 0;
-//      
-//      if (!bInApp)
-//      {
-//         
-//         string strLibrary = ::process::app_id_to_app_name(strAppId);
-//         
-//         hmodule = ::LoadLibrary(strLibrary + ".dll");
-//         
-//      }
-//      
-//      if (hmodule != NULL || bInApp)
-//      {
-//         
-//         PFN_DEFER_INIT defer_init = NULL;
-//         
-//         if ((hmodule = ::GetModuleHandle("core.dll")) != NULL)
-//         {
-//            
-//            defer_init = (PFN_DEFER_INIT) ::GetProcAddress(hmodule, "defer_core_init");
-//            
-//         }
-//         else if ((hmodule = ::GetModuleHandle("base.dll")) != NULL)
-//         {
-//            
-//            defer_init = (PFN_DEFER_INIT) ::GetProcAddress(hmodule, "defer_base_init");
-//            
-//         }
-//         else if ((hmodule = ::GetModuleHandle("axis.dll")) != NULL)
-//         {
-//            
-//            defer_init = (PFN_DEFER_INIT) ::GetProcAddress(hmodule, "defer_axis_init");
-//            
-//         }
-//         
-//         if (defer_init != NULL && !defer_init())
-//         {
-//            
-//            pappcore->on_result(-3);
-//            
-//            return NULL;
-//            
-//         }
-//         
-//      }
-//      
-//   }
-//   
-//   ::windows::command * pmaininitdata = new ::windows::command;
-//   
-//   pmaininitdata->m_hInstance = pappcore->m_pmaindata->m_hinstance;
-//   pmaininitdata->m_hPrevInstance = pappcore->m_pmaindata->m_hPrevInstance;
-//   pmaininitdata->m_nCmdShow = pappcore->m_pmaindata->m_nCmdShow;
-//   pmaininitdata->m_strAppId = strAppId;
-//   
-//   //if (pszCmdLine == NULL)
-//   //{
-//   
-//   //pmaininitdata->m_strCommandLine = ::path::module() + " : app=" + strAppId;
-//   
-//   //}
-//   //else
-//   //{
-//   
-//   //pmaininitdata->m_strCommandLine = pszCmdLine;
-//   pmaininitdata->m_strCommandLine = ::GetCommandLineW();
-//   
-//   
-//   //}
-//   
-//   pappcore->m_pmaindata->m_pmaininitdata = pmaininitdata;
+   set_command_line_dup(strCommandLine);
    
    return true;
    

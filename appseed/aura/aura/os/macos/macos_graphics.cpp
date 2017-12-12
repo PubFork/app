@@ -1146,3 +1146,19 @@ bool macos_get_file_image(::draw2d::dib * pdib, const char * psz)
    return true;
    
 }
+
+
+
+bool os_init_imaging()
+{
+ 
+   return true;
+   
+}
+
+
+void os_term_imaging()
+{
+   
+}
+

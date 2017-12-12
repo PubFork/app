@@ -372,3 +372,10 @@ CLASS_DECL_AURA bool is_shared_library_busy(const stringa & stra)
    
 }
 
+void os_term_application()
+{
+   
+   ns_app_terminate();
+   
+}
+

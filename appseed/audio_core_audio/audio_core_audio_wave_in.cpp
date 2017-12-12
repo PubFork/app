@@ -28,8 +28,10 @@ namespace multimedia
       {
       }
 
-      bool wave_in::initialize_thread()
+      
+      bool wave_in::init_thread()
       {
+         
          TRACE("wave_in::init_instance %X\n", get_os_int());
          //SetMainWnd(NULL);
          //ASSERT(GetMainWnd() == NULL);
@@ -37,22 +39,26 @@ namespace multimedia
          m_evInitialized.SetEvent();
          
          
-         if(!::multimedia::audio::wave_in::initialize_thread())
+         if(!::multimedia::audio::wave_in::init_thread())
             return false;
          
          
          
-         if(!toolbox::initialize_thread())
+         if(!toolbox::init_thread())
             return false;
 
          
          return true;
       }
 
-      int32_t wave_in::exit_thread()
+      
+      void wave_in::term_thread()
       {
+         
          m_eventExitInstance.SetEvent();
-         return thread::exit_thread();
+         
+         thread::term_thread();
+         
       }
 
       void wave_in::pre_translate_message(::message::message * pmessage)

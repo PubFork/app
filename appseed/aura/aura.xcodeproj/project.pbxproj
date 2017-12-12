@@ -639,6 +639,8 @@
 		9A0974821F223D7E00CFA833 /* UncaughtExceptionHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9A0974751F223D2E00CFA833 /* UncaughtExceptionHandler.mm */; };
 		9A0974871F223E5000CFA833 /* apple_ns_exception.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A0974841F223E5000CFA833 /* apple_ns_exception.h */; };
 		9A0974881F223E5000CFA833 /* apple_ns_exception.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A0974841F223E5000CFA833 /* apple_ns_exception.h */; };
+		9A0AA3C21FDD849600C3A7A6 /* ios_windowing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A0AA3C01FDD849600C3A7A6 /* ios_windowing.cpp */; };
+		9A0AA3C31FDD849600C3A7A6 /* ios_windowing.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A0AA3C11FDD849600C3A7A6 /* ios_windowing.h */; };
 		9A1641E419C4A4CE00966C5E /* aura_c.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163DD119C4A4CD00966C5E /* aura_c.h */; };
 		9A1641E519C4A4CE00966C5E /* aura_cpp.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163DD219C4A4CD00966C5E /* aura_cpp.h */; };
 		9A1641E619C4A4CE00966C5E /* aura_policy.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163DD319C4A4CD00966C5E /* aura_policy.h */; };
@@ -2913,6 +2915,9 @@
 		9A0974831F223E5000CFA833 /* apple_ns_exception.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = apple_ns_exception.cpp; sourceTree = "<group>"; };
 		9A0974841F223E5000CFA833 /* apple_ns_exception.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = apple_ns_exception.h; sourceTree = "<group>"; };
 		9A0974891F22403B00CFA833 /* apple.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = apple.h; sourceTree = "<group>"; };
+		9A0AA3C01FDD849600C3A7A6 /* ios_windowing.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ios_windowing.cpp; sourceTree = "<group>"; };
+		9A0AA3C11FDD849600C3A7A6 /* ios_windowing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ios_windowing.h; sourceTree = "<group>"; };
+		9A0AA3C91FDD8AA500C3A7A6 /* os_windowing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = os_windowing.h; sourceTree = "<group>"; };
 		9A12322A1F9E933400BBECF8 /* axisidn.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = axisidn.xcodeproj; path = ../../../third/appseed/idn/axisidn.xcodeproj; sourceTree = "<group>"; };
 		9A163DD119C4A4CD00966C5E /* aura_c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_c.h; sourceTree = "<group>"; };
 		9A163DD219C4A4CD00966C5E /* aura_cpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_cpp.h; sourceTree = "<group>"; };
@@ -4006,6 +4011,8 @@
 		9A8383921F414D3D005ED52C /* draw2d_pen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = draw2d_pen.cpp; sourceTree = "<group>"; };
 		9A8383931F414D3D005ED52C /* draw2d_region.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = draw2d_region.cpp; sourceTree = "<group>"; };
 		9A8897A514C24736006B4023 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = ../../../../System/Library/Frameworks/Foundation.framework; sourceTree = "<group>"; };
+		9A8CEA9F1FDDF99F00DEDA01 /* windows */ = {isa = PBXFileReference; lastKnownFileType = folder; path = windows; sourceTree = "<group>"; };
+		9A8CEAA01FDDFE2F00DEDA01 /* metrowin */ = {isa = PBXFileReference; lastKnownFileType = folder; path = metrowin; sourceTree = "<group>"; };
 		9A8ED4821F20052E007DB75C /* draw2d_nanosvg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = draw2d_nanosvg.cpp; sourceTree = "<group>"; };
 		9A8ED57F1F204BDD007DB75C /* macos_user_mm.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = macos_user_mm.mm; sourceTree = "<group>"; };
 		9A8ED5811F204E28007DB75C /* RoundWindowApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoundWindowApp.h; sourceTree = "<group>"; };
@@ -4571,6 +4578,8 @@
 				07CAA96C1B4DBC4000180410 /* os.h */,
 				07EDC2781B4E427700AF8928 /* MessageBoxA_W.mm */,
 				07703C321B6FDEEA009026EA /* ios_mm.mm */,
+				9A0AA3C01FDD849600C3A7A6 /* ios_windowing.cpp */,
+				9A0AA3C11FDD849600C3A7A6 /* ios_windowing.h */,
 			);
 			path = ios;
 			sourceTree = "<group>";
@@ -5663,6 +5672,8 @@
 		9A163F6519C4A4CD00966C5E /* os */ = {
 			isa = PBXGroup;
 			children = (
+				9A8CEAA01FDDFE2F00DEDA01 /* metrowin */,
+				9A8CEA9F1FDDF99F00DEDA01 /* windows */,
 				9A81810B1F21A80100FDAF74 /* apple */,
 				077A05301B4D70B7001C85FF /* ios */,
 				9A163F8919C4A4CD00966C5E /* ansios */,
@@ -5686,6 +5697,7 @@
 				9A1640B019C4A4CE00966C5E /* os_http.cpp */,
 				9A1640B219C4A4CE00966C5E /* os_process.h */,
 				9A1640B319C4A4CE00966C5E /* os_thread.cpp */,
+				9A0AA3C91FDD8AA500C3A7A6 /* os_windowing.h */,
 			);
 			path = os;
 			sourceTree = "<group>";
@@ -7009,6 +7021,7 @@
 				077A05E21B4D7403001C85FF /* str.h in Headers */,
 				077A05E31B4D7403001C85FF /* exception_interface_only.h in Headers */,
 				077A05E41B4D7403001C85FF /* macos_process.h in Headers */,
+				9A0AA3C31FDD849600C3A7A6 /* ios_windowing.h in Headers */,
 				077A05E51B4D7403001C85FF /* exception_resource.h in Headers */,
 				077A05E61B4D7403001C85FF /* process_process.h in Headers */,
 				077A05E81B4D7403001C85FF /* filesystem_dir_system.h in Headers */,
@@ -8576,6 +8589,7 @@
 				9A957A411F6225B900623508 /* cross_windows_error.cpp in Sources */,
 				9A957A421F6225B900623508 /* cross_windows_locale.cpp in Sources */,
 				9A957A431F6225B900623508 /* cross_windows_nt.cpp in Sources */,
+				9A0AA3C21FDD849600C3A7A6 /* ios_windowing.cpp in Sources */,
 				9A957A441F6225B900623508 /* cross_windows_shared_memory.cpp in Sources */,
 				9A957A451F6225B900623508 /* cross_windows_threading.cpp in Sources */,
 				9A957A461F6225B900623508 /* cross_windows_user.cpp in Sources */,

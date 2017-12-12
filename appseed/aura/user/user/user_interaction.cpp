@@ -1,5 +1,6 @@
-﻿#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 
+::user::interaction * get_system_window_interaction(::os_system_window * psystemwindow);
 
 #ifdef WINDOWSEX
 
@@ -4356,7 +4357,7 @@ restart:
 
       auto psystemwindow = System.m_possystemwindow;
 
-      if ((psystemwindow == NULL || psystemwindow->m_pui != this))
+      if (psystemwindow == NULL || ::get_system_window_interaction(psystemwindow) != this)
       {
 
          if (!(pbase->m_uiMessageFlags & 2)) // message already pre translated

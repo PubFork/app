@@ -175,14 +175,36 @@ void ns_app_terminate()
    
 }
 
-
-
-void ns_get_bundle_identifier(char * psz, int iSize)
+size_t ns_string(char * psz, size_t s, NSString * pstr)
 {
    
-   NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+   size_t len = strlen([pstr UTF8String]);
    
-   strncpy(psz, [bundleIdentifier UTF8String], iSize);
+   if(psz == NULL || s == 0)
+   {
+   
+      return len;
+      
+   }
+   
+   strncpy(psz, [pstr UTF8String], s);
+   
+   if(len < s)
+   {
+    
+      return len;
+      
+   }
+
+   return s;
+   
+}
+
+
+size_t ns_get_bundle_identifier(char * psz, size_t iSize)
+{
+   
+   return ns_string(psz, iSize, [[NSBundle mainBundle] bundleIdentifier]);
    
 }
 

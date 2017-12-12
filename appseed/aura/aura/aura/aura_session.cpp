@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include "aura/net/sockets/bsd/sockets_sockets.h"
 
 
@@ -546,9 +546,10 @@ namespace aura
             {
 
                simple_message_box("Could not create requested application: \"" + strApp + "\"", MB_OK);
+               
+               ::count c = System.handler()->m_spcommandline->m_varQuery["app"].array_get_count();
 
-               if (System.handler()->m_spcommandline->m_varQuery["app"].array_get_count() == 1
-                     && System.handler()->m_spcommandline->m_varQuery["app"] == strApp)
+               if (c == 1 && System.handler()->m_spcommandline->m_varQuery["app"] == strApp)
                {
 
                   ::multithreading::post_quit(&System);
@@ -804,7 +805,6 @@ namespace aura
       string strAppId(pszAppId);
 
 #if !defined(METROWIN) && !defined(VSNORD) && !defined(APPLE_IOS)
-
 
       if (System.m_pappcore->m_pfnNewApp == NULL && ((!System.handler()->m_varTopicQuery.has_property("install")
             && !System.handler()->m_varTopicQuery.has_property("uninstall"))

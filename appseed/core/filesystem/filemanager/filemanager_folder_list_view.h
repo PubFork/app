@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 namespace filemanager
@@ -20,13 +20,13 @@ namespace filemanager
       virtual ~folder_list_view();
 
 
-      virtual void install_message_routing(::message::sender * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface) override;
 
 
       virtual void initialize(string strDataKeyModifier,bool bRecursive);
 
 
-      virtual string calc_data_id();
+      virtual string calc_data_id() override;
 
       virtual void _001InsertColumns() override;
 

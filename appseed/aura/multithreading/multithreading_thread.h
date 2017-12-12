@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 class CLASS_DECL_AURA error :
@@ -32,6 +32,9 @@ public:
    int get_exit_code();
 
    ::exception::exception * get_exception();
+   
+   ::exception::exception * detach_exception();
+   
 
 };
 

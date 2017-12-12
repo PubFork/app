@@ -124,8 +124,8 @@ CLASS_DECL_AXIS bool __node_axis_pos_term();
 
 #elif defined(MACOS)
 
-#include "axis/os/ansios/ansios.h"
-#include "axis/os/macos/macos.h"
+#include "axis/axis/os/ansios/ansios.h"
+#include "axis/axis/os/macos/macos.h"
 
 #elif defined(ANDROID)
 
@@ -268,11 +268,11 @@ namespace user
 } // namespace user
 
 
-#include "primitive/data/data_tree_item.h"
+#include "aura/primitive/data/data_tree_item.h"
 
-#include "primitive/data/data_tree.h"
+#include "aura/primitive/data/data_tree.h"
 
-#include "primitive/data/data_simple_item.h"
+#include "aura/primitive/data/data_simple_item.h"
 
 
 #include "axis/html_lite/html_lite/html_lite.h"

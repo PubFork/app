@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 //#include "macos.h"
 //#include "base/user/user.h"
 //#include "base/user/user/user.h"
@@ -2262,7 +2262,7 @@ namespace macos
       else
       {
 
-         m_pthreadUpdateWindow = m_pui->fork([&]()
+         m_pthreadUpdateWindow = fork([&]()
          {
 
             DWORD dwStart;
@@ -2344,9 +2344,9 @@ namespace macos
 
             output_debug_string("m_pthreadDraw has finished!");
 
-            m_pthreadUpdateWindow.release();
+//            m_pthreadUpdateWindow.release();
 
-            release_graphics_resources();
+//            release_graphics_resources();
 
 
          });

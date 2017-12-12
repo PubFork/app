@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 namespace filemanager
@@ -165,12 +165,14 @@ namespace filemanager
                }
                else if (puh->is_type_of(update_hint::TypeTopicCancel))
                {
+                  
                   if (base_class < ::filemanager::save_as_view >::bases(get_pane_window(0)))
                   {
                      //RemovePaneAt(0);
                      //set_position(0, 49);
                      //on_layout();
                   }
+                  
                }
                else if (puh->is_type_of(update_hint::TypeTopicOK))
                {
@@ -183,15 +185,18 @@ namespace filemanager
                   }
 
                }
+               
             }
+            
          }
+         
       }
 
-      tab_view * ptabview = GetParentFrame()->GetTypedParent < tab_view >();
-      if (ptabview != NULL)
-      {
-         ptabview->on_update(this, lHint, phint);
-      }
+      //tab_view * ptabview = GetParentFrame()->GetTypedParent < tab_view >();
+      //if (ptabview != NULL)
+      //{
+      //   ptabview->on_update(this, lHint, phint);
+      //}
 
    }
 

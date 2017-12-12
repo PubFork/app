@@ -1,4 +1,4 @@
-﻿#include "framework.h" // previously aura/user/user.h
+#include "framework.h" // previously aura/user/user.h
 //#include "aura/user/colorertake5/colorertake5.h"
 
 
@@ -10,11 +10,7 @@ void os_init_windowing();
 
 void os_term_windowing();
 
-#ifdef METROWIN
-
 void os_term_application();
-
-#endif
 
 #if defined(LINUX) || defined(ANDROID)
 
@@ -1011,23 +1007,9 @@ namespace aura
 
       os_term_application();
 
-#ifdef METROWIN
-      //      m_pdevicecontext = nullptr;
 
-      //      m_pmutexDc.release();
-#endif
 
-      //if(m_peengine != NULL)
-      //{
 
-      //   delete m_peengine;
-
-      //   m_peengine = NULL;
-
-      //}
-      //#ifdef MACOS
-      //    ns_app_terminate();
-      //#endif
 
    }
 

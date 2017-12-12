@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include <stdio.h>
 
 
@@ -2411,6 +2411,22 @@ end:
       pszXml = psz;
    }
 
+   string consume_non_spaces(const char * & pszXml, const char * pszEnd)
+   {
+      const char * psz = pszXml;
+      while(!::str::ch::is_whitespace(psz, pszEnd))
+      {
+         psz = __utf8_inc(psz);
+         if(psz >= pszEnd)
+         {
+            break;
+         }
+      }
+      string str(pszXml, psz - pszXml);
+      pszXml = psz;
+      return str;
+   }
+
    string consume_hex(const char * & pszXml)
    {
       const char * psz = pszXml;
@@ -2508,7 +2524,7 @@ end:
 
       const char * psz = pszXml;
 
-      if(*psz != '\"' && *psz != '\\')
+      if(*psz != '\"' && *psz != '\'')
       {
 
          throw_parsing_exception("Quote character is required here");
@@ -2525,6 +2541,8 @@ end:
 
       while(*psz != qc)
       {
+         
+      skip:
 
          psz = __utf8_inc(psz);
 
@@ -2535,6 +2553,24 @@ end:
 
             return "";
 
+         }
+         
+         if(*psz == '\\')
+         {
+            
+            psz = __utf8_inc(psz);
+            
+            if(psz > pszEnd)
+            {
+               
+               throw_parsing_exception("Quote character is required here, premature end");
+               
+               return "";
+               
+            }
+            
+            goto skip;
+            
          }
 
       }
@@ -4124,11 +4160,7 @@ end:
    }
 
 
-
 } // namespace str
-
-
-
 
 
 template < >

@@ -187,7 +187,6 @@
 		9A9D7BD61F5D68FF009EC103 /* user_impact_system.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A8384521F416F57005ED52C /* user_impact_system.cpp */; };
 		9A9D7BD71F5D68FF009EC103 /* user_impact_update_hint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A8384531F416F57005ED52C /* user_impact_update_hint.cpp */; };
 		9A9D7BE01F5D68FF009EC103 /* user_message.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A83845D1F416F57005ED52C /* user_message.cpp */; };
-		9A9D7BE11F5D68FF009EC103 /* user_message_queue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A83845C1F416F57005ED52C /* user_message_queue.cpp */; };
 		9A9D7BE31F5D68FF009EC103 /* user_plain_edit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A8384601F416F57005ED52C /* user_plain_edit.cpp */; };
 		9A9D7BE41F5D68FF009EC103 /* user_plain_text_data.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A8384611F416F57005ED52C /* user_plain_text_data.cpp */; };
 		9A9D7BE51F5D68FF009EC103 /* user_scroll.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A8384661F416F57005ED52C /* user_scroll.cpp */; };
@@ -210,7 +209,6 @@
 		9A9D7BFF1F5D6900009EC103 /* user_impact_system.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A8384521F416F57005ED52C /* user_impact_system.cpp */; };
 		9A9D7C001F5D6900009EC103 /* user_impact_update_hint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A8384531F416F57005ED52C /* user_impact_update_hint.cpp */; };
 		9A9D7C091F5D6900009EC103 /* user_message.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A83845D1F416F57005ED52C /* user_message.cpp */; };
-		9A9D7C0A1F5D6900009EC103 /* user_message_queue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A83845C1F416F57005ED52C /* user_message_queue.cpp */; };
 		9A9D7C0C1F5D6900009EC103 /* user_plain_edit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A8384601F416F57005ED52C /* user_plain_edit.cpp */; };
 		9A9D7C0D1F5D6900009EC103 /* user_plain_text_data.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A8384611F416F57005ED52C /* user_plain_text_data.cpp */; };
 		9A9D7C0E1F5D6900009EC103 /* user_scroll.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A8384661F416F57005ED52C /* user_scroll.cpp */; };
@@ -518,7 +516,6 @@
 		9A8384521F416F57005ED52C /* user_impact_system.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = user_impact_system.cpp; sourceTree = "<group>"; };
 		9A8384531F416F57005ED52C /* user_impact_update_hint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = user_impact_update_hint.cpp; sourceTree = "<group>"; };
 		9A8384541F416F57005ED52C /* user_impact.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = user_impact.cpp; sourceTree = "<group>"; };
-		9A83845C1F416F57005ED52C /* user_message_queue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = user_message_queue.cpp; sourceTree = "<group>"; };
 		9A83845D1F416F57005ED52C /* user_message.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = user_message.cpp; sourceTree = "<group>"; };
 		9A8384601F416F57005ED52C /* user_plain_edit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = user_plain_edit.cpp; sourceTree = "<group>"; };
 		9A8384611F416F57005ED52C /* user_plain_text_data.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = user_plain_text_data.cpp; sourceTree = "<group>"; };
@@ -926,7 +923,6 @@
 				9A8384521F416F57005ED52C /* user_impact_system.cpp */,
 				9A8384531F416F57005ED52C /* user_impact_update_hint.cpp */,
 				9A83845D1F416F57005ED52C /* user_message.cpp */,
-				9A83845C1F416F57005ED52C /* user_message_queue.cpp */,
 				9A8384601F416F57005ED52C /* user_plain_edit.cpp */,
 				9A8384611F416F57005ED52C /* user_plain_text_data.cpp */,
 				9A8384661F416F57005ED52C /* user_scroll.cpp */,
@@ -1429,7 +1425,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A9D7BE11F5D68FF009EC103 /* user_message_queue.cpp in Sources */,
 				9A9D7BE61F5D68FF009EC103 /* user_scroll_bar.cpp in Sources */,
 				077C2A1D190F144000A1F6B0 /* framework.cpp in Sources */,
 				9A9D7BEF1F5D68FF009EC103 /* user_wait_cursor.cpp in Sources */,
@@ -1565,7 +1560,6 @@
 				9A9D7B9E1F5D6847009EC103 /* hotplugin_host.cpp in Sources */,
 				9A9D7B651F5D66D9009EC103 /* ios_app.cpp in Sources */,
 				07EDC52C1B4F1BB300AF8928 /* ios_user.mm in Sources */,
-				9A9D7C0A1F5D6900009EC103 /* user_message_queue.cpp in Sources */,
 				9A9D7B981F5D683C009EC103 /* fontopus_dialog.cpp in Sources */,
 				9A9D7C441F5D6E9F009EC103 /* user_impact.cpp in Sources */,
 				9A9D7C391F5D6DF2009EC103 /* base_static_start.cpp in Sources */,

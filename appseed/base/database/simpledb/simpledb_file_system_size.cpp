@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include "base/user/user.h"
 //#include "core/filesystem/filemanager/filemanager.h"
 //
@@ -629,7 +629,7 @@ void file_size_table::get_fs_size::read(::file::istream & istream)
 
 #else
 
-   _throw(not_implemented(get_app()));
+   _throw(not_implemented(::get_app()));
 
 #endif
 

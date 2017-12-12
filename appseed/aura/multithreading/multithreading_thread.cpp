@@ -1,6 +1,6 @@
-﻿#include "framework.h"
+#include "framework.h"
 
-#if OS64BIT
+#ifdef OS64BIT
 
 #define STRFPTR "0x%016x"
 
@@ -134,6 +134,30 @@ error & error::operator =(const error & error)
 
    return NULL;
 
+}
+
+
+::exception::exception * error::detach_exception()
+{
+   
+   for(index i = 0; i < m_iaErrorCode2.get_count(); i++)
+   {
+      
+      auto & spe = m_mapError2[i];
+      
+      if(m_mapError2[i].is_set())
+      {
+         
+         ::exception::exception * pexception = spe.detach();
+         
+         return dereference_no_delete(pexception);
+         
+      }
+      
+   }
+   
+   return NULL;
+   
 }
 
 
@@ -1710,14 +1734,34 @@ bool thread::begin_thread(bool bSynch, int32_t epriority,uint_ptr nStackSize,uin
          {
 
             *perror = pstartup->m_error;
-
+            
+         }
+         
+         if(pstartup->m_error.get_exception() != NULL
+            && dynamic_cast< ::exit_exception * > (pstartup->m_error.get_exception()) != NULL)
+         {
+          
+            ::exit_exception * pexception = dynamic_cast< ::exit_exception * > (pstartup->m_error.detach_exception());
+            
+            //output_debug_string("test");
+            _rethrow(pexception);
+            
          }
 
       }
+      catch(::exit_exception * pexception)
+      {
+         
+         _rethrow(pexception);
+         
+      }
       catch(...)
       {
+         
       }
+      
       return false;
+      
    }
 
    pstartup->m_event2.SetEvent();
@@ -1984,8 +2028,8 @@ uint32_t __thread_entry(void * pparam)
       catch (::exit_exception * pexception)
       {
 
-         esp671 esp(pexception);
-
+         pthread->m_error.set(pexception);
+         
          // let translator run undefinetely
          //translator::detach();
          try
@@ -2020,11 +2064,13 @@ uint32_t __thread_entry(void * pparam)
          {
 
             pstartup->m_error = pthread->m_error;
-
+            
             pstartup->m_bError = true;
 
             // allow the creating thread to return from thread::create_thread
             pstartup->m_event.set_event();
+            
+            return uiRet;
 
          }
 
@@ -2046,7 +2092,6 @@ uint32_t __thread_entry(void * pparam)
 
       if(bError)
       {
-
 
          // let translator run undefinetely
          //translator::detach();
@@ -2109,6 +2154,16 @@ uint32_t __thread_entry(void * pparam)
       catch(::exit_exception &)
       {
 
+      }
+      try
+      {
+         
+         pthread->thread_exit();
+         
+      }
+      catch(::exit_exception &)
+      {
+         
       }
 
       return ::multithreading::__on_thread_finally(pthread);
@@ -2578,19 +2633,19 @@ run:
 
 // let translator run undefinetely
 //translator::detach();
-   try
-   {
-
-      nResult = thread_exit();
-
-   }
-   catch(...)
-   {
-
-      m_error.set_if_not_set(-1);
-      //nResult = (DWORD)-1;
-
-   }
+//   try
+//   {
+//
+//      nResult = thread_exit();
+//
+//   }
+//   catch(...)
+//   {
+//
+//      m_error.set_if_not_set(-1);
+//      //nResult = (DWORD)-1;
+//
+//   }
 
 //   return nResult;
 

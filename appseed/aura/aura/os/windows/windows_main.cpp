@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include <stdio.h>
 
 #include <time.h>
@@ -238,58 +238,7 @@ bool node_fill(app_core * pappcore)
 
    }
 
-   if (strAppId.has_char())
-   {
-
-      HMODULE hmodule = NULL;
-
-      bool bInApp = strAppId.compare_ci("acid") == 0;
-
-      if (!bInApp)
-      {
-
-         string strLibrary = ::process::app_id_to_app_name(strAppId);
-
-         hmodule = ::LoadLibrary(strLibrary + ".dll");
-
-      }
-
-      if (hmodule != NULL || bInApp)
-      {
-
-         PFN_DEFER_INIT defer_init = NULL;
-
-         if ((hmodule = ::GetModuleHandle("core.dll")) != NULL)
-         {
-
-            defer_init = (PFN_DEFER_INIT) ::GetProcAddress(hmodule, "defer_core_init");
-
-         }
-         else if ((hmodule = ::GetModuleHandle("base.dll")) != NULL)
-         {
-
-            defer_init = (PFN_DEFER_INIT) ::GetProcAddress(hmodule, "defer_base_init");
-
-         }
-         else if ((hmodule = ::GetModuleHandle("axis.dll")) != NULL)
-         {
-
-            defer_init = (PFN_DEFER_INIT) ::GetProcAddress(hmodule, "defer_axis_init");
-
-         }
-
-         if (defer_init != NULL && !defer_init())
-         {
-
-            pappcore->on_result(-3);
-
-            return NULL;
-
-         }
-
-      }
-
-   }
+   pappcore->defer_load_backbone_libraries(strAppId);
 
    ::windows::command * pmaininitdata = new ::windows::command;
 

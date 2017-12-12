@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 struct aura_main_data
@@ -10,66 +10,23 @@ public:
    int                           m_argc;
    char **                       m_argv;
    int                           m_iExitCode;
+   LPTSTR                        m_lpCmdLine;
 
 #ifdef WINDOWS
 
    HINSTANCE                     m_hinstance;
    HINSTANCE                     m_hPrevInstance;
-   LPTSTR                        m_lpCmdLine;
    int32_t                       m_nCmdShow;
 
 #endif
 
-   aura_main_data(int argc, char ** argv)
-   {
-
-      m_bConsole = true;
-
-      m_argc = argc;
-
-      m_argv = argv;
-
+   aura_main_data(int argc, char ** argv);
 #ifdef WINDOWSEX
-
-      m_hinstance = ::GetModuleHandle(NULL);
-
-      m_hPrevInstance = NULL;
-
-      m_lpCmdLine = NULL;
-
-      m_nCmdShow = SW_SHOWDEFAULT;
-
+   aura_main_data(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow);
 #endif
-
-   }
-
-#ifdef WINDOWSEX
-
-   aura_main_data(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow)
-   {
-
-      m_bConsole = false;
-
-      m_hinstance = hinstance;
-
-      m_hPrevInstance = hPrevInstance;
-
-      m_lpCmdLine = lpCmdLine;
-
-      m_nCmdShow = nCmdShow;
-
-   }
-
-#endif
-
-   aura_main_data(LPTSTR lpCmdLine)
-   {
-
-      m_bConsole = false;
-
-      m_lpCmdLine = lpCmdLine;
-
-   }
+   aura_main_data(LPTSTR lpCmdLine);
+   ~aura_main_data();
+   
 
    void * operator new(size_t sz)
    {
@@ -108,6 +65,7 @@ public:
    DWORD                         m_dwAfterApplicationFirstRequest;
    aura_main_data *              m_pmaindata = NULL;
    ::aura::system *              m_psystem = NULL;
+   char *                        m_pszAppId = NULL;
 
    int                           m_iaError[APP_CORE_MAXIMUM_ERROR_COUNT];
    int                           m_iErrorCount = 0;
@@ -115,7 +73,7 @@ public:
 
 
    app_core(aura_main_data * pdata);
-
+   ~app_core();
 
    bool on_result(int iResultCode);
 
@@ -123,6 +81,8 @@ public:
 
    bool ini();
 
+   virtual void defer_load_backbone_libraries(string strAppId);
+   
    void run();
 
    void end();
@@ -177,7 +137,6 @@ public:
 
    static bool defer_call_construct(app_core * pappcore);
 
-
    virtual bool construct(app_core * pappcore);
 
 
@@ -189,5 +148,9 @@ public:
 
 };
 
+
+
+stringa get_c_args(const char * psz);
+stringa get_c_args(int argc, char ** argv);
 
 

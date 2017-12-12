@@ -88,5 +88,11 @@ CLASS_DECL_AURA void get_command_line_dup(char * psz, int iBuffer);
 
 END_EXTERN_C
 
+#ifdef __cplusplus
+
+#include "os_windowing.h"
+
+#endif
+
 
 

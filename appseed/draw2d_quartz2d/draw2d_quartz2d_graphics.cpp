@@ -243,7 +243,7 @@ namespace draw2d_quartz2d
       if(m_iType != -1)
       {
          
-         TRACE("occluding device context?!!?");
+         //TRACE("occluding device context?!!?");
          
       }
 

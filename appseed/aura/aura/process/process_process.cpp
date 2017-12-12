@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 namespace process
@@ -117,10 +117,10 @@ namespace process
       for (index i = 0; i < strId.length(); i++)
       {
 
-         if (strId[i] == L'-' || strId[i] == L'/' || strId[i] == L'\\')
+         if (strId[i] == '-' || strId[i] == '/' || strId[i] == '\\')
          {
 
-            strName += L"_";
+            strName += "_";
 
          }
          else

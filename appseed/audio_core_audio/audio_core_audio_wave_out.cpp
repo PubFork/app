@@ -139,27 +139,27 @@ namespace multimedia
       }
       
       
-      bool wave_out::initialize_thread()
+      bool wave_out::init_thread()
       {
          
-         if(!::multimedia::audio::wave_out::initialize_thread())
+         if(!::multimedia::audio::wave_out::init_thread())
             return false;
          
-         if(!toolbox::initialize_thread())
+         if(!toolbox::init_thread())
             return false;
          
          return true;
          
       }
       
-      int32_t wave_out::exit_thread()
+      void wave_out::term_thread()
       {
          
-         ::multimedia::audio::wave_out::exit_thread();
+         ::multimedia::audio::wave_out::term_thread();
          
-         toolbox::exit_thread();
+         toolbox::term_thread();
          
-         return thread::exit_thread();
+         thread::term_thread();
          
       }
       

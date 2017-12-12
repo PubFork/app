@@ -901,3 +901,30 @@ CLASS_DECL_AURA ::user::interaction_impl * oswindow_get(oswindow oswindow)
 }
 
 
+::user::interaction * get_system_window_interaction(::os_system_window * psystemwindow)
+{
+   
+   return NULL;
+   
+}
+
+
+bool os_init_windowing()
+{
+   
+   return true;
+   
+}
+
+
+void os_term_windowing()
+{
+   
+}
+
+
+
+
+
+
+

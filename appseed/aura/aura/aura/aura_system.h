@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 namespace aura
@@ -13,49 +13,6 @@ namespace aura
    {
    public:
 
-#if defined METROWIN && defined(__cplusplus_winrt)
-
-      class CLASS_DECL_AURA os_system_window
-      {
-      public:
-
-         //bool                                         m_bWindowSizeChange;
-
-         sp(::user::interaction)                      m_pui;
-
-         ::aura::system_window ^                      m_pwindow;
-
-         os_system_window();
-
-      };
-
-#elif defined(APPLE_IOS)
-
-      class os_system_window
-      {
-      public:
-
-         sp(::user::interaction)                      m_pui;
-
-      };
-
-#elif defined(VSNORD)
-
-      class os_system_window
-      {
-      public:
-
-         sp(::user::interaction)                      m_pui;
-
-         oswindow                                     m_oswindow;
-
-      };
-
-#else
-
-      class os_system_window;
-
-#endif
 
 #ifdef WINDOWSEX
 
@@ -63,7 +20,7 @@ namespace aura
 
 #endif
 
-      os_system_window *                     m_possystemwindow;
+      ::os_system_window *                   m_possystemwindow;
 
 
 #ifdef APPLE_IOS

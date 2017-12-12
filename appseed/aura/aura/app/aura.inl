@@ -29,6 +29,12 @@ int main(int argc, char * argv[])
 {
 
    ap(aura_main_data) pmaindata = new aura_main_data(argc, argv);
+   
+#ifdef MAIN_STRING
+   
+   pmaindata->m_lpCmdLine = ::str::dup(MAIN_STRING);
+   
+#endif
 
    return (int)aura_aura(pmaindata);
 
@@ -62,5 +68,10 @@ END_EXTERN_C
 #include "include/applink.cpp"
 
 #endif
+
+
+
+
+
 
 

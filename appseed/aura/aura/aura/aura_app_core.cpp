@@ -1,10 +1,24 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include <time.h>
+typedef bool DEFER_INIT();
+typedef DEFER_INIT * PFN_DEFER_INIT;
 
+
+stringa get_c_args(const char * psz);
+stringa get_c_args(int argc, char ** argv);
 
 ::aura_prelude * aura_prelude::s_pprelude = NULL;
 
 //::aura::PFN_GET_NEW_APP aura_prelude::s_pfnNewApp = NULL;
+
+
+#ifdef APPLEOS
+
+size_t ns_get_bundle_identifier(char * psz, size_t iSize);
+
+string apple_get_bundle_identifier();
+
+#endif
 
 
 #ifdef WINDOWS
@@ -17,6 +31,66 @@
 
 #endif
 
+aura_main_data::aura_main_data(int argc, char ** argv)
+{
+   
+   m_bConsole = true;
+   
+   m_argc = argc;
+   
+   m_argv = argv;
+   
+   m_lpCmdLine = NULL;
+   
+#ifdef WINDOWSEX
+   
+   m_hinstance = ::GetModuleHandle(NULL);
+   
+   m_hPrevInstance = NULL;
+   
+   m_nCmdShow = SW_SHOWDEFAULT;
+   
+#endif
+   
+}
+
+#ifdef WINDOWSEX
+
+aura_main_data::aura_main_data(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow)
+{
+   
+   m_bConsole = false;
+   
+   m_hinstance = hinstance;
+   
+   m_hPrevInstance = hPrevInstance;
+   
+   m_lpCmdLine = ::str::dup(lpCmdLine);
+   
+   m_nCmdShow = nCmdShow;
+   
+}
+
+#endif
+
+aura_main_data::aura_main_data(LPTSTR lpCmdLine)
+{
+   
+   m_bConsole = false;
+   
+   m_lpCmdLine = lpCmdLine;
+   
+}
+
+
+aura_main_data::~aura_main_data()
+{
+   
+   ::aura::free(m_lpCmdLine);
+   
+}
+
+
 // ATTENTION
 // This class should (if it uses) member functions with care:
 // It is used after all application app_core (library) finalization,
@@ -27,6 +101,14 @@ app_core::app_core(aura_main_data * pdata)
 
    m_pmaindata = pdata;
 
+}
+
+app_core::~app_core()
+{
+
+   ::aura::free(m_pszAppId);
+   ::aura::del(m_pmaindata);
+   
 }
 
 
@@ -73,6 +155,24 @@ bool app_core::beg()
       return on_result(-4);
 
    }
+   
+   
+#ifdef APPLEOS
+   
+   if(m_pmaindata->m_lpCmdLine == NULL)
+   {
+   
+      string str = apple_get_bundle_identifier();
+   
+      ::str::begins_eat_ci(str, "com.ca2.");
+   
+      str.replace(".", "/");
+      
+      m_pmaindata->m_lpCmdLine = ::str::dup("app : app=" + str);
+      
+   }
+   
+#endif
 
    m_dwStartTime = ::get_first_tick();
 
@@ -109,6 +209,36 @@ bool app_core::ini()
       return false;
 
    }
+   
+   string strCommandLine = get_command_line_dup();
+   
+   string strAppId;
+   
+   get_command_line_param(strAppId, strCommandLine, "app");
+   
+   if(strAppId.is_empty() && m_bAcidApp)
+   {
+    
+      strAppId = "acid";
+      
+      strCommandLine += " app=acid";
+      
+   }
+   
+   if(strAppId.has_char())
+   {
+    
+      m_pszAppId = ::str::dup(strAppId);
+      
+   }
+   
+   string strDerivedApplication;
+   
+   get_command_line_param(strDerivedApplication, strCommandLine, "derived_application");
+   
+   g_iDerivedApplication = atoi(strDerivedApplication);
+   
+   defer_load_backbone_libraries(strAppId);
 
    m_psystem = g_pfn_create_system(this);
 
@@ -130,6 +260,66 @@ bool app_core::ini()
    return true;
 
 }
+
+
+void app_core::defer_load_backbone_libraries(string strAppId)
+{
+
+   if (strAppId.has_char())
+   {
+      
+      void * hmodule = NULL;
+      
+      bool bInApp = strAppId.compare_ci("acid") == 0;
+      
+      string strMessage;
+      
+      if (!bInApp)
+      {
+         
+         string strLibrary = ::process::app_id_to_app_name(strAppId);
+         
+         hmodule = __node_library_open(strLibrary, strMessage);
+         
+      }
+      
+      if (hmodule != NULL || bInApp)
+      {
+         
+         PFN_DEFER_INIT defer_init = NULL;
+         
+         if ((hmodule = __node_library_open("core", strMessage)) != NULL)
+         {
+            
+            defer_init = (PFN_DEFER_INIT) __node_library_raw_get(hmodule, "defer_core_init");
+            
+         }
+         else if ((hmodule = __node_library_open("base", strMessage)) != NULL)
+         {
+            
+            defer_init = (PFN_DEFER_INIT) __node_library_raw_get(hmodule, "defer_base_init");
+            
+         }
+         else if ((hmodule = __node_library_open("axis", strMessage)) != NULL)
+         {
+            
+            defer_init = (PFN_DEFER_INIT) __node_library_raw_get(hmodule, "defer_axis_init");
+            
+         }
+         
+         if (defer_init != NULL && !defer_init())
+         {
+            
+            on_result(-3);
+            
+         }
+         
+      }
+      
+   }
+
+}
+
 
 void app_core::run()
 {
@@ -551,3 +741,124 @@ bool aura_prelude::prelude(app_core * pappcore)
    return true;
 
 }
+
+
+stringa get_c_args(const char * psz)
+{
+   
+   stringa stra;
+   
+   if(psz == NULL)
+   {
+      
+      return stra;
+      
+   }
+   
+   const char * pszEnd = psz + strlen(psz);
+
+   while(psz < pszEnd)
+   {
+   
+      ::str::consume_spaces(psz, 0, pszEnd);
+      
+      if(psz >= pszEnd)
+      {
+    
+         break;
+         
+      }
+      if(*psz == '\"')
+      {
+         
+         stra.add(::str::consume_quoted_value(psz, pszEnd));
+         
+      }
+      else if(*psz == '\'')
+      {
+         
+         stra.add(::str::consume_quoted_value(psz, pszEnd));
+         
+      }
+      else
+      {
+         
+         stra.add(::str::consume_non_spaces(psz, pszEnd));
+         
+      }
+
+   }
+   
+   return stra;
+   
+}
+
+
+stringa get_c_args(int argc, char ** argv)
+{
+   
+   stringa straBeforeColon;
+   
+   stringa straAfterColon;
+   
+   if(argc > 0)
+   {
+      
+      straBeforeColon.add(argv[0]);
+      
+   }
+ 
+   for(int i = 1; i < argc; i++)
+   {
+      
+#ifdef WINDOWS
+      if(straAfterColon.has_elements() || argv[i][0] == '-' || (argv[i][0] == '/' && strlen(argv[i]) == 2))
+#else
+      if(straAfterColon.has_elements() || argv[i][0] == '-')
+#endif
+      {
+         
+         straAfterColon.add(argv[i]);
+         
+      }
+      else
+      {
+         
+         straBeforeColon.add(argv[i]);
+         
+      }
+      
+   }
+   
+   stringa stra;
+   
+   stra = straBeforeColon;
+   
+   stra.add(":");
+   
+   stra += straAfterColon;
+   
+   return stra;
+
+}
+
+
+typedef size_t FN_GET_STRING(char * psz, size_t s);
+typedef FN_GET_STRING * PFN_GET_STRING;
+
+
+
+#ifdef APPLEOS
+
+string apple_get_bundle_identifier()
+{
+   
+   return ::str::get_string(&ns_get_bundle_identifier);
+   
+}
+
+#endif
+
+
+
+

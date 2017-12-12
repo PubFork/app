@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "aura/node/macos/macos.h"
+#include "aura/aura/node/macos/macos.h"
 
 
 string get_error_message(DWORD dwError);

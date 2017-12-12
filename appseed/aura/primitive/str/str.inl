@@ -1109,3 +1109,30 @@ inline void string_format::defer_get_additional_argument(const char * & s, const
    defer_get_additional_argument(s, args...);
    
 }
+
+
+namespace str
+{
+
+inline CLASS_DECL_AURA string & get_string(string & str, PFN_GET_STRING pfn)
+{
+   
+   size_t len = (*pfn)(NULL, 0);
+   
+   char * psz = str.GetBufferSetLength(len);
+   
+   (*pfn)(psz, len);
+   
+   str.ReleaseBuffer(len);
+   
+   return str;
+   
+}
+   inline CLASS_DECL_AURA string get_string(PFN_GET_STRING pfn)
+   {
+      string str;
+      return get_string(str, pfn);
+      
+   }
+
+}

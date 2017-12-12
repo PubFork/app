@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 #include "app/appseed/base/base/base/base.h"
@@ -330,7 +330,7 @@ class multiple_document_template;
 
 
 
-#include "graphics/visual/visual_const.h"
+#include "aura/graphics/visual/visual_const.h"
 
 
 

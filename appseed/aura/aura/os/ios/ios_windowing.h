@@ -4,10 +4,7 @@
 //
 //  Created by Camilo Sasuke Tsumanuma on 10/12/17.
 //
+#pragma once
 
-#ifndef ios_windowing_hpp
-#define ios_windowing_hpp
 
-#include <stdio.h>
 
-#endif /* ios_windowing_hpp */

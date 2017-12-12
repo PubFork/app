@@ -140,6 +140,41 @@ bool imaging::_load_image(::draw2d::dib * pdib, ::file::file * pfile)
       
    }
    
+//#if 1 // check premultiplied
+//
+//   byte * p = (byte *) pdib->m_pcolorref;
+//
+//   size_t s = iScan * h / sizeof(COLORREF);
+//
+//   while(s> 0)
+//   {
+//      if(p[0] > p[3] || p[1] > p[3] || p[2] > p[3])
+//      {
+//         output_debug_string("probably not premultiplied");
+//      }
+   //p+=4;
+//      s--;
+//   }
+//
+//#endif
+   
+   byte * p = (byte *) pdib->m_pcolorref;
+   
+   size_t s = iScan * h/ sizeof(COLORREF);
+   
+   while(s> 0)
+   {
+//      if(p[0] > p[3] || p[1] > p[3] || p[2] > p[3])
+//      {
+//         output_debug_string("probably not premultiplied");
+//      }
+      p[0] = p[0] * p[3] / 255;
+      p[1] = p[1] * p[3] / 255;
+      p[2] = p[2] * p[3] / 255;
+      p+=4;
+      s--;
+   }
+
    return true;
    
    

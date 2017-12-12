@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #ifdef WINDOWSEX
 #include "aura/aura/os/windows/windows_system_interaction_impl.h"
 #endif
@@ -2585,7 +2585,7 @@ namespace aura
 
          dappy(string(typeid(*this).name()) + " : on_run exit_exception");
 
-         esp.cast < ::exit_exception > ()->post_quit();
+         pexception->post_quit();
 
       }
       catch(::exception::exception *pexception)

@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 class var;
@@ -30,6 +30,11 @@ extern CLASS_DECL_AURA const char trailingBytesForUTF8[256];
 #ifdef APPLEOS
 #undef err_none
 #endif
+
+
+typedef size_t FN_GET_STRING(char * psz, size_t s);
+typedef FN_GET_STRING * PFN_GET_STRING;
+
 
 ///
 /// \author Camilo Sasuke Tsumanuma
@@ -231,6 +236,12 @@ namespace str
    template < typename T >
    inline string  from_uint(const T & t);
 
+   inline CLASS_DECL_AURA string & get_string(string & str, PFN_GET_STRING pfn);
+   inline CLASS_DECL_AURA string get_string(PFN_GET_STRING pfn);
+      
+   
+   
+
 
    /*inline CLASS_DECL_AURA string  from(int32_t i);
    inline CLASS_DECL_AURA string  from(uint32_t ui);
@@ -290,6 +301,7 @@ namespace str
    CLASS_DECL_AURA uint64_t consume_natural(const char * & pszXml, uint64_t uiMax = ((uint64_t) -1), uint64_t uiMin = 0);
    CLASS_DECL_AURA string consume_hex(const char * & pszXml);
    CLASS_DECL_AURA void consume_spaces(const char * & pszXml, ::count iMinimumCount, const char * pszEnd);
+   CLASS_DECL_AURA string consume_non_spaces(const char * & pszXml, const char * pszEnd);
    CLASS_DECL_AURA string consume_nc_name(const char * & pszXml);
    CLASS_DECL_AURA string consume_quoted_value(const char * & pszXml);
    CLASS_DECL_AURA void consume_quoted_value_ex2(const char * & pszXml, const char * pszEnd, char ** ppsz, strsize & iBufferSize);

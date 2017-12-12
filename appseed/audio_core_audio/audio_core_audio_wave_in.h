@@ -42,8 +42,8 @@ namespace multimedia
          ::multimedia::e_result wave_in_reset() override;
 
          
-         virtual bool initialize_thread() override;
-         virtual int32_t exit_thread() override;
+         virtual bool init_thread() override;
+         virtual void term_thread() override;
          virtual void pre_translate_message(::message::message * pmessage) override;
          
 

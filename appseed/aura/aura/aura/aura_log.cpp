@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include "aura/net/net_sockets.h"
 
 
@@ -270,10 +270,11 @@ namespace aura
       }
 
       //sl.lock();
-      if(m_bTrace && plog->m_pfile == NULL
-            || plog->m_iYear != time.GetYear()
-            || plog->m_iMonth != time.GetMonth()
-            || plog->m_iDay != time.GetDay())
+      if(m_bTrace &&
+         (plog->m_pfile == NULL
+         || plog->m_iYear != time.GetYear()
+         || plog->m_iMonth != time.GetMonth()
+         || plog->m_iDay != time.GetDay()))
       {
          if(plog->m_pfile != NULL)
          {

@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 namespace filemanager
@@ -500,11 +500,26 @@ namespace filemanager
          if (pathFolder.m_iDir == 1)
          {
 
-            if (ptabview != NULL)
+            if(ptabview != NULL)
+            {
+               
+            if (ptabview->get_tab_count() <= 0)
+            {
+               
+               ptabview->set_cur_tab_by_id("verifile://" + pathFolder);
+               
+            }
+            else
             {
 
-               ptabview->set_cur_tab_by_id("verifile://" + pathFolder);
+               sp(::user::frame_window) pframe = ptabview->get_pane(0)->m_pholder->get_hold();
+               
+               sp(manager) pmanager = pframe->GetActiveDocument();
+               
+               pmanager->FileManagerBrowse(pathFolder, action::source_user);
 
+            }
+               
             }
 
          }
