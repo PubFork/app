@@ -2579,7 +2579,7 @@ end:
 
       pszXml = psz;
 
-      return string(pszValueStart, psz - pszValueStart);
+      return string(pszValueStart, psz - pszValueStart - 1);
 
    }
 

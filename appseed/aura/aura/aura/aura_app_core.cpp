@@ -807,14 +807,20 @@ stringa get_c_args(int argc, char ** argv)
       straBeforeColon.add(argv[0]);
       
    }
+   
+   bool bColon = false;
  
    for(int i = 1; i < argc; i++)
    {
       
+      if(strcmp(argv[i], ":") == 0)
+      {
+         bColon = true;
+      }
 #ifdef WINDOWS
-      if(straAfterColon.has_elements() || argv[i][0] == '-' || (argv[i][0] == '/' && strlen(argv[i]) == 2))
+      else if(bColon || straAfterColon.has_elements() || argv[i][0] == '-' || (argv[i][0] == '/' && strlen(argv[i]) == 2))
 #else
-      if(straAfterColon.has_elements() || argv[i][0] == '-')
+      else if(bColon || straAfterColon.has_elements() || argv[i][0] == '-')
 #endif
       {
          

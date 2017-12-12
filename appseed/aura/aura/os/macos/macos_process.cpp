@@ -9,184 +9,61 @@
 
 extern char ** environ;
 
-int32_t create_process(const char * _cmd_line, int32_t * pprocessId)
+stringa get_c_args(const char * psz);
+
+string transform_to_c_arg(const char * psz);
+
+int create_process2(const char * _cmd_line, int * pprocessId);
+
+int32_t create_process(const char * pszCommandLine, int32_t * pprocessId)
 {
    
-   char *   exec_path_name;
+   //return create_process2(pszCommandLine, pprocessId);
    
-   char *	cmd_line;
+   stringa stra;
    
-   char *	cmd_line2;
+   stra = get_c_args(pszCommandLine);
    
-   cmd_line = strdup(_cmd_line);
+   char * argv[1024 + 1];
    
-   if(cmd_line == NULL)
+   int argc = 0;
+   
+   for(auto & str : stra)
    {
       
-      return 0;
+      //str = transform_to_c_arg(str);
+      
+      //str.replace("\"", "\\\"");
+      
+      argv[argc] = (char *) str.c_str();
+      
+      argc++;
       
    }
-   
-   char *      pArg;
-   
-   char *      pPtr = NULL;
-   
-   char *      argv[1024 + 1];
-   
-   int32_t		argc = 0;
-   
-   char * p;
-   
-   char * psz = cmd_line;
-   
-   enum e_state
-   {
-      
-      state_initial,
-      
-      state_quote,
-      
-      state_non_space,
-      
-   };
-   
-   e_state e = state_initial;
-   
-   char quote;
-   
-   while(psz != NULL && *psz != '\0')
-   {
-      
-      if(e == state_initial)
-      {
-         
-         if(*psz == ' ')
-         {
-            
-            psz = (char *) ::str::utf8_inc(psz);
-            
-         }
-         else if(*psz == '\"')
-         {
-            
-            quote = '\"';
-            
-            psz = (char *) ::str::utf8_inc(psz);
-            
-            argv[argc++] = psz;
-            
-            e = state_quote;
-            
-         }
-         else if(*psz == '\'')
-         {
-            
-            quote = '\'';
-            
-            psz = (char *) ::str::utf8_inc(psz);
-            
-            argv[argc++] = psz;
-            
-            e = state_quote;
-            
-         }
-         else
-         {
-            
-            argv[argc++] = psz;
-            
-            psz = (char *) ::str::utf8_inc(psz);
-            
-            e = state_non_space;
-            
-         }
-         
-      }
-      else if(e == state_quote)
-      {
-         
-         if(*psz == quote)
-         {
-            
-            p = (char *) ::str::utf8_inc(psz);
-            
-            *psz = '\0';
-            
-            psz = p;
-            
-            e = state_initial;
-            
-         }
-         else
-         {
-            
-            psz = (char *) ::str::utf8_inc(psz);
-            
-         }
-         
-      }
-      else
-      {
-         
-         if(*psz == ' ')
-         {
-            
-            p = (char *) ::str::utf8_inc(psz);
-            
-            *psz = '\0';
-            
-            psz = p;
-            
-            e = state_initial;
-            
-         }
-         else
-         {
-            
-            psz = (char *) ::str::utf8_inc(psz);
-            
-         }
-         
-      }
-      
-   }
-   
+
    argv[argc] = NULL;
    
+   pid_t pid = 0;
    
-   pid_t pid;
-   
-   //   char *argv[] = {"ls", (char *) 0};
-   
-   int status;
-   
-   //puts("Testing posix_spawn");
-   
-   //fflush(NULL);
-   
-   status = posix_spawn(&pid, argv[0], NULL, NULL, argv, environ);
-   
-   free(cmd_line);
+   int status = posix_spawn(&pid, argv[0], NULL, NULL, argv, environ);
    
    if (status == 0)
    {
       
+      if(pprocessId != NULL)
+      {
+         
+         *pprocessId = pid;
+         
+      }
+      
       return 1;
       
-      //    printf("Child id: %i\n", pid);
-      //    fflush(NULL);
-      //    if (waitpid(pid, &status, 0) != -1) {
-      //      printf("Child exited with status %i\n", status);
-      //    } else {
-      //      perror("waitpid");
-      //    }
    }
    else
    {
       
       return 0;
-      
-      //printf("posix_spawn: %s\n", strerror(status));
       
    }
    
@@ -268,6 +145,8 @@ CLASS_DECL_AURA int call_async(
     }
     
     int processId;
+   
+   chdir(pszDir);
     
     if(!create_process(strCmdLine, &processId))
         return -1;

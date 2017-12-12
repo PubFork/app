@@ -1455,7 +1455,7 @@ namespace aura
 
       }
 
-      strParam += " : " + strWeather + "=" + strUser;
+      string strExtraParam = " : " + strWeather + "=" + strUser;
 
 
 #ifdef WINDOWS
@@ -1466,21 +1466,25 @@ namespace aura
 
       ::file::path shell;
 
-      shell = "/bin/bash";
-
 #ifdef MACOS
 
-      path = System.url().url_decode(path);
+      shell = "/bin/bash";
+      
+      //path = System.url().url_decode(path);
 
-      string strCmd = "open -n -a \"" + path + "\" --args " + strParam;
+      string strCmd = "open -a \"" + path + "\" " + " --args " + strParam + strExtraParam;
 
       //strCmd.replace("\"", "\\\"");
 
       strParam = " -c '" + strCmd + "'";
+      
+      pathDir = dir::home();
 
 #else
 
-      string strCmd = path + " " + strParam;
+      shell = "/bin/bash";
+      
+      string strCmd = path + " " + strParam + strExtraParam;
 
       strCmd.replace("\"", "\\\"");
 
@@ -1982,330 +1986,6 @@ namespace aura
    {
 
       browser(strUrl, "", strProfile, strTarget);
-
-      return;
-
-//      if (strTarget.is_empty())
-//      {
-//
-//         strTarget = "_blank";
-//
-//      }
-//
-//      if (strProfile.is_empty() || strProfile == "native")
-//      {
-//
-//         strProfile = "default";
-//
-//      }
-//
-//      string strWeather = Application.file().as_string(::dir::system() / "browser_weather.txt");
-//
-//      if (strWeather.is_empty() || !strWeather.begins_ci("browser_"))
-//      {
-//
-//         strWeather = "browser_day";
-//
-//      }
-//
-//      strProfile = strWeather + "." + strProfile;
-//
-//      //MessageBox(NULL, strProfile, "strProfile", MB_OK);
-//
-//      string strBrowser;
-//
-//      ::file::path path;
-//
-//      string strParam;
-//
-//      System.os().get_default_browser(strBrowser, path, strParam);
-//
-//      if (strUrl.has_char())
-//      {
-//
-//         if (strBrowser == "firefox")
-//         {
-//
-//            strUrl = "https://ca2.cc/open_f___?url=" + System.url_encode(strUrl) + "&profile=" + System.url_encode(strProfile) + "&target=" + System.url_encode(strTarget);
-//
-//         }
-//         else
-//         {
-//
-//            strUrl = "https://ca2.cc/open_tab?url=" + System.url_encode(strUrl) + "&profile=" + System.url_encode(strProfile) + "&target=" + System.url_encode(strTarget);
-//
-//         }
-//
-//      }
-//
-//#if defined(METROWIN)
-//
-//
-//      string * pstrNew = new string(strUrl);
-//
-//      Windows::ApplicationModel::Core::CoreApplication::MainView->CoreWindow->Dispatcher->RunAsync(::Windows::UI::Core::CoreDispatcherPriority::Normal,
-//         ref new Windows::UI::Core::DispatchedHandler([pstrNew]()
-//      {
-//
-//         ::Windows::Foundation::Uri ^ uri = ref new ::Windows::Foundation::Uri(*pstrNew);
-//
-//         delete pstrNew;
-//
-//         LauncherOptions ^ options = ref new LauncherOptions();
-//
-//         options->TreatAsUntrusted = false;
-//
-//         Launcher::LaunchUriAsync(uri, options);
-//
-//      }));
-//
-//      //#elif defined(LINUX)
-//      //
-//      //      ::system("xdg-open \"" + strUrl + "\"");
-//      //
-//      //      return true;
-//      //
-//      //#elif defined(APPLEOS)
-//        //    openURL(strLink);
-//          //  return true;
-//#elif defined(VSNORD)
-//
-//      string strOpenUrl;
-//
-//      if (System.m_pandroidinitdata->m_pszOpenUrl != NULL)
-//      {
-//
-//         strOpenUrl = System.m_pandroidinitdata->m_pszOpenUrl;
-//
-//         free((void *)System.m_pandroidinitdata->m_pszOpenUrl);
-//
-//         System.m_pandroidinitdata->m_pszOpenUrl = NULL;
-//
-//      }
-//
-//
-//      strOpenUrl = m_strLink + str::has_char(strOpenUrl, ";");
-//
-//      if (strOpenUrl.has_char())
-//      {
-//
-//         System.m_pandroidinitdata->m_pszOpenUrl = strdup(strLink);
-//
-//      }
-//
-//
-//#elif defined(MACOS)
-//
-//      ::system("open -a /Applications/Safari.app \"" + strUrl + "\"");
-//
-//#elif defined(WINDOWSEX)
-//
-//      //if (strProfile == "native")
-//      //{
-//
-//      //   ::ShellExecuteW(NULL, L"open", wstring("microsoft-edge:" + strUrl), NULL, L"C:\\Windows", SW_SHOWDEFAULT);
-//
-//      //}
-//      //else if (strProfile == "ca2bot" || strProfile == "bot")
-//      //{
-//
-//      //   call_async("C:\\Program Files (x86)\\Google\\Chrome\\Application\\Chrome.exe", "\"" + strUrl + "\"", "C:\\Program Files (x86)\\Google\\Chrome\\Application\\", SW_SHOWDEFAULT, false);
-//
-//      //}
-//      //else
-//      //{
-//
-//      //   string strFirefox = file().as_string(::dir::system() / "firefox.txt");
-//      //   string strFirefoxPath = file().as_string(::dir::system() / "firefox_path.txt");
-//      //   string strFirefoxDir = file().as_string(::dir::system() / "firefox_dir.txt");
-//
-//      //   call_async(strFirefoxPath, "\"" + strUrl + "\"", strFirefoxDir, SW_SHOWDEFAULT, false);
-//
-//      //}
-//
-//      //if (strProfile.is_empty())
-//      //{
-//
-//      //   ::ShellExecuteW(NULL, L"open", wstring(strUrl), NULL, L"C:\\Windows", SW_SHOWDEFAULT);
-//
-//      //   return;
-//
-//      //}
-//
-//      strsize iParam = strParam.find("%1");
-//
-//      if (strUrl.has_char())
-//      {
-//
-//         if (iParam < 0)
-//         {
-//
-//            strParam += " \"" + strUrl + "\"";
-//
-//         }
-//         else
-//         {
-//
-//            strParam = strParam.Left(iParam) + strUrl + strParam.Mid(iParam + 2);
-//
-//         }
-//
-//      }
-//      else
-//      {
-//
-//         strUrl = "foo.html";
-//         strParam = "";
-//
-//      }
-//
-//      // MessageBox(NULL, strAfter, "strAfter", MB_OK);
-//
-//      ::file::path pathDir;
-//
-//      pathDir = path.folder();
-//
-//      if (strBrowser == "vivaldi")
-//      {
-//
-//         ::file::path pathAppDataDir(getenv("APPDATA"));
-//
-//         ::file::path pathProfile;
-//
-//         pathProfile = pathAppDataDir / "ca2/Vivaldi/Profile" / strProfile;
-//
-//         call_async(path, "--user-data-dir=\"" + pathProfile + "\" " + strParam, pathDir, SW_SHOWDEFAULT, false);
-//
-//      }
-//      else if (strBrowser == "chrome")
-//      {
-//
-//         ::file::path pathAppDataDir(getenv("APPDATA"));
-//
-//         ::file::path pathProfile;
-//
-//         pathProfile = pathAppDataDir / "ca2/Chrome/Profile" / strProfile;
-//
-//         strParam = "--user-data-dir=\"" + pathProfile + "\" " + strParam;
-//
-//         //MessageBox(NULL, strParam, path, MB_OK);
-//
-//         call_async(path, strParam, pathDir, SW_SHOWDEFAULT, false);
-//
-//      }
-//      else if (strBrowser == "firefox")
-//      {
-//
-//         ::file::path pathAppDataDir(getenv("APPDATA"));
-//
-//         ::file::path pathProfile;
-//
-//         pathProfile = pathAppDataDir / "ca2/Firefox/Profile" / strProfile;
-//
-//         call_async(path, "-profile=\"" + pathProfile + "\" " + strParam, pathDir, SW_SHOWDEFAULT, false);
-//
-//      }
-//      else
-//      {
-//
-//         ::ShellExecuteW(NULL, L"open", wstring("foo.html"), NULL, L"C:\\Windows", SW_SHOWDEFAULT);
-//
-//      }
-//
-//
-//
-//      //      }
-//
-//            //if (strProfile == "ca2bot")
-//            //{
-//
-//            //   strProfile = "bot";
-//
-//            //}
-//            //else
-//            //{
-//
-//            //   strProfile = "default";
-//
-//            //}
-//
-//            //::file::path path = getenv("APPDATA");
-//
-//            //path /= strProfile;
-//
-//            //call_sync("C:\\Program Files\\Opera.exe", "--user-data-dir=\"" + path + "\" " + strUrl, "C:\\Users\\camilo\\AppData\\Local\\Vivaldi\\Application", SW_SHOWNORMAL, 0);
-//
-//#else
-//
-//      if (strUrl.has_char())
-//      {
-//
-//         strParam = "\"" + strUrl + "\"";
-//
-//      }
-//
-//      ::file::path pathDir;
-//
-//      pathDir = path.folder();
-//
-//      ::file::path shell;
-//
-//      shell = "/bin/bash";
-//
-//      if (strBrowser == "vivaldi")
-//      {
-//
-//         ::file::path pathHome(getenv("HOME"));
-//
-//         ::file::path pathProfile;
-//
-//         pathProfile = pathHome / "ca2/Vivaldi/Profile" / strProfile;
-//
-//         call_async(shell, " -c \"" + path + " --user-data-dir=\\\"" + pathProfile + "\\\" " + strParam, pathHome, SW_SHOWDEFAULT, false);
-//
-//      }
-//      else if (strBrowser == "chrome")
-//      {
-//
-//         ::file::path pathHome(getenv("HOME"));
-//
-//         ::file::path pathProfile;
-//
-//         pathProfile = pathHome / "ca2/Chrome/Profile" / strProfile;
-//
-//         string strCmd = path + " --user-data-dir=\"" + pathProfile + "\" " + strParam;
-//
-//         strCmd.replace("\"", "\\\"");
-//
-//         strParam = " -c \"" + strCmd + "\"";
-//
-//         //MessageBox(NULL, strParam, path, MB_OK);
-//
-//         call_async(shell, strParam, pathHome, SW_SHOWDEFAULT, false);
-//
-//      }
-//      else if (strBrowser == "firefox")
-//      {
-//
-//         ::file::path pathHome(getenv("HOME"));
-//
-//         ::file::path pathProfile;
-//
-//         pathProfile = pathHome / "ca2/Firefox/Profile" / strProfile;
-//
-//         call_async(shell, "-c \"" + path + " -profile=\\\"" + pathProfile + "\\\" " + strParam + "\"", pathHome, SW_SHOWDEFAULT, false);
-//
-//      }
-//      else
-//      {
-//
-//         ::system("xdg-open " + strUrl);
-//
-//      }
-//
-//
-//
-//#endif
 
    }
 

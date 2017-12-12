@@ -13,10 +13,11 @@
 string transform_to_c_arg(const char * psz)
 {
 
-   if(strstr(psz, " ") != NULL)
+   if(strstr(psz, " ") != NULL
+      || (strstr(psz, ":") != NULL && strlen(psz) > 1))
    {
     
-      return string("\"") + ::str::replace(psz, "\"", "\\\"") + "\"";
+      return string("\"") + ::str::replace("\"", "\\\"", psz) + "\"";
       
    }
    else
@@ -55,21 +56,26 @@ string merge_colon_args(const array < stringa > str2a)
          
       }
       
-      iFindColon = iFindColon < 0 ? stra.get_size() : 1;
+      if(iFindColon < 0)
+      {
+      
+         iFindColon = stra.get_size();
+         
+      }
       
       for(index i = 1; i < stra.get_count(); i++)
       {
          
+         string str = stra[i];
+         
          if(i < iFindColon)
          {
             
-            straBeforeColon.add(stra[i]);
+            straBeforeColon.add(str);
             
          }
          else if(i > iFindColon)
          {
-            
-            string str = stra[i];
             
             if(::str::begins_eat_ci(str, "app="))
             {
@@ -101,7 +107,7 @@ string merge_colon_args(const array < stringa > str2a)
       
    }
 
-   strCommandLine += straBeforeColon.pred_implode(&transform_to_c_arg, " ");
+   strCommandLine += ::str::has_char(straBeforeColon.pred_implode(&transform_to_c_arg, " "), " ");
    
    strCommandLine += " : ";
 
