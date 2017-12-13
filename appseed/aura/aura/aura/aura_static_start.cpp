@@ -26,9 +26,6 @@ double g_machtime_conversion_factor;
 
 mutex * g_pmutexCred = NULL;
 
-void os_init_windowing();
-void os_term_windowing();
-
 
 //extern mutex * g_pmutexSignal;
 extern class ::exception::engine * g_pexceptionengine;

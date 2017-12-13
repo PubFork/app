@@ -23,7 +23,7 @@ int g_iWsaStartup;
 
 
 
-::aura::system * app_common_prelude(int & iError, ::windows::command * & pmaininitdata, app_core & appcore,  HINSTANCE hinstance = NULL, HINSTANCE hinstancePrev = NULL, const char * pszCmdLine = NULL, int nShowCmd = SW_SHOW);
+::aura::system * app_common_prelude(int & iError, ::command::command * & pmaininitdata, app_core & appcore,  HINSTANCE hinstance = NULL, HINSTANCE hinstancePrev = NULL, const char * pszCmdLine = NULL, int nShowCmd = SW_SHOW);
 int app_common_term(int iError, ::aura::system * psystem, app_core & appcore);
 
 
@@ -790,8 +790,8 @@ namespace core
       TRACE(atlTraceException,0,"_throw(hresult_exception: hr = 0x%x\n",hr));
 #ifdef _AFX
       if(hr == E_OUTOFMEMORY)
-      {
-         _throw(memory_exception());
+   {
+      _throw(memory_exception());
       }
       else
       {

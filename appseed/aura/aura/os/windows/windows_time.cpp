@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 
@@ -124,7 +124,7 @@ BOOLEAN nanosleep(LONGLONG ns)
       return TRUE;
    }
    /* Set timer properties */
-   li.QuadPart = -(ns / 100);
+   li.QuadPart = -((int64_t) ns / 100LL );
    if (!SetWaitableTimer(timer, &li, 0, NULL, NULL, FALSE))
    {
       CloseHandle(timer);

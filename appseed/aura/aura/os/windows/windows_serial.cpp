@@ -100,6 +100,8 @@ Serial::SerialImpl::reconfigurePort ()
 
    DCB dcbSerialParams = {0};
 
+   ZERO(dcbSerialParams);
+
    dcbSerialParams.DCBlength=sizeof(dcbSerialParams);
 
    if (!GetCommState(fd_, &dcbSerialParams))

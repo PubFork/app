@@ -1,4 +1,4 @@
-#include "aura/aura/aura/aura.h"
+﻿#include "aura/aura/aura/aura.h"
 
 
 #ifdef METROWIN
@@ -14,6 +14,8 @@
 int main(Array<String^>^)
 {
 
+   aura_aura aura;
+
    ap(aura_main_data) pmaindata = new aura_main_data(MAIN_STRING);
 
    return (int)aura_aura(pmaindata);
@@ -28,12 +30,14 @@ int main(Array<String^>^)
 int main(int argc, char * argv[])
 {
 
+   class aura_aura aura;
+
    ap(aura_main_data) pmaindata = new aura_main_data(argc, argv);
-   
+
 #ifdef MAIN_STRING
-   
+
    pmaindata->m_lpCmdLine = ::str::dup(MAIN_STRING);
-   
+
 #endif
 
    return (int)aura_aura(pmaindata);
@@ -47,6 +51,8 @@ BEGIN_EXTERN_C
 
 int32_t WINAPI _tWinMain(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow)
 {
+
+   class aura_aura aura;
 
    ap(aura_main_data) pmaindata = new aura_main_data(hinstance, hPrevInstance, lpCmdLine, nCmdShow);
 

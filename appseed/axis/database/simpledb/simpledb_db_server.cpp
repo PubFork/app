@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "db_str_set.h"
 
 
@@ -99,18 +99,18 @@ bool db_server::initialize()
    sp(command_line) pcommandline = phandler->m_spcommandline;
 
    string strAppName;
-   
+
    if(pcommandline.is_null())
    {
-   
-      strAppName = System.m_pappcore->m_pszAppId;
-      
+
+      strAppName = System.m_pappcore->m_strAppId;
+
    }
    else
    {
-      
+
       strAppName = pcommandline->m_strApp;
-      
+
    }
 
    ::file::path str;

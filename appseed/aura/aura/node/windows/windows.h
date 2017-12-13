@@ -43,7 +43,7 @@ CLASS_DECL_AURA void __try_cleanup();
 void CLASS_DECL_AURA __cdecl _ca2_purecall();
 void CLASS_DECL_AURA __cdecl _null_se_translator(uint32_t uiCode, EXCEPTION_POINTERS * ppointers);
 bool CLASS_DECL_AURA __windows_init();
-int32_t CLASS_DECL_AURA __windows_main(::aura::system * psystem, ::windows::command * pmaininitdata);
+int32_t CLASS_DECL_AURA __windows_main(::aura::system * psystem, ::command::command * pmaininitdata);
 
 
 #include "windows_console_window.h"
@@ -125,7 +125,7 @@ namespace windows
 
    class windows
    {
-         int32_t function();
+      int32_t function();
    };
 
    CLASS_DECL_AURA HINSTANCE   load_library(const char * lpsz);

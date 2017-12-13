@@ -135,38 +135,38 @@ namespace windows
 
 
 
-CLASS_DECL_AURA int32_t app_main(::aura::system * psystem, HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow)
-{
+// CLASS_DECL_AURA int32_t app_main(::aura::system * psystem, HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow)
+// {
 
-   __node_init_main_data(psystem, hInstance, hPrevInstance, lpCmdLine, nCmdShow);
+//    __node_init_main_data(psystem, hInstance, hPrevInstance, lpCmdLine, nCmdShow);
 
-   //t32_t iRet;
+//    //t32_t iRet;
 
-   //iRet = psystem->main();
+//    //iRet = psystem->main();
 
-   error error;
+//    error error;
 
-   psystem->main();
+//    psystem->main();
 
-   try
-   {
+//    try
+//    {
 
-      error = psystem->m_error;
+//       error = psystem->m_error;
 
-      delete psystem;
+//       delete psystem;
 
-      psystem = NULL;
+//       psystem = NULL;
 
-   }
-   catch (...)
-   {
+//    }
+//    catch (...)
+//    {
 
-   }
+//    }
 
-   return error.get_exit_code();
+//    return error.get_exit_code();
 
 
-}
+// }
 
 
 

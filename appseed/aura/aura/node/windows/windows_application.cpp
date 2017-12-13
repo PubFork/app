@@ -327,16 +327,16 @@ namespace aura
       if (m_pcommand != NULL && m_pauraapp->is_system())
       {
 
-         ::windows::command * pdata = m_pcommand.cast < ::windows::command >();
+         ::command::command * pdata = m_pcommand.cast < ::command::command >();
          if (!m_pauraapp->is_system())
             return false;
 
-         ASSERT(pdata->m_hPrevInstance == NULL);
+         ASSERT(::app_core::s_pappcore->m_pmaindata->m_hPrevInstance == NULL);
 
-         HINSTANCE hInstance = pdata->m_hInstance;
+         HINSTANCE hInstance = ::app_core::s_pappcore->m_pmaindata->m_hinstance;
          //         HINSTANCE hPrevInstance    = pdata->m_hPrevInstance;
          string strCmdLine = pdata->m_strCommandLine;
-         UINT nCmdShow = pdata->m_nCmdShow;
+         UINT nCmdShow = ::app_core::s_pappcore->m_pmaindata->m_nCmdShow;
 
          // handle critical errors and avoid Windows message boxes
          SetErrorMode(SetErrorMode(0) | SEM_FAILCRITICALERRORS | SEM_NOOPENFILEERRORBOX);
@@ -469,21 +469,21 @@ namespace aura
 
 
 
-
-void __node_init_main_data(::aura::application * papp, HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow)
-{
-
-
-   ::windows::command * pmaininitdata = new ::windows::command;
-
-
-   pmaininitdata->m_hInstance = hInstance;
-   pmaininitdata->m_hPrevInstance = hPrevInstance;
-   pmaininitdata->m_strCommandLine = ::str::international::unicode_to_utf8(::GetCommandLineW());
-   pmaininitdata->m_nCmdShow = nCmdShow;
-
-   papp->startup_command(pmaininitdata);
-
-}
-
+//
+//void __node_init_main_data(::aura::application * papp, HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow)
+//{
+//
+//
+//   ::comm::command * pmaininitdata = new ::windows::command;
+//
+//
+//   pmaininitdata->m_hInstance = hInstance;
+//   pmaininitdata->m_hPrevInstance = hPrevInstance;
+//   pmaininitdata->m_strCommandLine = ::str::international::unicode_to_utf8(::GetCommandLineW());
+//   pmaininitdata->m_nCmdShow = nCmdShow;
+//
+//   papp->startup_command(pmaininitdata);
+//
+//}
+//
 

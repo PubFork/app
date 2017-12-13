@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "base/database/simpledb/simpledb.h"
 
 
@@ -1440,30 +1440,16 @@ finished:
 
       }
 
-      try
-      {
-
-         if (m_pfilemanager != NULL)
-         {
-
-            delete m_pfilemanager;
-
-         }
-
-      }
-      catch (...)
-      {
-
-      }
+      m_pfilemanager.release();
 
       try
       {
-         
+
          if(m_puserex != NULL)
          {
 
             m_puserex->term();
-            
+
          }
 
       }

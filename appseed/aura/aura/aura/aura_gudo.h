@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace aura
@@ -25,7 +25,7 @@ namespace aura
    };
 
    template < class AXIS >
-   gudo < AXIS > ::gudo(sp(aura::application) papp,const string & strKey,bool bInitialGudoGet):
+   gudo < AXIS > ::gudo(sp(::aura::application) papp,const string & strKey,bool bInitialGudoGet):
       object(papp)
    {
 

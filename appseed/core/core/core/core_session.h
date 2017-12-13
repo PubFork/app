@@ -43,7 +43,7 @@ namespace core
 
       index                                              m_iEdge;
 
-      ::filemanager::filemanager *                       m_pfilemanager;
+      sp(::filemanager::filemanager)                     m_pfilemanager;
 
       session_docs *                                     m_pdocs;
       //nature::database *                                 m_pdatabase;

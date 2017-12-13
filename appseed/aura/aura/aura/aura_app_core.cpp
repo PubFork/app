@@ -1,11 +1,17 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include <time.h>
+
+
 typedef bool DEFER_INIT();
 typedef DEFER_INIT * PFN_DEFER_INIT;
 
 
-stringa get_c_args(const char * psz);
-stringa get_c_args(int argc, char ** argv);
+
+
+//string merge_colon_args(const array < stringa > & str2a);
+//string transform_to_c_arg(const char * psz);
+//stringa get_c_args(const char * psz);
+//stringa get_c_args(int argc, char ** argv);
 
 ::aura_prelude * aura_prelude::s_pprelude = NULL;
 
@@ -33,62 +39,61 @@ string apple_get_bundle_identifier();
 
 aura_main_data::aura_main_data(int argc, char ** argv)
 {
-   
+
    m_bConsole = true;
-   
+
    m_argc = argc;
-   
+
    m_argv = argv;
-   
-   m_lpCmdLine = NULL;
-   
+
 #ifdef WINDOWSEX
-   
+
    m_hinstance = ::GetModuleHandle(NULL);
-   
+
    m_hPrevInstance = NULL;
-   
+
    m_nCmdShow = SW_SHOWDEFAULT;
-   
+
 #endif
-   
+
 }
 
 #ifdef WINDOWSEX
 
 aura_main_data::aura_main_data(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow)
 {
-   
+
    m_bConsole = false;
-   
+
    m_hinstance = hinstance;
-   
+
    m_hPrevInstance = hPrevInstance;
-   
-   m_lpCmdLine = ::str::dup(lpCmdLine);
-   
+
+   m_strCommandLine = lpCmdLine;
+
    m_nCmdShow = nCmdShow;
-   
+
 }
 
 #endif
 
 aura_main_data::aura_main_data(LPTSTR lpCmdLine)
 {
-   
+
    m_bConsole = false;
-   
-   m_lpCmdLine = lpCmdLine;
-   
+
+   m_strCommandLine = lpCmdLine;
+
 }
 
 
 aura_main_data::~aura_main_data()
 {
-   
-   ::aura::free(m_lpCmdLine);
-   
+
 }
+
+
+app_core * app_core::s_pappcore = NULL;
 
 
 // ATTENTION
@@ -99,6 +104,8 @@ aura_main_data::~aura_main_data()
 app_core::app_core(aura_main_data * pdata)
 {
 
+   s_pappcore = this;
+
    m_pmaindata = pdata;
 
 }
@@ -106,9 +113,6 @@ app_core::app_core(aura_main_data * pdata)
 app_core::~app_core()
 {
 
-   ::aura::free(m_pszAppId);
-   ::aura::del(m_pmaindata);
-   
 }
 
 
@@ -147,31 +151,21 @@ bool app_core::beg()
 
    aura_prelude::defer_call_construct(this);
 
-   if (!defer_aura_init())
-   {
-
-      ::output_debug_string("Failed to defer_core_init");
-
-      return on_result(-4);
-
-   }
-   
-   
 #ifdef APPLEOS
-   
+
    if(m_pmaindata->m_lpCmdLine == NULL)
    {
-   
+
       string str = apple_get_bundle_identifier();
-   
+
       ::str::begins_eat_ci(str, "com.ca2.");
-   
+
       str.replace(".", "/");
-      
+
       m_pmaindata->m_lpCmdLine = ::str::dup("app : app=" + str);
-      
+
    }
-   
+
 #endif
 
    m_dwStartTime = ::get_first_tick();
@@ -201,43 +195,114 @@ bool app_core::ini()
 
    m_bAcidApp = m_pfnNewApp != NULL;
 
-   if (!node_fill(this))
-   {
+   //if (!node_fill(this))
+   //{
 
-      on_result(-1);
+   //   on_result(-1);
 
-      return false;
+   //   return false;
 
-   }
-   
-   string strCommandLine = get_command_line_dup();
-   
+   //}
+
+
+   //bool node_fill(app_core * pappcore)
+   //{
+
    string strAppId;
-   
+
+   //if (hinstance == NULL)
+   //{
+
+   //   hinstance = ::GetModuleHandle(NULL);
+
+   //}
+
+   //if (::GetProcAddress(hinstance, "get_acid_app") != NULL)
+   //{
+
+   //   strAppId = "acid";
+
+   //}
+
+   string strCommandLine = merge_colon_args(
+   {
+      get_c_args(m_pmaindata->m_argc, m_pmaindata->m_argv),
+      get_c_args(ca2_command_line()),
+      get_c_args(m_pmaindata->m_strCommandLine)
+   });
+
+   set_command_line_dup(strCommandLine);
+
    get_command_line_param(strAppId, strCommandLine, "app");
-   
-   if(strAppId.is_empty() && m_bAcidApp)
+
+   if (strAppId.is_empty())
    {
-    
-      strAppId = "acid";
-      
-      strCommandLine += " app=acid";
-      
+
+      if (m_bAcidApp)
+      {
+
+         strAppId = "acid";
+
+         strCommandLine += " app=acid";
+
+      }
+
+
+
    }
-   
-   if(strAppId.has_char())
+
+   if (strAppId.has_char())
    {
-    
-      m_pszAppId = ::str::dup(strAppId);
-      
+
+      m_strAppId = strAppId;
+
    }
-   
+
+   //pappcore->defer_load_backbone_libraries(strAppId);
+
+   ::command::command * pmaininitdata = new ::command::command;
+
+   //pmaininitdata->m_hInstance = pappcore->m_pmaindata->m_hinstance;
+   //pmaininitdata->m_hPrevInstance = pappcore->m_pmaindata->m_hPrevInstance;
+   //pmaininitdata->m_nCmdShow = pappcore->m_pmaindata->m_nCmdShow;
+   pmaininitdata->m_strAppId = strAppId;
+
+   pmaininitdata->m_strCommandLine = strCommandLine;
+
+   //if (pszCmdLine == NULL)
+   //{
+
+   //pmaininitdata->m_strCommandLine = ::path::module() + " : app=" + strAppId;
+
+   //}
+   //else
+   //{
+
+   //pmaininitdata->m_strCommandLine = pszCmdLine;
+   pmaininitdata->m_strCommandLine = ::GetCommandLineW();
+
+
+   //}
+
+   m_pmaindata->m_pmaininitdata = pmaininitdata;
+
+   //   return true;
+
+   //}
+
+
+//   string strCommandLine = get_command_line_dup();
+
+   //string strAppId;
+
+
+
    string strDerivedApplication;
-   
+
    get_command_line_param(strDerivedApplication, strCommandLine, "derived_application");
-   
+
    g_iDerivedApplication = atoi(strDerivedApplication);
-   
+
    defer_load_backbone_libraries(strAppId);
 
    m_psystem = g_pfn_create_system(this);
@@ -267,55 +332,55 @@ void app_core::defer_load_backbone_libraries(string strAppId)
 
    if (strAppId.has_char())
    {
-      
+
       void * hmodule = NULL;
-      
+
       bool bInApp = strAppId.compare_ci("acid") == 0;
-      
+
       string strMessage;
-      
+
       if (!bInApp)
       {
-         
+
          string strLibrary = ::process::app_id_to_app_name(strAppId);
-         
+
          hmodule = __node_library_open(strLibrary, strMessage);
-         
+
       }
-      
+
       if (hmodule != NULL || bInApp)
       {
-         
+
          PFN_DEFER_INIT defer_init = NULL;
-         
-         if ((hmodule = __node_library_open("core", strMessage)) != NULL)
+
+         if ((hmodule = __node_library_touch("core", strMessage)) != NULL)
          {
-            
+
             defer_init = (PFN_DEFER_INIT) __node_library_raw_get(hmodule, "defer_core_init");
-            
+
          }
-         else if ((hmodule = __node_library_open("base", strMessage)) != NULL)
+         else if ((hmodule = __node_library_touch("base", strMessage)) != NULL)
          {
-            
+
             defer_init = (PFN_DEFER_INIT) __node_library_raw_get(hmodule, "defer_base_init");
-            
+
          }
-         else if ((hmodule = __node_library_open("axis", strMessage)) != NULL)
+         else if ((hmodule = __node_library_touch("axis", strMessage)) != NULL)
          {
-            
+
             defer_init = (PFN_DEFER_INIT) __node_library_raw_get(hmodule, "defer_axis_init");
-            
+
          }
-         
+
          if (defer_init != NULL && !defer_init())
          {
-            
+
             on_result(-3);
-            
+
          }
-         
+
       }
-      
+
    }
 
 }
@@ -397,14 +462,14 @@ void app_core::end()
 
    strncpy(szEllapsed, ::file::path(APP_CORE_BASE_DIR) / "show_elapsed.txt", sizeof(szEllapsed));
 
-   if (!defer_aura_term())
-   {
+   //if (!defer_aura_term())
+   //{
 
-      ::output_debug_string("Failed to defer_core_term");
+   //   ::output_debug_string("Failed to defer_core_term");
 
-      on_result(-10000);
+   //   on_result(-10000);
 
-   }
+   //}
 
    DWORD dwEnd = ::get_tick_count();
 
@@ -570,9 +635,9 @@ typedef DEFER_INIT * PFN_DEFER_INIT;
 long aura_aura(aura_main_data * pmaindata)
 {
 
-   ap(app_core) pappcore;
+   sp(app_core) pappcore;
 
-   pappcore = new app_core(pmaindata);
+   pappcore = canew(app_core(pmaindata));
 
    if(!pappcore->beg())
    {
@@ -745,74 +810,74 @@ bool aura_prelude::prelude(app_core * pappcore)
 
 stringa get_c_args(const char * psz)
 {
-   
+
    stringa stra;
-   
+
    if(psz == NULL)
    {
-      
+
       return stra;
-      
+
    }
-   
+
    const char * pszEnd = psz + strlen(psz);
 
    while(psz < pszEnd)
    {
-   
+
       ::str::consume_spaces(psz, 0, pszEnd);
-      
+
       if(psz >= pszEnd)
       {
-    
+
          break;
-         
+
       }
       if(*psz == '\"')
       {
-         
+
          stra.add(::str::consume_quoted_value(psz, pszEnd));
-         
+
       }
       else if(*psz == '\'')
       {
-         
+
          stra.add(::str::consume_quoted_value(psz, pszEnd));
-         
+
       }
       else
       {
-         
+
          stra.add(::str::consume_non_spaces(psz, pszEnd));
-         
+
       }
 
    }
-   
+
    return stra;
-   
+
 }
 
 
 stringa get_c_args(int argc, char ** argv)
 {
-   
+
    stringa straBeforeColon;
-   
+
    stringa straAfterColon;
-   
+
    if(argc > 0)
    {
-      
+
       straBeforeColon.add(argv[0]);
-      
+
    }
-   
+
    bool bColon = false;
- 
+
    for(int i = 1; i < argc; i++)
    {
-      
+
       if(strcmp(argv[i], ":") == 0)
       {
          bColon = true;
@@ -823,27 +888,27 @@ stringa get_c_args(int argc, char ** argv)
       else if(bColon || straAfterColon.has_elements() || argv[i][0] == '-')
 #endif
       {
-         
+
          straAfterColon.add(argv[i]);
-         
+
       }
       else
       {
-         
+
          straBeforeColon.add(argv[i]);
-         
+
       }
-      
+
    }
-   
+
    stringa stra;
-   
+
    stra = straBeforeColon;
-   
+
    stra.add(":");
-   
+
    stra += straAfterColon;
-   
+
    return stra;
 
 }
@@ -858,13 +923,125 @@ typedef FN_GET_STRING * PFN_GET_STRING;
 
 string apple_get_bundle_identifier()
 {
-   
+
    return ::str::get_string(&ns_get_bundle_identifier);
-   
+
 }
 
 #endif
 
 
 
+
+
+
+
+//m_plibrary = __node_library_open_ca2(pszPath, m_strMessage);
+
+string transform_to_c_arg(const char * psz)
+{
+
+   if (strstr(psz, " ") != NULL
+         || (strstr(psz, ":") != NULL && strlen(psz) > 1))
+   {
+
+      return string("\"") + ::str::replace("\"", "\\\"", psz) + "\"";
+
+   }
+   else
+   {
+
+      return psz;
+
+   }
+
+}
+
+
+string merge_colon_args(const array < stringa > & str2a)
+{
+
+   stringa straBeforeColon;
+
+   stringa straAfterColon;
+
+   string strCommandLine;
+
+   for (auto & stra : str2a)
+   {
+
+      index iFindColon = stra.find_first(":");
+
+      if (stra.get_size() > 0 && iFindColon != 0)
+      {
+
+         if (strCommandLine.is_empty())
+         {
+
+            strCommandLine = transform_to_c_arg(stra[0]);
+
+         }
+
+      }
+
+      if (iFindColon < 0)
+      {
+
+         iFindColon = stra.get_size();
+
+      }
+
+      for (index i = 1; i < stra.get_count(); i++)
+      {
+
+         string str = stra[i];
+
+         if (i < iFindColon)
+         {
+
+            straBeforeColon.add(str);
+
+         }
+         else if (i > iFindColon)
+         {
+
+            if (::str::begins_eat_ci(str, "app="))
+            {
+
+               if (straAfterColon.find_first_begins("app=") >= 0) // fixed case when added below :D..O
+               {
+
+                  straAfterColon.add("fallback_app=" + str);
+
+               }
+               else
+               {
+
+                  straAfterColon.add("app=" + str); // fixed case :) (excuses, excuses...)
+
+               }
+
+            }
+            else
+            {
+
+               straAfterColon.add(str);
+
+            }
+
+         }
+
+      }
+
+   }
+
+   strCommandLine += ::str::has_char(straBeforeColon.pred_implode(&transform_to_c_arg, " "), " ");
+
+   strCommandLine += " : ";
+
+   strCommandLine += straAfterColon.pred_implode(&transform_to_c_arg, " ");
+
+   return strCommandLine;
+
+}
 

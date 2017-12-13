@@ -1,12 +1,9 @@
 #include "framework.h"
 
-
 CLASS_DECL_AURA string & get_command_line_string()
 {
 
-   static string g_strCommandLine;
-
-   return g_strCommandLine;
+   return ::app_core::s_pappcore->m_strCommandLine;
 
 }
 

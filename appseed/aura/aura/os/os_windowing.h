@@ -1,4 +1,4 @@
-//
+﻿//
 //  os_windowing.h
 //  aura
 //
@@ -11,15 +11,15 @@
 class CLASS_DECL_AURA os_system_window
 {
 public:
-   
+
    //bool                                         m_bWindowSizeChange;
-   
+
    sp(::user::interaction)                      m_pui;
-   
+
    ::aura::system_window ^                      m_pwindow;
-   
+
    os_system_window();
-   
+
 };
 
 #elif defined(APPLE_IOS)
@@ -27,9 +27,9 @@ public:
 class os_system_window
 {
 public:
-   
+
    sp(::user::interaction)                      m_pui;
-   
+
 };
 
 #elif defined(VSNORD)
@@ -37,11 +37,11 @@ public:
 class os_system_window
 {
 public:
-   
+
    sp(::user::interaction)                      m_pui;
-   
+
    oswindow                                     m_oswindow;
-   
+
 };
 
 #else
@@ -52,12 +52,19 @@ class os_system_window;
 
 namespace user
 {
-   
+
    class interaction;
-   
+
 } // namespace user
 
 
 ::user::interaction * get_system_window_interaction(::os_system_window * psystemwindow);
 
+
+
+
+
+CLASS_DECL_AURA bool os_init_windowing();
+
+CLASS_DECL_AURA void os_term_windowing();
 

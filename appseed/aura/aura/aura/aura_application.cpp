@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #ifdef WINDOWSEX
 #include "aura/aura/os/windows/windows_system_interaction_impl.h"
 #endif
@@ -7112,14 +7112,16 @@ finalize:
 
    string application::install_get_title(string strTitle)
    {
-      static string  s_strTitle;
 
       if (strTitle.has_char())
       {
-         s_strTitle = strTitle;
+
+         System.oprop("install_title") = strTitle;
+
       }
 
-      return s_strTitle;
+      return System.oprop("install_title");
+      
    }
 
 

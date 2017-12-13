@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #if !defined(METROWIN)
@@ -73,9 +73,13 @@ CLASS_DECL_AURA bool launch_application(::aura::application * papp, const string
 
 
 
-bool shell_execute_async(const char * pszFile, const char * pszParams);
-bool shell_execute_sync(const char * pszFile, const char * pszParams, ::duration durationTimeout = one_minute());
+CLASS_DECL_AURA bool shell_execute_async(const char * pszFile, const char * pszParams);
+CLASS_DECL_AURA bool shell_execute_sync(const char * pszFile, const char * pszParams, ::duration durationTimeout = one_minute());
 
-bool root_execute_async(const char * pszFile, const char * pszParams);
-bool root_execute_sync(const char * pszFile, const char * pszParams, ::duration durationTimeout = one_minute());
+CLASS_DECL_AURA bool root_execute_async(const char * pszFile, const char * pszParams);
+CLASS_DECL_AURA bool root_execute_sync(const char * pszFile, const char * pszParams, ::duration durationTimeout = one_minute());
+
+
+CLASS_DECL_AURA bool os_init_application();
+CLASS_DECL_AURA void os_term_application();
 

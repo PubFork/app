@@ -2,15 +2,7 @@
 //#include "aura/user/colorertake5/colorertake5.h"
 
 
-void os_init_imaging();
 
-void os_term_imaging();
-
-void os_init_windowing();
-
-void os_term_windowing();
-
-void os_term_application();
 
 #if defined(LINUX) || defined(ANDROID)
 

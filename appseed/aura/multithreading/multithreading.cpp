@@ -476,7 +476,7 @@ void thread_refa::post_quit()
 void thread_refa::wait(const duration & duration, ::sync_interface * psyncParent)
 {
 
-   ::datetime::time timeEnd = ::datetime::time::get_current_time() + MAX(2, duration.get_total_seconds());
+   ::datetime::time timeEnd = ::datetime::time::get_current_time() + MAX(seconds(2), duration);
 
    try
    {

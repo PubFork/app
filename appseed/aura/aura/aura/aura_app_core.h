@@ -1,7 +1,42 @@
-#pragma once
+﻿#pragma once
 
 
-struct aura_main_data
+class raw_fail
+{
+public:
+
+   raw_fail() {}
+   ~raw_fail() {}
+
+};
+
+class CLASS_DECL_AURA aura_aura
+{
+public:
+
+   aura_aura()
+   {
+
+      if (!defer_aura_init())
+      {
+
+         throw raw_fail();
+
+      }
+
+   }
+
+   ~aura_aura()
+   {
+
+      defer_aura_term();
+
+   }
+
+};
+
+class CLASS_DECL_AURA aura_main_data :
+   virtual public object
 {
 public:
 
@@ -10,7 +45,7 @@ public:
    int                           m_argc;
    char **                       m_argv;
    int                           m_iExitCode;
-   LPTSTR                        m_lpCmdLine;
+   string                        m_strCommandLine;
 
 #ifdef WINDOWS
 
@@ -26,21 +61,7 @@ public:
 #endif
    aura_main_data(LPTSTR lpCmdLine);
    ~aura_main_data();
-   
 
-   void * operator new(size_t sz)
-   {
-
-      return malloc(sz * 2);
-
-   }
-
-   void operator delete(void * p)
-   {
-
-      free(p);
-
-   }
 
 };
 
@@ -53,19 +74,22 @@ public:
 // It is used after all application app_core (library) finalization,
 // when even new/delete/strings/ids can be used anymore for example.
 
-class CLASS_DECL_AURA app_core
+class CLASS_DECL_AURA app_core :
+   virtual public object
 {
 public:
 
 
+   static app_core *             s_pappcore;
+   string                        m_strCommandLine;
    bool                          m_bAcidApp = false;
    ::aura::PFN_GET_NEW_LIBRARY   m_pfnNewLibrary = NULL;
    ::aura::PFN_GET_NEW_APP       m_pfnNewApp = NULL;
    DWORD                         m_dwStartTime;
    DWORD                         m_dwAfterApplicationFirstRequest;
-   aura_main_data *              m_pmaindata = NULL;
+   sp(aura_main_data)            m_pmaindata;
    ::aura::system *              m_psystem = NULL;
-   char *                        m_pszAppId = NULL;
+   string                        m_strAppId;
 
    int                           m_iaError[APP_CORE_MAXIMUM_ERROR_COUNT];
    int                           m_iErrorCount = 0;
@@ -82,24 +106,10 @@ public:
    bool ini();
 
    virtual void defer_load_backbone_libraries(string strAppId);
-   
+
    void run();
 
    void end();
-
-   void * operator new(size_t sz)
-   {
-
-      return malloc(sz * 2);
-
-   }
-
-   void operator delete(void * p)
-   {
-
-      free(p);
-
-   }
 
 };
 
@@ -149,8 +159,7 @@ public:
 };
 
 
-
-stringa get_c_args(const char * psz);
-stringa get_c_args(int argc, char ** argv);
-
-
+CLASS_DECL_AURA string transform_to_c_arg(const char * psz);
+CLASS_DECL_AURA stringa get_c_args(const char * psz);
+CLASS_DECL_AURA stringa get_c_args(int argc, char ** argv);
+CLASS_DECL_AURA string ca2_command_line();

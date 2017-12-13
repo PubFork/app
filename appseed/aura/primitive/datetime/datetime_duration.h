@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 class CLASS_DECL_AURA duration
@@ -33,8 +33,7 @@ public:
    int64_t        m_iSeconds;
 
 
-   duration() {}
-   duration(int64_t iSeconds, int64_t iNanoSeconds);
+   duration(int64_t iSeconds = 0, int64_t iNanoSeconds = 0);
    duration(e_duration eduration);
 
 
@@ -281,7 +280,7 @@ inline bool duration::operator == (const duration & duration) const
    const_cast < class duration * >(this)->normalize();
    const_cast < class duration * >(&duration)->normalize();
    return m_iSeconds == duration.m_iSeconds
-      && m_iNanoseconds == duration.m_iNanoseconds;
+          && m_iNanoseconds == duration.m_iNanoseconds;
 }
 
 class CLASS_DECL_AURA nanos :

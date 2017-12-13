@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #ifdef __cplusplus
@@ -93,6 +93,10 @@ END_EXTERN_C
 #include "os_windowing.h"
 
 #endif
+
+
+#include "os_graphics.h"
+
 
 
 

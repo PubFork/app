@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include <stdio.h>
 
 #include <time.h>
@@ -6,7 +6,7 @@
 #include <crtdbg.h>
 #endif
 
-
+CLASS_DECL_AURA string ca2_command_line();
 
 //#ifdef WINDOWSEX
 //
@@ -198,76 +198,6 @@ extern "C"
 
 
 
-bool node_fill(app_core * pappcore)
-{
-
-   string strAppId;
-
-   //if (hinstance == NULL)
-   //{
-
-   //   hinstance = ::GetModuleHandle(NULL);
-
-   //}
-
-   //if (::GetProcAddress(hinstance, "get_acid_app") != NULL)
-   //{
-
-   //   strAppId = "acid";
-
-   //}
-
-   if (strAppId.is_empty())
-   {
-
-      strAppId = read_resource_as_string_dup(pappcore->m_pmaindata->m_hinstance, 1, "APPID");
-
-      if (strAppId.is_empty())
-      {
-
-         get_command_line_param(strAppId, string(::GetCommandLineW()), "app");
-
-         if (strAppId.is_empty())
-         {
-
-            strAppId = "acid";
-
-         }
-
-      }
-
-   }
-
-   pappcore->defer_load_backbone_libraries(strAppId);
-
-   ::windows::command * pmaininitdata = new ::windows::command;
-
-   pmaininitdata->m_hInstance = pappcore->m_pmaindata->m_hinstance;
-   pmaininitdata->m_hPrevInstance = pappcore->m_pmaindata->m_hPrevInstance;
-   pmaininitdata->m_nCmdShow = pappcore->m_pmaindata->m_nCmdShow;
-   pmaininitdata->m_strAppId = strAppId;
-
-   //if (pszCmdLine == NULL)
-   //{
-
-   //pmaininitdata->m_strCommandLine = ::path::module() + " : app=" + strAppId;
-
-   //}
-   //else
-   //{
-
-   //pmaininitdata->m_strCommandLine = pszCmdLine;
-   pmaininitdata->m_strCommandLine = ::GetCommandLineW();
-
-
-   //}
-
-   pappcore->m_pmaindata->m_pmaininitdata = pmaininitdata;
-
-   return true;
-
-}
-
 
 
 //int app_common_term(int iError, ::aura::system * psystem, app_core & appcore)
@@ -295,3 +225,39 @@ bool node_fill(app_core * pappcore)
 //
 
 
+
+CLASS_DECL_AURA bool os_init_application()
+{
+
+   return true;
+
+}
+
+
+CLASS_DECL_AURA void os_term_application()
+{
+
+
+
+}
+
+
+
+
+
+
+string ca2_command_line()
+{
+
+   string strAppId = read_resource_as_string_dup(::app_core::s_pappcore->m_pmaindata->m_hinstance, 1, "APPID");
+
+   if (strAppId.is_empty())
+   {
+
+      return "";
+
+   }
+
+   return "app.exe : app=" + strAppId;
+
+}
