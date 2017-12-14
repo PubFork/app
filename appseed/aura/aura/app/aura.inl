@@ -14,6 +14,8 @@
 int main(Array<String^>^)
 {
 
+   class aura_aura aura;
+
    aura_aura aura;
 
    ap(aura_main_data) pmaindata = new aura_main_data(MAIN_STRING);
