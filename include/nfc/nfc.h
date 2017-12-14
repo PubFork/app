@@ -80,6 +80,11 @@
 extern  "C" {
 #  endif                        // __cplusplus
 
+typedef void FUNCTION_NFC_OUTPUT_DEBUG_STRING(const char * lpOutputString);
+typedef FUNCTION_NFC_OUTPUT_DEBUG_STRING * PFN_NFC_OUTPUT_DEBUG_STRING;
+
+NFC_EXPORT void nfc_set_output_debug_string_function(PFN_NFC_OUTPUT_DEBUG_STRING pfn);
+
 /* Library initialization/deinitialization */
 NFC_EXPORT void nfc_init(nfc_context **context) ATTRIBUTE_NONNULL(1);
 NFC_EXPORT void nfc_exit(nfc_context *context) ATTRIBUTE_NONNULL(1);
