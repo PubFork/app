@@ -265,12 +265,6 @@ uint64_t file_length_dup(const char * path)
 
 
 
-string file_module_path_dup()
-{
-
-   return "/core/stage";
-
-}
 
 
 

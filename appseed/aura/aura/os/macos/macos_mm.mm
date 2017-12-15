@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-
+size_t ns_string(char * psz, size_t s, NSString * pstr);
 
 //
 //char * str_clip_dup()
@@ -175,6 +175,14 @@ void ns_app_terminate()
    
 }
 
+
+size_t ns_executable_path(char * psz, size_t s)
+{
+   
+   return ns_string(psz, s, [[NSBundle mainBundle] executablePath]);
+   
+}
+
 size_t ns_string(char * psz, size_t s, NSString * pstr)
 {
    
@@ -201,7 +209,7 @@ size_t ns_string(char * psz, size_t s, NSString * pstr)
 }
 
 
-size_t ns_get_bundle_identifier(char * psz, size_t iSize)
+size_t ns_bundle_identifier(char * psz, size_t iSize)
 {
    
    return ns_string(psz, iSize, [[NSBundle mainBundle] bundleIdentifier]);

@@ -902,7 +902,6 @@ namespace file
 #include "aura/aura/aura/aura_debug.h"
 
 
-#include "aura/aura/aura/aura_app_core.h"
 
 
 
@@ -946,10 +945,6 @@ namespace file
 
 
 #include "aura/aura/aura/aura_action_context.h"
-
-
-CLASS_DECL_AURA string merge_colon_args(const array < stringa > & str2a);
-
 
 #include "aura/aura/aura/aura_fixed_alloc.h"
 
@@ -1068,6 +1063,13 @@ namespace aura
 
 
 //#include "aura/user/user_create_context.h"
+
+
+#include "aura/aura/aura/aura_app_core.h"
+
+CLASS_DECL_AURA string merge_colon_args(const array < stringa > & str2a);
+
+
 
 
 #if defined(LINUX)

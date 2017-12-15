@@ -4260,7 +4260,7 @@ namespace macos
       if (IsWindowVisible())
       {
 
-         round_window_redraw();
+         round_window_redraw_async();
 
       }
       else

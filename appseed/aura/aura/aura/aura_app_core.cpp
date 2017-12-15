@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include <time.h>
 
 
@@ -20,9 +20,9 @@ typedef DEFER_INIT * PFN_DEFER_INIT;
 
 #ifdef APPLEOS
 
-size_t ns_get_bundle_identifier(char * psz, size_t iSize);
+size_t ns_bundle_identifier(char * psz, size_t iSize);
 
-string apple_get_bundle_identifier();
+size_t ns_executable_path(char * psz, size_t iSize);
 
 #endif
 
@@ -82,7 +82,7 @@ aura_main_data::aura_main_data(LPTSTR lpCmdLine)
 
    m_bConsole = false;
 
-   m_strCommandLine = lpCmdLine;
+   m_straCommandLine.add(lpCmdLine);
 
 }
 
@@ -151,23 +151,6 @@ bool app_core::beg()
 
    aura_prelude::defer_call_construct(this);
 
-#ifdef APPLEOS
-
-   if(m_pmaindata->m_lpCmdLine == NULL)
-   {
-
-      string str = apple_get_bundle_identifier();
-
-      ::str::begins_eat_ci(str, "com.ca2.");
-
-      str.replace(".", "/");
-
-      m_pmaindata->m_lpCmdLine = ::str::dup("app : app=" + str);
-
-   }
-
-#endif
-
    m_dwStartTime = ::get_first_tick();
 
    m_dwAfterApplicationFirstRequest = m_dwStartTime;
@@ -223,13 +206,21 @@ bool app_core::ini()
    //   strAppId = "acid";
 
    //}
+   
+   array < stringa > str2a;
 
-   string strCommandLine = merge_colon_args(
+   str2a.add(get_c_args(m_pmaindata->m_argc, m_pmaindata->m_argv));
+
+   for(auto str : m_pmaindata->m_straCommandLine)
    {
-      get_c_args(m_pmaindata->m_argc, m_pmaindata->m_argv),
-      get_c_args(ca2_command_line()),
-      get_c_args(m_pmaindata->m_strCommandLine)
-   });
+      
+      str2a.add(get_c_args(str));
+      
+   }
+   
+   str2a.add(get_c_args(ca2_command_line()));
+
+   string strCommandLine = merge_colon_args(str2a);
 
    set_command_line_dup(strCommandLine);
 
@@ -279,7 +270,7 @@ bool app_core::ini()
    //{
 
    //pmaininitdata->m_strCommandLine = pszCmdLine;
-   pmaininitdata->m_strCommandLine = ::GetCommandLineW();
+   //pmaininitdata->m_strCommandLine = ::GetCommandLineW();
 
 
    //}
@@ -921,10 +912,17 @@ typedef FN_GET_STRING * PFN_GET_STRING;
 
 #ifdef APPLEOS
 
-string apple_get_bundle_identifier()
+string apple_bundle_identifier()
 {
 
-   return ::str::get_string(&ns_get_bundle_identifier);
+   return ::str::get_string(&ns_bundle_identifier);
+
+}
+
+string apple_executable_path()
+{
+
+   return ::str::get_string(&ns_executable_path);
 
 }
 

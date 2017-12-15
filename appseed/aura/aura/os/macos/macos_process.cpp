@@ -5,6 +5,7 @@
 #include <errno.h>
 #include <string.h>
 #include <spawn.h>
+#include "aura/aura/os/apple/apple.h"
 
 
 extern char ** environ;
@@ -258,3 +259,9 @@ void os_term_application()
    
 }
 
+string file_module_path_dup()
+{
+   
+   return apple_executable_path();
+   
+}
