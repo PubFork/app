@@ -154,14 +154,6 @@ void round_window::round_window_redraw()
 }
 
 
-void round_window::round_window_redraw_async()
-{
-   
-   [[m_proundwindow dd_invokeOnMainThreadAndWaitUntilDone:FALSE] display ];
-   
-}
-
-
 void round_window::round_window_invalidate()
 {
    

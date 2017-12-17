@@ -531,22 +531,16 @@ int32_t simple_ui_message_box(oswindow interaction_impl,const char * lpText,cons
       {
 
 
-         __begin_thread(get_app(),&thread_proc_simple_ui_message_box,pmessagebox);
-         //thread_proc_simple_ui_message_box(pmessagebox);
+         //__begin_thread(get_app(),&thread_proc_simple_ui_message_box,pmessagebox);
+         thread_proc_simple_ui_message_box(pmessagebox);
          //pmessagebox->show();
 
-         while(!pmessagebox->m_evReady.wait(millis(23)).signaled())
-         {
+         //while(!pmessagebox->m_evReady.wait(millis(23)).signaled())
+         //{
 
-            if(!get_thread()->defer_pump_message())
-            {
-                  
-               break;
-               
-            }
-          //get_app()->defer_pump_message();
+           // get_app()->defer_pump_message();
 
-         }
+         //}
 
          /*         if(bWasLocked)
                   {

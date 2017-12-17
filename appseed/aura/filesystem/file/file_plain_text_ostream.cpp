@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace file
@@ -11,12 +11,12 @@ namespace file
 
    plain_text_ostream::plain_text_ostream(file * pwriter)
    {
-	   m_spfile = pwriter;
+      m_spfile = pwriter;
    }
 
    plain_text_ostream::plain_text_ostream(const ostream & ostream)
    {
-	   m_spfile = ostream.m_spfile;
+      m_spfile = ostream.m_spfile;
    }
 
    plain_text_ostream::~plain_text_ostream()
@@ -35,7 +35,7 @@ namespace file
    void plain_text_ostream:: write (char ch)
    {
       m_spfile->write(&ch, sizeof(ch)); // treat as char - character
-      
+
    }
 
    void plain_text_ostream:: write (uchar uch)
@@ -90,10 +90,10 @@ namespace file
 
    }
 
-   
+
    void plain_text_ostream:: write (int32_t i)
    {
-      
+
       print_number(::str::from(i));
 
    }
@@ -101,7 +101,7 @@ namespace file
 
    void plain_text_ostream:: write (uint32_t ui)
    {
-      
+
       print_number(::str::from(ui));
 
    }
@@ -145,7 +145,7 @@ namespace file
 
    }
 
-   
+
    void plain_text_ostream:: write (const RECT & rect)
    {
 
@@ -154,7 +154,7 @@ namespace file
       write (rect.top);
       write (rect.right);
       write (rect.bottom);
-      
+
    }
 
 
@@ -172,18 +172,18 @@ namespace file
       m_estrflag = (e_str_flag)((int)m_estrflag  & ~(int)str_flag_ifnumberparenthesizeandspace);
       write (size.cx);
       write (size.cy);
-      
+
    }
 
-   
+
    void plain_text_ostream:: write (const sp(type) info)
    {
 
       raw_print(info->friendly_name());
-      
+
    }
 
-   
+
    void plain_text_ostream::write(const std_type_info & info)
    {
 
@@ -192,15 +192,15 @@ namespace file
 
    }
 
-   
+
    void plain_text_ostream:: write (serializable & serializable)
    {
-      
+
       serializable.write(*this);
-      
+
    }
 
-   
+
    void plain_text_ostream:: write (const char * psz)
    {
 
@@ -210,35 +210,35 @@ namespace file
          return;
 
       }
-      
-      m_spfile->write(psz, strlen(psz));
-      
+
+      write(psz, strlen(psz));
+
    }
 
-   
+
    string plain_text_ostream::get_location() const
    {
-      
+
       return "<unknown plain_text_ostream location>";
 
    }
 
-   
+
    void plain_text_ostream::raw_print(const string & str)
    {
-      
-      m_spfile->write(str.c_str(), str.size());
-      
+
+      write(str.c_str(), str.size());
+
       m_estrflag = (e_str_flag) ((int)m_estrflag  & ~(int)str_flag_ifnumberparenthesize);
 
    }
 
-   
+
    ostream & plain_text_ostream::operator = (const ostream & ostream)
    {
 
       return ostream::operator = (ostream);
-      
+
    }
 
 

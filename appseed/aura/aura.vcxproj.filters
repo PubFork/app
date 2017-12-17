@@ -2729,6 +2729,9 @@
     <ClInclude Include="aura\os\os_graphics.h">
       <Filter>Header Files\aura\os</Filter>
     </ClInclude>
+    <ClInclude Include="aura\aura\aura_pointer.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="multithreading\multithreading_condition.cpp">
@@ -4785,6 +4788,9 @@
     </ClCompile>
     <ClCompile Include="aura\os\apple\apple_time.cpp">
       <Filter>Source Files\aura\os\apple</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_pointer.cpp">
+      <Filter>Source Files\aura\aura</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

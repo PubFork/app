@@ -1,5 +1,5 @@
 #include "framework.h"
-#include "aura/aura/os/apple/apple.h"
+
 
 
 void ns_app_run();
@@ -102,36 +102,11 @@ string ca2_command_line()
    
    char * psz = mm_ca2_command_line();
    
-   string str1(psz);
-   
-   string str2 = apple_bundle_identifier();
-   
-   if(!::str::begins_eat_ci(str2, "com.ca2."))
-   {
-      
-      ::str::begins_eat_ci(str2, "cc.ca2.");
-      
-   }
-
-   str2.replace(".", "/");
-   
-   if(str2.has_char())
-   {
-   
-      str2 = "app : app=" + str2;
-      
-   }
-   
-   string strCommandLine = merge_colon_args(
-                                            {
-                                               get_c_args(str1),
-                                               get_c_args(str2)
-                                            });
-
+   string str(psz);
    
    free(psz);
    
-   return strCommandLine;
+   return str;
    
 }
 

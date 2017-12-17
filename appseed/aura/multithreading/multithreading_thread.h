@@ -55,7 +55,7 @@ private:
 public:
 
    static mutex *                         s_pmutexDependencies;
-   bool                                   m_bMessagePumpingEnabled;
+
    enum e_op
    {
 
@@ -374,8 +374,6 @@ public:
 
 
    virtual int get_exit_code();
-   
-   virtual bool is_message_pumping_enabled();
 
 };
 

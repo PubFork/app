@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 class raw_fail
@@ -45,7 +45,7 @@ public:
    int                           m_argc;
    char **                       m_argv;
    int                           m_iExitCode;
-   stringa                       m_straCommandLine;
+   string                        m_strCommandLine;
 
 #ifdef WINDOWS
 

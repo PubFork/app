@@ -295,7 +295,7 @@ CLASS_DECL_AURA void trace(e_level elevel, const char * pszTag, const char * psz
 
 #define cinfo LOG(level_info, LOG_TAG)
 #define cwarn LOG(level_warning, LOG_TAG)
-#define cerr LOG(level_error, LOG_TAG)
+#define cerror LOG(level_error, LOG_TAG)
 #define cdebug LOG(level_debug, LOG_TAG)
 
 

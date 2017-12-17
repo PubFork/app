@@ -1,4 +1,4 @@
-//
+﻿//
 //  apple_main.cpp
 //  aura
 //
@@ -170,14 +170,14 @@ bool node_fill(app_core * pappcore)
 
    setlocale(LC_ALL,"");
 
-//   string strCommandLine = merge_colon_args(
-//   {
-//      get_c_args(pappcore->m_pmaindata->m_argc, pappcore->m_pmaindata->m_argv),
-//      get_c_args(ca2_command_line()),
-//      get_c_args(pappcore->m_pmaindata->m_lpCmdLine)
-//   });
-//
-//   set_command_line_dup(strCommandLine);
+   string strCommandLine = merge_colon_args(
+   {
+      get_c_args(pappcore->m_pmaindata->m_argc, pappcore->m_pmaindata->m_argv),
+      get_c_args(ca2_command_line()),
+      get_c_args(pappcore->m_pmaindata->m_lpCmdLine)
+   });
+
+   set_command_line_dup(strCommandLine);
 
    return true;
 

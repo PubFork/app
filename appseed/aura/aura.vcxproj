@@ -596,6 +596,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="aura\aura\aura_pointer.cpp" />
     <ClCompile Include="aura\aura\aura_simple_log.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
@@ -2572,6 +2573,7 @@
     <ClInclude Include="aura\aura\aura_keep.h" />
     <ClInclude Include="aura\aura\aura_local_memory_map.h" />
     <ClInclude Include="aura\aura\aura_net.h" />
+    <ClInclude Include="aura\aura\aura_pointer.h" />
     <ClInclude Include="aura\aura\aura_printer.h" />
     <ClInclude Include="aura\aura\aura_allocate_processor_cache_oriented.h" />
     <ClInclude Include="aura\aura\aura_profiler.h" />

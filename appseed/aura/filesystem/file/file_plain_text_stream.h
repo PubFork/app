@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #include "file_memory_file.h"
@@ -16,13 +16,13 @@ namespace file
    {
    public:
 
-      
+
       plain_text_stream();
       plain_text_stream(file * pbuffer);
       plain_text_stream(const stream & stream);
       virtual ~plain_text_stream();
 
-      
+
       stream & operator = (const stream & stream);
 
       virtual bool is_stream_null();
@@ -44,7 +44,7 @@ namespace file
 
       plain_text_stream_memory_file(::aura::application * papp);
       virtual ~plain_text_stream_memory_file();
-      
+
       virtual file_position_t seek(file_offset_t offset, e_seek seekOrigin);
       virtual file_position_t get_position() const;
       virtual void flush();
@@ -99,3 +99,6 @@ namespace file
 
 
 using std_string_stream = ::file::plain_text_stream;
+
+
+

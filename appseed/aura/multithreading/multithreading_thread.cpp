@@ -310,8 +310,6 @@ thread::thread(::aura::application * papp, __THREADPROC pfnThreadProc, LPVOID pP
 
 void thread::CommonConstruct()
 {
-   
-   m_bMessagePumpingEnabled = true;
 
    if (::get_thread() != NULL)
    {
@@ -643,14 +641,7 @@ bool thread::pump_message()
 bool thread::defer_pump_message()
 {
 
-   //MESSAGE msg = {};
-   
-   if(!is_message_pumping_enabled())
-   {
-      
-      return true;
-      
-   }
+   MESSAGE msg = {};
 
    //while(::PeekMessage(&msg,NULL,0,0,PM_NOREMOVE) != FALSE)
    {
@@ -661,7 +652,7 @@ bool thread::defer_pump_message()
       {
 
 
-         ::output_debug_string("\n\n\npump_message returned false : " + string(demangle(typeid(*this).name())) + " ("+::str::from((uint64_t)::GetCurrentThreadId())+")\n\n\n");
+         ::output_debug_string("\n\n\nthread::defer_pump_message (1) quitting (wm_quit? {PeekMessage->message : "+::str::from(msg.message == WM_QUIT?1:0)+"!}) : " + string(demangle(typeid(*this).name())) + " ("+::str::from((uint64_t)::GetCurrentThreadId())+")\n\n\n");
 
          return false;
 
@@ -3660,13 +3651,3 @@ int thread::get_exit_code()
    return m_error.get_exit_code();
 
 }
-
-
-bool thread::is_message_pumping_enabled()
-{
-   
-   return m_bMessagePumpingEnabled;
-   
-}
-
-

@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #ifdef WINDOWSEX
 #include "aura/aura/os/windows/windows_system_interaction_impl.h"
 #endif
@@ -5821,8 +5821,6 @@ retry_license:
 
    bool application::handle_not_installed(::not_installed * pnotinstalled)
    {
-      
-      keep < bool > keepDisableMessagePumping(&m_bMessagePumpingEnabled, false, true, true);
 
       pnotinstalled->m_bHandled = true;
 
@@ -6003,13 +6001,9 @@ retry_license:
 
                if (!(bool)System.oprop("not_installed_message_already_shown"))
                {
-                  
-                  ::file::path pathModule = ::file_module_path_dup();
-                  
-                  string strMessage = "Debug only message, please install:\n\n\n\t" + pnotinstalled->m_strAppId + "\n\tconfiguration = " + pnotinstalled->m_strConfiguration + "\n\tplatform = " + pnotinstalled->m_strPlatform + "\n\tlocale = " + pnotinstalled->m_strLocale + "\n\tschema = " + pnotinstalled->m_strSchema + "\n\n\nSource executable: " + pathModule;
 
                   if ((App(pnotinstalled->get_app()).is_serviceable() && !App(pnotinstalled->get_app()).is_user_service())
-                        || (IDYES == (iRet = simple_message_box(NULL, strMessage, MB_ICONINFORMATION | MB_YESNO)))) //"Debug only message, please install.", MB_ICONINFORMATION | MB_YESNO))))
+                        || (IDYES == (iRet = ::simple_message_box(NULL, "Debug only message, please install:\n\n\n\t" + pnotinstalled->m_strAppId + "\n\tconfiguration = " + pnotinstalled->m_strConfiguration + "\n\tplatform = " + pnotinstalled->m_strPlatform + "\n\tlocale = " + pnotinstalled->m_strLocale + "\n\tschema = " + pnotinstalled->m_strSchema + "\n\n\nThere are helper scripts under <solution directory>/nodeapp/stage/install/", "Debug only message, please install.", MB_ICONINFORMATION | MB_YESNO))))
                   {
 
                      ::duration durationWait = minutes(1);

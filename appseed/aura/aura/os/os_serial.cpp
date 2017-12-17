@@ -144,7 +144,7 @@ Serial::read (memory &buffer, size_t size)
 }
 
 size_t
-Serial::read (std::string &buffer, size_t size)
+Serial::read (string &buffer, size_t size)
 {
    ScopedReadLock lock(this->pimpl_);
    uint8_t *buffer_ = new uint8_t[size];
@@ -157,7 +157,7 @@ Serial::read (std::string &buffer, size_t size)
 string
 Serial::read (size_t size)
 {
-   std::string buffer;
+   string buffer;
    this->read (buffer, size);
    return buffer;
 }
@@ -195,7 +195,7 @@ Serial::readline (string &buffer, size_t size, string eol)
 string
 Serial::readline (size_t size, string eol)
 {
-   std::string buffer;
+   string buffer;
    this->readline (buffer, size, eol);
    return buffer;
 }

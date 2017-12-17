@@ -1346,7 +1346,7 @@ namespace ftp
       {
          for (auto * p : (observer_array &)m_setObserver)
             p->OnSendCommand(Command, Arguments);
-         const std::string strCommand = Command.AsString(Arguments) + "\r\n";
+         const ca2std::string strCommand = Command.AsString(Arguments) + "\r\n";
          //write(strCommand, static_cast<int>(strCommand.length()), mc_uiTimeout);
          write(strCommand, static_cast<int>(strCommand.length()));
       }
