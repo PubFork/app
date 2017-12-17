@@ -27,6 +27,7 @@
 #include "windows_gdi.cpp"
 #include "windows_gdi_cursor.cpp"
 #include "windows_gdi_icon.cpp"
+#include "windows_graphics.cpp"
 #include "windows_internal.cpp"
 #include "windows_ipc.cpp"
 #include "windows_launcher.cpp"
@@ -48,6 +49,7 @@
 #include "windows_util.cpp"
 #include "windows_utils.cpp"
 #include "windows_window_buffer.cpp"
+#include "windows_windowing.cpp"
 
 
 

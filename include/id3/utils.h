@@ -1,4 +1,4 @@
-// -*- C++ -*-
+﻿// -*- C++ -*-
 // $Id: utils.h,v 1.22 2002/07/02 22:11:03 t1mpy Exp $
 
 // id3lib: a C++ library for creating and manipulating id3v1/v2 tags
@@ -47,57 +47,57 @@ namespace dami
 #endif  /* !MAXPATHLEN && !PATH_MAX */
 
 #ifndef min
-  template<typename T>
-  const T& min(const T& a, const T& b)
-  {
-    return (a < b) ? a : b;
-  }
+   template<typename T>
+   const T& min(const T& a, const T& b)
+   {
+      return (a < b) ? a : b;
+   }
 #endif
 
 #ifndef max
-  template<typename T>
-  const T& max(const T& a, const T& b)
-  {
-    return (b < a) ? a : b;
-  }
+   template<typename T>
+   const T& max(const T& a, const T& b)
+   {
+      return (b < a) ? a : b;
+   }
 #endif
 
 #ifndef mid
-  template<typename T>
-  const T& mid(const T& lo, const T& mid, const T& hi)
-  {
-    return max(lo, min(mid, hi));
-  }
+   template<typename T>
+   const T& mid(const T& lo, const T& mid, const T& hi)
+   {
+      return max(lo, min(mid, hi));
+   }
 #endif
 
 #ifndef abs
-  template<typename T>
-  T abs(const T& a)
-  {
-    return (a < T(0)) ? -a : a;
-  }
+   template<typename T>
+   T abs(const T& a)
+   {
+      return (a < T(0)) ? -a : a;
+   }
 #endif
 
-  size_t ID3_C_EXPORT renderNumber(uchar *buffer, uint32 val, size_t size = sizeof(uint32));
-  ID3String ID3_C_EXPORT renderNumber(uint32 val, size_t size = sizeof(uint32));
+   size_t ID3_C_EXPORT renderNumber(uchar *buffer, uint32 val, size_t size = sizeof(uint32));
+   ID3String ID3_C_EXPORT renderNumber(uint32 val, size_t size = sizeof(uint32));
 
-  ID3String ID3_C_EXPORT toString(uint32 val);
-  WString ID3_C_EXPORT toWString(const unicode_t[], size_t);
-  
-  size_t ID3_C_EXPORT ucslen(const unicode_t *unicode);
-  ID3String ID3_C_EXPORT convert(ID3String data, ID3_TextEnc, ID3_TextEnc);
+   ID3String ID3_C_EXPORT toString(uint32 val);
+   WString ID3_C_EXPORT toWString(const unicode_t[], size_t);
 
-  // file utils
-  size_t ID3_C_EXPORT getFileSize(std::fstream&);
-  size_t ID3_C_EXPORT getFileSize(std::ifstream&);
-  size_t ID3_C_EXPORT getFileSize(std::ofstream&);
-  ID3_Err ID3_C_EXPORT createFile(ID3String, std::fstream&);
-  ID3_Err ID3_C_EXPORT openWritableFile(ID3String, std::fstream&);
-  ID3_Err ID3_C_EXPORT openWritableFile(ID3String, std::ofstream&);
-  ID3_Err ID3_C_EXPORT openReadableFile(ID3String, std::fstream&);
-  ID3_Err ID3_C_EXPORT openReadableFile(ID3String, std::ifstream&);
+   size_t ID3_C_EXPORT ucslen(const unicode_t *unicode);
+   ID3String ID3_C_EXPORT convert(ID3String data, ID3_TextEnc, ID3_TextEnc);
+
+   // file utils
+   size_t ID3_C_EXPORT getFileSize(ca2std::fstream&);
+   size_t ID3_C_EXPORT getFileSize(ca2std::ifstream&);
+   size_t ID3_C_EXPORT getFileSize(ca2std::ofstream&);
+   ID3_Err ID3_C_EXPORT createFile(ID3String, ca2std::fstream&);
+   ID3_Err ID3_C_EXPORT openWritableFile(ID3String, ca2std::fstream&);
+   ID3_Err ID3_C_EXPORT openWritableFile(ID3String, ca2std::ofstream&);
+   ID3_Err ID3_C_EXPORT openReadableFile(ID3String, ca2std::fstream&);
+   ID3_Err ID3_C_EXPORT openReadableFile(ID3String, ca2std::ifstream&);
 
 };
-  
+
 #endif /* _ID3LIB_UTILS_H_ */
 
