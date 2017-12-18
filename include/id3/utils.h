@@ -88,14 +88,14 @@ namespace dami
    ID3String ID3_C_EXPORT convert(ID3String data, ID3_TextEnc, ID3_TextEnc);
 
    // file utils
-   size_t ID3_C_EXPORT getFileSize(ca2std::fstream&);
-   size_t ID3_C_EXPORT getFileSize(ca2std::ifstream&);
-   size_t ID3_C_EXPORT getFileSize(ca2std::ofstream&);
-   ID3_Err ID3_C_EXPORT createFile(ID3String, ca2std::fstream&);
-   ID3_Err ID3_C_EXPORT openWritableFile(ID3String, ca2std::fstream&);
-   ID3_Err ID3_C_EXPORT openWritableFile(ID3String, ca2std::ofstream&);
-   ID3_Err ID3_C_EXPORT openReadableFile(ID3String, ca2std::fstream&);
-   ID3_Err ID3_C_EXPORT openReadableFile(ID3String, ca2std::ifstream&);
+   size_t ID3_C_EXPORT getFileSize(std::fstream&);
+   size_t ID3_C_EXPORT getFileSize(std::ifstream&);
+   size_t ID3_C_EXPORT getFileSize(std::ofstream&);
+   ID3_Err ID3_C_EXPORT createFile(ID3String, std::fstream&);
+   ID3_Err ID3_C_EXPORT openWritableFile(ID3String, std::fstream&);
+   ID3_Err ID3_C_EXPORT openWritableFile(ID3String, std::ofstream&);
+   ID3_Err ID3_C_EXPORT openReadableFile(ID3String, std::fstream&);
+   ID3_Err ID3_C_EXPORT openReadableFile(ID3String, std::ifstream&);
 
 };
 

@@ -491,6 +491,13 @@ namespace metrowin
    }
 
 
+   directx_application::~directx_application()
+   {
+
+      ::draw2d_direct2d::finalize();
+
+   }
+
 //   ::user::window_draw * directx_application::create_twf_2ex()
 //   {
 //
@@ -510,12 +517,12 @@ namespace metrowin
 
       int nReturnCode = 0;
 
-      //if (!m_psystem->begin_synch())
-      //{
+      if (!m_psystem->begin_synch())
+      {
 
-      //   _throw(simple_exception(get_app(), "integer_exception 1"));
+         _throw(simple_exception(get_app(), "failed to begin_synch the system"));
 
-      //}
+      }
 
       m_directx->defer_init();
 
@@ -565,6 +572,17 @@ namespace metrowin
       //__begin_thread(m_psystem, &system_main, m_psystem);
 
       //system_main(m_psystem);
+
+      //m_psystem->begin_synch();
+
+
+      if (!m_psystem->process_command(m_psystem->m_pcommand))
+      {
+
+         _throw(simple_exception(get_app(), "failed to system::process_command"));
+
+      }
+
 
    }
 

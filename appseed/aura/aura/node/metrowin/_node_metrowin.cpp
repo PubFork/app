@@ -21,7 +21,6 @@
 #include "metrowin_file_find.cpp"
 #include "metrowin_file_system.cpp"
 #include "metrowin_folder_watch.cpp"
-#include "metrowin_main.cpp"
 #include "metrowin_os.cpp"
 #include "metrowin_registry.cpp"
 #include "metrowin_shell.cpp"

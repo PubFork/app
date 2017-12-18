@@ -63,21 +63,6 @@ CLASS_DECL_AURA void debug_print(const char * pszFormat,...)
 }
 
 
-//namespace std
-//{
-//
-//   const nothrow_t nothrow;
-//
-//} // namespace std
-
-//int32_t ___()
-//{
-//
-//   simple_message_box(NULL,"___ library of ca","___ library of ca",MB_ICONINFORMATION | MB_OK);
-//
-//   return 0;
-//
-//}
 
 
 void __post_quit_message(int32_t nExitCode)

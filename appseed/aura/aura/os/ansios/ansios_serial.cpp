@@ -48,9 +48,6 @@
 #include <IOKit/serial/ioss.h>
 #endif
 
-//using std::string;
-//using std::stringstream;
-//using std::invalid_argument;
 using serial::MillisecondTimer;
 using serial::Serial;
 using serial::SerialException;

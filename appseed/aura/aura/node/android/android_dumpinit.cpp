@@ -23,24 +23,6 @@ void __cdecl __crt_dump_client(void * pvData, size_t nBytes)
 
       ::object * pobject = NULL;
 
-      /*for(int32_t i = 0; i < 256; i++)
-      {
-         try
-         {
-            pobject = dynamic_cast < ::object * > ((::object *)&((int_ptr *)pca)[i]);
-         }
-         catch(std::__non_rtti_object & e)
-         {
-            pobject = NULL;
-         }
-         catch(...)
-         {
-            pobject = NULL;
-         }
-         if(pobject != NULL)
-            break;
-      }*/
-
       if(pobject == NULL)
       {
 // xxx            C_RUNTIME_ERRORCHECK_SPRINTF(_snprintf_s(sz, _countof(sz), _countof(sz) - 1, "unknown object at $%p, %u bytes long\n", pvData, nBytes));
@@ -59,19 +41,10 @@ void __cdecl __crt_dump_client(void * pvData, size_t nBytes)
          *::aura::system::g_p->m_pdumpcontext << sz;
       }
    }
-/* xxx   catch(std::__non_rtti_object & e)
-   {
-      *::aura::system::g_p->m_pdumpcontext << "_::ca2::CrtdumpClient __non_rtti_object ";
-      ::aura::system::g_p->m_pdumpcontext << e.what();
-   } */
    catch(...)
    {
-      // short form for trashed objects
-// xxx      sprintf_s(sz, _countof(sz), "faulted while dumping object at $%p, %u bytes long\n", pvData, nBytes);
       *::aura::system::g_p->m_pdumpcontext << sz;
    }
-   //if (pfnOldCrtDumpClient != NULL)
-   //   (*pfnOldCrtDumpClient)(pvData, nBytes);
 }
 
 int32_t __cdecl __crt_report_hook(int32_t nRptType, char *szMsg, int32_t* pResult)
@@ -112,44 +85,6 @@ int32_t __cdecl __crt_report_hook(int32_t nRptType, char *szMsg, int32_t* pResul
 //#endif // ___NO_DEBUG_CRT
 //}
 //
-//___DEBUG_STATE::~___DEBUG_STATE()
-//{
-//#ifndef ___NO_DEBUG_CRT
-//   if(::is_debugger_attached() && false)
-//   {
-//      try
-//      {
-//         _CrtDumpMemoryLeaks();
-//      }
-///*  xxx     catch(std::__non_rtti_object & e)
-//      {
-//         ::output_debug_string("~___DEBUG_STATE _CrtdumpMemoryLeaks std::__non_rtti_object\n");
-//         ::output_debug_string(e.what());
-//         ::output_debug_string("\n");
-//      } */
-//      catch(...)
-//      {
-//         ::output_debug_string("~___DEBUG_STATE _CrtdumpMemoryLeaks exception\n");
-//      }
-//   }
-//   int32_t nOldState = _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
-//   _CrtSetDbgFlag(nOldState & ~_CRTDBG_LEAK_CHECK_DF);
-//
-//   ASSERT(_CrtSetReportHook2(_CRT_RPTHOOK_REMOVE,__crt_report_hook) != -1);
-//   _CrtSetDumpClient(pfnOldCrtDumpClient);
-//#endif // ___NO_DEBUG_CRT
-//}
-//
-//PROCESS_LOcaL(___DEBUG_STATE, afxDebugState)
-//
-//bool CLASS_DECL_AURA __diagnostic_init()
-//{
-//   // just get the debug state to cause initialization
-//   ___DEBUG_STATE* pState = afxDebugState.get_data();
-//   ASSERT(pState != NULL);
-//
-//   return TRUE;
-//}
 
 #endif
 

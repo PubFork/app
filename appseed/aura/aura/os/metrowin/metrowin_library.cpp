@@ -1,6 +1,15 @@
 #include "framework.h"
 
 
+
+void * __node_library_touch(const char * pszPath, string & strMessage)
+{
+
+   return __node_library_open(pszPath, strMessage);
+
+}
+
+
 void * __node_library_open(const char * pszPath, string & strMessage)
 {
 

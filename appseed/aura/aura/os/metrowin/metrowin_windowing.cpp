@@ -470,9 +470,10 @@ CLASS_DECL_AURA::user::interaction_impl * oswindow_get(oswindow oswindow)
 }
 
 
-void os_init_windowing()
+bool os_init_windowing()
 {
 
+   return true;
 
 }
 
@@ -482,3 +483,42 @@ void os_term_windowing()
 
 
 }
+
+
+
+
+os_system_window::os_system_window()
+{
+
+   //      m_bWindowSizeChange = false;
+
+}
+
+
+::user::interaction * get_system_window_interaction(::os_system_window * pwindow)
+{
+
+   if (pwindow == NULL)
+   {
+
+      return NULL;
+
+   }
+
+   try
+   {
+
+      return pwindow->m_pui;
+
+   }
+   catch (...)
+   {
+
+   }
+
+   return NULL;
+
+}
+
+
+

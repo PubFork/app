@@ -689,7 +689,7 @@ namespace serial
    public:
       SerialException (const char *description)
       {
-         ca2std::stringstream ss;
+         std::stringstream ss;
          ss << "SerialException " << description << " failed.";
          e_what_ = ss.str();
       }
@@ -713,7 +713,7 @@ namespace serial
       explicit IOException (string file, int line, int errnum)
          : file_(file), line_(line), errno_(errnum)
       {
-         ca2std::stringstream ss;
+         std::stringstream ss;
 #if defined(_WIN32) && !defined(__MINGW32__)
          char error_str [1024];
          strerror_s(error_str, 1024, errnum);
@@ -728,7 +728,7 @@ namespace serial
       explicit IOException (string file, int line, const char * description)
          : file_(file), line_(line), errno_(0)
       {
-         ca2std::stringstream ss;
+         std::stringstream ss;
          ss << "IO Exception: " << description;
          set_file(file_);
          m_iLine = line_;
@@ -756,7 +756,7 @@ namespace serial
    public:
       PortNotOpenedException (const char * description)
       {
-         ca2std::stringstream ss;
+         std::stringstream ss;
          ss << "PortNotOpenedException " << description << " failed.";
          e_what_ = ss.str();
       }

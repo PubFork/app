@@ -1,8 +1,6 @@
 ﻿#pragma once
 
 
-#include <string>
-
 
 namespace file
 {
@@ -75,7 +73,6 @@ namespace file
       inline ostream & operator << (const var & var                      ) { write(var             ); return *this;}
       inline ostream & operator << (const property & property            ) { write(property        ); return *this;}
       inline ostream & operator << (const string & str                   ) { write(str             ); return *this;}
-      inline ostream & operator << (const std::string & str              ) { write(str.c_str()     ); return *this; }
       inline ostream & operator << (e_str_flag eflag                     ) { m_estrflag = (e_str_flag)((int)m_estrflag | (int)eflag); return *this; }
 
       virtual void write_arbitrary(int32_t i);

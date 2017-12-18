@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 //#ifdef WINDOWSEX
 //
@@ -22,6 +22,8 @@ namespace draw2d_direct2d
    {
 
 
+      ::draw2d_direct2d::initialize();
+
       if (g_pdiba == NULL)
       {
 
@@ -42,11 +44,11 @@ namespace draw2d_direct2d
       System.factory().cloneable_large < region                >  (System.type_info < ::draw2d::region            > ());
       System.factory().cloneable_large < font                  >  (System.type_info < ::draw2d::font              > ());
       System.factory().cloneable_large < printer               >  (System.type_info < ::aura::printer             > ());
-      
+
 
       //draw2d_direct2d_initialize();
 
-      initialize();
+
 
    }
 
@@ -57,7 +59,7 @@ namespace draw2d_direct2d
 
 
       finalize();
-      
+
 
    }
 

@@ -33,14 +33,14 @@
 
 class ID3_CPP_EXPORT ID3_IStreamReader : public ID3_Reader
 {
-   ca2std::istream& _stream;
+   std::istream& _stream;
 protected:
-   ca2std::istream& getReader() const
+   std::istream& getReader() const
    {
       return _stream;
    }
 public:
-   ID3_IStreamReader(ca2std::istream& reader) : _stream(reader) { ; }
+   ID3_IStreamReader(std::istream& reader) : _stream(reader) { ; }
    virtual ~ID3_IStreamReader() { ; }
    virtual void close() { ; }
 
@@ -90,9 +90,9 @@ public:
 
 class ID3_CPP_EXPORT ID3_IFStreamReader : public ID3_IStreamReader
 {
-   ca2std::ifstream& _file;
+   std::ifstream& _file;
 public:
-   ID3_IFStreamReader(ca2std::ifstream& reader)
+   ID3_IFStreamReader(std::ifstream& reader)
       : ID3_IStreamReader(reader), _file(reader) { ; }
 
    virtual void close()

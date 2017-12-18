@@ -11,14 +11,18 @@
 #undef new
 
 [MTAThread]
-int main(Array<String^>^)
+int main(Array < String ^ > ^ refstra)
 {
 
    class aura_aura aura;
 
-   aura_aura aura;
+   ap(aura_main_data) pmaindata = new aura_main_data(refstra);
 
-   ap(aura_main_data) pmaindata = new aura_main_data(MAIN_STRING);
+#ifdef MAIN_STRING
+
+   pmaindata->m_strCommandLine = MAIN_STRING;
+
+#endif
 
    return (int)aura_aura(pmaindata);
 

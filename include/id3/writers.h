@@ -34,12 +34,12 @@
 
 class ID3_CPP_EXPORT ID3_OStreamWriter : public ID3_Writer
 {
-   ca2std::ostream& _stream;
+   std::ostream& _stream;
    pos_type _beg;
 protected:
-   ca2std::ostream& getWriter() const { return _stream; }
+   std::ostream& getWriter() const { return _stream; }
 public:
-   ID3_OStreamWriter(ca2std::ostream& writer) : _stream(writer), _beg(_stream.tellp()) { ; }
+   ID3_OStreamWriter(std::ostream& writer) : _stream(writer), _beg(_stream.tellp()) { ; }
    virtual ~ID3_OStreamWriter() { ; }
 
    virtual void close() { ; }
@@ -71,9 +71,9 @@ public:
 
 class ID3_CPP_EXPORT ID3_OFStreamWriter : public ID3_OStreamWriter
 {
-   ca2std::ofstream& _file;
+   std::ofstream& _file;
 public:
-   ID3_OFStreamWriter(ca2std::ofstream& writer)
+   ID3_OFStreamWriter(std::ofstream& writer)
       : ID3_OStreamWriter(writer), _file(writer) { ; }
 
    virtual void close()
@@ -84,12 +84,12 @@ public:
 
 class ID3_CPP_EXPORT ID3_IOStreamWriter : public ID3_Writer
 {
-   ca2std::iostream& _stream;
+   std::iostream& _stream;
    pos_type  _beg;
 protected:
-   ca2std::iostream& getWriter() const { return _stream; }
+   std::iostream& getWriter() const { return _stream; }
 public:
-   ID3_IOStreamWriter(ca2std::iostream& writer) : _stream(writer), _beg(_stream.tellp()) { ; }
+   ID3_IOStreamWriter(std::iostream& writer) : _stream(writer), _beg(_stream.tellp()) { ; }
    virtual ~ID3_IOStreamWriter() { ; }
 
    virtual void close() { ; }
@@ -121,9 +121,9 @@ public:
 
 class ID3_CPP_EXPORT ID3_FStreamWriter : public ID3_IOStreamWriter
 {
-   ca2std::fstream& _file;
+   std::fstream& _file;
 public:
-   ID3_FStreamWriter(ca2std::fstream& writer)
+   ID3_FStreamWriter(std::fstream& writer)
       : ID3_IOStreamWriter(writer), _file(writer) { ; }
 
    virtual void close()

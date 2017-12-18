@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "metrowin.h"
 
 //O volume na unidade Y ‚ bergedge
@@ -35,4 +35,10 @@
 
 #include "metrowin_windowing.cpp"
 
+#include "metrowin_graphics.cpp"
+
 #include "metrowin_dummy_ipc.cpp"
+
+#include "metrowin_main.cpp"
+
+

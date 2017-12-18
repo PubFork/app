@@ -58,6 +58,8 @@ public:
    aura_main_data(int argc, char ** argv);
 #ifdef WINDOWSEX
    aura_main_data(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow);
+#elif defined(METROWIN)
+   aura_main_data(Array < String ^ > ^ refstra);
 #endif
    aura_main_data(LPTSTR lpCmdLine);
    ~aura_main_data();

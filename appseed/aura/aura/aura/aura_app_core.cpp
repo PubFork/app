@@ -75,6 +75,18 @@ aura_main_data::aura_main_data(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPT
 
 }
 
+
+#elif defined(METROWIN)
+
+aura_main_data::aura_main_data(Array < String ^ > ^ refstra)
+{
+
+   m_bConsole = false;
+
+   stringa stra(refstra);
+
+}
+
 #endif
 
 aura_main_data::aura_main_data(LPTSTR lpCmdLine)
@@ -151,22 +163,22 @@ bool app_core::beg()
 
    aura_prelude::defer_call_construct(this);
 
-#ifdef APPLEOS
-
-   if(m_pmaindata->m_lpCmdLine == NULL)
-   {
-
-      string str = apple_get_bundle_identifier();
-
-      ::str::begins_eat_ci(str, "com.ca2.");
-
-      str.replace(".", "/");
-
-      m_pmaindata->m_lpCmdLine = ::str::dup("app : app=" + str);
-
-   }
-
-#endif
+//#ifdef APPLEOS
+//
+//   if(m_pmaindata->m_lpCmdLine == NULL)
+//   {
+//
+//      string str = apple_get_bundle_identifier();
+//
+//      ::str::begins_eat_ci(str, "com.ca2.");
+//
+//      str.replace(".", "/");
+//
+//      m_pmaindata->m_lpCmdLine = ::str::dup("app : app=" + str);
+//
+//   }
+//
+//#endif
 
    m_dwStartTime = ::get_first_tick();
 
@@ -195,37 +207,13 @@ bool app_core::ini()
 
    m_bAcidApp = m_pfnNewApp != NULL;
 
-   //if (!node_fill(this))
-   //{
-
-   //   on_result(-1);
-
-   //   return false;
-
-   //}
-
-
-   //bool node_fill(app_core * pappcore)
-   //{
-
    string strAppId;
-
-   //if (hinstance == NULL)
-   //{
-
-   //   hinstance = ::GetModuleHandle(NULL);
-
-   //}
-
-   //if (::GetProcAddress(hinstance, "get_acid_app") != NULL)
-   //{
-
-   //   strAppId = "acid";
-
-   //}
 
    string strCommandLine = merge_colon_args(
    {
+#ifdef WINDOWS
+      get_c_args(string(::GetCommandLineW())),
+#endif
       get_c_args(m_pmaindata->m_argc, m_pmaindata->m_argv),
       get_c_args(ca2_command_line()),
       get_c_args(m_pmaindata->m_strCommandLine)
@@ -247,8 +235,6 @@ bool app_core::ini()
 
       }
 
-
-
    }
 
    if (strAppId.has_char())
@@ -258,44 +244,13 @@ bool app_core::ini()
 
    }
 
-   //pappcore->defer_load_backbone_libraries(strAppId);
-
    ::command::command * pmaininitdata = new ::command::command;
 
-   //pmaininitdata->m_hInstance = pappcore->m_pmaindata->m_hinstance;
-   //pmaininitdata->m_hPrevInstance = pappcore->m_pmaindata->m_hPrevInstance;
-   //pmaininitdata->m_nCmdShow = pappcore->m_pmaindata->m_nCmdShow;
    pmaininitdata->m_strAppId = strAppId;
 
    pmaininitdata->m_strCommandLine = strCommandLine;
 
-   //if (pszCmdLine == NULL)
-   //{
-
-   //pmaininitdata->m_strCommandLine = ::path::module() + " : app=" + strAppId;
-
-   //}
-   //else
-   //{
-
-   //pmaininitdata->m_strCommandLine = pszCmdLine;
-   pmaininitdata->m_strCommandLine = ::GetCommandLineW();
-
-
-   //}
-
    m_pmaindata->m_pmaininitdata = pmaininitdata;
-
-   //   return true;
-
-   //}
-
-
-//   string strCommandLine = get_command_line_dup();
-
-   //string strAppId;
-
-
 
    string strDerivedApplication;
 
@@ -398,6 +353,14 @@ void app_core::run()
    m_psystem->startup_command(m_pmaindata->m_pmaininitdata);
 
    if (!m_psystem->pre_run())
+   {
+
+      return;
+
+   }
+
+
+   if (!m_psystem->process_command(m_psystem->m_pcommand))
    {
 
       return;
@@ -697,14 +660,9 @@ CLASS_DECL_AURA void aura_main(app_core * pappcore)
 
    pappcore->m_psystem->startup_command(pappcore->m_pmaindata->m_pmaininitdata);
 
-   if (pappcore->m_psystem->begin_synch())
-   {
+   auto source = ::metrowin::new_directx_application_source(pappcore->m_psystem, pappcore->m_pmaindata->m_pmaininitdata->m_strCommandLine);
 
-      auto source = ::metrowin::new_directx_application_source(pappcore->m_psystem, pappcore->m_pmaindata->m_pmaininitdata->m_strCommandLine);
-
-      ::Windows::ApplicationModel::Core::CoreApplication::Run(source);
-
-   }
+   ::Windows::ApplicationModel::Core::CoreApplication::Run(source);
 
 #else
 
@@ -820,7 +778,15 @@ stringa get_c_args(const char * psz)
 
    }
 
+   stringa straBeforeColon;
+
+   stringa straAfterColon;
+
    const char * pszEnd = psz + strlen(psz);
+
+   string str;
+
+   int i = 0;
 
    while(psz < pszEnd)
    {
@@ -836,21 +802,51 @@ stringa get_c_args(const char * psz)
       if(*psz == '\"')
       {
 
-         stra.add(::str::consume_quoted_value(psz, pszEnd));
+         str = ::str::consume_quoted_value(psz, pszEnd);
 
       }
       else if(*psz == '\'')
       {
 
-         stra.add(::str::consume_quoted_value(psz, pszEnd));
+         str = ::str::consume_quoted_value(psz, pszEnd);
 
       }
       else
       {
 
-         stra.add(::str::consume_non_spaces(psz, pszEnd));
+         str = ::str::consume_non_spaces(psz, pszEnd);
 
       }
+
+      if (str == ":")
+      {
+
+      }
+      else if (i == 0 && str[0] != '-')
+      {
+
+         straBeforeColon.add(str);
+
+      }
+      else
+      {
+
+         straAfterColon.add(str);
+
+      }
+
+      i++;
+
+   }
+
+   stra = straBeforeColon;
+
+   if (straAfterColon.has_elements())
+   {
+
+      stra.add(":");
+
+      stra += straAfterColon;
 
    }
 
@@ -905,9 +901,14 @@ stringa get_c_args(int argc, char ** argv)
 
    stra = straBeforeColon;
 
-   stra.add(":");
+   if (straAfterColon.has_elements())
+   {
 
-   stra += straAfterColon;
+      stra.add(":");
+
+      stra += straAfterColon;
+
+   }
 
    return stra;
 
@@ -935,8 +936,6 @@ string apple_get_bundle_identifier()
 
 
 
-
-//m_plibrary = __node_library_open_ca2(pszPath, m_strMessage);
 
 string transform_to_c_arg(const char * psz)
 {

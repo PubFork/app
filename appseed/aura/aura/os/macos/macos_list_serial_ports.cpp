@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 #if defined(__APPLE__)
 
@@ -10,11 +10,6 @@
 #include <IOKit/serial/IOSerialKeys.h>
 #include <IOKit/IOBSD.h>
 
-//#include <iostream>
-//#include <string>
-//#include <vector>
-
-//#include "serial/serial.h"
 
 using serial::PortInfo;
 

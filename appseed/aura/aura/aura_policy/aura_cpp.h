@@ -1455,6 +1455,7 @@ struct install_status
 
 #include "aura/net/net_email_department.h"
 
+#include "aura/aura/os/os2.h"
 
 #include "aura/aura/aura/aura_system.h"
 
@@ -1723,9 +1724,6 @@ CLASS_DECL_AURA string get_system_error_message(uint32_t dwError);
 #include "aura/aura/aura/aura_profiler.h"
 
 
-#include "aura/aura/os/os2.h"
-
-
 #include "aura/aura/aura/aura_speaker.h"
 
 
@@ -1758,7 +1756,7 @@ namespace _std
 
 }
 
-namespace ca2std
+namespace std
 {
 
    using string = ::string;

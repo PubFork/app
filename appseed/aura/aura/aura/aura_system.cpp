@@ -1,4 +1,4 @@
-#include "framework.h" // previously aura/user/user.h
+﻿#include "framework.h" // previously aura/user/user.h
 //#include "aura/user/colorertake5/colorertake5.h"
 
 
@@ -37,16 +37,7 @@ namespace aura
 
 
 
-#ifdef METROWIN
 
-   system::os_system_window::os_system_window()
-   {
-
-//      m_bWindowSizeChange = false;
-
-   }
-
-#endif
 
    class ::id system::idEmpty;
 
@@ -457,13 +448,6 @@ namespace aura
          return false;
 
       m_spos.alloc(allocer());
-
-      if(!process_command(m_pcommand))
-      {
-
-         return false;
-
-      }
 
       if(is_installing() || is_unstalling())
       {

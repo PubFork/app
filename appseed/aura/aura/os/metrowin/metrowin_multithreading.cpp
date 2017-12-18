@@ -11,25 +11,15 @@
 
 #undef System
 
-//#include <assert.h>
-////#include <vector>
-////#include <set>
-////#include <map>
 
-//using namespace std;
-//using namespace Platform;
 #pragma push_macro("System")
 #undef System
 using namespace Windows::Foundation;
 using namespace Windows::System::Threading;
 #pragma pop_macro("System")
 
-//BEGIN_EXTERN_C
-//mutex * g_pmutexPendingThreadsLock = NULL;
 mutex * g_pmutexThreadIdHandleLock = NULL;
 mutex * g_pmutexThreadIdLock = NULL;
-//mutex * g_pmutexTlsData = NULL;
-//END_EXTERN_C
 
 
 thread_data::thread_data()

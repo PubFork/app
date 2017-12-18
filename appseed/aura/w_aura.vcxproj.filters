@@ -2983,9 +2983,6 @@
     <ClCompile Include="aura\node\metrowin\metrowin_folder_watch.cpp">
       <Filter>Source Files\aura\node\metrowin</Filter>
     </ClCompile>
-    <ClCompile Include="aura\node\metrowin\metrowin_main.cpp">
-      <Filter>Source Files\aura\node\metrowin</Filter>
-    </ClCompile>
     <ClCompile Include="aura\node\metrowin\metrowin_os.cpp">
       <Filter>Source Files\aura\node\metrowin</Filter>
     </ClCompile>
@@ -4005,6 +4002,12 @@
     </ClCompile>
     <ClCompile Include="user\user\user.cpp">
       <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\metrowin\metrowin_graphics.cpp">
+      <Filter>Source Files\aura\os\metrowin</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\metrowin\metrowin_main.cpp">
+      <Filter>Source Files\aura\os\metrowin</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

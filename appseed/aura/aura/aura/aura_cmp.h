@@ -1,8 +1,5 @@
-#pragma once
+﻿#pragma once
 
-//#include <stdio.h>
-//#include <string>
-//#include <tuple>
 
 template<class TYPE>
 struct add_const

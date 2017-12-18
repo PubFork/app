@@ -100,14 +100,4 @@ CLASS_DECL_AURA void defer_dock_application(bool bDock)
 }
 
 
-void os_init_imaging()
-{
-
-}
-
-
-void os_term_imaging()
-{
-
-}
 

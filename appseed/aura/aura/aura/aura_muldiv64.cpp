@@ -174,48 +174,6 @@ inline uint32_t msb(uint64_t value)
     return r;
 }
 
-/**
- * multiply a 64 and a 32 bit value and divide them by a 64 bit value.
- * result bits above 64 are ignored, so overflow flags are not set.
- * @author Axel Plinge
- * @param number       64 bit multiplicant
- * @param numerator    32 bit multiplicant
- * @param denominator  64 bit divisor
- * @return  (number*numerator)/denominator (+/-) 1
- */
-/*inline uint64_t Mul32Div64(uint64_t number,uint32_t numerator,uint64_t denominator)
-{
-    uint64_t num_h = ((uint64_uint32*)&number)->h;
-    uint64_t num_l = ((uint64_uint32*)&number)->l;
-    uint64_t mul = numerator;
-    uint64_t res;
-    // lower 32bit portions yield 64 bit product
-    // that can be divded directly giving 64 bits of result
-    res = (num_l * mul)/denominator;
-    // upper 32bit have to be shifted, calculate modulus 2^32
-    uint64_t product_h = num_h*mul;
-    uint64_t div_h = product_h/denominator; // division main
-    uint64_t mod_h = product_h - denominator*div_h; // modulus
-    // upper bits
-    res += div_h<<32;
-    if (mod_h==0)  {
-   return res;
-    }
-    // remainder of division
-    // if msb modulus < 32 we can be quick about it
-    if ((mod_h>>32)==0) {
-        res += (mod_h<<32)/denominator;
-        return res;
-    }
-    // if we reach this point we have full 64 bit values i.e. a 96bit dividend
-    // calculate an approximate result by shifting according to msb set
-    int32_t msb_nominator = msb(mod_h)+32;
-    int32_t msb_denominator = msb(denominator);
-    int32_t msb = std::max(msb_nominator,msb_denominator);
-    int32_t shift = msb-63;
-    res += (mod_h << (32-shift)) / (denominator>>shift);
-    return res;
-}*/
 
 
 static uint64_t const g_base = 1ULL<<32;

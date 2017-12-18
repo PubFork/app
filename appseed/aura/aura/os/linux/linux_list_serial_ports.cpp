@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 //#if defined(__linux__)
 
@@ -8,16 +8,6 @@
  * A copy of the licence can be obtained from:
  * http://opensource.org/licenses/MIT
  */
-
-//#include <vector>
-//#include <string>
-//#include <sstream>
-//#include <stdexcept>
-//#include <iostream>
-//#include <fstream>
-//#include <cstdio>
-//#include <cstdarg>
-//#include <cstdlib>
 
 #include <glob.h>
 #include <sys/types.h>
@@ -29,13 +19,7 @@
 
 
 using serial::PortInfo;
-//using std::istringstream;
-//using std::ifstream;
-//using std::getline;
-//using std::vector;
-//using std::string;
-//using std::cout;
-//using std::endl;
+
 
 static stringa glob(const stringa& patterns);
 static string basename(const string& path);

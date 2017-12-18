@@ -56,7 +56,6 @@ namespace metrowin
 
       directx_application(::aura::system * psystem,String ^ strId);
 
-
       void init_part_2ex();
 
       void install_message_routing_2ex();
@@ -75,6 +74,7 @@ namespace metrowin
       virtual Windows::Foundation::Rect get_window_rect();
       virtual Windows::Foundation::Point get_cursor_pos();
 
+      virtual ~directx_application();
 
    private:
       // Event Handlers
