@@ -213,8 +213,9 @@ bool app_core::ini()
    {
 #ifdef WINDOWS
       get_c_args(string(::GetCommandLineW())),
-#endif
+#else
       get_c_args(m_pmaindata->m_argc, m_pmaindata->m_argv),
+#endif
       get_c_args(ca2_command_line()),
       get_c_args(m_pmaindata->m_strCommandLine)
    });
@@ -788,6 +789,8 @@ stringa get_c_args(const char * psz)
 
    int i = 0;
 
+   bool bColon = false;
+
    while(psz < pszEnd)
    {
 
@@ -821,8 +824,10 @@ stringa get_c_args(const char * psz)
       if (str == ":")
       {
 
+         bColon = true;
+
       }
-      else if (i == 0 && str[0] != '-')
+      else if (!bColon && (i == 0 || str[0] != '-'))
       {
 
          straBeforeColon.add(str);

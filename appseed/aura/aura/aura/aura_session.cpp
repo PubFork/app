@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "aura/net/sockets/bsd/sockets_sockets.h"
 
 
@@ -99,9 +99,7 @@ namespace aura
       if (strApp != "session")
       {
 
-         UINT uiMessage = WM_APP + 2043;
-
-         papp->post_object(uiMessage, 2, pcreate);
+         papp->post_object(message_system, system_message_command, pcreate);
 
          while (thread_get_run())
          {
@@ -546,7 +544,7 @@ namespace aura
             {
 
                simple_message_box("Could not create requested application: \"" + strApp + "\"", MB_OK);
-               
+
                ::count c = System.handler()->m_spcommandline->m_varQuery["app"].array_get_count();
 
                if (c == 1 && System.handler()->m_spcommandline->m_varQuery["app"] == strApp)

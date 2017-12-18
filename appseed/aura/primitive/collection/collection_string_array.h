@@ -1611,6 +1611,9 @@ string_array < Type, RawType > ::string_array(const string_array < Type, RawType
 }
 
 
+#ifdef METROWIN
+
+
 template < class Type, class RawType >
 string_array < Type, RawType > ::string_array(Platform::Array < Platform::String ^ > ^ refstra)
 {
@@ -1627,6 +1630,10 @@ string_array < Type, RawType > ::string_array(Platform::Array < Platform::String
    }
 
 }
+
+
+#endif
+
 
 template < class Type, class RawType >
 void string_array < Type, RawType > ::add_tokens(const char * lpcsz,const char * lpcszSeparator,bool bAddEmpty)
