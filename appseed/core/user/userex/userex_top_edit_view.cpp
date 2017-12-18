@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace userex
@@ -10,6 +10,8 @@ namespace userex
       ::user::interaction(papp),
       ::user::plain_edit(papp)
    {
+
+      m_dwDelayedAfterChange = 1000;
 
       m_ptopview = NULL;
 
@@ -31,6 +33,7 @@ namespace userex
 
    void top_edit_view::_001OnCreate(::message::message * pobj)
    {
+
       SCAST_PTR(::message::create, pcreate, pobj);
 
       pcreate->previous();
@@ -45,6 +48,31 @@ namespace userex
    }
 
 
+   void top_edit_view::_001OnTimer(::timer * ptimer)
+   {
+
+      ::user::show < ::user::plain_edit >::_001OnTimer(ptimer);
+
+
+      if (ptimer->m_nIDEvent == 5544)
+      {
+
+         KillTimer(ptimer->m_nIDEvent);
+
+         ::user::view_update_hint uh(get_app());
+
+         uh.m_ehint = ::user::view_update_hint::hint_after_change_text_delayed;
+
+         uh.m_pui = this;
+
+         get_document()->update_all_views(this, 0, &uh);
+
+      }
+
+
+   }
+
+
    void top_edit_view::on_update(::user::impact * pSender, LPARAM lHint, object* phint)
    {
 
@@ -54,25 +82,15 @@ namespace userex
    void top_edit_view::_001OnAfterChangeText(::action::context actioncontext)
    {
 
-//      if (actioncontext.is_source(::action::source_sync))
-  //       return;
-
-      //if (m_ptopview == NULL)
-        // return;
-
-
-
-      //string strText;
-
-      //_001GetText(strText);
-
       ::user::view_update_hint uh(get_app());
 
       uh.m_ehint = ::user::view_update_hint::hint_after_change_text;
+
       uh.m_pui = this;
 
       get_document()->update_all_views(this, 0, &uh);
 
+      SetTimer(5544, m_dwDelayedAfterChange, NULL);
 
    }
 

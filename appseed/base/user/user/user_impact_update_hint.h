@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace user
@@ -19,6 +19,7 @@ namespace user
          hint_create_views,
          hint_pre_close_document,
          hint_after_change_text,
+         hint_after_change_text_delayed,
          hint_control_event,
 
       };

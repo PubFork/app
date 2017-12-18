@@ -140,6 +140,22 @@ public:
    template < typename PRED >
    inline ::thread * fork(PRED pred);
 
+   template < typename TYPE >
+   inline ::thread * async(void (TYPE::*pfnMemberProcedure)())
+   {
+
+      return fork([&]()
+      {
+
+         TYPE * ptype = dynamic_cast <TYPE *> (this);
+
+         (ptype->*pfnMemberProcedure)();
+
+      });
+
+   }
+
+
    void defer_create_mutex();
 
 

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace userex
@@ -11,7 +11,8 @@ namespace userex
    public:
 
 
-      top_view * m_ptopview;
+      uint32_t                m_dwDelayedAfterChange; // Milliseconds
+      top_view *              m_ptopview;
 
 
       top_edit_view(::aura::application * papp);
@@ -27,9 +28,7 @@ namespace userex
 
       bool keyboard_focus_is_focusable() override;
 
-      //virtual int64_t add_ref();
-
-      //virtual int64_t dec_ref();
+      virtual void _001OnTimer(::timer * ptimer) override;
 
       bool IsWindowVisible() override;
 

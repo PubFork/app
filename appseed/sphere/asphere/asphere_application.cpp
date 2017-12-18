@@ -247,47 +247,46 @@ namespace asphere
 
 #ifdef METROWIN
 
-      return "day.";
+      return "";
 
 #endif
 
-      string strEtime = Application.file().as_string(::dir::system() / "weather_etime.txt");
+      ::file::path path = ::dir::system() / "config/weather_state.txt";
 
-      string strContext;
+      string strState = Application.file().as_string(path);
 
-      if (strEtime.is_empty())
+      if (strState.is_empty())
       {
 
-         strEtime = "day";
+         return "";
 
       }
 
-      strContext += "." + strEtime;
+      string strContext;
 
-      ::file::path path = ::dir::system() / "config/weather_main1.txt";
-
-      if (Application.file().exists(path))
+      if(strState.contains_ci("night"))
       {
 
-         string strMain1 = Application.file().as_string(path);
+         strContext += ".night";
 
-         if (strMain1.has_char())
-         {
+      }
+      else
+      {
 
-            if (strMain1.find_ci("cloud") >= 0 && strMain1.find_ci("partly") < 0)
-            {
+         strContext += ".day";
 
-               strContext += ".dampened";
+      }
 
-            }
-            else if (strMain1.find_ci("rain") >= 0)
-            {
+      if (strState.contains_ci("cloud") && !strState.contains_ci("partly"))
+      {
 
-               strContext += ".dampened";
+         strContext += ".dampened";
 
-            }
+      }
+      else if (strState.contains_ci("rain"))
+      {
 
-         }
+         strContext += ".dampened";
 
       }
 
