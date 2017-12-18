@@ -31,7 +31,7 @@ CLASS_DECL_AURA void __cdecl _null_se_translator(unsigned int uiCode, EXCEPTION_
 int CLASS_DECL_AURA win_main(::aura::system * psystem, ::Array < ::String ^ > ^ args)
 {
 
-   if(!main_initialize())
+   if (!main_initialize())
       return -1;
 
 
@@ -41,11 +41,11 @@ int CLASS_DECL_AURA win_main(::aura::system * psystem, ::Array < ::String ^ > ^ 
    int nReturnCode = 0;
 
 
-   ::metrowin::command * pcommand       = canew(::metrowin::command);
+   ::metrowin::command * pcommand = canew(::metrowin::command);
 
-//    pcommand->m_hInstance               = NULL;
-//    pcommand->m_hPrevInstance           = NULL;
-//    pcommand->m_nCmdShow                = 0;
+   //    pcommand->m_hInstance               = NULL;
+   //    pcommand->m_hPrevInstance           = NULL;
+   //    pcommand->m_nCmdShow                = 0;
 
    //pinitmaindata->m_hInstance             = hInstance;
    //pinitmaindata->m_hPrevInstance         = hPrevInstance;
@@ -65,7 +65,7 @@ int CLASS_DECL_AURA win_main(::aura::system * psystem, ::Array < ::String ^ > ^ 
       main_finalize();
 
    }
-   catch(...)
+   catch (...)
    {
    }
 
@@ -73,7 +73,7 @@ int CLASS_DECL_AURA win_main(::aura::system * psystem, ::Array < ::String ^ > ^ 
    {
       delete psystem;
    }
-   catch(...)
+   catch (...)
    {
    }
 
@@ -82,26 +82,26 @@ int CLASS_DECL_AURA win_main(::aura::system * psystem, ::Array < ::String ^ > ^ 
 
    try
    {
-//      delete __get_module_state()->m_pmapHWND;
+      //      delete __get_module_state()->m_pmapHWND;
    }
-   catch(...)
+   catch (...)
    {
    }
    /*   try
-      {
-         delete __get_module_state()->m_pmapHDC;
-      }
-      catch(...)
-      {
-      }*/
+   {
+   delete __get_module_state()->m_pmapHDC;
+   }
+   catch(...)
+   {
+   }*/
    /*   try
-      {
-         delete __get_module_state()->m_pmapHGDIOBJ;
-      }
-      catch(...)
-      {
-      }*/
-//      delete __get_module_state()->m_pmapHMENU;
+   {
+   delete __get_module_state()->m_pmapHGDIOBJ;
+   }
+   catch(...)
+   {
+   }*/
+   //      delete __get_module_state()->m_pmapHMENU;
 
    //try
    //{
@@ -111,22 +111,22 @@ int CLASS_DECL_AURA win_main(::aura::system * psystem, ::Array < ::String ^ > ^ 
    //{
    //}
    /*   try
-      {
-         __get_module_state()->m_pmapHDC      = NULL;
-      }
-      catch(...)
-      {
-      }*/
+   {
+   __get_module_state()->m_pmapHDC      = NULL;
+   }
+   catch(...)
+   {
+   }*/
    /*   try
-      {
-         __get_module_state()->m_pmapHGDIOBJ  = NULL;
-      }
-      catch(...)
-      {
-      }*/
+   {
+   __get_module_state()->m_pmapHGDIOBJ  = NULL;
+   }
+   catch(...)
+   {
+   }*/
 
 
-//   set_heap_mutex(NULL);
+   //   set_heap_mutex(NULL);
 
    return nReturnCode;
 
@@ -242,77 +242,109 @@ void CLASS_DECL_AURA __cdecl _null_se_translator(unsigned int uiCode, EXCEPTION_
 }
 
 
-bool node_fill(app_core * pappcore)
+// bool node_fill(app_core * pappcore)
+// {
+
+//    string strAppId;
+
+//    set_command_line_dup(string(pappcore->m_pmaindata->m_lpCmdLine));
+
+//    strAppId = get_command_line_param(get_command_line_dup(), "app");
+
+//    if (strAppId.has_char())
+//    {
+
+//       HMODULE hmodule = NULL;
+
+//       bool bInApp = strAppId.compare_ci("acid") == 0;
+
+//       if (!bInApp)
+//       {
+
+//          string strLibrary = ::process::app_id_to_app_name(strAppId);
+
+//          hmodule = ::LoadPackagedLibrary(wstring(strLibrary + ".dll"), 0);
+
+//       }
+
+//       if (hmodule != NULL || bInApp)
+//       {
+
+//          PFN_DEFER_INIT defer_init = NULL;
+
+//          if ((hmodule = ::LoadPackagedLibrary(L"core.dll",0)) != NULL)
+//          {
+
+//             defer_init = (PFN_DEFER_INIT) ::GetProcAddress(hmodule, "defer_core_init");
+
+//          }
+//          else if ((hmodule = ::LoadPackagedLibrary(L"base.dll",0)) != NULL)
+//          {
+
+//             defer_init = (PFN_DEFER_INIT) ::GetProcAddress(hmodule, "defer_base_init");
+
+//          }
+//          else if ((hmodule = ::LoadPackagedLibrary(L"axis.dll",0)) != NULL)
+//          {
+
+//             defer_init = (PFN_DEFER_INIT) ::GetProcAddress(hmodule, "defer_axis_init");
+
+//          }
+
+//          if (defer_init != NULL && !defer_init())
+//          {
+
+//             pappcore->on_result(-3);
+
+//             return NULL;
+
+//          }
+
+//       }
+
+//    }
+
+
+//    ::command::command * pcommand = new ::command::command;
+
+//    pcommand->m_strCommandLine = get_command_line_dup();
+
+//    pcommand->m_strAppId = strAppId;
+
+//    pappcore->m_pmaindata->m_pmaininitdata = pcommand;
+
+//    return true;
+
+// }
+
+
+
+
+
+string ca2_command_line()
 {
 
-   string strAppId;
+   string strAppId = Windows::ApplicationModel::Package::Current->Id->Name;
 
-   set_command_line_dup(string(pappcore->m_pmaindata->m_lpCmdLine));
-
-   strAppId = get_command_line_param(get_command_line_dup(), "app");
-
-   if (strAppId.has_char())
+   if (strAppId.is_empty())
    {
 
-      HMODULE hmodule = NULL;
-
-      bool bInApp = strAppId.compare_ci("acid") == 0;
-
-      if (!bInApp)
-      {
-
-         string strLibrary = ::process::app_id_to_app_name(strAppId);
-
-         hmodule = ::LoadPackagedLibrary(wstring(strLibrary + ".dll"), 0);
-
-      }
-
-      if (hmodule != NULL || bInApp)
-      {
-
-         PFN_DEFER_INIT defer_init = NULL;
-
-         if ((hmodule = ::LoadPackagedLibrary(L"core.dll",0)) != NULL)
-         {
-
-            defer_init = (PFN_DEFER_INIT) ::GetProcAddress(hmodule, "defer_core_init");
-
-         }
-         else if ((hmodule = ::LoadPackagedLibrary(L"base.dll",0)) != NULL)
-         {
-
-            defer_init = (PFN_DEFER_INIT) ::GetProcAddress(hmodule, "defer_base_init");
-
-         }
-         else if ((hmodule = ::LoadPackagedLibrary(L"axis.dll",0)) != NULL)
-         {
-
-            defer_init = (PFN_DEFER_INIT) ::GetProcAddress(hmodule, "defer_axis_init");
-
-         }
-
-         if (defer_init != NULL && !defer_init())
-         {
-
-            pappcore->on_result(-3);
-
-            return NULL;
-
-         }
-
-      }
+      return "";
 
    }
 
+   if (!::str::begins_eat_ci(strAppId, "cc.ca2."))
+   {
 
-   ::command::command * pcommand = new ::command::command;
+      ::str::begins_eat_ci(strAppId, "com.ca2.");
 
-   pcommand->m_strCommandLine = get_command_line_dup();
+   }
 
-   pcommand->m_strAppId = strAppId;
+   strAppId.replace(".", "/");
 
-   pappcore->m_pmaindata->m_pmaininitdata = pcommand;
-
-   return true;
+   return "app.exe : app=" + strAppId + " client_only";
 
 }
+
+
+
