@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace html
@@ -22,7 +22,7 @@ namespace html
             pdata->m_imagea[m_iImage]->m_spdib->defer_realize(pgraphics);
 
             pgraphics->BitBlt((int32_t)get_x(), (int32_t)get_y(), (int32_t)get_cx(), (int32_t)get_cy(),
-               pdata->m_imagea[m_iImage]->m_spdib->get_graphics(), 0, 0, SRCCOPY);
+                              pdata->m_imagea[m_iImage]->m_spdib->get_graphics(), 0, 0, SRCCOPY);
 
          }
 
@@ -37,9 +37,21 @@ namespace html
          elemental::implement_phase1(pdata, pelemental);
          if (pelemental->m_pbase->get_type() == ::html::base::type_tag)
          {
-            m_iImage = pdata->get_image_index(pelemental->m_propertyset["src"]);
-            m_cxMax = (float)pdata->m_imagea[m_iImage]->m_spdib->m_size.cx;
-            m_cxMin = (float)pdata->m_imagea[m_iImage]->m_spdib->m_size.cy;
+
+            string strSrc = pelemental->m_propertyset["src"];
+            m_iImage = pdata->get_image_index(strSrc);
+            int cx = pdata->m_imagea[m_iImage]->m_spdib->m_size.cx;
+            int cy = pdata->m_imagea[m_iImage]->m_spdib->m_size.cy;
+            if (pelemental->m_propertyset.has_property("width"))
+            {
+               cx = pelemental->m_propertyset["width"];
+            }
+            if (pelemental->m_propertyset.has_property("height"))
+            {
+               cy = pelemental->m_propertyset["height"];
+            }
+            m_cxMax = (float)cx;
+            m_cxMin = (float)cy;
          }
       }
 
@@ -54,7 +66,19 @@ namespace html
 
             if (lockImage.lock(duration::zero()))
             {
-               m_box.set_cxy(pdata->m_imagea[m_iImage]->m_spdib->size());
+
+               int cx = pdata->m_imagea[m_iImage]->m_spdib->m_size.cx;
+               int cy = pdata->m_imagea[m_iImage]->m_spdib->m_size.cy;
+               if (m_pelemental->m_propertyset.has_property("width"))
+               {
+                  cx = m_pelemental->m_propertyset["width"];
+               }
+               if (m_pelemental->m_propertyset.has_property("height"))
+               {
+                  cy = m_pelemental->m_propertyset["height"];
+               }
+
+               m_box.set_cxy(size(cx, cy));
             }
             else
             {

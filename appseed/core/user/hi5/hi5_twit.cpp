@@ -746,7 +746,7 @@ namespace hi5
    *          response by twitter. Use get_response() for that.
    *
    *--*/
-   bool twit::statusUpdate( string & newStatus, stringa straMediaIds)
+   bool twit::statusUpdate( string & newStatus, stringa straMediaIds, string strReplyStatusId)
    {
 
       m_strRequest = "hi5::twit::statusUpdate(\"" + newStatus + "\", {" + straMediaIds.implode(", ")+"})" ;
@@ -776,10 +776,29 @@ namespace hi5
 
       string strUrl("https://api.twitter.com/1.1/statuses/update.json");
 
+      int i = 0;
+
       if (straMediaIds.has_elements())
       {
 
          strUrl += "?media_ids=" + straMediaIds.implode(",");
+         i++;
+
+      }
+
+      if (strReplyStatusId.has_char())
+      {
+
+         if (i > 0)
+         {
+            strUrl += "&";
+         }
+         else
+         {
+            strUrl += "?";
+         }
+
+         strUrl += "in_reply_to_status_id=" + strReplyStatusId;
 
       }
 
