@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 string consume_param(const char * pszCommandLine, const char ** pszEndPtr)
@@ -29,7 +29,7 @@ string consume_param(const char * pszCommandLine, const char ** pszEndPtr)
       while(*psz != '\0' &&!isspace_dup(*psz))
          psz++;
    }
-   
+
    const char * pszEnd = psz;
 
    if(pszEndPtr != NULL)
@@ -54,7 +54,7 @@ string consume_param(const char * pszCommandLine, const char ** pszEndPtr)
 //   {
 //
 //      string strReplace;
-//         
+//
 //      if(get_command_line_param(strReplace,pszCommandLine,pszReplaceParam) && strReplace.has_char())
 //      {
 //
@@ -148,7 +148,7 @@ string get_command_line_param(const char * psz,const char * pszParam)
 
    if(!get_command_line_param(str,psz,pszParam))
    {
-      
+
       return "";
 
    }
@@ -164,7 +164,7 @@ bool get_command_line_param(string & wstrValue,const char * psz,const char * psz
    string wstr(psz);
 
    string wstrParam(pszParam);
-   
+
    auto iFind = wstr.find(wstrParam + "=");
 
    if(iFind == wstring::npos)
@@ -214,7 +214,7 @@ bool get_command_line_param(string & wstrValue,const char * psz,const char * psz
 
    if(iEnd == wstring::npos)
    {
-         
+
       wstrValue = wstr.substr(iFind + wstrParam.length() + 1);
 
    }
@@ -295,4 +295,30 @@ CLASS_DECL_AURA string process_version_dir_name()
 
 }
 
+extern "C"
+{
 
+   CLASS_DECL_AURA WINBOOL IsProcessRunning(DWORD pid)
+   {
+
+#ifdef WINDOWS
+
+      HANDLE process = OpenProcess(SYNCHRONIZE, FALSE, pid);
+
+      DWORD ret = WaitForSingleObject(process, 0);
+
+      CloseHandle(process);
+
+      return ret == WAIT_TIMEOUT;
+
+#else
+
+      int i = kill(pid, 0);
+
+      return (i == 0) || (i == -1 && errno == EPERM);
+
+#endif
+
+   }
+
+}

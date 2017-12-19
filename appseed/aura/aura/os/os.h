@@ -7,6 +7,9 @@ CLASS_DECL_AURA void defer_dock_application(bool bDock);
 
 #endif
 
+BEGIN_EXTERN_C
+CLASS_DECL_AURA WINBOOL IsProcessRunning(DWORD pid);
+END_EXTERN_C
 
 
 #include "os_threading.h"

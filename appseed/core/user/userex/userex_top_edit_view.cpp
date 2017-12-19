@@ -82,15 +82,21 @@ namespace userex
    void top_edit_view::_001OnAfterChangeText(::action::context actioncontext)
    {
 
-      ::user::view_update_hint uh(get_app());
 
-      uh.m_ehint = ::user::view_update_hint::hint_after_change_text;
+      if (actioncontext.is_user_source())
+      {
 
-      uh.m_pui = this;
+         ::user::view_update_hint uh(get_app());
 
-      get_document()->update_all_views(this, 0, &uh);
+         uh.m_ehint = ::user::view_update_hint::hint_after_change_text;
 
-      SetTimer(5544, m_dwDelayedAfterChange, NULL);
+         uh.m_pui = this;
+
+         get_document()->update_all_views(this, 0, &uh);
+
+         SetTimer(5544, m_dwDelayedAfterChange, NULL);
+
+      }
 
    }
 

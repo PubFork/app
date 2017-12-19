@@ -144,7 +144,7 @@ public:
    inline ::thread * async(void (TYPE::*pfnMemberProcedure)())
    {
 
-      return fork([&]()
+      return fork([=]()
       {
 
          TYPE * ptype = dynamic_cast <TYPE *> (this);
