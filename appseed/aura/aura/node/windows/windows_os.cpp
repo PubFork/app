@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include <wincred.h>
 #include <wtsapi32.h>
 
@@ -8,11 +8,11 @@ CREDUIAPI
 BOOL
 WINAPI
 CredPackAuthenticationBufferWfoo(
-   _In_ DWORD                                      dwFlags,
-   _In_ LPWSTR                                     pszUserName,
-   _In_ LPWSTR                                     pszPassword,
-   _Out_writes_bytes_opt_(*pcbPackedCredentials) PBYTE   pPackedCredentials,
-   _Inout_ DWORD*                                  pcbPackedCredentials
+_In_ DWORD                                      dwFlags,
+_In_ LPWSTR                                     pszUserName,
+_In_ LPWSTR                                     pszPassword,
+_Out_writes_bytes_opt_(*pcbPackedCredentials) PBYTE   pPackedCredentials,
+_Inout_ DWORD*                                  pcbPackedCredentials
 );
 
 
@@ -230,9 +230,9 @@ namespace windows
       {
          dwa.allocate(dwa.get_count() + 1024);
          if(!EnumProcesses(
-                  (DWORD *) dwa.get_data(),
-                  (DWORD) (dwa.get_count() * sizeof(DWORD)),
-                  &cbNeeded))
+               (DWORD *) dwa.get_data(),
+               (DWORD) (dwa.get_count() * sizeof(DWORD)),
+               &cbNeeded))
          {
             return;
          }
@@ -247,9 +247,9 @@ namespace windows
       while(natural(wstrPath.get_length() + 1) == dwSize)
       {
          dwSize = ::GetModuleFileNameW(
-                     hmodule,
-                     wstrPath.alloc(dwSize + 1024),
-                     (dwSize + 1024));
+                  hmodule,
+                  wstrPath.alloc(dwSize + 1024),
+                  (dwSize + 1024));
          wstrPath.release_buffer();
       }
       return ::str::international::unicode_to_utf8(wstrPath);
@@ -610,9 +610,9 @@ namespace windows
       // Open the access token associated with the
       // current process
       if(!OpenProcessToken(
-               GetCurrentProcess(),            // Process handle
-               TOKEN_READ,                     // Read access only
-               &tokenHandle))                  // Access token handle
+            GetCurrentProcess(),            // Process handle
+            TOKEN_READ,                     // Read access only
+            &tokenHandle))                  // Access token handle
       {
          DWORD win32Status = GetLastError();
          debug_print("Cannot open token handle: %d\n",win32Status);
@@ -625,11 +625,11 @@ namespace windows
       // Retrieve information about the access token. In this case,
       // retrieve a SID.
       if(!GetTokenInformation(
-               tokenHandle,                    // Access token handle
-               TokenUser,                      // User for the token
-               &tokenInfo.tokenUser,     // Buffer to fill
-               sizeof(tokenInfo),        // Size of the buffer
-               &bytesReturned))                // Size needed
+            tokenHandle,                    // Access token handle
+            TokenUser,                      // User for the token
+            &tokenInfo.tokenUser,     // Buffer to fill
+            sizeof(tokenInfo),        // Size of the buffer
+            &bytesReturned))                // Size needed
       {
          DWORD win32Status = GetLastError();
          debug_print("Cannot query token information: %d\n",win32Status);
@@ -645,9 +645,9 @@ namespace windows
    }
    BOOL
    GetAccountSid(
-      LPTSTR SystemName,
-      LPTSTR AccountName,
-      PSID *Sid
+   LPTSTR SystemName,
+   LPTSTR AccountName,
+   PSID *Sid
    )
    {
       LPTSTR ReferencedDomain=NULL;
@@ -663,28 +663,28 @@ namespace windows
          // initial memory allocations
          //
          if((*Sid=HeapAlloc(
-                     GetProcessHeap(),
-                     0,
-                     cbSid
+                  GetProcessHeap(),
+                  0,
+                  cbSid
                   )) == NULL) __leave;
 
          if((ReferencedDomain=(LPTSTR)HeapAlloc(
-                                 GetProcessHeap(),
-                                 0,
-                                 cchReferencedDomain * sizeof(TCHAR)
+                              GetProcessHeap(),
+                              0,
+                              cchReferencedDomain * sizeof(TCHAR)
                               )) == NULL) __leave;
 
          //
          // Obtain the SID of the specified account on the specified system.
          //
          while(!LookupAccountName(
-                  SystemName,         // machine to lookup account on
-                  AccountName,        // account to lookup
-                  *Sid,               // SID of interest
-                  &cbSid,             // size of SID
-                  ReferencedDomain,   // domain account was found on
-                  &cchReferencedDomain,
-                  &peUse
+               SystemName,         // machine to lookup account on
+               AccountName,        // account to lookup
+               *Sid,               // SID of interest
+               &cbSid,             // size of SID
+               ReferencedDomain,   // domain account was found on
+               &cchReferencedDomain,
+               &peUse
                ))
          {
             if(GetLastError() == ERROR_INSUFFICIENT_BUFFER)
@@ -693,17 +693,17 @@ namespace windows
                // reallocate memory
                //
                if((*Sid=HeapReAlloc(
-                           GetProcessHeap(),
-                           0,
-                           *Sid,
-                           cbSid
+                        GetProcessHeap(),
+                        0,
+                        *Sid,
+                        cbSid
                         )) == NULL) __leave;
 
                if((ReferencedDomain=(LPTSTR)HeapReAlloc(
-                                       GetProcessHeap(),
-                                       0,
-                                       ReferencedDomain,
-                                       cchReferencedDomain * sizeof(TCHAR)
+                                    GetProcessHeap(),
+                                    0,
+                                    ReferencedDomain,
+                                    cchReferencedDomain * sizeof(TCHAR)
                                     )) == NULL) __leave;
             }
             else __leave;
@@ -851,11 +851,11 @@ namespace windows
       // in bytes, of the authentication buffer.
 
       if(!LIBCALL(credui,CredPackAuthenticationBufferW)(
-               0,                // Reserved
-               szDomainAndUser,  // Domain\User name
-               szPassword,       // User Password
-               NULL,             // Packed credentials
-               &cbInAuthBlob)    // Size, in bytes, of credentials
+            0,                // Reserved
+            szDomainAndUser,  // Domain\User name
+            szPassword,       // User Password
+            NULL,             // Packed credentials
+            &cbInAuthBlob)    // Size, in bytes, of credentials
             && GetLastError() != ERROR_INSUFFICIENT_BUFFER)
       {
          dwResult = GetLastError();
@@ -875,11 +875,11 @@ namespace windows
       // Call CredPackAuthenticationBufferW again to retrieve the
       // authentication buffer.
       if(!LIBCALL(credui,CredPackAuthenticationBufferW)(
-               0,
-               szDomainAndUser,
-               szPassword,
-               (PBYTE)pvInAuthBlob,
-               &cbInAuthBlob))
+            0,
+            szDomainAndUser,
+            szPassword,
+            (PBYTE)pvInAuthBlob,
+            &cbInAuthBlob))
       {
          dwResult = GetLastError();
          debug_print("\n CredPackAuthenticationBufferW (2) failed: win32 error = 0x%x\n",dwResult);
@@ -903,17 +903,17 @@ namespace windows
 retry:
 
       dwResult = LIBCALL(credui,CredUIPromptForWindowsCredentialsW)(
-                    &ui,             // Customizing information
-                    dwLastError,               // Error code to display
-                    &ulAuthPackage,  // Authorization package
-                    pvInAuthBlob,    // Credential byte array
-                    cbInAuthBlob,    // Size of credential input buffer
-                    &pvAuthBlob,     // Output credential byte array
-                    &cbAuthBlob,     // Size of credential byte array
-                    &fSave,          // Select the save check box.
-                    //CREDUIWIN_SECURE_PROMPT |
-                    CREDUIWIN_IN_CRED_ONLY |
-                    CREDUIWIN_ENUMERATE_CURRENT_USER
+                 &ui,             // Customizing information
+                 dwLastError,               // Error code to display
+                 &ulAuthPackage,  // Authorization package
+                 pvInAuthBlob,    // Credential byte array
+                 cbInAuthBlob,    // Size of credential input buffer
+                 &pvAuthBlob,     // Output credential byte array
+                 &cbAuthBlob,     // Size of credential byte array
+                 &fSave,          // Select the save check box.
+                 //CREDUIWIN_SECURE_PROMPT |
+                 CREDUIWIN_IN_CRED_ONLY |
+                 CREDUIWIN_ENUMERATE_CURRENT_USER
                  );
 
 
@@ -950,11 +950,11 @@ retry:
          ::GetUserNameExW(NameSamCompatible,szDomainAndUser,&l);
 
          bOk = LIBCALL(credui,CredUIParseUserNameW)(
-                  szDomainAndUser,
-                  szUsername,
-                  CREDUI_MAX_USERNAME_LENGTH,
-                  szDomain,
-                  CREDUI_MAX_DOMAIN_TARGET_LENGTH
+               szDomainAndUser,
+               szUsername,
+               CREDUI_MAX_USERNAME_LENGTH,
+               szDomain,
+               CREDUI_MAX_DOMAIN_TARGET_LENGTH
                ) == NO_ERROR ;
 
          if(!bOk)
@@ -968,12 +968,12 @@ retry:
 
 
          if(::LogonUserW(
-                  szUsername,
-                  szDomain,
-                  szPassword,
-                  LOGON32_LOGON_SERVICE,
-                  LOGON32_PROVIDER_DEFAULT,
-                  &h))
+               szUsername,
+               szDomain,
+               szPassword,
+               LOGON32_LOGON_SERVICE,
+               LOGON32_PROVIDER_DEFAULT,
+               &h))
          {
             ::CloseHandle(h);
          }
@@ -1184,19 +1184,19 @@ retry:
       wcscpy(pszPass,wstring(strPass));
 
       SC_HANDLE hdlServ = ::CreateServiceW(
-                             hdlSCM,                    // SCManager database
-                             wstring(strServiceName),
-                             wstring(strDisplayName),        // service name to display
-                             STANDARD_RIGHTS_REQUIRED,  // desired access
-                             SERVICE_WIN32_OWN_PROCESS, // service type
-                             SERVICE_AUTO_START,      // start type
-                             SERVICE_ERROR_NORMAL,      // error control type
-                             wstring(strCommand),                   // service's binary Path name
-                             0,                      // no load ordering group
-                             0,                      // no tag identifier
-                             0,                      // no dependencies
-                             strUser.has_char() ? pszName : NULL,                      // LocalSystem account
-                             strPass.has_char() ? pszPass : NULL);                     // no password
+                          hdlSCM,                    // SCManager database
+                          wstring(strServiceName),
+                          wstring(strDisplayName),        // service name to display
+                          STANDARD_RIGHTS_REQUIRED,  // desired access
+                          SERVICE_WIN32_OWN_PROCESS, // service type
+                          SERVICE_AUTO_START,      // start type
+                          SERVICE_ERROR_NORMAL,      // error control type
+                          wstring(strCommand),                   // service's binary Path name
+                          0,                      // no load ordering group
+                          0,                      // no tag identifier
+                          0,                      // no dependencies
+                          strUser.has_char() ? pszName : NULL,                      // LocalSystem account
+                          strPass.has_char() ? pszPass : NULL);                     // no password
 
 
       if(!hdlServ)
@@ -1235,9 +1235,9 @@ retry:
 
 
       SC_HANDLE hdlServ = ::OpenServiceW(
-                             hdlSCM,                    // SCManager database
-                             wstring(strServiceName),
-                             DELETE);
+                          hdlSCM,                    // SCManager database
+                          wstring(strServiceName),
+                          DELETE);
 
       if(!hdlServ)
       {
@@ -1292,9 +1292,9 @@ retry:
       }
 
       SC_HANDLE hdlServ = ::OpenServiceW(
-                             hdlSCM,                    // SCManager database
-                             wstring(strServiceName),
-                             SERVICE_START);                     // no password
+                          hdlSCM,                    // SCManager database
+                          wstring(strServiceName),
+                          SERVICE_START);                     // no password
 
 
       if(!hdlServ)
@@ -1327,9 +1327,9 @@ retry:
       }
 
       SC_HANDLE hdlServ = ::OpenServiceW(
-                             hdlSCM,                    // SCManager database
-                             wstring(strServiceName),
-                             SERVICE_STOP);                     // no password
+                          hdlSCM,                    // SCManager database
+                          wstring(strServiceName),
+                          SERVICE_STOP);                     // no password
 
       if(!hdlServ)
       {
@@ -2313,7 +2313,6 @@ repeat:
             //pFileSave->SetFileTypes(3, rgSpec);
 
 
-            //pFileSave->SetDefaultExtension(L"csv");
 
             //pFileSave->SetFileName(L"Twitter Automator Export");
 
@@ -2403,7 +2402,7 @@ repeat:
                   if (SUCCEEDED(hr))
                   {
 
-                     set["file_name"] = (PWSTR) pwszFilePath;
+                     set["file_name"] = string(pwszFilePath);
 
                      bOk = true;
 
