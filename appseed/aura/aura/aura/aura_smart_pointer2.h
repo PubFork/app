@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 // ::ca::null_class back link to operational system oswindow.h
@@ -9,113 +9,113 @@
 // operational system NULL/void itself to a windowing service
 //
 // Curitiba, inha-metro-win-ubuntu-mountain-lion-macos 4 de novembro de 2012
-   template < class T >
-   smart_pointer < T > ::smart_pointer()
-   {
-      m_p = NULL;
-   }
+template < class T >
+smart_pointer < T > ::smart_pointer()
+{
+   m_p = NULL;
+}
 
 
-   template < class T >
-   smart_pointer < T > ::smart_pointer(const smart_pointer < T > & t)
-   {
-      m_p = NULL;
-      operator = (t);
-   }
-
-#ifdef MOVE_SEMANTICS
-   template < class T >
-   smart_pointer < T > ::smart_pointer(smart_pointer < T > && t)
-   {
-
-      m_p      = t.m_p;
-      t.m_p    = NULL;
-
-   }
-#endif
-
-   template < class T >
-   inline smart_pointer < T > ::smart_pointer(T * p)
-   {
-      m_p = p;
-      ::add_ref(m_p);
-   }
-
-   template < class T >
-   inline smart_pointer < T > ::smart_pointer(const lparam & lparam)
-   {
-      m_p = dynamic_cast < T * > ((object *) lparam.m_lparam);
-   }
-
-   template < class T >
-   smart_pointer < T > ::smart_pointer(const ::aura::allocatorsp & a)
-   {
-      m_p = NULL;
-      alloc(a);
-   }
+template < class T >
+smart_pointer < T > ::smart_pointer(const smart_pointer < T > & t)
+{
+   m_p = NULL;
+   operator = (t);
+}
 
 #ifdef MOVE_SEMANTICS
-   template < class T >
-   smart_pointer < T > ::smart_pointer(::aura::allocatorsp && a)
-   {
-      m_p = NULL;
-      alloc(a);
-   }
+template < class T >
+smart_pointer < T > ::smart_pointer(smart_pointer < T > && t)
+{
+
+   m_p      = t.m_p;
+   t.m_p    = NULL;
+
+}
 #endif
 
-   template < class T >
-   smart_pointer < T > ::~smart_pointer()
-   {
-      release();
-   }
+template < class T >
+inline smart_pointer < T > ::smart_pointer(T * p)
+{
+   m_p = p;
+   ::add_ref(m_p);
+}
 
-   template < class T >
-   inline T * smart_pointer < T > ::operator ->()
-   {
-      return m_p;
-   }
+template < class T >
+inline smart_pointer < T > ::smart_pointer(const lparam & lparam)
+{
+   m_p = dynamic_cast < T * > ((object *) lparam.m_lparam);
+}
 
-   template < class T >
-   inline T * smart_pointer < T > ::operator ->() const
-   {
-      return m_p;
-   }
+template < class T >
+smart_pointer < T > ::smart_pointer(const ::aura::allocatorsp & a)
+{
+   m_p = NULL;
+   alloc(a);
+}
 
-   template < class T >
-   inline T & smart_pointer < T > ::operator * ()
-   {
-      return *m_p;
-   }
+#ifdef MOVE_SEMANTICS
+template < class T >
+smart_pointer < T > ::smart_pointer(::aura::allocatorsp && a)
+{
+   m_p = NULL;
+   alloc(a);
+}
+#endif
 
-   template < class T >
-   inline T & smart_pointer < T > ::operator * () const
-   {
-      return *m_p;
-   }
+template < class T >
+smart_pointer < T > ::~smart_pointer()
+{
+   release();
+}
 
-   template < class T >
-   inline smart_pointer < T > ::operator T * ()
-   {
-      return m_p;
-   }
+template < class T >
+inline T * smart_pointer < T > ::operator ->()
+{
+   return m_p;
+}
 
-   template < class T >
-   inline smart_pointer < T > ::operator T * const () const
-   {
-      return m_p;
-   }
+template < class T >
+inline T * smart_pointer < T > ::operator ->() const
+{
+   return m_p;
+}
 
-   template < class T >
-   inline smart_pointer < T > ::operator lparam ()
-   {
-      return m_p;
-   }
+template < class T >
+inline T & smart_pointer < T > ::operator * ()
+{
+   return *m_p;
+}
 
-   template < class T >
-   inline smart_pointer < T > ::operator lparam () const
-   {
-      return m_p;
-   }
+template < class T >
+inline T & smart_pointer < T > ::operator * () const
+{
+   return *m_p;
+}
+
+template < class T >
+inline smart_pointer < T > ::operator T * ()
+{
+   return m_p;
+}
+
+template < class T >
+inline smart_pointer < T > ::operator T * const () const
+{
+   return m_p;
+}
+
+template < class T >
+inline smart_pointer < T > ::operator lparam ()
+{
+   return m_p;
+}
+
+template < class T >
+inline smart_pointer < T > ::operator lparam () const
+{
+   return m_p;
+}
 
 /*   template < class T >
    inline smart_pointer < T > ::operator void * ()
@@ -132,165 +132,165 @@
    }
 */
 
-   template < class T >
-   inline T * smart_pointer < T > ::get_()
-   {
-      return m_p;
-   }
+template < class T >
+inline T * smart_pointer < T > ::get_()
+{
+   return m_p;
+}
 
-   template < class T >
-   inline const T * smart_pointer < T > ::get_() const
-   {
-      return m_p;
-   }
+template < class T >
+inline const T * smart_pointer < T > ::get_() const
+{
+   return m_p;
+}
 
-   template < class T >
-   inline bool smart_pointer < T > ::is_null() const
-   {
-      return m_p == NULL;
-   }
+template < class T >
+inline bool smart_pointer < T > ::is_null() const
+{
+   return m_p == NULL;
+}
 
-   template < class T >
-   inline bool smart_pointer < T > ::is_set() const
-   {
-      return m_p != NULL;
-   }
+template < class T >
+inline bool smart_pointer < T > ::is_set() const
+{
+   return m_p != NULL;
+}
 
-   template < class T >
-   inline smart_pointer < T > & smart_pointer < T > ::operator = (T * p)
+template < class T >
+inline smart_pointer < T > & smart_pointer < T > ::operator = (T * p)
+{
+   if(m_p != p)
    {
-      if(m_p != p)
+      T * pOld = m_p;
+      if(p != NULL)
       {
-         T * pOld = m_p;
-         if(p != NULL)
-         {
-            ::add_ref(p);
-         }
-         m_p = p;
-         if(pOld != NULL)
-         {
-            ::release(pOld);
-         }
+         ::add_ref(p);
       }
-      return *this;
+      m_p = p;
+      if(pOld != NULL)
+      {
+         ::release(pOld);
+      }
    }
+   return *this;
+}
 
-   template < class T >
-   inline smart_pointer < T > & smart_pointer < T > ::operator = (const smart_pointer < T > & t)
-   {
-      return operator = (t.m_p);
-   }
+template < class T >
+inline smart_pointer < T > & smart_pointer < T > ::operator = (const smart_pointer < T > & t)
+{
+   return operator = (t.m_p);
+}
 
 #ifdef MOVE_SEMANTICS
-   template < class T >
-   inline smart_pointer < T > & smart_pointer < T > ::operator = (smart_pointer < T > && t)
+template < class T >
+inline smart_pointer < T > & smart_pointer < T > ::operator = (smart_pointer < T > && t)
+{
+
+   if(&t != this)
    {
 
-      if(&t != this)
+      if (m_p != NULL)
       {
-
-         if (m_p != NULL)
-         {
-            ::release(m_p);
-         }
-
-         m_p      = t.m_p;
-         t.m_p    = NULL;
-
+         ::release(m_p);
       }
 
-      return *this;
+      m_p      = t.m_p;
+      t.m_p    = NULL;
 
    }
+
+   return *this;
+
+}
 #endif
 
-   template < class T >
-   inline smart_pointer < T > & smart_pointer < T > ::operator = (const lparam & lparam)
+template < class T >
+inline smart_pointer < T > & smart_pointer < T > ::operator = (const lparam & lparam)
+{
+
+   release();
+
+   m_p = (T *) lparam;
+
+   return * this;
+
+}
+
+template < class T >
+inline T * smart_pointer < T > ::detach()
+{
+   T * p = m_p;
+   m_p = NULL;
+   return p;
+}
+
+
+template < class T >
+void smart_pointer < T > ::oattrib(const sp(T) & p)
+{
+
+   if(p.m_p == NULL)
    {
 
       release();
 
-      m_p = (T *) lparam;
-
-      return * this;
+      return;
 
    }
 
-   template < class T >
-   inline T * smart_pointer < T > ::detach()
-   {
-      T * p = m_p;
-      m_p = NULL;
-      return p;
-   }
-
-
-   template < class T >
-   void smart_pointer < T > ::oattrib(const sp(T) & p)
+   if(is_null())
    {
 
-      if(p.m_p == NULL)
-      {
-
-         release();
-
-         return;
-
-      }
-
-      if(is_null())
-      {
-
-         alloc(p->allocer());
-
-      }
-
-      *m_p = *p.m_p;
+      alloc(p->allocer());
 
    }
 
+   *m_p = *p.m_p;
 
-    // cut and paste with very good capabilities of RealVNC for MacOS in OVH.fr/eu/pt cloud from Windows client.
-    // slashes with ABNT 2 keyboard and even c cedilha working with RealVNC
-    template < class T >
-    void smart_pointer <T>::release()
-    {
+}
 
-        ::release(m_p);
 
-    }
+// cut and paste with very good capabilities of RealVNC for MacOS in OVH.fr/eu/pt cloud from Windows client.
+// slashes with ABNT 2 keyboard and even c cedilha working with RealVNC
+template < class T >
+void smart_pointer <T>::release()
+{
 
-   template < class T1, class T2 >
-   bool operator ==(const T1  * t1, const smart_pointer < T2 > & t2)
+   ::release(m_p);
+
+}
+
+template < class T1, class T2 >
+bool operator ==(const T1  * t1, const smart_pointer < T2 > & t2)
+{
+   T1 * pt1 = dynamic_cast < T1 * > (t2.m_p);
+   if(pt1 != NULL)
    {
-      T1 * pt1 = dynamic_cast < T1 * > (t2.m_p);
-      if(pt1 != NULL)
-      {
-         return pt1 == t1;
-      }
-      T2 * pt2 = dynamic_cast < T2 * > ((T1 *) t1);
-      if(pt2 != NULL)
-      {
-         return pt2 == t2.m_p;
-      }
-      return false;
+      return pt1 == t1;
    }
-
-   template < class T1, class T2 >
-   bool operator ==(const smart_pointer < T1 > & t1, const T2 * t2)
+   T2 * pt2 = dynamic_cast < T2 * > ((T1 *) t1);
+   if(pt2 != NULL)
    {
-      T1 * pt1 = dynamic_cast < T1 * > ((T2 *) t2);
-      if(pt1 != NULL)
-      {
-         return pt1 == t1.m_p;
-      }
-      T2 * pt2 = dynamic_cast < T2 * > (t1.m_p);
-      if(pt2 != NULL)
-      {
-         return pt2 == t2;
-      }
-      return false;
+      return pt2 == t2.m_p;
    }
+   return false;
+}
+
+template < class T1, class T2 >
+bool operator ==(const smart_pointer < T1 > & t1, const T2 * t2)
+{
+   T1 * pt1 = dynamic_cast < T1 * > ((T2 *) t2);
+   if(pt1 != NULL)
+   {
+      return pt1 == t1.m_p;
+   }
+   T2 * pt2 = dynamic_cast < T2 * > (t1.m_p);
+   if(pt2 != NULL)
+   {
+      return pt2 == t2;
+   }
+   return false;
+}
 
 
 template < class T1, class T2 >
@@ -391,4 +391,9 @@ template < class T >
    is >> *sp.m_p;
    return is;
 }
+
+
+
+
+
 

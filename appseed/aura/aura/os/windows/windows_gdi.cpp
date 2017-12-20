@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 
@@ -238,8 +238,8 @@ namespace draw2d
          for (index i = 0; i < m_itema.get_size(); i++)
          {
 
-            if (m_itema[i].m_ecs == ::draw2d::font::cs_ansi
-                  || m_itema[i].m_ecs == ::draw2d::font::cs_default)
+            if (m_itema[i]->m_ecs == ::draw2d::font::cs_ansi
+                  || m_itema[i]->m_ecs == ::draw2d::font::cs_default)
 
             {
 
@@ -249,7 +249,7 @@ namespace draw2d
 
                s.cy = 0;
 
-               ecsFound = m_itema[i].m_ecs;
+               ecsFound = m_itema[i]->m_ecs;
 
                iMultiScript = 0;
 
@@ -267,7 +267,7 @@ namespace draw2d
                   if (wstrSample.get_length() > 0)
                   {
 
-                     string strFont = m_itema[i].m_strName;
+                     string strFont = m_itema[i]->m_strName;
 
                      hfont = wingdi_CreatePointFont(180, strFont, m_hdc, &lf);
 
@@ -316,19 +316,19 @@ namespace draw2d
                if (iMultiScript == 1)
                {
 
-                  m_itema[i].m_ecs = ecsFound;
+                  m_itema[i]->m_ecs = ecsFound;
 
                }
                else if (iMultiScript > 1)
                {
 
-                  string str = m_itema[i].m_strName;
+                  string str = m_itema[i]->m_strName;
 
 
                   m_itema.pred_remove([&](auto & item)
                   {
 
-                     return item.m_strName == str;
+                     return item->m_strName == str;
 
                   });
 
@@ -463,7 +463,7 @@ namespace draw2d
                             [&](auto & item)
          {
 
-            return item.m_strName == strTopic && item.m_ecs == ecs;
+            return item->m_strName == strTopic && item->m_ecs == ecs;
 
          }) >= 0)
             {
@@ -479,7 +479,7 @@ namespace draw2d
                        [&](auto & item)
          {
 
-            return item.m_strName == str;
+            return item->m_strName == str;
 
          });
 
@@ -487,11 +487,11 @@ namespace draw2d
          if (iFind >= 0)
          {
 
-            if (penum->m_itema[iFind].m_ecs == ::draw2d::font::cs_ansi
-                  || penum->m_itema[iFind].m_ecs == ::draw2d::font::cs_default)
+            if (penum->m_itema[iFind]->m_ecs == ::draw2d::font::cs_ansi
+                  || penum->m_itema[iFind]->m_ecs == ::draw2d::font::cs_default)
             {
 
-               penum->m_itema[iFind].m_ecs = ecs;
+               penum->m_itema[iFind]->m_ecs = ecs;
 
                if (ecs != ::draw2d::font::cs_ansi && ecs != ::draw2d::font::cs_default)
                {
@@ -508,7 +508,7 @@ namespace draw2d
                        [&](auto & item)
                {
 
-                  return item.m_strName == str && item.m_ecs == ecs;
+                  return item->m_strName == str && item->m_ecs == ecs;
 
                });
 
@@ -519,7 +519,7 @@ namespace draw2d
          if (iFind < 0)
          {
 
-            penum->m_itema.add(::draw2d::font::enum_item(lplf->lfFaceName, ecs));
+            penum->m_itema.add(canew(::draw2d::font::enum_item(lplf->lfFaceName, ecs)));
 
          }
 
@@ -537,7 +537,9 @@ namespace draw2d
 
       ::sort::array::pred_sort(itema, [&](auto & a, auto & b)
       {
-         return a.m_strName < b.m_strName;
+
+         return a->m_strName < b->m_strName;
+
       });
 
    }

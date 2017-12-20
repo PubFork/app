@@ -95,9 +95,39 @@ class thread_refa;
 // Duplicated root here... element is essentially like root (Rute, Inha, Lenir) for templates, but not for polymorphism
 
 
+class CLASS_DECL_AURA simple_object
+{
+public:
 
 
-class CLASS_DECL_AURA object
+   int64_t                       m_countReference;
+
+
+   simple_object();
+   virtual ~simple_object();
+
+
+   inline int64_t get_ref_count()
+   {
+
+      return m_countReference;
+
+   }
+
+   virtual void delete_this();
+
+
+   virtual int64_t add_ref();
+   virtual int64_t dec_ref();
+   virtual int64_t release();
+
+
+};
+
+
+
+class CLASS_DECL_AURA object :
+   virtual public simple_object
 {
 public:
 
@@ -118,7 +148,6 @@ public:
    uint64_t                      m_ulFlags;
    factory_item_base *           m_pfactoryitembase;
    void *                        m_pthis;
-   int64_t                       m_countReference;
    ::aura::application *         m_pauraapp;
    mutex *                       m_pmutex;
    property_set *                m_psetObject;
@@ -205,12 +234,6 @@ public:
    }
 
 
-   inline int64_t get_ref_count()
-   {
-
-      return m_countReference;
-
-   }
 
    inline bool is_heap()
    {
@@ -220,9 +243,6 @@ public:
    }
 
 
-   virtual int64_t add_ref();
-   virtual int64_t dec_ref();
-   virtual int64_t release();
 
 
    virtual void add_line(::command::command * pcommand, application_bias * pbiasCreate = NULL);

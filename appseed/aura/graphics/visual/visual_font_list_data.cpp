@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 #include <math.h>
 
@@ -166,7 +166,7 @@ namespace visual
 
          synch_lock slEnum(m_pfontenumeration->m_pmutex);
 
-         if (m_pfontenumeration->m_itema == m_itema)
+         if (::lemon::array::are_all_elements_equal(m_pfontenumeration->m_itema, m_itema))
          {
 
             return;
@@ -228,11 +228,9 @@ namespace visual
 
             m_itemptra[i] = pitem;
 
-            //         pitem->m_dibSel.alloc(allocer());
+            pitem->m_strFont = m_itema[i]->m_strFile;
 
-            pitem->m_strFont = m_itema[i].m_strFile;
-
-            pitem->m_strName = m_itema[i].m_strName;
+            pitem->m_strName = m_itema[i]->m_strName;
 
             string str = pitem->m_strFont;
 
@@ -256,7 +254,7 @@ namespace visual
 
                pgraphics->SelectFont(pbox->m_font);
 
-               pbox->m_font->m_ecs = m_itema[i].m_ecs;
+               pbox->m_font->m_ecs = m_itema[i]->m_ecs;
 
                if (j == 0)
                {

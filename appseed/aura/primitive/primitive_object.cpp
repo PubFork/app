@@ -1,17 +1,111 @@
 ﻿#include "framework.h"
 
 
+simple_object::simple_object()
+{
+
+   m_countReference = 1;
+
+}
+
+
+simple_object::~simple_object()
+{
+
+
+}
+
+
+int64_t simple_object::add_ref()
+{
+
+#ifdef WINDOWS
+
+   return InterlockedIncrement64(&m_countReference);
+
+#elif defined(RASPBIAN) && defined(OS32BIT)
+
+   return __sync_add_and_fetch_4(&m_countReference,1);
+
+#else
+
+   return __sync_add_and_fetch(&m_countReference,1);
+
+#endif
+
+}
+
+
+int64_t simple_object::dec_ref()
+{
+
+#ifdef WINDOWS
+
+   return InterlockedDecrement64(&m_countReference);
+
+#elif defined(RASPBIAN) && defined(OS32BIT)
+
+   return __sync_sub_and_fetch_4(&m_countReference,1);
+
+#else
+
+   return __sync_sub_and_fetch(&m_countReference,1);
+
+#endif
+
+}
+
+
+void simple_object::delete_this()
+{
+
+   try
+   {
+
+      delete this;
+
+   }
+   catch (...)
+   {
+
+   }
+
+}
+
+
+int64_t simple_object::release()
+{
+
+   int64_t i = dec_ref();
+
+   if(i == 0)
+   {
+
+      delete_this();
+
+   }
+
+   return i;
+
+}
+
+void object::assert_valid() const
+{
+
+   ASSERT(this != NULL);
+
+}
+
 
 object::object()
 {
 
-   m_psetObject         = NULL;
-   m_pmutex             = NULL;
-   m_ulFlags            = (uint32_t)flag_auto_clean;
-   m_pfactoryitembase   = NULL;
-   m_countReference     = 1;
-   m_pauraapp           = NULL;
-   m_pthreadrefa        = NULL;
+   m_psetObject = NULL;
+   m_pmutex = NULL;
+   m_ulFlags = (uint32_t)flag_auto_clean;
+   m_pfactoryitembase = NULL;
+   m_pauraapp = NULL;
+   m_pthreadrefa = NULL;
 
 }
 
@@ -45,11 +139,11 @@ object::object(const object& objectSrc)
 
    }
 
-   m_ulFlags            = (uint32_t)flag_auto_clean;
-   m_pfactoryitembase   = NULL;
-   m_countReference     = 1;
-   m_pauraapp           = objectSrc.m_pauraapp;
-   m_pthreadrefa        = NULL;
+   m_ulFlags = (uint32_t)flag_auto_clean;
+   m_pfactoryitembase = NULL;
+   m_countReference = 1;
+   m_pauraapp = objectSrc.m_pauraapp;
+   m_pthreadrefa = NULL;
 
 
 }
@@ -58,13 +152,13 @@ object::object(const object& objectSrc)
 object::object(::aura::application * papp)
 {
 
-   m_psetObject         = NULL;
-   m_pmutex             = NULL;
-   m_ulFlags            = (uint32_t)flag_auto_clean;
-   m_pfactoryitembase   = NULL;
-   m_countReference     = 1;
-   m_pauraapp           = papp;
-   m_pthreadrefa        = NULL;
+   m_psetObject = NULL;
+   m_pmutex = NULL;
+   m_ulFlags = (uint32_t)flag_auto_clean;
+   m_pfactoryitembase = NULL;
+   m_countReference = 1;
+   m_pauraapp = papp;
+   m_pthreadrefa = NULL;
 
 }
 
@@ -81,70 +175,6 @@ object::~object()
    ::aura::del(m_psetObject);
 
    ::aura::del(m_pmutex);
-
-}
-
-
-int64_t object::add_ref()
-{
-
-#ifdef WINDOWS
-
-   return InterlockedIncrement64(&m_countReference);
-
-#elif defined(RASPBIAN) && defined(OS32BIT)
-
-   return __sync_add_and_fetch_4(&m_countReference,1);
-
-#else
-
-   return __sync_add_and_fetch(&m_countReference,1);
-
-#endif
-
-}
-
-
-int64_t object::dec_ref()
-{
-
-#ifdef WINDOWS
-
-   return InterlockedDecrement64(&m_countReference);
-
-#elif defined(RASPBIAN) && defined(OS32BIT)
-
-   return __sync_sub_and_fetch_4(&m_countReference,1);
-
-#else
-
-   return __sync_sub_and_fetch(&m_countReference,1);
-
-#endif
-
-}
-
-
-int64_t object::release()
-{
-
-   int64_t i = dec_ref();
-
-   if(i == 0)
-   {
-
-      delete_this();
-
-   }
-
-   return i;
-
-}
-
-void object::assert_valid() const
-{
-
-   ASSERT(this != NULL);
 
 }
 
@@ -758,7 +788,7 @@ void object::delete_this()
    else if(is_heap())
    {
 
-      delete this;
+      simple_object::delete_this();
 
    }
 

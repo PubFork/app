@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include <math.h>
 
 
@@ -5679,7 +5679,7 @@ namespace draw2d_direct2d
 
             string strName = string((LPCWSTR)(name));
 
-            itema.add(::draw2d::font::enum_item(strName, strName, ::draw2d::font::cs_default));
+            itema.add(canew(::draw2d::font::enum_item(strName, strName, ::draw2d::font::cs_default)));
 
          }
 
@@ -5690,7 +5690,7 @@ namespace draw2d_direct2d
       itema.pred_sort([](auto & item1, auto & item2)
       {
 
-         return item1.m_strName < item2.m_strName;
+         return item1->m_strName < item2->m_strName;
 
       });
 

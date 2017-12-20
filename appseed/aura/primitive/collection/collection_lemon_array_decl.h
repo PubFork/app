@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 
@@ -47,6 +47,10 @@ namespace lemon
       template<> inline void add(stringa & stra,const stringa & straSource);
       template<> inline void add(::file::patha & patha,const stringa & stra);
       template<> inline void add(::file::patha & patha,const string & str);
+
+
+      template < typename T >
+      inline bool are_all_elements_equal(const spa(T) & a1, const spa(T) & a2);
 
    } // namespace array
 

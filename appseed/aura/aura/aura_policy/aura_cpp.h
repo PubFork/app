@@ -932,16 +932,14 @@ namespace file
 
 #include "aura/primitive/collection/collection_decl.h"
 #include "aura/primitive/collection/collection_raw_array_decl.h"
-#include "aura/primitive/collection/collection_lemon_array_decl.h"
 #include "aura/primitive/collection/collection_smart_pointer_array.h"
 #include "aura/primitive/collection/collection_comparable_eq_array.h"
 #include "aura/primitive/collection/collection_comparable_array.h"
 #include "aura/primitive/collection/collection_comparable_raw_array.h"
-
-
 #include "aura/primitive/collection/collection_ptr_array.h"
 
 
+#include "aura/primitive/collection/collection_lemon_array_decl.h"
 #include "aura/primitive/collection/collection_lemon_heap.h"
 
 

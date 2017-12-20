@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 // Range-based for loop support
@@ -304,7 +304,7 @@ public:
 
    }
 
-   
+
    ::index add(const array < smart_pointer < T > > & a)
    {
 
@@ -470,13 +470,13 @@ public:
    template < typename PRED >
    sp(T) pred_remove_first(PRED pred, index iStart = 0)
    {
-      
+
       for (index i = iStart; i < this->get_count(); i++)
       {
 
          if (pred(this->m_pData[i]))
          {
-            
+
             sp(T) sp = this->m_pData[i];
 
             this->remove_at(i);
@@ -917,13 +917,13 @@ namespace xml
 
    template < int32_t m_iNodeNameIndex,class TYPE >
    smart_pointer_array<m_iNodeNameIndex,TYPE>::
-      smart_pointer_array()
+   smart_pointer_array()
    {
-      }
+   }
 
    template < int32_t m_iNodeNameIndex,class TYPE >
    smart_pointer_array<m_iNodeNameIndex,TYPE>::
-      smart_pointer_array(const smart_pointer_array & xmla)
+   smart_pointer_array(const smart_pointer_array & xmla)
    {
 
       copy(xmla);
@@ -1752,20 +1752,20 @@ namespace xml
 
    template < int32_t m_iNodeNameIndex,class TYPE >
    smart_pointer_array2<m_iNodeNameIndex,TYPE>::
-      smart_pointer_array2()
+   smart_pointer_array2()
    {
    }
 
    template < int32_t m_iNodeNameIndex,class TYPE >
    smart_pointer_array2<m_iNodeNameIndex,TYPE>::
-      smart_pointer_array2(const smart_pointer_array2 & xmla)
+   smart_pointer_array2(const smart_pointer_array2 & xmla)
    {
 
       copy(xmla);
 
    }
 
-   
+
 
 } // namespace xml
 
@@ -1777,3 +1777,7 @@ namespace xml
 #define xmlspa(TYPE) ::smart_pointer_array < TYPE >
 
 typedef spa(object) object_spa;
+
+
+
+
