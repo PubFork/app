@@ -1,4 +1,4 @@
-#include "framework.h" // from "base/user/user.h"
+﻿#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 //include "aura/user/colorertake5/colorertake5.h"
 
@@ -9,14 +9,14 @@ namespace user
 
    class plain_edit_internal
    {
-      public:
+   public:
 
-         ::draw2d::pen_sp              m_penCaret;
-         ::draw2d::brush_sp            m_brushText;
-         ::draw2d::brush_sp            m_brushTextCr;
-         ::draw2d::brush_sp            m_brushTextSel;
+      ::draw2d::pen_sp              m_penCaret;
+      ::draw2d::brush_sp            m_brushText;
+      ::draw2d::brush_sp            m_brushTextCr;
+      ::draw2d::brush_sp            m_brushTextSel;
 
-         void update(plain_edit * pedit);
+      void update(plain_edit * pedit);
 
    };
 
@@ -548,11 +548,11 @@ namespace user
             {
 
                pgraphics->FillSolidRect(
-                  (double)((double)left + x1),
-                  (double)y,
-                  (double)MIN(x2-x1, (double)rectClient.right - ((double)left + x1)),
-                  (double)MIN((double)m_iLineHeight, (double)rectClient.bottom - y),
-                  crBkSel);
+               (double)((double)left + x1),
+               (double)y,
+               (double)MIN(x2-x1, (double)rectClient.right - ((double)left + x1)),
+               (double)MIN((double)m_iLineHeight, (double)rectClient.bottom - y),
+               crBkSel);
 
                pgraphics->SelectObject(brushTextSel);
 
@@ -856,7 +856,7 @@ namespace user
 
             ev.m_actioncontext = ::action::source_user;
 
-            if (!BaseOnControlEvent(&ev))
+            if (BaseOnControlEvent(&ev))
             {
 
                on_action("submit");
@@ -1035,32 +1035,34 @@ namespace user
    void plain_edit::pre_translate_message(::message::message * pobj)
    {
 
-      SCAST_PTR(::message::base, pbase, pobj);
+      ::user::control::pre_translate_message(pobj);
 
-      if (pbase->m_id == WM_KEYDOWN)
-      {
+      //SCAST_PTR(::message::base, pbase, pobj);
 
-         pbase->m_bRet = true;
+      //if (pbase->m_id == WM_KEYDOWN)
+      //{
 
-         _001OnKeyDown(pbase);
+      //   pbase->m_bRet = true;
 
-      }
-      else if (pbase->m_id == WM_KEYUP)
-      {
+      //   _001OnKeyDown(pbase);
 
-         pbase->m_bRet = true;
+      //}
+      //else if (pbase->m_id == WM_KEYUP)
+      //{
 
-         _001OnKeyUp(pbase);
+      //   pbase->m_bRet = true;
 
-      }
-      else if (pbase->m_id == WM_CHAR)
-      {
+      //   _001OnKeyUp(pbase);
 
-         pbase->m_bRet = true;
+      //}
+      //else if (pbase->m_id == WM_CHAR)
+      //{
 
-         ::user::interaction::_001OnChar(pbase);
+      //   pbase->m_bRet = true;
 
-      }
+      //   ::user::interaction::_001OnChar(pbase);
+
+      //}
 
    }
 
@@ -3381,12 +3383,10 @@ finished_update:
          {
             char buf[512];
             memset(buf, 0, sizeof(buf));
-            strsize iProperBegin = MAX(0, m_ptree->m_iSelEnd - 256);
-            strsize iCur = m_ptree->m_iSelEnd - iProperBegin;
-            m_ptree->m_editfile.seek(iProperBegin, ::file::seek_begin);
+            m_ptree->m_editfile.seek(m_ptree->m_iSelEnd, ::file::seek_begin);
             m_ptree->m_editfile.read(buf, sizeof(buf));
-            const char * psz = ::str::utf8_dec(buf, &buf[iCur]);
-            strsize iMultiByteUtf8DeleteCount = &buf[iCur] - psz;
+            const char * psz = ::str::utf8_inc(buf);
+            strsize iMultiByteUtf8DeleteCount = psz - buf;
 
             index i1 = m_ptree->m_iSelEnd;
             index i2 = i1 + iMultiByteUtf8DeleteCount;

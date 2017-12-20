@@ -340,7 +340,18 @@ string ca2_command_line()
 
    }
 
-   strAppId.replace(".", "/");
+   stringa stra;
+
+   stra.explode(".", strAppId);
+
+   stra.pred_each([](auto & str)
+   {
+
+      str.replace("-", "_");
+
+   }, 1);
+
+   strAppId = stra.implode("/");
 
    return "app.exe : app=" + strAppId + " client_only";
 

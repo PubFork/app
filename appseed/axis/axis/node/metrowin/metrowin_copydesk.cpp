@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "axis/user/user.h"
 #include "metrowin.h"
 #include <shlobj.h>
@@ -26,9 +26,9 @@ namespace metrowin
       int iFileCount = 0;
 
       ::wait(
-         Windows::ApplicationModel::Core::CoreApplication::MainView->CoreWindow->Dispatcher->RunAsync(
-         ::Windows::UI::Core::CoreDispatcherPriority::Normal,
-         ref new Windows::UI::Core::DispatchedHandler([&iFileCount, this]()
+      Windows::ApplicationModel::Core::CoreApplication::MainView->CoreWindow->Dispatcher->RunAsync(
+      ::Windows::UI::Core::CoreDispatcherPriority::Normal,
+      ref new Windows::UI::Core::DispatchedHandler([&iFileCount, this]()
       {
          ::Windows::ApplicationModel::DataTransfer::DataPackageView ^ view = ::Windows::ApplicationModel::DataTransfer::Clipboard::GetContent();
 
@@ -93,7 +93,7 @@ namespace metrowin
       if(iCount <= 0)
          return;
 //      if(!m_p->OpenClipboard())
-  //       return;
+      //       return;
 #ifdef WINDOWSEX
 
       HDROP hdrop = (HDROP) ::GetClipboardData(CF_HDROP);
@@ -187,14 +187,14 @@ namespace metrowin
 
       bOk = ::user::copydesk::finalize();
 
-/*      if(::user::window_sp::is_set() && ::user::window_sp::m_p->IsWindow())
-      {
-         bOk = ::user::window_sp::m_p->DestroyWindow() != FALSE;
-      }
-      else
-      {
-         bOk = false;
-      }*/
+      /*      if(::user::window_sp::is_set() && ::user::window_sp::m_p->IsWindow())
+            {
+               bOk = ::user::window_sp::m_p->DestroyWindow() != FALSE;
+            }
+            else
+            {
+               bOk = false;
+            }*/
 
       return bOk;
 
@@ -204,7 +204,7 @@ namespace metrowin
    {
 #ifdef WINDOWSEX
       ASSERT(m_p->IsWindow());
-   //   int iLen = 0;
+      //   int iLen = 0;
 
       string str;
       str = ::str::international::utf8_to_unicode(psz);
@@ -243,7 +243,7 @@ namespace metrowin
 
    string copydesk::get_plain_text()
    {
-      
+
       auto dataPackage = ::Windows::ApplicationModel::DataTransfer::Clipboard::GetContent();
 
       if(dataPackage == nullptr)
@@ -268,49 +268,70 @@ namespace metrowin
    bool copydesk::desk_to_dib(::draw2d::dib * pdib)
    {
 
-      auto dataPackage = ::Windows::ApplicationModel::DataTransfer::Clipboard::GetContent();
+      bool bOk = true;
 
-      if (dataPackage == nullptr)
+      ::wait(Windows::ApplicationModel::Core::CoreApplication::MainView->CoreWindow->Dispatcher->RunAsync(
+             Windows::UI::Core::CoreDispatcherPriority::Normal,
+             ref new Windows::UI::Core::DispatchedHandler([&]()
       {
 
-         return false;
+         auto dataPackage = ::Windows::ApplicationModel::DataTransfer::Clipboard::GetContent();
 
-      }
+         if (dataPackage == nullptr)
+         {
 
-      if (!dataPackage->Contains(::Windows::ApplicationModel::DataTransfer::StandardDataFormats::Bitmap))
-      {
+            bOk = false;
 
-         return false;
+            return;
 
-      }
+         }
 
-      ::Windows::Storage::Streams::RandomAccessStreamReference ^ ref = ::wait(dataPackage->GetBitmapAsync());
+         if (!dataPackage->Contains(::Windows::ApplicationModel::DataTransfer::StandardDataFormats::Bitmap))
+         {
 
-      if (ref == nullptr)
-      {
+            bOk = false;
 
-         return false;
+            return;
 
-      }
+         }
 
-      ::Windows::Storage::Streams::IRandomAccessStreamWithContentType ^ stream = ::wait(ref->OpenReadAsync());
+         ::Windows::Storage::Streams::RandomAccessStreamReference ^ ref = ::wait(dataPackage->GetBitmapAsync());
+
+         if (ref == nullptr)
+         {
+
+            bOk = false;
+
+            return;
+
+         }
+
+         ::Windows::Storage::Streams::IRandomAccessStreamWithContentType ^ stream = ::wait(ref->OpenReadAsync());
+         if (stream == nullptr)
+         {
 
 
-      if (stream == nullptr)
-      {
+            bOk = false;
 
-         return false;
+            return;
 
-      }
+         }
 
-      if (!windows_load_dib_from_file(pdib, stream, get_app()))
-      {
+         if (!windows_load_dib_from_file(pdib, stream, get_app()))
+         {
 
-         return false;
 
-      }
+            bOk = false;
 
-      return true;
+            return;
+
+         }
+
+      })));
+
+
+
+      return bOk;
 
 #ifdef WINDOWSEX
       if(!m_p->OpenClipboard())
@@ -326,10 +347,10 @@ namespace metrowin
          //g->Attach(hdc);
          //::draw2d::graphics * pgraphics = Application.graphics_from_os_data(hdc);
          //g->SelectObject(hbitmap);
-       //  BITMAP bm;
+         //  BITMAP bm;
          //::GetObjectA(hbitmap, sizeof(bm), &bm);
          //if(!pdib->create(bm.bmWidth, bm.bmHeight))
-           // return false;
+         // return false;
          ::draw2d::graphics_sp g(get_app());
          g->SelectObject(bitmap);
          size sz = bitmap->GetBitmapDimension();
