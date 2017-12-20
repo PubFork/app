@@ -5362,13 +5362,7 @@ namespace draw2d_quartz2d
          for(unsigned long ui = 0; ui < c; ui++)
          {
             
-            ::draw2d::font::enum_item item;
-            
-            item.m_ecs = ::draw2d::font::cs_default;
-            item.m_strFile = p[ui];
-            item.m_strName = p[ui];
-
-            itema.add(item);
+            itema.add(canew(::draw2d::font::enum_item(p[ui], p[ui],::draw2d::font::cs_default)));
             
             free(p[ui]);
             

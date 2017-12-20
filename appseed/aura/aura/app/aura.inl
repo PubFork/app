@@ -1,4 +1,4 @@
-﻿#include "aura/aura/aura/aura.h"
+#include "aura/aura/aura/aura.h"
 
 
 #ifdef METROWIN
@@ -42,7 +42,7 @@ int main(int argc, char * argv[])
 
 #ifdef MAIN_STRING
 
-   pmaindata->m_lpCmdLine = ::str::dup(MAIN_STRING);
+   pmaindata->m_strCommandLine = MAIN_STRING;
 
 #endif
 

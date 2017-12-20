@@ -18,6 +18,7 @@ void ns_app_terminate();
 CLASS_DECL_AURA bool __node_aura_pre_init()
 {
 
+   setlocale(LC_ALL,"");
    
    return true;
 

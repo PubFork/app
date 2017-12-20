@@ -9,7 +9,7 @@
 
 extern char ** environ;
 
-stringa get_c_args(const char * psz);
+stringa get_c_args_for_c(const char * psz);
 
 string transform_to_c_arg(const char * psz);
 
@@ -22,7 +22,7 @@ int32_t create_process(const char * pszCommandLine, int32_t * pprocessId)
    
    stringa stra;
    
-   stra = get_c_args(pszCommandLine);
+   stra = get_c_args_for_c(pszCommandLine);
    
    char * argv[1024 + 1];
    

@@ -1,4 +1,4 @@
-﻿//
+//
 //  apple_main.cpp
 //  aura
 //
@@ -165,24 +165,52 @@ uint32_t __start_system_with_file(const char ** pszaFile, int iCount)
 string ca2_command_line();
 
 
-bool node_fill(app_core * pappcore)
+//bool node_fill(app_core * pappcore)
+//{
+//
+//   setlocale(LC_ALL,"");
+//
+////   string strCommandLine = merge_colon_args(
+////   {
+////      get_c_args(pappcore->m_pmaindata->m_argc, pappcore->m_pmaindata->m_argv),
+////      get_c_args(ca2_command_line()),
+////      get_c_args(pappcore->m_pmaindata->m_)
+////   });
+////
+////   set_command_line_dup(strCommandLine);
+//
+//   return true;
+//
+//}
+
+
+string apple_get_bundle_identifier();
+
+
+
+string ca2_command_line2()
 {
 
-   setlocale(LC_ALL,"");
+   string str = apple_get_bundle_identifier();
 
-   string strCommandLine = merge_colon_args(
+   if(!::str::begins_eat_ci(str, "cc.ca2."))
    {
-      get_c_args(pappcore->m_pmaindata->m_argc, pappcore->m_pmaindata->m_argv),
-      get_c_args(ca2_command_line()),
-      get_c_args(pappcore->m_pmaindata->m_lpCmdLine)
-   });
+    
+      ::str::begins_eat_ci(str, "com.ca2.");
+      
+   }
 
-   set_command_line_dup(strCommandLine);
+   str.replace(".", "/");
+   
+#ifdef APPLE_IOS
 
-   return true;
+   return "app : app=" + str + " client_only";
+   
+#else
+   
+   return "app : app=" + str;
+   
+#endif
 
 }
-
-
-
 

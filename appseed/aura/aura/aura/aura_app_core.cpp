@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include <time.h>
 
 
@@ -23,6 +23,8 @@ typedef DEFER_INIT * PFN_DEFER_INIT;
 size_t ns_get_bundle_identifier(char * psz, size_t iSize);
 
 string apple_get_bundle_identifier();
+
+string ca2_command_line2();
 
 #endif
 
@@ -205,6 +207,8 @@ bool app_core::beg()
 bool app_core::ini()
 {
 
+   
+   
    m_bAcidApp = m_pfnNewApp != NULL;
 
    string strAppId;
@@ -217,6 +221,9 @@ bool app_core::ini()
       get_c_args(m_pmaindata->m_argc, m_pmaindata->m_argv),
 #endif
       get_c_args(ca2_command_line()),
+#ifdef APPLEOS
+      get_c_args(ca2_command_line2()),
+#endif
       get_c_args(m_pmaindata->m_strCommandLine)
    });
 
@@ -857,6 +864,61 @@ stringa get_c_args(const char * psz)
 
    return stra;
 
+}
+
+stringa get_c_args_for_c(const char * psz)
+{
+   
+   stringa stra;
+   
+   if(psz == NULL)
+   {
+      
+      return stra;
+      
+   }
+   
+   const char * pszEnd = psz + strlen(psz);
+   
+   string str;
+   
+   while(psz < pszEnd)
+   {
+      
+      ::str::consume_spaces(psz, 0, pszEnd);
+      
+      if(psz >= pszEnd)
+      {
+         
+         break;
+         
+      }
+      
+      if(*psz == '\"')
+      {
+         
+         str = ::str::consume_quoted_value(psz, pszEnd);
+         
+      }
+      else if(*psz == '\'')
+      {
+         
+         str = ::str::consume_quoted_value(psz, pszEnd);
+         
+      }
+      else
+      {
+         
+         str = ::str::consume_non_spaces(psz, pszEnd);
+         
+      }
+      
+      stra.add(str);
+         
+   }
+   
+   return stra;
+   
 }
 
 

@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include "aura/net/sockets/bsd/sockets_sockets.h"
 
 
@@ -130,6 +130,8 @@ namespace aura
       }
 
       Session.m_appptra.add(papp);
+      
+      m_pappCurrent = papp;
 
       return papp;
 

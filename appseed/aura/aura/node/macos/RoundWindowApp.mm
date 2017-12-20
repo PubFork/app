@@ -10,7 +10,7 @@
 int file_put_contents_dup(const char * path, const char * contents);
 void file_add_contents_raw(const char * path, const char * psz);
 int32_t defer_run_system();
-
+uint32_t __start_system_with_file(const char * pszFileName);
 int32_t defer_run_system(const char * pszFileName);
 
 int32_t defer_run_system(char * * psza, int c);
@@ -60,6 +60,8 @@ NSAppleEventManager *appleEventManager = [NSAppleEventManager sharedAppleEventMa
    //MessageBox(NULL, "applicationOpenUntitledFile", "applicationOpenUntitledFile", MB_OK);
    
    defer_run_system();
+   
+   //__start_system_with_file(NULL);
    
    return YES;
    

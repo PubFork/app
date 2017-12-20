@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 #ifdef OS64BIT
 
@@ -2349,7 +2349,7 @@ bool thread::post_message(UINT message,WPARAM wParam,lparam lParam)
 
    }
 
-   BOOL bOk = ::PostThreadMessage(m_uiThread,message,wParam,lParam) != FALSE;
+   WINBOOL bOk = ::PostThreadMessage(m_uiThread,message,wParam,lParam) != FALSE;
 
    return bOk;
 
