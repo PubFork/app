@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 #ifdef __cplusplus
@@ -94,6 +94,17 @@ END_EXTERN_C
 #ifdef __cplusplus
 
 #include "os_windowing.h"
+
+class runnable
+{
+   
+public:
+   
+   virtual void run() = 0;
+   
+};
+
+void run_runnable_on_main_thread(runnable * prunnable);
 
 #endif
 

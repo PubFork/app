@@ -85,46 +85,62 @@ bool ns_open_file(const char * psz)
 }
 
 
-void ns_launch_app(const char * psz)
+void ns_launch_app_at_url(NSURL * url, const char ** argv)
 {
    
-   NSString * path = [[NSString alloc] initWithUTF8String:psz];
-   NSDictionary* errorDict;
-   NSAppleEventDescriptor* returnDescriptor = NULL;
+   NSWorkspace * workspace = [NSWorkspace sharedWorkspace];
+   
+   NSMutableDictionary * dict = nil;
+   
+   if(argv != NULL)
+   {
+   
+      NSMutableArray * array = [[NSMutableArray alloc] init];
+   
+      while(*argv != NULL)
+      {
+      
+         [array addObject: [[NSString alloc] initWithUTF8String: *argv]];
+         
+         argv++;
+         
+      }
 
-   NSString * source = [NSString stringWithFormat:@"%@%@%@",
-                        @"try\nrun application \"",
-                        path,
-                        @"\"\non error number -609 # 'Connection is invalid' error that is spuriously reported # simply ignore\n               end try"];
-   
-   NSAppleScript* scriptObject;
-   scriptObject = [[NSAppleScript alloc] initWithSource: source];
-   
-   [scriptObject compileAndReturnError:nil];
-   returnDescriptor = [scriptObject executeAndReturnError:&errorDict];
-                   if (returnDescriptor != NULL) {
-                      // successful execution
-                      if (kAENullEvent != [returnDescriptor descriptorType]) {
-                         // script returned an AppleScript result
-                         if (cAEList == [returnDescriptor descriptorType]) {
-                            // result is a list of other descriptors
-                         }
-                         else {
-                            // coerce the result to the appropriate ObjC type
-                         }
-                      }
-                   }
-   
+      dict = [[NSMutableDictionary alloc] init];
 
-//   NSURL* url = [NSURL fileURLWithPath:path isDirectory:NO];
-//
-//   [[NSWorkspace sharedWorkspace] launchApplicationAtURL:url
-//                   options:NSWorkspaceLaunchWithoutActivation
-//             configuration:nil
-//                     error:nil];
+      [dict setObject:array forKey:NSWorkspaceLaunchConfigurationArguments];
+      
+   }
+   
+   //NSWorkspaceLaunchWithoutActivation
+   
+   [[workspace dd_invokeOnMainThread] launchApplicationAtURL:url options:NSWorkspaceLaunchDefault configuration:dict error:nil];
 
 }
 
+
+void ns_launch_app(const char * psz, const char ** argv)
+{
+   
+   NSString * path = [[NSString alloc] initWithUTF8String:psz];
+   
+   NSURL * url = [NSURL fileURLWithPath:path isDirectory:NO];
+   
+   ns_launch_app_at_url(url, argv);
+   
+}
+
+
+void ns_launch_bundle(const char * pszBundle, const char ** argv)
+{
+
+   NSString * bundle = [[NSString alloc] initWithUTF8String:pszBundle];
+   
+   NSURL * url = [[NSWorkspace sharedWorkspace] URLForApplicationWithBundleIdentifier:bundle];
+
+   ns_launch_app_at_url(url, argv);
+                        
+}
 
 
 

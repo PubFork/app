@@ -27,8 +27,6 @@ int create_process2(const char * _cmd_line, int * pprocessId);
 int32_t create_process(const char * pszCommandLine, int32_t * pprocessId)
 {
    
-   //return create_process2(pszCommandLine, pprocessId);
-   
    stringa stra;
    
    stra = get_c_args_for_c(pszCommandLine);
@@ -39,10 +37,6 @@ int32_t create_process(const char * pszCommandLine, int32_t * pprocessId)
    
    for(auto & str : stra)
    {
-      
-      //str = transform_to_c_arg(str);
-      
-      //str.replace("\"", "\\\"");
       
       argv[argc] = (char *) str.c_str();
       
@@ -55,6 +49,10 @@ int32_t create_process(const char * pszCommandLine, int32_t * pprocessId)
    pid_t pid = 0;
    
    int status = posix_spawn(&pid, argv[0], NULL, NULL, argv, environ);
+   
+   int iError = errno;
+   
+   char * pszError = strerror(iError);
    
    if (status == 0)
    {
@@ -146,20 +144,27 @@ CLASS_DECL_AURA int call_async(
    
    string strCmdLine;
     
-    strCmdLine = pszPath;
-    if(strlen_dup(pszParam) > 0)
-    {
-        strCmdLine +=  " ";
-        strCmdLine += pszParam;
-    }
+   strCmdLine = pszPath;
+   
+   if(strlen_dup(pszParam) > 0)
+   {
+   
+      strCmdLine +=  " ";
+      
+      strCmdLine += pszParam;
+   
+   }
     
-    int processId;
+   int processId;
    
    chdir(pszDir);
     
-    if(!create_process(strCmdLine, &processId))
-        return -1;
-   
+   if(!create_process(strCmdLine, &processId))
+   {
+      
+      return -1;
+      
+   }
    
    if(puiPid != NULL)
    {
@@ -168,10 +173,10 @@ CLASS_DECL_AURA int call_async(
       
    }
    
-    
-    return 0;
+   return 0;
     
 }
+
 
 CLASS_DECL_AURA DWORD call_sync(
                              const char * pszPath, 

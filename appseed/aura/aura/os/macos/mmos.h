@@ -28,5 +28,10 @@
 - (void)monitorIconForFile;
 
 - (void)deferIconForFile:(NSTimer *)timer;
+
+-(void)runRunnableOnMainThread:(runnable *)prunnable;
+
+-(void)runRunnable:(runnable *)prunnable;
+
 @end
 

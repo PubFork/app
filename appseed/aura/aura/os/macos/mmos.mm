@@ -4,6 +4,16 @@
 void macos_desktop_image_changed();
 bool mm2_get_file_image(unsigned int * pcr, int cx, int cy, int iScan, const char * psz);
 
+
+
+
+void run_runnable_on_main_thread(runnable * prunnable)
+{
+   
+   [[mmos get] runRunnableOnMainThread: prunnable];
+   
+}
+
 @implementation mmos
 
 + (id)get
@@ -125,6 +135,22 @@ bool mm2_get_file_image(unsigned int * pcr, int cx, int cy, int iScan, const cha
    [myRunLoop addTimer:t forMode:NSDefaultRunLoopMode];
    
 }
+
+-(void)runRunnableOnMainThread:(runnable *)prunnable
+{
+   
+   [[self dd_invokeOnMainThread] runRunnable: prunnable];
+   
+}
+
+-(void)runRunnable:(runnable *)prunnable
+{
+   
+   prunnable->run();
+   
+}
+
+
 -(void)deferWallpaper:(NSTimer *)timer
 {
    

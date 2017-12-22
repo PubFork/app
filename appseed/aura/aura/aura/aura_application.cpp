@@ -17,6 +17,42 @@ extern "C"
 
 }
 
+template < typename PRED >
+class runnable_pred :
+virtual public runnable
+{
+public:
+   
+   PRED m_pred;
+   
+   runnable_pred(PRED pred) :
+   m_pred(pred)
+   {
+      
+   }
+   
+   virtual void run()
+   {
+      m_pred();
+      
+      delete this;
+      
+   }
+ 
+
+};
+
+template < typename PRED >
+void run_pred_on_main_thread(PRED pred)
+{
+ 
+   runnable_pred < PRED > * prunnablepred = new runnable_pred < PRED >(pred);
+
+   run_runnable_on_main_thread(prunnablepred);
+
+}
+   
+
 
 #ifdef WINDOWSEX
 
@@ -33,6 +69,7 @@ CLASS_DECL_IMPORT void draw2d_factory_exchange(::aura::application * papp);
 #ifdef MACOS
 ::file::path macos_app_path(string strApp);
 void ns_app_terminate();
+void ns_launch_app(const char * psz, const char ** argv);
 #endif
 
 #if defined(LINUX)
@@ -1310,29 +1347,63 @@ namespace aura
 
 #else
 
-
-
-
-         ::file::path shell;
-
-         shell = "/bin/bash";
-
 #ifdef MACOS
-
-         path = System.url().url_decode(path);
-
-         strParam += "--user-data-dir=\"" + pathProfile + "\"";
          
-         path.trim("\"");
+//         string strApp = System.url().url_decode(path);
+//
+//         strApp.trim("\"");
+//
+//         path = strApp;
+//
+//         path /= "Contents/MacOS/Google Chrome";
+//
+//         strApp = "\"";
+//
+//         strApp += path;
+//
+//         strApp += "\"";
+//
+//         strParam += " --user-data-dir=\"" + pathProfile + "\"";
+//
+//         output_debug_string(strParam);
+//
+//         pathDir = ::dir::home();
+//
+//         run_pred_on_main_thread([=]()
+//         {
+//
+//            call_async(strApp, strParam, pathDir, SW_SHOWDEFAULT, false);
+//
+//         });
+         
+         
+         ::file::path shell;
+         
+         shell = "/bin/bash";
+         
+         strParam += " --user-data-dir=\"" + pathProfile + "\"";
 
-         string strCmd = "open -n -a \"" + path + "\" --args " + strParam;
-
-         //strCmd.replace("\"", "\\\"");
-
+         string strApp = System.url().url_decode(path);
+         
+         strApp.trim("\"");
+         
+         string strCmd = "open -na \"" + strApp + "\" --args " + strParam;
+         
          strParam = " -c '" + strCmd + "'";
+         
+         run_pred_on_main_thread([=]()
+         {
+         
+            call_async(shell, strParam, pathDir, SW_SHOWDEFAULT, false);
+         
+         });
 
 #else
 
+         ::file::path shell;
+         
+         shell = "/bin/bash";
+         
          strParam += "--user-data-dir=\"" + pathProfile + "\"";
 
          string strCmd = path + " " + strParam;
@@ -1341,18 +1412,13 @@ namespace aura
 
          strParam = " -c \"" + strCmd + "\"";
 
-
-#endif
-
-         //MessageBox(NULL, strParam, path, MB_OK);
-
          output_debug_string(strParam);
-
+            
          call_async(shell, strParam, pathDir, SW_SHOWDEFAULT, false);
 
 #endif
 
-
+#endif
 
       }
       catch (...)
@@ -1366,138 +1432,178 @@ namespace aura
    }
 
 
-   void application::commander(string strUrl, string strWeather, string strUser, ::file::path path, string strParam)
-   {
-
-#ifdef METROWIN
-
-      ui_open_url(strUrl);
-
-#else
-
-      ::file::path pathDir;
-
-      pathDir = path.folder();
-
-      if (strUrl.has_char())
-      {
-
-         strsize iFind = strParam.find("%1");
-
-         if (iFind >= 0)
-         {
-
-            strParam = strParam.Left(iFind) + strUrl + strParam.Mid(iFind + 2) + " ";
-
-         }
-         else
-         {
-
-            strParam = "\"" + strUrl + "\" ";
-
-         }
-
-      }
-      else
-      {
-         strParam.trim_left();
-
-         strsize iFind = strParam.find("%1");
-
-         if (iFind == 0 || iFind == 1)
-         {
-
-            if (strParam.get_length() <= 4)
-            {
-
-               strParam = "";
-
-            }
-            else
-            {
-
-               if (iFind == 0)
-               {
-
-                  strParam = strParam.Mid(2);
-
-               }
-               else
-               {
-
-                  strParam = strParam.Mid(4);
-
-               }
-
-            }
-         }
-         else if (iFind >= 2)
-         {
-
-            if (strParam[iFind - 1] == '\"' && strParam[iFind + 2] == '\"')
-            {
-
-               strParam = strParam.Left(iFind - 1) + strParam.Mid(iFind + 3);
-
-            }
-            else if (strParam[iFind - 1] == '\"' && strParam[iFind + 2] == '\"')
-            {
-
-               strParam = strParam.Left(iFind - 1) + strParam.Mid(iFind + 3);
-
-            }
-            else
-            {
-
-               strParam = strParam.Left(iFind) + strParam.Mid(iFind + 2);
-
-            }
-
-         }
-
-      }
-
-      string strExtraParam = " : " + strWeather + "=" + strUser;
-
-
-#ifdef WINDOWS
-
-      call_async(path, strParam, pathDir, SW_SHOWDEFAULT, false);
-
-#else
-
-      ::file::path shell;
-
-      shell = "/bin/bash";
-      
-#ifdef MACOS
-      
-      string strCmd = "open -a \"" + path + "\" --args " + strParam + strExtraParam;
-
-      strParam = " -c '" + strCmd + "'";
-      
-      pathDir = dir::home();
-      
-#else
-
-      string strCmd = path + " " + strParam + strExtraParam;
-
-      strCmd.replace("\"", "\\\"");
-
-      strParam = " -c \"" + strCmd + "\"";
-      
-      output_debug_string(strParam);
-      
-      call_async(shell, strParam, pathDir, SW_SHOWDEFAULT, false);
-
-#endif
-
-      
-#endif
-
-#endif
-
-   }
+//   void application::commander(string strUrl, string strWeather, string strUser, ::file::path path, string strParam)
+//   {
+//
+//#ifdef METROWIN
+//
+//      ui_open_url(strUrl);
+//
+//#else
+//
+//      ::file::path pathDir;
+//
+//      pathDir = path.folder();
+//
+//      if (strUrl.has_char())
+//      {
+//
+//         strsize iFind = strParam.find("%1");
+//
+//         if (iFind >= 0)
+//         {
+//
+//            strParam = strParam.Left(iFind) + strUrl + strParam.Mid(iFind + 2) + " ";
+//
+//         }
+//         else
+//         {
+//
+//            strParam = "\"" + strUrl + "\" ";
+//
+//         }
+//
+//      }
+//      else
+//      {
+//         strParam.trim_left();
+//
+//         strsize iFind = strParam.find("%1");
+//
+//         if (iFind == 0 || iFind == 1)
+//         {
+//
+//            if (strParam.get_length() <= 4)
+//            {
+//
+//               strParam = "";
+//
+//            }
+//            else
+//            {
+//
+//               if (iFind == 0)
+//               {
+//
+//                  strParam = strParam.Mid(2);
+//
+//               }
+//               else
+//               {
+//
+//                  strParam = strParam.Mid(4);
+//
+//               }
+//
+//            }
+//         }
+//         else if (iFind >= 2)
+//         {
+//
+//            if (strParam[iFind - 1] == '\"' && strParam[iFind + 2] == '\"')
+//            {
+//
+//               strParam = strParam.Left(iFind - 1) + strParam.Mid(iFind + 3);
+//
+//            }
+//            else if (strParam[iFind - 1] == '\"' && strParam[iFind + 2] == '\"')
+//            {
+//
+//               strParam = strParam.Left(iFind - 1) + strParam.Mid(iFind + 3);
+//
+//            }
+//            else
+//            {
+//
+//               strParam = strParam.Left(iFind) + strParam.Mid(iFind + 2);
+//
+//            }
+//
+//         }
+//
+//      }
+//
+//      string strExtraParam = " : " + strWeather + "=" + strUser;
+//
+//
+//#ifdef WINDOWS
+//
+//      call_async(path, strParam, pathDir, SW_SHOWDEFAULT, false);
+//
+//#else
+//
+//      ::file::path shell;
+//
+//      shell = "/bin/bash";
+//
+//#ifdef MACOS
+//
+///*
+//
+//      path = System.url().url_decode(path);
+//
+//      path.trim("\"");
+//
+//      pathDir = dir::home();
+//
+//      run_pred_on_main_thread([=]()
+//      {
+//
+//         string strCmd = "open -a \"" + path + "\" --args " + strParam + strExtraParam;
+//
+//         string strBashParam = "-c '" + strCmd + "'";
+//
+//         ::file::path pathDir = dir::home();
+//
+//         output_debug_string(strBashParam);
+//
+//         call_async(shell, strBashParam, pathDir, SW_SHOWDEFAULT, false);
+//
+//      });
+//
+// */
+//
+//      path = System.url().url_decode(path);
+//
+//      path.trim("\"");
+//
+//      pathDir = dir::home();
+//
+//      shell = "\"" + path + "/Contents/MacOS/commander\"";
+//
+//      run_pred_on_main_thread([=]()
+//      {
+//
+//         string strCmd = strParam + strExtraParam;
+//
+//         ::file::path pathDir = dir::home();
+//
+//         output_debug_string(strCmd);
+//
+//         call_async(shell, strCmd, pathDir, SW_SHOWDEFAULT, false);
+//
+//      });
+//
+//#else
+//
+//      string strCmd = path + " " + strParam + strExtraParam;
+//
+//      strCmd.replace("\"", "\\\"");
+//
+//      strParam = " -c \"" + strCmd + "\"";
+//
+//      output_debug_string(strParam);
+//
+//      call_async(shell, strParam, pathDir, SW_SHOWDEFAULT, false);
+//
+//#endif
+//
+//
+//#endif
+//
+//#endif
+//
+//   }
 
 
    void application::defer_create_firefox_profile(::file::path pathFirefox, string strProfileName, ::file::path pathProfile)
@@ -1789,16 +1895,16 @@ namespace aura
       else if (strId == "commander")
       {
 
-         if (m_strAppName == "app-core/commander")
+         //if (m_strAppName == "app-core/commander")
          {
 
             chromium(strUrl, strBrowser, strId, System.os().get_app_path("chrome"), strProfile, strParam);
 
          }
-         else
+         //else
          {
 
-            commander(strUrl, strWeather, strUser, path, strParam);
+            //commander(strUrl, strWeather, strUser, path, strParam);
 
          }
 

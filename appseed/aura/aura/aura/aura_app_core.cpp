@@ -907,8 +907,37 @@ stringa get_c_args_for_c(const char * psz)
       else
       {
          
-         str = ::str::consume_non_spaces(psz, pszEnd);
+         const char * pszValueStart = psz;
          
+         while(!::str::ch::is_whitespace(psz))
+         {
+            
+            psz = str::utf8_inc(psz);
+            
+            if(psz >= pszEnd)
+            {
+               
+               break;
+               
+            }
+            
+            if(*psz == '\"')
+            {
+               
+               ::str::consume_quoted_value_ex(psz, pszEnd);
+               
+            }
+            else if(*psz == '\'')
+            {
+               
+               ::str::consume_quoted_value_ex(psz, pszEnd);
+               
+            }
+
+         }
+         
+         str = string(pszValueStart, psz - pszValueStart);
+
       }
       
       stra.add(str);

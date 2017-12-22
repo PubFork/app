@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 namespace aura
@@ -237,7 +237,7 @@ namespace aura
 
       void chromium(string strUrl, string strBrowser, string strId, ::file::path path, string strProfile, string strParam);
 
-      void commander(string strUrl, string strWeather, string strUser, ::file::path path, string strParam);
+//      void commander(string strUrl, string strWeather, string strUser, ::file::path path, string strParam);
 
       void defer_create_firefox_profile(::file::path pathFirefox, string strProfileName, ::file::path pathProfile);
 
