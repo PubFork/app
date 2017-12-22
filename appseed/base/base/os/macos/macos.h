@@ -9,4 +9,4 @@
 
 //#include "base/graphics/graphics_window_graphics.h"
 
-bool macos_set_user_wallpaper(const char * psz);
+// bool macos_set_user_wallpaper(const char * psz);

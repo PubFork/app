@@ -5,9 +5,8 @@
 //  Created by Camilo Sasuke Tsumanuma on 20/12/17.
 //  Copyright © 2017 ca2 Desenvolvimento de Sofware Ltda. All rights reserved.
 //
-
-#ifndef macos_h
-#define macos_h
+#pragma once
 
 
-#endif /* macos_h */
+#include "macos_user.h"
+

@@ -1,13 +1,13 @@
 #pragma once
 
-template < typename PAIR >
+template < typename PAIR, const int DEFAULT_HASH_TABLE_SIZE = 17 >
 class map_dynamic_hash_table
 {
    public:
 
       typedef map_association < PAIR >  assoc;
 
-      assoc *           m_assocHash17[17];
+      assoc *           m_assocHashDefault[DEFAULT_HASH_TABLE_SIZE];
       assoc **          m_ppassocHash;
       UINT              m_nHashTableSize;
 
@@ -15,33 +15,39 @@ class map_dynamic_hash_table
       {
 
          m_ppassocHash = NULL;
-         m_nHashTableSize = 17;
+         
+         m_nHashTableSize = DEFAULT_HASH_TABLE_SIZE;
 
       }
+   
 
       UINT GetHashTableSize() const
       {
+         
          return m_nHashTableSize;
+         
       }
 
 
-      void InitHashTable(UINT nHashSize,bool bAllocNow = TRUE)
+      void InitHashTable(UINT nHashSize, bool bAllocNow = TRUE)
       {
 
-         if(m_ppassocHash != NULL && m_ppassocHash != m_assocHash17)
+         if(m_ppassocHash != NULL && m_ppassocHash != m_assocHashDefault && m_nHashTableSize > DEFAULT_HASH_TABLE_SIZE)
          {
-            // free hash table
+
             delete[] m_ppassocHash;
-            m_ppassocHash = NULL;
+            
          }
+
+         m_ppassocHash = NULL;
 
          if(bAllocNow)
          {
 
-            if (nHashSize == 17)
+            if (nHashSize <= DEFAULT_HASH_TABLE_SIZE)
             {
 
-               m_ppassocHash = m_assocHash17;
+               m_ppassocHash = m_assocHashDefault;
 
             }
             else
@@ -53,7 +59,7 @@ class map_dynamic_hash_table
 
             }
 
-            memset(m_ppassocHash,0,sizeof(assoc*) * nHashSize);
+            ::zero(m_ppassocHash, sizeof(assoc*) * nHashSize);
 
          }
 
@@ -63,10 +69,10 @@ class map_dynamic_hash_table
 
       void remove_all()
       {
-         if(m_ppassocHash != NULL && m_ppassocHash != m_assocHash17)
+         
+         if(m_ppassocHash != NULL && m_ppassocHash != m_assocHashDefault && m_nHashTableSize > DEFAULT_HASH_TABLE_SIZE)
          {
 
-            // free hash table
             delete[] m_ppassocHash;
 
          }

@@ -185,9 +185,7 @@ int_array app_get_pid(const char * psz)
    
    ::file::path path1;
    
-   path1 = getenv("HOME");
-   
-   path1 = path1 / ".ca2" / "mypath" / psz + ".txt";
+   path1 = ::dir::home() / "Library/ca2/mypath" / psz + ".txt";
    
    if(file_exists_dup(path1))
    {

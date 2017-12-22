@@ -297,7 +297,27 @@ DWORD fixKeyCode(DWORD keyCode, unichar keyChar, enum APPLE_KEYBOARD_TYPE type)
 	return resizeRect;
    
 }
+- (NSPoint) screenLocationEx: (NSEvent *) event
+{
+   
+   NSPoint point = [event locationInWindow];
+   
+   if([event window] != nil)
+   {
+      
+      CGRect rectWindow = [[event window] frame];
+      
+      point.x += rectWindow.origin.x;
+      
+      point.y += rectWindow.origin.y;
+      
+   }
+   
+   point.y = (int) [[NSScreen mainScreen] frame].size.height - point.y;
 
+   return point;
+   
+}
 
 - (void) mouseUp: (NSEvent *) event
 {
@@ -307,19 +327,11 @@ DWORD fixKeyCode(DWORD keyCode, unichar keyChar, enum APPLE_KEYBOARD_TYPE type)
    if(p == NULL)
       return;
     
-   NSRect e = [m_roundwindow frame];
-   
-   NSPoint point = [event locationInWindow];
-   
-   point.x = point.x + e.origin.x;
-
-   point.y = point.y + e.origin.y;
-   
-   int H = (int) [[NSScreen mainScreen] frame].size.height;
+   NSPoint point = [self screenLocationEx: event];
    
    int x = point.x;
    
-   int y = H - point.y;
+   int y = point.y;
    
    // Left Button
    
@@ -347,20 +359,11 @@ DWORD fixKeyCode(DWORD keyCode, unichar keyChar, enum APPLE_KEYBOARD_TYPE type)
    if(p == NULL)
       return;
    
-   NSRect e = [m_roundwindow frame];
-    
-   NSPoint point = [event locationInWindow];
-    
-   point.x = point.x + e.origin.x;
-   
-   point.y = point.y + e.origin.y;
-   
-   int H = (int) [[NSScreen mainScreen] frame].size.height;
+   NSPoint point = [self screenLocationEx: event];
    
    int x = point.x;
    
-   int y = H - point.y;
-   
+   int y = point.y;
    
    p->round_window_mouse_moved(x, y, [NSEvent pressedMouseButtons]);
    
@@ -377,20 +380,12 @@ DWORD fixKeyCode(DWORD keyCode, unichar keyChar, enum APPLE_KEYBOARD_TYPE type)
    if(p == NULL)
       return;
    
-   NSRect e = [m_roundwindow frame];
-    
-   NSPoint point = [event locationInWindow];
-    
-   point.x = point.x + e.origin.x;
-   
-   point.y = point.y + e.origin.y;
-   
-   int H = (int) [[NSScreen mainScreen] frame].size.height;
+   NSPoint point = [self screenLocationEx: event];
    
    int x = point.x;
    
-   int y = H - point.y;
-   
+   int y = point.y;
+
    p->round_window_mouse_dragged(x, y, [NSEvent pressedMouseButtons]);
    
 }
@@ -416,20 +411,12 @@ DWORD fixKeyCode(DWORD keyCode, unichar keyChar, enum APPLE_KEYBOARD_TYPE type)
    if(p == NULL)
       return;
    
-   NSRect e = [m_roundwindow frame];
-    
-   NSPoint point = [event locationInWindow];
-    
-   point.x = point.x + e.origin.x;
-   
-   point.y = point.y + e.origin.y;
-   
-   int H = (int) [[NSScreen mainScreen] frame].size.height;
+   NSPoint point = [self screenLocationEx: event];
    
    int x = point.x;
    
-   int y = H - point.y;
-   
+   int y = point.y;
+
    // Left Button
    
    int iButton = 0;
@@ -447,20 +434,12 @@ DWORD fixKeyCode(DWORD keyCode, unichar keyChar, enum APPLE_KEYBOARD_TYPE type)
    if(p == NULL)
       return;
    
-   NSRect e = [m_roundwindow frame];
-   
-   NSPoint point = [event locationInWindow];
-   
-   point.x = point.x + e.origin.x;
-   
-   point.y = point.y + e.origin.y;
-   
-   int H = (int) [[NSScreen mainScreen] frame].size.height;
+   NSPoint point = [self screenLocationEx: event];
    
    int x = point.x;
    
-   int y = H - point.y;
-   
+   int y = point.y;
+
    // Right Button
    
    int iButton = 1;
@@ -478,20 +457,12 @@ DWORD fixKeyCode(DWORD keyCode, unichar keyChar, enum APPLE_KEYBOARD_TYPE type)
    if(p == NULL)
       return;
    
-   NSRect e = [m_roundwindow frame];
-   
-   NSPoint point = [event locationInWindow];
-   
-   point.x = point.x + e.origin.x;
-   
-   point.y = point.y + e.origin.y;
-   
-   int H = (int) [[NSScreen mainScreen] frame].size.height;
+   NSPoint point = [self screenLocationEx: event];
    
    int x = point.x;
    
-   int y = H - point.y;
-  
+   int y = point.y;
+
    // Right Button
    
    int iButton = 1;

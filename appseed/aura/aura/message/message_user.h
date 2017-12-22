@@ -365,7 +365,7 @@ namespace message
          POINTL         pt; // [in] DragEnter, DragOver, Drop
          DWORD          grfKeyState; // [in] DragEnter, DragOver, Drop
          DWORD          dwEffect; // [in][out] DragEnter, DragOver, Drop
-
+      
 #endif
 
    };

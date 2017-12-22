@@ -67,6 +67,24 @@ namespace macos
    {
 
    }
+   
+   void interaction_impl::round_window_add_ref()
+   {
+    
+      add_ref();
+      
+      m_pui->add_ref();
+      
+   }
+
+   void interaction_impl::round_window_dec_ref()
+   {
+      
+      m_pui->dec_ref();
+      
+      dec_ref();
+      
+   }
 
 
    CLASS_DECL_AURA void hook_window_create(::user::interaction * pWnd);

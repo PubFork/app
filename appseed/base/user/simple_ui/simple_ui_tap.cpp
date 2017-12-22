@@ -426,7 +426,17 @@ namespace simple_ui
 
 #else
 
-      crText = ARGB(223, 49, 84, 23);
+      if (timeNow.GetHour() >= 6 && timeNow.GetHour() <= 17)
+      {
+         
+         crText = ARGB(223, 49, 84, 23);
+         
+      }
+      else
+      {
+         
+         crText = ARGB(223, 49, 84, 23);
+      }
 
 #endif
 

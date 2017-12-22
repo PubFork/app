@@ -615,3 +615,20 @@ public:
 
 
 };
+
+template < class TYPE, class ARG_TYPE, class ALLOCATOR = allocator::nodef < TYPE > >
+inline const TYPE& operator%(index nIndex, const array_base < TYPE, ARG_TYPE, ALLOCATOR > & a)
+{
+   
+   return a[nIndex % a.get_size()];
+   
+}
+template < class TYPE, class ARG_TYPE, class ALLOCATOR = allocator::nodef < TYPE > >
+inline TYPE& operator%(index nIndex, array_base < TYPE, ARG_TYPE, ALLOCATOR > & a)
+{
+   
+   return a[nIndex % a.get_size()];
+   
+}
+
+

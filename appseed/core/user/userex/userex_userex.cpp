@@ -1,12 +1,12 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include "base/database/simpledb/simpledb.h"
 
 
 CLASS_DECL_AURA mutex * get_cred_mutex();
 
+
 namespace userex
 {
-
 
 
    userex::userex(::aura::application * papp):
@@ -1131,6 +1131,335 @@ retry_license:
       return m_typeDefaultListData;
 
    }
+   
+   
+   string userex::get_wallpaper(index iScreen)
+   {
+      
+      return impl_get_wallpaper(iScreen);
+      
+   }
+   
+   
+   bool userex::set_wallpaper(index iScreen, string strWallpaper)
+   {
+      
+      return impl_set_wallpaper(iScreen, strWallpaper);
+      
+   }
+   
+   
+   stringa userex::get_wallpaper()
+   {
+      
+      ::count iMonitorCount = System.get_monitor_count();
+      
+      stringa stra;
+      
+      for(index iScreen = 0; iScreen < iMonitorCount; iScreen++)
+      {
+         
+         stra.add(get_wallpaper(iScreen));
+         
+      }
+      
+      bool bAllEqual = true;
+      
+      for(index iScreen = 1; iScreen < iMonitorCount; iScreen++)
+      {
+         
+         if(stra[iScreen] != stra[iScreen - 1])
+         {
+            
+            bAllEqual = false;
+            
+         }
+         
+      }
+      
+      if(bAllEqual && stra.get_count() >= 2)
+      {
+         
+         stra.set_size(1);
+         
+      }
+      
+      return stra;
+      
+   }
+   
+   
+   void userex::set_wallpaper(const stringa & straWallpaper)
+   {
+      
+      if(straWallpaper.is_empty())
+      {
+         
+         return;
+         
+      }
+      
+      ::count iMonitorCount = System.get_monitor_count();
+      
+      for(index iScreen = 0; iScreen < iMonitorCount; iScreen++)
+      {
+         
+         string strWallpaper = iScreen % straWallpaper;
+         
+         fork([=]()
+              {
+                 
+                 int iTry = 3;
+                 
+                 while(iTry > 0)
+                 {
+                 
+                    set_wallpaper(iScreen, strWallpaper);
+                 
+                    Sleep(300);
+                 
+                    string strCompare = get_wallpaper(iScreen);
+                 
+                    if(strCompare == strWallpaper)
+                    {
+                  
+                       break;
+                    
+                    }
+                    
+                    iTry--;
+                    
+                 }
+                 
+                 
+              });
+         
+      }
+      
+   }
+   
+   
+#ifdef WINDOWSEX
+   
+   bool userex::impl_set_wallpaper(index iScreen, string strLocalImagePath)
+   {
+      
+      return SystemParametersInfoW(SPI_SETDESKWALLPAPER, 0, wstring(strLocalImagePath), SPIF_UPDATEINIFILE | SPIF_SENDCHANGE) != FALSE;
+      
+   }
+   
+   
+   string userex::impl_get_wallpaper(index iScreen)
+   {
+      
+      wchar_t sz[MAX_PATH * 8];
+      
+      if(!SystemParametersInfoW(SPI_GETDESKWALLPAPER, MAX_PATH * 8, sz, 0))
+      {
+         
+         return "";
+         
+      }
+      
+      return stringa(sz);
+      
+   }
+   
+   
+#elif defined(LINUX)
+   
+   bool userex::impl_set_wallpaper(index iScreen, string strLocalImagePath)
+   {
+      
+      // wall-changer sourceforge.net contribution
+      
+      switch(get_edesktop())
+      {
+            
+         case desktop_gnome:
+         case desktop_unity_gnome:
+            
+            return gsettings_set("org.gnome.desktop.background", "picture-uri", "file://" + strLocalImagePath);
+            
+         case desktop_mate:
+            
+            return gsettings_set("org.mate.background", "picture-filename", strLocalImagePath);
+            
+         case desktop_lxde:
+            
+            call_async("pcmanfm", "-w " + strLocalImagePath, NULL, SW_HIDE, false);
+            
+            break;
+            
+         case desktop_xfce:
+         {
+            //        Q_FOREACH(QString entry, Global::getOutputOfCommand("xfconf-query", QStringList() << "-c" << "xfce4-desktop" << "-p" << "/backdrop" << "-l").split("\n")){
+            //          if(entry.contains("image-path") || entry.contains("last-image")){
+            //            QProcess::startDetached("xfconf-query", QStringList() << "-c" << "xfce4-desktop" << "-p" << entry << "-s" << image);
+            //      }
+            //}
+            
+         }
+            
+            //break;
+            
+         default:
+            
+            output_debug_string("Failed to change wallpaper. If your Desktop Environment is not listed at \"Preferences->Integration-> Current Desktop Environment\", then it is not supported.");
+            return false;
+            
+      }
+      
+      return true;
+      
+   }
+   
+   
+   string userex::impl_get_wallpaper(index iScreen)
+   {
+      
+      char sz[MAX_PATH * 8];
+      
+      ZERO(sz);
+      
+      // wall-changer sourceforge.net contribution
+      
+      switch(get_edesktop())
+      {
+            
+         case desktop_gnome:
+         case desktop_unity_gnome:
+            
+            gsettings_get(sz, sizeof(sz), "org.gnome.desktop.background", "picture-uri");
+            
+            break;
+            
+         case desktop_mate:
+            
+            gsettings_get(sz, sizeof(sz), "org.mate.background", "picture-filename");
+            
+            break;
+            
+         case desktop_lxde:
+            
+            //call_async("pcmanfm", "-w " + strLocalImagePath, NULL, SW_HIDE, false);
+            
+            break;
+            
+         case desktop_xfce:
+         {
+            //        Q_FOREACH(QString entry, Global::getOutputOfCommand("xfconf-query", QStringList() << "-c" << "xfce4-desktop" << "-p" << "/backdrop" << "-l").split("\n")){
+            //          if(entry.contains("image-path") || entry.contains("last-image")){
+            //            QProcess::startDetached("xfconf-query", QStringList() << "-c" << "xfce4-desktop" << "-p" << entry << "-s" << image);
+            //      }
+            //}
+            
+         }
+            
+            //break;
+            
+         default:
+            
+            output_debug_string("Failed to get wallpaper setting. If your Desktop Environment is not listed at \"Preferences->Integration-> Current Desktop Environment\", then it is not supported.");
+            //return "";
+            
+      }
+      
+      string str(sz);
+      
+      ::str::begins_eat_ci(str, "file://");
+      
+      return str;
+      
+   }
+   
+   
+#elif defined(APPLE_IOS)
+   
+   bool userex::impl_set_wallpaper(index iScreen, string strLocalImagePath)
+   {
+      
+      // Someday we will be together...
+      // What do you mean...
+      // Cold Water...
+      
+      return false;
+      
+   }
+   
+   string userex::impl_get_wallpaper(index iScreen)
+   {
+      
+      return stringa();
+      
+   }
+   
+#elif defined(ANDROID)
+   
+   bool userex::impl_set_wallpaper(index iScreen, string strLocalImagePath)
+   {
+      
+      return ::aura::system::g_p->android_set_user_wallpaper(strLocalImagePath);
+      
+   }
+   
+   string userex::impl_get_wallpaper(index iScreen)
+   {
+      
+      stringa stra;
+      
+      string strLocalImagePath;
+      
+      if( ::aura::system::g_p->android_get_user_wallpaper(strLocalImagePath) && strLocalImagePath.has_char())
+      {
+         
+         stra.add(strLocalImagePath);
+         
+      }
+      
+      return stra;
+      
+   }
+   
+   
+#elif defined(METROWIN)
+   
+   bool userex::impl_set_wallpaper(index iScreen, string strLocalImagePath)
+   {
+      
+      // Someday we will be together...
+      // What do you mean...
+      // Cold Water...
+      
+      return false;
+      
+   }
+   
+   string userex::impl_get_wallpaper(index iScreen)
+   {
+      
+      return stringa();
+      
+   }
+   
+#else
+   
+   bool userex::impl_set_wallpaper(index iScreen, string strLocalImagePath)
+   {
+      
+      return macos_set_user_wallpaper((int) iScreen, strLocalImagePath);
+      
+   }
+   
+   string userex::impl_get_wallpaper(index iScreen)
+   {
+      
+      return macos_get_user_wallpaper((int) iScreen);
+      
+   }
+   
+#endif
+
 
 
 } //namespace userex
@@ -1608,5 +1937,6 @@ namespace user
       return Session.userex()->default_create_list_data(get_app());
 
    }
+
 
 } // namespace user

@@ -210,6 +210,13 @@
 			remoteGlobalIDString = 9AE24DDB1904CF6E001AEFFB;
 			remoteInfo = ios_core;
 		};
+		9A9A75CF1FED3B8700046482 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9AD188031F9C40BD001CEA8E /* axiscrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9A9A745E1FED286900046482;
+			remoteInfo = axiscrypto_iosTests;
+		};
 		9AD187251F9C3FB6001CEA8E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 9AD186E51F9C3FB5001CEA8E /* auracharguess.xcodeproj */;
@@ -258,13 +265,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 07B2729219A019AB00E822E1;
 			remoteInfo = ios_axiscrypto;
-		};
-		9AD1880D1F9C40BD001CEA8E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9AD188031F9C40BD001CEA8E /* axiscrypto.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 9AF8B7231D1FDDB50087E7A2;
-			remoteInfo = axiscrypto_iosTests;
 		};
 		9AD1880F1F9C40CC001CEA8E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1134,7 +1134,7 @@
 			children = (
 				9AD1880A1F9C40BD001CEA8E /* libaxiscrypto.dylib */,
 				9AD1880C1F9C40BD001CEA8E /* libios_axiscrypto.a */,
-				9AD1880E1F9C40BD001CEA8E /* axiscrypto_iosTests.xctest */,
+				9A9A75D01FED3B8700046482 /* axiscrypto_iosTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1364,6 +1364,13 @@
 			remoteRef = 07DA47781B71ED0F006F27E6 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		9A9A75D01FED3B8700046482 /* axiscrypto_iosTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = axiscrypto_iosTests.xctest;
+			remoteRef = 9A9A75CF1FED3B8700046482 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		9AD187261F9C3FB6001CEA8E /* libauracharguess.dylib */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.dylib";
@@ -1394,7 +1401,7 @@
 		};
 		9AD1880A1F9C40BD001CEA8E /* libaxiscrypto.dylib */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.ar;
+			fileType = "compiled.mach-o.dylib";
 			path = libaxiscrypto.dylib;
 			remoteRef = 9AD188091F9C40BD001CEA8E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -1406,16 +1413,9 @@
 			remoteRef = 9AD1880B1F9C40BD001CEA8E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		9AD1880E1F9C40BD001CEA8E /* axiscrypto_iosTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = axiscrypto_iosTests.xctest;
-			remoteRef = 9AD1880D1F9C40BD001CEA8E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		9AD188191F9C40E6001CEA8E /* libaxisopenssl.dylib */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.ar;
+			fileType = "compiled.mach-o.dylib";
 			path = libaxisopenssl.dylib;
 			remoteRef = 9AD188181F9C40E6001CEA8E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -1750,6 +1750,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "$(WorkspaceDir)/../../../include $(WorkspaceDir)/../../../nodeapp/include $(WorkspaceDir)/../../../app/include . .. $(WorkspaceDir)/../../.. $(WorkspaceDir)/../.. $(WorkspaceDir)/../../../app $(WorkspaceDir)/../../../app/appseed $(WorkspaceDir)/../../../app/appseed/core $(WorkspaceDir)/../../../app/appseed/base $(WorkspaceDir)/../../../app/appseed/axis $(WorkspaceDir)/../../../app/appseed/aura $(WorkspaceDir)/../../../app/base $(WorkspaceDir)/../../../app/axis $(WorkspaceDir)/../../../app/aura $(WorkspaceDir)/../../../app/atom";
 				WorkspaceDir = "$(SRCROOT)/../../../nodeapp/seed/metaseed";
@@ -1811,6 +1812,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "$(WorkspaceDir)/../../../include $(WorkspaceDir)/../../../nodeapp/include $(WorkspaceDir)/../../../app/include . .. $(WorkspaceDir)/../../.. $(WorkspaceDir)/../.. $(WorkspaceDir)/../../../app $(WorkspaceDir)/../../../app/appseed $(WorkspaceDir)/../../../app/appseed/core $(WorkspaceDir)/../../../app/appseed/base $(WorkspaceDir)/../../../app/appseed/axis $(WorkspaceDir)/../../../app/appseed/aura $(WorkspaceDir)/../../../app/base $(WorkspaceDir)/../../../app/axis $(WorkspaceDir)/../../../app/aura $(WorkspaceDir)/../../../app/atom";
 				WorkspaceDir = "$(SRCROOT)/../../../nodeapp/seed/metaseed";
 			};

@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 //#include "core/user/user/user.h"
 //#include "core/filesystem/filemanager/filemanager.h"
 
@@ -1105,7 +1105,7 @@ namespace core
 
       stringa stra;
 
-      stringa straSource = ::user::get_wallpaper();
+      stringa straSource = Session.userex()->get_wallpaper();
 
       for(string str : straSource)
       {

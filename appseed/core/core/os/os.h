@@ -13,6 +13,10 @@
 
 #include "ios/ios_main.h"
 
+#elif defined(MACOS)
+
+#include "macos/macos.h"
+
 #endif
 
 

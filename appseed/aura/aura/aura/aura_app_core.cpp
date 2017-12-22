@@ -207,8 +207,6 @@ bool app_core::beg()
 bool app_core::ini()
 {
 
-   
-   
    m_bAcidApp = m_pfnNewApp != NULL;
 
    string strAppId;
@@ -219,12 +217,12 @@ bool app_core::ini()
       get_c_args(string(::GetCommandLineW())),
 #else
       get_c_args(m_pmaindata->m_argc, m_pmaindata->m_argv),
-#endif
-      get_c_args(ca2_command_line()),
-#ifdef APPLEOS
-      get_c_args(ca2_command_line2()),
-#endif
       get_c_args(m_pmaindata->m_strCommandLine)
+#endif
+      ,get_c_args(ca2_command_line())
+#ifdef APPLEOS
+      ,get_c_args(ca2_command_line2())
+#endif
    });
 
    set_command_line_dup(strCommandLine);
@@ -812,13 +810,13 @@ stringa get_c_args(const char * psz)
       if(*psz == '\"')
       {
 
-         str = ::str::consume_quoted_value(psz, pszEnd);
+         str = ::str::consume_quoted_value_ex(psz, pszEnd);
 
       }
       else if(*psz == '\'')
       {
 
-         str = ::str::consume_quoted_value(psz, pszEnd);
+         str = ::str::consume_quoted_value_ex(psz, pszEnd);
 
       }
       else
@@ -1006,9 +1004,48 @@ string apple_get_bundle_identifier()
 
 string transform_to_c_arg(const char * psz)
 {
-
-   if (strstr(psz, " ") != NULL
-         || (strstr(psz, ":") != NULL && strlen(psz) > 1))
+   
+   bool bNeedWrap = false;
+   
+   const char * pszParse = psz;
+   
+   char chQuote = '\0';
+   
+   while(*pszParse)
+   {
+      
+      if(chQuote != '\0')
+      {
+         
+         if(*pszParse == '\\')
+         {
+            
+            pszParse = ::str::utf8_inc(pszParse);
+            
+         }
+         else if(*pszParse == chQuote)
+         {
+            
+            chQuote = '\0';
+            
+         }
+         
+      }
+      else if(::str::ch::is_whitespace(pszParse)
+              || *pszParse == ':')
+      {
+         
+         bNeedWrap = true;
+         
+         break;
+         
+      }
+      
+      pszParse = ::str::utf8_inc(pszParse);
+      
+   }
+   
+   if (bNeedWrap)
    {
 
       return string("\"") + ::str::replace("\"", "\\\"", psz) + "\"";

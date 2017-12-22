@@ -471,122 +471,88 @@ void property_set::_008Parse(bool bApp, const char * pszCmdLine, var & varFile, 
    if(pszCmdLine == NULL)
       return;
 
-   enum e_state
+   stringa stra = get_c_args(pszCmdLine);
+   
+   int i = 0;
+   
+   if(bApp && stra.get_count() > 0)
    {
-      state_key,
-      state_equal,
-      state_value
-   };
-
-
-   ::str::parse parse(pszCmdLine, strlen(pszCmdLine), "= ");
-
-   parse.EnableQuote(true);
-
-   if(bApp && parse.getrestlen())
-   {
-      parse.getword(strApp);
+    
+      strApp = stra[0];
+      
+      i++;
+      
    }
-
-   string strFile;
-
-
-   while(parse.getrestlen())
+   
+   index iFindColon = stra.find_first(":");
+   
+   if(iFindColon > i)
    {
-
-      parse.getword(strFile);
-
-      if(strFile == ":")
-         break;
-
-      strFile.trim("\"'");
-
-      if(varFile.is_empty())
+    
+      if(iFindColon - i > 1)
       {
-         varFile = strFile;
-      }
-      else if(varFile.get_type() == var::type_string)
-      {
-         varFile.stra().add(strFile);
-      }
-      else if(varFile.get_type() == var::type_stra)
-      {
-         varFile.stra().add(strFile);
-      }
-      else if(varFile.get_type() == var::type_propset)
-      {
-         varFile.propset()["stra"].stra().add(strFile);
+         
+         for(;i < iFindColon; i++)
+         {
+          
+            varFile.stra().add(stra[i]);
+            
+         }
+         
       }
       else
       {
-         varFile.propset()["varFile"] = varFile;
-         varFile.propset()["stra"].stra().add(strFile);
+         
+         varFile = stra[i];
+         
+         i++;
+         
       }
-
+      
+      i++;
 
    }
-
-
-   string str;
-   string strKey;
-
-
-   e_state state = state_key;
-
-   int iEnd = 0;
-
-   while(iEnd <= 1)
+   
+   for(; i < stra.get_size(); i++)
    {
-
-      if(parse.getrestlen() <= 0)
+    
+      string str = stra[i];
+      
+      index iFindEqual = str.find('=');
+      
+      index iFindQuote = str.find('\"');
+      
+      if(iFindEqual >= 0)
       {
-         iEnd++;
-      }
-
-      if(iEnd <= 0)
-      {
-         parse.getsplitword(str);
-      }
-
-      str.trim("\"'");
-
-      switch(state)
-      {
-      case state_key:
-      {
-         strKey = str;
-         state = state_equal;
-      }
-      break;
-      case state_equal:
-      {
-         if(str == '=')
+         
+         string strValue;
+         
+         strValue = str.Mid(iFindEqual + 1);
+         
+         if(iFindEqual + 1 == iFindQuote)
          {
-            state = state_value;
+            
+            const char * pszValue = strValue;
+         
+            strValue = ::str::consume_quoted_value(pszValue);
+            
          }
-         else
-         {
-            _008Add(strKey, NULL);
-            strKey = str;
-            state = state_equal;
-         }
+       
+         _008Add(str.Left(iFindEqual), strValue);
+         
       }
-      break;
-      case state_value:
+      else
       {
-
-         _008Add(strKey, str);
-         strKey.Empty();
-         str.Empty();
-         state = state_key;
-
+         
+         _008Add(str, NULL);
+         
       }
-      break;
-      }
-
+      
    }
 
 }
+
+
 void property_set::skip_json(const char * & pszJson)
 {
 

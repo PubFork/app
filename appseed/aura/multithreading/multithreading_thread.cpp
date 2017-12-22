@@ -145,7 +145,7 @@ error & error::operator =(const error & error)
 
       auto & spe = m_mapError2[i];
 
-      if(m_mapError2[i].is_set())
+      if(spe.is_set())
       {
 
          ::exception::exception * pexception = spe.detach();
@@ -1623,15 +1623,6 @@ thread_startup::~thread_startup()
 bool thread::begin_thread(bool bSynch, int32_t epriority,uint_ptr nStackSize,uint32_t dwCreateFlagsParam,LPSECURITY_ATTRIBUTES lpSecurityAttrs, IDTHREAD * puiId, error * perror)
 {
 
-   error error;
-
-   if(perror == NULL)
-   {
-
-      perror = &error;
-
-   }
-
    m_bRunThisThread = true;
 
    DWORD dwCreateFlags = dwCreateFlagsParam;
@@ -1675,13 +1666,7 @@ bool thread::begin_thread(bool bSynch, int32_t epriority,uint_ptr nStackSize,uin
       try
       {
 
-         if (perror == &error)
-         {
-
-            perror = &pstartup->m_error;
-
-         }
-         else
+         if (perror != NULL)
          {
 
             *perror = pstartup->m_error;
@@ -1742,8 +1727,9 @@ bool thread::begin_thread(bool bSynch, int32_t epriority,uint_ptr nStackSize,uin
          {
 
             ::exit_exception * pexception = dynamic_cast< ::exit_exception * > (pstartup->m_error.detach_exception());
+            
+            pexception->add_ref();
 
-            //output_debug_string("test");
             _rethrow(pexception);
 
          }

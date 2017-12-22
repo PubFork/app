@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 namespace exception
@@ -197,7 +197,7 @@ typedef ::exception::result_sp cres;
 
 typedef ::exception::exception_sp esp671;
 
-#define _throw(EXCEPTION_WITH_OPTIONAL_CONSTRUCTION) throw canew(EXCEPTION_WITH_OPTIONAL_CONSTRUCTION)
+#define _throw(EXCEPTION_WITH_OPTIONAL_CONSTRUCTION) throw new EXCEPTION_WITH_OPTIONAL_CONSTRUCTION
 
 template < typename EXCEPTION >
 void _rethrow(EXCEPTION * pexception)

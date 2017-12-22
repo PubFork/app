@@ -80,7 +80,9 @@
  
    [self create_view];
    
-      return self;
+   m_pwindow->round_window_add_ref();
+   
+   return self;
    
 }
 
@@ -93,6 +95,7 @@
 - (void)dealloc
 {
 
+   m_pwindow->round_window_dec_ref();
    
 }
 

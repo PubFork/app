@@ -14,12 +14,6 @@
 #endif
 
 
-#ifdef MACOS
-
-CLASS_DECL_CORE stringa macos_get_user_wallpaper(void);
-
-#endif
-
 namespace html
 {
 
@@ -41,8 +35,8 @@ namespace user
    class menu_item;
 
 
-   CLASS_DECL_CORE bool set_wallpaper(string strLocalImagePath);
-   CLASS_DECL_CORE stringa get_wallpaper();
+   //CLASS_DECL_CORE bool set_wallpaper(string strLocalImagePath);
+   //CLASS_DECL_CORE stringa get_wallpaper();
 
 
 

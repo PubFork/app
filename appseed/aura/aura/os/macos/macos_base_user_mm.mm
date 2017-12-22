@@ -353,12 +353,19 @@ WINBOOL SetWindowPos(oswindow hwnd, oswindow hwndInsertAfter, int x, int y, int 
 
 
 
-bool macos_set_user_wallpaper(const char * psz)
+bool macos_set_user_wallpaper(int iScreen, const char * psz)
 {
 
    NSArray<NSScreen *> * screenArray = [NSScreen screens];
    
    unsigned long screenCount = [screenArray count];
+   
+   if(iScreen < 0 || iScreen >= screenCount)
+   {
+      
+      return false;
+      
+   }
 
    NSString * str = [NSString stringWithUTF8String: psz];
    
@@ -375,14 +382,11 @@ bool macos_set_user_wallpaper(const char * psz)
    
    bool bOk = true;
    
-   for (int i = 0; i < screenCount; i++)
-   {
-
-      NSScreen * screen = [screenArray objectAtIndex: i];
+      NSScreen * screen = [screenArray objectAtIndex: iScreen];
       
       NSURL * u = [[NSWorkspace sharedWorkspace] desktopImageURLForScreen: screen];
       
-      NSLog(@"current wallpaper %s (screen=%d)", [[u absoluteString] UTF8String], i);
+      NSLog(@"current wallpaper %s (screen=%d)", [[u absoluteString] UTF8String], iScreen);
       
       NSLog(@"gonna set to %s", [[url absoluteString] UTF8String]);
       
@@ -396,8 +400,6 @@ bool macos_set_user_wallpaper(const char * psz)
          bOk = false;
          
       }
-   
-   }
 
    return bOk;
    
@@ -405,27 +407,31 @@ bool macos_set_user_wallpaper(const char * psz)
 
 
 
-long long mm_get_user_wallpaper(char *** ppp)
+long long mm_get_user_wallpaper(long long llScreen, char ** ppsz)
 {
    
    mmos * p = [mmos get];
    
    [p->theLock lock];
    
-   long long ll = p->m_llWallpaper;
-   
-   *ppp = (char**) malloc(sizeof(char *) * ll);
-   
-   for(long long i = 0; i < ll; i++)
+   long long llCount = p->m_llWallpaper;
+
+   if(llScreen < 0 || llScreen >= llCount || p->m_ppszWallpaper == NULL)
+   {
+
+      (*ppsz) = NULL;
+
+   }
+   else
    {
    
-      (*ppp)[i] = strdup(p->m_ppszWallpaper[i]);
-      
+      (*ppsz) = strdup(p->m_ppszWallpaper[llScreen]);
+
    }
    
    [p->theLock unlock];
    
-   return ll;
+   return llCount;
                          
    
 }

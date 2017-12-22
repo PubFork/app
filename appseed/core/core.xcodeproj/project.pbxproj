@@ -1331,6 +1331,8 @@
 		9AE24DF61904CF6F001AEFFB /* core_iosTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "core_iosTests-Info.plist"; sourceTree = "<group>"; };
 		9AE24DF81904CF6F001AEFFB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9AE4C83A1996EF2E00E50F88 /* simple_toolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simple_toolbar.h; sourceTree = "<group>"; };
+		9AE558DE1FEAE26B00247AE9 /* macos_user.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = macos_user.h; path = core/os/macos/macos_user.h; sourceTree = SOURCE_ROOT; };
+		9AE558DF1FEAE29C00247AE9 /* macos.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = macos.h; path = core/os/macos/macos.h; sourceTree = SOURCE_ROOT; };
 		9AE60E4D1F22807500F7CDC2 /* ios_main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_main.cpp; sourceTree = "<group>"; };
 		9AE60E4E1F22807500F7CDC2 /* ios_main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ios_main.h; sourceTree = "<group>"; };
 		9AE60E541F22820100F7CDC2 /* os.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = os.h; sourceTree = "<group>"; };
@@ -2223,9 +2225,20 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		9AE558DD1FEAE20500247AE9 /* macos */ = {
+			isa = PBXGroup;
+			children = (
+				9AE558DF1FEAE29C00247AE9 /* macos.h */,
+				9AE558DE1FEAE26B00247AE9 /* macos_user.h */,
+			);
+			name = macos;
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		9AE60E4B1F22807500F7CDC2 /* os */ = {
 			isa = PBXGroup;
 			children = (
+				9AE558DD1FEAE20500247AE9 /* macos */,
 				9AE60E4C1F22807500F7CDC2 /* ios */,
 				9AE60E541F22820100F7CDC2 /* os.h */,
 			);

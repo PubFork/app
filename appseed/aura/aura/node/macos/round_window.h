@@ -37,6 +37,9 @@ public:
    round_window();
    virtual ~round_window();
    
+   virtual void round_window_add_ref() = 0;
+   virtual void round_window_dec_ref() = 0;
+   
    virtual void round_window_draw(CGContextRef cgc) = 0;
    virtual void round_window_mouse_down(int iButton, double x, double y) = 0;
    virtual void round_window_mouse_up(int iButton, double x, double y) = 0;

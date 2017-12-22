@@ -353,82 +353,82 @@ WINBOOL SetWindowPos(oswindow hwnd, oswindow hwndInsertAfter, int x, int y, int 
 
 
 
-bool macos_set_user_wallpaper(const char * psz)
-{
+// bool macos_set_user_wallpaper(const char * psz)
+// {
 
-   NSArray<NSScreen *> * screenArray = [NSScreen screens];
+//    NSArray<NSScreen *> * screenArray = [NSScreen screens];
    
-   int screenCount = [screenArray count];
+//    int screenCount = [screenArray count];
 
-   NSString * str = [NSString stringWithUTF8String: psz];
+//    NSString * str = [NSString stringWithUTF8String: psz];
    
-   NSString * path = str;
+//    NSString * path = str;
    
-   NSURL * url = [NSURL fileURLWithPath: path];
+//    NSURL * url = [NSURL fileURLWithPath: path];
    
-/*   NSDictionary * options = [NSDictionary dictionaryWithObjectsAndKeys:nil, NSWorkspaceDesktopImageFillColorKey, [NSNumber numberWithBool:NO], NSWorkspaceDesktopImageAllowClippingKey, [NSNumber numberWithInteger:NSImageScaleProportionallyUpOrDown], NSWorkspaceDesktopImageScalingKey, nil]; */
-   NSDictionary * options = [NSDictionary dictionaryWithObjectsAndKeys:
-      [NSColor colorWithCalibratedRed:0.51 green:0.49 blue:0.89 alpha:1.0], NSWorkspaceDesktopImageFillColorKey,
-                             [NSNumber numberWithBool:YES], NSWorkspaceDesktopImageAllowClippingKey, [NSNumber numberWithInteger:NSImageScaleProportionallyUpOrDown], NSWorkspaceDesktopImageScalingKey, nil];
+// /*   NSDictionary * options = [NSDictionary dictionaryWithObjectsAndKeys:nil, NSWorkspaceDesktopImageFillColorKey, [NSNumber numberWithBool:NO], NSWorkspaceDesktopImageAllowClippingKey, [NSNumber numberWithInteger:NSImageScaleProportionallyUpOrDown], NSWorkspaceDesktopImageScalingKey, nil]; */
+//    NSDictionary * options = [NSDictionary dictionaryWithObjectsAndKeys:
+//       [NSColor colorWithCalibratedRed:0.51 green:0.49 blue:0.89 alpha:1.0], NSWorkspaceDesktopImageFillColorKey,
+//                              [NSNumber numberWithBool:YES], NSWorkspaceDesktopImageAllowClippingKey, [NSNumber numberWithInteger:NSImageScaleProportionallyUpOrDown], NSWorkspaceDesktopImageScalingKey, nil];
    
-   NSError * error;
+//    NSError * error;
    
-   bool bOk = true;
+//    bool bOk = true;
    
-   for (int i = 0; i < screenCount; i++)
-   {
+//    for (int i = 0; i < screenCount; i++)
+//    {
 
-      NSScreen * screen = [screenArray objectAtIndex: i];
+//       NSScreen * screen = [screenArray objectAtIndex: i];
       
-      NSURL * u = [[NSWorkspace sharedWorkspace] desktopImageURLForScreen: screen];
+//       NSURL * u = [[NSWorkspace sharedWorkspace] desktopImageURLForScreen: screen];
       
-      NSLog(@"current wallpaper %s (screen=%d)", [[u absoluteString] UTF8String], i);
+//       NSLog(@"current wallpaper %s (screen=%d)", [[u absoluteString] UTF8String], i);
       
-      NSLog(@"gonna set to %s", [[url absoluteString] UTF8String]);
+//       NSLog(@"gonna set to %s", [[url absoluteString] UTF8String]);
       
-      error = NULL;
+//       error = NULL;
       
-      [[[NSWorkspace sharedWorkspace] dd_invokeOnMainThreadAndWaitUntilDone:FALSE ] setDesktopImageURL:url forScreen: screen options:options error:&error];
+//       [[[NSWorkspace sharedWorkspace] dd_invokeOnMainThreadAndWaitUntilDone:FALSE ] setDesktopImageURL:url forScreen: screen options:options error:&error];
       
-      if(error != NULL)
-      {
+//       if(error != NULL)
+//       {
          
-         bOk = false;
+//          bOk = false;
          
-      }
+//       }
    
-   }
+//    }
 
-   return bOk;
+//    return bOk;
    
-}
+// }
 
 
 
-long long mm_get_user_wallpaper(char *** ppp)
-{
+// long long mm_get_user_wallpaper(char *** ppp)
+// {
    
-   mmos * p = [mmos get];
+//    mmos * p = [mmos get];
    
-   [p->theLock lock];
+//    [p->theLock lock];
    
-   long long ll = p->m_llWallpaper;
+//    long long ll = p->m_llWallpaper;
    
-   *ppp = (char**) malloc(sizeof(char *) * ll);
+//    *ppp = (char**) malloc(sizeof(char *) * ll);
    
-   for(long long i = 0; i < ll; i++)
-   {
+//    for(long long i = 0; i < ll; i++)
+//    {
    
-      (*ppp)[i] = strdup(p->m_ppszWallpaper[i]);
+//       (*ppp)[i] = strdup(p->m_ppszWallpaper[i]);
       
-   }
+//    }
    
-   [p->theLock unlock];
+//    [p->theLock unlock];
    
-   return ll;
+//    return ll;
                          
    
-}
+// }
 
 
 

@@ -7,6 +7,15 @@
 #include <spawn.h>
 
 
+::file::path macos_app_path(string strApp)
+{
+   
+   ::file::path path = ::dir::home() / "Library/ca2/mypath" / (strApp + ".txt");
+   
+   return file_as_string_dup(path);
+   
+}
+
 extern char ** environ;
 
 stringa get_c_args_for_c(const char * psz);

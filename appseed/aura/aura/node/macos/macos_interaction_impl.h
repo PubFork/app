@@ -220,6 +220,11 @@ namespace macos
         virtual void _001WindowRestore() override;
         virtual bool IsWindowVisible() override;
         virtual void ShowOwnedPopups(bool bShow = TRUE) override;
+      
+      
+      virtual void round_window_add_ref() override;
+      virtual void round_window_dec_ref() override;
+
 
         virtual void round_window_draw(CGContextRef cgc) override;
         virtual void round_window_mouse_down(int iButton, double x, double y) override;

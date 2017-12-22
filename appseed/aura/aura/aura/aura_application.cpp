@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #ifdef WINDOWSEX
 #include "aura/aura/os/windows/windows_system_interaction_impl.h"
 #endif
@@ -31,7 +31,7 @@ CLASS_DECL_IMPORT void draw2d_factory_exchange(::aura::application * papp);
 #endif
 
 #ifdef MACOS
-
+::file::path macos_app_path(string strApp);
 void ns_app_terminate();
 #endif
 
@@ -1322,6 +1322,8 @@ namespace aura
          path = System.url().url_decode(path);
 
          strParam += "--user-data-dir=\"" + pathProfile + "\"";
+         
+         path.trim("\"");
 
          string strCmd = "open -n -a \"" + path + "\" --args " + strParam;
 
@@ -1466,39 +1468,31 @@ namespace aura
 
       ::file::path shell;
 
-#ifdef MACOS
-
       shell = "/bin/bash";
       
-      //path = System.url().url_decode(path);
-
-      string strCmd = "open -a \"" + path + "\" " + " --args " + strParam + strExtraParam;
-
-      //strCmd.replace("\"", "\\\"");
+#ifdef MACOS
+      
+      string strCmd = "open -a \"" + path + "\" --args " + strParam + strExtraParam;
 
       strParam = " -c '" + strCmd + "'";
       
       pathDir = dir::home();
-
+      
 #else
 
-      shell = "/bin/bash";
-      
       string strCmd = path + " " + strParam + strExtraParam;
 
       strCmd.replace("\"", "\\\"");
 
       strParam = " -c \"" + strCmd + "\"";
-
+      
+      output_debug_string(strParam);
+      
+      call_async(shell, strParam, pathDir, SW_SHOWDEFAULT, false);
 
 #endif
 
-      //MessageBox(NULL, strParam, path, MB_OK);
-
-      output_debug_string(strParam);
-
-      call_async(shell, strParam, pathDir, SW_SHOWDEFAULT, false);
-
+      
 #endif
 
 #endif
@@ -4449,8 +4443,6 @@ retry_license:
 
 #if defined(MACOS) || defined(LINUX)
 
-
-
          ::file::path p;
 
          p = "/var/tmp";
@@ -4467,8 +4459,6 @@ retry_license:
 
          if (m_eexclusiveinstance == ExclusiveInstanceLocal && i < 0)
 #else
-
-
 
          try
          {
@@ -4500,13 +4490,13 @@ retry_license:
             {
             }
 
-            if(bHandled)
-            {
-
-               _throw(exit_exception(this, exit_application));
-
-            }
-
+//            if(bHandled)
+//            {
+//
+//               _throw(exit_exception(this, exit_application));
+//
+//            }
+//
             //::aura::post_quit_thread(&System);
             return false;
          }
@@ -6002,8 +5992,8 @@ retry_license:
                if (!(bool)System.oprop("not_installed_message_already_shown"))
                {
 
-                  if ((App(pnotinstalled->get_app()).is_serviceable() && !App(pnotinstalled->get_app()).is_user_service())
-                        || (IDYES == (iRet = ::simple_message_box(NULL, "Debug only message, please install:\n\n\n\t" + pnotinstalled->m_strAppId + "\n\tconfiguration = " + pnotinstalled->m_strConfiguration + "\n\tplatform = " + pnotinstalled->m_strPlatform + "\n\tlocale = " + pnotinstalled->m_strLocale + "\n\tschema = " + pnotinstalled->m_strSchema + "\n\n\nThere are helper scripts under <solution directory>/nodeapp/stage/install/", "Debug only message, please install.", MB_ICONINFORMATION | MB_YESNO))))
+//                  if ((App(pnotinstalled->get_app()).is_serviceable() && !App(pnotinstalled->get_app()).is_user_service())
+//                        || (IDYES == (iRet = ::simple_message_box(NULL, "Debug only message, please install:\n\n\n\t" + pnotinstalled->m_strAppId + "\n\tconfiguration = " + pnotinstalled->m_strConfiguration + "\n\tplatform = " + pnotinstalled->m_strPlatform + "\n\tlocale = " + pnotinstalled->m_strLocale + "\n\tschema = " + pnotinstalled->m_strSchema + "\n\n\nThere are helper scripts under <solution directory>/nodeapp/stage/install/", "Debug only message, please install.", MB_ICONINFORMATION | MB_YESNO))))
                   {
 
                      ::duration durationWait = minutes(1);
