@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include <time.h>
 
 
@@ -214,11 +214,11 @@ bool app_core::ini()
    string strCommandLine = merge_colon_args(
    {
 #ifdef WINDOWS
-      get_c_args(string(::GetCommandLineW())),
+      get_c_args(string(::GetCommandLineW()))
 #else
-      get_c_args(m_pmaindata->m_argc, m_pmaindata->m_argv),
-      get_c_args(m_pmaindata->m_strCommandLine)
+      get_c_args(m_pmaindata->m_argc, m_pmaindata->m_argv)
 #endif
+      ,get_c_args(m_pmaindata->m_strCommandLine)
       ,get_c_args(ca2_command_line())
 #ifdef APPLEOS
       ,get_c_args(ca2_command_line2())
@@ -866,86 +866,86 @@ stringa get_c_args(const char * psz)
 
 stringa get_c_args_for_c(const char * psz)
 {
-   
+
    stringa stra;
-   
+
    if(psz == NULL)
    {
-      
+
       return stra;
-      
+
    }
-   
+
    const char * pszEnd = psz + strlen(psz);
-   
+
    string str;
-   
+
    while(psz < pszEnd)
    {
-      
+
       ::str::consume_spaces(psz, 0, pszEnd);
-      
+
       if(psz >= pszEnd)
       {
-         
+
          break;
-         
+
       }
-      
+
       if(*psz == '\"')
       {
-         
+
          str = ::str::consume_quoted_value(psz, pszEnd);
-         
+
       }
       else if(*psz == '\'')
       {
-         
+
          str = ::str::consume_quoted_value(psz, pszEnd);
-         
+
       }
       else
       {
-         
+
          const char * pszValueStart = psz;
-         
+
          while(!::str::ch::is_whitespace(psz))
          {
-            
+
             psz = str::utf8_inc(psz);
-            
+
             if(psz >= pszEnd)
             {
-               
+
                break;
-               
+
             }
-            
+
             if(*psz == '\"')
             {
-               
+
                ::str::consume_quoted_value_ex(psz, pszEnd);
-               
+
             }
             else if(*psz == '\'')
             {
-               
+
                ::str::consume_quoted_value_ex(psz, pszEnd);
-               
+
             }
 
          }
-         
+
          str = string(pszValueStart, psz - pszValueStart);
 
       }
-      
+
       stra.add(str);
-         
+
    }
-   
+
    return stra;
-   
+
 }
 
 
@@ -1033,47 +1033,47 @@ string apple_get_bundle_identifier()
 
 string transform_to_c_arg(const char * psz)
 {
-   
+
    bool bNeedWrap = false;
-   
+
    const char * pszParse = psz;
-   
+
    char chQuote = '\0';
-   
+
    while(*pszParse)
    {
-      
+
       if(chQuote != '\0')
       {
-         
+
          if(*pszParse == '\\')
          {
-            
+
             pszParse = ::str::utf8_inc(pszParse);
-            
+
          }
          else if(*pszParse == chQuote)
          {
-            
+
             chQuote = '\0';
-            
+
          }
-         
+
       }
       else if(::str::ch::is_whitespace(pszParse)
               || *pszParse == ':')
       {
-         
+
          bNeedWrap = true;
-         
+
          break;
-         
+
       }
-      
+
       pszParse = ::str::utf8_inc(pszParse);
-      
+
    }
-   
+
    if (bNeedWrap)
    {
 
