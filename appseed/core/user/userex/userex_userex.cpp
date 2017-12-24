@@ -1438,7 +1438,7 @@ retry_license:
    string userex::impl_get_wallpaper(index iScreen)
    {
 
-      return stringa();
+      return string();
 
    }
 
