@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include <time.h>
 
 
@@ -20,7 +20,7 @@ typedef DEFER_INIT * PFN_DEFER_INIT;
 
 #ifdef APPLEOS
 
-size_t ns_get_bundle_identifier(char * psz, size_t iSize);
+char * ns_get_bundle_identifier();
 
 string apple_get_bundle_identifier();
 
@@ -1019,7 +1019,7 @@ typedef FN_GET_STRING * PFN_GET_STRING;
 string apple_get_bundle_identifier()
 {
 
-   return ::str::get_string(&ns_get_bundle_identifier);
+   return ::str::from_strdup(ns_get_bundle_identifier());
 
 }
 

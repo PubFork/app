@@ -1186,6 +1186,7 @@
 				9A9874A11F5CBCAD00CB62EB /* macos_win_base.cpp */,
 				9A9874A21F5CBCAD00CB62EB /* macos.cpp */,
 				07A374201B26054100E4F888 /* macos_cross_user.mm */,
+				9AB6283D1F3D116D0007966E /* NSPasteboard++.mm */,
 				07A3741C1B26054100E4F888 /* macos.h */,
 				07A374231B26054100E4F888 /* macos_cross_win_gdi.h */,
 				07A374271B26054100E4F888 /* macos_file.h */,
@@ -1195,7 +1196,6 @@
 				07A374321B26054100E4F888 /* macos_process.h */,
 				07A374381B26054100E4F888 /* macos_window_impl.h */,
 				07A3743B1B26054100E4F888 /* os.h */,
-				9AB6283D1F3D116D0007966E /* NSPasteboard++.mm */,
 			);
 			path = macos;
 			sourceTree = "<group>";

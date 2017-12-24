@@ -8,6 +8,10 @@ void macos_clipboard_get_filea(::file::patha & stra);
 
 void macos_clipboard_set_filea(const ::file::patha & stra);
 
+string macos_clipboard_get_plain_text();
+
+void macos_clipboard_set_plain_text(const char * pszPlainText);
+
 
 namespace macos
 {
@@ -84,81 +88,22 @@ namespace macos
 
    }
 
+   
    void copydesk::set_plain_text(const char * psz)
    {
-//      ASSERT(IsWindow());
-   //   int32_t iLen = 0;
-
-      string str;
-      str = ::str::international::utf8_to_unicode(psz);
-
-
-
-//      ASSERT(IsWindow());
-//      if(!m_p->OpenClipboard())
-  //    {
-    ///     return;
-      //}
-
-      _throw(todo(get_app()));
-
-/*
-
-      EmptyClipboard();
-
-
-      count iCount = ::str::international::utf8_to_unicode_count(str) + 1;
-      HGLOBAL hglbCopy = ::GlobalAlloc(GMEM_MOVEABLE, iCount * sizeof(WCHAR));
-      unichar * lpwstrCopy  = (unichar *) ::GlobalLock(hglbCopy);
-      ::str::international::utf8_to_unicode(lpwstrCopy, iCount, str);
-      ::GlobalUnlock(hglbCopy);
-
-      HGLOBAL hglbCopy2 = ::GlobalAlloc(GMEM_MOVEABLE, sizeof(CHAR) * (strlen(psz) + 1));
-      char * lpstrCopy  = (char *) ::GlobalLock(hglbCopy2);
-      strcpy(lpstrCopy, psz);
-      ::GlobalUnlock(hglbCopy2);
-
-
-      SetClipboardData(CF_UNICODETEXT, hglbCopy);
-      SetClipboardData(CF_TEXT, hglbCopy2);
-      VERIFY(::CloseClipboard());
-
-*/
+      
+      macos_clipboard_set_plain_text(psz);
 
    }
 
 
    string copydesk::get_plain_text()
    {
-//      _throw(todo(get_app()));
-      return "https://www.liveedu.tv/static/img/logos/logo-white.png?h=fc4045ce";
-/* xxx
-      if (IsClipboardFormatAvailable(CF_UNICODETEXT))
-      {
-         if(!m_p->OpenClipboard())
-            return "";
-         HGLOBAL hglb = GetClipboardData(CF_UNICODETEXT);
-         string str(::str::international::unicode_to_utf8((const unichar *) GlobalLock(hglb)));
-         GlobalUnlock(hglb);
-         VERIFY(::CloseClipboard());
-         return str;
-      }
-      else if (IsClipboardFormatAvailable(CF_TEXT))
-      {
-         if(!m_p->OpenClipboard())
-            return "";
-         HGLOBAL hglb = GetClipboardData(CF_TEXT);
-         string str((char *) GlobalLock(hglb));
-         GlobalUnlock(hglb);
-         VERIFY(::CloseClipboard());
-         return str;
-      }
-      else
-      {
-         return "";
-      }
-*/
+      
+      return macos_clipboard_get_plain_text();
+      
    }
+   
 
    bool copydesk::desk_to_dib(::draw2d::dib * pdib)
    {

@@ -164,3 +164,34 @@ WINBOOL get_nswindow_rect(oswindow oswindow, LPRECT lprect);
 //}
 //
 //
+
+
+// https://stackoverflow.com/questions/6167557/get-string-from-nspasteboard
+//you need to use the following method with stringForType with key NSPasteboardTypeString to read the string value from clipboard.
+
+- (NSString *)stringForType:(NSString *)dataType .
+
+NSPasteboard*  myPasteboard  = [NSPasteboard generalPasteboard];
+NSString* myString = [myPasteboard  stringForType:NSPasteboardTypeString];
+
+you need to use the following method with stringForType with key NSPasteboardTypeString to read the string value from clipboard.
+
+- (NSString *)stringForType:(NSString *)dataType .
+
+NSPasteboard*  myPasteboard  = [NSPasteboard generalPasteboard];
+NSString* myString = [myPasteboard  stringForType:NSPasteboardTypeString];
+//To do this for iOS with UIPasteBoard use the following code:
+
+UIPasteboard *thePasteboard = [UIPasteboard generalPasteboard];
+NSString *pasteboardString = thePasteboard.string;
+NSLog(@"%@", pasteboardString);
+
+https://stackoverflow.com/questions/3655038/how-to-copy-textfield-to-osx-clipboard
+
+On iOS
+
+[UIPasteboard generalPasteboard].string = helloField.text;
+On OSX
+
+[[NSPasteboard generalPasteboard] clearContents];
+[[NSPasteboard generalPasteboard] setString:helloField.stringValue forType:NSStringPboardType];

@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 
 
+char * ns_string(NSString * str);
+
 
 //
 //char * str_clip_dup()
@@ -231,36 +233,12 @@ void ns_app_terminate()
    
 }
 
-size_t ns_string(char * psz, size_t s, NSString * pstr)
+
+
+char * ns_get_bundle_identifier()
 {
    
-   size_t len = strlen([pstr UTF8String]);
-   
-   if(psz == NULL || s == 0)
-   {
-   
-      return len;
-      
-   }
-   
-   strncpy(psz, [pstr UTF8String], s);
-   
-   if(len < s)
-   {
-    
-      return len;
-      
-   }
-
-   return s;
-   
-}
-
-
-size_t ns_get_bundle_identifier(char * psz, size_t iSize)
-{
-   
-   return ns_string(psz, iSize, [[NSBundle mainBundle] bundleIdentifier]);
+   return ns_string([[NSBundle mainBundle] bundleIdentifier]);
    
 }
 
@@ -272,3 +250,8 @@ void ns_Sleep(unsigned int uiMillis)
    [NSThread sleepForTimeInterval: ((double) uiMillis / 1000.0) ];
 
 }
+
+
+
+
+

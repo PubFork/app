@@ -325,7 +325,7 @@ char ** mm_clipboard_get_filea(int * pc);
 
 void mm_clipboard_set_filea(const char ** psza, int c);
 
-size_t mm_clipboard_get_plain_text(char * psz, size_t s);
+char * mm_clipboard_get_plain_text();
 
 void mm_clipboard_set_plain_text(const char * psz);
 
@@ -366,6 +366,20 @@ void macos_clipboard_set_filea(const ::file::patha & patha)
    
 }
 
+string macos_clipboard_get_plain_text()
+{
+
+   return ::str::get_string(mm_clipboard_get_plain_text());
+   
+}
+
+
+void macos_clipboard_set_plain_text(const char * pszPlainText)
+{
+   
+   mm_clipboard_set_plain_text(pszPlainText);
+   
+}
 
 
 

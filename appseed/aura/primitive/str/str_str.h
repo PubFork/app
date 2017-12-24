@@ -32,8 +32,6 @@ extern CLASS_DECL_AURA const char trailingBytesForUTF8[256];
 #endif
 
 
-typedef size_t FN_GET_STRING(char * psz, size_t s);
-typedef FN_GET_STRING * PFN_GET_STRING;
 
 
 ///
@@ -236,8 +234,7 @@ namespace str
    template < typename T >
    inline string  from_uint(const T & t);
 
-   inline CLASS_DECL_AURA string & get_string(string & str, PFN_GET_STRING pfn);
-   inline CLASS_DECL_AURA string get_string(PFN_GET_STRING pfn);
+   inline CLASS_DECL_AURA string from_strdup(char * psz);
       
    
    

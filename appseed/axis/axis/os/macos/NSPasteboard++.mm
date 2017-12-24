@@ -10,6 +10,8 @@
 
 #undef new
 
+char * ns_string(NSString * str);
+
 
 int mm_clipboard_get_file_count()
 {
@@ -89,4 +91,35 @@ void mm_clipboard_set_filea(const char ** psza, int c)
        
    [pasteboard setPropertyList:filea forType:NSFilenamesPboardType];
    
+}
+
+
+
+
+// https://stackoverflow.com/questions/6167557/get-string-from-nspasteboard
+char * mm_clipboard_get_plain_text()
+{
+   
+   NSPasteboard * pasteboard = [NSPasteboard generalPasteboard];
+   
+   NSString * strPasteboard = [pasteboard stringForType:NSPasteboardTypeString];
+   
+   return ns_string(strPasteboard);
+   
+}
+
+//https://stackoverflow.com/questions/3655038/how-to-copy-textfield-to-osx-clipboard
+//On OSX
+
+void mm_clipboard_set_plain_text(const char * psz)
+{
+   
+   NSPasteboard * pasteboard = [NSPasteboard generalPasteboard];
+   
+   NSString * strPasteboard = [NSString stringWithUTF8String: psz];
+
+   [pasteboard clearContents];
+   
+   [pasteboard setString:strPasteboard forType:NSStringPboardType];
+
 }

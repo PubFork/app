@@ -1114,25 +1114,46 @@ inline void string_format::defer_get_additional_argument(const char * & s, const
 namespace str
 {
 
-inline CLASS_DECL_AURA string & get_string(string & str, PFN_GET_STRING pfn)
-{
-   
-   size_t len = (*pfn)(NULL, 0);
-   
-   char * psz = str.GetBufferSetLength(len);
-   
-   (*pfn)(psz, len);
-   
-   str.ReleaseBuffer(len);
-   
-   return str;
-   
-}
-   inline CLASS_DECL_AURA string get_string(PFN_GET_STRING pfn)
+   inline CLASS_DECL_AURA string from_strdup(char * psz)
    {
-      string str;
-      return get_string(str, pfn);
+   
+      if(psz == NULL)
+      {
       
-   }
+         return "";
+      
+      }
+      
+      string str;
+      
+      try
+      {
+      
+         str = psz;
+         
+      }
+      catch(...)
+      {
+         
+      }
+      
+      try
+      {
+         
+         free(psz);
+         
+      }
+      catch(...)
+      {
+         
+      }
 
-}
+      return str;
+   
+   }
+   
+
+} // namespace str
+
+
+
