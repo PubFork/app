@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #ifdef WINDOWSEX
 #include "aura/aura/os/windows/windows_system_interaction_impl.h"
 #endif
@@ -19,39 +19,39 @@ extern "C"
 
 template < typename PRED >
 class runnable_pred :
-virtual public runnable
+   virtual public runnable
 {
 public:
-   
+
    PRED m_pred;
-   
+
    runnable_pred(PRED pred) :
-   m_pred(pred)
+      m_pred(pred)
    {
-      
+
    }
-   
+
    virtual void run()
    {
       m_pred();
-      
+
       delete this;
-      
+
    }
- 
+
 
 };
 
 template < typename PRED >
 void run_pred_on_main_thread(PRED pred)
 {
- 
+
    runnable_pred < PRED > * prunnablepred = new runnable_pred < PRED >(pred);
 
    run_runnable_on_main_thread(prunnablepred);
 
 }
-   
+
 
 
 #ifdef WINDOWSEX
@@ -759,7 +759,7 @@ namespace aura
    void application::open_profile_link(string strUrl, string strProfile, string strTarget)
    {
 
-      ::fork(this, [=]()
+      fork([=]()
       {
 
          sync_open_profile_link(strUrl, strProfile, strTarget);
@@ -1339,7 +1339,18 @@ namespace aura
 
 #ifdef WINDOWS
          {
-            strParam += "--user-data-dir=\"" + pathProfile + "\"";
+            if (strParam.trimmed().begins_ci("--"))
+            {
+
+               strParam = "--user-data-dir=\"" + pathProfile + "\" " + strParam;
+
+            }
+            else
+            {
+
+               strParam += "--user-data-dir=\"" + pathProfile + "\"";
+
+            }
 
             call_async(path, strParam, pathDir, SW_SHOWDEFAULT, false);
 
@@ -1348,7 +1359,7 @@ namespace aura
 #else
 
 #ifdef MACOS
-         
+
 //         string strApp = System.url().url_decode(path);
 //
 //         strApp.trim("\"");
@@ -1375,35 +1386,35 @@ namespace aura
 //            call_async(strApp, strParam, pathDir, SW_SHOWDEFAULT, false);
 //
 //         });
-         
-         
+
+
          ::file::path shell;
-         
+
          shell = "/bin/bash";
-         
+
          strParam += " --user-data-dir=\"" + pathProfile + "\"";
 
          string strApp = System.url().url_decode(path);
-         
+
          strApp.trim("\"");
-         
+
          string strCmd = "open -na \"" + strApp + "\" --args " + strParam;
-         
+
          strParam = " -c '" + strCmd + "'";
-         
+
          run_pred_on_main_thread([=]()
          {
-         
+
             call_async(shell, strParam, pathDir, SW_SHOWDEFAULT, false);
-         
+
          });
 
 #else
 
          ::file::path shell;
-         
+
          shell = "/bin/bash";
-         
+
          strParam += "--user-data-dir=\"" + pathProfile + "\"";
 
          string strCmd = path + " " + strParam;
@@ -1413,7 +1424,7 @@ namespace aura
          strParam = " -c \"" + strCmd + "\"";
 
          output_debug_string(strParam);
-            
+
          call_async(shell, strParam, pathDir, SW_SHOWDEFAULT, false);
 
 #endif
@@ -7217,7 +7228,7 @@ finalize:
       }
 
       return System.oprop("install_title");
-      
+
    }
 
 
