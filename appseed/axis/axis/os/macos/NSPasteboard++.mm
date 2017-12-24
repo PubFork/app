@@ -10,7 +10,9 @@
 
 #undef new
 
+
 char * ns_string(NSString * str);
+
 
 
 int mm_clipboard_get_file_count()

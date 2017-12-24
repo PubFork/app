@@ -11,40 +11,6 @@
 
 char * ns_string(NSString * str);
 
-
-//
-//char * str_clip_dup()
-//{
-// 
-//   NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
-//   
-//   NSArray *classes = [[NSArray alloc] initWithObjects:[NSString class], nil];
-//   
-//   NSDictionary *options = [NSDictionary dictionary];
-//   
-//   NSArray *copiedItems = [pasteboard readObjectsForClasses:classes options:options];
-//   
-//   if (copiedItems == nil)
-//   {
-//      
-//      return NULL;
-//
-//   }
-//   
-//   if([copiedItems count] <= 0)
-//   {
-//    
-//      return NULL;
-//      
-//   }
-//  
-//   NSString * pstr = [copiedItems objectAtIndex:0];
-//   
-//   return strdup([pstr UTF8String]);
-//
-//}
-
-
 char * ns_get_default_browser_path()
 {
    
@@ -252,6 +218,31 @@ void ns_Sleep(unsigned int uiMillis)
 }
 
 
+
+
+char * ns_string(NSString * str)
+{
+   
+   if(str == nil)
+   {
+      
+      return NULL;
+      
+   }
+   
+   const char * pszUtf8 = [str UTF8String];
+   
+   if(pszUtf8 == NULL)
+   {
+      
+      return NULL;
+      
+   }
+   
+   return strdup(pszUtf8);
+   
+   
+}
 
 
 
