@@ -1112,7 +1112,7 @@ namespace macos
    }
 
    
-   bool os::file_open(::file::path path)
+   bool os::file_open(::file::path path, string strParams, string strFolder)
    {
       
       ns_open_file(path.c_str());

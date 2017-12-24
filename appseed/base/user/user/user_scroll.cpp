@@ -1386,7 +1386,12 @@ namespace user
    bool scroll::GetClientRect(LPRECT lprect)
    {
 
-      ::user::interaction::GetClientRect(lprect);
+      if(!::user::interaction::GetClientRect(lprect))
+      {
+         
+         return false;
+         
+      }
 
       lprect->right -= get_final_y_scroll_bar_width();
       lprect->bottom -= get_final_x_scroll_bar_width();
