@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace aura
@@ -14,16 +14,16 @@ namespace aura
    {
    }
 
-   
+
    string os::get_command_line()
    {
 
       _throw(interface_only_exception(get_app(), "this is an interface"));
-      
+
       return "";
-      
+
    }
-   
+
 
    bool os::shutdown(bool bIfPowerOff)
    {
@@ -209,20 +209,20 @@ namespace aura
    /// Remark: it is not default browser (necessarily)
    bool os::native_full_web_browser(const char * lpcsz)
    {
-      
+
       _throw(not_implemented(get_app()));
 
       return false;
-      
+
    }
-   
+
    /// Windows (Edge), fallback to native_full_web_browser
    /// Remark: it is not default browser (necessarily)
    bool os::native_modern_web_browser(const char * lpcsz)
    {
-     
+
       return native_full_web_browser(lpcsz);
-      
+
    }
 
 
@@ -354,9 +354,9 @@ namespace aura
 
 //      #ifdef LINUX
 
-  //       strTarget = pszSource;
+         //       strTarget = pszSource;
 
-    //  #else
+         //  #else
 
          string str = Application.file().as_string(pszSource);
 
@@ -457,7 +457,7 @@ namespace aura
    }
 
 
-   bool os::file_open(::file::path strSrc)
+   bool os::file_open(::file::path strSrc, string strParams, string strFolder)
    {
 
       return false;
@@ -515,7 +515,7 @@ namespace aura
       return false;
 
    }
-   
+
 
    bool os::is_user_auto_start(string strId)
    {
@@ -523,7 +523,7 @@ namespace aura
       return false;
 
    }
-   
+
 
    ::file::path os::get_app_path(const string & strApp)
    {
@@ -532,31 +532,31 @@ namespace aura
 
    }
 
-   
+
    void os::on_process_command(::command::command * pcommand)
    {
-      
+
       UNREFERENCED_PARAMETER(pcommand);
-      
+
    }
 
 
    bool os::browse_file_open(oswindow oswindowOwner, property_set & set)
    {
 
-	   _throw(interface_only_exception(get_app()));
+      _throw(interface_only_exception(get_app()));
 
-	   return false;
+      return false;
 
    }
 
-   
+
    bool os::browse_file_save(oswindow oswindowOwner, property_set & set)
    {
 
-	   _throw(interface_only_exception(get_app()));
+      _throw(interface_only_exception(get_app()));
 
-	   return false;
+      return false;
 
    }
 
@@ -564,9 +564,9 @@ namespace aura
    bool os::browse_folder(oswindow oswindowOwner, property_set & set)
    {
 
-	   _throw(interface_only_exception(get_app()));
+      _throw(interface_only_exception(get_app()));
 
-	   return false;
+      return false;
 
    }
 

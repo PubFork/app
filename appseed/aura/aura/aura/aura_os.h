@@ -1,32 +1,32 @@
-#ifndef AXIS_AXIS_CORE_OS_H
+﻿#ifndef AXIS_AXIS_CORE_OS_H
 #define AXIS_AXIS_CORE_OS_H
 
 
 namespace aura
 {
 
-   
+
    class CLASS_DECL_AURA os :
       virtual public object
    {
    public:
 
-      
+
       os(::aura::application * papp);
       virtual ~os();
 
-      
+
       virtual string get_command_line();
 
       virtual bool reboot();
       virtual bool shutdown(bool bPowerOff);
 
       virtual void terminate_processes_by_title(const char * pszName);
-      
+
 #ifdef WINDOWS
       virtual ::file::path get_module_path(HMODULE hmodule);
 #endif
-      
+
       virtual bool get_pid_by_path(const char * pszName, uint32_t & dwPid);
       virtual bool get_pid_by_title(const char * pszName, uint32_t & dwPid);
       virtual void get_all_processes(uint_array & dwa);
@@ -58,19 +58,19 @@ namespace aura
       virtual bool native_modern_web_browser(const char * lpcsz);
 
       virtual bool create_service(::aura::application * papp);
-      
+
       virtual bool remove_service(::aura::application * papp);
 
       virtual bool start_service(::aura::application * papp);
- 
+
       virtual bool stop_service(::aura::application * papp);
 
       virtual bool create_service(const string & strServiceName, const string & strDisplayName, const string & strCommand, const string & strUser = "", const string & strPass = "");
-      
+
       virtual bool remove_service(const string & strServiceName);
 
       virtual bool start_service(const string & strServiceName);
-      
+
       virtual bool stop_service(const string & strServiceName);
 
       DECLSPEC_NO_RETURN void raise_exception(uint32_t dwExceptionCode, uint32_t dwExceptionFlags = EXCEPTION_NONCONTINUABLE);
@@ -83,7 +83,7 @@ namespace aura
 
       virtual bool initialize_wallpaper_fileset(::file::set * pfileset, bool bAddSearch);
 
-      virtual bool file_open(::file::path path);
+      virtual bool file_open(::file::path path, string strParams = "", string strFolder = "");
 
       virtual string get_default_browser();
 
@@ -96,25 +96,25 @@ namespace aura
       virtual bool is_user_auto_start(string strId);
 
       virtual ::file::path get_app_path(const string & strApp);
-       
+
       virtual void on_process_command(::command::command * pcommand);
 
-	  /// set["file_filter_specs"] : string array of file extensions (with dot)
-	  /// set["file_filter_names"] : string array of the file extensions titles
-	  /// set["default_file_extension"] : default file extension (with dot)
-	  /// set["folder"] : folder path
-	  /// set["file_name"] : in/out file name
-	  virtual bool browse_file_open(oswindow oswindowOwner, property_set & set);
-	  
-	  /// set["file_filter_specs"] : string array of extensions (with dot)
-	  /// set["file_filter_names"] : string array of the file extensions titles
-	  /// set["default_file_extension"] : default file extension (with dot)
-	  /// set["folder"] : folder path
-	  /// set["file_name"] : in/out file name
-	  virtual bool browse_file_save(oswindow oswindowOwner, property_set & set);
-	  
-	  /// set["folder"] : in/out folder path
-	  virtual bool browse_folder(oswindow oswindowOwner, property_set & set);
+      /// set["file_filter_specs"] : string array of file extensions (with dot)
+      /// set["file_filter_names"] : string array of the file extensions titles
+      /// set["default_file_extension"] : default file extension (with dot)
+      /// set["folder"] : folder path
+      /// set["file_name"] : in/out file name
+      virtual bool browse_file_open(oswindow oswindowOwner, property_set & set);
+
+      /// set["file_filter_specs"] : string array of extensions (with dot)
+      /// set["file_filter_names"] : string array of the file extensions titles
+      /// set["default_file_extension"] : default file extension (with dot)
+      /// set["folder"] : folder path
+      /// set["file_name"] : in/out file name
+      virtual bool browse_file_save(oswindow oswindowOwner, property_set & set);
+
+      /// set["folder"] : in/out folder path
+      virtual bool browse_folder(oswindow oswindowOwner, property_set & set);
 
 
    };

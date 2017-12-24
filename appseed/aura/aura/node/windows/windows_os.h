@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 
@@ -52,7 +52,7 @@ namespace windows
 
       virtual bool open_in_ie(const char * lpcsz);
 
-      virtual bool file_open(::file::path path);
+      virtual bool file_open(::file::path path, string strParams = "", string strFolder = "") override;
 
       virtual bool browse_file_open(oswindow oswindowOwner, property_set & set) override;
       virtual bool browse_file_save(oswindow oswindowOwner, property_set & set) override;

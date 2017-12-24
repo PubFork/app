@@ -1,4 +1,4 @@
-//   Creator : El Barto (ef00@luc.ac.be)
+﻿//   Creator : El Barto (ef00@luc.ac.be)
 //   Location : http://www.luc.ac.be/~ef00/ebgfx
 //   Date : 09-04-98
 //////////////////////////////////////////////////////////////////////
@@ -313,17 +313,17 @@ namespace draw2d
       dib * pdibDst = this;
 
       if (
-         (!pdibDst->m_bMapped && !pdibSrc->m_bMapped)
-         ||
-         (
-            !(pdibDst->m_bMapped && pdibSrc->m_bMapped)
-            &&
-            (
-               (pdibDst->m_bMapped && !pdibDst->get_graphics()->prefer_mapped_dib_on_mix())
-               ||
-               (pdibSrc->m_bMapped && !pdibSrc->get_graphics()->prefer_mapped_dib_on_mix())
-            )
-         )
+      (!pdibDst->m_bMapped && !pdibSrc->m_bMapped)
+      ||
+      (
+      !(pdibDst->m_bMapped && pdibSrc->m_bMapped)
+      &&
+      (
+      (pdibDst->m_bMapped && !pdibDst->get_graphics()->prefer_mapped_dib_on_mix())
+      ||
+      (pdibSrc->m_bMapped && !pdibSrc->get_graphics()->prefer_mapped_dib_on_mix())
+      )
+      )
       )
       {
 
@@ -518,7 +518,6 @@ namespace draw2d
 
       dib * pdibDst = this;
 
-
       pdibDst->map();
 
       pdibSrc->map();
@@ -591,23 +590,18 @@ namespace draw2d
 
             psrc2 = &psrc[scanSrc * y];
 
-            //memcpy(pdst2, psrc2, xEnd * 4);
             for (int x = 0; x < xEnd; x++)
             {
 
-               //*pdst2 = *psrc2;
+               int  aDst = pdst2[3];
 
-               //pdst2[0] = (psrc2[0] + (pdst2[0] * (255 - psrc2[3])) / 255);
-               //pdst2[1] = (psrc2[1] + (pdst2[1] * (255 - psrc2[3])) / 255);
-               //pdst2[2] = (psrc2[2] + (pdst2[2] * (255 - psrc2[3])) / 255);
-               //pdst2[3] = (psrc2[3] + (pdst2[3] * (255 - psrc2[3])) / 255);
-               int  a = pdst2[3];
-               int  alpha = psrc2[3];
-               if (a == 0)
+               int  aSrc = psrc2[3];
+
+               if (aDst == 0)
                {
 
                }
-               else if (alpha == 0)
+               else if (aSrc == 0)
                {
 
                   *((COLORREF *)pdst2) = 0;
@@ -616,55 +610,31 @@ namespace draw2d
                else
                {
 
-                  //int d0 = pdst2[0] * 255 / a;
-                  //int d1 = pdst2[1] * 255 / a;
-                  //int d2 = pdst2[2] * 255 / a;
-
-                  //int s0 = psrc2[0] * 255 / alpha;
-                  //int s1 = psrc2[1] * 255 / alpha;
-                  //int s2 = psrc2[2] * 255 / alpha;
-
-                  //d0 = ((s0 * a) + (d0 * alpha)) >> 8;
-                  //d1 = ((s1 * a) + (d1 * alpha)) >> 8;
-                  //d2 = ((s2 * a) + (d2 * alpha)) >> 8;
-                  //pdst2[3] = ((psrc2[3] * a) + (pdst2[3] * alpha)) >> 8;
-
-                  //pdst[0] = (d0 * pdst2[3]) >> 8;
-                  //pdst[1] = (d1 * pdst2[3]) >> 8;
-                  //pdst[2] = (d2 * pdst2[3]) >> 8;
-
-                  //pdst2[0] = psrc2[0] + ((pdst2[0] * (acomplement)) >> 8);
-                  //pdst2[1] = psrc2[1] + ((pdst2[1] * (acomplement)) >> 8);
-                  //pdst2[2] = psrc2[2] + ((pdst2[2] * (acomplement)) >> 8);
-                  //pdst2[3] = psrc2[3] + ((pdst2[3] * (acomplement)) >> 8);
-
                   int r = pdst2[0];
                   int g = pdst2[1];
                   int b = pdst2[2];
 
-                  r = (r<<8) / a;
-                  g = (g<<8) / a;
-                  b = (b<<8) /a ;
+                  r = (r << 8) / aDst;
+                  g = (g << 8) / aDst;
+                  b = (b << 8) / aDst;
 
-                  int iA = alpha*a;
+                  int a = aSrc * aDst;
 
-                  pdst2[0] = (r * iA) >> 16;
-                  pdst2[1] = (g * iA) >> 16;
-                  pdst2[2] = (b * iA) >> 16;
-                  pdst2[3] = iA >> 8;
+                  pdst2[0] = (r * a) >> 16;
+                  pdst2[1] = (g * a) >> 16;
+                  pdst2[2] = (b * a) >> 16;
+                  pdst2[3] = a >> 8;
+
                }
-
-
 
                pdst2 += 4;
 
                psrc2 += 4;
 
             }
-            //pdst2 += xEnd;
-            //psrc2 += xEnd;
 
          }
+
       }
       else
       {
@@ -4672,9 +4642,9 @@ restart:
 
 
    void dib::RadialFill(
-      BYTE alpha1, BYTE red1, BYTE green1, BYTE blue1,
-      BYTE alpha2, BYTE red2, BYTE green2, BYTE blue2,
-      int32_t xCenter, int32_t yCenter, int32_t iRadius)
+   BYTE alpha1, BYTE red1, BYTE green1, BYTE blue1,
+   BYTE alpha2, BYTE red2, BYTE green2, BYTE blue2,
+   int32_t xCenter, int32_t yCenter, int32_t iRadius)
    {
       if (iRadius == 0)
          return;
@@ -5118,7 +5088,7 @@ restart:
 
 
             get_data()[(j + joff)*stride_unit + (i + ioff)] =
-               pdib->get_data()[y * stride_unit + x];
+            pdib->get_data()[y * stride_unit + x];
             k++;
          }
       }
@@ -5207,7 +5177,7 @@ restart:
 
 
             get_data()[(j + joff)*stride_unit + (i + ioff)] =
-               pdib->get_data()[y * stride_unit + x];
+            pdib->get_data()[y * stride_unit + x];
             k++;
          }
       }
@@ -6961,10 +6931,10 @@ restart:
       if (dx == 0.0 && dy == 0.0)
       {
          Fill(
-            byte_clip(argb_get_a_value(clr1) * 0.5 + argb_get_a_value(clr2) * 0.5),
-            byte_clip(argb_get_r_value(clr1) * 0.5 + argb_get_r_value(clr2) * 0.5),
-            byte_clip(argb_get_g_value(clr1) * 0.5 + argb_get_g_value(clr2) * 0.5),
-            byte_clip(argb_get_b_value(clr1) * 0.5 + argb_get_b_value(clr2) * 0.5));
+         byte_clip(argb_get_a_value(clr1) * 0.5 + argb_get_a_value(clr2) * 0.5),
+         byte_clip(argb_get_r_value(clr1) * 0.5 + argb_get_r_value(clr2) * 0.5),
+         byte_clip(argb_get_g_value(clr1) * 0.5 + argb_get_g_value(clr2) * 0.5),
+         byte_clip(argb_get_b_value(clr1) * 0.5 + argb_get_b_value(clr2) * 0.5));
       }
       else if (dx == 0.0)
       {
@@ -7063,10 +7033,10 @@ restart:
          d = ((double)(line - start)) / ((double)(end - start));
 
          clr = ARGB(
-                  byte_clip(argb_get_a_value(clr1) * (1.0 - d) + argb_get_a_value(clr2) * d),
-                  byte_clip(argb_get_r_value(clr1) * (1.0 - d) + argb_get_r_value(clr2) * d),
-                  byte_clip(argb_get_g_value(clr1) * (1.0 - d) + argb_get_g_value(clr2) * d),
-                  byte_clip(argb_get_b_value(clr1) * (1.0 - d) + argb_get_b_value(clr2) * d));
+               byte_clip(argb_get_a_value(clr1) * (1.0 - d) + argb_get_a_value(clr2) * d),
+               byte_clip(argb_get_r_value(clr1) * (1.0 - d) + argb_get_r_value(clr2) * d),
+               byte_clip(argb_get_g_value(clr1) * (1.0 - d) + argb_get_g_value(clr2) * d),
+               byte_clip(argb_get_b_value(clr1) * (1.0 - d) + argb_get_b_value(clr2) * d));
 
          pdata = (COLORREF *)&pb[m_iScan * line];
          for (int row = 0; row < m_size.cx; row++)
@@ -7117,10 +7087,10 @@ restart:
          d = ((double)(row - start)) / ((double)(end - start));
 
          clr = ARGB(
-                  byte_clip(argb_get_a_value(clr1) * (1.0 - d) + argb_get_a_value(clr2) * d),
-                  byte_clip(argb_get_r_value(clr1) * (1.0 - d) + argb_get_r_value(clr2) * d),
-                  byte_clip(argb_get_g_value(clr1) * (1.0 - d) + argb_get_g_value(clr2) * d),
-                  byte_clip(argb_get_b_value(clr1) * (1.0 - d) + argb_get_b_value(clr2) * d));
+               byte_clip(argb_get_a_value(clr1) * (1.0 - d) + argb_get_a_value(clr2) * d),
+               byte_clip(argb_get_r_value(clr1) * (1.0 - d) + argb_get_r_value(clr2) * d),
+               byte_clip(argb_get_g_value(clr1) * (1.0 - d) + argb_get_g_value(clr2) * d),
+               byte_clip(argb_get_b_value(clr1) * (1.0 - d) + argb_get_b_value(clr2) * d));
 
          pdata = (COLORREF *)&pb[sizeof(COLORREF) * row];
          for (int line = 0; line < m_size.cx; line++)
