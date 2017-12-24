@@ -325,6 +325,10 @@ char ** mm_clipboard_get_filea(int * pc);
 
 void mm_clipboard_set_filea(const char ** psza, int c);
 
+size_t mm_clipboard_get_plain_text(char * psz, size_t s);
+
+void mm_clipboard_set_plain_text(const char * psz);
+
 int macos_clipboard_get_file_count()
 {
    
