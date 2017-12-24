@@ -106,6 +106,7 @@ namespace user
       }
    }
 
+   // load keyboard_layout/<language>.xml
    bool keyboard_layout::load(const char * pszPath)
    {
 
@@ -220,6 +221,7 @@ namespace user
 
       string str;
 
+      // load keyboard_layout/<language>.xml
       if(!m_mapCode.Lookup(iCode, str))
       {
 

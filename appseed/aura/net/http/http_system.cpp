@@ -1354,6 +1354,7 @@ retry:
 
       TRACE("http system get : %s", pszUrl);
 
+      int iTry = 0;
 #ifdef BSD_STYLE_SOCKETS
 retry:
 #endif
@@ -1843,13 +1844,13 @@ retry_session:
       int32_t iStatusCode = psocket->outattr("http_status_code");
 
       set["http_status_code"] = psocket->outattr("http_status_code");
-
+      iTry++;
 #ifdef BSD_STYLE_SOCKETS
       if(iStatusCode == 0)
       {
-         //if(psocket->m_spsslclientcontext.is_set() && psocket->m_spsslclientcontext->m_iRetry == 1)
-         if (psocket->m_ssl_ctx != NULL && psocket->m_iSslCtxRetry == 1)
+         if (iTry <= 1)
          {
+            Sleep(300);
             goto retry;
          }
       }

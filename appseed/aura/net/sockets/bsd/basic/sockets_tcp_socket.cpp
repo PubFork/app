@@ -144,8 +144,11 @@ static int ssl_tlsext_ticket_key_cb(SSL *s, unsigned char key_name[16], unsigned
 namespace sockets
 {
 
-
-   bool tcp_socket::s_bReuseSession = true;
+#ifdef MACOS
+   bool tcp_socket::s_bReuseSession = false;
+   #else
+bool tcp_socket::s_bReuseSession = true;
+   #endif
 
 #ifdef LINUX
    // ssl_sigpipe_handle ---------------------------------------------------------
