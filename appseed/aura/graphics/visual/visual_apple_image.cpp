@@ -162,6 +162,7 @@ bool imaging::_load_image(::draw2d::dib * pdib, ::file::file * pfile)
    
    size_t s = iScan * h/ sizeof(COLORREF);
    
+   COLORREF * pcr = (COLORREF*)p;
    while(s> 0)
    {
 //      if(p[0] > p[3] || p[1] > p[3] || p[2] > p[3])
