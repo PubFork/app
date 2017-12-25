@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include "base/database/simpledb/simpledb.h"
 
 
@@ -1206,33 +1206,7 @@ retry_license:
 
          string strWallpaper = iScreen % straWallpaper;
 
-         fork([=]()
-         {
-
-            int iTry = 3;
-
-            while(iTry > 0)
-            {
-
-               set_wallpaper(iScreen, strWallpaper);
-
-               Sleep(300);
-
-               string strCompare = get_wallpaper(iScreen);
-
-               if(strCompare == strWallpaper)
-               {
-
-                  break;
-
-               }
-
-               iTry--;
-
-            }
-
-
-         });
+         set_wallpaper(iScreen, strWallpaper);
 
       }
 
