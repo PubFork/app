@@ -30,7 +30,8 @@ namespace music
             
          }
          
-         bool player::initialize_thread()
+         
+         bool player::init_thread()
          {
             
             m_psequencethread->ResumeThread();
@@ -44,9 +45,11 @@ namespace music
             m_evInitialized.SetEvent();
             
             return true;
+            
          }
          
-         int32_t player::exit_thread()
+         
+         void player::term_thread()
          {
             // TODO:  perform any per-thread cleanup here
             //   if(!get_sequence()->IsNull())
@@ -58,8 +61,11 @@ namespace music
             //    delete m_pmidicallbackdata;
             ///  m_pmidicallbackdata = NULL;
             //}
-            return thread::exit_thread();
+         
+            thread::term_thread();
+            
          }
+         
          
          void player::install_message_routing(::message::sender * pinterface)
          {

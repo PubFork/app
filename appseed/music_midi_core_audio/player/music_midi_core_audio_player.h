@@ -39,8 +39,8 @@ namespace music
             bool Play(double dRate = 0.0, uint32_t dwEllapse = 584) override;
             bool Play(imedia_position tkStart, uint32_t dwEllapse = 584) override;
 
-            virtual bool initialize_thread() override;
-            virtual int32_t exit_thread() override;
+            virtual bool init_thread() override;
+            virtual void term_thread() override;
             virtual void pre_translate_message(::message::message * pobj) override;
             void OnMmsgDone(::music::midi::sequence *pSeq) override;
             DECL_GEN_SIGNAL(OnUserMessage);

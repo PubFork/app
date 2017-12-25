@@ -20,16 +20,24 @@ namespace music
       {
       }
       
-      bool sequence_thread::initialize_thread()
+      
+      bool sequence_thread::init_thread()
       {
+         
          set_thread_priority(::multithreading::priority_highest);
+         
          return true;
+         
       }
       
-      int32_t sequence_thread::exit_thread()
+      
+      void sequence_thread::term_thread()
       {
-         return thread::exit_thread();
+         
+         thread::term_thread();
+         
       }
+      
       
       void sequence_thread::install_message_routing(::message::sender * pinterface)
       {
@@ -240,7 +248,7 @@ namespace music
             
             /* super merge module      CVmsMusDll::load_string(str, IDS_PREROLLUSERERROR001);
              pme->SetUserText(str);*/
-            _throw(pme);
+            _rethrow(pme);
          }
          
       }
