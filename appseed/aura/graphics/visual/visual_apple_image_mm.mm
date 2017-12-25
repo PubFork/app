@@ -10,7 +10,7 @@
 //#include <CoreGraphics/CoreGraphics.h>
 CFDataRef CopyImagePixels(CGImageRef inImage) {     return CGDataProviderCopyData(CGImageGetDataProvider(inImage)); }
 
-void * get_dib(int & w, int & h, int & iScan, const void * pdata, unsigned long size)
+void * get_dib(int & width, int & height, int & iScan, const void * pdata, unsigned long size)
 {
    
    NSData * data = [NSData dataWithBytes:pdata length:size];
@@ -31,27 +31,43 @@ void * get_dib(int & w, int & h, int & iScan, const void * pdata, unsigned long 
       
    }
    
-   CGImageRef cgimage = [image CGImageForProposedRect:NULL context:NULL hints:NULL];
+   CGImageRef inputCGImage = [image CGImageForProposedRect:NULL context:NULL hints:NULL];
    
-   if(cgimage == NULL)
+   if(inputCGImage == NULL)
    {
     
       return NULL;
       
    }
    
-   w = (int) CGImageGetWidth(cgimage);
+//https://www.raywenderlich.com/69855/image-processing-in-ios-part-1-raw-bitmap-modification
    
-   h   = (int) CGImageGetHeight(cgimage);
+   // 1.
+   width = (int) CGImageGetWidth(inputCGImage);
+   height = (int) CGImageGetHeight(inputCGImage);
    
-   if(w <= 0 || h <= 0)
-   {
-      
-      return NULL;
-      
-   }
+   // 2.
+   NSUInteger bytesPerPixel = 4;
+   NSUInteger bytesPerRow = bytesPerPixel * width;
+   NSUInteger bitsPerComponent = 8;
    
-   iScan = (int) CGImageGetBytesPerRow(cgimage);
+   UInt32 * pixels;
+   pixels = (UInt32 *) calloc(height * width, sizeof(UInt32));
+   
+   // 3.
+   CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+   CGContextRef context = CGBitmapContextCreate(pixels, width, height, bitsPerComponent, bytesPerRow, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
+   
+   // 4.
+   CGContextDrawImage(context, CGRectMake(0, 0, width, height), inputCGImage);
+   
+   // 5. Cleanup
+   CGColorSpaceRelease(colorSpace);
+   CGContextRelease(context);
+   
+   //CGImageRelease(inputCGImage);
+   
+   /*iScan = (int) CGImageGetBytesPerRow(cgimage);
    
    if(iScan <= 0)
    {
@@ -82,7 +98,11 @@ void * get_dib(int & w, int & h, int & iScan, const void * pdata, unsigned long 
    
    memcpy(pdst, psrc, iScan * h);
    
-   return pdst;
+   */
+   
+   //return pdst;
+   
+   return pixels;
    
 }
 
