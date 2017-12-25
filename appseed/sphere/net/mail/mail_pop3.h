@@ -1,6 +1,4 @@
-﻿#pragma once
-
-#include "aura/net/sockets/bsd/basic/sockets_socket_handler.h"
+#pragma once
 
 namespace mail
 {
@@ -15,7 +13,7 @@ namespace mail
    public:
 
 
-      ::sockets::socket_handler     m_handler;
+      ::sockets::socket_handler *   m_phandler;
       pop3_socket *                 m_psocket;
       event                         m_evFinish;
       bool                          m_bRun;
@@ -35,6 +33,7 @@ namespace mail
 
 
       pop3(::aura::application * papp);
+      virtual ~pop3();
 
 
       virtual string get_user();

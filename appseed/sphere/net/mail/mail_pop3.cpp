@@ -1,5 +1,8 @@
 #include "framework.h" // from "aura/net/net_sockets.h"
 #include "aura/net/net_sockets.h"
+#include "pop3_socket.h"
+#include "simple_pop3.h"
+
 
 
 namespace mail
@@ -8,15 +11,24 @@ namespace mail
 
    pop3::pop3(::aura::application * papp) :
       ::object(papp),
-      m_handler(papp),
       m_evFinish(papp)
    {
+      
+      m_phandler = new ::sockets::socket_handler(papp);
 
       m_bRun = false;
       m_bSynch = false;
 
    }
 
+   
+   pop3::~pop3()
+   {
+
+      ::aura::del(m_phandler);
+      
+   }
+   
 
    UINT pop3::pop3_thread_proc(LPVOID lpvoid)
    {
@@ -31,7 +43,7 @@ namespace mail
 
    UINT pop3::run()
    {
-      m_psocket = new pop3_socket(m_handler);
+      m_psocket = new pop3_socket(*m_phandler);
       m_psocket->m_ppop3 = this;
       int32_t iPort = 995;
       if(iPort == 995)
@@ -40,11 +52,11 @@ namespace mail
          m_psocket->EnableSSL();
       }
       m_psocket->open(::net::address(get_host(), (port_t) iPort));
-      m_handler.add(m_psocket);
-      m_handler.select(240,0);
+      m_phandler->add(m_psocket);
+      m_phandler->select(240,0);
       while(m_bRun && m_psocket->m_estate != pop3_socket::state_finished)
       {
-         m_handler.select(240,0);
+         m_phandler->select(240,0);
       }
       m_bRun = false;
       m_evFinish.SetEvent();
