@@ -116,6 +116,8 @@ namespace aura
       /// set["folder"] : in/out folder path
       virtual bool browse_folder(oswindow oswindowOwner, property_set & set);
 
+      /// set["folder"] : in/out folder path
+      virtual bool browse_file_or_folder(oswindow oswindowOwner, property_set & set);
 
    };
 

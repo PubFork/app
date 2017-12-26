@@ -57,6 +57,7 @@ namespace windows
       virtual bool browse_file_open(oswindow oswindowOwner, property_set & set) override;
       virtual bool browse_file_save(oswindow oswindowOwner, property_set & set) override;
       virtual bool browse_folder(oswindow oswindowOwner, property_set & set) override;
+      virtual bool browse_file_or_folder(oswindow oswindowOwner, property_set & set) override;
 
       virtual bool create_service(::aura::application * papp);
       virtual bool remove_service(::aura::application * papp);

@@ -2478,6 +2478,7 @@ repeat:
    }
 
 
+
    bool os::browse_folder(oswindow oswindowOwner, property_set & set)
    {
 
@@ -2590,6 +2591,118 @@ repeat:
 
    }
 
+   bool os::browse_file_or_folder(oswindow oswindowOwner, property_set & set)
+   {
+
+      bool bOk = false;
+
+      try
+      {
+
+         ::EnableWindow(oswindowOwner, FALSE);
+
+      }
+      catch (...)
+      {
+
+
+      }
+
+      try
+      {
+
+         defer_co_initialize_ex(false);
+
+         comptr < IFileOpenDialog > pfileopen;
+
+         // Create the FileOpenDialog object.
+         HRESULT hr = pfileopen.CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_ALL);
+
+         if (SUCCEEDED(hr))
+         {
+
+            if (set["folder"].get_string().get_length() > 0)
+            {
+
+               wstring wstr(set["folder"].get_string());
+
+               comptr < IShellItem > psi;
+
+               hr = SHCreateItemFromParsingName(wstr, NULL, IID_IShellItem, (void **)&psi);
+
+               if (SUCCEEDED(hr))
+               {
+
+                  pfileopen->SetFolder(psi);
+
+               }
+
+            }
+
+            pfileopen->SetOptions(FOS_PATHMUSTEXIST | FOS_PICKFOLDERS);
+
+            // Show the Open dialog box.
+            hr = pfileopen->Show(NULL);
+
+            if (SUCCEEDED(hr))
+            {
+
+               // Get the file name from the dialog box.
+               comptr < IShellItem > pitem;
+
+               hr = pfileopen->GetResult(&pitem);
+
+               if (SUCCEEDED(hr))
+               {
+
+                  cotaskp(PWSTR) pwszFilePath;
+
+                  hr = pitem->GetDisplayName(SIGDN_FILESYSPATH, &pwszFilePath);
+
+                  // Display the file name to the user.
+                  if (SUCCEEDED(hr))
+                  {
+
+                     set["path"] = string((PWSTR)pwszFilePath);
+
+                     bOk = true;
+
+                  }
+
+               }
+
+            }
+
+         }
+
+      }
+      catch (...)
+      {
+
+      }
+
+      try
+      {
+
+         ::EnableWindow(oswindowOwner, TRUE);
+
+         ::SetWindowPos(oswindowOwner, HWND_TOP, 0, 0, 0, 0, SWP_SHOWWINDOW);
+
+         ::SetForegroundWindow(oswindowOwner);
+
+         ::BringWindowToTop(oswindowOwner);
+
+      }
+      catch (...)
+      {
+
+
+      }
+
+      return bOk;
+
+
+   }
 
 } // namespace windows
 

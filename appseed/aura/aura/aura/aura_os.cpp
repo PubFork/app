@@ -570,6 +570,14 @@ namespace aura
 
    }
 
+   bool os::browse_file_or_folder(oswindow oswindowOwner, property_set & set)
+   {
+
+      _throw(interface_only_exception(get_app()));
+
+      return false;
+
+   }
 
 } // namespace core
 
