@@ -3689,39 +3689,9 @@ namespace draw2d_quartz2d
    point graphics::GetViewportOrg() const
    {
 
-      CGPoint pt1;
+      ((graphics*)this)->m_affine = CGContextGetCTM(m_pdc);
 
-      pt1.x = 0;
-
-      pt1.y = 0;
-
-      CGPoint pt2;
-
-      pt2.x = 0;
-
-      pt2.y = 0;
-
-      CGAffineTransform affine = m_affine;
-
-      CGAffineTransform affineABCD = CGContextGetCTM(m_pdc);
-
-//      CGAffineTransform affineBCD = CGAffineTransformConcat(affineInvert, affineABCD);
-
-//      CGAffineTransform affineBCDInvert = CGAffineTransformInvert(affineBCD);
-
-//      pt = CGPointApplyAffineTransform(pt, affineBCDInvert);
-
-      pt1 = CGPointApplyAffineTransform(pt1, affineABCD);
-
-      pt2 = CGPointApplyAffineTransform(pt1, affine);
-
-      point pt;
-
-      pt.x = pt2.x;
-
-      pt.y = pt2.y;
-
-      return pt;
+      return point(m_affine.tx, m_affine.ty);
 
    }
 
@@ -3732,43 +3702,16 @@ namespace draw2d_quartz2d
 
       POINT ptOld = GetViewportOrg();
 
-      CGAffineTransform affine = m_affine;
+      m_affine = CGContextGetCTM(m_pdc);
 
-      //      CGAffineTransform affineInvert = CGAffineTransformInvert(affine);
-
-      CGAffineTransform affineABCD = CGContextGetCTM(m_pdc);
-
-      //      CGAffineTransform affineBCD = CGAffineTransformConcat(affineInvert, affineABCD);
-
-      CGAffineTransform affineABCDInvert = CGAffineTransformInvert(affineABCD);
-
-      CGContextConcatCTM(m_pdc, affineABCDInvert);
-
-      //      CGAffineTransform affineQ1 = CGContextGetCTM(m_pdc);
-
-      CGContextConcatCTM(m_pdc, affine);
-
-      //      CGAffineTransform affineQ2 = CGContextGetCTM(m_pdc);
-
-      CGContextTranslateCTM(m_pdc, x, y);
-
-      //      CGAffineTransform affineQ3 = CGContextGetCTM(m_pdc);
-
-      //      CGContextConcatCTM(m_pdc, affineBCD);
-
-      //      CGPoint pt;
-
-      //      pt.x = 0.f;
-
-      //      pt.y = 0.f;
-
-      //      CGPointApplyAffineTransform(pt, affineBCD);
-
-      //      CGContextTranslateCTM(m_pdc, -pt.x, -pt.y);
+      CGContextTranslateCTM(m_pdc, x - m_affine.tx, y - m_affine.ty);
+      
+      m_affine = CGContextGetCTM(m_pdc);
 
       return ptOld;
 
    }
+
 
    point graphics::OffsetViewportOrg(int32_t nWidth, int32_t nHeight)
    {

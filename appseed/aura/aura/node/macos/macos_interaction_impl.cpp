@@ -605,6 +605,72 @@ namespace macos
 
          ::copy(m_rectParentClient, rect32);
 
+//         if(!m_pui->WfiIsMoving() && !m_pui->WfiIsSizing())
+//         {
+//            
+//            rect rectIntersect;
+//            
+//            if(m_pui->WfiIsFullScreen())
+//            {
+//            
+//               rect rectMonitor;
+//               
+//            for(index iMonitor = 0; iMonitor < System.get_monitor_count(); iMonitor++)
+//            {
+//               
+//               System.get_monitor_rect(iMonitor, rectMonitor);
+//               
+//               if(rectIntersect.intersect(rect32, rectMonitor))
+//               {
+//                
+//                  
+//                  if(rectIntersect != rect32)
+//                  {
+//                  m_pui->SetPlacement(rectIntersect);
+//                     
+//                  }
+//                  
+//                  
+//               }
+//               
+//            }
+//               
+//            }
+//            
+//            else
+//            {
+//               
+//               rect rectWkSpace;
+//               
+//
+//               for(index iWkSpace = 0; iWkSpace < System.get_wkspace_count(); iWkSpace++)
+//               {
+//                  
+//                  System.get_monitor_rect(iWkSpace, rectWkSpace);
+//                  
+//                  if(rectIntersect.intersect(rect32, rectWkSpace))
+//                  {
+//                     
+//                     if(rectIntersect != rect32)
+//                     {
+//                     
+//                        m_pui->SetPlacement(rectIntersect);
+//                        
+//                     }
+//                     
+//                     
+//                  }
+//
+//               }
+//
+//               
+//            }
+//            
+//            
+//            
+//            
+//         }
+         
       }
 
       //m_pui->on_layout();
@@ -1250,12 +1316,15 @@ namespace macos
 
          }
 
-         if (m_bTranslateMouseMessageCursor && !pmouse->m_bTranslated)
+         if (m_bTranslateMouseMessageCursor)
          {
+            
+            rect rect;
+
+            if(!pmouse->m_bTranslated)
+            {
 
             pmouse->m_bTranslated = true;
-
-            rect rect;
 
             if (System.get_monitor_count() > 0)
             {
@@ -1293,6 +1362,8 @@ namespace macos
 
                pmouse->m_pt.y += (LONG)rect.top;
 
+            }
+               
             }
 
          }
@@ -2340,6 +2411,7 @@ namespace macos
                      _001UpdateScreen();
 
                   }
+                  
 
                   DWORD dwSpan = ::get_tick_count() - dwStart;
 

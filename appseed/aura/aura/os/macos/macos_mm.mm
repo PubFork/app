@@ -1,4 +1,4 @@
-//
+///
 //  macos_mm.m
 //  aura
 //
@@ -243,6 +243,42 @@ char * ns_string(NSString * str)
    
    
 }
+
+
+
+
+//https://stackoverflow.com/questions/14699604/replacements-for-getmacosstatuserrorstring-getmacosstatuscommentstring
+
+//11
+//down vote
+//accepted
+//You can use [NSError errorWithDomain:NSOSStatusErrorDomain code:errorCode userInfo:nil] to get an NSError representing the OSStatus of errorCode. NSError provides the ability to get a localized error message from the error code (-localizedDescription), or a regular unlocalized one for debugging purposes (-description).
+
+// GetMacOSStatusErrorString and GetMacOSStatusCommentString
+
+char * mm_error_string(OSStatus status)
+{
+   
+   NSError * error = [NSError errorWithDomain:NSOSStatusErrorDomain code: status userInfo: nil];
+   
+   NSString * strError = [error localizedDescription];
+   
+   return ns_string(strError);
+   
+}
+
+
+char * mm_error_description(OSStatus status)
+{
+   
+   NSError * error = [NSError errorWithDomain:NSOSStatusErrorDomain code: status userInfo: nil];
+   
+   NSString * strError = [error description];
+   
+   return ns_string(strError);
+   
+}
+
 
 
 

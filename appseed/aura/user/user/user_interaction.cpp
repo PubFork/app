@@ -737,10 +737,7 @@ restart:
 
       }
 
-      lprect->left = (LONG)rectWindow.left;
-      lprect->top = (LONG)rectWindow.top;
-      lprect->right = (LONG)rectWindow.right;
-      lprect->bottom = (LONG)rectWindow.bottom;
+      ::copy(lprect, rectWindow);
 
       return true;
 

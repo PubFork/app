@@ -199,8 +199,19 @@ string ca2_command_line2()
       ::str::begins_eat_ci(str, "com.ca2.");
       
    }
+   
+   stringa stra;
+   
+   stra.explode(".", str);
 
-   str.replace(".", "/");
+   if(stra.get_size() >= 2)
+   {
+      
+      stra[1].replace('-', '_');
+      
+   }
+   
+   str = stra.implode("/");
    
 #ifdef APPLE_IOS
 

@@ -28,7 +28,7 @@
 
 //#include  "app/axis/freeimage/Source/FreeImage/FreeImageFramework.h"
 #include "freeimage/Source/FreeImage.h"
-#include "ra/graphics/freeimage/Source/Utilities.h"
+#include "aura/graphics/freeimage/Source/Utilities.h"
 
 #include "aura/graphics/freeimage/Source/Metadata/FreeImageTag.h"
 #include "os_hint.h"
