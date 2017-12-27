@@ -31,8 +31,6 @@ namespace music
             m_cbPendingUserEvent    = 0;
             m_hpbPendingUserEvent   = 0;
 
-            m_tempomap.set_size(0, C_TEMPO_MAP_CHK);
-
             m_iKeyShift             = 0;
             m_iTempoShift           = 0;
 
@@ -539,7 +537,7 @@ smf_Open_File_Cleanup:
             return MillisecsToTicks(time);
          }
 
-         void  buffer::PositionToTime(imedia::time_array & timea, imedia::position_array  & positiona, int_ptr tkOffset)
+         void  buffer::PositionToTime(imedia_time_array & timea, imedia_position_array  & positiona, int_ptr tkOffset)
          {
             if(tkOffset < 0)
             {
@@ -569,7 +567,7 @@ smf_Open_File_Cleanup:
             }
          }
 
-         void buffer::TicksToMillisecs(imedia::time_2darray * p2DMillis, imedia::position_2darray *p2DTicks, int_ptr tkOffset)
+         void buffer::TicksToMillisecs(imedia_time_2darray * p2DMillis, imedia_position_2darray *p2DTicks, int_ptr tkOffset)
          {
             ASSERT(p2DMillis->get_size() == 0);
             p2DMillis->set_app(get_app());
@@ -585,7 +583,7 @@ smf_Open_File_Cleanup:
 
          }
 
-         void buffer::PositionToTime(imedia::time_2darray  & timea, imedia::position_2darray  & positiona, int_ptr tkOffset)
+         void buffer::PositionToTime(imedia_time_2darray  & timea, imedia_position_2darray  & positiona, int_ptr tkOffset)
          {
             ASSERT(timea.get_size() == 0);
             timea.set_app(get_app());
@@ -601,7 +599,7 @@ smf_Open_File_Cleanup:
 
          }
 
-         void  buffer::TicksToMillisecs(imedia::time_array *pMillisArray, imedia::position_array *pTickArray, int_ptr tkOffset)
+         void  buffer::TicksToMillisecs(imedia_time_array *pMillisArray, imedia_position_array *pTickArray, int_ptr tkOffset)
          {
             if(tkOffset < 0)
             {
@@ -636,8 +634,8 @@ smf_Open_File_Cleanup:
 
 
          void  buffer::MillisecsToTicks(
-            imedia::position_array *pTickArray,
-            imedia::time_array *pMillisArray,
+            imedia_position_array *pTickArray,
+            imedia_time_array *pMillisArray,
             imedia_time msOffset)
          {
             if(msOffset < 0)
@@ -672,8 +670,8 @@ smf_Open_File_Cleanup:
          }
 
          void  buffer::TimeToPosition(
-            imedia::position_array & positiona,
-            imedia::time_array  & timea,
+            imedia_position_array & positiona,
+            imedia_time_array  & timea,
             imedia_time msOffset)
          {
             if(msOffset < 0)
@@ -956,7 +954,7 @@ smf_Open_File_Cleanup:
             else // Meta
             {
                // se o meta event possuir tkDelta > 0,
-               // insere o evento no stream para que não haja perda de sincronismo
+               // insere o evento no stream para que nï¿½o haja perda de sincronismo
                if(tkDelta > 0)
                {
                   InsertPadEvent(tkDelta, lpmh);
@@ -2032,7 +2030,7 @@ smf_Open_File_Cleanup:
 
 
 
-         //int32_t buffer::CalcMelodyTrack(::music::midi::events **ppEvents, imedia::position_array *pTicks)
+         //int32_t buffer::CalcMelodyTrack(::music::midi::events **ppEvents, imedia_position_array *pTicks)
          //{
             //    return -1;
            // return m_ptracks->CalcMelodyTrack(ppEvents, pTicks, m_pFileHeader->wFormat);
@@ -2040,7 +2038,7 @@ smf_Open_File_Cleanup:
 
          /*int32_t buffer::WorkCalcMelodyTrack(
             ::music::midi::events ** ppEvents,
-            imedia::position_array & positiona,
+            imedia_position_array & positiona,
             int_array & iaTokenLine)
          {
             return m_ptracks->WorkCalcMelodyTrack(
@@ -3189,7 +3187,7 @@ smf_Open_File_Cleanup:
 
          e_result buffer::WorkWriteXFTracks(
             stringa &  tokena,
-            imedia::position_array & positiona,
+            imedia_position_array & positiona,
             ::music::xf::info_header & xfinfoheader)
          {
             ::music::midi::tracks & tracka = GetTracks();

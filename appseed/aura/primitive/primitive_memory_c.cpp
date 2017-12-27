@@ -77,31 +77,16 @@ void * memcpy_dup(void * dst, const void * src, size_t iSize)
    return dst;*/
 }
 
-void * memrcpy_dup(void * dst, const void * src, size_t iSize)
-{
-   uchar * puchDst = ((uchar * ) dst) + iSize - 1;
-   uchar * puchSrc = ((uchar * ) src) + iSize - 1;
-   if(puchDst == puchSrc)
-      return dst;
-   while(iSize > 0)
-   {
-      *puchDst = *puchSrc;
-      puchDst--;
-      puchSrc--;
-      iSize--;
-   }
-   return dst;
-}
 
 void * memmov_dup(void * dst, const void * src, size_t iSize)
 {
+   
    memmove(dst,  src, iSize);
-   /*if(dst <= src)
-      return memcpy_dup(dst, src, iSize);
-   else
-      return memrcpy_dup(dst, src, iSize);*/
+   
    return dst;
+   
 }
+
 
 int32_t memcmp_dup(const void * sz1, const void * sz2, size_t iLen)
 {
@@ -176,6 +161,44 @@ void * mem_reverse(void * p, size_t iLen)
 
    return p;
 
+}
+
+void * memrcpy_dup(void * dst, const void * src, size_t size)
+{
+
+   if(size == 0)
+   {
+
+      return dst;
+
+   }
+   
+   char * pchDst = (char *) dst;
+   
+   const char * pchSrc = (const char *) src;
+   
+   size_t i = size - 1;
+   
+   while(true)
+   {
+      
+      *pchDst = pchSrc[i];
+      
+      if(i == 0)
+      {
+         
+         break;
+         
+      }
+
+      pchDst++;
+      
+      i--;
+      
+   }
+   
+   return dst;
+   
 }
 
 

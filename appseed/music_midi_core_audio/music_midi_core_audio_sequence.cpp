@@ -11,94 +11,35 @@ CFStringRef ConnectedEndpointName(MIDIEndpointRef endpoint);
 void MyMIDINotifyProc (const MIDINotification  *message, void *refCon) {
    printf("MIDI Notify, messageId=%d,", message->messageID);
 }
-// Get the MIDI messages as they're sent
-static void MyMIDIReadProc(const MIDIPacketList *pktlist,
-                           void *refCon,
-                           void *connRefCon) {
+
+static void MyMIDIReadProc(const MIDIPacketList * pktlist, void * refCon, void * connRefCon)
+{
+
    ::music::midi_core_midi::sequence * pseq = (::music::midi_core_midi::sequence * )refCon;
    
-   
-   
-   //if(!pseq->m_bStart)
-   {
-      
-      
-      
-   }
-   //CAClockParseMIDI(pseq->m_cl, pktlist);
-   // Cast our Sampler unit back to an audio unit
-   //AudioUnit *player = &pseq->m_pau->m_synth_unit;
-   
-   //MIDISend(pseq->m_pcmo->m_port, pseq->m_pcmo->getDestinations()[0].m_ref, pktlist);
-   //CAClockTime t;
-   //CAClockGetCurrentTime(pseq->m_cl, kCAClockTimeFormat_Seconds, &t);
-   //pseq->m_posPlay = t.time.seconds * 1000;
    MIDIPacket *packet = (MIDIPacket *)pktlist->packet;
-   for (int i=0; i < pktlist->numPackets; i++)
+   
+   for (int i = 0; i < pktlist->numPackets; i++)
    {
       
-      //pseq->m_posPlay += packet->timeStamp;
       Byte midiStatus = packet->data[0];
+      
       Byte midiCommand = midiStatus >> 4;
    
-       //If the command is note-on
-      //if (midiCommand == 0x09) {
-         Byte note = packet->data[1] & 0x7F;
-         Byte velocity = packet->data[2] & 0x7F;
+      Byte note = packet->data[1] & 0x7F;
+
+      Byte velocity = packet->data[2] & 0x7F;
          
-         // Log the note letter in a readable format
-         int noteNumber = ((int) note) % 12;
-//         NSString *noteType;
-//         switch (noteNumber) {
-//            case 0:
-//               noteType = @"C";
-//               break;
-//            case 1:
-//               noteType = @"C#";
-//               break;
-//            case 2:
-//               noteType = @"D";
-//               break;
-//            case 3:
-//               noteType = @"D#";
-//               break;
-//            case 4:
-//               noteType = @"E";
-//               break;
-//            case 5:
-//               noteType = @"F";
-//               break;
-//            case 6:
-//               noteType = @"F#";
-//               break;
-//            case 7:
-//               noteType = @"G";
-//               break;
-//            case 8:
-//               noteType = @"G#";
-//               break;
-//            case 9:
-//               noteType = @"A";
-//               break;
-//            case 10:
-//               noteType = @"Bb";
-//               break;
-//            case 11:
-//               noteType = @"B";
-//               break;
-//            default:
-//               break;
-//         }
-//         NSLog([noteType stringByAppendingFormat:[NSString stringWithFormat:@": %i", noteNumber]]);
-         
-         // Use MusicDeviceMIDIEvent to send our MIDI message to the sampler to be played
-         
-      //}
       OSStatus result = noErr;
+      
       result = MusicDeviceMIDIEvent (pseq->m_pau->m_synth_unit, midiStatus, note, velocity, 0);
+      
       packet = MIDIPacketNext(packet);
+      
    }
+   
 }
+
 
 namespace music
 {
@@ -114,10 +55,13 @@ namespace music
       ::ikaraoke::karaoke(papp),
       ::music::midi::sequence(papp)
       {
+         
+         defer_create_mutex();
+         
          m_posPlay = 0;
-//         m_pseq = NULL;
          
          m_buffera.Initialize(16, 4 * 1024, 0);
+         
          m_midicallbackdata.m_psequence = this;
          
 //         m_iClient = 128;
@@ -135,474 +79,8 @@ namespace music
       }
       
       
-      /***************************************************************************
-       *
-       * seqAllocBuffers
-       *
-       * allocate buffers for this instance.
-       *
-       * pSeq                      - The sequencer instance to allocate buffers for.
-       *
-       * Returns
-       *   ::multimedia::result_success If the operation was successful.
-       *
-       *   MCIERR_OUT_OF_MEMORY  If there is insufficient primitive::memory for
-       *     the requested number and size of buffers.
-       *
-       * seqAllocBuffers allocates playback buffers based on the
-       * cbBuffer and cBuffer fields of pSeq. cbBuffer specifies the
-       * number of bytes in each buffer, and cBuffer specifies the
-       * number of buffers to allocate.
-       *
-       * seqAllocBuffers must be called before any other sequencer call
-       * on a newly allocted SEQUENCE structure. It must be paired with
-       * a call to seqFreeBuffers, which should be the last call made
-       * before the SEQUENCE structure is discarded.
-       *
-       ***************************************************************************/
-      ::multimedia::e_result sequence::AllocBuffers()
-      {
-         ASSERT(FALSE);
-         /*
-          uint32_t                   dwEachBufferSize;
-          uint32_t                   dwAlloc;
-          uint32_t                    i;
-          LPBYTE                  lpbWork;
-          
-          //    assert(pSeq != NULL);
-          
-          SetState(status_no_file);
-          m_lpmhFree  = NULL;
-          m_lpbAlloc  = NULL;
-          //    m_hSmf      = (HSMF)NULL;
-          
-          // First make sure we can allocate the buffers they asked for
-          //
-          dwEachBufferSize = sizeof(MIDIHDR) + (uint32_t)(m_cbBuffer);
-          dwAlloc          = dwEachBufferSize * (uint32_t)(m_cBuffer);
-          
-          //m_lpbAlloc = (uchar *) GlobalAllocPtr(GMEM_MOVEABLE|GMEM_SHARE, dwAlloc);
-          m_lpbAlloc = (uchar *) HeapAlloc(GetProcessHeap(), 0, dwAlloc);
-          if (NULL == m_lpbAlloc)
-          return MCIERR_OUT_OF_MEMORY;
-          
-          // Initialize all MIDIHDR's and _throw( them into a free list
-          //
-          m_lpmhFree = NULL;
-          
-          lpbWork = m_lpbAlloc;
-          for (i=0; i < m_cBuffer; i++)
-          {
-          ((LPMIDIHDR)lpbWork)->lpNext            = m_lpmhFree;
-          
-          ((LPMIDIHDR)lpbWork)->lpData            = (char *) (lpbWork + sizeof(MIDIHDR));
-          ((LPMIDIHDR)lpbWork)->dwBufferLength    = m_cbBuffer;
-          ((LPMIDIHDR)lpbWork)->dwBytesRecorded   = 0;
-          ((LPMIDIHDR)lpbWork)->dwUser            = (uint32_t)(uint32_t)this;
-          ((LPMIDIHDR)lpbWork)->dwFlags           = 0;
-          
-          m_lpmhFree = (LPMIDIHDR)lpbWork;
-          
-          lpbWork += dwEachBufferSize;
-          }
-          
-          return ::multimedia::result_success;*/
-         return ::multimedia::result_success;
-      }
-      
-      /***************************************************************************
-       *
-       * seqFreeBuffers
-       *
-       * Free buffers for this instance.
-       *
-       * pSeq                      - The sequencer instance to free buffers for.
-       *
-       * seqFreeBuffers frees all allocated primitive::memory belonging to the
-       * given sequencer instance pSeq. It must be the last call
-       * performed on the instance before it is destroyed.
-       *
-       ****************************************************************************/
-      VOID sequence::FreeBuffers()
-      {
-         ASSERT(FALSE);
-         /*
-          LPMIDIHDR               lpmh;
-          
-          //    assert(pSeq != NULL);
-          
-          if (NULL != m_lpbAlloc)
-          {
-          lpmh = (LPMIDIHDR)m_lpbAlloc;
-          ASSERT(!(lpmh->dwFlags & MHDR_PREPARED));
-          
-          //GlobalFreePtr(m_lpbAlloc);
-          HeapFree(GetProcessHeap(), 0, m_lpbAlloc);
-          }*/
-      }
-      
-      /***************************************************************************
-       *
-       * seqOpenFile
-       *
-       * Associates a MIDI file with the given sequencer instance.
-       *
-       * pSeq                      - The sequencer instance.
-       *
-       * Returns
-       *   ::multimedia::result_success If the operation is successful.
-       *
-       *   ::music::EFunctionNotSupported If there is already a file open
-       *     on this instance.
-       *
-       *   MCIERR_OUT_OF_MEMORY If there was insufficient primitive::memory to
-       *     allocate internal buffers on the file.
-       *
-       *   MCIERR_INVALID_FILE If initial attempts to parse the file
-       *     failed (such as the file is not a MIDI or RMI file).
-       *
-       * seqOpenFile may only be called if there is no currently open file
-       * on the instance. It must be paired with a call to seqCloseFile
-       * when operations on this file are complete.
-       *
-       * The pstrFile field of pSeq contains the name of the file
-       * to open. This name will be passed directly to mmioOpen; it may
-       * contain a specifcation for a custom MMIO file handler. The task
-       * context used for all I/O will be the task which calls seqOpenFile.
-       *
-       ***************************************************************************/
-      
-      ::music::e_result sequence::OpenFile(::music::midi::sequence & sequence, int32_t openMode)
-      {
-         SMFFILEINFO             sfi;
-         ::music::e_result               smfrc;
-         uint32_t                   cbBuffer;
-         
-         if (GetState() != status_no_file)
-         {
-            return ::music::EFunctionNotSupported;
-         }
-         
-         m_posPlay = 0;
-         
-         m_iOpenMode = openMode;
-         
-         smfrc = file()->OpenFile(*sequence.get_file(), openMode);
-         
-         if (::music::success != smfrc)
-         {
-            goto Seq_Open_File_Cleanup;
-         }
-         
-         file()->GetFileInfo(&sfi);
-         
-         m_dwTimeDivision = sfi.dwTimeDivision;
-         m_tkLength       = sfi.tkLength;
-         if(m_iOpenMode == ::music::midi::file::OpenForPlaying)
-         {
-            m_msLength      = TicksToMillisecs(m_tkLength);
-         }
-         /* Track buffers must be big enough to hold the state data returned
-          ** by smfSeek()
-          */
-         cbBuffer = MIN(m_cbBuffer, ::music::midi::GetStateMaxSize());
-         
-         
-      Seq_Open_File_Cleanup:
-         
-         if (::music::success != smfrc)
-            CloseFile();
-         else
-            SetState(status_opened);
-         
-         return smfrc;
-         
-      }
       
       
-      ::music::e_result sequence::OpenFile(const char * lpFileName, int32_t openMode)
-      {
-         ::file::file_sp file(
-                                get_app());
-         file->open(lpFileName,
-                    ::file::mode_read |
-                    ::file::share_deny_write |
-                    ::file::type_binary);
-         return OpenFile(*file, openMode);
-      }
-      
-      
-      ::music::e_result sequence::OpenFile(memory * pmemorystorage, int32_t openMode, e_storage estorage)
-      {
-         SMFFILEINFO             sfi;
-         ::music::e_result    smfrc;
-         uint32_t                   cbBuffer;
-         
-         if (GetState() != status_no_file)
-         {
-            CloseFile();
-            //return ::music::EFunctionNotSupported;
-         }
-         
-         m_iOpenMode = openMode;
-         
-         smfrc = file()->OpenFile(pmemorystorage, openMode, estorage);
-         
-         if (::music::success != smfrc)
-         {
-         }
-         else
-         {
-            file()->GetFileInfo(&sfi);
-            
-            m_dwTimeDivision = sfi.dwTimeDivision;
-            m_tkLength       = sfi.tkLength;
-            if(m_iOpenMode == ::music::midi::file::OpenForPlaying)
-            {
-               m_msLength      = TicksToMillisecs(m_tkLength);
-            }
-            /* Track buffers must be big enough to hold the state data returned
-             ** by smfSeek()
-             */
-            cbBuffer = MIN(m_cbBuffer, ::music::midi::GetStateMaxSize());
-         }
-         
-         if(::music::success != smfrc)
-            CloseFile();
-         else
-            SetState(status_opened);
-         
-         return smfrc;
-      }
-      
-      ::music::e_result sequence::OpenFile(
-                                           ::file::file & ar,
-                                           int32_t openMode)
-      {
-         ::multimedia::e_result                rc      = ::multimedia::result_success;
-         //    SMFOPENFILESTRUCT       sofs;
-         SMFFILEINFO             sfi;
-         ::music::e_result               smfrc;
-         uint32_t                   cbBuffer;
-         //    assert(pSeq != NULL);
-         
-         if (GetState() != status_no_file)
-         {
-            return ::music::EFunctionNotSupported;
-         }
-         
-         
-         
-         //   m_pstrFile = _tcsdup(lpFileName);
-         //   m_strFile = lpFileName;
-         
-         //    ASSERT(m_pstrFile != NULL);
-         
-         m_iOpenMode = openMode;
-         
-         //    sofs.pstrName     = m_pstrFile;
-         
-         //PSMF pSmf = new SMF();
-         
-         //smfrc = file()->OpenFile(&sofs);
-         smfrc = file()->OpenFile(ar, openMode);
-         
-         //smfrc = smfOpenFile(&sofs);
-         if (::music::success != smfrc)
-         {
-            //      delete pSmf;
-            rc = ::music::translate(smfrc);
-         }
-         else
-         {
-            //    m_hSmf = sofs.hSmf;
-            //    ((PSMF) m_hSmf)->GetFileInfo(&sfi);
-            file()->GetFileInfo(&sfi);
-            
-            m_dwTimeDivision = sfi.dwTimeDivision;
-            m_tkLength       = sfi.tkLength;
-            if(m_iOpenMode == ::music::midi::file::OpenForPlaying)
-            {
-               m_msLength      = TicksToMillisecs(m_tkLength);
-            }
-            /* Track buffers must be big enough to hold the state data returned
-             ** by smfSeek()
-             */
-            cbBuffer = MIN(m_cbBuffer, ::music::midi::GetStateMaxSize());
-         }
-         
-         if (::music::success != smfrc)
-            CloseFile();
-         else
-            SetState(status_opened);
-         
-         return smfrc;
-      }
-      /***************************************************************************
-       *
-       * seqCloseFile
-       *
-       * Deassociates a MIDI file with the given sequencer instance.
-       *
-       * pSeq                      -  The sequencer instance.
-       *
-       * Returns
-       *   ::multimedia::result_success If the operation is successful.
-       *
-       *   ::music::EFunctionNotSupported If the sequencer instance is not
-       *     stopped.
-       *
-       * A call to seqCloseFile must be paired with a prior call to
-       * seqOpenFile. All buffers associated with the file will be
-       * freed and the file will be closed. The sequencer must be
-       * stopped before this call will be accepted.
-       *
-       ***************************************************************************/
-      ::music::e_result sequence::CloseFile()
-      {
-         single_lock sl(&m_mutex, true);
-         
-         //if (status_no_file == GetState())
-         //   return ::music::EFunctionNotSupported;
-         
-         file()->CloseFile();
-         
-         /* If we were prerolled, need to clean up -- have an open MIDI handle
-          ** and buffers in the ready queue
-          */
-         
-         //    single_lock slStream(&m_csStream, false);
-         
-         //    for (lpmh = m_lpmhFree; lpmh; lpmh = lpmh->lpNext)
-         //    for (lpmh = m_buffera[0]; lpmh != NULL; lpmh = lpmh->lpNext)
-         
-         
-         /*   m_lpmhFree = NULL;
-          
-          if (m_lpmhPreroll != NULL)
-          {
-          slStream.lock();
-          if(m_hstream != NULL)
-          {
-          midiOutUnprepareHeader((HMIDIOUT) m_hstream, m_lpmhPreroll, sizeof(*m_lpmhPreroll));
-          }
-          slStream.unlock();
-          }
-          m_lpmhPreroll = NULL;*/
-         //    slStream.lock();
-//         if (m_pseq)
-  //       {
-    //
-      //      seq_free_context(m_pseq);
-            
-        // }
-         //  slStream.unlock();
-         
-         SetState(status_no_file);
-         
-         return ::music::success;
-      }
-      
-      /*
-      unsigned int MidiOutCore :: getPortCount()
-      {
-         CFRunLoopRunInMode( kCFRunLoopDefaultMode, 0, false );
-         return MIDIGetNumberOfDestinations();
-      }
-      
-      std::string MidiOutCore :: getPortName( unsigned int portNumber )
-      {
-         CFStringRef nameRef;
-         MIDIEndpointRef portRef;
-         char name[128];
-         
-         std::string stringName;
-         CFRunLoopRunInMode( kCFRunLoopDefaultMode, 0, false );
-         if ( portNumber >= MIDIGetNumberOfDestinations() ) {
-            std::ostringstream ost;
-            ost << "MidiOutCore::getPortName: the 'portNumber' argument (" << portNumber << ") is invalid.";
-            errorString_ = ost.str();
-            error( RtMidiError::WARNING, errorString_ );
-            return stringName;
-         }
-         
-         portRef = MIDIGetDestination( portNumber );
-         nameRef = ConnectedEndpointName(portRef);
-         CFStringGetCString( nameRef, name, sizeof(name), CFStringGetSystemEncoding());
-         CFRelease( nameRef );
-         
-         return stringName = name;
-      }
-      
-      void MidiOutCore :: openPort( unsigned int portNumber, const std::string portName )
-      {
-         if ( connected_ ) {
-            errorString_ = "MidiOutCore::openPort: a valid connection already exists!";
-            error( RtMidiError::WARNING, errorString_ );
-            return;
-         }
-         
-         CFRunLoopRunInMode( kCFRunLoopDefaultMode, 0, false );
-         unsigned int nDest = MIDIGetNumberOfDestinations();
-         if (nDest < 1) {
-            errorString_ = "MidiOutCore::openPort: no MIDI output destinations found!";
-            error( RtMidiError::NO_DEVICES_FOUND, errorString_ );
-            return;
-         }
-         
-         if ( portNumber >= nDest ) {
-            std::ostringstream ost;
-            ost << "MidiOutCore::openPort: the 'portNumber' argument (" << portNumber << ") is invalid.";
-            errorString_ = ost.str();
-            error( RtMidiError::INVALID_PARAMETER, errorString_ );
-            return;
-         }
-         
-         MIDIPortRef port;
-         CoreMidiData *data = static_cast<CoreMidiData *> (apiData_);
-         OSStatus result = MIDIOutputPortCreate( data->client,
-                                                CFStringCreateWithCString( NULL, portName.c_str(), kCFStringEncodingASCII ),
-                                                &port );
-         if ( result != noErr ) {
-            MIDIClientDispose( data->client );
-            errorString_ = "MidiOutCore::openPort: error creating OS-X MIDI output port.";
-            error( RtMidiError::DRIVER_ERROR, errorString_ );
-            return;
-         }
-         
-         // Get the desired output port identifier.
-         MIDIEndpointRef destination = MIDIGetDestination( portNumber );
-         if ( destination == 0 ) {
-            MIDIPortDispose( port );
-            MIDIClientDispose( data->client );
-            errorString_ = "MidiOutCore::openPort: error getting MIDI output destination reference.";
-            error( RtMidiError::DRIVER_ERROR, errorString_ );
-            return;
-         }
-         
-         // Save our api-specific connection information.
-         data->port = port;
-         data->destinationId = destination;
-         connected_ = true;
-      }
-      
-      void MidiOutCore :: closePort( void )
-      {
-         CoreMidiData *data = static_cast<CoreMidiData *> (apiData_);
-         
-         if ( data->endpoint ) {
-            MIDIEndpointDispose( data->endpoint );
-         }
-         
-         if ( data->port ) {
-            MIDIPortDispose( data->port );
-         }
-         
-         connected_ = false;
-      }
-
-      */
-
        
       
       /***************************************************************************
@@ -638,7 +116,7 @@ namespace music
       ::multimedia::e_result sequence::Preroll(::thread * pthread, ::music::midi::LPPREROLL lpPreroll, bool bThrow)
       {
          UNREFERENCED_PARAMETER(pthread);
-         single_lock sl(&m_mutex, TRUE);
+         single_lock sl(m_pmutex, TRUE);
          int32_t i;
          //   midi_callback_data *      lpData = &m_midicallbackdata;
          ::music::e_result     smfrc;
@@ -841,7 +319,7 @@ namespace music
       ::multimedia::e_result sequence::Start()
       {
          
-         single_lock sl(&m_mutex, TRUE);
+         single_lock sl(m_pmutex, TRUE);
          
          if (::music::midi::sequence::status_pre_rolled != GetState())
          {
@@ -872,7 +350,7 @@ namespace music
       ::multimedia::e_result sequence::seq_start()
       {
          
-         single_lock sl(&m_mutex, TRUE);
+         single_lock sl(m_pmutex, TRUE);
          
          if(GetState() != status_pre_rolled)
             return ::music::translate(::music::EFunctionNotSupported);
@@ -894,14 +372,16 @@ namespace music
 //         nameRef = ConnectedEndpointName(portRef);
 //         CFStringGetCString( nameRef, name, sizeof(name), CFStringGetSystemEncoding());
 //         CFRelease( nameRef );
-//         
+//
 //         stringName = name;
-//         
-//         m_pcmo = new CoreMidiOutput(stringName);
          
-         m_bStart = false;
+         //m_pcmo = new CoreMidiOutput(stringName);
+         
+         //m_bStart = false;
          
          m_pau = new AudioUnitOutput(NULL);
+         
+         //m_pau->note_on(128, 128, 0);
          
          OSStatus result;
          
@@ -923,85 +403,85 @@ namespace music
                                    MyMIDINotifyProc,
                                    NULL,
                                    &m_virtualMidi);
-         
-         
+
+
          if(result != noErr)
          {
-            
+
             return translate_os_status(result);
-            
+
          }
-         
+
          // Create an endpoint
          //MIDIEndpointRef virtualEndpoint;
          result = MIDIDestinationCreate(m_virtualMidi, CFSTR("Virtual Destination"), MyMIDIReadProc, this, &m_virtualEndpoint);
-         
-         
+
+
          if(result != noErr)
          {
-            
+
             return translate_os_status(result);
-            
+
          }
          m_sequence = NULL;
-         
+
          OSStatus os = LoadSMF((const char *)m_pfile->get_data(),
                                m_pfile->get_size(),
                                m_sequence, 0);
-         
+
          if(os != noErr)
          {
-            
+
             return translate_os_status(os);
-            
+
          }
          MusicSequenceType outType;
           OSStatus os2 = MusicSequenceGetSequenceType ( m_sequence, &outType );
-         
+
          // ************* Set the endpoint of the sequence to be our virtual endpoint
          MusicSequenceSetMIDIEndpoint(m_sequence, m_virtualEndpoint);
-         
+
          // Create a new music player
          // Initialise the music player
          os = NewMusicPlayer(&m_player);
          if(os != noErr)
          {
-            
+
             return translate_os_status(os);
-            
+
          }
-         
+
          // Load the sequence into the music player
          os = MusicPlayerSetSequence(m_player, m_sequence);
          if(os != noErr)
          {
-            
+
             return translate_os_status(os);
-            
+
          }
          // Called to do some MusicPlayer setup. This just
          // reduces latency when MusicPlayerStart is called
          os = MusicPlayerPreroll(m_player);
          if(os != noErr)
          {
-            
+
             return translate_os_status(os);
-            
+
          }
          // Starts the music playing
          os = MusicPlayerStart(m_player);
-         
+
          if(os != noErr)
          {
-            
+
             return translate_os_status(os);
-            
+
          }
-         
+
          SetState(status_playing);
-         
+
          m_uiStart = get_tick_count();
-         
+
          // Get length of track so that we know how long to kill time for
          MusicTrack t;
          MusicTimeStamp len = 0;
@@ -1011,18 +491,18 @@ namespace music
          os = MusicSequenceGetTrackCount(m_sequence, &uiCount);
 //         if(os != noErr)
 //         {
-//            
+//
 //            return translate_os_status(os);
-//            
+//
 //         }
-         
+
          for(UInt32 uiTrack = 0; uiTrack < uiCount; uiTrack++)
          {
-            
+
             MusicSequenceGetIndTrack(m_sequence, uiTrack, &t);
             len = 0;
             MusicTrackGetProperty(t, kSequenceTrackProperty_TrackLength, &len, &sz);
-            
+
             if(len > maxLen)
             {
                maxLen = len;
@@ -1180,7 +660,7 @@ namespace music
        ***************************************************************************/
       ::multimedia::e_result sequence::Pause()
       {
-         single_lock sl(&m_mutex, TRUE);
+         single_lock sl(m_pmutex, TRUE);
          
          //    assert(NULL != pSeq);
          
@@ -1224,7 +704,7 @@ namespace music
       {
          //    assert(NULL != pSeq);
          
-         single_lock sl(&m_mutex, TRUE);
+         single_lock sl(m_pmutex, TRUE);
          
          if (status_paused != GetState())
             return ::music::translate(::music::EFunctionNotSupported);
@@ -1263,7 +743,7 @@ namespace music
       ::multimedia::e_result sequence::Stop()
       {
          
-         single_lock sl(&m_mutex, TRUE);
+         single_lock sl(m_pmutex, TRUE);
          
          if(GetState() == status_stopping)
             return ::multimedia::result_success;
@@ -1331,13 +811,9 @@ namespace music
       ::multimedia::e_result sequence::get_ticks(imedia_position &  pTicks)
       {
          
-         single_lock sl(&m_mutex);
-         
-         if(!sl.lock(millis(184)))
-            return ::multimedia::result_internal;
+         synch_lock sl(m_pmutex);
          
          ::multimedia::e_result                mmr;
-         // xxx         MMTIME                  mmt;
          
          if (::music::midi::sequence::status_playing != GetState() &&
              ::music::midi::sequence::status_paused != GetState() &&
@@ -1346,34 +822,16 @@ namespace music
              ::music::midi::sequence::status_opened != GetState() &&
              ::music::midi::sequence::status_stopping != GetState())
          {
+            
             TRACE( "seqTime(): State wrong! [is %u]", GetState());
+            
             return ::music::translate(::music::EFunctionNotSupported);
+            
          }
          
-//         
-//         if(m_player != NULL)
-//         {
-//            
-//            Boolean bPlaying = false;
-//            OSStatus os = MusicPlayerIsPlaying(m_player, &bPlaying);
-//            
-//            if(os == noErr && bPlaying)
-//            {
-//               
-//               MusicTimeStamp now = 0;
-//               os = MusicPlayerGetTime (m_player, &now);
-//               if(os == noErr)
-//               {
-//         
-//                  pTick
-//                  
-//               }
-//               
-//            }
-//            
-//         }
          
          imedia_time t = 0;
+         
          if(get_millis(t) == ::multimedia::result_success)
          {
             
@@ -1383,106 +841,34 @@ namespace music
             
          }
          
-         
-         
-         //time = m_posPlay;
-//         if(m_player != NULL)
-//         {
-//            //MusicPlayerGetPlayRateScalar
-//            Boolean bPlaying = false;
-//            OSStatus os = MusicPlayerIsPlaying(m_player, &bPlaying);
-//            
-//            if(os == noErr && bPlaying)
-//            {
-//               
-//               MusicTimeStamp now = 0;
-//               os = MusicPlayerGetTime (m_player, &now);
-//               if(os == noErr)
-//               {
-//                  MusicTimeStamp f;
-//                  CABarBeatTime t;
-//                  os = MusicSequenceBeatsToBarBeatTime(m_sequence, now, m_dwTimeDivision , &t);
-//                  if(os == noErr)
-//                  {
-////                     UInt64 outHostTime = 0;
-//  //                   OSStatus os2= MusicPlayerGetHostTimeForBeats ( m_player, now, &outHostTime );
-//                     
-//    //                 m_posPlay = time = now * 1000;
-//                     
-//                     pTicks= t.;
-//                     
-//                     return ::multimedia::result_success;
-//                     
-//                  }
-//                  
-//               }
-//               
-//            }
-//            
-//         }
-         
-         
          pTicks = 0;
+         
          if (status_opened != GetState())
          {
+
             pTicks = m_tkBase;
-            if (status_pre_rolled != GetState())
-            {
-               //               mmt.wType = TIME_TICKS;
-               //            single_lock slStream(&m_csStream, false);
-               //          slStream.lock();
-//               snd_seq_tick_time_t ticks;
-  //             if(m_pseq == NULL)
-    //           {
-      //            TRACE("m_hmidi == NULL!!!!");
-        //          return ::multimedia::result_not_ready;
-          //     }
-            //   else
-               {
-                  try
-                  {
-                     
-              //       snd_seq_queue_status_t * pstatus = NULL;
-                     
-                    // snd_seq_queue_status_malloc(&pstatus);
-                     
-                    // if(pstatus == NULL)
-                      //  return ::multimedia::result_internal;
-                     
-                //     if(snd_seq_get_queue_status(m_pseq->handle, m_pseq->queue, pstatus) < 0)
-                  //      return ::multimedia::result_internal;
-                     
-                    // ticks = snd_seq_queue_status_get_tick_time(pstatus);
-                     
-                    // snd_seq_queue_status_free(pstatus);
-                     
-                  }
-                  catch(...)
-                  {
-                     return ::multimedia::result_internal;
-                  }
-//                  pTicks += ticks;
-               }
-               //        slStream.unlock();
-            }
+            
          }
          
          return ::multimedia::result_success;
+         
       }
+      
       
       void sequence::get_time(imedia_time & time)
       {
+         
          get_millis(time);
+         
       }
+      
       
       ::multimedia::e_result sequence::get_millis(imedia_time & time)
       {
-         single_lock sl(&m_mutex);
-         if(!sl.lock(millis(184)))
-            return ::multimedia::result_internal;
          
-         ::multimedia::e_result                mmr;
-         //MMTIME                  mmt;
+         single_lock sl(m_pmutex);
+         
+         ::multimedia::e_result mmr;
          
          if (status_playing != GetState() &&
              status_paused != GetState() &&
@@ -1491,28 +877,37 @@ namespace music
              status_opened != GetState() &&
              status_stopping != GetState())
          {
+            
             TRACE( "seqTime(): State wrong! [is %u]", GetState());
+            
             return ::music::translate(::music::EFunctionNotSupported);
+            
          }
          
-         //time = m_posPlay;
          if(m_player != NULL)
          {
-            //MusicPlayerGetPlayRateScalar
+
             Boolean bPlaying = false;
+            
             OSStatus os = MusicPlayerIsPlaying(m_player, &bPlaying);
             
             if(os == noErr && bPlaying)
             {
                
                MusicTimeStamp now = 0;
+               
                os = MusicPlayerGetTime (m_player, &now);
+               
                if(os == noErr)
                {
-               Float64 f;
-               os = MusicSequenceGetSecondsForBeats(m_sequence, now,  &f);
+                  
+                  Float64 f;
+                  
+                  os = MusicSequenceGetSecondsForBeats(m_sequence, now,  &f);
+                  
                   if(os == noErr)
                   {
+                    
                      UInt64 outHostTime = 0;
                       OSStatus os2= MusicPlayerGetHostTimeForBeats ( m_player, now, &outHostTime );
                
@@ -1522,8 +917,8 @@ namespace music
                      
                      time = m_posPlay;
                      //time = outHostTime;
-               
-               return ::multimedia::result_success;
+                     
+                     return ::multimedia::result_success;
                      
                   }
                   
@@ -1534,52 +929,21 @@ namespace music
          }
 
          time = 0;
+         
          if (status_opened != GetState())
          {
+            
             time = (int_ptr) TicksToMillisecs(m_tkBase);
+            
             if (status_pre_rolled != GetState())
             {
-//               const snd_seq_real_time_t * prt = NULL;
-               //            single_lock slStream(&m_csStream, false);
-               //          slStream.lock();
-    //           if(m_pseq == NULL)
-  //             {
-      //            TRACE("m_hmidi == NULL!!!!");
-        //          return ::multimedia::result_not_ready;
-          //     }
-            //   else
-               {
-                  try
-                  {
-                     
-              //       snd_seq_queue_status_t * pstatus = NULL;
-                     
-                //     snd_seq_queue_status_malloc(&pstatus);
-                     
-                  //   if(pstatus == NULL)
-                    //    return ::multimedia::result_internal;
-                     
-                    // if(snd_seq_get_queue_status(m_pseq->handle, m_pseq->queue, pstatus) < 0)
-                      //  return ::multimedia::result_internal;
-                     
-                 //    prt = snd_seq_queue_status_get_real_time(pstatus);
-                     
-                   //  snd_seq_queue_status_free(pstatus);
-                     
-                  }
-                  catch(...)
-                  {
-                     return ::multimedia::result_internal;
-                  }
-//                  if(prt == NULL)
-  //                   return ::multimedia::result_internal;;
-//                  time += (prt->tv_nsec / (1000 * 1000)) + (prt->tv_sec * 1000);
-               }
-               //        slStream.unlock();
+               
             }
+            
          }
          
          return ::multimedia::result_success;
+         
       }
       
       /***************************************************************************
@@ -1855,22 +1219,6 @@ namespace music
       
       
       
-      ::music::e_result sequence::SaveFile()
-      {
-         return SaveFile(file()->m_strName);
-      }
-      
-      ::music::e_result sequence::SaveFile(const char * lpFileName)
-      {
-         return file()->SaveFile(lpFileName);
-         
-      }
-      
-      ::music::e_result sequence::SaveFile(::file::file_sp &ar)
-      {
-         return file()->SaveFile(*ar);
-      }
-      
       
       
       uint32_t sequence::SetState(uint32_t uiState)
@@ -2001,7 +1349,7 @@ namespace music
       
       ::multimedia::e_result sequence::CloseStream()
       {
-         single_lock sl(&m_mutex, TRUE);
+         single_lock sl(m_pmutex, TRUE);
          if(IsPlaying())
          {
             Stop();
@@ -2035,7 +1383,7 @@ namespace music
       void sequence::OnMidiPlaybackEnd(::music::midi::sequence::event * pevent)
       {
          UNREFERENCED_PARAMETER(pevent);
-         single_lock sl(&m_mutex, TRUE);
+         single_lock sl(m_pmutex, TRUE);
          //   LPMIDIHDR lpmh = pevent->m_lpmh;
          //   midi_callback_data * lpData = &m_midicallbackdata;
          ::multimedia::e_result mmrc;
@@ -2093,7 +1441,7 @@ namespace music
                 
                 
                 
-                single_lock sl(&m_mutex, TRUE);
+                single_lock sl(m_pmutex, TRUE);
                 
                 ::music::midi_core_midi::sequence::event * pev = (::music::midi_core_midi::sequence::event *) pevent;
                 
@@ -2186,7 +1534,7 @@ namespace music
       
       /*imedia_position sequence::GetPositionTicks()
        {
-       single_lock sl(&m_mutex);
+       single_lock sl(m_pmutex);
        if(!sl.lock(millis(0)))
        return -1;
        MMTIME mmt;
@@ -2253,7 +1601,7 @@ namespace music
       
       void sequence::Prepare(
                              string2a & str2a,
-                             imedia::position_2darray & tka2DTokensTicks,
+                             imedia_position_2darray & tka2DTokensTicks,
                              int32_t iMelodyTrack,
                              int2a & ia2TokenLine,
                              ::ikaraoke::data & data)
@@ -2280,15 +1628,15 @@ namespace music
          }
          staticdata.m_LyricsDisplay = 30;
          
-         imedia::position_2darray tk2DNoteOnPositions(get_app());
-         imedia::position_2darray tk2DNoteOffPositions(get_app());
-         imedia::position_2darray tk2DBegPositions(get_app());
-         imedia::position_2darray tk2DEndPositions(get_app());
-         imedia::time_2darray ms2DTokensMillis(get_app());
-         imedia::time_2darray ms2DNoteOnMillis(get_app());
-         imedia::time_2darray ms2DNoteOffMillis(get_app());
-         imedia::time_2darray ms2DBegMillis(get_app());
-         imedia::time_2darray ms2DEndMillis(get_app());
+         imedia_position_2darray tk2DNoteOnPositions(get_app());
+         imedia_position_2darray tk2DNoteOffPositions(get_app());
+         imedia_position_2darray tk2DBegPositions(get_app());
+         imedia_position_2darray tk2DEndPositions(get_app());
+         imedia_time_2darray ms2DTokensMillis(get_app());
+         imedia_time_2darray ms2DNoteOnMillis(get_app());
+         imedia_time_2darray ms2DNoteOffMillis(get_app());
+         imedia_time_2darray ms2DBegMillis(get_app());
+         imedia_time_2darray ms2DEndMillis(get_app());
          ::music::midi::events midiEvents;
          
          
@@ -2693,7 +2041,7 @@ namespace music
          ::music::midi_core_midi::file & file = *this->file();
          ::music::midi::tracks & tracks = file.GetTracks();
          string2a & str2a = data.GetStaticData().m_str2aRawTokens;
-         imedia::position_2darray position2a;
+         imedia_position_2darray position2a;
          int2a ia2TokenLine;
          
          
@@ -2720,7 +2068,7 @@ namespace music
          ::music::midi_core_midi::file & file = *this->file();
          ::music::midi::tracks & tracks = file.GetTracks();
          string2a & str2a = data.GetStaticData().m_str2aRawTokens;
-         imedia::position_2darray position2a;
+         imedia_position_2darray position2a;
          int2a i2aTokenLine;
          
          ::music::xf::info_headers xfihs;

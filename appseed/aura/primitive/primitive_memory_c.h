@@ -54,6 +54,7 @@ CLASS_DECL_AURA int32_t  memcmp_dup(const void * sz1, const void * sz2, size_t i
 CLASS_DECL_AURA unichar * wmemcpy_dup(unichar * dst, const unichar * src, size_t iSize);
 
 CLASS_DECL_AURA void * mem_reverse(void * p, size_t iSize);
+CLASS_DECL_AURA void * memrcpy_dup(void * p, const void * p1, size_t iSize);
 
 #ifdef __cplusplus
 

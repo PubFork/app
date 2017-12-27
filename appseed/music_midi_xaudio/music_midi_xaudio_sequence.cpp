@@ -1740,7 +1740,7 @@ seq_Preroll_Cleanup:
 
          void sequence::Prepare(
             string2a & str2a,
-            imedia::position_2darray & tka2DTokensTicks,
+            imedia_position_2darray & tka2DTokensTicks,
             int32_t iMelodyTrack,
             int2a & ia2TokenLine,
             ::ikaraoke::data & data)
@@ -1770,15 +1770,15 @@ seq_Preroll_Cleanup:
             }
             staticdata.m_LyricsDisplay = 30;
 
-            imedia::position_2darray tk2DNoteOnPositions(get_app());
-            imedia::position_2darray tk2DNoteOffPositions(get_app());
-            imedia::position_2darray tk2DBegPositions(get_app());
-            imedia::position_2darray tk2DEndPositions(get_app());
-            imedia::time_2darray ms2DTokensMillis(get_app());
-            imedia::time_2darray ms2DNoteOnMillis(get_app());
-            imedia::time_2darray ms2DNoteOffMillis(get_app());
-            imedia::time_2darray ms2DBegMillis(get_app());
-            imedia::time_2darray ms2DEndMillis(get_app());
+            imedia_position_2darray tk2DNoteOnPositions(get_app());
+            imedia_position_2darray tk2DNoteOffPositions(get_app());
+            imedia_position_2darray tk2DBegPositions(get_app());
+            imedia_position_2darray tk2DEndPositions(get_app());
+            imedia_time_2darray ms2DTokensMillis(get_app());
+            imedia_time_2darray ms2DNoteOnMillis(get_app());
+            imedia_time_2darray ms2DNoteOffMillis(get_app());
+            imedia_time_2darray ms2DBegMillis(get_app());
+            imedia_time_2darray ms2DEndMillis(get_app());
             ::music::midi::events midiEvents;
 
 
@@ -2187,7 +2187,7 @@ seq_Preroll_Cleanup:
 
             string2a & str2a = data.GetStaticData().m_str2aRawTokens;
 
-            imedia::position_2darray position2a;
+            imedia_position_2darray position2a;
 
             int2a ia2TokenLine;
 
@@ -2215,7 +2215,7 @@ seq_Preroll_Cleanup:
             ::music::midi::mmsystem::buffer & file = *this->file();
             ::music::midi::tracks & tracks = file.GetTracks();
             string2a & str2a = data.GetStaticData().m_str2aRawTokens;
-            imedia::position_2darray position2a;
+            imedia_position_2darray position2a;
             int2a i2aTokenLine;
 
             ::music::xf::info_headers xfihs;

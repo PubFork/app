@@ -1,9 +1,6 @@
 #pragma once
 
 
-#define C_TEMPO_MAP_CHK     16
-
-
 namespace music
 {
 
@@ -89,11 +86,11 @@ namespace music
 
             e_result SaveFile(const char * lpFilePath);
 
-            e_result WorkWriteXFTracks(stringa & tokena, imedia::position_array & positiona, ::music::xf::info_header & xfinfoheader);
+            e_result WorkWriteXFTracks(stringa & tokena, imedia_position_array & positiona, ::music::xf::info_header & xfinfoheader);
 
-            //int32_t CalcMelodyTrack(::music::midi::events ** ppEvents, imedia::position_array * pTicks);
+            //int32_t CalcMelodyTrack(::music::midi::events ** ppEvents, imedia_position_array * pTicks);
 
-            //int32_t WorkCalcMelodyTrack(::music::midi::events ** ppEvents, imedia::position_array & positiona, int_array & iaTokenLine);
+            //int32_t WorkCalcMelodyTrack(::music::midi::events ** ppEvents, imedia_position_array & positiona, int_array & iaTokenLine);
 
             int32_t GetFormat();
 
@@ -139,13 +136,13 @@ namespace music
 
             int_ptr TicksToMillisecs(imedia_position tkOffset);
 
-            void TicksToMillisecs(imedia::time_array *pMillisArray, imedia::position_array *pTickArray, int_ptr tkOffset);
+            void TicksToMillisecs(imedia_time_array *pMillisArray, imedia_position_array *pTickArray, int_ptr tkOffset);
 
-            void TicksToMillisecs(imedia::time_2darray *p2DMillisArray, imedia::position_2darray * p2DTicksArray, int_ptr tkOffset);
+            void TicksToMillisecs(imedia_time_2darray *p2DMillisArray, imedia_position_2darray * p2DTicksArray, int_ptr tkOffset);
 
-            void PositionToTime(imedia::time_2darray  & timea, imedia::position_2darray  & positiona, int_ptr tkOffset);
+            void PositionToTime(imedia_time_2darray  & timea, imedia_position_2darray  & positiona, int_ptr tkOffset);
 
-            void PositionToTime(imedia::time_array  & timea, imedia::position_array  & positiona, int_ptr tkOffset);
+            void PositionToTime(imedia_time_array  & timea, imedia_position_array  & positiona, int_ptr tkOffset);
 
             imedia_position MillisecsToTicks(imedia_time msOffset);
 
@@ -153,9 +150,9 @@ namespace music
 
             imedia_position TimeToPosition(imedia_time msOffset);
 
-            void MillisecsToTicks(imedia::position_array * pTickArray, imedia::time_array *pMillisArray, imedia_time msOffset);
+            void MillisecsToTicks(imedia_position_array * pTickArray, imedia_time_array *pMillisArray, imedia_time msOffset);
 
-            void TimeToPosition(imedia::position_array & positiona, imedia::time_array & timea, imedia_time msOffset);
+            void TimeToPosition(imedia_position_array & positiona, imedia_time_array & timea, imedia_time msOffset);
 
             e_result StreamRender(LPMIDIHDR lpmh, imedia_position tkMax, uint32_t cbPrerollNomimalMax);
 

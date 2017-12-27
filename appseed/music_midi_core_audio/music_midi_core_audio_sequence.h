@@ -189,7 +189,7 @@ namespace music
          MIDIClientRef m_virtualMidi;
          MIDIEndpointRef m_virtualEndpoint;
          
-         //CoreMidiOutput * m_pcmo;
+         CoreMidiOutput * m_pcmo;
          
          AudioUnitOutput * m_pau;
          
@@ -219,7 +219,7 @@ namespace music
          void Prepare(int32_t iTrack, ::ikaraoke::data & data);
          void Prepare(
                       string2a & str2a,
-                      imedia::position_2darray & tka2DTokensTicks,
+                      imedia_position_2darray & tka2DTokensTicks,
                       int32_t iMelodyTrack,
                       int2a & ia2TokenLine,
                       ::ikaraoke::data & data);
@@ -260,20 +260,6 @@ namespace music
          virtual void OnEvent(::music::midi::sequence::event * pevent);
          
          
-         ::multimedia::e_result AllocBuffers();
-         
-         VOID FreeBuffers();
-         
-         //::multimedia::e_result OpenFile(const char * lpFileName, int32_t openMode);
-         ::music::e_result OpenFile(::music::midi::sequence & sequence, int32_t iOpenMode);
-         ::music::e_result OpenFile(::file::file & ar, int32_t openMode);
-         ::music::e_result OpenFile(const char * lpFileName, int32_t openMode);
-         ::music::e_result OpenFile(memory * pmemorystorage, int32_t openMode, ::music::e_storage estorage);
-         
-         ::music::e_result CloseFile();
-         ::music::e_result SaveFile(const char * lpFileName);
-         ::music::e_result SaveFile();
-         ::music::e_result SaveFile(::file::file_sp &ar);
          ::multimedia::e_result Preroll(::thread * pthread, ::music::midi::LPPREROLL lpPreroll, bool bThrow);
          ::multimedia::e_result Start();
          
@@ -296,10 +282,6 @@ namespace music
          imedia_time TicksToMillisecs(imedia_position tkOffset);
          
          bool IsPlaying();
-         
-         //         static void CALLBACK MidiOutProc(HMIDIOUT hmo, uint32_t wMsg, uint32_t dwInstance, uint32_t dwParam1, uint32_t dwParam2);
-         
-         
          
          bool IsSettingPosition();
          void SetSettingPositionFlag(bool bSet = TRUE);

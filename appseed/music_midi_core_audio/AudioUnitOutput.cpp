@@ -52,7 +52,7 @@ output_debug_string(str); \
 errorMessages.add(str); \
 return false; \
 }
-#define require_noerr(resultParam, place) { int result = ((resultParam)); if (result != 0) { \
+#define require_noerr(resultParam, place) { result = ((resultParam)); if (result != 0) { \
 string str; \
 str.Format(" failed with error code %i (line %i)", (int)result, __LINE__);\
 output_debug_string(str); \
@@ -166,7 +166,7 @@ bool WriteOutputFile (const char*       outputFilePath,
    CFRelease (url);
    CHECK_RETURN_CODE("ExtAudioFileCreateWithURL");
    
-   AudioUnit outputUnit;
+   AudioUnit outputUnit = 0;
    UInt32 nodeCount;
    result = AUGraphGetNodeCount (inGraph, &nodeCount);
    CHECK_RETURN_CODE("AUGraphGetNodeCount");
@@ -384,71 +384,95 @@ home:
 
 // Code by Apple, from http://developer.apple.com/library/mac/#samplecode/PlaySequence/Introduction/Intro.html
 
-OSStatus LoadSMF(const char* data, int dataSize, MusicSequence& sequence, MusicSequenceLoadFlags loadFlags)
+OSStatus LoadSMF(const char * data, int dataSize, MusicSequence& sequence, MusicSequenceLoadFlags loadFlags)
 {
+   
    OSStatus result = noErr;
    
    result = NewMusicSequence(&sequence);
-   if (result != 0)
+   
+   if (result != noErr)
    {
+      
       fprintf(stderr, "Error %i at NewMusicSequence\n", (int)result);
+      
       return result;
+      
    }
    
    CFDataRef cfdata = CFDataCreate(kCFAllocatorDefault, (const UInt8*)data, dataSize);
+   
    result = MusicSequenceFileLoadData (sequence, cfdata, kMusicSequenceFile_MIDIType, loadFlags);
-   if (result != 0)
+   
+   if (result != noErr)
    {
+      
       fprintf(stderr, "Error %i at MusicSequenceFileLoad\n", (int)result);
+      
       return result;
+      
    }
    
-   return 0;
+   return result;
+   
 }
 
 // Code by Apple, from http://developer.apple.com/library/mac/#samplecode/PlaySequence/Introduction/Intro.html
 OSStatus GetSynthFromGraph (AUGraph& inGraph, AudioUnit& outSynth)
 {
+   
    UInt32 nodeCount;
+   
    OSStatus result = noErr;
+   
    require_noerr (result = AUGraphGetNodeCount (inGraph, &nodeCount), fail);
    
    for (UInt32 i = 0; i < nodeCount; ++i)
    {
+      
       AUNode node;
+      
       require_noerr (result = AUGraphGetIndNode(inGraph, i, &node), fail);
       
-//#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_6
       AudioComponentDescription desc;
-//#else
-//      ComponentDescription desc;
-//#endif
+
       require_noerr (result = AUGraphNodeInfo(inGraph, node, &desc, 0), fail);
       
       if (desc.componentType == kAudioUnitType_MusicDevice)
       {
+         
          require_noerr (result = AUGraphNodeInfo(inGraph, node, 0, &outSynth), fail);
+         
          return noErr;
+         
       }
+      
    }
    
 fail:		// didn't find the synth AU
+   
    fprintf(stderr, "Error in GetSynthFromGraph\n");
-   return -1;
+   
+   return result;
+   
 }
 
 
 
-bool AudioUnitOutput::outputToDisk(const char* outputFilePath,
-                                   const char* data,
+bool AudioUnitOutput::outputToDisk(const char * outputFilePath,
+                                   const char * data,
                                    const int data_size,
-                                   stringa& errorMessages)
+                                   stringa & errorMessages)
 {
+   
    OSStatus result;
    
    AUGraph graph = 0;
+   
    AudioUnit theSynth = 0;
+   
    MusicSequence sequence;
+   
    Float32 maxCPULoad = .8;
    
    result = LoadSMF(data, data_size, sequence, 0 /* flags */);
@@ -473,20 +497,28 @@ bool AudioUnitOutput::outputToDisk(const char* outputFilePath,
 #ifdef MACOS
    if (m_custom_sound_font != NULL)
    {
+      
       printf("setting soundfont <%s>\n", m_custom_sound_font);
+      
       FSRef fsRef;
+      
       result = FSPathMakeRef ((const UInt8*)m_custom_sound_font, &fsRef, 0);
+      
       CHECK_RETURN_CODE("FSPathMakeRef");
       
       result = AudioUnitSetProperty (theSynth,
                                      kMusicDeviceProperty_SoundBankFSRef,
                                      kAudioUnitScope_Global, 0,
                                      &fsRef, sizeof(fsRef));
+      
       CHECK_RETURN_CODE("AudioUnitSetProperty[kMusicDeviceProperty_SoundBankFSRef]");
+      
    }
 #endif
+   
    // need to tell synth that is going to render a file.
    UInt32 value = 1;
+   
    result = AudioUnitSetProperty(theSynth,
                                  kAudioUnitProperty_OfflineRender,
                                  kAudioUnitScope_Global, 0,
@@ -494,6 +526,7 @@ bool AudioUnitOutput::outputToDisk(const char* outputFilePath,
    CHECK_RETURN_CODE("AudioUnitSetProperty[kAudioUnitProperty_OfflineRender]");
    
    UInt32 numFrames = 512;
+   
    Float64 sample_rate = 44100;
    
    result = SetUpGraph (graph, numFrames, sample_rate, (outputFilePath != NULL));
@@ -518,6 +551,7 @@ bool AudioUnitOutput::outputToDisk(const char* outputFilePath,
    
    for (UInt32 i = 0; i < ntracks; ++i)
    {
+      
       MusicTrack track;
       MusicTimeStamp trackLength;
       UInt32 propsize = sizeof(MusicTimeStamp);
@@ -531,14 +565,8 @@ bool AudioUnitOutput::outputToDisk(const char* outputFilePath,
       if (trackLength > sequenceLength)
          sequenceLength = trackLength;
       
-      /*
-       if (!trackSet.empty() && (trackSet.find(i) == trackSet.end()))
-       {
-       Boolean mute = true;
-       require_noerr (result = MusicTrackSetProperty(track, kSequenceTrackProperty_MuteStatus, &mute, sizeof(mute)), fail);
-       }
-       */
    }
+
    // now I'm going to add 8 beats on the end for the reverb/long releases to tail off...
    sequenceLength += 8;
    
@@ -547,26 +575,22 @@ bool AudioUnitOutput::outputToDisk(const char* outputFilePath,
    //startRunningTime = CAHostTimeBase::GetCurrentTime ();
    
    result = MusicPlayerStart(player);
-   // FIXME: there is a bug under Mac OS X Lion where MusicPlayerStart will return a bogus error code. Nonetheless
-   // the export completes successfully by just ignoring the error code
-   if (result != -10852)
-   {
-      CHECK_RETURN_CODE("MusicPlayerStart");
-   }
-   
+
    OSType dataFormat = 0;
+   
    str2OSType("lpcm", dataFormat); //0; //kAudioFormatLinearPCM;
    
    bool success = WriteOutputFile(outputFilePath, dataFormat, sample_rate, sequenceLength,
                                   false /* print */, graph, numFrames, player, errorMessages);
    
-   if (not success)
+   if (!success)
    {
       fprintf(stderr, "[AudioUnitOutput] ERROR: WriteOutputFile returned false\n");
       return false;
    }
    
    result = MusicPlayerStop(player);
+   
    if (result != 0)
    {
       fprintf(stderr, "MusicPlayerStop failed with error code %i\n", (int)result);
@@ -590,15 +614,8 @@ bool AudioUnitOutput::outputToDisk(const char* outputFilePath,
       return true;
    }
    
-   result = DisposeMusicSequence(sequence);
-   if (result != 0)
-   {
-      fprintf(stderr, "DisposeMusicSequence failed with error code %i\n", (int)result);
-      // ignore errors in cleanup
-      return true;
-   }
-   
    return true;
+   
 }
 
 #if 0
