@@ -1,7 +1,7 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
-bool local_memory_map::open()
+bool file_memory_map::open()
 {
 
 
@@ -24,7 +24,7 @@ bool local_memory_map::open()
    zero(&ps,sizeof(ps));
    ps.dwSize = sizeof(ps);
    ps.dwFileAttributes = FILE_ATTRIBUTE_NORMAL;
-   
+
    m_hfile = CreateFile2(wstr,(m_bRead ? FILE_READ_DATA : 0) | (m_bWrite ? FILE_WRITE_DATA : 0),FILE_SHARE_WRITE | FILE_SHARE_READ,iOpen,&ps);
 
    if(m_hfile == INVALID_HANDLE_VALUE)
@@ -42,11 +42,11 @@ bool local_memory_map::open()
 
    if(m_hfilemap == NULL)
    {
-      
+
       close();
 
       return false;
-      
+
    }
 
    m_pdata = MapViewOfFileFromApp(m_hfilemap, (m_bRead ? FILE_MAP_READ : 0) | (m_bWrite ? FILE_MAP_WRITE : 0), 0, 0);
@@ -76,4 +76,84 @@ bool local_memory_map::open()
 
 
 
+
+
+void file_memory_map::construct()
+{
+
+   m_strName.Empty();
+   m_hfile = INVALID_HANDLE_VALUE;
+   m_hfilemap = NULL;
+   m_pdata = NULL;
+   m_bRead = false;
+   m_bWrite = false;
+   m_bCreate = false;
+
+}
+
+
+bool file_memory_map::is_mapped()
+{
+
+   return m_pdata != NULL;
+
+}
+
+
+bool file_memory_map::close()
+{
+
+   synch_lock sl(m_pmutex);
+
+   if (m_pdata != NULL)
+   {
+
+      UnmapViewOfFile(m_pdata);
+
+      m_pdata = NULL;
+
+   }
+
+   if (m_hfile != NULL)
+   {
+
+      try
+      {
+
+         ::CloseHandle(m_hfile);
+
+      }
+      catch (...)
+      {
+
+      }
+
+      m_hfile = NULL;
+
+   }
+
+
+   if (m_hfile != INVALID_HANDLE_VALUE)
+   {
+
+      try
+      {
+
+         ::CloseHandle(m_hfile);
+
+      }
+      catch (...)
+      {
+
+      }
+
+      m_hfile = INVALID_HANDLE_VALUE;
+
+   }
+
+   ::aura::del(m_pmutex);
+
+   return true;
+
+}
 
