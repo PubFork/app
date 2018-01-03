@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #include "aura/graphics/graphics_window_graphics.h"
@@ -12,32 +12,35 @@
 class CLASS_DECL_AURA window_buffer :
    virtual public window_graphics
 {
-   protected:
-      int                           m_iScan;
-      COLORREF *                    m_pcolorref;
-//      BITMAPINFO                    m_bitmapinfo;
-      int                           m_cx;
-      int                           m_cy;
-      ::visual::dib_sp              m_spdibBuffer;
-   public:
-
-      bool                          m_bDibIsHostingBuffer;
-      HANDLE                        m_hMapFile;
-      LPCTSTR                       m_pBuf;
-      oswindow                      m_hwnd;
+protected:
 
 
-      window_buffer(::aura::application * papp);
-      virtual ~window_buffer();
+   int                           m_iScan;
+   COLORREF *                    m_pcolorref;
+   int                           m_cx;
+   int                           m_cy;
+   ::visual::dib_sp              m_spdibBuffer;
 
 
-      virtual void update_window();
-      virtual void update_window(::draw2d::dib * pdib);
+public:
 
 
-      ::draw2d::graphics * on_begin_draw();
+   bool                          m_bDibIsHostingBuffer;
+   oswindow                      m_hwnd;
+   file_memory_map               m_memorymap;
 
-      ::draw2d::dib_sp & get_buffer();
+
+   window_buffer(::aura::application * papp);
+   virtual ~window_buffer();
+
+
+   virtual void update_window();
+   virtual void update_window(::draw2d::dib * pdib);
+
+
+   ::draw2d::graphics * on_begin_draw();
+
+   ::draw2d::dib_sp & get_buffer();
 
 };
 
@@ -47,17 +50,17 @@ class CLASS_DECL_AURA window_buffer :
 class CLASS_DECL_AURA window_double_buffer :
    virtual public window_buffer
 {
-   public:
+public:
 
-      mutex                         m_mutex2;
-      ::visual::dib_sp              m_spdibBuffer2;
-
-
-      window_double_buffer(::aura::application * papp);
-      virtual ~window_double_buffer();
+   mutex                         m_mutex2;
+   ::visual::dib_sp              m_spdibBuffer2;
 
 
-      virtual void update_window();
+   window_double_buffer(::aura::application * papp);
+   virtual ~window_double_buffer();
+
+
+   virtual void update_window();
 
 
 

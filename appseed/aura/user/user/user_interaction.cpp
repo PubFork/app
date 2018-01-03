@@ -1,4 +1,4 @@
-#include "framework.h" // from "base/user/user.h"
+﻿#include "framework.h" // from "base/user/user.h"
 
 ::user::interaction * get_system_window_interaction(::os_system_window * psystemwindow);
 
@@ -8975,6 +8975,35 @@ restart:
       return stock_icon_none;
 
    }
+
+
+   void interaction::set_ipc_copy(bool bSet)
+   {
+
+      ::user::interaction * pwnd = get_wnd();
+
+      if (pwnd == NULL)
+      {
+
+         _throw(invalid_argument_exception(get_app()));
+
+      }
+
+      if (pwnd == this)
+      {
+
+         m_pimpl->set_ipc_copy(bSet);
+
+      }
+      else
+      {
+
+         pwnd->set_ipc_copy(bSet);
+
+      }
+
+   }
+
 
 } // namespace user
 

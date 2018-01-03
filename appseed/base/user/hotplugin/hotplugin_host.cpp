@@ -466,7 +466,7 @@ namespace hotplugin
 
       ensure_bitmap_data((int32_t)::width(lprect), (int32_t)::height(lprect), false);
 
-      if(!m_memBitmap.is_mapped())
+      if(!m_memorymapBitmap.is_mapped())
          return;
 
       synch_lock ml(m_pmutexBitmap);
@@ -506,7 +506,7 @@ namespace hotplugin
 
       ensure_bitmap_data((int32_t)::width(lprect), (int32_t)::height(lprect), false);
 
-      if(!m_memBitmap.is_mapped())
+      if(!m_memorymapBitmap.is_mapped())
          return;
 
       synch_lock ml(m_pmutexBitmap);
@@ -554,7 +554,7 @@ namespace hotplugin
 
       ensure_bitmap_data(m_sizeBitmap.cx, m_sizeBitmap.cy, false);
 
-      if(!m_memBitmap.is_mapped())
+      if(!m_memorymapBitmap.is_mapped())
          return;
 
       synch_lock ml(m_pmutexBitmap);
@@ -570,7 +570,7 @@ namespace hotplugin
 
       m_dib->map();
 
-      memcpy(m_dib->m_pcolorref, m_memBitmap.get_data(), (size_t) (m_dib->area() * sizeof(COLORREF)));
+      memcpy(m_dib->m_pcolorref, m_memorymapBitmap.get_data(), (size_t) (m_dib->area() * sizeof(COLORREF)));
 
       pgraphics->BitBlt(point(lprectOut.left,lprectOut.top), size(m_sizeBitmap.cx, m_sizeBitmap.cy), m_dib->get_graphics(), null_point());
 

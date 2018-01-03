@@ -1,5 +1,9 @@
 #pragma once
 
+
+#define INTERNATIONAL_DATE_HOUR_FORMAT_FOR_FILE "%Y-%m-%d %H"
+#define INTERNATIONAL_DATE_HOUR_FORMAT "%Y-%m-%d %H"
+
 #define INTERNATIONAL_DATE_TIME_FORMAT_FOR_FILE "%Y-%m-%d %H-%M-%S"
 #define INTERNATIONAL_DATE_TIME_FORMAT "%Y-%m-%d %H:%M:%S"
 

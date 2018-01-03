@@ -1,4 +1,4 @@
-#include "framework.h" // from "base/user/user.h"
+﻿#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 
@@ -3183,6 +3183,13 @@ namespace user
 
    }
 
+
+   void interaction_impl::set_ipc_copy(bool bSet)
+   {
+
+      m_bIpcCopy = bSet;
+
+   }
 
 
 } // namespace user

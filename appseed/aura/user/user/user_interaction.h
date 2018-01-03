@@ -1021,6 +1021,8 @@ namespace user
       virtual void on_select_user_style() override;
 
 
+      virtual void set_ipc_copy(bool bSet = true) override;
+
 
       //using style::get_color;
       //virtual bool get_color(COLORREF & cr, e_color ecolor);

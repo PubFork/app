@@ -48,7 +48,7 @@
 #include "aura_library.cpp"
 #include "aura_live_object.cpp"
 #include "aura_live_signal.cpp"
-#include "aura_local_memory_map.cpp"
+#include "aura_file_memory_map.cpp"
 #include "aura_log.cpp"
 #include "aura_lparam.cpp"
 #include "aura_machine_event.cpp"

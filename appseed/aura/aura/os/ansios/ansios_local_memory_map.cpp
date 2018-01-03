@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 #include <sys/mman.h>
@@ -7,7 +7,7 @@
 #include <unistd.h>
 
 
-void local_memory_map::construct()
+void file_memory_map::construct()
 {
 
    m_strName.Empty();
@@ -20,14 +20,14 @@ void local_memory_map::construct()
 }
 
 
-bool local_memory_map::is_mapped()
+bool file_memory_map::is_mapped()
 {
    return m_pdata != (void *)MAP_FAILED;
 }
 
 
 
-bool local_memory_map::close()
+bool file_memory_map::close()
 {
 
    if(m_pdata != (void *)MAP_FAILED)
@@ -54,7 +54,7 @@ bool local_memory_map::close()
 
 
 
-bool local_memory_map::open()
+bool file_memory_map::open()
 {
 
    close();

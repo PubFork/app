@@ -2585,7 +2585,7 @@
     <ClInclude Include="aura\aura\aura_ipc.h" />
     <ClInclude Include="aura\aura\aura_ipi.h" />
     <ClInclude Include="aura\aura\aura_keep.h" />
-    <ClInclude Include="aura\aura\aura_local_memory_map.h" />
+    <ClInclude Include="aura\aura\aura_file_memory_map.h" />
     <ClInclude Include="aura\aura\aura_net.h" />
     <ClInclude Include="aura\aura\aura_pointer.h" />
     <ClInclude Include="aura\aura\aura_printer.h" />
@@ -2833,6 +2833,7 @@
     <ClInclude Include="aura\os\windows\windows_simple_hold_handle.h" />
     <ClInclude Include="aura\os\windows\windows_utils.h" />
     <ClInclude Include="aura\os\windows\windows_windows.h" />
+    <ClInclude Include="aura\os\windows\windows_window_buffer.h" />
     <ClInclude Include="aura\os\windows_common\draw2d_direct2d_global.h" />
     <ClInclude Include="aura\process\process.h" />
     <ClInclude Include="aura\process\process_bidi_pipe.h" />
@@ -3015,7 +3016,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="aura\aura\aura_local_memory_map.cpp">
+    <ClCompile Include="aura\aura\aura_file_memory_map.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>

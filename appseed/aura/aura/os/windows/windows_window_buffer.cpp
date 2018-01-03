@@ -1,10 +1,7 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "aura/user/user/user.h"
 #include "windows_window_buffer.h"
 #include <stdio.h>
-
-
-CLASS_DECL_AURA bool g_bCreateWindowScreen = true;
 
 
 namespace windows
@@ -31,9 +28,6 @@ namespace windows
       m_pcolorref = NULL;
       m_hdc = NULL;
       m_hwnd = NULL;
-      m_hMapFile = NULL;
-      m_pBuf = NULL;
-      m_hmutex = NULL;
 
 
    }
@@ -42,43 +36,9 @@ namespace windows
    window_buffer::~window_buffer()
    {
 
-      if (m_hmutex != NULL)
-      {
-
-         if (WaitForSingleObject(m_hmutex, INFINITE) == WAIT_OBJECT_0)
-         {
-
-            if (m_pBuf != NULL)
-            {
-
-               UnmapViewOfFile(m_pBuf);
-
-               m_pBuf = NULL;
-
-            }
-
-            if (m_hMapFile != NULL)
-            {
-
-               CloseHandle(m_hMapFile);
-
-               m_hMapFile = NULL;
-
-            }
-
-            ::ReleaseMutex(m_hmutex);
-
-         }
-
-         ::CloseHandle(m_hmutex);
-
-      }
-
    }
 
 
-   CHAR szName[] = "Local\\ca2screen-%d";
-   CHAR szNameMutex[] = "Local\\ca2screenmutex-%d";
    void window_buffer::create_window_graphics_(int64_t cxParam, int64_t cyParam, int iStrideParam)
    {
 
@@ -102,108 +62,11 @@ namespace windows
 
       }
 
-//      ZERO(m_bitmapinfo);
+      m_hwnd = hwnd;
+
+      defer_prepare_ipc_copy_();
 
       int iStride = (int)(cxParam * 4);
-
-      if (m_hmutex == NULL || m_hwnd != hwnd)
-      {
-
-         m_hwnd = hwnd;
-
-         if (g_bCreateWindowScreen)
-         {
-
-            if (m_hmutex != NULL)
-            {
-
-               if (WaitForSingleObject(m_hmutex, INFINITE) == WAIT_OBJECT_0)
-               {
-
-                  if (m_pBuf != NULL)
-                  {
-
-                     UnmapViewOfFile(m_pBuf);
-
-                     m_pBuf = NULL;
-
-                  }
-
-                  if (m_hMapFile != NULL)
-                  {
-
-                     CloseHandle(m_hMapFile);
-
-                     m_hMapFile = NULL;
-
-                  }
-
-                  ::ReleaseMutex(m_hmutex);
-
-               }
-
-               ::CloseHandle(m_hmutex);
-
-            }
-
-            char szNameMutex2[2048];
-
-            sprintf(szNameMutex2, szNameMutex, (INT_PTR)hwnd);
-
-            m_hmutex = ::CreateMutex(NULL, FALSE, szNameMutex2);
-
-            if (::WaitForSingleObject(m_hmutex, INFINITE) == WAIT_OBJECT_0)
-            {
-
-               char szName2[2048];
-
-               sprintf(szName2, szName, (INT_PTR)hwnd);
-
-               m_hMapFile = CreateFileMapping(
-                            INVALID_HANDLE_VALUE,    // use paging file
-                            NULL,                    // default security
-                            PAGE_READWRITE,          // read/write access
-                            0,                       // maximum object size (high-order DWORD)
-                            8192 * 4096 * 4,                // maximum object size (low-order DWORD)
-                            szName2);                 // name of mapping object
-
-               if (m_hMapFile == NULL)
-               {
-
-                  ::ReleaseMutex(m_hmutex);
-
-                  ::CloseHandle(m_hmutex);
-
-               }
-               else
-               {
-
-                  m_pBuf = (LPTSTR)MapViewOfFile(m_hMapFile,   // handle to map object
-                                                 FILE_MAP_ALL_ACCESS, // read/write permission
-                                                 0,
-                                                 0,
-                                                 8192 * 4096 * 4);
-
-                  if (m_pBuf == NULL)
-                  {
-
-                     CloseHandle(m_hMapFile);
-
-                     ::ReleaseMutex(m_hmutex);
-
-                     ::CloseHandle(m_hmutex);
-
-                  }
-
-               }
-
-               ReleaseMutex(m_hmutex);
-
-            }
-
-         }
-
-      }
 
       m_hdcScreen = ::GetDCEx(hwnd, NULL, DCX_WINDOW);
 
@@ -251,6 +114,27 @@ namespace windows
 
 
       window_graphics::destroy_window_graphics_();
+
+   }
+
+
+   void window_buffer::defer_prepare_ipc_copy_()
+   {
+
+      if (m_hwnd == NULL || !m_pimpl->m_bIpcCopy)
+      {
+
+         return;
+
+      }
+
+      CHAR szName[] = "Local\\ca2screen-%d";
+
+      string strPath;
+
+      strPath.Format(szName, m_hwnd);
+
+      m_memorymap.open(strPath, false, true, true, 8192 * 4096 * 4);
 
    }
 
@@ -339,33 +223,31 @@ namespace windows
    void window_buffer::ipc_copy(int cx, int cy)
    {
 
-      if (m_pBuf != NULL)
+      void * pdata = m_memorymap.get_data();
+
+      if (pdata == NULL)
       {
 
-         if (::WaitForSingleObject(m_hmutex, INFINITE) == WAIT_OBJECT_0)
-         {
+         return;
 
-            try
-            {
+      }
 
-               int64_t * p = (int64_t *)m_pBuf;
+      synch_lock sl(m_memorymap.m_pmutex);
 
-               *p++ = cx;
-               *p++ = cy;
-               *p++ = m_iScan;
+      try
+      {
 
+         int64_t * p = (int64_t *)pdata;
 
-               ::draw2d::copy_colorref(cx, cy, (COLORREF *)p, sizeof(COLORREF) * cx, m_pcolorref, m_iScan);
+         *p++ = cx;
+         *p++ = cy;
+         *p++ = sizeof(COLORREF) * cx;
 
-            }
-            catch (...)
-            {
+         ::draw2d::copy_colorref(cx, cy, (COLORREF *)p, sizeof(COLORREF) * cx, m_pcolorref, m_iScan);
 
-            }
-
-            ReleaseMutex(m_hmutex);
-
-         }
+      }
+      catch (...)
+      {
 
       }
 

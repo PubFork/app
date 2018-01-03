@@ -1,4 +1,4 @@
-#include "framework.h" // from "base/user/user.h"
+﻿#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 
@@ -64,9 +64,9 @@ Restart:
          for(int32_t j = i + 1; j < array.get_size(); j++)
          {
             if(RedrawOptimize(
-                     rect,
-                     array[i],
-                     array[j]))
+                  rect,
+                  array[i],
+                  array[j]))
             {
                array[i] = rect;
                array.remove_at(j);
@@ -2790,6 +2790,12 @@ Restart:
 
 
    void interaction_base::on_after_graphical_update()
+   {
+
+   }
+
+
+   void interaction_base::set_ipc_copy(bool bSet)
    {
 
    }

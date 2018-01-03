@@ -1047,17 +1047,22 @@ namespace windows
 
    WNDPROC* interaction_impl::GetSuperWndProcAddr()
    {
+
       // Note: it is no longer necessary to override GetSuperWndProcAddr
       //  for each control class with a different WNDCLASS.
       //  This implementation now uses instance data, such that the previous
       //  WNDPROC can be anything.
 
       return &m_pfnSuper;
+
    }
+
 
    void interaction_impl::pre_translate_message(::message::message * pobj)
    {
+
       SCAST_PTR(::message::base, pbase, pobj);
+
       // no default processing
 
       //if (pbase->m_id == WM_APP + 1933)
@@ -1069,21 +1074,28 @@ namespace windows
    }
 
 
-
    int32_t interaction_impl::GetChildByIdText(int32_t nID, string & rString) const
    {
+
       ASSERT(::IsWindow(((::windows::interaction_impl *)this)->get_handle()));
+
       rString = "";    // is_empty without deallocating
 
       oswindow oswindow = ::GetDlgItem(((::windows::interaction_impl *)this)->get_handle(), nID);
+
       if (oswindow != NULL)
       {
+
          int32_t nLen = ::GetWindowTextLength(oswindow);
+
          ::GetWindowText(oswindow, rString.GetBufferSetLength(nLen), nLen + 1);
+
          rString.ReleaseBuffer();
+
       }
 
       return (int32_t)rString.get_length();
+
    }
 
 
@@ -1429,6 +1441,18 @@ namespace windows
       {
 
          TRACE("WM_ENABLE enable = " + string(pbase->m_wparam ? "true" : "false"));
+
+      }
+      if (uiMessage == WM_GETTEXTLENGTH)
+      {
+
+         TRACE("WM_GETTEXTLENGTH");
+
+      }
+      if (uiMessage == WM_GETTEXT)
+      {
+
+         TRACE("WM_GETTEXT");
 
       }
       if (uiMessage == WM_CREATE)
@@ -6427,11 +6451,11 @@ CLASS_DECL_AURA const unichar * __register_window_class(::aura::application * pa
 
    if (hCursor == NULL && hbrBackground == NULL && hIcon == NULL)
    {
-      C_RUNTIME_ERRORCHECK_SPRINTF(_snwprintf_s(lpszName, ___TEMP_CLASS_NAME_SIZE, ___TEMP_CLASS_NAME_SIZE - 1, L"::core:::%p:%x", papp->m_hinstance, nClassStyle));
+      C_RUNTIME_ERRORCHECK_SPRINTF(_snwprintf_s(lpszName, ___TEMP_CLASS_NAME_SIZE, ___TEMP_CLASS_NAME_SIZE - 1, L"ca2FrameOrView:::%p:%x", papp->m_hinstance, nClassStyle));
    }
    else
    {
-      C_RUNTIME_ERRORCHECK_SPRINTF(_snwprintf_s(lpszName, ___TEMP_CLASS_NAME_SIZE, ___TEMP_CLASS_NAME_SIZE - 1, L"::core:::%p:%x:%p:%p:%p", papp->m_hinstance, nClassStyle,
+      C_RUNTIME_ERRORCHECK_SPRINTF(_snwprintf_s(lpszName, ___TEMP_CLASS_NAME_SIZE, ___TEMP_CLASS_NAME_SIZE - 1, L"ca2FrameOrView:::%p:%x:%p:%p:%p", papp->m_hinstance, nClassStyle,
                                    hCursor, hbrBackground, hIcon));
    }
 
@@ -6451,7 +6475,7 @@ CLASS_DECL_AURA const unichar * __register_window_class(::aura::application * pa
 
    // otherwise we need to register a new class
    wndcls.style = nClassStyle;
-   wndcls.lpfnWndProc = DefWindowProc;
+   wndcls.lpfnWndProc = DefWindowProcW;
    wndcls.cbClsExtra = wndcls.cbWndExtra = 0;
    wndcls.hInstance = NULL;
    wndcls.hIcon = hIcon;

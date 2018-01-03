@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 using window_sp = sp(::user::interaction_impl);
 
@@ -768,6 +768,9 @@ namespace user
       virtual void _001OnTriggerMouseInside() override;
 
       virtual bool has_pending_graphical_update() override;
+
+
+      virtual void set_ipc_copy(bool bSet = true) override;
 
    };
 

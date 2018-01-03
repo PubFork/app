@@ -1267,6 +1267,8 @@ CLASS_DECL_AURA string get_system_error_message(uint32_t dwError);
 
 
 
+
+
 #include "aura/filesystem/file/file_memory_file.h"
 #include "aura/filesystem/file/file_circular_file.h"
 
@@ -1274,7 +1276,7 @@ CLASS_DECL_AURA string get_system_error_message(uint32_t dwError);
 //#include "aura/filesystem/file/file_timeout_buffer.h"
 //#include "aura/filesystem/file/file_transfer_buffer.h"
 
-#include "aura/aura/aura/aura_local_memory_map.h"
+#include "aura/aura/aura/aura_file_memory_map.h"
 
 #include "aura/primitive/str/str_international2.h"
 

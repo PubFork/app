@@ -751,7 +751,7 @@ namespace hotplugin
       if((cx * cy) <= 0)
          return;
 
-      if(m_memBitmap.get_data() == NULL
+      if(m_memorymapBitmap.get_data() == NULL
             || m_sizeBitmapData.cx != cx
             || m_sizeBitmapData.cy != cy)
       {
@@ -790,7 +790,7 @@ namespace hotplugin
 
          ::file::path strName = Application.dir().userappdata()/"time"/"core\\app_app_nest-" + m_strBitmapChannel;
 
-         if(!m_memBitmap.open(strName,true,true,bCreate,size))
+         if(!m_memorymapBitmap.open(strName,true,true,bCreate,size))
          {
 
             if(bCreate)

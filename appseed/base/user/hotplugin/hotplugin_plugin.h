@@ -40,7 +40,7 @@ namespace hotplugin
 
       void *                        m_pbitmap;
       void *                        m_pgraphics;
-      local_memory_map              m_memBitmap;
+      file_memory_map               m_memorymapBitmap;
       SIZE                          m_sizeBitmap;
 
       string                        m_strStatus;
