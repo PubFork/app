@@ -366,15 +366,27 @@ namespace music
               get_sequence()->Stop();
               //get_sequence()->m_evMmsgDone.lock();
               */
+               
                bool bPlay = IsPlaying();
+               
                imedia_position ticks = 0;
+               
                if(bPlay)
                {
-                  ticks = get_sequence()->GetPositionTicks();
+                  
+                  ticks = get_sequence()->get_position_ticks();
+                  
                   get_sequence()->Stop();
+                  
                }
+               
                if(!get_sequence()->SetTempoShift(iTempoShift))
+               {
+                  
                   return false;
+                  
+               }
+               
                if(bPlay)
                {
                   get_sequence()->m_pthread->PrerollAndWait(ticks);
@@ -430,19 +442,27 @@ namespace music
             
          }
          
+         
          void player::OnMidiOutDeviceChange()
          {
+            
             get_sequence()->SetMidiOutDevice(GetMidiOutDevice());
+            
             if(get_sequence()->IsPlaying())
             {
+               
                imedia_position tkPosition = 0;
-               get_sequence()->GetPosition(tkPosition);
+               
+               get_sequence()->get_position(tkPosition);
+               
                ::music::midi::sequence::PlayerLink & link = get_sequence()->GetPlayerLink();
-               link.ModifyFlag(
-                               ::music::midi::sequence::FlagTempoChange,
-                               ::music::midi::sequence::FlagNull);
+               
+               link.ModifyFlag(::music::midi::sequence::FlagTempoChange, ::music::midi::sequence::FlagNull);
+               
                link.m_tkRestart = tkPosition;
+               
                get_sequence()->Stop();
+               
             }
             
          }

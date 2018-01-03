@@ -193,7 +193,7 @@ namespace music
             //::multimedia::e_result Stop(uint32_t dwEllapse);
             ::multimedia::e_result Stop();
 
-            void GetPosition(imedia_position  & time);
+            void get_position(imedia_position  & time);
             void get_time(imedia_time  & time);
 
             ::multimedia::e_result get_ticks(imedia_position & time);

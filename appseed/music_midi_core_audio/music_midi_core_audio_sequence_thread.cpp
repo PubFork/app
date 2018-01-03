@@ -329,7 +329,7 @@ namespace music
          
          imedia_position pos = 0;
          
-         pseq->GetPosition(pos);
+         pseq->get_position(pos);
          
          /*while(snd_seq_event_input_pending(pseq->m_pseq->handle, TRUE) > 0)
           {
@@ -457,10 +457,8 @@ Play(spcommand->m_dRate);
                ::multimedia::e_result            mmrc;
                ::music::midi::sequence::PlayerLink & link = get_sequence()->GetPlayerLink();
                link.SetCommand(spcommand);
-               link.ModifyFlag(
-                               ::music::midi::sequence::FlagStopAndRestart,
-                               ::music::midi::sequence::FlagNull);
-               link.m_tkRestart = get_sequence()->GetPositionTicks();
+               link.ModifyFlag(::music::midi::sequence::FlagStopAndRestart, ::music::midi::sequence::FlagNull);
+               link.m_tkRestart = get_sequence()->get_position_ticks();
                if(::multimedia::result_success != (mmrc = get_sequence()->Stop()))
                {
                   _throw(exception(get_app(), EMidiPlayerStop, mmrc));

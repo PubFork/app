@@ -189,7 +189,7 @@ namespace music
          MIDIClientRef m_virtualMidi;
          MIDIEndpointRef m_virtualEndpoint;
          
-         CoreMidiOutput * m_pcmo;
+         //CoreMidiOutput * m_pcmo;
          
          AudioUnitOutput * m_pau;
          
@@ -203,90 +203,87 @@ namespace music
          virtual ~sequence();
 
          
-         inline uint32_t GetState();
-         inline uint32_t GetPreviousState();
-         uint32_t SetState(uint32_t uiState);
+         inline uint32_t GetState() override;
+         inline uint32_t GetPreviousState() override;
+         uint32_t SetState(uint32_t uiState) override;
          
-         void SetSpecialModeV001Flag(bool bSet = true);
+         void SetSpecialModeV001Flag(bool bSet = true) override;
          
-         void MuteAll(bool bMute = true, int32_t iExcludeTrack = -1);
-         void MuteTrack(int32_t iIndex, bool bMute = true);
+         void MuteAll(bool bMute = true, int32_t iExcludeTrack = -1) override;
+         void MuteTrack(int32_t iIndex, bool bMute = true) override;
          
          
-         virtual int32_t GetDefaultCodePage();
+         virtual int32_t GetDefaultCodePage() override;
          
-         void Prepare(::ikaraoke::data & data);
-         void Prepare(int32_t iTrack, ::ikaraoke::data & data);
+         void Prepare(::ikaraoke::data & data) override;
+         void Prepare(int32_t iTrack, ::ikaraoke::data & data) override;
          void Prepare(
                       string2a & str2a,
                       imedia_position_2darray & tka2DTokensTicks,
                       int32_t iMelodyTrack,
                       int2a & ia2TokenLine,
-                      ::ikaraoke::data & data);
+                      ::ikaraoke::data & data) override;
          
-         //imedia_position GetPositionTicks();
-         void SetLevelMeter(int32_t iLevel);
-         ::multimedia::e_result CloseStream();
-         bool SetMidiOutDevice(uint32_t uiDevice);
-         int32_t SetKeyShift(int32_t iKeyShift);
-         int32_t GetKeyShift();
+         void SetLevelMeter(int32_t iLevel) override;
+         ::multimedia::e_result CloseStream() override;
+         bool SetMidiOutDevice(uint32_t uiDevice) override;
+         int32_t SetKeyShift(int32_t iKeyShift) override;
+         int32_t GetKeyShift() override;
          
-         void OnMidiPlaybackEnd(::music::midi::sequence::event * pevent);
+         void OnMidiPlaybackEnd(::music::midi::sequence::event * pevent) override;
          int32_t SetTempoShift(int32_t iTempoShift);
          
          void OnPositionCB(LPMIDIHDR lpmidihdr);
 //         void OnDone(seq_context_t * hmidistream, LPMIDIHDR lpmidihdr);
-         virtual void GetTimeLength(imedia_time & time);
-         virtual void GetPositionLength(imedia_position & position);
+         //virtual void GetTimeLength(imedia_time & time);
+         //virtual void GetPositionLength(imedia_position & position);
          
          using ::ikaraoke::karaoke::TimeToPosition;
          using ::ikaraoke::karaoke::PositionToTime;
          
-         virtual imedia_position TimeToPosition(imedia_time time);
-         virtual imedia_time PositionToTime(imedia_position position);
+         virtual imedia_position TimeToPosition(imedia_time time) override;
+         virtual imedia_time PositionToTime(imedia_position position) override;
          
-         virtual bool IsOpened();
+         virtual bool IsOpened() override;
          
          virtual bool IsNull();
-         virtual void SetTempoChangeFlag(bool bSet = true);
-         virtual bool IsChangingTempo();
+         virtual void SetTempoChangeFlag(bool bSet = true) override;
+         virtual bool IsChangingTempo() override;
          
-         virtual double GetTempoShift();
-         virtual void GetMidiDoneData(::music::midi::LPMIDIDONEDATA lpmdd);
-         virtual bool IsInSpecialModeV001();
-         virtual bool WasInSpecialModeV001();
-         virtual void SetSpecialModeV001Operation(uint32_t uiOperation);
+         virtual double GetTempoShift() override;
+         virtual void GetMidiDoneData(::music::midi::LPMIDIDONEDATA lpmdd) override;
+         virtual bool IsInSpecialModeV001() override;
+         virtual bool WasInSpecialModeV001() override;
+         virtual void SetSpecialModeV001Operation(uint32_t uiOperation) override;
          
-         virtual void OnEvent(::music::midi::sequence::event * pevent);
+         virtual void OnEvent(::music::midi::sequence::event * pevent) override;
          
          
-         ::multimedia::e_result Preroll(::thread * pthread, ::music::midi::LPPREROLL lpPreroll, bool bThrow);
-         ::multimedia::e_result Start();
+         ::multimedia::e_result Preroll(::thread * pthread, ::music::midi::LPPREROLL lpPreroll, bool bThrow) override;
+         ::multimedia::e_result Start() override;
          
-         ::multimedia::e_result Pause();
+         ::multimedia::e_result Pause() override;
          
-         ::multimedia::e_result Restart();
+         ::multimedia::e_result Restart() override;
          
          //::multimedia::e_result Stop(uint32_t dwEllapse);
-         ::multimedia::e_result Stop();
+         ::multimedia::e_result Stop() override;
          
-         void GetPosition(imedia_position  & time);
-         void get_time(imedia_time  & time);
-         
-         ::multimedia::e_result get_ticks(imedia_position & time);
-         ::multimedia::e_result get_millis(imedia_time & time);
+
+         ::multimedia::e_result get_ticks(imedia_position & time) override;
+         ::multimedia::e_result get_millis(imedia_time & time) override;
          
          
-         imedia_position MillisecsToTicks(imedia_time msOffset);
+         imedia_position MillisecsToTicks(imedia_time msOffset) override;
          
-         imedia_time TicksToMillisecs(imedia_position tkOffset);
+         imedia_time TicksToMillisecs(imedia_position tkOffset) override;
          
-         bool IsPlaying();
+         bool IsPlaying() override;
          
-         bool IsSettingPosition();
-         void SetSettingPositionFlag(bool bSet = TRUE);
+         bool IsSettingPosition() override;
+         void SetSettingPositionFlag(bool bSet = TRUE) override;
          
-         imedia_position GetQuarterNote();
+         imedia_position GetQuarterNote() override;
          
          
          inline sp(::music::midi_core_midi::file) file()

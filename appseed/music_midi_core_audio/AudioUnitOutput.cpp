@@ -710,29 +710,29 @@ OSStatus CreateAUGraph (AUGraph &outGraph, AudioUnit &outSynth)
    return result;
 }
 
-#ifdef MACOS
-
-OSStatus PathToFSSpec(const char *filename, FSSpec &outSpec)
-{
-   FSRef fsRef;
-   OSStatus result;
-   result = FSPathMakeRef ((const UInt8*)filename, &fsRef, 0);
-   if (result != 0)
-   {
-      fprintf(stderr, "FSPathMakeRef failed\n");
-      return result;
-   }
-   
-   result = FSGetCatalogInfo(&fsRef, kFSCatInfoNone, NULL, NULL, &outSpec, NULL);
-   if (result != 0)
-   {
-      fprintf(stderr, "FSGetCatalogInfo failed\n");
-      return result;
-   }
-   
-   return result;
-}
-#endif
+//#ifdef MACOS
+//
+//OSStatus PathToFSSpec(const char *filename, FSSpec &outSpec)
+//{
+//   FSRef fsRef;
+//   OSStatus result;
+//   result = FSPathMakeRef ((const UInt8*)filename, &fsRef, 0);
+//   if (result != 0)
+//   {
+//      fprintf(stderr, "FSPathMakeRef failed\n");
+//      return result;
+//   }
+//   
+//   result = FSGetCatalogInfo(&fsRef, kFSCatInfoNone, NULL, NULL, &outSpec, NULL);
+//   if (result != 0)
+//   {
+//      fprintf(stderr, "FSGetCatalogInfo failed\n");
+//      return result;
+//   }
+//   
+//   return result;
+//}
+//#endif
 
 // some MIDI constants:
 enum
