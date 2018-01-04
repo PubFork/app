@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 template < typename Type, typename RawType >
@@ -3569,8 +3569,10 @@ template < class Type, class RawType >
 
    for(index i = 0; i < get_size(); i++)
    {
+      
+      char * psz = strdup((const char *) element_at(i));
 
-      psza.add((const char *) element_at(i));
+      psza.add(psz);
 
    }
 
