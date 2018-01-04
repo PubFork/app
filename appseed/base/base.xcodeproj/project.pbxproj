@@ -77,8 +77,6 @@
 		07D968461B4C63E4004A3D2A /* user_impact_update_hint.h in Headers */ = {isa = PBXBuildFile; fileRef = 07D967531B4C63E3004A3D2A /* user_impact_update_hint.h */; };
 		07D968471B4C63E4004A3D2A /* user_inline.h in Headers */ = {isa = PBXBuildFile; fileRef = 07D967541B4C63E3004A3D2A /* user_inline.h */; };
 		07D968671B4C63E4004A3D2A /* user_message.h in Headers */ = {isa = PBXBuildFile; fileRef = 07D967641B4C63E3004A3D2A /* user_message.h */; };
-		07D9686B1B4C63E4004A3D2A /* user_message_queue.h in Headers */ = {isa = PBXBuildFile; fileRef = 07D967661B4C63E3004A3D2A /* user_message_queue.h */; };
-		07D9686C1B4C63E4004A3D2A /* user_message_queue_listener.h in Headers */ = {isa = PBXBuildFile; fileRef = 07D967671B4C63E3004A3D2A /* user_message_queue_listener.h */; };
 		07D968781B4C63E4004A3D2A /* user_plain_edit.h in Headers */ = {isa = PBXBuildFile; fileRef = 07D9676D1B4C63E3004A3D2A /* user_plain_edit.h */; };
 		07D9687C1B4C63E4004A3D2A /* user_plain_text_data.h in Headers */ = {isa = PBXBuildFile; fileRef = 07D9676F1B4C63E3004A3D2A /* user_plain_text_data.h */; };
 		07D9688C1B4C63E4004A3D2A /* user_scroll.h in Headers */ = {isa = PBXBuildFile; fileRef = 07D967771B4C63E3004A3D2A /* user_scroll.h */; };
@@ -446,8 +444,6 @@
 		07D967531B4C63E3004A3D2A /* user_impact_update_hint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_impact_update_hint.h; sourceTree = "<group>"; };
 		07D967541B4C63E3004A3D2A /* user_inline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_inline.h; sourceTree = "<group>"; };
 		07D967641B4C63E3004A3D2A /* user_message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_message.h; sourceTree = "<group>"; };
-		07D967661B4C63E3004A3D2A /* user_message_queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_message_queue.h; sourceTree = "<group>"; };
-		07D967671B4C63E3004A3D2A /* user_message_queue_listener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_message_queue_listener.h; sourceTree = "<group>"; };
 		07D9676D1B4C63E3004A3D2A /* user_plain_edit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_plain_edit.h; sourceTree = "<group>"; };
 		07D9676F1B4C63E3004A3D2A /* user_plain_text_data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_plain_text_data.h; sourceTree = "<group>"; };
 		07D967771B4C63E3004A3D2A /* user_scroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_scroll.h; sourceTree = "<group>"; };
@@ -954,8 +950,6 @@
 				07D967531B4C63E3004A3D2A /* user_impact_update_hint.h */,
 				07D967541B4C63E3004A3D2A /* user_inline.h */,
 				07D967641B4C63E3004A3D2A /* user_message.h */,
-				07D967661B4C63E3004A3D2A /* user_message_queue.h */,
-				07D967671B4C63E3004A3D2A /* user_message_queue_listener.h */,
 				07D9676D1B4C63E3004A3D2A /* user_plain_edit.h */,
 				07D9676F1B4C63E3004A3D2A /* user_plain_text_data.h */,
 				9A7F2E951F423654006F97CD /* user_schema_button.h */,
@@ -1167,7 +1161,6 @@
 				07D9687C1B4C63E4004A3D2A /* user_plain_text_data.h in Headers */,
 				07D9688C1B4C63E4004A3D2A /* user_scroll.h in Headers */,
 				07D968211B4C63E4004A3D2A /* user_control_bar.h in Headers */,
-				07D9686B1B4C63E4004A3D2A /* user_message_queue.h in Headers */,
 				07D967E01B4C63E3004A3D2A /* simple_scroll_bar.h in Headers */,
 				9A9D7BC21F5D6887009EC103 /* simple_ui_top.h in Headers */,
 				9A9D7B5C1F5D6694009EC103 /* ios_c.h in Headers */,
@@ -1204,7 +1197,6 @@
 				07D967B31B4C63E3004A3D2A /* hotplugin.h in Headers */,
 				07D968901B4C63E4004A3D2A /* user_scroll_bar.h in Headers */,
 				07A36ED01B25D18F00E4F888 /* base_application.h in Headers */,
-				07D9686C1B4C63E4004A3D2A /* user_message_queue_listener.h in Headers */,
 				07A36ED51B25D18F00E4F888 /* base_simple_app.h in Headers */,
 				07A36F781B25D18F00E4F888 /* macos_mm.h in Headers */,
 				07A370861B25D18F00E4F888 /* macos.h in Headers */,
