@@ -270,8 +270,14 @@ namespace macos
          {
             break;
          }
-
-         nCount -= iRead;
+         if(iRead > nCount)
+         {
+            nCount = 0;
+         }
+         else
+         {
+            nCount -= iRead;
+         }
          pos += iRead;
          sizeRead += iRead;
       }

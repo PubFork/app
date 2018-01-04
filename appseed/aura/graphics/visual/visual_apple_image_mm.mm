@@ -10,6 +10,8 @@
 //#include <CoreGraphics/CoreGraphics.h>
 CFDataRef CopyImagePixels(CGImageRef inImage) {     return CGDataProviderCopyData(CGImageGetDataProvider(inImage)); }
 
+void * get_dib(int & width, int & height, int & iScan, NSImage * pimage);
+
 void * get_dib(int & width, int & height, int & iScan, const void * pdata, unsigned long size)
 {
    
@@ -24,12 +26,13 @@ void * get_dib(int & width, int & height, int & iScan, const void * pdata, unsig
    
    NSImage * image = [[NSImage alloc] initWithData: data];
    
-   if(image == NULL)
-   {
-      
-      return NULL;
-      
-   }
+   return get_dib(width, height, iScan, image);
+   
+}
+
+
+void * get_dib(int & width, int & height, int & iScan, NSImage * image)
+{
    
    CGImageRef inputCGImage = [image CGImageForProposedRect:NULL context:NULL hints:NULL];
    

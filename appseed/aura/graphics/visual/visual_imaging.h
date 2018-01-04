@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 #define XFM_LOAD_IMAGE 12
@@ -285,6 +285,7 @@ public:
 
    virtual bool load_image(::draw2d::dib * pdib, var varFile);
    virtual bool _load_image(::draw2d::dib * pdib, ::file::file * pfile);
+   virtual bool _load_image(::draw2d::dib * pdib, int cx, int cy, int iScan, COLORREF * pdata);
 
    virtual bool save_image(var varFile, ::draw2d::dib * pdib, ::visual::save_image * psaveimage = NULL);
    virtual bool _save_image(::file::file * pfile, ::draw2d::dib * pdib, ::visual::save_image * psaveimage = NULL);

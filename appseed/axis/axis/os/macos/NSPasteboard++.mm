@@ -125,3 +125,42 @@ void mm_clipboard_set_plain_text(const char * psz)
    [pasteboard setString:strPasteboard forType:NSStringPboardType];
 
 }
+
+
+void * get_dib(int & width, int & height, int & iScan, NSImage * pimage);
+
+// http://findnerd.com/list/view/How-to-copy-image-in-NSPasteBoard/756/
+void * mm_clipboard_get_dib(int & cx, int & cy, int & iScan)
+{
+
+   NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
+
+   NSArray *classArray = [NSArray arrayWithObject:[NSImage class]];
+
+   NSDictionary *options = [NSDictionary dictionary];
+
+   BOOL ok = [pasteboard canReadObjectForClasses:classArray options:options];
+
+   if (!ok)
+   {
+   
+      return NULL;
+   
+   }
+   
+   NSArray *objectsToPaste = [pasteboard readObjectsForClasses:classArray options:options];
+   
+   NSImage *image = [objectsToPaste objectAtIndex:0];
+   
+   void * pdata = get_dib(cx, cy, iScan, image);
+   
+   if(pdata == NULL)
+   {
+      
+      return NULL;
+      
+   }
+
+   return pdata;
+   
+}

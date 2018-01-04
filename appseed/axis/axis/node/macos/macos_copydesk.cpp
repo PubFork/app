@@ -12,6 +12,7 @@ string macos_clipboard_get_plain_text();
 
 void macos_clipboard_set_plain_text(const char * pszPlainText);
 
+void * mm_clipboard_get_dib(int & cx, int & cy, int & iScan);
 
 namespace macos
 {
@@ -107,43 +108,31 @@ namespace macos
 
    bool copydesk::desk_to_dib(::draw2d::dib * pdib)
    {
-//      if(!m_p->OpenClipboard())
-  //       return false;
-      bool bOk = false;
-      _throw(todo(get_app()));
-/* xxx
-      HBITMAP hbitmap = (HBITMAP) ::GetClipboardData(CF_BITMAP);
-      try
-      {
-         ::draw2d::bitmap_sp bitmap(get_app());
-         bitmap->Attach(hbitmap);
-         //HDC hdc = ::CreateCompatibleDC(NULL);
-         //::draw2d::graphics_sp g(get_app());
-         //g->Attach(hdc);
-         //::draw2d::graphics * pgraphics = Application.graphics_from_os_data(hdc);
-         //g->SelectObject(hbitmap);
-       //  BITMAP bm;
-         //::GetObjectA(hbitmap, sizeof(bm), &bm);
-         //if(!pdib->create(bm.bmWidth, bm.bmHeight))
-           // return false;
-         ::draw2d::graphics_sp g(get_app());
-         g->SelectObject(bitmap);
-         size sz = bitmap->GetBitmapDimension();
-         if(pdib->create(sz))
-         {
-            bOk = pdib->get_graphics()->BitBlt(0, 0, sz.cx, sz.cy, g, 0, 0, SRCCOPY) != FALSE;
-         }
-      }
-      catch(...)
-      {
-      }
-      ::DeleteObject((HGDIOBJ) hbitmap);
-      //::DeleteDC(hdc);
-      ::CloseClipboard();
+      
+      int w = 0;
+      
+      int h = 0;
+      
+      int iScan = 0;
 
-*/
-
-      return bOk;
+      ::aura::malloc < COLORREF * > pcolorref = (COLORREF *) mm_clipboard_get_dib(w, h, iScan);
+      
+      if(pcolorref == NULL)
+      {
+       
+         return false;
+         
+      }
+      
+      if(!System.imaging()._load_image(pdib, w, h, iScan, pcolorref))
+      {
+       
+         return false;
+         
+      }
+      
+      return true;
+      
    }
 
 

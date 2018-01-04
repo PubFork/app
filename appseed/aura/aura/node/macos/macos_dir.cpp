@@ -1116,6 +1116,8 @@ namespace macos
         
       string strCa2Module = ca2module();
         
+
+        m_pathHome = getenv("HOME");
       m_strCa2 = strCa2Module;
         
 //#if !defined(CUBE) && !defined(VSNORD)

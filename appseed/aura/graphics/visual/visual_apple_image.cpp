@@ -113,9 +113,19 @@ bool imaging::_load_image(::draw2d::dib * pdib, ::file::file * pfile)
    
    pcolorref = get_dib(w, h, iScan, m.get_data(), m.get_size());
    
+   return _load_image(pdib, w, h, iScan, pcolorref);
+   
+}
+
+
+bool imaging::_load_image(::draw2d::dib * pdib, int w, int h, int iScan, COLORREF * pdata)
+{
+   
+   COLORREF * pcolorref = pdata;
+   
    if(pcolorref == NULL)
    {
-    
+      
       return false;
       
    }
@@ -129,7 +139,7 @@ bool imaging::_load_image(::draw2d::dib * pdib, ::file::file * pfile)
          return false;
          
       }
-
+      
       ::draw2d::_001ProperCopyColorref(w, h, pdib->m_pcolorref, pdib->m_iScan, pcolorref, iScan);
       
    }
@@ -140,23 +150,23 @@ bool imaging::_load_image(::draw2d::dib * pdib, ::file::file * pfile)
       
    }
    
-//#if 1 // check premultiplied
-//
-//   byte * p = (byte *) pdib->m_pcolorref;
-//
-//   size_t s = iScan * h / sizeof(COLORREF);
-//
-//   while(s> 0)
-//   {
-//      if(p[0] > p[3] || p[1] > p[3] || p[2] > p[3])
-//      {
-//         output_debug_string("probably not premultiplied");
-//      }
+   //#if 1 // check premultiplied
+   //
+   //   byte * p = (byte *) pdib->m_pcolorref;
+   //
+   //   size_t s = iScan * h / sizeof(COLORREF);
+   //
+   //   while(s> 0)
+   //   {
+   //      if(p[0] > p[3] || p[1] > p[3] || p[2] > p[3])
+   //      {
+   //         output_debug_string("probably not premultiplied");
+   //      }
    //p+=4;
-//      s--;
-//   }
-//
-//#endif
+   //      s--;
+   //   }
+   //
+   //#endif
    
    byte * p = (byte *) pdib->m_pcolorref;
    
@@ -165,17 +175,17 @@ bool imaging::_load_image(::draw2d::dib * pdib, ::file::file * pfile)
    COLORREF * pcr = (COLORREF*)p;
    while(s> 0)
    {
-//      if(p[0] > p[3] || p[1] > p[3] || p[2] > p[3])
-//      {
-//         output_debug_string("probably not premultiplied");
-//      }
+      //      if(p[0] > p[3] || p[1] > p[3] || p[2] > p[3])
+      //      {
+      //         output_debug_string("probably not premultiplied");
+      //      }
       p[0] = p[0] * p[3] / 255;
       p[1] = p[1] * p[3] / 255;
       p[2] = p[2] * p[3] / 255;
       p+=4;
       s--;
    }
-
+   
    return true;
    
    
