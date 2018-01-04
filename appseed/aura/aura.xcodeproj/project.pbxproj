@@ -2111,6 +2111,8 @@
 		9AE7258217E83B69003E47F9 /* primitive_var.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE722F817E83B69003E47F9 /* primitive_var.h */; };
 		9AE7258317E83B69003E47F9 /* primitive_var2.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE722F917E83B69003E47F9 /* primitive_var2.h */; };
 		9AE7258517E83B69003E47F9 /* primitive_virtual_memory.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE722FB17E83B69003E47F9 /* primitive_virtual_memory.h */; };
+		9AE7B1421FFD9DAB003AFCEC /* aura_file_memory_map.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE7B1401FFD9DAA003AFCEC /* aura_file_memory_map.h */; };
+		9AE7B1431FFD9DAB003AFCEC /* aura_file_memory_map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AE7B1411FFD9DAB003AFCEC /* aura_file_memory_map.cpp */; };
 		9AE9FBB31F7F4D4800367001 /* audio.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE9FBA91F7F4D3C00367001 /* audio.h */; };
 		9AE9FBB41F7F4D4800367001 /* audio_c.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE9FBAA1F7F4D3C00367001 /* audio_c.h */; };
 		9AE9FBB51F7F4D4800367001 /* audio_wave_out.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AE9FBAB1F7F4D3C00367001 /* audio_wave_out.cpp */; };
@@ -2228,8 +2230,6 @@
 		9AF4C3761F836F8400197385 /* aura_live_object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4C2A51F836F8200197385 /* aura_live_object.cpp */; };
 		9AF4C3771F836F8400197385 /* aura_live_signal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4C2A61F836F8200197385 /* aura_live_signal.cpp */; };
 		9AF4C3781F836F8400197385 /* aura_live_signal.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AF4C2A71F836F8200197385 /* aura_live_signal.h */; };
-		9AF4C3791F836F8400197385 /* aura_local_memory_map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4C2A81F836F8200197385 /* aura_local_memory_map.cpp */; };
-		9AF4C37A1F836F8400197385 /* aura_local_memory_map.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AF4C2A91F836F8200197385 /* aura_local_memory_map.h */; };
 		9AF4C37B1F836F8400197385 /* aura_log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4C2AA1F836F8200197385 /* aura_log.cpp */; };
 		9AF4C37C1F836F8400197385 /* aura_log.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AF4C2AB1F836F8200197385 /* aura_log.h */; };
 		9AF4C37D1F836F8400197385 /* aura_lparam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4C2AC1F836F8200197385 /* aura_lparam.cpp */; };
@@ -2357,7 +2357,6 @@
 		9AF4C4051F83702B00197385 /* aura_library.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4C2A31F836F8200197385 /* aura_library.cpp */; };
 		9AF4C4061F83702B00197385 /* aura_live_object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4C2A51F836F8200197385 /* aura_live_object.cpp */; };
 		9AF4C4071F83702B00197385 /* aura_live_signal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4C2A61F836F8200197385 /* aura_live_signal.cpp */; };
-		9AF4C4081F83702B00197385 /* aura_local_memory_map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4C2A81F836F8200197385 /* aura_local_memory_map.cpp */; };
 		9AF4C4091F83702B00197385 /* aura_log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4C2AA1F836F8200197385 /* aura_log.cpp */; };
 		9AF4C40A1F83702B00197385 /* aura_lparam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4C2AC1F836F8200197385 /* aura_lparam.cpp */; };
 		9AF4C40B1F83702B00197385 /* aura_machine_event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4C2AE1F836F8200197385 /* aura_machine_event.cpp */; };
@@ -2500,13 +2499,6 @@
 			remoteGlobalIDString = 07B2729219A019AB00E822E1;
 			remoteInfo = ios_axiscrypto;
 		};
-		9A640E481EA6BBC400866C2C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9A640E3E1EA6BBC400866C2C /* axiscrypto.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 9AF8B7231D1FDDB50087E7A2;
-			remoteInfo = axiscrypto_iosTests;
-		};
 		9A640E4A1EA6BBEC00866C2C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 9A640E3E1EA6BBC400866C2C /* axiscrypto.xcodeproj */;
@@ -2576,6 +2568,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 9A1B358B16A2D7A500875A94;
 			remoteInfo = axiswinpr;
+		};
+		9AE7B13B1FFD9D9A003AFCEC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9A640E3E1EA6BBC400866C2C /* axiscrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9AE7AF9F1FFD9D08003AFCEC;
+			remoteInfo = axiscrypto_iosTests;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -4176,6 +4175,8 @@
 		9AE722F817E83B69003E47F9 /* primitive_var.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = primitive_var.h; sourceTree = "<group>"; };
 		9AE722F917E83B69003E47F9 /* primitive_var2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = primitive_var2.h; sourceTree = "<group>"; };
 		9AE722FB17E83B69003E47F9 /* primitive_virtual_memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = primitive_virtual_memory.h; sourceTree = "<group>"; };
+		9AE7B1401FFD9DAA003AFCEC /* aura_file_memory_map.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_file_memory_map.h; sourceTree = "<group>"; };
+		9AE7B1411FFD9DAB003AFCEC /* aura_file_memory_map.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aura_file_memory_map.cpp; sourceTree = "<group>"; };
 		9AE9FBA91F7F4D3C00367001 /* audio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio.h; sourceTree = "<group>"; };
 		9AE9FBAA1F7F4D3C00367001 /* audio_c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_c.h; sourceTree = "<group>"; };
 		9AE9FBAB1F7F4D3C00367001 /* audio_wave_out.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_wave_out.cpp; sourceTree = "<group>"; };
@@ -4311,8 +4312,6 @@
 		9AF4C2A51F836F8200197385 /* aura_live_object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aura_live_object.cpp; sourceTree = "<group>"; };
 		9AF4C2A61F836F8200197385 /* aura_live_signal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aura_live_signal.cpp; sourceTree = "<group>"; };
 		9AF4C2A71F836F8200197385 /* aura_live_signal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_live_signal.h; sourceTree = "<group>"; };
-		9AF4C2A81F836F8200197385 /* aura_local_memory_map.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aura_local_memory_map.cpp; sourceTree = "<group>"; };
-		9AF4C2A91F836F8200197385 /* aura_local_memory_map.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_local_memory_map.h; sourceTree = "<group>"; };
 		9AF4C2AA1F836F8200197385 /* aura_log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aura_log.cpp; sourceTree = "<group>"; };
 		9AF4C2AB1F836F8200197385 /* aura_log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_log.h; sourceTree = "<group>"; };
 		9AF4C2AC1F836F8200197385 /* aura_lparam.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aura_lparam.cpp; sourceTree = "<group>"; };
@@ -6209,7 +6208,7 @@
 			children = (
 				9A640E451EA6BBC400866C2C /* libaxiscrypto.dylib */,
 				9A640E471EA6BBC400866C2C /* libios_axiscrypto.a */,
-				9A640E491EA6BBC400866C2C /* axiscrypto_iosTests.xctest */,
+				9AE7B13C1FFD9D9A003AFCEC /* axiscrypto_iosTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -6827,6 +6826,8 @@
 				9AF4C27D1F836F8200197385 /* aura_error.h */,
 				9AF4C27E1F836F8200197385 /* aura_file_watcher.cpp */,
 				9AF4C27F1F836F8200197385 /* aura_file_watcher.h */,
+				9AE7B1411FFD9DAB003AFCEC /* aura_file_memory_map.cpp */,
+				9AE7B1401FFD9DAA003AFCEC /* aura_file_memory_map.h */,
 				9AF4C2801F836F8200197385 /* aura_file_watcher_impl.cpp */,
 				9AF4C2811F836F8200197385 /* aura_file_watcher_impl.h */,
 				9AF4C2821F836F8200197385 /* aura_file_watcher_listener_thread.cpp */,
@@ -6866,8 +6867,6 @@
 				9AF4C2A51F836F8200197385 /* aura_live_object.cpp */,
 				9AF4C2A61F836F8200197385 /* aura_live_signal.cpp */,
 				9AF4C2A71F836F8200197385 /* aura_live_signal.h */,
-				9AF4C2A81F836F8200197385 /* aura_local_memory_map.cpp */,
-				9AF4C2A91F836F8200197385 /* aura_local_memory_map.h */,
 				9AF4C2AA1F836F8200197385 /* aura_log.cpp */,
 				9AF4C2AB1F836F8200197385 /* aura_log.h */,
 				9AF4C2AC1F836F8200197385 /* aura_lparam.cpp */,
@@ -7428,6 +7427,7 @@
 				9A16450519C4A4CF00966C5E /* process_process.h in Headers */,
 				9A3630A41F9CEA0D0020D70B /* ansios_file.h in Headers */,
 				07502C9A1B24911C008D207C /* filesystem_dir_system.h in Headers */,
+				9AE7B1421FFD9DAB003AFCEC /* aura_file_memory_map.h in Headers */,
 				9AF4C3391F836F8300197385 /* aura_conv.h in Headers */,
 				9A0256FC1EA593AC003C82CF /* sockets_link_in_socket.h in Headers */,
 				9A16423419C4A4CE00966C5E /* exception_standard.h in Headers */,
@@ -8107,7 +8107,6 @@
 				9A02563A1EA593AC003C82CF /* ftp_file.h in Headers */,
 				9AF4C32A1F836F8300197385 /* aura_auto.h in Headers */,
 				9A0256DE1EA593AC003C82CF /* httpd_socket.h in Headers */,
-				9AF4C37A1F836F8400197385 /* aura_local_memory_map.h in Headers */,
 				9A16424119C4A4CE00966C5E /* exception_verisimple.h in Headers */,
 				9A16427919C4A4CE00966C5E /* ansios_thread_impl.h in Headers */,
 				9A0256E71EA593AC003C82CF /* sockets_http_debug_socket.h in Headers */,
@@ -8400,13 +8399,6 @@
 			remoteRef = 9A640E461EA6BBC400866C2C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		9A640E491EA6BBC400866C2C /* axiscrypto_iosTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = axiscrypto_iosTests.xctest;
-			remoteRef = 9A640E481EA6BBC400866C2C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		9A6716741D1553BF0069A961 /* libace.dylib */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.dylib";
@@ -8440,6 +8432,13 @@
 			fileType = "compiled.mach-o.dylib";
 			path = libios_axiswinpr.a;
 			remoteRef = 9AD185C71F9C214C001CEA8E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9AE7B13C1FFD9D9A003AFCEC /* axiscrypto_iosTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = axiscrypto_iosTests.xctest;
+			remoteRef = 9AE7B13B1FFD9D9A003AFCEC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -8650,7 +8649,6 @@
 				9A957A891F6225B900623508 /* multithreading_semaphore.cpp in Sources */,
 				9A957A8A1F6225B900623508 /* multithreading_service_base.cpp in Sources */,
 				9A957A8B1F6225B900623508 /* multithreading_signal_thread.cpp in Sources */,
-				9AF4C4081F83702B00197385 /* aura_local_memory_map.cpp in Sources */,
 				9A957A8C1F6225B900623508 /* multithreading_simple_thread.cpp in Sources */,
 				9A957A8D1F6225B900623508 /* multithreading_single_lock.cpp in Sources */,
 				9A957A8E1F6225B900623508 /* multithreading_socket_event.cpp in Sources */,
@@ -9104,6 +9102,7 @@
 				9AF4C34B1F836F8300197385 /* aura_draw_interface.cpp in Sources */,
 				9A6FAF8E1F5C794100AF31B2 /* ftp_data_types.cpp in Sources */,
 				9A6FB0641F5C79CF00AF31B2 /* file_set.cpp in Sources */,
+				9AE7B1431FFD9DAB003AFCEC /* aura_file_memory_map.cpp in Sources */,
 				9A6FB04D1F5C79CF00AF31B2 /* file_html_file.cpp in Sources */,
 				9A6FB12A1F5C9CEE00AF31B2 /* sockets_http_batch_buffer.cpp in Sources */,
 				9A6FAB241F5C704C00AF31B2 /* zip_api.cpp in Sources */,
@@ -9453,7 +9452,6 @@
 				9A6FAE481F5C772700AF31B2 /* geometry_rect.cpp in Sources */,
 				9A6FAB2F1F5C706400AF31B2 /* crypto_openssl.cpp in Sources */,
 				9A6FB0671F5C79CF00AF31B2 /* file_stdio_file.cpp in Sources */,
-				9AF4C3791F836F8400197385 /* aura_local_memory_map.cpp in Sources */,
 				9A6FAC091F5C70D200AF31B2 /* message_sender.cpp in Sources */,
 				9AF4C3B41F836F8400197385 /* aura_sprintf.cpp in Sources */,
 				9A6FABE71F5C70BE00AF31B2 /* exception_throw.cpp in Sources */,
