@@ -14,20 +14,6 @@
 #include "ios_file_watcher.h"
 
 
-int GetMainScreenRect(LPRECT lprect);
-
-int GetScreenRect(LPRECT lprect, int iMonitor);
-
-int GetScreenCount();
-
-int GetWkspaceRect(LPRECT lprect, int iMonitor);
-
-int GetWkspaceCount();
-
-
-#pragma once
-
-
 
 #include <stdarg.h>
 #include <wchar.h>
@@ -76,33 +62,4 @@ DWORD get_tick_count();
  HANDLE hThread
  );
  */
-
-oswindow GetCapture();
-oswindow SetCapture(oswindow window);
-WINBOOL ReleaseCapture();
-oswindow SetFocus(oswindow window);
-oswindow GetFocus();
-oswindow GetActiveWindow();
-oswindow SetActiveWindow(oswindow window);
-
-
-//void GetMainScreenRect(LPRECT lprect);
-
-WINBOOL SetForegroundWindow(oswindow window);
-WINBOOL BringWindowToTop(oswindow window);
-
-void ns_redraw_window(oswindow window);
-
-
-
-void copy(CGRect & rect, LPCRECT lpcrect);
-void copy(LPRECT lprect, const CGRect & rectSrc);
-void window_copy(CGRect & rect, LPCRECT lpcrect);
-void window_copy(LPRECT lprect, const CGRect & rectSrc);
-#ifdef MM
-void copy(NSRect & rect, LPCRECT lpcrect);
-void copy(LPRECT lprect, const NSRect & rectSrc);
-void window_copy(NSRect & rect, LPCRECT lpcrect);
-void window_copy(LPRECT lprect, const NSRect & rectSrc);
-#endif
 
