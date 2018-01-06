@@ -4,7 +4,7 @@
 //  core_static_start
 //
 
-
+aura_level auralevelCore(::aura_level::level_core, &defer_core_init);
 
 namespace core
 {

@@ -869,6 +869,38 @@ namespace aura
             }
             else
             {
+               
+               ::aura_app * pauraapp = ::aura_app::get(pszAppId);
+               
+               if(pauraapp != NULL)
+               {
+                  
+                  if(pauraapp->m_pfnNewLibrary != NULL)
+                  {
+                   
+                     plibrary = pauraapp->m_pfnNewLibrary(pappParent);
+                     
+                  }
+                  else if(pauraapp->m_pfnNewApp != NULL)
+                  {
+                     
+                     papp = pauraapp->m_pfnNewApp(pappParent);
+                     
+                     if (papp.is_null())
+                     {
+                        
+                        return NULL;
+                        
+                     }
+                     
+                     papp->m_strLibraryName = pszAppId;
+
+                  }
+                  
+               }
+               
+               if(papp.is_null() && plibrary == NULL)
+               {
 
                plibrary = new ::aura::library(pappParent, 0, NULL);
 
@@ -923,8 +955,14 @@ namespace aura
                ::output_debug_string("|----");
 
             }
+               
+            }
 
          }
+            
+            if(papp.is_null())
+               
+            {
 
          ::aura::library & library = *plibrary;
 
@@ -937,6 +975,7 @@ namespace aura
          ::output_debug_string("|\n");
          ::output_debug_string("|----");
 
+            }
 
          if (papp == NULL)
             return NULL;

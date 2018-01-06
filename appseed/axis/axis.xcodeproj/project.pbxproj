@@ -81,7 +81,6 @@
 		07A374921B26054100E4F888 /* axis_c_winrt.h in Headers */ = {isa = PBXBuildFile; fileRef = 07A372031B26054000E4F888 /* axis_c_winrt.h */; };
 		07A374931B26054100E4F888 /* axis_os.h in Headers */ = {isa = PBXBuildFile; fileRef = 07A372041B26054000E4F888 /* axis_os.h */; };
 		07A374951B26054100E4F888 /* axis_session.h in Headers */ = {isa = PBXBuildFile; fileRef = 07A372061B26054000E4F888 /* axis_session.h */; };
-		07A374961B26054100E4F888 /* axis_simple_app.h in Headers */ = {isa = PBXBuildFile; fileRef = 07A372071B26054000E4F888 /* axis_simple_app.h */; };
 		07A374981B26054100E4F888 /* axis_static_start.h in Headers */ = {isa = PBXBuildFile; fileRef = 07A372091B26054000E4F888 /* axis_static_start.h */; };
 		07A3749A1B26054100E4F888 /* axis_system.h in Headers */ = {isa = PBXBuildFile; fileRef = 07A3720B1B26054000E4F888 /* axis_system.h */; };
 		07A3749B1B26054100E4F888 /* boot.h in Headers */ = {isa = PBXBuildFile; fileRef = 07A3720C1B26054000E4F888 /* boot.h */; };
@@ -557,7 +556,6 @@
 		07A372031B26054000E4F888 /* axis_c_winrt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = axis_c_winrt.h; sourceTree = "<group>"; };
 		07A372041B26054000E4F888 /* axis_os.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = axis_os.h; sourceTree = "<group>"; };
 		07A372061B26054000E4F888 /* axis_session.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = axis_session.h; sourceTree = "<group>"; };
-		07A372071B26054000E4F888 /* axis_simple_app.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = axis_simple_app.h; sourceTree = "<group>"; };
 		07A372091B26054000E4F888 /* axis_static_start.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = axis_static_start.h; sourceTree = "<group>"; };
 		07A3720B1B26054000E4F888 /* axis_system.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = axis_system.h; sourceTree = "<group>"; };
 		07A3720C1B26054000E4F888 /* boot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = boot.h; sourceTree = "<group>"; };
@@ -1034,23 +1032,22 @@
 		07A371F81B26054000E4F888 /* axis */ = {
 			isa = PBXGroup;
 			children = (
-				9A98745E1F5CBB9900CB62EB /* axis_application.cpp */,
-				9A98745F1F5CBB9900CB62EB /* axis_session.cpp */,
-				9A9874601F5CBB9900CB62EB /* axis_static_start.cpp */,
-				9A9874611F5CBB9900CB62EB /* axis_system.cpp */,
-				9A9874621F5CBB9900CB62EB /* axis.cpp */,
-				07A371FB1B26054000E4F888 /* axis.h */,
-				07A371FC1B26054000E4F888 /* axis.inl */,
-				07A371FE1B26054000E4F888 /* axis_application.h */,
 				07A371FF1B26054000E4F888 /* axis_c.h */,
 				07A372001B26054000E4F888 /* axis_c_cpp.h */,
 				07A372011B26054000E4F888 /* axis_c_objc.h */,
 				07A372021B26054000E4F888 /* axis_c_objcpp.h */,
 				07A372031B26054000E4F888 /* axis_c_winrt.h */,
+				9A9874621F5CBB9900CB62EB /* axis.cpp */,
+				07A371FB1B26054000E4F888 /* axis.h */,
+				07A371FC1B26054000E4F888 /* axis.inl */,
+				9A98745E1F5CBB9900CB62EB /* axis_application.cpp */,
+				07A371FE1B26054000E4F888 /* axis_application.h */,
 				07A372041B26054000E4F888 /* axis_os.h */,
+				9A98745F1F5CBB9900CB62EB /* axis_session.cpp */,
 				07A372061B26054000E4F888 /* axis_session.h */,
-				07A372071B26054000E4F888 /* axis_simple_app.h */,
+				9A9874601F5CBB9900CB62EB /* axis_static_start.cpp */,
 				07A372091B26054000E4F888 /* axis_static_start.h */,
+				9A9874611F5CBB9900CB62EB /* axis_system.cpp */,
 				07A3720B1B26054000E4F888 /* axis_system.h */,
 			);
 			path = axis;
@@ -1483,7 +1480,6 @@
 				07A375661B26054200E4F888 /* macos 2.h in Headers */,
 				0747A6E91B2637BB00E85AC7 /* simpledb_server.h in Headers */,
 				07A3759F1B26054200E4F888 /* node.h in Headers */,
-				07A374961B26054100E4F888 /* axis_simple_app.h in Headers */,
 				9A9577DF1F6212AD00623508 /* ios_internal.h in Headers */,
 				9A9577CF1F6212AD00623508 /* ios.h in Headers */,
 				07A374911B26054100E4F888 /* axis_c_objcpp.h in Headers */,

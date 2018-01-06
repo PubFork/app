@@ -207,8 +207,7 @@ bool core_init()
 }
 
 
-extern "C"
-bool defer_core_init()
+int_bool defer_core_init()
 {
 
    g_iCoreRefCount++;
@@ -223,8 +222,8 @@ bool defer_core_init()
 
 }
 
-extern "C"
-CLASS_DECL_CORE bool defer_core_term()
+
+CLASS_DECL_CORE int_bool defer_core_term()
 {
 
    g_iCoreRefCount--;

@@ -2,7 +2,7 @@
 #include <time.h>
 
 
-typedef bool DEFER_INIT();
+typedef int_bool DEFER_INIT();
 typedef DEFER_INIT * PFN_DEFER_INIT;
 
 
@@ -308,41 +308,38 @@ void app_core::defer_load_backbone_libraries(string strAppId)
          hmodule = __node_library_open(strLibrary, strMessage);
 
       }
-
-      if (hmodule != NULL || bInApp || m_pszLevel)
+      
+      PFN_DEFER_INIT pfnDeferInit = NULL;
+      
+      if (hmodule != NULL || bInApp)
       {
 
-         PFN_DEFER_INIT defer_init = NULL;
-
-         if (!stricmp(m_pszLevel, "core")
-             || (hmodule = __node_library_touch("core", strMessage)) != NULL)
+         if ((hmodule = __node_library_touch("core", strMessage)) != NULL)
          {
 
-            defer_init = (PFN_DEFER_INIT) __node_library_raw_get(hmodule, "defer_core_init");
+            pfnDeferInit = (PFN_DEFER_INIT) __node_library_raw_get(hmodule, "defer_core_init");
 
          }
-         else if (!stricmp(m_pszLevel, "base")
-                  || (hmodule = __node_library_touch("base", strMessage)) != NULL)
+         else if ((hmodule = __node_library_touch("base", strMessage)) != NULL)
          {
 
-            defer_init = (PFN_DEFER_INIT) __node_library_raw_get(hmodule, "defer_base_init");
+            pfnDeferInit = (PFN_DEFER_INIT) __node_library_raw_get(hmodule, "defer_base_init");
 
          }
-         else if (!stricmp(m_pszLevel, "axis")
-                  || (hmodule = __node_library_touch("axis", strMessage)) != NULL)
+         else if ((hmodule = __node_library_touch("axis", strMessage)) != NULL)
          {
 
-            defer_init = (PFN_DEFER_INIT) __node_library_raw_get(hmodule, "defer_axis_init");
+            pfnDeferInit = (PFN_DEFER_INIT) __node_library_raw_get(hmodule, "defer_axis_init");
 
          }
 
-         if (defer_init != NULL && !defer_init())
-         {
-
-            on_result(-3);
-
-         }
-
+      }
+      
+      if(!::aura_level::defer_init(pfnDeferInit))
+      {
+         
+         on_result(-3);
+         
       }
 
    }
@@ -516,7 +513,7 @@ void app_core::end()
 //CLASS_DECL_AURA int32_t __win_main(sp(::aura::system) psystem, ::windows::command * pmaininitdata);
 
 
-typedef bool DEFER_INIT();
+typedef int_bool DEFER_INIT();
 typedef DEFER_INIT * PFN_DEFER_INIT;
 
 
@@ -582,7 +579,7 @@ CLASS_DECL_AURA void aura_main(app_core * pappcore)
 
 
 
-aura_prelude::aura_prelude(const char * pszLevel)
+aura_prelude::aura_prelude()
 {
 
    s_pprelude = this;
@@ -591,12 +588,10 @@ aura_prelude::aura_prelude(const char * pszLevel)
    
    m_pfnNewLibrary = NULL;
    
-   m_pszLevel = pszLevel;
-
 }
 
 
-aura_prelude::aura_prelude(::aura::PFN_GET_NEW_APP pgetnewapp, const char * pszLevel)
+aura_prelude::aura_prelude(::aura::PFN_GET_NEW_APP pgetnewapp)
 {
 
    s_pprelude = this;
@@ -605,8 +600,6 @@ aura_prelude::aura_prelude(::aura::PFN_GET_NEW_APP pgetnewapp, const char * pszL
    
    m_pfnNewLibrary = NULL;
    
-   m_pszLevel = pszLevel;
-
    m_pfnNewLibrary = NULL;
    
 }
@@ -619,20 +612,6 @@ aura_prelude::aura_prelude(::aura::PFN_GET_NEW_LIBRARY pgetnewlibrary)
    m_pfnNewLibrary = pgetnewlibrary;
    
    m_pfnNewApp = NULL;
-   
-}
-
-
-aura_prelude::aura_prelude(::aura::PFN_GET_NEW_LIBRARY pgetnewlibrary, const char * pszLevel)
-{
-   
-   s_pprelude = this;
-   
-   m_pfnNewApp = NULL;
-   
-   m_pfnNewLibrary = pgetnewlibrary;
-   
-   m_pszLevel = pszLevel;
    
 }
 
@@ -703,8 +682,6 @@ bool aura_prelude::prelude(app_core * pappcore)
    
    pappcore->m_pfnNewLibrary = m_pfnNewLibrary;
    
-   pappcore->m_pszLevel = m_pszLevel;
-
    return true;
 
 }
@@ -1129,7 +1106,11 @@ void app_core::run()
       set_main_thread(m_psystem->m_hthread);
 
       set_main_thread_id(m_psystem->m_uiThread);
-
+      
+      m_psystem->m_strAppId = m_pmaindata->m_pmaininitdata->m_strAppId;
+      
+      m_psystem->startup_command(m_pmaindata->m_pmaininitdata);
+      
       ns_application_main(m_pmaindata->m_argc, m_pmaindata->m_argv);
 
    }
@@ -1232,3 +1213,246 @@ void app_core::run()
 }
 
 #endif
+
+
+
+
+
+
+
+
+aura_level::aura_level(e_level elevel, PFN_DEFER_INIT pfnDeferInit) :
+m_elevel(elevel),
+m_pfnDeferInit(pfnDeferInit),
+m_plevelNext(s_plevel)
+{
+   
+   s_plevel = this;
+   
+}
+
+aura_level * aura_level::get_maximum_level()
+{
+   
+   if(s_plevel == NULL)
+   {
+      
+      return NULL;
+      
+   }
+   
+   aura_level * plevel = s_plevel;
+   
+   aura_level * plevelMax = plevel;
+   
+   while(true)
+   {
+      
+      plevel = plevel->m_plevelNext;
+      
+      if(plevel == NULL)
+      {
+         
+         break;
+         
+      }
+      
+      if(plevel->m_elevel > plevelMax->m_elevel)
+      {
+         
+         plevelMax = plevel;
+         
+      }
+      
+   }
+   
+   return plevelMax;
+   
+}
+
+
+aura_level * aura_level::find_level(PFN_DEFER_INIT pfnDeferInit)
+{
+   
+   if(s_plevel == NULL)
+   {
+      
+      return NULL;
+      
+   }
+   
+   aura_level * plevel = s_plevel;
+   
+   while(plevel != NULL)
+   {
+      
+      if(plevel->m_pfnDeferInit > pfnDeferInit)
+      {
+         
+         return plevel;
+         
+      }
+
+      plevel = plevel->m_plevelNext;
+      
+   }
+   
+   return NULL;
+   
+}
+
+
+bool aura_level::defer_init()
+{
+   
+   auto plevel = get_maximum_level();
+   
+   if(plevel == NULL)
+   {
+      
+      return false;
+      
+   }
+   
+   return plevel->m_pfnDeferInit();
+   
+}
+
+
+bool aura_level::defer_init(PFN_DEFER_INIT pfnDeferInit)
+{
+   
+   auto plevel = get_maximum_level();
+   
+   if(plevel == NULL)
+   {
+      
+      if(pfnDeferInit != NULL)
+      {
+         
+         return pfnDeferInit();
+         
+      }
+      else
+      {
+         
+         return true;
+         
+      }
+      
+   }
+   else if(pfnDeferInit == NULL)
+   {
+      
+      if(plevel->m_pfnDeferInit != NULL)
+      {
+      
+         return plevel->m_pfnDeferInit();
+         
+      }
+      else
+      {
+       
+         return true;
+         
+      }
+      
+   }
+   else
+   {
+      
+      auto plevelFind = find_level(pfnDeferInit);
+      
+      if(plevelFind == NULL)
+      {
+         
+         bool bOk1 = false;
+         
+         bOk1 = pfnDeferInit();
+         
+         bool bOk2 = true;
+         
+         if(plevel->m_pfnDeferInit != NULL)
+         {
+            
+            bOk2 = plevel->m_pfnDeferInit();
+            
+         }
+         
+         return bOk1 && bOk2;
+         
+      }
+      else if(plevelFind->m_elevel > plevel->m_elevel)
+      {
+         
+         return plevelFind->m_pfnDeferInit();
+         
+      }
+      else
+      {
+         
+         return plevel->m_pfnDeferInit();
+         
+      }
+      
+   }
+   
+   return true;
+   
+}
+
+::aura_app * aura_app::s_papp = NULL;
+
+aura_app::aura_app(const char * pszName, ::aura::PFN_GET_NEW_APP pfnNewApp) :
+m_pszName(pszName),
+m_pfnNewApp(pfnNewApp),
+m_pfnNewLibrary(NULL),
+m_pappNext(s_papp)
+{
+   
+   s_papp = this;
+   
+}
+
+
+aura_app::aura_app(const char * pszName, ::aura::PFN_GET_NEW_LIBRARY pfnNewLibrary):
+m_pszName(pszName),
+m_pfnNewApp(NULL),
+m_pfnNewLibrary(pfnNewLibrary),
+m_pappNext(s_papp)
+{
+   
+   s_papp = this;
+   
+}
+
+::aura_app * aura_app::get(const char * pszName)
+{
+   
+   if(s_papp == NULL)
+   {
+      
+      return NULL;
+      
+   }
+   
+   aura_app * papp = s_papp;
+   
+   while(papp != NULL)
+   {
+      
+      if(!stricmp(papp->m_pszName, pszName))
+      {
+         
+         return papp;
+         
+      }
+      
+      papp = papp->m_pappNext;
+      
+   }
+   
+   return NULL;
+   
+}
+

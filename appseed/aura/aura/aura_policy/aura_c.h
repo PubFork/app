@@ -178,7 +178,7 @@ inline int type_is_null(const T * p)
 #define GET_Y_LPARAM64(lp)                        ((int32_t)(int16_t)HIDWORD(lp))
 
 
-       CLASS_DECL_AURA int get_aura_init();
+CLASS_DECL_AURA int get_aura_init();
 CLASS_DECL_AURA int_bool defer_aura_init();
 CLASS_DECL_AURA int_bool defer_aura_term();
 

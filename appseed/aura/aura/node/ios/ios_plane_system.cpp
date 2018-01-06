@@ -126,6 +126,26 @@ ui_window_ptr plane_system::plane_system_initialize(CGRect rect)
 void plane_system::plane_system_begin()
 {
    
+//   m_psystem->m_strAppId = m_pmaindata->m_pmaininitdata->m_strAppId;
+//
+//   m_psystem->startup_command(m_pmaindata->m_pmaininitdata);
+//
+//   if (!m_psystem->pre_run())
+//   {
+//
+//      return;
+//
+//   }
+//
+//
+   if (!m_psystem->process_command(m_psystem->m_pcommand))
+   {
+      
+      return;
+      
+   }
+
+   
 }
 
 

@@ -4,6 +4,7 @@
 #include "framework.h" // from "axis/user/user.h"
 #include "base/user/user.h"
 
+aura_level auralevelBase(::aura_level::level_base, &defer_base_init);
 
 #if defined(APPLEOS)
 

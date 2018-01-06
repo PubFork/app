@@ -1,6 +1,10 @@
 #pragma once
 
 
+typedef int_bool DEFER_INIT();
+typedef DEFER_INIT * PFN_DEFER_INIT;
+
+
 class raw_fail
 {
 public:
@@ -92,7 +96,6 @@ public:
    sp(aura_main_data)            m_pmaindata;
    ::aura::system *              m_psystem = NULL;
    string                        m_strAppId;
-   const char *                  m_pszLevel = NULL;
 
 
    int                           m_iaError[APP_CORE_MAXIMUM_ERROR_COUNT];
@@ -136,21 +139,17 @@ public:
 
 
    static aura_prelude *         s_pprelude;
-
    ::aura::PFN_GET_NEW_APP       m_pfnNewApp;
-   
    ::aura::PFN_GET_NEW_LIBRARY   m_pfnNewLibrary;
    
-   const char *                  m_pszLevel;
-   
 
-   aura_prelude(const char * pszLevel = "core");
+   aura_prelude();
 
 
-   aura_prelude(::aura::PFN_GET_NEW_APP pgetnewapp, const char * pszLevel = "core");
+   aura_prelude(::aura::PFN_GET_NEW_APP pgetnewapp);
    
    
-   aura_prelude(::aura::PFN_GET_NEW_LIBRARY pgetnewlibrary, const char * pszLevel = "core");
+   aura_prelude(::aura::PFN_GET_NEW_LIBRARY pgetnewlibrary);
 
 
    virtual ~aura_prelude();
@@ -174,3 +173,68 @@ CLASS_DECL_AURA string transform_to_c_arg(const char * psz);
 CLASS_DECL_AURA stringa get_c_args(const char * psz);
 CLASS_DECL_AURA stringa get_c_args(int argc, char ** argv);
 CLASS_DECL_AURA string ca2_command_line();
+
+
+
+class CLASS_DECL_AURA aura_level
+{
+public:
+   
+   
+   enum e_level
+   {
+      level_aura,
+      level_axis,
+      level_base,
+      level_core,
+   };
+   
+   
+   e_level                    m_elevel;
+   PFN_DEFER_INIT             m_pfnDeferInit;
+   aura_level *               m_plevelNext;
+
+   
+   static aura_level *        s_plevel;
+   
+   
+   aura_level(e_level elevel, PFN_DEFER_INIT pfnDeferInit);
+
+   static aura_level * get_maximum_level();
+
+   static aura_level * find_level(PFN_DEFER_INIT pfnDeferInit);
+
+   static bool defer_init();
+
+   static bool defer_init(PFN_DEFER_INIT pfnDeferInit);
+
+   
+   
+};
+
+
+
+class CLASS_DECL_AURA aura_app
+{
+public:
+   
+   
+   const char *                  m_pszName;
+   ::aura::PFN_GET_NEW_APP       m_pfnNewApp;
+   ::aura::PFN_GET_NEW_LIBRARY   m_pfnNewLibrary;
+
+   
+   aura_app *                    m_pappNext;
+   
+   
+   static aura_app *             s_papp;
+   
+   
+   aura_app(const char * pszName, ::aura::PFN_GET_NEW_APP pfnNewApp);
+   aura_app(const char * pszName, ::aura::PFN_GET_NEW_LIBRARY pfnNewLibrary);
+   
+   static ::aura_app * get(const char * pszName);
+   
+   
+};
+

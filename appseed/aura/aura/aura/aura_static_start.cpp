@@ -673,3 +673,9 @@ CLASS_DECL_AURA mutex * get_cred_mutex()
 
 
 
+
+
+
+aura_level * aura_level::s_plevel = NULL;
+
+aura_level auralevelAura(::aura_level::level_aura, &defer_aura_init);

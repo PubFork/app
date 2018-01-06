@@ -1,6 +1,8 @@
 #include "framework.h"
 
 
+aura_level auralevelAxis(::aura_level::level_axis, &defer_axis_init);
+
 namespace axis
 {
 
