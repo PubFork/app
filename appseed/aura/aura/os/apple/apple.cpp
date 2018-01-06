@@ -130,14 +130,14 @@ void apple_on_new_file()
 }
 
 // iMillisDelay default 500ms good
-void apple_accumulate_on_open_file(const char ** psza, int iCount, const char * pszExtra, int iMillisDelay)
+void apple_accumulate_on_open_file(const char ** psza, int iCount, const char * pszExtra)
 {
    
    stringa stra;
    
    stra.c_add((char **) psza, iCount);
    
-   ::aura::system::g_p->accumulate_on_open_file(stra, pszExtra, iMillisDelay);
+   ::aura::system::g_p->defer_accumulate_on_open_file(stra, pszExtra);
    
 }
 

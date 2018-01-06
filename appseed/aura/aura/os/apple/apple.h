@@ -17,6 +17,6 @@
 #include "apple_time.h"
 
 void apple_on_open_file(const char ** psza, int iCount, const char * pszExtra);
-void apple_accumulate_on_open_file(const char ** psza, int iCount, const char * pszExtra, int iMillisDelay);
+void apple_accumulate_on_open_file(const char ** psza, int iCount, const char * pszExtra);
 void apple_on_new_file();
 

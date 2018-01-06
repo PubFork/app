@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 namespace message
@@ -22,8 +22,6 @@ namespace message
       unsigned int               m_uiMessageFlags;
 
 
-
-
       message(::aura::application * papp = NULL);
       message(::message::e_type etype);
       //message(dispatch * pdispatch);
@@ -43,8 +41,7 @@ namespace message
 
       bool previous(); // returns bRet
 
-
-      virtual void set(::user::primitive * pwnd, UINT uiMessage, WPARAM wparam, ::lparam lparam);
+      virtual void set(::user::primitive * pwnd, UINT_PTR uiMessage, WPARAM wparam, ::lparam lparam);
 
 
    };

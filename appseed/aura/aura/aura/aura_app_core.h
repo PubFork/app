@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 class raw_fail
@@ -136,12 +136,16 @@ public:
    static aura_prelude *         s_pprelude;
 
    ::aura::PFN_GET_NEW_APP       m_pfnNewApp;
+   
+   ::aura::PFN_GET_NEW_APP       m_pfnNewLibrary;
 
 
    aura_prelude();
 
 
    aura_prelude(::aura::PFN_GET_NEW_APP pgetnewapp);
+   
+   aura_prelude(::aura::PFN_GET_NEW_LIBRARY pgetnewlibrary);
 
 
    virtual ~aura_prelude();

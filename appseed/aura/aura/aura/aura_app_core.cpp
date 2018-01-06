@@ -647,12 +647,16 @@ CLASS_DECL_AURA void aura_main(app_core * pappcore)
 
 #ifdef APPLEOS
 
+   //Sleep(20000);
+
    if(pappcore->m_psystem->begin_synch())
    {
 
       set_main_thread(pappcore->m_psystem->m_hthread);
 
       set_main_thread_id(pappcore->m_psystem->m_uiThread);
+      
+      //Sleep(15000);
 
       ns_shared_application(pappcore->m_pmaindata->m_argc, pappcore->m_pmaindata->m_argv);
 
@@ -689,6 +693,10 @@ aura_prelude::aura_prelude()
 {
 
    s_pprelude = this;
+   
+   m_pfnNewLibrary = NULL;
+   
+   m_pfnNewApp = NULL;
 
 }
 
@@ -700,6 +708,19 @@ aura_prelude::aura_prelude(::aura::PFN_GET_NEW_APP pgetnewapp)
 
    m_pfnNewApp = pgetnewapp;
 
+   m_pfnNewLibrary = NULL;
+   
+}
+
+aura_prelude::aura_prelude(::aura::PFN_GET_NEW_LIBRARY pgetnewlibrary)
+{
+   
+   s_pprelude = this;
+   
+   m_pfnNewLibrary = pgetnewlibrary;
+   
+   m_pfnNewApp = NULL;
+   
 }
 
 
@@ -766,6 +787,8 @@ bool aura_prelude::prelude(app_core * pappcore)
 {
 
    pappcore->m_pfnNewApp = m_pfnNewApp;
+   
+   pappcore->m_pfnNewLibrary = m_pfnNewLibrary;
 
    return true;
 

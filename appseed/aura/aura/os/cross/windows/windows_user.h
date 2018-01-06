@@ -36,11 +36,11 @@ CLASS_DECL_AURA WINBOOL IsWindow(oswindow oswindow);
 
 //CLASS_DECL_AXIS WINBOOL GetCursorPos(LPPOINT lpptCursor);
 
-//#ifndef HWND_MESSAGE
-//
-//#define HWND_MESSAGE     ((oswindow)-3)
-//
-//#endif
+#ifndef HWND_MESSAGE
+
+#define HWND_MESSAGE     ((oswindow)-3)
+
+#endif
 
 #define PostMessage  PostMessageW
 

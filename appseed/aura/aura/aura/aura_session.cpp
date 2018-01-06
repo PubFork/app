@@ -96,9 +96,15 @@ namespace aura
 
       pcreate->m_spCommandLine->m_eventReady.ResetEvent();
 
+      Session.m_appptra.add(papp);
+      
+      m_pappCurrent = papp;
+      
       if (strApp != "session")
       {
-
+         
+         System.merge_accumulated_on_open_file(pcreate);
+         
          papp->post_object(message_system, system_message_command, pcreate);
 
          while (thread_get_run())
@@ -109,29 +115,7 @@ namespace aura
 
          }
 
-         if (!thread_get_run())
-         {
-
-            try
-            {
-
-               papp.release();
-
-            }
-            catch (...)
-            {
-
-            }
-
-            return NULL;
-
-         }
-
       }
-
-      Session.m_appptra.add(papp);
-      
-      m_pappCurrent = papp;
 
       return papp;
 
@@ -582,15 +566,17 @@ namespace aura
                }
 
                papp->on_start_application();
+               
+               if(!papp->is_system() && !papp->is_session())
+               {
+                  
+                  System.merge_accumulated_on_open_file(pcreate);
+                  
+               }
 
                papp->handler()->handle(pcreate);
 
                m_pappCurrent = papp;
-
-               m_pappCurrent = papp;
-
-               //pcreate->m_spCommandLine->m_eventReady.wait();
-
 
             }
 

@@ -501,7 +501,9 @@ namespace aura
 
 #endif
 
-      virtual bool accumulate_on_open_file(stringa stra, string strExtra, int iMillisDelay);
+      virtual bool defer_accumulate_on_open_file(stringa stra, string strExtra);
+      
+      virtual bool merge_accumulated_on_open_file(::create * pcreate);
 
       virtual bool on_open_file(var varFile, string strExtra);
 

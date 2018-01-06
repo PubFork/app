@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 namespace message
@@ -129,6 +129,14 @@ namespace message
 
    }
 
+
+   void message::set(::user::primitive * pwnd, UINT uiMessage, WPARAM wparam, ::lparam lparam, LRESULT & lresult)
+   {
+      
+      set(pwnd, uiMessage, wparam, lparam);
+      
+   }
+   
 
 } // namespace message
 

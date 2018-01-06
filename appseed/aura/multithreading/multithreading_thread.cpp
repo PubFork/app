@@ -3289,7 +3289,7 @@ bool thread::on_run_exception(::exception::exception * pexception)
 }
 
 
-message::e_prototype thread::GetMessagePrototype(UINT uiMessage,UINT uiCode)
+message::e_prototype thread::GetMessagePrototype(UINT_PTR uiMessage,UINT uiCode)
 {
 
    UNREFERENCED_PARAMETER(uiMessage);

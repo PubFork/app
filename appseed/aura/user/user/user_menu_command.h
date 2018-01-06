@@ -6,7 +6,8 @@ namespace user
 
 
    class CLASS_DECL_AURA menu_command :
-      public ::user::command
+      public ::user::command,
+      public ::user::check
    {
       public:
 

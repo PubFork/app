@@ -249,7 +249,7 @@ public:
 
    virtual bool on_run_exception(::exception::exception * pexception);
 
-   virtual message::e_prototype GetMessagePrototype(UINT uiMessage, UINT uiCode) override;
+   virtual message::e_prototype GetMessagePrototype(UINT_PTR uiMessage, UINT uiCode) override;
 
    // running and idle processing
    virtual void pre_translate_message(::message::message * pobj);

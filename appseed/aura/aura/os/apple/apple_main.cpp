@@ -41,8 +41,7 @@ uint32_t __start_system_with_file(const char ** pszaFile, int iCount)
       if(pszaFile != NULL)
       {
 
-         apple_accumulate_on_open_file(pszaFile, iCount, strExtra, 500);
-         //         macos_on_open_file(pszaFile, iCount, strExtra);
+         apple_accumulate_on_open_file(pszaFile, iCount, strExtra);
 
       }
       else

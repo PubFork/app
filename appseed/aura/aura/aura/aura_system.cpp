@@ -1,4 +1,4 @@
-﻿#include "framework.h" // previously aura/user/user.h
+#include "framework.h" // previously aura/user/user.h
 //#include "aura/user/colorertake5/colorertake5.h"
 
 
@@ -2997,14 +2997,14 @@ success:
    }
 
 
-   bool system::accumulate_on_open_file(stringa stra, string strExtra, int iMillisDelay)
+   bool system::defer_accumulate_on_open_file(stringa stra, string strExtra)
    {
-
+      
       synch_lock sl(m_pmutex);
 
       m_dwCommandLineLast = get_tick_count();
 
-      m_iCommandLineDelay = MAX(1000, iMillisDelay);
+      m_iCommandLineDelay = 1000;
 
       index iIndex = stra.find_first(":");
 
@@ -3039,61 +3039,97 @@ success:
 
       }
 
-      if(m_pthreadCommandLine.is_null())
+      auto appptra = get_appptra();
+      
+      ::aura::application * papp = NULL;
+      
+      appptra.pred_remove([](auto & papp)
+                             {
+                                return papp->is_system() || papp->is_session();
+      
+                             });
+      
+      if(appptra.has_elements())
       {
+         
+         papp = appptra[0];
+         
+      }
+      
+      if(papp != NULL)
+      {
+         
+         sp(::create) pcreate(allocer());
+         
+         merge_accumulated_on_open_file(pcreate);
+         
+         papp->post_object(message_system, system_message_command, pcreate);
+         
+      }
 
-         m_pthreadCommandLine = fork([&]()
-         {
+      return true;
+      
+   }
+   
+   
+   bool system::merge_accumulated_on_open_file(::create * pcreate)
+   {
 
-            while(::get_thread_run())
-            {
+      if(m_straCommandLineAccumul.is_empty())
+      {
+         
+         return true;
+         
+      }
 
-               {
+      stringa straAccumul = m_straCommandLineAccumul;
 
-                  synch_lock sl(m_pmutex);
+      stringa straExtra = m_straCommandLineExtra;
 
-                  if((m_straCommandLineAccumul.has_elements() ||
-                        m_straCommandLineExtra.has_elements())
-                        && ::comparison::gt(get_tick_count() - m_dwCommandLineLast, m_iCommandLineDelay))
-                  {
+      m_straCommandLineAccumul.remove_all();
 
-                     stringa straAccumul = m_straCommandLineAccumul;
-
-                     stringa straExtra = m_straCommandLineExtra;
-
-                     m_straCommandLineAccumul.remove_all();
-
-                     m_straCommandLineExtra.remove_all();
-
-                     sl.unlock();
-
-                     if(straExtra.has_elements())
-                     {
-
-                        on_open_file(
-                        straAccumul,
-                        straExtra.slice(1).implode(" "));
-
-                     }
-                     else
-                     {
-
-                        on_open_file(
-                        straAccumul,
-                        "");
-
-                     }
-
-                  }
-
-               }
-
-               Sleep(300);
-
-            }
-
-         });
-
+      m_straCommandLineExtra.remove_all();
+   
+      command_line_sp line(allocer());
+   
+      string strExtra = straExtra.implode(" ");
+   
+      if(straAccumul.is_empty())
+      {
+         
+         line->_001ParseCommandFork("app.exe : open_default " + strExtra);
+         
+      }
+      else
+      {
+         
+         string strParam = straAccumul.surround_and_implode(" ", "\"", "\"");
+         
+         line->_001ParseCommandFork("app.exe " + strParam + " " + ::str::has_char(strExtra, " : "));
+         
+      }
+   
+      if(pcreate->m_spCommandLine.is_null())
+      {
+      
+         pcreate->m_spCommandLine = line;
+         
+      }
+      else if(line->m_ecommand == command_line::command_file_open)
+      {
+         
+         pcreate->m_spCommandLine->m_varFile.stra().add(line->m_varFile.stra());
+      
+         pcreate->m_spCommandLine->m_ecommand = command_line::command_file_open;
+      
+      }
+      else if(line->m_ecommand == command_line::command_application_start)
+      {
+         
+         pcreate->m_spCommandLine->m_varFile.stra().add(line->m_varFile.stra());
+         
+         pcreate->m_spCommandLine->m_ecommand = command_line::command_application_start;
+         
       }
 
       return true;

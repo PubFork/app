@@ -486,6 +486,13 @@ void property_set::_008Parse(bool bApp, const char * pszCmdLine, var & varFile, 
    
    index iFindColon = stra.find_first(":");
    
+   if(iFindColon < 0)
+   {
+      
+      iFindColon = stra.get_size();
+      
+   }
+   
    if(iFindColon > i)
    {
     
