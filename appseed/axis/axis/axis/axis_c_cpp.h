@@ -242,9 +242,6 @@ CLASS_DECL_AXIS bool __node_axis_pos_term();
 #include "axis_static_start.h"
 
 
-#include "axis_simple_app.h"
-
-
 #include "app/appseed/axis/axis/node/node.h"
 
 
@@ -287,7 +284,7 @@ namespace user
 #include "axis/database/simpledb/simpledb.h"
 
 
-#include "axis.inl"
+#include "axis/axis/axis/axis.inl"
 
 
 
