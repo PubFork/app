@@ -145,12 +145,25 @@ public:
    id & operator = (const var & var);
    id & operator = (const property & prop);
 
+#if OSBIT == 32
 
+   inline operator int32_t() const;
+   
+#elif OSBIT == 64
+   
    inline operator int64_t() const;
-
+   
+#else
+   
+#error "need to implement"
+   
+#endif
+   
    inline int64_t int64() const;
+   
+   inline int32_t int32() const;
 
-
+   
    inline operator const char *() const;
    inline void to_string(string & str) const;
    inline string to_string() const;
@@ -489,13 +502,29 @@ inline bool id::operator >= (int_ptr i) const
    return m_etype == type_integer && m_i >= i;
 }
 
+#if OSBIT == 32
+
+inline id::operator int32_t () const
+{
+
+   return int32();
+
+}
+
+#elif OSBIT == 64
 
 inline id::operator int64_t () const
 {
-
+   
    return int64();
-
+   
 }
+
+#else
+
+#error "not implemented"
+
+#endif
 
 inline int64_t id::int64() const
 {
@@ -504,6 +533,12 @@ inline int64_t id::int64() const
 
 }
 
+inline int32_t id::int32() const
+{
+   
+   return m_etype == type_integer ? (int32_t) m_i : 0x80000000;
+   
+}
 
 
 

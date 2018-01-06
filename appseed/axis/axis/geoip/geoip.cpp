@@ -9,7 +9,7 @@
 
 #endif
 
-#ifdef MACOS
+#ifdef APPLEOS
 
 #include <netdb.h>
 

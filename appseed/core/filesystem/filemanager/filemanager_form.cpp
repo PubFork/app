@@ -53,7 +53,7 @@ namespace filemanager
             uh.m_strForm = "filemanager_add_location_lfs.xhtml";
             get_document()->update_all_views(NULL,0,&uh);
             sp(::user::interaction) pui = get_child_by_name("lfs");
-            sp(::user::elemental) ptext =  (pui.m_p);
+            sp(::user::edit_text) ptext = pui;
             ptext->_001SetText(get_filemanager_item()->m_filepath,::action::source_user);
          }
          else if(pevent->m_puie->m_id == "ftp")
@@ -70,7 +70,7 @@ namespace filemanager
                stringa stra;
                get_filemanager_manager()->data_load(get_filemanager_template()->m_dataidStatic,stra);
                sp(::user::interaction) pui = get_child_by_name("lfs");
-               sp(::user::elemental) ptext =  (pui.m_p);
+               sp(::user::edit_text) ptext = pui;
                string str;
                ptext->_001GetText(str);
                stra.add_unique(str);
@@ -84,10 +84,10 @@ namespace filemanager
             {
                form_update_hint uh(manager::hint_replace_name);
                sp(::user::interaction) pui = get_child_by_name("find");
-               sp(::user::elemental) ptext =  (pui.m_p);
+               sp(::user::edit_text) ptext =  (pui.m_p);
                ptext->_001GetText(uh.m_strFind);
                pui = get_child_by_name("replace");
-               ptext =  (pui.m_p);
+               ptext =  pui.m_p;
                ptext->_001GetText(uh.m_strReplace);
                sp(::filemanager::manager) pdoc =  get_filemanager_manager();
                pdoc->update_all_views(NULL,0,&uh);
@@ -96,7 +96,7 @@ namespace filemanager
             {
                form_update_hint uh(manager::hint_new_folder);
                sp(::user::interaction) pui = get_child_by_name("name");
-               sp(::user::elemental) ptext = (pui.m_p);
+               sp(::user::edit_text) ptext = (pui.m_p);
                ptext->_001GetText(uh.m_str);
                sp(::filemanager::manager) pdoc = get_filemanager_manager();
                pdoc->update_all_views(NULL, 0, &uh);

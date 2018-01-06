@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 #include "framework.h" // from "aura/net/net_sockets.h"
 #include "aura/net/net_sockets.h"
+#include "aura/net/sockets/bsd/basic/sockets_ssl_context.h"
 #ifdef _WIN32
 #elif defined(LINUX)
 #include <netdb.h>
@@ -76,21 +77,13 @@ namespace sockets
       ,m_detached(false)
       ,m_pThread(NULL)
       ,m_slave_handler(NULL)
-#ifdef HAVE_OPENSSL
-      , m_iSslCtxRetry(0)
-      //, m_ssl_ctx(NULL)
-      //, m_ssl_session(NULL)
-      //, ssl_method()(NULL)
-      , m_ssl(NULL)
-      , m_sbio(NULL)
-#endif
       // Line protocol
       ,m_bLineProtocol(false)
       ,m_skip_c(false),
       m_memfileInput(h.get_app()),
       m_event(h.get_app())
    {
-
+      m_psslcontext = new ssl_context;
       m_iBindPort    = -1;
       m_dwStart      = ::get_tick_count();
       m_pcallback    = NULL;
@@ -104,6 +97,7 @@ namespace sockets
    base_socket::~base_socket()
    {
 
+      ::aura::del(m_psslcontext);
 
    }
 
@@ -661,14 +655,14 @@ namespace sockets
    void base_socket::CopyConnection(base_socket * psocket)
    {
 
-      m_iSslCtxRetry = psocket->m_iSslCtxRetry;
+      *m_psslcontext = *psocket->m_psslcontext;
       m_spsslclientcontext = psocket->m_spsslclientcontext;
       //m_ssl_ctx = psocket->m_ssl_ctx; ///< ssl context
       //m_ssl_session = psocket->m_ssl_session; ///< ssl session
       //ssl_method() = psocket->ssl_method(); ///< ssl method
       //m_ssl = psocket->m_ssl; ///< ssl 'socket'
-      m_ssl = psocket->m_ssl; ///< ssl 'socket'
-      m_sbio = psocket->m_sbio; ///< ssl bio
+      //m_ssl = psocket->m_ssl; ///< ssl 'socket'
+      //m_sbio = psocket->m_sbio; ///< ssl bio
       m_password = psocket->m_password; ///< ssl password
 
       attach(psocket -> GetSocket());
@@ -680,13 +674,13 @@ namespace sockets
       SetClientRemoteAddress(psocket -> GetClientRemoteAddress());
       SetRemoteHostname(psocket -> GetRemoteHostname());
       psocket->m_socket = INVALID_SOCKET;
-      psocket->m_iSslCtxRetry = 0;
-      //psocket->m_ssl_ctx = NULL;
-      //psocket->m_ssl_session = NULL;
-      //psocket->ssl_method() = NULL;
+      psocket->m_psslcontext->m_iSslCtxRetry = 0;
+      psocket->m_psslcontext->m_ssl_ctx = NULL;
+      psocket->m_psslcontext->m_ssl_session = NULL;
+      psocket->m_psslcontext->m_ssl_method = NULL;
       psocket->m_spsslclientcontext.release();
-      psocket->m_ssl = NULL;
-      psocket->m_sbio = NULL;
+      psocket->m_psslcontext->m_ssl = NULL;
+      psocket->m_psslcontext->m_sbio = NULL;
       psocket->m_password.Empty();
 
 
@@ -2141,10 +2135,10 @@ namespace sockets
 
       synch_lock sl(m_pmutex);
 
-      if (m_ssl_session != NULL)
+      if (m_psslcontext->m_ssl_session != NULL)
       {
 
-         SSL_SESSION_free(m_ssl_session);
+         SSL_SESSION_free(m_psslcontext->m_ssl_session);
 
          try
          {
@@ -2162,7 +2156,7 @@ namespace sockets
 
          }
 
-         m_ssl_session = NULL;
+         m_psslcontext->m_ssl_session = NULL;
 
       }
 
@@ -2174,15 +2168,15 @@ namespace sockets
 
       synch_lock sl(m_pmutex);
 
-      if (m_ssl_session == NULL)
+      if (m_psslcontext->m_ssl_session == NULL)
       {
 
          if (m_spsslclientcontext.is_set())
          {
 
-            m_spsslclientcontext->m_psession = SSL_get1_session(m_ssl);
+            m_spsslclientcontext->m_psession = SSL_get1_session(m_psslcontext->m_ssl);
 
-            m_ssl_session = m_spsslclientcontext->m_psession;
+            m_psslcontext->m_ssl_session = m_spsslclientcontext->m_psession;
 
          }
 

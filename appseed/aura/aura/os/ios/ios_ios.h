@@ -106,8 +106,3 @@ void window_copy(NSRect & rect, LPCRECT lpcrect);
 void window_copy(LPRECT lprect, const NSRect & rectSrc);
 #endif
 
-
-void ui_application_main(int argc, char * argv[]);
-void ui_app_run(int argc, char * argv[]);
-
-

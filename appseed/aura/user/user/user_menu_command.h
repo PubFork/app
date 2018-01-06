@@ -6,22 +6,25 @@ namespace user
 
 
    class CLASS_DECL_AURA menu_command :
-      public ::user::command,
-      public ::user::check
+      virtual public ::user::command,
+      virtual public ::user::check,
+      virtual public ::user::set_text
    {
-      public:
+   public:
 
 
-         menu_item_ptra *     m_pitema;
-         menu_item *          m_pitemContainer;
+      menu_item_ptra *     m_pitema;
+      menu_item *          m_pitemContainer;
 
 
-         menu_command(::aura::application * papp);
+      menu_command(::aura::application * papp);
+      
 
+      void delete_this() override;
 
-         virtual void Enable(bool bOn, ::action::context actioncontext);
-         virtual void _001SetCheck(check::e_check echeck, ::action::context actioncontext);
-         virtual void SetText(const char * lpszText, ::action::context actioncontext);
+      virtual void Enable(bool bOn, ::action::context actioncontext) override;
+      virtual void _001SetCheck(::check::e_check echeck, ::action::context actioncontext) override;
+      virtual void _001SetText(const string & lpszText, ::action::context actioncontext) override;
 
    };
 

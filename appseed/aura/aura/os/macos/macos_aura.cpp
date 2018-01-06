@@ -4,12 +4,7 @@
 
 void ns_app_run();
 
-void ns_shared_application(int argc, char *argv[]);
-
 void ns_app_terminate();
-//extern thread_pointer < os_thread > t_posthread;
-
-
 
 
 
@@ -108,33 +103,6 @@ string ca2_command_line()
    free(psz);
    
    return str;
-   
-}
-
-///const char * g_pszCommandLine = NULL;
-
-int32_t aura_main_command_line(const char * pszParams, int argc, char *argv[])
-{
-   
-   return raw_main_command_line(pszParams, argc, argv);
-   
-}
-
-
-int32_t raw_main_command_line(const char * pszCommandLine, int argc, char *argv[])
-{
-   
-   setlocale(LC_ALL,"");
-   
-   set_command_line_dup(pszCommandLine);
-   
-   ns_shared_application(argc, argv);
-   
-   ns_app_run();
-   
-   delete ::aura::system::g_p;
-   
-   return 0;
    
 }
 

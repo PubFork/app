@@ -9,8 +9,6 @@
 
 
 
-//ui_window_ptr new_round_window(plane_system * psystem, CGRect rect);
-
 
 
 
@@ -23,149 +21,111 @@
 //
 
 
-plane_system * new_system(const char * pszId)
+plane_system * create_plane_system()
 {
    
-   on_init_thread();
-   
-   return new ::plane_system(pszId);
+   return new ::plane_system();
    
 }
 
-
-//::base::system * create_base_system()
-//{
-//   
-//   ::aura::system * paurasystem = create_aura_system();
-//   
-//   if(paurasystem == NULL)
-//      return NULL;
-//   
-//   ::base::system * pbasesystem = dynamic_cast<::base::system *>(paurasystem);
-//   
-//   if(pbasesystem == NULL)
-//   {
-//      
-//      ::aura::del(paurasystem);
-//      
-//      return NULL;
-//      
-//   }
-//   
-//   return pbasesystem;
-//   
-//}
-
-
-plane_system::plane_system(const char * pszId)
+plane_system::plane_system()
 {
    
-   m_psystem = create_aura_system();
-   
+   m_psystem = ::aura::system::g_p;
+
    m_psystem->m_pplanesystem = this;
-   
+
    m_psystem->initialize_native_window1();
-   
-   ::command::command * pinitmaindata  = new ::command::command;
-   
-   pinitmaindata->m_strCommandLine        = pszId;
-   
-   m_psystem->startup_command(pinitmaindata);
-   
+
 }
 
 
-ui_window_ptr init_part_2ex(plane_system * psystem, CGRect rect)
+ui_window_ptr plane_system::plane_system_initialize(CGRect rect)
 {
    
-   return psystem->init_part_2ex(rect);
+   ::user::native_window_initialize initialize;
    
-}
+   initialize.m_rect.left = rect.origin.x;
+   initialize.m_rect.top = rect.origin.y;
+   initialize.m_rect.right = rect.origin.x + rect.size.width;
+   initialize.m_rect.bottom = rect.origin.x + rect.size.height;
+   
+   m_psystem->m_possystemwindow->m_pui->initialize_native_window(&initialize);
+   
+   ::ios::interaction_impl * pimpl = m_psystem->m_possystemwindow->m_pui->m_pimpl.cast < ::ios::interaction_impl > ();
 
-
-ui_window_ptr plane_system::init_part_2ex(CGRect rect)
-{
+   UIWindow * window = new_round_window(pimpl, rect);
    
-   //m_psystem->m_window = ios_start_window(this, rect);
+   pimpl->m_oswindow = oswindow_get(window);
    
-   //int nReturnCode = 0;
+   pimpl->m_oswindow->set_user_interaction_impl(pimpl);
    
-   manual_reset_event ev(m_psystem);
+   ::user::create_struct cs;
+   cs.dwExStyle = 0;
+   cs.lpszClass = 0;
+   cs.lpszName = NULL;
+   cs.style = 0;
+   cs.x = 0;
+   cs.y = 0;
+   cs.cx = 0;
+   cs.cy = 0;
+   //      cs.hwndParent = hWndParent;
+   //   cs.hMenu = hWndParent == NULL ? NULL : nIDorHMenu;
+   cs.hMenu = NULL;
+   //      cs.hInstance = System.m_hInstance;
+   cs.lpCreateParams = NULL;
    
-   m_psystem->m_peventReady = &ev;
-   
-   if(!m_psystem->begin_synch())
-      return NULL;
-   
-   ev.wait();
-   
-   ::rect r;
-   
-   r.left = rect.origin.x;
-   r.top = rect.origin.y;
-   r.right = r.left + rect.size.width;
-   r.bottom = r.top + rect.size.height;
-   
-   ui_window_ptr pwindow = m_psystem->initialize_native_window2(r);
-   
-   //::user::native_window_initialize initialize;
-   
-   //initialize.pwindow = this;
-   //initialize.window = m_window.Get();
-   
-   //m_psystem->m_posdata->m_pui->initialize(&initialize);
-   
-   //m_psystem->m_ptwf = create_twf_2ex();
-   
-   //m_psystem->m_ptwf->twf_start();
-   
-   stringa straLibrary = m_psystem->handler()->m_varTopicQuery["app"].stra();
-   
-   for(int i = 0; i < m_psystem->handler()->m_varTopicQuery["app"].array_get_count(); i++)
+   if(pimpl->m_pui != NULL)
    {
-      string strApp = m_psystem->handler()->m_varTopicQuery["app"].at(i);
+      
+      if(!pimpl->m_pui->pre_create_window(cs))
+      {
+         
+         pimpl->PostNcDestroy();
+         
+         return FALSE;
+         
+      }
+      
+   }
+   else
+   {
+      
+      if (!pimpl->pre_create_window(cs))
+      {
+         
+         pimpl->PostNcDestroy();
+         
+         return FALSE;
+         
+      }
+      
    }
    
-   straLibrary.replace("\\", "_");
-   straLibrary.replace("-", "_");
-   
-   for(int i = 0; i < straLibrary.get_count(); i++)
+   if(cs.hwndParent == NULL)
    {
-      string strLibrary = straLibrary[i];
-      strsize iFind = strLibrary.find("/");
-      if(iFind >= 0)
-         strLibrary = strLibrary.Left(iFind) + '_' + strLibrary.Mid(iFind + 1);
-      iFind = strLibrary.find("/", iFind + 1);
-      if(iFind >= 0)
-         strLibrary.Truncate(iFind);
-      m_psystem->m_mapAppLibrary[m_psystem->handler()->m_varTopicQuery["app"][i]] = strLibrary;
+      
+      cs.style &= ~WS_CHILD;
+      
    }
    
-   for(int i = 0; i < m_psystem->handler()->m_varTopicQuery["app"].get_count(); i++)
-   {
-      string strApp = m_psystem->handler()->m_varTopicQuery["app"][i];
-   }
+   //   puiimpl->m_pui->m_pthread = ::get_thread();
    
-   m_psystem->m_mapAppLibrary["app/ca2/cube"] = "ca2";
-   m_psystem->m_mapAppLibrary["app/ca2/bergedge"] = "ca2";
+   pimpl->send_message(WM_CREATE, 0, (LPARAM) &cs);
    
-   return pwindow;
-}
+   ::rect rectMainScreen;
+   
+   GetMainScreenRect(rectMainScreen);
+   
+   pimpl->SetPlacement(rectMainScreen);
+   
+   return window;
 
+ }   
 
-void system_begin_main(plane_system * psystem)
+void plane_system::plane_system_begin()
 {
    
-   //psystem->begin();
-   
 }
-
-void plane_system::begin()
-{
-   
-   m_psystem->begin();
-   
-}
-
 
 

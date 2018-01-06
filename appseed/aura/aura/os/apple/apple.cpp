@@ -9,6 +9,10 @@
 #include "framework.h"
 #include "apple_main.h"
 
+
+char * mm_ca2_command_line();
+
+
 // ThomasBS-LiveEdu.TV(LiveCoding.TV)
 
 void * CreateDispatchQueue()
@@ -176,3 +180,11 @@ void apple_on_open_file(const char ** psza, int iCount, const char * pszExtra)
 }
 
 
+
+
+string ca2_command_line()
+{
+
+   return ::str::from_strdup(mm_ca2_command_line());
+
+}

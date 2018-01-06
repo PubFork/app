@@ -310,27 +310,25 @@ namespace user
 
       ASSERT(pcontrol->descriptor().get_type() == control_type_edit || pcontrol->descriptor().get_type() == control_type_edit_plain_text);
 
-      sp(::user::elemental) pedit = get_child_by_id(pcontrol->m_id);
-
-      string str;
+      sp(::user::edit_text) pedit = get_child_by_id(pcontrol->m_id);
 
       if(pedit == NULL)
       {
 
-         sp(::user::elemental) ptext = pcontrol;
-
-         if(ptext == NULL)
-            return false;
-
-         ptext->_001GetText(str);
+         pedit = pcontrol;
 
       }
-      else
+
+      if(pedit.is_null())
       {
-
-         pedit->_001GetText(str);
-
+       
+         return false;
+         
       }
+      
+      string str;
+      
+      pedit->_001GetText(str);
 
       if(!pcontrol->Validate(str))
       {
@@ -514,20 +512,30 @@ namespace user
          _001GetSelection(pcontrol->descriptor().m_dataid, selection);
          if(selection.get_item_count() > 0)
          {
+            
             ::database::selection_item & item = selection.get_item(0);
-            sp(::user::elemental) ptext = NULL;
-            if(get_child_by_id(pcontrol->m_id) != NULL)
-            {
-               ptext = get_child_by_id(pcontrol->m_id);
-            }
-            if(ptext == NULL && pcontrol != NULL)
-            {
-               ptext = pcontrol;
-            }
+            
+            sp(::user::edit_text) ptext;
+            
+            ptext = get_child_by_id(pcontrol->m_id);
+               
             if(ptext == NULL)
+            {
+               
+               ptext = pcontrol;
+               
+            }
+            
+            if(ptext == NULL)
+            {
+               
                return;
+               
+            }
+            
             if(data_get(pcontrol->descriptor().m_dataid.m_id + "."+item.m_id.m_id, var))
             {
+               
                switch(var.get_type())
                {
                case var::type_string:
@@ -1105,25 +1113,38 @@ namespace user
 
          if(pdescriptor->m_eddx == control_ddx_dbflags)
          {
+            
             int_ptr_array ia;
+            
             pdescriptor->m_ddx.m_pdbflags->m_key.m_pclient->data_load(
                pdescriptor->m_ddx.m_pdbflags->m_key.m_id,
                ia);
-            sp(elemental) pcheck = pevent->m_puie;
-            if(pcheck->_001GetCheck() == check::checked)
+            
+            sp(check) pcheck = pevent->m_puie;
+            
+            if(pcheck->_001GetCheck() == ::check::checked)
             {
+              
                ia.add_unique(pdescriptor->m_ddx.m_pdbflags->m_value);
+               
             }
             else
             {
+               
                ia.remove(pdescriptor->m_ddx.m_pdbflags->m_value);
+               
             }
+            
             pdescriptor->m_ddx.m_pdbflags->m_key.m_pclient->data_load(
                pdescriptor->m_ddx.m_pdbflags->m_key.m_id,
                ia);
+            
          }
+         
       }
+      
       return false;
+      
    }
 
 
@@ -1138,11 +1159,12 @@ namespace user
       _001InitializeFormPreData();
 
       _001UpdateFunctionStatic();
-      //   CVmsGuiApp * papp = (CVmsGuiApp *) &System;
-      //   papp->m_pcoreapp->TwfInitializeDescendants(pview->GetSafeoswindow_(), true);
+
       for(int32_t i = 0; i < m_controldescriptorset.get_size(); i++)
       {
+         
          sp(control) pcontrol = m_controldescriptorset[i]->get_control(this);
+         
          if (pcontrol == NULL)
          {
 
@@ -1165,7 +1187,11 @@ namespace user
    {
 
       if(pcontrol == NULL)
+      {
+         
          return false;
+         
+      }
 
       return pcontrol->_001IsPointInside(point);
 

@@ -279,7 +279,7 @@ typedef unsigned int * int_ptr_atomic;
 typedef unsigned __int64 * int_ptr_atomic;
 #elif defined(LINUX)
 typedef unsigned __int64 * int_ptr_atomic;
-#elif defined(MACOS)
+#elif defined(APPLEOS)
 typedef unsigned __int64 * int_ptr_atomic;
 #else
 typedef int_ptr int_ptr_atomic;

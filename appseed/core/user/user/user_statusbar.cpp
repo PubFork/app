@@ -711,15 +711,25 @@ namespace user
    /////////////////////////////////////////////////////////////////////////////
    // status_bar idle update through status_command class
 
-   class status_command : public ::user::command      // class private to this file!
+   class status_command :// class private to this file!
+      virtual public ::user::command,
+      virtual public ::user::check,
+      virtual public ::user::edit_text
    {
-      public: // re-implementations only
+   public:
 
-         status_command(::aura::application * papp);
-         virtual void Enable(bool bOn);
-         virtual void SetCheck(check::e_check echeck = check::checked);
-         virtual void SetText(const char * lpszText);
+      
+      status_command(::aura::application * papp);
+      
+      virtual void Enable(bool bOn);
+      virtual void _001SetCheck(::check::e_check echeck, ::action::context context) override;
+      virtual void _001SetText(const string & strText, ::action::context context) override;
+      
+      virtual void delete_this() override;
+      
+      
    };
+   
 
    status_command::status_command(::aura::application * papp) :
       ::user::command(papp)
@@ -742,34 +752,60 @@ namespace user
       pStatusBar->SetPaneStyle((int32_t) m_iIndex, nNewStyle);
    }
 
-   void status_command::SetCheck(check::e_check echeck) // "checking" will pop out the text
+   void status_command::_001SetCheck(::check::e_check echeck, ::action::context context) // "checking" will pop out the text
    {
 
 #ifdef WINDOWSEX
+      
       status_bar* pStatusBar = dynamic_cast < status_bar * > (m_puiOther);
+      
       ASSERT(pStatusBar != NULL);
+      
       ASSERT_KINDOF(status_bar, pStatusBar);
+      
       ASSERT(m_iIndex < m_iCount);
+      
       UINT nNewStyle = pStatusBar->GetPaneStyle((int32_t) m_iIndex) & ~SBPS_POPOUT;
+      
       if (echeck != check::unchecked)
+      {
+         
          nNewStyle |= SBPS_POPOUT;
+         
+      }
+      
       pStatusBar->SetPaneStyle((int32_t) m_iIndex, nNewStyle);
+      
 #else
-      _throw(todo(get_app()));
+      
+      _throw(todo(::get_app()));
+      
 #endif
 
    }
 
-   void status_command::SetText(const char * lpszText)
+   void status_command::_001SetText(const string & strText, ::action::context context)
    {
+      
       status_bar* pStatusBar = dynamic_cast < status_bar * > (m_puiOther);
+      
       ASSERT(pStatusBar != NULL);
+      
       ASSERT_KINDOF(status_bar, pStatusBar);
+      
       ASSERT(m_iIndex < m_iCount);
 
-      pStatusBar->SetPaneText((int32_t) m_iIndex, lpszText);
+      pStatusBar->SetPaneText((int32_t) m_iIndex, strText);
+      
    }
+   
 
+   void status_command::delete_this()
+   {
+   
+      ::user::command::delete_this();
+      
+   }
 
    void status_bar::on_command_probe(::user::frame_window * ptarget, bool bDisableIfNoHndler)
    {

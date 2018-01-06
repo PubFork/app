@@ -309,24 +309,27 @@ void app_core::defer_load_backbone_libraries(string strAppId)
 
       }
 
-      if (hmodule != NULL || bInApp)
+      if (hmodule != NULL || bInApp || m_pszLevel)
       {
 
          PFN_DEFER_INIT defer_init = NULL;
 
-         if ((hmodule = __node_library_touch("core", strMessage)) != NULL)
+         if (!stricmp(m_pszLevel, "core")
+             || (hmodule = __node_library_touch("core", strMessage)) != NULL)
          {
 
             defer_init = (PFN_DEFER_INIT) __node_library_raw_get(hmodule, "defer_core_init");
 
          }
-         else if ((hmodule = __node_library_touch("base", strMessage)) != NULL)
+         else if (!stricmp(m_pszLevel, "base")
+                  || (hmodule = __node_library_touch("base", strMessage)) != NULL)
          {
 
             defer_init = (PFN_DEFER_INIT) __node_library_raw_get(hmodule, "defer_base_init");
 
          }
-         else if ((hmodule = __node_library_touch("axis", strMessage)) != NULL)
+         else if (!stricmp(m_pszLevel, "axis")
+                  || (hmodule = __node_library_touch("axis", strMessage)) != NULL)
          {
 
             defer_init = (PFN_DEFER_INIT) __node_library_raw_get(hmodule, "defer_axis_init");
@@ -343,83 +346,6 @@ void app_core::defer_load_backbone_libraries(string strAppId)
       }
 
    }
-
-}
-
-
-void app_core::run()
-{
-
-   set_main_thread(GetCurrentThread());
-
-   set_main_thread_id(GetCurrentThreadId());
-
-   m_psystem->m_strAppId = m_pmaindata->m_pmaininitdata->m_strAppId;
-
-   m_psystem->startup_command(m_pmaindata->m_pmaininitdata);
-
-   if (!m_psystem->pre_run())
-   {
-
-      return;
-
-   }
-
-
-   if (!m_psystem->process_command(m_psystem->m_pcommand))
-   {
-
-      return;
-
-   }
-
-   try
-   {
-
-      m_psystem->main();
-
-      for(int i = 0; i < m_psystem->m_error.m_iaErrorCode2.get_count(); i++)
-      {
-
-         on_result(m_psystem->m_error.m_iaErrorCode2[i]);
-
-      }
-
-   }
-   catch (...)
-   {
-
-      on_result(-2004);
-
-   }
-
-   try
-   {
-
-      m_psystem->term_thread();
-
-   }
-   catch (...)
-   {
-
-      on_result(-2005);
-
-   }
-
-   try
-   {
-
-      m_dwAfterApplicationFirstRequest = m_psystem->m_dwAfterApplicationFirstRequest;
-
-   }
-   catch (...)
-   {
-
-      on_result(-2006);
-
-   }
-
-   ::aura::del(m_psystem);
 
 }
 
@@ -645,40 +571,7 @@ CLASS_DECL_AURA void aura_main(app_core * pappcore)
 
    pappcore->ini();
 
-#ifdef APPLEOS
-
-   //Sleep(20000);
-
-   if(pappcore->m_psystem->begin_synch())
-   {
-
-      set_main_thread(pappcore->m_psystem->m_hthread);
-
-      set_main_thread_id(pappcore->m_psystem->m_uiThread);
-      
-      //Sleep(15000);
-
-      ns_shared_application(pappcore->m_pmaindata->m_argc, pappcore->m_pmaindata->m_argv);
-
-      ns_app_run();
-
-   }
-
-#elif defined(METROWIN)
-
-   pappcore->m_psystem->m_strAppId = pappcore->m_pmaindata->m_pmaininitdata->m_strAppId;
-
-   pappcore->m_psystem->startup_command(pappcore->m_pmaindata->m_pmaininitdata);
-
-   auto source = ::metrowin::new_directx_application_source(pappcore->m_psystem, pappcore->m_pmaindata->m_pmaininitdata->m_strCommandLine);
-
-   ::Windows::ApplicationModel::Core::CoreApplication::Run(source);
-
-#else
-
    pappcore->run();
-
-#endif
 
    pappcore->end();
 
@@ -689,24 +582,30 @@ CLASS_DECL_AURA void aura_main(app_core * pappcore)
 
 
 
-aura_prelude::aura_prelude()
+aura_prelude::aura_prelude(const char * pszLevel)
 {
 
    s_pprelude = this;
    
+   m_pfnNewApp = NULL;
+   
    m_pfnNewLibrary = NULL;
    
-   m_pfnNewApp = NULL;
+   m_pszLevel = pszLevel;
 
 }
 
 
-aura_prelude::aura_prelude(::aura::PFN_GET_NEW_APP pgetnewapp)
+aura_prelude::aura_prelude(::aura::PFN_GET_NEW_APP pgetnewapp, const char * pszLevel)
 {
 
    s_pprelude = this;
 
    m_pfnNewApp = pgetnewapp;
+   
+   m_pfnNewLibrary = NULL;
+   
+   m_pszLevel = pszLevel;
 
    m_pfnNewLibrary = NULL;
    
@@ -720,6 +619,20 @@ aura_prelude::aura_prelude(::aura::PFN_GET_NEW_LIBRARY pgetnewlibrary)
    m_pfnNewLibrary = pgetnewlibrary;
    
    m_pfnNewApp = NULL;
+   
+}
+
+
+aura_prelude::aura_prelude(::aura::PFN_GET_NEW_LIBRARY pgetnewlibrary, const char * pszLevel)
+{
+   
+   s_pprelude = this;
+   
+   m_pfnNewApp = NULL;
+   
+   m_pfnNewLibrary = pgetnewlibrary;
+   
+   m_pszLevel = pszLevel;
    
 }
 
@@ -789,6 +702,8 @@ bool aura_prelude::prelude(app_core * pappcore)
    pappcore->m_pfnNewApp = m_pfnNewApp;
    
    pappcore->m_pfnNewLibrary = m_pfnNewLibrary;
+   
+   pappcore->m_pszLevel = m_pszLevel;
 
    return true;
 
@@ -1200,3 +1115,120 @@ string merge_colon_args(const array < stringa > & str2a)
 
 }
 
+
+
+
+#ifdef APPLEOS
+
+void app_core::run()
+{
+
+   if(m_psystem->begin_synch())
+   {
+
+      set_main_thread(m_psystem->m_hthread);
+
+      set_main_thread_id(m_psystem->m_uiThread);
+
+      ns_application_main(m_pmaindata->m_argc, m_pmaindata->m_argv);
+
+   }
+
+}
+
+#elif defined(METROWIN)
+
+void app_core::run()
+{
+
+   m_psystem->m_strAppId = m_pmaindata->m_pmaininitdata->m_strAppId;
+
+   m_psystem->startup_command(m_pmaindata->m_pmaininitdata);
+
+   auto source = ::metrowin::new_directx_application_source(m_psystem, m_pmaindata->m_pmaininitdata->m_strCommandLine);
+
+   ::Windows::ApplicationModel::Core::CoreApplication::Run(source);
+
+}
+
+#else
+
+
+
+void app_core::run()
+{
+
+   set_main_thread(GetCurrentThread());
+
+   set_main_thread_id(GetCurrentThreadId());
+
+   m_psystem->m_strAppId = m_pmaindata->m_pmaininitdata->m_strAppId;
+
+   m_psystem->startup_command(m_pmaindata->m_pmaininitdata);
+
+   if (!m_psystem->pre_run())
+   {
+
+      return;
+
+   }
+
+
+   if (!m_psystem->process_command(m_psystem->m_pcommand))
+   {
+
+      return;
+
+   }
+
+   try
+   {
+
+      m_psystem->main();
+
+      for(int i = 0; i < m_psystem->m_error.m_iaErrorCode2.get_count(); i++)
+      {
+
+         on_result(m_psystem->m_error.m_iaErrorCode2[i]);
+
+      }
+
+   }
+   catch (...)
+   {
+
+      on_result(-2004);
+
+   }
+
+   try
+   {
+
+      m_psystem->term_thread();
+
+   }
+   catch (...)
+   {
+
+      on_result(-2005);
+
+   }
+
+   try
+   {
+
+      m_dwAfterApplicationFirstRequest = m_psystem->m_dwAfterApplicationFirstRequest;
+
+   }
+   catch (...)
+   {
+
+      on_result(-2006);
+
+   }
+
+   ::aura::del(m_psystem);
+
+}
+
+#endif

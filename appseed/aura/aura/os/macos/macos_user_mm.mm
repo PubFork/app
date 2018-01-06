@@ -9,39 +9,9 @@
 #include "macos_mm.h"
 #include "aura/aura/node/macos/RoundWindowApp.h"
 
-void ns_shared_application(int argc, char *argv[])
-{
-   
-   NSApplication * application = [NSApplication sharedApplication];
-   
-   RoundWindowApp * appDelegate = [[RoundWindowApp alloc] init];
-   
-   [application setDelegate:appDelegate];
-   [NSApplication sharedApplication];
-   [NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
-   id menubar = [NSMenu alloc];
-   id appMenuItem = [NSMenuItem alloc];
-   [menubar addItem:appMenuItem];
-   [NSApp setMainMenu:menubar];
-   id appMenu = [NSMenu alloc];
-   id appName = [[NSProcessInfo processInfo] processName];
-   id quitTitle = [@"Quit " stringByAppendingString:appName];
-   id quitMenuItem = [[NSMenuItem alloc] initWithTitle:quitTitle
-                                                action:@selector(terminate:) keyEquivalent:@"q"];
-   [appMenu addItem:quitMenuItem];
-
-   [appMenuItem setSubmenu:appMenu];
-
-   [NSApp activateIgnoringOtherApps:YES];
-   
-   [NSApp run];
-   
-}
-
 
 
 void copy(LPRECT lprectDst, const CGRect & rectSrc);
-
 
 
 namespace macos

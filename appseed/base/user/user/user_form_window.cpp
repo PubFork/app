@@ -253,27 +253,25 @@ namespace user
 
       ASSERT(pcontrol->descriptor().get_type() == control_type_edit || pcontrol->descriptor().get_type() == control_type_edit_plain_text);
 
-      sp(::user::elemental) pedit = get_child_by_id(pcontrol->m_id);
-
-      string str;
+      sp(::user::edit_text) pedit = get_child_by_id(pcontrol->m_id);
 
       if(pedit == NULL)
       {
 
-         sp(::user::elemental) ptext = pcontrol;
-
-         if(ptext == NULL)
-            return false;
-
-         ptext->_001GetText(str);
+         pedit = pcontrol;
 
       }
-      else
+
+      if(pedit == NULL)
       {
-
-         pedit->_001GetText(str);
-
+         
+         return false;
+         
       }
+      
+      string str;
+      
+      pedit->_001GetText(str);
 
       if(!pcontrol->Validate(str))
       {
@@ -476,14 +474,16 @@ namespace user
                {
                   string str;
                   str = var.m_str;
-                  ptext->_001SetText(str,::action::source_database);
+                  sp(::user::edit_text) pedit = ptext;
+                  pedit->_001SetText(str,::action::source_database);
                }
                break;
                case var::type_int32:
                {
                   string str;
                   str.Format("%d",var.int32());
-                  ptext->_001SetText(str,::action::source_database);
+                  sp(::user::edit_text) pedit = ptext;
+                  pedit->_001SetText(str,::action::source_database);
                }
                break;
                default:
@@ -1075,9 +1075,9 @@ namespace user
                pdescriptor->m_ddx.m_pdbflags->m_key.m_id,
                ia);
 
-            sp(elemental) pcheck = pevent->m_puie;
+            sp(check) pcheck = pevent->m_puie;
 
-            if(pcheck->_001GetCheck() == check::checked)
+            if(pcheck->_001GetCheck() == ::check::checked)
             {
                ia.add_unique(pdescriptor->m_ddx.m_pdbflags->m_value);
             }

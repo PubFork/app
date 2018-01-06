@@ -24,6 +24,12 @@
 		9A331F011D4BE25E00255105 /* libaura.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A331F001D4BE25E00255105 /* libaura.dylib */; };
 		9A331F041D4BE26500255105 /* libaxis.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A331F031D4BE26500255105 /* libaxis.dylib */; };
 		9A331F061D4BE26C00255105 /* libbase.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A331F051D4BE26C00255105 /* libbase.dylib */; };
+		9A4BE0ED1FFEDBAB00DED594 /* _charguess.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AD186D71F9C3FB5001CEA8E /* _charguess.cpp */; };
+		9A4BE0F61FFEDBB100DED594 /* _colorertake5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AD186891F9C3FB5001CEA8E /* _colorertake5.cpp */; };
+		9A4BE0F71FFEDBB700DED594 /* _mail.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AD1872B1F9C3FB6001CEA8E /* _mail.cpp */; };
+		9A4BE0F81FFEDBC400DED594 /* pcre.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AD186D31F9C3FB5001CEA8E /* pcre.cpp */; };
+		9A4BE0F91FFEDC5300DED594 /* libaxisopenssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A4BE0FA1FFEDC5300DED594 /* libaxisopenssl.dylib */; };
+		9A4BE0FB1FFEDC5900DED594 /* libaxiscrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A4BE0FC1FFEDC5900DED594 /* libaxiscrypto.dylib */; };
 		9A57509E16AAB9A1000CC4EF /* framework.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A574D2B16AAB99E000CC4EF /* framework.cpp */; };
 		9A57509F16AAB9A1000CC4EF /* framework.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A574D2C16AAB99E000CC4EF /* framework.h */; };
 		9A7B1F521F61FA3F007D2345 /* sphere_main_frame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A920FBE1F3BF61C00CD9D94 /* sphere_main_frame.cpp */; };
@@ -163,8 +169,6 @@
 		9AD187CD1F9C3FB6001CEA8E /* UTF8Prober.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AD187221F9C3FB6001CEA8E /* UTF8Prober.h */; };
 		9AD187CE1F9C3FB6001CEA8E /* _mail.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AD1872B1F9C3FB6001CEA8E /* _mail.cpp */; };
 		9AD188021F9C4089001CEA8E /* libaurapcre.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AD187F91F9C404C001CEA8E /* libaurapcre.dylib */; };
-		9AD188111F9C40D8001CEA8E /* libaxiscrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AD1880A1F9C40BD001CEA8E /* libaxiscrypto.dylib */; };
-		9AD188201F9C4108001CEA8E /* libaxisopenssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AD188191F9C40E6001CEA8E /* libaxisopenssl.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -210,13 +214,6 @@
 			remoteGlobalIDString = 9AE24DDB1904CF6E001AEFFB;
 			remoteInfo = ios_core;
 		};
-		9A9A75CF1FED3B8700046482 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9AD188031F9C40BD001CEA8E /* axiscrypto.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 9A9A745E1FED286900046482;
-			remoteInfo = axiscrypto_iosTests;
-		};
 		9AD187251F9C3FB6001CEA8E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 9AD186E51F9C3FB5001CEA8E /* auracharguess.xcodeproj */;
@@ -251,55 +248,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 9AA5E4C216F7C61B005C45CE;
 			remoteInfo = aurapcre;
-		};
-		9AD188091F9C40BD001CEA8E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9AD188031F9C40BD001CEA8E /* axiscrypto.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 07B2729A19A01A4600E822E1;
-			remoteInfo = axiscrypto;
-		};
-		9AD1880B1F9C40BD001CEA8E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9AD188031F9C40BD001CEA8E /* axiscrypto.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 07B2729219A019AB00E822E1;
-			remoteInfo = ios_axiscrypto;
-		};
-		9AD1880F1F9C40CC001CEA8E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9AD188031F9C40BD001CEA8E /* axiscrypto.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 07B2729319A01A4600E822E1;
-			remoteInfo = axiscrypto;
-		};
-		9AD188181F9C40E6001CEA8E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9AD188121F9C40E6001CEA8E /* axisopenssl.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 07B2729A19A01A4600E822E1;
-			remoteInfo = axisopenssl;
-		};
-		9AD1881A1F9C40E6001CEA8E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9AD188121F9C40E6001CEA8E /* axisopenssl.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 07B2729219A019AB00E822E1;
-			remoteInfo = ios_axisopenssl;
-		};
-		9AD1881C1F9C40E6001CEA8E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9AD188121F9C40E6001CEA8E /* axisopenssl.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 9A92C9051D2058690069D173;
-			remoteInfo = axisopenssl_iosTests;
-		};
-		9AD1881E1F9C40FD001CEA8E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9AD188121F9C40E6001CEA8E /* axisopenssl.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 07B2729319A01A4600E822E1;
-			remoteInfo = axisopenssl;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -337,6 +285,8 @@
 		9A331F001D4BE25E00255105 /* libaura.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libaura.dylib; path = "../../../../Users/camilo/Library/Developer/Xcode/DerivedData/core-osx-dyhrstllhpqabhamryoxyuxzxxbr/Build/Products/Debug/libaura.dylib"; sourceTree = "<group>"; };
 		9A331F031D4BE26500255105 /* libaxis.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libaxis.dylib; path = "../../../../Users/camilo/Library/Developer/Xcode/DerivedData/core-osx-dyhrstllhpqabhamryoxyuxzxxbr/Build/Products/Debug/libaxis.dylib"; sourceTree = "<group>"; };
 		9A331F051D4BE26C00255105 /* libbase.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbase.dylib; path = "../../../../Users/camilo/Library/Developer/Xcode/DerivedData/core-osx-dyhrstllhpqabhamryoxyuxzxxbr/Build/Products/Debug/libbase.dylib"; sourceTree = "<group>"; };
+		9A4BE0FA1FFEDC5300DED594 /* libaxisopenssl.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libaxisopenssl.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A4BE0FC1FFEDC5900DED594 /* libaxiscrypto.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libaxiscrypto.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A574B9816AAB906000CC4EF /* libsphere.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libsphere.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A574D2B16AAB99E000CC4EF /* framework.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = framework.cpp; sourceTree = "<group>"; };
 		9A574D2C16AAB99E000CC4EF /* framework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = framework.h; sourceTree = "<group>"; };
@@ -597,8 +547,6 @@
 		9AD187521F9C3FB6001CEA8E /* sockets_sip_udp_client_socket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sockets_sip_udp_client_socket.cpp; sourceTree = "<group>"; };
 		9AD187F31F9C404C001CEA8E /* aurapcre.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = aurapcre.xcodeproj; path = ../../../third/appseed/pcre/aurapcre.xcodeproj; sourceTree = "<group>"; };
 		9AD187FE1F9C4070001CEA8E /* libpcre.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libpcre.tbd; path = usr/lib/libpcre.tbd; sourceTree = SDKROOT; };
-		9AD188031F9C40BD001CEA8E /* axiscrypto.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = axiscrypto.xcodeproj; path = ../../../third/appseed/crypto/axiscrypto.xcodeproj; sourceTree = "<group>"; };
-		9AD188121F9C40E6001CEA8E /* axisopenssl.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = axisopenssl.xcodeproj; path = ../../../third/appseed/openssl/axisopenssl.xcodeproj; sourceTree = "<group>"; };
 		9AF75DE31F83EAD400FDE7CC /* libios_aura.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libios_aura.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AF75DE61F83EADF00FDE7CC /* libios_axis.dylib */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libios_axis.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AF75DE81F83EAE600FDE7CC /* libios_base.dylib */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libios_base.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -627,8 +575,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9AD188201F9C4108001CEA8E /* libaxisopenssl.dylib in Frameworks */,
-				9AD188111F9C40D8001CEA8E /* libaxiscrypto.dylib in Frameworks */,
+				9A4BE0FB1FFEDC5900DED594 /* libaxiscrypto.dylib in Frameworks */,
+				9A4BE0F91FFEDC5300DED594 /* libaxisopenssl.dylib in Frameworks */,
 				9AD188021F9C4089001CEA8E /* libaurapcre.dylib in Frameworks */,
 				9A8C493D1F60695E004A5BA4 /* libace.dylib in Frameworks */,
 				9A331F061D4BE26C00255105 /* libbase.dylib in Frameworks */,
@@ -644,6 +592,8 @@
 		07B657E3190F3CCB002DAADE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9A4BE0FC1FFEDC5900DED594 /* libaxiscrypto.dylib */,
+				9A4BE0FA1FFEDC5300DED594 /* libaxisopenssl.dylib */,
 				9AD187FE1F9C4070001CEA8E /* libpcre.tbd */,
 				9AF75DE81F83EAE600FDE7CC /* libios_base.dylib */,
 				9AF75DE61F83EADF00FDE7CC /* libios_axis.dylib */,
@@ -712,8 +662,6 @@
 			isa = PBXGroup;
 			children = (
 				9AD187F31F9C404C001CEA8E /* aurapcre.xcodeproj */,
-				9AD188031F9C40BD001CEA8E /* axiscrypto.xcodeproj */,
-				9AD188121F9C40E6001CEA8E /* axisopenssl.xcodeproj */,
 				07DA476E1B71ED0F006F27E6 /* core.xcodeproj */,
 				9ACABEAC17BD04FF004C3F85 /* sphere */,
 				07B657FA190F3CCC002DAADE /* sphere_iosTests */,
@@ -1129,26 +1077,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		9AD188041F9C40BD001CEA8E /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				9AD1880A1F9C40BD001CEA8E /* libaxiscrypto.dylib */,
-				9AD1880C1F9C40BD001CEA8E /* libios_axiscrypto.a */,
-				9A9A75D01FED3B8700046482 /* axiscrypto_iosTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		9AD188131F9C40E6001CEA8E /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				9AD188191F9C40E6001CEA8E /* libaxisopenssl.dylib */,
-				9AD1881B1F9C40E6001CEA8E /* libios_axisopenssl.a */,
-				9AD1881D1F9C40E6001CEA8E /* axisopenssl_iosTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1277,8 +1205,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				9AD1881F1F9C40FD001CEA8E /* PBXTargetDependency */,
-				9AD188101F9C40CC001CEA8E /* PBXTargetDependency */,
 				9AD188011F9C4081001CEA8E /* PBXTargetDependency */,
 				07DA47811B71ED59006F27E6 /* PBXTargetDependency */,
 			);
@@ -1321,14 +1247,6 @@
 					ProjectRef = 9AD187F31F9C404C001CEA8E /* aurapcre.xcodeproj */;
 				},
 				{
-					ProductGroup = 9AD188041F9C40BD001CEA8E /* Products */;
-					ProjectRef = 9AD188031F9C40BD001CEA8E /* axiscrypto.xcodeproj */;
-				},
-				{
-					ProductGroup = 9AD188131F9C40E6001CEA8E /* Products */;
-					ProjectRef = 9AD188121F9C40E6001CEA8E /* axisopenssl.xcodeproj */;
-				},
-				{
 					ProductGroup = 07DA476F1B71ED0F006F27E6 /* Products */;
 					ProjectRef = 07DA476E1B71ED0F006F27E6 /* core.xcodeproj */;
 				},
@@ -1364,13 +1282,6 @@
 			remoteRef = 07DA47781B71ED0F006F27E6 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		9A9A75D01FED3B8700046482 /* axiscrypto_iosTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = axiscrypto_iosTests.xctest;
-			remoteRef = 9A9A75CF1FED3B8700046482 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		9AD187261F9C3FB6001CEA8E /* libauracharguess.dylib */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.dylib";
@@ -1399,41 +1310,6 @@
 			remoteRef = 9AD187FA1F9C404C001CEA8E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		9AD1880A1F9C40BD001CEA8E /* libaxiscrypto.dylib */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.dylib";
-			path = libaxiscrypto.dylib;
-			remoteRef = 9AD188091F9C40BD001CEA8E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		9AD1880C1F9C40BD001CEA8E /* libios_axiscrypto.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libios_axiscrypto.a;
-			remoteRef = 9AD1880B1F9C40BD001CEA8E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		9AD188191F9C40E6001CEA8E /* libaxisopenssl.dylib */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.dylib";
-			path = libaxisopenssl.dylib;
-			remoteRef = 9AD188181F9C40E6001CEA8E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		9AD1881B1F9C40E6001CEA8E /* libios_axisopenssl.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libios_axisopenssl.a;
-			remoteRef = 9AD1881A1F9C40E6001CEA8E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		9AD1881D1F9C40E6001CEA8E /* axisopenssl_iosTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = axisopenssl_iosTests.xctest;
-			remoteRef = 9AD1881C1F9C40E6001CEA8E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -1455,8 +1331,10 @@
 				9A9578A91F62232700623508 /* userstack_form_callback.cpp in Sources */,
 				9A9578A81F62232700623508 /* userstack_document.cpp in Sources */,
 				9A9578961F62230300623508 /* command_pane_view_update_hint.cpp in Sources */,
+				9A4BE0F81FFEDBC400DED594 /* pcre.cpp in Sources */,
 				9A9578AA1F62232700623508 /* userstack_frame.cpp in Sources */,
 				9A95789F1F62231000623508 /* filehandler_application.cpp in Sources */,
+				9A4BE0F61FFEDBB100DED594 /* _colorertake5.cpp in Sources */,
 				9A9578901F6222FC00623508 /* calculator_view.cpp in Sources */,
 				9A9578A61F62232000623508 /* sphere_library.cpp in Sources */,
 				9A95788F1F6222FC00623508 /* calculator_frame.cpp in Sources */,
@@ -1470,6 +1348,7 @@
 				9A95789A1F62230900623508 /* console_application.cpp in Sources */,
 				9A9D7F0F1F5D8211009EC103 /* asphere_asphere.cpp in Sources */,
 				9A9578931F62230300623508 /* command_document.cpp in Sources */,
+				9A4BE0ED1FFEDBAB00DED594 /* _charguess.cpp in Sources */,
 				9A95789D1F62230900623508 /* console_prompt_impact.cpp in Sources */,
 				9A95788D1F6222FB00623508 /* calculator_application.cpp in Sources */,
 				9A9578991F62230300623508 /* command_view.cpp in Sources */,
@@ -1477,6 +1356,7 @@
 				9A9578AB1F62232700623508 /* userstack_pane_view_update_hint.cpp in Sources */,
 				9A9578971F62230300623508 /* command_pane_view.cpp in Sources */,
 				9A9578AC1F62232700623508 /* userstack_pane_view.cpp in Sources */,
+				9A4BE0F71FFEDBB700DED594 /* _mail.cpp in Sources */,
 				9A9578A71F62232700623508 /* userstack_application.cpp in Sources */,
 				9A95788E1F6222FB00623508 /* calculator_document.cpp in Sources */,
 				9A7B1F521F61FA3F007D2345 /* sphere_main_frame.cpp in Sources */,
@@ -1568,16 +1448,6 @@
 			isa = PBXTargetDependency;
 			name = aurapcre;
 			targetProxy = 9AD188001F9C4081001CEA8E /* PBXContainerItemProxy */;
-		};
-		9AD188101F9C40CC001CEA8E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = axiscrypto;
-			targetProxy = 9AD1880F1F9C40CC001CEA8E /* PBXContainerItemProxy */;
-		};
-		9AD1881F1F9C40FD001CEA8E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = axisopenssl;
-			targetProxy = 9AD1881E1F9C40FD001CEA8E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

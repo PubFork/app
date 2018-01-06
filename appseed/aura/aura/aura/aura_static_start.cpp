@@ -1,4 +1,4 @@
-﻿//
+//
 //  base_static_start.cpp
 //  aura
 //
@@ -6,6 +6,7 @@
 //
 
 #include "framework.h"
+#include "aura/net/net_sockets.h"
 
 extern string_map < ::aura::PFN_GET_NEW_LIBRARY, ::aura::PFN_GET_NEW_LIBRARY  > * g_pmapLibrary;
 
@@ -239,6 +240,13 @@ namespace aura
          g_pmutexOutputDebugStringA = new mutex(NULL);
 
 #endif
+         
+#ifdef BSD_STYLE_SOCKETS
+         
+         ::sockets::base_socket::s_pmutex = new mutex();
+         
+#endif
+
 
 
 #ifdef APPLEOS
@@ -552,6 +560,13 @@ namespace aura
 
 //         destroy_id_space();
 
+#ifdef BSD_STYLE_SOCKETS
+         
+         ::aura::del(::sockets::base_socket::s_pmutex);
+         
+#endif
+
+         
 #ifdef ANDROID
 
          ::aura::del(g_pmutexOutputDebugStringA);

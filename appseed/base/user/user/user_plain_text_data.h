@@ -30,13 +30,18 @@ namespace user
    class CLASS_DECL_BASE plain_text_set_sel_command : public plain_text_command
    {
    public:
-      strsize   m_iSelStart;
+      
+      
+      strsize   m_iSelBeg;
       strsize   m_iSelEnd;
-      strsize   m_iPreviousSelStart;
+      strsize   m_iPreviousSelBeg;
       strsize   m_iPreviousSelEnd;
+      
+      
       virtual void Undo(plain_text_tree * pedit);
       virtual void Redo(plain_text_tree * pedit);
       virtual e_plain_text_command get_command() { return plain_text_command_set_sel; };
+      
    };
 
    class CLASS_DECL_BASE plain_text_file_command : public plain_text_command
@@ -83,11 +88,11 @@ namespace user
 
       sp(plain_text_group_command)     m_pgroupcommand;
       index                            m_iBranch;
-      ::file::file_sp                m_pfile;
-      ::file::edit_file              m_editfile;
+      ::file::file_sp                  m_pfile;
+      ::file::edit_file                m_editfile;
 
 
-      strsize                          m_iSelStart;
+      strsize                          m_iSelBeg;
       strsize                          m_iSelEnd;
 
 

@@ -3,16 +3,6 @@
 
 
 
-#ifdef HAVE_OPENSSL
-#include <openssl/ssl.h>
-#endif
-
-
-#if defined(LINUX)
-//#include <ctype.h>
-#endif
-
-
 namespace mail
 {
 
@@ -428,16 +418,20 @@ namespace mail
 
    void pop3_socket::InitSSLClient()
    {
-#if defined(HAVE_OPENSSL)
+      
       if(m_bTls)
       {
-         InitializeContext("", TLS_client_method());
+         
+         InitializeContextTLSClientMethod();
+         
       }
       else
       {
-         InitializeContext("", TLS_client_method());
+         
+         InitializeContextTLSClientMethod();
+         
       }
-#endif
+      
    }
 
 

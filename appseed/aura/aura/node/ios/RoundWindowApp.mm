@@ -7,6 +7,7 @@
 //
 
 #import "RoundWindowApp.h"
+#import "ios_plane_system.h"
 
 int32_t defer_run_system();
 
@@ -16,28 +17,18 @@ int32_t defer_run_system(char * * psza, int c);
 
 void macos_on_app_activate();
 
-
-
-plane_system * new_system(const char * pszId);
-
-UIWindow * init_part_2ex(plane_system * psystem, CGRect rect);
-
-void system_begin_main(plane_system * psystem);
+plane_system * create_plane_system();
 
 @implementation RoundWindowApp
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+
+   m_psystem = create_plane_system();
    
-//   [application _setApplicationIsOpaque : NO];
-  
-   NSString *ca2_command_line = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"ca2_command_line"];
-
-   m_psystem = new_system([ca2_command_line UTF8String]);
-
    CGRect rect = [[UIScreen mainScreen] bounds];
 
-   self.window = init_part_2ex(m_psystem, rect);
+   self.window = m_psystem->plane_system_initialize(rect);
 
    self.window.backgroundColor = [UIColor whiteColor];
 
@@ -45,7 +36,7 @@ void system_begin_main(plane_system * psystem);
 
    [self.window makeKeyAndVisible];
    
-   system_begin_main(m_psystem);
+   m_psystem->plane_system_begin();
    
    return YES;
    
@@ -80,3 +71,18 @@ void system_begin_main(plane_system * psystem);
 }
 
 @end
+
+
+void ns_application_main(int argc, char * argv[])
+{
+   
+   @autoreleasepool
+   {
+      
+      UIApplicationMain(argc, argv, nil, NSStringFromClass([RoundWindowApp class]));
+      
+   }
+   
+}
+
+

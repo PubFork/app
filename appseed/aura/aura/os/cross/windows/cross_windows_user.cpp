@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #if defined(LINUX)
 #include "aura/aura/os/linux/linux_user_impl.h"
 #endif
@@ -489,22 +489,22 @@ WINBOOL ShowWindow(::oswindow oswindow, int nCmdShow)
 
 LONG WINAPI GetWindowLongA(::oswindow oswindow, int nIndex)
 {
-   return (LONG) oswindow->get_window_long_ptr(nIndex);
+   return (LONG) oswindow->m_pimpl->get_window_long(nIndex);
 }
 
 LONG WINAPI SetWindowLongA(::oswindow oswindow, int nIndex, LONG l)
 {
-   return (LONG) oswindow->set_window_long_ptr(nIndex, (LONG) l);
+   return (LONG) oswindow->m_pimpl->set_window_long(nIndex, (LONG) l);
 }
 
 LONG_PTR WINAPI GetWindowLongPtrA(::oswindow oswindow, int nIndex)
 {
-   return oswindow->get_window_long_ptr(nIndex);
+   return oswindow->get_window_long(nIndex);
 }
 
 LONG_PTR WINAPI SetWindowLongPtrA(::oswindow oswindow, int nIndex, LONG_PTR l)
 {
-   return oswindow->set_window_long_ptr(nIndex, l);
+   return oswindow->set_window_long(nIndex, (int)l);
 }
 
 WINBOOL WINAPI ClientToScreen(::oswindow oswindow, LPPOINT lppoint)

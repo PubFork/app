@@ -1,7 +1,7 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
-#if !defined(ANDROID) && !defined(WINDOWSEX)
+#if !defined(ANDROID) && !defined(WINDOWSEX) && !defined(APPLE_IOS)
 #include "ansios_serial.cpp"
 #include "ansios_base.cpp"
 #endif

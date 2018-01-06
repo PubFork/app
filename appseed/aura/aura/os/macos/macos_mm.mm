@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 
 
-char * ns_string(NSString * str);
 
 char * ns_get_default_browser_path()
 {
@@ -114,24 +113,6 @@ void ns_launch_bundle(const char * pszBundle, const char ** argv)
 
 
 
-char * mm_ca2_command_line()
-{
-   
-   NSString *ca2_command_line = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"ca2_command_line"];
-   
-   if(ca2_command_line == NULL)
-   {
-      
-      return strdup("");
-      
-   }
-   
-   return strdup([ca2_command_line UTF8String]);
-   
-}
-
-
-
 
 
 bool GetImagePixelData(unsigned int * pcr, int cx, int cy, int iScan, CGImageRef inImage)
@@ -201,12 +182,6 @@ void ns_app_terminate()
 
 
 
-char * ns_get_bundle_identifier()
-{
-   
-   return ns_string([[NSBundle mainBundle] bundleIdentifier]);
-   
-}
 
 
 
@@ -219,30 +194,6 @@ void ns_Sleep(unsigned int uiMillis)
 
 
 
-
-char * ns_string(NSString * str)
-{
-   
-   if(str == nil)
-   {
-      
-      return NULL;
-      
-   }
-   
-   const char * pszUtf8 = [str UTF8String];
-   
-   if(pszUtf8 == NULL)
-   {
-      
-      return NULL;
-      
-   }
-   
-   return strdup(pszUtf8);
-   
-   
-}
 
 
 

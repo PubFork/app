@@ -2,9 +2,6 @@
 
 
 
-#ifdef BSD_STYLE_SOCKETS
-#include <openssl/ssl.h>
-#endif
 
 #include "aura/net/sockets/bsd/basic/sockets_ssl_client_context.h"
 
@@ -22,6 +19,8 @@
 namespace sockets
 {
 
+   
+   class ssl_context;
 
    class base_socket_handler;
 
@@ -98,14 +97,9 @@ namespace sockets
       };
 
       // former TCP_SOCKET ::sockets::tcp_socket
-      int m_iSslCtxRetry;
       sp(ssl_client_context)     m_spsslclientcontext;
 
-      SSL_CTX *m_ssl_ctx; ///< ssl context
-      SSL_SESSION * m_ssl_session; ///< ssl session
-      const SSL_METHOD * m_ssl_method; ///< ssl method
-      SSL *m_ssl; ///< ssl 'socket'
-      BIO *m_sbio; ///< ssl bio
+      ssl_context *              m_psslcontext;
       string m_password; ///< ssl password
 
 

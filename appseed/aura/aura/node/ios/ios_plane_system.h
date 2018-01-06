@@ -27,13 +27,15 @@ struct plane_system
    
    aura_system_ptr    m_psystem;
    
-   plane_system(const char * pszId);
+   plane_system();
    
-   ui_window_ptr init_part_2ex(CGRect rect);
+   ui_window_ptr plane_system_initialize(CGRect rect);
    
-   void begin();
+   void plane_system_begin();
    
 };
+
+plane_system * create_plane_system();
 
 #endif
 

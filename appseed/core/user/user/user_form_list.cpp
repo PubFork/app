@@ -617,7 +617,6 @@ namespace user
       {
 
 
-
          draw_list_item item(this);
 
          item.m_iItem = pcontrol->m_iEditItem;
@@ -628,7 +627,7 @@ namespace user
          if (item.m_bOk)
          {
 
-            pcontrol->_001SetText(item.m_strText, ::action::source_initialize);
+            pedit->_001SetText(item.m_strText, ::action::source_initialize);
 
          }
 
@@ -736,7 +735,7 @@ namespace user
       if (pcontrol->descriptor().get_type() == control_type_check_box)
       {
 
-         sp(::user::elemental) pcheckbox = pcontrol;
+         sp(::user::check) pcheckbox = pcontrol;
 
          ::check::e_check echeck = pcheckbox->_001GetCheck();
 
@@ -815,32 +814,33 @@ namespace user
       ASSERT(pcontrol->descriptor().get_type() == control_type_edit || pcontrol->descriptor().get_type() == control_type_edit_plain_text
              || pcontrol->descriptor().get_type() == control_type_combo_box);
 
-      sp(::user::elemental) pedit = get_child_by_id(pcontrol->m_id);
-
-      string str;
+      sp(::user::edit_text) pedit = get_child_by_id(pcontrol->m_id);
 
       if (pedit == NULL)
       {
 
-         sp(::user::elemental) ptext = pcontrol;
-
-         if (ptext == NULL)
-            return false;
-
-         ptext->_001GetText(str);
+         pedit = pcontrol;
 
       }
-      else
+
+      if (pedit == NULL)
       {
-
-         pedit->_001GetText(str);
-
+         
+         return false;
+         
       }
-
+         
+      string str;
+      
+      pedit->_001GetText(str);
+      
       if (!pcontrol->Validate(str))
       {
+         
          // que tal um balão para indicar o erro
+         
          return false;
+         
       }
 
       var var;

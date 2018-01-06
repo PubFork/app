@@ -1,7 +1,7 @@
 #include "framework.h"
 
 
-#if !defined(ANDROID) && !defined(APPLE) && !defined(LINUX)
+#if !defined(ANDROID) && !defined(APPLEOS) && !defined(LINUX)
 
 #include "ansios_datetime.cpp"
 

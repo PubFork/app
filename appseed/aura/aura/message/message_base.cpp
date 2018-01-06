@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 
@@ -34,7 +34,7 @@ namespace message
    }
 
 
-   base::base(::aura::application * papp,::user::primitive * pwnd,UINT uiMessage,WPARAM wparam,::lparam lparam,LRESULT & lresult):
+   base::base(::aura::application * papp,::user::primitive * pwnd, UINT_PTR uiMessage, WPARAM wparam, ::lparam lparam, LRESULT & lresult):
       ::message::message(papp)
    {
 
@@ -93,7 +93,7 @@ namespace message
    }
 
 
-   void base::set(::user::primitive * pwnd,UINT uiMessage,WPARAM wparam,::lparam lparam,LRESULT & lresult)
+   void base::set(::user::primitive * pwnd, UINT_PTR uiMessage, WPARAM wparam, ::lparam lparam, LRESULT & lresult)
    {
 
       ::message::message::set(pwnd, uiMessage, wparam, lparam);
@@ -104,7 +104,7 @@ namespace message
    }
 
 
-   void base::set(::user::primitive * pwnd,UINT uiMessage,WPARAM wparam,::lparam lparam)
+   void base::set(::user::primitive * pwnd,UINT_PTR uiMessage,WPARAM wparam,::lparam lparam)
    {
 
       set(pwnd,uiMessage,wparam,lparam,m_lresult);

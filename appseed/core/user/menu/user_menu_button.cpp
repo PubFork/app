@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 namespace user
@@ -158,13 +158,16 @@ namespace user
          rectImage.offset(1, 1);
          rectImage.top     = rectImage.bottom - rectImageInfo.height();
          rectImage.right   = rectImage.left + rectImageInfo.width();
-         if(m_echeck == check::checked)
+         
+         if(m_echeck == ::check::checked)
          {
 
-
             pgraphics->FillSolidRect(rectImageBorder, RGB(127, 127, 127));
+            
             pgraphics->Draw3dRect(rectImageBorder, Session.get_default_color(COLOR_3DSHADOW), Session.get_default_color(COLOR_3DHILIGHT));
+            
          }
+         
          pimagelist->draw(
             pgraphics,
             uiImage,

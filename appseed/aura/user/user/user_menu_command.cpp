@@ -13,6 +13,14 @@ namespace user
    }
    
    
+   void menu_command::delete_this()
+   {
+   
+      ::user::command::delete_this();
+      
+   }
+   
+   
    void menu_command::Enable(bool bOn, ::action::context actioncontext)
    {
       
@@ -28,27 +36,46 @@ namespace user
    }
    
    
-   void menu_command::_001SetCheck(check::e_check echeck, ::action::context actioncontext)
+   void menu_command::_001SetCheck(::check::e_check echeck, ::action::context actioncontext)
    {
       
-      ASSERT(echeck == check::checked || echeck == check::unchecked || echeck == check::tristate); // 0=>off, 1=>on, 2=>indeterminate
+      ASSERT(echeck == ::check::checked || echeck == ::check::unchecked || echeck == ::check::tristate); // 0=>off, 1=>on, 2=>indeterminate
 
       ::user::command::_001SetCheck(echeck, actioncontext);
       
       if (m_puiOther != NULL)
       {
+         
+         sp(::user::check) pcheck = m_puiOther;
+         
+         if(pcheck.is_set())
+         {
 
-         m_puiOther->_001SetCheck(echeck, actioncontext);
+            pcheck->_001SetCheck(echeck, actioncontext);
+            
+         }
 
       }
       
    }
    
    
-   void menu_command::SetText(const char * pszText, ::action::context actioncontext)
+   void menu_command::_001SetText(const string & strText, ::action::context actioncontext)
    {
       
-      m_puiOther->_001SetText(pszText, actioncontext);
+      if (m_puiOther != NULL)
+      {
+         
+         sp(::user::edit_text) pedit = m_puiOther;
+         
+         if(pedit.is_set())
+         {
+            
+            pedit->_001SetText(strText, actioncontext);
+            
+         }
+         
+      }
       
    }
    

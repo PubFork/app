@@ -24,8 +24,6 @@ namespace message
 
       message(::aura::application * papp = NULL);
       message(::message::e_type etype);
-      //message(dispatch * pdispatch);
-      //message(::aura::application * papp, class dispatch * pdispatch);
       virtual ~message();
 
 
@@ -40,6 +38,7 @@ namespace message
       bool all_previous(); // returns bRet
 
       bool previous(); // returns bRet
+
 
       virtual void set(::user::primitive * pwnd, UINT_PTR uiMessage, WPARAM wparam, ::lparam lparam);
 

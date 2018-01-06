@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 #include "user_elemental.h"
@@ -463,9 +463,9 @@ namespace user
       // for custom cleanup after WM_NCDESTROY
       virtual void PostNcDestroy();
 
-      virtual LRESULT DefWindowProc(UINT uiMessage,WPARAM wparam,lparam lparam);
+      virtual LRESULT DefWindowProc(UINT_PTR uiMessage, WPARAM wparam, lparam lparam);
 
-      virtual LRESULT call_message_handler(UINT message,WPARAM wparam,LPARAM lparam);
+      virtual LRESULT call_message_handler(UINT_PTR message, WPARAM wparam, lparam lparam);
 
       virtual void GuieProc(::message::message * pobj);
 

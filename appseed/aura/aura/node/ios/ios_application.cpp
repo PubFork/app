@@ -80,7 +80,7 @@ namespace aura
 //
 
 
-   bool application::impl_process_initialize()
+   bool application::impl_process_init()
    {
 
       return true;
@@ -88,7 +88,7 @@ namespace aura
    }
 
 
-   bool application::impl_initialize1()
+   bool application::impl_init1()
    {
 
       return true;
@@ -96,7 +96,7 @@ namespace aura
    }
 
 
-   bool application::impl_initialize2()
+   bool application::impl_init2()
    {
       
       return true;
@@ -104,7 +104,7 @@ namespace aura
    }
 
    
-   bool application::impl_initialize3()
+   bool application::impl_init3()
    {
       
       return true;
@@ -113,7 +113,7 @@ namespace aura
 
    
    // thread termination
-   int32_t application::impl_exit_instance() // default will 'delete this'
+   void application::impl_process_term() // default will 'delete this'
    {
       
       // avoid calling CloseHandle() on our own thread handle
@@ -134,6 +134,12 @@ namespace aura
       
    }
    
+   void application::impl_term1() {
+   }    void application::impl_term2() {
+   }    void application::impl_term3() {
+   }
+
+
 
    /*
    // Advanced: exception handling

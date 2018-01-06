@@ -1008,6 +1008,7 @@
 		9A19A39219C6F5940018DF7D /* wndfrm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wndfrm.h; sourceTree = "<group>"; };
 		9A19A39419C6F5940018DF7D /* wndfrm_interaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wndfrm_interaction.h; sourceTree = "<group>"; };
 		9A19A39619C6F5940018DF7D /* wndfrm_wndfrm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wndfrm_wndfrm.h; sourceTree = "<group>"; };
+		9A41737320011E3A0056265A /* core.inl */ = {isa = PBXFileReference; lastKnownFileType = text; path = core.inl; sourceTree = "<group>"; };
 		9A58847716A20D230061C610 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		9A58847916A20D360061C610 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		9A58847B16A20D480061C610 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
@@ -2152,6 +2153,14 @@
 			path = frame;
 			sourceTree = "<group>";
 		};
+		9A41737220011E060056265A /* app */ = {
+			isa = PBXGroup;
+			children = (
+				9A41737320011E3A0056265A /* core.inl */,
+			);
+			path = app;
+			sourceTree = "<group>";
+		};
 		9A4E84461D1FD1AC008A419B /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -2257,6 +2266,7 @@
 		9AE728EA17E85ECD003E47F9 /* core */ = {
 			isa = PBXGroup;
 			children = (
+				9A41737220011E060056265A /* app */,
 				078C35E21921910B00354453 /* core */,
 				9AE60E4B1F22807500F7CDC2 /* os */,
 				9AE72A2B17E85ECE003E47F9 /* plugin */,
@@ -3250,7 +3260,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
@@ -3322,7 +3331,6 @@
 				GCC_PREFIX_HEADER = framework.h;
 				GCC_VERSION = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;

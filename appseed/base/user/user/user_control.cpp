@@ -190,23 +190,23 @@ namespace user
       if (control_descriptor().get_type() == control_type_edit)
       {
 
-         sp(::user::elemental) ptext = pwnd.m_p;
+         sp(::user::edit_text) pedit = pwnd.m_p;
 
-         if (ptext == NULL)
+         if (pedit == NULL)
             return false;
 
-         ptext->_001GetText(str);
+         pedit->_001GetText(str);
 
       }
       else
       {
 
-         sp(::user::elemental) ptext = this;
+         sp(::user::edit_text) pedit = this;
 
-         if (ptext == NULL)
+         if (pedit == NULL)
             return false;
 
-         ptext->_001GetText(str);
+         pedit->_001GetText(str);
 
       }
 
@@ -228,6 +228,7 @@ namespace user
       }
 
    }
+   
 
    bool control::Validate(string & strParam)
    {

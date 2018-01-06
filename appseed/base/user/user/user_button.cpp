@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 namespace user
@@ -28,8 +28,8 @@ namespace user
       m_pbitmap         = NULL;
       m_plist           = NULL;
       m_iHover          = -1;
-      m_echeck          = check::unchecked;
-      m_puserstyle     = NULL;
+      m_echeck          = ::check::unchecked;
+      m_puserstyle      = NULL;
       m_iClick          = 0;
 
    }
@@ -485,7 +485,7 @@ namespace user
 
 
 
-   void button::_001SetCheck(check::e_check echeck, ::action::context actioncontext)
+   void button::_001SetCheck(::check::e_check echeck, ::action::context actioncontext)
    {
 
       UNREFERENCED_PARAMETER(actioncontext);
@@ -495,7 +495,7 @@ namespace user
    }
 
 
-   check::e_check button::_001GetCheck()
+   ::check::e_check button::_001GetCheck()
    {
 
       return m_echeck;

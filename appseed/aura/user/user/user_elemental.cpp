@@ -258,7 +258,7 @@ namespace user
 
    // text interface
 
-   void elemental::_001GetText(string & str) const
+   void get_text::_001GetText(string & str) const
    {
 
       UNREFERENCED_PARAMETER(str);
@@ -266,15 +266,12 @@ namespace user
    }
 
 
-   void elemental::_001GetSelText(string & str) const
+   void edit_text::_001SetSelText(const char * psz, ::action::context actioncontext)
    {
-
-      UNREFERENCED_PARAMETER(str);
 
    }
 
-
-   void elemental::_001SetText(const string & str,::action::context actioncontext)
+   void set_text::_001SetText(const string & str,::action::context actioncontext)
    {
 
       UNREFERENCED_PARAMETER(str);
@@ -283,17 +280,19 @@ namespace user
    }
 
 
-   strsize elemental::get_length() const
+   strsize get_text::_001GetTextLength() const
    {
 
       string str;
+      
       _001GetText(str);
+      
       return str.get_length();
 
    }
 
 
-   void elemental::get_string(char * psz,memory_size_t len) const
+   void get_text::_001GetText(char * psz, strsize len) const
    {
 
       string str;
@@ -303,34 +302,111 @@ namespace user
       strncpy(psz,str,len);
 
    }
+   
+   
+   void get_text::_001GetText(string & str, strsize iBeg, strsize iEnd) const
+   {
+      
+      // default implementation, probably inefficient
+      // _001GetText(string) returns big string
+      // or retrieving entire string, instead of portions, is slow
+      
+      string strText;
+      
+      _001GetText(strText);
+      
+      str = strText.Mid(iBeg, iEnd - iBeg);
 
-   void elemental::set_string(const string & str,::action::context actioncontext)
+   }
+
+
+   void set_text::_001SetText(const char * psz, strsize iLen, ::action::context actioncontext)
    {
 
-      _001SetText(str,actioncontext);
+      _001SetText(string(psz, iLen),actioncontext);
 
+   }
+
+   
+   void edit_text::_001GetSel(strsize & iBeg, strsize & iEnd) const
+   {
+      
+      UNREFERENCED_PARAMETER(iBeg);
+      UNREFERENCED_PARAMETER(iEnd);
+      
+   }
+   
+   
+   void edit_text::_001SetSel(strsize iBeg, strsize iEnd)
+   {
+      
+      UNREFERENCED_PARAMETER(iBeg);
+      UNREFERENCED_PARAMETER(iEnd);
+      
+   }
+   
+   
+   void edit_text::_001GetViewSel(strsize & iBeg, strsize & iEnd) const
+   {
+      
+      UNREFERENCED_PARAMETER(iBeg);
+      UNREFERENCED_PARAMETER(iEnd);
+      
+   }
+   
+   
+   void edit_text::_001SetSelEnd(strsize iEnd)
+   {
+      
+      UNREFERENCED_PARAMETER(iEnd);
+      
+   }
+   
+   
+   void edit_text::_001GetSelText(string & str) const
+   {
+      
+      // default implementation, maybe inefficient (if _001GetText is the default implementation)
+      
+      index iBeg, iEnd;
+      
+      _001GetSel(iBeg, iEnd);
+
+      _001GetText(str, iBeg, iEnd);
+
+   }
+   
+   
+   void edit_text::MacroBegin()
+   {
+      
+   }
+   
+   void edit_text::MacroEnd()
+   {
+      
    }
 
 
    // check interface
 
-   check::e_check elemental::_001GetCheck()
+   ::check::e_check check::_001GetCheck()
    {
 
-      return check::unchecked;
+      return ::check::unchecked;
 
    }
 
 
-   void elemental::_001SetCheck(bool bChecked,::action::context actioncontext)
+   void check::_001SetCheck(bool bChecked,::action::context actioncontext)
    {
 
-      _001SetCheck((check::e_check) (bChecked ? check::checked : check::unchecked),actioncontext);
+      _001SetCheck((::check::e_check) (bChecked ? ::check::checked : ::check::unchecked),actioncontext);
 
    }
 
 
-   void elemental::_001SetCheck(check::e_check echeck,::action::context actioncontext)
+   void check::_001SetCheck(::check::e_check echeck,::action::context actioncontext)
    {
 
       UNREFERENCED_PARAMETER(echeck);
@@ -339,36 +415,37 @@ namespace user
    }
 
 
-   void elemental::_001ToggleCheck(::action::context actioncontext)
+   void check::_001ToggleCheck(::action::context actioncontext)
    {
 
-      if(_001GetCheck() == check::checked)
+      if(_001GetCheck() == ::check::checked)
       {
 
-         _001SetCheck(check::unchecked,actioncontext);
+         _001SetCheck(::check::unchecked,actioncontext);
 
       }
-      else if(_001GetCheck() == check::unchecked)
+      else if(_001GetCheck() == ::check::unchecked)
       {
 
-         _001SetCheck(check::checked,actioncontext);
+         _001SetCheck(::check::checked,actioncontext);
 
       }
-      else if(_001GetCheck() == check::tristate)
+      else if(_001GetCheck() == ::check::tristate)
       {
 
-         _001SetCheck(check::unchecked,actioncontext);
+         _001SetCheck(::check::unchecked,actioncontext);
 
       }
       else
       {
 
-         _001SetCheck(check::unchecked,actioncontext);
+         _001SetCheck(::check::unchecked,actioncontext);
 
       }
 
    }
 
+   
    ::user::elemental * elemental::first_child_elemental()
    {
 

@@ -1,8 +1,5 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include "fiasco_finder.h"
-#ifdef BSD_STYLE_SOCKETS
-#include "openssl/err.h"
-#endif
 
 //#ifndef SMALLCODE
 //
@@ -57,8 +54,6 @@ CLASS_DECL_AXIS int_bool defer_axis_init()
    if(!__node_axis_pos_init())
       return false;
 
-   g_pfn_create_system = axis_create_aura_system;
-
    return true;
 
 }
@@ -93,52 +88,8 @@ bool axis_init()
 
    g_axisoninitthread = &axis_on_init_thread;
    g_axisontermthread = &axis_on_term_thread;
-   //if(!defer_axis_init())
-   // return false;
 
-   //::axis::static_start::init();
-
-   /*if(!__node_axis_pre_init())
-      return false;
-
-   ::axis::static_start::init();
-
-   __init_threading_count();
-
-   ::multithreading::init_multithreading();
-   */
-
-
-   /*
-   ::os_thread::s_pmutex = new mutex();
-
-   ::os_thread::s_pptra = new ref_array <  os_thread >();
-
-
-   if(!__node_axis_pos_init())
-      return false;*/
-
-//#ifndef WINDOWS
-
-   // todo (casey tips) : do real/explicit dynamic linking
-   //_throw(todo(get_app()));
-   //try
-   //{
-
-   //   FreeImage_Initialise(FALSE);
-
-   //}
-   //catch(...)
-   //{
-
-   //   ::simple_message_box(NULL,"Failure to initialize FreeImage (::core::init_core)","FreeImage_Initialise failure",MB_ICONEXCLAMATION);
-
-   //   return false;
-
-   //}
-
-//#endif
-
+   g_pfn_create_system = &axis_create_aura_system;
 
    return true;
 
@@ -198,23 +149,6 @@ void axis_on_init_thread()
 void axis_on_term_thread()
 {
 
-#ifdef BSD_STYLE_SOCKETS
-
-   if (thread_has_sockets())
-   {
-
-#if OPENSSL_API_COMPAT < 0x10100000L
-
-      ERR_free_strings();
-
-#endif
-//      CRYPTO_THREADID tid;
-      //    CRYPTO_THREADID_current(&tid);
-      //ERR_remove_thread_state(&tid);
-
-   }
-
-#endif
 
 }
 

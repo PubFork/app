@@ -136,7 +136,7 @@ namespace message
    }
 
 
-   e_prototype sender::GetMessagePrototype(UINT uiMessage, UINT uiCode)
+   e_prototype sender::GetMessagePrototype(UINT_PTR uiMessage, UINT uiCode)
    {
       switch (uiMessage)
       {

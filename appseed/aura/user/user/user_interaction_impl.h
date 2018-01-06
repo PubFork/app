@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 using window_sp = sp(::user::interaction_impl);
 
@@ -690,7 +690,7 @@ namespace user
 
       // for handling default processing
       virtual LRESULT Default() override;
-      virtual LRESULT DefWindowProc(UINT message,WPARAM wParam,lparam lParam) override;
+      virtual LRESULT DefWindowProc(UINT_PTR message,WPARAM wParam,lparam lParam) override;
 
       // for custom cleanup after WM_NCDESTROY
       virtual void PostNcDestroy() override;

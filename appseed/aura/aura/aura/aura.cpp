@@ -15,6 +15,13 @@ namespace user
 //CLASS_DECL_AURA aura_str_pool * s_paurastrpool = NULL;
 
 
+::aura::system * create_aura_system(app_core * pappcore)
+{
+
+   return g_pfn_create_system(pappcore);
+
+}
+
 
 BEGIN_EXTERN_C
 CLASS_DECL_AURA int g_bAura = 0;
@@ -136,15 +143,11 @@ CLASS_DECL_AURA int_bool defer_aura_init()
    if(!aura_init())
       return FALSE;
 
-   g_pfn_create_system = aura_create_aura_system;
-
    s_paurastrpool = new aura_str_pool();
 
-
    ::user::init_windowing();
+
    g_bAura = 1;
-
-
 
    return TRUE;
 
@@ -213,6 +216,8 @@ bool aura_init()
    set_extended_output_debug_string_w();
 
 #endif
+
+   g_pfn_create_system = &aura_create_aura_system;
 
    return true;
 
@@ -297,13 +302,6 @@ CLASS_DECL_AURA LPFN_CREATE_SYSTEM g_pfn_create_system;
 CLASS_DECL_AURA const char * g_pszCooperativeLevel;
 
 CLASS_DECL_AURA int g_iDerivedApplication = 0;
-
-::aura::system * create_aura_system(app_core * pappcore)
-{
-
-   return g_pfn_create_system(pappcore);
-
-}
 
 
 int __cdecl debug_report(int, char const *, int, char const *, char const *,...)

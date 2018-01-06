@@ -49,11 +49,11 @@ namespace base
 
       virtual bool initialize_native_window1() override;
 
-#ifdef APPLE_IOS
+// #ifdef APPLE_IOS
 
-      virtual void * initialize_native_window2(LPCRECT lpcrect) override;
+//       virtual void * initialize_native_window2(LPCRECT lpcrect) override;
 
-#endif
+// #endif
 
 
 #ifdef ANDROID

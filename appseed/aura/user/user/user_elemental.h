@@ -56,24 +56,7 @@ namespace user
 
          virtual void mouse_focus_OnLButtonUp(::message::message * pobj);
 
-         // text interface
 
-         virtual void _001GetText(string & str) const;
-         virtual void _001GetSelText(string & str) const;
-         virtual void _001SetText(const string & str,::action::context actioncontext);
-
-         // string_interface < char > interface
-         virtual strsize get_length() const;
-         virtual void get_string(char * psz,memory_size_t len) const;
-         virtual void set_string(const string & str,::action::context actioncontext);
-
-
-         // check interface
-
-         virtual check::e_check _001GetCheck();
-         virtual void _001SetCheck(bool b,::action::context actioncontext);   // 0, 1
-         virtual void _001SetCheck(check::e_check check,::action::context actioncontext);
-         virtual void _001ToggleCheck(::action::context actioncontext);
 
 
          virtual void _001OnTimer(::timer * ptimer);
@@ -83,6 +66,72 @@ namespace user
 
          virtual bool IsWindow() const;
 
+
+   };
+
+   
+   class CLASS_DECL_AURA check :
+      virtual public object
+   {
+   public:
+      
+      
+      virtual ::check::e_check _001GetCheck();
+      virtual void _001SetCheck(bool b,::action::context actioncontext);
+      virtual void _001SetCheck(::check::e_check check,::action::context actioncontext);
+      virtual void _001ToggleCheck(::action::context actioncontext);
+      
+      
+   };
+   
+   class CLASS_DECL_AURA get_text :
+      virtual public object
+   {
+   public:
+      
+      virtual void _001GetText(string & str) const;
+
+      virtual strsize _001GetTextLength() const;
+      virtual void _001GetText(char * psz, strsize len) const;
+      virtual void _001GetText(string & str, index iBeg, index iEnd) const;
+      
+   };
+
+   class CLASS_DECL_AURA set_text :
+      virtual public object
+   {
+   public:
+      
+      virtual void _001SetText(const string & str,::action::context actioncontext);
+      
+      virtual void _001SetText(const char * psz, strsize len, ::action::context actioncontext);
+      
+
+   };
+
+   
+   class CLASS_DECL_AURA edit_text :
+      virtual public get_text,
+      virtual public set_text
+   {
+   public:
+      
+      
+      virtual void _001GetSel(strsize & iBeg, strsize & iEnd) const;
+      virtual void _001SetSel(strsize iBeg, strsize iEnd);
+      virtual void _001SetSelEnd(strsize iSelEnd);
+
+      
+      virtual void _001GetSelText(string & str) const;
+      virtual void _001SetSelText(const char * psz, ::action::context actioncontext);
+
+      
+      virtual void _001GetViewSel(strsize &iSelStart, strsize &iSelEnd) const;
+      
+      
+      virtual void MacroBegin();
+      virtual void MacroEnd();
+      
 
    };
 

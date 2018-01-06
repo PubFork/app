@@ -1,4 +1,4 @@
-﻿#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 //include "aura/user/colorertake5/colorertake5.h"
 
@@ -687,19 +687,22 @@ namespace user
       {
 
          set_root(canew(::user::plain_text_tree(get_app())), true);
+         
          m_ptree->m_pfile = canew(::memory_file(get_app()));
+         
          m_ptree->m_editfile.SetFile(m_ptree->m_pfile);
-         m_ptree->m_iSelStart = 0;
+         
+         m_ptree->m_iSelBeg = 0;
+         
          m_ptree->m_iSelEnd = 0;
+         
          m_bGetTextNeedUpdate = true;
+         
          _001OnSetText(::action::source_system);
+         
          _001OnUpdate(::action::source_system);
 
       }
-
-
-      //m_pitem          = get_base_item();
-
 
       SetTimer(100, 100, NULL);
 
@@ -1153,38 +1156,39 @@ namespace user
    void plain_edit::_001GetSelText(string & str) const
    {
 
-      _001GetSelText(str, m_ptree->m_iSelStart, m_ptree->m_iSelEnd);
+      _001GetText(str, m_ptree->m_iSelBeg, m_ptree->m_iSelEnd);
 
    }
+   
 
-   void plain_edit::_001GetSelText(string & str, index iSelStart, index iSelEnd) const
+   void plain_edit::_001GetText(string & str, index iBegParam, index iEndParam) const
    {
 
       synch_lock sl(m_pmutex);
 
-      ::sort::sort_non_negative(iSelStart, iSelEnd);
+      ::sort::sort_non_negative(iBegParam, iEndParam);
 
-      file_position_t iProperEnd;
+      file_position_t iEnd;
 
-      file_position_t iStart;
+      file_position_t iBeg;
 
-      if (iSelEnd < 0)
+      if (iEndParam < 0)
       {
 
-         if (iSelStart < 0)
+         if (iBegParam < 0)
          {
 
-            iProperEnd = (file_position_t)m_ptree->m_editfile.get_length();
+            iEnd = (file_position_t)m_ptree->m_editfile.get_length();
 
-            iStart = 0;
+            iBeg = 0;
 
          }
          else
          {
 
-            iStart = iSelStart;
+            iBeg = iBegParam;
 
-            iProperEnd = (file_position_t)m_ptree->m_editfile.get_length();
+            iEnd = (file_position_t)m_ptree->m_editfile.get_length();
 
          }
 
@@ -1192,41 +1196,37 @@ namespace user
       else
       {
 
-         if (iSelStart < 0)
+         if (iBegParam < 0)
          {
 
-            iProperEnd = iSelEnd;
+            iEnd = iEndParam;
 
-            iStart = 0;
+            iBeg = 0;
 
          }
          else
          {
 
-            iProperEnd = iSelEnd;
+            iEnd = iEndParam;
 
-            iStart = iSelStart;
+            iBeg = iBegParam;
 
          }
 
       }
 
-      if (iProperEnd < iStart)
+      if (iEnd < iBeg)
       {
 
-         file_position_t iSwap = iProperEnd;
-
-         iProperEnd = iStart;
-
-         iStart = iSwap;
+         ::_std::swap(iEnd, iBeg);
 
       }
 
-      file_position_t iSize = iProperEnd - iStart;
+      file_position_t iSize = iEnd - iBeg;
 
       char * psz = str.GetBufferSetLength((strsize)(iSize + 1));
 
-      m_ptree->m_editfile.seek((file_offset_t)iStart, ::file::seek_begin);
+      m_ptree->m_editfile.seek((file_offset_t)iBeg, ::file::seek_begin);
 
       m_ptree->m_editfile.read(psz, (memory_size_t)(iSize));
 
@@ -1234,9 +1234,8 @@ namespace user
 
       str.ReleaseBuffer();
 
-      //str.replace("\n","\r\n");
-
    }
+   
 
    void plain_edit::_001SetSelText(const char * psz, ::action::context actioncontext)
    {
@@ -1245,11 +1244,11 @@ namespace user
 
          synch_lock sl(m_pmutex);
 
-         m_ptree->m_editfile.seek(m_ptree->m_iSelStart, ::file::seek_begin);
+         m_ptree->m_editfile.seek(m_ptree->m_iSelBeg, ::file::seek_begin);
 
-         m_ptree->m_editfile.Delete((memory_size_t)(m_ptree->m_iSelEnd - m_ptree->m_iSelStart));
+         m_ptree->m_editfile.Delete((memory_size_t)(m_ptree->m_iSelEnd - m_ptree->m_iSelBeg));
 
-         m_ptree->m_editfile.seek(m_ptree->m_iSelStart, ::file::seek_begin);
+         m_ptree->m_editfile.seek(m_ptree->m_iSelBeg, ::file::seek_begin);
 
          m_ptree->m_editfile.Insert(psz, strlen(psz));
 
@@ -1260,6 +1259,7 @@ namespace user
       RedrawWindow();
 
    }
+   
 
    void plain_edit::_001SetSelEnd(strsize iSelEnd)
    {
@@ -1269,7 +1269,6 @@ namespace user
       m_ptree->m_iSelEnd = iSelEnd;
 
       m_iColumn = SelToColumnX(m_ptree->m_iSelEnd, m_iColumnX);
-
 
       int x = 0;
 
@@ -1308,21 +1307,20 @@ namespace user
 
    }
 
-   void plain_edit::_001SetSel(strsize iSelStart, strsize iSelEnd)
+   void plain_edit::_001SetSel(strsize iBeg, strsize iEnd)
    {
 
       synch_lock sl(m_pmutex);
 
-      m_ptree->m_iSelStart = iSelStart;
+      m_ptree->m_iSelBeg = iBeg;
 
-      m_ptree->m_iSelEnd = iSelEnd;
+      m_ptree->m_iSelEnd = iEnd;
 
-      _001EnsureVisibleChar(iSelEnd);
+      _001EnsureVisibleChar(iEnd);
 
 #ifndef      SEARCH_SCROLLING_PROFILING
 
       RedrawWindow();
-
 
 #endif
 
@@ -1418,9 +1416,9 @@ namespace user
 
          SetCapture();
 
-         m_ptree->m_iSelStart = char_hit_test(pt.x, pt.y);
+         m_ptree->m_iSelBeg = char_hit_test(pt.x, pt.y);
 
-         m_ptree->m_iSelEnd = m_ptree->m_iSelStart;
+         m_ptree->m_iSelEnd = m_ptree->m_iSelBeg;
 
          m_iColumn = SelToColumnX(m_ptree->m_iSelEnd, m_iColumnX);
 
@@ -1487,9 +1485,9 @@ namespace user
 
       //   synch_lock sl(m_pmutex);
 
-      //   m_ptree->m_iSelStart = char_hit_test(pt.x, pt.y);
+      //   m_ptree->m_iSelBeg = char_hit_test(pt.x, pt.y);
 
-      //   m_ptree->m_iSelEnd = m_ptree->m_iSelStart;
+      //   m_ptree->m_iSelEnd = m_ptree->m_iSelBeg;
 
       //}
 
@@ -2852,7 +2850,7 @@ end:
    }
 
 
-   void plain_edit::_001GetViewSel(strsize &iSelStart, strsize &iSelEnd)
+   void plain_edit::_001GetViewSel(strsize & iSelBeg, strsize & iSelEnd) const
    {
 
       synch_lock sl(m_pmutex);
@@ -2860,7 +2858,7 @@ end:
       if (m_ptree == NULL)
       {
 
-         iSelStart = 0;
+         iSelBeg = 0;
 
          iSelEnd = 0;
 
@@ -2868,20 +2866,20 @@ end:
       else
       {
 
-         iSelStart = m_ptree->m_iSelStart - m_iViewOffset;
+         iSelBeg = m_ptree->m_iSelBeg - m_iViewOffset;
 
          iSelEnd = m_ptree->m_iSelEnd - m_iViewOffset;
 
-         if (iSelStart < 0)
+         if (iSelBeg < 0)
          {
 
-            iSelStart = 0;
+            iSelBeg = 0;
 
          }
-         else if (::comparison::gt(iSelStart, m_ptree->m_editfile.get_length()))
+         else if (::comparison::gt(iSelBeg, m_ptree->m_editfile.get_length()))
          {
 
-            iSelStart = (strsize) (m_ptree->m_editfile.get_length());
+            iSelBeg = (strsize) (m_ptree->m_editfile.get_length());
 
          }
 
@@ -2903,14 +2901,14 @@ end:
    }
 
 
-   void plain_edit::_001GetSel(strsize & iSelStart, strsize  & iSelEnd)
+   void plain_edit::_001GetSel(strsize & iBeg, strsize & iEnd) const
    {
+      
       synch_lock sl(m_pmutex);
 
+      iBeg = m_ptree->m_iSelBeg;
 
-      iSelStart = m_ptree->m_iSelStart;
-
-      iSelEnd = m_ptree->m_iSelEnd;
+      iEnd = m_ptree->m_iSelEnd;
 
    }
 
@@ -3346,76 +3344,115 @@ finished_update:
 
       if (!m_bReadOnly)
       {
-         strsize i1 = m_ptree->m_iSelStart;
+         
+         strsize i1 = m_ptree->m_iSelBeg;
+         
          strsize i2 = m_ptree->m_iSelEnd;
+         
          if (i1 != i2)
          {
+            
             plain_text_set_sel_command * psetsel = canew(plain_text_set_sel_command);
-            psetsel->m_iPreviousSelStart = m_ptree->m_iSelStart;
+            
+            psetsel->m_iPreviousSelBeg = m_ptree->m_iSelBeg;
+            
             psetsel->m_iPreviousSelEnd = m_ptree->m_iSelEnd;
+            
             ::sort::sort_non_negative(i1, i2);
 
             string strSel;
-            _001GetSelText(strSel, i1, i2);
+            
+            _001GetText(strSel, i1, i2);
+            
             bFullUpdate = strSel.find('\n') >= 0 || strSel.find('\r') >= 0;
+            
             if (!bFullUpdate)
             {
+               
                iLineUpdate = SelToLine(i1);
+               
             }
 
-
             m_ptree->m_editfile.seek(i1, ::file::seek_begin);
+            
             m_ptree->m_editfile.Delete((memory_size_t)(i2 - i1));
 
             m_pinsert = NULL;
 
             m_ptree->m_iSelEnd = i1;
-            m_ptree->m_iSelStart = m_ptree->m_iSelEnd;
-            psetsel->m_iSelStart = m_ptree->m_iSelStart;
+            
+            m_ptree->m_iSelBeg = m_ptree->m_iSelEnd;
+            
+            psetsel->m_iSelBeg = m_ptree->m_iSelBeg;
+            
             psetsel->m_iSelEnd = m_ptree->m_iSelEnd;
+            
             MacroBegin();
+            
             MacroRecord(psetsel);
+            
             MacroRecord(canew(plain_text_file_command()));
+            
             MacroEnd();
-            //bUpdate = true;
+            
          }
          else if (natural(m_ptree->m_iSelEnd) < m_ptree->m_editfile.get_length())
          {
+            
             char buf[512];
+            
             memset(buf, 0, sizeof(buf));
+            
             m_ptree->m_editfile.seek(m_ptree->m_iSelEnd, ::file::seek_begin);
+            
             m_ptree->m_editfile.read(buf, sizeof(buf));
+            
             const char * psz = ::str::utf8_inc(buf);
+            
             strsize iMultiByteUtf8DeleteCount = psz - buf;
 
             index i1 = m_ptree->m_iSelEnd;
+            
             index i2 = i1 + iMultiByteUtf8DeleteCount;
+            
             string strSel;
-            _001GetSelText(strSel, i1, i2);
+            
+            _001GetText(strSel, i1, i2);
+            
             bFullUpdate = strSel.find('\n') >= 0 || strSel.find('\r') >= 0;
+            
             if (!bFullUpdate)
             {
+               
                iLineUpdate = SelToLine(i1);
+               
             }
 
             m_ptree->m_editfile.seek(m_ptree->m_iSelEnd, ::file::seek_begin);
+            
             m_ptree->m_editfile.Delete((memory_size_t)(iMultiByteUtf8DeleteCount));
 
             m_pinsert = NULL;
 
             IndexRegisterDelete(m_ptree->m_iSelEnd, iMultiByteUtf8DeleteCount);
-            m_ptree->m_iSelStart = m_ptree->m_iSelEnd;
+            
+            m_ptree->m_iSelBeg = m_ptree->m_iSelEnd;
+            
             MacroBegin();
+            
             MacroRecord(canew(plain_text_file_command()));
+            
             MacroEnd();
-            //  bUpdate = true;
+            
          }
+         
       }
 
       internal_edit_update(bFullUpdate, iLineUpdate);
 
    }
 
+   
    void plain_edit::_001DeleteSel()
    {
 
@@ -3436,7 +3473,7 @@ finished_update:
    bool plain_edit::_001DeleteSel(bool & bFullUpdate, index & iLineUpdate)
    {
 
-      strsize i1 = m_ptree->m_iSelStart;
+      strsize i1 = m_ptree->m_iSelBeg;
 
       strsize i2 = m_ptree->m_iSelEnd;
 
@@ -3465,13 +3502,13 @@ finished_update:
 
       plain_text_set_sel_command * psetsel = canew(plain_text_set_sel_command);
 
-      psetsel->m_iPreviousSelStart = m_ptree->m_iSelStart;
+      psetsel->m_iPreviousSelBeg = m_ptree->m_iSelBeg;
 
       psetsel->m_iPreviousSelEnd = m_ptree->m_iSelEnd;
 
       string strSel;
 
-      _001GetSelText(strSel, i1, i2);
+      _001GetText(strSel, i1, i2);
 
       bFullUpdate = strSel.find('\n') >= 0 || strSel.find('\r') >= 0;
 
@@ -3492,9 +3529,9 @@ finished_update:
 
       m_ptree->m_iSelEnd = i1;
 
-      m_ptree->m_iSelStart = m_ptree->m_iSelEnd;
+      m_ptree->m_iSelBeg = m_ptree->m_iSelEnd;
 
-      psetsel->m_iSelStart = m_ptree->m_iSelStart;
+      psetsel->m_iSelBeg = m_ptree->m_iSelBeg;
 
       psetsel->m_iSelEnd = m_ptree->m_iSelEnd;
 
@@ -3531,7 +3568,7 @@ finished_update:
    bool plain_edit::_001ReplaceSel(const char * pszText, bool & bFullUpdate, index & iLineUpdate)
    {
 
-      strsize i1 = m_ptree->m_iSelStart;
+      strsize i1 = m_ptree->m_iSelBeg;
 
       strsize i2 = m_ptree->m_iSelEnd;
 
@@ -3560,13 +3597,13 @@ finished_update:
 
       plain_text_set_sel_command * psetsel = canew(plain_text_set_sel_command);
 
-      psetsel->m_iPreviousSelStart = m_ptree->m_iSelStart;
+      psetsel->m_iPreviousSelBeg = m_ptree->m_iSelBeg;
 
       psetsel->m_iPreviousSelEnd = m_ptree->m_iSelEnd;
 
       string strSel;
 
-      _001GetSelText(strSel, i1, i2);
+      _001GetText(strSel, i1, i2);
 
       bFullUpdate = strSel.find('\n') >= 0 || strSel.find('\r') >= 0;
 
@@ -3598,9 +3635,9 @@ finished_update:
 
       m_ptree->m_iSelEnd = i1;
 
-      m_ptree->m_iSelStart = m_ptree->m_iSelEnd;
+      m_ptree->m_iSelBeg = m_ptree->m_iSelEnd;
 
-      psetsel->m_iSelStart = m_ptree->m_iSelStart;
+      psetsel->m_iSelBeg = m_ptree->m_iSelBeg;
 
       psetsel->m_iSelEnd = m_ptree->m_iSelEnd;
 
@@ -3720,10 +3757,14 @@ finished_update:
                }
 
                m_ptree->m_iSelEnd = LineXToSel(iLine, m_iColumnX);
+               
                if (!bShift)
                {
-                  m_ptree->m_iSelStart = m_ptree->m_iSelEnd;
+                  
+                  m_ptree->m_iSelBeg = m_ptree->m_iSelEnd;
+                  
                }
+               
                _001EnsureVisibleLine(iLine);
 
             }
@@ -3753,9 +3794,13 @@ finished_update:
 
                if (!bShift)
                {
-                  m_ptree->m_iSelStart = m_ptree->m_iSelEnd;
+                  
+                  m_ptree->m_iSelBeg = m_ptree->m_iSelEnd;
+                  
                }
+               
                _001EnsureVisibleLine(iLine);
+               
             }
             else if (pkey->m_ekey == ::user::key_back)
             {
@@ -3767,7 +3812,7 @@ finished_update:
                   if (!m_bReadOnly)
                   {
 
-                     strsize i1 = m_ptree->m_iSelStart;
+                     strsize i1 = m_ptree->m_iSelBeg;
 
                      strsize i2 = m_ptree->m_iSelEnd;
 
@@ -3779,11 +3824,17 @@ finished_update:
                      }
                      else if (m_ptree->m_iSelEnd >= 0 && m_ptree->m_editfile.get_length() > 0)
                      {
+                        
                         plain_text_set_sel_command * psetsel = canew(plain_text_set_sel_command);
-                        psetsel->m_iPreviousSelStart = m_ptree->m_iSelStart;
+                        
+                        psetsel->m_iPreviousSelBeg = m_ptree->m_iSelBeg;
+                        
                         psetsel->m_iPreviousSelEnd = m_ptree->m_iSelEnd;
+                        
                         char buf[512];
+                        
                         memset(buf, 0, sizeof(buf));
+                        
                         strsize iProperBegin = MAX(0, m_ptree->m_iSelEnd - 256);
                         strsize iCur = m_ptree->m_iSelEnd - iProperBegin;
                         m_ptree->m_editfile.seek(iProperBegin, ::file::seek_begin);
@@ -3810,7 +3861,7 @@ finished_update:
                         index i1 = m_ptree->m_iSelEnd;
                         index i2 = i1 + iMultiByteUtf8DeleteCount;
                         string strSel;
-                        _001GetSelText(strSel, i1, i2);
+                        _001GetText(strSel, i1, i2);
                         bFullUpdate = strSel.find('\n') >= 0 || strSel.find('\r') >= 0;
                         if (!bFullUpdate)
                         {
@@ -3824,8 +3875,8 @@ finished_update:
                         m_pinsert = NULL;
 
                         IndexRegisterDelete(m_ptree->m_iSelEnd, iMultiByteUtf8DeleteCount);
-                        m_ptree->m_iSelStart = m_ptree->m_iSelEnd;
-                        psetsel->m_iSelStart = m_ptree->m_iSelStart;
+                        m_ptree->m_iSelBeg = m_ptree->m_iSelEnd;
+                        psetsel->m_iSelBeg = m_ptree->m_iSelBeg;
                         psetsel->m_iSelEnd = m_ptree->m_iSelEnd;
                         MacroBegin();
                         MacroRecord(psetsel);
@@ -3867,7 +3918,7 @@ finished_update:
                m_ptree->m_iSelEnd = LineXToSel(iLine, m_iColumnX);
                if (!bShift)
                {
-                  m_ptree->m_iSelStart = m_ptree->m_iSelEnd;
+                  m_ptree->m_iSelBeg = m_ptree->m_iSelEnd;
                }
                _001EnsureVisibleLine(iLine);
 
@@ -3894,7 +3945,7 @@ finished_update:
 
                if (!bShift)
                {
-                  m_ptree->m_iSelStart = m_ptree->m_iSelEnd;
+                  m_ptree->m_iSelBeg = m_ptree->m_iSelEnd;
                }
                _001EnsureVisibleLine(iLine);
             }
@@ -3903,13 +3954,13 @@ finished_update:
 
                on_reset_focus_start_tick();
 
-               if (!bShift && m_ptree->m_iSelStart > m_ptree->m_iSelEnd)
+               if (!bShift && m_ptree->m_iSelBeg > m_ptree->m_iSelEnd)
                {
-                  m_ptree->m_iSelEnd = m_ptree->m_iSelStart;
+                  m_ptree->m_iSelEnd = m_ptree->m_iSelBeg;
                }
-               else if (!bShift && m_ptree->m_iSelEnd > m_ptree->m_iSelStart)
+               else if (!bShift && m_ptree->m_iSelEnd > m_ptree->m_iSelBeg)
                {
-                  m_ptree->m_iSelStart = m_ptree->m_iSelEnd;
+                  m_ptree->m_iSelBeg = m_ptree->m_iSelEnd;
                }
                else if (natural(m_ptree->m_iSelEnd) < m_ptree->m_editfile.get_length())
                {
@@ -3929,7 +3980,7 @@ finished_update:
                   _001SetSelEnd(m_ptree->m_iSelEnd);
                   if (!bShift)
                   {
-                     m_ptree->m_iSelStart = m_ptree->m_iSelEnd;
+                     m_ptree->m_iSelBeg = m_ptree->m_iSelEnd;
                   }
                }
             }
@@ -3938,13 +3989,13 @@ finished_update:
 
                on_reset_focus_start_tick();
 
-               if (!bShift && m_ptree->m_iSelStart < m_ptree->m_iSelEnd)
+               if (!bShift && m_ptree->m_iSelBeg < m_ptree->m_iSelEnd)
                {
-                  m_ptree->m_iSelEnd = m_ptree->m_iSelStart;
+                  m_ptree->m_iSelEnd = m_ptree->m_iSelBeg;
                }
-               else if (!bShift && m_ptree->m_iSelEnd < m_ptree->m_iSelStart)
+               else if (!bShift && m_ptree->m_iSelEnd < m_ptree->m_iSelBeg)
                {
-                  m_ptree->m_iSelStart = m_ptree->m_iSelEnd;
+                  m_ptree->m_iSelBeg = m_ptree->m_iSelEnd;
                }
                else if (m_ptree->m_iSelEnd > 0)
                {
@@ -3973,7 +4024,7 @@ finished_update:
                   _001SetSelEnd(m_ptree->m_iSelEnd);
                   if (!bShift)
                   {
-                     m_ptree->m_iSelStart = m_ptree->m_iSelEnd;
+                     m_ptree->m_iSelBeg = m_ptree->m_iSelEnd;
                   }
                }
             }
@@ -3997,7 +4048,7 @@ finished_update:
                }
                if (!bShift)
                {
-                  m_ptree->m_iSelStart = m_ptree->m_iSelEnd;
+                  m_ptree->m_iSelBeg = m_ptree->m_iSelEnd;
                }
             }
             else if (pkey->m_ekey == ::user::key_end)
@@ -4024,7 +4075,7 @@ finished_update:
                }
                if (!bShift)
                {
-                  m_ptree->m_iSelStart = m_ptree->m_iSelEnd;
+                  m_ptree->m_iSelBeg = m_ptree->m_iSelEnd;
                }
             }
             else if (pkey->m_ekey == ::user::key_escape)
@@ -4142,7 +4193,7 @@ finished_update:
 
          if (!m_bReadOnly)
          {
-            strsize i1 = m_ptree->m_iSelStart;
+            strsize i1 = m_ptree->m_iSelBeg;
             strsize i2 = m_ptree->m_iSelEnd;
             if (i1 != i2)
             {
@@ -4153,7 +4204,7 @@ finished_update:
                m_pinsert = NULL;
 
                m_ptree->m_iSelEnd = i1;
-               m_ptree->m_iSelStart = m_ptree->m_iSelEnd;
+               m_ptree->m_iSelBeg = m_ptree->m_iSelEnd;
             }
             else if (natural(m_ptree->m_iSelEnd) < m_ptree->m_editfile.get_length())
             {
@@ -4171,7 +4222,7 @@ finished_update:
                m_pinsert = NULL;
 
                IndexRegisterDelete(m_ptree->m_iSelEnd, iMultiByteUtf8DeleteCount);
-               m_ptree->m_iSelStart = m_ptree->m_iSelEnd;
+               m_ptree->m_iSelBeg = m_ptree->m_iSelEnd;
             }
          }
       }
@@ -4311,10 +4362,10 @@ finished_update:
 
          auto iLen = _001GetTextLength();
 
-         if (m_ptree->m_iSelStart > iLen)
-            m_ptree->m_iSelStart = (strsize) (iLen);
-         else if (m_ptree->m_iSelStart < 0)
-            m_ptree->m_iSelStart = 0;
+         if (m_ptree->m_iSelBeg > iLen)
+            m_ptree->m_iSelBeg = (strsize) (iLen);
+         else if (m_ptree->m_iSelBeg < 0)
+            m_ptree->m_iSelBeg = 0;
 
          if (m_ptree->m_iSelEnd > iLen)
             m_ptree->m_iSelEnd = (strsize) (iLen);
@@ -4380,10 +4431,10 @@ finished_update:
 
          auto iLen = _001GetTextLength();
 
-         if (m_ptree->m_iSelStart > iLen)
-            m_ptree->m_iSelStart = (strsize) (iLen);
-         else if (m_ptree->m_iSelStart < 0)
-            m_ptree->m_iSelStart = 0;
+         if (m_ptree->m_iSelBeg > iLen)
+            m_ptree->m_iSelBeg = (strsize) (iLen);
+         else if (m_ptree->m_iSelBeg < 0)
+            m_ptree->m_iSelBeg = 0;
 
          if (m_ptree->m_iSelEnd > iLen)
             m_ptree->m_iSelEnd = (strsize) (iLen);
@@ -5100,7 +5151,7 @@ finished_update:
 
       index iLineUpdate = -1;
 
-      strsize i1 = m_ptree->m_iSelStart;
+      strsize i1 = m_ptree->m_iSelBeg;
       strsize i2 = m_ptree->m_iSelEnd;
 
 
@@ -5122,15 +5173,15 @@ finished_update:
 
          }
          m_ptree->m_iSelEnd += strText.get_length();
-         m_ptree->m_iSelStart = m_ptree->m_iSelEnd;
+         m_ptree->m_iSelBeg = m_ptree->m_iSelEnd;
          m_psetsel->m_iSelEnd = m_ptree->m_iSelEnd;
-         m_psetsel->m_iSelStart = m_ptree->m_iSelEnd;
+         m_psetsel->m_iSelBeg = m_ptree->m_iSelEnd;
 
       }
       else
       {
          plain_text_set_sel_command * psetsel = canew(plain_text_set_sel_command);
-         psetsel->m_iPreviousSelStart = m_ptree->m_iSelStart;
+         psetsel->m_iPreviousSelBeg = m_ptree->m_iSelBeg;
          psetsel->m_iPreviousSelEnd = m_ptree->m_iSelEnd;
 
          ::sort::sort_non_negative(i1, i2);
@@ -5166,12 +5217,12 @@ finished_update:
          m_ptree->m_iSelEnd = i1;
          m_ptree->m_editfile.seek(m_ptree->m_iSelEnd, ::file::seek_begin);
          m_ptree->m_iSelEnd += strText.get_length();
-         m_ptree->m_iSelStart = m_ptree->m_iSelEnd;
-         //m_ptree->m_editfile.seek(m_ptree->m_iSelStart, ::file::seek_begin);
+         m_ptree->m_iSelBeg = m_ptree->m_iSelEnd;
+         //m_ptree->m_editfile.seek(m_ptree->m_iSelBeg, ::file::seek_begin);
          m_pinsert = m_ptree->m_editfile.Insert(strText, strText.get_length());
          IndexRegisterInsert(m_ptree->m_iSelEnd, strText);
          m_ptree->m_editfile.MacroEnd();
-         psetsel->m_iSelStart = m_ptree->m_iSelStart;
+         psetsel->m_iSelBeg = m_ptree->m_iSelBeg;
          psetsel->m_iSelEnd = m_ptree->m_iSelEnd;
          m_psetsel = psetsel;
          MacroBegin();

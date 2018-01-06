@@ -82,8 +82,18 @@ END_EXTERN_C
 #endif
 
 
+#define APP_PRELUDE_LEVEL(prefix, level) \
+extern "C" \
+::aura::application * prefix##_get_new_app(::aura::application * papp); \
+aura_prelude auraprelude(&prefix##_get_new_app, level);
 
 
+#define LIBRARY_PRELUDE_LEVEL(prefix, level) \
+extern "C" \
+::aura::library * prefix##_get_new_library(::aura::application * papp); \
+aura_prelude auraprelude(&prefix##_get_new_library, level);
 
+#define APP_PRELUDE(prefix) APP_PRELUDE_LEVEL(prefix, "core")
 
+#define LIBRARY_PRELUDE(prefix) LIBRARY_PRELUDE_LEVEL(prefix, "core")
 

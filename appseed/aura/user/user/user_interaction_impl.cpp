@@ -1,4 +1,4 @@
-﻿#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 
@@ -768,11 +768,7 @@ namespace user
    }
 
 
-   /////////////////////////////////////////////////////////////////////////////
-   // Default interaction_impl implementation
-
-
-   LRESULT interaction_impl::DefWindowProc(UINT nMsg,WPARAM wParam,lparam lParam)
+   LRESULT interaction_impl::DefWindowProc(UINT_PTR nMsg,WPARAM wParam,lparam lParam)
    {
 
       return 0;
@@ -780,13 +776,15 @@ namespace user
    }
 
 
-
-
    void interaction_impl::pre_translate_message(::message::message * pobj)
    {
+
       UNREFERENCED_PARAMETER(pobj);
+      
       ::exception::throw_interface_only(get_app());
+      
    }
+   
 
    void interaction_impl::GetWindowText(string & rString)
    {

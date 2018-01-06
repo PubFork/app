@@ -1,8 +1,4 @@
 #include "framework.h"
-//#include "base/user/user.h"
-
-
-#if defined()
 
 
 namespace install
@@ -168,13 +164,6 @@ namespace install
 
 
 } // namespace install
-
-
-
-
-#endif
-
-
 
 
 

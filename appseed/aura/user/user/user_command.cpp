@@ -189,15 +189,15 @@ namespace user
    
    }
    
-   void ::user::command::_001SetCheck(bool bCheck,::action::context actioncontext)
+   void command::_001SetCheck(bool bCheck,::action::context actioncontext)
    {
    
-      _001SetCheck((check::e_check) (bCheck ? check::checked : check::unchecked),actioncontext);
+      _001SetCheck((::check::e_check) (bCheck ? ::check::checked : ::check::unchecked),actioncontext);
    
    }
    
    
-   void ::user::command::_001SetCheck(check::e_check nCheck,::action::context actioncontext)
+   void command::_001SetCheck(::check::e_check nCheck,::action::context actioncontext)
    {
    
       if (m_pmenu != NULL)
@@ -260,7 +260,7 @@ namespace user
 
       m_bRadioChanged   = false;
 
-      m_echeck          = check::undefined;
+      m_echeck          = ::check::undefined;
 
       ptarget->_001SendCommandProbe(this);
    

@@ -56,7 +56,7 @@ namespace user
 
          virtual bool _001OnDrawMainFrameBackground(::draw2d::graphics * pgraphics,::user::frame * pframe) override;
 
-         virtual void DrawCheck(check::e_check echeck, const RECT & rect, ::draw2d::graphics * pgraphics) override;
+      virtual void DrawCheck(::check::e_check echeck, const RECT & rect, ::draw2d::graphics * pgraphics) override;
 
          virtual bool select_layered_frame();
 

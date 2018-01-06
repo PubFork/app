@@ -8,8 +8,12 @@
 
 // CLASS_DECL_CORE string astr.strNote;
 
+::aura::system * core_create_aura_system(app_core * pappcore)
+{
 
-::aura::system * core_create_aura_system(app_core * pappcore);
+   return new ::core::system(NULL, pappcore);
+
+}
 
 namespace core
 {
@@ -189,10 +193,16 @@ void gen_CrtErrorCheck(int32_t i)
 int g_iCoreRefCount = 0;
 
 
-::aura::system * core_create_aura_system(app_core * pappcore)
+
+bool core_init()
 {
 
-   return new ::core::system(NULL, pappcore);
+   if(!::core::init_core())
+      return false;
+
+   g_pfn_create_system = &core_create_aura_system;
+
+   return true;
 
 }
 
@@ -206,12 +216,8 @@ bool defer_core_init()
    if(g_iCoreRefCount > 1)
       return true;
 
-
-
-   if(!::core::init_core())
+   if(!core_init())
       return false;
-
-   g_pfn_create_system = core_create_aura_system;
 
    return true;
 

@@ -58,10 +58,10 @@ namespace usernet // ca8 + cube
          string strProxy = doc.get_root()->attr("server");
          int32_t iProxyPort = doc.get_root()->attr("port");
          sp(::user::interaction) pui = m_pview->get_child_by_name("server");
-         sp(::user::elemental) ptext =  (pui.m_p);
+         sp(::user::edit_text) ptext = pui;
          ptext->_001SetText(strProxy, ::action::source::add(::action::source_data, ::action::source_load));
          pui = m_pview->get_child_by_name("port");
-         ptext =  (pui.m_p);
+         ptext = pui;
          ptext->_001SetText(::str::from(iProxyPort), ::action::source::add(::action::source_data, ::action::source_load));
       }
 
@@ -74,28 +74,46 @@ namespace usernet // ca8 + cube
       {
          if(pevent->m_puie->m_id == "submit")
          {
+            
             sp(::user::interaction) pui = m_pview->get_child_by_name("server");
-            sp(::user::elemental) ptext =  (pui.m_p);
-            //m_loginthread.m_puser = dynamic_cast < ::fontopus::user * > (System.allocate_user());
+            
+            sp(::user::edit_text) ptext = pui;
+            
             string strServer;
+            
             ptext->_001GetText(strServer);
+            
             if(strServer.get_length() == 0)
             {
+               
                Application.file().del(System.dir().appdata()/ "proxy.xml");
+               
             }
             else
             {
+               
                xml::document doc(get_app());
+               
                doc.get_root()->set_name("proxy");
+               
                doc.get_root()->add_attr("server", strServer);
+               
                pui = m_pview->get_child_by_name("port");
+               
                ptext =  (pui.m_p);
+               
                string strPort;
+               
                ptext->_001GetText(strPort);
+               
                doc.get_root()->add_attr("port", strPort);
+               
                Application.file().put_contents(System.dir().appdata()/"proxy.xml", doc.get_xml());
+               
             }
+            
          }
+         
       }
 
       return false;

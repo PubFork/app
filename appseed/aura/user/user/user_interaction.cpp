@@ -1,4 +1,4 @@
-﻿#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 
 ::user::interaction * get_system_window_interaction(::os_system_window * psystemwindow);
 
@@ -3685,14 +3685,14 @@ restart:
    }
 
 
-   void interaction::_001SetText(const string & str, ::action::context actioncontext)
-   {
-
-      UNREFERENCED_PARAMETER(actioncontext);
-
-      set_window_text(str);
-
-   }
+//   void interaction::_001SetText(const string & str, ::action::context actioncontext)
+//   {
+//
+//      UNREFERENCED_PARAMETER(actioncontext);
+//
+//      set_window_text(str);
+//
+//   }
 
 
    ::user::interaction * interaction::GetParentTopLevel() const
@@ -4338,7 +4338,7 @@ restart:
    }
 
 
-   LRESULT interaction::DefWindowProc(UINT uiMessage, WPARAM wparam, lparam lparam)
+   LRESULT interaction::DefWindowProc(UINT_PTR uiMessage, WPARAM wparam, lparam lparam)
    {
 
       if (m_pimpl == NULL)
@@ -6274,7 +6274,7 @@ restart:
    }
 
 
-   LRESULT interaction::call_message_handler(UINT message, WPARAM wparam, LPARAM lparam)
+   LRESULT interaction::call_message_handler(UINT_PTR message, WPARAM wparam, lparam lparam)
    {
 
       smart_pointer < ::message::base > spbase;
@@ -7708,7 +7708,7 @@ restart:
 
       */
 
-   sp(::message::base) interaction::get_message_base(UINT uiMessage, WPARAM wparam, LPARAM lparam)
+   sp(::message::base) interaction::get_message_base(UINT_PTR uiMessage, WPARAM wparam, lparam lparam)
    {
 
       sp(::message::base) pbase;

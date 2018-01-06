@@ -1,9 +1,6 @@
 #pragma once
 
 
-#include "aura/aura/os/apple/apple.h"
-
-
 #include "ios_multithreading.h"
 
 
@@ -113,7 +110,7 @@ public:
 
 #endif
 
-#include "ios_windowing.h"
 
+#include "ios_windowing.h"
 
 

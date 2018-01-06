@@ -6,7 +6,8 @@ namespace user
 
 
    class CLASS_DECL_BASE button :
-      virtual public control
+      virtual public control,
+      virtual public check
    {
    public:
 
@@ -49,7 +50,7 @@ namespace user
       //normal
 
       e_style                             m_estyle;
-      check::e_check                      m_echeck;
+      ::check::e_check                    m_echeck;
       rect                                m_rectText;
       index                               m_iClick;
 //      ::user::front_end_schema::button *  m_pschema;
@@ -87,8 +88,8 @@ namespace user
 
       virtual bool is_custom_draw() override;
 
-      virtual void _001SetCheck(check::e_check check, ::action::context actioncontext) override;
-      virtual check::e_check _001GetCheck() override;
+      virtual void _001SetCheck(::check::e_check check, ::action::context actioncontext) override;
+      virtual ::check::e_check _001GetCheck() override;
 
       virtual bool is_pressed();
 

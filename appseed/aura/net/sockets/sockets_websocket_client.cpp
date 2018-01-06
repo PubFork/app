@@ -1,5 +1,6 @@
 #include "framework.h" // from "aura/net/net_sockets.h"
 #include "aura/net/net_sockets.h"
+#include "aura/net/sockets/bsd/basic/sockets_ssl_context.h"
 #include "openssl/ssl.h"
 
 #define DEEP_DATA_DEBUG 0
@@ -662,7 +663,7 @@ namespace sockets
    {
 
 
-      int iResult = (int) SSL_get_verify_result(m_ssl);
+      int iResult = (int) SSL_get_verify_result(m_psslcontext->m_ssl);
 
       return iResult;
 

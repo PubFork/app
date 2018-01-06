@@ -125,7 +125,7 @@ namespace user
 
 
 
-   void style_composite::DrawCheck(check::e_check echeck, const RECT & rect, ::draw2d::graphics * pgraphics)
+   void style_composite::DrawCheck(::check::e_check echeck, const RECT & rect, ::draw2d::graphics * pgraphics)
    {
 
       return userstyle()->DrawCheck(echeck, rect, pgraphics);

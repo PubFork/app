@@ -1,4 +1,4 @@
-﻿#include "framework.h" // from "axis/user/user.h"
+#include "framework.h" // from "axis/user/user.h"
 #include "base/user/user.h"
 //#include "base/user/common_user.h"
 //#include "base/os/windows/windows_system_interaction_impl.h"
@@ -665,9 +665,16 @@ namespace base
 
             try
             {
-               pevent->m_puie->_001SetCheck(
+               sp(::user::check) pcheck = pevent->m_puie;
+               
+               if(pcheck.is_set())
+               {
+               
+                  pcheck->_001SetCheck(
                System.os().is_user_auto_start(get_executable_appid()),
                ::action::source_initialize);
+                  
+               }
             }
             catch (...)
             {
@@ -686,11 +693,18 @@ namespace base
 
             try
             {
+               
+               sp(::user::check) pcheck = pevent->m_puie;
+               
+               if(pcheck.is_set())
+               {
 
-               System.os().register_user_auto_start(
+                  System.os().register_user_auto_start(
                get_executable_appid(),
                get_executable_path(),
-               pevent->m_puie->_001GetCheck() == ::check::checked);
+               pcheck->_001GetCheck() == ::check::checked);
+                  
+               }
 
                return true;
 

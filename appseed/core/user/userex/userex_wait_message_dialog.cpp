@@ -143,7 +143,9 @@ namespace userex // ca8 + cube
 
          str.Format("%d", (int32_t)((m_dwDelay - dwTimeout) / 1000));
 
-         pui->_001SetText(str, ::action::source_sync);
+         sp(::user::edit_text) pedit = pui;
+         
+         pedit->_001SetText(str, ::action::source_sync);
 
       }
 

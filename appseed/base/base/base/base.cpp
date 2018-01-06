@@ -64,8 +64,6 @@ CLASS_DECL_BASE int_bool defer_base_init()
    if(!base_init())
       return FALSE;
 
-   g_pfn_create_system = &base_create_aura_system;
-
    return TRUE;
 
 }
@@ -93,21 +91,15 @@ bool base_init()
    if(!defer_axis_init())
       return false;
 
-
-
-
    ::base::static_start::init();
 
    if(!__node_base_pre_init())
       return false;
 
-
-   //::base::static_start::init();
-
    if(!__node_base_pos_init())
       return false;
 
-   g_pfn_create_system = base_create_aura_system;
+   g_pfn_create_system = &base_create_aura_system;
 
    return true;
 

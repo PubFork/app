@@ -1,5 +1,9 @@
-﻿#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
+
+#ifdef APPLEIOS
+oswindow GetWindow(oswindow window, int iParentHood);
+#endif
 
 
 #ifdef WINDOWSEX

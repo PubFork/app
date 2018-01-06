@@ -3,8 +3,6 @@
 
 void ns_app_run();
 
-void ns_shared_application(int argc, char *argv[]);
-
 void ns_app_terminate();
 //extern thread_pointer < os_thread > t_posthread;
 

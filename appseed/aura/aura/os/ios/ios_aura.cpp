@@ -116,6 +116,7 @@ CLASS_DECL_AURA bool __node_pre_term()
    
 }
 
+void ui_app_terminate();
 
 
 CLASS_DECL_AURA bool __node_pos_term()
@@ -130,6 +131,13 @@ CLASS_DECL_AURA bool __node_pos_term()
    
 }
 
+
+void ui_app_terminate()
+{
+
+// does nothing, remains in memory
+
+}
 
 unsigned int m_sleep(unsigned int seconds);
 

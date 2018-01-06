@@ -147,11 +147,15 @@ namespace userex // ca8 + cube
       {
          if(pevent->m_puie->m_id == "submit")
          {
+            
             sp(::user::interaction) pui = m_pview->get_child_by_name("server");
-            sp(::user::elemental) ptext =  (pui.m_p);
-            //m_loginthread.m_puser = dynamic_cast < ::fontopus::user * > (System.allocate_user());
+            
+            sp(::user::edit_text) ptext =  (pui.m_p);
+            
             string strServer;
+            
             ptext->_001GetText(strServer);
+            
             if(strServer.get_length() == 0)
             {
 
@@ -160,29 +164,52 @@ namespace userex // ca8 + cube
             }
             else
             {
+               
                xml::document doc(get_app());
+               
                doc.get_root()->set_name("proxy");
+               
                doc.get_root()->add_attr("server", strServer);
+               
                pui = m_pview->get_child_by_name("port");
-               ptext =  (pui.m_p);
+               
+               ptext = pui;
+               
                string strPort;
+               
                ptext->_001GetText(strPort);
+               
                doc.add_attr("port", strPort);
+               
                Application.file().put_contents(System.dir().appdata()/ "proxy.xml", doc.get_xml());
+               
             }
+            
          }
+         
       }
+      
       return false;
+      
    }
 
 
    void keyboard_layout::_001GetItemText(::user::mesh_item * pitem)
    {
+      
       if(pitem->m_iItem <  0 || pitem->m_iItem >= m_layoutida.get_size())
+      {
+         
          return_(pitem->m_bOk, false);
+         
+      }
+      
       pitem->m_strText = m_layoutida[pitem->m_iItem].m_strName;
+      
       pitem->m_bOk = true;
+      
    }
+   
 
    ::count keyboard_layout::_001GetItemCount()
    {

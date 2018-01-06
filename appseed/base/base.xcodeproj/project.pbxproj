@@ -90,17 +90,19 @@
 		07D968B71B4C63E5004A3D2A /* user.inl in Resources */ = {isa = PBXBuildFile; fileRef = 07D9678E1B4C63E3004A3D2A /* user.inl */; };
 		07EDC52A1B4F1BB300AF8928 /* ios_cross_gdi.mm in Sources */ = {isa = PBXBuildFile; fileRef = 07EDC5061B4F1BB300AF8928 /* ios_cross_gdi.mm */; };
 		07EDC52C1B4F1BB300AF8928 /* ios_user.mm in Sources */ = {isa = PBXBuildFile; fileRef = 07EDC50B1B4F1BB300AF8928 /* ios_user.mm */; };
-		07EDC59A1B4F234300AF8928 /* round_window.mm in Sources */ = {isa = PBXBuildFile; fileRef = 07EDC5791B4F234300AF8928 /* round_window.mm */; };
-		07EDC59B1B4F234300AF8928 /* RoundViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 07EDC57B1B4F234300AF8928 /* RoundViewController.mm */; };
-		07EDC59C1B4F234300AF8928 /* RoundWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = 07EDC57D1B4F234300AF8928 /* RoundWindow.mm */; };
-		07EDC59D1B4F234300AF8928 /* RoundWindowFrameView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 07EDC57F1B4F234300AF8928 /* RoundWindowFrameView.mm */; };
-		07EDC59F1B4F435600AF8928 /* ios_interaction_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 07EDC59E1B4F435600AF8928 /* ios_interaction_impl.h */; };
 		07EDC5A11B4F611B00AF8928 /* ios_window_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 07EDC5A01B4F611B00AF8928 /* ios_window_impl.h */; };
 		07EDC5B61B4FE64F00AF8928 /* main_mm.mm in Sources */ = {isa = PBXBuildFile; fileRef = 07EDC5B51B4FE64F00AF8928 /* main_mm.mm */; };
 		9A2BBCBE1FC1F98900E44B85 /* user_multiple_document_template.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A2BBCBA1FC1F98800E44B85 /* user_multiple_document_template.cpp */; };
 		9A2BBCBF1FC1F98900E44B85 /* user_multiple_document_template.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A2BBCBB1FC1F98800E44B85 /* user_multiple_document_template.h */; };
 		9A2BBCC01FC1F98900E44B85 /* user_single_document_template.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A2BBCBC1FC1F98900E44B85 /* user_single_document_template.cpp */; };
 		9A2BBCC11FC1F98900E44B85 /* user_single_document_template.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A2BBCBD1FC1F98900E44B85 /* user_single_document_template.h */; };
+		9A417136200032650056265A /* user_multiple_document_template.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A2BBCBA1FC1F98800E44B85 /* user_multiple_document_template.cpp */; };
+		9A4171392000326A0056265A /* user_single_document_template.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A2BBCBC1FC1F98900E44B85 /* user_single_document_template.cpp */; };
+		9A4173652000D0430056265A /* install_starter_start.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7BA71F5D6859009EC103 /* install_starter_start.cpp */; };
+		9A4173662000D0460056265A /* install_plugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7BA61F5D6859009EC103 /* install_plugin.cpp */; };
+		9A4173672000D04B0056265A /* install_plugin_bare_paint_veri_discreet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7BA51F5D6859009EC103 /* install_plugin_bare_paint_veri_discreet.cpp */; };
+		9A4173682000D04F0056265A /* install_plugin_bare_paint_full_screen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7BA41F5D6859009EC103 /* install_plugin_bare_paint_full_screen.cpp */; };
+		9A4173692000D0520056265A /* install_plugin_bare_paint_discreet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7BA31F5D6859009EC103 /* install_plugin_bare_paint_discreet.cpp */; };
 		9A7F2E911F41CCA8006F97CD /* user_button.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A7F2E8E1F41CCA8006F97CD /* user_button.h */; };
 		9A7F2E981F423654006F97CD /* user_schema_button.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A7F2E951F423654006F97CD /* user_schema_button.h */; };
 		9A7F2E9D1F4238E7006F97CD /* user_schema_menu.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A7F2E9A1F4238E7006F97CD /* user_schema_menu.h */; };
@@ -108,7 +110,6 @@
 		9A8384731F416F57005ED52C /* user_box.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A8384441F416F57005ED52C /* user_box.h */; };
 		9A8384741F416F57005ED52C /* user_const.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A8384451F416F57005ED52C /* user_const.h */; };
 		9A8C492F1F606906004A5BA4 /* libace.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A8C492E1F606906004A5BA4 /* libace.dylib */; };
-		9A920FF21F3C05E500CD9D94 /* ios_interaction_impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A8087991DE126F500F70A07 /* ios_interaction_impl.cpp */; };
 		9A98A6081771D67E000AE16E /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07BD556C16210BD4008E31F0 /* AppKit.framework */; };
 		9A98A6091771D67E000AE16E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A8897A514C24736006B4023 /* Foundation.framework */; };
 		9A98A60A1771D67E000AE16E /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE931714155F1599005F90F6 /* Carbon.framework */; };
@@ -121,7 +122,6 @@
 		9A9D7B651F5D66D9009EC103 /* ios_app.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7B511F5D6694009EC103 /* ios_app.cpp */; };
 		9A9D7B671F5D66D9009EC103 /* ios_graphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7B541F5D6694009EC103 /* ios_graphics.cpp */; };
 		9A9D7B691F5D66D9009EC103 /* ios_simple_app.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7B561F5D6694009EC103 /* ios_simple_app.cpp */; };
-		9A9D7B6A1F5D66D9009EC103 /* ios_windowing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7B571F5D6694009EC103 /* ios_windowing.cpp */; };
 		9A9D7B6B1F5D66D9009EC103 /* ios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7B581F5D6694009EC103 /* ios.cpp */; };
 		9A9D7B721F5D66FB009EC103 /* macos_simple_app.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7B6D1F5D66FB009EC103 /* macos_simple_app.cpp */; };
 		9A9D7B751F5D66FB009EC103 /* macos.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7B701F5D66FB009EC103 /* macos.cpp */; };
@@ -477,15 +477,6 @@
 		07EDC5641B4F234300AF8928 /* ios_os.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ios_os.h; sourceTree = "<group>"; };
 		07EDC5681B4F234300AF8928 /* ios_printer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ios_printer.h; sourceTree = "<group>"; };
 		07EDC5771B4F234300AF8928 /* os.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = os.h; sourceTree = "<group>"; };
-		07EDC5781B4F234300AF8928 /* round_window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = round_window.h; sourceTree = "<group>"; };
-		07EDC5791B4F234300AF8928 /* round_window.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = round_window.mm; sourceTree = "<group>"; };
-		07EDC57A1B4F234300AF8928 /* RoundViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoundViewController.h; sourceTree = "<group>"; };
-		07EDC57B1B4F234300AF8928 /* RoundViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RoundViewController.mm; sourceTree = "<group>"; };
-		07EDC57C1B4F234300AF8928 /* RoundWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoundWindow.h; sourceTree = "<group>"; };
-		07EDC57D1B4F234300AF8928 /* RoundWindow.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RoundWindow.mm; sourceTree = "<group>"; };
-		07EDC57E1B4F234300AF8928 /* RoundWindowFrameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoundWindowFrameView.h; sourceTree = "<group>"; };
-		07EDC57F1B4F234300AF8928 /* RoundWindowFrameView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RoundWindowFrameView.mm; sourceTree = "<group>"; };
-		07EDC59E1B4F435600AF8928 /* ios_interaction_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ios_interaction_impl.h; sourceTree = "<group>"; };
 		07EDC5A01B4F611B00AF8928 /* ios_window_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ios_window_impl.h; sourceTree = "<group>"; };
 		07EDC5B51B4FE64F00AF8928 /* main_mm.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = main_mm.mm; sourceTree = "<group>"; };
 		9A2BBCBA1FC1F98800E44B85 /* user_multiple_document_template.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = user_multiple_document_template.cpp; sourceTree = "<group>"; };
@@ -498,7 +489,6 @@
 		9A7F2E951F423654006F97CD /* user_schema_button.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_schema_button.h; sourceTree = "<group>"; };
 		9A7F2E9A1F4238E7006F97CD /* user_schema_menu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_schema_menu.h; sourceTree = "<group>"; };
 		9A7F2EAA1F4245DC006F97CD /* user.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user.h; sourceTree = "<group>"; };
-		9A8087991DE126F500F70A07 /* ios_interaction_impl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_interaction_impl.cpp; sourceTree = "<group>"; };
 		9A8384431F416F57005ED52C /* user_box.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = user_box.cpp; sourceTree = "<group>"; };
 		9A8384441F416F57005ED52C /* user_box.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_box.h; sourceTree = "<group>"; };
 		9A8384451F416F57005ED52C /* user_const.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_const.h; sourceTree = "<group>"; };
@@ -541,7 +531,6 @@
 		9A9D7B531F5D6694009EC103 /* ios_c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ios_c.h; sourceTree = "<group>"; };
 		9A9D7B541F5D6694009EC103 /* ios_graphics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_graphics.cpp; sourceTree = "<group>"; };
 		9A9D7B561F5D6694009EC103 /* ios_simple_app.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_simple_app.cpp; sourceTree = "<group>"; };
-		9A9D7B571F5D6694009EC103 /* ios_windowing.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_windowing.cpp; sourceTree = "<group>"; };
 		9A9D7B581F5D6694009EC103 /* ios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios.cpp; sourceTree = "<group>"; };
 		9A9D7B6D1F5D66FB009EC103 /* macos_simple_app.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = macos_simple_app.cpp; sourceTree = "<group>"; };
 		9A9D7B701F5D66FB009EC103 /* macos.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = macos.cpp; sourceTree = "<group>"; };
@@ -833,17 +822,17 @@
 		07D967031B4C63E3004A3D2A /* hotplugin */ = {
 			isa = PBXGroup;
 			children = (
-				9A9D7B8B1F5D682B009EC103 /* hotplugin_composer.cpp */,
-				9A9D7B8C1F5D682B009EC103 /* hotplugin_container_launcher.cpp */,
-				9A9D7B8D1F5D682B009EC103 /* hotplugin_host.cpp */,
-				9A9D7B8E1F5D682B009EC103 /* hotplugin_plugin.cpp */,
-				9A9D7B8F1F5D682B009EC103 /* hotplugin_windows.cpp */,
 				9A9D7B901F5D682B009EC103 /* hotplugin.cpp */,
 				07D967061B4C63E3004A3D2A /* hotplugin.h */,
+				9A9D7B8B1F5D682B009EC103 /* hotplugin_composer.cpp */,
 				07D967081B4C63E3004A3D2A /* hotplugin_composer.h */,
+				9A9D7B8C1F5D682B009EC103 /* hotplugin_container_launcher.cpp */,
 				07D9670A1B4C63E3004A3D2A /* hotplugin_container_launcher.h */,
+				9A9D7B8D1F5D682B009EC103 /* hotplugin_host.cpp */,
 				07D9670C1B4C63E3004A3D2A /* hotplugin_host.h */,
+				9A9D7B8E1F5D682B009EC103 /* hotplugin_plugin.cpp */,
 				07D9670E1B4C63E3004A3D2A /* hotplugin_plugin.h */,
+				9A9D7B8F1F5D682B009EC103 /* hotplugin_windows.cpp */,
 			);
 			path = hotplugin;
 			sourceTree = "<group>";
@@ -854,10 +843,10 @@
 				9A9D7BA31F5D6859009EC103 /* install_plugin_bare_paint_discreet.cpp */,
 				9A9D7BA41F5D6859009EC103 /* install_plugin_bare_paint_full_screen.cpp */,
 				9A9D7BA51F5D6859009EC103 /* install_plugin_bare_paint_veri_discreet.cpp */,
-				9A9D7BA61F5D6859009EC103 /* install_plugin.cpp */,
-				9A9D7BA71F5D6859009EC103 /* install_starter_start.cpp */,
 				07D967121B4C63E3004A3D2A /* install.h */,
+				9A9D7BA61F5D6859009EC103 /* install_plugin.cpp */,
 				07D967141B4C63E3004A3D2A /* install_plugin.h */,
+				9A9D7BA71F5D6859009EC103 /* install_starter_start.cpp */,
 				07D967191B4C63E3004A3D2A /* install_starter_start.h */,
 			);
 			path = install;
@@ -972,7 +961,6 @@
 				9A9D7B511F5D6694009EC103 /* ios_app.cpp */,
 				9A9D7B541F5D6694009EC103 /* ios_graphics.cpp */,
 				9A9D7B561F5D6694009EC103 /* ios_simple_app.cpp */,
-				9A9D7B571F5D6694009EC103 /* ios_windowing.cpp */,
 				9A9D7B581F5D6694009EC103 /* ios.cpp */,
 				07EDC5B51B4FE64F00AF8928 /* main_mm.mm */,
 				07EDC5061B4F1BB300AF8928 /* ios_cross_gdi.mm */,
@@ -997,13 +985,7 @@
 				9A9D7B2C1F5D65DF009EC103 /* ios_main.cpp */,
 				9A9D7B2F1F5D65DF009EC103 /* ios_util.cpp */,
 				9A920FEB1F3C05A300CD9D94 /* ios_factory_exchange.cpp */,
-				9A8087991DE126F500F70A07 /* ios_interaction_impl.cpp */,
-				07EDC5791B4F234300AF8928 /* round_window.mm */,
-				07EDC57B1B4F234300AF8928 /* RoundViewController.mm */,
-				07EDC57D1B4F234300AF8928 /* RoundWindow.mm */,
-				07EDC57F1B4F234300AF8928 /* RoundWindowFrameView.mm */,
 				07EDC5A01B4F611B00AF8928 /* ios_window_impl.h */,
-				07EDC59E1B4F435600AF8928 /* ios_interaction_impl.h */,
 				07EDC5451B4F234300AF8928 /* AppDelegate.h */,
 				07EDC5481B4F234300AF8928 /* ios.h */,
 				07EDC54A1B4F234300AF8928 /* ios_application.h */,
@@ -1015,10 +997,6 @@
 				07EDC5641B4F234300AF8928 /* ios_os.h */,
 				07EDC5681B4F234300AF8928 /* ios_printer.h */,
 				07EDC5771B4F234300AF8928 /* os.h */,
-				07EDC5781B4F234300AF8928 /* round_window.h */,
-				07EDC57A1B4F234300AF8928 /* RoundViewController.h */,
-				07EDC57C1B4F234300AF8928 /* RoundWindow.h */,
-				07EDC57E1B4F234300AF8928 /* RoundWindowFrameView.h */,
 			);
 			path = ios;
 			sourceTree = "<group>";
@@ -1148,7 +1126,6 @@
 				07D967FD1B4C63E3004A3D2A /* simple_ui_tap.h in Headers */,
 				07A36EE11B25D18F00E4F888 /* base_policy.h in Headers */,
 				07A36F6E1B25D18F00E4F888 /* macos_factory_exchange.h in Headers */,
-				07EDC59F1B4F435600AF8928 /* ios_interaction_impl.h in Headers */,
 				07A36ECD1B25D18F00E4F888 /* base.h in Headers */,
 				07D967E91B4C63E3004A3D2A /* simple_ui_interaction.h in Headers */,
 				07D9681D1B4C63E3004A3D2A /* user_control.h in Headers */,
@@ -1489,6 +1466,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9AFEDB3F1EB9B3E6008F0D19 /* install_canvas.cpp in Sources */,
+				9A4171392000326A0056265A /* user_single_document_template.cpp in Sources */,
+				9A4173662000D0460056265A /* install_plugin.cpp in Sources */,
 				9A9D7B9C1F5D6847009EC103 /* hotplugin_composer.cpp in Sources */,
 				9A9D7BC61F5D6895009EC103 /* simple_ui_message_box.cpp in Sources */,
 				9AEB69F91F81CC3D00F40B32 /* simpledb_file_system_size.cpp in Sources */,
@@ -1497,23 +1476,23 @@
 				9A9D7BC51F5D6895009EC103 /* simple_ui_label.cpp in Sources */,
 				9A9D7C0C1F5D6900009EC103 /* user_plain_edit.cpp in Sources */,
 				9AEB69F81F81CC3700F40B32 /* database_user_interaction.cpp in Sources */,
+				9A4173672000D04B0056265A /* install_plugin_bare_paint_veri_discreet.cpp in Sources */,
+				9A4173682000D04F0056265A /* install_plugin_bare_paint_full_screen.cpp in Sources */,
 				9A9D7B691F5D66D9009EC103 /* ios_simple_app.cpp in Sources */,
 				9A9D7C371F5D6DF2009EC103 /* base_application.cpp in Sources */,
+				9A417136200032650056265A /* user_multiple_document_template.cpp in Sources */,
 				9A9D7B991F5D683C009EC103 /* fontopus_login.cpp in Sources */,
-				9A9D7B6A1F5D66D9009EC103 /* ios_windowing.cpp in Sources */,
-				9A920FF21F3C05E500CD9D94 /* ios_interaction_impl.cpp in Sources */,
 				9A9D7C151F5D6900009EC103 /* user_user.cpp in Sources */,
 				9A9D7B9D1F5D6847009EC103 /* hotplugin_container_launcher.cpp in Sources */,
+				9A4173692000D0520056265A /* install_plugin_bare_paint_discreet.cpp in Sources */,
 				9A9D7C181F5D6900009EC103 /* user_wait_cursor.cpp in Sources */,
 				07EDC5B61B4FE64F00AF8928 /* main_mm.mm in Sources */,
 				9AEB69D81F81C77800F40B32 /* user_control_descriptor_set.cpp in Sources */,
 				9A9D7BFD1F5D6900009EC103 /* user_form_window.cpp in Sources */,
-				07EDC59A1B4F234300AF8928 /* round_window.mm in Sources */,
 				9A9D7BA01F5D6847009EC103 /* hotplugin_windows.cpp in Sources */,
 				9A9D7BFC1F5D6900009EC103 /* user_form_update_hint.cpp in Sources */,
 				9A9D7C0F1F5D6900009EC103 /* user_scroll_bar.cpp in Sources */,
 				9A9D7C161F5D6900009EC103 /* user_view_container.cpp in Sources */,
-				07EDC59C1B4F234300AF8928 /* RoundWindow.mm in Sources */,
 				9A9D7BA11F5D6847009EC103 /* hotplugin.cpp in Sources */,
 				9A9D7B9F1F5D6847009EC103 /* hotplugin_plugin.cpp in Sources */,
 				9A9D7C381F5D6DF2009EC103 /* base_session.cpp in Sources */,
@@ -1526,10 +1505,8 @@
 				9A9D7BC91F5D6895009EC103 /* simple_ui_tap.cpp in Sources */,
 				9A9D7BC81F5D6895009EC103 /* simple_ui_style.cpp in Sources */,
 				9AEB69D91F81C77800F40B32 /* user_control_descriptor.cpp in Sources */,
-				07EDC59D1B4F234300AF8928 /* RoundWindowFrameView.mm in Sources */,
 				9A9D7B451F5D6604009EC103 /* ios_factory_exchange.cpp in Sources */,
 				9A9D7B671F5D66D9009EC103 /* ios_graphics.cpp in Sources */,
-				07EDC59B1B4F234300AF8928 /* RoundViewController.mm in Sources */,
 				9A9D7B431F5D6604009EC103 /* ios_util.cpp in Sources */,
 				9A9D7BFA1F5D6900009EC103 /* user_document.cpp in Sources */,
 				9A9D7C361F5D6DF2009EC103 /* base.cpp in Sources */,
@@ -1545,6 +1522,7 @@
 				9A9D7C171F5D6900009EC103 /* user_view_creator.cpp in Sources */,
 				9A9D7BC71F5D6895009EC103 /* simple_ui_password.cpp in Sources */,
 				9A9D7B9B1F5D683C009EC103 /* fontopus.cpp in Sources */,
+				9A4173652000D0430056265A /* install_starter_start.cpp in Sources */,
 				9A9D7C0D1F5D6900009EC103 /* user_plain_text_data.cpp in Sources */,
 				9A9D7C3A1F5D6DF2009EC103 /* base_system.cpp in Sources */,
 				9A9D7BF81F5D6900009EC103 /* user_control_bar.cpp in Sources */,

@@ -3197,13 +3197,14 @@ success:
 
    }
 
-
+#ifndef APPLE_IOS
    void * system::initialize_native_window2(LPCRECT lpcrect)
    {
 
       return NULL;
 
    }
+#endif
 
 
    void system::on_os_text(e_os_text etext, string strText)

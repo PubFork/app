@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 #include "setup/debug.h"
@@ -17,7 +17,7 @@
 
 #endif
 
-#include "aura/aura/os/os.h"
+#include "aura/aura/os/os_aura.h"
 
 #include "aura/primitive/math/math_math.h"
 

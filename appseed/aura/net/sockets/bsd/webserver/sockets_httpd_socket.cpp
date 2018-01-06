@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 #include "framework.h" // #include "axis/net/sockets/bsd/sockets.h"
 #include "aura/net/net_sockets.h"
+#include "aura/net/sockets/bsd/basic/sockets_ssl_context.h"
 #include <openssl/ssl.h>
 
 
@@ -267,7 +268,7 @@ namespace sockets
 
          }
 
-         SSL_CTX_set_tmp_dh_callback(m_ssl_ctx, &tmp_dh_callback);
+         SSL_CTX_set_tmp_dh_callback(m_psslcontext->m_ssl_ctx, &tmp_dh_callback);
 
       }
 
@@ -279,24 +280,24 @@ namespace sockets
 
          EC_KEY *ecdh = EC_KEY_new_by_curve_name(NID_secp384r1);
 
-         SSL_CTX_set_tmp_ecdh(m_ssl_ctx, ecdh);
+         SSL_CTX_set_tmp_ecdh(m_psslcontext->m_ssl_ctx, ecdh);
 
       }
 
       if (m_strCipherList.find("DH") >= 0)
       {
 
-         SSL_CTX_set_options(m_ssl_ctx, SSL_CTX_get_options(m_ssl_ctx) | SSL_OP_SINGLE_DH_USE | SSL_OP_CIPHER_SERVER_PREFERENCE);
+         SSL_CTX_set_options(m_psslcontext->m_ssl_ctx, SSL_CTX_get_options(m_psslcontext->m_ssl_ctx) | SSL_OP_SINGLE_DH_USE | SSL_OP_CIPHER_SERVER_PREFERENCE);
 
       }
       else
       {
 
-         SSL_CTX_set_options(m_ssl_ctx, SSL_CTX_get_options(m_ssl_ctx) | SSL_OP_CIPHER_SERVER_PREFERENCE);
+         SSL_CTX_set_options(m_psslcontext->m_ssl_ctx, SSL_CTX_get_options(m_psslcontext->m_ssl_ctx) | SSL_OP_CIPHER_SERVER_PREFERENCE);
 
       }
 
-      SSL_CTX_set_cipher_list(m_ssl_ctx, strCipherList);
+      SSL_CTX_set_cipher_list(m_psslcontext->m_ssl_ctx, strCipherList);
 
    }
 

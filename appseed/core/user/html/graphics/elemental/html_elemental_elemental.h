@@ -7,7 +7,8 @@ namespace html
 
    class CLASS_DECL_CORE elemental : 
       virtual public ::user::elemental,
-      virtual public ::user::style
+      virtual public ::user::style,
+      virtual public ::user::set_text
    {
    public:
 

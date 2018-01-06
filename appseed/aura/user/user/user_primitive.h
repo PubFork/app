@@ -38,8 +38,8 @@ namespace user
       virtual void _001OnTimer(::timer * ptimer);
 
       virtual bool enable_window(bool bEnable = true);
-      virtual void _001SetCheck(check::e_check echeck,::action::context);
-      virtual void _001SetText(const string & strText,::action::context);
+      //virtual void _001SetCheck(check::e_check echeck,::action::context);
+      //virtual void _001SetText(const string & strText,::action::context);
 
    };
 

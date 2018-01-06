@@ -3289,16 +3289,6 @@ bool thread::on_run_exception(::exception::exception * pexception)
 }
 
 
-message::e_prototype thread::GetMessagePrototype(UINT_PTR uiMessage,UINT uiCode)
-{
-
-   UNREFERENCED_PARAMETER(uiMessage);
-   UNREFERENCED_PARAMETER(uiCode);
-
-   return message::PrototypeNone;
-
-
-}
 
 
 int thread::get_x_window_count() const

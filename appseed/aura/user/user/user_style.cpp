@@ -236,13 +236,13 @@ namespace user
    }
 
 
-   void style::DrawCheck(check::e_check echeck, const RECT & rect, ::draw2d::graphics * pgraphics)
+   void style::DrawCheck(::check::e_check echeck, const RECT & rect, ::draw2d::graphics * pgraphics)
    {
 
 
-
-      if (echeck == check::checked)
+      if (echeck == ::check::checked)
       {
+
          point_array pta;
 
          pta.add(point(2, 10));
@@ -771,16 +771,21 @@ namespace user
          rectCheckBox.top = 0;
          rectCheckBox.right = 15 * w / 15;
          rectCheckBox.bottom = 15 * h / 15;
-         if (echeck == check::tristate)
+         if (echeck == ::check::tristate)
          {
+            
             pgraphics->FillSolidRect(rectCheckBox, ARGB(255, 220, 220, 220));
+            
          }
+         
          pgraphics->Draw3dRect(rectCheckBox, ARGB(255, 128, 128, 128), ARGB(255, 128, 128, 128));
-         if (echeck == check::tristate
-               || echeck == check::checked)
+         
+         if (echeck == ::check::tristate || echeck == ::check::checked)
          {
+            
             ::draw2d::pen_sp pen(allocer());
-            pen->create_solid(1 * (w + h) / 30, echeck == check::checked ? ARGB(255, 0, 0, 0) : ARGB(255, 96, 96, 96));
+            
+            pen->create_solid(1 * (w + h) / 30, echeck == ::check::checked ? ARGB(255, 0, 0, 0) : ARGB(255, 96, 96, 96));
             pgraphics->SelectObject(pen);
             pgraphics->MoveTo(2 * w / 15, 8 * h / 15);
             pgraphics->LineTo(6 * w / 15, 12 * h / 15);

@@ -1,51 +1,72 @@
 #include "framework.h"
 
+
 namespace user
 {
 
+   
    check_box::check_box(::aura::application * papp) :
       object(papp),
       ::user::interaction(papp)
    {
-      m_echeck = check::unchecked;
+      
+      m_echeck = ::check::unchecked;
+      
       m_estyle = style_normal;
+      
    }
+   
 
    check_box::~check_box()
    {
    }
 
 
-   check::e_check check_box::_001GetCheck()
+   ::check::e_check check_box::_001GetCheck()
    {
+      
       return m_echeck;
+      
    }
+   
 
-   void check_box::_001SetCheck(check::e_check echeck, ::action::context actioncontext)
+   void check_box::_001SetCheck(::check::e_check echeck, ::action::context actioncontext)
    {
-      if(echeck != check::unchecked
-      && echeck != check::checked
-      && echeck != check::tristate)
+      
+      if(echeck != ::check::unchecked && echeck != ::check::checked && echeck != ::check::tristate)
       {
+         
          // default value when setting a value that does not match the ones above
-         echeck = check::checked;
+         
+         echeck = ::check::checked;
+         
       }
+      
       m_echeck = echeck;
+      
       ::user::control_event ev;
+      
       ev.m_puie = this;
+      
       ev.m_eevent = ::user::event_set_check;
+      
       ev.m_actioncontext = actioncontext;
+      
       if(get_form() != NULL)
       {
-         get_form()->send_message(
-            ::message::message_event, 0, (LPARAM) &ev);
+         
+         get_form()->send_message(::message::message_event, 0, (LPARAM) &ev);
+         
       }
       else
       {
-         GetParent()->send_message(
-            ::message::message_event, 0, (LPARAM) &ev);
+         
+         GetParent()->send_message(::message::message_event, 0, (LPARAM) &ev);
+         
       }
+      
    }
+   
 
    void check_box::_001OnDraw(::draw2d::graphics * pgraphics)
    {
@@ -103,13 +124,13 @@ namespace user
       COLORREF crPen = ARGB(255, 0, 0, 0);
       COLORREF crBrush;
 
-      if (m_echeck == check::checked)
+      if (m_echeck == ::check::checked)
       {
          
          crBrush = ARGB(255, 100, 220, 120);
 
       }
-      else if (m_echeck == check::unchecked)
+      else if (m_echeck == ::check::unchecked)
       {
 
          crBrush = ARGB(255, 220, 220, 100);

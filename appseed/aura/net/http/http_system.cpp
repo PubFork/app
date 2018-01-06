@@ -1,5 +1,6 @@
 #include "framework.h" // from "aura/net/net_sockets.h"
 #include "aura/net/net_sockets.h"
+#include "aura/net/sockets/bsd/basic/sockets_ssl_context.h"
 #include <time.h>
 #include <stdio.h>
 
@@ -1085,7 +1086,7 @@ retry:
 
 #if defined(BSD_STYLE_SOCKETS)
 
-            if(psession->m_ssl_ctx != NULL && psession->m_iSslCtxRetry == 1 && iTry < 8)
+            if(psession->m_psslcontext->m_ssl_ctx != NULL && psession->m_psslcontext->m_iSslCtxRetry == 1 && iTry < 8)
             {
 
                goto retry;

@@ -6,9 +6,15 @@
 //
 //
 
+
+// C and Objective-C include
+
 #ifdef __OBJC__
 #include "NSObject+DDExtensions.h"
 #include "DDInvocationGrabber.h"
+
+char * ns_string(NSString * str);
+
 #endif
 
 
@@ -19,4 +25,9 @@
 void apple_on_open_file(const char ** psza, int iCount, const char * pszExtra);
 void apple_accumulate_on_open_file(const char ** psza, int iCount, const char * pszExtra);
 void apple_on_new_file();
+
+
+void ns_application_main(int argc, char *argv[]);
+
+
 

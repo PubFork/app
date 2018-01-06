@@ -24,7 +24,8 @@ namespace user
 
    class CLASS_DECL_BASE plain_edit :
       virtual public control,
-      virtual public ::data::listener
+      virtual public ::data::listener,
+      virtual public edit_text
    {
       public:
 
@@ -216,18 +217,18 @@ namespace user
 
          colorertake5::file_type * colorer_select_type();
 
-         virtual strsize _001GetTextLength() const;
+         virtual strsize _001GetTextLength() const override;
          virtual void _001GetText(string & str) const override;
          virtual void _001GetSelText(string & str) const override;
-         virtual void _001GetSelText(string & str, index iSelStart, index iSelEnd) const;
+         virtual void _001GetText(string & str, index iBeg, index iEnd) const override;
 
-         void _001GetViewSel(strsize &iSelStart, strsize &iSelEnd);
+         void _001GetViewSel(strsize &iSelStart, strsize &iSelEnd) const override;
 
          void _001SetText(const string & str, ::action::context actioncontext) override;
-         void _001SetSelText(const char * psz, ::action::context actioncontext);
-         void _001SetSelEnd(strsize iSelEnd);
-         void _001SetSel(strsize iSelStart, strsize iSelEnd);
-         void _001GetSel(strsize & iSelStart,strsize  & iSelEnd);
+         void _001SetSelText(const char * psz, ::action::context actioncontext) override;
+         void _001SetSelEnd(strsize iSelEnd) override;
+         void _001SetSel(strsize iSelStart, strsize iSelEnd) override;
+         void _001GetSel(strsize & iSelStart, strsize & iSelEnd) const override;
 
          void _001EnsureVisibleChar(strsize iChar);
          void _001EnsureVisibleLine(index iLine);
@@ -257,9 +258,9 @@ namespace user
          void IndexRegisterDelete(strsize iSel, strsize iCount);
          void IndexRegisterInsert(strsize iSel, const char * lpcszWhat);
 
-         void MacroBegin();
+         virtual void MacroBegin() override;
          void MacroRecord(sp(plain_text_command) pcommand);
-         void MacroEnd();
+         virtual void MacroEnd() override;
 
          bool Undo();
          bool Redo();

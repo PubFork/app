@@ -5,7 +5,7 @@
 //  Created by Camilo Sasuke Tsumanuma on 2013-09-17.
 //
 //
-
+#include "app/appseed/aura/aura/aura_policy/aura_c.h"
 
 WINBOOL get_nswindow_rect(oswindow oswindow, LPRECT lprect);
 
@@ -168,30 +168,28 @@ WINBOOL get_nswindow_rect(oswindow oswindow, LPRECT lprect);
 
 // https://stackoverflow.com/questions/6167557/get-string-from-nspasteboard
 //you need to use the following method with stringForType with key NSPasteboardTypeString to read the string value from clipboard.
+char * mm_clipboard_get_plain_text()
+{
+   
+   UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
 
-- (NSString *)stringForType:(NSString *)dataType .
+   NSString * strPasteboard = pasteboard.string;
 
-NSPasteboard*  myPasteboard  = [NSPasteboard generalPasteboard];
-NSString* myString = [myPasteboard  stringForType:NSPasteboardTypeString];
+   return ns_string(strPasteboard);
+   
+}
 
-you need to use the following method with stringForType with key NSPasteboardTypeString to read the string value from clipboard.
+//https://stackoverflow.com/questions/3655038/how-to-copy-textfield-to-osx-clipboard
+//On OSX
+void mm_clipboard_set_plain_text(const char * psz)
+{
+   
+   UIPasteboard * pasteboard = [UIPasteboard generalPasteboard];
+   
+   NSString * strPasteboard = [NSString stringWithUTF8String: psz];
+   
+   pasteboard.string = strPasteboard;
+   
+}
 
-- (NSString *)stringForType:(NSString *)dataType .
 
-NSPasteboard*  myPasteboard  = [NSPasteboard generalPasteboard];
-NSString* myString = [myPasteboard  stringForType:NSPasteboardTypeString];
-//To do this for iOS with UIPasteBoard use the following code:
-
-UIPasteboard *thePasteboard = [UIPasteboard generalPasteboard];
-NSString *pasteboardString = thePasteboard.string;
-NSLog(@"%@", pasteboardString);
-
-https://stackoverflow.com/questions/3655038/how-to-copy-textfield-to-osx-clipboard
-
-On iOS
-
-[UIPasteboard generalPasteboard].string = helloField.text;
-On OSX
-
-[[NSPasteboard generalPasteboard] clearContents];
-[[NSPasteboard generalPasteboard] setString:helloField.stringValue forType:NSStringPboardType];

@@ -10,22 +10,24 @@ namespace message
 {
 
 
-   class CLASS_DECL_AURA create: public base
+   class CLASS_DECL_AURA create:
+      public ::message::base
    {
       public:
 
          create(::aura::application * papp): ::message::base(papp) {}
          ::user::create_struct * m_lpcreatestruct;
 
-         virtual void set_lresult(LRESULT lresult);
+         virtual void set_lresult(LRESULT lresult) override;
          using ::message::base::set;
-         virtual void set(::user::primitive * pwnd,UINT uiMessage,WPARAM wparam,::lparam lparam,LRESULT & lresult);
+         virtual void set(::user::primitive * pwnd, UINT_PTR uiMessage, WPARAM wparam, ::lparam lparam, LRESULT & lresult) override;
          virtual void error(const char * lpcszErrorMessage);
          virtual void failed(const char * lpcszErrorMessage);
+      
    };
 
 
-   class CLASS_DECL_AURA activate: public base
+   class CLASS_DECL_AURA activate: public ::message::base
    {
       public:
 
@@ -36,12 +38,14 @@ namespace message
 
 
          activate(::aura::application * papp);
+      
          using ::message::base::set;
 
-         virtual void set(::user::primitive * pwnd,UINT uiMessage,WPARAM wparam,::lparam lparam,LRESULT & lresult);
+         virtual void set(::user::primitive * pwnd, UINT_PTR uiMessage, WPARAM wparam, ::lparam lparam, LRESULT & lresult) override;
+      
    };
 
-   class CLASS_DECL_AURA move: public base
+   class CLASS_DECL_AURA move: public ::message::base
    {
       public:
 
@@ -50,35 +54,41 @@ namespace message
          point m_pt;
    };
 
-   class CLASS_DECL_AURA size: public base
+   class CLASS_DECL_AURA size: public ::message::base
    {
-      public:
+   public:
 
 
-         size(::aura::application * papp): ::message::base(papp) {}
-         UINT     m_nType;
-         ::size   m_size;
-         using ::message::base::set;
-         virtual void set(::user::primitive * pwnd,UINT uiMessage,WPARAM wparam,::lparam lparam,LRESULT & lresult);
+      UINT     m_nType;
+      ::size   m_size;
+      
+      size(::aura::application * papp): ::message::base(papp) {}
+
+      using ::message::base::set;
+      
+      virtual void set(::user::primitive * pwnd, UINT_PTR uiMessage, WPARAM wparam, ::lparam lparam, LRESULT & lresult) override;
    };
 
 
-   class CLASS_DECL_AURA scroll: public base
+   class CLASS_DECL_AURA scroll: public ::message::base
    {
       public:
 
+      UINT              m_nSBCode;
+      int32_t           m_nPos;
+      ::user::primitive *  m_pScrollBar;
 
-         scroll(::aura::application * papp): ::message::base(papp) {}
-         UINT              m_nSBCode;
-         int32_t           m_nPos;
-         ::user::primitive *  m_pScrollBar;
-         using ::message::base::set;
-         virtual void set(::user::primitive * pwnd,UINT uiMessage,WPARAM wparam,::lparam lparam,LRESULT & lresult);
+      scroll(::aura::application * papp): ::message::base(papp) {}
+
+      using ::message::base::set;
+      
+      virtual void set(::user::primitive * pwnd, UINT_PTR uiMessage, WPARAM wparam, ::lparam lparam, LRESULT & lresult) override;
+      
    };
 
 
    class CLASS_DECL_AURA mouse:
-      public base,
+      public ::message::base,
       public ::user::mouse
    {
       public:
@@ -87,15 +97,16 @@ namespace message
 
          mouse(::aura::application * papp);
          virtual ~mouse();
+      
          using ::message::base::set;
 
-         virtual void set(::user::primitive * pwnd,UINT uiMessage,WPARAM wparam,::lparam lparam,LRESULT & lresult);
+      virtual void set(::user::primitive * pwnd, UINT_PTR uiMessage, WPARAM wparam, ::lparam lparam, LRESULT & lresult) override;
          static_function mouse * cast(::message::message * pobj)
          {
             return dynamic_cast < mouse * > (pobj);
          }
 
-         virtual unsigned int get_message()
+         virtual unsigned int get_message() override
          {
             return (unsigned int) m_id.int64();
          }
@@ -114,15 +125,15 @@ namespace message
          }
 
          UINT     GetFlags();
-         int16_t    GetDelta();
+         int16_t  GetDelta();
          point    GetPoint();
          using ::message::base::set;
 
-         virtual void set(::user::primitive * pwnd,UINT uiMessage,WPARAM wparam,::lparam lparam,LRESULT & lresult);
+         virtual void set(::user::primitive * pwnd, UINT_PTR uiMessage, WPARAM wparam, ::lparam lparam, LRESULT & lresult) override;
    };
 
 
-   class CLASS_DECL_AURA mouse_activate: public base
+   class CLASS_DECL_AURA mouse_activate: public ::message::base
    {
       public:
 
@@ -133,7 +144,7 @@ namespace message
          UINT get_message();
    };
 
-   class CLASS_DECL_AURA context_menu: public base
+   class CLASS_DECL_AURA context_menu: public ::message::base
    {
       public:
 
@@ -144,44 +155,47 @@ namespace message
    };
 
 
-   class CLASS_DECL_AURA set_cursor: public base
+   class CLASS_DECL_AURA set_cursor: public ::message::base
    {
       public:
 
+      ::user::primitive * m_pWnd;
+      UINT m_nHitTest;
+      UINT m_message;
 
-         set_cursor(::aura::application * papp): ::message::base(papp) {}
-         ::user::primitive * m_pWnd;
-         UINT m_nHitTest;
-         UINT m_message;
+      set_cursor(::aura::application * papp): ::message::base(papp) {}
+      
    };
 
-   class CLASS_DECL_AURA show_window: public base
+   class CLASS_DECL_AURA show_window: public ::message::base
    {
-      public:
+   public:
 
+      bool m_bShow;
+      UINT  m_nStatus;
 
-         show_window(::aura::application * papp): ::message::base(papp) {}
-         bool m_bShow;
-         UINT  m_nStatus;
-         using ::message::base::set;
-         virtual void set(::user::primitive * pwnd,UINT uiMessage,WPARAM wparam,::lparam lparam,LRESULT & lresult);
+     show_window(::aura::application * papp): ::message::base(papp) {}
+     using ::message::base::set;
+     virtual void set(::user::primitive * pwnd, UINT_PTR uiMessage, WPARAM wparam, ::lparam lparam, LRESULT & lresult) override;
+      
    };
 
-   class CLASS_DECL_AURA on_draw: public base
+   class CLASS_DECL_AURA on_draw: public ::message::base
    {
-      public:
+   public:
 
+      ::draw2d::graphics * m_pdc;
 
-         on_draw(::aura::application * papp): ::message::base(papp) {}
-         ::draw2d::graphics * m_pdc;
+      on_draw(::aura::application * papp): ::message::base(papp) {}
+      
    };
 
-   class CLASS_DECL_AURA erase_bkgnd: public base
+   class CLASS_DECL_AURA erase_bkgnd: public ::message::base
    {
       public:
 
 
-         ::draw2d::graphics * m_pdc;
+      ::draw2d::graphics * m_pdc;
 
 
          erase_bkgnd(::aura::application * papp);
@@ -193,7 +207,7 @@ namespace message
    // WM_PAINT -> aura
    // WM_MOUSELEAVE -> aura
 
-   class CLASS_DECL_AURA nchittest: public base
+   class CLASS_DECL_AURA nchittest: public ::message::base
    {
       public:
 
@@ -220,13 +234,13 @@ namespace message
          key(const key & key);
 
          using ::message::base::set;
-         virtual void set(::user::primitive * pwnd,UINT uiMessage,WPARAM wparam,::lparam lparam,LRESULT & lresult);
+         virtual void set(::user::primitive * pwnd, UINT_PTR uiMessage, WPARAM wparam, ::lparam lparam, LRESULT & lresult) override;
 
          key & operator = (const key & key);
 
    };
 
-   class CLASS_DECL_AURA nc_activate: public base
+   class CLASS_DECL_AURA nc_activate: public ::message::base
    {
       public:
 
@@ -237,11 +251,11 @@ namespace message
          nc_activate(::aura::application * papp);
 
          using ::message::base::set;
-         virtual void set(::user::primitive * pwnd,UINT uiMessage,WPARAM wparam,::lparam lparam,LRESULT & lresult);
+         virtual void set(::user::primitive * pwnd, UINT_PTR uiMessage, WPARAM wparam, ::lparam lparam, LRESULT & lresult) override;
    };
 
 
-   class CLASS_DECL_AURA notify: public base
+   class CLASS_DECL_AURA notify: public ::message::base
    {
       public:
 
@@ -257,7 +271,7 @@ namespace message
    };
 
 
-   class CLASS_DECL_AURA command: public base
+   class CLASS_DECL_AURA command: public ::message::base
    {
       public:
 
@@ -268,7 +282,7 @@ namespace message
          oswindow get_oswindow();
    };
 
-   class CLASS_DECL_AURA ctl_color: public base
+   class CLASS_DECL_AURA ctl_color: public ::message::base
    {
       public:
 
@@ -280,26 +294,26 @@ namespace message
          UINT        m_nCtlType;
    };
 
-   class CLASS_DECL_AURA set_focus: public base
+   class CLASS_DECL_AURA set_focus: public ::message::base
    {
       public:
 
 
          set_focus(::aura::application * papp): ::message::base(papp) {}
          using ::message::base::set;
-         virtual void set(::user::primitive * pwnd,UINT uiMessage,WPARAM wparam,::lparam lparam,LRESULT & lresult);
+         virtual void set(::user::primitive * pwnd, UINT_PTR uiMessage, WPARAM wparam, ::lparam lparam, LRESULT & lresult) override;
    };
 
 
 
-   class CLASS_DECL_AURA window_pos: public base
+   class CLASS_DECL_AURA window_pos: public ::message::base
    {
       public:
 
          window_pos(::aura::application * papp): ::message::base(papp) {}
          WINDOWPOS * m_pwindowpos;
          using ::message::base::set;
-         virtual void set(::user::primitive * pwnd,UINT uiMessage,WPARAM wparam,::lparam lparam,LRESULT & lresult);
+         virtual void set(::user::primitive * pwnd, UINT_PTR uiMessage, WPARAM wparam, ::lparam lparam, LRESULT & lresult) override;
    };
 
 
@@ -307,7 +321,7 @@ namespace message
 #ifdef WINDOWSEX
 
 
-   class CLASS_DECL_AURA measure_item: public base
+   class CLASS_DECL_AURA measure_item: public ::message::base
    {
       public:
 
@@ -319,7 +333,7 @@ namespace message
 
 #endif
 
-   class CLASS_DECL_AURA nc_calc_size: public base
+   class CLASS_DECL_AURA nc_calc_size: public ::message::base
    {
       public:
 
@@ -328,12 +342,12 @@ namespace message
          NCCALCSIZE_PARAMS * m_pparams;
          bool GetCalcValidRects();
          using ::message::base::set;
-         virtual void set(::user::primitive * pwnd,UINT uiMessage,WPARAM wparam,::lparam lparam,LRESULT & lresult);
+         virtual void set(::user::primitive * pwnd, UINT_PTR uiMessage, WPARAM wparam, ::lparam lparam, LRESULT & lresult) override;
 
    };
 
 
-   class CLASS_DECL_AURA enable: public base
+   class CLASS_DECL_AURA enable: public ::message::base
    {
       public:
 
@@ -345,7 +359,7 @@ namespace message
 
 
 
-   class CLASS_DECL_AURA drag_and_drop: public base
+   class CLASS_DECL_AURA drag_and_drop: public ::message::base
    {
       public:
 

@@ -1,4 +1,4 @@
-﻿//
+//
 //  os_windowing.h
 //  aura
 //
@@ -54,4 +54,9 @@ class os_system_window;
 
 ::user::interaction * get_system_window_interaction(::os_system_window * psystemwindow);
 
+#ifdef APPLE_IOS
+
+#include "ios/ios_window.h"
+
+#endif
 

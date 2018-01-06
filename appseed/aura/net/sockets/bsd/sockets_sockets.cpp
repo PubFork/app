@@ -232,7 +232,7 @@ namespace sockets
 string ip_reverse(string str)
 {
 
-#if defined(METROWIN) || defined(LINUX) || defined(ANDROID) || defined(MACOS)
+#if defined(METROWIN) || defined(LINUX) || defined(ANDROID) || defined(APPLEOS)
 
    return c_gethostbyname(str);
 

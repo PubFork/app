@@ -1,5 +1,7 @@
 #include "framework.h"
 
+#include <netdb.h>
+
 
 namespace ios
 {
@@ -30,7 +32,7 @@ namespace ios
       }
 
       //get host information from the host name
-      hostent * phostent = gethostbyname(szHostname);
+      struct hostent * phostent = gethostbyname(szHostname);
       if (phostent == NULL)
       {
          TRACE("Failed in call to gethostbyname, errno returns %d\n", errno);

@@ -257,22 +257,33 @@ namespace hi5
 
       bool authorization::BaseOnControlEvent(::user::form_window * pview, ::user::control_event * pevent)
       {
+         
          UNREFERENCED_PARAMETER(pview);
-         if(pevent->m_eevent == ::user::event_button_clicked
-            || pevent->m_eevent == ::user::event_enter_key)
+         
+         if(pevent->m_eevent == ::user::event_button_clicked || pevent->m_eevent == ::user::event_enter_key)
          {
-            if(pevent->m_puie->m_id == "submit" ||
-               pevent->m_eevent == ::user::event_enter_key)
+            
+            if(pevent->m_puie->m_id == "submit" || pevent->m_eevent == ::user::event_enter_key)
             {
+               
                sp(::user::interaction) pui = m_pviewAuth->get_child_by_name("pin");
-               sp(::user::elemental) ptext =  (pui.m_p);
+               
+               sp(::user::edit_text) ptext = pui;
+               
                ptext->_001GetText(m_strPin);
+               
                m_ptabview->get_wnd()->EndModalLoop(IDOK);
+               
                m_ptabview->GetParentFrame()->ShowWindow(SW_HIDE);
+               
             }
+            
          }
+         
          return false;
+         
       }
+      
       
       bool authorization::style_translucency(::user::e_translucency & etranslucency, ::user::e_element)
       {

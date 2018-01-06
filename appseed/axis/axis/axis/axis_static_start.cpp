@@ -1,6 +1,4 @@
 #include "framework.h"
-#include "aura/net/net_sockets.h"
-//#include "fiasco_finder.h"
 
 
 namespace axis
@@ -16,11 +14,6 @@ namespace axis
 
          xxdebug_box("axis.dll axis_static_start (0)", "box", MB_OK);
 
-#ifdef BSD_STYLE_SOCKETS
-
-         ::sockets::base_socket::s_pmutex = new mutex();
-
-#endif
 
 
 #if defined(LINUX)
@@ -114,15 +107,6 @@ namespace axis
 //#endif // defined(LINUX)
 
 
-
-
-#ifdef BSD_STYLE_SOCKETS
-
-         delete ::sockets::base_socket::s_pmutex;
-
-         ::sockets::base_socket::s_pmutex = NULL;
-
-#endif
 
 
       }

@@ -130,24 +130,9 @@ inline int type_is_null(const T * p)
 
 #include "aura/primitive/math/math_mkint_c.h"
 
-#if defined(ANDROID)
-#include "aura/aura/os/android/android.h"
-#elif defined(MACOS)
-#include "aura/aura/os/macos/macos.h"
-#elif defined(LINUX)
-#include "aura/aura/os/linux/linux.h"
-#include "aura/aura/os/linux/linux_c.h"
-#elif defined(METROWIN)
-#include "aura/aura/os/metrowin/metrowin.h"
-#elif defined(WINDOWSEX)
-#include "aura/aura/os/windows/windows.h"
-#elif defined(SOLARIS)
-#include "aura/aura/os/solaris/solaris.h"
-#elif defined(APPLE_IOS)
-#include "aura/aura/os/ios/ios.h"
-#else
-#error Not Supported Operational System
-#endif
+           // C-includes
+           #include "aura/aura/os/os.h"
+           
 
 #undef MIN
 #undef MAX

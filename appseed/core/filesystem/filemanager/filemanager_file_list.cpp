@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include "framework.h"
 
 #include "base/database/simpledb/simpledb.h"
@@ -249,12 +249,12 @@ namespace filemanager
                {
                   //html::elemental * pelemental = dynamic_cast < html::elemental * > (puh->m_pformview->get_html_data()->get_element_by_name("encontrar"));
                   //html::impl::input_text * pinput = dynamic_cast < html::impl::input_text * > (pelemental->m_pimpl);
-                  sp(::user::interaction) ptext = puh->m_pform->get_child_by_id("encontrar");
+                  sp(::user::edit_text) pedit = puh->m_pform->get_child_by_id("encontrar");
                   range range;
                   _001GetSelection(range);
                   if (range.get_item_count() > 0)
                   {
-                     ptext->_001SetText(get_fs_mesh_data()->m_itema.get_item(range.ItemAt(0).get_lower_bound()).m_strName, puh->m_actioncontext);
+                     pedit->_001SetText(get_fs_mesh_data()->m_itema.get_item(range.ItemAt(0).get_lower_bound()).m_strName, puh->m_actioncontext);
                   }
                }
             }

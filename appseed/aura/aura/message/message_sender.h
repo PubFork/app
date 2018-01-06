@@ -31,7 +31,7 @@ namespace message
       virtual void route_message(::message::message * pmessage);
 
 
-      virtual e_prototype GetMessagePrototype(UINT uiMessage, UINT uiCode);
+      virtual e_prototype GetMessagePrototype(UINT_PTR uiMessage, UINT uiCode);
 
    };
 

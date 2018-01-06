@@ -28,22 +28,6 @@ UIWindow * new_boot_window(boot_window * pwindow, CGRect rect)
 
 
 
-void ui_shared_application()
-{
-
-   [UIApplication sharedApplication];
-   
-}
-
-
-void ui_app_run()
-{
-
-//   [NSApp run];
-   
-}
-
-
 
 void boot_window::boot_window_show()
 {

@@ -1,5 +1,6 @@
 #include "framework.h" // #include "axis/net/sockets/bsd/sockets.h"
 #include "aura/net/net_sockets.h"
+#include "sockets_ssl_context.h"
 
 
 #include <openssl/ssl.h>
@@ -511,10 +512,10 @@ bool tcp_socket::s_bReuseSession = true;
 
          }
 
-         n = SSL_read(m_ssl,buf,(int)nBufSize);
+         n = SSL_read(m_psslcontext->m_ssl,buf,(int)nBufSize);
          if(n == -1)
          {
-            n = SSL_get_error(m_ssl,(int)n);
+            n = SSL_get_error(m_psslcontext->m_ssl,(int)n);
             switch(n)
             {
             case SSL_ERROR_NONE:
@@ -863,11 +864,11 @@ bool tcp_socket::s_bReuseSession = true;
       if(IsSSL())
       {
 
-         n = SSL_write(m_ssl,buf,(int32_t)len);
+         n = SSL_write(m_psslcontext->m_ssl,buf,(int32_t)len);
 
          if(n == -1)
          {
-            int32_t errnr = SSL_get_error(m_ssl,(int32_t)n);
+            int32_t errnr = SSL_get_error(m_psslcontext->m_ssl,(int32_t)n);
             if(errnr != SSL_ERROR_WANT_READ && errnr != SSL_ERROR_WANT_WRITE)
             {
                if(errnr == SSL_ERROR_SYSCALL)
@@ -895,7 +896,7 @@ bool tcp_socket::s_bReuseSession = true;
             SetCloseAndDelete(true);
             SetFlushBeforeClose(false);
             SetLost();
-            int32_t errnr = SSL_get_error(m_ssl,(int32_t)n);
+            int32_t errnr = SSL_get_error(m_psslcontext->m_ssl,(int32_t)n);
             const char *errbuf = ERR_error_string(errnr,NULL);
             TRACE("SSL_write() returns 0: %d : %s\n",errnr,errbuf);
             //_throw(io_exception(get_app(), errbuf));
@@ -1260,14 +1261,14 @@ bool tcp_socket::s_bReuseSession = true;
 
       //slMap.unlock();
 
-      if(m_ssl_ctx)
+      if(m_psslcontext->m_ssl_ctx)
       {
 
          /* Connect the SSL socket */
 
-         m_ssl = SSL_new(m_ssl_ctx);
+         m_psslcontext->m_ssl = SSL_new(m_psslcontext->m_ssl_ctx);
 
-         if(!m_ssl)
+         if(!m_psslcontext->m_ssl)
          {
 
             TRACE(" m_ssl is NULL\n");
@@ -1278,13 +1279,13 @@ bool tcp_socket::s_bReuseSession = true;
 
          }
 
-         if (m_bClientSessionSet || m_ssl_session == NULL)
+         if (m_bClientSessionSet || m_psslcontext->m_ssl_session == NULL)
          {
 
             if (m_strTlsHostName.has_char())
             {
 
-               SSL_set_tlsext_host_name(m_ssl, (char *)(const char *)m_strTlsHostName);
+               SSL_set_tlsext_host_name(m_psslcontext->m_ssl, (char *)(const char *)m_strTlsHostName);
 
             }
 
@@ -1292,9 +1293,9 @@ bool tcp_socket::s_bReuseSession = true;
 
          }
 
-         m_sbio = BIO_new_socket((int32_t)GetSocket(),BIO_NOCLOSE);
+         m_psslcontext->m_sbio = BIO_new_socket((int32_t)GetSocket(),BIO_NOCLOSE);
 
-         if(!m_sbio)
+         if(!m_psslcontext->m_sbio)
          {
 
             TRACE(" m_sbio is NULL\n");
@@ -1305,7 +1306,7 @@ bool tcp_socket::s_bReuseSession = true;
 
          }
 
-         SSL_set_bio(m_ssl,m_sbio,m_sbio);
+         SSL_set_bio(m_psslcontext->m_ssl,m_psslcontext->m_sbio,m_psslcontext->m_sbio);
 
 
          if(!SSLNegotiate())
@@ -1334,7 +1335,7 @@ bool tcp_socket::s_bReuseSession = true;
       //synch_lock slMap(&Session.sockets().m_servercontextmap.m_mutex);
 
       {
-         if(m_ssl_ctx)
+         if(m_psslcontext->m_ssl_ctx)
          {
             TRACE("SSL Context already initialized - closing socket\n");
             SetCloseAndDelete(true);
@@ -1350,25 +1351,25 @@ bool tcp_socket::s_bReuseSession = true;
       //slMap.unlock();
 
 
-      if(m_ssl_ctx)
+      if(m_psslcontext->m_ssl_ctx)
       {
-         m_ssl = SSL_new(m_ssl_ctx);
-         if(!m_ssl)
+         m_psslcontext->m_ssl = SSL_new(m_psslcontext->m_ssl_ctx);
+         if(!m_psslcontext->m_ssl)
          {
             TRACE(" m_ssl is NULL\n");
             SetCloseAndDelete(true);
             return;
          }
-         SSL_set_app_data2(m_ssl, this);
-         SSL_set_mode(m_ssl,SSL_MODE_AUTO_RETRY);
-         m_sbio = BIO_new_socket((int32_t)GetSocket(),BIO_NOCLOSE);
-         if(!m_sbio)
+         SSL_set_app_data2(m_psslcontext->m_ssl, this);
+         SSL_set_mode(m_psslcontext->m_ssl,SSL_MODE_AUTO_RETRY);
+         m_psslcontext->m_sbio = BIO_new_socket((int32_t)GetSocket(),BIO_NOCLOSE);
+         if(!m_psslcontext->m_sbio)
          {
             TRACE(" m_sbio is NULL\n");
             SetCloseAndDelete(true);
             return;
          }
-         SSL_set_bio(m_ssl,m_sbio,m_sbio);
+         SSL_set_bio(m_psslcontext->m_ssl,m_psslcontext->m_sbio,m_psslcontext->m_sbio);
          //      if (!SSLNegotiate())
          {
             SetSSLNegotiate();
@@ -1385,23 +1386,23 @@ bool tcp_socket::s_bReuseSession = true;
 
          TRACE("SSL_connect!!");
 
-         if (m_bReuseSession && !m_bClientSessionSet && m_ssl_session != NULL)
+         if (m_bReuseSession && !m_bClientSessionSet && m_psslcontext->m_ssl_session != NULL)
          {
 
-            SSL_set_session(m_ssl, m_ssl_session);
+            SSL_set_session(m_psslcontext->m_ssl, m_psslcontext->m_ssl_session);
 
             m_bClientSessionSet = true;
 
          }
 
-         int32_t r = SSL_connect(m_ssl);
+         int32_t r = SSL_connect(m_psslcontext->m_ssl);
 
          if(r > 0)
          {
 
             SetSSLNegotiate(false);
 
-            if (SSL_session_reused(m_ssl))
+            if (SSL_session_reused(m_psslcontext->m_ssl))
             {
 
                output_debug_string("REUSED SESSION\n");
@@ -1433,14 +1434,14 @@ bool tcp_socket::s_bReuseSession = true;
             if (m_bReuseSession)
             {
 
-               if (m_ssl_session != NULL)
+               if (m_psslcontext->m_ssl_session != NULL)
                {
 
                   free_ssl_session();
 
                }
 
-               if (m_ssl_session == NULL)
+               if (m_psslcontext->m_ssl_session == NULL)
                {
 
                   get_ssl_session();
@@ -1485,12 +1486,12 @@ bool tcp_socket::s_bReuseSession = true;
             printf("could not SSL_connect: %s\n", error_str);
 
             int iError = errno;
-            int iErrorSsl = SSL_get_error(m_ssl,r);
+            int iErrorSsl = SSL_get_error(m_psslcontext->m_ssl,r);
 
             //if(m_spsslclientcontext.is_set() &&
-            if (m_ssl_ctx != NULL &&
+            if (m_psslcontext->m_ssl_ctx != NULL &&
                   iErrorSsl == SSL_ERROR_ZERO_RETURN
-                  && (m_ssl_method == TLS_client_method()))
+                  && (m_psslcontext->m_ssl_method == TLS_client_method()))
             {
 
                TRACE("ssl_error_zero_return");
@@ -1503,23 +1504,23 @@ bool tcp_socket::s_bReuseSession = true;
                if (m_bReuseSession)
                {
 
-                  if (m_ssl_session != NULL)
+                  if (m_psslcontext->m_ssl_session != NULL)
                   {
 
-                     if (m_iSslCtxRetry == 0)
+                     if (m_psslcontext->m_iSslCtxRetry == 0)
                      {
 
-                        m_iSslCtxRetry = 1;
+                        m_psslcontext->m_iSslCtxRetry = 1;
 
                         free_ssl_session();
 
-                        SSL_clear(m_ssl);
+                        SSL_clear(m_psslcontext->m_ssl);
 
                      }
                      else
                      {
 
-                        m_iSslCtxRetry = 0;
+                        m_psslcontext->m_iSslCtxRetry = 0;
 
                      }
 
@@ -1527,7 +1528,7 @@ bool tcp_socket::s_bReuseSession = true;
 
                }
 
-               if (m_iSslCtxRetry == 0)
+               if (m_psslcontext->m_iSslCtxRetry == 0)
                {
 #ifdef DEBUG
 
@@ -1544,7 +1545,7 @@ bool tcp_socket::s_bReuseSession = true;
          }
          else
          {
-            r = SSL_get_error(m_ssl,r);
+            r = SSL_get_error(m_psslcontext->m_ssl,r);
             if(r == SSL_ERROR_WANT_READ || r == SSL_ERROR_WANT_WRITE)
             {
             }
@@ -1566,7 +1567,7 @@ bool tcp_socket::s_bReuseSession = true;
       }
       else // server
       {
-         int32_t r = SSL_accept(m_ssl);
+         int32_t r = SSL_accept(m_psslcontext->m_ssl);
          if(r > 0)
          {
             SetSSLNegotiate(false);
@@ -1600,7 +1601,7 @@ bool tcp_socket::s_bReuseSession = true;
          }
          else
          {
-            r = SSL_get_error(m_ssl,r);
+            r = SSL_get_error(m_psslcontext->m_ssl,r);
             if(r == SSL_ERROR_WANT_READ || r == SSL_ERROR_WANT_WRITE)
             {
             }
@@ -1677,11 +1678,11 @@ bool tcp_socket::s_bReuseSession = true;
             if (m_spsslclientcontext.is_set() && m_spsslclientcontext->m_pcontext != NULL)
             {
 
-               m_ssl_ctx = m_spsslclientcontext->m_pcontext;
+               m_psslcontext->m_ssl_ctx = m_spsslclientcontext->m_pcontext;
 
-               m_ssl_session = m_spsslclientcontext->m_psession;
+               m_psslcontext->m_ssl_session = m_spsslclientcontext->m_psession;
 
-               m_ssl_method = m_spsslclientcontext->m_pmethod;
+               m_psslcontext->m_ssl_method = m_spsslclientcontext->m_pmethod;
 
                return;
 
@@ -1691,9 +1692,9 @@ bool tcp_socket::s_bReuseSession = true;
 
       }
 
-      m_ssl_method = pmethod != NULL ? pmethod : TLS_client_method();
+      m_psslcontext->m_ssl_method = pmethod != NULL ? pmethod : TLS_client_method();
 
-      m_ssl_ctx = SSL_CTX_new(m_ssl_method);
+      m_psslcontext->m_ssl_ctx = SSL_CTX_new(m_psslcontext->m_ssl_method);
 
       char buf[255];
 
@@ -1701,16 +1702,16 @@ bool tcp_socket::s_bReuseSession = true;
 
       ERR_error_string(err, buf);
 
-      SSL_CTX_set_mode(m_ssl_ctx, SSL_MODE_AUTO_RETRY);
+      SSL_CTX_set_mode(m_psslcontext->m_ssl_ctx, SSL_MODE_AUTO_RETRY);
 
       if (m_bReuseSession && m_spsslclientcontext.is_set())
       {
 
-         m_spsslclientcontext->m_pcontext = m_ssl_ctx;
+         m_spsslclientcontext->m_pcontext = m_psslcontext->m_ssl_ctx;
 
-         m_spsslclientcontext->m_psession = m_ssl_session;
+         m_spsslclientcontext->m_psession = m_psslcontext->m_ssl_session;
 
-         m_spsslclientcontext->m_pmethod = m_ssl_method;
+         m_spsslclientcontext->m_pmethod = m_psslcontext->m_ssl_method;
 
       }
 
@@ -1720,15 +1721,15 @@ bool tcp_socket::s_bReuseSession = true;
    void tcp_socket::InitializeContext(const string & context,const string & keyfile,const string & password,const SSL_METHOD *meth_in)
    {
 
-      m_ssl_method = meth_in != NULL ? meth_in : TLS_server_method();
+      m_psslcontext->m_ssl_method = meth_in != NULL ? meth_in : TLS_server_method();
 
-      m_ssl_ctx = SSL_CTX_new(m_ssl_method);
-      SSL_CTX_set_mode(m_ssl_ctx, SSL_MODE_AUTO_RETRY);
+      m_psslcontext->m_ssl_ctx = SSL_CTX_new(m_psslcontext->m_ssl_method);
+      SSL_CTX_set_mode(m_psslcontext->m_ssl_ctx, SSL_MODE_AUTO_RETRY);
       // session id
       if (context.get_length())
-         SSL_CTX_set_session_id_context(m_ssl_ctx, (const uchar *)(const  char *)context, (uint32_t)context.get_length());
+         SSL_CTX_set_session_id_context(m_psslcontext->m_ssl_ctx, (const uchar *)(const  char *)context, (uint32_t)context.get_length());
       else
-         SSL_CTX_set_session_id_context(m_ssl_ctx, (const uchar *)"--is_empty--", 9);
+         SSL_CTX_set_session_id_context(m_psslcontext->m_ssl_ctx, (const uchar *)"--is_empty--", 9);
 
       if (keyfile.begins_ci("cat://"))
       {
@@ -1744,7 +1745,7 @@ bool tcp_socket::s_bReuseSession = true;
          BIO_puts(bio, strCert);
          certificate = PEM_read_bio_X509(bio, NULL, NULL, NULL);
 
-         if (!SSL_CTX_use_certificate(m_ssl_ctx, certificate))
+         if (!SSL_CTX_use_certificate(m_psslcontext->m_ssl_ctx, certificate))
          {
             thiserr << "tcp_socket InitializeContext,-1,Couldn't read certificate string " << keyfile << "::aura::log::level_fatal";
 
@@ -1753,12 +1754,12 @@ bool tcp_socket::s_bReuseSession = true;
          X509_free(certificate);
 
          m_password = password;
-         SSL_CTX_set_default_passwd_cb(m_ssl_ctx, tcp_socket_SSL_password_cb);
-         SSL_CTX_set_default_passwd_cb_userdata(m_ssl_ctx, (socket *) this);
+         SSL_CTX_set_default_passwd_cb(m_psslcontext->m_ssl_ctx, tcp_socket_SSL_password_cb);
+         SSL_CTX_set_default_passwd_cb_userdata(m_psslcontext->m_ssl_ctx, (socket *) this);
          RSA *key = PEM_read_bio_RSAPrivateKey(bio, NULL, NULL, NULL);
 
 
-         if (!(SSL_CTX_use_RSAPrivateKey(m_ssl_ctx, key)))
+         if (!(SSL_CTX_use_RSAPrivateKey(m_psslcontext->m_ssl_ctx, key)))
          {
             thiserr << "tcp_socket InitializeContext,0,Couldn't read private key file " << keyfile << "::aura::log::level_fatal";
          }
@@ -1768,19 +1769,19 @@ bool tcp_socket::s_bReuseSession = true;
       }
       else
       {
-         if (!SSL_CTX_use_certificate_chain_file(m_ssl_ctx, keyfile))
+         if (!SSL_CTX_use_certificate_chain_file(m_psslcontext->m_ssl_ctx, keyfile))
          {
             /* Load our keys and certificates*/
-            if (!(SSL_CTX_use_certificate_file(m_ssl_ctx, keyfile, SSL_FILETYPE_PEM)))
+            if (!(SSL_CTX_use_certificate_file(m_psslcontext->m_ssl_ctx, keyfile, SSL_FILETYPE_PEM)))
             {
                thiserr << "tcp_socket InitializeContext,0,Couldn't read certificate file " << keyfile << "::aura::log::level_fatal";
             }
          }
          m_password = password;
-         SSL_CTX_set_default_passwd_cb(m_ssl_ctx, tcp_socket_SSL_password_cb);
-         SSL_CTX_set_default_passwd_cb_userdata(m_ssl_ctx, (socket *) this);
+         SSL_CTX_set_default_passwd_cb(m_psslcontext->m_ssl_ctx, tcp_socket_SSL_password_cb);
+         SSL_CTX_set_default_passwd_cb_userdata(m_psslcontext->m_ssl_ctx, (socket *) this);
 
-         if (!(SSL_CTX_use_PrivateKey_file(m_ssl_ctx, keyfile, SSL_FILETYPE_PEM)))
+         if (!(SSL_CTX_use_PrivateKey_file(m_psslcontext->m_ssl_ctx, keyfile, SSL_FILETYPE_PEM)))
          {
             thiserr << "tcp_socket InitializeContext,0,Couldn't read private key file " << keyfile << "::aura::log::level_fatal";
          }
@@ -1802,7 +1803,7 @@ bool tcp_socket::s_bReuseSession = true;
          }
       }
 
-      SSL_CTX_set_tlsext_ticket_key_cb(m_ssl_ctx, ssl_tlsext_ticket_key_cb);
+      SSL_CTX_set_tlsext_ticket_key_cb(m_psslcontext->m_ssl_ctx, ssl_tlsext_ticket_key_cb);
 
    }
 
@@ -1811,25 +1812,25 @@ bool tcp_socket::s_bReuseSession = true;
    {
 
       /* create our context*/
-      m_ssl_method = meth_in != NULL ? meth_in : TLS_client_method();
-      m_ssl_ctx = SSL_CTX_new(m_ssl_method);
-      SSL_CTX_set_mode(m_ssl_ctx, SSL_MODE_AUTO_RETRY);
+      m_psslcontext->m_ssl_method = meth_in != NULL ? meth_in : TLS_client_method();
+      m_psslcontext->m_ssl_ctx = SSL_CTX_new(m_psslcontext->m_ssl_method);
+      SSL_CTX_set_mode(m_psslcontext->m_ssl_ctx, SSL_MODE_AUTO_RETRY);
       // session id
       if (context.get_length())
-         SSL_CTX_set_session_id_context(m_ssl_ctx, (const uchar *)(const  char *)context, (uint32_t)context.get_length());
+         SSL_CTX_set_session_id_context(m_psslcontext->m_ssl_ctx, (const uchar *)(const  char *)context, (uint32_t)context.get_length());
       else
-         SSL_CTX_set_session_id_context(m_ssl_ctx, (const uchar *)"--is_empty--", 9);
+         SSL_CTX_set_session_id_context(m_psslcontext->m_ssl_ctx, (const uchar *)"--is_empty--", 9);
 
       /* Load our keys and certificates*/
-      if (!(SSL_CTX_use_certificate_file(m_ssl_ctx, certfile, SSL_FILETYPE_PEM)))
+      if (!(SSL_CTX_use_certificate_file(m_psslcontext->m_ssl_ctx, certfile, SSL_FILETYPE_PEM)))
       {
          TRACE(string("tcp_socket InitializeContext(2),0,Couldn't read certificate file ") + keyfile + string("::aura::log::level_fatal"));
       }
 
       m_password = password;
-      SSL_CTX_set_default_passwd_cb(m_ssl_ctx, tcp_socket_SSL_password_cb);
-      SSL_CTX_set_default_passwd_cb_userdata(m_ssl_ctx, (socket *) this);
-      if (!(SSL_CTX_use_PrivateKey_file(m_ssl_ctx, keyfile, SSL_FILETYPE_PEM)))
+      SSL_CTX_set_default_passwd_cb(m_psslcontext->m_ssl_ctx, tcp_socket_SSL_password_cb);
+      SSL_CTX_set_default_passwd_cb_userdata(m_psslcontext->m_ssl_ctx, (socket *) this);
+      if (!(SSL_CTX_use_PrivateKey_file(m_psslcontext->m_ssl_ctx, keyfile, SSL_FILETYPE_PEM)))
       {
          TRACE(string("tcp_socket InitializeContext(2),0,Couldn't read private key file ") + keyfile + string("::aura::log::level_fatal"));
       }
@@ -1918,7 +1919,7 @@ bool tcp_socket::s_bReuseSession = true;
       }
 
 
-      if(m_ssl)
+      if(m_psslcontext->m_ssl)
       {
          //#ifdef LINUX
          //  signal(SIGPIPE, &::sockets::ssl_sigpipe_handle);
@@ -1944,26 +1945,26 @@ bool tcp_socket::s_bReuseSession = true;
          sigaddset(&set,SIGPIPE);
          pthread_sigmask(SIG_BLOCK,&set,NULL);
 #endif
-         if(SSL_get_shutdown(m_ssl) == 0)
-            SSL_shutdown(m_ssl);
+         if(SSL_get_shutdown(m_psslcontext->m_ssl) == 0)
+            SSL_shutdown(m_psslcontext->m_ssl);
       }
 
-      if(m_ssl)
+      if(m_psslcontext->m_ssl)
       {
 
-         SSL_free(m_ssl);
+         SSL_free(m_psslcontext->m_ssl);
 
-         m_ssl = NULL;
+         m_psslcontext->m_ssl = NULL;
 
       }
 
       if (!m_bReuseSession)
       {
 
-         if (m_ssl_ctx)
+         if (m_psslcontext->m_ssl_ctx)
          {
 
-            SSL_CTX_free(m_ssl_ctx);
+            SSL_CTX_free(m_psslcontext->m_ssl_ctx);
 
          }
 
@@ -1980,26 +1981,26 @@ bool tcp_socket::s_bReuseSession = true;
 #ifdef HAVE_OPENSSL
    SSL_CTX *tcp_socket::GetSslContext()
    {
-      if (!m_ssl_ctx)
+      if (!m_psslcontext->m_ssl_ctx)
       {
 #ifdef DEBUG
 
          log("GetSslContext", 0, "SSL Context is NULL; check InitSSLServer/InitSSLClient", ::aura::log::level_warning);
 #endif
       }
-      return m_ssl_ctx;
+      return m_psslcontext->m_ssl_ctx;
    }
 
    SSL *tcp_socket::GetSsl()
    {
-      if (!m_ssl)
+      if (!m_psslcontext->m_ssl)
       {
 #ifdef DEBUG
 
          log("GetSsl", 0, "SSL is NULL; check InitSSLServer/InitSSLClient", ::aura::log::level_warning);
 #endif
       }
-      return m_ssl;
+      return m_psslcontext->m_ssl;
    }
 #endif
 
@@ -2250,7 +2251,7 @@ bool tcp_socket::s_bReuseSession = true;
       ::X509 *cert = NULL;
       ::X509_name_st *subject = NULL;
 
-      cert = SSL_get_peer_certificate(m_ssl);
+      cert = SSL_get_peer_certificate(m_psslcontext->m_ssl);
       bool ok = false;
       if(cert != NULL && strlen(common_name) > 0)
       {
@@ -2342,7 +2343,7 @@ bool tcp_socket::s_bReuseSession = true;
 
       if(ok)
       {
-         return SSL_get_verify_result(m_ssl);
+         return SSL_get_verify_result(m_psslcontext->m_ssl);
       }
 
       return X509_V_ERR_APPLICATION_VERIFICATION;
@@ -2373,7 +2374,16 @@ bool tcp_socket::s_bReuseSession = true;
 
    }
 
-
+   void tcp_socket::InitializeContextTLSClientMethod()
+   {
+      
+#if defined(HAVE_OPENSSL)
+      
+      InitializeContext("", TLS_client_method());
+      
+#endif
+      
+   }
 
 
 } // namespace sockets

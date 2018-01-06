@@ -30,19 +30,11 @@ namespace message
 {
 
 
-
-
    CLASS_DECL_AURA bool is_idle_message(::message::message * pobj);
 
 
    CLASS_DECL_AURA bool is_idle_message(MESSAGE* pMsg);
 
 
-
-
 } // namespace message
-
-
-
-
 

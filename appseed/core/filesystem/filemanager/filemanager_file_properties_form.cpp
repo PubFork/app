@@ -65,7 +65,7 @@ namespace filemanager
       
       sp(::user::interaction) pui = m_pviewGeneral->get_child_by_name("name");
       
-      sp(::user::elemental) ptext =  (pui.m_p);
+      sp(::user::edit_text) ptext = pui;
       
       ptext->_001SetText(m_itema[0]->m_filepath.name(), ::action::source_none);
 

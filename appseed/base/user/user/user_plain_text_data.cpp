@@ -16,7 +16,7 @@ namespace user
       //m_pgroupcommand      = NULL;
       m_pfile              = NULL;
       m_iBranch            = 0;
-      m_iSelStart          = -1;
+      m_iSelBeg            = -1;
       m_iSelEnd            = -1;
 
    }
@@ -56,13 +56,13 @@ namespace user
    void plain_text_set_sel_command::Undo(plain_text_tree * pdoc)
    {
       UNREFERENCED_PARAMETER(pdoc);
-      pdoc->m_iSelStart = m_iPreviousSelStart;
+      pdoc->m_iSelBeg = m_iPreviousSelBeg;
       pdoc->m_iSelEnd = m_iPreviousSelEnd;
    }
    void plain_text_set_sel_command::Redo(plain_text_tree * pdoc)
    {
       UNREFERENCED_PARAMETER(pdoc);
-      pdoc->m_iSelStart = m_iSelStart;
+      pdoc->m_iSelBeg = m_iSelBeg;
       pdoc->m_iSelEnd = m_iSelEnd;
    }
 

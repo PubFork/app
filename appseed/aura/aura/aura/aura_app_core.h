@@ -92,6 +92,8 @@ public:
    sp(aura_main_data)            m_pmaindata;
    ::aura::system *              m_psystem = NULL;
    string                        m_strAppId;
+   const char *                  m_pszLevel = NULL;
+
 
    int                           m_iaError[APP_CORE_MAXIMUM_ERROR_COUNT];
    int                           m_iErrorCount = 0;
@@ -137,15 +139,18 @@ public:
 
    ::aura::PFN_GET_NEW_APP       m_pfnNewApp;
    
-   ::aura::PFN_GET_NEW_APP       m_pfnNewLibrary;
-
-
-   aura_prelude();
-
-
-   aura_prelude(::aura::PFN_GET_NEW_APP pgetnewapp);
+   ::aura::PFN_GET_NEW_LIBRARY   m_pfnNewLibrary;
    
-   aura_prelude(::aura::PFN_GET_NEW_LIBRARY pgetnewlibrary);
+   const char *                  m_pszLevel;
+   
+
+   aura_prelude(const char * pszLevel = "core");
+
+
+   aura_prelude(::aura::PFN_GET_NEW_APP pgetnewapp, const char * pszLevel = "core");
+   
+   
+   aura_prelude(::aura::PFN_GET_NEW_LIBRARY pgetnewlibrary, const char * pszLevel = "core");
 
 
    virtual ~aura_prelude();

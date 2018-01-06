@@ -97,18 +97,18 @@ namespace user
    }
    
    
-   void primitive::_001SetCheck(check::e_check echeck,::action::context)
-   {
-      
-      
-   }
-   
-   
-   
-   void primitive::_001SetText(const string & strText,::action::context)
-   {
-      
-   }
+//   void check::_001SetCheck(::check::e_check echeck,::action::context)
+//   {
+//      
+//      
+//   }
+//   
+//   
+//   
+//   void set_text::_001SetText(const string & strText,::action::context)
+//   {
+//      
+//   }
 
 
 } // namespace user

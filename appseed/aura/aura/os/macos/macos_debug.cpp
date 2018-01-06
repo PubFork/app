@@ -119,12 +119,6 @@ output_debug_string(
 }
 
 
-void throw_ns_exception()
-{
-
-   _throw(ns_exception());
-   
-}
 
 char * mm_error_string(OSStatus status);
 char * mm_error_description(OSStatus status);

@@ -1,33 +1,26 @@
+//
+//  macos_c.h
+//  base
+//
+//  Created by Camilo Sasuke Tsumanuma on 6/26/16.
+//
+//
+
 #pragma once
 
 
-//#include "macos_ns_exception.h"
-
-#include "macos_multithreading.h"
+#include "macos_windowing_c.h"
 
 
 
-#include "macos_main.h"
+void nsapp_activate_ignoring_other_apps(int i);
+void nsapp_activation_policy_regular();
+void nsapp_activation_policy_prohibited();
+void nsapp_activation_policy_accessory();
+bool nsapp_activation_policy_is_accessory();
+bool nsapp_activation_policy_is_regular();
 
 
-#ifdef cplusplus
 
-#define LOG_THIS_TAG (typeid(*this).name())
-#define LOG_MEMBER_PREFIX __FUNCTION__
-
-#endif
-
-
-bool ns_open_file(const char * psz);
-void ns_set_this_default_browser();
-
-int32_t raw_main_command_line(const char * pszCommandLine, int argc, char *argv[]);
-
+int32_t run_system();
 int32_t aura_main_command_line(const char * pszParams, int argc, char *argv[]);
-
-#ifdef cplusplus
-string macos_error_string(OSStatus status);
-string macos_error_description(OSStatus status);
-#endif
-
-

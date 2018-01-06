@@ -136,7 +136,6 @@
 		07EDC2BB1B4ECB3C00AF8928 /* ios_message_loop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07EDC2971B4ECB3C00AF8928 /* ios_message_loop.cpp */; };
 		07EDC2BE1B4ECB3C00AF8928 /* ios_process_pid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07EDC29D1B4ECB3C00AF8928 /* ios_process_pid.cpp */; };
 		07EDC2C21B4ECB3C00AF8928 /* ios_time.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07EDC2A11B4ECB3C00AF8928 /* ios_time.cpp */; };
-		07EDC2C31B4ECB3C00AF8928 /* ios_user.mm in Sources */ = {isa = PBXBuildFile; fileRef = 07EDC2A21B4ECB3C00AF8928 /* ios_user.mm */; };
 		07EDC2C41B4ECB3C00AF8928 /* ios_win_base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07EDC2A31B4ECB3C00AF8928 /* ios_win_base.cpp */; };
 		07EDC4FC1B4F0C3E00AF8928 /* sqlitedb_base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0747A6A41B2637BB00E85AC7 /* sqlitedb_base.cpp */; };
 		07EDC4FD1B4F0C4100AF8928 /* sqlitedb_set.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0747A6A61B2637BB00E85AC7 /* sqlitedb_set.cpp */; };
@@ -146,6 +145,7 @@
 		9A331C831D4BD0BE00255105 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A331C821D4BD0BE00255105 /* libz.tbd */; };
 		9A331C871D4BD0DB00255105 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A331C861D4BD0DB00255105 /* libsqlite3.tbd */; };
 		9A3322B71D4BF72C00255105 /* libace.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A3322B61D4BF72C00255105 /* libace.a */; };
+		9A4BDE1F1FFEC87400DED594 /* ios_user.mm in Sources */ = {isa = PBXBuildFile; fileRef = 07EDC2A21B4ECB3C00AF8928 /* ios_user.mm */; };
 		9A80879D1DE13B4400F70A07 /* ios_file_set.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A80879C1DE13B4400F70A07 /* ios_file_set.h */; };
 		9A9367AD1D26C7F400ED7535 /* fs.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A9367AC1D26C7F400ED7535 /* fs.h */; };
 		9A9367B61D26C84200ED7535 /* fs_ifs_file.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A9367B41D26C84200ED7535 /* fs_ifs_file.h */; };
@@ -1865,6 +1865,7 @@
 				9A9D7AFC1F5D63DD009EC103 /* filesystem_axis_application.cpp in Sources */,
 				9A9D79F01F5D630E009EC103 /* database_set.cpp in Sources */,
 				9AE1AB521F7856BD0005113C /* ios_port_forward.cpp in Sources */,
+				9A4BDE1F1FFEC87400DED594 /* ios_user.mm in Sources */,
 				9A9D7A251F5D6333009EC103 /* simpledb_manager.cpp in Sources */,
 				9A9D7AF81F5D63D5009EC103 /* fs_native_fs.cpp in Sources */,
 				07EDC2AD1B4ECB3C00AF8928 /* ios.cpp in Sources */,
@@ -1930,7 +1931,6 @@
 				9AEB69D31F81C74100F40B32 /* axis_application.cpp in Sources */,
 				9A9D79F11F5D630E009EC103 /* database_stringhelper.cpp in Sources */,
 				9A9D7A2C1F5D6333009EC103 /* simpledb_simpledb.cpp in Sources */,
-				07EDC2C31B4ECB3C00AF8928 /* ios_user.mm in Sources */,
 				9A9D7A2A1F5D6333009EC103 /* simpledb_session.cpp in Sources */,
 				9A9D7AF31F5D63D5009EC103 /* fs_ifs_file.cpp in Sources */,
 				9A9D7A301F5D6333009EC103 /* simpledb_stra_set.cpp in Sources */,

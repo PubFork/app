@@ -1,4 +1,4 @@
-﻿/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 //
 //  ca2
 //
@@ -1068,46 +1068,50 @@ namespace aura
 //#include "aura/user/user_create_context.h"
 
 
-#if defined(LINUX)
-
-#include "aura/os/ansios/ansios.h"
-
-#elif defined(METROWIN)
-
-#include "aura/os/metrowin/metrowin.h"
-#include "aura/os/metrowin/metrowin_user_impl.h"
-
-#elif defined(MACOS)
-
-#include "aura/aura/os/ansios/ansios.h"
-#include "aura/aura/os/macos/macos.h"
-
-#elif defined(ANDROID)
-
-#include "aura/os/ansios/ansios.h"
-#include "aura/os/android/android.h"
-
-#elif defined(WINDOWSEX)
-
-#include "aura/aura/os/windows/windows.h"
-
-#elif defined(APPLE_IOS)
-
-#include "aura/os/ansios/ansios.h"
-#include "aura/os/ios/ios.h"
-//#include "aura/os/ios/ios_windowing.h"
-
-#elif defined(SOLARIS)
-
-#include "aura/os/ansios/ansios.h"
-#include "aura/os/solaris/solaris_user_impl.h"
-
-#else
+      // C-includes
+      #include "aura/aura/os/os.h"
 
 
-#error "not implemented!!"
 
-#endif
+//#if defined(LINUX)
+//
+//#include "aura/os/ansios/ansios.h"
+//
+//#elif defined(METROWIN)
+//
+//#include "aura/os/metrowin/metrowin.h"
+//#include "aura/os/metrowin/metrowin_user_impl.h"
+//
+//#elif defined(MACOS)
+//
+//#include "aura/aura/os/ansios/ansios.h"
+//#include "aura/aura/os/macos/macos.h"
+//
+//#elif defined(ANDROID)
+//
+//#include "aura/os/ansios/ansios.h"
+//#include "aura/os/android/android.h"
+//
+//#elif defined(WINDOWSEX)
+//
+//#include "aura/aura/os/windows/windows.h"
+//
+//#elif defined(APPLE_IOS)
+//
+//#include "aura/os/ansios/ansios.h"
+//#include "aura/os/ios/ios.h"
+////#include "aura/os/ios/ios_windowing.h"
+//
+//#elif defined(SOLARIS)
+//
+//#include "aura/os/ansios/ansios.h"
+//#include "aura/os/solaris/solaris_user_impl.h"
+//
+//#else
+//
+//#error "not implemented!!"
+//
+//#endif
 
 
 
@@ -1229,6 +1233,10 @@ CLASS_DECL_AURA string get_system_error_message(uint32_t dwError);
 #include "aura/aura/aura/aura_department_container.h"
 #include "aura/aura/xml/xml.h"
 
+
+#ifndef WINDOWSEX
+class mq;
+#endif
 
 #include "aura/aura/aura/aura_live_signal.h"
 #include "aura/multithreading/multithreading_pred_holder.h"
@@ -1678,7 +1686,10 @@ inline void string_format::format(const char * & s,const T & value,Args... args)
 #include "aura/aura/aura/aura_console_window.h"
 
 
-#include "aura/aura/aura/os.h"
+
+      // C++ includes
+      #include "aura/aura/os/os_os.h"
+
 
 
 #include "aura/multithreading/multithreading_data.h"
