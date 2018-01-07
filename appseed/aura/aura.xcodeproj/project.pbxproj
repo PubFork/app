@@ -5913,9 +5913,9 @@
 		9A16405619C4A4CD00966C5E /* macos */ = {
 			isa = PBXGroup;
 			children = (
+				9AD185CD1F9C25E3001CEA8E /* macos.h */,
 				9A2BBCB31FC1F13A00E44B85 /* macos_aura.cpp */,
 				9AD185D01F9C25E4001CEA8E /* macos_base_user_mm.mm */,
-				9AD185CD1F9C25E3001CEA8E /* macos.h */,
 				9A6FACB01F5C71AF00AF31B2 /* macos_cross_win.cpp */,
 				9A6FACAF1F5C71AF00AF31B2 /* macos_cross_win_file.cpp */,
 				9A16406219C4A4CE00966C5E /* macos_cross_win_gdi.h */,
