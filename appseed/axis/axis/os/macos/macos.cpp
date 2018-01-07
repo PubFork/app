@@ -65,12 +65,12 @@ LPWSTR GetCommandLineW()
 // }
 
 
-void osx_init_workspace_rect();
+void mm_init_workspace_rect();
 
 CLASS_DECL_AXIS bool __node_axis_pre_init()
 {
 
-   osx_init_workspace_rect();
+   mm_init_workspace_rect();
    
    return true;
 

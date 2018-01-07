@@ -33,7 +33,7 @@ namespace macos
 CGRect g_rectWorkspace;
 
 
-void osx_init_workspace_rect()
+void mm_init_workspace_rect()
 {
    
    g_rectWorkspace = [[NSScreen mainScreen] frame];
@@ -41,7 +41,7 @@ void osx_init_workspace_rect()
 }
 
 
-CGRect osx_get_workspace_rect()
+CGRect mm_get_workspace_rect()
 {
    
    return g_rectWorkspace;
@@ -49,35 +49,8 @@ CGRect osx_get_workspace_rect()
 }
 
 
- bool window_copy(NSRect & rect, LPCRECT lpcrect)
- {
-    
-    CGRect rectWorkspace = osx_get_workspace_rect();
-    
-    rect.origin.x       = lpcrect->left;
-    rect.origin.y       = rectWorkspace.size.height - lpcrect->bottom;
-    rect.size.width     = lpcrect->right - lpcrect->left;
-    rect.size.height    = lpcrect->bottom - lpcrect->top;
-    
-    return true;
  
- }
  
- bool window_copy(LPRECT lprect, const NSRect & rectSrc)
- {
-    
-    CGRect rectWorkspace = osx_get_workspace_rect();
-    
-    lprect->left        = rectSrc.origin.x;
-    lprect->bottom      = rectWorkspace.size.height - rectSrc.origin.y;
-    lprect->right       = lprect->left + rectSrc.size.width;
-    lprect->top         = lprect->bottom - rectSrc.size.height;
-    
-    return true;
- 
- }
-
-
 int GetMainScreenRect(LPRECT lprect)
 {
    

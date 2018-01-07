@@ -63,3 +63,27 @@ DWORD get_tick_count();
  );
  */
 
+oswindow GetCapture();
+oswindow SetCapture(oswindow window);
+WINBOOL ReleaseCapture();
+oswindow SetFocus(oswindow window);
+oswindow GetFocus();
+oswindow GetActiveWindow();
+oswindow SetActiveWindow(oswindow window);
+
+
+//void GetMainScreenRect(LPRECT lprect);
+
+WINBOOL SetForegroundWindow(oswindow window);
+WINBOOL BringWindowToTop(oswindow window);
+
+void ns_redraw_window(oswindow window);
+
+
+
+
+
+void ui_application_main(int argc, char * argv[]);
+void ui_app_run(int argc, char * argv[]);
+
+

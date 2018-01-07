@@ -69,16 +69,6 @@ void GetWkspaceRect(LPRECT lprect, int iMonitor);
 
 int GetWkspaceCount();
 
-void copy(CGRect & rect, LPCRECT lpcrect);
-void copy(LPRECT lprect, const CGRect & rectSrc);
-bool window_copy(CGRect & rect, LPCRECT lpcrect);
-bool window_copy(LPRECT lprect, const CGRect & rectSrc);
-#ifdef MM
-void copy(NSRect & rect, LPCRECT lpcrect);
-void copy(LPRECT lprect, const NSRect & rectSrc);
-void window_copy(NSRect & rect, LPCRECT lpcrect);
-void window_copy(LPRECT lprect, const NSRect & rectSrc);
-#endif
 
 WINBOOL SetForegroundWindow(oswindow window);
 WINBOOL BringWindowToTop(oswindow window);
