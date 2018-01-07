@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #ifdef WINDOWSEX
 #include "aura/aura/os/windows/windows_system_interaction_impl.h"
 #endif
@@ -6199,7 +6199,6 @@ retry_license:
       _throw_exit(exit_system);
 
       return false;
-
    }
 
 
