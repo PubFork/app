@@ -77,7 +77,7 @@ CGRect g_rectWorkspace;
 void mm_init_workspace_rect()
 {
    
-   g_rectWorkspace = [[UIScreen mainScreen] frame];
+   g_rectWorkspace = [[UIScreen mainScreen] bounds];
    
 }
 
