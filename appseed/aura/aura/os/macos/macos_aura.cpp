@@ -91,20 +91,20 @@ void macos_desktop_image_changed()
 
 
 
-char * mm_ca2_command_line();
-
-string ca2_command_line()
-{
-   
-   char * psz = mm_ca2_command_line();
-   
-   string str(psz);
-   
-   free(psz);
-   
-   return str;
-   
-}
+//char * mm_ca2_command_line();
+//
+//string ca2_command_line()
+//{
+//   
+//   char * psz = mm_ca2_command_line();
+//   
+//   string str(psz);
+//   
+//   free(psz);
+//   
+//   return str;
+//   
+//}
 
 
 

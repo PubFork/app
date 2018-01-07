@@ -28,12 +28,12 @@ void ns_Sleep(unsigned int uiMillis);
 //
 //}
 
-CLASS_DECL_AURA void sleep(const duration & duration)
-{
-
-   ns_Sleep((unsigned int) duration.get_total_milliseconds());
-   
-}
+//CLASS_DECL_AURA void sleep(const duration & duration)
+//{
+//
+//   ns_Sleep((unsigned int) duration.get_total_milliseconds());
+//
+//}
 
 
 CLASS_DECL_AURA void Sleep(unsigned int dwMillis)

@@ -851,22 +851,10 @@
 		9A4171352000321E0056265A /* aura_file_memory_map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AE7B1411FFD9DAB003AFCEC /* aura_file_memory_map.cpp */; };
 		9A41714F200033F50056265A /* _os_ansios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A41713D200033F40056265A /* _os_ansios.cpp */; };
 		9A417150200033F50056265A /* ansios.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A41713E200033F40056265A /* ansios.h */; };
-		9A417151200033F50056265A /* ansios_base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A41713F200033F40056265A /* ansios_base.cpp */; };
-		9A417152200033F50056265A /* ansios_base_file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A417140200033F40056265A /* ansios_base_file.cpp */; };
-		9A417153200033F50056265A /* ansios_cross_win.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A417141200033F40056265A /* ansios_cross_win.cpp */; };
-		9A417154200033F50056265A /* ansios_cross_win_file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A417142200033F40056265A /* ansios_cross_win_file.cpp */; };
-		9A417155200033F50056265A /* ansios_cross_windows_user.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A417143200033F40056265A /* ansios_cross_windows_user.cpp */; };
 		9A417156200033F50056265A /* ansios_file.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A417144200033F40056265A /* ansios_file.h */; };
-		9A417157200033F50056265A /* ansios_file_std.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A417145200033F40056265A /* ansios_file_std.cpp */; };
-		9A417158200033F50056265A /* ansios_local_memory_map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A417146200033F40056265A /* ansios_local_memory_map.cpp */; };
-		9A417159200033F50056265A /* ansios_message_loop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A417147200033F40056265A /* ansios_message_loop.cpp */; };
-		9A41715A200033F50056265A /* ansios_multithreading.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A417148200033F40056265A /* ansios_multithreading.cpp */; };
 		9A41715B200033F50056265A /* ansios_multithreading.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A417149200033F40056265A /* ansios_multithreading.h */; };
-		9A41715C200033F50056265A /* ansios_process.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A41714A200033F40056265A /* ansios_process.cpp */; };
-		9A41715D200033F50056265A /* ansios_serial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A41714B200033F40056265A /* ansios_serial.cpp */; };
 		9A41715E200033F50056265A /* ansios_serial.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A41714C200033F40056265A /* ansios_serial.h */; };
 		9A41715F200033F50056265A /* ansios_thread.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A41714D200033F40056265A /* ansios_thread.h */; };
-		9A417160200033F50056265A /* ansios_time.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A41714E200033F40056265A /* ansios_time.cpp */; };
 		9A417161200034750056265A /* _os_ansios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A41713D200033F40056265A /* _os_ansios.cpp */; };
 		9A41730820004E7A0056265A /* aes.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A4172B820004E790056265A /* aes.h */; };
 		9A41730920004E7A0056265A /* asn1.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A4172B920004E790056265A /* asn1.h */; };
@@ -9380,7 +9368,6 @@
 				9A6FADE01F5C76BD00AF31B2 /* math_natural.cpp in Sources */,
 				9A6FAB881F5C709100AF31B2 /* install_small_bell.cpp in Sources */,
 				9A6FB0731F5C79CF00AF31B2 /* file.cpp in Sources */,
-				9A417160200033F50056265A /* ansios_time.cpp in Sources */,
 				9A6FAFBE1F5C796800AF31B2 /* multithreading_event_base.cpp in Sources */,
 				9A6FB07D1F5C7A0C00AF31B2 /* filesystem_dir_application.cpp in Sources */,
 				9A6FACD01F5C71AF00AF31B2 /* macos_process_pid.cpp in Sources */,
@@ -9542,7 +9529,6 @@
 				9A6FABE91F5C70BE00AF31B2 /* exception_user.cpp in Sources */,
 				9A6FAEDA1F5C778800AF31B2 /* collection_id_array.cpp in Sources */,
 				9A6FAE211F5C771400AF31B2 /* str_international_locale_schema.cpp in Sources */,
-				9A417159200033F50056265A /* ansios_message_loop.cpp in Sources */,
 				9A6FAB901F5C709100AF31B2 /* install.cpp in Sources */,
 				9AF4C3191F836F8300197385 /* aura_app_core.cpp in Sources */,
 				9A6FB0B91F5C7A9B00AF31B2 /* xml.cpp in Sources */,
@@ -9571,7 +9557,6 @@
 				9A6FAE241F5C771400AF31B2 /* str_manager.cpp in Sources */,
 				9AD186401F9C30F0001CEA8E /* visual_apple_image.cpp in Sources */,
 				9AD186231F9C2983001CEA8E /* visual_glyph.cpp in Sources */,
-				9A417151200033F50056265A /* ansios_base.cpp in Sources */,
 				9A6FAE491F5C772700AF31B2 /* geometry_size.cpp in Sources */,
 				9A6FAF331F5C787E00AF31B2 /* sockets_AjpBaseSocket.cpp in Sources */,
 				9A6FADDD1F5C76BD00AF31B2 /* math_int_biunique.cpp in Sources */,
@@ -9580,7 +9565,6 @@
 				9A6FB1631F5C9DF900AF31B2 /* draw2d_region.cpp in Sources */,
 				9A6FAF061F5C77F800AF31B2 /* version.cpp in Sources */,
 				9A6FAB2B1F5C704C00AF31B2 /* zip_zip.cpp in Sources */,
-				9A417152200033F50056265A /* ansios_base_file.cpp in Sources */,
 				9A6FABDF1F5C70BE00AF31B2 /* exception_parsing.cpp in Sources */,
 				9AF4C3311F836F8300197385 /* aura_command_target.cpp in Sources */,
 				9AD1860E1F9C2983001CEA8E /* visual_font.cpp in Sources */,
@@ -9641,7 +9625,6 @@
 				9A6FB0711F5C79CF00AF31B2 /* file_writer_flush.cpp in Sources */,
 				9A6FABD61F5C70BE00AF31B2 /* exception_last_error.cpp in Sources */,
 				9A6FABCE1F5C70BE00AF31B2 /* exception_hresult.cpp in Sources */,
-				9A417154200033F50056265A /* ansios_cross_win_file.cpp in Sources */,
 				9AF4C3831F836F8400197385 /* aura_machine_event_data.cpp in Sources */,
 				9A6FB03E1F5C79CF00AF31B2 /* file_dir2.cpp in Sources */,
 				9AD185DA1F9C2964001CEA8E /* dib_console.cpp in Sources */,
@@ -9681,7 +9664,6 @@
 				9A6FAF701F5C78FA00AF31B2 /* sockets_base_socket_handler.cpp in Sources */,
 				9A6FB1B11F5CA08600AF31B2 /* macos_stdio_file.cpp in Sources */,
 				9A6FABC91F5C70BE00AF31B2 /* exception_dump_floating_point.cpp in Sources */,
-				9A417158200033F50056265A /* ansios_local_memory_map.cpp in Sources */,
 				9AF4C39B1F836F8400197385 /* aura_printer.cpp in Sources */,
 				9A6FAF191F5C783900AF31B2 /* net_sockets.cpp in Sources */,
 				9A6FB0421F5C79CF00AF31B2 /* file_file_base.cpp in Sources */,
@@ -9698,7 +9680,6 @@
 				9A6FAC531F5C713E00AF31B2 /* macos_trace.cpp in Sources */,
 				9A3630A01F9CEA0D0020D70B /* _os_cross_ansios.cpp in Sources */,
 				9A8ED4831F20052E007DB75C /* draw2d_nanosvg.cpp in Sources */,
-				9A41715D200033F50056265A /* ansios_serial.cpp in Sources */,
 				9A6FAE921F5C777800AF31B2 /* comparison_var_strict.cpp in Sources */,
 				9A6FB0351F5C79CF00AF31B2 /* file_byte_ostream.cpp in Sources */,
 				9A6FAB7F1F5C709100AF31B2 /* install_bootstrap.cpp in Sources */,
@@ -9711,7 +9692,6 @@
 				9A6FADA51F5C768E00AF31B2 /* primitive_create.cpp in Sources */,
 				9A920F5E1F3BE99400CD9D94 /* apple.cpp in Sources */,
 				9A6FB0801F5C7A0C00AF31B2 /* filesystem_listing.cpp in Sources */,
-				9A417153200033F50056265A /* ansios_cross_win.cpp in Sources */,
 				9A6FB05F1F5C79CF00AF31B2 /* file_plain_text_stream.cpp in Sources */,
 				9A6FAEF11F5C778800AF31B2 /* collection_var_array.cpp in Sources */,
 				9AD185DD1F9C2964001CEA8E /* graphics_window_dc.cpp in Sources */,
@@ -9735,7 +9715,6 @@
 				9A2BBCB41FC1F13A00E44B85 /* macos_aura.cpp in Sources */,
 				9AF4C3C61F836F8400197385 /* aura_timer_array.cpp in Sources */,
 				9A6FAF711F5C78FA00AF31B2 /* sockets_base_socket.cpp in Sources */,
-				9A41715C200033F50056265A /* ansios_process.cpp in Sources */,
 				9A16421B19C4A4CE00966C5E /* exception_mm.mm in Sources */,
 				9A6FADB11F5C768E00AF31B2 /* primitive_property_set.cpp in Sources */,
 				9A6FB15B1F5C9DF800AF31B2 /* draw2d_dibmap.cpp in Sources */,
@@ -9816,7 +9795,6 @@
 				9A6FACC41F5C71AF00AF31B2 /* macos_cross_win_file.cpp in Sources */,
 				9A6FB0821F5C7A0C00AF31B2 /* filesystem_system.cpp in Sources */,
 				9A6FACAB1F5C719700AF31B2 /* cross_windows_user.cpp in Sources */,
-				9A417157200033F50056265A /* ansios_file_std.cpp in Sources */,
 				9A6FAF321F5C787E00AF31B2 /* sockets_Ajp13Socket.cpp in Sources */,
 				9A6FAB2E1F5C706400AF31B2 /* crypto_crypto.cpp in Sources */,
 				9A6FAF6C1F5C78DB00AF31B2 /* sockets_resolv_server.cpp in Sources */,
@@ -9862,7 +9840,6 @@
 				9A6FB1A11F5C9FF700AF31B2 /* webserver_http_request.cpp in Sources */,
 				9AF4C38B1F836F8400197385 /* aura_muldiv64.cpp in Sources */,
 				9A6FACD11F5C71AF00AF31B2 /* macos_process.cpp in Sources */,
-				9A41715A200033F50056265A /* ansios_multithreading.cpp in Sources */,
 				9A6FB1A31F5C9FF700AF31B2 /* webserver_http_response.cpp in Sources */,
 				9A6FAE261F5C771400AF31B2 /* str_simple.cpp in Sources */,
 				9A6FAE651F5C773700AF31B2 /* datetime_file_time_span.cpp in Sources */,
@@ -9924,7 +9901,6 @@
 				9A6FAFC71F5C796800AF31B2 /* multithreading_mutex.cpp in Sources */,
 				9AF4C33F1F836F8300197385 /* aura_cregexp_util.cpp in Sources */,
 				9A6FAF931F5C794100AF31B2 /* ftp_output.cpp in Sources */,
-				9A417155200033F50056265A /* ansios_cross_windows_user.cpp in Sources */,
 				9AF4C3181F836F8300197385 /* aura_allocate_x86_cache_oriented.cpp in Sources */,
 				9ADF8EA91F9BFE63003BEC4D /* RoundWindowFrameView.mm in Sources */,
 				9AD186121F9C2983001CEA8E /* antialias_8bit.cpp in Sources */,

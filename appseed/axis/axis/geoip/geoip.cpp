@@ -25,6 +25,10 @@ static geoipv6_t IPV6_NULL;
 #include<sys/stat.h>
 #include<sys/mman.h>
 
+
+#define _fileno fileno
+
+
 #endif
 
 #if defined(APPLEOS) || defined(LINUX)

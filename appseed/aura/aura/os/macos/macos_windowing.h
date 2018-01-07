@@ -22,7 +22,7 @@ namespace user
 #ifdef __MM
 
 
-typedef void * int_to_int;
+typedef void * int_ptr_to_int_ptr;
 
 
 #else
@@ -44,7 +44,7 @@ public:
    ::user::interaction_impl *    m_pimpl;
    
    
-   int_to_int *                  m_plongmap;
+   int_ptr_to_int_ptr *          m_plongmap;
    
    
    oswindow_data();

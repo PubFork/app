@@ -489,12 +489,12 @@ WINBOOL ShowWindow(::oswindow oswindow, int nCmdShow)
 
 LONG WINAPI GetWindowLongA(::oswindow oswindow, int nIndex)
 {
-   return (LONG) oswindow->m_pimpl->get_window_long(nIndex);
+   return (LONG) oswindow->get_window_long(nIndex);
 }
 
 LONG WINAPI SetWindowLongA(::oswindow oswindow, int nIndex, LONG l)
 {
-   return (LONG) oswindow->m_pimpl->set_window_long(nIndex, (LONG) l);
+   return (LONG) oswindow->set_window_long(nIndex, (LONG) l);
 }
 
 LONG_PTR WINAPI GetWindowLongPtrA(::oswindow oswindow, int nIndex)

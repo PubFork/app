@@ -53,7 +53,7 @@ oswindow_data::oswindow_data()
 
    m_nswindow  = NULL;
    m_pimpl       = NULL;
-   m_plongmap  = new int_to_int;
+   m_plongmap  = new int_ptr_to_int_ptr;
 
 }
 
@@ -63,7 +63,7 @@ oswindow_data::oswindow_data(nswindow window)
 
    m_nswindow  = window;
    m_pimpl       = NULL;
-   m_plongmap  = new int_to_int;
+   m_plongmap  = new int_ptr_to_int_ptr;
 
 }
 
@@ -81,7 +81,7 @@ oswindow_data::oswindow_data(const oswindow_data & oswindow)
 oswindow_data::~oswindow_data()
 {
 
-   delete m_plongmap;
+   ::aura::del(m_plongmap);
 
 }
 
@@ -302,13 +302,6 @@ int_ptr oswindow_data::set_window_long(int_ptr iIndex, int_ptr iNewLong)
       return 0;
 
    int_ptr iLong = m_plongmap->operator[]((int) iIndex);
-
-//   if (iIndex == GWL_EXSTYLE)
-//   {
-//
-//      defer_dock_application(iLong & WS_EX_TOOLWINDOW);
-//
-//   }
 
    m_plongmap->operator[]((int) iIndex) = (int) iNewLong;
 

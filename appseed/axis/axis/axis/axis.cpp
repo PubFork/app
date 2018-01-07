@@ -30,7 +30,7 @@ CLASS_DECL_AXIS int get_axis_init()
 }
 
 
-CLASS_DECL_AXIS bool defer_axis_init()
+CLASS_DECL_AXIS int_bool defer_axis_init()
 {
 
 

@@ -68,6 +68,7 @@ namespace macos
 
    }
    
+   
    void interaction_impl::round_window_add_ref()
    {
     
@@ -76,6 +77,7 @@ namespace macos
       m_pui->add_ref();
       
    }
+   
 
    void interaction_impl::round_window_dec_ref()
    {
@@ -110,32 +112,8 @@ namespace macos
    }
 
 
-
-   // Change a window's style
-
-   /*__STATIC bool CLASS_DECL_BASE __modify_style(oswindow hWnd, int32_t nStyleOffset,
-    DWORD dwRemove, DWORD dwAdd, UINT nFlags)
-    {
-    ASSERT(hWnd != NULL);
-    DWORD dwStyle = ::GetWindowLong(hWnd, nStyleOffset);
-    DWORD dwNewStyle = (dwStyle & ~dwRemove) | dwAdd;
-    if (dwStyle == dwNewStyle)
-    return FALSE;
-
-    ::SetWindowLong(hWnd, nStyleOffset, dwNewStyle);
-    if (nFlags != 0)
-    {
-    ::SetWindowPos(hWnd, NULL, 0, 0, 0, 0,
-    SWP_NOSIZE | SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE | nFlags);
-    }
-    return TRUE;
-    }*/
-
-
-   bool  interaction_impl::ModifyStyle(oswindow hWnd, DWORD dwRemove, DWORD dwAdd, UINT nFlags)
+   bool interaction_impl::ModifyStyle(oswindow hWnd, DWORD dwRemove, DWORD dwAdd, UINT nFlags)
    {
-
-      //      _throw(todo(get_app()));
 
       if (!::IsWindow(hWnd))
          return false;
@@ -148,8 +126,6 @@ namespace macos
 
       hWnd->set_window_long(GWL_STYLE, dw);
 
-      //return __modify_style(hWnd, GWL_STYLE, dwRemove, dwAdd, nFlags);
-
       return true;
 
    }
@@ -157,8 +133,6 @@ namespace macos
 
    bool interaction_impl::ModifyStyleEx(oswindow hWnd, DWORD dwRemove, DWORD dwAdd, UINT nFlags)
    {
-
-      //      _throw(todo(get_app()));
 
       if (!::IsWindow(hWnd))
          return false;
@@ -173,18 +147,16 @@ namespace macos
 
       return true;
 
-      //      return __modify_style(hWnd, GWL_EXSTYLE, dwRemove, dwAdd, nFlags);
-
    }
 
 
-
-   const MESSAGE* PASCAL interaction_impl::GetCurrentMessage()
+   const MESSAGE * PASCAL interaction_impl::GetCurrentMessage()
    {
 
       return NULL;
 
    }
+   
 
    LRESULT interaction_impl::Default()
    {
