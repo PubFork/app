@@ -132,6 +132,9 @@ namespace primitive
          inline memory_size_t    size() const;
          inline const LPBYTE     data() const;
          inline LPBYTE           data();
+      
+         inline bool             has_data() const;
+         inline bool             is_empty() const;
 
          inline byte operator [] (uint64_t i) const;
          inline byte & operator [] (uint64_t i);
@@ -269,6 +272,14 @@ namespace primitive
    inline LPBYTE memory_base::data()
    {
       return get_data();
+   }
+   inline bool memory_base::has_data() const
+   {
+      return get_size() > 0;
+   }
+   inline bool memory_base::is_empty() const
+   {
+      return !has_data();
    }
 
 

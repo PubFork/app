@@ -286,6 +286,9 @@ public:
    virtual bool load_image(::draw2d::dib * pdib, var varFile);
    virtual bool _load_image(::draw2d::dib * pdib, ::file::file * pfile);
    virtual bool _load_image(::draw2d::dib * pdib, int cx, int cy, int iScan, COLORREF * pdata);
+#ifdef APPLEOS
+   virtual bool apple_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file_sp pfile, ::aura::application * papp);
+#endif
 
    virtual bool save_image(var varFile, ::draw2d::dib * pdib, ::visual::save_image * psaveimage = NULL);
    virtual bool _save_image(::file::file * pfile, ::draw2d::dib * pdib, ::visual::save_image * psaveimage = NULL);

@@ -221,6 +221,20 @@ namespace file
       }
 
       refresh();
+      
+      if(m_straFile.is_empty())
+      {
+         
+         if (!System.os().::aura::os::initialize_wallpaper_fileset(this, bAddSearch))
+         {
+            
+            return false;
+            
+         }
+         
+         refresh();
+
+      }
 
       return true;
 

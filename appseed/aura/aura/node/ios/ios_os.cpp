@@ -1,9 +1,6 @@
 #include "framework.h"
 
 
-#undef USERNAME_LENGTH // mysql one
-
-
 namespace ios
 {
 
@@ -797,7 +794,29 @@ namespace ios
 
 
    }
+   
+   
+   bool os::initialize_wallpaper_fileset(::file::set * pfileset, bool bAddSearch)
+   {
+      
+      if (bAddSearch)
+      {
+         
+         //string strDir;
+         //strDir = System.dir().path(getenv("HOME"), "Pictures");
+         //pimagefileset->add_search(strDir);
+         string strDir;
+         strDir = "/Library/Wallpaper";
+         pfileset->add_search(strDir, true);
 
+         strDir = "/Library/Desktop Pictures";
+         pfileset->add_search(strDir, true);
+
+      }
+      
+      return true;
+      
+   }
 
 } // namespace ios
 

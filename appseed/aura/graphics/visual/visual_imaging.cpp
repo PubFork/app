@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 //#include "freeimage/Source/FreeImage.h"
 //#include "visual_FreeImageFileProc.h"
 #ifdef WINDOWSEX
@@ -193,12 +193,25 @@ bool imaging::LoadImage(::draw2d::dib * pdib,var varFile)
 bool imaging::LoadImageFromFile(::visual::dib_sp::array * pdiba, ::file::file * pfile)
 {
 
-   if(!freeimage_load_diba_from_file(pdiba, pfile, get_app()))
+#ifdef APPLEOS
+   
+   if(!apple_load_diba_from_file(pdiba, pfile, get_app()))
    {
 
       return false;
 
    }
+   
+#else
+   
+   if(!freeimage_load_diba_from_file(pdiba, pfile, get_app()))
+   {
+      
+      return false;
+      
+   }
+
+#endif
 
    return true;
 
@@ -6010,43 +6023,6 @@ bool imaging::load_from_file(::visual::dib_sp::array * pdiba, var varFile, bool 
 {
 
    ::draw2d::lock draw2dlock;
-
-   //single_lock sl(&m_mutex);
-
-   //// image cache load
-   //// cache of decompression time
-   //string strFile;
-   //if (bCache && varFile.get_type() == var::type_string)
-   //   //if(false)
-   //{
-   //   strFile = varFile;
-   //   strFile.replace(":/", "\\_");
-   //   strFile.replace(":\\", "\\_\\");
-   //   strFile.replace("/", "\\");
-   //   strFile = System.dir().time() / "cache" / strFile;
-   //   strFile += ".dib";
-   //   if (Sess(papp).file().exists(strFile))
-   //   {
-   //      try
-   //      {
-   //         ::file::file_sp file = Sess(papp).file().get_file(strFile, ::file::mode_read | ::file::share_deny_write | ::file::type_binary);
-   //         if (file.is_null())
-   //         {
-   //            return true;
-   //         }
-   //         ::file::byte_istream istream(file);
-   //         istream >> *pdib;
-   //         if (!istream.fail())
-   //         {
-   //            return true;
-   //         }
-   //      }
-   //      catch (...)
-   //      {
-   //      }
-   //   }
-   //}
-
 
    try
    {

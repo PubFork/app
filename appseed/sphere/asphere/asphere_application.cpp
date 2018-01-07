@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 //#if defined(LINUX) || defined(APPLEOS)
 //#include <dlfcn.h>
@@ -58,8 +58,6 @@ namespace asphere
 
       }
 
-#if !defined(APPLE_IOS)
-
       Sess(this).userex()->shell()->m_straThemeableIconName.add("google-android.ico");
       Sess(this).userex()->shell()->m_straThemeableIconName.add("Folders-OS-Windows-8-Metro.ico");
       Sess(this).userex()->shell()->m_straThemeableIconName.add("firefox_weather.ico");
@@ -87,8 +85,6 @@ namespace asphere
       }
 
       connect_command("theme", &application::_001OnTheme);
-
-#endif
 
       sync_context_theme();
 

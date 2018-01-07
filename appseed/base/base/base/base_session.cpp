@@ -1,4 +1,4 @@
-﻿#include "framework.h" // from "axis/user/user.h"
+#include "framework.h" // from "axis/user/user.h"
 #include "base/user/user.h"
 //#include "base/user/common_user.h"
 
@@ -447,6 +447,7 @@ namespace base
 
       user()->set_mouse_focus_LButtonDown(pelementalFocus);
 
+      axis::session::on_finally_focus_set(pelementalFocus);
 
    }
 

@@ -441,7 +441,12 @@ namespace user
 
       ev.m_eevent = ::user::event_set_focus;
 
-      BaseOnControlEvent(&ev);
+      if(!BaseOnControlEvent(&ev))
+      {
+         
+         return true;
+         
+      }
 
       return ev.m_bOk;
 

@@ -192,3 +192,43 @@ bool imaging::_load_image(::draw2d::dib * pdib, int w, int h, int iScan, COLORRE
 }
 
 
+
+
+void * get_dib(int & width, int & height, int & iScan, CGImageRef inputCGImage)
+{
+   
+   if(inputCGImage == NULL)
+   {
+      
+      return NULL;
+      
+   }
+   
+   //https://www.raywenderlich.com/69855/image-processing-in-ios-part-1-raw-bitmap-modification
+   // 1.
+   width = (int) CGImageGetWidth(inputCGImage);
+   height = (int) CGImageGetHeight(inputCGImage);
+   
+   // 2.
+   long bytesPerPixel = 4;
+   long bytesPerRow = bytesPerPixel * width;
+   long bitsPerComponent = 8;
+   
+   UInt32 * pixels;
+   pixels = (UInt32 *) calloc(height * width, sizeof(UInt32));
+   
+   // 3.
+   CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+   CGContextRef context = CGBitmapContextCreate(pixels, width, height, bitsPerComponent, bytesPerRow, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
+   
+   // 4.
+   CGContextDrawImage(context, CGRectMake(0, 0, width, height), inputCGImage);
+   
+   // 5. Cleanup
+   CGColorSpaceRelease(colorSpace);
+   
+   CGContextRelease(context);
+   
+   return pixels;
+   
+}
