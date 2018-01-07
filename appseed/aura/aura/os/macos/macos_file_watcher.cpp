@@ -24,6 +24,8 @@
 
 #include "framework.h"
 
+#include "macos_file_watcher.h"
+
 #include <sys/event.h>
 #include <sys/time.h>
 #include <sys/stat.h>

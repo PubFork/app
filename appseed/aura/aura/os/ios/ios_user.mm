@@ -10,69 +10,6 @@
 WINBOOL get_nswindow_rect(oswindow oswindow, LPRECT lprect);
 
 
-//bool oswindow_data::is_window_visible()
-//{
-//   
-//   return 1;
-//   
-//}
-//
-//
-//bool oswindow_data::is_iconic()
-//{
-//   
-////   [window() miniaturize : 0];
-//   
-//   return 1;
-//   
-//   
-//}
-//
-//
-//bool oswindow_data::show_window(int32_t nCmdShow)
-//{
-//
-//   if(nCmdShow == SW_HIDE)
-//   {
-//
-//      [m_nswindow setHidden: true];
-//      
-//   }
-//   else
-//   {
-//   
-//  //    [m_nswindow makeKeyAndOrderFront : nil];
-//      
-//      [m_nswindow setHidden: false];
-//      
-//   }
-//   
-//   return 1;
-//   
-//}
-//
-//
-//bool oswindow_data::client_to_screen(POINT *lppoint)
-//{
-//   RECT rect;
-//   get_nswindow_rect(this, &rect);
-//   lppoint->x += rect.left;
-//   lppoint->y += rect.top;
-//   return true;
-//}
-//
-//bool oswindow_data::screen_to_client(POINT *lppoint)
-//{
-//   RECT rect;
-//   get_nswindow_rect(this, &rect);
-//   lppoint->x -= rect.left;
-//   lppoint->y -= rect.top;
-//   return true;
-//}
-//
-
-
-
 
 
 WINBOOL move_nswindow(oswindow hwnd, int x, int y)
@@ -97,50 +34,12 @@ WINBOOL move_nswindow(oswindow hwnd, int x, int y)
 
 
 
-//void * new_ns_pool()
-//{
-//   
-//   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-//   
-//   return pool;
-//   
-//}
-//
-//
-//void release_pool(void * pool)
-//{
-//
-//   NSAutoreleasePool * ppool =    (NSAutoreleasePool *)pool;
-//   [ppool release];
-//   
-//}
-
-
-
-
 void ns_redraw_window(oswindow w)
 {
    
 //   [w->window() display];
    
 }
-//
-//
-//WINBOOL get_nswindow_rect(oswindow oswindow, LPRECT lprect)
-//{
-//   
-//   CGRect rect = [oswindow->window() frame];
-//   
-//   lprect->left        = rect.origin.x;
-//   lprect->bottom      = [[UIScreen mainScreen] applicationFrame ].size.height - rect.origin.y;
-//   lprect->right       = rect.origin.x  + rect.size.width;
-//   lprect->top         = lprect->bottom - rect.size.height;
-//   
-//   return 1;
-//   
-//}
-
-
 
 int ui_open_url(const char * pszUrl)
 {
@@ -171,3 +70,21 @@ int ui_open_url(const char * pszUrl)
 
 }
 
+
+CGRect g_rectWorkspace;
+
+
+void mm_init_workspace_rect()
+{
+   
+   g_rectWorkspace = [[UIScreen mainScreen] frame];
+   
+}
+
+
+CGRect mm_get_workspace_rect()
+{
+   
+   return g_rectWorkspace;
+   
+}

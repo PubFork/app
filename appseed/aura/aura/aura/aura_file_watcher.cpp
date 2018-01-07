@@ -24,8 +24,8 @@
 
 #if defined(WINDOWSEX)
 //#include "aura/os/windows/windows_file_watcher.h"
-#elif defined(APPLEOS)
-//#include "aura/os/macos/macos_file_watcher.h"
+#elif defined(MACOS)
+#include "aura/os/macos/macos_file_watcher.h"
 #elif defined(LINUX)
 //#include "aura/os/linux/linux_file_watcher.h"
 #elif defined(ANDROID)

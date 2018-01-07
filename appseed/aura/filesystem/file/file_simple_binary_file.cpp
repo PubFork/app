@@ -16,6 +16,7 @@
 
 //#include <unistd.h>
 #define _doserrno errno
+#define _fileno fileno
 #define _fputts fputs
 #define _TEOF EOF
 #define _fgetts fgets

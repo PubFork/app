@@ -942,7 +942,6 @@
 		9A41734F20004E7A0056265A /* x509_vfy.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A4172FF20004E7A0056265A /* x509_vfy.h */; };
 		9A41735020004E7A0056265A /* x509v3.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A41730020004E7A0056265A /* x509v3.h */; };
 		9A41735120004E7A0056265A /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A41730220004E7A0056265A /* libcrypto.a */; };
-		9A41735220004E7A0056265A /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A41730320004E7A0056265A /* libssl.a */; };
 		9A4173592000C1A30056265A /* sockets_ssl_context.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A4173572000C1A30056265A /* sockets_ssl_context.cpp */; };
 		9A41735A2000C1A30056265A /* sockets_ssl_context.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A4173572000C1A30056265A /* sockets_ssl_context.cpp */; };
 		9A41735B2000C1A30056265A /* sockets_ssl_context.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A4173582000C1A30056265A /* sockets_ssl_context.h */; };
@@ -2175,6 +2174,8 @@
 		9AE4C7F61996D29C00E50F88 /* data_data_listener.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE4C7E81996D29C00E50F88 /* data_data_listener.h */; };
 		9AE4C7F81996D29C00E50F88 /* data_item.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE4C7EA1996D29C00E50F88 /* data_item.h */; };
 		9AE4C8191996D83200E50F88 /* file_folder_watch.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE4C8141996D83200E50F88 /* file_folder_watch.h */; };
+		9AE500FA2001F42800542092 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AE500F82001F42800542092 /* libssl.a */; };
+		9AE500FB2001F42800542092 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AE500F92001F42800542092 /* libcrypto.a */; };
 		9AE724FB17E83B69003E47F9 /* multithreading.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE7226917E83B68003E47F9 /* multithreading.h */; };
 		9AE724FD17E83B69003E47F9 /* multithreading_condition.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE7226C17E83B68003E47F9 /* multithreading_condition.h */; };
 		9AE7250017E83B69003E47F9 /* multithreading_critical_section.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE7226F17E83B68003E47F9 /* multithreading_critical_section.h */; };
@@ -4257,6 +4258,8 @@
 		9AE4C7E81996D29C00E50F88 /* data_data_listener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = data_data_listener.h; sourceTree = "<group>"; };
 		9AE4C7EA1996D29C00E50F88 /* data_item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = data_item.h; sourceTree = "<group>"; };
 		9AE4C8141996D83200E50F88 /* file_folder_watch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = file_folder_watch.h; sourceTree = "<group>"; };
+		9AE500F82001F42800542092 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../../../../usr/local/Cellar/openssl/1.0.2n/lib/libssl.a; sourceTree = "<group>"; };
+		9AE500F92001F42800542092 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../../../../usr/local/Cellar/openssl/1.0.2n/lib/libcrypto.a; sourceTree = "<group>"; };
 		9AE612311F229D2100F7CDC2 /* apple.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = apple.cpp; sourceTree = "<group>"; };
 		9AE612681F22B51000F7CDC2 /* apple_graphics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = apple_graphics.h; sourceTree = "<group>"; };
 		9AE7226917E83B68003E47F9 /* multithreading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = multithreading.h; sourceTree = "<group>"; };
@@ -4566,7 +4569,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A41735220004E7A0056265A /* libssl.a in Frameworks */,
+				9AE500FA2001F42800542092 /* libssl.a in Frameworks */,
+				9AE500FB2001F42800542092 /* libcrypto.a in Frameworks */,
 				9AD185CB1F9C2170001CEA8E /* libaxiswinpr.dylib in Frameworks */,
 				9AD185BE1F9C1FC6001CEA8E /* IOKit.framework in Frameworks */,
 				9A33A7551EA902C3000EC109 /* CoreServices.framework in Frameworks */,
@@ -6739,6 +6743,8 @@
 		9A9799131DAC3C2B001CD6D9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9AE500F92001F42800542092 /* libcrypto.a */,
+				9AE500F82001F42800542092 /* libssl.a */,
 				9A4172B320004E790056265A /* iPhoneSimulator11.2-x86_64.sdk */,
 				9AF8E7921F9FE70C003CBDB4 /* libaurapcre.dylib */,
 				9AF8E7941F9FE70C003CBDB4 /* libaxiscrypto.dylib */,
@@ -10047,6 +10053,12 @@
 					USE_OS_IMAGE_LOADER,
 					_DEBUG,
 				);
+				HEADER_SEARCH_PATHS = "/usr/local/opt/openssl@1.1/include";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/usr/local/opt/openssl@1.1/lib",
+				);
+				USER_HEADER_SEARCH_PATHS = "$(WorkspaceDir)/../../../include $(WorkspaceDir)/../../../app/include . .. $(WorkspaceDir)/../../.. $(WorkspaceDir)/../../../app/appseed/base/base $(WorkspaceDir)/../../../app/base/include $(WorkspaceDir)/../../../app/appseed/base/base $(WorkspaceDir)/../../appseed $(WorkspaceDir)/../.. $(WorkspaceDir)/../../../app/base $(WorkspaceDir)/../../../app/appseed/base/framework aura/aura $(WorkspaceDir)/../../../app $(WorkspaceDir)/../../../nodeapp/include";
 			};
 			name = Debug;
 		};
@@ -10056,6 +10068,12 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_C_LANGUAGE_STANDARD = c11;
+				HEADER_SEARCH_PATHS = "/usr/local/opt/openssl@1.1/include";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/usr/local/opt/openssl@1.1/lib",
+				);
+				USER_HEADER_SEARCH_PATHS = "$(WorkspaceDir)/../../../include $(WorkspaceDir)/../../../app/include . .. $(WorkspaceDir)/../../.. $(WorkspaceDir)/../../../app/appseed/base/base $(WorkspaceDir)/../../../app/base/include $(WorkspaceDir)/../../../app/appseed/base/base $(WorkspaceDir)/../../appseed $(WorkspaceDir)/../.. $(WorkspaceDir)/../../../app/base $(WorkspaceDir)/../../../app/appseed/base/framework aura/aura $(WorkspaceDir)/../../../app $(WorkspaceDir)/../../../nodeapp/include";
 			};
 			name = Release;
 		};
@@ -10133,7 +10151,6 @@
 		CEA754D014411F2C007E04DE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_ANALYZER_DEADCODE_DEADSTORES = YES;
 				CLANG_ANALYZER_GCD = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -10206,7 +10223,6 @@
 		CEA754D114411F2C007E04DE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_ANALYZER_DEADCODE_DEADSTORES = YES;
 				CLANG_ANALYZER_GCD = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;

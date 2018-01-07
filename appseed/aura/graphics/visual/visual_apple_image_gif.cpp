@@ -7,7 +7,12 @@
 #include "framework.h"
 
 #include <ImageIO/ImageIO.h>
+
+#ifdef APPLE_IOS
+
 #import <MobileCoreServices/MobileCoreServices.h>
+
+#endif
 
 
 void * get_dib(int & width, int & height, int & iScan, CGImageRef image);

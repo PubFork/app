@@ -188,3 +188,34 @@ string ca2_command_line()
    return ::str::from_strdup(mm_ca2_command_line());
 
 }
+
+
+
+void window_copy(CGRect & rect, LPCRECT lpcrect)
+{
+   
+   CGRect rectWorkspace = mm_get_workspace_rect();
+   
+   rect.origin.x       = lpcrect->left;
+   rect.origin.y       = rectWorkspace.size.height - lpcrect->bottom;
+   rect.size.width     = lpcrect->right - lpcrect->left;
+   rect.size.height    = lpcrect->bottom - lpcrect->top;
+   
+   return true;
+   
+}
+
+void window_copy(LPRECT lprect, const CGRect & rectSrc)
+{
+   
+   CGRect rectWorkspace = mm_get_workspace_rect();
+   
+   lprect->left        = rectSrc.origin.x;
+   lprect->bottom      = rectWorkspace.size.height - rectSrc.origin.y;
+   lprect->right       = lprect->left + rectSrc.size.width;
+   lprect->top         = lprect->bottom - rectSrc.size.height;
+   
+}
+
+
+
