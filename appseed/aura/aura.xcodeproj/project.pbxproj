@@ -929,7 +929,6 @@
 		9A41734E20004E7A0056265A /* x509.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A4172FE20004E7A0056265A /* x509.h */; };
 		9A41734F20004E7A0056265A /* x509_vfy.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A4172FF20004E7A0056265A /* x509_vfy.h */; };
 		9A41735020004E7A0056265A /* x509v3.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A41730020004E7A0056265A /* x509v3.h */; };
-		9A41735120004E7A0056265A /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A41730220004E7A0056265A /* libcrypto.a */; };
 		9A4173592000C1A30056265A /* sockets_ssl_context.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A4173572000C1A30056265A /* sockets_ssl_context.cpp */; };
 		9A41735A2000C1A30056265A /* sockets_ssl_context.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A4173572000C1A30056265A /* sockets_ssl_context.cpp */; };
 		9A41735B2000C1A30056265A /* sockets_ssl_context.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A4173582000C1A30056265A /* sockets_ssl_context.h */; };
@@ -2499,8 +2498,6 @@
 		9AF8E78F1F9FE6ED003CBDB4 /* libace.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AF8E78E1F9FE6EC003CBDB4 /* libace.dylib */; };
 		9AF8E7951F9FE70D003CBDB4 /* libaxiswinpr.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AF8E7901F9FE70B003CBDB4 /* libaxiswinpr.dylib */; };
 		9AF8E7961F9FE70D003CBDB4 /* libaurapcre.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AF8E7921F9FE70C003CBDB4 /* libaurapcre.dylib */; };
-		9AF8E7971F9FE70D003CBDB4 /* libaxisopenssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AF8E7931F9FE70C003CBDB4 /* libaxisopenssl.dylib */; };
-		9AF8E7981F9FE70D003CBDB4 /* libaxiscrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AF8E7941F9FE70C003CBDB4 /* libaxiscrypto.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -4544,11 +4541,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9AD185BE1F9C1FC6001CEA8E /* IOKit.framework in Frameworks */,
+				9A33A7551EA902C3000EC109 /* CoreServices.framework in Frameworks */,
+				9A98A6081771D67E000AE16E /* AppKit.framework in Frameworks */,
+				9A98A6091771D67E000AE16E /* Foundation.framework in Frameworks */,
+				9A98A60A1771D67E000AE16E /* Carbon.framework in Frameworks */,
+				9A98A60B1771D67E000AE16E /* Security.framework in Frameworks */,
 				9AE500FA2001F42800542092 /* libssl.a in Frameworks */,
 				9AE500FB2001F42800542092 /* libcrypto.a in Frameworks */,
 				9AD185CB1F9C2170001CEA8E /* libaxiswinpr.dylib in Frameworks */,
-				9AD185BE1F9C1FC6001CEA8E /* IOKit.framework in Frameworks */,
-				9A33A7551EA902C3000EC109 /* CoreServices.framework in Frameworks */,
 				9A640E7C1EA6C3D800866C2C /* libaxisidn.dylib in Frameworks */,
 				9A0254F41EA59363003C82CF /* libbz2.tbd in Frameworks */,
 				9A0254F21EA5934D003C82CF /* libz.tbd in Frameworks */,
@@ -4556,15 +4557,8 @@
 				9AF8E7961F9FE70D003CBDB4 /* libaurapcre.dylib in Frameworks */,
 				9A26A6FC1D7F01A5001F47A8 /* libaurapcre.dylib in Frameworks */,
 				9ACE46FF1D1FE56000A1E0AD /* libace.dylib in Frameworks */,
-				9A98A6081771D67E000AE16E /* AppKit.framework in Frameworks */,
-				9A41735120004E7A0056265A /* libcrypto.a in Frameworks */,
-				9AF8E7971F9FE70D003CBDB4 /* libaxisopenssl.dylib in Frameworks */,
-				9A98A6091771D67E000AE16E /* Foundation.framework in Frameworks */,
-				9A98A60A1771D67E000AE16E /* Carbon.framework in Frameworks */,
 				9AF8E7951F9FE70D003CBDB4 /* libaxiswinpr.dylib in Frameworks */,
 				9AF8E78F1F9FE6ED003CBDB4 /* libace.dylib in Frameworks */,
-				9AF8E7981F9FE70D003CBDB4 /* libaxiscrypto.dylib in Frameworks */,
-				9A98A60B1771D67E000AE16E /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
