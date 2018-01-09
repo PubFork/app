@@ -465,6 +465,9 @@ namespace windows
 
       oswindow oswindow = ::CreateWindowExW(cs.dwExStyle, cs.lpszClass, cs.lpszName, cs.style, cs.x, cs.y, cs.cx, cs.cy, cs.hwndParent, cs.hMenu, cs.hInstance, cs.lpCreateParams);
 
+
+      uint32_t dwLastError = get_last_error();
+
       if (!unhook_window_create())
          PostNcDestroy();        // cleanup if CreateWindowEx fails too soon
 
@@ -494,7 +497,6 @@ namespace windows
 
          }
 
-         uint32_t dwLastError = get_last_error();
          string strLastError = FormatMessageFromSystem(dwLastError);
          string strMessage;
          strMessage.Format("%s\n\nSystem Error Code: %d", strLastError, dwLastError);
@@ -6054,7 +6056,7 @@ namespace windows
          if (pwnd != NULL)
          {
 
-            ASSERT(Sys(pwnd->get_app()).ui_from_handle(oswindow) == NULL);
+            ASSERT(oswindow_get(oswindow) == NULL);
 
             pwnd->m_pui->m_pimpl = pwnd;
 

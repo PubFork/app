@@ -1,4 +1,4 @@
-#include "framework.h" // from "base/user/user.h"
+﻿#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 
@@ -768,7 +768,7 @@ namespace user
    }
 
 
-   LRESULT interaction_impl::DefWindowProc(UINT_PTR nMsg,WPARAM wParam,lparam lParam)
+   LRESULT interaction_impl::DefWindowProc(UINT nMsg,WPARAM wParam,lparam lParam)
    {
 
       return 0;
@@ -780,11 +780,11 @@ namespace user
    {
 
       UNREFERENCED_PARAMETER(pobj);
-      
+
       ::exception::throw_interface_only(get_app());
-      
+
    }
-   
+
 
    void interaction_impl::GetWindowText(string & rString)
    {
@@ -2988,7 +2988,7 @@ namespace user
 
       //::simple_message_box(NULL,"d1.b","d1.b",MB_OK);
 
-      ASSERT(System.ui_from_handle(oswindow_New) == NULL);
+      ASSERT(oswindow_get(oswindow_New) == NULL);
 
       //::simple_message_box(NULL,"d1.c","d1.c",MB_OK);
 

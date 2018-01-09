@@ -545,7 +545,7 @@ typedef int32_t errno_t;
 
 
 MY_EXTERN_C DWORD get_last_error();
-MY_EXTERN_C DWORD set_last_error(DWORD dw);
+MY_EXTERN_C void set_last_error(DWORD dw);
 
 
 /*#define MAKEWORD(a, b)      ((WORD)(((BYTE)(((DWORD_PTR)(a)) & 0xff)) | ((WORD)((BYTE)(((DWORD_PTR)(b)) & 0xff))) << 8))

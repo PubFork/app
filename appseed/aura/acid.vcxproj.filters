@@ -4567,6 +4567,15 @@
     <ClCompile Include="net\http\_http.cpp">
       <Filter>Source Files\net\http</Filter>
     </ClCompile>
+    <ClCompile Include="aura\os\windows_common\windows_common_error.cpp">
+      <Filter>Source Files\aura\os\windows_common</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows_common\windows_common_unicode.cpp">
+      <Filter>Source Files\aura\os\windows_common</Filter>
+    </ClCompile>
+    <ClCompile Include="net\sockets\bsd\basic\sockets_ssl_context.cpp">
+      <Filter>Source Files\net\sockets\bsd\basic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="multithreading\multithreading.inl">

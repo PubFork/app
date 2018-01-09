@@ -2706,7 +2706,12 @@ namespace user
 
       SCAST_PTR(::message::mouse,pmouse,pobj);
 
-      pmouse->previous(); // give chance to child control and to base views
+      if (pmouse->previous()) // give chance to child control and to base views
+      {
+
+         return;
+
+      }
 
       m_bLButtonDown = true;
 

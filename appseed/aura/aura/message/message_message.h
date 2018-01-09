@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace message
@@ -6,7 +6,7 @@ namespace message
 
 
    class CLASS_DECL_AURA message :
-      public object
+      virtual public object
    {
    public:
 
@@ -40,7 +40,7 @@ namespace message
       bool previous(); // returns bRet
 
 
-      virtual void set(::user::primitive * pwnd, UINT_PTR uiMessage, WPARAM wparam, ::lparam lparam);
+      virtual void set(::user::primitive * pwnd, UINT uiMessage, WPARAM wparam, ::lparam lparam);
 
 
    };

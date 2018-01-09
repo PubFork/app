@@ -1,4 +1,4 @@
-#include "framework.h" // from "base/user/user.h"
+﻿#include "framework.h" // from "base/user/user.h"
 
 ::user::interaction * get_system_window_interaction(::os_system_window * psystemwindow);
 
@@ -4338,7 +4338,7 @@ restart:
    }
 
 
-   LRESULT interaction::DefWindowProc(UINT_PTR uiMessage, WPARAM wparam, lparam lparam)
+   LRESULT interaction::DefWindowProc(UINT uiMessage, WPARAM wparam, lparam lparam)
    {
 
       if (m_pimpl == NULL)
@@ -6274,7 +6274,7 @@ restart:
    }
 
 
-   LRESULT interaction::call_message_handler(UINT_PTR message, WPARAM wparam, lparam lparam)
+   LRESULT interaction::call_message_handler(UINT message, WPARAM wparam, lparam lparam)
    {
 
       smart_pointer < ::message::base > spbase;
@@ -6557,6 +6557,8 @@ restart:
             keep < bool > keepIgnoreMoveEvent(&m_pimpl->m_bIgnoreMoveEvent, true, false, true);
 
             keep < bool > keepDisableSaveWindowRect(&m_bEnableSaveWindowRect, false, m_bEnableSaveWindowRect, true);
+
+            slUserMutex.unlock();
 
             ::ShowWindow(get_handle(), SW_MAXIMIZE);
 
@@ -7708,7 +7710,7 @@ restart:
 
       */
 
-   sp(::message::base) interaction::get_message_base(UINT_PTR uiMessage, WPARAM wparam, lparam lparam)
+   sp(::message::base) interaction::get_message_base(UINT uiMessage, WPARAM wparam, lparam lparam)
    {
 
       sp(::message::base) pbase;

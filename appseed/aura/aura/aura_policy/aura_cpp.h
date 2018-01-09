@@ -1,4 +1,4 @@
-/////////////////////////////////////////////////////////////////////////////////////////
+﻿/////////////////////////////////////////////////////////////////////////////////////////
 //
 //  ca2
 //
@@ -1068,8 +1068,8 @@ namespace aura
 //#include "aura/user/user_create_context.h"
 
 
-      // C-includes
-      #include "aura/aura/os/os.h"
+// C-includes
+#include "aura/aura/os/os.h"
 
 
 
@@ -1687,8 +1687,8 @@ inline void string_format::format(const char * & s,const T & value,Args... args)
 
 
 
-      // C++ includes
-      #include "aura/aura/os/os_os.h"
+// C++ includes
+#include "aura/aura/os/os_os.h"
 
 
 
@@ -1981,9 +1981,6 @@ CLASS_DECL_AURA ::aura::application * get_aura(void * p);
 
 #include "aura/aura/aura/aura_error.h"
 #include "aura/primitive/primitive.h"
-
-
-#include "aura/aura/os/os_cpp.h"
 
 
 #include "aura/user/user/user.h"

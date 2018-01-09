@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 #ifdef OS64BIT
 
@@ -1727,7 +1727,7 @@ bool thread::begin_thread(bool bSynch, int32_t epriority,uint_ptr nStackSize,uin
          {
 
             ::exit_exception * pexception = dynamic_cast< ::exit_exception * > (pstartup->m_error.detach_exception());
-            
+
             pexception->add_ref();
 
             _rethrow(pexception);
@@ -2733,6 +2733,10 @@ int32_t thread::thread_exit()
       m_error.set(-21);
 
    }
+
+   iExitCode = m_error.get_exit_code();
+
+   m_error.m_mapError2.remove_all();
 
    return iExitCode;
 

@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 property_set::property_set(::aura::application * papp, bool bAutoAdd, bool bMultiValue) :
@@ -471,90 +471,90 @@ void property_set::_008Parse(bool bApp, const char * pszCmdLine, var & varFile, 
    if(pszCmdLine == NULL)
       return;
 
-   stringa stra = get_c_args(pszCmdLine);
-   
+   stringa stra = get_c_args_for_c(pszCmdLine);
+
    int i = 0;
-   
+
    if(bApp && stra.get_count() > 0)
    {
-    
+
       strApp = stra[0];
-      
-      i++;
-      
-   }
-   
-   index iFindColon = stra.find_first(":");
-   
-   if(iFindColon < 0)
-   {
-      
-      iFindColon = stra.get_size();
-      
-   }
-   
-   if(iFindColon > i)
-   {
-    
-      if(iFindColon - i > 1)
-      {
-         
-         for(;i < iFindColon; i++)
-         {
-          
-            varFile.stra().add(stra[i]);
-            
-         }
-         
-      }
-      else
-      {
-         
-         varFile = stra[i];
-         
-         i++;
-         
-      }
-      
+
       i++;
 
    }
-   
-   for(; i < stra.get_size(); i++)
+
+   index iFindColon = stra.find_first(":");
+
+   if(iFindColon < 0)
    {
-    
-      string str = stra[i];
-      
-      index iFindEqual = str.find('=');
-      
-      index iFindQuote = str.find('\"');
-      
-      if(iFindEqual >= 0)
+
+      iFindColon = stra.get_size();
+
+   }
+
+   if(iFindColon > i)
+   {
+
+      if(iFindColon - i > 1)
       {
-         
-         string strValue;
-         
-         strValue = str.Mid(iFindEqual + 1);
-         
-         if(iFindEqual + 1 == iFindQuote)
+
+         for(; i < iFindColon; i++)
          {
-            
-            const char * pszValue = strValue;
-         
-            strValue = ::str::consume_quoted_value(pszValue);
-            
+
+            varFile.stra().add(stra[i]);
+
          }
-       
-         _008Add(str.Left(iFindEqual), strValue);
-         
+
       }
       else
       {
-         
-         _008Add(str, NULL);
-         
+
+         varFile = stra[i];
+
+         i++;
+
       }
-      
+
+      i++;
+
+   }
+
+   for(; i < stra.get_size(); i++)
+   {
+
+      string str = stra[i];
+
+      index iFindEqual = str.find('=');
+
+      index iFindQuote = str.find('\"');
+
+      if(iFindEqual >= 0)
+      {
+
+         string strValue;
+
+         strValue = str.Mid(iFindEqual + 1);
+
+         if(iFindEqual + 1 == iFindQuote)
+         {
+
+            const char * pszValue = strValue;
+
+            strValue = ::str::consume_quoted_value(pszValue);
+
+         }
+
+         _008Add(str.Left(iFindEqual), strValue);
+
+      }
+      else
+      {
+
+         _008Add(str, NULL);
+
+      }
+
    }
 
 }

@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace user
@@ -6,6 +6,7 @@ namespace user
 
 
    command::command(::aura::application * papp) :
+      ::object(papp),
       ::message::base(papp)
    {
 
@@ -71,17 +72,17 @@ namespace user
 
    bool command::handle(::command_target * pcommandtarget)
    {
-      
+
       return m_commandtargetptraHandle.add_unique(pcommandtarget);
-      
+
    }
-   
+
 
    bool command::is_handled(::command_target * pcommandtarget)
    {
-      
+
       return m_commandtargetptraHandle.contains(pcommandtarget);
-      
+
    }
 
 
@@ -168,38 +169,38 @@ namespace user
 
    void command::Enable(bool bOn,::action::context actioncontext)
    {
-   
+
       if(m_pmenu != NULL)
       {
-   
+
          ENSURE(m_iIndex < m_iCount);
-   
+
       }
-      
+
       if(m_puiOther != NULL)
       {
-   
+
          Application.enable_window(m_puiOther, bOn);
-   
+
       }
 
       m_bEnable = bOn;
-   
+
       m_bEnableChanged = true;
-   
+
    }
-   
+
    void command::_001SetCheck(bool bCheck,::action::context actioncontext)
    {
-   
+
       _001SetCheck((::check::e_check) (bCheck ? ::check::checked : ::check::unchecked),actioncontext);
-   
+
    }
-   
-   
+
+
    void command::_001SetCheck(::check::e_check nCheck,::action::context actioncontext)
    {
-   
+
       if (m_pmenu != NULL)
       {
 
@@ -209,26 +210,26 @@ namespace user
 
       if(m_puiOther != NULL)
       {
-   
-          Application.send_message(m_puiOther,BM_SETCHECK,nCheck);
-   
+
+         Application.send_message(m_puiOther,BM_SETCHECK,nCheck);
+
       }
 
       m_echeck = nCheck;
 
    }
-   
-   
+
+
    void ::user::command::SetRadio(bool bOn,::action::context actioncontext)
    {
-      
+
       _001SetCheck(bOn,actioncontext);
 
    }
-   
+
    void ::user::command::SetText(const char * lpszText,::action::context actioncontext)
    {
-      
+
       if (m_pmenu != NULL)
       {
 
@@ -247,15 +248,15 @@ namespace user
 
    }
 
-   
+
    void command::do_probe(command_target * ptarget)
    {
 
       if(m_id.is_empty())
          return;     // ignore invalid IDs
-   
+
       ENSURE_VALID(ptarget);
-   
+
       m_bEnableChanged  = false;
 
       m_bRadioChanged   = false;
@@ -263,11 +264,11 @@ namespace user
       m_echeck          = ::check::undefined;
 
       ptarget->_001SendCommandProbe(this);
-   
+
    }
-   
-   
-   
+
+
+
 
 } // namespace user
 

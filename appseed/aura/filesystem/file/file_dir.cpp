@@ -878,7 +878,7 @@ bool dir::mk(const ::file::path & path)
 
    hwstring path(MAX_PATH * 8);
 
-   if(!GetModuleFileNameW(NULL,path,sizeof(path) / sizeof(unichar)))
+   if(!GetModuleFileNameW(NULL,path,path.size()))
    {
 
       return "";
@@ -1593,7 +1593,7 @@ void dir::ls_file(::file::patha & stra,const ::file::path & psz)
       else
       {
          stra.add(FindFileData.cFileName);
-         }
+      }
 
 
       stra.add(FindFileData.cFileName);
@@ -1633,7 +1633,7 @@ void dir::ls_file(::file::patha & stra,const ::file::path & psz)
    }
 
    string str;
-   
+
    str = str::international::unicode_to_utf8(buf);
 
    return str;

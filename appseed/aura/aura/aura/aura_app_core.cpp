@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include <time.h>
 
 
@@ -214,14 +214,14 @@ bool app_core::ini()
    string strCommandLine = merge_colon_args(
    {
 #ifdef WINDOWS
-      get_c_args(string(::GetCommandLineW()))
+      get_c_args_for_c(string(::GetCommandLineW()))
 #else
       get_c_args(m_pmaindata->m_argc, m_pmaindata->m_argv)
 #endif
-      ,get_c_args(m_pmaindata->m_strCommandLine)
-      ,get_c_args(ca2_command_line())
+      ,get_c_args_for_c(m_pmaindata->m_strCommandLine)
+      ,get_c_args_for_c(ca2_command_line())
 #ifdef APPLEOS
-      ,get_c_args(ca2_command_line2())
+      ,get_c_args_for_c(ca2_command_line2())
 #endif
    });
 
@@ -308,9 +308,9 @@ void app_core::defer_load_backbone_libraries(string strAppId)
          hmodule = __node_library_open(strLibrary, strMessage);
 
       }
-      
+
       PFN_DEFER_INIT pfnDeferInit = NULL;
-      
+
       if (hmodule != NULL || bInApp)
       {
 
@@ -334,12 +334,12 @@ void app_core::defer_load_backbone_libraries(string strAppId)
          }
 
       }
-      
+
       if(!::aura_level::defer_init(pfnDeferInit))
       {
-         
+
          on_result(-3);
-         
+
       }
 
    }
@@ -583,11 +583,11 @@ aura_prelude::aura_prelude()
 {
 
    s_pprelude = this;
-   
+
    m_pfnNewApp = NULL;
-   
+
    m_pfnNewLibrary = NULL;
-   
+
 }
 
 
@@ -597,22 +597,22 @@ aura_prelude::aura_prelude(::aura::PFN_GET_NEW_APP pgetnewapp)
    s_pprelude = this;
 
    m_pfnNewApp = pgetnewapp;
-   
+
    m_pfnNewLibrary = NULL;
-   
+
    m_pfnNewLibrary = NULL;
-   
+
 }
 
 aura_prelude::aura_prelude(::aura::PFN_GET_NEW_LIBRARY pgetnewlibrary)
 {
-   
+
    s_pprelude = this;
-   
+
    m_pfnNewLibrary = pgetnewlibrary;
-   
+
    m_pfnNewApp = NULL;
-   
+
 }
 
 
@@ -679,9 +679,9 @@ bool aura_prelude::prelude(app_core * pappcore)
 {
 
    pappcore->m_pfnNewApp = m_pfnNewApp;
-   
+
    pappcore->m_pfnNewLibrary = m_pfnNewLibrary;
-   
+
    return true;
 
 }
@@ -862,6 +862,7 @@ stringa get_c_args_for_c(const char * psz)
    return stra;
 
 }
+
 
 
 stringa get_c_args(int argc, char ** argv)
@@ -1106,11 +1107,11 @@ void app_core::run()
       set_main_thread(m_psystem->m_hthread);
 
       set_main_thread_id(m_psystem->m_uiThread);
-      
+
       m_psystem->m_strAppId = m_pmaindata->m_pmaininitdata->m_strAppId;
-      
+
       m_psystem->startup_command(m_pmaindata->m_pmaininitdata);
-      
+
       ns_application_main(m_pmaindata->m_argc, m_pmaindata->m_argv);
 
    }
@@ -1222,237 +1223,237 @@ void app_core::run()
 
 
 aura_level::aura_level(e_level elevel, PFN_DEFER_INIT pfnDeferInit) :
-m_elevel(elevel),
-m_pfnDeferInit(pfnDeferInit),
-m_plevelNext(s_plevel)
+   m_elevel(elevel),
+   m_pfnDeferInit(pfnDeferInit),
+   m_plevelNext(s_plevel)
 {
-   
+
    s_plevel = this;
-   
+
 }
 
 aura_level * aura_level::get_maximum_level()
 {
-   
+
    if(s_plevel == NULL)
    {
-      
+
       return NULL;
-      
+
    }
-   
+
    aura_level * plevel = s_plevel;
-   
+
    aura_level * plevelMax = plevel;
-   
+
    while(true)
    {
-      
+
       plevel = plevel->m_plevelNext;
-      
+
       if(plevel == NULL)
       {
-         
+
          break;
-         
+
       }
-      
+
       if(plevel->m_elevel > plevelMax->m_elevel)
       {
-         
+
          plevelMax = plevel;
-         
+
       }
-      
+
    }
-   
+
    return plevelMax;
-   
+
 }
 
 
 aura_level * aura_level::find_level(PFN_DEFER_INIT pfnDeferInit)
 {
-   
+
    if(s_plevel == NULL)
    {
-      
+
       return NULL;
-      
+
    }
-   
+
    aura_level * plevel = s_plevel;
-   
+
    while(plevel != NULL)
    {
-      
+
       if(plevel->m_pfnDeferInit > pfnDeferInit)
       {
-         
+
          return plevel;
-         
+
       }
 
       plevel = plevel->m_plevelNext;
-      
+
    }
-   
+
    return NULL;
-   
+
 }
 
 
 bool aura_level::defer_init()
 {
-   
+
    auto plevel = get_maximum_level();
-   
+
    if(plevel == NULL)
    {
-      
+
       return false;
-      
+
    }
-   
+
    return plevel->m_pfnDeferInit();
-   
+
 }
 
 
 bool aura_level::defer_init(PFN_DEFER_INIT pfnDeferInit)
 {
-   
+
    auto plevel = get_maximum_level();
-   
+
    if(plevel == NULL)
    {
-      
+
       if(pfnDeferInit != NULL)
       {
-         
+
          return pfnDeferInit();
-         
+
       }
       else
       {
-         
+
          return true;
-         
+
       }
-      
+
    }
    else if(pfnDeferInit == NULL)
    {
-      
+
       if(plevel->m_pfnDeferInit != NULL)
       {
-      
+
          return plevel->m_pfnDeferInit();
-         
+
       }
       else
       {
-       
+
          return true;
-         
+
       }
-      
+
    }
    else
    {
-      
+
       auto plevelFind = find_level(pfnDeferInit);
-      
+
       if(plevelFind == NULL)
       {
-         
+
          bool bOk1 = false;
-         
+
          bOk1 = pfnDeferInit();
-         
+
          bool bOk2 = true;
-         
+
          if(plevel->m_pfnDeferInit != NULL)
          {
-            
+
             bOk2 = plevel->m_pfnDeferInit();
-            
+
          }
-         
+
          return bOk1 && bOk2;
-         
+
       }
       else if(plevelFind->m_elevel > plevel->m_elevel)
       {
-         
+
          return plevelFind->m_pfnDeferInit();
-         
+
       }
       else
       {
-         
+
          return plevel->m_pfnDeferInit();
-         
+
       }
-      
+
    }
-   
+
    return true;
-   
+
 }
 
 ::aura_app * aura_app::s_papp = NULL;
 
 aura_app::aura_app(const char * pszName, ::aura::PFN_GET_NEW_APP pfnNewApp) :
-m_pszName(pszName),
-m_pfnNewApp(pfnNewApp),
-m_pfnNewLibrary(NULL),
-m_pappNext(s_papp)
+   m_pszName(pszName),
+   m_pfnNewApp(pfnNewApp),
+   m_pfnNewLibrary(NULL),
+   m_pappNext(s_papp)
 {
-   
+
    s_papp = this;
-   
+
 }
 
 
 aura_app::aura_app(const char * pszName, ::aura::PFN_GET_NEW_LIBRARY pfnNewLibrary):
-m_pszName(pszName),
-m_pfnNewApp(NULL),
-m_pfnNewLibrary(pfnNewLibrary),
-m_pappNext(s_papp)
+   m_pszName(pszName),
+   m_pfnNewApp(NULL),
+   m_pfnNewLibrary(pfnNewLibrary),
+   m_pappNext(s_papp)
 {
-   
+
    s_papp = this;
-   
+
 }
 
 ::aura_app * aura_app::get(const char * pszName)
 {
-   
+
    if(s_papp == NULL)
    {
-      
+
       return NULL;
-      
+
    }
-   
+
    aura_app * papp = s_papp;
-   
+
    while(papp != NULL)
    {
-      
+
       if(!stricmp(papp->m_pszName, pszName))
       {
-         
+
          return papp;
-         
+
       }
-      
+
       papp = papp->m_pappNext;
-      
+
    }
-   
+
    return NULL;
-   
+
 }
 

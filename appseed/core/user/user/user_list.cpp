@@ -2869,8 +2869,6 @@ namespace user
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
 
-      pmouse->previous(); // give chance to base views
-
       int_ptr iItem;
 
       point pt = pmouse->m_pt;
@@ -2925,7 +2923,10 @@ namespace user
                   SetTimer(12345678, 400, NULL);
                   item_range itemrange;
                   itemrange.set(iItem, iItem, 0, m_columna.get_count() - 1, -1, -1);
-                  m_rangeSelection.add_item(itemrange);
+                  _001AddSelection(itemrange);
+                  pobj->m_bRet = true;
+                  pmouse->set_lresult(1);
+                  return;
                }
             }
          }
@@ -2971,6 +2972,9 @@ namespace user
       }
 
       RedrawWindow();
+
+      pmouse->previous(); // give chance to base views
+
 
       //if (!has_focus())
       //{

@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include <math.h>
 
 
@@ -39,7 +39,7 @@ namespace prompt
    {
 
       BASE::install_message_routing(pinterface);
-	   IGUI_MSG_LINK(WM_CONTEXTMENU, pinterface, this, &primary_view::_001OnContextMenu);
+      IGUI_MSG_LINK(WM_CONTEXTMENU, pinterface, this, &primary_view::_001OnContextMenu);
 
    }
 
@@ -65,129 +65,129 @@ namespace prompt
                string strNewLine;
                try
                {
-                  
+
                   ::calculator::parser parser(get_app());
-                  
+
                   ::calculator::element * pelement = parser.parse(strLine);
-                  
+
                   string strValue;
-                  
+
                   strValue.Format("%f", pelement->get_value());
-                  
+
                   string strNewText = str + pelement->get_expression() + " = " + strValue  + "\n";
-                  
+
                   strNewText.replace("\r\n", "\n");
-                  
+
                   _001SetText(strNewText, ::action::source::sync());
-                  
+
                   str = strNewText;
-                  
+
                   m_iCompromised = m_ptree->m_iSelBeg = m_ptree->m_iSelEnd = strNewText.get_length();
-                  
+
                   bOk = true;
-                  
+
                }
                catch(const char * psz)
                {
-                  
+
                   TRACE("error %s", psz);
-                  
+
                   bOk = false;
-                  
+
                }
 
                try
                {
                   if(!bOk)
                   {
-                     
+
                      stringa stra;
-                     
+
                      if(cregexp_util::match(stra, strLine, "(.+)\\s*segundos", true, 2) == 1)
                      {
-                        
+
                         calculator::parser parser(get_app());
-                        
+
                         calculator::element * pelement = parser.parse(stra[1]);
-                        
+
                         string strValue;
-                        
+
                         strValue.Format("%f", pelement->get_value());
-                        
+
                         string strMinFrac;
-                        
+
                         strMinFrac.Format("%f", pelement->get_value().mod() / 60.0);
-                        
+
                         string strMin;
-                        
+
                         strMin.Format("%d", ((int32_t)pelement->get_value().mod() / 60));
-                        
+
                         string strMinSec;
-                        
+
                         strMinSec.Format("%f", fmod(pelement->get_value().mod(), 60.0));
-                        
+
                         string strNewText = str + pelement->get_expression() + " segundos = " + strValue  + " segundos = " + strMinFrac + " minutos = " + strMin + " minutos e " + strMinSec + " segundos\n";
-                        
+
                         strNewText.replace("\r\n", "\n");
-                        
+
                         _001SetText(strNewText, ::action::source::sync());
-                        
+
                         str = strNewText;
-                        
+
                         m_iCompromised = m_ptree->m_iSelBeg = m_ptree->m_iSelEnd = strNewText.get_length();
-                        
+
                         bOk = true;
-                        
+
                      }
                      else if(cregexp_util::match(stra, strLine, "(.+)\\s*dias", true, 2) == 1)
                      {
-                        
+
                         calculator::parser parser(get_app());
-                        
+
                         calculator::element * pelement = parser.parse(stra[1]);
-                        
+
                         string strValue;
-                        
+
                         strValue.Format("%f", pelement->get_value());
-                        
+
                         string strMinFrac;
-                        
+
                         strMinFrac.Format("%f", pelement->get_value().mod() / 60.0);
-                        
+
                         string strMin;
-                        
+
                         strMin.Format("%d", ((int32_t)pelement->get_value().mod() / 60));
-                        
+
                         string strMinSec;
-                        
+
                         strMinSec.Format("%f", fmod(pelement->get_value().mod(), 60.0));
-                        
+
                         string strNewText = str + pelement->get_expression() + " segundos = " + strValue  + " segundos = " + strMinFrac + " minutos = " + strMin + " minutos e " + strMinSec + " segundos\n";
-                        
+
                         strNewText.replace("\r\n", "\n");
-                        
+
                         _001SetText(strNewText, ::action::source::sync());
-                        
+
                         str = strNewText;
-                        
+
                         m_iCompromised = m_ptree->m_iSelBeg = m_ptree->m_iSelEnd = strNewText.get_length();
-                  
-                    Application.send_simple_command("winactionareaview::show_calendar(\""+ ::str::from((int32_t) pelement->get_value().mod()) +"\")", (void *) get_wnd()->get_os_data());
-                        
+
+                        Application.send_simple_command("winactionareaview::show_calendar(\""+ ::str::from((int32_t) pelement->get_value().mod()) +"\")", (void *) get_wnd()->get_os_data());
+
                         bOk = true;
-                        
+
                      }
-                     
+
                   }
-                  
+
                }
                catch(const char * psz)
                {
-                  
+
                   TRACE("error %s", psz);
-                  
+
                   bOk = false;
-                  
+
                }
 
                if(!bOk)
@@ -196,17 +196,17 @@ namespace prompt
 #ifdef WINDOWSEX
 
                   if(::ShellExecuteW(
-                     NULL,
-                     NULL,
-                     ::str::international::utf8_to_unicode(strLine),
-                     NULL,
-                     NULL,
-                     SW_SHOW))
+                        NULL,
+                        NULL,
+                        ::str::international::utf8_to_unicode(strLine),
+                        NULL,
+                        NULL,
+                        SW_SHOW))
                   {
                      string strNewText = str + "executing " + strLine  + "...";
                      strNewText.replace("\r\n", "\n");
                      _001SetText(strNewText, ::action::source::system());
-                     m_iCompromised = m_ptree->m_iSelStart = m_ptree->m_iSelEnd = strNewText.get_length();
+                     m_iCompromised = m_ptree->m_iSelBeg = m_ptree->m_iSelEnd = strNewText.get_length();
                   }
 
 #else

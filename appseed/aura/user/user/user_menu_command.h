@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace user
@@ -18,7 +18,7 @@ namespace user
 
 
       menu_command(::aura::application * papp);
-      
+
 
       void delete_this() override;
 

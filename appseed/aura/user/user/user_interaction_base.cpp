@@ -1,4 +1,4 @@
-#include "framework.h" // from "base/user/user.h"
+﻿#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 
@@ -1604,7 +1604,7 @@ Restart:
    }
 
 
-   LRESULT interaction_base::DefWindowProc(UINT_PTR uiMessage,WPARAM wparam,lparam lparam)
+   LRESULT interaction_base::DefWindowProc(UINT uiMessage,WPARAM wparam,lparam lparam)
    {
 
       return 0;
@@ -2689,7 +2689,7 @@ Restart:
    }
 
 
-   LRESULT interaction_base::call_message_handler(UINT_PTR message, WPARAM wparam, ::lparam lparam)
+   LRESULT interaction_base::call_message_handler(UINT message, WPARAM wparam, ::lparam lparam)
    {
 
       ::exception::throw_interface_only(get_app());

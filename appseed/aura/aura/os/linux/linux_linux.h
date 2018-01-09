@@ -30,7 +30,7 @@ DWORD get_tick_count();
 
 
 CLASS_DECL_AURA DWORD get_last_error();
-CLASS_DECL_AURA DWORD set_last_error(DWORD dw);
+CLASS_DECL_AURA void set_last_error(DWORD dw);
 
 
 CLASS_DECL_AURA bool _istlead(int32_t ch);

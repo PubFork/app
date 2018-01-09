@@ -1,4 +1,4 @@
-//
+﻿//
 //  os.h
 //  aura
 //
@@ -20,8 +20,10 @@
 #include "aura/aura/os/linux/linux.h"
 #include "aura/aura/os/linux/linux_c.h"
 #elif defined(METROWIN)
+#include "aura/aura/os/windows_common/windows_common_c.h"
 #include "aura/aura/os/metrowin/metrowin.h"
 #elif defined(WINDOWSEX)
+#include "aura/aura/os/windows_common/windows_common_c.h"
 #include "aura/aura/os/windows/windows.h"
 #elif defined(SOLARIS)
 #include "aura/aura/os/solaris/solaris.h"

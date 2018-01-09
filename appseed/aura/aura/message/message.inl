@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #define MSG_TYPE_LINK(emessagetype, psender, preceiver, phandler) \
@@ -11,7 +11,7 @@
 //   IGUI_MSG_LINK(::message::emessageenum, psender, preceiver, phandler)
 
 #define SCAST_MSG(tcast) \
-   ::message::tcast * p##tcast = (::message::tcast *) pmessage;   
+   ::message::tcast * p##tcast = dynamic_cast < ::message::tcast * > (pmessage);
 
 
 

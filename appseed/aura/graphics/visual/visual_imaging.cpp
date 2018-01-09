@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "freeimage/Source/FreeImage.h"
 //#include "visual_FreeImageFileProc.h"
 #ifdef WINDOWSEX
@@ -194,21 +194,21 @@ bool imaging::LoadImageFromFile(::visual::dib_sp::array * pdiba, ::file::file * 
 {
 
 #ifdef APPLEOS
-   
+
    if(!apple_load_diba_from_file(pdiba, pfile, get_app()))
    {
 
       return false;
 
    }
-   
+
 #else
-   
+
    if(!freeimage_load_diba_from_file(pdiba, pfile, get_app()))
    {
-      
+
       return false;
-      
+
    }
 
 #endif
@@ -6215,12 +6215,12 @@ bool imaging::load_image(::draw2d::dib * pdib, var varFile)
 bool imaging::save_image(var varFile, ::draw2d::dib * pdib, ::visual::save_image * psaveimage)
 {
 
-   ::file::file_sp file = Application.file().get_file(varFile, 
-      ::file::type_binary 
-     | ::file::mode_write 
-      |       ::file::share_deny_write 
-      | ::file::defer_create_directory
-   | ::file::mode_create);
+   ::file::file_sp file = Application.file().get_file(varFile,
+                          ::file::type_binary
+                          | ::file::mode_write
+                          |       ::file::share_deny_write
+                          | ::file::defer_create_directory
+                          | ::file::mode_create);
 
    if (file.is_null())
    {
@@ -6232,4 +6232,87 @@ bool imaging::save_image(var varFile, ::draw2d::dib * pdib, ::visual::save_image
    return _save_image(file, pdib,  psaveimage);
 
 }
+
+
+
+
+bool imaging::_load_image(::draw2d::dib * pdib, int w, int h, int iScan, COLORREF * pdata)
+{
+
+   COLORREF * pcolorref = pdata;
+
+   if (pcolorref == NULL)
+   {
+
+      return false;
+
+   }
+
+   try
+   {
+
+      if (!pdib->create(w, h))
+      {
+
+         return false;
+
+      }
+
+      ::draw2d::_001ProperCopyColorref(w, h, pdib->m_pcolorref, pdib->m_iScan, pcolorref, iScan);
+
+   }
+   catch (...)
+   {
+
+      return false;
+
+   }
+
+   //#if 1 // check premultiplied
+   //
+   //   byte * p = (byte *) pdib->m_pcolorref;
+   //
+   //   size_t s = iScan * h / sizeof(COLORREF);
+   //
+   //   while(s> 0)
+   //   {
+   //      if(p[0] > p[3] || p[1] > p[3] || p[2] > p[3])
+   //      {
+   //         output_debug_string("probably not premultiplied");
+   //      }
+   //p+=4;
+   //      s--;
+   //   }
+   //
+   //#endif
+
+#ifdef APPLEOS
+
+   byte * p = (byte *)pdib->m_pcolorref;
+
+   size_t s = iScan * h / sizeof(COLORREF);
+
+   COLORREF * pcr = (COLORREF*)p;
+   while (s> 0)
+   {
+      //      if(p[0] > p[3] || p[1] > p[3] || p[2] > p[3])
+      //      {
+      //         output_debug_string("probably not premultiplied");
+      //      }
+      p[0] = p[0] * p[3] / 255;
+      p[1] = p[1] * p[3] / 255;
+      p[2] = p[2] * p[3] / 255;
+      p += 4;
+      s--;
+   }
+
+#endif
+
+   return true;
+
+
+}
+
+
+
 

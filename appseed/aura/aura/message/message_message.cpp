@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace message
@@ -117,7 +117,7 @@ namespace message
    }
 
 
-   void message::set(::user::primitive * pwnd, UINT_PTR uiMessage, WPARAM wparam, ::lparam lparam)
+   void message::set(::user::primitive * pwnd, UINT uiMessage, WPARAM wparam, ::lparam lparam)
    {
 
       m_id = ::message::id(::id((int_ptr) uiMessage), ::message::type_message);

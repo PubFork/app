@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #include "user_interaction_base.h"
@@ -709,9 +709,9 @@ namespace user
       // for custom cleanup after WM_NCDESTROY
       virtual void PostNcDestroy() override;
 
-      virtual LRESULT DefWindowProc(UINT_PTR uiMessage, WPARAM wparam, lparam lparam) override;
+      virtual LRESULT DefWindowProc(UINT uiMessage, WPARAM wparam, lparam lparam) override;
 
-      virtual LRESULT call_message_handler(UINT_PTR message, WPARAM wparam, lparam lparam) override;
+      virtual LRESULT call_message_handler(UINT message, WPARAM wparam, lparam lparam) override;
 
       virtual void message_handler(::message::base * pbase) override;
       virtual LRESULT message_handler(LPMESSAGE lpmessage) override;
@@ -913,7 +913,7 @@ namespace user
       */
 
 
-      sp(::message::base) get_message_base(UINT_PTR uiMessage, WPARAM wparam, lparam lparam);
+      sp(::message::base) get_message_base(UINT uiMessage, WPARAM wparam, lparam lparam);
 
 
       //void transfer_from(::aura::timer_array & ta, interaction * pui);

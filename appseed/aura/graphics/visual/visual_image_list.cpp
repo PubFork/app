@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 #ifndef METROWIN
 //#include "freeimage/Source/FreeImage.h"
@@ -204,7 +204,30 @@ int32_t image_list::add_icon_os_data(void * pvoid)
 
 int32_t image_list::add(::visual::icon * picon)
 {
+
+   if (is_null(picon))
+   {
+
+      return -1;
+
+   }
+
+   if (m_spdib.is_null())
+   {
+
+      if (!create(picon->m_size.cx, picon->m_size.cy))
+      {
+
+         return -1;
+
+      }
+
+   }
+
    int32_t iItem = m_iSize;
+
+
+
    if(iItem >= _get_alloc_count())
    {
       _grow();
