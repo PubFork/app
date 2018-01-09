@@ -3,9 +3,9 @@
 //#include <math.h>
 
 
-
 namespace draw2d
 {
+
 
    static double g_dPi = atan(1.0) * 4.0;
 

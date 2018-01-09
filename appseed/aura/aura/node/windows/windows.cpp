@@ -120,11 +120,11 @@ namespace windows
       // convert system time to local file time
       FILETIME localTime;
       if(!SystemTimeToFileTime((LPSYSTEMTIME)&sysTime,&localTime))
-         ::windows::file_exception::ThrowOsError(papp,(LONG)::GetLastError());
+         ::windows::file_exception::ThrowOsError(papp,(LONG)::get_last_error());
 
       // convert local file time to UTC file time
       if(!LocalFileTimeToFileTime(&localTime,pFileTime))
-         ::windows::file_exception::ThrowOsError(papp,(LONG)::GetLastError());
+         ::windows::file_exception::ThrowOsError(papp,(LONG)::get_last_error());
 
    }
 

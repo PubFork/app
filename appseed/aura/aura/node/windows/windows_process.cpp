@@ -142,7 +142,7 @@ namespace windows
       // If an error occurs, exit the application.
       if (!bSuccess)
       {
-         DWORD dwLastError = ::GetLastError();
+         DWORD dwLastError = ::get_last_error();
          string strMessage = get_system_error_message(dwLastError);
          output_debug_string(pwszCommandLine);
          output_debug_string("\r\n");

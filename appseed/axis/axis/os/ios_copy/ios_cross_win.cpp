@@ -2,7 +2,7 @@
 
 
 
-DWORD GetLastError()
+DWORD get_last_error()
 {
     
     return get_thread_int("dwLastError");
@@ -10,7 +10,7 @@ DWORD GetLastError()
 }
 
 
-DWORD SetLastError(DWORD dwLastError)
+DWORD set_last_error(DWORD dwLastError)
 {
     
     set_thread_int("dwLastError", (int) dwLastError);

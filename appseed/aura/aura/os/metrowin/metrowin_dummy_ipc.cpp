@@ -257,7 +257,7 @@
 //
 //         //if(m_oswindow == NULL)
 //         //{
-//         //   unsigned int dwLastError = ::GetLastError();
+//         //   unsigned int dwLastError = ::get_last_error();
 //         //   return false;
 //         //}
 //

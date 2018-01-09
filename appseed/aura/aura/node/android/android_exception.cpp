@@ -6,9 +6,9 @@
 
 //inline __EXCEPTION_CONTEXT* __get_exception_context()
 //{
-//   DWORD lError = GetLastError();
+//   DWORD lError = get_last_error();
 //   __EXCEPTION_CONTEXT* pContext = &gen_ThreadState->m_exceptionContext;
-//   SetLastError(lError);
+//   set_last_error(lError);
 //   return pContext;
 //}
 

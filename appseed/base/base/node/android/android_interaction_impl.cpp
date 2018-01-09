@@ -340,13 +340,13 @@ namespace android
 
          }
 
-         uint32_t dwLastError = GetLastError();
+         uint32_t dwLastError = get_last_error();
          string strLastError = FormatMessageFromSystem(dwLastError);
          string strMessage;
          strMessage.Format("%s\n\nSystem Error Code: %d",strLastError,dwLastError);
 
 
-         TRACE(::aura::trace::category_AppMsg,0,"Warning: Window creation failed: GetLastError returned:\n");
+         TRACE(::aura::trace::category_AppMsg,0,"Warning: Window creation failed: get_last_error returned:\n");
 
          TRACE(::aura::trace::category_AppMsg,0,"%s\n",strMessage);
 
@@ -2618,7 +2618,7 @@ namespace android
       //      rect rectx;
       //      ::draw2d::bitmap * pbitmap = &graphics->GetCurrentBitmap();
       //      ::GetCurrentObject((HDC) pbase->m_wparam, OBJ_BITMAP);
-      //      //      DWORD dw = ::GetLastError();
+      //      //      DWORD dw = ::get_last_error();
       //      class size size = pbitmap->get_size();
       //      rectx.left = 0;
       //      rectx.top = 0;

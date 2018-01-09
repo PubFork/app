@@ -823,7 +823,7 @@ namespace hotplugin
 //
 //
 //#ifdef WINDOWS
-//         uint32_t dwError = GetLastError();
+//         uint32_t dwError = get_last_error();
 //         if(m_hfileBitmap == INVALID_HANDLE_VALUE)
 //#else
 //         if(m_hfileBitmap == -1)

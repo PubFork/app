@@ -187,7 +187,7 @@ namespace macos
 //         if(!bIsDir)
 //         {
 //
-//            SetLastError(dwLastError);
+//            set_last_error(dwLastError);
 //
 //         }
 //
@@ -202,7 +202,7 @@ namespace macos
 
       bIsDir = ::dir::is(lpcszPath);
 
-      m_isdirmap.set(lpcszPath, bIsDir, bIsDir ? 0 : ::GetLastError());
+      m_isdirmap.set(lpcszPath, bIsDir, bIsDir ? 0 : ::get_last_error());
 
       return bIsDir;
    }
@@ -223,7 +223,7 @@ namespace macos
 //         if(!bIsDir)
 //         {
 //
-//            SetLastError(dwLastError);
+//            set_last_error(dwLastError);
 //
 //         }
 //
@@ -251,7 +251,7 @@ namespace macos
 //
 //      bIsDir = ::dir::is(::str::international::unicode_to_utf8(wstrPath));
 //
-//      m_isdirmap.set(strPath, bIsDir, bIsDir ? 0 : ::GetLastError());
+//      m_isdirmap.set(strPath, bIsDir, bIsDir ? 0 : ::get_last_error());
 //
 //      return bIsDir;
 //   }
@@ -328,7 +328,7 @@ namespace macos
 
       bIsDir = ::dir::is(::str::international::unicode_to_utf8(wstrPath));
 
-      m_isdirmap.set(str.Left(iLast + 1), bIsDir, bIsDir ? 0 : ::GetLastError());
+      m_isdirmap.set(str.Left(iLast + 1), bIsDir, bIsDir ? 0 : ::get_last_error());
 
       return bIsDir;
    }
@@ -353,7 +353,7 @@ namespace macos
             if(!::dir::mkdir(stra[i]))
             {
                
-               DWORD dwError = ::GetLastError();
+               DWORD dwError = ::get_last_error();
                
                if(dwError == ERROR_ALREADY_EXISTS)
                {
@@ -385,7 +385,7 @@ namespace macos
                   }
                   else
                   {
-                     dwError = ::GetLastError();
+                     dwError = ::get_last_error();
                   }
                }
 //               char * pszError;
@@ -691,7 +691,7 @@ namespace macos
 //        
 //        bool bIsDir = (dwAttrib != INVALID_FILE_ATTRIBUTES) && (dwAttrib & FILE_ATTRIBUTE_DIRECTORY);
 //        
-//        m_isdirmap.set(lpcszPath, bIsDir, bIsDir ? 0 : ::GetLastError());
+//        m_isdirmap.set(lpcszPath, bIsDir, bIsDir ? 0 : ::get_last_error());
 //        
 //        return bIsDir;
 //        
@@ -712,7 +712,7 @@ namespace macos
     //   {
     //      if(!bIsDir)
     //      {
-    //         ::SetLastError(uiLastError);
+    //         ::set_last_error(uiLastError);
     //      }
     //      return bIsDir;
     //   }
@@ -742,7 +742,7 @@ namespace macos
     //
     //   bIsDir = (dwAttrib != INVALID_FILE_ATTRIBUTES) && (dwAttrib & FILE_ATTRIBUTE_DIRECTORY);
     //
-    //   m_isdirmap.set(strPath, bIsDir, bIsDir ? 0 : ::GetLastError());
+    //   m_isdirmap.set(strPath, bIsDir, bIsDir ? 0 : ::get_last_error());
     
     //   return bIsDir;
     //}
@@ -790,7 +790,7 @@ namespace macos
 //        {
 //            if(!bIsDir)
 //            {
-//                ::SetLastError(uiLastError);
+//                ::set_last_error(uiLastError);
 //            }
 //            return bIsDir;
 //        }
@@ -835,7 +835,7 @@ namespace macos
 //        
 //        bIsDir = (dwAttrib != INVALID_FILE_ATTRIBUTES) && (dwAttrib & FILE_ATTRIBUTE_DIRECTORY);
 //        
-//        m_isdirmap.set(str.Left(iLast + 1), bIsDir, bIsDir ? 0 : ::GetLastError());
+//        m_isdirmap.set(str.Left(iLast + 1), bIsDir, bIsDir ? 0 : ::get_last_error());
 //        
 //        return bIsDir;
 //    }
@@ -932,7 +932,7 @@ namespace macos
 //                else
 //                {
 //                    
-//                    DWORD dwError = ::GetLastError();
+//                    DWORD dwError = ::get_last_error();
 //                    
 //                    if (dwError == ERROR_ALREADY_EXISTS)
 //                    {
@@ -969,7 +969,7 @@ namespace macos
 //                            }
 //                            else
 //                            {
-//                                dwError = ::GetLastError();
+//                                dwError = ::get_last_error();
 //                            }
 //                        }
 //                        char * pszError;

@@ -161,7 +161,7 @@ namespace macos
       if(hFile == hFileNull)
       {
 
-         DWORD dwLastError = ::GetLastError();
+         DWORD dwLastError = ::get_last_error();
 
          if(dwLastError != ERROR_FILE_NOT_FOUND && dwLastError != ERROR_PATH_NOT_FOUND)
          {
@@ -209,7 +209,7 @@ namespace macos
              ::file::exception * pfe = dynamic_cast < ::file::exception * > (pException->m_p);
              if(pfe != NULL)
              {
-             pfe->m_lOsError = ::GetLastError();
+             pfe->m_lOsError = ::get_last_error();
              pfe->m_cause = ::win::file_exception::OsErrorToException(pfe->m_lOsError);
              pfe->m_strFileName = lpszFileName;
              }
@@ -219,7 +219,7 @@ namespace macos
              {*/
 
 
-            DWORD dwLastError = ::GetLastError();
+            DWORD dwLastError = ::get_last_error();
 //            vfxThrowFileException(get_app(), ::macos::file_exception::OsErrorToException(dwLastError), dwLastError, m_strFileName);
 
             return canew(::file::exception(get_app(), file_exception::OsErrorToException(dwLastError), dwLastError, lpszFileName));
@@ -301,7 +301,7 @@ namespace macos
       {
          size_t iWrite = ::write(m_iFile, &((const byte *)lpBuf)[pos], (size_t) MIN(0x7fffffff, nCount));
          if(iWrite == ::numeric_info<size_t>::get_allset_value ())
-            ::macos::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError(), m_strFileName);
+            ::macos::file_exception::ThrowOsError(get_app(), (LONG)::get_last_error(), m_strFileName);
          nCount -= iWrite;
          pos += iWrite;
       }
@@ -329,7 +329,7 @@ namespace macos
       file_position_t posNew = ::lseek(m_iFile, lLoOffset, (DWORD)nFrom);
       //      posNew |= ((file_position_t) lHiOffset) << 32;
       if(posNew  == (file_position_t)-1)
-         ::macos::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+         ::macos::file_exception::ThrowOsError(get_app(), (LONG)::get_last_error());
 
       return posNew;
    }
@@ -345,7 +345,7 @@ namespace macos
       file_position_t pos = ::lseek(m_iFile, lLoOffset, SEEK_CUR);
       //    pos |= ((file_position_t)lHiOffset) << 32;
       if(pos  == (file_position_t)-1)
-         ::macos::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+         ::macos::file_exception::ThrowOsError(get_app(), (LONG)::get_last_error());
 
       return pos;
    }
@@ -367,7 +367,7 @@ namespace macos
        return;
 
        if (!::FlushFileBuffers((HANDLE)m_iFile))
-       ::macos::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());*/
+       ::macos::file_exception::ThrowOsError(get_app(), (LONG)::get_last_error());*/
    }
 
    void file::close()
@@ -384,7 +384,7 @@ namespace macos
       m_strFileName.Empty();
 
       if (bError)
-         ::macos::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+         ::macos::file_exception::ThrowOsError(get_app(), (LONG)::get_last_error());
    }
 
    void file::Abort()
@@ -405,7 +405,7 @@ namespace macos
       ASSERT(m_iFile != (UINT)hFileNull);
 
       /*if (!::LockFile((HANDLE)m_iFile, LODWORD(dwPos), HIDWORD(dwPos), LODWORD(dwCount), HIDWORD(dwCount)))
-       ::macos::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());*/
+       ::macos::file_exception::ThrowOsError(get_app(), (LONG)::get_last_error());*/
    }
 
    void file::UnlockRange(file_position_t dwPos, file_size_t dwCount)
@@ -414,7 +414,7 @@ namespace macos
       ASSERT(m_iFile != (UINT)hFileNull);
 
       /*      if (!::UnlockFile((HANDLE)m_iFile,  LODWORD(dwPos), HIDWORD(dwPos), LODWORD(dwCount), HIDWORD(dwCount)))
-       ::macos::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());*/
+       ::macos::file_exception::ThrowOsError(get_app(), (LONG)::get_last_error());*/
    }
 
    void file::set_length(file_size_t dwNewLen)
@@ -425,7 +425,7 @@ namespace macos
       seek((LONG)dwNewLen, (::file::e_seek)::file::seek_begin);
 
       if (!::ftruncate(m_iFile, dwNewLen))
-         ::macos::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+         ::macos::file_exception::ThrowOsError(get_app(), (LONG)::get_last_error());
    }
 
    file_size_t file::get_length() const
@@ -462,13 +462,13 @@ namespace macos
     void PASCAL file::Rename(const char * lpszOldName, const char * lpszNewName)
     {
     if (!::MoveFile((LPTSTR)lpszOldName, (LPTSTR)lpszNewName))
-    ::win::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+    ::win::file_exception::ThrowOsError(get_app(), (LONG)::get_last_error());
     }
 
     void PASCAL file::remove(const char * lpszFileName)
     {
     if (!::DeleteFile((LPTSTR)lpszFileName))
-    ::win::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+    ::win::file_exception::ThrowOsError(get_app(), (LONG)::get_last_error());
     }
     */
 
@@ -985,7 +985,7 @@ namespace macos
     LPFILETIME lpLastWriteTime = NULL;
 
     if ((wAttr = GetFileAttributes((LPTSTR)lpszFileName)) == (DWORD)-1L)
-    ::win::file_exception::ThrowOsError(get_app(), (LONG)GetLastError());
+    ::win::file_exception::ThrowOsError(get_app(), (LONG)get_last_error());
 
     if ((DWORD)status.m_attribute != wAttr && (wAttr & readOnly))
     {
@@ -994,7 +994,7 @@ namespace macos
     // caller changed the file from readonly.
 
     if (!SetFileAttributes((LPTSTR)lpszFileName, (DWORD)status.m_attribute))
-    ::win::file_exception::ThrowOsError(get_app(), (LONG)GetLastError());
+    ::win::file_exception::ThrowOsError(get_app(), (LONG)get_last_error());
     }
 
     // last modification time
@@ -1022,19 +1022,19 @@ namespace macos
     NULL);
 
     if (hFile == INVALID_HANDLE_VALUE)
-    ::win::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+    ::win::file_exception::ThrowOsError(get_app(), (LONG)::get_last_error());
 
     if (!SetFileTime((HANDLE)hFile, lpCreationTime, lpLastAccessTime, lpLastWriteTime))
-    ::win::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+    ::win::file_exception::ThrowOsError(get_app(), (LONG)::get_last_error());
 
     if (!::CloseHandle(hFile))
-    ::win::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+    ::win::file_exception::ThrowOsError(get_app(), (LONG)::get_last_error());
     }
 
     if ((DWORD)status.m_attribute != wAttr && !(wAttr & readOnly))
     {
     if (!SetFileAttributes((LPTSTR)lpszFileName, (DWORD)status.m_attribute))
-    ::win::file_exception::ThrowOsError(get_app(), (LONG)GetLastError());
+    ::win::file_exception::ThrowOsError(get_app(), (LONG)get_last_error());
     }
     }
     */

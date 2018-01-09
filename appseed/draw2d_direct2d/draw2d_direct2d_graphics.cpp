@@ -4011,7 +4011,7 @@ namespace draw2d_direct2d
       //else
       //{
       //   dwGetLayout = GDI_ERROR;
-      //   SetLastError(ERROR_CALL_NOT_IMPLEMENTED);
+      //   set_last_error(ERROR_CALL_NOT_IMPLEMENTED);
       //}
       //return dwGetLayout;
    }
@@ -4033,7 +4033,7 @@ namespace draw2d_direct2d
       //else if (dwSetLayout != LAYOUT_LTR)
       //{
       //   dwGetLayout = GDI_ERROR;
-      //   SetLastError(ERROR_CALL_NOT_IMPLEMENTED);
+      //   set_last_error(ERROR_CALL_NOT_IMPLEMENTED);
       //}
       //return dwGetLayout;
    }

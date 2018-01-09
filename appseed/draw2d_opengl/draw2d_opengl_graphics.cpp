@@ -3833,7 +3833,7 @@ return true;
             else
             {
                dwGetLayout = GDI_ERROR;
-               SetLastError(ERROR_CALL_NOT_IMPLEMENTED);
+               set_last_error(ERROR_CALL_NOT_IMPLEMENTED);
             }*/
       //return dwGetLayout;
       return 0;
@@ -3853,7 +3853,7 @@ return true;
       else if (dwSetLayout != LAYOUT_LTR)
       {
          dwGetLayout = GDI_ERROR;
-         SetLastError(ERROR_CALL_NOT_IMPLEMENTED);
+         set_last_error(ERROR_CALL_NOT_IMPLEMENTED);
       }
       return dwGetLayout;*/
 

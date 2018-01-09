@@ -336,7 +336,7 @@ string file_as_string_dup(const char * path)
    if (file == NULL)
    {
 
-      DWORD dw = ::GetLastError();
+      DWORD dw = ::get_last_error();
 
       return "";
 
@@ -1271,7 +1271,7 @@ HANDLE ExtractAndInstallDrv()
 
    if (!StartService(hService, 0, NULL))
    {
-      uint32_t dwLastError = GetLastError();
+      uint32_t dwLastError = get_last_error();
       if (dwLastError != ERROR_SERVICE_ALREADY_RUNNING)
       {
          DeleteService(hService);
@@ -1372,7 +1372,7 @@ int_bool EnableTokenPrivilege(LPCTSTR pszPrivilege)
       AdjustTokenPrivileges(hToken, FALSE, &tkp, 0,
                             (PTOKEN_PRIVILEGES)NULL, 0);
 
-      if (GetLastError() != ERROR_SUCCESS)
+      if (get_last_error() != ERROR_SUCCESS)
          return FALSE;
 
       return TRUE;

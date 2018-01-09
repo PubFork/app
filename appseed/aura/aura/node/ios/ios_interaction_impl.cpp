@@ -543,12 +543,12 @@ namespace ios
       //#ifdef DEBUG
       /*      if (user::interaction == 0)
        {
-       DWORD dwLastError = GetLastError();
+       DWORD dwLastError = get_last_error();
        string strLastError = FormatMessageFromSystem(dwLastError);
        string strMessage;
        strMessage.Format("%s\n\nSystem Error Code: %d", strLastError, dwLastError);
 
-       TRACE(::ca2::trace::category_AppMsg, 0, "Warning: oswindow creation failed: GetLastError returned:\n");
+       TRACE(::ca2::trace::category_AppMsg, 0, "Warning: oswindow creation failed: get_last_error returned:\n");
        TRACE(::ca2::trace::category_AppMsg, 0, "%s\n", strMessage);
        try
        {
@@ -3504,7 +3504,7 @@ namespace ios
       //      rect rectx;
       //      ::draw2d::bitmap * pbitmap = &graphics->GetCurrentBitmap();
       //      ::GetCurrentObject((HDC) pbase->m_wparam, OBJ_BITMAP);
-      //      //      DWORD dw = ::GetLastError();
+      //      //      DWORD dw = ::get_last_error();
       //      class size size = pbitmap->get_size();
       //      rectx.left = 0;
       //      rectx.top = 0;

@@ -10,7 +10,7 @@ int32_t stop_service()
 {
    SC_HANDLE hdlSCM = OpenSCManager(0, 0, SC_MANAGER_ALL_ACCESS);
 
-	if (hdlSCM == 0) return ::GetLastError();
+	if (hdlSCM == 0) return ::get_last_error();
  
    SC_HANDLE hdlServ = ::OpenService(
 		hdlSCM,                    // SCManager database 
@@ -20,7 +20,7 @@ int32_t stop_service()
    DWORD Ret = 0;
    if (!hdlServ) 
    {
-      Ret = ::GetLastError();
+      Ret = ::get_last_error();
       return Ret;
    }
    SERVICE_STATUS ss;
@@ -37,7 +37,7 @@ int32_t remove_service()
 {
 	SC_HANDLE hdlSCM = OpenSCManager(0, 0, SC_MANAGER_ALL_ACCESS);
 
-	if (hdlSCM == 0) return ::GetLastError();
+	if (hdlSCM == 0) return ::get_last_error();
  
    SC_HANDLE hdlServ = ::OpenService(
 		hdlSCM,                    // SCManager database 
@@ -47,7 +47,7 @@ int32_t remove_service()
    DWORD Ret = 0;
    if (!hdlServ)
    {
-      Ret = ::GetLastError();
+      Ret = ::get_last_error();
       return Ret;
    }
 

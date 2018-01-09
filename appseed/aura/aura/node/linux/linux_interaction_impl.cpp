@@ -443,7 +443,7 @@ namespace linux
          if (window == 0)
          {
 
-            DWORD dwLastError = GetLastError();
+            DWORD dwLastError = get_last_error();
 
             string strLastError = FormatMessageFromSystem(dwLastError);
 
@@ -451,7 +451,7 @@ namespace linux
 
             strMessage.Format("%s\n\nSystem Error Code: %d", strLastError, dwLastError);
 
-            TRACE(::aura::trace::category_AppMsg, 0, "Warning: oswindow creation failed: GetLastError returned:\n");
+            TRACE(::aura::trace::category_AppMsg, 0, "Warning: oswindow creation failed: get_last_error returned:\n");
 
             TRACE(::aura::trace::category_AppMsg, 0, "%s\n", strMessage);
 

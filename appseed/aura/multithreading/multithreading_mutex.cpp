@@ -28,14 +28,14 @@ mutex::mutex(::aura::application * papp, bool bInitiallyOwn, const char * pstrNa
 
    m_object = ::CreateMutexExW(lpsaAttribute,pstrName == NULL ? NULL : (const unichar *) ::str::international::utf8_to_unicode(pstrName),bInitiallyOwn ?  CREATE_MUTEX_INITIAL_OWNER : 0,MUTEX_ALL_ACCESS);
 
-   DWORD dwLastError = ::GetLastError();
+   DWORD dwLastError = ::get_last_error();
 
    m_bAlreadyExists = dwLastError == ERROR_ALREADY_EXISTS;
 
    if(m_object == NULL)
    {
 
-      DWORD dwError1 = ::GetLastError();
+      DWORD dwError1 = ::get_last_error();
 
       if(pstrName != NULL)
       {
@@ -47,7 +47,7 @@ mutex::mutex(::aura::application * papp, bool bInitiallyOwn, const char * pstrNa
       if(m_object == NULL)
       {
 
-         DWORD dwError2 = ::GetLastError();
+         DWORD dwError2 = ::get_last_error();
 
          _throw(resource_exception(papp));
 
@@ -151,7 +151,7 @@ mutex::mutex(::aura::application * papp, bool bInitiallyOwn, const char * pstrNa
 
       m_pmutex = NULL;
 
-      SetLastError(0);
+      set_last_error(0);
 
       ::file::path path;
 
@@ -257,7 +257,7 @@ mutex::mutex(::aura::application * papp, bool bInitiallyOwn, const char * pstrNa
 
 get_existing:
 
-      SetLastError(0);
+      set_last_error(0);
 
       m_semid = semget(
                 m_key, // a unique identifier to identify semaphore set
@@ -275,7 +275,7 @@ get_existing:
 
          if(bAlreadyExists)
          {
-            SetLastError(ERROR_ALREADY_EXISTS);
+            set_last_error(ERROR_ALREADY_EXISTS);
 
          }
 
@@ -1432,7 +1432,7 @@ mutex * mutex::open_mutex(::aura::application * papp,  const char * pstrName)
 
    }
 
-   SetLastError(0);
+   set_last_error(0);
 
    ::file::path path;
 
@@ -1514,10 +1514,10 @@ void wait_until_mutex_does_not_exist(const char * pszName)
 
    mutex * pmutex = new mutex(get_app(), false, "Global\\::ca::fontopus::ca2_spa::7807e510-5579-11dd-ae16-0800200c7784");
 
-   if(::GetLastError() == ERROR_ALREADY_EXISTS)
+   if(::get_last_error() == ERROR_ALREADY_EXISTS)
    {
 
-      while(::GetLastError() == ERROR_ALREADY_EXISTS)
+      while(::get_last_error() == ERROR_ALREADY_EXISTS)
       {
 
          delete pmutex;

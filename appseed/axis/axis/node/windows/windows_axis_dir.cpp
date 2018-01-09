@@ -369,7 +369,7 @@ namespace windows
       {
          if(!bIsDir)
          {
-            ::SetLastError(uiLastError);
+            ::set_last_error(uiLastError);
          }
          return bIsDir;
       }
@@ -390,12 +390,12 @@ namespace windows
          {
             if(!bHasSubFolder)
             {
-               ::SetLastError(uiLastError);
+               ::set_last_error(uiLastError);
             }
             return bHasSubFolder;
          }
          bHasSubFolder = m_pziputil->has_sub_folder(papp, str);
-         m_isdirmap.set(str.Left(iLast + 1), bHasSubFolder, bHasSubFolder ? 0 : ::GetLastError());
+         m_isdirmap.set(str.Left(iLast + 1), bHasSubFolder, bHasSubFolder ? 0 : ::get_last_error());
          return bHasSubFolder;
       }
 
@@ -430,7 +430,7 @@ namespace windows
       
       bIsDir = (dwAttrib != INVALID_FILE_ATTRIBUTES) && (dwAttrib & FILE_ATTRIBUTE_DIRECTORY);
       
-      m_isdirmap.set(str.Left(iLast + 1), bIsDir, bIsDir ? 0 : ::GetLastError());
+      m_isdirmap.set(str.Left(iLast + 1), bIsDir, bIsDir ? 0 : ::get_last_error());
 
       return bIsDir;
    }
@@ -562,7 +562,7 @@ namespace windows
    //         else
    //         {
 
-   //            DWORD dwError = ::GetLastError();
+   //            DWORD dwError = ::get_last_error();
 
    //            if (dwError == ERROR_ALREADY_EXISTS)
    //            {
@@ -599,7 +599,7 @@ namespace windows
    //                  }
    //                  else
    //                  {
-   //                     dwError = ::GetLastError();
+   //                     dwError = ::get_last_error();
    //                  }
    //               }
    //               char * pszError;

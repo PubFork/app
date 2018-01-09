@@ -81,11 +81,11 @@ namespace windows
       if (m_hContext == INVALID_HANDLE_VALUE)
       {
 
-         DWORD dwTemp = ::GetLastError();
+         DWORD dwTemp = ::get_last_error();
 
          close();
 
-         ::SetLastError(dwTemp);
+         ::set_last_error(dwTemp);
 
          return false;
 
@@ -108,7 +108,7 @@ namespace windows
 
          close();
 
-         ::SetLastError(ERROR_INVALID_NAME);
+         ::set_last_error(ERROR_INVALID_NAME);
 
          return false;
       }

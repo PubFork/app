@@ -483,7 +483,7 @@ namespace base
       if (!GetMonitorRedGreenOrBlueGain(monitor.hPhysicalMonitor, MC_RED_GAIN, &dwMinGainR, &dwCurGainR, &dwMaxGainR))
       {
 
-         DWORD dwLastError = GetLastError();
+         DWORD dwLastError = get_last_error();
 
          TRACELASTERROR();
 

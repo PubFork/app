@@ -77,7 +77,7 @@ namespace linux
          TRACELASTERROR();
          return false;
       }
-      if (GetLastError() == ERROR_NOT_ALL_ASSIGNED)
+      if (get_last_error() == ERROR_NOT_ALL_ASSIGNED)
       {
          return false;
       }
@@ -93,7 +93,7 @@ namespace linux
          TRACELASTERROR();
          return false;
       }
-      if (GetLastError() == ERROR_NOT_ALL_ASSIGNED)
+      if (get_last_error() == ERROR_NOT_ALL_ASSIGNED)
       {
          return false;
       }
@@ -107,7 +107,7 @@ namespace linux
       /*if (!ExitWindowsEx(EWX_REBOOT | EWX_FORCE,
       SHTDN_REASON_MAJOR_SOFTWARE | SHTDN_REASON_MINOR_INSTALLATION))
       {
-      DWORD dwLastError = ::GetLastError();
+      DWORD dwLastError = ::get_last_error();
       return false;
       }*/
       //reset the previlages
@@ -614,7 +614,7 @@ namespace linux
 
       if(hdlSCM == 0)
       {
-         //::GetLastError()
+         //::get_last_error()
          return false;
       }
 
@@ -636,7 +636,7 @@ namespace linux
       if (!hdlServ)
       {
          CloseServiceHandle(hdlSCM);
-         //Ret = ::GetLastError();
+         //Ret = ::get_last_error();
          return FALSE;
       }
 
@@ -664,7 +664,7 @@ namespace linux
 
       if(hdlSCM == 0)
       {
-         //::GetLastError();
+         //::get_last_error();
          return false;
       }
 
@@ -675,7 +675,7 @@ namespace linux
 
       if (!hdlServ)
       {
-         // Ret = ::GetLastError();
+         // Ret = ::get_last_error();
          CloseServiceHandle(hdlSCM);
          return false;
       }
@@ -705,7 +705,7 @@ namespace linux
 
       if(hdlSCM == 0)
       {
-         //::GetLastError();
+         //::get_last_error();
          return false;
       }
 
@@ -718,7 +718,7 @@ namespace linux
       if (!hdlServ)
       {
          CloseServiceHandle(hdlSCM);
-         //Ret = ::GetLastError();
+         //Ret = ::get_last_error();
          return FALSE;
       }
 
@@ -746,7 +746,7 @@ namespace linux
 
       if(hdlSCM == 0)
       {
-         //::GetLastError();
+         //::get_last_error();
          return false;
       }
 
@@ -757,7 +757,7 @@ namespace linux
 
       if (!hdlServ)
       {
-         // Ret = ::GetLastError();
+         // Ret = ::get_last_error();
          CloseServiceHandle(hdlSCM);
          return false;
       }

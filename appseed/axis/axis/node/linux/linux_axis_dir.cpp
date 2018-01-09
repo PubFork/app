@@ -447,7 +447,7 @@ namespace linux
       {
          if(!bIsDir)
          {
-            ::SetLastError(uiLastError);
+            ::set_last_error(uiLastError);
          }
          return bIsDir;
       }
@@ -468,19 +468,19 @@ namespace linux
          {
             if(!bHasSubFolder)
             {
-               ::SetLastError(uiLastError);
+               ::set_last_error(uiLastError);
             }
             return bHasSubFolder;
          }
          bHasSubFolder = m_pziputil->has_sub_folder(papp, str);
-         m_isdirmap.set(str.Left(iLast + 1), bHasSubFolder, bHasSubFolder ? 0 : ::GetLastError());
+         m_isdirmap.set(str.Left(iLast + 1), bHasSubFolder, bHasSubFolder ? 0 : ::get_last_error());
          return bHasSubFolder;
       }
 
 
       bIsDir = ::dir::is(str.Left(iLast));
 
-      m_isdirmap.set(str.Left(iLast + 1), bIsDir, bIsDir ? 0 : ::GetLastError());
+      m_isdirmap.set(str.Left(iLast + 1), bIsDir, bIsDir ? 0 : ::get_last_error());
 
       return bIsDir;
    }
@@ -612,7 +612,7 @@ namespace linux
    //         else
    //         {
 
-   //            DWORD dwError = ::GetLastError();
+   //            DWORD dwError = ::get_last_error();
 
    //            if (dwError == ERROR_ALREADY_EXISTS)
    //            {
@@ -649,7 +649,7 @@ namespace linux
    //                  }
    //                  else
    //                  {
-   //                     dwError = ::GetLastError();
+   //                     dwError = ::get_last_error();
    //                  }
    //               }
    //               char * pszError;

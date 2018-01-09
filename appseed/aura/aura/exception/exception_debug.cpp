@@ -160,7 +160,7 @@ bool EnforceFilter( bool bEnforce )
 
    if( hLib == NULL )
    {
-      ErrCode = GetLastError();
+      ErrCode = get_last_error();
       _ASSERTE( !"GetModuleHandle(kernel32.dll) failed." );
       return false;
    }
@@ -169,7 +169,7 @@ bool EnforceFilter( bool bEnforce )
 
    if( pTarget == 0 )
    {
-      ErrCode = GetLastError();
+      ErrCode = get_last_error();
       _ASSERTE( !"GetProcAddress(SetUnhandledExceptionFilter) failed." );
       return false;
    }
@@ -253,7 +253,7 @@ bool WriteMemory( BYTE* pTarget, const BYTE* pSource, uint32_t size )
 
    if( !VirtualProtect( pTarget, size, PAGE_EXECUTE_READWRITE, &OldProtect ) )
    {
-      ErrCode = GetLastError();
+      ErrCode = get_last_error();
       _ASSERTE( !"VirtualProtect() failed." );
       return false;
    }
@@ -270,7 +270,7 @@ bool WriteMemory( BYTE* pTarget, const BYTE* pSource, uint32_t size )
 
    if( !VirtualProtect( pTarget, size, OldProtect, &Temp ) )
    {
-      ErrCode = GetLastError();
+      ErrCode = get_last_error();
       _ASSERTE( !"VirtualProtect() failed." );
       return false;
    }

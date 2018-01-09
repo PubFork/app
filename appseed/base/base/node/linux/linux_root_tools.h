@@ -69,7 +69,7 @@ ptet
 Return Values:
    If the function succeeds, the return value is S_OK.
    If the function fails, the return value is E_FAIL. To get extended error information,
-   call GetLastError().
+   call get_last_error().
 */
 
 HRESULT CLASS_DECL_BASE
@@ -98,7 +98,7 @@ Return Values
    If the function succeeds, and the current process is elevated, the return value is S_OK.
    If the function succeeds, and the current process is not elevated, the return value is S_FALSE.
    If the function fails, the return value is E_FAIL. To get extended error information,
-   call GetLastError().
+   call get_last_error().
 */
 
 WINBOOL CLASS_DECL_BASE
@@ -138,7 +138,7 @@ phProcess
 Return Values
    If the function succeeds, the return value is TRUE.
    If the function fails, the return value is FALSE. To get extended error information,
-   call GetLastError().
+   call get_last_error().
 
 NOTE: This function will start a process elevated no matter which attribute (asInvoker,
 highestAvailable, or requireAdministrator) is specified in its manifest, and even if
@@ -190,7 +190,7 @@ phProcess
 Return Values
    If the function succeeds, the return value is TRUE.
    If the function fails, the return value is FALSE. To get extended error information,
-   call GetLastError().
+   call get_last_error().
 
 NOTE: For this function to work, the application must be marked with the asInvoker or
 highestAvailable attributes in its manifest. If the executable to be started is marked

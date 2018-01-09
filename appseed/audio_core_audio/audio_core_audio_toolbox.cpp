@@ -61,7 +61,6 @@ namespace multimedia
          
          for(int i = 0; i < m_Buffers.get_count(); i++)
          {
-
             
             if(m_Buffers[i]->mAudioData == pbuffer->m_pData)
             {
@@ -74,9 +73,7 @@ namespace multimedia
                
             }
             
-            
          }
-         
          
       }
       
@@ -87,13 +84,11 @@ namespace multimedia
          for(int i = 0; i < m_Buffers.get_count(); i++)
          {
             
-            
             AudioQueueFreeBuffer(m_Queue, m_Buffers[i]);
             
          }
          
          m_Buffers.remove_all();
-         
          
       }
       
@@ -113,7 +108,8 @@ namespace multimedia
          
       }
       
-       bool toolbox::init_instance()
+      
+      bool toolbox::init_instance()
       {
          
          m_runloop = CFRunLoopGetCurrent();
@@ -135,6 +131,7 @@ namespace multimedia
          }
          
          return true;
+         
       }
       
       

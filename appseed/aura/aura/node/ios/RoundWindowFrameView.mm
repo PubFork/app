@@ -527,65 +527,66 @@ void __ios_do_events();
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
    
-      [super touchesEnded:touches withEvent:event];
+   [super touchesEnded:touches withEvent:event];
     
-    BOOL allTouchesEnded = ([touches count] == [[event touchesForView:self] count]);
+   BOOL allTouchesEnded = ([touches count] == [[event touchesForView:self] count]);
    
    round_window * p = m_roundwindow->m_pwindow;
     
-    if ([touches count] == 1 && allTouchesEnded) {
+   if ([touches count] == 1 && allTouchesEnded)
+   {
         
-        UITouch *touch = [touches anyObject];
+      UITouch *touch = [touches anyObject];
         
-       // --------------------------------------------------------
-       //
-       //   tap/ClickCount == 0 :
-       //   not properly a tap/click, 
-       //   (but-a/"->"){eco/green-lang): drag.
-       //   So, still send mouse up message, now in the target location.
-       //
-       if ([touch tapCount] == 0)
-       {
+      // --------------------------------------------------------
+      //
+      //   tap/ClickCount == 0 :
+      //   not properly a tap/click,
+      //   (but-a/"->"){eco/green-lang): drag.
+      //   So, still send mouse up message, at the final location.
+      //
+      if ([touch tapCount] == 0)
+      {
           
-          CGPoint point = [touch locationInView:self];
+         CGPoint point = [touch locationInView:self];
           
-          int x = point.x;
+         int x = point.x;
           
-          int y = point.y;
+         int y = point.y;
           
-          p->round_window_mouse_up(x, y);
+         p->round_window_mouse_up(x, y);
           
-       }
-       else if ([touch tapCount] == 1) 
-       {
+      }
+      else if ([touch tapCount] == 1)
+      {
             
-            // if touch is a single tap, store its location so we can average it with the second touch location
+         // if touch is a single tap, store its location so we can average it with the second touch location
             
-            CGPoint point = [touch locationInView:self];
+         CGPoint point = [touch locationInView:self];
             
-            //CGRect e = [[UIScreen mainScreen] applicationFrame];
+         //CGRect e = [[UIScreen mainScreen] applicationFrame];
             
-            //int H = (int) e.size.height;
+         //int H = (int) e.size.height;
             
-            int x = point.x;
+         int x = point.x;
             
-            //int y = H - point.y;
+         //int y = H - point.y;
            
-           int y = point.y;
+         int y = point.y;
             
-            p->round_window_mouse_up(x, y);
+         p->round_window_mouse_up(x, y);
             
-        } else {
+      }
+      else
+      {
             
-//            twoFingerTapIsPossible = NO;
+         //            twoFingerTapIsPossible = NO;
             
-        }
-        
-    }
+      }
+      
+   }
    
 //   CGPoint point = [[self window] convertBaseToScreen:[event locationInWindow]];
-   
-   return;
    
 }
 
@@ -599,11 +600,13 @@ void __ios_do_events();
    
    round_window * p = m_roundwindow->m_pwindow;
    
-   if ([touches count] == 1 && allTouchesEnded) {
+   if ([touches count] == 1 && allTouchesEnded)
+   {
       
       UITouch *touch = [touches anyObject];
       
-      if ([touch tapCount] == 1) {
+      if ([touch tapCount] == 1)
+      {
          
          // if touch is a single tap, store its location so we can average it with the second touch location
          
@@ -621,7 +624,9 @@ void __ios_do_events();
          
          p->round_window_mouse_up(x, y);
          
-      } else {
+      }
+      else
+      {
          
          //            twoFingerTapIsPossible = NO;
          
@@ -630,8 +635,6 @@ void __ios_do_events();
    }
    
    //   CGPoint point = [[self window] convertBaseToScreen:[event locationInWindow]];
-   
-   return;
    
 }
 
@@ -643,63 +646,41 @@ void __ios_do_events();
    
    round_window * p = m_roundwindow->m_pwindow;
    
-    if ([touches count] == 1) {
+   if ([touches count] == 1)
+   {
         
-        UITouch *touch = [touches anyObject];
+      UITouch *touch = [touches anyObject];
         
-        if ([touch tapCount] == 1) {
+      if ([touch tapCount] == 1)
+      {
             
-            // if touch is a single tap, store its location so we can average it with the second touch location
+         // if touch is a single tap, store its location so we can average it with the second touch location
             
-            CGPoint point = [touch locationInView:self];
+         CGPoint point = [touch locationInView:self];
             
-            //CGRect e = [[UIScreen mainScreen] applicationFrame];
+         //CGRect e = [[UIScreen mainScreen] applicationFrame];
             
-            //int H = (int) e.size.height;
+         //int H = (int) e.size.height;
             
-            int x = point.x;
+         int x = point.x;
             
-           //            int y = H - point.y;
+         //            int y = H - point.y;
            
-           int y = point.y;
+         int y = point.y;
            
-            p->round_window_mouse_moved(x, y);
+         p->round_window_mouse_moved(x, y);
             
-        } else {
+      }
+      else
+      {
             
-            //            twoFingerTapIsPossible = NO;
+         //            twoFingerTapIsPossible = NO;
             
-        }
+      }
         
-    }
-   
-   return;
+   }
    
 }
-
-
-/*- (void)mouseDragged:(NSEvent *)event
-{
-   
-   boot_window * p = m_roundwindow->m_pwindow;
-   
-   CGPoint point = [[self window] convertBaseToScreen:[event locationInWindow]];
-   
-   CGRect e = [[NSScreen mainScreen] frame];
-   
-   int H = (int) e.size.height;
-   
-   int x = point.x;
-   
-   int y = H - point.y;
-   
-   p->boot_window_mouse_dragged(x, y);
-   
-   return;
-   
-   
-}
- */
 
 
 //
@@ -712,133 +693,55 @@ void __ios_do_events();
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
    
-    [super touchesBegan:touches withEvent:event];
+   [super touchesBegan:touches withEvent:event];
     
-    round_window * p = m_roundwindow->m_pwindow;
+   round_window * p = m_roundwindow->m_pwindow;
  
-    BOOL allTouchesEnded = ([touches count] == [[event touchesForView:self] count]);
+   BOOL allTouchesEnded = ([touches count] == [[event touchesForView:self] count]);
 
-//    if ([touches count] == 1 && allTouchesEnded) {
-    if ([touches count] == 1) {
+   if ([touches count] == 1)
+   {
         
-        UITouch *touch = [touches anyObject];
+      UITouch *touch = [touches anyObject];
         
-        if ([touch tapCount] == 1) {
+      if ([touch tapCount] == 1)
+      {
             
-            // if touch is a single tap, store its location so we can average it with the second touch location
+         // if touch is a single tap, store its location so we can average it with the second touch location
             
-            CGPoint point = [touch locationInView:self];
+         CGPoint point = [touch locationInView:self];
             
-            //CGRect e = [[UIScreen mainScreen] applicationFrame];
+         // CGRect e = [[UIScreen mainScreen] applicationFrame];
             
-            //int H = (int) e.size.height;
+         // int H = (int) e.size.height;
             
-            int x = point.x;
+         int x = point.x;
             
-//            int y = H - point.y;
+         // int y = H - point.y;
            
-            int y = point.y;
+         int y = point.y;
            
-            p->round_window_mouse_down(x, y);
+         p->round_window_mouse_down(x, y);
            
-           if(allTouchesEnded)
-           {
+         if(allTouchesEnded)
+         {
+          
+            //usleep(1500 * 1000);
+             
+            p->round_window_mouse_up(x, y);
               
-              p->round_window_mouse_up(x, y);
-              
-           }
+         }
             
-        } else {
+      }
+      else
+      {
             
             //            twoFingerTapIsPossible = NO;
             
-        }
+      }
         
-    }
+   }
    
-   return;
-   
-/*	CGPoint pointInView = [self convertPoint:[event locationInWindow] fromView:nil];
-	
-	BOOL resize = NO;
-	if (CGPointInRect(pointInView, [self resizeRect]))
-	{
-		resize = YES;
-	}
-	
-	NSWindow *window = [self window];
-	CGPoint originalMouseLocation = [window convertBaseToScreen:[event locationInWindow]];
-	CGRect originalFrame = [window frame];
-	
-    while (YES)
-	{
-		//
-		// Lock focus and take all the dragged and mouse up events until we
-		// receive a mouse up.
-		//
-        NSEvent *newEvent = [window
-			nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
-		
-        if ([newEvent type] == NSLeftMouseUp)
-		{
-			break;
-		}
-		
-		//
-		// Work out how much the mouse has moved
-		//
-		CGPoint newMouseLocation = [window convertBaseToScreen:[newEvent locationInWindow]];
-		CGPoint delta = NSMakePoint(
-			newMouseLocation.x - originalMouseLocation.x,
-			newMouseLocation.y - originalMouseLocation.y);
-		
-		CGRect newFrame = originalFrame;
-		
-		if (!resize)
-		{
-			//
-			// Alter the frame for a drag
-			//
-			newFrame.origin.x += delta.x;
-			newFrame.origin.y += delta.y;
-		}
-		else
-		{
-			//
-			// Alter the frame for a resize
-			//
-			newFrame.size.width += delta.x;
-			newFrame.size.height -= delta.y;
-			newFrame.origin.y += delta.y;
-			
-			//
-			// Constrain to the window's min and max size
-			//
-			CGRect newContentRect = [window contentRectForFrameRect:newFrame];
-			NSSize maxSize = [window maxSize];
-			NSSize minSize = [window minSize];
-			if (newContentRect.size.width > maxSize.width)
-			{
-				newFrame.size.width -= newContentRect.size.width - maxSize.width;
-			}
-			else if (newContentRect.size.width < minSize.width)
-			{
-				newFrame.size.width += minSize.width - newContentRect.size.width;
-			}
-			if (newContentRect.size.height > maxSize.height)
-			{
-				newFrame.size.height -= newContentRect.size.height - maxSize.height;
-				newFrame.origin.y += newContentRect.size.height - maxSize.height;
-			}
-			else if (newContentRect.size.height < minSize.height)
-			{
-				newFrame.size.height += minSize.height - newContentRect.size.height;
-				newFrame.origin.y -= minSize.height - newContentRect.size.height;
-			}
-		}
-		
-		[window setFrame:newFrame display:YES animate:NO];
-	}*/
 }
 
 //- (void)drawLayer:(CALayer *)layer

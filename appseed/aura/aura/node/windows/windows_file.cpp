@@ -57,7 +57,7 @@ namespace windows
                              ::GetCurrentProcess(), &hFile, 0, FALSE, DUPLICATE_SAME_ACCESS))
       {
          delete pFile;
-         //xxx      Ex1WinFileException::ThrowOsError(get_app(), (LONG)::GetLastError());
+         //xxx      Ex1WinFileException::ThrowOsError(get_app(), (LONG)::get_last_error());
          _throw(simple_exception(get_app(), "integer_exception" + ::str::from(121)));
       }
       pFile->m_hFile = hFile;
@@ -192,7 +192,7 @@ retry:
       if (hFile == INVALID_HANDLE_VALUE)
       {
 
-         DWORD dwLastError = ::GetLastError();
+         DWORD dwLastError = ::get_last_error();
 
          if(dwLastError == ERROR_SHARING_VIOLATION && ::get_thread_run() &&  (::get_tick_count() - dwStart) < m_dwErrorBlockTimeout)
          {
@@ -238,7 +238,7 @@ retry:
 
       DWORD dwRead;
       if (!::ReadFile((HANDLE)m_hFile, lpBuf, (DWORD) nCount, &dwRead, NULL))
-         file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+         file_exception::ThrowOsError(get_app(), (LONG)::get_last_error());
 
       return (UINT)dwRead;
    }
@@ -256,7 +256,7 @@ retry:
 
       DWORD nWritten;
       if (!::WriteFile((HANDLE)m_hFile, lpBuf, (DWORD) nCount, &nWritten, NULL))
-         file_exception::ThrowOsError(get_app(), (LONG)::GetLastError(), m_strFileName);
+         file_exception::ThrowOsError(get_app(), (LONG)::get_last_error(), m_strFileName);
 
       // Win32s will not return an error all the time (usually DISK_FULL)
       if (nWritten != nCount)
@@ -280,7 +280,7 @@ retry:
       file_position_t posNew = ::SetFilePointer((HANDLE)m_hFile, lLoOffset, &lHiOffset, (DWORD)nFrom);
       posNew |= ((file_position_t) lHiOffset) << 32;
       if(posNew  == (file_position_t)-1)
-         file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+         file_exception::ThrowOsError(get_app(), (LONG)::get_last_error());
 
       return posNew;
    }
@@ -296,7 +296,7 @@ retry:
       file_position_t pos = ::SetFilePointer((HANDLE)m_hFile, lLoOffset, &lHiOffset, FILE_CURRENT);
       pos |= ((file_position_t)lHiOffset) << 32;
       if(pos  == (file_position_t)-1)
-         file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+         file_exception::ThrowOsError(get_app(), (LONG)::get_last_error());
 
       return pos;
    }
@@ -310,7 +310,7 @@ retry:
 
       if(!::FlushFileBuffers((HANDLE)m_hFile))
       {
-         DWORD dwLastError = ::GetLastError();
+         DWORD dwLastError = ::get_last_error();
          if(dwLastError == ERROR_INVALID_HANDLE
                || dwLastError == ERROR_ACCESS_DENIED)
          {
@@ -337,7 +337,7 @@ retry:
          bError = !::CloseHandle((HANDLE)m_hFile);
          if(bError)
          {
-            dwLastError = ::GetLastError();
+            dwLastError = ::get_last_error();
          }
       }
 
@@ -368,7 +368,7 @@ retry:
       ASSERT(m_hFile != hFileNull);
 
       if (!::LockFile((HANDLE)m_hFile, LODWORD(dwPos), HIDWORD(dwPos), LODWORD(dwCount), HIDWORD(dwCount)))
-         file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+         file_exception::ThrowOsError(get_app(), (LONG)::get_last_error());
    }
 
    void file::UnlockRange(file_position_t dwPos, file_size_t dwCount)
@@ -377,7 +377,7 @@ retry:
       ASSERT(m_hFile != hFileNull);
 
       if (!::UnlockFile((HANDLE)m_hFile,  LODWORD(dwPos), HIDWORD(dwPos), LODWORD(dwCount), HIDWORD(dwCount)))
-         file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+         file_exception::ThrowOsError(get_app(), (LONG)::get_last_error());
    }
 
    void file::set_length(file_size_t dwNewLen)
@@ -388,7 +388,7 @@ retry:
       seek((LONG)dwNewLen, (::file::e_seek)::file::seek_begin);
 
       if (!::SetEndOfFile((HANDLE)m_hFile))
-         file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+         file_exception::ThrowOsError(get_app(), (LONG)::get_last_error());
    }
 
    file_size_t file::get_length() const
@@ -421,13 +421,13 @@ retry:
    void file::Rename(const char * lpszOldName, const char * lpszNewName)
    {
    if (!::MoveFile((LPTSTR)lpszOldName, (LPTSTR)lpszNewName))
-   file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+   file_exception::ThrowOsError(get_app(), (LONG)::get_last_error());
    }
 
    void file::remove(const char * lpszFileName)
    {
    if (!::DeleteFile((LPTSTR)lpszFileName))
-   file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+   file_exception::ThrowOsError(get_app(), (LONG)::get_last_error());
    }
    */
 
@@ -540,7 +540,7 @@ retry:
 
    cres file_exception::last_os_error(::aura::application * papp,const char * lpszFileName /* = NULL */)
    {
-      return os_error(papp,::GetLastError(),lpszFileName);
+      return os_error(papp,::get_last_error(),lpszFileName);
    }
 
    cres file_exception::os_error(::aura::application * papp,LONG lOsError,const char * lpszFileName /* = NULL */)
@@ -927,7 +927,7 @@ retry:
    LPFILETIME lpLastWriteTime = NULL;
 
    if ((wAttr = GetFileAttributes((LPTSTR)lpszFileName)) == (DWORD)-1L)
-   file_exception::ThrowOsError(get_app(), (LONG)GetLastError());
+   file_exception::ThrowOsError(get_app(), (LONG)get_last_error());
 
    if ((DWORD)status.m_attribute != wAttr && (wAttr & readOnly))
    {
@@ -936,7 +936,7 @@ retry:
    // caller changed the file from readonly.
 
    if (!SetFileAttributes((LPTSTR)lpszFileName, (DWORD)status.m_attribute))
-   file_exception::ThrowOsError(get_app(), (LONG)GetLastError());
+   file_exception::ThrowOsError(get_app(), (LONG)get_last_error());
    }
 
    // last modification time
@@ -964,19 +964,19 @@ retry:
    NULL);
 
    if (hFile == INVALID_HANDLE_VALUE)
-   file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+   file_exception::ThrowOsError(get_app(), (LONG)::get_last_error());
 
    if (!SetFileTime((HANDLE)hFile, lpCreationTime, lpLastAccessTime, lpLastWriteTime))
-   file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+   file_exception::ThrowOsError(get_app(), (LONG)::get_last_error());
 
    if (!::CloseHandle(hFile))
-   file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+   file_exception::ThrowOsError(get_app(), (LONG)::get_last_error());
    }
 
    if ((DWORD)status.m_attribute != wAttr && !(wAttr & readOnly))
    {
    if (!SetFileAttributes((LPTSTR)lpszFileName, (DWORD)status.m_attribute))
-   file_exception::ThrowOsError(get_app(), (LONG)GetLastError());
+   file_exception::ThrowOsError(get_app(), (LONG)get_last_error());
    }
    }
    */

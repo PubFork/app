@@ -35,7 +35,7 @@ block_input::block_input(::aura::application * papp, int iSleep) :
    m_bBlocked = ::BlockInput(TRUE) != FALSE;
    //{
 
-   //   DWORD dw = ::GetLastError();
+   //   DWORD dw = ::get_last_error();
    //   m_bBlocked = false;
    //   goto repeat;
    //}
@@ -659,7 +659,7 @@ int SendCtrlShiftQToChrome(oswindow w, int iSleep, ::aura::application * papp)
 //      send_input_digit('5', 1, iSleep);
 //
 //   }
-//   else if (i == '¨')
+//   else if (i == 'ï¿½')
 //   {
 //
 //      send_input_digit('6', 1, iSleep);

@@ -62,7 +62,7 @@ namespace metrowin
                              ::GetCurrentProcess(), &hFile, 0, FALSE, DUPLICATE_SAME_ACCESS))
       {
          delete pFile;
-         //xxx      Ex1WinFileException::ThrowOsError(get_app(), (LONG)::GetLastError());
+         //xxx      Ex1WinFileException::ThrowOsError(get_app(), (LONG)::get_last_error());
          _throw(simple_exception(get_app(), "integer_exception 1"));
       }
       pFile->m_hFile = (UINT)hFile;
@@ -185,7 +185,7 @@ namespace metrowin
       HANDLE hFile = ::create_file(m_strFileName, dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, NULL);
       if (hFile == INVALID_HANDLE_VALUE)
       {
-         DWORD dwLastError = ::GetLastError();
+         DWORD dwLastError = ::get_last_error();
 
          if(dwLastError != ERROR_FILE_NOT_FOUND && dwLastError != ERROR_PATH_NOT_FOUND)
          {
@@ -232,7 +232,7 @@ namespace metrowin
             ::file::exception * pfe = dynamic_cast < ::file::exception * > (pException->m_p);
             if(pfe != NULL)
             {
-            pfe->m_lOsError = ::GetLastError();
+            pfe->m_lOsError = ::get_last_error();
             pfe->m_cause = WinFileException::OsErrorToException(pfe->m_lOsError);
             pfe->m_strFileName = lpszFileName;
             }
@@ -242,7 +242,7 @@ namespace metrowin
             {*/
 
 
-            DWORD dwLastError = ::GetLastError();
+            DWORD dwLastError = ::get_last_error();
             return canew(::file::exception(get_app(), WinFileException::OsErrorToException(dwLastError), dwLastError, m_strFileName));
 
 
@@ -274,7 +274,7 @@ namespace metrowin
 
       DWORD dwRead;
       if (!::ReadFile((HANDLE)m_hFile, lpBuf, (DWORD) nCount, &dwRead, NULL))
-         WinFileException::ThrowOsError(get_app(), (LONG)::GetLastError());
+         WinFileException::ThrowOsError(get_app(), (LONG)::get_last_error());
 
       return (UINT)dwRead;
    }
@@ -292,7 +292,7 @@ namespace metrowin
 
       DWORD nWritten;
       if (!::WriteFile((HANDLE)m_hFile, lpBuf, (DWORD) nCount, &nWritten, NULL))
-         WinFileException::ThrowOsError(get_app(), (LONG)::GetLastError(), m_strFileName);
+         WinFileException::ThrowOsError(get_app(), (LONG)::get_last_error(), m_strFileName);
 
       // Win32s will not return an error all the time (usually DISK_FULL)
       if (nWritten != nCount)
@@ -316,7 +316,7 @@ namespace metrowin
       file_position_t posNew = ::SetFilePointer((HANDLE)m_hFile, lLoOffset, &lHiOffset, (DWORD)nFrom);
       posNew |= ((file_position_t) lHiOffset) << 32;
       if(posNew  == (file_position_t)-1)
-         WinFileException::ThrowOsError(get_app(), (LONG)::GetLastError());
+         WinFileException::ThrowOsError(get_app(), (LONG)::get_last_error());
 
       return posNew;
    }
@@ -332,7 +332,7 @@ namespace metrowin
       file_position_t pos = ::SetFilePointer((HANDLE)m_hFile, lLoOffset, &lHiOffset, FILE_CURRENT);
       pos |= ((file_position_t)lHiOffset) << 32;
       if(pos  == (file_position_t)-1)
-         WinFileException::ThrowOsError(get_app(), (LONG)::GetLastError());
+         WinFileException::ThrowOsError(get_app(), (LONG)::get_last_error());
 
       return pos;
    }
@@ -345,7 +345,7 @@ namespace metrowin
          return;
 
       if (!::FlushFileBuffers((HANDLE)m_hFile))
-         WinFileException::ThrowOsError(get_app(), (LONG)::GetLastError());
+         WinFileException::ThrowOsError(get_app(), (LONG)::get_last_error());
    }
 
    void file::close()
@@ -362,7 +362,7 @@ namespace metrowin
       m_strFileName.Empty();
 
       if (bError)
-         WinFileException::ThrowOsError(get_app(), (LONG)::GetLastError());
+         WinFileException::ThrowOsError(get_app(), (LONG)::get_last_error());
    }
 
    void file::Abort()
@@ -383,7 +383,7 @@ namespace metrowin
       ASSERT(m_hFile != (UINT)hFileNull);
 
 //      if (!::LockFile((HANDLE)m_hFile, LODWORD(dwPos), HIDWORD(dwPos), LODWORD(dwCount), HIDWORD(dwCount)))
-      //       WinFileException::ThrowOsError(get_app(), (LONG)::GetLastError());
+      //       WinFileException::ThrowOsError(get_app(), (LONG)::get_last_error());
    }
 
    void file::UnlockRange(file_position_t dwPos, file_size_t dwCount)
@@ -392,7 +392,7 @@ namespace metrowin
       ASSERT(m_hFile != (UINT)hFileNull);
 
       //  if (!::UnlockFile((HANDLE)m_hFile,  LODWORD(dwPos), HIDWORD(dwPos), LODWORD(dwCount), HIDWORD(dwCount)))
-      //   WinFileException::ThrowOsError(get_app(), (LONG)::GetLastError());
+      //   WinFileException::ThrowOsError(get_app(), (LONG)::get_last_error());
    }
 
    void file::set_length(file_size_t dwNewLen)
@@ -403,7 +403,7 @@ namespace metrowin
       seek((LONG)dwNewLen, (::file::e_seek)::file::seek_begin);
 
       if (!::SetEndOfFile((HANDLE)m_hFile))
-         WinFileException::ThrowOsError(get_app(), (LONG)::GetLastError());
+         WinFileException::ThrowOsError(get_app(), (LONG)::get_last_error());
    }
 
    file_size_t file::get_length() const
@@ -435,13 +435,13 @@ namespace metrowin
    void file::Rename(const char * lpszOldName, const char * lpszNewName)
    {
    if (!::MoveFile((LPTSTR)lpszOldName, (LPTSTR)lpszNewName))
-   WinFileException::ThrowOsError(get_app(), (LONG)::GetLastError());
+   WinFileException::ThrowOsError(get_app(), (LONG)::get_last_error());
    }
 
    void file::remove(const char * lpszFileName)
    {
    if (!::DeleteFile((LPTSTR)lpszFileName))
-   WinFileException::ThrowOsError(get_app(), (LONG)::GetLastError());
+   WinFileException::ThrowOsError(get_app(), (LONG)::get_last_error());
    }
    */
 
@@ -1436,7 +1436,7 @@ namespace metrowin
    LPFILETIME lpLastWriteTime = NULL;
 
    if ((wAttr = GetFileAttributes((LPTSTR)lpszFileName)) == (DWORD)-1L)
-   WinFileException::ThrowOsError(get_app(), (LONG)GetLastError());
+   WinFileException::ThrowOsError(get_app(), (LONG)get_last_error());
 
    if ((DWORD)status.m_attribute != wAttr && (wAttr & readOnly))
    {
@@ -1445,7 +1445,7 @@ namespace metrowin
    // caller changed the file from readonly.
 
    if (!SetFileAttributes((LPTSTR)lpszFileName, (DWORD)status.m_attribute))
-   WinFileException::ThrowOsError(get_app(), (LONG)GetLastError());
+   WinFileException::ThrowOsError(get_app(), (LONG)get_last_error());
    }
 
    // last modification time
@@ -1473,19 +1473,19 @@ namespace metrowin
    NULL);
 
    if (hFile == INVALID_HANDLE_VALUE)
-   WinFileException::ThrowOsError(get_app(), (LONG)::GetLastError());
+   WinFileException::ThrowOsError(get_app(), (LONG)::get_last_error());
 
    if (!SetFileTime((HANDLE)hFile, lpCreationTime, lpLastAccessTime, lpLastWriteTime))
-   WinFileException::ThrowOsError(get_app(), (LONG)::GetLastError());
+   WinFileException::ThrowOsError(get_app(), (LONG)::get_last_error());
 
    if (!::CloseHandle(hFile))
-   WinFileException::ThrowOsError(get_app(), (LONG)::GetLastError());
+   WinFileException::ThrowOsError(get_app(), (LONG)::get_last_error());
    }
 
    if ((DWORD)status.m_attribute != wAttr && !(wAttr & readOnly))
    {
    if (!SetFileAttributes((LPTSTR)lpszFileName, (DWORD)status.m_attribute))
-   WinFileException::ThrowOsError(get_app(), (LONG)GetLastError());
+   WinFileException::ThrowOsError(get_app(), (LONG)get_last_error());
    }
    }
    */

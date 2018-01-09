@@ -850,7 +850,7 @@ bool __is_valid_atom(ATOM nAtom)
    {
       return TRUE;
    }
-   DWORD dwError = GetLastError();
+   DWORD dwError = get_last_error();
    if(dwError == ERROR_INSUFFICIENT_BUFFER || dwError == ERROR_MORE_DATA)
    {
       return TRUE;
@@ -859,7 +859,7 @@ bool __is_valid_atom(ATOM nAtom)
    {
       return TRUE;
    }
-   dwError = GetLastError();
+   dwError = get_last_error();
    if(dwError == ERROR_INSUFFICIENT_BUFFER || dwError == ERROR_MORE_DATA)
    {
       return TRUE;
@@ -897,7 +897,7 @@ bool __is_valid_atom(const char * psz)
 CLASS_DECL_AURA string get_last_error_string()
 {
 
-   return get_error_string(::GetLastError());
+   return get_error_string(::get_last_error());
 
 }
 

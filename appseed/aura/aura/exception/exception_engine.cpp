@@ -538,7 +538,7 @@ namespace exception
       while (true)
       {
 
-         SetLastError(0);
+         set_last_error(0);
          HANDLE hprocess = SymGetProcessHandle();
 
          uint32_t dwType;
@@ -1077,8 +1077,8 @@ namespace exception
 
       // "Debugging Applications" John Robbins
       // For whatever reason, SymLoadModule can return zero, but it still loads the modules. Sheez.
-      SetLastError(ERROR_SUCCESS);
-      if (!SymLoadModule(hProcess, hFile, filename, 0, (uint_ptr)hMod, 0) && ERROR_SUCCESS != GetLastError())
+      set_last_error(ERROR_SUCCESS);
+      if (!SymLoadModule(hProcess, hFile, filename, 0, (uint_ptr)hMod, 0) && ERROR_SUCCESS != get_last_error())
       {
          ::CloseHandle(hFile);
          return false;

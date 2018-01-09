@@ -290,12 +290,12 @@ namespace metrowin
       //   System.file().get_ascendants_path(lpcsz, stra);
       //   for(int i = 0; i < stra.get_size(); i++)
       //   {
-      //      if(!is(stra[i], papp) && ::GetLastError() != ERROR_ACCESS_DENIED)
+      //      if(!is(stra[i], papp) && ::get_last_error() != ERROR_ACCESS_DENIED)
       //      {
       //
       //         if(!::CreateDirectoryW(::str::international::utf8_to_unicode("\\\\?\\" + stra[i]), NULL))
       //         {
-      //            uint32_t dwError = ::GetLastError();
+      //            uint32_t dwError = ::get_last_error();
       //            if(dwError == ERROR_ALREADY_EXISTS)
       //            {
       //               string str;
@@ -324,7 +324,7 @@ namespace metrowin
       //               }
       //               else
       //               {
-      //                  dwError = ::GetLastError();
+      //                  dwError = ::get_last_error();
       //               }
       //            }
       //            string strError = get_system_error_message(dwError);

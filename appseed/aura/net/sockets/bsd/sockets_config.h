@@ -239,7 +239,7 @@ CLASS_DECL_AURA string bsd_socket_error(int32_t x);
 #elif defined(METROWIN)
 
 CLASS_DECL_AURA const char *bsd_socket_error(int32_t x);
-#define Errno GetLastError()
+#define Errno get_last_error()
 
 
 #else

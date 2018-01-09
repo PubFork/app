@@ -64,7 +64,7 @@
    {
       return TRUE;
    }
-   DWORD dwError = GetLastError();
+   DWORD dwError = get_last_error();
    if (dwError == ERROR_INSUFFICIENT_BUFFER || dwError == ERROR_MORE_DATA)
    {
       return TRUE;
@@ -73,7 +73,7 @@
    {
       return TRUE;
    }
-   dwError = GetLastError();
+   dwError = get_last_error();
    if (dwError == ERROR_INSUFFICIENT_BUFFER || dwError == ERROR_MORE_DATA)
    {
       return TRUE;

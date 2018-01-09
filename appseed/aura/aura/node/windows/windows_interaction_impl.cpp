@@ -494,13 +494,13 @@ namespace windows
 
          }
 
-         uint32_t dwLastError = GetLastError();
+         uint32_t dwLastError = get_last_error();
          string strLastError = FormatMessageFromSystem(dwLastError);
          string strMessage;
          strMessage.Format("%s\n\nSystem Error Code: %d", strLastError, dwLastError);
 
 
-         APPTRACE(::aura::trace::category_AppMsg, 0, "Warning: Window creation failed: GetLastError returned:\n");
+         APPTRACE(::aura::trace::category_AppMsg, 0, "Warning: Window creation failed: get_last_error returned:\n");
 
          APPTRACE(::aura::trace::category_AppMsg, 0, "%s\n", strMessage);
 

@@ -71,7 +71,7 @@ namespace ios
        TRACELASTERROR();
        return false;
        }
-       if (GetLastError() == ERROR_NOT_ALL_ASSIGNED)
+       if (get_last_error() == ERROR_NOT_ALL_ASSIGNED)
        {
        return false;
        }
@@ -87,7 +87,7 @@ namespace ios
        TRACELASTERROR();
        return false;
        }
-       if (GetLastError() == ERROR_NOT_ALL_ASSIGNED)
+       if (get_last_error() == ERROR_NOT_ALL_ASSIGNED)
        {
        return false;
        }
@@ -101,7 +101,7 @@ namespace ios
        if (!ExitWindowsEx(EWX_REBOOT | EWX_FORCE,
        SHTDN_REASON_MAJOR_SOFTWARE | SHTDN_REASON_MINOR_INSTALLATION))
        {
-       DWORD dwLastError = ::GetLastError();
+       DWORD dwLastError = ::get_last_error();
        return false;
        }*/
       //reset the previlages
@@ -600,7 +600,7 @@ namespace ios
 
        if(hdlSCM == 0)
        {
-       //::GetLastError()
+       //::get_last_error()
        return false;
        }
 
@@ -622,7 +622,7 @@ namespace ios
        if (!hdlServ)
        {
        CloseServiceHandle(hdlSCM);
-       //Ret = ::GetLastError();
+       //Ret = ::get_last_error();
        return FALSE;
        }
 
@@ -650,7 +650,7 @@ namespace ios
 
        if(hdlSCM == 0)
        {
-       //::GetLastError();
+       //::get_last_error();
        return false;
        }
 
@@ -661,7 +661,7 @@ namespace ios
 
        if (!hdlServ)
        {
-       // Ret = ::GetLastError();
+       // Ret = ::get_last_error();
        CloseServiceHandle(hdlSCM);
        return false;
        }
@@ -691,7 +691,7 @@ namespace ios
 
        if(hdlSCM == 0)
        {
-       //::GetLastError();
+       //::get_last_error();
        return false;
        }
 
@@ -704,7 +704,7 @@ namespace ios
        if (!hdlServ)
        {
        CloseServiceHandle(hdlSCM);
-       //Ret = ::GetLastError();
+       //Ret = ::get_last_error();
        return FALSE;
        }
 
@@ -732,7 +732,7 @@ namespace ios
 
        if(hdlSCM == 0)
        {
-       //::GetLastError();
+       //::get_last_error();
        return false;
        }
 
@@ -743,7 +743,7 @@ namespace ios
 
        if (!hdlServ)
        {
-       // Ret = ::GetLastError();
+       // Ret = ::get_last_error();
        CloseServiceHandle(hdlSCM);
        return false;
        }

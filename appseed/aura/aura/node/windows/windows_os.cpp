@@ -88,7 +88,7 @@ namespace windows
          TRACELASTERROR();
          return false;
       }
-      if (GetLastError() == ERROR_NOT_ALL_ASSIGNED)
+      if (get_last_error() == ERROR_NOT_ALL_ASSIGNED)
       {
          return false;
       }
@@ -104,7 +104,7 @@ namespace windows
          TRACELASTERROR();
          return false;
       }
-      if (GetLastError() == ERROR_NOT_ALL_ASSIGNED)
+      if (get_last_error() == ERROR_NOT_ALL_ASSIGNED)
       {
          return false;
       }
@@ -118,7 +118,7 @@ namespace windows
       /*if (!ExitWindowsEx(EWX_REBOOT | EWX_FORCE,
       SHTDN_REASON_MAJOR_SOFTWARE | SHTDN_REASON_MINOR_INSTALLATION))
       {
-      DWORD dwLastError = ::GetLastError();
+      DWORD dwLastError = ::get_last_error();
       return false;
       }*/
       //reset the previlages
@@ -614,7 +614,7 @@ namespace windows
             TOKEN_READ,                     // Read access only
             &tokenHandle))                  // Access token handle
       {
-         DWORD win32Status = GetLastError();
+         DWORD win32Status = get_last_error();
          debug_print("Cannot open token handle: %d\n",win32Status);
          bOk = false;
       }
@@ -631,7 +631,7 @@ namespace windows
             sizeof(tokenInfo),        // Size of the buffer
             &bytesReturned))                // Size needed
       {
-         DWORD win32Status = GetLastError();
+         DWORD win32Status = get_last_error();
          debug_print("Cannot query token information: %d\n",win32Status);
          bOk = false;
       }
@@ -687,7 +687,7 @@ namespace windows
                &peUse
                ))
          {
-            if(GetLastError() == ERROR_INSUFFICIENT_BUFFER)
+            if(get_last_error() == ERROR_INSUFFICIENT_BUFFER)
             {
                //
                // reallocate memory
@@ -829,7 +829,7 @@ namespace windows
       //   &cchTmpDomain,    // Size of domain name
       //   &SidUse))         // Account type
       //{
-      //   dwResult = GetLastError();
+      //   dwResult = get_last_error();
       //   debug_print("\n getCredentialsForService LookupAccountSidLocalW failed: win32 error = 0x%x\n",dwResult);
       //   return false;
       //}
@@ -856,9 +856,9 @@ namespace windows
             szPassword,       // User Password
             NULL,             // Packed credentials
             &cbInAuthBlob)    // Size, in bytes, of credentials
-            && GetLastError() != ERROR_INSUFFICIENT_BUFFER)
+            && get_last_error() != ERROR_INSUFFICIENT_BUFFER)
       {
-         dwResult = GetLastError();
+         dwResult = get_last_error();
          debug_print("\n getCredentialsForService CredPackAuthenticationBufferW (1) failed: win32 error = 0x%x\n",dwResult);
          return false;
       }
@@ -881,7 +881,7 @@ namespace windows
             (PBYTE)pvInAuthBlob,
             &cbInAuthBlob))
       {
-         dwResult = GetLastError();
+         dwResult = get_last_error();
          debug_print("\n CredPackAuthenticationBufferW (2) failed: win32 error = 0x%x\n",dwResult);
       }
 
@@ -941,7 +941,7 @@ retry:
 
          if(!bOk)
          {
-            dwLastError = ::GetLastError();
+            dwLastError = ::get_last_error();
             goto retry;
          }
 
@@ -959,7 +959,7 @@ retry:
 
          if(!bOk)
          {
-            dwLastError = ::GetLastError();
+            dwLastError = ::get_last_error();
             goto retry;
          }
 
@@ -979,7 +979,7 @@ retry:
          }
          else
          {
-            dwLastError = ::GetLastError();
+            dwLastError = ::get_last_error();
             goto retry;
          }
 
@@ -1083,7 +1083,7 @@ retry:
       if(hdlSCM == 0)
       {
 
-         DWORD dwLastError = ::GetLastError();
+         DWORD dwLastError = ::get_last_error();
 
          return false;
 
@@ -1173,7 +1173,7 @@ retry:
 
       if(hdlSCM == 0)
       {
-         //::GetLastError()
+         //::get_last_error()
          return false;
       }
 
@@ -1201,7 +1201,7 @@ retry:
 
       if(!hdlServ)
       {
-         DWORD Ret = ::GetLastError();
+         DWORD Ret = ::get_last_error();
          TRACELASTERROR();
          CloseServiceHandle(hdlSCM);
          return false;
@@ -1229,7 +1229,7 @@ retry:
 
       if(hdlSCM == 0)
       {
-         //::GetLastError();
+         //::get_last_error();
          return false;
       }
 
@@ -1241,7 +1241,7 @@ retry:
 
       if(!hdlServ)
       {
-         DWORD Ret = ::GetLastError();
+         DWORD Ret = ::get_last_error();
          CloseServiceHandle(hdlSCM);
          if(Ret == 1060) // O serviço já não existe. Service already doesn't exist.
             return true; // do self-healing
@@ -1250,7 +1250,7 @@ retry:
 
       if(!::DeleteService(hdlServ))
       {
-         DWORD Ret = ::GetLastError();
+         DWORD Ret = ::get_last_error();
          CloseServiceHandle(hdlServ);
          CloseServiceHandle(hdlSCM);
          return false;
@@ -1287,7 +1287,7 @@ retry:
 
       if(hdlSCM == 0)
       {
-         //::GetLastError();
+         //::get_last_error();
          return false;
       }
 
@@ -1300,7 +1300,7 @@ retry:
       if(!hdlServ)
       {
          CloseServiceHandle(hdlSCM);
-         //Ret = ::GetLastError();
+         //Ret = ::get_last_error();
          return FALSE;
       }
 
@@ -1322,7 +1322,7 @@ retry:
 
       if(hdlSCM == 0)
       {
-         //::GetLastError();
+         //::get_last_error();
          return false;
       }
 
@@ -1333,7 +1333,7 @@ retry:
 
       if(!hdlServ)
       {
-         // Ret = ::GetLastError();
+         // Ret = ::get_last_error();
          CloseServiceHandle(hdlSCM);
          return false;
       }
@@ -1385,7 +1385,7 @@ retry:
       if((wAttr = GetFileAttributesW(wstr)) == (DWORD)-1L)
       {
 
-         ::windows::file_exception::ThrowOsError(get_app(), (LONG)GetLastError());
+         ::windows::file_exception::ThrowOsError(get_app(), (LONG)get_last_error());
 
       }
 
@@ -1399,7 +1399,7 @@ retry:
          if (!SetFileAttributesW(wstr, (DWORD)status.m_attribute))
          {
 
-            ::windows::file_exception::ThrowOsError(get_app(), (LONG)GetLastError());
+            ::windows::file_exception::ThrowOsError(get_app(), (LONG)get_last_error());
 
          }
 
@@ -1440,21 +1440,21 @@ retry:
       if(hFile == INVALID_HANDLE_VALUE)
       {
 
-         ::windows::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+         ::windows::file_exception::ThrowOsError(get_app(), (LONG)::get_last_error());
 
       }
 
       if(!SetFileTime((HANDLE)hFile, lpCreationTime, lpLastAccessTime, lpLastWriteTime))
       {
 
-         ::windows::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+         ::windows::file_exception::ThrowOsError(get_app(), (LONG)::get_last_error());
 
       }
 
       if(!::CloseHandle(hFile))
       {
 
-         ::windows::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+         ::windows::file_exception::ThrowOsError(get_app(), (LONG)::get_last_error());
 
       }
 
@@ -1464,7 +1464,7 @@ retry:
          if (!::SetFileAttributesW(wstr, (DWORD)status.m_attribute))
          {
 
-            ::windows::file_exception::ThrowOsError(get_app(), (LONG)GetLastError());
+            ::windows::file_exception::ThrowOsError(get_app(), (LONG)get_last_error());
 
          }
 

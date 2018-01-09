@@ -31,7 +31,7 @@ namespace zip
          ::GetCurrentProcess(), &hFile, 0, FALSE, DUPLICATE_SAME_ACCESS))
          {
          delete pFile;
-         //xxx      Ex1WinFileException::ThrowOsError((LONG)::GetLastError());
+         //xxx      Ex1WinFileException::ThrowOsError((LONG)::get_last_error());
          _throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
          }
          pFile->m_hFile = (UINT)hFile;

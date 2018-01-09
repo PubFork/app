@@ -4522,7 +4522,7 @@ retry_license:
          }
 
          if (m_eexclusiveinstance == ExclusiveInstanceGlobal
-               && (::GetLastError() == ERROR_ALREADY_EXISTS || bResourceException))
+               && (::get_last_error() == ERROR_ALREADY_EXISTS || bResourceException))
          {
             // Should in some way activate the other instance, but this is global, what to do? do not know yet.
             //System.simple_message_box("A instance of the application:<br><br>           - " + string(m_strAppName) + "<br><br>seems to be already running at the same machine<br>Only one instance of this application can run globally: at the same machine.<br><br>Exiting this new instance.");
@@ -4548,7 +4548,7 @@ retry_license:
                   bResourceException = true;
                }
             }
-            if (::GetLastError() == ERROR_ALREADY_EXISTS || bResourceException)
+            if (::get_last_error() == ERROR_ALREADY_EXISTS || bResourceException)
             {
                // Should in some way activate the other instance
                TRACE("A instance of the application:<br><br>           - " + string(m_strAppName) + "with the id \"" + get_local_mutex_id() + "\" <br><br>seems to be already running at the same machine<br>Only one instance of this application can run globally: at the same machine with the same id.<br><br>Exiting this new instance.");
@@ -4592,7 +4592,7 @@ retry_license:
                bResourceException = true;
             }
          }
-         if (m_eexclusiveinstance == ExclusiveInstanceLocal && (::GetLastError() == ERROR_ALREADY_EXISTS || bResourceException))
+         if (m_eexclusiveinstance == ExclusiveInstanceLocal && (::get_last_error() == ERROR_ALREADY_EXISTS || bResourceException))
 #endif
          {
             try
@@ -4635,7 +4635,7 @@ retry_license:
                   bResourceException = true;
                }
             }
-            if (::GetLastError() == ERROR_ALREADY_EXISTS || bResourceException)
+            if (::get_last_error() == ERROR_ALREADY_EXISTS || bResourceException)
             {
                try
                {
@@ -6059,7 +6059,7 @@ retry_license:
             //                  }
             //                  else
             //                  {
-            //                     uint32_t dwLastError = ::GetLastError();
+            //                     uint32_t dwLastError = ::get_last_error();
             //                     TRACE("Not Launched");
             //
             //                     WCHAR wsz[1024];
@@ -6849,7 +6849,7 @@ finalize:
       sei.lpVerb = L"RunAs";
       sei.lpFile = wstr.c_str();
       ::ShellExecuteExW(&sei);
-      DWORD dwGetLastError = GetLastError();
+      DWORD dwGetLastError = get_last_error();
 
 #endif
 

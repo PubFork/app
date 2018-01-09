@@ -71,7 +71,7 @@ Serial::SerialImpl::open ()
 
    if (fd_ == INVALID_HANDLE_VALUE)
    {
-      DWORD errno_ = GetLastError();
+      DWORD errno_ = get_last_error();
       string str;
       switch (errno_)
       {
@@ -385,7 +385,7 @@ Serial::SerialImpl::close ()
          {
             output_debug_string("\nSerial::serialimpl::close failed");
             string str;
-            str.Format("Error while closing serial port: %d", GetLastError());
+            str.Format("Error while closing serial port: %d", get_last_error());
             THROW (IOException, str);
          }
          else
@@ -415,7 +415,7 @@ Serial::SerialImpl::available ()
    if (!ClearCommError(fd_, NULL, &cs))
    {
       string str;
-      str.Format("Error while checking status of the serial port: %d", GetLastError());
+      str.Format("Error while checking status of the serial port: %d", get_last_error());
       THROW (IOException, str);
    }
    return static_cast<size_t>(cs.cbInQue);
@@ -450,7 +450,7 @@ Serial::SerialImpl::read (uint8_t *buf, size_t size)
    if (!ReadFile(fd_, buf, static_cast<DWORD>(size), &bytes_read, NULL))
    {
       string ss;
-      ss.Format("Error while reading from the serial port: %d", GetLastError());
+      ss.Format("Error while reading from the serial port: %d", get_last_error());
       THROW (IOException, ss);
    }
    return (size_t) (bytes_read);
@@ -467,7 +467,7 @@ Serial::SerialImpl::write (const uint8_t *data, size_t length)
    if (!WriteFile(fd_, data, static_cast<DWORD>(length), &bytes_written, NULL))
    {
       string str;
-      str.Format("Error while writing to the serial port: %d", GetLastError());
+      str.Format("Error while writing to the serial port: %d", get_last_error());
       THROW (IOException, str);
    }
    return (size_t) (bytes_written);

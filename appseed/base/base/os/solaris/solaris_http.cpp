@@ -270,7 +270,7 @@ if (bResults)
 if (! (bResults = WinHttpWriteData( hRequest, (LPVOID)pszPost,
 strlen(pszPost), &dwUploaded)))
 printf( "Error %u in WinHttpReadData.\n",
-GetLastError());
+get_last_error());
 
 // End the request.
 if (bResults)
@@ -288,7 +288,7 @@ do
 dwSize = 0;
 if (!WinHttpQueryDataAvailable( hRequest, &dwSize))
 printf( "Error %u in WinHttpQueryDataAvailable.\n",
-GetLastError());
+get_last_error());
 
 // Allocate space for the buffer.
 pszOutBuffer = new char[dwSize+1];
@@ -305,7 +305,7 @@ ZeroMemory(pszOutBuffer, dwSize+1);
 if (!WinHttpReadData( hRequest, (LPVOID)pszOutBuffer,
 dwSize, &dwDownloaded))
 printf( "Error %u in WinHttpReadData.\n",
-GetLastError());
+get_last_error());
 else
 {
 g_dwDownloadLen += dwSize;
@@ -319,7 +319,7 @@ delete [] pszOutBuffer;
 } while (dwSize>0);
 }
 
-DWORD dw = GetLastError();
+DWORD dw = get_last_error();
 // Report any errors.
 if (!bResults)
 printf("Error %d has occurred.\n",dw);

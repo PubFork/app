@@ -2596,7 +2596,7 @@ namespace draw2d_xlib
 
       ::GetCurrentObject((HDC) pbase->m_wparam, OBJ_BITMAP);
 
-      //      uint32_t dw = ::GetLastError();
+      //      uint32_t dw = ::get_last_error();
       class size size = pbitmap->get_size();
 
       rectx.left = 0;

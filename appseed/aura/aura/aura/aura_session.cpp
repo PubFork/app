@@ -1649,14 +1649,18 @@ namespace aura
 
 #if defined(APPLE_IOS)
 
-         sp(::ios::interaction_impl) pimpl = System.m_possystemwindow->m_pui->m_pimpl;
-
-         if (pimpl.is_set())
-         {
-
-            pimpl->defer_update_text_view();
-
-         }
+         
+         dispatch_async(dispatch_get_main_queue(), ^{
+            //this runs on the main thread.  Use theData
+            sp(::ios::interaction_impl) pimpl = System.m_possystemwindow->m_pui->m_pimpl;
+            
+            if (pimpl.is_set())
+            {
+               
+               pimpl->defer_update_text_view();
+               
+            }
+         });
 
 #endif
 

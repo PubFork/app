@@ -29,14 +29,31 @@ namespace user
 
    void font_list::font_list_common_construct()
    {
-      //      m_iHoverCalc = -1;
-      //m_pfontlistdata = NULL;
+      
+      m_scrolldataVert.m_bScrollEnable = true;
+      
    }
 
 
    font_list::~font_list()
    {
 
+      try
+      {
+         
+         if(m_pfontlistdata.is_set())
+         {
+            
+            m_pfontlistdata->m_uiptra.remove(this);
+            
+         }
+      
+      }
+      catch (...)
+      {
+      
+      }
+      
    }
 
 
@@ -205,13 +222,14 @@ namespace user
 
       m_pfontlistdata = pdata;
 
+      pdata->m_uiptra.add(this);
+      
    }
-
 
 
    void font_list::on_layout()
    {
-
+      
       rect rectClient;
 
       GetClientRect(rectClient);
@@ -234,8 +252,9 @@ namespace user
 
       GetClientRect(m_pfontlistdata->m_rectClient);
 
-      m_pfontlistdata->on_layout();
+      m_pfontlistdata->on_layout(&m_sizeTotal);
 
+      ::user::control::on_layout();
 
    }
 
@@ -319,6 +338,8 @@ namespace user
 
    index font_list::hit_test(point pt)
    {
+      
+      pt += m_ptScrollPassword1;
 
       return m_pfontlistdata->hit_test(pt);
 
@@ -358,20 +379,5 @@ namespace user
 
 
 } // namespace user
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

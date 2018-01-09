@@ -5,14 +5,14 @@
 
 thread_int_ptr < DWORD > g_dwLastError;
 
-CLASS_DECL_AURA DWORD GetLastError()
+CLASS_DECL_AURA DWORD get_last_error()
 {
 
    return g_dwLastError;
 
 }
 
-CLASS_DECL_AURA DWORD SetLastError(DWORD dw)
+CLASS_DECL_AURA DWORD set_last_error(DWORD dw)
 {
 
    DWORD dwLastError = g_dwLastError;

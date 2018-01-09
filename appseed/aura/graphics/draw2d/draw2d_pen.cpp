@@ -7,8 +7,6 @@ namespace draw2d
 {
 
 
-
-
    pen::pen()
    {
 

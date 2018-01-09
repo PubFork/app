@@ -923,8 +923,8 @@ CLASS_DECL_AURA WINBOOL WINAPI LocalFileTimeToFileTime( const FILETIME *localft,
     }
    else
    {
-      //SetLastError( RtlNtStatusToDosError(status) );
-      SetLastError(1);
+      //set_last_error( RtlNtStatusToDosError(status) );
+      set_last_error(1);
 
    }
 
@@ -948,8 +948,8 @@ CLASS_DECL_AURA WINBOOL WINAPI FileTimeToLocalFileTime( const FILETIME *utcft, L
     }
     else
     {
-      //SetLastError( RtlNtStatusToDosError(status) );
-      SetLastError( 1);
+      //set_last_error( RtlNtStatusToDosError(status) );
+      set_last_error( 1);
     }
 
 
@@ -1000,7 +1000,7 @@ WINBOOL WINAPI SystemTimeToFileTime( const SYSTEMTIME *syst, LPFILETIME ft )
     tf.Milliseconds = syst->wMilliseconds;
 
     if( !RtlTimeFieldsToTime(&tf, &t)) {
-        SetLastError( ERROR_INVALID_PARAMETER);
+        set_last_error( ERROR_INVALID_PARAMETER);
         return FALSE;
     }
     ft->dwLowDateTime = t.u.LowPart;

@@ -6,14 +6,14 @@ class CLASS_DECL_AURA c_error
 {
 public:
 
-   static DWORD GetLastError()
+   static DWORD get_last_error()
    {
 
       return errno;
 
    }
 
-   static string GetErrorDescription(int iErrorCode = GetLastError())
+   static string GetErrorDescription(int iErrorCode = get_last_error())
    {
 
       return strerror(iErrorCode);
@@ -29,9 +29,9 @@ public:
    {
    public:
 
-      static DWORD GetLastError() { return ::GetLastError(); }
+      static DWORD get_last_error() { return ::get_last_error(); }
 
-      static string GetErrorDescription(int iErrorCode = GetLastError())
+      static string GetErrorDescription(int iErrorCode = get_last_error())
       {
          LPVOID lpMsgBuf = NULL;
          FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,

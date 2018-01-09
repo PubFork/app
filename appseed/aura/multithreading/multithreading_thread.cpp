@@ -63,7 +63,7 @@ void error::set_last_error()
 
 #ifdef WINDOWS
 
-   set(::GetLastError());
+   set(::get_last_error());
 
 #else
 
@@ -1872,7 +1872,7 @@ uint32_t __thread_entry(void * pparam)
 
             WINBOOL bOk =
             ::SetThreadAffinityMask(::GetCurrentThread(), pthread->m_dwThreadAffinityMask) == 0
-            || ::GetLastError() == 0;
+            || ::get_last_error() == 0;
 
             if (bOk)
             {
@@ -3132,7 +3132,7 @@ bool thread::set_thread_priority(int32_t iCa2Priority)
 
    if (!bOk)
    {
-      uint32_t dwLastError = ::GetLastError();
+      uint32_t dwLastError = ::get_last_error();
       output_debug_string("thread::SetThreadPriority LastError = " + ::str::from(dwLastError));
    }
 

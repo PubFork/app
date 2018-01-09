@@ -123,7 +123,7 @@ namespace macos
          {
             if(!bIsDir)
             {
-               ::SetLastError(uiLastError);
+               ::set_last_error(uiLastError);
             }
             return bIsDir;
          }
@@ -144,19 +144,19 @@ namespace macos
             {
                if(!bHasSubFolder)
                {
-                  ::SetLastError(uiLastError);
+                  ::set_last_error(uiLastError);
                }
                return bHasSubFolder;
             }
             bHasSubFolder = m_pziputil->has_sub_folder(papp, str);
-            m_isdirmap.set(str.Left(iLast + 1), bHasSubFolder, bHasSubFolder ? 0 : ::GetLastError());
+            m_isdirmap.set(str.Left(iLast + 1), bHasSubFolder, bHasSubFolder ? 0 : ::get_last_error());
             return bHasSubFolder;
          }
          
          
          bIsDir = ::dir::is(str.Left(iLast));
          
-         m_isdirmap.set(str.Left(iLast + 1), bIsDir, bIsDir ? 0 : ::GetLastError());
+         m_isdirmap.set(str.Left(iLast + 1), bIsDir, bIsDir ? 0 : ::get_last_error());
          
          return bIsDir;
 

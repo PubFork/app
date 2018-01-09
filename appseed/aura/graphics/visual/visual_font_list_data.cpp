@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 #include <math.h>
 
@@ -197,6 +197,8 @@ namespace visual
       m_itemptra.set_size(iCount);
 
       output_debug_string("Middle");
+      
+      m_iUpdated = 0;
 
       ::fork_count(get_app(), m_itema.get_count(), [&](index iOrder, index i, index iCount, index iScan)
       {
@@ -364,7 +366,29 @@ namespace visual
                //pitem->m_box[1].m_bOk = false;
                //pitem->m_box[2].m_bOk = false;
 
-
+               m_iUpdated++;
+               
+               if(m_iUpdated == iCount)
+               {
+                  
+                  for(auto * pui : m_uiptra)
+                  {
+                     
+                     try
+                     {
+                        
+                        pui->set_need_layout();
+                        
+                     }
+                     catch(...)
+                     {
+                     
+                     }
+                     
+                  }
+                  
+               }
+               
 
             }
 
@@ -392,7 +416,8 @@ namespace visual
 
    }
 
-   void font_list_data::on_layout()
+   
+   void font_list_data::on_layout(SIZE * psize)
    {
 
       synch_lock sl(m_pmutex);
@@ -410,6 +435,8 @@ namespace visual
       sl.lock();
 
       int nextx;
+      
+      psize->cx = m_rectClient.width();
 
       for (int i = 0; i < m_itemptra.get_count(); i++)
       {
@@ -465,6 +492,8 @@ namespace visual
          }
 
       }
+      
+      psize->cy = y + h;
 
    }
 

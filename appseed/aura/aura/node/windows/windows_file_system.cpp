@@ -215,7 +215,7 @@ namespace windows
    //   LPFILETIME lpLastWriteTime = NULL;
 
    //   if((wAttr = GetFileAttributesW((LPWSTR)(LPCWSTR)lpszFileName)) == (DWORD)-1L)
-   //      file_exception::ThrowOsError(get_app(),(LONG)GetLastError());
+   //      file_exception::ThrowOsError(get_app(),(LONG)get_last_error());
 
    //   if((DWORD)status.m_attribute != wAttr && (wAttr & readOnly))
    //   {
@@ -224,7 +224,7 @@ namespace windows
    //      // caller changed the file from readonly.
 
    //      if(!SetFileAttributesW((LPWSTR)(LPCWSTR)lpszFileName,(DWORD)status.m_attribute))
-   //         file_exception::ThrowOsError(get_app(),(LONG)GetLastError());
+   //         file_exception::ThrowOsError(get_app(),(LONG)get_last_error());
    //   }
 
    //   // last modification time
@@ -252,19 +252,19 @@ namespace windows
    //         NULL);
 
    //      if(hFile == INVALID_HANDLE_VALUE)
-   //         file_exception::ThrowOsError(get_app(),(LONG)::GetLastError());
+   //         file_exception::ThrowOsError(get_app(),(LONG)::get_last_error());
 
    //      if(!SetFileTime((HANDLE)hFile,lpCreationTime,lpLastAccessTime,lpLastWriteTime))
-   //         file_exception::ThrowOsError(get_app(),(LONG)::GetLastError());
+   //         file_exception::ThrowOsError(get_app(),(LONG)::get_last_error());
 
    //      if(!::CloseHandle(hFile))
-   //         file_exception::ThrowOsError(get_app(),(LONG)::GetLastError());
+   //         file_exception::ThrowOsError(get_app(),(LONG)::get_last_error());
    //   }
 
    //   if((DWORD)status.m_attribute != wAttr && !(wAttr & readOnly))
    //   {
    //      if(!SetFileAttributes((LPTSTR)lpszFileName,(DWORD)status.m_attribute))
-   //         file_exception::ThrowOsError(get_app(),(LONG)GetLastError());
+   //         file_exception::ThrowOsError(get_app(),(LONG)get_last_error());
    //   }
    //}
 
@@ -280,7 +280,7 @@ namespace windows
    //   LPFILETIME lpLastWriteTime = NULL;
 
    //   if((wAttr = GetFileAttributes((LPTSTR)lpszFileName)) == (DWORD)-1L)
-   //      file_exception::ThrowOsError(get_app(),(LONG)GetLastError());
+   //      file_exception::ThrowOsError(get_app(),(LONG)get_last_error());
 
    //   if((DWORD)status.m_attribute != wAttr && (wAttr & readOnly))
    //   {
@@ -289,7 +289,7 @@ namespace windows
    //      // caller changed the file from readonly.
 
    //      if(!SetFileAttributes((LPTSTR)lpszFileName,(DWORD)status.m_attribute))
-   //         file_exception::ThrowOsError(get_app(),(LONG)GetLastError());
+   //         file_exception::ThrowOsError(get_app(),(LONG)get_last_error());
    //   }
 
    //   // last modification time
@@ -317,19 +317,19 @@ namespace windows
    //         NULL);
 
    //      if(hFile == INVALID_HANDLE_VALUE)
-   //         file_exception::ThrowOsError(get_app(),(LONG)::GetLastError());
+   //         file_exception::ThrowOsError(get_app(),(LONG)::get_last_error());
 
    //      if(!SetFileTime((HANDLE)hFile,lpCreationTime,lpLastAccessTime,lpLastWriteTime))
-   //         file_exception::ThrowOsError(get_app(),(LONG)::GetLastError());
+   //         file_exception::ThrowOsError(get_app(),(LONG)::get_last_error());
 
    //      if(!::CloseHandle(hFile))
-   //         file_exception::ThrowOsError(get_app(),(LONG)::GetLastError());
+   //         file_exception::ThrowOsError(get_app(),(LONG)::get_last_error());
    //   }
 
    //   if((DWORD)status.m_attribute != wAttr && !(wAttr & readOnly))
    //   {
    //      if(!SetFileAttributes((LPTSTR)lpszFileName,(DWORD)status.m_attribute))
-   //         file_exception::ThrowOsError(get_app(),(LONG)GetLastError());
+   //         file_exception::ThrowOsError(get_app(),(LONG)get_last_error());
    //   }
    //}
 
@@ -347,7 +347,7 @@ namespace windows
       LPFILETIME lpLastWriteTime = NULL;
 
       if((wAttr = GetFileAttributesW((LPWSTR)(LPCWSTR)lpszFileName)) == (DWORD)-1L)
-         file_exception::ThrowOsError(get_app(),(LONG)GetLastError());
+         file_exception::ThrowOsError(get_app(),(LONG)get_last_error());
 
       if((DWORD)status.m_attribute != wAttr && (wAttr & FILE_ATTRIBUTE_READONLY))
       {
@@ -356,7 +356,7 @@ namespace windows
          // caller changed the file from readonly.
 
          if(!SetFileAttributesW((LPWSTR)(LPCWSTR)lpszFileName,(DWORD)status.m_attribute))
-            file_exception::ThrowOsError(get_app(),(LONG)GetLastError());
+            file_exception::ThrowOsError(get_app(),(LONG)get_last_error());
       }
 
       // last modification time

@@ -51,7 +51,7 @@ void round_window::round_window_show()
 void round_window::round_window_redraw()
 {
    
-   [[m_proundwindow dd_invokeOnMainThreadAndWaitUntilDone :TRUE] display ];
+   [[m_proundwindow dd_invokeOnMainThreadAndWaitUntilDone :FALSE] display ];
    
 }
 
@@ -67,6 +67,8 @@ void round_window::round_window_invalidate()
 void round_window::round_window_show_keyboard(bool bShow)
 {
    
+   dispatch_async(dispatch_get_main_queue(), ^{
+      //this runs on the main thread.  Use theData
    if(bShow)
    {
     
@@ -84,6 +86,8 @@ void round_window::round_window_show_keyboard(bool bShow)
       }
       
    }
+   }
+      );
    
 }
 

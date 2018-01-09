@@ -624,7 +624,7 @@ namespace android
          if(!bIsDir)
          {
 
-            SetLastError(dwLastError);
+            set_last_error(dwLastError);
 
          }
 
@@ -652,7 +652,7 @@ namespace android
 
       bIsDir = ::dir::is(strPath);
 
-      m_isdirmap.set(lpcszPath, bIsDir, bIsDir ? 0 : ::GetLastError());
+      m_isdirmap.set(lpcszPath, bIsDir, bIsDir ? 0 : ::get_last_error());
 
       return bIsDir;
    }
@@ -673,7 +673,7 @@ namespace android
    //      if(!bIsDir)
    //      {
 
-   //         SetLastError(dwLastError);
+   //         set_last_error(dwLastError);
 
    //      }
 
@@ -701,7 +701,7 @@ namespace android
 
    //   bIsDir = ::dir::is(::str::international::unicode_to_utf8(wstrPath));
 
-   //   m_isdirmap.set(strPath, bIsDir, bIsDir ? 0 : ::GetLastError());
+   //   m_isdirmap.set(strPath, bIsDir, bIsDir ? 0 : ::get_last_error());
 
    //   return bIsDir;
    //}
@@ -762,7 +762,7 @@ namespace android
       //   if(m_isdirmap.lookup(str, bHasSubFolder, dwLastError))
       //      return bHasSubFolder;
       //   bHasSubFolder = m_pziputil->HasSubFolder(papp, str);
-      //   m_isdirmap.set(str.Left(iLast + 1), bHasSubFolder, bHasSubFolder ? 0 : ::GetLastError());
+      //   m_isdirmap.set(str.Left(iLast + 1), bHasSubFolder, bHasSubFolder ? 0 : ::get_last_error());
       //   return bHasSubFolder;
       //}
 
@@ -791,7 +791,7 @@ namespace android
 
       bIsDir = ::dir::is(::str::international::unicode_to_utf8(wstrPath));
 
-      m_isdirmap.set(str.Left(iLast + 1), bIsDir, bIsDir ? 0 : ::GetLastError());
+      m_isdirmap.set(str.Left(iLast + 1), bIsDir, bIsDir ? 0 : ::get_last_error());
 
       return bIsDir;
    }
@@ -898,7 +898,7 @@ namespace android
 
             if (!::dir::mk(stra[i]))
             {
-               DWORD dwError = ::GetLastError();
+               DWORD dwError = ::get_last_error();
                if (dwError == ERROR_ALREADY_EXISTS)
                {
                   string str;
@@ -928,7 +928,7 @@ namespace android
                   }
                   else
                   {
-                     dwError = ::GetLastError();
+                     dwError = ::get_last_error();
                   }
                }
                //char * pszError;

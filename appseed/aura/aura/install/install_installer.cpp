@@ -2772,7 +2772,7 @@ retry_host:
       strMutex += psz;
 
       ::mutex mutex(get_app(), false, strMutex);
-      bool bOpened = ::GetLastError() == ERROR_ALREADY_EXISTS;
+      bool bOpened = ::get_last_error() == ERROR_ALREADY_EXISTS;
       if (bOpened)
       {
 

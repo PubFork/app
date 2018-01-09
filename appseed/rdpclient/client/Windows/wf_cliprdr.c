@@ -1436,7 +1436,7 @@ static LRESULT CALLBACK cliprdr_proc(HWND hWnd, UINT Msg, WPARAM wParam,
 			/* discard all contexts in clipboard */
 			if (!OpenClipboard(clipboard->hwnd))
 			{
-				DEBUG_CLIPRDR("OpenClipboard failed with 0x%x", GetLastError());
+				DEBUG_CLIPRDR("OpenClipboard failed with 0x%x", get_last_error());
 				break;
 			}
 
@@ -1455,7 +1455,7 @@ static LRESULT CALLBACK cliprdr_proc(HWND hWnd, UINT Msg, WPARAM wParam,
 
 			if (!SetClipboardData((UINT) wParam, clipboard->hmem))
 			{
-				DEBUG_CLIPRDR("SetClipboardData failed with 0x%x", GetLastError());
+				DEBUG_CLIPRDR("SetClipboardData failed with 0x%x", get_last_error());
 
 				if (clipboard->hmem)
 				{
@@ -1557,7 +1557,7 @@ static int create_cliprdr_window(wfClipboard* clipboard)
 
 	if (!clipboard->hwnd)
 	{
-		DEBUG_CLIPRDR("error: CreateWindowEx failed with %x.", GetLastError());
+		DEBUG_CLIPRDR("error: CreateWindowEx failed with %x.", get_last_error());
 		return -1;
 	}
 
@@ -1661,7 +1661,7 @@ static BOOL wf_cliprdr_get_file_contents(WCHAR* file_name, BYTE* buffer,
 
 	if (!ReadFile(hFile, buffer, nRequested, &nGet, NULL))
 	{
-		DWORD err = GetLastError();
+		DWORD err = get_last_error();
 		DEBUG_CLIPRDR("ReadFile failed with 0x%x.", err);
 		goto error;
 	}
@@ -1786,7 +1786,7 @@ static BOOL wf_cliprdr_traverse_directory(wfClipboard* clipboard,
 
 	if (hFind == INVALID_HANDLE_VALUE)
 	{
-		DEBUG_CLIPRDR("FindFirstFile failed with 0x%x.", GetLastError());
+		DEBUG_CLIPRDR("FindFirstFile failed with 0x%x.", get_last_error());
 		return FALSE;
 	}
 
@@ -1971,7 +1971,7 @@ static UINT wf_cliprdr_server_format_list(CliprdrClientContext* context,
 			rc = CHANNEL_RC_OK;
 		}
 
-		if (!CloseClipboard() && GetLastError())
+		if (!CloseClipboard() && get_last_error())
 			return ERROR_INTERNAL_ERROR;
 	}
 
@@ -2243,7 +2243,7 @@ static UINT wf_cliprdr_server_format_data_response(CliprdrClientContext*
 	CopyMemory(data, formatDataResponse->requestedFormatData,
 	           formatDataResponse->dataLen);
 
-	if (!GlobalUnlock(hMem) && GetLastError())
+	if (!GlobalUnlock(hMem) && get_last_error())
 	{
 		GlobalFree(hMem);
 		return ERROR_INTERNAL_ERROR;

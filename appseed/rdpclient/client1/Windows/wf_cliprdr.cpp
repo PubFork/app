@@ -1072,7 +1072,7 @@ void wf_destroy_file_obj(IDataObject* instance);
 //			DEBUG_CLIPRDR("info: WM_CREATE");
 //			clipboard = (wfClipboard*)((CREATESTRUCT*) lParam)->lpCreateParams;
 //			if (!AddClipboardFormatListener(hWnd)) {
-//				DEBUG_CLIPRDR("error: AddClipboardFormatListener failed with %#x.", GetLastError());
+//				DEBUG_CLIPRDR("error: AddClipboardFormatListener failed with %#x.", get_last_error());
 //			}
 //			clipboard->hwnd = hWnd;
 //			break;
@@ -1105,7 +1105,7 @@ void wf_destroy_file_obj(IDataObject* instance);
 //			/* discard all contexts in clipboard */
 //			if (!OpenClipboard(clipboard->hwnd))
 //			{
-//				DEBUG_CLIPRDR("OpenClipboard failed with 0x%x", GetLastError());
+//				DEBUG_CLIPRDR("OpenClipboard failed with 0x%x", get_last_error());
 //				break;
 //			}
 //			EmptyClipboard();
@@ -1122,7 +1122,7 @@ void wf_destroy_file_obj(IDataObject* instance);
 //
 //			if (!SetClipboardData((UINT) wParam, clipboard->hmem))
 //			{
-//				DEBUG_CLIPRDR("SetClipboardData failed with 0x%x", GetLastError());
+//				DEBUG_CLIPRDR("SetClipboardData failed with 0x%x", get_last_error());
 //
 //				if (clipboard->hmem)
 //				{
@@ -1194,7 +1194,7 @@ void wf_destroy_file_obj(IDataObject* instance);
 //
 //	if (!clipboard->hwnd)
 //	{
-//		DEBUG_CLIPRDR("error: CreateWindowEx failed with %x.", GetLastError());
+//		DEBUG_CLIPRDR("error: CreateWindowEx failed with %x.", get_last_error());
 //		return -1;
 //	}
 //
@@ -1286,7 +1286,7 @@ void wf_destroy_file_obj(IDataObject* instance);
 //
 //	if (!ReadFile(hFile, buffer, nRequested, &nGet, NULL))
 //	{
-//		DWORD err = GetLastError();
+//		DWORD err = get_last_error();
 //		DEBUG_CLIPRDR("ReadFile failed with 0x%x.", err);
 //	}
 //
@@ -1386,7 +1386,7 @@ void wf_destroy_file_obj(IDataObject* instance);
 //
 //	if (hFind == INVALID_HANDLE_VALUE)
 //	{
-//		DEBUG_CLIPRDR("FindFirstFile failed with 0x%x.", GetLastError());
+//		DEBUG_CLIPRDR("FindFirstFile failed with 0x%x.", get_last_error());
 //		return;
 //	}
 //

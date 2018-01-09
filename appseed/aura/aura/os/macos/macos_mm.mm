@@ -207,28 +207,6 @@ void ns_Sleep(unsigned int uiMillis)
 
 // GetMacOSStatusErrorString and GetMacOSStatusCommentString
 
-char * mm_error_string(OSStatus status)
-{
-   
-   NSError * error = [NSError errorWithDomain:NSOSStatusErrorDomain code: status userInfo: nil];
-   
-   NSString * strError = [error localizedDescription];
-   
-   return ns_string(strError);
-   
-}
-
-
-char * mm_error_description(OSStatus status)
-{
-   
-   NSError * error = [NSError errorWithDomain:NSOSStatusErrorDomain code: status userInfo: nil];
-   
-   NSString * strError = [error description];
-   
-   return ns_string(strError);
-   
-}
 
 
 

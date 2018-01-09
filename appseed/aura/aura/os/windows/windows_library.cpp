@@ -73,7 +73,7 @@ void * __node_library_open(const char * pszPath, string & strMessage)
 
    }
 
-   uiError = ::GetLastError();
+   uiError = ::get_last_error();
 
    strError = "\n (1) LoadLibraryW " + path + " failed with (" + ::str::from(uiError) + ") " + get_error_string(uiError);
 
@@ -99,7 +99,7 @@ void * __node_library_open(const char * pszPath, string & strMessage)
 
    }
 
-   uiError = ::GetLastError();
+   uiError = ::get_last_error();
 
    strError = "\n (2) LoadLibraryW " + path + " failed with (" + ::str::from(uiError) + ") " + get_error_string(uiError);
 
@@ -118,7 +118,7 @@ void * __node_library_open(const char * pszPath, string & strMessage)
 
    }
 
-   uiError = ::GetLastError();
+   uiError = ::get_last_error();
 
    strError = "\n (3) LoadLibraryW " + path + " failed with (" + ::str::from(uiError) + ") " + get_error_string(uiError);
 
@@ -144,7 +144,7 @@ void * __node_library_open(const char * pszPath, string & strMessage)
 
    }
 
-   uiError = ::GetLastError();
+   uiError = ::get_last_error();
 
    strError = "\n (4) LoadLibraryW " + path + " failed with (" + ::str::from(uiError) + ") " + get_error_string(uiError);
 
@@ -170,7 +170,7 @@ void * __node_library_open(const char * pszPath, string & strMessage)
 
    }
 
-   uiError = ::GetLastError();
+   uiError = ::get_last_error();
 
    strError = "\n (5) LoadLibraryW " + path + " failed with (" + ::str::from(uiError) + ") " + get_error_string(uiError);
 
@@ -196,7 +196,7 @@ void * __node_library_open(const char * pszPath, string & strMessage)
 
    }
 
-   uiError = ::GetLastError();
+   uiError = ::get_last_error();
 
    strError = "\n (6) LoadLibraryW " + path + " failed with (" + ::str::from(uiError) + ") " + get_error_string(uiError);
 
@@ -297,7 +297,7 @@ void * __node_library_touch(const char * pszPath, string & strMessage)
 
    }
 
-   uiError = ::GetLastError();
+   uiError = ::get_last_error();
 
    strError = "\n (1) GetModuleHandleW " + path + " failed with (" + ::str::from(uiError) + ") " + get_error_string(uiError);
 
@@ -323,7 +323,7 @@ void * __node_library_touch(const char * pszPath, string & strMessage)
 
    }
 
-   uiError = ::GetLastError();
+   uiError = ::get_last_error();
 
    strError = "\n (2) GetModuleHandleW " + path + " failed with (" + ::str::from(uiError) + ") " + get_error_string(uiError);
 
@@ -342,7 +342,7 @@ void * __node_library_touch(const char * pszPath, string & strMessage)
 
    }
 
-   uiError = ::GetLastError();
+   uiError = ::get_last_error();
 
    strError = "\n (3) GetModuleHandleW " + path + " failed with (" + ::str::from(uiError) + ") " + get_error_string(uiError);
 
@@ -368,7 +368,7 @@ void * __node_library_touch(const char * pszPath, string & strMessage)
 
    }
 
-   uiError = ::GetLastError();
+   uiError = ::get_last_error();
 
    strError = "\n (4) GetModuleHandleW " + path + " failed with (" + ::str::from(uiError) + ") " + get_error_string(uiError);
 
@@ -394,7 +394,7 @@ void * __node_library_touch(const char * pszPath, string & strMessage)
 
    }
 
-   uiError = ::GetLastError();
+   uiError = ::get_last_error();
 
    strError = "\n (5) GetModuleHandleW " + path + " failed with (" + ::str::from(uiError) + ") " + get_error_string(uiError);
 
@@ -420,7 +420,7 @@ void * __node_library_touch(const char * pszPath, string & strMessage)
 
    }
 
-   uiError = ::GetLastError();
+   uiError = ::get_last_error();
 
    strError = "\n (6) GetModuleHandleW " + path + " failed with (" + ::str::from(uiError) + ") " + get_error_string(uiError);
 
@@ -488,7 +488,7 @@ void * __node_library_open_ca2(const char * psz, string & strMessage)
    else
    {
 
-      uint32_t uiError = GetLastError();
+      uint32_t uiError = get_last_error();
 
       strMessage = "__node_library_open_ca2 Failed to Load " + string(psz) + " with error (" + str::from(uiError) +
                    ")" + get_error_string(uiError);

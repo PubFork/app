@@ -120,7 +120,7 @@
 //   DPCHECK(condition) << "Couldn't do foo";
 //
 // which append the last system error to the message in string form (taken from
-// GetLastError() on Windows and errno on POSIX).
+// get_last_error() on Windows and errno on POSIX).
 //
 // The supported severity levels for macros that allow you to specify one
 // are (in increasing order of severity) INFO, WARNING, ERROR, and FATAL.
@@ -593,8 +593,8 @@ class LogMessage {
   const int line_;
 
 #if defined(OS_WIN)
-  // Stores the current value of GetLastError in the constructor and restores
-  // it in the destructor by calling SetLastError.
+  // Stores the current value of get_last_error in the constructor and restores
+  // it in the destructor by calling set_last_error.
   // This is useful since the LogMessage class uses a lot of Win32 calls
   // that will lose the value of GLE and the code that called the log function
   // will have lost the thread error value when the log call returns.
@@ -638,13 +638,13 @@ typedef unsigned long SystemErrorCode;
 typedef int SystemErrorCode;
 #endif
 
-// Alias for ::GetLastError() on Windows and errno on POSIX. Avoids having to
-// pull in windows.h just for GetLastError() and DWORD.
+// Alias for ::get_last_error() on Windows and errno on POSIX. Avoids having to
+// pull in windows.h just for get_last_error() and DWORD.
 SystemErrorCode GetLastSystemErrorCode();
 std::string SystemErrorCodeToString(SystemErrorCode error_code);
 
 #if defined(OS_WIN)
-// Appends a formatted system message of the GetLastError() type.
+// Appends a formatted system message of the get_last_error() type.
 class Win32ErrorLogMessage {
  public:
   Win32ErrorLogMessage(const char* file,

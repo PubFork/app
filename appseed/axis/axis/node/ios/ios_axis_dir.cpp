@@ -123,7 +123,7 @@ namespace ios
          {
             if(!bIsDir)
             {
-               ::SetLastError(uiLastError);
+               ::set_last_error(uiLastError);
             }
             return bIsDir;
          }
@@ -144,19 +144,19 @@ namespace ios
             {
                if(!bHasSubFolder)
                {
-                  ::SetLastError(uiLastError);
+                  ::set_last_error(uiLastError);
                }
                return bHasSubFolder;
             }
             bHasSubFolder = m_pziputil->has_sub_folder(papp, str);
-            m_isdirmap.set(str.Left(iLast + 1), bHasSubFolder, bHasSubFolder ? 0 : ::GetLastError());
+            m_isdirmap.set(str.Left(iLast + 1), bHasSubFolder, bHasSubFolder ? 0 : ::get_last_error());
             return bHasSubFolder;
          }
          
          
          bIsDir = ::dir::is(str.Left(iLast));
          
-         m_isdirmap.set(str.Left(iLast + 1), bIsDir, bIsDir ? 0 : ::GetLastError());
+         m_isdirmap.set(str.Left(iLast + 1), bIsDir, bIsDir ? 0 : ::get_last_error());
          
          return bIsDir;
       }
@@ -749,7 +749,7 @@ namespace ios
 //         if(!bIsDir)
 //         {
 //
-//            SetLastError(dwLastError);
+//            set_last_error(dwLastError);
 //
 //         }
 //
@@ -777,7 +777,7 @@ namespace ios
 //
 //      bIsDir = ::dir::is(strPath);
 //
-//      m_isdirmap.set(lpcszPath, bIsDir, bIsDir ? 0 : ::GetLastError());
+//      m_isdirmap.set(lpcszPath, bIsDir, bIsDir ? 0 : ::get_last_error());
 //
 //      return bIsDir;
 //   }
@@ -798,7 +798,7 @@ namespace ios
 //         if(!bIsDir)
 //         {
 //
-//            SetLastError(dwLastError);
+//            set_last_error(dwLastError);
 //
 //         }
 //
@@ -826,7 +826,7 @@ namespace ios
 //
 //      bIsDir = ::dir::is(::str::international::unicode_to_utf8(wstrPath));
 //
-//      m_isdirmap.set(strPath, bIsDir, bIsDir ? 0 : ::GetLastError());
+//      m_isdirmap.set(strPath, bIsDir, bIsDir ? 0 : ::get_last_error());
 //
 //      return bIsDir;
 //   }
@@ -887,7 +887,7 @@ namespace ios
 //         if(m_isdirmap.lookup(str, bHasSubFolder, dwLastError))
 //            return bHasSubFolder;
 //         bHasSubFolder = m_pziputil->HasSubFolder(papp, str);
-//         m_isdirmap.set(str.Left(iLast + 1), bHasSubFolder, bHasSubFolder ? 0 : ::GetLastError());
+//         m_isdirmap.set(str.Left(iLast + 1), bHasSubFolder, bHasSubFolder ? 0 : ::get_last_error());
 //         return bHasSubFolder;
 //      }
 //
@@ -916,7 +916,7 @@ namespace ios
 //
 //      bIsDir = ::dir::is(::str::international::unicode_to_utf8(wstrPath));
 //
-//      m_isdirmap.set(str.Left(iLast + 1), bIsDir, bIsDir ? 0 : ::GetLastError());
+//      m_isdirmap.set(str.Left(iLast + 1), bIsDir, bIsDir ? 0 : ::get_last_error());
 //
 //      return bIsDir;
 //   }
@@ -1044,7 +1044,7 @@ namespace ios
 //
 //            if(!::dir::mk(stra[i]))
 //            {
-//               DWORD dwError = ::GetLastError();
+//               DWORD dwError = ::get_last_error();
 //               if(dwError == ERROR_ALREADY_EXISTS)
 //               {
 //                  string str;
@@ -1074,7 +1074,7 @@ namespace ios
 //                  }
 //                  else
 //                  {
-//                     dwError = ::GetLastError();
+//                     dwError = ::get_last_error();
 //                  }
 //               }
 //               char * pszError;

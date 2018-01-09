@@ -557,7 +557,11 @@ namespace multimedia
          single_lock sLock(m_pmutex, TRUE);
          
          if(m_estate != state_playing && m_estate != state_paused)
+         {
+          
             return ::multimedia::result_error;
+            
+         }
          
          m_eventStopped.ResetEvent();
          
@@ -587,7 +591,11 @@ namespace multimedia
          ASSERT(m_estate == state_playing);
          
          if(m_estate != state_playing)
+         {
+            
             return ::multimedia::result_error;
+            
+         }
          
          // waveOutReset
          // The waveOutReset function stops playback on the given
@@ -600,7 +608,9 @@ namespace multimedia
          
          if(m_mmr == ::multimedia::result_success)
          {
+            
             m_estate = state_paused;
+            
          }
          
          return m_mmr;
@@ -624,9 +634,21 @@ namespace multimedia
             
          }
          
-         m_mmr = translate(AudioQueuePrime(m_Queue, 0, NULL));
+         OSStatus statusPrime = AudioQueuePrime(m_Queue, 0, NULL);
          
-         m_mmr = translate(AudioQueueStart(m_Queue, NULL));
+         m_mmr = translate(statusPrime);
+
+         ASSERT(m_mmr == ::multimedia::result_success);
+         
+//         Sleep(500);
+         
+         OSStatus statusStart = AudioQueueStart(m_Queue, NULL);
+         
+         string strErrorString = apple_error_string(statusStart);
+         
+         string strErrorDescription = apple_error_description(statusStart);
+
+         m_mmr = translate(statusStart);
          
          ASSERT(m_mmr == ::multimedia::result_success);
          

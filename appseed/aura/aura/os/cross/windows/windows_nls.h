@@ -1347,7 +1347,7 @@ IsDBCSLeadByteEx(
 //xxx linux WINAXISAPI
 int32_t
 WINAPI
-MultiByteToWideChar(
+MultiByteToWideChar2(
     UINT     CodePage,
     DWORD    dwFlags,
     LPCSTR   lpMultiByteStr,
@@ -1358,7 +1358,7 @@ MultiByteToWideChar(
 //xxx linux WINAXISAPI
 int32_t
 WINAPI
-WideCharToMultiByte(
+WideCharToMultiByte2(
     UINT     CodePage,
     DWORD    dwFlags,
     LPCWSTR  lpWideCharStr,

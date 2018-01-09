@@ -174,7 +174,7 @@ wait_result multi_lock::lock(const duration & duration, bool bWaitForAll, uint32
    DWORD iUpperBound = WAIT_OBJECT_0 + (DWORD) M_OBJECTA.get_count();
    if(iResult == WAIT_FAILED)
    {
-      DWORD dw = ::GetLastError();
+      DWORD dw = ::get_last_error();
       TRACELASTERROR();
    }
    else if (iResult >= WAIT_OBJECT_0 && iResult < iUpperBound)

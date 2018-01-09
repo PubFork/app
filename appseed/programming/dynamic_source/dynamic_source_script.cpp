@@ -146,7 +146,7 @@ bool ds_script::HasCompileOrLinkError()
       return true;
    if(str.find(" error ") >= 0)
       return true;
-   if(str.find(" GetLastError ") >= 0)
+   if(str.find(" get_last_error ") >= 0)
       return true;
    return false;
 }
@@ -244,7 +244,7 @@ bool ds_script::CalcHasTempError()
          return true;
       }
    }
-   if(str.find(" GetLastError ") >= 0)
+   if(str.find(" get_last_error ") >= 0)
       return true;
    return false;
 }
@@ -316,16 +316,16 @@ void ds_script::Load()
 #ifdef LINUX
          const char * psz = dlerror();
 #endif
-         uint32_t dwMessageId = GetLastError();
+         uint32_t dwMessageId = get_last_error();
          if(dwMessageId == 0x139)
          {
             debug_break();
          }
          TRACE("Error Message Id: %d\n", dwMessageId);
-         string strError = get_system_error_message(::GetLastError());
+         string strError = get_system_error_message(::get_last_error());
          string str;
-         str.Format("%d - ", ::GetLastError());
-         m_memfileError << strStagePath << " : LoadLibrary, GetLastError : " << str << strError;
+         str.Format("%d - ", ::get_last_error());
+         m_memfileError << strStagePath << " : LoadLibrary, get_last_error : " << str << strError;
       }
    }
    m_lpfnCreateInstance = m_library.get < NET_NODE_CREATE_INSTANCE_PROC > ("create_dynamic_source_script_instance");
@@ -364,7 +364,7 @@ void ds_script::Unload()
       bool b = ::GetModuleHandleExW(GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT, ::str::international::utf8_to_unicode("\\\\?\\" + strStagePath), &hmodule) != FALSE;
       if(hmodule != NULL && !::FreeLibrary(hmodule))
       {
-         uint32_t dwError = ::GetLastError();
+         uint32_t dwError = ::get_last_error();
          TRACE("ds_script::GetModuleHandle return bool(%d) Unload Error close Handle %s %d\r\n", b, strStagePath, dwError);
       }
       string strPdb;
@@ -374,7 +374,7 @@ void ds_script::Unload()
       b = ::GetModuleHandleExW(GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT, ::str::international::utf8_to_unicode("\\\\?\\" + strPdb), &hmodule) != FALSE;
       if(hmodule != NULL && !::FreeLibrary(hmodule))
       {
-         uint32_t dwError = ::GetLastError();
+         uint32_t dwError = ::get_last_error();
          TRACE("ds_script::Unload Error close Handle %s %d\r\n", strPdb, dwError);
       }
 

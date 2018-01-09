@@ -679,7 +679,7 @@ static DWORD WINAPI wf_client_thread(LPVOID lpParam)
 		                              QS_ALLINPUT) == WAIT_FAILED)
 		{
 			WLog_ERR(TAG, "wfreerdp_run: WaitForMultipleObjects failed: 0x%04X",
-			         GetLastError());
+			         get_last_error());
 			break;
 		}
 

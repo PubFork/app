@@ -428,7 +428,9 @@ namespace userex
 
          m_pfontview = pdoc->get_typed_view<font_view>();
 
-         Session.userex()->m_ptemplateFontSel->get_document()->get_typed_view<::user::font_list>()->attach_font_list_data(Session.m_pfontlistdata);
+         pcreatordata->m_pwnd = m_pfontview;
+
+         m_pfontview->m_pview->attach_font_list_data(Session.m_pfontlistdata);
 
       }
       else if(::str::begins_ci(pcreatordata->m_id, "file_manager")

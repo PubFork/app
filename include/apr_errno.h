@@ -76,7 +76,7 @@ APR_DECLARE(char *) apr_strerror(apr_status_t statcode, char *buf,
 
 /** @def apr_get_os_error()
  * @return apr_status_t the last platform error, folded into apr_status_t, on most platforms
- * @remark This retrieves errno, or calls a GetLastError() style function, and
+ * @remark This retrieves errno, or calls a get_last_error() style function, and
  *      folds it with APR_FROM_OS_ERROR.  Some platforms (such as OS2) have no
  *      such mechanism, so this call may be unsupported.  Do NOT use this
  *      call for socket errors from socket, send, recv etc!
@@ -88,7 +88,7 @@ APR_DECLARE(char *) apr_strerror(apr_status_t statcode, char *buf,
  * @warning This is a macro implementation; the statcode argument may be evaluated
  *      multiple times.  If the statcode was not created by apr_get_os_error
  *      or APR_FROM_OS_ERROR, the results are undefined.  This macro sets
- *      errno, or calls a SetLastError() style function, unfolding statcode
+ *      errno, or calls a set_last_error() style function, unfolding statcode
  *      with APR_TO_OS_ERROR.  Some platforms (such as OS2) have no such
  *      mechanism, so this call may be unsupported.
  */
@@ -848,8 +848,8 @@ APR_DECLARE(char *) apr_strerror(apr_status_t statcode, char *buf,
  * The API calls always return a result codes which
  * should be filtered through APR_FROM_OS_ERROR().
  *
- * #define apr_get_os_error()   (APR_FROM_OS_ERROR(GetLastError()))
- * #define apr_set_os_error(e)  (SetLastError(APR_TO_OS_ERROR(e)))
+ * #define apr_get_os_error()   (APR_FROM_OS_ERROR(get_last_error()))
+ * #define apr_set_os_error(e)  (set_last_error(APR_TO_OS_ERROR(e)))
  */
 
 /* A special case, only socket calls require this;
@@ -1012,8 +1012,8 @@ APR_DECLARE(char *) apr_strerror(apr_status_t statcode, char *buf,
 #define APR_FROM_OS_ERROR(e) (e == 0 ? APR_SUCCESS : e + APR_OS_START_SYSERR)
 #define APR_TO_OS_ERROR(e)   (e == 0 ? APR_SUCCESS : e - APR_OS_START_SYSERR)
 
-#define apr_get_os_error()   (APR_FROM_OS_ERROR(GetLastError()))
-#define apr_set_os_error(e)  (SetLastError(APR_TO_OS_ERROR(e)))
+#define apr_get_os_error()   (APR_FROM_OS_ERROR(get_last_error()))
+#define apr_set_os_error(e)  (set_last_error(APR_TO_OS_ERROR(e)))
 
 /* A special case, only socket calls require this:
  */

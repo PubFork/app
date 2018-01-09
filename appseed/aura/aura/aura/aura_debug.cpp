@@ -15,7 +15,7 @@ CLASS_DECL_AURA int32_t FUNCTION_DEBUGBOX(const char * pszMessage, const char * 
 void TRACELASTERROR()
 {
    sp(::aura::application) m_pauraapp = get_app();
-   string strErrorMessage = ::get_system_error_message(::GetLastError());
+   string strErrorMessage = ::get_system_error_message(::get_last_error());
    TRACE("Error Message :\n%s\n", strErrorMessage.c_str());
 }
 

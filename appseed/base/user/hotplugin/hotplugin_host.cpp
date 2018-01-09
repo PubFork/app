@@ -292,7 +292,7 @@ namespace hotplugin
 
          sp(mutex) pmutex = canew(mutex(get_app(),"Global\\::ca::fontopus::ca2_spa::7807e510-5579-11dd-ae16-0800200c7784"));
 
-         if(::GetLastError() == ERROR_ALREADY_EXISTS)
+         if(::get_last_error() == ERROR_ALREADY_EXISTS)
          {
 
             m_bRunningSpaAdmin = true;

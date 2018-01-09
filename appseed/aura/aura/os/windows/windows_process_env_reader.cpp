@@ -278,7 +278,7 @@ void CProcessEnvReader::ConvertUnicodeToMBCS(LPCWSTR lpStringToConvert,int nLen,
 {
    char* buff = new char[nLen + 1];
 
-   WideCharToMultiByte(CP_ACP,0,lpStringToConvert,-1,
+   WideCharToMultiByte2(CP_ACP,0,lpStringToConvert,-1,
       buff,nLen + 1,NULL,NULL);
 
    csMBCSStr = buff;

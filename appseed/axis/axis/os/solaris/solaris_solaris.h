@@ -62,8 +62,8 @@ DWORD get_tick_count();
 
 
 
-CLASS_DECL_AXIS DWORD GetLastError();
-CLASS_DECL_AXIS DWORD SetLastError(DWORD dw);
+CLASS_DECL_AXIS DWORD get_last_error();
+CLASS_DECL_AXIS DWORD set_last_error(DWORD dw);
 
 
 CLASS_DECL_AXIS bool _istlead(int32_t ch);

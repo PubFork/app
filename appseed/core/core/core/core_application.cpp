@@ -3335,7 +3335,7 @@ BOOL LaunchAppIntoDifferentSession(const char * pszProcess, const char * pszComm
          }
          else
          {
-            DWORD dwLastError = GetLastError();
+            DWORD dwLastError = get_last_error();
 
             //            APPTRACE(get_app())("%d", dwLastError);
          }
@@ -3360,13 +3360,13 @@ BOOL LaunchAppIntoDifferentSession(const char * pszProcess, const char * pszComm
                            | TOKEN_DUPLICATE | TOKEN_ASSIGN_PRIMARY | TOKEN_ADJUST_SESSIONID
                            | TOKEN_READ | TOKEN_WRITE, &hPToken))
    {
-      int abcd = GetLastError();
-      debug_print("Process token open Error: %u\n", GetLastError());
+      int abcd = get_last_error();
+      debug_print("Process token open Error: %u\n", get_last_error());
    }
 
    if (!LookupPrivilegeValue(NULL, SE_DEBUG_NAME, &luid))
    {
-      debug_print("Lookup Privilege value Error: %u\n", GetLastError());
+      debug_print("Lookup Privilege value Error: %u\n", get_last_error());
    }
    tp.PrivilegeCount = 1;
    tp.Privileges[0].Luid = luid;
@@ -3374,7 +3374,7 @@ BOOL LaunchAppIntoDifferentSession(const char * pszProcess, const char * pszComm
 
    DuplicateTokenEx(hPToken, MAXIMUM_ALLOWED, NULL,
                     SecurityIdentification, TokenPrimary, &hUserTokenDup);
-   int dup = GetLastError();
+   int dup = get_last_error();
 
    //Adjust Token privilege
    SetTokenInformation(hUserTokenDup,
@@ -3383,11 +3383,11 @@ BOOL LaunchAppIntoDifferentSession(const char * pszProcess, const char * pszComm
    if (!AdjustTokenPrivileges(hUserTokenDup, FALSE, &tp, sizeof(TOKEN_PRIVILEGES),
                               (PTOKEN_PRIVILEGES)NULL, NULL))
    {
-      int abc = GetLastError();
-      debug_print("Adjust Privilege value Error: %u\n", GetLastError());
+      int abc = get_last_error();
+      debug_print("Adjust Privilege value Error: %u\n", get_last_error());
    }
 
-   if (GetLastError() == ERROR_NOT_ALL_ASSIGNED)
+   if (get_last_error() == ERROR_NOT_ALL_ASSIGNED)
    {
       debug_print("Token does not have the provilege\n");
    }
@@ -3418,9 +3418,9 @@ BOOL LaunchAppIntoDifferentSession(const char * pszProcess, const char * pszComm
              );
    // End impersonation of client.
 
-   //GetLastError Shud be 0
+   //get_last_error Shud be 0
 
-   int iResultOfCreateProcessAsUser = GetLastError();
+   int iResultOfCreateProcessAsUser = get_last_error();
 
    //Perform All the Close Handles tasks
 
@@ -3440,7 +3440,7 @@ bool enable_windows_token_privilege(HANDLE h, LPCSTR lpcszName)
    if (!LookupPrivilegeValue(NULL, SE_DEBUG_NAME, &tp.Privileges[0].Luid))
    {
 
-      int iError = GetLastError();
+      int iError = get_last_error();
 
       debug_print("Lookup Privilege value Error: %u\n", iError);
 
@@ -3455,7 +3455,7 @@ bool enable_windows_token_privilege(HANDLE h, LPCSTR lpcszName)
    if (!AdjustTokenPrivileges(h, FALSE, &tp, sizeof(TOKEN_PRIVILEGES), (PTOKEN_PRIVILEGES)NULL, NULL))
    {
 
-      int iError = GetLastError();
+      int iError = get_last_error();
 
       debug_print("Adjust Privilege value Error: %u\n", iError);
 
@@ -3494,8 +3494,8 @@ BOOL LaunchAppIntoSystemAcc(const char * pszProcess, const char * pszCommand, co
 
    if (!::OpenProcessToken(hProcess, TOKEN_ALL_ACCESS, &hPToken))
    {
-      int abcd = GetLastError();
-      debug_print("Process token open Error: %u\n", GetLastError());
+      int abcd = get_last_error();
+      debug_print("Process token open Error: %u\n", get_last_error());
    }
 
    if (!enable_windows_token_privilege(hPToken, SE_DEBUG_NAME))
@@ -3531,7 +3531,7 @@ BOOL LaunchAppIntoSystemAcc(const char * pszProcess, const char * pszCommand, co
 
    }
 
-   //if(GetLastError() == ERROR_NOT_ALL_ASSIGNED)
+   //if(get_last_error() == ERROR_NOT_ALL_ASSIGNED)
    //{
    //   debug_print("Token does not have the provilege\n");
    //}
@@ -3539,7 +3539,7 @@ BOOL LaunchAppIntoSystemAcc(const char * pszProcess, const char * pszCommand, co
    // "NETWORK SERVICE" or "NetworkService" ?
    if (!LogonUserW(L"LocalService", L"NT AUTHORITY", NULL, LOGON32_LOGON_SERVICE, LOGON32_PROVIDER_DEFAULT, &hUserToken))
    {
-      DWORD dwError = ::GetLastError();
+      DWORD dwError = ::get_last_error();
       string str;
       str.Format("Lookup Privilege value Error: %u\n", dwError);
       ::MessageBox(NULL, str, "Help Me", MB_OK);
@@ -3547,8 +3547,8 @@ BOOL LaunchAppIntoSystemAcc(const char * pszProcess, const char * pszCommand, co
    }
    if (!DuplicateTokenEx(hUserToken, TOKEN_ALL_ACCESS, NULL, SecurityDelegation, TokenPrimary, &hUserTokenDup))
    {
-      int dup = GetLastError();
-      debug_print("DuplicateTokenEx Error: %u\n", GetLastError());
+      int dup = get_last_error();
+      debug_print("DuplicateTokenEx Error: %u\n", get_last_error());
    }
 
    //Adjust Token privilege
@@ -3583,9 +3583,9 @@ BOOL LaunchAppIntoSystemAcc(const char * pszProcess, const char * pszCommand, co
              );
    // End impersonation of client.
 
-   //GetLastError Shud be 0
+   //get_last_error Shud be 0
 
-   //int iResultOfCreateProcessAsUser = GetLastError();
+   //int iResultOfCreateProcessAsUser = get_last_error();
 
    //Perform All the Close Handles tasks
 

@@ -4266,7 +4266,7 @@ namespace draw2d
          str,
          iLen,
          &sz);*/
-         //         uint32_t dw = ::GetLastError();
+         //         uint32_t dw = ::get_last_error();
          if (sz.cx > rectClip.width())
          {
             strsize i = iLen;

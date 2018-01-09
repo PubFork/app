@@ -47,7 +47,7 @@
 //   }
 //   else
 //   {
-//      uint32_t dwLastError = GetLastError();
+//      uint32_t dwLastError = get_last_error();
 //  //    TRACELASTERROR();
 //    //  TRACE("crypt::decrypt Decryption error! (1)");
 //      return 0;
@@ -96,7 +96,7 @@
 //   }
 //   else
 //   {
-//      uint32_t dwLastError = GetLastError();
+//      uint32_t dwLastError = get_last_error();
 //      //TRACE("crypt::encrypt Encryption error! (1)");
 //         return 0;
 //   }

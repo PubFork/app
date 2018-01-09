@@ -37,7 +37,7 @@ namespace metrowin
 
       if(INVALID_HANDLE_VALUE == hDirectory)
       {
-         DWORD dwError = ::GetLastError();
+         DWORD dwError = ::get_last_error();
          // handle error (see this FAQ)
          return dwError;
       }

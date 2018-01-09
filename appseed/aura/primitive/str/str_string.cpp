@@ -506,13 +506,13 @@ strsize __cdecl crt_char_traits::GetcharLength(const char * pszSrc,strsize nLeng
 strsize __cdecl crt_char_traits::GetcharLength(const unichar * pszSource) NOTHROW
 {
    // Returns required buffer length in XCHARs
-   return ::WideCharToMultiByte(_gen_GetConversionACP(),0,pszSource,-1,NULL,0,NULL,NULL) - 1;
+   return ::WideCharToMultiByte2(_gen_GetConversionACP(),0,pszSource,-1,NULL,0,NULL,NULL) - 1;
 }
 
 strsize __cdecl crt_char_traits::GetcharLength(const unichar * pszSource,strsize nLength) NOTHROW
 {
    // Returns required buffer length in XCHARs
-   return ::WideCharToMultiByte(_gen_GetConversionACP(),0,pszSource,(int32_t)nLength,NULL,0,NULL,NULL);
+   return ::WideCharToMultiByte2(_gen_GetConversionACP(),0,pszSource,(int32_t)nLength,NULL,0,NULL,NULL);
 }
 
 
@@ -537,7 +537,7 @@ void __cdecl crt_char_traits::ConvertTochar(char * pszDest,strsize nDestLength,c
 void __cdecl crt_char_traits::ConvertTochar(char * pszDest,strsize nDestLength,const unichar * pszSrc,strsize nSrcLength) NOTHROW
 {
    // nLen is in XCHARs
-   ::WideCharToMultiByte(_gen_GetConversionACP(),0,pszSrc,(int32_t)nSrcLength,pszDest,(int32_t)nDestLength,NULL,NULL);
+   ::WideCharToMultiByte2(_gen_GetConversionACP(),0,pszSrc,(int32_t)nSrcLength,pszDest,(int32_t)nDestLength,NULL,NULL);
 }
 
 
@@ -582,13 +582,13 @@ void __cdecl crt_char_traits::FloodCharacters(char ch,strsize nLength,char* pch)
 BSTR __cdecl crt_char_traits::AllocSysString(const char* pchData,strsize nDataLength) NOTHROW
 {
 
-   strsize nLen = ::MultiByteToWideChar(_gen_GetConversionACP(),0,pchData,(int32_t)nDataLength,NULL,0);
+   strsize nLen = ::MultiByteToWideChar2(_gen_GetConversionACP(),0,pchData,(int32_t)nDataLength,NULL,0);
 
    BSTR bstr = ::SysAllocStringLen(NULL,(UINT)nLen);
 
    if(bstr != NULL)
    {
-      ::MultiByteToWideChar(_gen_GetConversionACP(),0,pchData,(int32_t)nDataLength,bstr,(int32_t)nLen);
+      ::MultiByteToWideChar2(_gen_GetConversionACP(),0,pchData,(int32_t)nDataLength,bstr,(int32_t)nLen);
    }
 
    return bstr;
@@ -598,13 +598,13 @@ BSTR __cdecl crt_char_traits::AllocSysString(const char* pchData,strsize nDataLe
 bool __cdecl crt_char_traits::ReAllocSysString(const char* pchData,BSTR* pbstr,strsize nDataLength) NOTHROW
 {
 
-   strsize nLen = ::MultiByteToWideChar(_gen_GetConversionACP(),0,pchData,(int32_t)nDataLength,NULL,0);
+   strsize nLen = ::MultiByteToWideChar2(_gen_GetConversionACP(),0,pchData,(int32_t)nDataLength,NULL,0);
 
    bool bSuccess = ::SysReAllocStringLen(pbstr,NULL,(UINT)nLen) != 0;
 
    if(bSuccess)
    {
-      ::MultiByteToWideChar(_gen_GetConversionACP(),0,pchData,(int32_t)nDataLength,*pbstr,(int32_t)nLen);
+      ::MultiByteToWideChar2(_gen_GetConversionACP(),0,pchData,(int32_t)nDataLength,*pbstr,(int32_t)nLen);
    }
 
    return bSuccess;

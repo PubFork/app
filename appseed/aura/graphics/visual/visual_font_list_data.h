@@ -50,7 +50,8 @@ namespace visual
 
          uint32_array                              m_dwaBg;
          uint32_array                              m_dwaFg;
-
+         int                                       m_iUpdated;
+         ref_array < ::user::interaction >         m_uiptra;
 
 
          font_list_data(::aura::application * papp);
@@ -65,7 +66,7 @@ namespace visual
 
          virtual void _001OnDraw(::draw2d::graphics * pgraphics);
 
-         virtual void on_layout();
+         virtual void on_layout(SIZE * psize);
 
 
    };

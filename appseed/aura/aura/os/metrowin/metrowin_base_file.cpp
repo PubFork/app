@@ -1855,7 +1855,7 @@ DWORD WinGetFileAttributes(const unichar * psz)
 
    if(!::GetFileAttributesExW(psz,GetFileExInfoStandard,&data))
    {
-      DWORD dwLastError = ::GetLastError();
+      DWORD dwLastError = ::get_last_error();
       return INVALID_FILE_ATTRIBUTES;
    }
 

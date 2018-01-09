@@ -101,7 +101,7 @@ namespace macos
        TRACELASTERROR();
        return false;
        }
-       if (GetLastError() == ERROR_NOT_ALL_ASSIGNED)
+       if (get_last_error() == ERROR_NOT_ALL_ASSIGNED)
        {
        return false;
        }
@@ -117,7 +117,7 @@ namespace macos
        TRACELASTERROR();
        return false;
        }
-       if (GetLastError() == ERROR_NOT_ALL_ASSIGNED)
+       if (get_last_error() == ERROR_NOT_ALL_ASSIGNED)
        {
        return false;
        }
@@ -131,7 +131,7 @@ namespace macos
        if (!ExitWindowsEx(EWX_REBOOT | EWX_FORCE,
        SHTDN_REASON_MAJOR_SOFTWARE | SHTDN_REASON_MINOR_INSTALLATION))
        {
-       DWORD dwLastError = ::GetLastError();
+       DWORD dwLastError = ::get_last_error();
        return false;
        }*/
       //reset the previlages
@@ -605,7 +605,7 @@ namespace macos
 
        if(hdlSCM == 0)
        {
-       //::GetLastError()
+       //::get_last_error()
        return false;
        }
 
@@ -627,7 +627,7 @@ namespace macos
        if (!hdlServ)
        {
        CloseServiceHandle(hdlSCM);
-       //Ret = ::GetLastError();
+       //Ret = ::get_last_error();
        return FALSE;
        }
 
@@ -655,7 +655,7 @@ namespace macos
 
        if(hdlSCM == 0)
        {
-       //::GetLastError();
+       //::get_last_error();
        return false;
        }
 
@@ -666,7 +666,7 @@ namespace macos
 
        if (!hdlServ)
        {
-       // Ret = ::GetLastError();
+       // Ret = ::get_last_error();
        CloseServiceHandle(hdlSCM);
        return false;
        }
@@ -696,7 +696,7 @@ namespace macos
 
        if(hdlSCM == 0)
        {
-       //::GetLastError();
+       //::get_last_error();
        return false;
        }
 
@@ -709,7 +709,7 @@ namespace macos
        if (!hdlServ)
        {
        CloseServiceHandle(hdlSCM);
-       //Ret = ::GetLastError();
+       //Ret = ::get_last_error();
        return FALSE;
        }
 
@@ -737,7 +737,7 @@ namespace macos
 
        if(hdlSCM == 0)
        {
-       //::GetLastError();
+       //::get_last_error();
        return false;
        }
 
@@ -748,7 +748,7 @@ namespace macos
 
        if (!hdlServ)
        {
-       // Ret = ::GetLastError();
+       // Ret = ::get_last_error();
        CloseServiceHandle(hdlSCM);
        return false;
        }
@@ -1022,7 +1022,7 @@ namespace macos
 //      if((wAttr = GetFileAttributesW(wstr)) == (DWORD)-1L)
 //      {
 //         
-//         ::windows::file_exception::ThrowOsError(get_app(), (LONG)GetLastError());
+//         ::windows::file_exception::ThrowOsError(get_app(), (LONG)get_last_error());
 //         
 //      }
 //      
@@ -1036,7 +1036,7 @@ namespace macos
 //         if (!SetFileAttributesW(wstr, (DWORD)status.m_attribute))
 //         {
 //            
-//            ::windows::file_exception::ThrowOsError(get_app(), (LONG)GetLastError());
+//            ::windows::file_exception::ThrowOsError(get_app(), (LONG)get_last_error());
 //            
 //         }
 //         
@@ -1077,21 +1077,21 @@ namespace macos
 //      if(hFile == INVALID_HANDLE_VALUE)
 //      {
 //         
-//         ::windows::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+//         ::windows::file_exception::ThrowOsError(get_app(), (LONG)::get_last_error());
 //         
 //      }
 //      
 //      if(!SetFileTime((HANDLE)hFile, lpCreationTime, lpLastAccessTime, lpLastWriteTime))
 //      {
 //         
-//         ::windows::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+//         ::windows::file_exception::ThrowOsError(get_app(), (LONG)::get_last_error());
 //         
 //      }
 //      
 //      if(!::CloseHandle(hFile))
 //      {
 //         
-//         ::windows::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+//         ::windows::file_exception::ThrowOsError(get_app(), (LONG)::get_last_error());
 //         
 //      }
 //      
@@ -1101,7 +1101,7 @@ namespace macos
 //         if (!::SetFileAttributesW(wstr, (DWORD)status.m_attribute))
 //         {
 //            
-//            ::windows::file_exception::ThrowOsError(get_app(), (LONG)GetLastError());
+//            ::windows::file_exception::ThrowOsError(get_app(), (LONG)get_last_error());
 //            
 //         }
 //         

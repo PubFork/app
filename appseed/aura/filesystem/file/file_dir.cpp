@@ -22,13 +22,13 @@ void TranslateLastError()
    if(errno == EEXIST)
    {
 
-      SetLastError(ERROR_ALREADY_EXISTS);
+      set_last_error(ERROR_ALREADY_EXISTS);
 
    }
    else
    {
 
-      SetLastError(0);
+      set_last_error(0);
 
    }
 
@@ -929,7 +929,7 @@ bool dir::is(const ::file::path & path1)
    else
    {
 
-      DWORD dwLastError = ::GetLastError();
+      DWORD dwLastError = ::get_last_error();
 
       string strPrefix;
 
@@ -981,7 +981,7 @@ bool dir::is(const ::file::path & path1)
       if (!bOk)
       {
 
-         SetLastError(dwLastError);
+         set_last_error(dwLastError);
 
       }
 

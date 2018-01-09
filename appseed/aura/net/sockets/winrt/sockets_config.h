@@ -186,7 +186,7 @@ namespace sockets {
 #elif defined(METROWIN)
 
 CLASS_DECL_AURA const char *bsd_socket_error(int x);
-#define Errno GetLastError()
+#define Errno get_last_error()
 
 #elif defined(WINDOWSEX)
 

@@ -403,7 +403,7 @@ namespace install
       sei.lpFile = wstr.c_str();
       sei.lpParameters = L"/install /passive /norestart /q";
       ::ShellExecuteExW(&sei);
-      DWORD dwGetLastError = GetLastError();
+      DWORD dwGetLastError = get_last_error();
 
       DWORD dwExitCode = 0;
 

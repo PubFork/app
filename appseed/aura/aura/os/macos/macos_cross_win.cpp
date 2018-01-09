@@ -4,12 +4,12 @@ void ns_Sleep(unsigned int uiMillis);
 
 thread_int_ptr < DWORD > m_dwLastError;
 
-DWORD GetLastError()
+DWORD get_last_error()
 {
     return m_dwLastError;
 }
 
-DWORD SetLastError(DWORD dwLastError)
+DWORD set_last_error(DWORD dwLastError)
 {
     m_dwLastError = dwLastError;
    return m_dwLastError;

@@ -1334,7 +1334,7 @@ namespace windows
 		   bool b = ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) ) != FALSE;
          if(!b)
          {
-            DWORD dw = ::GetLastError();
+            DWORD dw = ::get_last_error();
             ::MessageBoxA(NULL, ::str::from((uint32_t) dw), ::str::from((uint32_t) dw), 0);
          }
       }

@@ -544,8 +544,8 @@ typedef int32_t errno_t;
 #endif
 
 
-MY_EXTERN_C DWORD GetLastError();
-MY_EXTERN_C DWORD SetLastError(DWORD dw);
+MY_EXTERN_C DWORD get_last_error();
+MY_EXTERN_C DWORD set_last_error(DWORD dw);
 
 
 /*#define MAKEWORD(a, b)      ((WORD)(((BYTE)(((DWORD_PTR)(a)) & 0xff)) | ((WORD)((BYTE)(((DWORD_PTR)(b)) & 0xff))) << 8))
@@ -761,7 +761,7 @@ MY_EXTERN_C UINT SysStringByteLen(BSTR bstr);
 MY_EXTERN_C UINT SysStringLen(BSTR bstr);
 
 
-MY_EXTERN_C uint32_t GetLastError();
+MY_EXTERN_C uint32_t get_last_error();
 MY_EXTERN_C LONG CompareFileTime(const FILETIME* ft1, const FILETIME* ft2);
 
 

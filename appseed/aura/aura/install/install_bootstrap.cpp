@@ -1414,7 +1414,7 @@ command_retry:
 
             }
 
-            DWORD dwGetLastError = GetLastError();
+            DWORD dwGetLastError = get_last_error();
 
             string str = ::path::app_app_admin(strPlatform);
 

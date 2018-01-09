@@ -120,21 +120,3 @@ output_debug_string(
 
 
 
-char * mm_error_string(OSStatus status);
-char * mm_error_description(OSStatus status);
-
-
-string macos_error_string(OSStatus status)
-{
-   
-   return str::from_strdup(mm_error_string(status));
-   
-}
-
-
-string macos_error_description(OSStatus status)
-{
-   
-   return str::from_strdup(mm_error_description(status));
-   
-}

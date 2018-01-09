@@ -155,7 +155,7 @@ namespace aura
             if(!::SendMessageTimeout(m_oswindow,WM_COPYDATA,(WPARAM)0,(LPARAM)&cds,SMTO_BLOCK, (UINT)(durationTimeout.get_total_milliseconds()),&dwptr))
                return false;
 
-            unsigned int dwError = ::GetLastError();
+            unsigned int dwError = ::get_last_error();
 
             if(dwError == ERROR_TIMEOUT)
                return false;
@@ -205,7 +205,7 @@ namespace aura
             if(!::SendMessageTimeout(m_oswindow,WM_COPYDATA,(WPARAM)0,(LPARAM)&cds,SMTO_BLOCK, (UINT)(durationTimeout.get_total_milliseconds()), &dwptr))
                return false;
 
-            unsigned int dwError = ::GetLastError();
+            unsigned int dwError = ::get_last_error();
 
             if(dwError == ERROR_TIMEOUT)
                return false;
@@ -268,7 +268,7 @@ namespace aura
 
          if(m_oswindow == NULL)
          {
-            unsigned int dwLastError = ::GetLastError();
+            unsigned int dwLastError = ::get_last_error();
             return false;
          }
 

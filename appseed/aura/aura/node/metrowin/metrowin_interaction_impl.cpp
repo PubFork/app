@@ -267,12 +267,12 @@ namespace metrowin
 #ifdef DEBUG
       if (hWnd == NULL)
       {
-         uint32_t dwLastError = GetLastError();
+         uint32_t dwLastError = get_last_error();
          string strLastError = FormatMessageFromSystem(dwLastError);
          string strMessage;
          strMessage.Format("%s\n\nSystem Error Code: %d", strLastError, dwLastError);
 
-         TRACE(::core::trace::category_AppMsg, 0, "Warning: Window creation failed: GetLastError returned:\n");
+         TRACE(::core::trace::category_AppMsg, 0, "Warning: Window creation failed: get_last_error returned:\n");
          TRACE(::core::trace::category_AppMsg, 0, "%s\n", strMessage);
          try
          {
@@ -3249,7 +3249,7 @@ return TRUE;
       //rect rectx;
       //::draw2d::bitmap * pbitmap = &graphics->GetCurrentBitmap();
       //::GetCurrentObject((HDC) pbase->m_wparam, OBJ_BITMAP);
-      ////      uint32_t dw = ::GetLastError();
+      ////      uint32_t dw = ::get_last_error();
       //class size size = pbitmap->get_size();
       //rectx.left = 0;
       //rectx.top = 0;

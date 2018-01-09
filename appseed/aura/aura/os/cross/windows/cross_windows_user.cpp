@@ -188,7 +188,7 @@ string iconv_charset_from_windows_code_page(UINT CodePage)
 
 int32_t
 WINAPI
-MultiByteToWideChar(
+MultiByteToWideChar2(
 UINT     CodePage,
 DWORD    dwFlags,
 LPCSTR   lpMultiByteStr,
@@ -310,7 +310,7 @@ int32_t      cchWideChar)
 
 int32_t
 WINAPI
-WideCharToMultiByte(
+WideCharToMultiByte2(
 UINT     CodePage,
 DWORD    dwFlags,
 LPCWSTR  lpWideCharStr,

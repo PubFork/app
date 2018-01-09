@@ -523,7 +523,7 @@ string get_temp_file_name_dup(const char * pszName,const char * pszExtension)
    if (dwRetVal > sizeof(lpPathBuffer) || (dwRetVal == 0))
    {
 
-      debug_print("GetTempPath failed (%d)\n", GetLastError());
+      debug_print("GetTempPath failed (%d)\n", get_last_error());
 
       return "";
 

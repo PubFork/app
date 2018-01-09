@@ -822,7 +822,7 @@ namespace ios
 //                         ::str::international::utf8_to_unicode(psz),
 //                         ::str::international::utf8_to_unicode(pszNew)))
 //         {
-//            uint32_t dwError = ::GetLastError();
+//            uint32_t dwError = ::get_last_error();
 //            string strError;
 //            strError.Format("Failed to move file \"%s\" to \"%s\" error=%d", psz, pszNew, dwError);
 //            _throw(strError);
@@ -881,7 +881,7 @@ namespace ios
 //         if(!::DeleteFileW(
 //                           ::str::international::utf8_to_unicode(psz)))
 //         {
-//            uint32_t dwError = ::GetLastError();
+//            uint32_t dwError = ::get_last_error();
 //            if(dwError == 2) // the file does not exist, so delete "failed"
 //               return;
 //            string strError;

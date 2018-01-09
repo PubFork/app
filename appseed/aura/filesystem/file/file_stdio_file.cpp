@@ -21,7 +21,7 @@ namespace file
       if(!open(lpszFileName,nOpenFlags))
       {
 
-         throw_file_exception(get_app(),::file::exception::type_generic,::GetLastError(), lpszFileName);
+         throw_file_exception(get_app(),::file::exception::type_generic,::get_last_error(), lpszFileName);
 
       }
 

@@ -201,7 +201,7 @@ namespace metrowin
       {
          if(!bIsDir)
          {
-            ::SetLastError(dwLastError);
+            ::set_last_error(dwLastError);
          }
          return bIsDir;
       }
@@ -236,7 +236,7 @@ namespace metrowin
 
       bIsDir = ::dir::is(strPath);
 
-      m_isdirmap.set(lpcszPath,bIsDir,::GetLastError());
+      m_isdirmap.set(lpcszPath,bIsDir,::get_last_error());
 
       return bIsDir;
    }
@@ -298,7 +298,7 @@ namespace metrowin
       //   if(m_isdirmap.lookup(str,bHasSubFolder,dwLastError))
       //      return bHasSubFolder;
       //   bHasSubFolder = m_pziputil->HasSubFolder(papp,str);
-      //   m_isdirmap.set(str.Left(iLast + 1),bHasSubFolder,::GetLastError());
+      //   m_isdirmap.set(str.Left(iLast + 1),bHasSubFolder,::get_last_error());
       //   return bHasSubFolder;
       //}
 
@@ -335,7 +335,7 @@ namespace metrowin
 
       bIsDir = ::dir::is(::str::international::unicode_to_utf8(wstrPath));
 
-      m_isdirmap.set(str.Left(iLast + 1),bIsDir,::GetLastError());
+      m_isdirmap.set(str.Left(iLast + 1),bIsDir,::get_last_error());
 
       return bIsDir;
    }
@@ -450,7 +450,7 @@ namespace metrowin
 
          bIsDir = is(pathDir, papp);
 
-         if(!bIsDir && ::GetLastError() != ERROR_ACCESS_DENIED)
+         if(!bIsDir && ::get_last_error() != ERROR_ACCESS_DENIED)
          {
 
             if (!::CreateDirectoryW(::str::international::utf8_to_unicode(pathDir), NULL))
@@ -459,7 +459,7 @@ namespace metrowin
                if (!::CreateDirectoryW(::str::international::utf8_to_unicode("\\\\?\\" + pathDir), NULL))
                {
 
-                  uint32_t dwError = ::GetLastError();
+                  uint32_t dwError = ::get_last_error();
 
                   if (dwError == ERROR_ALREADY_EXISTS)
                   {
@@ -507,7 +507,7 @@ namespace metrowin
                      else
                      {
 
-                        dwError = ::GetLastError();
+                        dwError = ::get_last_error();
 
                      }
 

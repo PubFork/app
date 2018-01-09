@@ -1236,7 +1236,7 @@ namespace android
 		   WINBOOL b = ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, (LPARAM)(lp += addend) );
          if(!b)
          {
-            DWORD dw = ::GetLastError();
+            DWORD dw = ::get_last_error();
             ::MessageBoxA(NULL, ::str::from(dw), ::str::from(dw), 0);
          }
       }

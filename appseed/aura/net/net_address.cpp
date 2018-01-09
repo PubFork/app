@@ -432,6 +432,15 @@ namespace net
 
       auto * pnet = &psockets->net();
 
+#ifdef APPLE_IOS
+      if (pnet->convert(u.m_addr.sin_addr, strAddress))
+      {
+         
+         u.s.m_family = AF_INET;
+         
+      }
+      else
+#endif
       if (pnet->convert(u.m_addr6.sin6_addr, strAddress))
       {
 

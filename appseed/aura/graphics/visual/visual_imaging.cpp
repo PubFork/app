@@ -288,7 +288,7 @@ int32_t                 cy)
    //pgraphics->set_text_color(crText);
    if(!pgraphics->ExtTextOut(x,y,0,null_rect(),lpcsz,(int)cb,NULL))
    {
-      //      TRACE("Failed to ExtTextOut, GetLastError() -->%d\n", GetLastError());
+      //      TRACE("Failed to ExtTextOut, get_last_error() -->%d\n", get_last_error());
    }
 
    /* restore the DC
@@ -1037,7 +1037,7 @@ return pil;
 //      }
 //      catch(int32_t)
 //      {
-//         //         UINT user = GetLastError();
+//         //         UINT user = get_last_error();
 //         pgraphics->SelectObject(pbmpOld);
 //         return false;
 //      }
@@ -1143,7 +1143,7 @@ _throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
 }
 catch(int32_t)
 {
-UINT user = GetLastError();
+UINT user = get_last_error();
 pgraphics->SelectObject(pbmpOld);
 return false;
 }

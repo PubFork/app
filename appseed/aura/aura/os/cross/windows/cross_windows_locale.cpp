@@ -39,13 +39,13 @@ int32_t WINAPI GetLocaleInfoW( LCID lcid, LCTYPE lctype, LPWSTR buffer, int32_t 
 
     if (len < 0 || (len && !buffer))
     {
-        SetLastError( ERROR_INVALID_PARAMETER );
+        set_last_error( ERROR_INVALID_PARAMETER );
         return 0;
     }
     if (lctype & LOCALE_RETURN_GENITIVE_NAMES &&
        !is_genitive_name_supported( lctype ))
     {
-        SetLastError( ERROR_INVALID_FLAGS );
+        set_last_error( ERROR_INVALID_FLAGS );
         return 0;
     }
 
@@ -77,14 +77,14 @@ int32_t WINAPI GetLocaleInfoW( LCID lcid, LCTYPE lctype, LPWSTR buffer, int32_t 
                     uint32_t number = (uint32_t) wtoi64_dup(tmp, &end, 10 );
                     if (*end)  /* invalid number */
                     {
-                        SetLastError( ERROR_INVALID_FLAGS );
+                        set_last_error( ERROR_INVALID_FLAGS );
                         return 0;
                     }
                     ret = sizeof(uint32_t)/sizeof(WCHAR);
                     if (!buffer) return ret;
                     if (ret > len)
                     {
-                        SetLastError( ERROR_INSUFFICIENT_BUFFER );
+                        set_last_error( ERROR_INSUFFICIENT_BUFFER );
                         return 0;
                     }
                     memcpy( buffer, &number, sizeof(number) );
@@ -127,7 +127,7 @@ int32_t WINAPI GetLocaleInfoW( LCID lcid, LCTYPE lctype, LPWSTR buffer, int32_t 
 
     if (ret > len)
     {
-        SetLastError( ERROR_INSUFFICIENT_BUFFER );
+        set_last_error( ERROR_INSUFFICIENT_BUFFER );
         return 0;
     }
 
@@ -145,7 +145,7 @@ int32_t WINAPI GetLocaleInfoW( LCID lcid, LCTYPE lctype, LPWSTR buffer, int32_t 
             memcpy( buffer, &number, sizeof(number) );
         else  /* invalid number */
         {
-            SetLastError( ERROR_INVALID_FLAGS );
+            set_last_error( ERROR_INVALID_FLAGS );
             ret = 0;
         }
 //        HeapFree( GetProcessHeap(), 0, tmp );

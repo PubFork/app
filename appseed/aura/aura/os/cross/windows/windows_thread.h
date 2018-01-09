@@ -26,7 +26,7 @@
 //    - No thread identifier APIs (GetThreadId, GetCurrentThreadId, OpenThread)
 //    - No affinity APIs
 //    - No GetExitCodeThread
-//    - Failure cases return error codes but do not always call SetLastError
+//    - Failure cases return error codes but do not always call set_last_error
 #ifndef CA2_APP_AXIS_OS_CROSS_WINDOWS_THREAD_H
 #define CA2_APP_AXIS_OS_CROSS_WINDOWS_THREAD_H
 

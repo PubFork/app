@@ -754,7 +754,7 @@ CLASS_DECL_EXPORT BOOL wf_pre_connect(freerdp* instance)
 //
 //		if (MsgWaitForMultipleObjects(nCount, handles, FALSE, 1000, QS_ALLINPUT) == WAIT_FAILED)
 //		{
-//			WLog_ERR(TAG, "wfreerdp_run: WaitForMultipleObjects failed: 0x%04X", GetLastError());
+//			WLog_ERR(TAG, "wfreerdp_run: WaitForMultipleObjects failed: 0x%04X", get_last_error());
 //			break;
 //		}
 //

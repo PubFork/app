@@ -733,8 +733,8 @@ restart:
 
          if (res.failed())
          {
-
-            thiswarn << res->element_at(0)->what();
+            // xxx xyz
+            //thiswarn << res->element_at(0)->what();
 
             return;
 
@@ -1205,7 +1205,7 @@ restart:
             ::str::international::utf8_to_unicode(pszNew)))
       {
 
-         uint32_t dwError = ::GetLastError();
+         uint32_t dwError = ::get_last_error();
 
          if (dwError == ERROR_ALREADY_EXISTS)
          {
@@ -1219,7 +1219,7 @@ restart:
                if (!::DeleteFileW(::str::international::utf8_to_unicode(psz)))
                {
 
-                  dwError = ::GetLastError();
+                  dwError = ::get_last_error();
 
                   string strError;
 
@@ -1233,7 +1233,7 @@ restart:
 
             }
 
-            dwError = ::GetLastError();
+            dwError = ::get_last_error();
 
          }
 
@@ -1321,7 +1321,7 @@ restart:
 
       if (h == INVALID_HANDLE_VALUE)
       {
-         uint32_t dwError = ::GetLastError();
+         uint32_t dwError = ::get_last_error();
          if (dwError == 2) // the file does not exist, so delete "failed"
             return no_exception;
          string strError;
@@ -1336,7 +1336,7 @@ restart:
 
       /*      if(!::DeleteFileW(::str::international::utf8_to_unicode(string("\\\\?\\") + psz)))
       {
-      uint32_t dwError = ::GetLastError();
+      uint32_t dwError = ::get_last_error();
       if(dwError == 2) // the file does not exist, so delete "failed"
       return;
       string strError;

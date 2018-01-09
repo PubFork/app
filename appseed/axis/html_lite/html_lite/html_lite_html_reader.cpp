@@ -347,7 +347,7 @@ uint_ptr lite_html_reader::read_html_file(HANDLE hFile)
    {
       TRACE("(Error) lite_html_reader::read:"
             " GetFileSize() failed;"
-            " GetLastError() returns 0x%08x.\n", ::GetLastError());
+            " get_last_error() returns 0x%08x.\n", ::get_last_error());
       goto LError;
    }
 
@@ -362,7 +362,7 @@ uint_ptr lite_html_reader::read_html_file(HANDLE hFile)
       TRACE
       ("(Error) lite_html_reader::read:"
        " CreateFileMapping() failed;"
-       " GetLastError() returns 0x%08x.\n", ::GetLastError());
+       " get_last_error() returns 0x%08x.\n", ::get_last_error());
       goto LError;
    }
 
@@ -377,7 +377,7 @@ uint_ptr lite_html_reader::read_html_file(HANDLE hFile)
       TRACE
       ("(Error) lite_html_reader::read:"
        " MapViewOfFile() failed;"
-       " GetLastError() returns 0x%08x.\n", ::GetLastError());
+       " get_last_error() returns 0x%08x.\n", ::get_last_error());
       goto LError;
    }
 
@@ -425,7 +425,7 @@ uint_ptr lite_html_reader::read_html_file(HANDLE hFile)
    {
       TRACE("(Error) lite_html_reader::read:"
             " GetFileSize() failed;"
-            " GetLastError() returns 0x%08x.\n", ::GetLastError());
+            " get_last_error() returns 0x%08x.\n", ::get_last_error());
       goto LError;
    }
 
@@ -445,7 +445,7 @@ uint_ptr lite_html_reader::read_html_file(HANDLE hFile)
    {
       TRACE("(Error) lite_html_reader::read:"
             " CreateFileMapping() failed;"
-            " GetLastError() returns 0x%08x.\n", ::GetLastError());
+            " get_last_error() returns 0x%08x.\n", ::get_last_error());
       goto LError;
    }
 
@@ -463,7 +463,7 @@ uint_ptr lite_html_reader::read_html_file(HANDLE hFile)
    {
       TRACE("(Error) lite_html_reader::read:"
             " MapViewOfFile() failed;"
-            " GetLastError() returns 0x%08x.\n", ::GetLastError());
+            " get_last_error() returns 0x%08x.\n", ::get_last_error());
       goto LError;
    }
 
@@ -514,7 +514,7 @@ uint_ptr lite_html_reader::read_html_file(int32_t fd)
       dwBufLen = ::get_file_size(fd);
       if (dwBufLen == INVALID_FILE_SIZE)
       {
-         TRACE("(Error) lite_html_reader::read: GetFileSize() failed; GetLastError() returns 0x%08x.\n", ::GetLastError());
+         TRACE("(Error) lite_html_reader::read: GetFileSize() failed; get_last_error() returns 0x%08x.\n", ::get_last_error());
          return 0;
       }
 
@@ -530,7 +530,7 @@ uint_ptr lite_html_reader::read_html_file(int32_t fd)
    {
       TRACE("(Error) lite_html_reader::read:"
             " CreateFileMapping() failed;"
-            " GetLastError() returns 0x%08x.\n", ::GetLastError());
+            " get_last_error() returns 0x%08x.\n", ::get_last_error());
       goto map_error;
    }
 

@@ -2802,7 +2802,7 @@ namespace macos
       //      rect rectx;
       //      ::draw2d::bitmap * pbitmap = &graphics->GetCurrentBitmap();
       //      ::GetCurrentObject((HDC) pbase->m_wparam, OBJ_BITMAP);
-      //      //      DWORD dw = ::GetLastError();
+      //      //      DWORD dw = ::get_last_error();
       //      class size size = pbitmap->get_size();
       //      rectx.left = 0;
       //      rectx.top = 0;

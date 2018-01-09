@@ -103,7 +103,7 @@ NTSTATUS WINAPI RtlGetLastNtStatus(void)
  *  None.
  *
  * RETURNS
- *  The current error value for the thread, as set by SetLastWin32Error() or SetLastError().
+ *  The current error value for the thread, as set by SetLastWin32Error() or set_last_error().
  */
 DWORD WINAPI RtlGetLastWin32Error(void)
 {

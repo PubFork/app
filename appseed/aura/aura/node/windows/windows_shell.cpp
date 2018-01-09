@@ -375,7 +375,7 @@ namespace windows
    //   else if ( count == 0 ) {
    //      if ( !UserBuf )
    //         free(buf);
-   //      //_dosmaperr( GetLastError() );
+   //      //_dosmaperr( get_last_error() );
    //      return( NULL );
    //   }
 

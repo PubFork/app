@@ -65,9 +65,9 @@ namespace metrowin
 
       if (m_hContext == INVALID_HANDLE_VALUE)
       {
-         DWORD dwTemp = ::GetLastError();
+         DWORD dwTemp = ::get_last_error();
          close();
-         ::SetLastError(dwTemp);
+         ::set_last_error(dwTemp);
          return FALSE;
       }
       wstring wstrRoot;
@@ -81,7 +81,7 @@ namespace metrowin
       {
          m_strRoot.Empty();
          close();
-         ::SetLastError(ERROR_INVALID_NAME);
+         ::set_last_error(ERROR_INVALID_NAME);
          return FALSE;
       }
       else

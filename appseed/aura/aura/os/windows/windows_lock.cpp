@@ -20,7 +20,7 @@ int32_t _c_lock(const char * pszName, void ** pdata)
 {
 
    HANDLE hmutex = ::CreateMutex(NULL, FALSE, "Global\\::ca::fontopus::ca2_spa::7807e510-5579-11dd-ae16-0800200c7784");
-   if(::GetLastError() == ERROR_ALREADY_EXISTS)
+   if(::get_last_error() == ERROR_ALREADY_EXISTS)
    {
       ::CloseHandle(hmutex);
       return 0;

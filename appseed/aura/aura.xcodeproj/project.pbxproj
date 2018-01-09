@@ -943,6 +943,7 @@
 		9A41736E2000D5100056265A /* apple_debug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A41736B2000D5100056265A /* apple_debug.cpp */; };
 		9A41736F2000D5100056265A /* apple_debug.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A41736C2000D5100056265A /* apple_debug.h */; };
 		9A4173702000D5100056265A /* apple_debug.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A41736C2000D5100056265A /* apple_debug.h */; };
+		9A41A59E200416470095D13C /* audio_wave_out.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AE9FBAB1F7F4D3C00367001 /* audio_wave_out.cpp */; };
 		9A4B9C2F1E148E1A000D0E92 /* macos_mm.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9A4B9C2E1E148E1A000D0E92 /* macos_mm.mm */; };
 		9A4B9C311E149015000D0E92 /* os_debug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A4B9C301E149015000D0E92 /* os_debug.cpp */; };
 		9A4BDE211FFEC98E00DED594 /* apple.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9A4BDE201FFEC98E00DED594 /* apple.mm */; };
@@ -2524,13 +2525,6 @@
 			remoteGlobalIDString = 9AA5E4C216F7C61B005C45CE;
 			remoteInfo = axisidn;
 		};
-		9A2116D31D8329D2000C4336 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9A26A6F31D7F0166001F47A8 /* aurapcre.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 07D6A8271B4CBB45004FEBC2;
-			remoteInfo = ios_aurapcre;
-		};
 		9A26A6F81D7F0166001F47A8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 9A26A6F31D7F0166001F47A8 /* aurapcre.xcodeproj */;
@@ -2579,13 +2573,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 9A574B9716AAB906000CC4EF;
 			remoteInfo = ace;
-		};
-		9A6716CD1D159CAF0069A961 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9A67166C1D1553BF0069A961 /* ace.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 07B65763190F3CA2002DAADE;
-			remoteInfo = ace_ios;
 		};
 		9AD185C51F9C214C001CEA8E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -6080,37 +6067,37 @@
 		9A2A52FA1F1FEDFD001AB0F8 /* draw2d */ = {
 			isa = PBXGroup;
 			children = (
-				9A8383871F414D3D005ED52C /* draw2d_bitmap.cpp */,
-				9A8383881F414D3D005ED52C /* draw2d_brush.cpp */,
-				9A8383891F414D3D005ED52C /* draw2d_debug.cpp */,
-				9A83838A1F414D3D005ED52C /* draw2d_dib.cpp */,
-				9A83838B1F414D3D005ED52C /* draw2d_dibmap.cpp */,
-				9A83838C1F414D3D005ED52C /* draw2d_font.cpp */,
-				9A83838D1F414D3D005ED52C /* draw2d_graphics.cpp */,
-				9A83838E1F414D3D005ED52C /* draw2d_keep.cpp */,
-				9A83838F1F414D3D005ED52C /* draw2d_object.cpp */,
-				9A8383901F414D3D005ED52C /* draw2d_palette.cpp */,
-				9A8383911F414D3D005ED52C /* draw2d_path.cpp */,
-				9A8383921F414D3D005ED52C /* draw2d_pen.cpp */,
-				9A8383931F414D3D005ED52C /* draw2d_region.cpp */,
-				9A8ED4821F20052E007DB75C /* draw2d_nanosvg.cpp */,
 				9A2A52FC1F1FEDFD001AB0F8 /* draw2d.h */,
+				9A8383871F414D3D005ED52C /* draw2d_bitmap.cpp */,
 				9A2A52FE1F1FEDFD001AB0F8 /* draw2d_bitmap.h */,
+				9A8383881F414D3D005ED52C /* draw2d_brush.cpp */,
 				9A2A53001F1FEDFD001AB0F8 /* draw2d_brush.h */,
 				9A2A53011F1FEDFD001AB0F8 /* draw2d_common.h */,
 				9A2A53021F1FEDFD001AB0F8 /* draw2d_const.h */,
+				9A8383891F414D3D005ED52C /* draw2d_debug.cpp */,
+				9A83838A1F414D3D005ED52C /* draw2d_dib.cpp */,
 				9A2A53051F1FEDFD001AB0F8 /* draw2d_dib.h */,
+				9A83838B1F414D3D005ED52C /* draw2d_dibmap.cpp */,
 				9A2A53071F1FEDFD001AB0F8 /* draw2d_dibmap.h */,
 				9A2A53081F1FEDFD001AB0F8 /* draw2d_dibmap_ex1.h */,
+				9A83838C1F414D3D005ED52C /* draw2d_font.cpp */,
 				9A2A530A1F1FEDFD001AB0F8 /* draw2d_font.h */,
 				9A2A530B1F1FEDFD001AB0F8 /* draw2d_fwd.h */,
+				9A83838D1F414D3D005ED52C /* draw2d_graphics.cpp */,
 				9A2A530D1F1FEDFD001AB0F8 /* draw2d_graphics.h */,
 				9A2A530E1F1FEDFD001AB0F8 /* draw2d_igui.h */,
+				9A83838E1F414D3D005ED52C /* draw2d_keep.cpp */,
 				9A2A53101F1FEDFD001AB0F8 /* draw2d_keep.h */,
+				9A8ED4821F20052E007DB75C /* draw2d_nanosvg.cpp */,
+				9A83838F1F414D3D005ED52C /* draw2d_object.cpp */,
 				9A2A53131F1FEDFD001AB0F8 /* draw2d_object.h */,
+				9A8383901F414D3D005ED52C /* draw2d_palette.cpp */,
 				9A2A53151F1FEDFD001AB0F8 /* draw2d_palette.h */,
+				9A8383911F414D3D005ED52C /* draw2d_path.cpp */,
 				9A2A53171F1FEDFD001AB0F8 /* draw2d_path.h */,
+				9A8383921F414D3D005ED52C /* draw2d_pen.cpp */,
 				9A2A53191F1FEDFD001AB0F8 /* draw2d_pen.h */,
+				9A8383931F414D3D005ED52C /* draw2d_region.cpp */,
 				9A2A531B1F1FEDFD001AB0F8 /* draw2d_region.h */,
 			);
 			path = draw2d;
@@ -8551,8 +8538,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				9A2116D41D8329D2000C4336 /* PBXTargetDependency */,
-				9A6716CE1D159CAF0069A961 /* PBXTargetDependency */,
 			);
 			name = ios_aura;
 			productName = c;
@@ -8901,6 +8886,7 @@
 				9A957A7A1F6225B900623508 /* xml_xmlite.cpp in Sources */,
 				9AF4C3DD1F836FD100197385 /* aura_allocate_x86_cache_oriented.cpp in Sources */,
 				9A957A7B1F6225B900623508 /* xml.cpp in Sources */,
+				9A41A59E200416470095D13C /* audio_wave_out.cpp in Sources */,
 				9A957A7C1F6225B900623508 /* multithreading_condition.cpp in Sources */,
 				9A957A7D1F6225B900623508 /* multithreading_core.cpp in Sources */,
 				9A957A7E1F6225B900623508 /* multithreading_critical_section.cpp in Sources */,
@@ -9960,11 +9946,6 @@
 			name = axisidn;
 			targetProxy = 9A1232371F9E934800BBECF8 /* PBXContainerItemProxy */;
 		};
-		9A2116D41D8329D2000C4336 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = ios_aurapcre;
-			targetProxy = 9A2116D31D8329D2000C4336 /* PBXContainerItemProxy */;
-		};
 		9A26A6FE1D7F01B6001F47A8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = aurapcre;
@@ -9974,11 +9955,6 @@
 			isa = PBXTargetDependency;
 			name = ace;
 			targetProxy = 9A6716C91D159C9B0069A961 /* PBXContainerItemProxy */;
-		};
-		9A6716CE1D159CAF0069A961 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = ace_ios;
-			targetProxy = 9A6716CD1D159CAF0069A961 /* PBXContainerItemProxy */;
 		};
 		9AD185CA1F9C215D001CEA8E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -10003,9 +9979,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				EXECUTABLE_EXTENSION = a;
+				"HEADER_SEARCH_PATHS[sdk=iphonesimulator*]" = "$(WorkspaceDir)/../../../nodeapp/iPhoneSimulator11.2-x86_64.sdk/include";
 				MACH_O_TYPE = staticlib;
 				SDKROOT = iphoneos;
-				USER_HEADER_SEARCH_PATHS = "$(WorkspaceDir)/../../../include $(WorkspaceDir)/../../../app/include . .. $(WorkspaceDir)/../../.. $(WorkspaceDir)/../../../app/appseed/base/base $(WorkspaceDir)/../../../app/base/include $(WorkspaceDir)/../../../app/appseed/base/base $(WorkspaceDir)/../../appseed $(WorkspaceDir)/../.. $(WorkspaceDir)/../../../app/base $(WorkspaceDir)/../../../app/appseed/base/framework aura/aura $(WorkspaceDir)/../../../app $(WorkspaceDir)/../../../nodeapp/include $(WorkspaceDir)/../../../nodeapp/openssl/iPhoneSimulator11.2-x86_64.sdk/include";
 			};
 			name = Debug;
 		};
@@ -10015,7 +9991,6 @@
 				EXECUTABLE_EXTENSION = a;
 				MACH_O_TYPE = staticlib;
 				SDKROOT = iphoneos;
-				USER_HEADER_SEARCH_PATHS = "$(WorkspaceDir)/../../../include $(WorkspaceDir)/../../../app/include . .. $(WorkspaceDir)/../../.. $(WorkspaceDir)/../../../app/appseed/base/base $(WorkspaceDir)/../../../app/base/include $(WorkspaceDir)/../../../app/appseed/base/base $(WorkspaceDir)/../../appseed $(WorkspaceDir)/../.. $(WorkspaceDir)/../../../app/base $(WorkspaceDir)/../../../app/appseed/base/framework aura/aura $(WorkspaceDir)/../../../app $(WorkspaceDir)/../../../nodeapp/include $(WorkspaceDir)/../../../nodeapp/openssl/iPhoneSimulator11.2-x86_64.sdk/include";
 			};
 			name = Release;
 		};

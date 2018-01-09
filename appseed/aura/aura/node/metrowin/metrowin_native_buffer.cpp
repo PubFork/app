@@ -252,7 +252,7 @@ namespace metrowin
       //   ::GetCurrentProcess(),&hnative_buffer,0,FALSE,DUPLICATE_SAME_ACCESS))
       //{
       //   delete pnative_buffer;
-      //   //xxx      Ex1WinFileException::ThrowOsError(get_app(), (LONG)::GetLastError());
+      //   //xxx      Ex1WinFileException::ThrowOsError(get_app(), (LONG)::get_last_error());
       //   _throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
       //}
       //pnative_buffer->m_hnative_buffer = (UINT)hnative_buffer;
@@ -581,7 +581,7 @@ namespace metrowin
       //ASSERT(m_hnative_buffer != (UINT)hnative_bufferNull);
 
       ////      if (!::Locknative_buffer((HANDLE)m_hnative_buffer, LODWORD(dwPos), HIDWORD(dwPos), LODWORD(dwCount), HIDWORD(dwCount)))
-      ////       WinFileException::ThrowOsError(get_app(), (LONG)::GetLastError());
+      ////       WinFileException::ThrowOsError(get_app(), (LONG)::get_last_error());
    }
 
    void native_buffer::UnlockRange(file_position_t dwPos,file_size_t dwCount)
@@ -590,7 +590,7 @@ namespace metrowin
       //ASSERT(m_hnative_buffer != (UINT)hnative_bufferNull);
 
       ////  if (!::Unlocknative_buffer((HANDLE)m_hnative_buffer,  LODWORD(dwPos), HIDWORD(dwPos), LODWORD(dwCount), HIDWORD(dwCount)))
-      ////   WinFileException::ThrowOsError(get_app(), (LONG)::GetLastError());
+      ////   WinFileException::ThrowOsError(get_app(), (LONG)::get_last_error());
    }
 
    void native_buffer::set_length(file_size_t dwNewLen)
@@ -601,7 +601,7 @@ namespace metrowin
       //seek((LONG)dwNewLen,(::file::e_seek)::file::seek_begin);
 
       //if(!::SetEndOfnative_buffer((HANDLE)m_hnative_buffer))
-      //   WinFileException::ThrowOsError(get_app(),(LONG)::GetLastError());
+      //   WinFileException::ThrowOsError(get_app(),(LONG)::get_last_error());
    }
 
    file_size_t native_buffer::get_length() const
@@ -633,13 +633,13 @@ namespace metrowin
    void native_buffer::Rename(const char * lpszOldName, const char * lpszNewName)
    {
    if (!::Movenative_buffer((LPTSTR)lpszOldName, (LPTSTR)lpszNewName))
-   WinFileException::ThrowOsError(get_app(), (LONG)::GetLastError());
+   WinFileException::ThrowOsError(get_app(), (LONG)::get_last_error());
    }
 
    void native_buffer::remove(const char * lpszfileName)
    {
    if (!::Deletenative_buffer((LPTSTR)lpszfileName))
-   WinFileException::ThrowOsError(get_app(), (LONG)::GetLastError());
+   WinFileException::ThrowOsError(get_app(), (LONG)::get_last_error());
    }
    */
 
@@ -900,7 +900,7 @@ namespace metrowin
    LPnative_bufferTIME lpLastWriteTime = NULL;
 
    if ((wAttr = Getnative_bufferAttributes((LPTSTR)lpszfileName)) == (DWORD)-1L)
-   WinFileException::ThrowOsError(get_app(), (LONG)GetLastError());
+   WinFileException::ThrowOsError(get_app(), (LONG)get_last_error());
 
    if ((DWORD)status.m_attribute != wAttr && (wAttr & readOnly))
    {
@@ -909,7 +909,7 @@ namespace metrowin
    // caller changed the native_buffer from readonly.
 
    if (!Setnative_bufferAttributes((LPTSTR)lpszfileName, (DWORD)status.m_attribute))
-   WinFileException::ThrowOsError(get_app(), (LONG)GetLastError());
+   WinFileException::ThrowOsError(get_app(), (LONG)get_last_error());
    }
 
    // last modification time
@@ -937,19 +937,19 @@ namespace metrowin
    NULL);
 
    if (hnative_buffer == INVALID_HANDLE_VALUE)
-   WinFileException::ThrowOsError(get_app(), (LONG)::GetLastError());
+   WinFileException::ThrowOsError(get_app(), (LONG)::get_last_error());
 
    if (!Setnative_bufferTime((HANDLE)hnative_buffer, lpCreationTime, lpLastAccessTime, lpLastWriteTime))
-   WinFileException::ThrowOsError(get_app(), (LONG)::GetLastError());
+   WinFileException::ThrowOsError(get_app(), (LONG)::get_last_error());
 
    if (!::CloseHandle(hnative_buffer))
-   WinFileException::ThrowOsError(get_app(), (LONG)::GetLastError());
+   WinFileException::ThrowOsError(get_app(), (LONG)::get_last_error());
    }
 
    if ((DWORD)status.m_attribute != wAttr && !(wAttr & readOnly))
    {
    if (!Setnative_bufferAttributes((LPTSTR)lpszfileName, (DWORD)status.m_attribute))
-   WinFileException::ThrowOsError(get_app(), (LONG)GetLastError());
+   WinFileException::ThrowOsError(get_app(), (LONG)get_last_error());
    }
    }
    */

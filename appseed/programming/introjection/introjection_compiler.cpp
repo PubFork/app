@@ -1338,7 +1338,7 @@ DWORD RunSilent(const char* strFunct, char* strstrParams)
                       &StartupInfo,
                       &ProcessInfo))
    {
-      return GetLastError();
+      return get_last_error();
    }
 
    WaitForSingleObject(ProcessInfo.hProcess, INFINITE);
