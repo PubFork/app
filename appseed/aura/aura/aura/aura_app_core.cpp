@@ -950,7 +950,7 @@ string apple_get_bundle_identifier()
 string transform_to_c_arg(const char * psz)
 {
 
-   bool bNeedWrap = false;
+   bool bNeedQuote = false;
 
    const char * pszParse = psz;
 
@@ -976,11 +976,23 @@ string transform_to_c_arg(const char * psz)
          }
 
       }
+      else if (*pszParse == '\'')
+      {
+
+         chQuote = '\'';
+
+      }
+      else if (*pszParse == '\"')
+      {
+
+         chQuote = '\"';
+
+      }
       else if(::str::ch::is_whitespace(pszParse)
               || *pszParse == ':')
       {
 
-         bNeedWrap = true;
+         bNeedQuote = true;
 
          break;
 
@@ -990,7 +1002,7 @@ string transform_to_c_arg(const char * psz)
 
    }
 
-   if (bNeedWrap)
+   if (bNeedQuote)
    {
 
       return string("\"") + ::str::replace("\"", "\\\"", psz) + "\"";
