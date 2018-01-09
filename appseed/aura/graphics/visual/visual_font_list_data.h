@@ -53,7 +53,6 @@ namespace visual
          int                                       m_iUpdated;
          ref_array < ::user::interaction >         m_uiptra;
 
-
          font_list_data(::aura::application * papp);
          virtual ~font_list_data();
 
