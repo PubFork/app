@@ -161,6 +161,9 @@ namespace draw2d_cairo
       virtual void read(::file::istream & istream);
 
 
+      virtual bool blend(point ptDst, ::draw2d::dib * pdibSrc, point ptSrc, class size size, byte bA) override;
+
+
    };
 
 

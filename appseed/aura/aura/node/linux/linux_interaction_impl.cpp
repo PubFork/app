@@ -781,7 +781,12 @@ namespace linux
 
       ::user::interaction_impl::PostNcDestroy();
 
-      m_oswindow->post_nc_destroy();
+      if(!::is_null(m_oswindow))
+      {
+
+         m_oswindow->post_nc_destroy();
+
+      }
 
    }
 

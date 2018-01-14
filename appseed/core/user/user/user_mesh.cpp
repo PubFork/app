@@ -4403,6 +4403,7 @@ namespace user
 
    }
 
+
    bool mesh::_001IsItemVisible(index iItem)
    {
       draw_mesh_item item(this);

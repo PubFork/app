@@ -2781,8 +2781,6 @@ namespace user
 
       ScreenToClient(&pt);
 
-      pmouse->previous(); // give chance to child control
-
       synch_lock sl(m_pmutex);
 
       if (m_bDrag)
@@ -2852,11 +2850,21 @@ namespace user
 
                }
 
+               pmouse->m_bRet = true;
+
+               pmouse->set_lresult(1);
+
+               return;
+
             }
 
          }
 
+
+
       }
+
+      pmouse->previous(); // give chance to child control
 
       track_mouse_leave();
 
@@ -2876,6 +2884,8 @@ namespace user
       ScreenToClient(&pt);
 
       synch_lock sl(m_pmutex);
+
+      m_bLButtonDown = true;
 
       if (m_bSelect)
       {
@@ -2958,6 +2968,15 @@ namespace user
                {
                   m_rangeSelection.clear();
                }
+
+               pobj->m_bRet = true;
+
+               pmouse->set_lresult(1);
+
+               set_need_redraw();
+
+               return;
+
             }
 
          }

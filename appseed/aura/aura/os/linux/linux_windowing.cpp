@@ -10,8 +10,17 @@ CLASS_DECL_AURA int xinerama_get_screen_size(int& width, int& height);
 
 
 
-int best_xinerama_monitor(::user::interaction * pui, int & l, int & t, int & cx, int & cy);
-int best_xinerama_monitor(::user::interaction * pui, LPCRECT lpcrect, int & l, int & t, int & cx, int & cy);
+int best_xinerama_monitor(::user::interaction * pui, LPRECT lprectRet);
+int best_xinerama_monitor(::user::interaction * pui, LPCRECT lpcrect, LPRECT lprectRet);
+
+void mapped_net_state (gboolean   add,
+			 Display *d,
+			 Window w,
+			 int iScreen,
+			 Atom    state1,
+			 Atom    state2);
+
+void unmapped_net_state(Display * d, Window w, ...);
 
 //int get_best_ordered_monitor(::user::interaction * pui, int & l, int & t, int & cx, int & cy);
 //int get_best_monitor(::user::interaction * pui, int & l, int & t, int & cx, int & cy);
@@ -163,9 +172,12 @@ int32_t oswindow_data::map_window()
 void oswindow_data::post_nc_destroy()
 {
 
-   //single_lock slOsWindow(s_pmutex, true);
+   if(!::is_null(this))
+   {
 
-   oswindow_remove(display(), window());
+      oswindow_remove(display(), window());
+
+   }
 
 }
 
@@ -325,62 +337,76 @@ bool oswindow_data::show_window(int32_t nCmdShow)
 
    }
 
-   if(attr.override_redirect)
-   {
-
-      XSetWindowAttributes attrs;
-      ZERO(attrs);
-      attrs.override_redirect = False;
-      XChangeWindowAttributes(display(), window(), CWOverrideRedirect, &attrs);
-      XWithdrawWindow(display(), window(), m_iScreen);
-
-      if(!XGetWindowAttributes(display(), window(), &attr))
-      {
-
-         return false;
-
-      }
-
-
-   }
+//   if(attr.override_redirect)
+//   {
+//
+//      XSetWindowAttributes attrs;
+//      ZERO(attrs);
+//      attrs.override_redirect = False;
+//      XChangeWindowAttributes(display(), window(), CWOverrideRedirect, &attrs);
+//      XWithdrawWindow(display(), window(), m_iScreen);
+//
+//      if(!XGetWindowAttributes(display(), window(), &attr))
+//      {
+//
+//         return false;
+//
+//      }
+//
+//
+//   }
 
    if(attr.map_state == IsViewable)
    {
 
-      {
-
-         long data[2];
-         data[0] = (long) NormalState;
-         data[1] = (long) None;
-         Atom wm_state = intern_atom("WM_STATE", false);
-         XChangeProperty(display(), window(), wm_state, wm_state, 32, PropModeReplace, (unsigned char *) data, 2);
-
-      }
-
-      send_client_event(XInternAtom(display(), "_NET_WM_STATE", false), 6,
-                        XInternAtom(display(), "_NET_WM_STATE_REMOVE", false),
-                        XInternAtom(display(), "_NET_WM_STATE_FULLSCREEN", false),
-                        XInternAtom(display(), "_NET_WM_STATE_MAXIMIZED_HORZ", false),
-                        XInternAtom(display(), "_NET_WM_STATE_MAXIMIZED_VERT", false),
-                        XInternAtom(display(), "_NET_WM_STATE_HIDDEN", false), 0);
-
 //      {
 //
-//         XEvent xev;
-//         ZERO(xev);
-//         xev.type = ClientMessage;
-//         xev.xclient.window = m_window;
-//         xev.xclient.message_type = intern_atom("_NET_WM_FULLSCREEN_MONITORS", False);
-//         xev.xclient.format = 32;
-//         xev.xclient.data.l[0] = -1; /* your topmost monitor number */
-//         xev.xclient.data.l[1] = -1; /* bottommost */
-//         xev.xclient.data.l[2] = -1; /* leftmost */
-//         xev.xclient.data.l[3] = -1; /* rightmost */
-//         xev.xclient.data.l[4] = 1; /* source indication */
-//         XSendEvent (display(), DefaultRootWindow(display()), False, SubstructureRedirectMask | SubstructureNotifyMask, &xev);
+//         long data[2];
+//         data[0] = (long) NormalState;
+//         data[1] = (long) None;
+//         Atom wm_state = intern_atom("WM_STATE", false);
+//         XChangeProperty(display(), window(), wm_state, wm_state, 32, PropModeReplace, (unsigned char *) data, 2);
 //
 //      }
 
+//      send_client_event(XInternAtom(display(), "_NET_WM_STATE", false), 6,
+//                        XInternAtom(display(), "_NET_WM_STATE_REMOVE", false),
+//                        XInternAtom(display(), "_NET_WM_STATE_FULLSCREEN", false),
+//                        XInternAtom(display(), "_NET_WM_STATE_MAXIMIZED_HORZ", false),
+//                        XInternAtom(display(), "_NET_WM_STATE_MAXIMIZED_VERT", false),
+//                        XInternAtom(display(), "_NET_WM_STATE_HIDDEN", false), 0);
+//   if(attr.map_state == IsViewable)
+//   {
+//
+
+//      if(m_pimpl->m_pui->m_eappearance == ::user::appearance_full_screen)
+//      {
+//
+//         mapped_net_state(false, display(), window(), m_iScreen, intern_atom("_NET_WM_STATE_FULLSCREEN", false), 0);
+//
+//      }
+//
+//      if(m_pimpl->m_pui->m_eappearance == ::user::appearance_iconic && nCmdShow != SW_MINIMIZE)
+//      {
+//
+//         mapped_net_state(false, display(), window(), m_iScreen, intern_atom("_NET_WM_STATE_HIDDEN", false), 0);
+//
+//      }
+//
+//      if(m_pimpl->m_pui->m_eappearance == ::user::appearance_zoomed && nCmdShow != SW_MAXIMIZE)
+//      {
+//
+//         mapped_net_state(false, display(), window(), m_iScreen,
+//                       intern_atom("_NET_WM_STATE_MAXIMIZED_HORZ", false),
+//                       intern_atom("_NET_WM_STATE_MAXIMIZED_VERT", false));
+//
+//      }
+//
+   }
+   else
+   {
+
+//      unmapped_net_state(display(), window(), 0);
 
    }
 
@@ -405,25 +431,15 @@ bool oswindow_data::show_window(int32_t nCmdShow)
 
       }
 
-      send_client_event(XInternAtom(display(), "_NET_WM_STATE", false), 4,
-                        XInternAtom(display(), "_NET_WM_STATE_ADD", false),
-                        XInternAtom(display(), "_NET_WM_STATE_MAXIMIZED_VERT", false),
-                        XInternAtom(display(), "_NET_WM_STATE_MAXIMIZED_HORZ", false), 0);
-      XFlush(display());
-      XSync(display(), False);
+      mapped_net_state(true, display(), window(), m_iScreen,
+                       intern_atom("_NET_WM_STATE_MAXIMIZED_HORZ", false),
+                       intern_atom("_NET_WM_STATE_MAXIMIZED_VERT", false));
 
    }
    else if(nCmdShow == SW_MINIMIZE)
    {
 
-      if(attr.map_state != IsViewable)
-      {
-
-         XMapWindow(display(), window());
-
-      }
-
-      XIconifyWindow(display(), window(), m_iScreen);
+      wm_iconify_window(this);
 
    }
    else
@@ -437,9 +453,6 @@ bool oswindow_data::show_window(int32_t nCmdShow)
       }
 
    }
-
-   XFlush(display());
-   XSync(display(), False);
 
    return true;
 
@@ -467,32 +480,47 @@ void oswindow_data::full_screen(LPCRECT lpcrect)
 
    }
 
-   //m_pimpl->m_pui->m_eappearanceRequest = ::user::appearance_full_screen;
+   m_pimpl->m_pui->m_eappearanceRequest = ::user::appearance_full_screen;
 
-   m_pimpl->m_pui->set_appearance(::user::appearance_full_screen);
+   rect rBest;
+
+   int iMonitor = best_xinerama_monitor(m_pimpl->m_pui, lpcrect, rBest);
+
+   ::rect rWindow;
+
+   ::GetWindowRect(this, rWindow);
+
+   if(rBest != rWindow)
+   {
+
+      XMoveResizeWindow(display(), m_window, rBest.left, rBest.top, rBest.width(), rBest.height());
+
+   }
 
    if(attr.map_state == IsViewable)
    {
 
-      send_client_event(intern_atom("_NET_WM_STATE", false), 3,
-                        intern_atom("_NET_WM_STATE_REMOVE", false),
-                        intern_atom("_NET_WM_STATE_HIDDEN", false),
-                        intern_atom("_NET_WM_STATE_MAXIMIZED_VERT", false),
-                        intern_atom("_NET_WM_STATE_MAXIMIZED_HORZ", false), 0);
-      XFlush(display());
-      XSync(display(), False);
+      mapped_net_state(true, display(), window(), m_iScreen, intern_atom("_NET_WM_STATE_FULLSCREEN", false), 0);
+
+   }
+   else
+   {
+
+      unmapped_net_state(display(), window(), intern_atom("_NET_WM_STATE_FULLSCREEN", false), 0);
+
+      XMapWindow(display(), window());
 
    }
 
-   XWithdrawWindow(display(), m_window, m_iScreen);
+   //XWithdrawWindow(display(), m_window, m_iScreen);
 
-   XSetWindowAttributes attrs;
+   //XSetWindowAttributes attrs;
 
-   ZERO(attrs);
+   //ZERO(attrs);
 
-   attrs.override_redirect = True;
+   //attrs.override_redirect = True;
 
-   XChangeWindowAttributes(display(), window(), CWOverrideRedirect, &attrs);
+   //XChangeWindowAttributes(display(), window(), CWOverrideRedirect, &attrs);
 
 //   {
 //
@@ -505,22 +533,15 @@ void oswindow_data::full_screen(LPCRECT lpcrect)
 //   }
 //
 
-   int l = 0;
 
-   int t = 0;
+   //int iMonitor = best_xinerama_monitor(m_pimpl->m_pui, lpcrect, l, t, cx, cy);
 
-   int cx = 0;
+   //XMoveResizeWindow(display(), m_window, l, t, cx, cy);
 
-   int cy = 0;
+   //XMapRaised(display(), m_window);
 
-   int iMonitor = best_xinerama_monitor(m_pimpl->m_pui, lpcrect, l, t, cx, cy);
-
-   XMoveResizeWindow(display(), m_window, l, t, cx, cy);
-
-   XMapRaised(display(), m_window);
-
-   XFlush(display());
-   XSync(display(), False);
+   //XFlush(display());
+   //XSync(display(), False);
 
    //XFlush(display());
    //XSync(display(), False);
@@ -555,15 +576,15 @@ void oswindow_data::full_screen(LPCRECT lpcrect)
 //
 //   XSync(display(), False);
 
-   m_pimpl->m_rectParentClientRequest.left = l;
-   m_pimpl->m_rectParentClientRequest.top = t;
-   m_pimpl->m_rectParentClientRequest.right = l + cx;
-   m_pimpl->m_rectParentClientRequest.bottom = t + cy;
-   m_pimpl->m_rectParentClient = m_pimpl->m_rectParentClientRequest;
+   //m_pimpl->m_rectParentClientRequest.left = l;
+   //m_pimpl->m_rectParentClientRequest.top = t;
+   //m_pimpl->m_rectParentClientRequest.right = l + cx;
+   //m_pimpl->m_rectParentClientRequest.bottom = t + cy;
+   //m_pimpl->m_rectParentClient = m_pimpl->m_rectParentClientRequest;
 
-   m_pimpl->m_pui->set_need_layout();
+   //m_pimpl->m_pui->set_need_layout();
 
-   m_pimpl->m_pui->set_need_redraw();
+   //m_pimpl->m_pui->set_need_redraw();
 
 //   ZERO(values);
 //
@@ -642,14 +663,88 @@ bool oswindow_data::screen_to_client(POINT * pp)
 
 Atom get_window_long_atom(int32_t nIndex);
 
+// Change _NET_WM_STATE if Window is Mapped
+void mapped_net_state (gboolean   add,
+			 Display *d,
+			 Window w,
+			 int iScreen,
+			 Atom    state1,
+			 Atom    state2)
+{
 
+  XClientMessageEvent xclient;
+
+#define _NET_WM_STATE_REMOVE        0    /* remove/unset property */
+#define _NET_WM_STATE_ADD           1    /* add/set property */
+#define _NET_WM_STATE_TOGGLE        2    /* toggle property  */
+
+  ZERO(xclient);
+  xclient.type = ClientMessage;
+  xclient.window = w;
+  xclient.message_type = XInternAtom(d, "_NET_WM_STATE", False);
+  xclient.format = 32;
+  xclient.data.l[0] = add ? _NET_WM_STATE_ADD : _NET_WM_STATE_REMOVE;
+  xclient.data.l[1] = state1;
+  xclient.data.l[2] = state2;
+  xclient.data.l[3] = 1; /* source indication */
+  xclient.data.l[4] = 0;
+
+  XSendEvent (d, RootWindow(d, iScreen), False, SubstructureRedirectMask | SubstructureNotifyMask, (XEvent *)&xclient);
+}
+
+
+void unmapped_net_state(Display * d, Window w, ...)
+{
+
+	XEvent xevent;
+
+	unsigned int i;
+
+	va_list argp;
+
+	va_start(argp, w);
+
+   ZERO(xevent);
+
+   array < Atom > atoms;
+
+	while(true)
+	{
+
+      Atom atom = va_arg(argp, int);
+
+      if(atom == 0)
+      {
+
+         break;
+
+      }
+
+		atoms.add(atom);
+
+	}
+
+	if(atoms.has_elements())
+   {
+
+      XChangeProperty(d, w, XInternAtom(d, "_NET_WM_STATE", False),
+                      XA_ATOM, 32, PropModeReplace,
+                      (guchar*) atoms.get_data(), atoms.get_size());
+   }
+   else
+   {
+
+      XDeleteProperty(d, w, XInternAtom(d, "_NET_WM_STATE", False));
+
+   }
+
+	va_end(argp);
+
+}
 
 
 long oswindow_data::get_state()
 {
-
-
-  //single_lock sl(&user_mutex(), true);
 
   xdisplay d(display());
 
@@ -666,7 +761,6 @@ long oswindow_data::get_state()
   xa_WM_STATE = XInternAtom(display(), "WM_STATE", false);
 
   status = XGetWindowProperty(display(), window(), xa_WM_STATE, 0L, WM_STATE_ELEMENTS, False, xa_WM_STATE, &actual_type, &actual_format, &nitems, &leftover, &p);
-
 
   if(status == 0)
   {
@@ -1760,7 +1854,7 @@ void wm_nodecorations(oswindow w, int map)
 
 }
 
-
+WINBOOL IsWindowVisibleRaw(Display * display, Window window);
 
 void wm_iconify_window(oswindow w)
 {
@@ -1771,9 +1865,27 @@ void wm_iconify_window(oswindow w)
 
    Window window = w->window();
 
-   int scr=DefaultScreen(display);
+   int scr = DefaultScreen(display);
 
-   XIconifyWindow(display, window, scr);
+   if(IsWindowVisibleRaw(display, window))
+   {
+
+      XIconifyWindow(display, window, scr);
+
+   }
+   else
+   {
+
+      if(w->m_pimpl->m_pui->get_appearance() !=::user::appearance_iconic)
+      {
+
+         w->m_pimpl->m_pui->set_appearance(::user::appearance_iconic);
+
+      }
+
+      unmapped_net_state(display, window, XInternAtom(display, "_NET_WM_STATE_HIDDEN", False));
+
+   }
 
 }
 
@@ -2398,28 +2510,37 @@ void process_message(osdisplay_data * pdata, Display * display)
                }
 
 
-//               if(!bHandled)
-//               {
-//
-//                  //rect64 rectWindow;
-//
-//                  //rectWindow.left = e.xconfigure.x;
-//
-//                  //rectWindow.top = e.xconfigure.y;
-//
-//                  //rectWindow.right = rectWindow.left + e.xconfigure.width;
-//
-//                  //rectWindow.bottom = rectWindow.top + e.xconfigure.height;
-//
-//                  ::rect rectWindow;
-//
-//                  ::GetWindowRect(msg.hwnd, rectWindow);
-//
-//                  ::copy(pimpl->m_rectParentClientRequest, rectWindow);
-//
-//                  pui->set_need_layout();
-//
-//               }
+               if(!bHandled)
+               {
+
+                  rect64 rectWindow;
+
+                  //rectWindow.left = e.xconfigure.x;
+
+                  //rectWindow.top = e.xconfigure.y;
+
+                  //rectWindow.right = rectWindow.left + e.xconfigure.width;
+
+                  //rectWindow.bottom = rectWindow.top + e.xconfigure.height;
+
+                  ::rect rWindow;
+
+                  GetWindowRect(msg.hwnd, rWindow);
+
+                  copy(rectWindow, rWindow);
+
+                  //decltype(pimpl->m_rectParentClientRequest) x;
+
+                  if(rectWindow != pimpl->m_rectParentClient)
+                  {
+
+                     ::copy(pimpl->m_rectParentClientRequest, rectWindow);
+
+                     pui->set_need_layout();
+
+                  }
+
+               }
 
             }
 
@@ -2563,10 +2684,18 @@ void process_message(osdisplay_data * pdata, Display * display)
    else if(e.type == MotionNotify)
    {
 
+      WPARAM wparam(0);
+
+      if(e.xmotion.state & Button1Mask)
+      {
+
+         wparam |= MK_LBUTTON;
+
+      }
 
       msg.hwnd          = oswindow_get(display, e.xbutton.window);
       msg.message       = WM_MOUSEMOVE;
-      msg.wParam        = 0;
+      msg.wParam        = wparam;
       msg.lParam        = MAKELONG(e.xmotion.x_root, e.xmotion.y_root);
 
       synch_lock sl(pdata->m_pmutexMouse);

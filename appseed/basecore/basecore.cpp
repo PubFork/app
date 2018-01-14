@@ -111,9 +111,9 @@ void basecore_init()
 
    // g_type_init ();
 
-   //gtk_init_check(0, 0);
+   gtk_init_check(0, 0);
 
-   //gtk_main();
+   gtk_main();
 
 }
 
@@ -136,7 +136,7 @@ public:
    void *               m_pvoidRet;
    GtkWidget *          m_pmenu;
    int                  m_iOpen;
-   //bool                 m_bQuitGtk;
+   bool                 m_bQuitGtk;
 
 
    basecore_data();
@@ -166,7 +166,7 @@ basecore_data::basecore_data()
    m_bLoop = false;
    m_bTerm = true;
    m_iOpen = -1;
-   //m_bQuitGtk = false;
+   m_bQuitGtk = false;
 }
 
 
@@ -404,11 +404,11 @@ GtkWidget * idle_basecore_app_indicator_init(indicator * pind, i_close_quit * pi
 void basecore_term()
 {
 
-   //basecore_data * data = new basecore_data();
+   basecore_data * data = new basecore_data();
 
-   //data->m_bQuitGtk = true;
+   data->m_bQuitGtk = true;
 
-   //data->process();
+   data->process();
 
 }
 
@@ -525,12 +525,12 @@ gboolean basecore_data::run()
       }
 
    }
-   //else if(m_bQuitGtk)
-   //{
+   else if(m_bQuitGtk)
+   {
 
-   //   gtk_main_quit();
+      gtk_main_quit();
 
-   //}
+   }
 
    if(!m_bLoop)
    {

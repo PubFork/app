@@ -2746,7 +2746,7 @@ int32_t thread::thread_exit()
 thread::operator HTHREAD() const
 {
 
-   return is_null(*this) ? (HTHREAD) NULL : m_hthread;
+   return is_null(this) ? (HTHREAD) NULL : m_hthread;
 
 }
 

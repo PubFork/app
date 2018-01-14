@@ -128,22 +128,22 @@ WINBOOL GetWindowRect(oswindow hwnd, LPRECT lprect)
 
    }
 
-   int x;
-   int y;
-   Window child;
+//   int x;
+//   int y;
+//   Window child;
+//
+//   if(!XTranslateCoordinates(hwnd->display(), hwnd->window(), DefaultRootWindow(hwnd->display()), 0, 0, &x, &y, &child))
+//   {
+//
+//      return FALSE;
+//
+//   }
 
-   if(!XTranslateCoordinates(hwnd->display(), hwnd->window(), DefaultRootWindow(hwnd->display()), 0, 0, &x, &y, &child))
-   {
 
-      return FALSE;
-
-   }
-
-
-   lprect->left      = x;
-   lprect->top       = y;
-   lprect->right     = x    + attrs.width;
-   lprect->bottom    = y    + attrs.height;
+   lprect->left      = attrs.x;
+   lprect->top       = attrs.y;
+   lprect->right     = attrs.x    + attrs.width;
+   lprect->bottom    = attrs.y    + attrs.height;
 
    return TRUE;
 

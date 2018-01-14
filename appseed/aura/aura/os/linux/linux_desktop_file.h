@@ -31,6 +31,7 @@ namespace linux
 
 
       ::file::path get_file_path();
+      ::file::path get_board_path();
 
       void write();
 

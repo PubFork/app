@@ -178,7 +178,7 @@ namespace userex
 
          }
 
-         if(is_set(filemanager_manager()))
+         if(is_set_ref(filemanager_manager()))
          {
 
             filemanager_manager().get_filemanager_data()->m_pdocumentTopic = NULL;
@@ -598,19 +598,21 @@ namespace userex
    }
 
 
-
    void pane_tab_view::_001OnTabClose(int32_t iTab)
    {
 
       ::user::tab::_001OnTabClose(iTab);
 
-      if(GetParentFrame()->ContinueModal() && is_set(filemanager_manager())
+      if(GetParentFrame()->ContinueModal() && is_set_ref(filemanager_manager())
             && filemanager_manager().get_filemanager_data()->m_pdocumentTopic!= NULL)
       {
+
          GetParentFrame()->EndModalLoop("yes");
+
       }
 
    }
+
 
    string pane_tab_view::get_cred(const string & strRequestUrl, const RECT & rect, string & strUsername, string & strPassword, string strToken, string strTitle, bool bInteractive)
    {

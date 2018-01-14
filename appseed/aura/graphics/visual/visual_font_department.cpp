@@ -38,11 +38,22 @@ font_department::~font_department()
 
 bool font_department::IsInitialized()
 {
-   if(is_null(*this))
+
+   if(is_null(this))
+   {
+
       return false;
+
+   }
    else
+   {
+
       return m_bInitialized;
+
+   }
+
 }
+
 
 bool font_department::Initialize()
 {
@@ -58,7 +69,7 @@ bool font_department::Initialize()
       return false;
 
    }
-   
+
    spgraphics->CreateCompatibleDC(NULL);
 
    m_fontMenu->create_point_font(FONTFACENAME_MENU, 9);

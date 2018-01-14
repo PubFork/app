@@ -1466,10 +1466,14 @@ namespace user
 //      class point point = pmouse->m_pt;
       if(get_data()->m_iDragTab >= 0)
       {
+
          if(get_data()->m_pcallback != NULL)
          {
+
             get_data()->m_pcallback->_001DropTargetWindowRelay(this);
+
          }
+
       }
       /*      if(m_iHover < 0)
             {
@@ -2009,11 +2013,15 @@ namespace user
 
    void tab::_001SetTabCallback(tab_callback * pcallback)
    {
+
       if(get_data()->m_pcallback != NULL)
       {
+
          delete get_data()->m_pcallback;
+
       }
-      get_data()->m_pcallback = pcallback;;
+
+      get_data()->m_pcallback = pcallback;
 
    }
 
@@ -2039,20 +2047,28 @@ namespace user
 
    ::count tab::_001GetPaneCount()
    {
+
       return get_data()->m_panea.get_count();
+
    }
 
 
    bool tab::_001IsAddTab(::index iPane)
    {
+
       if(get_data()->m_pcallback != NULL)
       {
+
          return get_data()->m_pcallback->_001IsAddTab(this, iPane);
+
       }
       else
       {
+
          return false;
+
       }
+
    }
 
 
@@ -2312,8 +2328,11 @@ namespace user
 
       if(get_data()->m_bVertical)
       {
+
          get_data()->m_rectMargin.set(2, 3, 1, 0);
+
          get_data()->m_rectBorder.set(11, 1, 6, 0);
+
          get_data()->m_rectTextMargin.set(3, 0, 1, 0);
 
          get_data()->m_iTabHeight += get_data()->m_rectBorder.top + get_data()->m_rectBorder.bottom +
@@ -2324,8 +2343,11 @@ namespace user
       }
       else
       {
+
          get_data()->m_rectMargin.set(3, 2, 0, 1);
+
          get_data()->m_rectBorder.set(0, 1, 11, 6);
+
          get_data()->m_rectTextMargin.set(3, 0, 1, 0);
 
          get_data()->m_iTabHeight += get_data()->m_rectBorder.top + get_data()->m_rectBorder.bottom +
@@ -2336,9 +2358,12 @@ namespace user
       }
    }
 
+
    void tab::_001ConnectParent(::message::sender * psender)
    {
+
       UNREFERENCED_PARAMETER(psender);
+
    }
 
 
@@ -2378,12 +2403,12 @@ namespace user
 
    }
 
+
    ::index tab::id_pane(id id)
    {
 
       for (::index iPane = 0; iPane < get_data()->m_panea.get_size(); iPane++)
       {
-
 
          if (get_data()->m_panea[iPane]->m_id == id)
          {
@@ -2481,8 +2506,6 @@ namespace user
 
          iTab--;
 
-
-
       }
 
       return -1;
@@ -2522,7 +2545,6 @@ namespace user
             }
 
          }
-
 
          if (get_data()->m_panea[iPane]->m_bTabPaneVisible)
          {
@@ -2606,22 +2628,36 @@ namespace user
          return position_top;
       }
       GetDragRect(rect, position_bottom);
+
       if(rect.contains(pt))
       {
+
          return position_bottom;
+
       }
+
       GetDragRect(rect, position_left);
+
       if(rect.contains(pt))
       {
+
          return position_left;
+
       }
+
       GetDragRect(rect, position_right);
+
       if(rect.contains(pt))
       {
+
          return position_right;
+
       }
+
       return position_none;
+
    }
+
 
    void tab::GetDragRect(LPRECT lprect, e_position eposition)
    {
@@ -2677,13 +2713,17 @@ namespace user
 
    ::user::interaction * tab::get_view_uie()
    {
+
       return NULL;
+
    }
 
 
    id tab::get_current_id()
    {
+
       return get_cur_tab_id();
+
    }
 
 
@@ -2694,11 +2734,27 @@ namespace user
 
       if(ptimer->m_nIDEvent == 5432187)
       {
-         // hey hey hey
-         //return;
-         get_data()->m_bDrag = true;
-         KillTimer(5432187);
-         post_message(message_start_tab_drag);
+
+         point point;
+
+         ::GetCursorPos(&point);
+
+         ::user::e_element eelement;
+
+         index iPane = hit_test(point, eelement);
+
+         index iDragTab = get_data()->m_iDragTab;
+
+         if(iPane >= 0 && iDragTab != iPane)
+         {
+
+            get_data()->m_bDrag = true;
+
+            KillTimer(5432187);
+
+            post_message(message_start_tab_drag);
+
+         }
 
       }
 

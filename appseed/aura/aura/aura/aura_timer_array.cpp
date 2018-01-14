@@ -58,8 +58,6 @@ namespace aura
          if(!ptimer->start(nEllapse,bPeriodic))
          {
 
-            sl.lock();
-
             bOk = false;
 
          }
@@ -75,7 +73,7 @@ namespace aura
       if(!bOk)
       {
 
-         m_map.remove_key(nIDEvent);
+         delete_timer(nIDEvent);
 
       }
 
@@ -104,7 +102,7 @@ namespace aura
 
       sl.unlock();
 
-      ptimer->stop(true);
+      ptimer->stop();
 
       return true;
 

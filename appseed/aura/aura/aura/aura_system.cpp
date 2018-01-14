@@ -3802,79 +3802,37 @@ success:
 
 // it doesn't work for final purpose,
 // but it calls function that "sorts" rectangles with stability
-int get_best_ordered_monitor(::user::interaction * pui, int & l, int & t, int & cx, int & cy)
+int get_best_ordered_monitor(::user::interaction * pui, LPRECT lprectRet)
 {
 
    auto rectaOrdered = get_ordered_monitor_recta(pui->get_app());
 
-   ::rect rectBestMonitor;
+   index iJustForComparison = pui->best_monitor(lprectRet, null_rect(), FALSE, 0, 0);
 
-   index iJustForComparison = pui->best_monitor(&rectBestMonitor, null_rect(), FALSE, 0, 0);
-
-   index iOrdered = rectaOrdered.pred_find_first([&](auto & rectMonitorSorted){ return rectMonitorSorted == rectBestMonitor; });
+   index iOrdered = rectaOrdered.pred_find_first([&](auto & rectMonitorSorted){ return rectMonitorSorted == *lprectRet; });
 
    output_debug_string(::str::from(iJustForComparison));
 
    output_debug_string(::str::from(iOrdered));
-
-   l = rectBestMonitor.left;
-
-   t = rectBestMonitor.top;
-
-   cx = rectBestMonitor.width();
-
-   cy = rectBestMonitor.height();
 
    return iOrdered;
 
 }
 
 
-//void xinerama_monitor_recta(rect_array & rectaMonitor, ::aura::application * papp)
-//{
-//
-//   index iMonitor = 0;
-//
-//   ::count cMonitor = xinerama_get_monitor_count();
-//
-//   ::rect rectMonitor;
-//
-//   rectaMonitor.set_size(cMonitor);
-//
-//   for(; iMonitor < cMonitor; iMonitor++)
-//   {
-//
-//      xinerama_get_monitor_rect(iMonitor, &rectMonitor);
-//
-//      rectaMonitor[iMonitor] = rectMonitor;
-//
-//      output_debug_string(::str::from(rectMonitor.left));
-//
-//      output_debug_string(::str::from(rectMonitor.top));
-//
-//      output_debug_string(::str::from(rectMonitor.right));
-//
-//      output_debug_string(::str::from(rectMonitor.bottom));
-//
-//   }
-//
-//}
-
-int best_xinerama_monitor(::user::interaction * pui, LPCRECT lpcrect, int & l, int & t, int & cx, int & cy)
+int best_xinerama_monitor(::user::interaction * pui, LPCRECT lpcrect, LPRECT lprectRet)
 {
 
-   ::rect rectBestMonitor;
-
-   rectBestMonitor = null_rect();
+   *lprectRet = null_rect();
 
    if(lpcrect == NULL)
    {
 
-      lpcrect = &rectBestMonitor;
+      lpcrect = lprectRet;
 
    }
 
-   index iOrdered = pui->best_monitor(&rectBestMonitor, *lpcrect, false, 0, 0);
+   index iOrdered = pui->best_monitor(lprectRet, *lpcrect, false, 0, 0);
 
    ::count cMonitor = xinerama_get_monitor_count();
 
@@ -3898,31 +3856,21 @@ int best_xinerama_monitor(::user::interaction * pui, LPCRECT lpcrect, int & l, i
 
    output_debug_string(::str::from(iOrdered));
 
-   l = rectBestMonitor.left;
-
-   t = rectBestMonitor.top;
-
-   cx = rectBestMonitor.width();
-
-   cy = rectBestMonitor.height();
-
    return iOrdered;
 
 }
 
 
-int best_xinerama_monitor(::user::interaction * pui, int & l, int & t, int & cx, int & cy)
+int best_xinerama_monitor(::user::interaction * pui, LPRECT lprectRet)
 {
 
-   return best_xinerama_monitor(pui, NULL, l, t, cx, cy);
+   return best_xinerama_monitor(pui, NULL, lprectRet);
 
 }
 
 
-int get_best_monitor(::user::interaction * pui, LPCRECT lpcrect, int & l, int & t, int & cx, int & cy)
+int get_best_monitor(::user::interaction * pui, LPCRECT lpcrect, LPRECT lprectRet)
 {
-
-   ::rect rectBestMonitor;
 
    rect rNull = null_rect();
 
@@ -3933,24 +3881,16 @@ int get_best_monitor(::user::interaction * pui, LPCRECT lpcrect, int & l, int & 
 
    }
 
-   index i = pui->best_monitor(&rectBestMonitor, *lpcrect, FALSE, 0, 0);
-
-   l = rectBestMonitor.left;
-
-   t = rectBestMonitor.top;
-
-   cx = rectBestMonitor.width();
-
-   cy = rectBestMonitor.height();
+   index i = pui->best_monitor(lprectRet, *lpcrect, FALSE, 0, 0);
 
    return i;
 
 }
 
 
-int get_best_monitor(::user::interaction * pui, int & l, int & t, int & cx, int & cy)
+int get_best_monitor(::user::interaction * pui, LPRECT lprectRet)
 {
 
-   return get_best_monitor(pui, NULL, l, t, cx, cy);
+   return get_best_monitor(pui, NULL, lprectRet);
 
 }

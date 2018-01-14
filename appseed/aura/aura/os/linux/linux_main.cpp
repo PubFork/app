@@ -200,24 +200,24 @@ void app_core::run()
 //
 //   }
 //
-//   g_set_prgname(strPrgName);
+   //g_set_prgname(strPrgName);
 
    //g_pgtkapp = gtk_application_new (strPrgName, G_APPLICATION_FLAGS_NONE);
 
-   g_pappBloatPad = bloat_pad_new(strPrgName, strPrgName);
+   //g_pappBloatPad = bloat_pad_new(strPrgName, strPrgName);
 
-   if(g_pappBloatPad == NULL)
-   {
+   //if(g_pappBloatPad == NULL)
+   //{
 
-      output_debug_string("Failed to initialize GtkApplication (gtk_application_new return NULL)");
+     // output_debug_string("Failed to initialize GtkApplication (gtk_application_new return NULL)");
 
-      return;
+      //return;
 
-   }
+   //}
 
-   output_debug_string("created GtkApplication");
+   //output_debug_string("created GtkApplication");
 
-   if(!m_psystem->begin_synch())
+   if(!m_psystem->pre_run())
    {
 
       output_debug_string("Failed to begin_synch the system (::aura::system or ::aura::system derived)");
@@ -226,19 +226,23 @@ void app_core::run()
 
    }
 
-   set_main_thread(m_psystem->m_hthread);
+   //set_main_thread(m_psystem->m_hthread);
 
-   set_main_thread_id(m_psystem->m_uiThread);
+   //set_main_thread_id(m_psystem->m_uiThread);
 
    m_psystem->m_strAppId = m_pmaindata->m_pmaininitdata->m_strAppId;
 
    m_psystem->startup_command(m_pmaindata->m_pmaininitdata);
 
-   int status = g_application_run (G_APPLICATION (g_pappBloatPad), 0, NULL);
+   m_psystem->process_command(m_psystem->m_pcommand);
 
-   g_object_unref(g_pappBloatPad);
+   m_psystem->main();
 
-   g_pappBloatPad = NULL;
+   //int status = g_application_run (G_APPLICATION (g_pappBloatPad), 0, NULL);
+
+   //g_object_unref(g_pappBloatPad);
+
+   //g_pappBloatPad = NULL;
 
 }
 

@@ -23,7 +23,7 @@ timer::timer(::aura::application * papp, uint_ptr uiTimer, PFN_TIMER pfnTimer, v
 timer::~timer()
 {
 
-   stop(true);
+   stop();
 
    impl_term();
 
@@ -32,27 +32,21 @@ timer::~timer()
 }
 
 
-
-
 bool timer::start(int millis, bool bPeriodic)
 {
 
    synch_lock sl(m_pmutex);
 
-   if(m_ptimerRunning.is_set())
-   {
-
-      sl.unlock();
-
-      stop(true);
-
-      sl.lock();
-
-   }
-
    m_bPeriodic = bPeriodic;
 
    m_dwMillis = millis;
+
+   if(m_ptimerRunning.is_set())
+   {
+
+      return true;
+
+   }
 
    m_ptimerRunning = this;
 
@@ -85,7 +79,7 @@ bool timer::start(int millis, bool bPeriodic)
 }
 
 
-void timer::stop(bool bWaitCompletion)
+void timer::stop()
 {
 
    if(m_ptimerRunning.is_null())
@@ -117,31 +111,6 @@ void timer::stop(bool bWaitCompletion)
 
    }
 
-   if(bWaitCompletion)
-   {
-
-      try
-      {
-
-         int iWait = 3000; // 30s
-
-         while(m_ptimerRunning.is_set() && iWait > 0)
-         {
-
-            Sleep(10);
-
-            iWait--;
-
-         }
-
-      }
-      catch(...)
-      {
-
-      }
-
-   }
-
    try
    {
 
@@ -158,19 +127,6 @@ void timer::stop(bool bWaitCompletion)
 
 void timer::call_on_timer()
 {
-
-   ::set_thread(this);
-
-   try
-   {
-
-      on_timer();
-
-   }
-   catch(...)
-   {
-
-   }
 
    bool bRepeat = true;
 
@@ -189,6 +145,24 @@ void timer::call_on_timer()
    {
 
       bRepeat = false;
+
+   }
+
+   if(bRepeat)
+   {
+
+      ::set_thread(this);
+
+      try
+      {
+
+         on_timer();
+
+      }
+      catch(...)
+      {
+
+      }
 
    }
 
@@ -244,7 +218,7 @@ void timer::call_on_timer()
       try
       {
 
-         m_ptimerRunning.release();
+         unregister_from_required_threads();
 
       }
       catch(...)
@@ -255,7 +229,7 @@ void timer::call_on_timer()
       try
       {
 
-         unregister_from_required_threads();
+         m_ptimerRunning.release();
 
       }
       catch(...)

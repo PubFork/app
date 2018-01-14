@@ -757,6 +757,10 @@
 		<Unit filename="graphics/draw2d/draw2d_dibmap_ex1.h" />
 		<Unit filename="graphics/draw2d/draw2d_font.h" />
 		<Unit filename="graphics/draw2d/draw2d_fwd.h" />
+		<Unit filename="graphics/draw2d/draw2d_graphics.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="graphics/draw2d/draw2d_graphics.h" />
 		<Unit filename="graphics/draw2d/draw2d_igui.h" />
 		<Unit filename="graphics/draw2d/draw2d_keep.h" />

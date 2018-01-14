@@ -164,10 +164,21 @@ void bit_array::add_bit_array(bit_array & ba)
 
 void bit_array::clear_bit_array(bit_array & ba)
 {
+
   if(m_pdata == NULL)
+  {
+
      return;
-  if(is_null(ba) || ba.m_pdata == NULL)
+
+  }
+
+  if(is_null_ref(ba) || ::is_null(ba.m_pdata))
+  {
+
      return;
+
+  }
+
   if(int_ptr(ba.m_pdata) == 1)
   {
     if(m_pdata != NULL && int_ptr(m_pdata) != 1)

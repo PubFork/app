@@ -151,7 +151,7 @@ bool xfplayer_view_line::to(::draw2d::graphics * pgraphics, bool bDraw, const RE
 
    single_lock sl(m_pContainer->m_pmutex);
 
-   
+
 
    string strFinal(m_str);
 
@@ -337,7 +337,7 @@ bool xfplayer_view_line::to(::draw2d::graphics * pgraphics, bool bDraw, const RE
             }
          }
 
-         if (is_set(rectaModified))
+         if (is_set_ref(rectaModified))
          {
             ::rect baserect;
             rgn.get_bounding_box(baserect);
@@ -364,7 +364,7 @@ bool xfplayer_view_line::to(::draw2d::graphics * pgraphics, bool bDraw, const RE
 
    UNREFERENCED_PARAMETER(count);
 
-   
+
 
    ::rect rectPlacement;
 
@@ -382,8 +382,10 @@ bool xfplayer_view_line::to(::draw2d::graphics * pgraphics, bool bDraw, const RE
 
    if (!IsVisible())
    {
+
       class rect rect(m_rectInvalidate);
-      if (!is_null(rectaModified))
+
+      if (!is_null_ref(rectaModified))
       {
          class rect baserect(rect);
          rectaModified.add(baserect);
@@ -1640,7 +1642,7 @@ void xfplayer_view_line::CacheEmboss(::draw2d::graphics * pgraphics, const char 
       int x = (int32_t) (s.cx + (s.cx / m_strPrefix.get_length()) + (int32_t)(int32_t)((MAX(2.0, m_floatRateX * 8.0)) / 2));
 
       int y = (int32_t) (1 * (int32_t)((MAX(2.0, m_floatRateX * 8.0)) / 2));
-      
+
       m_dcextension.text_out(pdcCache, x, y, m_strRoot, m_strRoot.get_length(), s);
 
    }

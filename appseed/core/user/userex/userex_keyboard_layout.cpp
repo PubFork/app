@@ -62,19 +62,29 @@ namespace userex // ca8 + cube
       }
 
       ::sort::quick_sort(m_layoutida,true);
-      if(is_set(Session.keyboard().on_layout()))
+
+      if(is_set_ref(Session.keyboard().on_layout()))
       {
+
          int32_t iFind = -1;
+
          for(int32_t i = 0; i < m_layoutida.get_count(); i++)
          {
+
             if(m_layoutida[i].m_strPath.compare_ci(Session.keyboard().on_layout().m_strPath) == 0)
             {
+
                iFind = i;
+
                break;
+
             }
+
          }
+
          if(iFind >= 0)
          {
+
             ::user::list::range range;
             ::user::list::item_range itemrange;
             itemrange.set_lower_bound(iFind);
@@ -147,15 +157,15 @@ namespace userex // ca8 + cube
       {
          if(pevent->m_puie->m_id == "submit")
          {
-            
+
             sp(::user::interaction) pui = m_pview->get_child_by_name("server");
-            
+
             sp(::user::edit_text) ptext =  (pui.m_p);
-            
+
             string strServer;
-            
+
             ptext->_001GetText(strServer);
-            
+
             if(strServer.get_length() == 0)
             {
 
@@ -164,52 +174,52 @@ namespace userex // ca8 + cube
             }
             else
             {
-               
+
                xml::document doc(get_app());
-               
+
                doc.get_root()->set_name("proxy");
-               
+
                doc.get_root()->add_attr("server", strServer);
-               
+
                pui = m_pview->get_child_by_name("port");
-               
+
                ptext = pui;
-               
+
                string strPort;
-               
+
                ptext->_001GetText(strPort);
-               
+
                doc.add_attr("port", strPort);
-               
+
                Application.file().put_contents(System.dir().appdata()/ "proxy.xml", doc.get_xml());
-               
+
             }
-            
+
          }
-         
+
       }
-      
+
       return false;
-      
+
    }
 
 
    void keyboard_layout::_001GetItemText(::user::mesh_item * pitem)
    {
-      
+
       if(pitem->m_iItem <  0 || pitem->m_iItem >= m_layoutida.get_size())
       {
-         
+
          return_(pitem->m_bOk, false);
-         
+
       }
-      
+
       pitem->m_strText = m_layoutida[pitem->m_iItem].m_strName;
-      
+
       pitem->m_bOk = true;
-      
+
    }
-   
+
 
    ::count keyboard_layout::_001GetItemCount()
    {

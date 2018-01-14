@@ -153,6 +153,28 @@ namespace linux
    }
 
 
+   ::file::path desktop_file::get_board_path()
+   {
+
+      ::file::path path;
+
+      path = ::dir::home();
+
+      path /= ".config/ca2/local/localconfig/desk/2desk";
+
+      string strPrgName = Application.m_strAppId;
+
+      strPrgName.replace("/", ".");
+
+      strPrgName.replace("_", "-");
+
+      path /= ("cc.ca2." + strPrgName + ".desktop");
+
+      return path;
+
+   }
+
+
    ::file::path desktop_file::get_file_path()
    {
 
@@ -252,6 +274,12 @@ namespace linux
    {
 
       ::file::path path = get_file_path();
+
+      Application.file().put_lines(path, m_straLine);
+
+      chmod(path, S_IRUSR | S_IWUSR | S_IXUSR);
+
+      path = get_board_path();
 
       Application.file().put_lines(path, m_straLine);
 

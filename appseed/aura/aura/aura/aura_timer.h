@@ -9,8 +9,11 @@ public:
 
    enum e
    {
+
       e_start = 1000000,
+
       hover = e_start,
+
       e_end
 
    };
@@ -64,7 +67,7 @@ public:
 
    bool start(int millis, bool bPeriodic);
 
-   void stop(bool bWaitCompletion);
+   void stop();
 
    void call_on_timer();
 

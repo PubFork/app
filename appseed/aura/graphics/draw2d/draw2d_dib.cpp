@@ -197,8 +197,12 @@ namespace draw2d
 
       ::draw2d::bitmap & bitmap = *pgraphics->get_current_bitmap();
 
-      if (is_null(bitmap))
+      if (is_null_ref(bitmap))
+      {
+
          return false;
+
+      }
 
       ::exception::throw_not_implemented(get_app());
 

@@ -1210,7 +1210,7 @@ namespace aura
       if (handler()->m_varTopicQuery.has_property("uninstall"))
          return true;
 
-      if (is_null(licensing()))
+      if (is_null_ref(licensing()))
       {
 
          return false;

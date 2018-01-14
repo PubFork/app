@@ -809,31 +809,43 @@ CLASS_DECL_AURA ::aura::application * get_app();
 #include "aura/aura/aura/aura_lparam.h"
 #include "aura/aura/aura/aura_muldiv64.h"
 
+inline bool is_null(const void * p, size_t s)
+{
+
+   return ((size_t)p) <= s;
+
+}
+
 
 
 template < typename TYPE >
-bool is_null(const TYPE * p)
+inline bool is_null(const TYPE * p)
 {
-   return (((int_ptr)p) < ((sizeof(TYPE) + sizeof(int_ptr)) * 2));
+
+   return is_null(p, ((sizeof(TYPE) + sizeof(void *)) * 2));
+
 }
 
 template < typename TYPE >
-bool is_set(const TYPE * p)
+inline bool is_set(const TYPE * p)
 {
    return !is_null(p);
 }
 
 
 template < typename TYPE >
-bool is_null(const TYPE & t)
+inline bool is_null_ref(const TYPE & t)
 {
-   return (((int_ptr)&t) < ((sizeof(TYPE) + sizeof(int_ptr)) * 2));
+
+   return is_null(&t);
+
 }
 
+
 template < typename TYPE >
-bool is_set(const TYPE & t)
+inline bool is_set_ref(const TYPE & t)
 {
-   return !is_null(t);
+   return !is_null_ref(t);
 }
 
 
@@ -846,7 +858,6 @@ inline void delptr(t *& p)
       p = NULL;
    }
 }
-
 
 
 #include "aura/aura/aura/aura_auto_pointer.h"

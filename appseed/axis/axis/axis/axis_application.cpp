@@ -3646,7 +3646,7 @@ namespace axis
       if(pszPath == NULL)
       {
 
-         if(is_set(Session.keyboard().on_layout()))
+         if(is_set_ref(Session.keyboard().on_layout()))
          {
 
             //            if(Session.fontopus()->m_puser != NULL
