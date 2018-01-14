@@ -12,7 +12,7 @@
 
 #endif
 
-
+BEGIN_EXTERN_C
 
 WINBOOL get_version_ex_a(LPOSVERSIONINFOA lpVersionInformation)
 {
@@ -93,3 +93,9 @@ CLASS_DECL_ACE int _ca_is_stage()
 	return FALSE;
 #endif
 }
+
+
+
+END_EXTERN_C
+
+
