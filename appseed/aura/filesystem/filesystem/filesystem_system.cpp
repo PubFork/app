@@ -1,6 +1,7 @@
 #include "framework.h"
 #include <stdio.h>
 
+#define UTF8_BOM "\xef\xbb\xbf"
 
 #include "aura/aura/compress/zip/zip.h"
 
@@ -775,6 +776,83 @@ restart:
    }
 
 
+   void system::put_lines(var varFile, const stringa & stra, ::aura::application * papp)
+   {
+
+      UNREFERENCED_PARAMETER(papp);
+
+      ::file::file_sp spfile;
+
+      try
+      {
+
+         spfile = App(papp).file().get_file(varFile,::file::type_text | ::file::mode_write | ::file::mode_truncate | ::file::mode_create | ::file::defer_create_directory);
+
+      }
+      catch(...)
+      {
+
+         return;
+
+      }
+
+      _put_lines(spfile, stra);
+
+   }
+
+
+   void system::put_lines_utf8(var varFile, const stringa & stra, ::aura::application * papp)
+   {
+
+      ::file::file_sp spfile;
+
+      try
+      {
+
+         spfile = App(papp).file().get_file(varFile,::file::type_text | ::file::mode_write | ::file::mode_truncate | ::file::mode_create | ::file::defer_create_directory);
+
+      }
+      catch(...)
+      {
+
+         return;
+
+      }
+
+      if(spfile.is_null())
+      {
+
+         return;
+
+      }
+
+      spfile->write(UTF8_BOM, STATIC_ASCII_STRING_LENGTH(UTF8_BOM));
+
+      _put_lines(spfile, stra);
+
+   }
+
+
+   void system::_put_lines(::file::file * pfile, const stringa & stra)
+   {
+
+      if(pfile == NULL)
+      {
+
+         return;
+
+      }
+
+      for(auto & strLine : stra)
+      {
+
+         pfile->write_string(strLine);
+
+      }
+
+   }
+
+
    void system::lines(stringa & stra, var varFile, ::aura::application * papp)
    {
 
@@ -795,6 +873,13 @@ restart:
 
       }
 
+      if(spfile.is_null())
+      {
+
+         return;
+
+      }
+
       string strLine;
 
       while(spfile->read_string(strLine))
@@ -805,6 +890,7 @@ restart:
       }
 
    }
+
 
    bool system::put_contents(var varFile, const void * pvoidContents, ::count count, ::aura::application * papp)
    {
@@ -956,7 +1042,7 @@ restart:
 
       }
 
-      spfile->write("\xef\xbb\xbf", 3);
+      spfile->write(UTF8_BOM, STATIC_ASCII_STRING_LENGTH(UTF8_BOM));
 
       spfile->write(lpcszContents, strlen(lpcszContents));
 

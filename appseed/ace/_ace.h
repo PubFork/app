@@ -41,7 +41,6 @@
 #define MEMORY_DECL
 
 #elif defined(LINUX)
-
 #define inplace_new_throw_spec
 #define new_throw_spec
 #define del_throw_spec

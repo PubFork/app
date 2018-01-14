@@ -15,20 +15,17 @@
 				<Option createDefFile="1" />
 				<Option createStaticLib="1" />
 				<Compiler>
-					<Add option="-pg" />
+					<Add option="-std=c++14" />
 					<Add option="-g" />
 					<Add option="-fnon-call-exceptions" />
-					<Add option="-fno-pie" />
 					<Add option="-fno-stack-protector" />
 					<Add option="-fno-omit-frame-pointer" />
 					<Add option="-Wno-pointer-arith" />
 					<Add option="-Wno-attributes" />
 					<Add option="-Winvalid-pch" />
-					<Add option="-fPIC" />
 					<Add option="-D_DEBUG" />
 				</Compiler>
 				<Linker>
-					<Add option="-pg" />
 					<Add option="-Wl,-rpath=\\$$$ORIGIN" />
 					<Add option="-lz" />
 					<Add option="-lbz2" />
@@ -36,12 +33,21 @@
 					<Add option="-lrt" />
 					<Add option="-lbfd" />
 					<Add option="-lX11" />
+					<Add option="-lX11-xcb" />
+					<Add option="-lxcb" />
+					<Add option="-lxcb-util" />
+					<Add option="-lXinerama" />
+					<Add option="-lXmu" />
+					<Add option="-lXrandr" />
+					<Add option="-lXext" />
+					<Add option="-lXxf86vm" />
 					<Add option="-lidn" />
 					<Add option="-lpthread" />
 					<Add option="-lncurses" />
 					<Add option="-latomiconv" />
 					<Add option="-lssl" />
 					<Add option="-lcrypto" />
+					<Add option="`pkg-config --libs gtk+-3.0`" />
 					<Add option="-lace" />
 					<Add option="-lfreeimage" />
 					<Add option="-Wl,-z,defs" />
@@ -137,6 +143,8 @@
 		<Compiler>
 			<Add option="-std=c++14" />
 			<Add option="-fexceptions" />
+			<Add option="`pkg-config --cflags gtk+-3.0`" />
+			<Add option="-fPIC" />
 			<Add option="-DLINUX" />
 			<Add directory="../../../include" />
 			<Add directory="framework" />
@@ -154,6 +162,7 @@
 			<Add directory="graphics/freeimage/Source" />
 		</Compiler>
 		<Linker>
+			<Add option="-fPIC" />
 			<Add directory="../../../time/x64/basis" />
 		</Linker>
 		<ExtraCommands>
@@ -163,13 +172,26 @@
 		<Unit filename="all.h" />
 		<Unit filename="aura.h" />
 		<Unit filename="aura/_aura.cpp" />
+		<Unit filename="aura/app/aura.inl" />
 		<Unit filename="aura/aura/aura.h" />
 		<Unit filename="aura/aura/aura_action_context.h" />
 		<Unit filename="aura/aura/aura_action_source.h" />
 		<Unit filename="aura/aura/aura_allocate.h" />
 		<Unit filename="aura/aura/aura_allocate_processor_cache_oriented.h" />
+		<Unit filename="aura/aura/aura_allocate_system_heap.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="aura/aura/aura_app_core.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/aura/aura_app_core.h" />
 		<Unit filename="aura/aura/aura_app_launcher.h" />
+		<Unit filename="aura/aura/aura_application.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/aura/aura_application.h" />
 		<Unit filename="aura/aura/aura_application_common.h" />
 		<Unit filename="aura/aura/aura_application_heap.h" />
@@ -209,7 +231,15 @@
 		<Unit filename="aura/aura/aura_fixed_alloc_impl.h" />
 		<Unit filename="aura/aura/aura_flags.h" />
 		<Unit filename="aura/aura/aura_gudo.h" />
+		<Unit filename="aura/aura/aura_heap.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/aura/aura_heap.h" />
+		<Unit filename="aura/aura/aura_heap_bare.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/aura/aura_heap_item.h" />
 		<Unit filename="aura/aura/aura_heap_item_array.h" />
 		<Unit filename="aura/aura/aura_heap_memory.h" />
@@ -238,6 +268,10 @@
 		<Unit filename="aura/aura/aura_os.h" />
 		<Unit filename="aura/aura/aura_os_alloc.h" />
 		<Unit filename="aura/aura/aura_plex.h" />
+		<Unit filename="aura/aura/aura_plex_heap.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/aura/aura_plex_heap.h" />
 		<Unit filename="aura/aura/aura_plex_heap_impl.h" />
 		<Unit filename="aura/aura/aura_pointer.h" />
@@ -247,6 +281,10 @@
 		<Unit filename="aura/aura/aura_progress.h" />
 		<Unit filename="aura/aura/aura_restore.h" />
 		<Unit filename="aura/aura/aura_savings.h" />
+		<Unit filename="aura/aura/aura_session.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/aura/aura_session.h" />
 		<Unit filename="aura/aura/aura_session_common.h" />
 		<Unit filename="aura/aura/aura_session_heap.h" />
@@ -259,13 +297,25 @@
 		<Unit filename="aura/aura/aura_sprintf.h" />
 		<Unit filename="aura/aura/aura_static_start.h" />
 		<Unit filename="aura/aura/aura_str_context.h" />
+		<Unit filename="aura/aura/aura_system.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/aura/aura_system.h" />
 		<Unit filename="aura/aura/aura_system_common.h" />
 		<Unit filename="aura/aura/aura_system_heap.h" />
 		<Unit filename="aura/aura/aura_system_str.h" />
 		<Unit filename="aura/aura/aura_system_trace.h" />
 		<Unit filename="aura/aura/aura_template.h" />
+		<Unit filename="aura/aura/aura_timer.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/aura/aura_timer.h" />
+		<Unit filename="aura/aura/aura_timer_array.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/aura/aura_timer_array.h" />
 		<Unit filename="aura/aura/aura_timer_callback.h" />
 		<Unit filename="aura/aura/aura_timer_event.h" />
@@ -273,7 +323,6 @@
 		<Unit filename="aura/aura/aura_trace.h" />
 		<Unit filename="aura/aura/aura_types.h" />
 		<Unit filename="aura/aura/aura_user.h" />
-		<Unit filename="aura/aura/os.h" />
 		<Unit filename="aura/aura_policy/aura_c.h" />
 		<Unit filename="aura/aura_policy/aura_cpp.h" />
 		<Unit filename="aura/aura_policy/aura_policy.h" />
@@ -401,12 +450,20 @@
 		<Unit filename="aura/node/ansios/ansios_process.h" />
 		<Unit filename="aura/node/ansios/ansios_thread_impl.h" />
 		<Unit filename="aura/node/linux/linux.h" />
+		<Unit filename="aura/node/linux/linux_application.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/node/linux/linux_application.h" />
 		<Unit filename="aura/node/linux/linux_console_window.h" />
 		<Unit filename="aura/node/linux/linux_dir.h" />
 		<Unit filename="aura/node/linux/linux_factory_exchange.h" />
 		<Unit filename="aura/node/linux/linux_file.h" />
 		<Unit filename="aura/node/linux/linux_file_system.h" />
+		<Unit filename="aura/node/linux/linux_interaction_impl.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/node/linux/linux_interaction_impl.h" />
 		<Unit filename="aura/node/linux/linux_internal.h" />
 		<Unit filename="aura/node/linux/linux_os.h" />
@@ -457,33 +514,124 @@
 		<Unit filename="aura/os/cross/windows/windows_user.h" />
 		<Unit filename="aura/os/cross/windows/windows_wincon.h" />
 		<Unit filename="aura/os/cross/windows/windows_winnt.h" />
+		<Unit filename="aura/os/linux/libsn/config.h" />
+		<Unit filename="aura/os/linux/libsn/sn-common.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="aura/os/linux/libsn/sn-common.h" />
+		<Unit filename="aura/os/linux/libsn/sn-internals.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="aura/os/linux/libsn/sn-internals.h" />
+		<Unit filename="aura/os/linux/libsn/sn-launchee.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="aura/os/linux/libsn/sn-launchee.h" />
+		<Unit filename="aura/os/linux/libsn/sn-launcher.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="aura/os/linux/libsn/sn-launcher.h" />
+		<Unit filename="aura/os/linux/libsn/sn-list.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="aura/os/linux/libsn/sn-list.h" />
+		<Unit filename="aura/os/linux/libsn/sn-monitor.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="aura/os/linux/libsn/sn-monitor.h" />
+		<Unit filename="aura/os/linux/libsn/sn-util.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="aura/os/linux/libsn/sn-util.h" />
+		<Unit filename="aura/os/linux/libsn/sn-xmessages.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="aura/os/linux/libsn/sn-xmessages.h" />
+		<Unit filename="aura/os/linux/libsn/sn-xutils.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="aura/os/linux/libsn/sn-xutils.h" />
+		<Unit filename="aura/os/linux/libsn/sn.h" />
 		<Unit filename="aura/os/linux/linux.h" />
 		<Unit filename="aura/os/linux/linux.inl" />
-		<Unit filename="aura/os/linux/linux_c.h" />
+		<Unit filename="aura/os/linux/linux_bloat_pad.h" />
 		<Unit filename="aura/os/linux/linux_cross_win_file.h" />
 		<Unit filename="aura/os/linux/linux_cross_win_gdi.h" />
 		<Unit filename="aura/os/linux/linux_cross_win_gdi_internal.h" />
 		<Unit filename="aura/os/linux/linux_debug.h" />
+		<Unit filename="aura/os/linux/linux_desktop_file.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="aura/os/linux/linux_desktop_file.h" />
 		<Unit filename="aura/os/linux/linux_file.h" />
 		<Unit filename="aura/os/linux/linux_file_watcher.h" />
 		<Unit filename="aura/os/linux/linux_graphics.h" />
 		<Unit filename="aura/os/linux/linux_linux.h" />
+		<Unit filename="aura/os/linux/linux_main.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="aura/os/linux/linux_message_loop.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="aura/os/linux/linux_multithreading.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="aura/os/linux/linux_osdisplay.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/os/linux/linux_osdisplay.h" />
+		<Unit filename="aura/os/linux/linux_oswindow.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/os/linux/linux_oswindow.h" />
+		<Unit filename="aura/os/linux/linux_process.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/os/linux/linux_process.h" />
 		<Unit filename="aura/os/linux/linux_user.h" />
 		<Unit filename="aura/os/linux/linux_user_impl.h" />
 		<Unit filename="aura/os/linux/linux_user_private.h" />
 		<Unit filename="aura/os/linux/linux_window_cairo.h" />
+		<Unit filename="aura/os/linux/linux_window_xlib.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/os/linux/linux_window_xlib.h" />
+		<Unit filename="aura/os/linux/linux_windowing.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/os/linux/linux_windowing.h" />
+		<Unit filename="aura/os/linux/linux_xdisplay.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="aura/os/linux/linux_xdisplay.h" />
+		<Unit filename="aura/os/linux/linux_xinerama.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/os/os.h" />
 		<Unit filename="aura/os/os2.h" />
 		<Unit filename="aura/os/os_binreloc.h" />
-		<Unit filename="aura/os/os_cpp.h" />
+		<Unit filename="aura/os/os_os.h" />
 		<Unit filename="aura/os/os_process.h" />
 		<Unit filename="aura/os/os_threading.h" />
 		<Unit filename="aura/os/os_time.h" />
+		<Unit filename="aura/os/windows/windows.h" />
+		<Unit filename="aura/os/windows/windows_graphics.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="aura/os/windows/windows_graphics.h" />
+		<Unit filename="aura/os/windows/windows_windows.h" />
 		<Unit filename="aura/pcre/framework.h" />
 		<Unit filename="aura/pcre/pcre.h" />
 		<Unit filename="aura/pcre/pcre_util.h" />
@@ -537,6 +685,10 @@
 		<Unit filename="filesystem/file/file_dir.h" />
 		<Unit filename="filesystem/file/file_edit_file.h" />
 		<Unit filename="filesystem/file/file_exception.h" />
+		<Unit filename="filesystem/file/file_file.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="filesystem/file/file_file.h" />
 		<Unit filename="filesystem/file/file_file_base.h" />
 		<Unit filename="filesystem/file/file_file_istream.h" />
@@ -574,7 +726,6 @@
 		<Unit filename="filesystem/file/file_writer.h" />
 		<Unit filename="filesystem/file/file_writer_flush.h" />
 		<Unit filename="filesystem/filesystem.h" />
-		<Unit filename="filesystem/filesystem/aaa_want_to_remove_file_ftd.h" />
 		<Unit filename="filesystem/filesystem/filesystem.h" />
 		<Unit filename="filesystem/filesystem/filesystem_application.h" />
 		<Unit filename="filesystem/filesystem/filesystem_dir_application.h" />
@@ -582,6 +733,10 @@
 		<Unit filename="filesystem/filesystem/filesystem_dir_system_heap.h" />
 		<Unit filename="filesystem/filesystem/filesystem_listing.h" />
 		<Unit filename="filesystem/filesystem/filesystem_path.h" />
+		<Unit filename="filesystem/filesystem/filesystem_system.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="filesystem/filesystem/filesystem_system.h" />
 		<Unit filename="framework.cpp" />
 		<Unit filename="framework.h">
@@ -618,7 +773,6 @@
 		<Unit filename="graphics/graphics_window_buffer.h" />
 		<Unit filename="graphics/graphics_window_dc.h" />
 		<Unit filename="graphics/graphics_window_graphics.h" />
-		<Unit filename="graphics/visual/visual (2).h" />
 		<Unit filename="graphics/visual/visual.h" />
 		<Unit filename="graphics/visual/visual.inl" />
 		<Unit filename="graphics/visual/visual_api.h" />
@@ -632,6 +786,10 @@
 		<Unit filename="graphics/visual/visual_font_department.h" />
 		<Unit filename="graphics/visual/visual_font_enumeration.h" />
 		<Unit filename="graphics/visual/visual_font_list_data.h" />
+		<Unit filename="graphics/visual/visual_freeimage_image.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="graphics/visual/visual_freeimage_image.h" />
 		<Unit filename="graphics/visual/visual_glyph.h" />
 		<Unit filename="graphics/visual/visual_glyph_set.h" />
@@ -660,6 +818,10 @@
 		<Unit filename="multithreading/multithreading_manual_reset_event.h" />
 		<Unit filename="multithreading/multithreading_multi_lock.h" />
 		<Unit filename="multithreading/multithreading_mutex.h" />
+		<Unit filename="multithreading/multithreading_pred_holder.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="multithreading/multithreading_pred_holder.h" />
 		<Unit filename="multithreading/multithreading_retry_multi_lock.h" />
 		<Unit filename="multithreading/multithreading_retry_single_lock.h" />
@@ -682,6 +844,7 @@
 		<Unit filename="multithreading/multithreading_tools.h" />
 		<Unit filename="multithreading/multithreading_wait_result.h" />
 		<Unit filename="multithreading/multithreading_waitable.h" />
+		<Unit filename="multithreading/service/service_plain_service.cpp" />
 		<Unit filename="multithreading/service/service_plain_service.h" />
 		<Unit filename="multithreading/service/service_thread_pool.h" />
 		<Unit filename="net/_net.cpp" />
@@ -859,7 +1022,6 @@
 		<Unit filename="primitive/aaa_want_to_remove_array.h" />
 		<Unit filename="primitive/api/api.h" />
 		<Unit filename="primitive/api/api_rotate.h" />
-		<Unit filename="primitive/array.h" />
 		<Unit filename="primitive/collection.h" />
 		<Unit filename="primitive/collection/collection.h" />
 		<Unit filename="primitive/collection/collection.inl" />
@@ -1154,6 +1316,10 @@
 		<Unit filename="user/user/user_elemental.h" />
 		<Unit filename="user/user/user_enum.h" />
 		<Unit filename="user/user/user_frame.h" />
+		<Unit filename="user/user/user_interaction.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="user/user/user_interaction.h" />
 		<Unit filename="user/user/user_interaction_base.h" />
 		<Unit filename="user/user/user_interaction_child.h" />

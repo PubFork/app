@@ -19,19 +19,7 @@ simple_object::~simple_object()
 int64_t simple_object::add_ref()
 {
 
-#ifdef WINDOWS
-
-   return InterlockedIncrement64(&m_countReference);
-
-#elif defined(RASPBIAN) && defined(OS32BIT)
-
-   return __sync_add_and_fetch_4(&m_countReference,1);
-
-#else
-
-   return __sync_add_and_fetch(&m_countReference,1);
-
-#endif
+   return atomic_increment(&m_countReference);
 
 }
 
@@ -39,19 +27,7 @@ int64_t simple_object::add_ref()
 int64_t simple_object::dec_ref()
 {
 
-#ifdef WINDOWS
-
-   return InterlockedDecrement64(&m_countReference);
-
-#elif defined(RASPBIAN) && defined(OS32BIT)
-
-   return __sync_sub_and_fetch_4(&m_countReference,1);
-
-#else
-
-   return __sync_sub_and_fetch(&m_countReference,1);
-
-#endif
+   return atomic_decrement(&m_countReference);
 
 }
 

@@ -18,10 +18,6 @@ typedef uint32_t DWORD;
 #endif
 
 
-#ifdef __cplusplus
-
-
-
 struct hthread;
 
 namespace ca2
@@ -78,5 +74,214 @@ CLASS_DECL_AURA bool oswindow_remove_message_only_window(::user::interaction_imp
 
 
 
+struct hthread;
 
-#endif
+namespace ca2
+{
+
+
+   class thread_base;
+
+
+} // namespace ca2
+
+
+//class oswindow_data;
+
+
+//typedef oswindow_data * oswindow;
+
+
+
+namespace user
+{
+
+
+   class interaction;
+   class interaction;
+
+
+} // namespace user
+
+
+class oswindow_dataptra;
+
+
+class simple_event;
+
+
+class mutex;
+
+
+class CLASS_DECL_AURA oswindow_data
+{
+public:
+
+
+   osdisplay                     m_osdisplay;
+   Window                        m_window;
+   Visual                        m_visual;
+   int                           m_iDepth;
+   int                           m_iScreen;
+   bool                          m_bMessageOnlyWindow;
+   ::user::interaction_impl *    m_pimpl;
+   HTHREAD                       m_hthread;
+   int_ptr_to_int_ptr *          m_plongptrmap;
+   Colormap                      m_colormap;
+   DWORD                         m_dwLastMouseMove;
+   Window                        m_parent;
+   RECT                          m_rect;
+
+   //ref_array < bool >            m_bptraTellMeDestroyed; // Telmo why!! :-)
+
+
+   static oswindow_dataptra * s_pdataptra;
+   static mutex * s_pmutex;
+
+   static Atom s_atomLongType;
+   static Atom s_atomLongStyle;
+   static Atom s_atomLongStyleEx;
+
+   static Atom get_window_long_atom(int32_t nIndex);
+
+
+
+
+   oswindow_data();
+   //oswindow_data(::user::interaction * puibaseMessageOnlyWindow);
+   //oswindow_data(const void * p);
+   //oswindow_data(const LPARAM & lparam);
+   //oswindow_data(const WPARAM & wparam);
+
+
+   ~oswindow_data();
+
+
+
+   operator void * ()
+   {
+      return this;
+   }
+
+   operator void * () const
+   {
+      return (void *) this;
+   }
+
+   oswindow_data & operator = (const oswindow_data & window);
+
+   bool operator == (const void * p) const
+   {
+      return this == p;
+   }
+
+   bool operator != (const void * p) const
+   {
+      return this != p;
+   }
+
+   Display * display()
+   {
+      return ::is_null(this) ? NULL : m_osdisplay->display();
+   }
+
+   Display * display() const
+   {
+      return ::is_null(this) ? NULL : m_osdisplay->display();
+   }
+
+   Window window()
+   {
+      return ::is_null(this) ? None : m_window;
+   }
+
+   Window window() const
+   {
+      return ::is_null(this) ? None : m_window;
+   }
+
+   Visual * visual()
+   {
+      return ::is_null(this) ? NULL : &m_visual;
+   }
+
+   Visual * visual() const
+   {
+      return ::is_null(this) ? NULL : (Visual *) &m_visual;
+   }
+
+
+   void send_client_event(Atom atom, unsigned int numArgs, ...);
+   int32_t store_name(const char * psz);
+   int32_t select_input(int32_t iInput);
+   int32_t select_all_input();
+   int32_t map_window();
+
+   void full_screen(LPCRECT lpcrect = null_rect());
+
+   void set_user_interaction(::user::interaction_impl * pui);
+
+
+   void post_nc_destroy();
+
+
+   bool is_child(oswindow oswindowcandidateChildOrDescendant); // or descendant
+   oswindow get_parent();
+   Window get_parent_handle();
+
+   oswindow set_parent(oswindow oswindowNewParent);
+   long get_state();
+   bool is_iconic();
+   bool is_window_visible();
+   bool show_window(int32_t nCmdShow);
+   LONG_PTR get_window_long(int32_t nIndex);
+   LONG_PTR set_window_long(int32_t nIndex, LONG_PTR l);
+   bool client_to_screen(LPPOINT lppoint);
+   bool screen_to_client(LPPOINT lppoint);
+
+   Atom intern_atom(const char * pszAtomName, bool bCreate);
+
+   bool is_null() const
+   {
+      return ::is_null(this);
+   }
+
+
+   bool is_destroying();
+
+   bool bamf_set_icon();
+
+   bool set_icon(::draw2d::dib * pdib);
+
+   int x_change_property(Atom property, Atom type, int format, int mode, const unsigned char * data, int nelements);
+
+};
+
+class oswindow_dataptra :
+   public array < oswindow_data * >
+{
+public:
+
+   virtual ~oswindow_dataptra()
+   {
+
+         remove_all();
+
+   }
+
+   void remove_all()
+   {
+
+      for(auto p : *this)
+      {
+
+         delete p;
+
+      }
+
+      array < oswindow_data * >::remove_all();
+   }
+
+};
+
+extern oswindow g_oswindowDesktop;

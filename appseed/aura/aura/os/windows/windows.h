@@ -9,6 +9,7 @@
 #include "windows_file.h"
 #include "windows_multithreading.h"
 #include "windows_utils.h"
+#include "windows_graphics.h"
 
 char get_drive_letter(const char * lpDevicePath);
 
@@ -80,6 +81,8 @@ CLASS_DECL_AURA HFONT wingdi_CreatePointFontIndirect(LOGFONTW* lpLogFont, HDC hd
 
 CLASS_DECL_AURA int node_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow);
 CLASS_DECL_AURA int node_main(int argc, char *argv[]);
+
+
 
 
 

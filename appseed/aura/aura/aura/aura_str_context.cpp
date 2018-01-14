@@ -616,7 +616,7 @@ namespace aura
 
       string str;
 
-      int32_t i = 0;
+      //int32_t i = 0;
 
       strsize start;
 
@@ -628,7 +628,7 @@ namespace aura
 
       bool bFinal;
 
-      bool bEof = false;
+      //bool bEof = false;
 
       const char * s;
 

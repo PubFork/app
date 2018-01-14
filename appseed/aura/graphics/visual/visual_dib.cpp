@@ -276,6 +276,32 @@ namespace visual
    }
 
 
+   bool dib_sp::load_matter_icon(stringa & straMatter, string strIcon)
+   {
+
+      ::file::path path;
+
+      for (auto & strMatter : straMatter)
+      {
+
+         path = strMatter;
+
+         path = App(m_p->get_app()).dir().matter(path / strIcon);
+
+         if(load_from_file(path))
+         {
+
+            return true;
+
+         }
+
+      }
+
+      return false;
+
+   }
+
+
 //#ifndef  WINDOWS
 //
 //   bool dib_sp::from(class draw2d::graphics * pgraphics, struct FIBITMAP * pfi, bool bUnload)
@@ -494,7 +520,7 @@ namespace visual
 
    }
 
-   
+
    bool dib_sp::write_to_file(var varFile, save_image * psaveimage)
    {
 

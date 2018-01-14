@@ -52,16 +52,15 @@
 		</Build>
 		<Compiler>
 			<Add option="-std=c++14" />
+			<Add option="-fPIC" />
 			<Add option="-fexceptions" />
 			<Add option="-fpermissive" />
 			<Add option="-fnon-call-exceptions" />
-			<Add option="-fno-pie" />
 			<Add option="-fno-stack-protector" />
 			<Add option="-Wno-pointer-arith" />
 			<Add option="-Wno-attributes" />
 			<Add option="-Winvalid-pch" />
 			<Add option="-Wno-conversion-null" />
-			<Add option="-fPIC" />
 			<Add directory="." />
 			<Add directory="../../.." />
 			<Add directory="framework" />
@@ -144,6 +143,7 @@
 		<Unit filename="core/core/core_util1.h" />
 		<Unit filename="core/core/plane.h" />
 		<Unit filename="core/os/ios/ios_main.h" />
+		<Unit filename="core/os/linux/linux_simple_frame_window.cpp" />
 		<Unit filename="core/os/os.h" />
 		<Unit filename="core/plugin/plugin.h" />
 		<Unit filename="core/plugin/plugin_gen.h" />
@@ -544,7 +544,6 @@
 		<Unit filename="user/user/user_mesh_cache_interface.h" />
 		<Unit filename="user/user/user_mesh_data.cpp" />
 		<Unit filename="user/user/user_mesh_data.h" />
-		<Unit filename="user/user/user_multiple_document_template.cpp" />
 		<Unit filename="user/user/user_multiple_document_template.h" />
 		<Unit filename="user/user/user_network_configuration.cpp" />
 		<Unit filename="user/user/user_network_configuration.h" />
@@ -568,7 +567,6 @@
 		<Unit filename="user/user/user_shell_metrowin.h" />
 		<Unit filename="user/user/user_shell_windows.h" />
 		<Unit filename="user/user/user_simple_list_data.h" />
-		<Unit filename="user/user/user_single_document_template.cpp" />
 		<Unit filename="user/user/user_single_document_template.h" />
 		<Unit filename="user/user/user_slider.cpp" />
 		<Unit filename="user/user/user_slider.h" />

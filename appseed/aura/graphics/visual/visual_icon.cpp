@@ -122,7 +122,7 @@ namespace visual
       ia.add(256);
 
       HICON hIcon = NULL;
-      
+
       for (auto i : ia)
       {
 
@@ -455,3 +455,5 @@ MYICON_INFO MyGetIconInfo(HICON hIcon)
 
 
 #endif
+
+

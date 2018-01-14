@@ -38,12 +38,12 @@ void rect::ExtendOnCenter(const RECT & rect)
 
    int32_t cw = (int32_t) (cx * dr);
    int32_t ch = (int32_t) (cy * dr);
-   
+
    left = (LONG) ((dx - cw) / 2.0);
    top = (LONG) ((dy - ch) / 2.0);
    right = left + cw;
    bottom = top + ch;
-   
+
 }
 
 void rect::FitOnCenterOf(const RECT & rect,SIZE size)
@@ -67,9 +67,9 @@ void rect::FitOnCenterOf(const RECT & rect,SIZE size)
 
 void rect::FitOnCenterOf(const RECT & rect)
 {
-   
+
    FitOnCenterOf(rect,size());
-   
+
 }
 
 
@@ -714,6 +714,9 @@ rect::rect(LPCRECT lpSrcRect) NOTHROW
    { ::CopyRect(this, lpSrcRect); }
 rect::rect(POINT point, SIZE size) NOTHROW
    { right = (left = point.x) + size.cx; bottom = (top = point.y) + size.cy; }
+rect::rect(SIZE size, POINT point) NOTHROW :
+   ::rect(point, size)
+   { }
 rect::rect(POINT topLeft, POINT bottomRight) NOTHROW
    { left = topLeft.x; top = topLeft.y;
       right = bottomRight.x; bottom = bottomRight.y; }

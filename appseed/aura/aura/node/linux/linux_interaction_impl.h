@@ -239,10 +239,11 @@ class x11data;
       virtual void InvalidateRgn(::draw2d::region* pRgn, bool bErase = TRUE);
       virtual void ValidateRect(LPCRECT lpRect);
       virtual void ValidateRgn(::draw2d::region* pRgn);
-      virtual bool ShowWindow(int32_t nCmdShow);
-      virtual void _001WindowMaximize();
-      virtual void _001WindowMinimize();
-      virtual void _001WindowRestore();
+      virtual bool ShowWindow(int32_t nCmdShow) override;
+      virtual void _001WindowMaximize() override;
+      virtual void _001WindowMinimize(bool bNoActivate) override;
+      virtual void _001WindowRestore() override;
+      virtual void _001WindowFullScreen() override;
       virtual bool IsWindowVisible();
       virtual void ShowOwnedPopups(bool bShow = TRUE);
 

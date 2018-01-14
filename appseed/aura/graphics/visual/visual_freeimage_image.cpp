@@ -1116,7 +1116,7 @@ bool imaging::_load_image(::draw2d::dib * pdib, ::file::file *  pfile)
 
 
 
-void os_init_imaging()
+bool os_init_imaging()
 {
 
    FreeImage_Initialise(FALSE);

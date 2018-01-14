@@ -97,14 +97,14 @@ namespace aura
       pcreate->m_spCommandLine->m_eventReady.ResetEvent();
 
       Session.m_appptra.add(papp);
-      
+
       m_pappCurrent = papp;
-      
+
       if (strApp != "session")
       {
-         
+
          System.merge_accumulated_on_open_file(pcreate);
-         
+
          papp->post_object(message_system, system_message_command, pcreate);
 
          while (thread_get_run())
@@ -507,9 +507,6 @@ namespace aura
 
             strApp = pcreate->m_spCommandLine->m_varQuery["app"].stra()[i];
 
-
-            //simple_message_box(NULL, "create", strApp, MB_ICONEXCLAMATION);
-
             if (strApp.is_empty() || strApp == "bergedge")
             {
 
@@ -544,34 +541,23 @@ namespace aura
 
             }
 
-            //simple_message_box(NULL, "appok", strApp, MB_ICONEXCLAMATION);
-
-            //if(pcreate->m_spCommandLine->m_varQuery.has_property("install")
-            //   || pcreate->m_spCommandLine->m_varQuery.has_property("uninstall"))
-            //{
-            //   continue;
-            //}
-
             pcreate->m_spCommandLine->m_eventReady.ResetEvent();
 
             if (strApp != "bergedge")
             {
 
+               if(!papp->on_start_application())
                {
 
-                  //synch_lock sl(System.m_pmutex);
-
-                  //m_appptra.add(papp);
+                  TRACE("One or more errors occurred during on_start_application execution.");
 
                }
 
-               papp->on_start_application();
-               
                if(!papp->is_system() && !papp->is_session())
                {
-                  
+
                   System.merge_accumulated_on_open_file(pcreate);
-                  
+
                }
 
                papp->handler()->handle(pcreate);
@@ -584,11 +570,8 @@ namespace aura
 
       }
 
-
-
-      //return;
-
    }
+
 
 //      m_varCurrentViewFile = pcreate->m_spCommandLine->m_varFile;
 //
@@ -869,36 +852,36 @@ namespace aura
             }
             else
             {
-               
+
                ::aura_app * pauraapp = ::aura_app::get(pszAppId);
-               
+
                if(pauraapp != NULL)
                {
-                  
+
                   if(pauraapp->m_pfnNewLibrary != NULL)
                   {
-                   
+
                      plibrary = pauraapp->m_pfnNewLibrary(pappParent);
-                     
+
                   }
                   else if(pauraapp->m_pfnNewApp != NULL)
                   {
-                     
+
                      papp = pauraapp->m_pfnNewApp(pappParent);
-                     
+
                      if (papp.is_null())
                      {
-                        
+
                         return NULL;
-                        
+
                      }
-                     
+
                      papp->m_strLibraryName = pszAppId;
 
                   }
-                  
+
                }
-               
+
                if(papp.is_null() && plibrary == NULL)
                {
 
@@ -955,13 +938,13 @@ namespace aura
                ::output_debug_string("|----");
 
             }
-               
+
             }
 
          }
-            
+
             if(papp.is_null())
-               
+
             {
 
          ::aura::library & library = *plibrary;
@@ -1649,16 +1632,16 @@ namespace aura
 
 #if defined(APPLE_IOS)
 
-         
+
          dispatch_async(dispatch_get_main_queue(), ^{
             //this runs on the main thread.  Use theData
             sp(::ios::interaction_impl) pimpl = System.m_possystemwindow->m_pui->m_pimpl;
-            
+
             if (pimpl.is_set())
             {
-               
+
                pimpl->defer_update_text_view();
-               
+
             }
          });
 

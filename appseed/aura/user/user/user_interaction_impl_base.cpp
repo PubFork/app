@@ -1622,7 +1622,7 @@ namespace user
 
       }
 
-      return create_timer(nIDEvent,nEllapse,pfnTimer, true, m_pui);
+      return create_timer(nIDEvent, nEllapse, pfnTimer, true, m_pui);
 
    }
 
@@ -1639,17 +1639,16 @@ namespace user
    {
 
       if(m_pui == NULL)
+      {
+
          return;
 
-//      if (m_pauraapp == NULL)
-//         return;
-//
-//      if (!m_pauraapp->m_bRun)
-//         return;
+      }
 
       m_pui->_001OnTimer(ptimer);
 
    }
+
 
    bool interaction_impl_base::DestroyWindow()
    {
@@ -1809,11 +1808,28 @@ namespace user
 
    }
 
+   void interaction_impl_base::_001OnDestroyWindow(::message::message * pobj)
+   {
+
+      try
+      {
+
+         delete_all_timers();
+
+      }
+      catch(...)
+      {
+
+      }
+
+   }
+
 
    void interaction_impl_base::prio_install_message_routing(::message::sender * pinterface)
    {
 
       IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &interaction_impl_base::_001OnShowWindow);
+      IGUI_MSG_LINK(WM_DESTROY, pinterface, this, &interaction_impl_base::_001OnDestroyWindow);
 
    }
 

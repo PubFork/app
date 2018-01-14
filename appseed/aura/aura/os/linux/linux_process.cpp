@@ -18,11 +18,6 @@ CLASS_DECL_AURA void dll_processes(uint_array & dwa, stringa & straProcesses, co
 
 
 
-
-
-
-//extern thread_pointer < hthread > t_hthread;
-
 int32_t create_process(const char * _cmd_line, int32_t * pprocessId)
 {
 
@@ -211,6 +206,220 @@ int32_t create_process(const char * _cmd_line, int32_t * pprocessId)
       //printf("posix_spawn: %s\n", strerror(status));
 
    }
+
+}
+
+
+
+//extern thread_pointer < hthread > t_hthread;
+
+int32_t daemonize_process(const char * _cmd_line, int32_t * pprocessId)
+{
+
+   if(_cmd_line == NULL)
+   {
+
+      return 0;
+
+   }
+
+   char * cmd_line = strdup(_cmd_line);
+
+   if(cmd_line == NULL)
+   {
+
+      return 0;
+
+   }
+
+   pid_t pid;
+
+   pid = fork();
+
+   if (pid == -1)
+   {
+
+      printf("fork error\n");
+
+      return 0;
+
+   }
+   else if(pid > 0)
+   {
+
+
+      return 1;
+
+   }
+
+   signal(SIGCHLD, SIG_IGN);
+
+   umask(0);
+
+   int sid = setsid();
+
+   if (sid < 0)
+   {
+
+      exit(EXIT_FAILURE);
+
+   }
+
+    /* Change the current working directory.  This prevents the current
+       directory from being locked; hence not being able to remove it. */
+   if ((chdir("/")) < 0)
+   {
+
+      exit(EXIT_FAILURE);
+
+   }
+
+   /* Redirect standard files to /dev/null */
+   freopen( "/dev/null", "r", stdin);
+   freopen( "/dev/null", "w", stdout);
+   freopen( "/dev/null", "w", stderr);
+
+   char *      pArg;
+
+   char *      pPtr = NULL;
+
+   char *      argv[1024 + 1];
+
+   int32_t		argc = 0;
+
+   char * p;
+
+   char * psz = cmd_line;
+
+   enum e_state
+   {
+
+      state_initial,
+
+      state_quote,
+
+      state_non_space,
+
+   };
+
+   e_state e = state_initial;
+
+   char quote;
+
+   while(psz != NULL && *psz != '\0')
+   {
+
+      if(e == state_initial)
+      {
+
+         if(*psz == ' ')
+         {
+
+            psz = (char *) ::str::utf8_inc(psz);
+
+         }
+         else if(*psz == '\"')
+         {
+
+            quote = '\"';
+
+            psz = (char *) ::str::utf8_inc(psz);
+
+            argv[argc++] =(char *) psz;
+
+            e = state_quote;
+
+         }
+         else if(*psz == '\'')
+         {
+
+            quote = '\'';
+
+            psz = (char *) ::str::utf8_inc(psz);
+
+            argv[argc++] = (char *) psz;
+
+            e = state_quote;
+
+         }
+         else
+         {
+
+            argv[argc++] = (char *) psz;
+
+            psz = (char *) ::str::utf8_inc(psz);
+
+            e = state_non_space;
+
+         }
+
+      }
+      else if(e == state_quote)
+      {
+
+         if(*psz == '\\')
+         {
+
+            memmove(psz, psz + 1, strlen(psz));
+
+            psz = (char *) ::str::utf8_inc(psz);
+
+         }
+         else if(*psz == quote)
+         {
+
+            p = (char *) ::str::utf8_inc(psz);
+
+            *psz = '\0';
+
+            psz = p;
+
+            e = state_initial;
+
+         }
+         else
+         {
+
+            psz = (char *) ::str::utf8_inc(psz);
+
+         }
+
+      }
+      else
+      {
+
+         if(*psz == ' ')
+         {
+
+            p = (char *) ::str::utf8_inc(psz);
+
+            *psz = '\0';
+
+            psz = p;
+
+            e = state_initial;
+
+         }
+         else
+         {
+
+            psz = (char *) ::str::utf8_inc(psz);
+
+         }
+
+      }
+
+   }
+
+   argv[argc] = NULL;
+
+   int iExitCode = execv(argv[0], argv);
+
+   free(cmd_line);
+
+   exit(iExitCode);
+
+   return 0;
 
 }
 

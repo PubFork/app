@@ -44,7 +44,9 @@ namespace file
       virtual string as_string(var varFile);
       virtual string as_string(var varFile, var & varQuery);
       virtual void as_memory(var varFile, memory & mem);
+
       virtual void lines(stringa & stra, var varFile);
+      virtual void put_lines(var varFile, const stringa & stra);
 
       virtual bool put_contents(var varFile, const void * pvoidContents, ::count count);
       virtual bool put_contents(var varFile, const char * lpcszContents);
@@ -127,8 +129,8 @@ namespace file
 
       virtual bool touch(const ::file::path & path);
 
-
       virtual string md5(var varFile);
+
       virtual string nessie(var varFile);
 
 

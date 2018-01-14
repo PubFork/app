@@ -1,7 +1,6 @@
 ﻿#include "framework.h"
 
 
-#include "install_canvas.h"
 #include <stdio.h>
 
 

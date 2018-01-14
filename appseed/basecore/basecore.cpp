@@ -49,26 +49,29 @@ static void ___quit(void * data)
    pi->__quit();
 
 }
+
+
 extern "C"
 {
 
-static void __close(GtkAction * action, gpointer data)
-{
 
-   ___close(data);
+   static void __close(GtkAction * action, gpointer data)
+   {
 
-}
+      ___close(data);
 
-
-static void __quit(GtkAction * action, gpointer data)
-{
-
-   ___quit(data);
-
-}
+   }
 
 
-static gboolean f1(gpointer data);
+   static void __quit(GtkAction * action, gpointer data)
+   {
+
+      ___quit(data);
+
+   }
+
+   static gboolean f1(gpointer data);
+
 
 } // extern "C"
 
@@ -103,14 +106,14 @@ static const gchar *ui_info =
 void basecore_init()
 {
 
-// deprecated
-   //g_thread_init (NULL);
+   // deprecated
+   // g_thread_init (NULL);
 
-   //g_type_init ();
+   // g_type_init ();
 
-   gtk_init_check(0, 0);
+   //gtk_init_check(0, 0);
 
-   gtk_main();
+   //gtk_main();
 
 }
 
@@ -133,26 +136,12 @@ public:
    void *               m_pvoidRet;
    GtkWidget *          m_pmenu;
    int                  m_iOpen;
-   bool                 m_bQuitGtk;
+   //bool                 m_bQuitGtk;
 
 
    basecore_data();
-   ~basecore_data()
-   {
-      if(m_pszId != NULL)
-      {
-         free((void *)m_pszId);
-      }
-      if(m_pszIcon != NULL)
-      {
-         free((void *)m_pszIcon);
-      }
-      if(m_pszFolder != NULL)
-      {
-         free((void *)m_pszFolder);
-      }
+   ~basecore_data();
 
-   }
    virtual void post();
    virtual void * process();
    virtual void * wait();
@@ -161,6 +150,7 @@ public:
    GtkMenuItem * get_menu_item_close();
 
 };
+
 
 basecore_data::basecore_data()
 {
@@ -176,8 +166,27 @@ basecore_data::basecore_data()
    m_bLoop = false;
    m_bTerm = true;
    m_iOpen = -1;
-   m_bQuitGtk = false;
+   //m_bQuitGtk = false;
 }
+
+
+basecore_data::~basecore_data()
+{
+   if(m_pszId != NULL)
+   {
+      free((void *)m_pszId);
+   }
+   if(m_pszIcon != NULL)
+   {
+      free((void *)m_pszIcon);
+   }
+   if(m_pszFolder != NULL)
+   {
+      free((void *)m_pszFolder);
+   }
+
+}
+
 
 struct indicator_new : public basecore_data
 {
@@ -334,7 +343,7 @@ void basecore_app_indicator_term(void * pvoidInd)
 
    data->process();
 
-   pind->wait();
+   //pind->wait();
 
 }
 
@@ -395,11 +404,11 @@ GtkWidget * idle_basecore_app_indicator_init(indicator * pind, i_close_quit * pi
 void basecore_term()
 {
 
-   basecore_data * data = new basecore_data();
+   //basecore_data * data = new basecore_data();
 
-   data->m_bQuitGtk = true;
+   //data->m_bQuitGtk = true;
 
-   data->process();
+   //data->process();
 
 }
 
@@ -514,13 +523,14 @@ gboolean basecore_data::run()
          m_pind->m_bTerm = true;
 
       }
-   }
-   else if(m_bQuitGtk)
-   {
-
-      gtk_main_quit();
 
    }
+   //else if(m_bQuitGtk)
+   //{
+
+   //   gtk_main_quit();
+
+   //}
 
    if(!m_bLoop)
    {
@@ -742,17 +752,8 @@ namespace user
 
 
 
-
-
-
-
-
-
-
-
 const char * basecore_get_file_icon_path(const char * pszPath, int iSize)
 {
-
 
    GFile * pfile = g_file_new_for_path (pszPath);
 
@@ -770,25 +771,15 @@ const char * basecore_get_file_icon_path(const char * pszPath, int iSize)
    if(pfileinfo == NULL)
    {
 
-      //g_free(pfile);
-
       return NULL;
 
    }
-
-   //const char * pszContentType = g_file_info_get_content_type (pfileinfo);
-   //char * pszDescription = g_content_type_get_description (pszContentType);
-   //GAppInfo * pappinfo = g_app_info_get_default_for_type (pszContentType, FALSE);
 
    /* you'd have to use g_loadable_icon_load to get the actual icon */
    GIcon * picon = g_file_info_get_icon (pfileinfo);
 
    if(picon == NULL)
    {
-
-      //g_free(pfileinfo);
-
-      //g_free(pfile);
 
       return NULL;
 
@@ -797,170 +788,68 @@ const char * basecore_get_file_icon_path(const char * pszPath, int iSize)
    if(G_IS_FILE_ICON(G_OBJECT(picon)))
    {
 
-   GFileIcon * pfileicon = G_FILE_ICON(G_OBJECT(picon));
+      GFileIcon * pfileicon = G_FILE_ICON(G_OBJECT(picon));
 
-   if(pfileicon == NULL)
-   {
+      if(pfileicon == NULL)
+      {
 
-      //g_free(picon);
+         return NULL;
 
-      //g_free(pfileinfo);
+      }
 
-      //g_free(pfile);
+      GFile * pfileIcon = g_file_icon_get_file(pfileicon);
 
-      return NULL;
+      if(pfileIcon == NULL)
+      {
 
-   }
+         return NULL;
 
+      }
 
-   GFile * pfileIcon = g_file_icon_get_file(pfileicon);
+      char * psz = strdup(g_file_get_path(pfileIcon));
 
-   if(pfileIcon == NULL)
-   {
-
-     // g_free(pfileicon);
-
-      //g_free(picon);
-
-      //g_free(pfileinfo);
-
-      //g_free(pfile);
-
-      return NULL;
-
-   }
-//    printf ("File: %s\nDescription: %s\nDefault Application: %s\n",
-//            argv[1],
-//            desc,
-//            g_app_info_get_executable (app_info));
-
-    //return 0;
-
-   char * psz = strdup(g_file_get_path(pfileIcon));
-
-   //g_free(pfileIcon);
-
-   //g_free(pfileicon);
-
-   //g_free(picon);
-
-   //g_free(pfileinfo);
-
-   //g_free(pfile);
-
-
-
-   return psz;
-
+      return psz;
 
    }
    else if(G_IS_THEMED_ICON(G_OBJECT(picon)))
    {
 
-//   GThemedIcon * pthemedicon = G_THEMED_ICON(G_OBJECT(picon));
-//
-//
-//
-//   if(pthemedicon == NULL)
-//   {
-//      g_free(picon);
-//
-//      g_free(pfileinfo);
-//
-//      g_free(pfile);
-//
-//      return "";
-//
-//   }
-//
-//     const gchar * const * pgchar = g_themed_icon_get_names(pthemedicon);
-//
-//
-//   if(pgchar == NULL)
-//   {
-//
-//      g_free(pthemedicon);
-//
-//      g_free(picon);
-//
-//      g_free(pfileinfo);
-//
-//      g_free(pfile);
-//
-//      return "";
-//
-//   }
-////    printf ("File: %s\nDescription: %s\nDefault Application: %s\n",
-////            argv[1],
-////            desc,
-////            g_app_info_get_executable (app_info));
-//
-//    //return 0;
-//
-GtkIconInfo *pGtkIconInfo;
-//Gicon *pgIcon=gtk_app_info_get_icon (G_APP_INFO(appinfo));
+      GtkIconInfo *pGtkIconInfo;
 
-GtkIconTheme *pGtkIconTheme= gtk_icon_theme_get_default();
-if(pGtkIconTheme == NULL)
-{
-   //g_free(picon);
+      GtkIconTheme *pGtkIconTheme= gtk_icon_theme_get_default();
 
-   //g_free(pfileinfo);
+      if(pGtkIconTheme == NULL)
+      {
 
-   //g_free(pfile);
+         return NULL;
 
-   return NULL;
-}
+      }
 
-pGtkIconInfo=gtk_icon_theme_lookup_by_gicon(pGtkIconTheme,picon,(gint)iSize,GTK_ICON_LOOKUP_USE_BUILTIN);
-if(pGtkIconInfo == NULL)
-{
+      pGtkIconInfo=gtk_icon_theme_lookup_by_gicon(pGtkIconTheme,picon,(gint)iSize,GTK_ICON_LOOKUP_USE_BUILTIN);
 
-   //g_object_unref(pGtkIconTheme);
+      if(pGtkIconInfo == NULL)
+      {
 
-   //g_free(picon);
+         return NULL;
 
-   //g_free(pfileinfo);
+      }
 
-   //g_free(pfile);
+      const char * p = gtk_icon_info_get_filename(pGtkIconInfo);
 
-   return NULL;
-}
-//get icon filename if icone 256*256 exist.
+      char * psz = NULL;
 
-   const char * p = gtk_icon_info_get_filename(pGtkIconInfo);
+      if(p != NULL)
+      {
 
-   char * psz = NULL;
+         psz = strdup(p);
 
-   if(p != NULL)
-   {
+      }
 
-
-      psz = strdup(p);
+      return psz;
 
    }
 
-
-//
-//   g_free(pthemedicon);
-
-   //g_object_unref(pGtkIconInfo);
-
-   //g_object_unref(pGtkIconTheme);
-
-   //g_free(picon);
-
-   //g_free(pfileinfo);
-
-   //g_free(pfile);
-
-
-   return psz;
-
-
-   }
-
-   return "";
+   return NULL;
 
 }
 
@@ -984,8 +873,6 @@ const char * basecore_get_file_content_type(const char * pszPath)
    if(pfileinfo == NULL)
    {
 
-      //g_free(pfile);
-
       return NULL;
 
    }
@@ -1000,11 +887,6 @@ const char * basecore_get_file_content_type(const char * pszPath)
       p = strdup(pszContentType);
 
    }
-
-
-
-   //char * pszDescription = g_content_type_get_description (pszContentType);
-   //GAppInfo * pappinfo = g_app_info_get_default_for_type (pszContentType, FALSE);
 
    return p;
 

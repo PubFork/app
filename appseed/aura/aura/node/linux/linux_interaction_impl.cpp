@@ -2,6 +2,7 @@
 #include "linux.h"
 #include "aura/aura/os/linux/linux_user_impl.h"
 #include <X11/Xatom.h>
+#include "aura/aura/os/linux/libsn/sn.h"
 
 #define TEST 0
 
@@ -19,6 +20,8 @@ CLASS_DECL_AURA thread_int_ptr < DWORD_PTR > t_time1;
 //#include <multimon.h>
 
 //#include "sal.h"
+
+extern SnLauncheeContext* g_psncontext;
 
 CLASS_DECL_AURA void hook_window_create(::user::interaction * pWnd);
 CLASS_DECL_AURA bool unhook_window_create();
@@ -436,9 +439,11 @@ namespace linux
 
          attr.border_pixel = 0;
 
-         attr.override_redirect = False;
+         //attr.override_redirect = False;
 
-         Window window = XCreateWindow(display, DefaultRootWindow(display), cs.x, cs.cy, cs.cx, cs.cy, 0, m_iDepth, InputOutput, vis, CWColormap|CWEventMask|CWBackPixmap|CWBorderPixel, &attr);
+         Window window = XCreateWindow(display, DefaultRootWindow(display), cs.x, cs.cy, cs.cx, cs.cy, 0, m_iDepth, InputOutput, vis, CWColormap|CWEventMask|CWBackPixmap|CWBorderPixel
+                                       //| CWOverrideRedirect
+                                       , &attr);
 
          if (window == 0)
          {
@@ -478,6 +483,35 @@ namespace linux
             }
 
             return false;
+
+         }
+
+         {
+
+            XClassHint * phint = XAllocClassHint();
+
+            string strPrgName = app_core::s_pappcore->m_strAppId;
+
+            strPrgName.replace("/", ".");
+
+            strPrgName.replace("_", "-");
+
+            strPrgName = "cc.ca2." + strPrgName;
+
+            phint->res_class = (char *) (const char *) strPrgName;
+
+            phint->res_name = (char *) (const char *) strPrgName;
+
+            XSetClassHint(display, window, phint);
+
+            XFree(phint);
+
+         }
+
+         if(g_psncontext != NULL)
+         {
+
+            sn_launchee_context_setup_window(g_psncontext, window);
 
          }
 
@@ -522,7 +556,7 @@ namespace linux
          if(cs.dwExStyle & WS_EX_TOOLWINDOW)
          {
 
-            m_oswindow->set_window_long_ptr(GWL_EXSTYLE, m_oswindow->get_window_long_ptr(GWL_EXSTYLE) |  WS_EX_TOOLWINDOW);
+            m_oswindow->set_window_long(GWL_EXSTYLE, m_oswindow->get_window_long(GWL_EXSTYLE) |  WS_EX_TOOLWINDOW);
 
          }
 
@@ -531,7 +565,7 @@ namespace linux
          if(cs.style & WS_VISIBLE)
          {
 
-            XMapWindow(m_oswindow->display(), m_oswindow->window());
+            m_oswindow->map_window();
 
          }
 
@@ -563,8 +597,6 @@ namespace linux
             }
 
          }
-
-
 
          m_pui->m_id = id;
 
@@ -676,9 +708,11 @@ namespace linux
 //         IGUI_MSG_LINK(ca2m_PRODEVIAN_SYNCH,pinterface,this,&interaction_impl::_001OnProdevianSynch);
          ::user::interaction_impl::prio_install_message_routing(pinterface);
       }
+
       IGUI_MSG_LINK(WM_DESTROY,pinterface,this,&interaction_impl::_001OnDestroy);
 
    }
+
 
    void interaction_impl::_001OnShowWindow(::message::message * pobj)
    {
@@ -708,15 +742,17 @@ namespace linux
 
       pobj->m_bRet = true;
 
-      // cleanup main and active windows
-
       ::thread* pThread = ::get_thread();
 
       if (pThread != NULL)
       {
 
          if (pThread->get_active_ui() == m_pui)
+         {
+
             pThread->set_active_ui(NULL);
+
+         }
 
       }
 
@@ -726,9 +762,15 @@ namespace linux
 
       PostNcDestroy();
 
-      if(m_pui != NULL)
+      auto pui = m_pui;
+
+      if(pui != NULL)
       {
-         m_pui->PostNcDestroy();
+
+         pui->PostNcDestroy();
+
+         ::release(pui);
+
       }
 
    }
@@ -741,17 +783,24 @@ namespace linux
 
       m_oswindow->post_nc_destroy();
 
-      //m_pui->PostNcDestroy();
-
    }
+
 
    void interaction_impl::on_final_release()
    {
 
       if (get_handle() != NULL)
+      {
+
          DestroyWindow();
+
+      }
       else
+      {
+
          PostNcDestroy();
+
+      }
 
    }
 
@@ -760,30 +809,47 @@ namespace linux
    {
 
       if (((interaction_impl *) this)->get_handle() == NULL)
+      {
+
          return;
+
+      }
 
    }
 
 
    void interaction_impl::dump(dump_context & dumpcontext) const
    {
+
       ::object::dump(dumpcontext);
 
       dumpcontext << "\nm_hWnd = " << (void *)((interaction_impl *) this)->get_handle();
 
-      /*      if (get_handle() == NULL || get_handle() == oswindow_BOTTOM ||
-               get_handle() == oswindow_TOPMOST || get_handle() == oswindow_NOTOPMOST)
-            {
-               // not a normal interaction_impl - nothing more to dump
-               return;
-            }*/
+      /*
 
-      /*      if (!::IsWindow((oswindow) get_handle()))
-            {
-               // not a valid interaction_impl
-               dumpcontext << " (illegal oswindow)";
-               return; // don't do anything more
-            }*/
+      if (get_handle() == NULL || get_handle() == oswindow_BOTTOM ||
+               get_handle() == oswindow_TOPMOST || get_handle() == oswindow_NOTOPMOST)
+      {
+
+         // not a normal interaction_impl - nothing more to dump
+            return;
+
+      }
+
+      */
+
+      /*
+
+      if (!::IsWindow((oswindow) get_handle()))
+      {
+
+         // not a valid interaction_impl
+         dumpcontext << " (illegal oswindow)";
+         return; // don't do anything more
+
+      }
+
+      */
 
       sp(::user::interaction_impl) pWnd = (::user::interaction_impl *) this;
       if (pWnd.m_p != this)
@@ -1553,7 +1619,7 @@ namespace linux
    pMsgcache->nMsg = message;
    pMsgcache->pMessageMap = pMessageMap;
 
-   for (/* pMessageMap already init'ed */ /*; pMessageMap->pfnGetBaseMap != NULL;
+   for (// pMessageMap already init'ed  //; pMessageMap->pfnGetBaseMap != NULL;
 pMessageMap = (*pMessageMap->pfnGetBaseMap)())
 {
 // Note: catch not so common but fatal mistake!!
@@ -2098,18 +2164,20 @@ return TRUE;
 
          ASSERT_VALID(this);
 
-   /*      oswindow hWndParent = get_handle();
-         oswindow hWndT;
-         while ((::GetWindowLong(hWndParent, GWL_STYLE) & WS_CHILD) &&
-            (hWndT = ::GetParent(hWndParent)) != NULL)
-         {
-            hWndParent = hWndT;
-         }
-
-         return ::linux::interaction_impl::from_handle(hWndParent);*/
+//         oswindow hWndParent = get_handle();
+//         oswindow hWndT;
+//         while ((::GetWindowLong(hWndParent, GWL_STYLE) & WS_CHILD) &&
+//            (hWndT = ::GetParent(hWndParent)) != NULL)
+//         {
+//            hWndParent = hWndT;
+//         }
+//
+//         return ::linux::interaction_impl::from_handle(hWndParent);
 
    //return NULL;
    //}
+
+   */
 
    bool interaction_impl::IsTopParentActive()
    {
@@ -3655,25 +3723,24 @@ return TRUE;
    }
 
 
-   /*   view_update_hint::view_update_hint(sp(::aura::application) papp) :
-   ::object(papp)
-   {
-   }
-   */
-
-
-
    bool interaction_impl::IsChild(::user::interaction * pWnd)
    {
+
       ASSERT(::IsWindow((oswindow) get_handle()));
+
       if(pWnd->get_handle() == NULL)
       {
+
          return ::user::interaction_impl::IsChild(pWnd);
+
       }
       else
       {
+
          return ::IsChild((oswindow) get_handle(), pWnd->get_handle()) != FALSE;
+
       }
+
    }
 
 
@@ -3736,7 +3803,7 @@ return TRUE;
          if((nFlags & SWP_SHOWWINDOW))
          {
 
-            XMapWindow(m_oswindow->display(), m_oswindow->window());
+            m_oswindow->map_window();
 
          }
 
@@ -4099,21 +4166,25 @@ return TRUE;
    }
 
 
-   void interaction_impl::_001WindowMinimize()
+   void interaction_impl::_001WindowMinimize(bool bNoActivate)
    {
 
-      if(m_pui != NULL)
-      {
+//      if(m_pui != NULL)
+//      {
+//
+//         m_pui->m_eappearanceBefore = m_pui->m_eappearance;
+//
+//         m_pui->m_eappearance = ::user::appearance_iconic;
+//
+//         m_pui->ModifyStyleEx(WS_VISIBLE, 0, 0);
+//
+//      }
+//
+//      wm_iconify_window(get_handle());
 
-         m_pui->m_eappearanceBefore = m_pui->m_eappearance;
+//      m_pui->set_appearance(::user::appearance_iconic);
 
-         m_pui->m_eappearance = ::user::appearance_iconic;
-
-         m_pui->ModifyStyleEx(WS_VISIBLE, 0, 0);
-
-      }
-
-      wm_iconify_window(get_handle());
+      ShowWindow(SW_MINIMIZE);
 
    }
 
@@ -4179,6 +4250,16 @@ return TRUE;
       }
 
       return m_pui->m_eappearance == ::user::appearance_zoomed;
+
+   }
+
+
+   void interaction_impl::_001WindowFullScreen()
+   {
+
+      m_pui->set_appearance(::user::appearance_full_screen);
+
+      get_handle()->full_screen();
 
    }
 

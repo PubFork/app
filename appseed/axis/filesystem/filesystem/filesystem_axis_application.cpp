@@ -213,32 +213,47 @@ namespace file
 
       bool application::crypto_set(var varFile, const char * pszData, const char * pszSalt)
       {
+
          // attention: operation on System crypto
          return m_pauraapp->m_paxissystem->m_spcrypto->file_set(varFile, pszData, pszSalt, m_pauraapp);
+
       }
+
 
       bool application::crypto_get(var varFile, string & str, const char * pszSalt)
       {
+
          // attention: operation on System crypto
          return m_pauraapp->m_paxissystem->m_spcrypto->file_get(varFile, str, pszSalt, m_pauraapp);
+
       }
+
 
       ::file::file_sp application::friendly_get_file(var varFile, UINT nOpenFlags, cres * pfesp)
       {
+
          if (pfesp != NULL)
          {
+
             ::release(pfesp->m_p);
+
          }
 
          try
          {
+
             return get_file(varFile, nOpenFlags, pfesp);
+
          }
          catch (...)
          {
+
             return NULL;
+
          }
+
       }
+
 
       ::file::file_sp application::get_file(var varFile, UINT nOpenFlags, cres * pfesp)
       {
@@ -262,14 +277,6 @@ namespace file
          return pfile;
 
       }
-
-      /*   ::file::byte_stream application::get_byte_stream(var varFile, UINT nOpenFlags)
-         {
-
-         return get_file(varFile, nOpenFlags);
-
-         }
-         */
 
 
    } // namespace axis

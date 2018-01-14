@@ -99,6 +99,13 @@ void machine_event_data::read(FILE * file)
 
    size_t iRead = fread(&m_fixed, 1, sizeof(m_fixed), file);
 
+   if(iRead != 1)
+   {
+
+      throw "fread failure";
+
+   }
+
    m_blobCommand.read(file);
 
 }
@@ -108,6 +115,13 @@ void machine_event_data::write(FILE * file)
 {
 
    size_t iWritten = fwrite(&m_fixed, 1, sizeof(m_fixed), file);
+
+   if(iWritten != 1)
+   {
+
+      throw "fread failure";
+
+   }
 
    m_blobCommand.write(file);
 

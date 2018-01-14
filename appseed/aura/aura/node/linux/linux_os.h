@@ -14,9 +14,9 @@ namespace linux
       os(sp(::aura::application) papp);
       virtual ~os();
 
-      
+
       virtual string get_command_line();
-      
+
 
       virtual bool reboot();
       virtual bool shutdown(bool bPowerOff);
@@ -66,6 +66,8 @@ namespace linux
 
       virtual bool get_default_browser(string & strId, ::file::path & path, string & strParam) override;
 
+      virtual bool file_open(::file::path strSrc, string strParams, string strFolder) override;
+
    };
 
 
@@ -73,4 +75,9 @@ namespace linux
 
 
 
+typedef string GET_FILE_CONTENT_TYPE(string strPath);
+
+typedef GET_FILE_CONTENT_TYPE * PFN_GET_FILE_CONTENT_TYPE;
+
+void set_get_file_content_type_function(PFN_GET_FILE_CONTENT_TYPE pfnGetFileContentType);
 

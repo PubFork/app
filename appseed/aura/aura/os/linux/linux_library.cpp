@@ -1,6 +1,12 @@
 #include "framework.h"
 #include <dlfcn.h>
 
+CLASS_DECL_AURA void * __node_library_touch(const char * pszPath, string & strMessage)
+{
+
+   return __node_library_open(pszPath, strMessage);
+
+}
 
 CLASS_DECL_AURA void * __node_library_open(const char * pszPath, string & strMessage)
 {

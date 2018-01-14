@@ -334,6 +334,79 @@ namespace aura
    }
 
 
+   string application::get_title()
+   {
+
+      if(m_strAppTitle.has_char())
+      {
+
+         return m_strAppTitle;
+
+      }
+
+      stringa stra;
+
+      stra.explode("/", m_strAppName);
+
+      string strTitle;
+
+      if(stra.get_count() > 1)
+      {
+
+         strTitle = stra.implode("/", 1);
+
+         if(strTitle.length() > 0)
+         {
+
+            return strTitle;
+
+         }
+
+      }
+
+      if(m_strAppName.has_char())
+      {
+
+         return m_strAppName;
+
+      }
+
+      stra.explode("/", m_strAppId);
+
+      if(stra.get_count() > 1)
+      {
+
+         strTitle = stra.implode("/", 1);
+
+         if(strTitle.length() > 0)
+         {
+
+            return strTitle;
+
+         }
+
+      }
+
+      if(m_strAppId.has_char())
+      {
+
+         return m_strAppId;
+
+      }
+
+      return System.file().module().title();
+
+   }
+
+
+   stringa application::get_categories()
+   {
+
+      return m_straAppCategory;
+
+   }
+
+
    bool application::app_data_set(class id id, ::file::ostream & os)
    {
 
@@ -1421,7 +1494,7 @@ namespace aura
 
          strCmd.replace("\"", "\\\"");
 
-         strParam = " -c \"" + strCmd + "\"";
+         strParam = " -c \"" + strCmd + " & disown\"";
 
          output_debug_string(strParam);
 
@@ -4570,7 +4643,7 @@ retry_license:
 
          int i = open(p, O_WRONLY | O_CREAT, 0777);
 
-         int err = errno;
+         //int err = errno;
 
          i = lockf(i, F_TLOCK, 0);
 
@@ -5839,6 +5912,13 @@ retry_license:
 
       }
 
+      if(!os_on_start_application())
+      {
+
+         return false;
+
+      }
+
       return true;
 
    }
@@ -5959,7 +6039,15 @@ retry_license:
 
             ::file::path path;
 
+            #ifdef LINUX
+
+            path = System.dir().ca2module() / ::process::app_id_to_app_name(pnotinstalled->m_strAppId);
+
+            #else
+
             path = System.dir().ca2module() / "app";
+
+            #endif
 
 #ifdef WINDOWS
 

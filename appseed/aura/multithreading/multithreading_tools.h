@@ -64,7 +64,7 @@ public:
    bool add_tool(::thread_tool * ptool);
 
    inline ::count get_span() const;
-   bool nok() const { return ((int_ptr) this) <= sizeof(::thread_toolset) || is_empty(); };
+   bool nok() const { return ::comparison::le(((int_ptr) this), sizeof(::thread_toolset)) || is_empty(); };
 
    bool prepare(::count cIteration);
    inline bool operator()();
@@ -112,7 +112,7 @@ public:
    bool is_full() const { return m_cCount >= m_threada.get_count(); }
    bool fillable() const { return !is_full(); }
    ::count get_span() const { return m_cSpan; }
-   bool nok() const { return ((int_ptr) this) <= sizeof(::thread_tools) || is_empty(); };
+   bool nok() const { return ::comparison::le(((int_ptr) this), sizeof(::thread_tools)) || is_empty(); };
 
    bool prepare(::thread::e_op eop, ::count cIteration = 0);
    bool start();

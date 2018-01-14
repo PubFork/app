@@ -989,15 +989,6 @@ namespace crypto
 
       }
 
-      const BIGNUM * n = NULL;
-      const BIGNUM * e = NULL;
-      const BIGNUM * d = NULL;
-      const BIGNUM * p = NULL;
-      const BIGNUM * q = NULL;
-      const BIGNUM * dmp1 = NULL;
-      const BIGNUM * dmq1 = NULL;
-      const BIGNUM * iqmp = NULL;
-
 #if defined(METROWIN) || (defined(LINUX) && !defined(RASPBIAN))
 
       char * hexN       = BN_bn2hex(prsa->n);
@@ -1010,6 +1001,15 @@ namespace crypto
       char * hexIqmp    = BN_bn2hex(prsa->iqmp);
 
 #else
+
+      const BIGNUM * n = NULL;
+      const BIGNUM * e = NULL;
+      const BIGNUM * d = NULL;
+      const BIGNUM * p = NULL;
+      const BIGNUM * q = NULL;
+      const BIGNUM * dmp1 = NULL;
+      const BIGNUM * dmq1 = NULL;
+      const BIGNUM * iqmp = NULL;
 
       RSA_get0_key(prsa, &n, &e, &d);
       RSA_get0_factors(prsa, &p, &q);

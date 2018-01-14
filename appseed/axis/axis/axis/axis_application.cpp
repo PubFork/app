@@ -1040,18 +1040,18 @@ InitFailure:
 
       }
 
-      try
-      {
-
-         term_thread();
-
-      }
-      catch (...)
-      {
-
-
-      }
-
+//      try
+//      {
+//
+//         term_thread();
+//
+//      }
+//      catch (...)
+//      {
+//
+//
+//      }
+//
    }
 
 

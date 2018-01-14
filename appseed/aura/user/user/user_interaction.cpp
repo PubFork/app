@@ -4,9 +4,7 @@
 
 #ifdef WINDOWSEX
 
-
 #define MESSAGE_WINDOW_PARENT HWND_MESSAGE
-
 
 #endif // WINDOWSEX
 
@@ -76,6 +74,7 @@ namespace user
       m_bMayProDevian = true;
       //m_pmutex                   = NULL;
       m_eappearance = appearance_normal;
+      m_eappearanceRequest = appearance_none;
       m_bCursorInside = false;
       m_nFlags = 0;
       m_puiOwner = NULL;
@@ -3965,76 +3964,6 @@ restart:
       }
 
 
-      //try
-      //{
-
-      //   m_signala.remove_all();
-
-      //}
-      //catch(...)
-      //{
-
-      //}
-
-      //try
-      //{
-
-      //   m_dispatchUpdateCmdUi.m_signala.remove_all();
-
-      //}
-      //catch(...)
-      //{
-
-      //}
-
-
-      //try
-      //{
-
-      //   m_dispatchCommand.m_signala.remove_all();
-
-      //}
-      //catch(...)
-      //{
-
-      //}
-
-
-      //try
-      //{
-
-      //   m_signalidaCommand.remove_all();
-
-      //}
-      //catch(...)
-      //{
-
-      //}
-
-      //try
-      //{
-
-      //   ::::message::receiver::m_signalptra.remove_all();
-
-      //}
-      //catch(...)
-      //{
-
-      //}
-
-
-      //try
-      //{
-
-      //   m_pauraapp = NULL;
-
-      //}
-      //catch (...)
-      //{
-
-      //}
-
-
       {
 
          ::user::interaction * puiParent = GetParent();
@@ -6239,6 +6168,13 @@ restart:
       }
 
       m_eappearance = eappearance;
+
+      if(eappearance == m_eappearanceRequest)
+      {
+
+         m_eappearanceRequest = ::user::appearance_none;
+
+      }
 
       return true;
 

@@ -25,7 +25,7 @@ namespace user
             m_bFullScreenOnZoom = false;
 
             m_bInitialFramePosition = true;
-             
+
          }
 
          WorkSetClientInterface::~WorkSetClientInterface()
@@ -219,7 +219,7 @@ namespace user
 
                if(m_eappearanceBefore == m_eappearance)
                {
-                  
+
                   eappearanceRestore = appearance_normal;
 
                }
@@ -268,7 +268,7 @@ namespace user
 
          bool WorkSetClientInterface::WfiMaximize()
          {
-            
+
             if (m_bFullScreenOnZoom)
             {
 
@@ -431,6 +431,13 @@ namespace user
          bool WorkSetClientInterface::WfiOnBeforeFullScreen()
          {
 
+            if(m_eappearanceRequest == ::user::appearance_full_screen)
+            {
+
+               return false;
+
+            }
+
             return true;
 
          }
@@ -573,7 +580,7 @@ namespace user
 
          void WorkSetClientInterface::WfiOnAfterMaximize()
          {
-            
+
             WindowDataSaveWindowRect();
 
          }
@@ -644,10 +651,10 @@ namespace user
             m_workset.EnableFullScreen(bEnable);
          }
 
-         
+
          void WorkSetClientInterface::_001OnDraw(::draw2d::graphics * pgraphics)
          {
-            
+
             m_workset._001OnDraw(pgraphics);
 
          }
@@ -655,7 +662,7 @@ namespace user
 
          //WorkSetClientInterface::CWorkSetDownUpInterface()
          //{
-         //   
+         //
          //}
          void WorkSetClientInterface::frame_Attach()
          {
@@ -673,10 +680,10 @@ namespace user
          }
 
 
-         
+
          void WorkSetClientInterface::_001OnTimer(::timer * ptimer)
          {
-            
+
             m_workset._001OnTimer(ptimer);
 
          }

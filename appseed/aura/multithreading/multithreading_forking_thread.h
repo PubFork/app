@@ -109,6 +109,60 @@ inline ::thread * object::fork(PRED pred)
 }
 
 
+template < typename PRED >
+inline ::thread * object::delay_fork(bool * pbExecuting, int64_t * piRequestCount, ::duration duration, PRED pred)
+{
+
+   atomic_increment(piRequestCount);
+
+   return fork([=]
+   {
+
+      restart:
+
+      Sleep(duration);
+
+      if(!::get_thread_run())
+      {
+
+         return;
+
+      }
+
+      int64_t iPendingRequestCount = atomic_decrement(piRequestCount);
+
+      if(iPendingRequestCount > 0)
+      {
+
+         return;
+
+      }
+
+      if(*pbExecuting)
+      {
+
+         atomic_increment(piRequestCount);
+
+         goto restart;
+
+      }
+
+      keep < bool > keepExecutingFlag(pbExecuting, true, false, true);
+
+      if(!::get_thread_run())
+      {
+
+         return;
+
+      }
+
+      pred();
+
+   });
+
+}
+
+
 template < typename T >
 inline void fork_release(::aura::application * papp, sp(T) & t)
 {

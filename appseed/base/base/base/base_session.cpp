@@ -1,6 +1,5 @@
-#include "framework.h" // from "axis/user/user.h"
-#include "base/user/user.h"
-//#include "base/user/common_user.h"
+#include "framework.h"
+
 
 
 namespace base

@@ -182,7 +182,7 @@ void xfplayer_view_linea::_001OnTimer(::timer * ptimer)
    for (int32_t i = 0; i < this->get_size(); i++)
    {
       this->element_at(i)->_001OnTimer(ptimer);
-      if (ptimer->m_bRet)
+      if (!ptimer->thread_get_run())
          return;
    }
 }

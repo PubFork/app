@@ -9,11 +9,7 @@
 
 #define TEST 0
 
-bool wm_set_icon(oswindow w, ::draw2d::dib * p);
-bool wm_set_icon(oswindow w, stringa & straMatter);
 extern CLASS_DECL_CORE thread_int_ptr < DWORD_PTR > t_time1;
-
-bool load_icon(::visual::dib_sp & d, ::aura::application * papp, stringa & straMatter, string strIcon);
 
 manual_reset_event * simple_frame_window::helper_task::g_pevent = NULL;
 
@@ -308,65 +304,7 @@ sp(::user::wndfrm::frame::frame) simple_frame_window::create_frame_schema()
 }
 
 
-#ifdef WINDOWSEX
 
-HICON load_icon(::aura::application * papp, stringa & straMatter, string strIcon, int cx, int cy)
-{
-
-   HICON hicon = NULL;
-
-   ::file::path path;
-
-   for (auto & strMatter : straMatter)
-   {
-
-      path = strMatter;
-
-      path = App(papp).dir().matter(path / strIcon);
-
-      hicon = (HICON)LoadImage(NULL, path, IMAGE_ICON, cx, cy, LR_LOADFROMFILE);
-
-      if (hicon != NULL)
-      {
-
-         break;
-
-      }
-
-   }
-
-   return hicon;
-
-}
-
-#else
-
-bool load_icon(::visual::dib_sp & d, ::aura::application * papp, stringa & straMatter, string strIcon)
-{
-
-   ::file::path path;
-
-   for (auto & strMatter : straMatter)
-   {
-
-      path = strMatter;
-
-      path = App(papp).dir().matter(path / strIcon);
-
-      if(d.load_from_file(path))
-      {
-
-         return true;
-
-      }
-
-   }
-
-   return false;
-
-}
-
-#endif
 
 
 void simple_frame_window::_001OnCreate(::message::message * pobj)
@@ -619,120 +557,6 @@ void simple_frame_window::_001OnCreate(::message::message * pobj)
 
 }
 
-
-void simple_frame_window::defer_set_icon()
-{
-
-#ifdef WINDOWSEX
-
-   if (GetParent() == NULL)
-   {
-      ::file::path strMatter = get_window_default_matter();
-      //http://www.cplusplus.com/forum/general/28470/
-      //blackcoder41 (1426)  Sep 12, 2010 at 2:43pm
-      //hIconSm = (HICON)LoadImage(NULL, "menu_two.ico", IMAGE_ICON, 16, 16, LR_LOADFROMFILE);
-
-      stringa straMatter;
-
-      if (strMatter.name(0) == "system")
-      {
-
-         straMatter.add("main");
-
-         straMatter.add(strMatter);
-
-      }
-      else
-      {
-
-         straMatter.add(strMatter);
-
-         straMatter.add("main");
-
-      }
-
-      HICON hicon = load_icon(get_app(), straMatter, "icon.ico", 16, 16);
-
-      if (hicon != NULL)
-      {
-
-         SendMessage(get_handle(), (UINT)WM_SETICON, ICON_SMALL, (LPARAM)hicon);
-
-      }
-
-      hicon = load_icon(get_app(), straMatter, "icon.ico", 16, 16);
-
-      if (hicon != NULL)
-      {
-
-         SendMessage(get_handle(), (UINT)WM_SETICON, ICON_BIG, (LPARAM)hicon);
-
-      }
-
-      if (m_bWindowFrame)
-      {
-
-         hicon = load_icon(get_app(), straMatter, "icon.ico", 24, 24);
-
-         if (hicon != NULL)
-         {
-
-            ::visual::icon * picon = canew(::visual::icon(get_app(), hicon));
-
-            if (picon != NULL && m_workset.m_pappearance != NULL)
-            {
-
-               m_workset.m_pappearance->m_picon = picon;
-
-            }
-
-         }
-
-      }
-   }
-
-#elif defined(LINUX)
-
-   if (GetParent() == NULL)
-   {
-
-      ::file::path strMatter = get_window_default_matter();
-
-      stringa straMatter;
-
-      if (strMatter.name(0) == "system")
-      {
-
-         straMatter.add("main");
-
-         straMatter.add(strMatter);
-
-      }
-      else
-      {
-
-         straMatter.add(strMatter);
-
-         straMatter.add("main");
-
-      }
-
-      wm_set_icon(get_handle(), straMatter);
-
-      ::visual::dib_sp d(allocer());
-
-      if(load_icon(d, get_app(), straMatter, "icon.png"))
-      {
-
-         wm_set_icon(get_handle(), d);
-
-      }
-
-   }
-
-#endif
-
-}
 
 
 void simple_frame_window::_001OnShowWindow(::message::message * pobj)

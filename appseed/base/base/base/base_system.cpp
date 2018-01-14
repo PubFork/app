@@ -1,6 +1,7 @@
-﻿#include "framework.h" // from "axis/user/user.h"
-//#include "base/user/user/user_windowing.h"
-#include "base/user/user.h"
+﻿#include "framework.h"
+
+
+
 #include "base/node/node.h"
 #ifdef WINDOWSEX
 #include "aura/aura/os/windows/windows_system_interaction_impl.h"
@@ -14,9 +15,6 @@
 
 CLASS_DECL_BASE void black_body(float * r, float * g, float * b, DWORD dwTemp);
 
-CLASS_DECL_BASE int os_get_monitor_count();
-CLASS_DECL_BASE bool os_get_monitor_rect(index i, LPRECT lprect);
-CLASS_DECL_BASE int os_get_screen_size(int& width, int& height);
 
 #ifdef WINDOWSEX
 
@@ -278,7 +276,9 @@ namespace base
 
 #ifdef LINUX
 
-      return os_get_monitor_count();
+      //return os_get_monitor_count();
+
+      return ::axis::system::get_monitor_count();
 
 #else
 
@@ -712,7 +712,9 @@ error:
 
 #elif defined(LINUX)
 
-      return os_get_monitor_rect(iMonitor, lprect);
+
+      return ::axis::system::get_monitor_rect(iMonitor, lprect);
+      //return os_get_monitor_rect(iMonitor, lprect);
 
 
 #else

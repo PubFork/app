@@ -4,33 +4,31 @@
 timer::timer(::aura::application * papp, uint_ptr uiTimer, PFN_TIMER pfnTimer, void * pvoidData, mutex * pmutex) :
    ::object(papp)
 {
-   
+
    impl_init();
-   
+
    m_nIDEvent = uiTimer;
+
    m_pfnTimer = pfnTimer;
+
    m_pvoidData = pvoidData;
+
    m_pmutex = pmutex;
-   
-   m_bDestroying = false;
+
    m_pcallback = NULL;
-   
-   m_bRet = false;
-   m_bKill = false;
-   m_bDeal = false;
-   
+
 }
 
 
 timer::~timer()
 {
-   
+
    stop(true);
-   
+
    impl_term();
-   
+
    m_pmutex = NULL;
-   
+
 }
 
 
@@ -38,189 +36,261 @@ timer::~timer()
 
 bool timer::start(int millis, bool bPeriodic)
 {
-   
-   if(m_bSet)
+
+   synch_lock sl(m_pmutex);
+
+   if(m_ptimerRunning.is_set())
    {
-      
+
+      sl.unlock();
+
       stop(true);
-      
+
+      sl.lock();
+
    }
-   
+
    m_bPeriodic = bPeriodic;
-   
+
    m_dwMillis = millis;
-   
-   if(!impl_start())
+
+   m_ptimerRunning = this;
+
+   try
    {
-      
-      return false;
-      
+
+      if(!impl_start())
+      {
+
+         m_ptimerRunning.release();
+
+         return false;
+
+      }
+
    }
-   
-   
+   catch(...)
+   {
+
+      m_ptimerRunning.release();
+
+      return false;
+
+   }
+
+   register_at_required_threads();
+
    return true;
-   
+
 }
-
-
-
 
 
 void timer::stop(bool bWaitCompletion)
 {
-   
+
+   if(m_ptimerRunning.is_null())
+   {
+
+      return;
+
+   }
+
    try
    {
-      
-      m_bKill = true;
-      
-   }
-   catch (...)
-   {
-      
-   }
-   
-   try
-   {
-      
-      impl_stop(bWaitCompletion);
-      
+
+      post_quit();
+
    }
    catch(...)
    {
-      
-   }
-   
-   
-   
-}
 
-
-bool timer::call_on_timer()
-{
-   
-   if(!g_bAura)
-   {
-      
-      output_debug_string("there is timer on (timer::call_on_timer) and aura has gone (!g_bAura)\n");
-      
-      return  false;
-      
    }
-   
-   ::set_thread(this);
-   
+
    try
    {
-      
-      synch_lock sl(m_pmutex);
-      
-      if (m_bKill || m_bDestroying || m_bDeal)
-      {
-         
-         return true;
-         
-      }
-      
-      m_bDeal = true;
-      
-      m_bRet = false;
-      
-      sl.unlock();
-      
-      on_timer();
-      
-      if(!m_bPeriodic)
-      {
-         
-         stop(false);
-         
-         post_quit();
-         
-      }
-      
-      /// pump any messages in queue
-      MESSAGE msg;
-      
-      while(::PeekMessage(&msg,NULL,0,0,PM_NOREMOVE) != FALSE)
-      {
-         
-         if(!thread_get_run() || !pump_message())
-         {
-            
-            
-            break;
-            
-         }
-         
-      }
-      
-      sl.lock();
-      
-      m_bDeal = false;
-      
-      if (!m_bPeriodic || m_bKill || !thread_get_run())
-      {
-         
-         
-         if (!m_bDestroying)
-         {
-            
-            m_bDestroying = true;
-            
-            sl.unlock();
-            
-         }
-         
-         return false;
-         
-      }
-      
-      if (m_bPeriodic)
-      {
-         
-         if(!impl_restart())
-         {
-            
-            return false;
-            
-         }
-            
-         
-      }
-      
-      return !m_bRet;
-      
+
+      impl_stop();
+
    }
-   catch (...)
+   catch(...)
    {
-      
+
    }
-   
-   return false;
-   
+
+   if(bWaitCompletion)
+   {
+
+      try
+      {
+
+         int iWait = 3000; // 30s
+
+         while(m_ptimerRunning.is_set() && iWait > 0)
+         {
+
+            Sleep(10);
+
+            iWait--;
+
+         }
+
+      }
+      catch(...)
+      {
+
+      }
+
+   }
+
+   try
+   {
+
+      unregister_from_required_threads();
+
+   }
+   catch(...)
+   {
+
+   }
+
 }
 
-bool timer::on_timer()
+
+void timer::call_on_timer()
 {
-   
+
+   ::set_thread(this);
+
+   try
+   {
+
+      on_timer();
+
+   }
+   catch(...)
+   {
+
+   }
+
+   bool bRepeat = true;
+
+   try
+   {
+
+      if(!thread_get_run())
+      {
+
+         bRepeat = false;
+
+      }
+
+   }
+   catch(...)
+   {
+
+      bRepeat = false;
+
+   }
+
+   if(bRepeat)
+   {
+
+      try
+      {
+
+         if (m_bPeriodic)
+         {
+
+            if(!impl_restart())
+            {
+
+               bRepeat = false;
+
+            }
+
+         }
+         else
+         {
+
+            bRepeat = false;
+
+         }
+
+      }
+      catch (...)
+      {
+
+         bRepeat = false;
+
+      }
+
+   }
+
+   if(!bRepeat)
+   {
+
+      try
+      {
+
+         // intentionally may repeat the operation
+         post_quit();
+
+      }
+      catch(...)
+      {
+
+      }
+
+      try
+      {
+
+         m_ptimerRunning.release();
+
+      }
+      catch(...)
+      {
+
+      }
+
+      try
+      {
+
+         unregister_from_required_threads();
+
+      }
+      catch(...)
+      {
+
+      }
+
+   }
+
+}
+
+
+void timer::on_timer()
+{
+
+   m_bRet = false;
+
    if (m_pfnTimer != NULL)
    {
-      
-      if (!m_pfnTimer(this) && m_bPeriodic)
-         return false;
-      
+
+      m_pfnTimer(this);
+
+      return;
+
    }
-   
+
    if (m_pcallback != NULL)
    {
-      
+
       m_pcallback->on_timer(this);
-      
+
+      return;
+
    }
-   
-   return !m_bRet;
-   
+
 }
 
 

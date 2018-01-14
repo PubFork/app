@@ -2541,7 +2541,7 @@ end:
 
       while(*psz != qc)
       {
-         
+
       skip:
 
          psz = __utf8_inc(psz);
@@ -2554,23 +2554,23 @@ end:
             return "";
 
          }
-         
+
          if(*psz == '\\')
          {
-            
+
             psz = __utf8_inc(psz);
-            
+
             if(psz > pszEnd)
             {
-               
+
                throw_parsing_exception("Quote character is required here, premature end");
-               
+
                return "";
-               
+
             }
-            
+
             goto skip;
-            
+
          }
 
       }
@@ -4170,6 +4170,7 @@ CLASS_DECL_AURA void to_string(string & str, const float & f)
    char sz[256];
    sprintf(sz, "%f", f);
    str = sz;
+   str.replace(",", ".");
 
 }
 
@@ -4181,6 +4182,7 @@ CLASS_DECL_AURA void to_string(string & str, const double & d)
    char sz[256];
    sprintf(sz, "%f", d);
    str = sz;
+   str.replace(",", ".");
 
 }
 

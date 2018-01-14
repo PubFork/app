@@ -8,6 +8,7 @@
 #include "sockets_socket_handler.cpp"
 #include "sockets_ssl_client_context.cpp"
 #include "sockets_ssl_client_context_map.cpp"
+#include "sockets_ssl_context.cpp"
 #include "sockets_stream_socket.cpp"
 #include "sockets_sync_socket_handler.cpp"
 #include "sockets_tcp_socket.cpp"

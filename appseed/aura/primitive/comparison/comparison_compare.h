@@ -31,6 +31,13 @@ namespace comparison
 
    }
 
+   template < >
+   inline bool lt(long int l, unsigned long int ul)
+   {
+
+      return l < 0 ? true : (unsigned long int) l < ul;
+
+   }
 
    template < >
    inline bool lt(int i, unsigned long long ull)

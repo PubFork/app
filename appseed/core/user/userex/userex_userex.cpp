@@ -1,5 +1,4 @@
 #include "framework.h"
-#include "base/database/simpledb/simpledb.h"
 
 
 CLASS_DECL_AURA mutex * get_cred_mutex();
@@ -1247,25 +1246,25 @@ retry_license:
 
       // wall-changer sourceforge.net contribution
 
-      switch(get_edesktop())
+      switch(::user::get_edesktop())
       {
 
-      case desktop_gnome:
-      case desktop_unity_gnome:
+      case ::user::desktop_gnome:
+      case ::user::desktop_unity_gnome:
 
-         return gsettings_set("org.gnome.desktop.background", "picture-uri", "file://" + strLocalImagePath);
+         return ::user::gsettings_set("org.gnome.desktop.background", "picture-uri", "file://" + strLocalImagePath);
 
-      case desktop_mate:
+      case ::user::desktop_mate:
 
-         return gsettings_set("org.mate.background", "picture-filename", strLocalImagePath);
+         return ::user::gsettings_set("org.mate.background", "picture-filename", strLocalImagePath);
 
-      case desktop_lxde:
+      case ::user::desktop_lxde:
 
          call_async("pcmanfm", "-w " + strLocalImagePath, NULL, SW_HIDE, false);
 
          break;
 
-      case desktop_xfce:
+      case ::user::desktop_xfce:
       {
          //        Q_FOREACH(QString entry, Global::getOutputOfCommand("xfconf-query", QStringList() << "-c" << "xfce4-desktop" << "-p" << "/backdrop" << "-l").split("\n")){
          //          if(entry.contains("image-path") || entry.contains("last-image")){
@@ -1298,29 +1297,29 @@ retry_license:
 
       // wall-changer sourceforge.net contribution
 
-      switch(get_edesktop())
+      switch(::user::get_edesktop())
       {
 
-      case desktop_gnome:
-      case desktop_unity_gnome:
+      case ::user::desktop_gnome:
+      case ::user::desktop_unity_gnome:
 
-         gsettings_get(sz, sizeof(sz), "org.gnome.desktop.background", "picture-uri");
-
-         break;
-
-      case desktop_mate:
-
-         gsettings_get(sz, sizeof(sz), "org.mate.background", "picture-filename");
+         ::user::gsettings_get(sz, sizeof(sz), "org.gnome.desktop.background", "picture-uri");
 
          break;
 
-      case desktop_lxde:
+      case ::user::desktop_mate:
+
+         ::user::gsettings_get(sz, sizeof(sz), "org.mate.background", "picture-filename");
+
+         break;
+
+      case ::user::desktop_lxde:
 
          //call_async("pcmanfm", "-w " + strLocalImagePath, NULL, SW_HIDE, false);
 
          break;
 
-      case desktop_xfce:
+      case ::user::desktop_xfce:
       {
          //        Q_FOREACH(QString entry, Global::getOutputOfCommand("xfconf-query", QStringList() << "-c" << "xfce4-desktop" << "-p" << "/backdrop" << "-l").split("\n")){
          //          if(entry.contains("image-path") || entry.contains("last-image")){

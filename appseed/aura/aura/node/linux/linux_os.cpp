@@ -7,6 +7,128 @@
 #undef USERNAME_LENGTH // mysql one
 
 
+#include <sys/stat.h>
+
+string empty_get_file_content_type(string)
+{
+
+   return "";
+
+}
+
+PFN_GET_FILE_CONTENT_TYPE g_pfnGetFileContentType = &empty_get_file_content_type;
+
+string linux_get_file_content_type(string strPath)
+{
+
+   return (*g_pfnGetFileContentType)(strPath);
+
+}
+
+void set_get_file_content_type_function(PFN_GET_FILE_CONTENT_TYPE pfnGetFileContentType)
+{
+
+   g_pfnGetFileContentType = pfnGetFileContentType;
+
+}
+
+
+bool linux_can_exec(const char *file)
+{
+
+   struct stat st;
+
+   string str(file);
+
+   if(::str::begins_eat_ci(str, "\""))
+   {
+
+      strsize iFind = str.find("\"");
+
+      if(iFind < 0)
+      {
+
+         return false;
+
+      }
+
+      str = str.Left(iFind);
+
+   }
+   else if(::str::begins_eat_ci(str, "\'"))
+   {
+
+      strsize iFind = str.find("\'");
+
+      if(iFind < 0)
+      {
+
+         return false;
+
+      }
+
+      str = str.Left(iFind);
+
+   }
+   else
+   {
+
+      strsize iFind = str.find(" ");
+
+      if(iFind > 0)
+      {
+
+         str = str.Left(iFind);
+
+      }
+
+
+   }
+
+   if(str == "sudo")
+   {
+
+      return true;
+
+   }
+
+   ZERO(st);
+
+   if (stat(str, &st) < 0)
+   {
+
+      return false;
+
+   }
+
+   if ((st.st_mode & S_IEXEC) != 0)
+   {
+
+      string strContentType = linux_get_file_content_type(str);
+
+      if(strContentType == "application/x-shellscript")
+      {
+
+         return true;
+
+      }
+      else if(strContentType == "application/x-sharedlib")
+      {
+
+         return true;
+
+      }
+
+
+      return false;
+
+   }
+
+   return false;
+
+}
+
+
 namespace linux
 {
 
@@ -22,12 +144,12 @@ namespace linux
    {
    }
 
-   
+
    string os::get_command_line()
    {
-      
+
       return get_command_line_dup();
-      
+
    }
 
 
@@ -104,20 +226,23 @@ namespace linux
          TRACELASTERROR();
          return false;
       }
-      /*if (!ExitWindowsEx(EWX_REBOOT | EWX_FORCE,
-      SHTDN_REASON_MAJOR_SOFTWARE | SHTDN_REASON_MINOR_INSTALLATION))
-      {
-      DWORD dwLastError = ::get_last_error();
-      return false;
-      }*/
+//      if (!ExitWindowsEx(EWX_REBOOT | EWX_FORCE,
+//      SHTDN_REASON_MAJOR_SOFTWARE | SHTDN_REASON_MINOR_INSTALLATION))
+//      {
+//      DWORD dwLastError = ::get_last_error();
+//      return false;
+//      }
       //reset the previlages
-  /*    tkp.Privileges[0].Attributes = 0;
-      AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES) NULL, 0);
-      return true;*/
+//      tkp.Privileges[0].Attributes = 0;
+//      AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES) NULL, 0);
+//      return true;
       _throw(not_implemented(get_app()));
       return false;
 
+   */
+
    }
+
 
    void os::terminate_processes_by_title(const char * pszName)
    {
@@ -194,29 +319,6 @@ namespace linux
 
    ::file::path os::get_process_path(DWORD dwPid)
    {
-      /*
-      string strName = ":<unknown>";
-      // get a handle to the process.
-      HANDLE hProcess = OpenProcess( PROCESS_QUERY_INFORMATION |
-         PROCESS_VM_READ,
-         FALSE, dwPid );
-
-      // get the process name.
-
-      if (NULL != hProcess )
-      {
-         HMODULE hMod;
-         DWORD cbNeeded;
-
-         if(EnumProcessModules( hProcess, &hMod, sizeof(hMod),
-            &cbNeeded) )
-         {
-            strName = get_module_path(hMod);
-         }
-      }
-
-      CloseHandle( hProcess );
-      return strName;*/
       _throw(not_implemented(get_app()));
       return "";
 
@@ -878,6 +980,45 @@ return ::getpid();
       return true;
 
    }
+
+
+   bool os::file_open(::file::path strTarget, string strParams, string strFolder)
+   {
+
+      if(linux_can_exec(strTarget))
+      {
+
+         call_async("/bin/bash", "-c \"" + strTarget + "\"", strFolder, SW_SHOWDEFAULT, false);
+
+      }
+      else
+      {
+
+         bool bUbuntu = true;
+
+         if(bUbuntu)
+         {
+
+            call_async("/bin/bash", "-c \"gvfs-open \\\"" + strTarget + "\\\"\"", strFolder, SW_SHOWDEFAULT, false);
+
+         }
+         else
+         {
+
+            call_async("/bin/bash", "-c \"xdg-open \\\"" + strTarget + "\\\"\"", strFolder, SW_SHOWDEFAULT, false);
+
+         }
+
+
+      }
+
+      return true;
+
+
+   }
+
+
+
 
 } // namespace linux
 

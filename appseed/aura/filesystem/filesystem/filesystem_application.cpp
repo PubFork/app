@@ -159,6 +159,11 @@ namespace file
       return m_pauraapp->m_paurasystem->m_spfile->lines(stra, varFile, m_pauraapp);
    }
 
+   void application::put_lines(var varFile, const stringa & stra)
+   {
+      return m_pauraapp->m_paurasystem->m_spfile->put_lines(varFile, stra, m_pauraapp);
+   }
+
    bool application::put_contents(var varFile, const void * pvoidContents, ::count count)
    {
       return m_pauraapp->m_paurasystem->m_spfile->put_contents(varFile, pvoidContents, count, m_pauraapp);

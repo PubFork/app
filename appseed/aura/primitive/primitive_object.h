@@ -95,6 +95,46 @@ class thread_refa;
 // Duplicated root here... element is essentially like root (Rute, Inha, Lenir) for templates, but not for polymorphism
 
 
+inline int64_t atomic_increment(int64_t * pi)
+{
+
+#ifdef WINDOWS
+
+   return InterlockedIncrement64(pi);
+
+#elif defined(RASPBIAN) && defined(OS32BIT)
+
+   return __sync_add_and_fetch_4(pi,1);
+
+#else
+
+   return __sync_add_and_fetch(pi,1);
+
+#endif
+
+}
+
+
+inline int64_t atomic_decrement(int64_t * pi)
+{
+
+#ifdef WINDOWS
+
+   return InterlockedDecrement64(pi);
+
+#elif defined(RASPBIAN) && defined(OS32BIT)
+
+   return __sync_sub_and_fetch_4(pi,1);
+
+#else
+
+   return __sync_sub_and_fetch(pi,1);
+
+#endif
+
+}
+
+
 class CLASS_DECL_AURA simple_object
 {
 public:
@@ -168,6 +208,9 @@ public:
 
    template < typename PRED >
    inline ::thread * fork(PRED pred);
+
+   template < typename PRED >
+   inline ::thread * delay_fork(bool * pbExecuting, int64_t * piRequestCount, ::duration duration, PRED pred);
 
    template < typename TYPE >
    inline ::thread * async(void (TYPE::*pfnMemberProcedure)())

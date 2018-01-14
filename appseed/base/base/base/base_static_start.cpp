@@ -1,8 +1,6 @@
-//
-//  axis_static_start
-//
-#include "framework.h" // from "axis/user/user.h"
-#include "base/user/user.h"
+#include "framework.h"
+
+
 
 aura_level auralevelBase(::aura_level::level_base, &defer_base_init);
 

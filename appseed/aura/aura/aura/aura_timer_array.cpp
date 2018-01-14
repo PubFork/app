@@ -8,7 +8,7 @@ namespace aura
    timer_array::timer_array(::aura::application * papp):
       object(papp)
    {
-      
+
       defer_create_mutex();
 
    }
@@ -19,12 +19,11 @@ namespace aura
 
       delete_all_timers(); // besides virtual
 
-
    }
+
 
    bool timer_array::create_timer(uint_ptr nIDEvent,UINT nEllapse, PFN_TIMER pfnTimer, bool bPeriodic, void * pvoidData)
    {
-
 
       if(nEllapse < 800)
       {
@@ -37,13 +36,13 @@ namespace aura
 
       }
 
-
-
       delete_timer(nIDEvent);
 
       synch_lock sl(m_pmutex);
-      
-      timer * ptimer = new timer(get_app(),nIDEvent,pfnTimer,pvoidData, m_pmutex);
+
+      timer * ptimer = canew(timer(get_app(), nIDEvent, pfnTimer, pvoidData, m_pmutex));
+
+      threadrefa_add(ptimer);
 
       ptimer->m_pcallback = this;
 
@@ -51,21 +50,39 @@ namespace aura
 
       sl.unlock();
 
-      if(!ptimer->start(nEllapse,bPeriodic))
+      bool bOk = true;
+
+      try
       {
 
-         sl.lock();
+         if(!ptimer->start(nEllapse,bPeriodic))
+         {
 
-         m_map.remove_key(nIDEvent);
+            sl.lock();
 
-         return false;
+            bOk = false;
+
+         }
+
+      }
+      catch(...)
+      {
+
+         bOk = false;
 
       }
 
-      return true;
+      if(!bOk)
+      {
+
+         m_map.remove_key(nIDEvent);
+
+      }
+
+      return bOk;
 
    }
-   
+
 
    bool timer_array::delete_timer(uint_ptr nIDEvent)
    {
@@ -81,38 +98,13 @@ namespace aura
 
       }
 
-      timer * ptimer = ppair->m_element2;
+      auto ptimer = ppair->m_element2;
 
       m_map.remove_key(nIDEvent);
 
-      if(ptimer->m_bDeal)
-      {
+      sl.unlock();
 
-         ptimer->m_bKill = true;
-
-      }
-      else
-      {
-
-         if(ptimer->m_bDestroying)
-         {
-
-
-            sl.unlock();
-
-         }
-         else
-         {
-
-            ptimer->m_bDestroying = true;
-
-            sl.unlock();
-
-            delete ptimer;
-
-         }
-
-      }
+      ptimer->stop(true);
 
       return true;
 
@@ -146,9 +138,23 @@ namespace aura
 
    }
 
-   
+
    void timer_array::delete_all_timers()
    {
+
+      {
+
+         auto mapCopy = m_map;
+
+         for(auto & pair : mapCopy)
+         {
+
+            pair.m_element2->post_quit();
+
+         }
+
+      }
+
 
       MAP::pair * ppair = NULL;
 

@@ -1,6 +1,23 @@
 #pragma once
 
 
+#ifdef WINDOWS
+
+#define LINE_SEPARATOR "\r\n"
+
+#elif defined(APPLEOS)
+
+#define LINE_SEPARATOR "\r"
+
+#else
+
+#define LINE_SEPARATOR "\n"
+
+#endif
+
+#define STATIC_ASCII_STRING_LENGTH(x) (sizeof(x) - 1)
+
+
 CLASS_DECL_AURA memory file_as_memory_dup(const char * path);
 CLASS_DECL_AURA memory_size_t file_as_memory_dup(const char * path, void * p, memory_size_t s);
 CLASS_DECL_AURA string file_as_string_dup(const char * path);

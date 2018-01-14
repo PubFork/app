@@ -42,6 +42,14 @@ void * operator new(size_t nSize) new_throw_spec
 
 }
 
+#ifdef LINUX
+void * operator new(size_t nSize, const std::nothrow_t & ) noexcept
+{
+
+   return ace_memory_alloc(nSize);
+
+}
+#endif
 
 #endif
 

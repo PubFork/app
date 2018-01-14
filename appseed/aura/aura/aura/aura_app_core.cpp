@@ -26,6 +26,10 @@ string apple_get_bundle_identifier();
 
 string ca2_command_line2();
 
+#elif defined(LINUX)
+
+#include <gtk/gtk.h>
+
 #endif
 
 
@@ -379,7 +383,7 @@ void app_core::end()
 
    localtime_r(&timet, &t);
 
-   errno_t err = errno;
+   //errno_t err = errno;
 
 #endif
 
@@ -476,10 +480,10 @@ void app_core::end()
       char szUTCTime[2048];
       //      char szLocalTime[2048];
       time_t rawtime;
-      struct tm * l;
+      //struct tm * l;
       struct tm * g;
       time(&rawtime);
-      l = localtime(&rawtime);
+      //l = localtime(&rawtime);
       g = gmtime(&rawtime);
       sprintf(szUTCTime, "%04d-%02d-%02d %02d:%02d:%02d UTC", g->tm_year + 1900, g->tm_mon, g->tm_mday, g->tm_hour, g->tm_min, g->tm_sec);
       //   sprintf(szLocalTime,"%04d-%02d-%02d %02d:%02d:%02d local : ",l->tm_year + 1900,l->tm_mon,l->tm_mday,l->tm_hour,l->tm_min,l->tm_sec);
@@ -1145,8 +1149,15 @@ void app_core::run()
 
 }
 
-#else
+#elif defined(LINUX)
 
+
+// LOOK AT LINUX_MAIN.Cpp
+
+// defined at linux_main.cpp
+
+
+#else
 
 
 void app_core::run()

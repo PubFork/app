@@ -26,12 +26,10 @@ bool timer_event::wait(int millis)
 }
 
 
-bool timer_event::on_timer()
+void timer_event::on_timer()
 {
 
    m_ev.SetEvent();
-
-   return true;
 
 }
 

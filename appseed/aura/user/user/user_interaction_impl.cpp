@@ -728,10 +728,11 @@ namespace user
    }
 
 
-   // WM_NCDESTROY is the absolute LAST message sent.
    void interaction_impl::PostNcDestroy()
    {
+
       ::user::interaction_base::PostNcDestroy();
+
    }
 
 

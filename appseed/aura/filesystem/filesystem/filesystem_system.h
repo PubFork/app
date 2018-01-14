@@ -1,6 +1,8 @@
 #pragma once
 
 
+
+
 namespace file
 {
 
@@ -13,6 +15,7 @@ namespace file
 
       path         m_pathCa2Module;
       path         m_pathModule;
+
 
       system(::aura::application * papp);
       virtual ~system();
@@ -67,6 +70,7 @@ namespace file
 
 
 
+
       virtual int32_t filterex_time_square(const char * pszPrefix,patha & stra);
       virtual bool mk_time(const ::file::path & pathCandidate);
 
@@ -74,7 +78,11 @@ namespace file
       virtual string as_string(var varFile,::aura::application * papp);
       virtual string as_string(var varFile,var & varQuery,::aura::application * papp);
       virtual void as_memory(var varFile,primitive::memory_base & mem,::aura::application * papp);
-      virtual void lines(stringa & stra,var varFile,::aura::application * papp);
+
+      virtual void lines(stringa & stra, var varFile, ::aura::application * papp);
+      virtual void put_lines(var varFile, const stringa & stra, ::aura::application * papp);
+      virtual void put_lines_utf8(var varFile, const stringa & stra, ::aura::application * papp);
+      virtual void _put_lines(::file::file * pfile, const stringa & stra);
 
       virtual bool put_contents(var varFile,const void * pvoidContents,::count count,::aura::application * papp);
       virtual bool put_contents(var varFile,const char * lpcszContents,::aura::application * papp);

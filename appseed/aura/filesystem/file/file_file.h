@@ -10,9 +10,11 @@ class CLASS_DECL_AURA sync_io_error
 {
    public:
 
+
       int   m_iGenerateBefore;
       int   m_iErrorBefore;
       int * m_piError;
+
 
       sync_io_error(int * piError = NULL)
       {
@@ -136,6 +138,8 @@ namespace file
          virtual bool read_string(string & str);
          virtual bool read_string(::primitive::memory_base & mem);
          virtual bool full_read_string(string & str);
+
+         virtual void write_string(const string & str);
 
 
          void writef(const char *format, ...);

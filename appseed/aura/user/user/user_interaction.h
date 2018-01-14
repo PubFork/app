@@ -130,8 +130,9 @@ namespace user
 
       ::user::interaction *               m_pparent;
 
-      e_appearance                         m_eappearance;
-      e_appearance                         m_eappearanceBefore;
+      e_appearance                        m_eappearance;
+      e_appearance                        m_eappearanceBefore;
+      e_appearance                        m_eappearanceRequest;
       sp(interaction_impl_base)           m_pimpl;
 
 

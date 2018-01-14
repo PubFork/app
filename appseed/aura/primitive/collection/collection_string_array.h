@@ -43,6 +43,11 @@ public:
    index get_upper_bound(index i = -1) const;
    index get_middle_index(index i = 0) const;
 
+
+   void remove_duplicates();
+
+   void remove_duplicates_ci();
+
    //void set_size(::count nNewSize, ::count nGrowBy = -1);
 
    //::count size() const;
@@ -50,6 +55,9 @@ public:
    //void free_extra();
    //void remove_all();
    //void clear();
+
+   void _007SetLine(const RawType & strKey, const RawType & strValue);
+
 
 
    void sort();
@@ -777,6 +785,8 @@ m_nMaxSize = nNewMax;
 }*/
 
 
+
+
 template < class Type, class RawType >
 ::count string_array < Type, RawType >::add(const string_array < Type, RawType >& src)
 {
@@ -869,6 +879,28 @@ Type & string_array < Type, RawType >::set_at_grow(index nIndex,const char * new
 
 }
 
+template < typename Type, typename RawType >
+void string_array < Type, RawType >::_007SetLine(const RawType & strKey, const RawType & strValue)
+{
+
+   index iKeyIndex = this->find_first_begins_ci(strKey + "=");
+
+   RawType strNewLine = strKey + "=" + strValue;
+
+   if(iKeyIndex >= 0)
+   {
+
+      this->operator[](iKeyIndex) = strNewLine;
+
+   }
+   else
+   {
+
+      this->add(strNewLine);
+
+   }
+
+}
 
 
 template < typename Type, typename RawType >
@@ -1319,8 +1351,54 @@ void string_array < Type, RawType >::add(const id & id)
    }
 }
 
+template < typename Type, typename RawType >
+void string_array < Type, RawType >::remove_duplicates()
+{
+
+   for(index i = 1; i < this->get_size();)
+   {
+
+      if(find_first(this->element_at(i), 0, i - 1) >= 1)
+      {
+
+         this->remove_at(i);
+
+      }
+      else
+      {
+
+         i++;
+
+      }
+
+   }
+
+}
 
 
+template < typename Type, typename RawType >
+void string_array < Type, RawType >::remove_duplicates_ci()
+{
+
+   for(index i = 1; i < this->get_size();)
+   {
+
+      if(find_first_ci(this->element_at(i), 0, i - 1) >= 1)
+      {
+
+         this->remove_at(i);
+
+      }
+      else
+      {
+
+         i++;
+
+      }
+
+   }
+
+}
 
 //// same as clear
 //void string_array < Type, RawType >::remove_all()
@@ -3569,7 +3647,7 @@ template < class Type, class RawType >
 
    for(index i = 0; i < get_size(); i++)
    {
-      
+
       char * psz = strdup((const char *) element_at(i));
 
       psza.add(psz);

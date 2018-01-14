@@ -1884,6 +1884,178 @@ break_mid_loop:
    }
 
 
+   //https://stackoverflow.com/questions/32937902/sorting-index-of-array-using-merge-sort
+
+   template < typename ARRAY, typename PRED >
+   void pred_index_merge(ARRAY & a, PRED leq, index_array & temp, index_array & perm, int lo, int mid, int hi)
+   {
+
+      int i = lo, j = mid + 1;
+
+      for (int k = lo; k <= hi; k++)
+      {
+
+         temp[k] = perm[k];
+
+      }
+
+      for (int k = lo; k <= hi; k++)
+      {
+
+         if (i > mid)
+         {
+
+            perm[k] = temp[j++];
+
+         }
+         else if (j > hi)
+         {
+
+            perm[k] = temp[i++];
+
+         }
+         else if (leq(a[temp[i]], a[temp[j]]))
+         {
+
+            perm[k] = temp[i++];
+
+         }
+         else
+         {
+
+            perm[k] = temp[j++];
+
+         }
+
+      }
+
+   }
+
+   template < typename ARRAY, typename PRED >
+   void pred_index_merge_sort(ARRAY & a, PRED leq, index_array & temp, index_array & perm, int lo, int hi)
+   {
+
+      if (hi <= lo)
+         return;
+
+      int mid = (hi + lo) / 2;
+
+      pred_merge_sort(a, leq, temp, perm, lo, mid);
+
+      pred_merge_sort(a, leq, temp, perm, mid + 1, hi);
+
+      pred_merge(a, leq, temp, perm, lo, mid, hi);
+
+   }
+
+   template < typename ARRAY, typename PRED >
+   void pred_stable_index_sort(ARRAY & a, index_array & perm, PRED leq)
+   {
+
+      index_array temp;
+
+      temp.set_size(a.get_size());
+
+      pred_index_merge_sort(a, leq, temp, perm, 0, a.get_upper_bound());
+
+   }
+
+
+
+   // Merges two subarrays of arr[].
+   // First subarray is arr[l..m]
+   // Second subarray is arr[m+1..r]
+   template < typename ARRAY, typename PRED >
+   void pred_merge(ARRAY & a, PRED leq, int l, int m, int r)
+   {
+
+      int i, j, k;
+      int n1 = m - l + 1;
+      int n2 =  r - m;
+
+      /* create temp arrays */
+      ARRAY L;
+      L.set_size(n1);
+      ARRAY R;
+      R.set_size(n2);
+
+      /* Copy data to temp arrays L[] and R[] */
+      for (i = 0; i < n1; i++)
+         L[i] = a[l + i];
+      for (j = 0; j < n2; j++)
+         R[j] = a[m + 1+ j];
+
+       /* Merge the temp arrays back into arr[l..r]*/
+       i = 0; // Initial index of first subarray
+       j = 0; // Initial index of second subarray
+       k = l; // Initial index of merged subarray
+       while (i < n1 && j < n2)
+       {
+           if (leq(L[i], R[j]))
+           {
+               a[k] = L[i];
+               i++;
+           }
+           else
+           {
+               a[k] = R[j];
+               j++;
+           }
+           k++;
+       }
+
+       /* Copy the remaining elements of L[], if there
+          are any */
+       while (i < n1)
+       {
+           a[k] = L[i];
+           i++;
+           k++;
+       }
+
+       /* Copy the remaining elements of R[], if there
+          are any */
+       while (j < n2)
+       {
+           a[k] = R[j];
+           j++;
+           k++;
+       }
+   }
+
+   /* l is for left index and r is right index of the
+   sub-array of arr to be sorted */
+   template < typename ARRAY, typename PRED >
+   void pred_merge_sort(ARRAY & a, PRED leq, int l, int r)
+   {
+
+      if (l < r)
+      {
+
+        // Same as (l+r)/2, but avoids overflow for large l and h
+
+        int m = l + (r - l) / 2;
+
+        // Sort first and second halves
+
+        pred_merge_sort(a, leq, l, m);
+
+        pred_merge_sort(a, leq, m + 1, r);
+
+        pred_merge(a, leq, l, m, r);
+
+      }
+
+   }
+
+   template < typename ARRAY, typename PRED >
+   void pred_stable_sort(ARRAY & a, PRED leq)
+   {
+
+      pred_merge_sort(a, leq, 0, a.get_upper_bound());
+
+   }
+
 } // namespace sort
 
 

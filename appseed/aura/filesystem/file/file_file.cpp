@@ -525,6 +525,13 @@ namespace file
 
       int iNew = sbumpc();
 
+      if(iNew == EOF)
+      {
+
+         return true;
+
+      }
+
       if (iNew == i || ((char)iNew != '\n' && (char)iNew != '\r'))
       {
          seek(-1, seek_current);
@@ -596,6 +603,17 @@ namespace file
       return true;
 
    }
+
+
+   void file::write_string(const string & str)
+   {
+
+      write(str, str.get_length());
+
+      write(LINE_SEPARATOR, STATIC_ASCII_STRING_LENGTH(LINE_SEPARATOR));
+
+   }
+
 
    void file::SetFilePath(const char * lpszNewName)
    {

@@ -80,6 +80,8 @@ device_context::device_context()
 WINBOOL GetClientRect(oswindow hwnd, LPRECT lprect)
 {
 
+   xdisplay display(hwnd->display());
+
    //single_lock sl(&user_mutex(), true);
 
    XWindowAttributes attrs;
@@ -243,7 +245,9 @@ WINBOOL SetWindowPos(oswindow hwnd, oswindow hwndInsertAfter, int32_t x, int32_t
 
    if(uFlags & SWP_SHOWWINDOW)
    {
-      XMapWindow(hwnd->display(), hwnd->window());
+
+      hwnd->map_window();
+
    }
 
    XConfigureWindow(hwnd->display(), hwnd->window(), value_mask, &values);
@@ -296,6 +300,28 @@ WINBOOL SetWindowPos(oswindow hwnd, oswindow hwndInsertAfter, int32_t x, int32_t
 
 }
 
+int g_iIgnoreXDisplayError = 0;
+
+void x_display_error_trap_push(SnDisplay * display, Display * xdisplay)
+{
+
+  g_iIgnoreXDisplayError++;
+
+}
+
+void x_display_error_trap_pop(SnDisplay * display, Display * xdisplay)
+{
+
+  g_iIgnoreXDisplayError--;
+
+  if(g_iIgnoreXDisplayError == 0)
+  {
+
+    XSync(xdisplay, false);
+
+  }
+
+}
 
 int32_t _c_XErrorHandler(Display * display, XErrorEvent * perrorevent)
 {

@@ -158,6 +158,10 @@ namespace linux
          if(!(nOpenFlags & ::file::mode_no_truncate))
             dwFlags |= O_TRUNC;
       }
+      else if(nOpenFlags & ::file::mode_truncate)
+      {
+         dwFlags |= O_TRUNC;
+      }
 
       DWORD dwPermission = 0;
 
@@ -302,13 +306,11 @@ namespace linux
 
       */
 
-      /*
-
-    /*  if (m_iFile == INVALID_FILE)
-         return;
-
-      if (!::FlushFileBuffers((HANDLE)m_iFile))
-         file_exception::ThrowOsError(get_app(), (LONG)::get_last_error());*/
+//      if (m_iFile == INVALID_FILE)
+//         return;
+//
+//      if (!::FlushFileBuffers((HANDLE)m_iFile))
+//         file_exception::ThrowOsError(get_app(), (LONG)::get_last_error());
    }
 
    void file::close()
@@ -467,9 +469,10 @@ namespace linux
 #endif
 
 
-   /*void CLASS_DECL_AURA vfxThrowFileException(int32_t cause, LONG lOsError,
-   //   const char * lpszFileName /* == NULL */
-   /*{
+   /*
+   void CLASS_DECL_AURA vfxThrowFileException(int32_t cause, LONG lOsError,
+   //   const char * lpszFileName // == NULL
+   {
    #ifdef DEBUG
    const char * lpsz;
    if (cause >= 0 && cause < _countof(rgszFileExceptioncause))
@@ -480,7 +483,8 @@ namespace linux
    lpsz, (lpszFileName == NULL) ? L"Unknown" : lpszFileName, lOsError);
    #endif
    THROW(new FileException(cause, lOsError, lpszFileName));
-   }*/
+   }
+   */
 
    /* Error Codes */
 
@@ -1014,7 +1018,7 @@ namespace linux
 
 
 
-} // namespace win
+} // namespace linux
 
 
 
@@ -1378,31 +1382,32 @@ CLASS_DECL_AURA bool vfxResolveShortcut(string & strTarget, const char * pszSour
    {
       if (SUCCEEDED(ppf->Load(wstrFileIn, STGM_READ)))
       {
-         /* Resolve the link, this may post UI to find the link */
-  /*       if (SUCCEEDED(psl->Resolve(pui == NULL ? NULL : (oswindow) pui->get_os_data(),
-            SLR_ANY_MATCH | (pui == NULL ? (SLR_NO_UI | (8400 << 16)) : 0))))
-         {
-            wstrFileOut.alloc(MAX_PATH);
-            bool bOk;
-            if(SUCCEEDED(psl->GetPath(wstrFileOut, MAX_PATH, NULL, 0)))
-            {
-               bOk = true;
-               wstrFileOut.release_buffer();
-               strTarget = ::str::international::unicode_to_utf8((LPCWSTR) wstrFileOut);
-            }
-            else
-            {
-               bOk = false;
-            }
-            ppf->Release();
-            psl->Release();
-            return bOk;
-         }
-      }
-      ppf->Release();
-   }
-   psl->Release();
-   return FALSE;*/
+         // Resolve the link, this may post UI to find the link
+//         if (SUCCEEDED(psl->Resolve(pui == NULL ? NULL : (oswindow) pui->get_os_data(),
+//            SLR_ANY_MATCH | (pui == NULL ? (SLR_NO_UI | (8400 << 16)) : 0))))
+//         {
+//            wstrFileOut.alloc(MAX_PATH);
+//            bool bOk;
+//            if(SUCCEEDED(psl->GetPath(wstrFileOut, MAX_PATH, NULL, 0)))
+//            {
+//               bOk = true;
+//               wstrFileOut.release_buffer();
+//               strTarget = ::str::international::unicode_to_utf8((LPCWSTR) wstrFileOut);
+//            }
+//            else
+//            {
+//               bOk = false;
+//            }
+//            ppf->Release();
+//            psl->Release();
+//            return bOk;
+//         }
+//      }
+//      ppf->Release();
+//   }
+//   psl->Release();
+//   return FALSE;
+*/
 }
 
 // turn a file, relative path or other into an absolute path

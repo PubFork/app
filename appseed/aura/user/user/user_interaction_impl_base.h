@@ -32,6 +32,7 @@ namespace user
       mutex                               m_mutexLongPtr;
       int_ptr_to_int_ptr                  m_longptr;
 
+
       interaction_impl_base();
       virtual ~interaction_impl_base();
 
@@ -245,7 +246,7 @@ namespace user
       virtual bool ShowWindow(int32_t nCmdShow) override;
 
       DECL_GEN_SIGNAL(_001OnShowWindow);
-
+      DECL_GEN_SIGNAL(_001OnDestroyWindow);
 
       virtual void show_task(bool bShow);
 

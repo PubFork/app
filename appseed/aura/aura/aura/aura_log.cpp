@@ -197,7 +197,6 @@ namespace aura
    void log::trace_str(const char *pszFileName, int32_t nLine, uint32_t dwCategory, uint32_t nLevel, const char * psz) const
    {
 
-      UNREFERENCED_PARAMETER(nLevel);
       UNREFERENCED_PARAMETER(nLine);
       UNREFERENCED_PARAMETER(pszFileName);
 
@@ -209,7 +208,7 @@ namespace aura
       //sl.lock();
       log * plog = (log *) this;
       ::aura::trace::category & category = plog->m_ptrace->m_map[dwCategory];
-      if(category.m_estatus == ::aura::trace::status_disabled || category.m_uiLevel > category.m_uiLevel)
+      if(category.m_estatus == ::aura::trace::status_disabled || category.m_uiLevel > nLevel)
          return;
       //sl.unlock();
       stringa stra;

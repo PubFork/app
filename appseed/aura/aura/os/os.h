@@ -17,8 +17,8 @@
 #include "aura/aura/os/apple/apple.h"
 #include "aura/aura/os/macos/macos.h"
 #elif defined(LINUX)
+#include "aura/aura/os/ansios/ansios.h"
 #include "aura/aura/os/linux/linux.h"
-#include "aura/aura/os/linux/linux_c.h"
 #elif defined(METROWIN)
 #include "aura/aura/os/windows_common/windows_common_c.h"
 #include "aura/aura/os/metrowin/metrowin.h"

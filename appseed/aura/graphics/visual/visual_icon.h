@@ -35,6 +35,7 @@ namespace visual
       bool load_matter(string strPath);
       bool load_app_tray_icon(string strPath);
 
+
       ::size get_size();
 
       virtual void on_update_icon();
@@ -53,4 +54,6 @@ namespace visual
 
 
 } // namespace visual
+
+
 

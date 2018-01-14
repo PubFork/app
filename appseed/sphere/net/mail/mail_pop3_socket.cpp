@@ -1,5 +1,6 @@
 #include "framework.h" // from "aura/net/net_sockets.h"
 #include "aura/net/net_sockets.h"
+#include "pop3_socket.h"
 
 
 
@@ -418,20 +419,20 @@ namespace mail
 
    void pop3_socket::InitSSLClient()
    {
-      
+
       if(m_bTls)
       {
-         
+
          InitializeContextTLSClientMethod();
-         
+
       }
       else
       {
-         
+
          InitializeContextTLSClientMethod();
-         
+
       }
-      
+
    }
 
 

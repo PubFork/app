@@ -6,7 +6,7 @@ class CLASS_DECL_AURA timer_event:
 {
 public:
 
-   
+
    manual_reset_event   m_ev;
 
 
@@ -17,7 +17,7 @@ public:
    virtual bool wait(int millis);
 
 
-   virtual bool on_timer();
+   virtual void on_timer() override;
 
 
 };

@@ -4,43 +4,28 @@
 
 
 
+
 const char * basecore_get_file_icon_path(const char * pszPath, int iSize);
+
 string linux_get_file_icon_path(string strPath, int iSize)
 {
 
-   const char* psz = basecore_get_file_icon_path(strPath, iSize);
-
-   if (psz == NULL)
-   {
-      return "";
-   }
-
-   string str = psz;
-
-   free((void*)psz);
-
-   return str;
+   return ::str::from_strdup(basecore_get_file_icon_path(strPath, iSize));
 
 }
 
 const char * basecore_get_file_content_type(const char * pszFile);
-string linux_get_file_content_type(string strPath)
+
+string core_linux_get_file_content_type(string strPath)
 {
 
-   const char* psz = basecore_get_file_content_type(strPath);
-
-   if (psz == NULL)
-   {
-      return "";
-   }
-
-   string str = psz;
-
-   free((void*)psz);
-
-   return str;
+   return ::str::from_strdup(basecore_get_file_content_type(strPath));
 
 }
+
+
+
+
 
 namespace user
 {
@@ -57,6 +42,8 @@ namespace user
          ::user::shell::shell(papp),
          m_mutexQueue(papp)
       {
+
+         set_get_file_content_type_function(&core_linux_get_file_content_type);
 
          defer_create_mutex();
          //begin();

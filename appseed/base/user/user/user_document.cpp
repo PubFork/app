@@ -134,12 +134,11 @@ namespace user
    }
 
 
-
-
-
    void document::on_final_release()
    {
+
       on_close_document();  // may 'delete this'
+
    }
 
 
@@ -634,14 +633,11 @@ namespace user
 
 
    void document::on_close_document()
-   // must close all views now (no prompting) - usually destroys this
    {
 
       pre_close_document();
 
-      // destroy all frames viewing this document_interface
-      // the last destroy may destroy us
-      sp(::object) pthis = this; // don't destroy document_interface while closing views
+      sp(::object) pthis = this;
 
       {
 
@@ -650,8 +646,7 @@ namespace user
          for (index index = 0; index < m_viewspa.get_count(); index++)
          {
 
-            // get frame attached to the ::user::impact
-            ::user::impact * pview = m_viewspa[index];
+            sp(::user::impact) pview = m_viewspa[index];
 
             sl.unlock();
 
@@ -662,12 +657,9 @@ namespace user
             if (pframe != NULL)
             {
 
-               // and close it
                pre_close_frame(pframe);
 
                pframe->DestroyWindow();
-
-               // will destroy the ::user::impact as well
 
             }
 
@@ -678,8 +670,6 @@ namespace user
          m_viewspa.remove_all();
 
       }
-
-      // clean up contents of document_interface before destroying the document_interface itself
 
       delete_contents();
 
@@ -715,6 +705,7 @@ namespace user
       }
 
    }
+
 
    void document::report_save_load_exception(const char * lpszPathName, ::exception::base* e, bool bSaving, const char * nIDPDefault)
    {
@@ -754,9 +745,12 @@ namespace user
                TRACE(::aura::trace::category_AppMsg, 0, "Reporting file I/O exception on Save/Load with lOsError = $%lX.\n",
                      pfe->m_lOsError);
 
-
                if (pfe->m_strFileName.is_empty())
+               {
+
                   pfe->m_strFileName = lpszPathName;
+
+               }
 
                if (!pfe->get_error_message(prompt))
                {

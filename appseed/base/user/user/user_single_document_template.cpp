@@ -33,23 +33,36 @@ namespace user
          return NULL;
    }
 
+
    void single_document_template::add_document(::user::document * pdocument)
    {
+
       if(m_pdocument == NULL)
       {
+
          m_pdocument = pdocument;
+
          impact_system::add_document(pdocument);
+
       }
+
    }
+
 
    void single_document_template::remove_document(::user::document * pdocument)
    {
+
       if(m_pdocument == pdocument)
       {
+
          impact_system::remove_document(pdocument);
+
          m_pdocument = NULL;
+
       }
+
    }
+
 
    /////////////////////////////////////////////////////////////////////////////
    // single_document_template commands

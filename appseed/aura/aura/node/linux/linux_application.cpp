@@ -464,4 +464,31 @@ namespace aura
 
    }
 
+
+   bool application::os_on_start_application()
+   {
+
+      try
+      {
+
+         ::linux::desktop_file file(this);
+
+         file.create();
+
+         file.write();
+
+      }
+      catch(...)
+      {
+
+         TRACE("Could not create .desktop shortcut file for the Linux Application for the current user.");
+
+      }
+
+      return true;
+
+   }
+
+
 } // namespace linux
+

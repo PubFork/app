@@ -73,6 +73,8 @@ namespace aura
 
       string_map < ::aura::application * >            m_appmap;
       string                                          m_strAppName;
+      string                                          m_strAppTitle;
+      stringa                                         m_straAppCategory;
       ::aura::allocatorsp                             m_allocer;
 
       sp(::command::command)                          m_pcommand;
@@ -217,6 +219,9 @@ namespace aura
 
       virtual class imaging & imaging();
 
+
+      virtual string get_title();
+      virtual stringa get_categories();
 
 
       virtual bool on_run_exception(::exception::exception * pe) override;
@@ -523,6 +528,8 @@ namespace aura
       virtual bool start_application(bool bSynch, application_bias * pbias);
 
       virtual bool on_start_application();
+
+      virtual bool os_on_start_application();
 
       virtual bool is_application() override;
 

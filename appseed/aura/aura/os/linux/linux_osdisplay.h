@@ -4,54 +4,6 @@
 #include "aura/os/linux/linux_cross_win_gdi.h"
 
 
-#ifdef __cplusplus
-
-
-class osdisplay_dataptra;
-class osdisplay_data;
-class mutex;
-
-
-CLASS_DECL_AURA int32_t osdisplay_find(Display * pdisplay);
-CLASS_DECL_AURA osdisplay_data * osdisplay_get(Display * pdisplay);
-CLASS_DECL_AURA bool osdisplay_remove(Display * pdisplay);
-
-
-class CLASS_DECL_AURA xdisplay
-{
-public:
-
-
-   osdisplay_data *  m_pdata;
-   bool              m_bLocked;
-   bool              m_bOwn;
-
-
-   xdisplay();
-   xdisplay(Display * pdisplay, bool bInitialLock = true);
-   ~ xdisplay();
-
-
-   bool open(char * display_name, bool bInitialLock = true);
-
-   void lock();
-   void unlock();
-
-   bool close();
-
-   inline operator Display *();
-   inline bool is_null();
-   inline bool is_set();
-
-   Window default_root_window();
-
-   int default_screen();
-
-
-};
-
-
-
 
 class CLASS_DECL_AURA osdisplay_data
 {
@@ -75,35 +27,41 @@ public:
 
    Display * display()
    {
-      return this == NULL ? NULL : m_pdisplay;
+      return ::is_null(this) ? NULL : m_pdisplay;
    }
 
    Display * display() const
    {
-      return this == NULL ? NULL : m_pdisplay;
+      return ::is_null(this) ? NULL : m_pdisplay;
    }
 
    Atom atom_long_type()
    {
-      return this == NULL ? 0 : m_atomLongType;
+      return ::is_null(this) ? 0 : m_atomLongType;
    }
 
    Atom atom_long_style()
    {
-      return this == NULL ? 0 : m_atomLongStyle;
+      return ::is_null(this) ? 0 : m_atomLongStyle;
    }
 
    Atom atom_long_style_ex()
    {
-      return this == NULL ? 0 : m_atomLongStyleEx;
+      return ::is_null(this) ? 0 : m_atomLongStyleEx;
    }
 
    bool is_null() const
    {
-      return this == NULL;
+      return ::is_null(this);
    }
 
    Atom get_window_long_atom(int32_t nIndex);
+
+
+   Atom intern_atom(const char * pszAtomName, bool bCreate);
+
+
+
 
 
    inline int64_t get_ref_count()
@@ -122,9 +80,9 @@ public:
       return InterlockedIncrement64(&m_countReference);
 
 #elif defined(RASPBIAN) && defined(OS32BIT)
-      
+
       return __sync_add_and_fetch_4(&m_countReference,1);
-      
+
 #else
 
       return __sync_add_and_fetch(&m_countReference,1);
@@ -142,9 +100,9 @@ public:
       return InterlockedDecrement64(&m_countReference);
 
 #elif defined(RASPBIAN) && defined(OS32BIT)
-      
+
       return __sync_sub_and_fetch_4(&m_countReference,1);
-      
+
 #else
 
       return __sync_sub_and_fetch(&m_countReference,1);
@@ -201,8 +159,32 @@ inline bool xdisplay::is_set()
 }
 
 
-#endif
 
 
 
+class osdisplay_dataptra :
+   public ::raw_array < osdisplay_data * >
+{
+public:
 
+   virtual ~osdisplay_dataptra()
+   {
+
+         remove_all();
+
+   }
+
+   void remove_all()
+   {
+
+      for(auto p : *this)
+      {
+
+         delete p;
+
+      }
+
+      raw_array < osdisplay_data * >::remove_all();
+   }
+
+};

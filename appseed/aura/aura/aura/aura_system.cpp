@@ -1,6 +1,11 @@
 #include "framework.h" // previously aura/user/user.h
 //#include "aura/user/colorertake5/colorertake5.h"
 
+CLASS_DECL_AURA int xinerama_get_monitor_count();
+CLASS_DECL_AURA int xinerama_get_monitor_rect(index i, LPRECT lprect);
+CLASS_DECL_AURA int xinerama_get_screen_size(int& width, int& height);
+
+
 
 
 
@@ -45,8 +50,8 @@ namespace aura
 
 
    system::system(::aura::application * papp, app_core * pappcore, void * pdata) :
-      m_process(this),
       m_base64(this),
+      m_process(this),
       m_httpsystem(this),
       m_emaildepartment(this)
    {
@@ -430,10 +435,11 @@ namespace aura
    bool system::process_init()
    {
 
+      os_init_imaging();
 
       os_init_windowing();
 
-      os_init_imaging();
+      os_init_application();
 
       //m_peengine = new ::exception::engine(this);
 
@@ -590,7 +596,7 @@ namespace aura
 
       }
 
-      bool bOk = true;
+      //bool bOk = true;
 
       try
       {
@@ -728,6 +734,7 @@ namespace aura
       }
 
    }
+
 
    void system::term1()
    {
@@ -977,15 +984,11 @@ namespace aura
 
       ::aura::application::TermApplication();
 
-      os_term_imaging();
+      os_term_application();
 
       os_term_windowing();
 
-      os_term_application();
-
-
-
-
+      os_term_imaging();
 
    }
 
@@ -2999,7 +3002,7 @@ success:
 
    bool system::defer_accumulate_on_open_file(stringa stra, string strExtra)
    {
-      
+
       synch_lock sl(m_pmutex);
 
       m_dwCommandLineLast = get_tick_count();
@@ -3040,46 +3043,46 @@ success:
       }
 
       auto appptra = get_appptra();
-      
+
       ::aura::application * papp = NULL;
-      
+
       appptra.pred_remove([](auto & papp)
                              {
                                 return papp->is_system() || papp->is_session();
-      
+
                              });
-      
+
       if(appptra.has_elements())
       {
-         
+
          papp = appptra[0];
-         
+
       }
-      
+
       if(papp != NULL)
       {
-         
+
          sp(::create) pcreate(allocer());
-         
+
          merge_accumulated_on_open_file(pcreate);
-         
+
          papp->post_object(message_system, system_message_command, pcreate);
-         
+
       }
 
       return true;
-      
+
    }
-   
-   
+
+
    bool system::merge_accumulated_on_open_file(::create * pcreate)
    {
 
       if(m_straCommandLineAccumul.is_empty())
       {
-         
+
          return true;
-         
+
       }
 
       stringa straAccumul = m_straCommandLineAccumul;
@@ -3089,47 +3092,47 @@ success:
       m_straCommandLineAccumul.remove_all();
 
       m_straCommandLineExtra.remove_all();
-   
+
       command_line_sp line(allocer());
-   
+
       string strExtra = straExtra.implode(" ");
-   
+
       if(straAccumul.is_empty())
       {
-         
+
          line->_001ParseCommandFork("app.exe : open_default " + strExtra);
-         
+
       }
       else
       {
-         
+
          string strParam = straAccumul.surround_and_implode(" ", "\"", "\"");
-         
+
          line->_001ParseCommandFork("app.exe " + strParam + " " + ::str::has_char(strExtra, " : "));
-         
+
       }
-   
+
       if(pcreate->m_spCommandLine.is_null())
       {
-      
+
          pcreate->m_spCommandLine = line;
-         
+
       }
       else if(line->m_ecommand == command_line::command_file_open)
       {
-         
+
          pcreate->m_spCommandLine->m_varFile.stra().add(line->m_varFile.stra());
-      
+
          pcreate->m_spCommandLine->m_ecommand = command_line::command_file_open;
-      
+
       }
       else if(line->m_ecommand == command_line::command_application_start)
       {
-         
+
          pcreate->m_spCommandLine->m_varFile.stra().add(line->m_varFile.stra());
-         
+
          pcreate->m_spCommandLine->m_ecommand = command_line::command_application_start;
-         
+
       }
 
       return true;
@@ -3443,6 +3446,19 @@ success:
 
       return GetScreenCount();
 
+#elif defined(LINUX)
+
+      GdkDisplay * pdisplay = gdk_display_get_default();
+
+      if(pdisplay == NULL)
+      {
+
+         return 1;
+
+      }
+
+      return gdk_display_get_n_monitors(pdisplay);
+
 #else
 
       return 1;
@@ -3470,8 +3486,36 @@ success:
 
 #elif defined(LINUX)
 
+      GdkDisplay * pdisplay = gdk_display_get_default();
 
-      return false;
+      if(pdisplay == NULL)
+      {
+
+         return false;
+
+      }
+
+      GdkMonitor * pmonitor = gdk_display_get_monitor (pdisplay, iMonitor);
+
+      if(pmonitor == NULL)
+      {
+
+         return false;
+
+      }
+
+      GdkRectangle r;
+
+      ZERO(r);
+
+      gdk_monitor_get_geometry(pmonitor, &r);
+
+      lprect->left = r.x;
+      lprect->top = r.y;
+      lprect->right = r.x + r.width;
+      lprect->bottom = r.y + r.height;
+
+      return true;
 
 
 #elif defined(APPLEOS)
@@ -3594,6 +3638,38 @@ success:
 
       //      lprect->top += ::mac::get_system_main_menu_bar_height();
       //    lprect->bottom -= ::mac::get_system_dock_height();
+#elif defined(LINUX)
+
+      GdkDisplay * pdisplay = gdk_display_get_default();
+
+      if(pdisplay == NULL)
+      {
+
+         return false;
+
+      }
+
+      GdkMonitor * pmonitor = gdk_display_get_monitor (pdisplay, iWkspace);
+
+      if(pmonitor == NULL)
+      {
+
+         return false;
+
+      }
+
+      GdkRectangle r;
+
+      ZERO(r);
+
+      gdk_monitor_get_workarea(pmonitor, &r);
+
+      lprect->left = r.x;
+      lprect->top = r.y;
+      lprect->right = r.x + r.width;
+      lprect->bottom = r.y + r.height;
+
+      return true;
 
 #else
 
@@ -3664,3 +3740,217 @@ success:
 } // namespace aura
 
 
+
+
+// it doesn't work for final purpose, but it has example on how to "sort" rectangles with stability
+::array < rect > get_ordered_monitor_recta(::aura::application * papp)
+{
+
+   index iMonitor = 0;
+
+   ::array < ::rect > rectaMonitor;
+
+   ::aura::system & system = Sys(papp);
+
+   ::count cMonitor = system.get_monitor_count();
+
+   ::rect rectMonitor;
+
+   rectaMonitor.set_size(cMonitor);
+
+   for(; iMonitor < cMonitor; iMonitor++)
+   {
+
+      system.get_monitor_rect(iMonitor, &rectMonitor);
+
+      rectaMonitor[iMonitor] = rectMonitor;
+
+      output_debug_string(::str::from(rectMonitor.left));
+
+      output_debug_string(::str::from(rectMonitor.top));
+
+      output_debug_string(::str::from(rectMonitor.right));
+
+      output_debug_string(::str::from(rectMonitor.bottom));
+
+   }
+
+   // sort horizontally
+
+   ::sort::pred_stable_sort(rectaMonitor, [](auto & r1, auto & r2){ return r1.left <= r2.left; });
+
+   // sort vertically in stable way
+
+   ::sort::pred_stable_sort(rectaMonitor, [](auto & r1, auto & r2){ return r1.top <= r2.top; });
+
+   for(auto & rectItem: rectaMonitor)
+   {
+
+      output_debug_string(::str::from(rectItem.left));
+
+      output_debug_string(::str::from(rectItem.top));
+
+      output_debug_string(::str::from(rectItem.right));
+
+      output_debug_string(::str::from(rectItem.bottom));
+
+   }
+
+   return rectaMonitor;
+
+}
+
+// it doesn't work for final purpose,
+// but it calls function that "sorts" rectangles with stability
+int get_best_ordered_monitor(::user::interaction * pui, int & l, int & t, int & cx, int & cy)
+{
+
+   auto rectaOrdered = get_ordered_monitor_recta(pui->get_app());
+
+   ::rect rectBestMonitor;
+
+   index iJustForComparison = pui->best_monitor(&rectBestMonitor, null_rect(), FALSE, 0, 0);
+
+   index iOrdered = rectaOrdered.pred_find_first([&](auto & rectMonitorSorted){ return rectMonitorSorted == rectBestMonitor; });
+
+   output_debug_string(::str::from(iJustForComparison));
+
+   output_debug_string(::str::from(iOrdered));
+
+   l = rectBestMonitor.left;
+
+   t = rectBestMonitor.top;
+
+   cx = rectBestMonitor.width();
+
+   cy = rectBestMonitor.height();
+
+   return iOrdered;
+
+}
+
+
+//void xinerama_monitor_recta(rect_array & rectaMonitor, ::aura::application * papp)
+//{
+//
+//   index iMonitor = 0;
+//
+//   ::count cMonitor = xinerama_get_monitor_count();
+//
+//   ::rect rectMonitor;
+//
+//   rectaMonitor.set_size(cMonitor);
+//
+//   for(; iMonitor < cMonitor; iMonitor++)
+//   {
+//
+//      xinerama_get_monitor_rect(iMonitor, &rectMonitor);
+//
+//      rectaMonitor[iMonitor] = rectMonitor;
+//
+//      output_debug_string(::str::from(rectMonitor.left));
+//
+//      output_debug_string(::str::from(rectMonitor.top));
+//
+//      output_debug_string(::str::from(rectMonitor.right));
+//
+//      output_debug_string(::str::from(rectMonitor.bottom));
+//
+//   }
+//
+//}
+
+int best_xinerama_monitor(::user::interaction * pui, LPCRECT lpcrect, int & l, int & t, int & cx, int & cy)
+{
+
+   ::rect rectBestMonitor;
+
+   rectBestMonitor = null_rect();
+
+   if(lpcrect == NULL)
+   {
+
+      lpcrect = &rectBestMonitor;
+
+   }
+
+   index iOrdered = pui->best_monitor(&rectBestMonitor, *lpcrect, false, 0, 0);
+
+   ::count cMonitor = xinerama_get_monitor_count();
+
+   ::rect rectMonitor;
+
+   for(index i = 0; i < cMonitor; i++)
+   {
+
+      int iScreen = xinerama_get_monitor_rect(i, &rectMonitor);
+
+      if(rectMonitor == *lpcrect)
+      {
+
+         iOrdered = iScreen;
+
+         break;
+
+      }
+
+   }
+
+   output_debug_string(::str::from(iOrdered));
+
+   l = rectBestMonitor.left;
+
+   t = rectBestMonitor.top;
+
+   cx = rectBestMonitor.width();
+
+   cy = rectBestMonitor.height();
+
+   return iOrdered;
+
+}
+
+
+int best_xinerama_monitor(::user::interaction * pui, int & l, int & t, int & cx, int & cy)
+{
+
+   return best_xinerama_monitor(pui, NULL, l, t, cx, cy);
+
+}
+
+
+int get_best_monitor(::user::interaction * pui, LPCRECT lpcrect, int & l, int & t, int & cx, int & cy)
+{
+
+   ::rect rectBestMonitor;
+
+   rect rNull = null_rect();
+
+   if(lpcrect == NULL)
+   {
+
+      lpcrect = &rNull;
+
+   }
+
+   index i = pui->best_monitor(&rectBestMonitor, *lpcrect, FALSE, 0, 0);
+
+   l = rectBestMonitor.left;
+
+   t = rectBestMonitor.top;
+
+   cx = rectBestMonitor.width();
+
+   cy = rectBestMonitor.height();
+
+   return i;
+
+}
+
+
+int get_best_monitor(::user::interaction * pui, int & l, int & t, int & cx, int & cy)
+{
+
+   return get_best_monitor(pui, NULL, l, t, cx, cy);
+
+}

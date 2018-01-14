@@ -1402,13 +1402,13 @@ namespace datetime
 
          if (strCountryCode == "cn")
          {
-            
+
             dTimeZoneOffset = 8.0;
 
          }
          else
          {
-            
+
             dTimeZoneOffset = -6.0;
 
          }

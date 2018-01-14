@@ -1372,7 +1372,7 @@ namespace user
             if(!m_bEnable)
             {
 
-               ptimer->m_bRet = false;
+               ptimer->post_quit();
 
                return;
 
@@ -1381,7 +1381,12 @@ namespace user
             if(m_pframeschema != NULL)
             {
 
-               ptimer->m_bRet = m_pframeschema->_000OnTimer((UINT) ptimer->m_nIDEvent);
+               if(!m_pframeschema->_000OnTimer((UINT) ptimer->m_nIDEvent))
+               {
+
+                  ptimer->post_quit();
+
+               }
 
             }
 

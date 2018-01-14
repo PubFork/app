@@ -314,39 +314,6 @@ WINBOOL SetWindowPos(oswindow hwnd, oswindow hwndInsertAfter, int x, int y, int 
       
    }
    
-//   [[hwnd->window() dd_invokeOnMainThreadAndWaitUntilDone:TRUE] display];
-   
-   
-   
-   /*   if(!(uFlags & SWP_NOZORDER) && hwndInsertAfter >= 0)
-    {
-    value_mask |= CWSibling;
-    values.sibling = hwndInsertAfter;
-    values.stack_mode = Above;
-    }
-    
-    XConfigureWindow(display, hwnd, value_mask, &values);
-    
-    if(uFlags & SWP_SHOWWINDOW)
-    {
-    XMapWindow(display, hwnd);
-    }
-    
-    if(!(uFlags & SWP_NOZORDER) && hwndInsertAfter < 0)
-    {
-    if(hwndInsertAfter == ZORDER_TOP || hwndInsertAfter == ZORDER_TOPMOST)
-    {
-    XRaiseWindow(display, hwnd);
-    }
-    else if(hwndInsertAfter == ZORDER_BOTTOM)
-    {
-    XLowerWindow(display, hwnd);
-    }
-    
-    }
-    
-    XCloseDisplay(display);*/
-   
    return 1;
    
 }

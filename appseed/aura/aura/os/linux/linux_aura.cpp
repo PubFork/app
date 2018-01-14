@@ -135,12 +135,14 @@ procCount=2;
 }
 
 printf("Proc Count:%d\n", procCount);
-return 0;
+return procCount;
+
 }
 
 int get_processor_count()
 {
 
+   return get_proc_cpuinfo_core_count();
 }
 
 

@@ -1254,6 +1254,7 @@ class mq;
 #include "aura/multithreading/multithreading_simple_thread.h"
 #include "aura/multithreading/multithreading_go_thread.h"
 #include "aura/multithreading/multithreading_signal_thread.h"
+#include "aura/multithreading/multithreading_procedure_array.h"
 
 
 #include "aura/primitive/primitive_job.h"

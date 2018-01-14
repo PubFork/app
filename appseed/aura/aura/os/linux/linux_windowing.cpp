@@ -2,9 +2,21 @@
 #include "linux_user_impl.h"
 #include <X11/Xatom.h>
 #include <sys/stat.h>
+#include <X11/extensions/xf86vmode.h>
+
+CLASS_DECL_AURA int xinerama_get_monitor_count();
+CLASS_DECL_AURA int xinerama_get_monitor_rect(index i, LPRECT lprect);
+CLASS_DECL_AURA int xinerama_get_screen_size(int& width, int& height);
 
 
 
+int best_xinerama_monitor(::user::interaction * pui, int & l, int & t, int & cx, int & cy);
+int best_xinerama_monitor(::user::interaction * pui, LPCRECT lpcrect, int & l, int & t, int & cx, int & cy);
+
+//int get_best_ordered_monitor(::user::interaction * pui, int & l, int & t, int & cx, int & cy);
+//int get_best_monitor(::user::interaction * pui, int & l, int & t, int & cx, int & cy);
+
+extern SnLauncheeContext* g_psncontext;
 Display * x11_get_display();
 void wm_toolwindow(oswindow w,bool bToolWindow);
 void wm_state_hidden_raw(oswindow w, bool bSet);
@@ -42,278 +54,6 @@ struct MWMHints
 #define MWM_DECOR_MAXIMIZE      (1L << 6)
 
 
-oswindow_data::oswindow_data()
-{
-
-   m_plongptrmap           = new int_ptr_to_int_ptr();
-
-   m_hthread               = 0;
-
-   m_window                = None;
-
-   m_pimpl                 = NULL;
-
-   m_bMessageOnlyWindow    = false;
-
-   m_osdisplay             = NULL;
-
-   ZERO(m_visual);
-
-   m_iDepth                = -1;
-
-   m_iScreen               = -1;
-
-   m_colormap              = None;
-
-}
-
-oswindow_data::~oswindow_data()
-{
-
-   ::aura::del(m_plongptrmap);
-
-}
-
-
-
-
-oswindow_dataptra * oswindow_data::s_pdataptra = NULL;
-mutex * oswindow_data::s_pmutex = NULL;
-
-
-int32_t oswindow_find_message_only_window(::user::interaction_impl * pimpl)
-{
-
-   if(pimpl == NULL)
-      return -1;
-
-   single_lock slOsWindow(oswindow_data::s_pmutex, true);
-   //
-   //xdisplay d(x11_get_display());
-
-   for(int32_t i = 0; i < ::oswindow_data::s_pdataptra->get_count(); i++)
-   {
-
-      if(::oswindow_data::s_pdataptra->element_at(i)->m_bMessageOnlyWindow
-      && ::oswindow_data::s_pdataptra->element_at(i)->m_pimpl == pimpl)
-      {
-
-         return i;
-
-      }
-
-   }
-
-   return -1;
-
-}
-
-int32_t oswindow_find(Display * pdisplay, Window window)
-{
-
-   single_lock slOsWindow(::oswindow_data::s_pmutex, true);
-   //xdisplay d(x11_get_display());
-
-   for(int32_t i = 0; i < ::oswindow_data::s_pdataptra->get_count(); i++)
-   {
-      if(!::oswindow_data::s_pdataptra->element_at(i)->m_bMessageOnlyWindow
-      &&  ::oswindow_data::s_pdataptra->element_at(i)->m_osdisplay->display() == pdisplay
-      &&  ::oswindow_data::s_pdataptra->element_at(i)->m_window == window)
-      {
-         return i;
-      }
-   }
-
-   return -1;
-
-}
-
-int32_t oswindow_find(Window window)
-{
-
-   single_lock slOsWindow(::oswindow_data::s_pmutex, true);
-   //xdisplay d(x11_get_display());
-
-   for(int32_t i = 0; i < ::oswindow_data::s_pdataptra->get_count(); i++)
-   {
-      if(!::oswindow_data::s_pdataptra->element_at(i)->m_bMessageOnlyWindow
-      &&  ::oswindow_data::s_pdataptra->element_at(i)->m_window == window)
-      {
-         return i;
-      }
-   }
-
-   return -1;
-
-}
-
-oswindow_data * oswindow_get_message_only_window(::user::interaction_impl * pui)
-{
-
-   if(pui == NULL)
-      return NULL;
-
-   //single_lock slUser(&user_mutex(), true);
-
-   single_lock slOsWindow(::oswindow_data::s_pmutex, true);
-   //xdisplay d(x11_get_display());
-
-   int_ptr iFind = oswindow_find_message_only_window(pui);
-
-   if(iFind >= 0)
-      return ::oswindow_data::s_pdataptra->element_at(iFind);
-
-   ::oswindow_data * pdata = new oswindow_data;
-
-   pdata->m_bMessageOnlyWindow      = true;
-   pdata->m_window                  = None;
-   pdata->m_pimpl                   = pui;
-   pdata->m_osdisplay               = NULL;
-   pdata->m_parent                  = NULL;
-
-
-
-   ::oswindow_data::s_pdataptra->add(pdata);
-
-   return pdata;
-
-}
-
-
-oswindow_data * oswindow_get(Display * pdisplay, Window window, Visual * pvisual, int iDepth, int iScreen, Colormap colormap)
-{
-
-   //single_lock slUser(&user_mutex(), true);
-
-   single_lock slOsWindow(::oswindow_data::s_pmutex, true);
-//   xdisplay d(x11_get_display());
-
-   int_ptr iFind = oswindow_find(pdisplay, window);
-
-   if(iFind >= 0)
-      return ::oswindow_data::s_pdataptra->element_at(iFind);
-
-   ::oswindow_data * pdata = new ::oswindow_data;
-
-   pdata->m_bMessageOnlyWindow      = false;
-   pdata->m_osdisplay               = osdisplay_get(pdisplay);
-   pdata->m_window                  = window;
-
-   if(pvisual != NULL)
-   {
-
-      pdata->m_visual               = *pvisual;
-
-   }
-
-   pdata->m_iDepth                  = iDepth;
-   pdata->m_iScreen                 = iScreen;
-   pdata->m_colormap                = colormap;
-   pdata->m_parent                  = NULL;
-
-
-   ::oswindow_data::s_pdataptra->add(pdata);
-
-   return pdata;
-
-}
-
-oswindow_data * oswindow_get(Window window)
-{
-
-   single_lock slOsWindow(::oswindow_data::s_pmutex, true);
-//   xdisplay d(x11_get_display());
-
-   int_ptr iFind = oswindow_find(window);
-
-   if(iFind < 0)
-      return NULL;
-
-   return ::oswindow_data::s_pdataptra->element_at(iFind);
-
-}
-
-/*
-oswindow::oswindow()
-{
-
-   m_pdata = NULL;
-
-}
-
-oswindow::oswindow(::user::interaction_base * pui)
-{
-
-   single_lock slOsWindow(s_pmutex, true);
-
-   m_pdata = get_message_only_window(pui);
-
-
-
-}
-
-oswindow::oswindow(Display * pdisplay, Window window, Visual * pvisual)
-{
-
-   single_lock slOsWindow(s_pmutex, true);
-
-   m_pdata = get(pdisplay, window);
-
-   if(pvisual != NULL)
-   {
-
-      m_pdata->m_pvisual = pvisual;
-
-   }
-
-
-}
-
-oswindow::oswindow(const oswindow & oswindow)
-{
-
-   m_pdata = oswindow.m_pdata;
-
-}
-
-oswindow::oswindow(const void * p)
-{
-
-   m_pdata = (data *) p;
-
-}
-
-oswindow::oswindow(const LPARAM & lparam)
-{
-
-   m_pdata = (data *) lparam;
-
-}
-
-oswindow::oswindow(const WPARAM & wparam)
-{
-
-   m_pdata = (data *) wparam;
-
-}
-
-
-
-
-
-
-oswindow & oswindow::operator = (const oswindow & oswindow)
-{
-
-   m_pdata = oswindow.m_pdata;
-
-   return *this;
-
-}
-
-
-
-*/
 
 
 oswindow oswindow_defer_get(Window window)
@@ -382,11 +122,6 @@ int32_t oswindow_data::store_name(const char * psz)
 int32_t oswindow_data::select_input(int32_t iInput)
 {
 
-
-   //single_lock sl(&user_mutex(), true);
-
-   //single_lock slOsWindow(s_pmutex, true);
-
    xdisplay d(display());
 
    return XSelectInput(display(), window(), iInput);
@@ -407,14 +142,20 @@ int32_t oswindow_data::select_all_input()
 int32_t oswindow_data::map_window()
 {
 
-
-   //single_lock sl(&user_mutex(), true);
-
-   //single_lock slOsWindow(s_pmutex, true);
-
    xdisplay d(display());
 
-   return XMapWindow(display(), window());
+   int i = XMapWindow(display(), window());
+
+   if(g_psncontext != NULL)
+   {
+
+      sn_launchee_context_complete(g_psncontext);
+
+      g_psncontext = NULL;
+
+   }
+
+   return i;
 
 }
 
@@ -436,7 +177,7 @@ void oswindow_data::set_user_interaction(::user::interaction_impl * pimpl)
 
 //   xdisplay d(x11_get_display());
 
-   if(this == NULL)
+   if(::is_null(this))
       _throw(simple_exception(get_app(), "error, m_pdata cannot be NULL to ::oswindow::set_user_interaction"));
 
    m_pimpl = pimpl;
@@ -477,12 +218,8 @@ Window oswindow_data::get_parent_handle()
 
    single_lock slOsWindow(s_pmutex, true);
 
-//   xdisplay d(x11_get_display());
-
-   if(this == NULL)
+   if(::is_null(this))
       return 0;
-
-   if(m_parent)
 
    return m_parent;
 
@@ -497,7 +234,7 @@ oswindow oswindow_data::get_parent()
    //single_lock slOsWindow(s_pmutex, true);
    xdisplay d(x11_get_display());
 
-   if(this == NULL)
+   if(::is_null(this))
       return NULL;
 
    return NULL;
@@ -515,7 +252,7 @@ oswindow oswindow_data::set_parent(oswindow oswindow)
 
    //xdisplay d(x11_get_display());
 
-   if(this == NULL)
+   if(::is_null(this))
       return NULL;
 
    xdisplay d(display());
@@ -534,11 +271,17 @@ oswindow oswindow_data::set_parent(oswindow oswindow)
  */
 void oswindow_data::send_client_event(Atom atom, unsigned int numArgs, ...)
 {
+
 	XEvent xevent;
+
 	unsigned int i;
+
 	va_list argp;
+
 	va_start(argp, numArgs);
+
    ZERO(xevent);
+
 	xevent.xclient.type = ClientMessage;
 	xevent.xclient.serial = 0;
 	xevent.xclient.send_event = False;
@@ -549,22 +292,20 @@ void oswindow_data::send_client_event(Atom atom, unsigned int numArgs, ...)
 
 	for (i = 0; i < numArgs; i++)
 	{
+
 		xevent.xclient.data.l[i] = va_arg(argp, int);
+
 	}
 
-//	DEBUG_X11("Send ClientMessage Event: wnd=0x%04X",
-	//          (unsigned int) xevent.xclient.window);
 	XSendEvent(display(), RootWindow(display(), m_iScreen), False, SubstructureRedirectMask | SubstructureNotifyMask, &xevent);
-	XSync(display(), False);
+
 	va_end(argp);
+
 }
+
 
 bool oswindow_data::show_window(int32_t nCmdShow)
 {
-
-   //single_lock sl(&user_mutex(), true);
-
-   //single_lock slOsWindow(s_pmutex, true);
 
    xdisplay d(display());
 
@@ -575,10 +316,23 @@ bool oswindow_data::show_window(int32_t nCmdShow)
 
    }
 
-   if(nCmdShow == SW_HIDE)
+   XWindowAttributes attr;
+
+   if(!XGetWindowAttributes(display(), window(), &attr))
    {
 
-      XWindowAttributes attr;
+      return false;
+
+   }
+
+   if(attr.override_redirect)
+   {
+
+      XSetWindowAttributes attrs;
+      ZERO(attrs);
+      attrs.override_redirect = False;
+      XChangeWindowAttributes(display(), window(), CWOverrideRedirect, &attrs);
+      XWithdrawWindow(display(), window(), m_iScreen);
 
       if(!XGetWindowAttributes(display(), window(), &attr))
       {
@@ -587,11 +341,56 @@ bool oswindow_data::show_window(int32_t nCmdShow)
 
       }
 
+
+   }
+
+   if(attr.map_state == IsViewable)
+   {
+
+      {
+
+         long data[2];
+         data[0] = (long) NormalState;
+         data[1] = (long) None;
+         Atom wm_state = intern_atom("WM_STATE", false);
+         XChangeProperty(display(), window(), wm_state, wm_state, 32, PropModeReplace, (unsigned char *) data, 2);
+
+      }
+
+      send_client_event(XInternAtom(display(), "_NET_WM_STATE", false), 6,
+                        XInternAtom(display(), "_NET_WM_STATE_REMOVE", false),
+                        XInternAtom(display(), "_NET_WM_STATE_FULLSCREEN", false),
+                        XInternAtom(display(), "_NET_WM_STATE_MAXIMIZED_HORZ", false),
+                        XInternAtom(display(), "_NET_WM_STATE_MAXIMIZED_VERT", false),
+                        XInternAtom(display(), "_NET_WM_STATE_HIDDEN", false), 0);
+
+//      {
+//
+//         XEvent xev;
+//         ZERO(xev);
+//         xev.type = ClientMessage;
+//         xev.xclient.window = m_window;
+//         xev.xclient.message_type = intern_atom("_NET_WM_FULLSCREEN_MONITORS", False);
+//         xev.xclient.format = 32;
+//         xev.xclient.data.l[0] = -1; /* your topmost monitor number */
+//         xev.xclient.data.l[1] = -1; /* bottommost */
+//         xev.xclient.data.l[2] = -1; /* leftmost */
+//         xev.xclient.data.l[3] = -1; /* rightmost */
+//         xev.xclient.data.l[4] = 1; /* source indication */
+//         XSendEvent (display(), DefaultRootWindow(display()), False, SubstructureRedirectMask | SubstructureNotifyMask, &xev);
+//
+//      }
+
+
+   }
+
+   if(nCmdShow == SW_HIDE)
+   {
+
       if(attr.map_state == IsViewable)
       {
 
          XWithdrawWindow(display(), window(), m_iScreen);
-         //XUnmapWindow();
 
       }
 
@@ -599,27 +398,30 @@ bool oswindow_data::show_window(int32_t nCmdShow)
    else if(nCmdShow == SW_MAXIMIZE)
    {
 
-			/* Set the window as maximized */
+      if(attr.map_state != IsViewable)
+      {
+
+         XMapWindow(display(), window());
+
+      }
+
       send_client_event(XInternAtom(display(), "_NET_WM_STATE", false), 4,
                         XInternAtom(display(), "_NET_WM_STATE_ADD", false),
                         XInternAtom(display(), "_NET_WM_STATE_MAXIMIZED_VERT", false),
                         XInternAtom(display(), "_NET_WM_STATE_MAXIMIZED_HORZ", false), 0);
-
-			/*
-			 * This is a workaround for the case where the window is maximized locally before the rail server is told to maximize
-			 * the window, this appears to be a race condition where the local window with incomplete data and once the window is
-			 * actually maximized on the server - an update of the new areas may not happen. So, we simply to do a full update of
-			 * the entire window once the rail server notifies us that the window is now maximized.
-			 */
-//			if (appWindow->rail_state == WINDOW_SHOW_MAXIMIZED)
-//			{
-//				xf_UpdateWindowArea(xfc, appWindow, 0, 0, appWindow->windowWidth,
-//				                    appWindow->windowHeight);
-//			}
+      XFlush(display());
+      XSync(display(), False);
 
    }
    else if(nCmdShow == SW_MINIMIZE)
    {
+
+      if(attr.map_state != IsViewable)
+      {
+
+         XMapWindow(display(), window());
+
+      }
 
       XIconifyWindow(display(), window(), m_iScreen);
 
@@ -627,65 +429,179 @@ bool oswindow_data::show_window(int32_t nCmdShow)
    else
    {
 
-      /* Ensure the window is not maximized */
-      send_client_event(XInternAtom(display(), "_NET_WM_STATE", false), 4,
-                        XInternAtom(display(), "_NET_WM_STATE_REMOVE", false),
-                        XInternAtom(display(), "_NET_WM_STATE_MAXIMIZED_VERT", false),
-                        XInternAtom(display(), "_NET_WM_STATE_MAXIMIZED_HORZ", false), 0);
+      if(attr.map_state != IsViewable)
+      {
+
+         XMapWindow(display(), window());
+
+      }
 
    }
 
    XFlush(display());
+   XSync(display(), False);
+
+   return true;
 
 }
 
 
+void oswindow_data::full_screen(LPCRECT lpcrect)
+{
 
-LONG_PTR oswindow_data::get_window_long_ptr(int32_t nIndex)
+   xdisplay d(display());
+
+   if(d.is_null())
+   {
+
+      return;
+
+   }
+
+   XWindowAttributes attr;
+
+   if(!XGetWindowAttributes(display(), window(), &attr))
+   {
+
+      return;
+
+   }
+
+   //m_pimpl->m_pui->m_eappearanceRequest = ::user::appearance_full_screen;
+
+   m_pimpl->m_pui->set_appearance(::user::appearance_full_screen);
+
+   if(attr.map_state == IsViewable)
+   {
+
+      send_client_event(intern_atom("_NET_WM_STATE", false), 3,
+                        intern_atom("_NET_WM_STATE_REMOVE", false),
+                        intern_atom("_NET_WM_STATE_HIDDEN", false),
+                        intern_atom("_NET_WM_STATE_MAXIMIZED_VERT", false),
+                        intern_atom("_NET_WM_STATE_MAXIMIZED_HORZ", false), 0);
+      XFlush(display());
+      XSync(display(), False);
+
+   }
+
+   XWithdrawWindow(display(), m_window, m_iScreen);
+
+   XSetWindowAttributes attrs;
+
+   ZERO(attrs);
+
+   attrs.override_redirect = True;
+
+   XChangeWindowAttributes(display(), window(), CWOverrideRedirect, &attrs);
+
+//   {
+//
+//      long data[2];
+//      data[0] = (long) NormalState;
+//      data[1] = (long) None;
+//      Atom wm_state = intern_atom("WM_STATE", false);
+//      XChangeProperty(display(), window(), wm_state, wm_state, 32, PropModeReplace, (unsigned char *) data, 2);
+//
+//   }
+//
+
+   int l = 0;
+
+   int t = 0;
+
+   int cx = 0;
+
+   int cy = 0;
+
+   int iMonitor = best_xinerama_monitor(m_pimpl->m_pui, lpcrect, l, t, cx, cy);
+
+   XMoveResizeWindow(display(), m_window, l, t, cx, cy);
+
+   XMapRaised(display(), m_window);
+
+   XFlush(display());
+   XSync(display(), False);
+
+   //XFlush(display());
+   //XSync(display(), False);
+
+//   XEvent xev;
+//
+//   ZERO(xev);
+//   xev.type = ClientMessage;
+//   xev.xclient.window = m_window;
+//   xev.xclient.message_type = intern_atom("_NET_WM_FULLSCREEN_MONITORS", False);
+//   xev.xclient.format = 32;
+//   xev.xclient.data.l[0] = iMonitor; /* your topmost monitor number */
+//   xev.xclient.data.l[1] = iMonitor; /* bottommost */
+//   xev.xclient.data.l[2] = iMonitor; /* leftmost */
+//   xev.xclient.data.l[3] = iMonitor; /* rightmost */
+//   xev.xclient.data.l[4] = 1; /* source indication */
+//
+//   XSendEvent (display(), DefaultRootWindow(display()), False, SubstructureRedirectMask | SubstructureNotifyMask, &xev);
+//
+//   XFlush(display());
+//   XSync(display(), False);
+
+//   XFlush(display());
+//
+//   XSync(display(), False);
+//
+//   send_client_event(intern_atom("_NET_WM_STATE", false), 3,
+//                        intern_atom("_NET_WM_STATE_ADD", false),
+//                        intern_atom("_NET_WM_STATE_FULLSCREEN", false), 0);
+//
+//   XFlush(display());
+//
+//   XSync(display(), False);
+
+   m_pimpl->m_rectParentClientRequest.left = l;
+   m_pimpl->m_rectParentClientRequest.top = t;
+   m_pimpl->m_rectParentClientRequest.right = l + cx;
+   m_pimpl->m_rectParentClientRequest.bottom = t + cy;
+   m_pimpl->m_rectParentClient = m_pimpl->m_rectParentClientRequest;
+
+   m_pimpl->m_pui->set_need_layout();
+
+   m_pimpl->m_pui->set_need_redraw();
+
+//   ZERO(values);
+//
+//   value_mask = 0;
+//   value_mask = value_mask | CWX | CWY;
+//   value_mask |= CWX | CWY;
+//   values.x = l;
+//   values.y = t;
+//
+//   value_mask |= CWWidth | CWHeight;
+//   values.width = cx;
+//   values.height = cy;
+//
+//   XConfigureWindow(display(), window(), value_mask, &values);
+//
+//   XFlush(display());
+//
+//
+//   Atom wm_state   = intern_atom("_NET_WM_STATE", true);
+//
+//   Atom wm_fullscreen = intern_atom("_NET_WM_STATE_FULLSCREEN", true );
+//
+//   x_change_property(wm_state, XA_ATOM, 32, PropModeReplace, (unsigned char *)&wm_fullscreen, 1);
+//
+//   XFlush(display());
+
+}
+
+
+LONG_PTR oswindow_data::get_window_long(int32_t nIndex)
 {
 
    return m_plongptrmap->operator[](nIndex);
 
-/*   Atom type = 0;
-   int32_t format = 0;
-   unsigned long itemcount = 0;
-   unsigned long remaining = 0;
-   LONG * pl = NULL;
-   LONG l;
-
-   if(XGetWindowProperty(display(), window(), m_pdata->m_osdisplay.get_window_long_atom(nIndex), 0, 1, False, m_pdata->m_osdisplay.atom_long_type(), &type, &format, &itemcount, &remaining, (unsigned char **) &pl) == Success)
-   {
-
-      if(pl != NULL)
-      {
-
-         l = *pl;
-
-         XFree(pl);
-
-      }
-      else
-      {
-
-         l = 0;
-
-      }
-
-   }
-   else
-   {
-
-      l = 0;
-
-   }
-
-
-   return l;*/
-
 }
 
 
-LONG_PTR oswindow_data::set_window_long_ptr(int32_t nIndex, LONG_PTR l)
+LONG_PTR oswindow_data::set_window_long(int32_t nIndex, LONG_PTR l)
 {
 
    LONG_PTR lOld = m_plongptrmap->operator[](nIndex);
@@ -703,11 +619,6 @@ LONG_PTR oswindow_data::set_window_long_ptr(int32_t nIndex, LONG_PTR l)
    }
 
    m_plongptrmap->operator[](nIndex) = l;
-
-
-/*   LONG lOld = get_window_long(nIndex);
-
-   XChangeProperty(display(), window(), m_osdisplay.get_window_long_atom(nIndex), m_osdisplay.atom_long_type(), 32, PropModeReplace, (unsigned char *) &l, 1);*/
 
    return lOld;
 
@@ -1294,7 +1205,7 @@ WINBOOL DestroyWindow(oswindow window)
 bool oswindow_data::is_destroying()
 {
 
-   if(this == NULL)
+   if(::is_null(this))
       return true;
 
    if(m_pimpl == NULL)
@@ -2096,258 +2007,6 @@ bool wm_add_remove_list_raw(oswindow w, Atom atomList, Atom atomFlag, bool bSet)
 }
 
 
-bool wm_set_icon(oswindow w, ::draw2d::dib * p)
-{
-
-   // http://stackoverflow.com/questions/10699927/xlib-argb-window-icon
-   // http://stackoverflow.com/users/432509/ideasman42
-
-   xdisplay d(w->display());
-
-
-   #if 0
-
-      unsigned int buffer[] = {
-            16, 16,
-            4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 338034905, 3657433343, 0, 184483840, 234881279, 3053453567, 3221225727, 1879048447, 0, 0, 0, 0, 0, 0, 0, 1224737023, 3305111807, 3875537151,0, 0, 2063597823, 1291845887, 0, 67109119, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 50266112, 3422552319, 0, 0, 3070230783, 2063597823, 2986344703, 771752191, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3422552319, 0, 0, 3372220671, 1509949695, 704643327, 3355443455, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 0, 3422552319, 0, 134152192, 3187671295, 251658495, 0, 3439329535, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3422552319, 0, 0, 2332033279, 1342177535, 167772415, 3338666239, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 0, 3422552319, 0, 0, 436207871, 3322085628, 3456106751, 1375731967, 4278255360, 4026597120, 3758161664, 3489726208, 3204513536, 2952855296, 2684419840, 2399207168, 2130771712, 1845559040, 1593900800, 1308688128, 1040252672, 755040000, 486604544, 234946304, 4278255360, 4043374336, 3774938880, 3506503424, 3221290752, 2952855296, 2667642624, 2399207168, 2130771712, 1862336256, 1627453957, 1359017481, 1073805064, 788591627, 503379721, 218169088, 4278255360, 4043374336, 3758161664, 3506503424, 3221290752, 2952855296, 2684419840, 2415984384, 2130771712, 1862336256, 1577123584, 1308688128, 1040252672, 755040000, 486604544, 218169088, 4278190335, 4026532095, 3758096639, 3489661183, 3221225727, 2952790271, 2667577599, 2415919359, 2130706687, 1862271231, 1593835775, 1325400319, 1056964863, 771752191, 520093951, 234881279, 4278190335, 4026532095, 3758096639, 3489661183, 3221225727, 2952790271, 2667577599, 2415919359, 2130706687, 1862271231, 1593835775, 1325400319, 1056964863, 771752191, 503316735, 234881279, 4278190335, 4026532095, 3758096639, 3489661183, 3221225727, 2952790271, 2684354815, 2399142143, 2130706687, 1862271231, 1593835775, 1325400319, 1040187647, 771752191, 520093951, 234881279, 4294901760, 4043243520, 3774808064, 3506372608, 3221159936, 2952724480, 2684289024, 2399076352, 2147418112, 1862205440, 1593769984, 1308557312, 1040121856, 771686400, 503250944, 234815488, 4294901760, 4060020736, 3758030848, 3506372608, 3221159936, 2952724480, 2684289024, 2415853568, 2130640896, 1862205440, 1593769984, 1308557312, 1040121856, 771686400, 503250944, 234815488, 4294901760, 4043243520, 3774808064, 3489595392, 3237937152, 2952724480, 2684289024, 2415853568, 2147418112, 1862205440, 1593769984, 1325334528, 1056899072, 788463616, 503250944, 234815488,
-            32, 32,
-            4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 0, 0, 0, 0, 0, 0, 0, 0, 0, 268369920, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 1509949695, 3120562431, 4009754879, 4194304255, 3690987775, 2130706687, 83886335, 0, 50331903, 1694499071, 3170894079, 3992977663, 4211081471, 3657433343, 1879048447, 16777471, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3087007999, 2281701631, 1191182591, 1040187647, 2030043391, 4127195391, 2566914303, 0, 16777471, 3254780159, 2181038335, 1191182591, 973078783, 2030043391,4177527039, 2130706687, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 0, 0, 0, 0, 0, 2214592767, 4093640959, 0, 0, 0, 0, 0, 0, 0, 2298478847, 3909091583, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2214592767, 3607101695, 0, 0, 0, 0, 0, 0, 0, 1946157311, 4093640959, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 0, 0, 536871167, 1191182591, 2281701631,3019899135, 637534463, 0, 0, 0, 100597760, 251592704, 33488896, 0, 3321889023, 2919235839, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2550137087, 4278190335, 4278190335, 3405775103, 570425599, 0, 0, 0, 0, 0, 0, 2046820607, 4043309311, 620757247, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 33488896, 0, 0, 218104063, 1291845887, 3841982719, 3388997887, 0, 0, 0, 0, 0, 1996488959, 4093640959, 1073742079, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1761607935, 4278190335, 150995199, 0, 0, 67109119, 2550137087, 3909091583, 889192703, 0, 0, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 0, 0, 0, 0, 0, 2181038335, 3925868799, 0, 0, 218104063, 3070230783, 3623878911, 570425599, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 805306623, 3288334591, 1795162367, 1040187647, 1023410431, 2231369983, 4211081471, 1694499071, 0, 369099007, 3456106751, 3825205503, 1174405375, 872415487, 872415487, 872415487, 872415487, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4293984270, 2046951677, 3422552319, 4110418175, 4177527039, 3405775103, 1409286399, 0, 0, 1409286399, 4278190335, 4278190335, 4278190335, 4278190335, 4278190335, 4278190335, 4278190335, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760,4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 4294901760, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4278255360, 4144037632, 4009819904, 3875602176, 3741384448, 3607166720, 3472948992, 3338731264, 3204513536, 3053518592, 2936078080, 2801860352, 2650865408, 2516647680, 2382429952, 2264989440, 2113994496, 1996553984, 1862336256, 1728118528, 1577123584, 1459683072, 1325465344, 1191247616, 1040252672, 922812160, 771817216, 637599488, 503381760, 385941248, 234946304, 100728576, 4278255360, 4144037632, 4009819904, 3875602176, 3724607232, 3607166720, 3472948992, 3338731264, 3204513536, 3070295808, 2936078080, 2801860352, 2667642624, 2516647680, 2399207168, 2264989440, 2130771712, 1996553984, 1845559040, 1728118528, 1593900800, 1459683072, 1308688128, 1191247616, 1057029888, 922812160, 788594432, 637599488, 503381760, 369164032, 234946304, 117505792, 4278255360, 4144037632, 4009819904, 3875602176, 3741384448, 3607166720, 3472948992, 3338731264, 3204513536, 3053518592, 2919300864, 2801860352, 2650865408, 2533424896, 2399207168, 2264989440, 2113994496, 1996553984, 1862336256, 1728118528,1593900800, 1459683072, 1325465344, 1191247616, 1040252672, 906034944, 771817216, 654376704, 503381760, 369164032, 234946304, 117505792, 4278255360, 4144037632, 4009819904, 3858824960, 3741384448, 3607166720, 3472948992, 3338731264, 3204513536, 3070295808, 2936078080, 2801860352, 2667642624, 2533424896, 2382429952, 2264989440, 2130771712, 1979776768, 1862336256, 1728118528, 1577123584, 1442905856, 1325465344, 1191247616, 1040252672, 922812160, 771817216, 637599488, 503381760, 369164032, 234946304, 100728576, 4278255360, 4144037632, 4009819904, 3875602176, 3741384448, 3607166720, 3472948992, 3338731264, 3204513536, 3070295808, 2919300864, 2801860352, 2667642624, 2533424896, 2399207168, 2264989440, 2113994496, 1996553984, 1862336256, 1728118528, 1593900800, 1442905856, 1342241795, 1174470400, 1057029888, 906034944, 788594432, 654376704, 503381760, 385941248, 251723520, 100728576, 4278190335, 4160749823, 4026532095, 3892314367, 3741319423, 3623878911, 3472883967, 3338666239, 3221225727, 3070230783, 2952790271, 2818572543, 2667577599, 2533359871, 2399142143, 2264924415, 2147483903, 1996488959, 1862271231, 1728053503, 1593835775, 1459618047, 1325400319, 1191182591, 1056964863, 922747135, 788529407, 654311679, 520093951,385876223, 251658495, 117440767, 4278190335, 4160749823, 4026532095, 3892314367, 3741319423, 3623878911, 3489661183, 3355443455, 3221225727, 3087007999, 2936013055, 2801795327, 2667577599, 2533359871, 2399142143, 2281701631, 2130706687, 1996488959, 1862271231, 1728053503, 1593835775,1459618047, 1325400319, 1191182591, 1056964863, 922747135, 788529407, 654311679, 520093951, 385876223, 234881279, 100663551, 4278190335, 4160749823, 4026532095, 3892314367, 3758096639, 3623878911, 3489661183, 3355443455, 3221225727, 3087007999, 2936013055, 2801795327, 2667577599, 2550137087, 2415919359, 2264924415, 2130706687, 1996488959, 1862271231, 1728053503, 1593835775, 1459618047, 1325400319, 1191182591, 1056964863, 922747135, 788529407, 654311679, 503316735, 369099007, 251658495, 100663551, 4278190335, 4160749823, 4026532095, 3892314367, 3758096639, 3623878911, 3489661183, 3355443455, 3204448511, 3087007999, 2936013055, 2818572543, 2667577599, 2533359871, 2399142143, 2264924415, 2130706687, 1996488959, 1879048447, 1728053503, 1593835775, 1459618047, 1325400319, 1191182591, 1056964863, 922747135, 788529407, 654311679, 520093951, 385876223, 251658495, 117440767, 4278190335, 4160749823, 4026532095, 3892314367, 3758096639, 3623878911, 3489661183, 3355443455, 3221225727, 3087007999, 2952790271, 2818572543, 2667577599, 2533359871, 2399142143, 2264924415, 2147483903, 2013266175, 1862271231, 1744830719, 1610612991, 1476395263, 1342177535, 1191182591, 1056964863, 922747135, 788529407, 654311679, 520093951, 385876223, 251658495, 100663551, 4294901760, 4160684032, 4026466304, 3909025792, 3774808064, 3623813120, 3489595392, 3355377664, 3237937152, 3103719424, 2952724480, 2818506752, 2684289024, 2550071296, 2415853568, 2281635840, 2147418112, 2013200384, 1878982656, 1744764928, 1593769984, 1476329472,1325334528, 1207894016, 1056899072, 939458560, 788463616, 654245888, 520028160, 385810432, 251592704, 117374976, 4294901760, 4177461248, 4043243520, 3909025792, 3774808064, 3640590336, 3506372608, 3355377664, 3221159936, 3086942208, 2952724480, 2818506752, 2701066240, 2550071296, 2415853568, 2281635840, 2147418112, 2013200384, 1878982656, 1727987712, 1610547200, 1476329472, 1325334528, 1191116800, 1073676288, 922681344, 788463616, 654245888, 520028160, 385810432, 251592704, 100597760, 4294901760, 4177461248, 4043243520, 3909025792, 3774808064, 3640590336, 3489595392, 3372154880, 3237937152, 3103719424, 2952724480, 2818506752, 2700935170, 2550071296, 2415853568, 2281635840, 2147418112, 2013200384, 1878982656, 1744764928, 1610547200, 1459552256, 1342111744, 1191116800, 1056899072, 922681344, 788463616, 671023104, 520028160, 385810432, 251592704, 100597760, 4294901760, 4177461248, 4043243520, 3909025792, 3774808064, 3640590336, 3489595392, 3372154880, 3237937152, 3086942208, 2969501696, 2818506752, 2684289024, 2550071296, 2432630784, 2281635840, 2147418112, 2013200384, 1862205440, 1744764928, 1610547200, 1476329472, 1342111744, 1191116800, 1056899072, 922681344, 788463616, 654245888, 520028160, 385810432, 251592704, 117374976, 4294901760, 4177461248, 4043243520, 3909025792, 3774808064, 3623813120, 3506372608, 3372154880, 3237937152, 3103719424, 2952724480, 2835283968, 2684289024, 2550071296, 2432630784, 2281635840, 2147418112, 2046492676, 1862205440, 1744764928, 1610547200, 1476329472, 1342111744,1207894016, 1056899072, 939458560, 788463616, 654245888, 536281096, 385810432, 251592704, 134152192,
-    };
-    Display *display = w->display();
-    int s = DefaultScreen(display);
-    Atom net_wm_icon = XInternAtom(display, "_NET_WM_ICON", False);
-    Atom cardinal = XInternAtom(d, "CARDINAL", False);
-    //Window w;
-    //XEvent e; //w = XCreateWindow(d, RootWindow(d, s), 0, 0, 200, 200, 0,
-    //CopyFromParent, InputOutput, CopyFromParent, 0, 0);
-    int length = 2 + 16 * 16 + 2 + 32 * 32;
-    int status = XChangeProperty(d, w->window(), net_wm_icon, cardinal, 32, PropModeReplace, (const unsigned char*) buffer, length);
-    //XMapWindow(d, w);
-    //while(1)
-    //XNextEvent(d, &e);
-    //(void)argc, (void)argv;
-//}
-   if(status != 0)
-   {
-
-      //file_put_contents_dup("/home/camilo/window.txt", ::str::from((int)w->window()));
-      return false;
-
-   }
-   #elif 1
-
-      ::draw2d::dib_sp d1(w->m_pimpl->m_pui->allocer());
-
-   if(!d1->create(32, 32))
-   {
-
-      return false;
-
-   }
-
-   d1->get_graphics()->SetStretchBltMode(HALFTONE);
-
-   d1->get_graphics()->StretchBlt(0, 0, d1->m_size.cx, d1->m_size.cy, p->get_graphics(), 0, 0, p->m_size.cx, p->m_size.cy);
-
-   memory m(w->m_pimpl->m_pui->get_app());
-
-   int length = 2 + d1->area();
-
-   m.allocate(length * 4);
-
-   unsigned int * pcr = (unsigned int *) m.get_data();
-
-   pcr[0] = d1->m_size.cx;
-
-   pcr[1] = d1->m_size.cy;
-
-   int c = d1->area();
-
-   for(int i = 0; i < c; i++)
-   {
-
-      pcr[i+2] = d1->m_pcolorref[i];
-
-   }
-
-   Display *display = w->display();
-
-   Atom net_wm_icon = XInternAtom(display, "_NET_WM_ICON", False);
-
-   Atom cardinal = XInternAtom(display, "CARDINAL", False);
-
-   int status = XChangeProperty(display, w->window(), net_wm_icon, cardinal, 32, PropModeReplace, (const unsigned char*) pcr, length);
-
-
-   if(status == BadAlloc)
-   {
-   }
-   if(status != 0)
-   {
-
-      //file_put_contents_dup("/home/camilo/window.txt", ::str::from((int)w->window()));
-      return false;
-
-   }
-
-   #else
-
-
-
-   ::draw2d::dib_sp d1(w->m_pimpl->m_pui->allocer());
-
-   if(!d1->create(24, 24))
-   {
-
-      return false;
-
-   }
-
-   d1->get_graphics()->SetStretchBltMode(HALFTONE);
-
-   d1->get_graphics()->StretchBlt(0, 0, d1->m_size.cx, d1->m_size.cy, p->get_graphics(), 0, 0, p->m_size.cx, p->m_size.cy);
-
-   ::draw2d::dib_sp d2(w->m_pimpl->m_pui->allocer());
-
-   if(!d2->create(54, 54))
-   {
-
-      return false;
-
-   }
-
-   d2->get_graphics()->SetStretchBltMode(HALFTONE);
-
-   d2->get_graphics()->StretchBlt(0, 0, d2->m_size.cx, d2->m_size.cy, p->get_graphics(), 0, 0, p->m_size.cx, p->m_size.cy);
-
-   memory m(w->m_pimpl->m_pui->get_app());
-
-   int length = 2 + d1->area() + 2 + d2->area();
-
-   m.allocate(length * 4);
-
-   unsigned int * pcr = (unsigned int *) m.get_data();
-
-   pcr[0] = d1->m_size.cx;
-
-   pcr[1] = d1->m_size.cy;
-
-   int c = d1->area();
-
-   for(int i = 0; i < c; i++)
-   {
-
-      pcr[i+2] = d1->m_pcolorref[i];
-
-   }
-
-   memory_offset_t o;
-
-   o = 2 + d1->area();
-
-   pcr[o] = d2->m_size.cx;
-
-   pcr[o+1] = d2->m_size.cy;
-
-   c = d2->area();
-
-   for(int i = 0; i < c; i++)
-   {
-
-      pcr[i+o+2] = d2->m_pcolorref[i];
-
-   }
-
-   Display *display = w->display();
-
-   Atom net_wm_icon = XInternAtom(display, "_NET_WM_ICON", False);
-
-   Atom cardinal = XInternAtom(display, "CARDINAL", False);
-
-   int status = XChangeProperty(display, w->window(), net_wm_icon, cardinal, 32, PropModeReplace, (const unsigned char*) pcr, length);
-
-
-   if(status != 0)
-   {
-
-      //file_put_contents_dup("/home/camilo/window.txt", ::str::from((int)w->window()));
-      return false;
-
-   }
-#endif
-   return true;
-
-}
-
-
-bool wm_set_icon(oswindow w, stringa & straMatter)
-{
-
-   ::aura::application * papp = w->m_pimpl->m_pui->get_app();
-
-   ::file::path path;
-
-   for (auto & strMatter : straMatter)
-   {
-
-      path = strMatter;
-
-      path = App(papp).dir().matter(path / "linux.txt");
-
-      if(App(papp).file().exists(path))
-      {
-
-         ::file::path path2;
-
-         path2 = getenv("HOME");
-
-         path2 /= ".local/share/applications";
-
-         string strApp = App(papp).m_strAppName;
-
-         strApp.replace("-", "_");
-         strApp.replace("/", "_");
-         strApp.replace(".", "_");
-
-         path2 /= (strApp + ".desktop");
-
-         if(!App(papp).file().exists(path2))
-         {
-
-            App(papp).file().copy(path2, path);
-
-            chmod(path2, S_IRUSR | S_IWUSR );
-
-         }
-
-         xdisplay d(w->display());
-
-         Atom net_wm_icon = XInternAtom(w->display(), "_BAMF_DESKTOP_FILE", False);
-
-         Atom cardinal = XInternAtom(w->display(), "STRING", False);
-
-         int ixa= XA_STRING;
-
-         int status = XChangeProperty(w->display(), w->window(), net_wm_icon, ixa, 8, PropModeReplace, (const unsigned char*) (const char *) path2, path2.get_length());
-
-         if(status != 0)
-         {
-
-            //file_put_contents_dup("/home/camilo/window.txt", ::str::from((int)w->window()));
-
-            return false;
-
-         }
-
-         return true;
-
-      }
-
-   }
-
-   return false;
-
-}
 
 
 
@@ -2499,7 +2158,10 @@ UINT __axis_x11_thread(void * p)
 
    }
 
+   return 0;
+
 }
+
 
 int g_xxx = 0;
 
@@ -2543,8 +2205,6 @@ void process_message(osdisplay_data * pdata, Display * display)
 
       msg.hwnd = oswindow_get(display, e.xproperty.window);
 
-
-
       if(msg.hwnd != NULL && msg.hwnd->m_pimpl != NULL)
       {
 
@@ -2564,16 +2224,21 @@ void process_message(osdisplay_data * pdata, Display * display)
 
                if(g_xxx >= 9)
                {
+
                   output_debug_string("g_xxx");
+
                }
+
                if(pui->m_eappearance == ::user::appearance_iconic && !msg.hwnd->is_iconic())
                {
 
                   //file_put_contents_dup("/home/camilo/xxx.txt", "");
 
-                  pui->m_eappearance == ::user::appearance_none;
+                  // 1111111111111111111111111111111111111111111
 
-                  ::fork(pui->get_app(), [=]()
+                  pui->m_eappearance = ::user::appearance_none;
+
+                  pui->fork([=]()
                   {
 
                      if(pui->m_eappearanceBefore == ::user::appearance_iconic)
@@ -2593,6 +2258,23 @@ void process_message(osdisplay_data * pdata, Display * display)
 
                   bHandled = true;
 
+               }
+
+               if(pui->m_eappearance != ::user::appearance_iconic
+                  && pui->m_eappearance != ::user::appearance_none
+                  && msg.hwnd->is_iconic())
+               {
+
+                  pui->set_appearance(::user::appearance_iconic);
+
+               }
+
+               if(pui->m_eappearanceRequest == ::user::appearance_full_screen
+                  && pui->m_eappearance != ::user::appearance_full_screen
+                  && !msg.hwnd->is_iconic())
+               {
+
+                  pui->set_appearance(::user::appearance_full_screen);
 
                }
 
@@ -2611,6 +2293,48 @@ void process_message(osdisplay_data * pdata, Display * display)
       msg.lParam        = 0;
 
       send_message(msg);
+
+      if(e.type == MapNotify)
+      {
+         if(msg.hwnd != NULL && msg.hwnd->m_pimpl != NULL)
+         {
+
+            ::user::interaction * pui = msg.hwnd->m_pimpl->m_pui;
+
+            if(pui->m_eappearance == ::user::appearance_iconic && !msg.hwnd->is_iconic())
+            {
+
+               //file_put_contents_dup("/home/camilo/xxx.txt", "");
+
+               // 1111111111111111111111111111111111111111111
+
+               pui->m_eappearance = ::user::appearance_none;
+
+               pui->fork([=]()
+               {
+
+                  if(pui->m_eappearanceBefore == ::user::appearance_iconic)
+                  {
+
+                     pui->_001OnDeiconify(::user::appearance_normal);
+
+                  }
+                  else
+                  {
+
+                     pui->_001OnDeiconify(pui->m_eappearanceBefore);
+
+                  }
+
+               });
+
+//               bHandled = true;
+
+            }
+
+         }
+
+      }
 
    }
    else if(e.type == ConfigureNotify)
@@ -2637,16 +2361,21 @@ void process_message(osdisplay_data * pdata, Display * display)
 
                if(g_xxx >= 9)
                {
+
                   output_debug_string("g_xxx");
+
                }
-               if(pui->m_eappearance == ::user::appearance_iconic)
+
+               if(pui->m_eappearance == ::user::appearance_iconic && !msg.hwnd->is_iconic())
                {
 
                   //file_put_contents_dup("/home/camilo/xxx.txt", "");
 
-                  pui->m_eappearance == ::user::appearance_none;
+                  // 33333333333333333333333333333333333333333333333333333333333333
 
-                  ::fork(pui->get_app(), [=]()
+                  pui->m_eappearance = ::user::appearance_none;
+
+                  pui->fork([=]()
                   {
 
                      if(pui->m_eappearanceBefore == ::user::appearance_iconic)
@@ -2666,32 +2395,31 @@ void process_message(osdisplay_data * pdata, Display * display)
 
                   bHandled = true;
 
-
                }
 
 
-               if(!bHandled)
-               {
-
-                  //rect64 rectWindow;
-
-                  //rectWindow.left = e.xconfigure.x;
-
-                  //rectWindow.top = e.xconfigure.y;
-
-                  //rectWindow.right = rectWindow.left + e.xconfigure.width;
-
-                  //rectWindow.bottom = rectWindow.top + e.xconfigure.height;
-
-                  ::rect rectWindow;
-
-                  ::GetWindowRect(msg.hwnd, rectWindow);
-
-                  ::copy(pimpl->m_rectParentClientRequest, rectWindow);
-
-                  pui->set_need_layout();
-
-               }
+//               if(!bHandled)
+//               {
+//
+//                  //rect64 rectWindow;
+//
+//                  //rectWindow.left = e.xconfigure.x;
+//
+//                  //rectWindow.top = e.xconfigure.y;
+//
+//                  //rectWindow.right = rectWindow.left + e.xconfigure.width;
+//
+//                  //rectWindow.bottom = rectWindow.top + e.xconfigure.height;
+//
+//                  ::rect rectWindow;
+//
+//                  ::GetWindowRect(msg.hwnd, rectWindow);
+//
+//                  ::copy(pimpl->m_rectParentClientRequest, rectWindow);
+//
+//                  pui->set_need_layout();
+//
+//               }
 
             }
 
@@ -2699,7 +2427,7 @@ void process_message(osdisplay_data * pdata, Display * display)
 
       }
 
-      if(e.xconfigure.window == g_oswindowDesktop->window())
+      if(g_oswindowDesktop != NULL && e.xconfigure.window == g_oswindowDesktop->window())
       {
 
          for(int j = 0; j < ::oswindow_data::s_pdataptra->get_count(); j++)
@@ -2993,13 +2721,8 @@ UINT __axis_x11mouse_thread(void * p)
 }
 
 
-
-
-
-
 namespace user
 {
-
 
 
    LRESULT interaction_child::send_x11_event(void * pvoidEvent)
@@ -3013,31 +2736,51 @@ namespace user
 
       try
       {
+
          sp(::user::interaction) pui = m_pui;
+
          while(pui != NULL && pui->GetParent() != NULL)
          {
+
             try
             {
+
                pui->pre_translate_message(spbase);
+
             }
             catch(...)
             {
+
                break;
+
             }
+
             if(spbase->m_bRet)
+            {
+
                return spbase->get_lresult();
+
+            }
+
             try
             {
+
                pui = pui->GetParent();
+
             }
             catch(...)
             {
+
                break;
+
             }
+
          }
+
       }
       catch(...)
       {
+
       }
 
       message_handler(spbase);
@@ -3067,26 +2810,22 @@ namespace aura
 } // namespace aura
 
 
-
-
-
-void os_init_windowing()
+bool os_init_windowing()
 {
 
+   set_TranslateMessage(&axis_TranslateMessage);
 
-      set_TranslateMessage(&axis_TranslateMessage);
+   set_DispatchMessage(&axis_DispatchMessage);
 
-      set_DispatchMessage(&axis_DispatchMessage);
+   oswindow_data::s_pdataptra = new oswindow_dataptra;
 
-      oswindow_data::s_pdataptra = new oswindow_dataptra;
+   oswindow_data::s_pmutex = new mutex;
 
-      oswindow_data::s_pmutex = new mutex;
+   osdisplay_data::s_pdataptra = new osdisplay_dataptra;
 
-      osdisplay_data::s_pdataptra = new osdisplay_dataptra;
+   osdisplay_data::s_pmutex = new mutex;
 
-      osdisplay_data::s_pmutex = new mutex;
-
-      XSetErrorHandler(_c_XErrorHandler);
+   XSetErrorHandler(_c_XErrorHandler);
 
 }
 
@@ -3094,44 +2833,67 @@ void os_init_windowing()
 void os_term_windowing()
 {
 
-      delete osdisplay_data::s_pmutex;
+   delete osdisplay_data::s_pmutex;
 
-      osdisplay_data::s_pmutex = NULL;
+   osdisplay_data::s_pmutex = NULL;
 
-      delete osdisplay_data::s_pdataptra;
+   delete osdisplay_data::s_pdataptra;
 
-      osdisplay_data::s_pdataptra = NULL;
+   osdisplay_data::s_pdataptra = NULL;
 
-      delete oswindow_data::s_pmutex;
+   delete oswindow_data::s_pmutex;
 
-      oswindow_data::s_pmutex = NULL;
+   oswindow_data::s_pmutex = NULL;
 
-      delete oswindow_data::s_pdataptra;
+   delete oswindow_data::s_pdataptra;
 
-      oswindow_data::s_pdataptra = NULL;
+   oswindow_data::s_pdataptra = NULL;
 
 }
-
-
-
 
 
 int xlib_error_handler(Display * d, XErrorEvent * e)
 {
 
-   if(e->request_code == 12) //
+   if(e->request_code == 12)
    {
 
       if(e->error_code == BadValue)
       {
+
       }
 
    }
+
    char sz[1024];
+
    XGetErrorText(d, e->error_code, sz, sizeof(sz));
+
    fputs(sz, stderr);
 
    abort();
 
 }
 
+
+
+
+
+
+
+
+::user::interaction * get_system_window_interaction(::os_system_window * psystemwindow)
+{
+
+   return NULL;
+
+}
+
+
+
+void wm_full_screen(oswindow w, LPCRECT lpcrect)
+{
+
+   w->full_screen(lpcrect);
+
+}

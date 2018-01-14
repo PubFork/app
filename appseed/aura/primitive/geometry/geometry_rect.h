@@ -22,6 +22,8 @@ public:
    rect(LPCRECT lpSrcRect) NOTHROW;
    // from a point and size
    rect(POINT point, SIZE size) NOTHROW;
+   // from size
+   rect(SIZE size, POINT point = null_point()) NOTHROW;
    // from two points
    rect(POINT topLeft, POINT bottomRight) NOTHROW;
 

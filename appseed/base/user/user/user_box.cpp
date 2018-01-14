@@ -191,6 +191,10 @@ namespace user
 
          ::user::e_appearance eappearance = (::user::e_appearance) iAppearance;
 
+         rect rectRestored;
+
+         memstream >> rectRestored;
+
          rect rectWindow;
 
          memstream >> rectWindow;
@@ -236,7 +240,7 @@ namespace user
 
                pwindow->set_appearance(::user::appearance_normal);
 
-               pwindow->good_restore(NULL, rectWindow, true);
+               pwindow->good_restore(NULL, rectRestored, true);
 
             }
 
@@ -246,7 +250,7 @@ namespace user
 
             pwindow->set_appearance(::user::appearance_normal);
 
-            pwindow->good_restore(NULL, rectWindow, true);
+            pwindow->good_restore(NULL, rectRestored, true);
 
          }
 
@@ -293,6 +297,7 @@ namespace user
       bool bIconicOld = false;
       int iAppearanceOld = 0;
       rect rectOld;
+      rect rectRestoredOld;
       if (bGet)
       {
          try
@@ -303,6 +308,7 @@ namespace user
             streamGet >> bFullScreenOld;
             streamGet >> bIconicOld;
             streamGet >> iAppearanceOld;
+            streamGet >> rectRestoredOld;
             streamGet >> rectOld;
             bGet = error.none();
          }
@@ -324,16 +330,17 @@ namespace user
       stream << bIconic;
       int iAppearance = (int)pwindow->get_appearance();
       stream << iAppearance;
+      rect rect;
+      pwindow->GetWindowRect(rect);
       if (bGet && (bZoomed || bFullScreen || bIconic || ::user::is_docking_appearance((::user::e_appearance)iAppearance)))
       {
-         stream << rectOld;
+         stream << rectRestoredOld;
       }
       else
       {
-         rect rect;
-         pwindow->GetWindowRect(rect);
          stream << rect;
       }
+      stream << rect;
       return data_set(id, stream);
    }
 

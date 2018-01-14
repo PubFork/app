@@ -134,7 +134,6 @@
 		<Unit filename="base/os/ansios/ansios_multithreading.cpp" />
 		<Unit filename="base/os/cross.h" />
 		<Unit filename="base/os/cross/cross.h" />
-		<Unit filename="base/os/cross/windows/base_cross_windows_threading.cpp" />
 		<Unit filename="base/os/cross/windows/windows.h" />
 		<Unit filename="base/os/linux/linux.cpp" />
 		<Unit filename="base/os/linux/linux.h" />
@@ -264,10 +263,11 @@
 		<Unit filename="user/user/user_menu_item.h" />
 		<Unit filename="user/user/user_message.cpp" />
 		<Unit filename="user/user/user_message.h" />
-		<Unit filename="user/user/user_message_queue.cpp" />
 		<Unit filename="user/user/user_message_queue.h" />
 		<Unit filename="user/user/user_message_queue_listener.h" />
 		<Unit filename="user/user/user_mouse.h" />
+		<Unit filename="user/user/user_multiple_document_template.cpp" />
+		<Unit filename="user/user/user_multiple_document_template.h" />
 		<Unit filename="user/user/user_place_holder.h" />
 		<Unit filename="user/user/user_place_holder_container.h" />
 		<Unit filename="user/user/user_plain_edit.cpp" />
@@ -283,6 +283,8 @@
 		<Unit filename="user/user/user_scroll_bar.h" />
 		<Unit filename="user/user/user_server.cpp" />
 		<Unit filename="user/user/user_server.h" />
+		<Unit filename="user/user/user_single_document_template.cpp" />
+		<Unit filename="user/user/user_single_document_template.h" />
 		<Unit filename="user/user/user_style.h" />
 		<Unit filename="user/user/user_style_base.h" />
 		<Unit filename="user/user/user_style_composite.h" />

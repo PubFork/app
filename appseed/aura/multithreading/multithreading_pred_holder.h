@@ -52,3 +52,27 @@ public:
 
 
 
+
+class CLASS_DECL_AURA pred_array :
+   virtual public array < sp(pred_holder_base) >
+{
+public:
+
+
+   pred_array(::aura::application * papp);
+   virtual ~pred_array();
+
+
+   template < typename PRED >
+   void pred_add(PRED pred)
+   {
+
+      add(canew(pred_holder < PRED >(get_app(), pred)));
+
+   }
+
+   void run_all();
+
+};
+
+

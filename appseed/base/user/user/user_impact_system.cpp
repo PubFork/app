@@ -74,9 +74,13 @@ namespace user
 
    void impact_system::remove_document(::user::document * pdocument)
    {
+
       ASSERT(pdocument->m_pimpactsystem == this);   // must be attached to us
+
       pdocument->m_pimpactsystem = NULL;
+
    }
+
 
    impact_system::Confidence impact_system::MatchDocType(const ::file::path & lpszPathName,::user::document *& rpDocMatch)
    {
@@ -275,7 +279,8 @@ namespace user
 
          try
          {
-            sp(::user::document) pdocument = get_document(index);
+
+            ::user::document * pdocument = get_document(index);
 
             pdocument->close_document();
 

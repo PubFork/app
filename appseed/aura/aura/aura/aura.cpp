@@ -331,10 +331,10 @@ CLASS_DECL_AURA void writeln(const char * psz)
 
 BEGIN_EXTERN_C
 
-CLASS_DECL_AURA void c_function_call(void * p)
+CLASS_DECL_AURA void c_function_call(void * )
 {
 
-   const char * psz = (const char *) p;
+   //const char * psz = (const char *) p;
 
 
 }

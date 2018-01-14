@@ -1,6 +1,4 @@
 ﻿#include "framework.h"
-//#include "core/filesystem/filemanager/filemanager.h"
-#include "base/database/simpledb/simpledb.h"
 
 
 #ifdef WINDOWS

@@ -5901,10 +5901,12 @@ namespace draw2d_cairo
 
       printf("Total fonts: %d", fs->nfont);
 
-      ::draw2d::font::enum_item item;
+      sp(::draw2d::font::enum_item) item;
 
       for (i = 0; fs && i < fs->nfont; i++)
       {
+
+         item = canew(::draw2d::font::enum_item);
 
          FcPattern * font = fs->fonts[i];//FcFontSetFont(fs, i);
 
@@ -5928,22 +5930,22 @@ namespace draw2d_cairo
 
             //printf("Filename: %s", file);
 
-            item.m_strFile = (const char *)file;
+            item->m_strFile = (const char *)file;
 
          }
          else
          {
 
-            item.m_strFile = str;
+            item->m_strFile = str;
 
          }
 
          //printf("Font: %s\n", str.c_str());
          //printf("Font: %s\n", s);
 
-         item.m_strName = str;
+         item->m_strName = str;
 
-         item.m_ecs = ::draw2d::font::cs_default;
+         item->m_ecs = ::draw2d::font::cs_default;
 
          itema.add(item);
 
@@ -5962,7 +5964,7 @@ namespace draw2d_cairo
       itema.pred_sort([&](auto & i1, auto & i2)
       {
 
-         return i1.m_strName < i2.m_strName;
+         return i1->m_strName < i2->m_strName;
 
       });
 

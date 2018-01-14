@@ -13,6 +13,7 @@
 #include "multithreading_manual_reset_event.cpp"
 #include "multithreading_multi_lock.cpp"
 #include "multithreading_mutex.cpp"
+#include "multithreading_pred_holder.cpp"
 #include "multithreading_retry_multi_lock.cpp"
 #include "multithreading_retry_single_lock.cpp"
 #include "multithreading_semaphore.cpp"

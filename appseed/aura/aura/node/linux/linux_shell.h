@@ -342,6 +342,8 @@ inline WINBOOL shell::GetVolumeInformation(
       nFileSystemNameSize);         // length of file system name buffer
 }
 
+*/
+
 /*
 inline DWORD shell::SHGetFileInfo(
    const unichar * pszPath,
@@ -412,7 +414,11 @@ inline DWORD shell::GetModuleFileName(
       nSize);
 }
 
-/*inline WINBOOL shell::GetClassInfo(
+*/
+
+/*
+
+inline WINBOOL shell::GetClassInfo(
    HINSTANCE hInstance ,
    const unichar * lpClassName,
    LPWNDCLASSW lpWndClass)
