@@ -10,8 +10,6 @@ namespace user
 
    UINT c_cdecl data_update_mesh_visible_subitem_proc(LPVOID pparam);
 
-
-
    const UINT mesh::MESSAGE_ENDCOLUMNHEADERDRAG = WM_USER + 25;
    const UINT mesh::MESSAGE_COLUMNHEADERTRACK = WM_USER + 26;
    const UINT mesh::MESSAGE_ENDCOLUMNHEADERTRACK = WM_USER + 27;
@@ -2832,7 +2830,7 @@ namespace user
 
                   m_ptLButtonDown = pt;
 
-                  SetTimer(12345678,800,NULL);
+                  SetTimer(12345678, 1200, NULL);
 
                   item_range itemrange;
 
@@ -4247,14 +4245,20 @@ namespace user
       }
       else if(ptimer->m_nIDEvent == 12345678)
       {
+
          KillTimer(ptimer->m_nIDEvent);
+
          if(!m_bHoverSelect)
          {
+
          }
          else
          {
+
             m_bDrag = true;
+
          }
+
       }
       else if(ptimer->m_nIDEvent == 12321)
       {

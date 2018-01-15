@@ -2874,7 +2874,6 @@ namespace user
    void list::_001OnLButtonDown(::message::message * pobj)
    {
 
-
       SCAST_PTR(::message::mouse, pmouse, pobj);
 
       int_ptr iItem;
@@ -2896,46 +2895,79 @@ namespace user
          }
          else
          {
+
             if (m_bMultiSelect && Session.is_key_pressed(::user::key_shift))
             {
+
                if (_001DisplayHitTest(pt, iItem))
                {
+
                   item_range itemrange;
+
                   int_ptr iLItem = MIN(m_iShiftFirstSelection, iItem);
+
                   int_ptr iUItem = MAX(m_iShiftFirstSelection, iItem);
+
                   itemrange.set(iLItem, iUItem, 0, m_columna.get_count() - 1, -1, -1);
+
                   m_rangeSelection.add_item(itemrange);
+
                   m_iShiftFirstSelection = iItem;
+
                }
+
             }
             else if (m_bMultiSelect && Session.is_key_pressed(::user::key_control))
             {
+
                if (_001DisplayHitTest(pt, iItem))
                {
+
                   item_range itemrange;
+
                   int_ptr iLItem = MIN(m_iShiftFirstSelection, iItem);
+
                   int_ptr iUItem = MAX(m_iShiftFirstSelection, iItem);
+
                   itemrange.set(iLItem, iUItem, 0, m_columna.get_count() - 1, -1, -1);
+
                   m_rangeSelection.add_item(itemrange);
+
                   m_iShiftFirstSelection = iItem;
+
                }
+
             }
             else
             {
+
                m_rangeSelection.clear();
+
                index iItem;
+
                if (_001DisplayHitTest(pt, iItem))
                {
+
                   m_iShiftFirstSelection = iItem;
+
                   m_iItemFocus = iItem;
+
                   _001DisplayHitTest(pt, m_iItemDrag);
+
                   m_iItemDrop = m_iItemDrag;
-                  SetTimer(12345678, 400, NULL);
+
+                  SetTimer(12345678, 1200, NULL);
+
                   item_range itemrange;
+
                   itemrange.set(iItem, iItem, 0, m_columna.get_count() - 1, -1, -1);
+
                   _001AddSelection(itemrange);
+
                   pobj->m_bRet = true;
+
                   pmouse->set_lresult(1);
+
                   return;
                }
             }
@@ -3021,6 +3053,7 @@ namespace user
       ReleaseCapture();
 
       KillTimer(12345678);
+
       KillTimer(224455);
 
       synch_lock sl(m_pmutex);
