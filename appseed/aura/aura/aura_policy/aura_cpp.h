@@ -402,6 +402,7 @@ namespace multimedia
 
 } // namespace multimedia
 
+
 #include "aura/aura/aura/aura_auto.h"
 #include "aura/primitive/comparison/comparison_compare.h"
 
@@ -862,6 +863,13 @@ inline void delptr(t *& p)
 
 #include "aura/aura/aura/aura_auto_pointer.h"
 
+
+// C-includes
+#include "aura/aura/os/os.h"
+
+
+
+
 #include "aura/aura/aura/aura_smart_pointer1.h"
 #include "aura/aura/aura/aura_smart_pointer2.h"
 
@@ -1079,8 +1087,6 @@ namespace aura
 //#include "aura/user/user_create_context.h"
 
 
-// C-includes
-#include "aura/aura/os/os.h"
 
 
 

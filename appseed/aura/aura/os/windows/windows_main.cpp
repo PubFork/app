@@ -261,3 +261,22 @@ string ca2_command_line()
    return "app.exe : app=" + strAppId;
 
 }
+
+
+
+
+namespace aura
+{
+
+
+   bool application::os_on_start_application()
+   {
+
+      return true;
+
+   }
+
+
+} // namespace aura
+
+

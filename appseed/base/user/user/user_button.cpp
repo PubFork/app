@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace user
@@ -293,31 +293,43 @@ namespace user
 
       if(hit_test(pmouse->m_pt, eelement) >= 0 && Session.m_puiLastLButtonDown == this)
       {
+
          Session.m_puiLastLButtonDown = NULL;
 
-
          pobj->m_bRet = _001OnClick(pmouse->m_nFlags, pt);
+
          if (pobj->m_bRet)
          {
+
             pmouse->set_lresult(1);
+
          }
          else
          {
 
             ::user::control_event ev;
+
             ev.m_puie = this;
+
             ev.m_eevent = ::user::event_button_clicked;
+
             BaseOnControlEvent(&ev);
+
             pobj->m_bRet = ev.m_bRet;
+
             if (pobj->m_bRet)
             {
+
                pmouse->set_lresult(1);
+
             }
+
          }
 
       }
 
    }
+
 
    void button::_001OnMouseMove(::message::message * pobj)
    {
@@ -347,7 +359,7 @@ namespace user
             ev.m_puie = this;
             ev.m_eevent = ::user::event_mouse_enter;
             GetParent()->send_message(
-               ::message::message_event, 0, (LPARAM)&ev);
+            ::message::message_event, 0, (LPARAM)&ev);
 //               m_bActionHover = true;
          }
          else if(iHover == -1)
@@ -356,7 +368,7 @@ namespace user
             ev.m_puie = this;
             ev.m_eevent = ::user::event_mouse_leave;
             GetParent()->send_message(
-               ::message::message_event, 0, (LPARAM)&ev);
+            ::message::message_event, 0, (LPARAM)&ev);
 //             m_bActionHover = false;
          }
       }
@@ -588,10 +600,10 @@ namespace user
       {
          class imaging & imaging = Application.imaging();
          imaging.color_blend(
-            pgraphics,
-            rectClient,
-            crBk,
-            127);
+         pgraphics,
+         rectClient,
+         crBk,
+         127);
       }
       else
       {
@@ -1074,33 +1086,33 @@ namespace user
       if(bSubItemHover)
       {
          pgraphics->Draw3dRect(
-            rectClient,
-            RGB(255,255,255),
-            RGB(155,155,105));
+         rectClient,
+         RGB(255,255,255),
+         RGB(155,155,105));
 
          if(m_plist->m_pimagelistSubItemHover != NULL)
          {
             m_plist->m_pimagelistSubItemHover->draw(
-               pgraphics,
-               m_plist->m_iImageSubItemHover,
-               pt,
-               0);
+            pgraphics,
+            m_plist->m_iImageSubItemHover,
+            pt,
+            0);
          }
          else if(m_plist->m_pimagelistItemHover != NULL)
          {
             m_plist->m_pimagelistItemHover->draw(
-               pgraphics,
-               m_plist->m_iImageItemHover,
-               pt,
-               0);
+            pgraphics,
+            m_plist->m_iImageItemHover,
+            pt,
+            0);
          }
          else if(m_plist->m_pimagelistNormal != NULL)
          {
             m_plist->m_pimagelistNormal->draw(
-               pgraphics,
-               m_plist->m_iImageNormal,
-               pt,
-               0);
+            pgraphics,
+            m_plist->m_iImageNormal,
+            pt,
+            0);
          }
       }
       else if(bItemHover)
@@ -1108,26 +1120,26 @@ namespace user
          if(m_plist->m_pimagelistItemHover != NULL)
          {
             m_plist->m_pimagelistItemHover->draw(
-               pgraphics,
-               m_plist->m_iImageItemHover,
-               pt,
-               0);
+            pgraphics,
+            m_plist->m_iImageItemHover,
+            pt,
+            0);
          }
          else if(m_plist->m_pimagelistSubItemHover != NULL)
          {
             m_plist->m_pimagelistSubItemHover->draw(
-               pgraphics,
-               m_plist->m_iImageSubItemHover,
-               pt,
-               0);
+            pgraphics,
+            m_plist->m_iImageSubItemHover,
+            pt,
+            0);
          }
          else if(m_plist->m_pimagelistNormal != NULL)
          {
             m_plist->m_pimagelistNormal->draw(
-               pgraphics,
-               m_plist->m_iImageNormal,
-               pt,
-               0);
+            pgraphics,
+            m_plist->m_iImageNormal,
+            pt,
+            0);
          }
       }
       else
@@ -1135,26 +1147,26 @@ namespace user
          if(m_plist->m_pimagelistNormal != NULL)
          {
             m_plist->m_pimagelistNormal->draw(
-               pgraphics,
-               m_plist->m_iImageNormal,
-               pt,
-               0);
+            pgraphics,
+            m_plist->m_iImageNormal,
+            pt,
+            0);
          }
          else if(m_plist->m_pimagelistItemHover != NULL)
          {
             m_plist->m_pimagelistItemHover->draw(
-               pgraphics,
-               m_plist->m_iImageItemHover,
-               pt,
-               0);
+            pgraphics,
+            m_plist->m_iImageItemHover,
+            pt,
+            0);
          }
          else if(m_plist->m_pimagelistSubItemHover != NULL)
          {
             m_plist->m_pimagelistSubItemHover->draw(
-               pgraphics,
-               m_plist->m_iImageSubItemHover,
-               pt,
-               0);
+            pgraphics,
+            m_plist->m_iImageSubItemHover,
+            pt,
+            0);
          }
       }
 

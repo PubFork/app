@@ -177,6 +177,12 @@
     <Filter Include="Header Files\math\kissfft">
       <UniqueIdentifier>{893c9654-3104-435a-a4a1-acd343f54321}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\core\os">
+      <UniqueIdentifier>{95d213d6-1637-4ee4-8dd0-252fa6344a98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\core\os\windows">
+      <UniqueIdentifier>{ba0d3109-210f-49e1-8d8c-dba5354c0518}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="user\simple\simple_child_frame.h">
@@ -1896,6 +1902,9 @@
     </ClCompile>
     <ClCompile Include="user\user\user_tool_command.cpp">
       <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="core\os\windows\windows_simple_frame_window.cpp">
+      <Filter>Source Files\core\os\windows</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

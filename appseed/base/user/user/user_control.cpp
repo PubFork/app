@@ -1,18 +1,21 @@
-#include "framework.h" // from "base/user/user.h"
-//#include "base/user/user.h"
+﻿#include "framework.h"
 
 
 namespace user
 {
 
 
-#ifdef WINDOWSEX
+   control::control()
+   {
 
-   //   const uint32_t control::g_uiMessage = ::RegisterWindowMessage("user::control::g_uiMessage");
-
-#endif
-
-
+      m_pdescriptor = NULL;
+      m_iHover = -1;
+      m_bControlExCommandEnabled = true;
+      m_pform = NULL;
+      m_pformcallback = NULL;
+      m_ulFlags &= ~object::flag_auto_delete;
+      m_bDefaultWalkPreTranslateParentTree = true;
+   }
 
 
    control::~control()
@@ -45,8 +48,6 @@ namespace user
 
    void control::_003OnCustomDraw(::draw2d::graphics * pgraphics, ::aura::draw_context * pdrawcontext)
    {
-
-
 
       pgraphics->chain(pdrawcontext);
 
@@ -228,7 +229,7 @@ namespace user
       }
 
    }
-   
+
 
    bool control::Validate(string & strParam)
    {
@@ -274,14 +275,9 @@ namespace user
 
    bool control::_001IsPointInside(point64 point)
    {
-      //if(get_form() != NULL)
-      //{
-      //   return get_form()->_001IsPointInside(this, point);
-      //}
-      //else
-      {
-         return ::user::interaction::_001IsPointInside(point);
-      }
+
+      return ::user::interaction::_001IsPointInside(point);
+
    }
 
 
@@ -293,17 +289,11 @@ namespace user
    }
 
 
-   /*form_list * control::get_form_list()
-   {
-      if(get_form() != NULL)
-         return dynamic_cast < form_list * > (get_form());
-      else
-         return NULL;
-   }*/
-
    class control_descriptor & control::descriptor()
    {
-         return *m_pdescriptor;
+
+      return *m_pdescriptor;
+
    }
 
 
@@ -359,54 +349,45 @@ namespace user
 
    bool control::GetWindowRect(LPRECT lprect)
    {
-      //      if(get_form() != NULL)
-      //      {
-      //         get_form()->control_get_window_rect(this, lprect);
-      //      }
-      //      else
-      {
-         return ::user::interaction::GetWindowRect(lprect);
-      }
+
+      return ::user::interaction::GetWindowRect(lprect);
+
    }
+
 
    bool control::GetClientRect(LPRECT lprect)
    {
-      //if(get_form() != NULL)
-      //{
-      //   get_form()->control_get_client_rect(this, lprect);
-      //}
-      //else
-      {
-         return ::user::interaction::GetClientRect(lprect);
-      }
+
+      return ::user::interaction::GetClientRect(lprect);
+
    }
+
 
    index control::get_hover()
    {
+
       POINT pt;
-      // netshare
-      // System.get_cursor_position(&pt);
+
       Session.get_cursor_pos(&pt);
+
       ScreenToClient(&pt);
+
       rect rect;
+
       GetWindowRect(rect);
-      if (rect.contains(pt))
-         return 0;
-      else
+
+      if (!rect.contains(pt))
+      {
+
          return -1;
+
+      }
+
+      return 0;
+
    }
 
 
-   control::control()
-   {
-      m_pdescriptor = NULL;
-      m_iHover = -1;
-      m_bControlExCommandEnabled = true;
-      m_pform = NULL;
-      m_pformcallback = NULL;
-      m_ulFlags &= ~object::flag_auto_delete;
-      m_bDefaultWalkPreTranslateParentTree = true;
-   }
 
 
    bool control::IsControlCommandEnabled()
@@ -443,9 +424,9 @@ namespace user
 
       if(!BaseOnControlEvent(&ev))
       {
-         
+
          return true;
-         
+
       }
 
       return ev.m_bOk;
@@ -844,32 +825,48 @@ namespace user
       }
 
       if (pevent->m_bProcessed)
-         return true;
-
-      if (GetParent() != NULL)
       {
 
-         pevent->m_bProcessed = GetParent()->BaseOnControlEvent(pevent);
+         return true;
+
+      }
+
+      ::user::interaction * puiParent = GetParent();
+
+      if (puiParent != NULL)
+      {
+
+         pevent->m_bProcessed = puiParent->BaseOnControlEvent(pevent);
 
       }
 
       if (pevent->m_bProcessed)
-         return true;
-
-      if (get_form() != NULL && !IsAscendant(get_form()))
       {
 
-         pevent->m_bProcessed = get_form()->BaseOnControlEvent(pevent);
+         return true;
+
+      }
+
+      form_window * pform = get_form();
+
+      if (pform != NULL && !IsAscendant(pform))
+      {
+
+         pevent->m_bProcessed = pform->BaseOnControlEvent(pevent);
 
       }
 
       if (pevent->m_bProcessed)
+      {
+
          return true;
 
+      }
 
       return false;
 
    }
+
 
    bool control::simple_process_system_message(::message::message * pobj, ::user::e_event eevent)
    {

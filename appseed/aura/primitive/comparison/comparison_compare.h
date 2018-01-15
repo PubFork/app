@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #pragma once
@@ -121,6 +121,12 @@ namespace comparison
       return a <= b;
    }
 
+
+   template <  >
+   inline bool le(int32_t i, unsigned int ui)
+   {
+      return i < 0 ? false : (unsigned int) i <= ui;
+   }
 
    template < typename A, typename B >
    inline bool gt(A a, B b)

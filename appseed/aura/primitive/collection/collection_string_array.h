@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 template < typename Type, typename RawType >
@@ -885,7 +885,7 @@ void string_array < Type, RawType >::_007SetLine(const RawType & strKey, const R
 
    index iKeyIndex = this->find_first_begins_ci(strKey + "=");
 
-   RawType strNewLine = strKey + "=" + strValue;
+   Type strNewLine = strKey + "=" + strValue;
 
    if(iKeyIndex >= 0)
    {
@@ -896,7 +896,7 @@ void string_array < Type, RawType >::_007SetLine(const RawType & strKey, const R
    else
    {
 
-      this->add(strNewLine);
+      this->add((const Type &) strNewLine);
 
    }
 

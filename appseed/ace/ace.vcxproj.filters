@@ -27,10 +27,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ace_alloc.c">
+    <ClCompile Include="ace_alloc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="version.c">
+    <ClCompile Include="version.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

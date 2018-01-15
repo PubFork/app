@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 timer::timer(::aura::application * papp, uint_ptr uiTimer, PFN_TIMER pfnTimer, void * pvoidData, mutex * pmutex) :
@@ -93,28 +93,6 @@ void timer::stop()
    {
 
       post_quit();
-
-   }
-   catch(...)
-   {
-
-   }
-
-   try
-   {
-
-      impl_stop();
-
-   }
-   catch(...)
-   {
-
-   }
-
-   try
-   {
-
-      unregister_from_required_threads();
 
    }
    catch(...)
@@ -225,6 +203,25 @@ void timer::call_on_timer()
       {
 
       }
+
+      try
+      {
+
+         synch_lock sl(m_objectrefaDependent.m_pmutex);
+
+         for (auto pobject : m_objectrefaDependent)
+         {
+
+            pobject->threadrefa_remove(this);
+
+         }
+
+      }
+      catch (...)
+      {
+
+      }
+
 
       try
       {

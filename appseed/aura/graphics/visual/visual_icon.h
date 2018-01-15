@@ -1,9 +1,8 @@
-#pragma once
+﻿#pragma once
 
 
 namespace visual
 {
-
 
 
    class CLASS_DECL_AURA icon :
@@ -56,4 +55,9 @@ namespace visual
 } // namespace visual
 
 
+#ifdef WINDOWSEX
+
+CLASS_DECL_AURA HICON load_icon(::aura::application * papp, stringa & straMatter, string strIcon, int cx, int cy);
+
+#endif
 

@@ -1,7 +1,4 @@
-#pragma once
-
-
-bool get_thread_run();
+﻿#pragma once
 
 
 template < typename TYPE >
@@ -34,8 +31,8 @@ public:
    }
 
 
-   virtual void assert_valid() const{}
-   virtual void dump(dump_context &) const{}
+   virtual void assert_valid() const {}
+   virtual void dump(dump_context &) const {}
 
 
    inline ref_array < thread * > async_all()
@@ -49,11 +46,11 @@ public:
       {
 
          threadptra.add(m_p->fork([=]()
-            {
+         {
 
-               (m_p->*pfnProcedure)();
+            (m_p->*pfnProcedure)();
 
-            }));
+         }));
 
       }
 

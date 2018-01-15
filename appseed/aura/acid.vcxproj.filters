@@ -4357,12 +4357,6 @@
     <ClCompile Include="aura\os\os_windowing.cpp">
       <Filter>Source Files\aura\os</Filter>
     </ClCompile>
-    <ClCompile Include="..\ace\ace_alloc.c">
-      <Filter>Source Files\ace</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ace\version.c">
-      <Filter>Source Files\ace</Filter>
-    </ClCompile>
     <ClCompile Include="..\ace\_ace_new.cpp">
       <Filter>Source Files\ace</Filter>
     </ClCompile>
@@ -4575,6 +4569,12 @@
     </ClCompile>
     <ClCompile Include="net\sockets\bsd\basic\sockets_ssl_context.cpp">
       <Filter>Source Files\net\sockets\bsd\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ace\ace_alloc.cpp">
+      <Filter>Source Files\ace</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ace\version.cpp">
+      <Filter>Source Files\ace</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

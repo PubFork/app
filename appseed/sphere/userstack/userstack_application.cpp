@@ -317,7 +317,7 @@ namespace userstack
 
       }
 
-      if(is_null(App(papp)))
+      if(is_null_ref(App(papp)))
       {
 
          return NULL;

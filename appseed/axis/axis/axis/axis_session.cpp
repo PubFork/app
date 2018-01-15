@@ -341,7 +341,7 @@ namespace axis
             || Application.handler()->m_varTopicQuery.has_property("install"))
       {
 
-         if(is_null(m_pfontopus->create_system_user("system")))
+         if(is_null_ref(m_pfontopus->create_system_user("system")))
             return false;
 
       }

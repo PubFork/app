@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "aura/net/sockets/bsd/sockets_sockets.h"
 
 
@@ -96,7 +96,7 @@ namespace aura
 
       pcreate->m_spCommandLine->m_eventReady.ResetEvent();
 
-      Session.m_appptra.add(papp);
+      //Session.m_appptra.add(papp);
 
       m_pappCurrent = papp;
 
@@ -885,32 +885,32 @@ namespace aura
                if(papp.is_null() && plibrary == NULL)
                {
 
-               plibrary = new ::aura::library(pappParent, 0, NULL);
+                  plibrary = new ::aura::library(pappParent, 0, NULL);
 
-               string strLibrary = strAppId;
+                  string strLibrary = strAppId;
 
-               strLibrary.replace("/", "_");
+                  strLibrary.replace("/", "_");
 
-               strLibrary.replace("-", "_");
+                  strLibrary.replace("-", "_");
 
-               ::output_debug_string("\n\n::aura::session::get_new_application assembled library path " + strLibrary + "\n\n");
+                  ::output_debug_string("\n\n::aura::session::get_new_application assembled library path " + strLibrary + "\n\n");
 
-               if (!plibrary->open(strLibrary, false))
-               {
+                  if (!plibrary->open(strLibrary, false))
+                  {
 
 #ifndef METROWIN
 
-                  ::MessageBox(NULL, "Application \"" + strAppId + "\" cannot be created.\n\nThe library \"" + strLibrary + "\" could not be loaded. " + plibrary->m_strMessage, "ca2", MB_ICONERROR);
+                     ::MessageBox(NULL, "Application \"" + strAppId + "\" cannot be created.\n\nThe library \"" + strLibrary + "\" could not be loaded. " + plibrary->m_strMessage, "ca2", MB_ICONERROR);
 
 #endif
 
-                  return NULL;
+                     return NULL;
 
-               }
+                  }
 
-               ::output_debug_string("\n\n::aura::session::get_new_application Found library : " + strLibrary + "\n\n");
+                  ::output_debug_string("\n\n::aura::session::get_new_application Found library : " + strLibrary + "\n\n");
 
-               // error anticipation maybe counter-self-healing
+                  // error anticipation maybe counter-self-healing
 //               if (!plibrary->is_opened())
 //               {
 //
@@ -920,45 +920,45 @@ namespace aura
 //
 //               }
 
-               ::output_debug_string("\n\n::aura::session::get_new_application Opened library : " + strLibrary + "\n\n");
+                  ::output_debug_string("\n\n::aura::session::get_new_application Opened library : " + strLibrary + "\n\n");
 
-               if (!plibrary->open_ca2_library())
-               {
+                  if (!plibrary->open_ca2_library())
+                  {
 
-                  ::output_debug_string("\n\n::aura::session::get_new_application open_ca2_library failed(2) : " + strLibrary + "\n\n");
+                     ::output_debug_string("\n\n::aura::session::get_new_application open_ca2_library failed(2) : " + strLibrary + "\n\n");
 
-                  return NULL;
+                     return NULL;
+
+                  }
+
+                  ::output_debug_string("\n\n\n|(5)----");
+                  ::output_debug_string("| app : " + strAppId + "\n");
+                  ::output_debug_string("|\n");
+                  ::output_debug_string("|\n");
+                  ::output_debug_string("|----");
 
                }
-
-               ::output_debug_string("\n\n\n|(5)----");
-               ::output_debug_string("| app : " + strAppId + "\n");
-               ::output_debug_string("|\n");
-               ::output_debug_string("|\n");
-               ::output_debug_string("|----");
-
-            }
 
             }
 
          }
 
-            if(papp.is_null())
+         if(papp.is_null())
 
-            {
+         {
 
-         ::aura::library & library = *plibrary;
+            ::aura::library & library = *plibrary;
 
 
-         papp = library.get_new_application(strAppId);
+            papp = library.get_new_application(strAppId);
 
-         ::output_debug_string("\n\n\n|(4)----");
-         ::output_debug_string("| app : " + strAppId + "(papp=0x" + ::hex::upper_from((uint_ptr)papp.m_p) + ")\n");
-         ::output_debug_string("|\n");
-         ::output_debug_string("|\n");
-         ::output_debug_string("|----");
+            ::output_debug_string("\n\n\n|(4)----");
+            ::output_debug_string("| app : " + strAppId + "(papp=0x" + ::hex::upper_from((uint_ptr)papp.m_p) + ")\n");
+            ::output_debug_string("|\n");
+            ::output_debug_string("|\n");
+            ::output_debug_string("|----");
 
-            }
+         }
 
          if (papp == NULL)
             return NULL;
@@ -1633,7 +1633,8 @@ namespace aura
 #if defined(APPLE_IOS)
 
 
-         dispatch_async(dispatch_get_main_queue(), ^{
+         dispatch_async(dispatch_get_main_queue(), ^
+         {
             //this runs on the main thread.  Use theData
             sp(::ios::interaction_impl) pimpl = System.m_possystemwindow->m_pui->m_pimpl;
 

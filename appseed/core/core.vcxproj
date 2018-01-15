@@ -514,6 +514,7 @@
   <ItemGroup>
     <ClCompile Include="core\core\core_session.cpp" />
     <ClCompile Include="core\core\core_static_start.cpp" />
+    <ClCompile Include="core\os\windows\windows_simple_frame_window.cpp" />
     <ClCompile Include="filesystem\filemanager\filemanager.cpp" />
     <ClCompile Include="math\calculator\calculator_calculator.cpp" />
     <ClCompile Include="math\calculator\calculator_element.cpp" />

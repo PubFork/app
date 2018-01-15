@@ -8,21 +8,14 @@ VOID CALLBACK aura_timer_TimerRoutine(PVOID lpParam, BOOLEAN TimerOrWaitFired);
 bool timer::impl_start()
 {
 
-
-
-   m_bSet = true;
-
    if(!CreateTimerQueueTimer(&m_hTimer,m_hTimerQueue,(WAITORTIMERCALLBACK)aura_timer_TimerRoutine,this,m_dwMillis,0,WT_EXECUTEONLYONCE | WT_EXECUTELONGFUNCTION))
    {
-
-      m_bSet = false;
 
       return false;
 
    }
 
    return true;
-
 
 }
 
@@ -46,7 +39,7 @@ void timer::impl_init()
 void timer::impl_term()
 {
 
-   stop(false);
+   stop();
 
    if(m_hTimerQueue != NULL && m_hTimerQueue != INVALID_HANDLE_VALUE)
    {
@@ -58,13 +51,11 @@ void timer::impl_term()
 }
 
 
-void timer::impl_stop(bool bWaitCompletion)
+void timer::impl_stop()
 {
 
    if(m_hTimerQueue != NULL && m_hTimer != NULL)
    {
-
-      DeleteTimerQueueTimer(m_hTimerQueue,m_hTimer, bWaitCompletion ? INVALID_HANDLE_VALUE : NULL);
 
       m_hTimer = NULL;
 
