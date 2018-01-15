@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include <math.h>
 
 
@@ -29,9 +29,9 @@ namespace user
 
    void font_list::font_list_common_construct()
    {
-      
+
       m_scrolldataVert.m_bScrollEnable = true;
-      
+
    }
 
 
@@ -40,20 +40,20 @@ namespace user
 
       try
       {
-         
+
          if(m_pfontlistdata.is_set())
          {
-            
+
             m_pfontlistdata->m_uiptra.remove(this);
-            
+
          }
-      
+
       }
       catch (...)
       {
-      
+
       }
-      
+
    }
 
 
@@ -223,13 +223,13 @@ namespace user
       m_pfontlistdata = pdata;
 
       pdata->m_uiptra.add(this);
-      
+
    }
 
 
    void font_list::on_layout()
    {
-      
+
       rect rectClient;
 
       GetClientRect(rectClient);
@@ -250,7 +250,13 @@ namespace user
 
       synch_lock sl(m_pfontlistdata->m_pmutex);
 
-      GetClientRect(m_pfontlistdata->m_rectClient);
+      ::rect rectFontList;
+
+      GetClientRect(rectFontList);
+
+      rectFontList.right -= GetSystemMetrics(SM_CXVSCROLL);
+
+      m_pfontlistdata->m_rectClient = rectFontList;
 
       m_pfontlistdata->on_layout(&m_sizeTotal);
 
@@ -338,7 +344,7 @@ namespace user
 
    index font_list::hit_test(point pt)
    {
-      
+
       pt += m_ptScrollPassword1;
 
       return m_pfontlistdata->hit_test(pt);
