@@ -1,5 +1,9 @@
 ﻿#include "framework.h"
 
+
+#define DBLCLKMS 500
+
+
 CLASS_DECL_AURA index_array array_translate_a_array(index_biunique & ia, index_array iaNew, index_array iaOld);
 
 namespace user
@@ -299,13 +303,13 @@ namespace user
          if (m_bDrag && m_iItemLButtonDown < 0)
          {
 
-            int x1 = m_ptLButtonDown.x;
+            int x1 = m_ptLButtonDown1.x;
 
             int x2 = m_ptLButtonUp.x;
 
             ::sort::sort(x1, x2);
 
-            int y1 = m_ptLButtonDown.y;
+            int y1 = m_ptLButtonDown1.y;
 
             int y2 = m_ptLButtonUp.y;
 
@@ -2668,7 +2672,7 @@ namespace user
 
                point pt = m_ptLButtonUp;
 
-               point p2 = m_ptLButtonDown;
+               point p2 = m_ptLButtonDown1;
 
                pt -= p2;
 
@@ -3237,7 +3241,7 @@ namespace user
 
                index iDisplayEnd;
 
-               if (_001DisplayHitTest(m_ptLButtonDown, iDisplayBeg))
+               if (_001DisplayHitTest(m_ptLButtonDown1, iDisplayBeg))
                {
 
                   if (_001DisplayHitTest(pt, iDisplayEnd))
@@ -3324,9 +3328,42 @@ namespace user
 
       m_bLButtonDown = true;
 
-      m_ptLButtonDown = pt;
+      DWORD dwNow = get_tick_count();
 
-      m_dwLButtonDownStart = get_tick_count();
+      if(dwNow - m_dwLButtonDownStart2 < DBLCLKMS)
+      {
+
+         m_dwLButtonDownStart1 = m_dwLButtonDownStart2;
+
+         m_dwLButtonDownStart2 = dwNow;
+
+         m_ptLButtonDown1 = m_ptLButtonDown2;
+
+         m_ptLButtonDown2 = pt;
+
+         m_iClick = 2;
+
+      }
+      else if(dwNow - m_dwLButtonDownStart1 < DBLCLKMS)
+      {
+
+         m_dwLButtonDownStart2 = dwNow;
+
+         m_ptLButtonDown2 = pt;
+
+         m_iClick = 2;
+
+      }
+      else
+      {
+
+         m_dwLButtonDownStart1 = dwNow;
+
+         m_ptLButtonDown1 = pt;
+
+         m_iClick = 1;
+
+      }
 
       if (!has_focus())
       {
@@ -3392,22 +3429,33 @@ namespace user
 
                m_rangeSelection.clear();
 
-               index iItem;
+               index iDisplayItem;
 
-               if (_001DisplayHitTest(pt, iItem))
+               if (_001DisplayHitTest(pt, iDisplayItem))
                {
 
-                  m_iShiftFirstSelection = iItem;
+                  m_iShiftFirstSelection = iDisplayItem;
 
-                  m_iDisplayItemFocus = iItem;
+                  m_iDisplayItemFocus = iDisplayItem;
 
-                  _001DisplayHitTest(pt, m_iDisplayItemLButtonDown);
+                  if(m_iClick == 1)
+                  {
+
+                     m_iDisplayItemLButtonDown1 = iDisplayItem;
+
+                  }
+                  else
+                  {
+
+                     m_iDisplayItemLButtonDown2 = iDisplayItem;
+
+                  }
 
                   SetTimer(12345678, 1200, NULL);
 
                   item_range itemrange;
 
-                  itemrange.set(iItem, iItem, 0, m_columna.get_count() - 1, -1, -1);
+                  itemrange.set(iDisplayItem, iDisplayItem, 0, m_columna.get_count() - 1, -1, -1);
 
                   _001AddSelection(itemrange);
 
@@ -3416,8 +3464,11 @@ namespace user
                   pmouse->set_lresult(1);
 
                   return;
+
                }
+
             }
+
          }
 
       }
@@ -3427,7 +3478,18 @@ namespace user
          if (_001DisplayHitTest(pt, iDisplayItem))
          {
 
-            m_iDisplayItemLButtonDown = iDisplayItem;
+            if(m_iClick == 1)
+            {
+
+               m_iDisplayItemLButtonDown1 = iDisplayItem;
+
+            }
+            else
+            {
+
+               m_iDisplayItemLButtonDown2 = iDisplayItem;
+
+            }
 
             m_iItemLButtonDown = DisplayToStrict(iDisplayItem);
 
@@ -3442,7 +3504,7 @@ namespace user
 
                item.m_iItem = m_iItemLButtonDown;
 
-               item.m_iDisplayItem = m_iDisplayItemLButtonDown;
+               item.m_iDisplayItem = m_iDisplayItemLButtonDown1;
 
                _001GetItemRect(&item);
 
@@ -3473,11 +3535,11 @@ namespace user
 
             m_iItemLButtonDown = -1;
 
-            m_iDisplayItemLButtonDown = -1;
+            m_iDisplayItemLButtonDown1 = -1;
+
+            m_iDisplayItemLButtonDown2 = -1;
 
          }
-
-         m_ptLButtonDown = pt;
 
       }
 
@@ -3518,7 +3580,7 @@ namespace user
             if (m_iItemLButtonDown >= 0)
             {
 
-               index iDisplayItemDrag = m_iDisplayItemLButtonDown;
+               index iDisplayItemDrag = m_iDisplayItemLButtonDown1;
 
                index iDisplayItemDrop;
 
@@ -3566,61 +3628,8 @@ namespace user
 
          }
 
-         m_iItemLButtonDown = -1;
-
-         m_iDisplayItemLButtonDown = -1;
-
-         pobj->m_bRet = true;
-
-         pmouse->set_lresult(1);
-
-         m_bLButtonDown = false;
-
-         return;
-
       }
-      else if(m_bHoverSelect)
-      {
-
-         if (m_eview == view_report)
-         {
-
-            sl.unlock();
-
-            pmouse->previous();
-
-         }
-         else
-         {
-
-            index iDisplayItem = -1;
-
-            if (_001DisplayHitTest(pt, iDisplayItem))
-            {
-
-               if (iDisplayItem >= 0 && m_iDisplayItemLButtonDown == iDisplayItem)
-               {
-
-                  index iItem = DisplayToStrict(iDisplayItem);
-
-                  if (iItem >= 0)
-                  {
-
-                     sl.unlock();
-
-                     _001OnItemClick(iItem);
-
-                  }
-
-               }
-
-            }
-
-         }
-
-      }
-      // ***LONG Long Press PhRESSing***
-      else if ((get_tick_count() - m_dwLButtonDownStart) > Session.get_Long_PhRESSing_time())
+      else
       {
 
          if (m_bLButtonDown)
@@ -3631,7 +3640,7 @@ namespace user
             if (_001DisplayHitTest(pt, iDisplayItemLButtonUp) && iDisplayItemLButtonUp >= 0)
             {
 
-               if (iDisplayItemLButtonUp == m_iDisplayItemLButtonDown)
+               if (iDisplayItemLButtonUp == m_iDisplayItemLButtonDown1)
                {
 
                   if (!m_rangeSelection.has_item(iDisplayItemLButtonUp))
@@ -3649,38 +3658,23 @@ namespace user
 
                   sl.unlock();
 
-                  _001OnClick(pmouse->m_nFlags, pt);
-
-               }
-
-
-            }
-
-         }
-
-      }
-      else if (!m_bSelect)
-      {
-
-         if (Session.user()->get_mouse_focus_LButtonDown() == this)
-         {
-
-            index iDisplayItem = -1;
-
-            if (_001DisplayHitTest(pt, iDisplayItem))
-            {
-
-               if (iDisplayItem >= 0 && m_iDisplayItemLButtonDown == iDisplayItem)
-               {
-
-                  index iItem = DisplayToStrict(iDisplayItem);
-
-                  if (iItem >= 0)
+                  if(m_iClick == 1)
                   {
 
-                     sl.unlock();
+                     if(!_001OnClick(pmouse->m_nFlags, pt))
+                     {
 
-                     _001OnItemClick(iItem);
+                        index iItem = DisplayToStrict(iDisplayItemLButtonUp);
+
+                        _001OnItemClick(iItem);
+
+                     }
+
+                  }
+                  else
+                  {
+
+                     send_message(WM_LBUTTONDBLCLK, pmouse->m_nFlags, MAKELPARAM(pt.x, pt.y));
 
                   }
 
@@ -3690,76 +3684,13 @@ namespace user
 
          }
 
-         m_iItemLButtonDown = -1;
-
-         m_iDisplayItemLButtonDown = -1;
-
-         pobj->m_bRet = true;
-
-         pmouse->set_lresult(1);
-
-      }
-      else
-      {
-
-         //if(m_iClick == 1)
-         //{
-
-         //   m_iClick = 0;
-
-         //   if(!_001IsEditing())
-         //   {
-         //      //uint_ptr nFlags = m_uiLButtonUpFlags;
-         //      //point point = m_ptLButtonUp;
-         //      //_001OnClick(pmouse->m_nFlags,pt);
-         //      Redraw();
-
-
-         //      /* trans
-         //      window_id wndidNotify = pwnd->GetOwner()->GetSafeoswindow_();
-         //      if(wndidNotify == NULL)
-         //      wndidNotify = pwnd->GetParent()->GetSafeoswindow_(); */
-
-         //      //               LRESULT lresult = 0;
-
-         //      /* trans            if(wndidNotify)
-         //      {
-         //      NMLISTVIEW nm;
-         //      nm.hdr.idFrom = pwnd->GetDlgCtrlId();
-         //      nm.hdr.code =   NM_CLICK;
-         //      nm.hdr.oswindowFrom = pwnd->GetSafeoswindow_();
-         //      lresult = ::SendMessage(
-         //      wndidNotify,
-         //      WM_NOTIFY,
-         //      nm.hdr.idFrom,
-         //      (LPARAM) &nm);
-         //      }*/
-
-         //   }
-
-         //}
-         //else
-         //{
-         //   output_debug_string(".");
-         //   // commented on 2017-03-28
-         //   //m_iClick++;
-         //   //m_uiLButtonUpFlags = (UINT) pmouse->m_nFlags;
-         //   //m_ptLButtonUp = pt;
-         //   //SetTimer(12345679, 500, NULL);
-         // commented on 2017-03-28
-         //m_iClick++;
-         //m_uiLButtonUpFlags = (UINT) pmouse->m_nFlags;
-         //m_ptLButtonUp = pt;
-         //SetTimer(12345679, 500, NULL);
-
-
-         //}
-
       }
 
       m_iItemLButtonDown = -1;
 
-      m_iDisplayItemLButtonDown = -1;
+      m_iDisplayItemLButtonDown1 = -1;
+
+      m_iDisplayItemLButtonDown2 = -1;
 
       pobj->m_bRet = true;
 
@@ -3829,27 +3760,40 @@ namespace user
 
    bool list::_001OnClick(uint_ptr nFlag, point point)
    {
+
       UNREFERENCED_PARAMETER(nFlag);
+
       UNREFERENCED_PARAMETER(point);
+
       ::user::control_event ev;
+
       ev.m_puie = this;
+
       ev.m_eevent = ::user::event_list_clicked;
+
       if (m_pformcallback != NULL)
       {
+
          m_pformcallback->BaseOnControlEvent(NULL, &ev);
+
       }
       else if (get_form() != NULL)
       {
-         get_form()->send_message(
-         ::message::message_event, 0, (LPARAM)&ev);
+
+         get_form()->send_message(::message::message_event, 0, (LPARAM)&ev);
+
       }
       else
       {
-         GetParent()->send_message(
-         ::message::message_event, 0, (LPARAM)&ev);
+
+         GetParent()->send_message(::message::message_event, 0, (LPARAM)&ev);
+
       }
-      return false;
+
+      return ev.m_bProcessed;
+
    }
+
 
    bool list::_001OnRightClick(uint_ptr nFlag, point point)
    {
@@ -4058,7 +4002,7 @@ namespace user
          if (_001DisplayHitTest(pt, iDisplayItem))
          {
 
-            if (iDisplayItem >= 0 && m_iDisplayItemLButtonDown == iDisplayItem)
+            if (iDisplayItem >= 0 && m_iDisplayItemLButtonDown1 == iDisplayItem)
             {
 
                index iItem = DisplayToStrict(iDisplayItem);

@@ -336,9 +336,12 @@ namespace user
 
          index                            m_iClick;
          bool                             m_bLButtonDown;
-         point                            m_ptLButtonDown;
-         DWORD                            m_dwLButtonDownStart;
-         index                            m_iDisplayItemLButtonDown;
+         point                            m_ptLButtonDown1;
+         point                            m_ptLButtonDown2;
+         DWORD                            m_dwLButtonDownStart1;
+         DWORD                            m_dwLButtonDownStart2;
+         index                            m_iDisplayItemLButtonDown1;
+         index                            m_iDisplayItemLButtonDown2;
 
          index                            m_iDisplayItemFocus;
 

@@ -1,6 +1,9 @@
 ﻿#include "framework.h"
 
 
+#define DBLCLKMS 500
+
+
 CLASS_DECL_AURA index array_translate_a(index_biunique & ia, index aNew, index aOld);
 CLASS_DECL_AURA index_array array_translate_a_array(index_biunique & ia, index_array iaNew, index_array iaOld);
 
@@ -2634,7 +2637,7 @@ namespace user
          if (m_bLButtonDown)
          {
 
-            bool bShouldStartDrag = d_distance(pt, m_ptLButtonDown) > m_iItemHeight;
+            bool bShouldStartDrag = d_distance(pt, m_ptLButtonDown1) > m_iItemHeight;
 
             if (bShouldStartDrag)
             {
@@ -2704,9 +2707,47 @@ namespace user
 
       ScreenToClient(&pt);
 
-      m_ptLButtonDown = pt;
+      if(dynamic_cast < list * >(this) == NULL)
+      {
 
-      m_dwLButtonDownStart = get_tick_count();
+         DWORD dwNow = get_tick_count();
+
+         if(dwNow - m_dwLButtonDownStart2 < DBLCLKMS)
+         {
+
+            m_dwLButtonDownStart1 = m_dwLButtonDownStart2;
+
+            m_dwLButtonDownStart2 = dwNow;
+
+            m_ptLButtonDown1 = m_ptLButtonDown2;
+
+            m_ptLButtonDown2 = pt;
+
+            m_iClick = 2;
+
+         }
+         else if(dwNow - m_dwLButtonDownStart1 < DBLCLKMS)
+         {
+
+            m_dwLButtonDownStart2 = dwNow;
+
+            m_ptLButtonDown2 = pt;
+
+            m_iClick = 2;
+
+         }
+         else
+         {
+
+            m_dwLButtonDownStart1 = dwNow;
+
+            m_ptLButtonDown1 = pt;
+
+            m_iClick = 1;
+
+         }
+
+      }
 
       if (!has_focus())
       {
@@ -2719,10 +2760,10 @@ namespace user
 
       Session.user()->set_mouse_focus_LButtonDown(this);
 
-      if (!_001DisplayHitTest(pt, m_iDisplayItemLButtonDown))
+      if (!_001DisplayHitTest(pt, m_iDisplayItemLButtonDown1))
       {
 
-         m_iDisplayItemLButtonDown = -1;
+         m_iDisplayItemLButtonDown1 = -1;
 
       }
 
@@ -2830,11 +2871,11 @@ namespace user
 
                   m_iDisplayItemFocus = iItem;
 
-                  _001DisplayHitTest(pt, m_iDisplayItemLButtonDown);
+                  _001DisplayHitTest(pt, m_iDisplayItemLButtonDown1);
 
                   m_uiLButtonDownFlags = pmouse->m_nFlags;
 
-                  m_ptLButtonDown = pt;
+                  m_ptLButtonDown1 = pt;
 
                   SetTimer(12345678, 1200, NULL);
 
@@ -2885,10 +2926,10 @@ namespace user
             if (_001DisplayHitTest(pt, iDisplayItemDrop))
             {
 
-               if (m_iDisplayItemLButtonDown != iDisplayItemDrop && iDisplayItemDrop != -1)
+               if (m_iDisplayItemLButtonDown1 != iDisplayItemDrop && iDisplayItemDrop != -1)
                {
 
-                  m_meshlayout.m_iaDisplayToStrict.swap(m_iDisplayItemLButtonDown, iDisplayItemDrop);
+                  m_meshlayout.m_iaDisplayToStrict.swap(m_iDisplayItemLButtonDown1, iDisplayItemDrop);
 
                   _001OnAfterSort();
 
@@ -2899,8 +2940,7 @@ namespace user
          }
 
       }
-      // if Hover Select or ***LONG Long Press PhRESSing***
-      else if (m_bHoverSelect || (get_tick_count() - m_dwLButtonDownStart > 800))
+      else
       {
 
          if (m_bLButtonDown)
@@ -2911,7 +2951,7 @@ namespace user
             if (_001DisplayHitTest(pt, iDisplayItemLButtonUp) && iDisplayItemLButtonUp >= 0)
             {
 
-               if (iDisplayItemLButtonUp == m_iDisplayItemLButtonDown)
+               if (iDisplayItemLButtonUp == m_iDisplayItemLButtonDown1)
                {
 
                   if (!m_rangeSelection.has_item(iDisplayItemLButtonUp))
@@ -2927,7 +2967,18 @@ namespace user
 
                   }
 
-                  _001OnClick(pmouse->m_nFlags, pt);
+                  if(m_iClick == 1)
+                  {
+
+                     _001OnClick(pmouse->m_nFlags, pt);
+
+                  }
+                  else
+                  {
+
+                     send_message(WM_LBUTTONDBLCLK, pmouse->m_nFlags, MAKELPARAM(pt.x, pt.y));
+
+                  }
 
                }
 
@@ -4207,7 +4258,9 @@ namespace user
 
             m_iItemLButtonDown = -1;
 
-            m_iDisplayItemLButtonDown = -1;
+            m_iDisplayItemLButtonDown1 = -1;
+
+            m_iDisplayItemLButtonDown2 = -1;
 
             m_bDrag = false;
 
