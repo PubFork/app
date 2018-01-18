@@ -11,7 +11,11 @@
 
 const char * g_psz_br_init_symbol_app = "";
 
+#ifndef LINUX_COMMAND_LINE
+
 #define GET_COMMAND_LINE(RET, ARGC, ARGV) linux_get_command_line(RET, ARGC, ARGV)
+
+#endif
 
 class string;
 
@@ -158,7 +162,7 @@ extern "C" \
 aura_prelude auraprelude(&prefix##_get_new_library);
 
 
-#ifdef LINUX
+#if defined(LINUX) && !defined(LINUX_COMMAND_LINE)
 
 extern char _binary_data_txt_start;
 

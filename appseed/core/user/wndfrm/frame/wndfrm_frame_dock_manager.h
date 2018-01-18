@@ -26,9 +26,9 @@ namespace user
             point                      m_ptWindowOrigin;
             bool                       m_bDocking;
             UINT                       m_uiSWPFlags;
-            ::user::e_appearance        m_eappearanceOrigin;
+            ::user::e_appearance       m_eappearanceOrigin;
             size                       m_sizeOrigin;
-
+            ::int_map < rect >         m_mapWorkspaceRect;
 
             DockManager(WorkSet * pworkset);
             virtual ~DockManager();
@@ -58,7 +58,7 @@ namespace user
 
             void message_handler(::user::interaction * pui, ::message::base * pbase);
 
-            
+
          };
 
 

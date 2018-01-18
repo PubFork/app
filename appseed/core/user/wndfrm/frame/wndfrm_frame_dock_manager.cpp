@@ -18,7 +18,7 @@ namespace user
          DockManager::DockManager(WorkSet * pworkset) :
             object(pworkset->get_app())
          {
-            
+
             ASSERT(pworkset != NULL);
             m_pworkset = pworkset;
             m_bDocking = false;
@@ -35,7 +35,7 @@ namespace user
 
          bool DockManager::_000OnLButtonDown(::message::mouse * pmouse)
          {
-            
+
             if(!m_pworkset->IsDockingEnabled() || m_pworkset->m_bSizingCapture)
                return false;
 
@@ -79,6 +79,8 @@ namespace user
 
             m_eappearanceOrigin = GetDockWindow()->get_appearance();
 
+            m_mapWorkspaceRect.remove_all();
+
             m_bDocking = true;
 
             pmouse->m_bRet = true;
@@ -101,7 +103,7 @@ namespace user
 
          bool DockManager::_000OnLButtonUp(::message::mouse * pmouse)
          {
-            
+
             if(!m_pworkset->IsDockingEnabled() || m_pworkset->m_bSizingCapture)
                return false;
 
@@ -115,7 +117,7 @@ namespace user
          {
 
             ASSERT(pmouse->m_id == WM_MOUSEMOVE || pmouse->m_id == WM_LBUTTONUP || pmouse->m_id == WM_NCMOUSEMOVE || pmouse->m_id == WM_NCLBUTTONUP);
-            
+
             if(!m_bDocking)
                return false;
 
@@ -207,7 +209,14 @@ namespace user
 
             int iMonitor = (int) Session.get_best_monitor(screen,rectCursor);
 
-            System.get_wkspace_rect(iMonitor, rectWork);
+            if(!m_mapWorkspaceRect.Lookup(iMonitor, rectWork))
+            {
+
+               System.get_wkspace_rect(iMonitor, rectWork);
+
+               m_mapWorkspaceRect.set_at(iMonitor, rectWork);
+
+            }
 
             int cx2 =  screen.width() / 3;
             int cy2 =  screen.height() / 3;
@@ -433,7 +442,7 @@ namespace user
 
          }
 
-         
+
          EBorder DockManager::GetBorderMask()
          {
 
@@ -467,9 +476,9 @@ namespace user
 
             if(pbase->m_id == WM_LBUTTONDOWN)
             {
-               
+
                point ptCursor((int16_t)LOWORD(pbase->m_lparam),(int16_t)HIWORD(pbase->m_lparam));
-               
+
                pui->ClientToScreen(&ptCursor);
 
                m_ptCursorOrigin = ptCursor;
@@ -507,9 +516,9 @@ namespace user
                   return;
                }
                //           uint32_t fwKeys = pbase->m_wparam;        // key flags
-               
+
                point ptCursor((int16_t)LOWORD(pbase->m_lparam),(int16_t)HIWORD(pbase->m_lparam));
-               
+
                pui->ClientToScreen(&ptCursor);
 
                point pt;

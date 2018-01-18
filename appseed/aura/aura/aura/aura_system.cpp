@@ -4,9 +4,14 @@
 
 #ifdef LINUX
 
+#include <X11/Xlib.h>
+#include "aura/aura/os/linux/linux_xdisplay.h"
+
 CLASS_DECL_AURA int xinerama_get_monitor_count();
 CLASS_DECL_AURA int xinerama_get_monitor_rect(index i, LPRECT lprect);
 CLASS_DECL_AURA int xinerama_get_screen_size(int& width, int& height);
+
+Display * x11_get_display();
 
 #endif
 
@@ -3451,6 +3456,8 @@ success:
 
 #elif defined(LINUX)
 
+      xdisplay d(x11_get_display());
+
       GdkDisplay * pdisplay = gdk_display_get_default();
 
       if(pdisplay == NULL)
@@ -3488,6 +3495,8 @@ success:
 
 
 #elif defined(LINUX)
+
+      xdisplay d(x11_get_display());
 
       GdkDisplay * pdisplay = gdk_display_get_default();
 
@@ -3642,6 +3651,8 @@ success:
       //      lprect->top += ::mac::get_system_main_menu_bar_height();
       //    lprect->bottom -= ::mac::get_system_dock_height();
 #elif defined(LINUX)
+
+      xdisplay d(x11_get_display());
 
       GdkDisplay * pdisplay = gdk_display_get_default();
 
