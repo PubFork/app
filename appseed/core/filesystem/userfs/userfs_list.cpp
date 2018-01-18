@@ -565,27 +565,61 @@ namespace userfs
 
    bool list::query_drop(index iDisplayDrop, index iDisplayDrag)
    {
+
       list_data * pdata = get_fs_mesh_data();
+
       if (iDisplayDrag < 0)
-         return false;
-      if (iDisplayDrop < 0)
-         return false;
-      if (m_iItemDrag != m_iItemDrop)
       {
+
+         return false;
+
+      }
+
+      if (iDisplayDrop < 0)
+      {
+
+         return false;
+
+      }
+
+      if (iDisplayDrag != iDisplayDrop)
+      {
+
          index strict;
+
          if (m_eview == view_icon)
+         {
+
             strict = m_iconlayout.m_iaDisplayToStrict[iDisplayDrop];
-         else
-            strict = m_meshlayout.m_iaDisplayToStrict[iDisplayDrop];
-         if (strict <= -1)
-            return true; // can drop in is_empty place
-         else if (strict >= _001GetItemCount())
-            return true; // can drop if destination is invalid
+
+         }
          else
          {
+
+            strict = m_meshlayout.m_iaDisplayToStrict[iDisplayDrop];
+
+         }
+
+         if (strict <= -1)
+         {
+
+            return true; // can drop in is_empty place
+
+         }
+         else if (strict >= _001GetItemCount())
+         {
+
+            return true; // can drop if destination is invalid
+
+         }
+         else
+         {
+
             // can drop if destination is folder
             return pdata->m_itema.get_item(strict).IsFolder();
+
          }
+
       }
 
       return false;

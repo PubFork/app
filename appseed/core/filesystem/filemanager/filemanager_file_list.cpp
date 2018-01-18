@@ -2123,7 +2123,7 @@ namespace filemanager
          return false;
       if (iDisplayDrop < 0)
          return false;
-      if (m_iItemDrag != m_iItemDrop)
+      if (iDisplayDrag != iDisplayDrop)
       {
          index strict;
          if (m_eview == view_icon)

@@ -4,23 +4,8 @@
 #include <sys/stat.h>
 #include <X11/extensions/xf86vmode.h>
 
-CLASS_DECL_AURA int xinerama_get_monitor_count();
-CLASS_DECL_AURA int xinerama_get_monitor_rect(index i, LPRECT lprect);
-CLASS_DECL_AURA int xinerama_get_screen_size(int& width, int& height);
 
 
-
-int best_xinerama_monitor(::user::interaction * pui, LPRECT lprectRet);
-int best_xinerama_monitor(::user::interaction * pui, LPCRECT lpcrect, LPRECT lprectRet);
-
-void mapped_net_state (gboolean   add,
-			 Display *d,
-			 Window w,
-			 int iScreen,
-			 Atom    state1,
-			 Atom    state2);
-
-void unmapped_net_state(Display * d, Window w, ...);
 
 //int get_best_ordered_monitor(::user::interaction * pui, int & l, int & t, int & cx, int & cy);
 //int get_best_monitor(::user::interaction * pui, int & l, int & t, int & cx, int & cy);
@@ -35,6 +20,39 @@ CLASS_DECL_AURA int_bool mq_remove_window_from_all_queues(oswindow oswindow);
 #ifdef LINUX
 int32_t _c_XErrorHandler(Display * display, XErrorEvent * perrorevent);
 #endif
+
+
+int g_iIgnoreXDisplayError = 0;
+
+
+void x_display_error_trap_push(SnDisplay * display, Display * xdisplay)
+{
+
+  g_iIgnoreXDisplayError++;
+
+}
+
+void x_display_error_trap_pop(SnDisplay * display, Display * xdisplay)
+{
+
+  g_iIgnoreXDisplayError--;
+
+  if(g_iIgnoreXDisplayError == 0)
+  {
+
+    XSync(xdisplay, false);
+
+  }
+
+}
+
+int32_t _c_XErrorHandler(Display * display, XErrorEvent * perrorevent)
+{
+
+   return 0;
+
+}
+
 
 
 struct MWMHints
@@ -114,562 +132,10 @@ bool oswindow_remove_message_only_window(::user::interaction_impl * puibaseMessa
 }
 
 
-int32_t oswindow_data::store_name(const char * psz)
-{
-
-   //single_lock sl(&user_mutex(), true);
-
-   //single_lock slOsWindow(s_pmutex, true);
-
-   xdisplay d(display());
-
-   return XStoreName(display(), window(), psz);
-
-}
-
-
-int32_t oswindow_data::select_input(int32_t iInput)
-{
-
-   xdisplay d(display());
-
-   return XSelectInput(display(), window(), iInput);
-
-}
-
-
-int32_t oswindow_data::select_all_input()
-{
-
-   xdisplay d(display());
-
-   return select_input(ExposureMask | ButtonPressMask);
-
-}
-
-
-int32_t oswindow_data::map_window()
-{
-
-   xdisplay d(display());
-
-   int i = XMapWindow(display(), window());
-
-   if(g_psncontext != NULL)
-   {
-
-      sn_launchee_context_complete(g_psncontext);
-
-      g_psncontext = NULL;
-
-   }
-
-   return i;
-
-}
-
-
-void oswindow_data::post_nc_destroy()
-{
-
-   if(!::is_null(this))
-   {
-
-      oswindow_remove(display(), window());
-
-   }
-
-}
-
-
-void oswindow_data::set_user_interaction(::user::interaction_impl * pimpl)
-{
-
-   single_lock slOsWindow(s_pmutex, true);
-
-//   xdisplay d(x11_get_display());
-
-   if(::is_null(this))
-      _throw(simple_exception(get_app(), "error, m_pdata cannot be NULL to ::oswindow::set_user_interaction"));
-
-   m_pimpl = pimpl;
-
-   m_hthread = pimpl->m_pauraapp->get_os_handle();
-
-   oswindow_assign(this, pimpl);
-
-}
-
-
-
-
-bool oswindow_data::is_child(::oswindow oswindow)
-{
-
-   if (oswindow == NULL || oswindow->m_pimpl == NULL || oswindow->m_pimpl->m_pui == NULL)
-   {
-
-      return false;
-
-   }
-
-   if (m_pimpl == NULL || m_pimpl->m_pui == NULL)
-   {
-
-      return false;
-
-   }
-
-   return m_pimpl->m_pui->IsChild(oswindow->m_pimpl->m_pui);
-
-}
-
-
-Window oswindow_data::get_parent_handle()
-{
-
-   single_lock slOsWindow(s_pmutex, true);
-
-   if(::is_null(this))
-      return 0;
-
-   return m_parent;
-
-}
-
-
-oswindow oswindow_data::get_parent()
-{
-
-   //single_lock sl(&user_mutex(), true);
-
-   //single_lock slOsWindow(s_pmutex, true);
-   xdisplay d(x11_get_display());
-
-   if(::is_null(this))
-      return NULL;
-
-   return NULL;
-
-//   return oswindow_get(display(), get_parent_handle());
-
-}
-
-oswindow oswindow_data::set_parent(oswindow oswindow)
-{
-
-   //single_lock sl(&user_mutex(), true);
-
-   //single_lock slOsWindow(s_pmutex, true);
-
-   //xdisplay d(x11_get_display());
-
-   if(::is_null(this))
-      return NULL;
-
-   xdisplay d(display());
-
-   ::oswindow oswindowOldParent = get_parent();
-
-   XReparentWindow(display(), window(), oswindow->window(), 0, 0);
-
-   return oswindowOldParent;
-
-}
-
-
-/**
- * Post an event from the client to the X server
- */
-void oswindow_data::send_client_event(Atom atom, unsigned int numArgs, ...)
-{
-
-	XEvent xevent;
-
-	unsigned int i;
-
-	va_list argp;
-
-	va_start(argp, numArgs);
-
-   ZERO(xevent);
-
-	xevent.xclient.type = ClientMessage;
-	xevent.xclient.serial = 0;
-	xevent.xclient.send_event = False;
-	xevent.xclient.display = display();
-	xevent.xclient.window = window();
-	xevent.xclient.message_type = atom;
-	xevent.xclient.format = 32;
-
-	for (i = 0; i < numArgs; i++)
-	{
-
-		xevent.xclient.data.l[i] = va_arg(argp, int);
-
-	}
-
-	XSendEvent(display(), RootWindow(display(), m_iScreen), False, SubstructureRedirectMask | SubstructureNotifyMask, &xevent);
-
-	va_end(argp);
-
-}
-
-
-bool oswindow_data::show_window(int32_t nCmdShow)
-{
-
-   xdisplay d(display());
-
-   if(d.is_null())
-   {
-
-      return false;
-
-   }
-
-   XWindowAttributes attr;
-
-   if(!XGetWindowAttributes(display(), window(), &attr))
-   {
-
-      return false;
-
-   }
-
-//   if(attr.override_redirect)
-//   {
-//
-//      XSetWindowAttributes attrs;
-//      ZERO(attrs);
-//      attrs.override_redirect = False;
-//      XChangeWindowAttributes(display(), window(), CWOverrideRedirect, &attrs);
-//      XWithdrawWindow(display(), window(), m_iScreen);
-//
-//      if(!XGetWindowAttributes(display(), window(), &attr))
-//      {
-//
-//         return false;
-//
-//      }
-//
-//
-//   }
-
-   if(attr.map_state == IsViewable)
-   {
-
-//      {
-//
-//         long data[2];
-//         data[0] = (long) NormalState;
-//         data[1] = (long) None;
-//         Atom wm_state = intern_atom("WM_STATE", false);
-//         XChangeProperty(display(), window(), wm_state, wm_state, 32, PropModeReplace, (unsigned char *) data, 2);
-//
-//      }
-
-//      send_client_event(XInternAtom(display(), "_NET_WM_STATE", false), 6,
-//                        XInternAtom(display(), "_NET_WM_STATE_REMOVE", false),
-//                        XInternAtom(display(), "_NET_WM_STATE_FULLSCREEN", false),
-//                        XInternAtom(display(), "_NET_WM_STATE_MAXIMIZED_HORZ", false),
-//                        XInternAtom(display(), "_NET_WM_STATE_MAXIMIZED_VERT", false),
-//                        XInternAtom(display(), "_NET_WM_STATE_HIDDEN", false), 0);
-//   if(attr.map_state == IsViewable)
-//   {
-//
-
-//      if(m_pimpl->m_pui->m_eappearance == ::user::appearance_full_screen)
-//      {
-//
-//         mapped_net_state(false, display(), window(), m_iScreen, intern_atom("_NET_WM_STATE_FULLSCREEN", false), 0);
-//
-//      }
-//
-//      if(m_pimpl->m_pui->m_eappearance == ::user::appearance_iconic && nCmdShow != SW_MINIMIZE)
-//      {
-//
-//         mapped_net_state(false, display(), window(), m_iScreen, intern_atom("_NET_WM_STATE_HIDDEN", false), 0);
-//
-//      }
-//
-//      if(m_pimpl->m_pui->m_eappearance == ::user::appearance_zoomed && nCmdShow != SW_MAXIMIZE)
-//      {
-//
-//         mapped_net_state(false, display(), window(), m_iScreen,
-//                       intern_atom("_NET_WM_STATE_MAXIMIZED_HORZ", false),
-//                       intern_atom("_NET_WM_STATE_MAXIMIZED_VERT", false));
-//
-//      }
-//
-   }
-   else
-   {
-
-//      unmapped_net_state(display(), window(), 0);
-
-   }
-
-   if(nCmdShow == SW_HIDE)
-   {
-
-      if(attr.map_state == IsViewable)
-      {
-
-         XWithdrawWindow(display(), window(), m_iScreen);
-
-      }
-
-   }
-   else if(nCmdShow == SW_MAXIMIZE)
-   {
-
-      if(attr.map_state != IsViewable)
-      {
-
-         XMapWindow(display(), window());
-
-      }
-
-      mapped_net_state(true, display(), window(), m_iScreen,
-                       intern_atom("_NET_WM_STATE_MAXIMIZED_HORZ", false),
-                       intern_atom("_NET_WM_STATE_MAXIMIZED_VERT", false));
-
-   }
-   else if(nCmdShow == SW_MINIMIZE)
-   {
-
-      wm_iconify_window(this);
-
-   }
-   else
-   {
-
-      if(attr.map_state != IsViewable)
-      {
-
-         XMapWindow(display(), window());
-
-      }
-
-   }
-
-   return true;
-
-}
-
-
-void oswindow_data::full_screen(LPCRECT lpcrect)
-{
-
-   xdisplay d(display());
-
-   if(d.is_null())
-   {
-
-      return;
-
-   }
-
-   XWindowAttributes attr;
-
-   if(!XGetWindowAttributes(display(), window(), &attr))
-   {
-
-      return;
-
-   }
-
-   m_pimpl->m_pui->m_eappearanceRequest = ::user::appearance_full_screen;
-
-   rect rBest;
-
-   int iMonitor = best_xinerama_monitor(m_pimpl->m_pui, lpcrect, rBest);
-
-   ::rect rWindow;
-
-   ::GetWindowRect(this, rWindow);
-
-   if(rBest != rWindow)
-   {
-
-      XMoveResizeWindow(display(), m_window, rBest.left, rBest.top, rBest.width(), rBest.height());
-
-   }
-
-   if(attr.map_state == IsViewable)
-   {
-
-      mapped_net_state(true, display(), window(), m_iScreen, intern_atom("_NET_WM_STATE_FULLSCREEN", false), 0);
-
-   }
-   else
-   {
-
-      unmapped_net_state(display(), window(), intern_atom("_NET_WM_STATE_FULLSCREEN", false), 0);
-
-      XMapWindow(display(), window());
-
-   }
-
-   //XWithdrawWindow(display(), m_window, m_iScreen);
-
-   //XSetWindowAttributes attrs;
-
-   //ZERO(attrs);
-
-   //attrs.override_redirect = True;
-
-   //XChangeWindowAttributes(display(), window(), CWOverrideRedirect, &attrs);
-
-//   {
-//
-//      long data[2];
-//      data[0] = (long) NormalState;
-//      data[1] = (long) None;
-//      Atom wm_state = intern_atom("WM_STATE", false);
-//      XChangeProperty(display(), window(), wm_state, wm_state, 32, PropModeReplace, (unsigned char *) data, 2);
-//
-//   }
-//
-
-
-   //int iMonitor = best_xinerama_monitor(m_pimpl->m_pui, lpcrect, l, t, cx, cy);
-
-   //XMoveResizeWindow(display(), m_window, l, t, cx, cy);
-
-   //XMapRaised(display(), m_window);
-
-   //XFlush(display());
-   //XSync(display(), False);
-
-   //XFlush(display());
-   //XSync(display(), False);
-
-//   XEvent xev;
-//
-//   ZERO(xev);
-//   xev.type = ClientMessage;
-//   xev.xclient.window = m_window;
-//   xev.xclient.message_type = intern_atom("_NET_WM_FULLSCREEN_MONITORS", False);
-//   xev.xclient.format = 32;
-//   xev.xclient.data.l[0] = iMonitor; /* your topmost monitor number */
-//   xev.xclient.data.l[1] = iMonitor; /* bottommost */
-//   xev.xclient.data.l[2] = iMonitor; /* leftmost */
-//   xev.xclient.data.l[3] = iMonitor; /* rightmost */
-//   xev.xclient.data.l[4] = 1; /* source indication */
-//
-//   XSendEvent (display(), DefaultRootWindow(display()), False, SubstructureRedirectMask | SubstructureNotifyMask, &xev);
-//
-//   XFlush(display());
-//   XSync(display(), False);
-
-//   XFlush(display());
-//
-//   XSync(display(), False);
-//
-//   send_client_event(intern_atom("_NET_WM_STATE", false), 3,
-//                        intern_atom("_NET_WM_STATE_ADD", false),
-//                        intern_atom("_NET_WM_STATE_FULLSCREEN", false), 0);
-//
-//   XFlush(display());
-//
-//   XSync(display(), False);
-
-   //m_pimpl->m_rectParentClientRequest.left = l;
-   //m_pimpl->m_rectParentClientRequest.top = t;
-   //m_pimpl->m_rectParentClientRequest.right = l + cx;
-   //m_pimpl->m_rectParentClientRequest.bottom = t + cy;
-   //m_pimpl->m_rectParentClient = m_pimpl->m_rectParentClientRequest;
-
-   //m_pimpl->m_pui->set_need_layout();
-
-   //m_pimpl->m_pui->set_need_redraw();
-
-//   ZERO(values);
-//
-//   value_mask = 0;
-//   value_mask = value_mask | CWX | CWY;
-//   value_mask |= CWX | CWY;
-//   values.x = l;
-//   values.y = t;
-//
-//   value_mask |= CWWidth | CWHeight;
-//   values.width = cx;
-//   values.height = cy;
-//
-//   XConfigureWindow(display(), window(), value_mask, &values);
-//
-//   XFlush(display());
-//
-//
-//   Atom wm_state   = intern_atom("_NET_WM_STATE", true);
-//
-//   Atom wm_fullscreen = intern_atom("_NET_WM_STATE_FULLSCREEN", true );
-//
-//   x_change_property(wm_state, XA_ATOM, 32, PropModeReplace, (unsigned char *)&wm_fullscreen, 1);
-//
-//   XFlush(display());
-
-}
-
-
-LONG_PTR oswindow_data::get_window_long(int32_t nIndex)
-{
-
-   return m_plongptrmap->operator[](nIndex);
-
-}
-
-
-LONG_PTR oswindow_data::set_window_long(int32_t nIndex, LONG_PTR l)
-{
-
-   LONG_PTR lOld = m_plongptrmap->operator[](nIndex);
-
-   if(nIndex == GWL_EXSTYLE)
-   {
-
-      if((l & WS_EX_TOOLWINDOW) ^ (m_plongptrmap->operator[](nIndex) & WS_EX_TOOLWINDOW) != 0)
-      {
-
-         wm_toolwindow(this, (l & WS_EX_TOOLWINDOW) != 0);
-
-      }
-
-   }
-
-   m_plongptrmap->operator[](nIndex) = l;
-
-   return lOld;
-
-}
-
-
-bool oswindow_data::client_to_screen(POINT * pp)
-{
-
-   return true;
-
-}
-
-
-bool oswindow_data::screen_to_client(POINT * pp)
-{
-
-   return true;
-
-}
-
 Atom get_window_long_atom(int32_t nIndex);
 
 // Change _NET_WM_STATE if Window is Mapped
-void mapped_net_state (gboolean   add,
-			 Display *d,
-			 Window w,
-			 int iScreen,
-			 Atom    state1,
-			 Atom    state2)
+void mapped_net_state (bool add, Display * d, Window w, int iScreen, Atom state1, Atom state2)
 {
 
   XClientMessageEvent xclient;
@@ -690,6 +156,7 @@ void mapped_net_state (gboolean   add,
   xclient.data.l[4] = 0;
 
   XSendEvent (d, RootWindow(d, iScreen), False, SubstructureRedirectMask | SubstructureNotifyMask, (XEvent *)&xclient);
+
 }
 
 
@@ -743,90 +210,35 @@ void unmapped_net_state(Display * d, Window w, ...)
 }
 
 
-long oswindow_data::get_state()
-{
-
-  xdisplay d(display());
-
-  static const long WM_STATE_ELEMENTS = 2L;
-
-  unsigned long nitems = 0;
-  unsigned long leftover = 0;
-  Atom xa_WM_STATE = 0;
-  Atom actual_type = 0;
-  int32_t actual_format = 0;
-  int32_t status = 0;
-  unsigned char* p = NULL;
-
-  xa_WM_STATE = XInternAtom(display(), "WM_STATE", false);
-
-  status = XGetWindowProperty(display(), window(), xa_WM_STATE, 0L, WM_STATE_ELEMENTS, False, xa_WM_STATE, &actual_type, &actual_format, &nitems, &leftover, &p);
-
-  if(status == 0)
-  {
-     long lStatus = -1;
-     if(p!= NULL)
-      lStatus = (long)*p;
-      XFree(p);
-      return lStatus;
-  }
-
-  return -1;
-
-}
-
-
-
-
-bool oswindow_data::is_iconic()
-{
-
-   return get_state() == IconicState;
-
-}
-
-bool oswindow_data::is_window_visible()
-{
-
-   xdisplay d(display());
-
-   if(d.m_pdata->m_pdisplay == NULL)
-      return false;
-
-   XWindowAttributes attr;
-
-   if(!XGetWindowAttributes(display(), window(), &attr))
-      return false;
-
-   return attr.map_state == IsViewable;
-
-}
-
-
-
-
-
-
 static oswindow g_oswindowCapture;
 
 
 oswindow GetCapture()
 {
-      return g_oswindowCapture;
+
+   return g_oswindowCapture;
+
 }
+
 
 oswindow SetCapture(oswindow window)
 {
 
-   //single_lock sl(&user_mutex(), true);
-
    oswindow windowOld(g_oswindowCapture);
 
    if(window->display() == NULL)
+   {
+
       return NULL;
 
+   }
+
    if(window->window() == None)
+   {
+
       return NULL;
+
+   }
 
    xdisplay d(window->display());
 
@@ -847,18 +259,23 @@ oswindow SetCapture(oswindow window)
 WINBOOL ReleaseCapture()
 {
 
-   //single_lock sl(&user_mutex(), true);
-
    if(g_oswindowCapture == NULL)
+   {
+
       return FALSE;
 
-   xdisplay d(g_oswindowCapture->display());
+   }
 
+   xdisplay d(g_oswindowCapture->display());
 
    WINBOOL bRet = XUngrabPointer(g_oswindowCapture->display(), CurrentTime) != FALSE;
 
    if(bRet)
+   {
+
       g_oswindowCapture = NULL;
+
+   }
 
    return bRet;
 
@@ -868,39 +285,56 @@ WINBOOL ReleaseCapture()
 oswindow SetFocus(oswindow window)
 {
 
-   //single_lock sl(&user_mutex(), true);
-
    if(window == NULL)
+   {
+
       return NULL;
+
+   }
 
    xdisplay display(window->display());
 
    if(!IsWindow(window))
+   {
+
       return NULL;
+
+   }
 
    oswindow windowOld = ::GetFocus();
 
    if(!IsWindowVisible(window))
+   {
+
       return NULL;
 
+   }
+
    if(!XSetInputFocus(window->display(), window->window(), RevertToNone, CurrentTime))
+   {
+
       return NULL;
+
+   }
 
    return windowOld;
 
 }
 
+
 oswindow GetFocus()
 {
-
-   //single_lock sl(&user_mutex(), true);
 
    xdisplay pdisplay;
 
    pdisplay.open(NULL);
 
    if(pdisplay == NULL)
+   {
+
       return NULL;
+
+   }
 
    Window window = None;
 
@@ -908,13 +342,21 @@ oswindow GetFocus()
 
    bool bOk = XGetInputFocus(pdisplay, &window, &revert_to) != 0;
 
-    pdisplay.close();
+   pdisplay.close();
 
    if(!bOk)
+   {
+
       return NULL;
 
+   }
+
    if(window == None || window == PointerRoot)
+   {
+
       return NULL;
+
+   }
 
    return oswindow_defer_get(window);
 
@@ -931,6 +373,30 @@ oswindow GetActiveWindow()
 
 oswindow SetActiveWindow(oswindow window)
 {
+
+   xdisplay d(window->display());
+
+   XEvent xev;
+
+   ZERO(xev);
+
+   Window wRoot = RootWindow(window->display(), window->m_iScreen);
+
+   Atom atomActiveWindow = XInternAtom (window->display(), "_NET_ACTIVE_WINDOW", False);
+
+   xev.xclient.type = ClientMessage;
+   xev.xclient.send_event = True;
+   xev.xclient.display = window->display();
+   xev.xclient.window = window->window();
+   xev.xclient.message_type = atomActiveWindow;
+   xev.xclient.format = 32;
+   xev.xclient.data.l[0] = 1;
+   xev.xclient.data.l[1] = 0;
+   xev.xclient.data.l[2] = 0;
+   xev.xclient.data.l[3] = 0;
+   xev.xclient.data.l[4] = 0;
+
+   XSendEvent (d, wRoot, False, SubstructureRedirectMask | SubstructureNotifyMask, &xev);
 
    return SetFocus(window);
 
@@ -1296,23 +762,6 @@ WINBOOL DestroyWindow(oswindow window)
 }
 
 
-bool oswindow_data::is_destroying()
-{
-
-   if(::is_null(this))
-      return true;
-
-   if(m_pimpl == NULL)
-      return true;
-
-   if(!m_pimpl->m_pui->m_bUserElementalOk)
-      return true;
-
-   return false;
-
-}
-
-
 WINBOOL IsWindow(oswindow oswindow)
 {
 
@@ -1383,19 +832,9 @@ bool c_xstart()
 oswindow GetDesktopWindow()
 {
 
-return g_oswindowDesktop;
+   return g_oswindowDesktop;
+
 }
-
-
-
-#include "framework.h"
-
-#include <X11/Xatom.h>
-
-
-//extern cairo_surface_t *  g_cairosurface;
-//extern cairo_t *  g_cairo;
-
 
 
 
@@ -2275,8 +1714,6 @@ UINT __axis_x11_thread(void * p)
 }
 
 
-int g_xxx = 0;
-
 void process_message(osdisplay_data * pdata, Display * display)
 {
 
@@ -2331,15 +1768,6 @@ void process_message(osdisplay_data * pdata, Display * display)
 
             if(pimpl != NULL)
             {
-
-               g_xxx++;
-
-               if(g_xxx >= 9)
-               {
-
-                  output_debug_string("g_xxx");
-
-               }
 
                if(pui->m_eappearance == ::user::appearance_iconic && !msg.hwnd->is_iconic())
                {
@@ -2469,15 +1897,6 @@ void process_message(osdisplay_data * pdata, Display * display)
             if(pui != NULL)
             {
 
-               g_xxx++;
-
-               if(g_xxx >= 9)
-               {
-
-                  output_debug_string("g_xxx");
-
-               }
-
                if(pui->m_eappearance == ::user::appearance_iconic && !msg.hwnd->is_iconic())
                {
 
@@ -2509,34 +1928,34 @@ void process_message(osdisplay_data * pdata, Display * display)
 
                }
 
-
                if(!bHandled)
                {
 
                   rect64 rectWindow;
 
-                  //rectWindow.left = e.xconfigure.x;
+                  rectWindow.left = e.xconfigure.x;
 
-                  //rectWindow.top = e.xconfigure.y;
+                  rectWindow.top = e.xconfigure.y;
 
-                  //rectWindow.right = rectWindow.left + e.xconfigure.width;
+                  rectWindow.right = rectWindow.left + e.xconfigure.width;
 
-                  //rectWindow.bottom = rectWindow.top + e.xconfigure.height;
+                  rectWindow.bottom = rectWindow.top + e.xconfigure.height;
 
-                  ::rect rWindow;
+                  auto rect = pimpl->m_rectParentClient;
 
-                  GetWindowRect(msg.hwnd, rWindow);
+                  ::copy(pimpl->m_rectParentClientRequest, rectWindow);
 
-                  copy(rectWindow, rWindow);
-
-                  //decltype(pimpl->m_rectParentClientRequest) x;
-
-                  if(rectWindow != pimpl->m_rectParentClient)
+                  if(rectWindow.top_left() != rect.top_left())
                   {
 
-                     ::copy(pimpl->m_rectParentClientRequest, rectWindow);
+                     pimpl->m_pui->post_message(WM_MOVE);
 
-                     pui->set_need_layout();
+                  }
+
+                  if(rectWindow.size() != rect.size())
+                  {
+
+                     pimpl->m_pui->post_message(WM_SIZE);
 
                   }
 
@@ -2674,7 +2093,9 @@ void process_message(osdisplay_data * pdata, Display * display)
       {
 
          msg.hwnd          = oswindow_get(display, e.xbutton.window);
+
          msg.wParam        = e.xkey.keycode;
+
          msg.lParam        = MAKELONG(0, e.xkey.keycode);
 
          send_message(msg);
@@ -2939,6 +2360,155 @@ namespace aura
 } // namespace aura
 
 
+
+
+
+
+WINBOOL SetWindowPos(oswindow hwnd, oswindow hwndInsertAfter, int32_t x, int32_t y, int32_t cx, int32_t cy, UINT nFlags)
+{
+
+   return hwnd->set_window_pos(hwndInsertAfter, x, y, cx, cy, nFlags);
+
+}
+
+
+
+
+WINBOOL GetWindowRect(oswindow hwnd, LPRECT lprect)
+{
+
+   //single_lock sl(&user_mutex(), true);
+
+   //synch_lock sl(::oswindow_data::s_pmutex);
+
+   xdisplay d(hwnd->display());
+
+
+   //oswindow window = oswindow_get(hwnd->display(), e.xbutton.window);
+
+   XWindowAttributes attrs;
+
+   /* Fill attribute structure with information about root window */
+
+   if(!XGetWindowAttributes(hwnd->display(), hwnd->window(), &attrs))
+   {
+
+      return FALSE;
+
+   }
+
+//   int x;
+//   int y;
+//   Window child;
+//
+//   if(!XTranslateCoordinates(hwnd->display(), hwnd->window(), DefaultRootWindow(hwnd->display()), 0, 0, &x, &y, &child))
+//   {
+//
+//      return FALSE;
+//
+//   }
+
+
+   lprect->left      = attrs.x;
+   lprect->top       = attrs.y;
+   lprect->right     = attrs.x    + attrs.width;
+   lprect->bottom    = attrs.y    + attrs.height;
+
+   return TRUE;
+
+}
+
+
+
+
+WINBOOL GetClientRect(oswindow hwnd, LPRECT lprect)
+{
+
+   xdisplay display(hwnd->display());
+
+   //single_lock sl(&user_mutex(), true);
+
+   XWindowAttributes attrs;
+
+   /* Fill attribute structure with information about root window */
+
+   if(XGetWindowAttributes(hwnd->display(), hwnd->window(), &attrs) == 0)
+   {
+
+      return FALSE;
+
+   }
+
+   lprect->left      = 0;
+   lprect->top       = 0;
+   lprect->right     = lprect->left    + attrs.width;
+   lprect->bottom    = lprect->top     + attrs.height;
+
+   return TRUE;
+
+}
+
+
+
+WINBOOL GetCursorPos(LPPOINT lpptCursor)
+{
+
+   //single_lock sl(user_mutex(), true);
+
+
+   Window root_return;
+   Window child_return;
+   int32_t win_x_return;
+   int32_t win_y_return;
+   uint32_t mask_return;
+
+   xdisplay display;
+
+   display.open(NULL);
+
+   if(display == NULL)
+        return FALSE;
+
+   XQueryPointer(display, display.default_root_window(), &root_return, &child_return, &lpptCursor->x, &lpptCursor->y, &win_x_return, &win_y_return, & mask_return);
+
+   return TRUE;
+
+}
+
+
+
+
+::user::interaction * get_system_window_interaction(::os_system_window * psystemwindow)
+{
+
+   return NULL;
+
+}
+
+
+
+void wm_full_screen(oswindow w, LPCRECT lpcrect)
+{
+
+   w->full_screen(lpcrect);
+
+}
+
+
+
+CLASS_DECL_AURA void defer_dock_application(bool bDock)
+{
+
+   UNREFERENCED_PARAMETER(bDock);
+
+}
+
+
+
+
+
+
+
 bool os_init_windowing()
 {
 
@@ -3001,28 +2571,5 @@ int xlib_error_handler(Display * d, XErrorEvent * e)
    fputs(sz, stderr);
 
    abort();
-
-}
-
-
-
-
-
-
-
-
-::user::interaction * get_system_window_interaction(::os_system_window * psystemwindow)
-{
-
-   return NULL;
-
-}
-
-
-
-void wm_full_screen(oswindow w, LPCRECT lpcrect)
-{
-
-   w->full_screen(lpcrect);
 
 }

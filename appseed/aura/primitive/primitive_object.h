@@ -286,6 +286,8 @@ public:
    }
 
 
+   virtual ::id calc_object_id() const;
+   virtual ::id calc_default_object_id() const;
 
 
    virtual void add_line(::command::command * pcommand, application_bias * pbiasCreate = NULL);

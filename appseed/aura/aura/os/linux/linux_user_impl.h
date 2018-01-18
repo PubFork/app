@@ -6,6 +6,21 @@
 #include <X11/X.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
+#include <X11/Xatom.h>
+
+
+CLASS_DECL_AURA int xinerama_get_monitor_count();
+CLASS_DECL_AURA int xinerama_get_monitor_rect(index i, LPRECT lprect);
+CLASS_DECL_AURA int xinerama_get_screen_size(int& width, int& height);
+
+
+int best_xinerama_monitor(::user::interaction * pui, LPRECT lprectRet);
+int best_xinerama_monitor(::user::interaction * pui, LPCRECT lpcrect, LPRECT lprectRet);
+
+
+void mapped_net_state (bool add, Display * d, Window w, int iScreen, Atom state1, Atom state2);
+void unmapped_net_state(Display * d, Window w, ...);
+
 
 
 #include "linux_xdisplay.h"

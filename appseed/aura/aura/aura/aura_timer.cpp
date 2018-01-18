@@ -82,13 +82,6 @@ bool timer::start(int millis, bool bPeriodic)
 void timer::stop()
 {
 
-   if(m_ptimerRunning.is_null())
-   {
-
-      return;
-
-   }
-
    try
    {
 

@@ -1,6 +1,7 @@
 #include "framework.h"
 
 
+
 oswindow_data::oswindow_data()
 {
 
@@ -34,6 +35,51 @@ oswindow_data::~oswindow_data()
 }
 
 
+int32_t oswindow_data::map_window()
+{
+
+   xdisplay d(display());
+
+   int i = XMapWindow(display(), window());
+
+   if(g_psncontext != NULL)
+   {
+
+      sn_launchee_context_complete(g_psncontext);
+
+      g_psncontext = NULL;
+
+   }
+
+   return i;
+
+}
+
+
+
+int32_t oswindow_data::unmap_window(bool bWithdraw)
+{
+
+   xdisplay d(display());
+
+   int i;
+
+   if(bWithdraw)
+   {
+
+      XWithdrawWindow(display(), window(), m_iScreen);
+
+   }
+   else
+   {
+
+      XUnmapWindow(display(), window());
+
+   }
+
+   return i;
+
+}
 
 
 oswindow_dataptra * oswindow_data::s_pdataptra = NULL;
@@ -480,4 +526,754 @@ bool oswindow_data::set_icon(::draw2d::dib * pdib)
 }
 
 
+
+
+
+
+int32_t oswindow_data::store_name(const char * psz)
+{
+
+   //single_lock sl(&user_mutex(), true);
+
+   //single_lock slOsWindow(s_pmutex, true);
+
+   xdisplay d(display());
+
+   return XStoreName(display(), window(), psz);
+
+}
+
+
+int32_t oswindow_data::select_input(int32_t iInput)
+{
+
+   xdisplay d(display());
+
+   return XSelectInput(display(), window(), iInput);
+
+}
+
+
+int32_t oswindow_data::select_all_input()
+{
+
+   xdisplay d(display());
+
+   return select_input(ExposureMask | ButtonPressMask);
+
+}
+
+
+
+void oswindow_data::post_nc_destroy()
+{
+
+   if(!::is_null(this))
+   {
+
+      oswindow_remove(display(), window());
+
+   }
+
+}
+
+
+void oswindow_data::set_user_interaction(::user::interaction_impl * pimpl)
+{
+
+   single_lock slOsWindow(s_pmutex, true);
+
+//   xdisplay d(x11_get_display());
+
+   if(::is_null(this))
+      _throw(simple_exception(get_app(), "error, m_pdata cannot be NULL to ::oswindow::set_user_interaction"));
+
+   m_pimpl = pimpl;
+
+   m_hthread = pimpl->m_pauraapp->get_os_handle();
+
+   oswindow_assign(this, pimpl);
+
+}
+
+
+
+
+bool oswindow_data::is_child(::oswindow oswindow)
+{
+
+   if (oswindow == NULL || oswindow->m_pimpl == NULL || oswindow->m_pimpl->m_pui == NULL)
+   {
+
+      return false;
+
+   }
+
+   if (m_pimpl == NULL || m_pimpl->m_pui == NULL)
+   {
+
+      return false;
+
+   }
+
+   return m_pimpl->m_pui->IsChild(oswindow->m_pimpl->m_pui);
+
+}
+
+
+Window oswindow_data::get_parent_handle()
+{
+
+   single_lock slOsWindow(s_pmutex, true);
+
+   if(::is_null(this))
+      return 0;
+
+   return m_parent;
+
+}
+
+
+oswindow oswindow_data::get_parent()
+{
+
+   //single_lock sl(&user_mutex(), true);
+
+   //single_lock slOsWindow(s_pmutex, true);
+   xdisplay d(x11_get_display());
+
+   if(::is_null(this))
+      return NULL;
+
+   return NULL;
+
+//   return oswindow_get(display(), get_parent_handle());
+
+}
+
+oswindow oswindow_data::set_parent(oswindow oswindow)
+{
+
+   //single_lock sl(&user_mutex(), true);
+
+   //single_lock slOsWindow(s_pmutex, true);
+
+   //xdisplay d(x11_get_display());
+
+   if(::is_null(this))
+      return NULL;
+
+   xdisplay d(display());
+
+   ::oswindow oswindowOldParent = get_parent();
+
+   XReparentWindow(display(), window(), oswindow->window(), 0, 0);
+
+   return oswindowOldParent;
+
+}
+
+
+/**
+ * Post an event from the client to the X server
+ */
+void oswindow_data::send_client_event(Atom atom, unsigned int numArgs, ...)
+{
+
+	XEvent xevent;
+
+	unsigned int i;
+
+	va_list argp;
+
+	va_start(argp, numArgs);
+
+   ZERO(xevent);
+
+	xevent.xclient.type = ClientMessage;
+	xevent.xclient.serial = 0;
+	xevent.xclient.send_event = False;
+	xevent.xclient.display = display();
+	xevent.xclient.window = window();
+	xevent.xclient.message_type = atom;
+	xevent.xclient.format = 32;
+
+	for (i = 0; i < numArgs; i++)
+	{
+
+		xevent.xclient.data.l[i] = va_arg(argp, int);
+
+	}
+
+	XSendEvent(display(), RootWindow(display(), m_iScreen), False, SubstructureRedirectMask | SubstructureNotifyMask, &xevent);
+
+	va_end(argp);
+
+}
+
+
+bool oswindow_data::show_window(int32_t nCmdShow)
+{
+
+   xdisplay d(display());
+
+   if(d.is_null())
+   {
+
+      return false;
+
+   }
+
+   XWindowAttributes attr;
+
+   if(!XGetWindowAttributes(display(), window(), &attr))
+   {
+
+      return false;
+
+   }
+
+//   if(attr.override_redirect)
+//   {
+//
+//      XSetWindowAttributes attrs;
+//      ZERO(attrs);
+//      attrs.override_redirect = False;
+//      XChangeWindowAttributes(display(), window(), CWOverrideRedirect, &attrs);
+//      XWithdrawWindow(display(), window(), m_iScreen);
+//
+//      if(!XGetWindowAttributes(display(), window(), &attr))
+//      {
+//
+//         return false;
+//
+//      }
+//
+//
+//   }
+
+   if(attr.map_state == IsViewable)
+   {
+
+//      {
+//
+//         long data[2];
+//         data[0] = (long) NormalState;
+//         data[1] = (long) None;
+//         Atom wm_state = intern_atom("WM_STATE", false);
+//         XChangeProperty(display(), window(), wm_state, wm_state, 32, PropModeReplace, (unsigned char *) data, 2);
+//
+//      }
+
+//      send_client_event(XInternAtom(display(), "_NET_WM_STATE", false), 6,
+//                        XInternAtom(display(), "_NET_WM_STATE_REMOVE", false),
+//                        XInternAtom(display(), "_NET_WM_STATE_FULLSCREEN", false),
+//                        XInternAtom(display(), "_NET_WM_STATE_MAXIMIZED_HORZ", false),
+//                        XInternAtom(display(), "_NET_WM_STATE_MAXIMIZED_VERT", false),
+//                        XInternAtom(display(), "_NET_WM_STATE_HIDDEN", false), 0);
+//   if(attr.map_state == IsViewable)
+//   {
+//
+
+//      if(m_pimpl->m_pui->m_eappearance == ::user::appearance_full_screen)
+//      {
+//
+//         mapped_net_state(false, display(), window(), m_iScreen, intern_atom("_NET_WM_STATE_FULLSCREEN", false), 0);
+//
+//      }
+//
+//      if(m_pimpl->m_pui->m_eappearance == ::user::appearance_iconic && nCmdShow != SW_MINIMIZE)
+//      {
+//
+//         mapped_net_state(false, display(), window(), m_iScreen, intern_atom("_NET_WM_STATE_HIDDEN", false), 0);
+//
+//      }
+//
+//      if(m_pimpl->m_pui->m_eappearance == ::user::appearance_zoomed && nCmdShow != SW_MAXIMIZE)
+//      {
+//
+//         mapped_net_state(false, display(), window(), m_iScreen,
+//                       intern_atom("_NET_WM_STATE_MAXIMIZED_HORZ", false),
+//                       intern_atom("_NET_WM_STATE_MAXIMIZED_VERT", false));
+//
+//      }
+//
+   }
+   else
+   {
+
+//      unmapped_net_state(display(), window(), 0);
+
+   }
+
+   if(nCmdShow == SW_HIDE)
+   {
+
+      if(attr.map_state == IsViewable)
+      {
+
+         XWithdrawWindow(display(), window(), m_iScreen);
+
+      }
+
+   }
+   else if(nCmdShow == SW_MAXIMIZE)
+   {
+
+      if(attr.map_state != IsViewable)
+      {
+
+         XMapWindow(display(), window());
+
+      }
+
+      mapped_net_state(true, display(), window(), m_iScreen,
+                       intern_atom("_NET_WM_STATE_MAXIMIZED_HORZ", false),
+                       intern_atom("_NET_WM_STATE_MAXIMIZED_VERT", false));
+
+   }
+   else if(nCmdShow == SW_MINIMIZE)
+   {
+
+      wm_iconify_window(this);
+
+   }
+   else
+   {
+
+      if(attr.map_state != IsViewable)
+      {
+
+         XMapWindow(display(), window());
+
+      }
+
+   }
+
+   return true;
+
+}
+
+
+void oswindow_data::full_screen(LPCRECT lpcrect)
+{
+
+   xdisplay d(display());
+
+   if(d.is_null())
+   {
+
+      return;
+
+   }
+
+   XWindowAttributes attr;
+
+   if(!XGetWindowAttributes(display(), window(), &attr))
+   {
+
+      return;
+
+   }
+
+   m_pimpl->m_pui->m_eappearanceRequest = ::user::appearance_full_screen;
+
+   rect rBest;
+
+   int iMonitor = best_xinerama_monitor(m_pimpl->m_pui, lpcrect, rBest);
+
+   ::rect rWindow;
+
+   ::GetWindowRect(this, rWindow);
+
+   if(rBest != rWindow)
+   {
+
+      XMoveResizeWindow(display(), m_window, rBest.left, rBest.top, rBest.width(), rBest.height());
+
+   }
+
+   if(attr.map_state == IsViewable)
+   {
+
+      mapped_net_state(true, display(), window(), m_iScreen, intern_atom("_NET_WM_STATE_FULLSCREEN", false), 0);
+
+   }
+   else
+   {
+
+      unmapped_net_state(display(), window(), intern_atom("_NET_WM_STATE_FULLSCREEN", false), 0);
+
+      XMapWindow(display(), window());
+
+   }
+
+   //XWithdrawWindow(display(), m_window, m_iScreen);
+
+   //XSetWindowAttributes attrs;
+
+   //ZERO(attrs);
+
+   //attrs.override_redirect = True;
+
+   //XChangeWindowAttributes(display(), window(), CWOverrideRedirect, &attrs);
+
+//   {
+//
+//      long data[2];
+//      data[0] = (long) NormalState;
+//      data[1] = (long) None;
+//      Atom wm_state = intern_atom("WM_STATE", false);
+//      XChangeProperty(display(), window(), wm_state, wm_state, 32, PropModeReplace, (unsigned char *) data, 2);
+//
+//   }
+//
+
+
+   //int iMonitor = best_xinerama_monitor(m_pimpl->m_pui, lpcrect, l, t, cx, cy);
+
+   //XMoveResizeWindow(display(), m_window, l, t, cx, cy);
+
+   //XMapRaised(display(), m_window);
+
+   //XFlush(display());
+   //XSync(display(), False);
+
+   //XFlush(display());
+   //XSync(display(), False);
+
+//   XEvent xev;
+//
+//   ZERO(xev);
+//   xev.type = ClientMessage;
+//   xev.xclient.window = m_window;
+//   xev.xclient.message_type = intern_atom("_NET_WM_FULLSCREEN_MONITORS", False);
+//   xev.xclient.format = 32;
+//   xev.xclient.data.l[0] = iMonitor; /* your topmost monitor number */
+//   xev.xclient.data.l[1] = iMonitor; /* bottommost */
+//   xev.xclient.data.l[2] = iMonitor; /* leftmost */
+//   xev.xclient.data.l[3] = iMonitor; /* rightmost */
+//   xev.xclient.data.l[4] = 1; /* source indication */
+//
+//   XSendEvent (display(), DefaultRootWindow(display()), False, SubstructureRedirectMask | SubstructureNotifyMask, &xev);
+//
+//   XFlush(display());
+//   XSync(display(), False);
+
+//   XFlush(display());
+//
+//   XSync(display(), False);
+//
+//   send_client_event(intern_atom("_NET_WM_STATE", false), 3,
+//                        intern_atom("_NET_WM_STATE_ADD", false),
+//                        intern_atom("_NET_WM_STATE_FULLSCREEN", false), 0);
+//
+//   XFlush(display());
+//
+//   XSync(display(), False);
+
+   //m_pimpl->m_rectParentClientRequest.left = l;
+   //m_pimpl->m_rectParentClientRequest.top = t;
+   //m_pimpl->m_rectParentClientRequest.right = l + cx;
+   //m_pimpl->m_rectParentClientRequest.bottom = t + cy;
+   //m_pimpl->m_rectParentClient = m_pimpl->m_rectParentClientRequest;
+
+   //m_pimpl->m_pui->set_need_layout();
+
+   //m_pimpl->m_pui->set_need_redraw();
+
+//   ZERO(values);
+//
+//   value_mask = 0;
+//   value_mask = value_mask | CWX | CWY;
+//   value_mask |= CWX | CWY;
+//   values.x = l;
+//   values.y = t;
+//
+//   value_mask |= CWWidth | CWHeight;
+//   values.width = cx;
+//   values.height = cy;
+//
+//   XConfigureWindow(display(), window(), value_mask, &values);
+//
+//   XFlush(display());
+//
+//
+//   Atom wm_state   = intern_atom("_NET_WM_STATE", true);
+//
+//   Atom wm_fullscreen = intern_atom("_NET_WM_STATE_FULLSCREEN", true );
+//
+//   x_change_property(wm_state, XA_ATOM, 32, PropModeReplace, (unsigned char *)&wm_fullscreen, 1);
+//
+//   XFlush(display());
+
+}
+
+
+LONG_PTR oswindow_data::get_window_long(int32_t nIndex)
+{
+
+   return m_plongptrmap->operator[](nIndex);
+
+}
+
+
+LONG_PTR oswindow_data::set_window_long(int32_t nIndex, LONG_PTR l)
+{
+
+   LONG_PTR lOld = m_plongptrmap->operator[](nIndex);
+
+   if(nIndex == GWL_EXSTYLE)
+   {
+
+      if((l & WS_EX_TOOLWINDOW) ^ (m_plongptrmap->operator[](nIndex) & WS_EX_TOOLWINDOW) != 0)
+      {
+
+         wm_toolwindow(this, (l & WS_EX_TOOLWINDOW) != 0);
+
+      }
+
+   }
+
+   m_plongptrmap->operator[](nIndex) = l;
+
+   return lOld;
+
+}
+
+
+bool oswindow_data::client_to_screen(POINT * pp)
+{
+
+   return true;
+
+}
+
+
+bool oswindow_data::screen_to_client(POINT * pp)
+{
+
+   return true;
+
+}
+
+
+
+long oswindow_data::get_state()
+{
+
+  xdisplay d(display());
+
+  static const long WM_STATE_ELEMENTS = 2L;
+
+  unsigned long nitems = 0;
+  unsigned long leftover = 0;
+  Atom xa_WM_STATE = 0;
+  Atom actual_type = 0;
+  int32_t actual_format = 0;
+  int32_t status = 0;
+  unsigned char* p = NULL;
+
+  xa_WM_STATE = XInternAtom(display(), "WM_STATE", false);
+
+  status = XGetWindowProperty(display(), window(), xa_WM_STATE, 0L, WM_STATE_ELEMENTS, False, xa_WM_STATE, &actual_type, &actual_format, &nitems, &leftover, &p);
+
+  if(status == 0)
+  {
+     long lStatus = -1;
+     if(p!= NULL)
+      lStatus = (long)*p;
+      XFree(p);
+      return lStatus;
+  }
+
+  return -1;
+
+}
+
+
+
+
+bool oswindow_data::is_iconic()
+{
+
+   return get_state() == IconicState;
+
+}
+
+bool oswindow_data::is_window_visible()
+{
+
+   xdisplay d(display());
+
+   if(d.m_pdata->m_pdisplay == NULL)
+      return false;
+
+   XWindowAttributes attr;
+
+   if(!XGetWindowAttributes(display(), window(), &attr))
+      return false;
+
+   return attr.map_state == IsViewable;
+
+}
+
+
+
+bool oswindow_data::is_destroying()
+{
+
+   if(::is_null(this))
+      return true;
+
+   if(m_pimpl == NULL)
+      return true;
+
+   if(!m_pimpl->m_pui->m_bUserElementalOk)
+      return true;
+
+   return false;
+
+}
+
+
+
+
+//   if(hwnd->m_pimpl->m_pui)
+//   {
+//
+//      xsizehints hints = {};
+//
+//      if(!(nflags & swp_nosize))
+//      {
+//
+//         hints.flags |= psize;
+//
+//         hints.width = cx;
+//
+//         hints.height = cy;
+//
+//      }
+//
+//
+//      if(!(nflags & swp_nomove))
+//      {
+//
+//         hints.flags |= pposition;
+//
+//         hints.x = x;
+//
+//         hints.y = y;
+//
+//      }
+//
+//      xsetwmnormalhints(hwnd->display(), hwnd->window(), &hints);
+//
+//   }
+
+
+bool oswindow_data::set_window_pos(oswindow hwndInsertAfter, int32_t x, int32_t y, int32_t cx, int32_t cy, UINT nFlags)
+{
+
+   xdisplay d(display());
+
+   XWindowAttributes attrs;
+
+   Window w = window();
+
+   if(!XGetWindowAttributes(display(), window(), &attrs))
+   {
+
+      return false;
+
+   }
+
+   if(nFlags & SWP_SHOWWINDOW)
+   {
+
+      if(attrs.map_state != IsViewable)
+      {
+
+         XMapWindow(display(), window());
+
+      }
+
+      if(!XGetWindowAttributes(display(), window(), &attrs))
+      {
+
+         return false;
+
+      }
+
+   }
+
+   if(!(nFlags & SWP_NOMOVE))
+   {
+
+      if(!(nFlags & SWP_NOSIZE))
+      {
+
+         XMoveResizeWindow(display(), window(), x, y, cx, cy);
+
+      }
+      else
+      {
+
+         XMoveWindow(display(), window(), x, y);
+
+      }
+
+   }
+   else if(!(nFlags & SWP_NOSIZE))
+   {
+
+      XResizeWindow(display(), window(), cx, cy);
+
+   }
+
+   if(nFlags & SWP_HIDEWINDOW)
+   {
+
+      if(attrs.map_state == IsViewable)
+      {
+
+         XWithdrawWindow(display(), window(), m_iScreen);
+
+      }
+
+   }
+
+   if(!XGetWindowAttributes(display(), window(), &attrs))
+   {
+
+      return false;
+
+   }
+
+   if(attrs.map_state == IsViewable)
+   {
+
+      if(!(nFlags & SWP_NOZORDER))
+      {
+
+         if(((int_ptr) hwndInsertAfter) == ZORDER_TOP || ((int_ptr) hwndInsertAfter) == ZORDER_TOPMOST)
+         {
+
+            XRaiseWindow(display(), window());
+
+         }
+         else if(((int_ptr) hwndInsertAfter) == ZORDER_BOTTOM)
+         {
+
+            XLowerWindow(display(), window());
+
+         }
+
+      }
+
+   }
+
+   return 1;
+
+}
 

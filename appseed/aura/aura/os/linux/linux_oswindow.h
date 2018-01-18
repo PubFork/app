@@ -216,6 +216,7 @@ public:
    int32_t select_input(int32_t iInput);
    int32_t select_all_input();
    int32_t map_window();
+   int32_t unmap_window(bool bWithdraw);
 
    void full_screen(LPCRECT lpcrect = null_rect());
 
@@ -246,6 +247,7 @@ public:
       return ::is_null(this);
    }
 
+   bool set_window_pos(oswindow hwndInsertAfter, int32_t x, int32_t y, int32_t cx, int32_t cy, UINT nFlags);
 
    bool is_destroying();
 

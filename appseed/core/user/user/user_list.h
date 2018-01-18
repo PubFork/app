@@ -202,17 +202,14 @@ namespace user
    {
       public:
 
+
          int                              m_iImageSpacing;
          bool                             m_bMorePlain;
          bool                             m_bAutoCreateListHeader;
          bool                             m_bHeaderCtrl;
          bool                             m_bSingleColumnMode;
 
-         //double                           m_dWidthRate;
-         //double                           m_dHeightRate;
-
          sp(list_header)                  m_plistheader;
-
 
          draw_list_item *                 m_pdrawlistitem;
 

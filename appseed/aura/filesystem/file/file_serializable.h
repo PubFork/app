@@ -35,11 +35,11 @@ namespace file
             ostream << a.element_at(index);
          }
       }
-      
+
       template < class TYPE >
       void defer_alloc(TYPE & t)
       {
-         
+
       }
 
       template < class ARRAY >
@@ -73,20 +73,20 @@ namespace file
          ::count count;
          //istream >> count;
          istream.read_arbitrary(count);
-         
+
          if(istream.fail())
          {
             return;
          }
-         
+
          a.allocate(count);
          for(index index = 0; index < count; index++)
          {
             if(a.is_null())
             {
-             
+
                a = canew(TYPE);
-               
+
             }
             istream >> a.element_at(index);
             if(istream.fail())
@@ -147,7 +147,7 @@ namespace file
       template < class type_map >
       void write(ostream & ostream,const type_map & m)
       {
-         
+
          ostream.write_arbitrary(m.get_count());
 
          auto p = m.PGetFirstAssoc();
@@ -254,14 +254,14 @@ template<class TYPE,class ARG_TYPE = const TYPE &>
 }
 
 
-template < class TYPE,class ARRAY_TYPE = raw_ref_array < TYPE * > >
+template < class TYPE,class ARRAY_TYPE = pointer_array < TYPE * > >
 ::file::ostream & operator << (::file::ostream & os,const ref_array < TYPE,ARRAY_TYPE> & a)
 {
    ::file::ptra::write(os,a);
    return os;
 }
 
-template < class TYPE,class ARRAY_TYPE = raw_ref_array < TYPE * > >
+template < class TYPE,class ARRAY_TYPE = pointer_array < TYPE * > >
 ::file::istream & operator >> (::file::istream & is,ref_array < TYPE,ARRAY_TYPE > & a)
 {
    ::file::ptra::read(is,a);

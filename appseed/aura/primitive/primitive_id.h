@@ -61,6 +61,7 @@ public:
 
 
    inline id();
+   inline id(e_type etype);
    inline id(const id & id);
    id(const char * psz);
    id(int_ptr i);
@@ -148,22 +149,22 @@ public:
 #if OSBIT == 32
 
    inline operator int32_t() const;
-   
+
 #elif OSBIT == 64
-   
+
    inline operator int64_t() const;
-   
+
 #else
-   
+
 #error "need to implement"
-   
+
 #endif
-   
+
    inline int64_t int64() const;
-   
+
    inline int32_t int32() const;
 
-   
+
    inline operator const char *() const;
    inline void to_string(string & str) const;
    inline string to_string() const;
@@ -198,6 +199,39 @@ inline id::id()
    m_all = {};
 
 }
+
+
+inline id::id(e_type etype) :
+   ::id()
+{
+
+   if(etype == type_null)
+   {
+
+      m_etype = type_null;
+
+   }
+   else if(etype == type_empty)
+   {
+
+      m_etype = type_empty;
+
+   }
+   else if(etype == type_integer)
+   {
+
+      m_etype = type_integer;
+
+   }
+   else if(etype == type_text)
+   {
+
+      operator = ("");
+
+   }
+
+}
+
 
 inline id::id(const id & id)
 {
@@ -515,9 +549,9 @@ inline id::operator int32_t () const
 
 inline id::operator int64_t () const
 {
-   
+
    return int64();
-   
+
 }
 
 #else
@@ -535,9 +569,9 @@ inline int64_t id::int64() const
 
 inline int32_t id::int32() const
 {
-   
+
    return m_etype == type_integer ? (int32_t) m_i : 0x80000000;
-   
+
 }
 
 

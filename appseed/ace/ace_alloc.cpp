@@ -90,6 +90,13 @@ CLASS_DECL_ACE void ace_memory_free(void * pParam)
 
    int64_t * p = (int64_t *) pParam;
 
+   if(((int_ptr) p) < 1024 * 16)
+   {
+
+      return;
+
+   }
+
    p--;
 
    if(p[0] == ACE_SET)

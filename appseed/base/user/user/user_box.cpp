@@ -109,7 +109,9 @@ namespace user
 
       defer_update_display();
 
-      ::id idKey = m_strWindowRectDataAddUp + get_data_id().m_id + ".WindowRect." + m_strDisplay;
+      ::id idData = get_data_id().m_id;
+
+      ::id idKey = m_strWindowRectDataAddUp + idData + ".WindowRect." + m_strDisplay;
 
       //sl.unlock();
 
@@ -486,6 +488,27 @@ namespace user
 
    string box::calc_data_id()
    {
+
+      if(m_id.is_empty())
+      {
+
+         m_id = calc_user_interaction_id();
+
+         if(m_id.is_empty())
+         {
+
+            m_id = calc_default_user_interaction_id();
+
+            if(m_id.is_empty())
+            {
+
+               return "";
+
+            }
+
+         }
+
+      }
 
       string str;
 

@@ -167,7 +167,6 @@
 		</Linker>
 		<ExtraCommands>
 			<Add before="cp -Rf ../../../nodeapp/thirdparty/library/x64/* ../../../time/x64/basis/" />
-			<Add before="cp -Rf ../../../nodeapp/thirdparty/binary/x64/* ../../../time/x64/basis/" />
 		</ExtraCommands>
 		<Unit filename="all.h" />
 		<Unit filename="aura.h" />
@@ -472,6 +471,10 @@
 		<Unit filename="aura/node/linux/linux_stdio_file.h" />
 		<Unit filename="aura/node/linux/linux_thread.h" />
 		<Unit filename="aura/node/node.h" />
+		<Unit filename="aura/node/windows/windows_interaction_impl.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/os/ansios/ansios.h" />
 		<Unit filename="aura/os/ansios/ansios_file.h" />
 		<Unit filename="aura/os/ansios/ansios_multithreading.h" />
@@ -1164,6 +1167,10 @@
 		<Unit filename="primitive/math/math_department.h" />
 		<Unit filename="primitive/math/math_filestream.h" />
 		<Unit filename="primitive/math/math_index.h" />
+		<Unit filename="primitive/math/math_int_biunique.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="primitive/math/math_int_biunique.h" />
 		<Unit filename="primitive/math/math_math.h" />
 		<Unit filename="primitive/math/math_mkint_c.h" />
@@ -1325,9 +1332,25 @@
 			<Option link="0" />
 		</Unit>
 		<Unit filename="user/user/user_interaction.h" />
+		<Unit filename="user/user/user_interaction_base.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="user/user/user_interaction_base.h" />
+		<Unit filename="user/user/user_interaction_child.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="user/user/user_interaction_child.h" />
+		<Unit filename="user/user/user_interaction_impl.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="user/user/user_interaction_impl.h" />
+		<Unit filename="user/user/user_interaction_impl_base.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="user/user/user_interaction_impl_base.h" />
 		<Unit filename="user/user/user_interactive.h" />
 		<Unit filename="user/user/user_job.h" />

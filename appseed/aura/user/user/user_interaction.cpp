@@ -8943,6 +8943,22 @@ restart:
    }
 
 
+   id interaction::calc_user_interaction_id() const
+   {
+
+      return calc_default_user_interaction_id();
+
+   }
+
+
+   id interaction::calc_default_user_interaction_id() const
+   {
+
+      return calc_object_id();
+
+   }
+
+
 } // namespace user
 
 

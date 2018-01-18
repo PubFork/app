@@ -56,10 +56,12 @@ void simple_frame_window::helper_task::run()
             {
 
                TRACE("m_pframe->does_display_match() the tester is about to get close to get sad... (yes, he is mad...)");
+
                if(m_pframe->does_display_match()) // the tester (without UPS) can loose a save even here
                {
 
                   TRACE("m_pframe->WindowDataSaveWindowRect() the tester is close to get sad... (yes, he is mad...)");
+
                   m_pframe->WindowDataSaveWindowRect(); // the tester (without UPS) can loose a save here
 
                }
@@ -1391,7 +1393,7 @@ bool simple_frame_window::LoadFrame(const char * pszMatter, uint32_t dwDefaultSt
 
    output_debug_string("\nm_bLayoutEnable FALSE");
 
-   if (!create_window_ex(0L, NULL, lpszTitle, dwDefaultStyle, rectFrame, pParentWnd, /*nIDResource*/ 0, pcreate))
+   if (!create_window_ex(0L, NULL, lpszTitle, dwDefaultStyle, rectFrame, pParentWnd, ::id::type_null, pcreate))
    {
 
       return false;   // will self destruct on failure normally

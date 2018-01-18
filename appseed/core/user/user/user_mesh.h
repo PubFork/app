@@ -47,18 +47,20 @@ namespace user
          index          m_iImage;
          bool           m_bOk;
 
-         index          m_iGroupTopIndex;
+         index          m_iGroupTopDisplayIndex;
          index          m_iGroupCount;
 
          mesh_item(mesh * pmesh);
 
    };
 
+
    class CLASS_DECL_CORE draw_mesh_item:
       virtual public mesh_item,
       virtual public ::aura::draw_context
    {
       public:
+
 
          rect                 m_rectGroup;
          rect                 m_rectItem;
@@ -318,12 +320,8 @@ namespace user
          /// Is multiple selection of items enabled?
          bool                             m_bMultiSelect;
 
-
-         index                            m_iStrictItemDrag;
-         index                            m_iItemDrag;
-         index                            m_iItemDrop;
          bool                             m_bDrag;
-         index                            m_iItemMouseDown;
+         index                            m_iItemLButtonDown;
 
          // Sort
          bool                             m_bSort;
@@ -342,12 +340,12 @@ namespace user
          DWORD                            m_dwLButtonDownStart;
          index                            m_iDisplayItemLButtonDown;
 
-         index                            m_iItemFocus;
+         index                            m_iDisplayItemFocus;
 
          bool                             m_bLockViewUpdate;
          int64_t                          m_iItemWidth;
 
-         index                            m_iItemHover;
+         index                            m_iDisplayItemHover;
          index                            m_iSubItemHover;
 
          index                            m_iLastItemSel;
@@ -358,13 +356,8 @@ namespace user
          index                            m_iItemSel;
          index                            m_iSubItemSel;
 
-
-
-
          range                            m_rangeSelection;
          range                            m_rangeHighlight;
-
-
 
          index                            m_iShiftFirstSelection;
          uint_ptr                         m_uiLButtonDownFlags;
@@ -391,7 +384,7 @@ namespace user
          //mutex                            m_mutex;
 
 
-         index                            m_iTopIndex;
+         index                            m_iTopDisplayIndex;
          index                            m_iTopGroup;
          ::count                          m_nDisplayCount;
          ::count                          m_nItemCount;

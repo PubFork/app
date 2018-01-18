@@ -89,7 +89,7 @@ namespace user
          }
          else
          {
-            
+
             _001PlaceControl(pcontrol, iItem, true);
 
          }
@@ -168,7 +168,7 @@ namespace user
 
    void form_mesh::_001OnVScroll(::message::message * pobj)
    {
-      
+
       pobj->previous();
 
       sp(control) pcontrol = _001GetEditControl();
@@ -185,7 +185,7 @@ namespace user
 
    void form_mesh::_001OnHScroll(::message::message * pobj)
    {
-      
+
       pobj->previous();
 
       if(pobj->m_bRet)
@@ -541,40 +541,64 @@ namespace user
 
    }
 
+
    void form_mesh::control_get_client_rect(sp(control) pcontrol,LPRECT lprect)
    {
+
       if(pcontrol == NULL)
       {
+
          SetRectEmpty(lprect);
+
          return;
+
       }
+
       rect rectControl;
+
       draw_mesh_item item(this);
 
-      item.m_iDisplayItem = m_iItemHover;
-      item.m_iItem = DisplayToStrict(m_iItemHover);
+      item.m_iDisplayItem = m_iDisplayItemHover;
+
+      item.m_iItem = DisplayToStrict(m_iDisplayItemHover);
 
       if(m_bGroup)
       {
-         item.m_iGroupTopIndex = 0;
-         //            int32_t igroup;
+
+         item.m_iGroupTopDisplayIndex = 0;
+
          for(item.m_iGroup = 0; item.m_iGroup < m_nGroupCount; item.m_iGroup++)
          {
+
             item.m_iGroupCount = _001GetGroupItemCount(item.m_iGroup);
-            if(item.m_iItem >= item.m_iGroupTopIndex && item.m_iItem < (item.m_iGroupTopIndex + item.m_iGroupCount))
+
+            if(item.m_iItem >= item.m_iGroupTopDisplayIndex && item.m_iItem < (item.m_iGroupTopDisplayIndex + item.m_iGroupCount))
+            {
+
                break;
+
+            }
+
          }
+
       }
 
-
       item.m_iSubItem = pcontrol->descriptor().m_iSubItem;
+
       item.m_iOrder = _001MapSubItemToOrder(item.m_iSubItem);
+
       item.m_iListItem = -1;
+
       _001GetElementRect(&item,::user::mesh::element_sub_item);
+
       rectControl = item.m_rectSubItem;
+
       class rect rect(rectControl);
+
       *lprect = rect;
+
    }
+
 
    void form_mesh::control_get_window_rect(sp(control) pcontrol,LPRECT lprect)
    {

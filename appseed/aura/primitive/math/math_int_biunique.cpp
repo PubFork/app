@@ -1,14 +1,14 @@
 #include "framework.h"
 
 
-index_biunique::index_biunique(::aura::application * papp) : 
-   biunique < index >(papp) 
-{ 
+index_biunique::index_biunique(::aura::application * papp) :
+   biunique < index >(papp)
+{
 }
 
-int_biunique::int_biunique(::aura::application * papp) : 
-   biunique < int32_t, int_to_int >(papp) 
-{ 
+int_biunique::int_biunique(::aura::application * papp) :
+   biunique < int32_t, int_to_int >(papp)
+{
 }
 
 
@@ -102,8 +102,11 @@ CLASS_DECL_AURA index array_translate_a(index_biunique & ia, index aNew, index a
 
 
 
-CLASS_DECL_AURA index_array array_translate_a(index_biunique & ia, index_array iaNew, index_array iaOld)
+CLASS_DECL_AURA index_array array_translate_a_array(index_biunique & ia, index_array iaNew, index_array iaOld)
 {
+
+
+
 
    if (iaNew.get_size() != iaOld.get_size())
    {
@@ -116,7 +119,7 @@ CLASS_DECL_AURA index_array array_translate_a(index_biunique & ia, index_array i
 
    for (index i = 0; i < iaNew.get_size();)
    {
-      
+
       if (iaNew[i] < 0 || iaOld[i] < 0 || iaNew[i] == iaOld[i])
       {
 
@@ -151,9 +154,9 @@ CLASS_DECL_AURA index_array array_translate_a(index_biunique & ia, index_array i
 
    }
 
-   if (iaOld.get_size() <= 0 || iaNew.get_size() <= 0 || iaOld.get_size() != iaNew.get_size())
+   if (iaOld.get_size() <= 0 || iaNew.get_size() <= 0 || iaB.get_size() <= 0 || iaB.get_size() != iaOld.get_size() || iaOld.get_size() != iaNew.get_size())
    {
-      
+
       return index_array();
 
    }
@@ -164,61 +167,93 @@ CLASS_DECL_AURA index_array array_translate_a(index_biunique & ia, index_array i
    {
 
       ia.m_ba.remove_key(iaB[i]);
+
       ia.m_ab.remove_key(iaOld[i]);
 
    }
 
    ia.m_iMaxA = ia.calc_max_a();
-   ia.m_iMaxB = ia.calc_max_b();
 
+   ia.m_iMaxB = ia.calc_max_b();
 
    // making room
    for (index i = c - 1; i >= 0; i--)
    {
-      index bA = ia.get_b(iaNew[i]);
 
-      if (bA >= 0)
+      index newb = ia.get_b(iaNew[i]);
+
+      if (newb >= 0)
       {
+
          index a = iaNew[i];
+
          index b;
+
          while (true)
          {
+
             a++;
+
             if (a > ia.m_iMaxA)
             {
+
                break;
+
             }
+
             b = ia.get_b(a);
+
             if (b == ia.m_iEmptyB && !iaNew.contains(a))
             {
+
                break;
+
             }
+
          }
+
          a--;
+
          index iOffset = 1;
+
          while (a >= iaNew[i])
          {
+
             b = ia.get_b(a);
+
             if (iaNew.contains(a) && a != iaNew[i])
             {
+
                iOffset++;
+
             }
             else if (b != ia.m_iEmptyB)
             {
+
                ia.m_ba.remove_key(b);
+
                ia.m_ab.remove_key(a);
+
                ia.m_ba.set_at(b, a + iOffset);
+
                ia.m_ab.set_at(a + iOffset, b);
+
             }
+
             a--;
+
          }
 
       }
-      // actually (in)se(r)tting
+
       ia.m_ba.set_at(iaB[i], iaNew[i]);
+
       ia.m_ab.set_at(iaNew[i], iaB[i]);
+
       ia.m_iMaxA = ia.calc_max_a();
+
       ia.m_iMaxB = ia.calc_max_b();
+
    }
 
    return iaB;

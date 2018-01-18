@@ -585,6 +585,7 @@ namespace linux
                {
 
                   point pt;
+
                   m_pauraapp->m_paurasession->get_cursor_pos(pt);
 
                   m_rectParentClient.left = pt.x;
@@ -687,7 +688,7 @@ namespace linux
       IGUI_MSG_LINK(WM_CREATE,pinterface,this,&interaction_impl::_001OnCreate);
 
 
-      //IGUI_MSG_LINK(WM_SIZE              , pinterface, this, &interaction_impl::_001OnSize);
+      IGUI_MSG_LINK(WM_SIZE              , pinterface, this, &interaction_impl::_001OnSize);
 
       if(!m_pui->m_bMessageWindow)
       {
@@ -710,6 +711,25 @@ namespace linux
       }
 
       IGUI_MSG_LINK(WM_DESTROY,pinterface,this,&interaction_impl::_001OnDestroy);
+
+   }
+
+
+   void interaction_impl::_001OnSize(::message::message * pobj)
+   {
+
+      SCAST_PTR(::message::size, psize, pobj);
+
+      m_pui->on_layout();
+
+      if (m_bIgnoreSizeEvent)
+      {
+
+         pobj->m_bRet = true;
+
+         return;
+
+      }
 
    }
 
@@ -3770,115 +3790,121 @@ return TRUE;
    bool interaction_impl::SetWindowPos(int_ptr z, int32_t x, int32_t y, int32_t cx, int32_t cy, UINT nFlags)
    {
 
-      //::user::interaction_impl::SetWindowPos(z, x, y, cx, cy, nFlags);
+      return ::SetWindowPos(get_handle(), (oswindow) z, x, y, cx, cy, nFlags);
 
-      //m_rectParentClient = m_rectParentClientRequest;
-
-      xdisplay d(m_oswindow->display());
-
-      if(!::IsWindowVisibleRaw(m_oswindow))
-      {
-
-         XSizeHints hints = {};
-
-         if(!(nFlags & SWP_NOSIZE))
-         {
-
-            hints.flags |= PSize;
-
-            hints.width = cx;
-
-            hints.height = cy;
-
-         }
-
-         if(!(nFlags & SWP_NOMOVE))
-         {
-
-            hints.flags |= PPosition;
-
-            hints.x = x;
-
-            hints.y = y;
-
-         }
-
-         XSetNormalHints(m_oswindow->display(), m_oswindow->window(), &hints);
-
-         if((nFlags & SWP_SHOWWINDOW))
-         {
-
-            m_oswindow->map_window();
-
-         }
-
-      }
-
-      {
-
-         if(!(nFlags & SWP_NOMOVE) && !(nFlags & SWP_NOSIZE))
-         {
-
-            XMoveResizeWindow(m_oswindow->display(), m_oswindow->window(), x, y, cx, cy);
-
-         }
-         else if(!(nFlags & SWP_NOMOVE))
-         {
-
-            XMoveWindow(m_oswindow->display(), m_oswindow->window(), x, y);
-
-         }
-         else if(!(nFlags & SWP_NOSIZE))
-         {
-
-            XResizeWindow(m_oswindow->display(), m_oswindow->window(), cx, cy);
-
-         }
-
-      }
-
-
-      if(!(nFlags & SWP_NOZORDER))
-      {
-
-         wm_state_above_raw((oswindow)get_handle(), z == ZORDER_TOPMOST);
-
-         if(z == ZORDER_TOP)
-         {
-
-            Atom atom;
-
-            XEvent xev;
-
-            ZERO(xev);
-
-            Window w = RootWindow(get_handle()->display(), get_handle()->m_iScreen);
-
-            atom = XInternAtom (d, "_NET_ACTIVE_WINDOW", False);
-
-            xev.xclient.type = ClientMessage;
-            xev.xclient.send_event = True;
-            xev.xclient.display = get_handle()->display();
-            xev.xclient.window = get_handle()->window();
-            xev.xclient.message_type = atom;
-            xev.xclient.format = 32;
-            xev.xclient.data.l[0] = 1;
-            xev.xclient.data.l[1] = 0;
-            xev.xclient.data.l[2] = 0;
-            xev.xclient.data.l[3] = 0;
-            xev.xclient.data.l[4] = 0;
-
-            XSendEvent (d, w, False, SubstructureRedirectMask | SubstructureNotifyMask, &xev);
-
-            XRaiseWindow(m_oswindow->display(), m_oswindow->window());
-
-         }
-
-      }
-
-      XFlush(m_oswindow->display());
-
-      XSync(m_oswindow->display(), False);
+//      xdisplay d(m_oswindow->display());
+//
+//      if(::IsWindowVisibleRaw(m_oswindow))
+//      {
+//
+//         ::SetWindowPos(m_oswindow, (oswindow) z, x, y, cx, cy, nFlags);
+//
+//      }
+//      else
+//      {
+//
+//         XSizeHints hints = {};
+//
+//         if(!(nFlags & SWP_NOSIZE))
+//         {
+//
+//            hints.flags |= PSize;
+//
+//            hints.width = cx;
+//
+//            hints.height = cy;
+//
+//         }
+//
+//         if(!(nFlags & SWP_NOMOVE))
+//         {
+//
+//            hints.flags |= PPosition;
+//
+//            hints.x = x;
+//
+//            hints.y = y;
+//
+//         }
+//
+//         XSetNormalHints(m_oswindow->display(), m_oswindow->window(), &hints);
+//
+//         if((nFlags & SWP_SHOWWINDOW))
+//         {
+//
+//            m_oswindow->map_window();
+//
+//         }
+//
+//      }
+//
+////      {
+////
+////         if(!(nFlags & SWP_NOMOVE) && !(nFlags & SWP_NOSIZE))
+////         {
+////
+////            XMoveResizeWindow(m_oswindow->display(), m_oswindow->window(), x, y, cx, cy);
+////
+////         }
+////         else if(!(nFlags & SWP_NOMOVE))
+////         {
+////
+////            XMoveWindow(m_oswindow->display(), m_oswindow->window(), x, y);
+////
+////         }
+////         else if(!(nFlags & SWP_NOSIZE))
+////         {
+////
+////            XResizeWindow(m_oswindow->display(), m_oswindow->window(), cx, cy);
+////
+////         }
+////
+////      }
+////
+////
+//
+//
+//      if(!(nFlags & SWP_NOZORDER))
+//      {
+//
+//         wm_state_above_raw((oswindow)get_handle(), z == ZORDER_TOPMOST);
+//
+//         if(z == ZORDER_TOP)
+//         {
+//
+//            Atom atom;
+//
+//            XEvent xev;
+//
+//            ZERO(xev);
+//
+//            Window w = RootWindow(get_handle()->display(), get_handle()->m_iScreen);
+//
+//            atom = XInternAtom (d, "_NET_ACTIVE_WINDOW", False);
+//
+//            xev.xclient.type = ClientMessage;
+//            xev.xclient.send_event = True;
+//            xev.xclient.display = get_handle()->display();
+//            xev.xclient.window = get_handle()->window();
+//            xev.xclient.message_type = atom;
+//            xev.xclient.format = 32;
+//            xev.xclient.data.l[0] = 1;
+//            xev.xclient.data.l[1] = 0;
+//            xev.xclient.data.l[2] = 0;
+//            xev.xclient.data.l[3] = 0;
+//            xev.xclient.data.l[4] = 0;
+//
+//            XSendEvent (d, w, False, SubstructureRedirectMask | SubstructureNotifyMask, &xev);
+//
+//            XRaiseWindow(m_oswindow->display(), m_oswindow->window());
+//
+//         }
+//
+//      }
+//
+//      XFlush(m_oswindow->display());
+//
+//      XSync(m_oswindow->display(), False);
 
    }
 

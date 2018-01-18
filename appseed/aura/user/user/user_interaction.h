@@ -174,6 +174,10 @@ namespace user
       virtual ~interaction();
 
 
+      virtual ::id calc_user_interaction_id() const;
+      virtual ::id calc_default_user_interaction_id() const;
+
+
       tooltip *         get_tooltip();
 
 
@@ -1114,6 +1118,9 @@ namespace user
 
       virtual void set_stock_icon(e_stock_icon eicon);
       virtual e_stock_icon get_stock_icon();
+
+
+
    };
 
 

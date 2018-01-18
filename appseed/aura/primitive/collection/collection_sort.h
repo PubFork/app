@@ -1681,12 +1681,15 @@ break_mid_loop:
 
    }
 
+
    template <class TYPE, class ARG_TYPE, class ARRAY_TYPE, typename PRED>
    void pred_quick_sort_descending(comparable_list < TYPE, ARG_TYPE, ARRAY_TYPE > & list, PRED pred)
    {
+
       pred_quick_sort(list, [&](auto & a, auto & b) { return pred(b, a); });
 
    }
+
 
    template <class TYPE, class ARG_TYPE, class ARRAY_TYPE >
    void quick_sort(comparable_list < TYPE, ARG_TYPE, ARRAY_TYPE > & list, bool bAscendent = true)

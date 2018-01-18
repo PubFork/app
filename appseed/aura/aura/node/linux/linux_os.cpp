@@ -994,30 +994,13 @@ return ::getpid();
       else
       {
 
-         bool bUbuntu = true;
-
-         if(bUbuntu)
-         {
-
-            call_async("/bin/bash", "-c \"gvfs-open \\\"" + strTarget + "\\\"\"", strFolder, SW_SHOWDEFAULT, false);
-
-         }
-         else
-         {
-
-            call_async("/bin/bash", "-c \"xdg-open \\\"" + strTarget + "\\\"\"", strFolder, SW_SHOWDEFAULT, false);
-
-         }
-
+         call_async("/bin/bash", "-c 'xdg-open \"" + strTarget + "\"'", strFolder, SW_SHOWDEFAULT, false);
 
       }
 
       return true;
 
-
    }
-
-
 
 
 } // namespace linux

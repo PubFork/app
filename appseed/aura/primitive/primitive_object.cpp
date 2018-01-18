@@ -443,6 +443,26 @@ bool sync_object::is_locked() const
 }
 
 
+::id object::calc_object_id() const
+{
+
+   return calc_default_object_id();
+
+}
+
+
+::id object::calc_default_object_id() const
+{
+
+   string strType = typeid(*this).name();
+
+   ::str::begins_eat_ci(strType, "class ");
+
+   return strType;
+
+}
+
+
 void object::handle(::command::command * pcommand)
 {
 

@@ -561,7 +561,7 @@ namespace filemanager
          void list_view::start_build(int32_t iItem)
          {
             UNREFERENCED_PARAMETER(iItem);
-            index iTopIndex = m_iTopIndex;
+            index iTopIndex = m_iTopDisplayIndex;
             ::count iDisplayItemCount = m_nDisplayCount;
 
             if(m_bKickActive &&

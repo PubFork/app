@@ -475,15 +475,7 @@ namespace database
 
       }
 
-      {
-
-         string strType = typeid(*this).name();
-
-         ::str::begins_eat_ci(strType, "class ");
-
-         str += strType;
-
-      }
+      str += calc_object_id();
 
       if (m_strDataKeyModifier.has_char())
       {

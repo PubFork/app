@@ -22,8 +22,8 @@ public:
 
       return *this;
 
-
    }
+
 
    box & operator += (const point3d & p)
    {

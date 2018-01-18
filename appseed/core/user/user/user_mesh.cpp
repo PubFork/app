@@ -2,7 +2,7 @@
 
 
 CLASS_DECL_AURA index array_translate_a(index_biunique & ia, index aNew, index aOld);
-CLASS_DECL_AURA index_array array_translate_a(index_biunique & ia, index_array iaNew, index_array iaOld);
+CLASS_DECL_AURA index_array array_translate_a_array(index_biunique & ia, index_array iaNew, index_array iaOld);
 
 
 namespace user
@@ -31,8 +31,8 @@ namespace user
 
       m_bDrag = false;
       m_eview = view_grid;
-      m_iItemFocus = -1;
-      m_iItemHover = -1;
+      m_iDisplayItemFocus = -1;
+      m_iDisplayItemHover = -1;
       m_iSubItemHover = -2;
       m_bSortEnable              = true;
       m_bFilter1                 = false;
@@ -61,7 +61,7 @@ namespace user
       m_iGroupMinHeight          = 0;
       m_nGroupCount              = 0;
       m_nItemCount               = 0;
-      m_iTopIndex                = -1;
+      m_iTopDisplayIndex                = -1;
       m_nDisplayCount            = 0;
 
       m_iClick = 0;
@@ -242,7 +242,7 @@ namespace user
       rect rectItem;
       rect rectIntersect;
       int_ptr iItemCount = m_nDisplayCount;
-      int_ptr iItemFirst = m_iTopIndex;
+      int_ptr iItemFirst = m_iTopDisplayIndex;
       int_ptr iItemLast;
       if(m_eview == view_icon)
       {
@@ -432,8 +432,6 @@ namespace user
 
       rect rectIntersect;
 
-      index iItem;
-
       if(m_eview == view_icon)
       {
          m_pdrawmeshitem->m_iDrawTextFlags = DT_TOP | DT_CENTER | DT_END_ELLIPSIS | DT_WORDBREAK;
@@ -449,58 +447,84 @@ namespace user
 
       pdrawitem->m_pfont = pdrawitem->m_pgraphics->m_spfont;
 
-      for(iItem = iItemFirst; iItem <= iItemLast; iItem++)
-      {
-         if(m_eview == view_icon
-               && (m_iconlayout.m_iaDisplayToStrict.get_b(iItem) == -1
-                   && iItem != m_iItemDrop))
-            continue;
+      index iDisplayItem;
 
-         m_pdrawmeshitem->m_iItem           = DisplayToStrict(iItem);
-         m_pdrawmeshitem->m_iDisplayItem    = iItem;
+      for(iDisplayItem = iItemFirst; iDisplayItem <= iItemLast; iDisplayItem++)
+      {
+
+         m_pdrawmeshitem->m_iItem           = DisplayToStrict(iDisplayItem);
+
+         m_pdrawmeshitem->m_iDisplayItem    = iDisplayItem;
 
          if(m_bGroup)
          {
-            m_pdrawmeshitem->m_iGroupTopIndex = 0;
-            //            int32_t igroup;
+
+            m_pdrawmeshitem->m_iGroupTopDisplayIndex = 0;
+
             for(m_pdrawmeshitem->m_iGroup = 0; m_pdrawmeshitem->m_iGroup < m_nGroupCount; m_pdrawmeshitem->m_iGroup++)
             {
+
                m_pdrawmeshitem->m_iGroupCount = _001GetGroupItemCount(m_pdrawmeshitem->m_iGroup);
-               if(iItem >= m_pdrawmeshitem->m_iGroupTopIndex && iItem < (m_pdrawmeshitem->m_iGroupTopIndex + m_pdrawmeshitem->m_iGroupCount))
+
+               if(iDisplayItem >= m_pdrawmeshitem->m_iGroupTopDisplayIndex && iDisplayItem < (m_pdrawmeshitem->m_iGroupTopDisplayIndex + m_pdrawmeshitem->m_iGroupCount))
+               {
+
                   break;
+
+               }
+
             }
+
          }
 
          _001GetItemRect(m_pdrawmeshitem);
 
          if(!m_pdrawmeshitem->m_bOk)
+         {
+
             continue;
+
+         }
 
          if(!rectIntersect.intersect(m_pdrawmeshitem->m_rectItem,rectVisible))
+         {
+
             continue;
 
-         if(iItem == m_iItemHover)
+         }
+
+         if(iDisplayItem == m_iDisplayItemHover)
          {
+
             if(!bHoverFont)
             {
+
                bHoverFont = true;
+
                select_font(pdrawitem->m_pgraphics, font_list_hover);
+
             }
+
          }
          else
          {
+
             if(bHoverFont)
             {
+
                bHoverFont = false;
+
                select_font(pdrawitem->m_pgraphics, font_list_item);
+
             }
+
          }
 
          _001DrawItem(m_pdrawmeshitem);
 
       }
-   }
 
+   }
 
 
    void mesh::_001DrawItem(draw_mesh_item * pdrawitem)
@@ -518,9 +542,9 @@ namespace user
       if(pdrawitem->m_iItem < 0)
          return;
 
-      pdrawitem->m_bListItemHover = pdrawitem->m_iDisplayItem == m_iItemHover &&
+      pdrawitem->m_bListItemHover = pdrawitem->m_iDisplayItem == m_iDisplayItemHover &&
                                     (m_eview != view_icon ||
-                                     ((m_iconlayout.m_iaDisplayToStrict.get_a(m_iItemHover) >= 0 && m_iconlayout.m_iaDisplayToStrict.get_a(m_iItemHover) < m_nItemCount)));
+                                     ((m_iconlayout.m_iaDisplayToStrict.get_a(m_iDisplayItemHover) >= 0 && m_iconlayout.m_iaDisplayToStrict.get_a(m_iDisplayItemHover) < m_nItemCount)));
 
       if(pdrawitem->m_bListItemHover)
       {
@@ -770,7 +794,7 @@ namespace user
 
       }
 
-      m_iTopIndex       = _001CalcDisplayTopIndex();
+      m_iTopDisplayIndex       = _001CalcDisplayTopIndex();
 
       if(m_eview == view_grid)
       {
@@ -784,7 +808,7 @@ namespace user
       for(m_iTopGroup = 0; m_iTopGroup < m_nGroupCount; m_iTopGroup++)
       {
 
-         if(m_iTopIndex >= iLow && m_iTopIndex < (iLow + _001GetGroupItemCount(m_iTopGroup)))
+         if(m_iTopDisplayIndex >= iLow && m_iTopDisplayIndex < (iLow + _001GetGroupItemCount(m_iTopGroup)))
             break;
 
       }
@@ -1025,12 +1049,12 @@ namespace user
             }
             if(m_bGroup)
             {
-               itemLast.m_iGroupTopIndex = 0;
+               itemLast.m_iGroupTopDisplayIndex = 0;
                //               int32_t igroup;
                for(itemLast.m_iGroup = 0; itemLast.m_iGroup < m_nGroupCount; itemLast.m_iGroup++)
                {
                   itemLast.m_iGroupCount = _001GetGroupItemCount(itemLast.m_iGroup);
-                  if(itemLast.m_iItem >= itemLast.m_iGroupTopIndex && itemLast.m_iItem < (itemLast.m_iGroupTopIndex + itemLast.m_iGroupCount))
+                  if(itemLast.m_iItem >= itemLast.m_iGroupTopDisplayIndex && itemLast.m_iItem < (itemLast.m_iGroupTopDisplayIndex + itemLast.m_iGroupCount))
                      break;
                }
             }
@@ -1383,7 +1407,7 @@ namespace user
       {
          iItemCount = m_nItemCount;
       }
-      int_ptr iItemFirst = m_iTopIndex;
+      int_ptr iItemFirst = m_iTopDisplayIndex;
       int_ptr iItemLast = iItemFirst;
       rect rectItem;
       rect rectIntersect;
@@ -1399,11 +1423,11 @@ namespace user
             item.m_iDisplayItem  = i;
             if(m_bGroup)
             {
-               item.m_iGroupTopIndex = 0;
+               item.m_iGroupTopDisplayIndex = 0;
                for(item.m_iGroup = 0; item.m_iGroup < m_nGroupCount; item.m_iGroup++)
                {
                   item.m_iGroupCount = _001GetGroupItemCount(item.m_iGroup);
-                  if(i >= item.m_iGroupTopIndex && i < (item.m_iGroupTopIndex + item.m_iGroupCount))
+                  if(i >= item.m_iGroupTopDisplayIndex && i < (item.m_iGroupTopDisplayIndex + item.m_iGroupCount))
                      break;
                }
             }
@@ -1772,10 +1796,10 @@ namespace user
 
                if(pdrawitem->m_iDisplayItem > pdrawitem->m_iItemRectItem)
                {
-                  int32_t iOffset                               = (int32_t)((pdrawitem->m_iItemRectItem - pdrawitem->m_iGroupTopIndex) * m_iItemHeight);
+                  int32_t iOffset                               = (int32_t)((pdrawitem->m_iItemRectItem - pdrawitem->m_iGroupTopDisplayIndex) * m_iItemHeight);
                   pdrawitem->m_rectItem.top                -= iOffset;
                   pdrawitem->m_rectItem.bottom              = pdrawitem->m_rectItem.top + m_iItemHeight;
-                  while(pdrawitem->m_iGroupTopIndex + pdrawitem->m_iGroupCount < pdrawitem->m_iDisplayItem)
+                  while(pdrawitem->m_iGroupTopDisplayIndex + pdrawitem->m_iGroupCount < pdrawitem->m_iDisplayItem)
                   {
                      //                     int32_t iHeight                            = _001GetGroupHeight(pdrawitem->m_iGroup);
                      pdrawitem->m_rectItem.top             += iOffset;
@@ -1785,17 +1809,17 @@ namespace user
                         break;
                      }
                      pdrawitem->m_iGroup++;
-                     pdrawitem->m_iGroupTopIndex            += pdrawitem->m_iGroupCount;
+                     pdrawitem->m_iGroupTopDisplayIndex            += pdrawitem->m_iGroupCount;
                      pdrawitem->m_iGroupCount               = _001GetGroupItemCount(pdrawitem->m_iGroup);
-                     pdrawitem->m_iItemRectItem             = pdrawitem->m_iGroupTopIndex;
+                     pdrawitem->m_iItemRectItem             = pdrawitem->m_iGroupTopDisplayIndex;
                   }
                }
                else
                {
-                  int32_t iOffset                               = (int32_t)((pdrawitem->m_iItemRectItem - pdrawitem->m_iGroupTopIndex) * m_iItemHeight);
+                  int32_t iOffset                               = (int32_t)((pdrawitem->m_iItemRectItem - pdrawitem->m_iGroupTopDisplayIndex) * m_iItemHeight);
                   pdrawitem->m_rectItem.top                -= iOffset;
                   pdrawitem->m_rectItem.bottom              = pdrawitem->m_rectItem.top + m_iItemHeight;
-                  while(pdrawitem->m_iGroupTopIndex + pdrawitem->m_iGroupCount > pdrawitem->m_iDisplayItem)
+                  while(pdrawitem->m_iGroupTopDisplayIndex + pdrawitem->m_iGroupCount > pdrawitem->m_iDisplayItem)
                   {
                      if((pdrawitem->m_iGroup - 1) < 0)
                      {
@@ -1806,14 +1830,14 @@ namespace user
                      pdrawitem->m_rectItem.top          -= iHeight;
                      pdrawitem->m_rectItem.bottom        = pdrawitem->m_rectItem.top + m_iItemHeight;
                      pdrawitem->m_iGroupCount            = _001GetGroupItemCount(pdrawitem->m_iGroup);
-                     pdrawitem->m_iGroupTopIndex        -= pdrawitem->m_iGroupCount;
-                     pdrawitem->m_iItemRectItem          = pdrawitem->m_iGroupTopIndex;
+                     pdrawitem->m_iGroupTopDisplayIndex        -= pdrawitem->m_iGroupCount;
+                     pdrawitem->m_iItemRectItem          = pdrawitem->m_iGroupTopDisplayIndex;
                   }
                }
                if(pdrawitem->m_iGroup < m_nGroupCount && pdrawitem->m_iGroup >= 0)
                {
                   pdrawitem->m_iItemRectItem       = pdrawitem->m_iDisplayItem;
-                  pdrawitem->m_rectItem.top       += (LONG)((pdrawitem->m_iItemRectItem - pdrawitem->m_iGroupTopIndex) * m_iItemHeight);
+                  pdrawitem->m_rectItem.top       += (LONG)((pdrawitem->m_iItemRectItem - pdrawitem->m_iGroupTopDisplayIndex) * m_iItemHeight);
                   pdrawitem->m_rectItem.bottom     =  pdrawitem->m_rectItem.top + m_iItemHeight;
                }
             }
@@ -1874,10 +1898,10 @@ namespace user
 
                if(pdrawitem->m_iDisplayItem > pdrawitem->m_iItemRectItem)
                {
-                  int32_t iOffset                               = (int32_t)((pdrawitem->m_iItemRectItem - pdrawitem->m_iGroupTopIndex) * m_iItemHeight);
+                  int32_t iOffset                               = (int32_t)((pdrawitem->m_iItemRectItem - pdrawitem->m_iGroupTopDisplayIndex) * m_iItemHeight);
                   pdrawitem->m_rectItem.top                -= iOffset;
                   pdrawitem->m_rectItem.bottom              = pdrawitem->m_rectItem.top + m_iItemHeight;
-                  while(pdrawitem->m_iGroupTopIndex + pdrawitem->m_iGroupCount < pdrawitem->m_iDisplayItem)
+                  while(pdrawitem->m_iGroupTopDisplayIndex + pdrawitem->m_iGroupCount < pdrawitem->m_iDisplayItem)
                   {
                      //                     int32_t iHeight                            = _001GetGroupHeight(pdrawitem->m_iGroup);
                      pdrawitem->m_rectItem.top             += iOffset;
@@ -1887,17 +1911,17 @@ namespace user
                         break;
                      }
                      pdrawitem->m_iGroup++;
-                     pdrawitem->m_iGroupTopIndex            += pdrawitem->m_iGroupCount;
+                     pdrawitem->m_iGroupTopDisplayIndex            += pdrawitem->m_iGroupCount;
                      pdrawitem->m_iGroupCount               = _001GetGroupItemCount(pdrawitem->m_iGroup);
-                     pdrawitem->m_iItemRectItem             = pdrawitem->m_iGroupTopIndex;
+                     pdrawitem->m_iItemRectItem             = pdrawitem->m_iGroupTopDisplayIndex;
                   }
                }
                else
                {
-                  int32_t iOffset                               = (int32_t)((pdrawitem->m_iItemRectItem - pdrawitem->m_iGroupTopIndex) * m_iItemHeight);
+                  int32_t iOffset                               = (int32_t)((pdrawitem->m_iItemRectItem - pdrawitem->m_iGroupTopDisplayIndex) * m_iItemHeight);
                   pdrawitem->m_rectItem.top                -= iOffset;
                   pdrawitem->m_rectItem.bottom              = pdrawitem->m_rectItem.top + m_iItemHeight;
-                  while(pdrawitem->m_iGroupTopIndex + pdrawitem->m_iGroupCount > pdrawitem->m_iDisplayItem)
+                  while(pdrawitem->m_iGroupTopDisplayIndex + pdrawitem->m_iGroupCount > pdrawitem->m_iDisplayItem)
                   {
                      if((pdrawitem->m_iGroup - 1) < 0)
                      {
@@ -1908,14 +1932,14 @@ namespace user
                      pdrawitem->m_rectItem.top          -= iHeight;
                      pdrawitem->m_rectItem.bottom        = pdrawitem->m_rectItem.top + m_iItemHeight;
                      pdrawitem->m_iGroupCount            = _001GetGroupItemCount(pdrawitem->m_iGroup);
-                     pdrawitem->m_iGroupTopIndex        -= pdrawitem->m_iGroupCount;
-                     pdrawitem->m_iItemRectItem          = pdrawitem->m_iGroupTopIndex;
+                     pdrawitem->m_iGroupTopDisplayIndex        -= pdrawitem->m_iGroupCount;
+                     pdrawitem->m_iItemRectItem          = pdrawitem->m_iGroupTopDisplayIndex;
                   }
                }
                if(pdrawitem->m_iGroup < m_nGroupCount && pdrawitem->m_iGroup >= 0)
                {
                   pdrawitem->m_iItemRectItem       = pdrawitem->m_iDisplayItem;
-                  pdrawitem->m_rectItem.top       += (LONG)((pdrawitem->m_iItemRectItem - pdrawitem->m_iGroupTopIndex) * m_iItemHeight);
+                  pdrawitem->m_rectItem.top       += (LONG)((pdrawitem->m_iItemRectItem - pdrawitem->m_iGroupTopDisplayIndex) * m_iItemHeight);
                   pdrawitem->m_rectItem.bottom     =  pdrawitem->m_rectItem.top + m_iItemHeight;
                }
             }
@@ -2478,7 +2502,7 @@ namespace user
             range range = m_rangeSelection;
             m_rangeSelection.clear();
 
-            int_ptr iItem = m_iItemFocus;
+            int_ptr iItem = m_iDisplayItemFocus;
 
             if(iItem < 0)
             {
@@ -2527,7 +2551,7 @@ namespace user
             }
 
             m_iShiftFirstSelection = iItem;
-            m_iItemFocus = iItem;
+            m_iDisplayItemFocus = iItem;
 
             item_range itemrange;
 //            itemrange.set(iItem,iItem,0,m_nColumnCount - 1,- 1,-1);
@@ -2557,7 +2581,9 @@ namespace user
       }
 
       pobj->m_bRet = false;
+
    }
+
 
    void mesh::_001OnMouseMove(::message::message * pobj)
    {
@@ -2587,6 +2613,7 @@ namespace user
          {
 
             m_bLButtonDown = false;
+
             m_bDrag = false;
 
          }
@@ -2596,28 +2623,10 @@ namespace user
       if (m_bDrag)
       {
 
-         if (m_iItemMouseDown >= 0)
-         {
-            //index iItemOld = m_iItemDrop;
-            m_ptLButtonUp = pt;
-            //if (!_001DisplayHitTest(pt, m_iItemDrop))
-            {
-            }
-            //            if (iItemOld != m_iItemDrop)
-            {
-               //             if (m_eview == view_icon)
-               {
-                  //if (iItemOld != m_iItemDrag)
-                  {
-                     //                  m_iconlayout.m_iaDisplayToStrict.array_remove_a(iItemOld);
-                  }
-                  //             m_iconlayout.m_iaDisplayToStrict.array_insert(m_iItemDrop, m_iStrictItemDrag);
-                  //array_translate_a(m_iconlayout.m_iaDisplayToStrict, m_iItemDrop, iItemOld);
+         m_ptLButtonUp = pt;
 
-               }
-               RedrawWindow();
-            }
-         }
+         set_need_redraw();
+
       }
       else if(m_bHoverSelect)
       {
@@ -2627,32 +2636,12 @@ namespace user
 
             bool bShouldStartDrag = d_distance(pt, m_ptLButtonDown) > m_iItemHeight;
 
-            if (!bShouldStartDrag)
-            {
-
-               index iItem = -1;
-
-               if (_001DisplayHitTest(pt, iItem))
-               {
-
-                  if (iItem != m_iDisplayItemLButtonDown)
-                  {
-
-                     bShouldStartDrag = true;
-
-                  }
-
-               }
-
-            }
-
             if (bShouldStartDrag)
             {
 
                m_bDrag = true;
 
             }
-
 
          }
 
@@ -2694,7 +2683,6 @@ namespace user
          }
 
       }
-
 
    }
 
@@ -2781,32 +2769,52 @@ namespace user
 
                m_rangeSelection.clear();
             }
+
          }
          else
          {
+
             if(m_bMultiSelect && Session.is_key_pressed(::user::key_shift))
             {
+
                if(_001DisplayHitTest(pt,iItem))
                {
+
                   item_range itemrange;
+
                   int_ptr iLItem = MIN(m_iShiftFirstSelection,iItem);
+
                   int_ptr iUItem = MAX(m_iShiftFirstSelection,iItem);
+
                   itemrange.set(iLItem,iUItem,0,m_nColumnCount - 1,- 1,-1);
+
                   _001AddSelection(itemrange);
+
                   m_iShiftFirstSelection = iItem;
+
                }
+
             }
             else if(m_bMultiSelect && Session.is_key_pressed(::user::key_control))
             {
+
                if(_001DisplayHitTest(pt,iItem))
                {
+
                   item_range itemrange;
+
                   int_ptr iLItem = MIN(m_iShiftFirstSelection,iItem);
+
                   int_ptr iUItem = MAX(m_iShiftFirstSelection,iItem);
+
                   itemrange.set(iLItem,iUItem,0,m_nColumnCount - 1,- 1,-1);
+
                   _001AddSelection(itemrange);
+
                   m_iShiftFirstSelection = iItem;
+
                }
+
             }
             else
             {
@@ -2820,11 +2828,9 @@ namespace user
 
                   m_iShiftFirstSelection = iItem;
 
-                  m_iItemFocus = iItem;
+                  m_iDisplayItemFocus = iItem;
 
-                  _001DisplayHitTest(pt,m_iItemDrag);
-
-                  m_iItemDrop = m_iItemDrag;
+                  _001DisplayHitTest(pt, m_iDisplayItemLButtonDown);
 
                   m_uiLButtonDownFlags = pmouse->m_nFlags;
 
@@ -2874,15 +2880,15 @@ namespace user
          if (m_eview != view_icon)
          {
 
-            //index iItemOld = m_iItemDrop;
+            index iDisplayItemDrop;
 
-            if (_001DisplayHitTest(pt, m_iItemDrop))
+            if (_001DisplayHitTest(pt, iDisplayItemDrop))
             {
 
-               if (m_iItemDrag != m_iItemDrop && m_iItemDrop != -1)
+               if (m_iDisplayItemLButtonDown != iDisplayItemDrop && iDisplayItemDrop != -1)
                {
 
-                  m_meshlayout.m_iaDisplayToStrict.swap(m_iItemDrag, m_iItemDrop);
+                  m_meshlayout.m_iaDisplayToStrict.swap(m_iDisplayItemLButtonDown, iDisplayItemDrop);
 
                   _001OnAfterSort();
 
@@ -4176,69 +4182,34 @@ namespace user
       }
       else if(ptimer->m_nIDEvent == 0xfffffffe)
       {
+
          if(!Filter1Step())
+         {
+
             KillTimer(ptimer->m_nIDEvent);
+
+         }
+
       }
       else if (ptimer->m_nIDEvent == 224455)
       {
 
          KillTimer(ptimer->m_nIDEvent);
 
-         m_iItemDrop = -1;
-
-         if (m_eview == view_icon)
+         if (m_iItemLButtonDown >= 0)
          {
 
-            m_iStrictItemDrag = m_iconlayout.m_iaDisplayToStrict.get_b(m_iItemMouseDown);
-
-            if (m_iStrictItemDrag >= 0)
-            {
-
-               //if (iItemOld >= 0)
-               {
-
-                  //m_iconlayout.m_iaDisplayToStrict.remove_a(m_iItemMouseDown);
-
-               }
-
-               m_iItemDrag = m_iItemMouseDown;
-
-               m_iItemDrop = m_iItemDrag;
-
-               m_bDrag = true;
-
-            }
-            else
-            {
-
-               m_iItemMouseDown = -1;
-
-               m_iItemDrag = -1;
-
-               m_iItemDrop = -1;
-
-               m_bDrag = true;
-
-            }
+            m_bDrag = true;
 
          }
          else
          {
 
-            m_iStrictItemDrag = m_meshlayout.m_iaDisplayToStrict.find_first(m_iItemDrag);
+            m_iItemLButtonDown = -1;
 
-            if (m_iStrictItemDrag >= 0)
-            {
+            m_iDisplayItemLButtonDown = -1;
 
-               m_meshlayout.m_iaDisplayToStrict.remove_at(m_iStrictItemDrag);
-
-               m_iItemDrop = -1;
-
-               m_iItemDrag = m_iItemMouseDown;
-
-               m_bDrag = true;
-
-            }
+            m_bDrag = false;
 
          }
 
@@ -4521,7 +4492,7 @@ namespace user
       if(m_pcache != NULL)
       {
          int_ptr iItemCount = m_nDisplayCount;
-         int_ptr iItemFirst = m_iTopIndex;
+         int_ptr iItemFirst = m_iTopDisplayIndex;
          m_pcache->_001CacheHint(
          this,
          iItemFirst,
@@ -4863,120 +4834,98 @@ namespace user
       return -1;
    }
 
+
    index mesh::DisplayToStrict(index iDisplay)
    {
+
       if(iDisplay < 0)
+      {
+
          return -1;
-      if(m_bDrag)
-      {
-         if(m_eview == view_icon)
-         {
-            return m_iconlayout.m_iaDisplayToStrict[iDisplay];
-            //if(m_iconlayout.m_iaDisplayToStrict[m_iItemDrop] >= 0 && m_iconlayout.m_iaDisplayToStrict[m_iItemDrop] < m_nItemCount)
-            //{
-            //   return m_iconlayout.m_iaDisplayToStrict[iDisplay];
-            //}
-            //else
-            //{
-            //   //if(iDisplay == m_iItemDrop)
-            //   //{
-            //     // return m_iconlayout.m_iaDisplayToStrict[m_iItemDrag];
-            //   //}
-            //   //else if(iDisplay == m_iItemDrag)
-            //   //{
-            //      //return -1;
-            //   //}
-            //   //else
-            //   {
-            //      return m_iconlayout.m_iaDisplayToStrict[iDisplay];
-            //   }
-            //}
-         }
-         else
-         {
-            if(iDisplay < m_iItemDrag && iDisplay < m_iItemDrop)
-            {
-               return m_iconlayout.m_iaDisplayToStrict[iDisplay];
-            }
-            else if(iDisplay > m_iItemDrag && iDisplay > m_iItemDrop)
-            {
-               return m_iconlayout.m_iaDisplayToStrict[iDisplay];
-            }
-            else
-            {
-               if(iDisplay == m_iItemDrop)
-               {
-                  return m_iconlayout.m_iaDisplayToStrict[m_iItemDrag];
-               }
-               else if(m_iItemDrop > m_iItemDrag)
-               {
-                  return m_iconlayout.m_iaDisplayToStrict[iDisplay + 1];
-               }
-               else if(m_iItemDrag > m_iItemDrop)
-               {
-                  return m_iconlayout.m_iaDisplayToStrict[iDisplay - 1];
-               }
-               else
-               {
-                  return m_iconlayout.m_iaDisplayToStrict[iDisplay];
-               }
-            }
-         }
+
       }
-      else if(m_eview == view_icon)
+
+      if(m_eview == view_icon)
       {
+
          return m_iconlayout.m_iaDisplayToStrict[iDisplay];
+
       }
       else
       {
+
          if(iDisplay < 0)
+         {
+
             return -1;
+
+         }
+
          if(m_meshlayout.m_iaDisplayToStrict.get_count() <= 0)
          {
+
             if(iDisplay < m_nItemCount)
+            {
+
                return iDisplay;
+
+            }
+
          }
-         //if(m_meshlayout.m_iaDisplayToStrict.get_count() != m_nItemCount)
-         // return iDisplay;
+
          if(iDisplay >= m_meshlayout.m_iaDisplayToStrict.get_count())
          {
+
             return -1;
+
          }
+
          return m_meshlayout.m_iaDisplayToStrict[iDisplay];
+
       }
+
    }
+
 
    void mesh::FilterBegin()
    {
+
       m_efilterstate = FilterStateSetup;
 
       index iItemCount = m_nItemCount;
 
       if(m_eview == view_icon)
       {
+
          m_piaFilterIcon->remove_all();
 
          for(index i = 0; i < iItemCount; i++)
          {
+
             m_piaFilterIcon->add(i);
+
          }
+
       }
       else
       {
+
          m_piaFilterMesh->remove_all();
 
          for(index i = 0; i < iItemCount; i++)
          {
+
             m_piaFilterMesh->add(i);
+
          }
+
       }
 
    }
 
+
    void mesh::FilterApply()
    {
-
-      //      ASSERT(m_efilterstate == FilterStateSetup);
 
       m_iFilter1Step = 0;
 
@@ -4996,34 +4945,43 @@ namespace user
 
    }
 
+
    void mesh::FilterClose()
    {
+
       m_bFilter1 = false;
 
       KillTimer(0xfffffffe);
 
-      ASSERT(m_efilterstate == FilterStateSetup
-             || m_efilterstate == FilterStateFilter);
+      ASSERT(m_efilterstate == FilterStateSetup || m_efilterstate == FilterStateFilter);
 
       index iItemCount = m_nItemCount;
 
       if(m_eview == view_icon)
       {
+
          m_iconlayout.m_iaDisplayToStrict.remove_all();
 
          for(index i = 0; i < iItemCount; i++)
          {
+
             m_iconlayout.m_iaDisplayToStrict.add(i);
+
          }
+
       }
       else
       {
+
          m_meshlayout.m_iaDisplayToStrict.remove_all();
 
          for(index i = 0; i < iItemCount; i++)
          {
+
             m_meshlayout.m_iaDisplayToStrict.add(i);
+
          }
+
       }
 
       on_change_view_size();
@@ -5034,49 +4992,79 @@ namespace user
 
    }
 
+
    void mesh::FilterExcludeAll()
    {
+
       if(m_eview == view_icon)
       {
+
          m_piaFilterIcon->remove_all();
+
       }
       else
       {
+
          m_piaFilterMesh->remove_all();
+
       }
+
    }
+
 
    void mesh::FilterInclude(index iItem)
    {
+
       ASSERT(m_efilterstate == FilterStateSetup);
+
       if(m_eview == view_icon)
       {
+
          m_piaFilterIcon->add_unique(iItem);
+
       }
       else
       {
+
          m_piaFilterMesh->add_unique(iItem);
+
       }
+
    }
+
 
    void mesh::FilterInclude(int_array & array)
    {
+
       ASSERT(m_efilterstate == FilterStateSetup);
+
       for(index i = 0; i < array.get_size() ; i++)
       {
+
          FilterInclude(array[i]);
+
       }
+
    }
 
 
    bool mesh::Filter1Step()
    {
+
       uint32_t dwIn = get_tick_count();
+
       uint32_t dwOut;
+
       TRACE("mesh::Filter1Step\n");
+
       TRACE("dwIn = %d\n",dwIn);
+
       if(!m_bFilter1)
+      {
+
          return false;
+
+      }
 
       string wstrItem;
 
@@ -5086,10 +5074,7 @@ namespace user
 
       draw_mesh_item item(this);
 
-      for(
-      iFilter1Step =  m_iFilter1Step;
-      iFilter1Step < iItemCount;
-      iFilter1Step++)
+      for(iFilter1Step =  m_iFilter1Step; iFilter1Step < iItemCount; iFilter1Step++)
       {
          //for(index j = 0; j < m_nColumnCount; j++)
          /*{
@@ -5123,11 +5108,15 @@ namespace user
 
       if(m_eview == view_icon)
       {
+
          m_iconlayout.m_iaDisplayToStrict = (*m_piaFilterIcon);
+
       }
       else
       {
+
          m_meshlayout.m_iaDisplayToStrict = (*m_piaFilterMesh);
+
       }
 
       set_viewport_offset_x(0);
@@ -5406,11 +5395,11 @@ namespace user
 
 //      ::user::control::on_change_viewport_offset();
 
-      m_iTopIndex = _001CalcDisplayTopIndex();
+      m_iTopDisplayIndex = _001CalcDisplayTopIndex();
       index iLow = 0;
       for(m_iTopGroup = 0; m_iTopGroup < m_nGroupCount; m_iTopGroup++)
       {
-         if(m_iTopIndex >= iLow && m_iTopIndex < (iLow + _001GetGroupItemCount(m_iTopGroup)))
+         if(m_iTopDisplayIndex >= iLow && m_iTopDisplayIndex < (iLow + _001GetGroupItemCount(m_iTopGroup)))
             break;
       }
       m_nDisplayCount = _001CalcDisplayItemCount();
@@ -5448,7 +5437,7 @@ namespace user
 
    void mesh::_001OnMouseLeave(::message::message * pobj)
    {
-      m_iItemHover = -1;
+      m_iDisplayItemHover = -1;
       m_iSubItemHover = -1;
       RedrawWindow();
       pobj->m_bRet = true;
@@ -5467,9 +5456,9 @@ namespace user
       if(_001DisplayHitTest(point,iItemHover,iSubItemHover))
       {
          if(m_iSubItemHover != iSubItemHover ||
-               m_iItemHover != iItemHover)
+               m_iDisplayItemHover != iItemHover)
          {
-            m_iItemHover = iItemHover;
+            m_iDisplayItemHover = iItemHover;
             m_iSubItemHover = iSubItemHover;
             RedrawWindow();
          }
@@ -5695,11 +5684,11 @@ namespace user
 
       }
 
-      m_iTopIndex = _001CalcDisplayTopIndex();
+      m_iTopDisplayIndex = _001CalcDisplayTopIndex();
       index iLow = 0;
       for(m_iTopGroup = 0; m_iTopGroup < m_nGroupCount; m_iTopGroup++)
       {
-         if(m_iTopIndex >= iLow && m_iTopIndex < (iLow + _001GetGroupItemCount(m_iTopGroup)))
+         if(m_iTopDisplayIndex >= iLow && m_iTopDisplayIndex < (iLow + _001GetGroupItemCount(m_iTopGroup)))
             break;
       }
       m_nDisplayCount = _001CalcDisplayItemCount();
@@ -5721,48 +5710,66 @@ namespace user
 
    bool mesh::query_drop(index iDisplayDrop,index iDisplayDrag)
    {
+
       if(iDisplayDrag < 0)
-         return false;
-      if(iDisplayDrop < 0)
-         return false;
-      if(m_iItemDrag != m_iItemDrop)
       {
-         if(m_eview == view_icon)
-         {
-            if(m_iconlayout.m_iaDisplayToStrict[m_iItemDrop] == -1 || m_iconlayout.m_iaDisplayToStrict[m_iItemDrop] >= m_nItemCount)
-            {
-               return true;
-            }
-         }
-         else
-         {
-            if(m_meshlayout.m_iaDisplayToStrict[m_iItemDrop] == -1 || m_meshlayout.m_iaDisplayToStrict[m_iItemDrop] >= m_nItemCount)
-            {
-               return true;
-            }
-         }
+
+         return false;
+
       }
-      return false;
+
+      if(iDisplayDrop < 0)
+      {
+
+         return false;
+
+      }
+
+      if(iDisplayDrag == iDisplayDrop)
+      {
+
+         return false;
+
+      }
+
+      if(DisplayToStrict(iDisplayDrop) != -1 && DisplayToStrict(iDisplayDrop) < m_nItemCount)
+      {
+
+         return false;
+
+      }
+
+      return true;
+
    }
 
 
    bool mesh::do_drop(index iDisplayDrop,index iDisplayDrag)
    {
+
       UNREFERENCED_PARAMETER(iDisplayDrop);
+
       UNREFERENCED_PARAMETER(iDisplayDrag);
+
       if(m_eview == view_icon)
       {
-         m_iconlayout.m_iaDisplayToStrict.translate_a(m_iItemDrop,m_iItemDrag);
+
+         m_iconlayout.m_iaDisplayToStrict.translate_a(iDisplayDrop,iDisplayDrag);
+
       }
       else
       {
-         index i = m_meshlayout.m_iaDisplayToStrict[m_iItemDrag];
-         m_meshlayout.m_iaDisplayToStrict[m_iItemDrag] = m_meshlayout.m_iaDisplayToStrict[m_iItemDrop];
-         m_meshlayout.m_iaDisplayToStrict[m_iItemDrop] = i;
+
+         m_meshlayout.m_iaDisplayToStrict.swap(iDisplayDrag, iDisplayDrop);
+
       }
+
       _001OnAfterSort();
+
       return true;
+
    }
+
 
    bool mesh::defer_drop(index iDisplayDrop,index iDisplayDrag)
    {
@@ -6012,7 +6019,7 @@ namespace user
       m_iImage          = -1;
       m_bOk             = false;
 
-      m_iGroupTopIndex  = -1;
+      m_iGroupTopDisplayIndex  = -1;
       m_iGroupCount     = -1;
 
    }
