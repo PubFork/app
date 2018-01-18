@@ -905,18 +905,17 @@ namespace linux
    void os::post_to_all_threads(UINT message, WPARAM wparam, LPARAM lparam)
    {
 
-      //_throw(not_implemented(get_app()));
       return;
-
 
    }
 
 
 	int os::get_pid()
-{
-return ::getpid();
-}
+   {
 
+      return ::getpid();
+
+   }
 
 
    bool os::initialize_wallpaper_fileset(::file::set * pfileset, bool bAddSearch)

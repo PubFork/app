@@ -250,7 +250,7 @@ namespace linux
       straLine._007SetLine("GenericName", strTitle);
       straLine._007SetLine("Name", strTitle);
       straLine._007SetLine("Comment", strTitle + " Comment");
-      straLine._007SetLine("Exec", string(System.file().module()) + " %U");
+      straLine._007SetLine("Exec", "\"" + string(System.file().module()) + "\" %U");
       straLine._007SetLine("StartupWMClass", "cc.ca2." + strPrgName);
 
       if(Application.file().exists(pathIcon))

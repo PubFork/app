@@ -377,6 +377,33 @@ namespace aura
 
          ::str::begins_eat_ci(strTarget, "exec=");
 
+         while(true)
+         {
+
+            bool bAte = false;
+
+            if(::str::ends_eat_ci(strTarget, "%u"))
+            {
+
+               bAte = true;
+
+            }
+
+            if(!bAte)
+            {
+
+               break;
+
+            }
+
+         }
+
+         strTarget.trim();
+
+         strTarget.trim("\"");
+
+         strTarget.trim("\'");
+
          strDirectory = ::file::path(strTarget).folder();
 
 //      #endif
