@@ -955,7 +955,6 @@ namespace file
 #include "aura/primitive/collection/collection_comparable_eq_array.h"
 #include "aura/primitive/collection/collection_comparable_array.h"
 #include "aura/primitive/collection/collection_comparable_raw_array.h"
-#include "aura/primitive/collection/collection_auto_pointer_array.h"
 
 
 #include "aura/primitive/collection/collection_lemon_array_decl.h"
@@ -1134,7 +1133,8 @@ namespace aura
 
 
 
-class CLASS_DECL_AURA openweather_city
+class CLASS_DECL_AURA openweather_city :
+      virtual public mini_object
 {
 public:
 
@@ -1832,9 +1832,7 @@ namespace std
       ::sort::quick_sort_iter(a, b);
    }
 
-   template < typename T >
-   using auto_ptr = ::auto_pointer < T >;
-
+   
    template < typename T >
    using stack = ::stack < T >;
 

@@ -7,7 +7,8 @@
 namespace message
 {
 
-   class route
+   class route :
+      virtual public mini_object
    {
    public:
 
@@ -81,7 +82,7 @@ namespace message
 
    }
 
-   using route_array = ::auto_pointer_array < route >;
+   using route_array = spa(route);
 
    using id_route = ::map < ::message::id, const ::message::id &, route_array >;
 

@@ -109,7 +109,6 @@ public:
 #include "collection_comparable_raw_array.h"
 #include "collection_comparable_primitive_array.h"
 
-#include "collection_auto_pointer_array.h"
 
 #include "collection_primitive_array.h"
 #include "collection_numeric_array_range.h"

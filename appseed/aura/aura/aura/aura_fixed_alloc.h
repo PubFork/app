@@ -1,6 +1,9 @@
 ﻿#pragma once
 
 
+#include "aura/primitive/collection/collection_pointer_array.h"
+
+
 struct plex;
 
 

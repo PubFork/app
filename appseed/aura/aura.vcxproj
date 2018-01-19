@@ -3694,7 +3694,7 @@
     <ClInclude Include="primitive\collection\collection_queue.h" />
     <ClInclude Include="primitive\collection\collection_raw_array_decl.h" />
     <ClInclude Include="primitive\collection\collection_rect_array.h" />
-    <ClInclude Include="primitive\collection\collection_ref_array.h" />
+    <ClInclude Include="primitive\collection\collection_pointer_array.h" />
     <ClInclude Include="primitive\collection\collection_set.h" />
     <ClInclude Include="primitive\collection\collection_smart_pointer_array.h" />
     <ClInclude Include="primitive\collection\collection_sort.h" />

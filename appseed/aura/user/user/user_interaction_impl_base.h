@@ -27,7 +27,7 @@ namespace user
       ::user::interaction *               m_pui;
       bool                                m_bIgnoreSizeEvent;
       bool                                m_bIgnoreMoveEvent;
-      ap(critical_section)                m_apcsDisplay;
+      sp(critical_section)                m_pcsDisplay;
 
       mutex                               m_mutexLongPtr;
       int_ptr_to_int_ptr                  m_longptr;
@@ -36,7 +36,7 @@ namespace user
       interaction_impl_base();
       virtual ~interaction_impl_base();
 
-      inline critical_section * cs_display() { return m_apcsDisplay; }
+      inline critical_section * cs_display() { return m_pcsDisplay; }
       virtual ::user::interaction_impl * get_user_interaction_impl();
       virtual ::user::interaction_child * get_user_interaction_child();
 

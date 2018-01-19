@@ -79,8 +79,8 @@ namespace user
 
       sp(window_graphics)           m_spgraphics;
 
-      ap(mutex)                     m_apmutexDraw; // auto pointer
-      ap(mutex)                     m_apmutexRedraw; // auto pointer
+      sp(mutex)                     m_pmutexDraw;
+      sp(mutex)                     m_pmutexRedraw;
 
       ::user::interaction_ptra      m_guieptraMouseHover;
 

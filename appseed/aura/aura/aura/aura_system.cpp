@@ -2633,23 +2633,23 @@ RetryBuildNumber:
    openweather_city * system::openweather_find_city(string strQuery)
    {
 
-      auto & city_auto_pointer = m_mapCity[strQuery];
+      auto & pcity = m_mapCity[strQuery];
 
-      if (city_auto_pointer == NULL)
+      if (pcity == NULL)
       {
 
-         city_auto_pointer = new openweather_city;
+         pcity = canew(openweather_city);
 
-         city_auto_pointer->m_iIndex = openweather_find_city2(
+         pcity->m_iIndex = openweather_find_city2(
                                        strQuery,
-                                       city_auto_pointer->m_strCit,
-                                       city_auto_pointer->m_iId,
-                                       city_auto_pointer->m_dLat,
-                                       city_auto_pointer->m_dLon);
+                                       pcity->m_strCit,
+                                       pcity->m_iId,
+                                       pcity->m_dLat,
+                                       pcity->m_dLon);
 
       }
 
-      return city_auto_pointer;
+      return pcity;
 
    }
 

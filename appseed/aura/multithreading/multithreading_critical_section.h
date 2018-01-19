@@ -1,13 +1,14 @@
-#pragma once
+﻿#pragma once
 
 
-class CLASS_DECL_AURA critical_section
+class CLASS_DECL_AURA critical_section :
+   virtual public mini_object
 {
 public:
 
 
 #ifdef WINDOWS
-   CRITICAL_SECTION     m_sect;
+   CRITICAL_SECTION        m_sect;
 #else
    pthread_mutex_t         m_mutex;
 #endif
@@ -42,7 +43,7 @@ inline void critical_section::lock()
    }
    //catch(...)
    //{
-     // _throw(resource_exception(get_app()));
+   // _throw(resource_exception(get_app()));
    //}
 }
 

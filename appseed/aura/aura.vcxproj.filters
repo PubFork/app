@@ -2552,9 +2552,6 @@
     <ClInclude Include="multithreading\multithreading_pred_holder.h">
       <Filter>Header Files\multithreading</Filter>
     </ClInclude>
-    <ClInclude Include="primitive\collection\collection_ref_array.h">
-      <Filter>Header Files\primitive\collection</Filter>
-    </ClInclude>
     <ClInclude Include="primitive\collection\collection_array_base.h">
       <Filter>Header Files\primitive\collection</Filter>
     </ClInclude>
@@ -2742,6 +2739,9 @@
       <Filter>Header Files\aura\os\windows_common</Filter>
     </ClInclude>
     <ClInclude Include="primitive\collection\collection_auto_pointer_array.h">
+      <Filter>Header Files\primitive\collection</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive\collection\collection_pointer_array.h">
       <Filter>Header Files\primitive\collection</Filter>
     </ClInclude>
   </ItemGroup>

@@ -46,14 +46,14 @@ namespace user
    mutex * interaction_impl::draw_mutex()
    {
 
-      if (m_apmutexDraw == NULL)
+      if (m_pmutexDraw == NULL)
       {
 
-         m_apmutexDraw = new mutex(get_app());
+         m_pmutexDraw = canew(mutex(get_app()));
 
       }
 
-      return m_apmutexDraw;
+      return m_pmutexDraw;
 
    }
 
@@ -2353,7 +2353,7 @@ namespace user
       if(!m_pui->m_bMessageWindow)
       {
 
-         m_apcsDisplay = new critical_section;
+         m_pcsDisplay = canew(critical_section);
 
          output_debug_string("interaction_impl m_spgraphics alloc");
 
@@ -3149,14 +3149,14 @@ namespace user
    mutex * interaction_impl::mutex_redraw()
    {
 
-      if (m_apmutexRedraw == NULL)
+      if (m_pmutexRedraw == NULL)
       {
 
-         m_apmutexRedraw = new mutex(get_app());
+         m_pmutexRedraw = canew(mutex(get_app()));
 
       }
 
-      return m_apmutexRedraw;
+      return m_pmutexRedraw;
 
    }
 
