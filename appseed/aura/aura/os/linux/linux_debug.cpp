@@ -147,7 +147,12 @@ output_debug_string(
 
     //fprintf(stderr, "%s", lpOutputString);
     //fflush(stderr);
-    printf("%s", lpOutputString);
+    if(is_debugger_attached())
+    {
+     
+      printf("%s", lpOutputString);
+
+    }
     //fflush(stdout);
 
 

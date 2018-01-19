@@ -856,6 +856,13 @@ int_array app_get_pid(const char * psz)
 
          ::file::path path = module_path_from_pid(iPid);
 
+         if(path.has_char())
+         {
+
+            output_debug_string(path + "\n");
+
+         }
+
          if(path.title() == strApp)
          {
 

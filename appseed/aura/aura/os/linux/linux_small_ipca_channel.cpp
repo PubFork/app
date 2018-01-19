@@ -89,87 +89,55 @@ namespace aura
       }
 
 
-      bool tx::send(const char * pszMessage,duration durationTimeout)
+      bool tx::send(const char * pszMessage, duration durationTimeout)
       {
 
-
-//      int iLimit = MSGMNB;
-
-        memory m;
+         memory m;
 
          int iLen = strlen_dup(pszMessage);
 
          m.allocate(sizeof(data_struct) + iLen);
 
-         data_struct * pdata = (data_struct *)m.get_data();
-         pdata->mtype        = 15111984;
-         pdata->request      = 0x80000000;
-         pdata->size         = iLen;
-         //if(data.size > 512)
-           // return false;
+         data_struct * pdata  = (data_struct *)m.get_data();
 
-         /* The length is essentially the size of the structure minus sizeof(mtype) */
-/*         int32_t length = sizeof(data_struct) - sizeof(long);
+         pdata->mtype         = 15111984;
 
-         int32_t result;
+         pdata->request       = 1024;
 
-         memcpy(data.data, pszMessage, data.size);
+         pdata->size          = iLen;
 
-         if((result = msgsnd(m_iQueue,&data,length,0)) == -1)
-         {
-            return false;
-         }
-         */
-
-                  //const char * pszMessage = (const char *)pdata;
-
-         memcpy(pdata->data,pszMessage,iLen);
+         memcpy(pdata->data, pszMessage, iLen);
 
          int result = 0;
-
 
          msqid_ds b;
 
          ZERO(b);
 
+         if((result = msgsnd(m_iQueue, pdata, m.get_size() - sizeof(long), 0)) == -1)
+         {
 
+            int iError = errno;
 
-//         if(msgctl(m_iQueue, IPC_STAT, &b) == -1)
-//         {
-//         return false;
-//         }
-//
-//         if(b.msg_qbytes < m.get_size() * 2)
-//         {
-//            b.msg_qbytes += m.get_size() * 2;
-//         if(msgctl(m_iQueue, IPC_SET, &b) == -1)
-//         {
-//         int iError = errno;
-//         return false;
-//         }
-//
-//         }
+            return false;
 
-
-        if((result = msgsnd(m_iQueue,pdata,m.get_size() - sizeof(long),0)) == -1)
-        {
-        int iError = errno;
-           return false;
-        }
-
+         }
 
          ::output_debug_string("functon: \"tx::send\"\n");
+
          ::output_debug_string("channel: \"" +m_strBaseChannel+ "\"\n");
+
          ::output_debug_string("message: \"" +string(pszMessage)+ "\"\n");
 
          return true;
+
       }
 
 
       bool tx::send(int32_t message,void * p,int32_t iLen,duration durationTimeout)
       {
 
-         if(message == 0x80000000)
+         if(message == 1024)
             return false;
 
 
@@ -182,7 +150,7 @@ namespace aura
 
          data_struct * pdata = (data_struct *)m.get_data();
          pdata->mtype        = 15111984;
-         pdata->request      = 0x80000000;
+         pdata->request      = 1024;
          pdata->size         = iLen;
          //if(data.size > 512)
            // return false;
@@ -423,19 +391,19 @@ namespace aura
       {
 
          return m_iQueue != -1;
+
       }
-
-
-
-
 
 
       void * rx::receive()
       {
-            memory mem;
 
-            memory m;
-            m.allocate(10000000);
+         memory mem;
+
+         memory m;
+
+         m.allocate(10000000);
+
          while(get_thread_run())
          {
 
@@ -447,41 +415,51 @@ namespace aura
 
             data_struct * pdata = (data_struct *) m.get_data();
 
-            /* The length is essentially the size of the structure minus sizeof(mtype) */
             length = m.get_size() - sizeof(long);
 
-           if((result = msgrcv(m_iQueue,pdata,length,15111984,IPC_NOWAIT)) == -1)
-           {
-
-              if(errno == ENOMSG)
-              {
-              Sleep(100);
-              continue;
-              }
-              else
-              {
-                 return (void *)-1;
-              }
-
-           }
-
-               mem.assign(pdata->data,pdata->size);
-
-
-
-
-            if(pdata->request == 0x80000000)
+            if((result = msgrcv(m_iQueue, pdata, length, 15111984, IPC_NOWAIT)) == -1)
             {
 
-               on_receive(this,mem.to_string());
+               if(errno == ENOMSG)
+               {
+
+                  Sleep(100);
+
+                  continue;
+
+               }
+               else
+               {
+
+                  return (void *)-1;
+
+               }
 
             }
-            else
+
+            mem.assign(pdata->data,pdata->size);
+
+            long lRequest = pdata->request;
+
+            fork([=]()
             {
 
-               on_receive(this,pdata->request,mem.get_data(),mem.get_size());
+               memory m2(mem);
 
-            }
+               if(lRequest == 1024)
+               {
+
+                  on_receive(this, m2.to_string());
+
+               }
+               else
+               {
+
+                  on_receive(this, lRequest, m2.get_data(), m2.get_size());
+
+               }
+
+            });
 
          }
 
@@ -490,7 +468,6 @@ namespace aura
          return NULL;
 
       }
-
 
 
       ipc::ipc(::aura::application * papp):

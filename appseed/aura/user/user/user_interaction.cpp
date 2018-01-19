@@ -2757,6 +2757,13 @@ restart:
 
       }
 
+      if(WfiIsIconic())
+      {
+
+         return false;
+
+      }
+
       return m_pimpl->IsWindowVisible();
 
    }

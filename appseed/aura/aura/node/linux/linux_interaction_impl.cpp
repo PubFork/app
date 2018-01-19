@@ -2991,6 +2991,8 @@ return TRUE;
 
                dwStart = ::get_tick_count();
 
+               bool bUpdateScreen = false;
+
                if (!m_pui->m_bLockWindowUpdate)
                {
 
@@ -3001,12 +3003,18 @@ return TRUE;
 
                      m_pui->on_after_graphical_update();
 
+                     bUpdateScreen = true;
+
                   }
 
                }
 
+               if(bUpdateScreen)
+               {
 
-               _001UpdateScreen();
+                  _001UpdateScreen();
+
+               }
 
                DWORD dwDiff = ::get_tick_count() - dwStart;
 
