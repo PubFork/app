@@ -93,6 +93,22 @@ void timer::stop()
 
    }
 
+   try
+   {
+
+      if (m_pcallback != NULL)
+      {
+
+         m_pcallback->threadrefa_add(this);
+
+      }
+
+   }
+   catch (...)
+   {
+
+   }
+
 }
 
 

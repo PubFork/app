@@ -1,4 +1,4 @@
-#include "framework.h" // previously aura/user/user.h
+﻿#include "framework.h" // previously aura/user/user.h
 
 
 namespace aura
@@ -100,6 +100,8 @@ namespace aura
 
       m_map.remove_key(nIDEvent);
 
+      threadrefa_add(ptimer);
+
       sl.unlock();
 
       ptimer->stop();
@@ -156,7 +158,7 @@ namespace aura
 
       MAP::pair * ppair = NULL;
 
-   restart:
+restart:
 
       ppair = m_map.PGetFirstAssoc();
 

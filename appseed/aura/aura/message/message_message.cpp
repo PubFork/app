@@ -47,7 +47,7 @@ namespace message
       if (m_routea.is_empty())
       {
 
-         m_bRet = true;
+         //m_bRet = true;
 
          return true;
 
@@ -63,7 +63,7 @@ namespace message
       if (m_iRouteIndex < 0)
       {
 
-         m_bRet = true;
+         //m_bRet = true;
 
          return true;
 
