@@ -1,11 +1,13 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include <stdio.h>
 
 
 void std_out_buffer::write(const void * lpBuf,memory_size_t nCount)
 {
 
-   fwrite(lpBuf,1,nCount,stdout);
+   DWORD dw;
+
+   WriteFile(GetStdHandle(STD_OUTPUT_HANDLE), lpBuf, nCount, &dw, NULL);
 
 }
 

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 namespace user
 {
@@ -6,15 +6,15 @@ namespace user
    class tab_drop_target_window;
    class single_document_template;
 
-   class CLASS_DECL_CORE tab_view : 
+   class CLASS_DECL_CORE tab_view :
       virtual public ::user::impact,
       virtual public ::user::tab,
       virtual public ::user::tab_callback,
       virtual public ::user::view_creator
    {
    public:
-      
-      
+
+
       tab_drop_target_window *               m_pdroptargetwindow;
       ::user::view_creator_data *            m_pviewdata;
       ::user::view_creator_data *            m_pviewdataOld;
@@ -36,7 +36,7 @@ namespace user
       void _000OnDraw(::draw2d::graphics * pgraphics) override;
 
       void _001OnDropTab(index iPane, e_position eposition) override;
-      
+
       ::user::interaction * _001GetTabWnd(int32_t iTab);
 
       void _001OnCmdMsg(::user::command * pcommand) override;
@@ -79,12 +79,12 @@ namespace user
       DECL_GEN_SIGNAL(_001OnCreate);
       DECL_GEN_SIGNAL(_001OnSetFocus);
 
-
+      virtual void OnActivateView(bool bActivate, sp(impact) pActivateView, sp(impact) pDeactiveView) override;
 
    };
 
 
-   class tab_drop_target_window : 
+   class tab_drop_target_window :
       virtual public ::user::interaction
    {
    public:

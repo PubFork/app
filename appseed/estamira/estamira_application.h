@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace estamira
@@ -18,8 +18,8 @@ namespace estamira
       virtual ~application();
 
 
-      virtual bool init_instance();
-      virtual int32_t  exit_application() override;
+      virtual bool init_instance() override;
+      virtual void term_instance() override;
 
    };
 

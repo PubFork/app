@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace estamira
@@ -51,6 +51,9 @@ namespace estamira
 
       m_timer.start(23, true);
 
+
+      m_pui->keyboard_set_focus();
+
       return true;
 
    }
@@ -99,7 +102,7 @@ namespace estamira
 
    void game::remove_all_characters()
    {
-      
+
       m_charactera.remove_all();
 
    }
@@ -119,17 +122,17 @@ namespace estamira
 
    void game::on_layout()
    {
-    
+
       rect rectClient;
 
       m_pui->GetClientRect(rectClient);
 
       if (rectClient.area() <= 0)
          return;
-      
+
       m_sizePage.cx = rectClient.width() / MAX(1, m_iMult);
       m_sizePage.cy = rectClient.height() / MAX(1, m_iMult);
-      
+
       m_dibPage->create(m_sizePage);
 
 
@@ -138,8 +141,24 @@ namespace estamira
 
    void game::_001OnKeyDown(::message::message * pobj)
    {
+
       SCAST_PTR(::message::key, pkey, pobj);
-   
+
+      auto ekey = pkey->m_ekey;
+
+      fork([=]()
+      {
+
+         on_key_down(ekey);
+
+      });
+
+   }
+
+   void game::on_key_down(::user::e_key )
+   {
+
+
    }
 
    void game::_001OnKeyUp(::message::message * pobj)
@@ -156,7 +175,7 @@ namespace estamira
       SCAST_PTR(::message::mouse, pmouse, pobj);
       point pt = pmouse->m_pt;
 
-      
+      m_pui->SetFocus();
 
       ScreenToClient(pt);
 
@@ -260,7 +279,7 @@ namespace estamira
 
       if (pdib->area() <= 0)
          return;
-      
+
       lppoint->x = lppoint->x * pdib->m_size.cx / rectClient.width();
       lppoint->y = lppoint->y * pdib->m_size.cy / rectClient.height();
 
@@ -276,8 +295,8 @@ namespace estamira
       }
       return true;
    }
-   
-   
+
+
    void game::on_move_tick()
    {
 

@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace user
@@ -381,18 +381,18 @@ namespace user
    bool impact::IsSelected(const object* pDocItem) const
    {
       ASSERT_VALID(pDocItem);
-    //  UNUSED(pDocItem);    // unused in release builds
+      //  UNUSED(pDocItem);    // unused in release builds
 
       return FALSE;   // not implemented, so not selected
    }
 
    void impact::OnActivateView(bool bActivate, sp(::user::impact) pActivateView, sp(::user::impact))
    {
-  //    UNUSED(pActivateView);   // unused in release builds
+      //    UNUSED(pActivateView);   // unused in release builds
 
       if (bActivate)
       {
-         ASSERT(pActivateView == this);
+         //ASSERT(pActivateView == this);
 
          // take the focus if this frame/::user::impact/pane is now active
          if (IsTopParentActive())

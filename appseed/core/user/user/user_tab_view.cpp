@@ -87,6 +87,55 @@ namespace user
 
    }
 
+
+   void tab_view::OnActivateView(bool bActivate, sp(impact) pActivateView, sp(impact) pDeactiveView)
+   {
+
+      sp(::user::interaction) pui = get_view_uie();
+
+      sp(::user::impact) pview = pui;
+
+      if (pview.is_null() && pui.is_set())
+      {
+
+         if (pui->is_place_holder())
+         {
+
+            pview = pui->m_uiptraChild[0];
+
+         }
+         else
+         {
+
+            sp(::user::frame_window) pframe = pui;
+
+            if (pframe.is_set())
+            {
+
+               pview = pframe->GetActiveView();
+
+            }
+
+         }
+
+      }
+
+      if (pview.is_set())
+      {
+
+         pview->OnActivateView(bActivate, pActivateView, pDeactiveView);
+
+      }
+      else
+      {
+
+         ::user::impact::OnActivateView(bActivate, pActivateView, pDeactiveView);
+
+      }
+
+   }
+
+
    bool tab_view::pre_create_window(::user::create_struct& cs)
    {
       cs.dwExStyle &= ~WS_EX_CLIENTEDGE;

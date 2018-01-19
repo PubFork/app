@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace estamira
@@ -6,7 +6,7 @@ namespace estamira
 
 
    class CLASS_DECL_ESTAMIRA character :
-      virtual public ::::message::receiver
+      virtual public ::message::receiver
    {
    public:
 

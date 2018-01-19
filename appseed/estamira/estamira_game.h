@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace estamira
@@ -7,7 +7,7 @@ namespace estamira
 
    class CLASS_DECL_ESTAMIRA game :
       virtual public ::aura::drawable,
-      virtual public ::::message::receiver,
+      virtual public ::message::receiver,
       virtual public timer_callback
    {
    public:
@@ -26,8 +26,8 @@ namespace estamira
       int                           m_iCurChar;
       timer                         m_timer;
 
-      // Beam Mode is when the touched/mouse position points to exact instantaneous 
-      // position of player. 
+      // Beam Mode is when the touched/mouse position points to exact instantaneous
+      // position of player.
       // Beam Mode off moves the player according to tick, current player position
       // and relative touched/dragged cursor position.
       bool                          m_bBeamMode;
@@ -56,7 +56,7 @@ namespace estamira
       DECL_GEN_SIGNAL(_001OnLButtonUp);
       DECL_GEN_SIGNAL(_001OnMouseMove);
 
-
+      virtual void on_key_down(::user::e_key ekey);
       virtual void moveLeft(index iChar);
 
       virtual void moveRight(index iChar);

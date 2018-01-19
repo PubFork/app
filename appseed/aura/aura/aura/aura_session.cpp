@@ -1627,7 +1627,7 @@ namespace aura
 
          }
 
-         puiFocus->send_message(WM_SETFOCUS);
+         //puiFocus->send_message(WM_SETFOCUS);
 
 
 #if defined(APPLE_IOS)

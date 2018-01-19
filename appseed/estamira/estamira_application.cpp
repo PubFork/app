@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace estamira
@@ -30,10 +30,10 @@ namespace estamira
    }
 
 
-   int32_t application::exit_application()
+   void application::term_instance()
    {
 
-      return ::multimedia::application::exit_application();
+      ::multimedia::application::term_instance();
 
    }
 

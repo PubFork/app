@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace estamira
@@ -56,7 +56,12 @@ namespace estamira
       pschema->SetStyle(main_frame::FrameSchemaHardCoded005::StyleTranslucidWarmGray);
       return pschema;*/
    }
+   void main_frame::install_message_routing(::message::sender * psender)
+   {
 
+      ::simple_frame_window::install_message_routing(psender);
+
+   }
 
    bool main_frame::get_translucency(::user::e_translucency & etranslucency)
    {

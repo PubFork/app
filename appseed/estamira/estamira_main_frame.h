@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace estamira
@@ -13,6 +13,9 @@ namespace estamira
 
       main_frame(::aura::application * papp);
       virtual ~main_frame();
+
+
+      virtual void install_message_routing(::message::sender * psender);
 
 
       sp(::user::wndfrm::frame::frame) create_frame_schema();
