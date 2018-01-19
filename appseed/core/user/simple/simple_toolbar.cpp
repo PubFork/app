@@ -1,17 +1,17 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 #define TIMER_HOVER 321654
 
 class simple_tool_command : public ::user::command        // class private to this file !
 {
-   public: // re-implementations only
+public: // re-implementations only
 
-      simple_tool_command(::aura::application * papp);
-      virtual void Enable(bool bOn = TRUE, ::action::context actioncontext = ::action::source_system);
-      //   virtual void _001SetCheck(bool bCheck, ::action::context = ::action::source_system);   // 0, 1 or 2 (indeterminate)
-      virtual void _001SetCheck(check::e_check echeck, ::action::context = ::action::source_system);   // 0, 1 or 2 (indeterminate)
+   simple_tool_command(::aura::application * papp);
+   virtual void Enable(bool bOn = TRUE, ::action::context actioncontext = ::action::source_system);
+   //   virtual void _001SetCheck(bool bCheck, ::action::context = ::action::source_system);   // 0, 1 or 2 (indeterminate)
+   virtual void _001SetCheck(check::e_check echeck, ::action::context = ::action::source_system);   // 0, 1 or 2 (indeterminate)
 //   virtual void SetRadio(bool bOn = TRUE, ::action::context actioncontext = ::action::source_system);
-      virtual void SetText(const char * lpszText, ::action::context actioncontext = ::action::source_system);
+   virtual void SetText(const char * lpszText, ::action::context actioncontext = ::action::source_system);
 };
 
 #define EXTRA_TEXT_CX 3
@@ -300,24 +300,24 @@ void simple_toolbar::TransparentEraseNonClient(::draw2d::graphics * pgraphics)
       if (m_iHover >= -1)
       {
          imaging.color_blend(
-            pgraphics,
-            rectWindow.left,
-            rectWindow.top,
-            rectWindow.width(),
-            rectWindow.height(),
-            RGB(215, 215, 210),
-            220);
+         pgraphics,
+         rectWindow.left,
+         rectWindow.top,
+         rectWindow.width(),
+         rectWindow.height(),
+         RGB(215, 215, 210),
+         220);
       }
       else
       {
          imaging.color_blend(
-            pgraphics,
-            rectWindow.left,
-            rectWindow.top,
-            rectWindow.width(),
-            rectWindow.height(),
-            RGB(215, 215, 210),
-            180);
+         pgraphics,
+         rectWindow.left,
+         rectWindow.top,
+         rectWindow.width(),
+         rectWindow.height(),
+         RGB(215, 215, 210),
+         180);
       }
    }
    else
@@ -806,12 +806,12 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
             if ((m_dwCtrlStyle & TBSTYLE_FLAT) == TBSTYLE_FLAT)
             {
                Application.imaging().color_blend(
-                  pgraphics,
-                  rectItem.left,
-                  rectItem.top,
-                  rectItem.width(),
-                  rectItem.height(),
-                  RGB(255, 255, 250), 208);
+               pgraphics,
+               rectItem.left,
+               rectItem.top,
+               rectItem.width(),
+               rectItem.height(),
+               RGB(255, 255, 250), 208);
 
                pgraphics->Draw3dRect(rectItem, ARGB(255, 127, 127, 127), ARGB(255, 255, 255, 255));
 
@@ -1273,29 +1273,34 @@ void simple_toolbar::on_layout()
 
       GetClientRect(rectClient);
 
-      CalcSize((int32_t) (m_itema.get_count()));
-
-      for (index i = 0; i < m_itema.get_count(); i++)
+      if (m_itema.has_elements())
       {
 
-         if (m_itema[i]->m_fsStyle & TBSTATE_WRAP || i == m_itema.get_upper_bound())
+         CalcSize((int32_t)(m_itema.get_count()));
+
+         for (index i = 0; i < m_itema.get_count(); i++)
          {
 
-            int iTotalX = 0;
-
-            for (index j = 0; j <= i; j++)
+            if (m_itema[i]->m_fsStyle & TBSTATE_WRAP || i == m_itema.get_upper_bound())
             {
 
-               iTotalX += m_itema[j]->m_rect.width() + get_item_spacing().cx;
+               int iTotalX = 0;
 
-            }
+               for (index j = 0; j <= i; j++)
+               {
 
-            int offsetx = (rectClient.width() - iTotalX) / 2;
+                  iTotalX += m_itema[j]->m_rect.width() + get_item_spacing().cx;
 
-            for (index j = 0; j <= i; j++)
-            {
+               }
 
-               m_itema[j]->m_rect.offset(offsetx, 0);
+               int offsetx = (rectClient.width() - iTotalX) / 2;
+
+               for (index j = 0; j <= i; j++)
+               {
+
+                  m_itema[j]->m_rect.offset(offsetx, 0);
+
+               }
 
             }
 

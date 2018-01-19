@@ -1261,7 +1261,12 @@ namespace user
 
       string str;
 
-      str = get_document()->get_data_id().m_id;
+      if (get_document() != NULL)
+      {
+
+         str = get_document()->get_data_id().m_id;
+
+      }
 
       {
 
