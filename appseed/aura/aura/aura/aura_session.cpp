@@ -2,6 +2,14 @@
 #include "aura/net/sockets/bsd/sockets_sockets.h"
 
 
+#ifdef METROWIN
+
+#include "aura/os/metrowin/metrowin_user_impl.h"
+
+#endif
+
+
+
 namespace aura
 {
 
