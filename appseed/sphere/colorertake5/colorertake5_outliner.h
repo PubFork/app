@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace colorertake5
@@ -17,62 +17,63 @@ namespace colorertake5
       public EditorListener
    {
    public:
-     /**
-      * Creates outliner object, that searches stream for
-      * the specified type of region. Outliner is deattached
-      * on its explicit destruction action.
-      *
-      * @param baseEditor Editor to attach this Outliner to.
-      * @param searchRegion region type to search in parser's stream
-      */
-     Outliner(base_editor *baseEditor, class region *searchRegion);
-     ~Outliner();
+      /**
+       * Creates outliner object, that searches stream for
+       * the specified type of region. Outliner is deattached
+       * on its explicit destruction action.
+       *
+       * @param baseEditor Editor to attach this Outliner to.
+       * @param searchRegion region type to search in parser's stream
+       */
+      Outliner(base_editor *baseEditor, class region *searchRegion);
+      ~Outliner();
 
-     /**
-      * Returns reference to item with specified ordinal
-      * index in list of currently generated outline items.
-      * Note, that the returned pointer is vaild only between
-      * subsequent parser invocations.
-      */
-     OutlineItem *getItem(index idx);
+      /**
+       * Returns reference to item with specified ordinal
+       * index in list of currently generated outline items.
+       * Note, that the returned pointer is vaild only between
+       * subsequent parser invocations.
+       */
+      OutlineItem *getItem(index idx);
 
-     /**
-      * Static service method to make easy tree reconstruction
-      * from created list of outline items. This list contains
-      * unpacked level indexed of item's enclosure in scheme.
-      * @param treeStack external array of integer, storing
-      *        temporary tree structure. Must not be changed
-      *        externally.
-      * @param newLevel Unpacked level of item to be added into
-      *        the tree. This index is converted into packed one
-      *        and returned.
-      * @return Packed index of item, which could be used to
-      *         reconstruct tree of outlined items.
-      */
-     static index manageTree(index_array & treeStack, index newLevel);
+      /**
+       * Static service method to make easy tree reconstruction
+       * from created list of outline items. This list contains
+       * unpacked level indexed of item's enclosure in scheme.
+       * @param treeStack external array of integer, storing
+       *        temporary tree structure. Must not be changed
+       *        externally.
+       * @param newLevel Unpacked level of item to be added into
+       *        the tree. This index is converted into packed one
+       *        and returned.
+       * @return Packed index of item, which could be used to
+       *         reconstruct tree of outlined items.
+       */
+      static index manageTree(index_array & treeStack, index newLevel);
 
-     /**
-      * Total number of currently available outline items
-      */
-     ::count itemCount();
+      /**
+       * Total number of currently available outline items
+       */
+      ::count itemCount();
 
-     void startParsing(index lno);
-     void endParsing(index lno);
-     void clearLine(index lno, const char *line);
-     void addRegion(index lno, const char *line, strsize sx, strsize ex, class region *region);
-     void enterScheme(index lno, const char *line, strsize sx, strsize ex, class region *region, class scheme *scheme);
-     void leaveScheme(index lno, const char *line, strsize sx, strsize ex, class region *region, class scheme *scheme);
-     void modifyEvent(index topLine);
+      void startParsing(index lno);
+      void endParsing(index lno);
+      void clearLine(index lno, const char *line);
+      void addRegion(index lno, const char *line, strsize sx, strsize ex, class region *region);
+      void enterScheme(index lno, const char *line, strsize sx, strsize ex, class region *region, class scheme *scheme);
+      void leaveScheme(index lno, const char *line, strsize sx, strsize ex, class region *region, class scheme *scheme);
+      void modifyEvent(index topLine);
 
    protected:
-     bool isOutlined(class region*region);
+      bool isOutlined(class region*region);
 
-     base_editor *baseEditor;
-     class region *searchRegion;
-     ref_array < OutlineItem > outline;
-     bool lineIsEmpty;
-     index curLevel;
-     index modifiedLine;
+      base_editor *baseEditor;
+      class region *searchRegion;
+      pointer_array < OutlineItem * > outline;
+      bool lineIsEmpty;
+      index curLevel;
+      index modifiedLine;
+
    };
 
 

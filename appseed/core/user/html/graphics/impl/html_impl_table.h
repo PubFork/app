@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace html
@@ -34,7 +34,7 @@ namespace html
          float                                           m_iCellPadding;
 
          array < array < cell::holder > >                m_cellholdera;
-         ref_array < table_row >                m_rowptra;
+         pointer_array < table_row * >                   m_rowptra;
          array < column >                                m_columna;
 
 
@@ -47,7 +47,7 @@ namespace html
 
          void set_cell(index iCol, index iRow, cell * pcell);
 
-         
+
          void implement_phase1(data * pdata, ::html::elemental * pelemental);
 
 

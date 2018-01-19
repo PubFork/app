@@ -60,7 +60,7 @@ namespace user
       bool                          m_bIpcCopy;
       bool                          m_bLockWindowUpdate;
 
-      ref_array < object >          m_ptraRedraw;
+      object_ptra                   m_ptraRedraw;
 
       ::user::interaction *         m_puiFocus;
 

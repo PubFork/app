@@ -4,12 +4,13 @@
 /// Base class for implementing the notification stuff.
 /// @remarks Inherit public (instead of private) because it wouldn't compile under Dev-C++
 template < typename T, typename T2 > class observer :
-   virtual public ref_array < T >
+   virtual public pointer_array < T * >
 {
 public:
 
 
-   typedef ref_array < T > base_type;
+   typedef pointer_array < T * > base_type;
+
 
    T2 *   m_pt2This;
 

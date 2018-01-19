@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace data
@@ -13,7 +13,7 @@ namespace data
    public:
 
 
-      ref_array < data > m_dataptra;
+      data_ptra         m_dataptra;
 
 
       listener();

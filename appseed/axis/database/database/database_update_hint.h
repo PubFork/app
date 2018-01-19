@@ -1,14 +1,14 @@
-#pragma once
+﻿#pragma once
 
 
 namespace database
 {
 
-   
+
    class client;
    class server;
 
-   
+
    class CLASS_DECL_AXIS update_hint  :
       virtual public ::object
    {
@@ -19,12 +19,12 @@ namespace database
       {
          update_internal,
          update_user
-            
+
       };
-      
+
 
       flags < e_update > m_flagsupdate;
-      ref_array < client > m_selfa;
+      pointer_array < client * > m_selfa;
 
 
       update_hint();
@@ -39,7 +39,7 @@ namespace database
 
    };
 
-   
+
 } // namespace database
 
 

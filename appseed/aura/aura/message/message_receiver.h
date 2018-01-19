@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace message
@@ -10,9 +10,10 @@ namespace message
    {
    public:
 
-      ref_array < sender >          m_sendera;
 
-      
+      pointer_array < sender * >          m_sendera;
+
+
       receiver();
       virtual ~receiver();
 

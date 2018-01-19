@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 namespace colorertake5
 {
@@ -8,172 +8,182 @@ namespace colorertake5
 #define REGIONS_NUM MATCHES_NUM
 #define NAMED_REGIONS_NUM NAMED_MATCHES_NUM
 
-class scheme_impl;
-class file_type_impl;
+   class scheme_impl;
+   class file_type_impl;
 
 
-/** Information about one parsed keyword.
-    Contains keyword, symbol specifier, region reference
-    and internal optimization field.
-    @ingroup colorer_parsers
-*/
-struct KeywordInfo{
-  string keyword;
-  bool isSymbol;
-  class region* region;
-  int32_t  ssShorter;
+   /** Information about one parsed keyword.
+       Contains keyword, symbol specifier, region reference
+       and internal optimization field.
+       @ingroup colorer_parsers
+   */
+   struct KeywordInfo
+   {
+      string keyword;
+      bool isSymbol;
+      class region* region;
+      int32_t  ssShorter;
 
 ////#define CNAME "KeywordInfo"
 //#include "memory_operator.h"
 
-};
+   };
 
-/** List of keywords.
-    @ingroup colorer_parsers
-*/
-class KeywordList
-{
-public:
-  int32_t num;
-  int32_t matchCase;
-  strsize minKeywordLength;
-  ::str::ch_class *firstChar;
-  KeywordInfo *kwList;
-  KeywordList();
-  ~KeywordList();
-  void sortList();
-  void substrIndex();
+   /** List of keywords.
+       @ingroup colorer_parsers
+   */
+   class KeywordList
+   {
+   public:
+      int32_t num;
+      int32_t matchCase;
+      strsize minKeywordLength;
+      ::str::ch_class *firstChar;
+      KeywordInfo *kwList;
+      KeywordList();
+      ~KeywordList();
+      void sortList();
+      void substrIndex();
 
-//  //#undef CNAME 
+//  //#undef CNAME
 ////#define CNAME "KeywordList"
 ////#include "core/core/ca_memory_operator.h"
 
-};
+   };
 
-/** One entry of 'inherit' element virtualization content.
-    @ingroup colorer_parsers
-*/
-class VirtualEntry{
-public:
-  scheme_impl *virtScheme, *substScheme;
-  string virtSchemeName, substSchemeName;
+   /** One entry of 'inherit' element virtualization content.
+       @ingroup colorer_parsers
+   */
+   class VirtualEntry
+   {
+   public:
+      scheme_impl *virtScheme, *substScheme;
+      string virtSchemeName, substSchemeName;
 
-  VirtualEntry(const char *scheme, const char *subst){
-    virtScheme = substScheme = NULL;
-    virtSchemeName = (scheme);
-    substSchemeName = (subst);
-  };
-  ~VirtualEntry(){
-  };
+      VirtualEntry(const char *scheme, const char *subst)
+      {
+         virtScheme = substScheme = NULL;
+         virtSchemeName = (scheme);
+         substSchemeName = (subst);
+      };
+      ~VirtualEntry()
+      {
+      };
 
-//  //#undef CNAME 
+//  //#undef CNAME
 ////#define CNAME "VirtualEntry"
 ////#include "core/core/ca_memory_operator.h"
 
-};
+   };
 
-enum SchemeNodeType { SNT_EMPTY, SNT_RE, SNT_SCHEME, SNT_KEYWORDS, SNT_INHERIT };
-extern const char * schemeNodeTypeNames[];
+   enum SchemeNodeType { SNT_EMPTY, SNT_RE, SNT_SCHEME, SNT_KEYWORDS, SNT_INHERIT };
+   extern const char * schemeNodeTypeNames[];
 
-typedef ref_array < VirtualEntry > VirtualEntryVector;
+   typedef pointer_array < VirtualEntry * > VirtualEntryVector;
 
-/** scheme node.
-    @ingroup colorer_parsers
-*/
-class SchemeNode :
-   virtual public ::object
-{
-public:
-  SchemeNodeType type;
+   /** scheme node.
+       @ingroup colorer_parsers
+   */
+   class SchemeNode :
+      virtual public ::object
+   {
+   public:
+      SchemeNodeType type;
 
-  string schemeName;
-  scheme_impl *scheme;
+      string schemeName;
+      scheme_impl *scheme;
 
-  VirtualEntryVector virtualEntryVector;
-  KeywordList *kwList;
-  ::str::ch_class *worddiv;
+      VirtualEntryVector virtualEntryVector;
+      KeywordList *kwList;
+      ::str::ch_class *worddiv;
 
-  class region* region;
-  class region* regions[REGIONS_NUM];
-  class region* regionsn[NAMED_REGIONS_NUM];
-  class region* regione[REGIONS_NUM];
-  class region* regionen[NAMED_REGIONS_NUM];
-  cregexp *start, *end;
-  bool innerRegion, lowPriority, lowContentPriority;
+      class region* region;
+      class region* regions[REGIONS_NUM];
+      class region* regionsn[NAMED_REGIONS_NUM];
+      class region* regione[REGIONS_NUM];
+      class region* regionen[NAMED_REGIONS_NUM];
+      cregexp *start, *end;
+      bool innerRegion, lowPriority, lowContentPriority;
 
-////#undef CNAME 
+////#undef CNAME
 ////#define CNAME "SchemeNode"
 ////#include "core/core/ca_memory_operator.h"
 
-  SchemeNode();
-  ~SchemeNode();
-};
+      SchemeNode();
+      ~SchemeNode();
+   };
 
 
-/** scheme storage implementation.
-    Manages the vector of SchemeNode's.
-    @ingroup colorer_parsers
-*/
-class scheme_impl : public scheme{
-  friend class HRCParserImpl;
-  friend class text_parser_impl;
-public:
-  const string getName() const { return schemeName; };
-  file_type *getFileType() const { return (file_type*)fileType; };
+   /** scheme storage implementation.
+       Manages the vector of SchemeNode's.
+       @ingroup colorer_parsers
+   */
+   class scheme_impl : public scheme
+   {
+      friend class HRCParserImpl;
+      friend class text_parser_impl;
+   public:
+      const string getName() const { return schemeName; };
+      file_type *getFileType() const { return (file_type*)fileType; };
 
-//#undef CNAME 
+//#undef CNAME
 //#define CNAME "scheme_impl"
 //#include "core/core/ca_memory_operator.h"
 
-protected:
-  string schemeName;
-  ref_array < SchemeNode > nodes;
-  file_type_impl *fileType;
-public:
-  scheme_impl(const char *sn){
-    schemeName = string(sn);
-    fileType = NULL;
-  };
-  ~scheme_impl(){
-    for (int32_t idx = 0; idx < nodes.get_size(); idx++)
-      delete nodes.element_at(idx);
-  };
-};
+   protected:
+      string schemeName;
+      pointer_array < SchemeNode * > nodes;
+      file_type_impl *fileType;
+   public:
+      scheme_impl(const char *sn)
+      {
+         schemeName = string(sn);
+         fileType = NULL;
+      };
+      ~scheme_impl()
+      {
+         for (int32_t idx = 0; idx < nodes.get_size(); idx++)
+            delete nodes.element_at(idx);
+      };
+   };
 
 
-/** Stores regular expressions of filename and firstline
-    elements and helps to detect file type.
-    @ingroup colorer_parsers
-*/
-class FileTypeChooser{
-public:
-  /** Creates choose entry.
-      @param type If 0 - filename RE, if 1 - firstline RE
-      @param prior Priority of this rule
-      @param re Associated regular expression
-  */
-  FileTypeChooser(int32_t type, double prior, cregexp *re){
-    this->type = type;
-    this->prior = prior;
-    this->re = re;
-  };
-  /** Default destructor */
-  ~FileTypeChooser(){
-    delete re;
-  };
-  /** Returns type of chooser */
-  bool isFileName() const { return type == 0; };
-  /** Returns type of chooser */
-  bool isFileContent() const { return type == 1; };
-  /** Returns chooser priority */
-  double getPrior() const { return prior; };
-  /** Returns associated regular expression */
-  cregexp *getRE() const { return re; };
-private:
-  int32_t type;
-  double prior;
-  cregexp *re;
-};
+   /** Stores regular expressions of filename and firstline
+       elements and helps to detect file type.
+       @ingroup colorer_parsers
+   */
+   class FileTypeChooser
+   {
+   public:
+      /** Creates choose entry.
+          @param type If 0 - filename RE, if 1 - firstline RE
+          @param prior Priority of this rule
+          @param re Associated regular expression
+      */
+      FileTypeChooser(int32_t type, double prior, cregexp *re)
+      {
+         this->type = type;
+         this->prior = prior;
+         this->re = re;
+      };
+      /** Default destructor */
+      ~FileTypeChooser()
+      {
+         delete re;
+      };
+      /** Returns type of chooser */
+      bool isFileName() const { return type == 0; };
+      /** Returns type of chooser */
+      bool isFileContent() const { return type == 1; };
+      /** Returns chooser priority */
+      double getPrior() const { return prior; };
+      /** Returns associated regular expression */
+      cregexp *getRE() const { return re; };
+   private:
+      int32_t type;
+      double prior;
+      cregexp *re;
+   };
 
 } // namespace colorertake5
 

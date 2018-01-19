@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "math_value.h"
 #include "math_number.h"
 
@@ -49,15 +49,15 @@ namespace math
    void value::parse_numeric_formula(const char * psz)
    {
 //      int32_t iOpen               = 0;
-  //    bool bLeft              = false;
-    //  bool bNumber            = false;
+      //    bool bLeft              = false;
+      //  bool bNumber            = false;
       m_pimpl                 = new number();
 //      const char * pszNumber  = NULL;
-  //    value_impl * pimpl      = m_pimpl;
+      //    value_impl * pimpl      = m_pimpl;
 
       string strNumber;
 //      binary_operation * pbinopNew;
-      ref_array < number > stackptra;
+      pointer_array < number * > stackptra;
 
       _throw(not_implemented(get_app()));
 

@@ -1184,7 +1184,7 @@ restart:
 
       }
 
-      ref_array <  ::user::interaction  > uiptra;
+      pointer_array <  ::user::interaction * > uiptra;
 
       {
 

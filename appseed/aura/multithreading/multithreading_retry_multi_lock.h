@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 class CLASS_DECL_AURA retry_multi_lock
@@ -6,16 +6,16 @@ class CLASS_DECL_AURA retry_multi_lock
 protected:
 
 
-   spa(sync_object)              m_syncobjectptra;
+   spa(sync_object)                 m_syncobjectptra;
 #ifdef WINDOWS
-   raw_ref_array < HANDLE >      m_objecta;
+   pointer_array < HANDLE >         m_objecta;
 #else
-   array<sync_object *>        m_objecta;
+   pointer_array < sync_object * >  m_objecta;
 #endif
-   bool_array                    m_baLocked;
-   duration                      m_durationLock;
-   duration                      m_durationSleep;
-   int32_t                       m_iRetry;
+   bool_array                       m_baLocked;
+   duration                         m_durationLock;
+   duration                         m_durationSleep;
+   int32_t                          m_iRetry;
 
 
 public:

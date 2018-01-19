@@ -1,43 +1,43 @@
-#pragma once
+﻿#pragma once
 
 namespace colorertake5
 {
-/** Abstract RegionMapper.
-    Stores all region mappings in hashtable and sequental vector.
-    @ingroup colorer_handlers
-*/
-class RegionMapperImpl : public RegionMapper,
-   virtual public ::object
-{
-public:
-  RegionMapperImpl(::aura::application * papp) : object(papp){};
-  ~RegionMapperImpl(){};
+   /** Abstract RegionMapper.
+       Stores all region mappings in hashtable and sequental vector.
+       @ingroup colorer_handlers
+   */
+   class RegionMapperImpl : public RegionMapper,
+      virtual public ::object
+   {
+   public:
+      RegionMapperImpl(::aura::application * papp) : object(papp) {};
+      ~RegionMapperImpl() {};
 
-  /** Loads region defines from @ca is input_source
-  */
-  virtual void  loadRegionMappings(::file::istream & reader) = 0;
-  /** Saves all loaded region defines into @ca writer.
-      Note, that result document would not be equal
-      to input one, because there could be multiple input
-      documents.
-  */
-  virtual void  saveRegionMappings(::file::ostream & writer) const = 0;
-  /** Changes specified region definition to @ca rdnew
-      @param region region full qualified name.
-      @param rdnew  New region definition to replace old one
-  */
-  virtual void  setRegionDefine(const char * region, RegionDefine *rdnew) = 0;
+      /** Loads region defines from @ca is input_source
+      */
+      virtual void  loadRegionMappings(::file::istream & reader) = 0;
+      /** Saves all loaded region defines into @ca writer.
+          Note, that result document would not be equal
+          to input one, because there could be multiple input
+          documents.
+      */
+      virtual void  saveRegionMappings(::file::ostream & writer) const = 0;
+      /** Changes specified region definition to @ca rdnew
+          @param region region full qualified name.
+          @param rdnew  New region definition to replace old one
+      */
+      virtual void  setRegionDefine(const char * region, RegionDefine *rdnew) = 0;
 
 
-  RegionDefine *getRegionDefine(class region *region);
-  RegionDefine *getRegionDefine(const char * name);
+      RegionDefine *getRegionDefine(class region *region);
+      RegionDefine *getRegionDefine(const char * name);
 
-  string_map< RegionDefine *> regionDefines;
-  ref_array < RegionDefine > regionDefinesVector;
+      string_map< RegionDefine *> regionDefines;
+      pointer_array < RegionDefine * > regionDefinesVector;
 
-  RegionMapperImpl(const RegionMapperImpl&);
-  void operator=(const RegionMapperImpl&);
-};
+      RegionMapperImpl(const RegionMapperImpl&);
+      void operator=(const RegionMapperImpl&);
+   };
 
 } // namespace colorertake5
 

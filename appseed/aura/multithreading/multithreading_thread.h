@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 class CLASS_DECL_AURA error :
@@ -32,9 +32,9 @@ public:
    int get_exit_code();
 
    ::exception::exception * get_exception();
-   
+
    ::exception::exception * detach_exception();
-   
+
 
 };
 
@@ -96,7 +96,7 @@ public:
    single_lock *                          m_pslUser;
    static bool                            s_bAllocReady;
 
-   object_refa                            m_objectrefaDependent;
+   object_ptra                            m_objectptraDependent;
 
    //mutex *                              m_pmutex;
 
@@ -110,8 +110,8 @@ public:
    ::user::primitive *                    m_puiActive;         // active main interaction_impl (may not be m_puiMain)
    //property_set                           m_set;
    string                                 m_strWorkUrl;
-   thread_refa                            m_threadrefaDependent;
-   thread_refa                            m_threadrefaRequired;
+   thread_ptra                            m_threadrefaDependent;
+   thread_ptra                            m_threadrefaRequired;
    ::user::interactive *                  m_pinteractive;
 
    bool                                   m_bZipIsDir;
@@ -137,7 +137,7 @@ public:
    HTHREAD                                   m_hthread;
    IDTHREAD                                  m_uiThread;
 
-   ref_array < ::user::frame >               m_frameptra;
+   pointer_array < ::user::frame * >         m_frameptra;
 
    LPVOID                                    m_pThreadParams;
    __THREADPROC                              m_pfnThreadProc;

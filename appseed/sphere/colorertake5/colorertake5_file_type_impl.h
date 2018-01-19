@@ -112,7 +112,7 @@ namespace colorertake5
       HRCParserImpl *hrcParser;
       scheme_impl *baseScheme;
 
-      ref_array < FileTypeChooser > chooserVector;
+      pointer_array < FileTypeChooser * > chooserVector;
       string_to_string paramDefaultHash;
       string_to_string paramHash;
       string_to_string paramDescriptionHash;

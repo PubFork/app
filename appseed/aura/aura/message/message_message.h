@@ -12,7 +12,7 @@ namespace message
 
 
       id                         m_id;
-      ref_array < route >        m_routea;
+      pointer_array < route * >  m_routea;
       sender *                   m_psender;
       WPARAM                     m_wparam;
       lparam                     m_lparam;

@@ -1,4 +1,4 @@
-#include "framework.h" // #include "axis/net/sockets/bsd/sockets.h"
+﻿#include "framework.h" // #include "axis/net/sockets/bsd/sockets.h"
 #include "aura/net/net_sockets.h"
 #include <stdio.h>
 
@@ -319,8 +319,8 @@ namespace sockets
 #endif // NO_GETADDRINFO
    }
    item.r = true;
-   ref_array <  addrinfo > vec;
-   addrinfo *ai = res;
+   pointer_array < addrinfo * > vec;
+   addrinfo * ai = res;
    while (ai)
    {
       if (ai -> ai_addrlen == sizeof(sa))

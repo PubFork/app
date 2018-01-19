@@ -90,7 +90,7 @@ class var;
 class application_bias;
 class create;
 class command_line;
-class thread_refa;
+class thread_ptra;
 #include "aura/multithreading/multithreading_wait_result.h"
 // Duplicated root here... element is essentially like root (Rute, Inha, Lenir) for templates, but not for polymorphism
 
@@ -191,7 +191,7 @@ public:
    ::aura::application *         m_pauraapp;
    mutex *                       m_pmutex;
    property_set *                m_psetObject;
-   thread_refa *                 m_pthreadrefa;
+   thread_ptra *                 m_pthreadrefa;
 
 
    object();

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 
@@ -744,7 +744,7 @@ public:
 
 
 class CLASS_DECL_AURA property_ptra :
-   public ref_array < property >
+   public pointer_array < property * >
 {
 public:
 

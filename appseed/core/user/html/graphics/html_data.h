@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace html
@@ -92,7 +92,7 @@ namespace html
 //         float_array       m_cyStack;
          float_array       m_xParent;
          float_array       m_cya;
-  //       int                           m_iy;
+         //       int                           m_iy;
          float             m_x;
          float             m_cx;
          //         bool     m_bLastBlockX;
@@ -111,22 +111,22 @@ namespace html
 
       };
 
-      ::user::form_callback *       m_pcallback;
-      ::user::interaction *         m_pui;
-      ::draw2d::graphics *          m_pgraphics;
-      box                           m_box;
-      string                        m_strTitle;
-      layout_state1                 m_layoutstate1;
-      layout_state2                 m_layoutstate2;
-      layout_state3                 m_layoutstate3;
+      ::user::form_callback *          m_pcallback;
+      ::user::interaction *            m_pui;
+      ::draw2d::graphics *             m_pgraphics;
+      box                              m_box;
+      string                           m_strTitle;
+      layout_state1                    m_layoutstate1;
+      layout_state2                    m_layoutstate2;
+      layout_state3                    m_layoutstate3;
 
-      ref_array < impl::table >     m_tableptra;
+      pointer_array < impl::table * >  m_tableptra;
 
-      smart_pointer_array < image>  m_imagea;
+      smart_pointer_array < image>     m_imagea;
 
-      smart_pointer_array < font >  m_fonta;
+      smart_pointer_array < font >     m_fonta;
 
-      ::user::interaction_ptra      m_focusptra;
+      ::user::interaction_ptra         m_focusptra;
 
       style_sheet_array             m_stylesheeta;
       ::file::path                  m_strPathName;

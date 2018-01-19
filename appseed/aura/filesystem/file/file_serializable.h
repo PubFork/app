@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace file
@@ -254,15 +254,15 @@ template<class TYPE,class ARG_TYPE = const TYPE &>
 }
 
 
-template < class TYPE,class ARRAY_TYPE = pointer_array < TYPE * > >
-::file::ostream & operator << (::file::ostream & os,const ref_array < TYPE,ARRAY_TYPE> & a)
+template < class TYPE, class ARRAY_TYPE = comparable_array < POINTER, POINTER, comparable_eq_array < POINTER, POINTER, raw_array < POINTER, POINTER, ::allocator::zero < POINTER > > > > >
+::file::ostream & operator << (::file::ostream & os,const pointer_array < TYPE, ARRAY_TYPE> & a)
 {
    ::file::ptra::write(os,a);
    return os;
 }
 
-template < class TYPE,class ARRAY_TYPE = pointer_array < TYPE * > >
-::file::istream & operator >> (::file::istream & is,ref_array < TYPE,ARRAY_TYPE > & a)
+template < class TYPE, class ARRAY_TYPE = comparable_array < POINTER, POINTER, comparable_eq_array < POINTER, POINTER, raw_array < POINTER, POINTER, ::allocator::zero < POINTER > > > > >
+::file::istream & operator >> (::file::istream & is, pointer_array < TYPE, ARRAY_TYPE > & a)
 {
    ::file::ptra::read(is,a);
    return is;

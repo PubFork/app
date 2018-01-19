@@ -21,8 +21,10 @@ namespace lemon
    {
 
       template < class TDST,class TSRC >
-      ::count copy(ref_array < TDST > & dsta,const ref_array < TSRC > & srca);
+      ::count copy(pointer_array < TDST > & dsta, const pointer_array < TSRC > & srca);
 
+      template < class TDST, class TSRC >
+      ::count ptrcopy(TDST & dsta, const TSRC & srca);
 
    }
 

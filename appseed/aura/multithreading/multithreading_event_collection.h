@@ -1,9 +1,9 @@
-#pragma once
+﻿#pragma once
 
 
 // Thank you linode.com!!
-typedef ref_array < ::object > object_ptra;
-typedef ref_array < ::sync_object > sync_object_ptra;
+//typedef poin_array < ::object > object_ptra;
+typedef pointer_array < ::sync_object * > sync_object_ptra;
 
 
 /// This class represents a collection of object items. A collection can be mixed
@@ -13,9 +13,9 @@ class CLASS_DECL_AURA event_collection :
 {
 public:
 #ifdef WINDOWS
-   typedef raw_ref_array < HANDLE > CollectionType;
+   typedef pointer_array < HANDLE > CollectionType;
 #else
-   typedef array < sync_object * > CollectionType;
+   typedef pointer_array < sync_object * > CollectionType;
 #endif
 
 private:

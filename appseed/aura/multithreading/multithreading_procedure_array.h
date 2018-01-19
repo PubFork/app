@@ -35,10 +35,10 @@ public:
    virtual void dump(dump_context &) const {}
 
 
-   inline ref_array < thread * > async_all()
+   inline thread_ptra async_all()
    {
 
-      ref_array < thread * > threadptra;
+      thread_ptra threadptra;
 
       array < void (TYPE::*)() > & a = *this;
 

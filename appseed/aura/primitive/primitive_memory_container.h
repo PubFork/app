@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #include "primitive_memory_base.h"
@@ -19,7 +19,7 @@ namespace primitive
 
 
       sp(memory_base)                        m_spmemory;
-      ref_array < void * > *                 m_pvppa;
+      pointer_array < void ** > *            m_pvppa;
 
    public:
 
@@ -30,7 +30,7 @@ namespace primitive
       virtual ~memory_container();
 
 
-      
+
 
       void allocate_add_up(memory_size_t dwAddUp);
       void allocate(memory_size_t dwNewLength);
@@ -96,8 +96,7 @@ namespace primitive
 
    protected:
 
-      ref_array < void * > & vppa();
-
+      pointer_array < void ** > & vppa();
 
    };
 
@@ -166,7 +165,7 @@ namespace primitive
    {
 
       if(m_spmemory.is_null())
-          m_spmemory = create_memory();
+         m_spmemory = create_memory();
 
       m_spmemory->from_string(str);
 

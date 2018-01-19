@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 // with tbs in <3!! (Thomas Boregaard Soerensen)
@@ -11,11 +11,11 @@ namespace message
    {
    public:
 
-      
+
       receiver *        m_preceiver;
       void *            m_pvoidReceiver;
       sp(type)          m_ptypeReceiver;
-      
+
 
       route(receiver * preceiver, void * pvoidReceiver, ::type * ptypeReceiver) :
          m_preceiver(preceiver),
@@ -54,7 +54,7 @@ namespace message
          route(preceiver, pvoidReceiver, ptype),
          m_pred(pred)
       {
-         
+
       }
 
       virtual ~pred_route()
@@ -72,7 +72,7 @@ namespace message
 
    };
 
-   
+
    template < typename PRED >
    route * create_pred_route(receiver * preceiver, void * pvoidReceiver, PRED pred, ::type * ptype)
    {
@@ -81,11 +81,11 @@ namespace message
 
    }
 
-   using route_array = ::ptr_array < route >;
+   using route_array = ::auto_pointer_array < route >;
 
    using id_route = ::map < ::message::id, const ::message::id &, route_array >;
 
    using type_id_route = ::map < e_type, e_type, id_route >;
 
 
-} // namespace message 
+} // namespace message

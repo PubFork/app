@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace user
@@ -11,8 +11,8 @@ namespace user
    public:
 
 
-      ref_array < ::user::tree >          m_treeptra; 
-      ref_array < ::user::tree >          m_treeptraBound; 
+      pointer_array < ::user::tree * >    m_treeptra;
+      pointer_array < ::user::tree * >    m_treeptraBound;
       sp(image_list)                      m_pimagelist;
 
 

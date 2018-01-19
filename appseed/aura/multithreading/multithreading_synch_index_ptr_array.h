@@ -1,12 +1,12 @@
-#pragma once
+﻿#pragma once
 
 
 class CLASS_DECL_AURA synch_index_ptr_array:
-   virtual protected ref_array < index >
+   virtual protected pointer_array < index * >
 {
 public:
 
-   
+
    //::mutex * m_pmutex;
 
 

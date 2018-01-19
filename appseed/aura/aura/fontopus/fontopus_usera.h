@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace fontopus
@@ -6,7 +6,7 @@ namespace fontopus
 
 
    class CLASS_DECL_AURA usera :
-      virtual public ref_array < user >
+      virtual public pointer_array < user * >
    {
    public:
 
@@ -17,7 +17,7 @@ namespace fontopus
 
    };
 
-   
+
 } // namespace fontopus
 
 

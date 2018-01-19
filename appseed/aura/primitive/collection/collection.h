@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 
@@ -16,45 +16,45 @@
 template < typename CONST_ITERATOR >
 class const_range
 {
-   public:
+public:
 
-      typedef CONST_ITERATOR const_iterator;
+   typedef CONST_ITERATOR const_iterator;
 
-      CONST_ITERATOR m_begin;
-      CONST_ITERATOR m_end;
+   CONST_ITERATOR m_begin;
+   CONST_ITERATOR m_end;
 
-      const_range(CONST_ITERATOR b,CONST_ITERATOR e): m_begin(b),m_end(e) {}
+   const_range(CONST_ITERATOR b,CONST_ITERATOR e): m_begin(b),m_end(e) {}
 
-      CONST_ITERATOR begin() const { return m_begin; }
-      CONST_ITERATOR end() const { return m_end; }
+   CONST_ITERATOR begin() const { return m_begin; }
+   CONST_ITERATOR end() const { return m_end; }
 
 
-      typename CONST_ITERATOR::TYPE & element_at(::index iIndex)
+   typename CONST_ITERATOR::TYPE & element_at(::index iIndex)
+   {
+
+      CONST_ITERATOR it = begin();
+
+      while(iIndex > 0 && it != end())
       {
 
-         CONST_ITERATOR it = begin();
-
-         while(iIndex > 0 && it != end())
-         {
-
-            iIndex--;
-
-         }
-
-         if(iIndex == 0)
-         {
-
-            return (*it);
-
-         }
-         else
-         {
-
-            _throw(invalid_argument_exception(get_app()));
-
-         }
+         iIndex--;
 
       }
+
+      if(iIndex == 0)
+      {
+
+         return (*it);
+
+      }
+      else
+      {
+
+         _throw(invalid_argument_exception(get_app()));
+
+      }
+
+   }
 };
 
 
@@ -62,44 +62,44 @@ class const_range
 template < typename ITERATOR >
 class range
 {
-   public:
+public:
 
-      typedef ITERATOR const_iterator;
+   typedef ITERATOR const_iterator;
 
-      ITERATOR m_begin;
-      ITERATOR m_end;
+   ITERATOR m_begin;
+   ITERATOR m_end;
 
-      range(ITERATOR b,ITERATOR e): m_begin(b),m_end(e) { }
+   range(ITERATOR b,ITERATOR e): m_begin(b),m_end(e) { }
 
-      ITERATOR begin() const { return m_begin; }
-      ITERATOR end() const { return m_end; }
+   ITERATOR begin() const { return m_begin; }
+   ITERATOR end() const { return m_end; }
 
-      typename ITERATOR::TYPE& element_at(::index iIndex)
+   typename ITERATOR::TYPE& element_at(::index iIndex)
+   {
+
+      ITERATOR it = begin();
+
+      while(iIndex > 0 && it != end())
       {
 
-         ITERATOR it = begin();
-
-         while(iIndex > 0 && it != end())
-         {
-
-            iIndex--;
-
-         }
-
-         if(iIndex == 0)
-         {
-
-            return (*it);
-
-         }
-         else
-         {
-
-            _throw(invalid_argument_exception(get_app()));
-
-         }
+         iIndex--;
 
       }
+
+      if(iIndex == 0)
+      {
+
+         return (*it);
+
+      }
+      else
+      {
+
+         _throw(invalid_argument_exception(get_app()));
+
+      }
+
+   }
 
 };
 
@@ -109,7 +109,7 @@ class range
 #include "collection_comparable_raw_array.h"
 #include "collection_comparable_primitive_array.h"
 
-#include "collection_ptr_array.h"
+#include "collection_auto_pointer_array.h"
 
 #include "collection_primitive_array.h"
 #include "collection_numeric_array_range.h"
@@ -168,45 +168,45 @@ class object_list;              // list of object*
 class CLASS_DECL_AURA map_word_to_ptr :
    virtual public map < WORD, WORD, void *, void * >
 {
-   public:
-      map_word_to_ptr(::aura::application * papp = NULL, ::count nBlockSize = 10);
+public:
+   map_word_to_ptr(::aura::application * papp = NULL, ::count nBlockSize = 10);
 };
 
 class CLASS_DECL_AURA map_ptr_to_word :
    virtual public map < void *, void *, WORD, WORD >
 {
-   public:
-      map_ptr_to_word(::aura::application * papp = NULL, ::count nBlockSize = 10);
+public:
+   map_ptr_to_word(::aura::application * papp = NULL, ::count nBlockSize = 10);
 };
 
 
 class CLASS_DECL_AURA map_ptr_to_ptr :
    virtual public map < void *, void *, void *, void * >
 {
-   public:
-      map_ptr_to_ptr(::aura::application * papp = NULL, ::count nBlockSize = 10);
+public:
+   map_ptr_to_ptr(::aura::application * papp = NULL, ::count nBlockSize = 10);
 };
 
 class CLASS_DECL_AURA map_word_to_ob :
    virtual public map < WORD, WORD, object *, object * >
 {
-   public:
-      map_word_to_ob(::aura::application * papp = NULL, ::count nBlockSize = 10);
+public:
+   map_word_to_ob(::aura::application * papp = NULL, ::count nBlockSize = 10);
 };
 
 
 class CLASS_DECL_AURA map_string_to_ptr :
    virtual public map < string, const string &, void *, void * >
 {
-   public:
-      map_string_to_ptr(::aura::application * papp = NULL, ::count nBlockSize = 10);
+public:
+   map_string_to_ptr(::aura::application * papp = NULL, ::count nBlockSize = 10);
 };
 
 class CLASS_DECL_AURA map_string_to_ob :
    virtual public map < string, const string &, object *, object * >
 {
-   public:
-      map_string_to_ob(::aura::application * papp = NULL, ::count nBlockSize = 10);
+public:
+   map_string_to_ob(::aura::application * papp = NULL, ::count nBlockSize = 10);
 };
 
 

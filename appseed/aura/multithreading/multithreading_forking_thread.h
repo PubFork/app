@@ -81,7 +81,7 @@ template < typename PRED >
    if (pobjectDependent != NULL)
    {
 
-      pthread->m_objectrefaDependent.add(pobjectDependent);
+      pthread->m_objectptraDependent.add(pobjectDependent);
 
    }
 

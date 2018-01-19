@@ -993,7 +993,7 @@ void object::threadrefa_add(::thread * pthread)
    if (m_pthreadrefa == NULL)
    {
 
-      m_pthreadrefa = new thread_refa;
+      m_pthreadrefa = new thread_ptra;
 
    }
 
@@ -1003,7 +1003,7 @@ void object::threadrefa_add(::thread * pthread)
 
    m_pthreadrefa->add(pthread);
 
-   pthread->m_objectrefaDependent.add(this);
+   pthread->m_objectptraDependent.add(this);
 
 }
 
@@ -1033,7 +1033,7 @@ void object::threadrefa_remove(::thread * pthread)
 
    m_pthreadrefa->remove(pthread);
 
-   pthread->m_objectrefaDependent.remove(this);
+   pthread->m_objectptraDependent.remove(this);
 
 }
 

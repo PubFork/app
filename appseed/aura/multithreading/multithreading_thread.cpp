@@ -385,9 +385,9 @@ thread::~thread()
    try
    {
 
-      synch_lock sl(m_objectrefaDependent.m_pmutex);
+      synch_lock sl(m_objectptraDependent.m_pmutex);
 
-      for (auto pobject : m_objectrefaDependent)
+      for (auto pobject : m_objectptraDependent)
       {
 
          pobject->threadrefa_remove(this);
@@ -465,7 +465,7 @@ void thread::on_pos_run_thread()
    {
 
 
-      for(auto pobject : m_objectrefaDependent)
+      for(auto pobject : m_objectptraDependent)
       {
 
          pobject->threadrefa_remove(this);
@@ -2232,7 +2232,7 @@ void thread::post_to_all_threads(UINT message,WPARAM wparam,LPARAM lparam)
 
       single_lock sl(::multithreading::s_pmutex,true);
 
-      ref_array < thread > threadptra = *::multithreading::s_pthreadptra;
+      thread_ptra threadptra = *::multithreading::s_pthreadptra;
 
       for(index i = 0; i < threadptra.get_size(); i++)
       {
@@ -3555,7 +3555,7 @@ CLASS_DECL_AURA uint32_t random_processor_index_generator()
 
 
 
-thread_refa::thread_refa()
+thread_ptra::thread_ptra()
 {
 
    defer_create_mutex();
@@ -3565,7 +3565,7 @@ thread_refa::thread_refa()
 
 
 
-thread_refa::~thread_refa()
+thread_ptra::~thread_ptra()
 {
 
 

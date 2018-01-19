@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 namespace colorertake5
 {
@@ -13,72 +13,72 @@ namespace colorertake5
    */
    class CLASS_DECL_SPHERE HRCParserImpl : public HRCParser
    {
-      public:
-         HRCParserImpl(::aura::application * papp);
-         virtual ~HRCParserImpl();
+   public:
+      HRCParserImpl(::aura::application * papp);
+      virtual ~HRCParserImpl();
 
-         void setErrorHandler(ErrorHandler *eh);
+      void setErrorHandler(ErrorHandler *eh);
 
-         void loadSource(const char * pszSourceLocation, const char * pszSource);
-         file_type *getFileType(const char *name);
-         file_type *enumerateFileTypes(int32_t index);
-         file_type *chooseFileType(const char *fileName, const char *firstLine, int32_t typeNo = 0);
+      void loadSource(const char * pszSourceLocation, const char * pszSource);
+      file_type *getFileType(const char *name);
+      file_type *enumerateFileTypes(int32_t index);
+      file_type *chooseFileType(const char *fileName, const char *firstLine, int32_t typeNo = 0);
 
-         ::count getRegionCount();
-         class region *getRegion(int32_t id);
-         class region* getRegion(const char *name);
+      ::count getRegionCount();
+      class region *getRegion(int32_t id);
+      class region* getRegion(const char *name);
 
-         string getVersion();
+      string getVersion();
 
-      protected:
-         friend class file_type_impl;
+   protected:
+      friend class file_type_impl;
 
-         enum QualifyNameType { QNT_DEFINE, QNT_SCHEME, QNT_ENTITY };
+      enum QualifyNameType { QNT_DEFINE, QNT_SCHEME, QNT_ENTITY };
 
-         // types and packages
-         string_map<file_type_impl *>       fileTypeHash;
-         // types, not packages
-         ref_array < file_type_impl >       fileTypeVector;
+      // types and packages
+      string_map<file_type_impl *>       fileTypeHash;
+      // types, not packages
+      pointer_array < file_type_impl * >       fileTypeVector;
 
-         string_map<scheme_impl *>          schemeHash;
-         string_map<int32_t>                   disabledSchemes;
+      string_map<scheme_impl *>          schemeHash;
+      string_map<int32_t>                   disabledSchemes;
 
-         ref_array < region >   regionNamesVector;
-         string_map<region *>   regionNamesHash;
-         string_to_string              schemeEntitiesHash;
+      pointer_array < region * >   regionNamesVector;
+      string_map<region *>   regionNamesHash;
+      string_to_string              schemeEntitiesHash;
 
-         string versionName;
+      string versionName;
 
-         file_type_impl *parseType;
-         bool structureChanged;
-         bool updateStarted;
+      file_type_impl *parseType;
+      bool structureChanged;
+      bool updateStarted;
 
-         ::file::path m_strCurrentSourceLocation;
-         string m_strCurrentSource;
+      ::file::path m_strCurrentSourceLocation;
+      string m_strCurrentSource;
 
-         //DocumentBuilder docbuilder;
-         ErrorHandler *errorHandler;
+      //DocumentBuilder docbuilder;
+      ErrorHandler *errorHandler;
 
-         void loadFileType(file_type *filetype);
+      void loadFileType(file_type *filetype);
 
-         void parseHRC(const char * psz);
-         void addPrototype(sp(::xml::node)elem);
-         void addType(sp(::xml::node)elem);
+      void parseHRC(const char * psz);
+      void addPrototype(sp(::xml::node)elem);
+      void addType(sp(::xml::node)elem);
 
-         void addScheme(sp(::xml::node)elem);
-         void addSchemeNodes(scheme_impl *scheme, sp(::xml::node)elem);
+      void addScheme(sp(::xml::node)elem);
+      void addSchemeNodes(scheme_impl *scheme, sp(::xml::node)elem);
 
-         void loadBlockRegions(SchemeNode *node, sp(::xml::node)el);
-         void loadRegions(SchemeNode *node, sp(::xml::node)el, bool st);
+      void loadBlockRegions(SchemeNode *node, sp(::xml::node)el);
+      void loadRegions(SchemeNode *node, sp(::xml::node)el, bool st);
 
-         string qualifyOwnName(const char *name);
-         bool checkNameExist(const char *name, file_type_impl *parseType, QualifyNameType qntype, bool logErrors);
-         string qualifyForeignName(const char *name, QualifyNameType qntype, bool logErrors);
+      string qualifyOwnName(const char *name);
+      bool checkNameExist(const char *name, file_type_impl *parseType, QualifyNameType qntype, bool logErrors);
+      string qualifyForeignName(const char *name, QualifyNameType qntype, bool logErrors);
 
-         void updateLinks();
-         string useEntities(const char * name);
-         class region *getNCRegion(sp(::xml::node)el, const char * tag);
-         class region *getNCRegion(const char *name, bool logErrors);
+      void updateLinks();
+      string useEntities(const char * name);
+      class region *getNCRegion(sp(::xml::node)el, const char * tag);
+      class region *getNCRegion(const char *name, bool logErrors);
 
 
    };

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace html
@@ -45,7 +45,7 @@ namespace html
    };
 
 
-   typedef ref_array < base > base_ptr_array;
+   typedef pointer_array < base * > base_ptr_array;
 
 
 } // namespace html

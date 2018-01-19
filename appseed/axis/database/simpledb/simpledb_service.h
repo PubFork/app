@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace simpledb
@@ -14,8 +14,8 @@ namespace simpledb
    public:
 
 
-      manager *            m_pmanager;
-      ref_array < socket_thread > m_threadptra;
+      manager *                           m_pmanager;
+      pointer_array < socket_thread * >   m_threadptra;
 
 
       service(::aura::application * papp);

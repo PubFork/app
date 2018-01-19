@@ -6,7 +6,7 @@ namespace multithreading
 
 
    CLASS_DECL_AURA comparable_eq_array<IDTHREAD> * s_piaThread = NULL;
-   CLASS_DECL_AURA ref_array < thread > * s_pthreadptra = NULL;
+   CLASS_DECL_AURA thread_ptra * s_pthreadptra = NULL;
    CLASS_DECL_AURA mutex * s_pmutex = NULL;
 
 
@@ -14,7 +14,7 @@ namespace multithreading
    {
       s_pmutex = new mutex(NULL);
       s_piaThread = new comparable_eq_array<IDTHREAD>;
-      s_pthreadptra = new ref_array < thread >;
+      s_pthreadptra = new thread_ptra;
 
       __node_init_multithreading();
 
@@ -82,9 +82,9 @@ namespace multithreading
       try
       {
 
-         synch_lock sl(pthread->m_objectrefaDependent.m_pmutex);
+         synch_lock sl(pthread->m_objectptraDependent.m_pmutex);
 
-         for (auto pobject : pthread->m_objectrefaDependent)
+         for (auto pobject : pthread->m_objectptraDependent)
          {
 
             pobject->threadrefa_remove(pthread);
@@ -432,7 +432,7 @@ void do_events(const duration & duration)
 
 
 
-void thread_refa::post_quit()
+void thread_ptra::post_quit()
 {
 
    try
@@ -473,7 +473,7 @@ void thread_refa::post_quit()
 }
 
 
-void thread_refa::wait(const duration & duration, ::sync_interface * psyncParent)
+void thread_ptra::wait(const duration & duration, ::sync_interface * psyncParent)
 {
 
    ::datetime::time timeEnd = ::datetime::time::get_current_time() + MAX(seconds(2), duration);

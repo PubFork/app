@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 #if defined(HAVE_OPENSSL)
 
@@ -1841,7 +1841,7 @@ namespace crypto
       stack_st_X509 * pstack509 = NULL;
       {
          string strOthers = Application.file().as_string(strOthersPath);
-         ref_array < X509 > xptra;
+         pointer_array < X509 * > xptra;
          strsize iStart = 0;
          strsize iFind;
          string strEnd = "-----END CERTIFICATE-----";

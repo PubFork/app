@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace primitive
@@ -8,11 +8,11 @@ namespace primitive
    memory_container ::memory_container(::aura::application * papp) :
       object(papp)
    {
-      
+
 //      m_spmemory = canew(memory(papp));
-      
+
       m_pvppa = NULL;
-      
+
    }
 
 
@@ -128,7 +128,7 @@ namespace primitive
 
    }
 
-   
+
    void memory_container::set_memory(memory_base * pmemory)
    {
 
@@ -178,7 +178,7 @@ namespace primitive
 
    void memory_container ::keep_pointer(void **ppvoid)
    {
-      
+
       vppa().add(ppvoid);
 
    }
@@ -217,7 +217,7 @@ namespace primitive
 
       if (container.m_spmemory.is_null())
       {
-       
+
          m_spmemory.release();
 
       }
@@ -252,7 +252,7 @@ namespace primitive
       }
 
       object::copy_this(container);
-      
+
       memory_container::copy_this(container);
 
       return *this;
@@ -280,7 +280,7 @@ namespace primitive
 
    memory * memory_container::get_primitive_memory()
    {
-      
+
       if (m_spmemory.is_null())
          m_spmemory = canew(memory(get_app()));
 
@@ -382,13 +382,14 @@ namespace primitive
 
    }
 
-   ref_array < void * > & memory_container::vppa()
+
+   pointer_array < void ** > & memory_container::vppa()
    {
 
       if(m_pvppa == NULL)
       {
 
-         m_pvppa = new ref_array < void * > ();
+         m_pvppa = new pointer_array < void ** > ();
 
       }
 

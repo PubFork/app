@@ -1,13 +1,16 @@
-#pragma once
+﻿#pragma once
+
+
+typedef CLASS_DECL_AURA spa(object) object_spa;
 
 
 namespace data
 {
 
 
-   typedef CLASS_DECL_AURA ref_array < listener > data_listener_ptra;
-   typedef CLASS_DECL_AURA ref_array < data > data_ptra;
-   typedef CLASS_DECL_AURA comparable_array < sp(object) > ca_ptra;
+   typedef CLASS_DECL_AURA pointer_array < listener * > data_listener_ptra;
+   typedef CLASS_DECL_AURA pointer_array < data * > data_ptra;
+
 
 
 //   class CLASS_DECL_AURA simple_lock :
@@ -24,7 +27,7 @@ namespace data
 //
 //   };
 
-   
+
 
 
    class CLASS_DECL_AURA simple_data :
@@ -36,8 +39,8 @@ namespace data
       // writing to or reading from this data
 //      interlocked_long  m_lockedlong;
 //      mutex                m_mutex;
-      
-      
+
+
       simple_data();
       virtual ~simple_data();
 

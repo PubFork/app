@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace colorertake5
@@ -13,8 +13,8 @@ namespace colorertake5
    protected:
 
 
-      ref_array < LineRegion > lineRegions;
-      ref_array < LineRegion > schemeStack;
+      pointer_array < LineRegion * > lineRegions;
+      pointer_array < LineRegion * > schemeStack;
 
       RegionMapper *regionMapper;
       LineRegion *flowBackground;

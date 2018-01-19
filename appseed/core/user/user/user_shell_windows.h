@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #include <shlobj.h>
@@ -9,7 +9,7 @@
 namespace user
 {
 
-   
+
    namespace shell
    {
 
@@ -44,7 +44,7 @@ namespace user
 
          bool                                                        m_bStarted;
          delay_thread *                                              m_pdelayRelease;
-         ref_array < image_key >                                     m_keyptra;
+         pointer_array < image_key * >                               m_keyptra;
          manual_reset_event                                          m_evKey;
          mutex                                                       m_mutexQueue;
          spa(::thread)                                               m_threadaGetImage;

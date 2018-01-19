@@ -200,9 +200,9 @@ void timer::call_on_timer()
       try
       {
 
-         synch_lock sl(m_objectrefaDependent.m_pmutex);
+         synch_lock sl(m_objectptraDependent.m_pmutex);
 
-         for (auto pobject : m_objectrefaDependent)
+         for (auto pobject : m_objectptraDependent)
          {
 
             pobject->threadrefa_remove(this);

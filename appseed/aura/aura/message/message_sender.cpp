@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 
@@ -91,7 +91,7 @@ namespace message
 
          synch_lock sl(m_pmutexIdRoute);
 
-         pmessage->m_routea = m_idroute[pmessage->m_id];
+         ::lemon::ptra::ptrcopy(pmessage->m_routea, m_idroute[pmessage->m_id]);
 
       }
 

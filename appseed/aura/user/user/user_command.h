@@ -15,7 +15,7 @@ namespace user
       id                                           m_idControl;     // menu item or other index
       index                                        m_iIndex;
       ::count                                      m_iCount;        // last + 1 for iterating m_iIndex
-      ref_array < ::command_target >               m_commandtargetptraHandle;
+      pointer_array < ::command_target * >         m_commandtargetptraHandle;
 
       bool                                         m_bEnable;
       check::e_check                               m_echeck; // m_bCheckChanged is similar to m_echeck != undefined

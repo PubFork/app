@@ -1,4 +1,4 @@
-//
+﻿//
 //HISTORY:
 //
 //Version 1.0            Gurmeet S. Kochar (GSK)
@@ -82,7 +82,7 @@ public:
     * @author Gurmeet S. Kochar
     */
    bool isColorValue(::lite_html_reader * preader) const
-      { return (isNamedColorValue(preader) || isHexColorValue()); }
+   { return (isNamedColorValue(preader) || isHexColorValue()); }
 
    /**
     * Returns the color value of the attribute
@@ -107,7 +107,7 @@ public:
     * @author Gurmeet S. Kochar
     */
    bool isPercentValue() const
-      { return (m_strValue.Right(1) == "%" ? true : false); }
+   { return (m_strValue.Right(1) == "%" ? true : false); }
 
    /**
     * Returns a percent value of the attribute
@@ -151,7 +151,7 @@ public:
       for (i = 0; i < sizeof(_szUnits)/sizeof(_szUnits[0]); i++)
       {
          if (m_strValue.Right(::strlen(_szUnits[i])). \
-            compare_ci(_szUnits[i]) == 0)
+               compare_ci(_szUnits[i]) == 0)
          {
             rUnit = (LengthUnitsEnum)i;
             break;
@@ -186,7 +186,7 @@ public:
     * @author Gurmeet S. Kochar
     */
    operator BYTE() const
-      { return ((BYTE)(m_strValue.get_length() ? m_strValue[0] : 0)); }
+   { return ((BYTE)(m_strValue.get_length() ? m_strValue[0] : 0)); }
 
    /**
     * Converts attribute value to double
@@ -195,7 +195,7 @@ public:
     * @author Gurmeet S. Kochar
     */
    operator double() const
-      { return (::strtod(m_strValue, NULL)); }
+   { return (::strtod(m_strValue, NULL)); }
 
    /**
     * Converts attribute value to signed int16_t
@@ -204,7 +204,7 @@ public:
     * @author Gurmeet S. Kochar
     */
    operator int16_t() const
-      { return ((int16_t)::atoi(m_strValue)); }
+   { return ((int16_t)::atoi(m_strValue)); }
 
    /**
     * @return attribute value
@@ -212,7 +212,7 @@ public:
     * @author Gurmeet S. Kochar
     */
    operator const char *() const
-      { return (m_strValue); }
+   { return (m_strValue); }
 
 // Private Operations
 private:
@@ -298,7 +298,7 @@ public:
    }
 
    virtual ~LiteHTMLAttributes()
-      { removeAll(); }
+   { removeAll(); }
 
 // Initialization
 public:
@@ -385,7 +385,7 @@ public:
     * @author Gurmeet S. Kochar
     */
    LiteHTMLElemAttr getAttribute(int32_t nIndex) const
-      { return ((*this)[nIndex]); }
+   { return ((*this)[nIndex]); }
 
    /**
     * Returns a LiteHTMLElemAttr object given an attribute name
@@ -408,7 +408,7 @@ public:
     * @author Gurmeet S. Kochar
     */
    string getName(int32_t nIndex) const
-      { return ((*this)[nIndex].m_strName); }
+   { return ((*this)[nIndex].m_strName); }
 
    /**
     * Returns the value of an attribute given its index
@@ -418,7 +418,7 @@ public:
     * @author Gurmeet S. Kochar
     */
    string getValue(int32_t nIndex) const
-      { return ((*this)[nIndex].m_strValue); }
+   { return ((*this)[nIndex].m_strValue); }
 
    /**
     * Returns the value of an attribute given its name
@@ -428,7 +428,7 @@ public:
     * @author Gurmeet S. Kochar
     */
    string getValueFromName(const char * lpszAttributeName) const
-      { return ((*this)[lpszAttributeName].m_strValue); }
+   { return ((*this)[lpszAttributeName].m_strValue); }
 
 // Operations
 public:
@@ -488,6 +488,6 @@ public:
 
 // Data Members
 private:
-   typedef ref_array < LiteHTMLElemAttr >   CElemAttrArray;
+   typedef pointer_array < LiteHTMLElemAttr * >   CElemAttrArray;
    CElemAttrArray   *m_parrAttrib;   // array of attributes/value pairs
 };

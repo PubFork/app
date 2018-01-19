@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace core
@@ -79,15 +79,15 @@ namespace aura
 
       virtual int64_t add_ref()
       {
-      
-         return ::object::add_ref(); 
-      
+
+         return ::object::add_ref();
+
       }
       virtual int64_t dec_ref()
       {
-      
-         return ::object::dec_ref(); 
-      
+
+         return ::object::dec_ref();
+
       }
 
       inline str_locale * get_locale(const ::id & idLocale)
@@ -143,7 +143,7 @@ namespace aura
 
 
 
-      ref_array < str_schema >                  m_schemaptra;
+      pointer_array < str_schema * >            m_schemaptra;
 
 
 

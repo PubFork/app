@@ -1,4 +1,4 @@
-#include "framework.h" // from "base/user/user.h"
+﻿#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 #ifdef APPLEIOS
@@ -1139,7 +1139,7 @@ namespace user
 
    }
 
-   interaction_spa::interaction_spa(const ref_array < ::user::interaction > & ptra)
+   interaction_spa::interaction_spa(const pointer_array < ::user::interaction * > & ptra)
    {
 
       for (index i = 0; i < ptra.get_count(); i++)

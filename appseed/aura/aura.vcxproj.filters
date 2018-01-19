@@ -1793,9 +1793,6 @@
     <ClInclude Include="primitive\enum.h">
       <Filter>Header Files\primitive</Filter>
     </ClInclude>
-    <ClInclude Include="primitive\collection\collection_ptr_array.h">
-      <Filter>Header Files\primitive\collection</Filter>
-    </ClInclude>
     <ClInclude Include="primitive\datetime\datetime_department.h">
       <Filter>Header Files\primitive\datetime</Filter>
     </ClInclude>
@@ -2743,6 +2740,9 @@
     </ClInclude>
     <ClInclude Include="aura\os\windows_common\windows_common_c.h">
       <Filter>Header Files\aura\os\windows_common</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive\collection\collection_auto_pointer_array.h">
+      <Filter>Header Files\primitive\collection</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

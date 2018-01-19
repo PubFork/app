@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace file_watcher
@@ -33,8 +33,8 @@ namespace file_watcher
 
       };
 
-      ref_array < file_watch_listener > m_listenerptra;
-      
+      pointer_array < file_watch_listener * > m_listenerptra;
+
 
       listener_thread(::aura::application * papp);
       virtual ~listener_thread();
