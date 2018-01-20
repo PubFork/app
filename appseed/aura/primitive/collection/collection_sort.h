@@ -536,10 +536,8 @@ namespace sort
    //   }
    //}
 
-   template <class TYPE, class ARG_TYPE = const TYPE &>
-   void quick_sort(
-   array<TYPE, ARG_TYPE> & a,
-   index (* fCompare)(ARG_TYPE, ARG_TYPE))
+   template < typename PRED_LE, typename ARRAY>
+   void pred_array_quick_sort(ARRAY & a, PRED_LE pred_le)
    {
       index_array stackLowerBound;
       index_array stackUpperBound;
@@ -564,7 +562,7 @@ namespace sort
                {
                   if(iMPos == iUPos)
                      break;
-                  if(fCompare(a.element_at(iMPos), a.element_at(iUPos)) <= 0)
+                  if(pred_le(a.element_at(iMPos), a.element_at(iUPos)))
                      iUPos--;
                   else
                   {
@@ -582,7 +580,7 @@ namespace sort
                {
                   if(iMPos == iLPos)
                      break;
-                  if(fCompare(a.element_at(iLPos), a.element_at(iMPos)) <= 0)
+                  if(pred_le(a.element_at(iLPos), a.element_at(iMPos)))
                      iLPos++;
                   else
                   {
@@ -607,11 +605,16 @@ namespace sort
                stackLowerBound.push(iMPos + 1);
                stackUpperBound.push(iUpperBound);
             }
+
             if(stackLowerBound.get_size() == 0)
                break;
+
          }
+
       }
+
    }
+
 
    template <class TYPE, class ARG_TYPE, class ARRAY_TYPE>
    void QuickSortAsc(comparable_array < TYPE, ARG_TYPE, ARRAY_TYPE > & a)
@@ -1988,42 +1991,42 @@ break_mid_loop:
       for (j = 0; j < n2; j++)
          R[j] = a[m + 1+ j];
 
-       /* Merge the temp arrays back into arr[l..r]*/
-       i = 0; // Initial index of first subarray
-       j = 0; // Initial index of second subarray
-       k = l; // Initial index of merged subarray
-       while (i < n1 && j < n2)
-       {
-           if (leq(L[i], R[j]))
-           {
-               a[k] = L[i];
-               i++;
-           }
-           else
-           {
-               a[k] = R[j];
-               j++;
-           }
-           k++;
-       }
+      /* Merge the temp arrays back into arr[l..r]*/
+      i = 0; // Initial index of first subarray
+      j = 0; // Initial index of second subarray
+      k = l; // Initial index of merged subarray
+      while (i < n1 && j < n2)
+      {
+         if (leq(L[i], R[j]))
+         {
+            a[k] = L[i];
+            i++;
+         }
+         else
+         {
+            a[k] = R[j];
+            j++;
+         }
+         k++;
+      }
 
-       /* Copy the remaining elements of L[], if there
-          are any */
-       while (i < n1)
-       {
-           a[k] = L[i];
-           i++;
-           k++;
-       }
+      /* Copy the remaining elements of L[], if there
+         are any */
+      while (i < n1)
+      {
+         a[k] = L[i];
+         i++;
+         k++;
+      }
 
-       /* Copy the remaining elements of R[], if there
-          are any */
-       while (j < n2)
-       {
-           a[k] = R[j];
-           j++;
-           k++;
-       }
+      /* Copy the remaining elements of R[], if there
+         are any */
+      while (j < n2)
+      {
+         a[k] = R[j];
+         j++;
+         k++;
+      }
    }
 
    /* l is for left index and r is right index of the
@@ -2035,17 +2038,17 @@ break_mid_loop:
       if (l < r)
       {
 
-        // Same as (l+r)/2, but avoids overflow for large l and h
+         // Same as (l+r)/2, but avoids overflow for large l and h
 
-        int m = l + (r - l) / 2;
+         int m = l + (r - l) / 2;
 
-        // Sort first and second halves
+         // Sort first and second halves
 
-        pred_merge_sort(a, leq, l, m);
+         pred_merge_sort(a, leq, l, m);
 
-        pred_merge_sort(a, leq, m + 1, r);
+         pred_merge_sort(a, leq, m + 1, r);
 
-        pred_merge(a, leq, l, m, r);
+         pred_merge(a, leq, l, m, r);
 
       }
 
