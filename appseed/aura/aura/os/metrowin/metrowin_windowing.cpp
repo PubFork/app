@@ -62,8 +62,15 @@ index oswindow_find(::user::interaction_impl * pimpl)
 
 oswindow_data::oswindow_data(::user::interaction_impl * pimpl)
 {
-
+   m_plongptrmap = new int_ptr_to_int_ptr();
    m_pimpl = pimpl;
+
+}
+
+oswindow_data::~oswindow_data()
+{
+
+   ::aura::del(m_plongptrmap);
 
 }
 
@@ -155,27 +162,36 @@ bool oswindow_data::show_window(int nCmdShow)
    return m_pimpl->m_pui->ShowWindow(nCmdShow);
 }
 
-LONG oswindow_data::get_window_long_ptr(int nIndex)
+
+LONG_PTR oswindow_data::get_window_long(int32_t nIndex)
 {
-   if (m_pimpl == NULL || m_pimpl->m_pui == NULL)
-   {
 
-      return 0;
+   return m_plongptrmap->operator[](nIndex);
 
-   }
-   return (LONG)m_pimpl->m_pui->get_window_long_ptr(nIndex);
 }
 
-LONG oswindow_data::set_window_long_ptr(int nIndex, LONG l)
+
+LONG_PTR oswindow_data::set_window_long(int32_t nIndex, LONG_PTR l)
 {
-   if (m_pimpl == NULL || m_pimpl->m_pui == NULL)
+
+   LONG_PTR lOld = m_plongptrmap->operator[](nIndex);
+
+   /*if (nIndex == GWL_EXSTYLE)
    {
 
-      return 0;
+      if ((l & WS_EX_TOOLWINDOW) ^ (m_plongptrmap->operator[](nIndex) & WS_EX_TOOLWINDOW) != 0)
+      {
+
+         wm_toolwindow(this, (l & WS_EX_TOOLWINDOW) != 0);
+
+      }
 
    }
 
-   return (LONG)m_pimpl->m_pui->set_window_long_ptr(nIndex, (LONG)l);
+   */
+   m_plongptrmap->operator[](nIndex) = l;
+
+   return lOld;
 
 }
 

@@ -94,9 +94,6 @@
     <Filter Include="Header Files\aura\os\ansios">
       <UniqueIdentifier>{c1792792-6c20-416e-8570-a2e1cedf9c89}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\aura\os\windows">
-      <UniqueIdentifier>{1a82e5c5-db97-42bb-929c-cf01cf137196}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\aura\node">
       <UniqueIdentifier>{a6c78d3f-f3d5-4d20-966b-4e1c54120241}</UniqueIdentifier>
     </Filter>
@@ -333,6 +330,12 @@
     </Filter>
     <Filter Include="Source Files\user\fontopus">
       <UniqueIdentifier>{9a67c773-8949-49d0-9232-f8e7fbddc5d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\aura\os\linux">
+      <UniqueIdentifier>{8719b657-a815-4a75-99ba-5e3924745c52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\aura\os\windows_common">
+      <UniqueIdentifier>{1a82e5c5-db97-42bb-929c-cf01cf137196}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -2039,6 +2042,72 @@
     </ClInclude>
     <ClInclude Include="user\user\user_prelude.h">
       <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\linux\linux.h">
+      <Filter>Header Files\aura\os\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\linux\linux_bloat_pad.h">
+      <Filter>Header Files\aura\os\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\linux\linux_cross_win_file.h">
+      <Filter>Header Files\aura\os\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\linux\linux_cross_win_gdi.h">
+      <Filter>Header Files\aura\os\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\linux\linux_cross_win_gdi_internal.h">
+      <Filter>Header Files\aura\os\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\linux\linux_debug.h">
+      <Filter>Header Files\aura\os\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\linux\linux_desktop_file.h">
+      <Filter>Header Files\aura\os\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\linux\linux_file.h">
+      <Filter>Header Files\aura\os\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\linux\linux_file_watcher.h">
+      <Filter>Header Files\aura\os\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\linux\linux_graphics.h">
+      <Filter>Header Files\aura\os\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\linux\linux_graphics2.h">
+      <Filter>Header Files\aura\os\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\linux\linux_linux.h">
+      <Filter>Header Files\aura\os\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\linux\linux_osdisplay.h">
+      <Filter>Header Files\aura\os\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\linux\linux_oswindow.h">
+      <Filter>Header Files\aura\os\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\linux\linux_process.h">
+      <Filter>Header Files\aura\os\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\linux\linux_user.h">
+      <Filter>Header Files\aura\os\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\linux\linux_user_impl.h">
+      <Filter>Header Files\aura\os\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\linux\linux_user_private.h">
+      <Filter>Header Files\aura\os\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\linux\linux_window_cairo.h">
+      <Filter>Header Files\aura\os\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\linux\linux_window_xlib.h">
+      <Filter>Header Files\aura\os\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\linux\linux_windowing.h">
+      <Filter>Header Files\aura\os\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\linux\linux_xdisplay.h">
+      <Filter>Header Files\aura\os\linux</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -4008,6 +4077,12 @@
     </ClCompile>
     <ClCompile Include="aura\os\metrowin\metrowin_main.cpp">
       <Filter>Source Files\aura\os\metrowin</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows_common\windows_common_error.cpp">
+      <Filter>Source Files\aura\os\windows_common</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows_common\windows_common_unicode.cpp">
+      <Filter>Source Files\aura\os\windows_common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

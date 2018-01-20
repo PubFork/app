@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 bool CLASS_DECL_AURA vfxResolveShortcut(string & strTarget, const char * pszSource, ::user::primitive * puiMessageParentOptional = NULL);
@@ -17,9 +17,9 @@ namespace metrowin
       os(::aura::application * papp);
       virtual ~os();
 
-      
+
       virtual string get_command_line();
-      
+
 
       virtual bool reboot();
       virtual bool shutdown(bool bPowerOff);
@@ -51,8 +51,7 @@ namespace metrowin
 
 
       virtual bool open_in_ie(const char * lpcsz);
-
-      virtual bool file_open(::file::path path);
+      virtual bool file_open(::file::path path, string strParams, string strFolder) override;
 
 
       virtual bool create_service(sp(::aura::application) papp);

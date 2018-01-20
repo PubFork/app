@@ -79,7 +79,7 @@ CLASS_DECL_AURA ::Windows::Storage::StorageFolder ^ winrt_folder(string & strPat
 
    }
 
-   
+
    ::file::patha patha;
 
    ::file::path path(strPath);
@@ -129,6 +129,8 @@ CLASS_DECL_AURA ::Windows::Storage::StorageFolder ^ winrt_get_folder(const strin
    }
    else
    {
+
+      strPath.replace("/", "\\");
 
       return wait(folder->GetFolderAsync(strPath));
 

@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "base/user/user/user.h"
 #include "base/base/node/metrowin/metrowin.h"
 
@@ -22,7 +22,7 @@ CLASS_DECL_CORE int app_core_main(const char * pszCmdLine)
    auto source = ::metrowin::new_directx_application_source(psystem,pszCmdLine);
 
    ::Windows::ApplicationModel::Core::CoreApplication::Run(source);
-   
+
    try
    {
 
@@ -53,3 +53,15 @@ CLASS_DECL_CORE int app_core_main(const char * pszCmdLine)
 
 
 }
+
+
+
+void simple_frame_window::defer_set_icon()
+{
+
+
+}
+
+
+
+

@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 bool timer::impl_start()
@@ -24,16 +24,6 @@ bool timer::impl_start()
 
    };
 
-   //if (bPeriodic)
-   //{
-
-   //   m_ptimer->m_timer = ThreadPoolTimer::CreatePeriodicTimer(ref new TimerElapsedHandler(pred), span); // TimeSpan is 100 nanoseconds
-
-   //}
-   //   else
-
-   m_bSet = true;
-
    {
 
       m_timer = ThreadPoolTimer::CreateTimer(ref new TimerElapsedHandler(pred), span);
@@ -41,7 +31,7 @@ bool timer::impl_start()
       if (m_timer == nullptr)
       {
 
-         m_bSet = false;
+         return false;
 
       }
 
@@ -75,7 +65,7 @@ void timer::impl_term()
 }
 
 
-void timer::impl_stop(bool bWaitCompletion)
+void timer::impl_stop()
 {
 
    if (m_timer != nullptr)

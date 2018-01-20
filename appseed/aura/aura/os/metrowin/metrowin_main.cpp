@@ -359,3 +359,11 @@ string ca2_command_line()
 
 
 
+
+
+bool os_init_application()
+{
+
+   return true;
+
+}

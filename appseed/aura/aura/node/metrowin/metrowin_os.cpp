@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "metrowin.h"
 
 
@@ -24,37 +24,37 @@ namespace metrowin
    {
    }
 
-   
+
    string os::get_command_line()
    {
-      
+
       return get_command_line_dup();
-      
+
    }
 
 
    bool os::shutdown(bool bIfPowerOff)
    {
-/*      bool retval = true;
-      HANDLE hToken;
-      TOKEN_PRIVILEGES tkp;
-      if (!OpenProcessToken(GetCurrentProcess(),
-         TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &hToken))
-         return false;
-      LookupPrivilegeValue(NULL, SE_SHUTDOWN_NAME, &tkp.Privileges[0].Luid);
-      tkp.PrivilegeCount = 1;
-      tkp.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
-      AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES) NULL, 0);
-      if (bIfPowerOff)
-         retval = ExitWindowsEx(EWX_POWEROFF, 0) != FALSE;
-      else
-         retval = ExitWindowsEx(EWX_SHUTDOWN, 0) != FALSE;
+      /*      bool retval = true;
+            HANDLE hToken;
+            TOKEN_PRIVILEGES tkp;
+            if (!OpenProcessToken(GetCurrentProcess(),
+               TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &hToken))
+               return false;
+            LookupPrivilegeValue(NULL, SE_SHUTDOWN_NAME, &tkp.Privileges[0].Luid);
+            tkp.PrivilegeCount = 1;
+            tkp.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
+            AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES) NULL, 0);
+            if (bIfPowerOff)
+               retval = ExitWindowsEx(EWX_POWEROFF, 0) != FALSE;
+            else
+               retval = ExitWindowsEx(EWX_SHUTDOWN, 0) != FALSE;
 
-      //reset the previlages
-      tkp.Privileges[0].Attributes = 0;
-      AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES) NULL, 0);
-      return retval;
-*/
+            //reset the previlages
+            tkp.Privileges[0].Attributes = 0;
+            AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES) NULL, 0);
+            return retval;
+      */
       return false;
 
    }
@@ -128,8 +128,8 @@ namespace metrowin
       while(get_pid_by_title(pszName, dwPid))
       {
          HANDLE hProcess = OpenProcess( PROCESS_QUERY_INFORMATION |
-            PROCESS_VM_READ,
-            FALSE, dwPid );
+                                        PROCESS_VM_READ,
+                                        FALSE, dwPid );
          TerminateProcess(hProcess, (UINT) -1);
          CloseHandle(hProcess);
          /*::EnumWindows((WNDENUMPROC)
@@ -192,8 +192,8 @@ namespace metrowin
 #ifdef WINDOWSEX
       // get a handle to the process.
       HANDLE hProcess = OpenProcess( PROCESS_QUERY_INFORMATION |
-         PROCESS_VM_READ,
-         FALSE, dwPid );
+                                     PROCESS_VM_READ,
+                                     FALSE, dwPid );
 
       // get the process name.
 
@@ -203,7 +203,7 @@ namespace metrowin
          DWORD cbNeeded;
 
          if(EnumProcessModules( hProcess, &hMod, sizeof(hMod),
-            &cbNeeded) )
+                                &cbNeeded) )
          {
             strName = get_module_path(hMod);
          }
@@ -225,9 +225,9 @@ namespace metrowin
       {
          dwa.set_size(dwa.get_count() + 1024);
          if(!EnumProcesses(
-            dwa.get_data(),
-            (DWORD) (dwa.get_count() * sizeof(DWORD)),
-            &cbNeeded))
+               dwa.get_data(),
+               (DWORD) (dwa.get_count() * sizeof(DWORD)),
+               &cbNeeded))
          {
             return;
          }
@@ -251,9 +251,9 @@ namespace metrowin
       while(natural(strPath.get_length() + 1) == dwSize)
       {
          dwSize = ::GetModuleFileName(
-            hmodule,
-            strPath.GetBufferSetLength(dwSize + 1024),
-            (dwSize + 1024));
+                  hmodule,
+                  strPath.GetBufferSetLength(dwSize + 1024),
+                  (dwSize + 1024));
          strPath.ReleaseBuffer();
       }
 #else
@@ -437,7 +437,7 @@ namespace metrowin
    }
 
 
-   bool os::file_open(::file::path path)
+   bool os::file_open(::file::path path, string strParams, string strFolder)
    {
 
       ::Windows::Storage::StorageFile ^ fileSrc = nullptr;
@@ -686,8 +686,8 @@ namespace metrowin
 #ifdef WINDOWSEX
 
       if(papp->m_pcoreapp->m_strAppName.is_empty()
-      || papp->m_pcoreapp->m_strAppName.compare_ci("bergedge") == 0
-      || !papp->m_pcoreapp->is_serviceable())
+            || papp->m_pcoreapp->m_strAppName.compare_ci("bergedge") == 0
+            || !papp->m_pcoreapp->is_serviceable())
          return false;
 
       SC_HANDLE hdlSCM = OpenSCManager(0, 0, SC_MANAGER_CREATE_SERVICE);
@@ -701,19 +701,19 @@ namespace metrowin
       }
 
       SC_HANDLE hdlServ = ::CreateService(
-         hdlSCM,                    // SCManager database
-         "core-" + papp->m_pcoreapp->m_strAppName,               // name of service
-         "ccvotagus ca2 fontopus " + papp->m_pcoreapp->m_strAppName,        // service name to display
-         STANDARD_RIGHTS_REQUIRED,  // desired access
-         SERVICE_WIN32_OWN_PROCESS | SERVICE_INTERACTIVE_PROCESS, // service type
-         SERVICE_AUTO_START,      // start type
-         SERVICE_ERROR_NORMAL,      // error control type
-         strCalling,                   // service's binary Path name
-         0,                      // no load ordering group
-         0,                      // no tag identifier
-         0,                      // no dependencies
-         0,                      // LocalSystem account
-         0);                     // no password
+                          hdlSCM,                    // SCManager database
+                          "core-" + papp->m_pcoreapp->m_strAppName,               // name of service
+                          "ccvotagus ca2 fontopus " + papp->m_pcoreapp->m_strAppName,        // service name to display
+                          STANDARD_RIGHTS_REQUIRED,  // desired access
+                          SERVICE_WIN32_OWN_PROCESS | SERVICE_INTERACTIVE_PROCESS, // service type
+                          SERVICE_AUTO_START,      // start type
+                          SERVICE_ERROR_NORMAL,      // error control type
+                          strCalling,                   // service's binary Path name
+                          0,                      // no load ordering group
+                          0,                      // no tag identifier
+                          0,                      // no dependencies
+                          0,                      // LocalSystem account
+                          0);                     // no password
 
       if (!hdlServ)
       {
@@ -742,8 +742,8 @@ namespace metrowin
 #ifdef WINDOWSEX
 
       if(papp->m_pcoreapp->m_strAppName.is_empty()
-      || papp->m_pcoreapp->m_strAppName.compare_ci("bergedge") == 0
-      || !papp->m_pcoreapp->is_serviceable())
+            || papp->m_pcoreapp->m_strAppName.compare_ci("bergedge") == 0
+            || !papp->m_pcoreapp->is_serviceable())
          return false;
 
       SC_HANDLE hdlSCM = OpenSCManager(0, 0, SC_MANAGER_ALL_ACCESS);
@@ -755,9 +755,9 @@ namespace metrowin
       }
 
       SC_HANDLE hdlServ = ::OpenService(
-         hdlSCM,                    // SCManager database
-         "core-" + papp->m_pcoreapp->m_strAppName,               // name of service
-         DELETE);                     // no password
+                          hdlSCM,                    // SCManager database
+                          "core-" + papp->m_pcoreapp->m_strAppName,               // name of service
+                          DELETE);                     // no password
 
       if (!hdlServ)
       {
@@ -790,8 +790,8 @@ namespace metrowin
 #ifdef WINDOWSEX
 
       if(papp->m_pcoreapp->m_strAppName.is_empty()
-      || papp->m_pcoreapp->m_strAppName.compare_ci("bergedge") == 0
-      || !papp->m_pcoreapp->is_serviceable())
+            || papp->m_pcoreapp->m_strAppName.compare_ci("bergedge") == 0
+            || !papp->m_pcoreapp->is_serviceable())
          return false;
 
       SC_HANDLE hdlSCM = OpenSCManager(0, 0, SC_MANAGER_ALL_ACCESS);
@@ -803,9 +803,9 @@ namespace metrowin
       }
 
       SC_HANDLE hdlServ = ::OpenService(
-         hdlSCM,                    // SCManager database
-         "core-" + papp->m_pcoreapp->m_strAppName,               // name of service
-         SERVICE_START);                     // no password
+                          hdlSCM,                    // SCManager database
+                          "core-" + papp->m_pcoreapp->m_strAppName,               // name of service
+                          SERVICE_START);                     // no password
 
 
       if (!hdlServ)
@@ -837,8 +837,8 @@ namespace metrowin
 #ifdef WINDOWSEX
 
       if(papp->m_pcoreapp->m_strAppName.is_empty()
-      || papp->m_pcoreapp->m_strAppName.compare_ci("bergedge") == 0
-      || !papp->m_pcoreapp->is_serviceable())
+            || papp->m_pcoreapp->m_strAppName.compare_ci("bergedge") == 0
+            || !papp->m_pcoreapp->is_serviceable())
          return false;
 
       SC_HANDLE hdlSCM = OpenSCManager(0, 0, SC_MANAGER_ALL_ACCESS);
@@ -850,9 +850,9 @@ namespace metrowin
       }
 
       SC_HANDLE hdlServ = ::OpenService(
-         hdlSCM,                    // SCManager database
-         "core-" + papp->m_pcoreapp->m_strAppName,               // name of service
-         SERVICE_STOP);                     // no password
+                          hdlSCM,                    // SCManager database
+                          "core-" + papp->m_pcoreapp->m_strAppName,               // name of service
+                          SERVICE_STOP);                     // no password
 
       if (!hdlServ)
       {
@@ -882,7 +882,7 @@ namespace metrowin
       return bOk != FALSE;
    }
 
-   
+
    bool os::resolve_link(string & strTarget, string & strFolder, string & strParams, const string & pszSource, ::user::primitive * puiMessageParentOptional)
    {
 
@@ -919,7 +919,7 @@ namespace metrowin
 
 
    }
-   
+
    int os::get_pid()
    {
 

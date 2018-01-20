@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #include "metrowin_gdi_winrt.h"
@@ -77,16 +77,19 @@ public:
 
    ::user::interaction_impl * m_pimpl;
 
+   int_ptr_to_int_ptr *          m_plongptrmap;
+
    ::user::interaction_impl * window();
 
    oswindow_data(::user::interaction_impl * pimpl = NULL);
+   ~oswindow_data();
 
    bool is_child(::oswindow oswindow);
    ::oswindow get_parent();
    ::oswindow set_parent(::oswindow oswindow);
    bool show_window(int nCmdShow);
-   LONG get_window_long_ptr(int nIndex);
-   LONG set_window_long_ptr(int nIndex, LONG l);
+   LONG get_window_long(int nIndex);
+   LONG set_window_long(int nIndex, LONG l);
 #if OSBIT == 64
    LONG_PTR get_window_long_ptr(int nIndex);
    LONG_PTR set_window_long_ptr(int nIndex, LONG_PTR l);

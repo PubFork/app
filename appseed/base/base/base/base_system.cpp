@@ -5,6 +5,8 @@
 #include "base/node/node.h"
 #ifdef WINDOWSEX
 #include "aura/aura/os/windows/windows_system_interaction_impl.h"
+#elif defined(METROWIN)
+#include "aura/aura/os/metrowin/metrowin_user_impl.h"
 #endif
 
 

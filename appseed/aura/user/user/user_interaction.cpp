@@ -1,4 +1,4 @@
-﻿#include "framework.h" // from "base/user/user.h"
+﻿#include "framework.h"
 
 ::user::interaction * get_system_window_interaction(::os_system_window * psystemwindow);
 
@@ -6,7 +6,11 @@
 
 #define MESSAGE_WINDOW_PARENT HWND_MESSAGE
 
-#endif // WINDOWSEX
+#elif defined(METROWIN)
+
+#include "aura/aura/os/metrowin/metrowin_user_impl.h"
+
+#endif // METROWIN
 
 
 namespace user
