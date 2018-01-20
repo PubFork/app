@@ -70,3 +70,10 @@
 //}
 
 
+bool os_init_application()
+{
+   
+   return true;
+   
+}
+

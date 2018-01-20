@@ -6,4 +6,10 @@
 //  Copyright © 2018 ca2 Desenvolvimento de Sofware Ltda. All rights reserved.
 //
 
-#include "macos_simple_frame_window.hpp"
+#include "framework.h"
+
+void simple_frame_window::defer_set_icon()
+{
+   
+   
+}

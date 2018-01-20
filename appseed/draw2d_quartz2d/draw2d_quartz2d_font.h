@@ -34,7 +34,6 @@ namespace draw2d_quartz2d
       };
       
       string_map < metrics >  m_mapMetrics;
-      CFDictionaryRef         attributes;
       CTFontRef               m_font;
       CTFontDescriptorRef     m_fontD;
       CFStringRef             m_fontName;

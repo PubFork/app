@@ -86,7 +86,7 @@ bool font_department::Initialize()
 
    m_fontGridCtrl->create_point_font(FONTFACENAME_LUCIDA, 9);
 
-   CreateLyricViewFonts();
+   //CreateLyricViewFonts();
 
    m_bInitialized = true;
 

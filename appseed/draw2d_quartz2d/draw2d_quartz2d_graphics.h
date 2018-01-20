@@ -24,7 +24,7 @@ namespace draw2d_quartz2d
       bool                          m_bOwnDC;
       CGContextRef                  m_pdc;
       CGLayerRef                    m_layer;
-      CGAffineTransform             m_affine;
+//      CGAffineTransform             m_affine;
       
       int32_t                       m_iType;
 #ifdef __MM

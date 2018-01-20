@@ -6,4 +6,11 @@
 //  Copyright © 2018 ca2 Desenvolvimento de Sofware Ltda. All rights reserved.
 //
 
-#include <stdio.h>
+#include "framework.h"
+
+void simple_frame_window::defer_set_icon()
+{
+   
+   
+}
+

@@ -170,12 +170,12 @@ namespace draw2d_quartz2d
 
       }
 
-      if(m_pdc != NULL)
-      {
-
-         m_affine = CGContextGetCTM(m_pdc);
-
-      }
+//      if(m_pdc != NULL)
+//      {
+//
+//         m_affine = CGContextGetCTM(m_pdc);
+//
+//      }
 
       m_bOwnDC = true;
 
@@ -2021,7 +2021,7 @@ namespace draw2d_quartz2d
    bool graphics::get_text_metrics(::draw2d::text_metric * lpMetrics) const
    {
 
-      string str(L"123AWZwmc123AWZwmcpQçg");
+      string str(L"123AWZwmc123AWZwmcpQg");
 
       CGFloat ascent, descent, leading, width;
       
@@ -3688,10 +3688,12 @@ namespace draw2d_quartz2d
 
    point graphics::GetViewportOrg() const
    {
+      
+      synch_lock sl(m_pmutex);
 
-      ((graphics*)this)->m_affine = CGContextGetCTM(m_pdc);
+      CGAffineTransform affine = CGContextGetCTM(m_pdc);
 
-      return point(m_affine.tx, m_affine.ty);
+      return point(affine.tx, affine.ty);
 
    }
 
@@ -3699,16 +3701,14 @@ namespace draw2d_quartz2d
 
    point graphics::SetViewportOrg(int32_t x, int32_t y)
    {
-
-      POINT ptOld = GetViewportOrg();
-
-      m_affine = CGContextGetCTM(m_pdc);
-
-      CGContextTranslateCTM(m_pdc, x - m_affine.tx, y - m_affine.ty);
       
-      m_affine = CGContextGetCTM(m_pdc);
+      synch_lock sl(m_pmutex);
 
-      return ptOld;
+      CGAffineTransform affine = CGContextGetCTM(m_pdc);
+      
+      CGContextTranslateCTM(m_pdc, x - affine.tx, y - affine.ty);
+      
+      return point(affine.tx, affine.ty);
 
    }
 
@@ -3716,11 +3716,13 @@ namespace draw2d_quartz2d
    point graphics::OffsetViewportOrg(int32_t nWidth, int32_t nHeight)
    {
 
-      point point = GetViewportOrg();
-
+      synch_lock sl(m_pmutex);
+      
+      CGAffineTransform affine = CGContextGetCTM(m_pdc);
+      
       CGContextTranslateCTM(m_pdc, nWidth, nHeight);
-
-      return ::point(point.x + nWidth, point.y + nHeight);
+      
+      return point(affine.tx, affine.ty);
 
    }
 
@@ -4625,13 +4627,6 @@ namespace draw2d_quartz2d
       
       m_pdc = (CGContextRef) pdata;
 
-      if(m_pdc != NULL)
-      {
-
-         m_affine = CGContextGetCTM(m_pdc);
-
-      }
-      
       m_bOwnDC = false;
 
       return true;
@@ -5694,21 +5689,32 @@ namespace draw2d_quartz2d
       
       ::draw2d_quartz2d::font::metrics & m = f->m_mapMetrics[str];
       
-      CFStringRef string = CFStringCreateWithCString(NULL, str, kCFStringEncodingUTF8);
+      CFStringRef stringI = CFStringCreateWithCString(NULL, str, kCFStringEncodingUTF8);
 
-      if(string == NULL)
+      if(stringI == NULL)
       {
          
          return false;
          
       }
-   
+      
+      CFStringRef string = CFStringCreateMutableCopy(NULL, 0, stringI);
+
+      if(stringI == NULL)
+      {
+         
+         CFRelease(stringI);
+         
+         return false;
+         
+      }
+
       CGContextSaveGState(pgraphics);
 
       if(f->m_fontName == NULL)
       {
 
-         f->m_fontName = CFStringCreateWithCString(NULL, f->m_strFontFamilyName, kCFStringEncodingUTF8);
+         f->m_fontName = CFStringCreateWithCString(kCFAllocatorDefault, f->m_strFontFamilyName, kCFStringEncodingUTF8);
       
       }
    
@@ -5741,13 +5747,13 @@ namespace draw2d_quartz2d
       
       }
 
-      array < CFStringRef>    pkeys;
-      array < CFTypeRef >     pvals;
+      array < const void * >  pkeys;
+      array < const void * >  pvals;
       array < CFTypeRef >     cfrel;
       array < CGColorRef >    crrel;
 
-      pkeys.add(kCTFontAttributeName);
-      pvals.add(f->m_font);
+      pkeys.add((const void *) kCTFontAttributeName);
+      pvals.add((const void *) f->m_font);
 
       if(emode != kCGTextInvisible && bDraw)
       {
@@ -5764,7 +5770,7 @@ namespace draw2d_quartz2d
             components[2] = argb_get_b_value(crFill) / 255.f;
             components[3] = argb_get_a_value(crFill) / 255.f;
 
-            pkeys.add(kCTForegroundColorAttributeName);
+            pkeys.add((const void *) kCTForegroundColorAttributeName);
             pvals.add(CGColorCreate(rgbColorSpace, components));
             crrel.add((CGColorRef)pvals.last());
 
@@ -5775,8 +5781,8 @@ namespace draw2d_quartz2d
 
             double dStroke = sppen.is_null() ? 3.0 : sppen->m_dWidth * 100.0 / dFontSize;
 
-            pkeys.add(kCTStrokeWidthAttributeName);
-            pvals.add(CFNumberCreate(kCFAllocatorDefault, kCFNumberDoubleType, &dStroke));
+            pkeys.add((const void *) kCTStrokeWidthAttributeName);
+            pvals.add((const void *) CFNumberCreate(kCFAllocatorDefault, kCFNumberDoubleType, &dStroke));
             cfrel.add(pvals.last());
 
             components[0] = argb_get_r_value(crStroke) / 255.f;
@@ -5784,8 +5790,8 @@ namespace draw2d_quartz2d
             components[2] = argb_get_b_value(crStroke) / 255.f;
             components[3] = argb_get_a_value(crStroke) / 255.f;
 
-            pkeys.add(kCTStrokeColorAttributeName);
-            pvals.add(CGColorCreate(rgbColorSpace, components));
+            pkeys.add((const void *) kCTStrokeColorAttributeName);
+            pvals.add((const void *) CGColorCreate(rgbColorSpace, components));
             crrel.add((CGColorRef)pvals.last());
 
          }
@@ -5794,26 +5800,23 @@ namespace draw2d_quartz2d
 
       }
 
-      ::count iCount = pkeys.count();
-
-      CFStringRef * &   keys = (CFStringRef * &) pkeys.m_pData;
-      CFTypeRef * &     vals = (CFTypeRef * &) pvals.m_pData;
-
       CFDictionaryRef attributes = CFDictionaryCreate(
                       kCFAllocatorDefault,
-                      (const void**) keys,
-                      (const void**) vals,
-                      iCount,
+                      pkeys.get_data(),
+                      pvals.get_data(),
+                      pkeys.get_size(),
                       &kCFTypeDictionaryKeyCallBacks,
                       &kCFTypeDictionaryValueCallBacks);
 
       CFAttributedStringRef attrString = CFAttributedStringCreate(kCFAllocatorDefault, string, attributes);
 
-      CFRelease(string);
-
-      CFRelease(attributes);
-
       CTLineRef line = CTLineCreateWithAttributedString(attrString);
+
+      CFRelease(string);
+      
+      CFRelease(stringI);
+      
+      CFRelease(attributes);
 
       m.width = CTLineGetTypographicBounds(line, &m.ascent,  &m.descent, &m.leading);
 

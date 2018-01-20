@@ -106,6 +106,8 @@
 		9A19A3B719C6F5950018DF7D /* wndfrm.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A19A39219C6F5940018DF7D /* wndfrm.h */; };
 		9A19A3B919C6F5960018DF7D /* wndfrm_interaction.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A19A39419C6F5940018DF7D /* wndfrm_interaction.h */; };
 		9A19A3BB19C6F5960018DF7D /* wndfrm_wndfrm.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A19A39619C6F5940018DF7D /* wndfrm_wndfrm.h */; };
+		9A43E47820134ECC00CF911B /* macos_simple_frame_window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A43E47620134ECC00CF911B /* macos_simple_frame_window.cpp */; };
+		9A43E47B20134F1B00CF911B /* ios_simple_frame_window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A43E47A20134F1B00CF911B /* ios_simple_frame_window.cpp */; };
 		9A7E85C31E169ABB00B4534B /* user_shell_macos_mm.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9A7E85C21E169ABB00B4534B /* user_shell_macos_mm.mm */; };
 		9A7F2E7F1F41C014006F97CD /* menu.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A7F2E781F41C014006F97CD /* menu.h */; };
 		9A957B0C1F6227A000623508 /* core_application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7E971F5D751C009EC103 /* core_application.cpp */; };
@@ -1009,6 +1011,8 @@
 		9A19A39419C6F5940018DF7D /* wndfrm_interaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wndfrm_interaction.h; sourceTree = "<group>"; };
 		9A19A39619C6F5940018DF7D /* wndfrm_wndfrm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wndfrm_wndfrm.h; sourceTree = "<group>"; };
 		9A41737320011E3A0056265A /* core.inl */ = {isa = PBXFileReference; lastKnownFileType = text; path = core.inl; sourceTree = "<group>"; };
+		9A43E47620134ECC00CF911B /* macos_simple_frame_window.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = macos_simple_frame_window.cpp; path = core/os/windows/macos_simple_frame_window.cpp; sourceTree = SOURCE_ROOT; };
+		9A43E47A20134F1B00CF911B /* ios_simple_frame_window.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ios_simple_frame_window.cpp; sourceTree = "<group>"; };
 		9A58847716A20D230061C610 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		9A58847916A20D360061C610 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		9A58847B16A20D480061C610 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
@@ -2239,6 +2243,7 @@
 			children = (
 				9AE558DF1FEAE29C00247AE9 /* macos.h */,
 				9AE558DE1FEAE26B00247AE9 /* macos_user.h */,
+				9A43E47620134ECC00CF911B /* macos_simple_frame_window.cpp */,
 			);
 			name = macos;
 			path = "New Group";
@@ -2259,6 +2264,7 @@
 			children = (
 				9AE60E4D1F22807500F7CDC2 /* ios_main.cpp */,
 				9AE60E4E1F22807500F7CDC2 /* ios_main.h */,
+				9A43E47A20134F1B00CF911B /* ios_simple_frame_window.cpp */,
 			);
 			path = ios;
 			sourceTree = "<group>";
@@ -2612,6 +2618,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A43E47820134ECC00CF911B /* macos_simple_frame_window.cpp in Sources */,
 				9A9D7DC91F5D744D009EC103 /* html_impl_elemental.cpp in Sources */,
 				9A9D7E7B1F5D74B9009EC103 /* filemanager_update_hint.cpp in Sources */,
 				9A9D7C9D1F5D7315009EC103 /* userex_menu_frame.cpp in Sources */,
@@ -2944,6 +2951,7 @@
 				9A957B771F622A0400623508 /* userfs_document.cpp in Sources */,
 				9A957B781F622A0400623508 /* userfs_item.cpp in Sources */,
 				9A957B791F622A0400623508 /* userfs_list_data.cpp in Sources */,
+				9A43E47B20134F1B00CF911B /* ios_simple_frame_window.cpp in Sources */,
 				9A957B7A1F622A0400623508 /* userfs_list_item_array.cpp in Sources */,
 				9A957B7B1F622A0400623508 /* userfs_list_item.cpp in Sources */,
 				9A957B7C1F622A0400623508 /* userfs_list.cpp in Sources */,

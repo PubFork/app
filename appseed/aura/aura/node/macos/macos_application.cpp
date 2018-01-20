@@ -308,6 +308,13 @@ namespace aura
 
    }
 
+   
+   bool application::os_on_start_application()
+   {
+      
+      return true;
+      
+   }
 
 
 //} // namespace macos

@@ -29,22 +29,16 @@ bool timer::impl_start()
       if (m_queue == NULL)
       {
          
-         m_bSet = false;
-         
          return false;
          
       }
       
    }
    
-   m_bSet = true;
-   
    m_timer = CreateDispatchTimer(m_dwMillis, MAX(1, m_dwMillis / 20), m_queue, aura_timer, this);
    
    if (m_timer == NULL)
    {
-      
-      m_bSet = false;
       
       return false;
       
@@ -70,19 +64,8 @@ void timer::impl_term()
       
       
       
-void timer::impl_stop(bool bWaitCompletion)
+void timer::impl_stop()
 {
-         
-         int iRetry = 1000;
-         
-         while(iRetry >= 0 && m_bDeal)
-         {
-            
-            Sleep(5);
-            
-            iRetry--;
-            
-         }
          
          if (m_timer != NULL)
          {
@@ -95,9 +78,6 @@ void timer::impl_stop(bool bWaitCompletion)
             
          }
          
-         m_bSet = false;
-         
-      
 
 }
 
@@ -108,14 +88,10 @@ bool timer::impl_restart()
 {
    
    
-   m_bSet = true;
-   
    m_timer = ResetDispatchTimer(m_timer, m_dwMillis, MAX(1, m_dwMillis / 20));
    
    if (m_timer == NULL)
    {
-      
-      m_bSet = false;
       
       return false;
       
