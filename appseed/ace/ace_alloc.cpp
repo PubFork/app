@@ -1,4 +1,4 @@
-﻿#include <stdlib.h>
+#include <stdlib.h>
 #include "ace.h"
 
 BEGIN_EXTERN_C
@@ -11,23 +11,38 @@ PFN_MEMORY_REALLOC g_pfnAceRealloc = NULL;
 PFN_MEMORY_FREE g_pfnAceFree = NULL;
 PFN_MEMORY_SIZE g_pfnAceSize = NULL;
 
+#ifdef APPLEOS
 
+
+#define ALIGN_BYTE_COUNT (sizeof(size_t) * 2)
+
+
+#else
+
+
+//#define ALIGN_BYTE_COUNT (sizeof(size_t))
+
+
+#define ALIGN_BYTE_COUNT 16
+
+
+#endif
 int g_ace_set = 0;
 
 
-#define INITIAL_ACE 0xFFFFFFFFFFFFFFF7
-#define ACE_SET 0xFFFFFFFFFFFFFFFF
+#define INITIAL_ACE 0xff
+#define ACE_SET 0xf7
 
 
 CLASS_DECL_ACE void * ace_memory_alloc(size_t s)
 {
 
-   int64_t * p;
+   byte * p;
 
    if(g_ace_set)
    {
 
-      p = (int64_t *) g_pfnAceAlloc(s + sizeof(int64_t));
+      p = (byte *) g_pfnAceAlloc(s + ALIGN_BYTE_COUNT);
 
       p[0] = ACE_SET;
 
@@ -35,13 +50,13 @@ CLASS_DECL_ACE void * ace_memory_alloc(size_t s)
    else
    {
 
-      p = (int64_t *) malloc(s + sizeof(int64_t));
+      p = (byte *) malloc(s + ALIGN_BYTE_COUNT);
 
       p[0] = INITIAL_ACE;
 
    }
 
-   p++;
+   p+=ALIGN_BYTE_COUNT;
 
    return p;
 
@@ -51,24 +66,24 @@ CLASS_DECL_ACE void * ace_memory_alloc(size_t s)
 CLASS_DECL_ACE void * ace_memory_realloc(void * pParam, size_t s)
 {
 
-   int64_t * p = (int64_t *) pParam;
+   byte * p = (byte *) pParam;
 
-   p--;
+   p-=ALIGN_BYTE_COUNT;
 
    if(p[0] == ACE_SET)
    {
 
-      p = (int64_t *) g_pfnAceRealloc(p, s + sizeof(int64_t));
+      p = (byte *) g_pfnAceRealloc(p, s + ALIGN_BYTE_COUNT);
 
-      p[0] = 1;
+      p[0] = ACE_SET;
 
    }
    else if(p[0] == INITIAL_ACE)
    {
 
-      p = (int64_t *) realloc(p, s + sizeof(int64_t));
+      p = (byte *) realloc(p, s + ALIGN_BYTE_COUNT);
 
-      p[0] = 0;
+      p[0] = INITIAL_ACE;
 
    }
    else
@@ -78,7 +93,7 @@ CLASS_DECL_ACE void * ace_memory_realloc(void * pParam, size_t s)
 
    }
 
-   p++;
+   p+=ALIGN_BYTE_COUNT;
 
    return p;
 
@@ -88,7 +103,7 @@ CLASS_DECL_ACE void * ace_memory_realloc(void * pParam, size_t s)
 CLASS_DECL_ACE void ace_memory_free(void * pParam)
 {
 
-   int64_t * p = (int64_t *) pParam;
+   byte * p = (byte *) pParam;
 
    if(((int_ptr) p) < 1024 * 16)
    {
@@ -97,7 +112,7 @@ CLASS_DECL_ACE void ace_memory_free(void * pParam)
 
    }
 
-   p--;
+   p-=ALIGN_BYTE_COUNT;
 
    if(p[0] == ACE_SET)
    {
@@ -125,14 +140,14 @@ CLASS_DECL_ACE void ace_memory_free(void * pParam)
 CLASS_DECL_ACE size_t ace_memory_size(void * pParam)
 {
 
-   int64_t * p = (int64_t *) pParam;
+   byte * p = (byte *) pParam;
 
-   p--;
+   p-=ALIGN_BYTE_COUNT;
 
    if(p[0] == ACE_SET)
    {
 
-      return g_pfnAceSize(p) - sizeof(int64_t);
+      return g_pfnAceSize(p) - ALIGN_BYTE_COUNT;
 
    }
    else if(p[0] == INITIAL_ACE)
@@ -144,7 +159,7 @@ CLASS_DECL_ACE size_t ace_memory_size(void * pParam)
    else
    {
 
-      return g_pfnAceSize(pParam);
+      return g_pfnAceSize(pParam) - ALIGN_BYTE_COUNT;
 
    }
 

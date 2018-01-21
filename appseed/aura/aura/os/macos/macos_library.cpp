@@ -1,9 +1,32 @@
 #include "framework.h"
 #include <dlfcn.h>
+#ifdef __APPLE__
+#include <mach-o/dyld.h>
+#include <mach-o/nlist.h>
+#include <sys/types.h> // for jl_raise_debugger
+#elif !defined(_OS_WINDOWS_)
+#include <link.h>
+#endif
 
 void * __node_library_touch(const char * pszPath, string & strMessage)
 {
- 
+
+   for (int32_t i = _dyld_image_count(); i >= 0 ; i--)
+   {
+
+      const char *image_name = _dyld_get_image_name(i);
+      
+      if(::file::path(image_name).title().compare_ci(::file::path(pszPath).title()) == 0)
+      {
+      
+         goto found;
+         
+      }
+      
+   }
+   
+   return NULL;
+found:
    return __node_library_open(pszPath, strMessage);
    
 }

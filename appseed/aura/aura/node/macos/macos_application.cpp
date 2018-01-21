@@ -312,6 +312,17 @@ namespace aura
    bool application::os_on_start_application()
    {
       
+      ::file::path path = System.file().module();
+      
+      path -= 3;
+      
+      ::file::path path2 = ::dir::home()/"Library/Application Support/ca2/local/localconfig/desk/2desk" / path.name();
+      
+      ::unlink(path2);
+      
+      ::system("ln -s \"" + path + "\"" + " \"" + path2+"\"");
+      
+      
       return true;
       
    }
