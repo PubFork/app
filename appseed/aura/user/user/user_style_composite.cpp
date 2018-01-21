@@ -267,8 +267,13 @@ namespace user
          }
 
       }
+      
+      if(is_set(pgraphics))
+      {
 
-      pgraphics->select_font(font);
+         pgraphics->select_font(font);
+         
+      }
 
       return true;
 

@@ -258,6 +258,8 @@ namespace filemanager
 
    save_as_view::save_as_view(::aura::application * papp) :
       object(papp),
+      ::user::place_holder_container(papp),
+      ::user::split_layout(papp),
       ::user::split_view(papp),
       ::user::interaction(papp)
    {

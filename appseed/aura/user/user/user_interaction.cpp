@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 ::user::interaction * get_system_window_interaction(::os_system_window * psystemwindow);
 
@@ -4606,6 +4606,14 @@ restart:
 
             break;
 
+         }
+         
+         
+         if(::is_null(get_thread()))
+         {
+            
+            break;
+            
          }
 
          if(!::get_thread()->defer_pump_message())

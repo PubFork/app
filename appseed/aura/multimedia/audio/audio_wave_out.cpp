@@ -83,6 +83,7 @@
 //
 //}
 
+BEGIN_EXTERN_C
 
 
 LPWAVEOUT waveout_open(int iChannel, LPAUDIOFORMAT pformat, LPWAVEOUT_CALLBACK pcallback)
@@ -122,3 +123,5 @@ CLASS_DECL_AURA int waveout_close(LPWAVEOUT pwaveout)
 }
 
 
+
+END_EXTERN_C

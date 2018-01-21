@@ -701,7 +701,7 @@ namespace filemanager
       for(int32_t i = 0; i < straExpand.get_size(); i++)
       {
 
-         if(Application.dir().is(straExpand[i]) && !::str::ends_ci(m_stra[i],".zip"))
+         if(Application.dir().is(straExpand[i]) && !::str::ends_ci(straExpand[i],".zip"))
          {
 
             straExpanded.rls(straExpand[i]);
