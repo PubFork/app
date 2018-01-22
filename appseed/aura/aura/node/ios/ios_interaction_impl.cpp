@@ -844,7 +844,7 @@ namespace ios
    }
 
 
-   LRESULT interaction_impl::DefWindowProc(UINT_PTR nMsg, WPARAM wparam, ::lparam lparam)
+   LRESULT interaction_impl::DefWindowProc(UINT nMsg, WPARAM wparam, ::lparam lparam)
    {
       /*  if (m_pfnSuper != NULL)
        return ::CallWindowProc(m_pfnSuper, get_handle(), nMsg, wparam, lparam);
@@ -1351,7 +1351,7 @@ namespace ios
             }
          }
          
-         pbase->set_lresult(DefWindowProc(pbase->m_id, pbase->m_wparam, pbase->m_lparam));
+         pbase->set_lresult(DefWindowProc((UINT) pbase->m_id, pbase->m_wparam, pbase->m_lparam));
          
          return;
          
@@ -1375,7 +1375,7 @@ namespace ios
       if(pbase->m_bRet)
          return;
       
-      pbase->set_lresult(DefWindowProc(pbase->m_id, pbase->m_wparam, pbase->m_lparam));
+      pbase->set_lresult(DefWindowProc((UINT) pbase->m_id, pbase->m_wparam, pbase->m_lparam));
       
    }
    

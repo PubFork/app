@@ -687,7 +687,7 @@ namespace ansios
 
       stringa straParam;
 
-      ref_array < char > argv;
+      pointer_array < char * > argv;
 
 #ifdef MACOS
 

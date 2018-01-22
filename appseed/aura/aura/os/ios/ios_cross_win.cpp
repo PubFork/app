@@ -7,7 +7,7 @@ DWORD get_last_error()
     return m_dwLastError;
 }
 
-DWORD set_last_error(DWORD dwLastError)
+void set_last_error(DWORD dwLastError)
 {
     m_dwLastError = dwLastError;
    return m_dwLastError;

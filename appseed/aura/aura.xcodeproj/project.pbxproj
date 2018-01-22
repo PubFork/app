@@ -977,6 +977,7 @@
 		9A4BE1021FFEDD4D00DED594 /* RoundWindowFrameView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9A706D741FFE62F900A78618 /* RoundWindowFrameView.mm */; };
 		9A4BE1041FFF8AF700DED594 /* message_user.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A4BE1031FFF8AF700DED594 /* message_user.h */; };
 		9A52EC441FFEC777001E1357 /* ios_interaction_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A52EC421FFEC776001E1357 /* ios_interaction_impl.h */; };
+		9A5C67F9201556CD00FF6CBA /* ios_main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A5C67F8201556CD00FF6CBA /* ios_main.cpp */; };
 		9A640E181EA6BABB00866C2C /* fontopus.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A640E011EA6BABB00866C2C /* fontopus.h */; };
 		9A640E1A1EA6BABB00866C2C /* fontopus_authentication_map.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A640E031EA6BABB00866C2C /* fontopus_authentication_map.h */; };
 		9A640E1C1EA6BABB00866C2C /* fontopus_contact_list.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A640E051EA6BABB00866C2C /* fontopus_contact_list.h */; };
@@ -3324,6 +3325,7 @@
 		9A51A7481F9BE30D004D02D4 /* user_window_map.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = user_window_map.cpp; sourceTree = "<group>"; };
 		9A52EC411FFEC775001E1357 /* ios_interaction_impl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ios_interaction_impl.cpp; path = ios/ios_interaction_impl.cpp; sourceTree = "<group>"; };
 		9A52EC421FFEC776001E1357 /* ios_interaction_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ios_interaction_impl.h; path = ios/ios_interaction_impl.h; sourceTree = "<group>"; };
+		9A5C67F8201556CD00FF6CBA /* ios_main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ios_main.cpp; sourceTree = "<group>"; };
 		9A5DF96C1CEE2536008916A4 /* primitive.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = primitive.inl; sourceTree = "<group>"; };
 		9A640E011EA6BABB00866C2C /* fontopus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fontopus.h; sourceTree = "<group>"; };
 		9A640E031EA6BABB00866C2C /* fontopus_authentication_map.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fontopus_authentication_map.h; sourceTree = "<group>"; };
@@ -4686,6 +4688,7 @@
 				9A706D671FFE5B1300A78618 /* ios_window.h */,
 				9A0AA3C01FDD849600C3A7A6 /* ios_windowing.cpp */,
 				9A0AA3C11FDD849600C3A7A6 /* ios_windowing.h */,
+				9A5C67F8201556CD00FF6CBA /* ios_main.cpp */,
 			);
 			path = ios;
 			sourceTree = "<group>";
@@ -9139,6 +9142,7 @@
 				9A9578E71F6223D300623508 /* file_seekable.cpp in Sources */,
 				9A6FB18B1F5C9FE300AF31B2 /* sockets_http_get_socket.cpp in Sources */,
 				9AEB6A081F81D91800F40B32 /* apple_time.cpp in Sources */,
+				9A5C67F9201556CD00FF6CBA /* ios_main.cpp in Sources */,
 				9A6FACF31F5C75A300AF31B2 /* ios_dumpinit.cpp in Sources */,
 				9A6FB1451F5C9D8700AF31B2 /* ftp_output_stream.cpp in Sources */,
 				9A6FACF21F5C75A300AF31B2 /* ios_dir.cpp in Sources */,

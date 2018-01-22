@@ -5,4 +5,12 @@
 //  Created by Camilo Sasuke Tsumanuma on 21/01/18.
 //
 
-#include <stdio.h>
+#include "framework.h"
+
+
+bool os_init_application()
+{
+   
+   return true;
+   
+}
