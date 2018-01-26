@@ -11,6 +11,15 @@ namespace user
       public:
 
 
+        enum e_op
+        {
+
+         op_copy,
+         op_cut,
+
+      };
+
+
          copydesk(::aura::application * papp);
          virtual ~copydesk();
 
@@ -18,18 +27,17 @@ namespace user
          virtual bool initialize();
          virtual bool finalize();
 
-         virtual void set_filea(const ::file::patha & stra);
+         virtual bool set_filea(const ::file::patha & stra, e_op eop);
+         virtual bool get_filea(::file::patha & stra, e_op & eop);
+         virtual bool has_filea();
 
-         virtual int32_t get_file_count();
-         virtual void get_filea(::file::patha & stra);
-
-         virtual void set_plain_text(const char * psz);
-         virtual string get_plain_text();
-
+         virtual bool set_plain_text(const string & str);
+         virtual bool get_plain_text(string & str);
+         virtual bool has_plain_text();
 
          virtual bool desk_to_dib(::draw2d::dib * pdib);
-         // todo
          virtual bool dib_to_desk(::draw2d::dib * pdib);
+         virtual bool has_dib();
 
    };
 

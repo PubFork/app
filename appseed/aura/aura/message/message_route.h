@@ -14,13 +14,13 @@ namespace message
 
 
       receiver *        m_preceiver;
-      void *            m_pvoidReceiver;
+      object *          m_pobjectReceiver;
       sp(type)          m_ptypeReceiver;
 
 
-      route(receiver * preceiver, void * pvoidReceiver, ::type * ptypeReceiver) :
+      route(receiver * preceiver, ::object * pobjectReceiver, ::type * ptypeReceiver) :
          m_preceiver(preceiver),
-         m_pvoidReceiver(pvoidReceiver),
+         m_pobjectReceiver(pobjectReceiver),
          m_ptypeReceiver(ptypeReceiver)
       {
 
@@ -51,8 +51,8 @@ namespace message
 
       PRED m_pred;
 
-      pred_route(receiver * preceiver, void * pvoidReceiver, PRED pred, type * ptype) :
-         route(preceiver, pvoidReceiver, ptype),
+      pred_route(receiver * preceiver, ::object * pobjectReceiver, PRED pred, type * ptype) :
+         route(preceiver, pobjectReceiver, ptype),
          m_pred(pred)
       {
 
@@ -75,10 +75,10 @@ namespace message
 
 
    template < typename PRED >
-   route * create_pred_route(receiver * preceiver, void * pvoidReceiver, PRED pred, ::type * ptype)
+   route * create_pred_route(receiver * preceiver, ::object * pobjectReceiver, PRED pred, ::type * ptype)
    {
 
-      return new pred_route < PRED >(preceiver, pvoidReceiver, pred, ptype);
+      return new pred_route < PRED >(preceiver, pobjectReceiver, pred, ptype);
 
    }
 

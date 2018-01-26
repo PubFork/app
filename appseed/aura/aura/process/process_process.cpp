@@ -1,8 +1,21 @@
 #include "framework.h"
 
 
+void prepare_argc_argv(int & argc, char ** argv, char * cmd_line);
+
+
 namespace process
 {
+
+
+   exit_status::exit_status()
+   {
+
+      m_iExitCode = 0;
+      m_iExitSignal = 0;
+      m_iExitStop = 0;
+
+   }
 
 
    process::process(::aura::application * papp):
@@ -11,6 +24,7 @@ namespace process
    {
 
       m_bPiped = false;
+      m_iPid = 0;
 
    }
 
@@ -57,10 +71,8 @@ namespace process
    }
 
 
-   uint32_t process::wait_until_exit(int32_t iWaitMax)
+   void process::wait_until_exit(int32_t iWaitMax)
    {
-
-      uint32_t dwExitCode = 0;
 
       uint32_t dwStartTime = ::get_tick_count();
 
@@ -69,11 +81,19 @@ namespace process
       while(true)
       {
 
-         if(has_exited(&dwExitCode))
+         if(has_exited())
+         {
+
             break;
 
+         }
+
          if(iWaitMax >= 0 && get_tick_count() > dwStartTime + iWaitMax)
+         {
+
             break;
+
+         }
 
          Sleep(100);
 
@@ -81,11 +101,10 @@ namespace process
 
       }
 
-      return dwExitCode;
-
    }
 
-   bool process::has_exited(uint32_t * puiExitCode)
+
+   bool process::has_exited()
    {
 
       return true;
@@ -93,10 +112,8 @@ namespace process
    }
 
 
-   uint32_t process::synch_elevated(const char * pszCmdLine,int iShow,const ::duration & durationTimeOut,bool * pbTimeOut)
+   void process::synch_elevated(const char * pszCmdLine,int iShow,const ::duration & durationTimeOut,bool * pbTimeOut)
    {
-
-      return 0;
 
    }
 

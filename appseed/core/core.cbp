@@ -544,7 +544,6 @@
 		<Unit filename="user/user/user_mesh_cache_interface.h" />
 		<Unit filename="user/user/user_mesh_data.cpp" />
 		<Unit filename="user/user/user_mesh_data.h" />
-		<Unit filename="user/user/user_multiple_document_template.h" />
 		<Unit filename="user/user/user_network_configuration.cpp" />
 		<Unit filename="user/user/user_network_configuration.h" />
 		<Unit filename="user/user/user_notification_area.cpp" />
@@ -567,7 +566,6 @@
 		<Unit filename="user/user/user_shell_metrowin.h" />
 		<Unit filename="user/user/user_shell_windows.h" />
 		<Unit filename="user/user/user_simple_list_data.h" />
-		<Unit filename="user/user/user_single_document_template.h" />
 		<Unit filename="user/user/user_slider.cpp" />
 		<Unit filename="user/user/user_slider.h" />
 		<Unit filename="user/user/user_split_bar.cpp" />

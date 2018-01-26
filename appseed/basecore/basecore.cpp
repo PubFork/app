@@ -27,6 +27,8 @@
 
 struct indicator;
 
+void os_post_quit();
+
 GtkWidget * idle_basecore_app_indicator_init(indicator * pind, i_close_quit * pi);
 
 void * basecore_app_indicator_init(indicator * pind, struct i_close_quit * pi);
@@ -111,9 +113,9 @@ void basecore_init()
 
    // g_type_init ();
 
-   gtk_init_check(0, 0);
+   //gtk_init_check(0, 0);
 
-   gtk_main();
+   //gtk_main();
 
 }
 
@@ -528,7 +530,7 @@ gboolean basecore_data::run()
    else if(m_bQuitGtk)
    {
 
-      gtk_main_quit();
+      os_post_quit();
 
    }
 

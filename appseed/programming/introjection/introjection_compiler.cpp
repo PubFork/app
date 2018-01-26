@@ -1007,7 +1007,7 @@ namespace introjection
 
          strLog += process->read();
 
-         if(process->has_exited(&dwExitCode))
+         if(process->has_exited())
             break;
 
          Sleep(100);
@@ -1180,7 +1180,7 @@ namespace introjection
 
             strLog += process->read();
 
-            if(process->has_exited(&dwExitCode))
+            if(process->has_exited())
                break;
 
             Sleep(100);

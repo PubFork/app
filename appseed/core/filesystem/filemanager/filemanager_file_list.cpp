@@ -742,7 +742,7 @@ namespace filemanager
 
       }
 
-      Session.copydesk().set_filea(patha);
+      Session.copydesk().set_filea(patha, ::user::copydesk::op_copy);
 
       pobj->m_bRet = true;
 

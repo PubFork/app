@@ -1,5 +1,7 @@
-﻿#include "framework.h" // from "base/user/user.h"
-//#include "base/user/user.h"
+﻿#include "framework.h"
+
+
+void windowing_output_debug_string(const char * pszDebugString);
 
 
 namespace user
@@ -26,6 +28,7 @@ namespace user
    void interaction_impl::user_common_construct()
    {
 
+      m_bCursorRedraw = false;
       m_dFps = 60.0;
       m_bIpcCopy = false;
       m_pmutex                               = new mutex(get_app());
@@ -73,6 +76,27 @@ namespace user
       {
 
          return false;
+
+      }
+
+      if (m_bCursorRedraw)
+      {
+
+         point ptCursor;
+
+         Session.get_cursor_pos(ptCursor);
+
+         if (m_ptCursor != ptCursor)
+         {
+
+            if (_001IsPointInside(ptCursor))
+            {
+
+               return true;
+
+            }
+
+         }
 
       }
 
@@ -1647,11 +1671,15 @@ namespace user
 
       if(m_pui->WfiIsMoving())
       {
+
          TRACE("moving: skip walk pre translate tree");
+
       }
       else if(m_pui->WfiIsSizing())
       {
+
          TRACE("sizing: skip walk pre translate tree");
+
       }
       else
       {
@@ -1659,7 +1687,11 @@ namespace user
          m_pui->walk_pre_translate_tree(spbase);
 
          if(spbase->m_bRet)
+         {
+
             return spbase->get_lresult();
+
+         }
 
       }
 
@@ -2515,25 +2547,37 @@ namespace user
    void interaction_impl::_001UpdateBuffer()
    {
 
+      windowing_output_debug_string("\n_001UpdateBuffer : before draw2d::lock");
+
       ::draw2d::lock draw2dlock;
+
+      windowing_output_debug_string("\n_001UpdateBuffer : D");
 
       m_pui->defer_check_layout();
 
+      windowing_output_debug_string("\n_001UpdateBuffer : N");
+
       m_pui->defer_check_zorder();
+
+      windowing_output_debug_string("\n_001UpdateBuffer : A");
 
       update_graphics_resources();
 
+      windowing_output_debug_string("\n_001UpdateBuffer : updated graphics resources");
+
       if (m_spgraphics.is_null())
       {
+
+         windowing_output_debug_string("\n_001UpdateBuffer : m_spgraphics.is_null()");
 
          return;
 
       }
 
-
-
       if(!m_pui->IsWindowVisible())
       {
+
+         windowing_output_debug_string("\n_001UpdateBuffer : !IsWindowVisible");
 
          return;
 
@@ -2544,7 +2588,11 @@ namespace user
       if (bUpdateBuffer)
       {
 
+         windowing_output_debug_string("\n_001UpdateBuffer : before graphics lock");
+
          synch_lock sl(m_spgraphics->m_pmutex);
+
+         windowing_output_debug_string("\n_001UpdateBuffer : after graphics lock");
 
          {
 
@@ -2552,9 +2600,15 @@ namespace user
 
             m_pui->GetWindowRect(rectWindow);
 
+            windowing_output_debug_string("\n_001UpdateBuffer : after GetWindowRect");
+
             ::draw2d::graphics * pgraphics = m_spgraphics->on_begin_draw();
 
+            windowing_output_debug_string("\n_001UpdateBuffer : after on_begin_draw");
+
             ::draw2d::savedc savedc(pgraphics);
+
+            windowing_output_debug_string("\n_001UpdateBuffer : after savedc");
 
             if (pgraphics == NULL || pgraphics->get_os_data() == NULL)
             {
@@ -2562,6 +2616,8 @@ namespace user
                return;
 
             }
+
+            windowing_output_debug_string("\n_001UpdateBuffer : after check1");
 
             if (m_pui->m_bMayProDevian)
             {
@@ -2575,6 +2631,8 @@ namespace user
 
             }
 
+            windowing_output_debug_string("\n_001UpdateBuffer : after check2");
+
             rect r;
 
             r = rectWindow;
@@ -2582,6 +2640,8 @@ namespace user
             r.offset(-r.top_left());
 
             pgraphics->set_alpha_mode(::draw2d::alpha_mode_set);
+
+            windowing_output_debug_string("\n_001UpdateBuffer : after set alphamode");
 
             if (m_bComposite)
             {
@@ -2596,6 +2656,8 @@ namespace user
 
             }
 
+            windowing_output_debug_string("\n_001UpdateBuffer : before Print");
+
             //if(m_pui->IsWindowVisible())
             try
             {
@@ -2608,6 +2670,8 @@ namespace user
 
 
             }
+
+            windowing_output_debug_string("\n_001UpdateBuffer : after Print");
 
 #if HARD_DEBUG
 
@@ -2932,31 +2996,28 @@ namespace user
    }
 
 
-   void __reposition_window(SIZEPARENTPARAMS * lpLayout,
-                            ::user::interaction * oswindow,LPCRECT lpRect)
+   void __reposition_window(SIZEPARENTPARAMS * lpLayout, ::user::interaction * oswindow,LPCRECT lpRect)
    {
+
       ASSERT(oswindow != NULL);
+
       ASSERT(lpRect != NULL);
+
       sp(::user::interaction) puiParent = oswindow->GetParent();
+
       ASSERT(puiParent != NULL);
 
-      //if (lpLayout != NULL && lpLayout->hDWP == NULL)
-      // return;
-
-      // first check if the new rectangle is the same as the current
       rect rectOld;
+
       oswindow->GetWindowRect(rectOld);
+
       puiParent->ScreenToClient(&rectOld.top_left());
+
       puiParent->ScreenToClient(&rectOld.bottom_right());
-      //if (::is_equal(rectOld, lpRect))
-      //   return;     // nothing to do
 
-      // try to use DeferWindowPos for speed, otherwise use SetWindowPos
       oswindow->SetWindowPos(0,lpRect->left,lpRect->top,lpRect->right - lpRect->left,lpRect->bottom - lpRect->top,SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER | SWP_NOREDRAW);
+
    }
-
-
-
 
 
    void interaction_impl::set_handle(oswindow oswindow)
@@ -2972,51 +3033,29 @@ namespace user
       }
 
       m_oswindow = oswindow;
+
       _001BaseWndInterfaceMap();
 
-
-
    }
-
 
 
    bool interaction_impl::attach(oswindow oswindow_New)
    {
 
-      //::simple_message_box(NULL, "d1.a", "d1.a", MB_OK);
-
       ASSERT(get_handle() == NULL);
-
-      //::simple_message_box(NULL,"d1.b","d1.b",MB_OK);
 
       ASSERT(oswindow_get(oswindow_New) == NULL);
 
-      //::simple_message_box(NULL,"d1.c","d1.c",MB_OK);
-
       if(oswindow_New == NULL)
-         return FALSE;
+      {
 
+         return false;
 
-      //::simple_message_box(NULL,"d1.d","d1.d",MB_OK);
-
-
-
-      //::simple_message_box(NULL,"d1.e","d1.e",MB_OK);
-
+      }
 
       set_handle(oswindow_New);
 
-      //::simple_message_box(NULL,"d1.f","d1.f",MB_OK);
-
-
       ASSERT(System.ui_from_handle(get_handle()) == m_pui);
-
-      //::simple_message_box(NULL,"d1.g","d1.g",MB_OK);
-
-
-
-      // ::simple_message_box(NULL,"d1.h","d1.h",MB_OK);
-      //
 
       return true;
 
@@ -3059,21 +3098,13 @@ namespace user
    }
 
 
-
-   //sp(mutex) interaction_impl::cs_display()
-   //{
-
-   //   return m_spmutexDisplay;
-
-   //}
-
-
    window_graphics * interaction_impl::get_window_graphics()
    {
 
       return m_spgraphics;
 
    }
+
 
    ::user::interaction * interaction_impl::get_focus_ui()
    {
@@ -3137,6 +3168,7 @@ namespace user
 
    }
 
+
    bool interaction_impl::has_redraw()
    {
 
@@ -3145,6 +3177,7 @@ namespace user
       return m_ptraRedraw.has_elements();
 
    }
+
 
    mutex * interaction_impl::mutex_redraw()
    {
@@ -3179,7 +3212,6 @@ namespace user
 
       return false;
 
-
    }
 
 
@@ -3187,6 +3219,23 @@ namespace user
    {
 
       m_bIpcCopy = bSet;
+
+   }
+
+
+   void interaction_impl::on_after_graphical_update()
+   {
+
+      windowing_output_debug_string("\non_after_graphical_update before Session.get_cursor_pos");
+
+      if(is_set(m_pui))
+      {
+
+         Session.get_cursor_pos(m_ptCursor);
+
+      }
+
+      windowing_output_debug_string("\non_after_graphical_update after Session.get_cursor_pos");
 
    }
 

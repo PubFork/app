@@ -3030,6 +3030,7 @@ end:
 
    }
 
+
    string consume_spaced_value(string & str)
    {
 
@@ -3037,11 +3038,19 @@ end:
 
       while(i < str.length() && isspace((byte) str[i]))
       {
+
          i++;
+
       }
 
       if(i >= str.length())
+      {
+
+         str.Empty();
+
          return "";
+
+      }
 
       strsize iStart = i;
 

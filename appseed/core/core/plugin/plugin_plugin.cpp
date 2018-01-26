@@ -916,25 +916,31 @@ namespace plugin
 
                         bool bTimedOut = false;
 
-                        uint32_t dwExitCode = System.process().synch(strPath,SW_SHOW,seconds(8.41115770402),&bTimedOut);
+                        auto exitstatus = System.process().synch(strPath,SW_SHOW,seconds(8.41115770402),&bTimedOut);
 
                         if(bTimedOut)
                         {
+
                            ::simple_message_box(NULL, " - " + set["app"].get_string() + "\nhas timed out while trying to run.\n\nFor developers it is recommended to\nfix this installation timeout problem.\n\nYou may kill it manually :\n - \"" + strPath + "\"\nif it it does not come up.","Error Message",MB_ICONINFORMATION | MB_OK);
+
                         }
-                        else if(dwExitCode == 0)
+                        else if(exitstatus.m_iExitCode == 0)
                         {
+
                            //  ::simple_message_box(NULL,"Successfully run : " + strPath,"Debug only message, please install.",MB_ICONINFORMATION | MB_OK);
+
                         }
                         else
                         {
-                           ::simple_message_box(NULL,strPath + "\n\nFailed return code : " + ::str::from(dwExitCode),"Error Message",MB_ICONINFORMATION | MB_OK);
-                        }
 
+                           ::simple_message_box(NULL,strPath + "\n\nFailed return code : " + ::str::from(exitstatus.m_iExitCode),"Error Message",MB_ICONINFORMATION | MB_OK);
+
+                        }
 
                      }
                      else
                      {
+
                         m_puiHost->KillTimer(19841115);
                         //Sleep(15 * 1000);
                         //                     System.m_puiInitialPlaceHolderContainer = m_puiHost;

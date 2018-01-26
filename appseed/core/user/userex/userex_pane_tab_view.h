@@ -20,10 +20,13 @@ namespace userex
          sp(::user::document)          m_pdocAppOptions;
          font_view *                   m_pfontview;
 
+
          pane_tab_view(::aura::application * papp);
          virtual ~pane_tab_view();
 
+
          virtual void install_message_routing(::message::sender * psender) override;
+
 
          DECL_GEN_SIGNAL(_001OnCreate);
 

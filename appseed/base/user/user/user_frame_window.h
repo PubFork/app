@@ -114,6 +114,23 @@ namespace user
       virtual void dump(dump_context & dc) const override;
 
 
+      virtual void install_message_routing(::message::sender * pinterface) override;
+
+
+      DECL_GEN_SIGNAL(_guserbaseOnInitialUpdate);
+      DECL_GEN_SIGNAL(guserbaseOnInitialUpdate);
+      DECL_GEN_SIGNAL(_001OnCreate);
+      DECL_GEN_SIGNAL(_001OnDestroy);
+      DECL_GEN_SIGNAL(_001OnSysCommand);
+      DECL_GEN_SIGNAL(_001OnActivate);
+      DECL_GEN_SIGNAL(_001OnNcActivate);
+      //DECL_GEN_SIGNAL(_001OnIdleUpdateCmdUI);
+      DECL_GEN_SIGNAL(_001OnSetFocus);
+      DECL_GEN_SIGNAL(_001OnSize);
+      DECL_GEN_SIGNAL(_001OnQueryEndSession);
+
+
+
       virtual void OnInitialFrameUpdate(bool bMakeVisible);
 
 
@@ -133,10 +150,8 @@ namespace user
       virtual void on_command(::user::command * pcommand) override;
       //virtual void _000OnDraw(::draw2d::graphics * pgraphics);
       //virtual void _001OnDraw(::draw2d::graphics * pgraphics);
-      virtual void install_message_routing(::message::sender * pinterface) override;
 
-      DECL_GEN_SIGNAL(_guserbaseOnInitialUpdate);
-      DECL_GEN_SIGNAL(guserbaseOnInitialUpdate);
+
 
       virtual void on_set_parent(::user::interaction * puiParent) override;
 
@@ -245,9 +260,6 @@ namespace user
       friend class interaction_impl;  // for access to m_bModalDisable
       friend class CReBar; // for access to m_bInRecalcLayout
 
-      DECL_GEN_SIGNAL(_001OnCreate);
-      DECL_GEN_SIGNAL(_001OnDestroy);
-      DECL_GEN_SIGNAL(_001OnSysCommand);
 
       void OnClose();
       LRESULT OnPopMessageString(WPARAM wParam, LPARAM lParam);
@@ -259,8 +271,6 @@ namespace user
       void OnSize(UINT nType, int32_t cx, int32_t cy);
       bool OnEraseBkgnd(::draw2d::dib * pdib);
       //void OnActivate(UINT nState, sp(::user::interaction) pWndOther, bool bMinimized);
-      DECL_GEN_SIGNAL(_001OnActivate);
-      DECL_GEN_SIGNAL(_001OnNcActivate);
       //bool OnNcActivate(bool bActive);
       void OnSysCommand(UINT nID, LPARAM lParam);
       bool OnQueryEndSession();
@@ -295,10 +305,6 @@ namespace user
       sp(::user::interaction) WindowDataGetWnd();
 
 
-      //DECL_GEN_SIGNAL(_001OnIdleUpdateCmdUI);
-      DECL_GEN_SIGNAL(_001OnSetFocus);
-      DECL_GEN_SIGNAL(_001OnSize);
-      DECL_GEN_SIGNAL(_001OnQueryEndSession);
 
       friend class user;
       virtual void AddControlBar(::user::control_bar *pBar);

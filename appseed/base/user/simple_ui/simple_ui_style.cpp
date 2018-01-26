@@ -52,8 +52,11 @@ namespace simple_ui
       }
       else
       {
-         strLocale = "se";
+
+         strLocale = "_std";
+         
       }
+
       return strLocale;
 #else
 

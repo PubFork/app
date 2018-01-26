@@ -848,9 +848,11 @@ void simple_frame_window::_001OnViewFullScreen(::message::message * pobj)
 
 void simple_frame_window::_001OnMouseMove(::message::message * pobj)
 {
+
    UNREFERENCED_PARAMETER(pobj);
-   //   SCAST_PTR(::message::mouse, pmouse, pobj);
+
 }
+
 
 void simple_frame_window::_001OnUpdateViewFullScreen(::message::message * pobj)
 {
@@ -1023,14 +1025,15 @@ void simple_frame_window::_001OnAppExit(::message::message * pobj)
 
    }
 
-   if (!m_bDefaultNotifyIcon)
-   {
+   //if (!m_bDefaultNotifyIcon)
+   //m_bDefaultNotifyIcon = false;
+   //{
 
-      _001OnClose(pobj);
+      //_001OnClose(pobj);
 
-      return;
+     // return;
 
-   }
+   //}
 
    if(pobj != NULL)
    {
@@ -1668,12 +1671,19 @@ void simple_frame_window::_001OnDeferPaintLayeredWindowBackground(::draw2d::grap
 
 void simple_frame_window::_000OnDraw(::draw2d::graphics * pgraphicsParam)
 {
+
    defer_check_layout();
 
    defer_check_zorder();
 
+   windowing_output_debug_string("\nsimple_frame_window::_000OnDraw A");
+
    if (!IsWindowVisible() || WfiIsIconic())
       return;
+
+   windowing_output_debug_string("\nsimple_frame_window::_000OnDraw B");
+
+   fflush(stdout);
 
    rect rectClient;
 
@@ -1690,7 +1700,7 @@ void simple_frame_window::_000OnDraw(::draw2d::graphics * pgraphicsParam)
    if(dAlpha == 0.0)
    {
 
-      output_debug_string("Alpha is Zero\n");
+      windowing_output_debug_string("Alpha is Zero\n");
 
    }
 
@@ -1722,6 +1732,8 @@ void simple_frame_window::_000OnDraw(::draw2d::graphics * pgraphicsParam)
       if(m_puserstyle != NULL && m_puserstyle->_001OnDrawMainFrameBackground(pgraphics,this))
       {
 
+         windowing_output_debug_string("\nsimple_frame_window::_000OnDraw C.1");
+
          _001DrawThis(pgraphics);
 
          _001DrawChildren(pgraphics);
@@ -1731,6 +1743,8 @@ void simple_frame_window::_000OnDraw(::draw2d::graphics * pgraphicsParam)
       }
       else if (m_bblur_Background)
       {
+
+         windowing_output_debug_string("\nsimple_frame_window::_000OnDraw C.2");
 
          _001DrawThis(pgraphics);
 
@@ -1744,6 +1758,8 @@ void simple_frame_window::_000OnDraw(::draw2d::graphics * pgraphicsParam)
               && !Session.savings().is_trying_to_save(::aura::resource_memory))
          //&& (GetParent() != NULL || (this->GetExStyle() & WS_EX_LAYERED) != 0))
       {
+
+         windowing_output_debug_string("\nsimple_frame_window::_000OnDraw C.3");
 
 #if TEST
 
@@ -1762,6 +1778,8 @@ void simple_frame_window::_000OnDraw(::draw2d::graphics * pgraphicsParam)
       }
       else
       {
+
+         windowing_output_debug_string("\nsimple_frame_window::_000OnDraw C.4");
 
 #if TEST
 

@@ -162,11 +162,16 @@ namespace filemanager
 
    }
 
+
    void impact::_001OnUpdateEditPaste(::message::message * pobj)
    {
+
       SCAST_PTR(::user::command,pcommand,pobj);
-      pcommand->Enable(Session.copydesk().get_file_count() > 0);
+
+      pcommand->Enable(Session.copydesk().has_filea());
+
       pobj->m_bRet = true;
+
    }
 
 
@@ -175,13 +180,15 @@ namespace filemanager
 
       UNREFERENCED_PARAMETER(pobj);
 
-      ::file::listing stra;
+      ::file::listing listing;
 
-      Session.copydesk().get_filea(stra);
+      ::user::copydesk::e_op eop;
 
-      if (stra.get_size() <= 0)
+      if(!Session.copydesk().get_filea(listing, eop) || listing.is_empty())
       {
+
          pobj->m_bRet = true;
+
          return;
 
       }
@@ -204,7 +211,9 @@ namespace filemanager
       if(ptabview != NULL)
       {
 
-         ptabview->filemanager_manager().get_operation_doc(true)->m_thread.queue_copy(stra,strDir,cnull,true,false,this,WM_APP + 1024,4096);
+         bool bDeleteOriginOnSuccessfulCopy = eop = ::user::copydesk::op_cut;
+
+         ptabview->filemanager_manager().get_operation_doc(true)->m_thread.queue_copy(listing, strDir, cnull, true, false, bDeleteOriginOnSuccessfulCopy, this, WM_APP + 1024, 4096);
 
          ptabview->filemanager_manager().get_operation_doc(true)->m_thread.kick();
 

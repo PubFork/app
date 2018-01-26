@@ -189,14 +189,14 @@ void html_form::_001OnCreate(::message::message * pobj)
    SCAST_PTR(::message::create, pcreate, pobj);
    if(pobj->previous())
       return;
-   get_html_data()->m_pform = this;
-   ASSERT(get_html_data() != NULL);
-   if(get_html_data() == NULL)
-   {
-      pcreate->set_lresult(0);
-      pcreate->m_bRet = true;
+   //get_html_data()->m_pform = this;
+   //ASSERT(get_html_data() != NULL);
+   //if(get_html_data() == NULL)
+   //{
+     // pcreate->set_lresult(0);
+      //pcreate->m_bRet = true;
 
-   }
+   //}
 
 }
 

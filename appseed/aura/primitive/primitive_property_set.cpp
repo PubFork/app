@@ -1496,3 +1496,172 @@ property & stable_property_set::operator [](id id)
 }
 
 
+string property_set::get_command_line(const stringa & straKeys) const
+{
+
+   string str;
+
+   for(auto & strKey : straKeys)
+   {
+
+      property * pproperty = find(strKey);
+
+      if(pproperty == NULL)
+      {
+
+         continue;
+
+      }
+
+      if(str.has_char())
+      {
+
+         str += " ";
+
+      }
+
+      string strItem = pproperty->m_element1;
+
+      if(strItem.find(" ") >= 0 || strItem.find("\'") >= 0)
+      {
+
+         strItem.replace("\"", "\\\"");
+
+         str = "\"" + strItem + "\"";
+
+      }
+      else if(strItem.find("\"") >= 0)
+      {
+
+         strItem.replace("\'", "\\\'");
+
+         str = "\'" + strItem + "\'";
+
+      }
+      else
+      {
+
+         str += strItem;
+
+      }
+
+      if(pproperty->m_element2.is_empty())
+      {
+
+         continue;
+
+      }
+
+      str += "=";
+
+      strItem = pproperty->m_element2.get_string();
+
+      if(strItem.find(" ") >= 0 || strItem.find("\'") >= 0)
+      {
+
+         strItem.replace("\"", "\\\"");
+
+         str = "\"" + strItem + "\"";
+
+      }
+      else if(strItem.find("\"") >= 0)
+      {
+
+         strItem.replace("\'", "\\\'");
+
+         str = "\'" + strItem + "\'";
+
+      }
+      else
+      {
+
+         str += strItem;
+
+      }
+
+   }
+
+   return str;
+
+}
+
+
+string property_set::get_command_line() const
+{
+
+   string str;
+
+   for(auto & prop : *this)
+   {
+
+      if(str.has_char())
+      {
+
+         str += " ";
+
+      }
+
+      string strItem = prop.m_element1;
+
+      if(strItem.find(" ") >= 0 || strItem.find("\'") >= 0)
+      {
+
+         strItem.replace("\"", "\\\"");
+
+         str = "\"" + strItem + "\"";
+
+      }
+      else if(strItem.find("\"") >= 0)
+      {
+
+         strItem.replace("\'", "\\\'");
+
+         str = "\'" + strItem + "\'";
+
+      }
+      else
+      {
+
+         str += strItem;
+
+      }
+
+      if(prop.m_element2.is_empty())
+      {
+
+         continue;
+
+      }
+
+      str += "=";
+
+      strItem = prop.m_element2.get_string();
+
+      if(strItem.find(" ") >= 0 || strItem.find("\'") >= 0)
+      {
+
+         strItem.replace("\"", "\\\"");
+
+         str = "\"" + strItem + "\"";
+
+      }
+      else if(strItem.find("\"") >= 0)
+      {
+
+         strItem.replace("\'", "\\\'");
+
+         str = "\'" + strItem + "\'";
+
+      }
+      else
+      {
+
+         str += strItem;
+
+      }
+
+   }
+
+   return str;
+
+}

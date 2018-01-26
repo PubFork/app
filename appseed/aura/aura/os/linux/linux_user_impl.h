@@ -18,8 +18,8 @@ int best_xinerama_monitor(::user::interaction * pui, LPRECT lprectRet);
 int best_xinerama_monitor(::user::interaction * pui, LPCRECT lpcrect, LPRECT lprectRet);
 
 
-void mapped_net_state (bool add, Display * d, Window w, int iScreen, Atom state1, Atom state2);
-void unmapped_net_state(Display * d, Window w, ...);
+void mapped_net_state_raw(bool add, Display * d, Window w, int iScreen, Atom state1, Atom state2);
+void unmapped_net_state_raw(Display * d, Window w, ...);
 
 
 

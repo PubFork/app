@@ -447,7 +447,7 @@ namespace install
 
       bool bTimedOut = false;
 
-      uint32_t dwExitCode = System.process().synch(strPath,SW_SHOW,seconds(1.984 + 0.1977),&bTimedOut);
+      auto exitstatus = System.process().synch(strPath,SW_SHOW,seconds(1.984 + 0.1977),&bTimedOut);
 
       if(bTimedOut)
       {
@@ -463,7 +463,7 @@ namespace install
          m_bNativeLaunchFail = false;
 
       }
-      else if((int) dwExitCode >= 0)
+      else if(exitstatus.m_iExitCode == 0)
       {
 
          //  ::simple_message_box(NULL,"Successfully run : " + strPath,"Debug only message, please install.",MB_ICONINFORMATION | MB_OK);

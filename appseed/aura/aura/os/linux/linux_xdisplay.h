@@ -41,6 +41,8 @@ public:
 
    int default_screen();
 
+   Atom intern_atom(const char * pszAtomName, bool bCreate);
+
 
 };
 

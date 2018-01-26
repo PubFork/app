@@ -1460,10 +1460,13 @@ namespace user
       }
    }
 
+
    void tab::_001OnMouseMove(::message::message * pobj)
    {
+
 //      SCAST_PTR(::message::mouse, pmouse, pobj);
 //      class point point = pmouse->m_pt;
+
       if(get_data()->m_iDragTab >= 0)
       {
 
@@ -1475,18 +1478,28 @@ namespace user
          }
 
       }
-      /*      if(m_iHover < 0)
-            {
-               track_mouse_hover();
-            }
 
-            index iHover = hit_test(point, m_eelementHover);
+      /*
 
-            if(iHover != m_iHover)
-            {
-               m_iHover = iHover;
-               RedrawWindow();
-            }*/
+      if(m_iHover < 0)
+      {
+
+         track_mouse_hover();
+
+      }
+
+      index iHover = hit_test(point, m_eelementHover);
+
+      if(iHover != m_iHover)
+      {
+
+         m_iHover = iHover;
+
+         RedrawWindow();
+
+      }
+
+      */
 
    }
 

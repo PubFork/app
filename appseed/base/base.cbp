@@ -111,8 +111,6 @@
 		<Unit filename="base/message/message_user.h" />
 		<Unit filename="base/node/ansios/ansios.h" />
 		<Unit filename="base/node/linux/linux.h" />
-		<Unit filename="base/node/linux/linux_copydesk.cpp" />
-		<Unit filename="base/node/linux/linux_copydesk.h" />
 		<Unit filename="base/node/linux/linux_dumpinit.cpp" />
 		<Unit filename="base/node/linux/linux_exception.cpp" />
 		<Unit filename="base/node/linux/linux_factory_exchange.cpp" />
@@ -138,7 +136,6 @@
 		<Unit filename="base/os/linux/linux.cpp" />
 		<Unit filename="base/os/linux/linux.h" />
 		<Unit filename="base/os/linux/linux_c.h" />
-		<Unit filename="base/os/linux/linux_clipboard.cpp" />
 		<Unit filename="base/os/linux/linux_graphics.h" />
 		<Unit filename="base/os/linux/linux_internal.h" />
 		<Unit filename="base/os/linux/linux_linux.h" />
@@ -234,7 +231,6 @@
 		<Unit filename="user/user/user_control_descriptor.h" />
 		<Unit filename="user/user/user_control_descriptor_set.cpp" />
 		<Unit filename="user/user/user_control_descriptor_set.h" />
-		<Unit filename="user/user/user_control_event.h" />
 		<Unit filename="user/user/user_document.cpp" />
 		<Unit filename="user/user/user_document.h" />
 		<Unit filename="user/user/user_document_data_map.h" />
@@ -253,23 +249,10 @@
 		<Unit filename="user/user/user_impact_update_hint.cpp" />
 		<Unit filename="user/user/user_impact_update_hint.h" />
 		<Unit filename="user/user/user_inline.h" />
-		<Unit filename="user/user/user_interaction.h" />
-		<Unit filename="user/user/user_interaction_base.h" />
-		<Unit filename="user/user/user_interaction_child.h" />
-		<Unit filename="user/user/user_interaction_impl.h" />
-		<Unit filename="user/user/user_interaction_impl_base.h" />
-		<Unit filename="user/user/user_menu.h" />
-		<Unit filename="user/user/user_menu_command.h" />
-		<Unit filename="user/user/user_menu_item.h" />
 		<Unit filename="user/user/user_message.cpp" />
 		<Unit filename="user/user/user_message.h" />
-		<Unit filename="user/user/user_message_queue.h" />
-		<Unit filename="user/user/user_message_queue_listener.h" />
-		<Unit filename="user/user/user_mouse.h" />
 		<Unit filename="user/user/user_multiple_document_template.cpp" />
 		<Unit filename="user/user/user_multiple_document_template.h" />
-		<Unit filename="user/user/user_place_holder.h" />
-		<Unit filename="user/user/user_place_holder_container.h" />
 		<Unit filename="user/user/user_plain_edit.cpp" />
 		<Unit filename="user/user/user_plain_edit.h" />
 		<Unit filename="user/user/user_plain_text_data.cpp" />
@@ -285,10 +268,6 @@
 		<Unit filename="user/user/user_server.h" />
 		<Unit filename="user/user/user_single_document_template.cpp" />
 		<Unit filename="user/user/user_single_document_template.h" />
-		<Unit filename="user/user/user_style.h" />
-		<Unit filename="user/user/user_style_base.h" />
-		<Unit filename="user/user/user_style_composite.h" />
-		<Unit filename="user/user/user_tooltip.h" />
 		<Unit filename="user/user/user_user.cpp" />
 		<Unit filename="user/user/user_user.h" />
 		<Unit filename="user/user/user_view_container.cpp" />
@@ -298,9 +277,6 @@
 		<Unit filename="user/user/user_view_creator_data.h" />
 		<Unit filename="user/user/user_wait_cursor.cpp" />
 		<Unit filename="user/user/user_wait_cursor.h" />
-		<Unit filename="user/user/user_window_map.h" />
-		<Unit filename="user/user/user_window_util.h" />
-		<Unit filename="user/user/user_windowing.h" />
 		<Unit filename="user/user_prelude.h" />
 		<Unit filename="user/wndfrm/frame/wndfrm_frame_updowninterface.h" />
 		<Extensions>

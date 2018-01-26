@@ -18,7 +18,7 @@ namespace user
    }
 
 
-   int32_t copydesk::get_file_count()
+   bool copydesk::has_filea()
    {
 
       ::exception::throw_interface_only(get_app());
@@ -28,24 +28,28 @@ namespace user
    }
 
 
-   void copydesk::get_filea(::file::patha & stra)
+   bool copydesk::get_filea(::file::patha & stra, e_op & eop)
    {
 
       UNREFERENCED_PARAMETER(stra);
+
       ::exception::throw_interface_only(get_app());
+
+      return false;
 
    }
 
 
-   void copydesk::set_filea(const ::file::patha & patha)
+   bool copydesk::set_filea(const ::file::patha & patha, e_op eop)
    {
 
       UNREFERENCED_PARAMETER(patha);
-      
+
       ::exception::throw_interface_only(get_app());
 
-   }
+      return false;
 
+   }
 
 
    bool copydesk::initialize()
@@ -55,6 +59,7 @@ namespace user
 
    }
 
+
    bool copydesk::finalize()
    {
 
@@ -62,23 +67,39 @@ namespace user
 
    }
 
-   void copydesk::set_plain_text(const char * psz)
+
+   bool copydesk::set_plain_text(const string & str)
    {
 
-      UNREFERENCED_PARAMETER(psz);
+      UNREFERENCED_PARAMETER(str);
+
       ::exception::throw_interface_only(get_app());
+
+      return false;
 
    }
 
 
-   string copydesk::get_plain_text()
+   bool copydesk::get_plain_text(string & str)
    {
 
       ::exception::throw_interface_only(get_app());
 
-      return "";
+      return false;
 
    }
+
+
+   bool copydesk::has_plain_text()
+   {
+
+      ::exception::throw_interface_only(get_app());
+
+      return 0;
+
+   }
+
+
 
    bool copydesk::desk_to_dib(::draw2d::dib * pdib)
    {
@@ -99,6 +120,16 @@ namespace user
       return false;
 
    }
+
+   bool copydesk::has_dib()
+   {
+
+      ::exception::throw_interface_only(get_app());
+
+      return 0;
+
+   }
+
 
 } // namespace user
 

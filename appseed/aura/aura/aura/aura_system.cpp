@@ -1,5 +1,8 @@
-#include "framework.h" // previously aura/user/user.h
+﻿#include "framework.h" // previously aura/user/user.h
 //#include "aura/user/colorertake5/colorertake5.h"
+
+
+void os_post_quit();
 
 
 #ifdef LINUX
@@ -442,12 +445,6 @@ namespace aura
 
    bool system::process_init()
    {
-
-      os_init_imaging();
-
-      os_init_windowing();
-
-      os_init_application();
 
       //m_peengine = new ::exception::engine(this);
 
@@ -992,11 +989,7 @@ namespace aura
 
       ::aura::application::TermApplication();
 
-      os_term_application();
-
-      os_term_windowing();
-
-      os_term_imaging();
+      os_post_quit();
 
    }
 
@@ -2641,11 +2634,11 @@ RetryBuildNumber:
          pcity = canew(openweather_city);
 
          pcity->m_iIndex = openweather_find_city2(
-                                       strQuery,
-                                       pcity->m_strCit,
-                                       pcity->m_iId,
-                                       pcity->m_dLat,
-                                       pcity->m_dLon);
+                           strQuery,
+                           pcity->m_strCit,
+                           pcity->m_iId,
+                           pcity->m_dLat,
+                           pcity->m_dLon);
 
       }
 
@@ -3055,10 +3048,10 @@ success:
       ::aura::application * papp = NULL;
 
       appptra.pred_remove([](auto & papp)
-                             {
-                                return papp->is_system() || papp->is_session();
+      {
+         return papp->is_system() || papp->is_session();
 
-                             });
+      });
 
       if(appptra.has_elements())
       {
@@ -3456,8 +3449,6 @@ success:
 
 #elif defined(LINUX)
 
-      xdisplay d(x11_get_display());
-
       GdkDisplay * pdisplay = gdk_display_get_default();
 
       if(pdisplay == NULL)
@@ -3467,7 +3458,9 @@ success:
 
       }
 
-      return gdk_display_get_n_monitors(pdisplay);
+      int iMonitorCount = gdk_display_get_n_monitors(pdisplay);
+
+      return iMonitorCount;
 
 #else
 
@@ -3495,8 +3488,6 @@ success:
 
 
 #elif defined(LINUX)
-
-      xdisplay d(x11_get_display());
 
       GdkDisplay * pdisplay = gdk_display_get_default();
 
@@ -3651,8 +3642,6 @@ success:
       //      lprect->top += ::mac::get_system_main_menu_bar_height();
       //    lprect->bottom -= ::mac::get_system_dock_height();
 #elif defined(LINUX)
-
-      xdisplay d(x11_get_display());
 
       GdkDisplay * pdisplay = gdk_display_get_default();
 

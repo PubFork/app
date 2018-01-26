@@ -2967,57 +2967,9 @@ namespace ios
                                                    
                                                    
                                                 });
-
-            
-//         m_pthreadDraw = ::fork(get_app(), [&]()
-//                                {
-//
-//                                   try {
-//                                   DWORD dwStart;
-//
-//                                   while(::get_thread_run())
-//                                   {
-//
-//                                   dwStart = ::get_tick_count();
-//
-//                                   if (!m_pui->m_bLockWindowUpdate)
-//                                   {
-//
-//                                      if (m_pui->has_pending_graphical_update())
-//                                      {
-//
-//                                         RedrawWindow(NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW | RDW_NOERASE);
-//
-//                                         m_pui->on_after_graphical_update();
-//
-//                                      }
-//
-//                                   }
-//
-//                                      _001UpdateBuffer();
-//
-//                                      DWORD dwSpan = ::get_tick_count() - dwStart;
-//
-//                                   if (dwSpan < 20)
-//                                   {
-//
-//                                      Sleep(20 - dwSpan);
-//
-//                                   }
-//
-//                                }
-//                                   } catch (...) {
-//
-//                                      output_debug_string("exception");
-//
-//                                   }
-//
-//
-//                                   output_debug_string("test");
-//
-//                                });
        
          }
+         
       }
 
    }

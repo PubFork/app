@@ -1200,6 +1200,17 @@ retry_license:
 
       ::count iMonitorCount = System.get_monitor_count();
 
+      #ifdef LINUX
+
+      if(iMonitorCount > 0)
+      {
+
+         set_wallpaper(0, straWallpaper[0]);
+
+      }
+
+      #else
+
       for(index iScreen = 0; iScreen < iMonitorCount; iScreen++)
       {
 
@@ -1208,6 +1219,8 @@ retry_license:
          set_wallpaper(iScreen, strWallpaper);
 
       }
+
+      #endif
 
    }
 
@@ -1240,6 +1253,7 @@ retry_license:
 
 
 #elif defined(LINUX)
+
 
    bool userex::impl_set_wallpaper(index iScreen, string strLocalImagePath)
    {

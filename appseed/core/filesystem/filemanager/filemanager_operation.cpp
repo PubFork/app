@@ -10,7 +10,7 @@ namespace filemanager
    int64_t get_number_value(string strName);
    string set_number_value(string strName, int64_t iValue);
 
-   
+
    operation::operation(::aura::application * papp):
       object(papp)
    {
@@ -58,7 +58,7 @@ namespace filemanager
          m_stra = stra;
 
       }
-      
+
       m_str = pszDestBase;
 
       string strBase;
@@ -125,7 +125,7 @@ namespace filemanager
 
       if(Application.dir().is(pszSrc) && !::str::ends_ci(pszSrc,".zip"))
       {
-         
+
          Application.dir().mk(strDst.folder());
 
          return false;
@@ -211,9 +211,9 @@ namespace filemanager
       {
       case operation_copy:
       {
-                                         
+
          m_iFile = 0;
-                                         
+
          m_pchBuffer = (char *)malloc(m_iBufferSize);
 
          ::file::path strName = m_str / m_stra[m_iFile].Mid(m_strBase.get_length());
@@ -235,9 +235,9 @@ namespace filemanager
          break;
       case operation_move:
       {
-         
+
          m_iFile = 0;
-         
+
          m_pchBuffer = (char *)malloc(m_iBufferSize);
 
          ::file::path strPath = m_str / m_stra[m_iFile].name();
@@ -339,7 +339,7 @@ namespace filemanager
 
                                             if(m_iFile >= m_stra.get_size())
                                                return false;
-                                            
+
                                             ::file::path strName = m_str / m_stra[m_iFile].Mid(m_strBase.get_length());
 
                                             if(m_str == m_strBase)
@@ -370,12 +370,12 @@ namespace filemanager
          break;
       case operation_move:
       {
-                                         
+
          if(m_iFile >= m_stra.get_size())
             return false;
-                                         
+
          memory_size_t uiRead = m_fileSrc->read(m_pchBuffer,m_iBufferSize);
-                                         
+
          m_fileDst->write(m_pchBuffer,uiRead);
 
          m_daRead[m_iFile] += uiRead;
@@ -384,7 +384,7 @@ namespace filemanager
 
          if(uiRead == 0)
          {
-                                            
+
             m_fileSrc->close();
 
             m_fileDst->close();

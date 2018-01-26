@@ -7,6 +7,7 @@ namespace user
 
    class tab_callback;
 
+
    class CLASS_DECL_CORE tab_pane:
       virtual public ::object
    {
@@ -73,7 +74,7 @@ namespace user
 
 
 
-      
+
 
       class CLASS_DECL_CORE data :
          virtual public ::data::data
@@ -153,9 +154,23 @@ namespace user
       ::count                          m_iRestoredTabCount;
       bool                             m_bDrawTabAtBackground;
 
-      tab(::aura::application * papp);
-            virtual ~tab();
 
+      tab(::aura::application * papp);
+      virtual ~tab();
+
+
+      virtual void install_message_routing(::message::sender * pinterface);
+
+
+      DECL_GEN_SIGNAL(_001OnLButtonDown);
+      DECL_GEN_SIGNAL(_001OnLButtonUp);
+      DECL_GEN_SIGNAL(_001OnMouseMove);
+      DECL_GEN_SIGNAL(_001OnMouseLeave);
+      DECL_GEN_SIGNAL(_001OnCreate);
+      DECL_GEN_SIGNAL(_001OnShowWindow);
+      DECL_GEN_SIGNAL(_001OnSize);
+      DECL_GEN_SIGNAL(_001OnStartTabDrag);
+      DECL_GEN_SIGNAL(_001OnAppLanguage);
 
 
       data * get_data();
@@ -175,7 +190,7 @@ namespace user
       virtual ::user::interaction * pane_window(::index iTab);
       virtual ::user::place_holder * pane_holder(::index iTab);
 
-      void _000OnMouse(::message::mouse * pmouse);
+      virtual void _000OnMouse(::message::mouse * pmouse) override;
 
       virtual ::user::interaction * get_view_uie();
 
@@ -255,7 +270,6 @@ namespace user
       virtual void get_ends_ci_eat_id(stringa & stra, const char * pszSuffix);
       virtual void get_begins_ends_ci_eat_id(stringa & stra, const char * pszPrefix, const char * pszSuffixed);
 
-      virtual void install_message_routing(::message::sender * pinterface);
       virtual void _001ConnectParent(::message::sender * pinterface);
 
 
@@ -268,31 +282,15 @@ namespace user
       virtual void on_create_tabs();
 
 
-      void _001OnDraw(::draw2d::graphics * pgraphics);
+      virtual void _001OnDraw(::draw2d::graphics * pgraphics) override;
 
 
-      void _001OnDrawStandard(::draw2d::graphics * pgraphics);
-      void _001OnDrawSchema01(::draw2d::graphics * pgraphics);
+      virtual void _001OnDrawStandard(::draw2d::graphics * pgraphics);
+      virtual void _001OnDrawSchema01(::draw2d::graphics * pgraphics);
 
-
-
-      DECL_GEN_SIGNAL(_001OnLButtonDown);
-      DECL_GEN_SIGNAL(_001OnLButtonUp);
-      DECL_GEN_SIGNAL(_001OnMouseMove);
-      DECL_GEN_SIGNAL(_001OnMouseLeave);
-      DECL_GEN_SIGNAL(_001OnCreate);
-      DECL_GEN_SIGNAL(_001OnShowWindow);
-      DECL_GEN_SIGNAL(_001OnSize);
-
-      void _001OnTimer(::timer * ptimer);
-
-      DECL_GEN_SIGNAL(_001OnStartTabDrag);
-      DECL_GEN_SIGNAL(_001OnAppLanguage);
-
+      virtual void _001OnTimer(::timer * ptimer) override;
 
       virtual bool defer_handle_auto_hide_tabs(bool bLayout = true);
-
-
 
 
    };

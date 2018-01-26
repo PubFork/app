@@ -5,9 +5,6 @@
 typedef int_bool DEFER_INIT();
 typedef DEFER_INIT * PFN_DEFER_INIT;
 
-
-
-
 //string merge_colon_args(const array < stringa > & str2a);
 //string transform_to_c_arg(const char * psz);
 //stringa get_c_args(const char * psz);
@@ -16,7 +13,6 @@ typedef DEFER_INIT * PFN_DEFER_INIT;
 ::aura_prelude * aura_prelude::s_pprelude = NULL;
 
 //::aura::PFN_GET_NEW_APP aura_prelude::s_pfnNewApp = NULL;
-
 
 #ifdef APPLEOS
 
@@ -287,6 +283,12 @@ bool app_core::ini()
 
    xxdebug_box("box1", "box1", MB_ICONINFORMATION);
 
+   os_init_imaging();
+
+   os_init_windowing();
+
+   os_init_application();
+
    return true;
 
 }
@@ -353,6 +355,12 @@ void app_core::defer_load_backbone_libraries(string strAppId)
 
 void app_core::end()
 {
+
+   os_term_application();
+
+   os_term_windowing();
+
+   os_term_imaging();
 
    char szEllapsed[MAX_PATH * 2];
 

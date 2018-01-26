@@ -5,8 +5,6 @@
 #include <X11/extensions/xf86vmode.h>
 
 
-
-
 //int get_best_ordered_monitor(::user::interaction * pui, int & l, int & t, int & cx, int & cy);
 //int get_best_monitor(::user::interaction * pui, int & l, int & t, int & cx, int & cy);
 
@@ -25,26 +23,28 @@ int32_t _c_XErrorHandler(Display * display, XErrorEvent * perrorevent);
 int g_iIgnoreXDisplayError = 0;
 
 
-void x_display_error_trap_push(SnDisplay * display, Display * xdisplay)
+void x_display_error_trap_push(SnDisplay * sndisplay, Display * display)
 {
 
-  g_iIgnoreXDisplayError++;
+   g_iIgnoreXDisplayError++;
 
 }
 
-void x_display_error_trap_pop(SnDisplay * display, Display * xdisplay)
+
+void x_display_error_trap_pop(SnDisplay * sndisplay, Display * display)
 {
 
-  g_iIgnoreXDisplayError--;
+   g_iIgnoreXDisplayError--;
 
-  if(g_iIgnoreXDisplayError == 0)
-  {
+   if(g_iIgnoreXDisplayError == 0)
+   {
 
-    XSync(xdisplay, false);
+      XSync(display, false);
 
-  }
+   }
 
 }
+
 
 int32_t _c_XErrorHandler(Display * display, XErrorEvent * perrorevent)
 {
@@ -92,16 +92,19 @@ oswindow oswindow_defer_get(Window window)
 
 
 
-bool oswindow_remove(Display * pdisplay, Window window)
+bool oswindow_remove(Display * display, Window window)
 {
 
-   //single_lock slOsWindow(::oswindow_data::s_pmutex, true);
-   xdisplay d(x11_get_display());
+   single_lock slOsWindow(::osdisplay_data::s_pmutex, true);
 
-   int_ptr iFind = oswindow_find(pdisplay, window);
+   int_ptr iFind = oswindow_find(display, window);
 
    if(iFind < 0)
+   {
+
       return false;
+
+   }
 
    delete ::oswindow_data::s_pdataptra->element_at(iFind);
 
@@ -115,13 +118,16 @@ bool oswindow_remove(Display * pdisplay, Window window)
 bool oswindow_remove_message_only_window(::user::interaction_impl * puibaseMessageOnlyWindow)
 {
 
-   //single_lock slOsWindow(::oswindow_data::s_pmutex, true);
-   xdisplay d(x11_get_display());
+   single_lock slOsWindow(::osdisplay_data::s_pmutex, true);
 
    int_ptr iFind = oswindow_find_message_only_window(puibaseMessageOnlyWindow);
 
    if(iFind < 0)
+   {
+
       return false;
+
+   }
 
    delete ::oswindow_data::s_pdataptra->element_at(iFind);
 
@@ -135,48 +141,48 @@ bool oswindow_remove_message_only_window(::user::interaction_impl * puibaseMessa
 Atom get_window_long_atom(int32_t nIndex);
 
 // Change _NET_WM_STATE if Window is Mapped
-void mapped_net_state (bool add, Display * d, Window w, int iScreen, Atom state1, Atom state2)
+void mapped_net_state_raw(bool add, Display * d, Window w, int iScreen, Atom state1, Atom state2)
 {
 
-  XClientMessageEvent xclient;
+   XClientMessageEvent xclient;
 
 #define _NET_WM_STATE_REMOVE        0    /* remove/unset property */
 #define _NET_WM_STATE_ADD           1    /* add/set property */
 #define _NET_WM_STATE_TOGGLE        2    /* toggle property  */
 
-  ZERO(xclient);
-  xclient.type = ClientMessage;
-  xclient.window = w;
-  xclient.message_type = XInternAtom(d, "_NET_WM_STATE", False);
-  xclient.format = 32;
-  xclient.data.l[0] = add ? _NET_WM_STATE_ADD : _NET_WM_STATE_REMOVE;
-  xclient.data.l[1] = state1;
-  xclient.data.l[2] = state2;
-  xclient.data.l[3] = 1; /* source indication */
-  xclient.data.l[4] = 0;
+   ZERO(xclient);
+   xclient.type = ClientMessage;
+   xclient.window = w;
+   xclient.message_type = XInternAtom(d, "_NET_WM_STATE", False);
+   xclient.format = 32;
+   xclient.data.l[0] = add ? _NET_WM_STATE_ADD : _NET_WM_STATE_REMOVE;
+   xclient.data.l[1] = state1;
+   xclient.data.l[2] = state2;
+   xclient.data.l[3] = 1; /* source indication */
+   xclient.data.l[4] = 0;
 
-  XSendEvent (d, RootWindow(d, iScreen), False, SubstructureRedirectMask | SubstructureNotifyMask, (XEvent *)&xclient);
+   XSendEvent (d, RootWindow(d, iScreen), False, SubstructureRedirectMask | SubstructureNotifyMask, (XEvent *)&xclient);
 
 }
 
 
-void unmapped_net_state(Display * d, Window w, ...)
+void unmapped_net_state_raw(Display * d, Window w, ...)
 {
 
-	XEvent xevent;
+   XEvent xevent;
 
-	unsigned int i;
+   unsigned int i;
 
-	va_list argp;
+   va_list argp;
 
-	va_start(argp, w);
+   va_start(argp, w);
 
    ZERO(xevent);
 
    array < Atom > atoms;
 
-	while(true)
-	{
+   while(true)
+   {
 
       Atom atom = va_arg(argp, int);
 
@@ -187,11 +193,11 @@ void unmapped_net_state(Display * d, Window w, ...)
 
       }
 
-		atoms.add(atom);
+      atoms.add(atom);
 
-	}
+   }
 
-	if(atoms.has_elements())
+   if(atoms.has_elements())
    {
 
       XChangeProperty(d, w, XInternAtom(d, "_NET_WM_STATE", False),
@@ -205,7 +211,7 @@ void unmapped_net_state(Display * d, Window w, ...)
 
    }
 
-	va_end(argp);
+   va_end(argp);
 
 }
 
@@ -240,16 +246,22 @@ oswindow SetCapture(oswindow window)
 
    }
 
+   windowing_output_debug_string("\oswindow_data::SetCapture 1");
+
    xdisplay d(window->display());
 
-   if(XGrabPointer(window->display(), window->window(), False, ButtonPressMask | ButtonReleaseMask | PointerMotionMask, GrabModeAsync, GrabModeAsync, None, None, CurrentTime) == GrabSuccess)
+   if(XGrabPointer(d, window->window(), False, ButtonPressMask | ButtonReleaseMask | PointerMotionMask, GrabModeAsync, GrabModeAsync, None, None, CurrentTime) == GrabSuccess)
    {
 
       g_oswindowCapture = window;
 
+      windowing_output_debug_string("\oswindow_data::SetCapture 2");
+
       return windowOld;
 
    }
+
+   windowing_output_debug_string("\oswindow_data::SetCapture 2.1");
 
    return NULL;
 
@@ -266,6 +278,8 @@ WINBOOL ReleaseCapture()
 
    }
 
+   windowing_output_debug_string("\oswindow_data::ReleaseCapture 1");
+
    xdisplay d(g_oswindowCapture->display());
 
    WINBOOL bRet = XUngrabPointer(g_oswindowCapture->display(), CurrentTime) != FALSE;
@@ -276,6 +290,8 @@ WINBOOL ReleaseCapture()
       g_oswindowCapture = NULL;
 
    }
+
+   windowing_output_debug_string("\oswindow_data::ReleaseCapture 2");
 
    return bRet;
 
@@ -292,10 +308,14 @@ oswindow SetFocus(oswindow window)
 
    }
 
-   xdisplay display(window->display());
+   windowing_output_debug_string("\oswindow_data::SetFocus 1");
+
+   xdisplay d(window->display());
 
    if(!IsWindow(window))
    {
+
+      windowing_output_debug_string("\oswindow_data::SetFocus 1.1");
 
       return NULL;
 
@@ -306,16 +326,22 @@ oswindow SetFocus(oswindow window)
    if(!IsWindowVisible(window))
    {
 
+      windowing_output_debug_string("\oswindow_data::SetFocus 1.2");
+
       return NULL;
 
    }
 
-   if(!XSetInputFocus(window->display(), window->window(), RevertToNone, CurrentTime))
+   if(!XSetInputFocus(d, window->window(), RevertToNone, CurrentTime))
    {
 
+      windowing_output_debug_string("\oswindow_data::SetFocus 1.3");
+
       return NULL;
 
    }
+
+   windowing_output_debug_string("\oswindow_data::SetFocus 2");
 
    return windowOld;
 
@@ -325,12 +351,18 @@ oswindow SetFocus(oswindow window)
 oswindow GetFocus()
 {
 
-   xdisplay pdisplay;
+   windowing_output_debug_string("\n::GetFocus 1");
 
-   pdisplay.open(NULL);
+   b_prevent_xdisplay_lock_log = false;
 
-   if(pdisplay == NULL)
+   xdisplay d(x11_get_display());
+
+   windowing_output_debug_string("\n::GetFocus 1.01");
+
+   if(d.is_null())
    {
+
+      windowing_output_debug_string("\n::GetFocus 1.1");
 
       return NULL;
 
@@ -340,12 +372,12 @@ oswindow GetFocus()
 
    int revert_to = 0;
 
-   bool bOk = XGetInputFocus(pdisplay, &window, &revert_to) != 0;
-
-   pdisplay.close();
+   bool bOk = XGetInputFocus(d, &window, &revert_to) != 0;
 
    if(!bOk)
    {
+
+      windowing_output_debug_string("\n::GetFocus 1.2");
 
       return NULL;
 
@@ -354,11 +386,17 @@ oswindow GetFocus()
    if(window == None || window == PointerRoot)
    {
 
+      windowing_output_debug_string("\n::GetFocus 1.3");
+
       return NULL;
 
    }
 
-   return oswindow_defer_get(window);
+   auto pwindow = oswindow_defer_get(window);
+
+   windowing_output_debug_string("\n::GetFocus 2");
+
+   return pwindow;
 
 }
 
@@ -374,29 +412,37 @@ oswindow GetActiveWindow()
 oswindow SetActiveWindow(oswindow window)
 {
 
-   xdisplay d(window->display());
+   {
 
-   XEvent xev;
+      windowing_output_debug_string("\n::SetActiveWindow 1");
 
-   ZERO(xev);
+      xdisplay d(window->display());
 
-   Window wRoot = RootWindow(window->display(), window->m_iScreen);
+      XEvent xev;
 
-   Atom atomActiveWindow = XInternAtom (window->display(), "_NET_ACTIVE_WINDOW", False);
+      ZERO(xev);
 
-   xev.xclient.type = ClientMessage;
-   xev.xclient.send_event = True;
-   xev.xclient.display = window->display();
-   xev.xclient.window = window->window();
-   xev.xclient.message_type = atomActiveWindow;
-   xev.xclient.format = 32;
-   xev.xclient.data.l[0] = 1;
-   xev.xclient.data.l[1] = 0;
-   xev.xclient.data.l[2] = 0;
-   xev.xclient.data.l[3] = 0;
-   xev.xclient.data.l[4] = 0;
+      Window windowRoot = window->root_window_raw();
 
-   XSendEvent (d, wRoot, False, SubstructureRedirectMask | SubstructureNotifyMask, &xev);
+      Atom atomActiveWindow = d.intern_atom("_NET_ACTIVE_WINDOW", False);
+
+      xev.xclient.type = ClientMessage;
+      xev.xclient.send_event = True;
+      xev.xclient.display = d;
+      xev.xclient.window = window->window();
+      xev.xclient.message_type = atomActiveWindow;
+      xev.xclient.format = 32;
+      xev.xclient.data.l[0] = 1;
+      xev.xclient.data.l[1] = 0;
+      xev.xclient.data.l[2] = 0;
+      xev.xclient.data.l[3] = 0;
+      xev.xclient.data.l[4] = 0;
+
+      XSendEvent (d, windowRoot, False, SubstructureRedirectMask | SubstructureNotifyMask, &xev);
+
+      windowing_output_debug_string("\n::SetActiveWindow 2");
+
+   }
 
    return SetFocus(window);
 
@@ -421,6 +467,7 @@ oswindow oswindow_get_next_found(Display * pdisplay, long *array, int iStart, in
    return NULL;
 
 }
+
 
 oswindow oswindow_get_previous_found(Display * pdisplay, long *array, int iStart)
 {
@@ -461,6 +508,7 @@ oswindow oswindow_get_next_found(Window *array, int iStart, int numItems)
 
 }
 
+
 oswindow oswindow_get_previous_found(Window *array, int iStart)
 {
 
@@ -480,24 +528,26 @@ oswindow oswindow_get_previous_found(Window *array, int iStart)
 
 }
 
+
 oswindow GetWindow(oswindow windowParam, int iParentHood)
 {
-
-   //single_lock sl(&user_mutex(), true);
 
    oswindow window = windowParam;
 
    if(window == NULL)
+   {
+
       return NULL;
+
+   }
+
+   windowing_output_debug_string("\n::GetWindow 1");
 
    xdisplay d(window->display());
 
    Window w = window->window();
 
-   if(iParentHood == GW_HWNDFIRST
-   || iParentHood == GW_HWNDLAST
-   || iParentHood == GW_HWNDNEXT
-   || iParentHood == GW_HWNDPREV)
+   if(iParentHood == GW_HWNDFIRST || iParentHood == GW_HWNDLAST || iParentHood == GW_HWNDNEXT || iParentHood == GW_HWNDPREV)
    {
 
       window = ::GetParent(window);
@@ -509,45 +559,49 @@ oswindow GetWindow(oswindow windowParam, int iParentHood)
 
          w = window->get_parent_handle();
 
-      Atom a = XInternAtom(windowParam->display(), "_NET_CLIENT_LIST_STACKING" , False);
-      Atom actualType;
-      int format;
-      unsigned long numItems, bytesAfter;
-      unsigned char *data =0;
-      int status = XGetWindowProperty(windowParam->display(),
-                           RootWindow(windowParam->display(), windowParam->m_iScreen),
-                           a,
-                           0L,
-                           1024,
-                           false,
-                           AnyPropertyType,
-                           &actualType,
-                           &format,
-                           &numItems,
-                           &bytesAfter,
-                           &data);
+         Atom a = XInternAtom(windowParam->display(), "_NET_CLIENT_LIST_STACKING", False);
+
+         Atom actualType;
+
+         int format;
+
+         unsigned long numItems, bytesAfter;
+
+         unsigned char *data =0;
+
+         int status = XGetWindowProperty(
+                      windowParam->display(),
+                      RootWindow(windowParam->display(), windowParam->m_iScreen),
+                      a,
+                      0L,
+                      1024,
+                      false,
+                      AnyPropertyType,
+                      &actualType,
+                      &format,
+                      &numItems,
+                      &bytesAfter,
+                      &data);
 
          if (status >= Success && numItems)
          {
-            // success - we have data: Format should always be 32:
-      //		Q_ASSERT(format == 32);
-            // cast to proper format, and iterate through values:
-            long *array = (long*) data;
-            //for (quint32 k = 0; k < numItems; k++)
-            //{
-               // get window Id:
-               //Window w = (Window) array[k];
 
-               //qDebug() << "Scanned client window:" << w;
-            //}
-         switch(iParentHood)
-         {
+            long * array = (long*) data;
+
+            switch(iParentHood)
+            {
             case GW_CHILD:
             case GW_HWNDFIRST:
             {
 
                if(data == NULL)
+               {
+
+                  windowing_output_debug_string("\n::GetWindow 2");
+
                   return NULL;
+
+               }
 
                window = oswindow_get_next_found(windowParam->display(), array, 0, numItems);
 
@@ -557,7 +611,13 @@ oswindow GetWindow(oswindow windowParam, int iParentHood)
             {
 
                if(data == NULL)
+               {
+
+                  windowing_output_debug_string("\n::GetWindow 3");
+
                   return NULL;
+
+               }
 
                window = oswindow_get_previous_found(windowParam->display(), array, numItems - 1);
 
@@ -568,23 +628,39 @@ oswindow GetWindow(oswindow windowParam, int iParentHood)
             {
 
                if(data == NULL) // ????
+               {
+
+                  windowing_output_debug_string("\n::GetWindow 4");
+
                   return NULL;
+
+               }
 
                int iFound = -1;
 
                for(int i = 0; i < numItems; i++)
                {
-                     if(array[i] == windowParam->window())
-                     {
-                        iFound = i;
-                        break;
-                     }
+
+                  if(array[i] == windowParam->window())
+                  {
+
+                     iFound = i;
+
+                     break;
+
+                  }
+
                }
 
                if(iFound < 0)
                {
+
                   XFree(data);
+
+                  windowing_output_debug_string("\n::GetWindow 5");
+
                   return NULL;
+
                }
 
                if(iParentHood == GW_HWNDNEXT)
@@ -592,11 +668,16 @@ oswindow GetWindow(oswindow windowParam, int iParentHood)
 
                   if(iFound + 1 >= numItems)
                   {
+
                      XFree(data);
+
+                     windowing_output_debug_string("\n::GetWindow 6");
+
                      return NULL;
+
                   }
 
-                    window = ::oswindow_get_next_found(windowParam->display(), array, iFound + 1, numItems);
+                  window = ::oswindow_get_next_found(windowParam->display(), array, iFound + 1, numItems);
 
                }
                else
@@ -604,20 +685,28 @@ oswindow GetWindow(oswindow windowParam, int iParentHood)
 
                   if(iFound - 1 < 0)
                   {
+
                      XFree(data);
+
+                     windowing_output_debug_string("\n::GetWindow 7");
+
                      return NULL;
+
                   }
 
                   window = ::oswindow_get_previous_found(windowParam->display(), array, iFound - 1);
-
 
                }
 
             }
 
-         }
-         XFree(data);
-         return window;
+            }
+
+            XFree(data);
+
+            windowing_output_debug_string("\n::GetWindow 8");
+
+            return window;
 
          }
       }
@@ -634,75 +723,111 @@ oswindow GetWindow(oswindow windowParam, int iParentHood)
 
    switch(iParentHood)
    {
-      case GW_CHILD:
-      case GW_HWNDFIRST:
+   case GW_CHILD:
+   case GW_HWNDFIRST:
+   {
+
+      if(pchildren == NULL)
       {
 
-         if(pchildren == NULL)
-            return NULL;
+         windowing_output_debug_string("\n::GetWindow 9");
 
-         window = ::oswindow_get_next_found(pchildren, 0, ncount);
+         return NULL;
 
       }
-      break;
-      case GW_HWNDLAST:
+
+      window = ::oswindow_get_next_found(pchildren, 0, ncount);
+
+   }
+   break;
+   case GW_HWNDLAST:
+   {
+
+      if(pchildren == NULL)
       {
 
-         if(pchildren == NULL)
-            return NULL;
+         windowing_output_debug_string("\n::GetWindow 10");
 
-         window = ::oswindow_get_previous_found(pchildren, ncount - 1);
+         return NULL;
 
       }
-      break;
-      case GW_HWNDNEXT:
-      case GW_HWNDPREV:
+
+      window = ::oswindow_get_previous_found(pchildren, ncount - 1);
+
+   }
+   break;
+   case GW_HWNDNEXT:
+   case GW_HWNDPREV:
+   {
+
+      if(pchildren == NULL) // ????
       {
 
-         if(pchildren == NULL) // ????
+         windowing_output_debug_string("\n::GetWindow 11");
+
+         return NULL;
+
+      }
+
+      int iFound = -1;
+
+      for(int i = 0; i < ncount; i++)
+      {
+         if(pchildren[i] == windowParam->window())
+         {
+            iFound = i;
+            break;
+         }
+      }
+
+      if(iFound < 0)
+      {
+
+         windowing_output_debug_string("\n::GetWindow 12");
+
+         return NULL;
+
+      }
+
+      if(iParentHood == GW_HWNDNEXT)
+      {
+
+         if(iFound + 1 >= ncount)
+         {
+
+            windowing_output_debug_string("\n::GetWindow 13");
+
             return NULL;
 
-         int iFound = -1;
-
-         for(int i = 0; i < ncount; i++)
-         {
-               if(pchildren[i] == windowParam->window())
-               {
-                  iFound = i;
-                  break;
-               }
          }
 
-         if(iFound < 0)
+         window = ::oswindow_get_next_found(pchildren, iFound + 1, ncount);
+
+      }
+      else
+      {
+
+         if(iFound - 1 < 0)
+         {
+
+            windowing_output_debug_string("\n::GetWindow 14");
+
             return NULL;
 
-         if(iParentHood == GW_HWNDNEXT)
-         {
-
-            if(iFound + 1 >= ncount)
-               return NULL;
-
-            window = ::oswindow_get_next_found(pchildren, iFound + 1, ncount);
-
          }
-         else
-         {
 
-            if(iFound - 1 < 0)
-               return NULL;
-
-            window = ::oswindow_get_previous_found(pchildren, iFound - 1);
-
-         }
+         window = ::oswindow_get_previous_found(pchildren, iFound - 1);
 
       }
 
    }
 
+   }
 
    if(pchildren != NULL)
       XFree(pchildren);
 
+   windowing_output_debug_string("\n::GetWindow 15");
 
    return window;
 
@@ -724,15 +849,6 @@ WINBOOL DestroyWindow(oswindow window)
 
    oswindow_data * pdata = (oswindow_data *) (void *) window;
 
-//   pdata->m_bDestroying = true;
-//
-//   for(index i = 0; i < pdata->m_bptraTellMeDestroyed.get_count(); i++)
-//   {
-//
-//      *pdata->m_bptraTellMeDestroyed[i] = true;
-//
-//   }
-
    bool bIs = IsWindow(window);
 
    sp(::user::interaction) pui = window->m_pimpl->m_pui;
@@ -747,15 +863,15 @@ WINBOOL DestroyWindow(oswindow window)
 
    oswindow_remove(pdisplay, win);
 
+   windowing_output_debug_string("\n::DestroyWindow 1");
+
    xdisplay d(pdisplay);
 
    XUnmapWindow(pdisplay, win);
 
-   XSync(pdisplay, False);
-
    XDestroyWindow(pdisplay, win);
 
-   XSync(pdisplay, False);
+   windowing_output_debug_string("\n::DestroyWindow 2");
 
    return true;
 
@@ -765,57 +881,33 @@ WINBOOL DestroyWindow(oswindow window)
 WINBOOL IsWindow(oswindow oswindow)
 {
 
-   if(oswindow == NULL)
+   if(::oswindow_data::s_pdataptra->find_first(oswindow) < 0)
    {
 
-      return false;
+      return FALSE;
 
    }
 
-   if(oswindow->display() == NULL)
-   {
-
-      return false;
-
-   }
-
-   if(oswindow->window() == None)
-   {
-
-      return false;
-
-   }
-
-   if(oswindow->m_pimpl == NULL)
-   {
-
-      return true;
-
-   }
-
-   if(!oswindow->m_pimpl->m_pui->m_bUserElementalOk)
-   {
-
-      return false;
-
-   }
-
-   return true;
+   return TRUE;
 
 }
 
 
 oswindow g_oswindowDesktop;
+
+
 Display * x11_get_display();
+
 
 bool c_xstart()
 {
 
-
    if(!XInitThreads())
-      return -1;
+   {
 
+      return false;
 
+   }
 
    Display * dpy = x11_get_display();
 
@@ -828,69 +920,12 @@ bool c_xstart()
 }
 
 
-
 oswindow GetDesktopWindow()
 {
 
    return g_oswindowDesktop;
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /* Copyright (c) 2012 the authors listed at the following URL, and/or
@@ -920,10 +955,6 @@ Retrieved from: http://en.literateprograms.org/Hello_World_(C,_Cairo)?oldid=1038
 */
 
 
-//#include "cairo/cairo-xlib.h"
-#include <X11/Xlib.h>
-
-
 #define SIZEX 100
 #define SIZEY  50
 
@@ -931,16 +962,16 @@ Retrieved from: http://en.literateprograms.org/Hello_World_(C,_Cairo)?oldid=1038
 void message_box_paint(::draw2d::graphics * pgraphics, stringa & stra, bool_array  & baTab, int_array  & ya,SIZE * psize)
 {
 
-	pgraphics->FillSolidRect(0, 0, psize->cx, psize->cy, RGB(84, 90, 80));
+   pgraphics->FillSolidRect(0, 0, psize->cx, psize->cy, RGB(84, 90, 80));
 
    draw2d::brush_sp pen(pgraphics->allocer());
 
-	pen->create_solid(0);
+   pen->create_solid(0);
 
-	for(index i = 0; i < stra.get_count(); i++)
-	{
+   for(index i = 0; i < stra.get_count(); i++)
+   {
       pgraphics->text_out(10.0 + 50.0 + (baTab[i] ? 25.0 : 0), 10.0 + 50.0 + ya[i], stra[i]);
-	}
+   }
 
 
 
@@ -956,6 +987,7 @@ int wm_test_state_raw(oswindow w, const char * pszNetStateFlag);
 int wm_test_list_raw(oswindow w, Atom atomList, Atom atomFlag);
 bool wm_add_remove_list_raw(oswindow w, Atom atomList, Atom atomFlag, bool bSet);
 
+
 void wm_add_remove_state_mapped_raw(oswindow w, const char * pszNetStateFlag, bool bSet)
 {
 
@@ -963,27 +995,25 @@ void wm_add_remove_state_mapped_raw(oswindow w, const char * pszNetStateFlag, bo
 
    Window window = w->window();
 
-   int scr=DefaultScreen(display);
+   Window windowRoot = DefaultRootWindow(display);
 
-   Window rootw=RootWindow(display,scr);
+   Atom atomFlag = XInternAtom(display, pszNetStateFlag, true);
 
-   Atom atomFlag = XInternAtom(display, pszNetStateFlag, 1);
-
-   if( atomFlag == None )
+   if(atomFlag == None )
    {
 
-      output_debug_string("ERROR: cannot find atom for " + string(pszNetStateFlag) + "!\n");
+      windowing_output_debug_string("ERROR: cannot find atom for " + string(pszNetStateFlag) + "!\n");
 
       return;
 
    }
 
-   Atom atomNetState = XInternAtom(display, "_NET_WM_STATE", 1);
+   Atom atomNetState = XInternAtom(display, "_NET_WM_STATE", false);
 
    if( atomNetState == None )
    {
 
-      output_debug_string("ERROR: cannot find atom for _NET_WM_STATE !\n");
+      windowing_output_debug_string("ERROR: cannot find atom for _NET_WM_STATE !\n");
 
       return;
 
@@ -1010,9 +1040,7 @@ void wm_add_remove_state_mapped_raw(oswindow w, const char * pszNetStateFlag, bo
 
       }
 
-
    }
-
 
    XClientMessageEvent xclient;
 
@@ -1028,18 +1056,24 @@ void wm_add_remove_state_mapped_raw(oswindow w, const char * pszNetStateFlag, bo
    xclient.data.l[3]       = 0;
    xclient.data.l[4]       = 0;
 
-   XSendEvent(display, rootw, False, SubstructureRedirectMask | SubstructureNotifyMask, (XEvent *)&xclient );
+   XSendEvent(display, windowRoot, False, SubstructureRedirectMask | SubstructureNotifyMask, (XEvent *)&xclient );
 
 }
 
+
 void wm_add_remove_state_mapped(oswindow w, const char * pszNetStateFlag, bool bSet)
 {
+
+   windowing_output_debug_string("\n::wm_add_remove_state_mapped 1");
 
    xdisplay d(w->display());
 
    wm_add_remove_state_mapped_raw(w, pszNetStateFlag, bSet);
 
+   windowing_output_debug_string("\n::wm_add_remove_state_mapped 2");
+
 }
+
 
 void wm_add_remove_state_unmapped_raw(oswindow w, const char * pszNetStateFlag, bool bSet)
 {
@@ -1048,16 +1082,16 @@ void wm_add_remove_state_unmapped_raw(oswindow w, const char * pszNetStateFlag, 
 
    Window window = w->window();
 
-   int scr=DefaultScreen(display);
+   int iScreen = DefaultScreen(display);
 
-   Window rootw=RootWindow(display,scr);
+   Window windowRoot = RootWindow(display, iScreen);
 
    Atom atomFlag = XInternAtom(display, pszNetStateFlag, 1);
 
-   if( atomFlag == None )
+   if(atomFlag == None)
    {
 
-      output_debug_string("ERROR: cannot find atom for " + string(pszNetStateFlag) + "!\n");
+      windowing_output_debug_string("ERROR: cannot find atom for " + string(pszNetStateFlag) + "!\n");
 
       return;
 
@@ -1068,7 +1102,7 @@ void wm_add_remove_state_unmapped_raw(oswindow w, const char * pszNetStateFlag, 
    if( atomNetState == None )
    {
 
-      output_debug_string("ERROR: cannot find atom for _NET_WM_STATE !\n");
+      windowing_output_debug_string("ERROR: cannot find atom for _NET_WM_STATE !\n");
 
       return;
 
@@ -1078,14 +1112,20 @@ void wm_add_remove_state_unmapped_raw(oswindow w, const char * pszNetStateFlag, 
 
 }
 
+
 void wm_add_remove_state_unmapped(oswindow w, const char * pszNetStateFlag, bool bSet)
 {
+
+   windowing_output_debug_string("\n::wm_add_remove_state_unmapped 1");
 
    xdisplay d(w->display());
 
    wm_add_remove_state_unmapped_raw(w, pszNetStateFlag, bSet);
 
+   windowing_output_debug_string("\n::wm_add_remove_state_unmapped 2");
+
 }
+
 
 void wm_add_remove_state_raw(oswindow w, const char * pszState, bool bSet)
 {
@@ -1109,9 +1149,13 @@ void wm_add_remove_state_raw(oswindow w, const char * pszState, bool bSet)
 void wm_add_remove_state(oswindow w, const char * pszState, bool bSet)
 {
 
+   windowing_output_debug_string("\n::wm_add_remove_state 1");
+
    xdisplay d(w->display());
 
    wm_add_remove_state_raw(w, pszState, bSet);
+
+   windowing_output_debug_string("\n::wm_add_remove_state 2");
 
 }
 
@@ -1155,18 +1199,31 @@ void wm_state_hidden_raw(oswindow w, bool bSet)
 void wm_state_above(oswindow w, bool bSet)
 {
 
+   windowing_output_debug_string("\n::wm_state_above 1");
+
    xdisplay d(w->display());
 
    wm_state_above_raw(w, bSet);
 
+   windowing_output_debug_string("\n::wm_state_above 2");
+
 }
+
 
 void wm_state_below(oswindow w, bool bSet)
 {
 
+   windowing_output_debug_string("\n::wm_state_below 1");
+
+   fflush(stdout);
+
    xdisplay d(w->display());
 
    wm_state_above_raw(w, bSet);
+
+   windowing_output_debug_string("\n::wm_state_below 2");
+
+   fflush(stdout);
 
 }
 
@@ -1174,27 +1231,46 @@ void wm_state_below(oswindow w, bool bSet)
 void wm_state_hidden(oswindow w, bool bSet)
 {
 
+   windowing_output_debug_string("\n::wm_state_hidden 1");
+
+   fflush(stdout);
+
    xdisplay d(w->display());
 
    wm_state_hidden_raw(w, bSet);
 
+   windowing_output_debug_string("\n::wm_state_hidden 2");
+
+   fflush(stdout);
+
 }
 
 
-void wm_toolwindow(oswindow w,bool bToolWindow)
+void wm_toolwindow(oswindow w, bool bToolWindow)
 {
+
+   windowing_output_debug_string("\n::wm_toolwindow 1");
+
+   fflush(stdout);
 
    xdisplay d(w->display());
 
-   Display * display = w->display();
+   if(d.is_null())
+   {
+
+      windowing_output_debug_string("\n::wm_toolwindow 1.1");
+
+      fflush(stdout);
+
+      return;
+
+   }
 
    Window window = w->window();
 
-   int scr=DefaultScreen(display);
+   Window windowRoot = d.default_root_window();
 
-   Window rootw=RootWindow(display,scr);
-
-   Atom atomWindowType = XInternAtom(display,"_NET_WM_WINDOW_TYPE",False);
+   Atom atomWindowType = d.intern_atom("_NET_WM_WINDOW_TYPE", False);
 
    if(atomWindowType != None)
    {
@@ -1204,112 +1280,102 @@ void wm_toolwindow(oswindow w,bool bToolWindow)
       if(bToolWindow)
       {
 
-         atomWindowTypeValue = XInternAtom(display,"_NET_WM_WINDOW_TYPE_SPLASH",False);
+         atomWindowTypeValue = d.intern_atom("_NET_WM_WINDOW_TYPE_SPLASH", False);
 
       }
       else
       {
 
-         atomWindowTypeValue = XInternAtom(display,"_NET_WM_WINDOW_TYPE_NORMAL",False);
+         atomWindowTypeValue = d.intern_atom("_NET_WM_WINDOW_TYPE_NORMAL", False);
 
       }
 
       if(atomWindowType != None)
       {
 
-         XChangeProperty(display,window,atomWindowType,XA_ATOM,32,PropModeReplace, (unsigned char *)&atomWindowTypeValue,1);
+         XChangeProperty(d, window, atomWindowType, XA_ATOM, 32, PropModeReplace, (unsigned char *) &atomWindowTypeValue, 1);
 
       }
 
    }
 
-   wm_add_remove_state(w, "_NET_WM_STATE_SKIP_TASKBAR", bToolWindow);
+   wm_add_remove_state_raw(w, "_NET_WM_STATE_SKIP_TASKBAR", bToolWindow);
+
+   windowing_output_debug_string("\n::wm_toolwindow 2");
 
 }
 
 
-void wm_nodecorations(oswindow w, int map)
+void wm_nodecorations(oswindow w, int bMap)
 {
 
-   int set;
+   windowing_output_debug_string("\n::wm_nodecorations 1");
 
    xdisplay d(w->display());
 
-   Display * dpy = w->display();
+   if(d.is_null())
+   {
+
+      return;
+
+   }
 
    Window window = w->window();
 
-   int scr=DefaultScreen(dpy);
+   Window windowRoot = d.default_root_window();
 
-   Window rootw=RootWindow(dpy,scr);
-
-   Atom atomMotifHints = XInternAtom(dpy,"_MOTIF_WM_HINTS",True);
+   Atom atomMotifHints = d.intern_atom("_MOTIF_WM_HINTS", True);
 
    if(atomMotifHints != None)
    {
 
-      MWMHints hints = {MWM_HINTS_DECORATIONS,0, MWM_DECOR_NONE,0,0};
+      MWMHints hints = {MWM_HINTS_DECORATIONS, 0, MWM_DECOR_NONE, 0, 0};
 
-      XChangeProperty(dpy,window,atomMotifHints,atomMotifHints,32, PropModeReplace,(unsigned char *)&hints, sizeof(MWMHints) / 4);
+      XChangeProperty(d, window, atomMotifHints, atomMotifHints, 32, PropModeReplace, (unsigned char *)&hints, sizeof(MWMHints) / 4);
 
    }
 
-//   WM_HINTS = XInternAtom(dpy,"KWM_WIN_DECORATION",True);
-//   if(WM_HINTS != None)
-//   {
-//      long KWMHints = KDE_tinyDecoration;
-//      XChangeProperty(dpy,window,WM_HINTS,WM_HINTS,32,
-//         PropModeReplace,(unsigned char *)&KWMHints,
-//         sizeof(KWMHints) / 4);
-//   }
-
-//   WM_HINTS = XInternAtom(dpy,"_WIN_HINTS",True);
-//   if(WM_HINTS != None) {
-//      long GNOMEHints = 0;
-//      XChangeProperty(dpy,window,WM_HINTS,WM_HINTS,32,
-//         PropModeReplace,(unsigned char *)&GNOMEHints,
-//         sizeof(GNOMEHints) / 4);
-//   }
-//   WM_HINTS = XInternAtom(dpy,"_NET_WM_WINDOW_TYPE",True);
-//   if(WM_HINTS != None) {
-//      Atom NET_WMHints[2];
-//      NET_WMHints[0] = XInternAtom(dpy,
-//         "_KDE_NET_WM_WINDOW_TYPE_OVERRIDE",True);
-//      NET_WMHints[1] = XInternAtom(dpy,"_NET_WM_WINDOW_TYPE_TOOLBAR",True);
-//      XChangeProperty(dpy,window,
-//         WM_HINTS,XA_ATOM,32,PropModeReplace,
-//         (unsigned char *)&NET_WMHints,2);
-//   }
-   //XSetTransientForHint(dpy,window,rootw);
-
-   if(map)
+   if(bMap)
    {
 
-      XUnmapWindow(dpy,window);
+      XUnmapWindow(d, window);
 
-      XMapWindow(dpy,window);
+      XMapWindow(d, window);
 
    }
+
+   windowing_output_debug_string("\n::wm_nodecorations 2");
 
 }
 
+
 WINBOOL IsWindowVisibleRaw(Display * display, Window window);
+
 
 void wm_iconify_window(oswindow w)
 {
 
    xdisplay d(w->display());
 
-   Display * display = w->display();
+   windowing_output_debug_string("\n::wm_iconify_window 1");
+
+   if(d.is_null())
+   {
+
+      windowing_output_debug_string("\n::wm_iconify_window 1.1");
+
+      return;
+
+   }
 
    Window window = w->window();
 
-   int scr = DefaultScreen(display);
+   int iScreen = DefaultScreen(d.operator Display *());
 
-   if(IsWindowVisibleRaw(display, window))
+   if(IsWindowVisibleRaw(d, window))
    {
 
-      XIconifyWindow(display, window, scr);
+      XIconifyWindow(d, window, iScreen);
 
    }
    else
@@ -1322,13 +1388,13 @@ void wm_iconify_window(oswindow w)
 
       }
 
-      unmapped_net_state(display, window, XInternAtom(display, "_NET_WM_STATE_HIDDEN", False));
+      unmapped_net_state_raw(d, window, d.intern_atom("_NET_WM_STATE_HIDDEN", False));
 
    }
 
+   windowing_output_debug_string("\n::wm_iconify_window 2");
+
 }
-
-
 
 
 WINBOOL IsWindowVisibleRaw(Display * display, Window window)
@@ -1337,12 +1403,15 @@ WINBOOL IsWindowVisibleRaw(Display * display, Window window)
    XWindowAttributes attr;
 
    if(!XGetWindowAttributes(display, window, &attr))
+   {
+
       return false;
+
+   }
 
    return attr.map_state == IsViewable;
 
 }
-
 
 
 WINBOOL IsWindowVisibleRaw(oswindow w)
@@ -1356,9 +1425,9 @@ WINBOOL IsWindowVisibleRaw(oswindow w)
 
 }
 
+
 Atom * wm_get_list_raw(oswindow w, Atom atomList, unsigned long int * pnum_items)
 {
-
 
    if(atomList == None )
    {
@@ -1439,7 +1508,7 @@ int wm_test_state_raw(oswindow w, const char * pszNetStateFlag)
    if( atomFlag == None )
    {
 
-      output_debug_string("ERROR: cannot find atom for " + string(pszNetStateFlag) + "!\n");
+      windowing_output_debug_string("ERROR: cannot find atom for " + string(pszNetStateFlag) + "!\n");
 
       return 0;
 
@@ -1450,7 +1519,7 @@ int wm_test_state_raw(oswindow w, const char * pszNetStateFlag)
    if( atomNetState == None )
    {
 
-      output_debug_string("ERROR: cannot find atom for _NET_WM_STATE !\n");
+      windowing_output_debug_string("ERROR: cannot find atom for _NET_WM_STATE !\n");
 
       return 0;
 
@@ -1464,12 +1533,26 @@ int wm_test_state_raw(oswindow w, const char * pszNetStateFlag)
 int wm_test_state(oswindow w, const char * pszNetStateFlag)
 {
 
+   windowing_output_debug_string("\n::wm_test_state 1");
+
    xdisplay d(w->display());
 
-   return wm_test_state_raw(w, pszNetStateFlag);
+   if(d.is_null())
+   {
+
+      windowing_output_debug_string("\n::wm_test_state 1.1");
+
+      return 0;
+
+   }
+
+   int i = wm_test_state_raw(w, pszNetStateFlag);
+
+   windowing_output_debug_string("\n::wm_test_state 2");
+
+   return i;
 
 }
-
 
 
 bool wm_add_remove_list_raw(oswindow w, Atom atomList, Atom atomFlag, bool bSet)
@@ -1558,11 +1641,7 @@ bool wm_add_remove_list_raw(oswindow w, Atom atomList, Atom atomFlag, bool bSet)
 }
 
 
-
-
-
-
-CLASS_DECL_AURA ::user::interaction * oswindow_interaction(oswindow oswindow)
+::user::interaction * oswindow_interaction(oswindow oswindow)
 {
 
    if (is_ptr_null(oswindow, sizeof(*oswindow)))
@@ -1584,8 +1663,7 @@ CLASS_DECL_AURA ::user::interaction * oswindow_interaction(oswindow oswindow)
 }
 
 
-
-CLASS_DECL_AURA ::user::interaction_impl * oswindow_get(oswindow oswindow)
+::user::interaction_impl * oswindow_get(oswindow oswindow)
 {
 
    if (oswindow == NULL)
@@ -1618,7 +1696,7 @@ CLASS_DECL_AURA ::user::interaction_impl * oswindow_get(oswindow oswindow)
 }
 
 
-void process_message(osdisplay_data * pdata, Display * pdisplay);
+bool process_message(osdisplay_data * pdata, Display * pdisplay);
 void send_message(MESSAGE & msg);
 
 
@@ -1626,17 +1704,19 @@ bool g_bSkipMouseMessageInXcess = true;
 DWORD g_dwLastMotion = 0;
 DWORD g_dwMotionSkipTimeout = 23;
 
-UINT __axis_x11_thread(void * p)
-{
 
-   osdisplay_data * pdata = (osdisplay_data *) p;
+extern bool b_prevent_xdisplay_lock_log;
+
+
+void __axis_x11_thread(osdisplay_data * pdata)
+{
 
    Display * display = pdata->display();
 
    if(display == NULL)
    {
 
-      return 0;
+      return;
 
    }
 
@@ -1650,71 +1730,77 @@ UINT __axis_x11_thread(void * p)
 
    bool bPending;
 
-   while(::aura::system::g_p != NULL && ::aura::system::g_p->thread_get_run())
-   {
+   bool bCa2Processed = true;
 
-//      ZERO(msg);
-//
-//      FD_ZERO(&in_fds);
-//
-//      FD_SET(x11_fd, &in_fds);
-//
-//      tv.tv_usec = 0;
-//
-//      tv.tv_sec = 1;
-//
-//      int num_ready_fds = select(x11_fd + 1, &in_fds, NULL, NULL, &tv);
-//
-//      if (num_ready_fds > 0)
-//      {
-//
-//         // Event Received
-//
-//      }
-//      else if (num_ready_fds == 0)
-//      {
-//
-//         // Timer fired
-//
-//      }
-//      else
-//      {
-//
-//         // Error
-//
-//      }
+   XEvent e;
+
+   while(::aura::system::g_p != NULL && ::get_thread_run())
+   {
 
       bPending = false;
 
       {
 
+         b_prevent_xdisplay_lock_log = true;
+
+         windowing_output_debug_string("\n::__axis_x11_thread 1");
+
          xdisplay d(display);
 
          bPending = XPending(display);
+
+         b_prevent_xdisplay_lock_log = false;
+
+         windowing_output_debug_string("\n::__axis_x11_thread 2");
 
       }
 
       if(bPending)
       {
 
-         process_message(pdata, display);
+         if(!bCa2Processed)
+         {
+
+            windowing_output_debug_string("\n::__axis_x11_thread A");
+
+            xdisplay d(display);
+
+            XNextEvent(display, &e);
+
+            windowing_output_debug_string("\n::__axis_x11_thread B");
+
+         }
+
+         bCa2Processed = process_message(pdata, display);
+
+         if(!bCa2Processed)
+         {
+
+            Sleep(50);
+
+         }
 
       }
       else
       {
 
-         Sleep(1);
+         bCa2Processed = true;
+
+         // Attention: Game
+         // TODO: implement ability to change the event check time resolution.
+         Sleep(50);
 
       }
 
    }
 
-   return 0;
-
 }
 
 
-void process_message(osdisplay_data * pdata, Display * display)
+extern bool b_prevent_xdisplay_lock_log;
+
+
+bool process_message(osdisplay_data * pdata, Display * display)
 {
 
    XEvent e;
@@ -1725,13 +1811,57 @@ void process_message(osdisplay_data * pdata, Display * display)
 
    {
 
+      windowing_output_debug_string("\n::process_message 1");
+
+      b_prevent_xdisplay_lock_log = true;
+
       xdisplay d(display);
 
+      // confirm Pending
+
+      bool bReallyPending = XPending(d);
+
+      if(!bReallyPending)
+      {
+
+         return true;
+
+      }
+
       XNextEvent(display, &e);
+
+      b_prevent_xdisplay_lock_log = false;
+
+      windowing_output_debug_string("\n::process_message 2");
 
    }
 
    bool bRet = false;
+
+   msg.hwnd = oswindow_defer_get(display, e.xany.window);
+
+   if(msg.hwnd == NULL)
+   {
+
+      windowing_output_debug_string("\n::process_message A");
+
+      xdisplay d(display);
+
+      // not going to process
+
+      windowing_output_debug_string("!");
+
+      // put back
+
+      XPutBackEvent(display, &e);
+
+      // not processed
+
+      windowing_output_debug_string("\n::process_message B");
+
+      return false;
+
+   }
 
    if(e.type == Expose)
    {
@@ -1751,8 +1881,6 @@ void process_message(osdisplay_data * pdata, Display * display)
    }
    else if(e.type == PropertyNotify)
    {
-
-      msg.hwnd = oswindow_get(display, e.xproperty.window);
 
       if(msg.hwnd != NULL && msg.hwnd->m_pimpl != NULL)
       {
@@ -1801,8 +1929,8 @@ void process_message(osdisplay_data * pdata, Display * display)
                }
 
                if(pui->m_eappearance != ::user::appearance_iconic
-                  && pui->m_eappearance != ::user::appearance_none
-                  && msg.hwnd->is_iconic())
+                     && pui->m_eappearance != ::user::appearance_none
+                     && msg.hwnd->is_iconic())
                {
 
                   pui->set_appearance(::user::appearance_iconic);
@@ -1810,8 +1938,8 @@ void process_message(osdisplay_data * pdata, Display * display)
                }
 
                if(pui->m_eappearanceRequest == ::user::appearance_full_screen
-                  && pui->m_eappearance != ::user::appearance_full_screen
-                  && !msg.hwnd->is_iconic())
+                     && pui->m_eappearance != ::user::appearance_full_screen
+                     && !msg.hwnd->is_iconic())
                {
 
                   pui->set_appearance(::user::appearance_full_screen);
@@ -1821,6 +1949,7 @@ void process_message(osdisplay_data * pdata, Display * display)
             }
 
          }
+
       }
 
    }
@@ -1828,7 +1957,6 @@ void process_message(osdisplay_data * pdata, Display * display)
    {
 
       msg.message       = WM_SHOWWINDOW;
-      msg.hwnd          = oswindow_get(display, e.xmap.window);
       msg.wParam        = e.type == MapNotify;
       msg.lParam        = 0;
 
@@ -1836,6 +1964,7 @@ void process_message(osdisplay_data * pdata, Display * display)
 
       if(e.type == MapNotify)
       {
+
          if(msg.hwnd != NULL && msg.hwnd->m_pimpl != NULL)
          {
 
@@ -1844,9 +1973,9 @@ void process_message(osdisplay_data * pdata, Display * display)
             if(pui->m_eappearance == ::user::appearance_iconic && !msg.hwnd->is_iconic())
             {
 
-               //file_put_contents_dup("/home/camilo/xxx.txt", "");
+               // file_put_contents_dup("/home/camilo/xxx.txt", "");
 
-               // 1111111111111111111111111111111111111111111
+               // 2222222222222222222222222222222222222222222
 
                pui->m_eappearance = ::user::appearance_none;
 
@@ -1868,7 +1997,7 @@ void process_message(osdisplay_data * pdata, Display * display)
 
                });
 
-//               bHandled = true;
+               // bHandled = true;
 
             }
 
@@ -1880,92 +2009,96 @@ void process_message(osdisplay_data * pdata, Display * display)
    else if(e.type == ConfigureNotify)
    {
 
-      msg.hwnd = oswindow_get(display, e.xconfigure.window);
+      ::user::interaction_impl_base * pimpl = msg.hwnd->m_pimpl;
 
-      if(msg.hwnd != NULL)
+      if(pimpl != NULL)
       {
 
-         ::user::interaction_impl_base * pimpl = msg.hwnd->m_pimpl;
+         ::user::interaction * pui = pimpl->m_pui;
 
-         if(pimpl != NULL)
+         bool bHandled = false;
+
+         if(pui != NULL)
          {
 
-            ::user::interaction * pui = pimpl->m_pui;
-
-            bool bHandled = false;
-
-            if(pui != NULL)
+            if(pui->m_eappearance == ::user::appearance_iconic && !msg.hwnd->is_iconic())
             {
 
-               if(pui->m_eappearance == ::user::appearance_iconic && !msg.hwnd->is_iconic())
+               //file_put_contents_dup("/home/camilo/xxx.txt", "");
+
+               // 33333333333333333333333333333333333333333333333333333333333333
+
+               pui->m_eappearance = ::user::appearance_none;
+
+               pui->fork([=]()
                {
 
-                  //file_put_contents_dup("/home/camilo/xxx.txt", "");
-
-                  // 33333333333333333333333333333333333333333333333333333333333333
-
-                  pui->m_eappearance = ::user::appearance_none;
-
-                  pui->fork([=]()
+                  if(pui->m_eappearanceBefore == ::user::appearance_iconic)
                   {
 
-                     if(pui->m_eappearanceBefore == ::user::appearance_iconic)
-                     {
+                     pui->_001OnDeiconify(::user::appearance_normal);
 
-                        pui->_001OnDeiconify(::user::appearance_normal);
+                  }
+                  else
+                  {
 
-                     }
-                     else
-                     {
+                     pui->_001OnDeiconify(pui->m_eappearanceBefore);
 
-                        pui->_001OnDeiconify(pui->m_eappearanceBefore);
+                  }
 
-                     }
+               });
 
-                  });
+               bHandled = true;
 
-                  bHandled = true;
+            }
+
+            if(!bHandled)
+            {
+
+               rect64 rectWindow;
+
+               rectWindow.left = e.xconfigure.x;
+
+               rectWindow.top = e.xconfigure.y;
+
+               rectWindow.right = rectWindow.left + e.xconfigure.width;
+
+               rectWindow.bottom = rectWindow.top + e.xconfigure.height;
+
+               auto rect = pimpl->m_rectParentClient;
+
+               ::copy(pimpl->m_rectParentClientRequest, rectWindow);
+
+               if(rectWindow.top_left() != rect.top_left())
+               {
+
+                  pimpl->m_pui->post_message(WM_MOVE);
 
                }
 
-               if(!bHandled)
+               if(rectWindow.size() != rect.size())
                {
 
-                  rect64 rectWindow;
-
-                  rectWindow.left = e.xconfigure.x;
-
-                  rectWindow.top = e.xconfigure.y;
-
-                  rectWindow.right = rectWindow.left + e.xconfigure.width;
-
-                  rectWindow.bottom = rectWindow.top + e.xconfigure.height;
-
-                  auto rect = pimpl->m_rectParentClient;
-
-                  ::copy(pimpl->m_rectParentClientRequest, rectWindow);
-
-                  if(rectWindow.top_left() != rect.top_left())
-                  {
-
-                     pimpl->m_pui->post_message(WM_MOVE);
-
-                  }
-
-                  if(rectWindow.size() != rect.size())
-                  {
-
-                     pimpl->m_pui->post_message(WM_SIZE);
-
-                  }
+                  pimpl->m_pui->post_message(WM_SIZE);
 
                }
 
             }
 
+            if(pui->m_eappearanceRequest == ::user::appearance_full_screen
+                  && pui->m_eappearance != ::user::appearance_full_screen
+                  && !msg.hwnd->is_iconic())
+            {
+
+               pui->set_appearance(::user::appearance_full_screen);
+
+            }
+
+
          }
 
       }
+
 
       if(g_oswindowDesktop != NULL && e.xconfigure.window == g_oswindowDesktop->window())
       {
@@ -2050,15 +2183,18 @@ void process_message(osdisplay_data * pdata, Display * display)
 
       }
 
-
       if(bRet)
       {
 
          msg.hwnd          = oswindow_get(display, e.xbutton.window);
+
          msg.wParam        = 0;
+
          msg.lParam        = MAKELONG(e.xbutton.x_root, e.xbutton.y_root);
 
-         send_message(msg);
+         synch_lock sl(pdata->m_pmutexInput);
+
+         pdata->m_messsageaInput.add(msg);
 
       }
 
@@ -2098,9 +2234,12 @@ void process_message(osdisplay_data * pdata, Display * display)
 
          msg.lParam        = MAKELONG(0, e.xkey.keycode);
 
-         send_message(msg);
+         synch_lock sl(pdata->m_pmutexInput);
+
+         pdata->m_messsageaInput.add(msg);
 
       }
+
    }
    else if(e.type == MotionNotify)
    {
@@ -2119,16 +2258,9 @@ void process_message(osdisplay_data * pdata, Display * display)
       msg.wParam        = wparam;
       msg.lParam        = MAKELONG(e.xmotion.x_root, e.xmotion.y_root);
 
-      synch_lock sl(pdata->m_pmutexMouse);
+      synch_lock sl(pdata->m_pmutexInput);
 
-      if(pdata->m_messsageaMouse.get_size() > 1000)
-      {
-
-         pdata->m_messsageaMouse.remove_at(0, 499);
-
-      }
-
-      pdata->m_messsageaMouse.add(msg);
+      pdata->m_messsageaInput.add(msg);
 
    }
    else if(e.type == DestroyNotify)
@@ -2159,14 +2291,11 @@ void process_message(osdisplay_data * pdata, Display * display)
 
    }
 
+   // processed
+
+   return true;
 
 }
-
-
-
-
-
-
 
 
 void send_message(MESSAGE & msg)
@@ -2204,23 +2333,16 @@ void send_message(MESSAGE & msg)
 }
 
 
-
-
-
-UINT __axis_x11mouse_thread(void * p)
+void __axis_x11_input_thread(osdisplay_data * pdata)
 {
 
-   osdisplay_data * pdata = (osdisplay_data *) p;
-
-   __begin_thread(::aura::system::g_p,&__axis_x11_thread,pdata,::multithreading::priority_normal,0,0,NULL);
-
-   single_lock sl(pdata->m_pmutexMouse);
+   single_lock sl(pdata->m_pmutexInput);
 
    MESSAGE msg;
 
    bool bOk;
 
-   while(::aura::system::g_p != NULL && ::aura::system::g_p->thread_get_run())
+   while(::aura::system::g_p != NULL && ::get_thread_run())
    {
 
       bOk = false;
@@ -2229,12 +2351,12 @@ UINT __axis_x11mouse_thread(void * p)
 
          sl.lock();
 
-         if(pdata->m_messsageaMouse.has_elements())
+         if(pdata->m_messsageaInput.has_elements())
          {
 
-            msg = pdata->m_messsageaMouse.last();
+            msg = pdata->m_messsageaInput.first();
 
-            pdata->m_messsageaMouse.remove_all();
+            pdata->m_messsageaInput.remove_at(0);
 
             bOk = true;
 
@@ -2260,15 +2382,14 @@ UINT __axis_x11mouse_thread(void * p)
       else
       {
 
-         Sleep(23);
+         Sleep(25);
 
       }
 
    }
 
-   return 0;
-
 }
+
 
 
 namespace user
@@ -2372,68 +2493,58 @@ WINBOOL SetWindowPos(oswindow hwnd, oswindow hwndInsertAfter, int32_t x, int32_t
 }
 
 
-
-
 WINBOOL GetWindowRect(oswindow hwnd, LPRECT lprect)
 {
 
-   //single_lock sl(&user_mutex(), true);
-
-   //synch_lock sl(::oswindow_data::s_pmutex);
+   windowing_output_debug_string("\n::GetWindowRect 1");
 
    xdisplay d(hwnd->display());
 
-
-   //oswindow window = oswindow_get(hwnd->display(), e.xbutton.window);
-
    XWindowAttributes attrs;
-
-   /* Fill attribute structure with information about root window */
 
    if(!XGetWindowAttributes(hwnd->display(), hwnd->window(), &attrs))
    {
 
+      windowing_output_debug_string("\n::GetWindowRect 1.1");
+
       return FALSE;
 
    }
-
-//   int x;
-//   int y;
-//   Window child;
-//
-//   if(!XTranslateCoordinates(hwnd->display(), hwnd->window(), DefaultRootWindow(hwnd->display()), 0, 0, &x, &y, &child))
-//   {
-//
-//      return FALSE;
-//
-//   }
-
 
    lprect->left      = attrs.x;
    lprect->top       = attrs.y;
    lprect->right     = attrs.x    + attrs.width;
    lprect->bottom    = attrs.y    + attrs.height;
 
+   windowing_output_debug_string("\n::GetWindowRect 2");
+
    return TRUE;
 
 }
 
 
-
-
-WINBOOL GetClientRect(oswindow hwnd, LPRECT lprect)
+WINBOOL x11_GetClientRect(oswindow window, LPRECT lprect)
 {
 
-   xdisplay display(hwnd->display());
+   windowing_output_debug_string("\n::x11_GetWindowRect 1");
 
-   //single_lock sl(&user_mutex(), true);
+   xdisplay d(window->display());
 
-   XWindowAttributes attrs;
-
-   /* Fill attribute structure with information about root window */
-
-   if(XGetWindowAttributes(hwnd->display(), hwnd->window(), &attrs) == 0)
+   if(d.is_null())
    {
+
+      windowing_output_debug_string("\n::x11_GetWindowRect 1.1");
+
+      return FALSE;
+
+   }
+
+   XWindowAttributes attr;
+
+   if(XGetWindowAttributes(d, window->window(), &attr) == 0)
+   {
+
+      windowing_output_debug_string("\n::x11_GetWindowRect 1.2");
 
       return FALSE;
 
@@ -2441,20 +2552,32 @@ WINBOOL GetClientRect(oswindow hwnd, LPRECT lprect)
 
    lprect->left      = 0;
    lprect->top       = 0;
-   lprect->right     = lprect->left    + attrs.width;
-   lprect->bottom    = lprect->top     + attrs.height;
+   lprect->right     = lprect->left    + attr.width;
+   lprect->bottom    = lprect->top     + attr.height;
+
+   windowing_output_debug_string("\n::x11_GetWindowRect 2");
 
    return TRUE;
 
 }
 
 
+WINBOOL GetClientRect(oswindow window, LPRECT lprect)
+{
+
+   synch_lock sl(window->m_pimpl->m_pui->m_pmutex);
+
+   ::copy(lprect, window->m_pimpl->m_rectParentClient);
+
+   OffsetRect(lprect, -lprect->left, -lprect->top);
+
+   return TRUE;
+
+}
+
 
 WINBOOL GetCursorPos(LPPOINT lpptCursor)
 {
-
-   //single_lock sl(user_mutex(), true);
-
 
    Window root_return;
    Window child_return;
@@ -2462,14 +2585,26 @@ WINBOOL GetCursorPos(LPPOINT lpptCursor)
    int32_t win_y_return;
    uint32_t mask_return;
 
-   xdisplay display;
+   b_prevent_xdisplay_lock_log = true;
 
-   display.open(NULL);
+   windowing_output_debug_string("\n::GetCursorPos 1");
 
-   if(display == NULL)
-        return FALSE;
+   xdisplay d(x11_get_display());
 
-   XQueryPointer(display, display.default_root_window(), &root_return, &child_return, &lpptCursor->x, &lpptCursor->y, &win_x_return, &win_y_return, & mask_return);
+   if(d.is_null())
+   {
+
+      windowing_output_debug_string("\n::GetCursorPos 1.1");
+
+      return FALSE;
+
+   }
+
+   XQueryPointer(d, d.default_root_window(), &root_return, &child_return, &lpptCursor->x, &lpptCursor->y, &win_x_return, &win_y_return, & mask_return);
+
+   b_prevent_xdisplay_lock_log = false;
+
+   windowing_output_debug_string("\n::GetCursorPos 2");
 
    return TRUE;
 
@@ -2532,21 +2667,13 @@ bool os_init_windowing()
 void os_term_windowing()
 {
 
-   delete osdisplay_data::s_pmutex;
+   ::aura::del(osdisplay_data::s_pmutex);
 
-   osdisplay_data::s_pmutex = NULL;
+   ::aura::del(osdisplay_data::s_pdataptra);
 
-   delete osdisplay_data::s_pdataptra;
+   ::aura::del(oswindow_data::s_pmutex);
 
-   osdisplay_data::s_pdataptra = NULL;
-
-   delete oswindow_data::s_pmutex;
-
-   oswindow_data::s_pmutex = NULL;
-
-   delete oswindow_data::s_pdataptra;
-
-   oswindow_data::s_pdataptra = NULL;
+   ::aura::del(oswindow_data::s_pdataptra);
 
 }
 

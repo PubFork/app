@@ -55,10 +55,13 @@ namespace user
    {
    public:
 
+
+      bool                          m_bCursorRedraw;
       double                        m_dFps;
       double                        m_dUpdateScreenFps;
       bool                          m_bIpcCopy;
       bool                          m_bLockWindowUpdate;
+      point                         m_ptCursor;
 
       object_ptra                   m_ptraRedraw;
 
@@ -771,6 +774,9 @@ namespace user
 
 
       virtual void set_ipc_copy(bool bSet = true) override;
+
+      virtual void on_after_graphical_update() override;
+
 
    };
 

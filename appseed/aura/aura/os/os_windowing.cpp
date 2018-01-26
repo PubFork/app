@@ -21,3 +21,21 @@ oswindow get_splash()
 
 
 
+bool g_bWindowingOutputDebugString = false;
+
+
+void windowing_output_debug_string(const char * pszDebugString)
+{
+
+   if(g_bWindowingOutputDebugString)
+   {
+
+      output_debug_string(pszDebugString);
+
+      fflush(stdout);
+
+   }
+
+}
+
+

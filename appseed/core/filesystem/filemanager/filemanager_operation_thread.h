@@ -20,9 +20,10 @@ namespace filemanager
       mutex                            m_mutexStep;
       bool                             m_bStop;
 
+
       operation_thread(::aura::application * papp);
 
-      void queue_copy(::file::listing & stra,const ::file::path & pszDest,const ::file::path & pszSrcBase,bool bExpand,bool bReplaceAll,sp(::user::interaction) oswindowCallback = NULL,UINT uiMessage = WM_USER,WPARAM wparam = 0x1000);
+      void queue_copy(::file::listing & stra,const ::file::path & pszDest,const ::file::path & pszSrcBase,bool bExpand,bool bReplaceAll,bool bDeleteOriginOnSuccessfulCopy, sp(::user::interaction) oswindowCallback = NULL,UINT uiMessage = WM_USER,WPARAM wparam = 0x1000);
       void kick();
 
       int32_t get_item_count();

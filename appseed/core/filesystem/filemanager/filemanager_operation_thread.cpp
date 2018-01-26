@@ -134,15 +134,30 @@ namespace filemanager
       begin();
    }
 
-   void operation_thread::queue_copy(::file::listing & stra,const ::file::path & pszDstBase,const ::file::path & pszSrcBase,bool bExpand,bool bReplaceAll,sp(::user::interaction) oswindowCallback,UINT uiCallbackMessage,WPARAM wparamCallback)
+
+   void operation_thread::queue_copy(::file::listing & stra,const ::file::path & pszDstBase,const ::file::path & pszSrcBase,bool bExpand,bool bReplaceAll, bool bDeleteOriginOnSuccessfulCopy, sp(::user::interaction) oswindowCallback,UINT uiCallbackMessage,WPARAM wparamCallback)
    {
+
       ::filemanager::operation * poperation = canew(::filemanager::operation(get_app()));
+
       poperation->m_oswindowCallback = oswindowCallback;
       poperation->m_uiCallbackMessage = uiCallbackMessage;
       poperation->m_wparamCallback = wparamCallback;
       poperation->m_bReplaceAll = bReplaceAll;
       poperation->set_app(get_app());
-      poperation->set_copy(stra,pszDstBase,pszSrcBase,bExpand);
+
+      if(bDeleteOriginOnSuccessfulCopy)
+      {
+
+         poperation->set_move(stra, pszDstBase);
+
+      }
+      else
+      {
+
+         poperation->set_copy(stra, pszDstBase, pszSrcBase, bExpand);
+
+      }
 
       single_lock sl(&m_mutexFileOperationA,TRUE);
 

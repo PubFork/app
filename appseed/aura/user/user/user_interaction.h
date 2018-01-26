@@ -94,8 +94,8 @@ namespace user
       bool                                m_bTransparentMouseEvents;
       bool                                m_bRedraw;
       DWORD                               m_dwLastRedraw;
-      bool                                m_bCursorRedraw;
-      point                               m_ptCursor;
+
+      //point                               m_ptCursor;
 
       bool                                m_bWorkspaceFullScreen;
       point                               m_ptScrollPassword1;

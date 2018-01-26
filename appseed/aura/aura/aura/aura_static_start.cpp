@@ -10,6 +10,8 @@
 
 extern string_map < ::aura::PFN_GET_NEW_LIBRARY, ::aura::PFN_GET_NEW_LIBRARY  > * g_pmapLibrary;
 
+CLASS_DECL_AURA critical_section * g_pcsGlobal = NULL;
+
 #ifdef __APPLE__
 
 // http://stackoverflow.com/questions/5167269/clock-gettime-alternative-in-mac-os-x
@@ -223,6 +225,9 @@ namespace aura
           }
 
          */
+
+         g_pcsGlobal = new critical_section();
+
 #ifndef __MCRTDBG
          g_pplexheapallocarray = new plex_heap_alloc_array();
 #endif
@@ -240,11 +245,11 @@ namespace aura
          g_pmutexOutputDebugStringA = new mutex(NULL);
 
 #endif
-         
+
 #ifdef BSD_STYLE_SOCKETS
-         
+
          ::sockets::base_socket::s_pmutex = new mutex();
-         
+
 #endif
 
 
@@ -429,23 +434,15 @@ namespace aura
       {
 
 
-         delete g_pmapLibCall;
-
-         g_pmapLibCall = NULL;
+         del(g_pmapLibCall);
 
          //term_draw2d_mutex();
 
-         delete g_pmutexFactory;
+         del(g_pmutexFactory);
 
-         g_pmutexFactory = NULL;
+         del(g_pmapLibrary);
 
-         delete g_pmapLibrary;
-
-         g_pmapLibrary = NULL;
-
-         delete ::str::international::g_pmapRTL;
-
-         ::str::international::g_pmapRTL = NULL;
+         del(::str::international::g_pmapRTL);
 
          // IMPLEMENT_AXIS_FIXED_ALLOC_DESTRUCTOR(property)
          // IMPLEMENT_AXIS_FIXED_ALLOC_DESTRUCTOR(var)
@@ -460,10 +457,7 @@ namespace aura
 
          //       g_ppendingThreads = NULL;
 
-         delete g_pmutexTz;
-
-         g_pmutexTz = NULL;
-
+         del(g_pmutexTz);
 
 #endif // defined(LINUX) || defined(APPLEOS)
 
@@ -477,9 +471,7 @@ namespace aura
 
          //hthread::s_pmutex = NULL;
 
-         delete g_pmutexTlsData;
-
-         g_pmutexTlsData = NULL;
+         del(g_pmutexTlsData);
 
 
 #ifndef METROWIN
@@ -502,7 +494,7 @@ namespace aura
 
 #if defined(LINUX) || defined(APPLEOS) || defined(ANDROID)
 
-         ::aura::del(g_pmutexMq);
+         del(g_pmutexMq);
 
 #endif // defined(LINUX) || defined(APPLEOS) || defined(ANDROID)
 
@@ -518,13 +510,13 @@ namespace aura
 
          //g_pmutexTrace = NULL;
 
-         ::aura::del(g_pmutexCred);
+         del(g_pmutexCred);
 
-         ::aura::del(s_pmutexMessageDispatch);
+         del(s_pmutexMessageDispatch);
 
-         ::aura::del(g_pmutexUiDestroyed);
+         del(g_pmutexUiDestroyed);
 
-         ::aura::del(g_pmapAura);
+         del(g_pmapAura);
 
 #if MEMDLEAK
 
@@ -532,15 +524,15 @@ namespace aura
 
 #endif
 
-         ::aura::del(g_pmutexSystemHeap);
+         del(g_pmutexSystemHeap);
 
          //::aura::del(g_pmutexSignal);
 
-         ::aura::del(g_pmutexThreadOn);
+         del(g_pmutexThreadOn);
 
-         ::aura::del(g_pmapThreadOn);
+         del(g_pmapThreadOn);
 
-         ::aura::del(::thread::s_pmutexDependencies);
+         del(::thread::s_pmutexDependencies);
 
          // delete g_pstrLastGlsStatus;
 
@@ -552,24 +544,22 @@ namespace aura
 
 #ifdef APPLEOS
 
-         delete g_pmutexCvt;
-
-         g_pmutexCvt = NULL;
+         del(g_pmutexCvt);
 
 #endif
 
 //         destroy_id_space();
 
 #ifdef BSD_STYLE_SOCKETS
-         
-         ::aura::del(::sockets::base_socket::s_pmutex);
-         
+
+         del(::sockets::base_socket::s_pmutex);
+
 #endif
 
-         
+
 #ifdef ANDROID
 
-         ::aura::del(g_pmutexOutputDebugStringA);
+         del(g_pmutexOutputDebugStringA);
 
 #endif
 
@@ -579,7 +569,7 @@ namespace aura
             try
             {
 
-               delete po;
+               del(po);
 
             }
             catch(...)
@@ -590,19 +580,20 @@ namespace aura
 
          }
 
-         ::aura::del(g_paAura);
+         del(g_paAura);
 
-         ::aura::del(g_pstrCalcModuleFolderDup);
+         del(g_pstrCalcModuleFolderDup);
 
-         ::aura::del(::id_space::s_pidspace);
+         del(::id_space::s_pidspace);
 
-         ::aura::del(s_pstringmanager);
+         del(s_pstringmanager);
 
+         del(g_pcsGlobal);
 
          //::aura::del(g_pplexheapallocarray);
 
 #if !defined(__MCRTDBG) && !MEMDLEAK
-         ::aura::del(g_pheap);
+         del(g_pheap);
 #endif
 #if MEMDLEAK
 

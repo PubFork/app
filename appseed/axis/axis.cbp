@@ -45,6 +45,7 @@
 		</Build>
 		<Compiler>
 			<Add option="-std=c++0x" />
+			<Add option="`pkg-config --cflags gtk+-3.0`" />
 			<Add option="-fexceptions" />
 			<Add option="-fpermissive" />
 			<Add option="-fnon-call-exceptions" />
@@ -82,6 +83,7 @@
 			<Add option="-lcrypto" />
 			<Add option="-lidn" />
 			<Add option="-lssl" />
+			<Add option="`pkg-config --libs gtk+-3.0`" />
 			<Add option="-laura" />
 			<Add option="-Wl,-z,defs" />
 			<Add option="-fopenmp" />
@@ -123,6 +125,7 @@
 		<Unit filename="axis/node/linux/linux_axis_dir.h" />
 		<Unit filename="axis/node/linux/linux_axis_file_system.cpp" />
 		<Unit filename="axis/node/linux/linux_axis_file_system.h" />
+		<Unit filename="axis/node/linux/linux_copydesk.cpp" />
 		<Unit filename="axis/node/linux/linux_copydesk.h" />
 		<Unit filename="axis/node/linux/linux_crypto.cpp" />
 		<Unit filename="axis/node/linux/linux_crypto.h" />

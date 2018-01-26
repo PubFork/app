@@ -21,7 +21,7 @@ class x11data;
       string                        m_strWindowText;
       ::user::interaction_base *    m_pbasewnd;
       bool                          m_bExposing;
-      sp(x11data)                     m_px11data;
+      sp(x11data)                   m_px11data;
       int32_t                       m_iDepth;
       int32_t                       m_iScreen;
       bool                          m_bEnabled;

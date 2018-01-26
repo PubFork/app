@@ -2260,7 +2260,7 @@ void thread::post_to_all_threads(UINT message,WPARAM wparam,LPARAM lparam)
 
    single_lock sl(::multithreading::s_pmutex);
 
-   for(index i = ::multithreading::s_pthreadptra->get_size(); i >= 0; i--)
+   for(index i = ::multithreading::s_pthreadptra->get_upper_bound(); i >= 0; i--)
    {
 
       try
@@ -3570,9 +3570,6 @@ thread_ptra::~thread_ptra()
 
 
 }
-
-
-
 
 
 CLASS_DECL_AURA bool thread_sleep(DWORD dwMillis)

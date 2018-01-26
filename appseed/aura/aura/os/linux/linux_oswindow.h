@@ -66,12 +66,10 @@ CLASS_DECL_AURA int32_t oswindow_find(Window window);
 CLASS_DECL_AURA oswindow_data * oswindow_get_message_only_window(::user::interaction_impl * puibaseMessageWindow);
 CLASS_DECL_AURA oswindow_data * oswindow_get(Display * pdisplay, Window window, Visual * pvisual = NULL, int iDepth = -1, int iScreen = -1, Colormap colormap = None);
 CLASS_DECL_AURA oswindow_data * oswindow_get(Window window);
+CLASS_DECL_AURA oswindow_data * oswindow_defer_get(Display * pdisplay, Window window);
 CLASS_DECL_AURA oswindow oswindow_defer_get(Window w);
 CLASS_DECL_AURA bool oswindow_remove(Display * pdisplay, Window window);
 CLASS_DECL_AURA bool oswindow_remove_message_only_window(::user::interaction_impl * puibaseMessageOnlyWindow);
-
-
-
 
 
 struct hthread;
@@ -210,6 +208,10 @@ public:
       return ::is_null(this) ? NULL : (Visual *) &m_visual;
    }
 
+   Window root_window_raw() const
+   {
+      return ::is_null(this) || ::is_null(m_osdisplay) ? None : RootWindow(display(), m_iScreen);
+   }
 
    void send_client_event(Atom atom, unsigned int numArgs, ...);
    int32_t store_name(const char * psz);
@@ -260,7 +262,7 @@ public:
 };
 
 class oswindow_dataptra :
-   public array < oswindow_data * >
+   public pointer_array < oswindow_data * >
 {
 public:
 
@@ -281,7 +283,7 @@ public:
 
       }
 
-      array < oswindow_data * >::remove_all();
+      pointer_array < oswindow_data * >::remove_all();
    }
 
 };

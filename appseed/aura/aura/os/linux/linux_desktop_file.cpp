@@ -250,7 +250,8 @@ namespace linux
       straLine._007SetLine("GenericName", strTitle);
       straLine._007SetLine("Name", strTitle);
       straLine._007SetLine("Comment", strTitle + " Comment");
-      straLine._007SetLine("Exec", "\"" + string(System.file().module()) + "\" %U");
+      straLine._007SetLine("Exec", string(System.file().module()) + " %U");
+      //straLine._007SetLine("Path", string(System.file().module().folder()));
       straLine._007SetLine("StartupWMClass", "cc.ca2." + strPrgName);
 
       if(Application.file().exists(pathIcon))
@@ -293,6 +294,10 @@ namespace linux
 
       ::file::path path = get_file_path();
 
+      output_debug_string("\nlinux::interaction_impl::set_window_text");
+
+      fflush(stdout);
+
       xdisplay d(oswindow->display());
 
       Atom net_wm_icon = XInternAtom(oswindow->display(), "_BAMF_DESKTOP_FILE", False);
@@ -310,6 +315,10 @@ namespace linux
                      PropModeReplace,
                      (const unsigned char*) (const char *) path,
                      path.get_length());
+
+      output_debug_string("\nlinux::interaction_impl::bamf_set_icon END");
+
+      fflush(stdout);
 
       if(status != 0)
       {

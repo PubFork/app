@@ -17,32 +17,12 @@ CLASS_DECL_AURA void dll_processes(uint_array & dwa, stringa & straProcesses, co
 }
 
 
-
-int32_t create_process(const char * _cmd_line, int32_t * pprocessId)
+void prepare_argc_argv(int & argc, char ** argv, char * cmd_line)
 {
-
-   char *   exec_path_name;
-
-   char *	cmd_line;
-
-   char *	cmd_line2;
-
-   cmd_line = strdup(_cmd_line);
-
-   if(cmd_line == NULL)
-   {
-
-      return 0;
-
-   }
 
    char *      pArg;
 
    char *      pPtr = NULL;
-
-   char *      argv[1024 + 1];
-
-   int32_t		argc = 0;
 
    char * p;
 
@@ -170,6 +150,32 @@ int32_t create_process(const char * _cmd_line, int32_t * pprocessId)
 
    argv[argc] = NULL;
 
+}
+
+
+int32_t create_process(const char * _cmd_line, int32_t * pprocessId)
+{
+
+   char *   exec_path_name;
+
+   char *	cmd_line;
+
+   char *	cmd_line2;
+
+   cmd_line = strdup(_cmd_line);
+
+   if(cmd_line == NULL)
+   {
+
+      return 0;
+
+   }
+
+   char *      argv[1024 + 1];
+
+   int32_t		argc = 0;
+
+   prepare_argc_argv(argc, argv, cmd_line);
 
    pid_t pid;
 
@@ -427,11 +433,11 @@ int32_t daemonize_process(const char * _cmd_line, int32_t * pprocessId)
 int32_t create_process2(const char * _cmd_line, int32_t * pprocessId)
 {
 
-   char *   exec_path_name;
+   char * exec_path_name;
 
-   char *	cmd_line;
+   char * cmd_line;
 
-   char *	cmd_line2;
+   char * cmd_line2;
 
    cmd_line = strdup(_cmd_line);
 
@@ -580,7 +586,7 @@ int32_t create_process2(const char * _cmd_line, int32_t * pprocessId)
             else
             {
 
-               psz =(char *)  ::str::utf8_inc(psz);
+               psz = (char *) ::str::utf8_inc(psz);
 
             }
 
@@ -623,103 +629,107 @@ int32_t create_process2(const char * _cmd_line, int32_t * pprocessId)
 
 }
 
-CLASS_DECL_AURA int32_t call_async(
-                            const char * pszPath,
-                            const char * pszParam,
-                            const char * pszDir,
-                            int32_t iShow,
-		            bool bPrivileged,
-		            unsigned int * puiPid)
+
+CLASS_DECL_AURA int32_t call_async(const char * pszPath, const char * pszParam, const char * pszDir, int32_t iShow, bool bPrivileged, unsigned int * puiPid)
 {
-    string strCmdLine;
 
-    strCmdLine = pszPath;
-    if(strlen_dup(pszParam) > 0)
-    {
-        strCmdLine +=  " ";
-        strCmdLine += pszParam;
-    }
+   string strCmdLine;
 
-    int32_t processId;
+   strCmdLine = pszPath;
 
-    if(!create_process(strCmdLine, &processId))
-    {
+   if(strlen_dup(pszParam) > 0)
+   {
 
-        if(puiPid != NULL)
-        {
+      strCmdLine +=  " ";
 
-            *puiPid = -1;
+      strCmdLine += pszParam;
 
-        }
+   }
 
-        return -1;
+   int32_t processId;
 
-    }
+   if(!create_process(strCmdLine, &processId))
+   {
 
-    if(puiPid != NULL)
-    {
+      if(puiPid != NULL)
+      {
 
-        *puiPid = processId;
+         *puiPid = -1;
 
-    }
+      }
 
-    return 0;
+      return -1;
+
+   }
+
+   if(puiPid != NULL)
+   {
+
+      *puiPid = processId;
+
+   }
+
+   return 0;
 
 }
+
 
 CLASS_DECL_AURA DWORD call_sync(const char * pszPath, const char * pszParam, const char * pszDir, int32_t iShow, int32_t iRetry, int32_t iSleep, PFNCALLSYNCONRETRY pfnOnRetry, uint_ptr dwParam, unsigned int * puiPid)
 {
 
-    string strCmdLine;
+   string strCmdLine;
 
-    strCmdLine = pszPath;
-    if(strlen_dup(pszParam) > 0)
-    {
-        strCmdLine +=  " ";
-        strCmdLine += pszParam;
-    }
+   strCmdLine = pszPath;
 
-    int32_t processId;
+   if(strlen_dup(pszParam) > 0)
+   {
 
-    if(!create_process(strCmdLine, &processId))
-    {
+      strCmdLine +=  " ";
 
-        if(puiPid != NULL)
-        {
+      strCmdLine += pszParam;
 
-            *puiPid = -1;
+   }
 
-        }
+   int32_t processId;
 
-        return -1;
+   if(!create_process(strCmdLine, &processId))
+   {
 
-    }
+      if(puiPid != NULL)
+      {
 
+         *puiPid = -1;
 
-    while(true)
-    {
+      }
 
-        if(kill(processId, 0) == -1 && errno == ESRCH) // No process can be found corresponding to processId
-            break;
-        sleep(1);
-    }
+      return -1;
 
-    if(puiPid != NULL)
-    {
+   }
 
-        *puiPid = processId;
+   while(true)
+   {
 
-    }
+      if(kill(processId, 0) == -1 && errno == ESRCH) // No process can be found corresponding to processId
+      {
 
-    return 0;
+         break;
+
+      }
+
+      sleep(1);
+
+   }
+
+   if(puiPid != NULL)
+   {
+
+      *puiPid = processId;
+
+   }
+
+   return 0;
 
 }
-
-
-
-
-
-
 
 
 string module_path_from_pid(unsigned int iPid)
@@ -789,7 +799,6 @@ retry:
    return (const char *) mem.get_data();
 
 }
-
 
 
 int_array module_path_get_pid(const char * pszPath)
@@ -896,7 +905,6 @@ int_array app_get_pid(const char * psz)
 }
 
 
-
 stringa cmdline_from_pid(unsigned int iPid)
 {
 
@@ -959,20 +967,12 @@ stringa cmdline_from_pid(unsigned int iPid)
 }
 
 
-
-
-
-
-
 bool shell_execute_sync(const char * pszFile, const char * pszParams, ::duration durationTimeout )
 {
 
    return call_sync(pszFile, pszParams, ::file::path(pszFile).folder() , 0, false, durationTimeout.get_total_milliseconds());
 
 }
-
-
-
 
 
 CLASS_DECL_AURA bool is_shared_library_busy(uint32_t processid, const stringa & stra)
@@ -991,6 +991,5 @@ CLASS_DECL_AURA bool is_shared_library_busy(const stringa & stra)
 }
 
 
-
-
 CLASS_DECL_AURA int32_t ca2_main();
+

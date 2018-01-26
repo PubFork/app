@@ -1,6 +1,9 @@
 ﻿#include "framework.h"
 
 
+void install_sigchld_handler();
+
+
 namespace process
 {
 
@@ -9,6 +12,12 @@ namespace process
       object(papp),
       ::aura::department(papp)
    {
+
+   #ifndef WINDOWS
+
+      install_sigchld_handler();
+
+   #endif
 
    }
 
@@ -38,23 +47,22 @@ namespace process
 
 
 
-   uint32_t department::retry(const char * pszCmdLine,const ::duration & dur,int32_t iShow, bool * pbPotentialTimeout)
+   exit_status department::retry(const char * pszCmdLine,const ::duration & dur,int32_t iShow, bool * pbPotentialTimeout)
    {
 
       process_processor proc(get_app(), pszCmdLine, dur, pbPotentialTimeout);
 
-      return proc.m_uiRetCode;
-
+      return proc.m_exitstatus;
 
    }
 
 
-   uint32_t department::synch(const char * pszCmdLine,int32_t iShow, const ::duration & dur, bool * pbPotentialTimeout)
+   exit_status department::synch(const char * pszCmdLine,int32_t iShow, const ::duration & dur, bool * pbPotentialTimeout)
    {
 
       process_processor proc(get_app(), pszCmdLine, dur, pbPotentialTimeout);
 
-      return proc.m_uiRetCode;
+      return proc.m_exitstatus;
 
    }
 
@@ -81,12 +89,12 @@ namespace process
    }
 
 
-   uint32_t department::elevated_synch(const char * pszCmdLine,int32_t iShow,const ::duration & dur,bool * pbPotentialTimeout)
+   exit_status department::elevated_synch(const char * pszCmdLine,int32_t iShow,const ::duration & dur,bool * pbPotentialTimeout)
    {
 
       process_processor proc(get_app(),pszCmdLine,dur,pbPotentialTimeout, NULL, true);
 
-      return proc.m_uiRetCode;
+      return proc.m_exitstatus;
 
    }
 
@@ -140,7 +148,6 @@ namespace process
    }
 
 
-
    void department::process_thread::run_normal()
    {
 
@@ -161,8 +168,6 @@ namespace process
 
          }
 
-         ///return false;
-
          m_error.set_if_not_set();
 
          return;
@@ -173,7 +178,7 @@ namespace process
 
       string strRead;
 
-      while(!m_spprocess->has_exited(m_puiRetCode))
+      while(!m_spprocess->has_exited())
       {
 
          strRead = m_spprocess->m_pipe.m_sppipeOut->read();
@@ -186,9 +191,20 @@ namespace process
          }
 
          if(!retry())
+         {
+
             break;
 
+         }
+
          Sleep(100);
+
+      }
+
+      if(m_pexitstatus)
+      {
+
+         *m_pexitstatus = m_spprocess->m_exitstatus;
 
       }
 
@@ -224,21 +240,20 @@ namespace process
 
       }
 
-      //return 0;
-
    }
+
 
    void department::process_thread::run_elevated()
    {
 
-      uint32_t uiRetCode = m_spprocess->synch_elevated(m_strCmdLine,SW_HIDE,millis(m_uiTimeout),m_pbPotentialTimeout);
+      m_spprocess->synch_elevated(m_strCmdLine,SW_HIDE,millis(m_uiTimeout),m_pbPotentialTimeout);
 
-      m_error.set(uiRetCode);
+      m_error.set(m_spprocess->m_exitstatus.m_iExitCode);
 
-      if (m_puiRetCode != NULL)
+      if(m_pexitstatus != NULL)
       {
 
-         *m_puiRetCode = uiRetCode;
+         *m_pexitstatus = m_spprocess->m_exitstatus;
 
       }
 
@@ -279,8 +294,6 @@ namespace process
       m_evReady(papp)
    {
 
-      m_uiRetCode = -1;
-
       m_bInitFailure = false;
 
       m_bPotentialTimeout = false;
@@ -299,7 +312,12 @@ namespace process
 
       m_pthread->m_pevReady = &m_evReady;
 
-      m_pthread->m_puiRetCode = &m_uiRetCode;
+      if(m_pthread->m_pexitstatus != NULL)
+      {
+
+         *m_pthread->m_pexitstatus = m_exitstatus;
+
+      }
 
       if(dur.is_pos_infinity())
       {

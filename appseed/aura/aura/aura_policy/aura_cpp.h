@@ -17,6 +17,10 @@
 
 #include "nodeapp/operational_system/operational_system.h"
 
+class critical_section;
+
+extern CLASS_DECL_AURA critical_section * g_pcsGlobal;
+
 namespace command
 {
 
@@ -1832,7 +1836,7 @@ namespace std
       ::sort::quick_sort_iter(a, b);
    }
 
-   
+
    template < typename T >
    using stack = ::stack < T >;
 

@@ -528,13 +528,6 @@ namespace aura
 
       }
 
-      while (pobject->m_countReference > 1)
-      {
-
-         pobject->m_countReference--;
-
-      }
-
       pobject->m_ulFlags |= ::object::flag_heap_alloc;
 
       return pobject;

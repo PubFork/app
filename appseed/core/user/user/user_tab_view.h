@@ -1,10 +1,13 @@
 ﻿#pragma once
 
+
 namespace user
 {
 
+
    class tab_drop_target_window;
    class single_document_template;
+
 
    class CLASS_DECL_CORE tab_view :
       virtual public ::user::impact,
@@ -24,6 +27,17 @@ namespace user
       tab_view(::aura::application * papp);
       virtual ~tab_view();
 
+
+      virtual void assert_valid() const override;
+      virtual void dump(dump_context & dumpcontext) const override;
+
+
+      virtual void install_message_routing(::message::sender * pinterface) override;
+
+
+      DECL_GEN_SIGNAL(_001OnMenuMessage);
+      DECL_GEN_SIGNAL(_001OnCreate);
+      DECL_GEN_SIGNAL(_001OnSetFocus);
 
 
       virtual id get_view_id() override;
@@ -63,21 +77,12 @@ namespace user
       virtual void _001OnShowTab(::user::tab * ptab) override;
       virtual void on_show_view() override;
       virtual void on_stage_view() override;
-      virtual void install_message_routing(::message::sender * pinterface) override;
 
       void _001OnTabClick(int32_t iTab);
 
 
       virtual void on_update(::user::impact * pSender, LPARAM lHint, object* pHint) override;
       virtual bool pre_create_window(::user::create_struct& cs) override;
-
-      DECL_GEN_SIGNAL(_001OnMenuMessage);
-
-      virtual void assert_valid() const override;
-      virtual void dump(dump_context & dumpcontext) const override;
-
-      DECL_GEN_SIGNAL(_001OnCreate);
-      DECL_GEN_SIGNAL(_001OnSetFocus);
 
       virtual void OnActivateView(bool bActivate, sp(impact) pActivateView, sp(impact) pDeactiveView) override;
 

@@ -708,8 +708,6 @@ namespace dynamic_source
 
       uint32_t dwStart = ::get_tick_count();
 
-      uint32_t dwExitCode;
-
       string strLog;
 
       while(::get_thread_run() && thread_get_run())
@@ -717,7 +715,7 @@ namespace dynamic_source
 
          strLog += process->read();
 
-         if(process->has_exited(&dwExitCode))
+         if(process->has_exited())
             break;
 
          Sleep(100);
@@ -834,8 +832,6 @@ namespace dynamic_source
 
          uint32_t dwStart = ::get_tick_count();
 
-         uint32_t dwExitCode;
-
          string strLog;
 
          while(::get_thread_run() && thread_get_run())
@@ -843,7 +839,7 @@ namespace dynamic_source
 
             strLog += process->read();
 
-            if(process->has_exited(&dwExitCode))
+            if(process->has_exited())
                break;
 
             Sleep(100);
@@ -1739,7 +1735,7 @@ namespace dynamic_source
 
             strLog += process->read();
 
-            if(process->has_exited(&dwExitCode))
+            if(process->has_exited())
                break;
 
             Sleep(100);
@@ -1877,8 +1873,6 @@ namespace dynamic_source
 
       uint32_t dwStart = ::get_tick_count();
 
-      uint32_t dwExitCode;
-
       string strLog;
 
       while(::get_thread_run() && thread_get_run())
@@ -1886,7 +1880,7 @@ namespace dynamic_source
 
          strLog += process->read();
 
-         if(process->has_exited(&dwExitCode))
+         if(process->has_exited())
             break;
 
          Sleep(100);
@@ -1913,8 +1907,7 @@ namespace dynamic_source
 
       string strLlog;
 
-      strLlog = m_strTime / strLibRel /"link-log.txt";
-
+      strLlog = m_strTime / strLibRel / "link-log.txt";
 
       if(!bTimeout && strLog.has_char())
       {
@@ -1924,8 +1917,6 @@ namespace dynamic_source
          //Sleep(2000);
 
 #endif
-
-
 
          str = strLog;
 
@@ -1940,7 +1931,6 @@ namespace dynamic_source
             l.m_memfileError << str;
             l.m_memfileError << "</pre>";
 
-
          }
 
          l.m_strError = l.m_memfileError.to_string();
@@ -1949,8 +1939,6 @@ namespace dynamic_source
 
       }
 
-
-
       l.load_library();
 
       return l;
@@ -1958,12 +1946,15 @@ namespace dynamic_source
    }
 
 
-
    void script_compiler::cppize(const ::file::path & lpcszSource,const ::file::path & lpcszDest,ecpptype e_type)
    {
+
       Application.dir().mk(lpcszDest.folder());
+
       cppize1(lpcszSource, lpcszDest, e_type);
+
    }
+
 
    void script_compiler::cppize1(const ::file::path & lpcszSource,const ::file::path & lpcszDest,ecpptype e_type)
    {

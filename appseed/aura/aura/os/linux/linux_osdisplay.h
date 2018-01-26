@@ -10,14 +10,14 @@ class CLASS_DECL_AURA osdisplay_data
 public:
 
 
-   mutex *                 m_pmutex;
+   critical_section *      m_pcsOsDisplayData;
    Display *               m_pdisplay;
    Atom                    m_atomLongType;
    Atom                    m_atomLongStyle;
    Atom                    m_atomLongStyleEx;
    int_ptr                 m_countReference;
-   array < MESSAGE >       m_messsageaMouse;
-   mutex *                 m_pmutexMouse;
+   array < MESSAGE >       m_messsageaInput;
+   mutex *                 m_pmutexInput;
 
    static osdisplay_dataptra * s_pdataptra;
    static mutex * s_pmutex;
@@ -127,6 +127,10 @@ public:
       return i;
 
    }
+
+
+   Window default_root_window();
+
 
 };
 

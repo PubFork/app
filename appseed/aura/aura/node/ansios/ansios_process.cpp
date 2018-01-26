@@ -1,5 +1,4 @@
 #include "framework.h"
-//#include "ansios.h"
 
 
 #if defined(ANDROID)
@@ -21,10 +20,136 @@ extern char **environ;
 extern char * const * environ;
 #endif
 
+
 string ca2_module_folder_dup();
 
 
+struct chldstatus
+{
+
+   bool m_bRet;
+   int  m_iExitCode;
+
+
+};
+
+
+typedef int_ptr_map < chldstatus > chldstatus_map;
+
+
+critical_section * g_pcsPid2 = NULL;
+
+
+chldstatus_map * g_ppid = NULL;
+
+
+critical_section * get_pid_cs()
+{
+
+   cslock cs(g_pcsGlobal);
+
+   if(g_pcsPid2 == NULL)
+   {
+
+      g_pcsPid2 = new critical_section();
+
+      g_ppid = new chldstatus_map();
+
+
+   }
+
+   return g_pcsPid2;
+
+}
+
+
+chldstatus get_chldstatus(int iPid)
+{
+
+   cslock sl(get_pid_cs());
+
+   return g_ppid->operator[](iPid);
+
+}
+
+// must be called under get_pid_cs lock
+void init_chldstatus(int iPid)
+{
+
+   auto & s = g_ppid->operator[](iPid);
+
+   s.m_bRet = false;
+
+   s.m_iExitCode = 0;
+
+}
+
+
+void ansios_sigchld_handler(int sig)
+{
+
+   int saved_errno = errno;
+
+   int iExitCode;
+
+   int iPid;
+
+   while((iPid = waitpid(-1, &iExitCode,
+                          WUNTRACED
+#ifdef WNOHANG
+                          | WNOHANG
+#endif
+#ifdef WCONTINUED
+                          | WCONTINUED
+#endif
+                         )) > 0)
+   {
+
+      {
+
+         cslock sl(get_pid_cs());
+
+         auto ppair = g_ppid->PLookup(iPid);
+
+         if(ppair != NULL)
+         {
+
+            ppair->m_element2.m_bRet = true;
+
+            ppair->m_element2.m_iExitCode = iExitCode;
+
+         }
+
+      }
+
+   }
+
+   errno = saved_errno;
+
+}
+
+
+void install_sigchld_handler()
+{
+
+   struct sigaction sa;
+
+   ZERO(sa);
+
+   sa.sa_handler = &ansios_sigchld_handler;
+
+   sigemptyset(&sa.sa_mask);
+
+   sa.sa_flags = SA_RESTART | SA_NOCLDWAIT;
+
+   sigaction(SIGCHLD, &sa, NULL);
+
+}
+
+
 CLASS_DECL_AURA void process_get_os_priority(int32_t * piOsPolicy, sched_param * pparam, int32_t iCa2Priority);
+
+
 namespace ansios
 {
 
@@ -35,6 +160,7 @@ namespace ansios
    {
 
    }
+
 
    process::~process()
    {
@@ -159,7 +285,18 @@ namespace ansios
 
       }
 
-      int status = posix_spawn(&m_iPid,argv[0],&actions,&attr,(char * const *)argv.get_data(),e);
+
+      int status = 0;
+
+      {
+
+         cslock sl(get_pid_cs());
+
+         status = posix_spawn(&m_iPid,argv[0],&actions,&attr,(char * const *)argv.get_data(),e);
+
+         init_chldstatus(m_iPid);
+
+      }
 
 #ifdef APPLEOS
 
@@ -180,137 +317,138 @@ namespace ansios
 
       char *   cmd_line;
 
-      cmd_line = (char *) malloc(strlen(pszCmdLine ) + 1 );
+      cmd_line = strdup(pszCmdLine);
 
       if(cmd_line == NULL)
+      {
+
          return 0;
 
-      strcpy_dup(cmd_line, pszCmdLine);
+      }
+
+      //strcpy_dup(cmd_line, pszCmdLine);
 
       char *   exec_path_name = cmd_line;
+
+      cslock sl(get_pid_cs());
 
       if((m_iPid = ::fork()) == 0)
       {
 
          if(bPiped)
          {
+
             dup2(m_pipe.m_sppipeOut.cast < pipe >()->m_fd[1],STDOUT_FILENO);
+
             dup2(m_pipe.m_sppipeOut.cast < pipe >()->m_fd[1],STDERR_FILENO);
+
             dup2(m_pipe.m_sppipeIn.cast < pipe >()->m_fd[0],STDIN_FILENO);
+
          }
 
 
-         // child
-         char     *pArg, *pPtr;
-         char     *argv[1024 + 1];
-         int32_t      argc;
-         if( ( pArg = strrchr_dup( exec_path_name, '/' ) ) != NULL )
-            pArg++;
-         else
-            pArg = exec_path_name;
-         argv[0] = pArg;
-         argc = 1;
 
-         if( cmd_line != NULL && *cmd_line != '\0' )
-         {
-            pArg = strtok_r_dup(cmd_line, " ", &pPtr);
-            while( pArg != NULL )
-            {
-               argv[argc] = pArg;
-               argc++;
-               if( argc >= 1024 )
-                  break;
-               pArg = strtok_r_dup(NULL, " ", &pPtr);
-            }
-         }
-         argv[argc] = NULL;
+         char *      argv[1024 + 1];
 
-         execv(exec_path_name, argv);
+         int32_t		argc = 0;
+
+         prepare_argc_argv(argc, argv, cmd_line);
+
+         int iExitCode = execv(exec_path_name, argv);
+
          free(cmd_line);
-         exit( -1 );
+
+         exit(iExitCode);
+
       }
       else if(m_iPid == -1)
       {
+
          // in parent, but error
+
          m_iPid = 0;
+
          free(cmd_line);
+
          return 0;
+
       }
+
       // in parent, success
+
+      init_chldstatus(m_iPid);
+
       return 1;
+
 #endif
 
    }
 
 
-   bool process::has_exited(uint32_t * puiExitCode)
+   bool process::has_exited()
    {
 
+      auto chldstatus = get_chldstatus(m_iPid);
 
-      int32_t iExitCode;
-      //      bool bExited;
+      if(!chldstatus.m_bRet)
+      {
 
-      int32_t wpid = waitpid(m_iPid,&iExitCode,
-                             0
-#ifdef WNOHANG
-                             | WNOHANG
-#endif
-#ifdef WCONTINUED
-                             | WCONTINUED
-#endif
-                            );
+         return false;
 
-      if(wpid == -1)
-         return true;
+      }
+
+      int iExitCode = chldstatus.m_iExitCode;
 
       if(WIFEXITED(iExitCode))
       {
-         if(puiExitCode != NULL)
-         {
-            *puiExitCode = WEXITSTATUS(iExitCode);
 
-         }
-         return false;
+         m_exitstatus.m_iExitCode = WEXITSTATUS(iExitCode);
+
+         return true;
+
       }
       else if(WIFSIGNALED(iExitCode))
       {
-         if(puiExitCode != NULL)
-         {
-            *puiExitCode = WTERMSIG(iExitCode);
-         }
-         return false;
+
+         m_exitstatus.m_iExitSignal = WTERMSIG(iExitCode);
+
+         m_exitstatus.m_iExitCode = 0x80000000;
+
+         return true;
+
       }
       else if(WIFSTOPPED(iExitCode))
       {
-         if(puiExitCode != NULL)
-         {
-            *puiExitCode = WSTOPSIG(iExitCode);
-         }
+
+         m_exitstatus.m_iExitStop = WSTOPSIG(iExitCode);
+
+         m_exitstatus.m_iExitCode = 0x80000000;
+
          return false;
+
       }
 #ifdef WIFCONTINUED
       else if(WIFCONTINUED(iExitCode))
       {
+
          return false;
+
       }
 #endif
 
       return false;
 
-
-
    }
 
-   uint32_t process::synch_elevated(const char * pszCmdLineParam,int iShow,const ::duration & durationTimeOut,bool * pbTimeOut)
+
+   void process::synch_elevated(const char * pszCmdLineParam,int iShow,const ::duration & durationTimeOut,bool * pbTimeOut)
    {
 
 #if defined(MACOS)
 
-
 //      string strFallback = ::ca2_module_folder_dup();
 
       string str(pszCmdLineParam);
-
 
       {
 
@@ -560,9 +698,6 @@ namespace ansios
 
        */
 
-      DWORD dwExitCode = 0;
-
-
       if(pipe != NULL)
       {
 
@@ -704,8 +839,13 @@ namespace ansios
 
       if (access("/usr/bin/gksu", X_OK) != 0)
       {
+
+         m_exitstatus.m_iExitCode = -1;
+
          ::simple_message_box(NULL,"gksu is not installed, please install gksu.","Please, install gksu.",MB_ICONINFORMATION);
-         return -1;
+
+         return ;
+
       }
 
       string pszCmdLine = "/usr/bin/gksu " + string(pszCmdLineParam);
@@ -727,8 +867,17 @@ namespace ansios
 
       posix_spawn_file_actions_init(&actions);
 
+      int status= 0;
 
-      int status = posix_spawn(&m_iPid,argv[0],&actions,&attr,(char * const *)argv.get_data(),environ);
+      {
+
+         cslock sl(get_pid_cs());
+
+         status = posix_spawn(&m_iPid,argv[0],&actions,&attr,(char * const *)argv.get_data(),environ);
+
+         init_chldstatus(m_iPid);
+
+      }
 
       //int status = posix_spawn(&m_iPid,argv[0],NULL,NULL,(char * const *)argv.get_data(),environ);
 
@@ -739,18 +888,24 @@ namespace ansios
 
       while(!has_exited() && get_tick_count() - dwStart < durationTimeOut.get_total_milliseconds())
       {
+
          Sleep(100);
-      }
-      DWORD dwExitCode = 0;
-      if(!has_exited(&dwExitCode))
-      {
-         if(pbTimeOut != NULL)
-         {
-            *pbTimeOut = true;
-         }
+
       }
 
-      return dwExitCode;
+      DWORD dwExitCode = 0;
+
+      if(!has_exited())
+      {
+
+         if(pbTimeOut != NULL)
+         {
+
+            *pbTimeOut = true;
+
+         }
+
+      }
 
 #else
 
@@ -759,11 +914,18 @@ namespace ansios
       cmd_line = (char *) memory_alloc(strlen(pszCmdLine ) + 1 );
 
       if(cmd_line == NULL)
+      {
+
          return 0;
+
+      }
 
       strcpy_dup(cmd_line, pszCmdLine);
 
       char *   exec_path_name = cmd_line;
+
+
+      cslock sl(get_pid_cs());
 
       if((m_iPid = ::fork()) == 0)
       {
@@ -812,6 +974,9 @@ namespace ansios
          free(cmd_line);
          return 0;
       }
+
+      init_chldstatus(m_iPid);
+
       // in parent, success
       return 1;
 #endif

@@ -38,39 +38,6 @@ namespace simple_ui
    }
 
 
-   void interaction::_001OnChar(::message::message * pobj)
-   {
-
-      UNREFERENCED_PARAMETER(pobj);
-
-   }
-
-
-   void interaction::_001OnLButtonDown(::message::message * pobj)
-   {
-
-      UNREFERENCED_PARAMETER(pobj);
-
-   }
-
-   void interaction::_001OnLButtonUp(::message::message * pobj)
-   {
-
-      UNREFERENCED_PARAMETER(pobj);
-
-
-   }
-
-
-   void interaction::_001OnMouseMove(::message::message * pobj)
-   {
-
-      UNREFERENCED_PARAMETER(pobj);
-
-   }
-
-
-
    bool interaction::on_action(const char * pszId)
    {
 
@@ -226,7 +193,7 @@ namespace simple_ui
 
    void interaction::simple_ui_draw_focus_rect(::draw2d::graphics * pgraphics)
    {
-      
+
       userstyle()->simple_ui_draw_focus_rect(this,pgraphics);
 
    }

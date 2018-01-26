@@ -21,6 +21,9 @@
 BEGIN_EXTERN_C
 
 
+CLASS_DECL_AURA void windowing_output_debug_string(const char * pszDebugString);
+
+
 CLASS_DECL_AURA void c_function_call(void * p);
 
 extern CLASS_DECL_AURA int g_bAura;
@@ -132,7 +135,7 @@ inline int type_is_null(const T * p)
 
            // C-includes
            #include "aura/aura/os/os.h"
-           
+
 
 #undef MIN
 #undef MAX

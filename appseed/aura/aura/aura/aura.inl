@@ -425,15 +425,16 @@ namespace message
 
       synch_lock sl(m_pmutexIdRoute);
 
-      void * pvoidReceiver = preceiverDerived;
+      ::object * pobjectReceiver = dynamic_cast < ::object * > (preceiverDerived);
 
       sp(type) ptypeReceiver = System.type_info < RECEIVER >();
 
-      if (m_idroute[id].pred_find_first([=](auto proute)
-   {
-      return proute->m_pvoidReceiver == pvoidReceiver
-             && proute->m_ptypeReceiver == ptypeReceiver;
-   }) >= 0)
+      if (m_idroute[id].pred_find_first([=](auto & proute)
+      {
+
+         return proute->m_pobjectReceiver == pobjectReceiver && proute->m_ptypeReceiver == ptypeReceiver;
+
+      }) >= 0)
       {
 
          return;
@@ -458,7 +459,7 @@ namespace message
 
       };
 
-      route * proute = create_pred_route(preceiver, pvoidReceiver, pred, ptypeReceiver);
+      route * proute = create_pred_route(preceiver, pobjectReceiver, pred, ptypeReceiver);
 
       m_idroute[id].add(proute);
 

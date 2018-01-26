@@ -58,9 +58,6 @@ namespace user
 
       m_bRedraw = false;
 
-      m_bCursorRedraw = false;
-
-
       m_bRedrawOnVisible = false;
 
       m_bNeedLayout = false;
@@ -1274,8 +1271,6 @@ restart:
 
       pobj->previous();
 
-      //      keep<bool> lockWindowUpdate(&get_wnd()->m_bLockWindowUpdate, true, get_wnd()->m_bLockWindowUpdate, true);
-
       if (psize->m_nType == SIZE_MINIMIZED)
       {
 
@@ -1703,6 +1698,8 @@ restart:
    void interaction::_001Print(::draw2d::graphics * pgraphics)
    {
 
+      windowing_output_debug_string("\n_001Print A");
+
       {
 
          ::draw2d::keep k(pgraphics);
@@ -1720,13 +1717,13 @@ restart:
 
       }
 
+      windowing_output_debug_string("\n_001Print B");
+
+      fflush(stdout);
+
       {
 
          ::draw2d::keep k(pgraphics);
-
-         //int iGet = (get_tick_count() / 10) % 256;
-
-         //pgraphics->FillSolidRect(10, 10, 50, 50, ARGB(255, iGet, 255 - iGet, iGet));
 
          try
          {
@@ -1740,6 +1737,10 @@ restart:
          }
 
       }
+
+      windowing_output_debug_string("\n_001Print B");
+
+      fflush(stdout);
 
       if (&Session != NULL && Session.m_bDrawCursor)
       {
@@ -2383,31 +2384,6 @@ restart:
 
    }
 
-
-   void interaction::_001OnMouseEnter(::message::message * pobj)
-   {
-
-      pobj->m_bRet = false;
-
-   }
-
-
-   void interaction::_001OnMouseLeave(::message::message * pobj)
-   {
-
-      sp(interaction) pui = top_child();
-      while (pui != NULL)
-      {
-         if (pui->m_bCursorInside)
-         {
-            pui->m_bCursorInside = false;
-            pui->_001OnMouseLeave(pobj);
-            pui->_002OnMouseLeave(pobj);
-         }
-         pui = pui->under_sibling();
-      }
-      pobj->m_bRet = false;
-   }
 
 
    ::user::interaction * interaction::_001FromPoint(point64 pt, bool bTestedIfParentVisible)
@@ -4607,13 +4583,13 @@ restart:
             break;
 
          }
-         
-         
+
+
          if(::is_null(get_thread()))
          {
-            
+
             break;
-            
+
          }
 
          if(!::get_thread()->defer_pump_message())
@@ -4624,6 +4600,8 @@ restart:
          }
 
       }
+
+      //System.post_to_all_threads(WM_KICKIDLE, 0, 0);
 
       return m_idModalResult;
 
@@ -5130,37 +5108,90 @@ restart:
       return false;
    }
 
+
    ::visual::e_cursor interaction::get_cursor()
    {
+
       return m_ecursor;
+
    }
+
 
    void interaction::set_cursor(::visual::e_cursor ecursor)
    {
+
       m_ecursor = ecursor;
+
    }
+
+
+   void interaction::_001OnMouseEnter(::message::message * pobj)
+   {
+
+      pobj->m_bRet = false;
+
+   }
+
 
    void interaction::_001OnMouseMove(::message::message * pobj)
    {
+
       SCAST_PTR(::message::mouse, pmouse, pobj);
+
       pmouse->m_ecursor = get_cursor();
+
    }
 
 
+   void interaction::_001OnMouseLeave(::message::message * pobj)
+   {
 
+      SCAST_PTR(::message::base, pbase, pobj);
+
+      sp(interaction) pui = top_child();
+
+      while (pui != NULL)
+      {
+
+         if (pui->m_bCursorInside)
+         {
+
+            pui->m_bCursorInside = false;
+
+            pui->message_handler(pbase);
+
+            pui->message_handler(pbase);
+
+         }
+
+         pui = pui->under_sibling();
+
+      }
+
+      pobj->m_bRet = false;
+
+   }
 
 
    bool interaction::can_merge(::user::interaction * pui)
    {
+
       UNREFERENCED_PARAMETER(pui);
+
       return false;
+
    }
+
 
    bool interaction::merge(::user::interaction * pui)
    {
+
       UNREFERENCED_PARAMETER(pui);
+
       return false;
+
    }
+
 
    ::user::elemental * interaction::first_child_elemental()
    {
@@ -8256,27 +8287,6 @@ restart:
 
       }
 
-      if (m_bCursorRedraw)
-      {
-
-         point ptCursor;
-
-         Session.get_cursor_pos(ptCursor);
-
-         if (m_ptCursor != ptCursor)
-         {
-
-            if (_001IsPointInside(ptCursor))
-            {
-
-               return true;
-
-            }
-
-         }
-
-      }
-
       if (m_pimpl->has_pending_graphical_update())
       {
 
@@ -8429,7 +8439,12 @@ restart:
 
       m_bRedraw = false;
 
-      Session.get_cursor_pos(m_ptCursor);
+      if(m_pimpl.is_set())
+      {
+
+         m_pimpl->on_after_graphical_update();
+
+      }
 
    }
 

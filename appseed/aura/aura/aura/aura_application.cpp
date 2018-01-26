@@ -530,11 +530,15 @@ namespace aura
 
       try
       {
+
          pcreate->m_spCommandLine->m_varQuery["document"].unset();
+
       }
       catch (...)
       {
+
       }
+
       //sp(::core::session) pbergedge = pcreate->m_spCommandLine->m_varQuery["bergedge_callback"].cast < ::core::session >();
       // todobergedge
       /*if(pbergedge != NULL)
@@ -1086,145 +1090,8 @@ namespace aura
       }
 
 
-      //evClose.ResetEvent();
-
       try
       {
-
-         //   //::fork(this, [&]()
-         //   {
-
-         //      try
-         //      {
-
-         //         string strParam1 = strParam;
-
-         //         open_browser_enum e;
-
-         //         if (strId == "chrome" || strId == "commander")
-         //         {
-
-         //            e.m_strTopic = " - Google Chrome";
-
-         //            e.m_strCounterTopic = " - Google Chrome";
-
-         //         }
-         //         else if (strId == "vivaldi")
-         //         {
-
-         //         }
-         //         else
-         //         {
-
-
-         //         }
-
-         //         ::file::path pathProfile = pathAppDataDir / "ca2" / strBrowserProfile / "Profile" / strProfile;
-
-         //         e.m_hwndaCounterTopic.remove_all();
-
-         //         ::EnumWindows(&enum_proc_ff_counter_topic, (LPARAM)&e);
-
-         //         bool bFound;
-
-         //         string strProfilePrefix = strProfile;
-
-         //         string strProfileSuffix;
-
-         //         strsize iFind = strProfile.find_last_in('.');
-
-         //         if (iFind >= 0)
-         //         {
-
-         //            strProfilePrefix = strProfile.Left(iFind + 1);
-
-         //            strProfileSuffix = strProfile.Mid(iFind + 1);
-
-         //            if (strProfileSuffix == "browser_day")
-         //            {
-
-         //               strProfileSuffix = "browser_night";
-
-         //            }
-         //            else
-         //            {
-
-         //               strProfileSuffix = "browser_day";
-
-         //            }
-
-         //         }
-
-         //         ::file::path pathPrefix = pathAppDataDir / "ca2" / strBrowserProfile / "Profile" / strProfilePrefix;
-
-         //         ::file::path pathCounter = pathAppDataDir / "ca2" / strBrowserProfile / "Profile" / strProfilePrefix + strProfileSuffix;
-
-         //      repeat_counter_search:
-
-         //         bFound = false;
-
-         //         if (e.m_hwndaCounterTopic.has_elements())
-         //         {
-
-         //            for (auto w : e.m_hwndaCounterTopic)
-         //            {
-
-         //               DWORD dwPid = 0;
-
-         //               ::GetWindowThreadProcessId(w, &dwPid);
-
-         //               if (dwPid != 0)
-         //               {
-
-         //                  HANDLE h = OpenProcess(PROCESS_ALL_ACCESS, TRUE, dwPid);
-
-         //                  if (h != INVALID_HANDLE_VALUE)
-         //                  {
-
-         //                     string strCmd = get_command_line(h);
-
-         //                     if (strCmd.contains_ci(pathPrefix) && !strCmd.contains_ci(pathProfile))
-         //                     {
-
-         //                        do_events();
-
-         //                        //SendCtrlShiftQToChrome(w, 30, this);
-
-         //                        do_events();
-
-         //                        bFound = true;
-
-         //                     }
-
-         //                  }
-
-         //                  ::CloseHandle(h);
-
-         //               }
-
-         //            }
-
-         //         }
-
-         //         if (bFound)
-         //         {
-
-         //            goto repeat_counter_search;
-
-         //         }
-
-         //      }
-         //      catch (...)
-         //      {
-
-
-         //      }
-
-         //      evClose.SetEvent();
-
-         //      //});
-
-         //   }
 
          bool bFound = false;
 
@@ -1232,28 +1099,24 @@ namespace aura
 
 #ifdef WINDOWSEX
 
-
          open_browser_enum e;
+
          if (strId == "chrome" || strId == "commander")
          {
 
             e.m_strTopic = " - Google Chrome";
+
             e.m_strCounterTopic = " - Google Chrome";
 
          }
          else if (strId == "vivaldi")
          {
 
-
          }
          else
          {
 
-
          }
-
-
-
 
          e.m_hwndaTopic.remove_all();
 
@@ -1305,9 +1168,6 @@ namespace aura
 
                            Application.file().put_contents(::dir::system() / strProfile + "-request.json", var.get_json());
 
-
-                           //                        SendURLToChrome(w, strUrl + " ", this);
-
                         }
 
                      }
@@ -1348,70 +1208,17 @@ namespace aura
             }
             else
             {
+
                strParam = "";
-               //strParam.trim_left();
-
-               //strsize iFind = strParam.find("%1");
-
-               ////if (iFind == 0 || iFind == 1)
-               //{
-
-               //   if (strParam.get_length() <= 4)
-               //   {
-
-               //      strParam = "";
-
-               //   }
-               //   else
-               //   {
-
-               //      if (iFind == 0)
-               //      {
-
-               //         strParam = strParam.Mid(2);
-
-               //      }
-               //      else
-               //      {
-
-               //         strParam = strParam.Mid(4);
-
-               //      }
-
-               //   }
-               //}
-               /*else if(iFind >=2 )
-               {
-
-                  if (strParam[iFind-1] == '\"' && strParam[iFind + 2] == '\"')
-                  {
-
-                     strParam = strParam.Left(iFind - 1) + strParam.Mid(iFind + 3);
-
-                  }
-                  else if (strParam[iFind - 1] == '\"' && strParam[iFind + 2] == '\"')
-                  {
-
-                     strParam = strParam.Left(iFind - 1) + strParam.Mid(iFind + 3);
-
-                  }
-                  else
-                  {
-
-                     strParam = strParam.Left(iFind) + strParam.Mid(iFind + 2);
-
-                  }
-
-
-
-               }*/
 
             }
 
          }
 
 #ifdef WINDOWS
+
          {
+
             if (strParam.trimmed().begins_ci("--"))
             {
 
@@ -1723,7 +1530,7 @@ namespace aura
 
    }
 
-
+   // GitHub app#21
    void application::firefox(string strUrl, string strBrowser, string strProfile, string strParam)
    {
 
@@ -1737,8 +1544,6 @@ namespace aura
       string strBrowserDir;
       string strBrowserHelperPath;
       string strBrowserHelperDir;
-
-      manual_reset_event evClose(this);
 
       ::file::path pathAppDataDir(getenv("APPDATA"));
 
@@ -1789,6 +1594,8 @@ namespace aura
       bool bFound = false;
 
 #ifdef WINDOWSEX
+
+      manual_reset_event evClose(this);
 
       open_browser_enum e;
 
@@ -1875,6 +1682,7 @@ namespace aura
       {
 
          call_async(strBrowserPath, strParam, strBrowserDir, SW_SHOW, false);
+
          call_async(strBrowserHelperPath, "/SetAsDefaultAppUser", strBrowserHelperDir, SW_HIDE, false);
 
       }
@@ -1890,11 +1698,16 @@ namespace aura
 
       }
 
+#ifdef WINDOWSEX
+
       evClose.wait(seconds(60));
 
 #endif
 
+#endif
+
    }
+
 
    void application::browser(string strUrl, string strBrowser, string strProfile, string strTarget)
    {
@@ -2851,7 +2664,7 @@ run:
          if (!InitApplication())
          {
 
-            goto InitFailure;
+            return false;
 
          }
 
@@ -2869,7 +2682,7 @@ run:
 
          ::aura::del(pe);
 
-         goto InitFailure;
+         return false;
 
       }
       catch (...)
@@ -2877,7 +2690,7 @@ run:
 
          //thisexcall << 1 << m_iErrorCode;
 
-         goto InitFailure;
+         return false;
 
       }
 
@@ -2889,7 +2702,7 @@ run:
          if (!process_init())
          {
 
-            goto InitFailure;
+            return false;
 
          }
 
@@ -2905,13 +2718,13 @@ run:
 
          ::aura::del(pe);
 
-         goto InitFailure;
+         return false;
 
       }
       catch (...)
       {
 
-         goto InitFailure;
+         return false;
 
       }
 
@@ -2925,7 +2738,7 @@ run:
          if (!init_application())
          {
 
-            goto InitFailure;
+            return false;
 
          }
 
@@ -2941,13 +2754,13 @@ run:
 
          esp671 esp(pexception);
 
-         goto InitFailure;
+         return false;
 
       }
       catch (...)
       {
 
-         goto InitFailure;
+         return false;
 
       }
 
@@ -2961,7 +2774,7 @@ run:
 
             check_install();
 
-            _throw_exit(exit_system);
+            return false;
 
          }
          else
@@ -2970,7 +2783,7 @@ run:
             if (!init_instance())
             {
 
-               goto InitFailure;
+               return false;
 
             }
 
@@ -2988,27 +2801,24 @@ run:
 
          esp671 esp(pexception);
 
-         goto InitFailure;
+         return false;
 
       }
       catch (...)
       {
 
-         goto InitFailure;
+         return false;
 
       }
 
       return true;
-
-InitFailure:
-
-      return false;
 
    }
 
 
    void application::application_pos_run()
    {
+
       try
       {
 
@@ -3352,14 +3162,6 @@ retry_license:
       return true;
 
    }
-
-
-
-
-
-
-
-
 
 
    void application::on_request(::create * pcreate)
@@ -4152,10 +3954,18 @@ retry_license:
 #endif
 
       if (strLocale.is_empty())
-         strLocale = "se";
+      {
+
+         strLocale = "_std";
+
+      }
 
       if (strSchema.is_empty())
-         strSchema = "se";
+      {
+
+         strSchema = "_std";
+
+      }
 
       if (strLocaleSystem.has_char())
          strLocale = strLocaleSystem;
@@ -6031,7 +5841,7 @@ retry_license:
 
             ::file::path pathModule;
 
-            DWORD dwExitCode = 0;
+            ::process::exit_status exitstatus;
 
             bool bTimedOut = false;
 
@@ -6106,7 +5916,37 @@ retry_license:
             //#if defined(APPLEOS)
             //                   strPath = "/usr/bin/open -n " + strPath + " --args : app=" + notinstalled.m_strId + " install build=" + strBuild + " locale=" + notinstalled.m_strLocale + " schema=" + //notinstalled.m_strSchema;
             //#else
-            strParam = " : install app=" + pnotinstalled->m_strAppId + " platform="+ pnotinstalled->m_strPlatform + " configuration=" + pnotinstalled->m_strConfiguration + " locale=" + pnotinstalled->m_strLocale + " schema=" + pnotinstalled->m_strSchema;
+
+            //strParam = " : install app=" + pnotinstalled->m_strAppId + " platform=" + pnotinstalled->m_strPlatform + " configuration=" + pnotinstalled->m_strConfiguration + " locale=" + pnotinstalled->m_strLocale + " schema=" + pnotinstalled->m_strSchema;
+
+            strParam = " : install ";
+
+            stringa straKeys;
+
+            #ifdef WINDOWS
+
+            straKeys.add("app");
+
+            //strParam += " app=" + pnotinstalled->m_strAppId;
+
+            #endif
+
+            straKeys.add("platform");
+
+            straKeys.add("configuration");
+
+            straKeys.add("locale");
+
+            straKeys.add("schema");
+
+            strParam += System.handler()->m_spcommandline->m_varQuery.propset().get_command_line(straKeys);
+
+            //{
+
+            //   strParam
+
+            //}
+
             //#endif
 
             //               if(App(notinstalled.get_app()).is_serviceable() && !App(notinstalled.get_app()).is_user_service())
@@ -6186,7 +6026,7 @@ retry_license:
             //                  }
             //
             //               }
-            //else
+            //               else
 
             int iRet = IDNO;
 
@@ -6205,11 +6045,11 @@ retry_license:
 
 #ifdef LINUX
 
-                     dwExitCode = System.process().synch(string(path) + strParam, SW_HIDE, durationWait, &bTimedOut);
+                     exitstatus = System.process().synch(string(path) + strParam, SW_HIDE, durationWait, &bTimedOut);
 
 #else
 
-                     dwExitCode = System.process().elevated_synch(string(path) + strParam, SW_HIDE, durationWait, &bTimedOut);
+                     exitstatus = System.process().elevated_synch(string(path) + strParam, SW_HIDE, durationWait, &bTimedOut);
 
 #endif
 
@@ -6233,7 +6073,7 @@ retry_license:
                pnotinstalled->m_bContinue = false;
 
             }
-            else if (dwExitCode == 0)
+            else if (exitstatus.m_iExitCode == 0)
             {
 
                ::simple_message_box(NULL, "Successfully run : " + string(path) + strParam, "Installation Succesful", MB_ICONINFORMATION | MB_OK);
@@ -6244,7 +6084,14 @@ retry_license:
             else
             {
 
-               ::simple_message_box(NULL, string(path) + strParam + "\n\nFailed return code : " + ::str::from((uint32_t)dwExitCode), "Debug only message, please install.", MB_ICONINFORMATION | MB_OK);
+               string strMessage;
+
+               strMessage.Format("Failed return code : %d (%d, %d)",
+                  exitstatus.m_iExitCode,
+                  exitstatus.m_iExitSignal,
+                  exitstatus.m_iExitStop);
+
+               ::simple_message_box(NULL, string(path) + strParam + "\n\n" + strMessage, "Debug only message, please install.", MB_ICONINFORMATION | MB_OK);
 
                pnotinstalled->m_bContinue = false;
 

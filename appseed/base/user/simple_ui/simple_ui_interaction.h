@@ -48,18 +48,9 @@ namespace simple_ui
          virtual bool has_text_input();
          virtual COLORREF get_action_hover_border_color();
 
-         DECL_GEN_SIGNAL(_001OnChar);
-         DECL_GEN_SIGNAL(_001OnLButtonDown);
-         DECL_GEN_SIGNAL(_001OnLButtonUp);
-         DECL_GEN_SIGNAL(_001OnMouseMove);
-
-
          virtual bool on_action(const char * pszId);
 
-
          virtual bool keyboard_focus_is_focusable();
-
-//      virtual style * get_style();
 
          virtual index hit_test(point point,::user::e_element & eelement);
 

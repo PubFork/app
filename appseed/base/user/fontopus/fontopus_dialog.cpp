@@ -425,7 +425,7 @@ namespace fontopus
 
       //m_login.on_layout();
 
-      
+
 
    }
 
@@ -460,12 +460,12 @@ namespace fontopus
 
       SCAST_PTR(::message::mouse,pmouse,pobj);
 
-      if(pmouse->previous())
-         return;
-
       ReleaseCapture();
 
       m_bDrag = false;
+
+      if(pmouse->previous())
+         return;
 
       pobj->m_bRet = true;
 
@@ -529,12 +529,12 @@ namespace fontopus
 
    }
 
-   
+
    bool dialog::has_pending_graphical_update()
    {
-      
+
       return IsWindowVisible();
-      
+
    }
 
 

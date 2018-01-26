@@ -25,11 +25,12 @@ namespace userex
 
       set_view_creator(this);
 
-
    }
+
 
    pane_tab_view::~pane_tab_view()
    {
+
    }
 
 

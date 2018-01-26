@@ -8,6 +8,10 @@
 
 void wm_iconify_window(oswindow w);
 
+
+void windowing_output_debug_string(const char * pszDebugString);
+
+
 Display * x11_get_display();
 void wm_state_above_raw(oswindow w, bool bSet);
 void wm_toolwindow(oswindow w, bool bSet);
@@ -688,7 +692,7 @@ namespace linux
       IGUI_MSG_LINK(WM_CREATE,pinterface,this,&interaction_impl::_001OnCreate);
 
 
-      IGUI_MSG_LINK(WM_SIZE              , pinterface, this, &interaction_impl::_001OnSize);
+      IGUI_MSG_LINK(WM_SIZE, pinterface, this, &interaction_impl::_001OnSize);
 
       if(!m_pui->m_bMessageWindow)
       {
@@ -1645,360 +1649,360 @@ namespace linux
    pMsgcache->pMessageMap = pMessageMap;
 
    for (// pMessageMap already init'ed  //; pMessageMap->pfnGetBaseMap != NULL;
-pMessageMap = (*pMessageMap->pfnGetBaseMap)())
-{
-// Note: catch not so common but fatal mistake!!
-//       // BEGIN_MESSAGE_MAP(CMyWnd, CMyWnd)
-ASSERT(pMessageMap != (*pMessageMap->pfnGetBaseMap)());
-if (message < 0xC000)
-{
-// constant interaction_impl message
-if ((lpEntry = ::ca2::FindMessageEntry(pMessageMap->lpEntries,
-message, 0, 0)) != NULL)
-{
-pMsgcache->lpEntry = lpEntry;
-winMsgLock.unlock();
-goto LDispatch;
-}
-}
-else
-{
-// registered windows message
-lpEntry = pMessageMap->lpEntries;
-while ((lpEntry = ::ca2::FindMessageEntry(lpEntry, 0xC000, 0, 0)) != NULL)
-{
-UINT* pnID = (UINT*)(lpEntry->nSig);
-ASSERT(*pnID >= 0xC000 || *pnID == 0);
-// must be successfully registered
-if (*pnID == message)
-{
-pMsgcache->lpEntry = lpEntry;
-winMsgLock.unlock();
-goto LDispatchRegistered;
-}
-lpEntry++;      // keep looking past this one
-}
-}
-}
+   pMessageMap = (*pMessageMap->pfnGetBaseMap)())
+   {
+   // Note: catch not so common but fatal mistake!!
+   //       // BEGIN_MESSAGE_MAP(CMyWnd, CMyWnd)
+   ASSERT(pMessageMap != (*pMessageMap->pfnGetBaseMap)());
+   if (message < 0xC000)
+   {
+   // constant interaction_impl message
+   if ((lpEntry = ::ca2::FindMessageEntry(pMessageMap->lpEntries,
+   message, 0, 0)) != NULL)
+   {
+   pMsgcache->lpEntry = lpEntry;
+   winMsgLock.unlock();
+   goto LDispatch;
+   }
+   }
+   else
+   {
+   // registered windows message
+   lpEntry = pMessageMap->lpEntries;
+   while ((lpEntry = ::ca2::FindMessageEntry(lpEntry, 0xC000, 0, 0)) != NULL)
+   {
+   UINT* pnID = (UINT*)(lpEntry->nSig);
+   ASSERT(*pnID >= 0xC000 || *pnID == 0);
+   // must be successfully registered
+   if (*pnID == message)
+   {
+   pMsgcache->lpEntry = lpEntry;
+   winMsgLock.unlock();
+   goto LDispatchRegistered;
+   }
+   lpEntry++;      // keep looking past this one
+   }
+   }
+   }
 
-pMsgcache->lpEntry = NULL;
-winMsgLock.unlock();
-return FALSE;
-}
+   pMsgcache->lpEntry = NULL;
+   winMsgLock.unlock();
+   return FALSE;
+   }
 
-LDispatch:
-ASSERT(message < 0xC000);
+   LDispatch:
+   ASSERT(message < 0xC000);
 
-mmf.pfn = lpEntry->pfn;
+   mmf.pfn = lpEntry->pfn;
 
-switch (lpEntry->nSig)
-{
-default:
-ASSERT(FALSE);
-break;
-case ::ca2::Sig_l_p:
-{
-point point(lparam);
-lResult = (this->*mmf.pfn_l_p)(point);
-break;
-}
-case ::ca2::Sig_b_D_v:
-lResult = (this->*mmf.pfn_b_D)(::linux::graphics::from_handle(reinterpret_cast<HDC>(wparam)));
-break;
+   switch (lpEntry->nSig)
+   {
+   default:
+   ASSERT(FALSE);
+   break;
+   case ::ca2::Sig_l_p:
+   {
+   point point(lparam);
+   lResult = (this->*mmf.pfn_l_p)(point);
+   break;
+   }
+   case ::ca2::Sig_b_D_v:
+   lResult = (this->*mmf.pfn_b_D)(::linux::graphics::from_handle(reinterpret_cast<HDC>(wparam)));
+   break;
 
-case ::ca2::Sig_b_b_v:
-lResult = (this->*mmf.pfn_b_b)(static_cast<bool>(wparam));
-break;
+   case ::ca2::Sig_b_b_v:
+   lResult = (this->*mmf.pfn_b_b)(static_cast<bool>(wparam));
+   break;
 
-case ::ca2::Sig_b_u_v:
-lResult = (this->*mmf.pfn_b_u)(static_cast<UINT>(wparam));
-break;
+   case ::ca2::Sig_b_u_v:
+   lResult = (this->*mmf.pfn_b_u)(static_cast<UINT>(wparam));
+   break;
 
-case ::ca2::Sig_b_h_v:
-lResult = (this->*mmf.pfn_b_h)(reinterpret_cast<HANDLE>(wparam));
-break;
+   case ::ca2::Sig_b_h_v:
+   lResult = (this->*mmf.pfn_b_h)(reinterpret_cast<HANDLE>(wparam));
+   break;
 
-case ::ca2::Sig_i_u_v:
-lResult = (this->*mmf.pfn_i_u)(static_cast<UINT>(wparam));
-break;
+   case ::ca2::Sig_i_u_v:
+   lResult = (this->*mmf.pfn_i_u)(static_cast<UINT>(wparam));
+   break;
 
-case ::ca2::Sig_C_v_v:
-lResult = reinterpret_cast<LRESULT>((this->*mmf.pfn_C_v)());
-break;
+   case ::ca2::Sig_C_v_v:
+   lResult = reinterpret_cast<LRESULT>((this->*mmf.pfn_C_v)());
+   break;
 
-case ::ca2::Sig_v_u_W:
-(this->*mmf.pfn_v_u_W)(static_cast<UINT>(wparam),
-::linux::interaction_impl::from_handle(reinterpret_cast<oswindow>(lparam)));
-break;
+   case ::ca2::Sig_v_u_W:
+   (this->*mmf.pfn_v_u_W)(static_cast<UINT>(wparam),
+   ::linux::interaction_impl::from_handle(reinterpret_cast<oswindow>(lparam)));
+   break;
 
-case ::ca2::Sig_u_u_v:
-lResult = (this->*mmf.pfn_u_u)(static_cast<UINT>(wparam));
-break;
+   case ::ca2::Sig_u_u_v:
+   lResult = (this->*mmf.pfn_u_u)(static_cast<UINT>(wparam));
+   break;
 
-case ::ca2::Sig_b_v_v:
-lResult = (this->*mmf.pfn_b_v)();
-break;
+   case ::ca2::Sig_b_v_v:
+   lResult = (this->*mmf.pfn_b_v)();
+   break;
 
-case ::ca2::Sig_b_W_uu:
-lResult = (this->*mmf.pfn_b_W_u_u)(::linux::interaction_impl::from_handle(reinterpret_cast<oswindow>(wparam)),
-LOWORD(lparam), HIWORD(lparam));
-break;
+   case ::ca2::Sig_b_W_uu:
+   lResult = (this->*mmf.pfn_b_W_u_u)(::linux::interaction_impl::from_handle(reinterpret_cast<oswindow>(wparam)),
+   LOWORD(lparam), HIWORD(lparam));
+   break;
 
-case ::ca2::Sig_b_W_COPYDATASTRUCT:
-lResult = (this->*mmf.pfn_b_W_COPYDATASTRUCT)(
-::linux::interaction_impl::from_handle(reinterpret_cast<oswindow>(wparam)),
-reinterpret_cast<COPYDATASTRUCT*>(lparam));
-break;
+   case ::ca2::Sig_b_W_COPYDATASTRUCT:
+   lResult = (this->*mmf.pfn_b_W_COPYDATASTRUCT)(
+   ::linux::interaction_impl::from_handle(reinterpret_cast<oswindow>(wparam)),
+   reinterpret_cast<COPYDATASTRUCT*>(lparam));
+   break;
 
-case ::ca2::Sig_b_v_HELPINFO:
-lResult = (this->*mmf.pfn_b_HELPINFO)(reinterpret_cast<LPHELPINFO>(lparam));
-break;
+   case ::ca2::Sig_b_v_HELPINFO:
+   lResult = (this->*mmf.pfn_b_HELPINFO)(reinterpret_cast<LPHELPINFO>(lparam));
+   break;
 
-case ::ca2::Sig_CTLCOLOR:
-{
-// special case for OnCtlColor to avoid too many temporary objects
-ASSERT(message == WM_CTLCOLOR);
-__CTLCOLOR* pCtl = reinterpret_cast<__CTLCOLOR*>(lparam);
-::draw2d::graphics_sp dcTemp;
-dcTemp.set_handle1(pCtl->hDC);
-interaction_impl wndTemp;
-wndTemp.set_handle(pCtl->hWnd);
-UINT nCtlType = pCtl->nCtlType;
-// if not coming from a permanent interaction_impl, use stack temporary
-sp(::interaction_impl) pWnd = ::linux::interaction_impl::FromHandlePermanent(wndTemp.get_handle());
-if (pWnd == NULL)
-{
-pWnd = &wndTemp;
-}
-HBRUSH hbr = (this->*mmf.pfn_B_D_W_u)(&dcTemp, pWnd, nCtlType);
-// fast detach of temporary objects
-dcTemp.set_handle1(NULL);
-wndTemp.set_handle(NULL);
-lResult = reinterpret_cast<LRESULT>(hbr);
-}
-break;
+   case ::ca2::Sig_CTLCOLOR:
+   {
+   // special case for OnCtlColor to avoid too many temporary objects
+   ASSERT(message == WM_CTLCOLOR);
+   __CTLCOLOR* pCtl = reinterpret_cast<__CTLCOLOR*>(lparam);
+   ::draw2d::graphics_sp dcTemp;
+   dcTemp.set_handle1(pCtl->hDC);
+   interaction_impl wndTemp;
+   wndTemp.set_handle(pCtl->hWnd);
+   UINT nCtlType = pCtl->nCtlType;
+   // if not coming from a permanent interaction_impl, use stack temporary
+   sp(::interaction_impl) pWnd = ::linux::interaction_impl::FromHandlePermanent(wndTemp.get_handle());
+   if (pWnd == NULL)
+   {
+   pWnd = &wndTemp;
+   }
+   HBRUSH hbr = (this->*mmf.pfn_B_D_W_u)(&dcTemp, pWnd, nCtlType);
+   // fast detach of temporary objects
+   dcTemp.set_handle1(NULL);
+   wndTemp.set_handle(NULL);
+   lResult = reinterpret_cast<LRESULT>(hbr);
+   }
+   break;
 
-case ::ca2::Sig_CTLCOLOR_REFLECT:
-{
-// special case for CtlColor to avoid too many temporary objects
-ASSERT(message == WM_REFLECT_BASE+WM_CTLCOLOR);
-__CTLCOLOR* pCtl = reinterpret_cast<__CTLCOLOR*>(lparam);
-::draw2d::graphics_sp dcTemp;
-dcTemp.set_handle1(pCtl->hDC);
-UINT nCtlType = pCtl->nCtlType;
-HBRUSH hbr = (this->*mmf.pfn_B_D_u)(&dcTemp, nCtlType);
-// fast detach of temporary objects
-dcTemp.set_handle1(NULL);
-lResult = reinterpret_cast<LRESULT>(hbr);
-}
-break;
+   case ::ca2::Sig_CTLCOLOR_REFLECT:
+   {
+   // special case for CtlColor to avoid too many temporary objects
+   ASSERT(message == WM_REFLECT_BASE+WM_CTLCOLOR);
+   __CTLCOLOR* pCtl = reinterpret_cast<__CTLCOLOR*>(lparam);
+   ::draw2d::graphics_sp dcTemp;
+   dcTemp.set_handle1(pCtl->hDC);
+   UINT nCtlType = pCtl->nCtlType;
+   HBRUSH hbr = (this->*mmf.pfn_B_D_u)(&dcTemp, nCtlType);
+   // fast detach of temporary objects
+   dcTemp.set_handle1(NULL);
+   lResult = reinterpret_cast<LRESULT>(hbr);
+   }
+   break;
 
-case ::ca2::Sig_i_u_W_u:
-lResult = (this->*mmf.pfn_i_u_W_u)(LOWORD(wparam),
-::linux::interaction_impl::from_handle(reinterpret_cast<oswindow>(lparam)), HIWORD(wparam));
-break;
+   case ::ca2::Sig_i_u_W_u:
+   lResult = (this->*mmf.pfn_i_u_W_u)(LOWORD(wparam),
+   ::linux::interaction_impl::from_handle(reinterpret_cast<oswindow>(lparam)), HIWORD(wparam));
+   break;
 
-case ::ca2::Sig_i_uu_v:
-lResult = (this->*mmf.pfn_i_u_u)(LOWORD(wparam), HIWORD(wparam));
-break;
+   case ::ca2::Sig_i_uu_v:
+   lResult = (this->*mmf.pfn_i_u_u)(LOWORD(wparam), HIWORD(wparam));
+   break;
 
-case ::ca2::Sig_i_W_uu:
-lResult = (this->*mmf.pfn_i_W_u_u)(::linux::interaction_impl::from_handle(reinterpret_cast<oswindow>(wparam)),
-LOWORD(lparam), HIWORD(lparam));
-break;
+   case ::ca2::Sig_i_W_uu:
+   lResult = (this->*mmf.pfn_i_W_u_u)(::linux::interaction_impl::from_handle(reinterpret_cast<oswindow>(wparam)),
+   LOWORD(lparam), HIWORD(lparam));
+   break;
 
-case ::ca2::Sig_i_v_s:
-lResult = (this->*mmf.pfn_i_s)(reinterpret_cast<LPTSTR>(lparam));
-break;
+   case ::ca2::Sig_i_v_s:
+   lResult = (this->*mmf.pfn_i_s)(reinterpret_cast<LPTSTR>(lparam));
+   break;
 
-case ::ca2::Sig_l_w_l:
-lResult = (this->*mmf.pfn_l_w_l)(wparam, lparam);
-break;
-
-
-
-case ::ca2::Sig_v_b_h:
-(this->*mmf.pfn_v_b_h)(static_cast<bool>(wparam),
-reinterpret_cast<HANDLE>(lparam));
-break;
-
-case ::ca2::Sig_v_h_v:
-(this->*mmf.pfn_v_h)(reinterpret_cast<HANDLE>(wparam));
-break;
-
-case ::ca2::Sig_v_h_h:
-(this->*mmf.pfn_v_h_h)(reinterpret_cast<HANDLE>(wparam),
-reinterpret_cast<HANDLE>(lparam));
-break;
-
-case ::ca2::Sig_v_v_v:
-(this->*mmf.pfn_v_v)();
-break;
-
-case ::ca2::Sig_v_u_v:
-(this->*mmf.pfn_v_u)(static_cast<UINT>(wparam));
-break;
-
-case ::ca2::Sig_v_u_u:
-(this->*mmf.pfn_v_u_u)(static_cast<UINT>(wparam), static_cast<UINT>(lparam));
-break;
-
-case ::ca2::Sig_v_uu_v:
-(this->*mmf.pfn_v_u_u)(LOWORD(wparam), HIWORD(wparam));
-break;
-
-case ::ca2::Sig_v_v_ii:
-(this->*mmf.pfn_v_i_i)(GET_X_LPARAM(lparam), GET_Y_LPARAM(lparam));
-break;
-
-case ::ca2::Sig_v_u_uu:
-(this->*mmf.pfn_v_u_u_u)(static_cast<UINT>(wparam), LOWORD(lparam), HIWORD(lparam));
-break;
-
-case ::ca2::Sig_v_u_ii:
-(this->*mmf.pfn_v_u_i_i)(static_cast<UINT>(wparam), LOWORD(lparam), HIWORD(lparam));
-break;
-
-case ::ca2::Sig_v_w_l:
-(this->*mmf.pfn_v_w_l)(wparam, lparam);
-break;
-
-case ::ca2::Sig_MDIACTIVATE:
-(this->*mmf.pfn_v_b_W_W)(get_handle() == reinterpret_cast<oswindow>(lparam),
-::linux::interaction_impl::from_handle(reinterpret_cast<oswindow>(lparam)),
-::linux::interaction_impl::from_handle(reinterpret_cast<oswindow>(wparam)));
-break;
-
-case ::ca2::Sig_v_D_v:
-(this->*mmf.pfn_v_D)(::linux::graphics::from_handle(reinterpret_cast<HDC>(wparam)));
-break;
+   case ::ca2::Sig_l_w_l:
+   lResult = (this->*mmf.pfn_l_w_l)(wparam, lparam);
+   break;
 
 
-case ::ca2::Sig_v_W_v:
-(this->*mmf.pfn_v_W)(::linux::interaction_impl::from_handle(reinterpret_cast<oswindow>(wparam)));
-break;
 
-case ::ca2::Sig_v_v_W:
-(this->*mmf.pfn_v_W)(::linux::interaction_impl::from_handle(reinterpret_cast<oswindow>(lparam)));
-break;
+   case ::ca2::Sig_v_b_h:
+   (this->*mmf.pfn_v_b_h)(static_cast<bool>(wparam),
+   reinterpret_cast<HANDLE>(lparam));
+   break;
 
-case ::ca2::Sig_v_W_uu:
-(this->*mmf.pfn_v_W_u_u)(::linux::interaction_impl::from_handle(reinterpret_cast<oswindow>(wparam)), LOWORD(lparam),
-HIWORD(lparam));
-break;
+   case ::ca2::Sig_v_h_v:
+   (this->*mmf.pfn_v_h)(reinterpret_cast<HANDLE>(wparam));
+   break;
 
-case ::ca2::Sig_v_W_p:
-{
-point point(lparam);
-(this->*mmf.pfn_v_W_p)(::linux::interaction_impl::from_handle(reinterpret_cast<oswindow>(wparam)), point);
-}
-break;
+   case ::ca2::Sig_v_h_h:
+   (this->*mmf.pfn_v_h_h)(reinterpret_cast<HANDLE>(wparam),
+   reinterpret_cast<HANDLE>(lparam));
+   break;
 
-case ::ca2::Sig_v_W_h:
-(this->*mmf.pfn_v_W_h)(::linux::interaction_impl::from_handle(reinterpret_cast<oswindow>(wparam)),
-reinterpret_cast<HANDLE>(lparam));
-break;
+   case ::ca2::Sig_v_v_v:
+   (this->*mmf.pfn_v_v)();
+   break;
 
-case ::ca2::Sig_ACTIVATE:
-(this->*mmf.pfn_v_u_W_b)(LOWORD(wparam),
-::linux::interaction_impl::from_handle(reinterpret_cast<oswindow>(lparam)), HIWORD(wparam));
-break;
+   case ::ca2::Sig_v_u_v:
+   (this->*mmf.pfn_v_u)(static_cast<UINT>(wparam));
+   break;
 
-case ::ca2::Sig_SCROLL:
-case ::ca2::Sig_SCROLL_REFLECT:
-{
-// special case for WM_VSCROLL and WM_HSCROLL
-ASSERT(message == WM_VSCROLL || message == WM_HSCROLL ||
-message == WM_VSCROLL+WM_REFLECT_BASE || message == WM_HSCROLL+WM_REFLECT_BASE);
-int32_t nScrollCode = (short)LOWORD(wparam);
-int32_t nPos = (short)HIWORD(wparam);
-if (lpEntry->nSig == ::ca2::Sig_SCROLL)
-(this->*mmf.pfn_v_u_u_W)(nScrollCode, nPos,
-::linux::interaction_impl::from_handle(reinterpret_cast<oswindow>(lparam)));
-else
-(this->*mmf.pfn_v_u_u)(nScrollCode, nPos);
-}
-break;
+   case ::ca2::Sig_v_u_u:
+   (this->*mmf.pfn_v_u_u)(static_cast<UINT>(wparam), static_cast<UINT>(lparam));
+   break;
 
-case ::ca2::Sig_v_v_s:
-(this->*mmf.pfn_v_s)(reinterpret_cast<LPTSTR>(lparam));
-break;
+   case ::ca2::Sig_v_uu_v:
+   (this->*mmf.pfn_v_u_u)(LOWORD(wparam), HIWORD(wparam));
+   break;
 
-case ::ca2::Sig_v_u_cs:
-(this->*mmf.pfn_v_u_cs)(static_cast<UINT>(wparam), reinterpret_cast<const char *>(lparam));
-break;
+   case ::ca2::Sig_v_v_ii:
+   (this->*mmf.pfn_v_i_i)(GET_X_LPARAM(lparam), GET_Y_LPARAM(lparam));
+   break;
 
-case ::ca2::Sig_OWNERDRAW:
-(this->*mmf.pfn_v_i_s)(static_cast<int32_t>(wparam), reinterpret_cast<LPTSTR>(lparam));
-lResult = TRUE;
-break;
+   case ::ca2::Sig_v_u_uu:
+   (this->*mmf.pfn_v_u_u_u)(static_cast<UINT>(wparam), LOWORD(lparam), HIWORD(lparam));
+   break;
 
-case ::ca2::Sig_i_i_s:
-lResult = (this->*mmf.pfn_i_i_s)(static_cast<int32_t>(wparam), reinterpret_cast<LPTSTR>(lparam));
-break;
+   case ::ca2::Sig_v_u_ii:
+   (this->*mmf.pfn_v_u_i_i)(static_cast<UINT>(wparam), LOWORD(lparam), HIWORD(lparam));
+   break;
 
-case ::ca2::Sig_u_v_p:
-{
-point point(lparam);
-lResult = (this->*mmf.pfn_u_p)(point);
-}
-break;
+   case ::ca2::Sig_v_w_l:
+   (this->*mmf.pfn_v_w_l)(wparam, lparam);
+   break;
 
-case ::ca2::Sig_u_v_v:
-lResult = (this->*mmf.pfn_u_v)();
-break;
+   case ::ca2::Sig_MDIACTIVATE:
+   (this->*mmf.pfn_v_b_W_W)(get_handle() == reinterpret_cast<oswindow>(lparam),
+   ::linux::interaction_impl::from_handle(reinterpret_cast<oswindow>(lparam)),
+   ::linux::interaction_impl::from_handle(reinterpret_cast<oswindow>(wparam)));
+   break;
 
-case ::ca2::Sig_v_b_NCCALCSIZEPARAMS:
-(this->*mmf.pfn_v_b_NCCALCSIZEPARAMS)(static_cast<bool>(wparam),
-reinterpret_cast<NCCALCSIZE_PARAMS*>(lparam));
-break;
+   case ::ca2::Sig_v_D_v:
+   (this->*mmf.pfn_v_D)(::linux::graphics::from_handle(reinterpret_cast<HDC>(wparam)));
+   break;
 
-case ::ca2::Sig_v_v_WINDOWPOS:
-(this->*mmf.pfn_v_v_WINDOWPOS)(reinterpret_cast<WINDOWPOS*>(lparam));
-break;
 
-case ::ca2::Sig_v_uu_M:
-(this->*mmf.pfn_v_u_u_M)(LOWORD(wparam), HIWORD(wparam), reinterpret_cast<HMENU>(lparam));
-break;
+   case ::ca2::Sig_v_W_v:
+   (this->*mmf.pfn_v_W)(::linux::interaction_impl::from_handle(reinterpret_cast<oswindow>(wparam)));
+   break;
 
-case ::ca2::Sig_v_u_p:
-{
-point point(lparam);
-(this->*mmf.pfn_v_u_p)(static_cast<UINT>(wparam), point);
-}
-break;
+   case ::ca2::Sig_v_v_W:
+   (this->*mmf.pfn_v_W)(::linux::interaction_impl::from_handle(reinterpret_cast<oswindow>(lparam)));
+   break;
 
-case ::ca2::Sig_SIZING:
-(this->*mmf.pfn_v_u_pr)(static_cast<UINT>(wparam), reinterpret_cast<LPRECT>(lparam));
-lResult = TRUE;
-break;
+   case ::ca2::Sig_v_W_uu:
+   (this->*mmf.pfn_v_W_u_u)(::linux::interaction_impl::from_handle(reinterpret_cast<oswindow>(wparam)), LOWORD(lparam),
+   HIWORD(lparam));
+   break;
 
-case ::ca2::Sig_MOUSEWHEEL:
-lResult = (this->*mmf.pfn_b_u_s_p)(LOWORD(wparam), (short)HIWORD(wparam),
-point(GET_X_LPARAM(lparam), GET_Y_LPARAM(lparam)));
-if (!lResult)
-return FALSE;
-break;
-case ::ca2::Sig_l:
-lResult = (this->*mmf.pfn_l_v)();
-if (lResult != 0)
-return FALSE;
-break;
-}
-goto LReturnTrue;
+   case ::ca2::Sig_v_W_p:
+   {
+   point point(lparam);
+   (this->*mmf.pfn_v_W_p)(::linux::interaction_impl::from_handle(reinterpret_cast<oswindow>(wparam)), point);
+   }
+   break;
 
-LDispatchRegistered:    // for registered windows messages
-ASSERT(message >= 0xC000);
-ASSERT(sizeof(mmf) == sizeof(mmf.pfn));
-mmf.pfn = lpEntry->pfn;
-lResult = (this->*mmf.pfn_l_w_l)(wparam, lparam);
+   case ::ca2::Sig_v_W_h:
+   (this->*mmf.pfn_v_W_h)(::linux::interaction_impl::from_handle(reinterpret_cast<oswindow>(wparam)),
+   reinterpret_cast<HANDLE>(lparam));
+   break;
 
-LReturnTrue:
-if (pResult != NULL)
-*pResult = lResult;
-return TRUE;
-}
-*/
+   case ::ca2::Sig_ACTIVATE:
+   (this->*mmf.pfn_v_u_W_b)(LOWORD(wparam),
+   ::linux::interaction_impl::from_handle(reinterpret_cast<oswindow>(lparam)), HIWORD(wparam));
+   break;
+
+   case ::ca2::Sig_SCROLL:
+   case ::ca2::Sig_SCROLL_REFLECT:
+   {
+   // special case for WM_VSCROLL and WM_HSCROLL
+   ASSERT(message == WM_VSCROLL || message == WM_HSCROLL ||
+   message == WM_VSCROLL+WM_REFLECT_BASE || message == WM_HSCROLL+WM_REFLECT_BASE);
+   int32_t nScrollCode = (short)LOWORD(wparam);
+   int32_t nPos = (short)HIWORD(wparam);
+   if (lpEntry->nSig == ::ca2::Sig_SCROLL)
+   (this->*mmf.pfn_v_u_u_W)(nScrollCode, nPos,
+   ::linux::interaction_impl::from_handle(reinterpret_cast<oswindow>(lparam)));
+   else
+   (this->*mmf.pfn_v_u_u)(nScrollCode, nPos);
+   }
+   break;
+
+   case ::ca2::Sig_v_v_s:
+   (this->*mmf.pfn_v_s)(reinterpret_cast<LPTSTR>(lparam));
+   break;
+
+   case ::ca2::Sig_v_u_cs:
+   (this->*mmf.pfn_v_u_cs)(static_cast<UINT>(wparam), reinterpret_cast<const char *>(lparam));
+   break;
+
+   case ::ca2::Sig_OWNERDRAW:
+   (this->*mmf.pfn_v_i_s)(static_cast<int32_t>(wparam), reinterpret_cast<LPTSTR>(lparam));
+   lResult = TRUE;
+   break;
+
+   case ::ca2::Sig_i_i_s:
+   lResult = (this->*mmf.pfn_i_i_s)(static_cast<int32_t>(wparam), reinterpret_cast<LPTSTR>(lparam));
+   break;
+
+   case ::ca2::Sig_u_v_p:
+   {
+   point point(lparam);
+   lResult = (this->*mmf.pfn_u_p)(point);
+   }
+   break;
+
+   case ::ca2::Sig_u_v_v:
+   lResult = (this->*mmf.pfn_u_v)();
+   break;
+
+   case ::ca2::Sig_v_b_NCCALCSIZEPARAMS:
+   (this->*mmf.pfn_v_b_NCCALCSIZEPARAMS)(static_cast<bool>(wparam),
+   reinterpret_cast<NCCALCSIZE_PARAMS*>(lparam));
+   break;
+
+   case ::ca2::Sig_v_v_WINDOWPOS:
+   (this->*mmf.pfn_v_v_WINDOWPOS)(reinterpret_cast<WINDOWPOS*>(lparam));
+   break;
+
+   case ::ca2::Sig_v_uu_M:
+   (this->*mmf.pfn_v_u_u_M)(LOWORD(wparam), HIWORD(wparam), reinterpret_cast<HMENU>(lparam));
+   break;
+
+   case ::ca2::Sig_v_u_p:
+   {
+   point point(lparam);
+   (this->*mmf.pfn_v_u_p)(static_cast<UINT>(wparam), point);
+   }
+   break;
+
+   case ::ca2::Sig_SIZING:
+   (this->*mmf.pfn_v_u_pr)(static_cast<UINT>(wparam), reinterpret_cast<LPRECT>(lparam));
+   lResult = TRUE;
+   break;
+
+   case ::ca2::Sig_MOUSEWHEEL:
+   lResult = (this->*mmf.pfn_b_u_s_p)(LOWORD(wparam), (short)HIWORD(wparam),
+   point(GET_X_LPARAM(lparam), GET_Y_LPARAM(lparam)));
+   if (!lResult)
+   return FALSE;
+   break;
+   case ::ca2::Sig_l:
+   lResult = (this->*mmf.pfn_l_v)();
+   if (lResult != 0)
+   return FALSE;
+   break;
+   }
+   goto LReturnTrue;
+
+   LDispatchRegistered:    // for registered windows messages
+   ASSERT(message >= 0xC000);
+   ASSERT(sizeof(mmf) == sizeof(mmf.pfn));
+   mmf.pfn = lpEntry->pfn;
+   lResult = (this->*mmf.pfn_l_w_l)(wparam, lparam);
+
+   LReturnTrue:
+   if (pResult != NULL)
+   *pResult = lResult;
+   return TRUE;
+   }
+   */
 
 
    /////////////////////////////////////////////////////////////////////////////
@@ -2189,15 +2193,15 @@ return TRUE;
 
          ASSERT_VALID(this);
 
-//         oswindow hWndParent = get_handle();
-//         oswindow hWndT;
-//         while ((::GetWindowLong(hWndParent, GWL_STYLE) & WS_CHILD) &&
-//            (hWndT = ::GetParent(hWndParent)) != NULL)
-//         {
-//            hWndParent = hWndT;
-//         }
-//
-//         return ::linux::interaction_impl::from_handle(hWndParent);
+   //         oswindow hWndParent = get_handle();
+   //         oswindow hWndT;
+   //         while ((::GetWindowLong(hWndParent, GWL_STYLE) & WS_CHILD) &&
+   //            (hWndT = ::GetParent(hWndParent)) != NULL)
+   //         {
+   //            hWndParent = hWndT;
+   //         }
+   //
+   //         return ::linux::interaction_impl::from_handle(hWndParent);
 
    //return NULL;
    //}
@@ -3008,9 +3012,21 @@ return TRUE;
                   }
 
                }
+               else
+               {
+
+                  output_debug_string("window is locked for drawing update");
+
+                  fflush(stdout);
+
+               }
 
                if(bUpdateScreen)
                {
+
+                  windowing_output_debug_string("\nGoing to _001UpdateScreen");
+
+                  fflush(stdout);
 
                   _001UpdateScreen();
 
@@ -3024,6 +3040,8 @@ return TRUE;
                   Sleep(20 - dwDiff);
 
                }
+
+               //Sleep(500);
 
             }
 
@@ -3800,120 +3818,6 @@ return TRUE;
 
       return ::SetWindowPos(get_handle(), (oswindow) z, x, y, cx, cy, nFlags);
 
-//      xdisplay d(m_oswindow->display());
-//
-//      if(::IsWindowVisibleRaw(m_oswindow))
-//      {
-//
-//         ::SetWindowPos(m_oswindow, (oswindow) z, x, y, cx, cy, nFlags);
-//
-//      }
-//      else
-//      {
-//
-//         XSizeHints hints = {};
-//
-//         if(!(nFlags & SWP_NOSIZE))
-//         {
-//
-//            hints.flags |= PSize;
-//
-//            hints.width = cx;
-//
-//            hints.height = cy;
-//
-//         }
-//
-//         if(!(nFlags & SWP_NOMOVE))
-//         {
-//
-//            hints.flags |= PPosition;
-//
-//            hints.x = x;
-//
-//            hints.y = y;
-//
-//         }
-//
-//         XSetNormalHints(m_oswindow->display(), m_oswindow->window(), &hints);
-//
-//         if((nFlags & SWP_SHOWWINDOW))
-//         {
-//
-//            m_oswindow->map_window();
-//
-//         }
-//
-//      }
-//
-////      {
-////
-////         if(!(nFlags & SWP_NOMOVE) && !(nFlags & SWP_NOSIZE))
-////         {
-////
-////            XMoveResizeWindow(m_oswindow->display(), m_oswindow->window(), x, y, cx, cy);
-////
-////         }
-////         else if(!(nFlags & SWP_NOMOVE))
-////         {
-////
-////            XMoveWindow(m_oswindow->display(), m_oswindow->window(), x, y);
-////
-////         }
-////         else if(!(nFlags & SWP_NOSIZE))
-////         {
-////
-////            XResizeWindow(m_oswindow->display(), m_oswindow->window(), cx, cy);
-////
-////         }
-////
-////      }
-////
-////
-//
-//
-//      if(!(nFlags & SWP_NOZORDER))
-//      {
-//
-//         wm_state_above_raw((oswindow)get_handle(), z == ZORDER_TOPMOST);
-//
-//         if(z == ZORDER_TOP)
-//         {
-//
-//            Atom atom;
-//
-//            XEvent xev;
-//
-//            ZERO(xev);
-//
-//            Window w = RootWindow(get_handle()->display(), get_handle()->m_iScreen);
-//
-//            atom = XInternAtom (d, "_NET_ACTIVE_WINDOW", False);
-//
-//            xev.xclient.type = ClientMessage;
-//            xev.xclient.send_event = True;
-//            xev.xclient.display = get_handle()->display();
-//            xev.xclient.window = get_handle()->window();
-//            xev.xclient.message_type = atom;
-//            xev.xclient.format = 32;
-//            xev.xclient.data.l[0] = 1;
-//            xev.xclient.data.l[1] = 0;
-//            xev.xclient.data.l[2] = 0;
-//            xev.xclient.data.l[3] = 0;
-//            xev.xclient.data.l[4] = 0;
-//
-//            XSendEvent (d, w, False, SubstructureRedirectMask | SubstructureNotifyMask, &xev);
-//
-//            XRaiseWindow(m_oswindow->display(), m_oswindow->window());
-//
-//         }
-//
-//      }
-//
-//      XFlush(m_oswindow->display());
-//
-//      XSync(m_oswindow->display(), False);
-
    }
 
 
@@ -4262,6 +4166,12 @@ return TRUE;
 
       }
 
+#ifdef LINUX
+
+      return m_pui->m_eappearance == ::user::appearance_iconic;
+
+#else
+
       if(GetExStyle() & WS_EX_LAYERED)
       {
 
@@ -4274,6 +4184,8 @@ return TRUE;
          return ::IsIconic((oswindow) get_handle()) != FALSE;
 
       }
+
+#endif
 
    }
 
@@ -4392,6 +4304,7 @@ return TRUE;
       m_pui->SetOwner((pOwnerWnd));
    }
 
+
    LRESULT interaction_impl::send_message(UINT message, WPARAM wparam, lparam lparam)
    {
 
@@ -4424,9 +4337,17 @@ return TRUE;
 
       m_strWindowText = lpszString;
 
+      windowing_output_debug_string("\nlinux::interaction_impl::set_window_text");
+
+      fflush(stdout);
+
       xdisplay d(m_oswindow->display());
 
       XStoreName(m_oswindow->display(), m_oswindow->window(), m_strWindowText);
+
+      windowing_output_debug_string("\nlinux::interaction_impl::set_window_text END");
+
+      fflush(stdout);
 
    }
 
@@ -4585,6 +4506,10 @@ return TRUE;
 
       ::draw2d::graphics_sp g(allocer());
 
+      windowing_output_debug_string("\nlinux::interaction_impl::GetDC");
+
+      fflush(stdout);
+
       xdisplay d(m_oswindow->display());
 
       oswindow oswindow;
@@ -4611,8 +4536,15 @@ return TRUE;
       rectClient.right = 500;
       rectClient.bottom = 500;
 //      (dynamic_cast < ::linux::graphics * >(g.m_p))->attach(cairo_create(cairo_xlib_surface_create(oswindow->display(), oswindow->interaction_impl(), oswindow->visual(),rectClient.width(), rectClient.height())));
+
+      windowing_output_debug_string("\nlinux::interaction_impl::GetDC END");
+
+      fflush(stdout);
+
       return g.detach();
+
    }
+
 
    ::draw2d::graphics * interaction_impl::GetWindowDC()
    {

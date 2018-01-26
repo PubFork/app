@@ -61,7 +61,7 @@ namespace user
          //visual::fastblur              m_fastblur;
 
          bool                          m_bPassword;
-
+         bool                          m_bEnterKeyOnPaste;
          bool                          m_bLMouseDown;
          bool                          m_bRMouseDown;
          point                         m_ptSelStart;
@@ -174,8 +174,8 @@ namespace user
 
          virtual int32_t get_wheel_scroll_delta() override;
 
-         void clipboard_copy();
-         void clipboard_paste();
+         virtual void clipboard_copy();
+         virtual void clipboard_paste();
 
          virtual bool get_line_color(COLORREF & crOverride, const string & strLine);
 

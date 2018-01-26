@@ -1003,7 +1003,13 @@ namespace user
    void interaction_impl_base::_001Print(::draw2d::graphics * pgraphics)
    {
 
-      if (GetActiveWindow() == get_wnd())
+      windowing_output_debug_string("\ninteraction_impl_base::_001Print 1");
+
+      ::user::interaction * pui = get_wnd();
+
+      windowing_output_debug_string("\ninteraction_impl_base::_001Print 2");
+
+      if (GetActiveWindow() == pui)
       {
 
          //TRACE("active");
@@ -1015,6 +1021,8 @@ namespace user
          //TRACE("not active");
 
       }
+
+      windowing_output_debug_string("\ninteraction_impl_base::_001Print 3");
 
       m_pui->_001Print(pgraphics);
 

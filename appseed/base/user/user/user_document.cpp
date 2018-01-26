@@ -183,6 +183,8 @@ namespace user
 
    void document::delete_contents()
    {
+
+      m_spadata.remove_all();
    }
 
 
@@ -641,12 +643,14 @@ namespace user
 
       {
 
+
+
          synch_lock sl(m_pmutex);
 
-         for (index index = 0; index < m_viewspa.get_count(); index++)
+         for (index i = m_viewspa.get_upper_bound(); i >= 0 ; i = m_viewspa.get_upper_bound())
          {
 
-            sp(::user::impact) pview = m_viewspa[index];
+            sp(::user::impact) pview = m_viewspa[i];
 
             sl.unlock();
 

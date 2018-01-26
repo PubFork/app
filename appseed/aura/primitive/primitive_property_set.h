@@ -145,6 +145,8 @@ public:
    string & get_json(string & str, bool bNewLine = true) const;
    string get_http_post() const { string str; return get_http_post(str); }
    string get_json() const { string str; return get_json(str); }
+   string get_command_line(const stringa & straKeys) const;
+   string get_command_line() const;
 
    static void skip_json(const char * & pszJson);
    static void skip_json(const char * & pszJson, const char * pszEnd);
@@ -432,7 +434,7 @@ inline property & property_set::operator[](id idName)
 
 inline property & property_set::get(id idName)
 {
-   
+
    assoc * p = get_assoc(idName);
 
    return *p;

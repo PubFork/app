@@ -23,7 +23,7 @@ namespace process
          uint32_t                         m_uiStartTime;
          bool *                           m_pbInitFailure;
          bool *                           m_pbPotentialTimeout;
-         uint32_t *                       m_puiRetCode;
+         exit_status *                    m_pexitstatus;
          bool                             m_bElevated;
 
 
@@ -39,6 +39,7 @@ namespace process
 
       };
 
+
       class process_processor :
          virtual public object
       {
@@ -50,7 +51,7 @@ namespace process
          bool                             m_bPotentialTimeout;
          bool *                           m_pbPotentialTimeout;
          process_thread *                 m_pthread;
-         uint32_t                         m_uiRetCode;
+         exit_status                      m_exitstatus;
          bool                             m_bElevated;
 
 
@@ -69,10 +70,10 @@ namespace process
 
       // run process and get output
       virtual var get_output(const char * pszCmdLine,const ::duration & dur= ::duration::infinite(),int32_t iShow = SW_HIDE, bool * pbPotentialTimeout = NULL);
-      virtual uint32_t retry(const char * pszCmdLine,const ::duration & dur,int32_t iShow = SW_HIDE, bool * pbPotentialTimeout = NULL);
-      virtual uint32_t synch(const char * pszCmdLine,int32_t iShow = SW_HIDE, const ::duration & dur = ::duration::infinite(), bool * pbPotentialTimeout = NULL);
+      virtual exit_status retry(const char * pszCmdLine,const ::duration & dur,int32_t iShow = SW_HIDE, bool * pbPotentialTimeout = NULL);
+      virtual exit_status synch(const char * pszCmdLine,int32_t iShow = SW_HIDE, const ::duration & dur = ::duration::infinite(), bool * pbPotentialTimeout = NULL);
       virtual bool launch(const char * pszCmdLine,int32_t iShow = SW_HIDE, const char * pszDir = NULL);
-      virtual uint32_t elevated_synch(const char * pszCmdLine,int32_t iShow = SW_HIDE,const ::duration & dur = ::duration::infinite(),bool * pbPotentialTimeout = NULL);
+      virtual exit_status elevated_synch(const char * pszCmdLine,int32_t iShow = SW_HIDE,const ::duration & dur = ::duration::infinite(),bool * pbPotentialTimeout = NULL);
 
 
 

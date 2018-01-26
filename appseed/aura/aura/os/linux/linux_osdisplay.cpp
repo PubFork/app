@@ -8,28 +8,37 @@ Display * x11_get_display();
 #define CA2_X11_WINDOW_LONG_STYLE "ca2_ccvotagus_window_long_style"
 #define CA2_X11_WINDOW_LONG_STYLE_EX "ca2_ccvotagus_window_long_style_ex"
 
+
+void windowing_output_debug_string(const char * pszDebugString);
+
+
 osdisplay_dataptra * osdisplay_data::s_pdataptra = NULL;
 mutex * osdisplay_data::s_pmutex = NULL;
+
 
 osdisplay_data::osdisplay_data()
 {
 
-   m_pmutex             = new mutex();
-   m_pdisplay           = NULL;
-   m_atomLongType       = None;
-   m_atomLongStyle      = None;
-   m_atomLongStyleEx    = 0;
-   m_countReference     = 1;
-   m_pmutexMouse        = new mutex();
+   m_pcsOsDisplayData      = new critical_section();
+   m_pdisplay              = NULL;
+   m_atomLongType          = None;
+   m_atomLongStyle         = None;
+   m_atomLongStyleEx       = 0;
+   m_countReference        = 1;
+   m_pmutexInput           = new mutex();
 
 }
+
 
 osdisplay_data::~ osdisplay_data()
 {
 
-   ::aura::del(m_pmutex);
+   ::aura::del(m_pmutexInput);
+
+   ::aura::del(m_pcsOsDisplayData);
 
 }
+
 
 int32_t osdisplay_find(Display * pdisplay)
 {
@@ -47,8 +56,12 @@ int32_t osdisplay_find(Display * pdisplay)
    return -1;
 
 }
-UINT __axis_x11_thread(void * pparam);
-UINT __axis_x11mouse_thread(void * pparam);
+
+
+void __axis_x11_thread(osdisplay_data * pdisplaydata);
+
+void __axis_x11_input_thread(osdisplay_data * pdisplaydata);
+
 osdisplay_data * osdisplay_get(Display * pdisplay)
 {
 
@@ -79,7 +92,19 @@ osdisplay_data * osdisplay_get(Display * pdisplay)
 
    ::osdisplay_data::s_pdataptra->add(pdata);
 
-   __begin_thread(::aura::system::g_p,&__axis_x11mouse_thread,pdata,::multithreading::priority_normal,0,0,NULL);
+   ::aura::system::g_p->fork([pdata]()
+   {
+
+      __axis_x11_thread(pdata);
+
+   });
+
+   ::aura::system::g_p->fork([pdata]()
+   {
+
+      __axis_x11_input_thread(pdata);
+
+   });
 
    return pdata;
 
@@ -142,6 +167,28 @@ Atom osdisplay_data::get_window_long_atom(int32_t nIndex)
 Atom osdisplay_data::intern_atom(const char * pszAtomName, bool bCreate)
 {
 
-   return XInternAtom(m_pdisplay, pszAtomName, bCreate ? 1 : 0);
+   if(m_pdisplay == NULL)
+   {
+
+      return 0;
+
+   }
+
+   return XInternAtom(m_pdisplay, pszAtomName, bCreate ? True : False);
+
+}
+
+
+Window osdisplay_data::default_root_window()
+{
+
+   if(m_pdisplay == NULL)
+   {
+
+      return None;
+
+   }
+
+   return DefaultRootWindow(m_pdisplay);
 
 }

@@ -534,14 +534,26 @@ namespace aura
             if (papp == NULL)
             {
 
-               simple_message_box("Could not create requested application: \"" + strApp + "\"", MB_OK);
-
-               ::count c = System.handler()->m_spcommandline->m_varQuery["app"].array_get_count();
-
-               if (c == 1 && System.handler()->m_spcommandline->m_varQuery["app"] == strApp)
+               if(System.handler()->m_spcommandline->m_varQuery.has_property("install")
+                  || System.handler()->m_spcommandline->m_varQuery.has_property("uninstall"))
                {
 
                   ::multithreading::post_quit(&System);
+
+               }
+               else
+               {
+
+                  simple_message_box("Could not create requested application: \"" + strApp + "\"", MB_OK);
+
+                  ::count c = System.handler()->m_spcommandline->m_varQuery["app"].array_get_count();
+
+                  if (c == 1 && System.handler()->m_spcommandline->m_varQuery["app"] == strApp)
+                  {
+
+                     ::multithreading::post_quit(&System);
+
+                  }
 
                }
 

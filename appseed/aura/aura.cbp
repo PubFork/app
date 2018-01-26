@@ -47,7 +47,7 @@
 					<Add option="-latomiconv" />
 					<Add option="-lssl" />
 					<Add option="-lcrypto" />
-					<Add option="`pkg-config --libs gtk+-3.0`" />
+					<Add option="`pkg-config --libs gtk+-3.0 gthread-2.0`" />
 					<Add option="-lace" />
 					<Add option="-lfreeimage" />
 					<Add option="-Wl,-z,defs" />
@@ -298,6 +298,10 @@
 		<Unit filename="aura/aura/aura_smart_pointer2.h" />
 		<Unit filename="aura/aura/aura_speaker.h" />
 		<Unit filename="aura/aura/aura_sprintf.h" />
+		<Unit filename="aura/aura/aura_static_start.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/aura/aura_static_start.h" />
 		<Unit filename="aura/aura/aura_str_context.h" />
 		<Unit filename="aura/aura/aura_system.cpp">
@@ -407,9 +411,17 @@
 		<Unit filename="aura/fontopus/fontopus.h" />
 		<Unit filename="aura/fontopus/fontopus_authentication_map.h" />
 		<Unit filename="aura/fontopus/fontopus_contact_list.h" />
+		<Unit filename="aura/fontopus/fontopus_fontopus.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/fontopus/fontopus_fontopus.h" />
 		<Unit filename="aura/fontopus/fontopus_licensing.h" />
 		<Unit filename="aura/fontopus/fontopus_user.h" />
+		<Unit filename="aura/fontopus/fontopus_user_authentication.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/fontopus/fontopus_user_authentication.h" />
 		<Unit filename="aura/fontopus/fontopus_user_set.h" />
 		<Unit filename="aura/fontopus/fontopus_usera.h" />
@@ -450,6 +462,10 @@
 		<Unit filename="aura/message/message_timer.h" />
 		<Unit filename="aura/node/ansios/ansios.h" />
 		<Unit filename="aura/node/ansios/ansios_pipe.h" />
+		<Unit filename="aura/node/ansios/ansios_process.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/node/ansios/ansios_process.h" />
 		<Unit filename="aura/node/ansios/ansios_thread_impl.h" />
 		<Unit filename="aura/node/linux/linux.h" />
@@ -490,6 +506,10 @@
 		<Unit filename="aura/os/ansios/ansios.h" />
 		<Unit filename="aura/os/ansios/ansios_file.h" />
 		<Unit filename="aura/os/ansios/ansios_multithreading.h" />
+		<Unit filename="aura/os/ansios/ansios_process.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/os/ansios/ansios_thread.h" />
 		<Unit filename="aura/os/cross.h" />
 		<Unit filename="aura/os/cross/ansios/ansios.h" />
@@ -641,6 +661,10 @@
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>
+		<Unit filename="aura/os/linux/linxu_bloat_pad.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/os/os.h" />
 		<Unit filename="aura/os/os2.h" />
 		<Unit filename="aura/os/os_binreloc.h" />
@@ -648,6 +672,10 @@
 		<Unit filename="aura/os/os_process.h" />
 		<Unit filename="aura/os/os_threading.h" />
 		<Unit filename="aura/os/os_time.h" />
+		<Unit filename="aura/os/os_windowing.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/os/windows/windows.h" />
 		<Unit filename="aura/os/windows/windows_graphics.cpp">
 			<Option compile="0" />
@@ -659,9 +687,25 @@
 		<Unit filename="aura/pcre/pcre.h" />
 		<Unit filename="aura/pcre/pcre_util.h" />
 		<Unit filename="aura/process/process.h" />
+		<Unit filename="aura/process/process_bidi_pipe.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/process/process_bidi_pipe.h" />
+		<Unit filename="aura/process/process_department.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/process/process_department.h" />
+		<Unit filename="aura/process/process_pipe.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/process/process_pipe.h" />
+		<Unit filename="aura/process/process_process.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/process/process_process.h" />
 		<Unit filename="aura/scripting/javascript/javascript.h" />
 		<Unit filename="aura/scripting/javascript/javascript_functions.h" />
@@ -767,7 +811,6 @@
 			<Option weight="0" />
 		</Unit>
 		<Unit filename="framework_c.h" />
-		<Unit filename="geometry_quaternions.h" />
 		<Unit filename="graphics/_graphics.cpp" />
 		<Unit filename="graphics/dib_console.h" />
 		<Unit filename="graphics/draw2d/draw2d.h" />
@@ -831,6 +874,10 @@
 		<Unit filename="multithreading/multithreading.h" />
 		<Unit filename="multithreading/multithreading_common.h" />
 		<Unit filename="multithreading/multithreading_condition.h" />
+		<Unit filename="multithreading/multithreading_core.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="multithreading/multithreading_critical_section.h" />
 		<Unit filename="multithreading/multithreading_data.h" />
 		<Unit filename="multithreading/multithreading_delay_thread.h" />
@@ -865,6 +912,10 @@
 		<Unit filename="multithreading/multithreading_synch_index_ptr_array.h" />
 		<Unit filename="multithreading/multithreading_synch_lock.h" />
 		<Unit filename="multithreading/multithreading_synch_ptr_array.h" />
+		<Unit filename="multithreading/multithreading_thread.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="multithreading/multithreading_thread.h" />
 		<Unit filename="multithreading/multithreading_thread_impl.h" />
 		<Unit filename="multithreading/multithreading_thread_os.h" />
@@ -1336,6 +1387,10 @@
 		<Unit filename="user/colorertake5/colorertake5_text_region.h" />
 		<Unit filename="user/colorertake5/colorertake5_xmldom.h" />
 		<Unit filename="user/simple/simple_message_box.h" />
+		<Unit filename="user/user/_user.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="user/user/user.h" />
 		<Unit filename="user/user/user_command.h" />
 		<Unit filename="user/user/user_const.h" />
@@ -1346,6 +1401,10 @@
 		<Unit filename="user/user/user_create_struct.h" />
 		<Unit filename="user/user/user_elemental.h" />
 		<Unit filename="user/user/user_enum.h" />
+		<Unit filename="user/user/user_frame.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="user/user/user_frame.h" />
 		<Unit filename="user/user/user_interaction.cpp">
 			<Option compile="0" />
@@ -1380,7 +1439,15 @@
 		<Unit filename="user/user/user_menu_command.h" />
 		<Unit filename="user/user/user_menu_item.h" />
 		<Unit filename="user/user/user_mouse.h" />
+		<Unit filename="user/user/user_place_holder.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="user/user/user_place_holder.h" />
+		<Unit filename="user/user/user_place_holder_container.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="user/user/user_place_holder_container.h" />
 		<Unit filename="user/user/user_primitive.h" />
 		<Unit filename="user/user/user_print_job.h" />
