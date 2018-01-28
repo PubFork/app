@@ -103,6 +103,12 @@ public:
    int                           m_iTotalErrorCount = 0;
 
 
+   #ifdef LINUX
+
+   bool                          m_bGtkApp = false;
+
+   #endif
+
    app_core(aura_main_data * pdata);
    ~app_core();
 

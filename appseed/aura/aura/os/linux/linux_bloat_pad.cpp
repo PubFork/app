@@ -1,5 +1,7 @@
 #include "framework.h"
+#include "linux_bloat_pad.h"
 
+G_DEFINE_TYPE (BloatPad, bloat_pad, GTK_TYPE_APPLICATION)
 
 BloatPad * g_pappBloatPad = NULL;
 
@@ -132,3 +134,6 @@ void bloat_pad_class_init (BloatPadClass * pclass)
   object_class->finalize                  = &bloat_pad_finalize;
 
 }
+
+
+

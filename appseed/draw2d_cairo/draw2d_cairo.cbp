@@ -15,6 +15,7 @@
 				<Option createDefFile="1" />
 				<Option createStaticLib="1" />
 				<Compiler>
+					<Add option="-fPIC" />
 					<Add option="-g" />
 					<Add option="-D_DEBUG" />
 				</Compiler>
@@ -63,6 +64,7 @@
 		</Build>
 		<Compiler>
 			<Add option="-std=c++14" />
+			<Add option="-fPIC" />
 			<Add option="-fexceptions" />
 			<Add option="-fnon-call-exceptions" />
 			<Add option="-fno-pie" />
@@ -72,7 +74,6 @@
 			<Add option="-Wno-attributes" />
 			<Add option="-Winvalid-pch" />
 			<Add option="-Wno-conversion-null" />
-			<Add option="-fPIC" />
 			<Add option="` pkg-config --cflags cairo`" />
 			<Add directory="../../../include" />
 			<Add directory="../../include" />

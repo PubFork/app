@@ -795,7 +795,7 @@ namespace aura
 
 #if !defined(METROWIN) && !defined(VSNORD) && !defined(APPLE_IOS)
 
-      if (System.m_pappcore->m_pfnNewApp == NULL && ((!System.handler()->m_varTopicQuery.has_property("install")
+      if (System.m_pappcore->m_pfnNewApp == NULL && !System.handler()->m_varTopicQuery.has_property("noinstall") && ((!System.handler()->m_varTopicQuery.has_property("install")
             && !System.handler()->m_varTopicQuery.has_property("uninstall"))
                                                     ) //         || (papp->is_serviceable() && !papp->is_user_service() && strUserName != "NetworkService"))
             && strAppId.has_char()

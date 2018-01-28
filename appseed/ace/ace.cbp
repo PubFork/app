@@ -14,6 +14,7 @@
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
 				<Compiler>
+					<Add option="-fPIC" />
 					<Add option="-m64" />
 					<Add option="-g" />
 					<Add option="-D_DEBUG" />
@@ -50,6 +51,7 @@
 		</Build>
 		<Compiler>
 			<Add option="-std=c++14" />
+			<Add option="-fPIC" />
 			<Add option="-fexceptions" />
 			<Add option="-fnon-call-exceptions" />
 			<Add option="-fno-pie" />
@@ -58,7 +60,6 @@
 			<Add option="-Wno-attributes" />
 			<Add option="-Winvalid-pch" />
 			<Add option="-Wno-conversion-null" />
-			<Add option="-fPIC" />
 			<Add directory="../../../include" />
 			<Add directory="../../include" />
 			<Add directory="." />

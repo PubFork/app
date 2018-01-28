@@ -92,19 +92,24 @@ osdisplay_data * osdisplay_get(Display * pdisplay)
 
    ::osdisplay_data::s_pdataptra->add(pdata);
 
-   ::aura::system::g_p->fork([pdata]()
+   if(!::aura::system::g_p->m_pappcore->m_bGtkApp)
    {
 
-      __axis_x11_thread(pdata);
+      ::aura::system::g_p->fork([pdata]()
+      {
 
-   });
+         __axis_x11_thread(pdata);
 
-   ::aura::system::g_p->fork([pdata]()
-   {
+      });
 
-      __axis_x11_input_thread(pdata);
+      ::aura::system::g_p->fork([pdata]()
+      {
 
-   });
+         __axis_x11_input_thread(pdata);
+
+      });
+
+   }
 
    return pdata;
 

@@ -16,6 +16,7 @@
 				<Option createStaticLib="1" />
 				<Compiler>
 					<Add option="-std=c++14" />
+					<Add option="-fPIC" />
 					<Add option="-g" />
 					<Add option="-fnon-call-exceptions" />
 					<Add option="-fno-stack-protector" />
@@ -142,9 +143,9 @@
 		</Build>
 		<Compiler>
 			<Add option="-std=c++14" />
+			<Add option="-fPIC" />
 			<Add option="-fexceptions" />
 			<Add option="`pkg-config --cflags gtk+-3.0`" />
-			<Add option="-fPIC" />
 			<Add option="-DLINUX" />
 			<Add directory="../../../include" />
 			<Add directory="framework" />
@@ -171,6 +172,7 @@
 		<Unit filename="all.h" />
 		<Unit filename="aura.h" />
 		<Unit filename="aura/_aura.cpp" />
+		<Unit filename="aura/app/app_prelude.inl" />
 		<Unit filename="aura/app/aura.inl" />
 		<Unit filename="aura/aura/aura.h" />
 		<Unit filename="aura/aura/aura_action_context.h" />
@@ -601,6 +603,7 @@
 		<Unit filename="aura/os/linux/libsn/sn.h" />
 		<Unit filename="aura/os/linux/linux.h" />
 		<Unit filename="aura/os/linux/linux.inl" />
+		<Unit filename="aura/os/linux/linux_bloat_pad.cpp" />
 		<Unit filename="aura/os/linux/linux_bloat_pad.h" />
 		<Unit filename="aura/os/linux/linux_cross_win_file.h" />
 		<Unit filename="aura/os/linux/linux_cross_win_gdi.h" />
@@ -670,10 +673,6 @@
 		</Unit>
 		<Unit filename="aura/os/linux/linux_xdisplay.h" />
 		<Unit filename="aura/os/linux/linux_xinerama.cpp">
-			<Option compile="0" />
-			<Option link="0" />
-		</Unit>
-		<Unit filename="aura/os/linux/linxu_bloat_pad.cpp">
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>

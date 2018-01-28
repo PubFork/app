@@ -133,4 +133,58 @@ WINBOOL WINAPI TransparentBlt(HDC hdcDest,
 
 
 
+extern GMainContext * gtk_main_context;
+
+
+BEGIN_EXTERN_C
+
+gboolean gdk_callback_run_runnable(gpointer pdata);
+
+END_EXTERN_C
+
+
+template < typename PRED >
+class gdk_fork_class :
+   virtual public runnable
+{
+public:
+
+   PRED  m_pred;
+
+   gdk_fork_class(PRED pred) :
+      m_pred(pred)
+   {
+
+      auto idle_source = g_idle_source_new();
+
+      g_source_set_callback(idle_source, &gdk_callback_run_runnable, (::runnable *) this, NULL);
+
+      g_source_attach(idle_source, gtk_main_context);
+
+
+   }
+
+   ~gdk_fork_class()
+   {
+
+   }
+
+   virtual void run()
+   {
+
+      m_pred();
+
+      delete this;
+
+   }
+
+};
+
+template < typename PRED >
+void gdk_fork(PRED pred)
+{
+
+   gdk_fork_class < PRED > * gdkfork = new gdk_fork_class < PRED >(pred);
+
+}
 

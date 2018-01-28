@@ -6,6 +6,7 @@
 #include <spawn.h>
 #include <sys/stat.h>
 
+
 int create_process6(const char * _cmd_line, int * pprocessId);
 
 CLASS_DECL_AURA void dll_processes(uint_array & dwa, stringa & straProcesses, const char * pszDll)

@@ -18,6 +18,11 @@ typedef struct
 
 typedef GtkApplicationClass BloatPadClass;
 
-G_DEFINE_TYPE (BloatPad, bloat_pad, GTK_TYPE_APPLICATION)
+
 
 extern BloatPad * g_pappBloatPad;
+
+
+BloatPad * bloat_pad_new (string strAppName, string strAppId);
+
+

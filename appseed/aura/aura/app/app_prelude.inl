@@ -6,6 +6,8 @@
 int main(int argc, char * argv[])
 {
 
+   class aura_aura aura;
+
    app_prelude with_class;
 
    ap(aura_main_data) pmaindata = new aura_main_data(argc, argv);

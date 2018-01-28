@@ -3,6 +3,12 @@
 //#include "linux_bloat_pad.h"
 #include "libsn/sn.h"
 
+#if 1
+
+#include "linux_bloat_pad.h"
+
+#endif
+
 void os_post_quit();
 
 CLASS_DECL_AURA int32_t ca2_main();
@@ -81,20 +87,21 @@ void app_core::run()
 
    //g_pgtkapp = gtk_application_new (strPrgName, G_APPLICATION_FLAGS_NONE);
 
-   /*
-
-   g_pappBloatPad = bloat_pad_new(strPrgName, strPrgName);
-
-   if(g_pappBloatPad == NULL)
+   if(m_bGtkApp)
    {
 
-      output_debug_string("Failed to initialize GtkApplication (gtk_application_new return NULL)");
+      g_pappBloatPad = bloat_pad_new(strPrgName, strPrgName);
 
-      return;
+      if(g_pappBloatPad == NULL)
+      {
+
+         output_debug_string("Failed to initialize GtkApplication (gtk_application_new return NULL)");
+
+         return;
+
+      }
 
    }
-
-   */
 
    //output_debug_string("created GtkApplication");
 
@@ -119,13 +126,26 @@ void app_core::run()
 
    gtk_init_check(0, 0);
 
-   gtk_main();
+   ///GApplication * papp = g_application_get_default ();
 
-   //int status = g_application_run (G_APPLICATION (g_pappBloatPad), 0, NULL);
 
-   //g_object_unref(g_pappBloatPad);
 
-   //g_pappBloatPad = NULL;
+   if(m_bGtkApp)
+   {
+
+      int status = g_application_run (G_APPLICATION (g_pappBloatPad), 0, NULL);
+
+      g_object_unref(g_pappBloatPad);
+
+      g_pappBloatPad = NULL;
+
+   }
+   else
+   {
+
+      gtk_main();
+
+   }
 
 }
 
@@ -188,3 +208,15 @@ void os_post_quit()
 
 }
 
+
+
+gboolean gdk_callback_run_runnable(gpointer pdata)
+{
+
+   ::runnable * prunnable = (::runnable * ) pdata;
+
+   prunnable->run();
+
+   return FALSE;
+
+}
