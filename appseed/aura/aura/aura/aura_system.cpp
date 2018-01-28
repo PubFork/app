@@ -3356,8 +3356,8 @@ success:
    }
 
 
-
 #ifdef WINDOWSEX
+
    BOOL CALLBACK system::monitor_enum_proc(HMONITOR hmonitor, HDC hdcMonitor, LPRECT lprcMonitor, LPARAM dwData)
    {
 
@@ -3449,6 +3449,8 @@ success:
 
 #elif defined(LINUX)
 
+      xdisplay d(x11_get_display());
+
       GdkDisplay * pdisplay = gdk_display_get_default();
 
       if(pdisplay == NULL)
@@ -3488,6 +3490,8 @@ success:
 
 
 #elif defined(LINUX)
+
+      xdisplay d(x11_get_display());
 
       GdkDisplay * pdisplay = gdk_display_get_default();
 
@@ -3643,6 +3647,8 @@ success:
       //    lprect->bottom -= ::mac::get_system_dock_height();
 #elif defined(LINUX)
 
+      xdisplay d(x11_get_display());
+
       GdkDisplay * pdisplay = gdk_display_get_default();
 
       if(pdisplay == NULL)
@@ -3726,7 +3732,6 @@ success:
          }
 
       }
-
 
 #endif
 

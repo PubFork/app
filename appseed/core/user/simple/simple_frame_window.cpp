@@ -1157,8 +1157,12 @@ void simple_frame_window::_001OnClose(::message::message * pobj)
       else if(Application.GetVisibleTopLevelFrameCountExcept(this) <= 0)
       {
 
-         if (!papp->m_pcoreapp->_001CloseApplicationByUser(this))
-            return;
+         //if (!papp->m_pcoreapp->_001CloseApplicationByUser(this))
+           // return;
+
+         post_message(WM_APPEXIT);
+
+         return;
 
       }
       else

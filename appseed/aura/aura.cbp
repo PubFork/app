@@ -252,6 +252,10 @@
 		<Unit filename="aura/aura/aura_library.h" />
 		<Unit filename="aura/aura/aura_live_signal.h" />
 		<Unit filename="aura/aura/aura_local_memory_map.h" />
+		<Unit filename="aura/aura/aura_log.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/aura/aura_log.h" />
 		<Unit filename="aura/aura/aura_lparam.h" />
 		<Unit filename="aura/aura/aura_machine_event.h" />
@@ -368,6 +372,10 @@
 		<Unit filename="aura/exception/exception_debug.h" />
 		<Unit filename="aura/exception/exception_debug_stream.h" />
 		<Unit filename="aura/exception/exception_dump_context.h" />
+		<Unit filename="aura/exception/exception_engine.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/exception/exception_engine.h" />
 		<Unit filename="aura/exception/exception_error.h" />
 		<Unit filename="aura/exception/exception_exception.h" />
@@ -398,6 +406,10 @@
 		<Unit filename="aura/exception/exception_runtime_error.h" />
 		<Unit filename="aura/exception/exception_simple.h" />
 		<Unit filename="aura/exception/exception_standard.h" />
+		<Unit filename="aura/exception/exception_standard_translator.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/exception/exception_standard_translator.h" />
 		<Unit filename="aura/exception/exception_system.h" />
 		<Unit filename="aura/exception/exception_temporary.h" />

@@ -6,6 +6,7 @@
 #include <spawn.h>
 #include <sys/stat.h>
 
+int create_process6(const char * _cmd_line, int * pprocessId);
 
 CLASS_DECL_AURA void dll_processes(uint_array & dwa, stringa & straProcesses, const char * pszDll)
 {
@@ -153,7 +154,140 @@ void prepare_argc_argv(int & argc, char ** argv, char * cmd_line)
 }
 
 
-int32_t create_process(const char * _cmd_line, int32_t * pprocessId)
+int create_process6(const char * pszCommandLine, int * pprocessId)
+{
+
+   stringa stra;
+
+   stra = get_c_args_for_c(pszCommandLine);
+
+   char ** argv = (char **) malloc(sizeof(char *) * (stra.get_size() + 1));
+
+   int argc = 0;
+
+   for(auto & str : stra)
+   {
+
+      argv[argc] = strdup((char *) str.c_str());
+
+      argc++;
+
+   }
+
+   argv[argc] = NULL;
+
+   pid_t pid = 0;
+
+   if((pid = fork()) == 0)
+   {
+
+      // child
+
+      int iExitCode = execv(argv[0], argv);
+
+      char ** pargv = argv;
+
+      while(*pargv != NULL)
+      {
+
+         free(*pargv);
+
+         pargv++;
+
+      }
+
+      free(argv);
+
+      exit(iExitCode);
+
+   }
+   else if(pid == -1)
+   {
+
+      // in parent, but error
+
+      char ** pargv = argv;
+
+      while(*pargv != NULL)
+      {
+
+         free(*pargv);
+
+         pargv++;
+
+      }
+
+      free(argv);
+
+      return 0;
+
+   }
+
+   if(pprocessId != NULL)
+   {
+
+      *pprocessId = pid;
+
+   }
+
+   // in parent, success
+
+   return 1;
+
+}
+
+
+int32_t create_process(const char * pszCommandLine, int32_t * pprocessId)
+{
+
+   stringa stra;
+
+   stra = get_c_args_for_c(pszCommandLine);
+
+   pointer_array < char * > argv;
+
+   for(auto & str : stra)
+   {
+
+      argv.add((char *) str.c_str());
+
+   }
+
+   argv.add(NULL);
+
+   pid_t pid = 0;
+
+   int status = posix_spawn(&pid, argv[0], NULL, NULL, argv.get_data(), environ);
+
+   int iError = errno;
+
+   char * pszError = strerror(iError);
+
+   if (status == 0)
+   {
+
+      if(pprocessId != NULL)
+      {
+
+         *pprocessId = pid;
+
+      }
+
+      return 1;
+
+   }
+   else
+   {
+
+      return 0;
+
+   }
+
+}
+
+
+
+int32_t create_process3(const char * _cmd_line, int32_t * pprocessId)
 {
 
    char *   exec_path_name;
@@ -229,9 +363,9 @@ int32_t daemonize_process(const char * _cmd_line, int32_t * pprocessId)
 
    }
 
-   char * cmd_line = strdup(_cmd_line);
+   char * cmd_line1 = strdup(_cmd_line);
 
-   if(cmd_line == NULL)
+   if(cmd_line1 == NULL)
    {
 
       return 0;
@@ -257,33 +391,36 @@ int32_t daemonize_process(const char * _cmd_line, int32_t * pprocessId)
       return 1;
 
    }
+   char * cmd_line = strdup(cmd_line1);
 
-   signal(SIGCHLD, SIG_IGN);
+   daemon(0, 0);
 
-   umask(0);
-
-   int sid = setsid();
-
-   if (sid < 0)
-   {
-
-      exit(EXIT_FAILURE);
-
-   }
-
-    /* Change the current working directory.  This prevents the current
-       directory from being locked; hence not being able to remove it. */
-   if ((chdir("/")) < 0)
-   {
-
-      exit(EXIT_FAILURE);
-
-   }
-
-   /* Redirect standard files to /dev/null */
-   freopen( "/dev/null", "r", stdin);
-   freopen( "/dev/null", "w", stdout);
-   freopen( "/dev/null", "w", stderr);
+//   signal(SIGCHLD, SIG_IGN);
+//
+//   umask(0);
+//
+//   int sid = setsid();
+//
+//   if (sid < 0)
+//   {
+//
+//      exit(EXIT_FAILURE);
+//
+//   }
+//
+//    /* Change the current working directory.  This prevents the current
+//       directory from being locked; hence not being able to remove it. */
+//   if ((chdir("/")) < 0)
+//   {
+//
+//      exit(EXIT_FAILURE);
+//
+//   }
+//
+//   /* Redirect standard files to /dev/null */
+//   freopen( "/dev/null", "r", stdin);
+//   freopen( "/dev/null", "w", stdout);
+//   freopen( "/dev/null", "w", stderr);
 
    char *      pArg;
 
@@ -808,7 +945,7 @@ int_array module_path_get_pid(const char * pszPath)
 
    ::file::patha stra;
 
-	::dir::ls_dir(stra, "/proc/");
+   ::dir::ls_dir(stra, "/proc/");
 
    for(auto & strPid : stra)
    {
@@ -843,19 +980,19 @@ int_array app_get_pid(const char * psz)
 
    ::file::patha stra;
 
-	::dir::ls_dir(stra, "/proc/");
+   ::dir::ls_dir(stra, "/proc/");
 
-	string str(psz);
+   string str(psz);
 
-	str = "app=" + str;
+   str = "app=" + str;
 
-	string strApp(psz);
+   string strApp(psz);
 
-	strApp.replace("-", "_");
+   strApp.replace("-", "_");
 
-	strApp.replace("/", "_");
+   strApp.replace("/", "_");
 
-	for(auto & strPid : stra)
+   for(auto & strPid : stra)
    {
 
       int iPid = atoi(strPid.title());
@@ -952,17 +1089,17 @@ stringa cmdline_from_pid(unsigned int iPid)
 
    return stra;
 
-    /* the easiest case: we are in linux */
+   /* the easiest case: we are in linux */
 //    ssize_t s = readlink (str, path, iSize);
 
-  //  if(s == -1)
-    //{
-       // return "";
-    //}
+   //  if(s == -1)
+   //{
+   // return "";
+   //}
 
-    //path[s] = '\0';
+   //path[s] = '\0';
 
-	//return path;
+   //return path;
 
 }
 
@@ -970,7 +1107,7 @@ stringa cmdline_from_pid(unsigned int iPid)
 bool shell_execute_sync(const char * pszFile, const char * pszParams, ::duration durationTimeout )
 {
 
-   return call_sync(pszFile, pszParams, ::file::path(pszFile).folder() , 0, false, durationTimeout.get_total_milliseconds());
+   return call_sync(pszFile, pszParams, ::file::path(pszFile).folder(), 0, false, durationTimeout.get_total_milliseconds());
 
 }
 

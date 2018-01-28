@@ -121,8 +121,6 @@ void app_core::run()
 
    gtk_main();
 
-
-
    //int status = g_application_run (G_APPLICATION (g_pappBloatPad), 0, NULL);
 
    //g_object_unref(g_pappBloatPad);

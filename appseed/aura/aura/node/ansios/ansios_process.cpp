@@ -140,7 +140,7 @@ void install_sigchld_handler()
 
    sigemptyset(&sa.sa_mask);
 
-   sa.sa_flags = SA_RESTART | SA_NOCLDWAIT;
+   sa.sa_flags = SA_RESTART | SA_NOCLDSTOP;
 
    sigaction(SIGCHLD, &sa, NULL);
 
@@ -424,7 +424,7 @@ namespace ansios
 
          m_exitstatus.m_iExitCode = 0x80000000;
 
-         return false;
+         return true;
 
       }
 #ifdef WIFCONTINUED
@@ -436,7 +436,7 @@ namespace ansios
       }
 #endif
 
-      return false;
+      return true;
 
    }
 

@@ -3244,6 +3244,13 @@ namespace core
    bool application::_001OnAgreeExit()
    {
 
+      if(!save_all_modified())
+      {
+
+         return false;
+
+      }
+
       return true;
 
    }
@@ -3252,7 +3259,12 @@ namespace core
    void application::_001OnFranceExit()
    {
 
-      document_manager()->close_all_documents(true);
+      //document_manager()->close_all_documents(true);
+
+      // hide the application's windows before closing all the documents
+      HideApplication();
+
+      close(end_app);
 
    }
 

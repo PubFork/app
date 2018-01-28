@@ -1215,15 +1215,11 @@ void wm_state_below(oswindow w, bool bSet)
 
    windowing_output_debug_string("\n::wm_state_below 1");
 
-   fflush(stdout);
-
    xdisplay d(w->display());
 
    wm_state_above_raw(w, bSet);
 
    windowing_output_debug_string("\n::wm_state_below 2");
-
-   fflush(stdout);
 
 }
 
@@ -1233,15 +1229,11 @@ void wm_state_hidden(oswindow w, bool bSet)
 
    windowing_output_debug_string("\n::wm_state_hidden 1");
 
-   fflush(stdout);
-
    xdisplay d(w->display());
 
    wm_state_hidden_raw(w, bSet);
 
    windowing_output_debug_string("\n::wm_state_hidden 2");
-
-   fflush(stdout);
 
 }
 
@@ -1250,8 +1242,6 @@ void wm_toolwindow(oswindow w, bool bToolWindow)
 {
 
    windowing_output_debug_string("\n::wm_toolwindow 1");
-
-   fflush(stdout);
 
    xdisplay d(w->display());
 
@@ -2275,19 +2265,21 @@ bool process_message(osdisplay_data * pdata, Display * display)
    else if(e.type == FocusIn)
    {
 
-      msg.hwnd          = oswindow_get(display, e.xdestroywindow.window);
       msg.message       = WM_SETFOCUS;
 
-      send_message(msg);
+      synch_lock sl(pdata->m_pmutexInput);
+
+      pdata->m_messsageaInput.add(msg);
 
    }
    else if(e.type == FocusOut)
    {
 
-      msg.hwnd          = oswindow_get(display, e.xdestroywindow.window);
       msg.message       = WM_KILLFOCUS;
 
-      send_message(msg);
+      synch_lock sl(pdata->m_pmutexInput);
+
+      pdata->m_messsageaInput.add(msg);
 
    }
 
@@ -2523,7 +2515,7 @@ WINBOOL GetWindowRect(oswindow hwnd, LPRECT lprect)
 }
 
 
-WINBOOL x11_GetClientRect(oswindow window, LPRECT lprect)
+WINBOOL GetClientRect(oswindow window, LPRECT lprect)
 {
 
    windowing_output_debug_string("\n::x11_GetWindowRect 1");
@@ -2562,7 +2554,7 @@ WINBOOL x11_GetClientRect(oswindow window, LPRECT lprect)
 }
 
 
-WINBOOL GetClientRect(oswindow window, LPRECT lprect)
+WINBOOL ca2_GetClientRect(oswindow window, LPRECT lprect)
 {
 
    synch_lock sl(window->m_pimpl->m_pui->m_pmutex);

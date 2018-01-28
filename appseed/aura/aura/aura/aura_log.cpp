@@ -8,6 +8,7 @@
 #if defined(LINUX) || defined(ANDROID)
 //#include <sys/types.h>
 //#include <unistd.h>
+#define ENABLE_TRACE 1
 #endif
 
 namespace aura
@@ -208,7 +209,7 @@ namespace aura
       //sl.lock();
       log * plog = (log *) this;
       ::aura::trace::category & category = plog->m_ptrace->m_map[dwCategory];
-      if(category.m_estatus == ::aura::trace::status_disabled || category.m_uiLevel > nLevel)
+      if(category.m_estatus == ::aura::trace::status_disabled || nLevel > category.m_uiLevel)
          return;
       //sl.unlock();
       stringa stra;
@@ -284,7 +285,7 @@ namespace aura
          int32_t iRetry = 0;
 retry:
          string strRelative;
-         time.Format(strRelative, "%Y/%m/%d");
+         time.Format(strRelative, "%Y/%m/%d-%H_%M_%S");
          string strIndex;
 #ifdef WINDOWS
          strIndex.Format("%d-%05d", GetCurrentProcessId(), iRetry);

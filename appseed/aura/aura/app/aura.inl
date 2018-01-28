@@ -114,7 +114,19 @@ int main(int argc, char * argv[])
 
 #endif // GET_COMMAND_LINE
 
+#if defined(LINUX)
+
+   int iExitCode = aura_aura(pmaindata);
+
+   //exit(iExitCode);
+
+   return iExitCode;
+
+#else
+
    return (int)aura_aura(pmaindata);
+
+#endif
 
 }
 

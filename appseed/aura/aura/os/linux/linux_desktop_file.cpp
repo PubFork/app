@@ -243,14 +243,53 @@ namespace linux
 
       strPrgName.replace("_", "-");
 
+      ::file::path pathLaunch;
+
+      pathLaunch = ::dir::home() / ".config/ca2/launch" / (Application.m_strAppId + ".sh");
+
       ::file::path pathIcon = Application.dir().matter("main/icon-256.png");
 
       stringa & straLine = m_straLine;
 
+
+      string strScript = "#!/bin/bash\n";
+
+      strScript += "\n";
+
+      strScript += "run_app()\n";
+
+      strScript += "{\n";
+
+      strScript += "\n";
+
+      strScript += "   cd " + string(System.file().module().folder()) + "/\n";
+
+      strScript += "\n";
+
+      strScript += "   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.:" + string(System.file().module().folder()) + "\n";
+
+      strScript += "\n";
+
+      strScript += "   " + string(System.file().module()) + " ${@:1:99}\n";
+
+      strScript += "\n";
+
+      strScript += "}\n";
+
+      strScript += "\n";
+
+      strScript += "run_app ${@:1:99}\n";
+
+      strScript += "\n";
+
+      file_put_contents_dup(pathLaunch, strScript);
+
+      chmod(pathLaunch, 0755);
+
       straLine._007SetLine("GenericName", strTitle);
       straLine._007SetLine("Name", strTitle);
       straLine._007SetLine("Comment", strTitle + " Comment");
-      straLine._007SetLine("Exec", string(System.file().module()) + " %U");
+      straLine._007SetLine("Exec", pathLaunch + " %U");
       //straLine._007SetLine("Path", string(System.file().module().folder()));
       straLine._007SetLine("StartupWMClass", "cc.ca2." + strPrgName);
 

@@ -154,10 +154,14 @@ namespace user
          {
             // user has been alerted to what failed in on_new_document
             TRACE(::aura::trace::category_AppMsg, 0, "::user::document::on_new_document returned FALSE.\n");
+
             if (bCreated)
                pFrame->DestroyWindow();    // will destroy ::user::document
+
             return;
+
          }
+
       }
       else
       {

@@ -2,7 +2,7 @@
 #include "aura/node/ansios/ansios.h"
 #include "linux.h"
 
-
+int32_t daemonize_process(const char * _cmd_line, int32_t * pprocessId);
 
 #undef USERNAME_LENGTH // mysql one
 
@@ -987,7 +987,39 @@ namespace linux
       if(linux_can_exec(strTarget))
       {
 
+         //int iPid;
+
+         //daemonize_process(strTarget, &iPid);
+
+          //::system("cd /; setsid \"" + strTarget + "\" </dev/null &>/dev/null");
+
+         //int32_t daemonize_process(const char * _cmd_line, int32_t * pprocessId)
          call_async("/bin/bash", "-c \"" + strTarget + "\"", strFolder, SW_SHOWDEFAULT, false);
+
+//         char * pszCommandLine = strdup(strTarget + " " + strParams);
+
+//         pid_t pid = ::fork();
+//
+//         if(pid == 0)
+//         {
+//
+//            int iExitCode = ::system(pszCommandLine);
+//
+//            free(pszCommandLine);
+//
+//            exit(iExitCode);
+//
+//         }
+//         else if(pid < 0)
+//         {
+//
+//            free(pszCommandLine);
+//
+//            return false;
+//
+//         }
+
+         return true;
 
       }
       else
