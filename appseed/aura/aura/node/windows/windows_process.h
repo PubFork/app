@@ -19,13 +19,13 @@ namespace windows
       virtual ~process();
 
 
-      virtual bool create_child_process(const char * pszCmdLine,bool bPiped,const char * pszDir = NULL,int32_t iPriorityClass = ::multithreading::priority_none);
+      virtual bool create_child_process(const char * pszCmdLine,bool bPiped,const char * pszDir = NULL,int32_t iPriorityClass = ::multithreading::priority_none) override;
 
-      virtual bool has_exited(uint32_t * pdwExitCode = NULL);
+      virtual bool has_exited() override;
 
-      virtual uint32_t synch_elevated(const char * pszCmdLine,int iShow,const ::duration & durationTimeOut,bool * pbTimeOut);
+      virtual void synch_elevated(const char * pszCmdLine,int iShow,const ::duration & durationTimeOut,bool * pbTimeOut) override;
 
-      virtual bool kill();
+      virtual bool kill() override;
 
    };
 

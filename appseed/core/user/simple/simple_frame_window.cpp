@@ -1029,9 +1029,9 @@ void simple_frame_window::_001OnAppExit(::message::message * pobj)
    //m_bDefaultNotifyIcon = false;
    //{
 
-      //_001OnClose(pobj);
+   //_001OnClose(pobj);
 
-     // return;
+   // return;
 
    //}
 
@@ -1158,7 +1158,7 @@ void simple_frame_window::_001OnClose(::message::message * pobj)
       {
 
          //if (!papp->m_pcoreapp->_001CloseApplicationByUser(this))
-           // return;
+         // return;
 
          post_message(WM_APPEXIT);
 
@@ -1686,8 +1686,6 @@ void simple_frame_window::_000OnDraw(::draw2d::graphics * pgraphicsParam)
       return;
 
    windowing_output_debug_string("\nsimple_frame_window::_000OnDraw B");
-
-   fflush(stdout);
 
    rect rectClient;
 

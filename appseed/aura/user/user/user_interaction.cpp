@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 ::user::interaction * get_system_window_interaction(::os_system_window * psystemwindow);
 
@@ -1719,8 +1719,6 @@ restart:
 
       windowing_output_debug_string("\n_001Print B");
 
-      fflush(stdout);
-
       {
 
          ::draw2d::keep k(pgraphics);
@@ -1739,8 +1737,6 @@ restart:
       }
 
       windowing_output_debug_string("\n_001Print B");
-
-      fflush(stdout);
 
       if (&Session != NULL && Session.m_bDrawCursor)
       {

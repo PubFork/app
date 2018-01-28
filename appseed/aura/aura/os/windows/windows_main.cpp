@@ -280,3 +280,11 @@ namespace aura
 } // namespace aura
 
 
+
+
+void os_post_quit()
+{
+
+
+
+}

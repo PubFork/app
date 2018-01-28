@@ -168,7 +168,7 @@ namespace windows
    }
 
 
-   bool process::has_exited(uint32_t * puiExitCode)
+   bool process::has_exited()
    {
 
       DWORD dwExitCode;
@@ -177,6 +177,8 @@ namespace windows
 
       if(!GetExitCodeProcess(m_pi.hProcess,&dwExitCode))
       {
+
+         m_exitstatus.m_iExitCode = -1;
 
          bExited = true;
 
@@ -199,18 +201,14 @@ namespace windows
 
       }
 
-      if(puiExitCode != NULL)
-      {
-
-         *puiExitCode = dwExitCode;
-      }
+      m_exitstatus.m_iExitCode = dwExitCode;
 
       return bExited;
 
    }
 
 
-   uint32_t process::synch_elevated(const char * pszCmdLine,int iShow,const ::duration & durationTimeOut,bool * pbTimeOut)
+   void process::synch_elevated(const char * pszCmdLine,int iShow,const ::duration & durationTimeOut,bool * pbTimeOut)
    {
 
       DWORD dwExitCode = 0;
@@ -243,7 +241,7 @@ namespace windows
       else
       {
 
-         return -1;
+         return;
 
       }
 
@@ -285,10 +283,7 @@ namespace windows
 
       }
 
-      return dwExitCode;
-
    }
-
 
 
    bool process::kill()

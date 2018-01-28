@@ -1,4 +1,4 @@
-//
+﻿//
 //  base_static_start.cpp
 //  aura
 //
@@ -195,42 +195,15 @@ namespace aura
 
          new(g_pexceptionengine) class ::exception::engine(NULL);
 
-//#if !defined(_ACID_LIBRARY)
-
          ace_set_alloc(&memory_alloc, &memory_realloc, &memory_free, &memory_size);
 
-//#endif
+#ifndef __MCRTDBG
 
-         /*
+         g_pplexheapallocarray = new plex_heap_alloc_array();
 
-          if(g_pfnca2_alloc == NULL)
-          {
-            g_pfnca2_alloc       = memory_alloc;
-          }
-          if(g_pfnca2_alloc_dbg == NULL)
-          {
-            g_pfnca2_alloc_dbg   = _ca_alloc_dbg;
-          }
-          if(g_pfnca2_realloc == NULL)
-          {
-            g_pfnca2_realloc     = memory_realloc_dbg;
-          }
-          if(g_pfnca2_free == NULL)
-          {
-            g_pfnca2_free        = memory_free_dbg;
-          }
-          if(g_pfnca2_msize == NULL)
-          {
-            g_pfnca2_msize       = _ca_msize;
-          }
-
-         */
+#endif
 
          g_pcsGlobal = new critical_section();
-
-#ifndef __MCRTDBG
-         g_pplexheapallocarray = new plex_heap_alloc_array();
-#endif
 
          s_pstringmanager = new string_manager();
 

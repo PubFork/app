@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 #include "align_byte_count.h"
 #include "aura_heap_memory.h"
@@ -22,7 +22,7 @@ plex_heap * plex_heap::create(plex_heap*& pHead, uint_ptr nMax, uint_ptr cbEleme
 #ifdef DEBUG
    Alloc_check_pointer_in_cpp(p);
 #endif
-         // may _throw( exception
+   // may _throw( exception
    p->pNext = pHead;
    pHead = p;  // change head (adds in reverse order for simplicity)
    return p;
@@ -119,7 +119,7 @@ void plex_heap_alloc_sync::NewBlock()
       if(nAllocSize == 1024)
       {
 
-      //output_debug_string("plex_heap_alloc_sync::NewBlock() 1024");
+         //output_debug_string("plex_heap_alloc_sync::NewBlock() 1024");
 
       }
 
@@ -202,7 +202,7 @@ inline void * plex_heap_alloc_sync::Alloc()
    //}
    //#ifdef DEBUG
    memset(pNode, 0, m_nAllocSize); // let constructors and algorithms initialize... "random initialization" of not initialized :-> C-:!!
-                                   //#endif
+   //#endif
    return pNode;
 }
 
@@ -222,7 +222,7 @@ void plex_heap_alloc_sync::Free(void * p)
    //memset(p, 0xCD, m_nAllocSize); // attempt to invalidate memory so it get unusable (as it should be after freed).
 #endif
 
-                                  // simply return the node to the free list
+   // simply return the node to the free list
    node* pnode = (node*)p;
 
 #ifdef MEMDFREE // Free Debug - duplicate freeing ?
@@ -328,60 +328,31 @@ plex_heap_alloc_array::plex_heap_alloc_array()
       g_pheap = this;
 
    }
-//   ::zero(m_aa,sizeof(m_aa));
-  // ::zero(m_bb,sizeof(m_bb));
-   //::zero(m_aaSize,sizeof(m_aaSize));
-   //::zero(m_bbSize,sizeof(m_bbSize));
 
-//   m_iWorkingSize = 0;
-//
-//   m_aa[0] = 0;
-//   m_bb[0] = get_size();
    add(new plex_heap_alloc(8,256));
    add(new plex_heap_alloc(16, 256));
    add(new plex_heap_alloc(24, 256));
    add(new plex_heap_alloc(32, 256));
    add(new plex_heap_alloc(48, 256));
-//   m_bbSize[0] = last()->GetAllocSize();
-//
-//   m_bb[1] = get_size();
+
    add(new plex_heap_alloc(64, 128));
    add(new plex_heap_alloc(96, 128));
    add(new plex_heap_alloc(128, 1024 * 8));
    add(new plex_heap_alloc(192, 1024 *4));
    add(new plex_heap_alloc(256, 1024));
-//   m_bbSize[1] = last()->GetAllocSize();
-//   m_aaSize[0] = last()->GetAllocSize();
-//
-//   m_aa[1] = 2;
-//   m_bb[2] = get_size();
+
    add(new plex_heap_alloc(384, 2 * 1024));
    add(new plex_heap_alloc(512, 64));
    add(new plex_heap_alloc(768, 48));
    add(new plex_heap_alloc(1024, 48));
    add(new plex_heap_alloc(1024 * 2, 2 * 1024));
 
-//   #ifdef RASPBIAN
-//
-//   return;
-//
-//   #endif
-
-//   m_bbSize[2] = last()->GetAllocSize();
-//
-//
-//   m_bb[3] = get_size();
    add(new plex_heap_alloc(1024 * 4,32));
    add(new plex_heap_alloc(1024 * 8, 16));
    add(new plex_heap_alloc(1024 * 16, 16));
    add(new plex_heap_alloc(1024 * 32, 16));
    add(new plex_heap_alloc(1024 * 64, 16));
-//   m_bbSize[3] = last()->GetAllocSize();
-//   m_aaSize[1] = last()->GetAllocSize();
-//
-//
-//   m_aa[2] = 4;
-//   m_bb[4] = get_size();
+
    add(new plex_heap_alloc(1024 * 128,16));
 #if defined(OS64BIT) && defined(LINUX)
    add(new plex_heap_alloc(1024 * 192, 16));
@@ -391,21 +362,13 @@ plex_heap_alloc_array::plex_heap_alloc_array()
    add(new plex_heap_alloc(1024 * 768, 16));
    add(new plex_heap_alloc(1024 * 1024, 16));
 #endif
-////   m_bbSize[4] = last()->GetAllocSize();
-//
+
 #if defined(OS64BIT) && defined(LINUX)
-////   m_bb[5] = get_size();
    add(new plex_heap_alloc(1024 * 1024 * 2, 16));
    add(new plex_heap_alloc(1024 * 1024 * 4,16));
    add(new plex_heap_alloc(1024 * 1024 * 8,16));
    add(new plex_heap_alloc(1024 * 1024 * 16,16));
-////   m_bbSize[5] = last()->GetAllocSize();
 #endif
-//   m_aaSize[2] = last()->GetAllocSize();
-//
-//   m_iWorkingSize = get_size();
-
-
 
 }
 
@@ -506,18 +469,18 @@ void plex_heap_alloc_array::free_dbg(void * p, size_t size)
    size_t * psize = &((size_t *)((byte *)pvoid) - 128))[-1];
 
    if(*psize == 0)
-   {
+{
 
-      return ::system_heap_free(psize);
+   return ::system_heap_free(psize);
 
    }
 
    plex_heap_alloc * palloc = find(*psize);
 
    if(palloc != NULL)
-   {
+{
 
-      return palloc->Free(psize);
+   return palloc->Free(psize);
 
    }
    else
@@ -728,10 +691,10 @@ void Free_check_pointer_in_cpp(void * p)
 void plex_heap_alloc_array::_free(void * p,size_t size)
 {
 
-/*   int xxx = MIN(1024,size * 2 / 3);
+   /*   int xxx = MIN(1024,size * 2 / 3);
 
-   memset(&((byte *)p)[xxx],0xCD,size - xxx); // attempt to invalidate memory so it get unusable (as it should be after free). // but preserve first xxx bytes so vtable indicating object type may be eventually preserved for debugging
-   */
+      memset(&((byte *)p)[xxx],0xCD,size - xxx); // attempt to invalidate memory so it get unusable (as it should be after free). // but preserve first xxx bytes so vtable indicating object type may be eventually preserved for debugging
+      */
 
    //memset(p,0xCD,size); // attempt to invalidate memory so it get unusable (as it should be after free).
 
@@ -787,43 +750,6 @@ void plex_heap_alloc::Free(void * p)
 
 inline plex_heap_alloc * plex_heap_alloc_array::find(size_t nAllocSize)
 {
-
-   //int32_t iA = 0;
-
-   //   for(; iA < PLEX_HEAP_ALLOC_ARRAY_AINDEX_COUNT; iA++)
-   //   {
-   //
-   //      if(m_aaSize[iA] >= nAllocSize)
-   //      {
-   //
-   //         break;
-   //
-   //      }
-   //
-   //   }
-   //
-   //   if(iA >= PLEX_HEAP_ALLOC_ARRAY_AINDEX_COUNT)
-   //      return NULL;
-   //
-   //
-   //   ::count iB = m_aa[iA];
-   //
-   //   for(; iB < PLEX_HEAP_ALLOC_ARRAY_BINDEX_COUNT; iB++)
-   //   {
-   //
-   //      if(m_bbSize[iB] >= nAllocSize)
-   //      {
-   //
-   //         break;
-   //
-   //      }
-   //
-   //   }
-   //
-   //   if(iB >= PLEX_HEAP_ALLOC_ARRAY_BINDEX_COUNT)
-   //      return NULL;
-
-   // ::count i = m_bb[iB];
 
    for (index i = 0; i < m_nSize; i++)
    {
