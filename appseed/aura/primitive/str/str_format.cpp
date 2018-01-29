@@ -472,6 +472,16 @@ void string_format::format(const char * & s)
       }
 
 #endif
+#ifdef RASPBIAN
+
+      CLASS_DECL_AURA void format(string_format * pformat, long unsigned int const & ui)
+      {
+
+         format(pformat, (const unsigned int &)ui);
+
+      }
+
+#endif
 
       void format(string_format * pformat, uint64_t const & ui)
       {
@@ -581,7 +591,7 @@ void string_format::format(const char * & s)
                pformat->append(::str::from(d));
                return;
             }
-#elif defined(LINUX) || defined(MACOS) 
+#elif defined(LINUX) || defined(MACOS)
             if(gcvt(fabs(d),digits, sz))
             {
                pformat->append(::str::from(d));
@@ -707,58 +717,58 @@ void string_format::format(const char * & s)
           ::str::format(pformat, (int_ptr)lparam.m_lparam);
 
       }
-      
-      
+
+
       void format(string_format * pformat, const var & var)
       {
-         
+
          if(pformat->m_chLength == 's' || pformat->m_chLength == 'S')
          {
-         
+
             pformat->append(var.get_string());
-            
+
          }
          else if(pformat->m_chLength == 'x')
          {
-            
+
             pformat->append(::hex::lower_from(var.int64()));
-            
+
          }
          else if(pformat->m_chLength == 'X')
          {
-            
+
             pformat->append(::hex::upper_from(var.int64()));
-            
+
          }
          else if(pformat->m_chLength == 'd')
          {
-            
+
             pformat->append(::str::from(var.int64()));
-            
+
          }
          else if(pformat->m_chLength == 'f')
          {
-            
+
             pformat->append(::str::from(var.get_double()));
-            
+
          }
          else
          {
-         
+
             pformat->append(var.get_string());
-            
+
          }
 
       }
 
-      
+
       void format(string_format * pformat, const property & property)
       {
-         
+
          format(pformat, property.get_value());
-         
+
       }
-      
+
 
    } // namespace str
 

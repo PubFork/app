@@ -235,9 +235,9 @@ namespace str
    inline string  from_uint(const T & t);
 
    inline CLASS_DECL_AURA string from_strdup(char * psz);
-      
-   
-   
+
+
+
 
 
    /*inline CLASS_DECL_AURA string  from(int32_t i);
@@ -341,6 +341,12 @@ namespace str
    CLASS_DECL_AURA void format(string_format * pformat, uint32_t const &  i);
 
    CLASS_DECL_AURA void format(string_format * pformat, int64_t const & i);
+
+   #ifdef RASPBIAN
+
+   CLASS_DECL_AURA void format(string_format * pformat, long unsigned int const & ui);
+
+#endif
 
 #ifdef ANDROID
 

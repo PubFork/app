@@ -16,8 +16,8 @@
 				<Option createStaticLib="1" />
 				<Compiler>
 					<Add option="-std=c++14" />
-					<Add option="-fPIC" />
 					<Add option="-g" />
+					<Add option="-fPIC" />
 					<Add option="-fnon-call-exceptions" />
 					<Add option="-fno-stack-protector" />
 					<Add option="-fno-omit-frame-pointer" />
@@ -45,7 +45,6 @@
 					<Add option="-lidn" />
 					<Add option="-lpthread" />
 					<Add option="-lncurses" />
-					<Add option="-latomiconv" />
 					<Add option="-lssl" />
 					<Add option="-lcrypto" />
 					<Add option="`pkg-config --libs gtk+-3.0 gthread-2.0`" />
@@ -122,18 +121,26 @@
 				<Linker>
 					<Add option="-pg" />
 					<Add option="-Wl,-rpath=\\$$$ORIGIN" />
-					<Add option="-lc" />
 					<Add option="-lz" />
 					<Add option="-lbz2" />
 					<Add option="-ldl" />
 					<Add option="-lrt" />
 					<Add option="-lbfd" />
 					<Add option="-lX11" />
+					<Add option="-lX11-xcb" />
+					<Add option="-lxcb" />
+					<Add option="-lxcb-util" />
+					<Add option="-lXinerama" />
+					<Add option="-lXmu" />
+					<Add option="-lXrandr" />
+					<Add option="-lXext" />
+					<Add option="-lXxf86vm" />
 					<Add option="-lidn" />
 					<Add option="-lpthread" />
 					<Add option="-lncurses" />
 					<Add option="-lssl" />
 					<Add option="-lcrypto" />
+					<Add option="`pkg-config --libs gtk+-3.0 gthread-2.0`" />
 					<Add option="-lace" />
 					<Add option="-lfreeimage" />
 					<Add option="-Wl,-z,defs" />

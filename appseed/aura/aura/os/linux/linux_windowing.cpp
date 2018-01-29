@@ -2,7 +2,7 @@
 #include "linux_user_impl.h"
 #include <X11/Xatom.h>
 #include <sys/stat.h>
-#include <X11/extensions/xf86vmode.h>
+#include <X11/extensions/xf86vmode.h> // libxxf86vm-dev
 
 
 //int get_best_ordered_monitor(::user::interaction * pui, int & l, int & t, int & cx, int & cy);

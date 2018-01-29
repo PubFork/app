@@ -81,7 +81,9 @@ extern "C" {
 
 typedef signed char      INT8, *PINT8;
 typedef signed short     INT16, *PINT16;
+#ifndef RASPBIAN
 typedef int32_t       INT32, *PINT32;
+#endif
 typedef unsigned char    UINT8, *PUINT8;
 typedef unsigned short   UINT16, *PUINT16;
 typedef uint32_t     UINT32, *PUINT32;
