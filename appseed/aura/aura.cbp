@@ -16,8 +16,8 @@
 				<Option createStaticLib="1" />
 				<Compiler>
 					<Add option="-std=c++14" />
-					<Add option="-g" />
 					<Add option="-fPIC" />
+					<Add option="-g" />
 					<Add option="-fnon-call-exceptions" />
 					<Add option="-fno-stack-protector" />
 					<Add option="-fno-omit-frame-pointer" />
