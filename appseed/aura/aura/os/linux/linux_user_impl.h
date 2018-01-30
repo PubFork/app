@@ -3,10 +3,16 @@
 
 
 // Ubuntu apt-get install libx11-dev
+// // Ubuntu apt-get install libx11-dev
+// // CentOS yum install libX11-devel
 #include <X11/X.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <X11/Xatom.h>
+// // Ubuntu apt-get install libcairo2-dev
+
+#include <glib.h>
+
 
 
 CLASS_DECL_AURA int xinerama_get_monitor_count();
@@ -67,15 +73,6 @@ CLASS_DECL_AURA bool oswindow_remove_message_only_window(::user::interaction_imp
 
 
 
-
-
-#pragma once
-
-// // Ubuntu apt-get install libx11-dev
-// // CentOS yum install libX11-devel
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
-// // Ubuntu apt-get install libcairo2-dev
 
 
 class CLASS_DECL_AURA device_context

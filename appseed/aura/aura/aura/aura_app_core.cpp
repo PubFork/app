@@ -118,6 +118,12 @@ app_core * app_core::s_pappcore = NULL;
 app_core::app_core(aura_main_data * pdata)
 {
 
+#ifdef LINUX
+
+   m_bGtkApp = false;
+
+#endif
+
    s_pappcore = this;
 
    m_pmaindata = pdata;

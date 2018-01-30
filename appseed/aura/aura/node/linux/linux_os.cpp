@@ -994,7 +994,10 @@ namespace linux
           //::system("cd /; setsid \"" + strTarget + "\" </dev/null &>/dev/null");
 
          //int32_t daemonize_process(const char * _cmd_line, int32_t * pprocessId)
-         call_async("/bin/bash", "-c \"" + strTarget + "\"", strFolder, SW_SHOWDEFAULT, false);
+
+         // 2018-01-29 call_async("/bin/bash", "-c \"" + strTarget + "\"", strFolder, SW_SHOWDEFAULT, false);
+
+         call_async(strTarget, strParams, strFolder, SW_SHOWDEFAULT, false);
 
 //         char * pszCommandLine = strdup(strTarget + " " + strParams);
 

@@ -155,7 +155,7 @@ void prepare_argc_argv(int & argc, char ** argv, char * cmd_line)
 }
 
 
-int create_process6(const char * pszCommandLine, int * pprocessId)
+int create_process(const char * pszCommandLine, int * pprocessId)
 {
 
    stringa stra;
@@ -238,7 +238,7 @@ int create_process6(const char * pszCommandLine, int * pprocessId)
 }
 
 
-int32_t create_process(const char * pszCommandLine, int32_t * pprocessId)
+int32_t create_process2(const char * pszCommandLine, int32_t * pprocessId)
 {
 
    stringa stra;
@@ -568,7 +568,7 @@ int32_t daemonize_process(const char * _cmd_line, int32_t * pprocessId)
 }
 
 
-int32_t create_process2(const char * _cmd_line, int32_t * pprocessId)
+int32_t create_process4(const char * _cmd_line, int32_t * pprocessId)
 {
 
    char * exec_path_name;

@@ -323,7 +323,7 @@ oswindow SetFocus(oswindow window)
 
    oswindow windowOld = ::GetFocus();
 
-   if(!IsWindowVisible(window))
+   if(!IsWindowVisibleRaw(window))
    {
 
       windowing_output_debug_string("\oswindow_data::SetFocus 1.2");
@@ -2084,11 +2084,9 @@ bool process_message(osdisplay_data * pdata, Display * display)
 
             }
 
-
          }
 
       }
-
 
       if(g_oswindowDesktop != NULL && e.xconfigure.window == g_oswindowDesktop->window())
       {

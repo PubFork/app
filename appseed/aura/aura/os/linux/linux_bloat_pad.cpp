@@ -1,7 +1,9 @@
 #include "framework.h"
 #include "linux_bloat_pad.h"
 
+
 G_DEFINE_TYPE (BloatPad, bloat_pad, GTK_TYPE_APPLICATION)
+
 
 BloatPad * g_pappBloatPad = NULL;
 
@@ -38,6 +40,7 @@ void bloat_pad_activate(GApplication * application)
 
 }
 
+
 void bloat_pad_run_mainloop(GApplication * application)
 {
 
@@ -48,6 +51,7 @@ void bloat_pad_run_mainloop(GApplication * application)
    G_APPLICATION_CLASS (bloat_pad_parent_class)->run_mainloop(application);
 
 }
+
 
 void bloat_pad_init (BloatPad *app)
 {
@@ -64,7 +68,13 @@ void bloat_pad_startup (GApplication *application)
 
    G_APPLICATION_CLASS (bloat_pad_parent_class)->startup (application);
 
-   ::aura::system::g_p->process_command(::aura::system::g_p->m_pcommand);
+   ::aura::system * psystem = (::aura::system *) ::aura::system::g_p;
+
+   psystem->m_strAppId = psystem->m_pappcore->m_pmaindata->m_pmaininitdata->m_strAppId;
+
+   psystem->startup_command(psystem->m_pappcore->m_pmaindata->m_pmaininitdata);
+
+   psystem->process_command(psystem->m_pcommand);
 
    g_application_hold(application);
 

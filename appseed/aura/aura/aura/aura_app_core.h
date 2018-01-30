@@ -105,7 +105,7 @@ public:
 
    #ifdef LINUX
 
-   bool                          m_bGtkApp = false;
+   bool                          m_bGtkApp;
 
    #endif
 

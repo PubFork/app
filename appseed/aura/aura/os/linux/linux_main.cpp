@@ -62,6 +62,19 @@ void app_core::run()
    gtk_main_context = g_main_context_default();
 
    //gtk_init_check(0, 0);
+   //set_main_thread(m_psystem->m_hthread);
+
+   //set_main_thread_id(m_psystem->m_uiThread);
+
+   auto idle_source = g_idle_source_new();
+
+   g_source_set_callback(idle_source, &linux_start_system, (::aura::system *) m_psystem, NULL);
+
+   g_source_attach(idle_source, gtk_main_context);
+
+   gtk_init_check(0, 0);
+
+   ///GApplication * papp = g_application_get_default ();
 
    string strPrgName = app_core::s_pappcore->m_strAppId;
 
@@ -113,22 +126,6 @@ void app_core::run()
       return;
 
    }
-
-   //set_main_thread(m_psystem->m_hthread);
-
-   //set_main_thread_id(m_psystem->m_uiThread);
-
-   auto idle_source = g_idle_source_new();
-
-   g_source_set_callback(idle_source, &linux_start_system, (::aura::system *) m_psystem, NULL);
-
-   g_source_attach(idle_source, gtk_main_context);
-
-   gtk_init_check(0, 0);
-
-   ///GApplication * papp = g_application_get_default ();
-
-
 
    if(m_bGtkApp)
    {
@@ -182,6 +179,8 @@ gboolean gtk_quit_callback(gpointer data)
 
 gboolean linux_start_system(gpointer data)
 {
+
+   GApplication * papp = g_application_get_default ();
 
    ::aura::system * psystem = (::aura::system *) data;
 

@@ -289,8 +289,6 @@ public:
    virtual bool __close_is_closed() override;
    virtual bool notify_icon_frame_is_opened() override;
 
-
-
    virtual void OnInitialFrameUpdate(bool bMakeVisible) override;
 
    virtual void OnUpdateToolWindow(bool bVisible);

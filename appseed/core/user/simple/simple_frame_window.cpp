@@ -3077,6 +3077,13 @@ bool simple_frame_window::set_appearance(::user::e_appearance eappearance)
 
    m_workset.SetAppearance(eappearance);
 
+   if(eappearance == ::user::appearance_full_screen)
+   {
+
+      WfiOnAfterFullScreen();
+
+   }
+
    return bOk1;
 
 }
@@ -3198,6 +3205,7 @@ bool simple_frame_window::notify_icon_frame_is_opened()
    return !__close_is_closed();
 
 }
+
 
 
 void simple_frame_window::OnInitialFrameUpdate(bool bMakeVisible)

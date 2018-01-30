@@ -3,6 +3,7 @@
 #include "aura/aura/os/linux/linux_user_impl.h"
 #include <X11/Xatom.h>
 #include "aura/aura/os/linux/libsn/sn.h"
+#include <gdk/gdkx.h>
 
 #define TEST 0
 
@@ -80,8 +81,10 @@ namespace linux
       virtual public object
    {
    public:
+
       XWindowAttributes             m_attr;
       XVisualInfo                   m_visualinfo;
+      GdkWindow *                   m_pgdkwindow;
 
    };
 
@@ -520,6 +523,8 @@ namespace linux
          }
 
          m_oswindow = oswindow_get(display, window, vis, m_iDepth, m_iScreen, attr.colormap);
+
+         //m_px11data->m_pgdkwindow = gdk_x11_window_foreign_new_for_display(gdk_display_get_default(), window);
 
          Window root = 0;
 
@@ -3810,8 +3815,6 @@ namespace linux
 
    }
 
-
-#define SWP_IGNOREPALACEGUARD 0x80000000
 
    bool interaction_impl::SetWindowPos(int_ptr z, int32_t x, int32_t y, int32_t cx, int32_t cy, UINT nFlags)
    {

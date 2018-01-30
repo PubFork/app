@@ -47,7 +47,7 @@
 					<Add option="-lncurses" />
 					<Add option="-lssl" />
 					<Add option="-lcrypto" />
-					<Add option="`pkg-config --libs gtk+-3.0 gthread-2.0`" />
+					<Add option="`pkg-config --libs gtk+-3.0 gthread-2.0 glib-2.0`" />
 					<Add option="-lace" />
 					<Add option="-lfreeimage" />
 					<Add option="-Wl,-z,defs" />
@@ -152,7 +152,7 @@
 			<Add option="-std=c++14" />
 			<Add option="-fPIC" />
 			<Add option="-fexceptions" />
-			<Add option="`pkg-config --cflags gtk+-3.0`" />
+			<Add option="`pkg-config --cflags gtk+-3.0 glib-2.0`" />
 			<Add option="-DLINUX" />
 			<Add directory="../../../include" />
 			<Add directory="framework" />

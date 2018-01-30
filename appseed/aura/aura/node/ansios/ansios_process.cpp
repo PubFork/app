@@ -388,16 +388,57 @@ namespace ansios
    bool process::has_exited()
    {
 
-      auto chldstatus = get_chldstatus(m_iPid);
+      int iExitCode;
 
-      if(!chldstatus.m_bRet)
+#if 0
+
       {
 
-         return false;
+         int iPid;
+
+         iPid = waitpid(m_iPid, &iExitCode,
+                             WUNTRACED
+   #ifdef WNOHANG
+                             | WNOHANG
+   #endif
+   #ifdef WCONTINUED
+                             | WCONTINUED
+   #endif
+                            );
+
+         if(iPid == 0)
+         {
+
+            return false;
+
+         }
+         else if(iPid == -1)
+         {
+
+            return true;
+
+         }
 
       }
 
-      int iExitCode = chldstatus.m_iExitCode;
+#else
+
+      {
+
+         auto chldstatus = get_chldstatus(m_iPid);
+
+         if(!chldstatus.m_bRet)
+         {
+
+            return false;
+
+         }
+
+         iExitCode = chldstatus.m_iExitCode;
+
+      }
+
+#endif
 
       if(WIFEXITED(iExitCode))
       {
