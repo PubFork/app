@@ -57,7 +57,8 @@ public:
    //void clear();
 
    void _007SetLine(const RawType & strKey, const RawType & strValue);
-
+   index _007GetLine(RawType & rawtype, const RawType & strKey) const;
+   RawType _007GetLine(const RawType & strKey) const;
 
 
    void sort();
@@ -879,6 +880,7 @@ Type & string_array < Type, RawType >::set_at_grow(index nIndex,const char * new
 
 }
 
+
 template < typename Type, typename RawType >
 void string_array < Type, RawType >::_007SetLine(const RawType & strKey, const RawType & strValue)
 {
@@ -899,6 +901,53 @@ void string_array < Type, RawType >::_007SetLine(const RawType & strKey, const R
       this->add((const Type &) strNewLine);
 
    }
+
+}
+
+
+template < typename Type, typename RawType >
+index string_array < Type, RawType >::_007GetLine(RawType & strValue, const RawType & strKey) const
+{
+
+   string strPrefix;
+
+   strPrefix = strKey + "=";
+
+   index iFind = this->pred_find_first([&strPrefix](auto & str)
+   {
+
+      return ::str::begins_ci(str, strPrefix);
+
+
+   });
+
+   if(iFind < 0)
+   {
+
+      return -1;
+
+   }
+
+   strValue = this->operator[](iFind).Mid(strPrefix.length());
+
+   return iFind;
+
+}
+
+template < typename Type, typename RawType >
+RawType string_array < Type, RawType >::_007GetLine(const RawType & strKey) const
+{
+
+   RawType strValue;
+
+   if(_007GetLine(strValue, strKey) < 0)
+   {
+
+      return "";
+
+   }
+
+   return strValue;
 
 }
 

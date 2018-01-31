@@ -434,7 +434,7 @@ public:
    }
 
    template < typename PRED >
-   index pred_find_first(PRED pred, index iStart = 0, index iEnd = -1)
+   index pred_find_first(PRED pred, index iStart = 0, index iEnd = -1) const
    {
 
       if (iEnd < 0)
@@ -619,16 +619,16 @@ public:
 template < class TYPE, class ARG_TYPE, class ALLOCATOR = allocator::nodef < TYPE > >
 inline const TYPE& operator%(index nIndex, const array_base < TYPE, ARG_TYPE, ALLOCATOR > & a)
 {
-   
+
    return a[nIndex % a.get_size()];
-   
+
 }
 template < class TYPE, class ARG_TYPE, class ALLOCATOR = allocator::nodef < TYPE > >
 inline TYPE& operator%(index nIndex, array_base < TYPE, ARG_TYPE, ALLOCATOR > & a)
 {
-   
+
    return a[nIndex % a.get_size()];
-   
+
 }
 
 
