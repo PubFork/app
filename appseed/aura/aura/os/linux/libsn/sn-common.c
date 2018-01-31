@@ -28,7 +28,7 @@
 #include "sn-internals.h"
 
 #include <xcb/xcb.h>
-#include <xcb/xcb_aux.h> // libxcb-util0-dev
+#include <xcb/xcb_aux.h> // libxcb-util0-dev xcb-util-devel
 #include <xcb/xcb_event.h>
 
 #include <X11/Xlib-xcb.h> // libx11-xcb-dev

@@ -74,6 +74,12 @@ test_trace(void* ignored)
 int32_t
 gdb_check(void)
 {
+
+   #if 1
+
+   return 0;
+
+   #endif // 1
 	pthread_attr_t attr;
 	void* result;
 	pthread_t thread;
@@ -147,12 +153,14 @@ output_debug_string(
 
     //fprintf(stderr, "%s", lpOutputString);
     //fflush(stderr);
+    #if 0
     if(is_debugger_attached())
     {
-     
+
       printf("%s", lpOutputString);
 
     }
+    #endif
     //fflush(stdout);
 
 

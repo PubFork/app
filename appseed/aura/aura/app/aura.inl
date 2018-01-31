@@ -3,6 +3,13 @@
 
 #ifdef LINUX
 
+
+BEGIN_EXTERN_C
+
+void bloat_pad_run(const char * pszAppName, const char * pszProgName);
+
+END_EXTERN_C
+
 #include <sys/types.h>
 
 #include <sys/stat.h>
@@ -89,8 +96,11 @@ int main(int argc, char * argv[])
 //   umask(0);
 //
 //#endif
+   //bloat_pad_run("app-core/weather", "cc.ca2.app-core.weather");
 
    class aura_aura aura;
+
+
 
    ap(aura_main_data) pmaindata = new aura_main_data(argc, argv);
 
@@ -176,20 +186,10 @@ aura_prelude auraprelude(&prefix##_get_new_library);
 
 #if defined(LINUX) && !defined(LINUX_COMMAND_LINE)
 
-extern char _binary_data_txt_start;
-
-extern char _binary_data_txt_end;
-
 void linux_get_command_line(string & str, int argc, char ** argv)
 {
 
-   char*  p1 = &_binary_data_txt_start;
-
-   char * p2 = &_binary_data_txt_end;
-
-   string strAppId = string(p1, p2 - p1);
-
-   strAppId.trim();
+   string strAppId(MAINAPPID);
 
    str = string(argv[0]) + " : " + "app=" + strAppId;
 

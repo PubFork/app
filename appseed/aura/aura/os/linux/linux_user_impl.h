@@ -9,6 +9,7 @@
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <X11/Xatom.h>
+//#include <X11/Xatom.h>
 // // Ubuntu apt-get install libcairo2-dev
 
 #include <glib.h>

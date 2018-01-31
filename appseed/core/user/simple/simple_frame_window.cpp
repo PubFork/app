@@ -1079,20 +1079,32 @@ void simple_frame_window::_001OnClose(::message::message * pobj)
 
       }
 
+      #ifdef LINUX
+      //if(IsWindowVisible())
+      {
+
+         WfiMinimize();
+
+      }
+      #else
+
       if(IsWindowVisible())
       {
 
          ShowWindow(SW_HIDE);
 
       }
-      else
-      {
 
-         ShowWindow(SW_SHOW);
+      #endif // LINUX
 
-         InitialFramePosition(true);
-
-      }
+//      else
+//      {
+//
+//         ShowWindow(SW_SHOW);
+//
+//         InitialFramePosition(true);
+//
+//      }
 
       return;
 

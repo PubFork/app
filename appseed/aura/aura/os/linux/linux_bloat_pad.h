@@ -4,6 +4,7 @@
 #include <gtk/gtk.h>
 
 
+BEGIN_EXTERN_C
 
 typedef struct
 {
@@ -23,6 +24,8 @@ typedef GtkApplicationClass BloatPadClass;
 extern BloatPad * g_pappBloatPad;
 
 
-BloatPad * bloat_pad_new (string strAppName, string strAppId);
+void bloat_pad_run(const char * pszAppName, const char * pszProgName);
 
 
+
+END_EXTERN_C

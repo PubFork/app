@@ -3,7 +3,7 @@
 #include "aura/aura/os/linux/linux_user_impl.h"
 #include <X11/Xatom.h>
 #include "aura/aura/os/linux/libsn/sn.h"
-#include <gdk/gdkx.h>
+//#include <gdk/gdkx.h>
 
 #define TEST 0
 

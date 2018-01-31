@@ -47,7 +47,7 @@ int32_t oswindow_data::map_window()
 
    {
 
-      windowing_output_debug_string("\oswindow_data::map_window");
+      windowing_output_debug_string("\noswindow_data::map_window");
 
       xdisplay d(display());
 
@@ -64,7 +64,7 @@ int32_t oswindow_data::map_window()
 
    }
 
-   windowing_output_debug_string("\oswindow_data::map_window END");
+   windowing_output_debug_string("\noswindow_data::map_window END");
 
    return i;
 
@@ -75,7 +75,7 @@ int32_t oswindow_data::map_window()
 int32_t oswindow_data::unmap_window(bool bWithdraw)
 {
 
-   windowing_output_debug_string("\oswindow_data::unmap_window");
+   windowing_output_debug_string("\noswindow_data::unmap_window");
 
    xdisplay d(display());
 
@@ -94,7 +94,7 @@ int32_t oswindow_data::unmap_window(bool bWithdraw)
 
    }
 
-   windowing_output_debug_string("\oswindow_data::unmap_window END");
+   windowing_output_debug_string("\noswindow_data::unmap_window END");
 
    return i;
 
@@ -378,7 +378,7 @@ bool oswindow_data::set_icon(::draw2d::dib * pdib)
 
    }
 
-   windowing_output_debug_string("\oswindow_data::set_icon");
+   windowing_output_debug_string("\noswindow_data::set_icon");
 
    xdisplay d(display());
 
@@ -400,7 +400,7 @@ bool oswindow_data::set_icon(::draw2d::dib * pdib)
 
    }
 
-   windowing_output_debug_string("\oswindow_data::set_icon END");
+   windowing_output_debug_string("\noswindow_data::set_icon END");
 
    fflush(stdout);
 
@@ -494,13 +494,13 @@ bool oswindow_data::set_icon(::draw2d::dib * pdib)
 int32_t oswindow_data::store_name(const char * psz)
 {
 
-   windowing_output_debug_string("\oswindow_data::store_name");
+   windowing_output_debug_string("\noswindow_data::store_name");
 
    xdisplay d(display());
 
    int i = XStoreName(display(), window(), psz);
 
-   windowing_output_debug_string("\oswindow_data::store_name END");
+   windowing_output_debug_string("\noswindow_data::store_name END");
 
    return i;
 
@@ -510,13 +510,13 @@ int32_t oswindow_data::store_name(const char * psz)
 int32_t oswindow_data::select_input(int32_t iInput)
 {
 
-   windowing_output_debug_string("\oswindow_data::select_input");
+   windowing_output_debug_string("\noswindow_data::select_input");
 
    xdisplay d(display());
 
    int i = XSelectInput(display(), window(), iInput);
 
-   windowing_output_debug_string("\oswindow_data::select_input END");
+   windowing_output_debug_string("\noswindow_data::select_input END");
 
    return i;
 
@@ -526,13 +526,13 @@ int32_t oswindow_data::select_input(int32_t iInput)
 int32_t oswindow_data::select_all_input()
 {
 
-   windowing_output_debug_string("\oswindow_data::select_all_input");
+   windowing_output_debug_string("\noswindow_data::select_all_input");
 
    xdisplay d(display());
 
    int i = select_input(ExposureMask | ButtonPressMask);
 
-   windowing_output_debug_string("\oswindow_data::select_all_input");
+   windowing_output_debug_string("\noswindow_data::select_all_input");
 
    return i;
 

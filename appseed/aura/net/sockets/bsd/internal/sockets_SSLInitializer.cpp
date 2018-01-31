@@ -115,11 +115,11 @@ namespace sockets
 
 #endif
 
-      m_rand_size = 1024;
-
       thisok << 1;
 
 #if OPENSSL_API_COMPAT < 0x10100000L
+
+      m_rand_size = 1024;
 
       g_pmapMutex = new map < int32_t, int32_t, mutex *, mutex *>;
 

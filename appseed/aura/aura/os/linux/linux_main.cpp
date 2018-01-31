@@ -3,11 +3,11 @@
 //#include "linux_bloat_pad.h"
 #include "libsn/sn.h"
 
-#if 1
-
-#include "linux_bloat_pad.h"
-
-#endif
+//#if 1
+//
+//#include "linux_bloat_pad.h"
+//
+//#endif
 
 void os_post_quit();
 
@@ -49,6 +49,21 @@ void x_display_error_trap_push(SnDisplay * sndisplay, Display * display);
 void x_display_error_trap_pop(SnDisplay * sndisplay, Display * display);
 
 
+void sn_start_context()
+{
+
+
+   Display * dpy = x11_get_display();
+
+   xdisplay d(dpy);
+
+   SnDisplay * pd = sn_display_new(dpy, &x_display_error_trap_push, &x_display_error_trap_pop);
+
+   g_psncontext = sn_launchee_context_new(pd, 0, app_core::s_pappcore->m_strProgName);
+
+}
+
+
 
 
 GMainContext * gtk_main_context;
@@ -57,92 +72,138 @@ GMainContext * gtk_main_context;
 void app_core::run()
 {
 
-   g_thread_init(NULL);
-
-   gtk_main_context = g_main_context_default();
-
-   //gtk_init_check(0, 0);
-   //set_main_thread(m_psystem->m_hthread);
-
-   //set_main_thread_id(m_psystem->m_uiThread);
-
-   auto idle_source = g_idle_source_new();
-
-   g_source_set_callback(idle_source, &linux_start_system, (::aura::system *) m_psystem, NULL);
-
-   g_source_attach(idle_source, gtk_main_context);
-
-   gtk_init_check(0, 0);
-
-   ///GApplication * papp = g_application_get_default ();
-
-   string strPrgName = app_core::s_pappcore->m_strAppId;
-
-   strPrgName.replace("/", ".");
-
-   strPrgName.replace("_", "-");
-
-   strPrgName = "cc.ca2." + strPrgName;
+   //Sleep(30000);
 
    {
 
-      Display * dpy = x11_get_display();
+      string strPrgName = m_strAppId;
 
-      xdisplay d(dpy);
+      strPrgName.replace("/", ".");
 
-      SnDisplay * pd = sn_display_new(dpy, &x_display_error_trap_push, &x_display_error_trap_pop);
+      strPrgName.replace("_", "-");
 
-      g_psncontext = sn_launchee_context_new(pd, 0, strPrgName);
+      m_strProgName = "cc.ca2." + strPrgName;
 
    }
 
-   g_set_prgname(strPrgName);
-
-   //g_pgtkapp = gtk_application_new (strPrgName, G_APPLICATION_FLAGS_NONE);
-
-   if(m_bGtkApp)
+   if(!m_bGtkApp)
    {
 
-      g_pappBloatPad = bloat_pad_new(strPrgName, strPrgName);
+      g_thread_init(NULL);
 
-      if(g_pappBloatPad == NULL)
-      {
+      gdk_init(NULL, NULL);
 
-         output_debug_string("Failed to initialize GtkApplication (gtk_application_new return NULL)");
+      gtk_main_context = g_main_context_default();
 
-         return;
+      g_set_application_name(m_strAppId);
 
-      }
+      g_set_prgname(m_strProgName);
 
    }
 
-   //output_debug_string("created GtkApplication");
 
-   if(!m_psystem->begin_synch())
+//   if(!m_psystem->begin_synch())
+//   {
+//
+//      output_debug_string("Failed to begin_synch the system (::aura::system or ::aura::system derived)");
+//
+//      return;
+//
+//   }
+
+
+   set_main_thread(GetCurrentThread());
+
+   set_main_thread_id(GetCurrentThreadId());
+
+   m_psystem->m_strAppId = m_pmaindata->m_pmaininitdata->m_strAppId;
+
+   m_psystem->startup_command(m_pmaindata->m_pmaininitdata);
+
+   if (!m_psystem->pre_run())
    {
-
-      output_debug_string("Failed to begin_synch the system (::aura::system or ::aura::system derived)");
 
       return;
 
    }
 
-   if(m_bGtkApp)
+
+   if (!m_psystem->process_command(m_psystem->m_pcommand))
    {
 
-      int status = g_application_run (G_APPLICATION (g_pappBloatPad), 0, NULL);
-
-      g_object_unref(g_pappBloatPad);
-
-      g_pappBloatPad = NULL;
+      return;
 
    }
-   else
+
+   try
    {
 
-      gtk_main();
+      m_psystem->main();
+
+      for(int i = 0; i < m_psystem->m_error.m_iaErrorCode2.get_count(); i++)
+      {
+
+         on_result(m_psystem->m_error.m_iaErrorCode2[i]);
+
+      }
 
    }
+   catch (...)
+   {
+
+      on_result(-2004);
+
+   }
+
+   try
+   {
+
+      m_psystem->term_thread();
+
+   }
+   catch (...)
+   {
+
+      on_result(-2005);
+
+   }
+
+   try
+   {
+
+      m_dwAfterApplicationFirstRequest = m_psystem->m_dwAfterApplicationFirstRequest;
+
+   }
+   catch (...)
+   {
+
+      on_result(-2006);
+
+   }
+
+   ::aura::del(m_psystem);
+
+
+//   if(m_bGtkApp)
+//   {
+//
+//      bloat_pad_run(m_strAppId, m_strProgName);
+//
+//   }
+//   else
+//   {
+
+//      auto idle_source = g_idle_source_new();
+//
+//      g_source_set_callback(idle_source, &linux_start_system, (::aura::system *) m_psystem, NULL);
+//
+//      g_source_attach(idle_source, gtk_main_context);
+//
+//      gtk_init_check(NULL, NULL);
+//
+//      gtk_main();
+
+   //}
 
 }
 
@@ -171,28 +232,28 @@ void os_term_application()
 gboolean gtk_quit_callback(gpointer data)
 {
 
-   gtk_main_quit();
+//   gtk_main_quit();
 
    return FALSE;
 
 }
 
-gboolean linux_start_system(gpointer data)
-{
-
-   GApplication * papp = g_application_get_default ();
-
-   ::aura::system * psystem = (::aura::system *) data;
-
-   psystem->m_strAppId = psystem->m_pappcore->m_pmaindata->m_pmaininitdata->m_strAppId;
-
-   psystem->startup_command(psystem->m_pappcore->m_pmaindata->m_pmaininitdata);
-
-   psystem->process_command(psystem->m_pcommand);
-
-   return FALSE;
-
-}
+//gboolean linux_start_system(gpointer data)
+//{
+//
+//   GApplication * papp = g_application_get_default ();
+//
+//   ::aura::system * psystem = (::aura::system *) data;
+//
+//   psystem->m_strAppId = psystem->m_pappcore->m_pmaindata->m_pmaininitdata->m_strAppId;
+//
+//   psystem->startup_command(psystem->m_pappcore->m_pmaindata->m_pmaininitdata);
+//
+//   psystem->process_command(psystem->m_pcommand);
+//
+//   return FALSE;
+//
+//}
 
 
 

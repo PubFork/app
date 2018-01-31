@@ -47,7 +47,6 @@
 					<Add option="-lncurses" />
 					<Add option="-lssl" />
 					<Add option="-lcrypto" />
-					<Add option="`pkg-config --libs gtk+-3.0 gthread-2.0 glib-2.0`" />
 					<Add option="-lace" />
 					<Add option="-lfreeimage" />
 					<Add option="-Wl,-z,defs" />
@@ -152,7 +151,7 @@
 			<Add option="-std=c++14" />
 			<Add option="-fPIC" />
 			<Add option="-fexceptions" />
-			<Add option="`pkg-config --cflags gtk+-3.0 glib-2.0`" />
+			<Add option="`pkg-config --cflags gdk-3.0 gthread-2.0`" />
 			<Add option="-DLINUX" />
 			<Add directory="../../../include" />
 			<Add directory="framework" />
@@ -171,6 +170,7 @@
 		</Compiler>
 		<Linker>
 			<Add option="-fPIC" />
+			<Add option="`pkg-config --libs gdk-3.0 gthread-2.0`" />
 			<Add directory="../../../time/x64/basis" />
 		</Linker>
 		<ExtraCommands>
@@ -610,7 +610,6 @@
 		<Unit filename="aura/os/linux/libsn/sn.h" />
 		<Unit filename="aura/os/linux/linux.h" />
 		<Unit filename="aura/os/linux/linux.inl" />
-		<Unit filename="aura/os/linux/linux_bloat_pad.cpp" />
 		<Unit filename="aura/os/linux/linux_bloat_pad.h" />
 		<Unit filename="aura/os/linux/linux_cross_win_file.h" />
 		<Unit filename="aura/os/linux/linux_cross_win_gdi.h" />

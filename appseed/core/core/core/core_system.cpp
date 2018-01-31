@@ -209,15 +209,25 @@ namespace core
 
 #ifdef LINUX
 
-      ::fork(get_app(),[=]()
+      fork([=]()
       {
 
          ::get_thread()->unregister_from_required_threads();
 
          g_pbasecore = dlopen("libbasecore.so", RTLD_LOCAL | RTLD_NOW);
+
          BASECORE_INIT * f =  (BASECORE_INIT *) dlsym(g_pbasecore, "basecore_init");
-         (*f)();
-         output_debug_string("gtk_main exited");
+
+         if(f != NULL)
+         {
+
+            output_debug_string("basecore_init entry point not found at basecore library");
+
+            (*f)();
+
+            output_debug_string("gtk_main exited");
+
+         }
 
       });
 
@@ -350,7 +360,11 @@ namespace core
    {
 
       if(!::core::application::init3())
+      {
+
          return false;
+
+      }
 
       if(m_phistory == NULL)
       {
@@ -420,7 +434,15 @@ namespace core
 #ifdef LINUX
 
       BASECORE_INIT * f =  (BASECORE_INIT *) dlsym(g_pbasecore, "basecore_term");
-      (*f)();
+
+      if(f != NULL)
+      {
+
+         output_debug_string("basecore_term entry point not found at basecore library");
+
+         (*f)();
+
+      }
 
 #endif
 

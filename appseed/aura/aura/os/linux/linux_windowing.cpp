@@ -246,7 +246,7 @@ oswindow SetCapture(oswindow window)
 
    }
 
-   windowing_output_debug_string("\oswindow_data::SetCapture 1");
+   windowing_output_debug_string("\noswindow_data::SetCapture 1");
 
    xdisplay d(window->display());
 
@@ -255,13 +255,13 @@ oswindow SetCapture(oswindow window)
 
       g_oswindowCapture = window;
 
-      windowing_output_debug_string("\oswindow_data::SetCapture 2");
+      windowing_output_debug_string("\noswindow_data::SetCapture 2");
 
       return windowOld;
 
    }
 
-   windowing_output_debug_string("\oswindow_data::SetCapture 2.1");
+   windowing_output_debug_string("\noswindow_data::SetCapture 2.1");
 
    return NULL;
 
@@ -278,7 +278,7 @@ WINBOOL ReleaseCapture()
 
    }
 
-   windowing_output_debug_string("\oswindow_data::ReleaseCapture 1");
+   windowing_output_debug_string("\noswindow_data::ReleaseCapture 1");
 
    xdisplay d(g_oswindowCapture->display());
 
@@ -291,7 +291,7 @@ WINBOOL ReleaseCapture()
 
    }
 
-   windowing_output_debug_string("\oswindow_data::ReleaseCapture 2");
+   windowing_output_debug_string("\noswindow_data::ReleaseCapture 2");
 
    return bRet;
 
@@ -308,14 +308,14 @@ oswindow SetFocus(oswindow window)
 
    }
 
-   windowing_output_debug_string("\oswindow_data::SetFocus 1");
+   windowing_output_debug_string("\noswindow_data::SetFocus 1");
 
    xdisplay d(window->display());
 
    if(!IsWindow(window))
    {
 
-      windowing_output_debug_string("\oswindow_data::SetFocus 1.1");
+      windowing_output_debug_string("\noswindow_data::SetFocus 1.1");
 
       return NULL;
 
@@ -326,7 +326,7 @@ oswindow SetFocus(oswindow window)
    if(!IsWindowVisibleRaw(window))
    {
 
-      windowing_output_debug_string("\oswindow_data::SetFocus 1.2");
+      windowing_output_debug_string("\noswindow_data::SetFocus 1.2");
 
       return NULL;
 
@@ -335,13 +335,13 @@ oswindow SetFocus(oswindow window)
    if(!XSetInputFocus(d, window->window(), RevertToNone, CurrentTime))
    {
 
-      windowing_output_debug_string("\oswindow_data::SetFocus 1.3");
+      windowing_output_debug_string("\noswindow_data::SetFocus 1.3");
 
       return NULL;
 
    }
 
-   windowing_output_debug_string("\oswindow_data::SetFocus 2");
+   windowing_output_debug_string("\noswindow_data::SetFocus 2");
 
    return windowOld;
 

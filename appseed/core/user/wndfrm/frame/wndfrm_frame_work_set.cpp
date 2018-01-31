@@ -24,7 +24,6 @@ namespace user
             m_bEnableMouse = true;
 
             m_bFullScreenEnable = false;
-//            m_bNotifyIconEnable = false;
 
             m_pwndRegion = NULL;
             m_pwndDraw = NULL;
@@ -1198,10 +1197,6 @@ namespace user
             m_bFullScreenEnable = bEnable;
          }
 
-         //void WorkSet::EnableNotifyIcon(bool bEnable)
-         //{
-         //   m_bNotifyIconEnable = bEnable;
-         //}
 
          bool WorkSet::IsNotifyIconEnabled()
          {

@@ -88,6 +88,7 @@ public:
 
    static app_core *             s_pappcore;
    string                        m_strCommandLine;
+   string                        m_strProgName;
    bool                          m_bAcidApp = false;
    ::aura::PFN_GET_NEW_LIBRARY   m_pfnNewLibrary = NULL;
    ::aura::PFN_GET_NEW_APP       m_pfnNewApp = NULL;

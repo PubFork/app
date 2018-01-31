@@ -22,10 +22,6 @@ string apple_get_bundle_identifier();
 
 string ca2_command_line2();
 
-#elif defined(LINUX)
-
-#include <gtk/gtk.h>
-
 #endif
 
 

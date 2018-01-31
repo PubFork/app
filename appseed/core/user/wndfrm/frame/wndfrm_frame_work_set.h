@@ -56,7 +56,6 @@ namespace user
             bool                          m_bMovingEnabled;
             bool                          m_bSizingEnabled;
             bool                          m_bSysMenuEnabled;
-            //bool                          m_bNotifyIconEnable;
             bool                          m_bFullScreenEnable;
 
 

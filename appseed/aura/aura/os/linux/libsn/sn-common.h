@@ -27,6 +27,7 @@
 #define __SN_COMMON_H__
 
 #include "sn-util.h"
+// at Fedora sudo yum groupinstall "X Software Development"
 #include <X11/Xlib.h>
 #include <xcb/xcb.h>
 

@@ -989,7 +989,7 @@ namespace crypto
 
       }
 
-#if defined(METROWIN) || (defined(LINUX) && !defined(RASPBIAN))
+#if (defined(METROWIN) || (defined(LINUX) && !defined(RASPBIAN))) && (OPENSSL_API_COMPAT < 0x10100000L)
 
       char * hexN       = BN_bn2hex(prsa->n);
       char * hexE       = BN_bn2hex(prsa->e);
@@ -1271,7 +1271,7 @@ namespace crypto
       BN_hex2bn(&n, nParam);
       BN_hex2bn(&e, "10001");
 
-#if defined(METROWIN) || (defined(LINUX) && !defined(RASPBIAN))
+#if (defined(METROWIN) || (defined(LINUX) && !defined(RASPBIAN))) && (OPENSSL_API_COMPAT < 0x10100000L)
       m_prsa->n = n;
       m_prsa->e = e;
 #else
@@ -1321,7 +1321,7 @@ namespace crypto
       BN_hex2bn(&dmq1, strDmq1);
       BN_hex2bn(&iqmp, strIqmp);
 
-#if defined(METROWIN) || (defined(LINUX) && !defined(RASPBIAN))
+#if (defined(METROWIN) || (defined(LINUX) && !defined(RASPBIAN))) && (OPENSSL_API_COMPAT < 0x10100000L)
       m_prsa->n = n;
       m_prsa->e = e;
       m_prsa->d = d;

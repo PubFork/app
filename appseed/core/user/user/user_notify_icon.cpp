@@ -139,6 +139,15 @@ namespace user
 
          BASECORE_APP_INDICATOR_NEW* f = (BASECORE_APP_INDICATOR_NEW *) dlsym(g_pbasecore, "basecore_app_indicator_new");
 
+         if(f == NULL)
+         {
+
+            output_debug_string("basecore_app_indicator_new entry point not found at basecore library");
+
+            return false;
+
+         }
+
          string strFolder(System.dir().element());
 
          strFolder += "/";

@@ -357,12 +357,16 @@ namespace user
          bool WorkSetClientInterface::WfiMinimize(bool bNoActivate)
          {
 
+#ifndef LINUX
+
             if (m_workset.m_bMinimizeToTray)
             {
 
                return WfiNotifyIcon();
 
             }
+
+#endif
 
             if(!WfiOnBeforeMinimize())
                return false;

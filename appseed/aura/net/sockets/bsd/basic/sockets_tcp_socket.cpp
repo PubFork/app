@@ -2316,7 +2316,7 @@ bool tcp_socket::s_bReuseSession = true;
                   {
                      // Current name is a DNS name, let's check it
 
-#if defined(METROWIN) || defined(LINUX)
+#if (defined(METROWIN) || defined(LINUX)) && (OPENSSL_API_COMPAT < 0x10100000L)
                      string strDnsName(ASN1_STRING_data(current_name->d.dNSName), ASN1_STRING_length(current_name->d.dNSName));
 #else
                      string strDnsName(ASN1_STRING_get0_data(current_name->d.dNSName), ASN1_STRING_length(current_name->d.dNSName));
@@ -2376,13 +2376,13 @@ bool tcp_socket::s_bReuseSession = true;
 
    void tcp_socket::InitializeContextTLSClientMethod()
    {
-      
+
 #if defined(HAVE_OPENSSL)
-      
+
       InitializeContext("", TLS_client_method());
-      
+
 #endif
-      
+
    }
 
 

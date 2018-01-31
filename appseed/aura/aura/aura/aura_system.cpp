@@ -1,5 +1,5 @@
-﻿#include "framework.h" // previously aura/user/user.h
-//#include "aura/user/colorertake5/colorertake5.h"
+﻿#include "framework.h"
+
 
 
 void os_post_quit();
@@ -9,6 +9,7 @@ void os_post_quit();
 
 #include <X11/Xlib.h>
 #include "aura/aura/os/linux/linux_xdisplay.h"
+#include <gdk/gdk.h>
 
 CLASS_DECL_AURA int xinerama_get_monitor_count();
 CLASS_DECL_AURA int xinerama_get_monitor_rect(index i, LPRECT lprect);

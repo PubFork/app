@@ -256,7 +256,7 @@ string ip_reverse(string str)
 
 
 
-#if defined(METROWIN) || defined(LINUX)
+#if (defined(METROWIN) || defined(LINUX)) && (OPENSSL_API_COMPAT < 0x10100000L)
 
 
 #include <openssl/ssl.h>
@@ -274,7 +274,7 @@ CLASS_DECL_AURA const SSL_METHOD * TLS_client_method()
 extern "C"
 CLASS_DECL_AURA const SSL_METHOD * TLS_server_method()
 {
-   
+
    return TLSv1_2_server_method();
 
 }
