@@ -19,223 +19,6 @@ CLASS_DECL_AURA void dll_processes(uint_array & dwa, stringa & straProcesses, co
 }
 
 
-void prepare_argc_argv(int & argc, char ** argv, char * cmd_line)
-{
-
-   char *      pArg;
-
-   char *      pPtr = NULL;
-
-   char * p;
-
-   char * psz = cmd_line;
-
-   enum e_state
-   {
-
-      state_initial,
-
-      state_quote,
-
-      state_non_space,
-
-   };
-
-   e_state e = state_initial;
-
-   char quote;
-
-   while(psz != NULL && *psz != '\0')
-   {
-
-      if(e == state_initial)
-      {
-
-         if(*psz == ' ')
-         {
-
-            psz = (char *) ::str::utf8_inc(psz);
-
-         }
-         else if(*psz == '\"')
-         {
-
-            quote = '\"';
-
-            psz = (char *) ::str::utf8_inc(psz);
-
-            argv[argc++] =(char *) psz;
-
-            e = state_quote;
-
-         }
-         else if(*psz == '\'')
-         {
-
-            quote = '\'';
-
-            psz = (char *) ::str::utf8_inc(psz);
-
-            argv[argc++] = (char *) psz;
-
-            e = state_quote;
-
-         }
-         else
-         {
-
-            argv[argc++] = (char *) psz;
-
-            psz = (char *) ::str::utf8_inc(psz);
-
-            e = state_non_space;
-
-         }
-
-      }
-      else if(e == state_quote)
-      {
-
-         if(*psz == '\\')
-         {
-
-            memmove(psz, psz + 1, strlen(psz));
-
-            psz = (char *) ::str::utf8_inc(psz);
-
-         }
-         else if(*psz == quote)
-         {
-
-            p = (char *) ::str::utf8_inc(psz);
-
-            *psz = '\0';
-
-            psz = p;
-
-            e = state_initial;
-
-         }
-         else
-         {
-
-            psz = (char *) ::str::utf8_inc(psz);
-
-         }
-
-      }
-      else
-      {
-
-         if(*psz == ' ')
-         {
-
-            p = (char *) ::str::utf8_inc(psz);
-
-            *psz = '\0';
-
-            psz = p;
-
-            e = state_initial;
-
-         }
-         else
-         {
-
-            psz = (char *) ::str::utf8_inc(psz);
-
-         }
-
-      }
-
-   }
-
-   argv[argc] = NULL;
-
-}
-
-
-int create_process(const char * pszCommandLine, int * pprocessId)
-{
-
-   stringa stra;
-
-   stra = get_c_args_for_c(pszCommandLine);
-
-   char ** argv = (char **) malloc(sizeof(char *) * (stra.get_size() + 1));
-
-   int argc = 0;
-
-   for(auto & str : stra)
-   {
-
-      argv[argc] = strdup((char *) str.c_str());
-
-      argc++;
-
-   }
-
-   argv[argc] = NULL;
-
-   pid_t pid = 0;
-
-   if((pid = fork()) == 0)
-   {
-
-      // child
-
-      int iExitCode = execv(argv[0], argv);
-
-      char ** pargv = argv;
-
-      while(*pargv != NULL)
-      {
-
-         free(*pargv);
-
-         pargv++;
-
-      }
-
-      free(argv);
-
-      exit(iExitCode);
-
-   }
-   else if(pid == -1)
-   {
-
-      // in parent, but error
-
-      char ** pargv = argv;
-
-      while(*pargv != NULL)
-      {
-
-         free(*pargv);
-
-         pargv++;
-
-      }
-
-      free(argv);
-
-      return 0;
-
-   }
-
-   if(pprocessId != NULL)
-   {
-
-      *pprocessId = pid;
-
-   }
-
-   // in parent, success
-
-   return 1;
-
-}
 
 
 int32_t create_process2(const char * pszCommandLine, int32_t * pprocessId)
@@ -287,7 +70,6 @@ int32_t create_process2(const char * pszCommandLine, int32_t * pprocessId)
 }
 
 
-
 int32_t create_process3(const char * _cmd_line, int32_t * pprocessId)
 {
 
@@ -314,13 +96,7 @@ int32_t create_process3(const char * _cmd_line, int32_t * pprocessId)
 
    pid_t pid;
 
-//   char *argv[] = {"ls", (char *) 0};
-
    int status;
-
-   //puts("Testing posix_spawn");
-
-   //fflush(NULL);
 
    status = posix_spawn(&pid, argv[0], NULL, NULL, argv, environ);
 
@@ -331,47 +107,38 @@ int32_t create_process3(const char * _cmd_line, int32_t * pprocessId)
 
       return 1;
 
-//    printf("Child id: %i\n", pid);
-//    fflush(NULL);
-//    if (waitpid(pid, &status, 0) != -1) {
-//      printf("Child exited with status %i\n", status);
-//    } else {
-//      perror("waitpid");
-//    }
    }
    else
    {
 
       return 0;
 
-      //printf("posix_spawn: %s\n", strerror(status));
-
    }
 
 }
 
 
-
-//extern thread_pointer < hthread > t_hthread;
-
-int32_t daemonize_process(const char * _cmd_line, int32_t * pprocessId)
+int32_t daemonize_process(const char * pszCommandLine, int32_t * pprocessId)
 {
 
-   if(_cmd_line == NULL)
+   stringa stra;
+
+   stra = get_c_args_for_c(pszCommandLine);
+
+   char ** argv = (char **) malloc(sizeof(char *) * (stra.get_size() + 1));
+
+   int argc = 0;
+
+   for(auto & str : stra)
    {
 
-      return 0;
+      argv[argc] = strdup((char *) str.c_str());
+
+      argc++;
 
    }
 
-   char * cmd_line1 = strdup(_cmd_line);
-
-   if(cmd_line1 == NULL)
-   {
-
-      return 0;
-
-   }
+   argv[argc] = NULL;
 
    pid_t pid;
 
@@ -382,17 +149,28 @@ int32_t daemonize_process(const char * _cmd_line, int32_t * pprocessId)
 
       printf("fork error\n");
 
+      char ** pargv = argv;
+
+      while(*pargv != NULL)
+      {
+
+         free(*pargv);
+
+         pargv++;
+
+      }
+
+      free(argv);
+
       return 0;
 
    }
    else if(pid > 0)
    {
 
-
       return 1;
 
    }
-   char * cmd_line = strdup(cmd_line1);
 
    daemon(0, 0);
 
@@ -423,316 +201,53 @@ int32_t daemonize_process(const char * _cmd_line, int32_t * pprocessId)
 //   freopen( "/dev/null", "w", stdout);
 //   freopen( "/dev/null", "w", stderr);
 
-   char *      pArg;
+   int iExitCode = execv(argv[0], argv);
 
-   char *      pPtr = NULL;
+   char ** pargv = argv;
 
-   char *      argv[1024 + 1];
-
-   int32_t		argc = 0;
-
-   char * p;
-
-   char * psz = cmd_line;
-
-   enum e_state
+   while(*pargv != NULL)
    {
 
-      state_initial,
+      free(*pargv);
 
-      state_quote,
-
-      state_non_space,
-
-   };
-
-   e_state e = state_initial;
-
-   char quote;
-
-   while(psz != NULL && *psz != '\0')
-   {
-
-      if(e == state_initial)
-      {
-
-         if(*psz == ' ')
-         {
-
-            psz = (char *) ::str::utf8_inc(psz);
-
-         }
-         else if(*psz == '\"')
-         {
-
-            quote = '\"';
-
-            psz = (char *) ::str::utf8_inc(psz);
-
-            argv[argc++] =(char *) psz;
-
-            e = state_quote;
-
-         }
-         else if(*psz == '\'')
-         {
-
-            quote = '\'';
-
-            psz = (char *) ::str::utf8_inc(psz);
-
-            argv[argc++] = (char *) psz;
-
-            e = state_quote;
-
-         }
-         else
-         {
-
-            argv[argc++] = (char *) psz;
-
-            psz = (char *) ::str::utf8_inc(psz);
-
-            e = state_non_space;
-
-         }
-
-      }
-      else if(e == state_quote)
-      {
-
-         if(*psz == '\\')
-         {
-
-            memmove(psz, psz + 1, strlen(psz));
-
-            psz = (char *) ::str::utf8_inc(psz);
-
-         }
-         else if(*psz == quote)
-         {
-
-            p = (char *) ::str::utf8_inc(psz);
-
-            *psz = '\0';
-
-            psz = p;
-
-            e = state_initial;
-
-         }
-         else
-         {
-
-            psz = (char *) ::str::utf8_inc(psz);
-
-         }
-
-      }
-      else
-      {
-
-         if(*psz == ' ')
-         {
-
-            p = (char *) ::str::utf8_inc(psz);
-
-            *psz = '\0';
-
-            psz = p;
-
-            e = state_initial;
-
-         }
-         else
-         {
-
-            psz = (char *) ::str::utf8_inc(psz);
-
-         }
-
-      }
+      pargv++;
 
    }
 
-   argv[argc] = NULL;
-
-   int iExitCode = execv(argv[0], argv);
-
-   free(cmd_line);
+   free(argv);
 
    exit(iExitCode);
+
 
    return 0;
 
 }
 
 
-int32_t create_process4(const char * _cmd_line, int32_t * pprocessId)
+int32_t create_process4(const char * pszCommandLine, int32_t * pprocessId)
 {
 
-   char * exec_path_name;
+   stringa stra;
 
-   char * cmd_line;
+   stra = get_c_args_for_c(pszCommandLine);
 
-   char * cmd_line2;
+   char ** argv = (char **) malloc(sizeof(char *) * (stra.get_size() + 1));
 
-   cmd_line = strdup(_cmd_line);
+   int argc = 0;
 
-   if(cmd_line == NULL)
+   for(auto & str : stra)
    {
 
-      return 0;
+      argv[argc] = strdup((char *) str.c_str());
+
+      argc++;
 
    }
 
-   cmd_line2 = strdup(_cmd_line);
-
-   if(cmd_line2 == NULL)
-   {
-
-      free(cmd_line);
-
-      return 0;
-
-   }
-
-   strcpy_dup(cmd_line, _cmd_line);
-
-   strcpy_dup(cmd_line2, _cmd_line);
-
-   const char * pszEnv = getenv("LD_LIBRARY_PATH");
+   argv[argc] = NULL;
 
    if((*pprocessId = fork()) == 0)
    {
-
-      char *      pArg;
-
-      char *      pPtr = NULL;
-
-      char *      argv[1024 + 1];
-
-      int32_t		argc = 0;
-
-      char * p;
-
-      setenv("LD_LIBRARY_PATH", pszEnv, 1);
-
-      char * psz = cmd_line;
-
-      enum e_state
-      {
-
-         state_initial,
-
-         state_quote,
-
-         state_non_space,
-
-      };
-
-      e_state e = state_initial;
-
-      char quote;
-
-      while(psz != NULL && *psz != '\0')
-      {
-
-         if(e == state_initial)
-         {
-
-            if(*psz == ' ')
-            {
-
-               psz = (char *) ::str::utf8_inc(psz);
-
-            }
-            else if(*psz == '\"')
-            {
-
-               quote = '\"';
-
-               psz =(char *)  ::str::utf8_inc(psz);
-
-               argv[argc++] = psz;
-
-               e = state_quote;
-
-            }
-            else if(*psz == '\'')
-            {
-
-               quote = '\'';
-
-               psz = (char *) ::str::utf8_inc(psz);
-
-               argv[argc++] = psz;
-
-               e = state_quote;
-
-            }
-            else
-            {
-
-               argv[argc++] = psz;
-
-               psz = (char *) ::str::utf8_inc(psz);
-
-               e = state_non_space;
-
-            }
-
-         }
-         else if(e == state_quote)
-         {
-
-            if(*psz == quote)
-            {
-
-               p = (char *) ::str::utf8_inc(psz);
-
-               *psz = '\0';
-
-               psz = p;
-
-               e = state_initial;
-
-            }
-            else
-            {
-
-               psz = (char *) ::str::utf8_inc(psz);
-
-            }
-
-         }
-         else
-         {
-
-            if(*psz == ' ')
-            {
-
-               p = (char *) ::str::utf8_inc(psz);
-
-               *psz = '\0';
-
-               psz = p;
-
-               e = state_initial;
-
-            }
-            else
-            {
-
-               psz = (char *) ::str::utf8_inc(psz);
-
-            }
-
-         }
-
-      }
-
-      argv[argc] = NULL;
 
       execv(argv[0], argv);
 
@@ -740,9 +255,18 @@ int32_t create_process4(const char * _cmd_line, int32_t * pprocessId)
 
       wait(&status);
 
-      free(cmd_line);
+      char ** pargv = argv;
 
-      free(cmd_line2);
+      while(*pargv != NULL)
+      {
+
+         free(*pargv);
+
+         pargv++;
+
+      }
+
+      free(argv);
 
       exit(status);
 
@@ -750,19 +274,25 @@ int32_t create_process4(const char * _cmd_line, int32_t * pprocessId)
    else if(*pprocessId == -1)
    {
 
-      // in parent, but error
-
       *pprocessId = 0;
 
-      free(cmd_line);
+      char ** pargv = argv;
 
-      free(cmd_line2);
+      while(*pargv != NULL)
+      {
+
+         free(*pargv);
+
+         pargv++;
+
+      }
+
+      free(argv);
 
       return 0;
 
    }
 
-   // in parent, success
    return 1;
 
 }
@@ -1130,4 +660,85 @@ CLASS_DECL_AURA bool is_shared_library_busy(const stringa & stra)
 
 
 CLASS_DECL_AURA int32_t ca2_main();
+
+
+
+int create_process(const char * pszCommandLine, int * pprocessId)
+{
+
+   stringa stra;
+
+   stra = get_c_args_for_c(pszCommandLine);
+
+   char ** argv = (char **) malloc(sizeof(char *) * (stra.get_size() + 1));
+
+   int argc = 0;
+
+   for(auto & str : stra)
+   {
+
+      argv[argc] = strdup((char *) str.c_str());
+
+      argc++;
+
+   }
+
+   argv[argc] = NULL;
+
+   pid_t pid = 0;
+
+   if((pid = fork()) == 0) // child
+   {
+
+      int iExitCode = execv(argv[0], argv);
+
+      char ** pargv = argv;
+
+      while(*pargv != NULL)
+      {
+
+         free(*pargv);
+
+         pargv++;
+
+      }
+
+      free(argv);
+
+      exit(iExitCode);
+
+   }
+   else if(pid == -1) // in parent, but error
+   {
+
+      char ** pargv = argv;
+
+      while(*pargv != NULL)
+      {
+
+         free(*pargv);
+
+         pargv++;
+
+      }
+
+      free(argv);
+
+      return 0;
+
+   }
+
+   if(pprocessId != NULL)
+   {
+
+      *pprocessId = pid;
+
+   }
+
+   return 1;
+
+}
+
+
+
 

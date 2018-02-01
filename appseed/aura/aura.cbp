@@ -481,6 +481,10 @@
 		<Unit filename="aura/message/message_sender.h" />
 		<Unit filename="aura/message/message_simple_command.h" />
 		<Unit filename="aura/message/message_timer.h" />
+		<Unit filename="aura/node/android/android_process.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/node/ansios/ansios.h" />
 		<Unit filename="aura/node/ansios/ansios_pipe.h" />
 		<Unit filename="aura/node/ansios/ansios_process.cpp">
@@ -489,6 +493,10 @@
 		</Unit>
 		<Unit filename="aura/node/ansios/ansios_process.h" />
 		<Unit filename="aura/node/ansios/ansios_thread_impl.h" />
+		<Unit filename="aura/node/apple/apple_process.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/node/linux/linux.h" />
 		<Unit filename="aura/node/linux/linux_application.cpp">
 			<Option compile="0" />
@@ -515,6 +523,7 @@
 			<Option link="0" />
 		</Unit>
 		<Unit filename="aura/node/linux/linux_os.h" />
+		<Unit filename="aura/node/linux/linux_process.cpp" />
 		<Unit filename="aura/node/linux/linux_root_tools.h" />
 		<Unit filename="aura/node/linux/linux_shell.h" />
 		<Unit filename="aura/node/linux/linux_stdio_file.h" />
@@ -686,6 +695,10 @@
 		<Unit filename="aura/os/os2.h" />
 		<Unit filename="aura/os/os_binreloc.h" />
 		<Unit filename="aura/os/os_os.h" />
+		<Unit filename="aura/os/os_process.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/os/os_process.h" />
 		<Unit filename="aura/os/os_threading.h" />
 		<Unit filename="aura/os/os_time.h" />

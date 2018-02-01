@@ -322,3 +322,141 @@ extern "C"
    }
 
 }
+
+
+void prepare_argc_argv(int & argc, char ** argv, char * cmd_line)
+{
+
+   char *      pArg;
+
+   char *      pPtr = NULL;
+
+   char * p;
+
+   char * psz = cmd_line;
+
+   enum e_state
+   {
+
+      state_initial,
+
+      state_quote,
+
+      state_non_space,
+
+   };
+
+   e_state e = state_initial;
+
+   char quote;
+
+   while(psz != NULL && *psz != '\0')
+   {
+
+      if(e == state_initial)
+      {
+
+         if(*psz == ' ')
+         {
+
+            psz = (char *) ::str::utf8_inc(psz);
+
+         }
+         else if(*psz == '\"')
+         {
+
+            quote = '\"';
+
+            psz = (char *) ::str::utf8_inc(psz);
+
+            argv[argc++] =(char *) psz;
+
+            e = state_quote;
+
+         }
+         else if(*psz == '\'')
+         {
+
+            quote = '\'';
+
+            psz = (char *) ::str::utf8_inc(psz);
+
+            argv[argc++] = (char *) psz;
+
+            e = state_quote;
+
+         }
+         else
+         {
+
+            argv[argc++] = (char *) psz;
+
+            psz = (char *) ::str::utf8_inc(psz);
+
+            e = state_non_space;
+
+         }
+
+      }
+      else if(e == state_quote)
+      {
+
+         if(*psz == '\\')
+         {
+
+            memmove(psz, psz + 1, strlen(psz));
+
+            psz = (char *) ::str::utf8_inc(psz);
+
+         }
+         else if(*psz == quote)
+         {
+
+            p = (char *) ::str::utf8_inc(psz);
+
+            *psz = '\0';
+
+            psz = p;
+
+            e = state_initial;
+
+         }
+         else
+         {
+
+            psz = (char *) ::str::utf8_inc(psz);
+
+         }
+
+      }
+      else
+      {
+
+         if(*psz == ' ')
+         {
+
+            p = (char *) ::str::utf8_inc(psz);
+
+            *psz = '\0';
+
+            psz = p;
+
+            e = state_initial;
+
+         }
+         else
+         {
+
+            psz = (char *) ::str::utf8_inc(psz);
+
+         }
+
+      }
+
+   }
+
+   argv[argc] = NULL;
+
+}
+
+
