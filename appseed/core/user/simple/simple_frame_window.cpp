@@ -1081,6 +1081,14 @@ void simple_frame_window::_001OnClose(::message::message * pobj)
 
       #ifdef LINUX
       //if(IsWindowVisible())
+      if(::user::get_edesktop() == ::user::desktop_unity_gnome
+      || ::user::get_edesktop() == ::user::desktop_ubuntu_gnome)
+      {
+
+         ShowWindow(SW_HIDE);
+
+      }
+      else
       {
 
          WfiMinimize();
@@ -3174,6 +3182,19 @@ void simple_frame_window::OnNotifyIconLButtonDown(UINT uiNotifyIcon)
 {
    InitialFramePosition(true);
    UNREFERENCED_PARAMETER(uiNotifyIcon);
+}
+
+
+void simple_frame_window::OnNotifyIconOpen(UINT uiNotifyIcon)
+{
+
+   if(m_bDefaultNotifyIcon)
+   {
+
+      ShowWindow(SW_NORMAL);
+
+   }
+
 }
 
 

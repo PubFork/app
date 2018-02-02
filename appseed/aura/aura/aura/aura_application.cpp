@@ -1299,9 +1299,9 @@ namespace aura
 
          string strCmd = path + " " + strParam;
 
-         strCmd.replace("\"", "\\\"");
+         strCmd.replace("\'", "\\\'");
 
-         strParam = " -c \"" + strCmd + " & disown\"";
+         strParam = " -c '" + strCmd + "'";
 
          output_debug_string(strParam);
 

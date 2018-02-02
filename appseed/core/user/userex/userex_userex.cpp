@@ -1264,6 +1264,7 @@ retry_license:
       {
 
       case ::user::desktop_gnome:
+      case ::user::desktop_ubuntu_gnome:
       case ::user::desktop_unity_gnome:
 
          return ::user::gsettings_set("org.gnome.desktop.background", "picture-uri", "file://" + strLocalImagePath);
@@ -1315,6 +1316,7 @@ retry_license:
       {
 
       case ::user::desktop_gnome:
+      case ::user::desktop_ubuntu_gnome:
       case ::user::desktop_unity_gnome:
 
          ::user::gsettings_get(sz, sizeof(sz), "org.gnome.desktop.background", "picture-uri");

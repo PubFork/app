@@ -17,6 +17,8 @@ struct i_close_quit
 {
 public:
 
+
+   virtual void __open() = 0;
    virtual void __close() = 0;
    virtual void __quit() = 0;
    virtual bool __close_is_closed() = 0;

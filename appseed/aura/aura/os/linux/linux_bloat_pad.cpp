@@ -1,6 +1,7 @@
 #include "framework.h"
 #include "linux_bloat_pad.h"
 
+BEGIN_EXTERN_C
 
 void sn_start_context();
 
@@ -26,6 +27,24 @@ BloatPad * bloat_pad_new (const char * pszAppName, const char * pszProgName)
                                           NULL);
 
    return bloat_pad;
+
+}
+
+
+gboolean linux_start_system(gpointer data)
+{
+
+   GApplication * papp = g_application_get_default ();
+
+   ::aura::system * psystem = (::aura::system *) data;
+
+   psystem->m_strAppId = psystem->m_pappcore->m_pmaindata->m_pmaininitdata->m_strAppId;
+
+   psystem->startup_command(psystem->m_pappcore->m_pmaindata->m_pmaininitdata);
+
+   psystem->process_command(psystem->m_pcommand);
+
+   return FALSE;
 
 }
 
@@ -172,3 +191,7 @@ void bloat_pad_run(const char * pszAppName, const char * pszProgName)
    g_pappBloatPad = NULL;
 
 }
+
+
+END_EXTERN_C
+

@@ -81,6 +81,14 @@ namespace user
    }
 
 
+   void notify_icon_listener::OnNotifyIconOpen(UINT uiNotifyIcon)
+   {
+
+      UNREFERENCED_PARAMETER(uiNotifyIcon);
+
+   }
+
+
    void notify_icon_listener::OnNotifyIconClose(UINT uiNotifyIcon)
    {
 

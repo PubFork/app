@@ -1,19 +1,17 @@
 #include "framework.h"
 #include <gio/gio.h>
-//#include "linux_bloat_pad.h"
 #include "libsn/sn.h"
-
-//#if 1
-//
-//#include "linux_bloat_pad.h"
-//
-//#endif
+#include "linux_bloat_pad.h"
 
 void os_post_quit();
 
 CLASS_DECL_AURA int32_t ca2_main();
 
+BEGIN_EXTERN_C
+
 gboolean linux_start_system(gpointer data);
+
+END_EXTERN_C
 
 void CLASS_DECL_AURA __cdecl _ca2_purecall()
 {
@@ -48,6 +46,7 @@ void x_display_error_trap_push(SnDisplay * sndisplay, Display * display);
 
 void x_display_error_trap_pop(SnDisplay * sndisplay, Display * display);
 
+BEGIN_EXTERN_C
 
 void sn_start_context()
 {
@@ -63,7 +62,7 @@ void sn_start_context()
 
 }
 
-
+END_EXTERN_C
 
 
 GMainContext * gtk_main_context;
@@ -91,119 +90,117 @@ void app_core::run()
 
       g_thread_init(NULL);
 
-      gdk_init(NULL, NULL);
-
       gtk_main_context = g_main_context_default();
 
       g_set_application_name(m_strAppId);
 
       g_set_prgname(m_strProgName);
 
+      auto idle_source = g_idle_source_new();
+
+      g_source_set_callback(idle_source, &linux_start_system, (::aura::system *) m_psystem, NULL);
+
+      g_source_attach(idle_source, gtk_main_context);
+
+      gtk_init_check(NULL, NULL);
+
    }
 
 
-//   if(!m_psystem->begin_synch())
-//   {
+   if(!m_psystem->begin_synch())
+   {
+
+      output_debug_string("Failed to begin_synch the system (::aura::system or ::aura::system derived)");
+
+      return;
+
+   }
+
+
+//   set_main_thread(GetCurrentThread());
 //
-//      output_debug_string("Failed to begin_synch the system (::aura::system or ::aura::system derived)");
+//   set_main_thread_id(GetCurrentThreadId());
+//
+//   m_psystem->m_strAppId = m_pmaindata->m_pmaininitdata->m_strAppId;
+//
+//   m_psystem->startup_command(m_pmaindata->m_pmaininitdata);
+//
+//   if (!m_psystem->pre_run())
+//   {
 //
 //      return;
 //
 //   }
-
-
-   set_main_thread(GetCurrentThread());
-
-   set_main_thread_id(GetCurrentThreadId());
-
-   m_psystem->m_strAppId = m_pmaindata->m_pmaininitdata->m_strAppId;
-
-   m_psystem->startup_command(m_pmaindata->m_pmaininitdata);
-
-   if (!m_psystem->pre_run())
-   {
-
-      return;
-
-   }
-
-
-   if (!m_psystem->process_command(m_psystem->m_pcommand))
-   {
-
-      return;
-
-   }
-
-   try
-   {
-
-      m_psystem->main();
-
-      for(int i = 0; i < m_psystem->m_error.m_iaErrorCode2.get_count(); i++)
-      {
-
-         on_result(m_psystem->m_error.m_iaErrorCode2[i]);
-
-      }
-
-   }
-   catch (...)
-   {
-
-      on_result(-2004);
-
-   }
-
-   try
-   {
-
-      m_psystem->term_thread();
-
-   }
-   catch (...)
-   {
-
-      on_result(-2005);
-
-   }
-
-   try
-   {
-
-      m_dwAfterApplicationFirstRequest = m_psystem->m_dwAfterApplicationFirstRequest;
-
-   }
-   catch (...)
-   {
-
-      on_result(-2006);
-
-   }
-
-   ::aura::del(m_psystem);
-
-
-//   if(m_bGtkApp)
+//
+//
+//   if (!m_psystem->process_command(m_psystem->m_pcommand))
 //   {
 //
-//      bloat_pad_run(m_strAppId, m_strProgName);
+//      return;
 //
 //   }
-//   else
+//
+//   try
 //   {
+//
+//      m_psystem->main();
+//
+//      for(int i = 0; i < m_psystem->m_error.m_iaErrorCode2.get_count(); i++)
+//      {
+//
+//         on_result(m_psystem->m_error.m_iaErrorCode2[i]);
+//
+//      }
+//
+//   }
+//   catch (...)
+//   {
+//
+//      on_result(-2004);
+//
+//   }
+//
+//   try
+//   {
+//
+//      m_psystem->term_thread();
+//
+//   }
+//   catch (...)
+//   {
+//
+//      on_result(-2005);
+//
+//   }
+//
+//   try
+//   {
+//
+//      m_dwAfterApplicationFirstRequest = m_psystem->m_dwAfterApplicationFirstRequest;
+//
+//   }
+//   catch (...)
+//   {
+//
+//      on_result(-2006);
+//
+//   }
+//
+//   ::aura::del(m_psystem);
 
-//      auto idle_source = g_idle_source_new();
-//
-//      g_source_set_callback(idle_source, &linux_start_system, (::aura::system *) m_psystem, NULL);
-//
-//      g_source_attach(idle_source, gtk_main_context);
-//
-//      gtk_init_check(NULL, NULL);
-//
-//      gtk_main();
 
-   //}
+   if(m_bGtkApp)
+   {
+
+      bloat_pad_run(m_strAppId, m_strProgName);
+
+   }
+   else
+   {
+
+      gtk_main();
+
+   }
 
 }
 
@@ -232,28 +229,12 @@ void os_term_application()
 gboolean gtk_quit_callback(gpointer data)
 {
 
-//   gtk_main_quit();
+   gtk_main_quit();
 
    return FALSE;
 
 }
 
-//gboolean linux_start_system(gpointer data)
-//{
-//
-//   GApplication * papp = g_application_get_default ();
-//
-//   ::aura::system * psystem = (::aura::system *) data;
-//
-//   psystem->m_strAppId = psystem->m_pappcore->m_pmaindata->m_pmaininitdata->m_strAppId;
-//
-//   psystem->startup_command(psystem->m_pappcore->m_pmaindata->m_pmaininitdata);
-//
-//   psystem->process_command(psystem->m_pcommand);
-//
-//   return FALSE;
-//
-//}
 
 
 

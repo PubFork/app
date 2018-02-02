@@ -210,7 +210,19 @@ bool string_format::parse(const char * & s)
    }
    if(m_estate == state_parse_length)
    {
-      if(*s == 'l' || *s == 'L' || *s == 'h')
+      if(*s == 'l' && *(s + 1) == '6' && *(s + 2) == '4' && *(s + 3) == 'u')
+      {
+         m_chLength = 'I';
+         s+=4;
+         return false;
+      }
+      else if(*s == 'l' && *(s + 1) == '6' && *(s + 2) == '4' && *(s + 3) == 'd')
+      {
+         m_chLength = 'I';
+         s+=4;
+         return false;
+      }
+      else if(*s == 'l' || *s == 'L' || *s == 'h')
       {
          m_chLength = *s;
          s++;

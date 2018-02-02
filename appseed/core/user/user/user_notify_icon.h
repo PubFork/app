@@ -85,6 +85,7 @@ namespace user
 
       void install_message_routing(::message::sender * pinterface);
 
+      virtual void __open();
       virtual void __close();
       virtual void __quit();
       virtual bool __close_is_closed();

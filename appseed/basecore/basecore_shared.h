@@ -13,7 +13,8 @@ namespace user
       desktop_gnome,
       desktop_xfce,
       desktop_lxde,
-      desktop_mate
+      desktop_mate,
+      desktop_ubuntu_gnome,
 
    };
 

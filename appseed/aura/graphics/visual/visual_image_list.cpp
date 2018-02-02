@@ -500,7 +500,7 @@ bool image_list::get_image_info(int32_t nImage, info * pinfo) const
 
       }
 
-      if(bOk && (HBITMAP) const_cast < ::draw2d::dib_sp & > (m_spdib)->get_bitmap()->get_os_data() == NULL)
+      if(bOk && const_cast < ::draw2d::dib_sp & > (m_spdib)->get_bitmap()->get_os_data() == NULL)
       {
 
          bOk = false;

@@ -275,7 +275,7 @@ public:
 
    virtual bool frame_is_transparent() override;
 
-
+   virtual void OnNotifyIconOpen(UINT uiNotifyIcon) override;
    virtual void OnNotifyIconClose(UINT uiNotifyIcon) override;
    virtual void OnNotifyIconQuit(UINT uiNotifyIcon) override;
 

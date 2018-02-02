@@ -153,8 +153,8 @@ output_debug_string(
 
     //fprintf(stderr, "%s", lpOutputString);
     //fflush(stderr);
-    #if 0
-    if(is_debugger_attached())
+    #if 1
+    //if(is_debugger_attached())
     {
 
       printf("%s", lpOutputString);

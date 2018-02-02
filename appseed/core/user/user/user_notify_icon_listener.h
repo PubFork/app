@@ -13,6 +13,7 @@ namespace user
       virtual void OnNotifyIconContextMenu(UINT uiNotifyIcon);
       virtual void OnNotifyIconLButtonDblClk(UINT uiNotifyIcon);
       virtual void OnNotifyIconLButtonDown(UINT uiNotifyIcon);
+      virtual void OnNotifyIconOpen(UINT uiNotifyIcon);
       virtual void OnNotifyIconClose(UINT uiNotifyIcon);
       virtual void OnNotifyIconQuit(UINT uiNotifyIcon);
 

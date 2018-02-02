@@ -1830,6 +1830,8 @@ bool process_message(osdisplay_data * pdata, Display * display)
 
    msg.hwnd = oswindow_defer_get(display, e.xany.window);
 
+   msg.time = get_tick_count();
+
    if(msg.hwnd == NULL)
    {
 
@@ -2332,6 +2334,8 @@ void __axis_x11_input_thread(osdisplay_data * pdata)
 
    bool bOk;
 
+   DWORD dwLastMouseMove;
+
    while(::aura::system::g_p != NULL && ::get_thread_run())
    {
 
@@ -2341,10 +2345,30 @@ void __axis_x11_input_thread(osdisplay_data * pdata)
 
          sl.lock();
 
+         restart:
+
          if(pdata->m_messsageaInput.has_elements())
          {
 
             msg = pdata->m_messsageaInput.first();
+
+            if(msg.message == WM_MOUSEMOVE)
+            {
+
+               if(msg.time - dwLastMouseMove < 5
+               || (pdata->m_messsageaInput.get_size() > 1
+               && pdata->m_messsageaInput[1].message != WM_MOUSEMOVE))
+               {
+
+                  pdata->m_messsageaInput.remove_at(0);
+
+                  goto restart;
+
+               }
+
+               dwLastMouseMove = msg.time;
+
+            }
 
             pdata->m_messsageaInput.remove_at(0);
 

@@ -445,6 +445,14 @@ namespace user
    }
 
 
+   void notify_icon::__open()
+   {
+
+      m_plistener->OnNotifyIconOpen(m_uiId);
+
+   }
+
+
    void notify_icon::__close()
    {
 
