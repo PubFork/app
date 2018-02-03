@@ -254,6 +254,10 @@
 		<Unit filename="aura/aura/aura_id_pool.h" />
 		<Unit filename="aura/aura/aura_international.h" />
 		<Unit filename="aura/aura/aura_ipc.h" />
+		<Unit filename="aura/aura/aura_ipi.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/aura/aura_ipi.h" />
 		<Unit filename="aura/aura/aura_keep.h" />
 		<Unit filename="aura/aura/aura_keep_true.h" />
@@ -340,6 +344,10 @@
 		<Unit filename="aura/aura/aura_timer_callback.h" />
 		<Unit filename="aura/aura/aura_timer_event.h" />
 		<Unit filename="aura/aura/aura_timer_item.h" />
+		<Unit filename="aura/aura/aura_trace.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/aura/aura_trace.h" />
 		<Unit filename="aura/aura/aura_types.h" />
 		<Unit filename="aura/aura/aura_user.h" />
@@ -626,6 +634,10 @@
 		<Unit filename="aura/os/linux/linux_cross_win_file.h" />
 		<Unit filename="aura/os/linux/linux_cross_win_gdi.h" />
 		<Unit filename="aura/os/linux/linux_cross_win_gdi_internal.h" />
+		<Unit filename="aura/os/linux/linux_debug.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/os/linux/linux_debug.h" />
 		<Unit filename="aura/os/linux/linux_desktop_file.cpp">
 			<Option compile="0" />

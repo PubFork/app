@@ -12,6 +12,8 @@ extern string_map < ::aura::PFN_GET_NEW_LIBRARY, ::aura::PFN_GET_NEW_LIBRARY  > 
 
 CLASS_DECL_AURA critical_section * g_pcsGlobal = NULL;
 
+bool g_bOutputDebugString = true;
+
 #ifdef __APPLE__
 
 // http://stackoverflow.com/questions/5167269/clock-gettime-alternative-in-mac-os-x

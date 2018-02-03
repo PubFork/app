@@ -75,11 +75,6 @@ int32_t
 gdb_check(void)
 {
 
-   #if 1
-
-   return 0;
-
-   #endif // 1
 	pthread_attr_t attr;
 	void* result;
 	pthread_t thread;
@@ -143,42 +138,32 @@ FormatMessage(
 }
 
 
-VOID
-WINAPI
-output_debug_string(
-                   LPCSTR lpOutputString
-                   )
+extern bool g_bOutputDebugString;
+
+VOID WINAPI output_debug_string(LPCSTR lpOutputString)
 {
 
+  if(g_bOutputDebugString)
+  {
 
-    //fprintf(stderr, "%s", lpOutputString);
-    //fflush(stderr);
-    #if 1
-    //if(is_debugger_attached())
-    {
+    printf("%s", lpOutputString);
 
-      printf("%s", lpOutputString);
-
-    }
-    #endif
-    //fflush(stdout);
-
+  }
 
 }
 
 
 
 
-VOID
-WINAPI
-output_debug_string(
-                   LPCWSTR lpOutputString
-                   )
+VOID WINAPI output_debug_string(LPCWSTR lpOutputString)
 {
 
-
+  if(g_bOutputDebugString)
+  {
+  
     output_debug_string(string(lpOutputString));
-
+  
+  }
 
 }
 

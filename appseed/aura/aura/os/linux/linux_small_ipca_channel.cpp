@@ -441,7 +441,7 @@ namespace aura
 
             long lRequest = pdata->request;
 
-            fork([=]()
+            fork([this, mem, lRequest]()
             {
 
                memory m2(mem);

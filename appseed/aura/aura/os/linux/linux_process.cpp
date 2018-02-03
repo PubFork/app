@@ -21,7 +21,7 @@ CLASS_DECL_AURA void dll_processes(uint_array & dwa, stringa & straProcesses, co
 
 
 
-int32_t create_process2(const char * pszCommandLine, int32_t * pprocessId)
+int32_t create_process(const char * pszCommandLine, int32_t * pprocessId)
 {
 
    stringa stra;
@@ -663,7 +663,7 @@ CLASS_DECL_AURA int32_t ca2_main();
 
 
 
-int create_process(const char * pszCommandLine, int * pprocessId)
+int create_process2(const char * pszCommandLine, int * pprocessId)
 {
 
    stringa stra;

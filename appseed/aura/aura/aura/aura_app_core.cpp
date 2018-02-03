@@ -1,6 +1,7 @@
 #include "framework.h"
 #include <time.h>
 
+extern bool g_bOutputDebugString;
 
 typedef int_bool DEFER_INIT();
 typedef DEFER_INIT * PFN_DEFER_INIT;
@@ -290,6 +291,10 @@ bool app_core::ini()
    os_init_windowing();
 
    os_init_application();
+
+   ::file::path pathOutputDebugString = ::dir::system() / strAppId /"output_debug_string.txt";
+
+   g_bOutputDebugString = file_exists_dup(pathOutputDebugString);
 
    return true;
 
