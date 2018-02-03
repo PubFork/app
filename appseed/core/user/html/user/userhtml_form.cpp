@@ -206,6 +206,25 @@ void html_form::on_update(::user::impact * pSender, LPARAM lHint, object* pHint)
 
    ::user::form_view::on_update(pSender, lHint, pHint);
 
+   if(pHint != NULL)
+   {
+
+      html_view_update_hint * puh = dynamic_cast < html_view_update_hint  * > (pHint);
+
+      if(puh != NULL)
+      {
+
+         if(puh->m_etype == html_view_update_hint::type_document_complete)
+         {
+
+            m_phtmlform->m_sphtmldata = get_document()->get_html_data();
+
+         }
+
+      }
+
+   }
+
    if (lHint == 123)
    {
 

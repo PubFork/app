@@ -13,7 +13,7 @@ namespace html
       ::html::elemental *              m_pelementalLButtonDown;
       ::html::elemental *              m_pelementalHover;
       spa(::html::elemental)           m_elementalptraMouseMove;
-      ::html::data *                   m_sphtmldata;
+      sp(::html::data)                 m_sphtmldata;
 
       form();
       virtual ~form();
