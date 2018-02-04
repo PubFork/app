@@ -5,6 +5,7 @@ BEGIN_EXTERN_C
 
 void sn_start_context();
 
+GtkWindow * g_pmainwindow = NULL;
 
 G_DEFINE_TYPE (BloatPad, bloat_pad, GTK_TYPE_APPLICATION)
 
@@ -91,6 +92,10 @@ void bloat_pad_startup (GApplication *application)
    GtkApplication * app = GTK_APPLICATION (application);
 
    G_APPLICATION_CLASS (bloat_pad_parent_class)->startup (application);
+
+   g_pmainwindow = GTK_WINDOW(gtk_window_new(GTK_WINDOW_TOPLEVEL));
+
+   gtk_application_add_window(app, g_pmainwindow);
 
    ::aura::system * psystem = (::aura::system *) ::aura::system::g_p;
 

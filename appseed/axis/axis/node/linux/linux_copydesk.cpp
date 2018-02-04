@@ -334,7 +334,38 @@ gboolean clipboard_callback(gpointer data)
    else if(pdata->m_eclipboard == clipboard_get_dib)
    {
 
-      gtk_clipboard_request_image (clipboard, &clipboard_image_received_func, pdata);
+      if(gtk_clipboard_wait_is_image_available(clipboard))
+      {
+
+         gtk_clipboard_request_image (clipboard, &clipboard_image_received_func, pdata);
+
+         return false;
+
+      }
+
+      clipboard = gtk_clipboard_get(GDK_SELECTION_PRIMARY);
+
+      if(gtk_clipboard_wait_is_image_available(clipboard))
+      {
+
+         gtk_clipboard_request_image (clipboard, &clipboard_image_received_func, pdata);
+
+         return false;
+
+      }
+
+      clipboard = gtk_clipboard_get(GDK_SELECTION_SECONDARY);
+
+      if(gtk_clipboard_wait_is_image_available(clipboard))
+      {
+
+         gtk_clipboard_request_image (clipboard, &clipboard_image_received_func, pdata);
+
+         return false;
+
+      }
+
+      pdata->m_event.SetEvent();
 
 //      GdkPixbuf * pixbuf = gtk_clipboard_wait_for_image(clipboard);
 //
@@ -409,7 +440,7 @@ gboolean clipboard_callback(gpointer data)
 
    }
 
-   return true;
+   return false;
 
 }
 
