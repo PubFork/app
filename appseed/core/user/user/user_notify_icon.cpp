@@ -7,7 +7,7 @@ static ::user::notify_icon * g_pnotifyiconLast = NULL;
 
 #include <dlfcn.h>
 BEGIN_EXTERN_C
-typedef void * BASECORE_APP_INDICATOR_NEW(const char *, const char *, const char *, i_close_quit *);
+typedef void * BASECORE_APP_INDICATOR_NEW(const char *, const char *, const char *, user_notify_icon_appindicator_bridge *);
 typedef void BASECORE_APP_INDICATOR_TERM(void *);
 typedef void BASECORE_APP_INDICATOR_STEP(void *);
 END_EXTERN_C
@@ -500,6 +500,30 @@ namespace user
       }
 
 #endif
+
+   }
+
+
+   int notify_icon::bridge_extra_action_count()
+   {
+
+      return m_plistener->notify_icon_extra_action_count();
+
+   }
+
+
+   void notify_icon::bridge_extra_action_info(char ** ppszName, char ** ppszId, char ** ppszLabel, char ** ppszAccelerator, char ** ppszDescription, int iIndex)
+   {
+
+      m_plistener->notify_icon_extra_action_info(ppszName, ppszId, ppszLabel, ppszAccelerator, ppszDescription, iIndex);
+
+   }
+
+
+   void notify_icon::bridge_extra_action(const char * pszId)
+   {
+
+      m_plistener->notify_icon_extra_action(pszId);
 
    }
 

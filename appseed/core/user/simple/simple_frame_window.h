@@ -304,6 +304,8 @@ public:
 
    virtual void on_select_user_style() override;
 
+   virtual void notify_icon_extra_action(const char * pszId) override;
+
 };
 
 

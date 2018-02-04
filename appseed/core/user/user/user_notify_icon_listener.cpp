@@ -121,4 +121,24 @@ namespace user
    }
 
 
+   int notify_icon_listener::notify_icon_extra_action_count()
+   {
+
+      return 0;
+
+   }
+
+
+   void notify_icon_listener::notify_icon_extra_action_info(char ** ppszName, char ** ppszId, char ** ppszLabel, char ** ppszAccelerator, char ** ppszDescription, int iIndex)
+   {
+
+   }
+
+
+   void notify_icon_listener::notify_icon_extra_action(const char * pszId)
+   {
+
+   }
+
+
 } // namespace user

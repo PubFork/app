@@ -5,7 +5,7 @@ extern "C"
 
 void basecore_init();
 void basecore_term();
-void * basecore_app_indicator_new(const char * pszId, const char * pszIcon, const char * pszFolder, struct i_close_quit * pi);
+void * basecore_app_indicator_new(const char * pszId, const char * pszIcon, const char * pszFolder, struct user_notify_icon_appindicator_bridge * pi);
 void basecore_step(void * pind);
 void basecore_app_indicator_term(void * pind);
 
@@ -13,7 +13,7 @@ void basecore_app_indicator_term(void * pind);
 } // extern "C"
 
 
-struct i_close_quit
+struct user_notify_icon_appindicator_bridge
 {
 public:
 
@@ -22,6 +22,11 @@ public:
    virtual void __close() = 0;
    virtual void __quit() = 0;
    virtual bool __close_is_closed() = 0;
+
+
+   virtual int bridge_extra_action_count() = 0;
+   virtual void bridge_extra_action_info(char ** ppszName, char ** ppszId, char ** ppszLabel, char ** ppszAccelerator, char ** ppszDescription, int iIndex) = 0;
+   virtual void bridge_extra_action(const char * pszId) = 0;
 
 };
 

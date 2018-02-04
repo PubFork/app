@@ -20,6 +20,9 @@ namespace user
       virtual bool __close_is_closed();
       virtual bool notify_icon_frame_is_opened();
 
+      virtual int notify_icon_extra_action_count();
+      virtual void notify_icon_extra_action_info(char ** ppszName, char ** ppszId, char ** ppszLabel, char ** ppszAccelerator, char ** ppszDescription, int iIndex);
+      virtual void notify_icon_extra_action(const char * pszId);
 
    };
 

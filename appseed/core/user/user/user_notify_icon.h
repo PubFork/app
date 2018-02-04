@@ -22,7 +22,7 @@ namespace user
       virtual public ::object
       #endif
       #ifdef LINUX
-      , public i_close_quit
+      , public user_notify_icon_appindicator_bridge
       #elif defined (MACOS)
       , public user_notify_icon_mm_bridge
       #endif
@@ -93,6 +93,12 @@ namespace user
       virtual bool notify_icon_frame_is_opened();
 
       virtual void step();
+
+
+      virtual int bridge_extra_action_count() override;
+      virtual void bridge_extra_action_info(char ** ppszName, char ** ppszId, char ** ppszLabel, char ** ppszAccelerator, char ** ppszDescription, int iIndex) override;
+      virtual void bridge_extra_action(const char * pszId) override;
+
 
    };
 

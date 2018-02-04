@@ -52,6 +52,7 @@ bool image_list::create(int32_t cx, int32_t cy)
 
 }
 
+
 bool image_list::create(int32_t cx, int32_t cy, UINT nFlags, int32_t nInitial, int32_t nGrow)
 {
 
@@ -69,6 +70,8 @@ bool image_list::create(int32_t cx, int32_t cy, UINT nFlags, int32_t nInitial, i
    if(nGrow < 1)
       nGrow = 1;
 
+   synch_lock sl(m_pmutex);
+
    m_iSize = 0;
    m_iGrow = nGrow;
 
@@ -85,6 +88,8 @@ bool image_list::create(int32_t cx, int32_t cy, UINT nFlags, int32_t nInitial, i
 bool image_list::realize(::draw2d::graphics * pgraphics) const
 {
 
+   synch_lock sl(m_pmutex);
+
    return m_spdib->realize(pgraphics);
 
 }
@@ -92,6 +97,8 @@ bool image_list::realize(::draw2d::graphics * pgraphics) const
 
 image_list & image_list::operator=(const image_list & imagelist)
 {
+
+   synch_lock sl(m_pmutex);
 
    if(this != &imagelist)
    {
@@ -111,31 +118,6 @@ image_list & image_list::operator=(const image_list & imagelist)
 }
 
 
-/*bool image_list::create(const char * lpszBitmapID, int32_t cx, int32_t nGrow, COLORREF crMask)
-{
-   ::draw2d::bitmap bitmap;
-   if(!bitmap.LoadBitmap(lpszBitmapID))
-      return false;
-
-   BITMAP bm;
-   if(!bitmap.GetBitmap(&bm))
-      return false;
-
-   m_spdib->create(bm.bmWidth, bm.bmHeight);
-
-   ::draw2d::graphics_sp spgraphics(allocer());
-   spgraphics->CreateCompatibleDC(NULL);
-   spgraphics->SelectObject(bitmap);
-   m_spdib->from(spgraphics);
-   m_spdib->channel_mask(192, 255, 0, visual::rgba::channel_alpha);
-
-   m_size.cx = cx;
-   m_size.cy = bm.bmHeight;
-
-   return true;
-}
-*/
-
 int32_t image_list::get_image_count() const
 {
 
@@ -145,6 +127,8 @@ int32_t image_list::get_image_count() const
 
 bool image_list::draw(::draw2d::graphics *pgraphics, int32_t iImage, point pt, int32_t iFlag)
 {
+
+   synch_lock sl(m_pmutex);
 
    try
    {
@@ -168,6 +152,8 @@ bool image_list::draw(::draw2d::graphics *pgraphics, int32_t iImage, point pt, i
 bool image_list::draw(::draw2d::graphics *pgraphics, int32_t iImage, point pt, int32_t iFlag, BYTE alpha)
 {
 
+   synch_lock sl(m_pmutex);
+
    UNREFERENCED_PARAMETER(iFlag);
 
    if(alpha == 255)
@@ -177,8 +163,11 @@ bool image_list::draw(::draw2d::graphics *pgraphics, int32_t iImage, point pt, i
 
 }
 
+
 bool image_list::draw(::draw2d::graphics * pgraphics, int32_t iImage, point pt, size sz, point ptOffset, int32_t iFlag)
 {
+
+   synch_lock sl(m_pmutex);
 
    UNREFERENCED_PARAMETER(iFlag);
 
@@ -212,6 +201,8 @@ int32_t image_list::add(::visual::icon * picon)
 
    }
 
+   synch_lock sl(m_pmutex);
+
    if (m_spdib.is_null())
    {
 
@@ -226,62 +217,28 @@ int32_t image_list::add(::visual::icon * picon)
 
    int32_t iItem = m_iSize;
 
-
-
    if(iItem >= _get_alloc_count())
    {
+
       _grow();
+
    }
 
    ::draw2d::brush_sp brush(allocer(), RGB(192, 192, 192));
-   m_spdib->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
-   m_spdib->get_graphics()->FillSolidRect(iItem * m_size.cx, 0, m_size.cx, m_size.cy, 0);
-   //COLORREF crMask = m_spdib->get_graphics()->GetPixel(iItem * m_size.cx, 0);
 
+   m_spdib->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
+
+   m_spdib->get_graphics()->FillSolidRect(iItem * m_size.cx, 0, m_size.cx, m_size.cy, 0);
 
 #ifdef METROWIN
+
    m_spdib->get_graphics()->DrawIcon(iItem * m_size.cx, 0, picon, m_size.cx, m_size.cy, 0, NULL, 0);
+
 #else
+
    m_spdib->get_graphics()->DrawIcon(iItem * m_size.cx, 0, picon, m_size.cx, m_size.cy, 0, NULL, DI_IMAGE);
+
 #endif
-
-   //::draw2d::dib_sp dibAlpha(get_app());
-   //dibAlpha->create(m_size.cx, m_size.cy);
-
-   //dibAlpha->Fill(255, 255, 255);
-   //dibAlpha->SetIconMask(picon, m_size.cx, m_size.cy);
-
-//  ::draw2d::graphics_sp dcAlpha;
-//   dcAlpha.CreateCompatibleDC(NULL);
-//   dcAlpha.SelectObject(dibAlpha->m_hbitmap);
-
-   /*  m_dcAlpha.BitBlt(
-         iItem * m_size.cx, 0,
-         m_size.cx, m_size.cy,
-         &dcAlpha,
-         0, 0,
-         SRCCOPY);*/
-
-
-   /*::draw2d::dib_sp dibIcon;
-   dibIcon.create(m_size.cx, m_size.cy);
-   ::draw2d::graphics_sp dcIcon;
-   dcIcon.CreateCompatibleDC(NULL);
-   dcIcon.SelectObject(dibIcon.m_hbitmap);
-
-   DrawIconEx(dcIcon, 0, 0, hicon, m_size.cx, m_size.cy,
-      0, NULL, DI_MASK);
-
-   GdiFlush();
-
-   dibIcon.Invert();
-
-   m_dcAlpha.BitBlt(
-      iItem * m_size.cx, 0,
-      m_size.cx, m_size.cy,
-      &dcIcon,
-      0, 0,
-      SRCCOPY);*/
 
    m_iSize++;
 
@@ -322,31 +279,46 @@ int32_t image_list::add_file(const char * lpcsz)
    ::visual::dib_sp dib(allocer());
 
    if(!dib.load_from_file(lpcsz))
+   {
+
       return -1;
 
-   int32_t iItem = m_iSize;
-   if(iItem >= _get_alloc_count())
-   {
-      _grow();
    }
 
-   //m_spdib->get_graphics()->FillSolidRect(iItem * m_size.cx, 0, m_size.cx, m_size.cy, RGB(192, 192, 192));
+   synch_lock sl(m_pmutex);
+
+   int32_t iItem = m_iSize;
+
+   if(iItem >= _get_alloc_count())
+   {
+
+      _grow();
+
+   }
 
    m_spdib->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
 
    m_spdib->get_graphics()->BitBlt(iItem * m_size.cx, 0, m_size.cx, m_size.cy, dib->get_graphics(), 0, 0, SRCCOPY);
 
    m_iSize++;
+
    return iItem;
+
 }
+
 
 int32_t image_list::add_dib(::draw2d::dib * pdib, int x, int y)
 {
 
+   synch_lock sl(m_pmutex);
+
    int32_t iItem = m_iSize;
+
    if (iItem >= _get_alloc_count())
    {
+
       _grow();
+
    }
 
    m_spdib->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
@@ -358,7 +330,9 @@ int32_t image_list::add_dib(::draw2d::dib * pdib, int x, int y)
    m_spdib->get_graphics()->BitBlt(iItem * m_size.cx, 0, m_size.cx, m_size.cy, pdib->get_graphics(), x, y, SRCCOPY);
 
    m_iSize++;
+
    return iItem;
+
 }
 
 
@@ -391,6 +365,8 @@ int32_t image_list::add_matter(const char * lpcsz, ::aura::application * papp)
 int32_t image_list::add_image(image_list * pil, int iImage)
 {
 
+   synch_lock sl(pil->m_pmutex);
+
    return add_dib(pil->m_spdib, iImage * pil->m_size.cx, 0);
 
 }
@@ -420,15 +396,24 @@ int32_t image_list::add_image(image_list * pil, int iImage)
 
 }
 
+
 int32_t image_list::add_std_matter(const char * lpcsz)
 {
+
    return add_file(Application.dir().matter(lpcsz));
+
 }
+
 
 int32_t image_list::_get_alloc_count()
 {
+
    if(m_size.cx == 0)
+   {
+
       return 0;
+
+   }
    else
       return m_spdib->m_size.cx / m_size.cx;
 }

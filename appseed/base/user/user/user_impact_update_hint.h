@@ -21,6 +21,7 @@ namespace user
          hint_after_change_text,
          hint_after_change_text_delayed,
          hint_control_event,
+         hint_delete_contents,
 
       };
 

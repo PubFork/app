@@ -261,16 +261,24 @@ namespace numeric_info_internal
    {
       public:
 
-         typedef int32_t TYPE;
-         typedef int32_t OFFSET_TYPE;
+         typedef long TYPE;
+         typedef long OFFSET_TYPE;
 
          static inline TYPE maximum()
          {
+         #ifdef __LP64__
+            return (TYPE)LLONG_MAX;
+            #else
             return (TYPE)LONG_MAX;
+            #endif
          }
          static inline TYPE minimum()
          {
+         #ifdef __LP64__
+         return (TYPE)LLONG_MIN;
+         #else
             return (TYPE)LONG_MIN;
+            #endif
          }
          static inline TYPE null()
          {

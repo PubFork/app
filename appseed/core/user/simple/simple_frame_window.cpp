@@ -3372,3 +3372,17 @@ void simple_frame_window::on_select_user_style()
    ::user::frame_window::on_select_user_style();
 
 }
+
+
+void simple_frame_window::notify_icon_extra_action(const char * pszId)
+{
+
+   //sp(::user::interaction) pwnd = GetOwner();
+
+   sp(::user::interaction) pwnd = this;
+
+   ::user::command command((::id) pszId);
+
+   pwnd->_001SendCommand(&command);
+
+}
