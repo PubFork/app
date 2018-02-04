@@ -17,6 +17,7 @@ enum e_clipboard
    clipboard_set_patha,
    clipboard_get_patha,
    clipboard_get_file_target_count,
+   clipboard_get_dib,
 
 };
 
@@ -45,6 +46,7 @@ public:
    ::draw2d::dib_sp           m_dib;
    ::file::patha              m_patha;
    int                        m_nTargets;
+   GtkImage *                 m_pgtkimage;
 
 };
 
@@ -77,6 +79,61 @@ void clipboard_targets_func(GtkClipboard *clipboard, GdkAtom *atoms, gint n_atom
    pdata->m_event.SetEvent();
 
 }
+
+void clipboard_image_received_func(GtkClipboard * clipboard, GdkPixbuf * pixbuf,	gpointer data)
+{
+
+   clipboard_data * pdata = (clipboard_data *) data;
+
+   int iBitsPerSample = gdk_pixbuf_get_bits_per_sample(pixbuf);
+
+   int iChannels = gdk_pixbuf_get_n_channels (pixbuf);
+
+   GdkColorspace space = gdk_pixbuf_get_colorspace (pixbuf);
+
+   bool bHasAlpha = gdk_pixbuf_get_has_alpha (pixbuf);
+
+   if(iBitsPerSample == 8
+      && (iChannels == 4 || iChannels == 3)
+      && (space == GDK_COLORSPACE_RGB)
+      && (bHasAlpha || !bHasAlpha))
+   {
+
+      int w = gdk_pixbuf_get_width(pixbuf);
+
+      int h = gdk_pixbuf_get_height(pixbuf);
+
+      COLORREF * pcolorrefSrc = (COLORREF *) gdk_pixbuf_read_pixels(pixbuf);
+
+      int iSrcScan = gdk_pixbuf_get_rowstride(pixbuf);
+
+      if(pdata->m_dib->create(w, h))
+      {
+
+         ::draw2d::copy_colorref(
+            pdata->m_dib->m_size.cx,
+            pdata->m_dib->m_size.cy,
+            pdata->m_dib->m_pcolorref,
+            pdata->m_dib->m_iScan,
+            pcolorrefSrc,
+            iSrcScan);
+
+         if(!bHasAlpha)
+         {
+
+            pdata->m_dib->fill_channel(255, visual::rgba::channel_alpha);
+
+         }
+
+      }
+
+   }
+
+   pdata->m_event.SetEvent();
+
+}
+
+
 
 void clipboard_received_func(GtkClipboard * clipboard, GtkSelectionData * selection_data, gpointer data)
 {
@@ -274,6 +331,77 @@ gboolean clipboard_callback(gpointer data)
       gtk_clipboard_request_targets(clipboard, &clipboard_targets_func, pdata);
 
    }
+   else if(pdata->m_eclipboard == clipboard_get_dib)
+   {
+
+      gtk_clipboard_request_image (clipboard, &clipboard_image_received_func, pdata);
+
+//      GdkPixbuf * pixbuf = gtk_clipboard_wait_for_image(clipboard);
+//
+//      if(pixbuf == NULL)
+//      {
+//
+//         clipboard = gtk_clipboard_get(GDK_SELECTION_PRIMARY);
+//
+//         pixbuf = gtk_clipboard_wait_for_image(clipboard);
+//
+//      }
+//
+//      if(pixbuf != NULL)
+//      {
+//
+//         clipboard_data * pdata = (clipboard_data *) data;
+//
+//         int iBitsPerSample = gdk_pixbuf_get_bits_per_sample(pixbuf);
+//
+//         int iChannels = gdk_pixbuf_get_n_channels (pixbuf);
+//
+//         GdkColorspace space = gdk_pixbuf_get_colorspace (pixbuf);
+//
+//         bool bHasAlpha = gdk_pixbuf_get_has_alpha (pixbuf);
+//
+//         if(iBitsPerSample == 8
+//            && (iChannels == 4 || iChannels == 3)
+//            && (space == GDK_COLORSPACE_RGB)
+//            && (bHasAlpha || !bHasAlpha))
+//         {
+//
+//            int w = gdk_pixbuf_get_width(pixbuf);
+//
+//            int h = gdk_pixbuf_get_height(pixbuf);
+//
+//            COLORREF * pcolorrefSrc = (COLORREF *) gdk_pixbuf_read_pixels(pixbuf);
+//
+//            int iSrcScan = gdk_pixbuf_get_rowstride(pixbuf);
+//
+//            if(pdata->m_dib->create(w, h))
+//            {
+//
+//               ::draw2d::copy_colorref(
+//                  pdata->m_dib->m_size.cx,
+//                  pdata->m_dib->m_size.cy,
+//                  pdata->m_dib->m_pcolorref,
+//                  pdata->m_dib->m_iScan,
+//                  pcolorrefSrc,
+//                  iSrcScan);
+//
+//               if(!bHasAlpha)
+//               {
+//
+//                  pdata->m_dib->fill_channel(255, visual::rgba::channel_alpha);
+//
+//               }
+//
+//            }
+//
+//         }
+//
+//      }
+//
+//      pdata->m_event.SetEvent();
+
+
+   }
    else
    {
 
@@ -281,7 +409,7 @@ gboolean clipboard_callback(gpointer data)
 
    }
 
-   return FALSE;
+   return true;
 
 }
 
@@ -346,15 +474,13 @@ namespace linux
    bool copydesk::get_plain_text(string & str)
    {
 
-      GtkClipboard* clipboard = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
-
       sp(clipboard_data) pdata = canew(clipboard_data(get_app(), clipboard_get_plain_text));
 
       pdata->add_ref();
 
       auto idle_source = g_idle_source_new();
 
-      g_source_set_callback(idle_source, &clipboard_callback, pdata, NULL);
+      g_source_set_callback(idle_source, &clipboard_image_received_func, pdata, NULL);
 
       g_source_attach(idle_source, gtk_main_context);
 
@@ -387,8 +513,6 @@ namespace linux
    bool copydesk::has_filea()
    {
 
-      GtkClipboard* clipboard = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
-
       sp(clipboard_data) pdata = canew(clipboard_data(get_app(), clipboard_get_file_target_count));
 
       pdata->add_ref();
@@ -413,8 +537,6 @@ namespace linux
 
    bool copydesk::get_filea(::file::patha & patha, e_op & eop)
    {
-
-      GtkClipboard* clipboard = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
 
       sp(clipboard_data) pdata = canew(clipboard_data(get_app(), clipboard_get_patha));
 
@@ -444,9 +566,6 @@ namespace linux
 
    bool copydesk::set_filea(const ::file::patha & patha, e_op eop)
    {
-
-
-      GtkClipboard* clipboard = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
 
       sp(clipboard_data) pdata = canew(clipboard_data(get_app(), clipboard_set_patha));
 
@@ -479,44 +598,32 @@ namespace linux
 
    bool copydesk::desk_to_dib(::draw2d::dib * pdib)
    {
-//      if(!m_p->OpenClipboard())
-  //       return false;
-      bool bOk = false;
-      _throw(todo(get_app()));
-/* xxx
-      HBITMAP hbitmap = (HBITMAP) ::GetClipboardData(CF_BITMAP);
-      try
-      {
-         ::draw2d::bitmap_sp bitmap(get_app());
-         bitmap->Attach(hbitmap);
-         //HDC hdc = ::CreateCompatibleDC(NULL);
-         //::draw2d::graphics_sp g(get_app());
-         //g->Attach(hdc);
-         //::draw2d::graphics * pgraphics = Application.graphics_from_os_data(hdc);
-         //g->SelectObject(hbitmap);
-       //  BITMAP bm;
-         //::GetObjectA(hbitmap, sizeof(bm), &bm);
-         //if(!pdib->create(bm.bmWidth, bm.bmHeight))
-           // return false;
-         ::draw2d::graphics_sp g(get_app());
-         g->SelectObject(bitmap);
-         size sz = bitmap->GetBitmapDimension();
-         if(pdib->create(sz))
-         {
-            bOk = pdib->get_graphics()->BitBlt(0, 0, sz.cx, sz.cy, g, 0, 0, SRCCOPY) != FALSE;
-         }
-      }
-      catch(...)
-      {
-      }
-      ::DeleteObject((HGDIOBJ) hbitmap);
-      //::DeleteDC(hdc);
-      ::CloseClipboard();
 
-*/
+      sp(clipboard_data) pdata = canew(clipboard_data(get_app(), clipboard_get_dib));
 
-      return bOk;
+      pdata->add_ref();
+
+      pdata->m_dib.alloc(allocer());
+
+      auto idle_source = g_idle_source_new();
+
+      g_source_set_callback(idle_source, &clipboard_callback, pdata, NULL);
+
+      g_source_attach(idle_source, gtk_main_context);
+
+      if(!pdata->m_event.wait(seconds(5)).succeeded() || pdata->m_eclipboard == clipboard_error)
+      {
+
+         return false;
+
+      }
+
+      pdib->from(pdata->m_dib);
+
+      return true;
+
    }
+
 
    bool copydesk::dib_to_desk(::draw2d::dib * pdib)
    {
