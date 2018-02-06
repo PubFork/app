@@ -113,7 +113,7 @@ public:
    thread_ptra                            m_threadrefaDependent;
    thread_ptra                            m_threadrefaRequired;
    ::user::interactive *                  m_pinteractive;
-
+   bool                                   m_bSimpleMessageLoop;
    bool                                   m_bZipIsDir;
 
 //   replace_thread *                       m_preplacethread;
@@ -254,8 +254,10 @@ public:
    // running and idle processing
    virtual void pre_translate_message(::message::message * pobj);
    virtual bool pump_message();     // low level message pump
+   virtual bool raw_pump_message();     // low level message pump
    virtual bool defer_pump_message();     // deferred message pump
    virtual bool process_message(LPMESSAGE lpmessage);     // route message
+   virtual bool raw_process_message(LPMESSAGE lpmessage);     // route message
    // virtual bool on_idle(LONG lCount); // return TRUE if more idle processing
    virtual bool on_thread_on_idle(::thread * pthread, LONG lCount);
    virtual bool is_idle_message(::message::message * pobj);  // checks for special messages

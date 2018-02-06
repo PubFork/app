@@ -333,37 +333,18 @@ namespace aura
 
          ASSERT(::app_core::s_pappcore->m_pmaindata->m_hPrevInstance == NULL);
 
-         HINSTANCE hInstance = ::app_core::s_pappcore->m_pmaindata->m_hinstance;
-         //         HINSTANCE hPrevInstance    = pdata->m_hPrevInstance;
-         string strCmdLine = pdata->m_strCommandLine;
+         HINSTANCE hinstance = ::app_core::s_pappcore->m_pmaindata->m_hinstance;
+
          UINT nCmdShow = ::app_core::s_pappcore->m_pmaindata->m_nCmdShow;
 
          // handle critical errors and avoid Windows message boxes
          SetErrorMode(SetErrorMode(0) | SEM_FAILCRITICALERRORS | SEM_NOOPENFILEERRORBOX);
 
-         m_hinstance = hInstance;
-         m_pauraapp->m_hinstance = hInstance;
-         m_pauraapp->m_hinstance = hInstance;
-         //hPrevInstance; // Obsolete.
+         m_hinstance = hinstance;
+         m_pauraapp->m_hinstance = hinstance;
          System.m_nCmdShow = nCmdShow;
-         //pApp->SetCurrentHandles();
          m_pauraapp->SetCurrentHandles();
 
-         //string strAppId = read_resource_as_string_dup(NULL, 2000, "APPID");
-         string strAppId = System.m_strAppId;
-
-         if (strAppId.has_char())
-         {
-            handler()->m_varTopicQuery["appid"] = strAppId;
-            m_pauraapp->handler()->m_varTopicQuery["appid"] = strAppId;
-         }
-
-         // Initialize interaction_impl::m_pfnNotifyWinEvent
-         /*   HMODULE hModule = ::GetModuleHandle("user32.dll");
-         if (hModule != NULL)
-         {
-         interaction_impl::m_pfnNotifyWinEvent = (interaction_impl::PFNNOTIFYWINEVENT)::GetProcAddress(hModule, "NotifyWinEvent");
-         }*/
       }
 
       return true;

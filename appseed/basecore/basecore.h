@@ -25,8 +25,8 @@ public:
 
 
    virtual int bridge_extra_action_count() = 0;
-   virtual void bridge_extra_action_info(char ** ppszName, char ** ppszId, char ** ppszLabel, char ** ppszAccelerator, char ** ppszDescription, int iIndex) = 0;
-   virtual void bridge_extra_action(const char * pszId) = 0;
+   virtual void notification_area_action_info(char ** ppszName, char ** ppszId, char ** ppszLabel, char ** ppszAccelerator, char ** ppszDescription, int iIndex) = 0;
+   virtual void notification_area_extra_action(const char * pszId) = 0;
 
 };
 

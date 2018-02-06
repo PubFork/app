@@ -121,7 +121,7 @@ namespace user
    }
 
 
-   int notify_icon_listener::notify_icon_extra_action_count()
+   int notify_icon_listener::notification_area_extra_action_count()
    {
 
       return 0;
@@ -129,13 +129,13 @@ namespace user
    }
 
 
-   void notify_icon_listener::notify_icon_extra_action_info(char ** ppszName, char ** ppszId, char ** ppszLabel, char ** ppszAccelerator, char ** ppszDescription, int iIndex)
+   void notify_icon_listener::notification_area_extra_action_info(char ** ppszName, char ** ppszId, char ** ppszLabel, char ** ppszAccelerator, char ** ppszDescription, int iIndex)
    {
 
    }
 
 
-   void notify_icon_listener::notify_icon_extra_action(const char * pszId)
+   void notify_icon_listener::notification_area_extra_action(const char * pszId)
    {
 
    }

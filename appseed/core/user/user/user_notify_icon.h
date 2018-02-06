@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #ifdef LINUX
@@ -16,16 +16,16 @@ namespace user
 
 
    class CLASS_DECL_CORE notify_icon :
-   #ifdef WINDOWSEX
+#ifdef WINDOWSEX
       virtual public ::user::interaction
-      #else
+#else
       virtual public ::object
-      #endif
-      #ifdef LINUX
+#endif
+#ifdef LINUX
       , public user_notify_icon_appindicator_bridge
-      #elif defined (MACOS)
+#elif defined (MACOS)
       , public user_notify_icon_mm_bridge
-      #endif
+#endif
    {
    public:
 
@@ -94,10 +94,11 @@ namespace user
 
       virtual void step();
 
-
-      virtual int bridge_extra_action_count() override;
-      virtual void bridge_extra_action_info(char ** ppszName, char ** ppszId, char ** ppszLabel, char ** ppszAccelerator, char ** ppszDescription, int iIndex) override;
-      virtual void bridge_extra_action(const char * pszId) override;
+#if defined(LINUX) || defined(MACOS)
+      virtual int notification_extra_action_count() override;
+      virtual void notification_area_action_info(char ** ppszName, char ** ppszId, char ** ppszLabel, char ** ppszAccelerator, char ** ppszDescription, int iIndex) override;
+      virtual void notification_area_extra_action(const char * pszId) override;
+#endif
 
 
    };

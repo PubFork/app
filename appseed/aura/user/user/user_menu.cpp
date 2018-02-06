@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace user
@@ -183,7 +183,14 @@ namespace user
 
       m_pitem->m_pmenu = this;
 
-      return m_pitem->load_menu(lpnode);
+      if (!m_pitem->load_menu(lpnode))
+      {
+
+         return false;
+
+      }
+
+      return true;
 
    }
 
@@ -191,20 +198,28 @@ namespace user
    bool menu::load_xml_menu(const char * pszMatter)
    {
 
-      if (m_pitem.is_null())
-      {
-
-         m_pitem = Application.alloc(System.type_info < menu_item >());
-
-      }
-
-      xml::document doc(get_app());
-
       string strPath = Application.dir().matter(pszMatter);
 
       string strXml = Application.file().as_string(strPath);
 
-      if (!doc.load(strXml))
+      if (!load_xml_string_menu(strXml))
+      {
+
+         return false;
+
+      }
+
+      return true;
+
+   }
+
+
+   bool menu::load_xml_string_menu(const char * pszString)
+   {
+
+      xml::document doc(get_app());
+
+      if (!doc.load(pszString))
       {
 
          return false;

@@ -2289,53 +2289,9 @@ RetryBuildNumber:
       if(pcommand == NULL)
          return true;
 
-      property_set set(this);
+      handler()->add_line(pcommand);
 
-      var varFile;
-
-      string strApp;
-
-      set._008ParseCommandFork(pcommand->m_strCommandLine, varFile, strApp);
-
-      varFile._001Add(m_pcommand->m_varFile.stra());
-
-      string strAppId(strApp);
-
-      if (set.has_property("app"))
-      {
-
-         strAppId = set["app"];
-
-      }
-
-      if (set.has_property("appid"))
-      {
-
-         strAppId = set["appid"];
-
-      }
-
-      if((varFile.is_empty() && ((strAppId.is_empty() && !set.has_property("show_platform"))
-                                 || strAppId == "bergedge")) &&
-            !(set.has_property("install") || set.has_property("uninstall")))
-      {
-
-         if (set["show_platform"] == 1)
-         {
-
-            handler()->add_line(" : show_platform=1");
-
-         }
-
-      }
-      else
-      {
-
-         handler()->add_line(pcommand);
-
-         os().on_process_command(pcommand);
-
-      }
+      os().on_process_command(pcommand);
 
       return true;
 
@@ -2345,126 +2301,142 @@ RetryBuildNumber:
    void system::request_exit()
    {
 
-      auto ptra = Session.m_appptra;
-
-      for(auto papp : ptra)
+      fork([=]()
       {
 
-         papp->m_bAgreeExit            = false;
+         set_thread_priority(::multithreading::priority_highest);
 
-         papp->m_bAgreeExitOk          = false;
+         auto ptra = Session.m_appptra;
 
-      }
+         //for (auto papp : ptra)
+         //{
 
-      for(auto papp : ptra)
-      {
+         //   papp->m_bAgreeExit = false;
 
-         papp->handler()->handle(::command_on_agree_exit);
+         //   papp->m_bAgreeExitOk = false;
 
-      }
+         //}
 
-      int i = 100;
+         //for (auto papp : ptra)
+         //{
 
-      MESSAGE msg;
-      while(i > 0 && ptra.get_size() > 0)
-      {
+         //   papp->handler()->handle(::command_on_agree_exit);
 
-         if(::PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE))
+         //}
+
+         //int i = 500;
+
+         //MESSAGE msg;
+
+         //while (i > 0 && ptra.get_size() > 0)
+         //{
+
+         for (index j = 0; j < ptra.get_size(); j++)
          {
-            ::get_thread()->defer_pump_message();
-         }
 
-         for(index j = 0; j < ptra.get_size(); )
-         {
+            //if (ptra[j]->m_bAgreeExitOk)
+            //{
 
-            if(ptra[j]->m_bAgreeExitOk)
+            //if (!ptra[j]->m_bAgreeExit)
+            if (!ptra[j]->_001OnAgreeExit())
             {
 
-               if(!ptra[j]->m_bAgreeExit)
-               {
+               return;
 
-                  return;
+            }
+            //else
+            //{
 
-               }
-               else
+            //   ptra.remove_at(j);
+
+            //}
+
+            //}
+            //else
+            //{
+
+            // j++;
+
+         }
+//
+//            }
+//
+////            Sleep(50);
+//
+//            i--;
+//
+//         }
+
+         //if (i == 0)
+         //{
+
+         //   return;
+
+         //}
+
+         //ptra = Session.m_appptra;
+
+         //MESSAGE msg;
+
+         for (auto papp : ptra)
+         {
+
+            papp->m_bFranceExit = false;
+
+         }
+
+         for (auto papp : ptra)
+         {
+
+            fork([papp]()
+            {
+
+               //papp->handler()->handle(::command_france_exit);
+               papp->_001FranceExit();
+
+            });
+
+         }
+
+         int i = 500;
+
+         while (i > 0 && ptra.get_size() > 0)
+         {
+
+            //   //if (::PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE))
+            //   //{
+
+            //   //   ::get_thread()->defer_pump_message();
+
+            //   //}
+
+            for (index j = 0; j < ptra.get_size(); )
+            {
+
+               if (ptra[j]->m_bFranceExit)
                {
 
                   ptra.remove_at(j);
 
                }
+               else
+               {
+
+                  j++;
+
+               }
 
             }
-            else
-            {
 
-               j++;
+            Sleep(50);
 
-            }
+            i--;
 
          }
 
-         Sleep(100);
+         post_quit();
 
-         i--;
-
-      }
-
-      if(i == 0)
-      {
-
-         return;
-
-      }
-
-      ptra = Session.m_appptra;
-
-      for(auto papp : ptra)
-      {
-         papp->m_bFranceExit = false;
-      }
-
-      for(auto papp : ptra)
-      {
-         papp->handler()->handle(::command_france_exit);
-      }
-
-      i = 100;
-
-      while(i > 0 && ptra.get_size() > 0)
-      {
-
-         if(::PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE))
-         {
-
-            ::get_thread()->defer_pump_message();
-
-         }
-
-         for(index j = 0; j < ptra.get_size(); )
-         {
-
-            if(ptra[j]->m_bFranceExit)
-            {
-
-               ptra.remove_at(j);
-
-            }
-            else
-            {
-
-               j++;
-
-            }
-
-         }
-
-         Sleep(100);
-
-         i--;
-
-      }
-
-      post_quit();
+      });
 
    }
 

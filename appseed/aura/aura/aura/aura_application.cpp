@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #ifdef WINDOWSEX
 #include "aura/aura/os/windows/windows_system_interaction_impl.h"
 #endif
@@ -128,6 +128,9 @@ namespace aura
       m_mutexMatterLocator(this),
       m_mutexStr(this)
    {
+
+
+      m_bSimpleMessageLoop = false;
 
       // default value for acid apps
       // (but any acid app can have installer, just change this flag to true in the derived application class constructor).
@@ -453,9 +456,7 @@ namespace aura
       else if (pcommand->m_ecommand == ::command_france_exit)
       {
 
-         _001OnFranceExit();
-
-         m_bFranceExit = true;
+         _001FranceExit();
 
       }
       else
@@ -5849,15 +5850,15 @@ retry_license:
 
             ::file::path path;
 
-            #ifdef LINUX
+#ifdef LINUX
 
             path = System.dir().ca2module() / ::process::app_id_to_app_name(pnotinstalled->m_strAppId);
 
-            #else
+#else
 
             path = System.dir().ca2module() / "app";
 
-            #endif
+#endif
 
 #ifdef WINDOWS
 
@@ -5923,13 +5924,13 @@ retry_license:
 
             stringa straKeys;
 
-            #ifdef WINDOWS
+#ifdef WINDOWS
 
             straKeys.add("app");
 
             //strParam += " app=" + pnotinstalled->m_strAppId;
 
-            #endif
+#endif
 
             straKeys.add("platform");
 
@@ -6087,9 +6088,9 @@ retry_license:
                string strMessage;
 
                strMessage.Format("Failed return code : %d (%d, %d)",
-                  exitstatus.m_iExitCode,
-                  exitstatus.m_iExitSignal,
-                  exitstatus.m_iExitStop);
+                                 exitstatus.m_iExitCode,
+                                 exitstatus.m_iExitSignal,
+                                 exitstatus.m_iExitStop);
 
                ::simple_message_box(NULL, string(path) + strParam + "\n\n" + strMessage, "Debug only message, please install.", MB_ICONINFORMATION | MB_OK);
 
@@ -6180,6 +6181,17 @@ retry_license:
       post_quit();
 
    }
+
+
+   void application::_001FranceExit()
+   {
+
+      _001OnFranceExit();
+
+      m_bFranceExit = true;
+
+   }
+
 
    void application::dispatch_user_message_object(::object * pobject)
    {

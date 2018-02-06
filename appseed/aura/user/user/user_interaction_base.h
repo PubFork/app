@@ -28,7 +28,6 @@ namespace user
       };
 
 
-
       enum EProperty
       {
 
@@ -145,23 +144,11 @@ namespace user
       virtual bool RedrawOptimize(LPRECT lprectOut,LPCRECT lpcrect1,LPCRECT lpcrect2);
       virtual void RedrawOptimize(rect_array & array);
 
+      void Optimize008(::user::oswindow_tree::Array & oswindowtreea, const RECT & rect);
 
+      EOptimize Optimize008(::user::oswindow_tree::Array & oswindowtreea, HRGN hrgn);
 
-
-
-
-
-      void Optimize008(
-      ::user::oswindow_tree::Array & oswindowtreea,
-      const RECT & rect);
-
-      EOptimize Optimize008(
-      ::user::oswindow_tree::Array & oswindowtreea,
-      HRGN hrgn);
-
-      EOptimize Optimize008(
-      ::user::oswindow_tree & oswindowtree,
-      HRGN hrgn);
+      EOptimize Optimize008(::user::oswindow_tree & oswindowtree, HRGN hrgn);
 
 
 
@@ -527,6 +514,7 @@ namespace user
       virtual bool track_popup_menu(::user::menu_item * pitem,int32_t iFlags, POINT pt);
       virtual bool track_popup_menu(::xml::node * lpnode,int32_t iFlags, POINT pt);
       virtual bool track_popup_xml_matter_menu(const char * pszMatter,int32_t iFlags, POINT pt);
+      virtual bool track_popup_xml_string_menu(const char * pszString, int32_t iFlags, POINT pt);
 
       virtual bool track_popup_menu(::user::menu_item * pitem,int32_t iFlags,::message::message * pobj);
       virtual bool track_popup_menu(::xml::node * lpnode,int32_t iFlags,::message::message * pobj);

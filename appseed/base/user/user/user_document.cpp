@@ -1,4 +1,4 @@
-#include "framework.h" // from "base/user/user.h"
+﻿#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 
@@ -647,10 +647,10 @@ namespace user
 
          synch_lock sl(m_pmutex);
 
-         for (index i = m_viewspa.get_upper_bound(); i >= 0 ; i = m_viewspa.get_upper_bound())
-         {
+         auto viewspa = m_viewspa;
 
-            sp(::user::impact) pview = m_viewspa[i];
+         for (auto & pview : viewspa)
+         {
 
             sl.unlock();
 

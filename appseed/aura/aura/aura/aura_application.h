@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace aura
@@ -538,6 +538,7 @@ namespace aura
 
       virtual bool _001OnAgreeExit();
       virtual void _001OnFranceExit();
+      virtual void _001FranceExit();
 
       virtual string lstr(id id, string strDefault = "") override;
 

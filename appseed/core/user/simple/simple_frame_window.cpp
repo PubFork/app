@@ -1079,10 +1079,10 @@ void simple_frame_window::_001OnClose(::message::message * pobj)
 
       }
 
-      #ifdef LINUX
+#ifdef LINUX
       //if(IsWindowVisible())
       if(::user::get_edesktop() == ::user::desktop_unity_gnome
-      || ::user::get_edesktop() == ::user::desktop_ubuntu_gnome)
+            || ::user::get_edesktop() == ::user::desktop_ubuntu_gnome)
       {
 
          ShowWindow(SW_HIDE);
@@ -1094,7 +1094,7 @@ void simple_frame_window::_001OnClose(::message::message * pobj)
          WfiMinimize();
 
       }
-      #else
+#else
 
       if(IsWindowVisible())
       {
@@ -1103,7 +1103,7 @@ void simple_frame_window::_001OnClose(::message::message * pobj)
 
       }
 
-      #endif // LINUX
+#endif // LINUX
 
 //      else
 //      {
@@ -3163,15 +3163,33 @@ void simple_frame_window::_001OnTimer(::timer * ptimer)
 {
 
    ::user::frame_window::_001OnTimer(ptimer);
+
    ::user::wndfrm::frame::WorkSetClientInterface::_001OnTimer(ptimer);
 
 }
+
+
 void simple_frame_window::OnNotifyIconContextMenu(UINT uiNotifyIcon)
 {
+
    point pt;
-   ::GetCursorPos(&pt);
-   track_popup_xml_matter_menu("popup_notification.xml", 0, pt);
+
+   Session.get_cursor_pos(&pt);
+
+   string strMatter = "popup_notification.xml";
+
+   string strPath = Application.dir().matter(strMatter);
+
+   string strXml = Application.file().as_string(strPath);
+
+   string strExtraXml = notification_area_extra_get_xml_menu();
+
+   strXml.replace("<!--EXTRA_MENU!-->", strExtraXml);
+
+   track_popup_xml_string_menu(strXml, 0, pt);
+
 }
+
 
 void simple_frame_window::OnNotifyIconLButtonDblClk(UINT uiNotifyIcon)
 {
@@ -3374,7 +3392,7 @@ void simple_frame_window::on_select_user_style()
 }
 
 
-void simple_frame_window::notify_icon_extra_action(const char * pszId)
+void simple_frame_window::notification_area_extra_action(const char * pszId)
 {
 
    //sp(::user::interaction) pwnd = GetOwner();
@@ -3384,5 +3402,51 @@ void simple_frame_window::notify_icon_extra_action(const char * pszId)
    ::user::command command((::id) pszId);
 
    pwnd->_001SendCommand(&command);
+
+}
+
+
+string simple_frame_window::notification_area_extra_get_xml_menu()
+{
+
+   string strXml;
+
+   if (notification_area_extra_action_count() > 0)
+   {
+
+      strXml += "<separator/>";
+
+      for (int i = 0; i < notification_area_extra_action_count(); i++)
+      {
+
+         {
+
+            ::aura::malloc < char * > pszName;
+            ::aura::malloc < char * > pszId;
+            ::aura::malloc < char * > pszLabel;
+            ::aura::malloc < char * > pszAccelerator;
+            ::aura::malloc < char * > pszDescription;
+
+
+            notification_area_extra_action_info(
+            &pszName.m_p,
+            &pszId.m_p,
+            &pszLabel.m_p,
+            &pszAccelerator.m_p,
+            &pszDescription.m_p, i);
+
+            string strLabel(pszLabel);
+
+            strLabel.replace("_", "");
+
+            strXml += "<item id = \"" + string(pszId) + "\">" + strLabel + "</item>\r\n";
+
+         }
+
+      }
+
+   }
+
+   return strXml;
 
 }

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace multimedia
@@ -14,18 +14,11 @@ namespace multimedia
          virtual public ::multimedia::audio::wave_out
       {
       public:
-         
-         
-//         enum e_message
-//         {
-//            message_open = WM_APP + 5555,
-//         };
 
 
          UInt32                                    m_NumPacketsToRead;
          array < AudioStreamPacketDescription * >  m_PacketDescs;
          bool                                      m_bDone;
-//         ::manual_reset_event                      m_eventOpened;
          int32_t                                   m_iBufferCount;
          int32_t                                   m_iBufferSampleCount;
 
@@ -48,9 +41,9 @@ namespace multimedia
          virtual ::multimedia::e_result wave_out_restart() override;
          virtual void * get_os_data();
          AudioQueueRef wave_out_get_safe_AudioQueueRef();
-         
+
          ::multimedia::e_result wave_out_start(const imedia_position & position) override;
-         
+
 
          virtual void wave_out_on_playback_end() override;
 
@@ -59,13 +52,13 @@ namespace multimedia
 
 
          void AudioQueueBufferCallback(AudioQueueRef inAQ, AudioQueueBufferRef inCompleteAQBuffer);
-       
+
          //int run();
-         
-         
+
+
          virtual bool on_run_step();
-         
-         
+
+
          void OnOpen();
 
       } ;

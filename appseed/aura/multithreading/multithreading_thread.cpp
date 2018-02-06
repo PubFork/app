@@ -311,6 +311,8 @@ thread::thread(::aura::application * papp, __THREADPROC pfnThreadProc, LPVOID pP
 void thread::CommonConstruct()
 {
 
+   m_bSimpleMessageLoop = true;
+
    if (::get_thread() != NULL)
    {
 
@@ -544,16 +546,40 @@ void thread::run()
 
    thisstart;
 
-   while(thread_get_run())
+   if (m_bSimpleMessageLoop)
    {
 
-      if(!defer_pump_message())
+      TRACE("running thread with simple message loop");
+
+      while (thread_get_run())
       {
 
-         break;
+         if (!raw_pump_message())
+         {
+
+            break;
+
+         }
+
 
       }
 
+   }
+   else
+   {
+
+      while (thread_get_run())
+      {
+
+         if (!defer_pump_message())
+         {
+
+            break;
+
+         }
+
+
+      }
 
    }
 
@@ -637,6 +663,82 @@ bool thread::pump_message()
 //   return m_pthreadimpl->pump_message();
 
 }
+
+
+
+bool thread::raw_pump_message()
+{
+
+   try
+   {
+
+      MESSAGE msg;
+      if (!::GetMessage(&msg, NULL, 0, 0))
+      {
+
+         TRACE(::aura::trace::category_AppMsg, 1, "thread::pump_message - Received wm_quit.\n");
+
+         ::output_debug_string("thread::pump_message - Received wm_quit.\n");
+
+         m_nDisablePumpCount++; // application must die
+         // Note: prevents calling message loop things in 'exit_thread'
+         // will never be decremented
+         return false;
+
+      }
+
+      raw_process_message(&msg);
+
+      return true;
+
+   }
+   catch (exit_exception * pexception)
+   {
+
+      _rethrow(pexception);
+
+   }
+   catch (::exception::exception * pexception)
+   {
+
+      esp671 esp(pexception);
+
+      if (on_run_exception(esp))
+         return true;
+
+      // get_app() may be it self, it is ok...
+      if (Application.final_handle_exception(esp))
+         return true;
+
+   }
+   catch (...)
+   {
+
+   }
+
+   return false;
+
+   //   if(m_pthreadimpl.is_null())
+   //   {
+   //      if(dynamic_cast <::timer *> ((thread *) this) != NULL)
+   //      {
+   //         m_pthreadimpl.alloc(allocer());
+   //         if(m_pthreadimpl.is_null())
+   //         {
+   //            return false;
+   //         }
+   //         m_pthreadimpl->m_pthread = this;
+   //      }
+   //      else
+   //      {
+   //         return false;
+   //      }
+   //   }
+   //
+   //   return m_pthreadimpl->pump_message();
+
+}
+
 
 bool thread::defer_pump_message()
 {
@@ -3117,6 +3219,52 @@ bool thread::process_message(LPMESSAGE lpmessage)
 }
 
 
+
+bool thread::raw_process_message(LPMESSAGE lpmessage)
+{
+
+   try
+   {
+
+      smart_pointer < ::message::message > spbase;
+
+      spbase = m_pauraapp->get_message_base(lpmessage);
+
+      route_message(spbase);
+
+      return true;
+
+   }
+   catch (exit_exception * pexception)
+   {
+
+      _rethrow(pexception);
+
+   }
+   catch (::exception::exception * pexception)
+   {
+
+      esp671 esp(pexception);
+
+      if (on_run_exception(esp))
+         return true;
+
+      // get_app() may be it self, it is ok...
+      if (Application.final_handle_exception(esp))
+         return true;
+
+   }
+   catch (...)
+   {
+
+   }
+
+   return false;
+
+}
+
+
+
 bool thread::set_thread_priority(int32_t iCa2Priority)
 {
 
@@ -3255,7 +3403,7 @@ bool thread::has_message()
 void thread::set_priority(int32_t priority)
 {
 
-   if (::SetThreadPriority(m_hthread, priority) == 0)
+   if (::SetThreadPriority(m_hthread, get_os_thread_priority(priority)) == 0)
       _throw(runtime_error(get_app(), "Thread::set_priority: Couldn't set thread priority."));
 
 }

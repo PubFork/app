@@ -6083,6 +6083,36 @@ restart:
    }
 
 
+   bool interaction::track_popup_xml_string_menu(const char * pszString, int32_t iFlags, POINT pt)
+   {
+
+      sp(::user::menu) pmenu = Application.alloc(System.type_info < ::user::menu >());
+
+      if (!pmenu->load_xml_string_menu(pszString))
+      {
+
+         pmenu.release();
+
+         return false;
+
+      }
+
+      pmenu->hints(iFlags, pt);
+
+      if (!pmenu->track_popup_menu(this))
+      {
+
+         pmenu.release();
+
+         return false;
+
+      }
+
+      return true;
+
+   }
+
+
    void interaction::WfiEnableFullScreen(bool bEnable)
    {
 

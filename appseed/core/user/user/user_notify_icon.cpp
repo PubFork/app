@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 static ::user::notify_icon * g_pnotifyiconLast = NULL;
 
@@ -504,28 +504,34 @@ namespace user
    }
 
 
-   int notify_icon::bridge_extra_action_count()
+#if defined(LINUX) || defined(MACOS)
+
+
+   int notify_icon::notification_area_extra_action_count()
    {
 
-      return m_plistener->notify_icon_extra_action_count();
+      return m_plistener->notification_area_extra_action_count();
 
    }
 
 
-   void notify_icon::bridge_extra_action_info(char ** ppszName, char ** ppszId, char ** ppszLabel, char ** ppszAccelerator, char ** ppszDescription, int iIndex)
+   void notify_icon::notification_area_action_info(char ** ppszName, char ** ppszId, char ** ppszLabel, char ** ppszAccelerator, char ** ppszDescription, int iIndex)
    {
 
-      m_plistener->notify_icon_extra_action_info(ppszName, ppszId, ppszLabel, ppszAccelerator, ppszDescription, iIndex);
+      m_plistener->notification_area_extra_action_info(ppszName, ppszId, ppszLabel, ppszAccelerator, ppszDescription, iIndex);
 
    }
 
 
-   void notify_icon::bridge_extra_action(const char * pszId)
+   void notify_icon::notification_area_extra_action(const char * pszId)
    {
 
-      m_plistener->notify_icon_extra_action(pszId);
+      m_plistener->notification_area_extra_action(pszId);
 
    }
+
+
+#endif
 
 
 } // namespace user

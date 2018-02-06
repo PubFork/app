@@ -821,6 +821,7 @@ namespace user
       virtual bool track_popup_menu(::user::menu_item * pitem,int32_t iFlags, POINT pt) override;
       virtual bool track_popup_menu(::xml::node * lpnode,int32_t iFlags, POINT pt) override;
       virtual bool track_popup_xml_matter_menu(const char * pszMatter,int32_t iFlags,POINT pt) override;
+      virtual bool track_popup_xml_string_menu(const char * pszString, int32_t iFlags, POINT pt) override;
 
       virtual bool track_popup_menu(::user::menu_item * pitem,int32_t iFlags,::message::message * pobj) override;
       virtual bool track_popup_menu(::xml::node * lpnode,int32_t iFlags,::message::message * pobj) override;

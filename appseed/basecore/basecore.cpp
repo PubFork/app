@@ -72,7 +72,7 @@ static void ___extra_action(GtkAction * action, void * data)
 
    ::user_notify_icon_appindicator_bridge * pi = (::user_notify_icon_appindicator_bridge *) data;
 
-   pi->bridge_extra_action(gtk_action_get_stock_id(action));
+   pi->notification_area_extra_action(gtk_action_get_stock_id(action));
 
 }
 
@@ -407,7 +407,7 @@ GtkWidget * idle_basecore_app_indicator_init(indicator * pind, user_notify_icon_
       char * pszAccelerator = NULL;
       char * pszDescription = NULL;
 
-      pi->bridge_extra_action_info(&pszName, &pszId, &pszLabel, &pszAccelerator, &pszDescription, i);
+      pi->notification_area_action_info(&pszName, &pszId, &pszLabel, &pszAccelerator, &pszDescription, i);
 
       entries[i].name = pszName;
 
