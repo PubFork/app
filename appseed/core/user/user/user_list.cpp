@@ -490,7 +490,7 @@ namespace user
                m_pdrawlistitem->m_iGroupCount = _001GetGroupItemCount(m_pdrawlistitem->m_iGroup);
 
                if (iDisplayItem >= m_pdrawlistitem->m_iGroupTopDisplayIndex
-                   && iDisplayItem < (m_pdrawlistitem->m_iGroupTopDisplayIndex + m_pdrawlistitem->m_iGroupCount))
+                     && iDisplayItem < (m_pdrawlistitem->m_iGroupTopDisplayIndex + m_pdrawlistitem->m_iGroupCount))
                {
 
                   break;
@@ -1749,7 +1749,7 @@ namespace user
             if (ptOffset.y < 0)
             {
 
-              return 0;
+               return 0;
 
             }
 
@@ -5436,27 +5436,68 @@ namespace user
    //}
 
 
-   void list::_001EnsureVisible(index iItem, bool bRedraw)
+   void list::_001EnsureVisible(index iItem, e_align ealign, bool bRedraw)
    {
+
       point ptOffset = get_viewport_offset();
+
+
+      if (ealign & align_vertical_center)
+      {
+
+         iItem = iItem - (m_nDisplayCount / 2);
+
+      }
+      else if (ealign & align_bottom)
+      {
+
+         iItem = MIN(iItem + m_nDisplayCount - 1, _001GetItemCount() - 1);
+
+      }
+
+
+      if (iItem >= (_001GetItemCount() - m_nDisplayCount))
+      {
+
+         iItem = (_001GetItemCount() - m_nDisplayCount);
+
+      }
+
+      if (iItem < 0)
+      {
+
+         iItem = 0;
+
+      }
+
 
       if (m_iItemHeight > 0
             &&
             (iItem < ptOffset.y / m_iItemHeight ||
              iItem >= ptOffset.y / m_iItemHeight + m_nDisplayCount))
       {
+
          ptOffset.y = (LONG)(iItem * m_iItemHeight);
+
          set_viewport_offset_y(ptOffset.y);
+
          on_change_viewport_offset();
+
          if (bRedraw)
          {
+
             RedrawWindow();
+
          }
+
       }
+
    }
+
 
    void list::_001ItemScroll(index iItem, bool bRedraw)
    {
+
       if (iItem < m_nItemCount)
       {
 
