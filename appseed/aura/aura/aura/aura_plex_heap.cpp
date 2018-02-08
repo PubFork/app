@@ -7,7 +7,44 @@
 
 void Alloc_check_pointer_in_cpp(void * p);
 void Free_check_pointer_in_cpp(void * p);
+class good_guard
+{
+public:
+   char data[16];
 
+   good_guard()
+   {
+      memset(data, 0xCD, sizeof(data));
+   };
+
+   operator char * ()
+   {
+      return data;
+   }
+
+} g_goodguard;
+
+void defer_check_plex_heap_alloc_sync_node_palace_guard(plex_heap_alloc_sync::node * pnode)
+{
+
+   if (memcmp(pnode->palaceLeft, g_goodguard, sizeof(pnode->palaceLeft)))
+   {
+      output_debug_string("someone's pee outside of aim to left");
+      ASSERT(FALSE);
+   }
+   if (memcmp(pnode->palaceRight, g_goodguard, sizeof(pnode->palaceRight)))
+   {
+      output_debug_string("someone's pee outside of aim to the right");
+      ASSERT(FALSE);
+   }
+
+}
+
+void setup_plex_heap_alloc_sync_node_palace_guard(plex_heap_alloc_sync::node * pnode)
+{
+   memset(pnode->palaceLeft, 0xCD, sizeof(pnode->palaceLeft));
+   memset(pnode->palaceRight, 0xCD, sizeof(pnode->palaceRight));
+}
 
 plex_heap * plex_heap::create(plex_heap*& pHead, uint_ptr nMax, uint_ptr cbElement)
 {
@@ -54,11 +91,15 @@ plex_heap_alloc_sync::plex_heap_alloc_sync(UINT nAllocSize, UINT nBlockSize)
    if(nBlockSize <= 1)
       nBlockSize = 4;
 
-   ASSERT(nAllocSize >= sizeof(node));
-   ASSERT(nBlockSize > 1);
+#ifndef DEBUG
 
+   ASSERT(nAllocSize >= sizeof(node));
    if (nAllocSize < sizeof(node))
       nAllocSize = sizeof(node);
+
+#endif
+
+   ASSERT(nBlockSize > 1);
    if (nBlockSize <= 0)
       nBlockSize = 64;
 
@@ -113,7 +154,11 @@ void plex_heap_alloc_sync::NewBlock()
       size_t nAllocSize = m_nAllocSize;
 
       // add another block
+#ifdef DEBUG
+      plex_heap* pNewBlock = plex_heap::create(m_pBlocks, m_nBlockSize, nAllocSize + 32 + sizeof(node *));
+#else
       plex_heap* pNewBlock = plex_heap::create(m_pBlocks, m_nBlockSize, nAllocSize);
+#endif
 
 
       if(nAllocSize == 1024)
@@ -126,9 +171,20 @@ void plex_heap_alloc_sync::NewBlock()
       // chain them into free list
       node* pNode = (node*)pNewBlock->data();
       // free in reverse order to make it easier to debug
+#ifdef DEBUG
+      ((BYTE*&)pNode) += ((nAllocSize + 32 + sizeof(node *)) * m_nBlockSize) - (nAllocSize + 32 + sizeof(node *));
+#else
       ((BYTE*&)pNode) += (nAllocSize * m_nBlockSize) - nAllocSize;
-      for (int32_t i = m_nBlockSize-1; i >= 0; i--, ((BYTE*&)pNode) -= nAllocSize)
+#endif
+#ifdef DEBUG
+      for (int32_t i = m_nBlockSize-1; i >= 0; i--, ((BYTE*&)pNode) -= (nAllocSize + 32 + sizeof(node *)))
+#else
+      for (int32_t i = m_nBlockSize - 1; i >= 0; i--, ((BYTE*&)pNode) -= nAllocSize)
+#endif
       {
+#ifdef DEBUG
+         setup_plex_heap_alloc_sync_node_palace_guard(pNode);
+#endif
          pNode->pNext = m_pnodeFree;
          m_pnodeFree = pNode;
       }
@@ -194,6 +250,10 @@ inline void * plex_heap_alloc_sync::Alloc()
    }
    // remove the first available node from the free list
    void * pNode = m_pnodeFree;
+#ifdef DEBUG
+   defer_check_plex_heap_alloc_sync_node_palace_guard(m_pnodeFree);
+   pNode = ((byte*)pNode) + 32 + sizeof(node*);
+#endif
    m_pnodeFree = m_pnodeFree->pNext;
    //pdata = pNode;
    //}
@@ -206,15 +266,14 @@ inline void * plex_heap_alloc_sync::Alloc()
    return pNode;
 }
 
-void plex_heap_alloc_sync::Free(void * p)
+void plex_heap_alloc_sync::Free(void * pParam)
 {
 
-   if (p == NULL)
+   if (pParam == NULL)
       return;
 
-#ifdef DEBUG
-   //Free_check_pointer_in_cpp(p);
-#endif
+   void * p = ((byte*)pParam) - 32 - sizeof(node*);
+
 
    cslock sl(&m_protect);
 
@@ -224,6 +283,10 @@ void plex_heap_alloc_sync::Free(void * p)
 
    // simply return the node to the free list
    node* pnode = (node*)p;
+#ifdef DEBUG
+   defer_check_plex_heap_alloc_sync_node_palace_guard(pnode);
+   //Free_check_pointer_in_cpp(p);
+#endif
 
 #ifdef MEMDFREE // Free Debug - duplicate freeing ?
 

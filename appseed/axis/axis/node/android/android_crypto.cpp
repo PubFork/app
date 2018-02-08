@@ -21,7 +21,7 @@ namespace android
    ::file::path crypto::get_crypt_key_file_path()
    {
 
-      return Application.dir().userappdata() /  ".ca2/cryptkey";
+      return Application.dir().appdata() /  ".ca2/cryptkey";
 
    }
 

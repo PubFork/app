@@ -2020,7 +2020,7 @@ InitFailure:
       string strSchema;
       TRACE("update_appmatter(root=%s, relative=%s, locale=%s, style=%s)",pszRoot,pszRelative,pszLocale,pszStyle);
       ::file::path strRelative = ::file::path(pszRoot) / "appmatter" / pszRelative  / Sess(this).get_locale_schema_dir(pszLocale,pszStyle) + ".zip";
-      ::file::path strFile = System.dir().element() / strRelative;
+      ::file::path strFile = System.dir().install() / strRelative;
       ::file::path strUrl(::file::path_url);
       if(_ca_is_basis())
       {
@@ -2498,7 +2498,7 @@ InitFailure:
    //string application::dir_element(const char * psz)
    //{
 
-   //   return System.dir().element(psz);
+   //   return System.dir().install(psz);
 
    //}
 

@@ -1,4 +1,31 @@
-#pragma once
+﻿#pragma once
+
+
+class CLASS_DECL_AURA thread_data
+{
+public:
+
+
+#if defined(_POSIX_THREADS) || defined(LINUX)
+
+   pthread_key_t        m_key;
+
+#else
+
+   DWORD                m_dwIndex;
+
+#endif
+
+
+   thread_data();
+   ~thread_data();
+
+
+   void * get();
+   void set(void * p);
+
+
+};
 
 
 template < class T >
@@ -32,12 +59,12 @@ public:
 
 template < class T >
 class thread_object :
-	public thread_data
+   public thread_data
 {
 public:
 
-	inline operator T *() { if (get() == NULL) { set(new T()); } return (T *)get(); }
-	inline T * operator ->() { return operator T *(); }
+   inline operator T *() { if (get() == NULL) { set(new T()); } return (T *)get(); }
+   inline T * operator ->() { return operator T *(); }
 
 };
 

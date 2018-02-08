@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace message
@@ -25,6 +25,14 @@ namespace message
 #include "message_simple_command.h"
 #include "message.inl"
 #include "message_listener_smart_pointer_array.h"
+
+
+#ifdef WINDOWS
+
+#define MESSAGE MSG
+#define LPMESSAGE LPMSG
+
+#endif
 
 namespace message
 {

@@ -1,4 +1,5 @@
 ﻿#include "framework.h"
+#include "windows_common_graphics.h"
 
 
 

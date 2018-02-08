@@ -547,7 +547,7 @@ namespace macos
 //      return path(appdata(lpcszPrefix), lpcsz, lpcsz2);
 //   }
 //
-//   string dir::userappdata(::aura::application *   papp, const char * lpcsz, const char * lpcsz2)
+//   string dir::appdata(::aura::application *   papp, const char * lpcsz, const char * lpcsz2)
 //   {
 //      return path(userfolder(papp, "appdata"), lpcsz, lpcsz2);
 //   }
@@ -862,7 +862,7 @@ namespace macos
     }
     
     // stage in ca2os spalib
-    ::file::path dir::element()
+    ::file::path dir::install()
     {
         
         single_lock sl(&m_mutex, true);
@@ -1282,7 +1282,7 @@ namespace macos
         return appdata() / lpcszPrefix;
     }
     
-    ::file::path dir::userappdata(::aura::application * papp)
+    ::file::path dir::appdata(::aura::application * papp)
     {
         return userfolder(papp) / "appdata";
     }

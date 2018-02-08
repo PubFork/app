@@ -17,36 +17,42 @@ namespace windows
 #endif
 
 
-::file::path dir::afterca2()
+//::file::path dir::afterca2()
+//{
+//
+//   return element();
+//
+//}
+//
+
+//::file::path dir::appdata(string strPlatform)
+//{
+//
+//   return app() / strPlatform / app_relative();
+//
+//}
+
+::file::path dir::appdata()
 {
 
-   return element();
+   return ::dir::ca2config() / "appdata" / app_relative();
 
 }
 
-
-::file::path dir::appdata(string strPlatform)
-{
-
-   return app() / strPlatform / app_relative();
-
-}
-
-
-::file::path dir::userappdata()
-{
-
-   return app() / app_relative() / "appdata";
-
-}
+//::file::path dir::appdata()
+//{
+//
+//   return appdata();
+//
+//}
 
 
-::file::path dir::app()
-{
-
-   return root() / "app";
-
-}
+//::file::path dir::app()
+//{
+//
+//   return ca2config() / "app";
+//
+//}
 
 
 ::file::path dir::public_system()
@@ -60,7 +66,7 @@ namespace windows
 ::file::path dir::system()
 {
 
-   return root() / "system";
+   return ca2config() / "system";
 
 }
 
@@ -68,7 +74,7 @@ namespace windows
 ::file::path dir::local()
 {
 
-   return root() / "local";
+   return ca2config() / "local";
 
 }
 
@@ -89,7 +95,7 @@ namespace windows
 }
 
 
-::file::path dir::roaming_app_data()
+::file::path dir::config()
 {
 
    ::file::path path;
@@ -121,10 +127,10 @@ namespace windows
 }
 
 
-::file::path dir::root()
+::file::path dir::ca2config()
 {
 
-   return roaming_app_data() / "ca2";
+   return config() / "ca2";
 
 }
 
@@ -133,6 +139,18 @@ namespace windows
 {
 
    return program_data() / "ca2";
+
+}
+
+
+::file::path dir::relative(::file::path path)
+{
+
+   path.replace(":", "");
+
+   ::str::ends_eat_ci(path, ".exe");
+
+   return path;
 
 }
 
@@ -153,24 +171,11 @@ namespace windows
 ::file::path dir::app_relative()
 {
 
-   string strRelative = dir::element();
+   ::file::path path = ::file::app_module();
 
-   index iFind = strRelative.find(':');
+   path = relative(path);
 
-   if (iFind >= 0)
-   {
-
-      index iFind1 = strRelative.reverse_find('\\', iFind);
-
-      index iFind2 = strRelative.reverse_find('/', iFind);
-
-      index iStart = MAX(iFind1 + 1, iFind2 + 1);
-
-      strRelative = strRelative.substr(0, iFind - 1) + "_" + strRelative.substr(iStart, iFind - iStart) + strRelative.substr(iFind + 1);
-
-   }
-
-   return strRelative;
+   return path;
 
 }
 

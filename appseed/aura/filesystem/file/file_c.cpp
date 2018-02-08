@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 /*void sprint_hex(char * sz, int32_t iValue)
@@ -89,16 +89,16 @@ int_bool file_path_is_relative_dup(const char * psz)
 
 BEGIN_EXTERN_C
 
-CLASS_DECL_AURA int_bool dir_appdata(const char * pszPlatform, char * psz,size_t size)
+CLASS_DECL_AURA int_bool dir_appdata(char * psz,size_t size)
 {
 
 #ifdef WINDOWS
 
-   return strncpy_s(psz,size, ::dir::appdata(pszPlatform),size) != NULL;
+   return strncpy_s(psz,size, ::dir::appdata(),size) != NULL;
 
 #else
 
-   return strncpy(psz,::dir::appdata(pszPlatform), size) != NULL;
+   return strncpy(psz,::dir::appdata(), size) != NULL;
 
 #endif
 
@@ -144,7 +144,7 @@ END_EXTERN_C
 
 CLASS_DECL_AURA bool file_save_stra(const char * pszName, const stringa & stra)
 {
-   
+
    return file_put_contents_dup(pszName, stra.implode("\n"));
 
 }
@@ -152,7 +152,7 @@ CLASS_DECL_AURA bool file_save_stra(const char * pszName, const stringa & stra)
 
 CLASS_DECL_AURA bool file_load_stra(const char * pszName, stringa & stra, bool bAddEmpty)
 {
-   
+
    stra.add_lines(file_as_string_dup(pszName), bAddEmpty);
 
    return true;

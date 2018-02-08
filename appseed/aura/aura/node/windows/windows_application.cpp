@@ -402,7 +402,7 @@ namespace aura
 
          ::file::path strPath;
 
-         strPath = ::dir::userappdata() / "audio.txt";
+         strPath = ::dir::appdata() / "audio.txt";
 
          str = file_as_string_dup(strPath);
 
@@ -431,7 +431,7 @@ namespace aura
 
          ::file::path strPath;
 
-         strPath = ::dir::userappdata() / "draw2d.txt";
+         strPath = ::dir::appdata() / "draw2d.txt";
 
          str = file_as_string_dup(strPath);
 

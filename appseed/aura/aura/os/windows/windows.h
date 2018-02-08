@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #include <shellapi.h>
@@ -42,8 +42,6 @@ CLASS_DECL_AURA bool read_resource_as_memory_dup(memory & m, HINSTANCE hinst, UI
 
 #endif
 
-#define MESSAGE MSG
-#define LPMESSAGE LPMSG
 
 
 CLASS_DECL_AURA int WinRegGetValueW(HKEY hkey, LPCWSTR lpSubKey, LPCWSTR lpValue, DWORD dwFlags, LPDWORD pdwType, PVOID pvData, LPDWORD pcbData);
@@ -71,16 +69,12 @@ CLASS_DECL_AURA HFONT wingdi_CreatePointFontIndirect(LOGFONTW* lpLogFont, HDC hd
 
 
 
-#ifdef cplusplus
-
-#define LOG_THIS_TAG (typeid(*this).name())
-#define LOG_MEMBER_PREFIX __FUNCTION__
-
-#endif
 
 
 CLASS_DECL_AURA int node_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow);
 CLASS_DECL_AURA int node_main(int argc, char *argv[]);
+
+
 
 
 

@@ -58,7 +58,7 @@ namespace http
 //         string str = Application.file().as_string(System.dir().appdata() / "machine/proxy.xml");
 //         if(str.has_char() && str.find("<") >= 0 && str.find(">") > 0)
 //         {
-//            Application.file().copy(System.dir().appdata()/ "proxy_original.xml", System.dir().element()/ "proxy.xml", false);
+//            Application.file().copy(System.dir().appdata()/ "proxy_original.xml", System.dir().install()/ "proxy.xml", false);
 //         }
 //         if(Application.file().exists(System.dir().appdata()/ "proxy.xml"))
 //         {

@@ -18,7 +18,7 @@ namespace simpledb
    {
       string strMetaPath;
 
-      strMetaPath = System.dir().element() / "database" / db/ "meta.xml";
+      strMetaPath = System.dir().install() / "database" / db/ "meta.xml";
 
       try
       {

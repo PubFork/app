@@ -1,4 +1,7 @@
-#include "framework.h"
+﻿#include "framework.h"
+
+
+
 
 
 
@@ -241,11 +244,11 @@ namespace draw2d_direct2d
             // Create the ID2D1GradientStopCollection from a previously
             // declared array of D2D1_GRADIENT_STOP structs.
             HRESULT hr = pgraphics->m_prendertarget->CreateGradientStopCollection(
-                            gradientstops,
-                            2,
-                            D2D1_GAMMA_2_2,
-                            D2D1_EXTEND_MODE_CLAMP,
-                            &pgradientstops
+                         gradientstops,
+                         2,
+                         D2D1_GAMMA_2_2,
+                         D2D1_EXTEND_MODE_CLAMP,
+                         &pgradientstops
                          );
 
 
@@ -263,12 +266,12 @@ namespace draw2d_direct2d
                double radiusy = m_size.cy / 2;
 
                hr = pgraphics->m_prendertarget->CreateRadialGradientBrush(
-                       D2D1::RadialGradientBrushProperties(
-                          D2D1::Point2F((FLOAT) (centerx), (FLOAT)(centery)),
-                          D2D1::Point2F((FLOAT)(originx), (FLOAT)(originy)),
-                          (FLOAT)(radiusx), (FLOAT)(radiusy)),
-                       pgradientstops,
-                       & ((brush *) this)->m_pradialgradientbrush
+                    D2D1::RadialGradientBrushProperties(
+                    D2D1::Point2F((FLOAT) (centerx), (FLOAT)(centery)),
+                    D2D1::Point2F((FLOAT)(originx), (FLOAT)(originy)),
+                    (FLOAT)(radiusx), (FLOAT)(radiusy)),
+                    pgradientstops,
+                    & ((brush *) this)->m_pradialgradientbrush
                     );
             }
 

@@ -1,5 +1,9 @@
-#include "framework.h"
+﻿#include "framework.h"
 
+
+#ifdef WINDOWSEX
+CLASS_DECL_AURA void attach_thread_input_to_main_thread(bool bAttach);
+#endif
 
 CLASS_DECL_AURA mutex * get_cred_mutex();
 
@@ -171,7 +175,7 @@ namespace userex
       TRACE("::userex::application::initialize");
 
       xml::document docUser(get_app());
-      string strUser = Application.file().as_string(Application.dir().userappdata()/"langstyle_settings.xml");
+      string strUser = Application.file().as_string(System.dir().appdata()/"langstyle_settings.xml");
       string strLangUser;
       string strStyleUser;
       if(docUser.load(strUser))
@@ -1200,7 +1204,7 @@ retry_license:
 
       ::count iMonitorCount = System.get_monitor_count();
 
-      #ifdef LINUX
+#ifdef LINUX
 
       if(iMonitorCount > 0)
       {
@@ -1209,7 +1213,7 @@ retry_license:
 
       }
 
-      #else
+#else
 
       for(index iScreen = 0; iScreen < iMonitorCount; iScreen++)
       {
@@ -1220,7 +1224,7 @@ retry_license:
 
       }
 
-      #endif
+#endif
 
    }
 

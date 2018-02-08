@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 //string url_get_server(const char * psz)
 //{
@@ -51,18 +51,18 @@ namespace fontopus
 
    void set_cred_ok(::aura::application * papp,string strToken,bool bOk)
    {
-      
+
       process_token(strToken);
 
       if(bOk)
       {
 
-         Sys(papp).crypto().file_set(App(papp).dir().userappdata() / "cred" / strToken + "_c.data","ok",strToken, papp);
+         Sys(papp).crypto().file_set(Sys(papp).dir().appdata() / "cred" / strToken + "_c.data","ok",strToken, papp);
 
       }
       else
       {
-         Sys(papp).crypto().file_set(App(papp).dir().userappdata() / "cred" / strToken + "_c.data","failed",strToken, papp);
+         Sys(papp).crypto().file_set(Sys(papp).dir().appdata() / "cred" / strToken + "_c.data","failed",strToken, papp);
 
       }
 
@@ -86,11 +86,11 @@ namespace fontopus
 
 
       if((strUsername.has_char() && strPassword.has_char())
-         && (strUsernamePrevious != strUsername || strPasswordPrevious != strPassword))
+            && (strUsernamePrevious != strUsername || strPasswordPrevious != strPassword))
       {
-         dir::mk(App(papp).dir().userappdata() / "cred");
-         Sys(papp).crypto().file_set(App(papp).dir().userappdata() / "cred" / strToken + "_a.data",strUsername,"", papp);
-         Sys(papp).crypto().file_set(App(papp).dir().userappdata() / "cred" / strToken + "_b.data",strPassword,strToken, papp);
+         dir::mk(Sys(papp).dir().appdata() / "cred");
+         Sys(papp).crypto().file_set(Sys(papp).dir().appdata() / "cred" / strToken + "_a.data",strUsername,"", papp);
+         Sys(papp).crypto().file_set(Sys(papp).dir().appdata() / "cred" / strToken + "_b.data",strPassword,strToken, papp);
       }
 
    }
@@ -98,13 +98,13 @@ namespace fontopus
 
    string CLASS_DECL_AURA get_cred(::aura::application * papp,string & strUsername,string & strPassword,string strToken)
    {
-      
+
       process_token(strToken);
 
       string str;
-      Sys(papp).crypto().file_get(App(papp).dir().userappdata() / "cred" / strToken + "_a.data",strUsername,"", papp);
-      Sys(papp).crypto().file_get(App(papp).dir().userappdata() / "cred" / strToken + "_b.data",strPassword,strToken, papp);
-      Sys(papp).crypto().file_get(App(papp).dir().userappdata() / "cred" / strToken + "_c.data",str,strToken, papp);
+      Sys(papp).crypto().file_get(Sys(papp).dir().appdata() / "cred" / strToken + "_a.data",strUsername,"", papp);
+      Sys(papp).crypto().file_get(Sys(papp).dir().appdata() / "cred" / strToken + "_b.data",strPassword,strToken, papp);
+      Sys(papp).crypto().file_get(Sys(papp).dir().appdata() / "cred" / strToken + "_c.data",str,strToken, papp);
 
       return str;
 
@@ -113,7 +113,7 @@ namespace fontopus
 
    string CLASS_DECL_AURA get_cred(::aura::application * papp,const string & strRequestUrlParam,const RECT & rect,string & strUsername,string & strPassword,string strToken,string strTitle, bool bInteractive, ::user::interactive * pinteractive)
    {
-      
+
       return Sess(papp).fontopus_get_cred(papp, strRequestUrlParam, rect, strUsername, strPassword, strToken, strTitle, bInteractive, pinteractive);
 
    }

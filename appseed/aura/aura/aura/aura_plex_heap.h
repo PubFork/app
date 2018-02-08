@@ -1,6 +1,6 @@
-#pragma once
+﻿#pragma once
 
-#undef new 
+#undef new
 class CLASS_DECL_AURA plex_heap     // warning var length structure
 {
 public:
@@ -10,8 +10,8 @@ public:
    void * data() { return this+1; }
 
    static plex_heap* create(plex_heap*& head, uint_ptr nMax, uint_ptr cbElement);
-         // like 'calloc' but no zero fill
-         // may _throw( memory exceptions
+   // like 'calloc' but no zero fill
+   // may _throw( memory exceptions
 
    void FreeDataChain();       // free this one and links
 };
@@ -23,7 +23,13 @@ public:
 
    struct node
    {
+#ifdef DEBUG
+      char palaceLeft[16];
+#endif
       node* pNext;               // only valid when in free list
+#ifdef DEBUG
+      char palaceRight[16];
+#endif
    };
 
 

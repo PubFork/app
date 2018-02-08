@@ -350,7 +350,7 @@ namespace user
    bool control::GetWindowRect(LPRECT lprect)
    {
 
-      return ::user::interaction::GetWindowRect(lprect);
+      return ::user::box::GetWindowRect(lprect);
 
    }
 
@@ -358,7 +358,7 @@ namespace user
    bool control::GetClientRect(LPRECT lprect)
    {
 
-      return ::user::interaction::GetClientRect(lprect);
+      return ::user::box::GetClientRect(lprect);
 
    }
 

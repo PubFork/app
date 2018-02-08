@@ -7428,8 +7428,10 @@ restart:
 
    }
 
+
    void interaction::set_viewport_offset(int x, int y)
    {
+
       m_ptScrollPassword1.x = x;
 
       m_ptScrollPassword1.y = y;

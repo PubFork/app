@@ -1,4 +1,5 @@
-#include "framework.h"
+﻿#include "framework.h"
+#include "windows_process.h"
 
 
 typedef struct _PROCESS_BASIC_INFORMATION64

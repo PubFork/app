@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include <stdio.h>
 #include <share.h>
 #include <io.h>
@@ -316,11 +316,7 @@ ret1:
 ::file::path dir::sys_temp()
 {
 
-   unichar  wsz[MAX_PATH * 4];
-
-   wsz[GetTempPathW(sizeof(wsz) / sizeof(wsz[0]), wsz)] = L'\0';
-
-   return string(wsz);
+   return ::dir::appdata() / "time";
 
 }
 
@@ -399,15 +395,23 @@ bool file_get_memory_dup(::primitive::memory_base & memory, const char * path)
 
 
 
-string file_module_path_dup()
+::file::path file::app_module()
 {
 
-   char path[MAX_PATH * 4];
+   hwstring hwPath(MAX_PATH * 16);
 
-   if(!GetModuleFileName(NULL, path, sizeof(path)))
+   if (!GetModuleFileNameW(NULL, hwPath, hwPath.count()))
+   {
+
       return "";
 
-   return path;
+   }
+
+   string strPath;
+
+   strPath = hwPath;
+
+   return strPath;
 
 }
 

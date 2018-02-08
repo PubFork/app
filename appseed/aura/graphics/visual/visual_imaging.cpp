@@ -6022,8 +6022,6 @@ void imaging::AlphaTextOut(::draw2d::graphics *pgraphics,int32_t left,int32_t to
 bool imaging::load_from_file(::visual::dib_sp::array * pdiba, var varFile, bool bCache)
 {
 
-   ::draw2d::lock draw2dlock;
-
    try
    {
 

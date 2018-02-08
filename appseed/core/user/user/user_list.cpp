@@ -924,6 +924,8 @@ namespace user
 
       }
 
+      LayoutHeaderCtrl();
+
       on_change_view_size();
 
       LayoutHeaderCtrl();
@@ -1794,18 +1796,25 @@ namespace user
          else
          {
 
+            int iHeight = rectView.height();
+
             if (m_bTopText)
             {
 
-               return (rectView.height() - m_rectTopText.height()) / m_iItemHeight + 1;
+               iHeight -= m_rectTopText.height();
 
             }
-            else
+
+            ::count iItemCount = iHeight / m_iItemHeight;
+
+            if (iHeight % m_iItemHeight > 0)
             {
 
-               return rectView.height() / m_iItemHeight + 1;
+               iItemCount++;
 
             }
+
+            return iItemCount;
 
          }
 
@@ -5445,7 +5454,7 @@ namespace user
       if (ealign & align_vertical_center)
       {
 
-         iItem = iItem - (m_nDisplayCount / 2);
+         iItem = iItem - (MAX(0, m_nDisplayCount - 2) / 2);
 
       }
       else if (ealign & align_bottom)
@@ -5454,7 +5463,6 @@ namespace user
          iItem = MIN(iItem + m_nDisplayCount - 1, _001GetItemCount() - 1);
 
       }
-
 
       if (iItem >= (_001GetItemCount() - m_nDisplayCount))
       {
@@ -5469,7 +5477,6 @@ namespace user
          iItem = 0;
 
       }
-
 
       if (m_iItemHeight > 0
             &&
@@ -6131,6 +6138,8 @@ namespace user
 
       UpdateHover();
 
+      ::user::control::on_change_viewport_offset();
+
       RedrawWindow();
 
    }
@@ -6252,9 +6261,12 @@ namespace user
       //}
    }
 
+
    list::EView list::_001GetView()
    {
+
       return m_eview;
+
    }
 
 
@@ -6295,6 +6307,7 @@ namespace user
          if (m_iTopDisplayIndex >= iLow && m_iTopDisplayIndex < (iLow + _001GetGroupItemCount(m_iTopGroup)))
             break;
       }
+
       m_nDisplayCount = _001CalcDisplayItemCount();
 
       HeaderCtrlLayout();

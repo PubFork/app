@@ -836,7 +836,7 @@ namespace android
    }
 
    // stage in ccvotagus spalib
-   ::file::path dir::element()
+   ::file::path dir::install()
    {
 
       single_lock sl(&m_mutex, true);
@@ -1106,7 +1106,7 @@ try1:
    }
 
 
-   ::file::path dir::userappdata(::aura::application * papp)
+   ::file::path dir::appdata(::aura::application * papp)
    {
 
       return userfolder(papp) /  "appdata";

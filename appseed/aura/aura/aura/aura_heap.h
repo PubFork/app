@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #define ZEROED_ALLOC 1
@@ -7,40 +7,40 @@
 
 BEGIN_EXTERN_C
 
-   CLASS_DECL_AURA void * unaligned_memory_alloc(size_t size);
-   CLASS_DECL_AURA void * unaligned_memory_alloc_dbg(size_t nSize, int32_t nBlockUse, const char * szFileName, int32_t nLine);
+CLASS_DECL_AURA void * unaligned_memory_alloc(size_t size);
+CLASS_DECL_AURA void * unaligned_memory_alloc_dbg(size_t nSize, int32_t nBlockUse, const char * szFileName, int32_t nLine);
 
-   CLASS_DECL_AURA void * aligned_memory_alloc(size_t size);
-   CLASS_DECL_AURA void * aligned_memory_alloc_dbg(size_t nSize, int32_t nBlockUse, const char * szFileName, int32_t nLine);
-   CLASS_DECL_AURA void * memory_alloc_no_track(size_t size);
-   CLASS_DECL_AURA void * memory_calloc(size_t size, size_t bytes);
-   CLASS_DECL_AURA void * memory_alloc_dbg(size_t nSize, int32_t nBlockUse, const char * szFileName, int32_t nLine);
-   CLASS_DECL_AURA void * memory_realloc_dbg(void * pvoid, size_t nSize, int32_t nBlockUse, const char * szFileName, int32_t nLine);
-   CLASS_DECL_AURA void   memory_free_dbg(void * pvoid, int32_t iBlockType);
+CLASS_DECL_AURA void * aligned_memory_alloc(size_t size);
+CLASS_DECL_AURA void * aligned_memory_alloc_dbg(size_t nSize, int32_t nBlockUse, const char * szFileName, int32_t nLine);
+CLASS_DECL_AURA void * memory_alloc_no_track(size_t size);
+CLASS_DECL_AURA void * memory_calloc(size_t size, size_t bytes);
+CLASS_DECL_AURA void * memory_alloc_dbg(size_t nSize, int32_t nBlockUse, const char * szFileName, int32_t nLine);
+CLASS_DECL_AURA void * memory_realloc_dbg(void * pvoid, size_t nSize, int32_t nBlockUse, const char * szFileName, int32_t nLine);
+CLASS_DECL_AURA void   memory_free_dbg(void * pvoid, int32_t iBlockType);
 
-   CLASS_DECL_AURA size_t memory_size(void * p);
-   CLASS_DECL_AURA size_t memory_size_dbg(void * p, int32_t iBlockType);
+CLASS_DECL_AURA size_t memory_size(void * p);
+CLASS_DECL_AURA size_t memory_size_dbg(void * p, int32_t iBlockType);
 
 
 #if !defined(MCHECK) && !defined(__VLD) && !defined(__MCRTDBG)
-   CLASS_DECL_AURA void * CDECL memory_alloc(size_t size);
-   CLASS_DECL_AURA void * CDECL memory_realloc(void * pvoid, size_t nSize);
-   CLASS_DECL_AURA void   CDECL memory_free(void * pvoid);
+CLASS_DECL_AURA void * CDECL memory_alloc(size_t size);
+CLASS_DECL_AURA void * CDECL memory_realloc(void * pvoid, size_t nSize);
+CLASS_DECL_AURA void   CDECL memory_free(void * pvoid);
 #endif
 
 #if MEMDLEAK
-   CLASS_DECL_AURA int  memdleak_enabled();
-   CLASS_DECL_AURA void memdleak_enable(int enable);
-   CLASS_DECL_AURA int  global_memdleak_enabled();
-   CLASS_DECL_AURA void memdleak_init();
-   CLASS_DECL_AURA void memdleak_term();
+CLASS_DECL_AURA int  memdleak_enabled();
+CLASS_DECL_AURA void memdleak_enable(int enable);
+CLASS_DECL_AURA int  global_memdleak_enabled();
+CLASS_DECL_AURA void memdleak_init();
+CLASS_DECL_AURA void memdleak_term();
 #endif
 
-   END_EXTERN_C
+END_EXTERN_C
 
 #if MEMDLEAK
-   CLASS_DECL_AURA void set_last_block_file_name(const char * psz);
-   CLASS_DECL_AURA void memdleak_dump();
+CLASS_DECL_AURA void set_last_block_file_name(const char * psz);
+CLASS_DECL_AURA void memdleak_dump();
 #endif
 
 #if MEMDLEAK  || defined(__MCRTDBG)
@@ -87,6 +87,8 @@ struct memdleak_block
 
 
 #if defined(__cplusplus)
+
+class string;
 
 namespace heap
 {
@@ -265,6 +267,8 @@ namespace heap
       operator const T * () const { return (T *)m_p; }
 
       uint_ptr count() { return size() / sizeof(T); }
+
+      string & to_string(string & str) const;
 
    };
 

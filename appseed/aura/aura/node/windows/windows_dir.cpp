@@ -12,7 +12,7 @@ namespace windows
       ::file_watcher::file_watcher(papp),
       ::file_watcher::listener_thread(papp)
    {
-      
+
 
    }
 
@@ -227,7 +227,7 @@ namespace windows
          str.Empty();
          while(*lpsz)
          {
-            str += *lpsz;  
+            str += *lpsz;
             lpsz++;
          }
          ::file::path & path = listing.add(::file::path(str));
@@ -245,7 +245,7 @@ namespace windows
 
 
 
-   
+
 
    ::file::listing & dir::ls(::aura::application * papp,::file::listing & listing)
    {
@@ -592,7 +592,7 @@ namespace windows
 
    bool dir::is(const ::file::path & lpcszPath, ::aura::application * papp)
    {
-      
+
       if(::file::dir::system::is(lpcszPath, papp))
          return true;
 
@@ -619,19 +619,19 @@ namespace windows
       DWORD dwAttrib;
 
       dwAttrib = GetFileAttributesW(::str::international::utf8_to_unicode(strPath));
-      
+
       bool bIsDir = (dwAttrib != INVALID_FILE_ATTRIBUTES) && (dwAttrib & FILE_ATTRIBUTE_DIRECTORY);
-      
+
       m_isdirmap.set(lpcszPath, bIsDir, bIsDir ? 0 : ::get_last_error());
 
       return bIsDir;
 
    }
 
-      
+
    //bool dir::is(const ::file::path & strPath, ::aura::application * papp)
    //{
-   //   
+   //
    //   if(::file::dir::system::is(strPath, papp))
    //      return true;
 
@@ -649,7 +649,7 @@ namespace windows
    //   }
 
    //   wstring wstrPath;
-   //   
+   //
    //   //strsize iLen = ::str::international::utf8_to_unicode_count(strPath);
    //   //wstrPath.alloc(iLen + 32);
    //   wstrPath = ::str::international::utf8_to_unicode(strPath);
@@ -670,9 +670,9 @@ namespace windows
    //   {
    //      dwAttrib = GetFileAttributes(strPath);
    //   }*/
-   //   
+   //
    //   bIsDir = (dwAttrib != INVALID_FILE_ATTRIBUTES) && (dwAttrib & FILE_ATTRIBUTE_DIRECTORY);
-   //   
+   //
    //   m_isdirmap.set(strPath, bIsDir, bIsDir ? 0 : ::get_last_error());
 
    //   return bIsDir;
@@ -711,7 +711,7 @@ namespace windows
          return true; // assume empty string is root_ones directory
       }
 
-      
+
       bool bIsDir;
 
 
@@ -732,12 +732,12 @@ namespace windows
          m_isdirmap.set(str.Left(iLast + 1), true, 0);
          return true;
       }
-      
+
 
 
 
       wstring wstrPath;
-      
+
       //strsize iLen = ::str::international::utf8_to_unicode_count(str, iLast + 1);
 
       //wstrPath.alloc(iLen + 32);
@@ -763,9 +763,9 @@ namespace windows
       {
          dwAttrib = GetFileAttributes(strPath);
       }*/
-      
+
       bIsDir = (dwAttrib != INVALID_FILE_ATTRIBUTES) && (dwAttrib & FILE_ATTRIBUTE_DIRECTORY);
-      
+
       m_isdirmap.set(str.Left(iLast + 1), bIsDir, bIsDir ? 0 : ::get_last_error());
 
       return bIsDir;
@@ -779,12 +779,12 @@ namespace windows
 
    ::file::path dir::stage()
    {
-      return element() / "stage";
+      return install() / "stage";
    }
 
    ::file::path dir::stageapp()
    {
-      return stage() / "basis";
+      return install() / "basis";
    }
 
    ::file::path dir::netseed()
@@ -792,15 +792,14 @@ namespace windows
       return m_strNetSeedFolder;
    }
 
-   // stage in ca2os spalib
-   ::file::path dir::element()
-   {
-      
-      single_lock sl(&m_mutex, true);
+   //::file::path dir::install()
+   //{
 
-      return m_strCa2;
+   //   single_lock sl(&m_mutex, true);
 
-   }
+   //   return m_pathElement;
+
+   //}
 
 
    ::file::path dir::module()
@@ -813,7 +812,7 @@ namespace windows
 
    ::file::path dir::ca2module()
    {
-      
+
       return m_pathCa2Module;
 
    }
@@ -847,12 +846,12 @@ namespace windows
       lpcsz.ascendants_path(stra);
       for(int32_t i = 0; i < stra.get_size(); i++)
       {
-         
+
          string strDir = stra[i];
 
          if(!is(strDir, papp))
          {
-            
+
             if(::CreateDirectoryW(::str::international::utf8_to_unicode("\\\\?\\" + strDir), NULL))
             {
 
@@ -910,13 +909,13 @@ namespace windows
                   //m_isdirmap.set(stra[i], false);
                }
             }
-            try1:
-            
+try1:
+
             if(!is(stra[i], papp))
             {
                return false;
             }
-            
+
          }
       }
       return true;
@@ -927,7 +926,7 @@ namespace windows
       if(bRecursive)
       {
          ::file::listing patha(papp);
-         patha.ls(psz);         
+         patha.ls(psz);
          for(auto & path : patha)
          {
             if(is(path, papp))
@@ -978,7 +977,7 @@ namespace windows
 
    ::file::path dir::name(const ::file::path & str)
    {
-      
+
       strsize iLast = str.get_length() - 1;
 
       while(iLast >= 0)
@@ -1024,11 +1023,11 @@ namespace windows
       PWSTR pszPath = NULL;
       HANDLE hToken = NULL;
       ::OpenProcessToken(::GetCurrentProcess(),TOKEN_QUERY | TOKEN_IMPERSONATE | TOKEN_DUPLICATE,&hToken);
-         HRESULT hr = SHGetKnownFolderPath(kfid,0,hToken,&pszPath);
+      HRESULT hr = SHGetKnownFolderPath(kfid,0,hToken,&pszPath);
       if(SUCCEEDED(hr))
       {
          str = pszPath;
-         // The calling application is responsible for calling CoTaskMemFree 
+         // The calling application is responsible for calling CoTaskMemFree
          // to free this resource after use.
          CoTaskMemFree(pszPath);
       }
@@ -1043,61 +1042,54 @@ namespace windows
 
       update_module_path();
 
-      string strCa2Module = ca2module();
-
-      m_strCa2 = strCa2Module;
-
-      m_strCa2 -= 3;
+      m_pathInstall = ::dir::install();
 
       shell_get_special_folder_path(
-         NULL,
-         m_strCommonAppData,
-         CSIDL_COMMON_APPDATA,
-         FALSE);
+      NULL,
+      m_strCommonAppData,
+      CSIDL_COMMON_APPDATA,
+      FALSE);
       //shell_get_special_folder_path(
-        // NULL,
-         //m_pathProfile,
-         //CSIDL_PROFILE,
-         //FALSE);
+      // NULL,
+      //m_pathProfile,
+      //CSIDL_PROFILE,
+      //FALSE);
 
       m_pathHome = get_known_folder(FOLDERID_Profile);
 
-      m_pathProfile = get_known_folder(FOLDERID_RoamingAppData);
-      //shell_get_special_folder_path(
-      //   NULL,
-      //   m_strAppData,
-      //   CSIDL_APPDATA,
-      //   FALSE);
+      m_pathCa2Config = ::dir::ca2config();
+
       m_strCommonAppData /= "ca2";
-      m_pathProfile /= "ca2";
 
       m_strAppData = get_known_folder(FOLDERID_RoamingAppData);
 
       shell_get_special_folder_path(
-         NULL,
-         m_strPrograms,
-         CSIDL_PROGRAMS,
-         FALSE);
+      NULL,
+      m_strPrograms,
+      CSIDL_PROGRAMS,
+      FALSE);
       shell_get_special_folder_path(
-         NULL,
-         m_strCommonPrograms,
-         CSIDL_COMMON_PROGRAMS,
-         FALSE);
+      NULL,
+      m_strCommonPrograms,
+      CSIDL_COMMON_PROGRAMS,
+      FALSE);
 
       {
 
-         string strRelative;
-         strRelative = element();
-         index iFind = strRelative.find(':');
-         if(iFind >= 0)
-         {
-            strsize iFind1 = strRelative.reverse_find("\\",iFind);
-            strsize iFind2 = strRelative.reverse_find("/",iFind);
-            strsize iStart = MAX(iFind1 + 1,iFind2 + 1);
-            strRelative = strRelative.Left(iFind - 1) + "_" + strRelative.Mid(iStart,iFind - iStart) + strRelative.Mid(iFind + 1);
-         }
+         //string strRelative;
+         //strRelative = element();
+         //index iFind = strRelative.find(':');
+         //if (iFind >= 0)
+         //{
+         //   strsize iFind1 = strRelative.reverse_find("\\", iFind);
+         //   strsize iFind2 = strRelative.reverse_find("/", iFind);
+         //   strsize iStart = MAX(iFind1 + 1, iFind2 + 1);
+         //   strRelative = strRelative.Left(iFind - 1) + "_" + strRelative.Mid(iStart, iFind - iStart) + strRelative.Mid(iFind + 1);
+         //}
 
-         m_strCa2AppData = m_strAppData / "ca2" / "app" / strRelative;
+         string strRelative = ::dir::app_relative();
+
+         m_strCa2AppData = m_strAppData / "ca2" / "appdata" / strRelative;
 
          m_strCa2AppData /= System.get_system_platform();
 
@@ -1124,7 +1116,7 @@ namespace windows
          m_strTimeFolder = appdata() / "time";
 
       if(m_strNetSeedFolder.is_empty())
-         m_strNetSeedFolder = element() / "net";
+         m_strNetSeedFolder = install() / "net";
 
       mk(m_strTimeFolder,get_app());
       xxdebug_box("win_dir::initialize (m_strTimeFolder)","win_dir::initialize",0);
@@ -1136,20 +1128,20 @@ namespace windows
       xxdebug_box("win_dir::initialize","win_dir::initialize",0);
 
 
-      string str;
-      str = System.dir().profile();
+      //string str;
+      //str = System.dir().profile();
 
 
-      ::file::path strRelative;
-      strRelative = System.dir().element();
-      index iFind = strRelative.find(':');
-      if(iFind >= 0)
-      {
-         strsize iFind1 = strRelative.reverse_find("\\",iFind);
-         strsize iFind2 = strRelative.reverse_find("/",iFind);
-         strsize iStart = MAX(iFind1 + 1,iFind2 + 1);
-         strRelative = strRelative.Left(iFind - 1) + "_" + strRelative.Mid(iStart,iFind - iStart) + strRelative.Mid(iFind + 1);
-      }
+      //::file::path strRelative;
+      //strRelative = System.dir().install();
+      //index iFind = strRelative.find(':');
+      //if(iFind >= 0)
+      //{
+      //   strsize iFind1 = strRelative.reverse_find("\\",iFind);
+      //   strsize iFind2 = strRelative.reverse_find("/",iFind);
+      //   strsize iStart = MAX(iFind1 + 1,iFind2 + 1);
+      //   strRelative = strRelative.Left(iFind - 1) + "_" + strRelative.Mid(iStart,iFind - iStart) + strRelative.Mid(iFind + 1);
+      //}
 
 //      ::file::path strUserFolderShift;
 
@@ -1159,10 +1151,10 @@ namespace windows
 //      }
 //      else
 //      {
-  //       strUserFolderShift = strRelative;
+      //       strUserFolderShift = strRelative;
 //      }
 
-      m_pathUser = ::file::path(str) /"app"/ strRelative;
+      //m_pathUser = ::file::path(str) /"app"/ strRelative;
 
 
 
@@ -1207,7 +1199,7 @@ namespace windows
 
    }
 
-   
+
    ::file::path dir::commonappdata_root()
    {
 
@@ -1216,80 +1208,80 @@ namespace windows
    }
 
 
-   ::file::path dir::usersystemappdata(::aura::application * papp,const char * lpcszPrefix)
-   {
-      UNREFERENCED_PARAMETER(papp);
-      return appdata() / lpcszPrefix;
-   }
+   //::file::path dir::usersystemappdata(::aura::application * papp,const char * lpcszPrefix)
+   //{
+   //   UNREFERENCED_PARAMETER(papp);
+   //   return appdata() / lpcszPrefix;
+   //}
 
-   ::file::path dir::userappdata(::aura::application * papp)
-   {
-      return userfolder(papp) / "appdata";
-   }
+   //::file::path dir::appdata(::aura::application * papp)
+   //{
+   //   return userfolder(papp) / "appdata";
+   //}
 
-   ::file::path dir::userdata(::aura::application * papp)
-   {
-      return userfolder(papp) / "data";
-   }
+   //::file::path dir::userdata(::aura::application * papp)
+   //{
+   //   return userfolder(papp) / "data";
+   //}
 
 
-   ::file::path dir::default_os_user_path_prefix(::aura::application * papp)
-   {
-      UNREFERENCED_PARAMETER(papp);
-      unichar buf[MAX_PATH];
-      ULONG ulSize = sizeof(buf) / sizeof(unichar);
-      if(!::GetUserNameExW(NameCanonical, buf, &ulSize))
-      {
-         if(!::GetUserNameW(buf, &ulSize))
-         {
-            memset(buf, 0, sizeof(buf));
-         }
-      }
-      return ::str::international::unicode_to_utf8(buf);
-   }
+   //::file::path dir::default_os_user_path_prefix(::aura::application * papp)
+   //{
+   //   UNREFERENCED_PARAMETER(papp);
+   //   unichar buf[MAX_PATH];
+   //   ULONG ulSize = sizeof(buf) / sizeof(unichar);
+   //   if(!::GetUserNameExW(NameCanonical, buf, &ulSize))
+   //   {
+   //      if(!::GetUserNameW(buf, &ulSize))
+   //      {
+   //         memset(buf, 0, sizeof(buf));
+   //      }
+   //   }
+   //   return ::str::international::unicode_to_utf8(buf);
+   //}
 
-   ::file::path dir::default_userappdata(::aura::application * papp,const string & lpcszPrefix,const string & lpcszLogin)
-   {
-      return default_userfolder(papp, lpcszPrefix, lpcszLogin) /  "appdata" ;
-   }
+   //::file::path dir::default_userappdata(::aura::application * papp,const string & lpcszPrefix,const string & lpcszLogin)
+   //{
+   //   return default_userfolder(papp, lpcszPrefix, lpcszLogin) /  "appdata" ;
+   //}
 
-   ::file::path dir::default_userdata(::aura::application * papp,const string & lpcszPrefix,const string & lpcszLogin)
-   {
-      return default_userfolder(papp, lpcszPrefix, lpcszLogin) / "data";
-   }
+   //::file::path dir::default_userdata(::aura::application * papp,const string & lpcszPrefix,const string & lpcszLogin)
+   //{
+   //   return default_userfolder(papp, lpcszPrefix, lpcszLogin) / "data";
+   //}
 
-   ::file::path dir::default_userfolder(::aura::application * papp,const string & lpcszPrefix,const string & lpcszLogin)
-   {
+   //::file::path dir::default_userfolder(::aura::application * papp,const string & lpcszPrefix,const string & lpcszLogin)
+   //{
 
-      return userfolder(papp);
+   //   return userfolder(papp);
 
-   }
+   //}
 
    ::file::path dir::userquicklaunch(::aura::application * papp)
    {
-      
+
       UNREFERENCED_PARAMETER(papp);
 
       return m_strAppData / "Microsoft\\Internet Explorer\\Quick Launch";
 
    }
 
-   
+
    ::file::path dir::userprograms(::aura::application * papp)
    {
-      
+
       UNREFERENCED_PARAMETER(papp);
-      
+
       return m_strPrograms;
-      
+
    }
 
-   
+
    ::file::path dir::commonprograms()
    {
-      
+
       return m_strCommonPrograms;
-      
+
    }
 
 
@@ -1303,15 +1295,15 @@ namespace windows
 
    bool dir::is_inside(const ::file::path & pszDir, const ::file::path & pszPath, ::aura::application * papp)
    {
-      
+
       return ::str::begins_ci(pszDir, pszPath);
 
    }
 
-   
+
    bool dir::has_subdir(::aura::application * papp, const ::file::path & pszDir)
    {
-      
+
       file_find file_find;
 
       bool bWorking;
@@ -1320,7 +1312,7 @@ namespace windows
 
       while(bWorking)
       {
-         
+
          bWorking = file_find.FindNextFileA();
 
          if(file_find.IsDirectory() && !file_find.IsDots())
@@ -1382,10 +1374,10 @@ namespace windows
       ::file::path path;
 
       shell_get_special_folder_path(
-         NULL,
-         path,
-         CSIDL_MYDOCUMENTS,
-         FALSE);
+      NULL,
+      path,
+      CSIDL_MYDOCUMENTS,
+      FALSE);
 
       return path;
 
@@ -1397,10 +1389,10 @@ namespace windows
       ::file::path path;
 
       shell_get_special_folder_path(
-         NULL,
-         path,
-         CSIDL_DESKTOP,
-         FALSE);
+      NULL,
+      path,
+      CSIDL_DESKTOP,
+      FALSE);
 
       return path;
 
@@ -1423,10 +1415,10 @@ namespace windows
       ::file::path path;
 
       shell_get_special_folder_path(
-         NULL,
-         path,
-         CSIDL_MYMUSIC,
-         FALSE);
+      NULL,
+      path,
+      CSIDL_MYMUSIC,
+      FALSE);
 
       return path;
 
@@ -1439,10 +1431,10 @@ namespace windows
       ::file::path path;
 
       shell_get_special_folder_path(
-         NULL,
-         path,
-         CSIDL_MYVIDEO,
-         FALSE);
+      NULL,
+      path,
+      CSIDL_MYVIDEO,
+      FALSE);
 
       return path;
 
@@ -1455,10 +1447,10 @@ namespace windows
       ::file::path path;
 
       shell_get_special_folder_path(
-         NULL,
-         path,
-         CSIDL_MYPICTURES,
-         FALSE);
+      NULL,
+      path,
+      CSIDL_MYPICTURES,
+      FALSE);
 
       return path;
 
@@ -1480,7 +1472,7 @@ namespace windows
 
 ::file::path dir::home()
 {
-   
+
    return ::windows::get_known_folder(FOLDERID_Profile);
 
 }

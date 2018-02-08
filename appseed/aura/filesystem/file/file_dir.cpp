@@ -681,12 +681,12 @@ found:
 }
 
 
-::file::path dir::element()
+::file::path dir::install()
 {
 
 #ifdef WINDOWS
 
-   return ca2_module().folder(2);
+   return ca2_module().folder(3);
 
 #else
 
@@ -1611,165 +1611,165 @@ void dir::ls_file(::file::patha & stra,const ::file::path & psz)
 }
 
 
-::file::path dir::default_os_user_path_prefix()
-{
-
-#if defined(WINDOWSEX)
-
-   hwstring buf(MAX_PATH * 8);
-
-   ULONG ulSize = (ULONG) buf.count();
-
-   if(!::GetUserNameExW(NameCanonical, buf, &ulSize))
-   {
-
-      if(!::GetUserNameW(buf, &ulSize))
-      {
-
-         memset(buf, 0, sizeof(buf));
-
-      }
-
-   }
-
-   string str;
-
-   str = str::international::unicode_to_utf8(buf);
-
-   return str;
-
-#elif defined(METROWIN)
-
-//#pragma push_macro("System")
-//#undef System
+//::file::path dir::default_os_user_path_prefix()
+//{
 //
-//   string str(::Windows::System::UserProfile::UserInformation->GetDomainNameAsync()->GetResults()->Data());
+//#if defined(WINDOWSEX)
 //
-//#pragma pop_macro("System")
-
-   return "User";
-
-   //return str;
-
-#elif defined(ANDROID)
-
-   string str("ca2user");
-
-   return str;
-
-#else
-
-   memory mem;
-
-   mem.allocate(512);
-
-retry:
-
-   if(getlogin_r((char *) mem.get_data(), mem.get_size()))
-   {
-
-      if(errno == ERANGE)
-      {
-
-         if(mem.get_size() < 65536)
-         {
-
-            mem.allocate(mem.get_size() + 512);
-
-            goto retry;
-
-         }
-
-      }
-
-      return "";
-
-   }
-
-   return mem.to_string();
-
-#endif
-
-}
-
-
-
-::file::path dir::usersystemappdata(string strPlatform, const string & lpcszPrefix)
-{
-
-   return appdata(strPlatform) / lpcszPrefix;
-
-}
-
-
-::file::path dir::default_userappdata(const string & lpcszPrefix,const string & lpcszLogin)
-{
-
-   return default_user(lpcszPrefix, lpcszLogin) / "appdata";
-
-}
-
-
-::file::path dir::default_userdata(const string & lpcszPrefix,const string & lpcszLogin)
-{
-
-   return default_user(lpcszPrefix, lpcszLogin) /  "data";
-
-}
-
-
-::file::path dir::default_user(const string & lpcszPrefix,const string & lpcszLogin)
-{
-
-   return user();
-
-}
+//   hwstring buf(MAX_PATH * 8);
+//
+//   ULONG ulSize = (ULONG) buf.count();
+//
+//   if(!::GetUserNameExW(NameCanonical, buf, &ulSize))
+//   {
+//
+//      if(!::GetUserNameW(buf, &ulSize))
+//      {
+//
+//         memset(buf, 0, sizeof(buf));
+//
+//      }
+//
+//   }
+//
+//   string str;
+//
+//   str = str::international::unicode_to_utf8(buf);
+//
+//   return str;
+//
+//#elif defined(METROWIN)
+//
+////#pragma push_macro("System")
+////#undef System
+////
+////   string str(::Windows::System::UserProfile::UserInformation->GetDomainNameAsync()->GetResults()->Data());
+////
+////#pragma pop_macro("System")
+//
+//   return "User";
+//
+//   //return str;
+//
+//#elif defined(ANDROID)
+//
+//   string str("ca2user");
+//
+//   return str;
+//
+//#else
+//
+//   memory mem;
+//
+//   mem.allocate(512);
+//
+//retry:
+//
+//   if(getlogin_r((char *) mem.get_data(), mem.get_size()))
+//   {
+//
+//      if(errno == ERANGE)
+//      {
+//
+//         if(mem.get_size() < 65536)
+//         {
+//
+//            mem.allocate(mem.get_size() + 512);
+//
+//            goto retry;
+//
+//         }
+//
+//      }
+//
+//      return "";
+//
+//   }
+//
+//   return mem.to_string();
+//
+//#endif
+//
+//}
 
 
-::file::path dir::user()
-{
 
-   ::file::path str;
+//::file::path dir::usersystemappdata(string strPlatform, const string & lpcszPrefix)
+//{
+//
+//   return appdata(strPlatform) / lpcszPrefix;
+//
+//}
 
-#ifdef WINDOWSEX
 
-   ::windows::shell_get_special_folder_path(NULL, str, CSIDL_PROFILE, false);
+//::file::path dir::default_userappdata(const string & lpcszPrefix,const string & lpcszLogin)
+//{
+//
+//   return default_user(lpcszPrefix, lpcszLogin) / "appdata";
+//
+//}
 
-#elif defined(METROWIN)
 
-   str = ::Windows::Storage::KnownFolders::DocumentsLibrary->Path;
+//::file::path dir::default_userdata(const string & lpcszPrefix,const string & lpcszLogin)
+//{
+//
+//   return default_user(lpcszPrefix, lpcszLogin) /  "data";
+//
+//}
 
-#else
 
-   str = getenv("HOME");
+//::file::path dir::default_user(const string & lpcszPrefix,const string & lpcszLogin)
+//{
+//
+//   return user();
+//
+//}
 
-#endif
 
-   string strRelative;
-   strRelative = element();
-   index iFind = strRelative.find(':');
-   if(iFind >= 0)
-   {
-      ::index iFind1 = strRelative.reverse_find('\\', iFind);
-      ::index iFind2 = strRelative.reverse_find('/', iFind);
-      ::index iStart = MAX(iFind1 + 1, iFind2 + 1);
-      strRelative = strRelative.substr(0, iFind - 1) + "_" + strRelative.substr(iStart, iFind - iStart) + strRelative.substr(iFind + 1);
-   }
-
-   string strUserFolderShift;
-
-   /*if(App(papp).handler()->m_varTopicQuery.has_property("user_folder_relative_path"))
-   {
-   strUserFolderShift = path(strRelative, App(papp).handler()->m_varTopicQuery["user_folder_relative_path"].get_string());
-   }
-   else*/
-   {
-      strUserFolderShift = strRelative;
-   }
-
-   return ::file::path(str) / "ca2" / strUserFolderShift;
-
-}
+//::file::path dir::config()
+//{
+//
+//   ::file::path str;
+//
+//#ifdef WINDOWSEX
+//
+//   ::windows::shell_get_special_folder_path(NULL, str, CSIDL_PROFILE, false);
+//
+//#elif defined(METROWIN)
+//
+//   str = ::Windows::Storage::KnownFolders::DocumentsLibrary->Path;
+//
+//#else
+//
+//   str = getenv("HOME");
+//
+//#endif
+//
+//   string strRelative;
+//   strRelative = element();
+//   index iFind = strRelative.find(':');
+//   if(iFind >= 0)
+//   {
+//      ::index iFind1 = strRelative.reverse_find('\\', iFind);
+//      ::index iFind2 = strRelative.reverse_find('/', iFind);
+//      ::index iStart = MAX(iFind1 + 1, iFind2 + 1);
+//      strRelative = strRelative.substr(0, iFind - 1) + "_" + strRelative.substr(iStart, iFind - iStart) + strRelative.substr(iFind + 1);
+//   }
+//
+//   string strUserFolderShift;
+//
+//   /*if(App(papp).handler()->m_varTopicQuery.has_property("user_folder_relative_path"))
+//   {
+//   strUserFolderShift = path(strRelative, App(papp).handler()->m_varTopicQuery["user_folder_relative_path"].get_string());
+//   }
+//   else*/
+//   {
+//      strUserFolderShift = strRelative;
+//   }
+//
+//   return ::file::path(str) / "ca2" / strUserFolderShift;
+//
+//}
 
 
 ::file::path dir::pathfind(const string & pszEnv,const string & pszTopic,const string & pszMode)
@@ -1822,7 +1822,7 @@ retry:
 ::file::path dir::beforeca2()
 {
 
-   return dir::name(dir::element());
+   return dir::name(dir::install());
 
 }
 

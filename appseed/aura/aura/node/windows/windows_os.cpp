@@ -400,7 +400,7 @@ namespace windows
             keyPlugin.SetValue("Path", System.dir().ca2module() /"npca2.dll");
             keyPlugin.SetValue("ProductName", "ca2 plugin for NPAPI");
             keyPlugin.SetValue("Vendor", "ca2 Desenvolvimento de Software Ltda.");
-            keyPlugin.SetValue("Version", Application.file().as_string(System.dir().element()/"appdata/x86/ca2_build.txt"));
+            keyPlugin.SetValue("Version", Application.file().as_string(System.dir().install()/"appdata/x86/ca2_build.txt"));
 
             registry::Key keyApplicationCa2;
 
@@ -1890,7 +1890,7 @@ repeat:
    {
 
       string strTargetProgId;
-      string strModule = solve_relative_compressions(::file_module_path_dup());
+      string strModule = solve_relative_compressions(::file::app_module());
 
       strTargetProgId = papp->m_strAppName;
 

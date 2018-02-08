@@ -57,7 +57,7 @@ namespace userstack
 
    void view::OnDraw(::draw2d::graphics * pgraphics)
    {
-      
+
       UNREFERENCED_PARAMETER(pgraphics);
 
    }
@@ -145,7 +145,7 @@ namespace userstack
       pframe->m_pdocument = get_document();
 
 
-      string strImageDir = Application.dir().userdata()/"image";
+      string strImageDir = System.dir().appdata() / "image";
       m_straImagePath.m_pprovider = get_app();
       m_straImagePath.rls(strImageDir);
 
@@ -233,10 +233,10 @@ namespace userstack
       switch(ptimer->m_nIDEvent)
       {
       case TimerBackView:
-         {
-            //gcom::backview::Interface::ImageChangePostEvent(gcom::backview::event_timer);
-         }
-         break;
+      {
+         //gcom::backview::Interface::ImageChangePostEvent(gcom::backview::event_timer);
+      }
+      break;
       }
 
       if(ptimer->m_nIDEvent == 21977)
@@ -290,15 +290,15 @@ namespace userstack
 
    void view::check_apps()
    {
-   //   if(::IsDebuggerPresent())
-     //    return;
+      //   if(::IsDebuggerPresent())
+      //    return;
       //if(!m_bEnsureApps)
-        // return;
+      // return;
 #ifdef WINDOWSEX
       if(::IsWindow(m_oswindowWinactionarea) &&
-         ::IsWindow(m_oswindowCommand) &&
-         ::IsWindow(m_oswindowWinutil) &&
-         ::IsWindow(m_oswindowBergedge))
+            ::IsWindow(m_oswindowCommand) &&
+            ::IsWindow(m_oswindowWinutil) &&
+            ::IsWindow(m_oswindowBergedge))
       {
          return;
       }
@@ -427,10 +427,10 @@ namespace userstack
       }
       try
       {
-         
+
          if(m_pimpl == NULL)
             return;
-         
+
          m_pimpl->route_message(pmouse);
 
          if(pmouse->get_lresult() != 0)

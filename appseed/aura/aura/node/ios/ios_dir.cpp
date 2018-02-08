@@ -1018,7 +1018,7 @@ namespace ios
    //      return path(appdata(lpcszPrefix), lpcsz, lpcsz2);
    //   }
    //
-   //   string dir::userappdata(::aura::application *   papp, const char * lpcsz, const char * lpcsz2)
+   //   string dir::appdata(::aura::application *   papp, const char * lpcsz, const char * lpcsz2)
    //   {
    //      return path(userfolder(papp, "appdata"), lpcsz, lpcsz2);
    //   }
@@ -1333,7 +1333,7 @@ namespace ios
    }
    
    // stage in ca2os spalib
-   ::file::path dir::element()
+   ::file::path dir::install()
    {
       
       single_lock sl(&m_mutex, true);
@@ -1755,7 +1755,7 @@ namespace ios
       return appdata() / lpcszPrefix;
    }
    
-   ::file::path dir::userappdata(::aura::application * papp)
+   ::file::path dir::appdata(::aura::application * papp)
    {
       return userfolder(papp) / "appdata";
    }
@@ -2813,7 +2813,7 @@ namespace ios
 //   }
 //
 //   // stage in ccvotagus spalib
-//   string dir::element(const char * lpcsz, const char * lpcsz2)
+//   string dir::install(const char * lpcsz, const char * lpcsz2)
 //   {
 //
 //      single_lock sl(&m_mutex, true);
@@ -2822,7 +2822,7 @@ namespace ios
 //
 //   }
 //
-//   string dir::element(const string & str, const char * lpcsz2)
+//   string dir::install(const string & str, const char * lpcsz2)
 //   {
 //
 //      single_lock sl(&m_mutex, true);
@@ -2831,7 +2831,7 @@ namespace ios
 //
 //   }
 //
-//   string dir::element(const char * lpcsz, const string & str2)
+//   string dir::install(const char * lpcsz, const string & str2)
 //   {
 //
 //      single_lock sl(&m_mutex, true);
@@ -2840,7 +2840,7 @@ namespace ios
 //
 //   }
 //
-//   string dir::element(const string & str, const string & str2)
+//   string dir::install(const string & str, const string & str2)
 //   {
 //
 //      single_lock sl(&m_mutex, true);
@@ -2849,7 +2849,7 @@ namespace ios
 //
 //   }
 //
-//   string dir::element(const string & str)
+//   string dir::install(const string & str)
 //   {
 //
 //      single_lock sl(&m_mutex, true);
@@ -2858,7 +2858,7 @@ namespace ios
 //
 //   }
 //
-//   string dir::element()
+//   string dir::install()
 //   {
 //
 //      single_lock sl(&m_mutex, true);
@@ -3172,7 +3172,7 @@ namespace ios
 //      return path(appdata(lpcszPrefix), lpcsz, lpcsz2);
 //   }
 //
-//   string dir::userappdata(sp(::aura::application)  papp, const char * lpcsz, const char * lpcsz2)
+//   string dir::appdata(sp(::aura::application)  papp, const char * lpcsz, const char * lpcsz2)
 //   {
 //      return path(userfolder(papp, "appdata"), lpcsz, lpcsz2);
 //   }

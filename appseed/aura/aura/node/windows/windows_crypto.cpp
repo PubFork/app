@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include <shlobj.h>
 //#include <Security.h>
 //#include <shlobj.h>
@@ -37,7 +37,7 @@ namespace windows
    ::file::path crypto::get_crypt_key_file_path()
    {
 
-      return Application.dir().userappdata() / ".ca2/databin.bin";
+      return System.dir().appdata() / ".ca2/databin.bin";
 
    }
 
@@ -74,16 +74,16 @@ namespace windows
       //  by the function and is not passed.
 
       if (CryptUnprotectData(
-         &DataIn,
-         NULL, // A description string
-               // to be included with the
-               // encrypted data.
-         &DataSalt,                               // Optional entropy not used.
-         NULL,                               // Reserved.
-         NULL,                               // Pass NULL for the
-                                             // prompt structure.
-         0,
-         &DataOut))
+            &DataIn,
+            NULL, // A description string
+            // to be included with the
+            // encrypted data.
+            &DataSalt,                               // Optional entropy not used.
+            NULL,                               // Reserved.
+            NULL,                               // Pass NULL for the
+            // prompt structure.
+            0,
+            &DataOut))
       {
          TRACE("crypto::decrypt The encryption phase worked. \n");
          storageDecrypt.allocate(DataOut.cbData);
@@ -124,7 +124,7 @@ namespace windows
    {
 
       return ::crypto::crypto::encrypt(storageEncrypt, storageDecrypt, pszSalt);
-#if 0 
+#if 0
       DATA_BLOB DataIn;
       DATA_BLOB DataOut;
 
@@ -151,16 +151,16 @@ namespace windows
       //  by the function and is not passed.
 
       if (CryptProtectData(
-         &DataIn,
-         NULL, // A description string
-               // to be included with the
-               // encrypted data.
-         &DataSalt,                               // Optional entropy not used.
-         NULL,                               // Reserved.
-         NULL,                               // Pass NULL for the
-                                             // prompt structure.
-         0,
-         &DataOut))
+            &DataIn,
+            NULL, // A description string
+            // to be included with the
+            // encrypted data.
+            &DataSalt,                               // Optional entropy not used.
+            NULL,                               // Reserved.
+            NULL,                               // Pass NULL for the
+            // prompt structure.
+            0,
+            &DataOut))
       {
          TRACE("crypto::encrypt The encryption phase worked. \n");
          storageEncrypt.allocate(DataOut.cbData);

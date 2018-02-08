@@ -50,7 +50,7 @@ namespace userex // ca8 + cube
 
       ::file::listing patha(get_app());
 
-      patha.ls(System.dir().element()/ "app/appmatter/main/_std/_std/keyboard on_layout");
+      patha.ls(System.dir().install()/ "app/appmatter/main/_std/_std/keyboard on_layout");
 
       for(int32_t i = 0; i < patha.get_count(); i++)
       {

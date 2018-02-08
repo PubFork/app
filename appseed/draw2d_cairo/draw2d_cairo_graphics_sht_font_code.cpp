@@ -2,7 +2,7 @@
       if(g_iFtLevel < 0)
       {
 
-         strPath = System.dir().element() / "app/appmatter/main/_std/_std/font/truetype/arialuni.ttf";
+         strPath = System.dir().install() / "app/appmatter/main/_std/_std/font/truetype/arialuni.ttf";
 
          if(g_ft == NULL)
          {

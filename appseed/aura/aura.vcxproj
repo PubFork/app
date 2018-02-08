@@ -1303,6 +1303,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="aura\os\windows_common\windows_common_graphics.cpp" />
     <ClCompile Include="aura\os\windows_common\windows_common_multithreading.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
@@ -2854,6 +2855,7 @@
     <ClInclude Include="aura\os\windows_common\draw2d_direct2d_global.h" />
     <ClInclude Include="aura\os\windows_common\windows_common_c.h" />
     <ClInclude Include="aura\os\windows_common\windows_common_error.h" />
+    <ClInclude Include="aura\os\windows_common\windows_common_graphics.h" />
     <ClInclude Include="aura\os\windows_common\windows_common_unicode.h" />
     <ClInclude Include="aura\process\process.h" />
     <ClInclude Include="aura\process\process_bidi_pipe.h" />
@@ -2902,6 +2904,7 @@
     <ClInclude Include="filesystem\file\file_c.h" />
     <ClInclude Include="filesystem\file\file_circular_file.h" />
     <ClInclude Include="filesystem\file\file_composite.h" />
+    <ClInclude Include="filesystem\file\file_cpp.h" />
     <ClInclude Include="filesystem\file\file_dir.h" />
     <ClInclude Include="filesystem\file\file_edit_file.h" />
     <ClInclude Include="filesystem\file\file_exception.h" />

@@ -47,6 +47,7 @@ string get_user_name()
    ::GetUserNameW(wsz,&dwSize);
    return string(wsz);
 }
+#include "aura/aura/os/windows/windows.h"
 #endif
 
 namespace aura

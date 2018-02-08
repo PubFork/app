@@ -1,12 +1,140 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include <time.h>
 //#include <math.h>
 
+#ifdef WINDOWS
+#include <wincrypt.h>
+#endif
 
 namespace math
 {
 
+   struct math_os_data
+   {
 
+      int m_i;
+
+#ifdef WINDOWSEX
+      HCRYPTPROV     m_hCryptProv;
+      HCRYPTKEY      m_hOriginalKey;
+      HCRYPTKEY      m_hDuplicateKey;
+#endif
+
+      math_os_data(LPBYTE pbData = NULL)
+#ifdef WINDOWSEX
+      {
+         m_hCryptProv = NULL;
+         m_hOriginalKey = NULL;
+         m_hDuplicateKey = NULL;
+
+         if (!CryptAcquireContext(
+               &m_hCryptProv,
+               NULL,
+               NULL,
+               PROV_RSA_FULL,
+               0))
+         {
+            if (CryptAcquireContext(
+                  &m_hCryptProv,
+                  NULL,
+                  NULL,
+                  PROV_RSA_FULL,
+                  CRYPT_NEWKEYSET))
+            {
+               //debug_print("CryptAcquireContext succeeded. \n");
+            }
+            else
+            {
+               //           TRACELASTERROR();
+               //debug_print("Error during CryptAcquireContext!\n");
+
+            }
+
+         }
+         else
+         {
+            //debug_print("CryptAcquireContext succeeded. \n");
+         }
+         //-------------------------------------------------------------------
+         // Generate a key.
+         if (CryptGenKey(
+               m_hCryptProv,
+               CALG_RC4,
+               0,
+               &m_hOriginalKey))
+         {
+            //debug_print("Original session key is created. \n");
+         }
+         else
+         {
+            //debug_print("ERROR - CryptGenKey.");
+         }
+         //-------------------------------------------------------------------
+         // Duplicate the key.
+
+         if (CryptDuplicateKey(
+               m_hOriginalKey,
+               NULL,
+               0,
+               &m_hDuplicateKey))
+         {
+            //debug_print("The session key has been duplicated. \n");
+         }
+         else
+         {
+            //debug_print("ERROR - CryptDuplicateKey");
+         }
+         //-------------------------------------------------------------------
+         // set additional parameters on the original key.
+         // First, set the cipher mode.
+
+         DWORD dwMode = CRYPT_MODE_ECB;
+         if (CryptSetKeyParam(
+               m_hOriginalKey,
+               KP_MODE,
+               (BYTE*)&dwMode,
+               0))
+         {
+            //debug_print("Key Parameters set. \n");
+         }
+         else
+         {
+            //debug_print("Error during CryptSetKeyParam.");
+         }
+
+         // Generate a random initialization vector.
+         if (CryptGenRandom(
+               m_hCryptProv,
+               8,
+               pbData))
+         {
+            //debug_print("Random sequence generated. \n");
+         }
+         else
+         {
+            //debug_print("Error during CryptGenRandom.");
+         }
+         //-------------------------------------------------------------------
+         // set the initialization vector.
+         if (CryptSetKeyParam(
+               m_hOriginalKey,
+               KP_IV,
+               pbData,
+               0))
+         {
+            //debug_print("Parameter set with random sequence as initialization vector. \n");
+         }
+         else
+         {
+            //debug_print("Error during CryptSetKeyParam.");
+         }
+
+#endif
+
+
+      }
+
+   };
 
 
 
@@ -19,114 +147,7 @@ namespace math
       dPi = atan(1.0) * 4.0;
       fPi = atanf(1.0f) * 4.0f;
 
-#ifdef WINDOWSEX
-      hCryptProv = NULL;
-      hOriginalKey = NULL;
-      hDuplicateKey = NULL;
-
-      if (!CryptAcquireContext(
-               &hCryptProv,
-               NULL,
-               NULL,
-               PROV_RSA_FULL,
-               0))
-      {
-         if (CryptAcquireContext(
-                  &hCryptProv,
-                  NULL,
-                  NULL,
-                  PROV_RSA_FULL,
-                  CRYPT_NEWKEYSET))
-         {
-            //debug_print("CryptAcquireContext succeeded. \n");
-         }
-         else
-         {
-            //           TRACELASTERROR();
-            //debug_print("Error during CryptAcquireContext!\n");
-
-         }
-
-      }
-      else
-      {
-         //debug_print("CryptAcquireContext succeeded. \n");
-      }
-      //-------------------------------------------------------------------
-      // Generate a key.
-      if (CryptGenKey(
-               hCryptProv,
-               CALG_RC4,
-               0,
-               &hOriginalKey))
-      {
-         //debug_print("Original session key is created. \n");
-      }
-      else
-      {
-         //debug_print("ERROR - CryptGenKey.");
-      }
-      //-------------------------------------------------------------------
-      // Duplicate the key.
-
-      if (CryptDuplicateKey(
-               hOriginalKey,
-               NULL,
-               0,
-               &hDuplicateKey))
-      {
-         //debug_print("The session key has been duplicated. \n");
-      }
-      else
-      {
-         //debug_print("ERROR - CryptDuplicateKey");
-      }
-      //-------------------------------------------------------------------
-      // set additional parameters on the original key.
-      // First, set the cipher mode.
-
-      dwMode = CRYPT_MODE_ECB;
-      if (CryptSetKeyParam(
-               hOriginalKey,
-               KP_MODE,
-               (BYTE*)&dwMode,
-               0))
-      {
-         //debug_print("Key Parameters set. \n");
-      }
-      else
-      {
-         //debug_print("Error during CryptSetKeyParam.");
-      }
-
-      // Generate a random initialization vector.
-      if (CryptGenRandom(
-               hCryptProv,
-               8,
-               pbData))
-      {
-         //debug_print("Random sequence generated. \n");
-      }
-      else
-      {
-         //debug_print("Error during CryptGenRandom.");
-      }
-      //-------------------------------------------------------------------
-      // set the initialization vector.
-      if (CryptSetKeyParam(
-               hOriginalKey,
-               KP_IV,
-               pbData,
-               0))
-      {
-         //debug_print("Parameter set with random sequence as initialization vector. \n");
-      }
-      else
-      {
-         //debug_print("Error during CryptSetKeyParam.");
-      }
-
-#endif
+      m_posdata = new math_os_data();
 
       {
          //  m_chRngReSeedCountDown = -1;
@@ -167,7 +188,7 @@ namespace math
    void math::gen_rand(void * buf, memory_size_t dwLen)
    {
 #ifdef WINDOWSEX
-      CryptGenRandom(hCryptProv, (DWORD) dwLen, (BYTE *)buf);
+      CryptGenRandom(m_posdata->m_hCryptProv, (DWORD) dwLen, (BYTE *)buf);
 #elif defined(METROWIN)
       Windows::Storage::Streams::IBuffer ^ buffer = Windows::Security::Cryptography::CryptographicBuffer::GenerateRandom(dwLen);
       memory mem;
@@ -450,10 +471,10 @@ namespace math
    }
 
    double math::LinearMap(
-      double dMin, double dMax,
-      double dValue,
-      double dValueMin,
-      double dValueMax)
+   double dMin, double dMax,
+   double dValue,
+   double dValueMin,
+   double dValueMax)
    {
       double d = dValue - dValueMin;
       d *= (dMax - dMin) / (double)(dValueMax - dValueMin);

@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include <stdio.h>
 
 //#ifndef CA2_SPA
@@ -81,81 +81,81 @@ string dir_appdata(const char * path = NULL)
 
 machine_event::machine_event()
 {
-   
+
    m_bInitialized = false;
-   
+
    initialize();
-   
+
 }
 
 
 machine_event::~machine_event()
 {
-   
+
 }
 
 
 bool machine_event::initialize()
 {
-   
+
    if(m_bInitialized)
    {
-      
+
       return true;
-      
+
    }
-   
+
    m_bInitialized = true;
-   
+
    return true;
-   
+
 }
 
 
 bool machine_event::read(machine_event_data * pdata)
 {
-   
-   FILE * file = fopen_dup(dir::appdata(process_platform_dir_name2()) / "machine/event/machine_event.bin", "r");
-   
+
+   FILE * file = fopen_dup(dir::appdata() / "machine/event/machine_event.bin", "r");
+
    if(file == NULL)
    {
-      
+
       ZEROP(pdata);
-      
+
       return false;
-      
+
    }
 
    pdata->read(file);
-      
+
    ::fclose(file);
-      
+
    return true;
-   
+
 }
 
 
 bool machine_event::write(machine_event_data * pdata)
 {
-   
-   if(!dir::mk(dir::element() / "machine\\event"))
+
+   if(!dir::mk(dir::install() / "machine\\event"))
       return false;
-   
-   FILE * file = fopen_dup(dir::appdata(process_platform_dir_name2()) / "machine/event/machine_event.bin", "w+");
-   
+
+   FILE * file = fopen_dup(dir::appdata() / "machine/event/machine_event.bin", "w+");
+
    if(file == NULL)
    {
 
       return false;
-      
+
    }
-   
+
    pdata->write(file);
-   
+
    ::fclose(file);
-   
+
    return true;
-   
+
 }
 
 

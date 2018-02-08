@@ -32,7 +32,7 @@ namespace install
    void trace::ensure_trace_file()
    {
 
-      dir::mk(dir::element());
+      dir::mk(dir::install());
 
       if (m_file != NULL)
       {

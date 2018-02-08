@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 #ifdef WINDOWS
 #include <io.h>
@@ -265,10 +265,41 @@ uint64_t file_length_dup(const char * path)
 
 
 
-string file_module_path_dup()
+::file::path file::app_module()
 {
 
-   return "/core/stage";
+#if defined(ANDROID) || defined(LINUX)
+
+   if (!br_init_lib(NULL))
+      return "";
+
+   char * lpszModule = br_find_exe(NULL);
+
+   if (lpszModule == NULL)
+      return "";
+
+   ::file::path path = lpszModule;
+
+   free(lpszModule);
+
+   return path;
+
+#elif defined(WINDOWS)
+
+   hwstring lpszModuleFolder(MAX_PATH * 8);
+
+   hwstring lpszModuleFilePath(MAX_PATH * 8);
+
+   if (!GetModuleFileNameW(NULL, lpszModuleFilePath, (DWORD)lpszModuleFilePath.count()))
+      return "";
+
+   return string(lpszModuleFilePath);
+
+#elif defined(APPLEOS)
+
+   return apple_app_module_path();
+
+#endif
 
 }
 
@@ -660,20 +691,21 @@ string file_first_line_dup(const string & strPath)
    try
    {
 
-   int c;
+      int c;
 
-   do
-   {
+      do
+      {
 
-      c = fgetc (file);
+         c = fgetc (file);
 
-      if (c == '\n') break;
+         if (c == '\n') break;
 
-      if (c == '\r') break;
+         if (c == '\r') break;
 
-      line += (char) c;
+         line += (char) c;
 
-   } while (c != EOF);
+      }
+      while (c != EOF);
 
    }
    catch(...)

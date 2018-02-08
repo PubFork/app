@@ -108,7 +108,7 @@ namespace prompt
       else if(get_view_id() == prompt::PaneViewContextMenu)
       {
          sp(::filemanager::manager) pdoc =  (get_view_uie());
-         pdoc->FileManagerBrowse(Application.dir().userappdata()/ "command\\menu", ::action::source::system_default());
+         pdoc->FileManagerBrowse(System.dir().appdata()/ "command\\menu", ::action::source::system_default());
       }
       else
       {
@@ -152,7 +152,7 @@ namespace prompt
             pdoc->update_all_views(NULL, 1234);
             pdoc->update_all_views(NULL, 123458);
             sp(::user::impact) pview = pdoc->get_view();
-            pdoc->FileManagerBrowse(Application.dir().userappdata()/ "command\\menu", ::action::source::system_default());
+            pdoc->FileManagerBrowse(System.dir().appdata()/ "command\\menu", ::action::source::system_default());
             if(pview != NULL)
             {
                sp(::user::frame_window) pframe =  (pview->GetParentFrame());
@@ -223,7 +223,7 @@ namespace prompt
             pdoc->update_all_views(NULL, 123458);
             sp(::user::impact) pview = pdoc->get_view();
 
-            pdoc->FileManagerBrowse(Application.dir().userappdata()/ "command\\3-action-launch", ::action::source::system_default());
+            pdoc->FileManagerBrowse(System.dir().appdata()/ "command\\3-action-launch", ::action::source::system_default());
 
             if(pview != NULL)
             {
@@ -325,12 +325,12 @@ namespace prompt
 #ifdef WINDOWSEX
 
          i = (int_ptr) ::ShellExecuteW(
-                GetTopLevel()->get_handle(),
-                NULL,
-                ::str::international::utf8_to_unicode("\"" + itema[0]->m_filepath + "\""),
-                NULL,
-                ::str::international::utf8_to_unicode("\"" +  itema[0]->m_filepath.folder() + "\""),
-                SW_SHOWNORMAL);
+             GetTopLevel()->get_handle(),
+             NULL,
+             ::str::international::utf8_to_unicode("\"" + itema[0]->m_filepath + "\""),
+             NULL,
+             ::str::international::utf8_to_unicode("\"" +  itema[0]->m_filepath.folder() + "\""),
+             SW_SHOWNORMAL);
 
 #else
 

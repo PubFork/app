@@ -97,7 +97,7 @@ namespace path
    ::file::path install_log(string strPlatform)
    {
 
-      return dir::element() / ("install-" + strPlatform + ".log");
+      return dir::install() / ("install-" + strPlatform + ".log");
 
    }
 

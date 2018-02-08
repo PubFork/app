@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "framework.h"
 //#include <process.h>    // for _beginthreadex and _endthreadex
 #undef new
@@ -107,7 +107,7 @@ void attach_thread_input_to_main_thread(bool bAttach)
 
 HTHREAD get_current_thread()
 {
-   
+
    return ::GetCurrentThread();
 
 }
@@ -220,7 +220,7 @@ bool __os_term_thread()
 
    if(SUCCEEDED(t_hresultCoInitialize))
    {
-      
+
       CoUninitialize();
 
    }
@@ -257,7 +257,7 @@ CLASS_DECL_AURA uint32_t thread_alloc()
 
 CLASS_DECL_AURA void * thread_get_data(uint32_t uiIndex)
 {
-   
+
    return (void *) TlsGetValue((DWORD) uiIndex);
 
 }
@@ -265,7 +265,7 @@ CLASS_DECL_AURA void * thread_get_data(uint32_t uiIndex)
 
 CLASS_DECL_AURA int32_t thread_set_data(uint32_t uiIndex, void * pvalue)
 {
-  
+
    return TlsSetValue((DWORD)uiIndex, (LPVOID) pvalue);
 
 }
@@ -283,3 +283,20 @@ CLASS_DECL_AURA void thread_shutdown()
 {
 
 }
+
+
+void * thread_data::get()
+{
+
+   return TlsGetValue(m_dwIndex);
+
+}
+
+
+void thread_data::set(void * p)
+{
+
+   TlsSetValue(m_dwIndex, (LPVOID)p);
+
+}
+

@@ -993,7 +993,7 @@ namespace linux
    }
 
    // stage in ccvotagus spalib
-   ::file::path dir::element()
+   ::file::path dir::install()
    {
 
       single_lock sl(&m_mutex, true);
@@ -1002,7 +1002,7 @@ namespace linux
 
    }
 
-//   ::file::path dir::element(const string & str, const char * lpcsz2)
+//   ::file::path dir::install(const string & str, const char * lpcsz2)
 //   {
 //
 //      single_lock sl(&m_mutex, true);
@@ -1011,7 +1011,7 @@ namespace linux
 //
 //   }
 //
-//   ::file::path dir::element(const char * lpcsz, const string & str2)
+//   ::file::path dir::install(const char * lpcsz, const string & str2)
 //   {
 //
 //      single_lock sl(&m_mutex, true);
@@ -1020,7 +1020,7 @@ namespace linux
 //
 //   }
 //
-//   ::file::path dir::element(const string & str, const string & str2)
+//   ::file::path dir::install(const string & str, const string & str2)
 //   {
 //
 //      single_lock sl(&m_mutex, true);
@@ -1029,7 +1029,7 @@ namespace linux
 //
 //   }
 //
-//   ::file::path dir::element(const string & str)
+//   ::file::path dir::install(const string & str)
 //   {
 //
 //      single_lock sl(&m_mutex, true);
@@ -1038,7 +1038,7 @@ namespace linux
 //
 //   }
 //
-//   ::file::path dir::element()
+//   ::file::path dir::install()
 //   {
 //
 //      single_lock sl(&m_mutex, true);
@@ -1460,7 +1460,7 @@ namespace linux
    }
 
 
-   ::file::path dir::userappdata(::aura::application *  papp)
+   ::file::path dir::appdata(::aura::application *  papp)
    {
 
       return userfolder(papp) / "appdata";

@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "aura/net/sockets/bsd/basic/sockets_socket_handler.h"
 #include "aura/net/sockets/http/sockets_http_session.h"
 
@@ -215,7 +215,7 @@ namespace fontopus
          try
          {
 
-            Application.file().del(::dir::userappdata()/"license_auth/00001.data");
+            Application.file().del(::dir::appdata()/"license_auth/00001.data");
 
          }
          catch(...)
@@ -226,7 +226,7 @@ namespace fontopus
          try
          {
 
-            Application.file().del(::dir::userappdata()/"license_auth/00002.data");
+            Application.file().del(::dir::appdata()/"license_auth/00002.data");
 
          }
          catch(...)
@@ -254,24 +254,24 @@ namespace fontopus
    bool fontopus::initialize_user(::fontopus::user * puser)
    {
 
-      if(puser->m_strPathPrefix.is_empty())
-      {
+      //if(puser->m_strPathPrefix.is_empty())
+      //{
 
-         puser->m_strPathPrefix = Application.dir().default_os_user_path_prefix();
+      //   puser->m_strPathPrefix = Application.dir().default_os_user_path_prefix();
 
-      }
+      //}
 
-      puser->m_strPath = Application.dir().default_userfolder(puser->m_strPathPrefix, puser->m_strLogin);
+      puser->m_pathFolder = System.dir().appdata() / "profile" / puser->m_strLogin;
 
-      Application.dir().mk(puser->m_strPath);
+      Application.dir().mk(puser->m_pathFolder);
+//
+      //    puser->m_strDataPath = Application.dir().default_userdata(puser->m_strPathPrefix, puser->m_strLogin);
 
-      puser->m_strDataPath = Application.dir().default_userdata(puser->m_strPathPrefix, puser->m_strLogin);
+      //  Application.dir().mk(puser->m_strDataPath);
 
-      Application.dir().mk(puser->m_strDataPath);
+//      puser->m_strAppDataPath = Application.dir().default_userappdata(puser->m_strPathPrefix, puser->m_strLogin);
 
-      puser->m_strAppDataPath = Application.dir().default_userappdata(puser->m_strPathPrefix, puser->m_strLogin);
-
-      Application.dir().mk(puser->m_strAppDataPath);
+      //    Application.dir().mk(puser->m_strAppDataPath);
 
       puser->create_ifs();
 
@@ -753,7 +753,7 @@ retry:
 
    }
 
-   
+
    void create_user_thread::run()
    {
 

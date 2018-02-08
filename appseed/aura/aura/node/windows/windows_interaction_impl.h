@@ -2,6 +2,7 @@
 
 
 #include <Shobjidl.h>
+#include <Shellapi.h>
 
 
 namespace windows

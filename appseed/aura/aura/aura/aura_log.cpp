@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "aura/net/net_sockets.h"
 
 
@@ -8,6 +8,8 @@
 #if defined(LINUX) || defined(ANDROID)
 //#include <sys/types.h>
 //#include <unistd.h>
+#define ENABLE_TRACE 1
+#elif defined(WINDOWSEX)
 #define ENABLE_TRACE 1
 #endif
 
@@ -29,7 +31,7 @@ namespace aura
 
 #else
 
-      ::file::path pathTrace = ::dir::appdata("system") / "trace.txt";
+      ::file::path pathTrace = ::dir::system() / "trace.txt";
 
 #ifdef DEBUG
 
@@ -271,10 +273,10 @@ namespace aura
 
       //sl.lock();
       if(m_bTrace &&
-         (plog->m_pfile == NULL
-         || plog->m_iYear != time.GetYear()
-         || plog->m_iMonth != time.GetMonth()
-         || plog->m_iDay != time.GetDay()))
+            (plog->m_pfile == NULL
+             || plog->m_iYear != time.GetYear()
+             || plog->m_iMonth != time.GetMonth()
+             || plog->m_iDay != time.GetDay()))
       {
          if(plog->m_pfile != NULL)
          {
@@ -285,7 +287,7 @@ namespace aura
          int32_t iRetry = 0;
 retry:
          string strRelative;
-         time.Format(strRelative, "%Y/%m/%d-%H_%M_%S");
+         time.Format(strRelative, "%Y/%m/%d/%H-%M-%S");
          string strIndex;
 #ifdef WINDOWS
          strIndex.Format("%d-%05d", GetCurrentProcessId(), iRetry);
@@ -485,9 +487,9 @@ skip_further_possible_recursive_impossible_logging_in_file:
       // return false;
       m_id = id;
       m_bInitialized = true;
-      if(file_exists_dup(::dir::appdata(process_platform_dir_name2()) / "debug.txt"))
+      if(file_exists_dup(::dir::appdata() / "trace.txt"))
       {
-         string str = file_as_string_dup(::dir::appdata(process_platform_dir_name2())/"debug.txt");
+         string str = file_as_string_dup(::dir::appdata() / "trace.txt");
          if(str.get_length() == 0 || str.Left(2).trim() != "0")
          {
             m_bLog = true;

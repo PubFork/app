@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 class ifs;
@@ -31,10 +31,10 @@ namespace fontopus
 
       string                                 m_strLogin;
       string                                 m_strName;
-      string                                 m_strPathPrefix;
-      string                                 m_strPath;
-      string                                 m_strDataPath;
-      string                                 m_strAppDataPath;
+      //string                                 m_strPathPrefix;
+      ::file::path                           m_pathFolder;
+      //string                                 m_strDataPath;
+      //string                                 m_strAppDataPath;
       string_to_string                       m_sessionidmap;
       string                                 m_strFunUserId;
       string                                 m_strSessionRsa;

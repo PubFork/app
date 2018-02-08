@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "base/user/user.h"
 
 
@@ -765,7 +765,7 @@ namespace hotplugin
          //   m_pcolorref = (uint32_t *)get_map_failed();
          //}
 
-         dir::mk(dir::userappdata() / "time" / "core");
+         dir::mk(dir::appdata() / "time" / "core");
 
          //int32_t iOpen;
 
@@ -788,9 +788,9 @@ namespace hotplugin
 
          uint_ptr size = m_sizeBitmapData.cx * m_sizeBitmapData.cy * sizeof(COLORREF);
 
-         ::file::path strName = Application.dir().userappdata()/"time"/"core\\app_app_nest-" + m_strBitmapChannel;
+         ::file::path pathName = System.dir().appdata() / "time" / "core/app_app_nest-" + m_strBitmapChannel;
 
-         if(!m_memorymapBitmap.open(strName,true,true,bCreate,size))
+         if(!m_memorymapBitmap.open(pathName,true,true,bCreate,size))
          {
 
             if(bCreate)
@@ -805,17 +805,17 @@ namespace hotplugin
          }
 
 
-         //m_pcolorref = my_open_map(dir::path(dir::userappdata("time"),string("core\\app_app_nest-") + m_strBitmapChannel,&m_hfileBitmap, size);
+         //m_pcolorref = my_open_map(dir::path(dir::appdata("time"),string("core\\app_app_nest-") + m_strBitmapChannel,&m_hfileBitmap, size);
 
 //#ifdef METROWIN
 //         CREATEFILE2_EXTENDED_PARAMETERS ps;
 //         zero(&ps, sizeof(ps));
 //         ps.dwSize = sizeof(ps);
 //         ps.dwFileAttributes = FILE_ATTRIBUTE_NORMAL;
-//         wstring wstr(dir::path(dir::userappdata("time"), string("core\\app_app_nest-") + m_strBitmapChannel));
+//         wstring wstr(dir::path(dir::appdata("time"), string("core\\app_app_nest-") + m_strBitmapChannel));
 //         m_hfileBitmap = CreateFile2(wstr, FILE_READ_DATA | FILE_WRITE_DATA, FILE_SHARE_WRITE | FILE_SHARE_READ, iOpen, &ps);
 //#elif defined(WINDOWS)
-//         wstring wstr(dir::path(dir::userappdata("time"), string("core\\app_app_nest-") + m_strBitmapChannel));
+//         wstring wstr(dir::path(dir::appdata("time"), string("core\\app_app_nest-") + m_strBitmapChannel));
 //         m_hfileBitmap = CreateFileW(wstr, FILE_READ_DATA | FILE_WRITE_DATA, FILE_SHARE_WRITE | FILE_SHARE_READ, NULL, iOpen, FILE_ATTRIBUTE_NORMAL, NULL);
 //#else
 //         m_hfileBitmap = ::open(), iOpen, S_IRUSR | S_IWUSR);

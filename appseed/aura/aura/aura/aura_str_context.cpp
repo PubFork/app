@@ -173,7 +173,7 @@ namespace aura
 #ifdef METROWIN
       return true;
 #endif
-      auto strMain = System.dir().element() / "app\\appmatter\\main";
+      auto strMain = System.dir().install() / "app\\appmatter\\main";
       if(!load(strMain))
          return false;
       return true;

@@ -7,7 +7,7 @@
 
 #include "windows_exception.h"
 
-
+#include "aura/aura/os/windows/windows_comptr.h"
 
 
 
@@ -112,9 +112,6 @@ inline int32_t __invariant_stricmp(const unichar *pwszLeft,const unichar *pwszRi
 
 
 
-
-
-#pragma once
 
 
 namespace windows

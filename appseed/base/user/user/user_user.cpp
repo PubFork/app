@@ -66,7 +66,7 @@ namespace user
 
       xml::document docUser(get_app());
 
-      string strUser = Application.file().as_string(Application.dir().userappdata()/"langstyle_settings.xml");
+      string strUser = Application.file().as_string(System.dir().appdata()/"langstyle_settings.xml");
 
       string strLangUser;
 

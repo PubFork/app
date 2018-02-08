@@ -151,7 +151,7 @@ namespace install
       // this is currently hard-coded:
       System.dir().m_pathCa2Module = dir::program_files_x86() / "ca2/time" / process_platform_dir_name() / System.get_system_configuration();
 
-      System.dir().m_strCa2 = dir::program_files_x86() / "ca2";
+      System.dir().m_pathInstall = dir::program_files_x86() / "ca2";
 
       if (install_get_admin())
       {

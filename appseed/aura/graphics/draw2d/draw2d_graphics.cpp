@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "draw2d.h"
 //#include <math.h>
 
@@ -1348,48 +1348,48 @@ namespace draw2d
       return false;
 
    }
-   
-   
+
+
    bool graphics::StretchBlt(rect rectDst, ::draw2d::graphics * pgraphicsSrc)
    {
-      
+
       if(pgraphicsSrc == NULL)
       {
-         
+
          return false;
-         
+
       }
-      
+
       ::draw2d::dib * pdib = pgraphicsSrc->m_pdibDraw2dGraphics;
-      
+
       if(pdib == NULL)
       {
-       
+
          return false;
-         
+
       }
-      
+
       rect rectSrc(::null_point(), pdib->m_size);
-      
+
       return StretchBlt(rectDst, pgraphicsSrc, rectSrc);
-      
+
    }
-   
-   
+
+
    bool graphics::StretchBlt(rect rectDst, ::draw2d::graphics * pgraphicsSrc, rect rectSrc, uint32_t dwRop)
    {
-      
+
       return StretchBlt(
-                        rectDst.left,
-                        rectDst.top,
-                        rectDst.width(),
-                        rectDst.height(),
-                        pgraphicsSrc,
-                        rectSrc.left,
-                        rectSrc.top,
-                        rectSrc.width(),
-                        rectSrc.height(),
-                        dwRop);
+             rectDst.left,
+             rectDst.top,
+             rectDst.width(),
+             rectDst.height(),
+             pgraphicsSrc,
+             rectSrc.left,
+             rectSrc.top,
+             rectSrc.width(),
+             rectSrc.height(),
+             dwRop);
 
    }
 
@@ -1454,11 +1454,11 @@ namespace draw2d
             if (!pdibWork->create(sizeDst))
                return false;
             if (!pdibWork->get_graphics()->StretchBltRaw(
-                     0, 0,
-                     nDstWidth, nDstHeight,
-                     pgraphicsSrc,
-                     xSrc, ySrc,
-                     nSrcWidth, nSrcHeight))
+                  0, 0,
+                  nDstWidth, nDstHeight,
+                  pgraphicsSrc,
+                  xSrc, ySrc,
+                  nSrcWidth, nSrcHeight))
                return false;
 
 
@@ -5498,14 +5498,6 @@ namespace draw2d
 
    }
 
-#ifdef WINDOWS
-
-   ID2D1Factory1 * device_lock::g_pfactory = NULL;
-
-
-   mutex * lock::g_pmutex = NULL;
-
-#endif
 
 } // namespace draw2d
 

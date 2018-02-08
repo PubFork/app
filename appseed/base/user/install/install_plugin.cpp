@@ -768,7 +768,7 @@ namespace install
 
          // remove install tag : should be turned into a function dependant of spalib at maximum
 
-         if(!node.load(file_as_string_dup(dir::appdata(process_platform_dir_name2()) / "install.xml")))
+         if(!node.load(file_as_string_dup(dir::appdata() / "install.xml")))
             goto run_install;
 
 
@@ -804,7 +804,7 @@ namespace install
 
          lpnodeType->remove_child(pnode);
 
-         file_put_contents_dup(dir::appdata(process_platform_dir_name2()) / "install.xml", node.get_xml(NULL));
+         file_put_contents_dup(dir::appdata() / "install.xml", node.get_xml(NULL));
 
       }
 

@@ -63,7 +63,7 @@ namespace ios
       
       string str = getenv("HOME");
       
-      ::file::path strRelative = ::dir::element();
+      ::file::path strRelative = ::dir::install();
       
       string strUserFolderShift;
       

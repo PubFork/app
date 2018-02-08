@@ -111,7 +111,7 @@ namespace fontopus
             || strApp == "app-gtech/sensible_service")
       {
          m_puser = Session.fontopus()->allocate_user();
-         m_puser->m_strPathPrefix = "system" + ::str::has_char(Application.handler()->m_varTopicQuery["systemid"],"-");
+//         m_puser->m_strPathPrefix = "system" + ::str::has_char(Application.handler()->m_varTopicQuery["systemid"],"-");
          m_puser->m_strLogin = system_user_1;
          return m_puser;
       }
@@ -120,7 +120,7 @@ namespace fontopus
               || handler()->has_property("uninstall"))
       {
          m_puser = Session.fontopus()->allocate_user();
-         m_puser->m_strPathPrefix = "system" + ::str::has_char(Application.handler()->m_varTopicQuery["systemid"],"-");
+         //       m_puser->m_strPathPrefix = "system" + ::str::has_char(Application.handler()->m_varTopicQuery["systemid"],"-");
          m_puser->m_strLogin = system_user_1;
          return m_puser;
       }
@@ -133,7 +133,7 @@ namespace fontopus
               || handler()->property("app") == "winservice_filesystemsize")
       {
          m_puser = Session.fontopus()->allocate_user();
-         m_puser->m_strPathPrefix = "system" + ::str::has_char(Application.handler()->m_varTopicQuery["systemid"],"-");
+//         m_puser->m_strPathPrefix = "system" + ::str::has_char(Application.handler()->m_varTopicQuery["systemid"],"-");
          m_puser->m_strLogin = system_user_2;
          return m_puser;
       }
@@ -1065,20 +1065,20 @@ namespace fontopus
 
       string strUsernamePrevious;
       string strPasshashPrevious;
-      Application.file().crypto_get(::dir::userappdata() / "license_auth/00001.data",strUsernamePrevious,"");
-      Application.file().crypto_get(::dir::userappdata() / "license_auth/00002.data",strPasshashPrevious,calc_key_hash());
+      Application.file().crypto_get(::dir::appdata() / "license_auth/00001.data",strUsernamePrevious,"");
+      Application.file().crypto_get(::dir::appdata() / "license_auth/00002.data",strPasshashPrevious,calc_key_hash());
 
       if((strUsername.has_char() && strPasshash.has_char())
             && (strUsernamePrevious != strUsername || strPasshashPrevious != strPasshash))
       {
-         Application.file().crypto_set(::dir::userappdata() / "license_auth/00001.data",strUsername,"");
-         Application.file().crypto_set(::dir::userappdata() / "license_auth/00002.data",strPasshash,calc_key_hash());
+         Application.file().crypto_set(::dir::appdata() / "license_auth/00001.data",strUsername,"");
+         Application.file().crypto_set(::dir::appdata() / "license_auth/00002.data",strPasshash,calc_key_hash());
          if(strPassword.has_char())
          {
             string strSalt = System.crypto().v5_get_password_salt();
-            Application.file().crypto_set(::dir::userappdata() / "license_auth/00005.data",strSalt,calc_key_hash());
+            Application.file().crypto_set(::dir::appdata() / "license_auth/00005.data",strSalt,calc_key_hash());
             string strPasshash2 = System.crypto().v5_get_password_hash(strSalt,strPassword);
-            Application.file().crypto_set(::dir::userappdata() / "license_auth/00010.data",strPasshash2,calc_key_hash());
+            Application.file().crypto_set(::dir::appdata() / "license_auth/00010.data",strPasshash2,calc_key_hash());
          }
       }
       if(m_loginthread.m_strLicense.has_char())
@@ -1086,7 +1086,7 @@ namespace fontopus
          stringa straLicense;
          straLicense.add(m_loginthread.m_strValidUntil);
          straLicense.add(System.datetime().international().get_gmt_date_time());
-         Application.file().crypto_set(::dir::userappdata() / "license_auth" / m_loginthread.m_strLicense + ".data",straLicense.implode(";"),calc_ca2_hash());
+         Application.file().crypto_set(::dir::appdata() / "license_auth" / m_loginthread.m_strLicense + ".data",straLicense.implode(";"),calc_ca2_hash());
       }
       m_bLicense = true;
       m_puser = m_loginthread.m_puser;
@@ -1156,14 +1156,14 @@ namespace fontopus
             pageMessage({"err\\user\\authentication\\wrong_fontopus_login.html"},propertyset);
             try
             {
-               Application.file().del(::dir::userappdata() / "license_auth/00001.data");
+               Application.file().del(::dir::appdata() / "license_auth/00001.data");
             }
             catch(...)
             {
             }
             try
             {
-               Application.file().del(::dir::userappdata() / "license_auth/00002.data");
+               Application.file().del(::dir::appdata() / "license_auth/00002.data");
             }
             catch(...)
             {

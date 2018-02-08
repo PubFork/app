@@ -12,9 +12,9 @@ namespace install
       m_strLabel(strLabel)
    {
 
-      dir::mk(dir::element().c_str());
+      dir::mk(dir::install().c_str());
 
-      ::file::path path = dir::element() / ("install-" + strLabel + ".log");
+      ::file::path path = dir::install() / ("install-" + strLabel + ".log");
 
       m_pfile = Application.file().get_file(path, ::file::type_binary | ::file::mode_write | ::file::mode_create | ::file::share_deny_write);
 

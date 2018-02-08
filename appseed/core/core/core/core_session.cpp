@@ -573,7 +573,7 @@ namespace core
 
       string strSentinelPath;
 
-      strSentinelPath = System.dir().element() / "stage/x86/app.sentinel.exe";
+      strSentinelPath = System.dir().install() / "stage/x86/app.sentinel.exe";
 
       System.os().local_machine_set_run("core app.sentinel", "\"" + strSentinelPath + "\"", true);
 

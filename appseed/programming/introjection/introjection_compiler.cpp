@@ -111,7 +111,7 @@ namespace introjection
       m_strDynamicSourceStage = "profiler";
 
 #endif
-      m_strDynamicSourceStageFolder = System.dir().element() / m_strDynamicSourceStage;
+      m_strDynamicSourceStageFolder = System.dir().install() / m_strDynamicSourceStage;
 
 
    }
@@ -192,7 +192,7 @@ namespace introjection
 
       }
 
-      m_strTime = System.dir().element() / "time";
+      m_strTime = System.dir().install() / "time";
 
       //m_strEnv = "C:\\Program Files\\Microsoft SDKs\\Windows\\v7.1\\Bin\\SetEnv.cmd";
 
@@ -251,17 +251,17 @@ namespace introjection
       //prepare1(m_strDynamicSourceConfiguration  + "_libl" + m_strPlat1 + ".bat",
       //   m_strDynamicSourceConfiguration  + "_libl" + m_strPlat1 + ".bat");
 #endif
-      System.dir().mk(System.dir().element() / m_strDynamicSourceStage / "front",get_app());
+      System.dir().mk(System.dir().install() / m_strDynamicSourceStage / "front",get_app());
 
       //#ifdef WINDOWS
       //      string vars1batSrc;
       //      string vars2batSrc;
       //      string vars1batDst;
       //      string vars2batDst;
-      //      vars1batSrc = System.dir().element()/"nodeapp/stage/introjection/vc_vars.bat";
-      //      vars2batSrc = System.dir().element()/"nodeapp/stage/introjection/vc_vars_query_registry.bat";
-      //      vars1batDst = System.dir().element()/ m_strDynamicSourceStage / "front"/"vc_vars.bat";
-      //      vars2batDst = System.dir().element()/m_strDynamicSourceStage /"front"/"vc_vars_query_registry.bat";
+      //      vars1batSrc = System.dir().install()/"nodeapp/stage/introjection/vc_vars.bat";
+      //      vars2batSrc = System.dir().install()/"nodeapp/stage/introjection/vc_vars_query_registry.bat";
+      //      vars1batDst = System.dir().install()/ m_strDynamicSourceStage / "front"/"vc_vars.bat";
+      //      vars2batDst = System.dir().install()/m_strDynamicSourceStage /"front"/"vc_vars_query_registry.bat";
       //      try
       //      {
       //         Application.file().copy(vars1batDst, vars1batSrc, false);
@@ -297,10 +297,10 @@ namespace introjection
       string str;
       string strItem;
 
-      strItem = System.dir().element() / m_strDynamicSourceStage / m_strStagePlatform;
+      strItem = System.dir().install() / m_strDynamicSourceStage / m_strStagePlatform;
       str = str + strItem + ";";
 
-      strItem = System.dir().element() / m_strDynamicSourceStage / m_strStagePlatform / "introjection\\library";
+      strItem = System.dir().install() / m_strDynamicSourceStage / m_strStagePlatform / "introjection\\library";
       str = str + strItem + ";";
 #ifdef WINDOWSEX
       uint32_t dwSize = GetEnvironmentVariable("PATH",NULL,0);
@@ -398,7 +398,7 @@ namespace introjection
 #endif
 
       ::file::path strFolder;
-      strFolder = System.dir().element();
+      strFolder = System.dir().install();
       if(!::str::ends(strFolder,"/") && !::str::ends(strFolder,"\\"))
          strFolder += "/";
       string strTemplate;
@@ -425,7 +425,7 @@ namespace introjection
       str.replace("%VS_VARS%",m_strEnv);
       str.replace("%VS_VARS_PLAT2%",m_strPlat2);
 
-      string strV(System.dir().element());
+      string strV(System.dir().install());
       strV.replace("\\","/");
       if(!::str::ends(strV,"/") && !::str::ends(strV,"\\"))
          strV += "/";
@@ -556,7 +556,7 @@ namespace introjection
 
       //strName.replace("/", "\\");
       //string strFolder;
-      //strFolder = System.dir().element();
+      //strFolder = System.dir().install();
       //::file::path strB;
       ::file::path strO;
       ::file::path strP;
@@ -638,7 +638,7 @@ namespace introjection
       //lib->m_strBuildBat = strB;
       //m_pathScript = m_pmanager->get_script_path(strName);
       //#else
-      // lib->m_strLibraryPath.Format(System.dir().element(m_strDynamicSourceStage /" Release\\%s.dll"), strName);
+      // lib->m_strLibraryPath.Format(System.dir().install(m_strDynamicSourceStage /" Release\\%s.dll"), strName);
       //#endif
 
       try
@@ -863,7 +863,7 @@ namespace introjection
       Application.dir().mk(strL.folder());
       Application.dir().mk(m_strTime / "intermediate" / m_strPlatform / m_strDynamicSourceConfiguration / m_strApp / strTransformName);
 
-      //string strV(System.dir().element());
+      //string strV(System.dir().install());
       //strV.replace("\\","/");
       //if(!::str::ends(strV,"/") && !::str::ends(strV,"\\"))
       //   strV += "/";
@@ -877,11 +877,11 @@ namespace introjection
       string strBuildCmd;
 
 #ifdef LINUX
-      strBuildCmd = System.dir().element() / "nodeapp/stage/introjection" / m_strApp / (m_strDynamicSourceConfiguration + "_c" + m_strPlat1 + ".bash");
+      strBuildCmd = System.dir().install() / "nodeapp/stage/introjection" / m_strApp / (m_strDynamicSourceConfiguration + "_c" + m_strPlat1 + ".bash");
 #elif defined(__APPLE__)
-      strBuildCmd.Format(System.dir().element() / "nodeapp/stage/introjection" / m_strApp / (m_strDynamicSourceConfiguration + "_c" + m_strPlat1 + ".bat"));
+      strBuildCmd.Format(System.dir().install() / "nodeapp/stage/introjection" / m_strApp / (m_strDynamicSourceConfiguration + "_c" + m_strPlat1 + ".bat"));
 #else
-      strBuildCmd.Format(System.dir().element() / "nodeapp/stage/introjection" / m_strApp / m_strVsTools / (m_strDynamicSourceConfiguration + "_c" + m_strPlat1 + ".bat"));
+      strBuildCmd.Format(System.dir().install() / "nodeapp/stage/introjection" / m_strApp / m_strVsTools / (m_strDynamicSourceConfiguration + "_c" + m_strPlat1 + ".bat"));
 #endif
 
       str = Application.file().as_string(strBuildCmd);
@@ -893,7 +893,7 @@ namespace introjection
       str.replace("%VS_VARS%",m_strEnv);
       str.replace("%VS_VARS_PLAT2%",m_strPlat2);
 
-      string strElem = System.dir().element();
+      string strElem = System.dir().install();
 
       strElem.replace("\\","/");
 
@@ -920,11 +920,11 @@ namespace introjection
       strT2.replace("/",".");
       strT2.replace(":","_");
 #ifdef LINUX
-      string strTargetPath =  System.dir().element() /"time" / m_strPlatform / m_strDynamicSourceConfiguration / lib->m_pathScript.title();
+      string strTargetPath =  System.dir().install() /"time" / m_strPlatform / m_strDynamicSourceConfiguration / lib->m_pathScript.title();
       ::str::ends_eat_ci(strTargetPath,".cpp");
       ::str::ends_eat_ci(strTargetPath,".so");
 #else
-      string strTargetPath = System.dir().element() / "time" / m_strPlatform / m_strDynamicSourceConfiguration / strT2 ;
+      string strTargetPath = System.dir().install() / "time" / m_strPlatform / m_strDynamicSourceConfiguration / strT2 ;
       ::str::ends_eat_ci(strTargetPath, ".cpp");
       ::str::ends_eat_ci(strTargetPath,".dll");
 #endif
@@ -1075,9 +1075,9 @@ namespace introjection
 #ifndef MACOS
 
 #ifdef LINUX
-         strBuildCmd.Format(System.dir().element() / "nodeapp\\stage\\introjection" / m_strApp / (m_strDynamicSourceConfiguration + "_l" + m_strPlat1 + ".bash"));
+         strBuildCmd.Format(System.dir().install() / "nodeapp\\stage\\introjection" / m_strApp / (m_strDynamicSourceConfiguration + "_l" + m_strPlat1 + ".bash"));
 #else
-         strBuildCmd.Format(System.dir().element() / "nodeapp\\stage\\introjection" / m_strApp / m_strVsTools / (m_strDynamicSourceConfiguration + "_l" + m_strPlat1 + ".bat"));
+         strBuildCmd.Format(System.dir().install() / "nodeapp\\stage\\introjection" / m_strApp / m_strVsTools / (m_strDynamicSourceConfiguration + "_l" + m_strPlat1 + ".bat"));
 #endif
 
          str = Application.file().as_string(strBuildCmd);
@@ -1108,7 +1108,7 @@ namespace introjection
          //#else
          //         ::str::ends_eat_ci(strTargetPath,".dll");
          //#endif
-         //         strTargetPath = System.dir().element() /
+         //         strTargetPath = System.dir().install() /
          str.replace("%TARGET_PATH%",strTargetPath);
          //strBuildCmd = lib->m_strBuildBat;
          //Application.file().put_contents_utf8(strBuildCmd, str);

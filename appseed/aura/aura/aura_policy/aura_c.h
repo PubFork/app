@@ -1,4 +1,4 @@
-/////////////////////////////////////////////////////////////////////////////////////////
+﻿/////////////////////////////////////////////////////////////////////////////////////////
 //
 //   All Pure and Aural ca2 and God and Gods and Goddssesses and devils's blessings
 //
@@ -133,8 +133,8 @@ inline int type_is_null(const T * p)
 
 #include "aura/primitive/math/math_mkint_c.h"
 
-           // C-includes
-           #include "aura/aura/os/os.h"
+       // C-includes
+       //#include "aura/aura/os/os.h"
 
 
 #undef MIN
@@ -181,7 +181,7 @@ inline int type_is_null(const T * p)
 #define GET_Y_LPARAM64(lp)                        ((int32_t)(int16_t)HIDWORD(lp))
 
 
-CLASS_DECL_AURA int get_aura_init();
+       CLASS_DECL_AURA int get_aura_init();
 CLASS_DECL_AURA int_bool defer_aura_init();
 CLASS_DECL_AURA int_bool defer_aura_term();
 
@@ -204,7 +204,42 @@ CLASS_DECL_AURA void ansi_unlink(const char * psz);
 
 //CLASS_DECL_AURA int module_name_get_count(const char * pszModuleName);
 
+
+CLASS_DECL_AURA DWORD get_last_error();
+CLASS_DECL_AURA void set_last_error(DWORD dw);
+
+int32_t
+CLASS_DECL_AURA
+MultiByteToWideChar2(
+UINT     CodePage,
+DWORD    dwFlags,
+LPCSTR   lpMultiByteStr,
+int32_t      cbMultiByte,
+LPWSTR  lpWideCharStr,
+int32_t      cchWideChar);
+
+//xxx linux WINAXISAPI
+int32_t
+CLASS_DECL_AURA
+WideCharToMultiByte2(
+UINT     CodePage,
+DWORD    dwFlags,
+LPCWSTR  lpWideCharStr,
+int32_t      cchWideChar,
+LPSTR   lpMultiByteStr,
+int32_t      cbMultiByte,
+LPCSTR   lpDefaultChar,
+LPBOOL  lpUsedDefaultChar);
+
+
 END_EXTERN_C
+int ftruncate(int file, file_size_t len);
+
+CLASS_DECL_AURA int32_t get_os_thread_priority(int32_t iCa2Priority);
+CLASS_DECL_AURA int32_t get_os_priority_class(int32_t iCa2Priority);
+CLASS_DECL_AURA int32_t get_os_thread_scheduling_priority(int32_t iCa2Priority);
+CLASS_DECL_AURA int32_t get_os_class_scheduling_priority(int32_t iCa2Priority);
+
 
 
 

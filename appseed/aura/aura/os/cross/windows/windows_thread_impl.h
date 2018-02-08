@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 CLASS_DECL_AURA IDTHREAD get_current_thread_id();
@@ -12,7 +12,8 @@ class CLASS_DECL_AURA message_array:
 };
 
 
-class CLASS_DECL_AURA mq{
+class CLASS_DECL_AURA mq
+{
 public:
 
 
@@ -49,28 +50,3 @@ void __node_init_cross_windows_threading();
 void __node_term_cross_windows_threading();
 
 
-class CLASS_DECL_AURA thread_data
-{
-public:
-
-
-#if defined(_POSIX_THREADS) || defined(LINUX)
-
-   pthread_key_t        m_key;
-
-#else
-
-   DWORD                m_dwIndex;
-
-#endif
-
-
-   thread_data();
-   ~thread_data();
-
-
-   void * get();
-   void set(void * p);
-
-
-};

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace zip
@@ -38,21 +38,23 @@ namespace file
          virtual ::file::path matter_file(const ::file::path & path,bool bDir = false);
          virtual void   matter_ls_file(const ::file::path & str,::file::patha & stra);
 
-         virtual ::file::path usersystemappdata(const string & lpcszPrefix);
-         virtual ::file::path userappdata();
-         virtual ::file::path userdata();
-         virtual ::file::path userfolder();
-         virtual ::file::path default_os_user_path_prefix();
-         virtual ::file::path default_userappdata(const string & lpcszPrefix, const string & lpcszLogin );
-         virtual ::file::path default_userdata(const string & lpcszPrefix, const string & lpcszLogin);
-         virtual ::file::path default_userfolder(const string & lpcszPrefix, const string & lpcszLogin);
+         //virtual ::file::path usersystemappdata(const string & lpcszPrefix);
+         //virtual ::file::path userappdata();
+         //virtual ::file::path userdata();
+         //virtual ::file::path userfolder();
+         //virtual ::file::path default_os_user_path_prefix();
+         //virtual ::file::path default_userappdata(const string & lpcszPrefix, const string & lpcszLogin );
+         //virtual ::file::path default_userdata(const string & lpcszPrefix, const string & lpcszLogin);
+         //virtual ::file::path default_userfolder(const string & lpcszPrefix, const string & lpcszLogin);
+
+
          virtual ::file::path userquicklaunch();
          virtual ::file::path userprograms();
 
-         
+
          virtual listing & ls(listing & listing);
          virtual listing & ls_relative_name(listing & listing);
-         
+
 
          virtual bool  has_subdir(const ::file::path & lpcsz);
          virtual bool  is(const ::file::path & lpcsz);
@@ -66,7 +68,7 @@ namespace file
 
          virtual ::file::path pathfind(const string & pszEnv,const string & pszTopic,const string & pszMode);
 
-         
+
 
 
       };

@@ -2549,7 +2549,7 @@ namespace user
 
       windowing_output_debug_string("\n_001UpdateBuffer : before draw2d::lock");
 
-      ::draw2d::lock draw2dlock;
+//      ::draw2d::lock draw2dlock;
 
       windowing_output_debug_string("\n_001UpdateBuffer : D");
 

@@ -1064,7 +1064,7 @@ namespace aura
 
       pathDir = path.folder();
 
-      ::file::path pathAppDataDir(::dir::root());
+      ::file::path pathAppDataDir(::dir::ca2config());
 
       ::file::path pathProfile;
 
@@ -1098,92 +1098,92 @@ namespace aura
 
          pathProfile = pathAppDataDir / strBrowserProfile / "Profile" / strProfile;
 
-#ifdef WINDOWSEX
-
-         open_browser_enum e;
-
-         if (strId == "chrome" || strId == "commander")
-         {
-
-            e.m_strTopic = " - Google Chrome";
-
-            e.m_strCounterTopic = " - Google Chrome";
-
-         }
-         else if (strId == "vivaldi")
-         {
-
-         }
-         else
-         {
-
-         }
-
-         e.m_hwndaTopic.remove_all();
-
-         ::EnumWindows(&enum_proc_ff_topic, (LPARAM)&e);
-
-         bFound = false;
-
-         if (e.m_hwndaTopic.has_elements())
-         {
-
-            for (auto w : e.m_hwndaTopic)
-            {
-
-               DWORD dwPid = 0;
-
-               ::GetWindowThreadProcessId(w, &dwPid);
-
-               if (dwPid != 0)
-               {
-
-                  HANDLE h = OpenProcess(PROCESS_ALL_ACCESS, TRUE, dwPid);
-
-                  if (h != INVALID_HANDLE_VALUE)
-                  {
-
-                     string strCmd = get_command_line(h);
-
-                     if (strCmd.contains_ci(strProfile))
-                     {
-
-                        bFound = true;
-
-                        ShowWindow(w, SW_SHOWNORMAL);
-
-                        ::SetWindowPos(w, HWND_TOP, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE);
-
-                        ::BringWindowToTop(w);
-
-                        ::SetForegroundWindow(w);
-
-                        if (strUrl.has_char())
-                        {
-
-                           var var;
-
-                           var["action"] = "open_url";
-
-                           var["url"] = strUrl;
-
-                           Application.file().put_contents(::dir::system() / strProfile + "-request.json", var.get_json());
-
-                        }
-
-                     }
-
-                  }
-
-                  ::CloseHandle(h);
-
-               }
-
-            }
-
-         }
-
-#endif
+//#ifdef WINDOWSEX
+//
+//         open_browser_enum e;
+//
+//         if (strId == "chrome" || strId == "commander")
+//         {
+//
+//            e.m_strTopic = " - Google Chrome";
+//
+//            e.m_strCounterTopic = " - Google Chrome";
+//
+//         }
+//         else if (strId == "vivaldi")
+//         {
+//
+//         }
+//         else
+//         {
+//
+//         }
+//
+//         e.m_hwndaTopic.remove_all();
+//
+//         ::EnumWindows(&enum_proc_ff_topic, (LPARAM)&e);
+//
+//         bFound = false;
+//
+//         if (e.m_hwndaTopic.has_elements())
+//         {
+//
+//            for (auto w : e.m_hwndaTopic)
+//            {
+//
+//               DWORD dwPid = 0;
+//
+//               ::GetWindowThreadProcessId(w, &dwPid);
+//
+//               if (dwPid != 0)
+//               {
+//
+//                  HANDLE h = OpenProcess(PROCESS_ALL_ACCESS, TRUE, dwPid);
+//
+//                  if (h != INVALID_HANDLE_VALUE)
+//                  {
+//
+//                     string strCmd = get_command_line(h);
+//
+//                     if (strCmd.contains_ci(strProfile))
+//                     {
+//
+//                        bFound = true;
+//
+//                        ShowWindow(w, SW_SHOWNORMAL);
+//
+//                        ::SetWindowPos(w, HWND_TOP, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE);
+//
+//                        ::BringWindowToTop(w);
+//
+//                        ::SetForegroundWindow(w);
+//
+//                        if (strUrl.has_char())
+//                        {
+//
+//                           var var;
+//
+//                           var["action"] = "open_url";
+//
+//                           var["url"] = strUrl;
+//
+//                           Application.file().put_contents(::dir::system() / strProfile + "-request.json", var.get_json());
+//
+//                        }
+//
+//                     }
+//
+//                  }
+//
+//                  ::CloseHandle(h);
+//
+//               }
+//
+//            }
+//
+//         }
+//
+//#endif
 
          if (!bFound)
          {
@@ -1630,52 +1630,52 @@ namespace aura
 
       e.m_hwndaTopic.remove_all();
 
-      ::EnumWindows(&enum_proc_ff_topic, (LPARAM)&e);
+      //::EnumWindows(&enum_proc_ff_topic, (LPARAM)&e);
 
-      if (e.m_hwndaTopic.has_elements())
-      {
+      //if (e.m_hwndaTopic.has_elements())
+      //{
 
-         for (auto w : e.m_hwndaTopic)
-         {
+      //   for (auto w : e.m_hwndaTopic)
+      //   {
 
-            DWORD dwPid = 0;
+      //      DWORD dwPid = 0;
 
-            ::GetWindowThreadProcessId(w, &dwPid);
+      //      ::GetWindowThreadProcessId(w, &dwPid);
 
-            if (dwPid != 0)
-            {
+      //      if (dwPid != 0)
+      //      {
 
-               HANDLE h = OpenProcess(PROCESS_ALL_ACCESS, TRUE, dwPid);
+      //         HANDLE h = OpenProcess(PROCESS_ALL_ACCESS, TRUE, dwPid);
 
-               if (h != INVALID_HANDLE_VALUE)
-               {
+      //         if (h != INVALID_HANDLE_VALUE)
+      //         {
 
-                  string strCmd = get_command_line(h);
+      //            string strCmd = get_command_line(h);
 
-                  if (strCmd.contains_ci(strProfile))
-                  {
+      //            if (strCmd.contains_ci(strProfile))
+      //            {
 
-                     bFound = true;
+      //               bFound = true;
 
-                     ShowWindow(w, SW_SHOW);
+      //               ShowWindow(w, SW_SHOW);
 
-                     ::SetWindowPos(w, HWND_TOP, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE);
+      //               ::SetWindowPos(w, HWND_TOP, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE);
 
-                     ::BringWindowToTop(w);
+      //               ::BringWindowToTop(w);
 
-                     ::SetForegroundWindow(w);
+      //               ::SetForegroundWindow(w);
 
-                  }
+      //            }
 
-               }
+      //         }
 
-               ::CloseHandle(h);
+      //         ::CloseHandle(h);
 
-            }
+      //      }
 
-         }
+      //   }
 
-      }
+      //}
 
 #endif
 
@@ -5018,7 +5018,7 @@ retry_license:
 
       {
 
-         ::file::file_sp file = this->file().get_file(Application.dir().userappdata() / strPath, ::file::mode_read);
+         ::file::file_sp file = this->file().get_file(System.dir().appdata() / "gudo" / strPath, ::file::mode_read);
 
          if (file.is_null())
          {
@@ -5059,7 +5059,7 @@ retry_license:
 
       {
 
-         ::file::file_sp file = this->file().get_file(Application.dir().userappdata() / strPath, ::file::mode_write | ::file::mode_create | ::file::defer_create_directory);
+         ::file::file_sp file = this->file().get_file(System.dir().appdata() / "gudo" / strPath, ::file::mode_write | ::file::mode_create | ::file::defer_create_directory);
 
          if (file.is_null())
          {
@@ -6223,7 +6223,7 @@ retry_license:
 
          synch_lock sl(m_pmutex);
 
-         file().add_contents(dir().userappdata() / (System.file().module().sname() + "_log_error.txt"), strMessage);
+         file().add_contents(System.dir().appdata() / (System.file().module().sname() + "_log_error.txt"), strMessage);
 
       }
 
@@ -6251,7 +6251,7 @@ retry_license:
    void application::show_critical_error_log()
    {
 
-      string strFile = dir().userappdata() / (System.file().module().sname() + "_log_error.txt");
+      string strFile = System.dir().appdata() / (System.file().module().sname() + "_log_error.txt");
 
 #ifdef METROWIN
 

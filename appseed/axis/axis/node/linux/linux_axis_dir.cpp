@@ -507,7 +507,7 @@ namespace linux
    //}
 
    //// stage in ca2os spalib
-   //string dir::element(const char * lpcsz, const char * lpcsz2)
+   //string dir::install(const char * lpcsz, const char * lpcsz2)
    //{
    //
    //   single_lock sl(&m_mutex, true);
@@ -516,7 +516,7 @@ namespace linux
 
    //}
 
-   //string dir::element(const string & str, const char * lpcsz2)
+   //string dir::install(const string & str, const char * lpcsz2)
    //{
    //
    //   single_lock sl(&m_mutex, true);
@@ -525,7 +525,7 @@ namespace linux
 
    //}
 
-   //string dir::element(const char * lpcsz, const string & str2)
+   //string dir::install(const char * lpcsz, const string & str2)
    //{
    //
    //   single_lock sl(&m_mutex, true);
@@ -534,7 +534,7 @@ namespace linux
 
    //}
 
-   //string dir::element(const string & str, const string & str2)
+   //string dir::install(const string & str, const string & str2)
    //{
    //
    //   single_lock sl(&m_mutex, true);
@@ -543,7 +543,7 @@ namespace linux
 
    //}
 
-   //string dir::element(const string & str)
+   //string dir::install(const string & str)
    //{
    //
    //   single_lock sl(&m_mutex, true);
@@ -552,7 +552,7 @@ namespace linux
 
    //}
 
-   //string dir::element()
+   //string dir::install()
    //{
    //
    //   single_lock sl(&m_mutex, true);
@@ -935,7 +935,7 @@ namespace linux
 //      return path(appdata(lpcszPrefix), lpcsz, lpcsz2);
 //   }
 //
-//   string dir::userappdata(::aura::application * papp, const char * lpcsz, const char * lpcsz2)
+//   string dir::appdata(::aura::application * papp, const char * lpcsz, const char * lpcsz2)
 //   {
 //      return path(userfolder(papp, "appdata"), lpcsz, lpcsz2);
 //   }

@@ -2744,6 +2744,12 @@
     <ClInclude Include="primitive\collection\collection_pointer_array.h">
       <Filter>Header Files\primitive\collection</Filter>
     </ClInclude>
+    <ClInclude Include="filesystem\file\file_cpp.h">
+      <Filter>Header Files\filesystem\file</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\windows_common\windows_common_graphics.h">
+      <Filter>Header Files\aura\os\windows_common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="multithreading\multithreading_condition.cpp">
@@ -4812,6 +4818,9 @@
     </ClCompile>
     <ClCompile Include="net\sockets\bsd\basic\sockets_ssl_context.cpp">
       <Filter>Source Files\net\sockets\bsd\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows_common\windows_common_graphics.cpp">
+      <Filter>Source Files\aura\os\windows_common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

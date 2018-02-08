@@ -869,7 +869,7 @@ inline void delptr(t *& p)
 
 
 // C-includes
-#include "aura/aura/os/os.h"
+//#include "aura/aura/os/os.h"
 
 
 
@@ -997,6 +997,8 @@ inline void dump_elements(dump_context & dumpcontext, const TYPE* pElements, ::c
 #include "aura/filesystem/filesystem/filesystem_path.h"
 
 
+
+#include "aura/filesystem/file/file_cpp.h"
 
 
 
@@ -1138,7 +1140,7 @@ namespace aura
 
 
 class CLASS_DECL_AURA openweather_city :
-      virtual public mini_object
+   virtual public mini_object
 {
 public:
 
@@ -1710,7 +1712,7 @@ inline void string_format::format(const char * & s,const T & value,Args... args)
 
 
 // C++ includes
-#include "aura/aura/os/os_os.h"
+//#include "aura/aura/os/os_os.h"
 
 
 

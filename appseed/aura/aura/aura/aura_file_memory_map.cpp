@@ -45,7 +45,7 @@ file_memory_map::~file_memory_map()
 string file_memory_map::get_path()
 {
 
-   //return dir::path(dir::userappdata("time"),m_strName);
+   //return dir::path(dir::appdata("time"),m_strName);
 
    return m_strName;
 

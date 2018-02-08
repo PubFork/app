@@ -1,6 +1,11 @@
-#include "framework.h" // from "base/user/user.h"
+﻿#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
+#ifdef WINDOWSEX
+
+CLASS_DECL_AURA void attach_thread_input_to_main_thread(bool bAttach);
+
+#endif
 
 #define SIZEX 584
 #define SIZEY 384
@@ -60,12 +65,12 @@ namespace simple_ui
       tapa.add(ptap);
 
    }
-   
+
    void message_box::on_select_user_style()
    {
-      
+
       m_puserstyle = this;
-      
+
    }
 
    int32_t message_box::show()
@@ -513,7 +518,7 @@ int32_t simple_ui_message_box(oswindow interaction_impl,const char * lpText,cons
 #endif
 
 //   if(get_app() == NULL || get_app()->m_pbasesession == NULL
-  //    || &System == NULL || System.get_twf() == NULL)
+   //    || &System == NULL || System.get_twf() == NULL)
    if(get_app() == NULL || get_app()->m_paxissession == NULL || ::user::g_pmapImpl == NULL)
    {
 
@@ -538,7 +543,7 @@ int32_t simple_ui_message_box(oswindow interaction_impl,const char * lpText,cons
          //while(!pmessagebox->m_evReady.wait(millis(23)).signaled())
          //{
 
-           // get_app()->defer_pump_message();
+         // get_app()->defer_pump_message();
 
          //}
 

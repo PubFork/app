@@ -1,4 +1,4 @@
-/**
+﻿/**
 	Copyright (c) 2009 James Wynn (james@jameswynn.com)
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,7 +23,7 @@
 
 
 #if defined(WINDOWSEX)
-//#include "aura/os/windows/windows_file_watcher.h"
+#include "aura/os/windows/windows_file_watcher.h"
 #elif defined(MACOS)
 #include "aura/os/macos/macos_file_watcher.h"
 #elif defined(LINUX)
@@ -39,19 +39,19 @@ namespace file_watcher
 {
 
 
-	file_watcher::file_watcher(::aura::application * papp) :
+   file_watcher::file_watcher(::aura::application * papp) :
       ::object(papp)
-	{
+   {
 
       m_bUpdating = false;
 
-		m_pimpl = new os_file_watcher(papp);
+      m_pimpl = new os_file_watcher(papp);
 
-	}
+   }
 
 
-	file_watcher::~file_watcher()
-	{
+   file_watcher::~file_watcher()
+   {
 
       if(m_pimpl != NULL)
       {
@@ -62,39 +62,39 @@ namespace file_watcher
 
       }
 
-	}
+   }
 
 
    file_watch_id file_watcher::add_watch(const char * directory, file_watch_listener * pwatcher, bool bRecursive, bool bOwn)
-	{
+   {
 
       return m_pimpl->add_watch(directory, pwatcher, bRecursive, bOwn);
 
-	}
+   }
 
-	void file_watcher::remove_watch(const char * directory)
-	{
+   void file_watcher::remove_watch(const char * directory)
+   {
 
-		m_pimpl->remove_watch(directory);
+      m_pimpl->remove_watch(directory);
 
-	}
+   }
 
-	void file_watcher::remove_watch(file_watch_id id)
-	{
+   void file_watcher::remove_watch(file_watch_id id)
+   {
 
-		m_pimpl->remove_watch(id);
+      m_pimpl->remove_watch(id);
 
-	}
-   
-   
+   }
+
+
    bool file_watcher::update()
-	{
+   {
 
       keep_true updating(m_bUpdating);
 
       return m_pimpl->update();
 
-	}
+   }
 
 
 //   void file_watcher_pool::install_message_routing(::message::sender * psender)
@@ -119,7 +119,7 @@ namespace file_watcher
 //
 //   void file_watcher_pool::_001OnApp1000(::message::message * pobj)
 //   {
-//      
+//
 //      SCAST_PTR(::message::base, pbase, pobj);
 //
 //

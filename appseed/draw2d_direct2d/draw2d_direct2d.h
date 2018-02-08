@@ -2,6 +2,7 @@
 
 
 #include "aura/aura/aura/aura.h"
+#include "aura/aura/os/windows_common/windows_common_graphics.h"
 
 
 #undef new

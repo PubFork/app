@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 inline lparam::lparam(::object * p)
@@ -69,15 +69,15 @@ inline void __cdecl operator delete(void * p, void * palloc) del_throw_spec
 
 class CLASS_DECL_AURA c_class
 {
-   public:
+public:
 
 
-      static c_class s_cclass;
+   static c_class s_cclass;
 
 
-      c_class();
-      c_class(const c_class &);
-      virtual ~c_class();
+   c_class();
+   c_class(const c_class &);
+   virtual ~c_class();
 
 
 };
@@ -430,11 +430,11 @@ namespace message
       sp(type) ptypeReceiver = System.type_info < RECEIVER >();
 
       if (m_idroute[id].pred_find_first([=](auto & proute)
-      {
+   {
 
-         return proute->m_pobjectReceiver == pobjectReceiver && proute->m_ptypeReceiver == ptypeReceiver;
+      return proute->m_pobjectReceiver == pobjectReceiver && proute->m_ptypeReceiver == ptypeReceiver;
 
-      }) >= 0)
+   }) >= 0)
       {
 
          return;
@@ -472,4 +472,18 @@ namespace message
 } // namespace message
 
 
+namespace heap
+{
+
+
+   template < typename T >
+   string & heap < T > ::to_string(string & str) const
+   {
+
+      return str = this->operator const T *();
+
+   }
+
+
+} // namespace heap
 

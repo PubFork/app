@@ -268,7 +268,7 @@ retry_host:
 
          ::xml::document nodeInstall(get_app());
 
-         nodeInstall.load(file_as_string_dup(dir::appdata(process_platform_dir_name2()) / "install.xml"));
+         nodeInstall.load(file_as_string_dup(dir::appdata() / "install.xml"));
 
          ::xml::node * lpnodeVersion = nodeInstall.get_child(System.get_system_configuration());
 
@@ -834,7 +834,7 @@ retry_host:
 
          m_iGzLen2 = 0;
 
-         dir::afterca2() / "time/bz";
+         dir::install() / "time/bz";
 
          for (auto strCurrent : straExpandFileSet)
          {
@@ -1071,7 +1071,7 @@ retry_host:
 
       string dir2;
 
-      dir = dir::element();
+      dir = dir::install();
 
       if (dir.substr(dir.size() - 1, 1) != "\\")
       {
@@ -1207,7 +1207,7 @@ retry_host:
 
       string dir3;
 
-      dir = dir::element();
+      dir = dir::install();
 
       if (dir.substr(dir.size() - 1, 1) != "\\")
       {
@@ -1445,7 +1445,7 @@ retry_host:
 
       string file;
 
-      path = dir::element();
+      path = dir::install();
 
       ::str::begins_eat_ci(url_in, m_pathBaseUrl);
 
@@ -1459,7 +1459,7 @@ retry_host:
    ::file::path installer::ca2bz_get_dir(LPCSTR lpcszUrl)
    {
 
-      return (::dir::afterca2() / "time/bz" / lpcszUrl).folder();
+      return (::dir::install() / "time/bz" / lpcszUrl).folder();
 
    }
 
@@ -1475,7 +1475,7 @@ retry_host:
 
       string file;
 
-      dir = dir::afterca2() / "time/unbz";
+      dir = dir::install() / "time/unbz";
 
       ::str::begins_eat_ci(url_in, m_pathBaseUrl);
 
@@ -1493,7 +1493,7 @@ retry_host:
 
       ::file::path path;
 
-      path = ::dir::afterca2() / str;
+      path = ::dir::install() / str;
 
       return path.folder();
 
@@ -2140,7 +2140,7 @@ retry_host:
       if (strExec.substr(0, 15) == "install_service")
       {
          string strStage;
-         strStage = dir::element() / strExec.substr(16);
+         strStage = dir::install() / strExec.substr(16);
 
 #ifdef METROWIN
 
@@ -2165,7 +2165,7 @@ retry_host:
          string str2 = strExec.substr(11);
          index iPos = str2.find(" ");
          string str3 = str2.substr(iPos + 1);
-         strStage = dir::element() / str3;
+         strStage = dir::install() / str3;
 
 #ifdef METROWIN
 
@@ -2436,7 +2436,7 @@ RetryBuildNumber:
 
       string strBuildPath;
 
-      strBuildPath = System.dir().element_commonappdata(::dir::element()) / "spa_build_" + System.get_system_platform() + ".txt";
+      strBuildPath = System.dir().element_commonappdata(::dir::install()) / "spa_build_" + System.get_system_platform() + ".txt";
 
       // using a guess for build number (the latest installed one)
       {
@@ -2867,7 +2867,7 @@ retry_host:
    void installer::add_spa_start(const char * pszId)
    {
 
-      string strPath = dir::appdata(process_platform_dir_name2()) / "spa_start.xml";
+      string strPath = dir::appdata() / "spa_start.xml";
 
       string strContents = file_as_string_dup(strPath);
 
@@ -2896,7 +2896,7 @@ retry_host:
    void installer::remove_spa_start(const char * pszId)
    {
 
-      string strPath = dir::appdata(process_platform_dir_name2()) / "spa_start.xml";
+      string strPath = dir::appdata() / "spa_start.xml";
 
       string strContents = file_as_string_dup(strPath);
 

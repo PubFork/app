@@ -1,4 +1,4 @@
-#include "framework.h" // from "base/user/user.h"
+﻿#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 
@@ -42,7 +42,7 @@ namespace user
 
       rect rectClient;
 
-      GetClientRect(rectClient);
+      ::user::interaction::GetClientRect(rectClient);
 
       int32_t ifswp = SWP_SHOWWINDOW | SWP_NOCOPYBITS;
 
@@ -57,11 +57,11 @@ namespace user
             _001GetXScrollInfo(m_pscrollbarHorz->m_scrollinfo);
 
             m_pscrollbarHorz->SetWindowPos(
-               ZORDER_TOP,
-               rectClient.left,
-               rectClient.bottom - GetSystemMetrics(SM_CYHSCROLL),
-               rectClient.width() - get_final_y_scroll_bar_width(),
-               GetSystemMetrics(SM_CYHSCROLL), ifswp);
+            ZORDER_TOP,
+            rectClient.left,
+            rectClient.bottom - GetSystemMetrics(SM_CYHSCROLL),
+            rectClient.width() - get_final_y_scroll_bar_width(),
+            GetSystemMetrics(SM_CYHSCROLL), ifswp);
 
             m_pscrollbarHorz->on_layout();
 
@@ -140,6 +140,13 @@ namespace user
    {
 
       synch_lock sl(m_pmutex);
+
+      if (m_pscrollbarHorz.is_set())
+      {
+
+         m_pscrollbarHorz->m_scrollinfo.nPos = m_ptScrollPassword1.x;
+
+      }
 
    }
 
@@ -892,7 +899,7 @@ namespace user
       rect rectClient;
 
 
-      GetClientRect(rectClient);
+      ::user::interaction::GetClientRect(rectClient);
 
       int32_t ifswp = SWP_SHOWWINDOW | SWP_NOCOPYBITS;
 
@@ -907,11 +914,11 @@ namespace user
             _001GetYScrollInfo(m_pscrollbarVert->m_scrollinfo);
 
             m_pscrollbarVert->SetWindowPos(
-               ZORDER_TOP,
-               rectClient.right - GetSystemMetrics(SM_CXVSCROLL),
-               rectClient.top,
-               GetSystemMetrics(SM_CXVSCROLL),
-               rectClient.height() - get_final_x_scroll_bar_width(), ifswp);
+            ZORDER_TOP,
+            rectClient.right - GetSystemMetrics(SM_CXVSCROLL),
+            rectClient.top,
+            GetSystemMetrics(SM_CXVSCROLL),
+            rectClient.height() - get_final_x_scroll_bar_width(), ifswp);
 
             m_pscrollbarVert->on_layout();
 
@@ -999,6 +1006,13 @@ namespace user
    {
 
       synch_lock sl(m_pmutex);
+
+      if (m_pscrollbarVert.is_set())
+      {
+
+         m_pscrollbarVert->m_scrollinfo.nPos = m_ptScrollPassword1.y;
+
+      }
 
    }
 
@@ -1388,9 +1402,9 @@ namespace user
 
       if(!::user::interaction::GetClientRect(lprect))
       {
-         
+
          return false;
-         
+
       }
 
       lprect->right -= get_final_y_scroll_bar_width();

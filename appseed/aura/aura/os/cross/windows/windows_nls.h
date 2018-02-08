@@ -1345,28 +1345,7 @@ IsDBCSLeadByteEx(
     BYTE  TestChar);
 
 //xxx linux WINAXISAPI
-int32_t
-WINAPI
-MultiByteToWideChar2(
-    UINT     CodePage,
-    DWORD    dwFlags,
-    LPCSTR   lpMultiByteStr,
-    int32_t      cbMultiByte,
-    LPWSTR  lpWideCharStr,
-    int32_t      cchWideChar);
 
-//xxx linux WINAXISAPI
-int32_t
-WINAPI
-WideCharToMultiByte2(
-    UINT     CodePage,
-    DWORD    dwFlags,
-    LPCWSTR  lpWideCharStr,
-    int32_t      cchWideChar,
-    LPSTR   lpMultiByteStr,
-    int32_t      cbMultiByte,
-    LPCSTR   lpDefaultChar,
-    LPBOOL  lpUsedDefaultChar);
 
 
 //

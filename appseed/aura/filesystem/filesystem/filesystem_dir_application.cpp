@@ -85,45 +85,46 @@ namespace file
          return m_pauraapp->m_paurasystem->m_spdir->matter(get_app(), stra, bDir, pszRoot, pszApp);
       }
 
-      ::file::path application::usersystemappdata(const string & lpcszPrefix)
-      {
-         return m_pauraapp->m_paurasystem->m_spdir->usersystemappdata(get_app(), lpcszPrefix);
-      }
+      //::file::path application::usersystemappdata(const string & lpcszPrefix)
+      //{
+      //   return m_pauraapp->m_paurasystem->m_spdir->usersystemappdata(get_app(), lpcszPrefix);
+      //}
 
-      ::file::path application::userappdata()
-      {
-         return m_pauraapp->m_paurasystem->m_spdir->userappdata(get_app());
-      }
+      //::file::path application::userappdata()
+      //{
+      //   return m_pauraapp->m_paurasystem->m_spdir->userappdata(get_app());
+      //}
 
-      ::file::path application::userdata()
-      {
-         return m_pauraapp->m_paurasystem->m_spdir->userdata(get_app());
-      }
+      //::file::path application::userdata()
+      //{
+      //   return m_pauraapp->m_paurasystem->m_spdir->userdata(get_app());
+      //}
 
-      ::file::path application::userfolder()
-      {
-         return m_pauraapp->m_paurasystem->m_spdir->userfolder(get_app());
-      }
+      //::file::path application::userfolder()
+      //{
+      //   return m_pauraapp->m_paurasystem->m_spdir->userfolder(get_app());
+      //}
 
-      ::file::path application::default_os_user_path_prefix()
-      {
-         return m_pauraapp->m_paurasystem->m_spdir->default_os_user_path_prefix(get_app());
-      }
+      //::file::path application::default_os_user_path_prefix()
+      //{
+      //   return m_pauraapp->m_paurasystem->m_spdir->default_os_user_path_prefix(get_app());
+      //}
 
-      ::file::path application::default_userappdata(const string & lpcszPrefix, const string & lpcszLogin)
-      {
-         return m_pauraapp->m_paurasystem->m_spdir->default_userappdata(get_app(), lpcszPrefix, lpcszLogin);
-      }
+      //::file::path application::default_userappdata(const string & lpcszPrefix, const string & lpcszLogin)
+      //{
+      //   return m_pauraapp->m_paurasystem->m_spdir->default_userappdata(get_app(), lpcszPrefix, lpcszLogin);
+      //}
 
-      ::file::path application::default_userdata(const string & lpcszPrefix,const string & lpcszLogin)
-      {
-         return m_pauraapp->m_paurasystem->m_spdir->default_userdata(get_app(), lpcszPrefix, lpcszLogin);
-      }
+      //::file::path application::default_userdata(const string & lpcszPrefix,const string & lpcszLogin)
+      //{
+      //   return m_pauraapp->m_paurasystem->m_spdir->default_userdata(get_app(), lpcszPrefix, lpcszLogin);
+      //}
 
-      ::file::path application::default_userfolder(const string & lpcszPrefix,const string & lpcszLogin)
-      {
-         return m_pauraapp->m_paurasystem->m_spdir->default_userfolder(get_app(), lpcszPrefix, lpcszLogin);
-      }
+      //::file::path application::default_userfolder(const string & lpcszPrefix,const string & lpcszLogin)
+      //{
+      //   return m_pauraapp->m_paurasystem->m_spdir->default_userfolder(get_app(), lpcszPrefix, lpcszLogin);
+      //}
+
 
       ::file::path application::userquicklaunch()
       {
@@ -209,7 +210,7 @@ namespace file
          return m_pauraapp->m_paurasystem->m_spdir->pathfind(pszEnv, pszTopic, pszMode, m_pauraapp);
       }
 
-      
+
 
 
    } // namespace dir

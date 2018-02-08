@@ -148,7 +148,7 @@ namespace user
 
          }
 
-         string strFolder(System.dir().element());
+         string strFolder(System.dir().install());
 
          strFolder += "/";
 
@@ -241,7 +241,7 @@ namespace user
 
       string strUrl = "https://server.ca2.cc/matter/" + strFolder + strFile;
 
-      strFile = Application.dir().userappdata() / strFolder / strFile;
+      strFile = Application.dir().appdata() / strFolder / strFile;
 
       int iRetry = 3;
 

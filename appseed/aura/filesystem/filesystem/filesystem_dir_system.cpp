@@ -7,11 +7,11 @@
 
 #ifdef WINDOWS
 
-   #define DIR_SEPARATOR "\\"
+#define DIR_SEPARATOR "\\"
 
 #else
 
-   #define DIR_SEPARATOR "/"
+#define DIR_SEPARATOR "/"
 
 #endif
 
@@ -35,7 +35,7 @@ namespace file
 
          m_isdirmap.m_dwTimeOut = 15000;
 
-         m_strCa2 = ::dir::root();
+         m_pathInstall = ::dir::install();
 
       }
 
@@ -827,17 +827,21 @@ namespace file
          _throw(interface_only_exception(get_app(), "this is an interface"));
       }
 
-      ::file::path system::element()
-      {
-         _throw(interface_only_exception(get_app(), "this is an interface"));
-      }
-
-      ::file::path system::profile()
+      ::file::path system::install()
       {
 
          synch_lock sl(m_pmutex);
 
-         return m_pathProfile;
+         return m_pathInstall;
+
+      }
+
+      ::file::path system::config()
+      {
+
+         synch_lock sl(m_pmutex);
+
+         return m_pathCa2Config;
 
       }
 
@@ -851,16 +855,16 @@ namespace file
 
       }
 
-      ::file::path system::userfolder(::aura::application * papp)
-      {
+      //::file::path system::userfolder(::aura::application * papp)
+      //{
 
-         UNREFERENCED_PARAMETER(papp);
+      //   UNREFERENCED_PARAMETER(papp);
 
-         synch_lock sl(m_pmutex);
+      //   synch_lock sl(m_pmutex);
 
-         return m_pathUser;
+      //   return m_pathUser;
 
-      }
+      //}
 
 
       ::file::path system::module()
@@ -952,7 +956,7 @@ namespace file
             }
             else
             {
-               return {element() / strRoot / "appmatter" / strDomain / papp->m_paurasession->get_locale_schema_dir(strLocale,strSchema) };
+               return {install() / strRoot / "appmatter" / strDomain / papp->m_paurasession->get_locale_schema_dir(strLocale,strSchema) };
 
             }
 
@@ -1492,7 +1496,7 @@ namespace file
 
 
          if (papp->m_paurasession != NULL && papp->m_paurasession != papp &&
-            (sp(::aura::application)) papp->m_paurasystem != (sp(::aura::application)) papp)
+               (sp(::aura::application)) papp->m_paurasystem != (sp(::aura::application)) papp)
          {
             strPath = matter(papp->m_paurasession, stra, bDir);
             if (bDir)
@@ -1508,7 +1512,7 @@ namespace file
          }
 
          if (papp->m_paurasystem != NULL && papp->m_paurasystem != papp &&
-            (sp(::aura::application)) papp->m_paurasystem != (sp(::aura::application)) papp->m_paurasession)
+               (sp(::aura::application)) papp->m_paurasystem != (sp(::aura::application)) papp->m_paurasession)
          {
             strPath = matter(papp->m_paurasystem, stra, bDir);
             if (bDir)
@@ -1525,7 +1529,7 @@ namespace file
 
          strPath = strLs / stra[0];
 
-      ret:
+ret:
 
          if (Session.m_bMatterFromHttpCache)
          {
@@ -1560,13 +1564,13 @@ namespace file
          string strLocale;
 
          string strSchema;
-         
+
          ::file::path path;
 
          ::file::path pathLs;
 
          ::file::path pathFind;
-         
+
          ::file::path pathMapFile;
 
          ::file::patha pathaLs;
@@ -1600,57 +1604,57 @@ namespace file
 
                if (pathFind.has_char())
                {
-                  
+
                   // todo: keep cache timeout information;
-                  
+
                   return pathFind;
-                  
+
                }
 
                for (int k = 0; k < pathaLs.get_count(); k++)
                {
 
                   pathLs = pathaLs[k];
-                  
+
                   path = pathLs / str;
 
                   patha.add(path);
-                  
+
                }
 
                for (int32_t i = 0; i < pcontext->localeschema().m_idaLocale.get_count(); i++)
                {
-                  
+
                   strLocale = pcontext->localeschema().m_idaLocale[i];
-                  
+
                   strSchema = pcontext->localeschema().m_idaSchema[i];
-                  
+
                   pathaLs = locale_schema_matter(papp, strLocale, strSchema, root, domain);
-                  
+
                   for (int k = 0; k < pathaLs.get_count(); k++)
                   {
 
                      pathLs = pathaLs[k];
-                     
+
                      path = pathLs / path;
 
                      patha.add(path);
-                     
+
                   }
-                  
+
                }
 
                pathaLs = locale_schema_matter(papp, "en", "en");
-               
+
                for (int k = 0; k < pathaLs.get_count(); k++)
                {
 
                   pathLs = pathaLs[k];
-                  
+
                   path = pathLs / str;
 
                   patha.add(path);
-                  
+
                }
 
                property_set set(papp);
@@ -1663,24 +1667,24 @@ namespace file
 
                if (bDir)
                {
-                  
+
                   pathFind = Sess(papp).http().get("http://" + get_api_cc() + "/api/matter/query_dir?candidate=" + strCandidate, set);
-                  
+
                }
                else
                {
-                  
+
                   pathFind = Sess(papp).http().get("http://" + get_api_cc() + "/api/matter/query_file?candidate=" + strCandidate, set);
-                  
+
                }
 
                pathFind.trim();
 
                if (pathFind.has_char())
                {
-                  
+
                   goto ret;
-                  
+
                }
 
             }
@@ -1689,39 +1693,39 @@ namespace file
             {
 
                strLocale = pcontext->m_plocaleschema->m_idLocale;
-               
+
                strSchema = pcontext->m_plocaleschema->m_idSchema;
-               
+
                pathaLs = locale_schema_matter(papp, strLocale, strSchema, root, domain);
 
                for (index l = 0; l < pathaLs.get_count(); l++)
                {
-                  
+
                   pathLs = pathaLs[l];
 
                   pathFind = pathLs / str;
-                  
+
                   if (bDir)
                   {
-                     
+
                      if (System.dir().is(pathFind, papp))
                      {
-                        
+
                         goto ret;
-                        
+
                      }
-                     
+
                   }
                   else
                   {
-                     
+
                      if (System.file().exists(pathFind, papp))
                      {
-                        
+
                         goto ret;
-                        
+
                      }
-                     
+
                   }
 
                }
@@ -1731,39 +1735,39 @@ namespace file
                {
 
                   strLocale = pcontext->localeschema().m_idaLocale[i];
-                  
+
                   strSchema = pcontext->localeschema().m_idaSchema[i];
-                  
+
                   pathaLs = locale_schema_matter(papp, strLocale, strSchema, root, domain);
 
                   for (index l = 0; l < pathaLs.get_count(); l++)
                   {
-                     
+
                      pathLs = pathaLs[l];
 
                      pathFind = pathLs / str;
-                     
+
                      if (bDir)
                      {
-                        
+
                         if (System.dir().is(pathFind, papp))
                         {
-                           
+
                            goto ret;
-                           
+
                         }
-                        
+
                      }
                      else
                      {
-                        
+
                         if (System.file().exists(pathFind, papp))
                         {
-                           
+
                            goto ret;
-                           
+
                         }
-                        
+
                      }
                   }
 
@@ -1774,32 +1778,32 @@ namespace file
 
                for (index l = 0; l < pathaLs.get_count(); l++)
                {
-                  
+
                   pathLs = pathaLs[l];
 
                   pathFind = pathLs / str;
-                  
+
                   if (bDir)
                   {
-                     
+
                      if (System.dir().is(pathFind, papp))
                      {
-                        
+
                         goto ret;
-                        
+
                      }
-                     
+
                   }
                   else
                   {
-                     
+
                      if (System.file().exists(pathFind, papp))
                      {
-                        
+
                         goto ret;
-                        
+
                      }
-                     
+
                   }
                }
 
@@ -1814,9 +1818,9 @@ namespace file
             ::file::patha patha;
 
             strLocale = pcontext->m_plocaleschema->m_idLocale;
-            
+
             strSchema = pcontext->m_plocaleschema->m_idSchema;
-            
+
             pathaLs = locale_schema_matter(papp, strLocale, strSchema);
 
             pathMapFile = System.dir().commonappdata() / "cache" / papp->m_paurasession->get_locale_schema_dir(strLocale, strSchema) / str + ".map_question";
@@ -1834,11 +1838,11 @@ namespace file
 
             if (pathFind.has_char())
             {
-               
+
                // todo: keep cache timeout information;
-               
+
                return pathFind;
-               
+
             }
 
 
@@ -1846,7 +1850,7 @@ namespace file
             {
 
                pathLs = pathaLs[k];
-               
+
                path = pathLs / str;
 
                patha.add(path);
@@ -1855,37 +1859,37 @@ namespace file
 
             for (int32_t i = 0; i < pcontext->localeschema().m_idaLocale.get_count(); i++)
             {
-               
+
                strLocale = pcontext->localeschema().m_idaLocale[i];
-               
+
                strSchema = pcontext->localeschema().m_idaSchema[i];
-               
+
                pathaLs = locale_schema_matter(papp, strLocale, strSchema);
-               
+
                for (int k = 0; k < pathaLs.get_count(); k++)
                {
 
                   pathLs = pathaLs[k];
-                  
+
                   path = pathLs / str;
 
                   patha.add(path);
-                  
+
                }
-               
+
             }
 
             pathaLs = locale_schema_matter(papp, "en", "en");
-            
+
             for (int k = 0; k < pathaLs.get_count(); k++)
             {
 
                pathLs = pathaLs[k];
-               
+
                path = pathLs / str;
 
                patha.add(path);
-               
+
             }
 
             string strUrl;
@@ -1896,15 +1900,15 @@ namespace file
 
             if (bDir)
             {
-               
+
                strUrl = "https://ca2.cc/api/matter/query_dir?candidate=" + strParam;
-               
+
             }
             else
             {
-               
+
                strUrl = "https://ca2.cc/api/matter/query_file?candidate=" + strParam;
-               
+
             }
 
             property_set set(papp);
@@ -1923,9 +1927,9 @@ namespace file
 
             if (pathFind.has_char())
             {
-               
+
                goto ret;
-               
+
             }
 
          }
@@ -1933,39 +1937,39 @@ namespace file
          {
 
             strLocale = pcontext->m_plocaleschema->m_idLocale;
-            
+
             strSchema = pcontext->m_plocaleschema->m_idSchema;
-            
+
             pathaLs = locale_schema_matter(papp, strLocale, strSchema);
 
             for (index l = 0; l < pathaLs.get_count(); l++)
             {
-               
+
                pathLs = pathaLs[l];
 
                pathFind = pathLs / str;
-               
+
                if (bDir)
                {
-                  
+
                   if (System.dir().is(pathFind, papp))
                   {
-                     
+
                      goto ret;
-                     
+
                   }
-                  
+
                }
                else
                {
-                  
+
                   if (System.file().exists(pathFind, papp))
                   {
-                     
+
                      goto ret;
-                     
+
                   }
-                  
+
                }
 
             }
@@ -1974,39 +1978,39 @@ namespace file
             {
 
                strLocale = pcontext->localeschema().m_idaLocale[i];
-               
+
                strSchema = pcontext->localeschema().m_idaSchema[i];
-               
+
                pathaLs = locale_schema_matter(papp, strLocale, strSchema);
 
                for (index l = 0; l < pathaLs.get_count(); l++)
                {
-                  
+
                   pathLs = pathaLs[l];
 
                   pathFind = pathLs / str;
-                  
+
                   if (bDir)
                   {
-                     
+
                      if (System.dir().is(pathFind, papp))
                      {
-                        
+
                         goto ret;
-                        
+
                      }
-                     
+
                   }
                   else
                   {
-                     
+
                      if (System.file().exists(pathFind, papp))
                      {
-                        
+
                         goto ret;
-                        
+
                      }
-                     
+
                   }
 
                }
@@ -2017,109 +2021,109 @@ namespace file
 
             for (index l = 0; l < pathaLs.get_count(); l++)
             {
-               
+
                pathLs = pathaLs[l];
 
                pathFind = pathLs / str;
-               
+
                if (bDir)
                {
-                  
+
                   if (System.dir().is(pathFind, papp))
                   {
-                     
+
                      goto ret;
-                     
+
                   }
-                  
+
                }
                else
                {
-                  
+
                   if (System.file().exists(pathFind, papp))
                   {
-                     
+
                      goto ret;
-                     
+
                   }
-                  
+
                }
 
             }
 
             if (papp->m_paurasession != NULL && papp->m_paurasession != papp &&
-               (sp(::aura::application)) papp->m_paurasystem != (sp(::aura::application)) papp
-               && papp->m_paurasession->m_bAuraInitialize1)
+                  (sp(::aura::application)) papp->m_paurasystem != (sp(::aura::application)) papp
+                  && papp->m_paurasession->m_bAuraInitialize1)
             {
-               
+
                pathFind = matter(papp->m_paurasession, str, bDir);
-               
+
                if (bDir)
                {
-                  
+
                   if (System.dir().is(pathFind, papp))
                   {
-                     
+
                      goto ret;
-                     
+
                   }
-                  
+
                }
                else
                {
-                  
+
                   if (System.file().exists(pathFind, papp))
                   {
-                     
+
                      goto ret;
-                     
+
                   }
-                  
+
                }
-               
+
             }
 
          }
 
          if (papp->m_paurasystem != NULL && papp->m_paurasystem != papp &&
-            dynamic_cast < ::aura::application * >(papp->m_paurasystem) != dynamic_cast < ::aura::application * >(papp->m_paurasession)
-            && papp->m_paurasystem->m_bAuraInitialize1)
+               dynamic_cast < ::aura::application * >(papp->m_paurasystem) != dynamic_cast < ::aura::application * >(papp->m_paurasession)
+               && papp->m_paurasystem->m_bAuraInitialize1)
          {
-            
+
             pathFind = matter(papp->m_paurasystem, str, bDir);
-            
+
             if (bDir)
             {
-               
+
                if (System.dir().is(pathFind, get_app()))
                {
-                  
+
                   goto ret;
-                  
+
                }
-               
+
             }
             else
             {
 
                if (System.file().exists(pathFind, get_app()))
                {
-                  
+
                   goto ret;
-                  
+
                }
-               
+
             }
 
          }
 
          pathFind = pathLs / str;
 
-      ret:
+ret:
 
          if (Session.m_bMatterFromHttpCache)
          {
-            
+
             Application.file().put_contents(pathMapFile, pathFind);
 
             path = pathFind;
@@ -2193,7 +2197,7 @@ namespace file
       ::file::path system::appmatter(string strApp, ::file::path pathRel)
       {
 
-         ::file::path e = element();
+         ::file::path e = install();
 
          strsize iFind = strApp.find('/');
 
@@ -2503,7 +2507,7 @@ namespace file
          }
          else
          {
-            return element()/ strRoot/"appmatter"/strDomain;
+            return install()/ strRoot/"appmatter"/strDomain;
 
          }
 
@@ -2517,7 +2521,7 @@ namespace file
 
          appmatter_locators(strRoot, strDomain, strLibraryName, strAppName);
 
-         return element() / strRoot / "appmatter"/ strDomain;
+         return install() / strRoot / "appmatter"/ strDomain;
 
       }
 
@@ -2535,7 +2539,7 @@ namespace file
 
 #else
 
-         return element() / strRoot / "appmatter"/ strDomain;
+         return install() / strRoot / "appmatter"/ strDomain;
 
 #endif
 
@@ -2584,8 +2588,8 @@ namespace file
          return true;
 
       }
-      
-      
+
+
       ::file::path system::commonappdata(const char * pszAppId, const char * pszBuild, const char * pszPlatform, const char * pszConfiguration)
       {
 
@@ -2674,7 +2678,7 @@ namespace file
       ::file::path system::commonappdata()
       {
 
-         return element_commonappdata(element());
+         return element_commonappdata(install());
 
       }
 
@@ -2705,67 +2709,67 @@ namespace file
       }
 
 
-      ::file::path system::usersystemappdata(::aura::application * papp, const string & lpcszPrefix)
-      {
-         UNREFERENCED_PARAMETER(papp);
-         UNREFERENCED_PARAMETER(lpcszPrefix);
-         _throw(interface_only_exception(get_app(), "this is an interface"));
-      }
+      //::file::path system::usersystemappdata(::aura::application * papp, const string & lpcszPrefix)
+      //{
+      //   UNREFERENCED_PARAMETER(papp);
+      //   UNREFERENCED_PARAMETER(lpcszPrefix);
+      //   _throw(interface_only_exception(get_app(), "this is an interface"));
+      //}
 
 
-      ::file::path system::userappdata(::aura::application * papp)
-      {
+      //::file::path system::userappdata(::aura::application * papp)
+      //{
 
-         UNREFERENCED_PARAMETER(papp);
+      //   UNREFERENCED_PARAMETER(papp);
 
-         _throw(interface_only_exception(get_app(), "this is an interface"));
+      //   _throw(interface_only_exception(get_app(), "this is an interface"));
 
-      }
-
-
-      ::file::path system::userdata(::aura::application * papp)
-      {
-
-         UNREFERENCED_PARAMETER(papp);
-
-         _throw(interface_only_exception(get_app(), "this is an interface"));
-
-      }
+      //}
 
 
-      ::file::path system::default_os_user_path_prefix(::aura::application * papp)
-      {
+      //::file::path system::userdata(::aura::application * papp)
+      //{
 
-         UNREFERENCED_PARAMETER(papp);
+      //   UNREFERENCED_PARAMETER(papp);
 
-         _throw(interface_only_exception(get_app(), "this is an interface"));
+      //   _throw(interface_only_exception(get_app(), "this is an interface"));
 
-      }
+      //}
 
 
-      ::file::path system::default_userappdata(::aura::application * papp, const string & lpcszPrefix, const string & lpcszLogin)
-      {
-         UNREFERENCED_PARAMETER(papp);
-         UNREFERENCED_PARAMETER(lpcszPrefix);
-         UNREFERENCED_PARAMETER(lpcszLogin);
-         _throw(interface_only_exception(get_app(), "this is an interface"));
-      }
+      //::file::path system::default_os_user_path_prefix(::aura::application * papp)
+      //{
 
-      ::file::path system::default_userdata(::aura::application * papp, const string & lpcszPrefix, const string & lpcszLogin)
-      {
-         UNREFERENCED_PARAMETER(papp);
-         UNREFERENCED_PARAMETER(lpcszPrefix);
-         UNREFERENCED_PARAMETER(lpcszLogin);
-         _throw(interface_only_exception(get_app(), "this is an interface"));
-      }
+      //   UNREFERENCED_PARAMETER(papp);
 
-      ::file::path system::default_userfolder(::aura::application * papp, const string & lpcszPrefix, const string & lpcszLogin)
-      {
-         UNREFERENCED_PARAMETER(papp);
-         UNREFERENCED_PARAMETER(lpcszPrefix);
-         UNREFERENCED_PARAMETER(lpcszLogin);
-         _throw(interface_only_exception(get_app(), "this is an interface"));
-      }
+      //   _throw(interface_only_exception(get_app(), "this is an interface"));
+
+      //}
+
+
+      //::file::path system::default_userappdata(::aura::application * papp, const string & lpcszPrefix, const string & lpcszLogin)
+      //{
+      //   UNREFERENCED_PARAMETER(papp);
+      //   UNREFERENCED_PARAMETER(lpcszPrefix);
+      //   UNREFERENCED_PARAMETER(lpcszLogin);
+      //   _throw(interface_only_exception(get_app(), "this is an interface"));
+      //}
+
+      //::file::path system::default_userdata(::aura::application * papp, const string & lpcszPrefix, const string & lpcszLogin)
+      //{
+      //   UNREFERENCED_PARAMETER(papp);
+      //   UNREFERENCED_PARAMETER(lpcszPrefix);
+      //   UNREFERENCED_PARAMETER(lpcszLogin);
+      //   _throw(interface_only_exception(get_app(), "this is an interface"));
+      //}
+
+      //::file::path system::default_userfolder(::aura::application * papp, const string & lpcszPrefix, const string & lpcszLogin)
+      //{
+      //   UNREFERENCED_PARAMETER(papp);
+      //   UNREFERENCED_PARAMETER(lpcszPrefix);
+      //   UNREFERENCED_PARAMETER(lpcszLogin);
+      //   _throw(interface_only_exception(get_app(), "this is an interface"));
+      //}
 
       ::file::path system::userquicklaunch(::aura::application * papp)
       {
@@ -2863,22 +2867,22 @@ namespace file
 
       }
 
-      
+
       ::file::path system::get_home_folder()
       {
-         
+
          return ::dir::home();
-         
+
       }
 
       ::file::path system::get_desktop_folder()
       {
-         
+
          return get_home_folder() / "Desktop";
-         
+
       }
 
-      
+
       ::file::path system::get_document_folder()
       {
 
@@ -2886,13 +2890,13 @@ namespace file
 
       }
 
-      
-      
+
+
       ::file::path system::get_download_folder()
       {
-         
+
          return get_home_folder() / "Downloads";
-         
+
       }
 
 

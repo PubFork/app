@@ -144,9 +144,9 @@ void * __node_library_open_ca2(const char * psz, string & strMessage)
    if(str[0] == '/')
    return FALSE;
    #ifdef _M_X64
-   //::SetDllDirectory(dir::element("stage\\x64") + "\\");
+   //::SetDllDirectory(dir::install("stage\\x64") + "\\");
    #else
-   //::SetDllDirectory(dir::element("stage\\x86") + "\\");
+   //::SetDllDirectory(dir::install("stage\\x86") + "\\");
    #endif*/
 
    return LoadPackagedLibrary(gen_utf8_to_16(psz),0);

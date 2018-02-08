@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 #ifdef WINDOWS
@@ -121,9 +121,9 @@ namespace file
          inline bool myspace(char ch)
          {
             return ch == ' ' ||
-               ch == '\t' ||
-               ch == '\r' ||
-               ch == '\n';
+                   ch == '\t' ||
+                   ch == '\r' ||
+                   ch == '\n';
          }
 
 #define string_STRCAT2_beg_char_end(strCat, ch, str1, str2, beg1, end1, beg2, end2) \
@@ -391,7 +391,7 @@ namespace file
          ::file::listing & system::ls(::aura::application * papp, ::file::listing & l)
          {
 
-            
+
             return ::file::dir::system::ls(papp, l);
 
          }
@@ -602,117 +602,117 @@ namespace file
          //         }
          //      }
 
-               //string system::time(const char * lpcsz, const char * lpcsz2)
-               //{
-               //   UNREFERENCED_PARAMETER(lpcsz);
-               //   UNREFERENCED_PARAMETER(lpcsz2);
-               //   _throw(interface_only_exception(get_app(), "this is an interface"));
-               //}
+         //string system::time(const char * lpcsz, const char * lpcsz2)
+         //{
+         //   UNREFERENCED_PARAMETER(lpcsz);
+         //   UNREFERENCED_PARAMETER(lpcsz2);
+         //   _throw(interface_only_exception(get_app(), "this is an interface"));
+         //}
 
-               //string system::stage(const char * lpcsz, const char * lpcsz2)
-               //{
-               //   UNREFERENCED_PARAMETER(lpcsz);
-               //   UNREFERENCED_PARAMETER(lpcsz2);
-               //   _throw(interface_only_exception(get_app(), "this is an interface"));
-               //}
+         //string system::stage(const char * lpcsz, const char * lpcsz2)
+         //{
+         //   UNREFERENCED_PARAMETER(lpcsz);
+         //   UNREFERENCED_PARAMETER(lpcsz2);
+         //   _throw(interface_only_exception(get_app(), "this is an interface"));
+         //}
 
-               //string system::stageapp(const char * lpcsz, const char * lpcsz2)
-               //{
-               //   UNREFERENCED_PARAMETER(lpcsz);
-               //   UNREFERENCED_PARAMETER(lpcsz2);
-               //   _throw(interface_only_exception(get_app(), "this is an interface"));
-               //}
+         //string system::stageapp(const char * lpcsz, const char * lpcsz2)
+         //{
+         //   UNREFERENCED_PARAMETER(lpcsz);
+         //   UNREFERENCED_PARAMETER(lpcsz2);
+         //   _throw(interface_only_exception(get_app(), "this is an interface"));
+         //}
 
-               //string system::netseed(const char * lpcsz, const char * lpcsz2)
-               //{
-               //   UNREFERENCED_PARAMETER(lpcsz);
-               //   UNREFERENCED_PARAMETER(lpcsz2);
-               //   _throw(interface_only_exception(get_app(), "this is an interface"));
-               //}
+         //string system::netseed(const char * lpcsz, const char * lpcsz2)
+         //{
+         //   UNREFERENCED_PARAMETER(lpcsz);
+         //   UNREFERENCED_PARAMETER(lpcsz2);
+         //   _throw(interface_only_exception(get_app(), "this is an interface"));
+         //}
 
-               //string system::element(const char * lpcsz, const char * lpcsz2)
-               //{
-               //   UNREFERENCED_PARAMETER(lpcsz);
-               //   UNREFERENCED_PARAMETER(lpcsz2);
-               //   _throw(interface_only_exception(get_app(), "this is an interface"));
-               //}
+         //string system::element(const char * lpcsz, const char * lpcsz2)
+         //{
+         //   UNREFERENCED_PARAMETER(lpcsz);
+         //   UNREFERENCED_PARAMETER(lpcsz2);
+         //   _throw(interface_only_exception(get_app(), "this is an interface"));
+         //}
 
-               //string system::element(const string & str, const char * lpcsz2)
-               //{
-               //   UNREFERENCED_PARAMETER(str);
-               //   UNREFERENCED_PARAMETER(lpcsz2);
-               //   _throw(interface_only_exception(get_app(), "this is an interface"));
-               //}
+         //string system::element(const string & str, const char * lpcsz2)
+         //{
+         //   UNREFERENCED_PARAMETER(str);
+         //   UNREFERENCED_PARAMETER(lpcsz2);
+         //   _throw(interface_only_exception(get_app(), "this is an interface"));
+         //}
 
-               //string system::element(const char * lpcsz, const string & str2)
-               //{
-               //   UNREFERENCED_PARAMETER(lpcsz);
-               //   UNREFERENCED_PARAMETER(str2);
-               //   _throw(interface_only_exception(get_app(), "this is an interface"));
-               //}
+         //string system::element(const char * lpcsz, const string & str2)
+         //{
+         //   UNREFERENCED_PARAMETER(lpcsz);
+         //   UNREFERENCED_PARAMETER(str2);
+         //   _throw(interface_only_exception(get_app(), "this is an interface"));
+         //}
 
-               //string system::element(const string & str, const string & str2)
-               //{
-               //   UNREFERENCED_PARAMETER(str);
-               //   UNREFERENCED_PARAMETER(str2);
-               //   _throw(interface_only_exception(get_app(), "this is an interface"));
-               //}
+         //string system::element(const string & str, const string & str2)
+         //{
+         //   UNREFERENCED_PARAMETER(str);
+         //   UNREFERENCED_PARAMETER(str2);
+         //   _throw(interface_only_exception(get_app(), "this is an interface"));
+         //}
 
-               //string system::element(const string & str)
-               //{
-               //   UNREFERENCED_PARAMETER(str);
-               //   _throw(interface_only_exception(get_app(), "this is an interface"));
-               //}
+         //string system::element(const string & str)
+         //{
+         //   UNREFERENCED_PARAMETER(str);
+         //   _throw(interface_only_exception(get_app(), "this is an interface"));
+         //}
 
-               //string system::element()
-               //{
-               //   _throw(interface_only_exception(get_app(), "this is an interface"));
-               //}
+         //string system::element()
+         //{
+         //   _throw(interface_only_exception(get_app(), "this is an interface"));
+         //}
 
-               //string system::module(const char * lpcsz, const char * lpcsz2)
-               //{
-               //   UNREFERENCED_PARAMETER(lpcsz);
-               //   UNREFERENCED_PARAMETER(lpcsz2);
-               //   _throw(interface_only_exception(get_app(), "this is an interface"));
-               //}
+         //string system::module(const char * lpcsz, const char * lpcsz2)
+         //{
+         //   UNREFERENCED_PARAMETER(lpcsz);
+         //   UNREFERENCED_PARAMETER(lpcsz2);
+         //   _throw(interface_only_exception(get_app(), "this is an interface"));
+         //}
 
-               //string system::ca2module(const char * lpcsz, const char * lpcsz2)
-               //{
-               //   UNREFERENCED_PARAMETER(lpcsz);
-               //   UNREFERENCED_PARAMETER(lpcsz2);
-               //   _throw(interface_only_exception(get_app(), "this is an interface"));
-               //}
+         //string system::ca2module(const char * lpcsz, const char * lpcsz2)
+         //{
+         //   UNREFERENCED_PARAMETER(lpcsz);
+         //   UNREFERENCED_PARAMETER(lpcsz2);
+         //   _throw(interface_only_exception(get_app(), "this is an interface"));
+         //}
 
-               //void system::time_square(string &str)
-               //{
-               //   UNREFERENCED_PARAMETER(str);
-               //   _throw(interface_only_exception(get_app(), "this is an interface"));
-               //}
+         //void system::time_square(string &str)
+         //{
+         //   UNREFERENCED_PARAMETER(str);
+         //   _throw(interface_only_exception(get_app(), "this is an interface"));
+         //}
 
-               //string system::time_log(const char * pszId)
-               //{
-               //   UNREFERENCED_PARAMETER(pszId);
-               //   _throw(interface_only_exception(get_app(), "this is an interface"));
-               //}
+         //string system::time_log(const char * pszId)
+         //{
+         //   UNREFERENCED_PARAMETER(pszId);
+         //   _throw(interface_only_exception(get_app(), "this is an interface"));
+         //}
 
-               //bool system::mk(const char * lpcsz, ::aura::application * papp)
-               //{
-               //   UNREFERENCED_PARAMETER(lpcsz);
-               //   _throw(interface_only_exception(get_app(), "this is an interface"));
-               //}
+         //bool system::mk(const char * lpcsz, ::aura::application * papp)
+         //{
+         //   UNREFERENCED_PARAMETER(lpcsz);
+         //   _throw(interface_only_exception(get_app(), "this is an interface"));
+         //}
 
-               //bool system::rm(::aura::application * papp, const char * psz, bool bRecursive)
-               //{
-               //   UNREFERENCED_PARAMETER(psz);
-               //   UNREFERENCED_PARAMETER(bRecursive);
-               //   _throw(interface_only_exception(get_app(), "this is an interface"));
-               //}
+         //bool system::rm(::aura::application * papp, const char * psz, bool bRecursive)
+         //{
+         //   UNREFERENCED_PARAMETER(psz);
+         //   UNREFERENCED_PARAMETER(bRecursive);
+         //   _throw(interface_only_exception(get_app(), "this is an interface"));
+         //}
 
-               //string system::name(const char * path1)
-               //{
-               //   UNREFERENCED_PARAMETER(path1);
-               //   _throw(interface_only_exception(get_app(), "this is an interface"));
-               //}
+         //string system::name(const char * path1)
+         //{
+         //   UNREFERENCED_PARAMETER(path1);
+         //   _throw(interface_only_exception(get_app(), "this is an interface"));
+         //}
 
          ::file::path system::locale_schema(::aura::application * papp, const string & strLocale, const string & strSchema)
          {
@@ -738,7 +738,7 @@ namespace file
                else
                {
                   output_debug_string("MATTER from file system");
-                  return{ element() / root / "appmatter" / domain / papp->m_paxissession->get_locale_schema_dir(strLocale,strSchema) };
+                  return{ install() / root / "appmatter" / domain / papp->m_paxissession->get_locale_schema_dir(strLocale,strSchema) };
 
                }
 
@@ -747,20 +747,20 @@ namespace file
             {
 
                ::file::patha stra;
-               
+
                ::file::path pathLocator;
-               
+
                ::file::path path;
-               
+
                ::file::path pathAdd =papp->m_paxissession->get_locale_schema_dir(strLocale, strSchema);
 
                for (index i = 0; i < papp->m_straMatterLocator.get_size(); i++)
                {
-                  
+
                   pathLocator = papp->m_straMatterLocator[i];
-                  
+
                   path = pathLocator / pathAdd;
-                  
+
                   stra.add_unique(path);
 
                }
@@ -782,97 +782,97 @@ namespace file
 
          void system::matter_ls(::aura::application * papp, const ::file::path & str, ::file::patha & stra)
          {
-            
+
             ::file::path strDir = matter(papp, str, true);
-            
+
             if (Sess(papp).m_bMatterFromHttpCache)
             {
-               
+
                string strMatter = strDir;
-               
+
                strsize iFind1 = strMatter.find_ci("/matter/");
-               
+
                strsize iFind2 = strMatter.find_ci("\\matter\\");
-               
+
                strsize iFind = min_non_neg(iFind1, iFind2);
-               
+
                if(iFind > 0)
                {
-                  
+
                   strMatter = strMatter.Mid(iFind);
-                  
+
                }
-               
+
                property_set set(get_app());
-               
+
                set["raw_http"] = true;
-               
+
                ::file::path strFile = System.dir().commonappdata() / "cache" / strMatter / "list_dir.list_dir";
-               
+
                iFind = strFile.find(DIR_SEPARATOR);
-               
+
                if (iFind > 0)
                {
-                  
+
                   strFile.replace(":", "_", iFind + 1);
-                  
+
                }
-               
+
                strFile.replace("////", "//");
                strFile.replace("\\\\", "\\", 1);
-               
+
                ::file::path strLs;
-               
+
                if (Application.file().exists(strFile))
                {
-                  
+
                   strLs = Application.file().as_string(strFile);
-                  
+
                }
                else
                {
-                  
+
                   // todo: keep cache timeout information;
                   strLs = Sess(papp).http().get("http://"+get_api_cc()+"/api/matter/list_dir?dir=" + System.url().url_encode(strMatter), set);
-                  
+
                   Application.file().put_contents(strFile, strLs);
-                  
+
                }
-               
-               
-               
+
+
+
                stringa straLs;
-               
+
                stringa straSep;
-               
+
                straSep.add("\r");
                straSep.add("\n");
                straSep.add("\r\n");
-               
+
                straLs.add_smallest_tokens(strLs, straSep, false);
-               
+
                for (index i = 0; i < straLs.get_count(); i++)
                {
-                  
+
                   ::file::path strPath = strDir / straLs[i];
-                  
+
                   if (::str::ends(straLs[i], "/"))
                   {
-                     
+
                      strPath.m_iDir = 1;
-                     
+
                   }
-                  
+
                   stra.add(strPath);
-                  
+
                }
-               
+
             }
             else
             {
-               
+
                stra = listing(papp).ls(strDir);
-               
+
             }
 
          }
@@ -880,25 +880,25 @@ namespace file
 
          void system::matter_ls_file(::aura::application * papp, const ::file::path & str, ::file::patha & stra)
          {
-            
+
             ::file::path strDir = matter(papp, str, true);
-            
+
             if (Sess(papp).m_bMatterFromHttpCache)
             {
-               
+
                string strMatter = strDir;
-               
+
                strsize iFind1 = strMatter.find_ci("/matter/");
-               
+
                strsize iFind2 = strMatter.find_ci("\\matter\\");
-               
+
                strsize iFind = min_non_neg(iFind1, iFind2);
-                                         
+
                if(iFind > 0)
                {
 
                   strMatter = strMatter.Mid(iFind);
-                  
+
                }
 
                property_set set(get_app());
@@ -1406,7 +1406,7 @@ namespace file
 
 
             if (papp->m_paxissession != NULL && papp->m_paxissession != papp &&
-               (sp(::aura::application)) papp->m_paxissystem != (sp(::aura::application)) papp)
+                  (sp(::aura::application)) papp->m_paxissystem != (sp(::aura::application)) papp)
             {
                strPath = matter(papp->m_paxissession, stra, bDir);
                if (bDir)
@@ -1422,7 +1422,7 @@ namespace file
             }
 
             if (papp->m_paxissystem != NULL && papp->m_paxissystem != papp &&
-               (sp(::aura::application)) papp->m_paxissystem != (sp(::aura::application)) papp->m_paxissession)
+                  (sp(::aura::application)) papp->m_paxissystem != (sp(::aura::application)) papp->m_paxissession)
             {
                strPath = matter(papp->m_paxissystem, stra, bDir);
                if (bDir)
@@ -1439,7 +1439,7 @@ namespace file
 
             strPath = strLs / stra[0];
 
-         ret:
+ret:
 
             if (Session.m_bMatterFromHttpCache)
             {
@@ -1468,8 +1468,8 @@ namespace file
 
          ::file::path system::matter(::aura::application * papp, const ::file::path & str, bool bDir, const ::file::path & root, const ::file::path & domain)
          {
-            
-            
+
+
             return ::file::dir::system::matter(papp, str, bDir, root, domain);
 
 //            ::aura::str_context * pcontext = Sess(papp).str_context();
@@ -1737,7 +1737,7 @@ namespace file
 //               property_set set(papp);
 //
 //               set["raw_http"] = true;
-//               
+//
 //               output_debug_string("\n");
 //               output_debug_string(strUrl);
 //               output_debug_string("\n");
@@ -2236,7 +2236,7 @@ namespace file
 
                output_debug_string("MATTER from file system");
 
-               return element() / strRoot / "appmatter" / strDomain;
+               return install() / strRoot / "appmatter" / strDomain;
 
             }
 
@@ -2251,7 +2251,7 @@ namespace file
 
             appmatter_locators(strRoot, strDomain, strLibraryName, strAppName);
 
-            return element() / strRoot / "appmatter" / strDomain;
+            return install() / strRoot / "appmatter" / strDomain;
 
          }
 
@@ -2259,9 +2259,9 @@ namespace file
          {
 
             ::file::path pathRoot;
-            
+
             ::file::path pathDomain;
-            
+
             string strLibrary = System.m_mapAppLibrary[strAppName];
 
             appmatter_locators(pathRoot, pathDomain, strLibrary, strAppName);
@@ -2270,17 +2270,17 @@ namespace file
             {
 
                return pathRoot / "appmatter" / pathDomain;
-               
+
             }
             else
             {
-            
-               return element() / pathRoot / "appmatter" / pathDomain;
-               
+
+               return install() / pathRoot / "appmatter" / pathDomain;
+
             }
 
          }
-         
+
 
          ::file::path system::base_appmatter_locator(const ::file::path & strBase, const string & strLibraryName, const string & strAppName)
          {
