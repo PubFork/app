@@ -4576,6 +4576,9 @@
     <ClCompile Include="..\ace\version.cpp">
       <Filter>Source Files\ace</Filter>
     </ClCompile>
+    <ClCompile Include="aura\os\windows_common\windows_common_graphics.cpp">
+      <Filter>Source Files\aura\os\windows_common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="multithreading\multithreading.inl">
