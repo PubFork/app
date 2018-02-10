@@ -122,10 +122,14 @@ namespace file
       return sizeToRead;
    }
 
+   
    void stream_binder::CloseRead()
    {
+      
       _readStreamIsClosedEvent.SetEvent();
+
    }
+
 
    void stream_binder::write(const void *data, memory_size_t size, memory_size_t * processedSize)
    {
@@ -141,12 +145,13 @@ namespace file
          eva.add(_readStreamIsClosedEvent);
          if(!eva.wait(false, duration::infinite()).signaled())
          {
-            _throw(S_FALSE);
+            _throw(resource_exception(get_app()));
          }
       }
       if (processedSize != NULL)
          *processedSize = size;
    }
+
 
    void stream_binder::CloseWrite()
    {

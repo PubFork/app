@@ -42,7 +42,6 @@ namespace file
       out_buffer();
       ~out_buffer();
 
-      using ::object::create;
       bool create(memory_size_t bufferSize);
       void destroy();
 

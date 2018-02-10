@@ -1078,12 +1078,12 @@ retry_license:
    }
 
 
-   bool userex::_001OnCmdMsg(::user::command * pcommand)
+   void userex::_001OnCmdMsg(::user::command * pcommand)
    {
 
       UNREFERENCED_PARAMETER(pcommand);
 
-      return false;
+      //return false;
 
    }
 

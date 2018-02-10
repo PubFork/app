@@ -32,7 +32,6 @@ namespace file
       virtual ~temp_io_buffer();
 
       bool write_to_file(const void * data, memory_size_t size);
-      using ::object::create;
       void create();
 
       void InitWriting();

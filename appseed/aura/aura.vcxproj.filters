@@ -2750,6 +2750,12 @@
     <ClInclude Include="aura\os\windows_common\windows_common_graphics.h">
       <Filter>Header Files\aura\os\windows_common</Filter>
     </ClInclude>
+    <ClInclude Include="user\user\user_edit_text.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_check.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="multithreading\multithreading_condition.cpp">

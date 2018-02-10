@@ -478,6 +478,7 @@ namespace aura
       virtual string http_get_locale_schema(const char * pszUrl,const char * pszLocale,const char * pszSchema);
 
       virtual sp(::message::base) get_message_base(LPMESSAGE lpmsg);
+      virtual sp(::message::base) get_message_base(UINT message, WPARAM wparam, lparam lparam);
 
 #ifdef LINUX
 

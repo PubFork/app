@@ -4338,6 +4338,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClInclude Include="user\user\user_check.h" />
     <ClInclude Include="user\user\user.h" />
     <ClInclude Include="user\user\user_command.h" />
     <ClInclude Include="user\user\user_controller.h" />
@@ -4345,6 +4346,7 @@
     <ClInclude Include="user\user\user_copydesk.h" />
     <ClInclude Include="user\user\user_create.h" />
     <ClInclude Include="user\user\user_create_struct.h" />
+    <ClInclude Include="user\user\user_edit_text.h" />
     <ClInclude Include="user\user\user_elemental.h" />
     <ClInclude Include="user\user\user_enum.h" />
     <ClInclude Include="user\user\user_interaction.h" />

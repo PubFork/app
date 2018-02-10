@@ -60,7 +60,7 @@
 
 
 
-void reg_delete_tree_dup(HKEY hkey, const char * name)
+CLASS_DECL_AURA void reg_delete_tree_dup(HKEY hkey, const char * name)
 {
    HKEY hkeySub = NULL;
    if (ERROR_SUCCESS == ::RegOpenKey(

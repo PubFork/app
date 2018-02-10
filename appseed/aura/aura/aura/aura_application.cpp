@@ -7465,7 +7465,25 @@ finalize:
 
    }
 
+   sp(::message::base) application::get_message_base(UINT message, WPARAM wparam, lparam lparam)
+   {
+      
+      MESSAGE msg;
 
+      ZERO(msg);
+
+      msg.message = message;
+      msg.wParam = wparam;
+      msg.lParam = lparam;
+
+
+      return get_message_base(&msg);
+
+
+
+
+
+   }
 
    sp(::message::base) application::get_message_base(LPMESSAGE lpmsg)
    {

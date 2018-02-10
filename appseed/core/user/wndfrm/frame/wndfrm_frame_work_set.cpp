@@ -456,7 +456,7 @@ namespace user
             return false;
          }
 
-         bool WorkSet::_001OnCmdMsg(::user::command * pcommand)
+         void WorkSet::_001OnCmdMsg(::user::command * pcommand)
          {
 
             if(pcommand->m_id.m_emessagetype == ::message::type_command && m_pwndCommand != NULL)
@@ -472,33 +472,46 @@ namespace user
                {
                case ::user::wndfrm::frame::button_close:
                   pinterface->WfiClose();
-                  return TRUE;
+                  pcommand->m_bRet = true;
+                  return;
                case ::user::wndfrm::frame::button_minimize:
                   pinterface->WfiMinimize();
-                  return TRUE;
+                  pcommand->m_bRet = true;
+                  return;
                case ::user::wndfrm::frame::button_maximize:
                   pinterface->WfiMaximize();
-                  return TRUE;
+                  pcommand->m_bRet = true;
+                  return;
                case ::user::wndfrm::frame::button_restore:
                   pinterface->WfiRestore(true);
-                  return TRUE;
+                  pcommand->m_bRet = true;
+                  return;
                case ::user::wndfrm::frame::button_up:
                   pinterface->WfiUp();
-                  return TRUE;
+                  pcommand->m_bRet = true;
+                  return;
                case ::user::wndfrm::frame::button_down:
                   pinterface->WfiDown();
-                  return TRUE;
+                  pcommand->m_bRet = true;
+                  return;
                case ::user::wndfrm::frame::button_transparent_frame:
                   pinterface->WfiToggleTransparentFrame();
-                  return TRUE;
+                  pcommand->m_bRet = true;
+                  return;
                case ::user::wndfrm::frame::button_dock:
-                  return FALSE;
+                  pcommand->m_bRet = false;
+                  return;
                default:
                   break;
                }
             }
-            return FALSE;
+
+            pcommand->m_bRet = false;
+
+            return;
+
          }
+
 
          void WorkSet::_001OnCommand(::message::message * pobj)
          {
