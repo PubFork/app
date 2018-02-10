@@ -1477,26 +1477,34 @@ retry_session:
 
                   }
 
-
                   strHost = System.url().get_server(pszUrl);
 
-                  if (strUrl.find_ci("://api.ca2.cc/") > 0)
+                  if (strHost.has_char())
                   {
 
-                     if (::str::ends_eat_ci(strFontopus, "-account.ca2.cc"))
+                     if (strUrl.find_ci("://api.ca2.cc/") > 0)
                      {
-                        strHost = strFontopus + "-api.ca2.cc";
-                        strUrl.replace("://api.ca2.cc/", "://" + strHost + "/");
-                        Session.fontopus()->m_strBestApiServer = strHost;
+
+                        if (::str::ends_eat_ci(strFontopus, "-account.ca2.cc"))
+                        {
+
+                           strHost = strFontopus + "-api.ca2.cc";
+
+                           strUrl.replace("://api.ca2.cc/", "://" + strHost + "/");
+
+                           Session.fontopus()->m_strBestApiServer = strHost;
+
+                        }
+
                      }
 
+                     //::net::address ad(strHost); < you should unit test this class here :P :( ></
+
+                     //strIp = ad.get_display_number();;
+
+                     set["headers"]["host"] = strHost;
+
                   }
-                  ::net::address ad(strHost);
-
-                  strIp = ad.get_display_number();;
-
-
-                  set["headers"]["host"] = strHost;
 
                }
                else if (if_then(set.has_property("optional_ca2_login"), (bool)set["optional_ca2_login"]))
