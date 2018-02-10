@@ -186,7 +186,7 @@ namespace user
             bool IsFullScreen();
             bool ViewFullScreen(bool bFullScreen);
 
-            virtual bool _001OnCmdMsg(::user::command * pcommand);
+            virtual void _001OnCmdMsg(::user::command * pcommand);
 
             virtual void OnSize(UINT nType, int32_t cx, int32_t cy);
 

@@ -68,7 +68,7 @@ namespace userex
 
       virtual void term() override;
 
-      virtual bool _001OnCmdMsg(::user::command * pcommand);
+      virtual void _001OnCmdMsg(::user::command * pcommand);
 
 
       virtual void _001OnFileNew();

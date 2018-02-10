@@ -139,7 +139,7 @@ public:
    // Overridables
    // route and dispatch standard command message types
    //   (more sophisticated than OnCommand)
-   //   virtual bool _001OnCmdMsg(::user::command * pcommand);
+   //   virtual void _001OnCmdMsg(::user::command * pcommand);
 
 
 
