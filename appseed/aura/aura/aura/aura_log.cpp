@@ -286,53 +286,24 @@ namespace aura
          }
          int32_t iRetry = 0;
 retry:
-         string strRelative;
-         time.Format(strRelative, "%Y/%m/%d/%H-%M-%S");
+
+         string strDatetime;
+
+         time.Format(strDatetime, "%Y/%m/%d/%H-%M-%S");
+
          string strIndex;
+
 #ifdef WINDOWS
+
          strIndex.Format("%d-%05d", GetCurrentProcessId(), iRetry);
+
 #else
+
          strIndex.Format("%d-%05d", getpid(), iRetry);
-#endif
-
-         string strPath;
-
-#ifdef WINDOWSEX
-
-         unichar wsz[4096];
-
-         if(!GetModuleFileNameW(NULL,wsz,sizeof(wsz) / sizeof(unichar)))
-         {
-
-            strPath = "_";
-
-         }
-         else
-         {
-
-            strPath = ::str::international::unicode_to_utf8(wsz);
-
-         }
-
-#elif defined(METROWIN)
-
-#else
-
-         char * psz = br_find_exe("unknown-app");
-
-         strPath = psz;
-
-         free(psz);
 
 #endif
 
-         strPath.replace("\\", "/");
-
-         strPath = solve_relative_compressions(strPath);
-
-         strPath.replace(":","_");
-
-         plog->m_strLogPath = ::dir::sys_temp() /  string(m_id) / strPath/  strRelative + "-" + strIndex + ".log";
+         plog->m_strLogPath = ::dir::appdata() /  string(m_id) / strDatetime + "-" + strIndex + ".log";
 
          try
          {

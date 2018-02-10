@@ -684,22 +684,24 @@ found:
 ::file::path dir::install()
 {
 
-#ifdef WINDOWS
+   return ::file::app_module().folder(4);
 
-   return ca2_module().folder(3);
-
-#else
-
-   string strRelative = ca2_module_folder_dup();
-
-   eat_end_level_dup(strRelative, 3, "/");
-
-   string str = ::file::path(getenv("HOME")) / ".core/appdata";
-
-   return str;
-
-#endif
-
+//#ifdef WINDOWS
+//
+//   return ca2_module().folder(3);
+//
+//#else
+//
+//   string strRelative = ca2_module_folder_dup();
+//
+//   eat_end_level_dup(strRelative, 3, "/");
+//
+//   string str = ::file::path(getenv("HOME")) / ".core/appdata";
+//
+//   return str;
+//
+//#endif
+//
 }
 
 

@@ -308,7 +308,7 @@ namespace multimedia
          else if(epurpose == ::multimedia::audio::purpose_playground)
          {
 
-            iBufferCount = 1;
+            iBufferCount = 2;
             iBufferSampleCount = (1 << 9);
 
          }
