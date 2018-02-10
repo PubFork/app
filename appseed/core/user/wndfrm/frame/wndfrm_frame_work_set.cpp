@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 extern CLASS_DECL_CORE thread_int_ptr < DWORD_PTR > t_time1;
 
@@ -288,10 +288,10 @@ namespace user
          };
 
          bool WorkSet::update(
-            ::user::interaction *pwndDraw,
-            ::user::interaction *pwndRegion,
-            ::user::interaction *pwndEvent,
-            ::user::interaction *pwndCommand)
+         ::user::interaction *pwndDraw,
+         ::user::interaction *pwndRegion,
+         ::user::interaction *pwndEvent,
+         ::user::interaction *pwndCommand)
          {
 
             if(m_pappearance == NULL)
@@ -452,9 +452,13 @@ namespace user
                   break;
 
                }
+
             }
+
             return false;
+
          }
+
 
          void WorkSet::_001OnCmdMsg(::user::command * pcommand)
          {
@@ -471,39 +475,73 @@ namespace user
                switch(ebutton)
                {
                case ::user::wndfrm::frame::button_close:
+
                   pinterface->WfiClose();
+
                   pcommand->m_bRet = true;
+
                   return;
+
                case ::user::wndfrm::frame::button_minimize:
+
                   pinterface->WfiMinimize();
+
                   pcommand->m_bRet = true;
+
                   return;
+
                case ::user::wndfrm::frame::button_maximize:
+
                   pinterface->WfiMaximize();
+
                   pcommand->m_bRet = true;
+
                   return;
+
                case ::user::wndfrm::frame::button_restore:
+
                   pinterface->WfiRestore(true);
+
                   pcommand->m_bRet = true;
+
                   return;
+
                case ::user::wndfrm::frame::button_up:
+
                   pinterface->WfiUp();
+
                   pcommand->m_bRet = true;
+
                   return;
+
                case ::user::wndfrm::frame::button_down:
+
                   pinterface->WfiDown();
+
                   pcommand->m_bRet = true;
+
                   return;
+
                case ::user::wndfrm::frame::button_transparent_frame:
+
                   pinterface->WfiToggleTransparentFrame();
+
                   pcommand->m_bRet = true;
+
                   return;
+
                case ::user::wndfrm::frame::button_dock:
+
                   pcommand->m_bRet = false;
+
                   return;
+
                default:
+
                   break;
+
                }
+
             }
 
             pcommand->m_bRet = false;
@@ -515,11 +553,21 @@ namespace user
 
          void WorkSet::_001OnCommand(::message::message * pobj)
          {
+
             SCAST_PTR(::message::base,pbase,pobj);
-            if(m_pframeschema == NULL)
+
+            if (m_pframeschema == NULL)
+            {
+
                pbase->m_bRet = false;
+
+            }
             else
-               pbase->m_bRet = m_pframeschema->_000OnCommand(pbase->m_wparam,pbase->m_lparam,pbase->get_lresult());
+            {
+
+               pbase->m_bRet = m_pframeschema->_000OnCommand(pbase->m_wparam, pbase->m_lparam, pbase->get_lresult());
+
+            }
 
          }
 
@@ -814,82 +862,82 @@ namespace user
             if (edock & DockTop)
             {
                egripRemove =
-                  (EGrip)
-                  (
-                     egripRemove
-                     | GripTop
-                  );
+               (EGrip)
+               (
+               egripRemove
+               | GripTop
+               );
                eborderRemove =
-                  (EBorder)
-                  (
-                     eborderRemove
-                     | BorderTop
-                  );
+               (EBorder)
+               (
+               eborderRemove
+               | BorderTop
+               );
             }
             if (edock & DockBottom)
             {
                egripRemove =
-                  (EGrip)
-                  (
-                     egripRemove
-                     | GripBottom
-                  );
+               (EGrip)
+               (
+               egripRemove
+               | GripBottom
+               );
                eborderRemove =
-                  (EBorder)
-                  (
-                     eborderRemove
-                     | BorderBottom
-                  );
+               (EBorder)
+               (
+               eborderRemove
+               | BorderBottom
+               );
             }
             if (edock & DockLeft)
             {
                egripRemove =
-                  (EGrip)
-                  (
-                     egripRemove
-                     | GripLeft
-                  );
+               (EGrip)
+               (
+               egripRemove
+               | GripLeft
+               );
                eborderRemove =
-                  (EBorder)
-                  (
-                     eborderRemove
-                     | BorderLeft
-                  );
+               (EBorder)
+               (
+               eborderRemove
+               | BorderLeft
+               );
             }
             if (edock & DockRight)
             {
                egripRemove =
-                  (EGrip)
-                  (
-                     egripRemove
-                     | GripRight
-                  );
+               (EGrip)
+               (
+               egripRemove
+               | GripRight
+               );
                eborderRemove =
-                  (EBorder)
-                  (
-                     eborderRemove
-                     | BorderRight
-                  );
+               (EBorder)
+               (
+               eborderRemove
+               | BorderRight
+               );
             }
             if (edock != DockNone)
             {
                m_psizemanager->SetGripMask(
-                  (EGrip)
-                  (
-                     GripAll
-                     & ~egripRemove
-                  ));
+               (EGrip)
+               (
+               GripAll
+               & ~egripRemove
+               ));
                m_pmovemanager->SetBorderMask(
-                  (EBorder)
-                  (
-                     BorderAll
-                     & ~eborderRemove
-                  ));
+               (EBorder)
+               (
+               BorderAll
+               & ~eborderRemove
+               ));
             }
 
             m_wfla.WFLOnDock(
-               this,
-               m_pwndEvent);
+            this,
+            m_pwndEvent);
 
          }
 
@@ -957,12 +1005,12 @@ namespace user
          }
 
          void WorkSet::OnSizingGripMove(
-            EGrip egrip)
+         EGrip egrip)
          {
             m_wfla.WFLOnSizingGripMove(
-               this,
-               m_pwndEvent,
-               egrip);
+            this,
+            m_pwndEvent,
+            egrip);
          }
 
          void WorkSet::AddListener(WorkSetListener *plistener)

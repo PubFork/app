@@ -1083,8 +1083,6 @@ retry_license:
 
       UNREFERENCED_PARAMETER(pcommand);
 
-      //return false;
-
    }
 
 
