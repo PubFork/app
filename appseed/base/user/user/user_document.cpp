@@ -1348,12 +1348,14 @@ namespace user
 
       }
 
-      if (m_strDataKeyModifier.has_char())
+      string strModifier = get_data_key_modifier();
+
+      if (strModifier.has_char())
       {
 
-         str += "/";
+         str += "&";
 
-         str += m_strDataKeyModifier;
+         str += strModifier;
 
       }
 

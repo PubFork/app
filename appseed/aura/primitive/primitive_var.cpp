@@ -760,10 +760,10 @@ class var & var::operator = (::duration * pduration)
 
 var::operator const char *() const
 {
-   return get_string();
+
+   return get_ref_string();
+
 }
-
-
 
 
 bool var::is_true(bool bDefault) const
@@ -1616,22 +1616,39 @@ string & var::get_ref_string(const char * pszOnNull)
 
    if(m_etype == type_string)
    {
+
       return m_str;
+
    }
    else if(m_etype == type_pvar)
    {
+
       return m_pvar->get_ref_string(pszOnNull);
+
    }
    else if(m_etype == type_pstring)
    {
+
       return *m_pstr;
+
    }
    else
    {
-      m_str = get_string(pszOnNull);
-      set_type(type_string, false);
+
+      string str = get_string(pszOnNull);
+
+      set_string(str);
+
       return m_str;
+
    }
+
+}
+
+const string & var::get_ref_string(const char * pszOnNull) const
+{
+
+   return ((var *)this)->get_ref_string(pszOnNull);
 
 }
 

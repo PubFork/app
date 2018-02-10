@@ -70,6 +70,7 @@ namespace database
       id          m_dataid2;
       string      m_strDataKeyModifier;
       bool        m_bDataKeyModified;
+      bool        m_bLocalDataModifier;
 
    public:
 

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 
@@ -187,6 +187,7 @@ public:
    string                           to_r_string() const;
    string                           get_string(const char * pszOnNull = NULL) const;
    string &                         get_ref_string(const char * pszOnNull = NULL);
+   const string &                   get_ref_string(const char * pszOnNull = NULL) const;
    string &                         to_string(string & str) const;
    string                           to_string() const;
    id                               get_id(const char * pszOnNull = NULL)   const;
@@ -355,18 +356,18 @@ public:
    //inline var & operator = (var && v);
    //#endif
 
-   
+
    template < class T >
    void get_array(T & dsta) const
    {
-      
+
       for(int i = 0; i < array_get_count(); i++)
       {
-         
+
          dsta.add((typename T::BASE_TYPE) at(i));
-         
+
       }
-      
+
    }
 
    template < class T >
@@ -650,7 +651,7 @@ public:
    void null();
 
    ::file::path get_file_path() const;
-   
+
    void _001Add(const stringa & stra);
 
 };

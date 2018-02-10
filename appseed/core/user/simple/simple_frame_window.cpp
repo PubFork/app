@@ -154,24 +154,6 @@ void simple_frame_window::dump(dump_context & dumpcontext) const
 
 }
 
-// // BEGIN_MESSAGE_MAP(simple_frame_window, ::user::frame_window)
-//{{__MSG_MAP(simple_frame_window)
-/* xxx   ON_WM_DESTROY()
-   ON_WM_SIZE()
-   ON_WM_CLOSE()
-   ON_WM_NCCALCSIZE()
-   ON_UPDATE_::user::command(ID_VIEW_STATUS_BAR, OnUpdateControlBarMenu)
-   ON_COMMAND_EX(ID_VIEW_STATUS_BAR, OnBarCheck)
-   ON_UPDATE_::user::command(ID_VIEW_TOOLBAR, OnUpdateControlBarMenu)
-   ON_COMMAND_EX(ID_VIEW_TOOLBAR, OnBarCheck)
-   ON_UPDATE_::user::command(ID_VIEW_REBAR, OnUpdateControlBarMenu)
-   ON_COMMAND_EX(ID_VIEW_REBAR, OnBarCheck) */
-//}}__MSG_MAP
-// // END_MESSAGE_MAP()
-
-/////////////////////////////////////////////////////////////////////////////
-// simple_frame_window message handlers
-
 void simple_frame_window::install_message_routing(::message::sender * pinterface)
 {
    ::user::frame_window::install_message_routing(pinterface);
@@ -306,9 +288,6 @@ sp(::user::wndfrm::frame::frame) simple_frame_window::create_frame_schema()
 }
 
 
-
-
-
 void simple_frame_window::_001OnCreate(::message::message * pobj)
 {
 
@@ -352,23 +331,6 @@ void simple_frame_window::_001OnCreate(::message::message * pobj)
 
    }
 
-   if (m_workset.m_ebuttonaHide.contains(::user::wndfrm::frame::button_transparent_frame))
-   {
-
-      m_bTransparentFrame = false;
-
-   }
-   else
-   {
-
-      fork([&]()
-      {
-
-         data_get("transparent_frame", m_bTransparentFrame);
-
-      });
-
-   }
 
    sp(::user::place_holder) pplaceholder = GetParent();
 
@@ -408,6 +370,34 @@ void simple_frame_window::_001OnCreate(::message::message * pobj)
 
    }
 
+   if (GetParent() == NULL)
+   {
+
+      if (m_workset.m_ebuttonaHide.contains(::user::wndfrm::frame::button_transparent_frame))
+      {
+
+         m_bTransparentFrame = false;
+
+      }
+      else
+      {
+
+         fork([&]()
+         {
+
+            ::database::id databaseid = get_data_id();
+
+            data_get("transparent_frame", m_bTransparentFrame);
+
+            set_need_layout();
+
+            set_need_redraw();
+
+         });
+
+      }
+
+   }
 
 
 
@@ -802,6 +792,8 @@ bool simple_frame_window::WfiToggleTransparentFrame()
    }
 
    m_bTransparentFrame = !m_bTransparentFrame;
+
+   ::database::id databaseid = get_data_id();
 
    data_set("transparent_frame",m_bTransparentFrame);
 

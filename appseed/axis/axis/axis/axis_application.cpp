@@ -1544,7 +1544,7 @@ InitFailure:
    string application::calc_data_id()
    {
 
-      return "app://" + m_strAppName + "/" + m_strDataIdAddUp + ::str::has_char(m_strDataKeyModifier, "/");
+      return "app://" + m_strAppName + "/" + m_strDataIdAddUp + ::str::has_char(get_data_key_modifier(), "/");
 
    }
 

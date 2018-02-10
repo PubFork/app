@@ -447,9 +447,7 @@ public:
    operator const char *() const
    {
 
-      ((property *) this)->m_element2.m_str = m_element2.get_string();
-
-      return m_element2.m_str;
+      return m_element2.operator const char *();
 
    }
 

@@ -521,7 +521,22 @@ namespace user
 
       }
 
-      return str + m_id;
+      str += m_id;
+
+      string strModifier = get_data_key_modifier();
+
+      if (strModifier.has_char())
+      {
+
+         str += "&";
+
+         str += strModifier;
+
+      }
+
+      return str;
+
+      return str + m_id + get_data_key_modifier();
 
    }
 

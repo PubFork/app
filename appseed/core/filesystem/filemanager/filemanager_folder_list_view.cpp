@@ -79,7 +79,7 @@ namespace filemanager
    string folder_list_view::calc_data_id()
    {
 
-      return ::database::client::calc_data_id() + "." + m_strDataKeyModifier;
+      return ::database::client::calc_data_id() + "." + get_data_key_modifier();
 
    }
 

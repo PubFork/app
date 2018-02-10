@@ -8,6 +8,7 @@ namespace database
    client::client()
    {
 
+      m_bLocalDataModifier = false;
       m_pdataserver = NULL;
 
    }
@@ -91,10 +92,10 @@ namespace database
 
 
    bool client::data_set(
-      class id id,
+   class id id,
 
-      var & var,
-      update_hint * puh)
+   var & var,
+   update_hint * puh)
    {
       if(m_pdataserver != NULL)
       {
@@ -441,12 +442,7 @@ namespace database
 
       }
 
-      if (strDataKey.replace_ci_count("&data_source=local", "") > 0)
-      {
-
-         strDataKey += "&data_source=local&";
-
-      }
+      strDataKey += get_data_key_modifier();
 
       m_dataid2 = strDataKey;
 
@@ -503,7 +499,16 @@ namespace database
    string client::get_data_key_modifier()
    {
 
-      return m_strDataKeyModifier;
+      string strModifier = m_strDataKeyModifier;
+
+      if (m_bLocalDataModifier)
+      {
+
+         strModifier += "&data_source=local&";
+
+      }
+
+      return strModifier;
 
    }
 
@@ -524,7 +529,7 @@ namespace database
    void client::set_local_data_key_modifier()
    {
 
-      add_up_data_key_modifier("&data_source=local&");
+      m_bLocalDataModifier = true;
 
    }
 
