@@ -33,9 +33,9 @@ void SSL_init_app_data2_3_idx(void)
    for (i = 0; i <= 1; i++)
    {
       SSL_app_data2_idx =
-         SSL_get_ex_new_index(0,
-                              (void *) "Second Application Data for SSL",
-                              NULL, NULL, NULL);
+      SSL_get_ex_new_index(0,
+                           (void *) "Second Application Data for SSL",
+                           NULL, NULL, NULL);
    }
 
    if (SSL_app_data3_idx > -1)
@@ -44,9 +44,9 @@ void SSL_init_app_data2_3_idx(void)
    }
 
    SSL_app_data3_idx =
-      SSL_get_ex_new_index(0,
-                           (void *) "Third Application Data for SSL",
-                           NULL, NULL, NULL);
+   SSL_get_ex_new_index(0,
+                        (void *) "Third Application Data for SSL",
+                        NULL, NULL, NULL);
 
 }
 void *SSL_get_app_data2(SSL *ssl)
@@ -147,9 +147,9 @@ namespace sockets
 
 #ifdef MACOS
    bool tcp_socket::s_bReuseSession = false;
-   #else
-bool tcp_socket::s_bReuseSession = true;
-   #endif
+#else
+   bool tcp_socket::s_bReuseSession = true;
+#endif
 
 #ifdef LINUX
    // ssl_sigpipe_handle ---------------------------------------------------------
@@ -504,69 +504,84 @@ bool tcp_socket::s_bReuseSession = true;
       if(IsSSL())
       {
 
-         if(!Ready())
+         try
          {
 
-            TRACE("tcp_socket::recv not ready");
-            return 0;
-
-         }
-
-         n = SSL_read(m_psslcontext->m_ssl,buf,(int)nBufSize);
-         if(n == -1)
-         {
-            n = SSL_get_error(m_psslcontext->m_ssl,(int)n);
-            switch(n)
+            if (!Ready())
             {
-            case SSL_ERROR_NONE:
-            case SSL_ERROR_WANT_READ:
-            case SSL_ERROR_WANT_WRITE:
-               break;
-            case SSL_ERROR_ZERO_RETURN:
-               TRACE("SSL_read() returns zero - closing socket\n");
-               OnDisconnect();
-               SetCloseAndDelete(true);
-               SetFlushBeforeClose(false);
-               SetLost();
-               break;
-            case SSL_ERROR_SYSCALL:
-               TRACE("SSL read problem, errcode = %d (SSL_ERROR_SYSCALL) errno = %d \n",n,errno);
-               OnDisconnect();
-               SetCloseAndDelete(true);
-               SetFlushBeforeClose(false);
-               SetLost();
-               break;
-            default:
-               TRACE("SSL read problem, errcode = %d\n",n);
-               OnDisconnect();
-               SetCloseAndDelete(true);
-               SetFlushBeforeClose(false);
-               SetLost();
+
+               TRACE("tcp_socket::recv not ready");
+               return 0;
+
             }
-            TRACE("tcp_socket::recv ssl error(1)");
+
+            n = SSL_read(m_psslcontext->m_ssl, buf, (int)nBufSize);
+            if (n == -1)
+            {
+               n = SSL_get_error(m_psslcontext->m_ssl, (int)n);
+               switch (n)
+               {
+               case SSL_ERROR_NONE:
+               case SSL_ERROR_WANT_READ:
+               case SSL_ERROR_WANT_WRITE:
+                  break;
+               case SSL_ERROR_ZERO_RETURN:
+                  TRACE("SSL_read() returns zero - closing socket\n");
+                  OnDisconnect();
+                  SetCloseAndDelete(true);
+                  SetFlushBeforeClose(false);
+                  SetLost();
+                  break;
+               case SSL_ERROR_SYSCALL:
+                  TRACE("SSL read problem, errcode = %d (SSL_ERROR_SYSCALL) errno = %d \n", n, errno);
+                  OnDisconnect();
+                  SetCloseAndDelete(true);
+                  SetFlushBeforeClose(false);
+                  SetLost();
+                  break;
+               default:
+                  TRACE("SSL read problem, errcode = %d\n", n);
+                  OnDisconnect();
+                  SetCloseAndDelete(true);
+                  SetFlushBeforeClose(false);
+                  SetLost();
+               }
+               TRACE("tcp_socket::recv ssl error(1)");
+            }
+            else if (!n)
+            {
+               OnDisconnect();
+               SetCloseAndDelete(true);
+               SetFlushBeforeClose(false);
+               SetLost();
+               SetShutdown(SHUT_WR);
+               //TRACE("tcp_socket::recv ssl disconnect(2)");
+
+            }
+            else if (n > 0 && n <= nBufSize)
+            {
+               return n;
+            }
+            else
+            {
+#ifdef DEBUG
+               log("tcp_socket::recv(ssl)", (int)n, "abnormal value from SSL_read", ::aura::log::level_error);
+#endif
+               TRACE("tcp_socket::recv ssl abnormal value from SSL_read(3)");
+
+            }
+
          }
-         else if(!n)
+         catch(...)
          {
+
             OnDisconnect();
             SetCloseAndDelete(true);
             SetFlushBeforeClose(false);
             SetLost();
-            SetShutdown(SHUT_WR);
-            //TRACE("tcp_socket::recv ssl disconnect(2)");
 
          }
-         else if(n > 0 && n <= nBufSize)
-         {
-            return n;
-         }
-         else
-         {
-#ifdef DEBUG
-            log("tcp_socket::recv(ssl)",(int)n,"abnormal value from SSL_read",::aura::log::level_error);
-#endif
-            TRACE("tcp_socket::recv ssl abnormal value from SSL_read(3)");
 
-         }
       }
       else
 #endif // HAVE_OPENSSL

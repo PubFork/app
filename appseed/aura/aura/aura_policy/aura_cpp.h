@@ -831,10 +831,22 @@ inline bool is_null(const TYPE * p)
 
 }
 
+
+template < >
+inline bool is_null(const void * p)
+{
+
+   return is_null(p, 65536);
+
+}
+
+
 template < typename TYPE >
 inline bool is_set(const TYPE * p)
 {
+
    return !is_null(p);
+
 }
 
 

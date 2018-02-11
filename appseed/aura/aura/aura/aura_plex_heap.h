@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#pragma pack(1)
+
 #undef new
 class CLASS_DECL_AURA plex_heap     // warning var length structure
 {
@@ -16,6 +18,9 @@ public:
    void FreeDataChain();       // free this one and links
 };
 
+
+
+
 class CLASS_DECL_AURA plex_heap_alloc_sync
 {
 public:
@@ -24,11 +29,11 @@ public:
    struct node
    {
 #ifdef DEBUG
-      char palaceLeft[16];
+      char m_puchPalaceLeft[16];
 #endif
-      node* pNext;               // only valid when in free list
+      node * m_pnext;               // only valid when in free list
 #ifdef DEBUG
-      char palaceRight[16];
+      char m_puchPalaceRight[16];
 #endif
    };
 
@@ -82,4 +87,4 @@ public:
 };
 
 
-
+#pragma pack()

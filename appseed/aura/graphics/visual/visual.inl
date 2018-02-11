@@ -23,10 +23,10 @@ namespace visual
 
       ::rect rectEmboss = *lpcrect;
 
-      rectEmboss.left -= iR * g_dEmboss;
-      rectEmboss.top -= iR * g_dEmboss;
-      rectEmboss.right += iR * g_dEmboss;
-      rectEmboss.bottom += iR * g_dEmboss;
+      rectEmboss.left -= (LONG) (iR * g_dEmboss);
+      rectEmboss.top -= (LONG) (iR * g_dEmboss);
+      rectEmboss.right += (LONG) (iR * g_dEmboss);
+      rectEmboss.bottom += (LONG) (iR * g_dEmboss);
 
       if (bUpdate || dib2.is_null() || dib2->area() <= 0)
       {

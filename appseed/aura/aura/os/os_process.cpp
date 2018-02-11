@@ -327,8 +327,6 @@ extern "C"
 void prepare_argc_argv(int & argc, char ** argv, char * cmd_line)
 {
 
-   char *      pArg;
-
    char *      pPtr = NULL;
 
    char * p;
