@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 class var;
@@ -96,6 +96,10 @@ namespace str
    // case insensitive, ignore white space - only in searched string
    bool CLASS_DECL_AURA begins_ci_iws(const unichar * psz, const unichar * lpcszPrefix);
    bool CLASS_DECL_AURA begins_ci_iws(const wstring & str, const unichar * lpcszPrefix);
+
+
+   bool CLASS_DECL_AURA eat_before(string & strBefore, string strSeparator, string & str, bool bEatEverythingIfNotFound = false);
+   bool CLASS_DECL_AURA eat_before_let_separator(string & strBefore, string strSeparator, string & str, bool bEatEverythingIfNotFound = false);
 
 
    inline bool begins_eat(string & str, const string & strPrefix);
@@ -282,12 +286,12 @@ namespace str
    string CLASS_DECL_AURA get_window_text_timeout(oswindow oswindow, DWORD dwTimeout = 1000);
 
    string CLASS_DECL_AURA get_word(
-      const char * psz,
-      const char * pszSeparator,
-      bool bWithSeparator = false,
-      // if end is separator, return entire string if separator is not found
-      // otherwise, return is_empty
-      bool bEndIsSeparator = true);
+   const char * psz,
+   const char * pszSeparator,
+   bool bWithSeparator = false,
+   // if end is separator, return entire string if separator is not found
+   // otherwise, return is_empty
+   bool bEndIsSeparator = true);
 
    CLASS_DECL_AURA bool eats(const char * & pszXml, const char * psz);
    CLASS_DECL_AURA bool eats_ci(const char * & pszXml, const char * psz);
@@ -342,7 +346,7 @@ namespace str
 
    CLASS_DECL_AURA void format(string_format * pformat, int64_t const & i);
 
-   #ifdef RASPBIAN
+#ifdef RASPBIAN
 
    CLASS_DECL_AURA void format(string_format * pformat, long unsigned int const & ui);
 

@@ -584,12 +584,17 @@ namespace sockets
 
 
 
-   void http_socket::url_this(const string & url_in,string & protocol,string & host,port_t& port,string & url,string & file)
+   void http_socket::url_this(string strUrl, string & strProtocol, string & strHost, port_t & port, string & strRequestUri, string & strFile)
    {
-      ::str::parse pa(url_in,"/");
-      protocol = pa.getword(); // http
-      protocol.trim(":");
-      if(!stricmp_dup(protocol,"https") || !stricmp_dup(protocol, "wss"))
+
+      if (!strUrl.eat_before(strProtocol, "://"))
+      {
+
+         return;
+
+      }
+
+      if(strProtocol.equals_ci("https") || strProtocol.equals_ci("wss"))
       {
 
 #ifdef HAVE_OPENSSL
@@ -607,41 +612,31 @@ namespace sockets
 
 #endif
          port = 443;
+
       }
       else
       {
+
          port = 80;
-      }
-      host = pa.getword();
-      if (strstr(host,":"))
-      {
-         ::str::parse pa(host,":");
-         pa.getword(host);
-         port = static_cast<port_t>(pa.getvalue());
-      }
-      url = "/" + pa.getrest();
-      {
-         ::str::parse pa(url,"/");
-         /*         index iEnd = url.find("?");
-                  bool bHasQuery = iEnd > 0;
-                  if(!bHasQuery)
-                     iEnd = url.get_length();
-                  string strScript;
-                  strScript = System.url().url_encode(url.Mid(1, iEnd - 1));
-                  string strChar;
-                  strChar.Format("%%%02X", '_');
-                  strScript.replace("_", strChar);
-                  url = "/" + strScript + (bHasQuery ? url.Mid(iEnd + 1) : "");*/
-         string tmp = pa.getword();
-         while (tmp.get_length())
-         {
-            file = tmp;
-            tmp = pa.getword();
-         }
 
       }
 
-   } // url_this
+      string strPort;
+
+      strUrl.eat_before_let_separator(strPort, "/", true);
+
+      if (strPort.eat_before(strHost, ":", true))
+      {
+
+         port = atoi(strPort);
+
+      }
+
+      strRequestUri = strUrl;
+
+      strUrl.eat_before(strFile, "?", true);
+
+   }
 
 
    void http_socket::OnFirst()

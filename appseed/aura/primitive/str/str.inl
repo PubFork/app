@@ -1,4 +1,4 @@
-
+﻿
 namespace str
 {
 
@@ -1065,49 +1065,49 @@ inline string & string::operator = (String ^ & str)
 
 inline bool string_format::defer_get_additional_argument(const char * & s)
 {
-   
+
    _throw(simple_exception(get_app(), "missing argument value"));
-   
+
 }
 
 
 template < typename T, typename... Args>
 inline void string_format::defer_get_additional_argument(const char * & s, const T & value, Args... args)
 {
-   
+
    if(m_estate == state_initial || m_estate == state_parse_precision || m_estate == state_parse_length)
    {
-      
+
       if(!parse(s))
       {
-         
+
          ::str::format_type(this, value);
-         
+
          m_estate = state_initial;
-         
+
          format(s, args...);
-         
+
          return;
-         
+
       }
-      
+
    }
-   
+
    if(m_estate == state_waiting_width)
    {
-      
+
       _throw(simple_exception(get_app(), "width should plain int32_t"));
-      
+
    }
    else if(m_estate == state_waiting_precision)
    {
-      
+
       _throw(simple_exception(get_app(), "width should plain int32_t"));
-      
+
    }
-   
+
    defer_get_additional_argument(s, args...);
-   
+
 }
 
 
@@ -1116,44 +1116,60 @@ namespace str
 
    inline CLASS_DECL_AURA string from_strdup(char * psz)
    {
-   
+
       if(psz == NULL)
       {
-      
+
          return "";
-      
+
       }
-      
+
       string str;
-      
+
       try
       {
-      
+
          str = psz;
-         
+
       }
       catch(...)
       {
-         
+
       }
-      
+
       try
       {
-         
+
          free(psz);
-         
+
       }
       catch(...)
       {
-         
+
       }
 
       return str;
-   
+
    }
-   
+
 
 } // namespace str
 
 
 
+
+
+inline bool string::equals(const char * psz) const
+{
+
+   return compare(psz) == 0;
+
+}
+
+
+inline bool string::equals_ci(const char * psz) const
+{
+
+   return compare_ci(psz) == 0;
+
+}

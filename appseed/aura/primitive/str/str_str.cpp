@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include <stdio.h>
 
 
@@ -296,6 +296,86 @@ namespace str
    {
       return begins_ci_iws(str.c_str(), lpcszPrefix);
    }
+
+
+   bool eat_before(string & strBefore, string strSeparator, string & str, bool bEatEverythingIfNotFound)
+   {
+
+      ASSERT(&str != &strBefore);
+
+      if (&str == &strBefore)
+      {
+
+         return false;
+
+      }
+
+      index iFind = str.find(strSeparator);
+
+      if (iFind < 0)
+      {
+
+         if (bEatEverythingIfNotFound)
+         {
+
+            strBefore = str;
+
+            str.Empty();
+
+         }
+
+         return false;
+
+      }
+
+      strBefore = str.Left(iFind);
+
+      str = str.Mid(iFind + strSeparator.length());
+
+      return true;
+
+   }
+
+
+   bool eat_before_let_separator(string & strBefore, string strSeparator, string & str, bool bEatEverythingIfNotFound)
+   {
+
+      ASSERT(&str != &strBefore);
+
+      if (&str == &strBefore)
+      {
+
+         return false;
+
+      }
+
+      index iFind = str.find(strSeparator);
+
+      if (iFind < 0)
+      {
+
+         if (bEatEverythingIfNotFound)
+         {
+
+            strBefore = str;
+
+            str = strSeparator;
+
+         }
+
+         return false;
+
+      }
+
+      strBefore = str.Left(iFind);
+
+      str = str.Mid(iFind);
+
+      return true;
+
+   }
+
+
 
 
    bool begins_eat(string & str, const char * lpcszPrefix)
@@ -1551,10 +1631,10 @@ namespace str
    }
 
    string get_word(
-      const char * psz,
-      const char * pszSeparator,
-      bool bWithSeparator,
-      bool bEndIsSeparator)
+   const char * psz,
+   const char * pszSeparator,
+   bool bWithSeparator,
+   bool bEndIsSeparator)
    {
 
       if(psz == NULL)
@@ -2542,7 +2622,7 @@ end:
       while(*psz != qc)
       {
 
-      skip:
+skip:
 
          psz = __utf8_inc(psz);
 
@@ -2703,106 +2783,25 @@ end:
    template < const strsize m_iSize = 1024 >
    class mini_str_buffer
    {
-      public:
+   public:
 
 
-         strsize     m_iPos;
-         char        m_sz[m_iSize];
-         string      m_str;
+      strsize     m_iPos;
+      char        m_sz[m_iSize];
+      string      m_str;
 
 
-         mini_str_buffer()
-         {
+      mini_str_buffer()
+      {
 
-            m_iPos = 0;
+         m_iPos = 0;
 
-         }
+      }
 
-         void append(char ch)
-         {
+      void append(char ch)
+      {
 
-            if (m_iPos + 1 > m_iSize)
-            {
-
-               m_str.append(m_sz, m_iPos);
-
-               m_iPos = 0;
-
-            }
-
-            m_sz[m_iPos] = ch;
-
-            m_iPos ++;
-
-
-         }
-
-         void append_uni(int64_t w)
-         {
-
-            if (m_iPos + 3 > m_iSize)
-            {
-
-               m_str.append(m_sz, m_iPos);
-
-               m_iPos = 0;
-
-            }
-
-            if (w < 0x0080)
-            {
-
-               m_sz[m_iPos] = char(w);
-               m_iPos++;
-
-            }
-            else if (w < 0x0800)
-            {
-               m_sz[m_iPos] = (char)(0xc0 | ((w) >> 6));
-               m_iPos++;
-               m_sz[m_iPos] = (char)(0x80 | ((w) & 0x3f));
-               m_iPos++;
-            }
-            else
-            {
-               m_sz[m_iPos] = (char)(0xe0 | ((w) >> 12));
-               m_iPos++;
-               m_sz[m_iPos] = (char)(0xc0 | (((w) >> 6) & 0x3f));
-               m_iPos++;
-               m_sz[m_iPos] = (char)(0x80 | ((w) & 0x3f));
-               m_iPos++;
-            }
-         }
-
-         void append(const char * psz, strsize iSize)
-         {
-
-            if (m_iPos + iSize > m_iSize)
-            {
-
-               m_str.append(m_sz, m_iPos);
-
-               m_iPos = 0;
-
-               if (iSize > m_iSize)
-               {
-
-                  m_str.append(m_sz, iSize);
-
-                  return;
-
-               }
-
-            }
-
-            strncpy(&m_sz[m_iPos], psz, iSize);
-
-            m_iPos += iSize;
-
-         }
-
-
-         void update()
+         if (m_iPos + 1 > m_iSize)
          {
 
             m_str.append(m_sz, m_iPos);
@@ -2810,6 +2809,87 @@ end:
             m_iPos = 0;
 
          }
+
+         m_sz[m_iPos] = ch;
+
+         m_iPos ++;
+
+
+      }
+
+      void append_uni(int64_t w)
+      {
+
+         if (m_iPos + 3 > m_iSize)
+         {
+
+            m_str.append(m_sz, m_iPos);
+
+            m_iPos = 0;
+
+         }
+
+         if (w < 0x0080)
+         {
+
+            m_sz[m_iPos] = char(w);
+            m_iPos++;
+
+         }
+         else if (w < 0x0800)
+         {
+            m_sz[m_iPos] = (char)(0xc0 | ((w) >> 6));
+            m_iPos++;
+            m_sz[m_iPos] = (char)(0x80 | ((w) & 0x3f));
+            m_iPos++;
+         }
+         else
+         {
+            m_sz[m_iPos] = (char)(0xe0 | ((w) >> 12));
+            m_iPos++;
+            m_sz[m_iPos] = (char)(0xc0 | (((w) >> 6) & 0x3f));
+            m_iPos++;
+            m_sz[m_iPos] = (char)(0x80 | ((w) & 0x3f));
+            m_iPos++;
+         }
+      }
+
+      void append(const char * psz, strsize iSize)
+      {
+
+         if (m_iPos + iSize > m_iSize)
+         {
+
+            m_str.append(m_sz, m_iPos);
+
+            m_iPos = 0;
+
+            if (iSize > m_iSize)
+            {
+
+               m_str.append(m_sz, iSize);
+
+               return;
+
+            }
+
+         }
+
+         strncpy(&m_sz[m_iPos], psz, iSize);
+
+         m_iPos += iSize;
+
+      }
+
+
+      void update()
+      {
+
+         m_str.append(m_sz, m_iPos);
+
+         m_iPos = 0;
+
+      }
 
    };
 

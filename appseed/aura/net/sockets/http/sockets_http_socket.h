@@ -91,7 +91,7 @@ namespace sockets
       virtual string MyUseragent();
 
       /** Parse url. If protocol is https, EnableSSL() will be called. */
-      void url_this(const string & url_in,string & protocol,string & host,port_t& port,string & url,string & file);
+      void url_this(string strUrl, string & strProtocol, string & strHost, port_t & port, string & strRequestUri, string & strFile);
 
       /** Transfer coding 'chunked' */
       bool IsChunked() { return m_b_chunked; }

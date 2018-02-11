@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include <stdio.h>
 
 const int string::npos = -1;
@@ -3190,11 +3190,26 @@ string string::utf8_substr(strsize iFirst,strsize nCount) const
 
 bool string::begins_ci(const char * s) const
 {
+
    return ::str::begins_ci(*this,s);
+
 }
 
 
+bool string::eat_before(string & strBefore, string strSeparator, bool bEatEverythingIfNotFound)
+{
 
+   return ::str::eat_before(strBefore, strSeparator, *this, bEatEverythingIfNotFound);
+
+}
+
+
+bool string::eat_before_let_separator(string & strBefore, string strSeparator, bool bEatEverythingIfNotFound)
+{
+
+   return ::str::eat_before_let_separator(strBefore, strSeparator, *this, bEatEverythingIfNotFound);
+
+}
 
 
 void string::push_back(char ch)
@@ -3203,3 +3218,7 @@ void string::push_back(char ch)
    operator += (ch);
 
 }
+
+
+
+
