@@ -10,11 +10,10 @@ namespace fontopus
 
    fontopus::fontopus(::aura::application * papp) :
       ::object(papp),
-      ::aura::department(papp),
-      m_mutex(papp)
+      ::aura::department(papp)
    {
 
-//      m_phandler = NULL;
+      defer_create_mutex();
 
       m_puser                       = NULL;
 
@@ -491,7 +490,7 @@ namespace fontopus
 
       }
 
-      synch_lock sl(&m_mutex);
+      synch_lock sl(m_pmutex);
 
       string strFontopusServer;
 
@@ -525,12 +524,16 @@ retry:
       if(::str::ends(strHost,".ca2.cc"))
       {
 
+         sl.lock();
+
          if (m_strFirstAccountServer.has_char())
          {
 
             return m_strFirstAccountServer;
 
          }
+
+         sl.unlock();
 
          strGetFontopus = "https://" + strHost + "/get_fontopus_login";
 
@@ -541,18 +544,12 @@ retry:
       }
 
       System.url().set_param(strGetFontopus,strGetFontopus,"lang",Session.get_locale());
+
       System.url().set_param(strGetFontopus,strGetFontopus,"styl",Session.get_schema());
 
       sp(::sockets::http_session) psession;
 
       string strNode;
-
-      //if (m_phandler == NULL)
-      //{
-
-      //   m_phandler = new sockets::socket_handler(get_app());
-
-      //}
 
       try
       {
@@ -671,9 +668,6 @@ retry:
 
       }
 
-//      m_mapFontopusSession.set_at(strFontopusServer,psession);
-
-
       if(m_mapFontopusSessId[strFontopusServer].is_empty())
       {
 
@@ -683,17 +677,14 @@ retry:
 
          m_mapFontopusServer.set_at(strFontopusServer,strFontopusServer);
 
-//         Session.sockets().net().m_mapCache.set_at(strFontopusServer,item);
-
       }
 
       m_mapFontopusServer.set_at(strHost, strFontopusServer);
 
-      //Session.sockets().net().m_mapCache.set_at(strHost,item);
-
       return strFontopusServer;
 
    }
+
 
    string fontopus::get_fontopus_server(const char * pszRequestingServerOrUrl,int32_t iRetry)
    {

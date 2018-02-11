@@ -1,4 +1,4 @@
-#include "framework.h" // from "aura/net/net_sockets.h"
+﻿#include "framework.h" // from "aura/net/net_sockets.h"
 #include "aura/net/net_sockets.h"
 #include "aura/net/sockets/bsd/basic/sockets_ssl_context.h"
 #include <time.h>
@@ -1395,6 +1395,7 @@ retry:
 
             }*/
 
+      single_lock slFontopus(Session.fontopus()->m_pmutex);
 
       string strIp;
 
@@ -1405,20 +1406,23 @@ retry:
 retry_session:
 
       {
+
          property_set setQuery(get_app());
 
          setQuery.parse_url_query(System.url().get_query(strUrl));
+
          if ((bool)set["raw_http"])
          {
+
          }
          else
          {
 
             if (!(bool)set["disable_ca2_sessid"] && !setQuery.has_property("authnone"))
             {
+
                if ((bool)set["optional_ca2_sessid"])
                {
-
 
                   if (papp != NULL)
                   {
@@ -1431,13 +1435,18 @@ retry_session:
 
                      if (domainFontopus.m_strRadix == "ca2")
                      {
+
                         set["user"] = &AppUser(papp);
+
                         if (set["user"].cast < ::fontopus::user >() != NULL && (strSessId = set["user"].cast < ::fontopus::user >()->get_sessid(strUrl, !set["interactive_user"].is_new()
                               && (bool)set["interactive_user"])).has_char() &&
                               if_then(set.has_property("optional_ca2_login"), !(bool)set["optional_ca2_login"]))
                         {
+
                            System.url().string_set(strUrl, "sessid", strSessId);
+
                         }
+
                      }
 
                   }
@@ -1448,21 +1457,19 @@ retry_session:
                         if_then(set.has_property("optional_ca2_login"), !(bool)set["optional_ca2_login"]))
                {
 
-//                  if (0)
-//                  {
-//
-//                     strSessId += "a";
-//
-//                  }
-
                   System.url().string_set(strUrl, "sessid", strSessId);
+
                   string strHost;
+
                   string strFontopus = Session.fontopus()->get_server(pszUrl, 8);
+
                   ::net::address ad1(strFontopus);
 
                   strIp = ad1.get_display_number();
 
                   string str1 = strFontopus;
+
+                  slFontopus.lock();
 
                   if (::str::ends_eat_ci(str1, "-account.ca2.cc") && strIp.has_char())
                   {
@@ -1498,37 +1505,50 @@ retry_session:
 
                      }
 
-                     //::net::address ad(strHost); < you should unit test this class here :P :( ></
-
-                     //strIp = ad.get_display_number();;
-
                      set["headers"]["host"] = strHost;
 
                   }
 
+                  slFontopus.unlock();
+
                }
                else if (if_then(set.has_property("optional_ca2_login"), (bool)set["optional_ca2_login"]))
                {
+
                }
                else
                {
+
                   System.url().string_set(strUrl, "authnone", 1);
+
                }
+
             }
             else
             {
+
                System.url().string_set(strUrl, "authnone", 1);
+
             }
+
          }
+
       }
 
       // Format of script name example "system://server.com/the rain.mp3" => "system://server.com/the%20rain.mp3"
       {
+
          string strScript = System.url().url_encode(System.url().url_decode(System.url().get_script(strUrl)));
+
          strScript.replace("+", "%20");
+
          strScript.replace("%2F", "/");
+
          strUrl = System.url().set_script(strUrl, strScript);
+
       }
+
+      slFontopus.lock();
 
       if (strUrl.find_ci("://account.ca2.cc/") > 0 && Session.fontopus()->m_strBestFontopusServerIp.has_char())
       {
@@ -1537,12 +1557,12 @@ retry_session:
 
       }
 
-      //property_set setQuery(get_app());
-
-      //setQuery.parse_url_query(System.url().get_query(strUrl));
+      slFontopus.unlock();
 
       bool bPost;
+
       bool bPut;
+
       if (set["put"].cast < ::file::file >() != NULL || set.lookup(__id(http_method)) == "PUT")
       {
          bPost = false;
@@ -1916,8 +1936,11 @@ retry_session:
       else if (iStatusCode == 401)
       {
 
+
          if (strSessId.has_char() && set["user"].cast < ::fontopus::user >() != NULL && iRetrySession < 3)
          {
+
+            slFontopus.lock();
 
             Session.fontopus()->m_mapFontopusSessId[Session.fontopus()->m_strFirstFontopusServer].Empty();
 
@@ -1952,6 +1975,8 @@ retry_session:
 
 
             iRetrySession++;
+
+            slFontopus.unlock();
 
             goto retry_session;
 

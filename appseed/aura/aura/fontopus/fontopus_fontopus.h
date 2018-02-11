@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace fontopus
@@ -11,7 +11,6 @@ namespace fontopus
    public:
 
 
-      mutex                                        m_mutex;
       class create_user_thread *                   m_pthreadCreatingUser;
       sp(user)                                     m_puser;
       string_to_string                             m_mapFontopusServer;
