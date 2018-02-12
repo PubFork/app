@@ -1,11 +1,11 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 VOID
 WINAPI
 output_debug_string_a(
-   _In_opt_ LPCSTR lpOutputString
-   )
+_In_opt_ LPCSTR lpOutputString
+)
 {
 
    ::output_debug_string(wstring(lpOutputString));
@@ -15,7 +15,7 @@ output_debug_string_a(
 VOID
 WINAPI
 output_debug_string_w(
-   _In_opt_ LPCWSTR lpOutputString
+_In_opt_ LPCWSTR lpOutputString
 )
 {
 
@@ -27,14 +27,14 @@ typedef WINBASEAPI
 VOID
 WINAPI
 FN_OutputDebugStringA(
-   _In_opt_ LPCSTR lpOutputString
-   );
+_In_opt_ LPCSTR lpOutputString
+);
 
 typedef WINBASEAPI
 VOID
 WINAPI
 FN_OutputDebugStringW(
-   _In_opt_ LPCWSTR lpOutputString
+_In_opt_ LPCWSTR lpOutputString
 );
 
 typedef FN_OutputDebugStringA * PFN_OutputDebugStringA;
@@ -68,7 +68,18 @@ void set_extended_output_debug_string_w()
 
 void output_debug_string(const char * psz)
 {
-   
+
+   string str(psz);
+
+   str.trim();
+
+   if (str == ".")
+   {
+
+      printf("found!");
+
+   }
+
    g_pfnOutputDebugStringA(psz);
 
 }
@@ -76,7 +87,7 @@ void output_debug_string(const char * psz)
 
 void w_output_debug_string(const unichar * pwsz)
 {
-   
+
    g_pfnOutputDebugStringW(pwsz);
 
 }
@@ -84,7 +95,7 @@ void w_output_debug_string(const unichar * pwsz)
 
 void output_debug_string(const unichar * pwsz)
 {
-   
+
    g_pfnOutputDebugStringW(pwsz);
 
 }

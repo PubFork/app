@@ -1,4 +1,4 @@
-#include "framework.h" // from "aura/net/net_sockets.h"
+﻿#include "framework.h" // from "aura/net/net_sockets.h"
 #include "aura/net/net_sockets.h"
 #include "aura/net/sockets/bsd/basic/sockets_ssl_context.h"
 #include "openssl/ssl.h"
@@ -99,100 +99,107 @@ CLASS_DECL_AURA void websocket_prefix_varuint(memory & m, unsigned int ui)
 int client_send(memory & m, int fin, memory & memory, bool useMask)
 {
 
-   uint8_t masking_key[4];
+   int64_t message_size = memory.get_size();
 
-   for (index i = 0; i < 4; i++)
+   int length = 2 + message_size;
+
+   if (message_size >= 65536)
    {
 
-      masking_key[i] = (byte) ::aura::system::g_p->math().RandRange(0, 255);
+      length += 8;
+
+   }
+   else if (message_size >= 126)
+   {
+
+      length += 2;
 
    }
 
-   strsize len = memory.get_length();
+   uint8_t masking_key[4];
 
-   int64_t message_size = memory.get_size();
+   if (useMask)
+   {
 
-   int length = (int) (2 + (message_size >= 126 ? 2 : 0) + (message_size >= 65536 ? 6 : 0) + (useMask ? 4 : 0) + message_size);
+      length += 4;
+
+      for (index i = 0; i < 4; i++)
+      {
+
+         masking_key[i] = (byte) ::aura::system::g_p->math().RandRange(0, 255);
+
+      }
+
+   }
 
    m.allocate(length);
 
    byte * frame = (byte*)m.get_data();
 
-   byte * header = (byte*)m.get_data();
+   frame[0] = 0x80 | fin;
 
-   header[0] = 0x80 | fin;
    int iOffset = -1;
-   if (false) {}
-   else if (message_size < 126)
-   {
-      header[1] = (message_size & 0xff) | (useMask ? 0x80 : 0);
 
-      if (useMask)
-      {
-         header[2] = masking_key[0];
-         header[3] = masking_key[1];
-         header[4] = masking_key[2];
-         header[5] = masking_key[3];
-         iOffset = 6;
-      }
-      else
-      {
-         iOffset = 2;
-      }
+   if (message_size < 126)
+   {
+
+      frame[1] = (message_size & 0xff) | (useMask ? 0x80 : 0);
+
+      iOffset = 2;
+
    }
    else if (message_size < 65536)
    {
-      header[1] = 126 | (useMask ? 0x80 : 0);
-      header[2] = (message_size >> 8) & 0xff;
-      header[3] = (message_size >> 0) & 0xff;
-      if (useMask)
-      {
-         header[4] = masking_key[0];
-         header[5] = masking_key[1];
-         header[6] = masking_key[2];
-         header[7] = masking_key[3];
-         iOffset = 8;
-      }
-      else
-      {
-         iOffset = 4;
-      }
+
+      frame[1] = 126 | (useMask ? 0x80 : 0);
+      frame[2] = (message_size >> 8) & 0xff;
+      frame[3] = (message_size >> 0) & 0xff;
+
+      iOffset = 4;
+
    }
-   else   // TODO: run coverage testing here
+   else
    {
-      header[1] = 127 | (useMask ? 0x80 : 0);
-      header[2] = (message_size >> 56) & 0xff;
-      header[3] = (message_size >> 48) & 0xff;
-      header[4] = (message_size >> 40) & 0xff;
-      header[5] = (message_size >> 32) & 0xff;
-      header[6] = (message_size >> 24) & 0xff;
-      header[7] = (message_size >> 16) & 0xff;
-      header[8] = (message_size >> 8) & 0xff;
-      header[9] = (message_size >> 0) & 0xff;
-      if (useMask)
-      {
-         header[10] = masking_key[0];
-         header[11] = masking_key[1];
-         header[12] = masking_key[2];
-         header[13] = masking_key[3];
-         iOffset = 14;
-      }
-      else
-      {
-         iOffset = 10;
-      }
+
+      frame[1] = 127 | (useMask ? 0x80 : 0);
+      frame[2] = (message_size >> 56) & 0xff;
+      frame[3] = (message_size >> 48) & 0xff;
+      frame[4] = (message_size >> 40) & 0xff;
+      frame[5] = (message_size >> 32) & 0xff;
+      frame[6] = (message_size >> 24) & 0xff;
+      frame[7] = (message_size >> 16) & 0xff;
+      frame[8] = (message_size >> 8) & 0xff;
+      frame[9] = (message_size >> 0) & 0xff;
+
+      iOffset = 10;
+
    }
-   memcpy(&frame[iOffset], memory.get_data(), memory.get_length());
+
    if (useMask)
    {
+
+      frame[iOffset + 0] = masking_key[0];
+      frame[iOffset + 1] = masking_key[1];
+      frame[iOffset + 2] = masking_key[2];
+      frame[iOffset + 3] = masking_key[3];
+
+      iOffset += 4;
+
+   }
+
+   memcpy(&frame[iOffset], memory.get_data(), memory.get_length());
+
+   if (useMask)
+   {
+
       for (memory_size_t i = 0; i < memory.get_length(); i++)
       {
-         frame[iOffset+i] ^= masking_key[i & 3];
+
+         frame[iOffset + i] ^= masking_key[i & 3];
+
       }
+
    }
-   //memcpy(&frame[iOffset+ memory.get_length()],masking_key, 4);
-
-
 
    return (int) (m.get_size());
 
