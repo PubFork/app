@@ -1,4 +1,4 @@
-
+﻿
 
 
 template < class TYPE, class ARG_TYPE, class ALLOCATOR >
@@ -233,7 +233,7 @@ template < class TYPE, class ARG_TYPE, class ALLOCATOR >
 
    allocate(m_nSize + nSrcSize);
 
-   ALLOCATOR::copy(&m_pData[nOldSize],src.m_pData,nSrcSize);
+   ALLOCATOR::copy(m_pData + nOldSize, src.m_pData,nSrcSize);
 
    return nOldSize;
 
@@ -368,8 +368,8 @@ index array_base < TYPE, ARG_TYPE, ALLOCATOR >::insert_at(index nIndex,array_bas
       ::count nOldSize = m_nSize;
 
       set_size(m_nSize + nCount, -1);  // grow it to new size
-                                       // destroy intial data before copying over it
-                                       // shift old data up to fill gap
+      // destroy intial data before copying over it
+      // shift old data up to fill gap
       ::aura::memmove_s(m_pData + nIndex + nCount, (nOldSize - nIndex) * sizeof(TYPE), m_pData + nIndex, (nOldSize - nIndex) * sizeof(TYPE));
 
       ::zero(m_pData + nIndex, nCount* sizeof(TYPE));
@@ -527,7 +527,7 @@ template < class TYPE, class ARG_TYPE, class ALLOCATOR >
       ::aura::memcpy_s(pNewData,(size_t)nNewMax * sizeof(TYPE),m_pData,(size_t)m_nSize * sizeof(TYPE));
 
       ///for(int32_t i = 0; i < nNewSize - m_nSize; i++)
-         // get rid of old stuff (note: no destructors called)
+      // get rid of old stuff (note: no destructors called)
       ALLOCATOR::_free(m_pData);
       m_pData = pNewData;
       m_nSize = nNewSize;
@@ -601,7 +601,7 @@ template < class TYPE, class ARG_TYPE, class ALLOCATOR >
 
       ::count nAllocSize = MAX(nNewSize,m_nGrowBy);
 
-      #if MEMDLEAK  || defined(__MCRTDBG)
+#if MEMDLEAK  || defined(__MCRTDBG)
 
       if(::get_thread() != NULL)
       {
@@ -647,11 +647,11 @@ template < class TYPE, class ARG_TYPE, class ALLOCATOR >
       }
 
 
-      #else
+#else
 
       m_pData = ALLOCATOR::alloc(nAllocSize);
 
-      #endif
+#endif
 
       ALLOCATOR::construct(m_pData,nNewSize);
 
@@ -767,11 +767,11 @@ template < class TYPE, class ARG_TYPE, class ALLOCATOR >
       }
 
 
-      #else
+#else
 
       TYPE* pNewData = (TYPE *)ALLOCATOR::alloc(nNewMax * sizeof(TYPE));
 
-      #endif
+#endif
 
       // copy new data from old
       ::aura::memcpy_s(pNewData,(size_t)nNewMax * sizeof(TYPE),m_pData,(size_t)m_nSize * sizeof(TYPE));
