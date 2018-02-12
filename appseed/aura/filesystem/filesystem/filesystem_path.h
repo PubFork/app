@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 namespace file
 {
@@ -62,255 +62,256 @@ namespace file
       public string,
       public path_meta
    {
-      public:
+   public:
 
-         //string m_strNameUser;
-         //typedef ::string_array < ::file::path,string > patha;
+      //string m_strNameUser;
+      //typedef ::string_array < ::file::path,string > patha;
 
-         path(e_context_switcher_null);
-         path(e_path epath = path_file);
-         path(const unichar * pwsz, strsize iCount, e_path epath = path_none, int iDir = -1, bool bNormalize = true, int64_t iSize = -1);
-         path(const string & str, e_path epath = path_none, int iDir = -1, bool bNormalize = true, int64_t iSize = -1);
-         path(const id & id, e_path epath = path_none, int iDir = -1);
-         path(const var & var, e_path epath = path_none, int iDir = -1);
-         path(const path & path);
-         path(path && path);
-         path(const char * psz, e_path epath = path_none, int iDir = -1);
-         path(const unichar * psz, e_path epath = path_none, int iDir = -1);
-         path(const wstring & wstr, e_path epath = path_none, int iDir = -1);
-         //path(const var & var,e_path epath = path_file);
-         path(const property & property, e_path epath = path_none, int iDir = -1);
+      path(e_context_switcher_null);
+      path(e_path epath = path_file);
+      path(const unichar * pwsz, strsize iCount, e_path epath = path_none, int iDir = -1, bool bNormalize = true, int64_t iSize = -1);
+      path(const string & str, e_path epath = path_none, int iDir = -1, bool bNormalize = true, int64_t iSize = -1);
+      path(const id & id, e_path epath = path_none, int iDir = -1);
+      path(const var & var, e_path epath = path_none, int iDir = -1);
+      path(const path & path);
+      path(path && path);
+      path(const char * psz, e_path epath = path_none, int iDir = -1);
+      path(const unichar * psz, e_path epath = path_none, int iDir = -1);
+      path(const wstring & wstr, e_path epath = path_none, int iDir = -1);
+      //path(const var & var,e_path epath = path_file);
+      path(const property & property, e_path epath = path_none, int iDir = -1);
 
-         ~path() NOTHROW;
-
-
-         void set_type(e_path epath);
+      ~path() NOTHROW;
 
 
+      void set_type(e_path epath);
 
-         inline char sep() const
-         {
+      ::file::path replace_file_extension(const char * pszNewExtension, const char * pszOldExtension);
+      ::file::path replace_file_extension(const char * pszNewExtension);
 
-            return path_sep(m_epath);
+      inline char sep() const
+      {
 
-         }
+         return path_sep(m_epath);
 
-         inline char osep() const
-         {
+      }
 
-            return path_osep(m_epath);
+      inline char osep() const
+      {
 
-         }
+         return path_osep(m_epath);
 
-         path & operator = (const ::file::path & path);
+      }
 
-         path & operator = (const string & str);
+      path & operator = (const ::file::path & path);
+
+      path & operator = (const string & str);
 
 
-         bool is_equal(const path & path) const
-         {
+      bool is_equal(const path & path) const
+      {
 
 #ifdef WINDOWS
 
-            if (_stricmp(c_str(), path.c_str()) == 0) // undoubtely eaqual...
-               return true;
+         if (_stricmp(c_str(), path.c_str()) == 0) // undoubtely eaqual...
+            return true;
 
 #else
 
-            if (strcmp(c_str(), path.c_str()) == 0) // undoubtely eaqual...
-               return true;
+         if (strcmp(c_str(), path.c_str()) == 0) // undoubtely eaqual...
+            return true;
 
 #endif
 
-            return false;
+         return false;
 
-         }
+      }
 
 
-         bool operator == (const path & path) const
-         {
+      bool operator == (const path & path) const
+      {
 
-            return is_equal(path);
+         return is_equal(path);
 
-         }
+      }
 
-         bool operator == (const string & str) const
-         {
+      bool operator == (const string & str) const
+      {
 
-            return operator == (path(str));
+         return operator == (path(str));
 
-         }
+      }
 
 
-         bool operator == (const char * psz) const
-         {
+      bool operator == (const char * psz) const
+      {
 
-            return operator == (string(psz));
+         return operator == (string(psz));
 
-         }
+      }
 
 
-         bool operator != (const path & path) const
-         {
+      bool operator != (const path & path) const
+      {
 
-            return !is_equal(path);
+         return !is_equal(path);
 
-         }
+      }
 
 
-         bool operator != (const string & str) const
-         {
+      bool operator != (const string & str) const
+      {
 
-            return operator != (path(str));
+         return operator != (path(str));
 
-         }
+      }
 
 
-         bool operator != (const char * psz) const
-         {
+      bool operator != (const char * psz) const
+      {
 
-            return operator != (string(psz));
+         return operator != (string(psz));
 
-         }
-         //      bool operator == (const path & path) const;
+      }
+      //      bool operator == (const path & path) const;
 
-         //      bool operator == (const string & str) const;
-         //      bool operator == (const char * psz) const;
-         bool operator == (const var & var) const;
+      //      bool operator == (const string & str) const;
+      //      bool operator == (const char * psz) const;
+      bool operator == (const var & var) const;
 
-         //      bool operator != (const path & path) const;
+      //      bool operator != (const path & path) const;
 
-         //      bool operator != (const string & str) const;
-         //      bool operator != (const char * psz) const;
-         bool operator != (const var & var) const;
+      //      bool operator != (const string & str) const;
+      //      bool operator != (const char * psz) const;
+      bool operator != (const var & var) const;
 
-         path operator + (const path & path) const;
+      path operator + (const path & path) const;
 
 
-         path operator + (const string & str) const;
+      path operator + (const string & str) const;
 
-         path operator + (const char * psz) const;
-         path operator + (const var & var) const;
-         path operator + (const property & property) const;
-         path operator + (const id & id) const;
+      path operator + (const char * psz) const;
+      path operator + (const var & var) const;
+      path operator + (const property & property) const;
+      path operator + (const id & id) const;
 
-         path & operator += (const path & path);
-         path & operator += (const string & str);
-         path operator / (const path & path) const;
-         path operator / (const string & str) const;
-         path operator / (const char * psz) const;
-         path operator / (const property & property) const;
-         patha operator / (const stringa & path) const;
+      path & operator += (const path & path);
+      path & operator += (const string & str);
+      path operator / (const path & path) const;
+      path operator / (const string & str) const;
+      path operator / (const char * psz) const;
+      path operator / (const property & property) const;
+      patha operator / (const stringa & path) const;
 
-         path & operator /= (const path & path);
-         path & operator /= (const string & str);
-         path & operator /= (const char * psz);
+      path & operator /= (const path & path);
+      path & operator /= (const string & str);
+      path & operator /= (const char * psz);
 
 
 
-         //::file::path & file_cat(const string & str) { return *this + str; }
+      //::file::path & file_cat(const string & str) { return *this + str; }
 
-         //::file::path & operator | (const string & str) { return file_cat(str); } // what is good here is the operator precedence
+      //::file::path & operator | (const string & str) { return file_cat(str); } // what is good here is the operator precedence
 
-         //string arg(const string & str) const { return ((const string &)*this) + str; }
+      //string arg(const string & str) const { return ((const string &)*this) + str; }
 
-         //string operator << (const string & str) const { return arg(str); }
+      //string operator << (const string & str) const { return arg(str); }
 
-         path & operator = (const char * psz);
-         path & operator += (const char * psz);
+      path & operator = (const char * psz);
+      path & operator += (const char * psz);
 
-         path & operator = (const var & var);
-         path & operator += (const var & var);
+      path & operator = (const var & var);
+      path & operator += (const var & var);
 
-         path & operator = (const wstring & wstr);
-         path & operator += (const wstring & wstr);
+      path & operator = (const wstring & wstr);
+      path & operator += (const wstring & wstr);
 
-         path & operator = (const unichar * psz);
-         path & operator += (const unichar * psz);
+      path & operator = (const unichar * psz);
+      path & operator += (const unichar * psz);
 
-         //path operator * () const;
+      //path operator * () const;
 
-         //path operator -- () const;
-         //path operator -- (int) const { return operator --(); }
+      //path operator -- () const;
+      //path operator -- (int) const { return operator --(); }
 
 
-         string & to_string(string & str) const;
+      string & to_string(string & str) const;
 
-         path sibling(const path & path) const;
-         path sibling(const string & str) const;
-         path sibling(const char * psz) const;
+      path sibling(const path & path) const;
+      path sibling(const string & str) const;
+      path sibling(const char * psz) const;
 
-         path operator * (const path & path) const;
+      path operator * (const path & path) const;
 
-         path operator * (const string & str) const;
-         path operator * (const char * psz) const;
-         path operator * (const property & property) const;
+      path operator * (const string & str) const;
+      path operator * (const char * psz) const;
+      path operator * (const property & property) const;
 
-         path & operator *= (const path & path);
+      path & operator *= (const path & path);
 
-         path & operator *= (const string & str);
-         path & operator *= (const char * psz);
-         path & operator *= (const property & property);
+      path & operator *= (const string & str);
+      path & operator *= (const char * psz);
+      path & operator *= (const property & property);
 
-         ::file::path title() const;
+      ::file::path title() const;
 
-         const char * name() const
-         {
-            return &m_pszData[rfind(sep()) + 1];
-         }
+      const char * name() const
+      {
+         return &m_pszData[rfind(sep()) + 1];
+      }
 
-         string sname() const
-         {
-            return name();
-         }
+      string sname() const
+      {
+         return name();
+      }
 
-         string name(index i /* = -1 */) const;
+      string name(index i /* = -1 */) const;
 
-         index find_file_name() const;
+      index find_file_name() const;
 
-         //      bool is_equal(const ::file::path & path2) const;
+      //      bool is_equal(const ::file::path & path2) const;
 
-         string extension() const;
+      string extension() const;
 
-         string ext() const;
+      string ext() const;
 
-         string final_extension() const;
+      string final_extension() const;
 
-         //class CLASS_DECL_AURA path:
-         //   virtual public ::object
-         //{
-         //public:
+      //class CLASS_DECL_AURA path:
+      //   virtual public ::object
+      //{
+      //public:
 
-         //   ::file::system * m_pfile;
+      //   ::file::system * m_pfile;
 
 
-         //   bool is_equal(const char * lpszFilPathA,const char * lpszFilPathB); << is_equal
-         //   bool eat_end_level(string & str,int32_t iLevelCount,const char * lpSeparator); << operator *
-         //   void split(::file::patha & stra,const char * lpcszPath);
-         //   bool is_relative(const char * psz);
+      //   bool is_equal(const char * lpszFilPathA,const char * lpszFilPathB); << is_equal
+      //   bool eat_end_level(string & str,int32_t iLevelCount,const char * lpSeparator); << operator *
+      //   void split(::file::patha & stra,const char * lpcszPath);
+      //   bool is_relative(const char * psz);
 
-         //   bool rename(const char * pszNew,const char * psz,::aura::application * papp); TODO should go to something like file::system
+      //   bool rename(const char * pszNew,const char * psz,::aura::application * papp); TODO should go to something like file::system
 
-         //};
+      //};
 
-         void split(patha & patha) const;
-         bool is_relative();
+      void split(patha & patha) const;
+      bool is_relative();
 
-         patha & ascendants_path(patha & patha) const;
-         patha & ascendants_name(patha & namea) const;
-         patha ascendants_path() const;
-         patha ascendants_name() const;
+      patha & ascendants_path(patha & patha) const;
+      patha & ascendants_name(patha & namea) const;
+      patha ascendants_path() const;
+      patha ascendants_name() const;
 
-         path relative() const;
+      path relative() const;
 
 
-         path folder() const;
-         path folder(int i) const;
-         path up() const;
-         path up(int i) const;
-         path & go_up();
-         path & go_up(int i);
-         path & operator -= (int i);
+      path folder() const;
+      path folder(int i) const;
+      path up() const;
+      path up(int i) const;
+      path & go_up();
+      path & go_up(int i);
+      path & operator -= (int i);
 
 
 

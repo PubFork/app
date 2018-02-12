@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace file
@@ -145,7 +145,7 @@ namespace file
 
 
    path::path(const wstring & wstr, e_path epath, int iDir):
-        path(string(wstr), epath, iDir)
+      path(string(wstr), epath, iDir)
    {
 
    }
@@ -245,7 +245,7 @@ namespace file
 
    }
 
-   
+
    string path::name(index i) const
    {
 
@@ -434,7 +434,7 @@ namespace file
       }
 
       string str = path;
-      
+
       if (strPath.Right(3) == "://")
       {
 
@@ -471,33 +471,33 @@ namespace file
       string strPath;
 
       strPath = string(*this);
-      
+
       string str = path;
-      
+
       if (strPath.Right(3) == "://")
       {
 
          return operator = (::file::path(strPath + str, m_epath));
 
       }
-      
+
       if(strPath.is_empty())
       {
-       
+
          strPath = sep();
-         
+
       }
       else if(strPath.get_length() == 1 && strPath[0] == sep())
       {
-         
+
       }
       else
       {
-      
+
          strPath += sep();
 
          str.trim_left("\\/");
-         
+
       }
 
       return operator = (::file::path(strPath + str, m_epath));
@@ -518,6 +518,47 @@ namespace file
 
    }
 
+
+   ::file::path path::replace_file_extension(const char * pszNewExtension, const char * pszOldExtension)
+   {
+
+      string strNewExtension(pszNewExtension);
+
+      ::str::begins_eat_ci(strNewExtension, ".");
+
+      string strOldExtension(pszOldExtension);
+
+      ::str::begins_eat_ci(strOldExtension, ".");
+
+      ::file::path path(*this);
+
+      ::str::ends_eat_ci(path, strOldExtension);
+
+      path += strNewExtension;
+
+      return path;
+
+   }
+
+
+   ::file::path path::replace_file_extension(const char * pszNewExtension)
+   {
+
+      string strNewExtension(pszNewExtension);
+
+      ::str::begins_eat_ci(strNewExtension, ".");
+
+      ::file::path pathFolder = folder();
+
+      string strTitle = title();
+
+      string strName = strTitle + "." + strNewExtension;
+
+      return pathFolder / strName;
+
+   }
+
+
    void path::set_type(e_path epath)
    {
 
@@ -527,7 +568,7 @@ namespace file
          m_epath = epath;
 
          ::stdstring < simple_string >::operator = (normalize_path(*this, m_epath));
-                               ;
+         ;
       }
 
    }
@@ -785,27 +826,27 @@ namespace file
 #ifdef WINDOWS
          if(strPath == "\\\\" || strPath == "\\")
          {
-         
+
          }
-         else 
+         else
 #endif
-         if (strPath.has_char())
-         {
-
-            char * psz = strPath.GetBuffer();
-
-            char chSep = path_sep(epath);
-            
-            for(int i = 0; i < iSlashCount; i++)
+            if (strPath.has_char())
             {
 
-               psz[iaSlash[i]] = chSep;
+               char * psz = strPath.GetBuffer();
+
+               char chSep = path_sep(epath);
+
+               for(int i = 0; i < iSlashCount; i++)
+               {
+
+                  psz[iaSlash[i]] = chSep;
+
+               }
+
+               strPath.ReleaseBuffer();
 
             }
-
-            strPath.ReleaseBuffer();
-
-         }
 
       }
 

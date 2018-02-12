@@ -128,6 +128,12 @@ namespace comparison
       return i < 0 ? false : (unsigned int) i <= ui;
    }
 
+   template <  >
+   inline bool le(int64_t i, size_t ui)
+   {
+      return i < 0 ? false : (unsigned int)i <= ui;
+   }
+
    template < typename A, typename B >
    inline bool gt(A a, B b)
    {
