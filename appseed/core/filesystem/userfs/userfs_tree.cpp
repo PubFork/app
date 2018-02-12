@@ -73,7 +73,7 @@ namespace userfs
                //          SetDataInterface(&m_datainterface);
                //        AddClient(&m_datainterface);
                /*               string str;
-                              str.Format("tree(%s)", get_filemanager_template()->get_filemanager_data()->m_strDISection);
+                              str.Format("tree(%s)", get_filemanager_template()->get_filemanager_data()->m_strDataKeyModifier);
                               m_dataid = str;*/
                //            _001UpdateColumns();
             }
@@ -174,8 +174,8 @@ namespace userfs
 
       UNREFERENCED_PARAMETER(pobj);
 //      SCAST_PTR(::message::context_menu, pcontextmenu, pobj);
-         //   int32_t iItem;
-         //   HRESULT hr;
+      //   int32_t iItem;
+      //   HRESULT hr;
 //         point ptClient = pcontextmenu->GetPoint();
 //      ::user::tree::ScreenToClient(&ptClient);
       /*     if(_001HitTest_(ptClient, iItem))

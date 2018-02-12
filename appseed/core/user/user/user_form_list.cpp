@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace user
@@ -637,7 +637,7 @@ namespace user
          //if (selection.get_item_count() > 0)
          //{
          //   ::database::selection_item & item = selection.get_item(0);
-         //   sp(::user::elemental) ptext = NULL;
+         //   sp(::user::edit_text) ptext = NULL;
          //   if (get_child_by_id(pcontrol->m_id) != NULL)
          //   {
          //      ptext = get_child_by_id(pcontrol->m_id);

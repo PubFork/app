@@ -241,7 +241,7 @@ namespace user
 
       string strUrl = "https://server.ca2.cc/matter/" + strFolder + strFile;
 
-      strFile = Application.dir().appdata() / strFolder / strFile;
+      strFile = System.dir().appdata() / strFolder / strFile;
 
       int iRetry = 3;
 

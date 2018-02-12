@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 
@@ -17,12 +17,13 @@ public:
    virtual void assert_valid() const;
    virtual void dump(dump_context & dumpcontext) const;
 
-   
+
    DECL_GEN_SIGNAL(_001OnSize);
+   DECL_GEN_SIGNAL(_001OnCreate);
+   DECL_GEN_SIGNAL(_001OnDestroy);
+
    void on_layout();
 
-   void _001OnCreate(::message::message * pobj);
-   void _001OnDestroy(::message::message * pobj);
 
    virtual bool GetClientRect(LPRECT lprect);
 

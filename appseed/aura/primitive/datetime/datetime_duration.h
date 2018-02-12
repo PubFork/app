@@ -81,7 +81,7 @@ public:
    inline __time64_t GetTimeSpan() const;
 
 
-
+   void sleep();
 
 };
 
@@ -579,6 +579,13 @@ inline __time64_t duration::GetTimeSpan() const
    return total_seconds();
 }
 
+
+inline void duration::sleep()
+{
+
+   ::Sleep(*this);
+
+}
 
 inline int64_t duration::get_total_seconds() const
 {

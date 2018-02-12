@@ -26,16 +26,8 @@ namespace user
    bool user::init1()
    {
 
-      //m_pufeschema = new ::user::front_end_schema(get_app());
-      //m_pufe = new ::user::front_end();
-
-
-
       System.factory().creatable_small < ::user::document >();
-      // System.factory().creatable_small < ::user::application_as_proxy_document >();
       System.factory().creatable_small < ::user::message_queue >();
-
-
 
       if(m_pauraapp->is_system())
       {

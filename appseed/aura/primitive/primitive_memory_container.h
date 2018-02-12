@@ -77,13 +77,13 @@ namespace primitive
 #if !defined(METROWIN)
       virtual shared_memory *   get_shared_memory();
 #endif
-      virtual virtual_memory *  get_virtual_memory();
+      virtual_memory *  get_virtual_memory();
 
 //      virtual memory *          detach_primitive_memory();
 //#if !defined(METROWIN)
 //      virtual shared_memory *   detach_shared_memory();
 //#endif
-//      virtual virtual_memory *  detach_virtual_memory();
+//      virtual_memory *  detach_virtual_memory();
 //
 //      virtual LPBYTE            detach_primitive_storage();
 //#if !defined(METROWIN)

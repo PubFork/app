@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace user
@@ -264,13 +264,13 @@ namespace user
 
       if(pedit == NULL)
       {
-         
+
          return false;
-         
+
       }
-      
+
       string str;
-      
+
       pedit->_001GetText(str);
 
       if(!pcontrol->Validate(str))
@@ -455,7 +455,7 @@ namespace user
          if(selection.get_item_count() > 0)
          {
             ::database::selection_item & item = selection.get_item(0);
-            sp(::user::elemental) ptext = NULL;
+            sp(::user::edit_text) ptext = NULL;
             if(get_child_by_id(pcontrol->m_id) != NULL)
             {
                ptext = get_child_by_id(pcontrol->m_id);
@@ -996,8 +996,8 @@ namespace user
       if(m_pcallback != NULL)
       {
          if(m_pcallback->BaseOnControlEvent(
-                  this,
-                  pevent))
+               this,
+               pevent))
             return true;
       }
       //else if(get_html_data()->m_pform != NULL
@@ -1072,8 +1072,8 @@ namespace user
             int_ptr_array ia;
 
             pdescriptor->m_ddx.m_pdbflags->m_key.m_pclient->data_load(
-               pdescriptor->m_ddx.m_pdbflags->m_key.m_id,
-               ia);
+            pdescriptor->m_ddx.m_pdbflags->m_key.m_id,
+            ia);
 
             sp(check) pcheck = pevent->m_puie;
 
@@ -1086,8 +1086,8 @@ namespace user
                ia.remove(pdescriptor->m_ddx.m_pdbflags->m_value);
             }
             pdescriptor->m_ddx.m_pdbflags->m_key.m_pclient->data_load(
-               pdescriptor->m_ddx.m_pdbflags->m_key.m_id,
-               ia);
+            pdescriptor->m_ddx.m_pdbflags->m_key.m_id,
+            ia);
          }
       }
       return false;

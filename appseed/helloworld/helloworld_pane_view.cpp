@@ -495,7 +495,7 @@ namespace helloworld
 
       ::file::path path;
 
-      path = Application.dir().appdata() / "helloworld_menu.html";
+      path = System.dir().appdata() / "helloworld_menu.html";
 
       Application.file().put_contents(path, str);
 

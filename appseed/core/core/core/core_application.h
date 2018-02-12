@@ -126,7 +126,7 @@ namespace core
 
       virtual void install_message_routing(::message::sender * psender) override;
 
-      //virtual int32_t run();
+      //virtual void run();
 
 
       virtual void EnableShellOpen();

@@ -21,7 +21,7 @@ namespace linux
    ::file::path crypto::get_crypt_key_file_path()
    {
 
-      return Application.dir().appdata() / ".ca2/cryptkey";
+      return System.dir().appdata() / ".ca2/cryptkey";
 
    }
 

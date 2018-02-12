@@ -219,7 +219,7 @@ namespace file_watcher
    //   }
 
 
-   //   int32_t run();
+   //   virtual void run();
 
    //};
 

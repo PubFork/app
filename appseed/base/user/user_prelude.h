@@ -192,7 +192,6 @@ typedef sp(::user::interaction_impl) window_sp;
 
 #include "base/user/user/user_document_data_map.h"
 #include "base/user/user/user_document.h"
-//#include "base/user/user/user_application_as_proxy_document.h"
 #include "base/user/user/user_impact.h"
 
 
