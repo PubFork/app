@@ -160,7 +160,7 @@
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <SmallerTypeCheck>false</SmallerTypeCheck>
       <IntrinsicFunctions>false</IntrinsicFunctions>
-      <AdditionalOptions>/bigobj</AdditionalOptions>
+      <AdditionalOptions>/bigobj -Zm512</AdditionalOptions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
@@ -218,7 +218,7 @@
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <SmallerTypeCheck>false</SmallerTypeCheck>
       <IntrinsicFunctions>false</IntrinsicFunctions>
-      <AdditionalOptions>/bigobj</AdditionalOptions>
+      <AdditionalOptions>/bigobj -Zm512</AdditionalOptions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
@@ -276,7 +276,7 @@
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <SmallerTypeCheck>false</SmallerTypeCheck>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalOptions>/bigobj</AdditionalOptions>
+      <AdditionalOptions>/bigobj -Zm512</AdditionalOptions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
@@ -332,7 +332,7 @@
       <SmallerTypeCheck>false</SmallerTypeCheck>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <IntrinsicFunctions>false</IntrinsicFunctions>
-      <AdditionalOptions>/bigobj</AdditionalOptions>
+      <AdditionalOptions>/bigobj -Zm512</AdditionalOptions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
       <CompileAsManaged>false</CompileAsManaged>
@@ -398,7 +398,7 @@
       <SmallerTypeCheck>false</SmallerTypeCheck>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <IntrinsicFunctions>false</IntrinsicFunctions>
-      <AdditionalOptions>/bigobj</AdditionalOptions>
+      <AdditionalOptions>/bigobj -Zm512</AdditionalOptions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
       <CompileAsManaged>false</CompileAsManaged>
@@ -464,7 +464,7 @@
       <SmallerTypeCheck>false</SmallerTypeCheck>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalOptions>/bigobj</AdditionalOptions>
+      <AdditionalOptions>/bigobj -Zm512</AdditionalOptions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
       <CompileAsManaged>false</CompileAsManaged>

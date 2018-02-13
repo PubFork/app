@@ -158,7 +158,7 @@
       <SmallerTypeCheck>false</SmallerTypeCheck>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <FloatingPointModel>Fast</FloatingPointModel>
-      <AdditionalOptions>/bigobj</AdditionalOptions>
+      <AdditionalOptions>/bigobj -Zm512</AdditionalOptions>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
@@ -229,7 +229,7 @@
       <SmallerTypeCheck>false</SmallerTypeCheck>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <FloatingPointModel>Fast</FloatingPointModel>
-      <AdditionalOptions>/bigobj</AdditionalOptions>
+      <AdditionalOptions>/bigobj -Zm512</AdditionalOptions>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
@@ -301,7 +301,7 @@
       <SmallerTypeCheck>false</SmallerTypeCheck>
       <FloatingPointModel>Fast</FloatingPointModel>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalOptions>/bigobj</AdditionalOptions>
+      <AdditionalOptions>/bigobj -Zm512</AdditionalOptions>
       <MinimalRebuild>false</MinimalRebuild>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
       <FloatingPointExceptions>false</FloatingPointExceptions>
@@ -384,7 +384,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <Optimization>Disabled</Optimization>
       <DisableLanguageExtensions>false</DisableLanguageExtensions>
-      <AdditionalOptions>/bigobj</AdditionalOptions>
+      <AdditionalOptions>/bigobj -Zm512</AdditionalOptions>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
       <FunctionLevelLinking>false</FunctionLevelLinking>
@@ -456,7 +456,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <Optimization>Disabled</Optimization>
       <DisableLanguageExtensions>false</DisableLanguageExtensions>
-      <AdditionalOptions>/bigobj</AdditionalOptions>
+      <AdditionalOptions>/bigobj -Zm512</AdditionalOptions>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
       <FunctionLevelLinking>false</FunctionLevelLinking>
@@ -527,7 +527,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <Optimization>MaxSpeed</Optimization>
       <DisableLanguageExtensions>false</DisableLanguageExtensions>
-      <AdditionalOptions>/bigobj</AdditionalOptions>
+      <AdditionalOptions>/bigobj -Zm512</AdditionalOptions>
       <MinimalRebuild>false</MinimalRebuild>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>

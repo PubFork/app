@@ -70,11 +70,11 @@ index array_base < TYPE, ARG_TYPE, ALLOCATOR >::remove_at(index nIndex,::count n
    // just remove a range
    ::count nMoveCount = m_nSize - (nUpperBound);
 
-   ALLOCATOR::destruct(&m_pData[nIndex], nCount);
+   ALLOCATOR::destruct(m_pData + nIndex, nCount);
 
    if(nMoveCount)
    {
-      ::aura::memmove_s(&m_pData[nIndex],(size_t)nMoveCount * sizeof(TYPE),&m_pData[nUpperBound],(size_t)nMoveCount * sizeof(TYPE));
+      ::aura::memmove_s(m_pData + nIndex,(size_t)nMoveCount * sizeof(TYPE),m_pData + nUpperBound,(size_t)nMoveCount * sizeof(TYPE));
    }
 
    m_nSize -= nCount;
@@ -200,7 +200,7 @@ index array_base < TYPE, ARG_TYPE, ALLOCATOR >::insert_at(index nIndex,const TYP
 
       ::zero(m_pData + nIndex, nCount* sizeof(TYPE));
 
-      ALLOCATOR::construct(&m_pData[nIndex],nCount);
+      ALLOCATOR::construct(m_pData + nIndex,nCount);
 
    }
 
@@ -212,7 +212,9 @@ index array_base < TYPE, ARG_TYPE, ALLOCATOR >::insert_at(index nIndex,const TYP
    while(nCount--)
    {
 
-      ALLOCATOR::copy(&m_pData[nIndex++], &newElement);
+      ALLOCATOR::copy(m_pData + nIndex, &newElement);
+
+      nIndex++;
 
    }
 
@@ -374,7 +376,7 @@ index array_base < TYPE, ARG_TYPE, ALLOCATOR >::insert_at(index nIndex,array_bas
 
       ::zero(m_pData + nIndex, nCount* sizeof(TYPE));
 
-      ALLOCATOR::construct(&m_pData[nIndex], nCount);
+      ALLOCATOR::construct(m_pData + nIndex, nCount);
 
    }
 
@@ -388,7 +390,9 @@ index array_base < TYPE, ARG_TYPE, ALLOCATOR >::insert_at(index nIndex,array_bas
    while (nCount--)
    {
 
-      ALLOCATOR::copy(&m_pData[nIndex++], &pNewArray->element_at(i));
+      ALLOCATOR::copy(m_pData + nIndex, pNewArray->m_pData + i);
+
+      nIndex++;
 
    }
 
@@ -666,13 +670,13 @@ template < class TYPE, class ARG_TYPE, class ALLOCATOR >
       if(nNewSize > m_nSize)
       {
 
-         ALLOCATOR::construct(&m_pData[m_nSize],nNewSize - m_nSize);
+         ALLOCATOR::construct(m_pData + m_nSize,nNewSize - m_nSize);
 
       }
       else if(m_nSize > nNewSize)
       {
 
-         ALLOCATOR::destruct(&m_pData[nNewSize],m_nSize - nNewSize);
+         ALLOCATOR::destruct(m_pData + nNewSize,m_nSize - nNewSize);
 
       }
 
@@ -782,7 +786,7 @@ template < class TYPE, class ARG_TYPE, class ALLOCATOR >
       if (nNewSize > m_nSize)
       {
 
-         ALLOCATOR::construct(&pNewData[m_nSize], nNewSize - m_nSize);
+         ALLOCATOR::construct(pNewData + m_nSize, nNewSize - m_nSize);
 
       }
 
