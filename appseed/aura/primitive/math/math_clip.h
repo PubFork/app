@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 template < typename T1, typename T2 >
@@ -127,3 +127,22 @@ inline bool clip_convert_divide(T1 & t1, const T2 & t2)
 }
 
 
+template < typename TMIN, typename TMAX, typename T  >
+inline T & clip(const TMIN & min, const TMAX & max, T & t)
+{
+   if (t < min)
+   {
+
+      t = (T) min;
+
+   }
+   else if (t > max)
+   {
+
+      t = (T)max;
+
+   }
+
+   return t;
+
+}
