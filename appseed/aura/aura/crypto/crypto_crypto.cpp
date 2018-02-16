@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 #if defined(HAVE_OPENSSL)
 
@@ -885,7 +885,7 @@ namespace crypto
    ::file::path crypto::get_crypt_key_file_path()
    {
 
-      return System.dir().appdata() / "user/databin.bin";
+      return ::dir::system() / "user" / "databin.bin";
 
    }
 
