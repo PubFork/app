@@ -1,4 +1,4 @@
-// raw_array is an array that does not call constructors or destructor in elements
+﻿// raw_array is an array that does not call constructors or destructor in elements
 // array is an array that call only copy constructor and destructor in elements
 // array is an array that call default constructors, copy constructs and destructors in elements
 template < class TYPE, class ARG_TYPE, class ALLOCATOR = allocator::nodef < TYPE > >
@@ -538,9 +538,9 @@ public:
 
 
    template < typename PRED >
-   void pred_remove(PRED pred)
+   ::count pred_remove(PRED pred)
    {
-
+      ::count cTotal = 0;
       for (int i = 0; i < get_count();)
       {
 
@@ -575,12 +575,14 @@ public:
 
             remove_at(iStart, iCount);
 
+            cTotal += iCount;
+
             i = iStart;
 
          }
 
       }
-
+      return cTotal;
    }
 
    template < typename F >

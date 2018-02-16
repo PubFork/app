@@ -30,14 +30,6 @@ namespace fontopus
          delete m_phttpcookies;
    }
 
-   /*
-   void user::start_veiev_synch()
-   {
-      ::message::message * psignal = new ::message::message();
-      ::emit(get_app(), this, &user::on_end_veiev_synch, this, &user::veiev_synch, psignal);
-   }
-   */
-
 
    bool user::initialize()
    {
@@ -50,6 +42,7 @@ namespace fontopus
       return true;
 
    }
+
 
    bool user::create_ifs()
    {
@@ -74,69 +67,6 @@ namespace fontopus
       return true;
 
    }
-
-   /*
-   void user::veiev_synch(::message::message * pobj)
-   {
-      UNREFERENCED_PARAMETER(pobj);
-      int32_t iRestart = 0;
-restart:
-      if(iRestart >= 10)
-         return;
-      string strPath;
-      var rec = Application.m_simpledb.db().veiev_post().last();
-      rec.propset().set_app(get_app());
-      rec.propset().remove_by_name("message");
-      strPath = "http://europe001.veiev.api.server.ca2.cc/get?" + rec.propset().get_http_post();
-      property_set post(get_app());
-      property_set headers(get_app());
-      property_set set(get_app());
-      set["interactive_user"] = true;
-      string str;
-      Application.http().get(strPath, str, post, headers, set);
-      str.trim();
-      if(str.has_char())
-      {
-         xml::document doc(get_app());
-         doc.load(str);
-         xml::node & node = *doc.get_root();
-         string strThread;
-         if(node.get_name() == "messages" && node.get_children_count() > 0)
-         {
-            for(int32_t i = 0; i < node.get_children_count(); i++)
-            {
-               sp(::xml::node) pnodeMessage = node.child_at(i);
-               string strSender;
-               string strBody;
-               sp(::xml::node) pnodeSender = pnodeMessage->get_child("sender");
-               if(pnodeSender != NULL)
-                  strSender = pnodeSender->get_value();
-//               int32_t iLength = strSender.get_length();
-               sp(::xml::node) pnodeBody = pnodeMessage->get_child("body");
-               if(pnodeBody != NULL)
-               {
-                  strBody = pnodeBody->get_value();
-                  if(pnodeMessage->get_name() == "message")
-                  {
-                     strBody = pnodeBody->get_value();
-                     pnodeBody->attrs()["message"] = strBody;
-                     Application.m_simpledb.db().veiev_post().write(pnodeBody->attrs());
-                  }
-               }
-            }
-            iRestart++;
-            goto restart;
-         }
-      }
-
-
-   }
-
-   void user::on_end_veiev_synch(::message::message * pobj)
-   {
-      UNREFERENCED_PARAMETER(pobj);
-   }
-   */
 
 
    string user::get_sessid(const char * pszText, bool bInteractive)

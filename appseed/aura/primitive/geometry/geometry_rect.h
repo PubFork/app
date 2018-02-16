@@ -112,6 +112,9 @@ public:
    bool intersect_x(LPCRECT lpRect1,LPCRECT lpRect2) NOTHROW;
    bool intersect_y(LPCRECT lpRect1,LPCRECT lpRect2) NOTHROW;
    bool intersect(LPCRECT lpRect1, LPCRECT lpRect2) NOTHROW;
+   bool intersects_x(LPCRECT lpRect) const NOTHROW;
+   bool intersects_y(LPCRECT lpRect) const NOTHROW;
+   bool intersects(LPCRECT lpRect) const NOTHROW;
    rect & intersect(LPCRECT lpRect2) NOTHROW;
    rect intersect(LPCRECT lpRect2) const NOTHROW;
 
@@ -793,4 +796,29 @@ public:
 
 };
 
+
+
+
+inline bool rect::intersects_x(LPCRECT lpRect) const NOTHROW
+{
+   return (left >= lpRect->left && left <= lpRect->right) ||
+         (right >= lpRect->left && right <= lpRect->right) ||
+         (lpRect->left >= left && lpRect->left <= right) ||
+         (lpRect->right >= left && lpRect->right <= right);
+}
+
+inline bool rect::intersects_y(LPCRECT lpRect) const NOTHROW
+{
+   return (top >= lpRect->top && top <= lpRect->bottom) ||
+      (bottom >= lpRect->top && bottom <= lpRect->bottom) ||
+      (lpRect->top >= top && lpRect->top <= bottom) ||
+      (lpRect->bottom >= top && lpRect->bottom <= bottom);
+}
+
+inline bool rect::intersects(LPCRECT lpRect) const NOTHROW
+{
+
+   return intersects_x(lpRect) && intersects_y(lpRect);
+
+}
 

@@ -1,4 +1,4 @@
-#include "framework.h" // from "base/user/user.h"
+﻿#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 
@@ -734,9 +734,17 @@ namespace user
       {
 
          rect rectWindow;
+
          GetWindowRect(rectWindow);
-         get_wnd()->viewport_screen_to_client(rectWindow);
-         pgraphics->SetViewportOrg(rectWindow.top_left());
+
+         if (get_wnd() != NULL)
+         {
+
+            get_wnd()->viewport_screen_to_client(rectWindow);
+
+            pgraphics->SetViewportOrg(rectWindow.top_left());
+
+         }
 
       }
       catch (...)

@@ -57,12 +57,12 @@ namespace fontopus
       if(bOk)
       {
 
-         Sys(papp).crypto().file_set(Sys(papp).dir().appdata() / "cred" / strToken + "_c.data","ok",strToken, papp);
+         Sys(papp).crypto().file_set(::dir::system() / "cred" / strToken + "_c.data","ok",strToken, papp);
 
       }
       else
       {
-         Sys(papp).crypto().file_set(Sys(papp).dir().appdata() / "cred" / strToken + "_c.data","failed",strToken, papp);
+         Sys(papp).crypto().file_set(::dir::system()/ "cred" / strToken + "_c.data","failed",strToken, papp);
 
       }
 
@@ -88,9 +88,9 @@ namespace fontopus
       if((strUsername.has_char() && strPassword.has_char())
             && (strUsernamePrevious != strUsername || strPasswordPrevious != strPassword))
       {
-         dir::mk(Sys(papp).dir().appdata() / "cred");
-         Sys(papp).crypto().file_set(Sys(papp).dir().appdata() / "cred" / strToken + "_a.data",strUsername,"", papp);
-         Sys(papp).crypto().file_set(Sys(papp).dir().appdata() / "cred" / strToken + "_b.data",strPassword,strToken, papp);
+         dir::mk(::dir::system() / "cred");
+         Sys(papp).crypto().file_set(::dir::system() / "cred" / strToken + "_a.data",strUsername,"", papp);
+         Sys(papp).crypto().file_set(::dir::system() / "cred" / strToken + "_b.data",strPassword,strToken, papp);
       }
 
    }
@@ -102,9 +102,9 @@ namespace fontopus
       process_token(strToken);
 
       string str;
-      Sys(papp).crypto().file_get(Sys(papp).dir().appdata() / "cred" / strToken + "_a.data",strUsername,"", papp);
-      Sys(papp).crypto().file_get(Sys(papp).dir().appdata() / "cred" / strToken + "_b.data",strPassword,strToken, papp);
-      Sys(papp).crypto().file_get(Sys(papp).dir().appdata() / "cred" / strToken + "_c.data",str,strToken, papp);
+      Sys(papp).crypto().file_get(::dir::system() / "cred" / strToken + "_a.data",strUsername,"", papp);
+      Sys(papp).crypto().file_get(::dir::system() / "cred" / strToken + "_b.data",strPassword,strToken, papp);
+      Sys(papp).crypto().file_get(::dir::system() / "cred" / strToken + "_c.data",str,strToken, papp);
 
       return str;
 
