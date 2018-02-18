@@ -112,6 +112,8 @@ namespace database
       virtual bool data_set(class id, var & var, update_hint * puh = NULL);
       virtual bool data_set(class id, int32_t i, update_hint * puh = NULL);
       virtual bool data_set(class id, int64_t i, update_hint * puh = NULL);
+      virtual bool data_set(class id, float i, update_hint * puh = NULL);
+      virtual bool data_set(class id, double i, update_hint * puh = NULL);
 #ifdef APPLEOS
       virtual bool data_set(class id, long l, update_hint * puh = NULL);
 #endif
@@ -150,6 +152,8 @@ namespace database
       virtual bool data_get(class id, var & var);
       virtual bool data_get(class id, int32_t & i);
       virtual bool data_get(class id, int64_t & i);
+      virtual bool data_get(class id, float & f);
+      virtual bool data_get(class id, double & d);
 #ifdef APPLEOS
       virtual bool data_get(class id, long & l);
 #endif

@@ -2789,6 +2789,7 @@ CLASS_DECL_AURA int_bool SubtractRect(LPRECT prect, LPCRECT prect1, LPCRECT prec
 /*
 * Message structure
 */
+
 typedef struct tagMESSAGE
 {
    oswindow    hwnd;

@@ -54,7 +54,7 @@ namespace metrowin
       virtual ::file::path netseed();
 
       // stage in ccvotagus spalib
-      virtual ::file::path element();
+      virtual ::file::path install();
 
       //virtual ::file::path module();
       //virtual ::file::path ca2module();
@@ -67,14 +67,6 @@ namespace metrowin
 
       virtual ::file::path appdata();
 
-      virtual ::file::path usersystemappdata(::aura::application *  papp,const string & strPrefix);
-      virtual ::file::path userappdata(::aura::application *  papp);
-      virtual ::file::path userdata(::aura::application *  papp);
-      //virtual ::file::path userfolder(::aura::application *  papp);
-      virtual ::file::path default_os_user_path_prefix(::aura::application *  papp);
-      virtual ::file::path default_userappdata(::aura::application *  papp,const string & strPrefix,const string & strLogin);
-      virtual ::file::path default_userdata(::aura::application *  papp,const string & strPrefix,const string & strLogin);
-      virtual ::file::path default_userfolder(::aura::application *  papp,const string & strPrefix,const string & strLogin);
       virtual ::file::path userquicklaunch(::aura::application *  papp);
       virtual ::file::path userprograms(::aura::application *  papp);
 

@@ -1,5 +1,6 @@
-﻿#include "framework.h"
-
+#include "framework.h"
+#include "aura/aura/os/os.h"
+#include "aura/aura/os/cross.h"
 #ifdef OS64BIT
 
 #define STRFPTR "0x%016x"

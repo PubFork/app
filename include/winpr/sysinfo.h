@@ -256,7 +256,7 @@ WINPR_API BOOL IsProcessorFeaturePresent(DWORD ProcessorFeature);
 
 #endif
 
-#if !defined(_WIN32) || defined(_UWP)
+#if !defined(_WIN32)
 
 WINPR_API BOOL GetVersionExA(LPOSVERSIONINFOA lpVersionInformation);
 WINPR_API BOOL GetVersionExW(LPOSVERSIONINFOW lpVersionInformation);

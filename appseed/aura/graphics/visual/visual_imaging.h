@@ -15,6 +15,10 @@ class CLASS_DECL_AURA imaging :
 public:
 
 
+   int_map < ::visual::fastblur >         m_mapfastblur;
+   int_map < ::memory >                   m_mapmemorySpread;
+
+
    imaging(::aura::application * papp);
    virtual ~imaging();
 

@@ -261,7 +261,7 @@ public:
    uint_ptr read_html_document(const string & str);
 #ifdef WINDOWS
    // parses an HTML document from a file given its HANDLE
-   uint_ptr read_html_file(HANDLE hFile);
+   //uint_ptr read_html_file(HANDLE hFile);
 #else
    // parses an HTML document from a file given its file descriptor
    uint_ptr read_html_file(int32_t fd);

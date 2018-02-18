@@ -1374,16 +1374,6 @@ seq_Preroll_Cleanup:
          }
 
 
-         void sequence::GetMidiDoneData(::music::midi::LPMIDIDONEDATA lpmdd)
-         {
-
-            lpmdd->m_flags = m_flags;
-
-            lpmdd->m_uiSeqPreviousState = m_uiPreviousState;
-
-            lpmdd->m_uiSeqState = m_uiState;
-
-         }
 
 
          int32_t sequence::GetKeyShift()

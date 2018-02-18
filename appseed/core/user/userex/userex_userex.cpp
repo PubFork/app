@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 #ifdef WINDOWSEX
@@ -1641,7 +1641,7 @@ namespace core
 
          }
 
-#if !defined(LINUX) && !defined(APPLEOS) && !defined(VSNORD)
+#if !defined(LINUX) && !defined(APPLEOS) && !defined(VSNORD) && !defined(METROWIN)
          attach_thread_input_to_main_thread(false);
 #endif
 

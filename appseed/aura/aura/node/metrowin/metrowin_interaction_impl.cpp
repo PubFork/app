@@ -7339,8 +7339,6 @@ namespace metrowin
    void interaction_impl::on_after_graphical_update()
    {
 
-      m_pui->on_after_graphical_update();
-
       synch_lock sl(m_pui->m_pmutex);
 
       for (auto p : m_pui->m_uiptraChild)

@@ -1,4 +1,4 @@
-﻿/**
+/**
 	Copyright (c) 2009 James Wynn (james@jameswynn.com)
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,6 +20,8 @@
 	THE SOFTWARE.
 */
 #include "framework.h"
+#include "aura/aura/os/os.h"
+#include "aura/aura/os/cross.h"
 
 
 #if defined(WINDOWSEX)
@@ -27,11 +29,11 @@
 #elif defined(MACOS)
 #include "aura/os/macos/macos_file_watcher.h"
 #elif defined(LINUX)
-//#include "aura/os/linux/linux_file_watcher.h"
+#include "aura/os/linux/linux_file_watcher.h"
 #elif defined(ANDROID)
-//#include "aura/os/android/android_file_watcher.h"
+#include "aura/os/android/android_file_watcher.h"
 #elif defined(METROWIN)
-//#include "aura/os/metrowin/metrowin_file_watcher.h"
+#include "aura/os/metrowin/metrowin_file_watcher.h"
 #endif
 
 

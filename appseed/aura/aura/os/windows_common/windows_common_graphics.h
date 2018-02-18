@@ -1,4 +1,7 @@
-﻿#pragma once
+#pragma once
+
+
+#include "aura/aura/os/windows/windows_comptr.h"
 
 
 #ifdef METROWIN

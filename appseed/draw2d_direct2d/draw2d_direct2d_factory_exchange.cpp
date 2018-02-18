@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 //#ifdef WINDOWSEX
 //
@@ -10,7 +10,7 @@
 CLASS_DECL_AURA void init_draw2d_mutex();
 
 
-extern CLASS_DECL_AURA spa(::draw2d::dib) * g_pdiba;
+//extern CLASS_DECL_AURA spa(::draw2d::dib) * g_pdiba;
 
 
 namespace draw2d_direct2d
@@ -21,15 +21,27 @@ namespace draw2d_direct2d
       ::object(papp)
    {
 
-
-      ::draw2d_direct2d::initialize();
-
-      if (g_pdiba == NULL)
+      try
       {
 
-         g_pdiba = new spa(::draw2d::dib);
+         ::draw2d_direct2d::initialize();
 
       }
+      catch (hresult_exception * pe)
+      {
+
+         TRACE("hresult %08x", pe->m_hresult);
+
+         _rethrow(pe);
+
+      }
+
+      //if (g_pdiba == NULL)
+      //{
+
+      //   g_pdiba = new spa(::draw2d::dib);
+
+      //}
 
 
       //init_draw2d_mutex();

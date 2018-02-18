@@ -1,4 +1,5 @@
-﻿#include "framework.h"
+#include "framework.h"
+#include "aura/aura/os/os.h"
 #ifdef WINDOWSEX
 #include "aura/aura/os/windows/windows_system_interaction_impl.h"
 #endif

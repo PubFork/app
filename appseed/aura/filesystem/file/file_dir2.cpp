@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 #ifdef WINDOWSEX
@@ -88,7 +88,7 @@ namespace windows
 
 #else
 
-   return roaming_app_data() / "program_data";
+   return ca2config() / "program_data";
 
 #endif
 

@@ -199,7 +199,7 @@ bool is_empty(const RECTD * prect)
 {
    return
       prect->left   >= prect->right
-      && prect->top >= prect->bottom;
+      || prect->top >= prect->bottom;
 }
 
 bool contains(const RECTD * prect, POINTD pt)
@@ -451,7 +451,7 @@ bool is_empty(const RECT64 * prect)
 {
    return
       prect->left   >= prect->right
-      && prect->top >= prect->bottom;
+      || prect->top >= prect->bottom;
 }
 
 

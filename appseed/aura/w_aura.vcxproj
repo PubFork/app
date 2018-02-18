@@ -282,7 +282,7 @@
     <ClInclude Include="aura\os\metrowin\metrowin_user_impl.h" />
     <ClInclude Include="aura\os\os.h" />
     <ClInclude Include="aura\os\os_binreloc.h" />
-    <ClInclude Include="aura\os\os_cpp.h" />
+    <ClInclude Include="aura\os\os_os.h" />
     <ClInclude Include="aura\os\os_process.h" />
     <ClInclude Include="aura\os\os_threading.h" />
     <ClInclude Include="aura\os\os_time.h" />
@@ -2268,7 +2268,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="aura\os\metrowin\metrowin_file_std.cpp">
+    <ClCompile Include="aura\os\metrowin\metrowin_file.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
@@ -3407,12 +3407,70 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="graphics\visual\visual_fastblur.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">MaxSpeed</Optimization>
+      <InlineFunctionExpansion Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</IntrinsicFunctions>
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">Speed</FavorSizeOrSpeed>
+      <OmitFramePointers Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</OmitFramePointers>
+      <InlineFunctionExpansion Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">Speed</FavorSizeOrSpeed>
+      <OmitFramePointers Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</OmitFramePointers>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">MaxSpeed</Optimization>
+      <InlineFunctionExpansion Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</IntrinsicFunctions>
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">Speed</FavorSizeOrSpeed>
+      <OmitFramePointers Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</OmitFramePointers>
+      <InlineFunctionExpansion Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">Speed</FavorSizeOrSpeed>
+      <OmitFramePointers Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</OmitFramePointers>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='basis|x64'">MaxSpeed</Optimization>
+      <InlineFunctionExpansion Condition="'$(Configuration)|$(Platform)'=='basis|x64'">AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</IntrinsicFunctions>
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='basis|x64'">Speed</FavorSizeOrSpeed>
+      <OmitFramePointers Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</OmitFramePointers>
+      <InlineFunctionExpansion Condition="'$(Configuration)|$(Platform)'=='stage|x64'">AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='stage|x64'">Speed</FavorSizeOrSpeed>
+      <OmitFramePointers Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</OmitFramePointers>
+      <EnableEnhancedInstructionSet Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <EnableEnhancedInstructionSet Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <EnableEnhancedInstructionSet Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <EnableEnhancedInstructionSet Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <EnableEnhancedInstructionSet Condition="'$(Configuration)|$(Platform)'=='basis|x64'">StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <EnableEnhancedInstructionSet Condition="'$(Configuration)|$(Platform)'=='stage|x64'">StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">Default</BasicRuntimeChecks>
+      <FloatingPointExceptions Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">false</FloatingPointExceptions>
+      <ControlFlowGuard Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">false</ControlFlowGuard>
+      <FunctionLevelLinking Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">false</FunctionLevelLinking>
+      <EnableParallelCodeGeneration Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">false</EnableParallelCodeGeneration>
+      <FloatingPointModel Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">Fast</FloatingPointModel>
+      <FloatingPointExceptions Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">false</FloatingPointExceptions>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">Default</BasicRuntimeChecks>
+      <ControlFlowGuard Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">false</ControlFlowGuard>
+      <FunctionLevelLinking Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">false</FunctionLevelLinking>
+      <EnableParallelCodeGeneration Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">false</EnableParallelCodeGeneration>
+      <FloatingPointModel Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">Fast</FloatingPointModel>
+      <FloatingPointExceptions Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">false</FloatingPointExceptions>
+      <ControlFlowGuard Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">false</ControlFlowGuard>
+      <FunctionLevelLinking Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">false</FunctionLevelLinking>
+      <EnableParallelCodeGeneration Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">false</EnableParallelCodeGeneration>
+      <FloatingPointModel Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">Fast</FloatingPointModel>
+      <FloatingPointExceptions Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">false</FloatingPointExceptions>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='basis|x64'">Default</BasicRuntimeChecks>
+      <ControlFlowGuard Condition="'$(Configuration)|$(Platform)'=='basis|x64'">false</ControlFlowGuard>
+      <FunctionLevelLinking Condition="'$(Configuration)|$(Platform)'=='basis|x64'">false</FunctionLevelLinking>
+      <EnableParallelCodeGeneration Condition="'$(Configuration)|$(Platform)'=='basis|x64'">false</EnableParallelCodeGeneration>
+      <FloatingPointModel Condition="'$(Configuration)|$(Platform)'=='basis|x64'">Fast</FloatingPointModel>
+      <FloatingPointExceptions Condition="'$(Configuration)|$(Platform)'=='basis|x64'">false</FloatingPointExceptions>
+      <ControlFlowGuard Condition="'$(Configuration)|$(Platform)'=='stage|x64'">false</ControlFlowGuard>
+      <FunctionLevelLinking Condition="'$(Configuration)|$(Platform)'=='stage|x64'">false</FunctionLevelLinking>
+      <EnableParallelCodeGeneration Condition="'$(Configuration)|$(Platform)'=='stage|x64'">false</EnableParallelCodeGeneration>
+      <FloatingPointModel Condition="'$(Configuration)|$(Platform)'=='stage|x64'">Fast</FloatingPointModel>
+      <FloatingPointExceptions Condition="'$(Configuration)|$(Platform)'=='stage|x64'">false</FloatingPointExceptions>
     </ClCompile>
     <ClCompile Include="graphics\visual\visual_font.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>

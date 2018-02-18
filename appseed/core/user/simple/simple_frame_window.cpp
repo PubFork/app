@@ -1858,7 +1858,7 @@ void simple_frame_window::_001OnDraw(::draw2d::graphics * pgraphics)
       }
       else
       {
-#ifndef LINUX
+#if !defined(LINUX) && !defined(METROWIN)
          if(rectClient.size() != m_dibBk->size())
          {
             m_dibBk->create(rectClient.size());

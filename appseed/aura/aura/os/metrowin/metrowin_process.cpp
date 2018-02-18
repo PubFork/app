@@ -363,3 +363,23 @@ bool shell_execute_sync(const char * pszFile, const char * pszParams, ::duration
 
 
 
+
+
+
+namespace process
+{
+
+
+   bool set_priority(int32_t priority)
+   {
+
+      return (::SetPriorityClass(::GetCurrentProcess(), get_os_priority_class(priority)) != 0);
+
+
+   }
+
+
+
+
+} // namespace process
+

@@ -138,6 +138,25 @@ namespace database
 
 #endif
 
+   bool client::data_set(class id id, float f, update_hint * puh)
+   {
+      
+      int32_t * pi = (int32_t *) &f;
+
+      return data_set(id, *pi, puh);
+
+   }
+
+
+   bool client::data_set(class id id, double d, update_hint * puh)
+   {
+
+      int64_t * pi = (int64_t *)&d;
+
+      return data_set(id, *pi, puh);
+
+   }
+
 
    bool client::data_set(class id id, const char * lpsz, update_hint * puh)
    {
@@ -231,6 +250,40 @@ namespace database
          return false;
       b = i != 0;
       return true;
+   }
+
+
+   bool client::data_get(class id id, float & f)
+   {
+
+      int32_t * pi = (int32_t *)&f;
+
+      if (!data_get(id, *pi))
+      {
+
+         return false;
+
+      }
+
+      return true;
+
+   }
+
+
+   bool client::data_get(class id id, double & d)
+   {
+      
+      int64_t * pi = (int64_t *) &d;
+
+      if (!data_get(id, *pi))
+      {
+
+         return false;
+
+      }
+
+      return true;
+
    }
 
 

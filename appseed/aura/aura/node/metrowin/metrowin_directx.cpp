@@ -9,7 +9,7 @@ using namespace Microsoft::WRL;
 using namespace Windows::Graphics::Display;
 using namespace D2D1;
 
-extern CLASS_DECL_AURA spa(::draw2d::dib) * g_pdiba;
+//extern CLASS_DECL_AURA spa(::draw2d::dib) * g_pdiba;
 
 namespace metrowin
 {
@@ -638,7 +638,7 @@ namespace metrowin
                // Discard the contents of the depth stencil.
                m_d3dContext->DiscardView(m_d3dDepthStencilView.Get());
 
-               g_pdiba->remove_all();
+               //g_pdiba->remove_all();
 
             }
 

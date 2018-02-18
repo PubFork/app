@@ -432,7 +432,9 @@ namespace message
       if (m_idroute[id].pred_find_first([=](auto & proute)
    {
 
-      return proute->m_pobjectReceiver == pobjectReceiver && proute->m_ptypeReceiver == ptypeReceiver;
+         
+      return proute != NULL &&
+         proute->m_pobjectReceiver == pobjectReceiver && proute->m_ptypeReceiver == ptypeReceiver;
 
    }) >= 0)
       {

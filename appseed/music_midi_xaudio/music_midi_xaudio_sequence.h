@@ -160,7 +160,6 @@ namespace music
             virtual bool IsChangingTempo();
 
             virtual int32_t GetTempoShift();
-            virtual void GetMidiDoneData(::music::midi::LPMIDIDONEDATA lpmdd);
             virtual bool IsInSpecialModeV001();
             virtual bool WasInSpecialModeV001();
             virtual void SetSpecialModeV001Operation(uint32_t uiOperation);

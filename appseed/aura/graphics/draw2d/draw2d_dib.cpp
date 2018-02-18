@@ -4977,6 +4977,20 @@ restart:
    void dib::rotate(dib * pdib, double dAngle, double dScale)
    {
 
+      if (m_pcolorref == NULL)
+      {
+
+         return;
+
+      }
+
+      if (pdib == NULL || pdib->m_pcolorref == NULL || pdib->area() <= 0)
+      {
+
+         return;
+
+      }
+
       int32_t l = MAX(m_size.cx, m_size.cy);
 
       int32_t jmax = MIN(l, m_size.cy / 2);

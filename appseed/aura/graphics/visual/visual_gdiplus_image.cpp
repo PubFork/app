@@ -1,7 +1,9 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include <wincodec.h>
 #ifdef METROWIN
 #include <ShCore.h>
+#include "aura/aura/os/os.h"
+#include "aura/aura/os/cross.h"
 #endif
 
 

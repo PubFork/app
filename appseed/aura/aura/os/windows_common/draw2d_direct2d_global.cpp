@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include "windows_common_graphics.h"
 
 
@@ -130,6 +130,8 @@ namespace draw2d_direct2d
    CLASS_DECL_AURA void initialize()
    {
 
+      defer_co_initialize_ex(true);
+
       g_pdxgidebug = new dxgidebug;
 
       g_pplugin = new plugin;
@@ -173,20 +175,21 @@ namespace draw2d_direct2d
 
       Microsoft::WRL::ComPtr<ID3D11DeviceContext> context;
 
-      ::dx::throw_if_failed(
-      D3D11CreateDevice(
-      nullptr,                    // Specify nullptr to use the default adapter.
-      D3D_DRIVER_TYPE_HARDWARE,
-      0,
-      creationFlags,              // Set debug and Direct2D compatibility flags.
-      featureLevels,              // List of feature levels this app can support.
-      ARRAYSIZE(featureLevels),
-      D3D11_SDK_VERSION,          // Always set this to D3D11_SDK_VERSION for Metro style apps.
-      &device,                    // Returns the Direct3D device created.
-      &g_featurelevel,            // Returns feature level of device created.
-      &context                    // Returns the device immediate context.
-      )
-      );
+      HRESULT hr =
+         D3D11CreateDevice(
+            nullptr,                    // Specify nullptr to use the default adapter.
+            D3D_DRIVER_TYPE_HARDWARE,
+            0,
+            creationFlags,              // Set debug and Direct2D compatibility flags.
+            featureLevels,              // List of feature levels this app can support.
+            ARRAYSIZE(featureLevels),
+            D3D11_SDK_VERSION,          // Always set this to D3D11_SDK_VERSION for Metro style apps.
+            &device,                    // Returns the Direct3D device created.
+            &g_featurelevel,            // Returns feature level of device created.
+            &context                    // Returns the device immediate context.
+         );
+
+      ::dx::throw_if_failed(hr);
 
       // Get the Direct3D 11.1 API device and context interfaces.
       ::dx::throw_if_failed(
