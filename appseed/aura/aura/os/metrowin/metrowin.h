@@ -49,16 +49,6 @@ END_EXTERN_C
 //CLASS_DECL_AURA HANDLE WINAPI CreateMutexW(    _In_opt_ LPSECURITY_ATTRIBUTES lpMutexAttributes,    _In_ BOOL bInitialOwner,    _In_opt_ LPCWSTR lpName    );
 
 
-#ifdef __cplusplus
-
-CLASS_DECL_AURA string normalize_path(const char * lpcszPath);
-
-#define LOG_THIS_TAG (typeid(*this).name())
-#define LOG_MEMBER_PREFIX __FUNCTION__
-
-
-#endif
-
 HANDLE create_file(const char * lpcszFileName, DWORD dwDesiredAcces, DWORD dwShareMode, LPSECURITY_ATTRIBUTES lpSA, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile);
 
 

@@ -10,14 +10,6 @@
 #include "macos_main.h"
 
 
-#ifdef cplusplus
-
-#define LOG_THIS_TAG (typeid(*this).name())
-#define LOG_MEMBER_PREFIX __FUNCTION__
-
-#endif
-
-
 bool ns_open_file(const char * psz);
 void ns_set_this_default_browser();
 
