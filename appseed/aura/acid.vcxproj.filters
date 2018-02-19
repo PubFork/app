@@ -4582,6 +4582,9 @@
     <ClCompile Include="aura\os\windows\_os_windows.cpp">
       <Filter>Source Files\aura\os\windows</Filter>
     </ClCompile>
+    <ClCompile Include="graphics\visual\visual_fastblur.cpp">
+      <Filter>Source Files\graphics\visual</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="multithreading\multithreading.inl">
