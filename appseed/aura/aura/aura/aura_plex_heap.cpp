@@ -9,6 +9,9 @@ void Alloc_check_pointer_in_cpp(void * p);
 
 void Free_check_pointer_in_cpp(void * p);
 
+
+#ifdef DEBUG
+
 template < const int m_iSize >
 class good_guard
 {
@@ -91,6 +94,9 @@ void setup_plex_heap_alloc_sync_node_palace_guard(plex_heap_alloc_sync::node * p
    memset(&pnode->m_puchPalaceLeft[sizeof(*pnode) + nAllocSize], 0xCD, 32);
 
 }
+
+
+#endif
 
 
 plex_heap * plex_heap::create(plex_heap*& pHead, uint_ptr nMax, uint_ptr cbElement)
@@ -345,13 +351,17 @@ void plex_heap_alloc_sync::Free(void * pParam)
 
    }
 
-   void * p = ((byte*)pParam) - (16 + sizeof(node *) + 16);
-
-   node * pnode = (node *) p;
-
 #ifdef DEBUG
 
+   void * p = ((byte*)pParam) - (16 + sizeof(node *) + 16);
+
+   node * pnode = (node *)p;
+
    defer_check_plex_heap_alloc_sync_node_palace_guard(pnode, m_nAllocSize);
+
+#else
+
+   node * pnode = (node *)pParam;
 
 #endif
 

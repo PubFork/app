@@ -1395,7 +1395,7 @@ retry:
 
             }*/
 
-      single_lock slFontopus(Session.fontopus()->m_pmutex);
+      single_lock slFontopus(Session.fontopus() ? Session.fontopus()->m_pmutex : NULL);
 
       string strIp;
 

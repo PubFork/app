@@ -36,14 +36,14 @@ int_bool read_resource_as_file_dup(const char * pszFile, HINSTANCE hinstance, UI
 
       dir::mk(dir::name(pszFile));
 
-      file = fopen_dup(pszFile, "r");
+      file = fopen_dup(pszFile, "wb");
 
       if(file != NULL)
       {
 
          auto dwWritten = fwrite(pResource, 1, dwResourseSize, file);
 
-         CloseHandle(file);
+         fclose(file);
 
          bOk = dwWritten == dwResourseSize;
 
