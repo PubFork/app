@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ace_alloc.c" />
-    <ClCompile Include="version.c" />
+    <ClCompile Include="ace_alloc.cpp" />
+    <ClCompile Include="version.cpp" />
     <ClCompile Include="_ace_new.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace boot
@@ -14,12 +14,7 @@ namespace boot
 
 struct oswindow_data;
 
-
-typedef ref_array < oswindow_data > oswindow_dataptra;
-
-
-
-
+typedef pointer_array < oswindow_data * > oswindow_dataptra;
 
 namespace boot
 {
@@ -43,7 +38,7 @@ namespace user
 } // namespace user
 
 
-typedef ref_array < oswindow_data > oswindow_dataptra;
+typedef pointer_array < oswindow_data > oswindow_dataptra;
 
 /*
 * Copyright (C) 2010 The Android Open Source Project

@@ -275,7 +275,9 @@ typedef unsigned int * int_ptr_atomic;
 #error "What is OSBIT?"
 #endif
 #else
-#ifdef RASPBIAN
+#ifdef ANDROID
+typedef int * int_ptr_atomic;
+#elif defined(RASPBIAN)
 typedef unsigned __int64 * int_ptr_atomic;
 #elif defined(LINUX)
 typedef unsigned __int64 * int_ptr_atomic;

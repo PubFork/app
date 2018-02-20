@@ -9,6 +9,7 @@
 // C-includes
 
 #if defined(ANDROID)
+#include "aura/aura/os/ansios/ansios.h"
 #include "aura/aura/os/android/android.h"
 #elif defined(MACOS)
 #include "aura/aura/os/ansios/ansios_file.h"

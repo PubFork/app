@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #include "axis/os/android/android.h"
@@ -16,7 +16,7 @@ END_EXTERN_C
 #endif // VSNORD
 
 
-#include "base/graphics/graphics_window_buffer.h"
+//#include "base/graphics/graphics_window_buffer.h"
 
 //#include "android_window_android.h"
 //#include "android_window_impl.h"

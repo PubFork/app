@@ -1,7 +1,7 @@
 ﻿#include "framework.h"
 
 
-#include "android_base.cpp"
+//#include "android_base.cpp"
 #include "android_base_file.cpp"
 #include "android_c.cpp"
 #include "android_cross_win_file.cpp"

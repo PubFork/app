@@ -55,9 +55,6 @@
     <ClCompile Include="aura\os\cross\windows\cross_windows_crt.cpp">
       <Filter>Source Files\aura\os\cross\windows</Filter>
     </ClCompile>
-    <ClCompile Include="aura\os\android\android_base.cpp">
-      <Filter>Source Files\aura\os\android</Filter>
-    </ClCompile>
     <ClCompile Include="aura\os\android\android_base_file.cpp">
       <Filter>Source Files\aura\os\android</Filter>
     </ClCompile>
@@ -693,69 +690,6 @@
     </ClCompile>
     <ClCompile Include="filesystem\filesystem\filesystem_system.cpp">
       <Filter>Source Files\filesystem\filesystem</Filter>
-    </ClCompile>
-    <ClCompile Include="user\colorertake5\colorertake5_base_editor.cpp">
-      <Filter>Source Files\user\colorertake5</Filter>
-    </ClCompile>
-    <ClCompile Include="user\colorertake5\colorertake5_colorertake5.cpp">
-      <Filter>Source Files\user\colorertake5</Filter>
-    </ClCompile>
-    <ClCompile Include="user\colorertake5\colorertake5_default_error_handler.cpp">
-      <Filter>Source Files\user\colorertake5</Filter>
-    </ClCompile>
-    <ClCompile Include="user\colorertake5\colorertake5_error_handler_writer.cpp">
-      <Filter>Source Files\user\colorertake5</Filter>
-    </ClCompile>
-    <ClCompile Include="user\colorertake5\colorertake5_exception.cpp">
-      <Filter>Source Files\user\colorertake5</Filter>
-    </ClCompile>
-    <ClCompile Include="user\colorertake5\colorertake5_hrc_parser_helpers.cpp">
-      <Filter>Source Files\user\colorertake5</Filter>
-    </ClCompile>
-    <ClCompile Include="user\colorertake5\colorertake5_hrc_parser_impl.cpp">
-      <Filter>Source Files\user\colorertake5</Filter>
-    </ClCompile>
-    <ClCompile Include="user\colorertake5\colorertake5_line_regions_compact_support.cpp">
-      <Filter>Source Files\user\colorertake5</Filter>
-    </ClCompile>
-    <ClCompile Include="user\colorertake5\colorertake5_line_regions_support.cpp">
-      <Filter>Source Files\user\colorertake5</Filter>
-    </ClCompile>
-    <ClCompile Include="user\colorertake5\colorertake5_line_source.cpp">
-      <Filter>Source Files\user\colorertake5</Filter>
-    </ClCompile>
-    <ClCompile Include="user\colorertake5\colorertake5_logging.cpp">
-      <Filter>Source Files\user\colorertake5</Filter>
-    </ClCompile>
-    <ClCompile Include="user\colorertake5\colorertake5_outliner.cpp">
-      <Filter>Source Files\user\colorertake5</Filter>
-    </ClCompile>
-    <ClCompile Include="user\colorertake5\colorertake5_parsed_line_writer.cpp">
-      <Filter>Source Files\user\colorertake5</Filter>
-    </ClCompile>
-    <ClCompile Include="user\colorertake5\colorertake5_parser_factory.cpp">
-      <Filter>Source Files\user\colorertake5</Filter>
-    </ClCompile>
-    <ClCompile Include="user\colorertake5\colorertake5_region_handler.cpp">
-      <Filter>Source Files\user\colorertake5</Filter>
-    </ClCompile>
-    <ClCompile Include="user\colorertake5\colorertake5_region_mapper_impl.cpp">
-      <Filter>Source Files\user\colorertake5</Filter>
-    </ClCompile>
-    <ClCompile Include="user\colorertake5\colorertake5_styled_hrd_mapper.cpp">
-      <Filter>Source Files\user\colorertake5</Filter>
-    </ClCompile>
-    <ClCompile Include="user\colorertake5\colorertake5_text_hrd_mapper.cpp">
-      <Filter>Source Files\user\colorertake5</Filter>
-    </ClCompile>
-    <ClCompile Include="user\colorertake5\colorertake5_text_lines.cpp">
-      <Filter>Source Files\user\colorertake5</Filter>
-    </ClCompile>
-    <ClCompile Include="user\colorertake5\colorertake5_text_parser_helpers.cpp">
-      <Filter>Source Files\user\colorertake5</Filter>
-    </ClCompile>
-    <ClCompile Include="user\colorertake5\colorertake5_text_parser_impl.cpp">
-      <Filter>Source Files\user\colorertake5</Filter>
     </ClCompile>
     <ClCompile Include="aura\aura\aura_department.cpp">
       <Filter>Source Files\aura\aura</Filter>
@@ -1866,9 +1800,6 @@
     </ClCompile>
     <ClCompile Include="aura\os\android\_os_android.cpp">
       <Filter>Source Files\aura\os\android</Filter>
-    </ClCompile>
-    <ClCompile Include="user\colorertake5\_colorertake5.cpp">
-      <Filter>Source Files\user\colorertake5</Filter>
     </ClCompile>
     <ClCompile Include="filesystem\file\_file.cpp">
       <Filter>Source Files\filesystem\file</Filter>
@@ -4420,9 +4351,6 @@
     </Filter>
     <Filter Include="Source Files\user\simple">
       <UniqueIdentifier>{64a738f5-eb69-44ef-b937-de0377ddf654}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\user\colorertake5">
-      <UniqueIdentifier>{08b823fa-81de-49dc-8eeb-c2fd4314c2a9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\filesystem">
       <UniqueIdentifier>{4e86ef45-2683-49ea-bcf5-a1f98ee1ba2c}</UniqueIdentifier>
