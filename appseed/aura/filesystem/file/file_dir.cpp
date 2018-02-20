@@ -1,5 +1,6 @@
-﻿#include "framework.h"
+#include "framework.h"
 //#include <Shlobj.h>
+#include "aura/aura/os/os.h"
 #if defined(APPLEOS)
 #include <sys/stat.h>
 #include <dirent.h>

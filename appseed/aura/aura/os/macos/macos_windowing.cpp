@@ -8,7 +8,7 @@
 
 #include "framework.h"
 #include "macos_window_impl.h"
-
+#include "aura/aura/os/os.h"
 
 oswindow_dataptra * g_poswindowdataptra = NULL;
 

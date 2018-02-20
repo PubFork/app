@@ -10,3 +10,6 @@
 
 #include "apple_debug.h"
 
+
+
+string apple_app_module_path();

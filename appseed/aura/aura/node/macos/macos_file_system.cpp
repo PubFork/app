@@ -1,5 +1,7 @@
 #include "framework.h"
 //#include "macos.h"
+#include "aura/aura/os/os.h"
+#include "aura/aura/os/os_os.h"
 
 
 #include <sys/stat.h>
@@ -85,39 +87,8 @@ namespace macos
    bool file_system::update_module_path()
    {
       
-      string str;
       
-      char * lpsz = str.GetBufferSetLength(1024);
-      
-      uint32_t size = 1024;
-      
-      if(_NSGetExecutablePath(lpsz, &size) == 0)
-      {
-         
-         str.ReleaseBuffer();
-         
-      }
-      else
-      {
-         
-         lpsz = str.GetBufferSetLength(size);
-         
-         if(_NSGetExecutablePath(lpsz, &size) == 0)
-         {
-            
-            str.ReleaseBuffer();
-            
-         }
-         else
-         {
-            
-            return false;
-            
-         }
-         
-      }
-      
-      m_pathModule = str;
+      m_pathModule = apple_app_module_path();
       
       m_pathCa2Module = ca2_module_dup();
       

@@ -1,4 +1,6 @@
 #include "framework.h"
+#include "aura/aura/os/os.h"
+#include "aura/aura/os/os_os.h"
 #include <dlfcn.h>
 #ifdef __APPLE__
 #include <mach-o/dyld.h>

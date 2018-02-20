@@ -1,4 +1,4 @@
-﻿#include "framework.h" // from "aura/net/net_sockets.h"
+#include "framework.h" // from "aura/net/net_sockets.h"
 #include "aura/net/net_sockets.h"
 #include "aura/net/sockets/bsd/basic/sockets_ssl_context.h"
 #include "openssl/ssl.h"
@@ -101,7 +101,7 @@ int client_send(memory & m, int fin, memory & memory, bool useMask)
 
    int64_t message_size = memory.get_size();
 
-   int length = 2 + message_size;
+   int length = (int) ( 2 + message_size);
 
    if (message_size >= 65536)
    {

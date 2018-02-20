@@ -1,4 +1,6 @@
-﻿#include "framework.h"
+#include "framework.h"
+#include "aura/aura/os/os.h"
+#include "aura/aura/os/os_os.h"
 
 
 namespace aura
@@ -20,7 +22,7 @@ namespace aura
 
 #ifdef MACOS
 
-      ::file::path pathBase = ::dir::ca2_user();
+      ::file::path pathBase = ::dir::ca2config();
 
       if(pathBase.is_empty())
       {

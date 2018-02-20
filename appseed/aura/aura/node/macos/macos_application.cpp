@@ -1,5 +1,6 @@
 #include "framework.h"
 #include "macos.h"
+#include "aura/aura/os/os.h"
 #include <mach-o/dyld.h>
 #include <sys/time.h>
 
@@ -328,13 +329,13 @@ namespace aura
    }
 
    
-   bool application::os_on_start_application()
-   {
-      
-      return true;
-      
-   }
-   
+//   bool application::os_on_start_application()
+//   {
+//      
+//      return true;
+//      
+//   }
+//   
 
 //} // namespace macos
     

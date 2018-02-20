@@ -1,6 +1,9 @@
 #include "framework.h"
 #include <time.h>
 
+#include "aura/aura/os/os.h"
+#include "aura/aura/os/os_os.h"
+
 extern bool g_bOutputDebugString;
 
 typedef int_bool DEFER_INIT();

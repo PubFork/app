@@ -7,6 +7,8 @@
 //
 
 #import "macos_user.h"
+#include "aura/aura/os/os.h"
+#include "aura/aura/os/os_os.h"
 
 
 WINBOOL get_nswindow_rect(oswindow oswindow, LPRECT lprect);

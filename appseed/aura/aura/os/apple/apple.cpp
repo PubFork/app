@@ -8,6 +8,8 @@
 
 #include "framework.h"
 #include "apple_main.h"
+#include "aura/aura/os/os.h"
+#include "aura/aura/os/os_os.h"
 
 
 char * mm_ca2_command_line();

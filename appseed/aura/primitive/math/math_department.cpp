@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include <time.h>
 //#include <math.h>
 
@@ -21,8 +21,8 @@ namespace math
 #endif
 
       math_os_data(LPBYTE pbData = NULL)
-#ifdef WINDOWSEX
       {
+#ifdef WINDOWSEX
          m_hCryptProv = NULL;
          m_hOriginalKey = NULL;
          m_hDuplicateKey = NULL;

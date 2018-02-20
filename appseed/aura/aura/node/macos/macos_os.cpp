@@ -1,6 +1,7 @@
 #include "framework.h"
 #include "macos.h"
-
+#include "aura/aura/os/os.h"
+#include "aura/aura/os/os_os.h"
 #if defined(MACOS)
 #include <sys/stat.h>
 #endif
@@ -959,7 +960,7 @@ namespace macos
          
          ::file::path p;
          
-         p = ::dir::ca2_user();
+         p = ::dir::ca2config();
          
          p /= "mypath" / phandler->m_spcommandline->m_varQuery.propset()["app"].get_string() + ".txt";
          
@@ -972,13 +973,13 @@ namespace macos
          if(iFind > 0)
          {
             
-            p = ::dir::ca2_user;
+            p = ::dir::ca2config();
             
             p /= "mypath" / phandler->m_spcommandline->m_varQuery.propset()["app"].get_string() + "-app";
             
             ::file::path p2;
             
-            p2 = ::dir::ca2_user();
+            p2 = ::dir::ca2config();
             
             p2 /= "mypath" / ::file::path(phandler->m_spcommandline->m_varQuery.propset()["app"].get_string()).folder()/ ::file::path(strApp.Left(iFind + strlen(".app"))).name();
             

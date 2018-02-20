@@ -1,11 +1,14 @@
 #include "framework.h"
+#include "aura/aura/os/os.h"
+#include "aura/aura/os/os_os.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <signal.h>
 #include <errno.h>
 #include <string.h>
 #include <spawn.h>
-
+#include <mach-o/dyld.h>
 
 ::file::path macos_app_path(string strApp)
 {
@@ -247,8 +250,45 @@ bool shell_execute_sync(const char * pszFile, const char * pszParams, ::duration
    
 }
 
+string apple_app_module_path()
+{
 
+string str;
 
+char * lpsz = str.GetBufferSetLength(1024);
+
+uint32_t size = 1024;
+
+if(_NSGetExecutablePath(lpsz, &size) == 0)
+{
+   
+   str.ReleaseBuffer();
+   
+}
+else
+{
+   
+   lpsz = str.GetBufferSetLength(size);
+   
+   if(_NSGetExecutablePath(lpsz, &size) == 0)
+   {
+      
+      str.ReleaseBuffer();
+      
+   }
+   else
+   {
+      
+      return "";
+      
+   }
+   
+}
+
+   
+   return str;
+
+}
 
 CLASS_DECL_AURA bool is_shared_library_busy(uint32_t processid, const stringa & stra)
 {
@@ -271,4 +311,8 @@ void os_term_application()
    ns_app_terminate();
    
 }
+
+
+
+
 

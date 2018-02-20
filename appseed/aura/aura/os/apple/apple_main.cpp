@@ -6,6 +6,8 @@
 //
 
 #include "framework.h"
+#include "aura/aura/os/os.h"
+#include "aura/aura/os/os_os.h"
 #include "apple.h"
 
 

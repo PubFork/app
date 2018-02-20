@@ -1,4 +1,6 @@
 #include "framework.h"
+#include "aura/aura/os/os.h"
+#include "aura/aura/os/os_os.h"
 
 
 wait_result::wait_result(uint32_t value, ::count objectCount)

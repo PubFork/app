@@ -1587,7 +1587,6 @@
 		9A6FB0DD1F5C7D5400AF31B2 /* ios_multithreading.h in Headers */ = {isa = PBXBuildFile; fileRef = 077A05501B4D70B7001C85FF /* ios_multithreading.h */; };
 		9A6FB0DE1F5C7D5400AF31B2 /* ios_process.h in Headers */ = {isa = PBXBuildFile; fileRef = 077A05541B4D70B7001C85FF /* ios_process.h */; };
 		9A6FB0DF1F5C7D5400AF31B2 /* ios_window_boot.h in Headers */ = {isa = PBXBuildFile; fileRef = 077A055C1B4D70B7001C85FF /* ios_window_boot.h */; };
-		9A6FB0FD1F5C81EF00AF31B2 /* os_cpp.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A6FB0F91F5C81EF00AF31B2 /* os_cpp.h */; };
 		9A6FB0FE1F5C81EF00AF31B2 /* os_threading.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A6FB0FA1F5C81EF00AF31B2 /* os_threading.h */; };
 		9A6FB0FF1F5C81EF00AF31B2 /* os_time.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A6FB0FB1F5C81EF00AF31B2 /* os_time.h */; };
 		9A6FB1001F5C81EF00AF31B2 /* os2.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A6FB0FC1F5C81EF00AF31B2 /* os2.h */; };
@@ -3933,7 +3932,6 @@
 		9A6FB09D1F5C7A9B00AF31B2 /* xml_xmlite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = xml_xmlite.cpp; sourceTree = "<group>"; };
 		9A6FB09E1F5C7A9B00AF31B2 /* xml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = xml.cpp; sourceTree = "<group>"; };
 		9A6FB09F1F5C7A9B00AF31B2 /* xml.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = xml.inl; sourceTree = "<group>"; };
-		9A6FB0F91F5C81EF00AF31B2 /* os_cpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = os_cpp.h; sourceTree = "<group>"; };
 		9A6FB0FA1F5C81EF00AF31B2 /* os_threading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = os_threading.h; sourceTree = "<group>"; };
 		9A6FB0FB1F5C81EF00AF31B2 /* os_time.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = os_time.h; sourceTree = "<group>"; };
 		9A6FB0FC1F5C81EF00AF31B2 /* os2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = os2.h; sourceTree = "<group>"; };
@@ -5807,7 +5805,6 @@
 				9A1640AC19C4A4CE00966C5E /* os_aura.h */,
 				9A4B9C301E149015000D0E92 /* os_debug.cpp */,
 				9A6FB0FB1F5C81EF00AF31B2 /* os_time.h */,
-				9A6FB0F91F5C81EF00AF31B2 /* os_cpp.h */,
 				9A6FB0FC1F5C81EF00AF31B2 /* os2.h */,
 				9A163FC519C4A4CD00966C5E /* cross.h */,
 				9A6FACD81F5C71D600AF31B2 /* os_binreloc.cpp */,
@@ -7756,7 +7753,6 @@
 				9AF4C3531F836F8300197385 /* aura_file_watcher_impl.h in Headers */,
 				9AF4C3931F836F8400197385 /* aura_os.h in Headers */,
 				9A6FB0581F5C79CF00AF31B2 /* file_ostream.h in Headers */,
-				9A6FB0FD1F5C81EF00AF31B2 /* os_cpp.h in Headers */,
 				9AF4C3CF1F836F8400197385 /* aura_trace.h in Headers */,
 				9AE4C8191996D83200E50F88 /* file_folder_watch.h in Headers */,
 				9A1641EC19C4A4CE00966C5E /* exception2.h in Headers */,

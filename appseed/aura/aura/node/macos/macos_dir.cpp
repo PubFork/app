@@ -1,4 +1,7 @@
 #include "framework.h"
+#include "aura/aura/os/os.h"
+#include "aura/aura/os/os_os.h"
+
 #include "macos.h"
 
 const char * ns_user_local_desktop_folder();
@@ -565,12 +568,12 @@ namespace macos
 //   }
 
 
-   ::file::path dir::default_os_user_path_prefix(::aura::application *   papp)
-   {
-      
-      return ::getlogin();
-      
-   }
+//   ::file::path dir::default_os_user_path_prefix(::aura::application *   papp)
+//   {
+//
+//      return ::getlogin();
+//
+//   }
    
 
 //   string dir::default_userappdata(::aura::application *   papp, const char * lpcszPrefix, const char * lpcszLogin, const char * pszRelativePath)
@@ -848,7 +851,7 @@ namespace macos
     
     ::file::path dir::stage()
     {
-        return element() / "stage";
+        return install() / "stage";
     }
     
     ::file::path dir::stageapp()
@@ -1152,7 +1155,7 @@ namespace macos
  
       string strRelative;
       
-      strRelative = element();
+      strRelative = install();
       //index iFind = strRelative.find(':');
       //if(iFind >= 0)
       {
@@ -1167,7 +1170,7 @@ namespace macos
       
       m_strCommonAppData = str / strRelative / "commonappdata";
       
-      m_pathUser = str / strRelative / "user";
+      //m_pathUser = str / strRelative / "user";
       
       xml::document doc(get_app());
           
@@ -1193,7 +1196,7 @@ namespace macos
           m_strTimeFolder = ::file::path(getenv("HOME")) /"Library" / "ca2"/"time";
           
        if(m_strNetSeedFolder.is_empty())
-          m_strNetSeedFolder = element() / "net";
+          m_strNetSeedFolder = install() / "net";
           
        mk(m_strTimeFolder, get_app());
           
@@ -1276,22 +1279,22 @@ namespace macos
    }
 
     
-    ::file::path dir::usersystemappdata(::aura::application * papp,const char * lpcszPrefix)
-    {
-        UNREFERENCED_PARAMETER(papp);
-        return appdata() / lpcszPrefix;
-    }
-    
-    ::file::path dir::appdata(::aura::application * papp)
-    {
-        return userfolder(papp) / "appdata";
-    }
-    
-    ::file::path dir::userdata(::aura::application * papp)
-    {
-        return userfolder(papp) / "data";
-    }
-    
+//    ::file::path dir::usersystemappdata(::aura::application * papp,const char * lpcszPrefix)
+//    {
+//        UNREFERENCED_PARAMETER(papp);
+//        return appdata() / lpcszPrefix;
+//    }
+//
+//    ::file::path dir::appdata(::aura::application * papp)
+//    {
+//        return userfolder(papp) / "appdata";
+//    }
+//
+//    ::file::path dir::userdata(::aura::application * papp)
+//    {
+//        return userfolder(papp) / "data";
+//    }
+   
 //    ::file::path dir::userfolder(::aura::application * papp)
 //    {
 //        
@@ -1314,22 +1317,22 @@ namespace macos
 //        return ::str::international::unicode_to_utf8(buf);
 //    }
    
-    ::file::path dir::default_userappdata(::aura::application * papp,const string & lpcszPrefix,const string & lpcszLogin)
-    {
-        return default_userfolder(papp, lpcszPrefix, lpcszLogin) /  "appdata" ;
-    }
-    
-    ::file::path dir::default_userdata(::aura::application * papp,const string & lpcszPrefix,const string & lpcszLogin)
-    {
-        return default_userfolder(papp, lpcszPrefix, lpcszLogin) / "data";
-    }
-    
-    ::file::path dir::default_userfolder(::aura::application * papp,const string & lpcszPrefix,const string & lpcszLogin)
-    {
-        
-        return userfolder(papp);
-        
-    }
+//    ::file::path dir::default_userappdata(::aura::application * papp,const string & lpcszPrefix,const string & lpcszLogin)
+//    {
+//        return default_userfolder(papp, lpcszPrefix, lpcszLogin) /  "appdata" ;
+//    }
+//    
+//    ::file::path dir::default_userdata(::aura::application * papp,const string & lpcszPrefix,const string & lpcszLogin)
+//    {
+//        return default_userfolder(papp, lpcszPrefix, lpcszLogin) / "data";
+//    }
+//    
+//    ::file::path dir::default_userfolder(::aura::application * papp,const string & lpcszPrefix,const string & lpcszLogin)
+//    {
+//        
+//        return userfolder(papp);
+//        
+//    }
     
     ::file::path dir::userquicklaunch(::aura::application * papp)
     {

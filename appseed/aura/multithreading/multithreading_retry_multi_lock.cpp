@@ -1,4 +1,6 @@
 #include "framework.h"
+#include "aura/aura/os/os.h"
+#include "aura/aura/os/os_os.h"
 
 
 retry_multi_lock::retry_multi_lock(spa(sync_object) syncobjectptra, duration durationLock, duration durationSleep, int32_t iRetry, bool bInitialLock)

@@ -1,4 +1,4 @@
-﻿/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 //
 //   All Pure and Aural ca2 and God and Gods and Goddssesses and devils's blessings
 //
@@ -134,7 +134,7 @@ inline int type_is_null(const T * p)
 #include "aura/primitive/math/math_mkint_c.h"
 
        // C-includes
-       //#include "aura/aura/os/os.h"
+       #include "aura/aura/os/os.h"
 
 
 #undef MIN
@@ -233,7 +233,11 @@ LPBOOL  lpUsedDefaultChar);
 
 
 END_EXTERN_C
+           
+           
+#if !defined(APPLEOS)
 int ftruncate(int file, file_size_t len);
+#endif
 
 CLASS_DECL_AURA int32_t get_os_thread_priority(int32_t iCa2Priority);
 CLASS_DECL_AURA int32_t get_os_priority_class(int32_t iCa2Priority);
