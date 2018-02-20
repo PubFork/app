@@ -1697,6 +1697,9 @@ inline void string_format::format(const char * & s,const T & value,Args... args)
 #include "aura/aura/aura/aura_number.h"
 
 
+#include "aura/aura/aura/aura_debug.h"
+
+
 #include "aura/aura/aura/aura_printf.h"
 #include "aura/aura/aura/aura_sprintf.h"
 

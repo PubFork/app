@@ -4,41 +4,6 @@
 
 #pragma once
 
-CLASS_DECL_AURA::Windows::Storage::StorageFolder ^ winrt_folder2(string & strPath, KnownLibraryId id)
-{
-
-   auto library  = ::wait(::Windows::Storage::StorageLibrary::GetLibraryAsync(id));
-
-   if (library == nullptr)
-   {
-
-      return nullptr;
-
-   }
-
-   for (int i = 0; i < library->Folders->Size; i++)
-   {
-
-      auto folder = library->Folders->GetAt(i);
-
-      string strFolder = string(begin(folder->Path));
-
-      if (::str::begins_eat_ci(strPath, strFolder))
-      {
-
-         ::str::begins_eat_ci(strPath, "/");
-         ::str::begins_eat_ci(strPath, "\\");
-
-         return folder;
-
-      }
-
-   }
-
-   return nullptr;
-
-}
-
 
 CLASS_DECL_AURA::Windows::Storage::StorageFolder ^ winrt_folder1(string & strPath, string & strPrefix)
 {
@@ -93,17 +58,6 @@ CLASS_DECL_AURA::Windows::Storage::StorageFolder ^ winrt_folder1(string & strPat
    }
    else
    {
-
-      ::Windows::Storage::StorageFolder ^ folder = winrt_folder2(strPath, KnownLibraryId::Music);
-      
-         if (folder != nullptr)
-         {
-            strPrefix= "";
-
-            return folder;
-
-         }
-
 
       return nullptr;
 

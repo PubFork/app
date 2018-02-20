@@ -2707,10 +2707,11 @@ bool imaging::CreateBitmap(::draw2d::graphics *pgraphics,::draw2d::bitmap * pbit
    {
       pgraphics->FillSolidRect(rect(0,0,cxout,cyout),RGB(255,196,255));
    }
-   
    return true;
-
 }
+
+
+
 
 
 bool imaging::blur(::draw2d::graphics *pdcDst,point ptDst,size size,::draw2d::graphics * pdcSrc,point ptSrc,int32_t iRadius)
@@ -2719,57 +2720,16 @@ bool imaging::blur(::draw2d::graphics *pdcDst,point ptDst,size size,::draw2d::gr
    if(size.cx <= 0 || size.cy <= 0)
       return true;
 
-   synch_lock slImaging(m_pmutex);
+   ::visual::fastblur f(allocer());
 
-   ::visual::fastblur & f = m_mapfastblur[iRadius];
-
-   if (f.is_null())
-   {
-
-      f.alloc(allocer());
-
-      f->defer_create_mutex();
-
-   }
-
-   slImaging.unlock();
-
-   synch_lock sl(f->m_pmutex);
-
-   ::size sizeDib(size);
-
-   if (f.is_set())
-   {
-      
-      sizeDib.cx = MAX(sizeDib.cx, m_mapfastblur[iRadius]->m_size.cx);
-
-      sizeDib.cy = MAX(sizeDib.cy, m_mapfastblur[iRadius]->m_size.cy);
-
-   }
-
-   sizeDib.cx = (sizeDib.cx + 255) / 256 * 256;
-
-   sizeDib.cy = (sizeDib.cy + 255) / 256 * 256;
-
-   if (sizeDib != f->m_size)
-   {
-
-      if (!f.initialize(sizeDib, abs(iRadius)))
-      {
-
-         return false;
-
-      }
-
-   }
+   if(!f.initialize(size,abs(iRadius)))
+      return false;
 
    f->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
 
-   f->get_graphics()->FillSolidRect(0, 0, sizeDib.cx, sizeDib.cy, ARGB(0, 0, 0, 0));
-
    f->from(null_point(),pdcSrc,ptSrc,size);
 
-   f.blur(size.cx, size.cy);
+   f.blur();
 
    f->to(pdcDst,ptDst,size);
 
@@ -4633,7 +4593,7 @@ COLORREF cr)
          iRadius,cr))
       return false;
 
-   if(!dibDst->to(pdcDst,ptDst -point(iRadius/2, iRadius/2),size))
+   if(!dibDst->to(pdcDst,ptDst,size))
       return false;
 
    return true;
@@ -4641,16 +4601,24 @@ COLORREF cr)
 }
 
 
+
+
+
+
+
+
+
+
+
+
 bool imaging::spread__32CC(::draw2d::dib * pdibDst,::draw2d::dib * pdibSrc,int32_t iRadius,COLORREF crSpreadSetColor)
 {
-
    int32_t iFilterW      = iRadius * 2 + 1;
    int32_t iFilterH      = iRadius * 2 + 1;
    int32_t iFilterHalfW  = iRadius;
    int32_t iFilterHalfH  = iRadius;
    int32_t iFilterArea   = iFilterW * iFilterH;
    int32_t divisor       = iFilterW * iFilterH;
-
    BYTE *lpbSource;
    BYTE *lpbSource_1;
    BYTE *lpbSource_2;
@@ -4669,33 +4637,19 @@ bool imaging::spread__32CC(::draw2d::dib * pdibDst,::draw2d::dib * pdibSrc,int32
    int32_t iRadius2 = iRadius * iRadius;
    int32_t r2;
 
-   synch_lock slImaging(m_pmutex);
+   auto pmemory = get_thread()->oprop("m_alpha_spread__32CC_filterMap(" + ::str::from(iRadius) + ")").cast < memory >();
 
-   memory & m = m_mapmemorySpread[iRadius];
-
-   if (m.m_pmutex == NULL)
+   if (pmemory != NULL)
    {
-
-      m.defer_create_mutex();
-
-   }
-
-   synch_lock sl(m.m_pmutex);
-
-   slImaging.unlock();
-
-   auto pmemory = &m;
-
-   if(pmemory->get_size() != iFilterArea)
-   {
-
-      pmemory->allocate(iFilterArea);
-
       pFilter = pmemory->get_data();
-
+   }
+   else
+   {
+      pmemory = canew(memory());
+      pmemory->allocate(iFilterArea);
+      pFilter = pmemory->get_data();
       for(y = 0; y < iFilterHalfH; y++)
       {
-
          for(x = 0; x < iFilterHalfW; x++)
          {
             x1 = iFilterHalfW - x;
@@ -4707,19 +4661,11 @@ bool imaging::spread__32CC(::draw2d::dib * pdibDst,::draw2d::dib * pdibSrc,int32
                i = 0;
             pFilter[x + y * iFilterW]                                   = (byte)i;
          }
-
       }
-      
-   }
-   else
-   {
-
-      pFilter = pmemory->get_data();
-
+      get_thread()->oprop("m_alpha_spread__32CC_filterMap(" + ::str::from(iRadius) + ")") = pmemory;
    }
 
    int32_t cx = pdibDst->m_size.cx;
-
    int32_t cy = pdibDst->m_size.cy;
 
    if(cx != pdibSrc->m_size.cx

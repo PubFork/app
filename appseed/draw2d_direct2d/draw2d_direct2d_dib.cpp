@@ -1,7 +1,7 @@
 ﻿#include "framework.h"
 
 
-//extern CLASS_DECL_AURA spa(::draw2d::dib) * g_pdiba;
+extern CLASS_DECL_AURA spa(::draw2d::dib) * g_pdiba;
 
 
 namespace draw2d_direct2d
@@ -21,7 +21,7 @@ namespace draw2d_direct2d
       m_spgraphics(allocer())
    {
 
-      //g_pdiba->add(this);
+      g_pdiba->add(this);
 
       m_pcolorref = NULL;
       m_bMapped = false;
@@ -2446,33 +2446,29 @@ namespace draw2d_direct2d
    void dib::stretch_dib(::draw2d::dib * pdib)
    {
 
-      ::draw2d::dib::stretch_dib(pdib);
+      pdib->unmap();
 
-      //
+      unmap();
 
-      //pdib->unmap();
+      if (pdib->get_bitmap() == NULL)
+      {
 
-      //unmap();
+         return;
 
-      //if (pdib->get_bitmap() == NULL)
-      //{
+      }
 
-      //   return;
+      if (pdib->get_bitmap()->get_os_data() == NULL)
+      {
 
-      //}
+         return;
 
-      //if (pdib->get_bitmap()->get_os_data() == NULL)
-      //{
+      }
 
-      //   return;
+      D2D1_RECT_F rectDest = D2D1::RectF(0, 0, (FLOAT)m_size.cx, (FLOAT)m_size.cy);
 
-      //}
+      D2D1_RECT_F rectSource = D2D1::RectF(0, 0, (FLOAT)pdib->m_size.cx, (FLOAT)pdib->m_size.cy);
 
-      //D2D1_RECT_F rectDest = D2D1::RectF(0, 0, (FLOAT)m_size.cx, (FLOAT)m_size.cy);
-
-      //D2D1_RECT_F rectSource = D2D1::RectF(0, 0, (FLOAT)pdib->m_size.cx, (FLOAT)pdib->m_size.cy);
-
-      //((ID2D1RenderTarget *)m_spgraphics->get_os_data())->DrawBitmap(((ID2D1Bitmap1 *)pdib->get_bitmap()->get_os_data()), rectDest, 1.0, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, rectSource);
+      ((ID2D1RenderTarget *)m_spgraphics->get_os_data())->DrawBitmap(((ID2D1Bitmap1 *)pdib->get_bitmap()->get_os_data()), rectDest, 1.0, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, rectSource);
 
       /*
       ::StretchDIBits(

@@ -407,7 +407,7 @@ inline bool rect::is_null() const NOTHROW
 
 inline bool rect::is_empty() const NOTHROW
 {
-   return width() == 0 || height() == 0;
+   return width() == 0 && height() == 0;
 }
 
 

@@ -1,8 +1,6 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include <time.h>
 //#include <math.h>
-#include "aura/aura/os/os.h"
-#include "aura/aura/os/cross.h"
 
 #ifdef WINDOWS
 #include <wincrypt.h>
@@ -23,8 +21,8 @@ namespace math
 #endif
 
       math_os_data(LPBYTE pbData = NULL)
-      {
 #ifdef WINDOWSEX
+      {
          m_hCryptProv = NULL;
          m_hOriginalKey = NULL;
          m_hDuplicateKey = NULL;
@@ -131,13 +129,13 @@ namespace math
             //debug_print("Error during CryptSetKeyParam.");
          }
 
-
-
 #endif
+
 
       }
 
    };
+
 
 
    math::math(::aura::application * papp) :

@@ -5,7 +5,7 @@
 
 #include "nanosvg.h"
 
-//CLASS_DECL_AURA spa(::draw2d::dib) * g_pdiba = NULL;
+CLASS_DECL_AURA spa(::draw2d::dib) * g_pdiba = NULL;
 
 namespace draw2d
 {

@@ -35,18 +35,13 @@ namespace draw2d_direct2d
 
    }
 
-   
    graphics::state::~state()
    {
-
    }
-
 
    graphics::graphics(::aura::application * papp) :
       ::object(papp),
-      ::draw2d::graphics(papp),
-      m_dibmap(papp),
-      m_dibmap2(papp)
+      ::draw2d::graphics(papp)
    {
 
       defer_create_mutex();
@@ -323,12 +318,13 @@ namespace draw2d_direct2d
       //return ::EnumObjects(get_handle2(), nObjectType, (GOBJENUMPROC)lpfn, lpData);
    }
 
-
    bool graphics::BitBltAlphaBlend(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, uint32_t dwRop)
    {
 
       if (m_pdibAlphaBlend != NULL)
       {
+
+         // Reference implementation
 
          rect rectAlphaBlend(m_ptAlphaBlend, m_pdibAlphaBlend->size());
 
@@ -345,19 +341,11 @@ namespace draw2d_direct2d
 
             synch_lock sl(m_pmutex);
 
-            ::size sizeDib(size);
+            ::draw2d::dib_sp dib1(allocer());
 
-            sizeDib.cx += 512;
+            dib1->create(size);
 
-            sizeDib.cy += 512;
-
-            sizeDib.cx = sizeDib.cx / 512 * 512;
-            
-            sizeDib.cy = sizeDib.cy / 512 * 512;
-
-            ::draw2d::dib_sp & dib1 = m_dibmap[sizeDib];
-
-            ::rect rectDib1(null_point(), size);
+            ::rect rectDib1(null_point(), dib1->m_size);
 
             dib1->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
 
@@ -370,17 +358,17 @@ namespace draw2d_direct2d
 
             }
 
-            ::draw2d::dib_sp & dib2 = m_dibmap2[sizeDib];
+            ::draw2d::dib_sp dib2(allocer());
+
+            dib2->create(size);
 
             dib2->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
 
             dib2->get_graphics()->FillSolidRect(rectDib1, ARGB(255, 0, 0, 0));
 
-            point pt2 = pt - m_ptAlphaBlend;
-
-            if (!dib2->from(null_point(), m_pdibAlphaBlend, pt2, rectIntersect.size()))
+            if (!dib2->from(null_point(), m_pdibAlphaBlend, pt - m_ptAlphaBlend, rectIntersect.size()))
             {
-               
+
                return false;
 
             }
@@ -389,25 +377,18 @@ namespace draw2d_direct2d
 
             sp(::draw2d_direct2d::graphics) pgraphicsDib2 = dib2->get_graphics();
 
-            HRESULT hr = ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->EndDraw();
+            ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->EndDraw();
 
             pgraphicsDib1->m_pdevicecontext->DrawImage(
-               (ID2D1Bitmap *)pgraphicsDib2->get_current_bitmap()->get_os_data(),
-               D2D1::Point2F(0.f, 0.f),
-               d2d1::rectf(rectDib1),
-               D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
-               D2D1_COMPOSITE_MODE_DESTINATION_IN);
-
-            if (SUCCEEDED(hr))
-            {
-
-               ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->BeginDraw();
-
-            }
+            (ID2D1Bitmap *)pgraphicsDib2->get_current_bitmap()->get_os_data(),
+            D2D1::Point2F(0.f, 0.f),
+            d2d1::rectf(rectDib1),
+            D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
+            D2D1_COMPOSITE_MODE_DESTINATION_IN);
 
             set_alpha_mode(::draw2d::alpha_mode_blend);
 
-            BitBltRaw((int) x, (int) y, nWidth, nHeight, dib1->get_graphics(), 0, 0, SRCCOPY);
+            BitBltRaw(x, y, nWidth, nHeight, dib1->get_graphics(), 0, 0, dwRop);
 
             return true;
 
@@ -420,6 +401,7 @@ namespace draw2d_direct2d
    }
 
 
+
    bool graphics::TextOutAlphaBlend(double x, double y, const char * lpszString, strsize nCount)
    {
 
@@ -427,6 +409,15 @@ namespace draw2d_direct2d
       {
 
          single_lock sl(m_pmutex);
+
+         if (nCount < 0)
+         {
+
+            return false;
+
+         }
+
+         // "Reference" implementation for TextOutAlphaBlend
 
          ::size size = ::size(GetTextExtent(lpszString, nCount));
 
@@ -443,17 +434,9 @@ namespace draw2d_direct2d
 
             ::draw2d::lock draw2dlock;
 
-            ::size sizeDib(size);
+            ::draw2d::dib_sp dib1(allocer());
 
-            sizeDib.cx += 512;
-
-            sizeDib.cy += 512;
-
-            sizeDib.cx = sizeDib.cx / 512 * 512;
-
-            sizeDib.cy = sizeDib.cy / 512 * 512;
-
-            ::draw2d::dib_sp & dib1 = m_dibmap[sizeDib];
+            dib1->create(size);
 
             ::rect rectDib1(null_point(), size);
 
@@ -467,15 +450,15 @@ namespace draw2d_direct2d
 
             dib1->get_graphics()->text_out(0, 0, lpszString, nCount);
 
-            ::draw2d::dib_sp & dib2 = m_dibmap2[sizeDib];
+            ::draw2d::dib_sp dib2(allocer());
+
+            dib2->create(size);
 
             dib2->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
 
             dib2->get_graphics()->FillSolidRect(rectDib1, ARGB(255, 0, 0, 0));
 
-            point pt2 = pt - m_ptAlphaBlend;
-
-            if (!dib2->from(null_point(), m_pdibAlphaBlend, pt2, rectIntersect.size()))
+            if (!dib2->from(null_point(), m_pdibAlphaBlend, pt - m_ptAlphaBlend, rectIntersect.size()))
             {
 
                return false;
@@ -486,7 +469,7 @@ namespace draw2d_direct2d
 
             sp(::draw2d_direct2d::graphics) pgraphicsDib2 = dib2->get_graphics();
 
-            HRESULT hr = ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->EndDraw();
+            ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->EndDraw();
 
             pgraphicsDib1->m_pdevicecontext->DrawImage(
             (ID2D1Bitmap *)pgraphicsDib2->get_current_bitmap()->get_os_data(),
@@ -494,13 +477,6 @@ namespace draw2d_direct2d
             d2d1::rectf(rectDib1),
             D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
             D2D1_COMPOSITE_MODE_DESTINATION_IN);
-
-            if (SUCCEEDED(hr))
-            {
-
-               ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->BeginDraw();
-
-            }
 
             set_alpha_mode(::draw2d::alpha_mode_blend);
 
@@ -1883,7 +1859,6 @@ namespace draw2d_direct2d
 
          return true;
       }
-
       get_os_font(m_spfont)->GetFontFamilyName(name, 256);
 
       get_os_font(m_spfont)->GetFontCollection(&pcollection);
@@ -1898,51 +1873,19 @@ namespace draw2d_direct2d
 
          return true;
 
-
       }
 
-
       pcollection->FindFamilyName(name, &findex, &exists);
-
 
       if (!exists)
       {
 
-         while (true)
-         {
+         lpMetrics->tmAveCharWidth = 0;
+         lpMetrics->tmAscent = 0;
+         lpMetrics->tmDescent = 0;
+         lpMetrics->tmHeight = 0;
 
-            WCHAR * p = wcsrchr(name, ' ');
-
-            if (p < name)
-            {
-               lpMetrics->tmAveCharWidth = 0;
-               lpMetrics->tmAscent = 0;
-               lpMetrics->tmDescent = 0;
-               lpMetrics->tmHeight = 0;
-
-               return true;
-            }
-            else
-            {
-               
-               *p = '\0';
-
-               pcollection->FindFamilyName(name, &findex, &exists);
-
-
-               if (exists)
-               {
-                  break;
-               }
-
-            }
-
-
-         }
-
-
-
-
+         return true;
 
 
       }
@@ -4457,56 +4400,46 @@ namespace draw2d_direct2d
       if (m_spfont.is_null())
          return false;
 
-      IDWriteTextFormat * pfont = get_os_font(m_spfont);
-
-      if (pfont == NULL)
-      {
-
+      if (get_os_font(m_spfont) == NULL)
          return false;
-
-      }
-
-      HRESULT hr;
 
       if (nFormat & DT_RIGHT)
       {
 
-         hr = pfont->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_TRAILING);
+         get_os_font(m_spfont)->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_TRAILING);
 
       }
       else if (nFormat & DT_CENTER)
       {
 
-         hr = pfont->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
+         get_os_font(m_spfont)->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
 
       }
       else
       {
 
-         hr = pfont->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
+         get_os_font(m_spfont)->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
 
       }
 
       if (nFormat & DT_BOTTOM)
       {
 
-         hr = pfont->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_FAR);
+         get_os_font(m_spfont)->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_FAR);
 
       }
       else if (nFormat & DT_VCENTER)
       {
 
-         hr = pfont->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+         get_os_font(m_spfont)->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
 
       }
       else
       {
 
-         hr = pfont->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
+         get_os_font(m_spfont)->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
 
       }
-
-      hr = pfont->SetWordWrapping(DWRITE_WORD_WRAPPING_NO_WRAP);
 
       D2D1::Matrix3x2F m;
 
@@ -4812,6 +4745,9 @@ namespace draw2d_direct2d
 
       }
 
+      //if (::draw2d::graphics::text_out(x, y, lpszString, nCount))
+      //   return true;
+
       try
       {
 
@@ -4856,6 +4792,12 @@ namespace draw2d_direct2d
 
       D2D1::Matrix3x2F mOriginal(m);
 
+      //size sd = GetTextExtent(string(lpszString,nCount));
+
+      //string strTest1 = string(lpszString, nCount);
+
+      //strTest1.trim_left();
+
       string str(lpszString, nCount);
 
       if (str.length() > 20)
@@ -4873,13 +4815,12 @@ namespace draw2d_direct2d
 
       ID2D1Brush * pbrush = get_os_brush(m_spbrush);
 
+
       HRESULT  hr = pfont->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
 
       if(FAILED(hr))
       {
-
          trace_hr("text_out, SetTextAlignment",hr);
-
       }
 
       hr = pfont->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
@@ -4904,7 +4845,10 @@ namespace draw2d_direct2d
 
       hr = pfont->SetWordWrapping(DWRITE_WORD_WRAPPING_NO_WRAP);
 
+
       wstring wstr(str);
+
+
 
       m._11 *= (FLOAT) m_spfont->m_dFontWidth;
       m._31 += (FLOAT) x;
@@ -4916,10 +4860,17 @@ namespace draw2d_direct2d
 
       strsize uiLen = wstr.get_length();
 
+
       if(lpcwsz != NULL && uiLen > 0)
       {
 
+         //D2D1_POINT_2F d2d1pointf;
+
+         //d2d1pointf.x = 0.0f;
+         //d2d1pointf.y = 0.0f;
+
          m_prendertarget->DrawText(lpcwsz,(int) uiLen,pfont,&rectf,pbrush);
+//         m_prendertarget->DrawTextLayout(d2d1pointf, ::Ma  lpcwsz, (int)uiLen, pfont, &rectf, pbrush);
 
       }
 

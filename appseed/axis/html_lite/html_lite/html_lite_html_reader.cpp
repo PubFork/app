@@ -410,77 +410,77 @@ uint_ptr lite_html_reader::read_html_document(const string & str)
 * @since 1.0
 * @author Gurmeet S. Kochar
 */
-//uint_ptr lite_html_reader::read_html_file(HANDLE hFile)
-//{
-//   ASSERT(hFile != INVALID_HANDLE_VALUE);
-//   //ASSERT(::GetFileType(hFile) == FILE_TYPE_DISK);
-//
-//   HANDLE         hFileMap    = NULL;
-//   const char *   lpsz        = NULL;
-//   uint_ptr      nRetVal     = 0;
-//
-//   // determine file size
-//   strsize dwBufLen = ::GetFileSize(hFile, NULL);
-//   if (dwBufLen == INVALID_FILE_SIZE)
-//   {
-//      TRACE("(Error) lite_html_reader::read:"
-//            " GetFileSize() failed;"
-//            " get_last_error() returns 0x%08x.\n", ::get_last_error());
-//      goto LError;
-//   }
-//
-//   // create a file-mapping object for the file
-//#ifdef METROWIN
-//   hFileMap = CreateFileMappingFromApp(
-//              hFile,
-//              NULL,
-//              PAGE_READWRITE,
-//              dwBufLen,
-//              NULL);
-//
-//#else
-//   hFileMap = ::CreateFileMapping(hFile, NULL, PAGE_READONLY, 0L, 0L, NULL);
-//#endif
-//   if (hFileMap == NULL)
-//   {
-//      TRACE("(Error) lite_html_reader::read:"
-//            " CreateFileMapping() failed;"
-//            " get_last_error() returns 0x%08x.\n", ::get_last_error());
-//      goto LError;
-//   }
-//
-//#ifdef METROWIN
-//   lpsz = (const char *) MapViewOfFileFromApp(
-//          hFileMap,
-//          FILE_MAP_READ | FILE_MAP_WRITE,
-//          0,
-//          0);
-//#else
-//   // map the entire file into the address-space of the application
-//   lpsz = (const char *)::MapViewOfFile(hFileMap, FILE_MAP_READ, 0L, 0L, 0L);
-//#endif
-//   if (lpsz == NULL)
-//   {
-//      TRACE("(Error) lite_html_reader::read:"
-//            " MapViewOfFile() failed;"
-//            " get_last_error() returns 0x%08x.\n", ::get_last_error());
-//      goto LError;
-//   }
-//
-//   m_strBuffer = string(lpsz, dwBufLen);
-//   nRetVal = parseDocument();
-//   goto LCleanExit;
-//
-//LError:
-//   nRetVal = 0U;
-//
-//LCleanExit:
-//   if (lpsz != NULL)
-//      VERIFY(::UnmapViewOfFile(lpsz));
-//   if (hFileMap)
-//      VERIFY(::CloseHandle(hFileMap));
-//   return (nRetVal);
-//}
+uint_ptr lite_html_reader::read_html_file(HANDLE hFile)
+{
+   ASSERT(hFile != INVALID_HANDLE_VALUE);
+   //ASSERT(::GetFileType(hFile) == FILE_TYPE_DISK);
+
+   HANDLE         hFileMap    = NULL;
+   const char *   lpsz        = NULL;
+   uint_ptr      nRetVal     = 0;
+
+   // determine file size
+   strsize dwBufLen = ::GetFileSize(hFile, NULL);
+   if (dwBufLen == INVALID_FILE_SIZE)
+   {
+      TRACE("(Error) lite_html_reader::read:"
+            " GetFileSize() failed;"
+            " get_last_error() returns 0x%08x.\n", ::get_last_error());
+      goto LError;
+   }
+
+   // create a file-mapping object for the file
+#ifdef METROWIN
+   hFileMap = CreateFileMappingFromApp(
+              hFile,
+              NULL,
+              PAGE_READWRITE,
+              dwBufLen,
+              NULL);
+
+#else
+   hFileMap = ::CreateFileMapping(hFile, NULL, PAGE_READONLY, 0L, 0L, NULL);
+#endif
+   if (hFileMap == NULL)
+   {
+      TRACE("(Error) lite_html_reader::read:"
+            " CreateFileMapping() failed;"
+            " get_last_error() returns 0x%08x.\n", ::get_last_error());
+      goto LError;
+   }
+
+#ifdef METROWIN
+   lpsz = (const char *) MapViewOfFileFromApp(
+          hFileMap,
+          FILE_MAP_READ | FILE_MAP_WRITE,
+          0,
+          0);
+#else
+   // map the entire file into the address-space of the application
+   lpsz = (const char *)::MapViewOfFile(hFileMap, FILE_MAP_READ, 0L, 0L, 0L);
+#endif
+   if (lpsz == NULL)
+   {
+      TRACE("(Error) lite_html_reader::read:"
+            " MapViewOfFile() failed;"
+            " get_last_error() returns 0x%08x.\n", ::get_last_error());
+      goto LError;
+   }
+
+   m_strBuffer = string(lpsz, dwBufLen);
+   nRetVal = parseDocument();
+   goto LCleanExit;
+
+LError:
+   nRetVal = 0U;
+
+LCleanExit:
+   if (lpsz != NULL)
+      VERIFY(::UnmapViewOfFile(lpsz));
+   if (hFileMap)
+      VERIFY(::CloseHandle(hFileMap));
+   return (nRetVal);
+}
 
 
 #else

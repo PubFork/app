@@ -34,7 +34,7 @@
 #include "visual_api.cpp"
 #include "visual_buffered_graphics.cpp"
 #include "visual_dib.cpp"
-//#include "visual_fastblur.cpp"
+#include "visual_fastblur.cpp"
 #include "visual_font.cpp"
 #include "visual_font_department.cpp"
 #include "visual_font_enumeration.cpp"

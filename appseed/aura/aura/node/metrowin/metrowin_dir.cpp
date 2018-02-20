@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "metrowin.h"
 
 
@@ -352,7 +352,7 @@ namespace metrowin
 
    ::file::path dir::stage()
    {
-      return install() / "stage";
+      return element() / "stage";
    }
 
    ::file::path dir::stageapp()
@@ -622,7 +622,7 @@ try1:
          m_strTimeFolder = appdata() / "time";
 
       if(m_strNetSeedFolder.is_empty())
-         m_strNetSeedFolder = install() / "net";
+         m_strNetSeedFolder = element() / "net";
 
       mk(m_strTimeFolder,get_app());
 
@@ -631,7 +631,7 @@ try1:
 
       mk(m_strTimeFolder / "time",get_app());
 
-      m_pathHome = ::dir::ca2config() / "home";
+      m_pathHome = ::dir::roaming_app_data() / "home";
 
       return true;
 
@@ -679,6 +679,82 @@ try1:
 
    }
 
+
+   ::file::path dir::usersystemappdata(::aura::application *  papp, const string & strPrefix)
+   {
+
+      UNREFERENCED_PARAMETER(papp);
+
+      return appdata() / strPrefix;
+
+   }
+
+
+   ::file::path dir::appdata(::aura::application *  papp)
+   {
+
+      return userfolder(papp) / "appdata";
+
+   }
+
+
+   ::file::path dir::userdata(::aura::application *  papp)
+   {
+
+      return userfolder(papp) / "data";
+
+   }
+
+
+   ::file::path dir::userfolder(::aura::application *  papp)
+   {
+
+      string str = appdata();
+
+      string strUserFolderShift;
+
+      if(App(papp).handler()->m_varTopicQuery.has_property("user_folder_relative_path"))
+      {
+         strUserFolderShift = App(papp).handler()->m_varTopicQuery["user_folder_relative_path"].get_string();
+      }
+
+      return str / "ca2" / strUserFolderShift;
+
+   }
+
+
+   ::file::path dir::default_os_user_path_prefix(::aura::application *  papp)
+   {
+
+      UNREFERENCED_PARAMETER(papp);
+
+      return "CurrentUser";
+
+   }
+
+
+   ::file::path dir::default_userappdata(::aura::application *  papp,const string & lpcszPrefix,const string & lpcszLogin)
+   {
+
+      return default_userfolder(papp,lpcszPrefix,lpcszLogin) / "appdata";
+
+   }
+
+
+   ::file::path dir::default_userdata(::aura::application *  papp,const string & lpcszPrefix,const string & lpcszLogin)
+   {
+
+      return default_userfolder(papp,lpcszPrefix,lpcszLogin) / "data";
+
+   }
+
+
+   ::file::path dir::default_userfolder(::aura::application *  papp,const string & strPrefix,const string & strLogin)
+   {
+
+      return userfolder(papp) / strPrefix / strLogin;
+
+   }
 
 
    ::file::path dir::userquicklaunch(::aura::application *  papp)

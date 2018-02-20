@@ -18,7 +18,7 @@ enum e_scalar
    // slow down, to left pass certain range, rewinds.
 
    scalar_tempo,
-   scalar_time,
+   scalar_position,
    scalar_key_shift,
    scalar_audio_volume,
 

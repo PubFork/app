@@ -1872,6 +1872,9 @@
     <ClInclude Include="aura\compress\compress_department.h">
       <Filter>Header Files\aura\compress</Filter>
     </ClInclude>
+    <ClInclude Include="aura\os\os_cpp.h">
+      <Filter>Header Files\aura\os</Filter>
+    </ClInclude>
     <ClInclude Include="aura\node\metrowin\metrowin_command.h">
       <Filter>Header Files\aura\os\metrowin</Filter>
     </ClInclude>
@@ -2105,9 +2108,6 @@
     </ClInclude>
     <ClInclude Include="aura\os\linux\linux_xdisplay.h">
       <Filter>Header Files\aura\os\linux</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\os\os_os.h">
-      <Filter>Header Files\aura\os</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -3730,6 +3730,9 @@
     <ClCompile Include="aura\aura\aura_console_window.cpp">
       <Filter>Source Files\aura\aura</Filter>
     </ClCompile>
+    <ClCompile Include="aura\os\metrowin\metrowin_file_std.cpp">
+      <Filter>Source Files\aura\os\metrowin</Filter>
+    </ClCompile>
     <ClCompile Include="aura\aura\aura_profiler.cpp">
       <Filter>Source Files\aura\aura</Filter>
     </ClCompile>
@@ -4080,9 +4083,6 @@
     </ClCompile>
     <ClCompile Include="aura\os\windows_common\windows_common_unicode.cpp">
       <Filter>Source Files\aura\os\windows_common</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\os\metrowin\metrowin_file.cpp">
-      <Filter>Source Files\aura\os\metrowin</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

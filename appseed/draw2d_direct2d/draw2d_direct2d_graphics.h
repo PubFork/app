@@ -48,9 +48,6 @@ namespace draw2d_direct2d
 
       bool m_bSaveClip;
 
-      ::draw2d::dibmap                                   m_dibmap;
-      ::draw2d::dibmap                                   m_dibmap2;
-
 
       //array <ID2D1Layer * >       m_layerptra;
 

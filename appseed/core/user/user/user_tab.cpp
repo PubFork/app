@@ -2307,8 +2307,8 @@ namespace user
       //{
       // get_tab_holder(_001GetSel())->ShowWindow(SW_SHOW);
       // }
-      set_need_layout();
-      //on_layout();
+
+      on_layout();
 
    }
 

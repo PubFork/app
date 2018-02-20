@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 
@@ -206,7 +206,6 @@ namespace aura
       m_pfactory->creatable_large < ::file::string_file >();
       m_pfactory->creatable_large < ::memory_file >();
       m_pfactory->creatable_large < ::int64_array >();
-      m_pfactory->creatable_large < ::double_array >();
 
       factory().default_cloneable_large < stringa >();
       factory().default_cloneable_large < memory >();
@@ -612,16 +611,10 @@ namespace aura
          draw2d_factory_exchange();
 
       }
-      catch (hresult_exception * pe)
-      {
-
-         TRACE("Unable to find ANY *DRAW2D* plugin Hresult = %08x. Quitting...", pe->m_hresult);
-
-      }
       catch (...)
       {
 
-         TRACE("Unable to find ANY *DRAW2D* plugin. Quitting...");
+         output_debug_string("Unable to find ANY *DRAW2D* plugin. Quitting...");
 
       }
 

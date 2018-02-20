@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "metrowin.h"
 //#include "sal.h"
 
@@ -357,11 +357,7 @@ string ca2_command_line()
 
 }
 
-void os_post_quit()
-{
 
-
-}
 
 
 

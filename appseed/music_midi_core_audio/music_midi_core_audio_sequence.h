@@ -251,6 +251,7 @@ namespace music
          virtual bool IsChangingTempo() override;
          
          virtual double GetTempoShift() override;
+         virtual void GetMidiDoneData(::music::midi::LPMIDIDONEDATA lpmdd) override;
          virtual bool IsInSpecialModeV001() override;
          virtual bool WasInSpecialModeV001() override;
          virtual void SetSpecialModeV001Operation(uint32_t uiOperation) override;
