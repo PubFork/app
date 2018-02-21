@@ -375,7 +375,12 @@ int_bool WINAPI SetThreadPriority(HTHREAD hThread,int32_t nCa2Priority)
 
 }
 
+int32_t get_os_thread_priority(int32_t iCa2Priority)
+{
 
+      return iCa2Priority;
+
+}
 
 
 

@@ -77,3 +77,12 @@ bool os_init_application()
    
 }
 
+
+
+
+void os_post_quit()
+{
+   
+   ns_app_terminate();
+   
+}

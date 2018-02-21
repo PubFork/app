@@ -701,7 +701,7 @@ namespace ansios
 
             Sleep(100);
          }
-         if(!has_exited(&dwExitCode))
+         if(!has_exited())
          {
             if(pbTimeOut != NULL)
             {
@@ -751,7 +751,9 @@ namespace ansios
          TRACE("AuthorizationFree Error: %d", status);
       }
 
-      return dwExitCode;
+      //return dwExitCode;
+      return;
+      
 #else
 
       stringa straParam;
@@ -838,6 +840,7 @@ namespace ansios
 
       }
 
+#endif
 
    }
 

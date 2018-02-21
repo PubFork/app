@@ -2072,6 +2072,8 @@
 		9A98A60A1771D67E000AE16E /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE931714155F1599005F90F6 /* Carbon.framework */; };
 		9A98A60B1771D67E000AE16E /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 073EDDE1164E968100818801 /* Security.framework */; };
 		9AA315591E462D4E009CF281 /* macos_file_watcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AA315581E462D4E009CF281 /* macos_file_watcher.cpp */; };
+		9AB423B5203D20E600EA1483 /* apple_process.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB423AF203D20E500EA1483 /* apple_process.cpp */; };
+		9AB423B6203D20ED00EA1483 /* apple_process.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB423AF203D20E500EA1483 /* apple_process.cpp */; };
 		9AB8C85B1EA98EA0007670A6 /* netserver_socket_handler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB8C8581EA98EA0007670A6 /* netserver_socket_handler.cpp */; };
 		9AB8C85C1EA98EA0007670A6 /* netserver_socket_thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB8C8591EA98EA0007670A6 /* netserver_socket_thread.cpp */; };
 		9AB8C85D1EA98EA0007670A6 /* netserver_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB8C85A1EA98EA0007670A6 /* netserver_socket.cpp */; };
@@ -4128,6 +4130,7 @@
 		9A9799141DAC3C2B001CD6D9 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		9A98A6151771D67E000AE16E /* libaura.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libaura.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AA315581E462D4E009CF281 /* macos_file_watcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = macos_file_watcher.cpp; sourceTree = "<group>"; };
+		9AB423AF203D20E500EA1483 /* apple_process.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = apple_process.cpp; sourceTree = "<group>"; };
 		9AB8711B1F3E47F10007F324 /* primitive_handler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = primitive_handler.cpp; sourceTree = "<group>"; };
 		9AB8711D1F3E4D9B0007F324 /* primitive_object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = primitive_object.cpp; sourceTree = "<group>"; };
 		9AB8C8581EA98EA0007670A6 /* netserver_socket_handler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = netserver_socket_handler.cpp; sourceTree = "<group>"; };
@@ -6228,6 +6231,7 @@
 		9A2C3A961F4007A300B2DA15 /* apple */ = {
 			isa = PBXGroup;
 			children = (
+				9AB423AF203D20E500EA1483 /* apple_process.cpp */,
 				9A2C3A971F4007A300B2DA15 /* apple_timer.cpp */,
 			);
 			path = apple;
@@ -8789,6 +8793,7 @@
 				9A9579C81F6225B800623508 /* exception_not_implemented.cpp in Sources */,
 				9A9579C91F6225B800623508 /* exception_not_installed.cpp in Sources */,
 				9A9579CA1F6225B800623508 /* exception_not_licensed.cpp in Sources */,
+				9AB423B6203D20ED00EA1483 /* apple_process.cpp in Sources */,
 				9A9579CB1F6225B800623508 /* exception_not_supported.cpp in Sources */,
 				9A9579CC1F6225B800623508 /* exception_operation_canceled.cpp in Sources */,
 				9A9579CD1F6225B800623508 /* exception_os.cpp in Sources */,
@@ -9553,6 +9558,7 @@
 				9AE9FBB51F7F4D4800367001 /* audio_wave_out.cpp in Sources */,
 				9A6FB07F1F5C7A0C00AF31B2 /* filesystem_dir_system.cpp in Sources */,
 				9AD186151F9C2983001CEA8E /* visual_buffered_graphics.cpp in Sources */,
+				9AB423B5203D20E600EA1483 /* apple_process.cpp in Sources */,
 				9A0254ED1EA5927C003C82CF /* compress_bz.cpp in Sources */,
 				9A6FAB801F5C709100AF31B2 /* install_focus.cpp in Sources */,
 				9A6FAEF01F5C778800AF31B2 /* collection_stringl.cpp in Sources */,
