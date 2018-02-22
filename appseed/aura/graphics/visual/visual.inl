@@ -50,8 +50,8 @@ namespace visual
 
          class rect rectCache;
 
-         rectCache.left = iR * g_dEmboss;
-         rectCache.top = iR * g_dEmboss;
+         rectCache.left = (long) (iR * g_dEmboss);
+         rectCache.top = (long) (iR * g_dEmboss);
          rectCache.right = rectCache.left + ::width(lpcrect);
          rectCache.bottom = rectCache.top + ::height(lpcrect);
 

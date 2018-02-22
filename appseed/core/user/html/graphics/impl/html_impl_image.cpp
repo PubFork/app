@@ -78,7 +78,7 @@ namespace html
                   cy = m_pelemental->m_propertyset["height"];
                }
 
-               m_box.set_cxy(size(cx, cy));
+               m_box.set_cxy(size((float) cx, (float) cy));
             }
             else
             {

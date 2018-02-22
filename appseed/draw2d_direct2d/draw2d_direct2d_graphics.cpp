@@ -22,7 +22,7 @@ void copy(D2D1_RECT_F & rectSrc, LPCRECT lpcrect)
 
 #ifdef WINDOWSEX
 
-void directx_debug();
+CLASS_DECL_AURA void directx_debug();
 
 #endif
 
