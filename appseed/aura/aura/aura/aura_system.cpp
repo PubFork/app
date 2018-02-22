@@ -206,6 +206,7 @@ namespace aura
       m_pfactory->creatable_large < ::file::string_file >();
       m_pfactory->creatable_large < ::memory_file >();
       m_pfactory->creatable_large < ::int64_array >();
+      m_pfactory->creatable_large < ::double_array >();
 
       factory().default_cloneable_large < stringa >();
       factory().default_cloneable_large < memory >();
