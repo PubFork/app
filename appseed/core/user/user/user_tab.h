@@ -159,7 +159,7 @@ namespace user
       virtual ~tab();
 
 
-      virtual void install_message_routing(::message::sender * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface) override;
 
 
       DECL_GEN_SIGNAL(_001OnLButtonDown);
@@ -210,14 +210,14 @@ namespace user
       virtual void _001OnTabClick(::index iTab);
       virtual void _001OnTabClose(::index iTab);
       virtual ::window_sp GetNotifyWnd();
-      virtual index hit_test(point pt, e_element & eelement);
+      virtual index hit_test(point pt, e_element & eelement) override;
       virtual e_position DragHitTest(point pt);
       virtual void GetDragRect(LPRECT lprect, e_position eposition);
       virtual bool get_element_rect(::index iTab, LPRECT lprect, e_element eelement);
 
       virtual void get_title(int iPane,stringa & stra);
 
-      virtual void on_layout();
+      virtual void on_layout() override;
       virtual void layout_pane(index iPane, bool bDisplay = false);
 
       virtual void GetTabClientRect(LPRECT lprect);

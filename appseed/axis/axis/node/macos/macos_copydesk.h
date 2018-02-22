@@ -18,17 +18,18 @@ namespace macos
       virtual bool initialize() override;
       virtual bool finalize() override;
 
-      virtual void set_filea(const ::file::patha & stra) override;
+      virtual bool set_filea(const ::file::patha & stra, e_op eop) override;
+      virtual bool get_filea(::file::patha & stra, e_op & eop) override;
+      virtual bool has_filea() override;
 
-      virtual int32_t get_file_count() override;
-      virtual void get_filea(::file::patha & stra) override;
-
-      virtual void set_plain_text(const char * psz) override;
-      virtual string get_plain_text() override;
+      virtual bool set_plain_text(const string & str) override;
+      virtual bool get_plain_text(string & str) override;
+      virtual bool has_plain_text() override;
 
 
       virtual bool desk_to_dib(::draw2d::dib * pdib) override;
-      
+      virtual bool dib_to_desk(::draw2d::dib * pdib) override;
+      virtual bool has_dib() override;
 
    };
 

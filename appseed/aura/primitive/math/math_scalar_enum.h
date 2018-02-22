@@ -21,6 +21,7 @@ enum e_scalar
    scalar_position,
    scalar_key_shift,
    scalar_audio_volume,
+   scalar_time,
 
 
 };

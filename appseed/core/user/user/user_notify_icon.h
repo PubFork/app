@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 #ifdef LINUX
@@ -54,7 +54,7 @@ namespace user
 
 
 
-      virtual int64_t add_ref()
+      virtual int64_t add_ref() override
       {
 
          return ::object::add_ref();
@@ -62,7 +62,7 @@ namespace user
       }
 
 
-      virtual int64_t dec_ref()
+      virtual int64_t dec_ref() override
       {
 
          return ::object::dec_ref();
@@ -89,8 +89,8 @@ namespace user
       virtual void __close();
       virtual void __quit();
       virtual bool __close_is_closed();
-      virtual void notify_icon_play(const char * action);
-      virtual bool notify_icon_frame_is_opened();
+      virtual void notify_icon_play(const char * action) override;
+      virtual bool notify_icon_frame_is_opened() override;
 
       virtual void step();
 

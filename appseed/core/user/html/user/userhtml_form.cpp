@@ -186,7 +186,7 @@ void html_form::on_layout()
 
 void html_form::_001OnCreate(::message::message * pobj)
 {
-   SCAST_PTR(::message::create, pcreate, pobj);
+   //SCAST_PTR(::message::create, pcreate, pobj);
    if(pobj->previous())
       return;
    //get_html_data()->m_pform = this;

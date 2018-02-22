@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 static ::user::notify_icon * g_pnotifyiconLast = NULL;
 
@@ -507,7 +507,7 @@ namespace user
 #if defined(LINUX) || defined(MACOS)
 
 
-   int notify_icon::notification_area_extra_action_count()
+   int notify_icon::notification_extra_action_count()
    {
 
       return m_plistener->notification_area_extra_action_count();

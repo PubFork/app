@@ -28,25 +28,38 @@ namespace macos
    {
    }
 
-   int32_t copydesk::get_file_count()
+   bool copydesk::has_filea()
    {
 
-      return macos_clipboard_get_file_count();
+      return macos_clipboard_get_file_count() > 0;
       
    }
 
 
-   void copydesk::get_filea(::file::patha & patha)
+   bool copydesk::get_filea(::file::patha & patha, e_op & eop)
    {
+      
+      if(!has_filea())
+      {
+       
+         return false;
+         
+      }
 
+      eop = op_copy;
+      
       macos_clipboard_get_filea(patha);
       
+      return true;
+      
    }
 
-   void copydesk::set_filea(const ::file::patha & patha)
+   bool copydesk::set_filea(const ::file::patha & patha, e_op eop)
    {
       
       macos_clipboard_set_filea(patha);
+      
+      return true;
 
    }
 
@@ -56,7 +69,11 @@ namespace macos
    {
 
       if(!::user::copydesk::initialize())
+      {
+         
          return false;
+         
+      }
 
   //    if(!m_p->CreateEx(0, System.RegisterWndClass(0), NULL, 0, rect(0, 0, 0, 0), NULL, id()))
     //     return false;
@@ -90,21 +107,30 @@ namespace macos
    }
 
    
-   void copydesk::set_plain_text(const char * psz)
+   bool copydesk::set_plain_text(const string & str)
    {
       
-      macos_clipboard_set_plain_text(psz);
+      macos_clipboard_set_plain_text(str);
+      
+      return true;
 
    }
 
 
-   string copydesk::get_plain_text()
+   bool copydesk::get_plain_text(string & str)
    {
       
-      return macos_clipboard_get_plain_text();
+      str = macos_clipboard_get_plain_text();
+      
+      return true;
       
    }
-   
+   bool copydesk::has_plain_text()
+   {
+      
+      return macos_clipboard_get_plain_text().length()>0;
+
+   }
 
    bool copydesk::desk_to_dib(::draw2d::dib * pdib)
    {
@@ -133,6 +159,58 @@ namespace macos
       
       return true;
       
+   }
+
+   
+   bool copydesk::dib_to_desk(::draw2d::dib * pdib)
+   {
+      
+      throw todo(get_app());
+//      int w = 0;
+//
+//      int h = 0;
+//
+//      int iScan = 0;
+//
+//      ::aura::malloc < COLORREF * > pcolorref = (COLORREF *) mm_clipboard_get_dib(w, h, iScan);
+//
+//      if(pcolorref == NULL)
+//      {
+//
+//         return false;
+//
+//      }
+//
+//      if(!System.imaging()._load_image(pdib, w, h, iScan, pcolorref))
+//      {
+//
+//         return false;
+//
+//      }
+      
+      return true;
+      
+   }
+   
+   bool copydesk::has_dib()
+   {
+      int w = 0;
+      
+      int h = 0;
+      
+      int iScan = 0;
+      
+      ::aura::malloc < COLORREF * > pcolorref = (COLORREF *) mm_clipboard_get_dib(w, h, iScan);
+      
+      if(pcolorref == NULL)
+      {
+         
+         return false;
+         
+      }
+      
+      return true;
+
    }
 
 
