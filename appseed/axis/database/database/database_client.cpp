@@ -104,6 +104,11 @@ namespace database
       return false;
    }
 
+   bool client::data_set(class id id, float f , update_hint * puh)
+   {
+      return data_set(id, *(int32_t *)&f, puh);
+   }
+
    bool client::data_set(class id id, int32_t i, update_hint * puh)
    {
       if(m_pdataserver != NULL)
@@ -112,6 +117,12 @@ namespace database
          return m_pdataserver->data_server_save(this, id, var, puh);
       }
       return false;
+   }
+
+   bool client::data_set(class id id, double d, update_hint * puh)
+   {
+      
+      return data_set(id, *(int64_t *)&d, puh);
    }
 
    bool client::data_set(class id id, int64_t i, update_hint * puh)
@@ -243,6 +254,13 @@ namespace database
       return false;
    }
 
+   bool client::data_get(class id id, float & f)
+   {
+      
+      return data_get(id, *(int32_t *)&f);
+
+   }
+
    bool client::data_get(class id id, int32_t & i)
    {
       if(m_pdataserver != NULL)
@@ -255,6 +273,14 @@ namespace database
       }
       return false;
    }
+
+   bool client::data_get(class id id, double & d)
+   {
+
+      return data_get(id, *(int64_t *)&d);
+
+   }
+
 
    bool client::data_get(class id id, int64_t & i)
    {
