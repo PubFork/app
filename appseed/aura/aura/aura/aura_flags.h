@@ -27,11 +27,53 @@ public:
    virtual bool unsignalize_all();
    virtual bool toggle_signalization(ENUM eenum);
 
+   flags operator & (ENUM eenum) const
+   {
+      if (is_signalized(eenum))
+      {
+         return flags(eenum);
+      }
+      else
+      {
+         return flags();
+      }
+   }
 
+
+   flags operator | (ENUM eenum) const
+   {
+      flags flags(*this);
+      flags.signalize(eenum)
+      return flags;
+   }
    flags < ENUM > & operator = (const flags < ENUM >  & f);
    bool operator == (const flags < ENUM >  & f);
    bool operator != (const flags < ENUM >  & f);
    bool operator == (const ENUM e) { return m_ia.get_size() == 1 && (ENUM) m_ia.element_at(0) == e; }
+
+   flags < ENUM > & operator |= (ENUM eenum)
+   {
+      signalize(eenum);
+      return *this;
+   }
+   flags < ENUM > & operator -= (ENUM eenum)
+   {
+      unsignalize(eenum);
+      return *this;
+   }
+   flags < ENUM > & operator |= (const flags < ENUM > & f)
+   {
+      if (this != &f)
+      {
+         signalize(f);
+      }
+      return *this;
+   }
+
+   operator bool()
+   {
+      return m_ia.has_elements();
+   }
 
    void write(::file::ostream & os) const
    {

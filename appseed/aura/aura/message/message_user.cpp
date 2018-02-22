@@ -47,9 +47,10 @@ namespace message
    void create::error(const char * lpcszErrorMessage)
    {
       set_lresult(-1);
-      TRACE("%s", lpcszErrorMessage);
+      ::aura::application * papp = ::aura::system::g_p;
+      APPTRACE("%s", lpcszErrorMessage);
 #ifdef DEBUG
-      System.log().print(lpcszErrorMessage);
+      Sys(::aura::system::g_p).log().print(lpcszErrorMessage);
 #endif
    }
 
