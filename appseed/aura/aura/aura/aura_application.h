@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 namespace aura
@@ -95,6 +95,7 @@ namespace aura
       string                                          m_strLibraryName;
       string                                          m_strAppId;
       string                                          m_strRelativeFolder;
+      string                                          m_strBuild;
 
       HINSTANCE                                       m_hinstance;
 
@@ -225,7 +226,7 @@ namespace aura
 
 
       virtual bool on_run_exception(::exception::exception * pe) override;
-      virtual bool handle_not_installed(::not_installed  * pnotinstalled);
+      //virtual bool handle_not_installed(::not_installed  * pnotinstalled);
 
       virtual bool is_system() override;
       virtual bool is_session() override;
@@ -355,8 +356,8 @@ namespace aura
       virtual void ca_term1();
       virtual void ca_process_term();
 
-      virtual bool is_installing();
-      virtual bool is_unstalling();
+      // virtual bool is_installing();
+      // virtual bool is_unstalling();
 
       //virtual string get_version();
       virtual void run() override;
@@ -377,7 +378,7 @@ namespace aura
       virtual void TermApplication();
 
       virtual bool on_install();
-      virtual bool on_unstall();
+      virtual bool on_uninstall();
 
       virtual bool system_add_app_install(const char * pszId, const char * pszBuild);
 
@@ -555,12 +556,15 @@ namespace aura
       {
          return *m_pinstaller;
       }
+      
+      virtual bool is_installed();
 
-      virtual bool check_install();
+      virtual bool do_install();
+      virtual bool do_uninstall();
 
       virtual void dispatch_user_message_object(::object * pobject);
 
-      virtual void throw_not_installed();
+      //virtual void throw_not_installed();
 
       virtual void play_audio(var varFile, bool bSynch = false);
 

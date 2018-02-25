@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 #ifdef WINDOWSEX
@@ -1878,7 +1878,7 @@ finished:
       System.type_info < ::userex::font_view >());
 
 
-      if (!is_installing() && !is_unstalling())
+      //if (!is_installing() && !is_uninstalling())
       {
 
          m_pfontlistdata = new ::visual::font_list_data(this);

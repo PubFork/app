@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 namespace userex
@@ -115,8 +115,8 @@ namespace core
       virtual bool is_system() override;
       virtual bool is_session() override;
 
-      virtual bool is_installing() override;
-      virtual bool is_unstalling() override;
+      // virtual bool is_installing() override;
+      // virtual bool is_unstalling() override;
 
       virtual bool is_serviceable() override;
 
@@ -158,7 +158,7 @@ namespace core
 
 
       virtual bool on_install() override;
-      virtual bool on_unstall() override;
+      virtual bool on_uninstall() override;
       virtual bool on_run_install();
       virtual bool on_run_uninstall();
 

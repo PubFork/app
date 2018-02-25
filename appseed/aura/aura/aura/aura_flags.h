@@ -43,7 +43,7 @@ public:
    flags operator | (ENUM eenum) const
    {
       flags flags(*this);
-      flags.signalize(eenum)
+      flags.signalize(eenum);
       return flags;
    }
    flags < ENUM > & operator = (const flags < ENUM >  & f);

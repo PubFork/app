@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 namespace axis
@@ -133,9 +133,14 @@ namespace axis
 
 
       virtual bool InitApplication() override;
+      
+      
+      virtual bool do_install() override;
+      virtual bool do_uninstall() override;
+      
 
       virtual bool on_install() override;
-      virtual bool on_unstall() override;
+      virtual bool on_uninstall() override;
 
 
 
@@ -257,7 +262,7 @@ namespace axis
       virtual bool on_open_document(::user::document * pdocument, var varFile);
       virtual bool on_save_document(::user::document * pdocument, var varFile);
 
-      virtual bool check_install() override;
+      
 
       inline ::html::html * html() { return m_pauraapp->m_paurasystem->m_phtml; }
 

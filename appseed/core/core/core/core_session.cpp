@@ -904,7 +904,7 @@ namespace core
    }
 
 
-   bool session::on_unstall()
+   bool session::on_uninstall()
    {
 
 
@@ -913,7 +913,9 @@ namespace core
 
       try
       {
-         bOk1 = ::core::application::on_unstall();
+         
+         bOk1 = ::core::application::on_uninstall();
+         
       }
       catch(...)
       {
@@ -976,13 +978,14 @@ namespace core
 
       Session.m_appptra.add_unique(papp);
 
-      if (System.is_installing() || System.is_unstalling())
+      //if (System.is_installing() || System.is_unstalling())
       {
 
-         System.m_bDoNotExitIfNoApplications = false;
+        // System.m_bDoNotExitIfNoApplications = false;
 
       }
-      else if(!papp->is_session() && !papp->is_system() && !papp->is_serviceable())
+      //else
+      if(!papp->is_session() && !papp->is_system() && !papp->is_serviceable())
       {
 
          System.m_bDoNotExitIfNoApplications = false;

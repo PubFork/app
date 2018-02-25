@@ -33,8 +33,8 @@ namespace multimedia
          imedia_position wave_out_get_position() override;
          virtual void wave_out_buffer_ready(index iBuffer) override;
 
-         virtual ::multimedia::e_result wave_out_open(::thread * pthreadCallback, ::count iBufferCount, ::count iBufferSampleCount) override;
-         virtual ::multimedia::e_result wave_out_open_ex(::thread * pthreadCallback, ::count iBufferCount, ::count iBufferSampleCount, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample, ::multimedia::audio::e_purpose epurpose) override;
+//         virtual ::multimedia::e_result wave_out_open(::thread * pthreadCallback, ::count iBufferCount, ::count iBufferSampleCount) override;
+         virtual ::multimedia::e_result wave_out_open_ex(::thread * pthreadCallback, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample, ::multimedia::audio::e_purpose epurpose) override;
          virtual ::multimedia::e_result wave_out_stop() override;
          virtual ::multimedia::e_result wave_out_close() override;
          virtual ::multimedia::e_result wave_out_pause() override;

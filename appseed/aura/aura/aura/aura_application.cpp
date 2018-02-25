@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #ifdef WINDOWSEX
 #include "aura/aura/os/windows/windows_system_interaction_impl.h"
 #endif
@@ -129,6 +129,24 @@ namespace aura
       m_mutexStr(this)
    {
 
+      
+//      string strAppId = m_strAppId;
+//
+//      string strBuild = m_strBuild;
+//
+//      string strPlatform = m_strPlatform;
+//
+//      string strConfiguration = m_strConfiguration;
+//
+//      string strLocale = m_strLocale;
+//
+//      string strSchema = m_strSchema;
+
+      m_strBuild = "installed";
+      
+      m_strLocale = "_std";
+      
+      m_strSchema = "_std";
 
       m_bSimpleMessageLoop = false;
 
@@ -471,12 +489,12 @@ namespace aura
 
 
 
-   void application::throw_not_installed()
-   {
+//    void application::throw_not_installed()
+//    {
 
-      _throw(not_installed(get_app(), m_strAppId, "application"));
+//       _throw(not_installed(get_app(), m_strAppId, "application"));
 
-   }
+//    }
 
 
 
@@ -491,16 +509,16 @@ namespace aura
          on_request(pcreate);
 
       }
-      catch (not_installed * pexception)
-      {
+      // catch (not_installed * pexception)
+      // {
 
-         esp671 esp(pexception);
+      //    esp671 esp(pexception);
 
-         System.on_run_exception(esp);
+      //    System.on_run_exception(esp);
 
-         _throw(exit_exception(esp->get_app(), ::exit_application));
+      //    _throw(exit_exception(esp->get_app(), ::exit_application));
 
-      }
+      // }
       catch(exit_exception * pexception)
       {
 
@@ -2384,6 +2402,26 @@ namespace aura
 
          }
 
+      //    if(!check_install())
+      //    {
+            
+      //       m_bReady = true;
+            
+      //       return false;
+            
+      //    }
+
+//         if(!is_system() && !is_session())
+//         {
+//
+//            if(!is_installed())
+//            {
+//
+//
+//            }
+//
+//         }
+
          xxdebug_box("pre_run 1 ok", "pre_run 1 ok", MB_ICONINFORMATION);
 
          if (!initial_check_directrix())
@@ -2770,23 +2808,28 @@ run:
       try
       {
 
-         if ((is_installing() || is_unstalling()) && !is_system() && !is_session())
+         //if ((is_installing() || is_unstalling()) && !is_system() && !is_session())
+
+         if(!is_installed())
          {
 
-            check_install();
+            do_install();
 
-            return false;
+            if(!is_installed())
+            {
+               
+               simple_message_box(NULL, "Could not start application. Could not install application.");
+               
+               return false;
+               
+            }
 
          }
-         else
+
+         if (!init_instance())
          {
 
-            if (!init_instance())
-            {
-
-               return false;
-
-            }
+            return false;
 
          }
 
@@ -2823,7 +2866,7 @@ run:
       try
       {
 
-         if (!is_installing() && !is_unstalling())
+         //if (!is_installing() && !is_unstalling())
          {
 
             term_instance();
@@ -2884,11 +2927,8 @@ run:
 
 
 
-   bool application::check_install()
+   bool application::do_install()
    {
-
-      if (handler()->m_varTopicQuery.has_property("install"))
-      {
 
          if (!on_install())
          {
@@ -2903,78 +2943,71 @@ run:
 
          }
 
-         string strBuild;
+         string strBuild = m_strBuild;
 
          string strAppId = m_strAppId;
 
          xxdebug_box("on_install1", strAppId, 0);
+      
+         system_add_app_install(strAppId, strBuild);
 
-         if (strAppId.is_empty())
-         {
-
-            strAppId = m_strAppName;
-
-         }
-
-         if (strAppId.has_char() && handler()->m_varTopicQuery.has_property("app") && strAppId == handler()->m_varTopicQuery["app"])
-         {
-
-            system_add_app_install(strAppId, "installed");
-
-            if (strBuild.has_char())
-            {
-
-               system_add_app_install(strAppId, strBuild);
-
-            }
-
-         }
-         else if (strAppId.has_char() && handler()->m_varTopicQuery.has_property("session_start") && strAppId == handler()->m_varTopicQuery["session_start"])
-         {
-
-            system_add_app_install(strAppId, "installed");
-
-            if (strBuild.has_char())
-            {
-
-               system_add_app_install(strAppId, strBuild);
-
-            }
-
-         }
-         else if (m_strInstallToken.has_char())
-         {
-
-            system_add_app_install(m_strInstallToken, "installed");
-
-            if (strBuild.has_char())
-            {
-
-               system_add_app_install(m_strInstallToken, strBuild);
-
-            }
-
-         }
-
-      }
-      else if (handler()->m_varTopicQuery.has_property("uninstall"))
+//         if (strAppId.is_empty())
+//         {
+//
+//            strAppId = m_strAppName;
+//
+//         }
+//
+//         if (strAppId.has_char() && handler()->m_varTopicQuery.has_property("app") && strAppId == handler()->m_varTopicQuery["app"])
+//         {
+//
+//            system_add_app_install(strAppId, "installed");
+//
+//            if (strBuild.has_char())
+//            {
+//
+//               system_add_app_install(strAppId, strBuild);
+//
+//            }
+//
+//         }
+//         else if (strAppId.has_char() && handler()->m_varTopicQuery.has_property("session_start") && strAppId == handler()->m_varTopicQuery["session_start"])
+//         {
+//
+//            system_add_app_install(strAppId, "installed");
+//
+//            if (strBuild.has_char())
+//            {
+//
+//               system_add_app_install(strAppId, strBuild);
+//
+//            }
+//
+//         }
+//         else if (m_strInstallToken.has_char())
+//         {
+//
+//            system_add_app_install(m_strInstallToken, "installed");
+//
+//            if (strBuild.has_char())
+//            {
+//
+//               system_add_app_install(m_strInstallToken, strBuild);
+//
+//            }
+//
+//         }
+      
+      if(!is_installed())
       {
-
-         if (!on_unstall())
-         {
-
-            return false;
-
-         }
-
-         System.install().remove_spa_start(m_strAppId);
-
+         
+         return false;
+         
       }
 
       return true;
 
    }
-
 
 
    bool application::initial_check_directrix()
@@ -3031,6 +3064,33 @@ retry_license:
    }
 
 
+
+   bool application::do_uninstall()
+   {
+
+      if(!is_installed())
+      {
+
+            return true;
+
+      }
+
+      if (!on_uninstall())
+      {
+
+            return false;
+
+            System.install().remove_spa_start(m_strAppId);
+
+      }
+
+      return true;
+
+   }
+
+
+
+
    bool application::on_install()
    {
 
@@ -3058,7 +3118,7 @@ retry_license:
    }
 
 
-   bool application::on_unstall()
+   bool application::on_uninstall()
    {
 
       //bool bOk = axis::application::on_unstall();
@@ -3289,34 +3349,34 @@ retry_license:
 
 
 
-   bool application::is_installing()
-   {
-
-      if (handler() == NULL)
-      {
-
-         return false;
-
-      }
-
-      return handler()->has_property("install");
-
-   }
-
-
-   bool application::is_unstalling()
-   {
-
-      if (handler() == NULL)
-      {
-
-         return false;
-
-      }
-
-      return handler()->has_property("uninstall");
-
-   }
+//   bool application::is_installing()
+//   {
+//
+//      if (handler() == NULL)
+//      {
+//
+//         return false;
+//
+//      }
+//
+//      return handler()->has_property("install");
+//
+//   }
+//
+//
+//   bool application::is_unstalling()
+//   {
+//
+//      if (handler() == NULL)
+//      {
+//
+//         return false;
+//
+//      }
+//
+//      return handler()->has_property("uninstall");
+//
+//   }
 
 
    bool application::create_new_service()
@@ -5801,14 +5861,14 @@ retry_license:
 
       }
 
-      if (typeid(*pe) == typeid(not_installed))
-      {
-
-         not_installed * pnotinstalled = dynamic_cast <not_installed *> (pe);
-
-         return handle_not_installed(pnotinstalled);
-
-      }
+//      if (typeid(*pe) == typeid(not_installed))
+//      {
+//
+//         not_installed * pnotinstalled = dynamic_cast <not_installed *> (pe);
+//
+//         return handle_not_installed(pnotinstalled);
+//
+//      }
 
       //simple_message_box_timeout("An unexpected error has occurred and no special exception handling is available.<br>Timeout: $simple_message_box_timeout", 5000);
 
@@ -5817,325 +5877,325 @@ retry_license:
    }
 
 
-   bool application::handle_not_installed(::not_installed * pnotinstalled)
-   {
-
-      pnotinstalled->m_bHandled = true;
-
-      pnotinstalled->m_bContinue = true;
-
-      bool bDebuggerCheck = true;
-
-#ifdef APPLEOS
-
-      bDebuggerCheck = false;
-
-#endif
-
-      if (((!bDebuggerCheck || ::is_debugger_attached()) && !file_exists_dup(::dir::system() / "config\\plugin\\disable_manual_install_warning.txt")
-            && !file_exists_dup(::dir::system() / "config\\system\\skip_debug_install.txt")) || file_exists_dup(::dir::system() / "config\\system\\enable_debug_install.txt"))
-         //|| (App(notinstalled.get_app()).is_serviceable() && !App(notinstalled.get_app()).is_user_service()))
-      {
-
-         try
-         {
-
-            ::file::path pathModule;
-
-            ::process::exit_status exitstatus;
-
-            bool bTimedOut = false;
-
-            string strParam;
-
-            ::file::path path;
-
-#ifdef LINUX
-
-            path = System.dir().ca2module() / ::process::app_id_to_app_name(pnotinstalled->m_strAppId);
-
-#else
-
-            path = System.dir().ca2module() / "app";
-
-#endif
-
-#ifdef WINDOWS
-
-            path += ".exe";
-
-#elif defined(APPLEOS)
-
-
-            //                     strPath += ".app/Contents/MacOS/app";
-            // please be extremely careful with code below.
-            // Package app.app project with the <your-app> project!
-            // The code below will seem to be guilty and blameable if you skipp app.app packaging with your app.
-//            ::file::path path = get_exe_path();
+//   bool application::handle_not_installed(::not_installed * pnotinstalled)
+//   {
 //
-//            index i = 5;
+//      pnotinstalled->m_bHandled = true;
 //
-//            while(i >= 0)
+//      pnotinstalled->m_bContinue = true;
+//
+//      bool bDebuggerCheck = true;
+//
+//#ifdef APPLEOS
+//
+//      bDebuggerCheck = false;
+//
+//#endif
+//
+//      if (((!bDebuggerCheck || ::is_debugger_attached()) && !file_exists_dup(::dir::system() / "config\\plugin\\disable_manual_install_warning.txt")
+//            && !file_exists_dup(::dir::system() / "config\\system\\skip_debug_install.txt")) || file_exists_dup(::dir::system() / "config\\system\\enable_debug_install.txt"))
+//         //|| (App(notinstalled.get_app()).is_serviceable() && !App(notinstalled.get_app()).is_user_service()))
+//      {
+//
+//         try
+//         {
+//
+//            ::file::path pathModule;
+//
+//            ::process::exit_status exitstatus;
+//
+//            bool bTimedOut = false;
+//
+//            string strParam;
+//
+//            ::file::path path;
+//
+//#ifdef LINUX
+//
+//            path = System.dir().ca2module() / ::process::app_id_to_app_name(pnotinstalled->m_strAppId);
+//
+//#else
+//
+//            path = System.dir().ca2module() / "app";
+//
+//#endif
+//
+//#ifdef WINDOWS
+//
+//            path += ".exe";
+//
+//#elif defined(APPLEOS)
+//
+//
+//            //                     strPath += ".app/Contents/MacOS/app";
+//            // please be extremely careful with code below.
+//            // Package app.app project with the <your-app> project!
+//            // The code below will seem to be guilty and blameable if you skipp app.app packaging with your app.
+////            ::file::path path = get_exe_path();
+////
+////            index i = 5;
+////
+////            while(i >= 0)
+////            {
+////
+////               path = path.folder();
+////
+////               strPath = path / "app";
+////
+////               output_debug_string("\n xyzxyzx " + strPath + "\n");
+////               output_debug_string("\n xyzxyzx " + strPath + "\n");
+////               output_debug_string("\n xyzxyzx " + strPath + "\n");
+////               output_debug_string("\n xyzxyzx " + strPath + "\n");
+////               output_debug_string("\n xyzxyzx " + strPath + "\n");
+////
+////               if(Application.file().exists(strPath))
+////               {
+////
+////                  output_debug_string("\n OK OK K " + strPath + "\n");
+////
+////                  break;
+////
+////               }
+////
+////               i--;
+////
+////            }
+////
+////            //                     setenv("DYLD_FALLBACK_LIBRARY_PATH",System.dir().ca2module(), 1 );
+////            //                     setenv("DYLD_FALLBACK_LIBRARY_PATH",strPath, 1 );
+//
+//            path = get_exe_path();
+//
+//            ::output_debug_string("\n\n xyzxyzx OK OK K " + path + "\n\n");
+//
+//            path = "\"" + path + "\"";
+//
+//#endif
+//
+//            pathModule = path;
+//
+//            //#if defined(APPLEOS)
+//            //                   strPath = "/usr/bin/open -n " + strPath + " --args : app=" + notinstalled.m_strId + " install build=" + strBuild + " locale=" + notinstalled.m_strLocale + " schema=" + //notinstalled.m_strSchema;
+//            //#else
+//
+//            //strParam = " : install app=" + pnotinstalled->m_strAppId + " platform=" + pnotinstalled->m_strPlatform + " configuration=" + pnotinstalled->m_strConfiguration + " locale=" + pnotinstalled->m_strLocale + " schema=" + pnotinstalled->m_strSchema;
+//
+//            strParam = " : install ";
+//
+//            stringa straKeys;
+//
+//#ifdef WINDOWS
+//
+//            straKeys.add("app");
+//
+//            //strParam += " app=" + pnotinstalled->m_strAppId;
+//
+//#endif
+//
+//            straKeys.add("platform");
+//
+//            straKeys.add("configuration");
+//
+//            straKeys.add("locale");
+//
+//            straKeys.add("schema");
+//
+//            strParam += System.handler()->m_spcommandline->m_varQuery.propset().get_command_line(straKeys);
+//
+//            //{
+//
+//            //   strParam
+//
+//            //}
+//
+//            //#endif
+//
+//            //               if(App(notinstalled.get_app()).is_serviceable() && !App(notinstalled.get_app()).is_user_service())
+//            //               {
+//            //
+//            //
+//            //                  HANDLE hToken = NULL;
+//            //
+//            //                  //if(LogonUserW(L"LocalServer",L"NT AUTHORITY",NULL,LOGON32_LOGON_SERVICE,LOGON32_PROVIDER_DEFAULT,&hToken))
+//            //                  //{
+//            //                  //
+//            //                  //   ::simple_message_box(NULL,"Failed to Login at Local System Account","Debug only message, please install.",MB_ICONINFORMATION | MB_OK);
+//            //                  //}
+//            //
+//            //                  // os << "Impersonation OK!!<br>";
+//            //
+//            ////                  strPath = "\"" + System.file().name_(strModuleFilePath) + "\" : install";
+//            //                  string strCmdLine = strPath + strParam;
+//            //                  wstring wstrCmdLine = strCmdLine;
+//            //                  string strModuleFolder = System.get_module_folder();
+//            //                  wstring wstrModuleFolder = strModuleFolder;
+//            //                  LPSTR lpsz = (char *)(const char *)(strCmdLine);
+//            //                  LPWSTR lpwsz = (unichar *)(const unichar *)(wstrCmdLine);
+//            //                  STARTUPINFO m_si;
+//            //                  PROCESS_INFORMATION m_pi;
+//            //                  memset(&m_si,0,sizeof(m_si));
+//            //                  memset(&m_pi,0,sizeof(m_pi));
+//            //                  m_si.cb = sizeof(m_si);
+//            //                  m_si.wShowWindow = SW_HIDE;
+//            //
+//            //                  if(LaunchAppIntoSystemAcc(strModuleFilePath,lpsz,strModuleFolder,&m_si,&m_pi))
+//            //                  //if(LaunchAppIntoDifferentSession(strModuleFilePath,lpsz,strModuleFolder,&m_si,&m_pi, 0))
+//            //                  //if(::CreateProcessAsUserW(hToken,wstring(strModuleFilePath),lpsz,NULL,NULL,TRUE,CREATE_NEW_CONSOLE,NULL,wstrModuleFolder,&m_si,&m_pi))
+//            //                  {
+//            //                     TRACE("Launched");
+//            //
+//            //
+//            //                  }
+//            //                  else
+//            //                  {
+//            //                     uint32_t dwLastError = ::get_last_error();
+//            //                     TRACE("Not Launched");
+//            //
+//            //                     WCHAR wsz[1024];
+//            //
+//            //                     DWORD dwSize = sizeof(wsz) / sizeof(WCHAR);
+//            //
+//            //                     GetUserNameW(wsz,&dwSize);
+//            //
+//            //                     string strUserName = wsz;
+//            //
+//            //                     if(strUserName != "NetworkService")
+//            //                     {
+//            //
+//            //                        goto Launch;
+//            //
+//            //                     }
+//            //
+//            //                  }
+//            //
+//            //                  dwExitCode = 0;
+//            //
+//            //                  while(::GetExitCodeProcess(m_pi.hProcess,&dwExitCode))
+//            //                  {
+//            //
+//            //                     if(dwExitCode == STILL_ACTIVE)
+//            //                     {
+//            //
+//            //                        Sleep(100);
+//            //
+//            //                     }
+//            //                     else
+//            //                     {
+//            //                        break;
+//            //                     }
+//            //
+//            //                  }
+//            //
+//            //               }
+//            //               else
+//
+//            int iRet = IDNO;
+//
+//            output_debug_string("\n not_installed parameters: " + strParam + "\n");
+//
 //            {
 //
-//               path = path.folder();
-//
-//               strPath = path / "app";
-//
-//               output_debug_string("\n xyzxyzx " + strPath + "\n");
-//               output_debug_string("\n xyzxyzx " + strPath + "\n");
-//               output_debug_string("\n xyzxyzx " + strPath + "\n");
-//               output_debug_string("\n xyzxyzx " + strPath + "\n");
-//               output_debug_string("\n xyzxyzx " + strPath + "\n");
-//
-//               if(Application.file().exists(strPath))
+//               if (!(bool)System.oprop("not_installed_message_already_shown"))
 //               {
 //
-//                  output_debug_string("\n OK OK K " + strPath + "\n");
+////                  if ((App(pnotinstalled->get_app()).is_serviceable() && !App(pnotinstalled->get_app()).is_user_service())
+////                        || (IDYES == (iRet = ::simple_message_box(NULL, "Debug only message, please install:\n\n\n\t" + pnotinstalled->m_strAppId + "\n\tconfiguration = " + pnotinstalled->m_strConfiguration + "\n\tplatform = " + pnotinstalled->m_strPlatform + "\n\tlocale = " + pnotinstalled->m_strLocale + "\n\tschema = " + pnotinstalled->m_strSchema + "\n\n\nThere are helper scripts under <solution directory>/nodeapp/stage/install/", "Debug only message, please install.", MB_ICONINFORMATION | MB_YESNO))))
+//                  {
 //
-//                  break;
+//                     ::duration durationWait = minutes(1);
+//
+//#ifdef LINUX
+//
+//                     exitstatus = System.process().synch(string(path) + strParam, SW_HIDE, durationWait, &bTimedOut);
+//
+//#else
+//
+//                     exitstatus = System.process().elevated_synch(string(path) + strParam, SW_HIDE, durationWait, &bTimedOut);
+//
+//#endif
+//
+//                  }
 //
 //               }
 //
-//               i--;
+//            }
+//
+//            if (iRet == IDNO)
+//            {
+//
+//               pnotinstalled->m_bContinue = false;
+//
+//            }
+//            else if (bTimedOut)
+//            {
+//
+//               ::simple_message_box(NULL, " - " + pnotinstalled->m_strAppId + "\nhas timed out while trying to install.\n\nFor developers it is recommended to\nfix this installation timeout problem.\n\nIt is recommended to kill manually :\n - \"" + string(path) + strParam + "\"\nif it has not been terminated yet.", "Debug only message, please install.", MB_ICONINFORMATION | MB_OK);
+//
+//               pnotinstalled->m_bContinue = false;
+//
+//            }
+//            else if (exitstatus.m_iExitCode == 0)
+//            {
+//
+//               ::simple_message_box(NULL, "Successfully run : " + string(path) + strParam, "Installation Succesful", MB_ICONINFORMATION | MB_OK);
+//
+//               pnotinstalled->m_bContinue = false;
+//
+//            }
+//            else
+//            {
+//
+//               string strMessage;
+//
+//               strMessage.Format("Failed return code : %d (%d, %d)",
+//                                 exitstatus.m_iExitCode,
+//                                 exitstatus.m_iExitSignal,
+//                                 exitstatus.m_iExitStop);
+//
+//               ::simple_message_box(NULL, string(path) + strParam + "\n\n" + strMessage, "Debug only message, please install.", MB_ICONINFORMATION | MB_OK);
+//
+//               pnotinstalled->m_bContinue = false;
 //
 //            }
 //
-//            //                     setenv("DYLD_FALLBACK_LIBRARY_PATH",System.dir().ca2module(), 1 );
-//            //                     setenv("DYLD_FALLBACK_LIBRARY_PATH",strPath, 1 );
-
-            path = get_exe_path();
-
-            ::output_debug_string("\n\n xyzxyzx OK OK K " + path + "\n\n");
-
-            path = "\"" + path + "\"";
-
-#endif
-
-            pathModule = path;
-
-            //#if defined(APPLEOS)
-            //                   strPath = "/usr/bin/open -n " + strPath + " --args : app=" + notinstalled.m_strId + " install build=" + strBuild + " locale=" + notinstalled.m_strLocale + " schema=" + //notinstalled.m_strSchema;
-            //#else
-
-            //strParam = " : install app=" + pnotinstalled->m_strAppId + " platform=" + pnotinstalled->m_strPlatform + " configuration=" + pnotinstalled->m_strConfiguration + " locale=" + pnotinstalled->m_strLocale + " schema=" + pnotinstalled->m_strSchema;
-
-            strParam = " : install ";
-
-            stringa straKeys;
-
-#ifdef WINDOWS
-
-            straKeys.add("app");
-
-            //strParam += " app=" + pnotinstalled->m_strAppId;
-
-#endif
-
-            straKeys.add("platform");
-
-            straKeys.add("configuration");
-
-            straKeys.add("locale");
-
-            straKeys.add("schema");
-
-            strParam += System.handler()->m_spcommandline->m_varQuery.propset().get_command_line(straKeys);
-
-            //{
-
-            //   strParam
-
-            //}
-
-            //#endif
-
-            //               if(App(notinstalled.get_app()).is_serviceable() && !App(notinstalled.get_app()).is_user_service())
-            //               {
-            //
-            //
-            //                  HANDLE hToken = NULL;
-            //
-            //                  //if(LogonUserW(L"LocalServer",L"NT AUTHORITY",NULL,LOGON32_LOGON_SERVICE,LOGON32_PROVIDER_DEFAULT,&hToken))
-            //                  //{
-            //                  //
-            //                  //   ::simple_message_box(NULL,"Failed to Login at Local System Account","Debug only message, please install.",MB_ICONINFORMATION | MB_OK);
-            //                  //}
-            //
-            //                  // os << "Impersonation OK!!<br>";
-            //
-            ////                  strPath = "\"" + System.file().name_(strModuleFilePath) + "\" : install";
-            //                  string strCmdLine = strPath + strParam;
-            //                  wstring wstrCmdLine = strCmdLine;
-            //                  string strModuleFolder = System.get_module_folder();
-            //                  wstring wstrModuleFolder = strModuleFolder;
-            //                  LPSTR lpsz = (char *)(const char *)(strCmdLine);
-            //                  LPWSTR lpwsz = (unichar *)(const unichar *)(wstrCmdLine);
-            //                  STARTUPINFO m_si;
-            //                  PROCESS_INFORMATION m_pi;
-            //                  memset(&m_si,0,sizeof(m_si));
-            //                  memset(&m_pi,0,sizeof(m_pi));
-            //                  m_si.cb = sizeof(m_si);
-            //                  m_si.wShowWindow = SW_HIDE;
-            //
-            //                  if(LaunchAppIntoSystemAcc(strModuleFilePath,lpsz,strModuleFolder,&m_si,&m_pi))
-            //                  //if(LaunchAppIntoDifferentSession(strModuleFilePath,lpsz,strModuleFolder,&m_si,&m_pi, 0))
-            //                  //if(::CreateProcessAsUserW(hToken,wstring(strModuleFilePath),lpsz,NULL,NULL,TRUE,CREATE_NEW_CONSOLE,NULL,wstrModuleFolder,&m_si,&m_pi))
-            //                  {
-            //                     TRACE("Launched");
-            //
-            //
-            //                  }
-            //                  else
-            //                  {
-            //                     uint32_t dwLastError = ::get_last_error();
-            //                     TRACE("Not Launched");
-            //
-            //                     WCHAR wsz[1024];
-            //
-            //                     DWORD dwSize = sizeof(wsz) / sizeof(WCHAR);
-            //
-            //                     GetUserNameW(wsz,&dwSize);
-            //
-            //                     string strUserName = wsz;
-            //
-            //                     if(strUserName != "NetworkService")
-            //                     {
-            //
-            //                        goto Launch;
-            //
-            //                     }
-            //
-            //                  }
-            //
-            //                  dwExitCode = 0;
-            //
-            //                  while(::GetExitCodeProcess(m_pi.hProcess,&dwExitCode))
-            //                  {
-            //
-            //                     if(dwExitCode == STILL_ACTIVE)
-            //                     {
-            //
-            //                        Sleep(100);
-            //
-            //                     }
-            //                     else
-            //                     {
-            //                        break;
-            //                     }
-            //
-            //                  }
-            //
-            //               }
-            //               else
-
-            int iRet = IDNO;
-
-            output_debug_string("\n not_installed parameters: " + strParam + "\n");
-
-            {
-
-               if (!(bool)System.oprop("not_installed_message_already_shown"))
-               {
-
-//                  if ((App(pnotinstalled->get_app()).is_serviceable() && !App(pnotinstalled->get_app()).is_user_service())
-//                        || (IDYES == (iRet = ::simple_message_box(NULL, "Debug only message, please install:\n\n\n\t" + pnotinstalled->m_strAppId + "\n\tconfiguration = " + pnotinstalled->m_strConfiguration + "\n\tplatform = " + pnotinstalled->m_strPlatform + "\n\tlocale = " + pnotinstalled->m_strLocale + "\n\tschema = " + pnotinstalled->m_strSchema + "\n\n\nThere are helper scripts under <solution directory>/nodeapp/stage/install/", "Debug only message, please install.", MB_ICONINFORMATION | MB_YESNO))))
-                  {
-
-                     ::duration durationWait = minutes(1);
-
-#ifdef LINUX
-
-                     exitstatus = System.process().synch(string(path) + strParam, SW_HIDE, durationWait, &bTimedOut);
-
-#else
-
-                     exitstatus = System.process().elevated_synch(string(path) + strParam, SW_HIDE, durationWait, &bTimedOut);
-
-#endif
-
-                  }
-
-               }
-
-            }
-
-            if (iRet == IDNO)
-            {
-
-               pnotinstalled->m_bContinue = false;
-
-            }
-            else if (bTimedOut)
-            {
-
-               ::simple_message_box(NULL, " - " + pnotinstalled->m_strAppId + "\nhas timed out while trying to install.\n\nFor developers it is recommended to\nfix this installation timeout problem.\n\nIt is recommended to kill manually :\n - \"" + string(path) + strParam + "\"\nif it has not been terminated yet.", "Debug only message, please install.", MB_ICONINFORMATION | MB_OK);
-
-               pnotinstalled->m_bContinue = false;
-
-            }
-            else if (exitstatus.m_iExitCode == 0)
-            {
-
-               ::simple_message_box(NULL, "Successfully run : " + string(path) + strParam, "Installation Succesful", MB_ICONINFORMATION | MB_OK);
-
-               pnotinstalled->m_bContinue = false;
-
-            }
-            else
-            {
-
-               string strMessage;
-
-               strMessage.Format("Failed return code : %d (%d, %d)",
-                                 exitstatus.m_iExitCode,
-                                 exitstatus.m_iExitSignal,
-                                 exitstatus.m_iExitStop);
-
-               ::simple_message_box(NULL, string(path) + strParam + "\n\n" + strMessage, "Debug only message, please install.", MB_ICONINFORMATION | MB_OK);
-
-               pnotinstalled->m_bContinue = false;
-
-            }
-
-         }
-         catch (...)
-         {
-
-         }
-
-      }
-      else
-      {
-
-         string strAddUp;
-
-         if (System.handler()->m_varTopicQuery.has_property("enable_desktop_launch"))
-         {
-
-            if (System.handler()->m_varTopicQuery["enable_desktop_launch"].has_char())
-            {
-
-               strAddUp = " enable_desktop_launch=" + System.handler()->m_varTopicQuery["enable_desktop_launch"];
-
-            }
-            else
-            {
-
-               strAddUp = " enable_desktop_launch=" + System.handler()->m_varTopicQuery["app"];
-
-            }
-
-         }
-
-         hotplugin_host_starter_start_sync(": app=" + pnotinstalled->m_strAppId + " install locale=" + pnotinstalled->m_strLocale + " schema=" + pnotinstalled->m_strSchema + " configuration=" + pnotinstalled->m_strConfiguration + " platform=" + pnotinstalled->m_strPlatform + strAddUp, get_app(), NULL);
-
-      }
-
-      _throw_exit(exit_system);
-
-      return false;
-   }
+//         }
+//         catch (...)
+//         {
+//
+//         }
+//
+//      }
+//      else
+//      {
+//
+//         string strAddUp;
+//
+//         if (System.handler()->m_varTopicQuery.has_property("enable_desktop_launch"))
+//         {
+//
+//            if (System.handler()->m_varTopicQuery["enable_desktop_launch"].has_char())
+//            {
+//
+//               strAddUp = " enable_desktop_launch=" + System.handler()->m_varTopicQuery["enable_desktop_launch"];
+//
+//            }
+//            else
+//            {
+//
+//               strAddUp = " enable_desktop_launch=" + System.handler()->m_varTopicQuery["app"];
+//
+//            }
+//
+//         }
+//
+//         hotplugin_host_starter_start_sync(": app=" + pnotinstalled->m_strAppId + " install locale=" + pnotinstalled->m_strLocale + " schema=" + pnotinstalled->m_strSchema + " configuration=" + pnotinstalled->m_strConfiguration + " platform=" + pnotinstalled->m_strPlatform + strAddUp, get_app(), NULL);
+//
+//      }
+//
+//      _throw_exit(exit_system);
+//
+//      return false;
+//   }
 
 
    int32_t application::hotplugin_host_starter_start_sync(const char * pszCommandLine, ::aura::application * papp, hotplugin::host * phost, hotplugin::plugin * pplugin)
@@ -6612,6 +6672,32 @@ finalize:
 
       return status.m_bOk;
 
+   }
+   
+   
+   bool application::is_installed()
+   {
+      
+      string strAppId = m_strAppId;
+      
+      string strBuild = m_strBuild;
+      
+      string strPlatform = System.get_system_platform();
+      
+      string strConfiguration = System.get_system_configuration();
+      
+      string strLocale = m_strLocale;
+      
+      string strSchema = m_strSchema;
+      
+      return System.is_application_installed(
+                                             strAppId,
+                                             strBuild,
+                                             strPlatform,
+                                             strConfiguration,
+                                             strLocale,
+                                             strSchema);
+      
    }
 
 

@@ -127,6 +127,11 @@ app_core::app_core(aura_main_data * pdata)
    s_pappcore = this;
 
    m_pmaindata = pdata;
+   
+   
+   printf("%s", ("\n\napplication_pid="+::str::from(getpid())+"\n\n").c_str());
+   fprintf(stderr, "%s", ("\n\napplication_pid="+::str::from(getpid())+"\n\n").c_str());
+   output_debug_string("\n\napplication_pid="+::str::from(getpid())+"\n\n");
 
 }
 
@@ -232,6 +237,40 @@ bool app_core::ini()
    });
 
    set_command_line_dup(strCommandLine);
+   
+   string strUid;
+   
+   get_command_line_param(strUid, strCommandLine, "uid");
+   
+   if(strUid.has_char())
+   {
+      
+      uid_t uid = atoi(strUid);
+
+      
+      MessageBoxA(NULL, "going to seteuid to: " + ::str::from(uid), "going to seteuid", MB_OK);
+
+      
+      if(seteuid(uid) == 0)
+      {
+      
+         MessageBoxA(NULL, "uid=" + ::str::from(uid), "seteuid success", MB_OK);
+         
+      }
+      else
+      {
+         
+         int iErr = errno;
+         
+         string strError;
+         
+         strError.Format("errno=%d uid=%d", iErr);
+       
+         MessageBoxA(NULL, strError, "seteuid failed", MB_ICONEXCLAMATION);
+       
+      }
+      
+   }
 
    get_command_line_param(strAppId, strCommandLine, "app");
 

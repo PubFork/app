@@ -27,7 +27,7 @@ namespace aura
       if(pathBase.is_empty())
       {
 
-         pathBase = "~/Library/ca2";
+         pathBase = "~/Library/Application Support/ca2";
 
       }
 

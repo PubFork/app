@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 namespace userstack
@@ -441,7 +441,7 @@ namespace userstack
    }
 
 
-   bool application::on_unstall()
+   bool application::on_uninstall()
    {
 
       bool bOk = true;
@@ -449,7 +449,7 @@ namespace userstack
       try
       {
 
-         if (!::asphere::application::on_unstall())
+         if (!::asphere::application::on_uninstall())
          {
 
             bOk = false;

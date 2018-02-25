@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 namespace sphere
@@ -143,7 +143,8 @@ namespace sphere
       return asphere::application::on_install();
    }
 
-   bool application::on_unstall()
+   
+   bool application::on_uninstall()
    {
       string strId = m_strId;
       char chFirst = '\0';
@@ -155,23 +156,26 @@ namespace sphere
       {
          if(strId == "default_file_handler")
          {
-            return ::filehandler::application::on_unstall();
+            return ::filehandler::application::on_uninstall();
          }
       }
       else if(chFirst == 'u')
       {
          if(strId == "userstack")
          {
-            return ::userstack::application::on_unstall();
+            return ::userstack::application::on_uninstall();
          }
+         
       }
 
-      return asphere::application::on_unstall();
+      return asphere::application::on_uninstall();
+      
    }
 
 
    void application::on_request(::create * pcreate)
    {
+      
       string strId = m_strId;
       char chFirst = '\0';
       if(strId.get_length() > 0)
@@ -240,31 +244,46 @@ namespace sphere
       {
          if(strId == "default_file_handler")
          {
+            
             return ::filehandler::application::allocate_new_service();
+            
          }
+         
       }
 
       return ::asphere::application::allocate_new_service();
+      
    }
 
 
    ::user::document *  application::_001OpenDocumentFile(var varFile)
    {
+      
       string strId = m_strId;
+      
       char chFirst = '\0';
+      
       if(strId.get_length() > 0)
       {
+         
          chFirst = strId[0];
+         
       }
+      
       if(chFirst == 'd')
       {
+         
          if(strId == "default_file_handler")
          {
+            
             return ::filehandler::application::_001OpenDocumentFile(varFile);
+            
          }
+         
       }
       else if(chFirst == 'r')
       {
+         
       }
 
       return ::asphere::application::_001OpenDocumentFile(varFile);

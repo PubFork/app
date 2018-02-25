@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 extern
 void InstallUncaughtExceptionHandler();
@@ -125,7 +125,7 @@ namespace multimedia
 
           */
 
-         m_pprebuffer->SetMinL1BufferCount(wave_out_get_buffer()->GetBufferCount() + 4);
+         //m_pprebuffer->SetMinL1BufferCount(wave_out_get_buffer()->GetBufferCount() + 4);
 
          m_estate = state_opened;
 
@@ -158,146 +158,146 @@ namespace multimedia
 
       }
 
-      ::multimedia::e_result wave_out::wave_out_open(thread * pthreadCallback, ::count iBufferCount, ::count iBufferSampleCount)
-      {
+//      ::multimedia::e_result wave_out::wave_out_open(thread * pthreadCallback, ::count iBufferCount, ::count iBufferSampleCount)
+//      {
+//
+//         single_lock sLock(m_pmutex, TRUE);
+//
+//         if(m_Queue != NULL &&
+//               m_estate != state_initial)
+//            return ::multimedia::result_success;
+//
+//         m_pthreadCallback = pthreadCallback;
+//
+//         ASSERT(m_Queue == NULL);
+//         ASSERT(m_estate == state_initial);
+//
+//         m_pwaveformat->wFormatTag = 0;
+//         m_pwaveformat->nChannels = 2;
+//         m_pwaveformat->nSamplesPerSec = 44100;
+//         m_pwaveformat->wBitsPerSample = sizeof(multimedia::audio::WAVEBUFFERDATA) * 8;
+//         m_pwaveformat->nBlockAlign = m_pwaveformat->wBitsPerSample * m_pwaveformat->nChannels / 8;
+//         m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
+//         m_pwaveformat->cbSize = 0;
+//
+//         sp(::multimedia::audio::wave) audiowave = Application.audiowave();
+//
+//         translate(*&m_dataformat, m_pwaveformat);
+//         if(::multimedia::result_success == (m_mmr = translate(AudioQueueNewOutput(                              // 1
+//                                             &m_dataformat,                          // 2
+//                                             WaveOutAudioQueueBufferCallback,                            // 3
+//                                             this,                                      // 4
+//                                             m_runloop,                                         // 5
+//                                             kCFRunLoopDefaultMode,                        // 6
+//                                             0,                                            // 7
+//                                             &m_Queue                                // 8
+//                                             ))))
+//            goto Opened;
+//         m_pwaveformat->nSamplesPerSec = 22050;
+//         m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
+//         if(::multimedia::result_success == (m_mmr = translate(AudioQueueNewOutput(                              // 1
+//                                             &m_dataformat,                          // 2
+//                                             WaveOutAudioQueueBufferCallback,                            // 3
+//                                             this,                                      // 4
+//                                             m_runloop,                                         // 5
+//                                             kCFRunLoopDefaultMode,                        // 6
+//                                             0,                                            // 7
+//                                             &m_Queue                                // 8
+//                                             ))))
+//            goto Opened;
+//         m_pwaveformat->nSamplesPerSec = 11025;
+//         m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
+//         if(::multimedia::result_success == (m_mmr = translate(AudioQueueNewOutput(                              // 1
+//                                             &m_dataformat,                          // 2
+//                                             WaveOutAudioQueueBufferCallback,                            // 3
+//                                             this,                                      // 4
+//                                             m_runloop,                                         // 5
+//                                             kCFRunLoopDefaultMode,                        // 6
+//                                             0,                                            // 7
+//                                             &m_Queue                                // 8
+//                                             ))))
+//            goto Opened;
+//
+//         return m_mmr;
+//
+//Opened:
+//
+//         uint32_t uiBufferSizeLog2;
+//         memory_size_t uiBufferSize;
+//         uint32_t uiAnalysisSize;
+//         memory_size_t uiAllocationSize;
+//         uint32_t uiInterestSize;
+//         uint32_t uiSkippedSamplesCount;
+//         memory_size_t uiBufferCount = iBufferCount;
+//
+//         if(m_pwaveformat->nSamplesPerSec == 44100)
+//         {
+//            uiBufferSizeLog2 = 16;
+//            uiBufferSize = m_pwaveformat->nChannels * 2 * iBufferSampleCount; // 512 kbytes
+//            uiAnalysisSize = 4 * 1 << uiBufferSizeLog2;
+//            if(iBufferCount > 0)
+//            {
+//               uiAllocationSize = iBufferCount * uiAnalysisSize;
+//            }
+//            else
+//            {
+//               uiAllocationSize = 8 * uiAnalysisSize;
+//            }
+//            uiInterestSize = 200;
+//            uiSkippedSamplesCount = 2;
+//         }
+//         else if(m_pwaveformat->nSamplesPerSec == 22050)
+//         {
+//            uiBufferSizeLog2 = 10;
+//            uiBufferSize = 4 * 1 << uiBufferSizeLog2;
+//            uiAnalysisSize = 4 * 1 << uiBufferSizeLog2;
+//            uiAllocationSize = 4 * uiAnalysisSize;
+//            uiInterestSize = 200;
+//            uiSkippedSamplesCount = 1;
+//         }
+//         //         else if(m_pwaveformat->nSamplesPerSec == 11025)
+//         else
+//         {
+//            uiBufferSizeLog2 = 10;
+//            uiBufferSize = 2 * 1 << uiBufferSizeLog2;
+//            uiAnalysisSize = 2 * 1 << uiBufferSizeLog2;
+//            uiAllocationSize = 4 * uiAnalysisSize;
+//            uiInterestSize = 200;
+//            uiSkippedSamplesCount = 1;
+//         }
+//
+//         wave_out_get_buffer()->PCMOutOpen(this, uiBufferSize, uiBufferCount, 64, m_pwaveformat, m_pwaveformat);
+//
+//         m_pprebuffer->open(
+//         this, // callback thread (thread)
+//         m_pwaveformat->nChannels, // channel count
+//         uiBufferCount, // group count
+//         iBufferSampleCount); // group sample count
+//
+//         /*         int32_t i, iSize;
+//          iSize = wave_out_get_buffer()->GetBufferCount();
+//
+//          AudioQueueBufferRef buf;
+//
+//          for(i = 0; i < iSize; i++)
+//          {
+//
+//          buf = NULL;
+//
+//          if(0 != (status = AudioQueueAllocateBuffer (m_Queue, wave_out_get_buffer_size(), &buf))
+//          {
+//          TRACE("ERROR OPENING Preparing INPUT DEVICE buffer");
+//          return ::multimedia::result_error;
+//          }
+//
+//          m_Buffers.add(buf);
+//
+//          }*/
+//         m_estate = state_opened;
+//         return m_mmr;
+//      }
 
-         single_lock sLock(m_pmutex, TRUE);
-
-         if(m_Queue != NULL &&
-               m_estate != state_initial)
-            return ::multimedia::result_success;
-
-         m_pthreadCallback = pthreadCallback;
-
-         ASSERT(m_Queue == NULL);
-         ASSERT(m_estate == state_initial);
-
-         m_pwaveformat->wFormatTag = 0;
-         m_pwaveformat->nChannels = 2;
-         m_pwaveformat->nSamplesPerSec = 44100;
-         m_pwaveformat->wBitsPerSample = sizeof(multimedia::audio::WAVEBUFFERDATA) * 8;
-         m_pwaveformat->nBlockAlign = m_pwaveformat->wBitsPerSample * m_pwaveformat->nChannels / 8;
-         m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
-         m_pwaveformat->cbSize = 0;
-
-         sp(::multimedia::audio::wave) audiowave = Application.audiowave();
-
-         translate(*&m_dataformat, m_pwaveformat);
-         if(::multimedia::result_success == (m_mmr = translate(AudioQueueNewOutput(                              // 1
-                                             &m_dataformat,                          // 2
-                                             WaveOutAudioQueueBufferCallback,                            // 3
-                                             this,                                      // 4
-                                             m_runloop,                                         // 5
-                                             kCFRunLoopDefaultMode,                        // 6
-                                             0,                                            // 7
-                                             &m_Queue                                // 8
-                                             ))))
-            goto Opened;
-         m_pwaveformat->nSamplesPerSec = 22050;
-         m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
-         if(::multimedia::result_success == (m_mmr = translate(AudioQueueNewOutput(                              // 1
-                                             &m_dataformat,                          // 2
-                                             WaveOutAudioQueueBufferCallback,                            // 3
-                                             this,                                      // 4
-                                             m_runloop,                                         // 5
-                                             kCFRunLoopDefaultMode,                        // 6
-                                             0,                                            // 7
-                                             &m_Queue                                // 8
-                                             ))))
-            goto Opened;
-         m_pwaveformat->nSamplesPerSec = 11025;
-         m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
-         if(::multimedia::result_success == (m_mmr = translate(AudioQueueNewOutput(                              // 1
-                                             &m_dataformat,                          // 2
-                                             WaveOutAudioQueueBufferCallback,                            // 3
-                                             this,                                      // 4
-                                             m_runloop,                                         // 5
-                                             kCFRunLoopDefaultMode,                        // 6
-                                             0,                                            // 7
-                                             &m_Queue                                // 8
-                                             ))))
-            goto Opened;
-
-         return m_mmr;
-
-Opened:
-
-         uint32_t uiBufferSizeLog2;
-         memory_size_t uiBufferSize;
-         uint32_t uiAnalysisSize;
-         memory_size_t uiAllocationSize;
-         uint32_t uiInterestSize;
-         uint32_t uiSkippedSamplesCount;
-         memory_size_t uiBufferCount = iBufferCount;
-
-         if(m_pwaveformat->nSamplesPerSec == 44100)
-         {
-            uiBufferSizeLog2 = 16;
-            uiBufferSize = m_pwaveformat->nChannels * 2 * iBufferSampleCount; // 512 kbytes
-            uiAnalysisSize = 4 * 1 << uiBufferSizeLog2;
-            if(iBufferCount > 0)
-            {
-               uiAllocationSize = iBufferCount * uiAnalysisSize;
-            }
-            else
-            {
-               uiAllocationSize = 8 * uiAnalysisSize;
-            }
-            uiInterestSize = 200;
-            uiSkippedSamplesCount = 2;
-         }
-         else if(m_pwaveformat->nSamplesPerSec == 22050)
-         {
-            uiBufferSizeLog2 = 10;
-            uiBufferSize = 4 * 1 << uiBufferSizeLog2;
-            uiAnalysisSize = 4 * 1 << uiBufferSizeLog2;
-            uiAllocationSize = 4 * uiAnalysisSize;
-            uiInterestSize = 200;
-            uiSkippedSamplesCount = 1;
-         }
-         //         else if(m_pwaveformat->nSamplesPerSec == 11025)
-         else
-         {
-            uiBufferSizeLog2 = 10;
-            uiBufferSize = 2 * 1 << uiBufferSizeLog2;
-            uiAnalysisSize = 2 * 1 << uiBufferSizeLog2;
-            uiAllocationSize = 4 * uiAnalysisSize;
-            uiInterestSize = 200;
-            uiSkippedSamplesCount = 1;
-         }
-
-         wave_out_get_buffer()->PCMOutOpen(this, uiBufferSize, uiBufferCount, 64, m_pwaveformat, m_pwaveformat);
-
-         m_pprebuffer->open(
-         this, // callback thread (thread)
-         m_pwaveformat->nChannels, // channel count
-         uiBufferCount, // group count
-         iBufferSampleCount); // group sample count
-
-         /*         int32_t i, iSize;
-          iSize = wave_out_get_buffer()->GetBufferCount();
-
-          AudioQueueBufferRef buf;
-
-          for(i = 0; i < iSize; i++)
-          {
-
-          buf = NULL;
-
-          if(0 != (status = AudioQueueAllocateBuffer (m_Queue, wave_out_get_buffer_size(), &buf))
-          {
-          TRACE("ERROR OPENING Preparing INPUT DEVICE buffer");
-          return ::multimedia::result_error;
-          }
-
-          m_Buffers.add(buf);
-
-          }*/
-         m_estate = state_opened;
-         return m_mmr;
-      }
-
-      ::multimedia::e_result wave_out::wave_out_open_ex(thread * pthreadCallback, ::count iBufferCount, ::count iBufferSampleCount, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample, ::multimedia::audio::e_purpose epurpose)
+      ::multimedia::e_result wave_out::wave_out_open_ex(thread * pthreadCallback, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample, ::multimedia::audio::e_purpose epurpose)
       {
          single_lock sLock(m_pmutex, TRUE);
 
@@ -321,13 +321,17 @@ Opened:
          ZEROP(&m_dataformat);
 
          translate(m_dataformat, m_pwaveformat);
+         
+         int iBufferCount = 8;
+         
+         int iBufferSampleCount = 8192;
 
          if(epurpose == ::multimedia::audio::purpose_playground)
          {
 
             iBufferCount = 4;
 
-            iBufferSampleCount = 1024;
+            iBufferSampleCount = uiSamplesPerSec / 40;
 
          }
          else if(epurpose == ::multimedia::audio::purpose_playback)
@@ -335,9 +339,18 @@ Opened:
 
             iBufferCount = 8;
 
-            iBufferSampleCount = 8192;
+            iBufferSampleCount = uiSamplesPerSec / 20;
 
          }
+         else if(epurpose == ::multimedia::audio::purpose_live)
+         {
+            
+            iBufferCount = 4;
+            
+            iBufferSampleCount = uiSamplesPerSec / 40;
+            
+         }
+         
          //   if(epurpose)
          m_epurpose = epurpose;
          m_iBufferCount = iBufferCount;
@@ -499,8 +512,8 @@ Opened:
 
          m_Queue = NULL;
 
-         m_pprebuffer->Reset();
-
+//         m_pprebuffer->reset();
+//
          m_estate = state_initial;
 
          return ::multimedia::result_success;
@@ -571,7 +584,7 @@ Opened:
 
          }
 
-         m_pprebuffer->Stop();
+         m_pprebuffer->stop();
 
          return m_mmr;
 

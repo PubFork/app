@@ -13,7 +13,7 @@
 ::file::path macos_app_path(string strApp)
 {
    
-   ::file::path path = ::dir::home() / "Library/ca2/mypath" / (strApp + ".txt");
+   ::file::path path = ::dir::home() / "Library/Application Support/ca2/mypath" / (strApp + ".txt");
    
    return file_as_string_dup(path);
    

@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 namespace visual
@@ -50,8 +50,8 @@ namespace visual
 
          class rect rectCache;
 
-         rectCache.left = (long) (iR * g_dEmboss);
-         rectCache.top = (long) (iR * g_dEmboss);
+         rectCache.left = (LONG) (iR * g_dEmboss);
+         rectCache.top = (LONG) (iR * g_dEmboss);
          rectCache.right = rectCache.left + ::width(lpcrect);
          rectCache.bottom = rectCache.top + ::height(lpcrect);
 

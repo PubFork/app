@@ -3971,6 +3971,8 @@
 		9A706D771FFE62FA00A78618 /* RoundViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = RoundViewController.mm; path = ios/RoundViewController.mm; sourceTree = "<group>"; };
 		9A706D781FFE62FA00A78618 /* round_window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = round_window.h; path = ios/round_window.h; sourceTree = "<group>"; };
 		9A8087451DE0FF3000F70A07 /* ios_library.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_library.cpp; sourceTree = "<group>"; };
+		9A813B4E2041ADCF00646A4C /* linux */ = {isa = PBXFileReference; lastKnownFileType = folder; path = linux; sourceTree = "<group>"; };
+		9A813B542041AEB100646A4C /* linux_process.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = linux_process.cpp; sourceTree = "<group>"; };
 		9A81810C1F21A80100FDAF74 /* apple_graphics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = apple_graphics.cpp; sourceTree = "<group>"; };
 		9A81810F1F21A9A000FDAF74 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		9A8181111F21A9B000FDAF74 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/CoreFoundation.framework; sourceTree = DEVELOPER_DIR; };
@@ -5796,6 +5798,7 @@
 		9A163F6519C4A4CD00966C5E /* os */ = {
 			isa = PBXGroup;
 			children = (
+				9A813B4E2041ADCF00646A4C /* linux */,
 				9A8CEAA01FDDFE2F00DEDA01 /* metrowin */,
 				9A8CEA9F1FDDF99F00DEDA01 /* windows */,
 				9A163F9419C4A4CD00966C5E /* cross */,
@@ -6561,6 +6564,7 @@
 		9A81D9A11F448B120030C6E8 /* linux(just_for_browsing) */ = {
 			isa = PBXGroup;
 			children = (
+				9A813B542041AEB100646A4C /* linux_process.cpp */,
 				9A81D9A21F448B120030C6E8 /* _linux_node.cpp */,
 				9A81D9A31F448B120030C6E8 /* linux.cpp */,
 				9A81D9A41F448B120030C6E8 /* linux.h */,

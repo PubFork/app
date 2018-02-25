@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 namespace userstack
@@ -75,7 +75,7 @@ namespace userstack
 
       virtual void main() override;
 
-      virtual bool on_unstall() override;
+      virtual bool on_uninstall() override;
 
       virtual bool is_serviceable() override;
 

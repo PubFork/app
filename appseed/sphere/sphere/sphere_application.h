@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 namespace sphere
@@ -32,7 +32,7 @@ namespace sphere
 
 
       virtual bool on_install() override;
-      virtual bool on_unstall() override;
+      virtual bool on_uninstall() override;
 
       virtual void run() override;
 

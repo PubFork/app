@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include "dynamic_source.h"
 #ifdef WINDOWSEX
 #include "aura/aura/node/windows/windows_registry.h"
@@ -1726,7 +1726,7 @@ namespace dynamic_source
 
          uint32_t dwStart = ::get_tick_count();
 
-         uint32_t dwExitCode;
+         //uint32_t dwExitCode;
 
          string strLog;
 

@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 #include "base/install/install_canvas.h"
@@ -120,7 +120,7 @@ namespace install
 
       virtual bool native_launch();
 
-      virtual bool is_installing() override;
+      virtual bool is_installing();
 
       virtual void restart_aura_ipc() override;
 

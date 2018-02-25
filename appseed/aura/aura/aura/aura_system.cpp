@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 
@@ -68,6 +68,8 @@ namespace aura
       m_httpsystem(this),
       m_emaildepartment(this)
    {
+      
+      m_strAppId = "system";
 
       m_pappcore = pappcore;
 
@@ -463,7 +465,7 @@ namespace aura
 
       m_spos.alloc(allocer());
 
-      if(is_installing() || is_unstalling())
+      //if(is_installing() || is_unstalling())
       {
 
 #ifdef MACOS

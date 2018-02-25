@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 
@@ -424,14 +424,14 @@ void simple_frame_window::_001OnCreate(::message::message * pobj)
          pinteractionframe = create_frame_schema();
 
       }
-      catch (not_installed * pexception)
-      {
-
-         System.remove_frame(this);
-
-         _rethrow(pexception);
-
-      }
+//      catch (not_installed * pexception)
+//      {
+//
+//         System.remove_frame(this);
+//
+//         _rethrow(pexception);
+//
+//      }
       catch (::exception::exception * pexception)
       {
 

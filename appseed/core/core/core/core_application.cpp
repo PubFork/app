@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 #ifdef WINDOWS
@@ -126,20 +126,20 @@ namespace core
    }
 
 
-   bool application::is_installing()
-   {
-
-      return ::base::application::is_installing();
-
-   }
-
-
-   bool application::is_unstalling()
-   {
-
-      return ::base::application::is_unstalling();
-
-   }
+//   bool application::is_installing()
+//   {
+//
+//      return ::base::application::is_installing();
+//
+//   }
+//
+//
+//   bool application::is_unstalling()
+//   {
+//
+//      return ::base::application::is_unstalling();
+//
+//   }
 
 
    bool application::is_serviceable()
@@ -244,7 +244,8 @@ namespace core
       }
 
 
-      if (!is_system() && !is_session() && !is_installing() && !is_unstalling())
+      //if (!is_system() && !is_session() && !is_installing() && !is_unstalling())
+      if (!is_system() && !is_session())
       {
 
          string str;
@@ -2638,10 +2639,10 @@ namespace core
    }
 
 
-   bool application::on_unstall()
+   bool application::on_uninstall()
    {
 
-      bool bOk = ::base::application::on_unstall();
+      bool bOk = ::base::application::on_uninstall();
 
       string strId = m_strId;
 

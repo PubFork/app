@@ -378,7 +378,10 @@ namespace ansios
    void process::synch_elevated(const char * pszCmdLineParam,int iShow,const ::duration & durationTimeOut,bool * pbTimeOut)
    {
 
+      
 #if defined(MACOS)
+      
+      uid_t uid = getuid();
 
 //      string strFallback = ::ca2_module_folder_dup();
 
@@ -502,29 +505,44 @@ namespace ansios
       TRACE("\n\n** %s **\n\n", "This command should work.");
 
 
+//      stringa straParam;
+//
+     pointer_array < char * > argv;
+//
+//      straParam.add("/bin/bash");
+//
+//      straParam.add("-c");
+//
+//      string strC = "ignit_phase2 () { export DYLD_FALLBACK_LIBRARY_PATH=\""+strFallback+"\" ; cd "+strFolder+" ; "+string(pszCmdLineParam)+" ; } ; ignit_phase2 ;";
+////            string strC = "export DYLD_FALLBACK_LIBRARY_PATH="+strFallback;
+//
+//      straParam.add(strC);
+//
+//      for(index i = 0; i < straParam.get_count(); i++)
+//      {
+//
+//         argv.add((char *)(const char *)straParam[i]);
+//
+//      }
+//
+//      argv.add(NULL);
+
+
+      //string strParam(pszCmdLineParam);
+      
+      
       stringa straParam;
-
-      pointer_array < char * > argv;
-
-      straParam.add("/bin/bash");
-
-      straParam.add("-c");
-
-      string strC = "ignit_phase2 () { export DYLD_FALLBACK_LIBRARY_PATH=\""+strFallback+"\" ; cd "+strFolder+" ; "+string(pszCmdLineParam)+" ; } ; ignit_phase2 ;";
-//            string strC = "export DYLD_FALLBACK_LIBRARY_PATH="+strFallback;
-
-      straParam.add(strC);
-
-      for(index i = 0; i < straParam.get_count(); i++)
-      {
-
-         argv.add((char *)(const char *)straParam[i]);
-
-      }
-
-      argv.add(NULL);
-
-
+      
+      straParam = get_c_args(pszCmdLineParam);
+      straParam.add("uid=" + ::str::from(uid));
+            for(index i = 0; i < straParam.get_count(); i++)
+            {
+      
+               argv.add((char *)(const char *)straParam[i]);
+      
+            }
+      
+            argv.add(NULL);
 
       char *tool = (char * )argv[0];
       char **args = (char **) &argv.get_data()[1];
@@ -650,7 +668,7 @@ namespace ansios
                if(bNewLine)
                {
                   string strLine = szBuffer;
-                  if(::str::begins_eat_ci(strLine, "application_process_id="))
+                  if(::str::begins_eat_ci(strLine, "application_pid="))
                   {
                      m_iPid = atoi(strLine);
                      break;
@@ -669,10 +687,10 @@ namespace ansios
          }
 
 //         pid_t pptp_pid = 0;
-
-         //       fread(&pptp_pid,sizeof(pptp_pid),1,pipe); // get pid
-
-         //     m_iPid = pptp_pid;
+//
+//         fread(&pptp_pid,sizeof(pptp_pid),1,pipe); // get pid
+//
+//          m_iPid = pptp_pid;
 
          DWORD dwStart = get_tick_count();
 

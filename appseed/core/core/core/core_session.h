@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #define platform_parent session( )
 
@@ -156,7 +156,7 @@ namespace core
 
       virtual void main() override;
 
-      virtual bool on_unstall() override;
+      virtual bool on_uninstall() override;
 
       virtual bool is_serviceable() override;
 
