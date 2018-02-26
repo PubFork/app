@@ -2344,6 +2344,9 @@ namespace macos
                      break;
 
                   }
+                  
+                  
+                  m_oswindow->m_bNsWindowRect = false;
 
                   if (!m_pui->m_bLockWindowUpdate)
                   {

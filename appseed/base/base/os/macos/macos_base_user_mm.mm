@@ -263,6 +263,8 @@ WINBOOL SetWindowPos(oswindow hwnd, oswindow hwndInsertAfter, int x, int y, int 
       rect.top       = y;
       rect.right     = rect.left + cx;
       rect.bottom    = rect.top + cy;
+
+      hwnd->m_bNsWindowRect = false;
       
       set_nswindow_frame(hwnd, &rect, (uFlags & SWP_SHOWWINDOW) != 0);
       
@@ -276,6 +278,8 @@ WINBOOL SetWindowPos(oswindow hwnd, oswindow hwndInsertAfter, int x, int y, int 
       
       rect.right     = rect.left + cx;
       rect.bottom    = rect.top + cy;
+
+      hwnd->m_bNsWindowRect = false;
       
       set_nswindow_frame(hwnd, &rect, (uFlags & SWP_SHOWWINDOW) != 0);
       
@@ -296,6 +300,9 @@ WINBOOL SetWindowPos(oswindow hwnd, oswindow hwndInsertAfter, int x, int y, int 
 //      rect.bottom    = rect.top + cy;
 //      
 //      set_nswindow_frame(hwnd, &rect, (uFlags & SWP_SHOWWINDOW) != 0);
+
+      hwnd->m_bNsWindowRect = false;
+
       move_nswindow(hwnd, x, y);
       
    }

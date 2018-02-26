@@ -45,6 +45,9 @@ public:
    
    
    int_ptr_to_int_ptr *          m_plongmap;
+
+   bool                          m_bNsWindowRect;
+   RECT                          m_rectNsWindow;
    
    
    oswindow_data();

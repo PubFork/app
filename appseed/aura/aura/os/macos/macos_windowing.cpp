@@ -54,7 +54,7 @@ oswindow_data::oswindow_data()
    m_nswindow  = NULL;
    m_pimpl       = NULL;
    m_plongmap  = new int_ptr_to_int_ptr;
-
+    m_bNsWindowRect = false;
 }
 
 
@@ -64,7 +64,7 @@ oswindow_data::oswindow_data(nswindow window)
    m_nswindow  = window;
    m_pimpl       = NULL;
    m_plongmap  = new int_ptr_to_int_ptr;
-
+m_bNsWindowRect = false;
 }
 
 
@@ -74,7 +74,7 @@ oswindow_data::oswindow_data(const oswindow_data & oswindow)
    m_nswindow  = oswindow.m_nswindow;
    m_pimpl       = oswindow.m_pimpl;
    m_plongmap  = oswindow.m_plongmap;
-
+m_bNsWindowRect = false;
 }
 
 
