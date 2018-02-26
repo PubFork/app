@@ -127,11 +127,22 @@ app_core::app_core(aura_main_data * pdata)
    s_pappcore = this;
 
    m_pmaindata = pdata;
+  
+   int iPid;
+
+#ifdef WINDOWS   
+
+   iPid = ::GetCurrentProcessId();
+
+#else
+
+   iPid = getpid();
+
+#endif
    
-   
-   printf("%s", ("\n\napplication_pid="+::str::from(getpid())+"\n\n").c_str());
-   fprintf(stderr, "%s", ("\n\napplication_pid="+::str::from(getpid())+"\n\n").c_str());
-   output_debug_string("\n\napplication_pid="+::str::from(getpid())+"\n\n");
+   printf("%s", ("\n\napplication_pid=" + ::str::from(iPid) + "\n\n").c_str());
+   fprintf(stderr, "%s", ("\n\napplication_pid=" + ::str::from(iPid) + "\n\n").c_str());
+   output_debug_string("\n\napplication_pid=" + ::str::from(iPid) + "\n\n");
 
 }
 
@@ -237,6 +248,8 @@ bool app_core::ini()
    });
 
    set_command_line_dup(strCommandLine);
+
+#if !defined(WINDOWS)
    
    string strUid;
    
@@ -271,6 +284,8 @@ bool app_core::ini()
       }
       
    }
+
+#endif
 
    get_command_line_param(strAppId, strCommandLine, "app");
 
