@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 ::user::interaction * get_system_window_interaction(::os_system_window * psystemwindow);
 
@@ -2623,8 +2623,13 @@ restart:
    // handling
    LRESULT interaction::send(::message::base * pbase)
    {
+      
+      if(m_pimpl.is_set())
+      {
 
-      m_pimpl->queue_message_handler(pbase);
+         m_pimpl->queue_message_handler(pbase);
+         
+      }
 
       return pbase->get_lresult();
 

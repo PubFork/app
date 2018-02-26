@@ -1000,13 +1000,21 @@ void thread::close_dependent_threads(const ::duration & dur)
 
 void thread::signal_close_dependent_threads()
 {
-
-   synch_lock sl(m_threadrefaDependent.m_pmutex);
-
-   for(index i = 0; i < m_threadrefaDependent.get_count(); i++)
+   
+   thread_ptra ptra;
+   
    {
 
-      thread * pthread = m_threadrefaDependent[i];
+      synch_lock sl(m_threadrefaDependent.m_pmutex);
+   
+      ptra = m_threadrefaDependent;
+      
+   }
+
+   for(index i = 0; i < ptra.get_count(); i++)
+   {
+
+      thread * pthread = ptra[i];
 
       try
       {

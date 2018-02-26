@@ -3201,7 +3201,7 @@ void simple_frame_window::OnNotifyIconOpen(UINT uiNotifyIcon)
    if(m_bDefaultNotifyIcon)
    {
 
-      ShowWindow(SW_NORMAL);
+      InitialFramePosition(true);
 
    }
 

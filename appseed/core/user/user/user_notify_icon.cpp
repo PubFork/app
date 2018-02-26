@@ -441,6 +441,12 @@ namespace user
          __quit();
 
       }
+      else if(strAction == "open")
+      {
+
+         __open();
+
+      }
 
    }
 

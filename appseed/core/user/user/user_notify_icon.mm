@@ -84,7 +84,14 @@
    NSMenuItem * pitem = (NSMenuItem *) sender;
    if(pitem == closeItem)
    {
-      m_pbridge->notify_icon_play("close");
+      if(m_pbridge->notify_icon_frame_is_opened())
+      {
+         m_pbridge->notify_icon_play("close");
+      }
+      else
+      {
+         m_pbridge->notify_icon_play("open");
+      }
    }
    else if(pitem == quitItem)
    {
