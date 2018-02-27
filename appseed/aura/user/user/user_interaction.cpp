@@ -8306,18 +8306,23 @@ restart:
 
 #endif
 
-      if (m_bRedrawOnVisible && IsWindowVisible())
+      if(IsWindowVisible())
       {
+         
+         if (m_bRedrawOnVisible)
+         {
 
-         return true;
+            return true;
 
-      }
+         }
 
-      if (m_bRedraw)
-      {
+         if (m_bRedraw)
+         {
 
-         return true;
+            return true;
 
+         }
+         
       }
 
       if (m_pimpl->has_pending_graphical_update())
