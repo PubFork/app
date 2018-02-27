@@ -313,6 +313,15 @@ void os_term_application()
 }
 
 
-
-
-
+CLASS_DECL_AURA ::file::path core_app_path(string strApp)
+{
+   
+   ::file::path path = getenv("HOME");
+   
+   path /= "Library/Application Support/ca2/mypath" / strApp;
+   
+   path += ".txt";
+   
+   return file_as_string_dup(path);
+   
+}

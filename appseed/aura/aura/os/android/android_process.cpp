@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 void get_os_priority(int32_t * piPolicy, sched_param * pparam, int32_t nCa2Priority);
@@ -286,4 +286,12 @@ CLASS_DECL_AURA bool is_shared_library_busy(const stringa & stra)
 
    return true;
 
+}
+
+
+CLASS_DECL_AURA ::file::path core_app_path(string strApp)
+{
+   
+   throw todo(get_app());
+   
 }

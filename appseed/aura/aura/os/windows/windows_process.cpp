@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include "windows_process.h"
 
 
@@ -950,5 +950,26 @@ CLASS_DECL_AURA void shared_library_process(dword_array & dwa, stringa & straPro
 
 
 
+
+
+
+
+CLASS_DECL_AURA ::file::path core_app_path(string strApp)
+{
+   
+   strApp.replace("-", "_");
+   
+   strApp.replace("/", "_");
+   
+   if(strApp == "app_veriwell_waven")
+   {
+      
+      return "C:\\core\\time\\Win32\\basis\\" + strApp + ".exe";
+      
+   }
+   
+   return "C:\\core\\time\\x64\\basis\\" + strApp + ".exe";
+   
+}
 
 

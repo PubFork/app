@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 //#include "metrowin.h"
 //#include <Shellapi.h>
 //#include <string.h>
@@ -363,3 +363,10 @@ bool shell_execute_sync(const char * pszFile, const char * pszParams, ::duration
 
 
 
+
+CLASS_DECL_AURA ::file::path core_app_path(string strApp)
+{
+   
+   throw todo(get_app());
+   
+}

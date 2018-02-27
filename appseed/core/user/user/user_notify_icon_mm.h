@@ -26,6 +26,8 @@ class user_notify_icon_mm_bridge;
    // Flycut/AppController.h
    NSMenu *jcMenu;
    NSStatusItem *statusItem;
+   NSMutableArray * extraMenuItems;
+   NSMutableArray * extraMenuIds;
    NSMenuItem *closeItem;
    NSMenuItem *quitItem;
 }

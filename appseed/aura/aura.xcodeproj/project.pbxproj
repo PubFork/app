@@ -4131,6 +4131,7 @@
 		9A95779F1F620DF800623508 /* ios_ip_enum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ios_ip_enum.h; path = ios/ios_ip_enum.h; sourceTree = "<group>"; };
 		9A9799141DAC3C2B001CD6D9 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		9A98A6151771D67E000AE16E /* libaura.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libaura.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A9C4D592045670D00046215 /* android */ = {isa = PBXFileReference; lastKnownFileType = folder; path = android; sourceTree = "<group>"; };
 		9AA315581E462D4E009CF281 /* macos_file_watcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = macos_file_watcher.cpp; sourceTree = "<group>"; };
 		9AB423AF203D20E500EA1483 /* apple_process.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = apple_process.cpp; sourceTree = "<group>"; };
 		9AB8711B1F3E47F10007F324 /* primitive_handler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = primitive_handler.cpp; sourceTree = "<group>"; };
@@ -5798,6 +5799,7 @@
 		9A163F6519C4A4CD00966C5E /* os */ = {
 			isa = PBXGroup;
 			children = (
+				9A9C4D592045670D00046215 /* android */,
 				9A813B4E2041ADCF00646A4C /* linux */,
 				9A8CEAA01FDDFE2F00DEDA01 /* metrowin */,
 				9A8CEA9F1FDDF99F00DEDA01 /* windows */,

@@ -227,3 +227,12 @@ void os_term_application()
    
 }
 
+
+
+
+CLASS_DECL_AURA ::file::path core_app_path(string strApp)
+{
+   
+   throw todo(get_app());
+   
+}

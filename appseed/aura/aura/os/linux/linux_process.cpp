@@ -742,3 +742,13 @@ int create_process2(const char * pszCommandLine, int * pprocessId)
 
 
 
+CLASS_DECL_AURA ::file::path core_app_path(string strApp)
+{
+   
+   strApp.replace("-", "_");
+   
+   strApp.replace("/", "_");
+   
+   return "/xcore/time/x64/basis/" + strApp;
+   
+}

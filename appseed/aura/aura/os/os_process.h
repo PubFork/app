@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 #if !defined(METROWIN)
@@ -39,6 +39,7 @@ CLASS_DECL_AURA string process_platform_dir_name();
 CLASS_DECL_AURA string process_platform_dir_name2();
 CLASS_DECL_AURA string process_version_dir_name();
 
+CLASS_DECL_AURA ::file::path core_app_path(string strApp);
 
 #if !defined(METROWIN)
 

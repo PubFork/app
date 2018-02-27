@@ -29,6 +29,39 @@
    
    [statusItem setImage:[[NSImage alloc ]initByReferencingFile:strIconFile]];
    jcMenu = [[NSMenu alloc] initWithTitle:@"menubar_menu"];
+   extraMenuItems = [[NSMutableArray alloc] init];
+   extraMenuIds = [[NSMutableArray alloc] init];
+   for(int i = 0; i < pbridge->notification_extra_action_count(); i++)
+   {
+      
+      char * pszName = NULL;
+      char * pszId = NULL;
+      char * pszLabel = NULL;
+      char * pszAccelerator = NULL;
+      char * pszDescription = NULL;
+      
+      pbridge->notification_area_action_info(&pszName, &pszId, &pszLabel, &pszAccelerator, &pszDescription, i);
+      NSString * strTitle = [[NSString alloc] initWithUTF8String: pszName];
+      NSString * strId = [[NSString alloc] initWithUTF8String: pszId];
+      
+      NSMenuItem * item = [[NSMenuItem alloc] initWithTitle:  strTitle                                           action: @selector(play:) keyEquivalent:@"" ];
+      
+      
+      [item setTarget:self];
+      
+      [jcMenu addItem:item];
+      
+      [extraMenuItems addObject: item];
+      
+      [extraMenuIds addObject: strId];
+      
+      if(pszName) free(pszName);
+      if(pszId) free(pszId);
+      if(pszLabel) free(pszLabel);
+      if(pszAccelerator) free(pszAccelerator);
+      if(pszDescription) free(pszDescription);
+
+   }
    
    closeItem = [[NSMenuItem alloc] initWithTitle:@"Close"                                             action: @selector(play:) keyEquivalent:@""];
    
@@ -82,6 +115,20 @@
 - (void)play:(id)sender
 {
    NSMenuItem * pitem = (NSMenuItem *) sender;
+   for(int i = 0; i < m_pbridge->notification_extra_action_count(); i++)
+   {
+      
+      if(pitem == [extraMenuItems objectAtIndex:i])
+      {
+         
+         m_pbridge->notification_area_extra_action([[extraMenuIds objectAtIndex:i] UTF8String]);
+         
+         return;
+         
+      }
+      
+   }
+   
    if(pitem == closeItem)
    {
       if(m_pbridge->notify_icon_frame_is_opened())
