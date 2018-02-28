@@ -3099,7 +3099,7 @@ success:
       else if(line->m_ecommand == command_line::command_file_open)
       {
 
-         pcreate->m_spCommandLine->m_varFile.stra().add(line->m_varFile.stra());
+         pcreate->m_spCommandLine->m_varFile.stra().add_unique_ci(line->m_varFile.stra());
 
          pcreate->m_spCommandLine->m_ecommand = command_line::command_file_open;
 

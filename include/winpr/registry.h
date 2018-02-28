@@ -137,18 +137,15 @@ typedef ACCESS_MASK REGSAM;
 #define RRF_NOEXPAND					0x10000000
 #define RRF_ZEROONFAILURE				0x20000000
 
-#ifndef _UWP
 struct val_context
 {
 	int valuelen;
 	LPVOID value_context;
 	LPVOID val_buff_ptr;
 };
-#endif
 
 typedef struct val_context *PVALCONTEXT;
 
-#ifndef _UWP
 typedef struct pvalueA
 {
 	LPSTR pv_valuename;
@@ -156,9 +153,7 @@ typedef struct pvalueA
 	LPVOID pv_value_context;
 	DWORD pv_type;
 } PVALUEA, *PPVALUEA;
-#endif
 
-#ifndef _UWP
 typedef struct pvalueW
 {
 	LPWSTR pv_valuename;
@@ -166,8 +161,6 @@ typedef struct pvalueW
 	LPVOID pv_value_context;
 	DWORD pv_type;
 } PVALUEW, *PPVALUEW;
-#endif
-
 
 #ifdef UNICODE
 typedef PVALUEW PVALUE;
@@ -177,7 +170,6 @@ typedef PVALUEA PVALUE;
 typedef PPVALUEA PPVALUE;
 #endif
 
-#ifndef _UWP
 typedef struct value_entA
 {
 	LPSTR ve_valuename;
@@ -193,7 +185,6 @@ typedef struct value_entW
 	DWORD_PTR ve_valueptr;
 	DWORD ve_type;
 } VALENTW, *PVALENTW;
-#endif
 
 #ifdef UNICODE
 typedef VALENTW VALENT;

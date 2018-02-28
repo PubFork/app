@@ -50,12 +50,12 @@
 #else
 #define WINPR_TLS __declspec(thread)
 #endif
-#else //!defined(__IOS__) /// iOS 8 has it!!!
+#elif !defined(__IOS__)
 #define WINPR_TLS __thread
-//#else
-//#warning "Target iOS does not support Thread Local Storage!"
-//#warning "Multi Instance support is disabled!"
-//#define WINPR_TLS
+#else
+#warning "Target iOS does not support Thread Local Storage!"
+#warning "Multi Instance support is disabled!"
+#define WINPR_TLS
 #endif
 
 
@@ -70,5 +70,8 @@ WINPR_API const char* winpr_get_version_string(void);
 WINPR_API const char* winpr_get_build_date(void);
 WINPR_API const char* winpr_get_build_revision(void);
 WINPR_API const char* winpr_get_build_config(void);
+WINPR_API int winpr_exit(int status);
+
+#define WINPR_UNUSED(x) (void)(x)
 
 #endif /* WINPR_H */

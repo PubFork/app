@@ -17,7 +17,7 @@ int32_t defer_run_system(char * * psza, int c);
 
 void macos_on_app_activate();
 
-
+void set_aura_system_as_thread();
 
 @implementation RoundWindowApp
 
@@ -34,6 +34,7 @@ NSAppleEventManager *appleEventManager = [NSAppleEventManager sharedAppleEventMa
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
    
+   set_aura_system_as_thread();
    //MessageBox(NULL, "applicationDidFinishLaunching", "applicationDidFinishLaunching", MB_OK);
    
    defer_run_system();

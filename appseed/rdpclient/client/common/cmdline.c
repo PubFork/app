@@ -924,24 +924,24 @@ static int freerdp_client_command_line_post_filter(void* context,
 	}
 	CommandLineSwitchCase(arg, "multimedia")
 	{
-		if (arg->Flags & COMMAND_LINE_VALUE_PRESENT)
-		{
-			char** p;
-			int count;
-			p = freerdp_command_line_parse_comma_separated_values_offset(arg->Value,
-			        &count);
-			p[0] = "tsmf";
-			status = freerdp_client_add_dynamic_channel(settings, count, p);
-			free(p);
-		}
-		else
-		{
-			char* p[1];
-			int count;
-			count = 1;
-			p[0] = "tsmf";
-			status = freerdp_client_add_dynamic_channel(settings, count, p);
-		}
+		// if (arg->Flags & COMMAND_LINE_VALUE_PRESENT)
+		// {
+		// 	char** p;
+		// 	int count;
+		// 	p = freerdp_command_line_parse_comma_separated_values_offset(arg->Value,
+		// 	        &count);
+		// 	p[0] = "tsmf";
+		// 	status = freerdp_client_add_dynamic_channel(settings, count, p);
+		// 	free(p);
+		// }
+		// else
+		// {
+		// 	char* p[1];
+		// 	int count;
+		// 	count = 1;
+		// 	p[0] = "tsmf";
+		// 	status = freerdp_client_add_dynamic_channel(settings, count, p);
+		// }
 	}
 	CommandLineSwitchCase(arg, "heartbeat")
 	{

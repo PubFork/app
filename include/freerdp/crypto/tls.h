@@ -28,7 +28,6 @@
 
 #include <openssl/ssl.h>
 #include <openssl/err.h>
-#include <openssl/rsa.h>
 
 #include <freerdp/api.h>
 #include <freerdp/types.h>

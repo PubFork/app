@@ -1581,3 +1581,12 @@ aura_app::aura_app(const char * pszName, ::aura::PFN_GET_NEW_LIBRARY pfnNewLibra
 
 }
 
+
+
+
+void set_aura_system_as_thread()
+{
+   
+   ::set_thread(::aura::system::g_p);
+
+}

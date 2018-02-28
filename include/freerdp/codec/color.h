@@ -100,6 +100,14 @@ typedef struct gdi_palette gdiPalette;
 extern "C" {
 #endif
 
+/* Compare two color formats but ignore differences in alpha channel.
+ */
+static INLINE DWORD AreColorFormatsEqualNoAlpha(DWORD first, DWORD second)
+{
+	const DWORD mask = ~(8 << 12);
+	return (first & mask) == (second & mask);
+}
+
 /* Color Space Conversions: http://msdn.microsoft.com/en-us/library/ff566496/ */
 
 /***
@@ -110,7 +118,7 @@ extern "C" {
  *
  * @return A string representation of format
  */
-static const char* GetColorFormatName(UINT32 format)
+static const char* FreeRDPGetColorFormatName(UINT32 format)
 {
 	switch (format)
 	{
@@ -205,28 +213,28 @@ static INLINE void SplitColor(UINT32 color, UINT32 format, BYTE* _r, BYTE* _g,
 		/* 32bpp formats */
 		case PIXEL_FORMAT_ARGB32:
 			if (_a)
-				*_a = color >> 24;
+				*_a = (BYTE)(color >> 24);
 
 			if (_r)
-				*_r = color >> 16;
+				*_r = (BYTE)(color >> 16);
 
 			if (_g)
-				*_g = color >> 8;
+				*_g = (BYTE)(color >> 8);
 
 			if (_b)
-				*_b = color;
+				*_b = (BYTE)color;
 
 			break;
 
 		case PIXEL_FORMAT_XRGB32:
 			if (_r)
-				*_r = color >> 16;
+				*_r = (BYTE)(color >> 16);
 
 			if (_g)
-				*_g = color >> 8;
+				*_g = (BYTE)(color >> 8);
 
 			if (_b)
-				*_b = color;
+				*_b = (BYTE)color;
 
 			if (_a)
 				*_a = 0xFF;
@@ -235,28 +243,28 @@ static INLINE void SplitColor(UINT32 color, UINT32 format, BYTE* _r, BYTE* _g,
 
 		case PIXEL_FORMAT_ABGR32:
 			if (_a)
-				*_a = color >> 24;
+				*_a = (BYTE)(color >> 24);
 
 			if (_b)
-				*_b = color >> 16;
+				*_b = (BYTE)(color >> 16);
 
 			if (_g)
-				*_g = color >> 8;
+				*_g = (BYTE)(color >> 8);
 
 			if (_r)
-				*_r = color;
+				*_r = (BYTE)color;
 
 			break;
 
 		case PIXEL_FORMAT_XBGR32:
 			if (_b)
-				*_b = color >> 16;
+				*_b = (BYTE)(color >> 16);
 
 			if (_g)
-				*_g = color >> 8;
+				*_g = (BYTE)(color >> 8);
 
 			if (_r)
-				*_r = color;
+				*_r = (BYTE)color;
 
 			if (_a)
 				*_a = 0xFF;
@@ -265,28 +273,28 @@ static INLINE void SplitColor(UINT32 color, UINT32 format, BYTE* _r, BYTE* _g,
 
 		case PIXEL_FORMAT_RGBA32:
 			if (_r)
-				*_r = color >> 24;
+				*_r = (BYTE)(color >> 24);
 
 			if (_g)
-				*_g = color >> 16;
+				*_g = (BYTE)(color >> 16);
 
 			if (_b)
-				*_b = color >> 8;
+				*_b = (BYTE)(color >> 8);
 
 			if (_a)
-				*_a = color;
+				*_a = (BYTE)color;
 
 			break;
 
 		case PIXEL_FORMAT_RGBX32:
 			if (_r)
-				*_r = color >> 24;
+				*_r = (BYTE)(color >> 24);
 
 			if (_g)
-				*_g = color >> 16;
+				*_g = (BYTE)(color >> 16);
 
 			if (_b)
-				*_b = color >> 8;
+				*_b = (BYTE)(color >> 8);
 
 			if (_a)
 				*_a = 0xFF;
@@ -295,28 +303,28 @@ static INLINE void SplitColor(UINT32 color, UINT32 format, BYTE* _r, BYTE* _g,
 
 		case PIXEL_FORMAT_BGRA32:
 			if (_b)
-				*_b = color >> 24;
+				*_b = (BYTE)(color >> 24);
 
 			if (_g)
-				*_g = color >> 16;
+				*_g = (BYTE)(color >> 16);
 
 			if (_r)
-				*_r = color >> 8;
+				*_r = (BYTE)(color >> 8);
 
 			if (_a)
-				*_a = color;
+				*_a = (BYTE)color;
 
 			break;
 
 		case PIXEL_FORMAT_BGRX32:
 			if (_b)
-				*_b = color >> 24;
+				*_b = (BYTE)(color >> 24);
 
 			if (_g)
-				*_g = color >> 16;
+				*_g = (BYTE)(color >> 16);
 
 			if (_r)
-				*_r = color >> 8;
+				*_r = (BYTE)(color >> 8);
 
 			if (_a)
 				*_a = 0xFF;
@@ -326,13 +334,13 @@ static INLINE void SplitColor(UINT32 color, UINT32 format, BYTE* _r, BYTE* _g,
 		/* 24bpp formats */
 		case PIXEL_FORMAT_RGB24:
 			if (_r)
-				*_r = color >> 16;
+				*_r = (BYTE)(color >> 16);
 
 			if (_g)
-				*_g = color >> 8;
+				*_g = (BYTE)(color >> 8);
 
 			if (_b)
-				*_b = color;
+				*_b = (BYTE)color;
 
 			if (_a)
 				*_a = 0xFF;
@@ -341,13 +349,13 @@ static INLINE void SplitColor(UINT32 color, UINT32 format, BYTE* _r, BYTE* _g,
 
 		case PIXEL_FORMAT_BGR24:
 			if (_b)
-				*_b = color >> 16;
+				*_b = (BYTE)(color >> 16);
 
 			if (_g)
-				*_g = color >> 8;
+				*_g = (BYTE)(color >> 8);
 
 			if (_r)
-				*_r = color;
+				*_r = (BYTE)color;
 
 			if (_a)
 				*_a = 0xFF;
@@ -357,13 +365,13 @@ static INLINE void SplitColor(UINT32 color, UINT32 format, BYTE* _r, BYTE* _g,
 		/* 16bpp formats */
 		case PIXEL_FORMAT_RGB16:
 			if (_r)
-				*_r = ((color >> 11) & 0x1F) << 3;
+				*_r = (BYTE)(((color >> 11) & 0x1F) << 3);
 
 			if (_g)
-				*_g = ((color >> 5) & 0x3F) << 2;
+				*_g = (BYTE)(((color >> 5) & 0x3F) << 2);
 
 			if (_b)
-				*_b = (color & 0x1F) << 3;
+				*_b = (BYTE)((color & 0x1F) << 3);
 
 			if (_a)
 				*_a = 0xFF;
@@ -372,13 +380,13 @@ static INLINE void SplitColor(UINT32 color, UINT32 format, BYTE* _r, BYTE* _g,
 
 		case PIXEL_FORMAT_BGR16:
 			if (_b)
-				*_b = ((color >> 11) & 0x1F) << 3;
+				*_b = (BYTE)(((color >> 11) & 0x1F) << 3);
 
 			if (_g)
-				*_g = ((color >> 5) & 0x3F) << 2;
+				*_g = (BYTE)(((color >> 5) & 0x3F) << 2);
 
 			if (_r)
-				*_r = (color & 0x1F) << 3;
+				*_r = (BYTE)((color & 0x1F) << 3);
 
 			if (_a)
 				*_a = 0xFF;
@@ -387,13 +395,13 @@ static INLINE void SplitColor(UINT32 color, UINT32 format, BYTE* _r, BYTE* _g,
 
 		case PIXEL_FORMAT_ARGB15:
 			if (_r)
-				*_r = ((color >> 10) & 0x1F) << 3;
+				*_r = (BYTE)(((color >> 10) & 0x1F) << 3);
 
 			if (_g)
-				*_g = ((color >> 5) & 0x1F) << 3;
+				*_g = (BYTE)(((color >> 5) & 0x1F) << 3);
 
 			if (_b)
-				*_b = (color & 0x1F) << 3;
+				*_b = (BYTE)((color & 0x1F) << 3);
 
 			if (_a)
 				*_a = color & 0x8000 ? 0xFF : 0x00;
@@ -402,13 +410,13 @@ static INLINE void SplitColor(UINT32 color, UINT32 format, BYTE* _r, BYTE* _g,
 
 		case PIXEL_FORMAT_ABGR15:
 			if (_b)
-				*_b = ((color >> 10) & 0x1F) << 3;
+				*_b = (BYTE)(((color >> 10) & 0x1F) << 3);
 
 			if (_g)
-				*_g = ((color >> 5) & 0x1F) << 3;
+				*_g = (BYTE)(((color >> 5) & 0x1F) << 3);
 
 			if (_r)
-				*_r = (color & 0x1F) << 3;
+				*_r = (BYTE)((color & 0x1F) << 3);
 
 			if (_a)
 				*_a = color & 0x8000 ? 0xFF : 0x00;
@@ -418,13 +426,13 @@ static INLINE void SplitColor(UINT32 color, UINT32 format, BYTE* _r, BYTE* _g,
 		/* 15bpp formats */
 		case PIXEL_FORMAT_RGB15:
 			if (_r)
-				*_r = ((color >> 10) & 0x1F) << 3;
+				*_r = (BYTE)(((color >> 10) & 0x1F) << 3);
 
 			if (_g)
-				*_g = ((color >> 5) & 0x1F) << 3;
+				*_g = (BYTE)(((color >> 5) & 0x1F) << 3);
 
 			if (_b)
-				*_b = (color & 0x1F) << 3;
+				*_b = (BYTE)((color & 0x1F) << 3);
 
 			if (_a)
 				*_a = 0xFF;
@@ -433,13 +441,13 @@ static INLINE void SplitColor(UINT32 color, UINT32 format, BYTE* _r, BYTE* _g,
 
 		case PIXEL_FORMAT_BGR15:
 			if (_b)
-				*_b = ((color >> 10) & 0x1F) << 3;
+				*_b = (BYTE)(((color >> 10) & 0x1F) << 3);
 
 			if (_g)
-				*_g = ((color >> 5) & 0x1F) << 3;
+				*_g = (BYTE)(((color >> 5) & 0x1F) << 3);
 
 			if (_r)
-				*_r = (color & 0x1F) << 3;
+				*_r = (BYTE)((color & 0x1F) << 3);
 
 			if (_a)
 				*_a = 0xFF;
@@ -501,7 +509,7 @@ static INLINE void SplitColor(UINT32 color, UINT32 format, BYTE* _r, BYTE* _g,
 			if (_a)
 				*_a = 0x00;
 
-			WLog_ERR(CTAG, "Unsupported format %s", GetColorFormatName(format));
+			WLog_ERR(CTAG, "Unsupported format %s", FreeRDPGetColorFormatName(format));
 			break;
 	}
 }
@@ -519,7 +527,7 @@ static INLINE void SplitColor(UINT32 color, UINT32 format, BYTE* _r, BYTE* _g,
  * @return       The pixel color in the desired format. Value is in internal
  *               representation.
  */
-static INLINE UINT32 GetColor(UINT32 format, BYTE r, BYTE g, BYTE b, BYTE a)
+static INLINE UINT32 FreeRDPGetColor(UINT32 format, BYTE r, BYTE g, BYTE b, BYTE a)
 {
 	UINT32 _r = r;
 	UINT32 _g = g;
@@ -595,7 +603,7 @@ static INLINE UINT32 GetColor(UINT32 format, BYTE r, BYTE g, BYTE b, BYTE a)
 		/* 1bpp formats */
 		case PIXEL_FORMAT_MONO:
 		default:
-			WLog_ERR(CTAG, "Unsupported format %s", GetColorFormatName(format));
+			WLog_ERR(CTAG, "Unsupported format %s", FreeRDPGetColorFormatName(format));
 			return 0;
 	}
 }
@@ -671,7 +679,7 @@ static INLINE UINT32 ReadColor(const BYTE* src, UINT32 format)
 			break;
 
 		default:
-			WLog_ERR(CTAG, "Unsupported format %s", GetColorFormatName(format));
+			WLog_ERR(CTAG, "Unsupported format %s", FreeRDPGetColorFormatName(format));
 			color = 0;
 			break;
 	}
@@ -694,37 +702,37 @@ static INLINE BOOL WriteColor(BYTE* dst, UINT32 format, UINT32 color)
 	switch (GetBitsPerPixel(format))
 	{
 		case 32:
-			dst[0] = color >> 24;
-			dst[1] = color >> 16;
-			dst[2] = color >> 8;
-			dst[3] = color;
+			dst[0] = (BYTE)(color >> 24);
+			dst[1] = (BYTE)(color >> 16);
+			dst[2] = (BYTE)(color >> 8);
+			dst[3] = (BYTE)color;
 			break;
 
 		case 24:
-			dst[0] = color >> 16;
-			dst[1] = color >> 8;
-			dst[2] = color;
+			dst[0] = (BYTE)(color >> 16);
+			dst[1] = (BYTE)(color >> 8);
+			dst[2] = (BYTE)color;
 			break;
 
 		case 16:
-			dst[1] = color >> 8;
-			dst[0] = color;
+			dst[1] = (BYTE)(color >> 8);
+			dst[0] = (BYTE)color;
 			break;
 
 		case 15:
 			if (!ColorHasAlpha(format))
 				color = color & 0x7FFF;
 
-			dst[1] = color >> 8;
-			dst[0] = color;
+			dst[1] = (BYTE)(color >> 8);
+			dst[0] = (BYTE)color;
 			break;
 
 		case 8:
-			dst[0] = color;
+			dst[0] = (BYTE)color;
 			break;
 
 		default:
-			WLog_ERR(CTAG, "Unsupported format %s", GetColorFormatName(format));
+			WLog_ERR(CTAG, "Unsupported format %s", FreeRDPGetColorFormatName(format));
 			return FALSE;
 	}
 
@@ -743,7 +751,7 @@ static INLINE BOOL WriteColor(BYTE* dst, UINT32 format, UINT32 color)
  *
  * @return           The converted pixel color in dstFormat representation
  */
-static INLINE UINT32 ConvertColor(UINT32 color, UINT32 srcFormat,
+static INLINE UINT32 FreeRDPConvertColor(UINT32 color, UINT32 srcFormat,
                                   UINT32 dstFormat, const gdiPalette* palette)
 {
 	BYTE r = 0;
@@ -751,7 +759,7 @@ static INLINE UINT32 ConvertColor(UINT32 color, UINT32 srcFormat,
 	BYTE b = 0;
 	BYTE a = 0;
 	SplitColor(color, srcFormat, &r, &g, &b, &a, palette);
-	return GetColor(dstFormat, r, g, b, a);
+	return FreeRDPGetColor(dstFormat, r, g, b, a);
 }
 
 /***
@@ -781,9 +789,9 @@ FREERDP_API BYTE* freerdp_glyph_convert(UINT32 width, UINT32 height,
 
 /***
  *
- * @param pDstData  destionation buffer
- * @param DstFormat destionation buffer format
- * @param nDstStep  destionation buffer stride (line in bytes) 0 for default
+ * @param pDstData  destination buffer
+ * @param DstFormat destination buffer format
+ * @param nDstStep  destination buffer stride (line in bytes) 0 for default
  * @param nXDst     destination buffer offset x
  * @param nYDst     destination buffer offset y
  * @param nWidth    width to copy in pixels
@@ -791,7 +799,7 @@ FREERDP_API BYTE* freerdp_glyph_convert(UINT32 width, UINT32 height,
  * @param pSrcData  source buffer, must be (nWidth + 7) / 8 bytes long
  * @param backColor The background color in internal representation format
  * @param foreColor The foreground color in internal representation format
- * @param palette   pallete to use (only used for 8 bit color!)
+ * @param palette   palette to use (only used for 8 bit color!)
  *
  * @return          TRUE if success, FALSE otherwise
  */
@@ -805,9 +813,9 @@ FREERDP_API BOOL freerdp_image_copy_from_monochrome(BYTE* pDstData,
 
 /***
  *
- * @param pDstData      destionation buffer
- * @param DstFormat     destionation buffer format
- * @param nDstStep      destionation buffer stride (line in bytes) 0 for default
+ * @param pDstData      destination buffer
+ * @param DstFormat     destination buffer format
+ * @param nDstStep      destination buffer stride (line in bytes) 0 for default
  * @param nXDst         destination buffer offset x
  * @param nYDst         destination buffer offset y
  * @param nWidth        width to copy in pixels
@@ -817,7 +825,7 @@ FREERDP_API BOOL freerdp_image_copy_from_monochrome(BYTE* pDstData,
  * @param andMask       AND mask buffer
  * @param andMaskLength AND mask length in bytes
  * @param xorBpp        XOR bits per pixel
- * @param palette       pallete to use (only used for 8 bit color!)
+ * @param palette       palette to use (only used for 8 bit color!)
  *
  * @return              TRUE if success, FALSE otherwise
  */
@@ -830,9 +838,9 @@ FREERDP_API BOOL freerdp_image_copy_from_pointer_data(
 
 /***
  *
- * @param pDstData  destionation buffer
- * @param DstFormat destionation buffer format
- * @param nDstStep  destionation buffer stride (line in bytes) 0 for default
+ * @param pDstData  destination buffer
+ * @param DstFormat destination buffer format
+ * @param nDstStep  destination buffer stride (line in bytes) 0 for default
  * @param nXDst     destination buffer offset x
  * @param nYDst     destination buffer offset y
  * @param nWidth    width to copy in pixels
@@ -842,7 +850,7 @@ FREERDP_API BOOL freerdp_image_copy_from_pointer_data(
  * @param nSrcStep  source buffer stride (line in bytes) 0 for default
  * @param nXSrc     source buffer x offset in pixels
  * @param nYSrc     source buffer y offset in pixels
- * @param palette   pallete to use (only used for 8 bit color!)
+ * @param palette   palette to use (only used for 8 bit color!)
  * @param flags     Image flipping flags FREERDP_FLIP_NONE et al
  *
  * @return          TRUE if success, FALSE otherwise
@@ -864,13 +872,19 @@ FREERDP_API BOOL freerdp_image_copy(BYTE* pDstData, DWORD DstFormat,
  * @param nWidth    width to copy in pixels
  * @param nHeight   height to copy in pixels
  * @param color     Pixel color in DstFormat (internal representation format,
- *                  use GetColor to create)
+ *                  use FreeRDPGetColor to create)
  *
  * @return          TRUE if success, FALSE otherwise
  */
 FREERDP_API BOOL freerdp_image_fill(BYTE* pDstData, DWORD DstFormat,
                                     UINT32 nDstStep, UINT32 nXDst, UINT32 nYDst,
                                     UINT32 nWidth, UINT32 nHeight, UINT32 color);
+
+#if !defined(__APPLE__)
+#define GetColorFormatName FreeRDPGetColorFormatName
+#define GetColor FreeRDPGetColor
+#define ConvertColor FreeRDPConvertColor
+#endif
 
 #ifdef __cplusplus
 }

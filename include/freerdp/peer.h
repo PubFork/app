@@ -28,6 +28,8 @@
 #include <freerdp/autodetect.h>
 
 #include <winpr/sspi.h>
+#include <winpr/ntlm.h>
+
 
 typedef BOOL (*psPeerContextNew)(freerdp_peer* peer, rdpContext* context);
 typedef void (*psPeerContextFree)(freerdp_peer* peer, rdpContext* context);
@@ -35,6 +37,7 @@ typedef void (*psPeerContextFree)(freerdp_peer* peer, rdpContext* context);
 typedef BOOL (*psPeerInitialize)(freerdp_peer* peer);
 typedef BOOL (*psPeerGetFileDescriptor)(freerdp_peer* peer, void** rfds, int* rcount);
 typedef HANDLE(*psPeerGetEventHandle)(freerdp_peer* peer);
+typedef DWORD (*psPeerGetEventHandles)(freerdp_peer* peer, HANDLE* events, DWORD count);
 typedef HANDLE(*psPeerGetReceiveEventHandle)(freerdp_peer* peer);
 typedef BOOL (*psPeerCheckFileDescriptor)(freerdp_peer* peer);
 typedef BOOL (*psPeerIsWriteBlocked)(freerdp_peer* peer);
@@ -46,6 +49,8 @@ typedef BOOL (*psPeerCapabilities)(freerdp_peer* peer);
 typedef BOOL (*psPeerPostConnect)(freerdp_peer* peer);
 typedef BOOL (*psPeerActivate)(freerdp_peer* peer);
 typedef BOOL (*psPeerLogon)(freerdp_peer* peer, SEC_WINNT_AUTH_IDENTITY* identity, BOOL automatic);
+typedef BOOL (*psPeerAdjustMonitorsLayout)(freerdp_peer* peer);
+typedef BOOL (*psPeerClientCapabilities)(freerdp_peer* peer);
 
 typedef int (*psPeerSendChannelData)(freerdp_peer* peer, UINT16 channelId, BYTE* data, int size);
 typedef int (*psPeerReceiveChannelData)(freerdp_peer* peer, UINT16 channelId, BYTE* data, int size,
@@ -59,6 +64,7 @@ typedef int (*psPeerVirtualChannelWrite)(freerdp_peer* peer, HANDLE hChannel, BY
         UINT32 length);
 typedef void* (*psPeerVirtualChannelGetData)(freerdp_peer* peer, HANDLE hChannel);
 typedef int (*psPeerVirtualChannelSetData)(freerdp_peer* peer, HANDLE hChannel, void* data);
+
 
 struct rdp_freerdp_peer
 {
@@ -111,6 +117,10 @@ struct rdp_freerdp_peer
 	psPeerIsWriteBlocked IsWriteBlocked;
 	psPeerDrainOutputBuffer DrainOutputBuffer;
 	psPeerHasMoreToRead HasMoreToRead;
+	psPeerGetEventHandles GetEventHandles;
+	psPeerAdjustMonitorsLayout AdjustMonitorsLayout;
+	psPeerClientCapabilities ClientCapabilities;
+	psPeerComputeNtlmHash ComputeNtlmHash;
 };
 
 #ifdef __cplusplus

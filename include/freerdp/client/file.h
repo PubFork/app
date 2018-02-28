@@ -89,6 +89,7 @@ struct rdp_file
 
 	LPSTR Username; /* username */
 	LPSTR Domain; /* domain */
+	LPSTR Password; /*password*/
 	PBYTE Password51; /* password 51 */
 
 	LPSTR FullAddress; /* full address */
@@ -139,6 +140,7 @@ struct rdp_file
 	DWORD GatewayUsageMethod; /* gatewayusagemethod */
 	DWORD GatewayProfileUsageMethod; /* gatewayprofileusagemethod */
 	DWORD GatewayCredentialsSource; /* gatewaycredentialssource */
+	LPSTR GatewayAccessToken; /* gatewayaccesstoken */
 
 	DWORD UseRedirectionServerName; /* use redirection server name */
 
