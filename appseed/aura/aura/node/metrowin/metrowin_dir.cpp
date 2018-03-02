@@ -352,7 +352,7 @@ namespace metrowin
 
    ::file::path dir::stage()
    {
-      return element() / "stage";
+      return install() / "stage";
    }
 
    ::file::path dir::stageapp()
@@ -622,7 +622,7 @@ try1:
          m_strTimeFolder = appdata() / "time";
 
       if(m_strNetSeedFolder.is_empty())
-         m_strNetSeedFolder = element() / "net";
+         m_strNetSeedFolder = install() / "net";
 
       mk(m_strTimeFolder,get_app());
 

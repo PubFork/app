@@ -17,20 +17,6 @@ namespace windows
 #endif
 
 
-//::file::path dir::afterca2()
-//{
-//
-//   return element();
-//
-//}
-//
-
-//::file::path dir::appdata(string strPlatform)
-//{
-//
-//   return app() / strPlatform / app_relative();
-//
-//}
 
 ::file::path dir::appdata()
 {
@@ -38,21 +24,6 @@ namespace windows
    return ::dir::ca2config() / "appdata" / app_relative();
 
 }
-
-//::file::path dir::appdata()
-//{
-//
-//   return appdata();
-//
-//}
-
-
-//::file::path dir::app()
-//{
-//
-//   return ca2config() / "app";
-//
-//}
 
 
 ::file::path dir::public_system()

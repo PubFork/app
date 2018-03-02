@@ -815,7 +815,7 @@ namespace android
    ::file::path dir::stage()
    {
 
-      return element() / "stage";
+      return install() / "stage";
 
    }
 
@@ -1018,7 +1018,7 @@ try1:
          m_strTimeFolder = appdata()/ "time";
 
       if(m_strNetSeedFolder.is_empty())
-         m_strNetSeedFolder = element()/ "net";
+         m_strNetSeedFolder = install()/ "net";
 
       mk(m_strTimeFolder, get_app());
 
@@ -1075,7 +1075,7 @@ try1:
 
       str = string(System.m_pdataexchange->m_pszCacheDir) / ".ca2/app/appdata";
       string strRelative;
-      strRelative = element();
+      strRelative = install();
       //index iFind = strRelative.find(':');
       //if(iFind >= 0)
       {
@@ -1135,7 +1135,7 @@ try1:
 //      str = getenv("HOME");
 //
 //      ::file::path strRelative;
-//      strRelative = element();
+//      strRelative = install();
 //      index iFind = strRelative.find(':');
 //      if(iFind >= 0)
 //      {

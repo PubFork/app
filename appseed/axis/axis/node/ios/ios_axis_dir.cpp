@@ -1290,7 +1290,7 @@ namespace ios
 //
 //      string str = path(getenv("HOME"), ".ca2/appdata");
 //      string strRelative;
-//      strRelative = element();
+//      strRelative = install();
 //      //index iFind = strRelative.find(':');
 //      //if(iFind >= 0)
 //      {
@@ -1319,7 +1319,7 @@ namespace ios
 //      //str = path(getenv("HOME"), "commmonappdata");
 ////      str = "/var/lib";
 ////      string strRelative;
-//  //    strRelative = element();
+//  //    strRelative = install();
 //
 //      //index iFind = strRelative.find(':');
 //      //if(iFind >= 0)
@@ -1363,7 +1363,7 @@ namespace ios
 //      str = getenv("HOME");
 //
 //      string strRelative;
-//      strRelative = element();
+//      strRelative = install();
 //      index iFind = strRelative.find(':');
 //      if(iFind >= 0)
 //      {

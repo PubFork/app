@@ -664,7 +664,7 @@ namespace file
          //   _throw(interface_only_exception(get_app(), "this is an interface"));
          //}
 
-         //string system::element()
+         //string system::install()
          //{
          //   _throw(interface_only_exception(get_app(), "this is an interface"));
          //}
@@ -2341,7 +2341,7 @@ ret:
          //string system::commonappdata(const char * lpcsz,const char * lpcsz2)
          //{
 
-         //   return element_commonappdata(element(),lpcsz,lpcsz2);
+         //   return element_commonappdata(install(),lpcsz,lpcsz2);
 
          //}
 

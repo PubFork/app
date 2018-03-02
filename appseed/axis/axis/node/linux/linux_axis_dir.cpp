@@ -877,7 +877,7 @@ namespace linux
 //      str = m_strAppData;
 //
 //      string strRelative;
-//      strRelative = element();
+//      strRelative = install();
 //      index iFind = strRelative.find(':');
 //      if(iFind >= 0)
 //      {
@@ -897,7 +897,7 @@ namespace linux
 //
 //      str = m_strCommonAppData;
 //
-//      return element_commonappdata(element(), lpcsz, lpcsz2);
+//      return element_commonappdata(install(), lpcsz, lpcsz2);
 //
 //   }
 //
@@ -953,7 +953,7 @@ namespace linux
 //
 //
 //      string strRelative;
-//      strRelative = element();
+//      strRelative = install();
 //      index iFind = strRelative.find(':');
 //      if(iFind >= 0)
 //      {

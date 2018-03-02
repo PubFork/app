@@ -1077,7 +1077,7 @@ try1:
       {
 
          //string strRelative;
-         //strRelative = element();
+         //strRelative = install();
          //index iFind = strRelative.find(':');
          //if (iFind >= 0)
          //{

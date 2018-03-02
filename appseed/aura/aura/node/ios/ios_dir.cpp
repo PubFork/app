@@ -1319,7 +1319,7 @@ namespace ios
    
    ::file::path dir::stage()
    {
-      return element() / "stage";
+      return install() / "stage";
    }
    
    ::file::path dir::stageapp()
@@ -1624,7 +1624,7 @@ namespace ios
       
       string strRelative;
       
-      strRelative = element();
+      strRelative = install();
       
       m_strCa2AppData = str / "ca2" / strRelative;
       
@@ -1662,7 +1662,7 @@ namespace ios
       if(m_strNetSeedFolder.is_empty())
       {
          
-         m_strNetSeedFolder = element() / "net";
+         m_strNetSeedFolder = install() / "net";
          
       }
       
@@ -3153,7 +3153,7 @@ namespace ios
 //
 //      str = path(getenv("HOME"), ".ca2/appdata");
 //      string strRelative;
-//      strRelative = element();
+//      strRelative = install();
 //      //index iFind = strRelative.find(':');
 //      //if(iFind >= 0)
 //      {
@@ -3195,7 +3195,7 @@ namespace ios
 //      str = getenv("HOME");
 //
 //      string strRelative;
-//      strRelative = element();
+//      strRelative = install();
 //      index iFind = strRelative.find(':');
 //      if(iFind >= 0)
 //      {

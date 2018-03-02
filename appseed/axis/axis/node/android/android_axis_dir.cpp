@@ -872,7 +872,7 @@ namespace android
 		//      str = m_strAppData;
 		//
 		//      string strRelative;
-		//      strRelative = element();
+		//      strRelative = install();
 		//      index iFind = strRelative.find(':');
 		//      if(iFind >= 0)
 		//      {
@@ -948,7 +948,7 @@ namespace android
 		//
 		//
 		//      string strRelative;
-		//      strRelative = element();
+		//      strRelative = install();
 		//      index iFind = strRelative.find(':');
 		//      if(iFind >= 0)
 		//      {

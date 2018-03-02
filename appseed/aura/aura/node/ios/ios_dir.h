@@ -49,7 +49,7 @@ namespace ios
       virtual ::file::path stage();
       virtual ::file::path stageapp();
       virtual ::file::path netseed();
-      virtual ::file::path element();
+      virtual ::file::path install();
       //       virtual ::file::path profile();
       
       virtual ::file::path module();

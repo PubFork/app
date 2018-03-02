@@ -1749,7 +1749,7 @@ void dir::ls_file(::file::patha & stra,const ::file::path & psz)
 //#endif
 //
 //   string strRelative;
-//   strRelative = element();
+//   strRelative = install();
 //   index iFind = strRelative.find(':');
 //   if(iFind >= 0)
 //   {
@@ -1906,12 +1906,12 @@ void dir::ls_file(::file::patha & stra,const ::file::path & psz)
 
 }
 
-::file::path dir::ca2_user()
-{
-
-   return home() / ".config/ca2";
-
-}
+//::file::path dir::ca2config()
+//{
+//
+//   return home() / ".config/ca2";
+//
+//}
 
 
 #endif

@@ -979,7 +979,7 @@ namespace linux
 
    ::file::path dir::stage()
    {
-      return element() / "stage";
+      return install() / "stage";
    }
 
    ::file::path dir::stageapp()
@@ -993,14 +993,14 @@ namespace linux
    }
 
    // stage in ccvotagus spalib
-   ::file::path dir::install()
-   {
-
-      single_lock sl(&m_mutex, true);
-
-     return m_strCa2;
-
-   }
+//   ::file::path dir::install()
+//   {
+//
+//      single_lock sl(&m_mutex, true);
+//
+//     return m_strCa2;
+//
+//   }
 
 //   ::file::path dir::install(const string & str, const char * lpcsz2)
 //   {
@@ -1312,7 +1312,7 @@ namespace linux
 #endif
 
       if(m_strNetSeedFolder.is_empty())
-         m_strNetSeedFolder = element() / "netd";
+         m_strNetSeedFolder = install() / "netd";
 
       mk(m_strTimeFolder, get_app());
 
@@ -1332,7 +1332,7 @@ namespace linux
 
       string strRelative;
 
-      strRelative = element();
+      strRelative = install();
 
       index iFind = strRelative.find(':');
 
@@ -1359,7 +1359,7 @@ namespace linux
 
   //    }
 
-      m_pathUser = str / "ca2" / strUserFolderShift;
+//      m_pathUser = str / "ca2" / strUserFolderShift;
 
 
       return true;
@@ -1407,7 +1407,7 @@ namespace linux
 
       str = ::file::path(getenv("HOME")) / ".config/ca2/appdata";
       string strRelative;
-      strRelative = element();
+      strRelative = install();
       //index iFind = strRelative.find(':');
       //if(iFind >= 0)
       {
@@ -1434,7 +1434,7 @@ namespace linux
 
       str = ::file::path(getenv("HOME")) / ".config/ca2/commonappdata";
       string strRelative;
-      strRelative = element();
+      strRelative = install();
       //index iFind = strRelative.find(':');
       //if(iFind >= 0)
       {
@@ -1450,30 +1450,30 @@ namespace linux
    }
 
 
-   ::file::path dir::usersystemappdata(::aura::application *  papp, const string & lpcszPrefix)
-   {
-
-      UNREFERENCED_PARAMETER(papp);
-
-      return appdata() / lpcszPrefix;
-
-   }
-
-
-   ::file::path dir::appdata(::aura::application *  papp)
-   {
-
-      return userfolder(papp) / "appdata";
-
-   }
+//   ::file::path dir::usersystemappdata(::aura::application *  papp, const string & lpcszPrefix)
+//   {
+//
+//      UNREFERENCED_PARAMETER(papp);
+//
+//      return appdata() / lpcszPrefix;
+//
+//   }
 
 
-   ::file::path dir::userdata(::aura::application *  papp)
-   {
+//   ::file::path dir::appdata()
+//   {
+//
+//      return userfolder(papp) / "appdata";
+//
+//   }
 
-      return userfolder(papp) / "data";
 
-   }
+//   ::file::path dir::userdata(::aura::application *  papp)
+//   {
+//
+//      return userfolder(papp) / "data";
+//
+//   }
 
 /*
    ::file::path dir::userfolder(::aura::application *  papp)
@@ -1490,7 +1490,7 @@ namespace linux
 
       string strRelative;
 
-      strRelative = element();
+      strRelative = install();
 
       index iFind = strRelative.find(':');
 
@@ -1524,47 +1524,47 @@ namespace linux
 */
 
 
-   ::file::path dir::default_os_user_path_prefix(::aura::application *  papp)
-   {
-      /*UNREFERENCED_PARAMETER(papp);
-      unichar buf[MAX_PATH];
-      ULONG ulSize = sizeof(buf) / sizeof(unichar);
-      if(!::GetUserNameExW(Namecanonical, buf, &ulSize))
-      {
-         if(!::GetUserNameW(buf, &ulSize))
-         {
-            memset(buf, 0, sizeof(buf));
-         }
-      }*/
-      /*return ::str::international::unicode_to_utf8(buf);*/
-
-      return ::getlogin();
-
-   }
-
-
-   ::file::path dir::default_userappdata(::aura::application *  papp, const string & lpcszPrefix, const string & lpcszLogin)
-   {
-
-      return default_userfolder(papp, lpcszPrefix, lpcszLogin) / "appdata";
-
-   }
-
-
-   ::file::path dir::default_userdata(::aura::application *  papp, const string & lpcszPrefix, const string & lpcszLogin)
-   {
-
-      return default_userfolder(papp, lpcszPrefix, lpcszLogin) / "data";
-
-   }
-
-
-   ::file::path dir::default_userfolder(::aura::application *  papp, const string & lpcszPrefix, const string & lpcszLogin)
-   {
-
-      return userfolder(papp);
-
-   }
+//   ::file::path dir::default_os_user_path_prefix(::aura::application *  papp)
+//   {
+//      /*UNREFERENCED_PARAMETER(papp);
+//      unichar buf[MAX_PATH];
+//      ULONG ulSize = sizeof(buf) / sizeof(unichar);
+//      if(!::GetUserNameExW(Namecanonical, buf, &ulSize))
+//      {
+//         if(!::GetUserNameW(buf, &ulSize))
+//         {
+//            memset(buf, 0, sizeof(buf));
+//         }
+//      }*/
+//      /*return ::str::international::unicode_to_utf8(buf);*/
+//
+//      return ::getlogin();
+//
+//   }
+//
+//
+//   ::file::path dir::default_userappdata(::aura::application *  papp, const string & lpcszPrefix, const string & lpcszLogin)
+//   {
+//
+//      return default_userfolder(papp, lpcszPrefix, lpcszLogin) / "appdata";
+//
+//   }
+//
+//
+//   ::file::path dir::default_userdata(::aura::application *  papp, const string & lpcszPrefix, const string & lpcszLogin)
+//   {
+//
+//      return default_userfolder(papp, lpcszPrefix, lpcszLogin) / "data";
+//
+//   }
+//
+//
+//   ::file::path dir::default_userfolder(::aura::application *  papp, const string & lpcszPrefix, const string & lpcszLogin)
+//   {
+//
+//      return userfolder(papp);
+//
+//   }
 
 
    ::file::path dir::userquicklaunch(::aura::application *  papp)

@@ -235,7 +235,7 @@ LPBOOL  lpUsedDefaultChar);
 END_EXTERN_C
            
            
-#if !defined(APPLEOS)
+#if !defined(APPLEOS) && !defined(LINUX) && !defined(ANDROID)
 int ftruncate(int file, file_size_t len);
 #endif
 

@@ -46,7 +46,7 @@ namespace android
       virtual ::file::path netseed();
 
       // stage in ccvotagus spalib
-      virtual ::file::path element();
+      virtual ::file::path install();
 
       //virtual ::file::path module();
       //virtual ::file::path ca2module();
