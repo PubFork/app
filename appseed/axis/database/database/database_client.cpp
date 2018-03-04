@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 namespace database
@@ -527,7 +527,7 @@ namespace database
 
       string strModifier = m_strDataKeyModifier;
 
-      if (m_bLocalDataModifier)
+      if (is_local_data())
       {
 
          strModifier += "&data_source=local&";
