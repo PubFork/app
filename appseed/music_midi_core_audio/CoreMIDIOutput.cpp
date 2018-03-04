@@ -7,6 +7,19 @@
 //
 
 #include "framework.h"
+#include <CoreAudio/CoreAudio.h>
+#include <mach/mach_time.h>
+
+
+static mach_timebase_info_data_t sTimebaseInfo;
+
+UInt64 nano_to_absolute(UInt64 nano)
+{
+   
+   return nano * sTimebaseInfo.denom / sTimebaseInfo.numer;
+   
+}
+
 
 
 /*
@@ -87,7 +100,6 @@ static CFStringRef EndpointName(MIDIEndpointRef endpoint, bool isExternal)
    return result;
 }
 
-// ------------------------------------------------------------------------------------------------------
 
 CFStringRef ConnectedEndpointName(MIDIEndpointRef endpoint)
 {
@@ -149,178 +161,261 @@ CFStringRef ConnectedEndpointName(MIDIEndpointRef endpoint)
 
 // ------------------------------------------------------------------------------------------------------
 
-std::vector<CoreMidiOutput::Destination> g_destinations;
-
-const std::vector<CoreMidiOutput::Destination>& CoreMidiOutput::getDestinations()
+array < CoreMidiOutput::Destination > CoreMidiOutput::get_destinations()
 {
-   g_destinations.clear();
    
-   ItemCount destCount = MIDIGetNumberOfDestinations();
-   printf("[AUNotePlayer] %i MIDI destinations\n", (int)destCount);
-   for (int n=0; n<(int)destCount; n++)
+   array < CoreMidiOutput::Destination > destinations;
+   
+   ItemCount iEndpointCount = MIDIGetNumberOfDestinations();
+   
+   printf("[AUNotePlayer] %i MIDI destinations\n", (int)iEndpointCount);
+   
+   for (int iEndpoint =0; iEndpoint < (int) iEndpointCount; iEndpoint++)
    {
-      MIDIEndpointRef ref = MIDIGetDestination(n);
-      CFStringRef nameCStr = ConnectedEndpointName(ref);
-      char buffer[256];
-      CFStringGetCString(nameCStr, buffer, 256, kCFStringEncodingISOLatin1);
-      printf("[AUNotePlayer]  %i - '%s'\n", n, buffer);
       
-      Destination d;
-      d.m_ref = ref;
-      d.m_name = buffer;
-      g_destinations.push_back(d);
+      MIDIEndpointRef endpoint = MIDIGetDestination(iEndpoint);
+      
+      CFStringRef name = ConnectedEndpointName(endpoint);
+      
+      char szBuffer[256];
+      
+      CFStringGetCString(name, szBuffer, 256, kCFStringEncodingUTF8);
+      
+      CFRelease(name);
+      
+      printf("[AUNotePlayer]  %i - '%s'\n", iEndpoint, szBuffer);
+      
+      Destination destination;
+      
+      destination.m_endpoint = endpoint;
+      
+      destination.m_strName = szBuffer;
+      
+      destinations.add(destination);
+      
    }
    
-   return g_destinations;
+   return destinations;
+   
 }
 
-// ------------------------------------------------------------------------------------------------------
 
-CoreMidiOutput::CoreMidiOutput(string driver) : OutputBase()
+CoreMidiOutput::CoreMidiOutput(::aura::application * papp, string driver) :
+::object(papp),
+::music::midi::message_out(papp),
+OutputBase()
 {
-//   OSStatus result = MIDIOutputPortCreate(m_client,
-//                                          CFSTR("ariaport"),
-//                                          &m_port);
-   MIDIOutputPortCreate(m_client,
-                                          CFSTR("ariaport"),
-                                          &m_port);
-//   if (result != 0) fprintf(stderr, "MIDIOutputPortCreate failed with code /%i (%s, %s)\n", (int)result);;;,
-//                            GetMacOSStatusErrorString(result), GetMacOSStatusCommentString(result));
    
-   bool found = false;
-   getDestinations();
-   for (unsigned int n = 0; n < g_destinations.size(); n++)
+   mach_timebase_info(&sTimebaseInfo);
+
+   m_packetlist = NULL;
+   
+   m_port = NULL;
+   
+   OSStatus result = MIDIOutputPortCreate(m_client, CFSTR("ariaport"), &m_port);
+
+   if (result != 0)
    {
-      if (g_destinations[n].m_name == driver)
+      
+      string str;
+      
+      str.Format("MIDIOutputPortCreate failed with code %i\n", (int) result);
+      
+      throw resource_exception(get_app(), str);
+      
+   }
+
+   bool bFound = false;
+   
+   auto destinations  = get_destinations();
+   
+   for (unsigned int n = 0; n < destinations.size(); n++)
+   {
+      
+      if (destinations[n].m_strName == "sforzando")
       {
-         selectedOutput = g_destinations[n].m_ref;
-         found = true;
+         
+         m_endpoint = destinations[n].m_endpoint;
+         
+         bFound = true;
+         
          return;
+         
       }
+      
    }
    
-   if (not found)
+   if(!bFound && driver != "sforzando")
    {
-      //wxMessageBox(_("Unknown MIDI port : ") + driver);
-      selectedOutput = MIDIGetDestination(0);
+   
+      for (unsigned int n = 0; n < destinations.size(); n++)
+      {
+         
+         if (destinations[n].m_strName == driver)
+         {
+         
+            m_endpoint = destinations[n].m_endpoint;
+         
+            bFound = true;
+         
+            return;
+      
+         }
+         
+      }
+      
    }
+
+   if (!bFound)
+   {
+      
+      //wxMessageBox(_("Unknown MIDI port : ") + driver);
+      
+      m_endpoint = MIDIGetDestination(0);
+      
+   }
+   
 }
 
-// ------------------------------------------------------------------------------------------------------
+
+void CoreMidiOutput::reset_all_controllers()
+{
+
+   ::music::midi::message_out::reset_all_controllers();
+   
+}
+
 
 CoreMidiOutput::~CoreMidiOutput()
 {
+   
    MIDIPortDispose (m_port);
-}
-
-// ------------------------------------------------------------------------------------------------------
-
-void CoreMidiOutput::note_on(const int note, const int volume, const int channel)
-{
-   MIDITimeStamp timestamp = 0;   // 0 will mean play now.
-   Byte buffer[1024];             // storage space for MIDI Packets (max 65536)
-   MIDIPacketList *packetlist = (MIDIPacketList*)buffer;
-   MIDIPacket *currentpacket = MIDIPacketListInit(packetlist);
-   
-   const int MESSAGESIZE = 3;
-   
-   Byte noteon[MESSAGESIZE] = {static_cast<Byte>(0x90 | channel), static_cast<Byte>(note), static_cast<Byte>(volume)};
-   currentpacket = MIDIPacketListAdd(packetlist, sizeof(buffer),
-                                     currentpacket, timestamp, MESSAGESIZE, noteon);
-   
-   OSStatus result = MIDISend(m_port, selectedOutput, packetlist);
-   if (result != 0) fprintf(stderr, "MIDISend failed!!\n");
-   
    
 }
 
-// ------------------------------------------------------------------------------------------------------
 
-void CoreMidiOutput::note_off(const int note, const int channel)
+void CoreMidiOutput::note_on(int channel, unsigned char note, unsigned char volume)
 {
-   MIDITimeStamp timestamp = 0;   // 0 will mean play now.
-   Byte buffer[1024];             // storage space for MIDI Packets (max 65536)
-   MIDIPacketList *packetlist = (MIDIPacketList*)buffer;
-   MIDIPacket *currentpacket = MIDIPacketListInit(packetlist);
+
+   Byte message[3];
    
-   const int MESSAGESIZE = 3;
+   message[0] = 0x90 | channel;
    
-   currentpacket = MIDIPacketListInit(packetlist);
-   Byte noteoff[MESSAGESIZE] = {static_cast<Byte>(0x90 | channel), static_cast<Byte>(note), 0};
-   currentpacket = MIDIPacketListAdd(packetlist, sizeof(buffer),
-                                     currentpacket, timestamp, MESSAGESIZE, noteoff);
+   message[1] = note;
    
+   message[2] = volume;
    
-   OSStatus result = MIDISend(m_port, selectedOutput, packetlist);
-   if (result != 0) fprintf(stderr, "MIDISend failed!!\n");
+   add_short_message(message, 3);
    
 }
 
-// ------------------------------------------------------------------------------------------------------
 
-void CoreMidiOutput::prog_change(const int instrument, const int channel)
+void CoreMidiOutput::note_off(int channel, unsigned char note, unsigned char velocity)
 {
-   MIDITimeStamp timestamp = 0;   // 0 will mean play now.
-   Byte buffer[1024];             // storage space for MIDI Packets (max 65536)
-   MIDIPacketList *packetlist = (MIDIPacketList*)buffer;
-   MIDIPacket *currentpacket = MIDIPacketListInit(packetlist);
    
-   const int MESSAGESIZE = 2;
+   Byte message[3];
    
-   currentpacket = MIDIPacketListInit(packetlist);
-   Byte noteoff[MESSAGESIZE] = {static_cast<Byte>(0xC0 | channel), static_cast<Byte>(instrument)};
-   currentpacket = MIDIPacketListAdd(packetlist, sizeof(buffer),
-                                     currentpacket, timestamp, MESSAGESIZE, noteoff);
+   message[0] = 0x80 | channel;
    
+   message[1] = note;
    
-   OSStatus result = MIDISend(m_port, selectedOutput, packetlist);
-   if (result != 0) fprintf(stderr, "MIDISend failed!!\n");
+   message[2] = velocity;
+   
+   add_short_message(message, 3);
+   
 }
 
-// ------------------------------------------------------------------------------------------------------
 
-void CoreMidiOutput::controlchange(const int controller, const int value, const int channel)
+void CoreMidiOutput::program_change(int channel, unsigned char instrument)
 {
-   MIDITimeStamp timestamp = 0;   // 0 will mean play now.
-   Byte buffer[1024];             // storage space for MIDI Packets (max 65536)
-   MIDIPacketList *packetlist = (MIDIPacketList*)buffer;
-   MIDIPacket *currentpacket = MIDIPacketListInit(packetlist);
    
-   const int MESSAGESIZE = 3;
+   Byte message[2];
    
-   currentpacket = MIDIPacketListInit(packetlist);
-   Byte noteoff[MESSAGESIZE] = {static_cast<Byte>(0xB0 | channel), static_cast<Byte>(controller), static_cast<Byte>(value)};
-   currentpacket = MIDIPacketListAdd(packetlist, sizeof(buffer),
-                                     currentpacket, timestamp, MESSAGESIZE, noteoff);
+   message[0] = 0xC0 | channel;
    
+   message[1] = instrument;
    
-   OSStatus result = MIDISend(m_port, selectedOutput, packetlist);
-   if (result != 0) fprintf(stderr, "MIDISend failed!!\n");
+   add_short_message(message, 2);
+   
 }
 
-// ------------------------------------------------------------------------------------------------------
 
-void CoreMidiOutput::pitch_bend(const int value, const int channel)
+void CoreMidiOutput::step()
 {
-   MIDITimeStamp timestamp = 0;   // 0 will mean play now.
-   Byte buffer[1024];             // storage space for MIDI Packets (max 65536)
-   MIDIPacketList *packetlist = (MIDIPacketList*)buffer;
-   MIDIPacket *currentpacket = MIDIPacketListInit(packetlist);
    
-   const int MESSAGESIZE = 3;
+   OSStatus result = MIDISend(m_port, m_endpoint, m_packetlist);
    
+   if (result != 0)
+   {
+      
+      fprintf(stderr, "MIDISend failed!!\n");
+      
+   }
+
+   m_packetlist = NULL;
+   
+}
+
+
+void CoreMidiOutput::start()
+{
+   
+   m_ui64Start =AudioGetCurrentHostTime();
+   
+}
+
+void CoreMidiOutput::add_short_message(Byte * pmessage, int iSize)
+{
+   
+   MIDITimeStamp timestamp = m_ui64Start + nano_to_absolute((m_ps->m_timeFile - m_ps->m_timeFileStart + 100.0) * 1000000.0);
+   
+   if(m_packetlist == NULL)
+   {
+   
+      m_packetlist = (MIDIPacketList *) m_buffer;
+   
+      m_packet = MIDIPacketListInit(m_packetlist);
+      
+   }
+   
+   m_packet = MIDIPacketListAdd(m_packetlist, sizeof(m_buffer), m_packet, timestamp, iSize, pmessage);
+
+}
+
+
+void CoreMidiOutput::control_change(int channel, unsigned char controller, unsigned char value)
+{
+   
+   Byte message[3];
+   
+   message[0] = 0xB0 | channel;
+   
+   message[1] = controller;
+   
+   message[2] = value;
+
+   add_short_message(message, 3);
+   
+}
+
+
+void CoreMidiOutput::pitch_bend(int channel, unsigned short value)
+{
+
    int c1 = (value & 0x7F);
+
    int c2 = ((value >> 7) & 0x7F);
    
-   currentpacket = MIDIPacketListInit(packetlist);
-   Byte noteoff[MESSAGESIZE] = {static_cast<Byte>(0xE0 | channel), static_cast<Byte>(c1), static_cast<Byte>(c2)};
-   currentpacket = MIDIPacketListAdd(packetlist, sizeof(buffer),
-                                     currentpacket, timestamp, MESSAGESIZE, noteoff);
+   Byte message[3];
    
+   message[0] = 0xE0 | channel;
    
-   OSStatus result = MIDISend(m_port, selectedOutput, packetlist);
-   if (result != 0) fprintf(stderr, "MIDISend failed!!\n");
+   message[1] = c1;
+   
+   message[2] = c2;
+   
+   add_short_message(message, 3);
+   
 }
 
-// ------------------------------------------------------------------------------------------------------
 

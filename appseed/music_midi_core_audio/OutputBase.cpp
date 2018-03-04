@@ -83,15 +83,21 @@ StopNoteTimer* stopNoteTimer = NULL;
 
 OutputBase::OutputBase()
 {
+   
    OSStatus returnval = MIDIClientCreate(CFSTR("AriaOutput"), NULL, NULL, &m_client);
+   
    if (returnval != 0)
    {
+      
       //fprintf(stderr, "MIDIClientCreate failed with error code %i (%s, %s)\n", (int)returnval,
         //      GetMacOSStatusErrorString(returnval), GetMacOSStatusCommentString(returnval));
+      
    }
    
    stopNoteTimer = new StopNoteTimer(this);
+   
    m_playing = false;
+   
 }
 
 // ------------------------------------------------------------------------------------------------------
@@ -107,7 +113,6 @@ OutputBase::~OutputBase()
    }
 }
 
-// ------------------------------------------------------------------------------------------------------
 
 void OutputBase::playNote(int pitchID, int volume, int duration, int channel, int instrument)
 {
@@ -116,7 +121,7 @@ void OutputBase::playNote(int pitchID, int volume, int duration, int channel, in
    m_last_note = pitchID;
    m_last_channel = channel;
    
-   prog_change(instrument, channel);
+   program_change(instrument, channel);
    note_on(pitchID, volume, channel);
    stopNoteTimer->start(duration);
    m_playing = true;
@@ -130,7 +135,7 @@ void OutputBase::stopNote()
 {
    if (not m_playing) return;
    
-   note_off(m_last_note, m_last_channel);
+   note_off(m_last_channel, m_last_note, 0);
    m_playing = false;
    
    return;
@@ -142,11 +147,11 @@ void OutputBase::reset_all_controllers()
 {
    for (int channel=0; channel<16; channel++)
    {
-      controlchange(0x78 /*120*/ /* all sound off */, 0, channel);
-      controlchange(0x79 /*121*/ /* reset controllers */, 0, channel);
-      controlchange(7 /* reset volume */, 127, channel);
-      controlchange(10 /* reset pan */, 64, channel);
-      pitch_bend(PITCH_BEND_CENTER, channel);
+      control_change(channel, 0x78 /*120*/ /* all sound off */, 0);
+      control_change(channel, 0x79 /*121*/ /* reset controllers */, 0);
+      control_change(channel, 7 /* reset volume */, 127);
+      control_change(channel, 10 /* reset pan */, 64);
+      pitch_bend(channel, PITCH_BEND_CENTER);
    }
 }
 

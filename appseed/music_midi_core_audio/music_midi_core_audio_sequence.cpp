@@ -83,7 +83,7 @@ namespace music
       sequence::~sequence()
       {
          
-         CloseFile();
+         close_file();
          
       }
       
@@ -143,8 +143,8 @@ namespace music
          
          m_mmrcLastErr = ::multimedia::result_success;
          
-         if(GetState() != status_opened &&
-            GetState() != status_pre_rolled &&
+         if(get_status() != status_opened &&
+            get_status() != status_pre_rolled &&
             !IsInSpecialModeV001())
             return ::music::translate(::music::EFunctionNotSupported);
          
@@ -154,7 +154,7 @@ namespace music
          {
             // Recollect buffers from MMSYSTEM back into free queue
             //
-            SetState(::music::midi::sequence::status_reset);
+            set_status(::music::midi::sequence::status_reset);
             
   //          seq_free_context(m_pseq);
             
@@ -164,7 +164,7 @@ namespace music
          }
          
          //m_uBuffersInMMSYSTEM = 0;
-         SetState(::music::midi::sequence::status_pre_rolling);
+         set_status(::music::midi::sequence::status_pre_rolling);
          
          //
          // We've successfully opened the file and all of the tracks; now
@@ -248,7 +248,7 @@ namespace music
           mmrc = ::music::translate(smfrc);
           //if(bThrow)
           //{
-          //  SetState(status_opened);
+          //  set_status(status_opened);
           //  _throw(exception(mmrc, MIDIPLAYERPRERROLLREADEVENTSEXCEPTION));
           //}
           
@@ -272,7 +272,7 @@ namespace music
          // mmrc = MCIERR_DEVICE_NOT_READY;
          // if(bThrow)
          // {
-         // SetState(status_opened);
+         // set_status(status_opened);
          // _throw(exception(get_app(), mmrc, MIDIPLAYERPRERROLLPREPAREHEADEREXCEPTION));
          // }
          // else
@@ -295,12 +295,12 @@ namespace music
          
          if (mmrc != ::multimedia::result_success)
          {
-            SetState(status_opened);
+            set_status(status_opened);
             m_flags.unsignalize(::music::midi::sequence::FlagWaiting);
          }
          else
          {
-            SetState(status_pre_rolled);
+            set_status(status_pre_rolled);
          }
          
          return mmrc;
@@ -333,10 +333,10 @@ namespace music
          
          single_lock sl(m_pmutex, TRUE);
          
-         if (::music::midi::sequence::status_pre_rolled != GetState())
+         if (::music::midi::sequence::status_pre_rolled != get_status())
          {
             
-            TRACE( "seqStart(): State is wrong! [%u]", GetState());
+            TRACE( "seqStart(): State is wrong! [%u]", get_status());
             
             return ::music::translate(::music::EFunctionNotSupported);
             
@@ -359,12 +359,25 @@ namespace music
          
       }
       
+      
+      ::music::midi::message_out * sequence::get_message_out()
+      {
+
+         Application.midi().cast < midi >()->m_pmessageout->m_ps = m_psequencer;
+         
+         return Application.midi().cast < midi >()->m_pmessageout;
+
+      }
+
+      
       ::multimedia::e_result sequence::seq_start()
       {
          
+         return ::multimedia::result_internal;
+         
          single_lock sl(m_pmutex, TRUE);
          
-         if(GetState() != status_pre_rolled)
+         if(get_status() != status_pre_rolled)
             return ::music::translate(::music::EFunctionNotSupported);
          
          m_posPlay = 0;
@@ -391,115 +404,115 @@ namespace music
          
          //m_bStart = false;
          
-         m_pau = new AudioUnitOutput(NULL);
-         
-         //m_pau->note_on(128, 128, 0);
-         
-         OSStatus result;
-         
-//         m_cl = NULL;
+//         m_pau = new AudioUnitOutput(NULL);
 //         
+//         //m_pau->note_on(128, 128, 0);
 //         
-//         result = CAClockNew(0, &m_cl);
+//         OSStatus result;
 //         
-//         
+////         m_cl = NULL;
+////         
+////         
+////         result = CAClockNew(0, &m_cl);
+////         
+////         
+////         if(result != noErr)
+////         {
+////            
+////            return translate_os_status(result);
+////            
+////         }
+////         // Create a client
+//         //MIDIClientRef virtualMidi;
+//         result = MIDIClientCreate(CFSTR("Virtual Client"),
+//                                   MyMIDINotifyProc,
+//                                   NULL,
+//                                   &m_virtualMidi);
+//
+//
 //         if(result != noErr)
 //         {
-//            
+//
 //            return translate_os_status(result);
-//            
+//
 //         }
-//         // Create a client
-         //MIDIClientRef virtualMidi;
-         result = MIDIClientCreate(CFSTR("Virtual Client"),
-                                   MyMIDINotifyProc,
-                                   NULL,
-                                   &m_virtualMidi);
-
-
-         if(result != noErr)
-         {
-
-            return translate_os_status(result);
-
-         }
-
-         // Create an endpoint
-         //MIDIEndpointRef virtualEndpoint;
-         result = MIDIDestinationCreate(m_virtualMidi, CFSTR("Virtual Destination"), MyMIDIReadProc, this, &m_virtualEndpoint);
-
-
-         if(result != noErr)
-         {
-
-            return translate_os_status(result);
-
-         }
-         m_sequence = NULL;
-
-         OSStatus os = LoadSMF((const char *)m_pfile->get_data(),
-                               (int) m_pfile->get_size(),
-                               m_sequence, 0);
-
-         if(os != noErr)
-         {
-
-            return translate_os_status(os);
-
-         }
-         
-         MusicSequenceType outType;
-         
-         MusicSequenceGetSequenceType ( m_sequence, &outType );
-
-         // ************* Set the endpoint of the sequence to be our virtual endpoint
-         MusicSequenceSetMIDIEndpoint(m_sequence, m_virtualEndpoint);
-
-         // Create a new music player
-         // Initialise the music player
-         os = NewMusicPlayer(&m_player);
-         if(os != noErr)
-         {
-
-            return translate_os_status(os);
-
-         }
-
-         // Load the sequence into the music player
-         os = MusicPlayerSetSequence(m_player, m_sequence);
-         if(os != noErr)
-         {
-
-            return translate_os_status(os);
-
-         }
-         m_bStart = false;
-         // Called to do some MusicPlayer setup. This just
-         // reduces latency when MusicPlayerStart is called
-         os = MusicPlayerPreroll(m_player);
-         if(os != noErr)
-         {
-
-            return translate_os_status(os);
-
-         }
-         
-         // Starts the music playing
-         os = MusicPlayerStart(m_player);
-
-         if(os != noErr)
-         {
-
-            return translate_os_status(os);
-
-         }
-
-         SetState(status_playing);
-
-
-         m_uiStart = get_tick_count();
-
-         return ::multimedia::result_success;
+//
+//         // Create an endpoint
+//         //MIDIEndpointRef virtualEndpoint;
+//         result = MIDIDestinationCreate(m_virtualMidi, CFSTR("Virtual Destination"), MyMIDIReadProc, this, &m_virtualEndpoint);
+//
+//
+//         if(result != noErr)
+//         {
+//
+//            return translate_os_status(result);
+//
+//         }
+//         m_sequence = NULL;
+//
+//         OSStatus os = LoadSMF((const char *)m_pfile->get_data(),
+//                               (int) m_pfile->get_size(),
+//                               m_sequence, 0);
+//
+//         if(os != noErr)
+//         {
+//
+//            return translate_os_status(os);
+//
+//         }
+//         
+//         MusicSequenceType outType;
+//         
+//         MusicSequenceGetSequenceType ( m_sequence, &outType );
+//
+//         // ************* Set the endpoint of the sequence to be our virtual endpoint
+//         MusicSequenceSetMIDIEndpoint(m_sequence, m_virtualEndpoint);
+//
+//         // Create a new music player
+//         // Initialise the music player
+//         os = NewMusicPlayer(&m_player);
+//         if(os != noErr)
+//         {
+//
+//            return translate_os_status(os);
+//
+//         }
+//
+//         // Load the sequence into the music player
+//         os = MusicPlayerSetSequence(m_player, m_sequence);
+//         if(os != noErr)
+//         {
+//
+//            return translate_os_status(os);
+//
+//         }
+//         m_bStart = false;
+//         // Called to do some MusicPlayer setup. This just
+//         // reduces latency when MusicPlayerStart is called
+//         os = MusicPlayerPreroll(m_player);
+//         if(os != noErr)
+//         {
+//
+//            return translate_os_status(os);
+//
+//         }
+//         
+//         // Starts the music playing
+//         os = MusicPlayerStart(m_player);
+//
+//         if(os != noErr)
+//         {
+//
+//            return translate_os_status(os);
+//
+//         }
+//
+//         set_status(status_playing);
+//
+//
+//         m_uiStart = get_tick_count();
+//
+//         return ::multimedia::result_success;
          
       }
       
@@ -529,10 +542,10 @@ namespace music
          
          //    assert(NULL != pSeq);
          
-         if (status_playing != GetState())
+         if (status_playing != get_status())
             return ::music::translate(::music::EFunctionNotSupported);
          
-         SetState(status_paused);
+         set_status(status_paused);
          
          //::multimedia::e_result mmrc = ::multimedia::result_success;
          //    single_lock slStream(&m_csStream, false);
@@ -571,10 +584,10 @@ namespace music
          
          single_lock sl(m_pmutex, TRUE);
          
-         if (status_paused != GetState())
+         if (status_paused != get_status())
             return ::music::translate(::music::EFunctionNotSupported);
          
-         SetState(status_playing);
+         set_status(status_playing);
          m_evMmsgDone.ResetEvent();
          
          //    ::multimedia::e_result mmrc = 0;
@@ -610,19 +623,19 @@ namespace music
          
          single_lock sl(m_pmutex, TRUE);
          
-         if(GetState() == status_stopping)
+         if(get_status() == status_stopping)
             return ::multimedia::result_success;
          
          // Automatic success if we're already stopped
-         if (GetState() != status_playing
-             && GetState() != status_paused)
+         if (get_status() != status_playing
+             && get_status() != status_paused)
          {
             m_flags.unsignalize(::music::midi::sequence::FlagWaiting);
             GetPlayerLink().OnFinishCommand(::music::midi::player::command_stop);
             return ::multimedia::result_success;
          }
          
-         SetState(status_stopping);
+         set_status(status_stopping);
          m_flags.signalize(::music::midi::sequence::FlagWaiting);
          
          m_eventMidiPlaybackEnd.ResetEvent();
@@ -680,15 +693,15 @@ namespace music
          
          //::multimedia::e_result                mmr;
          
-         if (::music::midi::sequence::status_playing != GetState() &&
-             ::music::midi::sequence::status_paused != GetState() &&
-             ::music::midi::sequence::status_pre_rolling != GetState() &&
-             ::music::midi::sequence::status_pre_rolled != GetState() &&
-             ::music::midi::sequence::status_opened != GetState() &&
-             ::music::midi::sequence::status_stopping != GetState())
+         if (::music::midi::sequence::status_playing != get_status() &&
+             ::music::midi::sequence::status_paused != get_status() &&
+             ::music::midi::sequence::status_pre_rolling != get_status() &&
+             ::music::midi::sequence::status_pre_rolled != get_status() &&
+             ::music::midi::sequence::status_opened != get_status() &&
+             ::music::midi::sequence::status_stopping != get_status())
          {
             
-            TRACE( "seqTime(): State wrong! [is %u]", GetState());
+            TRACE( "seqTime(): State wrong! [is %u]", get_status());
             
             return ::music::translate(::music::EFunctionNotSupported);
             
@@ -708,7 +721,7 @@ namespace music
          
          pTicks = 0;
          
-         if (status_opened != GetState())
+         if (status_opened != get_status())
          {
 
             pTicks = m_tkBase;
@@ -725,78 +738,87 @@ namespace music
          
          single_lock sl(m_pmutex);
          
-         if (status_playing != GetState() &&
-             status_paused != GetState() &&
-             status_pre_rolling != GetState() &&
-             status_pre_rolled != GetState() &&
-             status_opened != GetState() &&
-             status_stopping != GetState())
+         if (status_playing != get_status() &&
+             status_paused != get_status() &&
+             status_pre_rolling != get_status() &&
+             status_pre_rolled != get_status() &&
+             status_opened != get_status() &&
+             status_stopping != get_status())
          {
             
-            TRACE( "seqTime(): State wrong! [is %u]", GetState());
+            TRACE( "seqTime(): State wrong! [is %u]", get_status());
             
             return ::music::translate(::music::EFunctionNotSupported);
             
          }
          
-         if(m_player != NULL)
+         if(m_psequencer != NULL)
          {
-
-            Boolean bPlaying = false;
             
-            OSStatus os = MusicPlayerIsPlaying(m_player, &bPlaying);
+            time = m_psequencer->get_millis();
             
-            if(os == noErr && bPlaying)
-            {
-               
-               MusicTimeStamp now = 0;
-               
-               os = MusicPlayerGetTime (m_player, &now);
-               
-               if(os == noErr)
-               {
-                  
-                  Float64 f;
-                  
-                  os = MusicSequenceGetSecondsForBeats(m_sequence, now,  &f);
-                  
-                  if(os == noErr)
-                  {
-                    
-                     UInt64 outHostTime = 0;
-                     
-                     MusicPlayerGetHostTimeForBeats ( m_player, now, &outHostTime );
-               
-                     //m_posPlay = time = now * 1000;
-                     
-                     ///m_posPlay =  (outHostTime - m_uiStart) / (1000.0 * 1000.0);
-                     
-                     //m_posPlay = get_tick_count() - m_uiStart;
-                     
-                     //time = m_posPlay;
-                     
-                     time = f * 1000.0;
-                     
-                     // time = outHostTime;
-                     
-                     return ::multimedia::result_success;
-                     
-                  }
-                  
-               }
-               
-            }
+            return ::multimedia::result_success;
             
          }
+         
+//         if(m_player != NULL)
+//         {
+//
+//            Boolean bPlaying = false;
+//
+//            OSStatus os = MusicPlayerIsPlaying(m_player, &bPlaying);
+//
+//            if(os == noErr && bPlaying)
+//            {
+//
+//               MusicTimeStamp now = 0;
+//
+//               os = MusicPlayerGetTime (m_player, &now);
+//
+//               if(os == noErr)
+//               {
+//
+//                  Float64 f;
+//
+//                  os = MusicSequenceGetSecondsForBeats(m_sequence, now,  &f);
+//
+//                  if(os == noErr)
+//                  {
+//
+//                     UInt64 outHostTime = 0;
+//
+//                     MusicPlayerGetHostTimeForBeats ( m_player, now, &outHostTime );
+//
+//                     //m_posPlay = time = now * 1000;
+//
+//                     ///m_posPlay =  (outHostTime - m_uiStart) / (1000.0 * 1000.0);
+//
+//                     //m_posPlay = get_tick_count() - m_uiStart;
+//
+//                     //time = m_posPlay;
+//
+//                     time = f * 1000.0;
+//
+//                     // time = outHostTime;
+//
+//                     return ::multimedia::result_success;
+//
+//                  }
+//
+//               }
+//
+//            }
+//
+//         }
 
          time = 0;
          
-         if (status_opened != GetState())
+         if (status_opened != get_status())
          {
             
             time = (int_ptr) TicksToMillisecs(m_tkBase);
             
-            if (status_pre_rolled != GetState())
+            if (status_pre_rolled != get_status())
             {
                
             }
@@ -938,8 +960,8 @@ namespace music
       
       bool sequence::IsPlaying()
       {
-         return GetState() == status_playing ||
-         GetState() == status_stopping;
+         return get_status() == status_playing ||
+         get_status() == status_stopping;
       }
       
       
@@ -947,50 +969,50 @@ namespace music
       
       
       
-      uint32_t sequence::SetState(uint32_t uiState)
-      {
-         m_uiPreviousState = m_uiState;
-         m_uiState = uiState;
-         return m_uiPreviousState;
-      }
+//      uint32_t sequence::set_status(uint32_t uiState)
+//      {
+//         m_uiPreviousState = m_uiState;
+//         m_uiState = uiState;
+//         return m_uiPreviousState;
+//      }
+//
+//      void sequence::SetSpecialModeV001Flag(bool bSet)
+//      {
+//         if(m_flags.is_signalized(FlagIsInSpecialModeV001))
+//            m_flags.signalize(FlagWasInSpecialModeV001);
+//         else
+//            m_flags.unsignalize(FlagWasInSpecialModeV001);
+//
+//         if(bSet)
+//            m_flags.signalize(FlagIsInSpecialModeV001);
+//         else
+//            m_flags.unsignalize(FlagIsInSpecialModeV001);
+//      }
       
-      void sequence::SetSpecialModeV001Flag(bool bSet)
-      {
-         if(m_flags.is_signalized(FlagIsInSpecialModeV001))
-            m_flags.signalize(FlagWasInSpecialModeV001);
-         else
-            m_flags.unsignalize(FlagWasInSpecialModeV001);
-         
-         if(bSet)
-            m_flags.signalize(FlagIsInSpecialModeV001);
-         else
-            m_flags.unsignalize(FlagIsInSpecialModeV001);
-      }
+//      void sequence::SetSpecialModeV001Operation(uint32_t uiOperation)
+//      {
+//         m_uiPreSpecialModeV001State = m_uiState;
+//         SetSpecialModeV001Flag();
+//         m_uiSpecialModeV001Operation = uiOperation;
+//      }
       
-      void sequence::SetSpecialModeV001Operation(uint32_t uiOperation)
-      {
-         m_uiPreSpecialModeV001State = m_uiState;
-         SetSpecialModeV001Flag();
-         m_uiSpecialModeV001Operation = uiOperation;
-      }
-      
-      bool sequence::IsInSpecialModeV001()
-      {
-         return m_flags.is_signalized(FlagIsInSpecialModeV001);
-      }
-      
-      bool sequence::WasInSpecialModeV001()
-      {
-         return m_flags.is_signalized(FlagWasInSpecialModeV001);
-      }
+//      bool sequence::IsInSpecialModeV001()
+//      {
+//         return m_flags.is_signalized(FlagIsInSpecialModeV001);
+//      }
+//
+//      bool sequence::WasInSpecialModeV001()
+//      {
+//         return m_flags.is_signalized(FlagWasInSpecialModeV001);
+//      }
       
       
-      void sequence::GetMidiDoneData(::music::midi::LPMIDIDONEDATA lpmdd)
-      {
-         lpmdd->m_flags = m_flags;
-         lpmdd->m_uiSeqPreviousState = m_uiPreviousState;
-         lpmdd->m_uiSeqState = m_uiState;
-      }
+//      void sequence::GetMidiDoneData(::music::midi::LPMIDIDONEDATA lpmdd)
+//      {
+//         lpmdd->m_flags = m_flags;
+//         lpmdd->m_uiSeqPreviousState = m_uiPreviousState;
+//         lpmdd->m_uiSeqState = m_uiState;
+//      }
       
       int32_t sequence::GetKeyShift()
       {
@@ -1096,7 +1118,7 @@ namespace music
       //      m_pseq = NULL;
         // }
          
-         SetState(status_opened);
+         set_status(status_opened);
          
          return ::multimedia::result_success;
       }
@@ -1150,19 +1172,19 @@ namespace music
             {
                SetSpecialModeV001Flag(false);
                OnMidiPlaybackEnd(pevent);
-               SetState(m_uiPreSpecialModeV001State);
+               set_status(m_estatusPreSpecialModeV001);
             }
                break;
-            case EventStopped:
-            {
-               OnMidiPlaybackEnd(pevent);
-               SetState(status_opened);
-            }
-               break;
+//            case EventStopped:
+//            {
+//               OnMidiPlaybackEnd(pevent);
+//               set_status(status_opened);
+//            }
+//               break;
             case EventMidiPlaybackEnd:
             {
                OnMidiPlaybackEnd(pevent);
-               SetState(status_opened);
+               set_status(status_opened);
             }
                break;
             default:
@@ -1230,7 +1252,7 @@ namespace music
       bool sequence::IsOpened()
       {
          
-         return GetState() != status_no_file;
+         return get_status() != status_no_file;
          
       }
       
@@ -2008,15 +2030,6 @@ namespace music
             m_flags.unsignalize(::music::midi::sequence::FlagSettingPos);
       }
       
-      uint32_t sequence::GetPreviousState()
-      {
-         return m_uiPreviousState;
-      }
-      
-      uint32_t sequence::GetState()
-      {
-         return m_uiState;
-      }
       
       ::music::midi::sequence::event * sequence::create_new_event(::music::midi::sequence::e_event eevent, LPMIDIHDR lpmidihdr)
       {

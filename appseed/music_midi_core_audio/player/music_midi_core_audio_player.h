@@ -34,9 +34,9 @@ namespace music
             void install_message_routing(::message::sender * pinterface) override;
 
 
-            void SendMmsgDone(::music::midi::sequence *pSeq, ::music::midi::LPMIDIDONEDATA lpmdd) override;
+//            void SendMmsgDone(::music::midi::sequence *pSeq, ::music::midi::LPMIDIDONEDATA lpmdd) override;
             void SetCallbackWindow(sp(::user::interaction) puie);
-            bool Play(double dRate = 0.0, uint32_t dwEllapse = 584) override;
+            bool PlayRate(double dRate = 0.0, uint32_t dwEllapse = 584) override;
             bool Play(imedia_position tkStart, uint32_t dwEllapse = 584) override;
 
             virtual bool init_thread() override;
@@ -46,8 +46,8 @@ namespace music
             DECL_GEN_SIGNAL(OnUserMessage);
                void SaveFile(const char * lpszPathName) override;
             void SetPosition(double dRate) override;
-            void Pause() override;
-            void CloseFile() override;
+            void pause() override;
+            void close_file() override;
             void SendReset();
             bool ExecuteCommand(::music::midi::player::e_command ecommand, uint32_t dwEllapse) override;
             virtual void OnMidiOutDeviceChange() override;

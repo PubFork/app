@@ -3,7 +3,7 @@
 
 
 //#define LOG(format, ...) TRACE(format, __VA_ARGS__)
-
+CFStringRef ConnectedEndpointName(MIDIEndpointRef endpoint);
 
 
 namespace music
@@ -20,8 +20,10 @@ namespace music
          ::music::midi::midi(papp),
       ::music::midi::object(papp)
       {
+         m_pmessageout = create_message_out();
+         
 
-            m_uiMidiOutDevice = 0;
+         m_uiMidiOutDevice = 0;
 
       }
 
@@ -29,6 +31,28 @@ namespace music
       midi::~midi()
       {
 
+      }
+
+      
+      CoreMidiOutput * midi::create_message_out()
+      {
+         
+         char name[2048];
+         
+         MIDIEndpointRef portRef = MIDIGetDestination( 0 );
+         
+         CFStringRef nameRef = ConnectedEndpointName(portRef);
+         
+         CFStringGetCString(nameRef, name, sizeof(name), CFStringGetSystemEncoding());
+         
+         CFRelease(nameRef);
+         
+         string stringName = name;
+         
+         CoreMidiOutput * pmessageout = canew(CoreMidiOutput(get_app(), stringName));
+         
+         return pmessageout;
+         
       }
 
 

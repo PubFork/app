@@ -30,30 +30,58 @@
  * An OS X MIDI output port that uses CoreMIDI. This output device is used to send output
  * to external devices, not for playing with the built-in software synthesizer.
  */
-class CoreMidiOutput : public OutputBase
+class CoreMidiOutput : public OutputBase,
+   virtual public ::music::midi::message_out
 {
 public:
+   
+
+   struct Destination
+   {
+      
+      
+      MIDIEndpointRef m_endpoint;
+      string m_strName;
+      
+      
+   };
+   
+   uint64_t                m_ui64Start;
+   
+
+
+   MIDIEndpointRef m_endpoint;
+   
    MIDIPortRef m_port;
+   
+   char m_buffer[65535];
+   
+   MIDIPacketList * m_packetlist;
+
+   MIDIPacket * m_packet;
+
+
    //MIDIClientRef m_client;
    
    
-   CoreMidiOutput(string driver);
+   CoreMidiOutput(::aura::application * papp, string driver);
    virtual ~CoreMidiOutput();
    
-   struct Destination
-   {
-      MIDIEndpointRef m_ref;
-      string m_name;
-   };
-   static const std::vector<Destination>& getDestinations();
+   virtual void start() override;
    
-   MIDIEndpointRef selectedOutput;
+   static array < Destination > get_destinations();
    
+   virtual void note_on(int iChannel, unsigned char uchNote, unsigned char uchVelocity) override;
+   virtual void note_off(int iChannel, unsigned char uchNote, unsigned char uchVelocity) override;
+   virtual void program_change(int iChannel, unsigned char uchProgram) override;
+   virtual void control_change(int iChannel, unsigned char uchController, unsigned char uchValue) override;
+   virtual void pitch_bend(int iChannel, unsigned short ushBend) override;
    
-   virtual void note_on(const int note, const int volume, const int channel);
-   virtual void note_off(const int note, const int channel);
-   virtual void prog_change(const int instrument, const int channel);
-   virtual void controlchange(const int controller, const int value, const int channel);
-   virtual void pitch_bend(const int value, const int channel);
+   virtual void step();
+   
+   virtual void reset_all_controllers() override;
+   
+   virtual void add_short_message(Byte * pmessage, int iSize);
+   
 };
 

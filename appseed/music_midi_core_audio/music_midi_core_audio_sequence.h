@@ -203,11 +203,11 @@ namespace music
          virtual ~sequence();
 
          
-         inline uint32_t GetState() override;
-         inline uint32_t GetPreviousState() override;
-         uint32_t SetState(uint32_t uiState) override;
-         
-         void SetSpecialModeV001Flag(bool bSet = true) override;
+//         virtual uint32_t get_status() override;
+//         inline uint32_t GetPreviousState() override;
+//         uint32_t SetState(uint32_t uiState) override;
+//
+//         void SetSpecialModeV001Flag(bool bSet = true) override;
          
          void MuteAll(bool bMute = true, int32_t iExcludeTrack = -1) override;
          void MuteTrack(int32_t iIndex, bool bMute = true) override;
@@ -238,6 +238,8 @@ namespace music
          //virtual void GetTimeLength(imedia_time & time);
          //virtual void GetPositionLength(imedia_position & position);
          
+         virtual ::music::midi::message_out * get_message_out() override;
+         
          using ::ikaraoke::karaoke::TimeToPosition;
          using ::ikaraoke::karaoke::PositionToTime;
          
@@ -251,10 +253,10 @@ namespace music
          virtual bool IsChangingTempo() override;
          
          virtual double GetTempoShift() override;
-         virtual void GetMidiDoneData(::music::midi::LPMIDIDONEDATA lpmdd) override;
-         virtual bool IsInSpecialModeV001() override;
-         virtual bool WasInSpecialModeV001() override;
-         virtual void SetSpecialModeV001Operation(uint32_t uiOperation) override;
+         //virtual void GetMidiDoneData(::music::midi::LPMIDIDONEDATA lpmdd) override;
+         //virtual bool IsInSpecialModeV001() override;
+         //virtual bool WasInSpecialModeV001() override;
+         //virtual void SetSpecialModeV001Operation(uint32_t uiOperation) override;
          
          virtual void OnEvent(::music::midi::sequence::event * pevent) override;
          

@@ -21,8 +21,8 @@ namespace music
 
          void install_message_routing(::message::sender * pinterface) override;
 
-         ::music::midi::sequence * get_sequence();
-         void Stop(imedia_time msEllapse);
+         virtual ::music::midi::sequence * get_sequence() override;
+         virtual void Stop(imedia_time msEllapse) override;
 
          bool PostMidiSequenceEvent(::music::midi::sequence * pseq, ::music::midi::sequence::e_event event);
 
@@ -30,13 +30,13 @@ namespace music
 
          void PostNotifyEvent(::music::midi::player::e_notify_event eevent);
 
-         void PrerollAndWait(double rate = 0.0);
-         void PrerollAndWait(imedia_position tkStart);
-         void Play(double dRate = 0.0);
-         void Play(imedia_position tkStart);
-         void PostGMReset();
-         void PostTempoChange();
-         void SendTempoChange();
+         void PrerollAndWait(double rate = 0.0) override;
+         void PrerollRateAndWait(imedia_position tkStart) override;
+         void PlayRate(double dRate = 0.0) override;
+         void Play(imedia_position tkStart) override;
+         void PostGMReset() override;
+         void PostTempoChange() override;
+         void SendTempoChange() override;
 
          void ExecuteCommand(::music::midi::player::command * pcommand) override;
          void _ExecuteCommand(::music::midi::player::command * pcommand) override;

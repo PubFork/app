@@ -13,6 +13,8 @@ namespace music
          virtual public ::music::midi::midi
       {
       public:
+         
+         sp(CoreMidiOutput)   m_pmessageout;
 
 
          midi(::aura::application * papp);
@@ -21,6 +23,7 @@ namespace music
 
          virtual ::multimedia::e_result enumerate_midi_devices();
 
+         CoreMidiOutput * create_message_out();
 
          //void RemoveListener(midi_listener * plistener);
          //void AddListener(midi_listener * plistener);

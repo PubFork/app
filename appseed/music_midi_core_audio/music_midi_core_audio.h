@@ -23,6 +23,8 @@
    #define CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_CORE_MIDI  CLASS_DECL_IMPORT
 #endif
 
+class CoreMidiOutput;
+
 
 #include "CAStreamBasicDescription.h"
 #include "OutputBase.h"
@@ -49,3 +51,5 @@
 #include "music_midi_core_audio_midi.h"
 
 #include "music_midi_core_audio_factory_exchange.h"
+
+#include "music_midi_core_message_out.h"
