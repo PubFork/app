@@ -559,6 +559,14 @@ namespace database
 
    }
 
+   
+   bool client::is_local_data()
+   {
+      
+      return m_bLocalDataModifier || Application.is_local_data();
+      
+   }
+
 
 } // namespace database
 

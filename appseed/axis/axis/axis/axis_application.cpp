@@ -3902,6 +3902,14 @@ namespace axis
    }
 
 
+   bool application::is_local_data()
+   {
+      
+      return m_bLocalDataModifier;
+      
+   }
+
+
 } // namespace axis
 
 

@@ -13,9 +13,6 @@ struct PROCESS_INFO_t
 };
 
 
-bool _ui_get_executable_path(char * psz, uint32_t * puiSize);
-
-
 namespace ios
 {
    
@@ -91,39 +88,7 @@ namespace ios
    bool file_system::update_module_path()
    {
       
-      string str;
-      
-      char * lpsz = str.GetBufferSetLength(1024);
-      
-      uint32_t size = 1024;
-      
-      if(_ui_get_executable_path(lpsz, &size))
-      {
-         
-         str.ReleaseBuffer();
-         
-      }
-      else
-      {
-         
-         lpsz = str.GetBufferSetLength(size);
-         
-         if(_ui_get_executable_path(lpsz, &size))
-         {
-            
-            str.ReleaseBuffer();
-            
-         }
-         else
-         {
-            
-            return false;
-            
-         }
-         
-      }
-      
-      m_pathModule = str;
+      m_pathModule = apple_app_module_path();
       
       m_pathCa2Module = ca2_module_dup();
       

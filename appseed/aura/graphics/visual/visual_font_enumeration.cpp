@@ -33,7 +33,7 @@ namespace visual
 
          synch_lock sl(m_pmutex);
 
-         g->enum_fonts(m_itema);
+         g->sorted_fonts(m_itema);
 
       }
 

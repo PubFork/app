@@ -43,6 +43,9 @@ namespace user
 } // namespace user
 
 
+#define USER_TIMER 50000
+
+
 class simple_mesh_data;
 
 

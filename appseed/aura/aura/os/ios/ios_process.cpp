@@ -218,6 +218,13 @@ CLASS_DECL_AURA bool is_shared_library_busy(const stringa & stra)
 }
 
 
+void os_post_quit()
+{
+   
+   
+   
+}
+
 
 
 void os_term_application()
@@ -236,3 +243,17 @@ CLASS_DECL_AURA ::file::path core_app_path(string strApp)
    throw todo(get_app());
    
 }
+
+
+namespace process
+{
+   
+   CLASS_DECL_AURA bool set_priority(int32_t priority)
+   {
+      
+      return true;
+      
+   }
+   
+   
+} // namespace process

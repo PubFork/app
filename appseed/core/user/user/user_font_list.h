@@ -13,6 +13,13 @@ namespace user
    {
       public:
 
+         enum timer
+      {
+         
+         timer_update_font = USER_TIMER,
+         
+      };
+      
 
          rect                             m_rectMargin;
          int                              m_iSel;

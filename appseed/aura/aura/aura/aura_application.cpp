@@ -7784,7 +7784,7 @@ run:
    }
 
 
-} // namespace install
+} // namespace aura
 
 
 

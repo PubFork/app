@@ -235,13 +235,15 @@ namespace user
 
          //         virtual void install_message_routing(::message::sender * pinterface);
 
-         virtual bool _001HasCommandHandler(::user::command * pcommand) override;
+      virtual bool _001HasCommandHandler(::user::command * pcommand) override;
 
-         virtual void walk_pre_translate_tree(::message::message * pobj,sp(::user::interaction) puiStop);
+      virtual void walk_pre_translate_tree(::message::message * pobj,sp(::user::interaction) puiStop);
 
 
-         virtual string calc_data_id() override;
+      virtual string calc_data_id() override;
 
+      virtual bool is_local_data() override;
+      
 
    };
 
@@ -303,7 +305,6 @@ namespace user
          VIEW::_001OnDraw(pgraphics);
 
       }
-
 
    };
 

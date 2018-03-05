@@ -5213,6 +5213,21 @@ namespace draw2d
    }
 
 
+   void graphics::sorted_fonts(::draw2d::font::enum_item_array & itema)
+   {
+
+      enum_fonts(itema);
+      
+      ::sort::array::pred_sort(itema, [&](auto & a, auto & b)
+      {
+
+         return a->m_strName < b->m_strName;
+
+      });
+
+   }
+
+
    float graphics::nanosvg_distPtSeg(float x, float y, float px, float py, float qx, float qy)
    {
       float pqx, pqy, dx, dy, d, t;

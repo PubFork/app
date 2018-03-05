@@ -656,9 +656,10 @@ namespace aura
 
 
       virtual ::visual::icon * set_icon(object * pobject, ::visual::icon * picon, bool bBigIcon);
+      
       virtual ::visual::icon * get_icon(object * pobject, bool bBigIcon) const;
 
-
+      
    };
 
 

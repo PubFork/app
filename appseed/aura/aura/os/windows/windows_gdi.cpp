@@ -535,13 +535,6 @@ namespace draw2d
 
       wingdi_font_enum fonts(itema, bRaster, bTrueType, bOther);
 
-      ::sort::array::pred_sort(itema, [&](auto & a, auto & b)
-      {
-
-         return a->m_strName < b->m_strName;
-
-      });
-
    }
 
 

@@ -49,12 +49,14 @@ namespace user
          virtual void on_command(::user::command * pcommand) override;
 
 
-         virtual void on_set_parent(::user::interaction * puiParent) override;
-         virtual bool on_before_set_parent(::user::interaction * pinterface) override;
+      virtual void on_set_parent(::user::interaction * puiParent) override;
+      virtual bool on_before_set_parent(::user::interaction * pinterface) override;
 
 
-         virtual string calc_data_id() override;
+      virtual string calc_data_id() override;
 
+      virtual bool parent_is_local_data();
+      virtual bool is_local_data() override;
 
    };
 

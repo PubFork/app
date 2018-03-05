@@ -103,26 +103,13 @@ bool mm1_get_file_image(unsigned int * pcr, int cx, int cy, int iScan, const cha
 }
 
 
-
-
-bool _ui_get_executable_path(char * psz, unsigned int * puiSize)
+char * ns_get_executable_path()
 {
-   NSString * pstr = [[NSBundle mainBundle] executablePath];
    
-   if(pstr == NULL)
-   {
-    
-      return false;
-      
-   }
+   return ns_string([[NSBundle mainBundle] executablePath]);
    
-   *puiSize = (unsigned int) strlen([pstr UTF8String]);
-   
-   strncpy(psz, [pstr UTF8String], *puiSize);
-                 
-   return true;
-
 }
+
 
 NSString * applicationDocumentsDirectory()
 {

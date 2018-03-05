@@ -1569,7 +1569,6 @@
 		9A6FB0C71F5C7D5400AF31B2 /* ios_multithreading.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAC631F5C715B00AF31B2 /* ios_multithreading.cpp */; };
 		9A6FB0C81F5C7D5400AF31B2 /* ios_process_pid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAC641F5C715B00AF31B2 /* ios_process_pid.cpp */; };
 		9A6FB0C91F5C7D5400AF31B2 /* ios_process.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAC651F5C715B00AF31B2 /* ios_process.cpp */; };
-		9A6FB0CA1F5C7D5400AF31B2 /* ios_simple_app.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAC661F5C715B00AF31B2 /* ios_simple_app.cpp */; };
 		9A6FB0CB1F5C7D5400AF31B2 /* ios_simple_shell_launcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAC671F5C715B00AF31B2 /* ios_simple_shell_launcher.cpp */; };
 		9A6FB0CC1F5C7D5400AF31B2 /* ios_small_ipca_channel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAC681F5C715B00AF31B2 /* ios_small_ipca_channel.cpp */; };
 		9A6FB0CD1F5C7D5400AF31B2 /* ios_time.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAC691F5C715B00AF31B2 /* ios_time.cpp */; };
@@ -3502,7 +3501,6 @@
 		9A6FAC631F5C715B00AF31B2 /* ios_multithreading.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_multithreading.cpp; sourceTree = "<group>"; };
 		9A6FAC641F5C715B00AF31B2 /* ios_process_pid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_process_pid.cpp; sourceTree = "<group>"; };
 		9A6FAC651F5C715B00AF31B2 /* ios_process.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_process.cpp; sourceTree = "<group>"; };
-		9A6FAC661F5C715B00AF31B2 /* ios_simple_app.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_simple_app.cpp; sourceTree = "<group>"; };
 		9A6FAC671F5C715B00AF31B2 /* ios_simple_shell_launcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_simple_shell_launcher.cpp; sourceTree = "<group>"; };
 		9A6FAC681F5C715B00AF31B2 /* ios_small_ipca_channel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_small_ipca_channel.cpp; sourceTree = "<group>"; };
 		9A6FAC691F5C715B00AF31B2 /* ios_time.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_time.cpp; sourceTree = "<group>"; };
@@ -4680,7 +4678,6 @@
 				9A6FAC641F5C715B00AF31B2 /* ios_process_pid.cpp */,
 				9A6FAC651F5C715B00AF31B2 /* ios_process.cpp */,
 				077A05541B4D70B7001C85FF /* ios_process.h */,
-				9A6FAC661F5C715B00AF31B2 /* ios_simple_app.cpp */,
 				9A6FAC671F5C715B00AF31B2 /* ios_simple_shell_launcher.cpp */,
 				9A6FAC681F5C715B00AF31B2 /* ios_small_ipca_channel.cpp */,
 				9A6FAC691F5C715B00AF31B2 /* ios_time.cpp */,
@@ -9051,7 +9048,6 @@
 				9A4173632000CBF10056265A /* graphics_window_dc.cpp in Sources */,
 				9A6FB1101F5C9C5D00AF31B2 /* primitive_id.cpp in Sources */,
 				9A6FB13E1F5C9D7E00AF31B2 /* http_system.cpp in Sources */,
-				9A6FB0CA1F5C7D5400AF31B2 /* ios_simple_app.cpp in Sources */,
 				9A6FB0CC1F5C7D5400AF31B2 /* ios_small_ipca_channel.cpp in Sources */,
 				9A6FB10C1F5C9C5D00AF31B2 /* primitive_create.cpp in Sources */,
 				9A6FB1A71F5CA00200AF31B2 /* webserver_http_cookie.cpp in Sources */,

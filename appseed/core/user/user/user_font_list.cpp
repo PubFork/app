@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 //#include <math.h>
 
 
@@ -74,38 +74,35 @@ namespace user
 
       SCAST_PTR(::message::create, pcreate, pobj);
 
-      //      m_dibSel.alloc(allocer());
-
       pcreate->previous();
 
       if (pcreate->m_bRet)
          return;
+      
+      attach_font_list_data(Session.m_pfontlistdata);
 
-      //      data_get("sel", m_iSel);
-
-      //defer_update();
-
-      SetTimer(9876, 10 * 1000, NULL);
+      SetTimer(timer_update_font, 10 * 1000, NULL);
 
    }
+   
 
    void font_list::_001OnTimer(::timer * ptimer)
    {
 
-      if (ptimer->m_nIDEvent == 9876)
+      if (ptimer->m_nIDEvent == timer_update_font)
       {
 
-         if (m_pfontlistdata != NULL)
+         if (m_pfontlistdata.is_set())
          {
 
             m_pfontlistdata->update();
 
          }
 
-
       }
 
    }
+   
 
    void font_list::_001OnLButtonDown(::message::message * pobj)
    {
@@ -133,14 +130,10 @@ namespace user
 
          BaseOnControlEvent(&ev);
 
-
-         //data_set("sel", m_pfontlistdata->m_iSel);
-
-
-
       }
 
    }
+   
 
    void font_list::_001OnMouseMove(::message::message * pobj)
    {
@@ -180,7 +173,9 @@ namespace user
       UNREFERENCED_PARAMETER(pSender);
       UNREFERENCED_PARAMETER(lHint);
       UNREFERENCED_PARAMETER(phint);
+      
    }
+   
 
    void font_list::_001OnNcDraw(::draw2d::graphics * pgraphics)
    {
@@ -212,7 +207,6 @@ namespace user
       }
 
       m_pfontlistdata->_001OnDraw(pgraphics);
-
 
    }
 
@@ -341,6 +335,7 @@ namespace user
       return m_pfontlistdata->m_iHover;
 
    }
+   
 
    index font_list::hit_test(point pt)
    {

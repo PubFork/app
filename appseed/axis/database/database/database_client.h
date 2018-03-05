@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 namespace database
@@ -200,6 +200,7 @@ namespace database
       virtual void set_data_key_modifier(string strDataKeyModifier);
       virtual void add_up_data_key_modifier(string strAddUpDataKeyModifier);
       virtual void set_local_data_key_modifier();
+      virtual bool is_local_data();
       virtual string get_data_key_modifier();
 
 

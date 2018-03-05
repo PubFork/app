@@ -275,7 +275,9 @@ namespace axis
       virtual bool compress_gz(::file::file * pfileOut, const ::file::path & lpcszUncompressed, int iLevel = 6) override;
       virtual bool compress_gz(::file::file * pfileOut, ::file::file * pfileIn, int iLevel = 6) override;
 
-
+      
+      virtual bool is_local_data() override;
+      
 
    };
 

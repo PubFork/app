@@ -5306,11 +5306,9 @@ namespace draw2d_quartz2d
             
          }
          
-         
          free(p);
          
       }
-      
       
    }
 

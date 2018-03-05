@@ -5960,14 +5960,6 @@ namespace draw2d_cairo
 
       }
 
-
-      itema.pred_sort([&](auto & i1, auto & i2)
-      {
-
-         return i1->m_strName < i2->m_strName;
-
-      });
-
 #elif defined(WINDOWS)
 
       ::draw2d::wingdi_enum_fonts(itema, false, true, false);

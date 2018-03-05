@@ -193,9 +193,6 @@ namespace user
 } // namespace user
 
 
-
-
-
 namespace aura
 {
 
@@ -216,6 +213,7 @@ namespace aura
 namespace user
 {
 
+   
    class primitive;
    class frame;
    class menu;
@@ -2069,11 +2067,8 @@ namespace user
    }
 
 
-
-
-
-
 } // namespace user
+
 
 #include "aura/primitive/collection/collection_string_array_impl.inl"
 

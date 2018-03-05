@@ -431,8 +431,6 @@ namespace userex
 
          pcreatordata->m_pwnd = m_pfontview;
 
-         m_pfontview->m_pview->attach_font_list_data(Session.m_pfontlistdata);
-
       }
       else if(::str::begins_ci(pcreatordata->m_id, "file_manager")
               || pcreatordata->m_id == "left_file"

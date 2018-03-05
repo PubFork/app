@@ -7,7 +7,7 @@
 //
 
 #include "framework.h"
-#include <CoreAudio/CoreAudio.h>
+//#include <CoreAudio/CoreAudio.h>
 #include <mach/mach_time.h>
 
 
@@ -359,15 +359,20 @@ void CoreMidiOutput::step()
 
 void CoreMidiOutput::start()
 {
-   
+#ifdef MACOS2
    m_ui64Start =AudioGetCurrentHostTime();
+#endif
    
 }
 
 void CoreMidiOutput::add_short_message(Byte * pmessage, int iSize)
 {
    
+#ifdef MACOS2
    MIDITimeStamp timestamp = m_ui64Start + nano_to_absolute((m_ps->m_timeFile - m_ps->m_timeFileStart + 100.0) * 1000000.0);
+#else
+   MIDITimeStamp timestamp = 0;
+#endif
    
    if(m_packetlist == NULL)
    {

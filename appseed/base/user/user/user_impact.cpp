@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 namespace user
@@ -1318,17 +1318,30 @@ namespace user
 
    }
 
+   
+   bool impact::is_local_data()
+   {
+   
+      if(::user::box::is_local_data())
+      {
+         
+         return true;
+         
+      }
+      
+      if(get_document() != NULL && get_document()->is_local_data())
+      {
+       
+         return true;
+         
+      }
+      
+      return false;
+      
+   }
 
+   
 } // namespace user
-
-
-
-
-
-
-
-
-
 
 
 
