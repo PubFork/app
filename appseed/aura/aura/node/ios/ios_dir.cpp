@@ -1036,12 +1036,12 @@ namespace ios
    //   }
    
    
-   ::file::path dir::default_os_user_path_prefix(::aura::application *   papp)
-   {
-      
-      return ::getlogin();
-      
-   }
+//   ::file::path dir::default_os_user_path_prefix(::aura::application *   papp)
+//   {
+//
+//      return ::getlogin();
+//
+//   }
    
    
    //   string dir::default_userappdata(::aura::application *   papp, const char * lpcszPrefix, const char * lpcszLogin, const char * pszRelativePath)
@@ -1333,14 +1333,14 @@ namespace ios
    }
    
    // stage in ca2os spalib
-   ::file::path dir::install()
-   {
-      
-      single_lock sl(&m_mutex, true);
-      
-      return m_strCa2;
-      
-   }
+//   ::file::path dir::install()
+//   {
+//
+//      single_lock sl(&m_mutex, true);
+//
+//      return m_strCa2;
+//
+//   }
    
    
    ::file::path dir::module()
@@ -1620,7 +1620,7 @@ namespace ios
       
       ::file::path str = m_strCa2 / ".ca2/appdata";
       
-      m_pathUser = m_strCa2 / ".ca2/user";
+//      m_pathUser = m_strCa2 / ".ca2/user";
       
       string strRelative;
       
@@ -1749,21 +1749,21 @@ namespace ios
    }
    
    
-   ::file::path dir::usersystemappdata(::aura::application * papp,const char * lpcszPrefix)
-   {
-      UNREFERENCED_PARAMETER(papp);
-      return appdata() / lpcszPrefix;
-   }
-   
-   ::file::path dir::appdata(::aura::application * papp)
-   {
-      return userfolder(papp) / "appdata";
-   }
-   
-   ::file::path dir::userdata(::aura::application * papp)
-   {
-      return userfolder(papp) / "data";
-   }
+//   ::file::path dir::usersystemappdata(::aura::application * papp,const char * lpcszPrefix)
+//   {
+//      UNREFERENCED_PARAMETER(papp);
+//      return appdata() / lpcszPrefix;
+//   }
+//
+//   ::file::path dir::appdata(::aura::application * papp)
+//   {
+//      return userfolder(papp) / "appdata";
+//   }
+//
+//   ::file::path dir::userdata(::aura::application * papp)
+//   {
+//      return userfolder(papp) / "data";
+//   }
    
    //    ::file::path dir::userfolder(::aura::application * papp)
    //    {
@@ -1787,22 +1787,22 @@ namespace ios
    //        return ::str::international::unicode_to_utf8(buf);
    //    }
    
-   ::file::path dir::default_userappdata(::aura::application * papp,const string & lpcszPrefix,const string & lpcszLogin)
-   {
-      return default_userfolder(papp, lpcszPrefix, lpcszLogin) /  "appdata" ;
-   }
-   
-   ::file::path dir::default_userdata(::aura::application * papp,const string & lpcszPrefix,const string & lpcszLogin)
-   {
-      return default_userfolder(papp, lpcszPrefix, lpcszLogin) / "data";
-   }
-   
-   ::file::path dir::default_userfolder(::aura::application * papp,const string & lpcszPrefix,const string & lpcszLogin)
-   {
-      
-      return userfolder(papp);
-      
-   }
+//   ::file::path dir::default_userappdata(::aura::application * papp,const string & lpcszPrefix,const string & lpcszLogin)
+//   {
+//      return default_userfolder(papp, lpcszPrefix, lpcszLogin) /  "appdata" ;
+//   }
+//   
+//   ::file::path dir::default_userdata(::aura::application * papp,const string & lpcszPrefix,const string & lpcszLogin)
+//   {
+//      return default_userfolder(papp, lpcszPrefix, lpcszLogin) / "data";
+//   }
+//   
+//   ::file::path dir::default_userfolder(::aura::application * papp,const string & lpcszPrefix,const string & lpcszLogin)
+//   {
+//      
+//      return userfolder(papp);
+//      
+//   }
    
    ::file::path dir::userquicklaunch(::aura::application * papp)
    {

@@ -90,9 +90,11 @@ namespace user
       virtual void __quit();
       virtual bool __close_is_closed();
 
+
       virtual void step();
 
-#if defined(LINUX) || defined(MACOS)
+      
+#if !defined(APPLEIOS)
       virtual void notify_icon_play(const char * action) override;
       virtual bool notify_icon_frame_is_opened() override;
       virtual int notification_extra_action_count() override;

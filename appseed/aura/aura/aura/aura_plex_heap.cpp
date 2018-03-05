@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 #include "align_byte_count.h"
 #include "aura_heap_memory.h"
@@ -390,7 +390,7 @@ void plex_heap_alloc_sync::Free(void * pParam)
 
       }
 
-      pnodeFree = pnodeFree->pNext;
+      pnodeFree = pnodeFree->m_pnext;
 
    }
 

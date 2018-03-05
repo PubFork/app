@@ -25,17 +25,17 @@ return getenv("HOME");
 
 }
 
-::file::path dir::ca2_user()
-{
-
-    return ::file::path(getenv("HOME")) / "Library/ca2";
-
-}
+//::file::path dir::ca2_user()
+//{
+//
+//    return ::file::path(getenv("HOME")) / "Library/ca2";
+//
+//}
 
 ::file::path dir::sys_temp()
 {
    
-   return ca2_user() / "time";
+   return ca2config() / "time";
    
 }
 
