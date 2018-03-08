@@ -21,7 +21,7 @@ CLASS_DECL_AQUA void pre_multiply_alpha(unsigned int * pui,int cx,int cy,int str
       p[0] = (p[0] * a1) >> 8;
       p[1] = (p[1] * a1) >> 8;
       p[2] = (p[2] * a1) >> 8;
-      
+
       p[4] = (p[4] * a2) >> 8;
       p[5] = (p[5] * a2) >> 8;
       p[6] = (p[6] * a2) >> 8;

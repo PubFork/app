@@ -24,14 +24,14 @@ void foo()
 
 void aura_auto_debug_teste()
 {
-   
+
    if(!file_exists_dup("/ca2/debug_test"))
    {
-      
+
       return;
-      
+
    }
-   
+
    try
    {
       if(true)
@@ -39,7 +39,8 @@ void aura_auto_debug_teste()
          AUTO(debug_puts("two"));
          debug_puts("one"); // compiler knows this doesn't _throw(
       }
-      if(true) {
+      if(true)
+      {
          AUTO(debug_puts("three"));
          foo(); // might _throw( an exception
       }

@@ -1442,31 +1442,31 @@ namespace windows
       if (uiMessage == WM_ENABLE)
       {
 
-         TRACE("WM_ENABLE enable = " + string(pbase->m_wparam ? "true" : "false"));
+         //TRACE("WM_ENABLE enable = " + string(pbase->m_wparam ? "true" : "false"));
 
       }
       if (uiMessage == WM_GETTEXTLENGTH)
       {
 
-         TRACE("WM_GETTEXTLENGTH");
+         //TRACE("WM_GETTEXTLENGTH");
 
       }
       if (uiMessage == WM_GETTEXT)
       {
 
-         TRACE("WM_GETTEXT");
+         //TRACE("WM_GETTEXT");
 
       }
       if (uiMessage == WM_CREATE)
       {
 
-         TRACE("WM_CREATE");
+         //TRACE("WM_CREATE");
 
       }
       if (uiMessage == WM_NCCREATE)
       {
 
-         TRACE("WM_NCCREATE");
+         //TRACE("WM_NCCREATE");
 
       }
       if (uiMessage == WM_SIZE || uiMessage == WM_MOVE)

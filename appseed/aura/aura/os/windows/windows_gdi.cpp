@@ -448,6 +448,8 @@ namespace draw2d
       if (bAdd)
       {
 
+         index iFind = -1;
+
          string str(lplf->lfFaceName);
 
          ::draw2d::font::e_cs ecs = ::draw2d::wingdi_get_cs(lplf->lfCharSet);
@@ -457,60 +459,72 @@ namespace draw2d
 
             string strTopic(penum->m_wstrTopicFaceName);
 
-            index iFindTopic = -1;
+            //   index iFindTopic = -1;
 
-            if(iFindTopic = penum->m_itema.pred_find_first(
-                            [&](auto & item)
-         {
+            //   if(iFindTopic = penum->m_itema.pred_find_first(
+            //                   [&](auto & item)
+            //{
 
-            return item->m_strName == strTopic && item->m_ecs == ecs;
+            //   return item->m_strName == strTopic && item->m_ecs == ecs;
 
-         }) >= 0)
+            //}) >= 0)
+            //   {
+
+            //      penum->m_itema.remove_at(iFindTopic);
+
+            //   }
+            iFind = penum->m_itema.pred_find_first(
+                    [&](auto & item)
             {
 
-               penum->m_itema.remove_at(iFindTopic);
+               return item->m_strName == strTopic && item->m_ecs == ecs;
 
-            }
+            });
 
          }
 
-
-         index iFind = penum->m_itema.pred_find_first(
-                       [&](auto & item)
+         if (iFind < 0)
          {
 
-            return item->m_strName == str;
 
-         });
-
-
-         if (iFind >= 0)
-         {
-
-            if (penum->m_itema[iFind]->m_ecs == ::draw2d::font::cs_ansi
-                  || penum->m_itema[iFind]->m_ecs == ::draw2d::font::cs_default)
+            iFind = penum->m_itema.pred_find_first(
+                    [&](auto & item)
             {
 
-               penum->m_itema[iFind]->m_ecs = ecs;
+               return item->m_strName == str;
 
-               if (ecs != ::draw2d::font::cs_ansi && ecs != ::draw2d::font::cs_default)
+            });
+
+
+            if (iFind >= 0)
+            {
+
+               if (penum->m_itema[iFind]->m_ecs == ::draw2d::font::cs_ansi
+                     || penum->m_itema[iFind]->m_ecs == ::draw2d::font::cs_default)
                {
 
-                  output_debug_string("test02");
+                  penum->m_itema[iFind]->m_ecs = ecs;
+
+                  if (ecs != ::draw2d::font::cs_ansi && ecs != ::draw2d::font::cs_default)
+                  {
+
+                     output_debug_string("test02");
+
+                  }
 
                }
-
-            }
-            else
-            {
-
-               iFind = penum->m_itema.pred_find_first(
-                       [&](auto & item)
+               else
                {
 
-                  return item->m_strName == str && item->m_ecs == ecs;
+                  iFind = penum->m_itema.pred_find_first(
+                          [&](auto & item)
+                  {
 
-               });
+                     return item->m_strName == str && item->m_ecs == ecs;
+
+                  });
+
+               }
 
             }
 

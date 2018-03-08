@@ -21,7 +21,7 @@ WINBOOL get_version_ex_a(LPOSVERSIONINFOA lpVersionInformation)
 
    /* Windows 10 Version Info */
    if ((lpVersionInformation->dwOSVersionInfoSize == sizeof(OSVERSIONINFOA)) ||
-      (lpVersionInformation->dwOSVersionInfoSize == sizeof(OSVERSIONINFOEXA)))
+         (lpVersionInformation->dwOSVersionInfoSize == sizeof(OSVERSIONINFOEXA)))
    {
       lpVersionInformation->dwMajorVersion = 10;
       lpVersionInformation->dwMinorVersion = 0;
@@ -46,7 +46,7 @@ WINBOOL get_version_ex_a(LPOSVERSIONINFOA lpVersionInformation)
 
    /* Windows 7 SP1 Version Info */
    if ((lpVersionInformation->dwOSVersionInfoSize == sizeof(OSVERSIONINFOA)) ||
-      (lpVersionInformation->dwOSVersionInfoSize == sizeof(OSVERSIONINFOEXA)))
+         (lpVersionInformation->dwOSVersionInfoSize == sizeof(OSVERSIONINFOEXA)))
    {
       lpVersionInformation->dwMajorVersion = 6;
       lpVersionInformation->dwMinorVersion = 1;
@@ -79,18 +79,18 @@ WINBOOL get_version_ex_a(LPOSVERSIONINFOA lpVersionInformation)
 CLASS_DECL_ACE int _ca_is_basis()
 {
 #if CA2_PLATFORM_VERSION == CA2_BASIS
-	return TRUE;
+   return TRUE;
 #else
-	return FALSE;
+   return FALSE;
 #endif
 }
 
 CLASS_DECL_ACE int _ca_is_stage()
 {
 #if CA2_PLATFORM_VERSION == CA2_STAGE
-	return TRUE;
+   return TRUE;
 #else
-	return FALSE;
+   return FALSE;
 #endif
 }
 
