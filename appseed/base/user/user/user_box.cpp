@@ -540,63 +540,59 @@ namespace user
 
    }
 
-   
+
    bool box::parent_is_local_data()
    {
+
       ::user::interaction * puiParent = GetParent();
-      
-      while(puiParent != NULL)
+
+      sp(::database::client) pclient = puiParent;
+
+      if(pclient.is_set())
       {
-         
-         sp(::database::client) pclient = puiParent;
-         
-         if(pclient.is_set())
+
+         if(pclient->is_local_data())
          {
-            
-            if(pclient->is_local_data())
-            {
-               
-               return true;
-               
-            }
-            else
-            {
-               
-               return false;
-               
-            }
-            
+
+            return true;
+
          }
-         
+         else
+         {
+
+            return false;
+
+         }
+
       }
 
       return false;
-      
+
    }
-   
-   
+
+
    bool box::is_local_data()
    {
 
       if(::database::client::is_local_data() || Application.is_local_data())
       {
-         
+
          return true;
-         
+
       }
 
       if(parent_is_local_data())
       {
-         
+
          return true;
-         
+
       }
-      
+
       return false;
-      
+
    }
 
-   
+
 } // namespace user
 
 

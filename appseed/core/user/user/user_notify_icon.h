@@ -93,17 +93,19 @@ namespace user
 
       virtual void step();
 
-      
-#if !defined(APPLEIOS)
+
+#if defined(APPLEIOS)
+      virtual void notify_icon_play(const char * action);
+      virtual bool notify_icon_frame_is_opened();
+#elif defined(WINDOWSEX)
+      virtual void notify_icon_play(const char * action);
+      virtual bool notify_icon_frame_is_opened();
+#else
       virtual void notify_icon_play(const char * action) override;
       virtual bool notify_icon_frame_is_opened() override;
       virtual int notification_extra_action_count() override;
       virtual void notification_area_action_info(char ** ppszName, char ** ppszId, char ** ppszLabel, char ** ppszAccelerator, char ** ppszDescription, int iIndex) override;
       virtual void notification_area_extra_action(const char * pszId) override;
-#else
-      virtual void notify_icon_play(const char * action);
-      virtual bool notify_icon_frame_is_opened();
-
 #endif
 
 

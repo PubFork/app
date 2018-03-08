@@ -68,7 +68,7 @@ namespace aura
       m_httpsystem(this),
       m_emaildepartment(this)
    {
-      
+
       m_strAppId = "system";
 
       m_pappcore = pappcore;
@@ -2027,7 +2027,7 @@ RetryBuildNumber:
 
       ::file::path path;
 
-      path = dir().commonappdata_locale_schema(pszAppId, pszBuild, pszPlatform, pszConfiguration, pszLocale, pszSchema) / "installed.txt";
+      path = dir().appdata() / pszAppId / pszBuild / pszPlatform / pszConfiguration / pszLocale / pszSchema / "installed.txt";
 
       if(!Application.file().exists(path))
          return false;

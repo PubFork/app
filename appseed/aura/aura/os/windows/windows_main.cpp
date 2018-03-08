@@ -89,13 +89,13 @@ void __cdecl _null_se_translator(uint32_t uiCode, EXCEPTION_POINTERS * ppointers
 #undef new
 
 
-#ifdef _WIN32
-extern "C"
-{
-#undef APPMACROS_ONLY
-#include <openssl/ms/applink.c>
-}
-#endif
+//#ifdef _WIN32
+//extern "C"
+//{
+//#undef APPMACROS_ONLY
+//#include <openssl/ms/applink.c>
+//}
+//#endif
 
 
 //
