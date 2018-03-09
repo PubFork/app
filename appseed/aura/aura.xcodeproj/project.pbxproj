@@ -788,7 +788,6 @@
 		9A1EDB6019C841D600F5CCE8 /* service_plain_service.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A1EDB5D19C841D600F5CCE8 /* service_plain_service.cpp */; };
 		9A1EDB6119C841D600F5CCE8 /* service_plain_service.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A1EDB5E19C841D600F5CCE8 /* service_plain_service.h */; };
 		9A1EDB6219C841D600F5CCE8 /* service_thread_pool.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A1EDB5F19C841D600F5CCE8 /* service_thread_pool.h */; };
-		9A26A6FC1D7F01A5001F47A8 /* libaurapcre.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A26A6F91D7F0166001F47A8 /* libaurapcre.dylib */; };
 		9A2A532B1F1FEDFD001AB0F8 /* draw2d.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A2A52FC1F1FEDFD001AB0F8 /* draw2d.h */; };
 		9A2A532D1F1FEDFD001AB0F8 /* draw2d_bitmap.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A2A52FE1F1FEDFD001AB0F8 /* draw2d_bitmap.h */; };
 		9A2A532F1F1FEDFD001AB0F8 /* draw2d_brush.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A2A53001F1FEDFD001AB0F8 /* draw2d_brush.h */; };
@@ -978,6 +977,7 @@
 		9A4BE1041FFF8AF700DED594 /* message_user.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A4BE1031FFF8AF700DED594 /* message_user.h */; };
 		9A52EC441FFEC777001E1357 /* ios_interaction_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A52EC421FFEC776001E1357 /* ios_interaction_impl.h */; };
 		9A5C67F9201556CD00FF6CBA /* ios_main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A5C67F8201556CD00FF6CBA /* ios_main.cpp */; };
+		9A61A27F20521ABF00DEF2F5 /* libaxiswinpr.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AD185C61F9C214C001CEA8E /* libaxiswinpr.dylib */; };
 		9A640E181EA6BABB00866C2C /* fontopus.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A640E011EA6BABB00866C2C /* fontopus.h */; };
 		9A640E1A1EA6BABB00866C2C /* fontopus_authentication_map.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A640E031EA6BABB00866C2C /* fontopus_authentication_map.h */; };
 		9A640E1C1EA6BABB00866C2C /* fontopus_contact_list.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A640E051EA6BABB00866C2C /* fontopus_contact_list.h */; };
@@ -2084,7 +2084,6 @@
 		9AD005371EB9AD1F00B9FB48 /* javascript.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A640E531EA6BC4E00866C2C /* javascript.cpp */; };
 		9AD185BD1F9C1F7F001CEA8E /* message_user.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AD185BC1F9C1F7F001CEA8E /* message_user.cpp */; };
 		9AD185BE1F9C1FC6001CEA8E /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AD185BB1F9C1F5C001CEA8E /* IOKit.framework */; };
-		9AD185CB1F9C2170001CEA8E /* libaxiswinpr.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AD185C61F9C214C001CEA8E /* libaxiswinpr.dylib */; };
 		9AD185D11F9C25E5001CEA8E /* macos_window_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AD185CC1F9C25E3001CEA8E /* macos_window_impl.h */; };
 		9AD185D21F9C25E5001CEA8E /* macos.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AD185CD1F9C25E3001CEA8E /* macos.h */; };
 		9AD185D31F9C25E5001CEA8E /* macos_windowing_c.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AD185CE1F9C25E4001CEA8E /* macos_windowing_c.h */; };
@@ -2497,8 +2496,6 @@
 		9AF4C42C1F83702B00197385 /* aura_trace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4C3031F836F8200197385 /* aura_trace.cpp */; };
 		9AF885B519D42E2400A3117D /* exception_throw.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AF885B319D42E2400A3117D /* exception_throw.h */; };
 		9AF8E78F1F9FE6ED003CBDB4 /* libace.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AF8E78E1F9FE6EC003CBDB4 /* libace.dylib */; };
-		9AF8E7951F9FE70D003CBDB4 /* libaxiswinpr.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AF8E7901F9FE70B003CBDB4 /* libaxiswinpr.dylib */; };
-		9AF8E7961F9FE70D003CBDB4 /* libaurapcre.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AF8E7921F9FE70C003CBDB4 /* libaurapcre.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -4545,6 +4542,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A61A27F20521ABF00DEF2F5 /* libaxiswinpr.dylib in Frameworks */,
 				9AD185BE1F9C1FC6001CEA8E /* IOKit.framework in Frameworks */,
 				9A33A7551EA902C3000EC109 /* CoreServices.framework in Frameworks */,
 				9A98A6081771D67E000AE16E /* AppKit.framework in Frameworks */,
@@ -4553,15 +4551,11 @@
 				9A98A60B1771D67E000AE16E /* Security.framework in Frameworks */,
 				9AE500FA2001F42800542092 /* libssl.a in Frameworks */,
 				9AE500FB2001F42800542092 /* libcrypto.a in Frameworks */,
-				9AD185CB1F9C2170001CEA8E /* libaxiswinpr.dylib in Frameworks */,
 				9A640E7C1EA6C3D800866C2C /* libaxisidn.dylib in Frameworks */,
 				9A0254F41EA59363003C82CF /* libbz2.tbd in Frameworks */,
 				9A0254F21EA5934D003C82CF /* libz.tbd in Frameworks */,
 				9A9799151DAC3C2B001CD6D9 /* libiconv.tbd in Frameworks */,
-				9AF8E7961F9FE70D003CBDB4 /* libaurapcre.dylib in Frameworks */,
-				9A26A6FC1D7F01A5001F47A8 /* libaurapcre.dylib in Frameworks */,
 				9ACE46FF1D1FE56000A1E0AD /* libace.dylib in Frameworks */,
-				9AF8E7951F9FE70D003CBDB4 /* libaxiswinpr.dylib in Frameworks */,
 				9AF8E78F1F9FE6ED003CBDB4 /* libace.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
