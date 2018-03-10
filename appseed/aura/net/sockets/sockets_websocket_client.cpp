@@ -342,6 +342,8 @@ namespace sockets
       m_mutexWebsocketWrite(h.get_app())
    {
 
+      m_iClientPingTimeout = -1;
+
       m_bUseMask = false;
 
       m_bRequestSent = false;
@@ -370,6 +372,8 @@ namespace sockets
       http_client_socket(h, url_in),
       m_mutexWebsocketWrite(h.get_app())
    {
+
+      m_iClientPingTimeout = -1;
 
       m_dwLastPing = get_tick_count();
 
@@ -447,7 +451,14 @@ namespace sockets
 
       }
 
-      if (m_eping == ping_sent_ping && get_tick_count() - m_dwLastPing > 60 * 1000)
+      if (m_iClientPingTimeout < 0)
+      {
+
+         return true;
+
+      }
+
+      if (m_eping == ping_sent_ping && get_tick_count() - m_dwLastPing > 60 * m_iClientPingTimeout)
       {
 
          thisinfo << "PING TIMEOUT!!";

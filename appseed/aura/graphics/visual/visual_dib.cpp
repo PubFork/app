@@ -327,22 +327,29 @@ namespace visual
 
    }*/
 
+
    void dib_sp::defer_update()
    {
+
       if (m_sparray.is_set() && m_sparray->get_count() > 0 && m_sparray->m_dwTotal > 0)
       {
 
-         //if (!m_p->create(m_sparray->m_size))
-         //{
+         if (m_sparray->get_count() == 1)
+         {
 
-         // return false;
+            m_p = m_sparray->element_at(0)->m_dib.m_p;
 
-         //}
+            return;
+
+         }
+
          if (!m_sparray->m_bStart)
          {
+
             m_sparray->m_bStart = true;
 
             m_sparray->m_dwStart = get_tick_count();
+
          }
 
          DWORD dwTime = (DWORD) (((double)(get_tick_count()) - m_sparray->m_dwStart)  * m_dSpeed);
@@ -385,27 +392,6 @@ namespace visual
 
          }
 
-         /*    for (index iFrame = m_sparray->m_iLastFrame + 1; iFrame <= iCurrentFrame; iFrame++)
-             {
-
-                if (m_sparray->element_at(iFrame).m_dwTime <= 0)
-                {
-                   output_debug_string("0 delay frame");
-                }
-                else
-                {
-
-                   dispose_current_frame();
-                   overlay_frame(iFrame);
-                }
-
-                m_sparray->m_iLastFrame = iFrame;
-
-             }
-
-
-         */
-
          if (m_sparray->m_iLastFrame != iCurrentFrame)
          {
 
@@ -444,9 +430,18 @@ namespace visual
 
          m_sparray->m_dibCompose.alloc(m_p->allocer());
 
+         m_sparray->m_dibCompose->create(m_sparray->m_size);
+
+         m_sparray->m_dibCompose->Fill(m_sparray->m_crBack);
+
+      }
+      else
+      {
+
+         m_sparray->m_dibCompose->create(m_sparray->m_size);
+
       }
 
-      m_sparray->m_dibCompose->create(m_sparray->m_size);
 
       if (m_sparray->m_iLastFrame < 0)
       {
@@ -465,8 +460,14 @@ namespace visual
       {
       case dib_sp::pointer::disposal_undefined:
       case dib_sp::pointer::disposal_none:
+      {
+         COLORREF crBack = m_sparray->m_crBack;
+
          // We simply draw on the previous frames. Do nothing here.
-         break;
+         m_sparray->m_dibCompose->get_graphics()->FillSolidRect(m_sparray->element_at(m_sparray->m_iLastFrame)->m_rect, crBack);
+
+      }
+      break;
       case dib_sp::pointer::disposal_background:
       {
          // Dispose background

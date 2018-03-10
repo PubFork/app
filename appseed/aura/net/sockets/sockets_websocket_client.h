@@ -30,7 +30,9 @@ namespace sockets
       DWORD       m_dwLastPing;
       DWORD       m_dwLastPong;
       e_ping      m_eping;
-      
+
+      int         m_iClientPingTimeout;
+
       int         m_fin;
       int         m_opcode;
       int         m_mask;

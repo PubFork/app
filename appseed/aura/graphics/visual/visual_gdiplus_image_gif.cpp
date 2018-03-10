@@ -547,6 +547,10 @@ bool freeimage_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file
 
          dibCompose->create(pdiba->m_size);
 
+         dibCompose->set_alpha_mode(::draw2d::alpha_mode_set);
+
+         dibCompose->get_graphics()->FillSolidRect(0, 0, pdiba->m_size.cx, pdiba->m_size.cy, 0);
+
       }
 
       dibCompose->precision_blend(pt, p->m_dib, ::null_point(), sz);
