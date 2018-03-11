@@ -129,7 +129,7 @@ namespace aura
       m_mutexStr(this)
    {
 
-      
+
 //      string strAppId = m_strAppId;
 //
 //      string strBuild = m_strBuild;
@@ -143,9 +143,9 @@ namespace aura
 //      string strSchema = m_strSchema;
 
       m_strBuild = "installed";
-      
+
       m_strLocale = "_std";
-      
+
       m_strSchema = "_std";
 
       m_bSimpleMessageLoop = false;
@@ -2402,14 +2402,14 @@ namespace aura
 
          }
 
-      //    if(!check_install())
-      //    {
-            
-      //       m_bReady = true;
-            
-      //       return false;
-            
-      //    }
+         //    if(!check_install())
+         //    {
+
+         //       m_bReady = true;
+
+         //       return false;
+
+         //    }
 
 //         if(!is_system() && !is_session())
 //         {
@@ -2810,18 +2810,23 @@ run:
 
          //if ((is_installing() || is_unstalling()) && !is_system() && !is_session())
 
-         if(!is_installed())
+         if (aura_app::should_install())
          {
 
-            do_install();
-
-            if(!is_installed())
+            if (!is_installed())
             {
-               
-               simple_message_box(NULL, "Could not start application. Could not install application.");
-               
-               return false;
-               
+
+               do_install();
+
+               if (!is_installed())
+               {
+
+                  simple_message_box(NULL, "Could not start application. Could not install application.");
+
+                  return false;
+
+               }
+
             }
 
          }
@@ -2930,26 +2935,26 @@ run:
    bool application::do_install()
    {
 
-         if (!on_install())
-         {
+      if (!on_install())
+      {
 
-            ::output_debug_string("Failed at on_install : " + m_strAppId + "\n\n");
+         ::output_debug_string("Failed at on_install : " + m_strAppId + "\n\n");
 
-            //System.m_iErrorCode = -1;
+         //System.m_iErrorCode = -1;
 
-            System.m_error.set(-1);
+         System.m_error.set(-1);
 
-            return false;
+         return false;
 
-         }
+      }
 
-         string strBuild = m_strBuild;
+      string strBuild = m_strBuild;
 
-         string strAppId = m_strAppId;
+      string strAppId = m_strAppId;
 
-         xxdebug_box("on_install1", strAppId, 0);
-      
-         system_add_app_install(strAppId, strBuild);
+      xxdebug_box("on_install1", strAppId, 0);
+
+      system_add_app_install(strAppId, strBuild);
 
 //         if (strAppId.is_empty())
 //         {
@@ -2997,12 +3002,12 @@ run:
 //            }
 //
 //         }
-      
+
       if(!is_installed())
       {
-         
+
          return false;
-         
+
       }
 
       return true;
@@ -3071,16 +3076,16 @@ retry_license:
       if(!is_installed())
       {
 
-            return true;
+         return true;
 
       }
 
       if (!on_uninstall())
       {
 
-            return false;
+         return false;
 
-            System.install().remove_spa_start(m_strAppId);
+         System.install().remove_spa_start(m_strAppId);
 
       }
 
@@ -6673,31 +6678,31 @@ finalize:
       return status.m_bOk;
 
    }
-   
-   
+
+
    bool application::is_installed()
    {
-      
+
       string strAppId = m_strAppId;
-      
+
       string strBuild = m_strBuild;
-      
+
       string strPlatform = System.get_system_platform();
-      
+
       string strConfiguration = System.get_system_configuration();
-      
+
       string strLocale = m_strLocale;
-      
+
       string strSchema = m_strSchema;
-      
+
       return System.is_application_installed(
-                                             strAppId,
-                                             strBuild,
-                                             strPlatform,
-                                             strConfiguration,
-                                             strLocale,
-                                             strSchema);
-      
+             strAppId,
+             strBuild,
+             strPlatform,
+             strConfiguration,
+             strLocale,
+             strSchema);
+
    }
 
 
@@ -7553,7 +7558,7 @@ finalize:
 
    sp(::message::base) application::get_message_base(UINT message, WPARAM wparam, lparam lparam)
    {
-      
+
       MESSAGE msg;
 
       ZERO(msg);

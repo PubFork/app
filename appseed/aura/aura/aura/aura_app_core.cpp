@@ -127,10 +127,10 @@ app_core::app_core(aura_main_data * pdata)
    s_pappcore = this;
 
    m_pmaindata = pdata;
-  
+
    int iPid;
 
-#ifdef WINDOWS   
+#ifdef WINDOWS
 
    iPid = ::GetCurrentProcessId();
 
@@ -139,7 +139,7 @@ app_core::app_core(aura_main_data * pdata)
    iPid = getpid();
 
 #endif
-   
+
    printf("%s", ("\n\napplication_pid=" + ::str::from(iPid) + "\n\n").c_str());
    fprintf(stderr, "%s", ("\n\napplication_pid=" + ::str::from(iPid) + "\n\n").c_str());
    output_debug_string("\n\napplication_pid=" + ::str::from(iPid) + "\n\n");
@@ -250,39 +250,39 @@ bool app_core::ini()
    set_command_line_dup(strCommandLine);
 
 #if !defined(WINDOWS)
-   
+
    string strUid;
-   
+
    get_command_line_param(strUid, strCommandLine, "uid");
-   
+
    if(strUid.has_char())
    {
-      
+
       uid_t uid = atoi(strUid);
 
-      
+
       MessageBoxA(NULL, "going to seteuid to: " + ::str::from(uid), "going to seteuid", MB_OK);
 
-      
+
       if(seteuid(uid) == 0)
       {
-      
+
          MessageBoxA(NULL, "uid=" + ::str::from(uid), "seteuid success", MB_OK);
-         
+
       }
       else
       {
-         
+
          int iErr = errno;
-         
+
          string strError;
-         
+
          strError.Format("errno=%d uid=%d", iErr);
-       
+
          MessageBoxA(NULL, strError, "seteuid failed", MB_ICONEXCLAMATION);
-       
+
       }
-      
+
    }
 
 #endif
@@ -1528,11 +1528,24 @@ bool aura_level::defer_init(PFN_DEFER_INIT pfnDeferInit)
 
 ::aura_app * aura_app::s_papp = NULL;
 
+aura_app::aura_app(::aura_app::e_flag eflag) :
+   m_pszName(NULL),
+   m_pfnNewApp(NULL),
+   m_pfnNewLibrary(NULL),
+   m_pappNext(s_papp),
+   m_eflag(eflag)
+{
+
+   s_papp = this;
+
+}
+
 aura_app::aura_app(const char * pszName, ::aura::PFN_GET_NEW_APP pfnNewApp) :
    m_pszName(pszName),
    m_pfnNewApp(pfnNewApp),
    m_pfnNewLibrary(NULL),
-   m_pappNext(s_papp)
+   m_pappNext(s_papp),
+   m_eflag(flag_none)
 {
 
    s_papp = this;
@@ -1544,12 +1557,14 @@ aura_app::aura_app(const char * pszName, ::aura::PFN_GET_NEW_LIBRARY pfnNewLibra
    m_pszName(pszName),
    m_pfnNewApp(NULL),
    m_pfnNewLibrary(pfnNewLibrary),
-   m_pappNext(s_papp)
+   m_pappNext(s_papp),
+   m_eflag(flag_none)
 {
 
    s_papp = this;
 
 }
+
 
 ::aura_app * aura_app::get(const char * pszName)
 {
@@ -1582,11 +1597,40 @@ aura_app::aura_app(const char * pszName, ::aura::PFN_GET_NEW_LIBRARY pfnNewLibra
 }
 
 
+bool aura_app::should_install()
+{
+
+   if (s_papp == NULL)
+   {
+
+      return true;
+
+   }
+
+   aura_app * papp = s_papp;
+
+   while (papp != NULL)
+   {
+
+      if (papp->m_eflag & flag_do_not_install)
+      {
+
+         return false;
+
+      }
+
+      papp = papp->m_pappNext;
+
+   }
+
+   return true;
+
+}
 
 
 void set_aura_system_as_thread()
 {
-   
+
    ::set_thread(::aura::system::g_p);
 
 }

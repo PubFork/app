@@ -104,11 +104,11 @@ public:
    int                           m_iTotalErrorCount = 0;
 
 
-   #ifdef LINUX
+#ifdef LINUX
 
    bool                          m_bGtkApp;
 
-   #endif
+#endif
 
    app_core(aura_main_data * pdata);
    ~app_core();
@@ -227,9 +227,18 @@ class CLASS_DECL_AURA aura_app
 public:
 
 
+   enum e_flag
+   {
+      flag_none,
+      flag_do_not_install = 4096,
+
+   };
+
+
    const char *                  m_pszName;
    ::aura::PFN_GET_NEW_APP       m_pfnNewApp;
    ::aura::PFN_GET_NEW_LIBRARY   m_pfnNewLibrary;
+   e_flag                        m_eflag;
 
 
    aura_app *                    m_pappNext;
@@ -238,11 +247,13 @@ public:
    static aura_app *             s_papp;
 
 
+   aura_app(::aura_app::e_flag eflag);
    aura_app(const char * pszName, ::aura::PFN_GET_NEW_APP pfnNewApp);
    aura_app(const char * pszName, ::aura::PFN_GET_NEW_LIBRARY pfnNewLibrary);
 
    static ::aura_app * get(const char * pszName);
 
+   static bool should_install();
 
 };
 
