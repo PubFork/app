@@ -222,7 +222,7 @@ namespace fs
    void link::fill_os_user()
    {
 
-      defer_fill_folder("Favorites", System.dir().get_favorites_folder());
+      defer_fill_folder("Favorites", System.dir().favorites());
 
    }
 
@@ -230,7 +230,7 @@ namespace fs
    void link::fill_os_user_desktop()
    {
 
-      defer_fill_folder("Desktop", System.dir().get_desktop_folder());
+      defer_fill_folder("Desktop", System.dir().desktop());
 
 
    }

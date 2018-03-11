@@ -70,7 +70,7 @@ namespace fs
 
       {
 
-         ::file::path & path = listing.insert_at(0, System.dir().get_video_folder());
+         ::file::path & path = listing.insert_at(0, System.dir().video());
          path.m_iDir = 1;
          listing.m_straTitle.insert_at(0, unitext("Video"));
 
@@ -78,7 +78,7 @@ namespace fs
 
       {
 
-         ::file::path & path = listing.insert_at(0, System.dir().get_image_folder());
+         ::file::path & path = listing.insert_at(0, System.dir().image());
          path.m_iDir = 1;
          listing.m_straTitle.insert_at(0, unitext("Image"));
 
@@ -86,7 +86,7 @@ namespace fs
 
       {
 
-         ::file::path & path = listing.insert_at(0, System.dir().get_music_folder());
+         ::file::path & path = listing.insert_at(0, System.dir().music());
          path.m_iDir = 1;
          listing.m_straTitle.insert_at(0, unitext("Music"));
 
@@ -94,7 +94,7 @@ namespace fs
 
       {
          
-         ::file::path & path = listing.insert_at(0, System.dir().get_download_folder());
+         ::file::path & path = listing.insert_at(0, System.dir().download());
          path.m_iDir = 1;
          listing.m_straTitle.insert_at(0, unitext("Download"));
          
@@ -102,7 +102,7 @@ namespace fs
       
       {
          
-         ::file::path & path = listing.insert_at(0, System.dir().get_document_folder());
+         ::file::path & path = listing.insert_at(0, System.dir().document());
          path.m_iDir = 1;
          listing.m_straTitle.insert_at(0, unitext("Document"));
          
@@ -110,7 +110,7 @@ namespace fs
       
       {
          
-         ::file::path & path = listing.insert_at(0, System.dir().get_desktop_folder());
+         ::file::path & path = listing.insert_at(0, System.dir().desktop());
          path.m_iDir = 1;
          listing.m_straTitle.insert_at(0, unitext("Desktop"));
          

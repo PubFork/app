@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 namespace filemanager
@@ -207,7 +207,7 @@ namespace filemanager
       else
       {
 
-         strPath = System.dir().get_desktop_folder();
+         strPath = System.dir().desktop();
 
       }
 
