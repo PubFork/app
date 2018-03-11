@@ -1368,7 +1368,7 @@ try1:
    //   return TRUE;
    //}
 
-   ::file::path dir::get_document_folder()
+   ::file::path dir::document()
    {
 
       ::file::path path;
@@ -1383,7 +1383,7 @@ try1:
 
    }
 
-   ::file::path dir::get_desktop_folder()
+   ::file::path dir::desktop()
    {
 
       ::file::path path;
@@ -1398,7 +1398,7 @@ try1:
 
    }
 
-   ::file::path dir::get_download_folder()
+   ::file::path dir::download()
    {
 
       ::file::path path;
@@ -1409,7 +1409,7 @@ try1:
 
    }
 
-   ::file::path dir::get_music_folder()
+   ::file::path dir::music()
    {
 
       ::file::path path;
@@ -1425,7 +1425,7 @@ try1:
    }
 
 
-   ::file::path dir::get_video_folder()
+   ::file::path dir::video()
    {
 
       ::file::path path;
@@ -1441,7 +1441,7 @@ try1:
    }
 
 
-   ::file::path dir::get_image_folder()
+   ::file::path dir::image()
    {
 
       ::file::path path;

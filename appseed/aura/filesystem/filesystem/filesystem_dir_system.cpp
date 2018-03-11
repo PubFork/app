@@ -2860,7 +2860,7 @@ ret:
       }
 
 
-      ::file::path system::get_favorites_folder()
+      ::file::path system::favorites()
       {
 
          return ::dir::favorites();
@@ -2868,58 +2868,58 @@ ret:
       }
 
 
-      ::file::path system::get_home_folder()
+      //::file::path system::home()
+      //{
+
+      //   return ::dir::home();
+
+      //}
+
+      ::file::path system::desktop()
       {
 
-         return ::dir::home();
-
-      }
-
-      ::file::path system::get_desktop_folder()
-      {
-
-         return get_home_folder() / "Desktop";
-
-      }
-
-
-      ::file::path system::get_document_folder()
-      {
-
-         return get_home_folder() / "Document";
+         return home() / "Desktop";
 
       }
 
 
-
-      ::file::path system::get_download_folder()
+      ::file::path system::document()
       {
 
-         return get_home_folder() / "Downloads";
+         return home() / "Document";
 
       }
 
 
-      ::file::path system::get_music_folder()
+
+      ::file::path system::download()
       {
 
-         return get_home_folder() / "Music";
+         return home() / "Downloads";
 
       }
 
 
-      ::file::path system::get_video_folder()
+      ::file::path system::music()
       {
 
-         return get_home_folder() / "Video";
+         return home() / "Music";
 
       }
 
 
-      ::file::path system::get_image_folder()
+      ::file::path system::video()
       {
 
-         return get_home_folder() / "Image";
+         return home() / "Video";
+
+      }
+
+
+      ::file::path system::image()
+      {
+
+         return home() / "Image";
 
       }
 
