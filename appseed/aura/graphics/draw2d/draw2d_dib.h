@@ -199,7 +199,11 @@ namespace draw2d
       virtual void gradient_horizontal_fill(COLORREF clr1, COLORREF clr2);
       virtual void gradient_vertical_fill(COLORREF clr1, COLORREF clr2);
 
-
+      inline COLORREF pixel(int x, int y)
+      {
+         return ::draw2d::get_pixel(m_pcolorref, m_iScan, m_size.cy, x, y);
+      }
+      
       virtual uint32_t GetPixel(int32_t x, int32_t y);
       virtual void Mask(COLORREF crMask, COLORREF crInMask, COLORREF crOutMask);
       virtual void channel_mask(BYTE uchFind, BYTE uchSet, BYTE uchUnset, visual::rgba::echannel echannel);

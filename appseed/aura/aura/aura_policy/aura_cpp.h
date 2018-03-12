@@ -2088,6 +2088,13 @@ namespace user
 
 
 
+#include "aura/graphics/draw2d/draw2d.inl"
+
+
+#include "aura/graphics/graphics.inl"
+
+
+
 
 
 

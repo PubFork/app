@@ -734,7 +734,11 @@ namespace multimedia
          ::multimedia::e_result mmr = ::multimedia::audio::wave_out::wave_out_start(position);
 
          if(mmr != 0)
+         {
+            
             return mmr;
+            
+         }
 
          m_estate = state_paused;
 
@@ -753,16 +757,17 @@ namespace multimedia
 
 
 
-
-
-
 void WaveOutAudioQueueBufferCallback(void * inUserData, AudioQueueRef inAQ, AudioQueueBufferRef inCompleteAQBuffer)
 {
 
    ::multimedia::audio_core_audio::wave_out * pwaveout = (::multimedia::audio_core_audio::wave_out *) inUserData;
 
    if(pwaveout == NULL)
+   {
+      
       return;
+      
+   }
 
    try
    {
@@ -776,3 +781,6 @@ void WaveOutAudioQueueBufferCallback(void * inUserData, AudioQueueRef inAQ, Audi
    }
 
 }
+
+
+

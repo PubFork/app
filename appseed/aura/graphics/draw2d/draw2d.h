@@ -16,6 +16,10 @@ namespace draw2d
    CLASS_DECL_AURA void copy_colorref(int x, int y, int cx,int cy,COLORREF * pcolorrefDst,int iStrideDst,COLORREF * pcolorrefSrc,int iStrideSrc);
    CLASS_DECL_AURA void _001ProperCopyColorref(int cx,int cy,COLORREF * pcolorrefDst,int iStrideDst,COLORREF * pcolorrefSrc,int iStrideSrc);
 
+   
+   inline COLORREF get_pixel(COLORREF * pcolorref, int iScan, int iHeight, int x, int y);
+   
+   
 } // namespace draw2d
 
 
@@ -52,6 +56,8 @@ namespace aura
 
 #include "aura/aura/aura/aura_draw_context.h"
 #include "draw2d_graphics.h"
+
+
 
 
 
