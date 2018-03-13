@@ -15,11 +15,10 @@ namespace music
       namespace player
       {
 
+
          class player_callback;
 
-
-
-
+         
          class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_CORE_MIDI player :
             virtual public ::music::midi::player::player
          {
@@ -34,8 +33,6 @@ namespace music
             void install_message_routing(::message::sender * pinterface) override;
 
 
-//            void SendMmsgDone(::music::midi::sequence *pSeq, ::music::midi::LPMIDIDONEDATA lpmdd) override;
-            void SetCallbackWindow(sp(::user::interaction) puie);
             bool PlayRate(double dRate = 0.0, uint32_t dwEllapse = 584) override;
             bool Play(imedia_position tkStart, uint32_t dwEllapse = 584) override;
 

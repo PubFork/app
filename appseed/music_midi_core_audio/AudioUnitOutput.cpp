@@ -969,8 +969,9 @@ void AudioUnitOutput::pitch_bend(const int value, const int channel)
                                                 0 /*sample offset*/), home_setBank);
    return;
    
-home_setBank:
-   return;
+home_setBank:;
+   
+   
 }
 
 

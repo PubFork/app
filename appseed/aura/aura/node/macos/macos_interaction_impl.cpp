@@ -2373,6 +2373,13 @@ namespace macos
                      {
 
                         _001UpdateBuffer();
+                        
+                        if(m_pui == NULL)
+                        {
+                           
+                           break;
+                           
+                        }
 
                         m_pui->on_after_graphical_update();
 
@@ -5968,11 +5975,18 @@ namespace macos
 
    void interaction_impl::round_window_resized(CGRect rect)
    {
+      
+      if(m_pui == NULL)
+      {
+         
+         return;
+         
+      }
 
       ::size sz;
 
       point64 pt(rect.origin.x, rect.origin.y);
-
+      
       bool bMove = false;
 
       {
@@ -6054,6 +6068,13 @@ namespace macos
    {
 
       ::DeactivateWindow(get_handle());
+      
+      if(m_pui == NULL)
+      {
+         
+         return;
+         
+      }
 
       m_pui->RedrawWindow();
 

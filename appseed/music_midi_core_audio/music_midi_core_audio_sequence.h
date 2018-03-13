@@ -234,9 +234,6 @@ namespace music
          int32_t SetTempoShift(int32_t iTempoShift);
          
          void OnPositionCB(LPMIDIHDR lpmidihdr);
-//         void OnDone(seq_context_t * hmidistream, LPMIDIHDR lpmidihdr);
-         //virtual void GetTimeLength(imedia_time & time);
-         //virtual void GetPositionLength(imedia_position & position);
          
          virtual ::music::midi::message_out * get_message_out() override;
          

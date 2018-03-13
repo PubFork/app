@@ -422,11 +422,7 @@ namespace music
             return Application.midi()->GetMidiOutDevice();
          }
          
-         void player::SetCallbackWindow(sp(::user::interaction) puie)
-         {
-            m_puie = puie;
-         }
-         
+
          void player::on_attribute_change(::message::message * pobj)
          {
             SCAST_PTR(::music::midi::attribute_message, pchange, pobj);
