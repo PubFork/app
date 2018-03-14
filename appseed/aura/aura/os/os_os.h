@@ -5,6 +5,9 @@
 //  Created by Camilo Sasuke Tsumanuma on 05/01/18.
 //
 
+
+#pragma once
+
 // C++ includes
 
 CLASS_DECL_AURA string get_command_line_dup();
@@ -85,4 +88,38 @@ CLASS_DECL_AURA string ca2_module_folder_dup();
 #endif
 
 
+template < typename PRED >
+inline void pred_Sleep(int iTime, PRED pred)
+{
+
+   if(iTime < 100)
+   {
+
+      Sleep(100);
+
+   }
+   else
+   {
+
+      iTime += 99;
+
+      iTime /= 100;
+
+      for(index i = 0; i < iTime; i++)
+      {
+
+         Sleep(100);
+
+         if(!pred())
+         {
+
+            break;
+
+         }
+
+      }
+
+   }
+
+}
 

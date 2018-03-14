@@ -301,6 +301,7 @@
 		<Unit filename="aura/aura/aura_progress.h" />
 		<Unit filename="aura/aura/aura_restore.h" />
 		<Unit filename="aura/aura/aura_savings.h" />
+		<Unit filename="aura/aura/aura_serial.h" />
 		<Unit filename="aura/aura/aura_session.cpp">
 			<Option compile="0" />
 			<Option link="0" />
@@ -548,6 +549,10 @@
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>
+		<Unit filename="aura/os/ansios/ansios_serial.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/os/ansios/ansios_thread.h" />
 		<Unit filename="aura/os/cross.h" />
 		<Unit filename="aura/os/cross/ansios/ansios.h" />
@@ -652,6 +657,10 @@
 			<Option link="0" />
 		</Unit>
 		<Unit filename="aura/os/linux/linux_linux.h" />
+		<Unit filename="aura/os/linux/linux_list_serial_ports.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/os/linux/linux_main.cpp">
 			<Option compile="0" />
 			<Option link="0" />
