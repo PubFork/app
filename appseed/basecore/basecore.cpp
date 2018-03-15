@@ -387,7 +387,7 @@ GtkWidget * idle_basecore_app_indicator_init(indicator * pind, user_notify_icon_
 
    guint n_entries = G_N_ELEMENTS (sentries);
 
-   GtkActionEntry * entries = new GtkActionEntry[n_entries + pi->bridge_extra_action_count()];
+   GtkActionEntry * entries = new GtkActionEntry[n_entries + pi->notification_extra_action_count()];
 
 
    gchar *ui_info = (gchar *) malloc(1024 * 1024);
@@ -398,7 +398,7 @@ GtkWidget * idle_basecore_app_indicator_init(indicator * pind, user_notify_icon_
    strcat(ui_info, "    <menuitem action='Quit' />");
    strcat(ui_info, "    <separator/>");
 
-   for(int i = 0; i < pi->bridge_extra_action_count(); i++)
+   for(int i = 0; i < pi->notification_extra_action_count(); i++)
    {
 
       char * pszName = NULL;
@@ -431,7 +431,7 @@ GtkWidget * idle_basecore_app_indicator_init(indicator * pind, user_notify_icon_
    strcat(ui_info, "</ui>");
 
 
-   memcpy(&entries[pi->bridge_extra_action_count()], sentries, sizeof(sentries));
+   memcpy(&entries[pi->notification_extra_action_count()], sentries, sizeof(sentries));
 
 
 //static const gchar *ui_info =
@@ -443,7 +443,7 @@ GtkWidget * idle_basecore_app_indicator_init(indicator * pind, user_notify_icon_
 //  "</ui>";
 //
 
-   gtk_action_group_add_actions (action_group, entries, n_entries + pi->bridge_extra_action_count(), pi);
+   gtk_action_group_add_actions (action_group, entries, n_entries + pi->notification_extra_action_count(), pi);
 
    GtkUIManager * uim = gtk_ui_manager_new ();
 
@@ -469,7 +469,7 @@ GtkWidget * idle_basecore_app_indicator_init(indicator * pind, user_notify_icon_
 
    }
 
-   for(int i = 0; i < pi->bridge_extra_action_count(); i++)
+   for(int i = 0; i < pi->notification_extra_action_count(); i++)
    {
 
       free((void *) entries[i].name);
