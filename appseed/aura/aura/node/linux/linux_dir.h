@@ -94,16 +94,15 @@ namespace linux
       virtual bool initialize();
 
 
-      virtual ::file::path get_music_folder();
-      virtual ::file::path get_video_folder();
-      virtual ::file::path get_image_folder();
+      virtual ::file::path music() override;
+      virtual ::file::path video() override;
+      virtual ::file::path image() override;
 
 
    };
 
 
-
-
 } // namespace linux
+
 
 

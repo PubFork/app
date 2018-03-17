@@ -3,7 +3,8 @@
 
 typedef void FN_CAIRO_TEXT(cairo_t *, const char*);
 typedef FN_CAIRO_TEXT * PFN_CAIRO_TEXT;
-
+typedef void FN_PANGO_TEXT(cairo_t *cr, PangoLayout *layout);
+typedef FN_PANGO_TEXT * PFN_PANGO_TEXT;
 
 namespace draw2d_cairo
 {
@@ -321,7 +322,9 @@ namespace draw2d_cairo
       virtual size TabbedTextOut(int32_t x, int32_t y, const char * lpszString, strsize nCount, count nTabPositions, LPINT lpnTabStopPositions, int32_t nTabOrigin);
       virtual size TabbedTextOut(int32_t x, int32_t y, const string & str, count nTabPositions, LPINT lpnTabStopPositions, int32_t nTabOrigin);
 
-      virtual int32_t internal_draw_text(const char * lpszString, strsize nCount, const RECT & lpRect, UINT nFormat, PFN_CAIRO_TEXT ftext);
+      //virtual int32_t internal_draw_text_cairo(const char * lpszString, strsize nCount, const RECT & lpRect, UINT nFormat, PFN_CAIRO_TEXT pfnText);
+      virtual int32_t internal_draw_text_pango(const char * lpszString, strsize nCount, const RECTD & lpRect, UINT nFormat, PFN_PANGO_TEXT pfnText);
+      virtual int32_t internal_draw_text(const char * lpszString, strsize nCount, const RECTD & lpRect, UINT nFormat);
       virtual int32_t draw_text(const char * lpszString, strsize nCount, const RECT & lpRect, UINT nFormat);
       virtual int32_t draw_text(const string & str, const RECT & lpRect, UINT nFormat);
 
@@ -488,7 +491,7 @@ namespace draw2d_cairo
       bool set_os_color(COLORREF cr);
       bool set(const ::draw2d::brush * pbrush);
       bool set(const ::draw2d::pen * ppen);
-      bool set(const ::draw2d::font * pfont);
+      //bool set(const ::draw2d::font * pfont);
       bool set(const ::draw2d::path * ppath);
       bool set(const ::draw2d::path::element & e);
       bool set(const ::draw2d::path::arc & arc);

@@ -1,5 +1,11 @@
 #pragma once
 
+#if defined(LINUX)
+
+#include <pango/pangocairo.h>
+
+#endif
+
 
 namespace draw2d_cairo
 {
@@ -11,10 +17,14 @@ namespace draw2d_cairo
    public:
 
 
-      FT_Face                    m_ft;
-      cairo_font_face_t *        m_pface;
-      cairo_user_data_key_t      m_keyDone;
-      cairo_scaled_font_t *      m_pfont;
+      //FT_Face                    m_ft;
+      //cairo_font_face_t *        m_pface;
+      //cairo_user_data_key_t      m_keyDone;
+      //cairo_scaled_font_t *      m_pfont;
+
+      PangoFontDescription *        m_pdesc;                     // this structure stores a description of the style of font you'd most like
+
+
 
 
       font(::aura::application * papp);

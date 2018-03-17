@@ -514,6 +514,9 @@
 		</Unit>
 		<Unit filename="aura/node/linux/linux_application.h" />
 		<Unit filename="aura/node/linux/linux_console_window.h" />
+		<Unit filename="aura/node/linux/linux_dir.cpp">
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/node/linux/linux_dir.h" />
 		<Unit filename="aura/node/linux/linux_factory_exchange.h" />
 		<Unit filename="aura/node/linux/linux_file.h" />

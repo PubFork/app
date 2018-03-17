@@ -3,7 +3,10 @@
 
 
 #if defined(LINUX)
+
 #include <fontconfig/fontconfig.h>
+
+#include <pango/pangocairo.h>
 
 mutex *        g_pmutexFc = NULL;
 
@@ -1845,6 +1848,7 @@ namespace draw2d_cairo
 
    }
 
+
    bool graphics::get_text_metrics(::draw2d::text_metric * lpMetrics) const
    {
 
@@ -1864,29 +1868,66 @@ namespace draw2d_cairo
 
       }
 
-      ((::draw2d_cairo::graphics *) this)->set(m_spfont);
+      PangoFontMap * pfontmap = pango_cairo_font_map_get_default ();
 
-      cairo_font_extents_t e;
+      PangoContext * pcontext = pango_font_map_create_context(pfontmap);
 
-      cairo_font_extents(m_pdc, &e);
+      PangoFontDescription * pdesc = (PangoFontDescription *) m_spfont->get_os_data();
 
-      lpMetrics->tmAscent = (LONG)e.ascent;
+      PangoFont * pfont = pango_font_map_load_font(pfontmap, pcontext, pdesc);
 
-      lpMetrics->tmDescent = (LONG)e.descent;
+      int iHeight = 0;
 
-      lpMetrics->tmHeight = (LONG)e.height;
+      PangoLayout * playout;                            // layout for a paragraph of text
 
-      lpMetrics->tmExternalLeading = (LONG)(e.height - (e.ascent + e.descent));
+      playout = pango_cairo_create_layout(m_pdc);                 // init pango layout ready for use
+
+      pango_layout_set_text(playout, unitext("ÁÚMGgçy"), -1);          // sets the text to be associated with the layout (final arg is length, -1
+                                        // to calculate automatically when passing a nul-terminated string)
+      pango_layout_set_font_description(playout, (PangoFontDescription *) m_spfont->get_os_data());            // assign the previous font description to the layout
+
+      pango_cairo_update_layout(m_pdc, playout);                  // if the target surface or transformation properties of the cairo instance
+                                        // have changed, update the pango layout to reflect this
+      int width = 0;
+
+      PangoRectangle pos;
+
+      pango_layout_get_pixel_size(playout, &width, &iHeight);
+
+//      iHeight = pango_font_description_get_size(pdesc);
+//
+//      if(pango_font_description_get_size_is_absolute(pdesc))
+//      {
+//
+//         iHeight /= PANGO_SCALE;
+//
+//      }
+//      else
+//      {
+//
+//         iHeight = iHeight * 1.333333333333333333 / PANGO_SCALE;
+//
+//      }
+
+      PangoFontMetrics * pfontmetrics = pango_font_get_metrics(pfont, NULL);
+
+      lpMetrics->tmAscent = (LONG) pango_font_metrics_get_ascent(pfontmetrics) / PANGO_SCALE;
+
+      lpMetrics->tmDescent = (LONG) pango_font_metrics_get_descent(pfontmetrics) / PANGO_SCALE;
+
+      lpMetrics->tmHeight = (LONG) iHeight;
+
+      lpMetrics->tmExternalLeading = (LONG)(lpMetrics->tmHeight - (lpMetrics->tmAscent + lpMetrics->tmDescent));
 
       lpMetrics->tmInternalLeading = (LONG)0;
 
       lpMetrics->tmExternalLeading = (LONG)0;
 
-      string str(L"123AWZwmc123AWZwmcpQçg");
+      lpMetrics->tmAveCharWidth = (LONG)pango_font_metrics_get_approximate_char_width (pfontmetrics);
 
-      ::size size = GetTextExtent(str);
+      pango_font_metrics_unref(pfontmetrics);
 
-      lpMetrics->tmAveCharWidth = (LONG)(size.cx * m_spfont->m_dFontWidth / (double)str.get_length());
+      g_object_unref(pcontext);
 
       return TRUE;
 
@@ -4363,98 +4404,43 @@ namespace draw2d_cairo
    }
 
 
-
-   int32_t graphics::draw_text(const string & strParam, const RECT & lpRect, UINT nFormat)
+   int32_t graphics::draw_text(const string & strParam, const RECT & rect, UINT nFormat)
    {
 
-      return internal_draw_text(strParam, strParam.get_length(), lpRect, nFormat, &cairo_show_text);
+      cairo_keep keep(m_pdc);
+
+      RECTD rectd;
+
+      rectd.left = rect.left;
+      rectd.top = rect.top;
+      rectd.right = rect.right;
+      rectd.bottom = rect.bottom;
+
+      return internal_draw_text(strParam, strParam.get_length(), rectd, nFormat);
 
    }
 
 
-   int32_t graphics::internal_draw_text(const char * lpszString, strsize nCount, const RECT & lpRect, UINT nFormat, PFN_CAIRO_TEXT ftext)
+   int32_t graphics::internal_draw_text(const char * lpszString, strsize nCount, const RECTD & rectd, UINT nFormat)
    {
 
+      return internal_draw_text_pango(lpszString, nCount, rectd, nFormat, &pango_cairo_show_layout);
 
-      string str(lpszString, nCount);
+   }
 
-      str = ::str::q_valid(str);
 
-      if (str.is_empty())
-      {
+   int32_t graphics::internal_draw_text_pango(const char * lpszString, strsize nCount, const RECTD & rectd, UINT nFormat, PFN_PANGO_TEXT pfnPango)
+   {
 
-         return -1;
+      PangoLayout * playout;                            // layout for a paragraph of text
 
-      }
+      cairo_translate(m_pdc, rectd.left, rectd.top);                        // set the origin of cairo instance 'cr' to (10,20) (i.e. this is where
+                                        // drawing will start from).
+      playout = pango_cairo_create_layout(m_pdc);                 // init pango layout ready for use
 
-      synch_lock ml(cairo_mutex());
+      pango_layout_set_text(playout, lpszString, -1);          // sets the text to be associated with the layout (final arg is length, -1
 
-      if(m_spfont.is_null())
-      {
-
-         return false;
-
-      }
-
-      if(m_spfont->m_dFontWidth <= 0.0)
-      {
-
-         return -1;
-
-      }
-
-      cairo_keep keep(m_pdc);
-
-      set(m_spfont);
-
-      cairo_font_extents_t e;
-
-      cairo_font_extents(m_pdc, &e);
-
-      size sz = GetTextExtent(str);
-
-      double dx;
-
-      double dy;
-
-      if (nFormat & DT_RIGHT)
-      {
-         dx = lpRect.right - lpRect.left - sz.cx;
-      }
-      else if (nFormat & DT_CENTER)
-      {
-         dx = ((lpRect.right - lpRect.left) - (sz.cx)) / 2.0;
-      }
-      else
-      {
-         dx = 0.;
-      }
-
-      if (nFormat & DT_BOTTOM)
-      {
-         dy = lpRect.bottom - lpRect.top - e.ascent;
-      }
-      else if (nFormat & DT_VCENTER)
-      {
-         dy = ((lpRect.bottom - lpRect.top) - (e.ascent)) / 2.0;
-      }
-      else
-      {
-         dy = 0.;
-      }
-
-      if(m_spfont->m_dFontWidth != 1.0)
-      {
-
-         cairo_matrix_t m;
-
-         cairo_get_matrix(m_pdc, &m);
-
-         cairo_matrix_scale(&m, m_spfont->m_dFontWidth, 1.0);
-
-         cairo_set_matrix(m_pdc, &m);
-
-      }
+      pango_layout_set_font_description(playout, (PangoFontDescription *) m_spfont->get_os_data());            // assign the previous font description to the layout
 
       if(m_spbrush.is_set())
       {
@@ -4463,58 +4449,14 @@ namespace draw2d_cairo
 
       }
 
-      if (nFormat & DT_EXPANDTABS)
-      {
+      pango_cairo_update_layout(m_pdc, playout);                  // if the target surface or transformation properties of the cairo instance
+                                        // have changed, update the pango layout to reflect this
+      (*pfnPango)(m_pdc, playout);                    // draw the pango layout onto the cairo surface
 
-         str.replace("\t", "        ");
-
-      }
-      else
-      {
-
-         str.replace("\t", "");
-
-      }
-
-      if (nFormat & DT_SINGLELINE)
-      {
-
-         str.replace("\n", "");
-         str.replace("\r", "");
-
-      }
-
-      stringa stra;
-
-      stra.add_lines(str);
-
-      int i = 0;
-
-      for (auto & strLine : stra)
-      {
-
-         cairo_move_to(m_pdc, lpRect.left + dx, lpRect.top + dy + e.ascent + sz.cy * (i) / stra.get_size());
-
-         (*ftext)(m_pdc, strLine);
-
-         cairo_status_t status = cairo_status(m_pdc);
-
-         if(status != CAIRO_STATUS_SUCCESS)
-         {
-
-            const char * pszStatus = cairo_status_to_string(status);
-
-            TRACE("cairo error : graphics::draw_text %d %s", status, pszStatus);
-
-         }
-
-         i++;
-
-      }
-
-      return 1;
+      g_object_unref(playout);                         // free the layout
 
    }
+
 
    int32_t graphics::draw_text_ex(LPTSTR lpszString, strsize nCount, const RECT & lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams)
    {
@@ -4542,11 +4484,16 @@ namespace draw2d_cairo
       sized sz;
 
       if (!GetTextExtent(sz, lpszString, nCount, iIndex))
-         return ::size(0, 0);
+      {
 
-      return sized((int)sz.cx, (int)sz.cy);
+         return ::sized(0.0, 0.0);
+
+      }
+
+      return sz;
 
    }
+
 
    sized graphics::GetTextExtent(const char * lpszString, strsize nCount) const
    {
@@ -4554,6 +4501,7 @@ namespace draw2d_cairo
       return GetTextExtent(lpszString, nCount, -1);
 
    }
+
 
    sized graphics::GetTextExtent(const string & str) const
    {
@@ -4567,32 +4515,19 @@ namespace draw2d_cairo
    {
 
       ::exception::throw_not_implemented(get_app());
+
       return ::sized(0, 0);
 
-      /*
-            ASSERT(get_handle1() != NULL);
-            SIZE size;
-            string str(lpszString, nCount);
-            wstring wstr = ::str::international::utf8_to_unicode(str);
-            VERIFY(::GetTextExtentPoint32W(get_handle1(), wstr, (int32_t)wstr.get_length(), &size));
-            return size;
-      */
-
    }
+
 
    size graphics::GetOutputTextExtent(const string & str) const
    {
 
       ::exception::throw_not_implemented(get_app());
+
       return ::size(0, 0);
 
-      /*
-            ASSERT(get_handle1() != NULL);
-            SIZE size;
-            wstring wstr = ::str::international::utf8_to_unicode(str);
-            VERIFY(::GetTextExtentPoint32W(get_handle1(), wstr, (int32_t)wstr.get_length(), &size));
-            return size;
-      */
    }
 
 
@@ -4627,14 +4562,53 @@ namespace draw2d_cairo
       }
 
       if (iIndex < 0)
+      {
+
          iIndex = (int32_t)nCount;
+
+      }
 
       stringa stra;
 
       stra.add_lines(str, true);
 
+      if(stra.get_count() == 1 && iIndex < nCount && iIndex >= 0)
+      {
+
+         PangoLayout * playout;                            // layout for a paragraph of text
+
+         playout = pango_cairo_create_layout(m_pdc);                 // init pango layout ready for use
+
+         pango_layout_set_text(playout, lpszString, -1);          // sets the text to be associated with the layout (final arg is length, -1
+                                           // to calculate automatically when passing a nul-terminated string)
+         pango_layout_set_font_description(playout, (PangoFontDescription *) m_spfont->get_os_data());            // assign the previous font description to the layout
+
+         pango_cairo_update_layout(m_pdc, playout);                  // if the target surface or transformation properties of the cairo instance
+                                           // have changed, update the pango layout to reflect this
+         int width = 0;
+
+         int height = 0;
+
+         PangoRectangle pos;
+
+         pango_layout_index_to_pos(playout, iIndex, &pos);
+
+         pango_layout_get_pixel_size(playout, &width, &height);
+
+         size.cx = (double) pos.x / (double) PANGO_SCALE;
+
+         size.cy = height;
+
+         g_object_unref(playout);                         // free the layout
+
+         return true;
+
+      }
+
       sized s0(0.0, 0.0);
+
       size.cx = 0.0;
+
       size.cy = 0.0;
 
       for (auto & str : stra)
@@ -4692,48 +4666,27 @@ namespace draw2d_cairo
 
       cairo_keep keep(m_pdc);
 
-      ((graphics *) this)->set(m_spfont);
+      PangoLayout * playout;                            // layout for a paragraph of text
 
-      cairo_text_extents_t ex;
+      playout = pango_cairo_create_layout(m_pdc);                 // init pango layout ready for use
 
-      cairo_font_extents_t e;
+      pango_layout_set_text(playout, lpszString, -1);          // sets the text to be associated with the layout (final arg is length, -1
+                                        // to calculate automatically when passing a nul-terminated string)
+      pango_layout_set_font_description(playout, (PangoFontDescription *) m_spfont->get_os_data());            // assign the previous font description to the layout
 
-      if (::str::begins(str, unitext("バーチャルマシン")))
-      {
+      pango_cairo_update_layout(m_pdc, playout);                  // if the target surface or transformation properties of the cairo instance
+                                        // have changed, update the pango layout to reflect this
+      int width = 0;
 
-         TRACE("Likely to fail in certain circumstances");
+      int height = 0;
 
-      }
+      pango_layout_get_pixel_size (playout, &width, &height);
 
-      cairo_font_extents(m_pdc, &e);
+      g_object_unref(playout);                         // free the layout
 
-      if (!str.has_char())
-      {
+      size.cx = width * m_spfont->m_dFontWidth;
 
-         size.cx = 0;
-
-         size.cy = e.height;
-
-         return true;
-
-      }
-
-      cairo_text_extents(m_pdc, str, &ex);
-
-      cairo_status_t status = cairo_status(m_pdc);
-
-      if(status != CAIRO_STATUS_SUCCESS)
-      {
-
-         const char * pszStatus = cairo_status_to_string(status);
-
-         TRACE("cairo error : graphics::_GetTextExtent %d %s", status, pszStatus);
-
-      }
-
-      size.cx = (LONG)(ex.x_advance * m_spfont->m_dFontWidth);
-
-      size.cy = (LONG)e.height;
+      size.cy = height;
 
       return true;
 
@@ -4803,10 +4756,6 @@ namespace draw2d_cairo
 
       cairo_fill(m_pdc);
 
-      //      m_pgraphics->FillRectangle(gdiplus_brush(), lpRect.left, lpRect.top, lpRect.right - lpRect.left, lpRect.bottom - lpRect.top);
-
-      //::SetBkColor(get_handle1(), clr);
-      //::ExtTextOut(get_handle1(), 0, 0, ETO_OPAQUE, lpRect, NULL, 0, NULL);
    }
 
    void graphics::FillSolidRect(int32_t x, int32_t y, int32_t cx, int32_t cy, COLORREF clr)
@@ -4840,129 +4789,14 @@ namespace draw2d_cairo
    bool graphics::TextOutRaw(double x, double y, const char * lpszString, strsize nCount)
    {
 
-      ::rect r = ::rect_dim(
-                    LONG(x),
-                    LONG(y),
-                    65535,
-                    65535
-                 );
-
-      internal_draw_text(lpszString, nCount, r, 0, &cairo_show_text);
-
-      return true;
-
-      string str(lpszString, nCount);
-
-      str = ::str::q_valid(str);
-
-      if (str.is_empty())
-      {
-
-         return false;
-
-      }
-
-      synch_lock sl(cairo_mutex());
-
-      if(m_spfont.is_null())
-      {
-
-         return false;
-
-      }
-
-      if(m_spfont->m_dFontWidth <= 0.0)
-      {
-
-         return false;
-
-      }
-
-      if (m_spregion.is_set() && !m_spregion.cast < region >()->is_simple_positive_region())
-      {
-
-         ::draw2d::dib_sp dib0(allocer());
-
-         dib0->create(m_spregion.cast < region >()->m_rectBoundingBoxInternal.size());
-         dib0->Fill(0, 0, 0, 0);
-         dib0->get_graphics()->SelectObject(get_current_brush());
-         dib0->get_graphics()->SelectObject(get_current_font());
-         dib0->get_graphics()->text_out(x - m_spregion.cast < region >()->m_rectBoundingBoxInternal.left,
-                                        y - m_spregion.cast < region >()->m_rectBoundingBoxInternal.top,
-                                        str);
-
-         cairo_keep k(m_pdc);
-
-         cairo_pattern_t * ppattern = cairo_pattern_create_for_surface((cairo_surface_t *)dib0->get_bitmap()->get_os_data());
-
-         cairo_set_source(m_pdc, ppattern);
-
-         return m_spregion.cast < region >()->mask(m_pdc);
-
-      }
-
       cairo_keep keep(m_pdc);
 
-      ((graphics *) this)->set(m_spfont);
+      ::rectd r = ::rectd(pointd(x, y), sized(65535.0, 65535.0));
 
-      cairo_font_extents_t e;
-
-      cairo_font_extents(m_pdc, &e);
-
-      cairo_status_t status = cairo_status(m_pdc);
-
-      if (status != CAIRO_STATUS_SUCCESS)
-      {
-
-         return false;
-
-      }
-
-      if (m_spbrush.is_null())
-      {
-         set_os_color(ARGB(255, 0, 0, 0));
-      }
-      else
-      {
-         set(m_spbrush);
-      }
-
-      cairo_move_to(m_pdc, x, y + e.ascent);
-
-      if(m_spfont->m_dFontWidth != 1.0)
-      {
-
-         cairo_matrix_t m;
-
-         cairo_get_matrix(m_pdc, &m);
-
-         cairo_matrix_scale(&m, m_spfont->m_dFontWidth, 1.0);
-
-         cairo_set_matrix(m_pdc, &m);
-
-      }
-
-      if (::str::begins(str, unitext("バーチャルマシン")))
-      {
-
-         TRACE("Likely to fail in certain circumstances");
-
-      }
-
-      cairo_show_text(m_pdc, str);
-
-      status = cairo_status(m_pdc);
-
-      if(status != CAIRO_STATUS_SUCCESS)
-      {
-
-         const char * pszStatus = cairo_status_to_string(status);
-
-         TRACE("cairo error : graphics::text_out %d %s", status, pszStatus);
-
-      }
+      internal_draw_text(lpszString, nCount, r, 0);
 
       return true;
+
 
    }
 
@@ -4972,25 +4806,17 @@ namespace draw2d_cairo
 
       synch_lock ml(cairo_mutex());
 
-      //      ::Gdiplus::Pen pen(::Gdiplus::Color(argb_get_a_value(m_crColor), argb_get_r_value(m_crColor), argb_get_g_value(m_crColor), argb_get_b_value(m_crColor)), m_dPenWidth);
-
-      //gdiplus_pen()->SetAlignment(Gdiplus::PenAlignment::PenAlignmentCenter);
-
-      //m_pgraphics->DrawLine(gdiplus_pen(), Gdiplus::Point((FLOAT) m_x, (FLOAT) m_y), Gdiplus::Point((FLOAT) x,(FLOAT) y));
-      //string str(lpszString, nCount);
-
-
       cairo_move_to(m_pdc, m_x, m_y);
 
       cairo_line_to(m_pdc, x, y);
 
       draw();
 
-
       m_x = x;
+
       m_y = y;
 
-      return TRUE;
+      return true;
 
    }
 
@@ -5252,137 +5078,171 @@ namespace draw2d_cairo
    }
 
 
-   bool graphics::set(const ::draw2d::font * pfontParam)
-   {
-
-      synch_lock ml(cairo_mutex());
-
-      //cairo_select_font_face(m_pdc, pfont->m_strFontFamilyName, pfont->m_bItalic ? CAIRO_FONT_SLANT_ITALIC : CAIRO_FONT_SLANT_NORMAL, pfont->m_iFontWeight > 650 ? CAIRO_FONT_WEIGHT_BOLD : CAIRO_FONT_WEIGHT_NORMAL);
-
-      if (pfontParam == NULL)
-      {
-
-         return false;
-
-      }
-
-      ::draw2d_cairo::font * pfont = dynamic_cast <::draw2d_cairo::font *> ((::draw2d::font *) pfontParam);
-
-      if (pfont == NULL)
-      {
-
-         return false;
-
-      }
-      //
-      ///*if(pfont->m_ft != NULL)
-      //{
-      //
-      // return true;
-      //
-      //}
-      //
-      //      //synch_lock sl(&user_mutex());
-      //
-      //      pfont->destroy();
-      //
-      ////      int status;
-      //
-      //      int iError = 0;
-      //
-      //      string strPath;
-      //
-      //
-      int iError;
-
-      string  strPath = get_font_path(pfont->m_strFontFamilyName);
-
-      if (g_pmapFontError->Lookup(strPath, iError))
-      {
-
-         g_pmapFontFace->Lookup(strPath, pfont->m_ft);
-
-      }
-      else
-      {
-
-         pfont->m_ft = NULL;
-
-         iError = FT_New_Face((FT_Library)System.ftlibrary(), strPath, 0, &pfont->m_ft);
-
-         if (iError == 0)
-         {
-
-            iError = FT_Select_Charmap(pfont->m_ft, /* target face object */ FT_ENCODING_UNICODE); /* encoding */
-
-         }
-
-         g_pmapFontError->set_at(strPath, iError);
-
-         g_pmapFontFace->set_at(strPath, pfont->m_ft);
-
-      }
-
-      if (iError != 0 || pfont->m_ft == NULL)
-      {
-
-         string strFont = pfont->m_strFontFamilyName;
-
-         cairo_select_font_face(m_pdc, strFont, pfont->m_bItalic ? CAIRO_FONT_SLANT_ITALIC : CAIRO_FONT_SLANT_NORMAL, pfont->m_iFontWeight > 650 ? CAIRO_FONT_WEIGHT_BOLD : CAIRO_FONT_WEIGHT_NORMAL);
-
-
-      }
-      else
-      {
-
-         if (!g_pmapCairoFontFace->Lookup(strPath, pfont->m_pface))
-         {
-
-            pfont->m_pface = cairo_ft_font_face_create_for_ft_face(pfont->m_ft, 0);
-
-            g_pmapCairoFontFace->set_at(strPath, pfont->m_pface);
-
-            cairo_font_face_reference(pfont->m_pface);
-
-         }
-
-         //         cairo_font_options_t * poptions = cairo_font_options_create ();
-         //
-         //         cairo_matrix_t m;
-         //
-         //         cairo_matrix_init_identity(&m);
-         //
-         //         cairo_matrix_t m2;
-         //
-         //         cairo_matrix_init_identity(&m2);
-         //
-         //         pfont->m_pfont = cairo_scaled_font_create(pfont->m_pface, &m, &m2, poptions);
-         //
-         //         cairo_set_scaled_font(m_pdc, pfont->m_pfont);
-         //
-         //         cairo_font_options_destroy(poptions);
-         //         */
-         //
-         cairo_set_font_face(m_pdc, pfont->m_pface);
-
-      }
-
-      if (pfont->m_eunitFontSize == ::draw2d::unit_pixel)
-      {
-
-         cairo_set_font_size(m_pdc, pfont->m_dFontSize);
-
-      }
-      else
-      {
-
-         cairo_set_font_size(m_pdc, pfont->m_dFontSize * 96.0 / 72.0);
-
-      }
-
-      return true;
-
-   }
+//   bool graphics::set(const ::draw2d::font * pfontParam)
+//   {
+//
+//      synch_lock ml(cairo_mutex());
+//
+//      //cairo_select_font_face(m_pdc, pfont->m_strFontFamilyName, pfont->m_bItalic ? CAIRO_FONT_SLANT_ITALIC : CAIRO_FONT_SLANT_NORMAL, pfont->m_iFontWeight > 650 ? CAIRO_FONT_WEIGHT_BOLD : CAIRO_FONT_WEIGHT_NORMAL);
+//
+//      if (pfontParam == NULL)
+//      {
+//
+//         return false;
+//
+//      }
+//
+//      ::draw2d_cairo::font * pfont = dynamic_cast <::draw2d_cairo::font *> ((::draw2d::font *) pfontParam);
+//
+//      if (pfont == NULL)
+//      {
+//
+//         return false;
+//
+//      }
+//
+//      if(pfont->m_pdesc != NULL)
+//      {
+//
+//         pfont->destroy();
+//
+//      }
+//
+//
+//      pfont->m_pdesc = pango_font_description_new();
+//
+//
+//      pango_font_description_set_family(pfont->m_pdesc, pfont->m_strFontFamilyName);
+//
+//      pango_font_description_set_style(pfont->m_pdesc, pfont->m_bItalic ? PANGO_STYLE_ITALIC : PANGO_STYLE_NORMAL);
+//
+//      pango_font_description_set_weight(pfont->m_pdesc, (PangoWeight) pfont->m_iFontWeight);
+//
+//      if(pfont->m_eunitFontSize == ::draw2d::unit_pixel)
+//      {
+//
+//         pango_font_description_set_absolute_size(pfont->m_pdesc, pfont->m_dFontSize * PANGO_SCALE);
+//
+//      }
+//      else
+//      {
+//
+//         pango_font_description_set_size(pfont->m_pdesc, pfont->m_dFontSize * PANGO_SCALE);
+//
+//      }
+//
+//
+//      //
+//      ///*if(pfont->m_ft != NULL)
+//      //{
+//      //
+//      // return true;
+//      //
+//      //}
+//      //
+//      //      //synch_lock sl(&user_mutex());
+//      //
+//      //      pfont->destroy();
+//      //
+//      ////      int status;
+//      //
+//      //      int iError = 0;
+//      //
+//      //      string strPath;
+//      //
+//      //
+////      int iError;
+////
+////      string  strPath = get_font_path(pfont->m_strFontFamilyName);
+////
+////      if (g_pmapFontError->Lookup(strPath, iError))
+////      {
+////
+////         g_pmapFontFace->Lookup(strPath, pfont->m_ft);
+////
+////      }
+////      else
+////      {
+////
+////         pfont->m_ft = NULL;
+////
+////         iError = FT_New_Face((FT_Library)System.ftlibrary(), strPath, 0, &pfont->m_ft);
+////
+////         if (iError == 0)
+////         {
+////
+////            iError = FT_Select_Charmap(pfont->m_ft, /* target face object */ FT_ENCODING_UNICODE); /* encoding */
+////
+////         }
+////
+////         g_pmapFontError->set_at(strPath, iError);
+////
+////         g_pmapFontFace->set_at(strPath, pfont->m_ft);
+////
+////      }
+////
+////      if (iError != 0 || pfont->m_ft == NULL)
+////      {
+////
+////         string strFont = pfont->m_strFontFamilyName;
+////
+////         cairo_select_font_face(m_pdc, strFont, pfont->m_bItalic ? CAIRO_FONT_SLANT_ITALIC : CAIRO_FONT_SLANT_NORMAL, pfont->m_iFontWeight > 650 ? CAIRO_FONT_WEIGHT_BOLD : CAIRO_FONT_WEIGHT_NORMAL);
+////
+////
+////      }
+////      else
+////      {
+////
+////         if (!g_pmapCairoFontFace->Lookup(strPath, pfont->m_pface))
+////         {
+////
+////            pfont->m_pface = cairo_ft_font_face_create_for_ft_face(pfont->m_ft, 0);
+////
+////            g_pmapCairoFontFace->set_at(strPath, pfont->m_pface);
+////
+////            cairo_font_face_reference(pfont->m_pface);
+////
+////         }
+////
+////         //         cairo_font_options_t * poptions = cairo_font_options_create ();
+////         //
+////         //         cairo_matrix_t m;
+////         //
+////         //         cairo_matrix_init_identity(&m);
+////         //
+////         //         cairo_matrix_t m2;
+////         //
+////         //         cairo_matrix_init_identity(&m2);
+////         //
+////         //         pfont->m_pfont = cairo_scaled_font_create(pfont->m_pface, &m, &m2, poptions);
+////         //
+////         //         cairo_set_scaled_font(m_pdc, pfont->m_pfont);
+////         //
+////         //         cairo_font_options_destroy(poptions);
+////         //         */
+////         //
+////         cairo_set_font_face(m_pdc, pfont->m_pface);
+////
+////      }
+////
+////      if (pfont->m_eunitFontSize == ::draw2d::unit_pixel)
+////      {
+////
+////         cairo_set_font_size(m_pdc, pfont->m_dFontSize);
+////
+////      }
+////      else
+////      {
+////
+////         cairo_set_font_size(m_pdc, pfont->m_dFontSize * 96.0 / 72.0);
+////
+////      }
+//
+//
+//
+//      return true;
+//
+//   }
 
 
    bool graphics::fill_and_draw()
@@ -5652,72 +5512,9 @@ namespace draw2d_cairo
    bool graphics::set(const ::draw2d_cairo::path::string_path & stringpath)
    {
 
-      ((graphics *) this)->set(stringpath.m_spfont);
+      ::rectd r = ::rectd(pointd(stringpath.m_x, stringpath.m_y), sized(65535.0, 65535.0));
 
-      ::rect r = ::rect_dim(
-                    LONG (stringpath.m_x),
-                    LONG (stringpath.m_y),
-                    65535,
-                    65535);
-
-
-      internal_draw_text(stringpath.m_strText, stringpath.m_strText.get_length(), r, 0, &cairo_text_path);
-
-//      string str;
-//
-//      str = ::str::q_valid(stringpath.m_strText);
-//
-//      if (str.is_empty())
-//      {
-//
-//         return false;
-//
-//      }
-//
-//      synch_lock sl(cairo_mutex());
-//
-//      if(m_spfont.is_null())
-//      {
-//
-//         return false;
-//
-//      }
-//
-//      if(m_spfont->m_dFontWidth <= 0.0)
-//      {
-//
-//         return false;
-//
-//      }
-//
-//      cairo_keep keep(m_pdc);
-//
-//      ((graphics *) this)->set(stringpath.m_spfont);
-//
-//      cairo_font_extents_t e;
-//
-//      cairo_font_extents(m_pdc, &e);
-//
-//      double x = stringpath.m_x;
-//
-//      double y = stringpath.m_y;
-//
-//      cairo_move_to(m_pdc, x, y + e.ascent);
-//
-//      if(m_spfont->m_dFontWidth != 1.0)
-//      {
-//
-//         cairo_matrix_t m;
-//
-//         cairo_get_matrix(m_pdc, &m);
-//
-//         cairo_matrix_scale(&m, m_spfont->m_dFontWidth, 1.0);
-//
-//         cairo_set_matrix(m_pdc, &m);
-//
-//      }
-//
-//      cairo_text_path(m_pdc, str);
+      internal_draw_text_pango(stringpath.m_strText, stringpath.m_strText.get_length(), r, 0, &pango_cairo_layout_path);
 
       cairo_status_t status = cairo_status(m_pdc);
 
@@ -5737,7 +5534,9 @@ namespace draw2d_cairo
 
    bool graphics::set(const ::draw2d_cairo::path::move & p)
    {
+
       synch_lock ml(cairo_mutex());
+
       cairo_move_to(m_pdc, p.m_x + 0.5, p.m_y + 0.5);
 
       return true;
@@ -5770,9 +5569,12 @@ namespace draw2d_cairo
       return p;
    }
 
+
    bool graphics::set_os_color(COLORREF cr)
    {
+
       synch_lock ml(cairo_mutex());
+
       cairo_set_source_rgba(m_pdc, argb_get_r_value(cr) / 255.0, argb_get_g_value(cr) / 255.0, argb_get_b_value(cr) / 255.0, argb_get_a_value(cr) / 255.0);
 
       return true;
@@ -5863,102 +5665,136 @@ namespace draw2d_cairo
 
 #if defined(LINUX)
 
-      synch_lock sl(g_pmutexFc);
+      PangoFontMap * pfontmap = pango_cairo_font_map_get_default();
 
-      FcPattern *    pat;
+      PangoFontFamily ** families;
 
-      FcObjectSet *  os;
+      int n_families = 0;
 
-      FcFontSet *    fs;
+      pango_font_map_list_families(pfontmap, &families, &n_families);
 
-      FcChar8 *      s;
-
-      FcChar8 *      file;
-
-      int            i;
-
-      if (!g_fcResult)
-      {
-
-         g_fcResult = FcInit();
-
-      }
-
-      if (!g_fcConfig)
-      {
-
-         g_fcConfig = FcConfigGetCurrent();
-
-         FcConfigSetRescanInterval(g_fcConfig, 30);
-
-      }
-
-      pat = FcPatternCreate();
-
-      os = FcObjectSetBuild(FC_FAMILY, FC_STYLE, FC_FILE, NULL);
-
-      fs = FcFontList(g_fcConfig, pat, os);
-
-      printf("Total fonts: %d", fs->nfont);
+      printf("Total fonts: %d", n_families);
 
       sp(::draw2d::font::enum_item) item;
 
-      for (i = 0; fs && i < fs->nfont; i++)
+      for (int i = 0; i < n_families; i++)
       {
 
          item = canew(::draw2d::font::enum_item);
 
-         FcPattern * font = fs->fonts[i];//FcFontSetFont(fs, i);
+         PangoFontFamily * pfamily = families[i];
 
-         //FcPatternPrint(font);
-
-         s = FcNameUnparse(font);
-
-         string str((const char *)s);
-
-         int iFind = str.find(":");
-
-         if (iFind > 0)
-         {
-
-            str = str.Left(iFind);
-
-         }
-
-         if (FcPatternGetString(font, FC_FILE, 0, &file) == FcResultMatch)
-         {
-
-            //printf("Filename: %s", file);
-
-            item->m_strFile = (const char *)file;
-
-         }
-         else
-         {
-
-            item->m_strFile = str;
-
-         }
+         item->m_strFile = pango_font_family_get_name(pfamily);
 
          //printf("Font: %s\n", str.c_str());
          //printf("Font: %s\n", s);
 
-         item->m_strName = str;
+         item->m_strName = item->m_strFile;
 
          item->m_ecs = ::draw2d::font::cs_default;
 
          itema.add(item);
 
-         free(s);
-
       }
 
-      if (fs != NULL)
-      {
+      g_free(families);
 
-         FcFontSetDestroy(fs);
-
-      }
+//      synch_lock sl(g_pmutexFc);
+//
+//      FcPattern *    pat;
+//
+//      FcObjectSet *  os;
+//
+//      FcFontSet *    fs;
+//
+//      FcChar8 *      s;
+//
+//      FcChar8 *      file;
+//
+//      int            i;
+//
+//      if (!g_fcResult)
+//      {
+//
+//         g_fcResult = FcInit();
+//
+//      }
+//
+//      if (!g_fcConfig)
+//      {
+//
+//         g_fcConfig = FcConfigGetCurrent();
+//
+//         FcConfigSetRescanInterval(g_fcConfig, 30);
+//
+//      }
+//
+//      pat = FcPatternCreate();
+//
+//      os = FcObjectSetBuild(FC_FAMILY, FC_STYLE, FC_FILE, NULL);
+//
+//      fs = FcFontList(g_fcConfig, pat, os);
+//
+//      printf("Total fonts: %d", fs->nfont);
+//
+//      sp(::draw2d::font::enum_item) item;
+//
+//      for (i = 0; fs && i < fs->nfont; i++)
+//      {
+//
+//         item = canew(::draw2d::font::enum_item);
+//
+//         FcPattern * font = fs->fonts[i];//FcFontSetFont(fs, i);
+//
+//         //FcPatternPrint(font);
+//
+//         s = FcNameUnparse(font);
+//
+//         string str((const char *)s);
+//
+//         int iFind = str.find(":");
+//
+//         if (iFind > 0)
+//         {
+//
+//            str = str.Left(iFind);
+//
+//         }
+//
+//         if (FcPatternGetString(font, FC_FILE, 0, &file) == FcResultMatch)
+//         {
+//
+//            //printf("Filename: %s", file);
+//
+//            item->m_strFile = (const char *)file;
+//
+//         }
+//         else
+//         {
+//
+//            item->m_strFile = str;
+//
+//         }
+//
+//         //printf("Font: %s\n", str.c_str());
+//         //printf("Font: %s\n", s);
+//
+//         item->m_strName = str;
+//
+//         item->m_ecs = ::draw2d::font::cs_default;
+//
+//         itema.add(item);
+//
+//         free(s);
+//
+//      }
+//
+//      if (fs != NULL)
+//      {
+//
+//         FcFontSetDestroy(fs);
+//
+//      }
 
 #elif defined(WINDOWS)
 

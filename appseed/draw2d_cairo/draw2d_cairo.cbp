@@ -74,7 +74,7 @@
 			<Add option="-Wno-attributes" />
 			<Add option="-Winvalid-pch" />
 			<Add option="-Wno-conversion-null" />
-			<Add option="` pkg-config --cflags cairo`" />
+			<Add option="`pkg-config --cflags cairo pangocairo`" />
 			<Add directory="../../../include" />
 			<Add directory="../../include" />
 			<Add directory="." />
@@ -99,7 +99,7 @@
 			<Add option="-lfontconfig" />
 			<Add option="-laura" />
 			<Add option="-lfreetype" />
-			<Add option="-lcairo" />
+			<Add option="`pkg-config --libs cairo pangocairo`" />
 			<Add option="-Wl,-z,defs" />
 			<Add directory="../../../time/x64/basis" />
 		</Linker>

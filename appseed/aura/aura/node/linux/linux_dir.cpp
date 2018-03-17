@@ -1647,7 +1647,7 @@ namespace linux
 
    }
 
-   ::file::path dir::get_music_folder()
+   ::file::path dir::music()
    {
 
       ::file::path path = xdg_get_dir("XDG_MUSIC_DIR");
@@ -1668,7 +1668,7 @@ namespace linux
    }
 
 
-   ::file::path dir::get_video_folder()
+   ::file::path dir::video()
    {
 
       ::file::path path = xdg_get_dir("XDG_VIDEOS_DIR");
@@ -1689,7 +1689,7 @@ namespace linux
    }
 
 
-   ::file::path dir::get_image_folder()
+   ::file::path dir::image()
    {
 
       ::file::path path = xdg_get_dir("XDG_PICTURES_DIR");

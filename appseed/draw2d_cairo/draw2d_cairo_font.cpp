@@ -40,10 +40,12 @@ namespace draw2d_cairo
    ::object(papp)
    {
 
-      m_pfont = NULL;
-      m_ft = NULL;
-      m_pface = NULL;
-      ZERO(m_keyDone);
+//      m_pdesc = NULL;
+//      m_ft = NULL;
+//      m_pface = NULL;
+//      ZERO(m_keyDone);
+
+      m_pdesc = NULL;
 
    }
 
@@ -60,12 +62,12 @@ namespace draw2d_cairo
    {
 
       synch_lock ml(cairo_mutex());
-//      if(m_pfont != NULL)
+//      if(m_pdesc != NULL)
 //      {
 // // the fonts are stored and managed by "font cache"
-//         cairo_scaled_font_destroy(m_pfont);
+//         cairo_scaled_font_destroy(m_pdesc);
 //
-//         m_pfont = NULL;
+//         m_pdesc = NULL;
 //
 //      }
 
@@ -87,6 +89,13 @@ namespace draw2d_cairo
 
       }
 
+      if(m_pdesc == NULL)
+      {
+
+         pango_font_description_free(m_pdesc);
+
+      }
+
       return true;
 
    }
@@ -103,9 +112,59 @@ namespace draw2d_cairo
    void * font::get_os_data() const
    {
 
-      ::exception::throw_interface_only(get_app());
+      font * pfont = (font *) this;
 
-      return NULL;
+      if(m_pdesc == NULL || !m_bUpdated)
+      {
+
+         if(m_pdesc != NULL)
+         {
+
+            try
+            {
+
+               pfont->destroy();
+
+            }
+            catch(...)
+            {
+
+            }
+
+            pfont->m_pdesc = NULL;
+
+         }
+
+         pfont->m_pdesc = pango_font_description_new();
+
+         pango_font_description_set_family(pfont->m_pdesc, pfont->m_strFontFamilyName);
+
+         pango_font_description_set_style(pfont->m_pdesc, pfont->m_bItalic ? PANGO_STYLE_ITALIC : PANGO_STYLE_NORMAL);
+
+         pango_font_description_set_weight(pfont->m_pdesc, (PangoWeight) pfont->m_iFontWeight);
+
+         if(pfont->m_eunitFontSize == ::draw2d::unit_pixel)
+         {
+
+            pango_font_description_set_absolute_size(pfont->m_pdesc, pfont->m_dFontSize * PANGO_SCALE);
+
+         }
+         else
+         {
+
+            pango_font_description_set_size(pfont->m_pdesc, pfont->m_dFontSize * PANGO_SCALE);
+
+         }
+
+      }
+
+
+      if(m_pdesc != NULL)
+      {
+         pfont->m_bUpdated = true;
+      }
+
+      return (void *) m_pdesc;
 
    }
 
