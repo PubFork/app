@@ -177,11 +177,11 @@
     <Filter Include="Header Files\math\kissfft">
       <UniqueIdentifier>{893c9654-3104-435a-a4a1-acd343f54321}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\core\os">
-      <UniqueIdentifier>{95d213d6-1637-4ee4-8dd0-252fa6344a98}</UniqueIdentifier>
+    <Filter Include="Source Files\core\node">
+      <UniqueIdentifier>{308c2edc-a026-47ba-aa41-4d3d4ee0df8e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\core\os\windows">
-      <UniqueIdentifier>{ba0d3109-210f-49e1-8d8c-dba5354c0518}</UniqueIdentifier>
+    <Filter Include="Source Files\core\node\windows">
+      <UniqueIdentifier>{0c21bd95-1478-4cec-9718-a52d5d964385}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1903,9 +1903,6 @@
     <ClCompile Include="user\user\user_tool_command.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
-    <ClCompile Include="core\os\windows\windows_simple_frame_window.cpp">
-      <Filter>Source Files\core\os\windows</Filter>
-    </ClCompile>
     <ClCompile Include="user\simple\_simple.cpp">
       <Filter>Source Files\user\simple</Filter>
     </ClCompile>
@@ -1965,6 +1962,9 @@
     </ClCompile>
     <ClCompile Include="core\plugin\_plugin.cpp">
       <Filter>Source Files\core\plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="core\node\windows\windows_simple_frame_window.cpp">
+      <Filter>Source Files\core\node\windows</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

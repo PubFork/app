@@ -1,6 +1,7 @@
 #pragma once
 
-#if defined(LINUX)
+
+#if defined(USE_PANGO)
 
 #include <pango/pangocairo.h>
 
@@ -16,14 +17,19 @@ namespace draw2d_cairo
    {
    public:
 
+#if defined(USE_PANGO)
 
-      //FT_Face                    m_ft;
-      //cairo_font_face_t *        m_pface;
-      //cairo_user_data_key_t      m_keyDone;
-      //cairo_scaled_font_t *      m_pfont;
+      // this structure stores a description of the style of font you'd most like
+      PangoFontDescription *        m_pdesc;
 
-      PangoFontDescription *        m_pdesc;                     // this structure stores a description of the style of font you'd most like
+#else
 
+      FT_Face                    m_ft;
+      cairo_font_face_t *        m_pface;
+      cairo_user_data_key_t      m_keyDone;
+      cairo_scaled_font_t *      m_pfont;
+
+#endif
 
 
 

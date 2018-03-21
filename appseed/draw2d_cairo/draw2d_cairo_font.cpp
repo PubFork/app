@@ -40,12 +40,18 @@ namespace draw2d_cairo
    ::object(papp)
    {
 
-//      m_pdesc = NULL;
-//      m_ft = NULL;
-//      m_pface = NULL;
-//      ZERO(m_keyDone);
+#if defined(USE_PANGO)
 
       m_pdesc = NULL;
+
+#else
+
+      m_pfont = NULL;
+      m_ft = NULL;
+      m_pface = NULL;
+      ZERO(m_keyDone);
+
+#endif
 
    }
 
@@ -89,12 +95,16 @@ namespace draw2d_cairo
 
       }
 
+#if defined(USE_PANGO)
+
       if(m_pdesc == NULL)
       {
 
          pango_font_description_free(m_pdesc);
 
       }
+
+#endif
 
       return true;
 
@@ -111,6 +121,14 @@ namespace draw2d_cairo
 
    void * font::get_os_data() const
    {
+
+#if !defined(USE_PANGO)
+
+      ::exception::throw_interface_only(get_app());
+
+      return NULL;
+
+#else
 
       font * pfont = (font *) this;
 
@@ -165,6 +183,8 @@ namespace draw2d_cairo
       }
 
       return (void *) m_pdesc;
+
+#endif
 
    }
 

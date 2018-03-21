@@ -4,6 +4,12 @@
 #include "aura/aura/aura/aura.h" // System.ftlibrary()
 
 
+#if defined(LINUX)
+
+#define USE_PANGO
+
+#endif
+
 #include "cairo-features.h"
 #include "cairo.h"
 #include "cairo-ft.h"

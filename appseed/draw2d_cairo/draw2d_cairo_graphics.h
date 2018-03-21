@@ -3,8 +3,13 @@
 
 typedef void FN_CAIRO_TEXT(cairo_t *, const char*);
 typedef FN_CAIRO_TEXT * PFN_CAIRO_TEXT;
+
+#if defined(USE_PANGO)
+
 typedef void FN_PANGO_TEXT(cairo_t *cr, PangoLayout *layout);
 typedef FN_PANGO_TEXT * PFN_PANGO_TEXT;
+
+#endif
 
 namespace draw2d_cairo
 {
@@ -77,12 +82,12 @@ namespace draw2d_cairo
       UINT GetBoundsRect(LPRECT lpRectBounds, UINT flags);
       // xxx      bool ResetDC(const DEVMODE* lpDevMode);
 
-         // Drawing-Tool Functions
+      // Drawing-Tool Functions
       point GetBrushOrg() const;
       point SetBrushOrg(int32_t x, int32_t y);
       point SetBrushOrg(POINT point);
       int32_t EnumObjects(int32_t nObjectType,
-         int32_t(CALLBACK* lpfn)(LPVOID, LPARAM), LPARAM lpData);
+                          int32_t(CALLBACK* lpfn)(LPVOID, LPARAM), LPARAM lpData);
 
       // Type-safe selection helpers
    public:
@@ -230,19 +235,19 @@ namespace draw2d_cairo
       bool DrawIcon(POINT point, ::visual::icon * picon);
       bool DrawIcon(int32_t x, int32_t y, ::visual::icon * picon, int32_t cx, int32_t cy, UINT istepIfAniCur, HBRUSH hbrFlickerFreeDraw, UINT diFlags);
       bool DrawState(point pt, size size, HBITMAP hBitmap, UINT nFlags,
-         HBRUSH hBrush = NULL);
+                     HBRUSH hBrush = NULL);
       bool DrawState(point pt, size size, ::draw2d::bitmap* pBitmap, UINT nFlags,
-         ::draw2d::brush* pBrush = NULL);
+                     ::draw2d::brush* pBrush = NULL);
       bool DrawState(point pt, size size, const char * lpszText, UINT nFlags,
-         bool bPrefixText = TRUE, int32_t nTextLen = 0, HBRUSH hBrush = NULL);
+                     bool bPrefixText = TRUE, int32_t nTextLen = 0, HBRUSH hBrush = NULL);
       bool DrawState(point pt, size size, const char * lpszText, UINT nFlags,
-         bool bPrefixText = TRUE, int32_t nTextLen = 0, ::draw2d::brush* pBrush = NULL);
+                     bool bPrefixText = TRUE, int32_t nTextLen = 0, ::draw2d::brush* pBrush = NULL);
 
 
 
 
       bool Chord(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x3, int32_t y3,
-         int32_t x4, int32_t y4);
+                 int32_t x4, int32_t y4);
       bool Chord(const RECT & lpRect, POINT ptStart, POINT ptEnd);
       void DrawFocusRect(const RECT & lpRect);
 
@@ -284,9 +289,9 @@ namespace draw2d_cairo
       // Bitmap Functions
       bool PatBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, uint32_t dwRop);
       bool BitBltRaw(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc,
-         int32_t xSrc, int32_t ySrc, uint32_t dwRop);
+                     int32_t xSrc, int32_t ySrc, uint32_t dwRop);
       bool StretchBltRaw(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc,
-         int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, uint32_t dwRop);
+                         int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, uint32_t dwRop);
       COLORREF GetPixel(int32_t x, int32_t y) const;
       COLORREF GetPixel(POINT point) const;
       COLORREF SetPixel(int32_t x, int32_t y, COLORREF crColor);
@@ -294,17 +299,17 @@ namespace draw2d_cairo
       bool FloodFill(int32_t x, int32_t y, COLORREF crColor);
       bool ExtFloodFill(int32_t x, int32_t y, COLORREF crColor, UINT nFillType);
       bool MaskBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc,
-         int32_t xSrc, int32_t ySrc, ::draw2d::bitmap& maskBitmap, int32_t xMask, int32_t yMask,
-         uint32_t dwRop);
+                   int32_t xSrc, int32_t ySrc, ::draw2d::bitmap& maskBitmap, int32_t xMask, int32_t yMask,
+                   uint32_t dwRop);
       bool PlgBlt(LPPOINT lpPoint, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc,
-         int32_t nWidth, int32_t nHeight, ::draw2d::bitmap& maskBitmap, int32_t xMask, int32_t yMask);
+                  int32_t nWidth, int32_t nHeight, ::draw2d::bitmap& maskBitmap, int32_t xMask, int32_t yMask);
       bool SetPixelV(int32_t x, int32_t y, COLORREF crColor);
       bool SetPixelV(POINT point, COLORREF crColor);
       bool GradientFill(TRIVERTEX* pVertices, WINULONG nVertices,
-         void * pMesh, WINULONG nMeshElements, uint32_t dwMode);
+                        void * pMesh, WINULONG nMeshElements, uint32_t dwMode);
       bool TransparentBlt(int32_t xDest, int32_t yDest, int32_t nDestWidth, int32_t nDestHeight,
-         ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight,
-         UINT clrTransparent);
+                          ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight,
+                          UINT clrTransparent);
 
       virtual bool alpha_blendRaw(int32_t xDest, int32_t yDest, int32_t nDestWidth, int32_t nDestHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, double dOpacity);
 
@@ -312,7 +317,7 @@ namespace draw2d_cairo
         ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight,
         BLENDFUNCTION blend);*/
 
-        // Text Functions
+      // Text Functions
       virtual bool text_out(int32_t x, int32_t y, const char * lpszString, strsize nCount);
       virtual bool text_out(int32_t x, int32_t y, const string & str);
       virtual bool TextOutRaw(double x, double y, const char * lpszString, strsize nCount);
@@ -322,9 +327,13 @@ namespace draw2d_cairo
       virtual size TabbedTextOut(int32_t x, int32_t y, const char * lpszString, strsize nCount, count nTabPositions, LPINT lpnTabStopPositions, int32_t nTabOrigin);
       virtual size TabbedTextOut(int32_t x, int32_t y, const string & str, count nTabPositions, LPINT lpnTabStopPositions, int32_t nTabOrigin);
 
+#if defined(USE_PANGO)
       //virtual int32_t internal_draw_text_cairo(const char * lpszString, strsize nCount, const RECT & lpRect, UINT nFormat, PFN_CAIRO_TEXT pfnText);
       virtual int32_t internal_draw_text_pango(const char * lpszString, strsize nCount, const RECTD & lpRect, UINT nFormat, PFN_PANGO_TEXT pfnText);
       virtual int32_t internal_draw_text(const char * lpszString, strsize nCount, const RECTD & lpRect, UINT nFormat);
+      #else
+      virtual int32_t internal_draw_text(const char * lpszString, strsize nCount, const RECT & lpRect, UINT nFormat, PFN_CAIRO_TEXT ftext);
+      #endif
       virtual int32_t draw_text(const char * lpszString, strsize nCount, const RECT & lpRect, UINT nFormat);
       virtual int32_t draw_text(const string & str, const RECT & lpRect, UINT nFormat);
 
@@ -373,7 +382,7 @@ namespace draw2d_cairo
 
       // Scrolling Functions
       bool ScrollDC(int32_t dx, int32_t dy, const RECT & lpRectScroll, const RECT & lpRectClip,
-         ::draw2d::region* pRgnUpdate, LPRECT lpRectUpdate);
+                    ::draw2d::region* pRgnUpdate, LPRECT lpRectUpdate);
 
       // font Functions
       bool GetCharWidth(UINT nFirstChar, UINT nLastChar, LPINT lpBuffer) const;
@@ -386,12 +395,12 @@ namespace draw2d_cairo
       //xxx      int32_t GetKerningPairs(int32_t nPairs, LPKERNINGPAIR lpkrnpair) const;
       //xxx      UINT GetOutlineTextMetrics(UINT cbData, LPOUTLINETEXTMETRICW lpotm) const;
       //xxx      uint32_t GetGlyphOutline(UINT nChar, UINT nFormat, LPGLYPHMETRICS lpgm,
-           //xxx    uint32_t cbBuffer, LPVOID lpBuffer, const MAT2* lpmat2) const;
+      //xxx    uint32_t cbBuffer, LPVOID lpBuffer, const MAT2* lpmat2) const;
 
       //xxx      bool GetCharABCWidths(UINT nFirstChar, UINT nLastChar,
       //xxx         LPABCFLOAT lpABCF) const;
       bool GetCharWidth(UINT nFirstChar, UINT nLastChar,
-         float* lpFloatBuffer) const;
+                        float* lpFloatBuffer) const;
 
       uint32_t GetFontLanguageInfo() const;
 
@@ -417,7 +426,7 @@ namespace draw2d_cairo
       int32_t EndDoc();
 
       // MetaFile Functions
-   //xxx      bool PlayMetaFile(HMETAFILE hMF);
+      //xxx      bool PlayMetaFile(HMETAFILE hMF);
       bool PlayMetaFile(HENHMETAFILE hEnhMetaFile, const RECT & lpBounds);
       bool AddMetaFileComment(UINT nDataSize, const BYTE* pCommentData);
       // can be used for enhanced metafiles only
@@ -447,14 +456,14 @@ namespace draw2d_cairo
       // Misc Helper Functions
       static ::draw2d::brush* PASCAL GetHalftoneBrush(::aura::application * papp);
       void DrawDragRect(const RECT & lpRect, SIZE size,
-         const RECT & lpRectLast, SIZE sizeLast,
-         ::draw2d::brush* pBrush = NULL, ::draw2d::brush* pBrushLast = NULL);
+                        const RECT & lpRectLast, SIZE sizeLast,
+                        ::draw2d::brush* pBrush = NULL, ::draw2d::brush* pBrushLast = NULL);
       void FillSolidRect(const RECT64 * lpRect, COLORREF clr);
       void FillSolidRect(const RECT & lpRect, COLORREF clr);
       void FillSolidRect(int32_t x, int32_t y, int32_t cx, int32_t cy, COLORREF clr);
       void Draw3dRect(const RECT & lpRect, COLORREF clrTopLeft, COLORREF clrBottomRight);
       void Draw3dRect(int32_t x, int32_t y, int32_t cx, int32_t cy,
-         COLORREF clrTopLeft, COLORREF clrBottomRight);
+                      COLORREF clrTopLeft, COLORREF clrBottomRight);
 
 
 
@@ -472,8 +481,8 @@ namespace draw2d_cairo
 
       virtual void * get_os_data() const;
       //      virtual HDC get_handle() const;
-        //    virtual HDC get_handle1() const;
-          //  virtual HDC get_handle2() const;
+      //    virtual HDC get_handle1() const;
+      //  virtual HDC get_handle2() const;
 
       virtual bool attach(void * pdata);
 
@@ -483,15 +492,17 @@ namespace draw2d_cairo
       bool blur(bool bExpand, double dRadius, const RECT & lpcrect);
 
       //protected:
-         // used for implementation of non-virtual SelectObject calls
-         //static ::draw2d_cairo::object* PASCAL SelectGdiObject(::aura::application * papp, HDC hDC, HGDIOBJ h);
+      // used for implementation of non-virtual SelectObject calls
+      //static ::draw2d_cairo::object* PASCAL SelectGdiObject(::aura::application * papp, HDC hDC, HGDIOBJ h);
 
 
-         // platform-specific or platform-internals
+      // platform-specific or platform-internals
       bool set_os_color(COLORREF cr);
       bool set(const ::draw2d::brush * pbrush);
       bool set(const ::draw2d::pen * ppen);
-      //bool set(const ::draw2d::font * pfont);
+      #if !defined(USE_PANGO)
+      bool set(const ::draw2d::font * pfont);
+      #endif
       bool set(const ::draw2d::path * ppath);
       bool set(const ::draw2d::path::element & e);
       bool set(const ::draw2d::path::arc & arc);
