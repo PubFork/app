@@ -1397,18 +1397,11 @@ retry_license:
    string userex::impl_get_wallpaper(index iScreen)
    {
 
-      stringa stra;
-
       string strLocalImagePath;
 
-      if( ::aura::system::g_p->android_get_user_wallpaper(strLocalImagePath) && strLocalImagePath.has_char())
-      {
+      ::aura::system::g_p->android_get_user_wallpaper(strLocalImagePath);
 
-         stra.add(strLocalImagePath);
-
-      }
-
-      return stra;
+      return strLocalImagePath;
 
    }
 

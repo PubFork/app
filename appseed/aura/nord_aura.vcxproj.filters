@@ -700,12 +700,6 @@
     <ClCompile Include="aura\process\process_department.cpp">
       <Filter>Source Files\aura\process</Filter>
     </ClCompile>
-    <ClCompile Include="aura\charguess\charDistribution.cpp">
-      <Filter>Source Files\aura\charguess</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\pcre\pcre.cpp">
-      <Filter>Source Files\aura\pcre</Filter>
-    </ClCompile>
     <ClCompile Include="aura\os\os_binreloc.cpp">
       <Filter>Source Files\aura\os</Filter>
     </ClCompile>
@@ -759,72 +753,6 @@
     </ClCompile>
     <ClCompile Include="aura\compress\zip\zip_zip.cpp">
       <Filter>Source Files\aura\compress\zip</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\charguess\big5Prober.cpp">
-      <Filter>Source Files\aura\charguess</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\charguess\charguess.cpp">
-      <Filter>Source Files\aura\charguess</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\charguess\EscCharsetProber.cpp">
-      <Filter>Source Files\aura\charguess</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\charguess\EscSM.cpp">
-      <Filter>Source Files\aura\charguess</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\charguess\EUCJPProber.cpp">
-      <Filter>Source Files\aura\charguess</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\charguess\EUCKRProber.cpp">
-      <Filter>Source Files\aura\charguess</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\charguess\EUCTWProber.cpp">
-      <Filter>Source Files\aura\charguess</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\charguess\GB2312Prober.cpp">
-      <Filter>Source Files\aura\charguess</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\charguess\jpCntx.cpp">
-      <Filter>Source Files\aura\charguess</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\charguess\LangBulgarianModel.cpp">
-      <Filter>Source Files\aura\charguess</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\charguess\LangCyrillicModel.cpp">
-      <Filter>Source Files\aura\charguess</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\charguess\LangGreekModel.cpp">
-      <Filter>Source Files\aura\charguess</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\charguess\LangHungarianModel.cpp">
-      <Filter>Source Files\aura\charguess</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\charguess\LangThaiModel.cpp">
-      <Filter>Source Files\aura\charguess</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\charguess\Latin1Prober.cpp">
-      <Filter>Source Files\aura\charguess</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\charguess\MBCSGroupProber.cpp">
-      <Filter>Source Files\aura\charguess</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\charguess\MBCSSM.cpp">
-      <Filter>Source Files\aura\charguess</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\charguess\SBCharsetProber.cpp">
-      <Filter>Source Files\aura\charguess</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\charguess\SBCSGroupProber.cpp">
-      <Filter>Source Files\aura\charguess</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\charguess\SJISProber.cpp">
-      <Filter>Source Files\aura\charguess</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\charguess\universal.cpp">
-      <Filter>Source Files\aura\charguess</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\charguess\UTF8Prober.cpp">
-      <Filter>Source Files\aura\charguess</Filter>
     </ClCompile>
     <ClCompile Include="filesystem\file\file.cpp">
       <Filter>Source Files\filesystem\file</Filter>
@@ -1041,15 +969,6 @@
     </ClCompile>
     <ClCompile Include="net\http\webserver\webserver_http_transaction.cpp">
       <Filter>Source Files\net\http\webserver</Filter>
-    </ClCompile>
-    <ClCompile Include="net\mail\mail_pop3.cpp">
-      <Filter>Source Files\net\mail</Filter>
-    </ClCompile>
-    <ClCompile Include="net\mail\mail_pop3_socket.cpp">
-      <Filter>Source Files\net\mail</Filter>
-    </ClCompile>
-    <ClCompile Include="net\mail\mail_simple_pop3.cpp">
-      <Filter>Source Files\net\mail</Filter>
     </ClCompile>
     <ClCompile Include="net\netserver\netserver_socket.cpp">
       <Filter>Source Files\net\netserver</Filter>
@@ -1777,9 +1696,6 @@
     <ClCompile Include="aura\aura\_aura_aura.cpp">
       <Filter>Source Files\aura\aura</Filter>
     </ClCompile>
-    <ClCompile Include="aura\charguess\_charguess.cpp">
-      <Filter>Source Files\aura\charguess</Filter>
-    </ClCompile>
     <ClCompile Include="aura\os\os_alloc.cpp">
       <Filter>Source Files\aura\os</Filter>
     </ClCompile>
@@ -1864,9 +1780,6 @@
     <ClCompile Include="net\http\webserver\_http_webserver.cpp">
       <Filter>Source Files\net\http\webserver</Filter>
     </ClCompile>
-    <ClCompile Include="net\mail\_mail.cpp">
-      <Filter>Source Files\net\mail</Filter>
-    </ClCompile>
     <ClCompile Include="net\netserver\_netserver.cpp">
       <Filter>Source Files\net\netserver</Filter>
     </ClCompile>
@@ -1932,6 +1845,36 @@
     </ClCompile>
     <ClCompile Include="multimedia\audio\audio_wave_out.cpp">
       <Filter>Source Files\multimedia\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\android\android_windowing.cpp">
+      <Filter>Source Files\aura\os\android</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\android\android_window_buffer.cpp">
+      <Filter>Source Files\aura\os\android</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\android\android_window_android.cpp">
+      <Filter>Source Files\aura\os\android</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\android\android_view_bitmap.cpp">
+      <Filter>Source Files\aura\os\android</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\android\android_aura.cpp">
+      <Filter>Source Files\aura\os\android</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\_graphics.cpp">
+      <Filter>Source Files\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="android_main.cpp">
+      <Filter>Source Files\aura\os\android</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\android\android_process.cpp">
+      <Filter>Source Files\aura\node\android</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\android\android_interaction_impl.cpp">
+      <Filter>Source Files\aura\node\android</Filter>
+    </ClCompile>
+    <ClCompile Include="user\wndfrm\frame\wndfrm_frame_updowninterface.cpp">
+      <Filter>Source Files\user\wndfrm\frame</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2141,153 +2084,6 @@
     </ClInclude>
     <ClInclude Include="user\simple\simple_message_box.h">
       <Filter>Header Files\user\simple</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_base_editor.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_colorertake5.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_cregexp.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_default_error_handler.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_editor_listener.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_error_handler.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_error_handler_writer.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_exception.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_features.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_file_input_source.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_file_type.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_file_type_impl.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_file_writer.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_hrc_parser.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_hrc_parser_helpers.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_hrc_parser_impl.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_line_region.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_line_regions_compact_support.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_line_regions_support.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_line_source.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_logging.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_memory_chunks.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_memory_file.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_outliner.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_outline_item.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_pair_match.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_parsed_line_writer.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_parser_factory.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_parser_factory_exception.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_region.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_region_define.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_region_handler.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_region_mapper.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_region_mapper_impl.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_scheme.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_shared_input_source.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_string_buffer.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_styled_hrd_mapper.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_styled_region.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_text_console_viewer.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_text_hrd_mapper.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_text_lines.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_text_parser.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_text_parser_helpers.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_text_parser_impl.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_text_region.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_Writer.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_xmldom.h">
-      <Filter>Header Files\user\colorertake5</Filter>
     </ClInclude>
     <ClInclude Include="filesystem\filesystem.h">
       <Filter>Header Files\filesystem</Filter>
@@ -2764,9 +2560,6 @@
       <Filter>Header Files\aura\os\android</Filter>
     </ClInclude>
     <ClInclude Include="aura\os\android\android_process.h">
-      <Filter>Header Files\aura\os\android</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\os\android\aaa_want_to_remove_android_window_impl.h">
       <Filter>Header Files\aura\os\android</Filter>
     </ClInclude>
     <ClInclude Include="aura\os\android\android_android.h">
@@ -4257,6 +4050,30 @@
     <ClInclude Include="aura\os\android\android_data_exchange.h">
       <Filter>Header Files\aura\os\android</Filter>
     </ClInclude>
+    <ClInclude Include="aura\os\android\android_cairo_keep.h">
+      <Filter>Header Files\aura\os\android</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\android\android_view_bitmap.h">
+      <Filter>Header Files\aura\os\android</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\android\android_vsnord_native_app_glue.h">
+      <Filter>Header Files\aura\os\android</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\android\android_window_android.h">
+      <Filter>Header Files\aura\os\android</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\android\android_window_buffer.h">
+      <Filter>Header Files\aura\os\android</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\android\android_windowing.h">
+      <Filter>Header Files\aura\os\android</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\android\android_interaction_impl.h">
+      <Filter>Header Files\aura\node\android</Filter>
+    </ClInclude>
+    <ClInclude Include="user\wndfrm\frame\wndfrm_frame_updowninterface.h">
+      <Filter>Header Files\user\wndfrm\frame</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -4276,9 +4093,6 @@
     </Filter>
     <Filter Include="Header Files\user\simple">
       <UniqueIdentifier>{55796a5c-733e-4e2f-b5c4-45ce822571b2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\user\colorertake5">
-      <UniqueIdentifier>{9d8f27e0-b68a-436b-908b-db49fed2ccca}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\filesystem">
       <UniqueIdentifier>{0a70f80b-6d1a-4784-9332-88c81d4120f8}</UniqueIdentifier>
@@ -4418,9 +4232,6 @@
     <Filter Include="Header Files\filesystem\filesystem">
       <UniqueIdentifier>{cf33ca26-3a3f-4822-bfd4-2e6fb4fff10f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\aura\pcre">
-      <UniqueIdentifier>{6aacc9e4-f716-4ec1-beb6-cd669b3dfac3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\aura\fontopus">
       <UniqueIdentifier>{a43d3c04-3a37-4f15-a58a-1976dcf08ce3}</UniqueIdentifier>
     </Filter>
@@ -4450,9 +4261,6 @@
     </Filter>
     <Filter Include="Header Files\aura\compress\bsdiff">
       <UniqueIdentifier>{9407b558-b507-4346-9cdb-127cbc28d02f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\aura\charguess">
-      <UniqueIdentifier>{857dc3cb-71f7-46d0-8487-a56a9f44f700}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\aura\charguess">
       <UniqueIdentifier>{d79e5319-26b1-46f8-b8dd-f58e9c82b254}</UniqueIdentifier>
@@ -4516,9 +4324,6 @@
     </Filter>
     <Filter Include="Source Files\net\http\webserver">
       <UniqueIdentifier>{4a936789-c404-46a1-8bee-83389dcbfeaa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\net\mail">
-      <UniqueIdentifier>{3618579a-cd5a-4024-b76f-baa8958a3905}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\net\netserver">
       <UniqueIdentifier>{38c4e220-16bc-4e11-b035-c3f9ea8c3e54}</UniqueIdentifier>
@@ -4642,6 +4447,18 @@
     </Filter>
     <Filter Include="Source Files\multimedia\audio">
       <UniqueIdentifier>{b0827325-e6ab-48c3-a79a-f5b2b7a609c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\user\wndfrm">
+      <UniqueIdentifier>{7037f8b3-3a22-41c7-a0b5-56076c8c2b2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\user\wndfrm\frame">
+      <UniqueIdentifier>{9914b2b5-f7e0-4196-b0c3-3b66b20a3bd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\user\wndfrm">
+      <UniqueIdentifier>{61ad17b7-f87c-4fc1-91ee-ce02bf8e8ffa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\user\wndfrm\frame">
+      <UniqueIdentifier>{367005ba-6258-437f-98ca-72defa185d31}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

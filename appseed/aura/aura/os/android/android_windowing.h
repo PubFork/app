@@ -1,6 +1,9 @@
 ﻿#pragma once
 
 
+#include "android_vsnord_native_app_glue.h"
+
+
 namespace boot
 {
 
@@ -38,7 +41,7 @@ namespace user
 } // namespace user
 
 
-typedef pointer_array < oswindow_data > oswindow_dataptra;
+typedef pointer_array < oswindow_data * > oswindow_dataptra;
 
 /*
 * Copyright (C) 2010 The Android Open Source Project
@@ -57,7 +60,7 @@ typedef pointer_array < oswindow_data > oswindow_dataptra;
 *
 */
 
-struct CLASS_DECL_BASE oswindow_data
+struct CLASS_DECL_AURA oswindow_data
 {
 
 #ifdef VSNORD
@@ -129,16 +132,16 @@ struct CLASS_DECL_BASE oswindow_data
 
 
    bool is_child(oswindow oswindowCandidateChildOrDescendant); // or descendant
-   oswindow GetParent();
-   oswindow SetParent(oswindow oswindowNewParent);
+   oswindow get_parent();
+   oswindow set_parent(oswindow oswindowNewParent);
    long get_state();
    bool is_iconic();
    bool is_window_visible();
-   bool ShowWindow(int nCmdShow);
+   bool show_window(int nCmdShow);
    LONG_PTR get_window_long_ptr(int32_t nIndex);
    LONG_PTR set_window_long_ptr(int32_t nIndex, LONG_PTR l);
-   bool ClientToScreen(LPPOINT lppoint);
-   bool ScreenToClient(LPPOINT lppoint);
+   bool client_to_screen(LPPOINT lppoint);
+   bool screen_to_client(LPPOINT lppoint);
 
 
 
@@ -210,4 +213,4 @@ class mutex;
 
 
 
-CLASS_DECL_BASE oswindow_data * oswindow_get(::user::interaction_impl * pui);
+CLASS_DECL_AURA oswindow_data * oswindow_get(::user::interaction_impl * pui);

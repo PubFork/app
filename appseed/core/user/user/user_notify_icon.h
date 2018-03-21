@@ -94,10 +94,7 @@ namespace user
       virtual void step();
 
 
-#if defined(APPLEIOS)
-      virtual void notify_icon_play(const char * action);
-      virtual bool notify_icon_frame_is_opened();
-#elif defined(WINDOWSEX)
+#if defined(APPLEIOS) || defined(WINDOWSEX) || defined(ANDROID)
       virtual void notify_icon_play(const char * action);
       virtual bool notify_icon_frame_is_opened();
 #else

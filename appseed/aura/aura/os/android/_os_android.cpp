@@ -1,7 +1,7 @@
 ﻿#include "framework.h"
 
 
-//#include "android_base.cpp"
+//#include "android_arua.cpp"
 #include "android_base_file.cpp"
 #include "android_c.cpp"
 #include "android_cross_win_file.cpp"
@@ -12,6 +12,7 @@
 #include "android_library.cpp"
 #include "android_locale.cpp"
 #include "android_lock.cpp"
+#include "android_main.cpp"
 #include "android_MessageBoxA.cpp"
 #include "android_message_loop.cpp"
 #include "android_multithreading.cpp"
@@ -19,7 +20,11 @@
 #include "android_process_pid.cpp"
 #include "android_simple_shell_launcher.cpp"
 #include "android_small_ipca_channel.cpp"
+#include "android_view_bitmap.cpp"
+#include "android_window_android.cpp"
+#include "android_window_buffer.cpp"
 #include "android_window_impl.cpp"
 #include "android_win_base.cpp"
+#include "android_windowing.cpp"
 
 

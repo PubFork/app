@@ -12,7 +12,7 @@ BEGIN_EXTERN_C
 // The lockf() function is not available on Android; we translate to flock().
 #define F_LOCK LOCK_EX
 #define F_ULOCK LOCK_UN
-CLASS_DECL_AURA int lockf(int fd, int cmd, off_t ignored_len); 
+CLASS_DECL_AURA int lockf(int fd, int cmd, off_t ignored_len);
 
 CLASS_DECL_AURA void swab(const void *from, void*to, ssize_t n);
 CLASS_DECL_AURA void* lfind( const void * key, const void * aura, size_t * num, size_t width, int (*fncomparison)(const void *, const void * ) );
@@ -34,6 +34,17 @@ double rint(double x);
 
 END_EXTERN_C
 
+
+oswindow GetCapture();
+oswindow SetCapture(oswindow window);
+WINBOOL ReleaseCapture();
+oswindow SetFocus(oswindow window);
+oswindow GetFocus();
+oswindow GetWindow(oswindow window, int iParentHood);
+oswindow GetActiveWindow();
+oswindow SetActiveWindow(oswindow window);
+WINBOOL DestroyWindow(oswindow window);
+oswindow GetDesktopWindow();
 
 
 

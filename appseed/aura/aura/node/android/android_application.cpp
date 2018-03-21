@@ -1,60 +1,15 @@
 #include "framework.h"
-//#include "android.h"
-//#include <dlfcn.h>
-//#include <link.h>
-//#include <pthread.h>
 
 
-//namespace android
 namespace aura
 {
 
 
-
-   //application::application(::aura::application * papp) :
-   //   ::object(papp)
-   //{
-   //   m_pthreadimpl.alloc(allocer());
-   //   m_pthreadimpl->m_pthread = this;
-
-
-   //   shell::theLinuxShell.Initialize();
-   //}
-
-   //application::~application()
-   //{
-
-   //}
-
-
-   //void application::_001OnFileNew()
-   //{
-   //   //::ca2::application_base::m_p->_001OnFileNew(NULL);
-   //}
-
-   //::aura::document *  application::_001OpenDocumentFile(var varFile)
-   //{
-   //  // return ::ca2::application_base::m_p->_001OpenDocumentFile(varFile);
-   //}
-
    void application::_001EnableShellOpen()
    {
-// xxx       ASSERT(m_atomApp == NULL && m_atomSystemTopic == NULL); // do once
 
-// xxx       m_atomApp            = ::GlobalAddAtomW(::str::international::utf8_to_unicode(m_strAppName));
-// xxx       m_atomSystemTopic    = ::GlobalAddAtomW(L"system");
    }
 
-   //bool application::_001OnDDECommand(const char * lpcsz)
-   //{
-   //   UNREFERENCED_PARAMETER(lpcsz);
-   //   return FALSE;
-   //}
-
-   //HINSTANCE application::GetHinstance()
-   //{
-   //   return NULL;
-   //}
 
    string application::get_version()
    {
@@ -64,8 +19,7 @@ namespace aura
    }
 
 
-
-   bool application::impl_process_initialize()
+   bool application::impl_process_init()
    {
 
       return true;
@@ -73,7 +27,7 @@ namespace aura
    }
 
 
-   bool application::impl_initialize1()
+   bool application::impl_init1()
    {
 
       return true;
@@ -81,7 +35,7 @@ namespace aura
    }
 
 
-   bool application::impl_initialize2()
+   bool application::impl_init2()
    {
 
       return true;
@@ -89,19 +43,35 @@ namespace aura
    }
 
 
-   bool application::impl_initialize3()
+   bool application::impl_init3()
    {
 
       return true;
 
    }
 
-   int32_t application::impl_exit_instance()
+   void application::impl_process_term()
    {
 
       set_os_data(NULL);
 
-      return m_iErrorCode;
+   }
+
+
+   void application::impl_term1()
+   {
+
+   }
+
+
+   void application::impl_term2()
+   {
+
+   }
+
+
+   void application::impl_term3()
+   {
 
    }
 
@@ -113,15 +83,13 @@ namespace aura
    }
 
 
-
-
-
    void application::get_time(struct timeval *p)
    {
 
       gettimeofday(p, NULL);
 
    }
+
 
    void application::set_env_var(const string & var,const string & value)
    {
@@ -130,11 +98,21 @@ namespace aura
 
    }
 
+
    IDTHREAD application::get_thread_id()
    {
+
       return ::pthread_self();
+
    }
 
+
+   bool application::os_on_start_application()
+   {
+
+      return true;
+
+   }
 
 
    bool application::process_command(::command::command * pdata)
@@ -151,6 +129,7 @@ namespace aura
       return true;
 
    }
+
 
    string application::draw2d_get_default_library_name()
    {

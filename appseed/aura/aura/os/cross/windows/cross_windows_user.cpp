@@ -1,6 +1,8 @@
 #include "framework.h"
 #if defined(LINUX)
 #include "aura/aura/os/linux/linux_user_impl.h"
+#elif defined(ANDROID)
+#include "aura/aura/os/android/android_windowing.h"
 #endif
 #if defined(APPLEOS) || defined(LINUX) || defined(ANDROID)
 #include <iconv.h>
@@ -489,22 +491,22 @@ WINBOOL ShowWindow(::oswindow oswindow, int nCmdShow)
 
 LONG WINAPI GetWindowLongA(::oswindow oswindow, int nIndex)
 {
-   return (LONG) oswindow->get_window_long(nIndex);
+   return (LONG) oswindow->get_window_long_ptr(nIndex);
 }
 
 LONG WINAPI SetWindowLongA(::oswindow oswindow, int nIndex, LONG l)
 {
-   return (LONG) oswindow->set_window_long(nIndex, (LONG) l);
+   return (LONG) oswindow->set_window_long_ptr(nIndex, (LONG) l);
 }
 
 LONG_PTR WINAPI GetWindowLongPtrA(::oswindow oswindow, int nIndex)
 {
-   return oswindow->get_window_long(nIndex);
+   return oswindow->get_window_long_ptr(nIndex);
 }
 
 LONG_PTR WINAPI SetWindowLongPtrA(::oswindow oswindow, int nIndex, LONG_PTR l)
 {
-   return oswindow->set_window_long(nIndex, (int)l);
+   return oswindow->set_window_long_ptr(nIndex, (int)l);
 }
 
 WINBOOL WINAPI ClientToScreen(::oswindow oswindow, LPPOINT lppoint)

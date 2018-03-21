@@ -71,7 +71,7 @@
 //
 //   //   ::draw2d::copy_colorref(
 //   //      MIN(cxParam, m_spdibBuffer->m_size.cx),
-//   //      MIN(cyParam, m_spdibBuffer->m_size.cy), 
+//   //      MIN(cyParam, m_spdibBuffer->m_size.cy),
 //   //      m_spdibBuffer->m_pcolorref,
 //   //      m_spdibBuffer->m_iScan, pcolorref, iStride);
 //
@@ -96,14 +96,14 @@ void android_fill_plasma(AndroidBitmapInfo * info, void * pixels, double  t)
 
    if (::aura::system::g_p->m_pbasesystem == NULL)
    {
-      
+
       output_debug_string("android_fill_plasma : base_system is null");
 
       return;
 
    }
 
-   if (::aura::system::g_p->m_pbasesystem->m_possystemwindow == NULL)
+   if (::aura::system::g_p->m_paurasystem->m_possystemwindow == NULL)
    {
 
       output_debug_string("android_fill_plasma : os_data is null");
@@ -112,7 +112,7 @@ void android_fill_plasma(AndroidBitmapInfo * info, void * pixels, double  t)
 
    }
 
-   if (::aura::system::g_p->m_pbasesystem->m_possystemwindow->m_pui.is_null())
+   if (::aura::system::g_p->m_paurasystem->m_possystemwindow->m_pui.is_null())
    {
 
       output_debug_string("android_fill_plasma : window is null");
@@ -121,7 +121,7 @@ void android_fill_plasma(AndroidBitmapInfo * info, void * pixels, double  t)
 
    }
 
-   if (::aura::system::g_p->m_pbasesystem->m_possystemwindow->m_pui->m_pimpl == NULL)
+   if (::aura::system::g_p->m_paurasystem->m_possystemwindow->m_pui->m_pimpl == NULL)
    {
 
       output_debug_string("android_fill_plasma : impl is null");
@@ -130,7 +130,7 @@ void android_fill_plasma(AndroidBitmapInfo * info, void * pixels, double  t)
 
    }
 
-   if (::aura::system::g_p->m_pbasesystem->m_possystemwindow->m_pui->m_pimpl->get_window_graphics() == NULL)
+   if (::aura::system::g_p->m_paurasystem->m_possystemwindow->m_pui->m_pimpl->get_window_graphics() == NULL)
    {
 
       //   output_debug_string("android_fill_plasma : get_window_graphics returned null");
@@ -139,7 +139,7 @@ void android_fill_plasma(AndroidBitmapInfo * info, void * pixels, double  t)
 
    }
 
-   auto pbuffer = dynamic_cast <::window_double_buffer *> (::aura::system::g_p->m_pbasesystem->m_possystemwindow->m_pui->m_pimpl->get_window_graphics());
+   auto pbuffer = dynamic_cast <::window_double_buffer *> (::aura::system::g_p->m_paurasystem->m_possystemwindow->m_pui->m_pimpl->get_window_graphics());
 
    if(pbuffer == NULL)
    {
@@ -172,13 +172,13 @@ void android_fill_plasma(AndroidBitmapInfo * info, void * pixels, double  t)
    synch_lock sl(&pbuffer->m_mutex2);
 
    ::draw2d::copy_colorref(
-      MIN(pbuffer->m_spdibBuffer2->m_size.cx, info->width),
-      MIN(pbuffer->m_spdibBuffer2->m_size.cy, info->height),
-      (COLORREF *) pixels, 
-      info->stride, 
-      pbuffer->m_spdibBuffer2->m_pcolorref,
-      pbuffer->m_spdibBuffer2->m_iScan);
-   
+   MIN(pbuffer->m_spdibBuffer2->m_size.cx, info->width),
+   MIN(pbuffer->m_spdibBuffer2->m_size.cy, info->height),
+   (COLORREF *) pixels,
+   info->stride,
+   pbuffer->m_spdibBuffer2->m_pcolorref,
+   pbuffer->m_spdibBuffer2->m_iScan);
+
    //output_debug_string("android_fill_plasma OK (area="+::str::from(pbuffer->m_spdibBuffer->area())+")");
 
 }

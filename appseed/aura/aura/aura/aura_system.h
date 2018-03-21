@@ -502,7 +502,7 @@ namespace aura
 #endif
 
       virtual bool defer_accumulate_on_open_file(stringa stra, string strExtra);
-      
+
       virtual bool merge_accumulated_on_open_file(::create * pcreate);
 
       virtual bool on_open_file(var varFile, string strExtra);
@@ -539,6 +539,16 @@ namespace aura
       virtual ::count get_desk_wkspace_count();
       virtual bool  get_desk_wkspace_rect(index iWkspace, LPRECT lprect);
       virtual index get_ui_wkspace(::user::interaction * pui);
+
+
+
+
+
+      // #ifdef APPLE_IOS
+
+      //       virtual void * initialize_native_window2(LPCRECT lpcrect) override;
+
+      // #endif
 
 
 

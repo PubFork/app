@@ -15,7 +15,7 @@ namespace android
       ::file_watcher::listener_thread(papp)
    {
 
-      m_strCa2 = ::dir::root();
+      m_pathInstall = ::dir::install();
 
    }
 
@@ -841,7 +841,7 @@ namespace android
 
       single_lock sl(&m_mutex, true);
 
-      return m_strCa2;
+      return m_pathInstall;
 
    }
 
@@ -995,9 +995,9 @@ try1:
 
       doc.load(Application.file().as_string(appdata() / "configuration\\directory.xml"));
 
-      m_pathUser = m_strCa2 / "userfolder";
+      //m_pathUser = m_strCa2 / "userfolder";
 
-      m_strCommonAppData = m_strCa2 / "commonappdata";
+      m_strCommonAppData = m_pathInstall / "commonappdata";
 
       mk(m_strCommonAppData, get_app());
 
@@ -1096,30 +1096,30 @@ try1:
    }
 
 
-   ::file::path dir::usersystemappdata(::aura::application * papp, const string & lpcszPrefix)
-   {
+   //::file::path dir::usersystemappdata(::aura::application * papp, const string & lpcszPrefix)
+   //{
 
-      UNREFERENCED_PARAMETER(papp);
+   //   UNREFERENCED_PARAMETER(papp);
 
-      return appdata() / lpcszPrefix;
+   //   return appdata() / lpcszPrefix;
 
-   }
-
-
-   ::file::path dir::appdata(::aura::application * papp)
-   {
-
-      return userfolder(papp) /  "appdata";
-
-   }
+   //}
 
 
-   ::file::path dir::userdata(::aura::application * papp)
-   {
+   //::file::path dir::appdata(::aura::application * papp)
+   //{
 
-      return userfolder(papp) / "data";
+   //   return userfolder(papp) /  "appdata";
 
-   }
+   //}
+
+
+   //::file::path dir::userdata(::aura::application * papp)
+   //{
+
+   //   return userfolder(papp) / "data";
+
+   //}
 
 
 //   ::file::path dir::userfolder(::aura::application * papp)
@@ -1175,52 +1175,52 @@ try1:
 //      }*/
 //   }
 
-   ::file::path dir::default_os_user_path_prefix(::aura::application * papp)
-   {
-      /*UNREFERENCED_PARAMETER(papp);
-      unichar buf[MAX_PATH];
-      ULONG ulSize = sizeof(buf) / sizeof(unichar);
-      if(!::GetUserNameExW(Namecanonical, buf, &ulSize))
-      {
-         if(!::GetUserNameW(buf, &ulSize))
-         {
-            memset(buf, 0, sizeof(buf));
-         }
-      }*/
-      /*return ::str::international::unicode_to_utf8(buf);*/
-      return ::getlogin();
+   //::file::path dir::default_os_user_path_prefix(::aura::application * papp)
+   //{
+   //   /*UNREFERENCED_PARAMETER(papp);
+   //   unichar buf[MAX_PATH];
+   //   ULONG ulSize = sizeof(buf) / sizeof(unichar);
+   //   if(!::GetUserNameExW(Namecanonical, buf, &ulSize))
+   //   {
+   //      if(!::GetUserNameW(buf, &ulSize))
+   //      {
+   //         memset(buf, 0, sizeof(buf));
+   //      }
+   //   }*/
+   //   /*return ::str::international::unicode_to_utf8(buf);*/
+   //   return ::getlogin();
 
-   }
-
-
-   ::file::path dir::default_userappdata(::aura::application * papp, const string & lpcszPrefix, const string & lpcszLogin)
-   {
-
-      return default_userfolder(papp, lpcszPrefix, lpcszLogin) /  "appdata";
-
-   }
+   //}
 
 
-   ::file::path dir::default_userdata(::aura::application * papp, const string & lpcszPrefix, const string & lpcszLogin)
-   {
+   //::file::path dir::default_userappdata(::aura::application * papp, const string & lpcszPrefix, const string & lpcszLogin)
+   //{
 
-      return default_userfolder(papp, lpcszPrefix, lpcszLogin) / "data";
+   //   return default_userfolder(papp, lpcszPrefix, lpcszLogin) /  "appdata";
 
-   }
+   //}
 
 
-   ::file::path dir::default_userfolder(::aura::application *  papp, const string & lpcszPrefix, const string & lpcszLogin)
-   {
+   //::file::path dir::default_userdata(::aura::application * papp, const string & lpcszPrefix, const string & lpcszLogin)
+   //{
 
-      return userfolder(papp);
+   //   return default_userfolder(papp, lpcszPrefix, lpcszLogin) / "data";
 
-   }
+   //}
+
+
+   //::file::path dir::default_userfolder(::aura::application *  papp, const string & lpcszPrefix, const string & lpcszLogin)
+   //{
+
+   //   return userfolder(papp);
+
+   //}
 
 
    ::file::path dir::userquicklaunch(::aura::application * papp)
    {
 
-      return ::dir::root() /  ".ca2/app/Microsoft/Internet Explorer/Quick Launch";
+      return m_pathInstall /  ".ca2/app/Microsoft/Internet Explorer/Quick Launch";
 
    }
 
@@ -1228,7 +1228,7 @@ try1:
    ::file::path dir::userprograms(::aura::application * papp)
    {
 
-      return ::dir::root() / system::userprograms(papp);
+      return m_pathInstall / system::userprograms(papp);
 
    }
 
@@ -1236,7 +1236,7 @@ try1:
    ::file::path dir::commonprograms()
    {
 
-      return ::dir::root() / system::commonprograms();
+      return m_pathInstall / system::commonprograms();
 
    }
 

@@ -49,18 +49,6 @@ namespace base
 
       virtual bool initialize_native_window1() override;
 
-// #ifdef APPLE_IOS
-
-//       virtual void * initialize_native_window2(LPCRECT lpcrect) override;
-
-// #endif
-
-
-#ifdef ANDROID
-
-      virtual void on_os_text(e_os_text etext, string strText) override;
-
-#endif
 
 
    };

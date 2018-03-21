@@ -18,11 +18,11 @@ aura_level auralevelBase(::aura_level::level_base, &defer_base_init);
 
 #elif defined(ANDROID)
 
-#include "base/os/android/android_windowing.h"
+//#include "base/os/android/android_windowing.h"
 
-oswindow_dataptra * oswindow_data::s_pdataptra = NULL;
+//oswindow_dataptra * oswindow_data::s_pdataptra = NULL;
 
-mutex * oswindow_data::s_pmutex = NULL;
+//mutex * oswindow_data::s_pmutex = NULL;
 
 
 #endif
@@ -63,9 +63,9 @@ namespace base
 
          g_plconv->decimal_point = strdup(".");
 
-         oswindow_data::s_pdataptra = new oswindow_dataptra;
+         //oswindow_data::s_pdataptra = new oswindow_dataptra;
 
-         oswindow_data::s_pmutex = new mutex;
+         //oswindow_data::s_pmutex = new mutex;
 
 #endif
 

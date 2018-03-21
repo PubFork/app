@@ -3187,6 +3187,7 @@ success:
    }
 #endif
 
+#ifndef ANDROID
 
    void system::on_os_text(e_os_text etext, string strText)
    {
@@ -3194,7 +3195,7 @@ success:
 
    }
 
-
+#endif
 
 #ifdef METROWIN
 

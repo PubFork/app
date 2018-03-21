@@ -97,7 +97,7 @@
     </ClCompile>
     <Link />
     <Link>
-      <LibraryDependencies>axisfreetype;axisfreeimage;axis;aura;ace;$(StlLibraryName);log;android;m</LibraryDependencies>
+      <LibraryDependencies>axisfreetype;axis;aura;ace;$(StlLibraryName);log;android;m</LibraryDependencies>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)..\..\..\nodeapp\thirdparty\library\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories);$(ToolchainPrebuiltPath)\lib\gcc\i686-linux-android\$(ToolchainVersion);$(StlLibraryPath)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -114,7 +114,7 @@
     <Link />
     <Link>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)..\..\..\nodeapp\thirdparty\library\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories);$(ToolchainPrebuiltPath)\lib\gcc\$(ToolchainName)\$(ToolchainVersion)\$(PlatformShortName);$(StlLibraryPath)</AdditionalLibraryDirectories>
-      <LibraryDependencies>axis;aura;ace;$(StlLibraryName);log;android;m</LibraryDependencies>
+      <LibraryDependencies>axisfreetype;axis;aura;ace;$(StlLibraryName);log;android;m</LibraryDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">
@@ -133,7 +133,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)..\..\..\nodeapp\thirdparty\library\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories);$(ToolchainPrebuiltPath)\lib\gcc\$(ToolchainName)\$(ToolchainVersion)\$(PlatformShortName);$(StlLibraryPath)</AdditionalLibraryDirectories>
-      <LibraryDependencies>axis;aura;ace;$(StlLibraryName);log;android;m</LibraryDependencies>
+      <LibraryDependencies>axisfreetype;axis;aura;ace;$(StlLibraryName);log;android;m</LibraryDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='stage|x86'">
@@ -151,7 +151,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)..\..\..\nodeapp\thirdparty\library\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories);$(ToolchainPrebuiltPath)\lib\gcc\i686-linux-android\$(ToolchainVersion);$(StlLibraryPath)</AdditionalLibraryDirectories>
-      <LibraryDependencies>axis;aura;ace;$(StlLibraryName);log;android;m</LibraryDependencies>
+      <LibraryDependencies>axisfreetype;axis;aura;ace;$(StlLibraryName);log;android;m</LibraryDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -161,32 +161,19 @@
     <ClCompile Include="base\base\base_static_start.cpp" />
     <ClCompile Include="base\base\base_system.cpp" />
     <ClCompile Include="base\install\install_canvas.cpp" />
-    <ClCompile Include="base\message\message_user.cpp" />
     <ClCompile Include="base\node\android\android1.cpp" />
     <ClCompile Include="base\node\android\android2.cpp" />
     <ClCompile Include="base\node\android\android_android.cpp" />
     <ClCompile Include="base\node\android\android_factory_exchange.cpp" />
-    <ClCompile Include="base\node\android\android_interaction_impl.cpp" />
     <ClCompile Include="base\os\android\android.cpp" />
-    <ClCompile Include="base\os\android\android_message_loop.cpp" />
-    <ClCompile Include="base\os\android\android_simple_app.cpp" />
-    <ClCompile Include="base\os\android\android_view_bitmap.cpp" />
-    <ClCompile Include="base\os\android\android_vsnord_native_app_glue.c" />
-    <ClCompile Include="base\os\android\android_windowing.cpp" />
-    <ClCompile Include="base\os\android\android_window_buffer.cpp" />
-    <ClCompile Include="base\os\android\android_window_android.cpp" />
     <ClCompile Include="base\os\ansios\ansios_cross_win.cpp" />
     <ClCompile Include="base\os\ansios\ansios_cross_windows_user.cpp" />
     <ClCompile Include="base\os\ansios\ansios_cross_win_file.cpp" />
     <ClCompile Include="base\os\ansios\ansios_file_std.cpp" />
     <ClCompile Include="base\os\ansios\ansios_multithreading.cpp" />
-    <ClCompile Include="base\os\cross\windows\base_cross_windows_threading.cpp" />
     <ClCompile Include="database\database\database_user_interaction.cpp" />
     <ClCompile Include="database\simpledb\simpledb_file_system_size.cpp" />
     <ClCompile Include="framework.cpp" />
-    <ClCompile Include="graphics\graphics_window_buffer.cpp" />
-    <ClCompile Include="graphics\graphics_window_dc.cpp" />
-    <ClCompile Include="graphics\graphics_window_graphics.cpp" />
     <ClCompile Include="user\fontopus\fontopus.cpp" />
     <ClCompile Include="user\fontopus\fontopus_dialog.cpp" />
     <ClCompile Include="user\fontopus\fontopus_login.cpp" />
@@ -197,6 +184,11 @@
     <ClCompile Include="user\hotplugin\hotplugin_host.cpp" />
     <ClCompile Include="user\hotplugin\hotplugin_plugin.cpp" />
     <ClCompile Include="user\hotplugin\hotplugin_windows.cpp" />
+    <ClCompile Include="user\install\install_plugin.cpp" />
+    <ClCompile Include="user\install\install_plugin_bare_paint_discreet.cpp" />
+    <ClCompile Include="user\install\install_plugin_bare_paint_full_screen.cpp" />
+    <ClCompile Include="user\install\install_plugin_bare_paint_veri_discreet.cpp" />
+    <ClCompile Include="user\install\install_starter_start.cpp" />
     <ClCompile Include="user\simple\simple_scroll_bar.cpp" />
     <ClCompile Include="user\simple_ui\simple_ui_edit_box.cpp" />
     <ClCompile Include="user\simple_ui\simple_ui_interaction.cpp" />
@@ -206,52 +198,169 @@
     <ClCompile Include="user\simple_ui\simple_ui_style.cpp" />
     <ClCompile Include="user\simple_ui\simple_ui_tap.cpp" />
     <ClCompile Include="user\simple_ui\simple_ui_top.cpp" />
-    <ClCompile Include="user\user\user.cpp" />
-    <ClCompile Include="user\user\user_box.cpp" />
-    <ClCompile Include="user\user\user_button.cpp" />
-    <ClCompile Include="user\user\user_control.cpp" />
-    <ClCompile Include="user\user\user_control_bar.cpp" />
-    <ClCompile Include="user\user\user_control_descriptor.cpp" />
-    <ClCompile Include="user\user\user_control_descriptor_set.cpp" />
-    <ClCompile Include="user\user\user_control_event.cpp" />
-    <ClCompile Include="user\user\user_document.cpp" />
-    <ClCompile Include="user\user\user_form_callback.cpp" />
-    <ClCompile Include="user\user\user_form_update_hint.cpp" />
-    <ClCompile Include="user\user\user_form_window.cpp" />
-    <ClCompile Include="user\user\user_frame_window.cpp" />
-    <ClCompile Include="user\user\user_impact.cpp" />
-    <ClCompile Include="user\user\user_impact_system.cpp" />
-    <ClCompile Include="user\user\user_impact_update_hint.cpp" />
-    <ClCompile Include="user\user\user_interaction.cpp" />
-    <ClCompile Include="user\user\user_interaction_base.cpp" />
-    <ClCompile Include="user\user\user_interaction_child.cpp" />
-    <ClCompile Include="user\user\user_interaction_impl.cpp" />
-    <ClCompile Include="user\user\user_interaction_impl_base.cpp" />
-    <ClCompile Include="user\user\user_menu.cpp" />
-    <ClCompile Include="user\user\user_menu_command.cpp" />
-    <ClCompile Include="user\user\user_menu_item.cpp" />
-    <ClCompile Include="user\user\user_message.cpp" />
-    <ClCompile Include="user\user\user_message_queue.cpp" />
-    <ClCompile Include="user\user\user_mouse.cpp" />
-    <ClCompile Include="user\user\user_place_holder.cpp" />
-    <ClCompile Include="user\user\user_place_holder_container.cpp" />
-    <ClCompile Include="user\user\user_plain_edit.cpp" />
-    <ClCompile Include="user\user\user_plain_text_data.cpp" />
-    <ClCompile Include="user\user\user_scroll.cpp" />
-    <ClCompile Include="user\user\user_scroll_bar.cpp" />
-    <ClCompile Include="user\user\user_server.cpp" />
-    <ClCompile Include="user\user\user_style.cpp" />
-    <ClCompile Include="user\user\user_style_base.cpp" />
-    <ClCompile Include="user\user\user_style_composite.cpp" />
-    <ClCompile Include="user\user\user_tooltip.cpp" />
-    <ClCompile Include="user\user\user_user.cpp" />
-    <ClCompile Include="user\user\user_view_container.cpp" />
-    <ClCompile Include="user\user\user_view_creator.cpp" />
-    <ClCompile Include="user\user\user_wait_cursor.cpp" />
-    <ClCompile Include="user\user\user_windowing.cpp" />
-    <ClCompile Include="user\user\user_window_map.cpp" />
-    <ClCompile Include="user\user\user_window_util.cpp" />
-    <ClCompile Include="user\wndfrm\frame\wndfrm_frame_updowninterface.cpp" />
+    <ClCompile Include="user\user\user.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x86'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x86'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_box.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x86'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x86'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_button.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x86'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x86'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_control.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x86'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x86'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_control_bar.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x86'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x86'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_control_descriptor.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x86'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x86'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_control_descriptor_set.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x86'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x86'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_document.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x86'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x86'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_form_callback.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x86'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x86'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_form_update_hint.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x86'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x86'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_form_window.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x86'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x86'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_frame_window.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x86'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x86'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_impact.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x86'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x86'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_impact_system.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x86'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x86'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_impact_update_hint.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x86'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x86'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_message.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x86'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x86'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_multiple_document_template.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x86'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x86'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_plain_edit.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x86'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x86'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_plain_text_data.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x86'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x86'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_scroll.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x86'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x86'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_scroll_bar.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x86'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x86'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_server.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x86'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x86'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_single_document_template.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x86'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x86'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_user.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x86'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x86'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_view_container.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x86'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x86'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_view_creator.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x86'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x86'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_wait_cursor.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x86'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x86'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\_user.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base\base\base.h" />
@@ -299,6 +408,9 @@
     <ClInclude Include="user\hotplugin\hotplugin_container_launcher.h" />
     <ClInclude Include="user\hotplugin\hotplugin_host.h" />
     <ClInclude Include="user\hotplugin\hotplugin_plugin.h" />
+    <ClInclude Include="user\install\install.h" />
+    <ClInclude Include="user\install\install_plugin.h" />
+    <ClInclude Include="user\install\install_starter_start.h" />
     <ClInclude Include="user\simple\simple.h" />
     <ClInclude Include="user\simple\simple_scroll_bar.h" />
     <ClInclude Include="user\simple_ui\simple_ui.h" />
@@ -346,7 +458,6 @@
     <ClInclude Include="user\user\user_windowing.h" />
     <ClInclude Include="user\user\user_window_map.h" />
     <ClInclude Include="user\user\user_window_util.h" />
-    <ClInclude Include="user\wndfrm\frame\wndfrm_frame_updowninterface.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="base\base\base.inl" />

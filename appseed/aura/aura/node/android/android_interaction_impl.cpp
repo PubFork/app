@@ -1,15 +1,14 @@
-#include "framework.h" // from "base/user/user.h"
-//#include "base/user/user.h"
-//#include "aura/node/android/android.h"
-//#include "android.h"
-
-CLASS_DECL_BASE int g_iMouseDown = 0;
-
-CLASS_DECL_AXIS thread_int_ptr < DWORD_PTR > t_time1;
-CLASS_DECL_AXIS thread_int_ptr < DWORD_PTR > t_time2;
+#include "framework.h"
+#include "aura/os/android/android_windowing.h"
 
 
-extern CLASS_DECL_AXIS thread_int_ptr < DWORD_PTR > t_time1;
+CLASS_DECL_AURA int g_iMouseDown = 0;
+
+CLASS_DECL_AURA thread_int_ptr < DWORD_PTR > t_time1;
+CLASS_DECL_AURA thread_int_ptr < DWORD_PTR > t_time2;
+
+
+extern CLASS_DECL_AURA thread_int_ptr < DWORD_PTR > t_time1;
 
 
 
@@ -83,13 +82,13 @@ namespace android
    interaction_impl::~interaction_impl()
    {
 
-      if(m_pauraapp != NULL &&  m_pauraapp->m_pbasesession != NULL &&  m_pauraapp->m_pbasesession->m_puser != NULL)
+      if(m_pauraapp != NULL &&  m_pauraapp->m_paurasession != NULL &&  m_pauraapp->m_paurasession)
       {
 
-         if(Session.user()->m_pwindowmap != NULL)
+         if(Session.m_pwindowmap != NULL)
          {
 
-            Session.user()->m_pwindowmap->m_map.remove_key((int_ptr)get_handle());
+            Session.m_pwindowmap->m_map.remove_key((int_ptr)get_handle());
 
          }
 
@@ -117,7 +116,7 @@ namespace android
 
    // Change a interaction_impl's style
 
-   __STATIC bool CLASS_DECL_BASE __modify_style(oswindow oswindow,int32_t nStyleOffset,
+   __STATIC bool CLASS_DECL_AURA __modify_style(oswindow oswindow,int32_t nStyleOffset,
          uint32_t dwRemove,uint32_t dwAdd,UINT nFlags)
    {
       ASSERT(oswindow != NULL);
@@ -1162,7 +1161,7 @@ namespace android
    void interaction_impl::PrepareForHelp()
    {
 
-      sp(::user::frame_window) pFrameWnd = m_pui;
+      sp(::user::frame) pFrameWnd = m_pui;
 
       if(pFrameWnd.is_set())
       {
@@ -2283,11 +2282,15 @@ namespace android
       return TRUE;
    }
 
+
    void interaction_impl::get_app_wnda(user::oswindow_array & wnda)
    {
-      _throw(not_implemented(get_app()));
-      //      EnumWindows(GetAppsEnumWindowsProc, (LPARAM) &wnda);
+
+      // _throw(not_implemented(get_app()));
+      // EnumWindows(GetAppsEnumWindowsProc, (LPARAM) &wnda);
+
    }
+
 
    /*   void interaction_impl::_001OnDeferPaintLayeredWindowBackground(::draw2d::dib * pdib)
    {
@@ -2298,45 +2301,45 @@ namespace android
    class print_window :
       virtual ::object
    {
-      public:
+   public:
 
 
 
-         manual_reset_event m_event;
-         oswindow m_hwnd;
-         HDC m_hdc;
+      manual_reset_event m_event;
+      oswindow m_hwnd;
+      HDC m_hdc;
 
-         print_window(sp(::aura::application) papp, oswindow hwnd, HDC hdc, DWORD dwTimeout) :
-            ::object(papp),
-            m_event(papp)
+      print_window(sp(::aura::application) papp, oswindow hwnd, HDC hdc, DWORD dwTimeout) :
+         ::object(papp),
+         m_event(papp)
 
+      {
+         m_event.ResetEvent();
+         m_hwnd = hwnd;
+         m_hdc = hdc;
+         __begin_thread(papp, &print_window::s_print_window, (LPVOID) this, ::multithreading::priority_normal);
+         if (m_event.wait(millis(dwTimeout)).timeout())
          {
-            m_event.ResetEvent();
-            m_hwnd = hwnd;
-            m_hdc = hdc;
-            __begin_thread(papp, &print_window::s_print_window, (LPVOID) this, ::multithreading::priority_normal);
-            if (m_event.wait(millis(dwTimeout)).timeout())
-            {
-               TRACE("print_window::time_out");
-            }
+            TRACE("print_window::time_out");
          }
+      }
 
 
-         static_function UINT c_cdecl s_print_window(LPVOID pvoid)
+      static_function UINT c_cdecl s_print_window(LPVOID pvoid)
+      {
+         print_window * pprintwindow = (print_window *)pvoid;
+         try
          {
-            print_window * pprintwindow = (print_window *)pvoid;
-            try
-            {
-               HANDLE hevent = (HANDLE)pprintwindow->m_event.get_os_data();
-               _throw(not_implemented(pprintwindow->get_app()));
-               /*            ::PrintWindow(pprintwindow->m_hwnd, pprintwindow->m_hdc, 0);
-               ::SetEvent(hevent);*/
-            }
-            catch (...)
-            {
-            }
-            return 0;
+            HANDLE hevent = (HANDLE)pprintwindow->m_event.get_os_data();
+            _throw(not_implemented(pprintwindow->get_app()));
+            /*            ::PrintWindow(pprintwindow->m_hwnd, pprintwindow->m_hdc, 0);
+            ::SetEvent(hevent);*/
          }
+         catch (...)
+         {
+         }
+         return 0;
+      }
    };
 
    void interaction_impl::_001DeferPaintLayeredWindowBackground(HDC hdc)
@@ -4538,7 +4541,7 @@ namespace android
    ::user::interaction * interaction_impl::FindWindowEx(oswindow hwndParent, oswindow hwndChildAfter, const char * lpszClass, const char * lpszWindow)
    {
 
-      _throw(not_implemented(get_app()));
+      _throw(not_implemented(::get_app()));
       //      return ::android::interaction_impl::from_handle(::FindWindowEx(hwndParent, hwndChildAfter, lpszClass, lpszWindow));
 
    }
@@ -4593,7 +4596,7 @@ namespace android
    {
 
 
-      _throw(not_implemented(get_app()));
+      _throw(not_implemented(::get_app()));
       //      return ::android::interaction_impl::from_handle(::oswindowFromPoint(point));
 
    }
@@ -4638,7 +4641,7 @@ namespace android
    ::user::interaction * PASCAL interaction_impl::GetOpenClipboardWindow()
    {
 
-      _throw(not_implemented(get_app()));
+      _throw(not_implemented(::get_app()));
       //      return ::android::interaction_impl::from_handle(::GetOpenClipboardWindow());
 
    }
@@ -4646,7 +4649,7 @@ namespace android
    ::user::interaction * PASCAL interaction_impl::GetClipboardOwner()
    {
 
-      _throw(not_implemented(get_app()));
+      _throw(not_implemented(::get_app()));
       //      return ::android::interaction_impl::from_handle(::GetClipboardOwner());
 
    }
@@ -4654,7 +4657,7 @@ namespace android
    ::user::interaction * PASCAL interaction_impl::GetClipboardViewer()
    {
 
-      _throw(not_implemented(get_app()));
+      _throw(not_implemented(::get_app()));
       //      return ::android::interaction_impl::from_handle(::GetClipboardViewer());
 
    }
@@ -4689,7 +4692,7 @@ namespace android
    point PASCAL interaction_impl::GetCaretPos()
    {
 
-      _throw(not_implemented(get_app()));
+      _throw(not_implemented(::get_app()));
       //      point point;
       //      ::GetCaretPos((LPPOINT)&point); return point;
 
@@ -4698,7 +4701,7 @@ namespace android
    void PASCAL interaction_impl::SetCaretPos(POINT point)
    {
 
-      _throw(not_implemented(get_app()));
+      _throw(not_implemented(::get_app()));
       //      ::SetCaretPos(point.x, point.y);
 
    }
@@ -5308,7 +5311,7 @@ namespace android
          hWndTemp = ::GetParent(hWndTop);
       }
 
-      _throw(todo(get_app()));
+      _throw(todo(::get_app()));
       // get last active popup of first non-child that was found
       //    if (hParent == NULL && hWnd != NULL)
       //       hWnd = ::GetLastActivePopup(hWnd);
@@ -5345,7 +5348,7 @@ namespace android
 
    void interaction_impl::_001BaseWndInterfaceMap()
    {
-      Session.user()->window_map().set((int_ptr)get_handle(), this);
+      Session.window_map().set((int_ptr)get_handle(), this);
    }
 
 
@@ -5462,7 +5465,7 @@ namespace android
    ::user::interaction_impl * interaction_impl::from_handle(oswindow oswindow)
    {
 
-      return ::window_from_handle(oswindow);
+      return oswindow_get(oswindow);
 
    }
 

@@ -25,7 +25,7 @@ string get_error_message(DWORD dwError);
 
 // Return TRUE if valid memory block of nBytes
 //CLASS_DECL_BASE WINBOOL AfxIsMemoryBlock(const void * p,UINT nBytes,
-  // LONG* plRequestNumber = NULL);
+// LONG* plRequestNumber = NULL);
 
 //CLASS_DECL_BASE void AfxResetMsgCache();
 
@@ -35,7 +35,7 @@ string get_error_message(DWORD dwError);
 #include "android_factory_exchange.h"
 //#include "android_window_draw.h"
 //#include "android_window.h"
-#include "android_interaction_impl.h"
+//#include "android_interaction_impl.h"
 //#include "android_copydesk.h"
 //#include "android_message_queue.h"
 
@@ -62,17 +62,17 @@ CLASS_DECL_BASE void __cdecl __pre_translate_message(::message::message * pobj);
 
 
 WINBOOL PeekMessage(
-    LPMESSAGE lpMsg,
-    oswindow hWnd,
-    UINT wMsgFilterMin,
-    UINT wMsgFilterMax,
-    UINT wRemoveMsg);
+LPMESSAGE lpMsg,
+oswindow hWnd,
+UINT wMsgFilterMin,
+UINT wMsgFilterMax,
+UINT wRemoveMsg);
 
 WINBOOL GetMessage(
-    LPMESSAGE lpMsg,
-    oswindow hWnd,
-    UINT wMsgFilterMin,
-    UINT wMsgFilterMax);
+LPMESSAGE lpMsg,
+oswindow hWnd,
+UINT wMsgFilterMin,
+UINT wMsgFilterMax);
 
 
 

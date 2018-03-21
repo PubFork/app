@@ -81,14 +81,14 @@ void ansios_sigchld_handler(int sig)
    int iPid;
 
    while((iPid = waitpid(-1, &iExitCode,
-                          WUNTRACED
+                         WUNTRACED
 #ifdef WNOHANG
-                          | WNOHANG
+                         | WNOHANG
 #endif
 #ifdef WCONTINUED
-                          | WCONTINUED
+                         | WCONTINUED
 #endif
-                         )) > 0)
+                        )) > 0)
    {
 
       {
@@ -246,14 +246,14 @@ namespace ansios
          int iPid;
 
          iPid = waitpid(m_iPid, &iExitCode,
-                             WUNTRACED
-   #ifdef WNOHANG
-                             | WNOHANG
-   #endif
-   #ifdef WCONTINUED
-                             | WCONTINUED
-   #endif
-                            );
+                        WUNTRACED
+#ifdef WNOHANG
+                        | WNOHANG
+#endif
+#ifdef WCONTINUED
+                        | WCONTINUED
+#endif
+                       );
 
          if(iPid == 0)
          {
@@ -361,7 +361,7 @@ namespace ansios
       if(cmd_line == NULL)
       {
 
-         return 0;
+         return;
 
       }
 
@@ -417,13 +417,13 @@ namespace ansios
          // in parent, but error
          m_iPid = 0;
          free(cmd_line);
-         return 0;
+         return;
       }
 
       init_chldstatus(m_iPid);
 
       // in parent, success
-      return 1;
+      //return 1;
 
    }
 

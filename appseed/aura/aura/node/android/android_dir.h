@@ -24,8 +24,8 @@ namespace android
       dir(::aura::application * papp);
 
 
-	  virtual ::file::listing & ls( ::aura::application * papp, ::file::listing & listing);
-	  virtual ::file::listing & root_ones(::file::listing & listing, ::aura::application *  papp);
+      virtual ::file::listing & ls( ::aura::application * papp, ::file::listing & listing);
+      virtual ::file::listing & root_ones(::file::listing & listing, ::aura::application *  papp);
 
 
       virtual bool  is(const ::file::path & path, ::aura::application * papp);
@@ -50,8 +50,8 @@ namespace android
 
       //virtual ::file::path module();
       //virtual ::file::path ca2module();
-	  virtual ::file::path time_square(::aura::application * papp, const string & strPrefix = cnull, const string & strSuffix = cnull);
-	  virtual ::file::path time_log();
+      virtual ::file::path time_square(::aura::application * papp, const string & strPrefix = cnull, const string & strSuffix = cnull);
+      virtual ::file::path time_log();
 
 
       virtual ::file::path trash_that_is_not_trash(const ::file::path & psz);
@@ -60,14 +60,14 @@ namespace android
       virtual ::file::path commonappdata();
 
 
-      virtual ::file::path usersystemappdata(::aura::application * papp, const string & lpcszPrefix);
-      virtual ::file::path userappdata(::aura::application * papp);
-      virtual ::file::path userdata(::aura::application * papp);
-      //virtual ::file::path userfolder(::aura::application * papp);
-      virtual ::file::path default_os_user_path_prefix(::aura::application * papp);
-      virtual ::file::path default_userappdata(::aura::application * papp, const string & lpcszPrefix, const string & lpcszLogin);
-      virtual ::file::path default_userdata(::aura::application * papp, const string & lpcszPrefix, const string & lpcszLogin);
-      virtual ::file::path default_userfolder(::aura::application * papp, const string & lpcszPrefix, const string & lpcszLogin);
+      //virtual ::file::path usersystemappdata(::aura::application * papp, const string & lpcszPrefix);
+      //virtual ::file::path userappdata(::aura::application * papp);
+      //virtual ::file::path userdata(::aura::application * papp);
+      ////virtual ::file::path userfolder(::aura::application * papp);
+      //virtual ::file::path default_os_user_path_prefix(::aura::application * papp);
+      //virtual ::file::path default_userappdata(::aura::application * papp, const string & lpcszPrefix, const string & lpcszLogin);
+      //virtual ::file::path default_userdata(::aura::application * papp, const string & lpcszPrefix, const string & lpcszLogin);
+      //virtual ::file::path default_userfolder(::aura::application * papp, const string & lpcszPrefix, const string & lpcszLogin);
       virtual ::file::path userquicklaunch(::aura::application * papp);
       virtual ::file::path userprograms(::aura::application * papp);
 

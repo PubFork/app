@@ -1,7 +1,7 @@
 #include "framework.h"
 #include <math.h>
 
-#include "FreeImage.h"
+#include "FreeImage/FreeImage.h"
 #include "graphics/visual/visual_freeimage_image.h"
 
 
@@ -361,11 +361,11 @@ bool freeimage_load_diba_frame(::draw2d::dib * pdibCompose, ::visual::dib_sp::ar
    {
 
       ::draw2d::copy_colorref(
-         p->m_dib->m_size.cx,
-         p->m_dib->m_size.cy,
-         p->m_dib->m_pcolorref,
-         p->m_dib->m_iScan,
-         (COLORREF*) pdata, iScan);
+      p->m_dib->m_size.cx,
+      p->m_dib->m_size.cy,
+      p->m_dib->m_pcolorref,
+      p->m_dib->m_iScan,
+      (COLORREF*) pdata, iScan);
       return true;
    }
    else

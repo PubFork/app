@@ -37,9 +37,6 @@
     <ClCompile Include="axis\os\android\android_multithreading.cpp">
       <Filter>Source Files\axis\os\android</Filter>
     </ClCompile>
-    <ClCompile Include="axis\os\android\android_simple_app.cpp">
-      <Filter>Source Files\axis\os\android</Filter>
-    </ClCompile>
     <ClCompile Include="axis\os\android\android_trace_message.cpp">
       <Filter>Source Files\axis\os\android</Filter>
     </ClCompile>
@@ -244,72 +241,6 @@
     <ClCompile Include="axis\node\android\android_copydesk.cpp">
       <Filter>Source Files\axis\node\android</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\dib_console.cpp">
-      <Filter>Source Files\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\antialias_8bit.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\detect_8bit_borders.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\freeimage.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\load_gif_frame.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_api.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_buffered_graphics.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_dib.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_fastblur.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_font.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_font_department.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_font_enumeration.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_font_list_data.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_FreeImageFileProc.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_glyph.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_glyph_set.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_graphics_extension.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_image_list.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_imaging.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_rgb_quad_array.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_visual.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_water_routine.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
     <ClCompile Include="html_lite\html\html_html.cpp">
       <Filter>Source Files\html_lite\html</Filter>
     </ClCompile>
@@ -390,12 +321,6 @@
     </ClCompile>
     <ClCompile Include="filesystem\_file.cpp">
       <Filter>Source Files\filesystem</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\_visual.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\_graphics.cpp">
-      <Filter>Source Files\graphics</Filter>
     </ClCompile>
     <ClCompile Include="html_lite\html_lite\_html_lite.cpp">
       <Filter>Source Files\html_lite\html_lite</Filter>
@@ -880,12 +805,6 @@
     </Filter>
     <Filter Include="Header Files\html_lite\html_lite">
       <UniqueIdentifier>{14f57fb5-9997-418a-a5a2-0f84a9c81aa6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\graphics">
-      <UniqueIdentifier>{c24f5a5c-1b43-4344-8400-e7425c000fec}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\graphics\visual">
-      <UniqueIdentifier>{12b95527-3f02-408f-82b6-191a5c7b84d6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\html_lite\html">
       <UniqueIdentifier>{1f76b015-444e-4cb6-98d0-8eed9e161a9a}</UniqueIdentifier>

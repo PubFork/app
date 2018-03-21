@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 
-#include "FreeImage.h"
+#include "FreeImage/FreeImage.h"
 
 
 FIBITMAP * freeimage_from_dib(::draw2d::dib * pdib)
@@ -616,213 +616,213 @@ namespace visual
 
 }
 
-   bool imaging::_save_image(::file::file * pfile, ::draw2d::dib * pdib, ::visual::save_image * psaveimage)
-   {
+bool imaging::_save_image(::file::file * pfile, ::draw2d::dib * pdib, ::visual::save_image * psaveimage)
+{
    if(pdib == NULL)
    {
-   return false;
+      return false;
    }
-      ::visual::save_image saveimageDefault;
-      if (psaveimage == NULL)
-         psaveimage = &saveimageDefault;
-      //#ifdef WINDOWS
+   ::visual::save_image saveimageDefault;
+   if (psaveimage == NULL)
+      psaveimage = &saveimageDefault;
+   //#ifdef WINDOWS
 
-      //    return windows_write_dib_to_file(pfile, m_p, psaveimage, m_p->get_app());
+   //    return windows_write_dib_to_file(pfile, m_p, psaveimage, m_p->get_app());
 
-      //#else
+   //#else
 
 
-      bool bOk = false;
+   bool bOk = false;
 
-      bool b8 = false;
-      bool b24 = false;
-      int iFreeImageSave = 0;
-      FREE_IMAGE_FORMAT eformat = (FREE_IMAGE_FORMAT)0;
-      string strFile;
-      switch (psaveimage->m_eformat)
+   bool b8 = false;
+   bool b24 = false;
+   int iFreeImageSave = 0;
+   FREE_IMAGE_FORMAT eformat = (FREE_IMAGE_FORMAT)0;
+   string strFile;
+   switch (psaveimage->m_eformat)
+   {
+   case ::visual::image::format_png:
+      eformat = FreeImage_GetFIFFromFormat("PNG");
+      strFile = "foo.png";
+      break;
+   case ::visual::image::format_bmp:
+      eformat = FIF_BMP;
+      strFile = "foo.bmp";
+      break;
+   case ::visual::image::format_gif:
+      b8 = true;
+      eformat = FIF_GIF;
+      strFile = "foo.gif";
+      break;
+   case ::visual::image::format_jpeg:
+      b24 = true;
+      eformat = FreeImage_GetFIFFromFormat("JPEG");
+      strFile = "foo.jpg";
+      if (psaveimage->m_iQuality > 80)
       {
-      case ::visual::image::format_png:
-         eformat = FreeImage_GetFIFFromFormat("PNG");
-         strFile = "foo.png";
-         break;
-      case ::visual::image::format_bmp:
-         eformat = FIF_BMP;
-         strFile = "foo.bmp";
-         break;
-      case ::visual::image::format_gif:
-         b8 = true;
-         eformat = FIF_GIF;
-         strFile = "foo.gif";
-         break;
-      case ::visual::image::format_jpeg:
-         b24 = true;
-         eformat = FreeImage_GetFIFFromFormat("JPEG");
-         strFile = "foo.jpg";
-         if (psaveimage->m_iQuality > 80)
-         {
-            iFreeImageSave |= JPEG_QUALITYSUPERB;
-         }
-         else if (psaveimage->m_iQuality > 67)
-         {
-            iFreeImageSave |= JPEG_QUALITYGOOD;
-         }
-         else if (psaveimage->m_iQuality > 33)
-         {
-            iFreeImageSave |= JPEG_QUALITYNORMAL;
-         }
-         else if (psaveimage->m_iQuality > 15)
-         {
-            iFreeImageSave |= JPEG_QUALITYAVERAGE;
-         }
-         else
-         {
-            iFreeImageSave |= JPEG_QUALITYBAD;
-         }
-         break;
-      default:
-         return false;
+         iFreeImageSave |= JPEG_QUALITYSUPERB;
       }
-
-      eformat = FreeImage_GetFIFFromFilename(strFile);
-
-
-      FIMEMORY * pfm1 = FreeImage_OpenMemory();
-      FIBITMAP * pfi7 = freeimage_from_dib(pdib);
-      FIBITMAP * pfi8 = NULL;
-      bool bConv;
-      if (b8)
+      else if (psaveimage->m_iQuality > 67)
       {
-         pfi8 = FreeImage_ConvertTo8Bits(pfi7);
-         bConv = true;
+         iFreeImageSave |= JPEG_QUALITYGOOD;
       }
-      else if (b24)
+      else if (psaveimage->m_iQuality > 33)
       {
-         pfi8 = FreeImage_ConvertTo24Bits(pfi7);
-         bConv = true;
+         iFreeImageSave |= JPEG_QUALITYNORMAL;
+      }
+      else if (psaveimage->m_iQuality > 15)
+      {
+         iFreeImageSave |= JPEG_QUALITYAVERAGE;
       }
       else
       {
-         //FreeImage_SetTransparent(pfi8,true);
-         pfi8 = pfi7;
-         bConv = false;
+         iFreeImageSave |= JPEG_QUALITYBAD;
       }
+      break;
+   default:
+      return false;
+   }
 
-      bOk = FreeImage_SaveToMemory(eformat, pfi8, pfm1, iFreeImageSave) != FALSE;
+   eformat = FreeImage_GetFIFFromFilename(strFile);
 
-      BYTE * pbData = NULL;
-      DWORD dwSize = 0;
-      if (bOk)
-         bOk = FreeImage_AcquireMemory(pfm1, &pbData, &dwSize) != FALSE;
-      if (bOk)
+
+   FIMEMORY * pfm1 = FreeImage_OpenMemory();
+   FIBITMAP * pfi7 = freeimage_from_dib(pdib);
+   FIBITMAP * pfi8 = NULL;
+   bool bConv;
+   if (b8)
+   {
+      pfi8 = FreeImage_ConvertTo8Bits(pfi7);
+      bConv = true;
+   }
+   else if (b24)
+   {
+      pfi8 = FreeImage_ConvertTo24Bits(pfi7);
+      bConv = true;
+   }
+   else
+   {
+      //FreeImage_SetTransparent(pfi8,true);
+      pfi8 = pfi7;
+      bConv = false;
+   }
+
+   bOk = FreeImage_SaveToMemory(eformat, pfi8, pfm1, iFreeImageSave) != FALSE;
+
+   BYTE * pbData = NULL;
+   DWORD dwSize = 0;
+   if (bOk)
+      bOk = FreeImage_AcquireMemory(pfm1, &pbData, &dwSize) != FALSE;
+   if (bOk)
+   {
+      try
       {
-         try
-         {
-            pfile->write(pbData, dwSize);
-         }
-         catch (...)
-         {
-            bOk = false;
-         }
+         pfile->write(pbData, dwSize);
       }
-
-      FreeImage_CloseMemory(pfm1);
-      if (bConv)
+      catch (...)
       {
-         FreeImage_Unload(pfi8);
+         bOk = false;
       }
-      FreeImage_Unload(pfi7);
-
-
-
-      return bOk != FALSE;
-
-      //#endif
-
    }
 
-
-   /*FIBITMAP * imaging::LoadImageFile(CArchive & ar)
+   FreeImage_CloseMemory(pfm1);
+   if (bConv)
    {
-   ASSERT(!ar.IsStoring());
-
-   return LoadImageFile(ar.GetFile());
-
+      FreeImage_Unload(pfi8);
    }
-   */
-   /*HBITMAP imaging::LoadBitmap(
-   const char * lpszType,
-   const char * lpszId)
-   {
-   ::exception::throw_not_implemented(get_app());
-
-   ::memory_file file(get_app());
-
-   ::core::Resource resource;
-
-   if(!resource.ReadResource(*file.get_memory(), (UINT) MAKEINTRESOURCE(lpszId), lpszType))
-   return false;
-
-   file.seek_to_begin();
-
-   ::file::file_sp  pfile = &file;
-
-   FreeImageIO io;
-   io.read_proc   = ___Ex1File__ReadProc;
-   io.seek_proc   = ___Ex1File__SeekProc;
-   io.tell_proc   = ___Ex1File__TellProc;
-   io.write_proc  = ___Ex1File__WriteProc;
-
-   FREE_IMAGE_FORMAT format;
-   format = FreeImage_GetFileTypeFromHandle(&io, pfile ,16);
-   FIBITMAP *pfi = NULL;
-   if(true)
-   {
-   pfi = FreeImage_LoadFromHandle(format, &io, pfile);
-   }
-
-   if(pfi == NULL)
-   return NULL;
-
-   BITMAPINFO * pbi = FreeImage_GetInfo(pfi);
-   void * pData = FreeImage_GetBits(pfi);
+   FreeImage_Unload(pfi7);
 
 
-   HDC hdcSource = CreateDC(
-   "DISPLAY",
-   NULL,
-   NULL,
-   NULL);
 
-   HBITMAP hBitmapSource = ::CreateCompatibleBitmap(
-   hdcSource,
-   pbi->bmiHeader.biWidth,
-   pbi->bmiHeader.biHeight);
+   return bOk != FALSE;
 
-   if(pbi->bmiHeader.biHeight != SetDIBits(
-   hdcSource,
-   hBitmapSource,
-   0,
-   pbi->bmiHeader.biHeight,
-   pData,
-   pbi,
-   DIB_RGB_COLORS))
-   {
-   FreeImage_Unload(pfi);
-   DeleteDC(hdcSource);
-   delete_object(hBitmapSource);
-   return NULL;
-   }
+   //#endif
 
-   FreeImage_Unload(pfi);
-   DeleteDC(hdcSource);
-
-   return hBitmapSource;
-   */
-   //}
-   //*/
+}
 
 
-   //#endif // WINDOWSEX
+/*FIBITMAP * imaging::LoadImageFile(CArchive & ar)
+{
+ASSERT(!ar.IsStoring());
+
+return LoadImageFile(ar.GetFile());
+
+}
+*/
+/*HBITMAP imaging::LoadBitmap(
+const char * lpszType,
+const char * lpszId)
+{
+::exception::throw_not_implemented(get_app());
+
+::memory_file file(get_app());
+
+::core::Resource resource;
+
+if(!resource.ReadResource(*file.get_memory(), (UINT) MAKEINTRESOURCE(lpszId), lpszType))
+return false;
+
+file.seek_to_begin();
+
+::file::file_sp  pfile = &file;
+
+FreeImageIO io;
+io.read_proc   = ___Ex1File__ReadProc;
+io.seek_proc   = ___Ex1File__SeekProc;
+io.tell_proc   = ___Ex1File__TellProc;
+io.write_proc  = ___Ex1File__WriteProc;
+
+FREE_IMAGE_FORMAT format;
+format = FreeImage_GetFileTypeFromHandle(&io, pfile ,16);
+FIBITMAP *pfi = NULL;
+if(true)
+{
+pfi = FreeImage_LoadFromHandle(format, &io, pfile);
+}
+
+if(pfi == NULL)
+return NULL;
+
+BITMAPINFO * pbi = FreeImage_GetInfo(pfi);
+void * pData = FreeImage_GetBits(pfi);
+
+
+HDC hdcSource = CreateDC(
+"DISPLAY",
+NULL,
+NULL,
+NULL);
+
+HBITMAP hBitmapSource = ::CreateCompatibleBitmap(
+hdcSource,
+pbi->bmiHeader.biWidth,
+pbi->bmiHeader.biHeight);
+
+if(pbi->bmiHeader.biHeight != SetDIBits(
+hdcSource,
+hBitmapSource,
+0,
+pbi->bmiHeader.biHeight,
+pData,
+pbi,
+DIB_RGB_COLORS))
+{
+FreeImage_Unload(pfi);
+DeleteDC(hdcSource);
+delete_object(hBitmapSource);
+return NULL;
+}
+
+FreeImage_Unload(pfi);
+DeleteDC(hdcSource);
+
+return hBitmapSource;
+*/
+//}
+//*/
+
+
+//#endif // WINDOWSEX
 
 
 

@@ -24,7 +24,7 @@ CLASS_DECL_AURA WINBOOL AfxCheckMemory();
 
 // Return TRUE if valid memory block of nBytes
 CLASS_DECL_AURA WINBOOL AfxIsMemoryBlock(const void * p, UINT nBytes,
-   LONG* plRequestNumber = NULL);
+      LONG* plRequestNumber = NULL);
 
 CLASS_DECL_AURA void AfxResetMsgCache();
 
@@ -57,17 +57,17 @@ CLASS_DECL_AURA void __cdecl __pre_translate_message(::message::message * pobj);
 
 
 WINBOOL PeekMessage(
-    LPMESSAGE lpMsg,
-    oswindow hWnd,
-    UINT wMsgFilterMin,
-    UINT wMsgFilterMax,
-    UINT wRemoveMsg);
+LPMESSAGE lpMsg,
+oswindow hWnd,
+UINT wMsgFilterMin,
+UINT wMsgFilterMax,
+UINT wRemoveMsg);
 
 WINBOOL GetMessage(
-    LPMESSAGE lpMsg,
-    oswindow hWnd,
-    UINT wMsgFilterMin,
-    UINT wMsgFilterMax);
+LPMESSAGE lpMsg,
+oswindow hWnd,
+UINT wMsgFilterMin,
+UINT wMsgFilterMax);
 
 
 
@@ -78,6 +78,9 @@ CLASS_DECL_AURA void vfxThrowFileException(::aura::application * papp, ::file::e
 
 
 #include "android_internal.h"
+
+
+#include "android_interaction_impl.h"
 
 
 

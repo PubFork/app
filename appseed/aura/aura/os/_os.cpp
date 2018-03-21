@@ -14,9 +14,9 @@
 #if !defined(ANDROID)
 #include "os_debug.cpp"
 #include "os_http.cpp"
-#include "os_os.cpp"
 #include "os_thread.cpp"
 #endif
+#include "os_os.cpp"
 
 
 #if !defined(ANDROID) && !defined(METROWIN)

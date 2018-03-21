@@ -365,7 +365,7 @@ namespace core
 
 #include "core_progress_interface.h"
 
-#include "app/appseed/core/core/os/os.h"
+#include "app/appseed/core/core/node/node.h"
 
 #include "core_debug.h"
 

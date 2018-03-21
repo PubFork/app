@@ -862,6 +862,9 @@
     <ClCompile Include="math\_math.cpp">
       <Filter>Source Files\math</Filter>
     </ClCompile>
+    <ClCompile Include="core\node\android\android_simple_frame_window.cpp">
+      <Filter>Source Files\core\node\android</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="user\simple\simple_child_frame.h">
@@ -1503,6 +1506,9 @@
     <ClInclude Include="user\databaseuser\databaseuser_mesh_data.h">
       <Filter>Header Files\user\databaseuser</Filter>
     </ClInclude>
+    <ClInclude Include="core\node\node.h">
+      <Filter>Header Files\core\node</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -1633,6 +1639,15 @@
     </Filter>
     <Filter Include="Header Files\user\fontopus">
       <UniqueIdentifier>{8b0dcb1c-8e37-4f97-b014-55228bac8934}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\core\node">
+      <UniqueIdentifier>{03718740-b301-41d7-8ce0-d60b2975129f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\core\node\android">
+      <UniqueIdentifier>{4898fa50-ab29-4630-a07b-2a7e6082872b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\core\node">
+      <UniqueIdentifier>{81e0d155-7aa9-45f7-82cb-cc539d4ce748}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

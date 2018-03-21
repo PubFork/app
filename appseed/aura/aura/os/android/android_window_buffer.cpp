@@ -1,5 +1,6 @@
 #include "framework.h"
 #include "android.h"
+#include "android_window_buffer.h"
 #include "android_window_android.h"
 
 namespace android

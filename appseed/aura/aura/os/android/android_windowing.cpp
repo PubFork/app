@@ -1,5 +1,19 @@
 ﻿#include "framework.h"
-#include "axis/user/user.h"
+#include "aura/os/android/android_windowing.h"
+
+::user::interaction * get_system_window_interaction(::os_system_window * psystemwindow)
+{
+
+   if (psystemwindow == NULL)
+   {
+
+      return NULL;
+
+   }
+
+   return psystemwindow->m_pui;
+
+}
 
 
 CLASS_DECL_AURA int32_t oswindow_find_message_only_window(::user::interaction_impl * puibaseMessageWindow);
@@ -471,7 +485,7 @@ bool oswindow_data::is_child(::oswindow oswindow)
 
    synch_lock slOsWindow(s_pmutex);
 
-   oswindow = oswindow->GetParent();
+   oswindow = oswindow->get_parent();
 
    while (!oswindow->is_null())
    {
@@ -484,7 +498,7 @@ bool oswindow_data::is_child(::oswindow oswindow)
 }
 
 
-oswindow oswindow_data::GetParent()
+oswindow oswindow_data::get_parent()
 {
 
    return NULL;
@@ -492,7 +506,7 @@ oswindow oswindow_data::GetParent()
 }
 
 
-oswindow oswindow_data::SetParent(oswindow oswindow)
+oswindow oswindow_data::set_parent(oswindow oswindow)
 {
 
    return NULL;
@@ -500,7 +514,7 @@ oswindow oswindow_data::SetParent(oswindow oswindow)
 }
 
 
-bool oswindow_data::ShowWindow(int32_t nCmdShow)
+bool oswindow_data::show_window(int32_t nCmdShow)
 {
 
    synch_lock sl(m_pimpl == NULL || m_pimpl->m_pui ? NULL : m_pimpl->m_pui->m_pmutex);
@@ -541,7 +555,7 @@ LONG_PTR oswindow_data::set_window_long_ptr(int32_t nIndex, LONG_PTR l)
 }
 
 
-bool oswindow_data::ClientToScreen(POINT * pp)
+bool oswindow_data::client_to_screen(POINT * pp)
 {
 
    return true;
@@ -549,7 +563,7 @@ bool oswindow_data::ClientToScreen(POINT * pp)
 }
 
 
-bool oswindow_data::ScreenToClient(POINT * pp)
+bool oswindow_data::screen_to_client(POINT * pp)
 {
 
    return true;
@@ -716,15 +730,15 @@ int_bool GetWindowRect(oswindow_data * pdata, RECT * prect)
 }
 
 
-bool ShowWindow(oswindow_data * pdata, int nCmdShow)
-{
+//WINBOOL ShowWindow(oswindow_data * pdata, int nCmdShow)
+//{
+//
+//   return pdata->show_window(nCmdShow);
+//
+//}
 
-   return pdata->ShowWindow(nCmdShow);
 
-}
-
-
-int_bool SetWindowPos(oswindow_data * pdata, oswindow_data * pdataAfter, int x, int y, int cx, int cy, unsigned int uiFlags)
+WINBOOL SetWindowPos(oswindow_data * pdata, oswindow_data * pdataAfter, int x, int y, int cx, int cy, unsigned int uiFlags)
 {
 
    return pdata->m_pimpl->SetWindowPos((int_ptr)pdataAfter, x, y, cx, cy, uiFlags);
@@ -765,27 +779,27 @@ int_bool SetWindowPos(oswindow_data * pdata, oswindow_data * pdataAfter, int x, 
 
 }
 
-oswindow_data * GetParent(oswindow_data * pdata)
-{
-
-   if (pdata == NULL)
-      return NULL;
-
-   if (!IsWindow(pdata))
-      return NULL;
-
-   return pdata->GetParent();
-
-
-}
-
+//oswindow_data * GetParent(oswindow_data * pdata)
+//{
+//
+//   if (pdata == NULL)
+//      return NULL;
+//
+//   if (!IsWindow(pdata))
+//      return NULL;
+//
+//   return pdata->get_parent();
+//
+//
+//}
+//
 int_bool IsAscendant(oswindow_data * pdata, oswindow_data * pdataAscendant)
 {
 
    if (pdata == NULL)
       return FALSE;
 
-   oswindow_data * pdataParent = pdata->GetParent();
+   oswindow_data * pdataParent = pdata->get_parent();
 
    if (pdataAscendant == NULL)
    {
@@ -801,7 +815,7 @@ int_bool IsAscendant(oswindow_data * pdata, oswindow_data * pdataAscendant)
       if (pdataParent == pdataAscendant)
          return TRUE;
 
-      pdataParent = pdataParent->GetParent();
+      pdataParent = pdataParent->get_parent();
    }
 
    return FALSE;
@@ -872,12 +886,12 @@ bool oswindow_data::is_destroying()
 }
 
 
-bool IsWindow(oswindow oswindow)
-{
-
-   return oswindow->get_user_interaction() != NULL && !oswindow->is_destroying();
-
-}
+//bool IsWindow(oswindow oswindow)
+//{
+//
+//   return oswindow->get_user_interaction() != NULL && !oswindow->is_destroying();
+//
+//}
 
 
 oswindow g_oswindowDesktop;
@@ -944,61 +958,61 @@ int_bool GetCursorPos(LPPOINT lppt)
 
 
 
-int32_t IsWindowVisible(oswindow window)
-{
-
-   if (!IsWindow(window))
-      return false;
-
-   return window->is_window_visible();
-
-}
-
-
-
-LONG GetWindowLongA(oswindow window, int nIndex)
-{
-
-   if (!IsWindow(window))
-      return false;
-
-   return (LONG) window->get_window_long_ptr(nIndex);
-
-}
+//int32_t IsWindowVisible(oswindow window)
+//{
+//
+//   if (!IsWindow(window))
+//      return false;
+//
+//   return window->is_window_visible();
+//
+//}
+//
 
 
-LONG SetWindowLongA(oswindow window, int nIndex, LONG lValue)
-{
+//LONG GetWindowLongA(oswindow window, int nIndex)
+//{
+//
+//   if (!IsWindow(window))
+//      return false;
+//
+//   return (LONG) window->get_window_long_ptr(nIndex);
+//
+//}
+//
+//
+//LONG SetWindowLongA(oswindow window, int nIndex, LONG lValue)
+//{
+//
+//   if (!IsWindow(window))
+//      return false;
+//
+//   return (LONG) window->set_window_long_ptr(nIndex, lValue);
+//
+//}
 
-   if (!IsWindow(window))
-      return false;
-
-   return (LONG) window->set_window_long_ptr(nIndex, lValue);
-
-}
-
-
-oswindow SetParent(oswindow window, oswindow windowNewParent)
-{
-
-   if (!IsWindow(window) || !(windowNewParent == NULL || ::IsWindow(windowNewParent)))
-      return NULL;
-
-   return window->SetParent(windowNewParent);
-
-}
+//
+//oswindow SetParent(oswindow window, oswindow windowNewParent)
+//{
+//
+//   if (!IsWindow(window) || !(windowNewParent == NULL || ::IsWindow(windowNewParent)))
+//      return NULL;
+//
+//   return window->SetParent(windowNewParent);
+//
+//}
 
 
 
-int32_t IsIconic(oswindow window)
-{
-
-   if (!IsWindow(window))
-      return false;
-
-   return window->is_iconic();
-
-}
+//int32_t IsIconic(oswindow window)
+//{
+//
+//   if (!IsWindow(window))
+//      return false;
+//
+//   return window->is_iconic();
+//
+//}
 
 
 ::user::interaction_impl * window_from_handle(oswindow oswindow)
@@ -1013,17 +1027,17 @@ int32_t IsIconic(oswindow window)
 
 
 
-bool IsChild(oswindow windowParent, oswindow oswindowCandidateChildOrDescendant)
-{
-
-   if (!IsWindow(windowParent) || !IsWindow(oswindowCandidateChildOrDescendant))
-      return false;
-
-
-   return windowParent->is_child(oswindowCandidateChildOrDescendant);
-
-
-}
+//bool IsChild(oswindow windowParent, oswindow oswindowCandidateChildOrDescendant)
+//{
+//
+//   if (!IsWindow(windowParent) || !IsWindow(oswindowCandidateChildOrDescendant))
+//      return false;
+//
+//
+//   return windowParent->is_child(oswindowCandidateChildOrDescendant);
+//
+//
+//}
 
 void on_post_nc_destroy(oswindow window)
 {
@@ -1052,18 +1066,18 @@ void android_mouse(unsigned int message, float x, float y)
    if (::aura::system::g_p == NULL)
       return;
 
-   if (::aura::system::g_p->m_pbasesystem == NULL)
+   if (::aura::system::g_p->m_paurasystem == NULL)
       return;
 
-   if (::aura::system::g_p->m_pbasesystem->m_possystemwindow == NULL)
+   if (::aura::system::g_p->m_paurasystem->m_possystemwindow == NULL)
       return;
 
-   if (::aura::system::g_p->m_pbasesystem->m_possystemwindow->m_pui == NULL)
+   if (::aura::system::g_p->m_paurasystem->m_possystemwindow->m_pui == NULL)
       return;
 
    MESSAGE msg;
 
-   msg.hwnd = ::aura::system::g_p->m_pbasesystem->m_possystemwindow->m_pui->get_handle();
+   msg.hwnd = ::aura::system::g_p->m_paurasystem->m_possystemwindow->m_pui->get_handle();
 
    msg.message = message;
 
@@ -1075,7 +1089,7 @@ void android_mouse(unsigned int message, float x, float y)
 
    msg.pt.y = (long)y;
 
-   ::aura::system::g_p->m_pbasesystem->m_possystemwindow->m_pui->message_handler(&msg);
+   ::aura::system::g_p->m_paurasystem->m_possystemwindow->m_pui->message_handler(&msg);
 
 
 }
@@ -1135,13 +1149,13 @@ void _android_key(unsigned int message, int keyCode, int iUni)
    if (::aura::system::g_p == NULL)
       return;
 
-   if (::aura::system::g_p->m_pbasesystem == NULL)
+   if (::aura::system::g_p->m_paurasystem == NULL)
       return;
 
-   if (::aura::system::g_p->m_pbasesystem->m_possystemwindow == NULL)
+   if (::aura::system::g_p->m_paurasystem->m_possystemwindow == NULL)
       return;
 
-   if (::aura::system::g_p->m_pbasesystem->m_possystemwindow->m_pui == NULL)
+   if (::aura::system::g_p->m_paurasystem->m_possystemwindow->m_pui == NULL)
       return;
 
    sp(::message::key) pkey = canew(::message::key(get_app()));
@@ -1155,7 +1169,7 @@ void _android_key(unsigned int message, int keyCode, int iUni)
 
    }
 
-   ::aura::system::g_p->m_pbasesystem->m_possystemwindow->m_pui->message_handler(pkey);
+   ::aura::system::g_p->m_paurasystem->m_possystemwindow->m_pui->message_handler(pkey);
 
 
 }
@@ -1274,7 +1288,7 @@ void android_on_text(e_os_text etext, const wchar_t * pwch, size_t len)
 }
 
 
-namespace base
+namespace aura
 {
 
    void system::on_os_text(e_os_text etext, string strText)
@@ -1315,7 +1329,7 @@ namespace base
 } // namespace base
 
 
-CLASS_DECL_BASE void defer_dock_application(bool bDock)
+CLASS_DECL_AURA void defer_dock_application(bool bDock)
 {
 
    UNREFERENCED_PARAMETER(bDock);
@@ -1323,10 +1337,65 @@ CLASS_DECL_BASE void defer_dock_application(bool bDock)
 
 }
 
-CLASS_DECL_BASE ::user::interaction * oswindow_interaction(oswindow oswindow)
+CLASS_DECL_AURA ::user::interaction * oswindow_interaction(oswindow oswindow)
 {
 
    return oswindow->m_pimpl->m_pui;
 
 }
 
+
+CLASS_DECL_AURA ::user::interaction_impl * oswindow_get(oswindow oswindow)
+{
+
+   if (oswindow == NULL)
+   {
+
+      return NULL;
+
+   }
+
+   return oswindow->m_pimpl;
+
+}
+
+mutex * oswindow_data::s_pmutex = NULL;
+
+oswindow_dataptra * oswindow_data::s_pdataptra = NULL;
+
+bool os_init_windowing()
+{
+
+   //set_TranslateMessage(&axis_TranslateMessage);
+
+   //set_DispatchMessage(&axis_DispatchMessage);
+
+   oswindow_data::s_pdataptra = new oswindow_dataptra;
+
+   oswindow_data::s_pmutex = new mutex;
+
+}
+
+
+void os_term_windowing()
+{
+
+   ::aura::del(oswindow_data::s_pmutex);
+
+   ::aura::del(oswindow_data::s_pdataptra);
+
+}
+
+WINBOOL IsWindow(oswindow oswindow)
+{
+
+   if (::oswindow_data::s_pdataptra->find_first(oswindow) < 0)
+   {
+
+      return FALSE;
+
+   }
+
+   return TRUE;
+
+}

@@ -4,7 +4,7 @@
 namespace android
 {
 
-   class CLASS_DECL_BASE window_buffer :
+   class CLASS_DECL_AURA window_buffer :
       virtual public ::window_buffer
    {
    public:

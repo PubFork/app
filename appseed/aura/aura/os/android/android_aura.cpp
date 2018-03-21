@@ -10,23 +10,21 @@
 //
 //}
 
-thread_int_ptr < DWORD > g_dwLastError;
+thread_int_ptr < DWORD > t_dwLastError;
+
 
 CLASS_DECL_AURA DWORD get_last_error()
 {
 
-   return g_dwLastError;
+   return t_dwLastError;
 
 }
 
-CLASS_DECL_AURA DWORD set_last_error(DWORD dw)
+
+CLASS_DECL_AURA void set_last_error(DWORD dw)
 {
 
-   DWORD dwLastError = g_dwLastError;
-
-   g_dwLastError = dw;
-
-   return dwLastError;
+   t_dwLastError = dw;
 
 }
 
