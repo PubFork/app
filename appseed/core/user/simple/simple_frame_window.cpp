@@ -3176,7 +3176,25 @@ void simple_frame_window::OnNotifyIconContextMenu(UINT uiNotifyIcon)
 
    string strExtraXml = notification_area_extra_get_xml_menu();
 
-   strXml.replace("<!--EXTRA_MENU!-->", strExtraXml);
+   if (strExtraXml.has_char())
+   {
+
+      string strToken = "<!--EXTRA_MENU!-->";
+
+      if (strXml.find(strToken) >= 0)
+      {
+
+         strXml.replace(strToken, strExtraXml);
+
+      }
+      else
+      {
+
+         strXml = strExtraXml + "<separator/>" + strXml;
+
+      }
+
+   }
 
    track_popup_xml_string_menu(strXml, 0, pt);
 
@@ -3405,8 +3423,6 @@ string simple_frame_window::notification_area_extra_get_xml_menu()
 
    if (notification_area_extra_action_count() > 0)
    {
-
-      strXml += "<separator/>";
 
       for (int i = 0; i < notification_area_extra_action_count(); i++)
       {
