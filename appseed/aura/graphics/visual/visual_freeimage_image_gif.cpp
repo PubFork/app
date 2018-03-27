@@ -1,7 +1,16 @@
 #include "framework.h"
 #include <math.h>
 
+#ifdef LINUX
+
+#include <FreeImage.h>
+
+#else
+
 #include "FreeImage/FreeImage.h"
+
+#endif
+
 #include "graphics/visual/visual_freeimage_image.h"
 
 

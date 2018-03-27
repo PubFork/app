@@ -237,8 +237,8 @@ public:
    bool is_iconic();
    bool is_window_visible();
    bool show_window(int32_t nCmdShow);
-   LONG_PTR get_window_long(int32_t nIndex);
-   LONG_PTR set_window_long(int32_t nIndex, LONG_PTR l);
+   LONG_PTR get_window_long_ptr(int32_t nIndex);
+   LONG_PTR set_window_long_ptr(int32_t nIndex, LONG_PTR l);
    bool client_to_screen(LPPOINT lppoint);
    bool screen_to_client(LPPOINT lppoint);
 
