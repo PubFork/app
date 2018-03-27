@@ -43,7 +43,7 @@ namespace file_watcher
       ::object(papp)
    {
 
-      m_bUpdating = false;
+      //m_bUpdating = false;
 
       m_pimpl = new os_file_watcher(papp);
 
@@ -53,14 +53,7 @@ namespace file_watcher
    file_watcher::~file_watcher()
    {
 
-      if(m_pimpl != NULL)
-      {
-
-         delete m_pimpl;
-
-         m_pimpl = NULL;
-
-      }
+      ::aura::del(m_pimpl);
 
    }
 
@@ -87,14 +80,14 @@ namespace file_watcher
    }
 
 
-   bool file_watcher::update()
-   {
+   //bool file_watcher::update()
+   //{
 
-      keep_true updating(m_bUpdating);
+   //   keep_true updating(m_bUpdating);
 
-      return m_pimpl->update();
+   //   return m_pimpl->update();
 
-   }
+   //}
 
 
 //   void file_watcher_pool::install_message_routing(::message::sender * psender)
@@ -131,7 +124,7 @@ namespace file_watcher
    file_watch_listener::file_watch_listener()
    {
 
-      m_pfilewatcherlistenerthread = NULL;
+      //m_pfilewatcherlistenerthread = NULL;
 
    }
 

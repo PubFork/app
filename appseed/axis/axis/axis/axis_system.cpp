@@ -14,15 +14,10 @@ namespace axis
 
 
    system::system(::aura::application * papp, app_core * pappcore):
-      aura::system(this, pappcore, NULL)//,
-//      m_httpsystem(this),
-//      m_visual(this),
-
-      //m_emaildepartment(this)
+      aura::system(this, pappcore)
    {
 
       m_paxissystem = this;
-
 
       g_pszCooperativeLevel = "axis";
 
@@ -30,20 +25,13 @@ namespace axis
 
       m_puserstr                 = NULL;
 
-
       __node_axis_factory_exchange(this);
-
 
 
       factory().creatable_small < ::file::axis::application >(System.type_info < ::file::application >());
       factory().creatable_small < ::file::dir::axis::application >(System.type_info < ::file::dir::application >());
 
-      //m_psimpleui       = NULL;
-
-
       set_app(this);
-
-//      m_pbasesystem     = this;
 
       if(papp == NULL)
       {

@@ -11,8 +11,8 @@ namespace android
    dir::dir(::aura::application * papp) :
       ::object(papp),
       ::file::dir::system(papp),
-      ::file_watcher::file_watcher(papp),
-      ::file_watcher::listener_thread(papp)
+      ::file_watcher::file_watcher(papp) //,
+      //::file_watcher::listener_thread(papp)
    {
 
       m_pathInstall = ::dir::install();
@@ -995,7 +995,11 @@ try1:
 
       doc.load(Application.file().as_string(appdata() / "configuration\\directory.xml"));
 
-      //m_pathUser = m_strCa2 / "userfolder";
+      m_pathInstall = ::dir::install();
+
+      nodeos_set_home(::dir::system() / "home");
+
+      nodeos_set_temp(::dir::system() / "temp");
 
       m_strCommonAppData = m_pathInstall / "commonappdata";
 
@@ -1073,7 +1077,7 @@ try1:
          CSIDL_COMMON_APPDATA,
          FALSE);*/
 
-      str = string(System.m_pdataexchange->m_pszCacheDir) / ".ca2/app/appdata";
+      str = ::dir::system() / ".ca2/app/appdata";
       string strRelative;
       strRelative = install();
       //index iFind = strRelative.find(':');

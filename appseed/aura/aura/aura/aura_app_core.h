@@ -5,6 +5,9 @@ typedef int_bool DEFER_INIT();
 typedef DEFER_INIT * PFN_DEFER_INIT;
 
 
+class node_data_exchange;
+
+
 class raw_fail
 {
 public:
@@ -44,12 +47,17 @@ class CLASS_DECL_AURA aura_main_data :
 {
 public:
 
+
+   node_data_exchange *          m_pnodedataexchange;
    ::command::command *          m_pmaininitdata;
    bool                          m_bConsole;
    int                           m_argc;
    char **                       m_argv;
    int                           m_iExitCode;
    string                        m_strCommandLine;
+   sp(app_core)                  m_pappcore;
+
+
 
 #ifdef WINDOWS
 
@@ -58,6 +66,7 @@ public:
    int32_t                       m_nCmdShow;
 
 #endif
+
 
    aura_main_data(int argc, char ** argv);
 #ifdef WINDOWSEX
@@ -85,7 +94,7 @@ class CLASS_DECL_AURA app_core :
 {
 public:
 
-
+   static app_core *             s_pappcoreMain;
    static app_core *             s_pappcore;
    string                        m_strCommandLine;
    string                        m_strProgName;
@@ -114,6 +123,8 @@ public:
    ~app_core();
 
    bool on_result(int iResultCode);
+
+   void main();
 
    bool beg();
 

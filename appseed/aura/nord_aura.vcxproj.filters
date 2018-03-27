@@ -1876,6 +1876,99 @@
     <ClCompile Include="user\wndfrm\frame\wndfrm_frame_updowninterface.cpp">
       <Filter>Source Files\user\wndfrm\frame</Filter>
     </ClCompile>
+    <ClCompile Include="aura\os\linux\_os_linux.cpp">
+      <Filter>Source Files\aura\os\linux %28just for browsing%29</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\linux\linux_aura.cpp">
+      <Filter>Source Files\aura\os\linux %28just for browsing%29</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\linux\linux_bloat_pad.cpp">
+      <Filter>Source Files\aura\os\linux %28just for browsing%29</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\linux\linux_cross_win_file.cpp">
+      <Filter>Source Files\aura\os\linux %28just for browsing%29</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\linux\linux_cross_win_gdi.cpp">
+      <Filter>Source Files\aura\os\linux %28just for browsing%29</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\linux\linux_debug.cpp">
+      <Filter>Source Files\aura\os\linux %28just for browsing%29</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\linux\linux_desktop_file.cpp">
+      <Filter>Source Files\aura\os\linux %28just for browsing%29</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\linux\linux_file.cpp">
+      <Filter>Source Files\aura\os\linux %28just for browsing%29</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\linux\linux_file_watcher.cpp">
+      <Filter>Source Files\aura\os\linux %28just for browsing%29</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\linux\linux_gnu_source.cpp">
+      <Filter>Source Files\aura\os\linux %28just for browsing%29</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\linux\linux_launcher.cpp">
+      <Filter>Source Files\aura\os\linux %28just for browsing%29</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\linux\linux_library.cpp">
+      <Filter>Source Files\aura\os\linux %28just for browsing%29</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\linux\linux_list_serial_ports.cpp">
+      <Filter>Source Files\aura\os\linux %28just for browsing%29</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\linux\linux_lock.cpp">
+      <Filter>Source Files\aura\os\linux %28just for browsing%29</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\linux\linux_main.cpp">
+      <Filter>Source Files\aura\os\linux %28just for browsing%29</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\linux\linux_message_loop.cpp">
+      <Filter>Source Files\aura\os\linux %28just for browsing%29</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\linux\linux_multithreading.cpp">
+      <Filter>Source Files\aura\os\linux %28just for browsing%29</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\linux\linux_os.cpp">
+      <Filter>Source Files\aura\os\linux %28just for browsing%29</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\linux\linux_osdisplay.cpp">
+      <Filter>Source Files\aura\os\linux %28just for browsing%29</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\linux\linux_oswindow.cpp">
+      <Filter>Source Files\aura\os\linux %28just for browsing%29</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\linux\linux_process.cpp">
+      <Filter>Source Files\aura\os\linux %28just for browsing%29</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\linux\linux_process_pid.cpp">
+      <Filter>Source Files\aura\os\linux %28just for browsing%29</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\linux\linux_simple_app.cpp">
+      <Filter>Source Files\aura\os\linux %28just for browsing%29</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\linux\linux_simple_shell_launcher.cpp">
+      <Filter>Source Files\aura\os\linux %28just for browsing%29</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\linux\linux_small_ipca_channel.cpp">
+      <Filter>Source Files\aura\os\linux %28just for browsing%29</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\linux\linux_time.cpp">
+      <Filter>Source Files\aura\os\linux %28just for browsing%29</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\linux\linux_win_base.cpp">
+      <Filter>Source Files\aura\os\linux %28just for browsing%29</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\linux\linux_window_xlib.cpp">
+      <Filter>Source Files\aura\os\linux %28just for browsing%29</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\linux\linux_windowing.cpp">
+      <Filter>Source Files\aura\os\linux %28just for browsing%29</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\linux\linux_xdisplay.cpp">
+      <Filter>Source Files\aura\os\linux %28just for browsing%29</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\linux\linux_xinerama.cpp">
+      <Filter>Source Files\aura\os\linux %28just for browsing%29</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -4459,6 +4552,9 @@
     </Filter>
     <Filter Include="Header Files\user\wndfrm\frame">
       <UniqueIdentifier>{367005ba-6258-437f-98ca-72defa185d31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\aura\os\linux %28just for browsing%29">
+      <UniqueIdentifier>{85960dbd-feee-4032-8da1-c6613c87a875}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

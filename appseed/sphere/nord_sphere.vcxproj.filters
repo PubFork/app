@@ -58,6 +58,21 @@
     <Filter Include="Source Files\pcre">
       <UniqueIdentifier>{994c6f10-98b4-47ad-b255-5bf921479ae6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\net">
+      <UniqueIdentifier>{362d2d38-eb89-4a3e-b9b9-b1c6b9451b17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\net\mail">
+      <UniqueIdentifier>{2086584a-3cd6-4402-9433-cbe07bd3a075}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\net\sockets">
+      <UniqueIdentifier>{dce6c321-d7ec-4e89-9c50-e243ab0865a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\net\sockets\bsd">
+      <UniqueIdentifier>{948cce1c-e7a6-4990-8901-ba0a1b147f39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\net\sockets\bsd\sip">
+      <UniqueIdentifier>{7f552597-6449-4d93-b43f-ce478b2a5895}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -328,6 +343,12 @@
     </ClCompile>
     <ClCompile Include="pcre\pcre.cpp">
       <Filter>Source Files\pcre</Filter>
+    </ClCompile>
+    <ClCompile Include="net\mail\_mail.cpp">
+      <Filter>Source Files\net\mail</Filter>
+    </ClCompile>
+    <ClCompile Include="net\sockets\bsd\sip\_sockets_bsd_sip.cpp">
+      <Filter>Source Files\net\sockets\bsd\sip</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

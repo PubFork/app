@@ -33,66 +33,63 @@ namespace file_watcher
 {
 
 
-	/// Type for a watch id
-	typedef int64_t file_watch_id;
-	typedef array < file_watch_id > file_watch_array;
+   /// Type for a watch id
+   typedef int64_t file_watch_id;
+   typedef array < file_watch_id > file_watch_array;
 
-	// forward declarations
-	class file_watcher_impl;
-	class file_watch_listener;
-   class listener_thread;
+   // forward declarations
+   class file_watcher_impl;
+   class file_watch_listener;
+   //class listener_thread;
 
-	/// Base exception class
-	/// @class Exception
-	class CLASS_DECL_AURA exception :
-	virtual public ::exception::exception
-	{
-	public:
+   /// Base exception class
+   /// @class Exception
+   class CLASS_DECL_AURA exception :
+      virtual public ::exception::exception
+   {
+   public:
 
       string    m_strMessage;
-		exception(const char *  message) :
+      exception(const char *  message) :
          m_strMessage(message)
-		{
-		}
+      {
+      }
 
-	};
+   };
 
-	/// Exception thrown when a file is not found.
-	/// @class file_not_found_exception
-	class CLASS_DECL_AURA file_not_found_exception : public exception
-	{
-	public:
-		file_not_found_exception()
-			: exception("File not found")
-		{}
+   /// Exception thrown when a file is not found.
+   /// @class file_not_found_exception
+   class CLASS_DECL_AURA file_not_found_exception : public exception
+   {
+   public:
+      file_not_found_exception()
+         : exception("File not found")
+      {}
 
-		file_not_found_exception(const char * filename)
-			: exception("File not found (" + string(filename) + ")")
-		{}
-	};
+      file_not_found_exception(const char * filename)
+         : exception("File not found (" + string(filename) + ")")
+      {}
+   };
 
-	/// Actions to listen for. Rename will send two events, one for
-	/// the deletion of the old file, and one for the creation of the
-	/// new file.
-	enum e_action
-	{
-		/// Sent when a file is created or renamed
-		action_add = 1,
-		/// Sent when a file is deleted or renamed
-		action_delete = 2,
-		/// Sent when a file is modified
-		action_modify = 4
+   /// Actions to listen for. Rename will send two events, one for
+   /// the deletion of the old file, and one for the creation of the
+   /// new file.
+   enum e_action
+   {
+      /// Sent when a file is created or renamed
+      action_add = 1,
+      /// Sent when a file is deleted or renamed
+      action_delete = 2,
+      /// Sent when a file is modified
+      action_modify = 4
 
-	};
+   };
 
    /// Basic interface for listening for file events.
    /// @class file_watch_listener
    class CLASS_DECL_AURA file_watch_listener
    {
    public:
-
-
-      ::file_watcher::listener_thread *   m_pfilewatcherlistenerthread;
 
 
       file_watch_listener();
@@ -139,28 +136,28 @@ namespace file_watcher
 
 
 
-	/// Listens to files and directories and dispatches events
-	/// to notify the parent program of the changes.
-	/// @class file_watcher
-	class CLASS_DECL_AURA file_watcher :
+   /// Listens to files and directories and dispatches events
+   /// to notify the parent program of the changes.
+   /// @class file_watcher
+   class CLASS_DECL_AURA file_watcher :
       virtual public object
-	{
-	private:
+   {
+   private:
 
       /// The implementation
-		file_watcher_impl       * m_pimpl;
+      file_watcher_impl       * m_pimpl;
 
-	public:
+   public:
 
-      bool  m_bUpdating;
+      //bool  m_bUpdating;
 
 
 
-		file_watcher(::aura::application * papp);
-		virtual ~file_watcher();
+      file_watcher(::aura::application * papp);
+      virtual ~file_watcher();
 
-		/// Add a directory watch
-		/// @exception file_not_found_exception Thrown when the requested directory does not exist
+      /// Add a directory watch
+      /// @exception file_not_found_exception Thrown when the requested directory does not exist
       file_watch_id add_watch(const char * directory, file_watch_listener * pwatcher, bool bRecursive, bool bOwn = false);
 
       template < typename PRED >
@@ -171,16 +168,14 @@ namespace file_watcher
 
       }
 
-		/// Remove a directory watch. This is a brute force search O(nlogn).
-		void remove_watch(const char * directory);
+      /// Remove a directory watch. This is a brute force search O(nlogn).
+      void remove_watch(const char * directory);
 
       void remove_watch(file_watch_id id);
 
-		/// Updates the watcher. Must be called often.
-		virtual bool update();
 
 
-	};//end file_watcher
+   };//end file_watcher
 
 
    //class CLASS_DECL_AURA file_watcher_pool :

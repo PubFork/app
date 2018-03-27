@@ -590,7 +590,7 @@ namespace aura
       ::aura::system * aura_create_system(app_core * pappcore)
       {
 
-         return new ::aura::system(NULL, pappcore, NULL);
+         return new ::aura::system(NULL, pappcore);
 
       }
 

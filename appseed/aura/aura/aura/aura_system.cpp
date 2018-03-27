@@ -62,7 +62,7 @@ namespace aura
    system * system::g_p = NULL;
 
 
-   system::system(::aura::application * papp, app_core * pappcore, void * pdata) :
+   system::system(::aura::application * papp, app_core * pappcore) :
       m_base64(this),
       m_process(this),
       m_httpsystem(this),
@@ -86,12 +86,6 @@ namespace aura
 #ifndef WINDOWS
 
       exception::translator::attach();
-
-#endif
-
-#ifdef VSNORD
-
-      m_pdataexchange = (android_data_exchange *) pdata;
 
 #endif
 
@@ -1014,6 +1008,13 @@ namespace aura
       return NULL;
    }
 
+
+   node_data_exchange * system::node_ddx()
+   {
+
+      return ::app_core::s_pappcoreMain->m_pmaindata->m_pnodedataexchange;
+
+   }
 
 
    void system::discard_to_factory(object * pca)
@@ -2894,7 +2895,7 @@ found:
    bool system::android_set_user_wallpaper(string strUrl)
    {
 
-      m_pdataexchange->m_pszUserWallpaper = strdup(strUrl);
+      node_ddx()->m_pszUserWallpaper = strdup(strUrl);
 
       return true;
 
@@ -2903,21 +2904,21 @@ found:
    bool system::android_get_user_wallpaper(string & strUrl)
    {
 
-      if (m_pdataexchange->m_pszGetUserWallpaper != NULL)
+      if (node_ddx()->m_pszGetUserWallpaper != NULL)
       {
 
          goto success;
 
       }
 
-      m_pdataexchange->m_pszGetUserWallpaper = NULL;
+      node_ddx()->m_pszGetUserWallpaper = NULL;
 
-      m_pdataexchange->m_bGetUserWallpaper = true;
+      node_ddx()->m_bGetUserWallpaper = true;
 
       for(int i = 0; i < 10; i++)
       {
 
-         if (m_pdataexchange->m_pszGetUserWallpaper != NULL)
+         if (node_ddx()->m_pszGetUserWallpaper != NULL)
          {
 
             break;
@@ -2928,9 +2929,9 @@ found:
 
       }
 
-      m_pdataexchange->m_bGetUserWallpaper = false;
+      node_ddx()->m_bGetUserWallpaper = false;
 
-      if (m_pdataexchange->m_pszGetUserWallpaper == NULL)
+      if (node_ddx()->m_pszGetUserWallpaper == NULL)
       {
 
          return false;
@@ -2939,12 +2940,12 @@ found:
 
 success:
 
-      strUrl = m_pdataexchange->m_pszGetUserWallpaper;
+      strUrl = node_ddx()->m_pszGetUserWallpaper;
 
       try
       {
 
-         free(m_pdataexchange->m_pszGetUserWallpaper);
+         free(node_ddx()->m_pszGetUserWallpaper);
 
       }
       catch (...)
@@ -2953,7 +2954,7 @@ success:
 
       }
 
-      m_pdataexchange->m_pszGetUserWallpaper = NULL;
+      node_ddx()->m_pszGetUserWallpaper = NULL;
 
       return true;
 
@@ -3514,8 +3515,8 @@ success:
 
       lprect->left = 0;
       lprect->top = 0;
-      lprect->right = m_pdataexchange->m_iScreenWidth;
-      lprect->bottom = m_pdataexchange->m_iScreenHeight;
+      lprect->right = node_ddx()->m_iScreenWidth;
+      lprect->bottom = node_ddx()->m_iScreenHeight;
 
 #endif
 

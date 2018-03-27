@@ -13,6 +13,9 @@ namespace windows
 
 } // namespace windows
 
+#elif defined(ANDROID)
+
+#include "aura/aura/os/android/android_data_exchange.h"
 
 #endif
 
@@ -81,7 +84,7 @@ namespace windows
 
 #elif defined(VSNORD)
 
-   path = ::aura::system::g_p->m_pdataexchange->m_pszCacheDir;
+   path = ::app_core::s_pappcoreMain->m_pmaindata->m_pnodedataexchange->m_pszCacheDir;
 
 #elif defined(APPLEOS)
 

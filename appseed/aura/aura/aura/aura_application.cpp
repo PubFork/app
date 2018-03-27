@@ -1862,15 +1862,15 @@ namespace aura
 
          string strOpenUrl;
 
-         if (System.m_pdataexchange->m_pszOpenUrl != NULL)
+         if (System.node_ddx()->m_pszOpenUrl != NULL)
          {
 
-            strOpenUrl = System.m_pdataexchange->m_pszOpenUrl;
+            strOpenUrl = System.node_ddx()->m_pszOpenUrl;
 
             try
             {
 
-               ::free((void *)System.m_pdataexchange->m_pszOpenUrl);
+               ::free((void *)System.node_ddx()->m_pszOpenUrl);
 
             }
             catch (...)
@@ -1879,7 +1879,7 @@ namespace aura
 
             }
 
-            System.m_pdataexchange->m_pszOpenUrl = NULL;
+            System.node_ddx()->m_pszOpenUrl = NULL;
 
          }
 
@@ -1891,7 +1891,7 @@ namespace aura
 
             // System.m_pandroidinitdata->m_pszOpenUrl = strdup(strLink);
 
-            System.m_pdataexchange->m_pszOpenUrl = strdup(strUrl);
+            System.node_ddx()->m_pszOpenUrl = strdup(strUrl);
 
          }
 

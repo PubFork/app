@@ -159,9 +159,11 @@ namespace filemanager
       ::userfs::document(papp)
    {
 
+      m_filewatchid = -1;
+
       m_bFullBrowse = false;
 
-      m_pfilewatcherlistenerthread = NULL;
+      //m_pfilewatcherlistenerthread = NULL;
 
       //command_signalid id;
 
@@ -257,22 +259,29 @@ namespace filemanager
 
       }
 
-      if (m_pfilewatcherlistenerthread != NULL)
+      //if (m_pfilewatcherlistenerthread != NULL)
+      //{
+
+      //   ::multithreading::post_quit(m_pfilewatcherlistenerthread);
+
+      //}
+
+      if(m_filewatchid >= 0)
       {
 
-         ::multithreading::post_quit(m_pfilewatcherlistenerthread);
+         System.dir().remove_watch(m_filewatchid);
 
       }
 
       if (m_item->m_filepath.has_char())
       {
 
-         m_pfilewatcherlistenerthread = new ::file_watcher::listener_thread(get_app());
+//         m_pfilewatcherlistenerthread = new ::file_watcher::listener_thread(get_app());
 
          try
          {
 
-            m_pfilewatcherlistenerthread->add_file_watch(m_item->m_filepath, this, false);
+            m_filewatchid = System.dir().add_watch(m_item->m_filepath, this, false);
 
          }
          catch (...)

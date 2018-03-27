@@ -42,6 +42,8 @@ string ca2_command_line2();
 aura_main_data::aura_main_data(int argc, char ** argv)
 {
 
+   m_pnodedataexchange = NULL;
+
    m_bConsole = true;
 
    m_argc = argc;
@@ -65,6 +67,8 @@ aura_main_data::aura_main_data(int argc, char ** argv)
 aura_main_data::aura_main_data(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow)
 {
 
+   m_pnodedataexchange = NULL;
+
    m_bConsole = false;
 
    m_hinstance = hinstance;
@@ -83,6 +87,8 @@ aura_main_data::aura_main_data(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPT
 aura_main_data::aura_main_data(Array < String ^ > ^ refstra)
 {
 
+   m_pnodedataexchange = NULL;
+
    m_bConsole = false;
 
    stringa stra(refstra);
@@ -93,6 +99,8 @@ aura_main_data::aura_main_data(Array < String ^ > ^ refstra)
 
 aura_main_data::aura_main_data(LPTSTR lpCmdLine)
 {
+
+   m_pnodedataexchange = NULL;
 
    m_bConsole = false;
 
@@ -109,6 +117,8 @@ aura_main_data::~aura_main_data()
 
 app_core * app_core::s_pappcore = NULL;
 
+app_core * app_core::s_pappcoreMain = NULL;
+
 
 // ATTENTION
 // This class should (if it uses) member functions with care:
@@ -124,9 +134,17 @@ app_core::app_core(aura_main_data * pdata)
 
 #endif
 
+   if (s_pappcoreMain == NULL)
+   {
+
+      s_pappcoreMain = this;
+
+      m_pmaindata = pdata;
+
+   }
+
    s_pappcore = this;
 
-   m_pmaindata = pdata;
 
    int iPid;
 
@@ -349,7 +367,7 @@ bool app_core::ini()
 
    os_init_application();
 
-   ::file::path pathOutputDebugString = ::dir::system() / strAppId /"output_debug_string.txt";
+   ::file::path pathOutputDebugString = ::dir::system() / strAppId / "output_debug_string.txt";
 
    g_bOutputDebugString = file_exists_dup(pathOutputDebugString);
 
@@ -603,20 +621,18 @@ typedef DEFER_INIT * PFN_DEFER_INIT;
 long aura_aura(aura_main_data * pmaindata)
 {
 
-   sp(app_core) pappcore;
+   pmaindata->m_pappcore = canew(app_core(pmaindata));
 
-   pappcore = canew(app_core(pmaindata));
-
-   if(!pappcore->beg())
+   if(!pmaindata->m_pappcore->beg())
    {
 
-      return pappcore->m_iTotalErrorCount;
+      return pmaindata->m_pappcore->m_iTotalErrorCount;
 
    }
 
-   aura_boot(pappcore);
+   aura_boot(pmaindata->m_pappcore);
 
-   return pappcore->m_iTotalErrorCount;
+   return pmaindata->m_pappcore->m_iTotalErrorCount;
 
 }
 
@@ -642,11 +658,7 @@ CLASS_DECL_AURA void aura_boot(app_core * pappcore)
 CLASS_DECL_AURA void aura_main(app_core * pappcore)
 {
 
-   pappcore->ini();
-
-   pappcore->run();
-
-   pappcore->end();
+   pappcore->main();
 
 }
 
@@ -1211,6 +1223,29 @@ string merge_colon_args(const array < stringa > & str2a)
 }
 
 
+#ifdef ANDROID
+
+// app_core::main defined linux_main.cpp
+
+// APP_CORE::MAIN defined at LINUX_MAIN.cpp
+
+#else
+
+void app_core::main()
+{
+
+   if (ini())
+   {
+
+      run();
+
+   }
+
+   end();
+
+}
+
+#endif
 
 
 #ifdef APPLEOS
@@ -1256,6 +1291,14 @@ void app_core::run()
 // LOOK AT LINUX_MAIN.Cpp
 
 // defined at linux_main.cpp
+
+
+#elif defined(ANDROID)
+
+
+// LOOK AT ANDROID_MAIN.Cpp
+
+// defined at android_main.cpp
 
 
 #else

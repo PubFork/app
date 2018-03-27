@@ -29,55 +29,59 @@
 
 namespace file_watcher
 {
-	/// Implementation for Linux based on inotify.
-	/// @class os_file_watcher
-	class os_file_watcher : public file_watcher_impl
-	{
-	public:
-		/// type for a map from id to watch_struct pointer
-		typedef map<file_watch_id, file_watch_id, watch_struct *, watch_struct*> WatchMap;
+   /// Implementation for Linux based on inotify.
+   /// @class os_file_watcher
+   class os_file_watcher :
+      virtual public file_watcher_impl,
+      virtual public thread
+   {
+   public:
+      /// type for a map from id to watch_struct pointer
+      typedef map<file_watch_id, file_watch_id, watch_struct *, watch_struct*> WatchMap;
 
-	public:
-		///
-		///
-		os_file_watcher(::aura::application * papp);
+   public:
+      ///
+      ///
+      os_file_watcher(::aura::application * papp);
 
-		///
-		///
-		virtual ~os_file_watcher();
+      ///
+      ///
+      virtual ~os_file_watcher();
 
-		/// Add a directory watch
-		/// @exception file_not_found_exception Thrown when the requested directory does not exist
-		file_watch_id add_watch(const string & directory, file_watch_listener* watcher, bool bRecursive, bool bOwn);
+      /// Add a directory watch
+      /// @exception file_not_found_exception Thrown when the requested directory does not exist
+      file_watch_id add_watch(const string & directory, file_watch_listener* watcher, bool bRecursive, bool bOwn);
 
-		/// Remove a directory watch. This is a brute force lazy search O(nlogn).
-		void remove_watch(const string & directory);
+      /// Remove a directory watch. This is a brute force lazy search O(nlogn).
+      void remove_watch(const string & directory);
 
-		/// Remove a directory watch. This is a map lookup O(logn).
-		void remove_watch(file_watch_id watchid);
+      /// Remove a directory watch. This is a map lookup O(logn).
+      void remove_watch(file_watch_id watchid);
 
-		string watch_path(file_watch_id watchid);
+      string watch_path(file_watch_id watchid);
 
-		/// Updates the watcher. Must be called often.
-		bool update();
+      /// Updates the watcher. Must be called often.
+      bool select();
 
-		/// Handles the action
-		virtual void handle_action(action * paction);
+      virtual void run();
 
-	private:
-		/// Map of id to watch_struct pointers
-		WatchMap m_watchmap;
-		/// The last watchid
+      /// Handles the action
+      virtual void handle_action(action * paction);
+
+   private:
+      /// Map of id to watch_struct pointers
+      WatchMap m_watchmap;
+      /// The last watchid
       file_watch_id mLastWatchID;
-		/// inotify file descriptor
-		int32_t mFD;
-		/// time out data
-		struct timeval mTimeOut;
-		/// File descriptor set
-		void *  m_pDescriptorSet; // fd_set
+      /// inotify file descriptor
+      int32_t mFD;
+      /// time out data
+      struct timeval mTimeOut;
+      /// File descriptor set
+      void *  m_pDescriptorSet; // fd_set
 
 
-	};
+   };
 
 
 } // namespace file_watcher

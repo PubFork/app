@@ -161,6 +161,13 @@ namespace core
    bool application::os_native_bergedge_start()
    {
 
+      if (!::base::application::os_native_bergedge_start())
+      {
+
+         return false;
+
+      }
+
       return true;
 
    }

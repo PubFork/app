@@ -689,7 +689,9 @@ namespace user
 
       }
 
-      if(!(m_pui->GetStyle() & WS_VISIBLE) && (!m_bShowFlags || !(m_iShowFlags & SWP_SHOWWINDOW)))
+      bool bStyleVisible = (m_pui->GetStyle() & WS_VISIBLE) != 0;
+
+      if(!bStyleVisible && (!m_bShowFlags || !(m_iShowFlags & SWP_SHOWWINDOW)))
       {
 
          return false;

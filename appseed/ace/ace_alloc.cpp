@@ -140,17 +140,17 @@ CLASS_DECL_ACE void ace_memory_free(void * pParam)
 CLASS_DECL_ACE size_t ace_memory_size(void * pParam)
 {
 
-   byte * p = (byte *) pParam;
+   byte * p = (byte *)pParam;
 
-   p-=ALIGN_BYTE_COUNT;
+   p -= ALIGN_BYTE_COUNT;
 
-   if(p[0] == ACE_SET)
+   if (p[0] == ACE_SET)
    {
 
       return g_pfnAceSize(p) - ALIGN_BYTE_COUNT;
 
    }
-   else if(p[0] == INITIAL_ACE)
+   else if (p[0] == INITIAL_ACE)
    {
 
       throw "memory size error: invalid call";
@@ -182,48 +182,82 @@ CLASS_DECL_ACE void ace_set_alloc(PFN_MEMORY_ALLOC palloc, PFN_MEMORY_REALLOC pr
 
 }
 
-const char * g_pszCacheDir;
 
-CLASS_DECL_EXPORT void android_set_cache_dir(const char * pszDir)
+static char * g_pszCacheDir;
+
+
+CLASS_DECL_EXPORT void nodeos_set_cache_dir(const char * pszDir)
 {
 
-   g_pszCacheDir = pszDir;
+   if (g_pszCacheDir != NULL)
+   {
+
+      free(g_pszCacheDir);
+
+   }
+
+   g_pszCacheDir = strdup(pszDir);
 
 }
+
 
 CLASS_DECL_EXPORT const char * android_get_cache_dir()
 {
+
    return g_pszCacheDir;
-}
-
-
-const char * g_pszIosHome;
-
-CLASS_DECL_EXPORT void ios_set_home(const char * pszDir)
-{
-
-   g_pszIosHome = pszDir;
 
 }
 
-CLASS_DECL_EXPORT const char * ios_get_home()
+
+static char * g_pszHome;
+
+
+CLASS_DECL_EXPORT void nodeos_set_home(const char * pszDir)
 {
-   return g_pszIosHome;
+
+   if (g_pszHome != NULL)
+   {
+
+      free(g_pszHome);
+
+   }
+
+   g_pszHome = strdup(pszDir);
+
 }
 
-const char * g_pszIosTemp;
 
-
-CLASS_DECL_EXPORT void ios_set_temp(const char * pszDir)
+CLASS_DECL_EXPORT const char * nodeos_get_home()
 {
 
-   g_pszIosTemp = pszDir;
+   return g_pszHome;
 
 }
 
-CLASS_DECL_EXPORT const char * ios_get_temp()
+
+static char * g_pszTemp = NULL;
+
+
+CLASS_DECL_EXPORT void nodeos_set_temp(const char * pszDir)
 {
-   return g_pszIosTemp;
+
+   if (g_pszTemp != NULL)
+   {
+
+      free(g_pszTemp);
+
+   }
+
+   g_pszTemp = strdup(pszDir);
+
+}
+
+
+CLASS_DECL_EXPORT const char * nodeos_get_temp()
+{
+
+   return g_pszTemp;
+
 }
 
 

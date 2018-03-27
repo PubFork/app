@@ -11,7 +11,8 @@ namespace file
 
       class CLASS_DECL_AURA system :
          virtual public ::object,
-         virtual public ::file_watcher::listener_thread
+      //virtual public ::file_watcher::listener_thread
+         virtual public ::file_watcher::file_watcher
       {
       public:
 

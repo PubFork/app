@@ -100,7 +100,7 @@ namespace base
 
 
    system::system(::aura::application * papp, app_core * pappcore) :
-      ::aura::system(this, pappcore, NULL),
+      ::aura::system(this, pappcore),
       ::axis::system(this, pappcore)
    {
 
@@ -120,8 +120,6 @@ namespace base
       m_possystemwindow = new os_system_window();
 
 #endif
-
-
 
       set_app(this);
 

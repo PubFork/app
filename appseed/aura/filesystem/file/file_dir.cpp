@@ -685,24 +685,16 @@ found:
 ::file::path dir::install()
 {
 
+#ifdef ANDROID
+
+   return ::dir::config();
+
+#else
+
    return ::file::app_module().folder(4);
 
-//#ifdef WINDOWS
-//
-//   return ca2_module().folder(3);
-//
-//#else
-//
-//   string strRelative = ca2_module_folder_dup();
-//
-//   eat_end_level_dup(strRelative, 3, "/");
-//
-//   string str = ::file::path(getenv("HOME")) / ".core/appdata";
-//
-//   return str;
-//
-//#endif
-//
+#endif
+
 }
 
 

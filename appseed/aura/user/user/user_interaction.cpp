@@ -1321,7 +1321,7 @@ restart:
    void interaction::do_show_flags()
    {
 
-      output_debug_string("\ninteraction::do_show_flags " + string(typeid(*this).name()));
+      //output_debug_string("\ninteraction::do_show_flags " + string(typeid(*this).name()));
 
       m_pimpl->on_do_show_flags();
 

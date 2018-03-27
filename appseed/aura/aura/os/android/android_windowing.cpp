@@ -1374,6 +1374,8 @@ bool os_init_windowing()
 
    oswindow_data::s_pmutex = new mutex;
 
+   return true;
+
 }
 
 
