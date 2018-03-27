@@ -148,13 +148,11 @@ namespace dynamic_source
 
       {
 
-         clear_include_matches_folder_watch * pwatch = new clear_include_matches_folder_watch(get_app());
+         clear_include_matches_file_watcher * pwatcher = new clear_include_matches_file_watcher(get_app());
 
-         pwatch->m_pmanager = this;
+         pwatcher->m_pmanager = this;
 
-         pwatch->add_file_watch( m_strNetseedDsCa2Path, true);
-
-         //pwatch->begin();
+         pwatcher->add_watch(m_strNetseedDsCa2Path, pwatcher, true);
 
       }
 
@@ -164,14 +162,20 @@ namespace dynamic_source
 
       forallref(listing)
       {
+
          if(::str::begins_ci(item.title(),"net-"))
          {
-            clear_include_matches_folder_watch * pwatch = new clear_include_matches_folder_watch(get_app());
-            pwatch->m_pmanager = this;
-            pwatch->add_file_watch(item, true);
-            //pwatch->begin();
+
+            clear_include_matches_file_watcher * pwatcher = new clear_include_matches_file_watcher(get_app());
+
+            pwatcher->m_pmanager = this;
+
+            pwatcher->add_watch(item, pwatcher, true);
+
          }
+
       }
+
 #endif
 
       LoadEnv();
@@ -628,20 +632,19 @@ namespace dynamic_source
    }
 
 
-   script_manager::clear_include_matches_folder_watch::clear_include_matches_folder_watch(::aura::application * papp) :
+   script_manager::clear_include_matches_file_watcher::clear_include_matches_file_watcher(::aura::application * papp) :
       ::object(papp),
-
-      file_watcher(papp),
-      listener_thread(papp)
+      file_watcher(papp)
    {
 
 
    }
 
-   void script_manager::clear_include_matches_folder_watch::handle_file_action(::file_watcher::file_watch_id watchid, const char * dir, const char * filename, ::file_watcher::e_action eaction)
+
+   void script_manager::clear_include_matches_file_watcher::handle_file_action(::file_watcher::id id, const char * dir, const char * filename, ::file_watcher::e_action eaction)
    {
 
-      UNREFERENCED_PARAMETER(watchid);
+      UNREFERENCED_PARAMETER(id);
       UNREFERENCED_PARAMETER(dir);
       UNREFERENCED_PARAMETER(filename);
       UNREFERENCED_PARAMETER(eaction);

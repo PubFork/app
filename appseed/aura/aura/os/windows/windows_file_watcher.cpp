@@ -28,30 +28,59 @@ namespace file_watcher
    /// Internal watch data
    struct watch_struct
    {
+
       OVERLAPPED m_overlapped;
       HANDLE m_hDirectory;
       BYTE m_buffer[32 * 1024];
       LPARAM m_lparam;
       uint32_t m_dwNotify;
+      bool m_bRefresh;
       bool m_bStop;
       file_watcher_impl* m_pwatcher;
-      file_watch_listener* m_plistener;
+      listener* m_plistener;
       bool  m_bOwn;
       string m_strDirName;
-      file_watch_id m_id;
+      id m_id;
       bool m_bRecursive;
 
-
-      watch_struct()
+      /// Starts monitoring a directory.
+      watch_struct(LPCTSTR szDirectory, uint32_t m_dwNotify, bool bRecursive)
       {
 
+         m_bRefresh = true;
          m_overlapped.hEvent = INVALID_HANDLE_VALUE;
          m_hDirectory = INVALID_HANDLE_VALUE;
+
+         m_hDirectory = CreateFileW(wstring(szDirectory), FILE_LIST_DIRECTORY,
+                                    FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, NULL,
+                                    OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OVERLAPPED, NULL);
+
+         if (m_hDirectory == INVALID_HANDLE_VALUE)
+         {
+
+            throw resource_exception(::get_app());
+
+         }
+
+         m_overlapped.hEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
+         m_dwNotify = m_dwNotify;
+         m_bRecursive = bRecursive;
+         m_bStop = false;
+         m_bRefresh = true;
+
+
 
       }
 
       ~watch_struct()
       {
+
+         m_bRefresh = false;
+         m_bStop = TRUE;
+
+         CancelIo(m_hDirectory);
+
+         refresh(true);
 
          if (!HasOverlappedIoCompleted(&m_overlapped))
          {
@@ -70,51 +99,44 @@ namespace file_watcher
          }
 
       }
-   };
 
-#pragma region Internal Functions
 
-   // forward decl
-   bool RefreshWatch(watch_struct* pWatch,bool _clear = false);
 
-   /// Unpacks events and passes them to a user defined callback.
-   void CALLBACK WatchCallback(DWORD dwErrorCode,DWORD dwNumberOfBytesTransfered,LPOVERLAPPED lpOverlapped)
-   {
-      TCHAR szFile[MAX_PATH];
-      PFILE_NOTIFY_INFORMATION pNotify;
-      watch_struct* pWatch = (watch_struct*)lpOverlapped;
-      size_t offset = 0;
-
-      if(dwNumberOfBytesTransfered == 0)
-         return;
-
-      if(dwErrorCode == ERROR_SUCCESS)
+      /// Unpacks events and passes them to a user defined callback.
+      static void CALLBACK WatchCallback(DWORD dwErrorCode,DWORD dwNumberOfBytesTransfered,LPOVERLAPPED lpOverlapped)
       {
-         do
+         TCHAR szFile[MAX_PATH];
+         PFILE_NOTIFY_INFORMATION pNotify;
+         watch_struct* pWatch = (watch_struct*)lpOverlapped;
+         size_t offset = 0;
+
+         if(dwNumberOfBytesTransfered == 0)
+            return;
+
+         if(dwErrorCode == ERROR_SUCCESS)
          {
-            pNotify = (PFILE_NOTIFY_INFORMATION)&pWatch->m_buffer[offset];
-            offset += pNotify->NextEntryOffset;
+            do
+            {
+               pNotify = (PFILE_NOTIFY_INFORMATION)&pWatch->m_buffer[offset];
+               offset += pNotify->NextEntryOffset;
 
 #			if defined(UNICODE)
-            {
-               lstrcpynW(szFile, pNotify->FileName,
-                  MIN(MAX_PATH, pNotify->FileNameLength / sizeof(WCHAR) + 1));
-            }
+               {
+                  lstrcpynW(szFile, pNotify->FileName,
+                            MIN(MAX_PATH, pNotify->FileNameLength / sizeof(WCHAR) + 1));
+               }
 #			else
-            {
-               int32_t count = WideCharToMultiByte2(CP_ACP, 0, pNotify->FileName,
-                  pNotify->FileNameLength / sizeof(WCHAR),
-                  szFile, MAX_PATH - 1, NULL, NULL);
-               szFile[count] = TEXT('\0');
-            }
+               {
+                  int32_t count = WideCharToMultiByte2(CP_ACP, 0, pNotify->FileName,
+                                                       pNotify->FileNameLength / sizeof(WCHAR),
+                                                       szFile, MAX_PATH - 1, NULL, NULL);
+                  szFile[count] = TEXT('\0');
+               }
 #			endif
 
-            string strFile = szFile;
+               string strFile = szFile;
 
-            ULONG ulAction = pNotify->Action;
-               
-            ::fork(pWatch->m_pwatcher->get_app(), [=]()
-            {
+               ULONG ulAction = pNotify->Action;
 
                ::file_watcher::file_watcher_impl::action action;
 
@@ -124,120 +146,99 @@ namespace file_watcher
 
                pWatch->m_pwatcher->handle_action(&action);
 
-            });
+            }
+            while(pNotify->NextEntryOffset != 0);
 
-         } while(pNotify->NextEntryOffset != 0);
-      }
+         }
 
-      if(!pWatch->m_bStop)
-      {
-         RefreshWatch(pWatch);
-      }
-   }
-
-   /// Refreshes the directory monitoring.
-   bool RefreshWatch(watch_struct* pWatch,bool _clear)
-   {
-      return ReadDirectoryChangesW(
-         pWatch->m_hDirectory,pWatch->m_buffer,sizeof(pWatch->m_buffer),pWatch->m_bRecursive ? TRUE : FALSE,
-         pWatch->m_dwNotify,NULL,&pWatch->m_overlapped,_clear ? 0 : WatchCallback) != 0;
-   }
-
-   /// Stops monitoring a directory.
-   void DestroyWatch(watch_struct* pWatch)
-   {
-
-      if (pWatch == NULL)
-      {
-
-         return;
-
-      }
-
-      pWatch->m_bStop = TRUE;
-
-      CancelIo(pWatch->m_hDirectory);
-
-      RefreshWatch(pWatch, true);
-
-      delete pWatch;
-
-   }
-
-   /// Starts monitoring a directory.
-   watch_struct* CreateWatch(LPCTSTR szDirectory,uint32_t m_dwNotify,bool bRecursive)
-   {
-      
-      watch_struct * pWatch;
-
-      pWatch = new watch_struct();
-
-      pWatch->m_hDirectory = CreateFileW(wstring(szDirectory),FILE_LIST_DIRECTORY,
-         FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,NULL,
-         OPEN_EXISTING,FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OVERLAPPED,NULL);
-
-      if(pWatch->m_hDirectory != INVALID_HANDLE_VALUE)
-      {
-
-         pWatch->m_overlapped.hEvent   = CreateEvent(NULL,TRUE,FALSE,NULL);
-         pWatch->m_dwNotify            = m_dwNotify;
-         pWatch->m_bRecursive          = bRecursive;
-         pWatch->m_bStop               = false;
-
-         if(RefreshWatch(pWatch))
+         if(!pWatch->m_bStop)
          {
 
-            return pWatch;
+            pWatch->m_bRefresh = true;
 
          }
 
       }
 
-      delete pWatch;
+      /// Refreshes the directory monitoring.
+      bool refresh(bool bClear = false)
+      {
 
-      return NULL;
+         return ReadDirectoryChangesW(
+                m_hDirectory,
+                m_buffer,
+                sizeof(m_buffer),
+                m_bRecursive ? TRUE : FALSE,
+                m_dwNotify,
+                NULL,
+                &m_overlapped,
+                bClear ? 0 : WatchCallback) != 0;
 
-   }
+      }
 
-#pragma endregion
+      void defer_refresh()
+      {
 
-   os_file_watcher::os_file_watcher(::aura::application * papp)
-      : 
+         if (m_bRefresh)
+         {
+
+            refresh();
+
+            m_bRefresh = false;
+
+         }
+
+      }
+
+
+   };
+
+   os_file_watcher::os_file_watcher(::aura::application * papp) :
       ::object(papp),
+      thread(papp),
       m_idLast(0)
 
    {
+      begin();
    }
 
    //--------
    os_file_watcher::~os_file_watcher()
    {
+
+      ::multithreading::post_quit_and_wait(seconds(15));
+
       watch_map::pair * ppair = m_watchmap.PGetFirstAssoc();
+
       for(; ppair != NULL; ppair = m_watchmap.PGetNextAssoc(ppair))
       {
-         DestroyWatch(ppair->m_element2);
+
+         delete ppair->m_element2;
+
       }
+
       m_watchmap.clear();
+
    }
 
 
-   file_watch_id os_file_watcher::add_watch(const string & directory,file_watch_listener* watcher,bool bRecursive, bool bOwn)
+   id os_file_watcher::add_watch(const string & directory,listener* watcher,bool bRecursive, bool bOwn)
    {
 
       synch_lock sl(m_pmutex);
 
-      file_watch_id id = ++m_idLast;
+      id id = ++m_idLast;
 
-      watch_struct * pwatch = CreateWatch(directory,
-         FILE_NOTIFY_CHANGE_CREATION
-         | FILE_NOTIFY_CHANGE_SIZE
-         | FILE_NOTIFY_CHANGE_FILE_NAME
-         | FILE_NOTIFY_CHANGE_LAST_WRITE
-         ,bRecursive);
+      watch_struct * pwatch = new watch_struct(directory,
+            FILE_NOTIFY_CHANGE_CREATION
+            | FILE_NOTIFY_CHANGE_SIZE
+            | FILE_NOTIFY_CHANGE_FILE_NAME
+            | FILE_NOTIFY_CHANGE_LAST_WRITE
+            ,bRecursive);
 
       if (pwatch == NULL)
       {
-         
+
          return -1;
 
       }
@@ -279,8 +280,19 @@ namespace file_watcher
 
    }
 
+   void os_file_watcher::run()
+   {
 
-   void os_file_watcher::remove_watch(file_watch_id id)
+      while (::get_thread_run())
+      {
+
+         step();
+
+      }
+
+   }
+
+   void os_file_watcher::remove_watch(id id)
    {
 
       synch_lock sl(m_pmutex);
@@ -294,28 +306,36 @@ namespace file_watcher
 
       m_watchmap.remove_key(ppair->m_element1);
 
-      DestroyWatch(pwatch);
+      delete pwatch;
 
    }
 
 
-   string os_file_watcher::watch_path(file_watch_id watchid)
+   string os_file_watcher::watch_path(id id)
    {
 
       synch_lock sl(m_pmutex);
 
-      return m_watchmap.PLookup(watchid)->m_element2->m_strDirName;
+      return m_watchmap.PLookup(id)->m_element2->m_strDirName;
 
    }
 
 
-   bool os_file_watcher::update()
+   bool os_file_watcher::step()
    {
 
-      if(GetQueueStatus(QS_ALLINPUT) == 0)
+      MESSAGE msg;
+
+      while (PeekMessage(&msg, NULL, 0, 0, TRUE));
+
+      MsgWaitForMultipleObjectsEx(0,NULL,1000,QS_ALLINPUT,MWMO_ALERTABLE);
+
+      watch_map::pair * ppair = m_watchmap.PGetFirstAssoc();
+
+      for (; ppair != NULL; ppair = m_watchmap.PGetNextAssoc(ppair))
       {
 
-         MsgWaitForMultipleObjectsEx(0,NULL,1000,QS_ALLINPUT,MWMO_ALERTABLE);
+         ppair->m_element2->defer_refresh();
 
       }
 

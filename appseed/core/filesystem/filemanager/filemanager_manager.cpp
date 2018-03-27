@@ -159,7 +159,7 @@ namespace filemanager
       ::userfs::document(papp)
    {
 
-      m_filewatchid = -1;
+      m_filewatcherid = -1;
 
       m_bFullBrowse = false;
 
@@ -266,10 +266,10 @@ namespace filemanager
 
       //}
 
-      if(m_filewatchid >= 0)
+      if(m_filewatcherid >= 0)
       {
 
-         System.dir().remove_watch(m_filewatchid);
+         System.dir().remove_watch(m_filewatcherid);
 
       }
 
@@ -281,7 +281,7 @@ namespace filemanager
          try
          {
 
-            m_filewatchid = System.dir().add_watch(m_item->m_filepath, this, false);
+            m_filewatcherid = System.dir().add_watch(m_item->m_filepath, this, false);
 
          }
          catch (...)
@@ -1308,7 +1308,7 @@ namespace filemanager
    }
 
 
-   void manager::handle_file_action(::file_watcher::file_watch_id watchid, const char * dir, const char * filename, ::file_watcher::e_action action)
+   void manager::handle_file_action(::file_watcher::id watchid, const char * dir, const char * filename, ::file_watcher::e_action action)
    {
 
       if (action == ::file_watcher::action_delete || action == ::file_watcher::action_add)

@@ -58,7 +58,7 @@ namespace file_watcher
    }
 
 
-   file_watch_id file_watcher::add_watch(const char * directory, file_watch_listener * pwatcher, bool bRecursive, bool bOwn)
+   id file_watcher::add_watch(const char * directory, listener * pwatcher, bool bRecursive, bool bOwn)
    {
 
       return m_pimpl->add_watch(directory, pwatcher, bRecursive, bOwn);
@@ -72,7 +72,7 @@ namespace file_watcher
 
    }
 
-   void file_watcher::remove_watch(file_watch_id id)
+   void file_watcher::remove_watch(id id)
    {
 
       m_pimpl->remove_watch(id);
@@ -80,55 +80,13 @@ namespace file_watcher
    }
 
 
-   //bool file_watcher::update()
-   //{
 
-   //   keep_true updating(m_bUpdating);
-
-   //   return m_pimpl->update();
-
-   //}
-
-
-//   void file_watcher_pool::install_message_routing(::message::sender * psender)
-//   {
-//      IGUI_MSG_LINK(WM_APP+1000, psender, this, _001OnApp1000)
-//   }
-//
-//   void file_watcher_pool::add_watch(const char * directory, file_watch_listener * pwatcher, bool bRecursive, bool bOwn)
-//   {
-//
-//      add * padd = new add;
-//
-//      padd->directory = directory;
-//      padd->pwatcher = pwatcher;
-//      padd->bRecursive = bRecursive;
-//      padd->bOwn = bOwn;
-//
-//      post_thread_message(WM_APP + 1000, 0, padd);
-//
-//   }
-//
-//
-//   void file_watcher_pool::_001OnApp1000(::message::message * pobj)
-//   {
-//
-//      SCAST_PTR(::message::base, pbase, pobj);
-//
-//
-//      delete padd;
-//
-//   }
-//
-
-   file_watch_listener::file_watch_listener()
+   listener::listener()
    {
-
-      //m_pfilewatcherlistenerthread = NULL;
 
    }
 
-   file_watch_listener::~file_watch_listener()
+   listener::~listener()
    {
 
    }
@@ -138,7 +96,7 @@ namespace file_watcher
 /// @param dir The directory
 /// @param filename The filename that was accessed (not full path)
 /// @param action Action that was performed
-   void file_watch_listener::handle_file_action(file_watch_id idWatch, const char * szDir, const char * szFilename, e_action eaction)
+   void listener::handle_file_action(id idWatch, const char * szDir, const char * szFilename, e_action eaction)
    {
 
       UNREFERENCED_PARAMETER(idWatch);

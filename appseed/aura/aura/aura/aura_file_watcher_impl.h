@@ -80,21 +80,19 @@ namespace file_watcher
 #endif
 
 
+
       file_watcher_impl();
       virtual ~file_watcher_impl();
 
 
       /// Add a directory watch
       /// @exception file_not_found_exception Thrown when the requested directory does not exist
-      virtual file_watch_id add_watch(const string & directory, file_watch_listener * pwatcher, bool bRecursive, bool bOwn) = 0;
+      virtual id add_watch(const string & directory, listener * pwatcher, bool bRecursive, bool bOwn) = 0;
 
       /// Remove a directory watch. This is a brute force lazy search O(nlogn).
       virtual void remove_watch(const string & directory) = 0;
 
-      virtual void remove_watch(file_watch_id id) = 0;
-
-      /// Updates the watcher. Must be called often.
-      //virtual bool update() = 0;
+      virtual void remove_watch(id id) = 0;
 
       /// Handles the action
       virtual void handle_action(action * paction) = 0;

@@ -8,7 +8,7 @@ namespace filemanager
 
 
    class CLASS_DECL_CORE manager :
-      virtual public ::file_watcher::file_watch_listener,
+      virtual public ::file_watcher::listener,
       virtual public ::userfs::document
    {
    public:
@@ -33,7 +33,7 @@ namespace filemanager
       };
 
 
-      ::file_watcher::file_watch_id       m_filewatchid;
+      ::file_watcher::id                  m_filewatcherid;
       sp(::filemanager::data)             m_spfilemanagerdata;
       sp(::fs::item)                      m_item;
       ::critical_section                  m_csItemIdListAbsolute;
@@ -111,7 +111,7 @@ namespace filemanager
 
 
 
-      virtual void handle_file_action(::file_watcher::file_watch_id watchid, const char * dir, const char * filename, ::file_watcher::e_action action) override;
+      virtual void handle_file_action(::file_watcher::id watchid, const char * dir, const char * filename, ::file_watcher::e_action action) override;
 
 
       virtual void on_create(::create * pcreate) override;

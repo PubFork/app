@@ -26,14 +26,8 @@ namespace dynamic_source
 
    script_compiler::script_compiler(::aura::application * papp):
       ::object(papp),
-//      m_memfileLibError(papp),
-      //    m_mutexLibrary(papp),
       m_mutex(papp),
-      file_watcher(papp),
-      listener_thread(papp)//,
-//      m_libraryLib(papp)
-
-
+      file_watcher(papp)
    {
 
       {
@@ -689,13 +683,11 @@ namespace dynamic_source
 
       ///Application.file().put_contents(strBuildCmd,str);
 
-
-
       bool bTimeout = false;
 
       ::process::process_sp process(allocer());
 
-      set_thread_priority(::multithreading::priority_highest);
+      ::multithreading::set_priority(::multithreading::priority_highest);
 
       //process->oprop("inherit") = false;
 #ifdef WINDOWS
@@ -710,7 +702,7 @@ namespace dynamic_source
 
       string strLog;
 
-      while(::get_thread_run() && thread_get_run())
+      while(::get_thread_run())
       {
 
          strLog += process->read();
@@ -826,7 +818,7 @@ namespace dynamic_source
 
          ::process::process_sp process(allocer());
 
-         set_thread_priority(::multithreading::priority_highest);
+         ::multithreading::set_priority(::multithreading::priority_highest);
 
          process->create_child_process(str,true,NULL,::multithreading::priority_highest);
 
@@ -834,7 +826,7 @@ namespace dynamic_source
 
          string strLog;
 
-         while(::get_thread_run() && thread_get_run())
+         while(::get_thread_run())
          {
 
             strLog += process->read();
@@ -974,7 +966,7 @@ namespace dynamic_source
 
       int iTry = 0;
 
-      while ((strSource = Application.file().as_string(pscript->m_strSourcePath)).trimmed().is_empty() && ::get_thread_run() && thread_get_run())
+      while ((strSource = Application.file().as_string(pscript->m_strSourcePath)).trimmed().is_empty() && ::get_thread_run())
       {
 
          Sleep(100);
@@ -1438,7 +1430,7 @@ namespace dynamic_source
    }
 
 
-   void script_compiler::handle_file_action(::file_watcher::file_watch_id watchid, const char * pszFolder, const char * psz, ::file_watcher::e_action eaction)
+   void script_compiler::handle_file_action(::file_watcher::id id, const char * pszFolder, const char * psz, ::file_watcher::e_action eaction)
    {
 
       synch_lock sl(&m_mutex);
@@ -1488,13 +1480,14 @@ namespace dynamic_source
 
    }
 
+
    void script_compiler::folder_watch()
    {
 
-      m_filewatchid           = add_file_watch(m_pmanager->m_strNetseedDsCa2Path, true);
-      //m_filewatchidFribox     = add_file_watch("Z:/fribox/ds/", true);
+      m_filewatcherid           = add_watch(m_pmanager->m_strNetseedDsCa2Path, this, true);
 
    }
+
 
    library & script_compiler::lib(const char * pszLibrary)
    {
@@ -1720,7 +1713,7 @@ namespace dynamic_source
 
          ::process::process_sp process(allocer());
 
-         set_thread_priority(::multithreading::priority_highest);
+         ::multithreading::set_priority(::multithreading::priority_highest);
 
          process->create_child_process(str,true,NULL,::multithreading::priority_highest);
 
@@ -1730,7 +1723,7 @@ namespace dynamic_source
 
          string strLog;
 
-         while(::get_thread_run() && thread_get_run())
+         while(::get_thread_run())
          {
 
             strLog += process->read();
@@ -1867,7 +1860,7 @@ namespace dynamic_source
 
       ::process::process_sp process(allocer());
 
-      set_thread_priority(::multithreading::priority_highest);
+      ::multithreading::set_priority(::multithreading::priority_highest);
 
       process->create_child_process(str,true,NULL,::multithreading::priority_highest);
 
@@ -1875,7 +1868,7 @@ namespace dynamic_source
 
       string strLog;
 
-      while(::get_thread_run() && thread_get_run())
+      while(::get_thread_run())
       {
 
          strLog += process->read();

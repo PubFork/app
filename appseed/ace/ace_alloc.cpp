@@ -196,7 +196,7 @@ CLASS_DECL_EXPORT void nodeos_set_cache_dir(const char * pszDir)
 
    }
 
-   g_pszCacheDir = strdup(pszDir);
+   g_pszCacheDir = _strdup(pszDir);
 
 }
 
@@ -222,7 +222,7 @@ CLASS_DECL_EXPORT void nodeos_set_home(const char * pszDir)
 
    }
 
-   g_pszHome = strdup(pszDir);
+   g_pszHome = _strdup(pszDir);
 
 }
 
@@ -248,7 +248,7 @@ CLASS_DECL_EXPORT void nodeos_set_temp(const char * pszDir)
 
    }
 
-   g_pszTemp = strdup(pszDir);
+   g_pszTemp = _strdup(pszDir);
 
 }
 

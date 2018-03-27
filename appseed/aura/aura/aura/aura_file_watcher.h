@@ -34,13 +34,12 @@ namespace file_watcher
 
 
    /// Type for a watch id
-   typedef int64_t file_watch_id;
-   typedef array < file_watch_id > file_watch_array;
+   typedef int64_t id;
+   typedef array < id > file_watch_array;
 
    // forward declarations
    class file_watcher_impl;
-   class file_watch_listener;
-   //class listener_thread;
+   class listener;
 
    /// Base exception class
    /// @class Exception
@@ -87,34 +86,35 @@ namespace file_watcher
 
    /// Basic interface for listening for file events.
    /// @class file_watch_listener
-   class CLASS_DECL_AURA file_watch_listener
+   class CLASS_DECL_AURA listener :
+      virtual public ::object
    {
    public:
 
 
-      file_watch_listener();
-      virtual ~file_watch_listener();
+      listener();
+      virtual ~listener();
 
       /// Handles the action file action
       /// @param watchid The watch id for the directory
       /// @param dir The directory
       /// @param filename The filename that was accessed (not full path)
       /// @param action Action that was performed
-      virtual void handle_file_action(file_watch_id watchid, const char * dir, const char * filename, e_action action);
+      virtual void handle_file_action(id watchid, const char * dir, const char * filename, e_action action);
 
 
    }; // class file_watch_listener
 
    template < typename PRED >
-   class pred_file_watch_listener :
-      virtual public file_watch_listener
+   class pred_listener :
+      virtual public listener
    {
    public:
 
 
       PRED m_pred;
 
-      pred_file_watch_listener(PRED pred):
+      pred_listener(PRED pred):
          m_pred(pred)
       {
       }
@@ -124,10 +124,10 @@ namespace file_watcher
       /// @param dir The directory
       /// @param filename The filename that was accessed (not full path)
       /// @param action Action that was performed
-      virtual void handle_file_action(file_watch_id watchid, const char * dir, const char * filename, e_action action)
+      virtual void handle_file_action(id id, const char * dir, const char * filename, e_action action)
       {
 
-         m_pred(watchid, dir, filename, action);
+         m_pred(id, dir, filename, action);
 
       }
 
@@ -158,65 +158,24 @@ namespace file_watcher
 
       /// Add a directory watch
       /// @exception file_not_found_exception Thrown when the requested directory does not exist
-      file_watch_id add_watch(const char * directory, file_watch_listener * pwatcher, bool bRecursive, bool bOwn = false);
+      id add_watch(const char * directory, listener * pwatcher, bool bRecursive, bool bOwn = false);
 
       template < typename PRED >
-      file_watch_id pred_add_watch(const char * directory, PRED pred, bool bRecursive)
+      id pred_add_watch(const char * directory, PRED pred, bool bRecursive)
       {
 
-         return add_watch(directory, new pred_file_watch_listener < PRED >(pred), bRecursive, true);
+         return add_watch(directory, new pred_listener < PRED >(pred), bRecursive, true);
 
       }
 
       /// Remove a directory watch. This is a brute force search O(nlogn).
       void remove_watch(const char * directory);
 
-      void remove_watch(file_watch_id id);
-
+      void remove_watch(id id);
 
 
    };//end file_watcher
 
-
-   //class CLASS_DECL_AURA file_watcher_pool :
-   //   virtual public ::thread
-   //{
-   //public:
-
-   //   class CLASS_DECL_AURA add
-   //   {
-   //   public:
-   //
-   //      string directory;
-   //      file_watch_listener * pwatcher;
-   //      bool bRecursive;
-   //      bool bOwn;
-   //   };
-
-
-   //   map < file_watch_id, file_watch_id, file_watcher *, file_watcher * > m_pool;
-
-   //   file_watcher_pool() {}
-   //   virtual ~file_watcher_pool() {}
-
-   //   virtual void install_message_routing(::message::sender * psender);
-
-   //   /// Add a directory watch
-   //   /// @exception file_not_found_exception Thrown when the requested directory does not exist
-   //   file_watch_id add_watch(const char * directory, file_watch_listener * pwatcher, bool bRecursive, bool bOwn = false);
-
-   //   template < typename PRED >
-   //   file_watch_id pred_add_watch(const char * directory, PRED pred, bool bRecursive)
-   //   {
-
-   //      return add_watch(directory, new pred_file_watch_listener < PRED >(pred), bRecursive, true);
-
-   //   }
-
-
-   //   virtual void run();
-
-   //};
 
 } // namespace file_watcher
 

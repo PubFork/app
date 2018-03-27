@@ -32,18 +32,18 @@ namespace dynamic_source
    public:
 
 
-      class CLASS_DECL_PROGRAMMING clear_include_matches_folder_watch :
-         virtual public ::file_watcher::listener_thread
-
+      class CLASS_DECL_PROGRAMMING clear_include_matches_file_watcher :
+         virtual public ::file_watcher::file_watcher,
+         virtual public ::file_watcher::listener
       {
       public:
 
 
          sp(script_manager)   m_pmanager;
 
-         clear_include_matches_folder_watch(::aura::application * papp);
+         clear_include_matches_file_watcher(::aura::application * papp);
 
-         virtual void handle_file_action(::file_watcher::file_watch_id watchid, const char * dir, const char * filename, ::file_watcher::e_action eaction) override;
+         virtual void handle_file_action(::file_watcher::id watchid, const char * dir, const char * filename, ::file_watcher::e_action eaction) override;
 
 
       };
