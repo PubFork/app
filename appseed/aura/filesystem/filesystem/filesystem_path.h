@@ -12,7 +12,7 @@ namespace file
 
    class path;
 
-   typedef CLASS_DECL_AURA::string_array < ::file::path, string > patha;
+   typedef CLASS_DECL_AURA ::string_array < ::file::path, string > patha;
 
 
    enum e_path
