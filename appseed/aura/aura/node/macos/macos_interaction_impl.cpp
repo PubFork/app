@@ -118,13 +118,13 @@ namespace macos
       if (!::IsWindow(hWnd))
          return false;
 
-      DWORD_PTR dw = hWnd->get_window_long(GWL_STYLE);
+      DWORD_PTR dw = hWnd->get_window_long_ptr(GWL_STYLE);
 
       dw &= ~dwRemove;
 
       dw |= dwAdd;
 
-      hWnd->set_window_long(GWL_STYLE, dw);
+      hWnd->set_window_long_ptr(GWL_STYLE, dw);
 
       return true;
 
@@ -137,13 +137,13 @@ namespace macos
       if (!::IsWindow(hWnd))
          return false;
 
-      DWORD_PTR dw = hWnd->get_window_long(GWL_EXSTYLE);
+      DWORD_PTR dw = hWnd->get_window_long_ptr(GWL_EXSTYLE);
 
       dw &= ~dwRemove;
 
       dw |= dwAdd;
 
-      hWnd->set_window_long(GWL_EXSTYLE, dw);
+      hWnd->set_window_long_ptr(GWL_EXSTYLE, dw);
 
       return true;
 
