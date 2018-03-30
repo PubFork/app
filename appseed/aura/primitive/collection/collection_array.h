@@ -138,7 +138,7 @@ class array :
       bool pred_add_unique(TYPE t, PRED pred)
       {
 
-         if (this->pred_find_first(pred) >= 0)
+         if (this->pred_contains(pred))
          {
 
             return false;

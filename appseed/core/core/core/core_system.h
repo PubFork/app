@@ -64,7 +64,7 @@ namespace core
 #endif
 
 
-      system(::aura::application * papp = NULL, app_core * pappcore = NULL, void * pinitdata = NULL);
+      system(::aura::application * papp = NULL, app_core * pappcore = NULL);
       virtual ~system();
 
 

@@ -6161,25 +6161,29 @@ namespace draw2d_cairo
 
 #elif defined(ANDROID)
 
-      ::draw2d::font::enum_item item;
+      sp(::draw2d::font::enum_item) item = canew(::draw2d::font::enum_item);
 
-      item.m_ecs = ::draw2d::font::cs_default;
+      item->m_ecs = ::draw2d::font::cs_default;
 
-      item.m_strFile = "monospace";
+      item->m_strFile = "monospace";
 
-      item.m_strName = "monospace";
-
-      itema.add(item);
-
-      item.m_strFile = "serif";
-
-      item.m_strName = "serif";
+      item->m_strName = "monospace";
 
       itema.add(item);
 
-      item.m_strFile = "normal";
+      item = canew(::draw2d::font::enum_item);
 
-      item.m_strName = "normal";
+      item->m_strFile = "serif";
+
+      item->m_strName = "serif";
+
+      itema.add(item);
+
+      item = canew(::draw2d::font::enum_item);
+
+      item->m_strFile = "normal";
+
+      item->m_strName = "normal";
 
       itema.add(item);
 

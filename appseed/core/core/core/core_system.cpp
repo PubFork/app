@@ -26,9 +26,9 @@ namespace core
 {
 
 
-   system::system(::aura::application * papp, app_core * pappcore, void * pdata):
+   system::system(::aura::application * papp, app_core * pappcore):
       ::object(papp),
-      ::aura::system(papp, pappcore, pdata),
+      ::aura::system(papp, pappcore),
       ::axis::system(papp, pappcore),
       ::base::system(papp, pappcore),
       m_mutexDelete(this),

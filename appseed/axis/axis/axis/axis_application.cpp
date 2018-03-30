@@ -1140,120 +1140,120 @@ InitFailure:
       return true;
 
    }
-   
+
 
    bool application::do_install()
    {
-      
-      
+
+
       if (!::aura::application::do_install())
       {
-         
+
          return false;
-         
+
       }
-      
+
       /*
        if (handler()->m_varTopicQuery.has_property("install"))
        {
-       
+
        if (!on_install())
        {
-       
+
        ::output_debug_string("Failed at on_install : " + m_strAppId + "\n\n");
-       
+
        System.m_iErrorCode = -1;
-       
+
        return false;
-       
+
        }
-       
+
        string strBuild;
-       
+
        string strAppId = m_strAppId;
-       
+
        xxdebug_box("on_install1", strAppId, 0);
-       
+
        if (strAppId.is_empty())
        {
-       
+
        strAppId = m_strAppName;
-       
+
        }
-       
+
        if (strAppId.has_char() && handler()->m_varTopicQuery.has_property("app") && strAppId == handler()->m_varTopicQuery["app"])
        {
-       
+
        system_add_app_install(strAppId, "installed");
-       
+
        if (strBuild.has_char())
        {
-       
+
        system_add_app_install(strAppId, strBuild);
-       
+
        }
-       
+
        }
        else if (strAppId.has_char() && handler()->m_varTopicQuery.has_property("session_start") && strAppId == handler()->m_varTopicQuery["session_start"])
        {
-       
+
        system_add_app_install(strAppId, "installed");
-       
+
        if (strBuild.has_char())
        {
-       
+
        system_add_app_install(strAppId, strBuild);
-       
+
        }
-       
+
        }
        else if (m_strInstallToken.has_char())
        {
-       
+
        system_add_app_install(m_strInstallToken, "installed");
-       
+
        if (strBuild.has_char())
        {
-       
+
        system_add_app_install(m_strInstallToken, strBuild);
-       
+
        }
-       
+
        }
-       
+
        }
        else if (handler()->m_varTopicQuery.has_property("uninstall"))
        {
-       
+
        if (!on_unstall())
        {
-       
+
        return false;
-       
+
        }
-       
+
        #ifdef
-       
+
        System.install().remove_spa_start(m_strAppId);
-       
+
        #endif
-       
+
        }*/
-      
+
       return true;
-      
+
    }
-   
 
 
-   
+
+
    bool application::do_uninstall()
    {
-      
+
       bool bOk = aura::application::do_uninstall();
-      
+
       return bOk;
-      
+
    }
 
 
@@ -1271,16 +1271,16 @@ InitFailure:
 
    bool application::on_uninstall()
    {
-      
+
       if(!aura::application::on_uninstall())
       {
-         
+
          return false;
-         
+
       }
-      
+
       return true;
-      
+
    }
 
 
@@ -1289,6 +1289,13 @@ InitFailure:
 
    bool application::os_native_bergedge_start()
    {
+
+      if (!::aura::application::os_native_bergedge_start())
+      {
+
+         return false;
+
+      }
 
       return true;
 
@@ -3904,9 +3911,9 @@ namespace axis
 
    bool application::is_local_data()
    {
-      
+
       return m_bLocalDataModifier;
-      
+
    }
 
 

@@ -1,5 +1,4 @@
 ﻿#include "framework.h"
-//#include "core/user/user/user.h"
 
 
 namespace plugin
@@ -8,12 +7,11 @@ namespace plugin
 
    system::system(::aura::application * papp, ::app_core * pappcore) :
       object(papp),
-      ::aura::system(papp, pappcore, NULL),
+      ::aura::system(papp, pappcore),
       ::axis::system(papp, pappcore),
       ::base::system(papp, pappcore),
       ::core::system(papp, pappcore)
    {
-
 
    }
 

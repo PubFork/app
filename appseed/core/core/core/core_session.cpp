@@ -913,9 +913,9 @@ namespace core
 
       try
       {
-         
+
          bOk1 = ::core::application::on_uninstall();
-         
+
       }
       catch(...)
       {
@@ -934,7 +934,14 @@ namespace core
    bool session::os_native_bergedge_start()
    {
 
-      return ::core::application::os_native_bergedge_start();
+      if (!::core::application::os_native_bergedge_start())
+      {
+
+         return false;
+
+      }
+
+      return true;
 
    }
 
@@ -981,7 +988,7 @@ namespace core
       //if (System.is_installing() || System.is_unstalling())
       {
 
-        // System.m_bDoNotExitIfNoApplications = false;
+         // System.m_bDoNotExitIfNoApplications = false;
 
       }
       //else

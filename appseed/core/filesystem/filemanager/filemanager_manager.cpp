@@ -159,9 +159,11 @@ namespace filemanager
       ::userfs::document(papp)
    {
 
+      m_filewatcherid = -1;
+
       m_bFullBrowse = false;
 
-      m_pfilewatcherlistenerthread = NULL;
+      //m_pfilewatcherlistenerthread = NULL;
 
       //command_signalid id;
 
@@ -257,22 +259,29 @@ namespace filemanager
 
       }
 
-      if (m_pfilewatcherlistenerthread != NULL)
+      //if (m_pfilewatcherlistenerthread != NULL)
+      //{
+
+      //   ::multithreading::post_quit(m_pfilewatcherlistenerthread);
+
+      //}
+
+      if(m_filewatcherid >= 0)
       {
 
-         ::multithreading::post_quit(m_pfilewatcherlistenerthread);
+         System.dir().remove_watch(m_filewatcherid);
 
       }
 
       if (m_item->m_filepath.has_char())
       {
 
-         m_pfilewatcherlistenerthread = new ::file_watcher::listener_thread(get_app());
+//         m_pfilewatcherlistenerthread = new ::file_watcher::listener_thread(get_app());
 
          try
          {
 
-            m_pfilewatcherlistenerthread->add_file_watch(m_item->m_filepath, this, false);
+            m_filewatcherid = System.dir().add_watch(m_item->m_filepath, this, false);
 
          }
          catch (...)
@@ -1299,7 +1308,7 @@ namespace filemanager
    }
 
 
-   void manager::handle_file_action(::file_watcher::file_watch_id watchid, const char * dir, const char * filename, ::file_watcher::e_action action)
+   void manager::handle_file_action(::file_watcher::id watchid, const char * dir, const char * filename, ::file_watcher::e_action action)
    {
 
       if (action == ::file_watcher::action_delete || action == ::file_watcher::action_add)

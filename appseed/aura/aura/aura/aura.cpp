@@ -127,7 +127,7 @@ CLASS_DECL_AURA int get_aura_init()
 CLASS_DECL_AURA ::aura::system * aura_create_aura_system(app_core * pappcore)
 {
 
-   return new ::aura::system(NULL, pappcore, NULL);
+   return new ::aura::system(NULL, pappcore);
 
 }
 

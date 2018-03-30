@@ -19,105 +19,105 @@ namespace file_watcher
 //
 //   }
 
-   void listener_thread::install_message_routing(::message::sender * psender)
-   {
-
-      ::thread::install_message_routing(psender);
-
-      IGUI_MSG_LINK(message_add_watch, psender, this, &listener_thread::_001OnAddWatch);
-
-   }
-
-   void listener_thread::_001OnAddWatch(::message::message * pobj)
-   {
-
-      SCAST_PTR(::message::base, pbase, pobj);
-
-      sp(listener_thread::add) padd(pbase->m_lparam);
-
-      try
-      {
-
-         try
-         {
-
-            padd->m_id = add_watch(padd->m_str, padd->m_plistener, padd->m_bRecursive, padd->m_bOwn);
-
-         }
-         catch (...)
-         {
-
-            try
-            {
-
-               padd->m_id = -1;
-
-            }
-            catch (...)
-            {
-
-            }
-
-         }
-
-      }
-      catch (...)
-      {
-
-      }
-
-   }
-
-
-
-   void listener_thread::run()
-   {
-
-      try
-      {
-
-         MESSAGE msg;
-
-         while(thread_get_run())
-         {
-
-            if (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE))
-            {
-
-               if (!defer_pump_message())
-               {
-
-                  break;
-
-               }
-
-            }
-
-            try
-            {
-
-               update();
-
-            }
-            catch(::file_watcher::exception &)
-            {
-
-            }
-
-
-
-
-         }
-
-      }
-      catch(...)
-      {
-
-      }
-
-//      return 0;
-
-   }
+//   void listener_thread::install_message_routing(::message::sender * psender)
+//   {
+//
+//      ::thread::install_message_routing(psender);
+//
+//      IGUI_MSG_LINK(message_add_watch, psender, this, &listener_thread::_001OnAddWatch);
+//
+//   }
+//
+//   void listener_thread::_001OnAddWatch(::message::message * pobj)
+//   {
+//
+//      SCAST_PTR(::message::base, pbase, pobj);
+//
+//      sp(listener_thread::add) padd(pbase->m_lparam);
+//
+//      try
+//      {
+//
+//         try
+//         {
+//
+//            padd->m_id = add_watch(padd->m_str, padd->m_plistener, padd->m_bRecursive, padd->m_bOwn);
+//
+//         }
+//         catch (...)
+//         {
+//
+//            try
+//            {
+//
+//               padd->m_id = -1;
+//
+//            }
+//            catch (...)
+//            {
+//
+//            }
+//
+//         }
+//
+//      }
+//      catch (...)
+//      {
+//
+//      }
+//
+//   }
+//
+//
+//
+//   void listener_thread::run()
+//   {
+//
+//      try
+//      {
+//
+//         MESSAGE msg;
+//
+//         while(thread_get_run())
+//         {
+//
+//            if (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE))
+//            {
+//
+//               if (!defer_pump_message())
+//               {
+//
+//                  break;
+//
+//               }
+//
+//            }
+//
+//            try
+//            {
+//
+//               update();
+//
+//            }
+//            catch(::file_watcher::exception &)
+//            {
+//
+//            }
+//
+//
+//
+//
+//         }
+//
+//      }
+//      catch(...)
+//      {
+//
+//      }
+//
+////      return 0;
+//
+//   }
 
 
 } // namespace file_watcher

@@ -28,8 +28,8 @@ namespace file
          ::object(papp),
          m_isdirmap(papp),
          m_mutex(papp),
-         ::file_watcher::file_watcher(papp),
-         ::file_watcher::listener_thread(papp)
+         ::file_watcher::file_watcher(papp) //,
+         //::file_watcher::listener_thread(papp)
 
       {
 

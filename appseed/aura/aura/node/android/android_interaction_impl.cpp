@@ -5432,7 +5432,7 @@ namespace android
 
       UNREFERENCED_PARAMETER(pfocus);
 
-      System.m_pdataexchange->m_bShowKeyboard = true;
+      System.node_ddx()->m_bShowKeyboard = true;
 
       return true;
 
@@ -5444,7 +5444,7 @@ namespace android
 
       output_debug_string("::android::interaction_impl::keyboard_focus_OnKillFocus() (1) \n");
 
-      System.m_pdataexchange->m_bHideKeyboard = true;
+      System.node_ddx()->m_bHideKeyboard = true;
 
       return true;
 
@@ -5455,7 +5455,7 @@ namespace android
 
       output_debug_string("::android::interaction_impl::keyboard_focus_OnChildKillFocus() (2) \n");
 
-      System.m_pdataexchange->m_bHideKeyboard = true;
+      System.node_ddx()->m_bHideKeyboard = true;
 
       return true;
 

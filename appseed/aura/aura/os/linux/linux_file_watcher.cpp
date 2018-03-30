@@ -47,38 +47,53 @@ namespace file_watcher
 		string m_strDirName;
 	   bool m_bRecursive;
 	   bool m_bOwn;
-		file_watch_listener* m_plistener;
+		listener * m_plistener;
 //	   ::array < watch_struct_item > m_itema;
 	};
 
 
 	//--------
 	os_file_watcher::os_file_watcher(::aura::application * papp) :
-      object(papp)
+      object(papp),
+      thread(papp)
 	{
+
 		mFD = inotify_init();
+
 		if (mFD < 0)
 			fprintf (stderr, "Error: %s\n", strerror(errno));
 
-		mTimeOut.tv_sec = 1;
+		mTimeOut.tv_sec = 3;
 		mTimeOut.tv_usec = 0;
 
 		FD_ZERO(&mDescriptorSet);
+
+		begin();
+
 	}
 
 	//--------
 	os_file_watcher::~os_file_watcher()
 	{
+
+      ::multithreading::post_quit_and_wait(seconds(15));
+
 		WatchMap::pair * ppair = m_watchmap.PGetFirstAssoc();
+
 		for(; ppair != NULL; ppair = m_watchmap.PGetNextAssoc(ppair))
 		{
+
 			delete ppair->m_element2;
+
 		}
+
 		m_watchmap.remove_all();
+
 	}
 
+
 	//--------
-	file_watch_id os_file_watcher::add_watch(const string & directory,  file_watch_listener * pwatcher, bool bRecursive, bool bOwn)
+	id os_file_watcher::add_watch(const string & directory,  listener * pwatcher, bool bRecursive, bool bOwn)
 	{
 
       synch_lock sl(m_pmutex);
@@ -168,12 +183,12 @@ namespace file_watcher
 	}
 
 	//--------
-	void os_file_watcher::remove_watch(file_watch_id watchid)
+	void os_file_watcher::remove_watch(id id)
 	{
 
       synch_lock sl(m_pmutex);
 
-		WatchMap::pair * ppair = m_watchmap.PLookup(watchid);
+		WatchMap::pair * ppair = m_watchmap.PLookup(id);
 
 		if(ppair == NULL)
 			return;
@@ -181,19 +196,35 @@ namespace file_watcher
 		watch_struct* watch = ppair->m_element2;
 		m_watchmap.remove_key(ppair->m_element1);
 
-		inotify_rm_watch(mFD, watchid);
+		inotify_rm_watch(mFD, id);
 
 		delete watch;
 		watch = 0;
 	}
 
-	string os_file_watcher::watch_path(file_watch_id id)
+
+	string os_file_watcher::watch_path(id id)
 	{
+
 		return m_watchmap[id]->m_strDirName;
+
+	}
+
+
+	void os_file_watcher::run()
+	{
+
+      while(thread_get_run())
+      {
+
+         step();
+
+      }
+
 	}
 
 	//--------
-	bool os_file_watcher::update()
+	bool os_file_watcher::step()
 	{
 
 	   FD_ZERO(&mDescriptorSet);

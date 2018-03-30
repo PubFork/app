@@ -70,7 +70,6 @@ public:
    };
 
 
-
    item                    m_item;
    HANDLE                  m_hmap;
    class get_fs_size *     m_pgetfssize;

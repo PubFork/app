@@ -433,6 +433,16 @@ public:
 
    }
 
+
+   template < typename PRED >
+   bool pred_contains(PRED pred, index iStart = 0, index iEnd = -1) const
+   {
+
+      return this->pred_find_first(pred, iStart, iEnd) >= 0;
+
+   }
+
+
    template < typename PRED >
    index pred_find_first(PRED pred, index iStart = 0, index iEnd = -1) const
    {

@@ -278,7 +278,7 @@ bool oswindow_data::is_child(::oswindow oswindow)
 }
 
 
-int_ptr oswindow_data::get_window_long(int_ptr iIndex)
+int_ptr oswindow_data::get_window_long_ptr(int_ptr iIndex)
 {
 
    if(is_null())
@@ -292,7 +292,7 @@ int_ptr oswindow_data::get_window_long(int_ptr iIndex)
 }
 
 
-int_ptr oswindow_data::set_window_long(int_ptr iIndex, int_ptr iNewLong)
+int_ptr oswindow_data::set_window_long_ptr(int_ptr iIndex, int_ptr iNewLong)
 {
 
    if(is_null())

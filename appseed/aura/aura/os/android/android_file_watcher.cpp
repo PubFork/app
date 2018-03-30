@@ -35,70 +35,95 @@ namespace file_watcher
 
    struct watch_struct_item
    {
-      id m_id;
-      string m_strDirName;
+
+      id                            m_id;
+      string                        m_strDirName;
+
    };
 
 
    struct watch_struct :
       public watch_struct_item
    {
-      bool m_bRecursive;
-      file_watch_listener* m_plistener;
-      array < watch_struct_item > m_itema;
-      bool m_bOwn;
+
+      bool                          m_bRecursive;
+      file_watch_listener *         m_plistener;
+      array < watch_struct_item >   m_itema;
+      bool                          m_bOwn;
+
    };
 
 
-   //--------
+
    os_file_watcher::os_file_watcher(::aura::application * papp) :
-      ::object(papp)
+      ::object(papp),
+      thread(papp)
    {
 
       m_pDescriptorSet = new fd_set;
 
       mFD = inotify_init();
+
       if (mFD < 0)
-         fprintf (stderr, "Error: %s\n", strerror(errno));
+      {
+
+         fprintf(stderr, "Error: %s\n", strerror(errno));
+
+      }
 
       mTimeOut.tv_sec = 0;
-      mTimeOut.tv_usec = 0;
+
+      mTimeOut.tv_usec = 300 * 1000;
 
       FD_ZERO((fd_set *) m_pDescriptorSet);
 
 
    }
 
-   //--------
+
    os_file_watcher::~os_file_watcher()
    {
+
+      multithreading::post_quit_and_wait(seconds(15));
+
       WatchMap::pair * ppair = m_watchmap.PGetFirstAssoc();
+
       for(; ppair != NULL; ppair = m_watchmap.PGetNextAssoc(ppair))
       {
+
          delete ppair->m_element2;
+
       }
+
       m_watchmap.remove_all();
 
       delete (fd_set*) m_pDescriptorSet;
 
    }
 
-   //--------
+
    file_watch_id os_file_watcher::add_watch(const string & directory,  file_watch_listener * pwatcher, bool bRecursive, bool bOwn)
    {
 
       synch_lock sl(m_pmutex);
 
       int32_t wd = inotify_add_watch (mFD, directory, IN_CLOSE_WRITE | IN_MOVED_TO | IN_CREATE | IN_MOVED_FROM | IN_DELETE);
+
       if (wd < 0)
       {
-         if(errno == ENOENT)
+         if (errno == ENOENT)
+         {
+
             _throw(file_not_found_exception(directory));
+
+         }
          else
+         {
+
             _throw(exception(strerror(errno)));
 
-//       fprintf (stderr, "Error: %s\n", strerror(errno));
-//       return -1;
+         }
+
       }
 
       watch_struct* pWatch = new watch_struct();
@@ -149,7 +174,7 @@ namespace file_watcher
       return wd;
    }
 
-   //--------
+
    void os_file_watcher::remove_watch(const string & directory)
    {
 
@@ -167,7 +192,7 @@ namespace file_watcher
 
    }
 
-   //--------
+
    void os_file_watcher::remove_watch(file_watch_id watchid)
    {
 
@@ -178,53 +203,96 @@ namespace file_watcher
       if(ppair == NULL)
          return;
 
-      watch_struct* watch = ppair->m_element2;
+      watch_struct * watch = ppair->m_element2;
+
       m_watchmap.remove_key(ppair->m_element1);
 
       inotify_rm_watch(mFD, watchid);
 
       delete watch;
+
       watch = 0;
+
    }
+
 
    string os_file_watcher::watch_path(file_watch_id id)
    {
+
+      synch_lock sl(m_pmutex);
+
       return m_watchmap[id]->m_strDirName;
+
    }
 
-   //--------
-   bool os_file_watcher::update()
+
+   void os_file_watcher::run()
    {
+
+      while (thread_get_run())
+      {
+
+         select();
+
+      }
+
+
+   }
+
+
+   bool os_file_watcher::select()
+   {
+
+      synch_lock sl(m_pmutex);
 
       FD_SET(mFD, (fd_set *) m_pDescriptorSet);
 
-      int32_t ret = select(mFD + 1,(fd_set *)m_pDescriptorSet,NULL,NULL,&mTimeOut);
+      int32_t ret = ::select(mFD + 1,(fd_set *)m_pDescriptorSet,NULL,NULL,&mTimeOut);
 
       if(ret < 0)
       {
+
          perror("select");
+
+         return false;
+
+      }
+      else if (ret == 0)
+      {
+
+         return false;
+
       }
       else if(FD_ISSET(mFD, (fd_set *) m_pDescriptorSet))
       {
 
          ssize_t len, i = 0;
+
          char action[81+FILENAME_MAX] = {0};
+
          char buff[BUFF_SIZE] = {0};
 
          len = read (mFD, buff, BUFF_SIZE);
 
          file_watcher_impl::action a;
+
          struct inotify_event *pevent = NULL;
 
          while (i < len)
          {
+
             pevent = (struct inotify_event *)&buff[i];
 
             a.filename = pevent->name;
+
             a.watch = m_watchmap[(id &)pevent->wd];
+
             a.ulOsAction = pevent->mask;
+
             handle_action(&a);
+
             i += sizeof(struct inotify_event) + pevent->len;
+
          }
 
       }
@@ -233,29 +301,43 @@ namespace file_watcher
 
    }
 
-   //--------
+
    void os_file_watcher::handle_action(action * paction)
    {
 
-      if(!paction->watch)
+      if (!paction->watch)
+      {
+
          return;
 
+      }
+
       if (!paction->watch->m_plistener)
+      {
+
          return;
+
+      }
 
       if (IN_CLOSE_WRITE & paction->ulOsAction)
       {
+
          paction->watch->m_plistener->handle_file_action(paction->watch->m_id, paction->watch->m_strDirName, paction->filename, action_modify);
+
       }
 
       if (IN_MOVED_TO & paction->ulOsAction || IN_CREATE & paction->ulOsAction)
       {
+
          paction->watch->m_plistener->handle_file_action(paction->watch->m_id, paction->watch->m_strDirName, paction->filename, action_add);
+
       }
 
       if (IN_MOVED_FROM & paction->ulOsAction || IN_DELETE & paction->ulOsAction)
       {
+
          paction->watch->m_plistener->handle_file_action(paction->watch->m_id, paction->watch->m_strDirName, paction->filename, action_delete);
+
       }
 
    }

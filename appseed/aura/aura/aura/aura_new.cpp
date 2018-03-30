@@ -19,33 +19,33 @@
 //
 //void * __cdecl operator new(size_t nSize) new_throw_spec
 //{
-//    
+//
 //    return memory_alloc(nSize);
-//    
+//
 //}
 //
 //
 //void __cdecl operator delete(void * p) del_throw_spec
 //{
-//    
+//
 //    memory_free(p);
-//    
+//
 //}
 //
 //
 //void * __cdecl operator new[](size_t nSize) new_throw_spec
 //{
-//    
+//
 //    return ::operator new(nSize);
-//    
+//
 //}
 //
 //
 //void __cdecl operator delete[](void * p) del_throw_spec
 //{
-//    
+//
 //    ::operator delete(p);
-//    
+//
 //}
 //
 //
@@ -75,3 +75,5 @@
 //   memory_free(p);
 //
 //}
+
+

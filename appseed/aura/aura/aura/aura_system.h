@@ -82,8 +82,6 @@ namespace aura
       float                                        m_dpi;
       //ID2D1DeviceContext *                         m_pdevicecontext;
       //mutex                                        m_mutexDc;
-#elif defined(VSNORD)
-      android_data_exchange *                      m_pdataexchange;
 #endif
 
       void *                                       m_ftlibrary;
@@ -173,7 +171,7 @@ namespace aura
 #endif
 
 
-      system(::aura::application * papp, app_core * pappcore, void * pdata);
+      system(::aura::application * papp, app_core * pappcore);
       virtual ~system();
 
 
@@ -246,7 +244,7 @@ namespace aura
 
       virtual object * on_alloc(::aura::application * papp,::type * ptype);
       virtual object * clone() override;
-
+      virtual node_data_exchange * node_ddx();
 
       template < typename T >
       inline T * cast_clone(T * pt)

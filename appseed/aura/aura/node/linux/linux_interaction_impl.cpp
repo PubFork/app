@@ -565,7 +565,7 @@ namespace linux
          if(cs.dwExStyle & WS_EX_TOOLWINDOW)
          {
 
-            m_oswindow->set_window_long(GWL_EXSTYLE, m_oswindow->get_window_long(GWL_EXSTYLE) |  WS_EX_TOOLWINDOW);
+            m_oswindow->set_window_long_ptr(GWL_EXSTYLE, m_oswindow->get_window_long_ptr(GWL_EXSTYLE) |  WS_EX_TOOLWINDOW);
 
          }
 

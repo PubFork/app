@@ -34,24 +34,21 @@ namespace file_watcher
 
    /// Implementation for Win32 based on ReadDirectoryChangesW.
    /// @class os_file_watcher
-   class os_file_watcher: public file_watcher_impl
+   class os_file_watcher :
+      virtual public file_watcher_impl,
+      virtual public thread
    {
    public:
 
 
       /// type for a map from id to watch_struct pointer
-      typedef map<file_watch_id, file_watch_id,watch_struct*,watch_struct*> watch_map;
-
-
-   private:
-
+      typedef map < id, id, watch_struct*,watch_struct*> watch_map;
 
       /// Map of id to watch_struct pointers
       watch_map m_watchmap;
-      /// The last watchid
-      file_watch_id m_idLast;
 
-   public:
+      /// The last watchid
+      id m_idLast;
 
 
       os_file_watcher(::aura::application *papp);
@@ -60,17 +57,20 @@ namespace file_watcher
 
       /// Add a directory watch
       /// @exception FileNotFoundException Thrown when the requested directory does not exist
-      file_watch_id add_watch(const string & directory,file_watch_listener * watcher,bool bRecursive, bool bOwn);
+      id add_watch(const string & directory, listener * watcher,bool bRecursive, bool bOwn);
 
       /// Remove a directory watch. This is a brute force lazy search O(nlogn).
       void remove_watch(const string & directory);
 
-      void remove_watch(file_watch_id id);
+      void remove_watch(id id);
 
-      string watch_path(file_watch_id watchid);
+      string watch_path(id watchid);
+
+
+      virtual void run() override;
 
       /// Updates the watcher. Must be called often.
-      bool update() override;
+      virtual bool step();
 
       /// Handles the action
       void handle_action(action * paction);

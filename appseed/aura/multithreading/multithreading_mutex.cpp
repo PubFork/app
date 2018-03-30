@@ -160,7 +160,7 @@ mutex::mutex(::aura::application * papp, bool bInitiallyOwn, const char * pstrNa
 
 #ifdef ANDROID
 
-         path = ::file::path(::aura::system::g_p->m_pdataexchange->m_pszCacheDir) / "var/tmp/ca2/lock/mutex" / string(pstrName);
+         path = ::dir::system() / "var/tmp/ca2/lock/mutex" / string(pstrName);
 
 #else
 
@@ -174,7 +174,7 @@ mutex::mutex(::aura::application * papp, bool bInitiallyOwn, const char * pstrNa
 
 #ifdef ANDROID
 
-         path = ::file::path(::aura::system::g_p->m_pdataexchange->m_pszCacheDir) / "home/user/ca2/lock/mutex" / string(pstrName);
+         path = ::dir::system() / "home/user/ca2/lock/mutex" / string(pstrName);
 
 #else
 

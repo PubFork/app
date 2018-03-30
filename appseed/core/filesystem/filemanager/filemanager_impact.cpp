@@ -211,7 +211,7 @@ namespace filemanager
       if(ptabview != NULL)
       {
 
-         bool bDeleteOriginOnSuccessfulCopy = eop = ::user::copydesk::op_cut;
+         bool bDeleteOriginOnSuccessfulCopy = eop == ::user::copydesk::op_cut;
 
          ptabview->filemanager_manager().get_operation_doc(true)->m_thread.queue_copy(listing, strDir, cnull, true, false, bDeleteOriginOnSuccessfulCopy, this, WM_APP + 1024, 4096);
 

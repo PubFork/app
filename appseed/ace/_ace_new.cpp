@@ -42,7 +42,7 @@ void * operator new(size_t nSize) new_throw_spec
 
 }
 
-#ifdef LINUX
+#if defined(LINUX) || defined(ANDROID)
 void * operator new(size_t nSize, const std::nothrow_t & ) noexcept
 {
 
@@ -79,6 +79,16 @@ void * operator new[](size_t nSize) new_throw_spec
 }
 
 #endif
+
+#if defined(LINUX) || defined(ANDROID)
+void * operator new[](size_t nSize, const std::nothrow_t & ) noexcept
+{
+
+   return ace_memory_alloc(nSize);
+
+}
+#endif
+
 
 
 void operator delete[](void * p) del_throw_spec

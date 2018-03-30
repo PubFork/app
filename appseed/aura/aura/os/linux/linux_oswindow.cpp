@@ -833,7 +833,7 @@ void oswindow_data::full_screen(LPCRECT lpcrect)
 }
 
 
-LONG_PTR oswindow_data::get_window_long(int32_t nIndex)
+LONG_PTR oswindow_data::get_window_long_ptr(int32_t nIndex)
 {
 
    return m_plongptrmap->operator[](nIndex);
@@ -841,7 +841,7 @@ LONG_PTR oswindow_data::get_window_long(int32_t nIndex)
 }
 
 
-LONG_PTR oswindow_data::set_window_long(int32_t nIndex, LONG_PTR l)
+LONG_PTR oswindow_data::set_window_long_ptr(int32_t nIndex, LONG_PTR l)
 {
 
    LONG_PTR lOld = m_plongptrmap->operator[](nIndex);
