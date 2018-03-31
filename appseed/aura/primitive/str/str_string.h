@@ -391,23 +391,23 @@ public:
    int32_t collate(strsize iStart, strsize iCount, const char * psz, strsize iStart2, strsize iCount2) const;
    int32_t collate_ci(strsize iStart, strsize iCount, const char * psz, strsize iStart2, strsize iCount2) const;
 
-   bool contains(char ch, strsize start = 0, strsize count = -1);
-   bool contains(unichar wch, strsize start = 0, strsize count = -1);
-   bool contains(int32_t i, strsize start = 0, strsize count = -1); // utf8 char index
-   bool contains(const char * psz, strsize start = 0, strsize count = -1);
-   bool contains(const string & str, strsize start = 0, strsize count = -1);
+   bool contains(char ch, strsize start = 0, strsize count = -1) const;
+   bool contains(unichar wch, strsize start = 0, strsize count = -1) const;
+   bool contains(int32_t i, strsize start = 0, strsize count = -1) const; // utf8 char index
+   bool contains(const char * psz, strsize start = 0, strsize count = -1) const;
+   bool contains(const string & str, strsize start = 0, strsize count = -1) const;
 
-   bool contains_ci(char ch, strsize start = 0, strsize count = -1);
-   bool contains_ci(unichar wch, strsize start = 0, strsize count = -1);
-   bool contains_ci(int32_t i, strsize start = 0, strsize count = -1); // utf8 char index
-   bool contains_ci(const char * psz, strsize start = 0, strsize count = -1);
-   bool contains_ci(const string & str, strsize start = 0, strsize count = -1);
+   bool contains_ci(char ch, strsize start = 0, strsize count = -1) const;
+   bool contains_ci(unichar wch, strsize start = 0, strsize count = -1) const;
+   bool contains_ci(int32_t i, strsize start = 0, strsize count = -1) const; // utf8 char index
+   bool contains_ci(const char * psz, strsize start = 0, strsize count = -1) const;
+   bool contains_ci(const string & str, strsize start = 0, strsize count = -1) const;
 
-   bool contains_wci(char ch, strsize start = 0, strsize count = -1);
-   bool contains_wci(unichar wch, strsize start = 0, strsize count = -1);
-   bool contains_wci(int32_t i, strsize start = 0, strsize count = -1); // utf8 char index
-   bool contains_wci(const char * psz, strsize start = 0, strsize count = -1);
-   bool contains_wci(const string & str, strsize start = 0, strsize count = -1);
+   bool contains_wci(char ch, strsize start = 0, strsize count = -1) const;
+   bool contains_wci(unichar wch, strsize start = 0, strsize count = -1) const;
+   bool contains_wci(int32_t i, strsize start = 0, strsize count = -1) const; // utf8 char index
+   bool contains_wci(const char * psz, strsize start = 0, strsize count = -1) const;
+   bool contains_wci(const string & str, strsize start = 0, strsize count = -1) const;
    // Advanced manipulation
 
 

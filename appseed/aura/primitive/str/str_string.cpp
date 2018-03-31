@@ -1258,124 +1258,203 @@ int32_t string::collate_ci(strsize iStart,strsize nCount,const char * psz) const
 
 int32_t string::compare(strsize iStart,strsize nCount,const char * psz,strsize start2,strsize count2) const
 {
+
    return substr(iStart,nCount).compare(string(psz).substr(start2,count2));
+
 }
+
 
 int32_t string::compare_ci(strsize iStart,strsize nCount,const char * psz,strsize start2,strsize count2) const
 {
+
    return substr(iStart,nCount).compare_ci(string(psz).substr(start2,count2));
+
 }
+
 
 int32_t string::collate(strsize iStart,strsize nCount,const char * psz,strsize start2,strsize count2) const
 {
+
    return substr(iStart,nCount).collate(string(psz).substr(start2,count2));
+
 }
 
 int32_t string::collate_ci(strsize iStart,strsize nCount,const char * psz,strsize start2,strsize count2) const
 {
+
    return substr(iStart,nCount).collate_ci(string(psz).substr(start2,count2));
+
 }
 
 
-bool string::contains(char ch,strsize iStart,strsize nCount)
+bool string::contains(char ch,strsize iStart,strsize nCount) const
 {
+
    return find(ch,iStart,nCount) >= 0;
+
 }
 
-bool string::contains(unichar wch,strsize iStart,strsize nCount)
+
+bool string::contains(unichar wch,strsize iStart,strsize nCount) const
 {
+
    return find_w(::str::uni_to_utf8(wch),iStart,nCount) >= 0;
+
 }
 
-bool string::contains(int32_t i,strsize iStart,strsize nCount) // utf8 char index
+
+bool string::contains(int32_t i,strsize iStart,strsize nCount) const // utf8 char index
 {
+
    return find_w(::str::uni_to_utf8(i),iStart,nCount) >= 0;
+
 }
 
-bool string::contains(const char * psz,strsize iStart,strsize nCount)
+
+bool string::contains(const char * psz,strsize iStart,strsize nCount) const
 {
+
    return find(psz,iStart,nCount) >= 0;
+
 }
 
-bool string::contains(const string & str,strsize iStart,strsize nCount)
+
+bool string::contains(const string & str,strsize iStart,strsize nCount) const
 {
+
    return find(str,iStart,nCount) >= 0;
+
 }
 
-bool string::contains_ci(char ch,strsize iStart,strsize nCount)
+
+bool string::contains_ci(char ch,strsize iStart,strsize nCount) const
 {
+
    return find_ci(ch,iStart,nCount) >= 0;
+
 }
 
-bool string::contains_ci(unichar wch,strsize iStart,strsize nCount)
+
+bool string::contains_ci(unichar wch,strsize iStart,strsize nCount) const
 {
+
    return find_wci(::str::uni_to_utf8(wch),iStart,nCount) >= 0;
+
 }
 
-bool string::contains_ci(int32_t i,strsize iStart,strsize nCount) // utf8 char index
+
+bool string::contains_ci(int32_t i,strsize iStart,strsize nCount) const// utf8 char index
 {
+
    return find_wci(::str::uni_to_utf8(i),iStart,nCount) >= 0;
+
 }
 
-bool string::contains_ci(const char * psz,strsize iStart,strsize nCount)
+
+bool string::contains_ci(const char * psz,strsize iStart,strsize nCount) const
 {
+
    return find_ci(psz,iStart,nCount) >= 0;
+
 }
 
-bool string::contains_ci(const string & str,strsize iStart,strsize nCount)
+
+bool string::contains_ci(const string & str,strsize iStart,strsize nCount) const
 {
+
    return find_ci(str,iStart,nCount) >= 0;
+
 }
 
-bool string::contains_wci(unichar wch,strsize iStart,strsize nCount)
+
+bool string::contains_wci(unichar wch,strsize iStart,strsize nCount) const
 {
+
    return find_wci(::str::uni_to_utf8(wch),iStart,nCount) >= 0;
+
 }
 
-bool string::contains_wci(int32_t i,strsize iStart,strsize nCount) // utf8 char index
+
+bool string::contains_wci(int32_t i,strsize iStart,strsize nCount) const// utf8 char index
 {
+
    return find_wci(::str::uni_to_utf8(i),iStart,nCount) >= 0;
+
 }
 
-bool string::contains_wci(const char * psz,strsize iStart,strsize nCount)
+
+bool string::contains_wci(const char * psz,strsize iStart,strsize nCount) const
 {
+
    return find_wci(psz,iStart,nCount) >= 0;
+
 }
 
-bool string::contains_wci(const string & str,strsize iStart,strsize nCount)
+
+bool string::contains_wci(const string & str,strsize iStart,strsize nCount) const
 {
+
    return find_wci(str,iStart,nCount) >= 0;
+
 }
 
 
 string & string::erase(strsize iStart,strsize strsize)
 {
-   if(iStart < 0)
+
+   if (iStart < 0)
+   {
+
       strsize = 0;
 
-   if(strsize < 0)
+   }
+
+   if (strsize < 0)
+   {
+
       strsize = get_length();
+
+   }
 
    Delete(iStart,strsize);
 
    return *this;
+
 }
+
 
 strsize string::Delete(strsize iIndex,strsize nCount)
 {
+
    strsize nLength = get_length();
 
-   if(iIndex < 0)
+   if (iIndex < 0)
+   {
+
       iIndex = 0;
 
-   if(nCount < 0)
+   }
+
+   if (nCount < 0)
+   {
+
       nCount = nLength;
 
-   if(nCount + iIndex > nLength)
+   }
+
+   if (nCount + iIndex > nLength)
+   {
+
       nCount = nLength - iIndex;
 
-   if(nCount < 0)
+   }
+
+   if (nCount < 0)
+   {
+
       return get_length();
+
+   }
 
    if(nCount + iIndex > nLength)
    {
@@ -1386,55 +1465,83 @@ strsize string::Delete(strsize iIndex,strsize nCount)
 
    if(nCount > 0)
    {
+
       strsize nNewLength = nLength - nCount;
-      strsize nXCHARsToCopy = nLength - (iIndex + nCount) + 1;
+
+      strsize nCopy = nLength - (iIndex + nCount) + 1;
+
       char * pszBuffer = GetBuffer();
-      ::aura::memmove_s(pszBuffer + iIndex,nXCHARsToCopy*sizeof(char),
-                        pszBuffer + iIndex + nCount,nXCHARsToCopy*sizeof(char));
+
+      ::aura::memmove_s(pszBuffer + iIndex, nCopy, pszBuffer + iIndex + nCount, nCopy);
+
       ReleaseBufferSetLength(nNewLength);
+
    }
 
-   return(get_length());
+   return get_length();
+
 }
+
 
 strsize string::Insert(strsize iIndex,char ch)
 {
-   if(iIndex < 0)
+
+   if (iIndex < 0)
+   {
+
       iIndex = 0;
+
+   }
 
    if(iIndex > get_length())
    {
+
       iIndex = get_length();
+
    }
+
    strsize nNewLength = get_length() + 1;
 
    char * pszBuffer = GetBuffer(nNewLength);
 
    // move existing bytes down
-   ::aura::memmove_s(pszBuffer + iIndex + 1,(nNewLength - iIndex)*sizeof(char),
-                     pszBuffer + iIndex,(nNewLength - iIndex)*sizeof(char));
+   ::aura::memmove_s(pszBuffer + iIndex + 1, nNewLength - iIndex, pszBuffer + iIndex, nNewLength - iIndex);
+
    pszBuffer[iIndex] = ch;
 
    ReleaseBufferSetLength(nNewLength);
 
-   return(nNewLength);
+   return nNewLength;
+
 }
+
 
 strsize string::Insert(strsize iIndex,const char * psz)
 {
-   if(iIndex < 0)
+
+   if (iIndex < 0)
+   {
+
       iIndex = 0;
+
+   }
 
    if(iIndex > get_length())
    {
+
       iIndex = get_length();
+
    }
 
    // nInsertLength and nNewLength are in XCHARs
+
    strsize nInsertLength = string_trait::SafeStringLen(psz);
+
    strsize nNewLength = get_length();
+
    if(nInsertLength > 0)
    {
+
       nNewLength += nInsertLength;
 
       char * pszBuffer = GetBuffer(nNewLength);

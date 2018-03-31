@@ -47,6 +47,7 @@ namespace user
          pointer_array < image_key * >                               m_keyptra;
          manual_reset_event                                          m_evKey;
          mutex                                                       m_mutexQueue;
+         mutex                                                       m_mutexImage;
          spa(::thread)                                               m_threadaGetImage;
 
          windows(::aura::application * papp);
@@ -65,15 +66,17 @@ namespace user
          virtual ::user::shell::e_folder get_folder_type(::aura::application * papp, const unichar * lpcszPath) override;
          virtual ::user::shell::e_folder get_folder_type(::aura::application * papp, const char * lpcszPath) override;
 
-         int add_icon_set(per_fork * pfork, SHFILEINFOW * pinfo16, SHFILEINFOW * pinfo48, COLORREF crBk, bool & bUsedImageList16, bool & bUsedImageList48);
+         int add_icon_set(per_fork * pfork, SHFILEINFOW * pinfo16, SHFILEINFOW * pinfo48, COLORREF crBk, bool & bUsedImageList16, bool & bUsedImageList48, int iImage);
 
-         int add_icon(int iSize, HICON hicon, COLORREF crBk);
+         int add_icon(int iSize, HICON hicon, COLORREF crBk, int iImage);
 
-         int add_icon_path(::file::path path, COLORREF crBk);
+         int add_icon_path(::file::path path, COLORREF crBk, int iImage);
 
-         int add_icon_info(per_fork * pfork, int iSize, SHFILEINFOW * pinfo16, SHFILEINFOW * pinfo48, COLORREF crBk, bool & bUsedImageList16, bool & bUsedImageList48);
+         int add_icon_info(per_fork * pfork, int iSize, SHFILEINFOW * pinfo16, SHFILEINFOW * pinfo48, COLORREF crBk, bool & bUsedImageList16, bool & bUsedImageList48, int iImage);
 
-         int add_system_icon(int iSize, IImageList * plist, SHFILEINFOW * pinfo, COLORREF crBck, bool & bUsedImageList);
+         int add_system_icon(int iSize, IImageList * plist, SHFILEINFOW * pinfo, COLORREF crBck, bool & bUsedImageList, int iImage);
+
+         int reserve_image();
 
 
          //virtual bool do_call();

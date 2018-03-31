@@ -1473,16 +1473,30 @@ retry:
    }
 
 
-   bool os::resolve_link(string & strTarget, string & strFolder, string & strParams, const string & pszSource, ::user::primitive * puiMessageParentOptional)
+   bool os::resolve_link(string & strTarget, string & strFolder, string & strParams, const string & strSource, ::user::primitive * puiMessageParentOptional)
    {
 
       sp(::user::primitive) pui = puiMessageParentOptional;
 
-      wstring wstrFileIn = ::str::international::utf8_to_unicode(pszSource);
+      if (!::str::ends_ci(strSource, ".lnk"))
+      {
+
+         strTarget = strSource;
+
+         return true;
+
+      }
+
+      if (strSource.contains("0318") && strSource.contains("removal"))
+      {
+
+         output_debug_string("app.removal.tool link?!");
+
+      }
+
+      wstring wstrFileIn = ::str::international::utf8_to_unicode(strSource);
 
       bool bNativeUnicode = is_windows_native_unicode() != FALSE;
-
-      comptr < IShellLinkW > pshelllink;
 
       SHFILEINFOW info;
 
@@ -1495,12 +1509,15 @@ retry:
 
          strTarget = wstrFileIn;
 
-         return FALSE;
+         return false;
+
       }
 
       HRESULT hr ;
 
-      if(FAILED(hr = pshelllink.CoCreateInstance(CLSID_ShellLink,NULL,CLSCTX_INPROC_SERVER)))
+      comptr < IShellLinkW > pshelllink;
+
+      if (FAILED(hr = pshelllink.CoCreateInstance(CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER)))
       {
 
          return false;
@@ -1508,7 +1525,6 @@ retry:
       }
 
       bool bOk = false;
-
 
       comptr < IPersistFile > ppersistfile;
 
@@ -1518,9 +1534,20 @@ retry:
          if(SUCCEEDED(hr = ppersistfile->Load(wstrFileIn,STGM_READ)))
          {
 
+            HWND hwnd = pui == NULL ? NULL : pui->get_handle();
+
+            DWORD fFlags = 0;
+
+            fFlags |= pui == NULL ? (SLR_NO_UI | (10 << 16)) : 0;
+
+            fFlags |= SLR_NOUPDATE;
+
+            fFlags |= SLR_NOSEARCH;
+
+            fFlags |= SLR_NOTRACK;
 
             /* Resolve the link, this may post UI to find the link */
-            if(SUCCEEDED(pshelllink->Resolve(pui == NULL ? NULL : pui->get_handle(), SLR_ANY_MATCH | (pui == NULL ? (SLR_NO_UI | (8400 << 16)) : 0))))
+            //if(SUCCEEDED(pshelllink->Resolve(hwnd, fFlags)))
             {
 
                wstring wstr;

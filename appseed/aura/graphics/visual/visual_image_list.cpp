@@ -181,17 +181,44 @@ bool image_list::draw(::draw2d::graphics * pgraphics, int32_t iImage, point pt, 
 }
 
 
-int32_t image_list::add_icon_os_data(void * pvoid)
+int32_t image_list::add_icon_os_data(void * pvoid, int iItem)
 {
 
    ::visual::icon icon(get_app(), pvoid);
 
-   return add(&icon);
+   return add(&icon, iItem);
 
 }
 
 
-int32_t image_list::add(::visual::icon * picon)
+int32_t image_list::reserve_image(int iItem)
+{
+
+   synch_lock sl(m_pmutex);
+
+   if (iItem < 0)
+   {
+
+      iItem = get_image_count();
+
+   }
+
+   if (iItem >= _get_alloc_count())
+   {
+
+      _grow(iItem + 1);
+
+   }
+
+   m_iSize = MAX(iItem + 1, m_iSize);
+
+   return iItem;
+
+
+}
+
+
+int32_t image_list::add(::visual::icon * picon, int iItem)
 {
 
    if (is_null(picon))
@@ -203,26 +230,7 @@ int32_t image_list::add(::visual::icon * picon)
 
    synch_lock sl(m_pmutex);
 
-   if (m_spdib.is_null())
-   {
-
-      if (!create(picon->m_size.cx, picon->m_size.cy))
-      {
-
-         return -1;
-
-      }
-
-   }
-
-   int32_t iItem = m_iSize;
-
-   if(iItem >= _get_alloc_count())
-   {
-
-      _grow();
-
-   }
+   iItem = reserve_image(iItem);
 
    ::draw2d::brush_sp brush(allocer(), RGB(192, 192, 192));
 
@@ -240,14 +248,12 @@ int32_t image_list::add(::visual::icon * picon)
 
 #endif
 
-   m_iSize++;
-
    return iItem;
 
 }
 
 
-int32_t image_list::add_icon(const char * psz)
+int32_t image_list::add_icon(const char * psz, int iItem)
 {
 
    ::visual::icon icon(get_app());
@@ -265,7 +271,7 @@ int32_t image_list::add_icon(const char * psz)
 }
 
 
-int32_t image_list::add_matter_icon(const char * pszMatter)
+int32_t image_list::add_matter_icon(const char * pszMatter, int iItem)
 {
 
    return add_icon(Application.dir().matter(pszMatter));
@@ -273,7 +279,7 @@ int32_t image_list::add_matter_icon(const char * pszMatter)
 }
 
 
-int32_t image_list::add_file(const char * lpcsz)
+int32_t image_list::add_file(const char * lpcsz, int iItem)
 {
 
    ::visual::dib_sp dib(allocer());
@@ -287,39 +293,23 @@ int32_t image_list::add_file(const char * lpcsz)
 
    synch_lock sl(m_pmutex);
 
-   int32_t iItem = m_iSize;
-
-   if(iItem >= _get_alloc_count())
-   {
-
-      _grow();
-
-   }
+   iItem = reserve_image(iItem);
 
    m_spdib->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
 
    m_spdib->get_graphics()->BitBlt(iItem * m_size.cx, 0, m_size.cx, m_size.cy, dib->get_graphics(), 0, 0, SRCCOPY);
-
-   m_iSize++;
 
    return iItem;
 
 }
 
 
-int32_t image_list::add_dib(::draw2d::dib * pdib, int x, int y)
+int32_t image_list::add_dib(::draw2d::dib * pdib, int x, int y, int iItem)
 {
 
    synch_lock sl(m_pmutex);
 
-   int32_t iItem = m_iSize;
-
-   if (iItem >= _get_alloc_count())
-   {
-
-      _grow();
-
-   }
+   iItem = reserve_image(iItem);
 
    m_spdib->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
 
@@ -329,14 +319,12 @@ int32_t image_list::add_dib(::draw2d::dib * pdib, int x, int y)
 
    m_spdib->get_graphics()->BitBlt(iItem * m_size.cx, 0, m_size.cx, m_size.cy, pdib->get_graphics(), x, y, SRCCOPY);
 
-   m_iSize++;
-
    return iItem;
 
 }
 
 
-int32_t image_list::add_matter(const char * lpcsz, ::aura::application * papp)
+int32_t image_list::add_matter(const char * lpcsz, ::aura::application * papp, int iItem)
 {
 
    string strMatter;
@@ -358,16 +346,16 @@ int32_t image_list::add_matter(const char * lpcsz, ::aura::application * papp)
 
    }
 
-   return add_file(strMatter);
+   return add_file(strMatter, iItem);
 
 }
 
-int32_t image_list::add_image(image_list * pil, int iImage)
+int32_t image_list::add_image(image_list * pil, int iImage, int iItem)
 {
 
    synch_lock sl(pil->m_pmutex);
 
-   return add_dib(pil->m_spdib, iImage * pil->m_size.cx, 0);
+   return add_dib(pil->m_spdib, iImage * pil->m_size.cx, 0, iItem);
 
 }
 
@@ -397,10 +385,10 @@ int32_t image_list::add_image(image_list * pil, int iImage)
 }
 
 
-int32_t image_list::add_std_matter(const char * lpcsz)
+int32_t image_list::add_std_matter(const char * lpcsz, int iItem)
 {
 
-   return add_file(Application.dir().matter(lpcsz));
+   return add_file(Application.dir().matter(lpcsz), iItem);
 
 }
 
@@ -418,37 +406,50 @@ int32_t image_list::_get_alloc_count()
       return m_spdib->m_size.cx / m_size.cx;
 }
 
-bool image_list::_grow()
+
+bool image_list::_grow(int iAddUpHint)
 {
+
+   synch_lock sl(m_pmutex);
+
    int32_t cx = m_size.cx;
+
    int32_t cy = m_size.cy;
 
-   int32_t iAllocSize = _get_alloc_count() + m_iGrow;
+   int iGrow = m_iGrow;
+
+   if (iAddUpHint > 0)
+   {
+
+      iGrow += iAddUpHint;
+
+   }
+
+   int32_t iAllocSize = _get_alloc_count() + iGrow;
 
    if(_get_alloc_count() == 0)
    {
+
       m_spdib->create(cx * iAllocSize, cy);
+
    }
    else
    {
+
       ::draw2d::dib_sp spdib(allocer());
-      //::draw2d::dib_sp dibAlpha(allocer());
 
       *spdib = *m_spdib;
 
       m_spdib->create(cx * iAllocSize, cy);
 
+      m_spdib->Fill(0);
+
       m_spdib->from(point(0, 0), spdib, point(0, 0), spdib->size());
-
-      //m_spdib->defer_realize(spdib->get_graphics());
-
-      //m_spdib->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
-
-      //m_spdib->get_graphics()->BitBlt(0, 0, spdib->cx, spdib->cy, spdib->get_graphics(), 0, 0, SRCCOPY);
 
    }
 
    return true;
+
 }
 
 

@@ -54,11 +54,19 @@ namespace windows
       bool dir::is(const ::file::path & strPath,::aura::application * papp)
       {
 
-         if(::windows::dir::is(strPath,papp))
+         if (::windows::dir::is(strPath, papp))
+         {
+
             return true;
 
-         if(::file::dir::axis::system::is(strPath,papp))
+         }
+
+         if (::file::dir::axis::system::is(strPath, papp))
+         {
+
             return true;
+
+         }
 
          return false;
 

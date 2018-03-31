@@ -70,19 +70,10 @@ namespace file
    bool system::exists(const ::file::path & strPath,var * pvarQuery,::aura::application * papp)
    {
 
-
-
       if (::str::begins(strPath, astr.strHttpProtocol) || ::str::begins(strPath, astr.strHttpsProtocol))
       {
 
          property_set set(papp);
-
-         /*         if(papp->m_paxissession != NULL)
-         {
-
-         set["user"] = papp->m_paxissession->safe_get_user();
-
-         }*/
 
          return App(papp).http().exists(strPath, pvarQuery, set);
 

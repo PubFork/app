@@ -154,21 +154,30 @@ namespace file
 
       }
 
+
       bool application::has_subdir(const ::file::path & lpcsz)
       {
+
          return m_pauraapp->m_paurasystem->m_spdir.m_p->has_subdir(m_pauraapp, lpcsz);
+
       }
 
 
       bool application::is(const ::file::path & lpcsz)
       {
+
          return m_pauraapp->m_paurasystem->m_spdir.m_p->is(lpcsz, m_pauraapp);
+
       }
+
 
       bool application::is_inside(const ::file::path & lpcszDir,const ::file::path & lpcszPath)
       {
+
          return m_pauraapp->m_paurasystem->m_spdir.m_p->is_inside(lpcszDir, lpcszPath, m_pauraapp);
+
       }
+
 
       bool application::is_inside_time(const ::file::path & lpcsz)
       {

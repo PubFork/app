@@ -76,18 +76,6 @@ namespace user
          m_iaSize.add(48);
          m_iaSize.add(256);
 
-
-         for (auto iSize : m_iaSize)
-         {
-
-            m_pil[iSize] = canew(image_list(papp));
-            m_pil[iSize]->create(iSize, iSize, 0, 10, 10);
-
-            m_pilHover[iSize] = canew(image_list(papp));
-            m_pilHover[iSize]->create(iSize, iSize, 0, 10, 10);
-
-         }
-
          m_imagemap.InitHashTable(16384);
 
       }
@@ -101,6 +89,45 @@ namespace user
       {
 
          do_initialize();
+
+      }
+
+
+      void shell::on_update_sizes_interest()
+      {
+
+         m_imagemap.remove_all();
+
+         m_pil.remove_all();
+
+         m_pilHover.remove_all();
+
+         if (!m_iaSize.contains(16))
+         {
+
+            m_iaSize.add(16);
+
+         }
+
+         if (!m_iaSize.contains(48))
+         {
+
+            m_iaSize.add(48);
+
+         }
+
+         m_iaSize.sort();
+
+         for (auto iSize : m_iaSize)
+         {
+
+            m_pil[iSize] = canew(image_list(get_app()));
+            m_pil[iSize]->create(iSize, iSize, 0, 10, 10);
+
+            m_pilHover[iSize] = canew(image_list(get_app()));
+            m_pilHover[iSize]->create(iSize, iSize, 0, 10, 10);
+
+         }
 
       }
 

@@ -2643,16 +2643,38 @@ namespace user
 
             windowing_output_debug_string("\n_001UpdateBuffer : after set alphamode");
 
-            if (m_bComposite)
+            if (pgraphics->m_pdibDraw2dGraphics != NULL)
             {
 
-               pgraphics->FillSolidRect(r, ARGB(0, 0, 0, 0));
+               if (m_bComposite)
+               {
+
+                  pgraphics->m_pdibDraw2dGraphics->Fill(0);
+
+               }
+               else
+               {
+
+                  pgraphics->m_pdibDraw2dGraphics->Fill(255, 192, 192, 192);
+
+               }
 
             }
             else
             {
 
-               pgraphics->FillSolidRect(r, ARGB(255, 184, 184, 177));
+               if (m_bComposite)
+               {
+
+                  pgraphics->FillSolidRect(r, ARGB(0, 0, 0, 0));
+
+               }
+               else
+               {
+
+                  pgraphics->FillSolidRect(r, ARGB(255, 192, 192, 192));
+
+               }
 
             }
 
