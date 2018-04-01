@@ -333,9 +333,7 @@ namespace install
 
       }
 
-#ifdef WINDOWSEX
-
-      if (!::IsWindow(m_pwindow->m_hwnd))
+      if (!::IsWindow(m_pwindow->get_safe_handle()))
       {
 
          if (!m_pwindow->create())
@@ -347,14 +345,11 @@ namespace install
 
       }
 
-      if (!m_pwindow->show())
-      {
+      int cx = 800;
 
-         return false;
+      int cy = cx * 9 / 16;
 
-      }
-
-#endif
+      m_pwindow->_001Emphasize(cx, cy);
 
       return true;
 
@@ -373,14 +368,14 @@ namespace install
 
 #ifdef WINDOWSEX
 
-      if (!::IsWindow(m_pwindow->m_hwnd))
+      if (!::IsWindow(m_pwindow->get_safe_handle()))
       {
 
          return true;
 
       }
 
-      if (!m_pwindow->hide())
+      if (!m_pwindow->ShowWindow(SW_HIDE))
       {
 
          return false;

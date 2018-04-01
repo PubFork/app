@@ -18,7 +18,7 @@ namespace aura
       object(papp),
       ::thread(papp)
    {
-      
+
       m_strAppId = "session";
 
       m_ecursorDefault = ::visual::cursor_arrow;
@@ -537,7 +537,7 @@ namespace aura
             {
 
                if(System.handler()->m_spcommandline->m_varQuery.has_property("install")
-                  || System.handler()->m_spcommandline->m_varQuery.has_property("uninstall"))
+                     || System.handler()->m_spcommandline->m_varQuery.has_property("uninstall"))
                {
 
                   ::multithreading::post_quit(&System);
@@ -1375,6 +1375,12 @@ namespace aura
 
       if (m_pcopydesk != NULL)
          return true;
+
+      if (m_pcoresession == NULL)
+      {
+         return true;
+
+      }
 
       alloc(m_pcopydesk);
 

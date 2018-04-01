@@ -15,7 +15,6 @@ namespace base
    application::application()
    {
 
-      m_puiptraFrame = new ::user::interaction_spa();
       m_pevAppBeg = NULL;
 
 
@@ -85,7 +84,7 @@ namespace base
 
    application::~application()
    {
-      ::aura::del(m_puiptraFrame);
+
    }
 
 
@@ -668,8 +667,8 @@ namespace base
                {
 
                   pcheck->_001SetCheck(
-               System.os().is_user_auto_start(get_executable_appid()),
-               ::action::source_initialize);
+                  System.os().is_user_auto_start(get_executable_appid()),
+                  ::action::source_initialize);
 
                }
             }
@@ -697,9 +696,9 @@ namespace base
                {
 
                   System.os().register_user_auto_start(
-               get_executable_appid(),
-               get_executable_path(),
-               pcheck->_001GetCheck() == ::check::checked);
+                  get_executable_appid(),
+                  get_executable_path(),
+                  pcheck->_001GetCheck() == ::check::checked);
 
                }
 

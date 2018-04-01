@@ -466,4 +466,10 @@ dump_context & dump_context::operator << (string str)
 }
 
 
+//dump_context & dump_context::operator << (double d )
+//{
+//   operator <<(::str::from(d));
+//   return *this;
+//}
+
 

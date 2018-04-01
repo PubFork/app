@@ -2623,12 +2623,12 @@ restart:
    // handling
    LRESULT interaction::send(::message::base * pbase)
    {
-      
+
       if(m_pimpl.is_set())
       {
 
          m_pimpl->queue_message_handler(pbase);
-         
+
       }
 
       return pbase->get_lresult();
@@ -4540,6 +4540,24 @@ restart:
          return;
       else
          m_pimpl->pre_subclass_window();
+   }
+
+
+   void interaction::_001Emphasize(int cx, int cy)
+   {
+
+      ::rect rectMainMonitor;
+
+      System.get_main_monitor(rectMainMonitor);
+
+      int x = (rectMainMonitor.width() - cx) / 2;
+
+      int y = (rectMainMonitor.height() - cy) / 3;
+
+      SetWindowPos(ZORDER_TOP, x, y, cx, cy, SWP_SHOWWINDOW);
+
+      BringToTop(SW_SHOW);
+
    }
 
 
@@ -8308,7 +8326,7 @@ restart:
 
       if(IsWindowVisible())
       {
-         
+
          if (m_bRedrawOnVisible)
          {
 
@@ -8322,7 +8340,7 @@ restart:
             return true;
 
          }
-         
+
       }
 
       if (m_pimpl->has_pending_graphical_update())
@@ -8611,6 +8629,13 @@ restart:
 
    void interaction::on_select_user_style()
    {
+
+      if (get_app()->m_pcoresession == NULL)
+      {
+
+         return;
+
+      }
 
       if (m_puserstyle == NULL)
       {

@@ -251,6 +251,7 @@ namespace aura
       }
 
 
+      m_puiptraFrame = new ::user::interaction_spa();
 
 
       //      m_pcoreapp                 = NULL;
@@ -300,7 +301,7 @@ namespace aura
 
    application::~application()
    {
-
+      ::aura::del(m_puiptraFrame);
 //      if (m_peventReady != NULL)
 //      {
 //

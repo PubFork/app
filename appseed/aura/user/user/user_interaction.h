@@ -387,6 +387,7 @@ namespace user
       // dialog support
       virtual void update_dialog_controls(command_target * ptarget) override;
       virtual void CenterWindow(::user::interaction * pAlternateOwner = NULL) override;
+      virtual void _001Emphasize(int cx, int cy);
       virtual id   run_modal_loop(::user::interaction * pui,uint32_t dwFlags = 0) override;
       virtual id   RunModalLoop(uint32_t dwFlags = 0) override;
       virtual id   _001RunModalLoop(uint32_t dwFlags = 0) override;

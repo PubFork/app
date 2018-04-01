@@ -35,6 +35,8 @@ namespace aura
          System.factory().creatable_small < ::windows::ip_enum                  >(System.type_info < ::net::ip_enum         >());
 
 
+         System.factory().cloneable_large    < ::windows::window_buffer      >(System.type_info < ::window_graphics                >());
+         System.factory().creatable_large    < ::windows::interaction_impl   >(System.type_info < ::user::interaction_impl    >());
 
          ::windows::shell::theWindowsShell.Initialize();
 

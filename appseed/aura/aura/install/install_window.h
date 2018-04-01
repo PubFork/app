@@ -6,17 +6,10 @@ namespace install
 
 
    class CLASS_DECL_AURA window :
-      virtual public ::object
+      virtual public ::user::interaction
    {
    public:
 
-
-      oswindow                      m_hwnd;
-
-
-      MESSAGE                       m_msg;
-      wstring                       m_wstrWindowTitle;
-      wstring                       m_wstrWindowClass;
 
 
       int                           m_iHealingSurface;
@@ -26,7 +19,6 @@ namespace install
       POINT                         m_ptDragStart;
       RECT                          m_rectWindowDragStart;
 
-      ::draw2d::dib_sp              m_dib;
       ::draw2d::font_sp             m_font;
       ::draw2d::font_sp             m_fontBold;
       ::draw2d::font_sp             m_fontHeader;
@@ -37,14 +29,6 @@ namespace install
       ::draw2d::pen_sp              m_penBarBorder;
       ::draw2d::brush_sp            m_brushBk;
       string                        m_strLastStatus;
-      int                           m_cx;
-      int                           m_cy;
-      COLORREF *                    m_pcolorref;
-      HBITMAP                       m_hbitmap;
-      HDC                           m_hdc;
-      HBRUSH                        m_hbrushBk;
-      HBITMAP                       m_hbmAlpha;
-      HDC                           m_hdcAlpha;
       bool                          m_bDraw;
 
       bool                          m_bRunMainLoop;
@@ -58,29 +42,29 @@ namespace install
 
       virtual bool create();
 
-      virtual void draw();
-
-      virtual bool update_layered_window();
+      //virtual void draw();
 
       virtual void drag();
 
-      virtual bool show();
+      virtual void on_resize(int cx, int cy);
 
-      virtual bool hide();
+      virtual void layout() override;
 
-      virtual bool initialize(int cx, int cy);
+      virtual void _001OnDraw(::draw2d::graphics * pgraphics) override;
 
-      virtual void paint_install(LPCRECT lpcrect, int iMode);
+      virtual void draw_install(::draw2d::graphics * pgraphics);
 
-      LRESULT message_handler(UINT message, WPARAM wParam, LPARAM lParam);
+      virtual bool has_pending_graphical_update() override;
 
-#ifdef WINDOWS
-      
-      static LRESULT CALLBACK window_procedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
-      
-#endif
+      //LRESULT message_handler(UINT message, WPARAM wParam, LPARAM lParam);
 
-      virtual ATOM register_class();
+//#ifdef WINDOWS
+//
+//      static LRESULT CALLBACK window_procedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
+//
+//#endif
+
+      //virtual ATOM register_class();
 
       virtual void main();
 
