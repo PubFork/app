@@ -355,6 +355,8 @@ namespace user
    }
 
 
+
+
    bool control::GetClientRect(LPRECT lprect)
    {
 

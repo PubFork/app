@@ -32,6 +32,7 @@
 #include "windows_ipc.cpp"
 #include "windows_launcher.cpp"
 #include "windows_library.cpp"
+#include "windows_list_serial_ports.cpp"
 #include "windows_local_memory_map.cpp"
 #include "windows_lock.cpp"
 #include "windows_main.cpp"

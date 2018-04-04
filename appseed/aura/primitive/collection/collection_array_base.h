@@ -334,11 +334,14 @@ public:
    inline ::count get_size_in_bytes() const;
    inline ::count get_count() const;
    inline ::count get_byte_count() const;
+   inline ::count get_length() const;
    inline ::count size() const;
    inline ::count count() const;
+   inline ::count length() const;
 
    inline bool is_empty(::count countMinimum = 1) const;
    inline bool empty(::count countMinimum = 1) const;
+   inline bool isEmpty(::count countMinimum = 1) const;
    inline bool has_elements(::count countMinimum = 1) const;
    inline index get_upper_bound(index i = -1) const;
    inline index get_middle_index(index i = 0) const;
@@ -406,6 +409,9 @@ public:
    inline void pop_back(index index = -1);
    inline void push_back(ARG_TYPE newElement, index = 0);
 
+   inline TYPE takeAt(index index);
+   inline TYPE takeFirst(index index = 0);
+   inline TYPE takeLast(index index = -1);
 
    virtual ::count append(const array_base & src); // return old size
    virtual void copy(const array_base & src);

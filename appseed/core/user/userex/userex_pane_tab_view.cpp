@@ -560,6 +560,32 @@ namespace userex
          create_app_options(pcreatordata);
 
       }
+      else if (pcreatordata->m_id.is_text())
+      {
+
+         if (::str::begins_ci(pcreatordata->m_id.m_psz, "form_"))
+         {
+
+            sp(html_document) pdocument = Application.create_child_form(this, pcreatordata->m_pholder);
+
+            if (pdocument.is_set())
+            {
+
+               m_mapForm[pcreatordata->m_id] = pdocument;
+
+               pdocument->m_id = string("document.") + string(pcreatordata->m_id);
+
+               ::user::impact * pview = pdocument->get_view(0);
+
+               m_pviewdata->m_pwnd = pview->GetParentFrame();
+
+               prepare_form(pcreatordata->m_id, pdocument);
+
+            }
+
+         }
+
+      }
 
    }
 
@@ -706,6 +732,14 @@ namespace userex
       m_pdocAppOptions->open_document(strAppOptions);
 
       return true;
+
+   }
+
+
+   void pane_tab_view::prepare_form(id id, ::html_document * pdocument)
+   {
+
+      Application.prepare_form(id, pdocument);
 
    }
 

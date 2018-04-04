@@ -22,7 +22,7 @@ interface ID2D1DeviceContext;
 
 #endif
 
-
+class html_document;
 
 namespace user
 {

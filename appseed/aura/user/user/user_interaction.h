@@ -416,6 +416,7 @@ namespace user
       virtual void _001WindowDock(::user::e_appearance eappearance);
 
       using ::user::interaction_base::GetWindowRect;
+      virtual bool scroll_bar_get_client_rect(LPRECT lprect);
       virtual bool GetClientRect(LPRECT lprect) override;
       virtual bool GetClientRect(RECT64 * lprect) override;
       virtual bool GetWindowRect(LPRECT lprect) override;

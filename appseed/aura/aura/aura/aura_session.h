@@ -28,7 +28,7 @@ namespace aura
 
 
 
-
+      ::user::elemental *                             m_pkeyboardfocusRequest;
       ::user::elemental *                             m_pkeyboardfocus;
       bool                                                     m_bSystemSynchronizedCursor;
       point                                                    m_ptCursor;

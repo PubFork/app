@@ -38,6 +38,7 @@ namespace message
       PrototypeCreate,
       PrototypeActivate,
       PrototypeNcActivate,
+      PrototypeMouseActivate,
       PrototypeEraseBkgnd,
       PrototypeShowWindow,
       PrototypeSetCursor,

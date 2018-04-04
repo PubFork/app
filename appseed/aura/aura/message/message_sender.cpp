@@ -152,6 +152,8 @@ namespace message
          return PrototypeMove;
       case WM_ACTIVATE:
          return PrototypeActivate;
+      case WM_MOUSEACTIVATE:
+         return PrototypeMouseActivate;
       case WM_MEASUREITEM:
          return PrototypeMeasureItem;
 #ifdef WINDOWS

@@ -7857,6 +7857,11 @@ restart:
          pbase = canew(::message::activate(get_app()));
       }
       break;
+      case ::message::PrototypeMouseActivate:
+      {
+         pbase = canew(::message::mouse_activate(get_app()));
+      }
+      break;
       case ::message::PrototypeSimpleCommand:
       {
          pbase = canew(::message::simple_command(get_app()));
@@ -9052,6 +9057,24 @@ restart:
    {
 
       return calc_object_id();
+
+   }
+
+
+   bool interaction::scroll_bar_get_client_rect(LPRECT lprect)
+   {
+
+      if (!GetClientRect(lprect))
+      {
+
+         return false;
+
+      }
+
+      lprect->right += get_final_y_scroll_bar_width();
+      lprect->bottom += get_final_x_scroll_bar_width();
+
+      return true;
 
    }
 

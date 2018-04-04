@@ -73,7 +73,7 @@ namespace user
    void combo_box::_001OnDrawStaticText(::draw2d::graphics * pgraphics)
    {
 
-      
+
 
       string strText;
 
@@ -122,7 +122,7 @@ namespace user
    void combo_box::_001OnDrawVerisimple(::draw2d::graphics * pgraphics)
    {
 
-      
+
 
       pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
@@ -243,7 +243,7 @@ namespace user
 
       }
 
-      
+
 
       pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
@@ -445,7 +445,7 @@ namespace user
    index combo_box::_001GetListCount() const
    {
 
-     return m_straList.get_count();
+      return m_straList.get_count();
 
    }
 
@@ -609,11 +609,11 @@ namespace user
    {
 
       //SCAST_PTR(::message::key,pkey,pobj);
-      
+
       UNREFERENCED_PARAMETER(pobj);
 
    }
-   
+
 
    void combo_box::_001OnLButtonDown(::message::message * pobj)
    {
@@ -686,6 +686,7 @@ namespace user
    {
 
 //      SCAST_PTR(::message::set_focus, pfocus, pobj);
+      //GetTopLevelFrame()->ActivateFrame();
 
    }
 
@@ -712,7 +713,7 @@ namespace user
 
       defer_create_combo_list();
 
-      _001ShowDropDown(!m_plist->is_this_visible());
+      _001ShowDropDown(!m_plist->IsWindowVisible());
 
 
    }
@@ -780,12 +781,11 @@ namespace user
 
       if (!m_plist->IsWindow())
       {
-
          if (!m_plist->create_window_ex(0, NULL, "combo_list", 0, rect(0, 0, 0, 0), NULL, 0, NULL))
          {
-            
+
             m_plist.release();
-            
+
             _throw(resource_exception(get_app()));
 
          }
@@ -868,17 +868,17 @@ namespace user
       }
 
 
-/*      ::draw2d::font_sp fontxyz(allocer());
+      /*      ::draw2d::font_sp fontxyz(allocer());
 
-      rect rectClient;
+            rect rectClient;
 
-      GetClientRect(rectClient);
+            GetClientRect(rectClient);
 
-      fontxyz->m_dFontSize = rectClient.height() * 0.4;
-      fontxyz->m_eunitFontSize = ::draw2d::unit_pixel;
-      fontxyz->m_bUpdated = false;
+            fontxyz->m_dFontSize = rectClient.height() * 0.4;
+            fontxyz->m_eunitFontSize = ::draw2d::unit_pixel;
+            fontxyz->m_bUpdated = false;
 
-      SetFont(fontxyz);*/
+            SetFont(fontxyz);*/
 
 
 
@@ -941,16 +941,16 @@ namespace user
 
 
 #ifdef WINDOWSEX
-    //Derived class is responsible for implementing these handlers
-      //for owner/self draw controls (except for the optional DeleteItem)
+   //Derived class is responsible for implementing these handlers
+   //for owner/self draw controls (except for the optional DeleteItem)
    void combo_box::DrawItem(LPDRAWITEMSTRUCT)
-      { ASSERT(FALSE); }
+   { ASSERT(FALSE); }
    void combo_box::MeasureItem(LPMEASUREITEMSTRUCT)
-      { ASSERT(FALSE); }
+   { ASSERT(FALSE); }
    int32_t combo_box::CompareItem(LPCOMPAREITEMSTRUCT)
-      { ASSERT(FALSE); return 0; }
+   { ASSERT(FALSE); return 0; }
    void combo_box::DeleteItem(LPDELETEITEMSTRUCT)
-      { /* default to nothing */ }
+   { /* default to nothing */ }
 #endif
 
    bool combo_box::OnChildNotify(::message::base * pbase)
@@ -1000,17 +1000,17 @@ namespace user
    }
 
    //::count combo_box::get_count()
-     // { ASSERT(IsWindow()); return (count)send_message( CB_GETCOUNT, 0, 0); }
+   // { ASSERT(IsWindow()); return (count)send_message( CB_GETCOUNT, 0, 0); }
    //index combo_box::get_cur_sel()
-     // { ASSERT(IsWindow()); return (index)send_message( CB_GETCURSEL, 0, 0); }
+   // { ASSERT(IsWindow()); return (index)send_message( CB_GETCURSEL, 0, 0); }
    //index combo_box::set_cur_sel(index nSelect)
-     // { ASSERT(IsWindow()); return (index)send_message( CB_SETCURSEL, nSelect, 0); }
+   // { ASSERT(IsWindow()); return (index)send_message( CB_SETCURSEL, nSelect, 0); }
    //IA64: Assuming retval of CB_GETEDITSEL won't be expanded
    bool combo_box::GetEditSel(strsize & nStartChar, strsize & nEndChar)
    {
-/*      ASSERT(IsWindow()); uint32_t dw = uint32_t(send_message( CB_GETEDITSEL, 0, 0));
-      nStartChar = LOWORD(dw);
-      nEndChar = LOWORD(dw);*/
+      /*      ASSERT(IsWindow()); uint32_t dw = uint32_t(send_message( CB_GETEDITSEL, 0, 0));
+            nStartChar = LOWORD(dw);
+            nEndChar = LOWORD(dw);*/
       return TRUE;
    }
    bool combo_box::LimitText(strsize nMaxChars)
@@ -1124,14 +1124,19 @@ namespace user
 
    }
 
+
    void combo_box::ResetContent()
    {
 
-      //ASSERT(IsWindow());
+      synch_lock sl(m_pmutex);
 
-      //send_message( CB_RESETCONTENT, 0, 0);
+      m_straList.remove_all();
+
+      m_straValue.remove_all();
+
 
    }
+
 
    index combo_box::Dir(index attr, const char * lpszWildCard)
    {
@@ -1359,7 +1364,7 @@ namespace user
 
 //      return (int32_t)send_message( CB_SETDROPPEDWIDTH, nWidth, 0);
 
-         return -1;
+      return -1;
 
    }
 
@@ -1370,7 +1375,7 @@ namespace user
 
 //      return (int32_t)send_message( CB_GETDROPPEDWIDTH, 0, 0);
 
-         return -1;
+      return -1;
 
    }
 
@@ -1453,6 +1458,8 @@ namespace user
 
    index combo_box::AddString(const char * lpszString,uint_ptr dwItemData)
    {
+
+      synch_lock sl(m_pmutex);
 
       ASSERT(m_edatamode == data_mode_opaque);
 
@@ -1558,7 +1565,7 @@ namespace user
 
    }
 
-   
+
    bool combo_box::is_drop_down()
    {
 

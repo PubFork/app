@@ -12,7 +12,8 @@ namespace user
    {
    public:
 
-        
+
+      id                               m_id;
       string                           m_strTitle;
       ::file::path                     m_filepath;
       bool                             m_bModified;

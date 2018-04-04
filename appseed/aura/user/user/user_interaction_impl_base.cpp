@@ -959,6 +959,18 @@ namespace user
 
          bShowFlags = !is_this_visible();
 
+         if (nFlags & SWP_SHOWWINDOW)
+         {
+
+            if (m_iShowWindow == SW_HIDE)
+            {
+
+               m_iShowWindow = SW_NORMAL;
+
+            }
+
+         }
+
          m_pui->m_bRedraw = true;
 
       }

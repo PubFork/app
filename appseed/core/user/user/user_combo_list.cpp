@@ -61,6 +61,8 @@ namespace user
    void combo_list::_001OnDraw(::draw2d::graphics * pgraphics)
    {
 
+      ::draw2d::savedc savedc(pgraphics);
+
       if (m_pcombo == NULL)
          return;
 
@@ -128,7 +130,18 @@ namespace user
 
       br->create_solid(ARGB(255, 84, 90, 80));
 
-      select_font(font_plain_edit);
+      if (m_pcombo != NULL)
+      {
+
+         m_pcombo->select_font(pgraphics, font_plain_edit);
+
+      }
+      else
+      {
+
+         select_font(pgraphics, font_plain_edit);
+
+      }
 
       pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
 
@@ -233,7 +246,18 @@ namespace user
       //GetFont()->m_eunitFontSize = ::draw2d::unit_pixel;
       //GetFont()->m_bUpdated = false;
 
-      select_font(pgraphics, font_plain_edit);
+      if (m_pcombo != NULL)
+      {
+
+         m_pcombo->select_font(pgraphics, font_plain_edit);
+
+      }
+      else
+      {
+
+         select_font(pgraphics, font_plain_edit);
+
+      }
 
       pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
 
@@ -340,7 +364,18 @@ namespace user
 
       ScreenToClient(&ptCursor);
 
-      select_font(pgraphics, font_plain_edit);
+      if (m_pcombo != NULL)
+      {
+
+         m_pcombo->select_font(pgraphics, font_plain_edit);
+
+      }
+      else
+      {
+
+         select_font(pgraphics, font_plain_edit);
+
+      }
 
       pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
 
@@ -442,8 +477,18 @@ namespace user
       //GetFont()->m_eunitFontSize = ::draw2d::unit_pixel;
       //GetFont()->m_bUpdated = false;
 
-      select_font(pgraphics, font_plain_edit);
+      if (m_pcombo != NULL)
+      {
 
+         m_pcombo->select_font(pgraphics, font_plain_edit);
+
+      }
+      else
+      {
+
+         select_font(pgraphics, font_plain_edit);
+
+      }
       //pgraphics->SelectObject(br);
 
       index iHover = m_iHover;
@@ -485,13 +530,13 @@ namespace user
    {
 
       ShowWindow(SW_HIDE);
-      
+
       int i = 0;
       while (IsWindowVisible() && i < 10)
       {
 
          Sleep(5);
-         
+
          i++;
 
 
@@ -506,7 +551,18 @@ namespace user
 
       pgraphics->CreateCompatibleDC(NULL);
 
-      select_font(pgraphics, font_plain_edit);
+      if (m_pcombo != NULL)
+      {
+
+         m_pcombo->select_font(pgraphics, font_plain_edit);
+
+      }
+      else
+      {
+
+         select_font(pgraphics, font_plain_edit);
+
+      }
 
       pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
 
@@ -550,6 +606,8 @@ namespace user
 
       }
 
+      m_iItemHeight += 4;
+
       int iAddUp = 0;
 
       if (m_pcombo->m_bEdit)
@@ -568,8 +626,6 @@ namespace user
       m_pcombo->GetClientRect(rectComboClient);
 
       lpsize->cx = MAX(lpsize->cx, rectComboClient.width());
-
-      lpsize->cy += m_iBorder * 2;
 
    }
 
@@ -611,7 +667,9 @@ namespace user
       if (IsWindowVisible())
       {
 
-         m_pcombo->_001ShowDropDown(false);
+         ShowWindow(SW_HIDE);
+
+         m_pcombo->SetFocus();
 
       }
 
@@ -736,14 +794,18 @@ namespace user
 
       //m_pcombo->_001ShowDropDown(false);
 
-   //}
+      //}
 
    }
 
    void combo_list::_001OnMouseActivate(::message::message * pobj)
    {
 
-      //      SCAST_PTR(::message::mouse_activate, pactivate, pobj);
+      SCAST_PTR(::message::mouse_activate, pactivate, pobj);
+
+      pactivate->m_lresult = MA_NOACTIVATE;
+
+      pactivate->m_bRet = true;
 
 
    }
@@ -1037,7 +1099,7 @@ namespace user
          rectListOver.right = rectWindow.left + sizeFull.cx;
          rectListOver.bottom = rectWindow.top;
          rectListOver.top = rectWindow.top - sizeFull.cy;
-         
+
          if (rectListOver.top < rectMonitor.top + m_iBorder)
          {
 
@@ -1077,11 +1139,11 @@ namespace user
 
       }
 
-      SetWindowPos(ZORDER_TOPMOST, 
-         rectList.left - m_iBorder, 
-         rectList.top - m_iBorder, 
-         rectList.width() + m_iBorder * 2, 
-         rectList.height() + m_iBorder * 2, SWP_SHOWWINDOW);
+      SetWindowPos(ZORDER_TOPMOST,
+                   rectList.left - m_iBorder,
+                   rectList.top - m_iBorder,
+                   rectList.width() + m_iBorder * 2,
+                   rectList.height() + m_iBorder * 2, SWP_SHOWWINDOW | SWP_NOACTIVATE);
 
    }
 

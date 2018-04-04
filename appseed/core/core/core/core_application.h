@@ -540,6 +540,8 @@ namespace core
       virtual bool _001OnAgreeExit() override;
       virtual void _001OnFranceExit() override;
 
+      virtual void prepare_form(id id, ::html_document * pdocument);
+
    };
 
 

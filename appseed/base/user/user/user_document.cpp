@@ -1348,6 +1348,15 @@ namespace user
 
       }
 
+      if (!m_id.is_empty())
+      {
+
+         str += "/";
+
+         str += m_id.m_psz;
+
+      }
+
       string strModifier = get_data_key_modifier();
 
       if (strModifier.has_char())

@@ -2811,26 +2811,26 @@ run:
 
          //if ((is_installing() || is_unstalling()) && !is_system() && !is_session())
 
-         if (aura_app::should_install())
-         {
+         //if (aura_app::should_install())
+         //{
 
-            if (!is_installed())
-            {
+         //   if (!is_installed())
+         //   {
 
-               do_install();
+         //      do_install();
 
-               if (!is_installed())
-               {
+         //      if (!is_installed())
+         //      {
 
-                  simple_message_box(NULL, "Could not start application. Could not install application.");
+         //         simple_message_box(NULL, "Could not start application. Could not install application.");
 
-                  return false;
+         //         return false;
 
-               }
+         //      }
 
-            }
+         //   }
 
-         }
+         //}
 
          if (!init_instance())
          {

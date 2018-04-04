@@ -27,6 +27,11 @@ inline ::count array_base < TYPE, ARG_TYPE, ALLOCATOR > ::get_count() const
    return this->get_size();
 }
 
+template < class TYPE, class ARG_TYPE, class ALLOCATOR >
+inline ::count array_base < TYPE, ARG_TYPE, ALLOCATOR > ::get_length() const
+{
+   return this->get_count();
+}
 
 template < class TYPE, class ARG_TYPE, class ALLOCATOR >
 inline ::count array_base < TYPE, ARG_TYPE, ALLOCATOR > ::get_byte_count() const
@@ -48,6 +53,11 @@ inline ::count array_base < TYPE, ARG_TYPE, ALLOCATOR > ::count() const
    return this->get_count();
 }
 
+template < class TYPE, class ARG_TYPE, class ALLOCATOR >
+inline ::count array_base < TYPE, ARG_TYPE, ALLOCATOR > ::length() const
+{
+   return this->get_length();
+}
 
 template < class TYPE, class ARG_TYPE, class ALLOCATOR >
 inline bool array_base < TYPE, ARG_TYPE, ALLOCATOR > ::is_empty(::count countMinimum) const
@@ -62,6 +72,11 @@ inline bool array_base < TYPE, ARG_TYPE, ALLOCATOR > ::empty(::count countMinimu
    return is_empty(countMinimum);
 }
 
+template < class TYPE, class ARG_TYPE, class ALLOCATOR >
+inline bool array_base < TYPE, ARG_TYPE, ALLOCATOR > ::isEmpty(::count countMinimum) const
+{
+   return empty(countMinimum);
+}
 
 template < class TYPE, class ARG_TYPE, class ALLOCATOR >
 inline bool array_base < TYPE, ARG_TYPE, ALLOCATOR > ::has_elements(::count countMinimum) const
@@ -249,6 +264,11 @@ inline index array < TYPE, ARG_TYPE, ALLOCATOR > ::add(const array & src)
    return append(src);
 }
 
+template < class TYPE, class ARG_TYPE, class ALLOCATOR >
+inline index array < TYPE, ARG_TYPE, ALLOCATOR > ::append(ARG_TYPE newElement)
+{
+   return add(newElement);
+}
 
 
 
@@ -564,6 +584,43 @@ template < class TYPE, class ARG_TYPE, class ALLOCATOR >
 inline void array_base < TYPE, ARG_TYPE, ALLOCATOR >::push_back(ARG_TYPE newElement,index n)
 {
    insert_at(this->get_upper_bound(n),newElement);
+}
+
+template < class TYPE, class ARG_TYPE, class ALLOCATOR >
+inline TYPE array_base < TYPE, ARG_TYPE, ALLOCATOR >::takeAt(index i)
+{
+
+   TYPE t = element_at(i);
+
+   this->remove_at(i);
+
+   return t;
+
+}
+template < class TYPE, class ARG_TYPE, class ALLOCATOR >
+inline TYPE array_base < TYPE, ARG_TYPE, ALLOCATOR >::takeFirst(index i)
+{
+
+   TYPE t = element_at(i);
+
+   this->remove_at(i);
+
+   return t;
+
+}
+
+template < class TYPE, class ARG_TYPE, class ALLOCATOR >
+inline TYPE array_base < TYPE, ARG_TYPE, ALLOCATOR >::takeLast(index n)
+{
+
+   index i = this->get_upper_bound(n);
+
+   TYPE t = element_at(i);
+
+   this->remove_at(i);
+
+   return t;
+
 }
 
 

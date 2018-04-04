@@ -4177,17 +4177,22 @@ namespace windows
          m_pui->_001WindowMinimize(true);
 
       }
+      else if (nCmdShow == SW_HIDE)
+      {
+
+         m_iShowWindow = SW_HIDE;
+
+         m_iShowFlags = SWP_HIDEWINDOW;
+
+         m_bShowWindow = true;
+
+         m_bShowFlags = true;
+
+      }
       else
       {
 
          ::ShowWindow(get_handle(), nCmdShow);
-
-      }
-
-      if ((GetExStyle() & WS_EX_LAYERED) && (!m_pui->IsWindowVisible() || m_pui->WfiIsIconic()))
-      {
-
-         ::UpdateLayeredWindow(get_handle(), NULL, NULL, NULL, NULL, NULL, 0, NULL, 0);
 
       }
 

@@ -899,7 +899,7 @@ namespace user
       rect rectClient;
 
 
-      ::user::interaction::GetClientRect(rectClient);
+      scroll_bar_get_client_rect(rectClient);
 
       int32_t ifswp = SWP_SHOWWINDOW | SWP_NOCOPYBITS;
 

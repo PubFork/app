@@ -575,14 +575,27 @@ namespace aura
 
                }
 
-               if(!papp->is_system() && !papp->is_session())
+               if (System.handler()->m_varTopicQuery.has_property("install"))
                {
 
-                  System.merge_accumulated_on_open_file(pcreate);
+                  papp->do_install();
+
+                  System.post_quit();
 
                }
+               else
+               {
 
-               papp->handler()->handle(pcreate);
+                  if (!papp->is_system() && !papp->is_session())
+                  {
+
+                     System.merge_accumulated_on_open_file(pcreate);
+
+                  }
+
+                  papp->handler()->handle(pcreate);
+
+               }
 
                m_pappCurrent = papp;
 
@@ -1544,11 +1557,13 @@ namespace aura
    void session::set_keyboard_focus(::user::elemental * pkeyboardfocus)
    {
 
-      if (m_pkeyboardfocus != NULL && m_pkeyboardfocus != pkeyboardfocus)
+      if (m_pkeyboardfocus != NULL && m_pkeyboardfocus != pkeyboardfocus
+            && m_pkeyboardfocusRequest != pkeyboardfocus)
       {
 
          ::user::elemental * pkeyboardfocusOld = m_pkeyboardfocus;
 
+         m_pkeyboardfocusRequest = pkeyboardfocus;
 
          try
          {

@@ -3277,6 +3277,14 @@ namespace core
    }
 
 
+   void application::prepare_form(id id, ::html_document * pdocument)
+   {
+
+
+
+   }
+
+
 } // namespace core
 
 
