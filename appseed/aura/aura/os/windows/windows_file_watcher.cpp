@@ -195,18 +195,19 @@ namespace file_watcher
 
    os_file_watcher::os_file_watcher(::aura::application * papp) :
       ::object(papp),
-      thread(papp),
       m_idLast(0)
 
    {
-      begin();
+
+      m_pthread = fork([this]() { run(); });
+
    }
 
    //--------
    os_file_watcher::~os_file_watcher()
    {
 
-      ::multithreading::post_quit_and_wait(seconds(15));
+      ::multithreading::post_quit_and_wait(m_pthread, seconds(15));
 
       watch_map::pair * ppair = m_watchmap.PGetFirstAssoc();
 
@@ -328,7 +329,14 @@ namespace file_watcher
 
       while (PeekMessage(&msg, NULL, 0, 0, TRUE));
 
-      MsgWaitForMultipleObjectsEx(0,NULL,1000,QS_ALLINPUT,MWMO_ALERTABLE);
+      MsgWaitForMultipleObjectsEx(0,NULL,500,QS_ALLINPUT,MWMO_ALERTABLE);
+
+      if (!::get_thread_run())
+      {
+
+         return false;
+
+      }
 
       watch_map::pair * ppair = m_watchmap.PGetFirstAssoc();
 

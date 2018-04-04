@@ -35,8 +35,7 @@ namespace file_watcher
    /// Implementation for Win32 based on ReadDirectoryChangesW.
    /// @class os_file_watcher
    class os_file_watcher :
-      virtual public file_watcher_impl,
-      virtual public thread
+      virtual public file_watcher_impl
    {
    public:
 
@@ -45,10 +44,12 @@ namespace file_watcher
       typedef map < id, id, watch_struct*,watch_struct*> watch_map;
 
       /// Map of id to watch_struct pointers
-      watch_map m_watchmap;
+      watch_map            m_watchmap;
 
       /// The last watchid
-      id m_idLast;
+      id                   m_idLast;
+
+      sp(::thread)         m_pthread;
 
 
       os_file_watcher(::aura::application *papp);
@@ -66,8 +67,7 @@ namespace file_watcher
 
       string watch_path(id watchid);
 
-
-      virtual void run() override;
+      virtual void run();
 
       /// Updates the watcher. Must be called often.
       virtual bool step();
