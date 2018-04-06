@@ -303,9 +303,11 @@ namespace hotplugin
 
       }
 
-      m_pplugin = new install::plugin(get_app());
+      throw todo(get_app());
 
-      m_pplugin->set_host(this);
+      //m_pplugin = new install::plugin(get_app());
+
+      //m_pplugin->set_host(this);
 
    }
 
@@ -382,15 +384,17 @@ namespace hotplugin
 
       phost->m_bHostStarterStart = true;
 
-      ::install::starter_start * pstart    = new ::install::starter_start(papp);
+      throw todo(phost->get_app());
 
-      pstart->m_phost               = phost;
+      //::install::starter_start * pstart    = new ::install::starter_start(papp);
 
-      pstart->m_pplugin             = pplugin;
+      //pstart->m_phost               = phost;
 
-      pstart->m_strCommandLine      = pszCommandLine;
+      //pstart->m_pplugin             = pplugin;
 
-      ::create_thread(NULL, 0, &::install::_ca2_starter_start, pstart, 0, pplugin == NULL ? NULL : &pplugin->m_nCa2StarterStartThreadID);
+      //pstart->m_strCommandLine      = pszCommandLine;
+
+      //::create_thread(NULL, 0, &::install::_ca2_starter_start, pstart, 0, pplugin == NULL ? NULL : &pplugin->m_nCa2StarterStartThreadID);
 
       return 0;
 
@@ -410,15 +414,17 @@ namespace hotplugin
 
       }
 
-      ::install::starter_start * pstart = new ::install::starter_start(papp);
+      throw todo(papp);
 
-      pstart->m_phost               = phost;
+      //::install::starter_start * pstart = new ::install::starter_start(papp);
 
-      pstart->m_pplugin             = pplugin;
+      //pstart->m_phost               = phost;
 
-      pstart->m_strCommandLine      = pszCommandLine;
+      //pstart->m_pplugin             = pplugin;
 
-      ::install::_ca2_starter_start(pstart);
+      //pstart->m_strCommandLine      = pszCommandLine;
+
+      //::install::_ca2_starter_start(pstart);
 
       return 0;
 

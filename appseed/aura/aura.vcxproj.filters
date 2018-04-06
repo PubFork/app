@@ -363,15 +363,6 @@
     <Filter Include="Source Files\aura\aura\os_alloc">
       <UniqueIdentifier>{44b60fb5-aef1-428e-8b06-002121687ba8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\aura\install">
-      <UniqueIdentifier>{68917a66-0973-43e5-901b-8538847e6f7e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\aura\install">
-      <UniqueIdentifier>{cef81474-8eed-4b61-b187-84f47f894aeb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\aura\install\windows">
-      <UniqueIdentifier>{e6e4f6ba-5849-408a-b6ed-c56ed1cb9eab}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\net\sockets\bsd\internal">
       <UniqueIdentifier>{15a4ac45-87fc-482d-a1cb-b439ac57c64b}</UniqueIdentifier>
     </Filter>
@@ -2363,66 +2354,6 @@
     <ClInclude Include="aura\os\cross\ansios\ansios_file_raw.h">
       <Filter>Header Files\aura\os\cross\ansios</Filter>
     </ClInclude>
-    <ClInclude Include="aura\install\install.h">
-      <Filter>Header Files\aura\install</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\install\install_application.h">
-      <Filter>Header Files\aura\install</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\install\install_bootstrap.h">
-      <Filter>Header Files\aura\install</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\install\install_focus.h">
-      <Filter>Header Files\aura\install</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\install\install_install.h">
-      <Filter>Header Files\aura\install</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\install\install_install_item.h">
-      <Filter>Header Files\aura\install</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\install\install_installer.h">
-      <Filter>Header Files\aura\install</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\install\install_installer_launcher.h">
-      <Filter>Header Files\aura\install</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\install\install_installer_square.h">
-      <Filter>Header Files\aura\install</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\install\install_launcher.h">
-      <Filter>Header Files\aura\install</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\install\install_module_list.h">
-      <Filter>Header Files\aura\install</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\install\install_resource.h">
-      <Filter>Header Files\aura\install</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\install\install_small_bell.h">
-      <Filter>Header Files\aura\install</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\install\install_socket.h">
-      <Filter>Header Files\aura\install</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\install\install_socket_handler.h">
-      <Filter>Header Files\aura\install</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\install\install_socket_thread.h">
-      <Filter>Header Files\aura\install</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\install\install_tool.h">
-      <Filter>Header Files\aura\install</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\install\install_trace.h">
-      <Filter>Header Files\aura\install</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\install\install_window.h">
-      <Filter>Header Files\aura\install</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\install\install2.h">
-      <Filter>Header Files\aura\install</Filter>
-    </ClInclude>
     <ClInclude Include="aura\aura\aura_simple_log.h">
       <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
@@ -2686,9 +2617,6 @@
     </ClInclude>
     <ClInclude Include="net\netserver\netserver.h">
       <Filter>Header Files\net\netserver</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\install\install_net.h">
-      <Filter>Header Files\aura\install</Filter>
     </ClInclude>
     <ClInclude Include="primitive\util.h">
       <Filter>Header Files\primitive</Filter>
@@ -4351,77 +4279,11 @@
     <ClCompile Include="aura\aura\os_alloc\os_alloc_WindowsHeapAlloc.cpp">
       <Filter>Source Files\aura\aura\os_alloc</Filter>
     </ClCompile>
-    <ClCompile Include="aura\install\install_module_list.cpp">
-      <Filter>Source Files\aura\install</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\install_launcher.cpp">
-      <Filter>Source Files\aura\install</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\install.cpp">
-      <Filter>Source Files\aura\install</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\install_focus.cpp">
-      <Filter>Source Files\aura\install</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\install_install.cpp">
-      <Filter>Source Files\aura\install</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\install_installer_launcher.cpp">
-      <Filter>Source Files\aura\install</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\install_installer_square.cpp">
-      <Filter>Source Files\aura\install</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\install_small_bell.cpp">
-      <Filter>Source Files\aura\install</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\install_trace.cpp">
-      <Filter>Source Files\aura\install</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\windows\install_windows_boot.cpp">
-      <Filter>Source Files\aura\install\windows</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\windows\install_windows_service.cpp">
-      <Filter>Source Files\aura\install\windows</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\windows\install_windows_win.cpp">
-      <Filter>Source Files\aura\install\windows</Filter>
-    </ClCompile>
     <ClCompile Include="aura\crypto\crypto_openssl.cpp">
       <Filter>Source Files\aura\crypto</Filter>
     </ClCompile>
-    <ClCompile Include="aura\install\install_install_item.cpp">
-      <Filter>Source Files\aura\install</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\install_installer.cpp">
-      <Filter>Source Files\aura\install</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\install_tool.cpp">
-      <Filter>Source Files\aura\install</Filter>
-    </ClCompile>
     <ClCompile Include="aura\os\cross\ansios\ansios_file_raw.cpp">
       <Filter>Source Files\aura\os\cross\ansios</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\install_application.cpp">
-      <Filter>Source Files\aura\install</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\install_bootstrap.cpp">
-      <Filter>Source Files\aura\install</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\install_socket.cpp">
-      <Filter>Source Files\aura\install</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\install_socket_handler.cpp">
-      <Filter>Source Files\aura\install</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\install_socket_thread.cpp">
-      <Filter>Source Files\aura\install</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\install_trace_file.cpp">
-      <Filter>Source Files\aura\install</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\install_window.cpp">
-      <Filter>Source Files\aura\install</Filter>
     </ClCompile>
     <ClCompile Include="filesystem\file\file_path.cpp">
       <Filter>Source Files\filesystem\file</Filter>
@@ -4572,9 +4434,6 @@
     </ClCompile>
     <ClCompile Include="aura\os\cross\ansios\_os_cross_ansios.cpp">
       <Filter>Source Files\aura\os\cross\ansios</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\_install.cpp">
-      <Filter>Source Files\aura\install</Filter>
     </ClCompile>
     <ClCompile Include="aura\compress\_compress.cpp">
       <Filter>Source Files\aura\compress</Filter>

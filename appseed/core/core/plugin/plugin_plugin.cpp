@@ -309,20 +309,20 @@ namespace plugin
       {
       }
 
-      try
-      {
+      //try
+      //{
 
-         if(System.install().is_installing_ca2())
-         {
+      //   if(Application.install().is_installing_ca2())
+      //   {
 
-            reload_plugin();
+      //      reload_plugin();
 
-         }
+      //   }
 
-      }
-      catch(...)
-      {
-      }
+      //}
+      //catch(...)
+      //{
+      //}
 
    }
 
@@ -840,7 +840,7 @@ namespace plugin
 
                         strCommandLine += " install";
 
-                        System.install().asynch_install(strCommandLine);
+//                        System.install().asynch_install(strCommandLine);
 
 #ifdef WINDOWSEX
                         ExitProcess(0);

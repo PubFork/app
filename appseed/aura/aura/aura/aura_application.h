@@ -42,8 +42,6 @@ namespace aura
 
 
 
-      string_map < install_status >                   m_mapUpdated;
-      string_map < install_status >                   m_mapInstalled;
 
 
       bool                                            m_bAgreeExit;
@@ -544,23 +542,13 @@ namespace aura
 
       virtual string lstr(id id, string strDefault = "") override;
 
+      virtual bool do_install();
+      virtual bool do_uninstall();
+
+
 
       void handle_command(::command::command * pcommand) override;
       void on_create(::create * pcreate) override;
-
-      virtual bool is_application_installed(string strAppId, DWORD & dwGoodToCheckAgain);
-
-      virtual bool is_application_updated(string strAppId, DWORD & dwGoodToCheckAgain);
-
-      ::install::installer & installer()
-      {
-         return *m_pinstaller;
-      }
-      
-      virtual bool is_installed();
-
-      virtual bool do_install();
-      virtual bool do_uninstall();
 
       virtual void dispatch_user_message_object(::object * pobject);
 
@@ -610,23 +598,7 @@ namespace aura
       virtual void defer_start_program_files_app_app_admin(string strPlatform);
       virtual void start_program_files_app_app_admin(string strPlatform);
 
-      virtual string install_pick_command_line();
 
-
-      virtual string install_get_title(string strTitle);
-
-      virtual string install_get_build();
-
-      virtual int check_soon_launch(string str, bool bLaunch, DWORD & dwGoodToCheckAgain);
-      virtual int check_soon_file_launch(string wstr, bool bLaunch, DWORD & dwGoodToCheckAgain);
-      virtual int check_soon_app_id(string wstr, bool bLaunch, DWORD & dwGoodToCheckAgain);
-      virtual int check_soon_app_id1(string wstr, bool bLaunch, DWORD & dwGoodToCheckAgain);
-      virtual int check_soon_app_id2(string wstr, bool bLaunch, DWORD & dwGoodToCheckAgain);
-
-
-
-      virtual bool install_get_admin();
-      virtual string install_get_id();
 
       virtual bool keyboard_focus_is_focusable(::user::elemental * pue);
       virtual bool keyboard_focus_OnSetFocus(::user::elemental * pue);
@@ -656,10 +628,10 @@ namespace aura
 
 
       virtual ::visual::icon * set_icon(object * pobject, ::visual::icon * picon, bool bBigIcon);
-      
+
       virtual ::visual::icon * get_icon(object * pobject, bool bBigIcon) const;
 
-      
+
    };
 
 

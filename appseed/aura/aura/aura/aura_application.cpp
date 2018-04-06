@@ -17,6 +17,7 @@ extern "C"
 
 }
 
+
 template < typename PRED >
 class runnable_pred :
    virtual public runnable
@@ -2809,24 +2810,23 @@ run:
       try
       {
 
-         //if ((is_installing() || is_unstalling()) && !is_system() && !is_session())
+         if (!is_system() && !is_session())
+         {
 
-         //if (aura_app::should_install())
-         //{
+            if (System.handler()->m_varTopicQuery.has_property("uninstall"))
+            {
 
-         //   if (!is_installed())
-         //   {
+               do_uninstall();
 
-         //      do_install();
+               return true;
 
-         //      if (!is_installed())
-         //      {
+            }
+            else if (System.handler()->m_varTopicQuery.has_property("install"))
+            {
 
-         //         simple_message_box(NULL, "Could not start application. Could not install application.");
+               do_install();
 
-         //         return false;
-
-         //      }
+               return true;
 
          //   }
 
@@ -3004,13 +3004,6 @@ run:
 //
 //         }
 
-      if(!is_installed())
-      {
-
-         return false;
-
-      }
-
       return true;
 
    }
@@ -3074,19 +3067,12 @@ retry_license:
    bool application::do_uninstall()
    {
 
-      if(!is_installed())
-      {
-
-         return true;
-
-      }
-
       if (!on_uninstall())
       {
 
          return false;
 
-         System.install().remove_spa_start(m_strAppId);
+//         System.install().remove_spa_start(m_strAppId);
 
       }
 
@@ -3148,6 +3134,8 @@ retry_license:
    bool application::system_add_app_install(const char * pszId, const char * pszBuild)
    {
 
+      // cool install
+
       string strBuild(pszBuild);
 
       if (strBuild.is_empty())
@@ -3165,58 +3153,58 @@ retry_license:
       stringa straLocale = m_phandler->m_varTopicQuery["locale"].stra();
       stringa straSchema = m_phandler->m_varTopicQuery["schema"].stra();
 
-      System.install().remove_spa_start(strId);
-      System.install().add_app_install(strId, strBuild, strSystemLocale, m_strSchema);
-      System.install().add_app_install(strId, strBuild, strSystemLocale, strSystemSchema);
-      System.install().add_app_install(strId, strBuild, m_strLocale, m_strSchema);
+      //System.install().remove_spa_start(strId);
+      //System.install().add_app_install(strId, strBuild, strSystemLocale, m_strSchema);
+      //System.install().add_app_install(strId, strBuild, strSystemLocale, strSystemSchema);
+      //System.install().add_app_install(strId, strBuild, m_strLocale, m_strSchema);
 
-      for (index iLocale = 0; iLocale < straLocale.get_count(); iLocale++)
-      {
+      //for (index iLocale = 0; iLocale < straLocale.get_count(); iLocale++)
+      //{
 
-         System.install().add_app_install(strId, strBuild, straLocale[iLocale], m_strSchema);
+      //   System.install().add_app_install(strId, strBuild, straLocale[iLocale], m_strSchema);
 
-      }
+      //}
 
-      for (index iSchema = 0; iSchema < straSchema.get_count(); iSchema++)
-      {
+      //for (index iSchema = 0; iSchema < straSchema.get_count(); iSchema++)
+      //{
 
-         System.install().add_app_install(strId, strBuild, m_strLocale, straSchema[iSchema]);
+      //   System.install().add_app_install(strId, strBuild, m_strLocale, straSchema[iSchema]);
 
-      }
+      //}
 
-      for (index iLocale = 0; iLocale < straLocale.get_count(); iLocale++)
-      {
+      //for (index iLocale = 0; iLocale < straLocale.get_count(); iLocale++)
+      //{
 
-         for (index iSchema = 0; iSchema < straSchema.get_count(); iSchema++)
-         {
+      //   for (index iSchema = 0; iSchema < straSchema.get_count(); iSchema++)
+      //   {
 
-            System.install().add_app_install(strId, strBuild, straLocale[iLocale], straSchema[iSchema]);
+      //      System.install().add_app_install(strId, strBuild, straLocale[iLocale], straSchema[iSchema]);
 
-         }
+      //   }
 
-      }
+      //}
 
-      System.install().add_app_install(strId, strBuild, strSystemLocale, "");
-      System.install().add_app_install(strId, strBuild, m_strLocale, "");
+      //System.install().add_app_install(strId, strBuild, strSystemLocale, "");
+      //System.install().add_app_install(strId, strBuild, m_strLocale, "");
 
-      for (index iLocale = 0; iLocale < straLocale.get_count(); iLocale++)
-      {
+      //for (index iLocale = 0; iLocale < straLocale.get_count(); iLocale++)
+      //{
 
-         System.install().add_app_install(strId, strBuild, straLocale[iLocale], "");
+      //   System.install().add_app_install(strId, strBuild, straLocale[iLocale], "");
 
-      }
+      //}
 
-      System.install().add_app_install(strId, strBuild, "", m_strSchema);
-      System.install().add_app_install(strId, strBuild, "", strSystemSchema);
+      //System.install().add_app_install(strId, strBuild, "", m_strSchema);
+      //System.install().add_app_install(strId, strBuild, "", strSystemSchema);
 
-      for (index iSchema = 0; iSchema < straSchema.get_count(); iSchema++)
-      {
+      //for (index iSchema = 0; iSchema < straSchema.get_count(); iSchema++)
+      //{
 
-         System.install().add_app_install(strId, strBuild, "", straSchema[iSchema]);
+      //   System.install().add_app_install(strId, strBuild, "", straSchema[iSchema]);
 
-      }
+      //}
 
-      System.install().add_app_install(strId, strBuild, "", "");
+      //System.install().add_app_install(strId, strBuild, "", "");
 
       return true;
 
@@ -5719,7 +5707,7 @@ retry_license:
 
          strCommand += " install";
 
-         System.start_installation(strCommand);
+         //System.start_installation(strCommand);
 
          _throw(installing_exception(get_app()));
 
@@ -6647,103 +6635,13 @@ finalize:
    }
 
 
-   bool application::is_application_updated(string strAppId, DWORD & dwGoodToCheckAgain)
-   {
-
-      if (!is_application_installed(strAppId, dwGoodToCheckAgain))
-      {
-
-         return false;
-
-      }
-
-      install_status & status = m_mapUpdated[strAppId];
-
-      status.m_iCheck++;
-
-      if (status.m_bOk)
-      {
-
-         return true;
-
-      }
-
-      string strConfiguration = System.get_system_configuration();
-
-      string strLatestBuildNumber = System.get_latest_build_number(strConfiguration);
-
-      status.m_bOk = System.::aura::system::is_application_installed(strAppId, strLatestBuildNumber);
-
-      dwGoodToCheckAgain = status.calc_when_is_good_to_check_again();
-
-      return status.m_bOk;
-
-   }
-
-
-   bool application::is_installed()
-   {
-
-      string strAppId = m_strAppId;
-
-      string strBuild = m_strBuild;
-
-      string strPlatform = System.get_system_platform();
-
-      string strConfiguration = System.get_system_configuration();
-
-      string strLocale = m_strLocale;
-
-      string strSchema = m_strSchema;
-
-      return System.is_application_installed(
-             strAppId,
-             strBuild,
-             strPlatform,
-             strConfiguration,
-             strLocale,
-             strSchema);
-
-   }
-
-
-   bool application::is_application_installed(string strAppId, DWORD & dwGoodToCheckAgain)
-   {
-
-      install_status & status = m_mapInstalled[strAppId];
-
-      status.m_iCheck++;
-
-      if (status.m_bOk)
-      {
-
-         return true;
-
-      }
-
-      string strName = ::process::app_id_to_app_name(strAppId);
-
-      string strApplication = dir::stage(process_platform_dir_name()) / strName + ".exe";
-
-      string strDll = dir::stage(process_platform_dir_name()) / strName + ".dll";
-
-      string strApp = dir::stage(process_platform_dir_name()) / "application.exe";
-
-      status.m_bOk = file_exists_dup(strApplication) || (file_exists_dup(strDll) && file_exists_dup(strApp));
-
-      dwGoodToCheckAgain = status.calc_when_is_good_to_check_again();
-
-      return status.m_bOk;
-
-   }
-
 
    void application::install_trace(const string & str)
    {
 
       synch_lock sl(m_pmutex);
 
-      ::install::trace_file(this, m_strInstallTraceLabel).print(str);
+      //::install::trace_file(this, m_strInstallTraceLabel).print(str);
 
    }
 
@@ -6753,9 +6651,11 @@ finalize:
 
       synch_lock sl(m_pmutex);
 
-      ::install::trace_file(this, m_strInstallTraceLabel).print(dRate);
+      //::install::trace_file(this, m_strInstallTraceLabel).print(dRate);
 
    }
+
+
    bool application::register_spa_file_type()
    {
 
@@ -6895,102 +6795,6 @@ finalize:
    }
 
 
-   string application::install_pick_command_line()
-   {
-
-      _throw(interface_only_exception(this));
-
-      return "";
-
-   }
-
-
-   string  application::install_get_build()
-   {
-
-      return m_strInstallBuild;
-
-   }
-
-   int application::check_soon_launch(string strCommandLine, bool bLaunch, DWORD & dwGoodToCheckAgain)
-   {
-
-      string strId;
-
-      string wstr = strCommandLine;
-
-      strsize iFind1 = 0;
-
-      if (wstr[0] == '\"')
-      {
-
-         iFind1 = wstr.find('\"', 1);
-
-      }
-
-      strsize iFind = wstr.find(" : ", iFind1 + 1);
-
-      if (iFind < 0)
-      {
-
-         string strFile = wstr.substr(iFind1 + 1);
-
-         strFile.trim();
-
-         if (check_soon_file_launch(strFile, bLaunch, dwGoodToCheckAgain))
-         {
-
-            return 1;
-
-         }
-
-      }
-      else
-      {
-
-         string wstrRequest = wstr.substr(iFind + 3);
-
-         string wstrValue;
-
-         if (get_command_line_param(wstrValue, wstrRequest, "install"))
-         {
-
-            if (get_command_line_param(strId, wstrRequest, "enable_desktop_launch") && strId.length() > 0)
-            {
-
-               return check_soon_app_id(strId, bLaunch, dwGoodToCheckAgain);
-
-            }
-
-            if (get_command_line_param(strId, wstrRequest, "app") && strId.length() > 0)
-            {
-
-               return check_soon_app_id(strId, bLaunch, dwGoodToCheckAgain);
-
-            }
-
-         }
-         else
-         {
-
-            if (get_command_line_param(strId, wstrRequest, "app") && strId.length() > 0)
-            {
-
-               return check_soon_app_id(strId, bLaunch, dwGoodToCheckAgain);
-
-            }
-         }
-
-      }
-
-      if (strId.empty())
-         return FALSE;
-
-      return check_soon_app_id(strId, bLaunch, dwGoodToCheckAgain);
-
-   }
-
-
    string application::get_app_id(string wstr)
    {
 
@@ -7046,246 +6850,6 @@ finalize:
       }
 
       return psz;
-
-   }
-
-
-   int application::check_soon_file_launch(string wstr, bool bLaunch, DWORD & dwGoodToCheckAgain)
-   {
-
-      return check_soon_app_id(u16(get_app_id(wstr.c_str()).c_str()), bLaunch, dwGoodToCheckAgain);
-
-   }
-
-
-   int application::check_soon_app_id(string strId, bool bLaunch, DWORD & dwGoodToCheckAgain)
-   {
-
-      if (check_soon_app_id1(strId, bLaunch, dwGoodToCheckAgain))
-      {
-
-         return TRUE;
-
-      }
-
-      if (check_soon_app_id2(strId, bLaunch, dwGoodToCheckAgain))
-      {
-
-         return TRUE;
-
-      }
-
-      return FALSE;
-
-   }
-
-
-   int application::check_soon_app_id1(string strId, bool bLaunch, DWORD & dwGoodToCheckAgain)
-   {
-
-      if (strId.length() <= 0)
-      {
-
-         return 0;
-
-      }
-
-      string strName = ::process::app_id_to_app_name(strId);
-
-      string strApp = dir::stage(process_platform_dir_name()) / strName + ".exe";
-
-      bool bOk;
-
-      if (bLaunch)
-      {
-
-         bOk = is_application_installed(strId, dwGoodToCheckAgain);
-
-      }
-      else
-      {
-
-         bOk = is_application_updated(strId, dwGoodToCheckAgain);
-
-      }
-
-      if (file_exists_dup(strApp) && bOk)
-      {
-
-         if (!bLaunch)
-         {
-
-            // if dll loads consider good state
-
-            string strDll = dir::stage(process_platform_dir_name()) / strName + ".dll";
-
-#ifdef WINDOWSEX
-
-            HMODULE hmodule = ::LoadLibraryW(wstring(strDll));
-
-            bool bOk = hmodule != NULL;
-
-            if (bOk)
-            {
-
-               ::FreeLibrary(hmodule);
-
-            }
-
-#endif
-
-            return bOk;
-
-         }
-
-#ifdef WINDOWSEX
-
-         SHELLEXECUTEINFOW sei = {};
-
-         wstring wstrFile(strApp.c_str());
-
-         sei.cbSize = sizeof(SHELLEXECUTEINFOW);
-
-         sei.lpFile = wstrFile.c_str();
-
-         if (::ShellExecuteExW(&sei))
-         {
-
-            return TRUE;
-
-         }
-
-#endif
-
-      }
-
-      return FALSE;
-
-   }
-
-
-   int application::check_soon_app_id2(string strId, bool bLaunch, DWORD & dwGoodToCheckAgain)
-   {
-
-      if (strId.length() <= 0)
-      {
-
-         return 0;
-
-      }
-
-      string strName = ::process::app_id_to_app_name(strId);
-
-      {
-
-         string strDll = dir::stage(process_platform_dir_name()) / strName + ".dll";
-
-         string strApp = dir::stage(process_platform_dir_name()) / "app.exe";
-
-         bool bOk;
-
-         if (bLaunch)
-         {
-
-            bOk = Application.is_application_installed(strId, dwGoodToCheckAgain);
-
-         }
-         else
-         {
-
-            bOk = Application.is_application_updated(strId, dwGoodToCheckAgain);
-
-         }
-
-         if (file_exists_dup(strDll) && file_exists_dup(strApp) && bOk)
-         {
-
-            if (!bLaunch)
-            {
-
-
-#ifdef WINDOWSEX
-               // if dll loads consider good state
-
-               HMODULE hmodule = ::LoadLibraryW(wstring(strDll));
-
-               bool bOk = hmodule != NULL;
-
-               if (bOk)
-               {
-
-                  ::FreeLibrary(hmodule);
-
-               }
-#endif
-
-               return bOk;
-
-            }
-
-#ifdef WINDOWSEX
-
-            wstring wstrParams(": app=" + strId);
-
-            wstring wstrApp(strApp);
-
-            SHELLEXECUTEINFOW sei = {};
-
-            sei.cbSize = sizeof(SHELLEXECUTEINFOW);
-
-            sei.lpFile = wstrApp.c_str();
-
-            sei.lpParameters = wstrParams.c_str();
-
-            if (::ShellExecuteExW(&sei))
-            {
-
-               return TRUE;
-
-            }
-
-#endif
-
-         }
-
-      }
-
-      return FALSE;
-
-   }
-
-
-   string application::install_get_title(string strTitle)
-   {
-
-      if (strTitle.has_char())
-      {
-
-         System.oprop("install_title") = strTitle;
-
-      }
-
-      return System.oprop("install_title");
-
-   }
-
-
-   bool application::install_get_admin()
-   {
-
-      _throw(interface_only_exception(this));
-
-      return false;
-
-   }
-
-
-   string application::install_get_id()
-   {
-
-      _throw(interface_only_exception(this));
-
-      return "";
 
    }
 

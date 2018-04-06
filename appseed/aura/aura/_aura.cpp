@@ -7,7 +7,6 @@
 #include "crypto/_crypto.cpp"
 #include "exception/_exception.cpp"
 #include "fontopus/_fontopus.cpp"
-#include "install/_install.cpp"
 #include "message/_message.cpp"
 #include "process/_process.cpp"
 #include "scripting/_scripting.cpp"

@@ -78,9 +78,6 @@
     <Filter Include="Source Files\user\hotplugin">
       <UniqueIdentifier>{5930d214-6119-4d3d-84ed-31dcd6f1588c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\user\install">
-      <UniqueIdentifier>{7941c4fb-c552-4d65-abcd-255859d007e4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\user">
       <UniqueIdentifier>{cf5975ea-3ddd-4fb6-8bfb-0bf87283fdf4}</UniqueIdentifier>
     </Filter>
@@ -98,9 +95,6 @@
     </Filter>
     <Filter Include="Header Files\user\hotplugin">
       <UniqueIdentifier>{2ee16b63-cf4c-410c-8543-1a142e9f5573}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\user\install">
-      <UniqueIdentifier>{63cabbdd-9a9f-4d6e-8dec-65756cd1d875}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\database">
       <UniqueIdentifier>{ba08ab2c-d4ff-4526-b3fe-af42610cb903}</UniqueIdentifier>
@@ -125,12 +119,6 @@
     </Filter>
     <Filter Include="Header Files\user\wndfrm\frame">
       <UniqueIdentifier>{b26ce49e-dc20-4147-81fd-34c99bedcba0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\base\install">
-      <UniqueIdentifier>{2825e098-dea8-4718-983d-2a4ed062f4c8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\base\install">
-      <UniqueIdentifier>{d23767a8-c5e0-4b91-961a-0e103a791af1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\user\simple_ui">
       <UniqueIdentifier>{1164d5d2-3fc6-424f-b2aa-07ee2f73a22b}</UniqueIdentifier>
@@ -229,15 +217,6 @@
     </ClInclude>
     <ClInclude Include="user\hotplugin\hotplugin_plugin.h">
       <Filter>Header Files\user\hotplugin</Filter>
-    </ClInclude>
-    <ClInclude Include="user\install\install.h">
-      <Filter>Header Files\user\install</Filter>
-    </ClInclude>
-    <ClInclude Include="user\install\install_plugin.h">
-      <Filter>Header Files\user\install</Filter>
-    </ClInclude>
-    <ClInclude Include="user\install\install_starter_start.h">
-      <Filter>Header Files\user\install</Filter>
     </ClInclude>
     <ClInclude Include="user\simple\simple.h">
       <Filter>Header Files\user\simple</Filter>
@@ -371,9 +350,6 @@
     <ClInclude Include="base\node\windows\windows_print_job.h">
       <Filter>Header Files\base\node\windows</Filter>
     </ClInclude>
-    <ClInclude Include="base\install\install_canvas.h">
-      <Filter>Header Files\base\install</Filter>
-    </ClInclude>
     <ClInclude Include="base\os\windows\windows_extract_icon.h">
       <Filter>Header Files\base\os\windows</Filter>
     </ClInclude>
@@ -435,21 +411,6 @@
     </ClCompile>
     <ClCompile Include="user\hotplugin\hotplugin_windows.cpp">
       <Filter>Source Files\user\hotplugin</Filter>
-    </ClCompile>
-    <ClCompile Include="user\install\install_plugin.cpp">
-      <Filter>Source Files\user\install</Filter>
-    </ClCompile>
-    <ClCompile Include="user\install\install_plugin_bare_paint_discreet.cpp">
-      <Filter>Source Files\user\install</Filter>
-    </ClCompile>
-    <ClCompile Include="user\install\install_plugin_bare_paint_full_screen.cpp">
-      <Filter>Source Files\user\install</Filter>
-    </ClCompile>
-    <ClCompile Include="user\install\install_plugin_bare_paint_veri_discreet.cpp">
-      <Filter>Source Files\user\install</Filter>
-    </ClCompile>
-    <ClCompile Include="user\install\install_starter_start.cpp">
-      <Filter>Source Files\user\install</Filter>
     </ClCompile>
     <ClCompile Include="user\simple\simple_scroll_bar.cpp">
       <Filter>Source Files\user\simple</Filter>
@@ -559,9 +520,6 @@
     <ClCompile Include="base\node\windows\windows_print_job.cpp">
       <Filter>Source Files\base\node\windows</Filter>
     </ClCompile>
-    <ClCompile Include="base\install\install_canvas.cpp">
-      <Filter>Source Files\base\install</Filter>
-    </ClCompile>
     <ClCompile Include="base\os\windows\windows_extract_icon.cpp">
       <Filter>Source Files\base\os\windows</Filter>
     </ClCompile>
@@ -594,6 +552,15 @@
     </ClCompile>
     <ClCompile Include="user\user\_user.cpp">
       <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\hotplugin\hotplugin_bare_paint_discreet.cpp">
+      <Filter>Header Files\user\hotplugin</Filter>
+    </ClCompile>
+    <ClCompile Include="user\hotplugin\hotplugin_bare_paint_full_screen.cpp">
+      <Filter>Header Files\user\hotplugin</Filter>
+    </ClCompile>
+    <ClCompile Include="user\hotplugin\hotplugin_bare_paint_veri_discreet.cpp">
+      <Filter>Header Files\user\hotplugin</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -397,112 +397,6 @@ namespace axis
    }
 
 
-   bool application::get_temp_file_name_template(string & strRet, const char * pszName, const char * pszExtension, const char * pszTemplate)
-   {
-
-#ifdef METROWIN
-
-      string str(::Windows::Storage::ApplicationData::Current->TemporaryFolder->Path);
-
-#else
-
-//      char lpPathBuffer[MAX_PATH * 4];
-//
-//      uint32_t dwRetVal = //GetTempPath(sizeof(lpPathBuffer), lpPathBuffer);
-//
-//      if (dwRetVal > sizeof(lpPathBuffer) || (dwRetVal == 0))
-//      {
-//
-//         return FALSE;
-//
-//      }
-
-//      string str(lpPathBuffer);
-
-      string str = System.dir().time();
-
-#endif
-
-      char bufItem[64];
-
-      string strRelative;
-
-      SYSTEMTIME st;
-
-      memset_dup(&st, 0, sizeof(st));
-
-      GetSystemTime(&st);
-
-      itoa_dup(bufItem, st.wYear, 10);
-      zero_pad(bufItem, 4);
-      strRelative += bufItem;
-
-      itoa_dup(bufItem, st.wMonth, 10);
-      zero_pad(bufItem, 2);
-      strRelative += "-";
-      strRelative += bufItem;
-
-      itoa_dup(bufItem, st.wDay, 10);
-      zero_pad(bufItem, 2);
-      strRelative += "-";
-      strRelative += bufItem;
-
-      itoa_dup(bufItem, st.wHour, 10);
-      zero_pad(bufItem, 2);
-      strRelative += " ";
-      strRelative += bufItem;
-
-      itoa_dup(bufItem, st.wMinute, 10);
-      zero_pad(bufItem, 2);
-      strRelative += "-";
-      strRelative += bufItem;
-
-      itoa_dup(bufItem, st.wSecond, 10);
-      zero_pad(bufItem, 2);
-      strRelative += "-";
-      strRelative += bufItem;
-
-      for (int32_t i = 0; i < (1024 * 1024); i++)
-      {
-
-         strRet = ::file::path(str) / (strRelative + "-" + hex::lower_from(i + 1)) / (string(pszName) + string(".") + pszExtension);
-
-         if (pszTemplate != NULL)
-         {
-
-            if (System.install().is_file_ok(strRet, pszTemplate, ""))
-               return true;
-
-         }
-
-
-         if (file_exists_dup(strRet))
-         {
-
-            try
-            {
-
-               Application.file().del(strRet);
-
-            }
-            catch (...)
-            {
-
-               continue;
-
-            }
-
-            return true;
-
-         }
-         else
-         {
-            return true;
-         }
-      }
-      return false;
-
-   }
 
 
    //void application::set_env_var(const string & var,const string & value)
@@ -735,12 +629,6 @@ namespace axis
 
 
 
-   bool application::get_temp_file_name(string & strRet,const char * pszName,const char * pszExtension)
-   {
-
-      return get_temp_file_name_template(strRet,pszName,pszExtension,NULL);
-
-   }
 
 
 

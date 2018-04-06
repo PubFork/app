@@ -146,7 +146,7 @@ namespace aura
       string                                       m_strIosTemp;
       string_to_string                             m_mapCachedLatestBuild;
 
-      sp(::install::install)                       m_spinstall;
+//      sp(::install::install)                       m_spinstall;
 
       ::net::email_department                     m_emaildepartment;
 
@@ -439,10 +439,10 @@ namespace aura
 
       virtual void * & ftlibrary();
 
-      ::install::install                           & install()
-      {
-         return *m_spinstall;
-      }
+      //::install::install                           & install()
+      //{
+      //   return *m_spinstall;
+      //}
 
 
       virtual bool find_applications_from_cache();
@@ -467,8 +467,6 @@ namespace aura
       virtual string get_system_configuration();
       virtual bool is_application_installed(const char * pszAppId, const char * pszBuild = NULL, const char * pszPlatform = NULL, const char * pszConfiguration = NULL, const char * pszLocale = NULL, const char * pszSchema = NULL);
       virtual string get_latest_build_number(const char * pszConfiguration);
-
-      virtual int32_t start_installation(const char * pszCommand);
 
 
       virtual void on_start_find_applications_from_cache();

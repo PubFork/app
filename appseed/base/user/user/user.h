@@ -102,9 +102,6 @@ enum
 #include "base/user/hotplugin/hotplugin.h"
 
 
-#include "base/user/install/install.h"
-
-
 #include "base/user/fontopus/fontopus.h"
 
 namespace user
@@ -113,7 +110,7 @@ namespace user
    class CLASS_DECL_BASE map_form_window :
       virtual public strsp(::user::form_window)
    {
-      public:
+   public:
 
    };
 

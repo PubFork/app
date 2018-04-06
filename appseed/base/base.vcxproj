@@ -677,7 +677,6 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="base\install\install_canvas.cpp" />
     <ClCompile Include="base\node\windows\windows_print_job.cpp" />
     <ClCompile Include="base\os\windows\windows_extract_icon.cpp" />
     <ClCompile Include="base\os\windows\windows_gdi.cpp" />
@@ -687,16 +686,14 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
     <ClCompile Include="user\fontopus\fontopus_login.cpp" />
     <ClCompile Include="user\fontopus\fontopus_dialog.cpp" />
     <ClCompile Include="user\hotplugin\hotplugin.cpp" />
+    <ClCompile Include="user\hotplugin\hotplugin_bare_paint_discreet.cpp" />
+    <ClCompile Include="user\hotplugin\hotplugin_bare_paint_full_screen.cpp" />
+    <ClCompile Include="user\hotplugin\hotplugin_bare_paint_veri_discreet.cpp" />
     <ClCompile Include="user\hotplugin\hotplugin_composer.cpp" />
     <ClCompile Include="user\hotplugin\hotplugin_container_launcher.cpp" />
     <ClCompile Include="user\hotplugin\hotplugin_host.cpp" />
     <ClCompile Include="user\hotplugin\hotplugin_plugin.cpp" />
     <ClCompile Include="user\hotplugin\hotplugin_windows.cpp" />
-    <ClCompile Include="user\install\install_plugin.cpp" />
-    <ClCompile Include="user\install\install_plugin_bare_paint_discreet.cpp" />
-    <ClCompile Include="user\install\install_plugin_bare_paint_full_screen.cpp" />
-    <ClCompile Include="user\install\install_plugin_bare_paint_veri_discreet.cpp" />
-    <ClCompile Include="user\install\install_starter_start.cpp" />
     <ClCompile Include="user\simple\simple_scroll_bar.cpp" />
     <ClCompile Include="user\simple_ui\simple_ui_edit_box.cpp" />
     <ClCompile Include="user\simple_ui\simple_ui_interaction.cpp" />
@@ -915,7 +912,6 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="user\user\_user.cpp" />
-    <ClInclude Include="base\install\install_canvas.h" />
     <ClInclude Include="base\node\ansios\ansios.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>
@@ -987,9 +983,6 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
     <ClInclude Include="user\hotplugin\hotplugin_container_launcher.h" />
     <ClInclude Include="user\hotplugin\hotplugin_host.h" />
     <ClInclude Include="user\hotplugin\hotplugin_plugin.h" />
-    <ClInclude Include="user\install\install.h" />
-    <ClInclude Include="user\install\install_plugin.h" />
-    <ClInclude Include="user\install\install_starter_start.h" />
     <ClInclude Include="user\simple\simple.h" />
     <ClInclude Include="user\simple\simple_scroll_bar.h" />
     <ClInclude Include="user\simple_ui\simple_ui.h" />

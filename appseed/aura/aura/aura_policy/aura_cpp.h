@@ -213,7 +213,7 @@ namespace aura
 namespace user
 {
 
-   
+
    class primitive;
    class frame;
    class menu;
@@ -228,16 +228,6 @@ namespace user
 
 } // namespace aura
 
-
-namespace install
-{
-
-
-   class install;
-   class canvas;
-
-
-} // namespace install
 
 namespace data
 {
@@ -1425,24 +1415,6 @@ public:
 typedef ::map < sp(object), sp(object), sp(object), sp(object) > element_map;
 typedef ::map < sp(object), sp(object), ptra, ptra > map_many;
 
-struct install_status
-{
-
-   int         m_iCheck;
-   bool        m_bOk;
-
-   install_status()
-   {
-
-      m_iCheck = 0;
-      m_bOk = false;
-
-   }
-
-
-   DWORD calc_when_is_good_to_check_again();
-
-};
 
 
 
@@ -1500,8 +1472,6 @@ struct install_status
 #include "aura/aura/os/os2.h"
 
 #include "aura/aura/aura/aura_system.h"
-
-#include "aura/aura/install/install.h"
 
 #include "aura/aura/aura/aura_system_str.h"
 
@@ -1775,9 +1745,6 @@ CLASS_DECL_AURA string get_system_error_message(uint32_t dwError);
 #include "app/appseed/aura/aura/node/node.h"
 
 
-#include "aura/aura/install/install.h"
-
-
 namespace math
 {
 
@@ -2039,9 +2006,6 @@ CLASS_DECL_AURA ::aura::application * get_aura(void * p);
 
 
 #include "aura/graphics/graphics.h"
-
-
-#include "aura/aura/install/install2.h"
 
 
 #include "aura/user/user/user_controller.h"

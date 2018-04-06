@@ -133,11 +133,11 @@ namespace axis
 
 
       virtual bool InitApplication() override;
-      
-      
+
+
       virtual bool do_install() override;
       virtual bool do_uninstall() override;
-      
+
 
       virtual bool on_install() override;
       virtual bool on_uninstall() override;
@@ -154,9 +154,6 @@ namespace axis
 
 
 
-      virtual bool get_temp_file_name_template(string & str, const char * pszName, const char * pszExtension, const char * pszTemplate) override;
-
-      virtual bool get_temp_file_name(string & str, const char * pszName, const char * pszExtension) override;
 
 
 
@@ -262,7 +259,7 @@ namespace axis
       virtual bool on_open_document(::user::document * pdocument, var varFile);
       virtual bool on_save_document(::user::document * pdocument, var varFile);
 
-      
+
 
       inline ::html::html * html() { return m_pauraapp->m_paurasystem->m_phtml; }
 
@@ -275,9 +272,9 @@ namespace axis
       virtual bool compress_gz(::file::file * pfileOut, const ::file::path & lpcszUncompressed, int iLevel = 6) override;
       virtual bool compress_gz(::file::file * pfileOut, ::file::file * pfileIn, int iLevel = 6) override;
 
-      
+
       virtual bool is_local_data() override;
-      
+
 
    };
 

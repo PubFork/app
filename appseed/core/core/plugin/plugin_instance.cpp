@@ -3,7 +3,7 @@
 //#include "plugin_instance.h"
 
 
-::hotplugin::plugin * new_hotplugin(::aura::application * papp);
+//::hotplugin::plugin * new_hotplugin(::aura::application * papp);
 
 
 namespace plugin
@@ -106,11 +106,11 @@ namespace plugin
 
 
 
-::hotplugin::plugin * new_hotplugin(::aura::application * papp)
-{
-
-   return new ::plugin::instance(papp);
-
-}
+//::hotplugin::plugin * new_hotplugin(::aura::application * papp)
+//{
+//
+//   return new ::plugin::instance(papp);
+//
+//}
 
 
