@@ -26,7 +26,7 @@ COLORREF metadata_GetBackgroundColor(IWICMetadataQueryReader *pMetadataQueryRead
    UINT cColorsCopied = 0;
    PROPVARIANT propVariant;
    PropVariantInit(&propVariant);
-   ::windows::comptr < IWICPalette > pWicPalette;
+   comptr < IWICPalette > pWicPalette;
 
    COLORREF crBk = 0;
 
@@ -99,13 +99,13 @@ bool freeimage_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file
 
    defer_co_initialize_ex(false);
 
-   windows::comptr < IWICImagingFactory > piFactory;
+   comptr < IWICImagingFactory > piFactory;
 
    HRESULT hr = piFactory.CoCreateInstance(CLSID_WICImagingFactory);
 
    if (hr != S_OK) return false;
 
-   windows::comptr < IWICStream > piStream;
+   comptr < IWICStream > piStream;
 
    hr = piFactory->CreateStream(&piStream);
 
@@ -126,7 +126,7 @@ bool freeimage_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file
 
    }
 
-   windows::comptr < IWICBitmapDecoder > piDecoder;
+   comptr < IWICBitmapDecoder > piDecoder;
 
    hr = piFactory->CreateDecoderFromStream(piStream, 0, WICDecodeMetadataCacheOnLoad, &piDecoder); // jpeg,png:OK, bmp:88982f50のエラーになる, iconもエラー
 
@@ -148,7 +148,7 @@ bool freeimage_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file
 
    }
 
-   ::windows::comptr < IWICMetadataQueryReader > piMetadataQueryReader;
+   comptr < IWICMetadataQueryReader > piMetadataQueryReader;
 
    // Create a MetadataQueryReader from the decoder
    hr =piDecoder->GetMetadataQueryReader(&piMetadataQueryReader);
@@ -326,9 +326,9 @@ bool freeimage_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file
 
       {
 
-         ::windows::comptr<IWICFormatConverter> pConverter;
-         ::windows::comptr<IWICBitmapFrameDecode> pWicFrame;
-         ::windows::comptr<IWICMetadataQueryReader > pFrameMetadataQueryReader;
+         comptr<IWICFormatConverter> pConverter;
+         comptr<IWICBitmapFrameDecode> pWicFrame;
+         comptr<IWICMetadataQueryReader > pFrameMetadataQueryReader;
 
          PROPVARIANT propValue;
          PropVariantInit(&propValue);
@@ -821,11 +821,11 @@ int iFrame)
    try
    {
 
-      HRESULT hr = piDecoder->GetFrame(iFrame, &pframe.get());
+      HRESULT hr = piDecoder->GetFrame(iFrame, &pframe);
 
       WICPixelFormatGUID px;
       ZERO(px);
-      if (pframe == NULL)
+      if (pframe.is_null())
       {
          return false;
       }
@@ -864,7 +864,7 @@ int iFrame)
          if (SUCCEEDED(hr))
          {
 
-            hr = piFactory->CreateFormatConverter(&pbitmap.get());
+            hr = piFactory->CreateFormatConverter(&pbitmap);
 
          }
 
@@ -950,7 +950,7 @@ HRESULT windows_GetBackgroundColor(WICColor *rgColors, int *piSize, ::visual::di
    // Get the color from the palette
    if (SUCCEEDED(hr))
    {
-      hr = piFactory->CreatePalette(&pWicPalette.get());
+      hr = piFactory->CreatePalette(&pWicPalette);
    }
 
    if (SUCCEEDED(hr))
@@ -1016,14 +1016,14 @@ UINT uFrameIndex)
    PropVariantInit(&propValue);
 
    // Retrieve the current frame
-   HRESULT hr = piDecoder->GetFrame(uFrameIndex, &pframe.get());
+   HRESULT hr = piDecoder->GetFrame(uFrameIndex, &pframe);
 
    comptr < IWICFormatConverter > pbitmap;
 
    if (SUCCEEDED(hr))
    {
 
-      hr = piFactory->CreateFormatConverter(&pbitmap.get());
+      hr = piFactory->CreateFormatConverter(&pbitmap);
 
    }
 
@@ -1068,7 +1068,7 @@ UINT uFrameIndex)
 
    }
 
-   hr = pframe->GetMetadataQueryReader(&pFrameMetadataQueryReader.get());
+   hr = pframe->GetMetadataQueryReader(&pFrameMetadataQueryReader);
 
    if (SUCCEEDED(hr))
    {
@@ -2528,7 +2528,7 @@ bool windows_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file_s
 
       }
 
-      hr = piFactory->CreateDecoderFromStream(pstream, NULL, WICDecodeMetadataCacheOnDemand, &decoder.get());
+      hr = piFactory->CreateDecoderFromStream(pstream, NULL, WICDecodeMetadataCacheOnDemand, &decoder);
 
       if (FAILED(hr))
       {
@@ -2554,7 +2554,7 @@ bool windows_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file_s
       }
 
       // Create a MetadataQueryReader from the decoder
-      hr = decoder->GetMetadataQueryReader(&pMetadataQueryReader.get());
+      hr = decoder->GetMetadataQueryReader(&pMetadataQueryReader);
 
 
       if (FAILED(hr))
@@ -2762,7 +2762,7 @@ bool windows_load_dib_from_file(::draw2d::dib * pdib, ::file::file_sp pfile, ::a
       if (SUCCEEDED(hr))
       {
 
-         hr = piFactory->CreateDecoderFromStream(pstream, NULL, WICDecodeMetadataCacheOnDemand, &decoder.get());
+         hr = piFactory->CreateDecoderFromStream(pstream, NULL, WICDecodeMetadataCacheOnDemand, &decoder);
       }
 
       //if(SUCCEEDED(hr))
@@ -2810,7 +2810,7 @@ CLASS_DECL_AURA bool windows_load_dib_from_file(::draw2d::dib * pdib, Windows::S
 
       comptr < IStream > pstream;
 
-      ::CreateStreamOverRandomAccessStream(stream, IID_PPV_ARGS(&pstream.get()));
+      ::CreateStreamOverRandomAccessStream(stream, IID_PPV_ARGS(&pstream));
 
       comptr < IWICImagingFactory > piFactory = NULL;
 
@@ -2825,7 +2825,7 @@ CLASS_DECL_AURA bool windows_load_dib_from_file(::draw2d::dib * pdib, Windows::S
       if (SUCCEEDED(hr))
       {
 
-         hr = piFactory->CreateDecoderFromStream(pstream, NULL, WICDecodeMetadataCacheOnDemand, &decoder.get());
+         hr = piFactory->CreateDecoderFromStream(pstream, NULL, WICDecodeMetadataCacheOnDemand, &decoder);
       }
 
       //if(SUCCEEDED(hr))

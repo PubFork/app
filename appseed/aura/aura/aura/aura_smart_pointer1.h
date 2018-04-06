@@ -206,57 +206,424 @@ public:
 
 
 
-#define COMPP(cptr) IID_PPV_ARGS(&cptr.get())
-template <class T>
+template < typename TYPE >
 class comptr
 {
 public:
-   T* ptr;
 
-   comptr(T *p=NULL): ptr(p) { }
+   TYPE * m_p;
+
+   comptr()
+   {
+      m_p = NULL;
+
+   }
+
+   comptr(const comptr & ptr)
+   {
+      if (ptr.m_p != NULL)
+      {
+         ptr.m_p->AddRef();
+      }
+      m_p = ptr.m_p;
+
+   }
+
+   comptr(TYPE * p)
+   {
+      if (p != NULL)
+      {
+         p->AddRef();
+      }
+      m_p = p;
+   }
+
+
+
+
+
+
    ~comptr()
    {
-      if(ptr) { ptr->Release(); }
+
+      Release();
+
    }
 
-   operator T * ()
+   HRESULT CoCreateInstance(REFCLSID rclsid, LPUNKNOWN pUnkOuter = NULL, DWORD dwClsContext = CLSCTX_ALL)
    {
-      return ptr;
-   }
 
-   T * & get()
-   {
-      return ptr;
-   }
+      Release();
 
-   T * operator -> ()
-   {
-      return ptr;
-   }
-
-   comptr & operator = (const comptr & c)
-   {
-      if(ptr != c.ptr)
+      if (!defer_co_initialize_ex(false))
       {
-         try
-         {
-            if(ptr != NULL)
-            {
-               ptr->Release();
-            }
-         }
-         catch(...)
-         {
-         }
-         ptr = c.ptr;
 
-         if(ptr != NULL)
+         return E_FAIL;
+
+      }
+
+      return ::CoCreateInstance(rclsid, pUnkOuter, dwClsContext, __uuidof(TYPE), (void **)&m_p);
+
+   }
+
+   template < class IFACE >
+   HRESULT As(comptr < IFACE > & iface)
+   {
+
+      if (m_p == NULL)
+      {
+
+         return E_FAIL;
+
+      }
+
+      return m_p->QueryInterface< IFACE >(&iface);
+
+   }
+
+
+   TYPE * operator ->()
+   {
+
+      return (TYPE *)m_p;
+
+   }
+
+   TYPE * operator ->() const
+   {
+
+      return (TYPE *)m_p;
+
+   }
+
+
+   TYPE * detach()
+   {
+
+      TYPE * p = operator ->();
+
+      m_p = NULL;
+
+      return p;
+
+   }
+
+   operator void ** ()
+   {
+
+      Release();
+
+      return (void **) &(TYPE * &)m_p;
+
+   }
+
+   TYPE ** operator & ()
+   {
+
+      Release();
+
+      return &(TYPE * &)m_p;
+
+   }
+
+
+   operator TYPE * ()
+   {
+
+      return (TYPE *)m_p;
+
+   }
+
+   comptr & operator = (TYPE * p)
+   {
+
+      if (m_p != p)
+      {
+
+         if (p != NULL)
          {
-            ptr->AddRef();
+
+            p->AddRef();
+
+
+         }
+
+         if (m_p != NULL)
+         {
+
+            m_p->Release();
+
+         }
+
+         m_p = p;
+
+      }
+
+      return *this;
+
+   }
+
+
+   comptr & operator = (const comptr & ptr)
+   {
+
+      if (&ptr != this)
+      {
+
+         if (ptr.m_p != NULL)
+         {
+
+            ptr.m_p->AddRef();
+
+
+         }
+
+         if (m_p != NULL)
+         {
+
+            m_p->Release();
+
+         }
+
+         m_p = ptr.m_p;
+
+      }
+
+      return *this;
+
+   }
+
+
+   ULONG Release()
+   {
+
+      ULONG ul = 0;
+
+      try
+      {
+
+         if (m_p != NULL)
+         {
+
+            ul = m_p->Release();
+
          }
 
       }
-      return *this;
+      catch (...)
+      {
+
+
+      }
+
+      m_p = NULL;
+
+
+      return ul;
+
    }
 
+
+   bool is_null()
+   {
+
+      return m_p == NULL;
+
+   }
+
+
+   bool is_set()
+   {
+
+      return !is_null();
+
+   }
+
+
 };
+
+
+
+
+
+template < typename POINTER_TYPE >
+class cotaskptr
+{
+public:
+
+
+   POINTER_TYPE   m_p;
+
+   cotaskptr()
+   {
+
+      m_p = NULL;
+
+   }
+
+
+   virtual ~cotaskptr()
+   {
+
+      free();
+
+   }
+
+   void alloc(SIZE_T size)
+   {
+
+      if (m_p != NULL)
+      {
+
+         m_p = CoTaskMemRealloc(m_p, size);
+
+      }
+      else
+      {
+
+         m_p = CoTaskMemAlloc(size);
+
+      }
+
+   }
+
+   bool is_null() const
+   {
+
+      return m_p == NULL;
+
+   }
+
+   bool is_set() const
+   {
+
+      return m_p != NULL;
+
+   }
+
+   virtual void free()
+   {
+
+      if (m_p != NULL)
+      {
+
+         ::CoTaskMemFree(m_p);
+
+         m_p = NULL;
+
+      }
+
+   }
+
+
+   operator POINTER_TYPE()
+   {
+
+      return m_p;
+
+   }
+
+   operator const POINTER_TYPE() const
+   {
+
+      return m_p;
+
+   }
+
+
+   POINTER_TYPE operator ->()
+   {
+
+      return m_p;
+
+   }
+
+
+   const POINTER_TYPE operator ->() const
+   {
+
+      return m_p;
+
+   }
+
+   POINTER_TYPE * operator &()
+   {
+
+      free();
+
+      return &m_p;
+
+   }
+
+   const POINTER_TYPE * operator &() const
+   {
+
+      return &m_p;
+
+   }
+
+
+};
+
+
+template < typename POINTER_TYPE >
+class sec_cotaskptr :
+   virtual public cotaskptr < POINTER_TYPE >
+{
+public:
+
+
+   SIZE_T         m_size;
+
+
+   sec_cotaskptr()
+   {
+
+      m_size = 0;
+      m_p = NULL;
+
+   }
+
+
+   virtual ~sec_cotaskptr()
+   {
+
+      free();
+
+   }
+
+   using cotaskptr::alloc;
+   void alloc()
+   {
+
+      alloc(m_size);
+
+   }
+
+   virtual void free() override
+   {
+
+      if (m_p != NULL)
+      {
+
+         if (m_size > 0)
+         {
+
+            SecureZeroMemory(m_p, m_size);
+
+            m_size = 0;
+
+         }
+
+         cotaskptr::free();
+
+      }
+
+   }
+
+
+};
+
+
+#define cotaskp(POINTER_TYPE) cotaskptr < POINTER_TYPE >
+

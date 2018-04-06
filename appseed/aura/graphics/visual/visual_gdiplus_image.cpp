@@ -683,7 +683,7 @@ namespace visual
 bool dib_from_wicbitmapsource(::draw2d::dib * pdib, IWICBitmapSource * piConverter, IWICImagingFactory * piFactory)
 {
 
-   windows::comptr < IWICBitmap > piBmp;
+   comptr < IWICBitmap > piBmp;
 
    HRESULT hr = piFactory->CreateBitmapFromSource(piConverter, WICBitmapCacheOnLoad, &piBmp);
 
@@ -714,7 +714,7 @@ bool dib_from_wicbitmapsource(::draw2d::dib * pdib, IWICBitmapSource * piConvert
    rc.Width = uiWidth;
    rc.Height = uiHeight;
 
-   windows::comptr < IWICBitmapLock > piLock;
+   comptr < IWICBitmapLock > piLock;
 
    hr = piBmp->Lock(&rc, WICBitmapLockRead, &piLock);
 
@@ -778,13 +778,13 @@ bool imaging::_load_image(::draw2d::dib * pdib, ::file::file * pfile)
 
    defer_co_initialize_ex(false);
 
-   windows::comptr < IWICImagingFactory > piFactory;
+   comptr < IWICImagingFactory > piFactory;
 
    HRESULT hr = piFactory.CoCreateInstance(CLSID_WICImagingFactory1);
 
    if (hr != S_OK) return false;
 
-   windows::comptr < IWICStream > piStream;
+   comptr < IWICStream > piStream;
 
    hr = piFactory->CreateStream(&piStream);
 
@@ -807,7 +807,7 @@ bool imaging::_load_image(::draw2d::dib * pdib, ::file::file * pfile)
 
 
 
-   windows::comptr < IWICBitmapDecoder > piDecoder;
+   comptr < IWICBitmapDecoder > piDecoder;
 
    hr = piFactory->CreateDecoderFromStream(piStream, 0, WICDecodeMetadataCacheOnLoad, &piDecoder); // jpeg,png:OK, bmp:88982f50のエラーになる, iconもエラー
 
@@ -818,7 +818,7 @@ bool imaging::_load_image(::draw2d::dib * pdib, ::file::file * pfile)
 
    }
 
-   windows::comptr < IWICBitmapFrameDecode > piBitmapFrame;
+   comptr < IWICBitmapFrameDecode > piBitmapFrame;
 
    hr = piDecoder->GetFrame(0, &piBitmapFrame);
 
@@ -827,7 +827,7 @@ bool imaging::_load_image(::draw2d::dib * pdib, ::file::file * pfile)
    // Convert the image format to 32bppPBGRA
    // (DXGI_FORMAT_B8G8R8A8_UNORM + D2D1_ALPHA_MODE_PREMULTIPLIED).
    // http://d.hatena.ne.jp/sugarontop/20141015
-   windows::comptr < IWICFormatConverter > piConverter;
+   comptr < IWICFormatConverter > piConverter;
 
    hr = piFactory->CreateFormatConverter(&piConverter);
 
@@ -969,7 +969,7 @@ bool windows_write_dib_to_file(::file::file_sp pfile, ::draw2d::dib * pdib, ::vi
 
    if (SUCCEEDED(hr))
    {
-      hr = piFactory->CreateStream(&piStream.get());
+      hr = piFactory->CreateStream(&piStream);
    }
 
    if (SUCCEEDED(hr))
@@ -982,16 +982,16 @@ bool windows_write_dib_to_file(::file::file_sp pfile, ::draw2d::dib * pdib, ::vi
       switch (psaveimage->m_eformat)
       {
       case ::visual::image::format_bmp:
-         hr = piFactory->CreateEncoder(GUID_ContainerFormatBmp, NULL, &piEncoder.get());
+         hr = piFactory->CreateEncoder(GUID_ContainerFormatBmp, NULL, &piEncoder);
          break;
       case ::visual::image::format_gif:
-         hr = piFactory->CreateEncoder(GUID_ContainerFormatGif, NULL, &piEncoder.get());
+         hr = piFactory->CreateEncoder(GUID_ContainerFormatGif, NULL, &piEncoder);
          break;
       case ::visual::image::format_jpeg:
-         hr = piFactory->CreateEncoder(GUID_ContainerFormatJpeg, NULL, &piEncoder.get());
+         hr = piFactory->CreateEncoder(GUID_ContainerFormatJpeg, NULL, &piEncoder);
          break;
       case ::visual::image::format_png:
-         hr = piFactory->CreateEncoder(GUID_ContainerFormatPng, NULL, &piEncoder.get());
+         hr = piFactory->CreateEncoder(GUID_ContainerFormatPng, NULL, &piEncoder);
          break;
       default:
          break;
@@ -1005,7 +1005,7 @@ bool windows_write_dib_to_file(::file::file_sp pfile, ::draw2d::dib * pdib, ::vi
 
    if (SUCCEEDED(hr))
    {
-      hr = piEncoder->CreateNewFrame(&piBitmapFrame.get(), &pPropertybag.get());
+      hr = piEncoder->CreateNewFrame(&piBitmapFrame, &pPropertybag);
    }
 
    if (SUCCEEDED(hr))
@@ -1114,7 +1114,7 @@ bool windows_write_dib_to_file(::file::file_sp pfile, ::draw2d::dib * pdib, ::vi
                  pdib->m_iScan,
                  pdib->m_iScan * pdib->size().cy,
                  (BYTE *)pdib->m_pcolorref,
-                 &pbitmap.get()
+                 &pbitmap
                  );
          }
 
@@ -1123,7 +1123,7 @@ bool windows_write_dib_to_file(::file::file_sp pfile, ::draw2d::dib * pdib, ::vi
          if (SUCCEEDED(hr))
          {
 
-            hr = piFactory->CreateFormatConverter(&pconverter.get());
+            hr = piFactory->CreateFormatConverter(&pconverter);
 
          }
 

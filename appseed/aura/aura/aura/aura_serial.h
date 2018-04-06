@@ -117,10 +117,7 @@ namespace serial
        *
        * \return Timeout struct that represents this simple timeout provided.
        */
-      static Timeout simpleTimeout(uint32_t timeout)
-      {
-         return Timeout(max(), timeout, 0, timeout, 0);
-      }
+      static Timeout simpleTimeout(uint32_t timeout);
 
       /*! Number of milliseconds between bytes received to timeout on. */
       uint32_t inter_byte_timeout;
@@ -157,6 +154,7 @@ namespace serial
       virtual public object
    {
    public:
+
       /*!
        * Creates a Serial object and opens the port if a port is specified,
        * otherwise it remains closed until serial::Serial::open is called.
@@ -330,7 +328,7 @@ namespace serial
        * \_throw( serial::PortNotOpenedException
        * \_throw( serial::SerialException
        */
-      size_t
+      virtual size_t
       readline (string &buffer, size_t size = 65536, string eol = "\n");
 
       /*! Reads in a line or until a given delimiter has been processed.

@@ -24,13 +24,13 @@ namespace user
          {
          public:
 
-            ::windows::comptr < IImageList >                            m_pilSmall;
-            ::windows::comptr < IImageList >                            m_pilLarge;
-            ::windows::comptr < IImageList >                            m_pilExtraLarge;
-            ::windows::comptr < IImageList >                            m_pilJumbo;
-            ::windows::comptr < IMalloc >                               m_pmalloc;
-            ::windows::comptr < IShellFolder >                          m_pfolderDesktop;
-            ::windows::comptr < IShellFolder >                          m_pfolder;
+            comptr < IImageList >                            m_pilSmall;
+            comptr < IImageList >                            m_pilLarge;
+            comptr < IImageList >                            m_pilExtraLarge;
+            comptr < IImageList >                            m_pilJumbo;
+            comptr < IMalloc >                               m_pmalloc;
+            comptr < IShellFolder >                          m_pfolderDesktop;
+            comptr < IShellFolder >                          m_pfolder;
             LPITEMIDLIST                                                m_lpiidl;
             string                                                      m_strFolder;
 
@@ -98,9 +98,9 @@ namespace user
 
 
 
-         ::windows::comptr < IShellFolder> _017GetShellParentFolder(per_fork * pfork, LPITEMIDLIST lpiidlChild);
-         //::windows::comptr < IShellFolder> _017GetShellFolder(const string & str, LPITEMIDLIST lpiidlChild);
-         ::windows::comptr < IShellFolder> _017GetShellFolder(per_fork * pfork, LPITEMIDLIST lpiidlChild);
+         comptr < IShellFolder> _017GetShellParentFolder(per_fork * pfork, LPITEMIDLIST lpiidlChild);
+         //comptr < IShellFolder> _017GetShellFolder(const string & str, LPITEMIDLIST lpiidlChild);
+         comptr < IShellFolder> _017GetShellFolder(per_fork * pfork, LPITEMIDLIST lpiidlChild);
          void _017ItemIDListParsePath(per_fork * pfork, oswindow oswindow, LPITEMIDLIST * lpiidl, const char * lpcsz);
 
          int run();

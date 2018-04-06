@@ -770,10 +770,8 @@ namespace windows
 
       HRESULT hr = S_OK;
       DWORD   dwResult;
-      PVOID   pvInAuthBlob = NULL;
-      ULONG   cbInAuthBlob = 0;
-      PVOID   pvAuthBlob = NULL;
-      ULONG   cbAuthBlob = 0;
+      sec_cotaskptr < PVOID > pvInAuthBlob;
+      sec_cotaskptr < PVOID > pvAuthBlob;
       CREDUI_INFOW ui;
       ULONG   ulAuthPackage = 0;
       BOOL    fSave = FALSE;
@@ -855,7 +853,7 @@ namespace windows
             szDomainAndUser,  // Domain\User name
             szPassword,       // User Password
             NULL,             // Packed credentials
-            &cbInAuthBlob)    // Size, in bytes, of credentials
+            &pvInAuthBlob.m_size)    // Size, in bytes, of credentials
             && get_last_error() != ERROR_INSUFFICIENT_BUFFER)
       {
          dwResult = get_last_error();
@@ -864,12 +862,15 @@ namespace windows
       }
 
       // Allocate memory for the input buffer.
-      pvInAuthBlob = CoTaskMemAlloc(cbInAuthBlob);
-      if(!pvInAuthBlob)
+      pvInAuthBlob.alloc();
+
+      if(pvInAuthBlob.is_null())
       {
-         cbInAuthBlob = 0;
+
          debug_print("\n getCredentialsForService CoTaskMemAlloc() Out of memory.\n");
+
          return false;
+
       }
 
       // Call CredPackAuthenticationBufferW again to retrieve the
@@ -878,8 +879,8 @@ namespace windows
             0,
             szDomainAndUser,
             szPassword,
-            (PBYTE)pvInAuthBlob,
-            &cbInAuthBlob))
+            (PBYTE)pvInAuthBlob.m_p,
+            &pvInAuthBlob.m_size))
       {
          dwResult = get_last_error();
          debug_print("\n CredPackAuthenticationBufferW (2) failed: win32 error = 0x%x\n",dwResult);
@@ -907,9 +908,9 @@ retry:
                  dwLastError,               // Error code to display
                  &ulAuthPackage,  // Authorization package
                  pvInAuthBlob,    // Credential byte array
-                 cbInAuthBlob,    // Size of credential input buffer
+                 pvInAuthBlob.m_size,    // Size of credential input buffer
                  &pvAuthBlob,     // Output credential byte array
-                 &cbAuthBlob,     // Size of credential byte array
+                 &pvAuthBlob.m_size,     // Size of credential byte array
                  &fSave,          // Select the save check box.
                  //CREDUIWIN_SECURE_PROMPT |
                  CREDUIWIN_IN_CRED_ONLY |
@@ -926,7 +927,7 @@ retry:
 
          bOk = LIBCALL(credui, CredUnPackAuthenticationBufferW)(CRED_PACK_PROTECTED_CREDENTIALS,
                pvAuthBlob,
-               cbAuthBlob,
+               pvAuthBlob.m_size,
                szUsername,
                &lenName,
                szDomain,
@@ -934,10 +935,6 @@ retry:
                szPassword,
                &lenPass) != FALSE;
 
-         SecureZeroMemory(pvAuthBlob,cbAuthBlob);
-         CoTaskMemFree(pvAuthBlob);
-         pvAuthBlob = NULL;
-         cbAuthBlob = 0;
 
          if(!bOk)
          {
@@ -995,13 +992,6 @@ retry:
 
          hr = HRESULT_FROM_WIN32(dwResult);
          bOk = false;
-      }
-
-      if(pvInAuthBlob)
-      {
-         SecureZeroMemory(pvInAuthBlob,cbInAuthBlob);
-         CoTaskMemFree(pvInAuthBlob);
-         pvInAuthBlob = NULL;
       }
 
       if(ui.hbmBanner != NULL)

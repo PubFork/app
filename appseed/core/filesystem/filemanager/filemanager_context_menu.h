@@ -19,8 +19,8 @@ namespace filemanager
 
 #ifdef WINDOWSEX
 
-      ::windows::comptr < IContextMenu >    m_pcontextmenu;
-      ::windows::comptr < IContextMenu2 >   m_pcontextmenu2;
+      comptr < IContextMenu >    m_pcontextmenu;
+      comptr < IContextMenu2 >   m_pcontextmenu2;
 
 #endif
       UINT              m_uiMinId;

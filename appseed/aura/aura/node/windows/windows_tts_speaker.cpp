@@ -21,7 +21,7 @@ inline HRESULT SpGetCategoryFromId(const WCHAR * pszCategoryId,ISpObjectTokenCat
 {
    HRESULT hr;
 
-   ::windows::comptr < ISpObjectTokenCategory > pcategory;
+   comptr < ISpObjectTokenCategory > pcategory;
    hr = pcategory.CoCreateInstance(CLSID_SpObjectTokenCategory);
 
    if(SUCCEEDED(hr))
@@ -41,7 +41,7 @@ inline HRESULT SpGetTokenFromId(const WCHAR * pszTokenId,ISpObjectToken ** ppTok
 {
    HRESULT hr;
 
-   ::windows::comptr < ISpObjectToken > ptoken;
+   comptr < ISpObjectToken > ptoken;
    hr = ptoken.CoCreateInstance(CLSID_SpObjectToken);
 
    if(SUCCEEDED(hr))
@@ -60,23 +60,23 @@ inline HRESULT SpGetTokenFromId(const WCHAR * pszTokenId,ISpObjectToken ** ppTok
 }
 
 inline HRESULT SpGetDefaultTokenFromCategoryId(
-   const WCHAR * pszCategoryId,
-   ISpObjectToken ** ppToken,
-   BOOL fCreateCategoryIfNotExist = TRUE)
+const WCHAR * pszCategoryId,
+ISpObjectToken ** ppToken,
+BOOL fCreateCategoryIfNotExist = TRUE)
 {
    HRESULT hr;
 
-   ::windows::comptr<ISpObjectTokenCategory> pcategory;
+   comptr<ISpObjectTokenCategory> pcategory;
    hr = SpGetCategoryFromId(pszCategoryId,&pcategory,fCreateCategoryIfNotExist);
 
    if(SUCCEEDED(hr))
    {
-      WCHAR * pszTokenId;
+      cotaskptr < LPWSTR > pszTokenId;
       hr = pcategory->GetDefaultTokenId(&pszTokenId);
       if(SUCCEEDED(hr))
       {
          hr = SpGetTokenFromId(pszTokenId,ppToken);
-         ::CoTaskMemFree(pszTokenId);
+
       }
    }
 
@@ -84,15 +84,15 @@ inline HRESULT SpGetDefaultTokenFromCategoryId(
 }
 
 inline bool SpGetDefaultTokenFromCategoryIdAndLang(
-   ::aura::application * papp,
-   const WCHAR * pszCategoryId,
-   ISpObjectToken ** ppToken,
-   const char * pszLang,
-   BOOL fCreateCategoryIfNotExist = TRUE)
+::aura::application * papp,
+const WCHAR * pszCategoryId,
+ISpObjectToken ** ppToken,
+const char * pszLang,
+BOOL fCreateCategoryIfNotExist = TRUE)
 {
    HRESULT hr;
 
-   ::windows::comptr<ISpObjectTokenCategory> pcategory;
+   comptr<ISpObjectTokenCategory> pcategory;
    hr = SpGetCategoryFromId(pszCategoryId,&pcategory,fCreateCategoryIfNotExist);
 
    string str(pszLang);
@@ -155,7 +155,7 @@ inline bool SpGetDefaultTokenFromCategoryIdAndLang(
 //      WCHAR * pszTokenId;
       // Declare local identifiers:
       HRESULT                           hr = S_OK;
-      ::windows::comptr<IEnumSpObjectTokens>      cpSpEnumTokens;
+      comptr<IEnumSpObjectTokens>      cpSpEnumTokens;
 
       if(SUCCEEDED(hr))
       {
@@ -176,7 +176,7 @@ inline bool SpGetDefaultTokenFromCategoryIdAndLang(
       for(ULONG i = 0; i < ulCount; i++)
       {
 
-         ::windows::comptr<ISpObjectToken> ptoken;
+         comptr<ISpObjectToken> ptoken;
 
          hr = cpSpEnumTokens->Item(i, &ptoken);
 
@@ -216,7 +216,7 @@ inline bool SpGetDefaultTokenFromCategoryIdAndLang(
       for(ULONG i = 0; i < ulCount; i++)
       {
 
-         ::windows::comptr<ISpObjectToken> ptoken;
+         comptr<ISpObjectToken> ptoken;
 
          hr = cpSpEnumTokens->Item(i,&ptoken);
 
@@ -478,10 +478,10 @@ namespace windows
             m_voice[strLang]->WaitUntilDone(5 * 60 * 60 * 1000);
 
             HRESULT hr = m_voice[strLang]->Speak(
-                            wstr,
-                            //SPF_IS_NOT_XML | SPF_ASYNC | SPF_PURGEBEFORESPEAK,
-                            uiFlag | (bSync ? 0 : SPF_ASYNC),
-                            &streamNumber);
+                         wstr,
+                         //SPF_IS_NOT_XML | SPF_ASYNC | SPF_PURGEBEFORESPEAK,
+                         uiFlag | (bSync ? 0 : SPF_ASYNC),
+                         &streamNumber);
 
             if (FAILED(hr))
             {
@@ -506,10 +506,10 @@ namespace windows
                m_voice[strLang]->WaitUntilDone(5 * 60 * 60 * 1000);
 
                HRESULT hr = m_voice[strLang]->Speak(
-                               wstr,
-                               //SPF_IS_NOT_XML | SPF_ASYNC | SPF_PURGEBEFORESPEAK,
-                               uiFlag | (bSync ? 0 : SPF_ASYNC),
-                               &streamNumber);
+                            wstr,
+                            //SPF_IS_NOT_XML | SPF_ASYNC | SPF_PURGEBEFORESPEAK,
+                            uiFlag | (bSync ? 0 : SPF_ASYNC),
+                            &streamNumber);
 
                if (FAILED(hr))
                {

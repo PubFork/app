@@ -23,7 +23,7 @@
 //using std::vector;
 //using std::size_t;
 //using std::string;
-
+using serial::Timeout;
 using serial::Serial;
 using serial::SerialException;
 using serial::IOException;
@@ -81,6 +81,16 @@ Serial::Serial (::aura::application * papp, const string &port, uint32_t baudrat
 Serial::~Serial ()
 {
 }
+
+serial::Timeout Timeout::simpleTimeout(uint32_t timeout)
+{
+#ifdef WINDOWS
+   return Timeout(MAXDWORD, timeout, MAXDWORD, timeout, 0);
+#else
+   return Timeout(max(), timeout, 0, timeout, 0);
+#endif
+}
+
 
 void
 Serial::open ()
@@ -165,6 +175,9 @@ Serial::read (size_t size)
 size_t
 Serial::readline (string &buffer, size_t size, string eol)
 {
+#ifdef WINDOWS
+   return this->pimpl_->readline(buffer, size, eol);
+#else
    ScopedReadLock lock(this->pimpl_);
    size_t eol_len = eol.length ();
    uint8_t *buffer_ = static_cast<uint8_t*>
@@ -190,6 +203,7 @@ Serial::readline (string &buffer, size_t size, string eol)
    }
    buffer.append(reinterpret_cast<const char*> (buffer_), read_so_far);
    return read_so_far;
+#endif
 }
 
 string

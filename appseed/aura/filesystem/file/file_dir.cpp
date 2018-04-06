@@ -120,7 +120,7 @@ using namespace ::Windows::System;
    if(hmodule == NULL)
    {
 
-      PWSTR pwstr = NULL;
+      cotaskp(PWSTR) pwstr;
 
       HRESULT hr = SHGetKnownFolderPath(
                    FOLDERID_ProgramFilesX86,
@@ -129,8 +129,6 @@ using namespace ::Windows::System;
                    &pwstr);
 
       wcscpy(lpszModuleFilePath, pwstr);
-
-      ::CoTaskMemFree(pwstr);
 
       //if(lpszModuleFilePath[wcslen(lpszModuleFilePath) - 1] == '\\'
       //      || lpszModuleFilePath[wcslen(lpszModuleFilePath) - 1] == '/')

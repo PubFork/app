@@ -1008,33 +1008,23 @@ try1:
    }
 
 
-   //class ::file::file_path & dir::path()
-   //{
-   //   return m_path;
-   //}
-
-   /*!
-   * Print a known folder.
-   */
    CLASS_DECL_AURA ::file::path get_known_folder(REFKNOWNFOLDERID kfid)
    {
+
       ::file::path str;
-      PWSTR pszPath = NULL;
+
+      cotaskptr < PWSTR > pwszPath;
+
       HANDLE hToken = NULL;
-      ::OpenProcessToken(::GetCurrentProcess(),TOKEN_QUERY | TOKEN_IMPERSONATE | TOKEN_DUPLICATE,&hToken);
-      HRESULT hr = SHGetKnownFolderPath(kfid,0,hToken,&pszPath);
-      if(SUCCEEDED(hr))
-      {
-         str = pszPath;
-         // The calling application is responsible for calling CoTaskMemFree
-         // to free this resource after use.
-         CoTaskMemFree(pszPath);
-      }
-      else
-      {
-      }
-      return str;
+
+      ::OpenProcessToken(::GetCurrentProcess(), TOKEN_QUERY | TOKEN_IMPERSONATE | TOKEN_DUPLICATE,&hToken);
+
+      HRESULT hr = SHGetKnownFolderPath(kfid, 0, hToken, &pwszPath);
+
+      return pwszPath;
+
    }
+
 
    bool dir::initialize()
    {

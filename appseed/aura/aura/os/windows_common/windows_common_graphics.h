@@ -17,7 +17,7 @@ namespace draw2d
 
       static ID2D1Factory1 * g_pfactory;
 
-      ::windows::comptr < ID2D1Multithread > m_D2DMultithread;
+      comptr < ID2D1Multithread > m_D2DMultithread;
 
       device_lock()
       {

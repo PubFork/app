@@ -32,7 +32,7 @@ namespace user
       }
 
 
-      ::windows::comptr < IShellFolder > windows::_017GetShellFolder(per_fork * pfork, LPITEMIDLIST lpiidlFolder)
+      comptr < IShellFolder > windows::_017GetShellFolder(per_fork * pfork, LPITEMIDLIST lpiidlFolder)
       {
 
          if (lpiidlFolder == NULL)
@@ -47,7 +47,7 @@ namespace user
          if (SUCCEEDED(hr))
          {
 
-            ::windows::comptr < IShellFolder > pfolder;
+            comptr < IShellFolder > pfolder;
 
             hr = pfork->m_pfolderDesktop->BindToObject(
                  lpiidlFolder,
@@ -73,12 +73,12 @@ namespace user
       }
 
 
-      ::windows::comptr < IShellFolder> windows::_017GetShellParentFolder(per_fork * pfork, LPITEMIDLIST lpiidlChild)
+      comptr < IShellFolder> windows::_017GetShellParentFolder(per_fork * pfork, LPITEMIDLIST lpiidlChild)
       {
 
          LPITEMIDLIST lpiidlParent = _017ItemIDListGetFolderParent(pfork, lpiidlChild);
 
-         ::windows::comptr < IShellFolder> pfolderRet = _017GetShellFolder(pfork, lpiidlParent);
+         comptr < IShellFolder> pfolderRet = _017GetShellFolder(pfork, lpiidlParent);
 
          pfork->_017ItemIDListFree(lpiidlParent);
 
@@ -395,7 +395,7 @@ namespace user
 
          int iImage = 0x80000000;
 
-         ::windows::comptr < IShellFolder> lpsf;
+         comptr < IShellFolder> lpsf;
 
          if (pfork->m_pfolder.is_set())
          {
@@ -479,11 +479,11 @@ namespace user
 
          SHFILEINFOW shfi48;
 
-         ::windows::comptr < IExtractIconW > lpiextracticon;
+         comptr < IExtractIconW > lpiextracticon;
 
-         ::windows::comptr < IShellIconOverlayIdentifier > lpioverlay;
+         comptr < IShellIconOverlayIdentifier > lpioverlay;
 
-         ::windows::comptr < IExtractImage > lpiextractimage;
+         comptr < IExtractImage > lpiextractimage;
 
          UINT uiExtractIconLocationFlags = 0;
 

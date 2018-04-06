@@ -32,7 +32,7 @@ bool imaging::_save_image(::file::file * pfile, ::draw2d::dib * pdib, ::visual::
 
    comptr < IStream > pstream;
 
-   ::CreateStreamOverRandomAccessStream(randomAccessStream, IID_PPV_ARGS(&pstream.get()));
+   ::CreateStreamOverRandomAccessStream(randomAccessStream, IID_PPV_ARGS(&pstream));
 
 #else
 
@@ -64,7 +64,7 @@ bool imaging::_save_image(::file::file * pfile, ::draw2d::dib * pdib, ::visual::
    if (SUCCEEDED(hr))
    {
 
-      hr = piFactory->CreateStream(&piStream.get());
+      hr = piFactory->CreateStream(&piStream);
 
    }
 
@@ -81,16 +81,16 @@ bool imaging::_save_image(::file::file * pfile, ::draw2d::dib * pdib, ::visual::
       switch (psaveimage == NULL ? ::visual::image::format_png : psaveimage->m_eformat)
       {
       case ::visual::image::format_bmp:
-         hr = piFactory->CreateEncoder(GUID_ContainerFormatBmp, NULL, &piEncoder.get());
+         hr = piFactory->CreateEncoder(GUID_ContainerFormatBmp, NULL, &piEncoder);
          break;
       case ::visual::image::format_gif:
-         hr = piFactory->CreateEncoder(GUID_ContainerFormatGif, NULL, &piEncoder.get());
+         hr = piFactory->CreateEncoder(GUID_ContainerFormatGif, NULL, &piEncoder);
          break;
       case ::visual::image::format_jpeg:
-         hr = piFactory->CreateEncoder(GUID_ContainerFormatJpeg, NULL, &piEncoder.get());
+         hr = piFactory->CreateEncoder(GUID_ContainerFormatJpeg, NULL, &piEncoder);
          break;
       default:
-         hr = piFactory->CreateEncoder(GUID_ContainerFormatPng, NULL, &piEncoder.get());
+         hr = piFactory->CreateEncoder(GUID_ContainerFormatPng, NULL, &piEncoder);
          break;
       }
    }
@@ -105,7 +105,7 @@ bool imaging::_save_image(::file::file * pfile, ::draw2d::dib * pdib, ::visual::
    if (SUCCEEDED(hr))
    {
 
-      hr = piEncoder->CreateNewFrame(&piBitmapFrame.get(), &pPropertybag.get());
+      hr = piEncoder->CreateNewFrame(&piBitmapFrame, &pPropertybag);
 
    }
 
@@ -215,7 +215,7 @@ bool imaging::_save_image(::file::file * pfile, ::draw2d::dib * pdib, ::visual::
                  pdib->m_iScan,
                  pdib->m_iScan * pdib->size().cy,
                  (BYTE *)pdib->m_pcolorref,
-                 &pbitmap.get()
+                 &pbitmap
                  );
          }
 
@@ -224,7 +224,7 @@ bool imaging::_save_image(::file::file * pfile, ::draw2d::dib * pdib, ::visual::
          if (SUCCEEDED(hr))
          {
 
-            hr = piFactory->CreateFormatConverter(&pconverter.get());
+            hr = piFactory->CreateFormatConverter(&pconverter);
 
          }
 

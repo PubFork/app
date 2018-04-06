@@ -1017,7 +1017,7 @@ namespace user
 
       CacheHint();
 
-      on_change_view_size();
+      set_need_layout();
 
       TRACE("list::_001OnUpdateItemCount ItemCount %d\n", m_nItemCount);
 
@@ -1030,7 +1030,7 @@ namespace user
 
       set_viewport_offset(ptOffset.x, ptOffset.y);
 
-      RedrawWindow();
+      set_need_redraw();
 
       return true;
 
@@ -5693,9 +5693,9 @@ namespace user
 
       m_efilterstate = FilterStateFilter;
 
-      on_change_view_size();
+      set_need_layout();
 
-      RedrawWindow();
+      set_need_redraw();
 
    }
 
@@ -5731,9 +5731,9 @@ namespace user
          }
       }
 
-      on_change_view_size();
+      set_need_layout();
 
-      RedrawWindow();
+      set_need_redraw();
 
    }
 
@@ -5845,9 +5845,9 @@ namespace user
 
       m_efilterstate = FilterStateFilter;
 
-      on_change_view_size();
+      set_need_layout();
 
-      RedrawWindow();
+      set_need_redraw();
 
 
       dwOut = get_tick_count();

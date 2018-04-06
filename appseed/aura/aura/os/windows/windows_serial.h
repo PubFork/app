@@ -52,153 +52,160 @@ namespace serial
    class serial::Serial::SerialImpl :
       virtual public object
    {
-      public:
-         SerialImpl (::aura::application * papp,
-                     const string &port,
-                     unsigned long baudrate,
-                     bytesize_t bytesize,
-                     parity_t parity,
-                     stopbits_t stopbits,
-                     flowcontrol_t flowcontrol);
+   public:
 
-         virtual ~SerialImpl ();
+      bool        m_bReadTimeout;
 
-         void
-         open ();
+      SerialImpl (::aura::application * papp,
+                  const string &port,
+                  unsigned long baudrate,
+                  bytesize_t bytesize,
+                  parity_t parity,
+                  stopbits_t stopbits,
+                  flowcontrol_t flowcontrol);
 
-         void
-         close ();
+      virtual ~SerialImpl ();
 
-         bool
-         isOpen () const;
+      void
+      open ();
 
-         size_t
-         available ();
+      void
+      close ();
 
-         bool
-         waitReadable (uint32_t timeout);
+      bool
+      isOpen () const;
 
-         void
-         waitByteTimes (size_t count);
+      size_t
+      available ();
 
-         size_t
-         read (uint8_t *buf, size_t size = 1);
+      bool
+      waitReadable (uint32_t timeout);
 
-         size_t
-         write (const uint8_t *data, size_t length);
+      void
+      waitByteTimes (size_t count);
 
-         void
-         flush ();
+      size_t
+      read (uint8_t *buf, size_t size = 1);
 
-         void
-         flushInput ();
+      size_t
+      write (const uint8_t *data, size_t length);
 
-         void
-         flushOutput ();
+      void
+      flush ();
 
-         void
-         sendBreak (int duration);
+      void
+      flushInput ();
 
-         void
-         setBreak (bool level);
+      void
+      flushOutput ();
 
-         void
-         setRTS (bool level);
+      void
+      sendBreak (int duration);
 
-         void
-         setDTR (bool level);
+      void
+      setBreak (bool level);
 
-         bool
-         waitForChange ();
+      void
+      setRTS (bool level);
 
-         bool
-         getCTS ();
+      void
+      setDTR (bool level);
 
-         bool
-         getDSR ();
+      bool
+      waitForChange ();
 
-         bool
-         getRI ();
+      bool
+      getCTS ();
 
-         bool
-         getCD ();
+      bool
+      getDSR ();
 
-         void
-         setPort (const string &port);
+      bool
+      getRI ();
 
-         string
-         getPort () const;
+      bool
+      getCD ();
 
-         void
-         setTimeout (Timeout &timeout);
+      void
+      setPort (const string &port);
 
-         Timeout
-         getTimeout () const;
+      string
+      getPort () const;
 
-         void
-         setBaudrate (unsigned long baudrate);
+      void
+      setTimeout (Timeout &timeout);
 
-         unsigned long
-         getBaudrate () const;
+      Timeout
+      getTimeout () const;
 
-         void
-         setBytesize (bytesize_t bytesize);
+      void
+      setBaudrate (unsigned long baudrate);
 
-         bytesize_t
-         getBytesize () const;
+      unsigned long
+      getBaudrate () const;
 
-         void
-         setParity (parity_t parity);
+      void
+      setBytesize (bytesize_t bytesize);
 
-         parity_t
-         getParity () const;
+      bytesize_t
+      getBytesize () const;
 
-         void
-         setStopbits (stopbits_t stopbits);
+      void
+      setParity (parity_t parity);
 
-         stopbits_t
-         getStopbits () const;
+      parity_t
+      getParity () const;
 
-         void
-         setFlowcontrol (flowcontrol_t flowcontrol);
+      void
+      setStopbits (stopbits_t stopbits);
 
-         flowcontrol_t
-         getFlowcontrol () const;
+      stopbits_t
+      getStopbits () const;
 
-         void
-         readLock ();
+      void
+      setFlowcontrol (flowcontrol_t flowcontrol);
 
-         void
-         readUnlock ();
+      flowcontrol_t
+      getFlowcontrol () const;
 
-         void
-         writeLock ();
+      void
+      readLock ();
 
-         void
-         writeUnlock ();
+      void
+      readUnlock ();
 
-      protected:
-         void reconfigurePort ();
+      void
+      writeLock ();
 
-      private:
-         wstring port_;               // Path to the file descriptor
-         HANDLE fd_;
+      void
+      writeUnlock ();
 
-         bool is_open_;
+      virtual size_t
+      readline(string &buffer, size_t size = 65536, string eol = "\n");
 
-         Timeout timeout_;           // Timeout for read operations
-         unsigned long baudrate_;    // Baudrate
-         uint32_t byte_time_ns_;     // Nanoseconds to transmit/receive a single byte
 
-         parity_t parity_;           // Parity
-         bytesize_t bytesize_;       // Size of the bytes
-         stopbits_t stopbits_;       // Stop Bits
-         flowcontrol_t flowcontrol_; // Flow Control
+   protected:
+      void reconfigurePort ();
 
-         // Mutex used to lock the read functions
-         HANDLE read_mutex;
-         // Mutex used to lock the write functions
-         HANDLE write_mutex;
+   private:
+      wstring           m_wstrPort;               // Path to the file descriptor
+      HANDLE            m_hFile;
+
+      bool              m_bOpened;
+
+      Timeout           m_timeout;           // Timeout for read operations
+      unsigned long     m_ulBaudrate;    // Baudrate
+      uint32_t          m_uiByteTimeNs;     // Nanoseconds to transmit/receive a single byte
+
+      parity_t          m_parity;           // Parity
+      bytesize_t        m_bytesize;       // Size of the bytes
+      stopbits_t        m_stopbits;       // Stop Bits
+      flowcontrol_t     m_flowcontrol; // Flow Control
+
+      // Mutex used to lock the read functions
+      HANDLE            m_hMutexRead;
+      // Mutex used to lock the write functions
+      HANDLE            m_hMutexWrite;
    };
 
 }
