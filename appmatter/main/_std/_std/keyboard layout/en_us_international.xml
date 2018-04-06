@@ -80,6 +80,25 @@
 	<item code="key_0" shift="1" value=")" />
 	<item code="key_hyphen" shift="1" value="_" />
 	<item code="key_space" shift=" " value=" " />
+	<item code="key_numpad_0" translate="key_insert" />
+	<item code="key_numpad_1" translate="key_end" />
+	<item code="key_numpad_2" translate="key_down" />
+	<item code="key_numpad_3" translate="key_pagedown" />
+	<item code="key_numpad_4" translate="key_left" />
+	<item code="key_numpad_6" translate="key_right" />
+	<item code="key_numpad_7" translate="key_home" />
+	<item code="key_numpad_8" translate="key_up" />
+	<item code="key_numpad_9" translate="key_pageup" />
+	<item code="key_numpad_1" numlock="1" value="1" />
+	<item code="key_numpad_2" numlock="1" value="2" />
+	<item code="key_numpad_3" numlock="1" value="3" />
+	<item code="key_numpad_4" numlock="1" value="4" />
+	<item code="key_numpad_5" numlock="1" value="5" />
+	<item code="key_numpad_6" numlock="1" value="6" />
+	<item code="key_numpad_7" numlock="1" value="7" />
+	<item code="key_numpad_8" numlock="1" value="8" />
+	<item code="key_numpad_9" numlock="1" value="9" />
+	<item code="key_numpad_0" numlock="1" value="0"/>
 	
 </layout>
 

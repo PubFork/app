@@ -88,10 +88,10 @@
 	<item scan="75" value="key_numpad_4" />
 	<item scan="76" value="key_numpad_5" />
 	<item scan="77" value="key_numpad_6" />
-	<item scan="79" value="key_numpad_7" />
-	<item scan="79" value="key_numpad_8" />
-	<item scan="79" value="key_numpad_9" />
-	<item scan="79" value="key_numpad_0" />
+	<item scan="71" value="key_numpad_7" />
+	<item scan="72" value="key_numpad_8" />
+	<item scan="73" value="key_numpad_9" />
+	<item scan="82" value="key_numpad_0" />
 	<item scan="69" value="key_numlock" />
 	<item scan="55" value="key_print_screen" />
 </layout>
