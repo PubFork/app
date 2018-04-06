@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #ifdef WINDOWSEX
 #include "aura/aura/os/windows/windows_system_interaction_impl.h"
 #endif
@@ -2828,9 +2828,9 @@ run:
 
                return true;
 
-         //   }
+            }
 
-         //}
+         }
 
          if (!init_instance())
          {
