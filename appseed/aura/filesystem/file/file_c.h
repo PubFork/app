@@ -61,7 +61,7 @@ CLASS_DECL_AURA int_bool file_copy_dup(const char * pszDup, const char * pszSrc,
 
 CLASS_DECL_AURA void _init_file_dup();
 
-CLASS_DECL_AURA FILE * fopen_dup(const char *path, const char *attrs);
+CLASS_DECL_AURA FILE * fopen_dup(const char *path, const char *attrs, int iShare);
 CLASS_DECL_AURA int32_t fprintf_dup(FILE *fp, const char *s, ...);
 CLASS_DECL_AURA int32_t fclose_dup(FILE *fp);
 CLASS_DECL_AURA int32_t feof_dup(FILE *fp);
@@ -78,7 +78,7 @@ CLASS_DECL_AURA uint64_t flen_dup(FILE *s);
 
 
 #ifdef WINDOWS
-CLASS_DECL_AURA FILE *_wfopen_dup(const unichar *path, const unichar *attrs);
+CLASS_DECL_AURA FILE *_wfopen_dup(const unichar *path, const unichar *attrs, int iShare);
 CLASS_DECL_AURA int32_t fwprintf_dup(FILE *fp, const unichar *s, ...);
 CLASS_DECL_AURA unichar *fgetws_dup(unichar *str, int32_t n, FILE *s);
 CLASS_DECL_AURA wint_t fgetwc_dup(FILE *s);
@@ -146,7 +146,7 @@ BEGIN_EXTERN_C
 
 
 
-CLASS_DECL_AURA FILE * fopen_dup(const char *path, const char *attrs);
+CLASS_DECL_AURA FILE * fopen_dup(const char *path, const char *attrs, int iShare);
 CLASS_DECL_AURA int32_t fprintf_dup(FILE *fp, const char *s, ...);
 CLASS_DECL_AURA int32_t fclose_dup(FILE *fp);
 CLASS_DECL_AURA int32_t feof_dup(FILE *fp);
@@ -162,7 +162,7 @@ CLASS_DECL_AURA int32_t fflush_dup(FILE *s);
 
 
 //#ifdef WINDOWS
-//CLASS_DECL_AURA FILE *_wfopen_dup(const unichar *path, const unichar *attrs);
+//CLASS_DECL_AURA FILE *_wfopen_dup(const unichar *path, const unichar *attrs, int iShare);
 //CLASS_DECL_AURA int32_t fwprintf_dup(FILE *fp, const unichar *s, ...);
 //CLASS_DECL_AURA unichar *fgetws_dup(unichar *str, int32_t n, FILE *s);
 //CLASS_DECL_AURA wint_t fgetwc_dup(FILE *s);

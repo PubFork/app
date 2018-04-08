@@ -97,7 +97,7 @@ machine_event_data::fixed::fixed()
 void machine_event_data::read(FILE * file)
 {
 
-   size_t iRead = fread(&m_fixed, 1, sizeof(m_fixed), file);
+   size_t iRead = fread(&m_fixed, sizeof(m_fixed), 1, file);
 
    if(iRead != 1)
    {
@@ -114,7 +114,7 @@ void machine_event_data::read(FILE * file)
 void machine_event_data::write(FILE * file)
 {
 
-   size_t iWritten = fwrite(&m_fixed, 1, sizeof(m_fixed), file);
+   size_t iWritten = fwrite(&m_fixed, sizeof(m_fixed), 1, file);
 
    if(iWritten != 1)
    {

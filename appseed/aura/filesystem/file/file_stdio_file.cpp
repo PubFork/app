@@ -69,10 +69,14 @@ namespace file
       {
       }
 
-      m_pfile = fopen_dup(lpszFileName,str);
+      m_pfile = fopen_dup(lpszFileName, str, _SH_DENYNO);
 
-      if(m_pfile == NULL)
+      if (m_pfile == NULL)
+      {
+
          return canew(::file::exception(get_app()));
+
+      }
 
       return ::no_exception;
 

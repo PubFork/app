@@ -60,14 +60,14 @@
    <item scan="81" ext="1" value="key_next" />
    <item code="48" value="key_tab" />
 	<item code="66" value="key_capslock" />
-   <item scan="71" ext="1" value="key_home" />
+	<item code="115" value="key_home" />
 	<item code="119" value="key_end" />
 	<item code="116" value="key_prior" />
 	<item code="121" value="key_next" />
 	<item code="36" value="key_return" />
 	<item code="27" value="key_hyphen" />
 	<item code="24" value="key_equal" />
-	<item code="115" value="key_slash2" />
+	<item code="94" value="key_slash2" />
 	<item code="30" value="key_openbracket2" />
 	<item code="42" value="key_closebracket2" />
 	<item code="39" value="key_til2" />

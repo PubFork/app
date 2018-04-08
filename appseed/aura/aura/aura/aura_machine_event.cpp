@@ -112,23 +112,42 @@ bool machine_event::initialize()
 }
 
 
+::file::path machine_event_file_path()
+{
+
+   return ::dir::appdata() / "machine/event/machine_event.bin";
+
+}
+
+
 bool machine_event::read(machine_event_data * pdata)
 {
 
-   FILE * file = fopen_dup(dir::appdata() / "machine/event/machine_event.bin", "r");
+   FILE * pfile = NULL;
 
-   if(file == NULL)
+   try
    {
 
-      ZEROP(pdata);
+      pfile = fopen_dup(machine_event_file_path(), "r", _SH_DENYNO);
 
-      return false;
+      if (pfile == NULL)
+      {
+
+         ZEROP(pdata);
+
+         return false;
+
+      }
+
+      pdata->read(pfile);
+
+   }
+   catch (...)
+   {
 
    }
 
-   pdata->read(file);
-
-   ::fclose(file);
+   fclose_dup(pfile);
 
    return true;
 
@@ -138,21 +157,31 @@ bool machine_event::read(machine_event_data * pdata)
 bool machine_event::write(machine_event_data * pdata)
 {
 
-   if(!dir::mk(dir::install() / "machine\\event"))
-      return false;
+   FILE * pfile = NULL;
 
-   FILE * file = fopen_dup(dir::appdata() / "machine/event/machine_event.bin", "w+");
-
-   if(file == NULL)
+   try
    {
 
-      return false;
+      dir::mk(dir::name(machine_event_file_path()));
+
+      pfile = fopen_dup(machine_event_file_path(), "w", _SH_DENYWR);
+
+      if (pfile == NULL)
+      {
+
+         return false;
+
+      }
+
+      pdata->write(pfile);
+
+   }
+   catch (...)
+   {
 
    }
 
-   pdata->write(file);
-
-   ::fclose(file);
+   fclose_dup(pfile);
 
    return true;
 

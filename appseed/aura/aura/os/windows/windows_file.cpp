@@ -36,7 +36,7 @@ int_bool read_resource_as_file_dup(const char * pszFile, HINSTANCE hinstance, UI
 
       dir::mk(dir::name(pszFile));
 
-      file = fopen_dup(pszFile, "wb");
+      file = fopen_dup(pszFile, "wb", _SH_DENYNO);
 
       if(file != NULL)
       {
@@ -101,7 +101,7 @@ int_bool file_put_contents_dup(const char * path, const char * contents, count l
 
    wstring wstr(path);
 
-   FILE * file = fopen_dup(path, "w");
+   FILE * file = fopen_dup(path, "w", _SH_DENYWR);
 
    if (file == NULL)
    {
@@ -327,7 +327,7 @@ string file_as_string_dup(const char * path)
 
    string str;
 
-   FILE * file = ::fopen_dup(path, "r");
+   FILE * file = ::fopen_dup(path, "r", _SH_DENYNO);
 
    if (file == NULL)
    {
@@ -363,7 +363,7 @@ bool file_get_memory_dup(::primitive::memory_base & memory, const char * path)
 
    memory.allocate(0);
 
-   FILE * file = ::fopen_dup(path, "r");
+   FILE * file = ::fopen_dup(path, "r", _SH_DENYNO);
 
    if (file == NULL)
    {
