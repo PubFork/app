@@ -557,6 +557,7 @@
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>
+		<Unit filename="aura/os/ansios/ansios_serial.h" />
 		<Unit filename="aura/os/ansios/ansios_thread.h" />
 		<Unit filename="aura/os/cross.h" />
 		<Unit filename="aura/os/cross/ansios/ansios.h" />

@@ -204,6 +204,7 @@ public:
 };
 
 
+#ifdef WINDOWS
 
 
 template < typename TYPE >
@@ -626,4 +627,8 @@ public:
 
 
 #define cotaskp(POINTER_TYPE) cotaskptr < POINTER_TYPE >
+
+
+#endif
+
 

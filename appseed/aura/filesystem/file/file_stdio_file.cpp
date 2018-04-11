@@ -40,9 +40,12 @@ namespace file
 
    }
 
+
    ::file::file_sp  stdio_file::Duplicate() const
    {
+
       return NULL;
+
    }
 
 
@@ -53,20 +56,27 @@ namespace file
 
       if(nOpenFlags & ::file::mode_read)
       {
+
          str += "r";
+
       }
 
       if(nOpenFlags & ::file::mode_write)
       {
+
          str += "w";
+
       }
 
       if(nOpenFlags & ::file::type_binary)
       {
+
          str += "b";
+
       }
       else if(nOpenFlags & ::file::type_text)
       {
+
       }
 
       m_pfile = fopen_dup(lpszFileName, str, _SH_DENYNO);
