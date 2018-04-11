@@ -13,6 +13,7 @@ namespace userex
 
       uint32_t                m_dwDelayedAfterChange; // Milliseconds
       top_view *              m_ptopview;
+      bool                    m_bEnterKeyPressed;
 
 
       top_edit_view(::aura::application * papp);
@@ -25,6 +26,7 @@ namespace userex
       virtual void install_message_routing(::message::sender * psender) override;
 
       DECL_GEN_SIGNAL(_001OnCreate);
+      DECL_GEN_SIGNAL(_001OnKeyDown);
 
       bool keyboard_focus_is_focusable() override;
 

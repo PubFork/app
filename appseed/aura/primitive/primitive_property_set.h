@@ -29,10 +29,10 @@ public:
    //property * set(id idName, var var);
    //property & defer_auto_add(id idName);
    //id get_new_id();
-   ::count remove_by_name(id idName);
+   ::count remove_by_name(const id & idName);
    ::count remove_by_name(stringa & straName);
-   property & operator[](string strName);
-   const property & operator[](string strName) const;
+   property & operator[](const string & strName);
+   const property & operator[](const string & strName) const;
    property & operator[](const char * pszName);
    const property & operator[](const char * pszName) const;
    property & operator[](index iIndex);
@@ -43,51 +43,51 @@ public:
 #endif
    property & operator[](const var & var);
    const property & operator[](const var & var) const;
-   property & operator[](id id);
-   const property & operator[](id id) const;
+   property & operator[](const id & id);
+   const property & operator[](const id & id) const;
 
    var lookup(id id) const;
    var lookup(id id, var varDefault) const;
 
-   property & get(id id);
+   property & get(const id & id);
 
    property & at(index iId);
    property at(index iId) const;
 
    property * find_var_ci(const var & var) const;
-   property * find_value_ci(var var) const;
+   property * find_value_ci(const var & var) const;
    property * find_value_ci(const char * psz) const;
 
    property * find_var(const var & var) const;
-   property * find_value(var var) const;
+   property * find_value(const var & var) const;
    property * find_value(const char * psz) const;
 
    property * str_find(const property & property) const;
 
    bool contains_var_ci(const var & var, ::count countMin = 1, ::count countMax = -1) const;
-   bool contains_value_ci(var var, ::count countMin = 1, ::count countMax = -1) const;
+   bool contains_value_ci(const var & var, ::count countMin = 1, ::count countMax = -1) const;
    bool contains_value_ci(const char * psz, ::count countMin = 1, ::count countMax = -1) const;
 
    bool contains_var(const var & var, ::count countMin = 1, ::count countMax = -1) const;
-   bool contains_value(var var, ::count countMin = 1, ::count countMax = -1) const;
+   bool contains_value(const var & var, ::count countMin = 1, ::count countMax = -1) const;
    bool contains_value(const char * psz, ::count countMin = 1, ::count countMax = -1) const;
 
    bool str_contains(const property_set & set) const;
 
    bool remove_first_var_ci(const var & var);
-   bool remove_first_value_ci(var var);
+   bool remove_first_value_ci(const var & var);
    bool remove_first_value_ci(const char * psz);
 
    bool remove_first_var(const var & var);
-   bool remove_first_value(var var);
+   bool remove_first_value(const var & var);
    bool remove_first_value(const char * psz);
 
    ::count remove_var_ci(const var & var, ::count countMin = 0, ::count countMax = -1);
-   ::count remove_value_ci(var var, ::count countMin = 0, ::count countMax = -1);
+   ::count remove_value_ci(const  var & var, ::count countMin = 0, ::count countMax = -1);
    ::count remove_value_ci(const char * psz, ::count countMin = 0, ::count countMax = -1);
 
    ::count remove_var(const var & var, ::count countMin = 0, ::count countMax = -1);
-   ::count remove_value(var var, ::count countMin = 0, ::count countMax = -1);
+   ::count remove_value(const var & var, ::count countMin = 0, ::count countMax = -1);
    ::count remove_value(const char * psz, ::count countMin = 0, ::count countMax = -1);
 
    bool has_property(id idName) const;
@@ -105,18 +105,18 @@ public:
    //index find_index(string_interface & str) const;
 
 
-   ::count unset(id idName);
+   ::count unset(const id & idName);
 
-   bool is_new(id idName) const;
+   bool is_new(const id & idName) const;
 //   bool is_new(string_interface & str) const;
 
-   bool is_null(id idName) const;
+   bool is_null(const id & idName) const;
 //   bool is_null(string_interface & str) const;
 
-   bool is_new_or_null(id idName) const;
+   bool is_new_or_null(const id & idName) const;
 //   bool is_new_or_null(string_interface & str) const;
 
-   bool is_empty(id idName) const;
+   bool is_empty(const id & idName) const;
 //   bool is_empty(string_interface & str) const;
 
    //void OnBeforePropertyChange(property * pproperty);
@@ -383,7 +383,7 @@ inline property & property_set::operator[] (const char * pszKey)
 }
 
 
-inline const property & property_set::operator[](id idName) const
+inline const property & property_set::operator[](const id & idName) const
 {
 
    return const_cast<property_set*>(this)->operator[](idName);
@@ -412,27 +412,27 @@ inline const property &  property_set::operator[](const var & var) const
    return operator[](string(var));
 }
 
-inline const property &  property_set::operator[](string str) const
+inline const property &  property_set::operator[](const string & str) const
 {
    return operator[]((id) str);
 }
 
 
 
-inline property & property_set::operator[](string strName)
+inline property & property_set::operator[](const string & strName)
 {
    return operator[](id(strName));
 }
 
 
-inline property & property_set::operator[](id idName)
+inline property & property_set::operator[](const id & idName)
 {
 
    return get(idName);
 
 }
 
-inline property & property_set::get(id idName)
+inline property & property_set::get(const id & idName)
 {
 
    assoc * p = get_assoc(idName);
@@ -542,7 +542,7 @@ inline var & var::operator[] (const char * pszKey)
    return propset().operator[](pszKey).get_value();
 }
 
-inline var var::operator[] (var varKey) const
+inline var var::operator[] (const var & varKey) const
 {
    if(varKey.is_integer())
    {
@@ -554,7 +554,7 @@ inline var var::operator[] (var varKey) const
    }
 }
 
-inline var var::operator[] (var varKey)
+inline var var::operator[] (const var & varKey)
 {
    if(varKey.is_integer())
    {
@@ -577,12 +577,12 @@ inline var var::operator[] (index iKey)
    return at(iKey);
 }
 
-inline const var & var::operator[] (string strKey) const
+inline const var & var::operator[] (const string & strKey) const
 {
    return propset().operator[](strKey).get_value();
 }
 
-inline var var::operator[] (id idKey)
+inline var var::operator[] (const id & idKey)
 {
    if(idKey.m_etype == id::type_integer)
    {
@@ -594,7 +594,7 @@ inline var var::operator[] (id idKey)
    }
 }
 
-inline var var::operator[] (id idKey) const
+inline var var::operator[] (const id & idKey) const
 {
    if(idKey.m_etype == id::type_integer)
    {
@@ -606,7 +606,7 @@ inline var var::operator[] (id idKey) const
    }
 }
 
-inline var & var::operator[] (string strKey)
+inline var & var::operator[] (const string & strKey)
 {
    return propset().operator[](strKey).get_value();
 }

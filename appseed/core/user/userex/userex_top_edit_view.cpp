@@ -15,6 +15,8 @@ namespace userex
 
       m_ptopview = NULL;
 
+      m_bEnterKeyPressed = false;
+
    }
 
    top_edit_view::~top_edit_view()
@@ -27,6 +29,7 @@ namespace userex
       ::user::show < ::user::plain_edit >::install_message_routing(psender);
 
       IGUI_MSG_LINK(WM_CREATE, psender, this, &top_edit_view::_001OnCreate);
+      IGUI_MSG_LINK(WM_KEYDOWN, psender, this, &top_edit_view::_001OnKeyDown);
 
    }
 
@@ -48,6 +51,39 @@ namespace userex
    }
 
 
+   void top_edit_view::_001OnKeyDown(::message::message * pobj)
+   {
+
+      SCAST_PTR(::message::key, pkey, pobj);
+
+      ::user::view_update_hint uh(get_app());
+
+      uh.m_ehint = ::user::view_update_hint::hint_key_down;
+
+      uh.m_pui = this;
+
+      uh.m_ekey = pkey->m_ekey;
+
+      get_document()->update_all_views(this, 0, &uh);
+
+      if (pkey->m_ekey == ::user::key_return)
+      {
+
+         m_bEnterKeyPressed = true;
+
+         SetTimer(5544, m_dwDelayedAfterChange, NULL);
+
+      }
+      else
+      {
+
+         m_bEnterKeyPressed = false;
+
+      }
+
+   }
+
+
    void top_edit_view::_001OnTimer(::timer * ptimer)
    {
 
@@ -64,6 +100,10 @@ namespace userex
          uh.m_ehint = ::user::view_update_hint::hint_after_change_text_delayed;
 
          uh.m_pui = this;
+
+         uh.m_bEnterKeyPressed = m_bEnterKeyPressed;
+
+         m_bEnterKeyPressed = false;
 
          get_document()->update_all_views(this, 0, &uh);
 

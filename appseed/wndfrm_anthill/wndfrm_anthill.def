@@ -1,0 +1,7 @@
+; wndfrm_anthill.def : Declares the module parameters for the DLL.
+
+LIBRARY      "wndfrm_anthill"
+	;DESCRIPTION  'uinteraction Windows Dynamic Link Library'
+
+EXPORTS
+get_new_library

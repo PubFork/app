@@ -76,9 +76,12 @@ property * property_set::find_var_ci(const var & var) const
    return NULL;
 }
 
-property * property_set::find_value_ci(var var) const
+
+property * property_set::find_value_ci(const var & var) const
 {
+
    return find_var_ci(var);
+
 }
 
 
@@ -92,10 +95,14 @@ property * property_set::find_var(const var & var) const
    return NULL;
 }
 
-property * property_set::find_value(var var) const
+
+property * property_set::find_value(const var & var) const
 {
+
    return find_var(var);
+
 }
+
 
 bool property_set::contains_var_ci(const var & var, ::count countMin, ::count countMax) const
 {
@@ -105,10 +112,14 @@ bool property_set::contains_var_ci(const var & var, ::count countMin, ::count co
    return count >= countMin && conditional(countMax >= 0, count <= countMax);
 }
 
-bool property_set::contains_value_ci(var var, ::count countMin, ::count countMax) const
+
+bool property_set::contains_value_ci(const var & var, ::count countMin, ::count countMax) const
 {
+
    return contains_var_ci(var, countMin, countMax);
+
 }
+
 
 bool property_set::contains_value_ci(const char * psz, ::count countMin, ::count countMax) const
 {
@@ -127,9 +138,12 @@ bool property_set::contains_var(const var & var, ::count countMin, ::count count
    return count >= countMin && conditional(countMax >= 0, count <= countMax);
 }
 
-bool property_set::contains_value(var var, ::count countMin, ::count countMax) const
+
+bool property_set::contains_value(const var & var, ::count countMin, ::count countMax) const
 {
+
    return contains_var(var, countMin, countMax);
+
 }
 
 bool property_set::contains_value(const char * psz, ::count countMin, ::count countMax) const
@@ -158,7 +172,7 @@ bool property_set::remove_first_var_ci(const var & var)
 }
 
 
-bool property_set::remove_first_value_ci(var var)
+bool property_set::remove_first_value_ci(const var & var)
 {
 
    return remove_first_var_ci(var);
@@ -198,7 +212,7 @@ bool property_set::remove_first_var(const var & var)
 }
 
 
-bool property_set::remove_first_value(var var)
+bool property_set::remove_first_value(const var & var)
 {
 
    return remove_first_var(var);
@@ -234,7 +248,7 @@ bool property_set::remove_first_value(const char * lpcsz)
 }
 
 
-::count property_set::remove_value_ci(var var, ::count countMin, ::count countMax)
+::count property_set::remove_value_ci(const var & var, ::count countMin, ::count countMax)
 {
 
    return remove_var_ci(var, countMin, countMax);
@@ -286,7 +300,7 @@ bool property_set::remove_first_value(const char * lpcsz)
 }
 
 
-::count property_set::remove_value(var var, ::count countMin, ::count countMax)
+::count property_set::remove_value(const var & var, ::count countMin, ::count countMax)
 {
 
    return remove_var(var, countMin, countMax);
@@ -316,7 +330,7 @@ bool property_set::remove_first_value(const char * lpcsz)
 }
 
 
-::count property_set::unset(id idName)
+::count property_set::unset(const id & idName)
 {
    property_map::pair * ppair = PLookup(idName);
    if(ppair == NULL)
@@ -327,7 +341,7 @@ bool property_set::remove_first_value(const char * lpcsz)
 
 
 
-bool property_set::is_new(id idName) const
+bool property_set::is_new(const id & idName) const
 {
    const property * pproperty = find(idName);
    if(pproperty == NULL)
@@ -340,7 +354,7 @@ bool property_set::is_new(id idName) const
 //   return is_new((const char *) string(str));
 //}
 
-bool property_set::is_null(id idName) const
+bool property_set::is_null(const id & idName) const
 {
    const property * pproperty = find(idName);
    if(pproperty == NULL)
@@ -353,7 +367,7 @@ bool property_set::is_null(id idName) const
 //   return is_null((const char *) string(str));
 //}
 
-bool property_set::is_new_or_null(id idName) const
+bool property_set::is_new_or_null(const id & idName) const
 {
    const property * pproperty = find(idName);
    if(pproperty == NULL)
@@ -367,7 +381,7 @@ bool property_set::is_new_or_null(id idName) const
 //}
 
 
-bool property_set::is_empty(id idName) const
+bool property_set::is_empty(const id & idName) const
 {
    const property * pproperty = find(idName);
    if(pproperty == NULL)
@@ -808,7 +822,7 @@ void property_set::parse_http_headers(const char * pszHeaders)
 }
 
 
-::count property_set::remove_by_name(id idName)
+::count property_set::remove_by_name(const id & idName)
 {
    return unset(idName);
 }

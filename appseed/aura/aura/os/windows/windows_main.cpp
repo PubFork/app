@@ -288,3 +288,18 @@ void os_post_quit()
 
 
 }
+
+
+CLASS_DECL_AURA void run_runnable_on_main_thread(runnable * prunnable)
+{
+
+   ::aura::system::g_p->post_pred([prunnable]()
+   {
+
+      prunnable->run();
+
+   });
+
+
+}
+

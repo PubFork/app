@@ -28,6 +28,7 @@ namespace user
 
       System.factory().creatable_small < ::user::document >();
       System.factory().creatable_small < ::user::message_queue >();
+      System.factory().creatable_small < ::user::simple_view >();
 
       if(m_pauraapp->is_system())
       {

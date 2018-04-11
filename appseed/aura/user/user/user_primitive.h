@@ -4,9 +4,9 @@
 namespace user
 {
 
-   
+
    class interaction;
-   
+
 
    class CLASS_DECL_AURA primitive:
       virtual public command_target,
@@ -14,7 +14,7 @@ namespace user
    {
    public:
 
-      
+
       interaction *     m_puiThis;
 
 
@@ -24,11 +24,11 @@ namespace user
       inline oswindow get_safe_handle() const;
 
 #ifdef WINDOWSEX
-      
+
       virtual bool GetWindowPlacement(WINDOWPLACEMENT* lpwndpl);
-      
+
       virtual bool SetWindowPlacement(const WINDOWPLACEMENT* lpwndpl);
-      
+
 #endif
 
       virtual bool SetPlacement(const RECT & rect,UINT nFlags = SWP_SHOWWINDOW);

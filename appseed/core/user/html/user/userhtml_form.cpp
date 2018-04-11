@@ -181,6 +181,15 @@ void html_form::on_layout()
 
    get_html_data()->layout(this);
 
+
+   ::user::control_event ev;
+
+   ev.m_eevent = ::user::event_layout;
+
+   ev.m_puie = this;
+
+   BaseOnControlEvent(&ev);
+
 }
 
 
@@ -193,8 +202,8 @@ void html_form::_001OnCreate(::message::message * pobj)
    //ASSERT(get_html_data() != NULL);
    //if(get_html_data() == NULL)
    //{
-     // pcreate->set_lresult(0);
-      //pcreate->m_bRet = true;
+   // pcreate->set_lresult(0);
+   //pcreate->m_bRet = true;
 
    //}
 
@@ -317,8 +326,8 @@ void html_form::_001OnMouseMove(::message::message * pobj)
 
       pelemental->OnMouseMove(&htmlmessage);
 
-/*      if(signal.m_bRet)
-         m_elementalptraMouseMove.add(pelemental);*/
+      /*      if(signal.m_bRet)
+               m_elementalptraMouseMove.add(pelemental);*/
 
    }
 
@@ -370,7 +379,7 @@ void html_form::_001OnLButtonUp(::message::message * pobj)
    ScreenToClient(&pt);
    html::elemental * pelemental = get_html_data()->m_elemental.hit_test(get_html_data(), pt);
    if(m_phtmlform->m_pelementalLButtonDown != NULL
-      && pelemental == m_phtmlform->m_pelementalLButtonDown)
+         && pelemental == m_phtmlform->m_pelementalLButtonDown)
    {
 
       ::html::message htmlmessage(get_app());
@@ -483,7 +492,7 @@ void html_form::_001SetText(const string & str, ::action::context actioncontext)
 
    if(bFocus)
    {
-	   sp(::user::elemental) pfocus = get_focusable_descendant();
+      sp(::user::elemental) pfocus = get_focusable_descendant();
       if(pfocus != NULL)
       {
          Session.set_keyboard_focus(pfocus);

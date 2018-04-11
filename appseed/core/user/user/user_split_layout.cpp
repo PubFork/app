@@ -12,6 +12,7 @@ namespace user
       split_layout(get_app())
    {
 
+      m_bSplitBar = true;
       m_econtroltype = control_type_split;
 
       m_flagNonClient.unsignalize(non_client_background);
@@ -463,7 +464,7 @@ namespace user
 
          pwnd = m_splitbara.element_at(i);
 
-         if (!is_pane_visible(i) || !bIsWindowVisible || m_panea[i]->m_bFixedSize)
+         if (!m_bSplitBar || !is_pane_visible(i) || !bIsWindowVisible || m_panea[i]->m_bFixedSize)
          {
 
             pwnd->ShowWindow(SW_HIDE);
@@ -477,12 +478,12 @@ namespace user
          uiFlags = uiBaseFlags;
 
          pwnd->SetWindowPos(
-            0,
-            rectBar.left,
-            rectBar.top,
-            rectBar.width(),
-            rectBar.height(),
-            uiFlags & ~(SWP_NOZORDER));
+         0,
+         rectBar.left,
+         rectBar.top,
+         rectBar.width(),
+         rectBar.height(),
+         uiFlags & ~(SWP_NOZORDER));
 
          if (bIsWindowVisible)
          {
@@ -1299,7 +1300,29 @@ namespace user
 
    }
 
+
    void split_layout::_001OnDraw(::draw2d::graphics * pgraphics)
+   {
+
+      if (m_puserstyle == NULL)
+      {
+
+         return;
+
+      }
+
+
+      if (!m_puserstyle->_001OnDrawSplitLayout(pgraphics, this))
+      {
+
+         _001OnDrawSplitLayout(pgraphics);
+
+      }
+
+   }
+
+
+   void split_layout::_001OnDrawSplitLayout(::draw2d::graphics * pgraphics)
    {
 
 

@@ -161,14 +161,52 @@ END_EXTERN_C
 
 class runnable
 {
-   
+
 public:
-   
+
    virtual void run() = 0;
-   
+
 };
 
-void run_runnable_on_main_thread(runnable * prunnable);
+
+CLASS_DECL_AURA void run_runnable_on_main_thread(runnable * prunnable);
+
+
+template < typename PRED >
+class runnable_pred :
+   virtual public runnable
+{
+public:
+
+   PRED m_pred;
+
+   runnable_pred(PRED pred) :
+      m_pred(pred)
+   {
+
+   }
+
+   virtual void run()
+   {
+      m_pred();
+
+      delete this;
+
+   }
+
+
+};
+
+
+template < typename PRED >
+inline void run_pred_on_main_thread(PRED pred)
+{
+
+   runnable_pred < PRED > * prunnablepred = new runnable_pred < PRED >(pred);
+
+   run_runnable_on_main_thread(prunnablepred);
+
+}
 
 #endif
 

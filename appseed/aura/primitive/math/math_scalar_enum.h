@@ -22,7 +22,7 @@ enum e_scalar
    scalar_key_shift,
    scalar_audio_volume,
    scalar_time,
-
+   scalar_progress,
 
 };
 

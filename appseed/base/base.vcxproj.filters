@@ -371,6 +371,12 @@
     <ClInclude Include="user\user\user_control_ddx_dbflags.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
+    <ClInclude Include="user\user\user_progress.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_simple_view.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="base\base\base.cpp">
@@ -561,6 +567,12 @@
     </ClCompile>
     <ClCompile Include="user\hotplugin\hotplugin_bare_paint_veri_discreet.cpp">
       <Filter>Header Files\user\hotplugin</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_progress.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_simple_view.cpp">
+      <Filter>Source Files\user\user</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

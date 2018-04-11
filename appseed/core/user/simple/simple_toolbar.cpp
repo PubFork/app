@@ -2180,19 +2180,19 @@ struct ___CONTROLPOS
 size simple_toolbar::CalcLayout(uint32_t dwMode, int32_t nLength)
 {
 
-   sp(::user::tab) ptab = GetTypedParent < ::user::tab >();
+   //sp(::user::tab) ptab = GetTypedParent < ::user::tab >();
 
-   if (ptab.is_set())
-   {
+   //if (ptab.is_set())
+   //{
 
-      if (!ptab->m_bShowTabs)
-      {
+   //   if (!ptab->m_bShowTabs)
+   //   {
 
-         return size(0, 0);
+   //      return size(0, 0);
 
-      }
+   //   }
 
-   }
+   //}
 
    ASSERT_VALID(this);
 

@@ -202,27 +202,51 @@ namespace windows
    }
 
 
-   string copydesk::get_plain_text()
+   bool copydesk::get_plain_text(string & str)
    {
+
       if (IsClipboardFormatAvailable(CF_UNICODETEXT))
       {
+
          if (!::OpenClipboard(m_hwnd))
-            return "";
+         {
+
+            return false;
+
+         }
+
          HGLOBAL hglb = GetClipboardData(CF_UNICODETEXT);
-         string str(::str::international::unicode_to_utf8((const unichar *)GlobalLock(hglb)));
+
+         str = (const unichar *)GlobalLock(hglb);
+
          GlobalUnlock(hglb);
+
          VERIFY(::CloseClipboard());
-         return str;
+
+         return true;
+
       }
       else if (IsClipboardFormatAvailable(CF_TEXT))
       {
+
          if (!::OpenClipboard(m_hwnd))
-            return "";
+         {
+
+            return false;
+
+         }
+
+
          HGLOBAL hglb = GetClipboardData(CF_TEXT);
-         string str((char *)GlobalLock(hglb));
+
+         str = (char *)GlobalLock(hglb);
+
          GlobalUnlock(hglb);
+
          VERIFY(::CloseClipboard());
-         return str;
+
+         return true;
+
       }
       else if (get_file_count() > 0)
       {
@@ -231,14 +255,20 @@ namespace windows
 
          get_filea(patha);
 
-         return patha.implode("\r\n");
+         str = patha.implode("\r\n");
+
+         return true;
 
       }
       else
       {
-         return "";
+
+         return false;
+
       }
+
    }
+
 
 #undef new
 

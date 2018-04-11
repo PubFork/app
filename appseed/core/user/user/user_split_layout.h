@@ -41,7 +41,7 @@ namespace user
 
       };
 
-
+      bool                                         m_bSplitBar;
       spa(split_bar)                               m_splitbara;
       spa(Pane)                                    m_panea;
       e_orientation                                m_eorientationSplit;
@@ -109,6 +109,8 @@ namespace user
       virtual void draw_control_background(::draw2d::graphics * pgraphics) override;
 
       virtual void _001OnDraw(::draw2d::graphics * pgraphics) override;
+
+      virtual void _001OnDrawSplitLayout(::draw2d::graphics * pgraphics);
 
 
    };

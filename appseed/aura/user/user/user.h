@@ -20,6 +20,7 @@ namespace user
    class frame_window;
    class toolbar;
    class scroll_bar;
+   class split_layout;
    class style;
    class scroll_info;
    class window_map;

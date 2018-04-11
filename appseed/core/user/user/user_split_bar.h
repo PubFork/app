@@ -28,13 +28,15 @@ namespace user
 
       void install_message_routing(::message::sender * pinterface);
 
+
       virtual void _001OnDraw(::draw2d::graphics * pgraphics);
+
 
       using ::user::interaction::create_window;
       bool create_window(const RECT & rect, split_layout * pparent);
       virtual bool pre_create_window(::user::create_struct& cs);
 
-      
+
       DECL_GEN_SIGNAL(_001OnLButtonDown);
       DECL_GEN_SIGNAL(_001OnLButtonUp);
       DECL_GEN_SIGNAL(_001OnMouseMove);

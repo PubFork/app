@@ -14,7 +14,7 @@ namespace xml
    }
 
 
-   ::xml::attr * attr_array::add_attr(id idName)
+   ::xml::attr * attr_array::add_attr(const id & idName)
    {
 
       return &operator[](idName);

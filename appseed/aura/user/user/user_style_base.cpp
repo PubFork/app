@@ -17,25 +17,25 @@ namespace user
    //
    //   style::~style()
    //   {
-   //      
+   //
    //      ::aura::del(m_plibrary);
    //
    //   }
-   //   
+   //
    //   void style::initialize_style_menu()
    //   {
-   //      
+   //
    //      style & style = *this;
-   //      
+   //
    //      style.m_pfont->create_point_font(FONT_SANS,9.0);
-   //      
+   //
    //      style[style_menu_button] = operator[](style_menu_button);
    //      style[style_menu_close] = operator[](style_menu_close);
    //      style[style_menu_popup] = operator[](style_menu_popup);
    //      style[style_system_menu_button] = operator[](style_system_menu_button);
    //      style[style_system_menu_close] = operator[](style_system_menu_close);
    //      style[style_system_menu_popup] = operator[](style_system_menu_popup);
-   //      
+   //
    //      style.m_iElementPadding = 3;
    //      style.m_rectItemMargin.left = 4;
    //      style.m_rectItemMargin.top = 4;
@@ -46,10 +46,10 @@ namespace user
    //
    //   void style::initialize_style_button()
    //   {
-   //      
+   //
    //      color color;
    //      color.set_rgb(Session.get_default_color(COLOR_HIGHLIGHT));
-   //      
+   //
    //
    //      m_pfont.alloc(allocer());
    //      m_pfont->create_point_font(FONT_SANS,11.0);
@@ -68,10 +68,10 @@ namespace user
    //
    //   void style::initialize_style_menu_button()
    //   {
-   //      
+   //
    //      color color;
    //      color.set_rgb(Session.get_default_color(COLOR_HIGHLIGHT));
-   //      
+   //
    //
    //      m_pfont.alloc(allocer());
    //      m_pfont->create_point_font(FONT_SANS, 12.0);
@@ -85,18 +85,18 @@ namespace user
    //      set_color(color_background_hover,ARGB(127,180,192,255));
    //      m_bBorder      = false;
    //      m_etranslucency = ::user::translucency_present;
-   //      
-   //      
+   //
+   //
    //   }
-   //   
-   //   
+   //
+   //
    //   void style::initialize_style_menu_popup()
    //   {
-   //      
-   //      
+   //
+   //
    //      color color;
    //      color.set_rgb(Session.get_default_color(COLOR_HIGHLIGHT));
-   //      
+   //
    //
    //      m_pfont.alloc(allocer());
    //      m_pfont->create_point_font(FONT_SANS, 9.0, FW_BOLD);
@@ -110,15 +110,15 @@ namespace user
    //      set_color(color_background_hover,Session.get_default_color(COLOR_3DHIGHLIGHT) | (184 << 24));
    //      m_bBorder      = false;
    //      m_etranslucency = ::user::translucency_present;
-   //      
-   //      
+   //
+   //
    //   }
    //   void style::initialize_style_system_menu_button()
    //   {
-   //      
+   //
    //      color color;
    //      color.set_rgb(Session.get_default_color(COLOR_HIGHLIGHT));
-   //      
+   //
    //
    //      m_pfont.alloc(allocer());
    //      m_pfont->create_point_font("Marlett", 11.0);
@@ -132,13 +132,13 @@ namespace user
    //      set_color(color_background_hover,Session.get_default_color(COLOR_3DFACE) | (184 << 24));
    //      m_bBorder      = false;
    //      m_etranslucency = ::user::translucency_present;
-   //  
+   //
    //   }
-   //   
-   //   
+   //
+   //
    //   void style::initialize_style_system_menu_close()
    //   {
-   //      
+   //
    //      m_pfont.alloc(allocer());
    //      m_pfont->create_point_font("Marlett",11.0);
    //      set_color(color_text_normal,ARGB(184,190, 90, 80));
@@ -151,23 +151,23 @@ namespace user
    //      set_color(color_background_hover,ARGB(184,223,192,192));
    //      m_bBorder      = false;
    //      m_etranslucency = ::user::translucency_present;
-   //    
-   //   }
-   //   
-   //   
-   //   void style::initialize_style_system_menu_popup()
-   //   {
-   //      
-   //      initialize_style_system_menu_button();
-   //      
+   //
    //   }
    //
-   //   
+   //
+   //   void style::initialize_style_system_menu_popup()
+   //   {
+   //
+   //      initialize_style_system_menu_button();
+   //
+   //   }
+   //
+   //
    //   void style::initialize_style()
    //   {
    //
    //      style & style = *this;
-   //      
+   //
    //      style[style_menu].alloc(allocer());
    //      style[style_button].alloc(allocer());
    //      style[style_menu_button].alloc(allocer());
@@ -182,49 +182,49 @@ namespace user
    //      style[style_system_menu_button]->initialize_style_system_menu_button();
    //      style[style_system_menu_popup]->initialize_style_system_menu_popup();
    //
-   //      
+   //
    //      color color;
    //      color.set_rgb(Session.get_default_color(COLOR_HIGHLIGHT));
-   //      
+   //
    //      class color colorHover(color);
    //      colorHover.hls_rate(0.0, 0.3, 0.0);
-   //      
+   //
    //      class color colorPress(color);
    //      colorPress.hls_rate(0.0, 0.7, 0.0);
    //
-   //      
-   //      
-   //      
-   //      
-   //      
+   //
+   //
+   //
+   //
+   //
    //         m_crTextNormal = ARGB(255, 0, 0, 0);
-   //         
+   //
    //      }
-   //      
-   //   
+   //
+   //
    //      void style::DrawCheck(check::e_check echeck, const RECT & rect, ::draw2d::graphics * pgraphics)
    //      {
-   //         
-   //         
-   //         
+   //
+   //
+   //
    //         if(echeck == check::checked)
    //         {
    //            point_array pta;
-   //            
+   //
    //            pta.add(point(2, 10));
    //            pta.add(point(6, 14));
    //            pta.add(point(14, 6));
    //            pta.add(point(14, 2));
    //            pta.add(point(6, 12));
    //            pta.add(point(2, 8));
-   //            
+   //
    //            pta.offset(rect.left, rect.top);
-   //            
+   //
    //            pgraphics->Polygon(pta);
-   //            
+   //
    //         }
-   //      
-   //      
+   //
+   //
    //   }
    //
    //
@@ -233,26 +233,26 @@ namespace user
    //
    //      if (m_mapColor.Lookup(ecolor, cr))
    //      {
-   //         
+   //
    //         return true;
-   //         
+   //
    //      }
    //
    //      return false;
    //
    //   }
-   //   
+   //
    //
    //   bool style::get_font(::draw2d::font_sp & spfont, e_font efont, ::user::interaction * pui)
    //   {
    //
    //      if(m_pfont.is_set())
    //      {
-   //      
+   //
    //         spfont = m_pfont;
-   //         
+   //
    //         return true;
-   //         
+   //
    //      }
    //
    //      return false;
@@ -262,84 +262,84 @@ namespace user
    //
    //   bool style::select_text_color(::draw2d::graphics * pgraphics,e_color ecolor)
    //   {
-   //   
+   //
    //      COLORREF cr;
-   //      
+   //
    //      if(!get_color(cr, ecolor))
    //      {
-   //       
+   //
    //         return false;
-   //         
+   //
    //      }
-   //      
+   //
    //      pgraphics->set_text_color(cr);
-   //      
+   //
    //      return true;
-   //      
+   //
    //   }
-   //   
-   //   
+   //
+   //
    //   bool style::select_solid_brush(::draw2d::graphics * pgraphics,e_color ecolor)
    //   {
-   //      
+   //
    //      COLORREF cr;
-   //      
+   //
    //      if(!get_color(cr, ecolor))
    //      {
-   //         
+   //
    //         return false;
-   //         
+   //
    //      }
-   //      
+   //
    //      ::draw2d::brush_sp brush(allocer());
-   //      
+   //
    //      brush->create_solid(cr);
-   //      
+   //
    //      pgraphics->SelectObject(brush);
-   //      
+   //
    //      return true;
-   //      
+   //
    //   }
-   //   
-   //   
+   //
+   //
    //   bool style::select_font(::draw2d::graphics * pgraphics, e_font efont, ::user::interaction * pui)
    //   {
-   //      
+   //
    //      ::draw2d::font_sp font;
-   //      
+   //
    //      if(!get_font(font, efont, pui))
    //      {
-   //       
+   //
    //         font.alloc(allocer());
-   //            
+   //
    //         if (!font->create_point_font(FONT_SANS, 12.0))
    //         {
-   //               
+   //
    //            return false;
-   //               
+   //
    //         }
    //
    //      }
-   //      
+   //
    //      pgraphics->select_font(font);
-   //      
+   //
    //      return true;
-   //      
+   //
    //   }
-   //   
+   //
    //
    //   bool style::get_translucency(e_translucency & etranslucency)
    //   {
    //
    //      if(m_etranslucency != translucency_undefined)
    //      {
-   //      
+   //
    //         etranslucency = m_etranslucency;
-   //      
+   //
    //         return true;
-   //         
+   //
    //      }
-   //      
+   //
    //      return false;
    //
    //   }
@@ -349,9 +349,9 @@ namespace user
    //   {
    //
    //      return false;
-   //      
+   //
    //   }
-   //   
+   //
    //
    //   COLORREF style::_001GetColor(e_color ecolor, COLORREF crDefault)
    //   {
@@ -715,7 +715,7 @@ namespace user
    //   }
    //
    //
-   //  
+   //
    //   bool style::select_layered_frame()
    //   {
    //
@@ -1083,7 +1083,7 @@ namespace user
    //
    //
    //      int w = width(lpcrectClient);
-   //      
+   //
    //      int h = height(lpcrectClient);
    //
    //      if (w <= 0 || h <= 0)
@@ -1150,94 +1150,102 @@ namespace user
    //      return false;
    //
    //   }
-   //   
-   //   
+   //
+   //
    //   ::user::interaction * style::create_menu_button()
    //   {
-   //      
+   //
    //      return canew(::user::button(get_app()));
-   //   
+   //
    //   }
-   //   
+   //
    //
    //   bool style::prepare_menu(::user::menu_item * pitem)
    //   {
-   //      
+   //
    //      if(!prepare_menu_button(pitem))
    //      {
-   //         
+   //
    //         return false;
-   //         
+   //
    //      }
-   //      
+   //
    //      return true;
-   //      
+   //
    //   }
-   //   
    //
    //
-   //   
-   //   
+   //
+   //
+   //
    //   bool style::set_color(e_color ecolor,COLORREF cr)
    //   {
-   //      
+   //
    //      m_mapColor[ecolor] = cr;
-   //      
+   //
    //      return true;
-   //      
+   //
    //   }
-   //   
-   //   
+   //
+   //
    //   bool style::prepare_menu_button(::user::menu_item * pitem)
    //   {
-   //      
+   //
    //      if(!::user::style::prepare_menu_button(pitem))
    //      {
-   //         
+   //
    //         return false;
-   //         
+   //
    //      }
-   //      
+   //
    //      sp(::user::button) pbutton = pitem->m_pui;
-   //      
+   //
    //      if(pbutton->m_id == "close")
    //      {
-   //         
+   //
    //         pbutton->m_puserstyle = get(style_system_menu_close);
-   //         
+   //
    //         pbutton->resize_to_fit();
-   //         
+   //
    //         pbutton->set_stock_icon(stock_icon_close);
-   //         
+   //
    //         return true;
-   //         
+   //
    //      }
    //      else
    //      {
-   //         
+   //
    //         pbutton->m_puserstyle = get(style_system_menu_button);
-   //         
+   //
    //         int cx = pbutton->width();
-   //         
+   //
    //         int cy = pbutton->height();
-   //         
+   //
    //         pbutton->m_pitem = pitem;
-   //         
+   //
    //         pbutton->m_rectCheckBox.left = m_rectItemMargin.left;
    //         pbutton->m_rectCheckBox.top = m_rectItemMargin.top;
    //         pbutton->m_rectCheckBox.bottom = cy - m_rectItemMargin.bottom;
    //         pbutton->m_rectCheckBox.right = pbutton->m_rectCheckBox.left + pitem->m_pmenu->m_iCheckBoxSize;
-   //         
+   //
    //         pbutton->m_rectText.left = pbutton->m_rectCheckBox.right + m_iElementPadding;
    //         pbutton->m_rectText.top = m_rectItemMargin.top;
    //         pbutton->m_rectText.bottom = cy - m_rectItemMargin.bottom;
    //         pbutton->m_rectText.right = cx - m_rectItemMargin.right;
-   //         
+   //
    //      }
-   //      
+   //
    //      return true;
-   //      
+   //
    //   }
+
+
+   bool style_base::_001OnDrawSplitLayout(::draw2d::graphics * pgraphics, ::user::split_layout * psplitlayout)
+   {
+
+      return false;
+
+   }
 
 
    bool style_base::get_color(COLORREF & cr, e_color ecolor, ::user::interaction * pui)
@@ -1287,7 +1295,7 @@ namespace user
 
    }
 
-   
+
    bool style_base::get_double(double & d, e_double edouble, ::user::interaction * pui)
    {
 

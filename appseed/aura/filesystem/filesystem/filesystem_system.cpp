@@ -777,7 +777,7 @@ restart:
       try
       {
 
-         spfile = App(papp).file().get_file(varFile,::file::type_text | ::file::mode_write | ::file::mode_truncate | ::file::mode_create | ::file::defer_create_directory);
+         spfile = App(papp).file().get_file(varFile,::file::mode_write | ::file::mode_truncate | ::file::mode_create | ::file::defer_create_directory);
 
       }
       catch(...)

@@ -77,6 +77,9 @@
 
 #include "base/user/user/user.h"
 
+#include "base/user/user/user_simple_view.h"
+#include "base/user/user/user_progress.h"
+
 
 //#include "base/user/wndfrm/frame/wndfrm_frame_updowninterface.h"
 
@@ -89,8 +92,6 @@ namespace user
 
 
 } // namespace user
-
-
 
 
 

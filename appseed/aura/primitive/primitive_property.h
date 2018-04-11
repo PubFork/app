@@ -46,6 +46,7 @@ namespace xml
 
 
    class disp_option;
+   class department;
 
 
 } // namespace xml

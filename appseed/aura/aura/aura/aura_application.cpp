@@ -18,42 +18,6 @@ extern "C"
 }
 
 
-template < typename PRED >
-class runnable_pred :
-   virtual public runnable
-{
-public:
-
-   PRED m_pred;
-
-   runnable_pred(PRED pred) :
-      m_pred(pred)
-   {
-
-   }
-
-   virtual void run()
-   {
-      m_pred();
-
-      delete this;
-
-   }
-
-
-};
-
-template < typename PRED >
-void run_pred_on_main_thread(PRED pred)
-{
-
-   runnable_pred < PRED > * prunnablepred = new runnable_pred < PRED >(pred);
-
-   run_runnable_on_main_thread(prunnablepred);
-
-}
-
-
 
 #ifdef WINDOWSEX
 

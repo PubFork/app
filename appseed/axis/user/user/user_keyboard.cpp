@@ -1,4 +1,4 @@
-#include "framework.h" 
+#include "framework.h"
 
 
 #if defined(LINUX) || defined(SOLARIS)
@@ -373,6 +373,8 @@ namespace user
    string keyboard::process_key(key * pkey)
    {
 
+      int iScan = pkey->m_iCode;
+
       if(m_playout == NULL)
       {
 
@@ -501,15 +503,15 @@ namespace user
 
 #elif defined(LINUX) || defined(SOLARIS)
 
-   string strSymbol = x11_keyboard_get_current_group_symbol();
+      string strSymbol = x11_keyboard_get_current_group_symbol();
 
-   for(int32_t i = 0; i < layoutida.get_count(); i++)
-   {
-      if(layoutida[i].m_countrycode.contains_ci(strSymbol))
+      for(int32_t i = 0; i < layoutida.get_count(); i++)
       {
-         return layoutida[i].m_strPath;
+         if(layoutida[i].m_countrycode.contains_ci(strSymbol))
+         {
+            return layoutida[i].m_strPath;
+         }
       }
-   }
 
 #elif defined(MACOS)
 

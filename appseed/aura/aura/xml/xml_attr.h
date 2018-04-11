@@ -4,7 +4,7 @@
 namespace xml
 {
 
-   
+
    class node;
 
 
@@ -17,7 +17,7 @@ namespace xml
    protected:
 
 
-      
+
       friend class node;
 
 
@@ -30,7 +30,7 @@ namespace xml
       attr_array(::aura::application * papp);
 
 
-      ::xml::attr * add_attr(id idName);
+      ::xml::attr * add_attr(const id & idName);
 
    };
 

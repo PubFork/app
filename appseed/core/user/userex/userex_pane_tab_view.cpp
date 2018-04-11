@@ -577,7 +577,7 @@ namespace userex
 
                ::user::impact * pview = pdocument->get_view(0);
 
-               m_pviewdata->m_pwnd = pview->GetParentFrame();
+               pcreatordata->m_pwnd = pview->GetParentFrame();
 
                prepare_form(pcreatordata->m_id, pdocument);
 

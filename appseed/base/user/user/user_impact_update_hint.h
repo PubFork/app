@@ -22,6 +22,7 @@ namespace user
          hint_after_change_text_delayed,
          hint_control_event,
          hint_delete_contents,
+         hint_key_down,
 
       };
 
@@ -30,6 +31,8 @@ namespace user
       bool                       m_bOk;
       ::user::control_event *    m_pusercontrolevent;
       ::user::interaction *      m_pui;
+      ::user::e_key              m_ekey;
+      bool                       m_bEnterKeyPressed;
 
 
       bool is_type_of(e_hint ehint) const;

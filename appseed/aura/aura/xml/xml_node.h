@@ -156,7 +156,7 @@ namespace xml
       node *                  GetChildByAnyAttr(const char * pszName, stringa & straName, stringa & straAttrValue);
       node *                  GetChildByAllAttr(const char * pszName, stringa & straName, stringa & straAttrValue);
 
-      node *                  get_child_at(const char * pszName, index iIndex, index iDepth);
+      node *                  get_child_at(const char * pszName, index iIndex, index iDepth = 0);
       ::count get_child_attr_value(stringa & stra, const char * pszName, const char * pszAttrName, index iDepth = 1);
       ::count remove_child_with_attr(const char * pszName, const char * pszAttrName, index iIndex, ::count iCount = 1, index iDepth = 1);
 

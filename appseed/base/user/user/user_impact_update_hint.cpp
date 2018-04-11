@@ -13,6 +13,9 @@ namespace user
       m_ehint              = hint_none;
       m_bOk                = true;
       m_pusercontrolevent  = NULL;
+      m_pui                = NULL;
+      m_ekey               = key_none;
+      m_bEnterKeyPressed   = false;
 
    }
 

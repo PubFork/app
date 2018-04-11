@@ -26,7 +26,7 @@ namespace windows
       virtual void get_filea(::file::patha & patha);
 
       virtual void set_plain_text(const char * psz);
-      virtual string get_plain_text();
+      virtual bool get_plain_text(string & str);
 
       virtual bool desk_to_dib(::draw2d::dib * pdib);
       virtual bool dib_to_desk(::draw2d::dib * pdib);
