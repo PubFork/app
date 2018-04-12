@@ -1356,7 +1356,9 @@ namespace wndfrm_anthill
          else
          {
 
-            brushText->create_solid(::user::color_button_text_disabled);
+            brushText->create_solid(ptoolbar->_001GetColor(
+
+                                    ::user::color_button_text_disabled));
 
             pgraphics->set_text_color(ptoolbar->_001GetColor(
 

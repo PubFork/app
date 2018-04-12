@@ -494,9 +494,9 @@ SizingNone:
             }
 
             void FrameSchemaHardCoded008::GetBorderRect(
-               const RECT & lpcrectClient,
-               LPRECT lprect,
-               EBorder eside)
+            const RECT & lpcrectClient,
+            LPRECT lprect,
+            EBorder eside)
             {
                rect rectBig(lpcrectClient);
                rect rectSmall;
@@ -826,7 +826,7 @@ SizingNone:
                   else if (ecolor == ::user::color_button_text_disabled)
                   {
 
-                     cr = ARGB(255, 0x80, 0x80, 0x80);
+                     cr = ARGB(255, 0xD0, 0xD0, 0xD0);
 
                      return true;
 

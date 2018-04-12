@@ -574,7 +574,7 @@ class sec_cotaskptr :
 public:
 
 
-   SIZE_T         m_size;
+   DWORD         m_size;
 
 
    sec_cotaskptr()
