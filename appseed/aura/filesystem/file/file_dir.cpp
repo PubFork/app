@@ -15,6 +15,7 @@
 #elif defined(METROWIN)
 #include "aura/aura/os/metrowin/metrowin_file_winrt.h"
 #endif
+#include "aura/aura/os/windows_common/windows_common_cotaskptr.h"
 
 
 void TranslateLastError()

@@ -5594,7 +5594,7 @@ namespace draw2d_direct2d
    void graphics::enum_fonts(::draw2d::font::enum_item_array & itema)
    {
 
-      ::windows::comptr<IDWriteFontCollection> pFontCollection;
+      ::comptr<IDWriteFontCollection> pFontCollection;
 
       // Get the system font collection.
       HRESULT hr = global_draw_get_write_factory()->GetSystemFontCollection(&pFontCollection);
@@ -5616,7 +5616,7 @@ namespace draw2d_direct2d
 
       for(UINT32 i = 0; i < familyCount; ++i)
       {
-         ::windows::comptr<IDWriteFontFamily> pFontFamily;
+         ::comptr<IDWriteFontFamily> pFontFamily;
 
          // Get the font family.
          if(SUCCEEDED(hr))
@@ -5624,7 +5624,7 @@ namespace draw2d_direct2d
             hr = pFontCollection->GetFontFamily(i,&pFontFamily);
          }
 
-         ::windows::comptr<IDWriteLocalizedStrings> pFamilyNames;
+         ::comptr<IDWriteLocalizedStrings> pFamilyNames;
 
          // Get a list of localized strings for the family name.
          if(SUCCEEDED(hr))

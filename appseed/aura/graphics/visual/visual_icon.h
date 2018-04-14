@@ -18,9 +18,9 @@ namespace visual
       ::draw2d::dibmap              m_dibmap;
 
       icon(::aura::application * papp);
-      icon(::aura::application * papp, void * picon);
+      icon(::aura::application * papp, void * picon, bool bAttach = true);
 #ifdef WINDOWS
-      icon(::aura::application * papp, HICON hicon);
+      icon(::aura::application * papp, HICON hicon, bool bAttach = true);
 #endif
       virtual ~icon();
 

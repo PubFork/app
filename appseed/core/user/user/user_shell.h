@@ -12,6 +12,7 @@ namespace user
       enum e_file_attribute
       {
 
+         file_attribute_none,
          file_attribute_normal,
          file_attribute_directory,
 
@@ -40,6 +41,7 @@ namespace user
       {
       public:
 
+
          string                        m_strPath;
          string                        m_strShellThemePrefix;
          cflag < e_file_attribute >    m_eattribute;
@@ -50,29 +52,16 @@ namespace user
          oswindow                      m_oswindow;
          COLORREF                      m_cr;
 
-         image_key();
-         virtual ~image_key() {}
 
-         operator uint32_t () const
-         {
-            return m_iIcon;
-         }
+         image_key();
+         image_key(const image_key & imagekey);
+         virtual ~image_key();
+
 
          bool operator == (const image_key & key) const;
-
          void set_path(const string & strPath, bool bSetExtension = true);
          void set_extension(const string & strPath);
 
-      };
-
-      class image_key_store :
-         public image_key
-      {
-      public:
-
-         image_key_store();
-         image_key_store(const image_key & key);
-         virtual ~image_key_store();
 
       };
 
@@ -81,13 +70,13 @@ namespace user
       {
          return m_eattribute == key.m_eattribute
                 && m_eicon == key.m_eicon
-                && m_iIcon == key.m_iIcon
                 && m_strExtension == key.m_strExtension
                 && m_strShellThemePrefix == key.m_strShellThemePrefix
                 && m_strPath == key.m_strPath;
       }
 
-
+      template < typename VALUE, typename ARG_VALUE >
+      using image_key_map = map< image_key, const image_key &, VALUE, ARG_VALUE >;
 
 
       class CLASS_DECL_CORE shell :
@@ -97,17 +86,18 @@ namespace user
       {
       protected:
 
-         ::int_map < sp(image_list) >                                     m_pil; // int is the size
-         ::int_map < sp(image_list) >                                     m_pilHover; // int is the size;
+         ::int_map < sp(image_list) >                                   m_pil; // int is the size
+         ::int_map < sp(image_list) >                                   m_pilHover; // int is the size;
 
       public:
 
          int_array                                                      m_iaSize;
-         //sp(image_list)                                                 m_pil48Hover;
-         map < image_key_store, const image_key &, int32_t, int32_t >   m_imagemap;
+         image_key_map < int32_t, int32_t >                             m_imagemap;
+         image_key_map < image_key, const image_key & >                 m_imagekeymap;
 
          string                                                         m_strShellThemePrefix;
          stringa                                                        m_straThemeableIconName;
+
 
          shell(::aura::application * papp);
          virtual ~shell();
@@ -115,13 +105,8 @@ namespace user
 
          virtual void on_update_sizes_interest();
 
-         //virtual void open_folder(oswindow oswindow, const string & strFolder);
-         //virtual void close_folder(const string & strFolder);
-
          virtual int32_t get_image_foo(oswindow oswindow, const string & strExtension, e_file_attribute eattribute, e_icon eicon, COLORREF crBk = 0) = 0;
          virtual int32_t get_image(oswindow oswindow, const string & strPath, e_file_attribute eattribute, e_icon eicon, COLORREF crBk = 0) = 0;
-         //virtual int32_t get_image(oswindow oswindow, image_key key, const unichar * lpcszExtra, COLORREF crBk) = 0;
-         //virtual int32_t get_image_by_extension(oswindow oswindow, image_key & key, COLORREF crBk) = 0;
 
          image_list * GetImageList(int iSize);
          image_list * GetImageListHover(int iSize);
@@ -150,5 +135,15 @@ inline UINT HashKey<const ::user::shell::image_key &>(const ::user::shell::image
    return (UINT)harmannieves_camwhite_hash(key.m_strPath,
                                            harmannieves_camwhite_hash(key.m_strShellThemePrefix,
                                                  harmannieves_camwhite_hash(key.m_strExtension,
-                                                       key.m_iIcon | (((int)key.m_eicon) << 8) | (((int)key.m_eattribute) << 16))));
+                                                       (((int)key.m_eicon) << 8) | (((int)key.m_eattribute) << 16))));
+}
+
+
+
+template <  >
+inline bool EqualElements(const ::user::shell::image_key & element1, const ::user::shell::image_key & element2)
+{
+
+   return element1 == element2;
+
 }

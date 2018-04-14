@@ -1,5 +1,5 @@
 ﻿#include "framework.h"
-
+#include "aura/aura/os/windows_common/windows_common_cotaskptr.h"
 
 
 namespace windows
@@ -1013,7 +1013,7 @@ try1:
 
       ::file::path str;
 
-      cotaskptr < PWSTR > pwszPath;
+      ::cotaskptr < PWSTR > pwszPath;
 
       HANDLE hToken = NULL;
 

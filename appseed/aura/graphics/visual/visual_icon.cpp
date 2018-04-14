@@ -30,25 +30,29 @@ namespace visual
 
    }
 
-   icon::icon(::aura::application * papp, void * picon) :
+
+   icon::icon(::aura::application * papp, void * picon, bool bAttach) :
       m_dibmap(papp)
    {
 
       m_picon = picon;
-      m_bAutoDelete = true;
+
+      m_bAutoDelete = bAttach;
 
       on_update_icon();
 
    }
 
+
 #ifdef WINDOWS
 
-   icon::icon(::aura::application * papp, HICON hicon) :
+   icon::icon(::aura::application * papp, HICON hicon, bool bAttach) :
       m_dibmap(papp)
    {
 
       m_picon = hicon;
-      m_bAutoDelete = true;
+
+      m_bAutoDelete = bAttach;
 
       on_update_icon();
 
@@ -288,21 +292,21 @@ namespace visual
 
          hbitmapOld = (HBITMAP) ::SelectObject(hdc, hbitmap);
 
-         ICONINFO ii;
-         BITMAPINFO biC;
-         BITMAPINFO biM;
+         //ICONINFO ii;
+         //BITMAPINFO biC;
+         //BITMAPINFO biM;
 
-         ZERO(biC);
-         ZERO(biM);
+         //ZERO(biC);
+         //ZERO(biM);
 
-         if (::GetIconInfo((HICON)m_picon, &ii))
-         {
+         //if (::GetIconInfo((HICON)m_picon, &ii))
+         //{
 
-            ::GetObject(ii.hbmColor, sizeof(biC), (LPVOID)&biC);
+         //   ::GetObject(ii.hbmColor, sizeof(biC), (LPVOID)&biC);
 
-            ::GetObject(ii.hbmMask, sizeof(biM), (LPVOID)&biM);
+         //   ::GetObject(ii.hbmMask, sizeof(biM), (LPVOID)&biM);
 
-         }
+         //}
 
          if (!::DrawIconEx(hdc, 0, 0, (HICON)m_picon, cx, cy, 0, NULL, DI_IMAGE | DI_MASK))
          {

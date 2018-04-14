@@ -247,6 +247,18 @@ public:
       return post_object(message_system, system_message_pred, dynamic_cast < pred_holder_base *>(canew(pred_holder < PRED >(get_app(), pred))));
    }
 
+   template < typename PRED >
+   bool schedule_pred(sp(object) phold, PRED pred)
+   {
+      return post_pred(phold, pred);
+   }
+
+   template < typename PRED >
+   bool schedule_pred(PRED pred)
+   {
+      return post_pred(pred);
+   }
+
    virtual bool on_run_exception(::exception::exception * pexception);
 
 

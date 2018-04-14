@@ -13,18 +13,17 @@ namespace user
       windows::windows(::aura::application * papp) :
          ::object(papp),
          ::user::shell::shell(papp),
-         m_mutexQueue(papp),
-         m_mutexImage(papp),
-         m_evKey(papp)
+         m_mutexImage(papp)
       {
 
+         m_iMaxThreadCount = MAX(4, ::get_processor_count());
 
          defer_create_mutex();
 
-         m_bStarted = false;
-
+         m_uiThread = 0;
 
       }
+
 
       windows::~windows()
       {
@@ -32,352 +31,61 @@ namespace user
       }
 
 
-      comptr < IShellFolder > windows::_017GetShellFolder(per_fork * pfork, LPITEMIDLIST lpiidlFolder)
+      windows::thread::thread(windows * pshell) :
+         ::object(pshell->get_app()),
+         ::thread(pshell->get_app())
       {
 
-         if (lpiidlFolder == NULL)
-         {
+         m_pshell = pshell;
 
-            return NULL;
-
-         }
-
-         HRESULT hr = S_OK;
-
-         if (SUCCEEDED(hr))
-         {
-
-            comptr < IShellFolder > pfolder;
-
-            hr = pfork->m_pfolderDesktop->BindToObject(
-                 lpiidlFolder,
-                 NULL,
-                 IID_IShellFolder,
-                 pfolder);
-
-            if (SUCCEEDED(hr))
-            {
-
-               return pfolder;
-
-            }
-
-         }
-         else
-         {
-            ASSERT(FALSE);
-         }
-
-         return NULL;
+         begin();
 
       }
 
 
-      comptr < IShellFolder> windows::_017GetShellParentFolder(per_fork * pfork, LPITEMIDLIST lpiidlChild)
+      windows::thread::~thread()
       {
-
-         LPITEMIDLIST lpiidlParent = _017ItemIDListGetFolderParent(pfork, lpiidlChild);
-
-         comptr < IShellFolder> pfolderRet = _017GetShellFolder(pfork, lpiidlParent);
-
-         pfork->_017ItemIDListFree(lpiidlParent);
-
-         return pfolderRet;
 
       }
 
 
-      LPITEMIDLIST windows::_017ItemIDListDup(per_fork * pfork, LPITEMIDLIST lpiidl)
+      bool windows::thread::init_thread()
       {
 
-         if (lpiidl == NULL)
-            return NULL;
+         m_bSimpleMessageLoop = false;
 
-         int32_t iLen = _017ItemIDListGetLen(lpiidl);
-
-         LPITEMIDLIST lpiidlRet = (LPITEMIDLIST)
-                                  pfork->m_pmalloc->Alloc(iLen + 2);
-
-         memcpy(lpiidlRet, lpiidl, iLen);
-         ((LPBYTE)lpiidlRet)[iLen] = 0;
-         ((LPBYTE)lpiidlRet)[iLen + 1] = 0;
-
-         return lpiidlRet;
-
-      }
-
-
-      int32_t _017ItemIDListIHash(LPITEMIDLIST lpiidl)
-      {
-
-         if (lpiidl == NULL)
-            return 0;
-
-         int32_t iLen = _017ItemIDListGetLen(lpiidl);
-
-         int32_t iHash = 0;
-         int32_t iRemain = iLen;
-         uint32_t * lpdw = (uint32_t *)lpiidl;
-         while (iRemain >= 4)
-         {
-            iHash += *lpdw;
-            lpdw++;
-            iRemain -= 4;
-         }
-         LPBYTE lpb = (LPBYTE)lpdw;
-         while (iRemain > 0)
-         {
-            iHash += *lpb;
-            lpb++;
-            iRemain--;
-         }
-         return iHash;
-      }
-
-
-      LPITEMIDLIST windows::_017ItemIDListGetAbsolute(per_fork * pfork, LPITEMIDLIST lpiidlParent, LPITEMIDLIST lpiidl)
-      {
-
-         int32_t iLenParent = _017ItemIDListGetLen(lpiidlParent);
-         int32_t iLen = _017ItemIDListGetLen(lpiidl);
-
-         LPITEMIDLIST lpiidlRet = (LPITEMIDLIST)
-                                  pfork->m_pmalloc->Alloc(iLenParent + iLen + 2);
-
-         memcpy(lpiidlRet, lpiidlParent, iLenParent);
-         memcpy(&(((LPBYTE)lpiidlRet)[iLenParent]), lpiidl, iLen);
-         ((LPBYTE)lpiidlRet)[iLenParent + iLen] = 0;
-         ((LPBYTE)lpiidlRet)[iLenParent + iLen + 1] = 0;
-
-         return lpiidlRet;
-
-      }
-
-      LPITEMIDLIST windows::_017ItemIDListGetLast(per_fork * pfork, LPITEMIDLIST lpiidl)
-      {
-
-         if (lpiidl == NULL)
-            return NULL;
-
-
-         LPSHITEMID  lpshiid = (LPSHITEMID)lpiidl;
-         LPSHITEMID  lpshiidLast = lpshiid;
-         USHORT cb;
-
-         while (true)
-         {
-            cb = *((USHORT *)lpshiid);
-            if (cb == 0)
-               break;
-            lpshiidLast = lpshiid;
-            lpshiid = (LPSHITEMID)(((LPBYTE)lpshiid) + cb);
-         }
-         int32_t iCount = *((USHORT *)lpshiidLast);
-
-         if (iCount == 0)
-            return NULL;
-
-         LPITEMIDLIST lpiidlRet = (LPITEMIDLIST)
-                                  pfork->m_pmalloc->Alloc(iCount + 2);
-
-         memcpy(lpiidlRet, lpshiidLast, iCount);
-
-         *((USHORT *)&(((LPBYTE)lpiidlRet)[iCount])) = 0;
-
-         return lpiidlRet;
-
-      }
-
-
-      LPITEMIDLIST windows::_017ItemIDListGetFolderParent(per_fork * pfork, LPITEMIDLIST lpiidl)
-      {
-
-         if (lpiidl == NULL)
-         {
-
-            return NULL;
-
-         }
-
-         //HRESULT hr;
-
-         LPSHITEMID  lpshiid = (LPSHITEMID)lpiidl;
-         LPSHITEMID  lpshiidLast = lpshiid;
-         USHORT cb;
-
-         while (true)
-         {
-            cb = *((USHORT *)lpshiid);
-            if (cb == 0)
-               break;
-            lpshiidLast = lpshiid;
-            lpshiid = (LPSHITEMID)(((LPBYTE)lpshiid) + cb);
-         }
-         ::count iCount = ((LPBYTE)lpshiidLast) - ((LPBYTE)lpiidl);
-
-         if (iCount == 0)
-            return NULL;
-
-         LPITEMIDLIST lpiidlRet = (LPITEMIDLIST)
-                                  pfork->m_pmalloc->Alloc(iCount + 2);
-
-         memcpy(lpiidlRet, lpiidl, iCount);
-
-         *((USHORT *)&(((LPBYTE)lpiidlRet)[iCount])) = 0;
-
-         return lpiidlRet;
-      }
-
-      bool windows::_017ItemIDListIsEqual(LPITEMIDLIST lpiidl1, LPITEMIDLIST lpiidl2)
-      {
-         if (lpiidl1 == NULL && lpiidl2 == NULL)
-         {
-            return true;
-         }
-         if (lpiidl1 == NULL || lpiidl2 == NULL)
-         {
-            return false;
-         }
-
-
-         LPSHITEMID  lpshiid1 = (LPSHITEMID)lpiidl1;
-         LPSHITEMID  lpshiid2 = (LPSHITEMID)lpiidl2;
-         USHORT cb1;
-         USHORT cb2;
-
-         while (true)
-         {
-            cb1 = *((USHORT *)lpshiid1);
-            cb2 = *((USHORT *)lpshiid2);
-            if (cb1 == 0 && cb2 == 0)
-            {
-               return true;
-            }
-            if (cb1 == 0 || cb2 == 0)
-            {
-               return false;
-            }
-            if (cb1 != cb2)
-               return false;
-            if (memcmp(lpshiid1, lpshiid2, cb1) != 0)
-               return false;
-            lpshiid1 = (LPSHITEMID)(((LPBYTE)lpshiid1) + cb1);
-            lpshiid2 = (LPSHITEMID)(((LPBYTE)lpshiid2) + cb2);
-         }
-      }
-
-      void windows::_017ItemIDListParsePath(per_fork * pfork, oswindow window, LPITEMIDLIST * lpiidl, const char * lpcsz)
-      {
-         HRESULT hr;
-
-
-         try
-         {
-            if (pfork->m_pfolder.is_set())
-            {
-
-               LPITEMIDLIST pChild = NULL;
-
-               hr = pfork->m_pfolder->ParseDisplayName(
-                    window,
-                    NULL,
-                    ::str::international::utf8_to_unicode(::file::path(lpcsz).name()),
-                    NULL,
-                    &pChild,
-                    NULL);
-
-               *lpiidl = _017ItemIDListGetAbsolute(pfork, pfork->m_lpiidl, pChild);
-
-               pfork->_017ItemIDListFree(pChild);
-
-            }
-            else
-            {
-               hr = pfork->m_pfolderDesktop->ParseDisplayName(
-                    window,
-                    NULL,
-                    ::str::international::utf8_to_unicode(lpcsz),
-                    NULL,
-                    lpiidl,
-                    NULL);
-            }
-         }
-         catch (...)
-         {
-         }
-
-      }
-
-      void windows::per_fork::_017ItemIDListFree(LPITEMIDLIST lpiidl)
-      {
-
-         m_pmalloc->Free(lpiidl);
-
-
-      }
-
-      bool windows::_017HasSubFolder(::aura::application * papp, LPITEMIDLIST lpiidl, const char * lpcszExtra)
-      {
-
-         WCHAR szPath[_MAX_PATH * 10];
-
-         SHGetPathFromIDListW(lpiidl, szPath);
-
-         e_folder efolder = get_folder_type(papp, szPath);
-
-         if (efolder == folder_none)
+         if (!::thread::init_thread())
          {
 
             return false;
 
          }
-         else if (efolder == folder_zip)
-         {
 
-            string wstrPath;
+         defer_co_initialize_ex(false);
 
-            ::str::international::unicode_to_utf8(wstrPath, szPath);
+         SHGetDesktopFolder(&m_pfolderDesktop);
 
-            string wstrExtra(lpcszExtra);
+         SHGetMalloc(&m_pmalloc);
 
-            if (wstrExtra.get_length() > 0)
-            {
-               wstrPath += ":" + wstrExtra;
-            }
+         SHGetImageList(SHIL_SMALL, IID_IImageList, m_pilSmall);
 
-            return zip::util().has_sub_folder(papp, wstrPath);
+         SHGetImageList(SHIL_LARGE, IID_IImageList, m_pilLarge);
 
-         }
-         else
-         {
+         SHGetImageList(SHIL_EXTRALARGE, IID_IImageList, m_pilExtraLarge);
 
-            ::file::listing listing(papp);
+         SHGetImageList(SHIL_JUMBO, IID_IImageList, m_pilJumbo);
 
-            listing.ls(::str::international::unicode_to_utf8(szPath));
-
-            for (int32_t i = 0; i < listing.get_size(); i++)
-            {
-
-               efolder = get_folder_type(papp, listing[i]);
-
-               if (efolder != folder_none)
-                  return true;
-
-            }
-
-            return false;
-
-         }
+         return true;
 
       }
 
 
-      int32_t windows::get_image_by_extension(per_fork * pfork, oswindow oswindow, image_key & key, COLORREF crBk)
+      int32_t windows::thread::get_image_by_extension(oswindow oswindow, image_key & imagekey, COLORREF crBk)
       {
 
 #ifdef WINDOWSEX
 
-         return get_foo_image(pfork, oswindow, key, crBk);
+         return get_foo_image(oswindow, imagekey, crBk);
 
 #else
 
@@ -388,38 +96,23 @@ namespace user
       }
 
 
-      int32_t windows::get_image(per_fork * pfork, oswindow oswindow, image_key imagekey, LPITEMIDLIST lpiidlAbsolute, LPITEMIDLIST lpiidlChild, const unichar * lpcszExtra, COLORREF crBk)
+      // returned image should be "Definitive" icon/image.
+      // maybe fallback but not temporary
+      int32_t windows::thread::get_image(oswindow oswindow, image_key imagekey, const itemidlist & pidlAbsolute, const itemidlist & pidlChild, const unichar * lpcszExtra, COLORREF crBk)
       {
-
-         DWORD dw1, dw2, dw3, dwDelta;
-
-         int iImage = 0x80000000;
 
          comptr < IShellFolder> lpsf;
 
-         if (pfork->m_pfolder.is_set())
-         {
-
-            lpsf = pfork->m_pfolder;
-
-         }
-         else
-         {
-
-            lpsf = _017GetShellParentFolder(pfork, lpiidlAbsolute);
-
-            pfork->m_pfolder = lpsf;
-
-            pfork->m_strFolder = ::file::path(imagekey.m_strPath).folder();
-
-         }
+         lpsf = pidlAbsolute.get_shell_folder();
 
          if (lpsf.is_null())
          {
 
-            return get_foo_image(pfork, oswindow, imagekey, crBk);
+            return get_foo_image(oswindow, imagekey, crBk);
 
          }
+
+         int iImage = 0x80000000;
 
          int32_t iType;
 
@@ -442,6 +135,7 @@ namespace user
          string strResource;
 
          WCHAR wszPath[_MAX_PATH * 6];
+
          WCHAR szPath[_MAX_PATH * 6];
 
          HICON hicon16 = NULL;
@@ -473,12 +167,6 @@ namespace user
 
          }
 
-#define UNNACCEPTABLE_TIMEOUT 40
-
-         SHFILEINFOW shfi16;
-
-         SHFILEINFOW shfi48;
-
          comptr < IExtractIconW > lpiextracticon;
 
          comptr < IShellIconOverlayIdentifier > lpioverlay;
@@ -489,27 +177,14 @@ namespace user
 
          string strIconLocation;
 
-         dw1 = get_tick_count();
-
-         if (SUCCEEDED(hrExtractIconUI= lpsf->GetUIObjectOf(
-                                        oswindow,
-                                        1,
-                                        (LPCITEMIDLIST *)&lpiidlChild,
-                                        IID_IExtractIconW,
-                                        NULL,
-                                        lpiextracticon)))
+         if (SUCCEEDED(hrExtractIconUI = lpsf->GetUIObjectOf(
+                                         oswindow,
+                                         1,
+                                         (LPCITEMIDLIST *)&pidlChild.m_pidl,
+                                         IID_IExtractIconW,
+                                         NULL,
+                                         lpiextracticon)))
          {
-
-            dw2 = get_tick_count();
-
-            dwDelta = dw2 - dw1;
-
-            if (dwDelta > UNNACCEPTABLE_TIMEOUT)
-            {
-
-               output_debug_string("What!!");
-
-            }
 
             int iIcon = 0;
 
@@ -520,17 +195,6 @@ namespace user
                                            &iIcon,
                                            &uiExtractIconLocationFlags)))
             {
-
-               dw3 = get_tick_count();
-
-               dwDelta = dw3 - dw2;
-
-               if (dwDelta > UNNACCEPTABLE_TIMEOUT)
-               {
-
-                  output_debug_string("What(2)!!");
-
-               }
 
                if (wcscmp(wszPath, L"*") == 0)
                {
@@ -558,13 +222,14 @@ namespace user
             }
 
          }
-         else
+
+         if(FAILED(hrIconLocation))
          {
 
             if (SUCCEEDED(lpsf->GetUIObjectOf(
                           oswindow,
                           1,
-                          (LPCITEMIDLIST *)&lpiidlChild,
+                          (LPCITEMIDLIST *)&pidlChild.m_pidl,
                           IID_IShellIconOverlayIdentifier,
                           NULL,
                           lpioverlay)))
@@ -611,7 +276,7 @@ namespace user
                if (SUCCEEDED(lpsf->GetUIObjectOf(
                              oswindow,
                              1,
-                             (LPCITEMIDLIST *)&lpiidlChild,
+                             (LPCITEMIDLIST *)&pidlChild.m_pidl,
                              IID_IExtractImage,
                              NULL,
                              lpiextractimage)))
@@ -674,42 +339,23 @@ namespace user
 
          }
 
-         {
-
-            synch_lock sl(m_pmutex);
-
-            if (m_imagemap.Lookup(imagekey, iImage))
-            {
-
-               return iImage;
-
-            }
-
-         }
-
          string strTarget;
 
-         if ((FAILED(hrIconLocation) || imagekey.m_iIcon == 0x80000000 || !Application.file().exists(strIconLocation)) && ::str::ends_ci(strFileParam, ".lnk"))
+         if (((FAILED(hrIconLocation) && FAILED(hrGetLocation))
+
+               || imagekey.m_iIcon == 0x80000000
+
+               || !Application.file().exists(strIconLocation))
+
+               && ::str::ends_ci(strFileParam, ".lnk"))
+
          {
 
             string strFolder;
 
             string strParams;
 
-            dw1 = get_tick_count();
-
             System.file().resolve_link(strTarget, strFolder, strParams, strFileParam, NULL);
-
-            dw2 = get_tick_count();
-
-            dwDelta = dw2 - dw1;
-
-            if (dwDelta > UNNACCEPTABLE_TIMEOUT)
-            {
-
-               output_debug_string("What(3)!!");
-
-            }
 
             if (!Application.file().exists(strTarget) && !Application.dir().is(strTarget))
             {
@@ -727,44 +373,18 @@ namespace user
 
                }
 
-               dw1 = get_tick_count();
-
-               iImage = get_foo_image(pfork, oswindow, imagekey, crBk);
-
-               dw2 = get_tick_count();
-
-               dwDelta = dw2 - dw1;
-
-               if (dwDelta > UNNACCEPTABLE_TIMEOUT)
-               {
-
-                  output_debug_string("What(4)!!");
-
-               }
+               iImage = get_foo_image(oswindow, imagekey, crBk);
 
                return iImage;
 
             }
 
-            if (FAILED(hrIconLocation))
+            if (FAILED(hrIconLocation) && FAILED(hrGetLocation))
             {
 
                imagekey.set_path(strTarget);
 
-               dw1 = get_tick_count();
-
-               iImage = get_image(pfork, oswindow, imagekey, lpcszExtra, crBk);
-
-               dw2 = get_tick_count();
-
-               dwDelta = dw2 - dw1;
-
-               if (dwDelta > UNNACCEPTABLE_TIMEOUT)
-               {
-
-                  output_debug_string("What(5)!!");
-
-               }
+               iImage = get_image(oswindow, imagekey, lpcszExtra, crBk);
 
                return iImage;
 
@@ -781,53 +401,37 @@ namespace user
          if (imagekey.m_iIcon == 0x80000000)
          {
 
-            if (m_strShellThemePrefix.has_char())
+            if (imagekey.m_strShellThemePrefix.has_char())
             {
 
                string strExtension = file_extension_dup(strTarget);
 
                image_key imagekeyTheme;
 
-               string strFooPath = m_strShellThemePrefix + "foo." + strExtension;
+               string strFooPath = imagekey.m_strShellThemePrefix + "foo." + strExtension;
 
                imagekeyTheme.set_path(strFooPath);
 
                imagekeyTheme.m_iIcon = 0;
 
+               if (m_pshell->contains_image(imagekeyTheme, iImage))
                {
 
-                  synch_lock sl(m_pmutex);
-
-                  if (m_imagemap.Lookup(imagekeyTheme, iImage))
-                  {
-
-                     return iImage;
-
-                  }
+                  return iImage;
 
                }
 
                string strIcon;
 
-               strIcon = ::dir::system() / "config/shell/app_theme" / m_strShellThemePrefix + strExtension + ".ico";
+               strIcon = ::dir::system() / "config/shell/app_theme" / imagekey.m_strShellThemePrefix + strExtension + ".ico";
 
                if (Application.file().exists(strIcon))
                {
 
-                  iImage = reserve_image();
-
-                  dw1 = get_tick_count();
-
-                  add_icon_path(strIcon, crBk, iImage);
-
-                  dw2 = get_tick_count();
-
-                  dwDelta = dw2 - dw1;
-
-                  if (dwDelta > UNNACCEPTABLE_TIMEOUT)
+                  if (m_pshell->reserve_image(imagekeyTheme, iImage))
                   {
 
-                     output_debug_string("What(6)!!");
+                     m_pshell->add_icon_path(strIcon, crBk, iImage);
 
                   }
 
@@ -840,31 +444,79 @@ namespace user
             if (wcscmp(wszPath, L"*") == 0)
             {
 
-               dw1 = get_tick_count();
-
-               iImage = get_foo_image(pfork, oswindow, imagekey, crBk);
-
-               dw2 = get_tick_count();
-
-               dwDelta = dw2 - dw1;
-
-               if (dwDelta > UNNACCEPTABLE_TIMEOUT)
-               {
-
-                  output_debug_string("What(7)!!");
-
-               }
-
-               return iImage;
+               return get_foo_image(oswindow, imagekey, crBk);
 
             }
 
          }
 
-         if (strIconLocation.has_char())
+         if (uiExtractIconLocationFlags & GIL_NOTFILENAME)
          {
 
-            if (strIconLocation.ends_ci(".ico"))
+            if (m_pshell->reserve_image(imagekey, iImage))
+            {
+
+               HICON hicon = NULL;
+
+               HRESULT hrExtract = E_FAIL;
+
+               synch_lock sl(m_pshell->m_pmutex);
+
+               auto iaSize = m_pshell->m_iaSize;
+
+               sl.unlock();
+
+               for (auto iSize : iaSize)
+               {
+
+                  if (iSize <= 16)
+                  {
+
+                     if (SUCCEEDED(hrExtract = lpiextracticon->Extract(
+                                               wszPath,
+                                               imagekey.m_iIcon,
+                                               NULL,
+                                               &hicon,
+                                               iSize << 16)))
+                     {
+
+                        m_pshell->add_icon(iSize, hicon, crBk, iImage);
+
+                        ::DestroyIcon(hicon);
+
+                     }
+
+                  }
+                  else
+                  {
+
+                     if (SUCCEEDED(hrExtract = lpiextracticon->Extract(
+                                               wszPath,
+                                               imagekey.m_iIcon,
+                                               &hicon,
+                                               NULL,
+                                               iSize)))
+                     {
+
+                        m_pshell->add_icon(iSize, hicon, crBk, iImage);
+
+                        ::DestroyIcon(hicon);
+
+                     }
+
+                  }
+
+               }
+
+            }
+
+            return iImage;
+
+         }
+         else if(strIconLocation.has_char())
+         {
+
+            if(strIconLocation.ends_ci(".ico"))
             {
 
                image_key imagekeyIco;
@@ -873,33 +525,10 @@ namespace user
 
                imagekeyIco.m_iIcon = 0;
 
+               if (m_pshell->reserve_image(imagekeyIco, iImage))
                {
 
-                  synch_lock sl(m_pmutex);
-
-                  if (m_imagemap.Lookup(imagekeyIco, iImage))
-                  {
-
-                     return iImage;
-
-                  }
-
-               }
-
-               iImage = reserve_image();
-
-               dw1 = get_tick_count();
-
-               add_icon_path(strIconLocation, crBk, iImage);
-
-               dw2 = get_tick_count();
-
-               dwDelta = dw2 - dw1;
-
-               if (dwDelta > UNNACCEPTABLE_TIMEOUT)
-               {
-
-                  output_debug_string("What(8)!!");
+                  m_pshell->add_icon_path(strIconLocation, crBk, iImage);
 
                }
 
@@ -909,516 +538,288 @@ namespace user
             else
             {
 
-               //{
+               image_key imagekeyIco;
 
-               //   int iImage = 0x80000000;
+               imagekeyIco.set_path(strIconLocation, false);
 
-               //   synch_lock sl(m_pmutex);
-
-               //   for (auto iSize : m_iaSize)
-               //   {
-
-               //      HICON hicon = (HICON)ExtractResourceIcon(strIconLocation, iSize, iSize, imagekey.m_iIcon);
-
-               //      iImage = add_icon(iSize, hicon, crBk);
-
-               //   }
-
-               //   m_imagemap.set_at(imagekey, iImage);
-
-               //}
-
-               //return iImage;
-
-               HICON hicon = NULL;
-
-               DWORD dw1 = get_tick_count();
-
-               iImage = reserve_image();
-
-               fork([=]()
+               if (m_pshell->reserve_image(imagekeyIco, iImage))
                {
 
-                  HRESULT hrExtract = E_FAIL;
+                  synch_lock sl(m_pshell->m_pmutex);
 
-                  HICON hicon;
+                  auto iaSize = m_pshell->m_iaSize;
 
-                  for (auto iSize : m_iaSize)
+                  sl.unlock();
+
+                  for (auto iSize : iaSize)
                   {
 
-                     if (iSize <= 16)
-                     {
+                     int iSizeOut = iSize;
 
-                        if (SUCCEEDED(hrExtract = lpiextracticon->Extract(
-                                                  wszPath,
-                                                  imagekey.m_iIcon,
-                                                  NULL,
-                                                  &hicon,
-                                                  iSize << 16)))
-                        {
+                     HICON hicon = (HICON)ExtractResourceIcon(strIconLocation, iSizeOut, iSizeOut, imagekey.m_iIcon);
 
+                     m_pshell->add_icon(iSize, hicon, crBk, iImage);
 
-                        }
-
-                        add_icon(iSize, hicon, crBk, iImage);
-
-                     }
-                     else
-                     {
-
-                        if (SUCCEEDED(hrExtract = lpiextracticon->Extract(
-                                                  wszPath,
-                                                  imagekey.m_iIcon,
-                                                  &hicon,
-                                                  NULL,
-                                                  iSize)))
-                        {
-
-
-                        }
-
-                        add_icon(iSize, hicon, crBk, iImage);
-
-                     }
+                     ::DestroyIcon(hicon);
 
                   }
 
-               });
-
-               dw2 = get_tick_count();
-
-               dwDelta = dw2 - dw1;
-
-               if (dwDelta > UNNACCEPTABLE_TIMEOUT)
-               {
-
-                  output_debug_string("What(9)!!");
-
                }
 
                return iImage;
 
-               //HICON hicon32 = NULL;
-
-               //ExtractIconExW(
-               //wstring(strIconLocation),
-               //imagekey.m_iIcon,
-               //&hicon32,
-               //&hicon16,
-               //1);
-
-               //if (hicon48 == NULL)
-               //{
-
-               //   if (hicon32 != NULL)
-               //   {
-
-               //      hicon48 = hicon32;
-
-               //   }
-               //   else
-               //   {
-
-               //      hicon48 = hicon16;
-
-               //   }
-
-               //}
-
-               //if (hicon16 == NULL || hicon48 == NULL)
-               //{
-
-               //   string strFoo;
-
-               //   strFoo = "foo." + file_extension_dup(strFileParam);
-
-               //   wstring wstrFoo;
-
-               //   wstrFoo = strFoo;
-
-               //   if (hicon16 == NULL)
-               //   {
-               //      SHGetFileInfoW(
-               //      wstrFoo,
-               //      FILE_ATTRIBUTE_NORMAL,
-               //      &shfi16,
-               //      sizeof(shfi16),
-               //      SHGFI_USEFILEATTRIBUTES
-               //      | SHGFI_ICON
-               //      | SHGFI_SMALLICON);
-               //      hicon16 = shfi16.hIcon;
-               //   }
-               //   else
-               //   {
-
-               //      shfi16.hIcon = hicon16;
-
-               //   }
-
-               //   if (hicon48 == NULL)
-               //   {
-               //      SHGetFileInfoW(
-               //      wstrFoo,
-               //      FILE_ATTRIBUTE_NORMAL,
-               //      &shfi48,
-               //      sizeof(shfi48),
-               //      SHGFI_USEFILEATTRIBUTES
-               //      | SHGFI_ICON
-               //      | SHGFI_LARGEICON);
-               //      hicon48 = shfi48.hIcon;
-               //   }
-               //   else
-               //   {
-
-               //      shfi48.hIcon = hicon48;
-
-               //   }
-
-               //}
-
-               //bool b16 = false;
-
-               //bool b48 = false;
-
-               //iImage = reserve_image();
-
-               //add_icon_set(pfork, &shfi16, &shfi48, crBk, b16, b48, iImage);
-
-               //if (!b16 && shfi16.hIcon != NULL)
-               //{
-
-               //   ::DestroyIcon(shfi16.hIcon);
-
-               //}
-
-               //if (!b48 && shfi48.hIcon != NULL)
-               //{
-
-               //   ::DestroyIcon(shfi48.hIcon);
-
-               //}
-
-               //synch_lock sl(m_pmutex);
-
-               //m_imagemap.set_at(imagekey, iImage);
-
-               //return iImage;
-
-            }
-
-
-         }
-
-
-         if (imagekey.m_iIcon >= 0 && strFileParam.get_length() > 0)
-         {
-
-            dw1 = get_tick_count();
-
-            wstring wstrPath(strFileParam);
-
-            SHGetFileInfoW(
-            wstrPath,
-            FILE_ATTRIBUTE_NORMAL,
-            &shfi16,
-            sizeof(shfi16),
-            SHGFI_ICON
-            | SHGFI_SMALLICON);
-
-            SHGetFileInfoW(
-            wstrPath,
-            FILE_ATTRIBUTE_NORMAL,
-            &shfi48,
-            sizeof(shfi48),
-            SHGFI_ICON
-            | SHGFI_LARGEICON);
-
-            bool b16 = false;
-
-            bool b48 = false;
-
-            if (shfi16.hIcon != NULL || shfi48.hIcon != NULL)
-            {
-
-               iImage = reserve_image();
-
-               add_icon_set(pfork, &shfi16, &shfi48, crBk, b16, b48, iImage);
-
-               if (!b16 && shfi16.hIcon != NULL)
-               {
-
-                  ::DestroyIcon(shfi16.hIcon);
-
-               }
-
-               if (!b48 && shfi48.hIcon != NULL)
-               {
-
-                  ::DestroyIcon(shfi48.hIcon);
-
-               }
-
-               dw2 = get_tick_count();
-
-               dwDelta = dw2 - dw1;
-
-               if (dwDelta > UNNACCEPTABLE_TIMEOUT)
-               {
-
-                  output_debug_string("What(A)!!");
-
-               }
-
-               return iImage;
-
-            }
-
-            dw2 = get_tick_count();
-
-            dwDelta = dw2 - dw1;
-
-            if (dwDelta > UNNACCEPTABLE_TIMEOUT)
-            {
-
-               output_debug_string("What(B)!!");
 
             }
 
          }
 
-         imagekey.set_extension(strFileParam);
+
+         //if (imagekey.m_iIcon >= 0 && strFileParam.get_length() > 0)
+         //{
+
+         //   SHFILEINFOW shfi16;
+
+         //   SHFILEINFOW shfi48;
+
+         //   wstring wstrPath(strFileParam);
+
+         //   SHGetFileInfoW(
+         //   wstrPath,
+         //   FILE_ATTRIBUTE_NORMAL,
+         //   &shfi16,
+         //   sizeof(shfi16),
+         //   SHGFI_ICON
+         //   | SHGFI_SMALLICON);
+
+         //   SHGetFileInfoW(
+         //   wstrPath,
+         //   FILE_ATTRIBUTE_NORMAL,
+         //   &shfi48,
+         //   sizeof(shfi48),
+         //   SHGFI_ICON
+         //   | SHGFI_LARGEICON);
+
+         //   bool b16 = false;
+
+         //   bool b48 = false;
+
+         //   if (shfi16.hIcon != NULL || shfi48.hIcon != NULL)
+         //   {
+
+         //      if (m_pshell->reserve_image(imagekey, iImage))
+         //      {
+
+         //         m_pshell->add_icon_set(&shfi16, &shfi48, crBk, b16, b48, iImage);
+
+         //         if (!b16 && shfi16.hIcon != NULL)
+         //         {
+
+         //            ::DestroyIcon(shfi16.hIcon);
+
+         //         }
+
+         //         if (!b48 && shfi48.hIcon != NULL)
+         //         {
+
+         //            ::DestroyIcon(shfi48.hIcon);
+
+         //         }
+
+
+         //      }
+
+         //   }
+
+         //}
+
+         imagekey.set_extension(strTarget);
 
          imagekey.m_strPath = NULL;
 
          imagekey.m_iIcon = 0;
 
-         dw1 = get_tick_count();
-
-         iImage =  get_foo_image(pfork, oswindow, imagekey, crBk);
-
-         dw2 = get_tick_count();
-
-         dwDelta = dw2 - dw1;
-
-         if (dwDelta > UNNACCEPTABLE_TIMEOUT)
-         {
-
-            output_debug_string("What(C)!!");
-
-         }
-
-         return iImage;
-
+         return get_foo_image(oswindow, imagekey, crBk);
 
       }
 
 
-      int32_t windows::get_foo_image(per_fork * pfork, oswindow oswindow, image_key imagekey, COLORREF crBk)
+      int32_t windows::thread::get_foo_image(oswindow oswindow, image_key & imagekey, COLORREF crBk)
       {
 
-         int32_t iImage = 0x80000000;
+         int32_t iImage;
 
-         SHFILEINFOW shfi16;
-
-         SHFILEINFOW shfi48;
-
-         wstring wstrFilePath;
-
-         imagekey.m_strPath = "foo";
-
-         imagekey.m_strShellThemePrefix = m_strShellThemePrefix;
-
+         if (m_pshell->reserve_image(imagekey, iImage))
          {
 
-            synch_lock sl(m_pmutex);
+            SHFILEINFOW shfi16 = {};
 
-            if (m_imagemap.Lookup(imagekey, iImage))
+            SHFILEINFOW shfi48 = {};
+
+            wstring wstrFilePath;
+
+            if (imagekey.m_eattribute.is_signalized(file_attribute_directory))
             {
 
-               return iImage;
+               SHGetFileInfoW(
+               L"foo",
+               FILE_ATTRIBUTE_DIRECTORY,
+               &shfi16,
+               sizeof(shfi16),
+               SHGFI_USEFILEATTRIBUTES
+               | SHGFI_ICON
+               | SHGFI_SMALLICON);
+
+               SHGetFileInfoW(
+               L"foo",
+               FILE_ATTRIBUTE_DIRECTORY,
+               &shfi48,
+               sizeof(shfi48),
+               SHGFI_USEFILEATTRIBUTES
+               | SHGFI_ICON
+               | SHGFI_LARGEICON);
+
+            }
+            else
+            {
+
+               wstrFilePath = wstring(L"foo.") + wstring(imagekey.m_strExtension);
+
+               SHGetFileInfoW(
+               wstrFilePath,
+               FILE_ATTRIBUTE_NORMAL,
+               &shfi16,
+               sizeof(shfi16),
+               SHGFI_USEFILEATTRIBUTES
+               | SHGFI_ICON
+               | SHGFI_SMALLICON);
+
+               SHGetFileInfoW(
+               wstrFilePath,
+               FILE_ATTRIBUTE_NORMAL,
+               &shfi48,
+               sizeof(shfi48),
+               SHGFI_USEFILEATTRIBUTES
+               | SHGFI_ICON
+               | SHGFI_LARGEICON);
+
+            }
+
+            bool b16 = false;
+
+            bool b48 = false;
+
+            add_icon_set(&shfi16, &shfi48, crBk, b16, b48, iImage);
+
+            if (shfi16.hIcon != NULL)
+            {
+
+               ::DestroyIcon(shfi16.hIcon);
+
+            }
+
+            if (shfi48.hIcon != NULL)
+            {
+
+               ::DestroyIcon(shfi48.hIcon);
 
             }
 
          }
-
-         if (imagekey.m_eattribute.is_signalized(file_attribute_directory))
-         {
-
-            SHGetFileInfoW(
-            L"foo",
-            FILE_ATTRIBUTE_DIRECTORY,
-            &shfi16,
-            sizeof(shfi16),
-            SHGFI_USEFILEATTRIBUTES
-            | SHGFI_ICON
-            | SHGFI_SMALLICON);
-
-            SHGetFileInfoW(
-            L"foo",
-            FILE_ATTRIBUTE_DIRECTORY,
-            &shfi48,
-            sizeof(shfi48),
-            SHGFI_USEFILEATTRIBUTES
-            | SHGFI_ICON
-            | SHGFI_LARGEICON);
-
-         }
-         else
-         {
-
-            wstrFilePath = wstring(L"foo.") + wstring(imagekey.m_strExtension);
-
-            SHGetFileInfoW(
-            wstrFilePath,
-            FILE_ATTRIBUTE_NORMAL,
-            &shfi16,
-            sizeof(shfi16),
-            SHGFI_USEFILEATTRIBUTES
-            | SHGFI_ICON
-            | SHGFI_SMALLICON);
-
-            SHGetFileInfoW(
-            wstrFilePath,
-            FILE_ATTRIBUTE_NORMAL,
-            &shfi48,
-            sizeof(shfi48),
-            SHGFI_USEFILEATTRIBUTES
-            | SHGFI_ICON
-            | SHGFI_LARGEICON);
-
-         }
-
-         per_fork f(false);
-
-         if (pfork == NULL)
-         {
-
-            f.init();
-
-            pfork = &f;
-
-         }
-
-         bool b16 = false;
-
-         bool b48 = false;
-
-         iImage = reserve_image();
-
-         add_icon_set(pfork, &shfi16, &shfi48, crBk, b16, b48, iImage);
-
-         if (!b16 && shfi16.hIcon != NULL)
-         {
-
-            ::DestroyIcon(shfi16.hIcon);
-
-         }
-
-         if (!b48 && shfi48.hIcon != NULL)
-         {
-
-            ::DestroyIcon(shfi48.hIcon);
-
-         }
-
-         synch_lock sl(m_pmutex);
-
-         m_imagemap.set_at(imagekey, iImage);
 
          return iImage;
 
       }
 
 
-      index windows::GetCSIDL(per_fork * pfork, LPITEMIDLIST lpiidl)
-      {
-         LPITEMIDLIST ppidl;
+      //index windows::GetCSIDL(LPITEMIDLIST lpiidl)
+      //{
+      //   LPITEMIDLIST ppidl;
 
-         int32_t csidla[] =
-         {
-            CSIDL_DESKTOP,
-            CSIDL_DRIVES,
-            CSIDL_PERSONAL,
-            CSIDL_NETHOOD,
-            CSIDL_NETWORK,
-            CSIDL_BITBUCKET,
-            -1,
-         };
+      //   int32_t csidla[] =
+      //   {
+      //      CSIDL_DESKTOP,
+      //      CSIDL_DRIVES,
+      //      CSIDL_PERSONAL,
+      //      CSIDL_NETHOOD,
+      //      CSIDL_NETWORK,
+      //      CSIDL_BITBUCKET,
+      //      -1,
+      //   };
 
-         int32_t * pcsidl = csidla;
+      //   int32_t * pcsidl = csidla;
 
-         while (*pcsidl != -1)
-         {
-            if (SUCCEEDED(SHGetSpecialFolderLocation(
-                          NULL,
-                          *pcsidl,
-                          &ppidl)))
-            {
-               if (_017ItemIDListIsEqual(ppidl, lpiidl))
-               {
-                  pfork->m_pmalloc->Free(ppidl);
-                  break;
-               }
-               pfork->m_pmalloc->Free(ppidl);
-            }
-            pcsidl++;
-         }
+      //   while (*pcsidl != -1)
+      //   {
+      //      if (SUCCEEDED(SHGetSpecialFolderLocation(
+      //                    NULL,
+      //                    *pcsidl,
+      //                    &ppidl)))
+      //      {
+      //         if (_017ItemIDListIsEqual(ppidl, lpiidl))
+      //         {
+      //            m_pmalloc->Free(ppidl);
+      //            break;
+      //         }
+      //         m_pmalloc->Free(ppidl);
+      //      }
+      //      pcsidl++;
+      //   }
 
-         return *pcsidl;
-
-
-      }
+      //   return *pcsidl;
 
 
-      index windows::GetCSIDLSort(index iCsidl)
-      {
-         switch (iCsidl)
-         {
-         case CSIDL_DESKTOP:
-            return 100;
-         case CSIDL_PERSONAL:
-            return 200;
-         case CSIDL_DRIVES:
-            return 300;
-         case CSIDL_NETHOOD:
-            return 1000;
-         default:
-            return 2000 + iCsidl;
-         }
-
-      }
+      //}
 
 
-      void windows::GetAscendants(per_fork * pfork, LPITEMIDLIST lpiidl, array < LPITEMIDLIST, LPITEMIDLIST > & lpiidla)
-      {
+      //index windows::GetCSIDLSort(index iCsidl)
+      //{
+      //   switch (iCsidl)
+      //   {
+      //   case CSIDL_DESKTOP:
+      //      return 100;
+      //   case CSIDL_PERSONAL:
+      //      return 200;
+      //   case CSIDL_DRIVES:
+      //      return 300;
+      //   case CSIDL_NETHOOD:
+      //      return 1000;
+      //   default:
+      //      return 2000 + iCsidl;
+      //   }
 
-         if (lpiidl == NULL)
-            return;
-
-         for (;;)
-         {
-            lpiidl = _017ItemIDListGetFolderParent(pfork, lpiidl);
-            if (lpiidl == NULL)
-               break;
-            lpiidla.add(lpiidl);
-         }
-
-      }
+      //}
 
 
-      void windows::Free(per_fork * pfork, array < LPITEMIDLIST, LPITEMIDLIST > & lpiidla)
-      {
+      //void windows::GetAscendants(LPITEMIDLIST lpiidl, array < LPITEMIDLIST, LPITEMIDLIST > & lpiidla)
+      //{
 
-         for (int32_t i = 0; i < lpiidla.get_size(); i++)
-         {
+      //   if (lpiidl == NULL)
+      //      return;
 
-            pfork->m_pmalloc->Free(lpiidla[i]);
+      //   for (;;)
+      //   {
+      //      lpiidl = _017ItemIDListGetFolderParent(lpiidl);
+      //      if (lpiidl == NULL)
+      //         break;
+      //      lpiidla.add(lpiidl);
+      //   }
 
-         }
+      //}
 
-         lpiidla.remove_all();
 
-      }
+      //void windows::Free(array < LPITEMIDLIST, LPITEMIDLIST > & lpiidla)
+      //{
+
+      //   for (int32_t i = 0; i < lpiidla.get_size(); i++)
+      //   {
+
+      //      m_pmalloc->Free(lpiidla[i]);
+
+      //   }
+
+      //   lpiidla.remove_all();
+
+      //}
 
 
       e_folder windows::get_folder_type(::aura::application * papp, const char * lpcsz)
@@ -1438,21 +839,27 @@ namespace user
 
          if (dir::is(strPath))
          {
+
             return folder_file_system;
+
          }
          else if (zip::util().is_unzippable(papp, strPath))
          {
+
             return folder_zip;
+
          }
          else
          {
+
             return folder_none;
+
          }
 
       }
 
 
-      int32_t windows::get_image(per_fork * pfork, oswindow oswindow, image_key imagekey, const unichar * lpcszExtra, COLORREF crBk)
+      int32_t windows::thread::get_image(oswindow oswindow, image_key imagekey, const unichar * lpcszExtra, COLORREF crBk)
       {
 
          int32_t iImage = 0x80000000;
@@ -1460,15 +867,14 @@ namespace user
          if (::str::begins_ci(imagekey.m_strPath, "uifs:"))
          {
 
-            ::file::path path = Application.dir().matter("cloud.ico");
+            if (m_pshell->reserve_image(imagekey, iImage))
+            {
 
-            iImage = reserve_image();
+               ::file::path path = Application.dir().matter("cloud.ico");
 
-            add_icon_path(path, crBk, iImage);
+               m_pshell->add_icon_path(path, crBk, iImage);
 
-            single_lock sl(m_pmutex, true);
-
-            m_imagemap.set_at(imagekey, iImage);
+            }
 
             return iImage;
 
@@ -1476,15 +882,14 @@ namespace user
          else if (::str::begins_ci(imagekey.m_strPath, "fs:"))
          {
 
-            ::file::path path = Application.dir().matter("remote.ico");
+            if (m_pshell->reserve_image(imagekey, iImage))
+            {
 
-            iImage = reserve_image();
+               ::file::path path = Application.dir().matter("remote.ico");
 
-            add_icon_path(path, crBk, iImage);
+               m_pshell->add_icon_path(path, crBk, iImage);
 
-            single_lock sl(m_pmutex, true);
-
-            m_imagemap.set_at(imagekey, iImage);
+            }
 
             return iImage;
 
@@ -1492,15 +897,14 @@ namespace user
          else if (::str::begins_ci(imagekey.m_strPath, "ftp:"))
          {
 
-            ::file::path path = Application.dir().matter("ftp.ico");
+            if (m_pshell->reserve_image(imagekey, iImage))
+            {
 
-            iImage = reserve_image();
+               ::file::path path = Application.dir().matter("ftp.ico");
 
-            add_icon_path(path, crBk, iImage);
+               m_pshell->add_icon_path(path, crBk, iImage);
 
-            single_lock sl(m_pmutex, true);
-
-            m_imagemap.set_at(imagekey, iImage);
+            }
 
             return iImage;
 
@@ -1508,10 +912,14 @@ namespace user
 
          if (::str::ends_ci(imagekey.m_strPath, ".core"))
          {
+
             string str = Application.file().as_string(imagekey.m_strPath);
+
             if (::str::begins_eat_ci(str, "ca2prompt\r\n"))
             {
+
                str.trim();
+
                /*HICON hicon16 = (HICON) ::LoadImage(NULL, Application.dir().matter(str + "/mainframe/icon.ico"), IMAGE_ICON, 16, 16, LR_LOADFROMFILE);
                HICON hicon48 = (HICON) ::LoadImage(NULL, Application.dir().matter(str + "/mainframe/icon.ico"), IMAGE_ICON, 48, 48, LR_LOADFROMFILE);
                synch_lock sl1(m_pil48Hover->m_pmutex);
@@ -1533,15 +941,25 @@ namespace user
                }*/
 
             }
+
             return iImage;
+
          }
-         // try to find "uifs:// http:// ftp:// like addresses"
-         // then should show icon by extension or if is folder
+
+         // Check for URL addresses like uifs://, http://, or ftp://
+         // Except A: B: C: (Windows drive letters)
+         // And then should find icon by extension if
+         // it is a file or as folder otherwise.
+
          strsize iFind = imagekey.m_strPath.find_ci("://");
+
          strsize iFind2 = imagekey.m_strPath.find_ci(":");
+
          if (iFind >= 0 || iFind2 >= 2)
          {
+
             string strProtocol = imagekey.m_strPath.Left(MAX(iFind, iFind2));
+
             int32_t i = 0;
 
             while (i < strProtocol.get_length() && isalnum_dup(strProtocol[i]))
@@ -1555,14 +973,14 @@ namespace user
             {
 
                // heuristically valid protocol
-               return get_image_by_extension(pfork, oswindow, imagekey, crBk);
+               return get_image_by_extension(oswindow, imagekey, crBk);
 
             }
 
             if (imagekey.m_eattribute.is_signalized(file_attribute_directory))
             {
 
-               return get_image_by_extension(pfork, oswindow, imagekey, crBk);
+               return get_image_by_extension(oswindow, imagekey, crBk);
 
             }
 
@@ -1577,21 +995,19 @@ namespace user
 
          }
 
-
          string str(imagekey.m_strPath);
-
 
          if (str == "foo")
          {
 
-            return get_foo_image(pfork, oswindow, imagekey, crBk);
+            return get_foo_image(oswindow, imagekey, crBk);
 
          }
 
          if (::str::begins_eat(str, "foo."))
          {
 
-            return get_foo_image(pfork, oswindow, imagekey, crBk);
+            return get_foo_image(oswindow, imagekey, crBk);
 
          }
 
@@ -1599,162 +1015,155 @@ namespace user
 
          ::file::path pathFolder = path.folder();
 
-         if (pathFolder.is_empty() || pathFolder != pfork->m_strFolder)
-         {
+         itemidlist idlist(imagekey.m_strPath);
 
-            if (pfork->m_pfolder.is_set())
-            {
+         itemidlist idlistAbsolute;
 
-               pfork->m_pfolder.Release();
+         idlistAbsolute = idlist - 1;
 
-               pfork->_017ItemIDListFree(pfork->m_lpiidl);
+         itemidlist idlistChild;
 
-               pfork->m_lpiidl = NULL;
+         idlistChild = idlist.last();
 
-            }
-
-         }
-
-         _017ItemIDListParsePath(pfork, oswindow, &pfork->m_lpiidl, imagekey.m_strPath);
-
-         LPITEMIDLIST lpiidlChild = _017ItemIDListGetLast(pfork, pfork->m_lpiidl);
-
-         iImage = get_image(pfork, oswindow, imagekey, pfork->m_lpiidl, lpiidlChild, lpcszExtra, crBk);
-
-         pfork->_017ItemIDListFree(lpiidlChild);
+         iImage = get_image(oswindow, imagekey, idlistAbsolute, idlistChild, lpcszExtra, crBk);
 
          return iImage;
 
       }
 
 
-      int32_t _017ItemIDListGetLen(LPITEMIDLIST lpiidl)
-      {
-         if (lpiidl == NULL)
-            return 0;
-         LPSHITEMID  lpshiid = (LPSHITEMID)lpiidl;
-         LPSHITEMID  lpshiidLast = NULL;
-         USHORT cb;
-         int32_t iLen = 0;
-         while (true)
-         {
-            cb = lpshiid->cb;
-            iLen += cb;
-            if (cb == 0)
-               break;
-            lpshiidLast = lpshiid;
-            lpshiid = (LPSHITEMID)(((LPBYTE)lpshiid) + cb);
-         }
-         return iLen;
-      }
+      //int32_t _017ItemIDListGetLen(LPITEMIDLIST lpiidl)
+      //{
+      //   if (lpiidl == NULL)
+      //      return 0;
+      //   LPSHITEMID  lpshiid = (LPSHITEMID)lpiidl;
+      //   LPSHITEMID  lpshiidLast = NULL;
+      //   USHORT cb;
+      //   int32_t iLen = 0;
+      //   while (true)
+      //   {
+      //      cb = lpshiid->cb;
+      //      iLen += cb;
+      //      if (cb == 0)
+      //         break;
+      //      lpshiidLast = lpshiid;
+      //      lpshiid = (LPSHITEMID)(((LPBYTE)lpshiid) + cb);
 
+      //   }
 
-      windows::per_fork::per_fork(bool bInit)
-      {
-         m_lpiidl = NULL;
+      //   return iLen;
 
-         defer_co_initialize_ex(false);
+      //}
 
-         if (bInit)
-         {
-
-            init();
-
-         }
-
-      }
-
-
-      windows::per_fork::~per_fork()
-      {
-         if (m_lpiidl != NULL)
-         {
-            _017ItemIDListFree(m_lpiidl);
-
-         }
-
-      }
 
       void windows::initialize()
       {
 
+         add_thread();
 
       }
 
 
-      void windows::defer_start()
+      void windows::add_thread()
       {
 
          synch_lock sl(m_pmutex);
 
-         if (!m_bStarted)
+         m_threadptra.add(canew(thread(this)));
+
+         m_uiThread = m_threadptra.get_upper_bound();
+
+      }
+
+
+      int32_t windows::thread::get_image(oswindow oswindow, const image_key & imagekey, COLORREF crBk)
+      {
+
+         int iImage;
+
+         synch_lock sl(m_pshell->m_pmutex);
+
+         if (m_pshell->m_imagemap.Lookup(imagekey, iImage))
          {
 
-            m_bStarted = true;
-
-            //m_threadaGetImage = ::fork_proc(get_app(), [&]()
-            //{
-
-            //   ::multithreading::set_priority(::multithreading::priority_highest);
-
-            //   run();
-
-            //});
-
-            m_threadaGetImage.add(::fork(get_app(), [&]()
+            if (iImage == 0x80000001)
             {
 
-               ::multithreading::set_priority(::multithreading::priority_highest);
+               iImage = 0x80000000;
 
-               run();
+            }
 
-            }));
+            return iImage;
 
          }
 
+         m_pshell->m_imagemap.set_at(imagekey, 0x80000001); // mark as "calculating image"
 
-      }
-
-      void windows::per_fork::init()
-      {
-
-         SHGetImageList(SHIL_SMALL, IID_IImageList, m_pilSmall);
-         SHGetImageList(SHIL_LARGE, IID_IImageList, m_pilLarge);
-         SHGetImageList(SHIL_EXTRALARGE, IID_IImageList, m_pilExtraLarge);
-         SHGetImageList(SHIL_JUMBO, IID_IImageList, m_pilJumbo);
-         SHGetDesktopFolder(&m_pfolderDesktop);
-         SHGetMalloc(&m_pmalloc);
-
-      }
-
-      int windows::run()
-      {
-
-         do_initialize();
-
-         per_fork fork;
-
-
-
-
-         single_lock sl(&m_mutexQueue);
-
-         while (get_thread_run())
+         schedule_pred([=]()
          {
 
-            sl.lock();
+            InterlockedIncrement64(&m_pshell->m_iActiveThreadCount);
 
-            if (m_keyptra.is_empty())
+            try
             {
 
-               m_evKey.ResetEvent();
+               int iImage = get_image(oswindow, imagekey, NULL, crBk);
 
-               sl.unlock();
+               synch_lock sl(m_pshell->m_pmutex);
 
-               if (!m_evKey.wait(millis(500)).succeeded())
+               if (iImage & 0x80000000)
                {
 
-                  continue;
+                  m_pshell->m_imagemap.remove_key(imagekey);
+
+               }
+               else
+               {
+
+                  m_pshell->m_imagemap.set_at(imagekey, iImage);
+
+               }
+
+            }
+            catch (...)
+            {
+
+            }
+
+            InterlockedDecrement64(&m_pshell->m_iActiveThreadCount);
+
+         });
+
+         return 0x80000000;
+
+      }
+
+
+      int32_t windows::get_image(oswindow oswindow, const image_key & imagekey, COLORREF crBk)
+      {
+
+         synch_lock sl(m_pmutex);
+
+         if (m_threadptra.get_count() < m_iMaxThreadCount)
+         {
+
+            bool bMax = m_iActiveThreadCount >= m_threadptra.get_count();
+
+            if (bMax)
+            {
+
+               if (!m_bMax)
+               {
+
+                  m_bMax = true;
+
+                  m_dwLastMax = get_tick_count();
+
+               }
+               else if (get_tick_count() - m_dwLastMax > 50)
+               {
+
+                  add_thread();
 
                }
 
@@ -1762,135 +1171,99 @@ namespace user
             else
             {
 
-               image_key * pkey = m_keyptra.first();
-
-               m_keyptra.remove_at(0);
-
-               if (m_keyptra.is_empty())
-               {
-
-                  m_evKey.ResetEvent();
-
-               }
-
-               sl.unlock();
-
-               int iImage = get_image(&fork, pkey->m_oswindow, *pkey, NULL, pkey->m_cr);
-
-               {
-
-                  synch_lock s(m_pmutex);
-
-                  m_imagemap.set_at(*pkey, iImage);
-
-               }
-
-               delete pkey;
+               m_bMax = false;
 
             }
 
          }
 
-         return 0;
+         UINT uiThread = m_uiThread;
+
+         uiThread = uiThread % m_threadptra.get_size();
+
+         int32_t iImage = m_threadptra[uiThread]->get_image(oswindow, imagekey, crBk);
+
+         uiThread++;
+
+         m_uiThread = uiThread;
+
+         return iImage;
 
       }
-
 
 
       int32_t windows::get_image(oswindow oswindow, const string & strPath, e_file_attribute eattribute, e_icon eicon, COLORREF crBk)
       {
 
-         if (!m_bStarted)
-         {
-
-            defer_start();
-
-         }
-
-         if (::str::find_ci("1484 ", strPath) > 0)
-         {
-
-            output_debug_string("1484 *test*");
-
-         }
-
          int32_t iImage = 0x80000000;
 
+         if (argb_get_a_value(crBk) != 255)
          {
-            if (argb_get_a_value(crBk) != 255)
-            {
 
-               crBk = 0;
-
-            }
-
-
-
-            image_key imagekey;
-
-            imagekey.set_path(strPath);
-
-            imagekey.m_strShellThemePrefix = m_strShellThemePrefix;
-
-            imagekey.m_eattribute = eattribute;
-
-            imagekey.m_eicon = eicon;
-
-            imagekey.m_iIcon = 0;
-
-            imagekey.m_oswindow = oswindow;
-
-            imagekey.m_cr = crBk;
-
-            {
-
-               synch_lock sl(m_pmutex);
-
-               if (m_imagemap.Lookup(imagekey, iImage))
-               {
-
-                  return iImage;
-
-               }
-
-            }
-
-            //if (Application.file().exists(strPath) || Application.dir().is(strPath))
-            {
-
-               image_key_store * pstore = new image_key_store(imagekey);
-
-               {
-
-                  synch_lock sl(&m_mutexQueue);
-
-                  m_keyptra.add(pstore);
-
-                  m_evKey.SetEvent();
-
-               }
-
-               imagekey.set_path("foo");
-
-               iImage = get_foo_image(NULL, oswindow, imagekey, imagekey.m_cr);
-
-            }
-            //else
-            //{
-
-            //   iImage = get_image_foo(oswindow, "", eattribute, eicon, crBk);
-
-            //}
+            crBk = 0;
 
          }
 
-         return iImage;
+         synch_lock sl(m_pmutex);
 
+         image_key imagekey;
+
+         imagekey.set_path(strPath);
+
+         imagekey.m_strShellThemePrefix = m_strShellThemePrefix;
+
+         imagekey.m_eattribute = eattribute;
+
+         imagekey.m_eicon = eicon;
+
+         imagekey.m_iIcon = 0;
+
+         imagekey.m_oswindow = oswindow;
+
+         imagekey.m_cr = crBk;
+
+         return get_image(oswindow, imagekey, crBk);
 
       }
 
 
-      int windows::reserve_image()
+      bool windows::contains_image(const image_key & imagekey, int32_t & iImage)
+      {
+
+         synch_lock sl(m_pmutex);
+
+         if (m_imagemap.Lookup(imagekey, iImage))
+         {
+
+            return true;
+
+         }
+
+         return false;
+
+      }
+
+
+      bool windows::reserve_image(const image_key & imagekey, int32_t & iImage)
+      {
+
+         synch_lock sl(m_pmutex);
+
+         if (contains_image(imagekey, iImage))
+         {
+
+            return false;
+
+         }
+
+         iImage = _reserve_image(imagekey);
+
+         return true;
+
+      }
+
+
+      int windows::_reserve_image(const image_key & key)
       {
 
          synch_lock sl(m_pmutex);
@@ -1911,13 +1284,19 @@ namespace user
       }
 
 
-      int windows::add_icon_set(per_fork * pfork, SHFILEINFOW * pinfo16, SHFILEINFOW * pinfo48, COLORREF crBk, bool & bUsed16, bool & bUsed48, int iImage)
+      int windows::thread::add_icon_set(SHFILEINFOW * pinfo16, SHFILEINFOW * pinfo48, COLORREF crBk, bool & bUsed16, bool & bUsed48, int iImage)
       {
 
-         for (auto iSize : m_iaSize)
+         synch_lock sl(m_pshell->m_pmutex);
+
+         auto iaSize = m_pshell->m_iaSize;
+
+         sl.unlock();
+
+         for (auto iSize : iaSize)
          {
 
-            iImage = add_icon_info(pfork, iSize, pinfo16, pinfo48, crBk, bUsed16, bUsed48, iImage);
+            iImage = add_icon_info(iSize, pinfo16, pinfo48, crBk, bUsed16, bUsed48, iImage);
 
          }
 
@@ -1929,12 +1308,29 @@ namespace user
       int windows::add_icon_path(::file::path path, COLORREF crBk, int iImage)
       {
 
+         synch_lock sl(m_pmutex);
+
+         auto iaSize = m_iaSize;
+
+         sl.unlock();
+
          for (auto iSize : m_iaSize)
          {
 
             HICON hicon = (HICON)LoadImage(NULL, path, IMAGE_ICON, iSize, iSize, LR_LOADFROMFILE);
 
+            if (hicon == NULL)
+            {
+
+               DWORD dwLastError = ::GetLastError();
+
+               output_debug_string("LastError = " + ::str::from(dwLastError));
+
+            }
+
             iImage = add_icon(iSize, hicon, crBk, iImage);
+
+            ::DestroyIcon(hicon);
 
          }
 
@@ -1959,36 +1355,46 @@ namespace user
       }
 
 
-      int windows::add_icon_info(per_fork * pfork, int iSize, SHFILEINFOW * pinfo16, SHFILEINFOW * pinfo48, COLORREF crBk, bool & bUsed16, bool & bUsed48, int iImage)
+      int windows::thread::add_icon_info(int iSize, SHFILEINFOW * pinfo16, SHFILEINFOW * pinfo48, COLORREF crBk, bool & bUsed16, bool & bUsed48, int iImage)
       {
 
          bool bUsed = false;
+
          SHFILEINFOW * pinfo;
+
          if (iSize <= 16)
          {
+
             pinfo = pinfo16 == NULL ? pinfo48 : pinfo16;
-            iImage = add_system_icon(iSize, pfork->m_pilSmall, pinfo, crBk, bUsed, iImage);
+
+            iImage = m_pshell->add_system_icon(iSize, m_pilSmall, pinfo, crBk, bUsed, iImage);
 
          }
          else if (iSize <= 32)
          {
 
             pinfo = pinfo48 == NULL ? pinfo16 : pinfo48;
-            iImage = add_system_icon(iSize, pfork->m_pilLarge, pinfo, crBk, bUsed, iImage);
+
+            iImage = m_pshell->add_system_icon(iSize, m_pilLarge, pinfo, crBk, bUsed, iImage);
 
          }
          else if (iSize <= 48)
          {
+
             pinfo = pinfo48 == NULL ? pinfo16 : pinfo48;
-            iImage = add_system_icon(iSize, pfork->m_pilExtraLarge, pinfo, crBk, bUsed, iImage);
+
+            iImage = m_pshell->add_system_icon(iSize, m_pilExtraLarge, pinfo, crBk, bUsed, iImage);
 
          }
          else
          {
+
             pinfo = pinfo48 == NULL ? pinfo16 : pinfo48;
-            iImage = add_system_icon(iSize, pfork->m_pilJumbo, pinfo, crBk, bUsed, iImage);
+
+            iImage = m_pshell->add_system_icon(iSize, m_pilJumbo, pinfo, crBk, bUsed, iImage);
 
          }
+
          if (bUsed)
          {
 
@@ -2012,8 +1418,6 @@ namespace user
       }
 
 
-
-
       int windows::add_system_icon(int iSize, IImageList * pil, SHFILEINFOW * pinfo, COLORREF crBk, bool & bUsedImageList, int iImage)
       {
 
@@ -2024,10 +1428,12 @@ namespace user
 
             HRESULT hr = pil->GetIcon(pinfo->iIcon, ILD_TRANSPARENT, &hicon);
 
-            if (SUCCEEDED(hr) && hicon != NULL)
+            if (hicon != NULL)
             {
 
                iImage = add_icon(iSize, hicon, crBk, iImage);
+
+               ::DestroyIcon(hicon);
 
             }
             else if (pinfo->hIcon == NULL)
@@ -2065,65 +1471,33 @@ namespace user
       int32_t windows::get_image_foo(oswindow oswindow, const string & strExtension, e_file_attribute eattribute, e_icon eicon, COLORREF crBk)
       {
 
-         if (!m_bStarted)
-         {
-
-            defer_start();
-
-         }
-
          int32_t iImage = 0x80000000;
 
+         if (argb_get_a_value(crBk) != 255)
          {
 
-            if (argb_get_a_value(crBk) != 255)
-            {
-
-               crBk = 0;
-
-            }
-
-
-            image_key imagekey;
-
-            imagekey.m_strPath = "foo";
-
-            imagekey.m_strShellThemePrefix = m_strShellThemePrefix;
-
-            imagekey.m_strExtension = strExtension;
-
-            imagekey.m_eattribute = eattribute;
-
-            imagekey.m_eicon = eicon;
-
-            imagekey.m_iIcon = 0;
-
-            {
-
-               synch_lock sl(m_pmutex);
-
-               if (m_imagemap.Lookup(imagekey, iImage))
-               {
-
-                  return iImage;
-
-               }
-
-            }
-
-            per_fork f;
-
-            iImage = get_image(&f, oswindow, imagekey, NULL, crBk);
-
-            synch_lock sl(m_pmutex);
-
-            m_imagemap.set_at(imagekey, iImage);
+            crBk = 0;
 
          }
 
-         return iImage;
+         image_key imagekey;
+
+         imagekey.m_strPath = "foo";
+
+         imagekey.m_strShellThemePrefix = m_strShellThemePrefix;
+
+         imagekey.m_strExtension = strExtension;
+
+         imagekey.m_eattribute = eattribute;
+
+         imagekey.m_eicon = eicon;
+
+         imagekey.m_iIcon = 0;
+
+         return get_image(oswindow, imagekey, crBk);
 
       }
+
 
       int shell::add_hover_image(int iSize, int iImage, COLORREF crBk)
       {
@@ -2135,7 +1509,9 @@ namespace user
 
             return m_pilHover[iSize]->pred_add_image([&](auto dib)
             {
+
                Application.imaging().Createcolor_blend_dib(dib, RGB(255, 255, 240), 64);
+
             }
             , m_pil[iSize], iImage, iImage);
 
@@ -2143,7 +1519,7 @@ namespace user
          else
          {
 
-            iImage = m_pilHover[iSize]->add_image(m_pil[iSize], iImage), iImage;
+            iImage = m_pilHover[iSize]->add_image(m_pil[iSize], iImage);
 
             {
 
@@ -2178,16 +1554,14 @@ namespace user
 
          }
 
+
       }
+
 
    } // namespace shell
 
 
 } // namespace user
-
-
-
-
 
 
 

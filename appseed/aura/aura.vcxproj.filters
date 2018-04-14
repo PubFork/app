@@ -2684,6 +2684,15 @@
     <ClInclude Include="user\user\user_check.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
+    <ClInclude Include="aura\os\windows\windows_itemidlist.h">
+      <Filter>Header Files\aura\os\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\windows_common\windows_common_cotaskptr.h">
+      <Filter>Header Files\aura\os\windows_common</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\windows_common\windows_common_comptr.h">
+      <Filter>Header Files\aura\os\windows_common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="multithreading\multithreading_condition.cpp">
@@ -4686,6 +4695,9 @@
     </ClCompile>
     <ClCompile Include="aura\os\windows_common\windows_common_graphics.cpp">
       <Filter>Source Files\aura\os\windows_common</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_itemidlist.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

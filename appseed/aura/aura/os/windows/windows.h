@@ -11,6 +11,10 @@
 #include "windows_utils.h"
 #include "windows_graphics.h"
 
+#include "windows_itemidlist.h"
+#include "aura/aura/os/windows_common/windows_common_comptr.h"
+
+
 char get_drive_letter(const char * lpDevicePath);
 
 CLASS_DECL_AURA void set_main_thread(HANDLE hThread);

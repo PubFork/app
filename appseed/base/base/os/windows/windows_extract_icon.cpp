@@ -4,7 +4,7 @@
 
 
 BOOL ExtractResourceIcon_EnumNamesFunc(HMODULE hModule, LPCWSTR lpType, LPWSTR lpName, LONG_PTR lParam);
-CLASS_DECL_BASE HICON ExtractResourceIcon(string strPath, int cx, int cy, int iIcon);
+CLASS_DECL_BASE HICON ExtractResourceIcon(string strPath, int & cx, int & cy, int iIcon);
 
 
 struct extract_resource_icon
@@ -82,7 +82,7 @@ typedef struct
 
 BOOL ExtractResourceIcon_EnumNamesFunc(HMODULE hModule, LPCWSTR lpType, LPWSTR lpName, LONG_PTR lParam);
 
-CLASS_DECL_BASE HICON ExtractResourceIcon(string strPath, int cx, int cy, int iIcon)
+CLASS_DECL_BASE HICON ExtractResourceIcon(string strPath, int & cx, int & cy, int iIcon)
 {
 
    HMODULE hLib = NULL;
@@ -158,7 +158,9 @@ CLASS_DECL_BASE HICON ExtractResourceIcon(string strPath, int cx, int cy, int iI
 
 BOOL ExtractResourceIcon_EnumNamesFunc(HMODULE hModule, LPCWSTR lpType, LPWSTR lpName, LONG_PTR lParam)
 {
+
    extract_resource_icon * pi = (extract_resource_icon *)lParam;
+
    ULONG_PTR u = ULONG_PTR(lpName);
 
    if (pi->iIcon > 0)
@@ -166,13 +168,9 @@ BOOL ExtractResourceIcon_EnumNamesFunc(HMODULE hModule, LPCWSTR lpType, LPWSTR l
 
       pi->iIcon--;
 
-
-
       return TRUE;
 
    }
-
-
 
    HRSRC hRsrc = FindResourceW(hModule, lpName, lpType);
 
@@ -182,32 +180,73 @@ BOOL ExtractResourceIcon_EnumNamesFunc(HMODULE hModule, LPCWSTR lpType, LPWSTR l
    //   if(pi->iIcon >= lpGrpIconDir->idCount)
    //    return FALSE;
 
+   int iTry = 0;
+
+   int iMaxW = 0;
+
+   int iMaxH = 0;
+
+retry:
+
    for (int i = 0; i < lpGrpIconDir->idCount; ++i)
    {
 
       GRPICONDIRENTRY * e = &lpGrpIconDir->idEntries[i];
 
-
-      if (e->bWidth == pi->cx && e->bHeight == pi->cy && e->wBitCount == 32)
+      if (e->wBitCount == 32)
       {
 
-         hRsrc = FindResource(hModule, MAKEINTRESOURCE(e->nID), RT_ICON);
+         if (e->bWidth > iMaxW)
+         {
 
-         HGLOBAL hGlobal = LoadResource(hModule, hRsrc);
+            iMaxW = e->bWidth;
 
-         ICONIMAGE *lpIconImage = (LPICONIMAGE)LockResource(hGlobal);
+            iMaxH = e->bHeight;
 
-         pi->hicon = CreateIconFromResourceEx(
-            (PBYTE)lpIconImage,
-            e->dwBytesInRes,
-            TRUE,
-            0x00030000,//DWORD dwVersion,
-            e->bWidth,
-            e->bHeight,
-            0);
+         }
 
-         if (pi->hicon != NULL)
-            return FALSE;
+         if (e->bWidth == pi->cx && e->bHeight == pi->cy)
+         {
+
+            hRsrc = FindResource(hModule, MAKEINTRESOURCE(e->nID), RT_ICON);
+
+            HGLOBAL hGlobal = LoadResource(hModule, hRsrc);
+
+            ICONIMAGE *lpIconImage = (LPICONIMAGE)LockResource(hGlobal);
+
+            pi->hicon = CreateIconFromResourceEx(
+                        (PBYTE)lpIconImage,
+                        e->dwBytesInRes,
+                        TRUE,
+                        0x00030000,//DWORD dwVersion,
+                        e->bWidth,
+                        e->bHeight,
+                        0);
+
+            if (pi->hicon != NULL)
+            {
+
+               return false;
+
+            }
+
+         }
+
+      }
+
+   }
+
+   if (pi->cx > iMaxW)
+   {
+
+      if (iTry <= 0)
+      {
+
+         pi->cx = iMaxW;
+
+         pi->cy = iMaxH;
+
+         goto retry;
 
       }
 
@@ -229,13 +268,13 @@ BOOL ExtractResourceIcon_EnumNamesFunc(HMODULE hModule, LPCWSTR lpType, LPWSTR l
          ICONIMAGE *lpIconImage = (LPICONIMAGE)LockResource(hGlobal);
 
          pi->hicon = CreateIconFromResourceEx(
-            (PBYTE)lpIconImage,
-            e->dwBytesInRes,
-            TRUE,
-            0x00030000,//DWORD dwVersion,
-            e->bWidth,
-            e->bHeight,
-            0);
+                     (PBYTE)lpIconImage,
+                     e->dwBytesInRes,
+                     TRUE,
+                     0x00030000,//DWORD dwVersion,
+                     e->bWidth,
+                     e->bHeight,
+                     0);
 
          if (pi->hicon != NULL)
             return FALSE;
@@ -261,13 +300,13 @@ BOOL ExtractResourceIcon_EnumNamesFunc(HMODULE hModule, LPCWSTR lpType, LPWSTR l
          ICONIMAGE *lpIconImage = (LPICONIMAGE)LockResource(hGlobal);
 
          pi->hicon = CreateIconFromResourceEx(
-            (PBYTE)lpIconImage,
-            e->dwBytesInRes,
-            TRUE,
-            0x00030000,//DWORD dwVersion,
-            e->bWidth,
-            e->bHeight,
-            0);
+                     (PBYTE)lpIconImage,
+                     e->dwBytesInRes,
+                     TRUE,
+                     0x00030000,//DWORD dwVersion,
+                     e->bWidth,
+                     e->bHeight,
+                     0);
 
          if (pi->hicon != NULL)
             return FALSE;
@@ -291,13 +330,13 @@ BOOL ExtractResourceIcon_EnumNamesFunc(HMODULE hModule, LPCWSTR lpType, LPWSTR l
          ICONIMAGE *lpIconImage = (LPICONIMAGE)LockResource(hGlobal);
 
          pi->hicon = CreateIconFromResourceEx(
-            (PBYTE)lpIconImage,
-            e->dwBytesInRes,
-            TRUE,
-            0x00030000,//DWORD dwVersion,
-            e->bWidth,
-            e->bHeight,
-            0);
+                     (PBYTE)lpIconImage,
+                     e->dwBytesInRes,
+                     TRUE,
+                     0x00030000,//DWORD dwVersion,
+                     e->bWidth,
+                     e->bHeight,
+                     0);
 
          if (pi->hicon != NULL)
             return FALSE;
@@ -322,13 +361,13 @@ BOOL ExtractResourceIcon_EnumNamesFunc(HMODULE hModule, LPCWSTR lpType, LPWSTR l
          ICONIMAGE *lpIconImage = (LPICONIMAGE)LockResource(hGlobal);
 
          pi->hicon = CreateIconFromResourceEx(
-            (PBYTE)lpIconImage,
-            e->dwBytesInRes,
-            TRUE,
-            0x00030000,//DWORD dwVersion,
-            e->bWidth,
-            e->bHeight,
-            0);
+                     (PBYTE)lpIconImage,
+                     e->dwBytesInRes,
+                     TRUE,
+                     0x00030000,//DWORD dwVersion,
+                     e->bWidth,
+                     e->bHeight,
+                     0);
 
          if (pi->hicon != NULL)
             return FALSE;
@@ -353,13 +392,13 @@ BOOL ExtractResourceIcon_EnumNamesFunc(HMODULE hModule, LPCWSTR lpType, LPWSTR l
          ICONIMAGE *lpIconImage = (LPICONIMAGE)LockResource(hGlobal);
 
          pi->hicon = CreateIconFromResourceEx(
-            (PBYTE)lpIconImage,
-            e->dwBytesInRes,
-            TRUE,
-            0x00030000,//DWORD dwVersion,
-            e->bWidth,
-            e->bHeight,
-            0);
+                     (PBYTE)lpIconImage,
+                     e->dwBytesInRes,
+                     TRUE,
+                     0x00030000,//DWORD dwVersion,
+                     e->bWidth,
+                     e->bHeight,
+                     0);
 
          if (pi->hicon != NULL)
             return FALSE;
@@ -384,13 +423,13 @@ BOOL ExtractResourceIcon_EnumNamesFunc(HMODULE hModule, LPCWSTR lpType, LPWSTR l
          ICONIMAGE *lpIconImage = (LPICONIMAGE)LockResource(hGlobal);
 
          pi->hicon = CreateIconFromResourceEx(
-            (PBYTE)lpIconImage,
-            e->dwBytesInRes,
-            TRUE,
-            0x00030000,//DWORD dwVersion,
-            e->bWidth,
-            e->bHeight,
-            0);
+                     (PBYTE)lpIconImage,
+                     e->dwBytesInRes,
+                     TRUE,
+                     0x00030000,//DWORD dwVersion,
+                     e->bWidth,
+                     e->bHeight,
+                     0);
 
          if (pi->hicon != NULL)
             return FALSE;
@@ -415,13 +454,13 @@ BOOL ExtractResourceIcon_EnumNamesFunc(HMODULE hModule, LPCWSTR lpType, LPWSTR l
          ICONIMAGE *lpIconImage = (LPICONIMAGE)LockResource(hGlobal);
 
          pi->hicon = CreateIconFromResourceEx(
-            (PBYTE)lpIconImage,
-            e->dwBytesInRes,
-            TRUE,
-            0x00030000,//DWORD dwVersion,
-            e->bWidth,
-            e->bHeight,
-            0);
+                     (PBYTE)lpIconImage,
+                     e->dwBytesInRes,
+                     TRUE,
+                     0x00030000,//DWORD dwVersion,
+                     e->bWidth,
+                     e->bHeight,
+                     0);
 
          if (pi->hicon != NULL)
             return FALSE;
@@ -446,13 +485,13 @@ BOOL ExtractResourceIcon_EnumNamesFunc(HMODULE hModule, LPCWSTR lpType, LPWSTR l
          ICONIMAGE *lpIconImage = (LPICONIMAGE)LockResource(hGlobal);
 
          pi->hicon = CreateIconFromResourceEx(
-            (PBYTE)lpIconImage,
-            e->dwBytesInRes,
-            TRUE,
-            0x00030000,//DWORD dwVersion,
-            e->bWidth,
-            e->bHeight,
-            0);
+                     (PBYTE)lpIconImage,
+                     e->dwBytesInRes,
+                     TRUE,
+                     0x00030000,//DWORD dwVersion,
+                     e->bWidth,
+                     e->bHeight,
+                     0);
 
          if (pi->hicon != NULL)
             return FALSE;
@@ -477,13 +516,13 @@ BOOL ExtractResourceIcon_EnumNamesFunc(HMODULE hModule, LPCWSTR lpType, LPWSTR l
          ICONIMAGE *lpIconImage = (LPICONIMAGE)LockResource(hGlobal);
 
          pi->hicon = CreateIconFromResourceEx(
-            (PBYTE)lpIconImage,
-            e->dwBytesInRes,
-            TRUE,
-            0x00030000,//DWORD dwVersion,
-            e->bWidth,
-            e->bHeight,
-            0);
+                     (PBYTE)lpIconImage,
+                     e->dwBytesInRes,
+                     TRUE,
+                     0x00030000,//DWORD dwVersion,
+                     e->bWidth,
+                     e->bHeight,
+                     0);
 
          if (pi->hicon != NULL)
             return FALSE;

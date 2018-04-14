@@ -4,7 +4,7 @@
 void simple_frame_window::defer_set_icon()
 {
 
-   if (GetParent() == NULL)
+   if (GetParent() == NULL && m_bWindowFrame && m_workset.m_pappearance->m_picon.is_null())
    {
 
       ::file::path strMatter = get_window_default_matter();

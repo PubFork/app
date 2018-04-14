@@ -18,12 +18,7 @@ namespace user
 
       }
 
-      image_key_store::image_key_store()
-      {
-
-      }
-
-      image_key_store::image_key_store(const image_key & key)
+      image_key::image_key(const image_key & key)
       {
 
          m_oswindow = key.m_oswindow;
@@ -38,18 +33,31 @@ namespace user
       }
 
 
-      image_key_store::~image_key_store()
+      image_key::~image_key()
       {
 
 
       }
+
 
       void image_key::set_path(const string & strPath, bool bSetExtension)
       {
 
          m_strPath = strPath;
 
-         set_extension(strPath);
+         if (bSetExtension)
+         {
+
+            set_extension(strPath);
+
+         }
+         else
+         {
+
+            m_strExtension.Empty();
+
+         }
+
 
       }
 
@@ -80,10 +88,12 @@ namespace user
 
       }
 
+
       shell::~shell()
       {
 
       }
+
 
       void shell::initialize()
       {

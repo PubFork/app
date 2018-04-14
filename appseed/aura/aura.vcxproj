@@ -1083,6 +1083,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_itemidlist.cpp" />
     <ClCompile Include="aura\os\windows\windows_serial.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
@@ -2678,6 +2679,7 @@
     <ClInclude Include="aura\os\windows\windows_comptr.h" />
     <ClInclude Include="aura\os\windows\windows_file_watcher.h" />
     <ClInclude Include="aura\os\windows\windows_implementation.h" />
+    <ClInclude Include="aura\os\windows\windows_itemidlist.h" />
     <ClInclude Include="aura\os\windows\windows_multithreading.h" />
     <ClInclude Include="aura\os\windows\windows_port_forward.h" />
     <ClInclude Include="aura\os\windows\windows_process.h" />
@@ -2690,6 +2692,8 @@
     <ClInclude Include="aura\os\windows\windows_window_buffer.h" />
     <ClInclude Include="aura\os\windows_common\draw2d_direct2d_global.h" />
     <ClInclude Include="aura\os\windows_common\windows_common_c.h" />
+    <ClInclude Include="aura\os\windows_common\windows_common_comptr.h" />
+    <ClInclude Include="aura\os\windows_common\windows_common_cotaskptr.h" />
     <ClInclude Include="aura\os\windows_common\windows_common_error.h" />
     <ClInclude Include="aura\os\windows_common\windows_common_graphics.h" />
     <ClInclude Include="aura\os\windows_common\windows_common_unicode.h" />

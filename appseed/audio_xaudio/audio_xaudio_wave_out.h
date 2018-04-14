@@ -144,7 +144,7 @@ namespace multimedia
 
          //};
 
-         ::windows::comptr<IXAudio2>                        m_pxaudio;
+         ::comptr<IXAudio2>                                 m_pxaudio;
          IXAudio2MasteringVoice *                           m_pvoice;
          IXAudio2SourceVoice *                              m_psourcevoice;
 
