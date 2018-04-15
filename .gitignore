@@ -11,3 +11,5 @@ solution.vc.db*
 *.depend
 *.layout
 *.h.gch
+*.expand_fileset
+*.expand_fileset.spa
