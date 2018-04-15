@@ -13,6 +13,7 @@ namespace dir
 
    CLASS_DECL_AURA string name(string path);
    CLASS_DECL_AURA ::file::path install();
+   CLASS_DECL_AURA::file::path inplace_install(string strAppId);
    CLASS_DECL_AURA ::file::path beforeca2();
    CLASS_DECL_AURA ::file::path module();
    CLASS_DECL_AURA ::file::path relative(::file::path path);

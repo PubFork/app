@@ -681,6 +681,47 @@ found:
 }
 
 
+CLASS_DECL_AURA::file::path dir::inplace_install(string strAppId)
+{
+#ifdef WINDOWSEX
+
+   ::file::path path;
+
+   string strFolder;
+
+   strsize iFind = strAppId.find('/');
+
+   path = "C:\\Program Files\\ca2\\";
+
+   if (iFind < 0)
+   {
+      path /= strAppId;
+
+   }
+   else
+   {
+
+      path /= strAppId.Left(iFind);
+
+      path /= strAppId.Mid(iFind + 1);
+
+   }
+
+   return path;
+
+#elif defined(ANDROID)
+
+   return ::dir::config();
+
+#else
+
+   return ::file::app_module().folder(4);
+
+#endif
+
+
+}
+
 ::file::path dir::install()
 {
 

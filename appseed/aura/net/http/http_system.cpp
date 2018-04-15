@@ -1354,7 +1354,7 @@ retry:
    {
 
       TRACE("http system get : %s", pszUrl);
-
+      DWORD dwStart = get_tick_count();
       int iTry = 0;
 #ifdef BSD_STYLE_SOCKETS
 retry:
@@ -1688,7 +1688,11 @@ retry_session:
 
       bool bConfigProxy = !set.has_property("no_proxy_config") || !(bool)set["no_proxy_config"];
 
-      int32_t iTimeout = set["timeout"];
+      int32_t iTimeoutTotalMs = set["timeout"];
+
+      int32_t iTimeout = 0;
+
+      int32_t iTimeoutMs = 0;
 
       set["http_body_size_downloaded"] = &psocket->m_body_size_downloaded;
 
@@ -1700,22 +1704,18 @@ retry_session:
 
       psocket->m_scalarsourceDownloaded.m_id = set["http_downloaded_id"].get_id();
 
-      if (iTimeout == 0)
+      if (iTimeoutTotalMs == 0)
       {
 
          iTimeout = 23;
-
-      }
-      else if (iTimeout < 1000)
-      {
-
-         iTimeout = 1;
+         iTimeoutMs = 0;
 
       }
       else
       {
 
-         iTimeout = iTimeout / 1000;
+         iTimeout = iTimeoutTotalMs / 1000;
+         iTimeoutMs = iTimeoutTotalMs % 1000;
 
       }
 
@@ -1794,7 +1794,7 @@ retry_session:
 
          dw1 = ::get_tick_count();
 
-         handler.select(iTimeout, 0);
+         handler.select(iTimeout, iTimeoutMs * 1000);
 
          set["http_content_length"] = psocket->m_content_length;
 
@@ -1877,7 +1877,8 @@ retry_session:
 #ifdef BSD_STYLE_SOCKETS
       if(iStatusCode == 0)
       {
-         if (iTry <= 1)
+         DWORD dwDelta = get_tick_count() - dwStart;
+         if (iTry <= 1 &&  dwDelta < iTimeoutTotalMs)
          {
             Sleep(300);
             goto retry;
