@@ -492,41 +492,41 @@ namespace user
    void view_creator::on_update(::user::document * pdocument, ::user::impact * pSender, LPARAM lHint, object* pHint)
    {
 
-      POSITION pos = m_viewmap.get_start_position();
+      //POSITION pos = m_viewmap.get_start_position();
 
-      ::user::view_creator_data * pcreatordata;
+      //::user::view_creator_data * pcreatordata;
 
-      id id;
+      //id id;
 
-      while(pos != NULL)
-      {
+      //while(pos != NULL)
+      //{
 
-         m_viewmap.get_next_assoc(pos, id, pcreatordata);
+      //   m_viewmap.get_next_assoc(pos, id, pcreatordata);
 
-         bool bUpdateView = true;
+      //   bool bUpdateView = true;
 
-         if (pcreatordata->m_eflag.is_signalized(::user::view_creator_data::flag_strict_update))
-         {
+      //   if (pcreatordata->m_eflag.is_signalized(::user::view_creator_data::flag_strict_update))
+      //   {
 
-            bUpdateView = pcreatordata->m_pdoc != NULL && pSender->get_document() != pcreatordata->m_pdoc;
+      //      bUpdateView = pcreatordata->m_pdoc != NULL && pSender->get_document() != pcreatordata->m_pdoc;
 
-            if (bUpdateView)
-            {
+      //      if (bUpdateView)
+      //      {
 
-               bUpdateView = pcreatordata->m_pdoc != NULL && pcreatordata->m_pdoc != pdocument;
+      //         bUpdateView = pcreatordata->m_pdoc != NULL && pcreatordata->m_pdoc != pdocument;
 
-            }
+      //      }
 
-         }
+      //   }
 
-         if(bUpdateView && pcreatordata->m_pdoc != NULL)
-         {
+      //   if(bUpdateView && pcreatordata->m_pdoc != NULL)
+      //   {
 
-            pcreatordata->m_pdoc->update_all_views(pSender, lHint, pHint);
+      //      pcreatordata->m_pdoc->update_all_views(pSender, lHint, pHint);
 
-         }
+      //   }
 
-      }
+      //}
 
    }
 

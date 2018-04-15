@@ -34,7 +34,7 @@ html_view::~html_view()
 
 void html_view::install_message_routing(::message::sender * pinterface)
 {
-   ::user::impact::install_message_routing(pinterface);
+   ::html_form::install_message_routing(pinterface);
 
    IGUI_MSG_LINK(WM_DESTROY, pinterface, this, &html_view::_001OnDestroy);
    //IGUI_MSG_LINK(WM_SIZE, pinterface, this, &html_view::_001OnSize);
