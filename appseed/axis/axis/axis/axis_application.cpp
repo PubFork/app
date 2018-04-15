@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "fiasco_finder.h"
 #include "aura/compress/zip/zip.h"
 
@@ -1113,7 +1113,7 @@ InitFailure:
        else if (handler()->m_varTopicQuery.has_property("uninstall"))
        {
 
-       if (!on_unstall())
+       if (!on_uninstall())
        {
 
        return false;
@@ -3087,10 +3087,10 @@ namespace axis
    //}
 
 
-   //bool application::on_unstall()
+   //bool application::on_uninstall()
    //{
 
-   //   bool bOk = axis::application::on_unstall();
+   //   bool bOk = axis::application::on_uninstall();
 
 
    //   if(is_serviceable())
@@ -3235,7 +3235,7 @@ namespace axis
    //   return ::core::application::on_install();
    //}
 
-   //bool application::on_unstall()
+   //bool application::on_uninstall()
    //{
    //   string strId = m_strId;
    //   char chFirst = '\0';
@@ -3243,7 +3243,7 @@ namespace axis
    //   {
    //      chFirst = strId[0];
    //   }
-   //   return ::core::application::on_unstall();
+   //   return ::core::application::on_uninstall();
    //}
 
 

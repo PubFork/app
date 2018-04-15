@@ -3077,7 +3077,7 @@ retry_license:
    bool application::on_uninstall()
    {
 
-      //bool bOk = axis::application::on_unstall();
+      //bool bOk = axis::application::on_uninstall();
 
       bool bOk = true;
 

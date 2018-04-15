@@ -1,8 +1,9 @@
-#pragma once
+﻿#pragma once
 
 
 namespace user
 {
+
 
    class CLASS_DECL_AURA check :
       virtual public object

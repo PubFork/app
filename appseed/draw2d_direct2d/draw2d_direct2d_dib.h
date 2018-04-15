@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace draw2d_direct2d
@@ -18,7 +18,7 @@ namespace draw2d_direct2d
 
       HRESULT                       m_hrEndDraw;
       BITMAPINFO                    m_info;
-      
+
       ::draw2d::bitmap_sp           m_spbitmap;
       ::draw2d::graphics_sp         m_spgraphics;
 
@@ -29,7 +29,7 @@ namespace draw2d_direct2d
       bool                          m_bTrans;
 
       //float                                        m_dpi;
-      //::windows::comptr<ID2D1DeviceContext>        m_pdevicecontext;
+      //::comptr<ID2D1DeviceContext>        m_pdevicecontext;
       //mutex                                        m_mutexDc;
 
 
