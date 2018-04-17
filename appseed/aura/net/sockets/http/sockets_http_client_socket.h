@@ -57,7 +57,7 @@ namespace sockets
 
       http_client_socket(base_socket_handler&);
       http_client_socket(base_socket_handler&,const string & url_in);
-      ~http_client_socket();
+      virtual ~http_client_socket();
 
 
       virtual void OnConnect();

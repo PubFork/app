@@ -13,7 +13,7 @@ namespace dir
 
    CLASS_DECL_AURA string name(string path);
    CLASS_DECL_AURA ::file::path install();
-   CLASS_DECL_AURA::file::path inplace_install(string strAppId);
+   CLASS_DECL_AURA::file::path inplace_install(string strAppId, string strPlatform);
    CLASS_DECL_AURA ::file::path beforeca2();
    CLASS_DECL_AURA ::file::path module();
    CLASS_DECL_AURA ::file::path relative(::file::path path);
@@ -51,7 +51,7 @@ namespace dir
    //CLASS_DECL_AURA ::file::path caconfig();
    CLASS_DECL_AURA ::file::path pathfind(const string & pszEnv, const string & pszTopic, const string & pszMode);
    CLASS_DECL_AURA ::file::path program_files_x86();
-   CLASS_DECL_AURA ::file::path stage(string strPlatform);
+   CLASS_DECL_AURA ::file::path stage(string strAppId, string strPlatform);
    CLASS_DECL_AURA ::file::path sys_temp();
 
 } // namespace dir

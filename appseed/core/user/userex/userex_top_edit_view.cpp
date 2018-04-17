@@ -19,10 +19,13 @@ namespace userex
 
    }
 
+
    top_edit_view::~top_edit_view()
    {
 
    }
+
+
    void top_edit_view::install_message_routing(::message::sender * psender)
    {
 

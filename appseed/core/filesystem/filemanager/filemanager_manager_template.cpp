@@ -9,6 +9,8 @@ namespace filemanager
       object(papp)
    {
 
+      m_pfilelistcallback = NULL;
+
       m_bRestoring = false;
 
       m_iTemplate = -1;
@@ -502,24 +504,24 @@ namespace filemanager
 
             if(ptabview != NULL)
             {
-               
-            if (ptabview->get_tab_count() <= 0)
-            {
-               
-               ptabview->set_cur_tab_by_id("verifile://" + pathFolder);
-               
-            }
-            else
-            {
 
-               sp(::user::frame_window) pframe = ptabview->get_pane(0)->m_pholder->get_hold();
-               
-               sp(manager) pmanager = pframe->GetActiveDocument();
-               
-               pmanager->FileManagerBrowse(pathFolder, action::source_user);
+               if (ptabview->get_tab_count() <= 0)
+               {
 
-            }
-               
+                  ptabview->set_cur_tab_by_id("verifile://" + pathFolder);
+
+               }
+               else
+               {
+
+                  sp(::user::frame_window) pframe = ptabview->get_pane(0)->m_pholder->get_hold();
+
+                  sp(manager) pmanager = pframe->GetActiveDocument();
+
+                  pmanager->FileManagerBrowse(pathFolder, action::source_user);
+
+               }
+
             }
 
          }

@@ -88,12 +88,7 @@ object * base_factory::create(::aura::application * papp, ::type * ptype)
 
    }
 
-   if(ptype->m_spmutex.is_null())
-   {
-
-      ptype->m_spmutex = canew(mutex(papp));
-
-   }
+   ptype->defer_create_mutex();
 
    id idType;
 
@@ -105,7 +100,11 @@ object * base_factory::create(::aura::application * papp, ::type * ptype)
       {
 
          if (m_bSimpleFactoryRequest)
+         {
+
             return ptype->m_pfactoryitem->create(papp);
+
+         }
 
       }
 
@@ -126,8 +125,6 @@ object * base_factory::create(::aura::application * papp, ::type * ptype)
 
    if(m_bSimpleFactoryRequest)
    {
-      
-//      m_typeinfoptraSimpleFactoryRequest.add(ptype);
 
       ptype->m_pfactoryitem = pitem;
 
@@ -167,7 +164,7 @@ object * base_factory::typed_clone(id idType,object * pobject)
 
 object * factory_item_base::create(::aura::application * papp)
 {
-   
+
    UNREFERENCED_PARAMETER(papp);
 
    return NULL;
@@ -258,9 +255,9 @@ CLASS_DECL_AURA bool safe_destroy_element(object * pelement)
 
    try
    {
-      
+
       pelement->~object();
-   
+
    }
    catch(...)
    {
@@ -282,7 +279,7 @@ CLASS_DECL_AURA bool safe_free_memory(void * ptype)
    {
 
       memory_free(ptype);
-      
+
    }
    catch(...)
    {

@@ -4,6 +4,8 @@
 #if !defined(MCHECK) && !defined(__VLD) && !defined(__MCRTDBG) && MEMDLEAK
 
 
+#include "aura_heap_memory.h"
+
 #ifdef WINDOWSEX
 #include <mmsystem.h>
 #endif // WINDOWSEX
@@ -120,9 +122,9 @@ void * aligned_memory_alloc_dbg(size_t size, int32_t nBlockUse, const char * szF
    p = unaligned_memory_alloc(size);
 
 
-    //zero(p, size);
+   //zero(p, size);
 
-    return p;
+   return p;
 
 }
 
@@ -132,6 +134,8 @@ void * unaligned_memory_alloc_dbg(size_t size, int32_t nBlockUse, const char * s
 
    void * p;
 
+
+   //p = unaligned_memory_alloc(size);
 
    p = unaligned_memory_alloc(size);
 
@@ -256,9 +260,9 @@ void * memory_realloc_dbg(void * pmemory, size_t size, int32_t nBlockUse, const 
    //}
 
    //if (pblock->m_pszFileName)
-     // ::system_heap_free((void *)pblock->m_pszFileName);
+   // ::system_heap_free((void *)pblock->m_pszFileName);
    //if (pblock->m_puiStack)
-     // ::system_heap_free((void *)pblock->m_puiStack);
+   // ::system_heap_free((void *)pblock->m_puiStack);
 
    size_t * psizeNew = NULL;
 
@@ -388,11 +392,11 @@ void memory_free_dbg(void * pmemory, int32_t iBlockType)
       }
    }
    //if (pblock->m_pszFileName)
-     // ::system_heap_free((void *)pblock->m_pszFileName);
+   // ::system_heap_free((void *)pblock->m_pszFileName);
    //if (pblock->m_puiStack)
-     // ::system_heap_free((void *)pblock->m_puiStack);
+   // ::system_heap_free((void *)pblock->m_puiStack);
 
-      return ::system_heap_free(pblock);
+   return ::system_heap_free(pblock);
 
 
 }
@@ -464,19 +468,19 @@ CLASS_DECL_AURA int  global_memdleak_enabled()
 
    if (g_iGlobalMemdleakEnabled == 0)
    {
-      
+
       bool bMemdleak = false;
-      
+
 #ifdef WINDOWS
 
       uint32_t dwFileAttributes = GetFileAttributesW(L"C:\\archive\\ca2\\config\\system\\memdleak.txt");
-      
+
       bMemdleak = dwFileAttributes != INVALID_FILE_ATTRIBUTES && (dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) == 0;
-      
+
 #else
-      
+
       bMemdleak = ::file_exists_dup("/archive/ca2/config/system/memdleak.txt");
-      
+
 #endif
 
       if (bMemdleak)

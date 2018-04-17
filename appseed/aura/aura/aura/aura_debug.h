@@ -208,13 +208,13 @@ typedef struct _MEMORY_STATE
 //
 /////////////////////////////
 
-#if MEMDLEAK
-
-#define MEMORY_ALLOC(size) memory_alloc_dbg(size , 1923, __FILE__ , __LINE__ )
-
-#define memory_alloc(size) MEMORY_ALLOC(size)
-
-#endif
+//#if MEMDLEAK
+//
+//#define MEMORY_ALLOC(size) memory_alloc_dbg(size , 1923, __FILE__ , __LINE__ )
+//
+//#define memory_alloc(size) MEMORY_ALLOC(size)
+//
+//#endif
 
 
 

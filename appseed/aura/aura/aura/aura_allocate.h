@@ -74,8 +74,6 @@ CLASS_DECL_AURA void __do_for_all_objects(void (c_cdecl *pfn)(object*, void *), 
 /////////////////////////////////////////////////////////////////////////////
 // Automatic debug memory diagnostics
 
-CLASS_DECL_AURA bool __dump_memory_leaks();
-
 #endif // ___NO_DEBUG_CRT
 #endif // DEBUG
 

@@ -10,8 +10,6 @@ void * os_impl_alloc(size_t size)
 
    return ::HeapAlloc(g_system_heap(), 0, size);
 
-   return  malloc(size);
-
 }
 
 

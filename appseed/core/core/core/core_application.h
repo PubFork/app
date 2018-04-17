@@ -343,7 +343,7 @@ namespace core
 
 
 
-      virtual sp(::user::interaction) get_request_parent_ui(sp(::user::interaction) pinteraction, ::create * pcreate);
+      virtual ::user::interaction * get_request_parent_ui(::user::interaction * pinteraction, ::create * pcreate);
 
 
 

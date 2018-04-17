@@ -161,7 +161,7 @@ namespace filemanager
 
                m_pauraapp = get_app()->m_pcoreapp;
 
-               db_server * pcentral = dynamic_cast <db_server *> (&System.m_simpledb.db());
+               db_server * pcentral = dynamic_cast <db_server *> (&System.m_psimpledb->db());
 
                if (pcentral == NULL)
                {
@@ -440,7 +440,7 @@ namespace filemanager
          return;
       m_bFileSize = true;
 
-      db_server * pcentral = dynamic_cast <db_server *> (&System.m_simpledb.db());
+      db_server * pcentral = dynamic_cast <db_server *> (&System.m_psimpledb->db());
       if (pcentral == NULL)
          return;
       DBFileSystemSizeSet * pset = pcentral->m_pfilesystemsizeset;
@@ -578,8 +578,8 @@ namespace filemanager
       }
 
       get_filemanager_data()->OnFileManagerItemCommand(
-         pcommand->m_id,
-         itema);
+      pcommand->m_id,
+      itema);
 
    }
 
@@ -606,8 +606,8 @@ namespace filemanager
          }
       }
       get_filemanager_data()->OnFileManagerItemUpdate(
-         pcommand,
-         itema);
+      pcommand,
+      itema);
       pobj->m_bRet = true;
    }
 
@@ -701,8 +701,8 @@ namespace filemanager
       range range;
       _001GetSelection(range);
       pcommand->Enable(
-         range.get_item_count() == 1
-         && range.ItemAt(0).get_lower_bound() == range.ItemAt(0).get_upper_bound());
+      range.get_item_count() == 1
+      && range.ItemAt(0).get_lower_bound() == range.ItemAt(0).get_upper_bound());
       pobj->m_bRet = true;
 
    }
@@ -1109,7 +1109,7 @@ namespace filemanager
       UNREFERENCED_PARAMETER(pobj);
       //      SCAST_PTR(::message::show_window, pshow, pobj);
 
-      db_server * pcentral = dynamic_cast <db_server *> (&System.m_simpledb.db());
+      db_server * pcentral = dynamic_cast <db_server *> (&System.m_psimpledb->db());
       if (pcentral == NULL)
          return;
       //DBFileSystemSizeSet * pset = pcentral->m_pfilesystemsizeset;
@@ -1547,7 +1547,7 @@ namespace filemanager
       int32_t iCount = 0;
 
       file_list_callback * pcallback =
-         get_filemanager_template()->m_pfilelistcallback;
+      get_filemanager_template()->m_pfilelistcallback;
 
       if (pcallback != NULL)
       {
@@ -1810,10 +1810,10 @@ namespace filemanager
          pgraphics->GetClipBox(rectClipBox);
          class imaging & imaging = Application.imaging();
          imaging.color_blend(
-            pgraphics,
-            rectClipBox,
-            RGB(255, 255, 255),
-            127);
+         pgraphics,
+         rectClipBox,
+         RGB(255, 255, 255),
+         127);
 
          //imaging.bitmap_blend(
          //   pgraphics,
@@ -1943,7 +1943,7 @@ namespace filemanager
          return;
 
       file_list_callback * pcallback =
-         get_filemanager_template()->m_pfilelistcallback;
+      get_filemanager_template()->m_pfilelistcallback;
 
       sp(::user::button) pbutton = (pcontrol);
       if (pcallback != NULL && pbutton != NULL)
@@ -1954,10 +1954,10 @@ namespace filemanager
    }
 
    void file_list::_001OnButtonAction(
-      sp(::user::control) pcontrol)
+   sp(::user::control) pcontrol)
    {
       file_list_callback * pcallback =
-         get_filemanager_template()->m_pfilelistcallback;
+      get_filemanager_template()->m_pfilelistcallback;
 
       if (pcallback != NULL)
       {
@@ -2092,7 +2092,7 @@ namespace filemanager
    void file_list::file_size_add_request(bool bClear)
    {
       UNREFERENCED_PARAMETER(bClear);
-      db_server * pcentral = dynamic_cast <db_server *> (&System.m_simpledb.db());
+      db_server * pcentral = dynamic_cast <db_server *> (&System.m_psimpledb->db());
       if (pcentral == NULL)
          return;
       DBFileSystemSizeSet * pset = pcentral->m_pfilesystemsizeset;

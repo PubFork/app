@@ -20,6 +20,12 @@ namespace user
 
    }
 
+   keyboard_layout_id::~keyboard_layout_id()
+   {
+
+
+   }
+
 
    keyboard_layout_id & keyboard_layout_id::operator = (const keyboard_layout_id & id)
    {
@@ -83,6 +89,13 @@ namespace user
    keyboard_layout::keyboard_layout(::aura::application * papp) :
       ::object(papp)
    {
+
+   }
+
+   keyboard_layout::~keyboard_layout()
+   {
+
+
 
    }
 
@@ -190,7 +203,7 @@ namespace user
 
    string keyboard_layout::process_key(key * pkey)
    {
-      
+
       string str;
 
       if(!m_mapCode.Lookup((int) pkey->m_iCode,str))
@@ -212,7 +225,7 @@ namespace user
          return process_char(str);
 
       }
-         
+
    }
 
 

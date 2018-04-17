@@ -81,7 +81,7 @@ namespace aura
       sp(::aura::str_context)                            m_puserstrcontext;
 
 
-      ptrmap < ::aura::application, string_map < ::aura::library * > > m_mapLibrary;
+      ptrmap < ::aura::application, string_map < sp(::aura::library) > > m_mapLibrary;
 
       bool                                                     m_bSystemSynchronizedScreen;
       rect_array                                               m_rectaMonitor;

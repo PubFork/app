@@ -146,7 +146,7 @@ public:
    simple_object();
    virtual ~simple_object();
 
-
+   virtual void set_heap_alloc();
    inline int64_t get_ref_count()
    {
 

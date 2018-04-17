@@ -382,6 +382,7 @@ public:
 
 
    inline void prepare_first_last(index & first, index & last) const;
+   inline void prepare_first_in_count_last_out(index & first, ::count & inCountLastOut) const;
 
 
    inline void remove_last();

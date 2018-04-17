@@ -1715,7 +1715,7 @@ namespace user
          else
          {
 
-            TRACE("optstr");
+            //TRACE("optstr");
 
          }
 
@@ -2093,7 +2093,7 @@ namespace user
          else
          {
 
-            TRACE("optstr");
+            //TRACE("optstr");
 
          }
 

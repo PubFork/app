@@ -112,6 +112,8 @@ aura_main_data::aura_main_data(LPTSTR lpCmdLine)
 aura_main_data::~aura_main_data()
 {
 
+   ::aura::del(m_pmaininitdata);
+
 }
 
 
@@ -399,6 +401,8 @@ void app_core::defer_load_backbone_libraries(string strAppId)
 
       PFN_DEFER_INIT pfnDeferInit = NULL;
 
+      PFN_DEFER_TERM pfnDeferTerm = NULL;
+
       if (hmodule != NULL || bInApp)
       {
 
@@ -407,17 +411,43 @@ void app_core::defer_load_backbone_libraries(string strAppId)
 
             pfnDeferInit = (PFN_DEFER_INIT) __node_library_raw_get(hmodule, "defer_core_init");
 
+            pfnDeferTerm = (PFN_DEFER_TERM) __node_library_raw_get(hmodule, "defer_core_term");
+
          }
          else if ((hmodule = __node_library_touch("base", strMessage)) != NULL)
          {
 
             pfnDeferInit = (PFN_DEFER_INIT) __node_library_raw_get(hmodule, "defer_base_init");
 
+            pfnDeferTerm = (PFN_DEFER_TERM) __node_library_raw_get(hmodule, "defer_base_term");
+
          }
          else if ((hmodule = __node_library_touch("axis", strMessage)) != NULL)
          {
 
             pfnDeferInit = (PFN_DEFER_INIT) __node_library_raw_get(hmodule, "defer_axis_init");
+
+            pfnDeferTerm = (PFN_DEFER_TERM) __node_library_raw_get(hmodule, "defer_axis_term");
+
+         }
+
+      }
+
+      if (pfnDeferInit != NULL)
+      {
+
+         if (pfnDeferTerm == NULL)
+         {
+
+            MessageBox(NULL, "Missing corresponding defer_*_term for the defer_*_init backbone library.", "Error", MB_ICONERROR);
+
+            on_result(-6);
+
+         }
+         else
+         {
+
+            m_pfnDeferTerm = pfnDeferTerm;
 
          }
 
@@ -429,6 +459,18 @@ void app_core::defer_load_backbone_libraries(string strAppId)
          on_result(-3);
 
       }
+
+   }
+
+}
+
+void app_core::defer_unload_backbone_libraries()
+{
+
+   if (m_pfnDeferTerm != NULL)
+   {
+
+      (*m_pfnDeferTerm)();
 
    }
 
@@ -593,6 +635,8 @@ void app_core::end()
       file_add_contents_raw(szEllapsed, szTimeMessage2);
 
    }
+
+   defer_unload_backbone_libraries();
 
 #ifdef __MCRTDBG
 

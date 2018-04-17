@@ -73,7 +73,6 @@ type::type(const type & info)
    m_id              = info.m_id;
    m_idFriendly      = info.m_idFriendly;
    m_pfactoryitem    = info.m_pfactoryitem;
-   m_spmutex         = info.m_spmutex;
 
 }
 
@@ -86,8 +85,8 @@ type::type(const std_type_info & info)
    m_idFriendly      = info.name();
    m_id              = info.raw_name();
 #elif defined(VSNORD)
-	m_idFriendly	   = demangle(info.name());
-	m_id			      = info.name();
+   m_idFriendly	   = demangle(info.name());
+   m_id			      = info.name();
 #elif defined(APPLEOS)
    m_idFriendly      = demangle(info.name());
    m_id              = info.name();
@@ -115,7 +114,6 @@ type & type::operator = (const type & info)
    m_id              = info.m_id;
    m_idFriendly      = info.m_idFriendly;
    m_pfactoryitem    = info.m_pfactoryitem;
-   m_spmutex         = info.m_spmutex;
 
    return *this;
 
@@ -139,7 +137,6 @@ type & type::operator = (const std_type_info & info)
    m_id              = info.name();
 #endif
 //   m_pfactoryitem.release();
-   m_spmutex.release();
 
    return *this;
 

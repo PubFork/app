@@ -60,7 +60,7 @@ bool compress_gz::transfer(::file::ostream & ostreamGzFileCompressed, ::file::is
    int32_t status;
 
    class memory memIn;
-   memIn.allocate(1024 * 64);
+   memIn.allocate(MAX(1024, MIN(istreamUncompressed.get_left(), 1024 * 64)));
 
    int64_t uiRead = istreamUncompressed.read(memIn.get_data(), memIn.get_size());
 
@@ -82,7 +82,7 @@ bool compress_gz::transfer(::file::ostream & ostreamGzFileCompressed, ::file::is
       return false;
    }
 
-   // use deflateSetHeader to set original file params
+// use deflateSetHeader to set original file params
 
    int iFlush = Z_NO_FLUSH;
 

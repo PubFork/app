@@ -13,9 +13,13 @@ timer::timer(::aura::application * papp, uint_ptr uiTimer, PFN_TIMER pfnTimer, v
 
    m_pvoidData = pvoidData;
 
+   ::aura::del(m_pmutex);
+
    m_pmutex = pmutex;
 
    m_pcallback = NULL;
+
+   m_ptimerRunning = NULL;
 
 }
 
@@ -41,7 +45,7 @@ bool timer::start(int millis, bool bPeriodic)
 
    m_dwMillis = millis;
 
-   if(m_ptimerRunning.is_set())
+   if(m_ptimerRunning != NULL)
    {
 
       return true;
@@ -56,7 +60,7 @@ bool timer::start(int millis, bool bPeriodic)
       if(!impl_start())
       {
 
-         m_ptimerRunning.release();
+         m_ptimerRunning = NULL;
 
          return false;
 
@@ -66,7 +70,7 @@ bool timer::start(int millis, bool bPeriodic)
    catch(...)
    {
 
-      m_ptimerRunning.release();
+      m_ptimerRunning = NULL;
 
       return false;
 
@@ -235,7 +239,7 @@ void timer::call_on_timer()
       try
       {
 
-         m_ptimerRunning.release();
+         m_ptimerRunning = NULL;
 
       }
       catch(...)

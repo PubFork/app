@@ -70,8 +70,11 @@ plex_heap_alloc_array * g_pheap = NULL;
 #endif
 
 
+#if !defined(MCHECK) && !defined(_VLD) && !defined(__MCRTDBG)
 
 const int heap_memory::m_iPaddingAfter = 16;
+
+#endif
 
 
 

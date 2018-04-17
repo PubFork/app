@@ -6631,7 +6631,7 @@ finalize:
       wstring desc = L"spafile";          // file type description
       wstring content_type = L"application/x-spa";
 
-      wstring app(::dir::stage("x86"));
+      wstring app(::dir::stage(m_strAppId, "x86"));
 
       wstring icon(app);
 
@@ -6678,7 +6678,7 @@ finalize:
       RegSetValueExW(hkey, L"", 0, REG_SZ, (BYTE*)icon.c_str(), DWORD (icon.length() * sizeof(wchar_t)));
       RegCloseKey(hkey);
 
-      wstring wstr(dir::stage("x86") / "spa_register.txt");
+      wstring wstr(dir::stage(m_strAppId, "x86") / "spa_register.txt");
 
       int iRetry = 9;
 

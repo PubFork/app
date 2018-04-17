@@ -10,7 +10,7 @@ namespace path
 
 #ifdef WINDOWS
 
-      return ::dir::stage(strPlatform) / "app.exe";
+      return ::dir::stage("ca2 Store", strPlatform) / "app.exe";
 
 #else
 
@@ -23,7 +23,7 @@ namespace path
    ::file::path app_app_admin(string strPlatform)
    {
 
-      return ::dir::stage(strPlatform) / "app_app_admin.exe";
+      return ::dir::stage("ca2 Store", strPlatform) / "app_app_admin.exe";
 
    }
 
@@ -31,7 +31,7 @@ namespace path
    ::file::path app_app_nest(string strPlatform)
    {
 
-      return ::dir::stage(strPlatform) / "app_app_nest.exe";
+      return ::dir::stage("ca2 Store", strPlatform) / "app_app_nest.exe";
 
    }
 
@@ -41,11 +41,11 @@ namespace path
 
 #ifdef WINDOWS
 
-      return ::dir::stage(strPlatform) / "app_app.exe";
+      return ::dir::stage("ca2 Store", strPlatform) / "app_app.exe";
 
 #else
 
-      return ::dir::stage(strPlatform) / "app_app";
+      return ::dir::stage("ca2 Store", strPlatform) / "app_app";
 
 #endif
 
@@ -57,7 +57,7 @@ namespace path
    ::file::path vcredist(string strPlatform)
    {
 
-      return ::dir::stage(strPlatform) / "vcredist.exe";
+      return ::dir::stage("ca2 Store", strPlatform) / "vcredist.exe";
 
    }
 

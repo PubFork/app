@@ -69,6 +69,8 @@ namespace aura
       m_emaildepartment(this)
    {
 
+      m_psystemwindow = NULL;
+
       m_strAppId = "system";
 
       m_pappcore = pappcore;
@@ -278,7 +280,7 @@ namespace aura
       try
       {
 
-         if (m_pfactory != NULL)
+         if (m_pfactory.is_set())
          {
 
             m_pfactory->enable_simple_factory_request(false);
@@ -836,8 +838,6 @@ namespace aura
 
       m_serviceptra.remove_all();
 
-      multithreading::post_quit_and_wait(m_paurasession, seconds(60));
-
       try
       {
 
@@ -881,11 +881,7 @@ namespace aura
 
       }
 
-#ifdef DEBUG
-
       m_plog.release();
-
-#endif
 
       m_pmath.release();
 
@@ -956,11 +952,7 @@ namespace aura
 
       }
 
-#ifdef DEBUG
-
       m_plog.release();
-
-#endif
 
       {
 

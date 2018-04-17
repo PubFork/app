@@ -21,10 +21,16 @@ namespace visual
          size                 m_size;
 
          text_box();
+         ~text_box();
+
+
          void update(font_list_data * pdata, int iBox, string strText);
+
+
       };
 
-      class CLASS_DECL_AURA item
+      class CLASS_DECL_AURA item :
+         virtual public simple_object
       {
       public:
 
@@ -32,6 +38,9 @@ namespace visual
          string               m_strName;
          string               m_strFont;
          string               m_strSample;
+
+         item();
+         virtual ~item();
 
       };
 
@@ -42,7 +51,7 @@ namespace visual
       string                                    m_strText;
       string                                    m_strTextLayout;
 
-      pointer_array < item * >                  m_itemptra;
+      spa(item)                                 m_itemptra;
       rect                                      m_rectClient;
       rect                                      m_rectMargin;
       index                                     m_iSel;

@@ -158,6 +158,7 @@ namespace base
    void system::term_application()
    {
 
+      base::application::term_application();
       axis::system::term_application();
 
    }

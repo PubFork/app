@@ -103,8 +103,8 @@ namespace sockets
       /** Return assigned port number. */
 //         port_t GetPort()
 //       {
- //        return GetSockPort();
-   //   }
+//        return GetSockPort();
+      //   }
 
       /** Return listen queue depth. */
       virtual int32_t GetDepth();
@@ -209,7 +209,7 @@ namespace sockets
          else
          {
 
-            m_psocket = new LISTENER(Handler());
+            m_psocket = canew(LISTENER(Handler()));
 
             pbasesocket = dynamic_cast < base_socket *> (m_psocket);
 

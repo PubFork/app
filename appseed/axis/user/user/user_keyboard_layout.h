@@ -13,7 +13,8 @@ typedef void * HKL;
 namespace user
 {
 
-   class CLASS_DECL_AXIS keyboard_layout_id
+   class CLASS_DECL_AXIS keyboard_layout_id :
+      virtual public ::object
    {
    public:
 
@@ -27,6 +28,7 @@ namespace user
 
       keyboard_layout_id();
       keyboard_layout_id(const keyboard_layout_id & id);
+      virtual ~keyboard_layout_id();
 
 
       keyboard_layout_id & operator = (const keyboard_layout_id & id);
@@ -47,14 +49,13 @@ namespace user
 
 
    class CLASS_DECL_AXIS keyboard_layout :
-      virtual public ::object,
       virtual public keyboard_layout_id
    {
    public:
 
 
 //      int_to_string         m_mapChar;
-  //    int_to_string         m_mapKey;
+      //    int_to_string         m_mapKey;
       int_to_string         m_mapCode;
 
       string                              m_strEscape;
@@ -62,6 +63,7 @@ namespace user
 
 
       keyboard_layout(::aura::application * papp);
+      virtual ~keyboard_layout();
 
       bool load(const char * pszPath);
 

@@ -1376,7 +1376,7 @@ namespace sockets
             return;
          }
          SSL_set_app_data2(m_psslcontext->m_ssl, this);
-         SSL_set_mode(m_psslcontext->m_ssl,SSL_MODE_AUTO_RETRY);
+         //SSL_set_mode(m_psslcontext->m_ssl,SSL_MODE_AUTO_RETRY);
          m_psslcontext->m_sbio = BIO_new_socket((int32_t)GetSocket(),BIO_NOCLOSE);
          if(!m_psslcontext->m_sbio)
          {
@@ -1717,7 +1717,10 @@ namespace sockets
 
       ERR_error_string(err, buf);
 
-      SSL_CTX_set_mode(m_psslcontext->m_ssl_ctx, SSL_MODE_AUTO_RETRY);
+      SSL_CTX_set_mode(m_psslcontext->m_ssl_ctx, SSL_MODE_AUTO_RETRY | SSL_MODE_RELEASE_BUFFERS);
+
+      SSL_CTX_set_options(m_psslcontext->m_ssl_ctx, SSL_OP_NO_COMPRESSION | SSL_CTX_get_options(m_psslcontext->m_ssl_ctx));
+
 
       if (m_bReuseSession && m_spsslclientcontext.is_set())
       {
@@ -1739,7 +1742,8 @@ namespace sockets
       m_psslcontext->m_ssl_method = meth_in != NULL ? meth_in : TLS_server_method();
 
       m_psslcontext->m_ssl_ctx = SSL_CTX_new(m_psslcontext->m_ssl_method);
-      SSL_CTX_set_mode(m_psslcontext->m_ssl_ctx, SSL_MODE_AUTO_RETRY);
+      SSL_CTX_set_mode(m_psslcontext->m_ssl_ctx, SSL_MODE_AUTO_RETRY | SSL_MODE_RELEASE_BUFFERS) ;
+      SSL_CTX_set_options(m_psslcontext->m_ssl_ctx, SSL_OP_NO_COMPRESSION | SSL_CTX_get_options(m_psslcontext->m_ssl_ctx));
       // session id
       if (context.get_length())
          SSL_CTX_set_session_id_context(m_psslcontext->m_ssl_ctx, (const uchar *)(const  char *)context, (uint32_t)context.get_length());
@@ -1829,7 +1833,8 @@ namespace sockets
       /* create our context*/
       m_psslcontext->m_ssl_method = meth_in != NULL ? meth_in : TLS_client_method();
       m_psslcontext->m_ssl_ctx = SSL_CTX_new(m_psslcontext->m_ssl_method);
-      SSL_CTX_set_mode(m_psslcontext->m_ssl_ctx, SSL_MODE_AUTO_RETRY);
+      SSL_CTX_set_mode(m_psslcontext->m_ssl_ctx, SSL_MODE_AUTO_RETRY | SSL_MODE_RELEASE_BUFFERS);
+      SSL_CTX_set_options(m_psslcontext->m_ssl_ctx, SSL_OP_NO_COMPRESSION | SSL_CTX_get_options(m_psslcontext->m_ssl_ctx));
       // session id
       if (context.get_length())
          SSL_CTX_set_session_id_context(m_psslcontext->m_ssl_ctx, (const uchar *)(const  char *)context, (uint32_t)context.get_length());
@@ -1915,6 +1920,8 @@ namespace sockets
 
       }
 
+      bool bSetToReuse = false;
+
 #ifdef HAVE_OPENSSL
 
 
@@ -1930,6 +1937,8 @@ namespace sockets
          synch_lock sl(clientcontextmap.m_pmutex);
 
          clientcontextmap[m_strInitSSLClientContext].push(m_spsslclientcontext);
+
+         bSetToReuse = true;
 
       }
 
@@ -1973,7 +1982,7 @@ namespace sockets
 
       }
 
-      if (!m_bReuseSession)
+      if (!bSetToReuse)
       {
 
          if (m_psslcontext->m_ssl_ctx)

@@ -16,6 +16,20 @@ namespace filemanager
    filemanager::~filemanager()
    {
 
+      if (m_ptemplateForm.is_set())
+      {
+
+         m_ptemplateForm->close_all_documents(false);
+
+      }
+
+      if (m_ptemplateOperation.is_set())
+      {
+
+         m_ptemplateOperation->close_all_documents(false);
+
+      }
+
    }
 
 
@@ -90,18 +104,18 @@ namespace filemanager
       m_ptemplate->m_setToolbar[manager::mode_export] = "filemanager_export_toolbar.xml";
 
       m_ptemplateForm = canew(::user::multiple_document_template(
-                                 get_app(),
-                                 pszMatter,
-                                 System.type_info < ::html_document > (),
-                                 System.type_info < form_child_frame > (),
-                                 System.type_info < form > ()));
+                              get_app(),
+                              pszMatter,
+                              System.type_info < ::html_document > (),
+                              System.type_info < form_child_frame > (),
+                              System.type_info < form > ()));
 
       m_ptemplateOperation = canew(::user::single_document_template(
-                                      get_app(),
-                                      pszMatter,
-                                      System.type_info < operation_document > (),
-                                      System.type_info < operation_child_frame > (),
-                                      System.type_info < operation_view > ()));
+                                   get_app(),
+                                   pszMatter,
+                                   System.type_info < operation_document > (),
+                                   System.type_info < operation_child_frame > (),
+                                   System.type_info < operation_view > ()));
    }
 
 

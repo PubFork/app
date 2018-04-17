@@ -681,7 +681,7 @@ found:
 }
 
 
-CLASS_DECL_AURA::file::path dir::inplace_install(string strAppId)
+CLASS_DECL_AURA::file::path dir::inplace_install(string strAppId, string strPlatform)
 {
 #ifdef WINDOWSEX
 
@@ -691,10 +691,22 @@ CLASS_DECL_AURA::file::path dir::inplace_install(string strAppId)
 
    strsize iFind = strAppId.find('/');
 
-   path = "C:\\Program Files\\ca2\\";
+   if (strPlatform.compare_ci("win32") == 0 || strPlatform.compare_ci("x86") == 0)
+   {
+
+      path = "C:\\Program Files (x86)\\";
+
+   }
+   else
+   {
+
+      path = "C:\\Program Files\\";
+
+   }
 
    if (iFind < 0)
    {
+
       path /= strAppId;
 
    }
@@ -1920,10 +1932,10 @@ void dir::ls_file(::file::patha & stra,const ::file::path & psz)
 
 
 
-::file::path dir::stage(string strPlatform)
+::file::path dir::stage(string strAppId, string strPlatform)
 {
 
-   return program_files_x86() / "ca2/time" / time_binary_platform(strPlatform) / process_version_dir_name();
+   return inplace_install(strAppId, strPlatform) /  "time" / time_binary_platform(strPlatform) / process_version_dir_name();
 
 }
 

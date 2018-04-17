@@ -24,7 +24,7 @@ namespace core
       if (m_pfilemanager == NULL)
       {
 
-         m_pfilemanager = new ::filemanager::filemanager(this);
+         m_pfilemanager = canew(::filemanager::filemanager(this));
 
          m_pfilemanager->construct(this);
 

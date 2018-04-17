@@ -1,6 +1,8 @@
 ﻿#pragma once
 
 
+
+
 template < typename Type, typename RawType >
 class string_array :
    public array < Type >
@@ -168,7 +170,7 @@ public:
    void make_upper();
 
 
-
+   void debug_output(index iStart = 0, ::count c = -1);
 
    operator ::count() const
    {
@@ -3316,6 +3318,14 @@ void string_array < Type, RawType > ::make_lower()
    {
       this->element_at(i).make_lower();
    }
+}
+
+template < class Type, class RawType >
+void string_array < Type, RawType > ::debug_output(index iStart, ::count inCountLastOut)
+{
+
+   output_debug_string(implode(STR_NEWLINE, iStart, inCountLastOut));
+
 }
 
 

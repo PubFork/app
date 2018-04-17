@@ -156,6 +156,27 @@ namespace math
 
    }
 
+
+   math::~math()
+   {
+
+      ::aura::del(m_posdata);
+      /*if (hOriginalKey)
+      if (!CryptDestroyKey(hOriginalKey))
+      TRACE("Failed CryptDestroyKey\n");
+
+      if (hDuplicateKey)
+      if (!CryptDestroyKey(hDuplicateKey))
+      TRACE("Failed CryptDestroyKey\n");
+
+      if(hCryptProv)
+      if (!CryptReleaseContext(hCryptProv, 0))
+      TRACE("Failed CryptReleaseContext\n");
+      */
+
+   }
+
+
    uint64_t math::gen_rand()
    {
 #if defined(METROWIN)
@@ -299,22 +320,6 @@ namespace math
       }
    }
 
-   math::~math()
-   {
-      /*if (hOriginalKey)
-      if (!CryptDestroyKey(hOriginalKey))
-      TRACE("Failed CryptDestroyKey\n");
-
-      if (hDuplicateKey)
-      if (!CryptDestroyKey(hDuplicateKey))
-      TRACE("Failed CryptDestroyKey\n");
-
-      if(hCryptProv)
-      if (!CryptReleaseContext(hCryptProv, 0))
-      TRACE("Failed CryptReleaseContext\n");
-      */
-
-   }
 
    double math::GetPi()
    {

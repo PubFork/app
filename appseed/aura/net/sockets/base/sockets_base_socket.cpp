@@ -832,7 +832,7 @@ namespace sockets
    void base_socket::DetachSocket()
    {
       SetDetached();
-      m_pThread = cnew(socket_thread(this));
+      m_pThread = canew(socket_thread(this));
    }
 
 
@@ -928,7 +928,7 @@ namespace sockets
          try
          {
 
-            h.select(0, 1000 * 1000);
+            h.select(1, 0);
 
          }
          catch(...)

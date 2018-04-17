@@ -566,6 +566,7 @@ namespace core
 
       m_puserfs = NULL;
 
+      m_pwndfrm.release();
 
       try
       {
@@ -2195,19 +2196,19 @@ namespace core
    }
 
 
-   sp(::user::interaction) application::get_request_parent_ui(sp(::user::interaction) pinteraction, ::create * pcreate)
+   ::user::interaction * application::get_request_parent_ui(::user::interaction * pinteraction, ::create * pcreate)
    {
 
-      sp(::user::interaction) puiParent = NULL;
+      ::user::interaction * puiParent = NULL;
 
       if (puiParent == NULL)
       {
-         puiParent = pcreate->m_puiParent;
+         puiParent = dynamic_cast < ::user::interaction * > (pcreate->m_puiParent);
       }
 
       if (puiParent == NULL && pcreate->m_spApplicationBias.is_set())
       {
-         puiParent = pcreate->m_spApplicationBias->m_puiParent;
+         puiParent = dynamic_cast < ::user::interaction * > (pcreate->m_spApplicationBias->m_puiParent);
       }
 
       //if(puiParent == NULL && m_pbasesession != NULL && m_pbasesession->m_pcoresession != NULL && !pcreate->m_bClientOnly
@@ -2795,7 +2796,7 @@ namespace core
    bool application::get_fs_size(int64_t & i64Size, const char * pszPath, bool & bPending)
    {
 
-      db_server * pcentral = dynamic_cast <db_server *> (&System.m_simpledb.db());
+      db_server * pcentral = dynamic_cast <db_server *> (&System.m_psimpledb->db());
 
       if (pcentral == NULL)
       {

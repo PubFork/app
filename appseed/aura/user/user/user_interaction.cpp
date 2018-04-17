@@ -1,10 +1,12 @@
 #include "framework.h"
 
+
 ::user::interaction * get_system_window_interaction(::os_system_window * psystemwindow);
 
 #ifdef WINDOWSEX
 
 #define MESSAGE_WINDOW_PARENT HWND_MESSAGE
+#include "aura/aura/os/windows/windows_system_interaction_impl.h"
 
 #elif defined(METROWIN)
 
@@ -73,7 +75,6 @@ namespace user
       m_puiThis = this;
 
       m_bMayProDevian = true;
-      //m_pmutex                   = NULL;
       m_eappearance = appearance_normal;
       m_eappearanceRequest = appearance_none;
       m_bCursorInside = false;
@@ -117,7 +118,6 @@ namespace user
 
       TRACE("::user::interaction::~interaction interaction=0x%016x %s", this, typeid(*this).name());
 
-      m_uiptraChild.m_pmutex = NULL;
 
    }
    tooltip *    interaction::get_tooltip()
@@ -1151,8 +1151,6 @@ restart:
       single_lock sl(get_wnd() == NULL || get_wnd()->m_pimpl.is_null()
                      || get_wnd()->m_pimpl.cast < ::user::interaction_impl >() == NULL ? NULL : get_wnd()->m_pimpl.cast < ::user::interaction_impl >()->draw_mutex(), true);
 
-      //single_lock sl(m_pmutex,true);
-
       m_bUserElementalOk = false;
 
       threadrefa_post_quit();
@@ -1980,21 +1978,18 @@ restart:
       {
 
          //m_pauraapp->add(this);
-
+         ::user::interaction * puiSystem = NULL;
+#if !defined(LINUX) && !defined(METROWIN) && !defined(APPLEOS) && !defined(VSNORD)
+         puiSystem = dynamic_cast < ::user::interaction * > (System.m_psystemwindow);
+#endif
 
          if ((GetParent() == NULL
 #if defined(METROWIN) || defined(VSNORD)
                || GetParent() == System.m_possystemwindow->m_pui
 #endif
-             )
-               && !is_message_only_window()
-#if !defined(LINUX) && !defined(METROWIN) && !defined(APPLEOS) && !defined(VSNORD)
-               && (::user::interaction *) System.m_psystemwindow != this
-#endif
+             ) && !is_message_only_window() &&  puiSystem != this
             )
          {
-
-            //            synch_lock slUser(m_pmutex);
 
             synch_lock sl(m_pmutex);
 
@@ -2024,8 +2019,6 @@ restart:
       }
 
       defer_create_mutex();
-
-      m_uiptraChild.m_pmutex = m_pmutex;
 
       try
       {

@@ -3,6 +3,8 @@
 
 typedef int_bool DEFER_INIT();
 typedef DEFER_INIT * PFN_DEFER_INIT;
+typedef int_bool DEFER_TERM();
+typedef DEFER_TERM * PFN_DEFER_TERM;
 
 
 class node_data_exchange;
@@ -101,11 +103,13 @@ public:
    bool                          m_bAcidApp = false;
    ::aura::PFN_GET_NEW_LIBRARY   m_pfnNewLibrary = NULL;
    ::aura::PFN_GET_NEW_APP       m_pfnNewApp = NULL;
+   PFN_DEFER_TERM                m_pfnDeferTerm = NULL;
    DWORD                         m_dwStartTime;
    DWORD                         m_dwAfterApplicationFirstRequest;
    sp(aura_main_data)            m_pmaindata;
    ::aura::system *              m_psystem = NULL;
    string                        m_strAppId;
+
 
 
    int                           m_iaError[APP_CORE_MAXIMUM_ERROR_COUNT];
@@ -131,6 +135,7 @@ public:
    bool ini();
 
    virtual void defer_load_backbone_libraries(string strAppId);
+   virtual void defer_unload_backbone_libraries();
 
    void run();
 

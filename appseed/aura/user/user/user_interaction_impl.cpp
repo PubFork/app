@@ -31,7 +31,7 @@ namespace user
       m_bCursorRedraw = false;
       m_dFps = 60.0;
       m_bIpcCopy = false;
-      m_pmutex                               = new mutex(get_app());
+      defer_create_mutex();
       m_guieptraMouseHover.m_pmutex          = m_pmutex;
       m_bScreenRelativeMouseMessagePosition  = true;
       m_bTranslateMouseMessageCursor         = true;

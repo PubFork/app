@@ -6,7 +6,7 @@ namespace sockets
 {
    class base_socket_handler;
    class base_socket;
-   
+
 }
 
 namespace aura
@@ -15,76 +15,91 @@ namespace aura
 
    class CLASS_DECL_AURA log :
    //virtual public ::sockets::logger
-   virtual public ::object
+      virtual public ::object
    {
-      public:
+   public:
 
-         enum e_level
-         {
+      enum e_level
+      {
 
-            level_warning = 0,
-            level_error,
-            level_fatal,
-            level_info
+         level_warning = 0,
+         level_error,
+         level_fatal,
+         level_info
 
-         };
+      };
 
-         bool                    m_bLog;
-         bool                    m_bExtendedLog;
-
-
-
-         bool                    m_bTrace;
-         ::aura::trace::trace *  m_ptrace;
-         mutex                   m_mutexTrace;
-         stringa                 m_straSeparator;
-         FILE *                  m_pfile;
-         bool                    m_bInitialized;
-         string                  m_strLogPath;
-         id                      m_id;
-         int32_t                 m_iYear;
-         int32_t                 m_iMonth;
-         int32_t                 m_iDay;
+      bool                    m_bLog;
+      bool                    m_bExtendedLog;
 
 
-         log(::aura::application * papp);
-         virtual ~log();
 
-         virtual void print(const char * psz, ...);
-
-         virtual bool initialize(const char * pszId);
-         virtual bool initialize(id id);
-         virtual bool finalize();
-
-         void trace_str(const char *pszFileName, int32_t nLine, uint32_t dwCategory, uint32_t nLevel, const char * psz) const;
-         void trace_v(const char *pszFileName, int32_t nLine, uint32_t dwCategory, uint32_t nLevel, const char * pszFmt, va_list args) const;
-
-         void set_trace_category(uint32_t dwCategory, const char * pszName, uint32_t uiLevel);
-
-
-         /** error level enum. */
-         //      log();
-         //    virtual ~log();
-
-         virtual void success(const char * psz);
-
-         //      virtual void print(const char * psz, ...);
-
-         //      virtual bool initialize(const char * pszId);
-         //      virtual bool finalize();
-
-         virtual void set_extended_log(bool bSet = true);
-         virtual bool get_extended_log();
+      bool                    m_bTrace;
+      ::aura::trace::trace *  m_ptrace;
+      mutex                   m_mutexTrace;
+      stringa                 m_straSeparator;
+      FILE *                  m_pfile;
+      bool                    m_bInitialized;
+      string                  m_strLogPath;
+      id                      m_id;
+      int32_t                 m_iYear;
+      int32_t                 m_iMonth;
+      int32_t                 m_iDay;
 
 
-         //virtual void trace_v(const char *pszFileName, int32_t nLine, uint32_t dwCategory, uint32_t nLevel, const char * pszFmt, va_list args) const;
-         //      virtual void trace_v(const char *pszFileName, int32_t nLine, uint32_t dwCategory, uint32_t nLevel, const unichar * pszFmt, va_list args) const;
-
-         void __cdecl trace(const char * pszFormat, ...);
-         void __cdecl trace2(uint32_t dwCategory, UINT nLevel, const char * pszFormat, ...);
+      log(::aura::application * papp);
+      virtual ~log();
 
 
-         //virtual void set_trace_category(uint32_t dwCategory, const char * pszName, uint32_t uiLevel);
+      virtual int64_t add_ref() override
+      {
+
+         return ::object::add_ref();
+
+      }
+
+      virtual int64_t dec_ref() override
+      {
+
+         return ::object::dec_ref();
+
+      }
+
+      virtual void print(const char * psz, ...);
+
+      virtual bool initialize(const char * pszId);
+      virtual bool initialize(id id);
+      virtual bool finalize();
+
+      void trace_str(const char *pszFileName, int32_t nLine, uint32_t dwCategory, uint32_t nLevel, const char * psz) const;
+      void trace_v(const char *pszFileName, int32_t nLine, uint32_t dwCategory, uint32_t nLevel, const char * pszFmt, va_list args) const;
+
+      void set_trace_category(uint32_t dwCategory, const char * pszName, uint32_t uiLevel);
+
+
+      /** error level enum. */
+      //      log();
+      //    virtual ~log();
+
+      virtual void success(const char * psz);
+
+      //      virtual void print(const char * psz, ...);
+
+      //      virtual bool initialize(const char * pszId);
+      //      virtual bool finalize();
+
+      virtual void set_extended_log(bool bSet = true);
+      virtual bool get_extended_log();
+
+
+      //virtual void trace_v(const char *pszFileName, int32_t nLine, uint32_t dwCategory, uint32_t nLevel, const char * pszFmt, va_list args) const;
+      //      virtual void trace_v(const char *pszFileName, int32_t nLine, uint32_t dwCategory, uint32_t nLevel, const unichar * pszFmt, va_list args) const;
+
+      void __cdecl trace(const char * pszFormat, ...);
+      void __cdecl trace2(uint32_t dwCategory, UINT nLevel, const char * pszFormat, ...);
+
+
+      //virtual void set_trace_category(uint32_t dwCategory, const char * pszName, uint32_t uiLevel);
 
       virtual void sockets_log(::sockets::base_socket_handler * phandler, ::sockets::base_socket * sock, const string & strUser, int32_t iError, const string & strSystem, ::aura::log::e_level elevel = ::aura::log::level_warning);
       //virtual void sockets_log(base_socket_handler *, base_socket *, const string & strUser, int32_t err, const string & strSystem, ::aura::log::e_level elevel = ::aura::log::level_warning);

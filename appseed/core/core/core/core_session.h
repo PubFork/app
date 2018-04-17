@@ -117,7 +117,7 @@ namespace core
       // varFile   : empty, one file path, many file paths, one file object, one or more file objects to be opened
       // varQuery  : more ellaborated requests for the application - syntax and semantic defined by requested application
 
-      virtual sp(::user::interaction) get_request_parent_ui(sp(::user::interaction) pinteraction, ::create * pcreate) override;
+      virtual ::user::interaction * get_request_parent_ui(::user::interaction * pinteraction, ::create * pcreate) override;
 
       virtual bool place(::user::main_frame * pmainframe, ::create * pcreate);
 

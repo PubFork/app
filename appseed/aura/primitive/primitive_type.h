@@ -10,7 +10,6 @@ class CLASS_DECL_AURA type :
 public:
 
 
-   sp(mutex)                           m_spmutex;
    id                                  m_id;
    id                                  m_idFriendly;
    factory_item_base *                 m_pfactoryitem;

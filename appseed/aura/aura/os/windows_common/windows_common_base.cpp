@@ -69,17 +69,6 @@ void set_extended_output_debug_string_w()
 void output_debug_string(const char * psz)
 {
 
-   string str(psz);
-
-   str.trim();
-
-   if (str == ".")
-   {
-
-      printf("found!");
-
-   }
-
    g_pfnOutputDebugStringA(psz);
 
 }

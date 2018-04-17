@@ -7,6 +7,7 @@
 
 #include "framework.h"
 #include "aura/net/net_sockets.h"
+extern mutex * g_pmutexThreadWaitClose;
 
 extern string_map < ::aura::PFN_GET_NEW_LIBRARY, ::aura::PFN_GET_NEW_LIBRARY  > * g_pmapLibrary;
 
@@ -236,6 +237,8 @@ namespace aura
 #endif
 
          ::thread::s_pmutexDependencies = new mutex();
+
+         g_pmutexThreadWaitClose = new mutex();
 
          g_pmutexThreadOn = new mutex();
 
@@ -508,6 +511,9 @@ namespace aura
          del(g_pmapThreadOn);
 
          del(::thread::s_pmutexDependencies);
+
+         del(g_pmutexThreadWaitClose);
+
 
          // delete g_pstrLastGlsStatus;
 

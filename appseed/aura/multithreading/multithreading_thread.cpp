@@ -2,6 +2,8 @@
 #include "aura/aura/os/os.h"
 #include "aura/aura/os/os_os.h"
 
+mutex * g_pmutexThreadWaitClose = NULL;
+
 
 #ifdef OS64BIT
 
@@ -1000,15 +1002,15 @@ void thread::close_dependent_threads(const ::duration & dur)
 
 void thread::signal_close_dependent_threads()
 {
-   
+
    thread_ptra ptra;
-   
+
    {
 
       synch_lock sl(m_threadrefaDependent.m_pmutex);
-   
+
       ptra = m_threadrefaDependent;
-      
+
    }
 
    for(index i = 0; i < ptra.get_count(); i++)
@@ -1042,14 +1044,6 @@ void thread::signal_close_dependent_threads()
 void thread::wait_close_dependent_threads(const duration & duration)
 {
 
-   static mutex * g_pmutex = NULL;
-
-   if (g_pmutex == NULL)
-   {
-
-      g_pmutex = new mutex(::aura::system::g_p);
-
-   }
 
    DWORD dwStart = ::get_tick_count();
 
@@ -1058,7 +1052,7 @@ void thread::wait_close_dependent_threads(const duration & duration)
 
       {
 
-         synch_lock slLog(g_pmutex);
+         synch_lock slLog(g_pmutexThreadWaitClose);
 
          synch_lock sl(m_threadrefaDependent.m_pmutex);
 

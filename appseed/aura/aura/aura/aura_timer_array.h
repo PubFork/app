@@ -6,13 +6,12 @@ namespace aura
 
 
    class CLASS_DECL_AURA timer_array:
-      virtual public ::object,
       virtual public timer_callback
    {
    public:
 
 
-      typedef map < uint_ptr,uint_ptr, sp(::timer) , sp(::timer) > MAP;
+      typedef map < uint_ptr,uint_ptr, sp(::timer), sp(::timer) > MAP;
 
       MAP        m_map;
 

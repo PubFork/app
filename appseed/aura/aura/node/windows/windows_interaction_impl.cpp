@@ -1001,8 +1001,35 @@ namespace windows
 
       bool bResult = false;
 
+      DWORD dwCurrentThreadId = ::GetCurrentThreadId();
+
+      DWORD dwWindowThreadId = ::GetWindowThreadProcessId(get_handle(), NULL);
+
       if (get_handle() != NULL)
-         bResult = ::DestroyWindow(get_handle()) != FALSE;
+      {
+
+         if (dwCurrentThreadId == dwWindowThreadId)
+         {
+
+            bResult = ::DestroyWindow(get_handle()) != FALSE;
+
+         }
+         else
+         {
+
+            HANDLE hevent = ::CreateEvent(NULL, TRUE, FALSE, NULL);
+
+            ::PostMessage(get_handle(), WM_USER + 7654, (WPARAM) hevent, (LPARAM) get_handle());
+
+            ::WaitForSingleObject(hevent, 5000);
+
+            ::CloseHandle(hevent);
+
+            bResult = TRUE;
+
+         }
+
+      }
 
       return bResult;
 
@@ -2637,7 +2664,7 @@ namespace windows
                   else if (::IsWindowVisible(get_handle()))
                   {
 
-                     ::RedrawWindow(get_handle(), NULL, NULL, RDW_UPDATENOW | RDW_INVALIDATE);
+                     ::RedrawWindow(get_handle(), NULL, NULL, RDW_INVALIDATE);
 
                      bUpdateScreen = false;
 
@@ -6284,6 +6311,17 @@ lCallNextHook:
 // isso é um comentario e zero (0) se não processou
 LRESULT CALLBACK __window_procedure(oswindow oswindow, UINT message, WPARAM wparam, LPARAM lparam)
 {
+
+   if (WM_USER + 7654 == message)
+   {
+
+      ::DestroyWindow((HWND) lparam);
+
+      ::SetEvent((HANDLE)wparam);
+
+      return 0;
+
+   }
 
    if (message == WM_LBUTTONDOWN)
    {

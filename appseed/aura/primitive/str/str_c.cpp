@@ -926,12 +926,6 @@ char * strpbrk_dup(char * sz, const char * szFind)
 }
 */
 
-string itoa_dup(int64_t i)
-{
-   char sz[256];
-   itoa_dup(sz, i, 10);
-   return string(sz);
-}
 
 /*
 string itohex_dup(int64_t i)

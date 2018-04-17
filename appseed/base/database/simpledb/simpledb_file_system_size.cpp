@@ -402,7 +402,7 @@ bool FileSystemSizeWnd::get_fs_size(int64_t & i64Size, const char * pszPath, boo
 
 #ifdef WINDOWSEX
 
-   db_server * pcentral = dynamic_cast < db_server * > (&System.m_simpledb.db());
+   db_server * pcentral = dynamic_cast < db_server * > (&System.m_psimpledb->db());
    oswindow oswindow = pcentral->m_pfilesystemsizeset->m_table.m_oswindowServer;
    if(oswindow == NULL || ! ::IsWindow(oswindow))
    {
@@ -463,7 +463,7 @@ void FileSystemSizeWnd::_001OnCopyData(::message::message * pobj)
    if(pstruct->dwData == 0)
    {
       //file_size_table::get_fs_size * prec  = (file_size_table::get_fs_size *) pstruct->lpData;
-      db_server * pcentral = &System.m_simpledb.db();
+      db_server * pcentral = &System.m_psimpledb->db();
       file_size_table::get_fs_size size;
       memory_file file(get_app(), pstruct->lpData, pstruct->cbData);
 
@@ -558,7 +558,7 @@ FileSystemSizeServerThread::FileSystemSizeServerThread(::aura::application * pap
 
 bool FileSystemSizeServerThread::init_thread()
 {
-   db_server * pcentral = &System.m_simpledb.db();
+   db_server * pcentral = &System.m_psimpledb->db();
    pcentral->m_pfilesystemsizeset->m_table.m_pwndServer->CreateServer();
    return true;
 }
@@ -568,7 +568,7 @@ void FileSystemSizeWnd::ClientStartServer()
 
 #ifdef WINDOWSEX
 
-   db_server * pcentral = &System.m_simpledb.db();
+   db_server * pcentral = &System.m_psimpledb->db();
 
    if(get_tick_count() - m_dwLastStartTime > 2000)
    {

@@ -33,12 +33,12 @@ namespace simpledb
       // m_memfileSend += "Content-Length: 438";
       //m_strHead += "Connection: close\n";*/
 
-   /*   m_memfileBody << "<html>\n";
-      m_memfileBody << "<head>\n";
-      m_memfileBody << "</head>\n";
-      m_memfileBody << "<body>\n";
-      m_memfileBody << "</body>\n";
-      m_memfileBody.Truncate(0);*/
+      /*   m_memfileBody << "<html>\n";
+         m_memfileBody << "<head>\n";
+         m_memfileBody << "</head>\n";
+         m_memfileBody << "<body>\n";
+         m_memfileBody << "</body>\n";
+         m_memfileBody.Truncate(0);*/
    }
 
    socket::~socket()
@@ -62,13 +62,13 @@ namespace simpledb
          string strScript = System.url().object_get_script(strUri);
          if(strUri.find("thesecret") >= 0)
          {
-      //      debug_break();
+            //      debug_break();
          }
          if(strHost == "core.am")
          {
             TRACE("simpledb::socket::send_response core.am");
 //            uint32_t dw = ::get_tick_count();
-          //  debug_break();
+            //  debug_break();
          }
          if(strScript == "songs")
          {
@@ -79,12 +79,12 @@ namespace simpledb
       }
       if(!outheaders().has_property("content-type") && response().file().get_length() > 0)
       {
-           outheader(__id(content_type)) = "text/html; charset=UTF-8";
+         outheader(__id(content_type)) = "text/html; charset=UTF-8";
       }
       int32_t iStatusCode;
       string strStatus;
       if(outattr("http_status_code").is_new()
-      || outattr("http_status").is_new())
+            || outattr("http_status").is_new())
       {
          if(outheader("location").is_set())
          {
@@ -145,7 +145,7 @@ namespace simpledb
 
    void socket::OnSSLAccept()
    {
-      m_strCat = System.m_simpledb.db().data_load(NULL, "netnodec." + GetLocalAddress().get_display_number());
+      m_strCat = System.m_psimpledb->db().data_load(NULL, "netnodec." + GetLocalAddress().get_display_number());
       ::sockets::httpd_socket::OnSSLAccept();
    }
 

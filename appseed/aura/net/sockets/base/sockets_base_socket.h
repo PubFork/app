@@ -19,7 +19,7 @@
 namespace sockets
 {
 
-   
+
    class ssl_context;
 
    class base_socket_handler;
@@ -158,7 +158,7 @@ namespace sockets
 
       bool                    m_detach; ///< base_socket ordered to detach flag
       bool                    m_detached; ///< base_socket has been detached
-      socket_thread *         m_pThread; ///< detach base_socket thread class pointer
+      sp(socket_thread)       m_pThread; ///< detach base_socket thread class pointer
       base_socket_handler *   m_slave_handler; ///< Actual sockethandler while detached
 
 

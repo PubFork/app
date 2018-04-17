@@ -95,7 +95,7 @@ namespace netserver
 
       string strUrl = m_request.attr("http_protocol").get_string() + "://" + m_request.header("host").get_string() + m_request.attr("request_uri").get_string();
 
-      TRACE("netserver::socket::OnExecute Url ----**START**====> %s", strUrl);
+//      TRACE("netserver::socket::OnExecute Url ----**START**====> %s", strUrl);
 
       DWORD dwExecuteBeg = ::get_tick_count();
 
@@ -105,9 +105,9 @@ namespace netserver
 
       DWORD dwExecuteEnd = ::get_tick_count();
 
-      TRACE("netserver::socket::OnExecute Url ----**END****====> %s", strUrl);
+      //TRACE("netserver::socket::OnExecute Url ----**END****====> %s", strUrl);
 
-      TRACE("netserver::socket::OnExecute Ms -----**END****====> %d", dwExecuteEnd - dwExecuteBeg);
+      TRACE("=> %d ms", dwExecuteEnd - dwExecuteBeg);
 
    }
 

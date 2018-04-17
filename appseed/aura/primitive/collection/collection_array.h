@@ -207,3 +207,32 @@ void array_base < TYPE, ARG_TYPE, ALLOCATOR > ::prepare_first_last(index & first
    }
 
 }
+
+
+template < class TYPE, class ARG_TYPE, class ALLOCATOR >
+void array_base < TYPE, ARG_TYPE, ALLOCATOR > ::prepare_first_in_count_last_out(index & first, ::count & in_count_out_last) const
+{
+
+   if (first < 0)
+   {
+
+      first += this->get_count();
+
+   }
+
+   if (in_count_out_last < 0)
+   {
+
+      in_count_out_last += this->get_count();
+
+   }
+   else
+   {
+
+      in_count_out_last = first + in_count_out_last - 1;
+
+
+   }
+
+}
+

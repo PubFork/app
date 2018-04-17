@@ -14,7 +14,11 @@ simple_object::~simple_object()
 
 
 }
+void simple_object::set_heap_alloc()
+{
 
+
+}
 
 int64_t simple_object::add_ref()
 {

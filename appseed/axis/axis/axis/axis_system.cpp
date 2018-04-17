@@ -261,7 +261,7 @@ namespace axis
 
       __wait_threading_count(::millis((5000) * 8));
 
-
+      axis::application::term_application();
       try
       {
 

@@ -48,7 +48,7 @@ namespace aura
 
 #endif
 
-      m_pmutex          = new mutex(papp);
+      defer_create_mutex();
       m_ptrace          = new ::aura::trace::trace(papp);
       m_bLog            = true;
 

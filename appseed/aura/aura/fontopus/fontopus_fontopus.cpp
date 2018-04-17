@@ -332,7 +332,7 @@ namespace fontopus
 
          }
 
-         m_pthreadCreatingUser = new create_user_thread(get_app());
+         m_pthreadCreatingUser = canew(create_user_thread(get_app()));
 
          if(pszRequestUrl != NULL)
          {

@@ -36,7 +36,8 @@ uint32_t c_inet_to_ui(const char * src)
 }
 
 #define XX 127
-static const uchar index_hex[256] = {
+static const uchar index_hex[256] =
+{
    XX,XX,XX,XX, XX,XX,XX,XX, XX,XX,XX,XX, XX,XX,XX,XX,
    XX,XX,XX,XX, XX,XX,XX,XX, XX,XX,XX,XX, XX,XX,XX,XX,
    XX,XX,XX,XX, XX,XX,XX,XX, XX,XX,XX,XX, XX,XX,XX,XX,
@@ -89,39 +90,48 @@ CLASS_DECL_AURA int_bool from_string(in6_addr & addr, const string & string)
    int32_t len;
 
    /* Handle initial (double) colon */
-   if (*s == ':') {
+   if (*s == ':')
+   {
       if (s[1] != ':') return 0;
       s += 2;
       addr.pr_s6_addr16[0] = 0;
       department = double_colon = 1;
    }
 
-   while (*s) {
+   while (*s)
+   {
       if (department == 8) return 0; /* too long */
-      if (*s == ':') {
+      if (*s == ':')
+      {
          if (double_colon != -1) return 0; /* two double colons */
          addr.pr_s6_addr16[department++] = 0;
          double_colon = department;
          s++;
          continue;
       }
-      for (len = val = 0; len < 4 && index_hex[*s] != XX; len++) {
+      for (len = val = 0; len < 4 && index_hex[*s] != XX; len++)
+      {
          val = (val << 4) + index_hex[*s++];
       }
-      if (*s == '.') {
+      if (*s == '.')
+      {
          if (len == 0) return 0; /* nothing between : and . */
          break;
       }
-      if (*s == ':') {
+      if (*s == ':')
+      {
          s++;
          if (!*s) return 0; /* cannot end with single colon */
-      } else if (*s) {
+      }
+      else if (*s)
+      {
          return 0; /* bad character */
       }
       addr.pr_s6_addr16[department++] = htons((uint16_t)val);
    }
 
-   if (*s == '.') {
+   if (*s == '.')
+   {
       /* Have a trailing v4 format address */
       if (department > 6) return 0; /* not enough room */
 
@@ -137,7 +147,8 @@ CLASS_DECL_AURA int_bool from_string(in6_addr & addr, const string & string)
       s++;
       val = index_hex[*s++];
       if (val > 9) return 0;
-      while (*s >= '0' && *s <= '9') {
+      while (*s >= '0' && *s <= '9')
+      {
          val = val * 10 + *s++ - '0';
          if (val > 255) return 0;
       }
@@ -148,7 +159,8 @@ CLASS_DECL_AURA int_bool from_string(in6_addr & addr, const string & string)
       s++;
       val = index_hex[*s++];
       if (val > 9) return 0;
-      while (*s >= '0' && *s <= '9') {
+      while (*s >= '0' && *s <= '9')
+      {
          val = val * 10 + *s++ - '0';
          if (val > 255) return 0;
       }
@@ -158,7 +170,8 @@ CLASS_DECL_AURA int_bool from_string(in6_addr & addr, const string & string)
       s++;
       val = index_hex[*s++];
       if (val > 9) return 0;
-      while (*s >= '0' && *s <= '9') {
+      while (*s >= '0' && *s <= '9')
+      {
          val = val * 10 + *s++ - '0';
          if (val > 255) return 0;
       }
@@ -167,18 +180,23 @@ CLASS_DECL_AURA int_bool from_string(in6_addr & addr, const string & string)
       department++;
    }
 
-   if (double_colon != -1) {
+   if (double_colon != -1)
+   {
       /* Stretch the double colon */
       int32_t tosection;
       int32_t ncopy = department - double_colon;
-      for (tosection = 7; ncopy--; tosection--) {
+      for (tosection = 7; ncopy--; tosection--)
+      {
          addr.pr_s6_addr16[tosection] =
-            addr.pr_s6_addr16[double_colon + ncopy];
+         addr.pr_s6_addr16[double_colon + ncopy];
       }
-      while (tosection >= double_colon) {
+      while (tosection >= double_colon)
+      {
          addr.pr_s6_addr16[tosection--] = 0;
       }
-   } else if (department != 8) {
+   }
+   else if (department != 8)
+   {
       return 0; /* too int16_t */
    }
    return 1;
@@ -212,16 +230,20 @@ CLASS_DECL_AURA void to_string(string & str, const in6_addr  & addr)
    uint32_t val;
 
    /* Scan to find the placement of the double colon */
-   for (department = 0; department < 8; department++) {
-      if (addr.pr_s6_addr16[department] == 0) {
+   for (department = 0; department < 8; department++)
+   {
+      if (addr.pr_s6_addr16[department] == 0)
+      {
          zero_length = 1;
          department++;
-         while (department < 8 && addr.pr_s6_addr16[department] == 0) {
+         while (department < 8 && addr.pr_s6_addr16[department] == 0)
+         {
             zero_length++;
             department++;
          }
          /* Select the longest sequence of zeros */
-         if (zero_length > double_colon_length) {
+         if (zero_length > double_colon_length)
+         {
             double_colon = department - zero_length;
             double_colon_length = zero_length;
          }
@@ -231,54 +253,62 @@ CLASS_DECL_AURA void to_string(string & str, const in6_addr  & addr)
    /* Now start converting to a string */
    department = 0;
 
-   if (double_colon == 0) {
+   if (double_colon == 0)
+   {
       if (double_colon_length == 6 ||
-         (double_colon_length == 5 && addr.pr_s6_addr16[5] == 0xffff)) {
-            /* ipv4 format address */
+            (double_colon_length == 5 && addr.pr_s6_addr16[5] == 0xffff))
+      {
+         /* ipv4 format address */
+         STUFF(':');
+         STUFF(':');
+         if (double_colon_length == 5)
+         {
+            STUFF('f');
+            STUFF('f');
+            STUFF('f');
+            STUFF('f');
             STUFF(':');
-            STUFF(':');
-            if (double_colon_length == 5) {
-               STUFF('f');
-               STUFF('f');
-               STUFF('f');
-               STUFF('f');
-               STUFF(':');
-            }
-            if (addr.pr_s6_addr[12] > 99) STUFF(addr.pr_s6_addr[12]/100 + '0');
-            if (addr.pr_s6_addr[12] > 9) STUFF((addr.pr_s6_addr[12]%100)/10 + '0');
-            STUFF(addr.pr_s6_addr[12]%10 + '0');
-            STUFF('.');
-            if (addr.pr_s6_addr[13] > 99) STUFF(addr.pr_s6_addr[13]/100 + '0');
-            if (addr.pr_s6_addr[13] > 9) STUFF((addr.pr_s6_addr[13]%100)/10 + '0');
-            STUFF(addr.pr_s6_addr[13]%10 + '0');
-            STUFF('.');
-            if (addr.pr_s6_addr[14] > 99) STUFF(addr.pr_s6_addr[14]/100 + '0');
-            if (addr.pr_s6_addr[14] > 9) STUFF((addr.pr_s6_addr[14]%100)/10 + '0');
-            STUFF(addr.pr_s6_addr[14]%10 + '0');
-            STUFF('.');
-            if (addr.pr_s6_addr[15] > 99) STUFF(addr.pr_s6_addr[15]/100 + '0');
-            if (addr.pr_s6_addr[15] > 9) STUFF((addr.pr_s6_addr[15]%100)/10 + '0');
-            STUFF(addr.pr_s6_addr[15]%10 + '0');
-            STUFF('\0');
+         }
+         if (addr.pr_s6_addr[12] > 99) STUFF(addr.pr_s6_addr[12]/100 + '0');
+         if (addr.pr_s6_addr[12] > 9) STUFF((addr.pr_s6_addr[12]%100)/10 + '0');
+         STUFF(addr.pr_s6_addr[12]%10 + '0');
+         STUFF('.');
+         if (addr.pr_s6_addr[13] > 99) STUFF(addr.pr_s6_addr[13]/100 + '0');
+         if (addr.pr_s6_addr[13] > 9) STUFF((addr.pr_s6_addr[13]%100)/10 + '0');
+         STUFF(addr.pr_s6_addr[13]%10 + '0');
+         STUFF('.');
+         if (addr.pr_s6_addr[14] > 99) STUFF(addr.pr_s6_addr[14]/100 + '0');
+         if (addr.pr_s6_addr[14] > 9) STUFF((addr.pr_s6_addr[14]%100)/10 + '0');
+         STUFF(addr.pr_s6_addr[14]%10 + '0');
+         STUFF('.');
+         if (addr.pr_s6_addr[15] > 99) STUFF(addr.pr_s6_addr[15]/100 + '0');
+         if (addr.pr_s6_addr[15] > 9) STUFF((addr.pr_s6_addr[15]%100)/10 + '0');
+         STUFF(addr.pr_s6_addr[15]%10 + '0');
+         STUFF('\0');
 //            return str;
       }
    }
 
-   while (department < 8) {
-      if (department == double_colon) {
+   while (department < 8)
+   {
+      if (department == double_colon)
+      {
          STUFF(':');
          STUFF(':');
          department += double_colon_length;
          continue;
       }
       val = ntohs(addr.pr_s6_addr16[department]);
-      if (val > 0xfff) {
+      if (val > 0xfff)
+      {
          STUFF(basis_hex[val >> 12]);
       }
-      if (val > 0xff) {
+      if (val > 0xff)
+      {
          STUFF(basis_hex[(val >> 8) & 0xf]);
       }
-      if (val > 0xf) {
+      if (val > 0xf)
+      {
          STUFF(basis_hex[(val >> 4) & 0xf]);
       }
       STUFF(basis_hex[val & 0xf]);
@@ -359,19 +389,23 @@ inline string ip_to_string(byte b1, byte b2, byte b3, byte b4)
 
    string str;
 
-   str += itoa_dup(b1);
+   char * psz = str.GetBufferSetLength(20);
 
-   str += ".";
+   itocat_dup(psz, b1);
 
-   str += itoa_dup(b2);
+   strcat(psz, ".");
 
-   str += ".";
+   itocat_dup(psz, b2);
 
-   str += itoa_dup(b3);
+   strcat(psz, ".");
 
-   str += ".";
+   itocat_dup(psz, b3);
 
-   str += itoa_dup(b4);
+   strcat(psz, ".");
+
+   itocat_dup(psz, b4);
+
+   str.ReleaseBuffer();
 
    return str;
 
@@ -384,10 +418,10 @@ CLASS_DECL_AURA void to_string(string & str, const in_addr &  addr)
 {
 #if defined(WINDOWS)
    str = ip_to_string(
-                             addr.S_un.S_un_b.s_b1,
-                             addr.S_un.S_un_b.s_b2,
-                             addr.S_un.S_un_b.s_b3,
-                             addr.S_un.S_un_b.s_b4);
+         addr.S_un.S_un_b.s_b1,
+         addr.S_un.S_un_b.s_b2,
+         addr.S_un.S_un_b.s_b3,
+         addr.S_un.S_un_b.s_b4);
 #else
    char sz[32];
    str = inet_ntop(AF_INET, &addr, sz, sizeof(sz));

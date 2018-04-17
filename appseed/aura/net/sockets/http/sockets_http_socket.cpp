@@ -452,7 +452,7 @@ namespace sockets
             string strValue = straValue[j];
             //         strLine = ;
             msg += strKey + ": " + strValue + "\r\n";
-            TRACE("%s: %s", strKey, strValue);
+            //TRACE("%s: %s", strKey, strValue);
          }
          //TRACE(strTrace + "\n");
       }

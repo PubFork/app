@@ -11,42 +11,59 @@ namespace filemanager
       virtual public ::filemanager::file_list_callback,
       virtual public ::database::client
    {
-      public:
+   public:
 
 
-         sp(::filemanager::manager_template)          m_ptemplate;
-         sp(::user::multiple_document_template)       m_ptemplateForm;
-         sp(::user::single_document_template)         m_ptemplateOperation;
+      sp(::filemanager::manager_template)          m_ptemplate;
+      sp(::user::multiple_document_template)       m_ptemplateForm;
+      sp(::user::single_document_template)         m_ptemplateOperation;
 
-         string                                       m_strCopy;
-         id                                           m_idFileManager;
-
-
-         filemanager(::aura::application * papp);
-         virtual ~filemanager();
-
-         bool initialize();
+      string                                       m_strCopy;
+      id                                           m_idFileManager;
 
 
-         virtual void InitializeFileManager(const char * pszMatter);
+      filemanager(::aura::application * papp);
+      virtual ~filemanager();
 
 
-         inline ::filemanager::manager_template * operator->() { return m_ptemplate.m_p; }
-         inline  operator ::filemanager::manager_template *() { return m_ptemplate; }
+      virtual i64 add_ref() override
+      {
+
+         return ::aura::department::add_ref();
+
+      }
 
 
-         void OnFileManagerOpenFile(::filemanager::data * pdata, ::fs::item_array & itema);
+      virtual i64 dec_ref() override
+      {
+
+         return ::aura::department::dec_ref();
+
+      }
+
+
+      bool initialize();
+
+
+      virtual void InitializeFileManager(const char * pszMatter);
+
+
+      inline ::filemanager::manager_template * operator->() { return m_ptemplate.m_p; }
+      inline  operator ::filemanager::manager_template *() { return m_ptemplate; }
+
+
+      void OnFileManagerOpenFile(::filemanager::data * pdata, ::fs::item_array & itema);
 
 
 
 
 
-         virtual bool do_prompt_file_name(var & varFile, UINT nIDSTitle, uint32_t lFlags, bool bOpenFileDialog, ::user::impact_system * ptemplate, ::user::document * pdocument);
+      virtual bool do_prompt_file_name(var & varFile, UINT nIDSTitle, uint32_t lFlags, bool bOpenFileDialog, ::user::impact_system * ptemplate, ::user::document * pdocument);
 
-         string get_initial_browse_path(const char * pszDefault = NULL);
+      string get_initial_browse_path(const char * pszDefault = NULL);
 
 
-         virtual void on_request(::create * pcreate);
+      virtual void on_request(::create * pcreate);
 
 
    };

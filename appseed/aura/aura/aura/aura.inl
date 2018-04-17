@@ -86,7 +86,7 @@ public:
 inline CLASS_DECL_AURA void * __cdecl operator new (size_t size, const c_class &)
 {
 
-   return memory_alloc(size);
+   return ace_memory_alloc(size);
 
 }
 
@@ -94,7 +94,7 @@ inline CLASS_DECL_AURA void * __cdecl operator new (size_t size, const c_class &
 inline CLASS_DECL_AURA void * __cdecl operator new[](size_t size, const c_class &)
 {
 
-   return memory_alloc(size);
+   return ace_memory_alloc(size);
 
 }
 
@@ -137,7 +137,15 @@ inline void __cdecl operator delete[](void * pData, const char * /* lpszFileName
 inline void * __cdecl operator new(size_t nSize, int32_t nType, const char * lpszFileName, int32_t nLine)
 {
 
+#if MEMDLEAK
+
+   return ace_memory_alloc(nSize);
+
+#else
+
    return memory_alloc_dbg(nSize, nType, lpszFileName, nLine);
+
+#endif
 
 }
 

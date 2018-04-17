@@ -47,6 +47,8 @@ namespace exception
 
       m_pszException = NULL;
 
+      m_pszFile = NULL;
+
 
    }
 

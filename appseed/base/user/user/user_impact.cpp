@@ -161,8 +161,12 @@ namespace user
       if (pFrame != NULL && pFrame->GetActiveView() == this)
          pFrame->SetActiveView(NULL);    // deactivate during death
 
-      if(m_pdocument != NULL)
+      if (m_pdocument != NULL)
+      {
+
          m_pdocument->remove_view(this);
+
+      }
 
       //   ::user::interaction::OnDestroy();
    }
@@ -1318,29 +1322,29 @@ namespace user
 
    }
 
-   
+
    bool impact::is_local_data()
    {
-   
+
       if(::user::box::is_local_data())
       {
-         
+
          return true;
-         
+
       }
-      
+
       if(get_document() != NULL && get_document()->is_local_data())
       {
-       
+
          return true;
-         
+
       }
-      
+
       return false;
-      
+
    }
 
-   
+
 } // namespace user
 
 

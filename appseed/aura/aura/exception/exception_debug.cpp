@@ -5,17 +5,17 @@
 // Global variables
 //
 
-   // Patch for SetUnhandledExceptionFilter
+// Patch for SetUnhandledExceptionFilter
 //const BYTE PatchBytes[5] = { 0x33, 0xC0, 0xC2, 0x04, 0x00 };
 
-   // Original bytes at the beginning of SetUnhandledExceptionFilter
+// Original bytes at the beginning of SetUnhandledExceptionFilter
 BYTE OriginalBytes[5] = {0};
 
 BEGIN_EXTERN_C
 
 CLASS_DECL_AURA int is_debugger_attached()
 {
-   
+
    return __node_is_debugger_attached() != FALSE;
 
 }
@@ -37,7 +37,7 @@ assert_exception::assert_exception(const assert_exception & e) :
    ::exception::base(e),
    simple_exception(e)
 {
-   
+
    debug_print(":assert(copy)");
 
 }
@@ -49,43 +49,43 @@ assert_exception::assert_exception(::aura::application * papp, const char * pszF
    ::exception::base(papp),
    simple_exception(papp)
 {
-   
+
 #if defined(_LP64) || defined(VSNORD)
-   
+
    if(pszFile == NULL)
    {
-   
+
       debug_print(":assert(NULL, %ld)",lLine);
-   
+
    }
    else
    {
-   
+
       debug_print(":assert(\"%s\":%ld)",pszFile,lLine);
-      
+
    }
-   
+
 #else
-   
+
    if(pszFile == NULL)
    {
-      
+
       debug_print(":assert(NULL, %d)",lLine);
-      
+
    }
    else
    {
-      
+
       debug_print(":assert(\"%s\":%d)",pszFile,lLine);
-      
+
    }
 
 #endif
-   
+
    m_strFile = pszFile;
-   
+
    m_lLine = lLine;
-   
+
 }
 
 
@@ -100,7 +100,7 @@ misc_exception::misc_exception(const misc_exception & e) :
    simple_exception(e),
    m_strMessage(e.m_strMessage)
 {
-   
+
    debug_print(":misc(copy)");
 
 }
@@ -115,17 +115,17 @@ misc_exception::misc_exception(::aura::application * papp, const char * pszMessa
 
    if(pszMessage == NULL)
    {
-   
+
       debug_print(":misc(NULL)");
 
    }
    else
    {
-   
+
       debug_print(":misc(\"%s\")",pszMessage);
-   
+
    }
-      
+
    m_strMessage = pszMessage;
 }
 
@@ -298,5 +298,7 @@ namespace win
 
 
 } // namespace win
+
+
 
 

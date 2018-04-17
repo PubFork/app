@@ -233,38 +233,38 @@ void simple_frame_window::_001OnDestroy(::message::message * pobj)
    }
 
 
-   try
-   {
-      if (m_pauraapp != NULL && &Application != NULL)
-      {
-         Application.remove_frame(this);
-      }
-   }
-   catch (...)
-   {
-   }
+   //try
+   //{
+   //   if (m_pauraapp != NULL && &Application != NULL)
+   //   {
+   //      Application.remove_frame(this);
+   //   }
+   //}
+   //catch (...)
+   //{
+   //}
 
-   try
-   {
-      if (&Session != NULL)
-      {
-         Session.remove_frame(this);
-      }
-   }
-   catch (...)
-   {
-   }
+   //try
+   //{
+   //   if (&Session != NULL)
+   //   {
+   //      Session.remove_frame(this);
+   //   }
+   //}
+   //catch (...)
+   //{
+   //}
 
-   try
-   {
-      if (m_pauraapp != NULL && m_pauraapp->m_pcoresystem != NULL && &System != NULL)
-      {
-         System.remove_frame(this);
-      }
-   }
-   catch (...)
-   {
-   }
+   //try
+   //{
+   //   if (m_pauraapp != NULL && m_pauraapp->m_pcoresystem != NULL && &System != NULL)
+   //   {
+   //      System.remove_frame(this);
+   //   }
+   //}
+   //catch (...)
+   //{
+   //}
 
 }
 

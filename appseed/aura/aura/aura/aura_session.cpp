@@ -310,8 +310,7 @@ namespace aura
          for (auto j : i.m_element2)
          {
 
-            ::aura::del(j.m_element2);
-
+            j.m_element2.release();
 
          }
 
@@ -874,7 +873,7 @@ namespace aura
       else
       {
 
-         ::aura::library * & plibrary = m_mapLibrary[pappParent][pszAppId];
+         sp(::aura::library) & plibrary = m_mapLibrary[pappParent][pszAppId];
 
          if (plibrary == NULL)
          {

@@ -7,9 +7,11 @@ namespace axis
 {
 
 
-   application::application() :
-      m_simpledb(this)
+   application::application()
    {
+
+      m_psimpledb = canew(::simpledb::simpledb(this));
+
       m_bInitializeDataCentral = true;
       if (m_paxissystem != NULL)
       {
@@ -1475,12 +1477,12 @@ InitFailure:
       if (m_bInitializeDataCentral)
       {
 
-         m_simpledb.construct(this);
+         m_psimpledb->construct(this);
 
-         if (!m_simpledb.initialize())
+         if (!m_psimpledb->initialize())
             return false;
 
-         if (!m_simpledb.init2())
+         if (!m_psimpledb->init2())
             return false;
 
 
@@ -1826,18 +1828,25 @@ InitFailure:
       }
       */
 
-      try
+      if (m_psimpledb.is_set())
       {
 
-         m_simpledb.finalize();
+         try
+         {
+
+            m_psimpledb->finalize();
+
+         }
+         catch (...)
+         {
+
+            m_error.set_if_not_set();
+
+         }
 
       }
-      catch (...)
-      {
 
-         m_error.set_if_not_set();
-
-      }
+      m_psimpledb.release();
 
 //      return m_iErrorCode;
 

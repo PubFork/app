@@ -77,6 +77,7 @@ namespace draw2d
          enum_item();
          enum_item(string strName, e_cs ecs);
          enum_item(string strFile, string strName, e_cs ecs);
+         virtual ~enum_item();
 
          bool operator < (const enum_item & item) const
          {

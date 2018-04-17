@@ -522,8 +522,8 @@ namespace userfs
       range range;
       _001GetSelection(range);
       pcommand->Enable(
-         range.get_item_count() == 1
-         && range.ItemAt(0).get_lower_bound() == range.ItemAt(0).get_upper_bound());
+      range.get_item_count() == 1
+      && range.ItemAt(0).get_lower_bound() == range.ItemAt(0).get_upper_bound());
       pobj->m_bRet = true;
    }
 
@@ -532,7 +532,7 @@ namespace userfs
       UNREFERENCED_PARAMETER(pobj);
       //      SCAST_PTR(::message::show_window, pshow, pobj);
 
-      db_server * pcentral = dynamic_cast < db_server * > (&System.m_simpledb.db());
+      db_server * pcentral = dynamic_cast < db_server * > (&System.m_psimpledb->db());
       if (pcentral == NULL)
          return;
       //DBFileSystemSizeSet * pset = pcentral->m_pfilesystemsizeset;

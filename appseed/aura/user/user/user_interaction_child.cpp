@@ -511,8 +511,6 @@ namespace user
 
       bool bOk = ::user::interaction_impl_base::DestroyWindow();
 
-      m_bCreate = false;
-
       return bOk;
 
    }

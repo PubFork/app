@@ -78,7 +78,7 @@ namespace message
    route * create_pred_route(receiver * preceiver, ::object * pobjectReceiver, PRED pred, ::type * ptype)
    {
 
-      return new pred_route < PRED >(preceiver, pobjectReceiver, pred, ptype);
+      return canew(pred_route < PRED >(preceiver, pobjectReceiver, pred, ptype));
 
    }
 

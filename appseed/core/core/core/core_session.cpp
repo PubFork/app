@@ -58,7 +58,6 @@ namespace core
       m_strAppName                        = "bergedge";
 
       m_puserex                           = NULL;
-      m_pfilemanager = NULL;
 
       m_strAppName         = "session";
       m_strBaseSupportId   = "ca2_bergedge";
@@ -241,6 +240,7 @@ namespace core
    void session::term()
    {
 
+      m_pfilemanager.release();
 
       try
       {

@@ -41,12 +41,12 @@ namespace simpledb
       }
       if(App(pbaseapp).m_iDatabaseServerPort <= 0)
       {
-	      App(pbaseapp).m_iDatabaseServerPort = 0;
+         App(pbaseapp).m_iDatabaseServerPort = 0;
       }*/
 
       stringa stra;
 
-      stra = System.m_simpledb.db().data_load(NULL, "simpledb").stra();
+      stra = System.m_psimpledb->db().data_load(NULL, "simpledb").stra();
 
       for(int32_t i = 0; i < stra.get_size(); i++)
       {

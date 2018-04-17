@@ -35,6 +35,7 @@ namespace core
       m_mutex(this)
    {
 
+      m_phistory = NULL;
       m_ppatch = new core::patch();
       g_pszCooperativeLevel = "core";
 
@@ -445,7 +446,7 @@ namespace core
       }
 
 #endif
-
+      ::core::application::term_application();
       try
       {
 

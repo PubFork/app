@@ -112,7 +112,10 @@ namespace user
       System.set_enum_name(key_print_screen,"key_print_screen");
 
    }
+   keyboard::~keyboard()
+   {
 
+   }
 
    bool keyboard::initialize()
    {

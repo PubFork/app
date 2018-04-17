@@ -17,15 +17,53 @@ namespace userex
       ::aura::department(papp)
    {
 
-
       m_pshell  = NULL;
       m_ptemplateFontSel = NULL;
+      m_ptemplateForm = NULL;
+      m_ptemplateChildForm = NULL;
+      m_ptemplatePlaceHolder = NULL;
+
 
    }
 
 
    userex::~userex()
    {
+
+      //if (m_ptemplateForm != NULL)
+      //{
+      //   m_ptemplateForm->close_all_documents(false);
+
+      //   ::aura::del(m_ptemplateForm);
+
+      //}
+
+      //if (m_ptemplateChildForm != NULL)
+      //{
+
+      //   m_ptemplateChildForm->close_all_documents(false);
+
+      //   ::aura::del(m_ptemplateChildForm);
+
+      //}
+
+      //if (m_ptemplatePlaceHolder != NULL)
+      //{
+
+      //   m_ptemplatePlaceHolder->close_all_documents(false);
+
+      //   ::aura::del(m_ptemplatePlaceHolder);
+
+      //}
+
+      if (m_ptemplateFontSel != NULL)
+      {
+
+         m_ptemplateFontSel->close_all_documents(false);
+
+         ::aura::del(m_ptemplateFontSel);
+
+      }
 
    }
 
@@ -588,7 +626,7 @@ retry_license:
    bool userex::get_fs_size(int64_t & i64Size,const char * pszPath,bool & bPending)
    {
 
-      db_server * pcentral = dynamic_cast <db_server *> (&System.m_simpledb.db());
+      db_server * pcentral = dynamic_cast <db_server *> (&System.m_psimpledb->db());
 
       if (pcentral == NULL)
       {
@@ -1718,7 +1756,7 @@ finished:
       try
       {
 
-         ::base::session::term_instance();
+         ::base::session::term_application();
 
       }
       catch (...)
@@ -1729,7 +1767,7 @@ finished:
       try
       {
 
-         ::core::application::term_instance();
+         ::core::application::term_application();
 
       }
       catch (...)
@@ -1772,6 +1810,8 @@ finished:
       }
 
       m_puserex = NULL;
+
+      ::aura::del(m_pfontlistdata);
 
       m_pobjectUserex.release();
 
@@ -1863,7 +1903,7 @@ finished:
       System.factory().creatable_small < ::user::font_list_view >();
       System.factory().creatable_small < ::userex::font_view >();
 
-      userex()->m_ptemplateFontSel = new  ::user::single_document_template(
+      userex()->m_ptemplateFontSel = new ::user::single_document_template(
       get_app(),
       "main",
       System.type_info < ::user::document >(),

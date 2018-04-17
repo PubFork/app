@@ -1,7 +1,12 @@
 #include "framework.h"
 
 #include "align_byte_count.h"
+
+#if !defined(MCHECK) && !defined(_VLD) && !defined(__MCRTDBG) && !MEMDLEAK
+
 #include "aura_heap_memory.h"
+
+#endif
 
 #undef new
 
@@ -481,38 +486,35 @@ plex_heap_alloc_array::plex_heap_alloc_array()
 
    add(new plex_heap_alloc(64, 128));
    add(new plex_heap_alloc(96, 128));
-   add(new plex_heap_alloc(128, 1024 * 8));
-   add(new plex_heap_alloc(192, 1024 *4));
-   add(new plex_heap_alloc(256, 1024));
+   add(new plex_heap_alloc(128, 128));
+   add(new plex_heap_alloc(192, 128));
+   add(new plex_heap_alloc(256, 128));
 
-   add(new plex_heap_alloc(384, 2 * 1024));
+   add(new plex_heap_alloc(384, 64));
    add(new plex_heap_alloc(512, 64));
-   add(new plex_heap_alloc(768, 48));
-   add(new plex_heap_alloc(1024, 48));
-   add(new plex_heap_alloc(1024 * 2, 2 * 1024));
+   add(new plex_heap_alloc(768, 64));
+   add(new plex_heap_alloc(1024, 64));
+   add(new plex_heap_alloc(1024 * 2, 64));
 
-   add(new plex_heap_alloc(1024 * 4,32));
-   add(new plex_heap_alloc(1024 * 8, 16));
+   add(new plex_heap_alloc(1024 * 4, 32));
+   add(new plex_heap_alloc(1024 * 8, 32));
+
    add(new plex_heap_alloc(1024 * 16, 16));
    add(new plex_heap_alloc(1024 * 32, 16));
    add(new plex_heap_alloc(1024 * 64, 16));
-
    add(new plex_heap_alloc(1024 * 128,16));
-#if defined(OS64BIT) && defined(LINUX)
-   add(new plex_heap_alloc(1024 * 192, 16));
-   add(new plex_heap_alloc(1024 * 256, 16));
-   add(new plex_heap_alloc(1024 * 384, 16));
-   add(new plex_heap_alloc(1024 * 512, 16));
-   add(new plex_heap_alloc(1024 * 768, 16));
-   add(new plex_heap_alloc(1024 * 1024, 16));
-#endif
 
-#if defined(OS64BIT) && defined(LINUX)
-   add(new plex_heap_alloc(1024 * 1024 * 2, 16));
-   add(new plex_heap_alloc(1024 * 1024 * 4,16));
-   add(new plex_heap_alloc(1024 * 1024 * 8,16));
-   add(new plex_heap_alloc(1024 * 1024 * 16,16));
-#endif
+   add(new plex_heap_alloc(1024 * 192, 4));
+   add(new plex_heap_alloc(1024 * 256, 4));
+   add(new plex_heap_alloc(1024 * 384, 4));
+   add(new plex_heap_alloc(1024 * 512, 4));
+   add(new plex_heap_alloc(1024 * 768, 4));
+   add(new plex_heap_alloc(1024 * 1024, 4));
+
+   add(new plex_heap_alloc(1024 * 1024 * 2, 2));
+   add(new plex_heap_alloc(1024 * 1024 * 4, 2));
+   add(new plex_heap_alloc(1024 * 1024 * 8, 2));
+   add(new plex_heap_alloc(1024 * 1024 * 16, 2));
 
 }
 

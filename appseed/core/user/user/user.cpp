@@ -397,28 +397,28 @@ namespace core
    }
 
 
-   sp(::user::interaction) session::get_request_parent_ui(sp(::user::interaction) pinteraction, ::create * pcreate)
+   ::user::interaction * session::get_request_parent_ui(::user::interaction * pinteraction, ::create * pcreate)
    {
 
 
-      sp(::user::interaction) puiParent = NULL;
+      ::user::interaction * puiParent = NULL;
 
       if (pcreate->m_spCommandLine->m_varQuery["uicontainer"].cast < ::user::interaction >() != NULL)
          puiParent = pcreate->m_spCommandLine->m_varQuery["uicontainer"].cast < ::user::interaction >();
 
       if (puiParent == NULL && pcreate->m_puiParent != NULL)
       {
-         puiParent = pcreate->m_puiParent;
+         puiParent = dynamic_cast < ::user::interaction * > (pcreate->m_puiParent);
       }
 
       if (puiParent == NULL && pcreate->m_spCommandLine->m_pbiasCreate != NULL)
       {
-         puiParent = pcreate->m_spCommandLine->m_pbiasCreate->m_puiParent;
+         puiParent = dynamic_cast < ::user::interaction * > (pcreate->m_spCommandLine->m_pbiasCreate->m_puiParent);
       }
 
       if (puiParent == NULL && pcreate->m_spApplicationBias.is_set())
       {
-         puiParent = pcreate->m_spApplicationBias->m_puiParent;
+         puiParent = dynamic_cast < ::user::interaction * > (pcreate->m_spApplicationBias->m_puiParent);
       }
 
 

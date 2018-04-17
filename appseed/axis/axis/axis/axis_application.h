@@ -39,7 +39,7 @@ namespace axis
 
 
 
-      ::simpledb::simpledb                            m_simpledb;
+      sp(::simpledb::simpledb)                        m_psimpledb;
 
 
 
@@ -90,8 +90,8 @@ namespace axis
       virtual bool is_serviceable() override;
 
 
-      inline class ::simpledb::simpledb         & simpledb() { return m_simpledb; }
-      inline ::database::server &               dataserver() { return *m_simpledb.get_data_server(); }
+      inline class ::simpledb::simpledb         & simpledb() { return *m_psimpledb; }
+      inline ::database::server &               dataserver() { return *m_psimpledb->get_data_server(); }
 
 
       virtual bool verb() override;
