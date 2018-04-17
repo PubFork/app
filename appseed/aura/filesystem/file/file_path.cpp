@@ -14,7 +14,7 @@ namespace path
 
 #else
 
-      return ::dir::stage(strPlatform) / "app";
+      return ::dir::stage("ca2 Store", strPlatform) / "app";
 
 #endif
 

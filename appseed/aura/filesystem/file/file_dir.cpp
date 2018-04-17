@@ -14,8 +14,10 @@
 #include <dirent.h>
 #elif defined(METROWIN)
 #include "aura/aura/os/metrowin/metrowin_file_winrt.h"
-#endif
+#elif defined(WINDOWSEX)
 #include "aura/aura/os/windows_common/windows_common_cotaskptr.h"
+#endif
+
 
 
 void TranslateLastError()

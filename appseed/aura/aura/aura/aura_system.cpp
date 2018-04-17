@@ -69,7 +69,11 @@ namespace aura
       m_emaildepartment(this)
    {
 
+#ifdef WINDOWSEX
+
       m_psystemwindow = NULL;
+
+#endif
 
       m_strAppId = "system";
 
