@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "aura/aura/os/os.h"
 #include "aura/aura/os/os_os.h"
 
@@ -84,7 +84,7 @@ namespace aura
 
 #else
 
-      return path::app_app(m_strPlatform);
+      return path::app_app(m_strPlatform, process_configuration_dir_name());
 
 #endif
 #endif
