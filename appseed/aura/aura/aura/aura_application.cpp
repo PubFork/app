@@ -6631,7 +6631,7 @@ finalize:
       wstring desc = L"spafile";          // file type description
       wstring content_type = L"application/x-spa";
 
-      wstring app(::dir::stage(m_strAppId, "x86"));
+      wstring app(::dir::stage(m_strAppId, process_platform_dir_name(), process_configuration_dir_name()));
 
       wstring icon(app);
 
@@ -6678,7 +6678,7 @@ finalize:
       RegSetValueExW(hkey, L"", 0, REG_SZ, (BYTE*)icon.c_str(), DWORD (icon.length() * sizeof(wchar_t)));
       RegCloseKey(hkey);
 
-      wstring wstr(dir::stage(m_strAppId, "x86") / "spa_register.txt");
+      wstring wstr(dir::stage(m_strAppId, process_platform_dir_name(), process_configuration_dir_name()) / "spa_register.txt");
 
       int iRetry = 9;
 
@@ -6702,7 +6702,7 @@ finalize:
    }
 
 
-   bool application::low_is_app_app_admin_running(string strPlatform)
+   bool application::low_is_app_app_admin_running(string strPlatform, string strConfiguration)
    {
 
       ::install::admin_mutex smutex(strPlatform);
@@ -6712,29 +6712,29 @@ finalize:
    }
 
 
-   void application::defer_start_program_files_app_app_admin(string strPlatform)
+   void application::defer_start_program_files_app_app_admin(string strPlatform, string strConfiguration)
    {
 
-      if (low_is_app_app_admin_running(strPlatform))
+      if (low_is_app_app_admin_running(strPlatform, strConfiguration))
       {
 
          return;
 
       }
 
-      start_program_files_app_app_admin(strPlatform);
+      start_program_files_app_app_admin(strPlatform, strConfiguration);
 
    }
 
 
-   void application::start_program_files_app_app_admin(string strPlatform)
+   void application::start_program_files_app_app_admin(string strPlatform, string strConfiguration)
    {
 
 #ifdef WINDOWSEX
 
       SHELLEXECUTEINFOW sei = {};
 
-      string str = ::path::app_app_admin(strPlatform);
+      string str = ::path::app_app_admin(strPlatform, strConfiguration);
 
       if (!::file_exists_dup(str))
       {

@@ -5,47 +5,47 @@ namespace path
 {
 
 
-   ::file::path app(string strPlatform)
+   ::file::path app(string strPlatform, string strConfiguration)
    {
 
 #ifdef WINDOWS
 
-      return ::dir::stage("ca2 Store", strPlatform) / "app.exe";
+      return ::dir::stage("ca2 Store", strPlatform, strConfiguration) / "app.exe";
 
 #else
 
-      return ::dir::stage("ca2 Store", strPlatform) / "app";
+      return ::dir::stage("ca2 Store", strPlatform, strConfiguration) / "app";
 
 #endif
 
    }
 
-   ::file::path app_app_admin(string strPlatform)
+   ::file::path app_app_admin(string strPlatform, string strConfiguration)
    {
 
-      return ::dir::stage("ca2 Store", strPlatform) / "app_app_admin.exe";
+      return ::dir::stage("ca2 Store", strPlatform, strConfiguration) / "app_app_admin.exe";
 
    }
 
 
-   ::file::path app_app_nest(string strPlatform)
+   ::file::path app_app_nest(string strPlatform, string strConfiguration)
    {
 
-      return ::dir::stage("ca2 Store", strPlatform) / "app_app_nest.exe";
+      return ::dir::stage("ca2 Store", strPlatform, strConfiguration) / "app_app_nest.exe";
 
    }
 
 
-   ::file::path app_app(string strPlatform)
+   ::file::path app_app(string strPlatform, string strConfiguration)
    {
 
 #ifdef WINDOWS
 
-      return ::dir::stage("ca2 Store", strPlatform) / "app_app.exe";
+      return ::dir::stage("ca2 Store", strPlatform, strConfiguration) / "app_app.exe";
 
 #else
 
-      return ::dir::stage("ca2 Store", strPlatform) / "app_app";
+      return ::dir::stage("ca2 Store", strPlatform, strConfiguration) / "app_app";
 
 #endif
 
@@ -54,10 +54,10 @@ namespace path
 
 
 
-   ::file::path vcredist(string strPlatform)
+   ::file::path vcredist(string strPlatform, string strConfiguration)
    {
 
-      return ::dir::stage("ca2 Store", strPlatform) / "vcredist.exe";
+      return ::dir::stage("ca2 Store", strPlatform, strConfiguration) / "vcredist.exe";
 
    }
 
@@ -94,7 +94,7 @@ namespace path
 
    }
 
-   ::file::path install_log(string strPlatform)
+   ::file::path install_log(string strPlatform, string strConfiguration)
    {
 
       return dir::install() / ("install-" + strPlatform + ".log");

@@ -875,7 +875,7 @@ namespace plugin
                      else if(str1 == "native_desktop_launcher")
                      {
 
-                        string strPath = ::path::app(process_platform_dir_name2());
+                        string strPath = ::path::app(process_platform_dir_name2(), process_configuration_dir_name());
 
                         string strCommandLine;
 

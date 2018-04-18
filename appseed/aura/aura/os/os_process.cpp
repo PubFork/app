@@ -231,7 +231,6 @@ bool get_command_line_param(string & wstrValue,const char * psz,const char * psz
 
 }
 
-
 string time_binary_platform(string strPlatform)
 {
 
@@ -257,6 +256,22 @@ string time_binary_platform(string strPlatform)
    }
 
 }
+
+string process_configuration_dir_name()
+{
+
+#ifdef DEBUG
+
+   return "basis";
+
+#else
+
+   return "stage";
+
+#endif
+
+}
+
 
 CLASS_DECL_AURA string process_platform_dir_name()
 {

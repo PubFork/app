@@ -3639,7 +3639,7 @@ namespace axis
 
 #else
 
-         return ::call_sync(::path::app_app(process_platform_dir_name2()),pszCommandLine,::path::app_app(process_platform_dir_name2()),SW_SHOWNORMAL,840,84,NULL,0);
+         return ::call_sync(::path::app_app(process_platform_dir_name2(), process_configuration_dir_name()),pszCommandLine,::path::app_app(process_platform_dir_name2(), process_configuration_dir_name()),SW_SHOWNORMAL,840,84,NULL,0);
 
 #endif
 

@@ -683,8 +683,9 @@ found:
 }
 
 
-CLASS_DECL_AURA::file::path dir::inplace_install(string strAppId, string strPlatform)
+CLASS_DECL_AURA::file::path dir::inplace_install(string strAppId, string strPlatform, string strConfiguration)
 {
+
 #ifdef WINDOWSEX
 
    ::file::path path;
@@ -1934,10 +1935,10 @@ void dir::ls_file(::file::patha & stra,const ::file::path & psz)
 
 
 
-::file::path dir::stage(string strAppId, string strPlatform)
+::file::path dir::stage(string strAppId, string strPlatform, string strConfiguration)
 {
 
-   return inplace_install(strAppId, strPlatform) /  "time" / time_binary_platform(strPlatform) / process_version_dir_name();
+   return inplace_install(strAppId, strPlatform, strConfiguration) /  "time" / time_binary_platform(strPlatform) / strConfiguration;
 
 }
 

@@ -594,9 +594,9 @@ namespace aura
       virtual void install_trace(double dRate);
       virtual bool register_spa_file_type();
 
-      virtual bool low_is_app_app_admin_running(string strPlatform);
-      virtual void defer_start_program_files_app_app_admin(string strPlatform);
-      virtual void start_program_files_app_app_admin(string strPlatform);
+      virtual bool low_is_app_app_admin_running(string strPlatform, string strConfiguration);
+      virtual void defer_start_program_files_app_app_admin(string strPlatform, string strConfiguration);
+      virtual void start_program_files_app_app_admin(string strPlatform, string strConfiguration);
 
 
 
