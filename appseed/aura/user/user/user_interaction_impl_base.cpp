@@ -103,6 +103,8 @@ namespace user
 
       m_bShowFlags = false;
 
+      m_iShowFlags = 0;
+
       m_pui->m_bNeedLayout = false;
 
    }
@@ -1816,11 +1818,36 @@ namespace user
 
          m_pui->ModifyStyle(0, WS_VISIBLE, 0);
 
+         if (m_bShowFlags)
+         {
+
+            if (m_iShowFlags & SWP_HIDEWINDOW)
+            {
+
+               m_iShowFlags &= ~SWP_HIDEWINDOW;
+               m_iShowFlags |= SWP_SHOWWINDOW;
+
+            }
+
+         }
+
       }
       else
       {
 
          m_pui->ModifyStyle(WS_VISIBLE, 0, 0);
+         if (m_bShowFlags)
+         {
+
+            if (m_iShowFlags & SWP_SHOWWINDOW)
+            {
+
+               m_iShowFlags &= ~SWP_SHOWWINDOW;
+               m_iShowFlags |= SWP_HIDEWINDOW;
+
+            }
+
+         }
 
       }
 

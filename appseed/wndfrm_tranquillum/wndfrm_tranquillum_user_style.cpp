@@ -32,6 +32,8 @@ namespace wndfrm_tranquillum
 
       userstyle()->m_mapFont[::user::font_default]->m_etextrendering = ::draw2d::text_rendering_anti_alias_grid_fit;
 
+      create_color(::user::color_button_text_normal, ARGB(255, 255, 255, 255));
+
    }
 
 

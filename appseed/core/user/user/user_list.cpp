@@ -5003,6 +5003,8 @@ namespace user
 
       pobj->m_bRet = false;
 
+      _001UpdateColumns();
+
    }
 
 
