@@ -3190,7 +3190,7 @@ void simple_frame_window::OnNotifyIconContextMenu(UINT uiNotifyIcon)
       else
       {
 
-         strXml = strExtraXml + "<separator/>" + strXml;
+         strXml.replace("</menubar>", "<separator/>" + strExtraXml + "</menubar>");
 
       }
 
