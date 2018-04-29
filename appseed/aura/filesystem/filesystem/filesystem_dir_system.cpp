@@ -24,13 +24,15 @@ namespace file
    {
 
 
+      system * system::g_pthis = NULL;
+
+
       system::system(::aura::application * papp) :
          ::object(papp),
          m_isdirmap(papp),
          m_mutex(papp),
          ::file_watcher::file_watcher(papp) //,
          //::file_watcher::listener_thread(papp)
-
       {
 
          m_isdirmap.m_dwTimeOut = 15000;
@@ -733,40 +735,71 @@ namespace file
 
 
       system::is_dir_map::is_dir_map(::aura::application * papp) :
-         file_path_map < is_dir >(papp, 256), // block size
          m_mutex(papp)
       {
-         InitHashTable(16384, TRUE);
       }
+
 
       bool system::is_dir_map::lookup(const ::file::path & strPath,bool &bIsDir,uint32_t & dwLastError)
       {
 
          if(strPath.get_length() <= 0)
          {
+
             bIsDir = false;
+
             return true;
+
          }
 
-         single_lock sl(&m_mutex, TRUE);
+         synch_lock sl(&m_mutex);
 
-         pair * ppair = this->PLookup(strPath);
+         ::file::patha namea;
 
-         if(ppair == NULL)
-            return false;
+         strPath.ascendants_name(namea);
 
-         if(::get_tick_count() > ppair->m_element2.m_dwLastCheck + m_dwTimeOut)
+         is_dir * pdir = this;
+
+         sp(is_dir) pfind(canew(is_dir));
+
+         for (auto & name : namea)
          {
-            return false;
+
+            pfind->m_str = name;
+
+            index iFind = pdir->pred_binary_search(pfind, [&](auto & t1, auto & t2)
+            {
+
+               return t1->m_str.compare_ci(t2->m_str) < 0;
+
+            });
+
+            if (iFind < 0)
+            {
+
+               return false;
+
+            }
+
+            pdir = pdir->element_at(iFind);
+
          }
 
-         bIsDir = ppair->m_element2.m_bIsDir;
+         if(::get_tick_count() > pdir->m_dwLastCheck + m_dwTimeOut)
+         {
 
-         dwLastError = ppair->m_element2.m_dwError;
+            return false;
+
+         }
+
+         bIsDir = pdir->m_bIsDir;
+
+         dwLastError = pdir->m_dwError;
 
          return true;
 
       }
+
 
       bool system::is_dir_map::lookup(const ::file::path & strPath,bool &bIsDir,uint32_t &dwLastError,int32_t iLast)
       {
@@ -777,35 +810,132 @@ namespace file
             return true;
          }
 
-         single_lock sl(&m_mutex, TRUE);
+         synch_lock sl(&m_mutex);
 
-         pair * ppair = this->PLookup(strPath);
+         ::file::patha namea;
 
-         if(ppair == NULL)
-            return false;
+         strPath.ascendants_name(namea);
 
-         if(::get_tick_count() > ppair->m_element2.m_dwLastCheck + m_dwTimeOut)
+         is_dir * pdir = this;
+
+         sp(is_dir) pfind(canew(is_dir));
+
+         for (auto & name : namea)
          {
-            return false;
+
+            pfind->m_str = name;
+
+            index iFind = pdir->pred_binary_search(pfind, [&](auto & t1, auto & t2)
+            {
+
+               return t1->m_str.compare_ci(t2->m_str) < 0;
+
+            });
+
+            if (iFind < 0)
+            {
+
+               return false;
+
+            }
+
+            pdir = pdir->element_at(iFind);
+
          }
 
-         bIsDir = ppair->m_element2.m_bIsDir;
+         if (::get_tick_count() > pdir->m_dwLastCheck + m_dwTimeOut)
+         {
 
-         dwLastError = ppair->m_element2.m_dwError;
+            return false;
+
+         }
+
+         bIsDir = pdir->m_bIsDir;
+
+         dwLastError = pdir->m_dwError;
 
          return true;
 
       }
 
-      void system::is_dir_map::set(const ::file::path & strPath,bool bIsDir,uint32_t dwLastError)
+
+      void system::is_dir_map::set(const ::file::path & path,bool bIsDir,uint32_t dwLastError)
       {
-         is_dir isdir;
-         isdir.m_bIsDir = bIsDir;
-         isdir.m_dwError = dwLastError;
-         isdir.m_dwLastCheck = ::get_tick_count();
+
          single_lock sl(&m_mutex, TRUE);
-         set_at(strPath, isdir);
+
+         ::file::patha namea;
+
+         path.ascendants_name(namea);
+
+         is_dir * pdir = this;
+
+         sp(is_dir) pfind(canew(is_dir));
+
+         for (index i = 0; i < namea.get_count(); i++)
+         {
+
+            pfind->m_str = namea[i];
+
+            index iFind = pdir->pred_binary_search(pfind, [&](auto & t1, auto & t2)
+            {
+
+               return t1->m_str.compare_ci(t2->m_str) < 0;
+
+            });
+
+            while(iFind < 0)
+            {
+
+               pfind->m_str = namea[i];
+
+               pfind->m_bIsDir = i < namea.get_upper_bound() ? true : bIsDir;
+
+               pfind->m_dwError = dwLastError;
+
+               pfind->m_dwLastCheck = ::get_tick_count();
+
+               pdir->add(pfind);
+
+               pdir->pred_sort([&](auto & t1, auto & t2)
+               {
+
+                  return t1->m_str.compare_ci(t2->m_str) < 0;
+
+               });
+
+               i++;
+
+               if (i >= namea.get_count())
+               {
+
+                  return;
+
+               }
+
+               pdir = pfind;
+
+               pfind = canew(is_dir);
+
+            }
+
+            pdir = pdir->element_at(iFind);
+
+            pfind->m_dwLastCheck = ::get_tick_count();
+
+         }
+
+         if (pdir != NULL && !bIsDir)
+         {
+
+            pdir->remove_all();
+
+         }
+
+         pfind->m_dwError = dwLastError;
+
       }
+
 
       ::file::path system::time()
       {

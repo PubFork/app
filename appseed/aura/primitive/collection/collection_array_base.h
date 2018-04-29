@@ -617,6 +617,9 @@ public:
    template < typename PRED >
    void pred_sort(PRED pred);
 
+   template < typename PRED >
+   index pred_binary_search(const TYPE & t, PRED pred) const;
+
 
    inline bool valid_iter(iterator first, iterator last)
    {

@@ -1463,6 +1463,61 @@ break_mid_loop:
 
       }
 
+      template < typename ARRAY_TYPE, typename PRED >
+      index pred_binary_search(const ARRAY_TYPE  & a, typename const ARRAY_TYPE::BASE_TYPE & t, PRED pred)
+      {
+
+         index iLPos, iUPos, iMPos;
+
+         iLPos = 0;
+
+         iUPos = a.get_upper_bound();
+
+         while(iLPos <= iUPos)
+         {
+
+            iMPos = (iLPos + iUPos) / 2;
+
+            if (pred(a[iMPos], t))
+            {
+
+               if (pred(t, a[iMPos]))
+               {
+
+                  return iMPos;
+
+               }
+               else
+               {
+
+                  iUPos = iMPos - 1;
+
+               }
+
+            }
+            else
+            {
+
+               if (!pred(t, a[iMPos]))
+               {
+
+                  return iMPos;
+
+               }
+               else
+               {
+
+                  iLPos = iMPos + 1;
+
+               }
+
+            }
+
+         }
+
+         return -1;
+
+      }
 
    } // namespace array
 
@@ -2123,6 +2178,15 @@ void array_base < TYPE, ARG_TYPE, ALLOCATOR >::pred_sort(PRED pred)
 
 }
 
+
+template < class TYPE, class ARG_TYPE, class ALLOCATOR >
+template < typename PRED >
+index array_base < TYPE, ARG_TYPE, ALLOCATOR >::pred_binary_search(const TYPE & t, PRED pred) const
+{
+
+   return ::sort::array::pred_binary_search(*this, t, pred);
+
+}
 
 
 template < typename TYPE >

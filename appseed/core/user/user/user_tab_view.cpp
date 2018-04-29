@@ -14,7 +14,6 @@ namespace user
       m_flagNonClient.unsignalize(non_client_background);
       m_flagNonClient.unsignalize(non_client_focus_rect);
       get_data()->m_pcallback       = this;
-      m_pdroptargetwindow           = NULL;
       m_pviewdata                   = NULL;
       m_pviewdataOld                = NULL;
 
@@ -191,100 +190,101 @@ namespace user
    }
 
 
+   void tab_view::_001OnRemoveTab(class tab_pane * ptab)
+   {
+
+      m_holdera.remove(ptab->m_pholder);
+
+   }
+
+
    void tab_view::_001OnDropTab(index iTab, e_position eposition)
    {
 
-      id id1 = ::user::tab::tab_id(::user::tab::_001GetSel());
-
-      id id2 = ::user::tab::tab_id(iTab);
-
-      id id3 = var(id1).get_string() + "->:<-" + var(id2).get_string();
-
-      ::user::tab_pane * ppane1 = get_pane_by_id(id1);
-
-      ::user::tab_pane * ppane2 = get_pane_by_id(id2);
-
-      string strName1 = ppane1->m_istrTitleEx;
-
-      string strName2 = ppane2->m_istrTitleEx;
-
-      add_tab(strName1 + "->:<-" + strName2,id3);
-
-      ::user::view_creator_data * pcreatordata = m_pviewcreator->allocate_creator_data(id3);
-
-      sp(::user::place_holder) pholder = get_new_place_holder(get_data()->m_rectTabClient);
-
-      pcreatordata->m_pholder = pholder;
-
-      int iPaneNew = (int) id_pane(id3);
-
-      get_data()->m_panea[iPaneNew]->m_pholder = pholder;
-
-      sp(::user::split_view) psplitview = impact::create_view < ::user::split_view >(null_rect(),pholder,id3);
-
-      pcreatordata->m_pwnd = psplitview;
-
-      if(eposition == position_top || eposition == position_bottom)
-      {
-         psplitview->SetSplitOrientation(orientation_horizontal);
-      }
-      else
-      {
-         psplitview->SetSplitOrientation(orientation_vertical);
-      }
-
-      psplitview->SetPaneCount(2);
-
-      psplitview->set_position_rate(0,0.5);
-
-      psplitview->initialize_split_layout();
-
-      rect rect0;
-
-      rect rect1;
-
-      psplitview->m_panea[0]->m_pholder->GetClientRect(rect0);
-
-      psplitview->m_panea[1]->m_pholder->GetClientRect(rect1);
-
-      sp(::user::interaction) pwnd1;
-
-      sp(::user::interaction) pwnd2;
-
-      if(eposition == position_top || eposition == position_left)
+      if (eposition != position_none)
       {
 
-         pwnd1 = get_impact(::user::tab::tab_id(::user::tab::_001GetSel()), rect1)->m_pwnd;
+         id id1 = ::user::tab::tab_id(::user::tab::_001GetSel());
 
-         pwnd2 = get_impact(::user::tab::tab_id(iTab),rect0)->m_pwnd;
+         id id2 = ::user::tab::tab_id(iTab);
 
-         psplitview->SetPane(0,pwnd2,false);
+         id id3 = var(id1).get_string() + "->:<-" + var(id2).get_string();
 
-         psplitview->SetPane(1,pwnd1,false);
+         ::user::tab_pane * ppane1 = get_pane_by_id(id1);
 
-      }
-      else
-      {
+         ::user::tab_pane * ppane2 = get_pane_by_id(id2);
 
-         pwnd1 = get_impact(::user::tab::tab_id(::user::tab::_001GetSel()),rect0)->m_pwnd;
+         string strName1 = ppane1->m_istrTitleEx;
 
-         pwnd2 = get_impact(::user::tab::tab_id(iTab),rect1)->m_pwnd;
+         string strName2 = ppane2->m_istrTitleEx;
 
-         psplitview->SetPane(0,pwnd1,false);
+         ::user::view_creator_data * pcreatordata = m_pviewcreator->allocate_creator_data(id3, get_data()->m_rectTabClient);
 
-         psplitview->SetPane(1,pwnd2,false);
+         add_tab(strName1 + "->:<-" + strName2, id3, true, false, pcreatordata->m_pholder);
+
+         sp(::user::split_view) psplitview = impact::create_view < ::user::split_view >(pcreatordata);
+
+         pcreatordata->m_pwnd = psplitview;
+
+         if (eposition == position_top || eposition == position_bottom)
+         {
+
+            psplitview->SetSplitOrientation(orientation_horizontal);
+
+         }
+         else
+         {
+
+            psplitview->SetSplitOrientation(orientation_vertical);
+
+         }
+
+         psplitview->SetPaneCount(2);
+
+         psplitview->set_position_rate(0, 0.5);
+
+         psplitview->initialize_split_layout();
+
+         sp(::user::interaction) pwnd1;
+
+         sp(::user::interaction) pwnd2;
+
+         ppane1->m_pholder->get_child(pwnd1);
+
+         ppane2->m_pholder->get_child(pwnd2);
+
+         if (eposition == position_top || eposition == position_left)
+         {
+
+            psplitview->SetPane(0, pwnd2, false);
+
+            psplitview->SetPane(1, pwnd1, false);
+
+         }
+         else
+         {
+
+            psplitview->SetPane(0, pwnd1, false);
+
+            psplitview->SetPane(1, pwnd2, false);
+
+         }
+
+         on_after_create_impact(pcreatordata);
+
+         remove_tab_by_id(id1);
+
+         remove_tab_by_id(id2);
+
+         set_cur_tab_by_id(id3);
 
       }
 
-      remove_tab_by_id(id1);
-
-      remove_tab_by_id(id2);
-
-      ::user::tab::on_layout();
-
-      get_data()->m_iDragTab = -1;
+      get_data()->m_iClickTab = -1;
 
       get_data()->m_bDrag = false;
+
+      m_estate = state_initial;
 
    }
 
@@ -318,16 +318,23 @@ namespace user
    void tab_view::_001DropTargetWindowInitialize(::user::tab * pinterface)
    {
 
-      create_tab_by_id(::user::tab::tab_id(pinterface->get_data()->m_iDragTab));
+      create_tab_by_id(::user::tab::tab_id(pinterface->get_data()->m_iClickTab));
 
-      m_pdroptargetwindow = new tab_drop_target_window(this, (int32_t) pinterface->get_data()->m_iDragTab);
+      m_pdroptargetwindow = canew(tab_drop_target_window(this, (int32_t) pinterface->get_data()->m_iClickTab));
+
       rect rect;
+
       rect = pinterface->get_data()->m_rectTabClient;
+
       pinterface->ClientToScreen(&rect);
+
       m_pdroptargetwindow->create_window_ex(WS_EX_LAYERED, NULL, NULL, 0, rect, NULL, id());
-      System.add_frame(m_pdroptargetwindow);
+
       m_pdroptargetwindow->ShowWindow(SW_SHOW);
+
       m_pdroptargetwindow->SetWindowPos(ZORDER_TOPMOST, rect, SWP_SHOWWINDOW);
+
+      m_pdroptargetwindow->SetCapture();
 
    }
 
@@ -887,108 +894,113 @@ namespace user
       return m_pviewcreator;
    }
 
-   tab_drop_target_window::tab_drop_target_window(::user::tab * ptab, int32_t iPane) :
+
+   tab_drop_target_window::tab_drop_target_window(::user::tab * ptab, index iTab) :
       ::object(ptab->get_app())
    {
-      m_ptab            = ptab;
-      m_iPane           = iPane;
+
+      m_positiona.add(position_top);
+
+      m_positiona.add(position_right);
+
+      m_positiona.add(position_bottom);
+
+      m_positiona.add(position_left);
+
+      m_ptab         = ptab;
+
+      m_iTab         = iTab;
+
    }
+
 
    tab_drop_target_window::~tab_drop_target_window()
    {
+
    }
+
 
    void tab_drop_target_window::install_message_routing(::message::sender * pinterface)
    {
+
       ::user::interaction::install_message_routing(pinterface);
+
       IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &tab_drop_target_window::_001OnLButtonUp);
+
    }
 
 
    void tab_drop_target_window::_001OnDraw(::draw2d::graphics * pgraphics)
    {
 
+      COLORREF crBorderNormal = ARGB(80, 127, 127, 80);
 
+      COLORREF crBorderSelect = ARGB(100, 40, 40, 20);
 
-//      class imaging & imaging = Application.imaging();
+      COLORREF crBorder;
 
-      COLORREF crBorder = ARGB(84, 127, 127, 80);
-      COLORREF crBorderSel = ARGB(84, 40, 40, 20);
+      COLORREF crBkNormal = ARGB(160, 150, 200, 255);
 
-      rect rectClient;
-      GetClientRect(rectClient);
-      pgraphics->FillSolidRect(rectClient, ARGB(84, 255,255,255));
+      COLORREF crBkSelect = ARGB(180, 255, 230, 155);
+
+      COLORREF crBk;
 
       point ptCursor;
-      Session.get_cursor_pos(&ptCursor);
-      ScreenToClient(&ptCursor);
-      e_position epositionDrag = m_ptab->DragHitTest(ptCursor);
-      rect rectTop;
-      m_ptab->GetDragRect(rectTop, position_top);
-      COLORREF crTop;
-      int iAlpha = 84 + 77;
-      if(rectTop.contains(ptCursor))
-      {
-         crTop = ARGB(iAlpha, 255, 230, 155);
-      }
-      else
-      {
-         crTop = ARGB(iAlpha, 150,200,255);
-      }
-      rect rectBottom;
-      m_ptab->GetDragRect(rectBottom, position_bottom);
-      COLORREF crBottom;
-      if(rectBottom.contains(ptCursor))
-      {
-         crBottom = ARGB(iAlpha, 255,230,155);
-      }
-      else
-      {
-         crBottom = ARGB(iAlpha, 150,200,255);
-      }
-      rect rectRight;
-      m_ptab->GetDragRect(rectRight, position_right);
-      COLORREF crRight;
-      if(rectRight.contains(ptCursor))
-      {
-         crRight = ARGB(iAlpha, 255,230,155);
-      }
-      else
-      {
-         crRight = ARGB(iAlpha, 150,200,255);
-      }
-      rect rectLeft;
-      m_ptab->GetDragRect(rectLeft, position_left);
-      COLORREF crLeft;
-      if(rectLeft.contains(ptCursor))
-      {
-         crLeft = ARGB(iAlpha, 255,230,155);
-      }
-      else
-      {
-         crLeft = ARGB(iAlpha, 150,200,255);
-      }
-      pgraphics->FillSolidRect(rectTop,crTop);
-      pgraphics->FillSolidRect(rectLeft,crLeft);
-      pgraphics->FillSolidRect(rectRight,crRight);
-      pgraphics->FillSolidRect(rectBottom,crBottom);
-      pgraphics->Draw3dRect(rectTop,crBorder,crBorder);
-      pgraphics->Draw3dRect(rectLeft, crBorder, crBorder);
-      pgraphics->Draw3dRect(rectRight, crBorder, crBorder);
-      pgraphics->Draw3dRect(rectBottom, crBorder, crBorder);
 
-      if(epositionDrag != position_none)
+      Session.get_cursor_pos(&ptCursor);
+
+      ScreenToClient(&ptCursor);
+
+      e_position epositionDrag = m_ptab->DragHitTest(ptCursor);
+
+      for (auto eposition : m_positiona)
       {
-         rect rectSel;
-         m_ptab->GetDragRect(rectSel, epositionDrag);
-         pgraphics->Draw3dRect(rectSel, crBorderSel, crBorderSel);
+
+         rect rect;
+
+         m_ptab->GetDragRect(rect, eposition);
+
+         if (eposition == epositionDrag)
+         {
+
+            crBk = crBkSelect;
+
+            crBorder = crBorderSelect;
+
+         }
+         else
+         {
+
+            crBk = crBkNormal;
+
+            crBorder = crBorderNormal;
+
+         }
+
+         pgraphics->FillSolidRect(rect, crBk);
+
+         pgraphics->Draw3dRect(rect, crBorder, crBorder);
+
       }
+
+   }
+
+
+   bool tab_drop_target_window::get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement, ::user::interaction * pui)
+   {
+
+      etranslucency = translucency_present;
+
+      return true;
 
    }
 
    void tab_drop_target_window::_001OnLButtonUp(::message::message * pobj)
    {
+
       SCAST_PTR(::message::mouse, pmouse, pobj);
+
+      ReleaseCapture();
 
       point pt(pmouse->m_pt);
 
@@ -996,20 +1008,24 @@ namespace user
 
       e_position eposition = m_ptab->DragHitTest(pt);
 
-      m_ptab->_001OnDropTab(m_iPane, eposition);
+      m_ptab->_001OnDropTab(m_iTab, eposition);
 
       ShowWindow(SW_HIDE);
 
       DestroyWindow();
-
-      //delete this;
 
       pobj->m_bRet = true;
 
    }
 
 
+   bool tab_drop_target_window::has_pending_graphical_update()
+   {
 
+      return true;
+
+   }
 
 
 } // namespace user
+

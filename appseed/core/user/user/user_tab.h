@@ -66,12 +66,30 @@ namespace user
    {
    public:
 
-      enum e_message
+      enum e_state
       {
-         message_start_tab_drag = WM_USER + 223 + 1984 + 77 + 51,
+
+         state_initial,
+         state_close_button_down,
+         state_other_tab_button_down,
+         state_drag_commanded,
+         state_drag_started
+
       };
 
+      enum e_message
+      {
 
+         message_start_tab_drag = WM_USER + 223 + 1984 + 77 + 51,
+
+      };
+
+      enum e_timer
+      {
+
+         timer_drag_start = WM_USER + 1000,
+
+      };
 
 
 
@@ -111,7 +129,7 @@ namespace user
          ::index                          m_iHover;
          image_list                       m_imagelist;
          tab_callback *                   m_pcallback;
-         ::index                          m_iDragTab;
+         ::index                          m_iClickTab;
          bool                             m_bDrag;
          bool                             m_bVertical;
          ::core::match::any               m_matchanyRestore;
@@ -141,7 +159,7 @@ namespace user
 
       };
 
-
+      e_state                          m_estate;
       sp(data)                         m_spdata;
       ::visual::graphics_extension     m_dcextension;
       bool                             m_bDisableSavingRestorableTabs;
@@ -149,7 +167,7 @@ namespace user
       bool                             m_bHidingTabs;
       DWORD                            m_dwHidingTabs;
       bool                             m_bNoTabs;
-      e_element                        m_eelement;
+      e_element                        m_eelementClick;
       sp(::create)                     m_spcreate;
       ::count                          m_iRestoredTabCount;
       bool                             m_bDrawTabAtBackground;
@@ -201,6 +219,8 @@ namespace user
 
       virtual id get_cur_tab_id();
       virtual id get_current_id();
+
+      virtual void _001OnRemoveTab(tab_pane * ptab);
 
       virtual ::index _001GetSel();
       virtual void _001SetSel(::index iSel);

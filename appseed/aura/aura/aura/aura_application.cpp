@@ -6386,13 +6386,7 @@ retry_license:
    string application::get_executable_title()
    {
 
-      string strTitle = get_executable_appid();
-
-      strTitle.replace("-", "_");
-
-      strTitle.replace("/", "_");
-
-      return strTitle;
+      return executable_title_from_appid(get_executable_appid());
 
    }
 

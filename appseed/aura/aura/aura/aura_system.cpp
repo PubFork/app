@@ -581,6 +581,8 @@ namespace aura
 
       }
 
+      ::file::dir::system::g_pthis = m_spdir;
+
       output_debug_string("CommonAppData (matter) : " + System.dir().commonappdata()  + "\n");
       output_debug_string("commonappdata (matter) : " + System.dir().commonappdata() + "\n");
       output_debug_string("Common App Data (matter) : " + System.dir().commonappdata() + "\n");

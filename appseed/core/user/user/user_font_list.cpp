@@ -78,13 +78,13 @@ namespace user
 
       if (pcreate->m_bRet)
          return;
-      
+
       attach_font_list_data(Session.m_pfontlistdata);
 
       SetTimer(timer_update_font, 10 * 1000, NULL);
 
    }
-   
+
 
    void font_list::_001OnTimer(::timer * ptimer)
    {
@@ -102,7 +102,7 @@ namespace user
       }
 
    }
-   
+
 
    void font_list::_001OnLButtonDown(::message::message * pobj)
    {
@@ -130,10 +130,14 @@ namespace user
 
          BaseOnControlEvent(&ev);
 
+         pmouse->set_lresult(0);
+
+         pmouse->m_bRet = true;
+
       }
 
    }
-   
+
 
    void font_list::_001OnMouseMove(::message::message * pobj)
    {
@@ -173,9 +177,9 @@ namespace user
       UNREFERENCED_PARAMETER(pSender);
       UNREFERENCED_PARAMETER(lHint);
       UNREFERENCED_PARAMETER(phint);
-      
+
    }
-   
+
 
    void font_list::_001OnNcDraw(::draw2d::graphics * pgraphics)
    {
@@ -335,7 +339,7 @@ namespace user
       return m_pfontlistdata->m_iHover;
 
    }
-   
+
 
    index font_list::hit_test(point pt)
    {

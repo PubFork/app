@@ -86,3 +86,8 @@ CLASS_DECL_AURA bool root_execute_sync(const char * pszFile, const char * pszPar
 CLASS_DECL_AURA bool os_init_application();
 CLASS_DECL_AURA void os_term_application();
 
+
+
+CLASS_DECL_AURA string executable_title_from_appid(string str);
+
+

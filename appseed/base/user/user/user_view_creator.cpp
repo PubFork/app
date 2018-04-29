@@ -89,7 +89,7 @@ namespace user
    }
 
 
-   view_creator_data * view_creator::allocate_creator_data(id id)
+   view_creator_data * view_creator::new_creator_data(id id)
    {
 
       view_creator_data * pcreatordata = new ::user::view_creator_data;
@@ -104,7 +104,7 @@ namespace user
    view_creator_data * view_creator::allocate_creator_data(id id, LPCRECT lpcrectCreate)
    {
 
-      view_creator_data * pcreatordata = allocate_creator_data(id);
+      view_creator_data * pcreatordata = new_creator_data(id);
 
       pcreatordata->m_rectCreate = *lpcrectCreate;
 

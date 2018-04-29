@@ -4,7 +4,7 @@
 namespace user
 {
 
-
+   class tab_pane;
    class tab_drop_target_window;
    class single_document_template;
 
@@ -18,7 +18,7 @@ namespace user
    public:
 
 
-      tab_drop_target_window *               m_pdroptargetwindow;
+      sp(tab_drop_target_window)             m_pdroptargetwindow;
       ::user::view_creator_data *            m_pviewdata;
       ::user::view_creator_data *            m_pviewdataOld;
       ::user::view_creator *                 m_pviewcreator;
@@ -86,6 +86,8 @@ namespace user
 
       virtual void OnActivateView(bool bActivate, sp(impact) pActivateView, sp(impact) pDeactiveView) override;
 
+      virtual void _001OnRemoveTab(class tab_pane * ptab) override;
+
    };
 
 
@@ -95,19 +97,24 @@ namespace user
    public:
 
 
-      ::user::tab *     m_ptab;
-      int32_t               m_iPane;
+      array < e_position >                   m_positiona;
+      ::user::tab *                          m_ptab;
+      index                                  m_iTab;
 
 
-      tab_drop_target_window(::user::tab * ptab, int32_t iPane);
+      tab_drop_target_window(::user::tab * ptab, index iTab);
       virtual ~tab_drop_target_window();
 
+
+      virtual bool get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement, ::user::interaction * pui) override;
 
       virtual void install_message_routing(::message::sender * pinterface) override;
 
       virtual void _001OnDraw(::draw2d::graphics * pgraphics) override;
 
       DECL_GEN_SIGNAL(_001OnLButtonUp);
+
+      virtual bool has_pending_graphical_update() override;
 
    };
 

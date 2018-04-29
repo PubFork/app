@@ -21,39 +21,39 @@ namespace file
 
 
 
-         class CLASS_DECL_AURA is_dir
+         class CLASS_DECL_AURA is_dir :
+            virtual public spa(is_dir)
          {
          public:
 
             bool           m_bIsDir;
             uint32_t       m_dwLastCheck;
             uint32_t       m_dwError;
-
+            string         m_str;
 
          };
 
 
          class CLASS_DECL_AURA is_dir_map :
-            virtual public file_path_map < is_dir >
+            virtual public is_dir
          {
          public:
-
 
             mutex                m_mutex;
             uint32_t             m_dwTimeOut;
 
-
             is_dir_map(::aura::application * papp);
 
 
-            bool lookup(const ::file::path & strPath,bool &bIsDir,uint32_t & dwLastError);
-            bool lookup(const ::file::path & strPath,bool &bIsDir,uint32_t & dwLastError,int32_t iLast);
-            void set(const ::file::path & strPath,bool bIsDir,uint32_t dwLastError);
+            bool lookup(const ::file::path & path,bool &bIsDir,uint32_t & dwLastError);
+            bool lookup(const ::file::path & path,bool &bIsDir,uint32_t & dwLastError,int32_t iLast);
+            void set(const ::file::path & path,bool bIsDir,uint32_t dwLastError);
 
 
          };
 
 
+         static system *      g_pthis;
          is_dir_map           m_isdirmap;
          mutex                m_mutex;
          string               m_strApiCc;

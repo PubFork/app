@@ -11,41 +11,41 @@ template < typename PRED >
 class forking_thread:
    virtual public thread
 {
-   public:
+public:
 
-      PRED m_pred;
+   PRED m_pred;
 
-      sp(object) m_pholdref;
+   sp(object) m_pholdref;
 
-      forking_thread(::aura::application * papp, sp(object) pholdref, PRED pred) :
-         object(papp),
-         thread(papp),
-         m_pholdref(pholdref),
-         m_pred(pred)
-      {
+   forking_thread(::aura::application * papp, sp(object) pholdref, PRED pred) :
+      object(papp),
+      thread(papp),
+      m_pholdref(pholdref),
+      m_pred(pred)
+   {
 
-      }
+   }
 
-      forking_thread(::aura::application * papp,PRED pred) :
-         object(papp),
-         thread(papp),
-         m_pred(pred)
-      {
+   forking_thread(::aura::application * papp,PRED pred) :
+      object(papp),
+      thread(papp),
+      m_pred(pred)
+   {
 
-      }
+   }
 
 
-      virtual ~forking_thread()
-      {
+   virtual ~forking_thread()
+   {
 
-      }
+   }
 
-      void run()
-      {
+   void run()
+   {
 
-         m_pred();
+      m_pred();
 
-      }
+   }
 
 };
 
@@ -118,7 +118,7 @@ inline ::thread * object::delay_fork(bool * pbExecuting, int64_t * piRequestCoun
    return fork([=]
    {
 
-      restart:
+restart:
 
       Sleep(duration);
 
@@ -202,33 +202,33 @@ template < typename PRED >
 class forking_count_pred :
    virtual public pred_holder_base
 {
-   public:
+public:
 
-      PRED m_pred;
-      index m_iOrder;
-      index m_iIndex;
-      index m_iScan;
-      ::count m_cCount;
+   PRED m_pred;
+   index m_iOrder;
+   index m_iIndex;
+   index m_iScan;
+   ::count m_cCount;
 
 
-      forking_count_pred(::aura::application * papp, index iOrder, index iIndex, ::count iScan, ::count cCount, PRED pred) :
-         ::object(papp),
-         ::pred_holder_base(papp),
-         m_pred(pred)
-      {
-         m_iOrder = iOrder;
-         m_iIndex = iIndex;
-         m_iScan = iScan;
-         m_cCount = cCount;
+   forking_count_pred(::aura::application * papp, index iOrder, index iIndex, ::count iScan, ::count cCount, PRED pred) :
+      ::object(papp),
+      ::pred_holder_base(papp),
+      m_pred(pred)
+   {
+      m_iOrder = iOrder;
+      m_iIndex = iIndex;
+      m_iScan = iScan;
+      m_cCount = cCount;
 
-      }
+   }
 
-      virtual void run()
-      {
+   virtual void run()
+   {
 
-         m_pred(m_iOrder, m_iIndex, m_cCount, m_iScan);
+      m_pred(m_iOrder, m_iIndex, m_cCount, m_iScan);
 
-      }
+   }
 
 };
 
@@ -237,62 +237,62 @@ template < typename PRED >
 class forking_count_thread :
    virtual public thread
 {
-   public:
+public:
 
-      PRED     m_pred;
+   PRED     m_pred;
 
 
 
-      index    m_iOrder;
-      index    m_iIndex;
-      ::count  m_iScan;
-      ::count  m_iCount;
+   index    m_iOrder;
+   index    m_iIndex;
+   ::count  m_iScan;
+   ::count  m_iCount;
 
-      sp(object) m_pholdref;
+   sp(object) m_pholdref;
 
-      forking_count_thread(::aura::application * papp, sp(object) pholdref, index iOrder, index iIndex, ::count iScan, ::count iCount, PRED pred) :
-         object(papp),
-         thread(papp),
-         m_pholdref(pholdref),
-         m_pred(pred),
-         m_iOrder(iOrder),
-         m_iIndex(iIndex),
-         m_iScan(iScan),
-         m_iCount(iCount)
-      {
-         construct();
-      }
+   forking_count_thread(::aura::application * papp, sp(object) pholdref, index iOrder, index iIndex, ::count iScan, ::count iCount, PRED pred) :
+      object(papp),
+      thread(papp),
+      m_pholdref(pholdref),
+      m_pred(pred),
+      m_iOrder(iOrder),
+      m_iIndex(iIndex),
+      m_iScan(iScan),
+      m_iCount(iCount)
+   {
+      construct();
+   }
 
-      forking_count_thread(::aura::application * papp, index iOrder, index iIndex, ::count iScan, ::count iCount, PRED pred) :
-         object(papp),
-         thread(papp),
-         m_pred(pred),
-         m_iOrder(iOrder),
-         m_iIndex(iIndex),
-         m_iScan(iScan),
-         m_iCount(iCount)
-      {
-         construct();
-      }
+   forking_count_thread(::aura::application * papp, index iOrder, index iIndex, ::count iScan, ::count iCount, PRED pred) :
+      object(papp),
+      thread(papp),
+      m_pred(pred),
+      m_iOrder(iOrder),
+      m_iIndex(iIndex),
+      m_iScan(iScan),
+      m_iCount(iCount)
+   {
+      construct();
+   }
 
-      void construct()
-      {
+   void construct()
+   {
 
-         m_dwThreadAffinityMask = translate_processor_affinity(int (m_iOrder));
+      m_dwThreadAffinityMask = translate_processor_affinity(int (m_iOrder));
 
-      }
+   }
 
-      virtual ~forking_count_thread()
-      {
+   virtual ~forking_count_thread()
+   {
 
-      }
+   }
 
-      void run()
-      {
+   void run()
+   {
 
-         m_pred(m_iOrder, m_iIndex, m_iCount, m_iScan);
+      m_pred(m_iOrder, m_iIndex, m_iCount, m_iScan);
 
-      }
+   }
 
 };
 
@@ -327,6 +327,106 @@ template < typename PRED >
    return iScan;
 
 }
+
+template < typename PRED >
+class forking_for_thread :
+   virtual public thread
+{
+public:
+
+   PRED     m_pred;
+
+
+
+   index    m_iOrder;
+   index    m_iIndex;
+   ::count  m_iScan;
+   ::count  m_iCount;
+
+   sp(object) m_pholdref;
+
+   forking_for_thread(::aura::application * papp, sp(object) pholdref, index iOrder, index iIndex, ::count iScan, ::count iCount, PRED pred) :
+      object(papp),
+      thread(papp),
+      m_pholdref(pholdref),
+      m_pred(pred),
+      m_iOrder(iOrder),
+      m_iIndex(iIndex),
+      m_iScan(iScan),
+      m_iCount(iCount)
+   {
+      construct();
+   }
+
+   forking_for_thread(::aura::application * papp, index iOrder, index iIndex, ::count iScan, ::count iCount, PRED pred) :
+      object(papp),
+      thread(papp),
+      m_pred(pred),
+      m_iOrder(iOrder),
+      m_iIndex(iIndex),
+      m_iScan(iScan),
+      m_iCount(iCount)
+   {
+      construct();
+   }
+
+   void construct()
+   {
+
+      m_dwThreadAffinityMask = translate_processor_affinity(int(m_iOrder));
+
+   }
+
+   virtual ~forking_for_thread()
+   {
+
+   }
+
+   void run()
+   {
+
+      for (; m_iIndex < m_iCount; m_iIndex += m_iScan)
+      {
+
+         m_pred(m_iIndex);
+
+      }
+
+   }
+
+};
+
+
+template < typename PRED >
+::count fork_for(::aura::application * papp, ::count iCount, PRED pred, index iStart = 0)
+{
+
+   int iAffinityOrder = get_current_process_affinity_order();
+
+   if (::get_thread() == NULL || ::get_thread()->m_bAvoidProcFork)
+   {
+
+      iAffinityOrder = 1;
+
+   }
+
+   ::count iScan = MAX(1, MIN(iCount - iStart, iAffinityOrder));
+
+   for (index iOrder = 0; iOrder < iScan; iOrder++)
+   {
+
+      auto pforkingthread = canew(forking_for_thread < PRED >(papp, iOrder, iOrder + iStart, iScan, iCount, pred));
+
+      ::thread * pthread = dynamic_cast <::thread *> (pforkingthread);
+
+      pthread->begin();
+
+   }
+
+   return iScan;
+
+}
+
 
 CLASS_DECL_AURA uint32_t random_processor_index_generator();
 

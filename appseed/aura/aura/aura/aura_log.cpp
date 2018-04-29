@@ -307,10 +307,9 @@ retry:
 
          try
          {
-            if(!::dir::is(::dir::name(plog->m_strLogPath)))
-            {
-               ::dir::mk(::dir::name(plog->m_strLogPath));
-            }
+
+            ::dir::mk(::dir::name(plog->m_strLogPath));
+
             if(!(plog->m_pfile = fopen(m_strLogPath, "at")))
             {
                int32_t iError = errno;

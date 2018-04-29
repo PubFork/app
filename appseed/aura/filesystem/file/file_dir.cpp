@@ -753,71 +753,24 @@ CLASS_DECL_AURA::file::path dir::inplace_install(string strAppId, string strPlat
 }
 
 
-bool dir::mkdir(const ::file::path & path)
+
+bool dir::mk(const ::file::path & path)
 {
 
-   if(is(path))
+   if (::file::dir::system::g_pthis == NULL)
    {
 
-      return true;
+      return _mk(path);
 
    }
 
-   if(file_exists_dup(path))
-   {
-
-      if(!file_delete_dup(path))
-      {
-
-         return false;
-
-      }
-
-   }
-
-#ifdef WINDOWS
-
-   wstring wstr;
-
-   if(is_absolute_path(path))
-   {
-
-      wstr = "\\\\?\\" + path;
-
-   }
-   else
-   {
-
-      wstr = path;
-
-   }
-
-   if(!::CreateDirectoryW(wstr, NULL))
-   {
-
-      return false;
-
-   }
-
-#else
-
-   if(::mkdir(path, S_IRWXU | S_IRWXG | S_IRWXO) != 0)
-   {
-
-      TranslateLastError();
-
-      return false;
-
-   }
-
-#endif
-
-   return true;
+   return ::file::dir::system::g_pthis->mk(path, ::aura::system::g_p);
 
 }
 
 
-bool dir::mk(const ::file::path & path)
+
+bool dir::_mk(const ::file::path & path)
 {
 
    if (is(path))
@@ -855,70 +808,170 @@ bool dir::mk(const ::file::path & path)
 
 #endif
 
-   while (true)
+   ::file::patha stra;
+
+   path.ascendants_path(stra);
+
+   index i = stra.get_upper_bound();
+
+   for (; i >= 0; i--)
    {
 
-      strsize iPos = path.find(::file::path_sep(::file::path_file), iLastPos + 1);
+      string strDir = stra[i];
 
-      if(iPos == 0)
+      if (is(strDir))
       {
 
-         iPos = path.find(::file::path_sep(::file::path_file), 1);
+         break;
 
       }
 
-      if(iPos < 0)
+   }
+
+   i++;
+
+   for(; i < stra.get_count(); i++)
+   {
+
+      string strDir = stra[i];
+
+      if (::dir::mkdir(strDir))
       {
-
-         strName = path.substr(iLastPos + 1);
-
-      }
-      else
-      {
-
-         strName = path.substr(iLastPos + 1, iPos - iLastPos - 1);
-
-      }
-
-      if (pathDir.is_empty())
-      {
-
-         pathDir = strName;
 
       }
       else
       {
 
-         pathDir /= strName;
+         DWORD dwError = ::get_last_error();
 
-      }
-
-      if(!::dir::is(pathDir))
-      {
-
-         if(!::dir::mkdir(pathDir))
+         if (dwError == ERROR_ALREADY_EXISTS)
          {
 
-            return false;
+            try
+            {
+
+               file_delete_dup(strDir);
+
+            }
+            catch (...)
+            {
+
+            }
+
+            string str = stra[i];
+
+            str.trim_right("\\/");
+
+            try
+            {
+
+               file_delete_dup(str);
+
+            }
+            catch (...)
+            {
+
+            }
+
+            if (::dir::mkdir(stra[i]))
+            {
+
+               continue;
+
+            }
+            else
+            {
+
+               dwError = ::get_last_error();
+
+            }
 
          }
 
+         char * pszError;
+
+         FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwError, 0, (LPTSTR)&pszError, 8, NULL);
+
+         //TRACE("dir::mk CreateDirectoryW last error(%d)=%s", dwError, pszError);
+
+         ::LocalFree(pszError);
+
+         //m_isdirmap.set(stra[i], false);
+
+         return false;
+
       }
-
-      if(iPos < 0)
-      {
-
-         return true;
-
-      }
-
-      iLastPos = iPos;
 
    }
 
    return true;
 
 }
+
+
+bool dir::mkdir(const ::file::path & path)
+{
+
+   if (is(path))
+   {
+
+      return true;
+
+   }
+
+   if (file_exists_dup(path))
+   {
+
+      if (!file_delete_dup(path))
+      {
+
+         return false;
+
+      }
+
+   }
+
+#ifdef WINDOWS
+
+   wstring wstr;
+
+   if (is_absolute_path(path))
+   {
+
+      wstr = "\\\\?\\" + path;
+
+   }
+   else
+   {
+
+      wstr = path;
+
+   }
+
+   if (!::CreateDirectoryW(wstr, NULL))
+   {
+
+      return false;
+
+   }
+
+#else
+
+   if (::mkdir(path, S_IRWXU | S_IRWXG | S_IRWXO) != 0)
+   {
+
+      TranslateLastError();
+
+      return false;
+
+   }
+
+#endif
+
+   return true;
+
+}
+
 
 
 ::file::path dir::module()
@@ -950,8 +1003,22 @@ bool dir::mk(const ::file::path & path)
 }
 
 
+bool dir::is(const ::file::path & path)
+{
 
-bool dir::is(const ::file::path & path1)
+   if (::file::dir::system::g_pthis == NULL)
+   {
+
+      return _is(path);
+
+   }
+
+   return ::file::dir::system::g_pthis->is(path, ::aura::system::g_p);
+
+}
+
+
+bool dir::_is(const ::file::path & path1)
 {
 
 #ifdef METROWIN
@@ -1042,47 +1109,55 @@ bool dir::is(const ::file::path & path1)
 
 #elif defined(WINDOWSEX)
 
-   WCHAR szVolumeName[128];
+   //wstring wstr = wstring(path1);
 
-   string strVolume = path1;
+   //WCHAR szVolumeName[128];
 
-   if (!str::ends(strVolume, "\\"))
-   {
+   //if (GetVolumePathNameW(wstr, szVolumeName, sizeof(szVolumeName) / sizeof(WCHAR)))
+   //{
 
-      strVolume += "\\";
+   //   wstr = wstring(szVolumeName);
 
-   }
+   //   if (GetVolumeNameForVolumeMountPointW(wstr, szVolumeName, sizeof(szVolumeName)))
+   //   {
 
-   wstring wstr = wstring(strVolume);
+   //      wstr = szVolumeName;
 
-   if (GetVolumeNameForVolumeMountPointW(wstr, szVolumeName, sizeof(szVolumeName)))
-   {
+   //   }
+   //   else
+   //   {
 
-      wstr = szVolumeName;
+   //      string str;
 
-   }
-   else
-   {
+   //      str = "\\\\?\\";
 
-      string str;
+   //      str += path1;
 
-      str = "\\\\?\\";
-      str += path1;
+   //      while (str_ends_dup(str, "\\") || str_ends_dup(str, "/"))
+   //      {
 
-      while (str_ends_dup(str, "\\") || str_ends_dup(str, "/"))
-      {
-         str = str.substr(0, str.length() - 1);
-      }
+   //         str = str.substr(0, str.length() - 1);
 
-   }
+   //      }
 
+   //   }
+
+   //}
+
+   wstring wstr;
+
+   wstr = path1;
 
    uint32_t dwFileAttributes = ::GetFileAttributesW(wstr);
 
-   if(dwFileAttributes != INVALID_FILE_ATTRIBUTES && dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
-      return true;
-   else
+   if (dwFileAttributes == INVALID_FILE_ATTRIBUTES || !(dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
+   {
+
       return false;
+
+   }
+
+   return true;
 
 #else
 

@@ -81,6 +81,8 @@ namespace user
       m_dcextension(papp)
    {
 
+      m_estate = state_initial;
+
       m_iRestoredTabCount = 0;
 
       m_spdata = canew(data(papp));
@@ -90,7 +92,7 @@ namespace user
       get_data()->m_bCreated     = false;
       get_data()->m_iTabHeight   = 16;
       get_data()->m_iTabWidth    = 48;
-      get_data()->m_iDragTab     = -1;
+      get_data()->m_iClickTab    = -1;
 
       m_bDisableSavingRestorableTabs           = true;
 
@@ -206,7 +208,6 @@ namespace user
 
       ppane->m_id               = id;
       ppane->m_dib.release();
-      ppane->m_pholder          = NULL;
 
       get_data()->m_panea.add(ppane);
 
@@ -215,6 +216,14 @@ namespace user
       return true;
 
    }
+
+
+   void tab::_001OnRemoveTab(class tab_pane * ptab)
+   {
+
+
+   }
+
 
    bool tab::remove_tab_by_id(id id)
    {
@@ -233,6 +242,8 @@ namespace user
                bRestorableMatch = true;
 
             }
+
+            _001OnRemoveTab(get_data()->m_panea[i]);
 
             get_data()->m_panea.remove_at(i);
 
@@ -1402,72 +1413,113 @@ namespace user
 
    void tab::_001OnLButtonDown(::message::message * pobj)
    {
+
       SCAST_PTR(::message::mouse, pmouse, pobj);
+
       class point point = pmouse->m_pt;
 
-      index iPane = hit_test(point, m_eelement);
+      index iTab = hit_test(point, m_eelementClick);
 
       get_data()->m_bDrag = false;
-      if(iPane >= 0)
+
+      get_data()->m_iClickTab = -1;
+
+      if(iTab >= 0)
       {
+
          index iSel = _001GetSel();
-         if(m_eelement == element_close_tab_button)
+
+         if(m_eelementClick == element_close_tab_button)
          {
-            get_data()->m_iDragTab = iPane;
+
+            get_data()->m_iClickTab = iTab;
+
             pmouse->m_bRet = true;
+
             pmouse->set_lresult(1);
+
+            m_estate = state_close_button_down;
+
          }
-         else if(iPane != iSel)
+         else if(iTab != iSel)
          {
-            get_data()->m_iDragTab = iPane;
-            SetTimer(5432187, 840, NULL);
+
+            get_data()->m_iClickTab = iTab;
+
+            SetCapture();
+
+            SetTimer(timer_drag_start, 300, NULL);
+
             pmouse->m_bRet = true;
+
             pmouse->set_lresult(1);
+
+            m_estate = state_other_tab_button_down;
+
          }
+
       }
+
    }
 
 
    void tab::_001OnLButtonUp(::message::message * pobj)
    {
+
       SCAST_PTR(::message::mouse, pmouse, pobj);
+
       class point point = pmouse->m_pt;
 
       e_element eelement;
 
-      index iPane = hit_test(point, eelement);
+      index iTab = hit_test(point, eelement);
 
-      KillTimer(5432187);
+      index iClickTab = get_data()->m_iClickTab;
 
-      index iDragTab = get_data()->m_iDragTab;
-
-      if(iPane >= 0 && iDragTab == iPane && m_eelement == eelement)
+      if (m_estate == state_other_tab_button_down)
       {
+
+         // drag operation was about to start (but ended prematurely)
+
+         ReleaseCapture();
+
+         KillTimer(timer_drag_start);
+
+      }
+
+      if(iTab >= 0 && iClickTab == iTab && m_eelementClick == eelement)
+      {
+
          if(eelement == element_close_tab_button)
          {
-            _001OnTabClose(iPane);
+
+            _001OnTabClose(iTab);
+
          }
          else
          {
-            _001OnTabClick(iPane);
+
+            _001OnTabClick(iTab);
+
          }
+
          pmouse->m_bRet = true;
+
          pmouse->set_lresult(1);
+
       }
-      else
-      {
-         get_data()->m_iDragTab = -1;
-      }
+
+      get_data()->m_iClickTab = -1;
+
+      get_data()->m_bDrag = false;
+
    }
 
 
    void tab::_001OnMouseMove(::message::message * pobj)
    {
 
-//      SCAST_PTR(::message::mouse, pmouse, pobj);
-//      class point point = pmouse->m_pt;
-
-      if(get_data()->m_iDragTab >= 0)
+      if(get_data()->m_iClickTab >= 0)
       {
 
          if(get_data()->m_pcallback != NULL)
@@ -1478,28 +1530,6 @@ namespace user
          }
 
       }
-
-      /*
-
-      if(m_iHover < 0)
-      {
-
-         track_mouse_hover();
-
-      }
-
-      index iHover = hit_test(point, m_eelementHover);
-
-      if(iHover != m_iHover)
-      {
-
-         m_iHover = iHover;
-
-         RedrawWindow();
-
-      }
-
-      */
 
    }
 
@@ -1874,7 +1904,6 @@ namespace user
       IGUI_MSG_LINK(WM_SHOWWINDOW, psender, this, &tab::_001OnShowWindow);
       MSG_TYPE_LINK(::message::type_language, psender, this, &tab::_001OnAppLanguage);
       IGUI_MSG_LINK(message_start_tab_drag, psender, this,&tab::_001OnStartTabDrag);
-
 
       ////IGUI_MSG_LINK(WM_TIMER, psender, this, &tab::_001OnTimer);
 
@@ -2717,10 +2746,14 @@ namespace user
 
    void tab::_001OnDropTab(::index iPane, e_position eposition)
    {
+
       if(get_data()->m_pcallback != NULL)
       {
+
          get_data()->m_pcallback->_001OnDropTab(iPane, eposition);
+
       }
+
    }
 
 
@@ -2745,27 +2778,37 @@ namespace user
 
       control::_001OnTimer(ptimer);;
 
-      if(ptimer->m_nIDEvent == 5432187)
+      if(ptimer->m_nIDEvent == timer_drag_start)
       {
+
+         KillTimer(timer_drag_start);
+
+         ReleaseCapture();
 
          point point;
 
-         ::GetCursorPos(&point);
+         Session.get_cursor_pos(point);
 
          ::user::e_element eelement;
 
-         index iPane = hit_test(point, eelement);
+         index iTab = hit_test(point, eelement);
 
-         index iDragTab = get_data()->m_iDragTab;
+         index iClickTab = get_data()->m_iClickTab;
 
-         if(iPane >= 0 && iDragTab != iPane)
+         if(iTab >= 0 && iClickTab == iTab)
          {
 
             get_data()->m_bDrag = true;
 
-            KillTimer(5432187);
+            m_estate = state_drag_commanded;
 
             post_message(message_start_tab_drag);
+
+         }
+         else
+         {
+
+            m_estate = state_initial;
 
          }
 
@@ -2781,6 +2824,14 @@ namespace user
       {
 
          get_data()->m_pcallback->_001DropTargetWindowInitialize(this);
+
+
+      }
+
+      if (m_estate == state_drag_commanded)
+      {
+
+         m_estate = state_initial;
 
       }
 

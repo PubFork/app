@@ -57,7 +57,7 @@ namespace user
 
       virtual ::user::view_creator_data * get(id id);
 
-      virtual ::user::view_creator_data * allocate_creator_data(id id);
+      virtual ::user::view_creator_data * new_creator_data(id id);
 
       virtual ::user::view_creator_data * allocate_creator_data(id id, LPCRECT lpcrectCreate);
 

@@ -1084,25 +1084,36 @@ int_bool file_delete_dup(const char * lpszFileName)
 int_bool file_is_equal_path(const char * psz1,const char * psz2)
 {
 
-   const int32_t iBufSize = MAX_PATH * 8;
    wstring pwsz1 = ::str::international::utf8_to_unicode(psz1);
+
    wstring pwsz2 = ::str::international::utf8_to_unicode(psz2);
+
    unichar * pwszFile1;
+
    unichar * pwszFile2;
-   unichar * pwszPath1 = new unichar[iBufSize];
-   unichar * pwszPath2 = new unichar[iBufSize];
+
+   ::aura::malloc < unichar * > pwszPath1;
+
+   ::aura::malloc < unichar * > pwszPath2;
+
+   pwszPath1.alloc(pwsz1.get_length() * 2 * sizeof(unichar));
+
+   pwszPath2.alloc(pwsz2.get_length() * 2 * sizeof(unichar));
+
    int32_t iCmp = -1;
-   if(GetFullPathNameW(pwsz1,iBufSize,pwszPath1,&pwszFile1))
+
+   if(GetFullPathNameW(pwsz1, pwszPath1.m_iSize / sizeof(unichar), pwszPath1, &pwszFile1))
    {
-      if(GetFullPathNameW(pwsz2,iBufSize,pwszPath2,&pwszFile2))
+
+      if(GetFullPathNameW(pwsz2, pwszPath2.m_iSize / sizeof(unichar), pwszPath2, &pwszFile2))
       {
-         string p1 = ::str::international::unicode_to_utf8(pwszPath1);
-         string p2 = ::str::international::unicode_to_utf8(pwszPath2);
-         iCmp = stricmp_dup(p1,p2);
+
+         iCmp = _wcsicmp(pwszPath1, pwszPath2);
+
       }
+
    }
-   delete pwszPath1;
-   delete pwszPath2;
+
    return iCmp == 0;
 
 }

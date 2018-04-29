@@ -342,7 +342,7 @@ extern "C"
 void prepare_argc_argv(int & argc, char ** argv, char * cmd_line)
 {
 
-   char *      pPtr = NULL;
+   char * pPtr = NULL;
 
    char * p;
 
@@ -472,4 +472,15 @@ void prepare_argc_argv(int & argc, char ** argv, char * cmd_line)
 
 }
 
+
+CLASS_DECL_AURA string executable_title_from_appid(string str)
+{
+
+   str.replace("-", "_");
+
+   str.replace("/", "_");
+
+   return str;
+
+}
 

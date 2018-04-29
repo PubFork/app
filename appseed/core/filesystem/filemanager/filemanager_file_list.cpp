@@ -1534,6 +1534,14 @@ namespace filemanager
 
    void file_list::_001InsertColumns()
    {
+
+      if (get_filemanager_manager() == NULL)
+      {
+
+         return;
+
+      }
+
       class user::control_descriptor control;
 
 

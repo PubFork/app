@@ -835,90 +835,124 @@ namespace windows
 
    }
 
-   bool dir::mk(const ::file::path & lpcsz,::aura::application * papp)
+   bool dir::mk(const ::file::path & path,::aura::application * papp)
    {
 
-      if(is(lpcsz, papp))
+      if (is(path, papp))
+      {
+
          return true;
 
+      }
+
       ::file::patha stra;
-      lpcsz.ascendants_path(stra);
-      for(int32_t i = 0; i < stra.get_size(); i++)
+
+      path.ascendants_path(stra);
+
+      index i = stra.get_upper_bound();
+
+      for (; i >= 0; i--)
       {
 
          string strDir = stra[i];
 
-         if(!is(strDir, papp))
+         if (is(strDir, papp))
          {
 
-            if(::CreateDirectoryW(::str::international::utf8_to_unicode("\\\\?\\" + strDir), NULL))
+            break;
+
+         }
+
+      }
+
+      i++;
+
+      for (; i < stra.get_count(); i++)
+      {
+
+         string strDir = stra[i];
+
+         if(::dir::mkdir(strDir))
+         {
+
+            m_isdirmap.set(strDir, true, 0);
+
+         }
+         else
+         {
+
+            DWORD dwError = ::get_last_error();
+
+            if (dwError == ERROR_ALREADY_EXISTS)
             {
 
-               m_isdirmap.set(strDir, true, 0);
+               string str;
 
-            }
-            else
-            {
+               str = "\\\\?\\" + strDir;
 
-               DWORD dwError = ::get_last_error();
+               str.trim_right("\\/");
 
-               if (dwError == ERROR_ALREADY_EXISTS)
+               try
                {
 
-                  if (::dir::is(strDir))
-                  {
-                     m_isdirmap.set(strDir, true, 0);
-                  }
-                  else
-                  {
-                     string str;
-                     str = "\\\\?\\" + strDir;
-                     str.trim_right("\\/");
-                     try
-                     {
-                        Application.file().del(str);
-                     }
-                     catch (...)
-                     {
-                     }
-                     str = stra[i];
-                     str.trim_right("\\/");
-                     try
-                     {
-                        Application.file().del(str);
-                     }
-                     catch (...)
-                     {
-                     }
-                     if (::CreateDirectoryW(::str::international::utf8_to_unicode("\\\\?\\" + stra[i]), NULL))
-                     {
-                        m_isdirmap.set(stra[i], true, 0);
-                        goto try1;
-                     }
-                     else
-                     {
-                        dwError = ::get_last_error();
-                     }
-                  }
-                  char * pszError;
-                  FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwError, 0, (LPTSTR)&pszError, 8, NULL);
+                  Application.file().del(str);
 
-                  //TRACE("dir::mk CreateDirectoryW last error(%d)=%s", dwError, pszError);
-                  ::LocalFree(pszError);
-                  //m_isdirmap.set(stra[i], false);
                }
-            }
-try1:
+               catch (...)
+               {
 
-            if(!is(stra[i], papp))
-            {
+               }
+
+               str = stra[i];
+
+               str.trim_right("\\/");
+
+               try
+               {
+
+                  Application.file().del(str);
+
+               }
+               catch (...)
+               {
+
+               }
+
+               if (::dir::mkdir(strDir))
+               {
+
+                  m_isdirmap.set(strDir, true, 0);
+
+                  continue;
+
+               }
+
+               m_isdirmap.set(strDir, false, 0);
+
+               dwError = ::get_last_error();
+
+               char * pszError;
+
+               FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwError, 0, (LPTSTR)&pszError, 8, NULL);
+
+               //TRACE("dir::mk CreateDirectoryW last error(%d)=%s", dwError, pszError);
+
+               ::LocalFree(pszError);
+
+               //m_isdirmap.set(stra[i], false);
+
                return false;
+
             }
 
          }
+
       }
+
       return true;
+
    }
+
 
    bool dir::rm(::aura::application * papp, const ::file::path & psz, bool bRecursive)
    {
