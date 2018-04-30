@@ -435,10 +435,12 @@ namespace file
 
       string str = path;
 
-      if (strPath.Right(3) == "://")
+      if (m_epath == path_url || strPath.Right(3) == "://")
       {
 
-         return ::file::path(strPath + str, m_epath, path.m_iDir);
+         str.replace("\\", "/");
+
+         return ::file::path(strPath + "/" + str, m_epath, path.m_iDir);
 
       }
 
