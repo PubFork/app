@@ -7,7 +7,7 @@ namespace user
    class CLASS_DECL_CORE network_configuration :
       virtual public ::object
 //      public ::user::form_callback,
-  //    public ::user::view_creator
+   //    public ::user::view_creator
    {
    public:
 
@@ -24,8 +24,6 @@ namespace user
       bool initialize_child(sp(::user::interaction) puiParent);
 
       void on_show();
-
-      //bool BaseOnControlEvent(::user::form_window * pview, ::user::control_event * pevent);
 
    };
 

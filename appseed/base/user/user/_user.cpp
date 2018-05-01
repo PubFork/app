@@ -12,7 +12,7 @@
 #include "user_simple_view.cpp"
 #include "user_form_callback.cpp"
 #include "user_form_update_hint.cpp"
-#include "user_form_window.cpp"
+#include "user_form_control.cpp"
 #include "user_frame_window.cpp"
 #include "user_impact.cpp"
 #include "user_impact_system.cpp"

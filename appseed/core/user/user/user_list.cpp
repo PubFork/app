@@ -3783,7 +3783,7 @@ namespace user
       if (m_pformcallback != NULL)
       {
 
-         m_pformcallback->BaseOnControlEvent(NULL, &ev);
+         m_pformcallback->BaseOnControlEvent(&ev);
 
       }
       else if (get_form() != NULL)

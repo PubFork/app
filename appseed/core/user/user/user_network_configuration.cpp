@@ -7,7 +7,7 @@ namespace user
       object(papp)
    {
 //      m_pdoc   = NULL;
-  //    m_pview  = NULL;
+      //    m_pview  = NULL;
    }
 
    network_configuration::~network_configuration()
@@ -60,39 +60,6 @@ namespace user
       }*/
    }
 
-//  bool network_configuration::BaseOnControlEvent(::user::form_window * pview, ::user::control_event * pevent)
-  //{
-     /*
-      UNREFERENCED_PARAMETER(pview);
-      if(pevent->m_eevent == ::user::event_button_clicked)
-      {
-         if(pevent->m_puie->m_id == "submit")
-         {
-            sp(::user::interaction) pui = m_pview->get_child_by_name("server");
-            sp(::user::primitive) ptext =  (pui);
-            //m_loginthread.m_puser = dynamic_cast < ::fontopus::user * > (System.allocate_user());
-            string strServer;
-            ptext->_001GetText(strServer);
-            if(strServer.get_length() == 0)
-            {
-               ::DeleteFile(System.dir().appdata("proxy.xml"));
-            }
-            else
-            {
-               xml::node node(get_app());
-               node.m_strName = "proxy";
-               node.add_attr("server", strServer);
-               pui = m_pview->get_child_by_name("port");
-               ptext =  (pui);
-               string strPort;
-               ptext->_001GetText(strPort);
-               node.add_attr("port", strPort);
-               Application.file().put_contents(System.dir().appdata("proxy.xml"), node.get_xml());
-            }
-         }
-      }*/
-    //  return false;
-   //}
 
 
 

@@ -134,27 +134,40 @@ namespace userex // ca8 + cube
       }*/
    }
 
-   bool keyboard_layout::BaseOnControlEvent(::user::form_window * pview, ::user::control_event * pevent)
+
+   bool keyboard_layout::BaseOnControlEvent(::user::control_event * pevent)
    {
-      UNREFERENCED_PARAMETER(pview);
+
       if(pevent->m_eevent == ::user::event_list_clicked)
       {
+
          if(pevent->m_puie == m_plistview)
          {
+
             ::user::list::range range;
+
             m_plistview->_001GetSelection(range);
+
             if(range.get_item_count() > 0)
             {
+
                index iItem = range.ItemAt(0).get_lower_bound();
+
                if(iItem >= 0 && iItem < m_layoutida.get_count())
                {
+
                   Session.set_keyboard_layout(m_layoutida[iItem].m_strPath, ::action::source::user());
+
                }
+
             }
+
          }
+
       }
       else if(pevent->m_eevent == ::user::event_button_clicked)
       {
+
          if(pevent->m_puie->m_id == "submit")
          {
 

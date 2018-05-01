@@ -67,53 +67,54 @@ namespace usernet // ca8 + cube
 
    }
 
-  bool network_configuration::BaseOnControlEvent(::user::form_window * pview, ::user::control_event * pevent)
-  {
-      UNREFERENCED_PARAMETER(pview);
+   bool network_configuration::BaseOnControlEvent(::user::control_event * pevent)
+   {
+
+
       if(pevent->m_eevent == ::user::event_button_clicked)
       {
          if(pevent->m_puie->m_id == "submit")
          {
-            
+
             sp(::user::interaction) pui = m_pview->get_child_by_name("server");
-            
+
             sp(::user::edit_text) ptext = pui;
-            
+
             string strServer;
-            
+
             ptext->_001GetText(strServer);
-            
+
             if(strServer.get_length() == 0)
             {
-               
+
                Application.file().del(System.dir().appdata()/ "proxy.xml");
-               
+
             }
             else
             {
-               
+
                xml::document doc(get_app());
-               
+
                doc.get_root()->set_name("proxy");
-               
+
                doc.get_root()->add_attr("server", strServer);
-               
+
                pui = m_pview->get_child_by_name("port");
-               
+
                ptext =  (pui.m_p);
-               
+
                string strPort;
-               
+
                ptext->_001GetText(strPort);
-               
+
                doc.get_root()->add_attr("port", strPort);
-               
+
                Application.file().put_contents(System.dir().appdata()/"proxy.xml", doc.get_xml());
-               
+
             }
-            
+
          }
-         
+
       }
 
       return false;

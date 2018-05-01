@@ -650,7 +650,7 @@ namespace base
    }
 
 
-   bool application::BaseOnControlEvent(::user::form_window * pview, ::user::control_event * pevent)
+   bool application::BaseOnControlEvent(::user::control_event * pevent)
    {
 
       if (pevent->m_eevent == ::user::event_initialize_control)

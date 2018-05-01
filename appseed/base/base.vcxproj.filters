@@ -266,9 +266,6 @@
     <ClInclude Include="user\user\user_form_update_hint.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
-    <ClInclude Include="user\user\user_form_window.h">
-      <Filter>Header Files\user\user</Filter>
-    </ClInclude>
     <ClInclude Include="user\user\user_frame_window.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
@@ -377,6 +374,9 @@
     <ClInclude Include="user\user\user_simple_view.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
+    <ClInclude Include="user\user\user_form_control.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="base\base\base.cpp">
@@ -458,9 +458,6 @@
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
     <ClCompile Include="user\user\user_form_update_hint.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_form_window.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
     <ClCompile Include="user\user\user_frame_window.cpp">
@@ -572,6 +569,9 @@
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
     <ClCompile Include="user\user\user_simple_view.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_form_control.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
   </ItemGroup>

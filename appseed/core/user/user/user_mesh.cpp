@@ -3074,24 +3074,33 @@ namespace user
 
    bool mesh::_001OnClick(uint_ptr nFlag,point point)
    {
+
       UNREFERENCED_PARAMETER(nFlag);
       UNREFERENCED_PARAMETER(point);
+
       ::user::control_event ev;
+
       ev.m_puie = this;
+
       ev.m_eevent = ::user::event_list_clicked;
+
       if(m_pformcallback != NULL)
       {
-         m_pformcallback->BaseOnControlEvent(NULL,&ev);
+
+         m_pformcallback->BaseOnControlEvent(&ev);
+
       }
       else if(get_form() != NULL)
       {
-         get_form()->send_message(
-         ::message::message_event,0,(LPARAM)&ev);
+
+         get_form()->send_message(::message::message_event,0,(LPARAM)&ev);
+
       }
       else
       {
-         GetParent()->send_message(
-         ::message::message_event,0,(LPARAM)&ev);
+
+         GetParent()->send_message(::message::message_event,0,(LPARAM)&ev);
+
       }
       return true;
    }

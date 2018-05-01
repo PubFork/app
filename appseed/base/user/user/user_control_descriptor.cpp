@@ -69,32 +69,32 @@ namespace user
    class control_descriptor & control_descriptor::operator = (const control_descriptor & control_descriptor)
    {
 
-         if (&control_descriptor == this)
-            return *this;
-
-         m_iItem = control_descriptor.m_iItem;
-         m_id = control_descriptor.m_id;
-         m_etype = control_descriptor.m_etype;
-         m_dataid = control_descriptor.m_dataid;
-         m_bTransparent = control_descriptor.m_bTransparent;
-         m_flagsfunction = control_descriptor.m_flagsfunction;
-         m_typeinfo = control_descriptor.m_typeinfo;
-         m_bCreated = control_descriptor.m_bCreated;
-         m_edatatype = control_descriptor.m_edatatype;
-         m_idPrivateDataSection = control_descriptor.m_idPrivateDataSection;
-         //m_pcontrol              = control_descriptor.m_pcontrol;
-         m_controlmap.remove_all();
-         m_eddx = control_descriptor.m_eddx;
-         m_ddx.m_pvoid = control_descriptor.m_ddx.m_pvoid;
-         m_puiParent = control_descriptor.m_puiParent;
-         m_iSubItem = control_descriptor.m_iSubItem;
-         m_setValue = control_descriptor.m_setValue;
-         m_iSubItemDisableCheckBox = control_descriptor.m_iSubItemDisableCheckBox;
-         m_iSubItemDuplicateCheckBox = control_descriptor.m_iSubItemDuplicateCheckBox;
-         m_iaSubItemDuplicate = control_descriptor.m_iaSubItemDuplicate;
-         m_iaSubItemDisable = control_descriptor.m_iaSubItemDisable;
-
+      if (&control_descriptor == this)
          return *this;
+
+      m_iItem = control_descriptor.m_iItem;
+      m_id = control_descriptor.m_id;
+      m_etype = control_descriptor.m_etype;
+      m_dataid = control_descriptor.m_dataid;
+      m_bTransparent = control_descriptor.m_bTransparent;
+      m_flagsfunction = control_descriptor.m_flagsfunction;
+      m_typeinfo = control_descriptor.m_typeinfo;
+      m_bCreated = control_descriptor.m_bCreated;
+      m_edatatype = control_descriptor.m_edatatype;
+      m_idPrivateDataSection = control_descriptor.m_idPrivateDataSection;
+      //m_pcontrol              = control_descriptor.m_pcontrol;
+      m_controlmap.remove_all();
+      m_eddx = control_descriptor.m_eddx;
+      m_ddx.m_pvoid = control_descriptor.m_ddx.m_pvoid;
+      m_puiParent = control_descriptor.m_puiParent;
+      m_iSubItem = control_descriptor.m_iSubItem;
+      m_setValue = control_descriptor.m_setValue;
+      m_iSubItemDisableCheckBox = control_descriptor.m_iSubItemDisableCheckBox;
+      m_iSubItemDuplicateCheckBox = control_descriptor.m_iSubItemDuplicateCheckBox;
+      m_iaSubItemDuplicate = control_descriptor.m_iaSubItemDuplicate;
+      m_iaSubItemDisable = control_descriptor.m_iaSubItemDisable;
+
+      return *this;
 
    }
 
@@ -162,7 +162,7 @@ namespace user
 
    }
 
-   control * control_descriptor::get_control(::user::form_window * pform, index iItem)
+   control * control_descriptor::get_control(::user::form * pform, index iItem)
    {
 
       //sp(control) & pcontrol = m_controlmap[iItem];

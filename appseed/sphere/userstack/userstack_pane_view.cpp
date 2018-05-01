@@ -104,7 +104,7 @@ namespace userstack
             }
          }
       }
-         if(pHint != NULL)
+      if(pHint != NULL)
       {
          if(base_class <pane_view_update_hint >::bases(pHint))
          {
@@ -127,7 +127,7 @@ namespace userstack
       string strId = get_view_id();
       if(::str::begins_eat(strId, "app:"))
       {
-         
+
          ::aura::application * pappTab = NULL;
 
          if(Session.m_mapApplication.Lookup("application:" + strId, pappTab))
@@ -135,43 +135,43 @@ namespace userstack
             Session.m_pappCurrent = pappTab;
             //Session.m_pappCurrent = pappTab;
          }
-/*            sp(::simple_frame_window) pframeApp = dynamic_cast < sp(::simple_frame_window) > (m_pviewdata->m_pwnd);
-         if(pframeApp != NULL)
-         {
-            pframeApp->WfiFullScreen();
-         }*/
+         /*            sp(::simple_frame_window) pframeApp = dynamic_cast < sp(::simple_frame_window) > (m_pviewdata->m_pwnd);
+                  if(pframeApp != NULL)
+                  {
+                     pframeApp->WfiFullScreen();
+                  }*/
       }
-   //   else if(get_view_id() == ::bergedge::PaneViewContextMenu)
-   //   {
-   //      /*bergedge::menu_view * pview = dynamic_cast < bergedge::menu_view *  > (get_view());
-   //      sp(::filemanager::manager) pdoc = (pview->get_document());
-   //      pdoc->FileManagerBrowse(System.dir().appdata() / "bergedge\\menu"), ::action::source::system_default());*/
-   //   }
-   //   else if(get_view_id() == ::bergedge::PaneViewConfiguration)
-   //   {
-   ///*      sp(::user::interaction) pui = m_pformOptions->ve_display_bandwidth");
-   //      elemental * pcheck = dynamic_cast < elemental * > (puie);
-   //      if(Session.savings().save().is_signalized(::ca2::save_display_bandwidth))
-   //      {
-   //         pcheck->_001SetCheck(check::checked, false);
-   //      }
-   //      else
-   //      {
-   //         pcheck->_001SetCheck(check::unchecked, false);
-   //      }*/
-   //   }
-   //   else if(get_view_id() == ::bergedge::PaneViewWinActionArea)
-   //   {
-   //      string strDirName;
-   //      strDirName.Format("desktop-%d", m_iDisplay);
-   //      string strDir = Application.dir().userfolder(strDirName);
-   //      if(m_iDisplay <= 0)
-   //      {
-   //         check_desktop_dir(strDir);
-   //      }
-   //      sp(::filemanager::manager) pdoc =  (m_pviewdata->m_pdoc);
-   //      pdoc->FileManagerBrowse(strDir, ::action::source::system_default());
-   //   }
+      //   else if(get_view_id() == ::bergedge::PaneViewContextMenu)
+      //   {
+      //      /*bergedge::menu_view * pview = dynamic_cast < bergedge::menu_view *  > (get_view());
+      //      sp(::filemanager::manager) pdoc = (pview->get_document());
+      //      pdoc->FileManagerBrowse(System.dir().appdata() / "bergedge\\menu"), ::action::source::system_default());*/
+      //   }
+      //   else if(get_view_id() == ::bergedge::PaneViewConfiguration)
+      //   {
+      ///*      sp(::user::interaction) pui = m_pformOptions->ve_display_bandwidth");
+      //      elemental * pcheck = dynamic_cast < elemental * > (puie);
+      //      if(Session.savings().save().is_signalized(::ca2::save_display_bandwidth))
+      //      {
+      //         pcheck->_001SetCheck(check::checked, false);
+      //      }
+      //      else
+      //      {
+      //         pcheck->_001SetCheck(check::unchecked, false);
+      //      }*/
+      //   }
+      //   else if(get_view_id() == ::bergedge::PaneViewWinActionArea)
+      //   {
+      //      string strDirName;
+      //      strDirName.Format("desktop-%d", m_iDisplay);
+      //      string strDir = Application.dir().userfolder(strDirName);
+      //      if(m_iDisplay <= 0)
+      //      {
+      //         check_desktop_dir(strDir);
+      //      }
+      //      sp(::filemanager::manager) pdoc =  (m_pviewdata->m_pdoc);
+      //      pdoc->FileManagerBrowse(strDir, ::action::source::system_default());
+      //   }
       else
       {
 //         pframe->m_bAutoHideOnOutClick = true;
@@ -202,7 +202,7 @@ namespace userstack
 
       if(::str::begins_eat(strId, "app:"))
       {
-         
+
          ::aura::application * pappTab = NULL;
 
          if(!Session.m_mapApplication.Lookup("application:" + strId, pappTab))
@@ -279,7 +279,7 @@ namespace userstack
    {
       ::userex::pane_tab_view::install_message_routing(pinterface);
       IGUI_MSG_LINK(WM_CREATE, pinterface, this, &pane_view::_001OnCreate);
-      IGUI_MSG_LINK(WM_USER + 1122  , this, this, &pane_view::_001OnMenuMessage);
+      IGUI_MSG_LINK(WM_USER + 1122, this, this, &pane_view::_001OnMenuMessage);
       IGUI_MSG_LINK(WM_RBUTTONUP, pinterface, this, &pane_view::_001OnRButtonUp);
       connect_command("properties", &pane_view::_001OnProperties);
    }
@@ -313,7 +313,7 @@ namespace userstack
 
    void pane_view::check_menu_dir(const ::file::path & psz)
    {
-      
+
       ::file::listing straPath(get_app());
 
       straPath.rls(System.dir().commonprograms());
@@ -328,13 +328,13 @@ namespace userstack
          Application.file().copy(str, straPath[i], true);
 
       }
-      
+
       straPath.clear_results();
 
       straPath.rls(System.dir().userprograms(NULL));
 
       for(int32_t i = 0; i < straPath.get_size(); i++)
-      
+
       {
          ::file::path str = psz / straPath[i].relative();
 
@@ -382,16 +382,16 @@ namespace userstack
       }
 
       //Application.file().put_contents(System.dir().path(strDir, "veriwell Musical Player.ca2"), "ca2prompt\r\nmplite");
-/*      stringa straPath;
-      stringa straRelative;
-      straPath.remove_all();
-      System.dir().rls(Application.dir().userquicklaunch(), &straPath, NULL, &straRelative);
-      for(int32_t i = 0; i < straPath.get_size(); i++)
-      {
-         string str = System.dir().path(psz, straRelative[i]);
-         Application.dir().mk(System.dir().name(str));
-         ::CopyFile(straPath[i], str, TRUE);
-      }*/
+      /*      stringa straPath;
+            stringa straRelative;
+            straPath.remove_all();
+            System.dir().rls(Application.dir().userquicklaunch(), &straPath, NULL, &straRelative);
+            for(int32_t i = 0; i < straPath.get_size(); i++)
+            {
+               string str = System.dir().path(psz, straRelative[i]);
+               Application.dir().mk(System.dir().name(str));
+               ::CopyFile(straPath[i], str, TRUE);
+            }*/
    }
 
    void pane_view::check_desktop_dir(const ::file::path & psz)
@@ -401,10 +401,10 @@ namespace userstack
       char buf[4096];
       memset(buf, 0, sizeof(buf));
       SHGetSpecialFolderPath(
-         NULL,
-         buf,
-         CSIDL_COMMON_DESKTOPDIRECTORY,
-         FALSE);
+      NULL,
+      buf,
+      CSIDL_COMMON_DESKTOPDIRECTORY,
+      FALSE);
       if(strlen(buf) > 0)
       {
          if(strlen(buf) > 0)
@@ -424,10 +424,10 @@ namespace userstack
       }
       memset(buf, 0, sizeof(buf));
       SHGetSpecialFolderPath(
-         NULL,
-         buf,
-         CSIDL_DESKTOPDIRECTORY,
-         FALSE);
+      NULL,
+      buf,
+      CSIDL_DESKTOPDIRECTORY,
+      FALSE);
       if(strlen(buf) > 0)
       {
          if(strlen(buf) > 0)
@@ -455,39 +455,39 @@ namespace userstack
       {
          m_iArea = m_iNewArea;
          //string strWallpaper;
-   /*
-         switch(m_iArea)
-         {
-         case 0:
-            strWallpaper = System.dir().standard_square_matter("windeskframe1_23.bmp");
-            break;
-         case 1:
-            strWallpaper = System.dir().standard_square_matter("windeskframe1_24.bmp");
-            break;
-         case 2:
-            strWallpaper = System.dir().standard_square_matter("windeskframe1_25.bmp");
-            break;
-         case 3:on_create_on_crea
-            strWallpaper = System.dir().standard_square_matter("windeskframe1_26.bmp");
-            break;
-         default:
-            strWallpaper = System.dir().standard_square_matter("windeskframe1_23.bmp");
-            break;
-         }
-         FIBITMAP * pfi;
+         /*
+               switch(m_iArea)
+               {
+               case 0:
+                  strWallpaper = System.dir().standard_square_matter("windeskframe1_23.bmp");
+                  break;
+               case 1:
+                  strWallpaper = System.dir().standard_square_matter("windeskframe1_24.bmp");
+                  break;
+               case 2:
+                  strWallpaper = System.dir().standard_square_matter("windeskframe1_25.bmp");
+                  break;
+               case 3:on_create_on_crea
+                  strWallpaper = System.dir().standard_square_matter("windeskframe1_26.bmp");
+                  break;
+               default:
+                  strWallpaper = System.dir().standard_square_matter("windeskframe1_23.bmp");
+                  break;
+               }
+               FIBITMAP * pfi;
 
-         ::draw2d::memory_graphics pgraphics(this);
+               ::draw2d::memory_graphics pgraphics(this);
 
-         pfi = Application.imaging().LoadImageFile(strWallpaper);
+               pfi = Application.imaging().LoadImageFile(strWallpaper);
 
-         m_dibBk.From((HDC)pgraphics->get_os_data(), pfi, true);
+               m_dibBk.From((HDC)pgraphics->get_os_data(), pfi, true);
 
-         */
+               */
          //RedrawWindow();
       }
 
       //m_dibBk.to(pgraphics, 0, 0, rectClient.right, rectClient.bottom);
-      
+
       ::userex::pane_tab_view::_001OnDraw(pgraphics);
 
    }
@@ -534,7 +534,7 @@ namespace userstack
    /*void pane_view::OnFileManagerOpenContextMenuFolder(::filemanager::data * pdata, ::fs::item & item)
    {
    }
-*/
+   */
    void pane_view::OnFileManagerOpenContextMenuFile(::filemanager::data * pdata, const ::fs::item_array & itema)
    {
       UNREFERENCED_PARAMETER(pdata);
@@ -566,50 +566,46 @@ namespace userstack
 
    void pane_view::_001InitializeFormPreData(::user::form * pform)
    {
+
       class user::control_descriptor control;
 
       control.m_bTransparent = true;
       control.set_type(user::control_type_check_box);
       control.m_id = "save_display_bandwidth";
-      control.set_ddx_dbflags(
-            "ca2.savings",
-            ::aura::resource_display_bandwidth);
-   //   control.add_function(user::control_function_static);
+      control.set_ddx_dbflags("ca2.savings", ::aura::resource_display_bandwidth);
       pform->_001AddControl(control);
 
       control.m_bTransparent = true;
       control.set_type(user::control_type_check_box);
       control.m_id = "save_processing";
-      control.set_ddx_dbflags(
-            "ca2.savings",
-            ::aura::resource_processing);
-   //   control.add_function(user::control_function_static);
+      control.set_ddx_dbflags("ca2.savings", ::aura::resource_processing);
       pform->_001AddControl(control);
 
       control.m_bTransparent = true;
       control.set_type(user::control_type_check_box);
       control.m_id = "save_memory";
-      control.set_ddx_dbflags(
-            "ca2.savings",
-            ::aura::resource_memory);
-   //   control.add_function(user::control_function_static);
+      control.set_ddx_dbflags("ca2.savings", ::aura::resource_memory);
       pform->_001AddControl(control);
 
       control.m_bTransparent = true;
       control.set_type(user::control_type_check_box);
       control.m_id = "enable_wallpaper";
       control.set_ddx_dbflags(
-            "ca2.bergedge",
-            0);
-   //   control.add_function(user::control_function_static);
+      "ca2.bergedge",
+      0);
+      //   control.add_function(user::control_function_static);
       pform->_001AddControl(control);
 
    }
-   bool pane_view::BaseOnControlEvent(::user::form * pview, ::user::control_event * pevent)
+
+
+   bool pane_view::BaseOnControlEvent(::user::control_event * pevent)
    {
-      UNREFERENCED_PARAMETER(pview);
+
       UNREFERENCED_PARAMETER(pevent);
+
       return false;
+
    }
 
 

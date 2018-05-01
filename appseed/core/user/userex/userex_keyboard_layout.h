@@ -1,7 +1,7 @@
 #pragma once
 
 
-namespace userex // ca8 + cube
+namespace userex
 {
 
 
@@ -14,10 +14,11 @@ namespace userex // ca8 + cube
 
 
 
-      sp(::user::document)               m_pdoc;
-      sp(::user::form)                   m_pview;
-      sp(simple_list_view)            m_plistview;
-      ::user::keyboard_layout_ida   m_layoutida;
+      sp(::user::document)                m_pdoc;
+      sp(::user::form_view)               m_pview;
+      sp(simple_list_view)                m_plistview;
+      ::user::keyboard_layout_ida         m_layoutida;
+
 
       keyboard_layout(::aura::application * papp);
       virtual ~keyboard_layout();
@@ -26,7 +27,7 @@ namespace userex // ca8 + cube
 
       void on_show();
 
-      bool BaseOnControlEvent(::user::form_window * pview, ::user::control_event * pevent);
+      bool BaseOnControlEvent(::user::control_event * pevent);
 
       virtual void _001GetItemText(::user::mesh_item * pitem);
 
@@ -49,7 +50,7 @@ namespace userex // ca8 + cube
    };
 
 
-} // namespace core // ca8 + cube
+} // namespace core
 
 
 

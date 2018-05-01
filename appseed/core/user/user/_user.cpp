@@ -11,7 +11,7 @@
 #include "user_edit_plain_text_view.cpp"
 #include "user_elastic_slider.cpp"
 #include "user_font_list.cpp"
-#include "user_form.cpp"
+#include "user_form_window.cpp"
 #include "user_form_list.cpp"
 #include "user_form_list_view.cpp"
 #include "user_form_mesh.cpp"

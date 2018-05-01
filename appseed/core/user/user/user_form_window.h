@@ -5,8 +5,8 @@ namespace user
 {
 
 
-   class CLASS_DECL_CORE form : 
-      virtual public ::user::form_window
+   class CLASS_DECL_CORE form_window :
+      virtual public ::user::form_control
    {
    public:
 
@@ -19,8 +19,8 @@ namespace user
       //::user::form_callback *       m_pcallback;
 
 
-      form();
-      virtual ~form();
+      form_window();
+      virtual ~form_window();
 
 
       //ref_array < CTransparentStatic > m_staticpa;
@@ -56,7 +56,7 @@ namespace user
       virtual void _001FillCombo(sp(control) pcontrol);
 
       virtual void WfiOnClose();
-      
+
       DECL_GEN_SIGNAL(_000OnPosCreate);
       DECL_GEN_SIGNAL(_001OnCreate);
 
@@ -71,7 +71,7 @@ namespace user
 
       virtual void _001UpdateDbFlags(sp(control) pcontrol);
       virtual void _001UpdateDbFlagsCheckBox(sp(control) pcontrol);
-      
+
       DECL_GEN_SIGNAL(_001OnAppLanguage);
 
       bool OnCommand(WPARAM wparam, LPARAM lparam);

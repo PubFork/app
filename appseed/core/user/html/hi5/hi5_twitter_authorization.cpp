@@ -11,11 +11,11 @@
 namespace hi5
 {
 
-   
+
    namespace twitter
    {
 
-      
+
       authorization::authorization(::aura::application * papp, const char * pszAuthorizationUrl, const char * pszForm, bool bAuth, bool bInteractive) :
          ::object(papp)
       {
@@ -25,11 +25,11 @@ namespace hi5
          m_bAuth    = bAuth;
          m_strForm         = pszForm;
          m_ptemplatePane   = new ::user::single_document_template(
-            papp,
-            "system/auth",
-            System.type_info < ::user::document > (),
-            System.type_info < simple_frame_window > (),
-            System.get_pane_tab_view_type_info());
+         papp,
+         "system/auth",
+         System.type_info < ::user::document > (),
+         System.type_info < simple_frame_window > (),
+         System.get_pane_tab_view_type_info());
          m_pviewAuth       = NULL;
          m_pdocAuth        = NULL;
          m_pdoc            = NULL;
@@ -99,7 +99,7 @@ namespace hi5
          {
 
             strAppName = System.m_strAppName;
-         
+
          }
 
          strUrl += strAppName;
@@ -127,7 +127,7 @@ namespace hi5
             setDoc["reason"] = "Licensing";
 
          }
-         
+
          if(!m_pdocAuth->on_open_document(Application.dir().matter(m_strForm)))
          {
 
@@ -152,7 +152,7 @@ namespace hi5
 
       void authorization::display_main_frame()
       {
-         
+
          rect rectOpen;
 
          m_ptabview->GetParentFrame()->best_top_level_parent(rectOpen);
@@ -171,7 +171,7 @@ namespace hi5
          {
 
             pframe->m_puserstyle = this;
-            
+
          }
 
          //if(&Session != NULL && Session.get_document() != NULL && Session.get_document()->get_bergedge_view() != NULL)
@@ -188,10 +188,10 @@ namespace hi5
          }
 
          m_ptabview->GetParentFrame()->SetWindowPos(
-            ZORDER_TOP,
-            rectOpen.left, rectOpen.top,
-            rectOpen.width(), rectOpen.height(),
-            SWP_SHOWWINDOW);
+         ZORDER_TOP,
+         rectOpen.left, rectOpen.top,
+         rectOpen.width(), rectOpen.height(),
+         SWP_SHOWWINDOW);
 
          m_pviewAuth->GetParentFrame()->SetForegroundWindow();
 
@@ -199,37 +199,37 @@ namespace hi5
 
       }
 
-      
+
       void authorization::pageMessage(const char * pszMatter, property_set & set)
       {
-         
+
          ensure_main_document();
-         
+
          m_pdocAuth->get_html_data()->m_propertyset = set;
          m_pdocAuth->on_open_document(Application.dir().matter(pszMatter));
          display_main_frame();
          //m_ptabview->get_wnd()->RunModalLoop(MLF_NOIDLEMSG | MLF_NOKICKIDLE);
-         
+
          m_ptabview->get_wnd()->RunModalLoop();
 
          m_ptabview->get_wnd()->EndModalLoop(IDOK);
-         
+
       }
-      
+
 
       void authorization::on_create_view(::user::view_creator_data * pcreatordata)
       {
-		  if (pcreatordata->m_id == "twitter_authorization")
-		  {
-			  m_pdocAuth = Application.create_child_form(this, pcreatordata->m_pholder);
-			  if (m_pdocAuth != NULL)
-			  {
-				  m_pviewAuth = m_pdocAuth->get_typed_view < ::user::form >();
-				  m_pviewAuth->m_pcallback = this;
-				  pcreatordata->m_pdoc = m_pdocAuth;
-				  pcreatordata->m_pwnd = m_pviewAuth->GetParentFrame();
-			  }
-		  }
+         if (pcreatordata->m_id == "twitter_authorization")
+         {
+            m_pdocAuth = Application.create_child_form(this, pcreatordata->m_pholder);
+            if (m_pdocAuth != NULL)
+            {
+               m_pviewAuth = m_pdocAuth->get_typed_view < ::user::form >();
+               m_pviewAuth->m_pcallback = this;
+               pcreatordata->m_pdoc = m_pdocAuth;
+               pcreatordata->m_pwnd = m_pviewAuth->GetParentFrame();
+            }
+         }
          if(pcreatordata->m_pwnd != NULL)
          {
             pcreatordata->m_eflag.signalize(::user::view_creator_data::flag_hide_all_others_on_show);
@@ -241,57 +241,50 @@ namespace hi5
          switch(get_view_id())
          {
          case 1:
-            {
-            }
-            break;
+         {
+         }
+         break;
 
          }
+
       }
 
 
-
-
-
-
-
-
-      bool authorization::BaseOnControlEvent(::user::form_window * pview, ::user::control_event * pevent)
+      bool authorization::BaseOnControlEvent( ::user::control_event * pevent)
       {
-         
-         UNREFERENCED_PARAMETER(pview);
-         
+
          if(pevent->m_eevent == ::user::event_button_clicked || pevent->m_eevent == ::user::event_enter_key)
          {
-            
+
             if(pevent->m_puie->m_id == "submit" || pevent->m_eevent == ::user::event_enter_key)
             {
-               
+
                sp(::user::interaction) pui = m_pviewAuth->get_child_by_name("pin");
-               
+
                sp(::user::edit_text) ptext = pui;
-               
+
                ptext->_001GetText(m_strPin);
-               
+
                m_ptabview->get_wnd()->EndModalLoop(IDOK);
-               
+
                m_ptabview->GetParentFrame()->ShowWindow(SW_HIDE);
-               
+
             }
-            
+
          }
-         
+
          return false;
-         
+
       }
-      
-      
+
+
       bool authorization::style_translucency(::user::e_translucency & etranslucency, ::user::e_element)
       {
-         
+
          etranslucency = ::user::translucency_present;
-         
+
          return true;
-         
+
       }
 
 

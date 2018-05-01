@@ -19,7 +19,7 @@ namespace user
       };
 
 
-      sp(::user::form_window)    m_pform;
+      sp(::user::form)           m_pform;
       e_type                     m_etype;
       string                     m_strForm;
       ::action::context          m_actioncontext;

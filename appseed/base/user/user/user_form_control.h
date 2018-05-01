@@ -5,27 +5,24 @@ namespace user
 {
 
 
-   class CLASS_DECL_BASE form_window:
+   class CLASS_DECL_BASE form_control:
+      virtual public ::user::form,
       virtual public ::user::control
    {
    public:
 
 
-      // if this object is a form_view class instance, this member should be set to the form_view class instance
-      // that superseeds this object (based on this object).
-      // form_view is later defined in core library.
-      form_view *                m_pformview;
       string                     m_strPath;
       bool                       m_bOnEditUpdate;
       bool                       m_bOnLanguageChange;
       UINT                       m_uiId;
-      control_descriptor_set    m_controldescriptorset;
+      control_descriptor_set     m_controldescriptorset;
       bool                       m_bInitialized;
       form_callback *            m_pcallback;
 
 
-      form_window();
-      virtual ~form_window();
+      form_control();
+      virtual ~form_control();
 
 
       //ref_array < CTransparentStatic > m_staticpa;
@@ -33,7 +30,7 @@ namespace user
       virtual string get_path();
       virtual bool open_document(var varFile);
       sp(type) controltype_to_typeinfo(::user::e_control_type e_type);
-   
+
 
 
       using ::user::control::_001IsPointInside;
@@ -123,12 +120,12 @@ namespace user
       //      virtual void install_message_routing(::message::sender * pinterface);
 
 
-      
+
 
 //      virtual bool _001IsPointInside(sp(control) pcontrol,point64 pt);
 
-  //    virtual void control_get_window_rect(sp(control) pcontrol,LPRECT lprect);
-    //  virtual void control_get_client_rect(sp(control) pcontrol,LPRECT lprect);
+      //    virtual void control_get_window_rect(sp(control) pcontrol,LPRECT lprect);
+      //  virtual void control_get_client_rect(sp(control) pcontrol,LPRECT lprect);
 
 
       //virtual bool open_document(var varFile);

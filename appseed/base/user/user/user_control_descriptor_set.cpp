@@ -17,7 +17,7 @@ namespace user
    }
 
 
-   sp(control) control_descriptor_set::get_control(::user::form_window * pform, id id, int iItem)
+   sp(control) control_descriptor_set::get_control(::user::form * pform, id id, int iItem)
    {
 
       for (int32_t i = 0; i < this->get_size(); i++)
@@ -99,21 +99,21 @@ namespace user
    class control_descriptor * control_descriptor_set::get_by_sub_item(int32_t iSubItem)
    {
 
-         for (int32_t i = 0; i < this->get_size(); i++)
+      for (int32_t i = 0; i < this->get_size(); i++)
+      {
+
+         class control_descriptor & control_descriptor = *this->element_at(i);
+
+         if (control_descriptor.m_iSubItem == iSubItem)
          {
 
-            class control_descriptor & control_descriptor = *this->element_at(i);
-
-            if (control_descriptor.m_iSubItem == iSubItem)
-            {
-
-               return &control_descriptor;
-
-            }
+            return &control_descriptor;
 
          }
 
-         return NULL;
+      }
+
+      return NULL;
 
    }
 

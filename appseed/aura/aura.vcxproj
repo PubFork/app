@@ -2204,6 +2204,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="user\user\user_form.cpp" />
     <ClCompile Include="user\user\user_frame_window.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
@@ -4189,6 +4190,7 @@
     <ClInclude Include="user\user\user_edit_text.h" />
     <ClInclude Include="user\user\user_elemental.h" />
     <ClInclude Include="user\user\user_enum.h" />
+    <ClInclude Include="user\user\user_form.h" />
     <ClInclude Include="user\user\user_interaction.h" />
     <ClInclude Include="user\user\user_interaction_base.h" />
     <ClInclude Include="user\user\user_interaction_child.h" />

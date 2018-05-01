@@ -819,10 +819,13 @@ namespace user
          m_iSel = iSel;
 
          ::user::control_event ev;
+
          ev.m_puie = this;
+
          ev.m_eevent = ::user::event_after_change_cur_sel;
+
          ev.m_actioncontext = actioncontext;
-         //if(!GetParent()->BaseOnControlEvent(&ev))
+
          BaseOnControlEvent(&ev);
 
       }

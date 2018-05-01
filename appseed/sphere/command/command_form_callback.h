@@ -16,7 +16,7 @@ namespace prompt
 
 
       void on_update(::user::form * pview, sp(::user::impact) pSender, LPARAM lHint, ::object* phint);
-      virtual bool BaseOnControlEvent(::user::form * pview, ::user::control_event * pevent);
+      virtual bool BaseOnControlEvent(::user::control_event * pevent);
 
 
    };

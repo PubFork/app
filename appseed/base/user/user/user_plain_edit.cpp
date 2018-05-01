@@ -387,6 +387,18 @@ namespace user
 
       string strLineGraphics;
 
+      if (_001GetTextLength() == 0)
+      {
+
+         if (m_strEmtpyText.has_char())
+         {
+
+            pgraphics->text_out(left, y, m_strEmtpyText);
+
+         }
+
+      }
+
       //::colorertake5::base_editor * pcolorer = colorertake5();
 
       for (index iLine = m_iLineStart; iLine < m_iLineEnd; i++, iLine++)

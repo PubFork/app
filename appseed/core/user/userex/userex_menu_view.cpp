@@ -9,7 +9,7 @@ menu_view::menu_view(::aura::application * papp) :
 }
 
 
-void menu_view::on_update(::user::impact * pSender, LPARAM lHint, object* phint) 
+void menu_view::on_update(::user::impact * pSender, LPARAM lHint, object* phint)
 {
    ::user::form_view::on_update(pSender, lHint, phint);
 }
@@ -18,7 +18,7 @@ void menu_view::on_update(::user::impact * pSender, LPARAM lHint, object* phint)
 bool menu_view::BaseOnControlEvent(::user::control_event * pevent)
 {
 
-   if(Application.BaseOnControlEvent(this,pevent))
+   if(Application.BaseOnControlEvent(pevent))
    {
 
       return true;
@@ -28,23 +28,25 @@ bool menu_view::BaseOnControlEvent(::user::control_event * pevent)
    if(m_pcallback != NULL)
    {
 
-      m_pcallback->BaseOnControlEvent(this, pevent);
+      m_pcallback->BaseOnControlEvent(pevent);
 
    }
-   //else if(get_html_data()->m_pform != NULL && get_html_data()->m_pform->m_pcallback != NULL)
-   //{
-   //   
-   //   get_html_data()->m_pform->m_pcallback ->BaseOnControlEvent(this, pevent);
 
-   //}
    if(GetParent() != NULL)
    {
-      return GetParent()->BaseOnControlEvent(pevent);
+
+      if (GetParent()->BaseOnControlEvent(pevent))
+      {
+
+         return true;
+
+      }
+
    }
-   else
-   {
-      return false;
-   }
+
+
+   return false;
+
 }
 
 void menu_view::install_message_routing(::message::sender * pinterface)
@@ -65,28 +67,42 @@ void menu_view::_001OnCreate(::message::message * pobj)
 
 void menu_view::_001OnTimer(::timer * ptimer)
 {
+
    ::user::form_view::_001OnTimer(ptimer);;
+
    if(m_pcallback != NULL)
    {
+
       ::user::control_event ev;
+
       ev.m_eevent = ::user::event_timer;
+
       ev.m_uiEvent = ptimer->m_nIDEvent;
 
-      if(Application.BaseOnControlEvent(this,&ev))
+      ev.m_puie = this;
+
+      if(Application.BaseOnControlEvent(&ev))
       {
 
          return;
 
       }
 
-      m_pcallback->BaseOnControlEvent(this, &ev);
+      m_pcallback->BaseOnControlEvent(&ev);
+
    }
+
    if(ptimer->m_nIDEvent == 24)
    {
+
       KillTimer(24);
+
       GetTopLevelFrame()->EndModalLoop(IDOK);
+
    }
+
 }
+
 
 void menu_view::_001OnUser123(::message::message * pobj)
 {

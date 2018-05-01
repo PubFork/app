@@ -22,7 +22,7 @@ namespace message
 namespace user
 {
 
-
+   class form;
    class tooltip;
 
 
@@ -94,6 +94,9 @@ namespace user
       bool                                m_bTransparentMouseEvents;
       bool                                m_bRedraw;
       DWORD                               m_dwLastRedraw;
+
+      ::user::form *                      m_pform;
+      ::user::form *                      m_pformParent;
 
       //point                               m_ptCursor;
 
@@ -180,6 +183,10 @@ namespace user
 
       tooltip *         get_tooltip();
 
+
+      virtual ::user::form * get_form();
+
+      virtual ::user::form * get_parent_form();
 
       void user_interaction_common_construct();
 

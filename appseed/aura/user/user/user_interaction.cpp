@@ -108,6 +108,9 @@ namespace user
       m_ptScrollPassword1.y = 0;
       m_palphasource = NULL;
 
+      m_pform = NULL;
+      m_pformParent = NULL;
+
       set_user_schema(::user::schema_default);
 
    }
@@ -403,6 +406,27 @@ namespace user
          return NULL;
 
       return pui->GetTopWindow();
+
+   }
+
+   ::user::form * interaction::get_form()
+   {
+
+      return m_pform;
+
+   }
+
+   ::user::form * interaction::get_parent_form()
+   {
+
+      if (m_pformParent == NULL)
+      {
+
+         return get_form();
+
+      }
+
+      return m_pformParent;
 
    }
 

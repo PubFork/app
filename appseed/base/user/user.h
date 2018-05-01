@@ -30,7 +30,7 @@
 #include "base/user/user/user_control_descriptor.h"
 #include "base/user/user/user_control_descriptor_set.h"
 
-#include "base/user/user/user_form_window.h"
+#include "base/user/user/user_form_control.h"
 #include "base/user/user/user_form_update_hint.h"
 
 

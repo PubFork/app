@@ -305,7 +305,7 @@ namespace user
 #include "user_split_bar.h"
 #include "user_split_layout.h"
 
-#include "user_form.h"
+#include "user_form_window.h"
 #include "user_form_mesh.h"
 #include "user_form_list.h"
 #include "user_form_view.h"
@@ -379,7 +379,7 @@ typedef struct _AppIndicator AppIndicator;
 
 #define new AURA_NEW
 
-#include "core/user/user/user_form.h"
+//#include "core/user/user/user_form.h"
 #include "core/user/user/user_form_mesh.h"
 
 

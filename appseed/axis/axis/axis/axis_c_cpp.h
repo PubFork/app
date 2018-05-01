@@ -60,7 +60,7 @@ namespace user
    class create_struct;
    class window_draw;
    class control_event;
-   class form_window;
+   class form_control;
    class style;
 
 

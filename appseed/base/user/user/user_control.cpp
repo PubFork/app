@@ -281,14 +281,6 @@ namespace user
    }
 
 
-   form_window * control::get_form()
-   {
-
-      return NULL;
-
-   }
-
-
    class control_descriptor & control::descriptor()
    {
 
@@ -849,7 +841,7 @@ namespace user
 
       }
 
-      form_window * pform = get_form();
+      ::user::form * pform = get_form();
 
       if (pform != NULL && !IsAscendant(pform))
       {

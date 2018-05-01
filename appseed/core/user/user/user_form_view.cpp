@@ -4,11 +4,9 @@
 namespace user
 {
 
-   
+
    form_view::form_view()
    {
-
-      m_pformview = this;
 
    }
 
@@ -69,7 +67,7 @@ namespace user
             //      get_html_data()->implement(dc);
 
             //   }
-            //   
+            //
             //}
 
          }

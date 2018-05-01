@@ -312,6 +312,29 @@ namespace prompt
       set_cur_tab_by_id(eviewNew);
    }
 
+
+   bool pane_view::BaseOnControlEvent(::user::control_event * pevent)
+   {
+
+      if (::prompt::form_callback::BaseOnControlEvent(pevent))
+      {
+
+         return true;
+
+      }
+
+      if (::userex::pane_tab_view::BaseOnControlEvent(pevent))
+      {
+
+         return true;
+
+      }
+
+      return false;
+
+   }
+
+
    void pane_view::OnFileManagerOpenFile(::filemanager::data * pdata, ::fs::item_array & itema)
    {
 

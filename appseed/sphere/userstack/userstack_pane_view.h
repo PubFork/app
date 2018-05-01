@@ -5,7 +5,7 @@ namespace userstack
 {
 
 
-   class CLASS_DECL_SPHERE pane_view : 
+   class CLASS_DECL_SPHERE pane_view :
       public ::userex::pane_tab_view,
       public ::filemanager::callback,
       public ::userstack::form_callback
@@ -30,7 +30,7 @@ namespace userstack
       using ::userstack::form_callback::on_update;
 
       void rotate();
-      
+
       void on_create_view(::user::view_creator_data * pcreatordata);
       void on_show_view();
 
@@ -41,11 +41,11 @@ namespace userstack
       void check_desktop_dir(const ::file::path & psz);
 
       void _001InitializeFormPreData(::user::form * pform);
-      bool BaseOnControlEvent(::user::form * pview, ::user::control_event * pevent);
-      
-   /*   virtual void OnFileManagerOpenContextMenuFolder(
-         ::filemanager::data * pdata, 
-         ::fs::item & item);*/
+      bool BaseOnControlEvent(::user::control_event * pevent);
+
+      /*   virtual void OnFileManagerOpenContextMenuFolder(
+            ::filemanager::data * pdata,
+            ::fs::item & item);*/
       virtual void OnFileManagerOpenContextMenuFile(::filemanager::data * pdata, const ::fs::item_array & itema);
       virtual void OnFileManagerOpenContextMenu(::filemanager::data * pdata);
 
@@ -56,10 +56,10 @@ namespace userstack
       virtual void on_update(::user::impact * pSender, LPARAM lHint, ::object* pHint);
       virtual bool pre_create_window(::user::create_struct& cs);
 
-   
+
       virtual void assert_valid() const;
       virtual void dump(dump_context & dumpcontext) const;
-   
+
 
       DECL_GEN_SIGNAL(_001OnMenuMessage);
       DECL_GEN_SIGNAL(_001OnCreate);

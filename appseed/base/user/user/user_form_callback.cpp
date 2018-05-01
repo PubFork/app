@@ -14,7 +14,7 @@ namespace user
    form_callback::~form_callback()
    {
 
-      strsp(::user::form_window)::pair * ppair = m_pmapform->PGetFirstAssoc();
+      auto * ppair = m_pmapform->PGetFirstAssoc();
 
       while(ppair != NULL)
       {
@@ -37,9 +37,8 @@ namespace user
       UNREFERENCED_PARAMETER(phint);
    }
 
-   bool form_callback::BaseOnControlEvent(::user::form_window * pview,::user::control_event * pevent)
+   bool form_callback::BaseOnControlEvent(::user::control_event * pevent)
    {
-      UNREFERENCED_PARAMETER(pview);
       UNREFERENCED_PARAMETER(pevent);
       return false;
    }
@@ -61,16 +60,16 @@ namespace user
       UNREFERENCED_PARAMETER(pbCancel);
    }
 
-   void form_callback::_001InitializeFormPreData(::user::form_window * pform)
+   void form_callback::_001InitializeFormPreData(::user::form * pform)
    {
       UNREFERENCED_PARAMETER(pform);
    }
 
 
-   form_view * form_callback::get_form_view(const string & strId)
+   form_control * form_callback::get_form_control(const string & strId)
    {
 
-      return m_pmapform->operator[](strId)->m_pformview;
+      return m_pmapform->operator[](strId);
 
    }
 

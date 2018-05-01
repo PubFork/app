@@ -72,6 +72,7 @@ class simple_scroll_bar;
 #include "aura/user/user/user_window_map.h"
 #include "aura/user/user/user_print_job.h"
 #include "aura/user/user/user_validate.h"
+#include "aura/user/user/user_form.h"
 
 
 #include "aura/user/user/user_prelude.h"

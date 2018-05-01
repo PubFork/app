@@ -6,7 +6,7 @@ namespace user
 
 
    class CLASS_DECL_CORE form_mesh:
-      virtual public ::user::form,
+      virtual public ::user::form_window,
       virtual public ::user::mesh
    {
    public:
@@ -76,7 +76,7 @@ namespace user
       void _001HideControl(sp(control) pcontrol);
       //virtual void _001OnDraw(::draw2d::graphics * pgraphics);
       virtual LRESULT _001BaseWndGetProperty(EProperty eprop,LPARAM lparam);
-      ;;void _001UpdateColumns();
+      ;; void _001UpdateColumns();
       sp(control) _001GetEditControl();
       void _001SetEditControl(sp(control) pcontrol);
       virtual void _001PlaceControl(sp(control) pcontrol, index iEditItem, bool bClick = false, bool bOnlySizeAndPosition = false);

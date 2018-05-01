@@ -797,9 +797,6 @@
     <ClInclude Include="user\user\user_list_view.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
-    <ClInclude Include="user\user\user_form.h">
-      <Filter>Header Files\user\user</Filter>
-    </ClInclude>
     <ClInclude Include="user\simple\simple_form_view.h">
       <Filter>Header Files\user\simple</Filter>
     </ClInclude>
@@ -1107,6 +1104,9 @@
       <Filter>Header Files\user\html\graphics</Filter>
     </ClInclude>
     <ClInclude Include="user\user\user_tool_command.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_form_window.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1645,9 +1645,6 @@
     <ClCompile Include="user\simple\simple_form_view.cpp">
       <Filter>Source Files\user\simple</Filter>
     </ClCompile>
-    <ClCompile Include="user\user\user_form.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
     <ClCompile Include="core\core\core_session.cpp">
       <Filter>Source Files\core\core</Filter>
     </ClCompile>
@@ -1965,6 +1962,9 @@
     </ClCompile>
     <ClCompile Include="core\node\windows\windows_simple_frame_window.cpp">
       <Filter>Source Files\core\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_form_window.cpp">
+      <Filter>Source Files\user\user</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

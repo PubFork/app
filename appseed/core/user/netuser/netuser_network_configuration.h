@@ -1,7 +1,7 @@
 #pragma once
 
 
-namespace usernet // ca8 + cube
+namespace usernet
 {
 
 
@@ -13,7 +13,7 @@ namespace usernet // ca8 + cube
 
 
       sp(::user::document)               m_pdoc;
-      sp(::user::form)                   m_pview;
+      sp(::user::form_view)              m_pview;
 
 
       network_configuration(::aura::application * papp);
@@ -25,11 +25,11 @@ namespace usernet // ca8 + cube
 
       void on_show();
 
-      bool BaseOnControlEvent(::user::form_window * pview, ::user::control_event * pevent);
+      bool BaseOnControlEvent(::user::control_event * pevent);
 
    };
 
 
-} // namespace core // ca8 + cube
+} // namespace usernet
 
 

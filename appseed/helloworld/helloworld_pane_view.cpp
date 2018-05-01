@@ -297,7 +297,7 @@ namespace helloworld
    }
 
 
-   bool pane_view::BaseOnControlEvent(::user::form_window * pview,::user::control_event * pevent)
+   bool pane_view::BaseOnControlEvent(::user::control_event * pevent)
    {
 
       if(m_pdocMenu != NULL && dynamic_cast < ::user::impact * > (pview) == m_pdocMenu->get_view(0) && pevent->m_puie != NULL)
