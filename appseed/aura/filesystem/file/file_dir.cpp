@@ -892,6 +892,8 @@ bool dir::_mk(const ::file::path & path)
             }
 
          }
+         
+#ifdef WINDOWSEX
 
          char * pszError;
 
@@ -902,6 +904,8 @@ bool dir::_mk(const ::file::path & path)
          ::LocalFree(pszError);
 
          //m_isdirmap.set(stra[i], false);
+         
+#endif
 
          return false;
 

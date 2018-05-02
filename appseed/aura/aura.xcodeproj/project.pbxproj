@@ -813,28 +813,6 @@
 		9A2A53511F1FEDFD001AB0F8 /* visual_const.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A2A53241F1FEDFD001AB0F8 /* visual_const.h */; };
 		9A2A53531F1FEDFD001AB0F8 /* visual_cursor.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A2A53261F1FEDFD001AB0F8 /* visual_cursor.h */; };
 		9A2A53551F1FEDFD001AB0F8 /* visual_icon.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A2A53281F1FEDFD001AB0F8 /* visual_icon.h */; };
-		9A2A53AD1F1FEE49001AB0F8 /* install.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A2A536F1F1FEE49001AB0F8 /* install.h */; };
-		9A2A53AE1F1FEE49001AB0F8 /* install2.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A2A53711F1FEE49001AB0F8 /* install2.h */; };
-		9A2A53B01F1FEE49001AB0F8 /* install_application.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A2A53731F1FEE49001AB0F8 /* install_application.h */; };
-		9A2A53B21F1FEE49001AB0F8 /* install_bootstrap.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A2A53751F1FEE49001AB0F8 /* install_bootstrap.h */; };
-		9A2A53B41F1FEE49001AB0F8 /* install_focus.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A2A53771F1FEE49001AB0F8 /* install_focus.h */; };
-		9A2A53B61F1FEE49001AB0F8 /* install_install.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A2A53791F1FEE49001AB0F8 /* install_install.h */; };
-		9A2A53B81F1FEE49001AB0F8 /* install_install_item.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A2A537B1F1FEE49001AB0F8 /* install_install_item.h */; };
-		9A2A53BA1F1FEE49001AB0F8 /* install_installer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A2A537D1F1FEE49001AB0F8 /* install_installer.h */; };
-		9A2A53BC1F1FEE49001AB0F8 /* install_installer_launcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A2A537F1F1FEE49001AB0F8 /* install_installer_launcher.h */; };
-		9A2A53BE1F1FEE49001AB0F8 /* install_installer_square.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A2A53811F1FEE49001AB0F8 /* install_installer_square.h */; };
-		9A2A53C01F1FEE49001AB0F8 /* install_launcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A2A53831F1FEE49001AB0F8 /* install_launcher.h */; };
-		9A2A53C21F1FEE49001AB0F8 /* install_module_list.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A2A53851F1FEE49001AB0F8 /* install_module_list.h */; };
-		9A2A53C31F1FEE49001AB0F8 /* install_resource.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A2A53861F1FEE49001AB0F8 /* install_resource.h */; };
-		9A2A53C51F1FEE49001AB0F8 /* install_small_bell.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A2A53881F1FEE49001AB0F8 /* install_small_bell.h */; };
-		9A2A53C71F1FEE49001AB0F8 /* install_socket.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A2A538A1F1FEE49001AB0F8 /* install_socket.h */; };
-		9A2A53C91F1FEE49001AB0F8 /* install_socket_handler.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A2A538C1F1FEE49001AB0F8 /* install_socket_handler.h */; };
-		9A2A53CB1F1FEE49001AB0F8 /* install_socket_thread.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A2A538E1F1FEE49001AB0F8 /* install_socket_thread.h */; };
-		9A2A53CD1F1FEE49001AB0F8 /* install_tool.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A2A53901F1FEE49001AB0F8 /* install_tool.h */; };
-		9A2A53CF1F1FEE49001AB0F8 /* install_trace.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A2A53921F1FEE49001AB0F8 /* install_trace.h */; };
-		9A2A53D21F1FEE49001AB0F8 /* install_window.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A2A53951F1FEE49001AB0F8 /* install_window.h */; };
-		9A2A53D31F1FEE49001AB0F8 /* install_windows_boot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A2A539D1F1FEE49001AB0F8 /* install_windows_boot.cpp */; };
-		9A2A53D51F1FEE49001AB0F8 /* install_windows_win.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A2A539F1F1FEE49001AB0F8 /* install_windows_win.cpp */; };
 		9A2BBCB41FC1F13A00E44B85 /* macos_aura.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A2BBCB31FC1F13A00E44B85 /* macos_aura.cpp */; };
 		9A2F5F701FA0F6DE006CA37F /* visual_macos_image_mm.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9A2F5F6F1FA0F6DE006CA37F /* visual_macos_image_mm.mm */; };
 		9A33276B1D4C50EB00255105 /* file_path.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A33276A1D4C50EB00255105 /* file_path.h */; };
@@ -1021,26 +999,6 @@
 		9A6FAB411F5C707800AF31B2 /* fontopus_usera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB371F5C707800AF31B2 /* fontopus_usera.cpp */; };
 		9A6FAB421F5C707800AF31B2 /* fontopus_validate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB381F5C707800AF31B2 /* fontopus_validate.cpp */; };
 		9A6FAB431F5C707800AF31B2 /* fontopus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB391F5C707800AF31B2 /* fontopus.cpp */; };
-		9A6FAB7E1F5C709100AF31B2 /* install_application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB561F5C709000AF31B2 /* install_application.cpp */; };
-		9A6FAB7F1F5C709100AF31B2 /* install_bootstrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB571F5C709000AF31B2 /* install_bootstrap.cpp */; };
-		9A6FAB801F5C709100AF31B2 /* install_focus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB581F5C709000AF31B2 /* install_focus.cpp */; };
-		9A6FAB811F5C709100AF31B2 /* install_install_item.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB591F5C709000AF31B2 /* install_install_item.cpp */; };
-		9A6FAB821F5C709100AF31B2 /* install_install.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB5A1F5C709000AF31B2 /* install_install.cpp */; };
-		9A6FAB831F5C709100AF31B2 /* install_installer_launcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB5B1F5C709000AF31B2 /* install_installer_launcher.cpp */; };
-		9A6FAB841F5C709100AF31B2 /* install_installer_square.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB5C1F5C709000AF31B2 /* install_installer_square.cpp */; };
-		9A6FAB851F5C709100AF31B2 /* install_installer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB5D1F5C709000AF31B2 /* install_installer.cpp */; };
-		9A6FAB861F5C709100AF31B2 /* install_launcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB5E1F5C709000AF31B2 /* install_launcher.cpp */; };
-		9A6FAB871F5C709100AF31B2 /* install_module_list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB5F1F5C709000AF31B2 /* install_module_list.cpp */; };
-		9A6FAB881F5C709100AF31B2 /* install_small_bell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB601F5C709000AF31B2 /* install_small_bell.cpp */; };
-		9A6FAB891F5C709100AF31B2 /* install_socket_handler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB611F5C709000AF31B2 /* install_socket_handler.cpp */; };
-		9A6FAB8A1F5C709100AF31B2 /* install_socket_thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB621F5C709000AF31B2 /* install_socket_thread.cpp */; };
-		9A6FAB8B1F5C709100AF31B2 /* install_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB631F5C709000AF31B2 /* install_socket.cpp */; };
-		9A6FAB8C1F5C709100AF31B2 /* install_tool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB641F5C709000AF31B2 /* install_tool.cpp */; };
-		9A6FAB8D1F5C709100AF31B2 /* install_trace_file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB651F5C709000AF31B2 /* install_trace_file.cpp */; };
-		9A6FAB8E1F5C709100AF31B2 /* install_trace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB661F5C709000AF31B2 /* install_trace.cpp */; };
-		9A6FAB8F1F5C709100AF31B2 /* install_window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB671F5C709000AF31B2 /* install_window.cpp */; };
-		9A6FAB901F5C709100AF31B2 /* install.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB681F5C709000AF31B2 /* install.cpp */; };
-		9A6FAB921F5C709100AF31B2 /* install_windows_service.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB711F5C709000AF31B2 /* install_windows_service.cpp */; };
 		9A6FABC21F5C70BE00AF31B2 /* exception_archive_exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB961F5C70BE00AF31B2 /* exception_archive_exception.cpp */; };
 		9A6FABC31F5C70BE00AF31B2 /* exception_archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB971F5C70BE00AF31B2 /* exception_archive.cpp */; };
 		9A6FABC41F5C70BE00AF31B2 /* exception_base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB981F5C70BE00AF31B2 /* exception_base.cpp */; };
@@ -1901,28 +1859,6 @@
 		9A9579961F6225B800623508 /* fontopus_usera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB371F5C707800AF31B2 /* fontopus_usera.cpp */; };
 		9A9579971F6225B800623508 /* fontopus_validate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB381F5C707800AF31B2 /* fontopus_validate.cpp */; };
 		9A9579981F6225B800623508 /* fontopus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB391F5C707800AF31B2 /* fontopus.cpp */; };
-		9A9579991F6225B800623508 /* install_application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB561F5C709000AF31B2 /* install_application.cpp */; };
-		9A95799A1F6225B800623508 /* install_bootstrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB571F5C709000AF31B2 /* install_bootstrap.cpp */; };
-		9A95799B1F6225B800623508 /* install_focus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB581F5C709000AF31B2 /* install_focus.cpp */; };
-		9A95799C1F6225B800623508 /* install_install_item.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB591F5C709000AF31B2 /* install_install_item.cpp */; };
-		9A95799D1F6225B800623508 /* install_install.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB5A1F5C709000AF31B2 /* install_install.cpp */; };
-		9A95799E1F6225B800623508 /* install_installer_launcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB5B1F5C709000AF31B2 /* install_installer_launcher.cpp */; };
-		9A95799F1F6225B800623508 /* install_installer_square.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB5C1F5C709000AF31B2 /* install_installer_square.cpp */; };
-		9A9579A01F6225B800623508 /* install_installer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB5D1F5C709000AF31B2 /* install_installer.cpp */; };
-		9A9579A11F6225B800623508 /* install_launcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB5E1F5C709000AF31B2 /* install_launcher.cpp */; };
-		9A9579A21F6225B800623508 /* install_module_list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB5F1F5C709000AF31B2 /* install_module_list.cpp */; };
-		9A9579A31F6225B800623508 /* install_small_bell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB601F5C709000AF31B2 /* install_small_bell.cpp */; };
-		9A9579A41F6225B800623508 /* install_socket_handler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB611F5C709000AF31B2 /* install_socket_handler.cpp */; };
-		9A9579A51F6225B800623508 /* install_socket_thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB621F5C709000AF31B2 /* install_socket_thread.cpp */; };
-		9A9579A61F6225B800623508 /* install_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB631F5C709000AF31B2 /* install_socket.cpp */; };
-		9A9579A71F6225B800623508 /* install_tool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB641F5C709000AF31B2 /* install_tool.cpp */; };
-		9A9579A81F6225B800623508 /* install_trace_file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB651F5C709000AF31B2 /* install_trace_file.cpp */; };
-		9A9579A91F6225B800623508 /* install_trace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB661F5C709000AF31B2 /* install_trace.cpp */; };
-		9A9579AA1F6225B800623508 /* install_window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB671F5C709000AF31B2 /* install_window.cpp */; };
-		9A9579AB1F6225B800623508 /* install.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB681F5C709000AF31B2 /* install.cpp */; };
-		9A9579AC1F6225B800623508 /* install_windows_boot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB701F5C709000AF31B2 /* install_windows_boot.cpp */; };
-		9A9579AD1F6225B800623508 /* install_windows_service.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB711F5C709000AF31B2 /* install_windows_service.cpp */; };
-		9A9579AE1F6225B800623508 /* install_windows_win.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB721F5C709000AF31B2 /* install_windows_win.cpp */; };
 		9A9579B21F6225B800623508 /* exception_archive_exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB961F5C70BE00AF31B2 /* exception_archive_exception.cpp */; };
 		9A9579B31F6225B800623508 /* exception_archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB971F5C70BE00AF31B2 /* exception_archive.cpp */; };
 		9A9579B41F6225B800623508 /* exception_base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB981F5C70BE00AF31B2 /* exception_base.cpp */; };
@@ -2076,6 +2012,8 @@
 		9AB8C85B1EA98EA0007670A6 /* netserver_socket_handler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB8C8581EA98EA0007670A6 /* netserver_socket_handler.cpp */; };
 		9AB8C85C1EA98EA0007670A6 /* netserver_socket_thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB8C8591EA98EA0007670A6 /* netserver_socket_thread.cpp */; };
 		9AB8C85D1EA98EA0007670A6 /* netserver_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB8C85A1EA98EA0007670A6 /* netserver_socket.cpp */; };
+		9AC20A4F20998C2F0077FEBF /* user_form.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AC20A4D20998C2E0077FEBF /* user_form.cpp */; };
+		9AC20A5020998C2F0077FEBF /* user_form.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AC20A4E20998C2F0077FEBF /* user_form.h */; };
 		9ACE46FF1D1FE56000A1E0AD /* libace.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A6716741D1553BF0069A961 /* libace.dylib */; };
 		9AD005321EB9AA2200B9FB48 /* compress_bz.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A0254EB1EA5927C003C82CF /* compress_bz.cpp */; };
 		9AD005331EB9AA2200B9FB48 /* compress_gz.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A0254EC1EA5927C003C82CF /* compress_gz.cpp */; };
@@ -3114,29 +3052,6 @@
 		9A2A53241F1FEDFD001AB0F8 /* visual_const.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = visual_const.h; sourceTree = "<group>"; };
 		9A2A53261F1FEDFD001AB0F8 /* visual_cursor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = visual_cursor.h; sourceTree = "<group>"; };
 		9A2A53281F1FEDFD001AB0F8 /* visual_icon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = visual_icon.h; sourceTree = "<group>"; };
-		9A2A536F1F1FEE49001AB0F8 /* install.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = install.h; sourceTree = "<group>"; };
-		9A2A53711F1FEE49001AB0F8 /* install2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = install2.h; sourceTree = "<group>"; };
-		9A2A53731F1FEE49001AB0F8 /* install_application.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = install_application.h; sourceTree = "<group>"; };
-		9A2A53751F1FEE49001AB0F8 /* install_bootstrap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = install_bootstrap.h; sourceTree = "<group>"; };
-		9A2A53771F1FEE49001AB0F8 /* install_focus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = install_focus.h; sourceTree = "<group>"; };
-		9A2A53791F1FEE49001AB0F8 /* install_install.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = install_install.h; sourceTree = "<group>"; };
-		9A2A537B1F1FEE49001AB0F8 /* install_install_item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = install_install_item.h; sourceTree = "<group>"; };
-		9A2A537D1F1FEE49001AB0F8 /* install_installer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = install_installer.h; sourceTree = "<group>"; };
-		9A2A537F1F1FEE49001AB0F8 /* install_installer_launcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = install_installer_launcher.h; sourceTree = "<group>"; };
-		9A2A53811F1FEE49001AB0F8 /* install_installer_square.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = install_installer_square.h; sourceTree = "<group>"; };
-		9A2A53831F1FEE49001AB0F8 /* install_launcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = install_launcher.h; sourceTree = "<group>"; };
-		9A2A53851F1FEE49001AB0F8 /* install_module_list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = install_module_list.h; sourceTree = "<group>"; };
-		9A2A53861F1FEE49001AB0F8 /* install_resource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = install_resource.h; sourceTree = "<group>"; };
-		9A2A53881F1FEE49001AB0F8 /* install_small_bell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = install_small_bell.h; sourceTree = "<group>"; };
-		9A2A538A1F1FEE49001AB0F8 /* install_socket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = install_socket.h; sourceTree = "<group>"; };
-		9A2A538C1F1FEE49001AB0F8 /* install_socket_handler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = install_socket_handler.h; sourceTree = "<group>"; };
-		9A2A538E1F1FEE49001AB0F8 /* install_socket_thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = install_socket_thread.h; sourceTree = "<group>"; };
-		9A2A53901F1FEE49001AB0F8 /* install_tool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = install_tool.h; sourceTree = "<group>"; };
-		9A2A53921F1FEE49001AB0F8 /* install_trace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = install_trace.h; sourceTree = "<group>"; };
-		9A2A53951F1FEE49001AB0F8 /* install_window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = install_window.h; sourceTree = "<group>"; };
-		9A2A539D1F1FEE49001AB0F8 /* install_windows_boot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = install_windows_boot.cpp; sourceTree = "<group>"; };
-		9A2A539E1F1FEE49001AB0F8 /* install_windows_service.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = install_windows_service.cpp; sourceTree = "<group>"; };
-		9A2A539F1F1FEE49001AB0F8 /* install_windows_win.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = install_windows_win.cpp; sourceTree = "<group>"; };
 		9A2BBCB31FC1F13A00E44B85 /* macos_aura.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = macos_aura.cpp; sourceTree = "<group>"; };
 		9A2C3A971F4007A300B2DA15 /* apple_timer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = apple_timer.cpp; sourceTree = "<group>"; };
 		9A2F5F6F1FA0F6DE006CA37F /* visual_macos_image_mm.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = visual_macos_image_mm.mm; sourceTree = "<group>"; };
@@ -3370,28 +3285,6 @@
 		9A6FAB371F5C707800AF31B2 /* fontopus_usera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fontopus_usera.cpp; sourceTree = "<group>"; };
 		9A6FAB381F5C707800AF31B2 /* fontopus_validate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fontopus_validate.cpp; sourceTree = "<group>"; };
 		9A6FAB391F5C707800AF31B2 /* fontopus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fontopus.cpp; sourceTree = "<group>"; };
-		9A6FAB561F5C709000AF31B2 /* install_application.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = install_application.cpp; sourceTree = "<group>"; };
-		9A6FAB571F5C709000AF31B2 /* install_bootstrap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = install_bootstrap.cpp; sourceTree = "<group>"; };
-		9A6FAB581F5C709000AF31B2 /* install_focus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = install_focus.cpp; sourceTree = "<group>"; };
-		9A6FAB591F5C709000AF31B2 /* install_install_item.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = install_install_item.cpp; sourceTree = "<group>"; };
-		9A6FAB5A1F5C709000AF31B2 /* install_install.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = install_install.cpp; sourceTree = "<group>"; };
-		9A6FAB5B1F5C709000AF31B2 /* install_installer_launcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = install_installer_launcher.cpp; sourceTree = "<group>"; };
-		9A6FAB5C1F5C709000AF31B2 /* install_installer_square.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = install_installer_square.cpp; sourceTree = "<group>"; };
-		9A6FAB5D1F5C709000AF31B2 /* install_installer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = install_installer.cpp; sourceTree = "<group>"; };
-		9A6FAB5E1F5C709000AF31B2 /* install_launcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = install_launcher.cpp; sourceTree = "<group>"; };
-		9A6FAB5F1F5C709000AF31B2 /* install_module_list.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = install_module_list.cpp; sourceTree = "<group>"; };
-		9A6FAB601F5C709000AF31B2 /* install_small_bell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = install_small_bell.cpp; sourceTree = "<group>"; };
-		9A6FAB611F5C709000AF31B2 /* install_socket_handler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = install_socket_handler.cpp; sourceTree = "<group>"; };
-		9A6FAB621F5C709000AF31B2 /* install_socket_thread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = install_socket_thread.cpp; sourceTree = "<group>"; };
-		9A6FAB631F5C709000AF31B2 /* install_socket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = install_socket.cpp; sourceTree = "<group>"; };
-		9A6FAB641F5C709000AF31B2 /* install_tool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = install_tool.cpp; sourceTree = "<group>"; };
-		9A6FAB651F5C709000AF31B2 /* install_trace_file.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = install_trace_file.cpp; sourceTree = "<group>"; };
-		9A6FAB661F5C709000AF31B2 /* install_trace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = install_trace.cpp; sourceTree = "<group>"; };
-		9A6FAB671F5C709000AF31B2 /* install_window.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = install_window.cpp; sourceTree = "<group>"; };
-		9A6FAB681F5C709000AF31B2 /* install.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = install.cpp; sourceTree = "<group>"; };
-		9A6FAB701F5C709000AF31B2 /* install_windows_boot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = install_windows_boot.cpp; sourceTree = "<group>"; };
-		9A6FAB711F5C709000AF31B2 /* install_windows_service.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = install_windows_service.cpp; sourceTree = "<group>"; };
-		9A6FAB721F5C709000AF31B2 /* install_windows_win.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = install_windows_win.cpp; sourceTree = "<group>"; };
 		9A6FAB951F5C70BE00AF31B2 /* _exception.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = _exception.txt; sourceTree = "<group>"; };
 		9A6FAB961F5C70BE00AF31B2 /* exception_archive_exception.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = exception_archive_exception.cpp; sourceTree = "<group>"; };
 		9A6FAB971F5C70BE00AF31B2 /* exception_archive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = exception_archive.cpp; sourceTree = "<group>"; };
@@ -4136,6 +4029,8 @@
 		9AB8C8581EA98EA0007670A6 /* netserver_socket_handler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = netserver_socket_handler.cpp; sourceTree = "<group>"; };
 		9AB8C8591EA98EA0007670A6 /* netserver_socket_thread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = netserver_socket_thread.cpp; sourceTree = "<group>"; };
 		9AB8C85A1EA98EA0007670A6 /* netserver_socket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = netserver_socket.cpp; sourceTree = "<group>"; };
+		9AC20A4D20998C2E0077FEBF /* user_form.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = user_form.cpp; sourceTree = "<group>"; };
+		9AC20A4E20998C2F0077FEBF /* user_form.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_form.h; sourceTree = "<group>"; };
 		9AC945281829225F00AA7325 /* primitive_factory_impl.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = primitive_factory_impl.inl; sourceTree = "<group>"; };
 		9AD005261EB9A97500B9FB48 /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/usr/lib/libbz2.tbd; sourceTree = DEVELOPER_DIR; };
 		9AD0052C1EB9A98200B9FB48 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/usr/lib/libz.tbd; sourceTree = DEVELOPER_DIR; };
@@ -4994,6 +4889,8 @@
 		07CABC0F1B3DFF200009F5B9 /* user */ = {
 			isa = PBXGroup;
 			children = (
+				9AC20A4D20998C2E0077FEBF /* user_form.cpp */,
+				9AC20A4E20998C2F0077FEBF /* user_form.h */,
 				9A51A7271F9BE303004D02D4 /* _user.cpp */,
 				9A81D9471F4449630030C6E8 /* user_command.cpp */,
 				9A81D9481F4449630030C6E8 /* user_command.h */,
@@ -5555,7 +5452,6 @@
 				9A640E631EA6BC5800866C2C /* crypto */,
 				9A163DD919C4A4CD00966C5E /* exception */,
 				9A640DFE1EA6BABB00866C2C /* fontopus */,
-				9A2A535A1F1FEE49001AB0F8 /* install */,
 				9A163E3519C4A4CD00966C5E /* message */,
 				9A163E3F19C4A4CD00966C5E /* node */,
 				9A163F6519C4A4CD00966C5E /* os */,
@@ -6170,64 +6066,6 @@
 			path = visual;
 			sourceTree = "<group>";
 		};
-		9A2A535A1F1FEE49001AB0F8 /* install */ = {
-			isa = PBXGroup;
-			children = (
-				9A6FAB6F1F5C709000AF31B2 /* windows */,
-				9A6FAB681F5C709000AF31B2 /* install.cpp */,
-				9A2A536F1F1FEE49001AB0F8 /* install.h */,
-				9A2A53711F1FEE49001AB0F8 /* install2.h */,
-				9A6FAB561F5C709000AF31B2 /* install_application.cpp */,
-				9A2A53731F1FEE49001AB0F8 /* install_application.h */,
-				9A6FAB571F5C709000AF31B2 /* install_bootstrap.cpp */,
-				9A2A53751F1FEE49001AB0F8 /* install_bootstrap.h */,
-				9A6FAB581F5C709000AF31B2 /* install_focus.cpp */,
-				9A2A53771F1FEE49001AB0F8 /* install_focus.h */,
-				9A6FAB5A1F5C709000AF31B2 /* install_install.cpp */,
-				9A2A53791F1FEE49001AB0F8 /* install_install.h */,
-				9A6FAB591F5C709000AF31B2 /* install_install_item.cpp */,
-				9A2A537B1F1FEE49001AB0F8 /* install_install_item.h */,
-				9A6FAB5D1F5C709000AF31B2 /* install_installer.cpp */,
-				9A2A537D1F1FEE49001AB0F8 /* install_installer.h */,
-				9A6FAB5B1F5C709000AF31B2 /* install_installer_launcher.cpp */,
-				9A2A537F1F1FEE49001AB0F8 /* install_installer_launcher.h */,
-				9A6FAB5C1F5C709000AF31B2 /* install_installer_square.cpp */,
-				9A2A53811F1FEE49001AB0F8 /* install_installer_square.h */,
-				9A6FAB5E1F5C709000AF31B2 /* install_launcher.cpp */,
-				9A2A53831F1FEE49001AB0F8 /* install_launcher.h */,
-				9A6FAB5F1F5C709000AF31B2 /* install_module_list.cpp */,
-				9A2A53851F1FEE49001AB0F8 /* install_module_list.h */,
-				9A2A53861F1FEE49001AB0F8 /* install_resource.h */,
-				9A6FAB601F5C709000AF31B2 /* install_small_bell.cpp */,
-				9A2A53881F1FEE49001AB0F8 /* install_small_bell.h */,
-				9A6FAB631F5C709000AF31B2 /* install_socket.cpp */,
-				9A2A538A1F1FEE49001AB0F8 /* install_socket.h */,
-				9A6FAB611F5C709000AF31B2 /* install_socket_handler.cpp */,
-				9A2A538C1F1FEE49001AB0F8 /* install_socket_handler.h */,
-				9A6FAB621F5C709000AF31B2 /* install_socket_thread.cpp */,
-				9A2A538E1F1FEE49001AB0F8 /* install_socket_thread.h */,
-				9A6FAB641F5C709000AF31B2 /* install_tool.cpp */,
-				9A2A53901F1FEE49001AB0F8 /* install_tool.h */,
-				9A6FAB661F5C709000AF31B2 /* install_trace.cpp */,
-				9A2A53921F1FEE49001AB0F8 /* install_trace.h */,
-				9A6FAB651F5C709000AF31B2 /* install_trace_file.cpp */,
-				9A6FAB671F5C709000AF31B2 /* install_window.cpp */,
-				9A2A53951F1FEE49001AB0F8 /* install_window.h */,
-				9A2A539C1F1FEE49001AB0F8 /* windows */,
-			);
-			path = install;
-			sourceTree = "<group>";
-		};
-		9A2A539C1F1FEE49001AB0F8 /* windows */ = {
-			isa = PBXGroup;
-			children = (
-				9A2A539D1F1FEE49001AB0F8 /* install_windows_boot.cpp */,
-				9A2A539E1F1FEE49001AB0F8 /* install_windows_service.cpp */,
-				9A2A539F1F1FEE49001AB0F8 /* install_windows_win.cpp */,
-			);
-			path = windows;
-			sourceTree = "<group>";
-		};
 		9A2C3A961F4007A300B2DA15 /* apple */ = {
 			isa = PBXGroup;
 			children = (
@@ -6485,16 +6323,6 @@
 				9A6716781D1553BF0069A961 /* ace_iosTests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		9A6FAB6F1F5C709000AF31B2 /* windows */ = {
-			isa = PBXGroup;
-			children = (
-				9A6FAB701F5C709000AF31B2 /* install_windows_boot.cpp */,
-				9A6FAB711F5C709000AF31B2 /* install_windows_service.cpp */,
-				9A6FAB721F5C709000AF31B2 /* install_windows_win.cpp */,
-			);
-			path = windows;
 			sourceTree = "<group>";
 		};
 		9A6FAE0F1F5C771400AF31B2 /* x */ = {
@@ -7634,7 +7462,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A2A53B61F1FEE49001AB0F8 /* install_install.h in Headers */,
 				9A41731320004E7A0056265A /* cmac.h in Headers */,
 				9AD185D11F9C25E5001CEA8E /* macos_window_impl.h in Headers */,
 				9A0254D01EA59238003C82CF /* compress_gz.h in Headers */,
@@ -7687,7 +7514,6 @@
 				9A16421019C4A4CE00966C5E /* exception_invalid_handle.h in Headers */,
 				9A6FAE611F5C773700AF31B2 /* datetime_date_span.h in Headers */,
 				9A1641E819C4A4CE00966C5E /* aura_policy_objcpp.h in Headers */,
-				9A2A53D21F1FEE49001AB0F8 /* install_window.h in Headers */,
 				07B0951718495C2B007A0560 /* geometry_point.h in Headers */,
 				07B094F318495C2B007A0560 /* collection_string_to_string_map.h in Headers */,
 				9A6FB0551F5C79CF00AF31B2 /* file_memory_file.h in Headers */,
@@ -7764,7 +7590,6 @@
 				9A6FADBB1F5C768E00AF31B2 /* str.h in Headers */,
 				9A16422719C4A4CE00966C5E /* exception_os.h in Headers */,
 				9A6FADE81F5C76BD00AF31B2 /* math_number.h in Headers */,
-				9A2A53B01F1FEE49001AB0F8 /* install_application.h in Headers */,
 				9A6FB1A01F5C9FF700AF31B2 /* webserver_http_form.h in Headers */,
 				07B094AE18495C2A007A0560 /* collection_attrib_map.h in Headers */,
 				9A1643B719C4A4CF00966C5E /* windows_shared_memory.h in Headers */,
@@ -7805,10 +7630,8 @@
 				07B094CD18495C2B007A0560 /* collection_map_to_smart_pointer.h in Headers */,
 				9AD186131F9C2983001CEA8E /* visual_rgb_quad_array.h in Headers */,
 				9AF4C3341F836F8300197385 /* aura_command_ui_probe.h in Headers */,
-				9A2A53C91F1FEE49001AB0F8 /* install_socket_handler.h in Headers */,
 				9AF4C3591F836F8300197385 /* aura_fixed_alloc_impl.h in Headers */,
 				0751A49E192AB15000CFD2B0 /* multithreading_data.h in Headers */,
-				9A2A53BC1F1FEE49001AB0F8 /* install_installer_launcher.h in Headers */,
 				9A6FAEE71F5C778800AF31B2 /* collection_ref_array.h in Headers */,
 				9A16451919C4A4CF00966C5E /* xml_enum.h in Headers */,
 				9A6FAE661F5C773700AF31B2 /* datetime_file_time_span.h in Headers */,
@@ -7842,7 +7665,6 @@
 				9A6FAF051F5C77F800AF31B2 /* version.config.h in Headers */,
 				9A16424819C4A4CE00966C5E /* message_cross_windows.h in Headers */,
 				9A41731520004E7A0056265A /* comp.h in Headers */,
-				9A2A53AD1F1FEE49001AB0F8 /* install.h in Headers */,
 				9A16439F19C4A4CE00966C5E /* e.h in Headers */,
 				9AF4C3301F836F8300197385 /* aura_cmp2.h in Headers */,
 				9A6FB06F1F5C79CF00AF31B2 /* file_text_file.h in Headers */,
@@ -7872,7 +7694,6 @@
 				9A0256801EA593AC003C82CF /* net_url_domain.h in Headers */,
 				07B0955318495C2B007A0560 /* str_string.h in Headers */,
 				07B0955918495C2B007A0560 /* str_to_integer.h in Headers */,
-				9A2A53AE1F1FEE49001AB0F8 /* install2.h in Headers */,
 				9A16421F19C4A4CE00966C5E /* exception_not_installed.h in Headers */,
 				9A02564B1EA593AC003C82CF /* http_listener.h in Headers */,
 				9AF4C33E1F836F8300197385 /* aura_cregexp.h in Headers */,
@@ -7956,7 +7777,6 @@
 				9A1643A819C4A4CF00966C5E /* windows_error.h in Headers */,
 				9A0256D51EA593AC003C82CF /* IEventOwner.h in Headers */,
 				9A706D801FFE62FA00A78618 /* round_window.h in Headers */,
-				9A2A53B21F1FEE49001AB0F8 /* install_bootstrap.h in Headers */,
 				9ADD53ED1F20E1B70008AA41 /* zip_impl.h in Headers */,
 				9A16483C19C4ADA000966C5E /* macos_thread.h in Headers */,
 				9A1644A019C4A4CF00966C5E /* os_binreloc.h in Headers */,
@@ -7981,7 +7801,6 @@
 				07502CA11B249355008D207C /* macos_file_system.h in Headers */,
 				9A6FADA11F5C768E00AF31B2 /* primitive_cflag.h in Headers */,
 				9A16483E19C4ADA100966C5E /* macos_stdio_file.h in Headers */,
-				9A2A53B81F1FEE49001AB0F8 /* install_install_item.h in Headers */,
 				9AF4C35B1F836F8300197385 /* aura_flags.h in Headers */,
 				9A6FB07E1F5C7A0C00AF31B2 /* filesystem_dir_system_heap.h in Headers */,
 				9A16453F19C4A56200966C5E /* math_complex.h in Headers */,
@@ -8036,7 +7855,6 @@
 				9A2A53531F1FEDFD001AB0F8 /* visual_cursor.h in Headers */,
 				9AE7250217E83B69003E47F9 /* multithreading_event.h in Headers */,
 				9AF4C3B91F836F8400197385 /* aura_str_context.h in Headers */,
-				9A2A53B41F1FEE49001AB0F8 /* install_focus.h in Headers */,
 				9AE7250417E83B69003E47F9 /* multithreading_event_base.h in Headers */,
 				9A6FAED91F5C778800AF31B2 /* collection_file_path_map.h in Headers */,
 				9AE7250617E83B69003E47F9 /* multithreading_event_collection.h in Headers */,
@@ -8072,7 +7890,6 @@
 				07502C991B24911C008D207C /* filesystem_dir_application.h in Headers */,
 				9A640E1A1EA6BABB00866C2C /* fontopus_authentication_map.h in Headers */,
 				9A41730820004E7A0056265A /* aes.h in Headers */,
-				9A2A53C01F1FEE49001AB0F8 /* install_launcher.h in Headers */,
 				9A16452119C4A4CF00966C5E /* xml_node.h in Headers */,
 				9AE7251317E83B69003E47F9 /* multithreading_retry_single_lock.h in Headers */,
 				9AD1862A1F9C2983001CEA8E /* visual_buffered_graphics.h in Headers */,
@@ -8181,7 +7998,6 @@
 				07B0951D18495C2B007A0560 /* geometry_types.h in Headers */,
 				9A16450D19C4A4CF00966C5E /* xml_base_array.h in Headers */,
 				9A6FAD781F5C766800AF31B2 /* collection.h in Headers */,
-				9A2A53C51F1FEE49001AB0F8 /* install_small_bell.h in Headers */,
 				9A6FADED1F5C76BD00AF31B2 /* math_value.h in Headers */,
 				9A2A53511F1FEDFD001AB0F8 /* visual_const.h in Headers */,
 				9A16451D19C4A4CF00966C5E /* xml_importable.h in Headers */,
@@ -8267,7 +8083,6 @@
 				9A41731620004E7A0056265A /* conf.h in Headers */,
 				9A6FAC051F5C70D200AF31B2 /* message_message.h in Headers */,
 				07F5B1D3184A3B430092C3E1 /* file_plain_text_stream_base.h in Headers */,
-				9A2A53BA1F1FEE49001AB0F8 /* install_installer.h in Headers */,
 				9AE7255F17E83B69003E47F9 /* primitive_factory.h in Headers */,
 				9A41731D20004E7A0056265A /* dtls1.h in Headers */,
 				9AE7256117E83B69003E47F9 /* primitive_id.h in Headers */,
@@ -8320,7 +8135,6 @@
 				9A640E6B1EA6BC5800866C2C /* crypto.h in Headers */,
 				9A1641E519C4A4CE00966C5E /* aura_cpp.h in Headers */,
 				9A6FAE911F5C777800AF31B2 /* comparison_compare.h in Headers */,
-				9A2A53CF1F1FEE49001AB0F8 /* install_trace.h in Headers */,
 				9A0256381EA593AC003C82CF /* ftp_data_types.h in Headers */,
 				9A3630A61F9CEA0D0020D70B /* ansios_file_raw.h in Headers */,
 				9AF4C36A1F836F8400197385 /* aura_id_pool.h in Headers */,
@@ -8339,7 +8153,6 @@
 				9AE7257817E83B69003E47F9 /* primitive_request_interface.h in Headers */,
 				9AE7257A17E83B69003E47F9 /* primitive_request_signal.h in Headers */,
 				9A41732120004E7A0056265A /* ecdh.h in Headers */,
-				9A2A53CD1F1FEE49001AB0F8 /* install_tool.h in Headers */,
 				9AE7257C17E83B69003E47F9 /* primitive_shared_memory.h in Headers */,
 				9ADF8EA31F9BFE63003BEC4D /* RoundWindowFrameView.h in Headers */,
 				9AE7258017E83B69003E47F9 /* primitive_type.h in Headers */,
@@ -8368,7 +8181,6 @@
 				9A41733B20004E7A0056265A /* rc4.h in Headers */,
 				9A6FB05B1F5C79CF00AF31B2 /* file_plain_text_istream.h in Headers */,
 				9A16445E19C4A4CF00966C5E /* macos_graphics_mm.h in Headers */,
-				9A2A53CB1F1FEE49001AB0F8 /* install_socket_thread.h in Headers */,
 				9AF4C3B31F836F8400197385 /* aura_speaker.h in Headers */,
 				9A41733920004E7A0056265A /* rand.h in Headers */,
 				9AF4C3751F836F8400197385 /* aura_library.h in Headers */,
@@ -8433,7 +8245,6 @@
 				9A0256841EA593AC003C82CF /* netserver_socket.h in Headers */,
 				9A1643B919C4A4CF00966C5E /* windows_thread_impl.h in Headers */,
 				9A2A534A1F1FEDFD001AB0F8 /* draw2d_region.h in Headers */,
-				9A2A53BE1F1FEE49001AB0F8 /* install_installer_square.h in Headers */,
 				9A41734920004E7A0056265A /* tls1.h in Headers */,
 				9A2A53551F1FEDFD001AB0F8 /* visual_icon.h in Headers */,
 				9A0256A21EA593AC003C82CF /* sockets_ssl_client_context_map.h in Headers */,
@@ -8461,7 +8272,6 @@
 				9A16484619C4ADA100966C5E /* macos_os.h in Headers */,
 				9A6FAE6A1F5C773700AF31B2 /* datetime_mktime.h in Headers */,
 				9A6FB06D1F5C79CF00AF31B2 /* file_string_file.h in Headers */,
-				9A2A53C21F1FEE49001AB0F8 /* install_module_list.h in Headers */,
 				9A6FB0471F5C79CF00AF31B2 /* file_file_ostream.h in Headers */,
 				076C9BF01B50ACB100CEA03E /* primitive_create.h in Headers */,
 				9AE4C7F61996D29C00E50F88 /* data_data_listener.h in Headers */,
@@ -8487,11 +8297,9 @@
 				07B0955118495C2B007A0560 /* str_str2.h in Headers */,
 				9A16421219C4A4CE00966C5E /* exception_invalid_index.h in Headers */,
 				9A6FB0511F5C79CF00AF31B2 /* file_listing_provider.h in Headers */,
-				9A2A53C71F1FEE49001AB0F8 /* install_socket.h in Headers */,
 				9AF4C3B01F836F8400197385 /* aura_smart_pointer1.h in Headers */,
 				9ADF8EA41F9BFE63003BEC4D /* RoundWindow.h in Headers */,
 				9A1643BC19C4A4CF00966C5E /* windows_user.h in Headers */,
-				9A2A53C31F1FEE49001AB0F8 /* install_resource.h in Headers */,
 				9A41733C20004E7A0056265A /* rc5.h in Headers */,
 				9AD186301F9C2983001CEA8E /* visual_water_routine.h in Headers */,
 				9A16420119C4A4CE00966C5E /* exception_error.h in Headers */,
@@ -8515,6 +8323,7 @@
 				9AF4C3D11F836F8400197385 /* aura_user.h in Headers */,
 				07B094FE18495C2B007A0560 /* collection_unique_array.h in Headers */,
 				9AF4C3981F836F8400197385 /* aura_plex_heap.h in Headers */,
+				9AC20A5020998C2F0077FEBF /* user_form.h in Headers */,
 				9A0254D11EA59238003C82CF /* compress_gzip.h in Headers */,
 				9AE4C7F81996D29C00E50F88 /* data_item.h in Headers */,
 				9A16420419C4A4CE00966C5E /* exception_exit.h in Headers */,
@@ -8744,29 +8553,7 @@
 				9AF4C3E51F836FD100197385 /* aura_chronometer.cpp in Sources */,
 				9AF4C4191F83702B00197385 /* aura_profiler.cpp in Sources */,
 				9A9579981F6225B800623508 /* fontopus.cpp in Sources */,
-				9A9579991F6225B800623508 /* install_application.cpp in Sources */,
-				9A95799A1F6225B800623508 /* install_bootstrap.cpp in Sources */,
-				9A95799B1F6225B800623508 /* install_focus.cpp in Sources */,
-				9A95799C1F6225B800623508 /* install_install_item.cpp in Sources */,
-				9A95799D1F6225B800623508 /* install_install.cpp in Sources */,
-				9A95799E1F6225B800623508 /* install_installer_launcher.cpp in Sources */,
-				9A95799F1F6225B800623508 /* install_installer_square.cpp in Sources */,
-				9A9579A01F6225B800623508 /* install_installer.cpp in Sources */,
-				9A9579A11F6225B800623508 /* install_launcher.cpp in Sources */,
-				9A9579A21F6225B800623508 /* install_module_list.cpp in Sources */,
-				9A9579A31F6225B800623508 /* install_small_bell.cpp in Sources */,
-				9A9579A41F6225B800623508 /* install_socket_handler.cpp in Sources */,
-				9A9579A51F6225B800623508 /* install_socket_thread.cpp in Sources */,
-				9A9579A61F6225B800623508 /* install_socket.cpp in Sources */,
-				9A9579A71F6225B800623508 /* install_tool.cpp in Sources */,
-				9A9579A81F6225B800623508 /* install_trace_file.cpp in Sources */,
-				9A9579A91F6225B800623508 /* install_trace.cpp in Sources */,
-				9A9579AA1F6225B800623508 /* install_window.cpp in Sources */,
 				9AF4C4291F83702B00197385 /* aura_timer_callback.cpp in Sources */,
-				9A9579AB1F6225B800623508 /* install.cpp in Sources */,
-				9A9579AC1F6225B800623508 /* install_windows_boot.cpp in Sources */,
-				9A9579AD1F6225B800623508 /* install_windows_service.cpp in Sources */,
-				9A9579AE1F6225B800623508 /* install_windows_win.cpp in Sources */,
 				9A9579B21F6225B800623508 /* exception_archive_exception.cpp in Sources */,
 				9A9579B31F6225B800623508 /* exception_archive.cpp in Sources */,
 				9A9579B41F6225B800623508 /* exception_base.cpp in Sources */,
@@ -9333,7 +9120,6 @@
 				9AF4C30E1F836F8300197385 /* aura.cpp in Sources */,
 				9A6FADE71F5C76BD00AF31B2 /* math_number.cpp in Sources */,
 				9A6FB06E1F5C79CF00AF31B2 /* file_text_file.cpp in Sources */,
-				9A6FAB871F5C709100AF31B2 /* install_module_list.cpp in Sources */,
 				9A6FAE801F5C775100AF31B2 /* data_data_container.cpp in Sources */,
 				9A6FAB3C1F5C707800AF31B2 /* fontopus_fontopus.cpp in Sources */,
 				9A6FADA61F5C768E00AF31B2 /* primitive_edit.cpp in Sources */,
@@ -9345,13 +9131,10 @@
 				9A6FABCB1F5C70BE00AF31B2 /* exception_dump.cpp in Sources */,
 				9A6FB0B01F5C7A9B00AF31B2 /* xml_output_tree.cpp in Sources */,
 				9A6FB12E1F5C9CEE00AF31B2 /* sockets_transfer_socket.cpp in Sources */,
-				9A6FAB8C1F5C709100AF31B2 /* install_tool.cpp in Sources */,
 				9AF4C3CE1F836F8400197385 /* aura_trace.cpp in Sources */,
 				9A6FB06B1F5C79CF00AF31B2 /* file_stream2.cpp in Sources */,
-				9A2A53D51F1FEE49001AB0F8 /* install_windows_win.cpp in Sources */,
 				9A6FADA31F5C768E00AF31B2 /* primitive_command_line.cpp in Sources */,
 				9A6FADE01F5C76BD00AF31B2 /* math_natural.cpp in Sources */,
-				9A6FAB881F5C709100AF31B2 /* install_small_bell.cpp in Sources */,
 				9A6FB0731F5C79CF00AF31B2 /* file.cpp in Sources */,
 				9A6FAFBE1F5C796800AF31B2 /* multithreading_event_base.cpp in Sources */,
 				9A6FB07D1F5C7A0C00AF31B2 /* filesystem_dir_application.cpp in Sources */,
@@ -9370,7 +9153,6 @@
 				9A6FABDE1F5C70BE00AF31B2 /* exception_overflow_error.cpp in Sources */,
 				9AF4C31D1F836F8300197385 /* aura_application.cpp in Sources */,
 				9AD185BD1F9C1F7F001CEA8E /* message_user.cpp in Sources */,
-				9A6FAB891F5C709100AF31B2 /* install_socket_handler.cpp in Sources */,
 				9A6FAC041F5C70D200AF31B2 /* message_message.cpp in Sources */,
 				9AF4C3101F836F8300197385 /* aura_action_context.cpp in Sources */,
 				9A4173592000C1A30056265A /* sockets_ssl_context.cpp in Sources */,
@@ -9483,16 +9265,13 @@
 				9A41714F200033F50056265A /* _os_ansios.cpp in Sources */,
 				9A6FB15F1F5C9DF800AF31B2 /* draw2d_object.cpp in Sources */,
 				9A6FACA81F5C719700AF31B2 /* cross_windows_nt.cpp in Sources */,
-				9A6FAB811F5C709100AF31B2 /* install_install_item.cpp in Sources */,
 				9A6FAB3A1F5C707800AF31B2 /* fontopus_authentication_map.cpp in Sources */,
 				9A6FB0541F5C79CF00AF31B2 /* file_memory_file.cpp in Sources */,
 				9AF4C3CA1F836F8400197385 /* aura_timer_event.cpp in Sources */,
 				9A6FB0331F5C79CF00AF31B2 /* file_byte_istream.cpp in Sources */,
-				9A2A53D31F1FEE49001AB0F8 /* install_windows_boot.cpp in Sources */,
 				9AD186261F9C2983001CEA8E /* visual_water_routine.cpp in Sources */,
 				9A6FAED61F5C778800AF31B2 /* collection_class_sort_array.cpp in Sources */,
 				9A6FAF821F5C792B00AF31B2 /* http_signal.cpp in Sources */,
-				9A6FAB8B1F5C709100AF31B2 /* install_socket.cpp in Sources */,
 				9A8ED5841F204E28007DB75C /* RoundWindowApp.mm in Sources */,
 				9A6FABE51F5C70BE00AF31B2 /* exception_standard_translator.cpp in Sources */,
 				9A6FAF271F5C785C00AF31B2 /* sockets_http_get_socket.cpp in Sources */,
@@ -9514,7 +9293,6 @@
 				9A6FABE91F5C70BE00AF31B2 /* exception_user.cpp in Sources */,
 				9A6FAEDA1F5C778800AF31B2 /* collection_id_array.cpp in Sources */,
 				9A6FAE211F5C771400AF31B2 /* str_international_locale_schema.cpp in Sources */,
-				9A6FAB901F5C709100AF31B2 /* install.cpp in Sources */,
 				9AF4C3191F836F8300197385 /* aura_app_core.cpp in Sources */,
 				9A6FB0B91F5C7A9B00AF31B2 /* xml.cpp in Sources */,
 				9A6FAFCF1F5C796800AF31B2 /* multithreading_single_lock.cpp in Sources */,
@@ -9560,7 +9338,6 @@
 				9AD186151F9C2983001CEA8E /* visual_buffered_graphics.cpp in Sources */,
 				9AB423B5203D20E600EA1483 /* apple_process.cpp in Sources */,
 				9A0254ED1EA5927C003C82CF /* compress_bz.cpp in Sources */,
-				9A6FAB801F5C709100AF31B2 /* install_focus.cpp in Sources */,
 				9A6FAEF01F5C778800AF31B2 /* collection_stringl.cpp in Sources */,
 				9A6FAC061F5C70D200AF31B2 /* message_receiver.cpp in Sources */,
 				9A6FAFCE1F5C796800AF31B2 /* multithreading_simple_thread.cpp in Sources */,
@@ -9572,6 +9349,7 @@
 				9A6FABE41F5C70BE00AF31B2 /* exception_simple.cpp in Sources */,
 				9AF4C35A1F836F8300197385 /* aura_flags.cpp in Sources */,
 				9A6FACCA1F5C71AF00AF31B2 /* macos_library.cpp in Sources */,
+				9AC20A4F20998C2F0077FEBF /* user_form.cpp in Sources */,
 				9AF4C3811F836F8400197385 /* aura_machine_event_central.cpp in Sources */,
 				9A6FAE331F5C771400AF31B2 /* str_x.cpp in Sources */,
 				9A6FABC71F5C70BE00AF31B2 /* exception_debug.cpp in Sources */,
@@ -9621,25 +9399,21 @@
 				9A6FB03C1F5C79CF00AF31B2 /* file_composite.cpp in Sources */,
 				9A6FADA41F5C768E00AF31B2 /* primitive_command.cpp in Sources */,
 				9A6FAFC61F5C796800AF31B2 /* multithreading_multi_lock.cpp in Sources */,
-				9A6FAB7E1F5C709100AF31B2 /* install_application.cpp in Sources */,
 				9A6FACC51F5C71AF00AF31B2 /* macos_cross_win.cpp in Sources */,
 				9A6FB1051F5C9C4A00AF31B2 /* primitive_object.cpp in Sources */,
 				9A6FACAC1F5C719700AF31B2 /* cross_windows_windows.cpp in Sources */,
-				9A6FAB831F5C709100AF31B2 /* install_installer_launcher.cpp in Sources */,
 				9A6FAC011F5C70D200AF31B2 /* message_id.cpp in Sources */,
 				9A6FACA71F5C719700AF31B2 /* cross_windows_locale.cpp in Sources */,
 				9A6FAF5F1F5C78BC00AF31B2 /* sockets_net.cpp in Sources */,
 				9A6FADAA1F5C768E00AF31B2 /* primitive_interlocked_long_pulse.cpp in Sources */,
 				9A6FADB71F5C768E00AF31B2 /* primitive_type.cpp in Sources */,
 				9A6FACDE1F5C71D600AF31B2 /* os_binreloc.cpp in Sources */,
-				9A6FAB841F5C709100AF31B2 /* install_installer_square.cpp in Sources */,
 				9A6FACA41F5C719700AF31B2 /* cross_windows_crt.cpp in Sources */,
 				9A6FADB51F5C768E00AF31B2 /* primitive_request_signal.cpp in Sources */,
 				9A6FABD91F5C70BE00AF31B2 /* exception_not_installed.cpp in Sources */,
 				9A09747B1F223D2E00CFA833 /* UncaughtExceptionHandler.mm in Sources */,
 				9A6FB0A71F5C7A9B00AF31B2 /* xml_disp_option.cpp in Sources */,
 				9A6FB12F1F5C9CEE00AF31B2 /* sockets_websocket_client.cpp in Sources */,
-				9A6FAB8E1F5C709100AF31B2 /* install_trace.cpp in Sources */,
 				9A6FAF601F5C78BC00AF31B2 /* sockets_sctp_socket.cpp in Sources */,
 				9A6FB0A51F5C7A9B00AF31B2 /* xml_data.cpp in Sources */,
 				9A6FAF631F5C78BC00AF31B2 /* sockets_ssl_client_context_map.cpp in Sources */,
@@ -9668,12 +9442,10 @@
 				9A8ED4831F20052E007DB75C /* draw2d_nanosvg.cpp in Sources */,
 				9A6FAE921F5C777800AF31B2 /* comparison_var_strict.cpp in Sources */,
 				9A6FB0351F5C79CF00AF31B2 /* file_byte_ostream.cpp in Sources */,
-				9A6FAB7F1F5C709100AF31B2 /* install_bootstrap.cpp in Sources */,
 				9A6FACCC1F5C71AF00AF31B2 /* macos_main.cpp in Sources */,
 				9A6FAF161F5C783900AF31B2 /* net_ip_enum.cpp in Sources */,
 				9AF4C38F1F836F8400197385 /* aura_new.cpp in Sources */,
 				9A6FAE881F5C775100AF31B2 /* data_tree.cpp in Sources */,
-				9A6FAB8A1F5C709100AF31B2 /* install_socket_thread.cpp in Sources */,
 				9A6FADB41F5C768E00AF31B2 /* primitive_request_interface.cpp in Sources */,
 				9A6FADA51F5C768E00AF31B2 /* primitive_create.cpp in Sources */,
 				9A920F5E1F3BE99400CD9D94 /* apple.cpp in Sources */,
@@ -9727,8 +9499,6 @@
 				9A6FAF121F5C783900AF31B2 /* net_address.cpp in Sources */,
 				9A6FAF141F5C783900AF31B2 /* net_email_department.cpp in Sources */,
 				9A6FAF351F5C787E00AF31B2 /* sockets_httpd_socket.cpp in Sources */,
-				9A6FAB921F5C709100AF31B2 /* install_windows_service.cpp in Sources */,
-				9A6FAB8F1F5C709100AF31B2 /* install_window.cpp in Sources */,
 				9AF4C37B1F836F8400197385 /* aura_log.cpp in Sources */,
 				9A6FAC391F5C712E00AF31B2 /* ansios_pipe.cpp in Sources */,
 				9A6FAF901F5C794100AF31B2 /* ftp_file_status.cpp in Sources */,
@@ -9790,7 +9560,6 @@
 				9A6FAB281F5C704C00AF31B2 /* zip_memory_buffer.cpp in Sources */,
 				9AB8C85C1EA98EA0007670A6 /* netserver_socket_thread.cpp in Sources */,
 				9A6FB0371F5C79CF00AF31B2 /* file_byte_stream.cpp in Sources */,
-				9A6FAB821F5C709100AF31B2 /* install_install.cpp in Sources */,
 				9A6FABE11F5C70BE00AF31B2 /* exception_resource.cpp in Sources */,
 				9A6FAFD61F5C796800AF31B2 /* multithreading_thread_impl.cpp in Sources */,
 				9ADF8EA81F9BFE63003BEC4D /* round_window.mm in Sources */,
@@ -9803,7 +9572,6 @@
 				9AEB6A061F81D91400F40B32 /* apple_time.cpp in Sources */,
 				9AF4C3251F836F8300197385 /* aura_assert.cpp in Sources */,
 				9A6FAE601F5C773700AF31B2 /* datetime_date_span.cpp in Sources */,
-				9A6FAB8D1F5C709100AF31B2 /* install_trace_file.cpp in Sources */,
 				9AF4C34D1F836F8300197385 /* aura_element.cpp in Sources */,
 				9A6FB05A1F5C79CF00AF31B2 /* file_plain_text_istream.cpp in Sources */,
 				9A6FABDA1F5C70BE00AF31B2 /* exception_not_licensed.cpp in Sources */,
@@ -9838,7 +9606,6 @@
 				9A6FAFBB1F5C796800AF31B2 /* multithreading_core.cpp in Sources */,
 				9A8ED5801F204BDD007DB75C /* macos_user_mm.mm in Sources */,
 				9A6FB02F1F5C79CF00AF31B2 /* file_binary_buffer.cpp in Sources */,
-				9A6FAB861F5C709100AF31B2 /* install_launcher.cpp in Sources */,
 				9A6FAF911F5C794100AF31B2 /* ftp_file.cpp in Sources */,
 				9A6FAE1F1F5C771400AF31B2 /* str_from_integer.cpp in Sources */,
 				9AF4C33D1F836F8300197385 /* aura_cregexp.cpp in Sources */,
@@ -9866,7 +9633,6 @@
 				9A6FB12B1F5C9CEE00AF31B2 /* sockets_link_in_socket.cpp in Sources */,
 				9A6FABD51F5C70BE00AF31B2 /* exception_io.cpp in Sources */,
 				9A6FB0691F5C79CF00AF31B2 /* file_stream_base.cpp in Sources */,
-				9A6FAB851F5C709100AF31B2 /* install_installer.cpp in Sources */,
 				9A6FABE31F5C70BE00AF31B2 /* exception_runtime_error.cpp in Sources */,
 				9A6FB0B81F5C7A9B00AF31B2 /* xml_xmlite.cpp in Sources */,
 				9A6FACEB1F5C71EC00AF31B2 /* process_department.cpp in Sources */,

@@ -1536,7 +1536,7 @@ namespace user
 
             }
 
-            image_key_store * pstore = new image_key_store(imagekey);
+            image_key * pstore = new image_key(imagekey);
             
             {
 

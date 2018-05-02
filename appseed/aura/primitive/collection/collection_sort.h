@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 namespace sort
@@ -1464,7 +1464,7 @@ break_mid_loop:
       }
 
       template < typename ARRAY_TYPE, typename PRED >
-      index pred_binary_search(const ARRAY_TYPE  & a, typename const ARRAY_TYPE::BASE_TYPE & t, PRED pred)
+      index pred_binary_search(const ARRAY_TYPE  & a, const typename ARRAY_TYPE::BASE_TYPE & t, PRED pred)
       {
 
          index iLPos, iUPos, iMPos;
