@@ -18,7 +18,7 @@
 #define FREERDP_SHARED_LIBRARY_PREFIX  "lib"
 #endif
 
-#define FREERDP_VENDOR_STRING "${VENDOR}"
-#define FREERDP_PRODUCT_STRING "${PRODUCT}"
+#define FREERDP_VENDOR_STRING "ca2"
+#define FREERDP_PRODUCT_STRING "freerdp_library"
 
 #endif /* FREERDP_BUILD_CONFIG_H */

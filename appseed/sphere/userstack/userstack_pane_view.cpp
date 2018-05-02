@@ -249,22 +249,32 @@ namespace userstack
          string strTypeId = typeid(*pappCurrent.m_p).name();
 
          string strIcon = Sess(pappCurrent).dir().matter("mainframe/icon48.png");
+
          ::user::tab_pane * ppane = (::user::tab_pane *) get_pane_by_id(pcreatordata->m_id);
 
          pappCurrent = Session.m_pappCurrent;
 
          if(Sess(pappCurrent).file().exists(strIcon))
          {
+
             ppane->m_dib.alloc(allocer());
+
             ppane->m_dib.load_from_file(strIcon);
+
          }
          else
          {
-            ppane->m_istrTitleEx = pcreatordata->m_id;
+
+            ppane->set_title(pcreatordata->m_id);
+
          }
+
          on_layout();
+
       }
+
       ::userex::pane_tab_view::on_create_view(pcreatordata);
+
    }
 
 

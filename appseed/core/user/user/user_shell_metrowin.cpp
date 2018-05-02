@@ -1537,13 +1537,13 @@ namespace user
 
             }
 
-            image_key_store * pstore = new image_key_store(imagekey);
+            image_key * pkey = new image_key(imagekey);
 
             {
 
                synch_lock sl(&m_mutexQueue);
 
-               m_keyptra.add(pstore);
+               m_keyptra.add(pkey);
 
             }
 

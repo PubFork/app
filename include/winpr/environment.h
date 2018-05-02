@@ -66,7 +66,7 @@ WINPR_API BOOL NeedCurrentDirectoryForExePathW(LPCWSTR ExeName);
 
 #endif
 
-#if !defined(_WIN32) || defined(_UWP)
+#if !defined(_WIN32)
 
 #ifdef __cplusplus
 extern "C" {

@@ -137,7 +137,7 @@ namespace draw2d_direct2d
 
       }
 
-      HRESULT hr = m_spbitmapMap->get_typed_os_data < ID2D1Bitmap1 >(::draw2d_direct2d::bitmap::data_bitmap1)->Unmap();
+      //HRESULT hr = m_spbitmapMap->get_typed_os_data < ID2D1Bitmap1 >(::draw2d_direct2d::bitmap::data_bitmap1)->Unmap();
 
       m_size.cx = width;
 
@@ -2724,6 +2724,7 @@ namespace draw2d_direct2d
 
       if (SUCCEEDED(m_hrEndDraw))
       {
+
          ((ID2D1DeviceContext *)m_spgraphics->get_os_data())->BeginDraw();
 
          ///dynamic_cast <::draw2d_direct2d::graphics *> (((dib *) this)->m_spgraphics.m_p)->RestoreClip();

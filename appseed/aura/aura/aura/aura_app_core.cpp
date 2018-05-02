@@ -439,7 +439,7 @@ void app_core::defer_load_backbone_libraries(string strAppId)
          if (pfnDeferTerm == NULL)
          {
 
-            MessageBox(NULL, "Missing corresponding defer_*_term for the defer_*_init backbone library.", "Error", MB_ICONERROR);
+            simple_message_box(NULL, "Missing corresponding defer_*_term for the defer_*_init backbone library.", "Error", MB_ICONERROR);
 
             on_result(-6);
 

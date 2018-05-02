@@ -2178,7 +2178,7 @@ restart:
 
          pathDownloading = pathOut + ".downloading." + ::str::zero_pad(::str::from(iTry), 20);
 
-         fileOut = papp->file().get_file(pathDownloading, ::file::mode_create | ::file::type_binary | ::file::mode_write);
+         fileOut = papp->file().get_file(pathDownloading, ::file::defer_create_directory | ::file::mode_create | ::file::type_binary | ::file::mode_write);
 
          if (fileOut.is_set())
          {

@@ -88,12 +88,8 @@ public:
    ::oswindow get_parent();
    ::oswindow set_parent(::oswindow oswindow);
    bool show_window(int nCmdShow);
-   LONG get_window_long(int nIndex);
-   LONG set_window_long(int nIndex, LONG l);
-#if OSBIT == 64
    LONG_PTR get_window_long_ptr(int nIndex);
    LONG_PTR set_window_long_ptr(int nIndex, LONG_PTR l);
-#endif
 
 
    bool client_to_screen(LPPOINT lppoint);

@@ -104,12 +104,17 @@ namespace core
 
       }
 
-      if (m_pcoresession->m_pdocmanager != NULL)
+      if (m_pcoresession != NULL)
       {
 
-         m_pcoresession->document_manager()->close_all_documents(true);
+         if (m_pcoresession->m_pdocmanager != NULL)
+         {
 
-         m_pcoresession->m_pdocmanager.release();
+            m_pcoresession->document_manager()->close_all_documents(true);
+
+            m_pcoresession->m_pdocmanager.release();
+
+         }
 
       }
 

@@ -939,7 +939,7 @@ bool windows_write_dib_to_file(::file::file_sp pfile, ::draw2d::dib * pdib, ::vi
 
    comptr < IStream > pstream;
 
-   ::CreateStreamOverRandomAccessStream(randomAccessStream, IID_PPV_ARGS(&pstream.get()));
+   ::CreateStreamOverRandomAccessStream(randomAccessStream, IID_PPV_ARGS(&pstream));
 
 #else
 

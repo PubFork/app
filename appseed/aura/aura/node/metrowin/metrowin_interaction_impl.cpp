@@ -461,6 +461,8 @@ namespace metrowin
                      try
                      {
 
+                        synch_lock sl(m_pui->m_pmutex);
+
                         HRESULT hr = m_xapp->m_directx->Render();
 
                         if (SUCCEEDED(hr))
@@ -7339,7 +7341,7 @@ namespace metrowin
    void interaction_impl::on_after_graphical_update()
    {
 
-      m_pui->on_after_graphical_update();
+      //m_pui->on_after_graphical_update();
 
       synch_lock sl(m_pui->m_pmutex);
 

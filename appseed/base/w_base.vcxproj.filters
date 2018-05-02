@@ -121,12 +121,6 @@
     <Filter Include="Source Files\user\hotplugin">
       <UniqueIdentifier>{2b3bed5e-9fb7-48db-a0ef-85a72b58afd2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\user\install">
-      <UniqueIdentifier>{108203dc-a6d0-4bd2-8253-0b5301134a98}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\base\install">
-      <UniqueIdentifier>{f805cac7-36a1-4126-ac20-3b8cef9395a0}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -547,23 +541,14 @@
     <ClCompile Include="user\hotplugin\hotplugin_plugin.cpp">
       <Filter>Source Files\user\hotplugin</Filter>
     </ClCompile>
-    <ClCompile Include="user\install\install_plugin.cpp">
-      <Filter>Source Files\user\install</Filter>
+    <ClCompile Include="user\hotplugin\hotplugin_bare_paint_full_screen.cpp">
+      <Filter>Source Files\user\hotplugin</Filter>
     </ClCompile>
-    <ClCompile Include="user\install\install_plugin_bare_paint_discreet.cpp">
-      <Filter>Source Files\user\install</Filter>
+    <ClCompile Include="user\hotplugin\hotplugin_bare_paint_veri_discreet.cpp">
+      <Filter>Source Files\user\hotplugin</Filter>
     </ClCompile>
-    <ClCompile Include="user\install\install_plugin_bare_paint_full_screen.cpp">
-      <Filter>Source Files\user\install</Filter>
-    </ClCompile>
-    <ClCompile Include="user\install\install_plugin_bare_paint_veri_discreet.cpp">
-      <Filter>Source Files\user\install</Filter>
-    </ClCompile>
-    <ClCompile Include="user\install\install_starter_start.cpp">
-      <Filter>Source Files\user\install</Filter>
-    </ClCompile>
-    <ClCompile Include="base\install\install_canvas.cpp">
-      <Filter>Source Files\base\install</Filter>
+    <ClCompile Include="user\hotplugin\hotplugin_bare_paint_discreet.cpp">
+      <Filter>Source Files\user\hotplugin</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

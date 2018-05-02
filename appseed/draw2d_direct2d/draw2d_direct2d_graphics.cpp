@@ -377,7 +377,7 @@ namespace draw2d_direct2d
 
             sp(::draw2d_direct2d::graphics) pgraphicsDib2 = dib2->get_graphics();
 
-            ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->EndDraw();
+            HRESULT hr = ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->EndDraw();
 
             pgraphicsDib1->m_pdevicecontext->DrawImage(
             (ID2D1Bitmap *)pgraphicsDib2->get_current_bitmap()->get_os_data(),
@@ -385,6 +385,13 @@ namespace draw2d_direct2d
             d2d1::rectf(rectDib1),
             D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
             D2D1_COMPOSITE_MODE_DESTINATION_IN);
+
+            if (SUCCEEDED(hr))
+            {
+
+               ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->BeginDraw();
+
+            }
 
             set_alpha_mode(::draw2d::alpha_mode_blend);
 
@@ -469,7 +476,7 @@ namespace draw2d_direct2d
 
             sp(::draw2d_direct2d::graphics) pgraphicsDib2 = dib2->get_graphics();
 
-            ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->EndDraw();
+            HRESULT hr = ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->EndDraw();
 
             pgraphicsDib1->m_pdevicecontext->DrawImage(
             (ID2D1Bitmap *)pgraphicsDib2->get_current_bitmap()->get_os_data(),
@@ -477,6 +484,13 @@ namespace draw2d_direct2d
             d2d1::rectf(rectDib1),
             D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
             D2D1_COMPOSITE_MODE_DESTINATION_IN);
+
+            if (SUCCEEDED(hr))
+            {
+
+               ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->BeginDraw();
+
+            }
 
             set_alpha_mode(::draw2d::alpha_mode_blend);
 
@@ -1566,56 +1580,62 @@ namespace draw2d_direct2d
       try
       {
 
-         if(pgraphicsSrc == NULL)
-            return FALSE;
+         if (pgraphicsSrc == NULL)
+         {
 
-         if(pgraphicsSrc->get_current_bitmap() == NULL)
-            return FALSE;
+            return false;
 
-         if(pgraphicsSrc->get_current_bitmap()->get_os_data() == NULL)
-            return FALSE;
+         }
+
+         if (pgraphicsSrc->get_current_bitmap() == NULL)
+         {
+
+            return false;
+
+         }
+
+         if (pgraphicsSrc->get_current_bitmap()->get_os_data() == NULL)
+         {
+
+            return false;
+
+         }
 
          D2D1_RECT_F rectDst = D2D1::RectF((float) xDst, (float) yDst, (float) (xDst + nDstWidth), (float) (yDst + nDstHeight));
-         D2D1_RECT_F rectSrc = D2D1::RectF((float) xSrc, (float) ySrc, (float) (xSrc + nSrcWidth), (float) (ySrc + nSrcHeight));
 
-         //dynamic_cast <::draw2d_direct2d::graphics *> (pgraphicsSrc)->SaveClip();
+         D2D1_RECT_F rectSrc = D2D1::RectF((float) xSrc, (float) ySrc, (float) (xSrc + nSrcWidth), (float) (ySrc + nSrcHeight));
 
          HRESULT hr = ((ID2D1DeviceContext *) pgraphicsSrc->get_os_data())->EndDraw();
 
          if(m_prendertarget != NULL)
          {
+
             m_prendertarget->DrawBitmap((ID2D1Bitmap *)pgraphicsSrc->get_current_bitmap()->get_os_data(),&rectDst,1.0,m_bitmapinterpolationmode,& rectSrc);
+
          }
          else
          {
-            m_pdevicecontext->DrawBitmap((ID2D1Bitmap *)pgraphicsSrc->get_current_bitmap()->get_os_data(),rectDst,1.0,m_interpolationmode,rectSrc);
-         }
 
-         //flush();
+            m_pdevicecontext->DrawBitmap((ID2D1Bitmap *)pgraphicsSrc->get_current_bitmap()->get_os_data(),rectDst,1.0,m_interpolationmode,rectSrc);
+
+         }
 
          if(SUCCEEDED(hr))
          {
 
             ((ID2D1DeviceContext *)pgraphicsSrc->get_os_data())->BeginDraw();
 
-            //dynamic_cast <::draw2d_direct2d::graphics *> (pgraphicsSrc)->RestoreClip();
-
          }
-
-         //hr = m_prendertarget->Flush();
-
-         //((ID2D1DeviceContext *) pgraphicsSrc->get_os_data())->BeginDraw();
 
          return true;
 
       }
       catch(...)
       {
-         return FALSE;
+
       }
 
-
-      //return ::StretchBlt(get_handle1(), x, y, nWidth, nHeight, WIN_HDC(pgraphicsSrc), xSrc, ySrc, nSrcWidth, nSrcHeight, dwRop);
+      return false;
 
    }
 
@@ -2720,11 +2740,15 @@ namespace draw2d_direct2d
 
          if(m_pdevicecontext != NULL)
          {
+
             m_prendertarget->DrawBitmap((ID2D1Bitmap *)pgraphicsSrc->get_current_bitmap()->get_os_data(),rectDst,(float)dRate,m_bitmapinterpolationmode,rectSrc);
+
          }
          else
          {
+
             m_pdevicecontext->DrawBitmap((ID2D1Bitmap *)pgraphicsSrc->get_current_bitmap()->get_os_data(),rectDst,(float)dRate,m_interpolationmode,rectSrc);
+
          }
 
          //hr = m_prendertarget->Flush();

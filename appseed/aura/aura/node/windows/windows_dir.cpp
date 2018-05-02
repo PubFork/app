@@ -865,7 +865,12 @@ namespace windows
 
       }
 
-      i++;
+      if (i < 0)
+      {
+
+         return true;
+
+      }
 
       for (; i < stra.get_count(); i++)
       {

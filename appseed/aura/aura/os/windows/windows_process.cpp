@@ -572,22 +572,6 @@ bool load_modules_diff(stringa & straOld, stringa & straNew, const char * pszExc
 }
 
 
-namespace process
-{
-
-
-   bool set_priority(int32_t priority)
-   {
-
-      return (::SetPriorityClass(::GetCurrentProcess(), get_os_priority_class(priority)) != 0);
-
-
-   }
-
-
-
-
-} // namespace process
 
 
 
@@ -956,20 +940,20 @@ CLASS_DECL_AURA void shared_library_process(dword_array & dwa, stringa & straPro
 
 CLASS_DECL_AURA ::file::path core_app_path(string strApp)
 {
-   
+
    strApp.replace("-", "_");
-   
+
    strApp.replace("/", "_");
-   
+
    if(strApp == "app_veriwell_waven")
    {
-      
+
       return "C:\\core\\time\\Win32\\basis\\" + strApp + ".exe";
-      
+
    }
-   
+
    return "C:\\core\\time\\x64\\basis\\" + strApp + ".exe";
-   
+
 }
 
 

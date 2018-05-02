@@ -72,26 +72,26 @@ extern "C" {
 
 typedef struct _SYSTEM_INFO
 {
-	union
-	{
-		DWORD dwOemId;
+   union
+   {
+      DWORD dwOemId;
 
-		struct
-		{
-			WORD wProcessorArchitecture;
-			WORD wReserved;
-		};
-	};
+      struct
+      {
+         WORD wProcessorArchitecture;
+         WORD wReserved;
+      };
+   };
 
-	DWORD dwPageSize;
-	LPVOID lpMinimumApplicationAddress;
-	LPVOID lpMaximumApplicationAddress;
-	DWORD_PTR dwActiveProcessorMask;
-	DWORD dwNumberOfProcessors;
-	DWORD dwProcessorType;
-	DWORD dwAllocationGranularity;
-	WORD wProcessorLevel;
-	WORD wProcessorRevision;
+   DWORD dwPageSize;
+   LPVOID lpMinimumApplicationAddress;
+   LPVOID lpMaximumApplicationAddress;
+   DWORD_PTR dwActiveProcessorMask;
+   DWORD dwNumberOfProcessors;
+   DWORD dwProcessorType;
+   DWORD dwAllocationGranularity;
+   WORD wProcessorLevel;
+   WORD wProcessorRevision;
 } SYSTEM_INFO, *LPSYSTEM_INFO;
 
 WINPR_API void GetSystemInfo(LPSYSTEM_INFO lpSystemInfo);
@@ -99,52 +99,52 @@ WINPR_API void GetNativeSystemInfo(LPSYSTEM_INFO lpSystemInfo);
 
 typedef struct _OSVERSIONINFOA
 {
-	DWORD dwOSVersionInfoSize;
-	DWORD dwMajorVersion;
-	DWORD dwMinorVersion;
-	DWORD dwBuildNumber;
-	DWORD dwPlatformId;
-	CHAR szCSDVersion[128];
+   DWORD dwOSVersionInfoSize;
+   DWORD dwMajorVersion;
+   DWORD dwMinorVersion;
+   DWORD dwBuildNumber;
+   DWORD dwPlatformId;
+   CHAR szCSDVersion[128];
 } OSVERSIONINFOA, *POSVERSIONINFOA, *LPOSVERSIONINFOA;
 
 typedef struct _OSVERSIONINFOW
 {
-	DWORD dwOSVersionInfoSize;
-	DWORD dwMajorVersion;
-	DWORD dwMinorVersion;
-	DWORD dwBuildNumber;
-	DWORD dwPlatformId;
-	WCHAR szCSDVersion[128];
+   DWORD dwOSVersionInfoSize;
+   DWORD dwMajorVersion;
+   DWORD dwMinorVersion;
+   DWORD dwBuildNumber;
+   DWORD dwPlatformId;
+   WCHAR szCSDVersion[128];
 } OSVERSIONINFOW, *POSVERSIONINFOW, *LPOSVERSIONINFOW;
 
 typedef struct _OSVERSIONINFOEXA
 {
-	DWORD dwOSVersionInfoSize;
-	DWORD dwMajorVersion;
-	DWORD dwMinorVersion;
-	DWORD dwBuildNumber;
-	DWORD dwPlatformId;
-	CHAR szCSDVersion[128];
-	WORD wServicePackMajor;
-	WORD wServicePackMinor;
-	WORD wSuiteMask;
-	BYTE wProductType;
-	BYTE wReserved;
+   DWORD dwOSVersionInfoSize;
+   DWORD dwMajorVersion;
+   DWORD dwMinorVersion;
+   DWORD dwBuildNumber;
+   DWORD dwPlatformId;
+   CHAR szCSDVersion[128];
+   WORD wServicePackMajor;
+   WORD wServicePackMinor;
+   WORD wSuiteMask;
+   BYTE wProductType;
+   BYTE wReserved;
 } OSVERSIONINFOEXA, *POSVERSIONINFOEXA, *LPOSVERSIONINFOEXA;
 
 typedef struct _OSVERSIONINFOEXW
 {
-	DWORD dwOSVersionInfoSize;
-	DWORD dwMajorVersion;
-	DWORD dwMinorVersion;
-	DWORD dwBuildNumber;
-	DWORD dwPlatformId;
-	WCHAR szCSDVersion[128];
-	WORD wServicePackMajor;
-	WORD wServicePackMinor;
-	WORD wSuiteMask;
-	BYTE wProductType;
-	BYTE wReserved;
+   DWORD dwOSVersionInfoSize;
+   DWORD dwMajorVersion;
+   DWORD dwMinorVersion;
+   DWORD dwBuildNumber;
+   DWORD dwPlatformId;
+   WCHAR szCSDVersion[128];
+   WORD wServicePackMajor;
+   WORD wServicePackMinor;
+   WORD wSuiteMask;
+   BYTE wProductType;
+   BYTE wReserved;
 } OSVERSIONINFOEXW, *POSVERSIONINFOEXW, *LPOSVERSIONINFOEXW;
 
 #ifdef UNICODE
@@ -256,7 +256,7 @@ WINPR_API BOOL IsProcessorFeaturePresent(DWORD ProcessorFeature);
 
 #endif
 
-#if !defined(_WIN32) || defined(_UWP)
+#if !defined(_WIN32) // || defined(_UWP)
 
 WINPR_API BOOL GetVersionExA(LPOSVERSIONINFOA lpVersionInformation);
 WINPR_API BOOL GetVersionExW(LPOSVERSIONINFOW lpVersionInformation);
@@ -276,18 +276,20 @@ WINPR_API DWORD GetTickCount(void);
 
 typedef enum _COMPUTER_NAME_FORMAT
 {
-	ComputerNameNetBIOS,
-	ComputerNameDnsHostname,
-	ComputerNameDnsDomain,
-	ComputerNameDnsFullyQualified,
-	ComputerNamePhysicalNetBIOS,
-	ComputerNamePhysicalDnsHostname,
-	ComputerNamePhysicalDnsDomain,
-	ComputerNamePhysicalDnsFullyQualified,
-	ComputerNameMax
+   ComputerNameNetBIOS,
+   ComputerNameDnsHostname,
+   ComputerNameDnsDomain,
+   ComputerNameDnsFullyQualified,
+   ComputerNamePhysicalNetBIOS,
+   ComputerNamePhysicalDnsHostname,
+   ComputerNamePhysicalDnsDomain,
+   ComputerNamePhysicalDnsFullyQualified,
+   ComputerNameMax
 } COMPUTER_NAME_FORMAT;
 
+#ifndef defined(_UWP)
 #define MAX_COMPUTERNAME_LENGTH 31
+#endif
 
 WINPR_API BOOL GetComputerNameExA(COMPUTER_NAME_FORMAT NameType, LPSTR lpBuffer, LPDWORD lpnSize);
 WINPR_API BOOL GetComputerNameExW(COMPUTER_NAME_FORMAT NameType, LPWSTR lpBuffer, LPDWORD lpnSize);

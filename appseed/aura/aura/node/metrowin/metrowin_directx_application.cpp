@@ -438,6 +438,8 @@ namespace metrowin
       m_mutex(NULL)
    {
 
+      m_pimpl = NULL;
+
       m_ptLastCursor.X = 0;
       m_ptLastCursor.Y = 0;
 
@@ -534,6 +536,10 @@ namespace metrowin
       m_psystem->m_possystemwindow->m_pui->initialize_native_window(&initialize);
 
       m_psystem->m_possystemwindow->m_pui->m_pimpl.cast < ::metrowin::interaction_impl >()->m_xapp = this;
+
+      m_pimpl = m_psystem->m_possystemwindow->m_pui->m_pimpl.cast < ::metrowin::interaction_impl >();
+
+      m_directx->m_pimpl = m_pimpl;
 
       //m_psystem->m_ptwf = create_twf_2ex();
 
@@ -678,7 +684,9 @@ namespace metrowin
 
       m_rectLastWindowRect.Height = (float)m_directx->m_size.cy;
 
-      m_directx->UpdateForWindowSizeChange();
+
+
+      m_directx->OnWindowSizeChange();
 
    }
 
@@ -688,7 +696,7 @@ namespace metrowin
 
       m_rectLastWindowRect = m_window->Bounds;
 
-      m_directx->SetDpi(sender->LogicalDpi);
+      m_directx->OnChangeDpi(sender->LogicalDpi);
 
 
    }

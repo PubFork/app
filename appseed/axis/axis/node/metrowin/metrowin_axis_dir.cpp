@@ -14,7 +14,6 @@ namespace metrowin
          ::object(papp),
          ::file::dir::system(papp),
          file_watcher::file_watcher(papp),
-         ::file_watcher::listener_thread(papp),
          ::metrowin::dir(papp),
          ::file::dir::axis::system(papp)
       {
@@ -521,183 +520,183 @@ namespace metrowin
 
       //}
 
-   //   string dir::usersystemappdata(::aura::application *  papp, const char * lpcszPrefix, const char * lpcsz, const char * lpcsz2)
-   //   {
-   //      UNREFERENCED_PARAMETER(papp);
-   //      return path(appdata(lpcszPrefix), lpcsz, lpcsz2);
-   //   }
-   //
-   //   string dir::appdata(::aura::application *  papp, const char * lpcsz, const char * lpcsz2)
-   //   {
-   //      return path(userfolder(papp, "appdata"), lpcsz, lpcsz2);
-   //   }
-   //
-   //   string dir::userdata(::aura::application *  papp, const char * lpcsz, const char * lpcsz2)
-   //   {
-   //      return path(userfolder(papp, "data"), lpcsz, lpcsz2);
-   //   }
-   //
-   //   string dir::userfolder(::aura::application *  papp, const char * lpcsz, const char * lpcsz2)
-   //   {
-   //#ifdef WINDOWSEX
-   //      string str;
-   //      SHGetSpecialFolderPath(
-   //         NULL,
-   //         str,
-   //         CSIDL_PROFILE,
-   //         FALSE);
-   //
-   //
-   //      string strRelative;
-   //      strRelative = ca2();
-   //      index iFind = strRelative.find(':');
-   //      if(iFind >= 0)
-   //      {
-   //         strsize iFind1 = strRelative.reverse_find("\\", iFind);
-   //         strsize iFind2 = strRelative.reverse_find("/", iFind);
-   //         strsize iStart = MAX(iFind1 + 1, iFind2 + 1);
-   //         strRelative = strRelative.Left(iFind - 1) + "_" + strRelative.Mid(iStart, iFind - iStart) + strRelative.Mid(iFind + 1);
-   //      }
-   //
-   //      string strUserFolderShift;
-   //
-   //      if(App(papp).handler().m_varTopicQuery.has_property("user_folder_relative_path"))
-   //      {
-   //         strUserFolderShift = path(strRelative, App(papp).handler().m_varTopicQuery["user_folder_relative_path"].get_string());
-   //      }
-   //      else
-   //      {
-   //         strUserFolderShift = strRelative;
-   //      }
-   //
-   //      return path(path(str, "ca2", strUserFolderShift), lpcsz, lpcsz2);
-   //
-   ////      return path(path(str, "ca2"), lpcsz);
-   ///*      if(&AppUser(papp) == NULL)
-   //      {
-   //         string str;
-   //         SHGetSpecialFolderPath(
-   //            NULL,
-   //            str,
-   //            CSIDL_PROFILE,
-   //            FALSE);
-   //         return path(path(str, "ca2\\_____default"), lpcsz);
-   //      }
-   //      else
-   //      {
-   //         return path(AppUser(papp).m_strPath, lpcsz, lpcsz2);
-   //      }*/
-   //#else
-   //
-   //      string str = appdata();
-   //
-   ///*      string strRelative;
-   //      strRelative = ca2();
-   //      index iFind = strRelative.find(':');
-   //      if(iFind >= 0)
-   //      {
-   //         strsize iFind1 = strRelative.reverse_find("\\", iFind);
-   //         strsize iFind2 = strRelative.reverse_find("/", iFind);
-   //         strsize iStart = MAX(iFind1 + 1, iFind2 + 1);
-   //         strRelative = strRelative.Left(iFind - 1) + "_" + strRelative.Mid(iStart, iFind - iStart) + strRelative.Mid(iFind + 1);
-   //      }*/
-   //
-   //      string strUserFolderShift;
-   //
-   //      if(App(papp).handler()->m_varTopicQuery.has_property("user_folder_relative_path"))
-   //      {
-   //         strUserFolderShift = App(papp).handler()->m_varTopicQuery["user_folder_relative_path"].get_string();
-   //      }
-   //
-   //      return path(path(str, "ca2", strUserFolderShift), lpcsz, lpcsz2);
-   //
-   //
-   //#endif
-   //
-   //   }
+      //   string dir::usersystemappdata(::aura::application *  papp, const char * lpcszPrefix, const char * lpcsz, const char * lpcsz2)
+      //   {
+      //      UNREFERENCED_PARAMETER(papp);
+      //      return path(appdata(lpcszPrefix), lpcsz, lpcsz2);
+      //   }
+      //
+      //   string dir::appdata(::aura::application *  papp, const char * lpcsz, const char * lpcsz2)
+      //   {
+      //      return path(userfolder(papp, "appdata"), lpcsz, lpcsz2);
+      //   }
+      //
+      //   string dir::userdata(::aura::application *  papp, const char * lpcsz, const char * lpcsz2)
+      //   {
+      //      return path(userfolder(papp, "data"), lpcsz, lpcsz2);
+      //   }
+      //
+      //   string dir::userfolder(::aura::application *  papp, const char * lpcsz, const char * lpcsz2)
+      //   {
+      //#ifdef WINDOWSEX
+      //      string str;
+      //      SHGetSpecialFolderPath(
+      //         NULL,
+      //         str,
+      //         CSIDL_PROFILE,
+      //         FALSE);
+      //
+      //
+      //      string strRelative;
+      //      strRelative = ca2();
+      //      index iFind = strRelative.find(':');
+      //      if(iFind >= 0)
+      //      {
+      //         strsize iFind1 = strRelative.reverse_find("\\", iFind);
+      //         strsize iFind2 = strRelative.reverse_find("/", iFind);
+      //         strsize iStart = MAX(iFind1 + 1, iFind2 + 1);
+      //         strRelative = strRelative.Left(iFind - 1) + "_" + strRelative.Mid(iStart, iFind - iStart) + strRelative.Mid(iFind + 1);
+      //      }
+      //
+      //      string strUserFolderShift;
+      //
+      //      if(App(papp).handler().m_varTopicQuery.has_property("user_folder_relative_path"))
+      //      {
+      //         strUserFolderShift = path(strRelative, App(papp).handler().m_varTopicQuery["user_folder_relative_path"].get_string());
+      //      }
+      //      else
+      //      {
+      //         strUserFolderShift = strRelative;
+      //      }
+      //
+      //      return path(path(str, "ca2", strUserFolderShift), lpcsz, lpcsz2);
+      //
+      ////      return path(path(str, "ca2"), lpcsz);
+      ///*      if(&AppUser(papp) == NULL)
+      //      {
+      //         string str;
+      //         SHGetSpecialFolderPath(
+      //            NULL,
+      //            str,
+      //            CSIDL_PROFILE,
+      //            FALSE);
+      //         return path(path(str, "ca2\\_____default"), lpcsz);
+      //      }
+      //      else
+      //      {
+      //         return path(AppUser(papp).m_strPath, lpcsz, lpcsz2);
+      //      }*/
+      //#else
+      //
+      //      string str = appdata();
+      //
+      ///*      string strRelative;
+      //      strRelative = ca2();
+      //      index iFind = strRelative.find(':');
+      //      if(iFind >= 0)
+      //      {
+      //         strsize iFind1 = strRelative.reverse_find("\\", iFind);
+      //         strsize iFind2 = strRelative.reverse_find("/", iFind);
+      //         strsize iStart = MAX(iFind1 + 1, iFind2 + 1);
+      //         strRelative = strRelative.Left(iFind - 1) + "_" + strRelative.Mid(iStart, iFind - iStart) + strRelative.Mid(iFind + 1);
+      //      }*/
+      //
+      //      string strUserFolderShift;
+      //
+      //      if(App(papp).handler()->m_varTopicQuery.has_property("user_folder_relative_path"))
+      //      {
+      //         strUserFolderShift = App(papp).handler()->m_varTopicQuery["user_folder_relative_path"].get_string();
+      //      }
+      //
+      //      return path(path(str, "ca2", strUserFolderShift), lpcsz, lpcsz2);
+      //
+      //
+      //#endif
+      //
+      //   }
 
-   //   string dir::default_os_user_path_prefix(::aura::application *  papp)
-   //   {
-   //      UNREFERENCED_PARAMETER(papp);
-   ////      unichar buf[MAX_PATH];
-   //#ifdef WINDOWSEX
-   //      ULONG ulSize = sizeof(buf) / sizeof(unichar);
-   //      if(!::GetUserNameExW(NameCanonical, buf, &ulSize))
-   //      {
-   //         if(!::GetUserNameW(buf, &ulSize))
-   //         {
-   //            memset(buf, 0, sizeof(buf));
-   //         }
-   //      }
-   //#else
-   //      return "CurrentUser";
-   //#endif
-   //      //return ::str::international::unicode_to_utf8(buf);
-   //   }
-   //
-   //   string dir::default_userappdata(::aura::application *  papp, const char * lpcszPrefix, const char * lpcszLogin, const char * pszRelativePath)
-   //   {
-   //      return path(default_userfolder(papp, lpcszPrefix, lpcszLogin, "appdata"), pszRelativePath);
-   //   }
+      //   string dir::default_os_user_path_prefix(::aura::application *  papp)
+      //   {
+      //      UNREFERENCED_PARAMETER(papp);
+      ////      unichar buf[MAX_PATH];
+      //#ifdef WINDOWSEX
+      //      ULONG ulSize = sizeof(buf) / sizeof(unichar);
+      //      if(!::GetUserNameExW(NameCanonical, buf, &ulSize))
+      //      {
+      //         if(!::GetUserNameW(buf, &ulSize))
+      //         {
+      //            memset(buf, 0, sizeof(buf));
+      //         }
+      //      }
+      //#else
+      //      return "CurrentUser";
+      //#endif
+      //      //return ::str::international::unicode_to_utf8(buf);
+      //   }
+      //
+      //   string dir::default_userappdata(::aura::application *  papp, const char * lpcszPrefix, const char * lpcszLogin, const char * pszRelativePath)
+      //   {
+      //      return path(default_userfolder(papp, lpcszPrefix, lpcszLogin, "appdata"), pszRelativePath);
+      //   }
 
-   //   string dir::default_userdata(::aura::application *  papp, const char * lpcszPrefix, const char * lpcszLogin, const char * pszRelativePath)
-   //   {
-   //      return path(default_userfolder(papp, lpcszPrefix, lpcszLogin, "data"), pszRelativePath);
-   //   }
-   //
-   //   string dir::default_userfolder(::aura::application *  papp, const char * lpcszPrefix, const char * lpcszLogin, const char * pszRelativePath)
-   //   {
-   //
-   //      return userfolder(papp, pszRelativePath);
-   //
-   ///*      UNREFERENCED_PARAMETER(papp);
-   //      string str;
-   //      SHGetSpecialFolderPath(
-   //         NULL,
-   //         str,
-   //         CSIDL_APPDATA,
-   //         FALSE);
-   //      return path(path(str, "ca2\\user", lpcszPrefix), lpcszLogin, pszRelativePath);*/
-   //   }
-   //
-   //   string dir::userquicklaunch(::aura::application *  papp, const char * lpcszRelativePath, const char * lpcsz2)
-   //   {
-   //_throw(todo(get_app()));
-         //UNREFERENCED_PARAMETER(papp);
-         //string str;
-         //SHGetSpecialFolderPath(
-         //   NULL,
-         //   str,
-         //   CSIDL_APPDATA,
-         //   FALSE);
-         //str = path(str, "Microsoft\\Internet Explorer\\Quick Launch");
-         //return path(str, lpcszRelativePath, lpcsz2);
-   //   }
-   //
-   //   string dir::userprograms(::aura::application *  papp, const char * lpcszRelativePath, const char * lpcsz2)
-   //   {
-   //_throw(todo(get_app()));
-   //      //UNREFERENCED_PARAMETER(papp);
-   //      //string str;
-   //      //SHGetSpecialFolderPath(
-   //      //   NULL,
-   //      //   str,
-   //      //   CSIDL_PROGRAMS,
-   //      //   FALSE);
-   //      //return path(str, lpcszRelativePath, lpcsz2);
-   //   }
-   //
-   //   string dir::commonprograms(const char * lpcszRelativePath, const char * lpcsz2)
-   //   {
-   //_throw(todo(get_app()));
-   //      //string str;
-   //      //SHGetSpecialFolderPath(
-   //      //   NULL,
-   //      //   str,
-   //      //   CSIDL_COMMON_PROGRAMS,
-   //      //   FALSE);
-   //      //return path(str, lpcszRelativePath, lpcsz2);
-   //   }
+      //   string dir::default_userdata(::aura::application *  papp, const char * lpcszPrefix, const char * lpcszLogin, const char * pszRelativePath)
+      //   {
+      //      return path(default_userfolder(papp, lpcszPrefix, lpcszLogin, "data"), pszRelativePath);
+      //   }
+      //
+      //   string dir::default_userfolder(::aura::application *  papp, const char * lpcszPrefix, const char * lpcszLogin, const char * pszRelativePath)
+      //   {
+      //
+      //      return userfolder(papp, pszRelativePath);
+      //
+      ///*      UNREFERENCED_PARAMETER(papp);
+      //      string str;
+      //      SHGetSpecialFolderPath(
+      //         NULL,
+      //         str,
+      //         CSIDL_APPDATA,
+      //         FALSE);
+      //      return path(path(str, "ca2\\user", lpcszPrefix), lpcszLogin, pszRelativePath);*/
+      //   }
+      //
+      //   string dir::userquicklaunch(::aura::application *  papp, const char * lpcszRelativePath, const char * lpcsz2)
+      //   {
+      //_throw(todo(get_app()));
+      //UNREFERENCED_PARAMETER(papp);
+      //string str;
+      //SHGetSpecialFolderPath(
+      //   NULL,
+      //   str,
+      //   CSIDL_APPDATA,
+      //   FALSE);
+      //str = path(str, "Microsoft\\Internet Explorer\\Quick Launch");
+      //return path(str, lpcszRelativePath, lpcsz2);
+      //   }
+      //
+      //   string dir::userprograms(::aura::application *  papp, const char * lpcszRelativePath, const char * lpcsz2)
+      //   {
+      //_throw(todo(get_app()));
+      //      //UNREFERENCED_PARAMETER(papp);
+      //      //string str;
+      //      //SHGetSpecialFolderPath(
+      //      //   NULL,
+      //      //   str,
+      //      //   CSIDL_PROGRAMS,
+      //      //   FALSE);
+      //      //return path(str, lpcszRelativePath, lpcsz2);
+      //   }
+      //
+      //   string dir::commonprograms(const char * lpcszRelativePath, const char * lpcsz2)
+      //   {
+      //_throw(todo(get_app()));
+      //      //string str;
+      //      //SHGetSpecialFolderPath(
+      //      //   NULL,
+      //      //   str,
+      //      //   CSIDL_COMMON_PROGRAMS,
+      //      //   FALSE);
+      //      //return path(str, lpcszRelativePath, lpcsz2);
+      //   }
 
       //bool dir::is_inside_time(const char * pszPath, ::aura::application *  papp)
       //{
@@ -709,23 +708,23 @@ namespace metrowin
       //   return ::str::begins_ci(pszDir, pszPath);
       //}
 
-   //   bool dir::has_subdir(::aura::application *  papp, const char * pszDir)
-   //   {
-   //      _throw(todo(get_app()));
-   //
-   ///*      file_find filefind;
-   //      bool bWorking;
-   //      bWorking = filefind.FindFile(path(pszDir, "*.*"));
-   //      while(bWorking)
-   //      {
-   //         bWorking = filefind.FindNextFileA();
-   //         if(filefind.IsDirectory() && !filefind.IsDots())
-   //         {
-   //            return true;
-   //         }
-   //      }
-   //      return false;*/
-   //   }
+      //   bool dir::has_subdir(::aura::application *  papp, const char * pszDir)
+      //   {
+      //      _throw(todo(get_app()));
+      //
+      ///*      file_find filefind;
+      //      bool bWorking;
+      //      bWorking = filefind.FindFile(path(pszDir, "*.*"));
+      //      while(bWorking)
+      //      {
+      //         bWorking = filefind.FindNextFileA();
+      //         if(filefind.IsDirectory() && !filefind.IsDots())
+      //         {
+      //            return true;
+      //         }
+      //      }
+      //      return false;*/
+      //   }
 
 
       /*string dir::commonappdata()

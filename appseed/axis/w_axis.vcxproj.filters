@@ -398,6 +398,9 @@
     <None Include="axis.def">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="w_axis.def">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="framework.cpp">

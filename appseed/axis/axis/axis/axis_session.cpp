@@ -770,6 +770,10 @@ namespace axis
       if(m_pkeyboard == NULL)
       {
 
+         //string strRellPath = "rell/path.txt";
+
+         //string str = ::file::path("https://server.ca2.cc") / "matter" / strRellPath;
+
          m_pkeyboard = new ::user::keyboard(m_pauraapp);
 
          if(m_pkeyboard == NULL)

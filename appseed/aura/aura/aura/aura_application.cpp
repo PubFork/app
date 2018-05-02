@@ -3919,7 +3919,6 @@ retry_license:
 
       try
       {
-
          stra.explode("-", ::Windows::Globalization::ApplicationLanguages::PrimaryLanguageOverride);
 
       }

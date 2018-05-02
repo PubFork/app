@@ -49,12 +49,6 @@
     <Filter Include="Source Files\core\core">
       <UniqueIdentifier>{209304d7-9db7-4f5f-afdb-2ee80dd44fb6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\core\os">
-      <UniqueIdentifier>{9387db24-1913-4095-963e-66cab64d1cee}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\core\os\metrowin">
-      <UniqueIdentifier>{d1f883b3-f4b9-4efa-b94c-cefb19201b72}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{3b593411-9334-44de-a4ac-66c4d900a479}</UniqueIdentifier>
     </Filter>
@@ -153,6 +147,12 @@
     </Filter>
     <Filter Include="Source Files\user\fontopus\NewFilter1">
       <UniqueIdentifier>{ce24e239-56ad-4880-aad2-bf263bd6d51b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\core\node">
+      <UniqueIdentifier>{9387db24-1913-4095-963e-66cab64d1cee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\core\node\metrowin">
+      <UniqueIdentifier>{d1f883b3-f4b9-4efa-b94c-cefb19201b72}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -687,9 +687,6 @@
     <ClCompile Include="core\core\core_system.cpp">
       <Filter>Source Files\core\core</Filter>
     </ClCompile>
-    <ClCompile Include="core\os\metrowin\metrowin_main.cpp">
-      <Filter>Source Files\core\os\metrowin</Filter>
-    </ClCompile>
     <ClCompile Include="user\hi5\hi5_oauth.cpp">
       <Filter>Source Files\user\hi5</Filter>
     </ClCompile>
@@ -954,6 +951,9 @@
     <ClCompile Include="user\_user.cpp">
       <Filter>Source Files\user</Filter>
     </ClCompile>
+    <ClCompile Include="core\node\metrowin\metrowin_main.cpp">
+      <Filter>Source Files\core\node\metrowin</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="core.def">
@@ -964,6 +964,9 @@
     </None>
     <None Include="core\core\core.inl">
       <Filter>Header Files\core\core</Filter>
+    </None>
+    <None Include="w_core.def">
+      <Filter>Source Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

@@ -26,7 +26,7 @@ namespace file
          {
          public:
 
-            bool           m_bIsDir;
+            int            m_iIsDir;
             uint32_t       m_dwLastCheck;
             uint32_t       m_dwError;
             string         m_str;

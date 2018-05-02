@@ -30,16 +30,16 @@ namespace metrowin
    {
    internal:
 
-      ::aura::application * m_pauraapp;
 
-      mutex    m_mutexDc;
+      bool                          m_b3D;
+      ::aura::application *         m_pauraapp;
+      mutex                         m_mutexDc;
+      size                          m_size;
+      ::user::interaction_impl *    m_pimpl;
+      bool                          m_bInitialized;
+      bool                          m_bInit;
+      ::draw2d::dib_sp              m_dib;
 
-      size        m_size;
-
-      bool m_bInitialized;
-      bool m_bInit;
-
-      ////::draw2d::dib_sp        m_dib;
 
       directx_base(::aura::application * papp);
 
@@ -55,6 +55,7 @@ namespace metrowin
       virtual void CreateDeviceIndependentResources();
       virtual void CreateDeviceResources();
       virtual void SetDpi(float dpi);
+      virtual void OnChangeDpi(float dpi);
       virtual void UpdateForWindowSizeChange();
       virtual void CreateWindowSizeDependentResources();
       virtual HRESULT Render();
@@ -77,7 +78,6 @@ namespace metrowin
       Microsoft::WRL::ComPtr<ID3D11RenderTargetView>  m_d3dRenderTargetView;
 
       // Direct2D Rendering Objects. Required for 2D.
-      //Microsoft::WRL::ComPtr<ID2D1Factory1>           m_d2dFactory;
       Microsoft::WRL::ComPtr<ID2D1Device>             m_d2dDevice;
       Microsoft::WRL::ComPtr<ID2D1DeviceContext>      m_pd2d1devicecontext;
       Microsoft::WRL::ComPtr<ID2D1Bitmap1>            m_d2dTargetBitmap;
@@ -91,14 +91,14 @@ namespace metrowin
       Windows::Foundation::Rect                       m_windowBounds;
       float                                           m_dpi;
       float                                           m_dpiIni;
-      bool                                            m_windowSizeChangeInProgress;
+      //bool                                            m_windowSizeChangeInProgress;
 
 
 
       //Microsoft::WRL::ComPtr<ID2D1SolidColorBrush>                    m_blackBrush;
-      Microsoft::WRL::ComPtr<IDWriteTextFormat>                       m_textFormat;
-      Microsoft::WRL::ComPtr<IDWriteTypography>                       m_textTypography;
-      Microsoft::WRL::ComPtr<IDWriteTextLayout>                       m_textLayout;
+      //Microsoft::WRL::ComPtr<IDWriteTextFormat>                       m_textFormat;
+      //Microsoft::WRL::ComPtr<IDWriteTypography>                       m_textTypography;
+      //Microsoft::WRL::ComPtr<IDWriteTextLayout>                       m_textLayout;
       //SampleOverlay^                                                  m_sampleOverlay;
 
 

@@ -141,6 +141,8 @@ namespace user
    bool tab::set_title(::index iPane, const char * lpcsz)
    {
 
+      synch_lock sl(m_pmutex);
+
       if (iPane < 0)
       {
 
@@ -155,7 +157,7 @@ namespace user
 
       }
 
-      get_data()->m_panea[iPane]->m_istrTitleEx = lpcsz;
+      get_data()->m_panea[iPane]->set_title(lpcsz);
 
       return true;
 
@@ -174,7 +176,7 @@ namespace user
 
       }
 
-      get_data()->m_panea[iPane]->m_istrTitleEx = lpcsz;
+      get_data()->m_panea[iPane]->set_title(lpcsz);
 
       return true;
 
@@ -192,12 +194,14 @@ namespace user
    bool tab::add_tab(const char * lpcsz, id id, bool bVisible, bool bPermanent, ::user::place_holder * pholder)
    {
 
-      sp(::user::tab_pane) ppane = canew(::user::tab_pane(get_app()));
+      sp(::user::tab_pane) ppane = canew(::user::tab_pane(this));
 
-      ppane->m_istrTitleEx       = lpcsz;
+      ppane->set_title(lpcsz);
       ppane->m_bTabPaneVisible   = bVisible;
       ppane->m_bPermanent        = bPermanent;
       ppane->m_pholder           = pholder;
+
+      synch_lock sl(m_pmutex);
 
       if (id.is_empty())
       {
@@ -272,7 +276,7 @@ namespace user
    bool tab::add_image_tab(const char * lpcszTitle, const char * pszImage, id id, bool bVisible, bool bPermanent)
    {
 
-      sp(::user::tab_pane) ppane = canew(::user::tab_pane(get_app()));
+      sp(::user::tab_pane) ppane = canew(::user::tab_pane(this));
 
       if (ppane == NULL)
       {
@@ -283,7 +287,9 @@ namespace user
 
       ppane->m_bTabPaneVisible = bVisible;
       ppane->m_bPermanent  = bPermanent;
-      ppane->m_istrTitleEx  = lpcszTitle;
+      ppane->set_title(lpcszTitle);
+
+      synch_lock sl(m_pmutex);
 
       if(id.is_empty())
          id = get_data()->m_panea.get_size();
@@ -1270,19 +1276,16 @@ namespace user
             }
 
             tab_pane.m_pt.x = x;
+
             tab_pane.m_pt.y = rectClient.top;
-
-
-//            string str = tab_pane.get_title();
-
-//            size size;
 
             ixAdd = 5;
 
             if (tab_pane.m_dib.is_set())
             {
-               //::image_list::info ii;
+
                ixAdd += tab_pane.m_dib->m_size.cx + 2;
+
             }
 
             if (!tab_pane.m_bPermanent)
@@ -1939,35 +1942,47 @@ namespace user
    }
 
 
-   tab_pane::tab_pane(::aura::application * papp) :
-      object(papp),
+   tab_pane::tab_pane(class tab * ptab) :
+      object(ptab->get_app()),
+      m_ptab(ptab),
       m_brushFill(allocer()),
       m_brushFillSel(allocer()),
       m_brushFillHover(allocer()),
-      m_istrTitleEx(papp)
+      m_istrTitleEx3(ptab->get_app())
    {
+
       m_bTabPaneVisible = true;
       m_bPermanent   = false;
       m_pholder      = NULL;
+
    }
 
    tab_pane::tab_pane(const ::user::tab_pane & tab_pane) :
-      m_istrTitleEx(tab_pane.get_app())
+      m_istrTitleEx3(tab_pane.get_app())
    {
+
       operator = (tab_pane);
+
    }
+
 
    tab_pane::~tab_pane()
    {
+
    }
+
 
    tab_pane & tab_pane::operator = (const tab_pane & tab_pane)
    {
 
       if(this != &tab_pane)
       {
+
+         m_ptab            = tab_pane.m_ptab;
          m_id              = tab_pane.m_id;
-         m_istrTitleEx     = tab_pane.m_istrTitleEx;
+         string str;
+         str = tab_pane.m_istrTitleEx3;
+         m_istrTitleEx3    = str.c_str();
          m_dib             = tab_pane.m_dib;
          m_pholder         = tab_pane.m_pholder;
          m_bTabPaneVisible = tab_pane.m_bTabPaneVisible;
@@ -1978,17 +1993,34 @@ namespace user
 
    }
 
+
    string tab_pane::get_title()
    {
 
-      return m_istrTitleEx;
+      synch_lock sl(m_ptab->m_pmutex);
+
+      string str;
+
+      str = m_istrTitleEx3;
+
+      return str.c_str();
 
    }
+
+   void tab_pane::set_title(const char * psz)
+   {
+
+      synch_lock sl(m_ptab->m_pmutex);
+
+      m_istrTitleEx3 = psz;
+
+   }
+
 
    void tab_pane::do_split_layout(::visual::graphics_extension & dc, ::draw2d::graphics * pgraphics)
    {
 
-      stringa & straTitle = m_straTitle;
+      stringa straTitle = m_straTitle.c_stra();
 
       straTitle.explode(MAGIC_PALACE_TAB_SPLT,get_title());
 

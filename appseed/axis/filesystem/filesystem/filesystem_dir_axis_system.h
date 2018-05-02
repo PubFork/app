@@ -101,8 +101,8 @@ namespace file
             virtual ::file::path matter(::aura::application * papp,const ::file::path & str,bool bDir = false,const ::file::path & pathRoot = cnull,const ::file::path & pathDomain = cnull);
             //virtual ::file::path matter(::aura::application * papp,const string & str,bool bDir = false,const ::file::path & pathRoot = cnull,const ::file::path & pathDomain = cnull);
 
-            virtual void   matter_ls(::aura::application * papp,const ::file::path & str,::file::patha & stra);
-            virtual void   matter_ls_file(::aura::application * papp,const ::file::path & str,::file::patha & stra);
+            //virtual void   matter_ls(::aura::application * papp,const ::file::path & str,::file::patha & stra);
+            //virtual void   matter_ls_file(::aura::application * papp,const ::file::path & str,::file::patha & stra);
 
             //virtual ::file::path matter(::aura::application * papp);
 
@@ -148,7 +148,7 @@ namespace file
 
          };
 
-         
+
 
       } // namespace axis
 

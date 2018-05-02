@@ -15,14 +15,16 @@ namespace metrowin
 {
 
 
-
-   // Constructor.
    directx_base::directx_base(::aura::application * papp):
       m_pauraapp(papp),
-      m_windowSizeChangeInProgress(false),
       m_dpi(-1.0f),
       m_mutexDc(papp)
    {
+
+      m_pimpl = NULL;
+
+      m_b3D = false;
+
       m_dpiIni = 1.0f;
       m_dpi = -999.0f;
       m_bInitialized = false;
@@ -42,6 +44,7 @@ namespace metrowin
       CreateDeviceIndependentResources();
 
       m_bInit = true;
+
 
    }
 
@@ -70,6 +73,10 @@ namespace metrowin
       SetDpi(m_dpiIni);
 
       m_bInitialized = true;
+
+      //m_dib.alloc(m_pauraapp->allocer());
+      //m_dib->create(1000, 1000);
+
 
       return true;
 
@@ -181,29 +188,29 @@ namespace metrowin
 
 
 
-      // Create a DirectWrite text format object.
-      ::metrowin::throw_if_failed(
-      m_dwriteFactory->CreateTextFormat(
-      L"Gabriola",
-      nullptr,
-      DWRITE_FONT_WEIGHT_REGULAR,
-      DWRITE_FONT_STYLE_NORMAL,
-      DWRITE_FONT_STRETCH_NORMAL,
-      64.0f,
-      L"en-US", // locale
-      &m_textFormat
-      )
-      );
+      //// Create a DirectWrite text format object.
+      //::metrowin::throw_if_failed(
+      //m_dwriteFactory->CreateTextFormat(
+      //L"Gabriola",
+      //nullptr,
+      //DWRITE_FONT_WEIGHT_REGULAR,
+      //DWRITE_FONT_STYLE_NORMAL,
+      //DWRITE_FONT_STRETCH_NORMAL,
+      //64.0f,
+      //L"en-US", // locale
+      //&m_textFormat
+      //)
+      //);
 
-      // Center the text horizontally.
-      ::metrowin::throw_if_failed(
-      m_textFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER)
-      );
+      //// Center the text horizontally.
+      //::metrowin::throw_if_failed(
+      //m_textFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER)
+      //);
 
-      // Center the text vertically.
-      ::metrowin::throw_if_failed(
-      m_textFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER)
-      );
+      //// Center the text vertically.
+      //::metrowin::throw_if_failed(
+      //m_textFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER)
+      //);
 
 
 
@@ -229,23 +236,36 @@ namespace metrowin
    // This is called in the dpiChanged event handler in the view class.
    void directx_base::SetDpi(float dpi)
    {
+      // Only handle window size changed if there is no pending DPI change.
+
+      m_window->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new Windows::UI::Core::DispatchedHandler([this,dpi]()
+      {
+         OnChangeDpi(dpi);
+
+         //         ::aura::system::g_p->m_paurasystem->m_possystemwindow->m_bWindowSizeChange = true;
+
+      }));
+
+   }
+   void directx_base::OnChangeDpi(float dpi)
+   {
       ::draw2d::lock draw2dlock;
 
-      if(dpi != m_dpi)
+      if (dpi != m_dpi)
       {
          // Save the DPI of this display in our class.
          m_dpi = dpi;
 
          System.m_dpi = dpi;
 
-         m_size.cx = (LONG) m_window->Bounds.Width;
+         m_size.cx = (LONG)m_window->Bounds.Width;
 
-         m_size.cy = (LONG) m_window->Bounds.Height;
+         m_size.cy = (LONG)m_window->Bounds.Height;
 
          // Often a DPI change implies a window size change. In some cases Windows will issue
          // both a size changed event and a DPI changed event. In this case, the resulting bounds
          // will not change, and the window resize code will only be executed once.
-         UpdateForWindowSizeChange();
+         OnWindowSizeChange();
       }
    }
 
@@ -277,27 +297,33 @@ namespace metrowin
       if (m_size.cx != m_windowBounds.Width || m_size.cy != m_windowBounds.Height)
       {
 
-         {
+         ::draw2d::lock lock;
 
-            ::draw2d::lock draw2dlock;
-
-            CreateWindowSizeDependentResources();
-
-         }
+         CreateWindowSizeDependentResources();
 
          System.m_possystemwindow->m_pui->SetWindowPos(ZORDER_TOP, 0, 0, m_size.cx, m_size.cy, SWP_SHOWWINDOW);
+
          if (System.handler()->m_varTopicQuery.has_property("client_only"))
          {
+
             for (int i = 0; i < System.m_possystemwindow->m_pui->m_uiptraChild.get_count(); i++)
             {
+
                if (System.m_possystemwindow->m_pui->m_uiptraChild[i]->IsWindowVisible())
                {
+
                   System.m_possystemwindow->m_pui->m_uiptraChild[i]->SetWindowPos(ZORDER_TOP, 0, 0, m_size.cx, m_size.cy, SWP_SHOWWINDOW);
 
-                  //System.m_posdata->m_pui->m_uiptraChild[i]->on_layout();
                }
+
             }
+
          }
+
+         Render();
+
+         Present();
+
       }
 
    }
@@ -306,7 +332,7 @@ namespace metrowin
    // Allocate all memory resources that change on a window SizeChanged event.
    void directx_base::CreateWindowSizeDependentResources()
    {
-      
+
       ::draw2d::device_lock devicelock;
 
       // Store the window bounds so the next time we get a SizeChanged event we can
@@ -317,7 +343,7 @@ namespace metrowin
       if(m_swapChain != nullptr)
       {
 
-         ID3D11RenderTargetView* nullViews[] = { nullptr };
+         ID3D11RenderTargetView * nullViews[] = { nullptr };
          m_d3dContext->OMSetRenderTargets(ARRAYSIZE(nullViews), nullViews, nullptr);
          m_d3dRenderTargetView = nullptr;
          m_pd2d1devicecontext->SetTarget(nullptr);
@@ -329,27 +355,28 @@ namespace metrowin
          m_d2dTargetBitmap = nullptr;
          m_d3dRenderTargetView = nullptr;
          m_d3dDepthStencilView = nullptr;
-         m_windowSizeChangeInProgress = true;
+         //m_windowSizeChangeInProgress = true;
 
 
          HRESULT hr;
-         //m_d3dContext->Flush();
+         m_d3dContext->Flush();
          m_d3dContext->ClearState();
-         //m_d2dDevice->ClearResources();
-         //{
-         //   Microsoft::WRL::ComPtr < ID3D11CommandList > pcommandlist;
-         //   hr = m_d3dContext->FinishCommandList(FALSE, &pcommandlist);
-         //   if (SUCCEEDED(hr))
-         //   {
-         //   }
-         //}
+         m_d2dDevice->ClearResources();
+         {
+            Microsoft::WRL::ComPtr < ID3D11CommandList > pcommandlist;
+            hr = m_d3dContext->FinishCommandList(FALSE, &pcommandlist);
+            if (SUCCEEDED(hr))
+            {
+            }
+         }
+
          // If the swap chain already exists, resize it.
          hr = m_swapChain->ResizeBuffers(
-                      0,
-                      0, // If you specify zero, DXGI will use the width of the client area of the target window.
-                      0, // If you specify zero, DXGI will use the height of the client area of the target window.
-            DXGI_FORMAT_UNKNOWN, // Set this value to DXGI_FORMAT_UNKNOWN to preserve the existing format of the back buffer.
-                      0);
+              0,
+              0, // If you specify zero, DXGI will use the width of the client area of the target window.
+              0, // If you specify zero, DXGI will use the height of the client area of the target window.
+              DXGI_FORMAT_UNKNOWN, // Set this value to DXGI_FORMAT_UNKNOWN to preserve the existing format of the back buffer.
+              0);
 
          if(hr == DXGI_ERROR_DEVICE_REMOVED)
          {
@@ -401,7 +428,8 @@ namespace metrowin
          dxgiAdapter->GetParent(IID_PPV_ARGS(&dxgiFactory))
          );
 
-         CoreWindow^ window = m_window.Get();
+         CoreWindow ^ window = m_window.Get();
+
          ::metrowin::throw_if_failed(
          dxgiFactory->CreateSwapChainForCoreWindow(
          m_d3dDevice.Get(),
@@ -414,68 +442,72 @@ namespace metrowin
 
          // Ensure that DXGI does not queue more than one frame at a time. This both reduces latency and
          // ensures that the application will only render after each VSync, minimizing power consumption.
-         ::metrowin::throw_if_failed(
-         dxgiDevice->SetMaximumFrameLatency(1)
-         );
+         ::metrowin::throw_if_failed(dxgiDevice->SetMaximumFrameLatency(1));
+
       }
 
-      // Create a Direct3D render target view of the swap chain back buffer.
-      ComPtr<ID3D11Texture2D> backBuffer;
-      ::metrowin::throw_if_failed(
-      m_swapChain->GetBuffer(0,IID_PPV_ARGS(&backBuffer))
-      );
+      if (m_b3D)
+      {
 
-      ::metrowin::throw_if_failed(
-      m_d3dDevice->CreateRenderTargetView(
-      backBuffer.Get(),
-      nullptr,
-      &m_d3dRenderTargetView
-      )
-      );
+         // Create a Direct3D render target view of the swap chain back buffer.
+         ComPtr<ID3D11Texture2D> backBuffer;
+         ::metrowin::throw_if_failed(
+         m_swapChain->GetBuffer(0, IID_PPV_ARGS(&backBuffer))
+         );
 
-      // Cache the rendertarget dimensions in our helper class for convenient use.
-      D3D11_TEXTURE2D_DESC backBufferDesc = {0};
-      backBuffer->GetDesc(&backBufferDesc);
-      m_renderTargetSize.Width  = static_cast<float>(backBufferDesc.Width);
-      m_renderTargetSize.Height = static_cast<float>(backBufferDesc.Height);
+         ::metrowin::throw_if_failed(
+         m_d3dDevice->CreateRenderTargetView(
+         backBuffer.Get(),
+         nullptr,
+         &m_d3dRenderTargetView
+         )
+         );
 
-      // Create a depth stencil view for use with 3D rendering if needed.
-      CD3D11_TEXTURE2D_DESC depthStencilDesc(
-      DXGI_FORMAT_D24_UNORM_S8_UINT,
-      backBufferDesc.Width,
-      backBufferDesc.Height,
-      1,
-      1,
-      D3D11_BIND_DEPTH_STENCIL
-      );
+         // Cache the rendertarget dimensions in our helper class for convenient use.
+         D3D11_TEXTURE2D_DESC backBufferDesc = { 0 };
+         backBuffer->GetDesc(&backBufferDesc);
+         m_renderTargetSize.Width = static_cast<float>(backBufferDesc.Width);
+         m_renderTargetSize.Height = static_cast<float>(backBufferDesc.Height);
 
-      ComPtr<ID3D11Texture2D> depthStencil;
-      ::metrowin::throw_if_failed(
-      m_d3dDevice->CreateTexture2D(
-      &depthStencilDesc,
-      nullptr,
-      &depthStencil
-      )
-      );
+         // Create a depth stencil view for use with 3D rendering if needed.
+         CD3D11_TEXTURE2D_DESC depthStencilDesc(
+         DXGI_FORMAT_D24_UNORM_S8_UINT,
+         backBufferDesc.Width,
+         backBufferDesc.Height,
+         1,
+         1,
+         D3D11_BIND_DEPTH_STENCIL
+         );
 
-      auto viewDesc = CD3D11_DEPTH_STENCIL_VIEW_DESC(D3D11_DSV_DIMENSION_TEXTURE2D);
-      ::metrowin::throw_if_failed(
-      m_d3dDevice->CreateDepthStencilView(
-      depthStencil.Get(),
-      &viewDesc,
-      &m_d3dDepthStencilView
-      )
-      );
+         ComPtr<ID3D11Texture2D> depthStencil;
+         ::metrowin::throw_if_failed(
+         m_d3dDevice->CreateTexture2D(
+         &depthStencilDesc,
+         nullptr,
+         &depthStencil
+         )
+         );
 
-      // Set the 3D rendering viewport to target the entire window.
-      CD3D11_VIEWPORT viewport(
-      0.0f,
-      0.0f,
-      static_cast<float>(backBufferDesc.Width),
-      static_cast<float>(backBufferDesc.Height)
-      );
+         auto viewDesc = CD3D11_DEPTH_STENCIL_VIEW_DESC(D3D11_DSV_DIMENSION_TEXTURE2D);
+         ::metrowin::throw_if_failed(
+         m_d3dDevice->CreateDepthStencilView(
+         depthStencil.Get(),
+         &viewDesc,
+         &m_d3dDepthStencilView
+         )
+         );
 
-      m_d3dContext->RSSetViewports(1,&viewport);
+         // Set the 3D rendering viewport to target the entire window.
+         CD3D11_VIEWPORT viewport(
+         0.0f,
+         0.0f,
+         static_cast<float>(backBufferDesc.Width),
+         static_cast<float>(backBufferDesc.Height)
+         );
+
+         m_d3dContext->RSSetViewports(1, &viewport);
+
+      }
 
       // Create a Direct2D target bitmap associated with the
       // swap chain back buffer and set it as the current target.
@@ -490,8 +522,8 @@ namespace metrowin
 
       ::draw2d_direct2d::throw_if_failed(
       global_draw_get_d2d1_device()->CreateDeviceContext(
-      D2D1_DEVICE_CONTEXT_OPTIONS_NONE,
-      //D2D1_DEVICE_CONTEXT_OPTIONS_ENABLE_MULTITHREADED_OPTIMIZATIONS,
+      //D2D1_DEVICE_CONTEXT_OPTIONS_NONE,
+      D2D1_DEVICE_CONTEXT_OPTIONS_ENABLE_MULTITHREADED_OPTIMIZATIONS,
       &m_pd2d1devicecontext
       )
       );
@@ -512,78 +544,9 @@ namespace metrowin
 
       m_pd2d1devicecontext->SetTarget(m_d2dTargetBitmap.Get());
 
-      // Grayscale text anti-aliasing is recommended for all Metro style apps.
-      m_pd2d1devicecontext->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE);
-
-      String^ text = "Hello World From ... DirectWrite!";
-
-      D2D1_SIZE_F size = m_pd2d1devicecontext->GetSize();
-
-      // Create a DirectWrite Text Layout object
-      ::metrowin::throw_if_failed(
-      m_dwriteFactory->CreateTextLayout(
-      text->Data(),                       // Text to be displayed
-      text->Length(),                     // Length of the text
-      m_textFormat.Get(),                 // DirectWrite Text Format object
-      size.width,                         // Width of the Text Layout
-      size.height,                        // Height of the Text Layout
-      &m_textLayout
-      )
-      );
-
-      // Text range for the "DirectWrite!" at the end of the string
-      DWRITE_TEXT_RANGE textRange = {21,12}; // 21 references the "D" in DirectWrite! and 12 is the number of characters in the word
-
-      // Set the font size on that text range to 100
-      ::metrowin::throw_if_failed(
-      m_textLayout->SetFontSize(100.0f,textRange)
-      );
-
-      // Create a DirectWrite Typography object
-      ::metrowin::throw_if_failed(
-      m_dwriteFactory->CreateTypography(
-      &m_textTypography
-      )
-      );
-
-      // Enumerate a stylistic set 6 font feature for application to our text on_layout
-      DWRITE_FONT_FEATURE fontFeature = {DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_6,1};
-
-      // Apply the previously enumerated font feature to our Text Typography object
-      ::metrowin::throw_if_failed(
-      m_textTypography->AddFontFeature(fontFeature)
-      );
-
-      // Move our text range to the entire length of the string
-      textRange.length = text->Length();
-      textRange.startPosition = 0;
-
-      // Apply our recently defined typography to our entire text range
-      ::metrowin::throw_if_failed(
-      m_textLayout->SetTypography(
-      m_textTypography.Get(),
-      textRange
-      )
-      );
-
-      // Move the text range to the end again
-      textRange.length = 12;
-      textRange.startPosition = 21;
-
-      // Set the underline on the text range
-      ::metrowin::throw_if_failed(
-      m_textLayout->SetUnderline(TRUE,textRange)
-      );
-
-      // Set the font weight on the text range
-      ::metrowin::throw_if_failed(
-      m_textLayout->SetFontWeight(DWRITE_FONT_WEIGHT_BOLD,textRange)
-      );
-
-
    }
 
-   // Method to deliver the final image to the display.
+
    void directx_base::Present()
    {
 
@@ -630,13 +593,28 @@ namespace metrowin
                // frames that will never be displayed to the screen.
                hr = m_swapChain->Present1(1, 0, &parameters);
 
-               // Discard the contents of the render target.
-               // This is a valid operation only when the existing contents will be entirely
-               // overwritten. If dirty or scroll rects are used, this call should be removed.
-               m_d3dContext->DiscardView(m_d3dRenderTargetView.Get());
+               if (m_d3dContext.Get())
+               {
 
-               // Discard the contents of the depth stencil.
-               m_d3dContext->DiscardView(m_d3dDepthStencilView.Get());
+                  if (m_d3dRenderTargetView.Get())
+                  {
+
+                     // Discard the contents of the render target.
+                     // This is a valid operation only when the existing contents will be entirely
+                     // overwritten. If dirty or scroll rects are used, this call should be removed.
+                     m_d3dContext->DiscardView(m_d3dRenderTargetView.Get());
+
+                  }
+
+                  if (m_d3dDepthStencilView.Get())
+                  {
+
+                     // Discard the contents of the depth stencil.
+                     m_d3dContext->DiscardView(m_d3dDepthStencilView.Get());
+
+                  }
+
+               }
 
                g_pdiba->remove_all();
 
@@ -665,22 +643,22 @@ namespace metrowin
 
       }
 
-      if (m_windowSizeChangeInProgress)
-      {
+      //if (m_windowSizeChangeInProgress)
+      //{
 
-         m_windowSizeChangeInProgress = false;
+      //   m_windowSizeChangeInProgress = false;
 
-         m_window->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new Windows::UI::Core::DispatchedHandler([this]()
-         {
+      //   m_window->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new Windows::UI::Core::DispatchedHandler([this]()
+      //   {
 
-            // A window size change has been initiated and the app has just completed presenting
-            // the first frame with the new size. Notify the resize manager so we can short
-            // circuit any resize animation and prevent unnecessary delays.
-            CoreWindowResizeManager::GetForCurrentView()->NotifyLayoutCompleted();
+      // A window size change has been initiated and the app has just completed presenting
+      // the first frame with the new size. Notify the resize manager so we can short
+      // circuit any resize animation and prevent unnecessary delays.
+      //      CoreWindowResizeManager::GetForCurrentView()->NotifyLayoutCompleted();
 
-         }));
+      //   }));
 
-      }
+      //}
 
    }
 
@@ -732,6 +710,9 @@ namespace metrowin
       if(!defer_init())
          return E_FAIL;
 
+
+
+
       m_pd2d1devicecontext->BeginDraw();
 
       D2D1_COLOR_F cr;
@@ -760,7 +741,11 @@ namespace metrowin
          if (pbuffer.is_set())
          {
 
-            dc->from(pbuffer->get_buffer()->get_size(), pbuffer->get_buffer()->get_graphics(), SRCCOPY);
+            size sz = pbuffer->get_buffer()->get_size();
+
+            ::draw2d::graphics * pgraphics = pbuffer->get_buffer()->get_graphics();
+
+            dc->from(sz, pgraphics, SRCCOPY);
 
          }
 
@@ -768,8 +753,8 @@ namespace metrowin
 
       //_001UpdateBuffer();
 
-//      Sys(::aura::system::g_p).m_possystemwindow->m_pui->_000OnDraw(m_dib->get_graphics());
-      //
+      //Sys(::aura::system::g_p).m_possystemwindow->m_pui->_000OnDraw(m_dib->get_graphics());
+
       //dc->from(m_dib->get_size(), m_dib->get_graphics(), SRCCOPY);
       //dc->from(m_dib->get_size(), m_dib->get_graphics(), SRCCOPY);
 

@@ -11,14 +11,20 @@ namespace user
    class CLASS_DECL_CORE tab_pane:
       virtual public ::object
    {
+   protected:
+
+
+      istring                             m_istrTitleEx3;
+
+
    public:
 
 
+      tab *                               m_ptab;
       ::draw2d::brush_sp                  m_brushFill;
       ::draw2d::brush_sp                  m_brushFillSel;
       ::draw2d::brush_sp                  m_brushFillHover;
       id                                  m_id;
-      istring                             m_istrTitleEx;
       ::visual::dib_sp                    m_dib;
       sp(place_holder)                    m_pholder;
       bool                                m_bTabPaneVisible;
@@ -29,7 +35,7 @@ namespace user
       point                               m_pt;
 
 
-      tab_pane(::aura::application * papp);
+      tab_pane(tab * ptab);
       tab_pane(const tab_pane & tab_pane);
       virtual ~tab_pane();
 
@@ -38,8 +44,11 @@ namespace user
 
 
       string get_title();
+      void set_title(const char * psz);
+
 
       virtual void do_split_layout(::visual::graphics_extension & dc,::draw2d::graphics * pgraphics);
+
 
    };
 

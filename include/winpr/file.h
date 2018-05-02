@@ -182,50 +182,50 @@
 
 typedef union _FILE_SEGMENT_ELEMENT
 {
-	PVOID64 Buffer;
-	ULONGLONG Alignment;
+   PVOID64 Buffer;
+   ULONGLONG Alignment;
 } FILE_SEGMENT_ELEMENT, *PFILE_SEGMENT_ELEMENT;
 
 typedef struct _WIN32_FIND_DATAA
 {
-	DWORD dwFileAttributes;
-	FILETIME ftCreationTime;
-	FILETIME ftLastAccessTime;
-	FILETIME ftLastWriteTime;
-	DWORD nFileSizeHigh;
-	DWORD nFileSizeLow;
-	DWORD dwReserved0;
-	DWORD dwReserved1;
-	CHAR cFileName[MAX_PATH];
-	CHAR cAlternateFileName[14];
+   DWORD dwFileAttributes;
+   FILETIME ftCreationTime;
+   FILETIME ftLastAccessTime;
+   FILETIME ftLastWriteTime;
+   DWORD nFileSizeHigh;
+   DWORD nFileSizeLow;
+   DWORD dwReserved0;
+   DWORD dwReserved1;
+   CHAR cFileName[MAX_PATH];
+   CHAR cAlternateFileName[14];
 } WIN32_FIND_DATAA, *PWIN32_FIND_DATAA, *LPWIN32_FIND_DATAA;
 
 typedef struct _WIN32_FIND_DATAW
 {
-	DWORD dwFileAttributes;
-	FILETIME ftCreationTime;
-	FILETIME ftLastAccessTime;
-	FILETIME ftLastWriteTime;
-	DWORD nFileSizeHigh;
-	DWORD nFileSizeLow;
-	DWORD dwReserved0;
-	DWORD dwReserved1;
-	WCHAR cFileName[MAX_PATH];
-	WCHAR cAlternateFileName[14];
+   DWORD dwFileAttributes;
+   FILETIME ftCreationTime;
+   FILETIME ftLastAccessTime;
+   FILETIME ftLastWriteTime;
+   DWORD nFileSizeHigh;
+   DWORD nFileSizeLow;
+   DWORD dwReserved0;
+   DWORD dwReserved1;
+   WCHAR cFileName[MAX_PATH];
+   WCHAR cAlternateFileName[14];
 } WIN32_FIND_DATAW, *PWIN32_FIND_DATAW, *LPWIN32_FIND_DATAW;
 
 typedef enum _FINDEX_INFO_LEVELS
 {
-	FindExInfoStandard,
-	FindExInfoMaxInfoLevel
+   FindExInfoStandard,
+   FindExInfoMaxInfoLevel
 } FINDEX_INFO_LEVELS;
 
 typedef enum _FINDEX_SEARCH_OPS
 {
-	FindExSearchNameMatch,
-	FindExSearchLimitToDirectories,
-	FindExSearchLimitToDevices,
-	FindExSearchMaxSearchOp
+   FindExSearchNameMatch,
+   FindExSearchLimitToDirectories,
+   FindExSearchLimitToDevices,
+   FindExSearchMaxSearchOp
 } FINDEX_SEARCH_OPS;
 
 typedef VOID (*LPOVERLAPPED_COMPLETION_ROUTINE)(DWORD dwErrorCode, DWORD dwNumberOfBytesTransfered, LPOVERLAPPED lpOverlapped);
@@ -245,49 +245,49 @@ extern "C" {
 #endif
 
 WINPR_API HANDLE CreateFileA(LPCSTR lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, LPSECURITY_ATTRIBUTES lpSecurityAttributes,
-		DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile);
+                             DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile);
 
 WINPR_API HANDLE CreateFileW(LPCWSTR lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, LPSECURITY_ATTRIBUTES lpSecurityAttributes,
-		DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile);
+                             DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile);
 
 WINPR_API BOOL DeleteFileA(LPCSTR lpFileName);
 
 WINPR_API BOOL DeleteFileW(LPCWSTR lpFileName);
 
 WINPR_API BOOL ReadFile(HANDLE hFile, LPVOID lpBuffer, DWORD nNumberOfBytesToRead,
-		LPDWORD lpNumberOfBytesRead, LPOVERLAPPED lpOverlapped);
+                        LPDWORD lpNumberOfBytesRead, LPOVERLAPPED lpOverlapped);
 
 WINPR_API BOOL ReadFileEx(HANDLE hFile, LPVOID lpBuffer, DWORD nNumberOfBytesToRead,
-		LPOVERLAPPED lpOverlapped, LPOVERLAPPED_COMPLETION_ROUTINE lpCompletionRoutine);
+                          LPOVERLAPPED lpOverlapped, LPOVERLAPPED_COMPLETION_ROUTINE lpCompletionRoutine);
 
 WINPR_API BOOL ReadFileScatter(HANDLE hFile, FILE_SEGMENT_ELEMENT aSegmentArray[],
-		DWORD nNumberOfBytesToRead, LPDWORD lpReserved, LPOVERLAPPED lpOverlapped);
+                               DWORD nNumberOfBytesToRead, LPDWORD lpReserved, LPOVERLAPPED lpOverlapped);
 
 WINPR_API BOOL WriteFile(HANDLE hFile, LPCVOID lpBuffer, DWORD nNumberOfBytesToWrite,
-		LPDWORD lpNumberOfBytesWritten, LPOVERLAPPED lpOverlapped);
+                         LPDWORD lpNumberOfBytesWritten, LPOVERLAPPED lpOverlapped);
 
 WINPR_API BOOL WriteFileEx(HANDLE hFile, LPCVOID lpBuffer, DWORD nNumberOfBytesToWrite,
-		LPOVERLAPPED lpOverlapped, LPOVERLAPPED_COMPLETION_ROUTINE lpCompletionRoutine);
+                           LPOVERLAPPED lpOverlapped, LPOVERLAPPED_COMPLETION_ROUTINE lpCompletionRoutine);
 
 WINPR_API BOOL WriteFileGather(HANDLE hFile, FILE_SEGMENT_ELEMENT aSegmentArray[],
-		DWORD nNumberOfBytesToWrite, LPDWORD lpReserved, LPOVERLAPPED lpOverlapped);
+                               DWORD nNumberOfBytesToWrite, LPDWORD lpReserved, LPOVERLAPPED lpOverlapped);
 
 WINPR_API BOOL FlushFileBuffers(HANDLE hFile);
 
 typedef struct _WIN32_FILE_ATTRIBUTE_DATA
 {
-	DWORD    dwFileAttributes;
-	FILETIME ftCreationTime;
-	FILETIME ftLastAccessTime;
-	FILETIME ftLastWriteTime;
-	DWORD    nFileSizeHigh;
-	DWORD    nFileSizeLow;
+   DWORD    dwFileAttributes;
+   FILETIME ftCreationTime;
+   FILETIME ftLastAccessTime;
+   FILETIME ftLastWriteTime;
+   DWORD    nFileSizeHigh;
+   DWORD    nFileSizeLow;
 } WIN32_FILE_ATTRIBUTE_DATA, *LPWIN32_FILE_ATTRIBUTE_DATA;
 
 typedef enum _GET_FILEEX_INFO_LEVELS
 {
-	GetFileExInfoStandard,
-	GetFileExMaxInfoLevel
+   GetFileExInfoStandard,
+   GetFileExMaxInfoLevel
 } GET_FILEEX_INFO_LEVELS;
 
 WINPR_API BOOL GetFileAttributesExA(LPCSTR lpFileName, GET_FILEEX_INFO_LEVELS fInfoLevelId, LPVOID lpFileInformation);
@@ -295,7 +295,7 @@ WINPR_API BOOL GetFileAttributesExA(LPCSTR lpFileName, GET_FILEEX_INFO_LEVELS fI
 WINPR_API DWORD GetFileAttributesA(LPCSTR lpFileName);
 
 WINPR_API BOOL GetFileAttributesExW(LPCWSTR lpFileName, GET_FILEEX_INFO_LEVELS fInfoLevelId, LPVOID lpFileInformation);
-	
+
 WINPR_API DWORD GetFileAttributesW(LPCWSTR lpFileName);
 
 WINPR_API BOOL SetFileAttributesA(LPCSTR lpFileName, DWORD dwFileAttributes);
@@ -307,33 +307,33 @@ WINPR_API BOOL SetEndOfFile(HANDLE hFile);
 WINPR_API DWORD WINAPI GetFileSize(HANDLE hFile, LPDWORD lpFileSizeHigh);
 
 WINPR_API DWORD SetFilePointer(HANDLE hFile, LONG lDistanceToMove,
-		PLONG lpDistanceToMoveHigh, DWORD dwMoveMethod);
+                               PLONG lpDistanceToMoveHigh, DWORD dwMoveMethod);
 
 WINPR_API BOOL SetFilePointerEx(HANDLE hFile, LARGE_INTEGER liDistanceToMove,
-		PLARGE_INTEGER lpNewFilePointer, DWORD dwMoveMethod);
+                                PLARGE_INTEGER lpNewFilePointer, DWORD dwMoveMethod);
 
 WINPR_API BOOL LockFile(HANDLE hFile, DWORD dwFileOffsetLow, DWORD dwFileOffsetHigh,
-		DWORD nNumberOfBytesToLockLow, DWORD nNumberOfBytesToLockHigh);
+                        DWORD nNumberOfBytesToLockLow, DWORD nNumberOfBytesToLockHigh);
 
 WINPR_API BOOL LockFileEx(HANDLE hFile, DWORD dwFlags, DWORD dwReserved,
-		DWORD nNumberOfBytesToLockLow, DWORD nNumberOfBytesToLockHigh, LPOVERLAPPED lpOverlapped);
+                          DWORD nNumberOfBytesToLockLow, DWORD nNumberOfBytesToLockHigh, LPOVERLAPPED lpOverlapped);
 
 WINPR_API BOOL UnlockFile(HANDLE hFile, DWORD dwFileOffsetLow, DWORD dwFileOffsetHigh,
-		DWORD nNumberOfBytesToUnlockLow, DWORD nNumberOfBytesToUnlockHigh);
+                          DWORD nNumberOfBytesToUnlockLow, DWORD nNumberOfBytesToUnlockHigh);
 
 WINPR_API BOOL UnlockFileEx(HANDLE hFile, DWORD dwReserved, DWORD nNumberOfBytesToUnlockLow,
-		DWORD nNumberOfBytesToUnlockHigh, LPOVERLAPPED lpOverlapped);
+                            DWORD nNumberOfBytesToUnlockHigh, LPOVERLAPPED lpOverlapped);
 
 WINPR_API BOOL SetFileTime(HANDLE hFile, const FILETIME *lpCreationTime,
-		const FILETIME *lpLastAccessTime, const FILETIME *lpLastWriteTime);
+                           const FILETIME *lpLastAccessTime, const FILETIME *lpLastWriteTime);
 
 WINPR_API HANDLE FindFirstFileA(LPCSTR lpFileName, LPWIN32_FIND_DATAA lpFindFileData);
 WINPR_API HANDLE FindFirstFileW(LPCWSTR lpFileName, LPWIN32_FIND_DATAW lpFindFileData);
 
 WINPR_API HANDLE FindFirstFileExA(LPCSTR lpFileName, FINDEX_INFO_LEVELS fInfoLevelId, LPVOID lpFindFileData,
-		FINDEX_SEARCH_OPS fSearchOp, LPVOID lpSearchFilter, DWORD dwAdditionalFlags);
+                                  FINDEX_SEARCH_OPS fSearchOp, LPVOID lpSearchFilter, DWORD dwAdditionalFlags);
 WINPR_API HANDLE FindFirstFileExW(LPCWSTR lpFileName, FINDEX_INFO_LEVELS fInfoLevelId, LPVOID lpFindFileData,
-		FINDEX_SEARCH_OPS fSearchOp, LPVOID lpSearchFilter, DWORD dwAdditionalFlags);
+                                  FINDEX_SEARCH_OPS fSearchOp, LPVOID lpSearchFilter, DWORD dwAdditionalFlags);
 
 WINPR_API BOOL FindNextFileA(HANDLE hFindFile, LPWIN32_FIND_DATAA lpFindFileData);
 WINPR_API BOOL FindNextFileW(HANDLE hFindFile, LPWIN32_FIND_DATAW lpFindFileData);
@@ -351,10 +351,10 @@ WINPR_API BOOL SetStdHandle(DWORD nStdHandle, HANDLE hHandle);
 WINPR_API BOOL SetStdHandleEx(DWORD dwStdHandle, HANDLE hNewHandle, HANDLE* phOldHandle);
 
 WINPR_API BOOL GetDiskFreeSpaceA(LPCSTR lpRootPathName, LPDWORD lpSectorsPerCluster,
-	LPDWORD lpBytesPerSector, LPDWORD lpNumberOfFreeClusters, LPDWORD lpTotalNumberOfClusters);
+                                 LPDWORD lpBytesPerSector, LPDWORD lpNumberOfFreeClusters, LPDWORD lpTotalNumberOfClusters);
 
 WINPR_API BOOL GetDiskFreeSpaceW(LPCWSTR lpRootPathName, LPDWORD lpSectorsPerCluster,
-	LPDWORD lpBytesPerSector, LPDWORD lpNumberOfFreeClusters, LPDWORD lpTotalNumberOfClusters);
+                                 LPDWORD lpBytesPerSector, LPDWORD lpNumberOfFreeClusters, LPDWORD lpTotalNumberOfClusters);
 
 WINPR_API BOOL MoveFileExA(LPCSTR lpExistingFileName, LPCSTR lpNewFileName, DWORD dwFlags);
 
@@ -402,12 +402,12 @@ WINPR_API BOOL MoveFileW(LPCWSTR lpExistingFileName, LPCWSTR lpNewFileName);
 
 typedef BOOL (*pcIsFileHandled)(LPCSTR lpFileName);
 typedef HANDLE (*pcCreateFileA)(LPCSTR lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, LPSECURITY_ATTRIBUTES lpSecurityAttributes,
-				DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile);
+                                DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile);
 
 typedef struct _HANDLE_CREATOR
 {
-	pcIsFileHandled IsHandled;
-	pcCreateFileA CreateFileA;
+   pcIsFileHandled IsHandled;
+   pcCreateFileA CreateFileA;
 } HANDLE_CREATOR, *PHANDLE_CREATOR, *LPHANDLE_CREATOR;
 
 WINPR_API BOOL ValidFileNameComponent(LPCWSTR lpFileName);
@@ -421,15 +421,17 @@ extern "C" {
 #endif
 
 WINPR_API HANDLE CreateFileA(LPCSTR lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, LPSECURITY_ATTRIBUTES lpSecurityAttributes,
-	DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile);
+                             DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile);
 
 WINPR_API HANDLE CreateFileW(LPCWSTR lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, LPSECURITY_ATTRIBUTES lpSecurityAttributes,
-	DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile);
+                             DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile);
 
 WINPR_API DWORD WINAPI GetFileSize(HANDLE hFile, LPDWORD lpFileSizeHigh);
 
+#ifndef _UWP
+
 WINPR_API DWORD SetFilePointer(HANDLE hFile, LONG lDistanceToMove,
-	PLONG lpDistanceToMoveHigh, DWORD dwMoveMethod);
+                               PLONG lpDistanceToMoveHigh, DWORD dwMoveMethod);
 
 WINPR_API HANDLE FindFirstFileA(LPCSTR lpFileName, LPWIN32_FIND_DATAA lpFindFileData);
 WINPR_API HANDLE FindFirstFileW(LPCWSTR lpFileName, LPWIN32_FIND_DATAW lpFindFileData);
@@ -437,10 +439,12 @@ WINPR_API HANDLE FindFirstFileW(LPCWSTR lpFileName, LPWIN32_FIND_DATAW lpFindFil
 WINPR_API DWORD GetFullPathNameA(LPCSTR lpFileName, DWORD nBufferLength, LPSTR lpBuffer, LPSTR* lpFilePart);
 
 WINPR_API BOOL GetDiskFreeSpaceA(LPCSTR lpRootPathName, LPDWORD lpSectorsPerCluster,
-	LPDWORD lpBytesPerSector, LPDWORD lpNumberOfFreeClusters, LPDWORD lpTotalNumberOfClusters);
+                                 LPDWORD lpBytesPerSector, LPDWORD lpNumberOfFreeClusters, LPDWORD lpTotalNumberOfClusters);
 
 WINPR_API BOOL GetDiskFreeSpaceW(LPCWSTR lpRootPathName, LPDWORD lpSectorsPerCluster,
-	LPDWORD lpBytesPerSector, LPDWORD lpNumberOfFreeClusters, LPDWORD lpTotalNumberOfClusters);
+                                 LPDWORD lpBytesPerSector, LPDWORD lpNumberOfFreeClusters, LPDWORD lpTotalNumberOfClusters);
+
+#endif
 
 WINPR_API DWORD GetLogicalDriveStringsA(DWORD nBufferLength, LPSTR lpBuffer);
 
@@ -448,7 +452,11 @@ WINPR_API DWORD GetLogicalDriveStringsW(DWORD nBufferLength, LPWSTR lpBuffer);
 
 WINPR_API BOOL PathIsDirectoryEmptyA(LPCSTR pszPath);
 
+#ifndef _UWP
+
 WINPR_API UINT GetACP(void);
+
+#endif
 
 #ifdef UNICODE
 #define CreateFile		CreateFileW

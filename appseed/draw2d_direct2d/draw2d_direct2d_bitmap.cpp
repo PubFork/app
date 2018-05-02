@@ -135,21 +135,22 @@ namespace draw2d_direct2d
       if (FAILED(hr) || m_pbitmap1 == NULL)
          return FALSE;
 
-      D2D1_MAPPED_RECT        map;
-
-      hr = m_pbitmap1->Map(D2D1_MAP_OPTIONS_READ, &map);
-
-      if (FAILED(hr) || map.bits == NULL)
-      {
-         destroy();
-         return false;
-      }
-
-
       if (ppvBits != NULL)
       {
 
-         *ppvBits = (COLORREF *)map.bits;
+         //D2D1_MAPPED_RECT        map;
+
+         //hr = m_pbitmap1->Map(D2D1_MAP_OPTIONS_READ, &map);
+
+         //if (FAILED(hr) || map.bits == NULL)
+         //{
+         //   destroy();
+         //   return false;
+         //}
+
+
+
+         //*ppvBits = (COLORREF *)map.bits;
 
       }
 

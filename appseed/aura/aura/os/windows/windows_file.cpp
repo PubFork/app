@@ -395,25 +395,6 @@ bool file_get_memory_dup(::primitive::memory_base & memory, const char * path)
 
 
 
-::file::path file::app_module()
-{
-
-   hwstring hwPath(MAX_PATH * 16);
-
-   if (!GetModuleFileNameW(NULL, hwPath, hwPath.count()))
-   {
-
-      return "";
-
-   }
-
-   string strPath;
-
-   strPath = hwPath;
-
-   return strPath;
-
-}
 
 
 

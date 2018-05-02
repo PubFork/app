@@ -5220,28 +5220,40 @@ restart:
    void dib::Fill(COLORREF cr)
    {
 
-      map();
-
-      int64_t size = scan_area();
-
-      byte a = argb_get_a_value(cr);
-      byte r = argb_get_r_value(cr);
-      byte g = argb_get_g_value(cr);
-      byte b = argb_get_b_value(cr);
-
-      if (a == r && a == g && a == b)
+      if (m_bMapped)
       {
 
-         memset(m_pcolorref, a, m_iScan * m_size.cy);
-         return;
+         int64_t size = scan_area();
+
+         byte a = argb_get_a_value(cr);
+         byte r = argb_get_r_value(cr);
+         byte g = argb_get_g_value(cr);
+         byte b = argb_get_b_value(cr);
+
+         if (a == r && a == g && a == b)
+         {
+
+            memset(m_pcolorref, a, m_iScan * m_size.cy);
+
+            return;
+
+         }
+
+         COLORREF * pcr = m_pcolorref;
+
+         #pragma omp parallel for
+         for (int64_t i = 0; i < size; i++)
+            pcr[i] = cr;
 
       }
+      else
+      {
 
-      COLORREF * pcr = m_pcolorref;
+         get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
 
-      #pragma omp parallel for
-      for (int64_t i = 0; i < size; i++)
-         pcr[i] = cr;
+         get_graphics()->FillSolidRect(rect(null_point(), m_size), cr);
+
+      }
 
    }
 
@@ -5256,10 +5268,6 @@ restart:
 
    void dib::Fill(int32_t a, int32_t r, int32_t g, int32_t b)
    {
-
-      //ASSERT(r <= a && g <= a && b <= a);
-
-      map();
 
       if (a == r && a == g && a == b)
       {

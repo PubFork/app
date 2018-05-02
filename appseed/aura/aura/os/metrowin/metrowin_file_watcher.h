@@ -32,55 +32,55 @@ namespace file_watcher
 {
 
 
-	/// Implementation for Win Merde based on StorageFolder::CreateFileQueryWithOptions.
-	/// @class os_file_watcher
-	class os_file_watcher :
+   /// Implementation for Win Merde based on StorageFolder::CreateFileQueryWithOptions.
+   /// @class os_file_watcher
+   class os_file_watcher :
       public file_watcher_impl
-	{
+   {
    public:
 
 
       /// type for a map from id to watch_struct pointer
-      typedef map < file_watch_id, file_watch_id, watch_holder, watch_holder > watch_map;
+      typedef map < id, id, watch_holder, watch_holder > watch_map;
 
 
-	private:
+   private:
 
 
-		/// Map of id to watch_struct pointers
-		watch_map m_watchmap;
-		/// The last watchid
-		file_watch_id m_idLast;
+      /// Map of id to watch_struct pointers
+      watch_map m_watchmap;
+      /// The last watchid
+      id m_idLast;
 
 
-	public:
+   public:
 
 
-		os_file_watcher(::aura::application * papp);
-		virtual ~os_file_watcher();
+      os_file_watcher(::aura::application * papp);
+      virtual ~os_file_watcher();
 
 
-		/// Add a directory watch
-		/// @exception file_not_found_exception Thrown when the requested directory does not exist
-		virtual file_watch_id add_watch(const string & directory, file_watch_listener * watcher, bool bRecursive, bool bOwn) override;
+      /// Add a directory watch
+      /// @exception file_not_found_exception Thrown when the requested directory does not exist
+      virtual id add_watch(const string & directory, listener * watcher, bool bRecursive, bool bOwn) override;
 
-		/// Remove a directory watch. This is a brute force lazy search O(nlogn).
-		void remove_watch(const string & directory);
+      /// Remove a directory watch. This is a brute force lazy search O(nlogn).
+      void remove_watch(const string & directory);
 
-		/// Remove a directory watch. This is a map lookup O(logn).
-		void remove_watch(file_watch_id watchid);
+      /// Remove a directory watch. This is a map lookup O(logn).
+      void remove_watch(id watchid);
 
       /// Return the directory name for a watch id
-      string watch_path(file_watch_id watchid);
+      string watch_path(id watchid);
 
-		/// Updates the watcher. Must be called often.
-		bool update();
+      /// Updates the watcher. Must be called often.
+      bool update();
 
-		/// Handles the action
-		void handle_action(action * paction);
+      /// Handles the action
+      void handle_action(action * paction);
 
 
-	}; // end os_file_watcher
+   }; // end os_file_watcher
 
 
 } // namespace file_watcher

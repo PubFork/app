@@ -43,7 +43,7 @@
     <ClCompile Include="core\core\core_strn.cpp" />
     <ClCompile Include="core\core\core_str_format.cpp" />
     <ClCompile Include="core\core\core_system.cpp" />
-    <ClCompile Include="core\os\metrowin\metrowin_main.cpp" />
+    <ClCompile Include="core\node\metrowin\metrowin_main.cpp" />
     <ClCompile Include="core\plugin\plugin_history.cpp" />
     <ClCompile Include="core\plugin\plugin_host_interaction.cpp" />
     <ClCompile Include="core\plugin\plugin_instance.cpp" />
@@ -1480,6 +1480,7 @@
     <None Include="core.def" />
     <None Include="core\core\core.inl" />
     <None Include="user\user\user_interaction.inl" />
+    <None Include="w_core.def" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\core\core.h" />

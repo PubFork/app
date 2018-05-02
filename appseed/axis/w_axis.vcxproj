@@ -123,6 +123,7 @@
   <ItemGroup>
     <None Include="axis.def" />
     <None Include="axis\axis\axis.inl" />
+    <None Include="w_axis.def" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="axis\axis\axis.cpp">

@@ -4,6 +4,7 @@
 
 #include "windows_common_base.cpp"
 #include "windows_common_error.cpp"
+#include "windows_common_file.cpp"
 #include "windows_common_graphics.cpp"
 #include "windows_common_multithreading.cpp"
 #include "windows_common_unicode.cpp"

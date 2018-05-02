@@ -137,29 +137,31 @@ typedef ACCESS_MASK REGSAM;
 #define RRF_NOEXPAND					0x10000000
 #define RRF_ZEROONFAILURE				0x20000000
 
+#ifndef _UWP
+
 struct val_context
 {
-	int valuelen;
-	LPVOID value_context;
-	LPVOID val_buff_ptr;
+   int valuelen;
+   LPVOID value_context;
+   LPVOID val_buff_ptr;
 };
 
 typedef struct val_context *PVALCONTEXT;
 
 typedef struct pvalueA
 {
-	LPSTR pv_valuename;
-	int pv_valuelen;
-	LPVOID pv_value_context;
-	DWORD pv_type;
+   LPSTR pv_valuename;
+   int pv_valuelen;
+   LPVOID pv_value_context;
+   DWORD pv_type;
 } PVALUEA, *PPVALUEA;
 
 typedef struct pvalueW
 {
-	LPWSTR pv_valuename;
-	int pv_valuelen;
-	LPVOID pv_value_context;
-	DWORD pv_type;
+   LPWSTR pv_valuename;
+   int pv_valuelen;
+   LPVOID pv_value_context;
+   DWORD pv_type;
 } PVALUEW, *PPVALUEW;
 
 #ifdef UNICODE
@@ -172,18 +174,18 @@ typedef PPVALUEA PPVALUE;
 
 typedef struct value_entA
 {
-	LPSTR ve_valuename;
-	DWORD ve_valuelen;
-	DWORD_PTR ve_valueptr;
-	DWORD ve_type;
+   LPSTR ve_valuename;
+   DWORD ve_valuelen;
+   DWORD_PTR ve_valueptr;
+   DWORD ve_type;
 } VALENTA, *PVALENTA;
 
 typedef struct value_entW
 {
-	LPWSTR ve_valuename;
-	DWORD ve_valuelen;
-	DWORD_PTR ve_valueptr;
-	DWORD ve_type;
+   LPWSTR ve_valuename;
+   DWORD ve_valuelen;
+   DWORD_PTR ve_valueptr;
+   DWORD ve_type;
 } VALENTW, *PVALENTW;
 
 #ifdef UNICODE
@@ -192,6 +194,8 @@ typedef PVALENTW PVALENT;
 #else
 typedef VALENTA VALENT;
 typedef PVALENTA PVALENT;
+#endif
+
 #endif
 
 WINPR_API LONG RegCloseKey(HKEY hKey);
@@ -206,9 +210,9 @@ WINPR_API LONG RegCopyTreeA(HKEY hKeySrc, LPCSTR lpSubKey, HKEY hKeyDest);
 #endif
 
 WINPR_API LONG RegCreateKeyExW(HKEY hKey, LPCWSTR lpSubKey, DWORD Reserved, LPWSTR lpClass, DWORD dwOptions,
-		REGSAM samDesired, LPSECURITY_ATTRIBUTES lpSecurityAttributes, PHKEY phkResult, LPDWORD lpdwDisposition);
+                               REGSAM samDesired, LPSECURITY_ATTRIBUTES lpSecurityAttributes, PHKEY phkResult, LPDWORD lpdwDisposition);
 WINPR_API LONG RegCreateKeyExA(HKEY hKey, LPCSTR lpSubKey, DWORD Reserved, LPSTR lpClass, DWORD dwOptions,
-		REGSAM samDesired, LPSECURITY_ATTRIBUTES lpSecurityAttributes, PHKEY phkResult, LPDWORD lpdwDisposition);
+                               REGSAM samDesired, LPSECURITY_ATTRIBUTES lpSecurityAttributes, PHKEY phkResult, LPDWORD lpdwDisposition);
 
 #ifdef UNICODE
 #define RegCreateKeyEx RegCreateKeyExW
@@ -246,9 +250,9 @@ WINPR_API LONG RegDeleteValueA(HKEY hKey, LPCSTR lpValueName);
 WINPR_API LONG RegDisablePredefinedCacheEx(void);
 
 WINPR_API LONG RegEnumKeyExW(HKEY hKey, DWORD dwIndex, LPWSTR lpName, LPDWORD lpcName,
-		LPDWORD lpReserved, LPWSTR lpClass, LPDWORD lpcClass, PFILETIME lpftLastWriteTime);
+                             LPDWORD lpReserved, LPWSTR lpClass, LPDWORD lpcClass, PFILETIME lpftLastWriteTime);
 WINPR_API LONG RegEnumKeyExA(HKEY hKey, DWORD dwIndex, LPSTR lpName, LPDWORD lpcName,
-		LPDWORD lpReserved, LPSTR lpClass, LPDWORD lpcClass, PFILETIME lpftLastWriteTime);
+                             LPDWORD lpReserved, LPSTR lpClass, LPDWORD lpcClass, PFILETIME lpftLastWriteTime);
 
 #ifdef UNICODE
 #define RegEnumKeyEx RegEnumKeyExW
@@ -257,9 +261,9 @@ WINPR_API LONG RegEnumKeyExA(HKEY hKey, DWORD dwIndex, LPSTR lpName, LPDWORD lpc
 #endif
 
 WINPR_API LONG RegEnumValueW(HKEY hKey, DWORD dwIndex, LPWSTR lpValueName,
-		LPDWORD lpcchValueName, LPDWORD lpReserved, LPDWORD lpType, LPBYTE lpData, LPDWORD lpcbData);
+                             LPDWORD lpcchValueName, LPDWORD lpReserved, LPDWORD lpType, LPBYTE lpData, LPDWORD lpcbData);
 WINPR_API LONG RegEnumValueA(HKEY hKey, DWORD dwIndex, LPSTR lpValueName,
-		LPDWORD lpcchValueName, LPDWORD lpReserved, LPDWORD lpType, LPBYTE lpData, LPDWORD lpcbData);
+                             LPDWORD lpcchValueName, LPDWORD lpReserved, LPDWORD lpType, LPBYTE lpData, LPDWORD lpcbData);
 
 #ifdef UNICODE
 #define RegEnumValue RegEnumValueW
@@ -270,12 +274,12 @@ WINPR_API LONG RegEnumValueA(HKEY hKey, DWORD dwIndex, LPSTR lpValueName,
 WINPR_API LONG RegFlushKey(HKEY hKey);
 
 WINPR_API LONG RegGetKeySecurity(HKEY hKey, SECURITY_INFORMATION SecurityInformation,
-		PSECURITY_DESCRIPTOR pSecurityDescriptor, LPDWORD lpcbSecurityDescriptor);
+                                 PSECURITY_DESCRIPTOR pSecurityDescriptor, LPDWORD lpcbSecurityDescriptor);
 
 WINPR_API LONG RegGetValueW(HKEY hkey, LPCWSTR lpSubKey, LPCWSTR lpValue,
-		DWORD dwFlags, LPDWORD pdwType, PVOID pvData, LPDWORD pcbData);
+                            DWORD dwFlags, LPDWORD pdwType, PVOID pvData, LPDWORD pcbData);
 WINPR_API LONG RegGetValueA(HKEY hkey, LPCSTR lpSubKey, LPCSTR lpValue,
-		DWORD dwFlags, LPDWORD pdwType, PVOID pvData, LPDWORD pcbData);
+                            DWORD dwFlags, LPDWORD pdwType, PVOID pvData, LPDWORD pcbData);
 
 #ifdef UNICODE
 #define RegGetValue RegGetValueW
@@ -284,9 +288,9 @@ WINPR_API LONG RegGetValueA(HKEY hkey, LPCSTR lpSubKey, LPCSTR lpValue,
 #endif
 
 WINPR_API LONG RegLoadAppKeyW(LPCWSTR lpFile, PHKEY phkResult,
-		REGSAM samDesired, DWORD dwOptions, DWORD Reserved);
+                              REGSAM samDesired, DWORD dwOptions, DWORD Reserved);
 WINPR_API LONG RegLoadAppKeyA(LPCSTR lpFile, PHKEY phkResult,
-		REGSAM samDesired, DWORD dwOptions, DWORD Reserved);
+                              REGSAM samDesired, DWORD dwOptions, DWORD Reserved);
 
 #ifdef UNICODE
 #define RegLoadAppKey RegLoadAppKeyW
@@ -304,9 +308,9 @@ WINPR_API LONG RegLoadKeyA(HKEY hKey, LPCSTR lpSubKey, LPCSTR lpFile);
 #endif
 
 WINPR_API LONG RegLoadMUIStringW(HKEY hKey, LPCWSTR pszValue, LPWSTR pszOutBuf,
-		DWORD cbOutBuf, LPDWORD pcbData, DWORD Flags, LPCWSTR pszDirectory);
+                                 DWORD cbOutBuf, LPDWORD pcbData, DWORD Flags, LPCWSTR pszDirectory);
 WINPR_API LONG RegLoadMUIStringA(HKEY hKey, LPCSTR pszValue, LPSTR pszOutBuf,
-		DWORD cbOutBuf, LPDWORD pcbData, DWORD Flags, LPCSTR pszDirectory);
+                                 DWORD cbOutBuf, LPDWORD pcbData, DWORD Flags, LPCSTR pszDirectory);
 
 #ifdef UNICODE
 #define RegLoadMUIString RegLoadMUIStringW
@@ -330,13 +334,13 @@ WINPR_API LONG RegOpenKeyExA(HKEY hKey, LPCSTR lpSubKey, DWORD ulOptions, REGSAM
 WINPR_API LONG RegOpenUserClassesRoot(HANDLE hToken, DWORD dwOptions, REGSAM samDesired, PHKEY phkResult);
 
 WINPR_API LONG RegQueryInfoKeyW(HKEY hKey, LPWSTR lpClass, LPDWORD lpcClass, LPDWORD lpReserved,
-		LPDWORD lpcSubKeys, LPDWORD lpcMaxSubKeyLen, LPDWORD lpcMaxClassLen,
-		LPDWORD lpcValues, LPDWORD lpcMaxValueNameLen, LPDWORD lpcMaxValueLen,
-		LPDWORD lpcbSecurityDescriptor, PFILETIME lpftLastWriteTime);
+                                LPDWORD lpcSubKeys, LPDWORD lpcMaxSubKeyLen, LPDWORD lpcMaxClassLen,
+                                LPDWORD lpcValues, LPDWORD lpcMaxValueNameLen, LPDWORD lpcMaxValueLen,
+                                LPDWORD lpcbSecurityDescriptor, PFILETIME lpftLastWriteTime);
 WINPR_API LONG RegQueryInfoKeyA(HKEY hKey, LPSTR lpClass, LPDWORD lpcClass, LPDWORD lpReserved,
-		LPDWORD lpcSubKeys, LPDWORD lpcMaxSubKeyLen, LPDWORD lpcMaxClassLen,
-		LPDWORD lpcValues, LPDWORD lpcMaxValueNameLen, LPDWORD lpcMaxValueLen,
-		LPDWORD lpcbSecurityDescriptor, PFILETIME lpftLastWriteTime);
+                                LPDWORD lpcSubKeys, LPDWORD lpcMaxSubKeyLen, LPDWORD lpcMaxClassLen,
+                                LPDWORD lpcValues, LPDWORD lpcMaxValueNameLen, LPDWORD lpcMaxValueLen,
+                                LPDWORD lpcbSecurityDescriptor, PFILETIME lpftLastWriteTime);
 
 #ifdef UNICODE
 #define RegQueryInfoKey RegQueryInfoKeyW
@@ -345,9 +349,9 @@ WINPR_API LONG RegQueryInfoKeyA(HKEY hKey, LPSTR lpClass, LPDWORD lpcClass, LPDW
 #endif
 
 WINPR_API LONG RegQueryValueExW(HKEY hKey, LPCWSTR lpValueName,
-		LPDWORD lpReserved, LPDWORD lpType, LPBYTE lpData, LPDWORD lpcbData);
+                                LPDWORD lpReserved, LPDWORD lpType, LPBYTE lpData, LPDWORD lpcbData);
 WINPR_API LONG RegQueryValueExA(HKEY hKey, LPCSTR lpValueName,
-		LPDWORD lpReserved, LPDWORD lpType, LPBYTE lpData, LPDWORD lpcbData);
+                                LPDWORD lpReserved, LPDWORD lpType, LPBYTE lpData, LPDWORD lpcbData);
 
 #ifdef UNICODE
 #define RegQueryValueEx RegQueryValueExW

@@ -779,197 +779,199 @@ namespace file
          }
 
 
-         void system::matter_ls(::aura::application * papp, const ::file::path & str, ::file::patha & stra)
-         {
+//         void system::matter_ls(::aura::application * papp, const ::file::path & str, ::file::patha & stra)
+//         {
+//
+//            ::file::dir::system::matter_ls(papp, str, stra);
+//
+//            //::file::path strDir = matter(papp, str, true);
+//
+//            //if (Sess(papp).m_bMatterFromHttpCache)
+//            //{
+//
+//            //   string strMatter = strDir;
+//
+//            //   strsize iFind1 = strMatter.find_ci("/matter/");
+//
+//            //   strsize iFind2 = strMatter.find_ci("\\matter\\");
+//
+//            //   strsize iFind = min_non_neg(iFind1, iFind2);
+//
+//            //   if(iFind > 0)
+//            //   {
+//
+//            //      strMatter = strMatter.Mid(iFind);
+//
+//            //   }
+//
+//            //   property_set set(get_app());
+//
+//            //   set["raw_http"] = true;
+//
+//            //   ::file::path strFile = System.dir().commonappdata() / "cache" / strMatter / "list_dir.list_dir";
+//
+//            //   iFind = strFile.find(DIR_SEPARATOR);
+//
+//            //   if (iFind > 0)
+//            //   {
+//
+//            //      strFile.replace(":", "_", iFind + 1);
+//
+//            //   }
+//
+//            //   strFile.replace("////", "//");
+//            //   strFile.replace("\\\\", "\\", 1);
+//
+//            //   ::file::path strLs;
+//
+//            //   if (Application.file().exists(strFile))
+//            //   {
+//
+//            //      strLs = Application.file().as_string(strFile);
+//
+//            //   }
+//            //   else
+//            //   {
+//
+//            //      // todo: keep cache timeout information;
+//            //      strLs = Sess(papp).http().get("http://"+get_api_cc()+"/api/matter/list_dir?dir=" + System.url().url_encode(strMatter), set);
+//
+//            //      Application.file().put_contents(strFile, strLs);
+//
+//            //   }
+//
+//
+//
+//            //   stringa straLs;
+//
+//            //   stringa straSep;
+//
+//            //   straSep.add("\r");
+//            //   straSep.add("\n");
+//            //   straSep.add("\r\n");
+//
+//            //   straLs.add_smallest_tokens(strLs, straSep, false);
+//
+//            //   for (index i = 0; i < straLs.get_count(); i++)
+//            //   {
+//
+//            //      ::file::path strPath = strDir / straLs[i];
+//
+//            //      if (::str::ends(straLs[i], "/"))
+//            //      {
+//
+//            //         strPath.m_iDir = 1;
+//
+//            //      }
+//
+//            //      stra.add(strPath);
+//
+//            //   }
+//
+//            //}
+//            //else
+//            //{
+//
+////               stra = listing(papp).ls(strDir);
+//
+//            //}
+//
+//         }
+
+
+         //void system::matter_ls_file(::aura::application * papp, const ::file::path & str, ::file::patha & stra)
+         //{
 
-            ::file::path strDir = matter(papp, str, true);
+         //   ::file::path strDir = matter(papp, str, true);
 
-            if (Sess(papp).m_bMatterFromHttpCache)
-            {
+         //   if (Sess(papp).m_bMatterFromHttpCache)
+         //   {
 
-               string strMatter = strDir;
+         //      string strMatter = strDir;
 
-               strsize iFind1 = strMatter.find_ci("/matter/");
+         //      strsize iFind1 = strMatter.find_ci("/matter/");
 
-               strsize iFind2 = strMatter.find_ci("\\matter\\");
+         //      strsize iFind2 = strMatter.find_ci("\\matter\\");
 
-               strsize iFind = min_non_neg(iFind1, iFind2);
+         //      strsize iFind = min_non_neg(iFind1, iFind2);
 
-               if(iFind > 0)
-               {
+         //      if(iFind > 0)
+         //      {
 
-                  strMatter = strMatter.Mid(iFind);
+         //         strMatter = strMatter.Mid(iFind);
 
-               }
+         //      }
 
-               property_set set(get_app());
+         //      property_set set(get_app());
 
-               set["raw_http"] = true;
+         //      set["raw_http"] = true;
 
-               ::file::path strFile = System.dir().commonappdata() / "cache" / strMatter / "list_dir.list_dir";
+         //      ::file::path strFile = System.dir().commonappdata() / "cache" / strDir / "list_dir.list_dir";
 
-               iFind = strFile.find(DIR_SEPARATOR);
+         //      iFind = strFile.find(DIR_SEPARATOR);
 
-               if (iFind > 0)
-               {
+         //      if (iFind > 0)
+         //      {
 
-                  strFile.replace(":", "_", iFind + 1);
+         //         strFile.replace(":", "_", iFind + 1);
 
-               }
+         //      }
 
-               strFile.replace("////", "//");
-               strFile.replace("\\\\", "\\", 1);
+         //      strFile.replace("////", "//");
+         //      strFile.replace("\\\\", "\\", 1);
 
-               ::file::path strLs;
+         //      ::file::path strLs;
 
-               if (Application.file().exists(strFile))
-               {
+         //      if (Application.file().exists(strFile))
+         //      {
 
-                  strLs = Application.file().as_string(strFile);
+         //         strLs = Application.file().as_string(strFile);
 
-               }
-               else
-               {
+         //      }
+         //      else
+         //      {
 
-                  // todo: keep cache timeout information;
-                  strLs = Sess(papp).http().get("http://"+get_api_cc()+"/api/matter/list_dir?dir=" + System.url().url_encode(strMatter), set);
+         //         // todo: keep cache timeout information;
+         //         strLs = Sess(papp).http().get("http://" + get_api_cc() + "/api/matter/list_dir?dir=" + System.url().url_encode(strMatter), set);
 
-                  Application.file().put_contents(strFile, strLs);
+         //         Application.file().put_contents(strFile, strLs);
 
-               }
+         //      }
 
 
 
-               stringa straLs;
+         //      stringa straLs;
 
-               stringa straSep;
+         //      stringa straSep;
 
-               straSep.add("\r");
-               straSep.add("\n");
-               straSep.add("\r\n");
+         //      straSep.add("\r");
+         //      straSep.add("\n");
+         //      straSep.add("\r\n");
 
-               straLs.add_smallest_tokens(strLs, straSep, false);
+         //      straLs.add_smallest_tokens(strLs, straSep, false);
 
-               for (index i = 0; i < straLs.get_count(); i++)
-               {
+         //      for (index i = 0; i < straLs.get_count(); i++)
+         //      {
 
-                  ::file::path strPath = strDir / straLs[i];
+         //         if (!::str::ends(straLs[i], "/"))
+         //         {
+         //            ::file::path strPath = strDir / straLs[i];
+         //            stra.add(strPath);
+         //         }
 
-                  if (::str::ends(straLs[i], "/"))
-                  {
+         //      }
 
-                     strPath.m_iDir = 1;
+         //   }
+         //   else
+         //   {
 
-                  }
+         //      stra = listing(papp).ls_file(strDir);
 
-                  stra.add(strPath);
 
-               }
+         //   }
 
-            }
-            else
-            {
 
-               stra = listing(papp).ls(strDir);
-
-            }
-
-         }
-
-
-         void system::matter_ls_file(::aura::application * papp, const ::file::path & str, ::file::patha & stra)
-         {
-
-            ::file::path strDir = matter(papp, str, true);
-
-            if (Sess(papp).m_bMatterFromHttpCache)
-            {
-
-               string strMatter = strDir;
-
-               strsize iFind1 = strMatter.find_ci("/matter/");
-
-               strsize iFind2 = strMatter.find_ci("\\matter\\");
-
-               strsize iFind = min_non_neg(iFind1, iFind2);
-
-               if(iFind > 0)
-               {
-
-                  strMatter = strMatter.Mid(iFind);
-
-               }
-
-               property_set set(get_app());
-
-               set["raw_http"] = true;
-
-               ::file::path strFile = System.dir().commonappdata() / "cache" / strDir / "list_dir.list_dir";
-
-               iFind = strFile.find(DIR_SEPARATOR);
-
-               if (iFind > 0)
-               {
-
-                  strFile.replace(":", "_", iFind + 1);
-
-               }
-
-               strFile.replace("////", "//");
-               strFile.replace("\\\\", "\\", 1);
-
-               ::file::path strLs;
-
-               if (Application.file().exists(strFile))
-               {
-
-                  strLs = Application.file().as_string(strFile);
-
-               }
-               else
-               {
-
-                  // todo: keep cache timeout information;
-                  strLs = Sess(papp).http().get("http://" + get_api_cc() + "/api/matter/list_dir?dir=" + System.url().url_encode(strMatter), set);
-
-                  Application.file().put_contents(strFile, strLs);
-
-               }
-
-
-
-               stringa straLs;
-
-               stringa straSep;
-
-               straSep.add("\r");
-               straSep.add("\n");
-               straSep.add("\r\n");
-
-               straLs.add_smallest_tokens(strLs, straSep, false);
-
-               for (index i = 0; i < straLs.get_count(); i++)
-               {
-
-                  if (!::str::ends(straLs[i], "/"))
-                  {
-                     ::file::path strPath = strDir / straLs[i];
-                     stra.add(strPath);
-                  }
-
-               }
-
-            }
-            else
-            {
-
-               stra = listing(papp).ls_file(strDir);
-
-
-            }
-
-
-         }
+         //}
 
 
          ::file::path system::matter(::aura::application * papp, const ::file::patha & stra, bool bDir, const ::file::path & root, const ::file::path & domain)

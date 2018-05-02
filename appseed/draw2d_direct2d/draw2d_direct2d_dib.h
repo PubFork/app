@@ -25,7 +25,6 @@ namespace draw2d_direct2d
       ::draw2d::bitmap_sp           m_spbitmapMap;
       ::draw2d::graphics_sp         m_spgraphicsMap;
 
-      bool                          m_bMapped;
       bool                          m_bTrans;
 
       //float                                        m_dpi;

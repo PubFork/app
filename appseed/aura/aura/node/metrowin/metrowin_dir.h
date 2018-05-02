@@ -45,7 +45,7 @@ namespace metrowin
       //virtual string name(const char * lpcsz);
       //virtual string name(const string & str);
 
-      ::file::path dir::userfolder(::aura::application *  papp);
+      ::file::path userfolder(::aura::application *  papp);
 
       virtual ::file::path votagus();
       virtual ::file::path time();
@@ -67,14 +67,14 @@ namespace metrowin
 
       virtual ::file::path appdata();
 
-      virtual ::file::path usersystemappdata(::aura::application *  papp,const string & strPrefix);
-      virtual ::file::path userappdata(::aura::application *  papp);
-      virtual ::file::path userdata(::aura::application *  papp);
-      //virtual ::file::path userfolder(::aura::application *  papp);
-      virtual ::file::path default_os_user_path_prefix(::aura::application *  papp);
-      virtual ::file::path default_userappdata(::aura::application *  papp,const string & strPrefix,const string & strLogin);
-      virtual ::file::path default_userdata(::aura::application *  papp,const string & strPrefix,const string & strLogin);
-      virtual ::file::path default_userfolder(::aura::application *  papp,const string & strPrefix,const string & strLogin);
+      //virtual ::file::path usersystemappdata(::aura::application *  papp,const string & strPrefix);
+      //virtual ::file::path userappdata(::aura::application *  papp);
+      //virtual ::file::path userdata(::aura::application *  papp);
+      ////virtual ::file::path userfolder(::aura::application *  papp);
+      //virtual ::file::path default_os_user_path_prefix(::aura::application *  papp);
+      //virtual ::file::path default_userappdata(::aura::application *  papp,const string & strPrefix,const string & strLogin);
+      //virtual ::file::path default_userdata(::aura::application *  papp,const string & strPrefix,const string & strLogin);
+      //virtual ::file::path default_userfolder(::aura::application *  papp,const string & strPrefix,const string & strLogin);
       virtual ::file::path userquicklaunch(::aura::application *  papp);
       virtual ::file::path userprograms(::aura::application *  papp);
 
@@ -87,11 +87,11 @@ namespace metrowin
 
       virtual bool update_module_path() override;
 
-      virtual ::file::path get_document_folder() override;
+      virtual ::file::path document() override;
 
-      virtual ::file::path get_music_folder() override;
-      virtual ::file::path get_video_folder() override;
-      virtual ::file::path get_image_folder() override;
+      virtual ::file::path music() override;
+      virtual ::file::path video() override;
+      virtual ::file::path image() override;
 
 
    };

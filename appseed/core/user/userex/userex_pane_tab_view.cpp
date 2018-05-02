@@ -714,7 +714,7 @@ namespace userex
       if (pdoc.is_set())
       {
 
-         pdoc->get_html_data()->m_propertyset["app_options_title"] = get_pane_by_id(pcreatordata->m_id)->m_istrTitleEx.to_string();
+         pdoc->get_html_data()->m_propertyset["app_options_title"] = get_pane_by_id(pcreatordata->m_id)->get_title();
 
       }
 

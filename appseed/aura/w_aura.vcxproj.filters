@@ -337,6 +337,15 @@
     <Filter Include="Header Files\aura\os\windows_common">
       <UniqueIdentifier>{1a82e5c5-db97-42bb-929c-cf01cf137196}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\aura\os\windows">
+      <UniqueIdentifier>{de9e705c-58ff-4b29-8abe-4bdab799c8b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\aura\node\windows">
+      <UniqueIdentifier>{3c3750c6-6bd0-4d0f-9452-c3b38d4b4446}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\aura\node\windows">
+      <UniqueIdentifier>{09241598-640a-4364-b89b-b5834dc5f8d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="primitive\primitive_application_bias.h">
@@ -1872,9 +1881,6 @@
     <ClInclude Include="aura\compress\compress_department.h">
       <Filter>Header Files\aura\compress</Filter>
     </ClInclude>
-    <ClInclude Include="aura\os\os_cpp.h">
-      <Filter>Header Files\aura\os</Filter>
-    </ClInclude>
     <ClInclude Include="aura\node\metrowin\metrowin_command.h">
       <Filter>Header Files\aura\os\metrowin</Filter>
     </ClInclude>
@@ -2109,6 +2115,165 @@
     <ClInclude Include="aura\os\linux\linux_xdisplay.h">
       <Filter>Header Files\aura\os\linux</Filter>
     </ClInclude>
+    <ClInclude Include="aura\os\windows_common\windows_common_comptr.h">
+      <Filter>Header Files\aura\os\windows_common</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\windows_common\windows_common_cotaskptr.h">
+      <Filter>Header Files\aura\os\windows_common</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\os_os.h">
+      <Filter>Header Files\aura\os</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\windows\windows.h">
+      <Filter>Header Files\aura\os\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\windows\windows_file.h">
+      <Filter>Header Files\aura\os\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\windows\windows_file_watcher.h">
+      <Filter>Header Files\aura\os\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\windows\windows_graphics.h">
+      <Filter>Header Files\aura\os\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\windows\windows_handle.h">
+      <Filter>Header Files\aura\os\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\windows\windows_implementation.h">
+      <Filter>Header Files\aura\os\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\windows\windows_internal.h">
+      <Filter>Header Files\aura\os\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\windows\windows_itemidlist.h">
+      <Filter>Header Files\aura\os\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\windows\windows_multithreading.h">
+      <Filter>Header Files\aura\os\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\windows\windows_port_forward.h">
+      <Filter>Header Files\aura\os\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\windows\windows_print_job.h">
+      <Filter>Header Files\aura\os\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\windows\windows_printer.h">
+      <Filter>Header Files\aura\os\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\windows\windows_process.h">
+      <Filter>Header Files\aura\os\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\windows\windows_process_env_reader.h">
+      <Filter>Header Files\aura\os\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\windows\windows_registry.h">
+      <Filter>Header Files\aura\os\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\windows\windows_serial.h">
+      <Filter>Header Files\aura\os\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\windows\windows_shell.h">
+      <Filter>Header Files\aura\os\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\windows\windows_simple_hold_handle.h">
+      <Filter>Header Files\aura\os\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\windows\windows_simple_ui.h">
+      <Filter>Header Files\aura\os\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\windows\windows_system_interaction_impl.h">
+      <Filter>Header Files\aura\os\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\windows\windows_utils.h">
+      <Filter>Header Files\aura\os\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\windows\windows_window_buffer.h">
+      <Filter>Header Files\aura\os\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\windows\windows_windows.h">
+      <Filter>Header Files\aura\os\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\windows\RoundWindowApp.h">
+      <Filter>Header Files\aura\node\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\windows\windows.h">
+      <Filter>Header Files\aura\node\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\windows\windows_command.h">
+      <Filter>Header Files\aura\node\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\windows\windows_console_window.h">
+      <Filter>Header Files\aura\node\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\windows\windows_crypto.h">
+      <Filter>Header Files\aura\node\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\windows\windows_dir.h">
+      <Filter>Header Files\aura\node\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\windows\windows_exception.h">
+      <Filter>Header Files\aura\node\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\windows\windows_factory_exchange.h">
+      <Filter>Header Files\aura\node\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\windows\windows_file.h">
+      <Filter>Header Files\aura\node\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\windows\windows_file_find.h">
+      <Filter>Header Files\aura\node\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\windows\windows_file_system.h">
+      <Filter>Header Files\aura\node\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\windows\windows_folder_watch.h">
+      <Filter>Header Files\aura\node\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\windows\windows_handle.h">
+      <Filter>Header Files\aura\node\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\windows\windows_interaction_impl.h">
+      <Filter>Header Files\aura\node\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\windows\windows_ip_enum.h">
+      <Filter>Header Files\aura\node\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\windows\windows_os.h">
+      <Filter>Header Files\aura\node\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\windows\windows_pipe.h">
+      <Filter>Header Files\aura\node\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\windows\windows_printer.h">
+      <Filter>Header Files\aura\node\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\windows\windows_process.h">
+      <Filter>Header Files\aura\node\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\windows\windows_registry.h">
+      <Filter>Header Files\aura\node\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\windows\windows_shell.h">
+      <Filter>Header Files\aura\node\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\windows\windows_simple_hold_handle.h">
+      <Filter>Header Files\aura\node\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\windows\windows_stdio_file.h">
+      <Filter>Header Files\aura\node\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\windows\windows_thread.h">
+      <Filter>Header Files\aura\node\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\windows\windows_tts_speaker.h">
+      <Filter>Header Files\aura\node\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\windows\windows_uac_tools.h">
+      <Filter>Header Files\aura\node\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\windows\windows_user.h">
+      <Filter>Header Files\aura\node\windows</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="primitive\primitive_factory_impl.inl">
@@ -2144,11 +2309,11 @@
     <None Include="aura\message\message.inl">
       <Filter>Header Files\aura\message</Filter>
     </None>
-    <None Include="aura.def">
-      <Filter>Source Files</Filter>
-    </None>
     <None Include="primitive\collection\collection.inl">
       <Filter>Header Files\primitive\collection</Filter>
+    </None>
+    <None Include="w_aura.def">
+      <Filter>Source Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -4083,6 +4248,207 @@
     </ClCompile>
     <ClCompile Include="aura\os\windows_common\windows_common_unicode.cpp">
       <Filter>Source Files\aura\os\windows_common</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\_os_windows.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\aaa_want_to_remove_windows_registry.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_ansi_file.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_application.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_aura.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_debug.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_dll.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_error.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_file.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_file_watcher.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_gdi.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_gdi_cursor.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_gdi_icon.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_graphics.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_internal.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_ipc.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_itemidlist.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_launcher.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_library.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_list_serial_ports.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_local_memory_map.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_lock.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_main.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_message_loop.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_multithreading.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_printer.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_process.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_process_env_reader.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_registry.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_serial.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_simple_app.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_simple_shell_launcher.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_small_ipc_channel.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_system_interaction_impl.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_time.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_user.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_util.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_utils.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_window_buffer.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_windowing.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows_common\windows_common_file.cpp">
+      <Filter>Source Files\aura\os\windows_common</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\_node_windows.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_application.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_console_window.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_crypto.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_dir.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_factory_exchange.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_file.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_file_find.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_file_system.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_folder_watch.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_handle.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_interaction_impl.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_ip_enum.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_os.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_pipe.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_printer.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_process.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_registry.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_shell.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_stdio_file.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_thread.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_timer.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_trace.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_tts_speaker.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_uac_tools.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

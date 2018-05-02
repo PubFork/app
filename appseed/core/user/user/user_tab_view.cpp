@@ -214,9 +214,9 @@ namespace user
 
          ::user::tab_pane * ppane2 = get_pane_by_id(id2);
 
-         string strName1 = ppane1->m_istrTitleEx;
+         string strName1 = ppane1->get_title();
 
-         string strName2 = ppane2->m_istrTitleEx;
+         string strName2 = ppane2->get_title();
 
          ::user::view_creator_data * pcreatordata = m_pviewcreator->allocate_creator_data(id3, get_data()->m_rectTabClient);
 
@@ -428,15 +428,21 @@ namespace user
 
       }
 
-      if(pcreatordata->m_strCreatorDataTitle.has_char())
       {
 
-         index iPane = tab_pane(_001GetSel());
+         synch_lock sl(m_pmutex);
 
-         if (iPane >= 0 && get_data()->m_panea[iPane]->m_id == pcreatordata->m_id)
+         if (pcreatordata->m_strCreatorDataTitle.has_char())
          {
 
-            get_data()->m_panea[iPane]->m_istrTitleEx = pcreatordata->m_strCreatorDataTitle;
+            index iPane = tab_pane(_001GetSel());
+
+            if (iPane >= 0 && get_data()->m_panea[iPane]->m_id == pcreatordata->m_id)
+            {
+
+               get_data()->m_panea[iPane]->set_title(pcreatordata->m_strCreatorDataTitle);
+
+            }
 
          }
 
@@ -679,10 +685,16 @@ namespace user
          if(ppane != NULL)
          {
 
-            if(pcreatordata->m_strCreatorDataTitle.has_char() && ppane->m_id == pcreatordata->m_id)
             {
 
-               ppane->m_istrTitleEx = pcreatordata->m_strCreatorDataTitle;
+               synch_lock sl(m_pmutex);
+
+               if (pcreatordata->m_strCreatorDataTitle.has_char() && ppane->m_id == pcreatordata->m_id)
+               {
+
+                  ppane->set_title(pcreatordata->m_strCreatorDataTitle);
+
+               }
 
             }
 
@@ -735,10 +747,16 @@ namespace user
          if (ppane != NULL)
          {
 
-            if (pcreatordata->m_strCreatorDataTitle.has_char() && ppane->m_id == pcreatordata->m_id)
             {
 
-               ppane->m_istrTitleEx = pcreatordata->m_strCreatorDataTitle;
+               synch_lock sl(m_pmutex);
+
+               if (pcreatordata->m_strCreatorDataTitle.has_char() && ppane->m_id == pcreatordata->m_id)
+               {
+
+                  ppane->set_title(pcreatordata->m_strCreatorDataTitle);
+
+               }
 
             }
 

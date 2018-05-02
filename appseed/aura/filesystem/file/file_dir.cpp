@@ -828,7 +828,12 @@ bool dir::_mk(const ::file::path & path)
 
    }
 
-   i++;
+   if (i < 0)
+   {
+
+      return true;
+
+   }
 
    for(; i < stra.get_count(); i++)
    {
@@ -2062,4 +2067,9 @@ void dir::ls_file(::file::patha & stra,const ::file::path & psz)
 
 #endif
 
+extern "C" int make_path(const char * psz)
+{
 
+   return ::dir::mk(psz) != false;
+
+}

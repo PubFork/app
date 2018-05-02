@@ -367,3 +367,11 @@ bool os_init_application()
    return true;
 
 }
+
+void os_post_quit()
+{
+
+
+
+}
+

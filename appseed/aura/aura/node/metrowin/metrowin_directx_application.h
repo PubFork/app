@@ -27,6 +27,8 @@ namespace metrowin
    internal:
 
 
+      ::user::interaction_impl * m_pimpl;
+
       Windows::Foundation::Point                m_ptLastCursor;
 
       String ^                                  m_strId;

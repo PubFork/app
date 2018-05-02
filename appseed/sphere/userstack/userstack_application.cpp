@@ -383,7 +383,7 @@ namespace userstack
             if(ppane != NULL)
             {
 
-               ppane->m_istrTitleEx = pszTitle;
+               ppane->set_title(pszTitle);
 
                ppaneview->on_layout();
 

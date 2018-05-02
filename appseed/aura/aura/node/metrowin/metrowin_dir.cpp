@@ -9,8 +9,7 @@ namespace metrowin
    dir::dir(::aura::application *  papp):
       ::object(papp),
       ::file::dir::system(papp),
-      file_watcher::file_watcher(papp),
-      ::file_watcher::listener_thread(papp)
+      file_watcher::file_watcher(papp)
    {
 
    }
@@ -234,7 +233,7 @@ namespace metrowin
 
       //bIsDir = (dwAttrib != INVALID_FILE_ATTRIBUTES) && (dwAttrib & FILE_ATTRIBUTE_DIRECTORY);
 
-      bIsDir = ::dir::is(strPath);
+      bIsDir = ::dir::_is(strPath);
 
       m_isdirmap.set(lpcszPath,bIsDir,::get_last_error());
 
@@ -409,26 +408,13 @@ namespace metrowin
 
       int i = stra.get_upper_bound();
 
-      if (i < 0)
-      {
-
-         return true;
-
-      }
-
-      bool bIsDir = false;
-
       for (; i >= 0; i--)
       {
 
          ::file::path pathDir = stra[i];
 
-         bIsDir = is(pathDir, papp);
-
-         if (bIsDir)
+         if(is(pathDir, papp))
          {
-
-            i++;
 
             break;
 
@@ -439,7 +425,7 @@ namespace metrowin
       if (i < 0)
       {
 
-         i = 0;
+         return true;
 
       }
 
@@ -448,103 +434,87 @@ namespace metrowin
 
          ::file::path pathDir = stra[i];
 
-         bIsDir = is(pathDir, papp);
-
-         if(!bIsDir && ::get_last_error() != ERROR_ACCESS_DENIED)
+         if (!::dir::mkdir(pathDir))
          {
 
-            if (!::CreateDirectoryW(::str::international::utf8_to_unicode(pathDir), NULL))
+            uint32_t dwError = ::get_last_error();
+
+            if (dwError == ERROR_ALREADY_EXISTS)
             {
 
-               if (!::CreateDirectoryW(::str::international::utf8_to_unicode("\\\\?\\" + pathDir), NULL))
+               string str;
+
+               str = "\\\\?\\" + pathDir;
+
+               str.trim_right("\\/");
+
+               try
                {
 
-                  uint32_t dwError = ::get_last_error();
+                  Application.file().del(str);
 
-                  if (dwError == ERROR_ALREADY_EXISTS)
-                  {
+               }
+               catch (...)
+               {
 
-                     string str;
+               }
 
-                     str = "\\\\?\\" + stra[i];
+               str = stra[i];
 
-                     str.trim_right("\\/");
+               str.trim_right("\\/");
 
-                     try
-                     {
+               try
+               {
 
-                        Application.file().del(str);
+                  Application.file().del(str);
 
-                     }
-                     catch (...)
-                     {
+               }
+               catch (...)
+               {
 
-                     }
+               }
 
-                     str = stra[i];
+               if (::dir::mkdir(stra[i]))
+               {
 
-                     str.trim_right("\\/");
+                  m_isdirmap.set(stra[i], true, 0);
 
-                     try
-                     {
-
-                        Application.file().del(str);
-
-                     }
-                     catch (...)
-                     {
-
-                     }
-
-                     if (::CreateDirectoryW(::str::international::utf8_to_unicode("\\\\?\\" + stra[i]), NULL))
-                     {
-
-                        m_isdirmap.set(stra[i], true, 0);
-
-                        goto try1;
-
-                     }
-                     else
-                     {
-
-                        dwError = ::get_last_error();
-
-                     }
-
-                  }
-
-                  string strError = get_system_error_message(dwError);
-
-                  APPTRACE("dir::mk CreateDirectoryW last error(%d)=%s", dwError, strError);
-
-                  //m_isdirmap.set(stra[i], false);
+                  goto try1;
 
                }
                else
                {
 
-                  m_isdirmap.set(stra[i], true, 0);
+                  dwError = ::get_last_error();
 
                }
+
+               string strError = get_system_error_message(dwError);
+
+               APPTRACE("dir::mk CreateDirectoryW last error(%d)=%s", dwError, strError);
+
+               m_isdirmap.set(stra[i], false, 0);
+
+               return false;
 
             }
             else
             {
 
-               m_isdirmap.set(stra[i],true,0);
-
-            }
-
-try1:
-
-            if(!is(stra[i],papp))
-            {
-
-               return false;
+               m_isdirmap.set(stra[i], true, 0);
 
             }
 
          }
+         else
+         {
+
+            m_isdirmap.set(stra[i],true,0);
+
+         }
+
+try1:;
+
 
       }
 
@@ -631,7 +601,11 @@ try1:
 
       mk(m_strTimeFolder / "time",get_app());
 
-      m_pathHome = ::dir::roaming_app_data() / "home";
+      m_pathHome = ::dir::ca2config() / "home";
+
+      nodeos_set_home(m_pathHome);
+
+      nodeos_set_temp(m_strTimeFolder / "time");
 
       return true;
 
@@ -680,81 +654,73 @@ try1:
    }
 
 
-   ::file::path dir::usersystemappdata(::aura::application *  papp, const string & strPrefix)
-   {
+   //::file::path dir::usersystemappdata(::aura::application *  papp, const string & strPrefix)
+   //{
 
-      UNREFERENCED_PARAMETER(papp);
+   //   UNREFERENCED_PARAMETER(papp);
 
-      return appdata() / strPrefix;
+   //   return appdata() / strPrefix;
 
-   }
-
-
-   ::file::path dir::appdata(::aura::application *  papp)
-   {
-
-      return userfolder(papp) / "appdata";
-
-   }
+   //}
 
 
-   ::file::path dir::userdata(::aura::application *  papp)
-   {
+   //::file::path dir::userdata(::aura::application *  papp)
+   //{
 
-      return userfolder(papp) / "data";
+   //   return userfolder(papp) / "data";
 
-   }
-
-
-   ::file::path dir::userfolder(::aura::application *  papp)
-   {
-
-      string str = appdata();
-
-      string strUserFolderShift;
-
-      if(App(papp).handler()->m_varTopicQuery.has_property("user_folder_relative_path"))
-      {
-         strUserFolderShift = App(papp).handler()->m_varTopicQuery["user_folder_relative_path"].get_string();
-      }
-
-      return str / "ca2" / strUserFolderShift;
-
-   }
+   //}
 
 
-   ::file::path dir::default_os_user_path_prefix(::aura::application *  papp)
-   {
+   //::file::path dir::userfolder(::aura::application *  papp)
+   //{
 
-      UNREFERENCED_PARAMETER(papp);
+   //   string str = appdata();
 
-      return "CurrentUser";
+   //   string strUserFolderShift;
 
-   }
+   //   if(App(papp).handler()->m_varTopicQuery.has_property("user_folder_relative_path"))
+   //   {
+   //      strUserFolderShift = App(papp).handler()->m_varTopicQuery["user_folder_relative_path"].get_string();
+   //   }
 
+   //   return str / "ca2" / strUserFolderShift;
 
-   ::file::path dir::default_userappdata(::aura::application *  papp,const string & lpcszPrefix,const string & lpcszLogin)
-   {
-
-      return default_userfolder(papp,lpcszPrefix,lpcszLogin) / "appdata";
-
-   }
-
-
-   ::file::path dir::default_userdata(::aura::application *  papp,const string & lpcszPrefix,const string & lpcszLogin)
-   {
-
-      return default_userfolder(papp,lpcszPrefix,lpcszLogin) / "data";
-
-   }
+   //}
 
 
-   ::file::path dir::default_userfolder(::aura::application *  papp,const string & strPrefix,const string & strLogin)
-   {
+   //::file::path dir::default_os_user_path_prefix(::aura::application *  papp)
+   //{
 
-      return userfolder(papp) / strPrefix / strLogin;
+   //   UNREFERENCED_PARAMETER(papp);
 
-   }
+   //   return "CurrentUser";
+
+   //}
+
+
+   //::file::path dir::default_userappdata(::aura::application *  papp,const string & lpcszPrefix,const string & lpcszLogin)
+   //{
+
+   //   return default_userfolder(papp,lpcszPrefix,lpcszLogin) / "appdata";
+
+   //}
+
+
+   //::file::path dir::default_userdata(::aura::application *  papp,const string & lpcszPrefix,const string & lpcszLogin)
+   //{
+
+   //   return default_userfolder(papp,lpcszPrefix,lpcszLogin) / "data";
+
+   //}
+
+
+   //::file::path dir::default_userfolder(::aura::application *  papp,const string & strPrefix,const string & strLogin)
+   //{
+
+   //   return userfolder(papp) / strPrefix / strLogin;
+
+   //}
 
 
    ::file::path dir::userquicklaunch(::aura::application *  papp)
@@ -824,7 +790,7 @@ try1:
    }
 
 
-   ::file::path dir::get_document_folder()
+   ::file::path dir::document()
    {
 
       return "winmetro-Document://";
@@ -832,7 +798,7 @@ try1:
    }
 
 
-   ::file::path dir::get_music_folder()
+   ::file::path dir::music()
    {
 
       return "winmetro-Music://";
@@ -840,7 +806,7 @@ try1:
    }
 
 
-   ::file::path dir::get_video_folder()
+   ::file::path dir::video()
    {
 
       return "winmetro-Videos://";
@@ -848,7 +814,7 @@ try1:
    }
 
 
-   ::file::path dir::get_image_folder()
+   ::file::path dir::image()
    {
 
       return "winmetro-Pictures://";

@@ -79,11 +79,11 @@
 
 struct _CLIPRDR_MFPICT
 {
-	UINT32 mappingMode;
-	UINT32 xExt;
-	UINT32 yExt;
-	UINT32 metaFileSize;
-	BYTE* metaFileData;
+   UINT32 mappingMode;
+   UINT32 xExt;
+   UINT32 yExt;
+   UINT32 metaFileSize;
+   BYTE* metaFileData;
 };
 typedef struct _CLIPRDR_MFPICT CLIPRDR_MFPICT;
 
@@ -91,10 +91,15 @@ typedef struct _CLIPRDR_MFPICT CLIPRDR_MFPICT;
 extern "C" {
 #endif
 
+#ifndef _UWP
+
 FREERDP_API UINT cliprdr_parse_file_list(const BYTE* format_data, UINT32 format_data_length,
-		FILEDESCRIPTOR** file_descriptor_array, UINT32* file_descriptor_count);
+      FILEDESCRIPTOR** file_descriptor_array, UINT32* file_descriptor_count);
+
 FREERDP_API UINT cliprdr_serialize_file_list(const FILEDESCRIPTOR* file_descriptor_array,
-		UINT32 file_descriptor_count, BYTE** format_data, UINT32* format_data_length);
+      UINT32 file_descriptor_count, BYTE** format_data, UINT32* format_data_length);
+
+#endif
 
 #ifdef __cplusplus
 }
@@ -109,127 +114,127 @@ FREERDP_API UINT cliprdr_serialize_file_list(const FILEDESCRIPTOR* file_descript
 
 struct _CLIPRDR_HEADER
 {
-	DEFINE_CLIPRDR_HEADER_COMMON();
+   DEFINE_CLIPRDR_HEADER_COMMON();
 };
 typedef struct _CLIPRDR_HEADER CLIPRDR_HEADER;
 
 struct _CLIPRDR_CAPABILITY_SET
 {
-	UINT16 capabilitySetType;
-	UINT16 capabilitySetLength;
+   UINT16 capabilitySetType;
+   UINT16 capabilitySetLength;
 };
 typedef struct _CLIPRDR_CAPABILITY_SET CLIPRDR_CAPABILITY_SET;
 
 struct _CLIPRDR_GENERAL_CAPABILITY_SET
 {
-	UINT16 capabilitySetType;
-	UINT16 capabilitySetLength;
+   UINT16 capabilitySetType;
+   UINT16 capabilitySetLength;
 
-	UINT32 version;
-	UINT32 generalFlags;
+   UINT32 version;
+   UINT32 generalFlags;
 };
 typedef struct _CLIPRDR_GENERAL_CAPABILITY_SET CLIPRDR_GENERAL_CAPABILITY_SET;
 
 struct _CLIPRDR_CAPABILITIES
 {
-	DEFINE_CLIPRDR_HEADER_COMMON();
+   DEFINE_CLIPRDR_HEADER_COMMON();
 
-	UINT32 cCapabilitiesSets;
-	CLIPRDR_CAPABILITY_SET* capabilitySets;
+   UINT32 cCapabilitiesSets;
+   CLIPRDR_CAPABILITY_SET* capabilitySets;
 };
 typedef struct _CLIPRDR_CAPABILITIES CLIPRDR_CAPABILITIES;
 
 struct _CLIPRDR_MONITOR_READY
 {
-	DEFINE_CLIPRDR_HEADER_COMMON();
+   DEFINE_CLIPRDR_HEADER_COMMON();
 };
 typedef struct _CLIPRDR_MONITOR_READY CLIPRDR_MONITOR_READY;
 
 struct _CLIPRDR_TEMP_DIRECTORY
 {
-	DEFINE_CLIPRDR_HEADER_COMMON();
+   DEFINE_CLIPRDR_HEADER_COMMON();
 
-	char szTempDir[520];
+   char szTempDir[520];
 };
 typedef struct _CLIPRDR_TEMP_DIRECTORY CLIPRDR_TEMP_DIRECTORY;
 
 struct _CLIPRDR_FORMAT
 {
-	UINT32 formatId;
-	char* formatName;
+   UINT32 formatId;
+   char* formatName;
 };
 typedef struct _CLIPRDR_FORMAT CLIPRDR_FORMAT;
 
 struct _CLIPRDR_FORMAT_LIST
 {
-	DEFINE_CLIPRDR_HEADER_COMMON();
+   DEFINE_CLIPRDR_HEADER_COMMON();
 
-	UINT32 numFormats;
-	CLIPRDR_FORMAT* formats;
+   UINT32 numFormats;
+   CLIPRDR_FORMAT* formats;
 };
 typedef struct _CLIPRDR_FORMAT_LIST CLIPRDR_FORMAT_LIST;
 
 struct _CLIPRDR_FORMAT_LIST_RESPONSE
 {
-	DEFINE_CLIPRDR_HEADER_COMMON();
+   DEFINE_CLIPRDR_HEADER_COMMON();
 };
 typedef struct _CLIPRDR_FORMAT_LIST_RESPONSE CLIPRDR_FORMAT_LIST_RESPONSE;
 
 struct _CLIPRDR_LOCK_CLIPBOARD_DATA
 {
-	DEFINE_CLIPRDR_HEADER_COMMON();
+   DEFINE_CLIPRDR_HEADER_COMMON();
 
-	UINT32 clipDataId;
+   UINT32 clipDataId;
 };
 typedef struct _CLIPRDR_LOCK_CLIPBOARD_DATA CLIPRDR_LOCK_CLIPBOARD_DATA;
 
 struct _CLIPRDR_UNLOCK_CLIPBOARD_DATA
 {
-	DEFINE_CLIPRDR_HEADER_COMMON();
+   DEFINE_CLIPRDR_HEADER_COMMON();
 
-	UINT32 clipDataId;
+   UINT32 clipDataId;
 };
 typedef struct _CLIPRDR_UNLOCK_CLIPBOARD_DATA CLIPRDR_UNLOCK_CLIPBOARD_DATA;
 
 struct _CLIPRDR_FORMAT_DATA_REQUEST
 {
-	DEFINE_CLIPRDR_HEADER_COMMON();
+   DEFINE_CLIPRDR_HEADER_COMMON();
 
-	UINT32 requestedFormatId;
+   UINT32 requestedFormatId;
 };
 typedef struct _CLIPRDR_FORMAT_DATA_REQUEST CLIPRDR_FORMAT_DATA_REQUEST;
 
 struct _CLIPRDR_FORMAT_DATA_RESPONSE
 {
-	DEFINE_CLIPRDR_HEADER_COMMON();
+   DEFINE_CLIPRDR_HEADER_COMMON();
 
-	BYTE* requestedFormatData;
+   BYTE* requestedFormatData;
 };
 typedef struct _CLIPRDR_FORMAT_DATA_RESPONSE CLIPRDR_FORMAT_DATA_RESPONSE;
 
 struct _CLIPRDR_FILE_CONTENTS_REQUEST
 {
-	DEFINE_CLIPRDR_HEADER_COMMON();
+   DEFINE_CLIPRDR_HEADER_COMMON();
 
-	UINT32 streamId;
-	UINT32 listIndex;
-	UINT32 dwFlags;
-	UINT32 nPositionLow;
-	UINT32 nPositionHigh;
-	UINT32 cbRequested;
-	BOOL haveClipDataId;
-	UINT32 clipDataId;
+   UINT32 streamId;
+   UINT32 listIndex;
+   UINT32 dwFlags;
+   UINT32 nPositionLow;
+   UINT32 nPositionHigh;
+   UINT32 cbRequested;
+   BOOL haveClipDataId;
+   UINT32 clipDataId;
 };
 typedef struct _CLIPRDR_FILE_CONTENTS_REQUEST CLIPRDR_FILE_CONTENTS_REQUEST;
 
 struct _CLIPRDR_FILE_CONTENTS_RESPONSE
 {
-	DEFINE_CLIPRDR_HEADER_COMMON();
+   DEFINE_CLIPRDR_HEADER_COMMON();
 
-	UINT32 streamId;
-	UINT32 dwFlags;
-	UINT32 cbRequested;
-	BYTE* requestedData;
+   UINT32 streamId;
+   UINT32 dwFlags;
+   UINT32 cbRequested;
+   BYTE* requestedData;
 };
 typedef struct _CLIPRDR_FILE_CONTENTS_RESPONSE CLIPRDR_FILE_CONTENTS_RESPONSE;
 

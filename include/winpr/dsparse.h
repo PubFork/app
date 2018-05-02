@@ -35,62 +35,62 @@
 #include <winpr/error.h>
 
 typedef enum
-{ 
-	DS_NAME_NO_FLAGS = 0x0,
-	DS_NAME_FLAG_SYNTACTICAL_ONLY = 0x1,
-	DS_NAME_FLAG_EVAL_AT_DC = 0x2,
-	DS_NAME_FLAG_GCVERIFY = 0x4,
-	DS_NAME_FLAG_TRUST_REFERRAL = 0x8
+{
+   DS_NAME_NO_FLAGS = 0x0,
+   DS_NAME_FLAG_SYNTACTICAL_ONLY = 0x1,
+   DS_NAME_FLAG_EVAL_AT_DC = 0x2,
+   DS_NAME_FLAG_GCVERIFY = 0x4,
+   DS_NAME_FLAG_TRUST_REFERRAL = 0x8
 } DS_NAME_FLAGS;
 
 typedef enum
-{ 
-	DS_UNKNOWN_NAME = 0,
-	DS_FQDN_1779_NAME = 1,
-	DS_NT4_ACCOUNT_NAME = 2,
-	DS_DISPLAY_NAME = 3,
-	DS_UNIQUE_ID_NAME = 6,
-	DS_CANONICAL_NAME = 7,
-	DS_USER_PRINCIPAL_NAME = 8,
-	DS_CANONICAL_NAME_EX = 9,
-	DS_SERVICE_PRINCIPAL_NAME = 10,
-	DS_SID_OR_SID_HISTORY_NAME = 11,
-	DS_DNS_DOMAIN_NAME = 12
+{
+   DS_UNKNOWN_NAME = 0,
+   DS_FQDN_1779_NAME = 1,
+   DS_NT4_ACCOUNT_NAME = 2,
+   DS_DISPLAY_NAME = 3,
+   DS_UNIQUE_ID_NAME = 6,
+   DS_CANONICAL_NAME = 7,
+   DS_USER_PRINCIPAL_NAME = 8,
+   DS_CANONICAL_NAME_EX = 9,
+   DS_SERVICE_PRINCIPAL_NAME = 10,
+   DS_SID_OR_SID_HISTORY_NAME = 11,
+   DS_DNS_DOMAIN_NAME = 12
 } DS_NAME_FORMAT;
 
 typedef enum
-{ 
-	DS_NAME_NO_ERROR = 0,
-	DS_NAME_ERROR_RESOLVING = 1,
-	DS_NAME_ERROR_NOT_FOUND = 2,
-	DS_NAME_ERROR_NOT_UNIQUE = 3,
-	DS_NAME_ERROR_NO_MAPPING = 4,
-	DS_NAME_ERROR_DOMAIN_ONLY = 5,
-	DS_NAME_ERROR_NO_SYNTACTICAL_MAPPING = 6,
-	DS_NAME_ERROR_TRUST_REFERRAL = 7
+{
+   DS_NAME_NO_ERROR = 0,
+   DS_NAME_ERROR_RESOLVING = 1,
+   DS_NAME_ERROR_NOT_FOUND = 2,
+   DS_NAME_ERROR_NOT_UNIQUE = 3,
+   DS_NAME_ERROR_NO_MAPPING = 4,
+   DS_NAME_ERROR_DOMAIN_ONLY = 5,
+   DS_NAME_ERROR_NO_SYNTACTICAL_MAPPING = 6,
+   DS_NAME_ERROR_TRUST_REFERRAL = 7
 } DS_NAME_ERROR;
 
 typedef enum
 {
-	DS_SPN_DNS_HOST = 0,
-	DS_SPN_DN_HOST = 1,
-	DS_SPN_NB_HOST = 2,
-	DS_SPN_DOMAIN = 3,
-	DS_SPN_NB_DOMAIN = 4,
-	DS_SPN_SERVICE = 5
+   DS_SPN_DNS_HOST = 0,
+   DS_SPN_DN_HOST = 1,
+   DS_SPN_NB_HOST = 2,
+   DS_SPN_DOMAIN = 3,
+   DS_SPN_NB_DOMAIN = 4,
+   DS_SPN_SERVICE = 5
 } DS_SPN_NAME_TYPE;
 
 typedef struct
 {
-	DWORD status;
-	LPTSTR pDomain;
-	LPTSTR pName;
+   DWORD status;
+   LPTSTR pDomain;
+   LPTSTR pName;
 } DS_NAME_RESULT_ITEM, *PDS_NAME_RESULT_ITEM;
 
 typedef struct
 {
-	DWORD cItems;
-	PDS_NAME_RESULT_ITEM rItems;
+   DWORD cItems;
+   PDS_NAME_RESULT_ITEM rItems;
 } DS_NAME_RESULT, *PDS_NAME_RESULT;
 
 #ifdef __cplusplus
@@ -98,10 +98,10 @@ extern "C" {
 #endif
 
 WINPR_API DWORD DsCrackSpnW(LPCWSTR pszSpn, DWORD* pcServiceClass, LPWSTR ServiceClass, DWORD* pcServiceName,
-		LPWSTR ServiceName, DWORD* pcInstanceName, LPWSTR InstanceName, USHORT* pInstancePort);
+                            LPWSTR ServiceName, DWORD* pcInstanceName, LPWSTR InstanceName, USHORT* pInstancePort);
 
 WINPR_API DWORD DsCrackSpnA(LPCSTR pszSpn, LPDWORD pcServiceClass, LPSTR ServiceClass, LPDWORD pcServiceName,
-		LPSTR ServiceName, LPDWORD pcInstanceName, LPSTR InstanceName, USHORT* pInstancePort);
+                            LPSTR ServiceName, LPDWORD pcInstanceName, LPSTR InstanceName, USHORT* pInstancePort);
 
 #ifdef UNICODE
 #define DsCrackSpn	DsCrackSpnW
@@ -110,10 +110,10 @@ WINPR_API DWORD DsCrackSpnA(LPCSTR pszSpn, LPDWORD pcServiceClass, LPSTR Service
 #endif
 
 WINPR_API DWORD DsMakeSpnW(LPCWSTR ServiceClass, LPCWSTR ServiceName, LPCWSTR InstanceName,
-		USHORT InstancePort, LPCWSTR Referrer, DWORD* pcSpnLength, LPWSTR pszSpn);
+                           USHORT InstancePort, LPCWSTR Referrer, DWORD* pcSpnLength, LPWSTR pszSpn);
 
 WINPR_API DWORD DsMakeSpnA(LPCSTR ServiceClass, LPCSTR ServiceName, LPCSTR InstanceName,
-		USHORT InstancePort, LPCSTR Referrer, DWORD* pcSpnLength, LPSTR pszSpn);
+                           USHORT InstancePort, LPCSTR Referrer, DWORD* pcSpnLength, LPSTR pszSpn);
 
 #ifdef __cplusplus
 }

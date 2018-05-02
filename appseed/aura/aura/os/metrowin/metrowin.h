@@ -5,7 +5,7 @@
 #include "metrowin_multithreading.h"
 //#include "metrowin_utils.h"
 #ifdef __cplusplus
-#include "aura/aura/os/windows/windows_comptr.h"
+#include "aura/aura/os/windows_common/windows_common_comptr.h"
 #endif
 
 #ifndef METROWIN

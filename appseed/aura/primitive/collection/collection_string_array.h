@@ -121,6 +121,8 @@ public:
    void copy(const int64_array & src);
 
 
+   string_array & c_stra(string_array & stra) const;
+   string_array c_stra() const;
 
    // overloaded operator helpers
    Type operator[](index nIndex) const;
@@ -807,6 +809,34 @@ template < class Type, class RawType >
    CopyElements(&this->m_pData[nOldSize],src.m_pData,src.m_nSize);
 
    return nOldSize;
+}
+
+
+template < typename Type, typename RawType >
+string_array < Type, RawType > &
+string_array < Type, RawType >::c_stra(string_array < Type, RawType > & stra) const
+{
+
+   for (auto & str : *this)
+   {
+
+      stra.add(str.c_str());
+
+   }
+
+   return stra;
+
+}
+
+template < typename Type, typename RawType >
+string_array < Type, RawType > string_array < Type, RawType >::
+string_array < Type, RawType >::c_stra() const
+{
+
+   string_array < Type, RawType > stra;
+
+   return c_stra(stra);
+
 }
 
 
