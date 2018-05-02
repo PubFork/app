@@ -49,7 +49,7 @@ class CLASS_DECL_AURA aura_main_data :
 {
 public:
 
-
+   bool                          m_bFork;
    node_data_exchange *          m_pnodedataexchange;
    ::command::command *          m_pmaininitdata;
    bool                          m_bConsole;
@@ -129,6 +129,8 @@ public:
    bool on_result(int iResultCode);
 
    void main();
+
+   static DWORD WINAPI MAIN(LPVOID pvoid);
 
    bool beg();
 

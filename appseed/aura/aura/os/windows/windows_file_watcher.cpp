@@ -199,7 +199,7 @@ namespace file_watcher
 
    {
 
-      m_pthread = fork([this]() { run(); });
+
 
    }
 
@@ -225,6 +225,13 @@ namespace file_watcher
 
    id os_file_watcher::add_watch(const string & directory,listener* watcher,bool bRecursive, bool bOwn)
    {
+
+      if (m_pthread.is_null())
+      {
+
+         m_pthread = fork([this]() { run(); });
+
+      }
 
       synch_lock sl(m_pmutex);
 

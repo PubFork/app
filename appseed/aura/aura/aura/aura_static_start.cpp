@@ -544,24 +544,29 @@ namespace aura
 
 #endif
 
-         for(auto * po : *g_paAura)
+         if (g_paAura != NULL)
          {
 
-            try
+            for (auto * po : *g_paAura)
             {
 
-               del(po);
+               try
+               {
+
+                  del(po);
+
+               }
+               catch (...)
+               {
+
+
+               }
 
             }
-            catch(...)
-            {
 
-
-            }
+            del(g_paAura);
 
          }
-
-         del(g_paAura);
 
          del(g_pstrCalcModuleFolderDup);
 

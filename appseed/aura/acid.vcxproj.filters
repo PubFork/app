@@ -393,6 +393,9 @@
     <Filter Include="Source Files\user\user\NewFilter1">
       <UniqueIdentifier>{afa386ca-6602-4990-b321-91ece3267cc1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\aura\app">
+      <UniqueIdentifier>{308a4f69-92ee-463d-864b-1acc65eaa74e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="primitive\primitive_id.h">
@@ -4585,6 +4588,12 @@
     <ClCompile Include="graphics\visual\visual_fastblur.cpp">
       <Filter>Source Files\graphics\visual</Filter>
     </ClCompile>
+    <ClCompile Include="graphics\visual\visual_gdiplus_image.cpp">
+      <Filter>Source Files\graphics\visual</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\visual\visual_gdiplus_image_gif.cpp">
+      <Filter>Source Files\graphics\visual</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="multithreading\multithreading.inl">
@@ -4661,6 +4670,15 @@
     </None>
     <None Include="primitive\geometry\geometry.inl">
       <Filter>Header Files\primitive\geometry</Filter>
+    </None>
+    <None Include="aura\app\acid.inl">
+      <Filter>Header Files\aura\app</Filter>
+    </None>
+    <None Include="aura\app\app_prelude.inl">
+      <Filter>Header Files\aura\app</Filter>
+    </None>
+    <None Include="aura\app\aura.inl">
+      <Filter>Header Files\aura\app</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

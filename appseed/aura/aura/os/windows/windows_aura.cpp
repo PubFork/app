@@ -222,14 +222,18 @@ bool __node_aura_pos_term()
 #endif // USE_OS_IMAGE_LOADER
 
 
-   g_pgdiplusStartupOutput->NotificationUnhook(g_gdiplusHookToken);
+   if (g_pgdiplusStartupOutput != NULL)
+   {
+
+      g_pgdiplusStartupOutput->NotificationUnhook(g_gdiplusHookToken);
 
 
-   ::Gdiplus::GdiplusShutdown(g_gdiplusToken);
+      ::Gdiplus::GdiplusShutdown(g_gdiplusToken);
 
 
-   ::aura::del(g_pgdiplusStartupInput);
-   ::aura::del(g_pgdiplusStartupOutput);
+      ::aura::del(g_pgdiplusStartupInput);
+      ::aura::del(g_pgdiplusStartupOutput);
+   }
 
    output_debug_string(L"aura terminating!\n");
 

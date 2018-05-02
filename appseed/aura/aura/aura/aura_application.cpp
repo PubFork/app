@@ -3434,7 +3434,18 @@ retry_license:
 
 #else
 
-         set_has_installer(!m_paurasystem->m_pappcore->m_bAcidApp);
+         if (m_paurasystem->m_pappcore == NULL)
+         {
+
+            set_has_installer(false);
+
+         }
+         else
+         {
+
+            set_has_installer(!m_paurasystem->m_pappcore->m_bAcidApp);
+
+         }
 
 #endif
 
