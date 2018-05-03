@@ -50,12 +50,6 @@ CLASS_DECL_AURA bool read_resource_as_memory_dup(memory & m, HINSTANCE hinst, UI
 
 CLASS_DECL_AURA int WinRegGetValueW(HKEY hkey, LPCWSTR lpSubKey, LPCWSTR lpValue, DWORD dwFlags, LPDWORD pdwType, PVOID pvData, LPDWORD pcbData);
 
-#ifdef __cplusplus
-
-#include "windows_comptr.h"
-
-#endif
-
 #include "windows.inl"
 
 
