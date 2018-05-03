@@ -202,7 +202,7 @@ namespace macos
          return true;
 
 
-      bIsDir = ::dir::is(lpcszPath);
+      bIsDir = ::dir::_is(lpcszPath);
 
       m_isdirmap.set(lpcszPath, bIsDir, bIsDir ? 0 : ::get_last_error());
 

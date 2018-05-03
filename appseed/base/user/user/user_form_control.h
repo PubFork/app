@@ -56,7 +56,7 @@ namespace user
       void Update(bool bSave);
       bool _001SetData(id uiId,bool bData);
       bool _001GetData(id uiId,bool & bData);
-      int_ptr _001AddControl(class control_descriptor & descriptor);
+      int_ptr _001AddControl(class control_descriptor & descriptor) override;
       void _001FillCombo(sp(control) pcontrol);
 
       virtual void WfiOnClose();
@@ -88,7 +88,7 @@ namespace user
       DECL_GEN_SIGNAL(data_on_after_change);
 
 
-      virtual bool create_control(class control_descriptor * pdescriptor, index iItem);
+      virtual bool create_control(class control_descriptor * pdescriptor, index iItem) override;
       virtual bool normalize_control_descriptor_typeinfo(class ::user::control_descriptor * pdescriptor);
 
       bool operator == (const control & control) const;

@@ -17,15 +17,15 @@ namespace prompt
       virtual ~pane_view();
 
 
-      void rotate();
+      void rotate() override;
 
-      void on_create_view(::user::view_creator_data * pcreatordata);
-      void on_show_view();
+      void on_create_view(::user::view_creator_data * pcreatordata) override;
+      void on_show_view() override;
 
-      virtual void install_message_routing(::message::sender * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface) override;
 
-      virtual void on_update(::user::impact * pSender, LPARAM lHint, ::object* pHint);
-      virtual bool pre_create_window(::user::create_struct& cs);
+      virtual void on_update(::user::impact * pSender, LPARAM lHint, ::object* pHint) override;
+      virtual bool pre_create_window(::user::create_struct& cs) override;
 
 
       void OnFileManagerOpenFile(::filemanager::data * pdata, ::fs::item_array & itema);
@@ -34,8 +34,8 @@ namespace prompt
 
       virtual bool BaseOnControlEvent(::user::control_event * pevent) override;
 
-      virtual void assert_valid() const;
-      virtual void dump(dump_context & dumpcontext) const;
+      virtual void assert_valid() const override;
+      virtual void dump(dump_context & dumpcontext) const override;
 
 
       DECL_GEN_SIGNAL(_001OnCreate);

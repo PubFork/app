@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 namespace filemanager
@@ -63,7 +63,7 @@ namespace filemanager
       string get_initial_browse_path(const char * pszDefault = NULL);
 
 
-      virtual void on_request(::create * pcreate);
+      virtual void on_request(::create * pcreate) override;
 
 
    };

@@ -43,8 +43,8 @@ namespace hi5
 
          string get_pin();
 
-         void on_create_view(::user::view_creator_data * pcreatordata);
-         virtual void on_show_view();
+         void on_create_view(::user::view_creator_data * pcreatordata) override;
+         virtual void on_show_view() override;
 
 
          virtual bool BaseOnControlEvent(::user::control_event * pevent) override;

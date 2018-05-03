@@ -513,7 +513,7 @@ int_bool file_is_equal_path_dup(const char * psz1, const char * psz2)
    if(stricmp_dup(psz1, psz2) == 0)
       return true;
 
-   _throw(simple_exception(get_app(), " // TODO: it should follow links "));
+   //_throw(simple_exception(get_app(), " // TODO: it should follow links "));
 
    return false;
 
