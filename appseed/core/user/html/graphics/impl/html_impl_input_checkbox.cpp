@@ -31,6 +31,8 @@ namespace html
       {
 
          m_pcheckbox = canew( user::check_box(pdata->get_app()));
+         
+         m_pcheckbox->m_pform = pdata->m_pform;
 
       }
 

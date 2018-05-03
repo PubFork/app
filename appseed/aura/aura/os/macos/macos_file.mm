@@ -16,7 +16,7 @@ void ns_create_alias(const char * pszTarget, const char * pszSource)
 }
 
 
-const char * ns_user_local_folder(NSSearchPathDirectory e)
+char * ns_user_local_folder(NSSearchPathDirectory e)
 {
    
    NSArray < NSURL * > * pa = [[NSFileManager defaultManager ] URLsForDirectory:e inDomains:NSLocalDomainMask| NSUserDomainMask];
@@ -34,7 +34,7 @@ const char * ns_user_local_folder(NSSearchPathDirectory e)
 
 
 
-const char * ns_user_local_desktop_folder()
+char * ns_user_local_desktop_folder()
 {
    
    return ns_user_local_folder(NSDesktopDirectory);
@@ -42,20 +42,22 @@ const char * ns_user_local_desktop_folder()
 }
 
 
-const char * ns_user_local_documents_folder()
+char * ns_user_local_documents_folder()
 {
    
    return ns_user_local_folder(NSDocumentDirectory);
    
 }
 
-const char * ns_user_local_downloads_folder()
+char * ns_user_local_downloads_folder()
 {
    
    return ns_user_local_folder(NSDownloadsDirectory);
    
 }
-const char * ns_user_local_music_folder()
+
+
+char * ns_user_local_music_folder()
 {
    
    return ns_user_local_folder(NSMusicDirectory);
@@ -63,14 +65,14 @@ const char * ns_user_local_music_folder()
 }
 
 
-const char * ns_user_local_image_folder()
+char * ns_user_local_image_folder()
 {
    
    return ns_user_local_folder(NSPicturesDirectory);
    
 }
 
-const char * ns_user_local_video_folder()
+char * ns_user_local_video_folder()
 {
    
    return ns_user_local_folder(NSMoviesDirectory);

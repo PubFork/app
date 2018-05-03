@@ -4,12 +4,12 @@
 
 #include "macos.h"
 
-const char * ns_user_local_desktop_folder();
-const char * ns_user_local_documents_folder();
-const char * ns_user_local_downloads_folder();
-const char * ns_user_local_music_folder();
-const char * ns_user_local_image_folder();
-const char * ns_user_local_video_folder();
+char * ns_user_local_desktop_folder();
+char * ns_user_local_documents_folder();
+char * ns_user_local_downloads_folder();
+char * ns_user_local_music_folder();
+char * ns_user_local_image_folder();
+char * ns_user_local_video_folder();
 
 
 namespace macos
@@ -1456,13 +1456,8 @@ namespace macos
    ::file::path dir::get_desktop_folder()
    {
       
-      const char * psz = ns_user_local_desktop_folder();
-      
-      ::file::path path = psz;
-      
-      free((void *) psz);
-      
-      return path;
+      return ::str::from_strdup(ns_user_local_desktop_folder());
+
       
    }
    
@@ -1470,66 +1465,39 @@ namespace macos
    ::file::path dir::get_document_folder()
    {
       
-      const char * psz = ns_user_local_documents_folder();
-      
-      ::file::path path = psz;
-      
-      free((void *) psz);
-      
-      return path;
+      return ::str::from_strdup(ns_user_local_documents_folder());
+
       
    }
    
    ::file::path dir::get_download_folder()
    {
       
-      const char * psz = ns_user_local_downloads_folder();
-      
-      ::file::path path = psz;
-      
-      free((void *) psz);
-      
-      return path;
-      
+      return ::str::from_strdup(ns_user_local_downloads_folder());
+
    }
    
 
    ::file::path dir::get_music_folder()
    {
    
-      const char * psz = ns_user_local_music_folder();
-      
-      ::file::path path = psz;
-      
-      free((void *) psz);
-      
-      return path;
-   
+      return ::str::from_strdup(ns_user_local_music_folder());
+
    }
+   
    
    ::file::path dir::get_video_folder()
    {
       
-      const char * psz = ns_user_local_video_folder();
-      
-      ::file::path path = psz;
-      
-      free((void *) psz);
-      
-      return path;
-      
+      return ::str::from_strdup(ns_user_local_video_folder());
+
    }
+   
    
    ::file::path dir::get_image_folder()
    {
       
-      const char * psz = ns_user_local_music_folder();
-      
-      ::file::path path = psz;
-      
-      free((void *) psz);
-      
-      return path;
+      return ::str::from_strdup(ns_user_local_image_folder());
       
    }
    

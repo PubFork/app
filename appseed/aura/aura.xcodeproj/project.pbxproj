@@ -2166,6 +2166,7 @@
 		9AEB6A081F81D91800F40B32 /* apple_time.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB6A041F81D91400F40B32 /* apple_time.cpp */; };
 		9AEB6A681F81E5C200F40B32 /* apple_exe_path.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB6A671F81E5C200F40B32 /* apple_exe_path.cpp */; };
 		9AEB6A691F81E5C700F40B32 /* apple_exe_path.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB6A671F81E5C200F40B32 /* apple_exe_path.cpp */; };
+		9AED553C209AEA5100F08971 /* macos_file.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9AED553B209AEA5100F08971 /* macos_file.mm */; };
 		9AEEADB619C4E10900866C9E /* simple_message_box.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AEEADB419C4E10900866C9E /* simple_message_box.h */; };
 		9AF4BEBF1F832FCC00197385 /* apple_main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4BEBE1F832FCC00197385 /* apple_main.cpp */; };
 		9AF4BEC11F83303800197385 /* apple_main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4BEBE1F832FCC00197385 /* apple_main.cpp */; };
@@ -4194,6 +4195,7 @@
 		9AEB6A041F81D91400F40B32 /* apple_time.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = apple_time.cpp; sourceTree = "<group>"; };
 		9AEB6A051F81D91400F40B32 /* apple_time.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = apple_time.h; sourceTree = "<group>"; };
 		9AEB6A671F81E5C200F40B32 /* apple_exe_path.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = apple_exe_path.cpp; sourceTree = "<group>"; };
+		9AED553B209AEA5100F08971 /* macos_file.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = macos_file.mm; sourceTree = "<group>"; };
 		9AEEADB319C4E10900866C9E /* simple_message_box.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simple_message_box.cpp; sourceTree = "<group>"; };
 		9AEEADB419C4E10900866C9E /* simple_message_box.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simple_message_box.h; sourceTree = "<group>"; };
 		9AF4BEAA1F832BD600197385 /* libios_axisidn.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libios_axisidn.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -5836,6 +5838,7 @@
 				9ADF8E8C1F9BF957003BEC4D /* macos_windowing.h */,
 				9A34F5D01E15763000AE2607 /* mmos.h */,
 				9A34F5D11E15763000AE2607 /* mmos.mm */,
+				9AED553B209AEA5100F08971 /* macos_file.mm */,
 			);
 			path = macos;
 			sourceTree = "<group>";
@@ -9540,6 +9543,7 @@
 				9A6FACD21F5C71AF00AF31B2 /* macos_simple_app.cpp in Sources */,
 				9A3630971F9CE9A00020D70B /* os_serial.cpp in Sources */,
 				9A6FADAC1F5C768E00AF31B2 /* primitive_job.cpp in Sources */,
+				9AED553C209AEA5100F08971 /* macos_file.mm in Sources */,
 				9A6FACA51F5C719700AF31B2 /* cross_windows_datetime.cpp in Sources */,
 				9AA315591E462D4E009CF281 /* macos_file_watcher.cpp in Sources */,
 				9A6FACCD1F5C71AF00AF31B2 /* macos_MessageBoxA.cpp in Sources */,
