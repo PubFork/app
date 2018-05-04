@@ -45,7 +45,28 @@ file_memory_map::~file_memory_map()
 string file_memory_map::get_path()
 {
 
-   //return dir::path(dir::appdata("time"),m_strName);
+#ifdef LINUX
+
+   ::file::path path("/var/tmp/ca2/");
+
+   string str = m_strName;
+
+   if(::str::begins_eat_ci(str, "Local\\"))
+   {
+
+      path /= Sys(::aura::system::g_p).dir().home() / str;
+
+   }
+   else
+   {
+
+      path /= str;
+
+   }
+
+   return path;
+
+#endif
 
    return m_strName;
 

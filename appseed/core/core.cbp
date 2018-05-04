@@ -143,8 +143,8 @@
 		<Unit filename="core/core/core_types.h" />
 		<Unit filename="core/core/core_util1.h" />
 		<Unit filename="core/core/plane.h" />
+		<Unit filename="core/node/linux/linux_simple_frame_window.cpp" />
 		<Unit filename="core/os/ios/ios_main.h" />
-		<Unit filename="core/os/linux/linux_simple_frame_window.cpp" />
 		<Unit filename="core/os/os.h" />
 		<Unit filename="core/plugin/plugin.h" />
 		<Unit filename="core/plugin/plugin_gen.h" />
@@ -509,7 +509,6 @@
 		<Unit filename="user/user/user_elastic_slider.h" />
 		<Unit filename="user/user/user_font_list.cpp" />
 		<Unit filename="user/user/user_font_list.h" />
-		<Unit filename="user/user/user_form.cpp" />
 		<Unit filename="user/user/user_form.h" />
 		<Unit filename="user/user/user_form_list.cpp" />
 		<Unit filename="user/user/user_form_list.h" />
@@ -519,6 +518,7 @@
 		<Unit filename="user/user/user_form_mesh.h" />
 		<Unit filename="user/user/user_form_view.cpp" />
 		<Unit filename="user/user/user_form_view.h" />
+		<Unit filename="user/user/user_form_window.cpp" />
 		<Unit filename="user/user/user_image_manager.cpp" />
 		<Unit filename="user/user/user_image_manager.h" />
 		<Unit filename="user/user/user_inline.h" />

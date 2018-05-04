@@ -57,9 +57,12 @@ void window_xlib::create_window_graphics_(int64_t cxParam, int64_t cyParam, int 
 
    m_pdc->m_pdisplay = m_pimpl->m_oswindow->display();
 
+   defer_prepare_ipc_copy_();
+
    window_graphics::create_window_graphics_(cxParam, cyParam, m_iScan);
 
 }
+
 
 
 void window_xlib::destroy_window_graphics_()
@@ -142,6 +145,8 @@ void window_xlib::update_window(::draw2d::dib * pdib)
 
    byte * pdata = (byte *) m_mem.get_data();
 
+   m_pcolorref = (COLORREF *) pdata;
+
    int size = m_iScan * m_cy;
 
    byte * pb = pdata + size - 4;
@@ -191,6 +196,13 @@ void window_xlib::update_window(::draw2d::dib * pdib)
    {
 
    }
+
+      if (m_pimpl->m_bIpcCopy)
+      {
+
+         ipc_copy(cx, cy, pdib->m_pcolorref, pdib->m_iScan);
+
+      }
 
 }
 

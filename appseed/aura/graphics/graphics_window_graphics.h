@@ -32,6 +32,7 @@ class CLASS_DECL_AURA window_graphics :
       virtual ::draw2d::graphics * on_begin_draw();
 
 
+
 };
 
 

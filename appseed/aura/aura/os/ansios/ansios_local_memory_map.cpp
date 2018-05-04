@@ -74,9 +74,11 @@ bool file_memory_map::open()
 
    }
 
-   string strPath(get_path());
+   ::file::path path(get_path());
 
-   m_iFile = ::open(strPath,iOpen,(m_bRead ? S_IRUSR : 0) | (m_bWrite ? S_IWUSR : 0));
+   ::dir::mk(path.folder());
+
+   m_iFile = ::open(path,iOpen, S_IRUSR |  S_IWUSR );
 
 
    if(m_iFile == -1)
@@ -100,6 +102,12 @@ bool file_memory_map::open()
       return false;
 
    }
+
+   string strMutex;
+
+   strMutex = m_strName + "-mutex";
+
+   m_pmutex = new mutex(get_app(), false, strMutex, NULL);
 
    return true;
 

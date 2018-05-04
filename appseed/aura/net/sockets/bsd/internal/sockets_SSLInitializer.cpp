@@ -55,7 +55,7 @@ extern void *OPENSSL_UplinkTable[];
 extern "C" void SSLInitializer_SSL_locking_function(int32_t mode, int32_t n, const char * file, int32_t line);
 extern "C" unsigned long SSLInitializer_SSL_id_function();
 extern "C"
-#if defined(METROWIN) || (defined(LINUX) && !defined(RASPBIAN))
+#if defined(METROWIN) && (!defined(RASPBIAN))
 void
 #else
 int
@@ -64,7 +64,7 @@ SSLInitializer_rand_seed(const void * buf, int32_t num);
 extern "C" int32_t SSLInitializer_rand_bytes(uchar * buf, int32_t num);
 extern "C" void SSLInitializer_rand_cleanup();
 extern "C"
-#if defined(METROWIN) || (defined(LINUX) && !defined(RASPBIAN))
+#if defined(METROWIN) && (!defined(RASPBIAN))
 void
 #else
 int
@@ -330,7 +330,7 @@ extern "C" unsigned long SSLInitializer_SSL_id_function()
 #if OPENSSL_API_COMPAT < 0x10100000L
 
 extern "C"
-#if defined(METROWIN) || (defined(LINUX) && !defined(RASPBIAN))
+#if defined(METROWIN) && (!defined(RASPBIAN))
 void
 #else
 int
@@ -339,7 +339,7 @@ SSLInitializer_rand_seed(const void * buf, int32_t num)
 {
    UNREFERENCED_PARAMETER(buf);
    UNREFERENCED_PARAMETER(num);
-#if defined(METROWIN) || (defined(LINUX) && !defined(RASPBIAN))
+#if defined(METROWIN) && (!defined(RASPBIAN))
 #else
    return 1;
 #endif
@@ -356,7 +356,7 @@ extern "C" void SSLInitializer_rand_cleanup()
 }
 
 extern "C"
-#if defined(METROWIN) || (defined(LINUX) && !defined(RASPBIAN))
+#if defined(METROWIN)
 void
 #else
 int
@@ -366,7 +366,7 @@ SSLInitializer_rand_add(const void * buf, int num, double entropy)
    UNREFERENCED_PARAMETER(buf);
    UNREFERENCED_PARAMETER(num);
    UNREFERENCED_PARAMETER(entropy);
-#if defined(METROWIN) || (defined(LINUX) && !defined(RASPBIAN))
+#if defined(METROWIN)
 #else
    return 1;
 #endif

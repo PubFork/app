@@ -118,25 +118,6 @@ namespace windows
    }
 
 
-   void window_buffer::defer_prepare_ipc_copy_()
-   {
-
-      if (m_hwnd == NULL || !m_pimpl->m_bIpcCopy)
-      {
-
-         return;
-
-      }
-
-      CHAR szName[] = "Local\\ca2screen-%d";
-
-      string strPath;
-
-      strPath.Format(szName, m_hwnd);
-
-      m_memorymap.open(strPath, false, true, true, 8192 * 4096 * 4);
-
-   }
 
 
    void window_buffer::create_buffer(int64_t cxParam, int64_t cyParam, int iStrideParam)

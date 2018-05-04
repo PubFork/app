@@ -829,7 +829,7 @@ string_array < Type, RawType >::c_stra(string_array < Type, RawType > & stra) co
 }
 
 template < typename Type, typename RawType >
-string_array < Type, RawType > string_array < Type, RawType >::
+string_array < Type, RawType >
 string_array < Type, RawType >::c_stra() const
 {
 

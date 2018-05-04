@@ -42,6 +42,11 @@ public:
 
    ::draw2d::dib_sp & get_buffer();
 
+   virtual void defer_prepare_ipc_copy_();
+   virtual void ipc_copy(int cx, int cy, COLORREF * pcolorref, int iScan);
+
+   void on_create_window(::user::interaction_impl * pimpl);
+
 };
 
 

@@ -106,7 +106,6 @@
 		<Unit filename="base/base_policy/base_policy_objc.h" />
 		<Unit filename="base/base_policy/base_policy_objcpp.h" />
 		<Unit filename="base/base_policy/base_policy_winrt.h" />
-		<Unit filename="base/install/install_canvas.cpp" />
 		<Unit filename="base/install/install_canvas.h" />
 		<Unit filename="base/message/message_user.h" />
 		<Unit filename="base/node/ansios/ansios.h" />
@@ -177,6 +176,9 @@
 		<Unit filename="user/fontopus/simple_ui_style.h" />
 		<Unit filename="user/hotplugin/hotplugin.cpp" />
 		<Unit filename="user/hotplugin/hotplugin.h" />
+		<Unit filename="user/hotplugin/hotplugin_bare_paint_discreet.cpp" />
+		<Unit filename="user/hotplugin/hotplugin_bare_paint_full_screen.cpp" />
+		<Unit filename="user/hotplugin/hotplugin_bare_paint_veri_discreet.cpp" />
 		<Unit filename="user/hotplugin/hotplugin_composer.cpp" />
 		<Unit filename="user/hotplugin/hotplugin_composer.h" />
 		<Unit filename="user/hotplugin/hotplugin_container_launcher.cpp" />
@@ -186,14 +188,6 @@
 		<Unit filename="user/hotplugin/hotplugin_plugin.cpp" />
 		<Unit filename="user/hotplugin/hotplugin_plugin.h" />
 		<Unit filename="user/hotplugin/hotplugin_windows.cpp" />
-		<Unit filename="user/install/install.h" />
-		<Unit filename="user/install/install_plugin.cpp" />
-		<Unit filename="user/install/install_plugin.h" />
-		<Unit filename="user/install/install_plugin_bare_paint_discreet.cpp" />
-		<Unit filename="user/install/install_plugin_bare_paint_full_screen.cpp" />
-		<Unit filename="user/install/install_plugin_bare_paint_veri_discreet.cpp" />
-		<Unit filename="user/install/install_starter_start.cpp" />
-		<Unit filename="user/install/install_starter_start.h" />
 		<Unit filename="user/simple/simple.h" />
 		<Unit filename="user/simple/simple_scroll_bar.cpp" />
 		<Unit filename="user/simple/simple_scroll_bar.h" />
@@ -236,10 +230,10 @@
 		<Unit filename="user/user/user_document_data_map.h" />
 		<Unit filename="user/user/user_form_callback.cpp" />
 		<Unit filename="user/user/user_form_callback.h" />
+		<Unit filename="user/user/user_form_control.cpp" />
+		<Unit filename="user/user/user_form_control.h" />
 		<Unit filename="user/user/user_form_update_hint.cpp" />
 		<Unit filename="user/user/user_form_update_hint.h" />
-		<Unit filename="user/user/user_form_window.cpp" />
-		<Unit filename="user/user/user_form_window.h" />
 		<Unit filename="user/user/user_frame_window.cpp" />
 		<Unit filename="user/user/user_frame_window.h" />
 		<Unit filename="user/user/user_impact.cpp" />
@@ -266,6 +260,8 @@
 		<Unit filename="user/user/user_scroll_bar.h" />
 		<Unit filename="user/user/user_server.cpp" />
 		<Unit filename="user/user/user_server.h" />
+		<Unit filename="user/user/user_simple_view.cpp" />
+		<Unit filename="user/user/user_simple_view.h" />
 		<Unit filename="user/user/user_single_document_template.cpp" />
 		<Unit filename="user/user/user_single_document_template.h" />
 		<Unit filename="user/user/user_user.cpp" />

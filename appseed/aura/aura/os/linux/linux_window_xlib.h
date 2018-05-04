@@ -30,8 +30,6 @@ public:
    virtual void create_window_graphics_(int64_t cx, int64_t cy, int iStride = -1) override;
    virtual void destroy_window_graphics_() override;
 
-
-
    virtual void update_window(::draw2d::dib * pdib) override;
 
 

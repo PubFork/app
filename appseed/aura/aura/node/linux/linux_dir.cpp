@@ -811,7 +811,7 @@ namespace linux
          }
       }
 
-      bIsDir = ::dir::is(strPath);
+      bIsDir = ::dir::_is(strPath);
 
       m_isdirmap.set(lpcszPath, bIsDir, bIsDir ? 0 : ::get_last_error());
 
@@ -1096,66 +1096,86 @@ namespace linux
 
       lpcsz.ascendants_path(stra);
 
-      for(int32_t i = 0; i < stra.get_size(); i++)
+      index i = stra.get_upper_bound();
+
+      for(; i >= 0; i--)
       {
 
-         if(!is(stra[i], papp))
+         if(is(stra[i], papp))
          {
 
-            if(!::dir::mk(stra[i]))
-            {
-               DWORD dwError = ::get_last_error();
-               if(dwError == ERROR_ALREADY_EXISTS)
-               {
-                  string str;
-                  str = "\\\\?\\" + stra[i];
-                  str.trim_right("\\/");
-                  try
-                  {
-                     Application.file().del(str);
-                  }
-                  catch(...)
-                  {
-                  }
-                  str = stra[i];
-                  str.trim_right("\\/");
-                  try
-                  {
-                     Application.file().del(str);
-                  }
-                  catch(...)
-                  {
-                  }
-                  //if(::CreateDirectory(::str::international::utf8_to_unicode("\\\\?\\" + stra[i]), NULL))
-                  if(::dir::mk("\\\\?\\" + stra[i]))
-                  {
-                     m_isdirmap.set(stra[i], true, 0);
-                     goto try1;
-                  }
-                  else
-                  {
-                     dwError = ::get_last_error();
-                  }
-               }
-               char * pszError;
-               //FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwError, 0, (LPTSTR) &pszError, 8, NULL);
+            break;
 
-               //TRACE("dir::mk CreateDirectoryW last error(%d)=%s", dwError, pszError);
-// xxx               ::LocalFree(pszError);
-               //m_isdirmap.set(stra[i], false);
-            }
-            else
+         }
+
+      }
+
+      if(i < 0)
+      {
+
+         return false;
+
+      }
+
+      for(; i < stra.get_size(); i++)
+      {
+
+         if(!::dir::mkdir(stra[i]))
+         {
+            DWORD dwError = ::get_last_error();
+            if(dwError == ERROR_ALREADY_EXISTS)
             {
-               m_isdirmap.set(stra[i], true, 0);
+               string str;
+               str = stra[i];
+               str.trim_right("\\/");
+               try
+               {
+                  Application.file().del(str);
+               }
+               catch(...)
+               {
+               }
+               str = stra[i];
+               str.trim_right("\\/");
+               try
+               {
+                  Application.file().del(str);
+               }
+               catch(...)
+               {
+               }
+               //if(::CreateDirectory(::str::international::utf8_to_unicode("\\\\?\\" + stra[i]), NULL))
+               if(::dir::mkdir(stra[i]))
+               {
+                  m_isdirmap.set(stra[i], true, 0);
+               }
+               else
+               {
+                  dwError = ::get_last_error();
+               }
             }
-            try1:
+            char * pszError;
+            //FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwError, 0, (LPTSTR) &pszError, 8, NULL);
+
+            //TRACE("dir::mk CreateDirectoryW last error(%d)=%s", dwError, pszError);
+// xxx               ::LocalFree(pszError);
+            //m_isdirmap.set(stra[i], false);
 
             if(!is(stra[i], papp))
             {
+
                return false;
+
+
             }
 
          }
+         else
+         {
+            m_isdirmap.set(stra[i], true, 0);
+         }
+
+
       }
       return true;
    }

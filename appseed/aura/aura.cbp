@@ -233,6 +233,10 @@
 		<Unit filename="aura/aura/aura_draw_interface.h" />
 		<Unit filename="aura/aura/aura_enum.h" />
 		<Unit filename="aura/aura/aura_error.h" />
+		<Unit filename="aura/aura/aura_file_memory_map.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/aura/aura_file_watcher.h" />
 		<Unit filename="aura/aura/aura_file_watcher_impl.h" />
 		<Unit filename="aura/aura/aura_file_watcher_listener_thread.h" />
@@ -548,6 +552,10 @@
 		</Unit>
 		<Unit filename="aura/os/ansios/ansios.h" />
 		<Unit filename="aura/os/ansios/ansios_file.h" />
+		<Unit filename="aura/os/ansios/ansios_local_memory_map.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/os/ansios/ansios_multithreading.h" />
 		<Unit filename="aura/os/ansios/ansios_process.cpp">
 			<Option compile="0" />
@@ -899,6 +907,10 @@
 		<Unit filename="graphics/draw3d/draw3d_ortho.h" />
 		<Unit filename="graphics/graphics.h" />
 		<Unit filename="graphics/graphics_window.h" />
+		<Unit filename="graphics/graphics_window_buffer.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="graphics/graphics_window_buffer.h" />
 		<Unit filename="graphics/graphics_window_dc.h" />
 		<Unit filename="graphics/graphics_window_graphics.h" />
@@ -1059,6 +1071,10 @@
 		<Unit filename="net/sockets/bsd/basic/sockets_tls_socket.h" />
 		<Unit filename="net/sockets/bsd/basic/sockets_udp_socket.h" />
 		<Unit filename="net/sockets/bsd/internal/SSLInitializer.h" />
+		<Unit filename="net/sockets/bsd/internal/sockets_SSLInitializer.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="net/sockets/bsd/sip/sip_base.h" />
 		<Unit filename="net/sockets/bsd/sip/sip_base_client_socket.h" />
 		<Unit filename="net/sockets/bsd/sip/sip_callback.h" />
@@ -1464,6 +1480,8 @@
 		<Unit filename="user/user/user_create_struct.h" />
 		<Unit filename="user/user/user_elemental.h" />
 		<Unit filename="user/user/user_enum.h" />
+		<Unit filename="user/user/user_form.cpp" />
+		<Unit filename="user/user/user_form.h" />
 		<Unit filename="user/user/user_frame.cpp">
 			<Option compile="0" />
 			<Option link="0" />

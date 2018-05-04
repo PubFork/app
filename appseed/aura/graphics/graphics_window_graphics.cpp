@@ -19,14 +19,14 @@ window_graphics::~window_graphics()
 
    destroy_window_graphics_();
 
-   
+
 
 }
 
 
 void window_graphics::on_create_window(::user::interaction_impl * pimpl)
 {
-   
+
    m_pimpl = pimpl;
 
 }
@@ -75,6 +75,5 @@ void window_graphics::update_window()
    return NULL;
 
 }
-
 
 

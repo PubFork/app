@@ -2,6 +2,7 @@
 //#include "base/user/user.h"
 //#include "graphics_window_buffer.h"
 
+i64 oswindow_id(oswindow w);
 
 window_buffer::window_buffer(::aura::application * papp) :
    object(papp),
@@ -16,7 +17,14 @@ window_buffer::~window_buffer()
 
 }
 
+void window_buffer::on_create_window(::user::interaction_impl * pimpl)
+{
 
+   window_graphics::on_create_window(pimpl);
+
+   m_hwnd = pimpl->m_oswindow;
+
+}
 void window_buffer::update_window()
 {
 
@@ -92,6 +100,59 @@ void window_buffer::update_window(::draw2d::dib * pdib)
 
 }
 
+   void window_buffer::defer_prepare_ipc_copy_()
+   {
+
+      if (m_hwnd == NULL || !m_pimpl->m_bIpcCopy)
+      {
+
+         return;
+
+      }
+
+      CHAR szName[] = "Local\\ca2screen-%d";
+
+      string strPath;
+
+      strPath.Format(szName, oswindow_id(m_hwnd));
+
+      m_memorymap.open(strPath, false, true, true, 8192 * 4096 * 4);
+
+   }
+
+
+   void window_buffer::ipc_copy(int cx, int cy, COLORREF * pcolorref, int iScan)
+   {
+
+      void * pdata = m_memorymap.get_data();
+
+      if (pdata == NULL)
+      {
+
+         return;
+
+      }
+
+      synch_lock sl(m_memorymap.m_pmutex);
+
+      try
+      {
+
+         int64_t * p = (int64_t *)pdata;
+
+         *p++ = cx;
+         *p++ = cy;
+         *p++ = sizeof(COLORREF) * cx;
+
+         ::draw2d::copy_colorref(cx, cy, (COLORREF *)p, sizeof(COLORREF) * cx, pcolorref, iScan);
+
+      }
+      catch (...)
+      {
+
+      }
+
+   }
 
 
 
