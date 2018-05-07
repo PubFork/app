@@ -27,21 +27,21 @@ CLASS_DECL_AURA void ultow_dup(unichar * sz, uint64_t i, int32_t iBase);
 inline string itoa_dup(i64 i)
 {
    char sz[32];
-   #if defined(LINUX) || defined(MACOS)
+#if defined(LINUX) || defined(MACOS) || defined(ANDROID)
    itoa_dup(sz, i, 10);
-   #else
+#else
    _i64toa(i, sz, 10);
-   #endif
+#endif
    return string(sz);
 }
 
 inline char * itocat_dup(char * psz, i64 i)
 {
-   #if defined(LINUX) || defined(MACOS)
+#if defined(LINUX) || defined(MACOS) || defined(ANDROID)
    itoa_dup(psz + strlen(psz), i, 10);
-   #else
+#else
    _i64toa(i, psz + strlen(psz), 10);
-   #endif
+#endif
    return psz;
 }
 
@@ -49,21 +49,21 @@ inline char * itocat_dup(char * psz, i64 i)
 inline string itoa_dup(i32 i)
 {
    char sz[16];
-   #if defined(LINUX) || defined(MACOS)
+#if defined(LINUX) || defined(MACOS) || defined(ANDROID)
    itoa_dup(sz, i, 10);
-   #else
+#else
    _itoa(i, sz, 10);
-   #endif
+#endif
    return string(sz);
 }
 
 inline char * itocat_dup(char * psz, i32 i)
 {
-   #if defined(LINUX) || defined(MACOS)
+#if defined(LINUX) || defined(MACOS) || defined(ANDROID)
    itoa_dup(psz + strlen(psz), i, 10);
-   #else
+#else
    _itoa(i, psz + strlen(psz), 10);
-   #endif
+#endif
    return psz;
 }
 
