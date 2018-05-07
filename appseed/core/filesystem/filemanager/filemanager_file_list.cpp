@@ -15,39 +15,11 @@ namespace filemanager
       m_bRestartCreateImageList = false;
       m_bStatic = false;
       m_bPendingSize = false;
-      //      m_pcreateimagelistthread = NULL;
-
       m_bFileSize = false;
       m_bShow = false;
       m_dwLastFileSize = ::get_tick_count();
 
-      //bool bDoubleClickInWebView = true;
-
-      //#ifdef WINDOWSEX
-      //
-      //      SHELLSTATE shellstate;
-      //
-      //      SHGetSetSettings(&shellstate, SSF_DOUBLECLICKINWEBVIEW, false);
-      //
-      //      bDoubleClickInWebView = shellstate.fDoubleClickInWebView != FALSE;
-      //
-      //#elif defined(MACOS)
-      //
-      //      bDoubleClickInWebView = true;
-      //
-      //#endif
-
-      //#ifdef LINUX
-      //
       m_bHoverSelect = true;
-
-      //#else
-      //
-      //      m_bHoverSelect = !bDoubleClickInWebView;
-      //
-      //#endif
-
-
 
    }
 
@@ -68,7 +40,6 @@ namespace filemanager
       IGUI_MSG_LINK(WM_HSCROLL, pinterface, this, &file_list::_001OnHScroll);
       IGUI_MSG_LINK(WM_VSCROLL, pinterface, this, &file_list::_001OnVScroll);
       IGUI_MSG_LINK(WM_RBUTTONUP, pinterface, this, &file_list::_001OnContextMenu);
-//      connect_command_range(FILEMANAGER_SHELL_COMMAND_FIRST, FILEMANAGER_SHELL_COMMAND_LAST, &file_list::_001OnShellCommand);
       IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &file_list::_001OnShowWindow);
       IGUI_MSG_LINK(WM_SETFOCUS, pinterface, this, &file_list::_001OnSetFocus);
       IGUI_MSG_LINK(WM_KILLFOCUS, pinterface, this, &file_list::_001OnKillFocus);
@@ -84,6 +55,8 @@ namespace filemanager
       connect_command("spafy2", &file_list::_001OnSpafy2);
       connect_command_probe("file_rename", &file_list::_001OnUpdateFileRename);
       connect_command("file_rename", &file_list::_001OnFileRename);
+
+
    }
 
 
@@ -202,19 +175,6 @@ namespace filemanager
 
                data_get_DisplayToStrict();
                _001OnUpdateItemCount();
-               /*string str;
-               if(data_get("sort-" + get_filemanager_item().m_strPath, str))
-               {
-                  stringa stra;
-                  stra.add_tokens(str, ";", true);
-                  if(stra.get_size() == m_iaDisplayToStrict.get_size())
-                  {
-                     for(int32_t i = 0; i < m_iaDisplayToStrict.get_size(); i++)
-                     {
-                        m_iaDisplayToStrict.set(i, atoi(stra[i]));
-                     }
-                  }
-               }*/
             }
             else if (puh->is_type_of(update_hint::TypeFilter))
             {
@@ -825,7 +785,15 @@ namespace filemanager
          for (int32_t i = 0; i < iCount; i++)
          {
             pmenuitem->m_id = "open with" + stra[i];
-            pmenuitem->m_pui->set_window_text(stra[i]);
+
+            if (pmenuitem->m_pui != NULL)
+            {
+
+               pmenuitem->m_pui->set_window_text(stra[i]);
+
+            }
+
+
             pmenuitem->m_iLevel = pitema->m_pitemParent != NULL ? pitema->m_pitemParent->m_iLevel + 1 : 0;
             pmenuitem->m_pmenu = pmenu;
             pitema->insert_at(iIndex, pmenuitem);
@@ -1368,170 +1336,6 @@ namespace filemanager
    }
 
 
-   //   void file_list::_001CreateImageList()
-   //   {
-   //
-   //      icon_key iconkey;
-   //      icon icon;
-   //
-   //#ifdef WINDOWSEX
-   //      for (POSITION pos = m_iconmap.get_start_position(); pos != NULL; m_iconmap.get_next_assoc(pos, iconkey, icon))
-   //      {
-   //         DestroyIcon((HICON) *icon.m_picon);
-   //      }
-   //#endif
-   //
-   //      m_iCreateImageListStep = 0;
-   //      m_bCreateImageList = true;
-   //      //if (m_pcreateimagelistthread == NULL)
-   //      //{
-   //      //   m_pcreateimagelistthread = new create_image_list_thread(get_app());
-   //      //   m_pcreateimagelistthread->m_plist = this;
-   //      //   m_pcreateimagelistthread->begin();
-   //      //}
-   //   }
-   //
-   //   file_list::create_image_list_thread::create_image_list_thread(::aura::application * papp) :
-   //      object(papp),
-   //      thread(papp)
-   //   {
-   //   }
-   //
-   //   int32_t file_list::create_image_list_thread::run()
-   //   {
-   //
-   //      int32_t iStepSetCount = 84;
-   //
-   //      ::file::path path = m_plist->get_filemanager_path();
-   //
-   //      Session.userex()->shell()->open_folder(m_plist->get_handle(), path);
-   //
-   //      try
-   //      {
-   //
-   //         //      int32_t iStepSetSleep = 23;
-   //         while (thread_get_run())
-   //         {
-   //            int32_t i = iStepSetCount;
-   //            while (i > 0 && thread_get_run())
-   //            {
-   //               if (!m_plist->_001CreateImageListStep())
-   //                  goto endloop;
-   //               i--;
-   //            }
-   //            //m_plist->post_message(MessageMainPost, MessageMainPostCreateImageListItemStepSetRedraw);
-   //            //Sleep(iStepSetSleep);
-   //         }
-   //      endloop:
-   //         m_plist->post_message(MessageMainPost, MessageMainPostCreateImageListItemRedraw);
-   //         //synch_lock lock(m_plist->m_pauraapp);
-   //         m_plist->m_pcreateimagelistthread = NULL;
-   //         return 0;
-   //
-   //      }
-   //      catch (...)
-   //      {
-   //
-   //
-   //      }
-   //
-   //      Session.userex()->shell()->close_folder(path);
-   //
-   //   }
-
-
-   //bool file_list::_001CreateImageListStep()
-   //{
-
-   //   synch_lock sl(get_fs_mesh_data()->m_pmutex);
-
-   //   if (m_iCreateImageListStep < 0 || m_iCreateImageListStep >= get_fs_mesh_data()->m_itema.get_count())
-   //   {
-   //      if (m_bRestartCreateImageList)
-   //      {
-   //         m_bRestartCreateImageList = false;
-   //         m_iCreateImageListStep = 0;
-   //         if (m_iCreateImageListStep >= get_fs_mesh_data()->m_itema.get_count())
-   //         {
-   //            return false;
-   //         }
-   //      }
-   //      else
-   //      {
-   //         return false;
-   //      }
-   //   }
-
-   //   ::file::path path;
-
-   //   {
-
-   //      ::userfs::list_item & item = get_fs_mesh_data()->m_itema.get_item((int32_t)m_iCreateImageListStep);
-   //      if (&item == NULL)
-   //      {
-
-   //         return true;
-
-   //      }
-   //      ::file::path & p = item.m_filepath;
-   //      if (p.m_iDir < 0)
-   //      {
-
-   //         p.m_iDir = get_document()->get_fs_data()->is_dir(p) ? 1 : 0;
-
-   //      }
-
-   //      if (p.m_iDir == 1)
-   //      {
-
-   //         item.m_flags.signalize(::fs::FlagFolder);
-
-   //      }
-   //      path = p;
-   //   }
-   //   sl.unlock();
-
-   //   int iImage = Session.userex()->shell()->get_image(
-   //      get_handle(),
-   //      path,
-   //      path.m_iDir == 1 ? ::user::shell::file_attribute_directory : ::user::shell::file_attribute_normal,
-   //      ::user::shell::icon_normal);
-
-   //   sl.lock();
-   //   {
-
-   //      //single_lock sl(m_pmutex, true);
-
-   //      if (m_iCreateImageListStep < 0 || m_iCreateImageListStep >= get_fs_mesh_data()->m_itema.get_count())
-   //      {
-   //         return true;
-   //      }
-   //      ::userfs::list_item & item = get_fs_mesh_data()->m_itema.get_item((int32_t)m_iCreateImageListStep);
-
-   //      if (&item == NULL)
-   //      {
-
-   //         return true;
-
-   //      }
-
-   //      if (path == item.m_filepath)
-   //      {
-
-   //         item.m_iImage = iImage;
-
-   //      }
-
-   //   }
-
-
-   //   m_iCreateImageListStep++;
-
-   //   return true;
-
-   //}
-
-
    void file_list::_001InsertColumns()
    {
 
@@ -1559,12 +1363,16 @@ namespace filemanager
 
       if (pcallback != NULL)
       {
+
          iCount = pcallback->GetActionButtonCount();
+
       }
 
       index i;
+
       for (i = 0; i < iCount; i++)
       {
+
          control.m_bTransparent = true;
          control.set_type(user::control_type_button);
          control.m_typeinfo = System.type_info < ::user::button >();
@@ -1585,8 +1393,9 @@ namespace filemanager
 
       if (get_filemanager_data()->m_bListSelection)
       {
+         m_iSelectionSubItem = i;
+         m_iIconSubItem = m_iSelectionSubItem;
          column.m_iWidth = get_filemanager_data()->m_iIconSize;
-         column.m_iSubItem = i;
          //column.m_bIcon                = true;
          column.m_sizeIcon.cx = get_filemanager_data()->m_iIconSize;
          column.m_sizeIcon.cy = get_filemanager_data()->m_iIconSize;
@@ -1596,9 +1405,8 @@ namespace filemanager
          column.m_bEditOnSecondClick = false;
          column.m_pil = Session.userex()->shell()->GetImageList(get_filemanager_data()->m_iIconSize);
          column.m_pilHover = Session.userex()->shell()->GetImageListHover(get_filemanager_data()->m_iIconSize);
+         column.m_iSubItem = m_iSelectionSubItem;
          _001AddColumn(column);
-         m_iSelectionSubItem = i;
-
          i++;
       }
       else
@@ -1619,8 +1427,9 @@ namespace filemanager
 
 
 
-      column.m_iSubItem = i;
       m_iNameSubItem = i;
+      m_iIconSubItem = m_iNameSubItem;
+      column.m_iSubItem = m_iNameSubItem;
       if (get_filemanager_data()->m_bListText)
       {
          m_iNameSubItemText = i;
@@ -1639,8 +1448,9 @@ namespace filemanager
       column.m_uiText = "Name";
       column.m_datakey = "FILE_MANAGER_ID_FILE_NAME";
       column.m_bEditOnSecondClick = true;
-      column.m_pil = Session.userex()->shell()->GetImageList(get_filemanager_data()->m_iIconSize);
-      column.m_pilHover = Session.userex()->shell()->GetImageListHover(get_filemanager_data()->m_iIconSize);
+      int iIconSize = get_filemanager_data()->m_iIconSize;
+      column.m_pil = Session.userex()->shell()->GetImageList(iIconSize);
+      column.m_pilHover = Session.userex()->shell()->GetImageListHover(iIconSize);
       _001AddColumn(column);
 
       i++;
@@ -1707,34 +1517,13 @@ namespace filemanager
       return false;*/
    }
 
+
    void file_list::_001GetItemImage(::user::mesh_item * pitem)
    {
+
       return ::userfs::list::_001GetItemImage(pitem);
-      /*      if(iSubItem == m_iSelectionSubItem)
-      {
-      if(m_rangeSelection.has_item(iItem))
-      {
-      return 1;
-      }
-      else
-      {
-      return 0;
-      }
-      }
-      else if(iSubItem == m_iNameSubItem)
-      {
-      return m_itema.get_item(iItem).m_iImage;
-      }
-      else
-      return ::user::list::_001GetItemImage(iItem, iSubItem, iListItem);*/
 
    }
-
-
-   //bool file_list::TwiHasTranslucency()
-   //{
-   //   return ::user::list::TwiHasTranslucency() && !m_bCreateImageListRedraw;
-   //}
 
 
    void file_list::GetSelectedFilePath(stringa & array)

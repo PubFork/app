@@ -14,6 +14,7 @@ struct extract_resource_icon
    int         cx;
    int         cy;
    HICON       hicon;
+   int         iCounter;
 
 };
 
@@ -117,6 +118,8 @@ CLASS_DECL_BASE HICON ExtractResourceIcon(string strPath, int & cx, int & cy, in
 
    i.iIcon = iIcon;
 
+   i.iCounter = -1;
+
    try
    {
 
@@ -154,7 +157,9 @@ CLASS_DECL_BASE HICON ExtractResourceIcon(string strPath, int & cx, int & cy, in
    }
 
    return i.hicon;
+
 }
+
 
 BOOL ExtractResourceIcon_EnumNamesFunc(HMODULE hModule, LPCWSTR lpType, LPWSTR lpName, LONG_PTR lParam)
 {
@@ -163,12 +168,15 @@ BOOL ExtractResourceIcon_EnumNamesFunc(HMODULE hModule, LPCWSTR lpType, LPWSTR l
 
    ULONG_PTR u = ULONG_PTR(lpName);
 
-   if (pi->iIcon > 0)
+   if (pi->iIcon < 0)
    {
 
-      pi->iIcon--;
+      if (-pi->iIcon != u)
+      {
 
-      return TRUE;
+         return TRUE;
+
+      }
 
    }
 
@@ -177,8 +185,31 @@ BOOL ExtractResourceIcon_EnumNamesFunc(HMODULE hModule, LPCWSTR lpType, LPWSTR l
    HGLOBAL hGroup = LoadResource(hModule, hRsrc);
 
    GRPICONDIR * lpGrpIconDir = (LPGRPICONDIR)LockResource(hGroup);
-   //   if(pi->iIcon >= lpGrpIconDir->idCount)
-   //    return FALSE;
+
+   if (pi->iIcon >= 0)
+   {
+
+      if (lpGrpIconDir->idCount > 0)
+      {
+
+         int iId = lpGrpIconDir->idEntries[0].nID;
+
+         if (iId != pi->iIcon)
+         {
+
+            return TRUE;
+
+         }
+
+      }
+      else
+      {
+
+         return TRUE;
+
+      }
+
+   }
 
    int iTry = 0;
 

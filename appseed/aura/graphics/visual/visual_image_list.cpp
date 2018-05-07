@@ -232,8 +232,6 @@ int32_t image_list::add(::visual::icon * picon, int iItem)
 
    iItem = reserve_image(iItem);
 
-   ::draw2d::brush_sp brush(allocer(), RGB(192, 192, 192));
-
    m_spdib->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
 
    m_spdib->get_graphics()->FillSolidRect(iItem * m_size.cx, 0, m_size.cx, m_size.cy, 0);

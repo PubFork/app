@@ -29,23 +29,25 @@ namespace file_watcher
    struct watch_struct
    {
 
-      OVERLAPPED m_overlapped;
-      HANDLE m_hDirectory;
-      BYTE m_buffer[32 * 1024];
-      LPARAM m_lparam;
-      uint32_t m_dwNotify;
-      bool m_bRefresh;
-      bool m_bStop;
-      file_watcher_impl* m_pwatcher;
-      listener* m_plistener;
-      bool  m_bOwn;
-      string m_strDirName;
-      id m_id;
-      bool m_bRecursive;
+      id                   m_id;
+      OVERLAPPED           m_overlapped;
+      HANDLE               m_hDirectory;
+      BYTE                 m_buffer[32 * 1024];
+      LPARAM               m_lparam;
+      uint32_t             m_dwNotify;
+      bool                 m_bRefresh;
+      bool                 m_bStop;
+      file_watcher_impl *  m_pwatcher;
+      listener *           m_plistener;
+      bool                 m_bOwn;
+      string               m_strDirName;
+      bool                 m_bRecursive;
 
       /// Starts monitoring a directory.
       watch_struct(LPCTSTR szDirectory, uint32_t m_dwNotify, bool bRecursive)
       {
+
+         ZERO(m_overlapped);
 
          m_bRefresh = true;
          m_overlapped.hEvent = INVALID_HANDLE_VALUE;
@@ -63,6 +65,7 @@ namespace file_watcher
          }
 
          m_overlapped.hEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
+
          m_dwNotify = m_dwNotify;
          m_bRecursive = bRecursive;
          m_bStop = false;
@@ -196,10 +199,7 @@ namespace file_watcher
    os_file_watcher::os_file_watcher(::aura::application * papp) :
       ::object(papp),
       m_idLast(0)
-
    {
-
-
 
    }
 
@@ -233,16 +233,37 @@ namespace file_watcher
 
       }
 
+      if (directory.is_empty())
+      {
+
+         // Intentionally put after possible thread creation.
+         // This way add_watch called with empty directory argument,
+         // can make provision of thread creation.
+
+         return -1;
+
+      }
+
       synch_lock sl(m_pmutex);
 
-      id id = ++m_idLast;
+      watch_struct * pwatch = NULL;
 
-      watch_struct * pwatch = new watch_struct(directory,
-            FILE_NOTIFY_CHANGE_CREATION
-            | FILE_NOTIFY_CHANGE_SIZE
-            | FILE_NOTIFY_CHANGE_FILE_NAME
-            | FILE_NOTIFY_CHANGE_LAST_WRITE
-            ,bRecursive);
+      try
+      {
+
+         pwatch = new watch_struct(directory,
+                                   FILE_NOTIFY_CHANGE_CREATION
+                                   | FILE_NOTIFY_CHANGE_SIZE
+                                   | FILE_NOTIFY_CHANGE_FILE_NAME
+                                   | FILE_NOTIFY_CHANGE_LAST_WRITE
+                                   , bRecursive);
+
+      }
+      catch (...)
+      {
+
+
+      }
 
       if (pwatch == NULL)
       {
@@ -251,16 +272,15 @@ namespace file_watcher
 
       }
 
-
-      pwatch->m_id = id;
+      pwatch->m_id = ++m_idLast;
       pwatch->m_pwatcher = this;
       pwatch->m_plistener = watcher;
       pwatch->m_strDirName = directory;
       pwatch->m_bOwn = bOwn;
 
-      m_watchmap.set_at(id,pwatch);
+      m_watchmap.set_at(pwatch->m_id, pwatch);
 
-      return id;
+      return pwatch->m_id;
 
    }
 

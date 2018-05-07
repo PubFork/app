@@ -51,11 +51,11 @@ public:
    inline bool is_empty() const { return m_pidl ? false : true; }
    itemidlist at(int nIndex) const;//Return a relative pidl at specified index.
    bool copy(LPCITEMIDLIST pidlf);
-   inline int count() const { return _count(m_pidl); }//Get pidl count.
-   inline int len() const { return _len(m_pidl); }
-   inline void free() { _free(m_pidl); }
+   inline int count() const;
+   inline int len() const;
+   inline void free();
    string path() const;//Retrieve full path.(only available for full-quality pidl)
-   void parse(const char * pszPath);
+   bool parse(const char * pszPath);
 
    itemidlist operator/(const itemidlist & piidl) const ;//Concat two pidls.
    inline operator LPITEMIDLIST() const { return m_pidl; }

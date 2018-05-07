@@ -120,19 +120,8 @@ namespace linux
    {
    }
 
-   int32_t copydesk::get_file_count()
+   bool copydesk::has_filea()
    {
-//      if(!m_p->OpenClipboard())
-  //       return 0;
-      int32_t iCount = 0;
-      //_throw(todo(get_app()));
-      /* xxx HDROP hdrop = (HDROP) ::GetClipboardData(CF_HDROP);
-      if(hdrop != NULL)
-      {
-         iCount = ::DragQueryFile(hdrop , 0xFFFFFFFF, NULL, 0);
-      }
-      ::CloseClipboard(); */
-      return iCount;
    }
 
 
@@ -142,7 +131,7 @@ namespace linux
       if(iCount <= 0)
          return;
 //      if(!m_p->OpenClipboard())
-  //       return;
+      //       return;
       _throw(todo(get_app()));
       /* HDROP hdrop = (HDROP) ::GetClipboardData(CF_HDROP);
       string str;
@@ -172,41 +161,41 @@ namespace linux
 
       _throw(todo(get_app()));
 
-/* xxx
+      /* xxx
 
-      HGLOBAL hglbCopy = ::GlobalAlloc(GMEM_MOVEABLE, sizeof(DROPFILES) + (iLen + 1) * sizeof(WCHAR));
-      LPDROPFILES pDropFiles = (LPDROPFILES) ::GlobalLock(hglbCopy);
-      pDropFiles->pFiles = sizeof(DROPFILES);
-      pDropFiles->pt.x = pDropFiles->pt.y = 0;
-      pDropFiles->fNC = TRUE;
-      pDropFiles->fWide = TRUE; // ANSI charset
+            HGLOBAL hglbCopy = ::GlobalAlloc(GMEM_MOVEABLE, sizeof(DROPFILES) + (iLen + 1) * sizeof(WCHAR));
+            LPDROPFILES pDropFiles = (LPDROPFILES) ::GlobalLock(hglbCopy);
+            pDropFiles->pFiles = sizeof(DROPFILES);
+            pDropFiles->pt.x = pDropFiles->pt.y = 0;
+            pDropFiles->fNC = TRUE;
+            pDropFiles->fWide = TRUE; // ANSI charset
 
-      ASSERT(m_p->IsWindow());
-      LPTSTR lptstrCopy = (char *) pDropFiles;
-      lptstrCopy += pDropFiles->pFiles;
-      unichar * lpwstrCopy = (unichar *) lptstrCopy;
-      for(int32_t i = 0; i < stra.get_size(); i++)
-      {
-         ASSERT(m_p->IsWindow());
-         ::str::international::utf8_to_unicode(lpwstrCopy, ::str::international::utf8_to_unicode_count(stra[i]) + 1, stra[i]);
-         ASSERT(m_p->IsWindow());
-         lpwstrCopy += (stra[i].get_length() + 1);
-      }
-      ASSERT(m_p->IsWindow());
-      *lpwstrCopy = '\0';    // null character
-      ASSERT(m_p->IsWindow());
-      ::GlobalUnlock(hglbCopy);
-      ASSERT(m_p->IsWindow());
-      if(!m_p->OpenClipboard())
-      {
-         ::GlobalFree(hglbCopy);
-         return;
-      }
-      EmptyClipboard();
-      SetClipboardData(CF_HDROP, hglbCopy);
-      VERIFY(::CloseClipboard());
+            ASSERT(m_p->IsWindow());
+            LPTSTR lptstrCopy = (char *) pDropFiles;
+            lptstrCopy += pDropFiles->pFiles;
+            unichar * lpwstrCopy = (unichar *) lptstrCopy;
+            for(int32_t i = 0; i < stra.get_size(); i++)
+            {
+               ASSERT(m_p->IsWindow());
+               ::str::international::utf8_to_unicode(lpwstrCopy, ::str::international::utf8_to_unicode_count(stra[i]) + 1, stra[i]);
+               ASSERT(m_p->IsWindow());
+               lpwstrCopy += (stra[i].get_length() + 1);
+            }
+            ASSERT(m_p->IsWindow());
+            *lpwstrCopy = '\0';    // null character
+            ASSERT(m_p->IsWindow());
+            ::GlobalUnlock(hglbCopy);
+            ASSERT(m_p->IsWindow());
+            if(!m_p->OpenClipboard())
+            {
+               ::GlobalFree(hglbCopy);
+               return;
+            }
+            EmptyClipboard();
+            SetClipboardData(CF_HDROP, hglbCopy);
+            VERIFY(::CloseClipboard());
 
-*/
+      */
 
    }
 
@@ -233,9 +222,9 @@ namespace linux
 
 //      if(::window_sp::is_set() && ::window_sp::m_p->IsWindow())
       {
-  //       bOk = ::window_sp::m_p->DestroyWindow() != FALSE;
+         //       bOk = ::window_sp::m_p->DestroyWindow() != FALSE;
       }
-    //  else
+      //  else
       {
          bOk = false;
       }
@@ -247,7 +236,7 @@ namespace linux
    void copydesk::set_plain_text(const char * psz)
    {
 ///      ASSERT(m_p->IsWindow());
-   //   int32_t iLen = 0;
+      //   int32_t iLen = 0;
 
 
       string str;
@@ -262,28 +251,28 @@ namespace linux
 
       _throw(todo(get_app()));
 
-/*
+      /*
 
-      EmptyClipboard();
-
-
-      count iCount = ::str::international::utf8_to_unicode_count(str) + 1;
-      HGLOBAL hglbCopy = ::GlobalAlloc(GMEM_MOVEABLE, iCount * sizeof(WCHAR));
-      unichar * lpwstrCopy  = (unichar *) ::GlobalLock(hglbCopy);
-      ::str::international::utf8_to_unicode(lpwstrCopy, iCount, str);
-      ::GlobalUnlock(hglbCopy);
-
-      HGLOBAL hglbCopy2 = ::GlobalAlloc(GMEM_MOVEABLE, sizeof(CHAR) * (strlen(psz) + 1));
-      char * lpstrCopy  = (char *) ::GlobalLock(hglbCopy2);
-      strcpy(lpstrCopy, psz);
-      ::GlobalUnlock(hglbCopy2);
+            EmptyClipboard();
 
 
-      SetClipboardData(CF_UNICODETEXT, hglbCopy);
-      SetClipboardData(CF_TEXT, hglbCopy2);
-      VERIFY(::CloseClipboard());
+            count iCount = ::str::international::utf8_to_unicode_count(str) + 1;
+            HGLOBAL hglbCopy = ::GlobalAlloc(GMEM_MOVEABLE, iCount * sizeof(WCHAR));
+            unichar * lpwstrCopy  = (unichar *) ::GlobalLock(hglbCopy);
+            ::str::international::utf8_to_unicode(lpwstrCopy, iCount, str);
+            ::GlobalUnlock(hglbCopy);
 
-*/
+            HGLOBAL hglbCopy2 = ::GlobalAlloc(GMEM_MOVEABLE, sizeof(CHAR) * (strlen(psz) + 1));
+            char * lpstrCopy  = (char *) ::GlobalLock(hglbCopy2);
+            strcpy(lpstrCopy, psz);
+            ::GlobalUnlock(hglbCopy2);
+
+
+            SetClipboardData(CF_UNICODETEXT, hglbCopy);
+            SetClipboardData(CF_TEXT, hglbCopy2);
+            VERIFY(::CloseClipboard());
+
+      */
 
    }
 
@@ -298,40 +287,40 @@ namespace linux
    bool copydesk::desk_to_dib(::draw2d::dib * pdib)
    {
 //      if(!m_p->OpenClipboard())
-  //       return false;
+      //       return false;
       bool bOk = false;
       _throw(todo(get_app()));
-/* xxx
-      HBITMAP hbitmap = (HBITMAP) ::GetClipboardData(CF_BITMAP);
-      try
-      {
-         ::draw2d::bitmap_sp bitmap(get_app());
-         bitmap->Attach(hbitmap);
-         //HDC hdc = ::CreateCompatibleDC(NULL);
-         //::draw2d::graphics_sp g(get_app());
-         //g->Attach(hdc);
-         //::draw2d::graphics * pgraphics = Application.graphics_from_os_data(hdc);
-         //g->SelectObject(hbitmap);
-       //  BITMAP bm;
-         //::GetObjectA(hbitmap, sizeof(bm), &bm);
-         //if(!pdib->create(bm.bmWidth, bm.bmHeight))
-           // return false;
-         ::draw2d::graphics_sp g(get_app());
-         g->SelectObject(bitmap);
-         size sz = bitmap->GetBitmapDimension();
-         if(pdib->create(sz))
-         {
-            bOk = pdib->get_graphics()->BitBlt(0, 0, sz.cx, sz.cy, g, 0, 0, SRCCOPY) != FALSE;
-         }
-      }
-      catch(...)
-      {
-      }
-      ::DeleteObject((HGDIOBJ) hbitmap);
-      //::DeleteDC(hdc);
-      ::CloseClipboard();
+      /* xxx
+            HBITMAP hbitmap = (HBITMAP) ::GetClipboardData(CF_BITMAP);
+            try
+            {
+               ::draw2d::bitmap_sp bitmap(get_app());
+               bitmap->Attach(hbitmap);
+               //HDC hdc = ::CreateCompatibleDC(NULL);
+               //::draw2d::graphics_sp g(get_app());
+               //g->Attach(hdc);
+               //::draw2d::graphics * pgraphics = Application.graphics_from_os_data(hdc);
+               //g->SelectObject(hbitmap);
+             //  BITMAP bm;
+               //::GetObjectA(hbitmap, sizeof(bm), &bm);
+               //if(!pdib->create(bm.bmWidth, bm.bmHeight))
+                 // return false;
+               ::draw2d::graphics_sp g(get_app());
+               g->SelectObject(bitmap);
+               size sz = bitmap->GetBitmapDimension();
+               if(pdib->create(sz))
+               {
+                  bOk = pdib->get_graphics()->BitBlt(0, 0, sz.cx, sz.cy, g, 0, 0, SRCCOPY) != FALSE;
+               }
+            }
+            catch(...)
+            {
+            }
+            ::DeleteObject((HGDIOBJ) hbitmap);
+            //::DeleteDC(hdc);
+            ::CloseClipboard();
 
-*/
+      */
 
       return bOk;
    }

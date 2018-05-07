@@ -9,6 +9,9 @@ namespace userfs
       object(papp)
    {
 
+      m_iSelectionSubItem = -1;
+      m_iNameSubItem = -1;
+      m_iIconSubItem = -1;
 
       m_rectMargin.left = 23;
       m_rectMargin.top = 8;
@@ -40,9 +43,14 @@ namespace userfs
 
    void list::_001OnCreate(::message::message * pobj)
    {
+
       pobj->previous();
+
       if(pobj->m_bRet)
          return;
+
+      Session.userex()->shell()->on_update_sizes_interest();
+
    }
 
 
@@ -714,12 +722,53 @@ namespace userfs
       return ::user::form_list_view::_001GetItemText(pitem);
    }
 
+
    void list::_001GetItemImage(::user::mesh_item * pitem)
    {
+
+
+      if (pitem->m_iSubItem == m_iSelectionSubItem || pitem->m_iSubItem == m_iNameSubItem)
+      {
+
+         if (pitem->m_iSubItem == m_iIconSubItem)
+         {
+
+            list_data * pdata = get_fs_mesh_data();
+
+            auto & item = pdata->m_itema.get_item(pitem->m_iItem);
+
+            pitem->m_iImage = Session.userex()->shell()->get_image(
+                              get_handle(),
+                              item.m_filepath,
+                              get_document()->get_fs_data()->is_dir(item.m_filepath) ?
+                              ::user::shell::file_attribute_directory : ::user::shell::file_attribute_normal,
+                              ::user::shell::icon_normal);
+
+            if (pitem->m_iImage >= 0)
+            {
+
+               pitem->m_bOk = true;
+
+            }
+
+         }
+         else
+         {
+
+            pitem->m_iImage = -1;
+
+            pitem->m_bOk = false;
+
+         }
+
+         return;
+
+      }
+
+
       return ::user::form_list_view::_001GetItemImage(pitem);
+
    }
-
-
 
 
 } // namespace userfs

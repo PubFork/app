@@ -201,38 +201,38 @@ namespace windows
 
 
 
-   void window_buffer::ipc_copy(int cx, int cy)
-   {
+   //void window_buffer::ipc_copy(int cx, int cy)
+   //{
 
-      void * pdata = m_memorymap.get_data();
+   //   void * pdata = m_memorymap.get_data();
 
-      if (pdata == NULL)
-      {
+   //   if (pdata == NULL)
+   //   {
 
-         return;
+   //      return;
 
-      }
+   //   }
 
-      synch_lock sl(m_memorymap.m_pmutex);
+   //   synch_lock sl(m_memorymap.m_pmutex);
 
-      try
-      {
+   //   try
+   //   {
 
-         int64_t * p = (int64_t *)pdata;
+   //      int64_t * p = (int64_t *)pdata;
 
-         *p++ = cx;
-         *p++ = cy;
-         *p++ = sizeof(COLORREF) * cx;
+   //      *p++ = cx;
+   //      *p++ = cy;
+   //      *p++ = sizeof(COLORREF) * cx;
 
-         ::draw2d::copy_colorref(cx, cy, (COLORREF *)p, sizeof(COLORREF) * cx, m_pcolorref, m_iScan);
+   //      ::draw2d::copy_colorref(cx, cy, (COLORREF *)p, sizeof(COLORREF) * cx, m_pcolorref, m_iScan);
 
-      }
-      catch (...)
-      {
+   //   }
+   //   catch (...)
+   //   {
 
-      }
+   //   }
 
-   }
+   //}
 
 
    void window_buffer::update_window(::draw2d::dib * pdib)
@@ -409,7 +409,7 @@ namespace windows
       if (m_pimpl->m_bIpcCopy)
       {
 
-         ipc_copy(cx, cy);
+         ipc_copy(cx, cy, pdib->m_pcolorref, pdib->m_iScan);
 
       }
 

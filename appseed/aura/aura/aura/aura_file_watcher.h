@@ -32,9 +32,11 @@
 namespace file_watcher
 {
 
+   class file_watcher;
 
    /// Type for a watch id
-   typedef int64_t id;
+   using id = i64;
+
    typedef array < id > file_watch_array;
 
    // forward declarations
@@ -100,10 +102,11 @@ namespace file_watcher
       /// @param dir The directory
       /// @param filename The filename that was accessed (not full path)
       /// @param action Action that was performed
-      virtual void handle_file_action(id watchid, const char * dir, const char * filename, e_action action);
+      virtual void handle_file_action(id id, const char * dir, const char * filename, e_action action);
 
 
    }; // class file_watch_listener
+
 
    template < typename PRED >
    class pred_listener :
@@ -135,7 +138,6 @@ namespace file_watcher
    }; // class file_watch_listener
 
 
-
    /// Listens to files and directories and dispatches events
    /// to notify the parent program of the changes.
    /// @class file_watcher
@@ -149,12 +151,10 @@ namespace file_watcher
 
    public:
 
-      //bool  m_bUpdating;
-
-
 
       file_watcher(::aura::application * papp);
       virtual ~file_watcher();
+
 
       /// Add a directory watch
       /// @exception file_not_found_exception Thrown when the requested directory does not exist
@@ -178,7 +178,6 @@ namespace file_watcher
 
 
 } // namespace file_watcher
-
 
 
 

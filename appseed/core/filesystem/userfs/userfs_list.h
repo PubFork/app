@@ -14,6 +14,10 @@ namespace userfs
 
       stringa              m_straFileSize;
       ::file::patha        m_pathaStrictOrder;
+      index                m_iSelectionSubItem;
+      index                m_iNameSubItem;
+      index                m_iNameSubItemText;
+      index                m_iIconSubItem;
 
 
 
@@ -72,7 +76,7 @@ namespace userfs
 
       virtual bool _001OnClick(uint_ptr uiFlags, point point);
 
-      
+
       virtual void on_update(::user::impact * pSender, LPARAM lHint, object* pHint);
       virtual bool pre_create_window(::user::create_struct& cs);
 

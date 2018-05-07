@@ -18,6 +18,8 @@ namespace user
 
          m_iMaxThreadCount = MAX(4, ::get_processor_count());
 
+         m_iMaxThreadCount = 1;
+
          defer_create_mutex();
 
          m_uiThread = 0;
@@ -542,6 +544,8 @@ namespace user
 
                imagekeyIco.set_path(strIconLocation, false);
 
+               imagekeyIco.m_iIcon = imagekey.m_iIcon;
+
                if (m_pshell->reserve_image(imagekeyIco, iImage))
                {
 
@@ -568,11 +572,9 @@ namespace user
 
                return iImage;
 
-
             }
 
          }
-
 
          //if (imagekey.m_iIcon >= 0 && strFileParam.get_length() > 0)
          //{
@@ -1015,7 +1017,30 @@ namespace user
 
          ::file::path pathFolder = path.folder();
 
-         itemidlist idlist(imagekey.m_strPath);
+         itemidlist idlist;
+
+         bool bParseError = false;
+
+         try
+         {
+
+            idlist.parse(imagekey.m_strPath);
+
+         }
+         catch (...)
+         {
+
+            bParseError = true;
+
+         }
+
+         if (bParseError)
+         {
+
+            return get_foo_image(oswindow, imagekey, crBk);
+
+         }
+
 
          itemidlist idlistAbsolute;
 
@@ -1097,7 +1122,9 @@ namespace user
 
          }
 
-         m_pshell->m_imagemap.set_at(imagekey, 0x80000001); // mark as "calculating image"
+         image_key imagekeyStore(imagekey);
+
+         m_pshell->m_imagemap.set_at(imagekeyStore, 0x80000001); // mark as "calculating image"
 
          schedule_pred([=]()
          {
@@ -1107,20 +1134,20 @@ namespace user
             try
             {
 
-               int iImage = get_image(oswindow, imagekey, NULL, crBk);
+               int iImage = get_image(oswindow, imagekeyStore, NULL, crBk);
 
                synch_lock sl(m_pshell->m_pmutex);
 
                if (iImage & 0x80000000)
                {
 
-                  m_pshell->m_imagemap.remove_key(imagekey);
+                  m_pshell->m_imagemap.remove_key(imagekeyStore);
 
                }
                else
                {
 
-                  m_pshell->m_imagemap.set_at(imagekey, iImage);
+                  m_pshell->m_imagemap.set_at(imagekeyStore, iImage);
 
                }
 
@@ -1278,6 +1305,8 @@ namespace user
             iImage = m_pilHover[iSize]->reserve_image(iImage);
 
          }
+
+         m_imagemap.set_at(key, iImage);
 
          return iImage;
 

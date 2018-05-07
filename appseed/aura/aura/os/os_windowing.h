@@ -11,3 +11,5 @@ CLASS_DECL_AURA bool os_init_windowing();
 
 CLASS_DECL_AURA void os_term_windowing();
 
+CLASS_DECL_AURA i64 oswindow_id(oswindow w);
+

@@ -65,11 +65,26 @@ namespace user
       void image_key::set_extension(const string & strPath)
       {
 
-         index iFind1 = strPath.rfind('/');
-         index iFind2 = strPath.rfind('\\');
-         index iFind = MAX(iFind1, iFind2) + 1;
+         strsize iFind1 = strPath.rfind('/');
 
-         m_strExtension = (char *)&strPath[strPath.find('.', iFind) + 1];
+         strsize iFind2 = strPath.rfind('\\');
+
+         strsize iFind = MAX(iFind1, iFind2) + 1;
+
+         strsize iDot = strPath.find('.', iFind);
+
+         if (iDot < 0)
+         {
+
+            m_strExtension.Empty();
+
+         }
+         else
+         {
+
+            m_strExtension = strPath.Mid(iDot + 1);
+
+         }
 
       }
 
@@ -141,28 +156,13 @@ namespace user
 
       }
 
+
       void shell::do_initialize()
       {
 
 
-//         single_lock sl(m_pmutex, true);
-//
-//         int iImage;
-//         for (auto iSize : m_iaSize)
-//         {
-//
-//            iImage = GetImageList(iSize)->add_matter("filemanager\\check_off_16.png");
-//
-//            add_hover_image(iSize, iImage, 0);
-//
-//
-//            iImage = GetImageList(iSize)->add_matter("filemanager\\check_on_16.png");
-//
-//            add_hover_image(iSize, iImage, 0);
-//
-//         }
-
       }
+
 
       image_list * shell::GetImageList(int iSize)
       {
@@ -219,23 +219,6 @@ namespace user
          return m_pilHover[m_iaSize[i]];
 
       }
-
-
-      //void shell::open_folder(oswindow oswindow, const string & strFolder)
-      //{
-
-
-
-
-      //}
-
-
-      //void shell::close_folder(const string & strFolder)
-      //{
-
-
-      //}
-
 
 
    } // namespace shell

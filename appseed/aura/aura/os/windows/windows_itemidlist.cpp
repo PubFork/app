@@ -51,6 +51,7 @@ itemidlist::itemidlist(LPCITEMIDLIST pidl, bool bAttach) :
 
 }
 
+
 itemidlist::~itemidlist()
 {
 
@@ -58,7 +59,8 @@ itemidlist::~itemidlist()
 
 }
 
-void itemidlist::_free(LPITEMIDLIST& pidl)
+
+void itemidlist::_free(LPITEMIDLIST & pidl)
 {
 
    if (!pidl)
@@ -86,28 +88,44 @@ void itemidlist::_free(LPITEMIDLIST& pidl)
 }
 
 
-void itemidlist::parse(const char * pszPath)
+int itemidlist::count() const
+{
+
+   return _count(m_pidl); //Get pidl count.
+
+}
+
+
+int itemidlist::len() const
+{
+
+   return _len(m_pidl);
+
+}
+
+
+void itemidlist::free()
+{
+
+   _free(m_pidl);
+
+}
+
+
+
+bool itemidlist::parse(const char * pszPath)
 {
 
    free();
 
-   comptr < IShellFolder > lpsf;
-
-   if (FAILED(SHGetDesktopFolder(&lpsf)))
+   if(FAILED(_parse(m_pidl, pszPath)))
    {
 
-      throw resource_exception(::get_app());
+      return false;
 
    }
 
-   wstring wstr(pszPath);
-
-   if (FAILED(lpsf->ParseDisplayName(NULL, NULL, wstr, NULL, &m_pidl, NULL)))
-   {
-
-      throw "ParseDisplayName failed!";
-
-   }
+   return true;
 
 }
 
@@ -214,7 +232,12 @@ itemidlist itemidlist::operator/(const itemidlist & piidl) const
 itemidlist & itemidlist::operator=(const char * pszPath)
 {
 
-   parse(pszPath);
+   if (!parse(pszPath))
+   {
+
+      throw resource_exception(::get_app(), "Failed to parse the path " + string (pszPath));
+
+   }
 
    return *this;
 
@@ -911,7 +934,7 @@ HRESULT itemidlist::_parse(LPITEMIDLIST & pidl, LPCTSTR pcszPath, IShellFolder *
 
    wstring wstr(pcszPath);
 
-   ULONG chEaten;
+   ULONG chEaten = 0;
 
    return psfFolder->ParseDisplayName(NULL, NULL, wstr, &chEaten, &pidl, NULL);
 
@@ -923,12 +946,6 @@ HRESULT itemidlist::_parse(LPITEMIDLIST &pidlf, LPCTSTR pcszPath)
 
    comptr < IShellFolder > psfDesktop;
 
-   ULONG chEaten;
-
-   HRESULT hr;
-
-   wstring wstr;
-
    if (FAILED(SHGetDesktopFolder(&psfDesktop)))
    {
 
@@ -936,7 +953,7 @@ HRESULT itemidlist::_parse(LPITEMIDLIST &pidlf, LPCTSTR pcszPath)
 
    }
 
-   return psfDesktop->ParseDisplayName(NULL, NULL, wstr, &chEaten, &pidlf, NULL);
+   return _parse(pidlf, pcszPath, psfDesktop);
 
 }
 

@@ -43,8 +43,6 @@ namespace file_watcher
       ::object(papp)
    {
 
-      //m_bUpdating = false;
-
       m_pimpl = new os_file_watcher(papp);
 
    }
@@ -65,12 +63,14 @@ namespace file_watcher
 
    }
 
+
    void file_watcher::remove_watch(const char * directory)
    {
 
       m_pimpl->remove_watch(directory);
 
    }
+
 
    void file_watcher::remove_watch(id id)
    {
@@ -80,26 +80,27 @@ namespace file_watcher
    }
 
 
-
    listener::listener()
    {
 
    }
+
 
    listener::~listener()
    {
 
    }
 
+
 /// Handles the action file action
 /// @param watchid The watch id for the directory
 /// @param dir The directory
 /// @param filename The filename that was accessed (not full path)
 /// @param action Action that was performed
-   void listener::handle_file_action(id idWatch, const char * szDir, const char * szFilename, e_action eaction)
+   void listener::handle_file_action(id id, const char * szDir, const char * szFilename, e_action eaction)
    {
 
-      UNREFERENCED_PARAMETER(idWatch);
+      UNREFERENCED_PARAMETER(id);
       UNREFERENCED_PARAMETER(szDir);
       UNREFERENCED_PARAMETER(szFilename);
       UNREFERENCED_PARAMETER(eaction);
@@ -107,10 +108,7 @@ namespace file_watcher
    }
 
 
-
 } //namespace file_watcher
-
-
 
 
 

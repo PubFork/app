@@ -268,6 +268,8 @@ namespace heap
 
       uint_ptr count() { return size() / sizeof(T); }
 
+      void stralloc(::count cChar) { size((cChar + 1) * sizeof(T)); }
+
       string & to_string(string & str) const;
 
    };

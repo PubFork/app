@@ -72,7 +72,8 @@ namespace user
                 && m_eicon == key.m_eicon
                 && m_strExtension == key.m_strExtension
                 && m_strShellThemePrefix == key.m_strShellThemePrefix
-                && m_strPath == key.m_strPath;
+                && m_strPath == key.m_strPath
+                && m_iIcon == key.m_iIcon;
       }
 
       template < typename VALUE, typename ARG_VALUE >
@@ -135,7 +136,7 @@ inline UINT HashKey<const ::user::shell::image_key &>(const ::user::shell::image
    return (UINT)harmannieves_camwhite_hash(key.m_strPath,
                                            harmannieves_camwhite_hash(key.m_strShellThemePrefix,
                                                  harmannieves_camwhite_hash(key.m_strExtension,
-                                                       (((int)key.m_eicon) << 8) | (((int)key.m_eattribute) << 16))));
+                                                       (((int)key.m_eicon) << 8) ^ (((int)key.m_eattribute) << 16)) ^ (((int)key.m_iIcon))));
 }
 
 

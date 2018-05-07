@@ -17,7 +17,7 @@ namespace windows
 
       m_hwnd = NULL;
 
-
+      defer_create_mutex();
 
    }
 
@@ -25,49 +25,140 @@ namespace windows
    {
 
       ::DestroyWindow(m_hwnd);
+
    }
 
-   int32_t copydesk::get_file_count()
+   void copydesk::OnClipboardUpdate()
    {
-      if (!::OpenClipboard(m_hwnd))
-         return 0;
-      HDROP hdrop = (HDROP) ::GetClipboardData(CF_HDROP);
-      int32_t iCount = 0;
-      if (hdrop != NULL)
+
+      synch_lock sl(m_pmutex);
+
+      m_cFileCount = -1;
+      m_iPriorityTextFormat = -2;
+      m_iFilea = -1;
+      m_iText = -1;
+      m_iDib = -1;
+
+   }
+
+
+   LRESULT WINAPI copydesk::WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)
+   {
+
+      if(message == WM_CLIPBOARDUPDATE)
       {
-         iCount = ::DragQueryFile(hdrop, 0xFFFFFFFF, NULL, 0);
+
+         LONG_PTR l = ::GetWindowLongPtrA(hwnd, GWLP_USERDATA);
+
+         copydesk * pdesk = (copydesk *) l;
+
+         if(pdesk != NULL)
+         {
+
+            pdesk->OnClipboardUpdate();
+
+         }
+
       }
-      ::CloseClipboard();
-      return iCount;
+
+      return DefWindowProc(hwnd, message, wparam, lparam);
+
    }
 
 
-   void copydesk::get_filea(::file::patha & stra)
+   bool copydesk::initialize()
    {
-      int32_t iCount = get_file_count();
-      if (iCount <= 0)
-         return;
-      if (!::OpenClipboard(m_hwnd))
-         return;
-      HDROP hdrop = (HDROP) ::GetClipboardData(CF_HDROP);
-      string str;
-      for (int32_t i = 0; i < iCount; i++)
+
+      if (!::user::copydesk::initialize())
+         return false;
+
+      synch_lock sl(m_pmutex);
+
+      WNDCLASS wndcls = {};
+
+      string strClass = "ca2_copydesk_windows_message_queue";
+
+      if (!GetClassInfo(System.m_hinstance, strClass, &wndcls))
       {
-         UINT uiLen = ::DragQueryFileW(hdrop, i, NULL, 0);
-         unichar * lpwsz = (unichar *)malloc(sizeof(unichar) * (uiLen + 1));
-         ::DragQueryFileW(hdrop, i, lpwsz, uiLen + 1);
-         stra.add(::file::path(::str::international::unicode_to_utf8(lpwsz)));
-         free(lpwsz);
+
+         wndcls.style = 0;
+         wndcls.lpfnWndProc = &copydesk::WindowProc;
+         wndcls.cbClsExtra = 0;
+         wndcls.cbWndExtra = 0;
+         wndcls.hInstance = System.m_hinstance;
+         wndcls.hIcon = NULL;
+         wndcls.hCursor = NULL;
+         wndcls.hbrBackground = NULL;
+         wndcls.lpszMenuName = NULL;
+         wndcls.lpszClassName = strClass;
+
+         if (!::RegisterClass(&wndcls))
+         {
+
+            return false;
+
+         }
+
       }
-      ::CloseClipboard();
+
+      m_hwnd = ::CreateWindowEx(0, strClass, 0, 0, 0, 0, 0, 0, HWND_MESSAGE, 0, 0, NULL);
+
+      if (m_hwnd == NULL)
+      {
+
+         return false;
+
+      }
+
+      ::SetWindowLongPtr(m_hwnd, GWLP_USERDATA, (LONG_PTR) this);
+
+      if(!::AddClipboardFormatListener(m_hwnd))
+      {
+
+         finalize();
+
+         return false;
+
+      }
+
+      OnClipboardUpdate();
+
+      return true;
 
    }
 
 
-   void copydesk::set_filea(const ::file::patha & patha)
+   bool copydesk::finalize()
    {
 
-      ASSERT(::IsWindow(m_hwnd));
+      if(m_hwnd == NULL)
+      {
+
+         return true;
+
+      }
+
+      bool bOk1 = ::RemoveClipboardFormatListener(m_hwnd);
+
+      bool bOk2 = ::DestroyWindow(m_hwnd);
+
+      bool bOk3 = ::user::copydesk::finalize();
+
+      return bOk1 && bOk2 && bOk3;
+
+   }
+
+
+   bool copydesk::_has_filea()
+   {
+
+      return _get_file_count();
+
+   }
+
+
+   HGLOBAL copydesk::hglobal_get_filea(const ::file::patha & patha)
+   {
 
       strsize iLen = 0;
 
@@ -78,290 +169,73 @@ namespace windows
 
       }
 
-
-      HGLOBAL hglbCopy = ::GlobalAlloc(GMEM_MOVEABLE, sizeof(DROPFILES) + (iLen + 1) * sizeof(WCHAR));
-      LPDROPFILES pDropFiles = (LPDROPFILES) ::GlobalLock(hglbCopy);
+      HGLOBAL hglb = ::GlobalAlloc(GMEM_MOVEABLE, sizeof(DROPFILES) + (iLen + 1) * sizeof(WCHAR));
+      LPDROPFILES pDropFiles = (LPDROPFILES) ::GlobalLock(hglb);
       pDropFiles->pFiles = sizeof(DROPFILES);
       pDropFiles->pt.x = pDropFiles->pt.y = 0;
       pDropFiles->fNC = TRUE;
-      pDropFiles->fWide = TRUE; // ANSI charset
+      pDropFiles->fWide = TRUE;
 
-      ASSERT(::IsWindow(m_hwnd));
-      LPTSTR lptstrCopy = (char *)pDropFiles;
-      lptstrCopy += pDropFiles->pFiles;
-      unichar * lpwstrCopy = (unichar *)lptstrCopy;
+      LPTSTR lpsz = (char *)pDropFiles;
+      lpsz += pDropFiles->pFiles;
+      unichar * lpwsz = (unichar *)lpsz;
 
       for (int32_t i = 0; i < patha.get_size(); i++)
       {
-         ASSERT(::IsWindow(m_hwnd));
-         ::str::international::utf8_to_unicode(lpwstrCopy, ::str::international::utf8_to_unicode_count(patha[i]) + 1, patha[i]);
-         ASSERT(::IsWindow(m_hwnd));
-         lpwstrCopy += (patha[i].get_length() + 1);
+
+         ::count c = ::str::international::utf8_to_unicode_count(patha[i]) + 1;
+
+         ::str::international::utf8_to_unicode(lpwsz, c, patha[i]);
+
+         lpwsz += c;
+
       }
-      ASSERT(::IsWindow(m_hwnd));
-      *lpwstrCopy = '\0';    // null character
-      ASSERT(::IsWindow(m_hwnd));
-      ::GlobalUnlock(hglbCopy);
-      ASSERT(::IsWindow(m_hwnd));
-      if (!::OpenClipboard(m_hwnd))
-      {
-         ::GlobalFree(hglbCopy);
-         return;
-      }
-      EmptyClipboard();
-      SetClipboardData(CF_HDROP, hglbCopy);
-      VERIFY(::CloseClipboard());
+
+      *lpwsz = L'\0';
+
+      ::GlobalUnlock(hglb);
+
+      return hglb;
 
    }
 
 
-
-   bool copydesk::initialize()
+   HGLOBAL copydesk::hglobal_get_wide_text(const string & str)
    {
 
-      if (!::user::copydesk::initialize())
-         return false;
+      ::count c = ::str::international::utf8_to_unicode_count(str) + 1;
+      HGLOBAL hglb = ::GlobalAlloc(GMEM_MOVEABLE, c * sizeof(WCHAR));
+      unichar * lpwsz = (unichar *) ::GlobalLock(hglb);
+      ::str::international::utf8_to_unicode(lpwsz, c, str);
+      ::GlobalUnlock(hglb);
 
-      WNDCLASS wndcls = {};
-
-      string strClass = "ca2_fontopus_cc_votagus_windows_message_queue";
-
-      if (!GetClassInfo(System.m_hinstance, strClass, &wndcls))
-      {
-
-         wndcls.style = 0;
-         wndcls.lpfnWndProc = DefWindowProc;
-         wndcls.cbClsExtra = 0;
-         wndcls.cbWndExtra = 0;
-         wndcls.hInstance = System.m_hinstance;
-         wndcls.hIcon = NULL;
-         wndcls.hCursor = NULL;
-         wndcls.hbrBackground = NULL;
-         wndcls.lpszMenuName = NULL;
-         wndcls.lpszClassName = strClass;
-         if (!::RegisterClass(&wndcls))
-         {
-            return false;
-         }
-
-      }
-      m_hwnd = ::CreateWindowEx(0, strClass, 0, 0, 0, 0, 0, 0, HWND_MESSAGE, 0, 0, NULL);
-
-      if (m_hwnd == NULL)
-         return false;
-
-      return true;
+      return hglb;
 
    }
 
 
-   bool copydesk::finalize()
+   HGLOBAL copydesk::hglobal_get_utf8_text(const string & str)
    {
 
-      bool bOk;
+      HGLOBAL hglb = ::GlobalAlloc(GMEM_MOVEABLE, sizeof(CHAR) * (str.length() + 1));
+      char * lpsz = (char *) ::GlobalLock(hglb);
+      strcpy(lpsz, str);
+      ::GlobalUnlock(hglb);
 
-      bOk = ::user::copydesk::finalize();
-
-      return bOk;
-
-   }
-
-   void copydesk::set_plain_text(const char * psz)
-   {
-      ASSERT(::IsWindow(m_hwnd));
-      //   int32_t iLen = 0;
-
-      string str(psz);
-
-
-
-      ASSERT(::IsWindow(m_hwnd));
-      if (!::OpenClipboard(m_hwnd))
-      {
-         return;
-      }
-      EmptyClipboard();
-
-
-      ::count iCount = ::str::international::utf8_to_unicode_count(str) + 1;
-      HGLOBAL hglbCopy = ::GlobalAlloc(GMEM_MOVEABLE, iCount * sizeof(WCHAR));
-      unichar * lpwstrCopy = (unichar *) ::GlobalLock(hglbCopy);
-      ::str::international::utf8_to_unicode(lpwstrCopy, iCount, str);
-      ::GlobalUnlock(hglbCopy);
-
-      HGLOBAL hglbCopy2 = ::GlobalAlloc(GMEM_MOVEABLE, sizeof(CHAR) * (strlen(psz) + 1));
-      char * lpstrCopy = (char *) ::GlobalLock(hglbCopy2);
-      strcpy(lpstrCopy, psz);
-      ::GlobalUnlock(hglbCopy2);
-
-
-      SetClipboardData(CF_UNICODETEXT, hglbCopy);
-      SetClipboardData(CF_TEXT, hglbCopy2);
-      VERIFY(::CloseClipboard());
+      return hglb;
 
    }
 
 
-   bool copydesk::get_plain_text(string & str)
+   HGLOBAL copydesk::hglobal_get_dib(::draw2d::dib * pdib)
    {
 
-      if (IsClipboardFormatAvailable(CF_UNICODETEXT))
-      {
-
-         if (!::OpenClipboard(m_hwnd))
-         {
-
-            return false;
-
-         }
-
-         HGLOBAL hglb = GetClipboardData(CF_UNICODETEXT);
-
-         str = (const unichar *)GlobalLock(hglb);
-
-         GlobalUnlock(hglb);
-
-         VERIFY(::CloseClipboard());
-
-         return true;
-
-      }
-      else if (IsClipboardFormatAvailable(CF_TEXT))
-      {
-
-         if (!::OpenClipboard(m_hwnd))
-         {
-
-            return false;
-
-         }
-
-
-         HGLOBAL hglb = GetClipboardData(CF_TEXT);
-
-         str = (char *)GlobalLock(hglb);
-
-         GlobalUnlock(hglb);
-
-         VERIFY(::CloseClipboard());
-
-         return true;
-
-      }
-      else if (get_file_count() > 0)
-      {
-
-         ::file::patha patha;
-
-         get_filea(patha);
-
-         str = patha.implode("\r\n");
-
-         return true;
-
-      }
-      else
-      {
-
-         return false;
-
-      }
-
-   }
-
-
-#undef new
-
-   bool copydesk::desk_to_dib(::draw2d::dib * pdib)
-   {
-      if (!::OpenClipboard(m_hwnd))
-         return false;
-      bool bOk = false;
-      HBITMAP hbitmap = (HBITMAP) ::GetClipboardData(CF_BITMAP);
-      try
-      {
-
-         BITMAP bm;
-
-         ZERO(bm);
-
-         ::GetObject(hbitmap, sizeof(bm), &bm);
-
-         pdib->create(bm.bmWidth, bm.bmHeight);
-
-         if (pdib->m_size.area() <= 0)
-         {
-            ::DeleteObject((HGDIOBJ)hbitmap);
-            //::DeleteDC(hdc);
-            ::CloseClipboard();
-
-            return false;
-         }
-
-         HDC hdc = (HDC)pdib->get_graphics()->get_os_data_ex(1);
-
-         HDC hdcMem = ::CreateCompatibleDC(NULL);
-
-         HGDIOBJ hbitmapOld = ::SelectObject(hdcMem, hbitmap);
-
-         ::BitBlt(hdc, 0, 0, pdib->m_size.cx, pdib->m_size.cy, hdcMem, 0, 0, SRCCOPY);
-
-         pdib->get_graphics()->release_os_data_ex(1, hdc);
-
-         ::SelectObject(hdcMem, hbitmapOld);
-
-         //bitmap->attach(new Gdiplus::Bitmap(hbitmap, NULL));
-         //HDC hdc = ::CreateCompatibleDC(NULL);
-         //::draw2d::graphics_sp g(allocer());
-         //g->attach(hdc);
-         //::draw2d::graphics * pgraphics = Application.graphics_from_os_data(hdc);
-         //g->SelectObject(hbitmap);
-         //  BITMAP bm;
-         //::GetObjectA(hbitmap, sizeof(bm), &bm);
-         //if(!pdib->create(bm.bmWidth, bm.bmHeight))
-         // return false;
-         //::draw2d::graphics_sp g(allocer());
-         //g->SelectObject(bitmap);
-         //size sz = bitmap->GetBitmapDimension();
-         //if(pdib->create(sz))
-         //{
-         // bOk = pdib->get_graphics()->BitBlt(0, 0, sz.cx, sz.cy, g, 0, 0, SRCCOPY) != FALSE;
-         //}
-      }
-      catch (...)
-      {
-      }
-      ::DeleteObject((HGDIOBJ)hbitmap);
-      //::DeleteDC(hdc);
-      ::CloseClipboard();
-      return bOk;
-   }
-
-
-   bool copydesk::dib_to_desk(::draw2d::dib * pdib)
-   {
-
-      ASSERT(::IsWindow(m_hwnd));
-
-      if (!::OpenClipboard(m_hwnd))
-      {
-
-         return false;
-
-      }
-
-      EmptyClipboard();
-
-      //   HDC hMemDC;
       DWORD dwWidth, dwHeight;
       BITMAPINFOHEADER bi;
-      // HBITMAP hOldBitmap;
-      //      HBITMAP hBitmap;
-      //      void *lpBits;
       HCURSOR hAlphaCursor = NULL;
 
-      dwWidth = pdib->m_size.cx;  // width of the Bitmap V5 Dib bitmap
-      dwHeight = pdib->m_size.cy;  // height of the Bitmap V5 Dib bitmap
+      dwWidth = pdib->m_size.cx;
+      dwHeight = pdib->m_size.cy;
 
       ZeroMemory(&bi, sizeof(BITMAPINFOHEADER));
       bi.biSize = sizeof(BITMAPINFOHEADER);
@@ -371,48 +245,390 @@ namespace windows
       bi.biBitCount = 32;
       bi.biCompression = BI_RGB;
       bi.biSizeImage = pdib->m_iScan * pdib->m_size.cy;
-      // The following mask specification specifies a supported 32 BPP
-      // alpha format for Windows XP.
-      //bi.bV5RedMask   =  0x00FF0000;
-      //bi.bV5GreenMask =  0x0000FF00;
-      //bi.bV5BlueMask  =  0x000000FF;
-      //bi.bV5AlphaMask =  0xFF000000;
 
-      //HDC hdc;
-      //hdc = GetDC(NULL);
+      HGLOBAL hglb = GlobalAlloc(GMEM_MOVEABLE, sizeof(bi) + pdib->m_iScan * pdib->m_size.cy);
 
-      // Create the DIB section with an alpha channel.
-      ///      hBitmap = CreateDIBSection(hdc,(BITMAPINFO *)&bi,DIB_RGB_COLORS,(void **)&lpBits,NULL,(DWORD)0);
+      if (hglb == NULL)
+      {
 
-      //hMemDC = CreateCompatibleDC(hdc);
-      //   ReleaseDC(NULL,hdc);
+         return NULL;
 
-      // Draw something on the DIB section.
-      //hOldBitmap = (HBITMAP)SelectObject(hMemDC,hBitmap);
-      //PatBlt(hMemDC,0,0,dwWidth,dwHeight,WHITENESS);
-      //SetTextColor(hMemDC,RGB(0,0,0));
-      //SetBkMode(hMemDC,TRANSPARENT);
-      //text_out(hMemDC,0,9,"rgba",4);
-      //SelectObject(hMemDC,hOldBitmap);
-      //DeleteDC(hMemDC);
+      }
 
-      // Set the alpha values for each pixel in the cursor so that
-      // the complete cursor is semi-transparent.
-
-      //int iStrideDst = dwWidth * sizeof(COLORREF);
-
-      //::draw2d::copy_colorref(pdib->m_size.cx,pdib->m_size.cy,(COLORREF *)lpBits,iStrideDst,pdib->m_pcolorref,pdib->m_iScan);
-
-      HGLOBAL hResult = GlobalAlloc(GMEM_MOVEABLE, sizeof(bi) + pdib->m_iScan * pdib->m_size.cy);
-      if (hResult == NULL) return false;
-
-      LPBYTE lp = (LPBYTE) ::GlobalLock(hResult);
+      LPBYTE lp = (LPBYTE) ::GlobalLock(hglb);
 
       memcpy(lp, &bi, sizeof(bi));
       memcpy(lp + sizeof(bi), pdib->m_pcolorref, pdib->m_iScan * pdib->m_size.cy);
-      GlobalUnlock(hResult);
+      GlobalUnlock(hglb);
 
-      SetClipboardData(CF_DIB, hResult);
+      return hglb;
+
+   }
+
+
+   int copydesk::_get_priority_text_format()
+   {
+
+      if(m_iPriorityTextFormat == -2)
+      {
+
+         UINT uiaFormatPriorityList[] =
+         {
+            CF_UNICODETEXT,
+            CF_TEXT
+         };
+
+         m_iPriorityTextFormat = ::GetPriorityClipboardFormat(uiaFormatPriorityList, ARRAYSIZE(uiaFormatPriorityList));
+
+      }
+
+      return m_iPriorityTextFormat;
+
+   }
+
+
+   ::count copydesk::_get_file_count()
+   {
+
+      if(m_cFileCount < 0)
+      {
+
+         if (!IsClipboardFormatAvailable(CF_HDROP))
+         {
+
+            m_cFileCount = 0;
+
+         }
+         else
+         {
+
+            synch_lock sl(m_pmutex);
+
+            if (!::OpenClipboard(m_hwnd))
+            {
+
+               m_cFileCount =  0;
+
+            }
+            else
+            {
+
+               HDROP hdrop = (HDROP) ::GetClipboardData(CF_HDROP);
+
+               ::count c = 0;
+
+               if (hdrop != NULL)
+               {
+
+                  c = ::DragQueryFile(hdrop, 0xFFFFFFFF, NULL, 0);
+
+               }
+
+               ::CloseClipboard();
+
+               m_cFileCount = c;
+
+            }
+
+         }
+
+      }
+
+      return m_cFileCount;
+
+   }
+
+
+   bool copydesk::_get_filea(::file::patha & patha, e_op & eop)
+   {
+
+      ::count c = _get_file_count();
+
+      if (c <= 0)
+      {
+
+         return false;
+
+      }
+
+      synch_lock sl(m_pmutex);
+
+      if (!::OpenClipboard(m_hwnd))
+      {
+
+         return false;
+
+      }
+
+      HDROP hdrop = (HDROP) ::GetClipboardData(CF_HDROP);
+
+      for (index i = 0; i < c; i++)
+      {
+
+         hwstring wstr;
+
+         UINT uiLen = ::DragQueryFileW(hdrop, i, NULL, 0);
+
+         wstr.stralloc(uiLen);
+
+         ::DragQueryFileW(hdrop, i, wstr, wstr.count());
+
+         patha.add(::file::path((const unichar *) wstr));
+
+      }
+
+      ::CloseClipboard();
+
+      return true;
+
+   }
+
+
+   bool copydesk::_set_filea(const ::file::patha & patha, e_op eop)
+   {
+
+      ASSERT(::IsWindow(m_hwnd));
+
+      synch_lock sl(m_pmutex);
+
+      if (!::OpenClipboard(m_hwnd))
+      {
+
+         return false;
+
+      }
+
+      EmptyClipboard();
+
+      SetClipboardData(CF_HDROP, hglobal_get_filea(patha));
+
+      SetClipboardData(CF_UNICODETEXT, hglobal_get_wide_text(patha.implode("\r\n")));
+
+      SetClipboardData(CF_TEXT, hglobal_get_utf8_text(patha.implode("\r\n")));
+
+      VERIFY(::CloseClipboard());
+
+      return true;
+
+   }
+
+
+   bool copydesk::_has_plain_text()
+   {
+
+      if(m_iText < 0)
+      {
+
+         int iFormat = _get_priority_text_format();
+
+         m_iText = iFormat != 0 && iFormat != -1 ? 1 : 0;
+
+      }
+
+      return m_iText != 0;
+
+   }
+
+
+   bool copydesk::_set_plain_text(const string & str)
+   {
+
+      ASSERT(::IsWindow(m_hwnd));
+
+      synch_lock sl(m_pmutex);
+
+      if (!::OpenClipboard(m_hwnd))
+      {
+
+         return false;
+
+      }
+
+      EmptyClipboard();
+
+      SetClipboardData(CF_UNICODETEXT, hglobal_get_wide_text(str));
+
+      SetClipboardData(CF_TEXT, hglobal_get_utf8_text(str));
+
+      ::file::patha patha;
+
+      if (string_to_filea(&patha, str))
+      {
+
+         SetClipboardData(CF_TEXT, hglobal_get_filea(patha));
+
+      }
+
+      VERIFY(::CloseClipboard());
+
+      return true;
+
+   }
+
+
+   bool copydesk::_get_plain_text(string & str)
+   {
+
+      int iFormat = _get_priority_text_format();
+
+      if (iFormat == 0 || iFormat == -1)
+      {
+
+         return false;
+
+      }
+
+      synch_lock sl(m_pmutex);
+
+      if (!::OpenClipboard(m_hwnd))
+      {
+
+         return false;
+
+      }
+
+      HGLOBAL hglb = GetClipboardData(iFormat);
+
+      if (iFormat == CF_UNICODETEXT)
+      {
+
+         str = (const unichar *)GlobalLock(hglb);
+
+      }
+      else if (iFormat == CF_TEXT)
+      {
+
+         str = (char *)GlobalLock(hglb);
+
+      }
+
+      GlobalUnlock(hglb);
+
+      VERIFY(::CloseClipboard());
+
+      return true;
+
+   }
+
+
+#undef new
+
+   bool copydesk::_has_dib()
+   {
+
+      if(m_iDib < 0)
+      {
+
+         m_iDib = IsClipboardFormatAvailable(CF_BITMAP) ? 1 : 0;
+
+      }
+
+      return m_iDib != 0;
+
+   }
+
+
+   bool copydesk::_desk_to_dib(::draw2d::dib * pdib)
+   {
+
+      if (!_has_dib())
+      {
+
+         return false;
+
+      }
+
+      synch_lock sl(m_pmutex);
+
+      if (!::OpenClipboard(m_hwnd))
+      {
+
+         return false;
+
+      }
+
+      bool bOk = false;
+
+      HBITMAP hbitmap = (HBITMAP) ::GetClipboardData(CF_BITMAP);
+
+      if(hbitmap != NULL)
+      {
+
+
+         HDC hdcMem = NULL;
+
+         HGDIOBJ hbitmapOld = NULL;
+
+         try
+         {
+
+            BITMAP bm;
+
+            ZERO(bm);
+
+            ::GetObject(hbitmap, sizeof(bm), &bm);
+
+            pdib->create(bm.bmWidth, bm.bmHeight);
+
+            if (pdib->m_size.area() > 0)
+            {
+
+               HDC hdc = (HDC)pdib->get_graphics()->get_os_data_ex(1);
+
+               hdcMem = ::CreateCompatibleDC(NULL);
+
+               hbitmapOld = ::SelectObject(hdcMem, hbitmap);
+
+               ::BitBlt(hdc, 0, 0, pdib->m_size.cx, pdib->m_size.cy, hdcMem, 0, 0, SRCCOPY);
+
+               pdib->get_graphics()->release_os_data_ex(1, hdc);
+
+            }
+
+         }
+         catch (...)
+         {
+
+         }
+
+         if (hdcMem != NULL)
+         {
+
+            ::SelectObject(hdcMem, hbitmapOld);
+
+            ::DeleteDC(hdcMem);
+
+         }
+
+         ::DeleteObject((HGDIOBJ)hbitmap);
+
+         ::CloseClipboard();
+
+      }
+
+      return bOk;
+
+   }
+
+
+   bool copydesk::_dib_to_desk(::draw2d::dib * pdib)
+   {
+
+      ASSERT(::IsWindow(m_hwnd));
+
+      synch_lock sl(m_pmutex);
+
+      if (!::OpenClipboard(m_hwnd))
+      {
+
+         return false;
+
+      }
+
+      EmptyClipboard();
+
+
+      SetClipboardData(CF_DIB, hglobal_get_dib(pdib));
 
 
       VERIFY(::CloseClipboard());

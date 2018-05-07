@@ -32,9 +32,9 @@ namespace filemanager
       class file_size
       {
       public:
-         
+
          file_list * m_pview;
-         
+
          string m_str;
 
       };
@@ -44,9 +44,6 @@ namespace filemanager
       bool                             m_bFileSize;
       bool                             m_bShow;
       uint32_t                         m_dwLastFileSize;
-      index                            m_iNameSubItem;
-      index                            m_iNameSubItemText;
-      index                            m_iSelectionSubItem;
       index                            m_iSizeSubItem;
       bool                             m_bPendingSize;
       uint32_t                         m_dwLastFileSizeGet;
@@ -68,12 +65,12 @@ namespace filemanager
 
       file_list(::aura::application * papp);
       virtual ~file_list();
-      
-      
+
+
       virtual void assert_valid() const override;
       virtual void dump(dump_context & dumpcontext) const override;
 
-      
+
       void schedule_file_size(const char * psz);
 
       virtual void _017OpenContextMenuFolder(sp(::fs::item) item, ::action::context actioncontext) override;
