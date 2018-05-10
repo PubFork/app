@@ -89,7 +89,7 @@ namespace multithreading
 
    CLASS_DECL_AURA bool set_priority(int32_t priority);
 
-   CLASS_DECL_AURA int32_t riority();
+   CLASS_DECL_AURA int32_t priority();
 
 
    inline int32_t get_priority_none()

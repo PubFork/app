@@ -7,6 +7,14 @@ struct NSVGimage;
 namespace draw2d
 {
 
+   enum e_mipmap
+   {
+
+      mipmap_none,
+      mipmap_isotropic, // 3x original size (a bit more or less if there are scan adjustments)
+      mipmap_anisotropic, // 4x original size (a bit more or less if there are scan adjustments)
+
+   };
 
    //////////////////////////////////////////////////////////////////////
    //   Creator : El Barto (ef00@luc.ac.be)
@@ -67,21 +75,22 @@ namespace draw2d
 
       };
 
-
-      //BITMAPINFO        m_info;
+      double            m_dIsotropicRate;
+      ::file::path      m_pathCache;
       COLORREF *        m_pcolorref;
       class ::size      m_size;
+      class ::size      m_sizeAlloc;
       int32_t           m_iScan;
       bool              m_bMapped; // optionally used by implementation
       descriptor        m_descriptor;
       bool              m_bReduced; // optionally used by implementation
-//         int               m_iHeight;
       point             m_pt;
       double            m_dFontFactor;
       e_alpha_mode      m_ealphamode;
       bool              m_bOwn;
       memory            m_memoryMap;
-
+      e_mipmap          m_emipmap;
+      sp(::draw2d::dib) m_pnext;
 
 
       static float Cosines[360];
@@ -97,13 +106,24 @@ namespace draw2d
       virtual ~dib();
 
 
+      void draw2d_dib_common_construct();
+
+
       virtual ::draw2d::graphics * get_graphics() const; // is semantically const (besides may not be implementationly constant)
       virtual ::draw2d::bitmap_sp get_bitmap() const; // is semantically const (besides may not be implementationly constant)
       virtual ::draw2d::bitmap_sp detach_bitmap();
 
+      virtual ::count get_dib_count();
+      virtual ::draw2d::dib * get_dib(index i);
 
       virtual COLORREF * get_data() const;
 
+      virtual void set_mipmap(e_mipmap emipmap);
+      virtual void _set_mipmap(e_mipmap emipmap);
+
+      //virtual bool add_next(double dRate);
+      virtual bool create_isotropic(::draw2d::dib * pdib);
+      virtual bool create_isotropic(double_array & daRate, ::multithreading::e_priority epriority);
 
       virtual void SetViewportOrg(point pt);
       virtual void set_font_factor(double dFactor);
@@ -189,9 +209,9 @@ namespace draw2d
       virtual void SetIconMask(::visual::icon * picon, int32_t cx, int32_t cy);
       virtual void RadialFill(BYTE a, BYTE r, BYTE g, BYTE b, int32_t x, int32_t y, int32_t iRadius);
       virtual void RadialFill(
-         BYTE a1, BYTE r1, BYTE g1, BYTE b1, // center colors
-         BYTE a2, BYTE r2, BYTE g2, BYTE b2, // border colors
-         int32_t x, int32_t y, int32_t iRadius);
+      BYTE a1, BYTE r1, BYTE g1, BYTE b1, // center colors
+      BYTE a2, BYTE r2, BYTE g2, BYTE b2, // border colors
+      int32_t x, int32_t y, int32_t iRadius);
 
       virtual void gradient_fill(COLORREF clr1, COLORREF clr2, POINT pt1, POINT pt2);
       virtual void gradient_horizontal_fill(COLORREF clr1, COLORREF clr2, int start, int end);
@@ -203,7 +223,7 @@ namespace draw2d
       {
          return ::draw2d::get_pixel(m_pcolorref, m_iScan, m_size.cy, x, y);
       }
-      
+
       virtual uint32_t GetPixel(int32_t x, int32_t y);
       virtual void Mask(COLORREF crMask, COLORREF crInMask, COLORREF crOutMask);
       virtual void channel_mask(BYTE uchFind, BYTE uchSet, BYTE uchUnset, visual::rgba::echannel echannel);
@@ -214,6 +234,7 @@ namespace draw2d
       virtual bool host(COLORREF * pcolorref, int iScan, int32_t iWidth, int32_t iHeight);
       virtual bool create(::draw2d::graphics * pgraphics);
       virtual bool destroy();
+      virtual bool detach(::draw2d::dib * pdib);
 
       // realization is semantically const
       // dib keeps an image and image will be the same,
@@ -321,11 +342,13 @@ namespace draw2d
 
       //virtual int32_t width();
       //virtual int32_t height();
-      inline int64_t area() const {
+      inline int64_t area() const
+      {
          return m_size.area();
       }
       virtual double pi() const;
-      inline class ::size size() const {
+      inline class ::size size() const
+      {
          return m_size;
       }
 

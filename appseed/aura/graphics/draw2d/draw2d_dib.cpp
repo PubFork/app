@@ -9,6 +9,7 @@
 #include "nanosvg.h"
 #include "nanosvgrast.h"
 
+#include "aura/graphics/graphics_double_pass_scale.h"
 
 /*
 byte byte_clip(double d);
@@ -56,16 +57,38 @@ namespace draw2d
    dib::dib()
    {
 
-      m_iScan = 0;
-      //      m_iHeight      = -1;
-      m_bMapped = false;
-      m_bOwn = true;
+      draw2d_dib_common_construct();
 
    }
 
 
+
    dib::~dib()
    {
+
+   }
+
+
+   void dib::draw2d_dib_common_construct()
+   {
+
+      m_pcolorref             = NULL;
+      m_dIsotropicRate        = 1.0;
+      m_size                  = ::size(0, 0);
+      m_sizeAlloc             = ::size(0, 0);
+      m_iScan                 = 0;
+      m_bMapped               = false;
+      m_descriptor.m_etype    = type_complex;
+      m_descriptor.m_cr       = 0;
+      m_descriptor.m_size     = ::size(0, 0);
+      m_bReduced              = false;
+      m_pt                    = point(0, 0);
+      m_dFontFactor           = 1.0;
+      m_ealphamode            = ::draw2d::alpha_mode_blend;
+      m_bOwn                  = true;
+      m_memoryMap.allocate(0);
+      m_emipmap               = mipmap_none;
+      m_pathCache.Empty();
 
    }
 
@@ -210,9 +233,190 @@ namespace draw2d
 
    }
 
+   ::count dib::get_dib_count()
+   {
+
+      ::count c = 1;
+
+      ::draw2d::dib * pdib = this;
+
+      while (pdib->m_pnext.is_set())
+      {
+
+         c++;
+
+         pdib = pdib->m_pnext;
+
+      }
+
+      return c;
+
+   }
+
+   ::draw2d::dib * dib::get_dib(index i)
+   {
+
+      ::draw2d::dib * pdib = this;
+
+      while(i > 0)
+      {
+
+         if (pdib->m_pnext.is_null())
+         {
+
+            return NULL;
+
+         }
+
+         i--;
+
+         pdib = pdib->m_pnext;
+
+      }
+
+      return pdib;
+
+
+   }
+
+
+   bool dib::create_isotropic(::draw2d::dib * pdib)
+   {
+
+      int cx = pdib->m_dIsotropicRate * m_size.cx;
+
+      int cy = pdib->m_dIsotropicRate * m_size.cy;
+
+      pdib->create(cx, cy);
+
+      if (::multithreading::priority() == ::multithreading::priority_idle)
+      {
+
+         map();
+
+         C2PassScale < CBlackmanFilter > scale(1.0);
+
+         scale.Scale(
+         pdib->m_pcolorref,
+         pdib->m_size.cx,
+         pdib->m_size.cy,
+         pdib->m_iScan,
+         m_pcolorref,
+         m_size.cx,
+         m_size.cy,
+         m_iScan
+         );
+
+      }
+      else
+      {
+
+         pdib->get_graphics()->SetStretchBltMode(HALFTONE);
+
+         pdib->get_graphics()->StretchBlt(0, 0, cx, cy, get_graphics(), 0, 0, m_size.cx, m_size.cy);
+
+      }
+
+      pdib->set_mipmap(m_emipmap);
+
+      return true;
+
+   }
+
+
+   bool dib::create_isotropic(double_array & daRate, ::multithreading::e_priority epriority)
+   {
+
+      daRate.sort(false);
+
+      m_pnext.release();
+
+      ::draw2d::dib * pdibLast = this;
+
+      spa(dib) diba;
+
+      for (const double & dRate : daRate)
+      {
+
+         pdibLast->m_pnext.alloc(allocer());
+
+         pdibLast = pdibLast->m_pnext;
+
+         pdibLast->m_dIsotropicRate = dRate;
+
+         diba.add(pdibLast);
+
+      }
+
+      fork_count_end(get_app(), diba.get_count(),
+                     [&](index i)
+      {
+
+         create_isotropic(diba[i]);
+
+      }, 0, epriority);
+
+      return true;
+
+   }
+
 
    bool dib::destroy()
    {
+
+      // image cache write
+      if (m_pathCache.has_char())
+      {
+
+         try
+         {
+
+            ::file::file_sp file = Application.file().get_file(m_pathCache, ::file::mode_create | ::file::mode_write | ::file::type_binary | ::file::defer_create_directory);
+
+            if (file.is_set())
+            {
+
+               ::file::byte_ostream ostream(file);
+
+               ostream << *this;
+
+            }
+
+         }
+         catch (...)
+         {
+
+         }
+
+      }
+
+      m_pathCache.Empty();
+
+      m_pnext.release();
+
+      return true;
+
+   }
+
+   bool dib::detach(::draw2d::dib * pdib)
+   {
+
+      m_pcolorref       = pdib->m_pcolorref;
+      m_size            = pdib->m_size;
+      m_sizeAlloc       = pdib->m_sizeAlloc;
+      m_iScan           = pdib->m_iScan;
+      m_bMapped         = pdib->m_bMapped;
+      m_descriptor      = pdib->m_descriptor;
+      m_bReduced        = pdib->m_bReduced;
+      m_pt              = pdib->m_pt;
+      m_dFontFactor     = pdib->m_dFontFactor;
+      m_ealphamode      = pdib->m_ealphamode;
+      m_bOwn            = pdib->m_bOwn;
+      m_memoryMap       = pdib->m_memoryMap;
+      m_emipmap         = pdib->m_emipmap;
+      m_pathCache       = pdib->m_pathCache;
+
+      pdib->draw2d_dib_common_construct();
 
       return true;
 
@@ -5633,6 +5837,185 @@ restart:
    }
 
 
+   void dib::set_mipmap(e_mipmap emipmap)
+   {
+
+      if (m_emipmap == emipmap)
+      {
+
+         return;
+
+      }
+
+      if (emipmap != mipmap_none)
+      {
+
+         _set_mipmap(emipmap);
+
+      }
+
+   }
+
+
+   void dib::_set_mipmap(e_mipmap emipmap)
+   {
+
+      ASSERT(emipmap != mipmap_none);
+
+      ::draw2d::dib_sp dib(allocer());
+
+      dib->detach(this);
+
+      double cx = dib->m_size.cx;
+
+      double cy = dib->m_size.cy;
+
+      if (emipmap == mipmap_isotropic)
+      {
+
+         double newcx = cx + cx / 2.0 - 1.0;
+
+         double newcy = cy;
+
+         if (!create(newcx, newcy))
+         {
+
+            throw resource_exception(get_app());
+
+         }
+
+         get_graphics()->SetStretchBltMode(HALFTONE);
+
+         int x = dib->m_size.cx;
+
+         int y = 0;
+
+         get_graphics()->BitBlt(0, 0, cx, cy, dib->get_graphics());
+
+         while (cx >= 1.0 && cy >= 1.0)
+         {
+
+            cx /= 2.0;
+
+            cy /= 2.0;
+
+            if (::multithreading::priority() == ::multithreading::priority_idle)
+            {
+
+               map();
+
+               C2PassScale < CBlackmanFilter > scale(1.0);
+
+               scale.Scale(
+               &m_pcolorref[x + y * m_iScan / sizeof(COLORREF)],
+               cx,
+               cy,
+               m_iScan,
+               dib->m_pcolorref,
+               dib->m_size.cx,
+               dib->m_size.cy,
+               dib->m_iScan
+               );
+
+            }
+            else
+            {
+
+               get_graphics()->StretchBlt(x, y, cx, cy, dib->get_graphics(), 0, 0, dib->m_size.cx, dib->m_size.cy);
+
+            }
+
+            y += cy;
+
+         }
+
+         m_emipmap = mipmap_isotropic;
+
+      }
+      else
+      {
+
+         double newcx = cx * 2.0 - 1.0;
+
+         double newcy = cy * 2.0 - 1.0;
+
+         if (!create(newcx, newcy))
+         {
+
+            throw resource_exception(get_app());
+
+         }
+
+         int dx;
+
+         int dy;
+
+         int x = 0;
+
+         int xPrevious;
+         int yPrevious;
+         int cxPrevious;
+         int cyPrevious;
+
+         xPrevious = 0;
+         cxPrevious = dib->m_size.cx;
+         ::draw2d::dib * pdib = dib;
+
+         for (dx = cx; dx > 0; x += dx, dx /= 2)
+         {
+
+            yPrevious = 0;
+            cyPrevious = dib->m_size.cy;
+
+            for (int y = 0, dy = cy; dy > 0; y += dy, dy /= 2)
+            {
+
+               if (::multithreading::priority() == ::multithreading::priority_idle)
+               {
+
+                  map();
+
+                  C2PassScale < CBlackmanFilter > scale(1.0);
+
+                  scale.Scale(
+                  &m_pcolorref[x + y * m_iScan / sizeof(COLORREF)],
+                  dx,
+                  dy,
+                  m_iScan,
+                  &pdib->m_pcolorref[xPrevious + yPrevious * pdib->m_iScan / sizeof(COLORREF)],
+                  cxPrevious,
+                  cyPrevious,
+                  pdib->m_iScan
+                  );
+
+                  yPrevious = y;
+                  cyPrevious = dy;
+                  pdib = this;
+
+               }
+               else
+               {
+
+                  get_graphics()->StretchBlt(x, y, dx, dy, dib->get_graphics(), 0, 0, dib->m_size.cx, dib->m_size.cy);
+
+               }
+
+            }
+
+            xPrevious = x;
+            cxPrevious = dx;
+
+         }
+
+         m_emipmap = mipmap_anisotropic;
+
+      }
+
+      m_size = dib->m_size;
+
+   }
+
+
    void dib::SetViewportOrg(point pt)
    {
 
@@ -6087,66 +6470,101 @@ restart:
       }
    }
 
+
    void dib::write(::file::ostream & ostream) const
    {
 
-      //synch_lock ml(&user_mutex());
-
       ostream << (int32_t)m_size.cx;
+
       ostream << (int32_t)m_size.cy;
+
+      ostream << (int32_t)m_sizeAlloc.cx;
+
+      ostream << (int32_t)m_sizeAlloc.cy;
+
+      ostream << (int32_t)m_iScan;
+
+      ostream << (int32_t)m_emipmap;
+
       if (area() <= 0)
+      {
+
          return;
+
+      }
+
       map();
-      int wc = m_size.cx * sizeof(COLORREF);
-      if (wc == m_iScan)
-      {
-         ostream.write(get_data(), wc * m_size.cy);
-      }
-      else
-      {
-         memory mem;
-         mem.allocate(wc *m_size.cy);
-         ::draw2d::copy_colorref(m_size.cx, m_size.cy, (COLORREF *)mem.get_data(), wc, get_data(), m_iScan);
-         ostream.write(mem.get_data(), wc * m_size.cy);
-      }
+
+      ostream.write(m_pcolorref, m_iScan * m_size.cy);
 
    }
+
 
    void dib::read(::file::istream & istream)
    {
 
-      //synch_lock ml(&user_mutex());
-
       int32_t width;
-      int32_t height;
       istream >> width;
       if (istream.fail())
          return;
-      if (width <= 0)
-         return;
+
+      int32_t height;
       istream >> height;
       if (istream.fail())
          return;
+
+      int32_t widthAlloc;
+      istream >> widthAlloc;
+      if (istream.fail())
+         return;
+
+      int32_t heightAlloc;
+      istream >> heightAlloc;
+      if (istream.fail())
+         return;
+
+      int32_t iScan;
+      istream >> iScan;
+      if (istream.fail())
+         return;
+
+      int32_t iMipmap;
+      istream >> iMipmap;
+      if (istream.fail())
+         return;
+
+      if (width <= 0)
+         return;
       if (height <= 0)
          return;
-      if ((width * height) <= 0)
+      if (widthAlloc <= 0)
          return;
-      if (!create(width, height))
+      if (heightAlloc <= 0)
+         return;
+      if (iScan <= 0)
+         return;
+      if (!create(widthAlloc, heightAlloc))
          _throw(simple_exception(get_app(), "dib::read"));
       map();
-      int wc = width * sizeof(COLORREF);
-      if (wc == m_iScan)
+      if (iScan == m_iScan)
       {
-         istream.read(get_data(), wc * m_size.cy);
+         istream.read(get_data(), iScan * m_size.cy);
       }
       else
       {
          memory mem;
-         mem.allocate(wc *m_size.cy);
-         istream.read(mem.get_data(), wc * m_size.cy);
-         ::draw2d::copy_colorref(width, height, get_data(), m_iScan, (COLORREF *)mem.get_data(), wc);
+         mem.allocate(iScan * m_size.cy);
+         istream.read(mem.get_data(), iScan * m_size.cy);
+         ::draw2d::copy_colorref(width, height, get_data(), m_iScan, (COLORREF *)mem.get_data(), iScan);
+
       }
+
+      m_size.cx = width;
+      m_size.cy = height;
+
    }
+
+
    void dib::tint(::draw2d::dib * pdib, int32_t R, int32_t G, int32_t B)
    {
 

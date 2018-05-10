@@ -3632,7 +3632,7 @@ CLASS_DECL_AURA void forking_count_thread_null_end(int iOrder)
 
 
 
-::thread_tools * thread::tools()
+::thread_tools * thread::tools(::multithreading::e_priority epriority)
 {
 
    if (m_bAvoidProcFork)
@@ -3644,17 +3644,16 @@ CLASS_DECL_AURA void forking_count_thread_null_end(int iOrder)
 
    synch_lock sl(m_pmutex);
 
-
    ASSERT(::get_thread() == this);
 
-   if (m_ptools.is_null())
+   if (m_toolmap[epriority].is_null())
    {
 
-      m_ptools = new thread_tools(get_app());
+      m_toolmap[epriority] = canew(thread_tools(get_app(), epriority));
 
    }
 
-   return m_ptools;
+   return m_toolmap[epriority];
 
 }
 
@@ -3680,7 +3679,7 @@ CLASS_DECL_AURA void forking_count_thread_null_end(int iOrder)
 
    }
 
-   if (!m_ptools->select_toolset(pset))
+   if (!m_toolmap[::multithreading::priority_none]->select_toolset(pset))
    {
 
       return NULL;

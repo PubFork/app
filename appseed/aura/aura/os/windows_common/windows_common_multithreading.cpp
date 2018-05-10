@@ -154,7 +154,7 @@ namespace multithreading
 
    int32_t priority()
    {
-      return ::GetThreadPriority(::GetCurrentThread());
+      return get_os_thread_scheduling_priority(::GetThreadPriority(::GetCurrentThread()));
    }
 
 

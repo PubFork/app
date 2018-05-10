@@ -2,13 +2,13 @@
 
 
 
-thread_tools::thread_tools(::aura::application * papp) :
+thread_tools::thread_tools(::aura::application * papp, ::multithreading::e_priority epriority) :
    ::object(papp)
 {
 
    defer_create_mutex();
 
-
+   m_epriority                      = epriority;
    m_cCount                         = 0;
    m_cIteration                     = 0;
    m_cSpan                          = 0;
@@ -30,7 +30,18 @@ thread_tools::thread_tools(::aura::application * papp) :
 
       m_threada.add(ptoolthread);
 
-      ptoolthread->begin(::multithreading::priority_highest);
+      if (epriority == ::multithreading::priority_none)
+      {
+
+         ptoolthread->begin(::multithreading::priority_highest);
+
+      }
+      else
+      {
+
+         ptoolthread->begin(epriority);
+
+      }
       //ptoolthread->begin();
       //ptoolthread->begin(::multithreading::priority_time_critical);
 //      ptoolthread->begin();
@@ -297,10 +308,10 @@ void tool_thread::start()
 
 
 
-CLASS_DECL_AURA ::thread_tools * get_thread_tools()
+CLASS_DECL_AURA ::thread_tools * get_thread_tools(::multithreading::e_priority epriority)
 {
 
-   return  ::get_thread()->tools();
+   return  ::get_thread()->tools(epriority);
 
 }
 

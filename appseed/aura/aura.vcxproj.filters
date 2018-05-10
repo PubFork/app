@@ -2696,6 +2696,12 @@
     <ClInclude Include="user\user\user_form.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
+    <ClInclude Include="graphics\graphics_filters.h">
+      <Filter>Header Files\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\graphics_double_pass_scale.h">
+      <Filter>Header Files\graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="multithreading\multithreading_condition.cpp">

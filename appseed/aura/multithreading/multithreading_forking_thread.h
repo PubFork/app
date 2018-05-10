@@ -226,7 +226,13 @@ public:
    virtual void run()
    {
 
-      m_pred(m_iOrder, m_iIndex, m_cCount, m_iScan);
+      for (index i = m_iIndex; i < m_cCount; i += m_iScan)
+      {
+
+         //m_pred(m_iOrder, m_iIndex, m_cCount, m_iScan);
+         m_pred(m_iIndex);
+
+      }
 
    }
 

@@ -258,6 +258,27 @@ namespace file
       ::file::file_sp application::get_file(var varFile, UINT nOpenFlags, cres * pfesp)
       {
 
+         if (m_pauraapp == NULL)
+         {
+
+            return NULL;
+
+         }
+
+         if (m_pauraapp->m_paxissystem == NULL)
+         {
+
+            return NULL;
+
+         }
+
+         if (m_pauraapp->m_paxissystem->m_spfile.is_null())
+         {
+
+            return NULL;
+
+         }
+
          ::file::file_sp pfile = m_pauraapp->m_paxissystem->m_spfile->get_file(varFile,nOpenFlags,pfesp,m_pauraapp);
 
          if (pfile.is_set())

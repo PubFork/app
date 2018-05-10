@@ -6082,23 +6082,24 @@ bool imaging::load_from_file(::draw2d::dib * pdib,var varFile,bool bCache)
       strFile.replace("/","\\");
       strFile = System.dir().time()/"cache"/strFile;
       strFile += ".dib";
-      if(Session.file().exists(strFile))
+      if (Session.file().exists(strFile))
       {
          try
          {
-            ::file::file_sp file = Session.file().get_file(strFile,::file::mode_read | ::file::share_deny_write | ::file::type_binary);
-            if(file.is_null())
+            ::file::file_sp file = Session.file().get_file(strFile, ::file::mode_read | ::file::share_deny_write | ::file::type_binary);
+            if (file.is_null())
             {
                return true;
             }
+            pdib->destroy();
             ::file::byte_istream istream(file);
             istream >> *pdib;
-            if(!istream.fail())
+            if (!istream.fail() && pdib->m_pcolorref != NULL)
             {
                return true;
             }
          }
-         catch(...)
+         catch (...)
          {
          }
       }
@@ -6124,28 +6125,11 @@ bool imaging::load_from_file(::draw2d::dib * pdib,var varFile,bool bCache)
 
    }
 
-
-   // image cache write
-   if(bCache && strFile.has_char())
+   if (bCache && strFile.has_char())
    {
-      try
-      {
 
-         ::file::file_sp file =Application.file().get_file(strFile,::file::mode_create | ::file::mode_write | ::file::type_binary | ::file::defer_create_directory);
+      pdib->m_pathCache = strFile;
 
-         if(file.is_set())
-         {
-
-            ::file::byte_ostream ostream(file);
-
-            ostream << *pdib;
-
-         }
-
-      }
-      catch(...)
-      {
-      }
    }
 
    return true;

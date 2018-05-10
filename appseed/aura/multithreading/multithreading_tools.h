@@ -93,17 +93,18 @@ class CLASS_DECL_AURA thread_tools :
 public:
 
 
-   spa(tool_thread)        m_threada;
-   sync_object_ptra        m_synca;
-   ::count                 m_cCount;
-   ::count                 m_cIteration;
-   ::count                 m_cSpan;
-   ::thread::e_op          m_eop;
-   sp(::thread_toolset)    m_ptoolset;
+   spa(tool_thread)              m_threada;
+   sync_object_ptra              m_synca;
+   ::count                       m_cCount;
+   ::count                       m_cIteration;
+   ::count                       m_cSpan;
+   ::thread::e_op                m_eop;
+   sp(::thread_toolset)          m_ptoolset;
+   ::multithreading::e_priority  m_epriority;
 
 
 
-   thread_tools(::aura::application * papp);
+   thread_tools(::aura::application * papp, ::multithreading::e_priority epriority);
    virtual ~thread_tools();
 
 
@@ -151,13 +152,13 @@ public:
 };
 
 
-CLASS_DECL_AURA ::thread_tools * get_thread_tools();
+CLASS_DECL_AURA ::thread_tools * get_thread_tools(::multithreading::e_priority epriority = ::multithreading::priority_none);
 CLASS_DECL_AURA ::thread_toolset * get_thread_toolset(::thread::e_tool etool);
 
 
 
 template < typename PRED >
-::count fork_count_end(::aura::application * papp, ::count iCount, PRED pred, index iStart = 0)
+::count fork_count_end(::aura::application * papp, ::count iCount, PRED pred, index iStart = 0, ::multithreading::e_priority epriority = ::multithreading::priority_none)
 {
 
    if (iCount <= 0)
@@ -167,12 +168,17 @@ template < typename PRED >
 
    }
 
-   auto  ptools = ::get_thread_tools();
+   auto ptools = ::get_thread_tools(epriority);
 
    if (ptools == NULL || ptools->get_count() <= 0)
    {
 
-      pred(0, iStart, iCount, 1);
+      for (index i = iStart; i < iCount; i++)
+      {
+
+         pred(i);
+
+      }
 
       return 1;
 

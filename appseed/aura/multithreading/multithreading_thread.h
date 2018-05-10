@@ -90,7 +90,9 @@ public:
    bool                                   m_bAvoidProcFork;
    bool                                   m_bThreadToolsForIncreasedFps;
    //::duration                             m_durationRunLock;
-   sp(::thread_tools)                     m_ptools;
+   map < ::multithreading::e_priority,
+       ::multithreading::e_priority,
+       sp(::thread_tools) >               m_toolmap;
    user_interaction_ptr_array *           m_puiptra;
 
    single_lock *                          m_pslUser;
@@ -169,7 +171,7 @@ public:
    virtual void dump(dump_context & dumpcontext) const override;
 
 
-   thread_tools * tools();
+   thread_tools * tools(::multithreading::e_priority epriority);
    thread_toolset * toolset(e_tool etool);
 
    // file related stuff
