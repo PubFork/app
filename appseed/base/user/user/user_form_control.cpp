@@ -480,7 +480,7 @@ namespace user
                case var::type_int32:
                {
                   string str;
-                  str.Format("%d",var.int32());
+                  str.Format("%d",var.i32());
                   sp(::user::edit_text) pedit = ptext;
                   pedit->_001SetText(str,::action::source_database);
                }

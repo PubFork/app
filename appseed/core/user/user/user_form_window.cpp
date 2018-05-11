@@ -548,7 +548,7 @@ namespace user
                case var::type_int32:
                {
                   string str;
-                  str.Format("%d", var.int32());
+                  str.Format("%d", var.i32());
                   ptext->_001SetText(str, ::action::source_database);
                }
                break;

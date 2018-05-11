@@ -1449,7 +1449,7 @@ namespace windows
 
       UINT uiMessage;
 
-      uiMessage = UINT(pbase->m_id.int64());
+      uiMessage = UINT(pbase->m_id.i64());
 
       //if(uiMessage == WM_MOUSEMOVE)
       //{
@@ -2341,7 +2341,7 @@ namespace windows
 
       UINT uiMessage;
 
-      uiMessage = UINT(pbase->m_id.int64());
+      uiMessage = UINT(pbase->m_id.i64());
 
       switch (uiMessage)
       {

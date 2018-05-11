@@ -521,7 +521,7 @@ namespace user
 
       UINT uiMessage;
 
-      uiMessage = (UINT) (pbase->m_id.int64());
+      uiMessage = (UINT) (pbase->m_id.i64());
 
       if(m_pui != NULL)
       {

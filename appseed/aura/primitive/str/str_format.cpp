@@ -743,19 +743,19 @@ namespace str
       else if(pformat->m_chLength == 'x')
       {
 
-         pformat->append(::hex::lower_from(var.int64()));
+         pformat->append(::hex::lower_from(var.i64()));
 
       }
       else if(pformat->m_chLength == 'X')
       {
 
-         pformat->append(::hex::upper_from(var.int64()));
+         pformat->append(::hex::upper_from(var.i64()));
 
       }
       else if(pformat->m_chLength == 'd')
       {
 
-         pformat->append(::str::from(var.int64()));
+         pformat->append(::str::from(var.i64()));
 
       }
       else if(pformat->m_chLength == 'f')

@@ -264,14 +264,14 @@ namespace simple_ui
          if(m_bFocus && bCaretOn && i3 == str1.get_length())
          {
             pgraphics->SelectObject(penCaret);
-            pgraphics->MoveTo(left + size1.cx,y);
-            pgraphics->LineTo(left + size1.cx,y + iLineHeight);
+            pgraphics->move_to(left + size1.cx,y);
+            pgraphics->line_to(left + size1.cx,y + iLineHeight);
          }
          else if(m_bFocus && bCaretOn && i3 == (str1.get_length() + str2.get_length()))
          {
             pgraphics->SelectObject(penCaret);
-            pgraphics->MoveTo(left + size2.cx + size1.cx,y);
-            pgraphics->LineTo(left + size2.cx + size1.cx,y + iLineHeight);
+            pgraphics->move_to(left + size2.cx + size1.cx,y);
+            pgraphics->line_to(left + size2.cx + size1.cx,y + iLineHeight);
          }
          y += iLineHeight;
          lim += straLines[i].get_length();

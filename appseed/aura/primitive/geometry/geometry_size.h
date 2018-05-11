@@ -68,7 +68,7 @@ public:
    int64_t area() const NOTHROW;
    inline bool is_empty() const NOTHROW;
 
-   uint32_t    ui32() const NOTHROW;
+   uint32_t    u32() const NOTHROW;
    uint64_t    ui64() const NOTHROW;
    LPARAM    lparam() const NOTHROW;
    POINT &        pt() NOTHROW { return (POINT &)*this; }
@@ -80,8 +80,8 @@ public:
    inline LONG get_dimension(e_orientation eorientation) const NOTHROW;
    inline LONG get_orthogonal_dimension(e_orientation eorientation) const NOTHROW;
    inline LONG get_orthogonal(e_orientation eorientation)const NOTHROW { return get_orthogonal_dimension(eorientation); }
-   inline LONG get_normal_dimension(e_orientation eorientation) const NOTHROW{ return get_orthogonal_dimension(eorientation); }
-   inline LONG get_normal(e_orientation eorientation) const NOTHROW{ return get_orthogonal_dimension(eorientation); }
+   inline LONG get_normal_dimension(e_orientation eorientation) const NOTHROW { return get_orthogonal_dimension(eorientation); }
+   inline LONG get_normal(e_orientation eorientation) const NOTHROW { return get_orthogonal_dimension(eorientation); }
 
    inline LONG set_dimension(e_orientation eorientation, LONG l) NOTHROW;
    inline LONG set_orthogonal_dimension(e_orientation eorientation, LONG l) NOTHROW;
@@ -155,7 +155,7 @@ public:
    int64_t area() const NOTHROW;
    inline bool is_empty() const NOTHROW;
 
-   uint32_t    ui32() const NOTHROW;
+   uint32_t    u32() const NOTHROW;
    uint64_t    ui64() const NOTHROW;
    LPARAM    lparam() const NOTHROW;
 
@@ -166,8 +166,8 @@ public:
    inline int64_t get_dimension(e_orientation eorientation) const NOTHROW;
    inline int64_t get_orthogonal_dimension(e_orientation eorientation) const NOTHROW;
    inline int64_t get_orthogonal(e_orientation eorientation)const NOTHROW { return get_orthogonal_dimension(eorientation); }
-   inline int64_t get_normal_dimension(e_orientation eorientation) const NOTHROW{ return get_orthogonal_dimension(eorientation); }
-   inline int64_t get_normal(e_orientation eorientation) const NOTHROW{ return get_orthogonal_dimension(eorientation); }
+   inline int64_t get_normal_dimension(e_orientation eorientation) const NOTHROW { return get_orthogonal_dimension(eorientation); }
+   inline int64_t get_normal(e_orientation eorientation) const NOTHROW { return get_orthogonal_dimension(eorientation); }
 
    inline int64_t set_dimension(e_orientation eorientation,int64_t l) NOTHROW;
    inline int64_t set_orthogonal_dimension(e_orientation eorientation,int64_t l) NOTHROW;
@@ -238,7 +238,7 @@ public:
    double area() const NOTHROW;
    inline bool is_empty() const NOTHROW;
 
-   uint32_t    ui32() const NOTHROW;
+   uint32_t    u32() const NOTHROW;
    uint64_t    ui64() const NOTHROW;
    LPARAM    lparam() const NOTHROW;
 
@@ -249,8 +249,8 @@ public:
    inline double get_dimension(e_orientation eorientation) const NOTHROW;
    inline double get_orthogonal_dimension(e_orientation eorientation) const NOTHROW;
    inline double get_orthogonal(e_orientation eorientation)const NOTHROW { return get_orthogonal_dimension(eorientation); }
-   inline double get_normal_dimension(e_orientation eorientation) const NOTHROW{ return get_orthogonal_dimension(eorientation); }
-   inline double get_normal(e_orientation eorientation) const NOTHROW{ return get_orthogonal_dimension(eorientation); }
+   inline double get_normal_dimension(e_orientation eorientation) const NOTHROW { return get_orthogonal_dimension(eorientation); }
+   inline double get_normal(e_orientation eorientation) const NOTHROW { return get_orthogonal_dimension(eorientation); }
 
    inline double set_dimension(e_orientation eorientation,double l) NOTHROW;
    inline double set_orthogonal_dimension(e_orientation eorientation,double l) NOTHROW;
@@ -302,7 +302,7 @@ inline LONG size::get_dimension(e_orientation eorientation) const NOTHROW
 
 inline ::size size::max(const ::size & s) const NOTHROW
 {
-   
+
    return ::size(MAX(cx,s.cx),MAX(cy,s.cy));
 
 }

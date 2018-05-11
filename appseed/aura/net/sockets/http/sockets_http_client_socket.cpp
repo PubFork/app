@@ -257,7 +257,7 @@ namespace sockets
    void http_client_socket::OnData(const char *buf,size_t len)
    {
 
-      if(m_response.attr(__id(http_status_code)).int32() >= 300 && m_response.attr(__id(http_status_code)).int32() <= 399)
+      if(m_response.attr(__id(http_status_code)).i32() >= 300 && m_response.attr(__id(http_status_code)).i32() <= 399)
       {
 
          return;

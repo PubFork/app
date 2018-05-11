@@ -1974,7 +1974,7 @@ namespace hi5
 
          setHttp["http_method"] = "POST";
 
-         bOk = Application.http().get(postUrl, m_strResponse, setHttp) && setHttp["get_status"].int32() == ::http::status_ok;
+         bOk = Application.http().get(postUrl, m_strResponse, setHttp) && setHttp["get_status"].i32() == ::http::status_ok;
 
          string m_strConnectionStatus = ::http::conn_status(setHttp);
 
@@ -2039,7 +2039,7 @@ namespace hi5
 
          }
 
-         bOk = Application.http().get(postUrl, m_strResponse, setHttp) && setHttp["get_status"].int32() == ::http::status_ok;
+         bOk = Application.http().get(postUrl, m_strResponse, setHttp) && setHttp["get_status"].i32() == ::http::status_ok;
 
          string m_strConnectionStatus = ::http::conn_status(setHttp);
 

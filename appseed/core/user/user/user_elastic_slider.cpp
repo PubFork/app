@@ -198,7 +198,7 @@ namespace user
    void elastic_slider::_001OnDraw(::draw2d::graphics * pgraphics)
    {
 
-      
+
 
       rect rectClient;
       GetClientRect(rectClient);
@@ -208,10 +208,10 @@ namespace user
       byte bAlpha = (byte) (128.0 * get_alpha());
 
       imaging.color_blend(
-         pgraphics,
-         rectClient,
-         RGB(250, 255, 255),
-         bAlpha);
+      pgraphics,
+      rectClient,
+      RGB(250, 255, 255),
+      bAlpha);
 
       rect rect;
       GetSliderRect(rect);
@@ -223,11 +223,11 @@ namespace user
       pgraphics->Draw3dRect(rect,ARGB(bAlpha,255,255,255),ARGB(bAlpha,255,255,255));
       if(m_bSlide)
       {
-         pgraphics->MoveTo(rect.center());
+         pgraphics->move_to(rect.center());
          POINT pt;
          Session.get_cursor_pos(&pt);
          ScreenToClient(&pt);
-         pgraphics->LineTo(pt);
+         pgraphics->line_to(pt);
       }
    }
 

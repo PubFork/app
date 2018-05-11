@@ -56,7 +56,8 @@ namespace sqlite
 
    int32_t base::setErr(int32_t err_code)
    {
-      switch (err_code) {
+      switch (err_code)
+      {
       case SQLITE_OK: error ="Successful result";
          break;
       case SQLITE_ERROR: error = "SQL error or missing database";
@@ -104,7 +105,8 @@ namespace sqlite
       return err_code;
    }
 
-   const char *base::getErrorMsg() {
+   const char *base::getErrorMsg()
+   {
       return error;
    }
 
@@ -143,7 +145,7 @@ namespace sqlite
 
    void base::disconnect()
    {
-      
+
       if (conn != NULL)
       {
 
@@ -152,7 +154,7 @@ namespace sqlite
          conn = NULL;
 
       }
-      
+
       if (active == false) return;
       active = false;
    }
@@ -177,17 +179,17 @@ namespace sqlite
 
       }
       //if (!_unlink(db))
-        // return DB_ERROR;
+      // return DB_ERROR;
       return DB_COMMAND_OK;
    }
 
 
    long base::nextid(const char* sname)
    {
-   
+
       if(!active)
       {
-      
+
          return DB_UNEXPECTED_RESULT;
 
       }
@@ -209,9 +211,9 @@ namespace sqlite
 
       if (res.records.get_size() == 0)
       {
-         
+
          id = 1;
-         
+
          sprintf(sqlcmd,"insert into %s (nextid,seq_name) values (%d,'%s')",sequence_table.c_str(),id,sname);
 
          if((last_err = sqlite3_exec((sqlite3 *)conn,sqlcmd,NULL,NULL,NULL)) != SQLITE_OK)
@@ -226,7 +228,7 @@ namespace sqlite
       else
       {
 
-         id = res.records[0][0].int32() + 1;
+         id = res.records[0][0].i32() + 1;
 
          sprintf(sqlcmd,"update %s set nextid=%d where seq_name = '%s'",sequence_table.c_str(),id,sname);
 
@@ -284,7 +286,7 @@ namespace sqlite
       return str;
    }
 
-   
+
    void base::create_long_set(const string & strTable)
    {
 

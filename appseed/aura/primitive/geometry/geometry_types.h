@@ -289,3 +289,125 @@ CLASS_DECL_AURA int_bool IsRectEmpty(const RECT & rect);
 
 
 
+
+
+inline CLASS_DECL_AURA RECTD & rectd_by_dimension(RECTD & rectd, f64 x, f64 y, f64 cx, f64 cy)
+{
+   rectd.left = x;
+   rectd.top = y;
+   rectd.right = x + cx;
+   rectd.bottom = y + cy;
+   return rectd;
+}
+
+inline CLASS_DECL_AURA RECTD & rectd_dim(RECTD & rectd, f64 x, f64 y, f64 cx, f64 cy)
+{
+   return rectd_by_dimension(rectd, x, y, cx, cy);
+}
+
+inline CLASS_DECL_AURA LPRECTD rectd_by_dimension(LPRECTD lprectd, f64 x, f64 y, f64 cx, f64 cy)
+{
+   return &rectd_by_dimension(*lprectd, x, y, cx, cy);
+}
+
+inline CLASS_DECL_AURA LPRECTD rectd_dim(LPRECTD lprectd, f64 x, f64 y, f64 cx, f64 cy)
+{
+   return rectd_by_dimension(lprectd, x, y, cx, cy);
+}
+
+inline CLASS_DECL_AURA::rectd rectd_by_dimension(f64 x, f64 y, f64 cx, f64 cy)
+{
+   ::rectd r;
+   return rectd_by_dimension(r, x, y, cx, cy);
+}
+
+inline CLASS_DECL_AURA::rectd rectd_dim(f64 x, f64 y, f64 cx, f64 cy)
+{
+   return rectd_by_dimension(x, y, cx, cy);
+}
+
+
+inline CLASS_DECL_AURA POINTD & pointd_by_coordinate(POINTD & p, f64 x, f64 y)
+{
+   p.x = x;
+   p.y = y;
+   return p;
+}
+
+inline CLASS_DECL_AURA POINTD & pointd_coord(POINTD & p, f64 x, f64 y)
+{
+   return pointd_by_coordinate(p, x, y);
+}
+
+
+inline CLASS_DECL_AURA LPPOINTD pointd_by_coordinate(LPPOINTD lppt, f64 x, f64 y)
+{
+   return &pointd_by_coordinate(*lppt, x, y);
+}
+
+inline CLASS_DECL_AURA LPPOINTD pointd_coord(LPPOINTD lppt, f64 x, f64 y)
+{
+   return pointd_by_coordinate(lppt, x, y);
+}
+
+inline CLASS_DECL_AURA POINTD pointd_by_coordinate(f64 x, f64 y)
+{
+   POINTD p;
+   return pointd_by_coordinate(p, x, y);
+}
+
+inline CLASS_DECL_AURA POINTD pointd_coord(f64 x, f64 y)
+{
+   return pointd_by_coordinate(x, y);
+}
+
+inline CLASS_DECL_AURA POINTD & offset(POINTD & pt, f64 x, f64 y)
+{
+   pt.x += x;
+   pt.y += y;
+   return pt;
+}
+
+CLASS_DECL_AURA bool polygon_contains(LPPOINTD lppt, LPPOINTD lpptPolygon, int iCount);
+
+CLASS_DECL_AURA bool polygon_contains(LPPOINT64 lppt, LPPOINT64 lpptPolygon, int iCount);
+
+CLASS_DECL_AURA bool polygon_contains(LPPOINTD lppt, LPPOINTD lpptPolygon, int iCount);
+
+
+inline CLASS_DECL_AURA POINTD & top_left(LPRECTD lpcrectd)
+{
+   return *(POINTD *)lpcrectd;
+}
+
+inline CLASS_DECL_AURA const POINTD & top_left(LPCRECTD lpcrectd)
+{
+   return *(const POINTD *)lpcrectd;
+}
+
+inline CLASS_DECL_AURA const POINTD & top_left(const RECTD & rectd)
+{
+   return ::top_left(&rectd);
+}
+
+
+
+
+CLASS_DECL_AURA bool deflate(LPRECTD prectd, LPCRECTD lpcrectd);
+
+
+
+#if defined(MACOS)
+
+
+
+
+void copy(CGRect & rectdDst, const RECTD & rectdSrc);
+void copy(LPRECTD lprectdDst, const CGRect & rectdSrc);
+
+#endif
+
+
+CLASS_DECL_AURA int_bool IsRectEmpty(const RECTD & rectd);
+
+

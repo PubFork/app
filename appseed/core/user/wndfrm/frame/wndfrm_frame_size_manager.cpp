@@ -292,9 +292,9 @@ namespace user
                }
                rectWindow.top = MIN(rectWindow.top, rectMonitor.bottom - m_minBorder.cy);
                sp(WorkSetClientInterface) pinterface = m_pworkset->get_draw_window();
-               if (pinterface->oprop("ysnap").int32() > 1)
+               if (pinterface->oprop("ysnap").i32() > 1)
                {
-                  rectWindow.top -= rectWindow.top % pinterface->oprop("ysnap").int32();
+                  rectWindow.top -= rectWindow.top % pinterface->oprop("ysnap").i32();
                }
             }
             else if(m_ehittestMode == HitTestSizingTopRight)
@@ -359,10 +359,10 @@ namespace user
                rectWindow.bottom = MAX(rectWindow.bottom, rectMonitor.top + m_minBorder.cy);
                sp(WorkSetClientInterface) pinterface = m_pworkset->get_draw_window();
 
-               if (pinterface->oprop("ysnap").int32() > 1)
+               if (pinterface->oprop("ysnap").i32() > 1)
                {
                   int h = rectWindow.height();
-                  h -= rectWindow.height() % pinterface->oprop("ysnap").int32();
+                  h -= rectWindow.height() % pinterface->oprop("ysnap").i32();
                   rectWindow.bottom = rectWindow.top + h;
                }
             }

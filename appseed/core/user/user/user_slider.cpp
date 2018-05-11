@@ -64,17 +64,17 @@ namespace user
       //if(rect.contains(pt))
       //{
 
-         SetCapture();
+      SetCapture();
 
-         m_bSlide = true;
+      m_bSlide = true;
 
-         m_pscalar->set_rate(get_slide_rate(), scalar_slide);
+      m_pscalar->set_rate(get_slide_rate(), scalar_slide);
 
-         RedrawWindow();
+      RedrawWindow();
 
-         pmouse->m_bRet = true;
+      pmouse->m_bRet = true;
 
-         pmouse->set_lresult(1);
+      pmouse->set_lresult(1);
 
       //   pmouse->m_bRet = true;
 
@@ -186,7 +186,7 @@ namespace user
    void slider::_001OnDraw(::draw2d::graphics * pgraphics)
    {
 
-      
+
 
       if(m_bSlide)
       {
@@ -226,11 +226,11 @@ namespace user
       pgraphics->FillSolidRect(rect,ARGB(bAlpha1,84 + 49,77 + 49,184 + 49));
       //if(m_bSlide)
       //{
-      //   pgraphics->MoveTo(rect.center());
+      //   pgraphics->move_to(rect.center());
       //   POINT pt;
       //   Session.get_cursor_pos(&pt);
       //   ScreenToClient(&pt);
-      //   pgraphics->LineTo(pt);
+      //   pgraphics->line_to(pt);
       //}
    }
 

@@ -292,10 +292,10 @@ void var::set_type(e_type e_type, bool bConvert)
       switch(e_type)
       {
       case type_int32:
-         m_i32       = int32();
+         m_i32       = i32();
          break;
       case type_uint32:
-         m_ui32      = uint32();
+         m_ui32      = u32();
          break;
       case type_double:
          m_d         = get_double();
@@ -1066,7 +1066,7 @@ int32_t var::compare_ci(const class var & var) const
       else
       {
          //var = var1;
-         //var.inta().remove(var2.int32());
+         //var.inta().remove(var2.i32());
       }
    }
    else if(m_etype == var::type_stra)
@@ -1105,11 +1105,11 @@ int32_t var::compare_ci(const class var & var) const
    }
    else if(is_integer() || var.is_integer())
    {
-      return int32() - var.int32();
+      return i32() - var.i32();
    }
    else if(is_natural() || var.is_natural())
    {
-      return (int32_t) (uint32() - var.uint32());
+      return (int32_t) (u32() - var.u32());
    }
    else
    {
@@ -1136,7 +1136,7 @@ int32_t var::compare(const class var & var) const
       else
       {
          //var = var1;
-         //var.inta().remove(var2.int32());
+         //var.inta().remove(var2.i32());
       }
    }
    else if(m_etype == var::type_stra)
@@ -1175,11 +1175,11 @@ int32_t var::compare(const class var & var) const
    }
    else if(is_integer() || var.is_integer())
    {
-      return int32() - var.int32();
+      return i32() - var.i32();
    }
    else if(is_natural() || var.is_natural())
    {
-      return (int32_t) (uint32() - var.uint32());
+      return (int32_t) (u32() - var.u32());
    }
    else
    {
@@ -1288,32 +1288,32 @@ bool var::operator > (const string & str) const
 
 bool var::operator == (int32_t i) const
 {
-   return int32() == i;
+   return i32() == i;
 }
 
 bool var::operator != (int32_t i) const
 {
-   return int32() != i;
+   return i32() != i;
 }
 
 bool var::operator < (int32_t i) const
 {
-   return int32() < i;
+   return i32() < i;
 }
 
 bool var::operator <= (int32_t i) const
 {
-   return int32() <= i;
+   return i32() <= i;
 }
 
 bool var::operator >= (int32_t i) const
 {
-   return int32() >= i;
+   return i32() >= i;
 }
 
 bool var::operator > (int32_t i) const
 {
-   return int32() > i;
+   return i32() > i;
 }
 
 
@@ -1328,32 +1328,32 @@ bool var::operator > (int32_t i) const
 
 bool var::operator == (int64_t i) const
 {
-   return int32() == i;
+   return i32() == i;
 }
 
 bool var::operator != (int64_t i) const
 {
-   return int32() != i;
+   return i32() != i;
 }
 
 bool var::operator < (int64_t i) const
 {
-   return int32() < i;
+   return i32() < i;
 }
 
 bool var::operator <= (int64_t i) const
 {
-   return int32() <= i;
+   return i32() <= i;
 }
 
 bool var::operator >= (int64_t i) const
 {
-   return int32() >= i;
+   return i32() >= i;
 }
 
 bool var::operator > (int64_t i) const
 {
-   return int32() > i;
+   return i32() > i;
 }
 
 
@@ -1733,7 +1733,7 @@ id & var::get_ref_id(const char * pszOnNull)
 
 
 
-int32_t var::int32(int32_t iDefault) const
+int32_t var::i32(int32_t iDefault) const
 {
    switch(m_etype)
    {
@@ -1756,7 +1756,7 @@ int32_t var::int32(int32_t iDefault) const
    case type_element:
       return iDefault;
    case type_pvar:
-      return m_pvar->int32(iDefault);
+      return m_pvar->i32(iDefault);
    case type_pstring:
       return atoi(*m_pstr);
    case type_id:
@@ -1776,7 +1776,7 @@ int32_t var::int32(int32_t iDefault) const
    }
 }
 
-uint32_t var::uint32(uint32_t uiDefault) const
+uint32_t var::u32(uint32_t uiDefault) const
 {
    switch(m_etype)
    {
@@ -1795,13 +1795,13 @@ uint32_t var::uint32(uint32_t uiDefault) const
    case type_uint64:
       return (uint32_t) m_ui64;
    case type_pvar:
-      return m_pvar->uint32(uiDefault);
+      return m_pvar->u32(uiDefault);
    default:
       return uiDefault;
    }
 }
 
-int64_t var::int64(int64_t iDefault) const
+int64_t var::i64(int64_t iDefault) const
 {
    switch(m_etype)
    {
@@ -1830,7 +1830,7 @@ int64_t var::int64(int64_t iDefault) const
    case type_element:
       return iDefault;
    case type_pvar:
-      return m_pvar->int64(iDefault);
+      return m_pvar->i64(iDefault);
    default:
       return iDefault;
    }
@@ -2412,17 +2412,17 @@ var var::equals_ci_get(const char * pszCompare, var varOnEqual) const
 
 var var::operator - (int32_t i) const
 {
-   return int32() - i;
+   return i32() - i;
 }
 
 var var::operator - (uint32_t user) const
 {
-   return uint32() - user;
+   return u32() - user;
 }
 
 var var::operator - (int64_t l) const
 {
-   return int64() - l;
+   return i64() - l;
 }
 
 var var::operator - (uint64_t ul) const
@@ -2437,17 +2437,17 @@ var var::operator - (double d) const
 
 var operator - (int32_t i, const class var & var)
 {
-   return i - var.int32();
+   return i - var.i32();
 }
 
 var operator - (uint32_t user, const class var & var)
 {
-   return user - var.uint32();
+   return user - var.u32();
 }
 
 var operator - (int64_t l, const class var & var)
 {
-   return l - var.int64();
+   return l - var.i64();
 }
 
 var operator - (uint64_t ul, const class var & var)
@@ -2472,7 +2472,7 @@ var operator - (const class var & var1, const class var & var2)
       else
       {
          var = var1;
-         var.inta().remove(var2.int32());
+         var.inta().remove(var2.i32());
       }
    }
    else if(var1.m_etype == var::type_stra)
@@ -2509,11 +2509,11 @@ var operator - (const class var & var1, const class var & var2)
    }
    else if(var1.is_integer() || var2.is_integer())
    {
-      var = var1.int32() - var2.int32();
+      var = var1.i32() - var2.i32();
    }
    else if(var1.is_natural() || var2.is_natural())
    {
-      var = var1.uint32() - var2.uint32();
+      var = var1.u32() - var2.u32();
    }
    else
    {
@@ -2525,17 +2525,17 @@ var operator - (const class var & var1, const class var & var2)
 
 var var::operator + (int32_t i) const
 {
-   return int32() + i;
+   return i32() + i;
 }
 
 var var::operator + (uint32_t user) const
 {
-   return uint32() + user;
+   return u32() + user;
 }
 
 var var::operator + (int64_t l) const
 {
-   return int64() + l;
+   return i64() + l;
 }
 
 var var::operator + (uint64_t ul) const
@@ -2550,17 +2550,17 @@ var var::operator + (double d) const
 
 var operator + (int32_t i, const class var & var)
 {
-   return i + var.int32();
+   return i + var.i32();
 }
 
 var operator + (uint32_t user, const class var & var)
 {
-   return user + var.uint32();
+   return user + var.u32();
 }
 
 var operator + (int64_t l, const class var & var)
 {
-   return l + var.int64();
+   return l + var.i64();
 }
 
 var operator + (uint64_t ul, const class var & var)
@@ -2588,13 +2588,13 @@ var operator + (const class var & var1, const class var & var2)
          else
          {
             var = var1;
-            var.inta().add(var2.int32());
+            var.inta().add(var2.i32());
          }
       }
       else
       {
          var = var2;
-         var.inta().add(var1.int32());
+         var.inta().add(var1.i32());
       }
    }
    else if(var1.m_etype == var::type_stra
@@ -2645,11 +2645,11 @@ var operator + (const class var & var1, const class var & var2)
    }
    else if(var1.is_integer() && var2.is_integer())
    {
-      var = var1.int32() + var2.int32();
+      var = var1.i32() + var2.i32();
    }
    else if(var1.is_natural() && var2.is_natural())
    {
-      var = var1.uint32() + var2.uint32();
+      var = var1.u32() + var2.u32();
    }
    else
    {
@@ -2681,17 +2681,17 @@ var operator + (const class var & var1, const class var & var2)
 
 var var::operator / (int32_t i) const
 {
-   return int32() / i;
+   return i32() / i;
 }
 
 var var::operator / (uint32_t user) const
 {
-   return uint32() / user;
+   return u32() / user;
 }
 
 var var::operator / (int64_t l) const
 {
-   return int64() / l;
+   return i64() / l;
 }
 
 var var::operator / (uint64_t ul) const
@@ -2732,17 +2732,17 @@ var var::operator / (double d) const
 
 var operator / (int32_t i, const class var & var)
 {
-   return i / var.int32();
+   return i / var.i32();
 }
 
 var operator / (uint32_t user, const class var & var)
 {
-   return user / var.uint32();
+   return user / var.u32();
 }
 
 var operator / (int64_t l, const class var & var)
 {
-   return l / var.int64();
+   return l / var.i64();
 }
 
 var operator / (uint64_t ul, const class var & var)
@@ -2794,7 +2794,7 @@ var operator / (const class var & var1, const class var & var2)
       else
       {
          var = var1;
-         var.inta().divide(var2.int32());
+         var.inta().divide(var2.i32());
       }
    }
    else if(var1.m_etype == var::type_stra)
@@ -2827,11 +2827,11 @@ var operator / (const class var & var1, const class var & var2)
    }
    else if(var1.is_integer() || var2.is_integer())
    {
-      var = var1.int32() / var2.int32();
+      var = var1.i32() / var2.i32();
    }
    else if(var1.is_natural() || var2.is_natural())
    {
-      var = var1.uint32() / var2.uint32();
+      var = var1.u32() / var2.u32();
    }
    else
    {
@@ -2843,17 +2843,17 @@ var operator / (const class var & var1, const class var & var2)
 
 var var::operator * (int32_t i) const
 {
-   return int32() * i;
+   return i32() * i;
 }
 
 var var::operator * (uint32_t user) const
 {
-   return uint32() * user;
+   return u32() * user;
 }
 
 var var::operator * (int64_t l) const
 {
-   return int64() * l;
+   return i64() * l;
 }
 
 var var::operator * (uint64_t ul) const
@@ -2893,17 +2893,17 @@ var var::operator * (double d) const
 
 var operator * (int32_t i, const class var & var)
 {
-   return i * var.int32();
+   return i * var.i32();
 }
 
 var operator * (uint32_t user, const class var & var)
 {
-   return user * var.uint32();
+   return user * var.u32();
 }
 
 var operator * (int64_t l, const class var & var)
 {
-   return l * var.int64();
+   return l * var.i64();
 }
 
 var operator * (uint64_t ul, const class var & var)
@@ -2958,13 +2958,13 @@ var operator * (const class var & var1, const class var & var2)
          else
          {
             var = var1;
-            var.inta().add(var2.int32());
+            var.inta().add(var2.i32());
          }
       }
       else
       {
          var = var2;
-         var.inta().add(var1.int32());
+         var.inta().add(var1.i32());
       }
    }
    else if(var1.m_etype == var::type_stra
@@ -3015,11 +3015,11 @@ var operator * (const class var & var1, const class var & var2)
    }
    else if(var1.is_integer() || var2.is_integer())
    {
-      var = var1.int32() * var2.int32();
+      var = var1.i32() * var2.i32();
    }
    else if(var1.is_natural() || var2.is_natural())
    {
-      var = var1.uint32() * var2.uint32();
+      var = var1.u32() * var2.u32();
    }
    else
    {

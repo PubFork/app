@@ -174,11 +174,11 @@ public:
 
 
    bool                             get_bool(bool bDefault = false)     const;
-   int32_t                          int32(int32_t iDefault = 0)  const;
+   int32_t                          i32(int32_t iDefault = 0)  const;
    template < typename ENUM >
-   ENUM                             e(ENUM edefault = enum_default < ENUM >())  const { return (ENUM)int64(); }
-   uint32_t                         uint32(uint32_t uiDefault = 0)  const;
-   int64_t                          int64(int64_t iDefault = 0)  const;
+   ENUM                             e(ENUM edefault = enum_default < ENUM >())  const { return (ENUM)i64(); }
+   uint32_t                         u32(uint32_t uiDefault = 0)  const;
+   int64_t                          i64(int64_t iDefault = 0)  const;
    uint64_t                         uint64(uint64_t uiDefault = 0)  const;
    inline int_ptr                   intptr(int_ptr iDefault = 0)  const;
    inline uint_ptr                  uintptr(uint_ptr uiDefault = 0)  const;
@@ -724,19 +724,19 @@ inline bool var::get_bool(bool bDefault) const
 // returns 0 for unknown conversions
 inline var::operator int32_t() const
 {
-   return int32();
+   return i32();
 }
 
 // returns 0 for unknown conversions
 inline var::operator uint32_t() const
 {
-   return uint32();
+   return u32();
 }
 
 // returns 0 for unknown conversions
 inline var::operator int64_t() const
 {
-   return int64();
+   return i64();
 }
 
 // returns 0 for unknown conversions
@@ -763,11 +763,11 @@ inline int_ptr var::intptr(int_ptr iDefault) const
 
 #if defined(OS64BIT)
 
-   return int64(iDefault);
+   return i64(iDefault);
 
 #else
 
-   return int32(iDefault);
+   return i32(iDefault);
 
 #endif
 
@@ -782,7 +782,7 @@ inline uint_ptr var::uintptr(uint_ptr uiDefault) const
 
 #else
 
-   return uint32(uiDefault);
+   return u32(uiDefault);
 
 #endif
 

@@ -263,7 +263,7 @@ namespace html
       bool text::layout_phase1(data * pdata)
       {
 
-          ::html::impl::elemental::layout_phase1(pdata);
+         ::html::impl::elemental::layout_phase1(pdata);
 
 
          e_tag etag = m_pelemental->m_etag;
@@ -305,8 +305,8 @@ namespace html
             return false;
 
          if (etag == tag_table
-          || etag == tag_tbody
-          || etag == tag_tr)
+               || etag == tag_tbody
+               || etag == tag_tr)
             return false;
 
          ::draw2d::graphics * pgraphics = pdata->m_pgraphics;
@@ -460,7 +460,7 @@ namespace html
          }
 
          if ((m_pelemental->m_bParent && m_pelemental->m_pparent->m_style.m_edisplay != display_table_cell)
-         || (!m_pelemental->m_bParent && m_pelemental->m_style.m_edisplay != display_table_cell))
+               || (!m_pelemental->m_bParent && m_pelemental->m_style.m_edisplay != display_table_cell))
          {
 
             float cx = 0.f;
@@ -570,31 +570,31 @@ namespace html
 
             double d;
 
-            if (m_pelemental->m_style.get_alpha("" , pdata, m_pelemental, d))
+            if (m_pelemental->m_style.get_alpha("", pdata, m_pelemental, d))
             {
                if(m_bHover && m_pelemental->m_style.get_color("background-color", "hover", pdata, m_pelemental, cr))
                {
                   App(pdata->get_app()).imaging().color_blend(
-                     pgraphics,
-                     rect,
-                     cr,
-                     MAX(0, MIN(255, (BYTE)(d * 255))));
+                  pgraphics,
+                  rect,
+                  cr,
+                  MAX(0, MIN(255, (BYTE)(d * 255))));
                }
                else if(has_link() && m_pelemental->m_style.get_color("background-color", "link", pdata, m_pelemental, cr))
                {
                   App(pdata->get_app()).imaging().color_blend(
-                     pgraphics,
-                     rect,
-                     cr,
-                     MAX(0, MIN(255, (BYTE)(d * 255))));
+                  pgraphics,
+                  rect,
+                  cr,
+                  MAX(0, MIN(255, (BYTE)(d * 255))));
                }
                else if (m_pelemental->m_style.get_color("background-color", "", pdata, m_pelemental, cr))
                {
                   App(pdata->get_app()).imaging().color_blend(
-                     pgraphics,
-                     rect,
-                     cr,
-                     MAX(0, MIN(255, (BYTE)(d * 255))));
+                  pgraphics,
+                  rect,
+                  cr,
+                  MAX(0, MIN(255, (BYTE)(d * 255))));
                }
             }
             else
@@ -782,13 +782,13 @@ namespace html
                   maxcy = MAX(maxcy,size3.cy);
                   if(m_bFocus && bCaretOn && i3 == str1.get_length())
                   {
-                     pgraphics->MoveTo(left + size1.cx,y);
-                     pgraphics->LineTo(left + size1.cx,y + maxcy);
+                     pgraphics->move_to(left + size1.cx,y);
+                     pgraphics->line_to(left + size1.cx,y + maxcy);
                   }
                   if(m_bFocus && bCaretOn && i3 == (str1.get_length() + str2.get_length()))
                   {
-                     pgraphics->MoveTo(left + size1.cx + size2.cx,y);
-                     pgraphics->LineTo(left + size1.cx + size2.cx,y + maxcy);
+                     pgraphics->move_to(left + size1.cx + size2.cx,y);
+                     pgraphics->line_to(left + size1.cx + size2.cx,y + maxcy);
                   }
 
                }
@@ -802,7 +802,7 @@ namespace html
                lim += strLine.get_length();
             }
          }
-        //pgraphics->FillSolidRect(0, 0, 100, 100, RGB(0, 255, 0));
+         //pgraphics->FillSolidRect(0, 0, 100, 100, RGB(0, 255, 0));
 
       }
 
@@ -829,7 +829,7 @@ namespace html
             if(m_pelemental->m_elementalptra.get_size() > 0)
             {
                return m_pelemental->m_elementalptra
-                  [m_pelemental->m_elementalptra.get_upper_bound()]->m_pimpl->get_last_line_height();
+                      [m_pelemental->m_elementalptra.get_upper_bound()]->m_pimpl->get_last_line_height();
             }
             else
             {
@@ -879,21 +879,21 @@ namespace html
          UNREFERENCED_PARAMETER(pdoc);
          float x = get_x();
 //         int32_t y = get_y();
-        float cy = 0.f;
-        float x1;
-        float x2;
+         float cy = 0.f;
+         float x1;
+         float x2;
 //        bool bTag = is_tag();
-  //      bool bValue = is_value();
-        for(int32_t i = 0; i < m_straLines.get_size(); i++)
-        {
-           x1 = i == 0 ? x : m_bound.left;
-           x2 = x1 + m_sizea[i].cx;
+         //      bool bValue = is_value();
+         for(int32_t i = 0; i < m_straLines.get_size(); i++)
+         {
+            x1 = i == 0 ? x : m_bound.left;
+            x2 = x1 + m_sizea[i].cx;
             if(pt.x > x1 && pt.x < x2)
                if(pt.y > m_box.top + cy  && pt.y < m_box.top + cy + m_sizea[i].cy)
                   return 1;
-         cy += m_sizea[i].cy;
-        }
-        return 0;
+            cy += m_sizea[i].cy;
+         }
+         return 0;
 
       }
 
@@ -933,7 +933,7 @@ namespace html
       void text::OnMouseMove(::message::message * pobj)
       {
 
-          ::html::impl::elemental::OnMouseMove(pobj);
+         ::html::impl::elemental::OnMouseMove(pobj);
 
          if (m_pelemental->m_pdata->m_bEdit)
          {

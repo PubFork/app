@@ -3,14 +3,14 @@
 template < typename SIZE >
 SIZE typed_unit_size()
 {
-   SIZE s ={1, 1};
+   SIZE s = {1, 1};
    return s;
 }
 
 template < >
 inline ::SIZE typed_unit_size < ::SIZE >()
 {
-   ::SIZE s ={1, 1};
+   ::SIZE s = {1, 1};
    return s;
 }
 
@@ -129,12 +129,11 @@ public:
 
 
 class CLASS_DECL_AURA pointd_array :
-   //public comparable_array < pointd >
    public point2d_array_base < pointd >
 {
 public:
-   //__inline pointd_array() : comparable_array < pointd >() {}
-   //__inline pointd_array(const pointd_array & pointset) { operator=(pointset); }
+
+
    virtual ~pointd_array();
 
    //void offset(double x, double y);

@@ -14,6 +14,8 @@ enum e_orientation
 #include "geometry_align.h"
 
 
+typedef const POINT * LPCPOINT;
+typedef const SIZE * LPCSIZE;
 
 
 struct SIZE64;
@@ -31,8 +33,8 @@ class rectd;
 
 struct POINT64
 {
-    int64_t    x;
-    int64_t    y;
+   int64_t    x;
+   int64_t    y;
 };
 
 typedef POINT64 * LPPOINT64;
@@ -86,8 +88,8 @@ typedef const RECT64 * LPCRECT64;
 
 struct POINTD
 {
-    double  x;
-    double  y;
+   double  x;
+   double  y;
 };
 
 typedef POINTD * LPPOINTD;
@@ -95,8 +97,8 @@ typedef const POINTD * LPCPOINTD;
 
 struct SIZED
 {
-    double        cx;
-    double        cy;
+   double        cx;
+   double        cy;
 };
 
 typedef SIZED * LPSIZED;
@@ -104,10 +106,10 @@ typedef const SIZED * LPCSIZED;
 
 struct RECTD
 {
-    double  left;
-    double  top;
-    double  right;
-    double  bottom;
+   double  left;
+   double  top;
+   double  right;
+   double  bottom;
 };
 
 typedef RECTD * LPRECTD;

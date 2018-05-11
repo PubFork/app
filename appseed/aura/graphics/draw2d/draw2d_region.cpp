@@ -207,7 +207,7 @@ namespace draw2d
       ::exception::throw_interface_only(get_app());
    }
 
-#ifdef WINDOWS
+   #ifdef WINDOWS
 
    bool region::CreateFromData(const XFORM* lpXForm, int32_t nCount, const RGNDATA* pRgnData)
    {
@@ -224,7 +224,7 @@ namespace draw2d
       ::exception::throw_interface_only(get_app());
    }
 
-#endif
+   #endif
 
    void region::SetRectRgn(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
    {
@@ -306,7 +306,7 @@ namespace draw2d
       UNREFERENCED_PARAMETER(lpRect);
       ::exception::throw_interface_only(get_app());
    }
-*/
+   */
 
 
    bool region::create_rect(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
@@ -595,20 +595,20 @@ namespace draw2d
          m_efillmode = regionSrc.m_efillmode;
          return *this;
       case type_poly_polygon:
+      {
+         m_nCount = regionSrc.m_nCount;
+         m_lppolycounts = new INT[m_nCount];
+         memcpy(m_lppolycounts, regionSrc.m_lppolycounts, sizeof(INT) * m_nCount);
+         int32_t iTotalCount = 0;
+         for(int32_t i = 0; i < m_nCount; i++)
          {
-            m_nCount = regionSrc.m_nCount;
-            m_lppolycounts = new INT[m_nCount];
-            memcpy(m_lppolycounts, regionSrc.m_lppolycounts, sizeof(INT) * m_nCount);
-            int32_t iTotalCount = 0;
-            for(int32_t i = 0; i < m_nCount; i++)
-            {
-               iTotalCount += m_lppolycounts[i];
-            }
-            m_lppoints = new POINTD[iTotalCount];
-            memcpy(m_lppoints, regionSrc.m_lppoints, sizeof(POINTD) * iTotalCount);
-            m_efillmode = regionSrc.m_efillmode;
+            iTotalCount += m_lppolycounts[i];
          }
-         return *this;
+         m_lppoints = new POINTD[iTotalCount];
+         memcpy(m_lppoints, regionSrc.m_lppoints, sizeof(POINTD) * iTotalCount);
+         m_efillmode = regionSrc.m_efillmode;
+      }
+      return *this;
       case type_round_rect:
          m_x1 = regionSrc.m_x1;
          m_y1 = regionSrc.m_y1;
@@ -672,25 +672,25 @@ namespace draw2d
          }
          return true;
       case type_poly_polygon:
+      {
+         int32_t iTotalCount = 0;
+         for(int32_t i = 0; i < m_nCount; i++)
          {
-            int32_t iTotalCount = 0;
-            for(int32_t i = 0; i < m_nCount; i++)
-            {
-               iTotalCount += m_lppolycounts[i];
-            }
-            for(int32_t i = 0; i < iTotalCount; i++)
-            {
-               m_lppoints[i].x += x;
-               m_lppoints[i].y += y;
-            }
+            iTotalCount += m_lppolycounts[i];
          }
-         return true;
+         for(int32_t i = 0; i < iTotalCount; i++)
+         {
+            m_lppoints[i].x += x;
+            m_lppoints[i].y += y;
+         }
+      }
+      return true;
       case type_combine:
-         {
-            bool bOk1 = m_pregion1->translate(x, y);
-            bool bOk2 = m_pregion2->translate(x, y);
-            return bOk1 && bOk2;
-         }
+      {
+         bool bOk1 = m_pregion1->translate(x, y);
+         bool bOk2 = m_pregion2->translate(x, y);
+         return bOk1 && bOk2;
+      }
       default:
          ::exception::throw_not_implemented(get_app());
       };
@@ -705,6 +705,12 @@ namespace draw2d
 
    }
 
+   bool region::contains(LPPOINT p)
+   {
+
+      return contains(pointd(point));
+
+   }
 
 
 
@@ -895,7 +901,7 @@ namespace draw2d
 
       int32_t n = 0;
 
-      for(int32_t i = 0; i < m_nCount;i++)
+      for(int32_t i = 0; i < m_nCount; i++)
       {
 
          int32_t iCount = m_lppolycounts[i];
@@ -1034,7 +1040,7 @@ namespace draw2d
 
       int32_t n = 0;
 
-      for(int32_t i = 0; i < m_nCount;i++)
+      for(int32_t i = 0; i < m_nCount; i++)
       {
          int32_t iCount = m_lppolycounts[i];
          if(::polygon_contains(&point, &m_lppoints[n], iCount))
@@ -1045,6 +1051,7 @@ namespace draw2d
       return false;
 
    }
+
 
    bool region::internal_combine_contains(POINTD point)
    {
@@ -1097,6 +1104,54 @@ namespace draw2d
          return false;
       }
 
+
+   }
+
+
+   bool region::internal_contains(LPPOINT lppt)
+   {
+
+      return internal_contains(pointd(pt));
+
+   }
+
+
+   bool region::internal_rect_contains(LPPOINT lppt)
+   {
+
+      return internal_rect_contains(pointd(pt));
+
+   }
+
+
+   bool region::internal_oval_contains(LPPOINT lppt)
+   {
+
+      return internal_oval_contains(pointd(pt));
+
+   }
+
+
+   bool region::internal_polygon_contains(LPPOINT lppt)
+   {
+
+      return internal_polygon_contains(pointd(pt));
+
+   }
+
+
+   bool region::internal_poly_polygon_contains(LPPOINT lppt)
+   {
+
+      return internal_poly_polygon_contains(pointd(pt));
+
+   }
+
+
+   bool region::internal_combine_contains(LPPOINT lppt)
+   {
+
+      return internal_combine_contains(pointd(pt));
 
    }
 

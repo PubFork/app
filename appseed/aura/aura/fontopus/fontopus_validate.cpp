@@ -1010,7 +1010,7 @@ namespace fontopus
          strAuth = Application.http().get(strAuthUrl, set);
 
 
-         *pestatus = (::http::e_status) set["get_status"].int64();
+         *pestatus = (::http::e_status) set["get_status"].i64();
          uint32_t dwTimeProfile2 = get_tick_count();
 
          TRACE("login_thread::NetLogin Total time Application.http().get(\"%s\") : %d", strAuthUrl, dwTimeProfile2 - dwTimeProfile1);

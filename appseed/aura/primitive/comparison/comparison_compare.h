@@ -87,9 +87,9 @@ namespace comparison
 
 
    template < >
-   inline bool lt(uint64_t ui64, uint32_t ui32)
+   inline bool lt(uint64_t ui64, uint32_t u32)
    {
-      return ui64 > 0xffffffffull ? false : (uint64_t)ui64 < ui32;
+      return ui64 > 0xffffffffull ? false : (uint64_t)ui64 < u32;
    }
 
    template < >

@@ -4,18 +4,18 @@
 namespace user
 {
 
-   
+
    check_box::check_box(::aura::application * papp) :
       object(papp),
       ::user::interaction(papp)
    {
-      
+
       m_echeck = ::check::unchecked;
-      
+
       m_estyle = style_normal;
-      
+
    }
-   
+
 
    check_box::~check_box()
    {
@@ -24,49 +24,49 @@ namespace user
 
    ::check::e_check check_box::_001GetCheck()
    {
-      
+
       return m_echeck;
-      
+
    }
-   
+
 
    void check_box::_001SetCheck(::check::e_check echeck, ::action::context actioncontext)
    {
-      
+
       if(echeck != ::check::unchecked && echeck != ::check::checked && echeck != ::check::tristate)
       {
-         
+
          // default value when setting a value that does not match the ones above
-         
+
          echeck = ::check::checked;
-         
+
       }
-      
+
       m_echeck = echeck;
-      
+
       ::user::control_event ev;
-      
+
       ev.m_puie = this;
-      
+
       ev.m_eevent = ::user::event_set_check;
-      
+
       ev.m_actioncontext = actioncontext;
-      
+
       if(get_form() != NULL)
       {
-         
+
          get_form()->send_message(::message::message_event, 0, (LPARAM) &ev);
-         
+
       }
       else
       {
-         
+
          GetParent()->send_message(::message::message_event, 0, (LPARAM) &ev);
-         
+
       }
-      
+
    }
-   
+
 
    void check_box::_001OnDraw(::draw2d::graphics * pgraphics)
    {
@@ -126,7 +126,7 @@ namespace user
 
       if (m_echeck == ::check::checked)
       {
-         
+
          crBrush = ARGB(255, 100, 220, 120);
 
       }
@@ -163,12 +163,12 @@ namespace user
       //      ::draw2d::pen_sp pen(allocer());
       //      pen->create_solid(1, m_echeck == check::checked ? ARGB(255, 0, 0, 0) : ARGB(255, 96, 96, 96));
       //      pgraphics->SelectObject(pen);
-      //      pgraphics->MoveTo(2, 8);
-      //      pgraphics->LineTo(6, 12);
-      //      pgraphics->LineTo(13, 5);
-      //      pgraphics->MoveTo(2, 9);
-      //      pgraphics->LineTo(6, 13);
-      //      pgraphics->LineTo(13, 6);
+      //      pgraphics->move_to(2, 8);
+      //      pgraphics->line_to(6, 12);
+      //      pgraphics->line_to(13, 5);
+      //      pgraphics->move_to(2, 9);
+      //      pgraphics->line_to(6, 13);
+      //      pgraphics->line_to(13, 6);
       //   }
       //}
       //pgraphics->OffsetViewportOrg(-rectClient.left, -rectClient.top);
@@ -178,7 +178,7 @@ namespace user
 
    void check_box::_001OnTimer(::timer * ptimer)
    {
-      
+
       ::user::control::_001OnTimer(ptimer);
 
    }
@@ -236,9 +236,9 @@ namespace user
 
    void check_box::install_message_routing(::message::sender * pinterface)
    {
-      
+
       ::user::interaction::install_message_routing(pinterface);
-      
+
       IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &check_box::_001OnLButtonDown);
       IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &check_box::_001OnLButtonUp);
       IGUI_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &check_box::_001OnMouseMove);
@@ -250,7 +250,7 @@ namespace user
    {
 
       //SCAST_PTR(::message::create, pcreate, pobj);
-      
+
       UNREFERENCED_PARAMETER(pobj);
 
       m_puserstyle = Application.userstyle();

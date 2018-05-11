@@ -166,15 +166,15 @@ namespace draw3d
       //SET_PCOLOR((p04.z + p01.z) / (2.0 * z));
       //m_pdc->draw_line((float)p04.x,(float)p04.y,(float)p01.x,(float)p01.y);
 
-      //m_pdc->MoveTo(p05.x,p05.y);
+      //m_pdc->move_to(p05.x,p05.y);
       //SET_PCOLOR((p05.z + p06.z) / (2.0 * z));
-      //m_pdc->LineTo(p06.x,p06.y);
+      //m_pdc->line_to(p06.x,p06.y);
       //SET_PCOLOR((p06.z + p07.z) / (2.0 * z));
-      //m_pdc->LineTo(p07.x,p07.y);
+      //m_pdc->line_to(p07.x,p07.y);
       //SET_PCOLOR((p07.z + p08.z) / (2.0 * z));
-      //m_pdc->LineTo(p08.x,p08.y);
+      //m_pdc->line_to(p08.x,p08.y);
       //SET_PCOLOR((p08.z + p05.z) / (2.0 * z));
-      //m_pdc->LineTo(p05.x,p05.y);
+      //m_pdc->line_to(p05.x,p05.y);
 
       //SET_PCOLOR((p01.z + p05.z) / (2.0 * z));
       //m_pdc->draw_line((float)p01.x,(float)p01.y,(float)p05.x,(float)p05.y);
@@ -188,7 +188,7 @@ namespace draw3d
       return ia;
    }
 
-   
+
    int_array ortho::draw_ortho_plain_fill(::box * pbox,int iHint,int bA,bool bFirst,::draw2d::dib * pdib)
    {
 
@@ -332,15 +332,15 @@ namespace draw3d
       //SET_PCOLOR((p04.z + p01.z) / (2.0 * z));
       //m_pdc->draw_line((float)p04.x,(float)p04.y,(float)p01.x,(float)p01.y);
 
-      //m_pdc->MoveTo(p05.x,p05.y);
+      //m_pdc->move_to(p05.x,p05.y);
       //SET_PCOLOR((p05.z + p06.z) / (2.0 * z));
-      //m_pdc->LineTo(p06.x,p06.y);
+      //m_pdc->line_to(p06.x,p06.y);
       //SET_PCOLOR((p06.z + p07.z) / (2.0 * z));
-      //m_pdc->LineTo(p07.x,p07.y);
+      //m_pdc->line_to(p07.x,p07.y);
       //SET_PCOLOR((p07.z + p08.z) / (2.0 * z));
-      //m_pdc->LineTo(p08.x,p08.y);
+      //m_pdc->line_to(p08.x,p08.y);
       //SET_PCOLOR((p08.z + p05.z) / (2.0 * z));
-      //m_pdc->LineTo(p05.x,p05.y);
+      //m_pdc->line_to(p05.x,p05.y);
 
       //SET_PCOLOR((p01.z + p05.z) / (2.0 * z));
       //m_pdc->draw_line((float)p01.x,(float)p01.y,(float)p05.x,(float)p05.y);

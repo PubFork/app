@@ -188,9 +188,9 @@ namespace user
                      }
                   }
                   goto SizingNone;
-               SizingSuccess:
+SizingSuccess:
                   return etest;
-               SizingNone:;
+SizingNone:;
                }
                return HitTestClient;
             }
@@ -346,10 +346,10 @@ namespace user
                if(get_appearance()->IsZoomed())
                {
                   eborder = (EBorder)
-                     (eborder &
-                     ~(BorderRight
-                     | BorderBottom
-                     | BorderLeft));
+                            (eborder &
+                             ~(BorderRight
+                               | BorderBottom
+                               | BorderLeft));
                }
 
                if(eborder & BorderTop)
@@ -438,7 +438,7 @@ namespace user
 
                return;
 
-               
+
 
 //               rect rectC(lpcrectClient);
 //
@@ -479,9 +479,9 @@ namespace user
 //                                  ptC = rectA.top_left();
 //                                  ptC.x += 15;
 //
-//                                  pgraphics->MoveTo(ptA);
-//                                  pgraphics->LineTo(ptB);
-//                                  pgraphics->LineTo(ptC);
+//                                  pgraphics->move_to(ptA);
+//                                  pgraphics->line_to(ptB);
+//                                  pgraphics->line_to(ptC);
 //
 //                                  pgraphics->SelectObject(m_penFace1);
 //
@@ -494,9 +494,9 @@ namespace user
 //                                  ptB = rectA.top_left();
 //                                  ptC = rectA.top_left();
 //                                  ptC.x += 16;
-//                                  pgraphics->MoveTo(ptA);
-//                                  pgraphics->LineTo(ptB);
-//                                  pgraphics->LineTo(ptC);
+//                                  pgraphics->move_to(ptA);
+//                                  pgraphics->line_to(ptB);
+//                                  pgraphics->line_to(ptC);
 //
 //                                  // Midle Rectangle
 //
@@ -512,9 +512,9 @@ namespace user
 //                                  ptB = rectA.top_left();
 //                                  ptC = rectA.top_left();
 //                                  ptC.x += 14;
-//                                  pgraphics->MoveTo(ptA);
-//                                  pgraphics->LineTo(ptB);
-//                                  pgraphics->LineTo(ptC);
+//                                  pgraphics->move_to(ptA);
+//                                  pgraphics->line_to(ptB);
+//                                  pgraphics->line_to(ptC);
 //
 //                                  pgraphics->SelectObject(m_penShadow1);
 //
@@ -536,9 +536,9 @@ namespace user
 //                                  ptB = rectA.top_left();
 //                                  ptC = rectA.top_left();
 //                                  ptC.x += 13;
-//                                  pgraphics->MoveTo(ptA);
-//                                  pgraphics->LineTo(ptB);
-//                                  pgraphics->LineTo(ptC);
+//                                  pgraphics->move_to(ptA);
+//                                  pgraphics->line_to(ptB);
+//                                  pgraphics->line_to(ptC);
 //
 //                                  pgraphics->SelectObject(m_penDkShadow1);
 //
@@ -554,9 +554,9 @@ namespace user
 //                                  ptB = rectA.top_left();
 //                                  ptC = rectA.top_left();
 //                                  ptC.x += 12;
-//                                  pgraphics->MoveTo(ptA);
-//                                  pgraphics->LineTo(ptB);
-//                                  pgraphics->LineTo(ptC);
+//                                  pgraphics->move_to(ptA);
+//                                  pgraphics->line_to(ptB);
+//                                  pgraphics->line_to(ptC);
 //
 //                                  pgraphics->SelectObject(m_penShadow1);
 //
@@ -566,8 +566,8 @@ namespace user
 //                                  ptA.y = rectClientB.top + 1;
 //                                  ptB.x = rectClientB.left + 14;
 //                                  ptB.y = rectClientB.top + 3;
-//                                  pgraphics->MoveTo(ptA);
-//                                  pgraphics->LineTo(ptB);
+//                                  pgraphics->move_to(ptA);
+//                                  pgraphics->line_to(ptB);
 //
 //
 //                                  // Details
@@ -576,8 +576,8 @@ namespace user
 //                                  ptA.y = rectClientB.top + 14;
 //                                  ptB.x = rectClientB.left + 3;
 //                                  ptB.y = rectClientB.top + 14;
-//                                  pgraphics->MoveTo(ptA);
-//                                  pgraphics->LineTo(ptB);
+//                                  pgraphics->move_to(ptA);
+//                                  pgraphics->line_to(ptB);
 //
 //                                  pgraphics->SelectObject(m_penDkShadow1);
 //
@@ -587,8 +587,8 @@ namespace user
 //                                  ptA.y = rectClientB.top + 1;
 //                                  ptB.x = rectClientB.left + 15;
 //                                  ptB.y = rectClientB.top + 5;
-//                                  pgraphics->MoveTo(ptA);
-//                                  pgraphics->LineTo(ptB);
+//                                  pgraphics->move_to(ptA);
+//                                  pgraphics->line_to(ptB);
 //
 //                                  // Details
 //
@@ -596,8 +596,8 @@ namespace user
 //                                  ptA.y = rectClientB.top + 15;
 //                                  ptB.x = rectClientB.left + 5;
 //                                  ptB.y = rectClientB.top + 15;
-//                                  pgraphics->MoveTo(ptA);
-//                                  pgraphics->LineTo(ptB);
+//                                  pgraphics->move_to(ptA);
+//                                  pgraphics->line_to(ptB);
 //               }
 //                  break;
 //               case GripTopRight:
@@ -614,8 +614,8 @@ namespace user
 //                                   ptA = rectA.top_right();
 //                                   ptA.x -= 15;
 //                                   ptB = rectA.top_right();
-//                                   pgraphics->MoveTo(ptA);
-//                                   pgraphics->LineTo(ptB);
+//                                   pgraphics->move_to(ptA);
+//                                   pgraphics->line_to(ptB);
 //
 //                                   rectA.top += 2;
 //                                   rectA.left += 2;
@@ -625,8 +625,8 @@ namespace user
 //                                   ptB = rectA.top_right();
 //                                   ptC = rectA.top_right();
 //                                   ptC.y += 13;
-//                                   pgraphics->MoveTo(ptB);
-//                                   pgraphics->LineTo(ptC);
+//                                   pgraphics->move_to(ptB);
+//                                   pgraphics->line_to(ptC);
 //
 //                                   pgraphics->SelectObject(m_penFace1);
 //
@@ -637,8 +637,8 @@ namespace user
 //                                   ptA = rectA.top_right();
 //                                   ptA.x -= 16;
 //                                   ptB = rectA.top_right();
-//                                   pgraphics->MoveTo(ptA);
-//                                   pgraphics->LineTo(ptB);
+//                                   pgraphics->move_to(ptA);
+//                                   pgraphics->line_to(ptB);
 //
 //
 //                                   // Most internal rectangle
@@ -651,8 +651,8 @@ namespace user
 //                                   ptB = rectA.top_right();
 //                                   ptC = rectA.top_right();
 //                                   ptC.y += 12;
-//                                   pgraphics->MoveTo(ptB);
-//                                   pgraphics->LineTo(ptC);
+//                                   pgraphics->move_to(ptB);
+//                                   pgraphics->line_to(ptC);
 //
 //                                   // Midle Rectangle
 //
@@ -668,9 +668,9 @@ namespace user
 //                                   ptB = rectA.top_right();
 //                                   ptC = rectA.top_right();
 //                                   ptC.y += 14;
-//                                   pgraphics->MoveTo(ptA);
-//                                   pgraphics->LineTo(ptB);
-//                                   pgraphics->LineTo(ptC);
+//                                   pgraphics->move_to(ptA);
+//                                   pgraphics->line_to(ptB);
+//                                   pgraphics->line_to(ptC);
 //
 //                                   pgraphics->SelectObject(m_penShadow1);
 //
@@ -684,8 +684,8 @@ namespace user
 //                                   ptB = rectA.top_right();
 //                                   ptC = rectA.top_right();
 //                                   ptC.y += 15;
-//                                   pgraphics->MoveTo(ptB);
-//                                   pgraphics->LineTo(ptC);
+//                                   pgraphics->move_to(ptB);
+//                                   pgraphics->line_to(ptC);
 //
 //                                   rectA.top += 2;
 //                                   rectA.left += 2;
@@ -695,8 +695,8 @@ namespace user
 //                                   ptA = rectA.top_right();
 //                                   ptA.x -= 12;
 //                                   ptB = rectA.top_right();
-//                                   pgraphics->MoveTo(ptA);
-//                                   pgraphics->LineTo(ptB);
+//                                   pgraphics->move_to(ptA);
+//                                   pgraphics->line_to(ptB);
 //
 //                                   pgraphics->SelectObject(m_penDkShadow1);
 //
@@ -705,8 +705,8 @@ namespace user
 //                                   ptB = rectA.top_right();
 //                                   ptC = rectA.top_right();
 //                                   ptC.y += 16;
-//                                   pgraphics->MoveTo(ptB);
-//                                   pgraphics->LineTo(ptC);
+//                                   pgraphics->move_to(ptB);
+//                                   pgraphics->line_to(ptC);
 //
 //                                   rectA.top += 4;
 //                                   rectA.left += 4;
@@ -716,8 +716,8 @@ namespace user
 //                                   ptA = rectA.top_right();
 //                                   ptA.x -= 11;
 //                                   ptB = rectA.top_right();
-//                                   pgraphics->MoveTo(ptA);
-//                                   pgraphics->LineTo(ptB);
+//                                   pgraphics->move_to(ptA);
+//                                   pgraphics->line_to(ptB);
 //
 //                                   pgraphics->SelectObject(m_penHilight1);
 //
@@ -725,8 +725,8 @@ namespace user
 //                                   ptA.y = rectClientB.top + 1;
 //                                   ptB.x = rectClientB.right - 14;
 //                                   ptB.y = rectClientB.top + 4;
-//                                   pgraphics->MoveTo(ptA);
-//                                   pgraphics->LineTo(ptB);
+//                                   pgraphics->move_to(ptA);
+//                                   pgraphics->line_to(ptB);
 //
 //                                   pgraphics->SelectObject(m_penFace1);
 //
@@ -736,8 +736,8 @@ namespace user
 //                                   ptA.y = rectClientB.top;
 //                                   ptB.x = rectClientB.right - 15;
 //                                   ptB.y = rectClientB.top + 5;
-//                                   pgraphics->MoveTo(ptA);
-//                                   pgraphics->LineTo(ptB);
+//                                   pgraphics->move_to(ptA);
+//                                   pgraphics->line_to(ptB);
 //
 //                                   pgraphics->SelectObject(m_penShadow1);
 //
@@ -747,8 +747,8 @@ namespace user
 //                                   ptA.y = rectClientB.top + 14;
 //                                   ptB.x = rectClientB.right - 1;
 //                                   ptB.y = rectClientB.top + 14;
-//                                   pgraphics->MoveTo(ptA);
-//                                   pgraphics->LineTo(ptB);
+//                                   pgraphics->move_to(ptA);
+//                                   pgraphics->line_to(ptB);
 //
 //                                   pgraphics->SelectObject(m_penDkShadow1);
 //
@@ -758,8 +758,8 @@ namespace user
 //                                   ptA.y = rectClientB.top + 15;
 //                                   ptB.x = rectClientB.right;
 //                                   ptB.y = rectClientB.top + 15;
-//                                   pgraphics->MoveTo(ptB);
-//                                   pgraphics->LineTo(ptA);
+//                                   pgraphics->move_to(ptB);
+//                                   pgraphics->line_to(ptA);
 //               }
 //                  break;
 //               case GripBottomLeft:
@@ -776,8 +776,8 @@ namespace user
 //                                     ptA = rectA.bottom_left();
 //                                     ptA.y -= 16;
 //                                     ptB = rectA.bottom_left();
-//                                     pgraphics->MoveTo(ptB);
-//                                     pgraphics->LineTo(ptA);
+//                                     pgraphics->move_to(ptB);
+//                                     pgraphics->line_to(ptA);
 //
 //                                     rectA = rectClient;
 //
@@ -788,8 +788,8 @@ namespace user
 //                                     ptB = rectA.bottom_left();
 //                                     ptC = rectA.bottom_left();
 //                                     ptC.x += 12;
-//                                     pgraphics->MoveTo(ptC);
-//                                     pgraphics->LineTo(ptB);
+//                                     pgraphics->move_to(ptC);
+//                                     pgraphics->line_to(ptB);
 //
 //                                     pgraphics->SelectObject(m_penFace1);
 //
@@ -800,8 +800,8 @@ namespace user
 //                                     ptA = rectA.bottom_left();
 //                                     ptA.y -= 15;
 //                                     ptB = rectA.bottom_left();
-//                                     pgraphics->MoveTo(ptB);
-//                                     pgraphics->LineTo(ptA);
+//                                     pgraphics->move_to(ptB);
+//                                     pgraphics->line_to(ptA);
 //
 //                                     // Most internal rectangle 4
 //
@@ -813,8 +813,8 @@ namespace user
 //                                     ptB = rectA.bottom_left();
 //                                     ptC = rectA.bottom_left();
 //                                     ptC.x += 12;
-//                                     pgraphics->MoveTo(ptB);
-//                                     pgraphics->LineTo(ptC);
+//                                     pgraphics->move_to(ptB);
+//                                     pgraphics->line_to(ptC);
 //
 //                                     // Midle Rectangle 2
 //
@@ -830,9 +830,9 @@ namespace user
 //                                     ptB = rectA.bottom_left();
 //                                     ptC = rectA.bottom_left();
 //                                     ptC.x += 14;
-//                                     pgraphics->MoveTo(ptA);
-//                                     pgraphics->LineTo(ptB);
-//                                     pgraphics->LineTo(ptC);
+//                                     pgraphics->move_to(ptA);
+//                                     pgraphics->line_to(ptB);
+//                                     pgraphics->line_to(ptC);
 //
 //                                     pgraphics->SelectObject(m_penShadow1);
 //
@@ -844,8 +844,8 @@ namespace user
 //                                     ptB = rectA.bottom_left();
 //                                     ptC = rectA.bottom_left();
 //                                     ptC.x += 14;
-//                                     pgraphics->MoveTo(ptB);
-//                                     pgraphics->LineTo(ptC);
+//                                     pgraphics->move_to(ptB);
+//                                     pgraphics->line_to(ptC);
 //
 //                                     rectA = rectClient;
 //
@@ -855,8 +855,8 @@ namespace user
 //                                     ptA = rectA.bottom_left();
 //                                     ptA.y -= 12;
 //                                     ptB = rectA.bottom_left();
-//                                     pgraphics->MoveTo(ptA);
-//                                     pgraphics->LineTo(ptB);
+//                                     pgraphics->move_to(ptA);
+//                                     pgraphics->line_to(ptB);
 //
 //                                     pgraphics->SelectObject(m_penDkShadow1);
 //
@@ -866,8 +866,8 @@ namespace user
 //                                     ptB.x++;
 //                                     ptC = rectA.bottom_left();
 //                                     ptC.x += 16;
-//                                     pgraphics->MoveTo(ptB);
-//                                     pgraphics->LineTo(ptC);
+//                                     pgraphics->move_to(ptB);
+//                                     pgraphics->line_to(ptC);
 //
 //                                     rectA.left += 4;
 //                                     rectA.bottom -= 3;
@@ -875,8 +875,8 @@ namespace user
 //                                     ptA = rectA.bottom_left();
 //                                     ptA.y -= 11;
 //                                     ptB = rectA.bottom_left();
-//                                     pgraphics->MoveTo(ptA);
-//                                     pgraphics->LineTo(ptB);
+//                                     pgraphics->move_to(ptA);
+//                                     pgraphics->line_to(ptB);
 //
 //                                     // Details - top most
 //
@@ -886,8 +886,8 @@ namespace user
 //                                     ptA.y = rectClientB.bottom - 15;
 //                                     ptB.x = rectClientB.left + 4;
 //                                     ptB.y = rectClientB.bottom - 15;
-//                                     pgraphics->MoveTo(ptA);
-//                                     pgraphics->LineTo(ptB);
+//                                     pgraphics->move_to(ptA);
+//                                     pgraphics->line_to(ptB);
 //
 //                                     // Details - top most
 //
@@ -897,8 +897,8 @@ namespace user
 //                                     ptA.y = rectClientB.bottom - 15;
 //                                     ptB.x = rectClientB.left + 5;
 //                                     ptB.y = rectClientB.bottom - 15;
-//                                     pgraphics->MoveTo(ptA);
-//                                     pgraphics->LineTo(ptB);
+//                                     pgraphics->move_to(ptA);
+//                                     pgraphics->line_to(ptB);
 //
 //                                     pgraphics->SelectObject(m_penShadow1);
 //
@@ -908,8 +908,8 @@ namespace user
 //                                     ptA.y = rectClientB.bottom - 4;
 //                                     ptB.x = rectClientB.left + 14;
 //                                     ptB.y = rectClientB.bottom - 1;
-//                                     pgraphics->MoveTo(ptB);
-//                                     pgraphics->LineTo(ptA);
+//                                     pgraphics->move_to(ptB);
+//                                     pgraphics->line_to(ptA);
 //
 //                                     pgraphics->SelectObject(m_penDkShadow1);
 //
@@ -919,8 +919,8 @@ namespace user
 //                                     ptA.y = rectClientB.bottom - 4;
 //                                     ptB.x = rectClientB.left + 15;
 //                                     ptB.y = rectClientB.bottom;
-//                                     pgraphics->MoveTo(ptB);
-//                                     pgraphics->LineTo(ptA);
+//                                     pgraphics->move_to(ptB);
+//                                     pgraphics->line_to(ptA);
 //               }
 //                  break;
 //               case GripBottomRight:
@@ -944,9 +944,9 @@ namespace user
 //                                      ptB = rectA.bottom_right();
 //                                      ptC = rectA.bottom_right();
 //                                      ptC.x -= 13;
-//                                      pgraphics->MoveTo(ptA);
-//                                      pgraphics->LineTo(ptB);
-//                                      pgraphics->LineTo(ptC);
+//                                      pgraphics->move_to(ptA);
+//                                      pgraphics->line_to(ptB);
+//                                      pgraphics->line_to(ptC);
 //
 //                                      pgraphics->SelectObject(m_penFace1);
 //
@@ -964,9 +964,9 @@ namespace user
 //                                      ptB = rectA.bottom_right();
 //                                      ptC = rectA.bottom_right();
 //                                      ptC.x -= 12;
-//                                      pgraphics->MoveTo(ptA);
-//                                      pgraphics->LineTo(ptB);
-//                                      pgraphics->LineTo(ptC);
+//                                      pgraphics->move_to(ptA);
+//                                      pgraphics->line_to(ptB);
+//                                      pgraphics->line_to(ptC);
 //
 //                                      // Midle Rectangle
 //
@@ -982,9 +982,9 @@ namespace user
 //                                      ptB = rectA.bottom_right();
 //                                      ptC = rectA.bottom_right();
 //                                      ptC.x -= 14;
-//                                      pgraphics->MoveTo(ptA);
-//                                      pgraphics->LineTo(ptB);
-//                                      pgraphics->LineTo(ptC);
+//                                      pgraphics->move_to(ptA);
+//                                      pgraphics->line_to(ptB);
+//                                      pgraphics->line_to(ptC);
 //                                      pgraphics->SelectObject(m_penShadow1);
 //
 //                                      rectA = rectClient;
@@ -999,9 +999,9 @@ namespace user
 //                                      ptB = rectA.bottom_right();
 //                                      ptC = rectA.bottom_right();
 //                                      ptC.x -= 15;
-//                                      pgraphics->MoveTo(ptA);
-//                                      pgraphics->LineTo(ptB);
-//                                      pgraphics->LineTo(ptC);
+//                                      pgraphics->move_to(ptA);
+//                                      pgraphics->line_to(ptB);
+//                                      pgraphics->line_to(ptC);
 //
 //                                      pgraphics->SelectObject(m_penDkShadow1);
 //
@@ -1012,9 +1012,9 @@ namespace user
 //                                      ptB = rectA.bottom_right();
 //                                      ptC = rectA.bottom_right();
 //                                      ptC.x -= 15;
-//                                      pgraphics->MoveTo(ptA);
-//                                      pgraphics->LineTo(ptB);
-//                                      pgraphics->LineTo(ptC);
+//                                      pgraphics->move_to(ptA);
+//                                      pgraphics->line_to(ptB);
+//                                      pgraphics->line_to(ptC);
 //
 //                                      pgraphics->SelectObject(m_penHilight1);
 //
@@ -1022,15 +1022,15 @@ namespace user
 //                                      ptA.y = rectClientB.bottom - 14;
 //                                      ptB.x = rectClientB.right - 1;
 //                                      ptB.y = rectClientB.bottom - 14;
-//                                      pgraphics->MoveTo(ptB);
-//                                      pgraphics->LineTo(ptA);
+//                                      pgraphics->move_to(ptB);
+//                                      pgraphics->line_to(ptA);
 //
 //                                      ptA.x = rectClientB.right - 14;
 //                                      ptA.y = rectClientB.bottom - 3;
 //                                      ptB.x = rectClientB.right - 14;
 //                                      ptB.y = rectClientB.bottom - 1;
-//                                      pgraphics->MoveTo(ptB);
-//                                      pgraphics->LineTo(ptA);
+//                                      pgraphics->move_to(ptB);
+//                                      pgraphics->line_to(ptA);
 //
 //                                      pgraphics->SelectObject(m_penFace1);
 //
@@ -1040,15 +1040,15 @@ namespace user
 //                                      ptA.y = rectClientB.bottom - 15;
 //                                      ptB.x = rectClientB.right;
 //                                      ptB.y = rectClientB.bottom - 15;
-//                                      pgraphics->MoveTo(ptB);
-//                                      pgraphics->LineTo(ptA);
+//                                      pgraphics->move_to(ptB);
+//                                      pgraphics->line_to(ptA);
 //
 //                                      ptA.x = rectClientB.right - 15;
 //                                      ptA.y = rectClientB.bottom - 5;
 //                                      ptB.x = rectClientB.right - 15;
 //                                      ptB.y = rectClientB.bottom;
-//                                      pgraphics->MoveTo(ptB);
-//                                      pgraphics->LineTo(ptA);
+//                                      pgraphics->move_to(ptB);
+//                                      pgraphics->line_to(ptA);
 //               }
 //                  break;
 //               case GripCenterTop:
@@ -1143,7 +1143,7 @@ namespace user
 //            void FrameSchemaHardCodedMinimal001::DrawRectGrip(::draw2d::graphics * pgraphics,const RECT & rectParam)
 //            {
 //
-//               
+//
 //
 //               rect rect(rectParam);
 //

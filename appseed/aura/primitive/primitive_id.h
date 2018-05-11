@@ -160,9 +160,9 @@ public:
 
 #endif
 
-   inline int64_t int64() const;
+   inline int64_t i64() const;
 
-   inline int32_t int32() const;
+   inline int32_t i32() const;
 
 
    inline operator const char *() const;
@@ -243,7 +243,7 @@ inline id::id(const id & id)
 inline id::id(const char * psz,id_space *)
 {
 
-   m_all ={};
+   m_all = {};
 
    m_etype = type_text;
    m_psz    = psz;
@@ -541,7 +541,7 @@ inline bool id::operator >= (int_ptr i) const
 inline id::operator int32_t () const
 {
 
-   return int32();
+   return i32();
 
 }
 
@@ -550,7 +550,7 @@ inline id::operator int32_t () const
 inline id::operator int64_t () const
 {
 
-   return int64();
+   return i64();
 
 }
 
@@ -560,14 +560,14 @@ inline id::operator int64_t () const
 
 #endif
 
-inline int64_t id::int64() const
+inline int64_t id::i64() const
 {
 
    return m_etype == type_integer ? m_i : 0x8000000000000000ll;
 
 }
 
-inline int32_t id::int32() const
+inline int32_t id::i32() const
 {
 
    return m_etype == type_integer ? (int32_t) m_i : 0x80000000;
@@ -602,7 +602,7 @@ inline void id::empty()
 
 inline void id::clear()
 {
-   m_all ={};
+   m_all = {};
 }
 
 

@@ -26,7 +26,7 @@ namespace http
    void form::parse_body(file::file *infil, const char * pszContentType, size_t content_length)
    {
 
-      if (::comparison::gt(content_length, Application.http().m_setHttp["max_http_post"].int64()))
+      if (::comparison::gt(content_length, Application.http().m_setHttp["max_http_post"].i64()))
       {
 
          return;
@@ -273,7 +273,7 @@ namespace http
       }
    }
 
-   
+
    form::~form()
    {
    }

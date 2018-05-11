@@ -234,25 +234,25 @@ public:
       return m_element2.get_bool();
    }
 
-   int32_t int32(int32_t iDefault = 0) const
+   int32_t i32(int32_t iDefault = 0) const
    {
-      return m_element2.int32(iDefault);
+      return m_element2.i32(iDefault);
    }
 
    template < typename ENUM >
-   int32_t int32(ENUM edefault = ::enum_default < ENUM > ()) const
+   int32_t i32(ENUM edefault = ::enum_default < ENUM > ()) const
    {
       return m_element2.e(edefault);
    }
 
-   uint32_t uint32(uint32_t uiDefault = 0) const
+   uint32_t u32(uint32_t uiDefault = 0) const
    {
-      return m_element2.uint32(uiDefault);
+      return m_element2.u32(uiDefault);
    }
 
-   int64_t int64(int64_t iDefault = 0) const
+   int64_t i64(int64_t iDefault = 0) const
    {
-      return m_element2.int64(iDefault);
+      return m_element2.i64(iDefault);
    }
 
    uint64_t uint64(uint64_t uiDefault = 0) const

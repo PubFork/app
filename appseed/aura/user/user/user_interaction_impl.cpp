@@ -687,7 +687,7 @@ namespace user
 
       }
 
-      pmouse->set_lresult(DefWindowProc(UINT(pmouse->m_id.int64()), pmouse->m_wparam, pmouse->m_lparam));
+      pmouse->set_lresult(DefWindowProc(UINT(pmouse->m_id.i64()), pmouse->m_wparam, pmouse->m_lparam));
 
    }
 

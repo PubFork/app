@@ -298,9 +298,9 @@ namespace datetime
                atm.tm_sec = set["second"];
                atm.tm_min = set["minute"];
                atm.tm_hour = set["hour"];
-               atm.tm_mday = set["day"].int32();
-               atm.tm_mon = set["month"].int32() - 1;        // tm_mon is 0 based
-               atm.tm_year = set["year"].int32() - 1900;     // tm_year is 1900 based
+               atm.tm_mday = set["day"].i32();
+               atm.tm_mon = set["month"].i32() - 1;        // tm_mon is 0 based
+               atm.tm_year = set["year"].i32() - 1900;     // tm_year is 1900 based
                atm.tm_isdst = -1;
                /*time_t now = _time64(NULL);
                time_t nowUtc = mktime(gmtime(&now));
@@ -314,12 +314,12 @@ namespace datetime
             else
             {
                time = ::datetime::time(
-                         set["year"],
-                         set["month"],
-                         set["day"],
-                         set["hour"],
-                         set["minute"],
-                         set["second"]);
+                      set["year"],
+                      set["month"],
+                      set["day"],
+                      set["hour"],
+                      set["minute"],
+                      set["second"]);
             }
             iStart = 20;
          }
@@ -333,12 +333,12 @@ namespace datetime
             bBaseTime = true;
             Sys(pbaseapp->m_paurasystem).datetime().international().parse_str(str,set);
             time = ::datetime::time(
-                      set["year"],
-                      set["month"],
-                      set["day"],
-                      set["hour"],
-                      set["minute"],
-                      set["second"]);
+                   set["year"],
+                   set["month"],
+                   set["day"],
+                   set["hour"],
+                   set["minute"],
+                   set["second"]);
             iStart = 11;
          }
       }
@@ -352,26 +352,26 @@ namespace datetime
             parse_br_str(str,set);
 
             time = ::datetime::time(
-                      set["year"],
-                      set["month"],
-                      set["day"],
-                      set["hour"],
-                      set["minute"],
-                      set["second"]);
+                   set["year"],
+                   set["month"],
+                   set["day"],
+                   set["hour"],
+                   set["minute"],
+                   set["second"]);
             iStart = 11;
          }
       }
       if(!bBaseTime && (
-               ::str::begins_eat(str,"today") ||
-               (pcontext != NULL && pcontext->begins_eat(str,"calendar:today"))))
+            ::str::begins_eat(str,"today") ||
+            (pcontext != NULL && pcontext->begins_eat(str,"calendar:today"))))
       {
          time = ::datetime::time::get_current_time();
          time = ::datetime::time(time.GetYear(),time.GetMonth(),time.GetDay(),0,0,0);
          bBaseTime = true;
       }
       if(!bBaseTime && (
-               ::str::begins_eat(str,"tomorrow") ||
-               (pcontext != NULL && pcontext->begins_eat(str,"calendar:tomorrow"))))
+            ::str::begins_eat(str,"tomorrow") ||
+            (pcontext != NULL && pcontext->begins_eat(str,"calendar:tomorrow"))))
       {
          time = ::datetime::time::get_current_time();
          time = ::datetime::time(time.GetYear(),time.GetMonth(),time.GetDay(),0,0,0);
@@ -379,8 +379,8 @@ namespace datetime
          bBaseTime = true;
       }
       if(!bBaseTime && (
-               ::str::begins_eat(str,"yesterday") ||
-               (pcontext != NULL && pcontext->begins_eat(str,"calendar:yesterday"))))
+            ::str::begins_eat(str,"yesterday") ||
+            (pcontext != NULL && pcontext->begins_eat(str,"calendar:yesterday"))))
       {
          time = ::datetime::time::get_current_time();
          time = ::datetime::time(time.GetYear(),time.GetMonth(),time.GetDay(),0,0,0);
@@ -388,8 +388,8 @@ namespace datetime
          bBaseTime = true;
       }
       if(!bBaseTime && (
-               ::str::begins_eat(str,"now") ||
-               (pcontext != NULL && pcontext->begins_eat(str,"calendar:now"))))
+            ::str::begins_eat(str,"now") ||
+            (pcontext != NULL && pcontext->begins_eat(str,"calendar:now"))))
       {
          time = ::datetime::time::get_current_time();
          bBaseTime = true;

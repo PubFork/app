@@ -36,7 +36,7 @@ namespace user
 
          bool MoveManager::_000OnLButtonDown(::message::mouse * pmouse)
          {
-            
+
             if (!m_pworkset->IsMovingEnabled() || m_pworkset->m_bSizingCapture)
             {
 
@@ -92,7 +92,7 @@ namespace user
 
          bool MoveManager::_000OnMouseMove(::message::mouse * pmouse)
          {
-            
+
             if (!m_pworkset->IsMovingEnabled() || m_pworkset->m_bSizingCapture)
             {
 
@@ -141,9 +141,9 @@ namespace user
 
             }
 
-            if (pui->oprop("ysnap").int32() > 1)
+            if (pui->oprop("ysnap").i32() > 1)
             {
-               ptMove.y -= ptMove.y % pui->oprop("ysnap").int32();
+               ptMove.y -= ptMove.y % pui->oprop("ysnap").i32();
             }
 
 
@@ -177,15 +177,15 @@ namespace user
 
             if(pmouse->m_id == WM_LBUTTONUP || pmouse->m_id == WM_NCLBUTTONUP)
             {
-               
+
                m_bMoving = false;
-               
+
                GetEventWindow()->m_bMoving = false;
 
                Session.ReleaseCapture();
-               
 
-               
+
+
                sp(WorkSetClientInterface) pinterface = m_pworkset->GetEventWindow();
 
                if(pinterface == NULL)
@@ -226,9 +226,9 @@ namespace user
                //UnhookWindowsHookEx(g_hhook);
 
 #endif
-               
+
                pinterface->WfiOnMove(false);
-               
+
             }
             else
             {
@@ -274,8 +274,8 @@ namespace user
 #ifdef WINDOWSEX
 
          bool CALLBACK UpdateCurrentAreaEnumWindowsProc(
-            oswindow oswindow,
-            LPARAM lParam)
+         oswindow oswindow,
+         LPARAM lParam)
          {
             UNREFERENCED_PARAMETER(lParam);
             //      oswindow oswindowParam= lParam;
@@ -447,7 +447,7 @@ namespace user
                }
                pbase->m_bRet = true;
                return;
-               
+
             }
 
          }

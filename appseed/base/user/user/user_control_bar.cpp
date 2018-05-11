@@ -288,7 +288,7 @@ namespace user
 
       UINT message;
 
-      message = UINT(pbase->m_id.int64());
+      message = UINT(pbase->m_id.i64());
 
       // handle CBRS_FLYBY style (status bar flyby help)
       if (((m_dwStyle & CBRS_FLYBY) ||
@@ -343,7 +343,7 @@ namespace user
 
       UINT uiMessage;
 
-      uiMessage = (UINT)(pbase->m_id.int64());
+      uiMessage = (UINT)(pbase->m_id.i64());
 
       switch (uiMessage)
       {
@@ -537,11 +537,11 @@ namespace user
       //SendMessage(WM_ERASEBKGND, (WPARAM)spgraphics->get_handle1());
       pgraphics->SelectClipRgn(NULL);
       pgraphics->FillSolidRect(
-         0,
-         0,
-         rectWindow.width(),
-         rectWindow.height(),
-         ARGB(128, 192, 192, 187));
+      0,
+      0,
+      rectWindow.width(),
+      rectWindow.height(),
+      ARGB(128, 192, 192, 187));
 
 
       // draw gripper in non-client area
@@ -865,20 +865,20 @@ namespace user
          if(dwStyle & CBRS_GRIPPER)
          {
             pgraphics->FillSolidRect(
-               rect.left + 7,
-               rect.top,
-               rect.right - 7,
-               1,
-               RGB(128, 128, 123));
+            rect.left + 7,
+            rect.top,
+            rect.right - 7,
+            1,
+            RGB(128, 128, 123));
          }
          else
          {
             pgraphics->FillSolidRect(
-               rect.left,
-               rect.top,
-               rect.right,
-               1,
-               RGB(128, 128, 123));
+            rect.left,
+            rect.top,
+            rect.right,
+            1,
+            RGB(128, 128, 123));
          }
          //      pgraphics->FillSolidRect(0, 0, rect.right, CY_BORDER, clr);
       }
@@ -889,8 +889,8 @@ namespace user
          {
             ::draw2d::pen_sp pen(pgraphics, 1, clr);
             ::draw2d::pen * ppenOld = pgraphics->SelectObject(pen);
-            pgraphics->MoveTo(0, 7);
-            pgraphics->LineTo(7, 0);
+            pgraphics->move_to(0, 7);
+            pgraphics->line_to(7, 0);
             pgraphics->SelectObject(ppenOld);
          }
       }

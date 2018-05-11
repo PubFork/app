@@ -648,9 +648,9 @@ namespace user
 
                pgraphics->SelectObject(penCaret);
 
-               pgraphics->MoveTo(left + x1, y);
+               pgraphics->move_to(left + x1, y);
 
-               pgraphics->LineTo(left + x1, y + iLineHeight);
+               pgraphics->line_to(left + x1, y + iLineHeight);
 
             }
             else if (iCurLineSelCur >= 0 && m_bFocus && bCaretOn && iCurLineSelCur == iCurLineSelEnd)
@@ -658,9 +658,9 @@ namespace user
 
                pgraphics->SelectObject(penCaret);
 
-               pgraphics->MoveTo(left + x2 + x1, y);
+               pgraphics->move_to(left + x2 + x1, y);
 
-               pgraphics->LineTo(left + x2 + x1, y + iLineHeight);
+               pgraphics->line_to(left + x2 + x1, y + iLineHeight);
 
             }
 

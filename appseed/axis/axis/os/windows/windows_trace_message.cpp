@@ -12,7 +12,7 @@ void __trace_message(const char * lpszPrefix,::message::message * pobj)
 
    UINT uiMessage;
 
-   uiMessage = (UINT) pbase->m_id.int64();
+   uiMessage = (UINT) pbase->m_id.i64();
 
    if(uiMessage == WM_MOUSEMOVE || uiMessage == WM_NCMOUSEMOVE ||
          uiMessage == WM_NCHITTEST || uiMessage == WM_SETCURSOR ||

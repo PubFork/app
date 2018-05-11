@@ -190,14 +190,14 @@ namespace draw2d
    }
 
 
-   /*   int32_t graphics::ExcludeUpdateRgn(::window_sp pwindow)
+   /*   i32 graphics::ExcludeUpdateRgn(::window_sp pwindow)
       {
          UNREFERENCED_PARAMETER(pwindow);
          _throw(interface_only_exception(get_app()));
       }
       */
 
-   int32_t graphics::GetDeviceCaps(int32_t nIndex) const
+   i32 graphics::GetDeviceCaps(i32 nIndex) const
    {
       UNREFERENCED_PARAMETER(nIndex);
       _throw(interface_only_exception(get_app()));
@@ -227,7 +227,7 @@ namespace draw2d
 
    }
 
-   point graphics::SetBrushOrg(int32_t x, int32_t y)
+   point graphics::SetBrushOrg(i32 x, i32 y)
    {
 
       UNREFERENCED_PARAMETER(x);
@@ -248,7 +248,7 @@ namespace draw2d
 
    }
 
-   int32_t graphics::EnumObjects(int32_t nObjectType, int32_t (CALLBACK* lpfn)(LPVOID, LPARAM), LPARAM lpData)
+   i32 graphics::EnumObjects(i32 nObjectType, i32 (CALLBACK* lpfn)(LPVOID, LPARAM), LPARAM lpData)
    {
       UNREFERENCED_PARAMETER(nObjectType);
       UNREFERENCED_PARAMETER(lpfn);
@@ -332,7 +332,7 @@ namespace draw2d
    }
 
 
-   int32_t graphics::GetPolyFillMode() const
+   i32 graphics::GetPolyFillMode() const
    {
 
       _throw(interface_only_exception(get_app()));
@@ -342,7 +342,7 @@ namespace draw2d
    }
 
 
-   int32_t graphics::GetROP2() const
+   i32 graphics::GetROP2() const
    {
 
       _throw(interface_only_exception(get_app()));
@@ -352,7 +352,7 @@ namespace draw2d
    }
 
 
-   int32_t graphics::GetStretchBltMode() const
+   i32 graphics::GetStretchBltMode() const
    {
 
       _throw(interface_only_exception(get_app()));
@@ -362,7 +362,7 @@ namespace draw2d
    }
 
 
-   int32_t graphics::GetMapMode() const
+   i32 graphics::GetMapMode() const
    {
 
       _throw(interface_only_exception(get_app()));
@@ -372,7 +372,7 @@ namespace draw2d
    }
 
 
-   int32_t graphics::GetGraphicsMode() const
+   i32 graphics::GetGraphicsMode() const
    {
 
       _throw(interface_only_exception(get_app()));
@@ -502,7 +502,7 @@ namespace draw2d
       return false;
    }
 
-   bool graphics::FrameRgn(::draw2d::region* pRgn, ::draw2d::brush* pBrush, int32_t nWidth, int32_t nHeight)
+   bool graphics::FrameRgn(::draw2d::region* pRgn, ::draw2d::brush* pBrush, i32 nWidth, i32 nHeight)
    {
       UNREFERENCED_PARAMETER(pRgn);
       UNREFERENCED_PARAMETER(pBrush);
@@ -527,7 +527,7 @@ namespace draw2d
       return false;
    }
 
-   bool graphics::PtVisible(int32_t x, int32_t y) const
+   bool graphics::PtVisible(i32 x, i32 y) const
    {
       UNREFERENCED_PARAMETER(x);
       UNREFERENCED_PARAMETER(y);
@@ -552,33 +552,116 @@ namespace draw2d
       return false;
    }
 
-   point graphics::GetCurrentPosition() const
-   {
-      _throw(interface_only_exception(get_app()));
 
-      return null_point();
-   }
-
-
-   point graphics::MoveTo(POINT point)
+   pointd graphics::current_position()
    {
 
-      synch_lock sl(m_pmutex);
-
-      pointd pointd = MoveTo((double)point.x, (double)point.y);
-
-      return ::point((int64_t) pointd.x, (int64_t) pointd.y);
+      return m_pt;
 
    }
 
 
-   bool graphics::LineTo(POINT point)
+   bool graphics::move_to(LPCPOINT lppoint)
    {
-      return LineTo(double(point.x), double(point.y));
+
+      return move_to(pointd(lppoint));
+
    }
 
-   bool graphics::Arc(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x3, int32_t y3, int32_t x4, int32_t y4)
+
+   bool graphics::move_to(LPCPOINTD lppoint)
    {
+
+      m_pt = *lppoint;
+
+      return true;
+
+   }
+
+
+   bool graphics::line_to(LPCPOINT lppoint)
+   {
+
+      return line_to(pointd(lppoint));
+
+   }
+
+
+   bool graphics::line_to(LPCPOINTD lppoint)
+   {
+
+      return line_to(point(lppoint));
+
+   }
+
+
+   bool graphics::draw_line(LPCPOINT lppt1, LPCPOINT lppt2)
+   {
+
+      return draw_line(pointd(lppt1), pointd(lppt2));
+
+   }
+
+
+   bool graphics::draw_line(LPCPOINT lppt1, LPCPOINT lppt2, ::draw2d::pen * ppen)
+   {
+
+      return draw_line(point(lppt1), point(lppt2));
+
+   }
+
+
+   bool graphics::draw_line(LPCPOINTD lppt1, LPCPOINTD lppt2)
+   {
+
+      return draw_line(point(lppt1), point(lppt2));
+
+   }
+
+
+   bool graphics::draw_line(LPCPOINTD lppt1, LPCPOINTD lppt2, ::draw2d::pen * ppen)
+   {
+
+      return draw_line(point(lppt1), point(lppt2), ppen);
+
+   }
+
+
+   bool graphics::draw_rectangle(LPCRECT lpcrect)
+   {
+
+      return draw_rectangle(rectd(lpcrect));
+
+   }
+
+
+   bool graphics::draw_rectangle(LPCRECTD lpcrect)
+   {
+
+      return draw_rectangle(rect(lpcrect));
+
+   }
+
+
+   bool graphics::draw_rectangle(LPCRECT lpcrect, ::draw2d::pen * ppen)
+   {
+
+      return draw_rectangle(rectd(lpcrect), ppen);
+
+   }
+
+
+   bool graphics::draw_rectangle(LPCRECTD lpcrect, ::draw2d::pen * ppen)
+   {
+
+      return draw_rectangle(rect(lpcrect), ppen);
+
+   }
+
+
+   bool graphics::Arc(i32 x1, i32 y1, i32 x2, i32 y2, i32 x3, i32 y3, i32 x4, i32 y4)
+   {
+
       UNREFERENCED_PARAMETER(x1);
       UNREFERENCED_PARAMETER(y1);
       UNREFERENCED_PARAMETER(x2);
@@ -602,7 +685,7 @@ namespace draw2d
    }
 
 
-   bool graphics::Arc(int32_t x1, int32_t y1, int32_t w, int32_t h, double start, double extends)
+   bool graphics::Arc(i32 x1, i32 y1, i32 w, i32 h, double start, double extends)
    {
 
       point ptCenter;
@@ -619,7 +702,7 @@ namespace draw2d
       double endx = (cos((start + extends) * System.math().GetPi() / 180.0) * dx) + ptCenter.x;
       double endy = (sin((start + extends) * System.math().GetPi() / 180.0) * dy) + ptCenter.y;
 
-      return Arc(x1, y1, x1 + w, y1 + h, (int32_t) startx, (int32_t) starty, (int32_t) endx, (int32_t) endy);
+      return Arc(x1, y1, x1 + w, y1 + h, (i32) startx, (i32) starty, (i32) endx, (i32) endy);
 
    }
 
@@ -713,7 +796,7 @@ namespace draw2d
       _throw(interface_only_exception(get_app()));
    }
 
-   bool graphics::DrawIcon(int32_t x, int32_t y, ::visual::icon * picon)
+   bool graphics::DrawIcon(i32 x, i32 y, ::visual::icon * picon)
    {
       UNREFERENCED_PARAMETER(x);
       UNREFERENCED_PARAMETER(y);
@@ -734,7 +817,7 @@ namespace draw2d
 
    }
 
-   bool graphics::DrawIcon(int32_t x, int32_t y, ::visual::icon * picon, int32_t cx, int32_t cy, UINT istepIfAniCur, HBRUSH hbrFlickerFreeDraw, UINT diFlags)
+   bool graphics::DrawIcon(i32 x, i32 y, ::visual::icon * picon, i32 cx, i32 cy, UINT istepIfAniCur, HBRUSH hbrFlickerFreeDraw, UINT diFlags)
    {
       UNREFERENCED_PARAMETER(x);
       UNREFERENCED_PARAMETER(y);
@@ -805,7 +888,7 @@ namespace draw2d
 
 #endif
 
-   bool graphics::DrawState(point pt, size size, const char * lpszText, UINT nFlags, bool bPrefixText, int32_t nTextLen, HBRUSH hBrush)
+   bool graphics::DrawState(point pt, size size, const char * lpszText, UINT nFlags, bool bPrefixText, i32 nTextLen, HBRUSH hBrush)
    {
       UNREFERENCED_PARAMETER(pt);
       UNREFERENCED_PARAMETER(size);
@@ -820,7 +903,7 @@ namespace draw2d
 
    }
 
-   bool graphics::DrawState(point pt, size size, const char * lpszText, UINT nFlags, bool bPrefixText, int32_t nTextLen, ::draw2d::brush* pBrush)
+   bool graphics::DrawState(point pt, size size, const char * lpszText, UINT nFlags, bool bPrefixText, i32 nTextLen, ::draw2d::brush* pBrush)
    {
       UNREFERENCED_PARAMETER(pt);
       UNREFERENCED_PARAMETER(size);
@@ -885,7 +968,7 @@ namespace draw2d
       return false;
    }
 
-   bool graphics::Chord(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x3, int32_t y3, int32_t x4, int32_t y4)
+   bool graphics::Chord(i32 x1, i32 y1, i32 x2, i32 y2, i32 x3, i32 y3, i32 x4, i32 y4)
    {
       UNREFERENCED_PARAMETER(x1);
       UNREFERENCED_PARAMETER(y1);
@@ -914,7 +997,7 @@ namespace draw2d
       _throw(interface_only_exception(get_app()));
    }
 
-   bool graphics::Ellipse(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
+   bool graphics::Ellipse(i32 x1, i32 y1, i32 x2, i32 y2)
    {
 
       bool bFill = FillEllipse(x1, y1, x2, y2);
@@ -937,7 +1020,7 @@ namespace draw2d
    }
 
 
-   bool graphics::DrawEllipse(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
+   bool graphics::DrawEllipse(i32 x1, i32 y1, i32 x2, i32 y2)
    {
       UNREFERENCED_PARAMETER(x1);
       UNREFERENCED_PARAMETER(y1);
@@ -954,7 +1037,7 @@ namespace draw2d
       return false;
    }
 
-   bool graphics::FillEllipse(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
+   bool graphics::FillEllipse(i32 x1, i32 y1, i32 x2, i32 y2)
    {
 
       ::rect rect(x1, y1, x2, y2);
@@ -1035,7 +1118,7 @@ namespace draw2d
       return false;
    }
 
-   bool graphics::Pie(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x3, int32_t y3, int32_t x4, int32_t y4)
+   bool graphics::Pie(i32 x1, i32 y1, i32 x2, i32 y2, i32 x3, i32 y3, i32 x4, i32 y4)
    {
       UNREFERENCED_PARAMETER(x1);
       UNREFERENCED_PARAMETER(y1);
@@ -1122,41 +1205,41 @@ namespace draw2d
 
    bool graphics::Polygon(point_array & pta)
    {
-      return Polygon(pta.get_data(), (int32_t) pta.get_count());
+      return Polygon(pta.get_data(), (i32) pta.get_count());
    }
 
 
    bool graphics::Polygon(pointd_array & pta)
    {
-      return Polygon(pta.get_data(),(int32_t)pta.get_count());
+      return Polygon(pta.get_data(),(i32)pta.get_count());
    }
 
 
 
    bool graphics::draw_polygon(point_array & pta)
    {
-      return draw_polygon(pta.get_data(),(int32_t)pta.get_count());
+      return draw_polygon(pta.get_data(),(i32)pta.get_count());
    }
 
 
    bool graphics::draw_polygon(pointd_array & pta)
    {
-      return draw_polygon(pta.get_data(),(int32_t)pta.get_count());
+      return draw_polygon(pta.get_data(),(i32)pta.get_count());
    }
 
 
    bool graphics::fill_polygon(point_array & pta)
    {
-      return fill_polygon(pta.get_data(),(int32_t)pta.get_count());
+      return fill_polygon(pta.get_data(),(i32)pta.get_count());
    }
 
 
    bool graphics::fill_polygon(pointd_array & pta)
    {
-      return fill_polygon(pta.get_data(),(int32_t)pta.get_count());
+      return fill_polygon(pta.get_data(),(i32)pta.get_count());
    }
 
-   bool graphics::Rectangle(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
+   bool graphics::Rectangle(i32 x1, i32 y1, i32 x2, i32 y2)
    {
       UNREFERENCED_PARAMETER(x1);
       UNREFERENCED_PARAMETER(y1);
@@ -1173,7 +1256,7 @@ namespace draw2d
       return false;
    }
 
-   bool graphics::DrawRectangle(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
+   bool graphics::DrawRectangle(i32 x1, i32 y1, i32 x2, i32 y2)
    {
       UNREFERENCED_PARAMETER(x1);
       UNREFERENCED_PARAMETER(y1);
@@ -1190,7 +1273,7 @@ namespace draw2d
       return false;
    }
 
-   bool graphics::FillRectangle(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
+   bool graphics::FillRectangle(i32 x1, i32 y1, i32 x2, i32 y2)
    {
       UNREFERENCED_PARAMETER(x1);
       UNREFERENCED_PARAMETER(y1);
@@ -1207,7 +1290,7 @@ namespace draw2d
       return false;
    }
 
-   bool graphics::RoundRect(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x3, int32_t y3)
+   bool graphics::RoundRect(i32 x1, i32 y1, i32 x2, i32 y2, i32 x3, i32 y3)
    {
       UNREFERENCED_PARAMETER(x1);
       UNREFERENCED_PARAMETER(y1);
@@ -1227,7 +1310,7 @@ namespace draw2d
       return false;
    }
 
-   bool graphics::PatBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, uint32_t dwRop)
+   bool graphics::PatBlt(i32 x, i32 y, i32 nWidth, i32 nHeight, uint32_t dwRop)
    {
       UNREFERENCED_PARAMETER(x);
       UNREFERENCED_PARAMETER(y);
@@ -1255,7 +1338,7 @@ namespace draw2d
    }
 
 
-   bool graphics::BitBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, uint32_t dwRop)
+   bool graphics::BitBlt(i32 x, i32 y, i32 nWidth, i32 nHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, uint32_t dwRop)
    {
 
       if (BitBltAlphaBlend(x, y, nWidth, nHeight, pgraphicsSrc, xSrc, ySrc, dwRop))
@@ -1277,7 +1360,7 @@ namespace draw2d
    }
 
 
-   bool graphics::BitBltRaw(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, uint32_t dwRop)
+   bool graphics::BitBltRaw(i32 x, i32 y, i32 nWidth, i32 nHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, uint32_t dwRop)
    {
 
       return false;
@@ -1285,7 +1368,7 @@ namespace draw2d
    }
 
 
-   bool graphics::BitBltAlphaBlend(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, uint32_t dwRop)
+   bool graphics::BitBltAlphaBlend(i32 x, i32 y, i32 nWidth, i32 nHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, uint32_t dwRop)
    {
 
       // return ::draw2d::graphics::BitBltAlphaBlend(x, y, nWidth, nHeight, pgraphicsSrc, xSrc, ySrc, dwRop);
@@ -1394,7 +1477,7 @@ namespace draw2d
    }
 
 
-   bool graphics::StretchBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, uint32_t dwRop)
+   bool graphics::StretchBlt(i32 x, i32 y, i32 nWidth, i32 nHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, i32 nSrcWidth, i32 nSrcHeight, uint32_t dwRop)
    {
 
       if (StretchBltAlphaBlend(x, y, nWidth, nHeight, pgraphicsSrc, xSrc, ySrc, nSrcWidth, nSrcHeight, dwRop))
@@ -1416,7 +1499,7 @@ namespace draw2d
    }
 
 
-   bool graphics::StretchBltAlphaBlend(int32_t xDst, int32_t yDst, int32_t nDstWidth, int32_t nDstHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, uint32_t dwRop)
+   bool graphics::StretchBltAlphaBlend(i32 xDst, i32 yDst, i32 nDstWidth, i32 nDstHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, i32 nSrcWidth, i32 nSrcHeight, uint32_t dwRop)
    {
 
       if (m_pdibAlphaBlend != NULL)
@@ -1504,7 +1587,7 @@ namespace draw2d
    }
 
 
-   bool graphics::StretchBltRaw(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, uint32_t dwRop)
+   bool graphics::StretchBltRaw(i32 x, i32 y, i32 nWidth, i32 nHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, i32 nSrcWidth, i32 nSrcHeight, uint32_t dwRop)
    {
 
       return false;
@@ -1512,7 +1595,7 @@ namespace draw2d
    }
 
 
-   COLORREF graphics::GetPixel(int32_t x, int32_t y) const
+   COLORREF graphics::GetPixel(i32 x, i32 y) const
    {
       UNREFERENCED_PARAMETER(x);
       UNREFERENCED_PARAMETER(y);
@@ -1527,7 +1610,7 @@ namespace draw2d
       return 0;
    }
 
-   COLORREF graphics::SetPixel(int32_t x, int32_t y, COLORREF crColor)
+   COLORREF graphics::SetPixel(i32 x, i32 y, COLORREF crColor)
    {
       UNREFERENCED_PARAMETER(x);
       UNREFERENCED_PARAMETER(y);
@@ -1544,7 +1627,7 @@ namespace draw2d
       return 0;
    }
 
-   bool graphics::FloodFill(int32_t x, int32_t y, COLORREF crColor)
+   bool graphics::FloodFill(i32 x, i32 y, COLORREF crColor)
    {
       UNREFERENCED_PARAMETER(x);
       UNREFERENCED_PARAMETER(y);
@@ -1553,7 +1636,7 @@ namespace draw2d
       return false;
    }
 
-   bool graphics::ExtFloodFill(int32_t x, int32_t y, COLORREF crColor, UINT nFillType)
+   bool graphics::ExtFloodFill(i32 x, i32 y, COLORREF crColor, UINT nFillType)
    {
       UNREFERENCED_PARAMETER(x);
       UNREFERENCED_PARAMETER(y);
@@ -1564,7 +1647,7 @@ namespace draw2d
    }
 
 
-   bool graphics::text_out(int32_t x, int32_t y, const char * lpszString, strsize nCount)
+   bool graphics::text_out(i32 x, i32 y, const char * lpszString, strsize nCount)
    {
 
       return text_out((double)x, (double)y, lpszString, nCount);
@@ -1572,7 +1655,7 @@ namespace draw2d
    }
 
 
-   bool graphics::text_out(int32_t x, int32_t y, const string & str)
+   bool graphics::text_out(i32 x, i32 y, const string & str)
    {
 
       return text_out((double) x, (double) y, str);
@@ -1675,12 +1758,12 @@ namespace draw2d
    bool graphics::text_out(double x, double y, const string & str)
    {
 
-      return text_out(x, y, str, (int32_t) str.get_length());
+      return text_out(x, y, str, (i32) str.get_length());
 
    }
 
 
-   bool graphics::ExtTextOut(int32_t x, int32_t y, UINT nOptions, const RECT &  lpRect, const char * lpszString, count nCount, LPINT lpDxWidths)
+   bool graphics::ExtTextOut(i32 x, i32 y, UINT nOptions, const RECT &  lpRect, const char * lpszString, count nCount, LPINT lpDxWidths)
    {
       UNREFERENCED_PARAMETER(x);
       UNREFERENCED_PARAMETER(y);
@@ -1693,7 +1776,7 @@ namespace draw2d
       return false;
    }
 
-   bool graphics::ExtTextOut(int32_t x, int32_t y, UINT nOptions, const RECT &  lpRect, const string & str, LPINT lpDxWidths)
+   bool graphics::ExtTextOut(i32 x, i32 y, UINT nOptions, const RECT &  lpRect, const string & str, LPINT lpDxWidths)
    {
       UNREFERENCED_PARAMETER(x);
       UNREFERENCED_PARAMETER(y);
@@ -1705,7 +1788,7 @@ namespace draw2d
       return false;
    }
 
-   size graphics::TabbedTextOut(int32_t x, int32_t y, const char * lpszString, strsize nCount, count nTabPositions, LPINT lpnTabStopPositions, int nTabOrigin)
+   size graphics::TabbedTextOut(i32 x, i32 y, const char * lpszString, strsize nCount, count nTabPositions, LPINT lpnTabStopPositions, int nTabOrigin)
    {
       UNREFERENCED_PARAMETER(x);
       UNREFERENCED_PARAMETER(y);
@@ -1718,7 +1801,7 @@ namespace draw2d
       return size(0, 0);
    }
 
-   size graphics::TabbedTextOut(int32_t x, int32_t y, const string & str, count nTabPositions, LPINT lpnTabStopPositions, int nTabOrigin)
+   size graphics::TabbedTextOut(i32 x, i32 y, const string & str, count nTabPositions, LPINT lpnTabStopPositions, int nTabOrigin)
    {
       UNREFERENCED_PARAMETER(x);
       UNREFERENCED_PARAMETER(y);
@@ -1781,7 +1864,7 @@ namespace draw2d
    }
 
 
-   bool graphics::GrayString(::draw2d::brush* pBrush, bool (CALLBACK* lpfnOutput)(HDC, LPARAM, int32_t), LPARAM lpData, int32_t nCount, int32_t x, int32_t y, int32_t nWidth, int32_t nHeight)
+   bool graphics::GrayString(::draw2d::brush* pBrush, bool (CALLBACK* lpfnOutput)(HDC, LPARAM, i32), LPARAM lpData, i32 nCount, i32 x, i32 y, i32 nWidth, i32 nHeight)
    {
       UNREFERENCED_PARAMETER(pBrush);
       UNREFERENCED_PARAMETER(lpfnOutput);
@@ -1801,7 +1884,7 @@ namespace draw2d
       return -1;
    }
 
-   int32_t graphics::GetTextFace(count nCount, LPTSTR lpszFacename) const
+   i32 graphics::GetTextFace(count nCount, LPTSTR lpszFacename) const
    {
       UNREFERENCED_PARAMETER(nCount);
       UNREFERENCED_PARAMETER(lpszFacename);
@@ -1809,7 +1892,7 @@ namespace draw2d
       return -1;
    }
 
-   int32_t graphics::GetTextFace(string & rString) const
+   i32 graphics::GetTextFace(string & rString) const
    {
       UNREFERENCED_PARAMETER(rString);
       _throw(interface_only_exception(get_app()));
@@ -1830,7 +1913,7 @@ namespace draw2d
       return false;
    }
 
-   int32_t graphics::GetTextCharacterExtra() const
+   i32 graphics::GetTextCharacterExtra() const
    {
       _throw(interface_only_exception(get_app()));
       return -1;
@@ -1891,7 +1974,7 @@ namespace draw2d
       return size(0, 0);
    }
 
-   bool graphics::ScrollDC(int32_t dx, int32_t dy, const RECT &  lpRectScroll, const RECT &  lpRectClip, ::draw2d::region * pRgnUpdate, LPRECT lpRectUpdate)
+   bool graphics::ScrollDC(i32 dx, i32 dy, const RECT &  lpRectScroll, const RECT &  lpRectClip, ::draw2d::region * pRgnUpdate, LPRECT lpRectUpdate)
    {
       UNREFERENCED_PARAMETER(dx);
       UNREFERENCED_PARAMETER(dy);
@@ -1904,7 +1987,7 @@ namespace draw2d
    }
 
    // Printer Escape Functions
-   int32_t graphics::Escape(int32_t nEscape, int32_t nCount, const char * lpszInData, LPVOID lpOutData)
+   i32 graphics::Escape(i32 nEscape, i32 nCount, const char * lpszInData, LPVOID lpOutData)
    {
       UNREFERENCED_PARAMETER(nEscape);
       UNREFERENCED_PARAMETER(nCount);
@@ -1976,7 +2059,7 @@ namespace draw2d
 
 #ifdef WINDOWSEX
 
-   int32_t graphics::GetKerningPairs(int32_t nPairs, LPKERNINGPAIR lpkrnpair) const
+   i32 graphics::GetKerningPairs(i32 nPairs, LPKERNINGPAIR lpkrnpair) const
    {
       UNREFERENCED_PARAMETER(nPairs);
       UNREFERENCED_PARAMETER(lpkrnpair);
@@ -1997,7 +2080,7 @@ namespace draw2d
    }
 
    // ::user::document handling functions
-   int32_t graphics::StartDoc(LPDOCINFO lpDocInfo)
+   i32 graphics::StartDoc(LPDOCINFO lpDocInfo)
    {
       UNREFERENCED_PARAMETER(lpDocInfo);
       _throw(interface_only_exception(get_app()));
@@ -2006,39 +2089,39 @@ namespace draw2d
 
 #endif
 
-   int32_t graphics::StartPage()
+   i32 graphics::StartPage()
    {
       _throw(interface_only_exception(get_app()));
       return -1;
    }
 
-   int32_t graphics::EndPage()
+   i32 graphics::EndPage()
    {
       _throw(interface_only_exception(get_app()));
       return -1;
    }
 
-   int32_t graphics::SetAbortProc(bool (CALLBACK* lpfn)(HDC, int32_t))
+   i32 graphics::SetAbortProc(bool (CALLBACK* lpfn)(HDC, i32))
    {
       UNREFERENCED_PARAMETER(lpfn);
       _throw(interface_only_exception(get_app()));
       return -1;
    }
 
-   int32_t graphics::AbortDoc()
+   i32 graphics::AbortDoc()
    {
       _throw(interface_only_exception(get_app()));
       return -1;
    }
 
-   int32_t graphics::EndDoc()
+   i32 graphics::EndDoc()
    {
       _throw(interface_only_exception(get_app()));
       return -1;
    }
 
-   bool graphics::MaskBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc,
-                          int32_t xSrc, int32_t ySrc, ::draw2d::bitmap& maskBitmap, int32_t xMask, int32_t yMask, uint32_t dwRop)
+   bool graphics::MaskBlt(i32 x, i32 y, i32 nWidth, i32 nHeight, ::draw2d::graphics * pgraphicsSrc,
+                          i32 xSrc, i32 ySrc, ::draw2d::bitmap& maskBitmap, i32 xMask, i32 yMask, uint32_t dwRop)
    {
       UNREFERENCED_PARAMETER(x);
       UNREFERENCED_PARAMETER(y);
@@ -2055,8 +2138,8 @@ namespace draw2d
       _throw(interface_only_exception(get_app()));
       return false;
    }
-   bool graphics::PlgBlt(LPPOINT lpPoint, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc,
-                         int32_t nWidth, int32_t nHeight, ::draw2d::bitmap& maskBitmap, int32_t xMask, int32_t yMask)
+   bool graphics::PlgBlt(LPPOINT lpPoint, ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc,
+                         i32 nWidth, i32 nHeight, ::draw2d::bitmap& maskBitmap, i32 xMask, i32 yMask)
    {
       UNREFERENCED_PARAMETER(lpPoint);
       UNREFERENCED_PARAMETER(pgraphicsSrc);
@@ -2072,7 +2155,7 @@ namespace draw2d
       return false;
    }
 
-   bool graphics::SetPixelV(int32_t x, int32_t y, COLORREF crColor)
+   bool graphics::SetPixelV(i32 x, i32 y, COLORREF crColor)
    {
       UNREFERENCED_PARAMETER(x);
       UNREFERENCED_PARAMETER(y);
@@ -2089,7 +2172,7 @@ namespace draw2d
       return false;
    }
 
-   bool graphics::AngleArc(int32_t x, int32_t y, int32_t nRadius, float fStartAngle, float fSweepAngle)
+   bool graphics::AngleArc(i32 x, i32 y, i32 nRadius, float fStartAngle, float fSweepAngle)
    {
       UNREFERENCED_PARAMETER(x);
       UNREFERENCED_PARAMETER(y);
@@ -2109,7 +2192,7 @@ namespace draw2d
       return false;
    }
 
-   int32_t graphics::GetArcDirection() const
+   i32 graphics::GetArcDirection() const
    {
       _throw(interface_only_exception(get_app()));
       return -1;
@@ -2178,7 +2261,7 @@ namespace draw2d
       return false;
    }
 
-   int32_t graphics::DrawEscape(int32_t nEscape, int32_t nInputSize, const char * lpszInputData)
+   i32 graphics::DrawEscape(i32 nEscape, i32 nInputSize, const char * lpszInputData)
    {
       UNREFERENCED_PARAMETER(nEscape);
       UNREFERENCED_PARAMETER(nInputSize);
@@ -2187,7 +2270,7 @@ namespace draw2d
       return -1;
    }
 
-   int32_t graphics::Escape(int32_t nEscape, int32_t nInputSize, const char * lpszInputData, int32_t nOutputSize, char * lpszOutputData)
+   i32 graphics::Escape(i32 nEscape, i32 nInputSize, const char * lpszInputData, i32 nOutputSize, char * lpszOutputData)
    {
       UNREFERENCED_PARAMETER(nEscape);
       UNREFERENCED_PARAMETER(nInputSize);
@@ -2220,17 +2303,26 @@ namespace draw2d
       return false;
    }
 
-   bool graphics::AbortPath()
+
+   bool graphics::abort_path()
    {
+
       _throw(interface_only_exception(get_app()));
+
       return false;
+
    }
 
-   bool graphics::BeginPath()
+
+   bool graphics::begin_path()
    {
+
       _throw(interface_only_exception(get_app()));
+
       return false;
+
    }
+
 
    bool graphics::CloseFigure()
    {
@@ -2262,7 +2354,7 @@ namespace draw2d
       return false;
    }
 
-   int32_t graphics::GetPath(LPPOINT lpPoints, LPBYTE lpTypes,count nCount) const
+   i32 graphics::GetPath(LPPOINT lpPoints, LPBYTE lpTypes,count nCount) const
    {
       UNREFERENCED_PARAMETER(lpPoints);
       UNREFERENCED_PARAMETER(lpTypes);
@@ -2365,8 +2457,8 @@ namespace draw2d
 
 #endif
 
-   bool graphics::TransparentBlt(int32_t xDest, int32_t yDest, int32_t nDestWidth, int32_t nDestHeight,
-                                 ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, UINT crTransparent)
+   bool graphics::TransparentBlt(i32 xDest, i32 yDest, i32 nDestWidth, i32 nDestHeight,
+                                 ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, i32 nSrcWidth, i32 nSrcHeight, UINT crTransparent)
    {
       UNREFERENCED_PARAMETER(xDest);
       UNREFERENCED_PARAMETER(yDest);
@@ -2445,7 +2537,7 @@ namespace draw2d
 
 #endif
 
-   bool graphics::GetTextExtentExPointI(LPWORD pgiIn, int32_t cgi, int32_t nMaxExtent, LPINT lpnFit, LPINT alpDx, LPSIZE lpSize) const
+   bool graphics::GetTextExtentExPointI(LPWORD pgiIn, i32 cgi, i32 nMaxExtent, LPINT lpnFit, LPINT alpDx, LPSIZE lpSize) const
    {
       UNREFERENCED_PARAMETER(pgiIn);
       UNREFERENCED_PARAMETER(cgi);
@@ -2457,7 +2549,7 @@ namespace draw2d
       return false;
    }
 
-   bool graphics::GetTextExtentPointI(LPWORD pgiIn, int32_t cgi, LPSIZE lpSize) const
+   bool graphics::GetTextExtentPointI(LPWORD pgiIn, i32 cgi, LPSIZE lpSize) const
    {
       UNREFERENCED_PARAMETER(pgiIn);
       UNREFERENCED_PARAMETER(cgi);
@@ -2526,7 +2618,7 @@ namespace draw2d
    }
 
 
-   void graphics::FillSolidRect(int32_t x, int32_t y, int32_t cx, int32_t cy, COLORREF clr)
+   void graphics::FillSolidRect(i32 x, i32 y, i32 cx, i32 cy, COLORREF clr)
    {
 
       return FillSolidRect((double)x, (double)y, (double)cx, (double)cy, clr);
@@ -2537,7 +2629,7 @@ namespace draw2d
    void graphics::FillSolidRect(double x, double y, double cx, double cy, COLORREF clr)
    {
 
-      return FillSolidRect((int32_t)x, (int32_t)y, (int32_t)cx, (int32_t)cy, clr);
+      return FillSolidRect((i32)x, (i32)y, (i32)cx, (i32)cy, clr);
 
    }
 
@@ -2550,7 +2642,7 @@ namespace draw2d
       _throw(interface_only_exception(get_app()));
    }
 
-   void graphics::Draw3dRect(int32_t x, int32_t y, int32_t cx, int32_t cy,  COLORREF clrTopLeft, COLORREF clrBottomRight)
+   void graphics::Draw3dRect(i32 x, i32 y, i32 cx, i32 cy,  COLORREF clrTopLeft, COLORREF clrBottomRight)
    {
       UNREFERENCED_PARAMETER(x);
       UNREFERENCED_PARAMETER(y);
@@ -2584,27 +2676,27 @@ namespace draw2d
    /////////////////////////////////////////////////////////////////////////////
    // Out-of-line routines
 
-   int32_t graphics::StartDoc(const char * lpszDocName)
+   i32 graphics::StartDoc(const char * lpszDocName)
    {
       UNREFERENCED_PARAMETER(lpszDocName);
       _throw(interface_only_exception(get_app()));
       return -1;
    }
 
-   int32_t graphics::SaveDC()
+   i32 graphics::SaveDC()
    {
       _throw(interface_only_exception(get_app()));
       return -1;
    }
 
-   bool graphics::RestoreDC(int32_t nSavedDC)
+   bool graphics::RestoreDC(i32 nSavedDC)
    {
       UNREFERENCED_PARAMETER(nSavedDC);
       _throw(interface_only_exception(get_app()));
       return false;
    }
 
-   ::draw2d::object* graphics::SelectStockObject(int32_t nIndex)
+   ::draw2d::object* graphics::SelectStockObject(i32 nIndex)
    {
       UNREFERENCED_PARAMETER(nIndex);
       _throw(interface_only_exception(get_app()));
@@ -2636,7 +2728,7 @@ namespace draw2d
    }
 
 
-   int32_t graphics::SelectObject(::draw2d::region * pRgn)
+   i32 graphics::SelectObject(::draw2d::region * pRgn)
    {
       UNREFERENCED_PARAMETER(pRgn);
       _throw(interface_only_exception(get_app()));
@@ -2652,21 +2744,21 @@ namespace draw2d
    }
 
 
-   int32_t graphics::SetPolyFillMode(int32_t nPolyFillMode)
+   i32 graphics::SetPolyFillMode(i32 nPolyFillMode)
    {
       UNREFERENCED_PARAMETER(nPolyFillMode);
       _throw(interface_only_exception(get_app()));
       return -1;
    }
 
-   int32_t graphics::SetROP2(int32_t nDrawMode)
+   i32 graphics::SetROP2(i32 nDrawMode)
    {
       UNREFERENCED_PARAMETER(nDrawMode);
       _throw(interface_only_exception(get_app()));
       return -1;
    }
 
-   int32_t graphics::SetStretchBltMode(int32_t nStretchMode)
+   i32 graphics::SetStretchBltMode(i32 nStretchMode)
    {
       UNREFERENCED_PARAMETER(nStretchMode);
       _throw(interface_only_exception(get_app()));
@@ -2674,7 +2766,7 @@ namespace draw2d
    }
 
 
-   int32_t graphics::SetGraphicsMode(int32_t iMode)
+   i32 graphics::SetGraphicsMode(i32 iMode)
    {
       UNREFERENCED_PARAMETER(iMode);
       _throw(interface_only_exception(get_app()));
@@ -2700,7 +2792,7 @@ namespace draw2d
 
 #endif
 
-   int32_t graphics::SetMapMode(int32_t nMapMode)
+   i32 graphics::SetMapMode(i32 nMapMode)
    {
       UNREFERENCED_PARAMETER(nMapMode);
       _throw(interface_only_exception(get_app()));
@@ -2708,7 +2800,7 @@ namespace draw2d
    }
 
 
-   point graphics::SetViewportOrg(int32_t x, int32_t y)
+   point graphics::SetViewportOrg(i32 x, i32 y)
    {
 
       UNREFERENCED_PARAMETER(x);
@@ -2719,7 +2811,7 @@ namespace draw2d
    }
 
 
-   point graphics::OffsetViewportOrg(int32_t nWidth, int32_t nHeight)
+   point graphics::OffsetViewportOrg(i32 nWidth, i32 nHeight)
    {
 
       UNREFERENCED_PARAMETER(nWidth);
@@ -2729,7 +2821,7 @@ namespace draw2d
 
    }
 
-   size graphics::SetViewportExt(int32_t x, int32_t y)
+   size graphics::SetViewportExt(i32 x, i32 y)
    {
       UNREFERENCED_PARAMETER(x);
       UNREFERENCED_PARAMETER(y);
@@ -2737,7 +2829,7 @@ namespace draw2d
       return size(0, 0);
    }
 
-   size graphics::ScaleViewportExt(int32_t xNum, int32_t xDenom, int32_t yNum, int32_t yDenom)
+   size graphics::ScaleViewportExt(i32 xNum, i32 xDenom, i32 yNum, i32 yDenom)
    {
       UNREFERENCED_PARAMETER(xNum);
       UNREFERENCED_PARAMETER(xDenom);
@@ -2747,7 +2839,7 @@ namespace draw2d
       return size(0, 0);
    }
 
-   point graphics::SetWindowOrg(int32_t x, int32_t y)
+   point graphics::SetWindowOrg(i32 x, i32 y)
    {
       UNREFERENCED_PARAMETER(x);
       UNREFERENCED_PARAMETER(y);
@@ -2755,7 +2847,7 @@ namespace draw2d
       return null_point();
    }
 
-   point graphics::OffsetWindowOrg(int32_t nWidth, int32_t nHeight)
+   point graphics::OffsetWindowOrg(i32 nWidth, i32 nHeight)
    {
       UNREFERENCED_PARAMETER(nWidth);
       UNREFERENCED_PARAMETER(nHeight);
@@ -2763,7 +2855,7 @@ namespace draw2d
       return null_point();
    }
 
-   size graphics::SetWindowExt(int32_t x, int32_t y)
+   size graphics::SetWindowExt(i32 x, i32 y)
    {
       UNREFERENCED_PARAMETER(x);
       UNREFERENCED_PARAMETER(y);
@@ -2771,7 +2863,7 @@ namespace draw2d
       return size(0, 0);
    }
 
-   size graphics::ScaleWindowExt(int32_t xNum, int32_t xDenom, int32_t yNum, int32_t yDenom)
+   size graphics::ScaleWindowExt(i32 xNum, i32 xDenom, i32 yNum, i32 yDenom)
    {
       UNREFERENCED_PARAMETER(xNum);
       UNREFERENCED_PARAMETER(xDenom);
@@ -2781,30 +2873,30 @@ namespace draw2d
       return size(0, 0);
    }
 
-   int32_t graphics::GetClipBox(LPRECT lpRect) const
+   i32 graphics::GetClipBox(LPRECT lpRect) const
    {
       UNREFERENCED_PARAMETER(lpRect);
       _throw(interface_only_exception(get_app()));
       return -1;
    }
 
-   int32_t graphics::GetClipBox(rect64 * lpRect) const
+   i32 graphics::GetClipBox(rect64 * lpRect) const
    {
       rect rect;
-      int32_t iClip = GetClipBox(rect);
+      i32 iClip = GetClipBox(rect);
       rect64 rect64(rect);
       *lpRect = rect64;
       return iClip;
    }
 
-   int32_t graphics::SelectClipRgn(::draw2d::region* pRgn)
+   i32 graphics::SelectClipRgn(::draw2d::region* pRgn)
    {
       UNREFERENCED_PARAMETER(pRgn);
       _throw(interface_only_exception(get_app()));
       return -1;
    }
 
-   int32_t graphics::ExcludeClipRect(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
+   i32 graphics::ExcludeClipRect(i32 x1, i32 y1, i32 x2, i32 y2)
    {
       UNREFERENCED_PARAMETER(x1);
       UNREFERENCED_PARAMETER(y1);
@@ -2814,7 +2906,7 @@ namespace draw2d
       return -1;
    }
 
-   int32_t graphics::ExcludeClipRect(const RECT &  lpRect)
+   i32 graphics::ExcludeClipRect(const RECT &  lpRect)
    {
       UNREFERENCED_PARAMETER(lpRect);
       _throw(interface_only_exception(get_app()));
@@ -2822,7 +2914,7 @@ namespace draw2d
    }
 
 
-   int32_t graphics::IntersectClipRect(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
+   i32 graphics::IntersectClipRect(i32 x1, i32 y1, i32 x2, i32 y2)
    {
 
       RECT r;
@@ -2837,7 +2929,7 @@ namespace draw2d
    }
 
 
-   int32_t graphics::IntersectClipRect(const RECT &  r)
+   i32 graphics::IntersectClipRect(const RECT &  r)
    {
 
       return IntersectClipRect(r.left, r.top, r.right, r.bottom);
@@ -2845,7 +2937,7 @@ namespace draw2d
    }
 
 
-   int32_t graphics::OffsetClipRgn(int32_t x, int32_t y)
+   i32 graphics::OffsetClipRgn(i32 x, i32 y)
    {
       UNREFERENCED_PARAMETER(x);
       UNREFERENCED_PARAMETER(y);
@@ -2853,37 +2945,13 @@ namespace draw2d
       return -1;
    }
 
-   int32_t graphics::OffsetClipRgn(SIZE size)
+   i32 graphics::OffsetClipRgn(SIZE size)
    {
       UNREFERENCED_PARAMETER(size);
       _throw(interface_only_exception(get_app()));
       return -1;
    }
 
-
-   point graphics::MoveTo(int32_t x, int32_t y)
-   {
-
-      synch_lock sl(m_pmutex);
-
-      pointd pointd = MoveTo((double) x, (double) y);
-
-      return point((LONG) pointd.x, (LONG) pointd.y);
-
-   }
-
-
-   bool graphics::LineTo(int32_t x, int32_t y)
-   {
-      return LineTo((double) x, (double) y);
-   }
-
-   bool graphics::LineTo(double x, double y)
-   {
-
-      return LineTo((int32_t) x, (int32_t) y);
-
-   }
 
    UINT graphics::SetTextAlign(UINT nFlags)
    {
@@ -2892,7 +2960,7 @@ namespace draw2d
       return -1;
    }
 
-   int32_t graphics::SetTextJustification(int32_t nBreakExtra, int32_t nBreakCount)
+   i32 graphics::SetTextJustification(i32 nBreakExtra, i32 nBreakCount)
    {
       UNREFERENCED_PARAMETER(nBreakExtra);
       UNREFERENCED_PARAMETER(nBreakCount);
@@ -2900,7 +2968,7 @@ namespace draw2d
       return -1;
    }
 
-   int32_t graphics::SetTextCharacterExtra(int32_t nCharExtra)
+   i32 graphics::SetTextCharacterExtra(i32 nCharExtra)
    {
       UNREFERENCED_PARAMETER(nCharExtra);
       _throw(interface_only_exception(get_app()));
@@ -2930,7 +2998,7 @@ namespace draw2d
    /////////////////////////////////////////////////////////////////////////////
    // Advanced Win32 GDI functions
 
-   bool graphics::ArcTo(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x3, int32_t y3, int32_t x4, int32_t y4)
+   bool graphics::ArcTo(i32 x1, i32 y1, i32 x2, i32 y2, i32 x3, i32 y3, i32 x4, i32 y4)
    {
       UNREFERENCED_PARAMETER(x1);
       UNREFERENCED_PARAMETER(y1);
@@ -2944,7 +3012,7 @@ namespace draw2d
       return false;
    }
 
-   int32_t graphics::SetArcDirection(int32_t nArcDirection)
+   i32 graphics::SetArcDirection(i32 nArcDirection)
    {
       UNREFERENCED_PARAMETER(nArcDirection);
       _throw(interface_only_exception(get_app()));
@@ -2993,14 +3061,14 @@ namespace draw2d
       return false;
    }
 
-   bool graphics::SelectClipPath(int32_t nMode)
+   bool graphics::SelectClipPath(i32 nMode)
    {
       UNREFERENCED_PARAMETER(nMode);
       _throw(interface_only_exception(get_app()));
       return false;
    }
 
-   int32_t graphics::SelectClipRgn(::draw2d::region* pRgn, int32_t nMode)
+   i32 graphics::SelectClipRgn(::draw2d::region* pRgn, i32 nMode)
    {
       UNREFERENCED_PARAMETER(pRgn);
       UNREFERENCED_PARAMETER(nMode);
@@ -3227,7 +3295,7 @@ namespace draw2d
    }
 
 
-   int32_t graphics::draw_text(const char * lpszString,strsize nCount,const RECT & lpRect,UINT nFormat)
+   i32 graphics::draw_text(const char * lpszString,strsize nCount,const RECT & lpRect,UINT nFormat)
    {
 
       return draw_text(string(lpszString, nCount), lpRect, nFormat);
@@ -3235,7 +3303,7 @@ namespace draw2d
    }
 
 
-   int32_t graphics::draw_text(const string & str,const RECT & lpRect,UINT nFormat)
+   i32 graphics::draw_text(const string & str,const RECT & lpRect,UINT nFormat)
    {
 
       RECTD r;
@@ -3247,7 +3315,7 @@ namespace draw2d
    }
 
 
-   int32_t graphics::draw_text(const char * lpszString,strsize nCount,const RECTD & lpRect,UINT nFormat)
+   i32 graphics::draw_text(const char * lpszString,strsize nCount,const RECTD & lpRect,UINT nFormat)
    {
 
       return draw_text(string(lpszString,nCount),lpRect,nFormat);
@@ -3255,7 +3323,7 @@ namespace draw2d
    }
 
 
-   int32_t graphics::draw_text(const string & strParam,const RECTD & lpRect,UINT nFormat)
+   i32 graphics::draw_text(const string & strParam,const RECTD & lpRect,UINT nFormat)
    {
 
       string str(strParam);
@@ -3361,7 +3429,7 @@ namespace draw2d
 
 #ifndef METROWIN
 
-   int32_t graphics::draw_text_ex(const char * lpszString,strsize nCount,const RECT & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
+   i32 graphics::draw_text_ex(const char * lpszString,strsize nCount,const RECT & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
    {
       UNREFERENCED_PARAMETER(lpszString);
       UNREFERENCED_PARAMETER(nCount);
@@ -3372,7 +3440,7 @@ namespace draw2d
       return -1;
    }
 
-   int32_t graphics::draw_text_ex(const string & str,const RECT & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
+   i32 graphics::draw_text_ex(const string & str,const RECT & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
    {
       UNREFERENCED_PARAMETER(str);
       UNREFERENCED_PARAMETER(lpRect);
@@ -3381,7 +3449,7 @@ namespace draw2d
       _throw(interface_only_exception(get_app()));
       return -1;
    }
-   int32_t graphics::draw_text_ex(const char * lpszString,strsize nCount,const RECTD & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
+   i32 graphics::draw_text_ex(const char * lpszString,strsize nCount,const RECTD & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
    {
       UNREFERENCED_PARAMETER(lpszString);
       UNREFERENCED_PARAMETER(nCount);
@@ -3392,7 +3460,7 @@ namespace draw2d
       return -1;
    }
 
-   int32_t graphics::draw_text_ex(const string & str,const RECTD & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
+   i32 graphics::draw_text_ex(const string & str,const RECTD & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
    {
       UNREFERENCED_PARAMETER(str);
       UNREFERENCED_PARAMETER(lpRect);
@@ -3477,7 +3545,7 @@ namespace draw2d
    }
 
 
-   bool graphics::alpha_blend(int32_t xDst, int32_t yDst, int32_t nDstWidth, int32_t nDstHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, double dOpacity)
+   bool graphics::alpha_blend(i32 xDst, i32 yDst, i32 nDstWidth, i32 nDstHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, i32 nSrcWidth, i32 nSrcHeight, double dOpacity)
    {
 
       if (dOpacity == 1.0)
@@ -3519,7 +3587,7 @@ namespace draw2d
 
 
 
-   bool graphics::alpha_blendRaw(int32_t xDest, int32_t yDest, int32_t nDestWidth, int32_t nDestHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, double dRate)
+   bool graphics::alpha_blendRaw(i32 xDest, i32 yDest, i32 nDestWidth, i32 nDestHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, i32 nSrcWidth, i32 nSrcHeight, double dRate)
    {
 
       return false;
@@ -3527,7 +3595,7 @@ namespace draw2d
    }
 
 
-   bool graphics::alpha_blendAlphaBlend(int32_t xDest, int32_t yDest, int32_t nDestWidth, int32_t nDestHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, double dRate)
+   bool graphics::alpha_blendAlphaBlend(i32 xDest, i32 yDest, i32 nDestWidth, i32 nDestHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, i32 nSrcWidth, i32 nSrcHeight, double dRate)
    {
 
       if (m_pdibAlphaBlend != NULL)
@@ -3635,206 +3703,6 @@ namespace draw2d
 
 
 
-   bool graphics::DrawLine(float x1, float y1, float x2, float y2)
-   {
-
-      // SIOOT - Should implemennt one of them
-      // OASOWO - otherwise a stack overflow will occur
-      // BTAIOM - because these are interface only methods
-      MoveTo(x1, y1);
-      return LineTo(x2, y2);
-
-   }
-
-   bool graphics::drawLine(float x1, float y1, float x2, float y2)
-   {
-
-      // SIOOT - Should implemennt one of them
-      // OASOWO - otherwise a stack overflow will occur
-      // BTAIOM - because these are interface only methods
-      return DrawLine(x1, y1, x2, y2);
-
-   }
-
-   bool graphics::draw_line(float x1, float y1, float x2, float y2)
-   {
-
-      // SIOOT - Should implemennt one of them
-      // OASOWO - otherwise a stack overflow will occur
-      // BTAIOM - because these are interface only methods
-      return drawLine(x1, y1, x2, y2);
-
-   }
-
-
-   bool graphics::DrawLine(float x1, float y1, float x2, float y2, ::draw2d::pen * ppen)
-   {
-
-      // SIOOT - Should implemennt one of them
-      // OASOWO - otherwise a stack overflow will occur
-      // BTAIOM - because these are interface only methods
-      return draw_line(x1, y1, x2, y2, ppen);
-
-   }
-
-   bool graphics::drawLine(float x1, float y1, float x2, float y2, ::draw2d::pen * ppen)
-   {
-
-      // SIOOT - Should implemennt one of them
-      // OASOWO - otherwise a stack overflow will occur
-      // BTAIOM - because these are interface only methods
-      return DrawLine(x1, y1, x2, y2, ppen);
-
-   }
-
-   bool graphics::draw_line(float x1, float y1, float x2, float y2, ::draw2d::pen * ppen)
-   {
-
-      // SIOOT - Should implemennt one of them
-      // OASOWO - otherwise a stack overflow will occur
-      // BTAIOM - because these are interface only methods
-      return drawLine(x1, y1, x2, y2, ppen);
-
-   }
-
-
-
-   bool graphics::DrawLine(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
-   {
-
-      // SIOOT - Should implemennt one of them
-      // OASOWO - otherwise a stack overflow will occur
-      // BTAIOM - because these are interface only methods
-      MoveTo(x1, y1);
-      return LineTo(x2, y2);
-
-   }
-
-   bool graphics::drawLine(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
-   {
-
-      // SIOOT - Should implemennt one of them
-      // OASOWO - otherwise a stack overflow will occur
-      // BTAIOM - because these are interface only methods
-      return DrawLine(x1, y1, x2, y2);
-
-   }
-
-   bool graphics::draw_line(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
-   {
-
-      // SIOOT - Should implemennt one of them
-      // OASOWO - otherwise a stack overflow will occur
-      // BTAIOM - because these are interface only methods
-      return drawLine(x1, y1, x2, y2);
-
-   }
-
-
-   bool graphics::DrawLine(int32_t x1, int32_t y1, int32_t x2, int32_t y2, ::draw2d::pen * ppen)
-   {
-
-      // SIOOT - Should implemennt one of them
-      // OASOWO - otherwise a stack overflow will occur
-      // BTAIOM - because these are interface only methods
-      return draw_line(x1, y1, x2, y2, ppen);
-
-   }
-
-   bool graphics::drawLine(int32_t x1, int32_t y1, int32_t x2, int32_t y2, ::draw2d::pen * ppen)
-   {
-
-      // SIOOT - Should implemennt one of them
-      // OASOWO - otherwise a stack overflow will occur
-      // BTAIOM - because these are interface only methods
-      return DrawLine(x1, y1, x2, y2, ppen);
-
-   }
-
-   bool graphics::draw_line(int32_t x1, int32_t y1, int32_t x2, int32_t y2, ::draw2d::pen * ppen)
-   {
-
-      // SIOOT - Should implemennt one of them
-      // OASOWO - otherwise a stack overflow will occur
-      // BTAIOM - because these are interface only methods
-      return drawLine(x1, y1, x2, y2, ppen);
-
-   }
-
-   bool graphics::DrawRect(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
-   {
-
-      // SIOOT - Should implemennt one of them
-      // OASOWO - otherwise a stack overflow will occur
-      // BTAIOM - because these are interface only methods
-      DrawRect(rect(x1,y1,x2,y2),m_sppen);
-
-      return true;
-
-   }
-
-   bool graphics::drawRect(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
-   {
-
-      // SIOOT - Should implemennt one of them
-      // OASOWO - otherwise a stack overflow will occur
-      // BTAIOM - because these are interface only methods
-      return DrawRect(x1, y1, x2, y2);
-
-   }
-
-   bool graphics::draw_rect(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
-   {
-
-      // SIOOT - Should implemennt one of them
-      // OASOWO - otherwise a stack overflow will occur
-      // BTAIOM - because these are interface only methods
-      return drawRect(x1, y1, x2, y2);
-
-   }
-
-
-
-   bool graphics::DrawRect(const RECT & rect, ::draw2d::pen * ppen)
-   {
-
-      return draw_rect(rect, ppen);
-
-   }
-
-   bool graphics::drawRect(const RECT & rect, ::draw2d::pen * ppen)
-   {
-
-      return DrawRect(rect, ppen);
-
-   }
-
-   bool graphics::draw_rect(const RECT & rect, ::draw2d::pen * ppen)
-   {
-
-      return drawRect(rect, ppen);
-
-   }
-
-
-   pointd graphics::MoveTo(double x, double y)
-   {
-
-      synch_lock sl(m_pmutex);
-
-      double px = m_x;
-
-      double py = m_y;
-
-      m_x = x;
-
-      m_y = y;
-
-      return pointd(px, py);
-
-   }
-
-
    void graphics::set_solid_pen(double dWidth, COLORREF cr)
    {
 
@@ -3918,7 +3786,7 @@ namespace draw2d
    //
    // Returns:     None
    //
-   bool graphics::draw_round_rect(const RECT & rect, ::draw2d::pen * ppen, int32_t radius)
+   bool graphics::draw_round_rect(const RECT & rect, ::draw2d::pen * ppen, i32 radius)
    {
 
       ::draw2d::path_sp path(allocer());
@@ -3950,19 +3818,19 @@ namespace draw2d
    //
    // Returns:     None
    //
-   bool graphics::draw_round_rect(const RECT & rect, COLORREF cr, int32_t radius, int32_t width)
+   bool graphics::draw_round_rect(const RECT & rect, COLORREF cr, i32 radius, i32 width)
    {
 
       RECT r = rect;
 
-      int32_t dia = 2 * radius;
+      i32 dia = 2 * radius;
 
       ::draw2d::pen_sp pen(this, 1.0, cr);
 
       draw_round_rect(r, pen, radius);
 
 
-      for (int32_t i = 1; i<width; i++)
+      for (i32 i = 1; i<width; i++)
       {
          dia++;
 
@@ -3983,7 +3851,7 @@ namespace draw2d
    }
 
 
-   bool graphics::draw_round_top_left(const RECT & rect, ::draw2d::pen  * ppen, int32_t radius)
+   bool graphics::draw_round_top_left(const RECT & rect, ::draw2d::pen  * ppen, i32 radius)
    {
 
       ::draw2d::path_sp path(allocer());
@@ -4001,19 +3869,19 @@ namespace draw2d
    }
 
 
-   bool graphics::draw_round_top_left(const RECT & rect, COLORREF cr, int32_t radius, int32_t width)
+   bool graphics::draw_round_top_left(const RECT & rect, COLORREF cr, i32 radius, i32 width)
    {
 
       RECT r = rect;
 
-      int32_t dia = 2 * radius;
+      i32 dia = 2 * radius;
 
       ::draw2d::pen_sp pen(this, 1.0, cr);
 
       draw_round_top_left(r, pen, radius);
 
 
-      for (int32_t i = 1; i<width; i++)
+      for (i32 i = 1; i<width; i++)
       {
          dia++;
 
@@ -4034,7 +3902,7 @@ namespace draw2d
    }
 
 
-   bool graphics::draw_round_bottom_right(const RECT & rect, ::draw2d::pen  * ppen, int32_t radius)
+   bool graphics::draw_round_bottom_right(const RECT & rect, ::draw2d::pen  * ppen, i32 radius)
    {
 
       ::draw2d::path_sp path(allocer());
@@ -4052,18 +3920,18 @@ namespace draw2d
    }
 
 
-   bool graphics::draw_round_bottom_right(const RECT & rect, COLORREF cr, int32_t radius, int32_t width)
+   bool graphics::draw_round_bottom_right(const RECT & rect, COLORREF cr, i32 radius, i32 width)
    {
 
       RECT r = rect;
 
-      int32_t dia = 2 * radius;
+      i32 dia = 2 * radius;
 
       ::draw2d::pen_sp pen(this, 1.0, cr);
 
       draw_round_bottom_right(r, pen, radius);
 
-      for (int32_t i = 1; i<width; i++)
+      for (i32 i = 1; i<width; i++)
       {
 
          dia++;
@@ -4098,7 +3966,7 @@ namespace draw2d
    //
    // Returns:     None
    //
-   bool graphics::fill_round_rect(const RECT & r, COLORREF cr, int32_t radius)
+   bool graphics::fill_round_rect(const RECT & r, COLORREF cr, i32 radius)
    {
 
       ::draw2d::brush_sp br(allocer(), cr);
@@ -4123,7 +3991,7 @@ namespace draw2d
    //
    // Returns:     None
    //
-   bool graphics::fill_round_rect(const RECT & rect, ::draw2d::brush * pbr, int32_t radius)
+   bool graphics::fill_round_rect(const RECT & rect, ::draw2d::brush * pbr, i32 radius)
    {
 
       ::draw2d::path_sp path(allocer());
@@ -4140,7 +4008,7 @@ namespace draw2d
 
    }
 
-   bool graphics::round_rect(const RECT & r, int32_t radius)
+   bool graphics::round_rect(const RECT & r, i32 radius)
    {
 
       bool bOk1 = fill_round_rect(r, m_spbrush, radius);
@@ -4151,12 +4019,12 @@ namespace draw2d
 
    }
 
-   int32_t graphics::_DrawText(const string & str, const RECT & rect, UINT uiFormat, ::draw2d::font * pfontUnderline)
+   i32 graphics::_DrawText(const string & str, const RECT & rect, UINT uiFormat, ::draw2d::font * pfontUnderline)
    {
       return _DrawText(str, str.get_length(), rect, uiFormat, pfontUnderline);
    }
 
-   int32_t graphics::_DrawText(const char * lpcsz, strsize iCount, const RECT & rectParam, UINT uiFormat, ::draw2d::font * pfontUnderline)
+   i32 graphics::_DrawText(const char * lpcsz, strsize iCount, const RECT & rectParam, UINT uiFormat, ::draw2d::font * pfontUnderline)
    {
 
       string strParam(lpcsz, iCount);
@@ -4221,7 +4089,7 @@ namespace draw2d
       else if ((uiFormat & DT_END_ELLIPSIS) != 0)
       {
 
-         sz = pgraphics->GetTextExtent(str, (int32_t)iLen);
+         sz = pgraphics->GetTextExtent(str, (i32)iLen);
 
          if (sz.cx > rectClip.width())
          {
@@ -4275,7 +4143,7 @@ namespace draw2d
             char * lpsz = str.GetBuffer(MAX(0, i));
             while (i > 0)
             {
-               sz = pgraphics->GetTextExtent(str, (int32_t)i);
+               sz = pgraphics->GetTextExtent(str, (i32)i);
                if ((int) sz.cx > rectClip.width())
                {
                   i = ::str::utf8_dec(str, &((const char *)str)[i]) - ((const char *)str);
@@ -4317,7 +4185,7 @@ namespace draw2d
       rect.right = (LONG) sz.cx;
       rect.bottom = iLineSpacing;
 
-      int32_t align = 0;
+      i32 align = 0;
       if (uiFormat & DT_BOTTOM)
       {
          align |= ::align_bottom;
@@ -4350,7 +4218,7 @@ namespace draw2d
 
          ::draw2d::font * pfontOld;
 
-         pgraphics->text_out(rect.left, rect.top, str, (int32_t)MIN(iUnderline, str.get_length()));
+         pgraphics->text_out(rect.left, rect.top, str, (i32)MIN(iUnderline, str.get_length()));
          /*::TextOutU(
          (HDC)pgraphics->get_os_data(),
          rect.left,
@@ -4366,7 +4234,7 @@ namespace draw2d
             str,
             iUnderline,
             &sz);*/
-            sz = pgraphics->GetTextExtent(str, (int32_t)iUnderline);
+            sz = pgraphics->GetTextExtent(str, (i32)iUnderline);
             char wch = str[iUnderline];
             /*::TextOutU(
             (HDC)pgraphics->get_os_data(),
@@ -4378,14 +4246,14 @@ namespace draw2d
             pgraphics->SelectObject(&fPrevious);
             if (iUnderline + 1 <= str.get_length())
             {
-               sz = pgraphics->GetTextExtent(str, (int32_t)(iUnderline + 1));
+               sz = pgraphics->GetTextExtent(str, (i32)(iUnderline + 1));
                /*::GetTextExtentPoint32U(
                (HDC)pgraphics->get_os_data(),
                str,
                iUnderline + 1,
                &sz);*/
                strsize iCount = str.get_length() - iUnderline - 1;
-               pgraphics->text_out(rect.left + sz.cx, (double)rect.top, str.Right(iCount), (int32_t)iCount);
+               pgraphics->text_out(rect.left + sz.cx, (double)rect.top, str.Right(iCount), (i32)iCount);
                /*::TextOutU(
                (HDC)pgraphics->get_os_data(),
                rect.left + sz.cx,
@@ -4474,7 +4342,7 @@ namespace draw2d
 
             strsize iLen = str.length();
 
-            sz = pgraphics->GetTextExtent(str,(int32_t)iLen);
+            sz = pgraphics->GetTextExtent(str,(i32)iLen);
 
 
             if(sz.cx > rectClip.width())
@@ -4666,10 +4534,10 @@ namespace draw2d
 
          m_sppen->m_dWidth *= 2.0;
          m_sppen->m_bUpdated = false;
-         MoveTo(rect.top_left());
-         LineTo(rect.bottom_right());
-         MoveTo(rect.bottom_left());
-         LineTo(rect.top_right());
+         move_to(rect.top_left());
+         line_to(rect.bottom_right());
+         move_to(rect.bottom_left());
+         line_to(rect.top_right());
 
       }
       else if(eicon == stock_icon_zoom)
@@ -4677,18 +4545,18 @@ namespace draw2d
 
          rect.deflate(0, rect.height() / 7);
 
-         draw_rect(rect.left,rect.top, rect.right, rect.bottom);
+         draw_rectangle(rect);
 
          m_sppen->m_elinecapBeg = ::draw2d::pen::line_cap_flat;
          m_sppen->m_elinecapEnd = ::draw2d::pen::line_cap_flat;
-         MoveTo(rect.top_left() + size(0,(int64_t) (pen->m_dWidth/2.0)));
-         LineTo(rect.top_right() + size(0,(int64_t)(pen->m_dWidth / 2.0)));
-         MoveTo(rect.top_left() + size(0,(int64_t)(pen->m_dWidth)));
-         LineTo(rect.top_right() + size(0,(int64_t)(pen->m_dWidth)));
-         MoveTo(rect.top_left() + size(0,(int64_t)(pen->m_dWidth *3.0 / 2.0)));
-         LineTo(rect.top_right() + size(0,(int64_t)(pen->m_dWidth *3.0 / 2.0)));
-         MoveTo(rect.top_left() + size(0,(int64_t)(pen->m_dWidth*2.0)));
-         LineTo(rect.top_right() + size(0,(int64_t)(pen->m_dWidth*2.0)));
+         move_to(rect.top_left() + size(0,(int64_t) (pen->m_dWidth/2.0)));
+         line_to(rect.top_right() + size(0,(int64_t)(pen->m_dWidth / 2.0)));
+         move_to(rect.top_left() + size(0,(int64_t)(pen->m_dWidth)));
+         line_to(rect.top_right() + size(0,(int64_t)(pen->m_dWidth)));
+         move_to(rect.top_left() + size(0,(int64_t)(pen->m_dWidth *3.0 / 2.0)));
+         line_to(rect.top_right() + size(0,(int64_t)(pen->m_dWidth *3.0 / 2.0)));
+         move_to(rect.top_left() + size(0,(int64_t)(pen->m_dWidth*2.0)));
+         line_to(rect.top_right() + size(0,(int64_t)(pen->m_dWidth*2.0)));
 
       }
       else if(eicon == stock_icon_restore)
@@ -4704,34 +4572,34 @@ namespace draw2d
 
          rect2.Align(align_bottom_right, rect);
 
-         draw_rect(rect2.left,rect2.top,rect2.right,rect2.bottom);
+         draw_rectangle(rect2);
 
          m_sppen->m_elinecapBeg = ::draw2d::pen::line_cap_flat;
          m_sppen->m_elinecapEnd = ::draw2d::pen::line_cap_flat;
-         MoveTo(rect2.top_left() + size(0,(int64_t)(pen->m_dWidth / 2.0)));
-         LineTo(rect2.top_right() + size(0,(int64_t)(pen->m_dWidth / 2.0)));
-         MoveTo(rect2.top_left() + size(0,(int64_t)(pen->m_dWidth)));
-         LineTo(rect2.top_right() + size(0,(int64_t)(pen->m_dWidth)));
+         move_to(rect2.top_left() + size(0,(int64_t)(pen->m_dWidth / 2.0)));
+         line_to(rect2.top_right() + size(0,(int64_t)(pen->m_dWidth / 2.0)));
+         move_to(rect2.top_left() + size(0,(int64_t)(pen->m_dWidth)));
+         line_to(rect2.top_right() + size(0,(int64_t)(pen->m_dWidth)));
 
 
-         MoveTo(rect1.top_left());
-         LineTo(rect1.top_right());
-         MoveTo(rect1.top_left() + size(0,(int64_t)(pen->m_dWidth / 2.0)));
-         LineTo(rect1.top_right() + size(0,(int64_t)(pen->m_dWidth / 2.0)));
-         MoveTo(rect1.top_left() + size(0,(int64_t)(pen->m_dWidth)));
-         LineTo(rect1.top_right() + size(0,(int64_t)(pen->m_dWidth)));
+         move_to(rect1.top_left());
+         line_to(rect1.top_right());
+         move_to(rect1.top_left() + size(0,(int64_t)(pen->m_dWidth / 2.0)));
+         line_to(rect1.top_right() + size(0,(int64_t)(pen->m_dWidth / 2.0)));
+         move_to(rect1.top_left() + size(0,(int64_t)(pen->m_dWidth)));
+         line_to(rect1.top_right() + size(0,(int64_t)(pen->m_dWidth)));
 
 
 
          m_sppen->m_elinecapBeg = ::draw2d::pen::line_cap_square;
          m_sppen->m_elinecapEnd = ::draw2d::pen::line_cap_square;
          m_sppen->m_bUpdated = false;
-         MoveTo(rect1.top_left() + size(0,(int64_t)(pen->m_dWidth)));
-         LineTo(rect1.bottom_left());
-         LineTo(rect2.left, rect1.bottom);
+         move_to(rect1.top_left() + size(0,(int64_t)(pen->m_dWidth)));
+         line_to(rect1.bottom_left());
+         line_to(rect2.bottom_left());
 
-         MoveTo(rect1.top_right() + size(0,(int64_t)(pen->m_dWidth)));
-         LineTo(rect1.right,(int)(rect2.top - (int64_t)(pen->m_dWidth)));
+         move_to(rect1.top_right() + size(0,(int64_t)(pen->m_dWidth)));
+         line_to(point(rect1.right,(int)(rect2.top - (int64_t)(pen->m_dWidth))));
 
       }
       else if(eicon == stock_icon_iconify)
@@ -4740,16 +4608,16 @@ namespace draw2d
          rect.deflate(0, rect.height() / 7);
 
 
-         MoveTo(rect.bottom_left() - size(0,(int64_t)(pen->m_dWidth*2.0)));
-         LineTo(rect.bottom_right() - size(0,(int64_t)(pen->m_dWidth*2.0)));
-         MoveTo(rect.bottom_left() - size(0,(int64_t)(pen->m_dWidth*3.0 / 2.0)));
-         LineTo(rect.bottom_right() - size(0,(int64_t)(pen->m_dWidth*3.0 / 2.0)));
-         MoveTo(rect.bottom_left() - size(0,(int64_t)(pen->m_dWidth)));
-         LineTo(rect.bottom_right() - size(0,(int64_t)(pen->m_dWidth)));
-         MoveTo(rect.bottom_left() - size(0,(int64_t)(pen->m_dWidth / 2.0)));
-         LineTo(rect.bottom_right() - size(0,(int64_t)(pen->m_dWidth / 2.0)));
-         MoveTo(rect.bottom_left());
-         LineTo(rect.bottom_right());
+         move_to(rect.bottom_left() - size(0,(int64_t)(pen->m_dWidth*2.0)));
+         line_to(rect.bottom_right() - size(0,(int64_t)(pen->m_dWidth*2.0)));
+         move_to(rect.bottom_left() - size(0,(int64_t)(pen->m_dWidth*3.0 / 2.0)));
+         line_to(rect.bottom_right() - size(0,(int64_t)(pen->m_dWidth*3.0 / 2.0)));
+         move_to(rect.bottom_left() - size(0,(int64_t)(pen->m_dWidth)));
+         line_to(rect.bottom_right() - size(0,(int64_t)(pen->m_dWidth)));
+         move_to(rect.bottom_left() - size(0,(int64_t)(pen->m_dWidth / 2.0)));
+         line_to(rect.bottom_right() - size(0,(int64_t)(pen->m_dWidth / 2.0)));
+         move_to(rect.bottom_left());
+         line_to(rect.bottom_right());
 
       }
       else if(eicon == stock_icon_transparent_frame)
@@ -4765,13 +4633,13 @@ namespace draw2d
 
          ::rect rect1(rect);
 
-         rect1.deflate((int32_t)(m_sppen->m_dWidth / 2.0),(int32_t)(m_sppen->m_dWidth / 2.0));
+         rect1.deflate((i32)(m_sppen->m_dWidth / 2.0),(i32)(m_sppen->m_dWidth / 2.0));
 
          DrawEllipse(rect1);
 
          ::rect rect2(rect);
 
-         rect2.deflate((int32_t)(m_sppen->m_dWidth),(int32_t)(m_sppen->m_dWidth));
+         rect2.deflate((i32)(m_sppen->m_dWidth),(i32)(m_sppen->m_dWidth));
 
          DrawEllipse(rect2);
 
@@ -4785,13 +4653,13 @@ namespace draw2d
 
          ::rect rect1(rect);
 
-         rect1.deflate((int32_t)(m_sppen->m_dWidth / 2.0), (int32_t)(m_sppen->m_dWidth / 2.0));
+         rect1.deflate((i32)(m_sppen->m_dWidth / 2.0), (i32)(m_sppen->m_dWidth / 2.0));
 
          DrawEllipse(rect1);
 
          ::rect rect2(rect);
 
-         rect2.deflate((int32_t)(m_sppen->m_dWidth), (int32_t)(m_sppen->m_dWidth));
+         rect2.deflate((i32)(m_sppen->m_dWidth), (i32)(m_sppen->m_dWidth));
 
          DrawEllipse(rect2);
 
@@ -4847,7 +4715,15 @@ namespace draw2d
    }
 
 
-   bool graphics::DrawErrorLine(int32_t x1,int32_t y1,int32_t x2,int32_t iStyle)
+   bool graphics::draw_error_line(LPCPOINT ppt1, LPCPOINT ppt2, i32 iStyle)
+   {
+
+      return draw_error_line(pointd(ppt1), pointd(ppt2), iStyle);
+
+   }
+
+
+   bool graphics::draw_error_line(LPCPOINTD ppt1, LPCPOINTD ppt2, i32 iStyle)
    {
 
       int iR = argb_get_r_value(m_sppen->m_cr);
@@ -4857,18 +4733,28 @@ namespace draw2d
 
       if(iStyle == 0)
       {
-         DrawLine(x1,y1+2,x2,y1+ 2);
+
+         draw_line(ppt1, ppt2);
+
       }
       else
       {
 
          ::draw2d::dib_sp dib(allocer());
 
-         dib->create(x2 - x1 + 1,6);
+         double w = ppt2->x - ppt1->x + 1;
 
-         if(dib->area() <= 0)
+         dib->create(w,6);
+
+         if (dib->area() <= 0)
+         {
+
             return false;
+
+         }
+
          dib->Fill(0,0,0,0);
+
          double dStep = 0.125;
          double dPeriod = 7.0;
          double dTint;
@@ -4879,7 +4765,8 @@ namespace draw2d
          double dBaseTint = 2.0;
          double dCircleX;
          double dCircleY;
-         for(double dx = x1; dx < x2; dx+=dStep)
+
+         for(double dx = 0; dx < w; dx+=dStep)
          {
             dCircleX = fmod(dx,(double)(dPeriod)) ;
             double dSign = dCircleX < (dPeriod / 2.0)? 1.0 : -1.0;
@@ -4923,8 +4810,11 @@ namespace draw2d
                   A = MIN(A,255);
                   dib->m_pcolorref[x + dib->m_iScan * y / sizeof(COLORREF)] =  ARGB((A * iA) / 255,iB,iG,iR);
                }
+
             }
+
             dTint = dBaseTint * 2.3;
+
             {
                double dy = (sin((double)dx * 2.0 * 3.1415 / dPeriod) - fmod(dx,(double)(dPeriod / 2.0)) / (dPeriod * dCurl)) + dCircleY;
                dy = (dy * dHalfH + dH);
@@ -4941,18 +4831,23 @@ namespace draw2d
                   A = (int) (A + ((fx * fy) * 255.0 * dStep*dTint));
                   A = MIN(A,255);
                   dib->m_pcolorref[x + dib->m_iScan * y / sizeof(COLORREF)] =  ARGB((A * iA) / 255,iB,iG,iR);
+
                }
+
             }
+
          }
 
          set_alpha_mode(::draw2d::alpha_mode_blend);
-         BitBlt(x1,y1,dib->m_size.cx,dib->m_size.cy,dib->get_graphics(),0,0);
+
+         BitBlt(ppt1->x,ppt1->y,dib->m_size.cx,dib->m_size.cy,dib->get_graphics(),0,0);
 
       }
 
       return true;
 
    }
+
 
    void graphics::draw_ca2_with_border2(int x,int y,int z,int bOut,int bIn,COLORREF crBk,COLORREF cr,COLORREF crOut,COLORREF crIn)
    {
@@ -4987,7 +4882,7 @@ namespace draw2d
 
          r.inflate(1,1);
 
-         DrawRect(r,p);
+         draw_rectangle(r,p);
 
       }
 
@@ -5183,7 +5078,7 @@ namespace draw2d
 
          r.inflate(1,1);
 
-         DrawRect(r,p);
+         draw_rectangle(r,p);
 
       }
 
@@ -5194,7 +5089,7 @@ namespace draw2d
 
          r.inflate(1,1);
 
-         DrawRect(r,p);
+         draw_rectangle(r,p);
 
       }
 
@@ -5217,7 +5112,7 @@ namespace draw2d
    {
 
       enum_fonts(itema);
-      
+
       ::sort::array::pred_sort(itema, [&](auto & a, auto & b)
       {
 
@@ -5275,16 +5170,20 @@ namespace draw2d
       }
       else
       {
-         LineTo(x4, y4);
+
+         line_to(pointd(x4, y4));
+
       }
+
    }
+
 
    void graphics::nanosvg_drawPath(float* pts, int npts, char closed, float tol, COLORREF cr)
    {
       int i;
 
       BeginPath();
-      MoveTo(pts[0], pts[1]);
+      move_to(pointd(pts[0], pts[1]));
       for (i = 0; i < npts - 1; i += 3)
       {
          float* p = &pts[i * 2];
@@ -5292,7 +5191,7 @@ namespace draw2d
       }
       if (closed)
       {
-         MoveTo(pts[0], pts[1]);
+         move_to(pointd(pts[0], pts[1]));
       }
       EndPath();
    }
@@ -5308,10 +5207,10 @@ namespace draw2d
       for (i = 0; i < npts - 1; i += 3)
       {
          float* p = &pts[i * 2];
-         MoveTo(p[0], p[1]);
-         LineTo(p[2], p[3]);
-         LineTo(p[4], p[5]);
-         LineTo(p[6], p[7]);
+         move_to(p[0], p[1]);
+         line_to(p[2], p[3]);
+         line_to(p[4], p[5]);
+         line_to(p[6], p[7]);
       }
       EndPath();
 

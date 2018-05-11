@@ -173,11 +173,11 @@ namespace user
    }
 
    bool list_header::GetItemRect(
-      LPRECT lprect,
-      e_element eelementLButtonDown,
-      index iItemLButtonDown,
-      e_element eelement,
-      index iItem)
+   LPRECT lprect,
+   e_element eelementLButtonDown,
+   index iItemLButtonDown,
+   e_element eelement,
+   index iItem)
    {
       if(iItem < 0)
          return false;
@@ -547,9 +547,9 @@ namespace user
       e_element eelement;
       index iItem;
       if(hit_test(
-               ptCursor,
-               eelement,
-               iItem)
+            ptCursor,
+            eelement,
+            iItem)
         )
       {
          if(eelement == ElementItemBox)
@@ -700,8 +700,8 @@ namespace user
          DrawItem(&drawitem);
          GetItemRect(rectDivider, ElementDivider, iItem);
          pgraphics->SelectObject(p);
-         pgraphics->MoveTo(rectDivider.left, rectDivider.top);
-         pgraphics->LineTo(rectDivider.left, rectDivider.bottom);
+         pgraphics->move_to(rectDivider.left, rectDivider.top);
+         pgraphics->line_to(rectDivider.left, rectDivider.bottom);
          //pgraphics->Draw3dRect(rectDivider, Session.get_default_color(COLOR_BTNSHADOW), Session.get_default_color(COLOR_BTNHIGHLIGHT));
       }
 

@@ -623,7 +623,7 @@ namespace user
                   return RGB(255, 210, 100) | 0xff000000;
                case StyleTranslucidWarmLiteGray:
                   return RGB(239, 230, 219) | 0xff000000;
-                  default:
+               default:
                   return RGB(200, 100, 220) | 0xff000000;
                }
 
@@ -676,18 +676,18 @@ namespace user
                if (eborder & BorderTop)
                {
 
-                  pgraphics->MoveTo(x, y);
+                  pgraphics->move_to(x, y);
 
-                  pgraphics->LineTo(x + cx, y);
+                  pgraphics->line_to(x + cx, y);
 
                }
 
                if (eborder & BorderLeft)
                {
 
-                  pgraphics->MoveTo(x, y);
+                  pgraphics->move_to(x, y);
 
-                  pgraphics->LineTo(x, y + cy);
+                  pgraphics->line_to(x, y + cy);
 
                }
 
@@ -705,18 +705,18 @@ namespace user
                if (eborder & BorderRight)
                {
 
-                  pgraphics->MoveTo(x + cx, y);
+                  pgraphics->move_to(x + cx, y);
 
-                  pgraphics->LineTo(x + cx, y + cy);
+                  pgraphics->line_to(x + cx, y + cy);
 
                }
 
                if (eborder & BorderBottom)
                {
 
-                  pgraphics->MoveTo(x, y + cy);
+                  pgraphics->move_to(x, y + cy);
 
-                  pgraphics->LineTo(x + cx, y + cy);
+                  pgraphics->line_to(x + cx, y + cy);
 
                }
 

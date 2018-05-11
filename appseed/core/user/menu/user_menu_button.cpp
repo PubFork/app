@@ -49,9 +49,9 @@ namespace user
 
          pgraphics->SelectObject(pen);
 
-         pgraphics->MoveTo(rectClient.left, (rectClient.top + rectClient.bottom) / 2);
+         pgraphics->move_to(rectClient.left, (rectClient.top + rectClient.bottom) / 2);
 
-         pgraphics->LineTo(rectClient.right, (rectClient.top + rectClient.bottom) / 2);
+         pgraphics->line_to(rectClient.right, (rectClient.top + rectClient.bottom) / 2);
 
          return;
 
@@ -158,21 +158,21 @@ namespace user
          rectImage.offset(1, 1);
          rectImage.top     = rectImage.bottom - rectImageInfo.height();
          rectImage.right   = rectImage.left + rectImageInfo.width();
-         
+
          if(m_echeck == ::check::checked)
          {
 
             pgraphics->FillSolidRect(rectImageBorder, RGB(127, 127, 127));
-            
+
             pgraphics->Draw3dRect(rectImageBorder, Session.get_default_color(COLOR_3DSHADOW), Session.get_default_color(COLOR_3DHILIGHT));
-            
+
          }
-         
+
          pimagelist->draw(
-            pgraphics,
-            uiImage,
-            rectImage.top_left(),
-            0);
+         pgraphics,
+         uiImage,
+         rectImage.top_left(),
+         0);
       }
       else
       {

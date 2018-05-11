@@ -958,37 +958,37 @@ void simple_scroll_bar::update_drawing_objects()
 class trw:
    virtual public ::user::interaction
 {
-   public:
+public:
 
-      point pt1;
-      point pt2;
+   point pt1;
+   point pt2;
 
 
-      trw(::aura::application * papp): ::object(papp),::user::interaction(papp)
+   trw(::aura::application * papp): ::object(papp),::user::interaction(papp)
+   {
+
+      if(create_window_ex(WS_EX_LAYERED,NULL,"",WS_VISIBLE,null_rect(),NULL, /*nIDResource*/ 0,NULL))
       {
 
-         if(create_window_ex(WS_EX_LAYERED,NULL,"",WS_VISIBLE,null_rect(),NULL, /*nIDResource*/ 0,NULL))
-         {
-
-            TRACE("created trw");
-
-         }
-
-         best_monitor(NULL,null_rect(),true);
+         TRACE("created trw");
 
       }
 
-      virtual ~trw()
-      {
+      best_monitor(NULL,null_rect(),true);
 
-      }
+   }
+
+   virtual ~trw()
+   {
+
+   }
 
 
-      virtual void _001OnDraw(::draw2d::graphics * pgraphics)
-      {
-         pgraphics->MoveTo(pt1);
-         pgraphics->LineTo(pt2);
-      }
+   virtual void _001OnDraw(::draw2d::graphics * pgraphics)
+   {
+      pgraphics->move_to(pt1);
+      pgraphics->line_to(pt2);
+   }
 };
 
 void simple_scroll_bar::_001OnDraw(::draw2d::graphics * pgraphics)
@@ -1080,7 +1080,7 @@ void simple_scroll_bar::_001OnVerisimpleDraw(::draw2d::graphics * pgraphics)
 
       DWORD dwFadeOut = 490;
 
-      byte uchAlpha = MAX(0, MIN(255, oprop("tracking_alpha").uint32()));
+      byte uchAlpha = MAX(0, MIN(255, oprop("tracking_alpha").u32()));
 
       if (m_bTracking)
       {
@@ -1121,7 +1121,7 @@ void simple_scroll_bar::_001OnVerisimpleDraw(::draw2d::graphics * pgraphics)
 
       if ((bool)oprop("tracking_fade_in"))
       {
-         DWORD dwFade = get_tick_count() - oprop("tracking_start").uint32();
+         DWORD dwFade = get_tick_count() - oprop("tracking_start").u32();
          if (dwFade < dwFadeIn)
          {
             uchAlpha = (byte)MIN(255, MAX(0, (dwFade * 255 / dwFadeIn)));
@@ -1135,7 +1135,7 @@ void simple_scroll_bar::_001OnVerisimpleDraw(::draw2d::graphics * pgraphics)
       }
       else if ((bool)oprop("tracking_fade_out"))
       {
-         DWORD dwFade = get_tick_count() - oprop("tracking_start").uint32();
+         DWORD dwFade = get_tick_count() - oprop("tracking_start").u32();
          if (dwFade < dwFadeOut)
          {
             uchAlpha = (byte)(255 - MIN(255, MAX(0, (dwFade * 255 / dwFadeOut))));

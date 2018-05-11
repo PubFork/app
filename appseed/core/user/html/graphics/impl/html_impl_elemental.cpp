@@ -39,7 +39,7 @@ namespace html
       bool elemental::hit_test(data * pdata, ::point pt)
       {
 
-          UNREFERENCED_PARAMETER(pdata);
+         UNREFERENCED_PARAMETER(pdata);
 
 //          e_tag etype = m_pelemental->m_etag;_001
 
@@ -409,17 +409,17 @@ namespace html
          e_tag etag = m_pelemental->m_etag;
 
          if (etag == tag_html
-            || etag == tag_head
-            || etag == tag_style
-            || etag == tag_link
-            || etag == tag_script
-            || etag == tag_title
-            || etag == tag_meta
-            || etag == tag_body)
+               || etag == tag_head
+               || etag == tag_style
+               || etag == tag_link
+               || etag == tag_script
+               || etag == tag_title
+               || etag == tag_meta
+               || etag == tag_body)
             return false;
 
          bool bBlock = m_pelemental->m_style.m_edisplay == display_block
-            || m_pelemental->m_style.m_edisplay == display_table;
+                       || m_pelemental->m_style.m_edisplay == display_table;
 
          string str = m_pelemental->m_strBody;
 
@@ -493,9 +493,9 @@ namespace html
          }
 
          m_bound.set_cx(m_box.get_cx());
-         
+
          return true;
-         
+
       }
 
 
@@ -511,17 +511,17 @@ namespace html
          e_tag etag = m_pelemental->m_etag;
 
          if (etag == tag_html
-            || etag == tag_head
-            || etag == tag_style
-            || etag == tag_link
-            || etag == tag_script
-            || etag == tag_title
-            || etag == tag_meta)
+               || etag == tag_head
+               || etag == tag_style
+               || etag == tag_link
+               || etag == tag_script
+               || etag == tag_title
+               || etag == tag_meta)
             return;
 
          if (m_pelemental->m_elementalptra.is_empty() || etag == tag_select)
          {
-          
+
             return;
 
          }
@@ -575,11 +575,11 @@ namespace html
             return;
 
          if (etag == tag_html
-            || etag == tag_head
-            || etag == tag_style
-            || etag == tag_script
-            || etag == tag_table
-            || etag == tag_tbody)
+               || etag == tag_head
+               || etag == tag_style
+               || etag == tag_script
+               || etag == tag_table
+               || etag == tag_tbody)
          {
             return;
          }
@@ -718,7 +718,7 @@ namespace html
                ::draw2d::pen_sp pen(pdata->get_app()->allocer());
                pen->create_solid(m_border.left, m_border.crLeft);
                pgraphics->SelectObject(pen);
-               pgraphics->drawLine(p1.x, p1.y, p2.x, p2.y);
+               pgraphics->draw_line(p1.x, p1.y, p2.x, p2.y);
             }
             else
             {
@@ -742,7 +742,7 @@ namespace html
                ::draw2d::pen_sp pen(pdata->get_app()->allocer());
                pen->create_solid(m_border.top, m_border.crTop);
                pgraphics->SelectObject(pen);
-               pgraphics->drawLine(p1.x, p1.y, p2.x, p2.y);
+               pgraphics->draw_line(p1.x, p1.y, p2.x, p2.y);
             }
             else
             {
@@ -766,7 +766,7 @@ namespace html
                ::draw2d::pen_sp pen(pdata->get_app()->allocer());
                pen->create_solid(m_border.right, m_border.crRight);
                pgraphics->SelectObject(pen);
-               pgraphics->drawLine(p1.x, p1.y, p2.x, p2.y);
+               pgraphics->draw_line(p1.x, p1.y, p2.x, p2.y);
             }
             else
             {
@@ -790,7 +790,7 @@ namespace html
                ::draw2d::pen_sp pen(pdata->get_app()->allocer());
                pen->create_solid(m_border.bottom, m_border.crBottom);
                pgraphics->SelectObject(pen);
-               pgraphics->drawLine(p1.x, p1.y, p2.x, p2.y);
+               pgraphics->draw_line(p1.x, p1.y, p2.x, p2.y);
             }
             else
             {
@@ -956,9 +956,9 @@ namespace html
          if (pcell != NULL)
          {
             if (pcell->m_iColBeg >= 0
-               || pcell->m_iColEnd >= 0
-               || pcell->m_iRowBeg >= 0
-               || pcell->m_iRowEnd >= 0)
+                  || pcell->m_iColEnd >= 0
+                  || pcell->m_iRowBeg >= 0
+                  || pcell->m_iRowEnd >= 0)
             {
 
                return false;
@@ -977,8 +977,8 @@ namespace html
 
          e_tag etag = m_pelemental->m_etag;
 
-         if (m_pelemental->m_elementalptra.is_empty() 
-            || etag == tag_select)
+         if (m_pelemental->m_elementalptra.is_empty()
+               || etag == tag_select)
             return;
 
          float x = 3e33f;
@@ -1021,10 +1021,10 @@ namespace html
          {
 
             set_pos(pdata,
-               x,
-               y,
-               cx,
-               cy);
+                    x,
+                    y,
+                    cx,
+                    cy);
 
          }
 
@@ -1121,11 +1121,11 @@ namespace html
       {
 
          return m_margin.left
-            + m_border.left
-            + m_padding.left
-            + m_padding.right
-            + m_border.right
-            + m_margin.right;
+                + m_border.left
+                + m_padding.left
+                + m_padding.right
+                + m_border.right
+                + m_margin.right;
 
       }
 
@@ -1134,11 +1134,11 @@ namespace html
       {
 
          return m_margin.top
-            + m_border.top
-            + m_padding.top
-            + m_padding.bottom
-            + m_border.bottom
-            + m_margin.bottom;
+                + m_border.top
+                + m_padding.top
+                + m_padding.bottom
+                + m_border.bottom
+                + m_margin.bottom;
 
       }
 

@@ -238,9 +238,9 @@ int32_t call_async(const char * pszPath, const char * pszParam, const char * psz
 
    SHELLEXECUTEINFOW info = {};
 
-   wstring wstrFile = u16(pszPath);
-   wstring wstrParam = u16(pszParam);
-   wstring wstrDir = u16(pszDir);
+   wstring wstrFile = unicode(pszPath);
+   wstring wstrParam = unicode(pszParam);
+   wstring wstrDir = unicode(pszDir);
 
    info.cbSize = sizeof(SHELLEXECUTEINFOW);
    info.nShow = iShow;

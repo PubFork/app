@@ -57,62 +57,46 @@ namespace draw2d
       virtual ~region();
 
 
-      virtual bool create_rect(int32_t x1, int32_t y1, int32_t x2, int32_t y2);
       virtual bool create_rect(LPCRECT lpRect);
-      virtual bool create_oval(int32_t x1, int32_t y1, int32_t x2, int32_t y2);
       virtual bool create_oval(LPCRECT lpRect);
-      virtual bool create_polygon(LPPOINT lpPoints, int32_t nCount, ::draw2d::e_fill_mode efillmode);
-      virtual bool create_polygon(LPPOINTD lpPoints,int32_t nCount,::draw2d::e_fill_mode efillmode);
-      virtual bool create_poly_polygon(LPPOINTD lpPoints, LPINT lpPolyCounts, int32_t nCount, ::draw2d::e_fill_mode efillmode);
-      virtual bool create_poly_polygon(LPPOINT lpPoints,LPINT lpPolyCounts,int32_t nCount,::draw2d::e_fill_mode efillmode);
-      //virtual bool add_round_rect(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x3, int32_t y3);
-//      virtual bool add_path(::draw2d::path * ppath);
-
-//      virtual void SetRectRgn(int32_t x1, int32_t y1, int32_t x2, int32_t y2);
-//      virtual void SetRectRgn(LPCRECT lpRect);
+      virtual bool create_polygon(const LPPOINT lpPoints, int32_t nCount, ::draw2d::e_fill_mode efillmode);
+      virtual bool create_polygon(const LPPOINTD lpPoints,int32_t nCount,::draw2d::e_fill_mode efillmode);
+      virtual bool create_poly_polygon(const LPPOINTD lpPoints, LPINT lpPolyCounts, int32_t nCount, ::draw2d::e_fill_mode efillmode);
+      virtual bool create_poly_polygon(const LPPOINT lpPoints,LPINT lpPolyCounts,int32_t nCount,::draw2d::e_fill_mode efillmode);
       virtual bool combine(const ::draw2d::region * prgn1, const ::draw2d::region * prgn2, e_combine ecombine);
-      //virtual int32_t CopyRgn(const ::draw2d::region* pRgnSrc);
-      //virtual bool EqualRgn(const ::draw2d::region* pRgn) const;
-      virtual bool translate(int32_t x, int32_t y);
-      virtual bool translate(POINT point);
-      virtual bool get_bounding_box(LPRECT lpRect) const;
-      //virtual int32_t GetRgnBox(rect64 * lpRect) const;
-      //virtual bool contains(int32_t x, int32_t y) const;
-      virtual bool contains(POINT point) { return contains(pointd(point));  }
-      virtual bool contains(POINTD point) const;
-      //virtual bool RectInRegion(LPCRECT lpRect) const;
-//#ifdef WINDOWS
-      //virtual int32_t GetRegionData(LPRGNDATA lpRgnData, int32_t nCount) const;
-//#endif
+      virtual bool translate(const LPPOINT point);
+      virtual bool get_bounding_box(LPRECT lpRect);
+      virtual bool contains(const LPPOINT point);
+      virtual bool contains(const LPPOINTD point);
 
-      bool internal_contains(POINT pt) { return internal_contains(pointd(pt));  }
-      bool internal_rect_contains(POINT pt){ return internal_rect_contains(pointd(pt)); }
-      bool internal_oval_contains(POINT pt){ return internal_oval_contains(pointd(pt)); }
-      bool internal_polygon_contains(POINT pt){ return internal_polygon_contains(pointd(pt)); }
-      bool internal_poly_polygon_contains(POINT pt){ return internal_poly_polygon_contains(pointd(pt)); }
-      bool internal_combine_contains(POINT pt){ return internal_combine_contains(pointd(pt)); }
+      bool internal_contains(LPPOINT lppt);
+      bool internal_rect_contains(LPPOINT lppt);
+      bool internal_oval_contains(LPPOINT lppt);
+      bool internal_polygon_contains(LPPOINT lppt);
+      bool internal_poly_polygon_contains(LPPOINT lppt);
+      bool internal_combine_contains(LPPOINT lppt);
 
 
-      bool internal_contains(POINTD pt);
-      bool internal_rect_contains(POINTD pt);
-      bool internal_oval_contains(POINTD pt);
-      bool internal_polygon_contains(POINTD pt);
-      bool internal_poly_polygon_contains(POINTD pt);
-      bool internal_combine_contains(POINTD pt);
+      bool internal_contains(LPPOINTD lpptd);
+      bool internal_rect_contains(LPPOINTD lpptd);
+      bool internal_oval_contains(LPPOINTD lpptd);
+      bool internal_polygon_contains(LPPOINTD lpptd);
+      bool internal_poly_polygon_contains(LPPOINTD lpptd);
+      bool internal_combine_contains(LPPOINTD lpptd);
 
-      virtual void max_bounding_box(LPRECT lpRect) const;
-      virtual void max_bounding_box_rect(LPRECT lpRect) const;
-      virtual void max_bounding_box_oval(LPRECT lpRect) const;
-      virtual void max_bounding_box_polygon(LPRECT lpRect) const;
-      virtual void max_bounding_box_poly_polygon(LPRECT lpRect) const;
-      virtual void max_bounding_box_combine(LPRECT lpRect) const;
+      virtual void max_bounding_box(LPRECT lpRect);
+      virtual void max_bounding_box_rect(LPRECT lpRect);
+      virtual void max_bounding_box_oval(LPRECT lpRect);
+      virtual void max_bounding_box_polygon(LPRECT lpRect);
+      virtual void max_bounding_box_poly_polygon(LPRECT lpRect);
+      virtual void max_bounding_box_combine(LPRECT lpRect);
 
-      virtual void max_bounding_box(LPRECTD lpRect) const;
-      virtual void max_bounding_box_rect(LPRECTD lpRect) const;
-      virtual void max_bounding_box_oval(LPRECTD lpRect) const;
-      virtual void max_bounding_box_polygon(LPRECTD lpRect) const;
-      virtual void max_bounding_box_poly_polygon(LPRECTD lpRect) const;
-      virtual void max_bounding_box_combine(LPRECTD lpRect) const;
+      virtual void max_bounding_box(LPRECTD lpRect);
+      virtual void max_bounding_box_rect(LPRECTD lpRect);
+      virtual void max_bounding_box_oval(LPRECTD lpRect);
+      virtual void max_bounding_box_polygon(LPRECTD lpRect);
+      virtual void max_bounding_box_poly_polygon(LPRECTD lpRect);
+      virtual void max_bounding_box_combine(LPRECTD lpRect);
 
       virtual bool destroy();
 

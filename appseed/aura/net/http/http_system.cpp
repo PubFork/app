@@ -1002,9 +1002,9 @@ retry:
 
             double dRateDownloaded = 0.0;
 
-            int64_t iContentLength = set["http_content_length"].int64();
+            int64_t iContentLength = set["http_content_length"].i64();
 
-            int64_t iBodySizeDownloaded = set["http_body_size_downloaded"].int64();
+            int64_t iBodySizeDownloaded = set["http_body_size_downloaded"].i64();
 
             if (iContentLength > 0)
             {
@@ -1800,9 +1800,9 @@ retry_session:
 
          double dRateDownloaded = 0.0;
 
-         int64_t iContentLength = set["http_content_length"].int64();
+         int64_t iContentLength = set["http_content_length"].i64();
 
-         int64_t iBodySizeDownloaded = set["http_body_size_downloaded"].int64();
+         int64_t iBodySizeDownloaded = set["http_body_size_downloaded"].i64();
 
          if (iContentLength > 0)
          {
@@ -2123,7 +2123,7 @@ retry_session:
       if(!get(handler, psocket, pmessage->m_strUrl, set))
       {
 
-         pmessage->m_estatusRet = (::http::e_status) set["get_status"].int64();
+         pmessage->m_estatusRet = (::http::e_status) set["get_status"].i64();
 
          pmessage->m_bRet = false;
 
@@ -2131,7 +2131,7 @@ retry_session:
 
       }
 
-      pmessage->m_estatusRet = (::http::e_status) set["get_status"].int64();
+      pmessage->m_estatusRet = (::http::e_status) set["get_status"].i64();
 
 
       if(psocket->GetDataPtr() != NULL && psocket->GetContentLength() > 0)

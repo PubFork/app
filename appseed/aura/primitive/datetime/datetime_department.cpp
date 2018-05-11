@@ -115,7 +115,7 @@ namespace datetime
       ::datetime::time time(timeParam);
       iPathCount = 1;
       ::datetime::value val = ::datetime::value(time) +
-         ::datetime::span_strtotime(get_app(), pcontext, psz);
+                              ::datetime::span_strtotime(get_app(), pcontext, psz);
       return val.get_time().get_time();
    }
 
@@ -402,15 +402,15 @@ namespace datetime
          year = year - 1;
       }
       return (
-         day
-         + (2 * month)
-         + int32_t(6 * (month + 1) / 10)
-         + year
-         + int32_t(year / 4)
-         - int32_t(year / 100)
-         + int32_t(year / 400)
-         + CalendarSystem
-         ) % 7;
+             day
+             + (2 * month)
+             + int32_t(6 * (month + 1) / 10)
+             + year
+             + int32_t(year / 4)
+             - int32_t(year / 100)
+             + int32_t(year / 400)
+             + CalendarSystem
+             ) % 7;
    }
 
    /*In [ISO8601], the week number is defined by:
@@ -654,7 +654,7 @@ namespace datetime
       string strUrl = "http://api.openweathermap.org/data/2.5/weather?id=" + ::str::from(pcity->m_iId) + "&APPID=" + string(pszId);
 
       string strGetUrl = "https://api.ca2.cc/account/openweather?sessid=" + Session.fontopus_get_user_sessid("api.ca2.cc")
-         + "&request=" + System.url_encode(strUrl);
+                         + "&request=" + System.url_encode(strUrl);
 
       string str = Application.http_get(strGetUrl, set);
 
@@ -666,9 +666,9 @@ namespace datetime
 
       v.parse_json(pszJson);
 
-      ::datetime::zonetime timeSunrise(v["sys"]["sunrise"].int64(), iTimeZone);
+      ::datetime::zonetime timeSunrise(v["sys"]["sunrise"].i64(), iTimeZone);
 
-      ::datetime::zonetime timeSunset(v["sys"]["sunset"].int64(), iTimeZone);
+      ::datetime::zonetime timeSunset(v["sys"]["sunset"].i64(), iTimeZone);
 
       iRise = (int) timeSunrise.GetZoneTimeOfDay();
 
@@ -878,11 +878,11 @@ namespace datetime
       }
 
 
-    //  int64_t iId;
+      //  int64_t iId;
 
 //      double dLat;
 
-  //    double dLon;
+      //    double dLon;
 
       auto pcity = System.openweather_find_city(strQ);
 

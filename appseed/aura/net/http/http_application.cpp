@@ -269,7 +269,7 @@ namespace http
       if (len.is_empty())
          strCache = "-1";
       else
-         strCache = ::str::from(len.int64());
+         strCache = ::str::from(len.i64());
 
       Application.file().put_contents(strFile, strCache);
 

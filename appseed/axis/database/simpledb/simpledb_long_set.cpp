@@ -347,7 +347,7 @@ bool db_long_set::load(const char * lpKey, int64_t * plValue)
       try
       {
 
-         *plValue = pcore->m_psimpledbUser->query_item("SELECT `value` FROM fun_user_str_set WHERE user = '" + pcore->m_strUser + "' AND `key` = '" + pcore->m_psimpledbUser->real_escape_string(lpKey) + "'").int32();
+         *plValue = pcore->m_psimpledbUser->query_item("SELECT `value` FROM fun_user_str_set WHERE user = '" + pcore->m_strUser + "' AND `key` = '" + pcore->m_psimpledbUser->real_escape_string(lpKey) + "'").i32();
 
          return true;
 

@@ -52,11 +52,11 @@ namespace user
       if(m_rules.has_property("m_iMin"))
       {
 
-         if(val.int64() < m_rules["m_iMin"].int64())
+         if(val.i64() < m_rules["m_iMin"].i64())
          {
 
             string strText = "You should enter an integer greater or equal " + m_rules["m_iMin"].get_string();
-            
+
             stra.add(strText);
 
          }
@@ -66,7 +66,7 @@ namespace user
       if(m_rules.has_property("m_iMax"))
       {
 
-         if(val.int64() > m_rules["m_iMax"].int64())
+         if(val.i64() > m_rules["m_iMax"].i64())
          {
 
             string strText = "You should enter an integer lesser or equal " + m_rules["m_iMax"].get_string();

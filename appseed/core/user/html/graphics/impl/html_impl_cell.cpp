@@ -14,7 +14,7 @@ namespace html
          user::plain_edit(papp),
          ::html::impl::text(papp)
       {
-         
+
          m_iRowSpan     = 1;
          m_iColSpan     = 1;
 
@@ -42,7 +42,7 @@ namespace html
          {
 
             pelemental = pelemental->m_pparent;
-            
+
             if(pelemental == NULL)
                return NULL;
 
@@ -355,7 +355,7 @@ namespace html
          }
 
          /*
-         
+
          table * ptable = get_table();
 
          if (ptable == NULL)
@@ -411,7 +411,7 @@ namespace html
       void cell::layout_phase1_end(data * pdata)
       {
 
-          ::html::impl::elemental::layout_phase1_end(pdata);
+         ::html::impl::elemental::layout_phase1_end(pdata);
 
       }
 
@@ -433,7 +433,7 @@ namespace html
 
       void cell::layout_phase3_end(data * pdata)
       {
-      
+
          pdata->m_layoutstate3.m_cya.last() = m_box.get_cy();
 
       }
@@ -457,7 +457,7 @@ namespace html
 
       size cell::get_content_size()
       {
-         
+
          class size size = ::html::impl::elemental::get_content_size();
 
          //size.cx -= get_table()->m_iCellSpacing;
@@ -490,7 +490,7 @@ namespace html
       float cell::get_extra_content_cy()
       {
 
-          return ::html::impl::elemental::get_extra_content_cy();
+         return ::html::impl::elemental::get_extra_content_cy();
          /*if (m_iRowBeg == 0 || m_iRowBeg == get_table()->m_rowptra.get_upper_bound())
          {
 
@@ -567,7 +567,7 @@ namespace html
                   if(!pelemental->m_propertyset.is_new_or_null("colspan"))
                   {
 
-                     iMinCol += pelemental->m_propertyset["colspan"].int32();
+                     iMinCol += pelemental->m_propertyset["colspan"].i32();
 
                   }
                   else
@@ -590,7 +590,7 @@ namespace html
 
       cell::holder::holder()
       {
-         
+
          m_pcell  =   NULL;
          m_iCol      = -1;
          m_iRow      = -1;

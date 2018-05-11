@@ -546,7 +546,7 @@ inline var var::operator[] (const var & varKey) const
 {
    if(varKey.is_integer())
    {
-      return at((index)varKey.int64());
+      return at((index)varKey.i64());
    }
    else
    {
@@ -558,7 +558,7 @@ inline var var::operator[] (const var & varKey)
 {
    if(varKey.is_integer())
    {
-      return at((index)varKey.int64());
+      return at((index)varKey.i64());
    }
    else
    {

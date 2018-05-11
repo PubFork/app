@@ -305,7 +305,7 @@ inline int64_t size::area() const NOTHROW
 }
 
 
-inline uint32_t  size::  ui32() const NOTHROW
+inline uint32_t  size::  u32() const NOTHROW
 {
 
    return MAKELONG((int32_t)cx,(int32_t)cy);

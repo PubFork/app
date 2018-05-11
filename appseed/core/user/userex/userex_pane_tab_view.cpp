@@ -443,10 +443,10 @@ namespace userex
          if(pfilemanagerdata == NULL)
             pfilemanagerdata = canew(::filemanager::data(get_app()));
 
-         if (oprop("filemanager_icon_size").int32() > 0)
+         if (oprop("filemanager_icon_size").i32() > 0)
          {
 
-            pfilemanagerdata->m_iIconSize = oprop("filemanager_icon_size").int32();
+            pfilemanagerdata->m_iIconSize = oprop("filemanager_icon_size").i32();
 
          }
 

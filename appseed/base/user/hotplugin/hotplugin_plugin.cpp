@@ -1068,7 +1068,7 @@ namespace hotplugin
 
       LPARAM lparam;
 
-      message = (UINT) (LPARAM) pbase->m_id.int64();
+      message = (UINT) (LPARAM) pbase->m_id.i64();
 
       wparam     = pbase->m_wparam;
 

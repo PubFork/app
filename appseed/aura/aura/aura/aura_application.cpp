@@ -6686,12 +6686,12 @@ finalize:
 
       int iRetry = 9;
 
-      while (!file_exists_dup(u8(wstr.c_str())) && iRetry > 0)
+      while (!file_exists_dup(utf8(wstr.c_str())) && iRetry > 0)
       {
 
-         dir::mk(dir::name(u8(wstr.c_str())).c_str());
+         dir::mk(dir::name(utf8(wstr.c_str())).c_str());
 
-         file_put_contents_dup(u8(wstr.c_str()).c_str(), "");
+         file_put_contents_dup(utf8(wstr.c_str()).c_str(), "");
 
          iRetry--;
 

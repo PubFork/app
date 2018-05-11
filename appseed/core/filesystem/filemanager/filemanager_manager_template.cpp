@@ -457,7 +457,7 @@ namespace filemanager
 
       sp(manager) pdoc;
 
-      if (id.int64() < -1 || id.int64() == m_pdoctemplateMain->get_document_count())
+      if (id.i64() < -1 || id.i64() == m_pdoctemplateMain->get_document_count())
       {
 
          pcreate->oprop("filemanager::template") = this;
@@ -487,7 +487,7 @@ namespace filemanager
          }
 
       }
-      else if (id.int64() < m_pdoctemplateMain->get_document_count())
+      else if (id.i64() < m_pdoctemplateMain->get_document_count())
       {
 
          pdoc = m_pdoctemplateMain->get_document((index) id);
@@ -582,7 +582,7 @@ namespace filemanager
 
       sp(manager) pdoc;
 
-      if (id.int64() < -1 || id.int64() == m_pdoctemplate->get_document_count())
+      if (id.i64() < -1 || id.i64() == m_pdoctemplate->get_document_count())
       {
 
          pcreate->oprop("filemanager::template") = this;
@@ -612,7 +612,7 @@ namespace filemanager
          }
 
       }
-      else if (id.int64() < m_pdoctemplate->get_document_count())
+      else if (id.i64() < m_pdoctemplate->get_document_count())
       {
 
          pdoc = m_pdoctemplate->get_document((index) id);

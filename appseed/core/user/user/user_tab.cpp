@@ -916,11 +916,11 @@ namespace user
 
                pgraphics->SelectObject(pen);
 
-               pgraphics->MoveTo(rectBorder.right, rectBorder.bottom);
-               pgraphics->LineTo(rectBorder.left + 1, rectBorder.bottom);
-               pgraphics->LineTo(rectBorder.left, rectBorder.top - (rectBorder.left - rectClient.left));
-               pgraphics->LineTo(rectClient.left, rectBorder.top);
-               pgraphics->LineTo(rectBorder.right, rectBorder.top);
+               pgraphics->move_to(rectBorder.right, rectBorder.bottom);
+               pgraphics->line_to(rectBorder.left + 1, rectBorder.bottom);
+               pgraphics->line_to(rectBorder.left, rectBorder.top - (rectBorder.left - rectClient.left));
+               pgraphics->line_to(rectClient.left, rectBorder.top);
+               pgraphics->line_to(rectBorder.right, rectBorder.top);
 
                pgraphics->set_font(get_data()->m_fontBold);
 
@@ -936,12 +936,12 @@ namespace user
 
                pgraphics->SelectObject(pen);
 
-               pgraphics->MoveTo(rectBorder.right, rectBorder.bottom);
-               pgraphics->LineTo(rectBorder.left + 1, rectBorder.bottom);
-               pgraphics->LineTo(rectBorder.left, rectBorder.top - (rectBorder.left - rectClient.left));
-               pgraphics->LineTo(rectText.left, rectBorder.top);
-               pgraphics->LineTo(rectBorder.right, rectBorder.top);
-               pgraphics->LineTo(rectBorder.right, rectBorder.bottom);
+               pgraphics->move_to(rectBorder.right, rectBorder.bottom);
+               pgraphics->line_to(rectBorder.left + 1, rectBorder.bottom);
+               pgraphics->line_to(rectBorder.left, rectBorder.top - (rectBorder.left - rectClient.left));
+               pgraphics->line_to(rectText.left, rectBorder.top);
+               pgraphics->line_to(rectBorder.right, rectBorder.top);
+               pgraphics->line_to(rectBorder.right, rectBorder.bottom);
                if(iVisiblePane == m_iHover && m_eelementHover != element_close_tab_button)
                {
                   pgraphics->set_font(get_data()->m_fontUnderline);
@@ -977,13 +977,13 @@ namespace user
 
                pgraphics->SelectObject(pen);
 
-               pgraphics->MoveTo(rectBorder.left, rectClient.bottom);
-               //pgraphics->LineTo(rectBorder.left, rectText.bottom);
-               pgraphics->LineTo(rectBorder.left, rectBorder.top);
-               pgraphics->LineTo(rectClient.right, rectBorder.top);
-               pgraphics->LineTo(rectBorder.right, rectBorder.top + (rectBorder.right - rectClient.right));
-               pgraphics->LineTo(rectBorder.right - 1, rectClient.bottom);
-               //pgraphics->LineTo(rect.right, rectText.bottom);
+               pgraphics->move_to(rectBorder.left, rectClient.bottom);
+               //pgraphics->line_to(rectBorder.left, rectText.bottom);
+               pgraphics->line_to(rectBorder.left, rectBorder.top);
+               pgraphics->line_to(rectClient.right, rectBorder.top);
+               pgraphics->line_to(rectBorder.right, rectBorder.top + (rectBorder.right - rectClient.right));
+               pgraphics->line_to(rectBorder.right - 1, rectClient.bottom);
+               //pgraphics->line_to(rect.right, rectText.bottom);
                pgraphics->set_font(get_data()->m_fontBold);
                brushText->create_solid(ARGB(255, 0, 0, 0));
             }
@@ -996,14 +996,14 @@ namespace user
 
                pgraphics->SelectObject(pen);
 
-//pgraphics->MoveTo(rect.left, rectBorder.bottom);
-//pgraphics->LineTo(rect.right, rectBorder.bottom);
-               pgraphics->MoveTo(rectBorder.left, rectClient.bottom);
-               pgraphics->LineTo(rectBorder.left, rectBorder.top);
-               pgraphics->LineTo(rectClient.right, rectBorder.top);
-               pgraphics->LineTo(rectBorder.right, rectBorder.top + (rectBorder.right - rectClient.right));
-               pgraphics->LineTo(rectBorder.right - 1, rectClient.bottom);
-               pgraphics->LineTo(rectBorder.left, rectClient.bottom);
+//pgraphics->move_to(rect.left, rectBorder.bottom);
+//pgraphics->line_to(rect.right, rectBorder.bottom);
+               pgraphics->move_to(rectBorder.left, rectClient.bottom);
+               pgraphics->line_to(rectBorder.left, rectBorder.top);
+               pgraphics->line_to(rectClient.right, rectBorder.top);
+               pgraphics->line_to(rectBorder.right, rectBorder.top + (rectBorder.right - rectClient.right));
+               pgraphics->line_to(rectBorder.right - 1, rectClient.bottom);
+               pgraphics->line_to(rectBorder.left, rectClient.bottom);
 
                if (iVisiblePane == m_iHover && m_eelementHover != element_close_tab_button)
                {

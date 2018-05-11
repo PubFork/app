@@ -32,7 +32,7 @@ namespace http
 
    bool failed(e_status estatus)
    {
-      
+
       return !succeeded(estatus);
 
    }
@@ -48,7 +48,7 @@ namespace http
    CLASS_DECL_AURA string conn_status(property_set & set)
    {
 
-      e_status estatus = (e_status)set["get_status"].int32();
+      e_status estatus = (e_status)set["get_status"].i32();
 
       string str;
 

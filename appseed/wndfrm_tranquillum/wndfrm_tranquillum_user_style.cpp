@@ -232,7 +232,7 @@ namespace wndfrm_tranquillum
 
                   pgraphics->SelectObject(ptab->get_data()->m_penBorder);
 
-                  pgraphics->DrawLine(rcTab.left, rectClient.bottom, rectBorder.left, rectClient.bottom);
+                  pgraphics->draw_line(rcTab.left, rectClient.bottom, rectBorder.left, rectClient.bottom);
 
                }
 
@@ -353,7 +353,7 @@ namespace wndfrm_tranquillum
 
                   pgraphics->SelectObject(ptab->get_data()->m_penBorder);
 
-                  pgraphics->DrawLine(rectBorder.right - 1, rectClient.bottom, rcTab.right, rectClient.bottom);
+                  pgraphics->draw_line(rectBorder.right - 1, rectClient.bottom, rcTab.right, rectClient.bottom);
 
                }
 

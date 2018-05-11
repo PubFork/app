@@ -76,7 +76,7 @@ void point::SetPoint(int32_t X, int32_t Y) NOTHROW
 //rect point::operator-(LPCRECT lpRect) const NOTHROW
 //{ return rect(lpRect) - *this; }
 
-uint32_t point::uint32() const NOTHROW
+uint32_t point::u32() const NOTHROW
 {
    return MAKELONG(x, y);
 }
@@ -163,7 +163,7 @@ rect64 point64::operator+(const RECT64 * lpRect) const NOTHROW
 rect64 point64::operator-(const RECT64 * lpRect) const NOTHROW
 { return rect64(lpRect) - *this; }
 
-uint32_t point64::ui32() const NOTHROW
+uint32_t point64::u32() const NOTHROW
 {
    return MAKELONG(x, y);
 }
@@ -282,7 +282,7 @@ rectd pointd::operator+(LPCRECTD lpRect) const NOTHROW
 rectd pointd::operator-(LPCRECTD lpRect) const NOTHROW
 { return rectd(lpRect) - *this; }
 
-uint32_t pointd::ui32() const NOTHROW
+uint32_t pointd::u32() const NOTHROW
 {
    return MAKELONG((int32_t) x, (int32_t) y);
 }

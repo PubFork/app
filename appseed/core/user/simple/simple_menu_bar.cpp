@@ -211,7 +211,7 @@ void simple_menu_bar::pre_translate_message(::message::message * pobj)
 
    }
 
-   TRACE("simple_menu_bar::pre_translate_message messageID=%d wParam=%d lParam=%d\n", pbase->m_id.int64(), pbase->m_wparam, pbase->m_lparam);
+   TRACE("simple_menu_bar::pre_translate_message messageID=%d wParam=%d lParam=%d\n", pbase->m_id.i64(), pbase->m_wparam, pbase->m_lparam);
 
    return simple_toolbar::pre_translate_message(pobj);
 
@@ -241,7 +241,7 @@ void simple_menu_bar::_001OnCreate(::message::message * pobj)
       ASSERT(lpmfmh != NULL);
       lpmfmh->MessageFilterHook(this);*/
 
-      //m_menuhook.Install((sp(::user::frame_window)) (sp(::user::interaction))this);
+   //m_menuhook.Install((sp(::user::frame_window)) (sp(::user::interaction))this);
 
    //   SetFont(System.visual().fonts().GetMenuFont());
 
@@ -282,8 +282,8 @@ bool simple_menu_bar::_track_popup_menu(point point)
    {
       int32_t iItem = _001HitTest(point);
       if (iItem >= 0 &&
-         iItem < m_iTopMenuCount &&
-         iItem != m_iTracking)
+            iItem < m_iTopMenuCount &&
+            iItem != m_iTracking)
       {
          TRACE("simple_menu_bar::OnMouseMove simple_menu_bar::_track_popup_menu % d\n", iItem);
          //            SendMessage(WM_KEYDOWN, VK_ESCAPE);
@@ -352,17 +352,17 @@ void simple_menu_bar::_001OnDestroy(::message::message * pobj)
 }
 
 bool simple_menu_bar::Initialize(
-   sp(image_list)   pimagelist,
-   sp(image_list)   pimagelistDisabled,
-   int_int_spreadset * prel,
-   ::draw2d::font *        pfont)
+sp(image_list)   pimagelist,
+sp(image_list)   pimagelistDisabled,
+int_int_spreadset * prel,
+::draw2d::font *        pfont)
 {
 
    //   m_menuhook.Initialize(
-     //    pimagelist,
-         //pimagelistDisabled,
-         //prel,
-         //pfont);
+   //    pimagelist,
+   //pimagelistDisabled,
+   //prel,
+   //pfont);
 
    m_pimagelist = pimagelist;
    m_pimagelistDisabled = pimagelistDisabled;
@@ -622,7 +622,7 @@ bool simple_menu_bar::create_window_ex(sp(::user::interaction) pParentWnd, uint3
    //   _::core::GetDropDownWidth();
    //   ASSERT(gen_DropDownWidth != -1);
 
-      // create the oswindow
+   // create the oswindow
    if (!::user::interaction::create_window(NULL, NULL, dwStyle, rect, pParentWnd, nID))
       return FALSE;
 
@@ -841,7 +841,7 @@ void simple_menu_bar::OnUpdateHover()
 
 int32_t simple_menu_bar::_001GetHoverItem()
 {
-   
+
    if (m_iTracking >= 0)
    {
 
@@ -850,7 +850,7 @@ int32_t simple_menu_bar::_001GetHoverItem()
    }
 
    return simple_toolbar::_001GetHoverItem();
-   
+
 
 }
 

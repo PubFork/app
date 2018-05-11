@@ -34,7 +34,7 @@ uint64_t get_nanos()
 //
 ///**********************************=> unix ************************************/
 //#ifndef _WIN32
-//void SleepInMs(uint32 ms) {
+//void SleepInMs(u32 ms) {
 //   struct timespec ts;
 //   ts.tv_sec = ms / 1000;
 //   ts.tv_nsec = ms % 1000 * 1000000;
@@ -42,7 +42,7 @@ uint64_t get_nanos()
 //   while (nanosleep(&ts, &ts) == -1 && errno == EINTR);
 //}
 //
-//void SleepInUs(uint32 us) {
+//void SleepInUs(u32 us) {
 //   struct timespec ts;
 //   ts.tv_sec = us / 1000000;
 //   ts.tv_nsec = us % 1000000 * 1000;
@@ -74,13 +74,13 @@ uint64_t get_nanos()
 //
 ///**********************************=> win *************************************/
 //#ifdef _WIN32
-//void SleepInMs(uint32 ms) {
+//void SleepInMs(u32 ms) {
 //   ::Sleep(ms);
 //}
 //
-//void SleepInUs(uint32 us) {
+//void SleepInUs(u32 us) {
 //   ::LARGE_INTEGER ft;
-//   ft.QuadPart = -static_cast<int64>(us * 10);  // '-' using relative time
+//   ft.QuadPart = -static_cast<i64>(us * 10);  // '-' using relative time
 //
 //   ::HANDLE timer = ::CreateWaitableTimer(NULL, TRUE, NULL);
 //   ::SetWaitableTimer(timer, &ft, 0, NULL, NULL, 0);

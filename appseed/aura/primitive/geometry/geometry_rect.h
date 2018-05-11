@@ -9,22 +9,17 @@ class point_array;
 
 class CLASS_DECL_AURA rect : public tagRECT
 {
-// Constructors
 public:
-   // uninitialized rectangle
+
+
    rect() NOTHROW;
-   // from left, top, right, and bottom
    rect(int64_t l, int64_t t, int64_t r, int64_t b) NOTHROW;
-   // copy constructor
    rect(const RECT& srcRect) NOTHROW;
-   rect(const RECT64& srcRect) NOTHROW;
-   // from a pointer to another rect
-   rect(LPCRECT lpSrcRect) NOTHROW;
-   // from a point and size
+   rect(LPCRECT lpcrect) NOTHROW;
+   rect(LPCRECTD  lpcrect) NOTHROW;
+   rect(LPCRECT64  lpcrect) NOTHROW;
    rect(POINT point, SIZE size) NOTHROW;
-   // from size
    rect(SIZE size, POINT point = null_point()) NOTHROW;
-   // from two points
    rect(POINT topLeft, POINT bottomRight) NOTHROW;
 
 // Attributes (in addition to RECT members)
@@ -181,18 +176,18 @@ public:
    void assign(const RECT & rect,e_orientation eorientation) NOTHROW;
    void assign_normal(const RECT & rect,e_orientation eorientation) NOTHROW;
 
-   LONG minimum_dimension() const NOTHROW{ return MIN(width(),height()); }
-   LONG maximum_dimension() const NOTHROW{ return MAX(width(),height()); }
-   LONG min_dimension() const NOTHROW{ return minimum_dimension(); }
-   LONG max_dimension() const NOTHROW{ return maximum_dimension(); }
-   LONG min_dim() const NOTHROW{ return min_dimension(); }
-   LONG max_dim() const NOTHROW{ return max_dimension(); }
+   LONG minimum_dimension() const NOTHROW { return MIN(width(),height()); }
+   LONG maximum_dimension() const NOTHROW { return MAX(width(),height()); }
+   LONG min_dimension() const NOTHROW { return minimum_dimension(); }
+   LONG max_dimension() const NOTHROW { return maximum_dimension(); }
+   LONG min_dim() const NOTHROW { return min_dimension(); }
+   LONG max_dim() const NOTHROW { return max_dimension(); }
 
-   LONG minimum_natural_dimension() const NOTHROW{ return MIN(MAX(0, width()),MAX(0,height())); }
-   LONG maximum_natural_dimension() const NOTHROW{ return MAX(MAX(0, width()),MAX(0, height())); }
+   LONG minimum_natural_dimension() const NOTHROW { return MIN(MAX(0, width()),MAX(0,height())); }
+   LONG maximum_natural_dimension() const NOTHROW { return MAX(MAX(0, width()),MAX(0, height())); }
 
-   LONG minimum_absolute_dimension() const NOTHROW{ return MIN(abs(width()),abs(height())); }
-   LONG maximum_absolute_dimension() const NOTHROW{ return MIN(abs(width()),abs(height())); }
+   LONG minimum_absolute_dimension() const NOTHROW { return MIN(abs(width()),abs(height())); }
+   LONG maximum_absolute_dimension() const NOTHROW { return MIN(abs(width()),abs(height())); }
 
    LONG minimum_signed_absolute_dimension(bool bNegativePreference = true) const NOTHROW;
    LONG maximum_signed_absolute_dimension(bool bPositivePreference = true) const NOTHROW;
@@ -363,15 +358,15 @@ public:
    void assign_normal(const RECT64 * lpcrect,e_orientation eorientation) NOTHROW;
 
 
-   int64_t minimum_dimension() const NOTHROW{ return MIN(width(),height()); }
-   int64_t maximum_dimension() const NOTHROW{ return MAX(width(),height()); }
-   int64_t min_dimension() const NOTHROW{ return minimum_dimension(); }
-   int64_t max_dimension() const NOTHROW{ return maximum_dimension(); }
-   int64_t min_dim() const NOTHROW{ return min_dimension(); }
-   int64_t max_dim() const NOTHROW{ return max_dimension(); }
+   int64_t minimum_dimension() const NOTHROW { return MIN(width(),height()); }
+   int64_t maximum_dimension() const NOTHROW { return MAX(width(),height()); }
+   int64_t min_dimension() const NOTHROW { return minimum_dimension(); }
+   int64_t max_dimension() const NOTHROW { return maximum_dimension(); }
+   int64_t min_dim() const NOTHROW { return min_dimension(); }
+   int64_t max_dim() const NOTHROW { return max_dimension(); }
 
-   int64_t minimum_natural_dimension() const NOTHROW{ return MIN(MAX(0,width()),MAX(0,height())); }
-   int64_t maximum_natural_dimension() const NOTHROW{ return MAX(MAX(0,width()),MAX(0,height())); }
+   int64_t minimum_natural_dimension() const NOTHROW { return MIN(MAX(0,width()),MAX(0,height())); }
+   int64_t maximum_natural_dimension() const NOTHROW { return MAX(MAX(0,width()),MAX(0,height())); }
 
    int64_t minimum_absolute_dimension() const NOTHROW;
    int64_t maximum_absolute_dimension() const NOTHROW;
@@ -469,18 +464,13 @@ class CLASS_DECL_AURA rectd : public RECTD
 {
 // Constructors
 public:
-   // uninitialized rectangle
    rectd() NOTHROW;
-   // from left, top, right, and bottom
    rectd(double l, double t, double r, double b) NOTHROW;
-   // copy constructor
    rectd(const RECTD& srcRect) NOTHROW;
-   rectd(const RECT64& srcRect) NOTHROW;
-   // from a pointer to another rectd
-   rectd(LPCRECTD lpSrcRect) NOTHROW;
-   // from a point and size
+   rectd(LPCRECT lpcrect) NOTHROW;
+   rectd(LPCRECTD lpcect) NOTHROW;
+   rectd(LPCRECT64 lpcrect) NOTHROW;
    rectd(POINTD point, SIZED size) NOTHROW;
-   // from two points
    rectd(POINTD topLeft, POINTD bottomRight) NOTHROW;
 
 // Attributes (in addition to RECTD members)
@@ -620,15 +610,15 @@ public:
    void assign(const RECTD * lpcrect,e_orientation eorientation) NOTHROW;
    void assign_normal(const RECTD * lpcrect,e_orientation eorientation) NOTHROW;
 
-   double minimum_dimension() const NOTHROW{ return MIN(width(),height()); }
-   double maximum_dimension() const NOTHROW{ return MAX(width(),height()); }
-   double min_dimension() const NOTHROW{ return minimum_dimension(); }
-   double max_dimension() const NOTHROW{ return maximum_dimension(); }
-   double min_dim() const NOTHROW{ return min_dimension(); }
-   double max_dim() const NOTHROW{ return max_dimension(); }
+   double minimum_dimension() const NOTHROW { return MIN(width(),height()); }
+   double maximum_dimension() const NOTHROW { return MAX(width(),height()); }
+   double min_dimension() const NOTHROW { return minimum_dimension(); }
+   double max_dimension() const NOTHROW { return maximum_dimension(); }
+   double min_dim() const NOTHROW { return min_dimension(); }
+   double max_dim() const NOTHROW { return max_dimension(); }
 
-   double minimum_natural_dimension() const NOTHROW{ return MIN(MAX(0,width()),MAX(0,height())); }
-   double maximum_natural_dimension() const NOTHROW{ return MAX(MAX(0,width()),MAX(0,height())); }
+   double minimum_natural_dimension() const NOTHROW { return MIN(MAX(0,width()),MAX(0,height())); }
+   double maximum_natural_dimension() const NOTHROW { return MAX(MAX(0,width()),MAX(0,height())); }
 
    double minimum_absolute_dimension() const NOTHROW;
    double maximum_absolute_dimension() const NOTHROW;
@@ -802,17 +792,17 @@ public:
 inline bool rect::intersects_x(LPCRECT lpRect) const NOTHROW
 {
    return (left >= lpRect->left && left <= lpRect->right) ||
-         (right >= lpRect->left && right <= lpRect->right) ||
-         (lpRect->left >= left && lpRect->left <= right) ||
-         (lpRect->right >= left && lpRect->right <= right);
+          (right >= lpRect->left && right <= lpRect->right) ||
+          (lpRect->left >= left && lpRect->left <= right) ||
+          (lpRect->right >= left && lpRect->right <= right);
 }
 
 inline bool rect::intersects_y(LPCRECT lpRect) const NOTHROW
 {
    return (top >= lpRect->top && top <= lpRect->bottom) ||
-      (bottom >= lpRect->top && bottom <= lpRect->bottom) ||
-      (lpRect->top >= top && lpRect->top <= bottom) ||
-      (lpRect->bottom >= top && lpRect->bottom <= bottom);
+          (bottom >= lpRect->top && bottom <= lpRect->bottom) ||
+          (lpRect->top >= top && lpRect->top <= bottom) ||
+          (lpRect->bottom >= top && lpRect->bottom <= bottom);
 }
 
 inline bool rect::intersects(LPCRECT lpRect) const NOTHROW
