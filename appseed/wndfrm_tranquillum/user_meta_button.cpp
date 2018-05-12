@@ -105,7 +105,7 @@ namespace user
 
       pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
-      pgraphics->FillSolidRect(rectClient, pgraphics->m_spbrush->m_cr);
+      pgraphics->fill_solid_rect(rectClient, pgraphics->m_spbrush->m_cr);
 
       //pgraphics->FillEllipse(rectEllipse);
 
@@ -129,12 +129,12 @@ namespace user
       {
 
          m_brush->create_solid(pgraphics->get_current_pen().is_set()
-            ? pgraphics->get_current_pen()->m_cr : ARGB(255, 255, 255, 255));
+                               ? pgraphics->get_current_pen()->m_cr : ARGB(255, 255, 255, 255));
 
          pgraphics->SelectObject(m_brush);
 
          m_pen->create_solid(1.0, pgraphics->get_current_pen().is_set()
-            ? pgraphics->get_current_pen()->m_cr : ARGB(255, 255, 255, 255));
+                             ? pgraphics->get_current_pen()->m_cr : ARGB(255, 255, 255, 255));
 
          pgraphics->SelectObject(m_pen);
 
@@ -240,9 +240,9 @@ namespace user
    {
 
       //return false && ::user::button::keyboard_focus_is_focusable();
-      
+
       return false;
-      
+
 
    }
 

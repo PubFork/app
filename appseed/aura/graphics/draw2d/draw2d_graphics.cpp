@@ -675,7 +675,7 @@ namespace draw2d
    bool graphics::fill_rect(LPCRECT lpcrect)
    {
 
-      return fill_rect(rectd(lpcrect), m_spbrush);
+      return fill_rect(lpcrect, m_spbrush);
 
    }
 
@@ -683,7 +683,7 @@ namespace draw2d
    bool graphics::fill_rect(LPCRECTD lpcrect)
    {
 
-      return fill_rect(rect(lpcrect), m_spbrush);
+      return fill_rect(lpcrect, m_spbrush);
 
    }
 

@@ -781,7 +781,7 @@ namespace user
                      while (i < rectGrip.width() - 5 + 1)
                      {
 
-                        pgraphics->Draw3dRect(rectGrip.left + i, rectGrip.top, 3, rectGrip.height(), ARGB(84 + 23, 230, 230, 230), ARGB(84 + 23, 108 + 23, 108 + 23, 108 + 23));
+                        pgraphics->draw3d_rect_dim(rectGrip.left + i, rectGrip.top, 3, rectGrip.height(), ARGB(84 + 23, 230, 230, 230), ARGB(84 + 23, 108 + 23, 108 + 23, 108 + 23));
 
                         i += 5;
 
@@ -798,13 +798,13 @@ namespace user
                   if (m_pworkset->GetWndDraw()->get_handle() == GetActiveWindow() && m_crActiveCaptionTextBk != 0)
                   {
 
-                     pgraphics->FillSolidRect(m_rectCaptionTextBk, m_crActiveCaptionTextBk);
+                     pgraphics->fill_solid_rect(m_rectCaptionTextBk, m_crActiveCaptionTextBk);
 
                   }
                   else
                   {
 
-                     pgraphics->FillSolidRect(m_rectCaptionTextBk, m_crCaptionTextBk);
+                     pgraphics->fill_solid_rect(m_rectCaptionTextBk, m_crCaptionTextBk);
 
                   }
 

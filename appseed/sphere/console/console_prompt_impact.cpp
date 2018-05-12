@@ -323,7 +323,7 @@ namespace console
       m_sizeChar = pgraphics->GetTextExtent("M");
       m_sizeChar = m_sizeChar.max(pgraphics->GetTextExtent("p"));
 
-      pgraphics->FillSolidRect(rectClient,ARGB(dwAlpha,0,0,0));
+      pgraphics->fill_solid_rect(rectClient,ARGB(dwAlpha,0,0,0));
 
       pgraphics->set_text_color(crTopic);
 
@@ -350,7 +350,7 @@ namespace console
 
 
 
-         pgraphics->FillSolidRect(rectCaret,crTopic);
+         pgraphics->fill_solid_rect(rectCaret,crTopic);
 
       }
 

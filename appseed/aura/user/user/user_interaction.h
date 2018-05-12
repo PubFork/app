@@ -99,7 +99,7 @@ namespace user
       ::user::form *                      m_pformParent;
 
       //point                               m_ptCursor;
-
+      e_color                             m_ecolorBackground;
       bool                                m_bWorkspaceFullScreen;
       point                               m_ptScrollPassword1;
       bool                                m_bHideOnTransparentFrame;

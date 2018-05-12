@@ -22,6 +22,8 @@ namespace user
       m_columna(get_app())
    {
 
+      m_ecolorBackground = color_list_background;
+
       m_econtroltype = control_type_list;
 
       m_iImageSpacing = 2;
@@ -603,7 +605,7 @@ namespace user
 
       }
 
-      pdrawitem->m_crText = _001GetColor(::user::color_text);
+      pdrawitem->m_crText = _001GetColor(::user::color_list_item_text);
 
       pdrawitem->m_crTextBackground = 0;
 
@@ -6197,6 +6199,13 @@ namespace user
             RedrawWindow();
          }
       }
+      else
+      {
+
+         m_iDisplayItemHover = -1;
+         m_iSubItemHover = -1;
+
+      }
 
    }
 
@@ -6756,15 +6765,22 @@ namespace user
 
    sp(image_list) draw_list_item::get_image_list()
    {
+
       if (m_bListItemHover && m_pcolumn->m_pilHover != NULL)
       {
+
          return m_pcolumn->m_pilHover;
+
       }
       else
       {
+
          return m_pcolumn->m_pil;
+
       }
+
    }
+
 
    bool draw_list_item::draw_image()
    {
@@ -6941,17 +6957,17 @@ namespace user
             if (m_bListItemHover)
             {
 
-               m_crText = m_plist->_001GetColor(::user::color_text_selected_highlight);
+               m_crText = m_plist->_001GetColor(::user::color_list_item_text_selected_hover);
 
-               m_crItemBackground = m_plist->_001GetColor(::user::color_background_selected_highlight);
+               m_crItemBackground = m_plist->_001GetColor(::user::color_list_item_background_selected_hover);
 
             }
             else
             {
 
-               m_crText = m_plist->_001GetColor(::user::color_text_selected);
+               m_crText = m_plist->_001GetColor(::user::color_list_item_text_selected);
 
-               m_crItemBackground = m_plist->_001GetColor(::user::color_background_selected);
+               m_crItemBackground = m_plist->_001GetColor(::user::color_list_item_background_selected);
 
             }
 
@@ -6962,15 +6978,17 @@ namespace user
             if (m_bListItemHover)
             {
 
-               m_crText = m_plist->_001GetColor(::user::color_text_highlight);
+               m_crText = m_plist->_001GetColor(::user::color_list_item_text_hover);
 
-               m_crItemBackground = m_plist->_001GetColor(::user::color_background_highlight);
+               m_crItemBackground = m_plist->_001GetColor(::user::color_list_item_background_hover);
 
             }
             else
             {
 
-               m_crText = m_plist->_001GetColor(::user::color_text);
+               m_crText = m_plist->_001GetColor(::user::color_list_item_text);
+
+               m_crItemBackground = m_plist->_001GetColor(::user::color_list_item_background);
 
             }
 

@@ -1141,11 +1141,11 @@ SizingNone:;
 
                //rect.bottom++;
 
-               pgraphics->Draw3dRect(rect, Session.get_default_color(COLOR_BTNFACE) | 0xff000000, Session.get_default_color(COLOR_3DDKSHADOW) | 0xff000000);
+               pgraphics->draw3d_rect(rect, Session.get_default_color(COLOR_BTNFACE) | 0xff000000, Session.get_default_color(COLOR_3DDKSHADOW) | 0xff000000);
 
                rect.deflate(1, 1);
 
-               pgraphics->Draw3dRect(rect, Session.get_default_color(COLOR_BTNHILIGHT) | 0xff000000, Session.get_default_color(COLOR_BTNSHADOW) | 0xff000000);
+               pgraphics->draw3d_rect(rect, Session.get_default_color(COLOR_BTNHILIGHT) | 0xff000000, Session.get_default_color(COLOR_BTNSHADOW) | 0xff000000);
 
                rect.deflate(1, 1);
 
@@ -1153,9 +1153,10 @@ SizingNone:;
 
                //rect.bottom--;
 
-               pgraphics->FillSolidRect(rect, Session.get_default_color(COLOR_BTNFACE) | 0xff000000);
+               pgraphics->fill_solid_rect(rect, Session.get_default_color(COLOR_BTNFACE) | 0xff000000);
 
             }
+
 
             void FrameSchemaHardCoded001::DrawGripSet(::draw2d::graphics * pgraphics, const RECT & lpcrectClient)
             {

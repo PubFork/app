@@ -70,14 +70,14 @@ namespace filehandler
 
    }
 
-   
+
    void view::item::parse(const char * pszApp)
    {
-      
+
       m_strApp = pszApp;
-      
+
    }
-   
+
 
    void view::list::parse(::filehandler::handler * phandler, const char * pszTopic)
    {
@@ -110,25 +110,25 @@ namespace filehandler
 
       UNREFERENCED_PARAMETER(plist);
 
-      
+
 
       COLORREF cr;
       sp(::aura::application) papp = pview->get_app();
       bool bHover = pview->m_iHover == m_iIndex;
       cr = bHover ? ARGB(255, 230, 255, 230) : ARGB(255, 200, 255, 200);
       if(!Sess(papp).savings().is_trying_to_save(::aura::resource_processing)
-         && !Sess(papp).savings().is_trying_to_save(::aura::resource_display_bandwidth)
-         && !Sess(papp).savings().is_trying_to_save(::aura::resource_memory))
+            && !Sess(papp).savings().is_trying_to_save(::aura::resource_display_bandwidth)
+            && !Sess(papp).savings().is_trying_to_save(::aura::resource_memory))
       {
          class imaging & imaging = App(papp).imaging();
          imaging.color_blend(pgraphics, m_rectItem, cr, 127);
       }
       else
       {
-         pgraphics->FillSolidRect(m_rectItem, cr);
+         pgraphics->fill_solid_rect(m_rectItem, cr);
       }
       cr = bHover ? ARGB(255, 150, 255, 150) : ARGB(255, 50, 255, 50);
-      pgraphics->FillSolidRect(m_rectStatusImage, cr);
+      pgraphics->fill_solid_rect(m_rectStatusImage, cr);
       COLORREF cr1;
       COLORREF cr2;
       if(bHover)
@@ -143,7 +143,7 @@ namespace filehandler
          cr1 = ARGB(255, 100, 100, 100);
          cr2 = ARGB(255, 10, 10, 10);
       }
-      pgraphics->Draw3dRect(m_rectItem, cr1, cr2);
+      pgraphics->draw3d_rect(m_rectItem, cr1, cr2);
       cr |= 0xff000000;
       ::draw2d::brush_sp brushText(allocer());
       brushText->create_solid(cr);

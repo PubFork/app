@@ -14,6 +14,7 @@ namespace user
       m_bLButtonDown = false;
       m_bHover = false;
       m_iImageSpacing = 4;
+      m_ecolorBackground = color_list_header_background;
    }
 
    list_header::~list_header()

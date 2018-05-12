@@ -48,6 +48,8 @@ namespace user
    void interaction::user_interaction_common_construct()
    {
 
+      m_ecolorBackground = color_background;
+
       m_econtroltype = control_type_none;
 
       m_iItemHeight = -1;
@@ -1943,7 +1945,7 @@ restart:
 
          COLORREF cr = ARGB(200, 255, 255, 255);
 
-         style_color(cr, ::user::color_background);
+         style_color(cr, m_ecolorBackground);
 
          pgraphics->fill_solid_rect(rectClient, cr);
 
