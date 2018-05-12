@@ -1293,7 +1293,7 @@ namespace user
 
          pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
-         pgraphics->FillSolidRect(rectClient, crBackground);
+         pgraphics->fill_solid_rect(rectClient, crBackground);
 
       }
 

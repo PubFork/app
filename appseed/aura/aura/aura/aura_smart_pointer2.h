@@ -210,7 +210,7 @@ inline smart_pointer < T > & smart_pointer < T > ::operator = (const lparam & lp
 
    release();
 
-   m_p = (T *) lparam;
+   m_p = lparam.cast < T >();
 
    return * this;
 

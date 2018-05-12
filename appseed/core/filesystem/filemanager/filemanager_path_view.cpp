@@ -15,16 +15,16 @@ namespace filemanager
 
    }
 
-   
+
    void path_view::install_message_routing(::message::sender * psender)
    {
-      
+
       ::filemanager::impact::install_message_routing(psender);
       ::user::plain_edit::install_message_routing(psender);
-      
+
    }
-   
-   
+
+
    void path_view::on_update(::user::impact * pSender, LPARAM lHint, object* phint)
    {
 
@@ -36,7 +36,7 @@ namespace filemanager
          {
             update_hint * puh = (update_hint *) phint;
             if (puh->m_pview == this &&
-               puh->is_type_of(update_hint::TypeInitialize))
+                  puh->is_type_of(update_hint::TypeInitialize))
             {
                //            get_filemanager_manager() = puh->get_filemanager_manager();
                /*            m_pserverNext = simpledb::AppGet()->GetDataServer();
@@ -171,9 +171,9 @@ namespace filemanager
 
       //   GetClientRect(rectClient);
 
-      //   pgraphics->FillSolidRect(rectClient, ARGB(255, 255, 255, 255));
+      //   pgraphics->fill_solid_rect(rectClient, ARGB(255, 255, 255, 255));
 
-         ::user::plain_edit::_001OnDraw(pgraphics);
+      ::user::plain_edit::_001OnDraw(pgraphics);
 
       //}
 

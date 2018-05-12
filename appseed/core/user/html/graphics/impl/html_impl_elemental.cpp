@@ -679,7 +679,7 @@ namespace html
                if(m_pelemental->get_color(cr,::user::color_background, pdata->m_pform))
                {
 
-                  pgraphics->FillSolidRect(rect, cr);
+                  pgraphics->fill_solid_rect(rect, cr);
 
                }
 

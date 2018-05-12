@@ -3,11 +3,8 @@
 
 #include "aura/aura/aura/aura.h"
 #include "aura/aura/os/windows_common/windows_common_graphics.h"
+#include "aura/aura/os/windows/windows_d2d1_1.h"
 
-
-#undef new
-
-#include <D2d1_1.h>
 
 
 #include <winapifamily.h>

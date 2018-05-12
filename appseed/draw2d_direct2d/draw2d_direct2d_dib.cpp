@@ -891,7 +891,7 @@ namespace draw2d_direct2d
    //}
 
    ////////////////////////////////////////////////////////////////////////
-   //// Rectangle Functions
+   //// rectangle Functions
    ////////////////////////////////////////////////////////////////////////
 
    //void dib::copy (::draw2d::dib * pdib, int x, int y )
@@ -953,7 +953,7 @@ namespace draw2d_direct2d
    //   }
    //}
 
-   //void dib::FillRect ( int x, int y, int w, int h, int R, int G, int B )
+   //void dib::fill_rect ( int x, int y, int w, int h, int R, int G, int B )
    //{
    //   // Clip Rect
    //   int px=(x>=0) ? x : 0;
@@ -2908,7 +2908,7 @@ namespace draw2d_direct2d
 
       map(false);
 
-      rect rect(rectWindow);
+      class rect rect(rectWindow);
 
       //      Application.window_graphics_update_window(pwnd->get_window_graphics(),pwnd->get_handle(),m_pcolorref,rect,m_size.cx, m_size.cy, m_iScan, bTransferBuffer);
 
@@ -3024,7 +3024,7 @@ namespace draw2d_direct2d
 
             ::draw2d::keep k1(pgraphicsDst);
 
-            rect rDst;
+            class rect rDst;
             rDst.left = ptDst.x;
             rDst.top = ptDst.y;
             rDst.right = ptDst.x + size.cx;
@@ -3139,7 +3139,7 @@ namespace draw2d_direct2d
    m_spgraphics-> SetViewportOrg(point(0, 0));
    pwnd->_000OnDraw(pgraphics);
    m_spgraphics->SetViewportOrg(point(0, 0));
-   //(dynamic_cast<::win::graphics * >(pgraphics))->FillSolidRect(rectUpdate.left, rectUpdate.top, 100, 100, 255);
+   //(dynamic_cast<::win::graphics * >(pgraphics))->fill_solid_rect(rectUpdate.left, rectUpdate.top, 100, 100, 255);
    m_spgraphics->SelectClipRgn(NULL);
    m_spgraphics->SetViewportOrg(point(0, 0));
 
@@ -3153,7 +3153,7 @@ namespace draw2d_direct2d
    catch(...)
    {
    }
-   m_spgraphics->FillSolidRect(rectx, RGB(255, 255, 255));
+   m_spgraphics->fill_solid_rect(rectx, RGB(255, 255, 255));
    pobj->m_bRet = true;
    pbase->set_lresult(0);
 
@@ -3177,7 +3177,7 @@ namespace draw2d_direct2d
 
       ::rect rectDib1(null_point(), pdib->m_size);
 
-      get_graphics()->FillSolidRect(rectDib1, ARGB(255, R, G, B));
+      get_graphics()->fill_solid_rect(rectDib1, ARGB(255, R, G, B));
 
       sp(::draw2d_direct2d::graphics) pgraphicsDib1 = get_graphics();
 

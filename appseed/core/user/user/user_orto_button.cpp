@@ -45,7 +45,7 @@ namespace user
       if (!is_window_enabled())
       {
 
-         pgraphics->FillSolidRect(rectClient, ARGB(255, 84, 90, 80));
+         pgraphics->fill_solid_rect(rectClient, ARGB(255, 84, 90, 80));
 
          crText = ARGB(255, 49, 49, 23);
 
@@ -53,7 +53,7 @@ namespace user
       else if (m_iHover >= 0)
       {
 
-         pgraphics->FillSolidRect(rectClient, ARGB(184, 49, 49, 23));
+         pgraphics->fill_solid_rect(rectClient, ARGB(184, 49, 49, 23));
 
          crText = ARGB(255, 255, 255, 255);
 
@@ -61,7 +61,7 @@ namespace user
       else if (Session.get_keyboard_focus() == this)
       {
 
-         pgraphics->FillSolidRect(rectClient, ARGB(255, 255, 250, 184));
+         pgraphics->fill_solid_rect(rectClient, ARGB(255, 255, 250, 184));
 
          crText = ARGB(255, 255, 255, 255);
 

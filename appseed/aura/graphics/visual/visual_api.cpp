@@ -19,11 +19,11 @@ namespace visual
 
 
    void api::DrawBeziers(
-      ::draw2d::graphics * pgraphics,
-      LPPOINT             lppoints,
-      int32_t                  iCount,
-      double               dRateX,
-      LPPOINT               lppointOffset)
+   ::draw2d::graphics * pgraphics,
+   LPPOINT             lppoints,
+   int32_t                  iCount,
+   double               dRateX,
+   LPPOINT               lppointOffset)
    {
 
       rect clipRect;
@@ -31,16 +31,14 @@ namespace visual
       size viewportExt = pgraphics->GetViewportExt();
       point viewportOrg = pgraphics->GetViewportOrg();
 
-      pgraphics->OffsetViewportOrg(
-         lppointOffset->x,
-         lppointOffset->y);
+      pgraphics->OffsetViewportOrg(lppointOffset->x, lppointOffset->y);
 
       pgraphics->ScaleViewportExt((int32_t)dRateX, 1, 1, 1);
 
-      pgraphics->BeginPath();
+      pgraphics->begin_path();
       pgraphics->PolyBezier(lppoints, iCount);
-      pgraphics->EndPath();
-      pgraphics->StrokePath();
+      pgraphics->end_path();
+      pgraphics->stroke_path();
 
       pgraphics->SetWindowExt(viewportExt);
       pgraphics->SetViewportOrg(viewportOrg);
@@ -48,11 +46,11 @@ namespace visual
    }
 
    void api::DrawAndFillBeziers(
-      ::draw2d::graphics * pgraphics,
-      LPPOINT             lppoints,
-      int32_t                  iCount,
-      double               dRateX,
-      LPPOINT               lppointOffset)
+   ::draw2d::graphics * pgraphics,
+   LPPOINT             lppoints,
+   int32_t                  iCount,
+   double               dRateX,
+   LPPOINT               lppointOffset)
    {
 
       rect clipRect;
@@ -61,15 +59,15 @@ namespace visual
       point viewportOrg = pgraphics->GetViewportOrg();
 
       pgraphics->OffsetViewportOrg(
-         lppointOffset->x,
-         lppointOffset->y);
+      lppointOffset->x,
+      lppointOffset->y);
 
       pgraphics->ScaleViewportExt((int32_t)dRateX, 1, 1, 1);
 
-      pgraphics->BeginPath();
+      pgraphics->begin_path();
       pgraphics->PolyBezier(lppoints, iCount);
-      pgraphics->EndPath();
-      pgraphics->StrokeAndFillPath();
+      pgraphics->end_path();
+      pgraphics->stroke_and_fill_path();
 
       pgraphics->SetWindowExt(viewportExt);
       pgraphics->SetViewportOrg(viewportOrg);
@@ -77,11 +75,11 @@ namespace visual
    }
 
    void api::DrawAndFillBeziers(
-      ::draw2d::graphics * pgraphics,
-      array<point_array, point_array &> *
-      lpglyph,
-      double               dRateX,
-      LPPOINT               lppointOffset)
+   ::draw2d::graphics * pgraphics,
+   array<point_array, point_array &> *
+   lpglyph,
+   double               dRateX,
+   LPPOINT               lppointOffset)
    {
 
       rect clipRect;
@@ -90,8 +88,8 @@ namespace visual
       point viewportOrg = pgraphics->GetViewportOrg();
 
       pgraphics->OffsetViewportOrg(
-         lppointOffset->x,
-         lppointOffset->y);
+      lppointOffset->x,
+      lppointOffset->y);
 
       pgraphics->ScaleViewportExt((int32_t)(dRateX * 1000.0), 1, 1, 1);
 
@@ -106,14 +104,14 @@ namespace visual
    }
 
    void api::EmbossedTextOut(
-      ::draw2d::graphics * pgraphics,
-      const RECT &            rect,
-      double            dRateX,
-      double            dHeight,
-      const char *      psz,
-      LPINT             lpiCharsPositions,
-      int32_t               iCharsPositions,
-      int32_t               iOffset)
+   ::draw2d::graphics * pgraphics,
+   const RECT &            rect,
+   double            dRateX,
+   double            dHeight,
+   const char *      psz,
+   LPINT             lpiCharsPositions,
+   int32_t               iCharsPositions,
+   int32_t               iOffset)
    {
       ::rect clipRect;
 
@@ -138,10 +136,10 @@ namespace visual
       //      VERIFY(::SelectObject(pgraphics->m_hDC, pfont->m_hObject));
 
       pgraphics->text_out(rect.left, rect.top, psz);
-      pgraphics->BeginPath();
+      pgraphics->begin_path();
       pgraphics->text_out(rect.left, rect.top, psz);
-      pgraphics->EndPath();
-      pgraphics->StrokePath();
+      pgraphics->end_path();
+      pgraphics->stroke_path();
 
 
       //      VERIFY(::SetMapMode(pgraphics->m_hDC, iOldMapMode));
@@ -154,14 +152,14 @@ namespace visual
 
 
    void api::EmbossedTextOut(
-      ::draw2d::graphics * pgraphics,
-      const char *   psz,
-      int32_t            iLeft,
-      int32_t            iTop,
-      int32_t            iWidth,
-      COLORREF       crText,
-      COLORREF       crOutline,
-      int32_t            iLen)
+   ::draw2d::graphics * pgraphics,
+   const char *   psz,
+   int32_t            iLeft,
+   int32_t            iTop,
+   int32_t            iWidth,
+   COLORREF       crText,
+   COLORREF       crOutline,
+   int32_t            iLen)
    {
       rect clipRect;
 
@@ -214,14 +212,14 @@ namespace visual
    }
 
    void api::SimpleTextOut(
-      ::draw2d::graphics * pgraphics,
-      const RECT &        lpcrect,
-      double         dRateX,
-      double         dHeight,
-      const char *   psz,
-      LPINT          lpiCharsPositions,
-      int32_t            iCharsPositions,
-      int32_t            iOffset)
+   ::draw2d::graphics * pgraphics,
+   const RECT &        lpcrect,
+   double         dRateX,
+   double         dHeight,
+   const char *   psz,
+   LPINT          lpiCharsPositions,
+   int32_t            iCharsPositions,
+   int32_t            iOffset)
    {
       UNREFERENCED_PARAMETER(dRateX);
       UNREFERENCED_PARAMETER(dHeight);
@@ -242,10 +240,10 @@ namespace visual
    {
 
       pgraphics->text_out(rect.left, rect.top, psz);
-      pgraphics->BeginPath();
+      pgraphics->begin_path();
       pgraphics->text_out(rect.left, rect.top, psz);
-      pgraphics->EndPath();
-      pgraphics->StrokePath();
+      pgraphics->end_path();
+      pgraphics->stroke_path();
 
    }
 

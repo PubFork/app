@@ -93,7 +93,7 @@ namespace html
 
       }
 
-      
+
       float table::calc_width()
       {
 
@@ -116,7 +116,7 @@ namespace html
 //
 //
 //         }
-         
+
          float cx = 0.f;
 
          for (int32_t i = 0; i < m_columna.get_size(); i++)
@@ -231,24 +231,24 @@ namespace html
          }
 
          m_box.right =
-            m_box.left
-            + cx
-            + m_margin.left
-            + m_margin.right
-            + m_border.left
-            + m_border.right;
+         m_box.left
+         + cx
+         + m_margin.left
+         + m_margin.right
+         + m_border.left
+         + m_border.right;
 //            + m_padding.left
-  //          + m_padding.right;
+         //          + m_padding.right;
 
          m_box.bottom =
-            m_box.top
-            + cy
-            + m_margin.top
-            + m_margin.bottom
-            + m_border.top
-            + m_border.bottom;
+         m_box.top
+         + cy
+         + m_margin.top
+         + m_margin.bottom
+         + m_border.top
+         + m_border.bottom;
 //            + m_padding.top
-  //          + m_padding.bottom;
+         //          + m_padding.bottom;
 
          pdata->m_layoutstate1.m_cya.last() = m_box.get_cy();
 
@@ -267,7 +267,7 @@ namespace html
 
       void table::layout_phase3(data * pdata)
       {
-         
+
          UNREFERENCED_PARAMETER(pdata);
 
          set_xy(pdata);
@@ -347,7 +347,7 @@ namespace html
          /*if(m_iBorder > 0)
          {
 
-         pdata->m_pdc->Draw3dRect(get_x() - m_iBorder - 2, get_y() - m_iBorder - 2, 
+         pdata->m_pdc->draw3d_rect(get_x() - m_iBorder - 2, get_y() - m_iBorder - 2,
          get_cx() + ((m_iBorder + 2) * 2), get_cy() + ((m_iBorder + 2) * 2), ARGB(255, 184, 184, 184), ARGB(255, 84, 84, 84));
 
          }*/

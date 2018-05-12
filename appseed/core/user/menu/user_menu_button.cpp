@@ -79,7 +79,7 @@ namespace user
          pta.add(point(rectPopupArrow.right, (rectPopupArrow.bottom + rectPopupArrow.top) / 2));
          pta.add(point(rectPopupArrow.left, rectPopupArrow.top));
          pta.add(point(rectPopupArrow.left, rectPopupArrow.bottom));
-         pgraphics->Polygon(pta.get_data(), (int32_t) pta.get_size());
+         pgraphics->polygon(pta);
       }
 
       _001DrawCheck(pgraphics);
@@ -162,9 +162,9 @@ namespace user
          if(m_echeck == ::check::checked)
          {
 
-            pgraphics->FillSolidRect(rectImageBorder, RGB(127, 127, 127));
+            pgraphics->fill_solid_rect(rectImageBorder, RGB(127, 127, 127));
 
-            pgraphics->Draw3dRect(rectImageBorder, Session.get_default_color(COLOR_3DSHADOW), Session.get_default_color(COLOR_3DHILIGHT));
+            pgraphics->draw3d_rect(rectImageBorder, Session.get_default_color(COLOR_3DSHADOW), Session.get_default_color(COLOR_3DHILIGHT));
 
          }
 

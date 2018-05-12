@@ -12,15 +12,18 @@ class CLASS_DECL_AURA rect : public tagRECT
 public:
 
 
-   rect() NOTHROW;
-   rect(int64_t l, int64_t t, int64_t r, int64_t b) NOTHROW;
-   rect(const RECT& srcRect) NOTHROW;
-   rect(LPCRECT lpcrect) NOTHROW;
-   rect(LPCRECTD  lpcrect) NOTHROW;
-   rect(LPCRECT64  lpcrect) NOTHROW;
-   rect(POINT point, SIZE size) NOTHROW;
-   rect(SIZE size, POINT point = null_point()) NOTHROW;
-   rect(POINT topLeft, POINT bottomRight) NOTHROW;
+   rect() NOTHROW {}
+   rect(i64 l, int64_t t, int64_t r, int64_t b) NOTHROW { left = l; top = t; right = r;  bottom = b;  }
+   rect(const RECT & r) NOTHROW { *this = r; }
+
+rect(const RECTD & rect) NOTHROW : rect(rect.left, rect.top, rect.right, rect.bottom) {}
+rect(const RECT64 & rect) NOTHROW : rect(rect.left, rect.top, rect.right, rect.bottom) {}
+rect(const RECT * prect) NOTHROW : rect(*prect) {}
+rect(const RECTD * prect) NOTHROW : rect(*prect) {}
+rect(const RECT64 * prect) NOTHROW : rect(*prect) {}
+rect(point pt, size sz) NOTHROW : rect(pt.x, pt.y, pt.x + sz.cx, pt.y + sz.cy) {}
+rect(size sz, point pt = null_point()) NOTHROW : rect(pt, sz) {}
+rect(point ptTopLeft, point ptBottomRight) NOTHROW : rect(ptTopLeft.x, ptTopLeft.y, ptBottomRight.x, ptBottomRight.y) {}
 
 // Attributes (in addition to RECT members)
 
@@ -199,26 +202,23 @@ public:
 
 class CLASS_DECL_AURA rect64 : public RECT64
 {
-// Constructors
 public:
-   // uninitialized rect64angle
-   rect64() NOTHROW;
-   // from left, top, right, and bottom
-   rect64(int64_t l, int64_t t, int64_t r, int64_t b) NOTHROW;
-   // copy constructor
-   rect64(const RECT& srcRect) NOTHROW;
-   // copy constructor
-   rect64(const RECT64 & srcRect) NOTHROW;
-   // from a point64_ter to another rect64
-   rect64(const RECT * lpSrcRect) NOTHROW;
-   // from a point64_ter to another rect64
-   rect64(const RECT64 * lpSrcRect) NOTHROW;
-   // from a POINT64 and size
-   rect64(POINT64 POINT64, SIZE64 size) NOTHROW;
-   // from two point64_ts
-   rect64(POINT64 topLeft, POINT64 bottomRight) NOTHROW;
 
-// Attributes (in addition to RECT members)
+
+   rect64() NOTHROW {}
+   rect64(i64 l, i64 t, i64 r, i64 b) NOTHROW { left = l; top = t; right = r; bottom = b; }
+   rect64(const RECT64 & rect) NOTHROW { *this = rect; }
+
+
+rect64(const RECT & rect) NOTHROW : rect64(rect.left, rect.top, rect.right, rect.bottom) {}
+rect64(const RECTD & rect) NOTHROW : rect64(rect.left, rect.top, rect.right, rect.bottom) {}
+rect64(const RECT * prect) NOTHROW : rect64(*prect) {}
+rect64(const RECTD * prect) NOTHROW : rect64(*prect) {}
+rect64(const RECT64 * prect) NOTHROW : rect64(*prect) {}
+rect64(point64 pt, size64 sz) NOTHROW : rect64(pt.x, pt.y, pt.x + sz.cx, pt.y + sz.cy) {}
+rect64(size64 sz, point64 pt = null_point()) NOTHROW : rect64(pt, sz) {}
+rect64(point64 ptTopLeft, point64 ptBottomRight) NOTHROW : rect64(ptTopLeft.x, ptTopLeft.y, ptBottomRight.x, ptBottomRight.y) {}
+
 
    // retrieves the width
    int64_t width() const NOTHROW;
@@ -462,18 +462,22 @@ class pointd_array;
 
 class CLASS_DECL_AURA rectd : public RECTD
 {
-// Constructors
 public:
-   rectd() NOTHROW;
-   rectd(double l, double t, double r, double b) NOTHROW;
-   rectd(const RECTD& srcRect) NOTHROW;
-   rectd(LPCRECT lpcrect) NOTHROW;
-   rectd(LPCRECTD lpcect) NOTHROW;
-   rectd(LPCRECT64 lpcrect) NOTHROW;
-   rectd(POINTD point, SIZED size) NOTHROW;
-   rectd(POINTD topLeft, POINTD bottomRight) NOTHROW;
 
-// Attributes (in addition to RECTD members)
+
+   rectd() NOTHROW {}
+   rectd(f64 l, f64 t, f64 r, f64 b) NOTHROW { left = l; top = t; right = r; bottom = b; }
+   rectd(const RECTD & rect) NOTHROW { *this = rect; }
+
+
+rectd(const RECT & rect) NOTHROW : rectd(rect.left, rect.top, rect.right, rect.bottom) {}
+rectd(const RECT64 & rect) NOTHROW : rectd(rect.left, rect.top, rect.right, rect.bottom) {}
+rectd(const RECT * prect) NOTHROW : rectd(*prect) {}
+rectd(const RECTD * prect) NOTHROW : rectd(*prect) {}
+rectd(const RECT64 * prect) NOTHROW : rectd(*prect) {}
+rectd(pointd pt, sized sz) NOTHROW : rectd(pt.x, pt.y, pt.x + sz.cx, pt.y + sz.cy) {}
+rectd(sized sz, pointd pt = null_point()) NOTHROW : rectd(pt, sz) {}
+rectd(pointd ptTopLeft, pointd ptBottomRight) NOTHROW : rectd(ptTopLeft.x, ptTopLeft.y, ptBottomRight.x, ptBottomRight.y) {}
 
    // retrieves the width
    double width() const NOTHROW;

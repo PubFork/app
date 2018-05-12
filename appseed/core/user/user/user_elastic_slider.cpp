@@ -216,17 +216,17 @@ namespace user
       rect rect;
       GetSliderRect(rect);
 
-      pgraphics->Draw3dRect(rect,ARGB(bAlpha,255,255,255),ARGB(bAlpha,255,255,255));
+      pgraphics->draw3d_rect(rect,ARGB(bAlpha,255,255,255),ARGB(bAlpha,255,255,255));
       rect.deflate(1, 1);
-      pgraphics->Draw3dRect(rect,ARGB(bAlpha,255,255,0),ARGB(bAlpha,255,255,0));
+      pgraphics->draw3d_rect(rect,ARGB(bAlpha,255,255,0),ARGB(bAlpha,255,255,0));
       rect.deflate(1, 1);
-      pgraphics->Draw3dRect(rect,ARGB(bAlpha,255,255,255),ARGB(bAlpha,255,255,255));
+      pgraphics->draw3d_rect(rect,ARGB(bAlpha,255,255,255),ARGB(bAlpha,255,255,255));
       if(m_bSlide)
       {
          pgraphics->move_to(rect.center());
-         POINT pt;
-         Session.get_cursor_pos(&pt);
-         ScreenToClient(&pt);
+         point pt;
+         Session.get_cursor_pos(pt);
+         ScreenToClient(pt);
          pgraphics->line_to(pt);
       }
    }

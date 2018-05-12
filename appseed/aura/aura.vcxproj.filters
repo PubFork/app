@@ -2702,6 +2702,12 @@
     <ClInclude Include="graphics\graphics_double_pass_scale.h">
       <Filter>Header Files\graphics</Filter>
     </ClInclude>
+    <ClInclude Include="aura\os\windows\windows_gdiplus.h">
+      <Filter>Header Files\aura\os\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\windows\windows_d2d1_1.h">
+      <Filter>Header Files\aura\os\windows</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="multithreading\multithreading_condition.cpp">

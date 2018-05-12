@@ -90,7 +90,7 @@ namespace hotplugin
 
       rectProgressComplement.left = rectProgress.right;
 
-      pgraphics->Rectangle(rectProgressComplement);
+      pgraphics->rectangle(rectProgressComplement);
 
       {
 
@@ -98,14 +98,13 @@ namespace hotplugin
          ::draw2d::brush_sp br(allocer());
          get_progress_color(uchR,uchG,uchB,dRate,0);
          br->create_solid(ARGB(184,uchR,uchG,uchB));
-         pgraphics->FillRect(rectProgress,br);
+         pgraphics->fill_rect(rectProgress,br);
 
       }
 
       pen->create_solid(1.0,ARGB(149,149,149,142));
 
-      pgraphics->DrawRect(rectBar, pen);
-
+      pgraphics->draw_rect(rectBar, pen);
 
       ::draw2d::font_sp f(allocer());
 

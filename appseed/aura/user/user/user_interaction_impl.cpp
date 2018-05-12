@@ -2666,13 +2666,13 @@ namespace user
                if (m_bComposite)
                {
 
-                  pgraphics->FillSolidRect(r, ARGB(0, 0, 0, 0));
+                  pgraphics->fill_solid_rect(r, ARGB(0, 0, 0, 0));
 
                }
                else
                {
 
-                  pgraphics->FillSolidRect(r, ARGB(255, 192, 192, 192));
+                  pgraphics->fill_solid_rect(r, ARGB(255, 192, 192, 192));
 
                }
 
@@ -2773,13 +2773,13 @@ namespace user
 //            if (m_bComposite)
 //            {
 //
-//               pgraphics->FillSolidRect(r, ARGB(0, 0, 0, 0));
+//               pgraphics->fill_solid_rect(r, ARGB(0, 0, 0, 0));
 //
 //            }
 //            else
 //            {
 //
-//               pgraphics->FillSolidRect(r, ARGB(255, 184, 184, 177));
+//               pgraphics->fill_solid_rect(r, ARGB(255, 184, 184, 177));
 //
 //            }
 //
@@ -2970,7 +2970,7 @@ namespace user
 //
 //      //       pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 //
-//      //       pgraphics->FillSolidRect(rectClient, ARGB(128, 0, 255, 0));
+//      //       pgraphics->fill_solid_rect(rectClient, ARGB(128, 0, 255, 0));
 //      {
 //         //point pt;
 //         //::GetCursorPos(&pt);

@@ -10,7 +10,7 @@ bool gif_load_frame(::draw2d::dib * pdibCompose, ::visual::dib_sp::array * pdiba
 
    COLORREF crBack = 0;
 
- 
+
    int w = pointer->m_dib->m_iScan / sizeof(COLORREF);
 
    for (index y = 0; y < pointer->m_rect.height(); y++)
@@ -75,7 +75,7 @@ bool gif_load_frame(::draw2d::dib * pdibCompose, ::visual::dib_sp::array * pdiba
 
          RECT r = pdiba->element_at(uFrameIndex - 1)->m_rect;
 
-         pdibCompose->get_graphics()->FillSolidRect(r, crBack);
+         pdibCompose->get_graphics()->fill_solid_rect(r, crBack);
 
       }
       pdibCompose->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_blend);

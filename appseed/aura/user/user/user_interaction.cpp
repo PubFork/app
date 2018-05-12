@@ -1931,7 +1931,7 @@ restart:
          if (cr != 0)
          {
 
-            pgraphics->FillSolidRect(rectClient, cr);
+            pgraphics->fill_solid_rect(rectClient, cr);
 
          }
 
@@ -1945,7 +1945,7 @@ restart:
 
          style_color(cr, ::user::color_background);
 
-         pgraphics->FillSolidRect(rectClient, cr);
+         pgraphics->fill_solid_rect(rectClient, cr);
 
       }
 

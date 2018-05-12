@@ -689,14 +689,16 @@ string itemidlist::_tooltip_info(IShellFolder * lpsf, LPCITEMIDLIST pidl)
 
    pinfo->GetInfoTip(0, &lpwsz);
 
-   return lpwsz;
+   return utf8(lpwsz);
 
 }
 
 
 LPITEMIDLIST itemidlist::_full(IShellFolder * lpsf, LPCITEMIDLIST lpi)
 {
-   OLECHAR szOleChar[MAX_PATH + 1];
+
+   //   OLECHAR szOleChar[MAX_PATH + 1];
+
    comptr < IShellFolder > lpsfDeskTop;
    LPITEMIDLIST lpifq;
    ULONG ulEaten, ulAttribs;

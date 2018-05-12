@@ -60,7 +60,7 @@ namespace visual
 
       m_dib->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
 
-      m_dib->get_graphics()->FillSolidRect(0, 0, m_size.cx, m_size.cy, pdata->m_dwaBg[iBox]);
+      m_dib->get_graphics()->fill_solid_rect(rect(m_size.cx), pdata->m_dwaBg[iBox]);
 
       m_dib->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_blend);
 
@@ -134,7 +134,7 @@ namespace visual
 
          }
 
-         pgraphics->BitBlt(pbox->m_rect, pbox->m_dib->get_graphics());
+         pgraphics->draw(pbox->m_rect, pbox->m_dib->get_graphics());
 
       }
 
@@ -149,8 +149,11 @@ namespace visual
             pbox->update(this, BOX_SEL, m_itemptra[m_iSel]->m_strSample);
 
          }
-         pgraphics->BitBlt(pbox->m_rect, pbox->m_dib->get_graphics());
+
+         pgraphics->draw(pbox->m_rect, pbox->m_dib->get_graphics());
+
       }
+
       if (m_iHover >= 0 && m_iHover != m_iSel)
       {
 
@@ -162,9 +165,10 @@ namespace visual
             pbox->update(this, BOX_HOVER, m_itemptra[m_iHover]->m_strSample);
 
          }
-         pgraphics->BitBlt(pbox->m_rect, pbox->m_dib->get_graphics());
-      }
 
+         pgraphics->draw(pbox->m_rect, pbox->m_dib->get_graphics());
+
+      }
 
    }
 

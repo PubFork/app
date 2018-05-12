@@ -39,10 +39,10 @@ namespace visual
       for(int32_t i = 1; i < iLen; i++)
       {
          ::GetTextExtentPoint32U(
-            (HDC)pgraphics->get_os_data(),
-            str,
-            i,
-            &sizea[i]);
+         (HDC)pgraphics->get_os_data(),
+         str,
+         i,
+         &sizea[i]);
       }
 
    }
@@ -113,67 +113,67 @@ namespace visual
       return -1;
    }*/
 
-   void graphics_extension::FillSolidRect(HDC hdc, const RECT64 * lpRect, COLORREF clr)
-   {
-
-#ifdef WINDOWSEX
-
-      ::SetBkColor(hdc, clr);
-
-      rect rect;
-
-      if(::copy(rect, lpRect))
-      {
-
-         ::ExtTextOut(hdc, 0, 0, ETO_OPAQUE, &rect, NULL, 0, NULL);
-
-      }
-
-#else
-
-      _throw(todo(get_app()));
-
-#endif
-
-   }
-
-
-   void graphics_extension::FillSolidRect(HDC hdc, LPCRECT lpRect, COLORREF clr)
-   {
-
-#ifdef WINDOWSEX
-
-      ::SetBkColor(hdc, clr);
-
-      ::ExtTextOut(hdc, 0, 0, ETO_OPAQUE, lpRect, NULL, 0, NULL);
-
-#else
-
-      _throw(todo(get_app()));
-
-#endif
-
-   }
-
-
-   void graphics_extension::FillSolidRect(HDC hdc, int32_t x, int32_t y, int32_t cx, int32_t cy, COLORREF clr)
-   {
-
-#ifdef WINDOWSEX
-
-      ::SetBkColor(hdc, clr);
-
-      rect rect(x, y, x + cx, y + cy);
-
-      ::ExtTextOut(hdc, 0, 0, ETO_OPAQUE, &rect, NULL, 0, NULL);
-
-#else
-
-      _throw(todo(get_app()));
-
-#endif
-
-   }
+//   void graphics_extension::fill_solid_rect(HDC hdc, const RECT64 * lpRect, COLORREF clr)
+//   {
+//
+//#ifdef WINDOWSEX
+//
+//      ::SetBkColor(hdc, clr);
+//
+//      rect rect;
+//
+//      if(::copy(rect, lpRect))
+//      {
+//
+//         ::ExtTextOut(hdc, 0, 0, ETO_OPAQUE, &rect, NULL, 0, NULL);
+//
+//      }
+//
+//#else
+//
+//      _throw(todo(get_app()));
+//
+//#endif
+//
+//   }
+//
+//
+//   void graphics_extension::fill_solid_rect(HDC hdc, LPCRECT lpRect, COLORREF clr)
+//   {
+//
+//#ifdef WINDOWSEX
+//
+//      ::SetBkColor(hdc, clr);
+//
+//      ::ExtTextOut(hdc, 0, 0, ETO_OPAQUE, lpRect, NULL, 0, NULL);
+//
+//#else
+//
+//      _throw(todo(get_app()));
+//
+//#endif
+//
+//   }
+//
+//
+//   void graphics_extension::fill_solid_rect(HDC hdc, int32_t x, int32_t y, int32_t cx, int32_t cy, COLORREF clr)
+//   {
+//
+//#ifdef WINDOWSEX
+//
+//      ::SetBkColor(hdc, clr);
+//
+//      rect rect(x, y, x + cx, y + cy);
+//
+//      ::ExtTextOut(hdc, 0, 0, ETO_OPAQUE, &rect, NULL, 0, NULL);
+//
+//#else
+//
+//      _throw(todo(get_app()));
+//
+//#endif
+//
+//   }
 
 
 } // namespace visual

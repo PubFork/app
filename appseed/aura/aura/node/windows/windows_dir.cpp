@@ -1060,7 +1060,7 @@ namespace windows
 
       HRESULT hr = SHGetKnownFolderPath(kfid, 0, hToken, &pwszPath);
 
-      return pwszPath;
+      return utf8(pwszPath);
 
    }
 

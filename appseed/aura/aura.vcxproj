@@ -2678,7 +2678,9 @@
     <ClInclude Include="aura\os\os_windowing.h" />
     <ClInclude Include="aura\os\windows\windows.h" />
     <ClInclude Include="aura\os\windows\windows_comptr.h" />
+    <ClInclude Include="aura\os\windows\windows_d2d1_1.h" />
     <ClInclude Include="aura\os\windows\windows_file_watcher.h" />
+    <ClInclude Include="aura\os\windows\windows_gdiplus.h" />
     <ClInclude Include="aura\os\windows\windows_implementation.h" />
     <ClInclude Include="aura\os\windows\windows_itemidlist.h" />
     <ClInclude Include="aura\os\windows\windows_multithreading.h" />

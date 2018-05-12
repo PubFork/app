@@ -201,7 +201,7 @@ namespace draw2d
       //
       // get_round_rect()
       //
-      // Purpose:     Defines a Rounded Rectangle and places it in the GraphicsPath
+      // Purpose:     Defines a Rounded rectangle and places it in the GraphicsPath
       //
       // Parameters:  pPath		- [out] pointer to GraphicsPath that will recieve the
       //									path data

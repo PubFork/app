@@ -16,10 +16,8 @@ namespace hotplugin
    class CLASS_DECL_BASE plugin :
       virtual public ::simple_ui::style,
       virtual public ::simple_ui::interaction,
-      virtual public ::base::session
-//#ifndef METROWIN
-      , virtual public ::aura::ipc::ipc
-//#endif
+      virtual public ::base::session,
+      virtual public ::aura::ipc::ipc
    {
    public:
 
@@ -38,10 +36,10 @@ namespace hotplugin
       bool                          m_bOk;
       bool                          m_bStream;
 
-      void *                        m_pbitmap;
-      void *                        m_pgraphics;
+      ::draw2d::dib_sp              m_dib;
+      ::draw2d::graphics_sp         m_pgraphics;
       file_memory_map               m_memorymapBitmap;
-      SIZE                          m_sizeBitmap;
+      size                          m_sizeBitmap;
 
       string                        m_strStatus;
       string                        m_strStatus2;

@@ -245,11 +245,11 @@ inline CLASS_DECL_AURA POINT & offset(POINT & pt, LONG x, LONG y)
    return pt;
 }
 
-CLASS_DECL_AURA bool polygon_contains(LPPOINT lppt, LPPOINT lpptPolygon, int iCount);
+CLASS_DECL_AURA bool polygon_contains(LPCPOINT lppt, LPCPOINT lpptPolygon, i32 iCount);
 
-CLASS_DECL_AURA bool polygon_contains(LPPOINT64 lppt,LPPOINT64 lpptPolygon,int iCount);
+CLASS_DECL_AURA bool polygon_contains(LPCPOINT64 lppt, LPCPOINT64 lpptPolygon, i32 iCount);
 
-CLASS_DECL_AURA bool polygon_contains(LPPOINTD lppt,LPPOINTD lpptPolygon,int iCount);
+CLASS_DECL_AURA bool polygon_contains(LPCPOINTD lppt, LPCPOINTD lpptPolygon, i32 iCount);
 
 
 inline CLASS_DECL_AURA POINT & top_left(LPRECT lpcrect)
@@ -368,11 +368,11 @@ inline CLASS_DECL_AURA POINTD & offset(POINTD & pt, f64 x, f64 y)
    return pt;
 }
 
-CLASS_DECL_AURA bool polygon_contains(LPPOINTD lppt, LPPOINTD lpptPolygon, int iCount);
+CLASS_DECL_AURA bool polygon_contains(LPCPOINTD lppt, LPCPOINTD lpptPolygon, i32 iCount);
 
-CLASS_DECL_AURA bool polygon_contains(LPPOINT64 lppt, LPPOINT64 lpptPolygon, int iCount);
+CLASS_DECL_AURA bool polygon_contains(LPCPOINT64 lppt, LPCPOINT64 lpptPolygon, i32 iCount);
 
-CLASS_DECL_AURA bool polygon_contains(LPPOINTD lppt, LPPOINTD lpptPolygon, int iCount);
+CLASS_DECL_AURA bool polygon_contains(LPCPOINTD lppt, LPCPOINTD lpptPolygon, i32 iCount);
 
 
 inline CLASS_DECL_AURA POINTD & top_left(LPRECTD lpcrectd)

@@ -111,15 +111,15 @@ namespace simple_ui
 
       br->CreateLinearGradientBrush(m_rect.top_left(), point(m_rect.left, m_rect.top + iBorderH), crOut, crIn);
 
-      pgraphics->FillRect(rect(m_rect.left, m_rect.top, (int32_t)m_rect.width(), iBorderH), br);
+      pgraphics->fill_rect(rect(m_rect.left, m_rect.top, (int32_t)m_rect.width(), iBorderH), br);
 
       br->create_solid(crIn);
 
-      pgraphics->FillRect(rect(m_rect.left, m_rect.top + iBorderH, (int32_t)m_rect.width(), (int32_t)m_rect.height() - (iBorderH * 2)), br);
+      pgraphics->fill_rect(rect(m_rect.left, m_rect.top + iBorderH, (int32_t)m_rect.width(), (int32_t)m_rect.height() - (iBorderH * 2)), br);
 
       br->CreateLinearGradientBrush(point(m_rect.left, m_rect.bottom - iBorderH), m_rect.bottom_left(), crIn, crOut);
 
-      pgraphics->FillRect(rect(m_rect.left, m_rect.bottom - iBorderH, (int32_t)m_rect.width(), iBorderH), br);
+      pgraphics->fill_rect(rect(m_rect.left, m_rect.bottom - iBorderH, (int32_t)m_rect.width(), iBorderH), br);
 
    }
 
@@ -142,7 +142,7 @@ namespace simple_ui
 
       //pgraphics->set_alpha_mode(::draw2d::alpha_mode_set);
 
-      //pgraphics->FillSolidRect(rect,ARGB(0,0,0,0));
+      //pgraphics->fill_solid_rect(rect,ARGB(0,0,0,0));
 
    }
 
@@ -220,7 +220,7 @@ namespace simple_ui
 
       pgraphics->SelectObject(p);
 
-      pgraphics->Rectangle(rectClient);
+      pgraphics->rectangle(rectClient);
 
    }
 
@@ -313,7 +313,7 @@ namespace simple_ui
 
       GetClientRect(rectWindow);
 
-      pgraphics->FillSolidRect(rectWindow, ARGB(84, 127, 127, 127));
+      pgraphics->fill_solid_rect(rectWindow, ARGB(84, 127, 127, 127));
 
    }
 
@@ -566,35 +566,35 @@ namespace simple_ui
 
 
 
-      // the value -1 indicates outside the control,
-      // other values may be control specific and are client hits
-      index interaction::hit_test(point ptScreen,::user::e_element & eelement)
+   // the value -1 indicates outside the control,
+   // other values may be control specific and are client hits
+   index interaction::hit_test(point ptScreen,::user::e_element & eelement)
+   {
+
+      sp(::user::interaction) pwnd = this;
+
+      rect rectWindow;
+
+      pwnd->GetWindowRect(rectWindow);
+
+      if(rectWindow.contains(ptScreen))
       {
 
-         sp(::user::interaction) pwnd = this;
+         eelement = ::user::element_client;
 
-         rect rectWindow;
-
-         pwnd->GetWindowRect(rectWindow);
-
-         if(rectWindow.contains(ptScreen))
-         {
-
-            eelement = ::user::element_client;
-
-            return 0;
-
-         }
-         else
-         {
-
-            eelement = ::user::element_none;
-
-            return -1;
-
-         }
+         return 0;
 
       }
+      else
+      {
+
+         eelement = ::user::element_none;
+
+         return -1;
+
+      }
+
+   }
 
 
 } // namespace simple_ui

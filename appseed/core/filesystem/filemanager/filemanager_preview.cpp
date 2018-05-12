@@ -71,11 +71,11 @@ namespace filemanager
    void preview::_001OnDraw(::draw2d::graphics * pgraphics)
    {
 
-      
+
 
       rect rectClient;
       GetClientRect(rectClient);
-      pgraphics->FillSolidRect(rectClient, RGB(200, 200, 190));
+      pgraphics->fill_solid_rect(rectClient, RGB(200, 200, 190));
 
       if(get_filemanager_manager() == NULL)
          return;

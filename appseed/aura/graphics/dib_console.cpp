@@ -25,10 +25,10 @@ COLORREF dib_console::console_COLORREF(int iColor)
 }
 
 dib_console::dib_console(::aura::application * papp,size sizeTile):
-object(papp),
-m_dib(allocer()),
-m_sizeTile(sizeTile),
-m_mutex(papp)
+   object(papp),
+   m_dib(allocer()),
+   m_sizeTile(sizeTile),
+   m_mutex(papp)
 {
    cout.m_spfile = this;
    m_x = 0;
@@ -46,14 +46,14 @@ void dib_console::SetWindowSize(int iHeight,int iWidth)
    m_dib->create(m_sizeTile.cx * m_sizeWindow.cx + m_iBorder * 2,m_sizeTile.cy * m_sizeWindow.cy + m_iBorder * 2);
    m_dib->get_graphics()->m_spfont.alloc(allocer());
    //m_dib->get_graphics()->m_spfont->create_pixel_font(FONT_SANS, m_sizeTile.cy * 0.92);
-   #ifdef LINUX
+#ifdef LINUX
 
    m_dib->get_graphics()->m_spfont->create_pixel_font("Ubuntu Mono",m_sizeTile.cy * 0.92);
 
-   #else
+#else
    m_dib->get_graphics()->m_spfont->create_pixel_font("Lucida Console",m_sizeTile.cy * 0.92);
 
-   #endif
+#endif
 
    SetScreenColor(::console::BLACK);
 
@@ -142,7 +142,7 @@ void dib_console::update_dib()
 
    for(int y = 0; y < m_stra.get_count(); y++)
    {
-      
+
       string & str = m_stra[y];
 
       for(int x = 0; x < str.get_length(); x++)
@@ -222,19 +222,21 @@ void dib_console::draw_write(char ch, int x, int y, int iColor)
 
          m_dib->get_graphics()->SelectObject(p2);
 
-         m_dib->get_graphics()->DrawLine(
-            m_iBorder + x * m_sizeTile.cx,
-            m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx + 1,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2
-            );
+         m_dib->get_graphics()->draw_line(
+         point(m_iBorder + x * m_sizeTile.cx,
+               m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2),
+         point(m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx + 1,
+               m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2)
+         );
 
          m_dib->get_graphics()->SelectObject(p);
 
-         m_dib->get_graphics()->DrawLine(
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,
-            m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy + 1
-            );
+         m_dib->get_graphics()->draw_line(
+         point(m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,
+               m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2),
+         point(m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,
+               m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy + 1)
+         );
 
          m_iLastPenColor = iColor;
          m_iLastPen = 1;
@@ -252,11 +254,12 @@ void dib_console::draw_write(char ch, int x, int y, int iColor)
 
          }
 
-         m_dib->get_graphics()->DrawLine(
-            m_iBorder + x * m_sizeTile.cx,
-            m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx + 1,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2
-            );
+         m_dib->get_graphics()->draw_line(
+         point(m_iBorder + x * m_sizeTile.cx,
+               m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2),
+         point(m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx + 1,
+               m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2)
+         );
 
          m_iLastPenColor = iColor;
          m_iLastPen = 2;
@@ -274,11 +277,12 @@ void dib_console::draw_write(char ch, int x, int y, int iColor)
 
          }
 
-         m_dib->get_graphics()->DrawLine(
-            m_iBorder + x * m_sizeTile.cx,
-            m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx + 1,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2
-            );
+         m_dib->get_graphics()->draw_line(
+         point(m_iBorder + x * m_sizeTile.cx,
+               m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2),
+         point(m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx + 1,
+               m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2)
+         );
 
          m_iLastPenColor = iColor;
          m_iLastPen = 1;
@@ -296,11 +300,12 @@ void dib_console::draw_write(char ch, int x, int y, int iColor)
 
          }
 
-         m_dib->get_graphics()->DrawLine(
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,
-            m_iBorder + y * m_sizeTile.cy,
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy + 1
-            );
+         m_dib->get_graphics()->draw_line(
+         point(m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,
+               m_iBorder + y * m_sizeTile.cy),
+         point(m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,
+               m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy + 1)
+         );
 
          m_iLastPenColor = iColor;
          m_iLastPen = 2;
@@ -312,18 +317,18 @@ void dib_console::draw_write(char ch, int x, int y, int iColor)
          ::draw2d::pen_sp & p = get_pen1(iColor);
          m_dib->get_graphics()->SelectObject(p2);
 
-         m_dib->get_graphics()->DrawLine(
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,
-            m_iBorder + y * m_sizeTile.cy,
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy + 1
-            );
+         m_dib->get_graphics()->draw_line(
+         m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,
+         m_iBorder + y * m_sizeTile.cy,
+         m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy + 1
+         );
          m_dib->get_graphics()->SelectObject(p);
 
-         m_dib->get_graphics()->DrawLine(
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,
-            m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx + 1,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2
-            );
+         m_dib->get_graphics()->draw_line(
+         m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,
+         m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
+         m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx + 1,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2
+         );
 
          m_iLastPenColor = iColor;
          m_iLastPen = 1;
@@ -335,18 +340,18 @@ void dib_console::draw_write(char ch, int x, int y, int iColor)
          ::draw2d::pen_sp & p = get_pen1(iColor);
          m_dib->get_graphics()->SelectObject(p2);
 
-         m_dib->get_graphics()->DrawLine(
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,
-            m_iBorder + y * m_sizeTile.cy,
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy + 1
-            );
+         m_dib->get_graphics()->draw_line(
+         m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,
+         m_iBorder + y * m_sizeTile.cy,
+         m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy + 1
+         );
          m_dib->get_graphics()->SelectObject(p);
 
-         m_dib->get_graphics()->DrawLine(
-            m_iBorder + x * m_sizeTile.cx,
-            m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2
-            );
+         m_dib->get_graphics()->draw_line(
+         m_iBorder + x * m_sizeTile.cx,
+         m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
+         m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2
+         );
 
          m_iLastPenColor = iColor;
          m_iLastPen = 1;
@@ -364,11 +369,11 @@ void dib_console::draw_write(char ch, int x, int y, int iColor)
 
          }
 
-         m_dib->get_graphics()->DrawLine(
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,
-            m_iBorder + y * m_sizeTile.cy,
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy + 1
-            );
+         m_dib->get_graphics()->draw_line(
+         m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,
+         m_iBorder + y * m_sizeTile.cy,
+         m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy + 1
+         );
 
          m_iLastPenColor = iColor;
          m_iLastPen = 1;
@@ -386,16 +391,16 @@ void dib_console::draw_write(char ch, int x, int y, int iColor)
 
          }
 
-         m_dib->get_graphics()->DrawLine(
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,
-            m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx + 1,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2
-            );
-         m_dib->get_graphics()->DrawLine(
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,
-            m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy
-            );
+         m_dib->get_graphics()->draw_line(
+         m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,
+         m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
+         m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx + 1,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2
+         );
+         m_dib->get_graphics()->draw_line(
+         m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,
+         m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
+         m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy
+         );
 
          m_iLastPenColor = iColor;
          m_iLastPen = 1;
@@ -413,16 +418,16 @@ void dib_console::draw_write(char ch, int x, int y, int iColor)
 
          }
 
-         m_dib->get_graphics()->DrawLine(
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2 - i2,
-            m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx + 1,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2
-            );
-         m_dib->get_graphics()->DrawLine(
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,
-            m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy + 1
-            );
+         m_dib->get_graphics()->draw_line(
+         m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2 - i2,
+         m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
+         m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx + 1,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2
+         );
+         m_dib->get_graphics()->draw_line(
+         m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,
+         m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
+         m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy + 1
+         );
 
          m_iLastPenColor = iColor;
          m_iLastPen = 2;
@@ -440,16 +445,16 @@ void dib_console::draw_write(char ch, int x, int y, int iColor)
 
          }
 
-         m_dib->get_graphics()->DrawLine(
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2 - i2,
-            m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx + 1,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2
-            );
-         m_dib->get_graphics()->DrawLine(
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,
-            m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,m_iBorder + y * m_sizeTile.cy
-            );
+         m_dib->get_graphics()->draw_line(
+         m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2 - i2,
+         m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
+         m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx + 1,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2
+         );
+         m_dib->get_graphics()->draw_line(
+         m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,
+         m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
+         m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,m_iBorder + y * m_sizeTile.cy
+         );
 
          m_iLastPenColor = iColor;
          m_iLastPen = 2;
@@ -467,16 +472,16 @@ void dib_console::draw_write(char ch, int x, int y, int iColor)
 
          }
 
-         m_dib->get_graphics()->DrawLine(
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,
-            m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx + 1,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2
-            );
-         m_dib->get_graphics()->DrawLine(
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,
-            m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,m_iBorder + y * m_sizeTile.cy
-            );
+         m_dib->get_graphics()->draw_line(
+         m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,
+         m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
+         m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx + 1,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2
+         );
+         m_dib->get_graphics()->draw_line(
+         m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,
+         m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
+         m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,m_iBorder + y * m_sizeTile.cy
+         );
 
          m_iLastPenColor = iColor;
          m_iLastPen = 1;
@@ -494,16 +499,16 @@ void dib_console::draw_write(char ch, int x, int y, int iColor)
 
          }
 
-         m_dib->get_graphics()->DrawLine(
-            m_iBorder + x * m_sizeTile.cx,
-            m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2 + i2,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2
-            );
-         m_dib->get_graphics()->DrawLine(
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,
-            m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,m_iBorder + y * m_sizeTile.cy
-            );
+         m_dib->get_graphics()->draw_line(
+         m_iBorder + x * m_sizeTile.cx,
+         m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
+         m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2 + i2,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2
+         );
+         m_dib->get_graphics()->draw_line(
+         m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,
+         m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
+         m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,m_iBorder + y * m_sizeTile.cy
+         );
 
          m_iLastPenColor = iColor;
          m_iLastPen = 2;
@@ -521,16 +526,16 @@ void dib_console::draw_write(char ch, int x, int y, int iColor)
 
          }
 
-         m_dib->get_graphics()->DrawLine(
-            m_iBorder + x * m_sizeTile.cx,
-            m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2
-            );
-         m_dib->get_graphics()->DrawLine(
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,
-            m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,m_iBorder + y * m_sizeTile.cy
-            );
+         m_dib->get_graphics()->draw_line(
+         m_iBorder + x * m_sizeTile.cx,
+         m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
+         m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2
+         );
+         m_dib->get_graphics()->draw_line(
+         m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,
+         m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
+         m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,m_iBorder + y * m_sizeTile.cy
+         );
 
          m_iLastPenColor = iColor;
          m_iLastPen = 1;
@@ -548,16 +553,16 @@ void dib_console::draw_write(char ch, int x, int y, int iColor)
 
          }
 
-         m_dib->get_graphics()->DrawLine(
-            m_iBorder + x * m_sizeTile.cx,
-            m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2 + i2,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2
-            );
-         m_dib->get_graphics()->DrawLine(
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,
-            m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy + 1
-            );
+         m_dib->get_graphics()->draw_line(
+         m_iBorder + x * m_sizeTile.cx,
+         m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
+         m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2 + i2,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2
+         );
+         m_dib->get_graphics()->draw_line(
+         m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,
+         m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
+         m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy + 1
+         );
 
          m_iLastPenColor = iColor;
          m_iLastPen = 2;
@@ -575,16 +580,16 @@ void dib_console::draw_write(char ch, int x, int y, int iColor)
 
          }
 
-         m_dib->get_graphics()->DrawLine(
-            m_iBorder + x * m_sizeTile.cx,
-            m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2
-            );
-         m_dib->get_graphics()->DrawLine(
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,
-            m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy + 1
-            );
+         m_dib->get_graphics()->draw_line(
+         m_iBorder + x * m_sizeTile.cx,
+         m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
+         m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2
+         );
+         m_dib->get_graphics()->draw_line(
+         m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,
+         m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy / 2,
+         m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx / 2,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy + 1
+         );
 
          m_iLastPenColor = iColor;
          m_iLastPen = 1;
@@ -596,13 +601,13 @@ void dib_console::draw_write(char ch, int x, int y, int iColor)
          string str;
 
          ::str::international::multibyte_to_utf8(437,str,string(ch));
-         
+
          //str = ch;
 
          m_dib->get_graphics()->set_text_color(console_COLORREF(iColor));
 
          m_dib->get_graphics()->draw_text(str,rect(m_iBorder + x * m_sizeTile.cx,m_iBorder + y * m_sizeTile.cy,
-            m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy),DT_CENTER | DT_VCENTER);
+                                          m_iBorder + x * m_sizeTile.cx + m_sizeTile.cx,m_iBorder + y * m_sizeTile.cy + m_sizeTile.cy),DT_CENTER | DT_VCENTER);
 
       }
 

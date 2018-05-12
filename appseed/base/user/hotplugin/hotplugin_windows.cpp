@@ -1,11 +1,7 @@
 ﻿#include "framework.h"
 
 
-#ifdef WINDOWSEX
 
-#include "coated/gdiplus.h"
-
-#endif
 
 
 namespace hotplugin
@@ -39,7 +35,7 @@ namespace hotplugin
 
    //HPEN hpenOld = (HPEN) ::SelectObject(hdc,hpen);
 
-   ////::Rectangle(hdc,rect.left,rect.top,rect.right,rect.bottom);
+   ////::rectangle(hdc,rect.left,rect.top,rect.right,rect.bottom);
 
    //::SelectObject(hdc,hbrushDark);
 
@@ -47,7 +43,7 @@ namespace hotplugin
 
    //
 
-   ////::Rectangle(hdc,rectBar.left,rectBar.top,rectBar.right,rectBar.bottom);
+   ////::rectangle(hdc,rectBar.left,rectBar.top,rectBar.right,rectBar.bottom);
 
    ////rectBar.deflate(2,2);
 
@@ -69,18 +65,18 @@ namespace hotplugin
 
    //
 
-   //::Rectangle(hdc,rectBar.left,rectBar.top,rectBar.right,rectBar.bottom);
+   //::rectangle(hdc,rectBar.left,rectBar.top,rectBar.right,rectBar.bottom);
 
    //::SetTextColor(hdc,RGB(184,184,177));
 
-   //::Rectangle(hdc,rectBar.left-1,rectBar.top-1,rectBar.right + 1,rectBar.top);
-   //::Rectangle(hdc,rectBar.left - 1,rectBar.bottom,rectBar.right + 1,rectBar.bottom+1);
-   //::Rectangle(hdc,rectBar.left - 1,rectBar.top - 1,rectBar.left,rectBar.bottom+1);
-   //::Rectangle(hdc,rectBar.right,rectBar.top - 1,rectBar.right+1,rectBar.bottom + 1);
+   //::rectangle(hdc,rectBar.left-1,rectBar.top-1,rectBar.right + 1,rectBar.top);
+   //::rectangle(hdc,rectBar.left - 1,rectBar.bottom,rectBar.right + 1,rectBar.bottom+1);
+   //::rectangle(hdc,rectBar.left - 1,rectBar.top - 1,rectBar.left,rectBar.bottom+1);
+   //::rectangle(hdc,rectBar.right,rectBar.top - 1,rectBar.right+1,rectBar.bottom + 1);
 
    //SetROP2(hdc,old);
 
-   ////::Rectangle(hdc,rectBar.left,rectBar.top,rectBar.right,rectBar.bottom);
+   ////::rectangle(hdc,rectBar.left,rectBar.top,rectBar.right,rectBar.bottom);
 
    //
 
@@ -102,7 +98,7 @@ namespace hotplugin
    //if(rectDraw.intersect(rectBar,rectBrick))
    //{
 
-   //   ::Rectangle(hdc,rectDraw.left,rectDraw.top,rectDraw.right,rectDraw.bottom);
+   //   ::rectangle(hdc,rectDraw.left,rectDraw.top,rectDraw.right,rectDraw.bottom);
 
    //}
 
@@ -111,7 +107,7 @@ namespace hotplugin
    //if(rectDraw.intersect(rectBar,rectBrick))
    //{
 
-   //   ::Rectangle(hdc,rectDraw.left,rectDraw.top,rectDraw.right,rectDraw.bottom);
+   //   ::rectangle(hdc,rectDraw.left,rectDraw.top,rectDraw.right,rectDraw.bottom);
 
    //}
 
@@ -120,7 +116,7 @@ namespace hotplugin
    //if(rectDraw.intersect(rectBar,rectBrick))
    //{
 
-   //   ::Rectangle(hdc,rectDraw.left,rectDraw.top,rectDraw.right,rectDraw.bottom);
+   //   ::rectangle(hdc,rectDraw.left,rectDraw.top,rectDraw.right,rectDraw.bottom);
 
    //}
 

@@ -106,7 +106,14 @@ namespace visual
          virtual ~array();
 
 
+         class size & size() { return m_size; }
+         const class size & size() const { return m_size; }
+
+         class rect rect(point pt = ::null_point()) { return class rect(pt, m_size); }
+         const class rect rect(point pt = ::null_point()) const { return class rect(pt, m_size); }
+
       };
+
 
       sp(array)            m_sparray;
       e_load               m_eload;

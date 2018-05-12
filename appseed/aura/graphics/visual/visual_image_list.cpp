@@ -234,7 +234,7 @@ int32_t image_list::add(::visual::icon * picon, int iItem)
 
    m_spdib->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
 
-   m_spdib->get_graphics()->FillSolidRect(iItem * m_size.cx, 0, m_size.cx, m_size.cy, 0);
+   m_spdib->get_graphics()->fill_solid_rect_dim(iItem * m_size.cx, 0, m_size.cx, m_size.cy, 0);
 
 #ifdef METROWIN
 
@@ -311,7 +311,7 @@ int32_t image_list::add_dib(::draw2d::dib * pdib, int x, int y, int iItem)
 
    m_spdib->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
 
-   m_spdib->get_graphics()->FillSolidRect(iItem * m_size.cx, 0, m_size.cx, m_size.cy, ARGB(0, 0, 0, 0));
+   m_spdib->get_graphics()->fill_solid_rect_dim(iItem * m_size.cx, 0, m_size.cx, m_size.cy, ARGB(0, 0, 0, 0));
 
    m_spdib->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_blend);
 

@@ -536,7 +536,7 @@ namespace user
       //pgraphics->IntersectClipRect(rectWindow);
       //SendMessage(WM_ERASEBKGND, (WPARAM)spgraphics->get_handle1());
       pgraphics->SelectClipRgn(NULL);
-      pgraphics->FillSolidRect(
+      pgraphics->fill_solid_rect_dim(
       0,
       0,
       rectWindow.width(),
@@ -853,18 +853,18 @@ namespace user
       {
          if(dwStyle & CBRS_GRIPPER)
          {
-            pgraphics->FillSolidRect(0, rect.top + 7, CX_BORDER, rect.height() - 7, clr);
+            pgraphics->fill_solid_rect_dim(0, rect.top + 7, CX_BORDER, rect.height() - 7, clr);
          }
          else
          {
-            pgraphics->FillSolidRect(0, rect2.top, CX_BORDER, rect2.height(), clr);
+            pgraphics->fill_solid_rect_dim(0, rect2.top, CX_BORDER, rect2.height(), clr);
          }
       }
       if (dwStyle & CBRS_BORDER_TOP)
       {
          if(dwStyle & CBRS_GRIPPER)
          {
-            pgraphics->FillSolidRect(
+            pgraphics->fill_solid_rect_dim(
             rect.left + 7,
             rect.top,
             rect.right - 7,
@@ -873,14 +873,14 @@ namespace user
          }
          else
          {
-            pgraphics->FillSolidRect(
+            pgraphics->fill_solid_rect_dim(
             rect.left,
             rect.top,
             rect.right,
             1,
             RGB(128, 128, 123));
          }
-         //      pgraphics->FillSolidRect(0, 0, rect.right, CY_BORDER, clr);
+         //      pgraphics->fill_solid_rect(0, 0, rect.right, CY_BORDER, clr);
       }
       if (dwStyle & (CBRS_BORDER_LEFT | CBRS_BORDER_TOP))
       {
@@ -897,9 +897,9 @@ namespace user
 
       // draw right and bottom
       if (dwStyle & CBRS_BORDER_RIGHT)
-         pgraphics->FillSolidRect(rect1.right, rect2.top, -CX_BORDER, rect2.height(), clr);
+         pgraphics->fill_solid_rect_dim(rect1.right, rect2.top, -CX_BORDER, rect2.height(), clr);
       if (dwStyle & CBRS_BORDER_BOTTOM)
-         pgraphics->FillSolidRect(0, rect1.bottom, rect.right, -CY_BORDER, clr);
+         pgraphics->fill_solid_rect_dim(0, rect1.bottom, rect.right, -CY_BORDER, clr);
 
       if (dwStyle & CBRS_BORDER_3D)
       {
@@ -909,21 +909,21 @@ namespace user
 
          // draw left and top
          if (dwStyle & CBRS_BORDER_LEFT)
-            pgraphics->FillSolidRect(1, rect2.top, CX_BORDER, rect2.height(), clr);
+            pgraphics->fill_solid_rect_dim(1, rect2.top, CX_BORDER, rect2.height(), clr);
          if (dwStyle & CBRS_BORDER_TOP)
          {
             if(dwStyle & CBRS_GRIPPER)
-               pgraphics->FillSolidRect(rect.left + 7, rect.top + 1, rect.width() - 7, 1, clr);
+               pgraphics->fill_solid_rect_dim(rect.left + 7, rect.top + 1, rect.width() - 7, 1, clr);
             else
-               pgraphics->FillSolidRect(rect.left, rect.top + 1, rect.width(), 1, clr);
-            //pgraphics->FillSolidRect(0, 1, rect.right, CY_BORDER, clr);
+               pgraphics->fill_solid_rect_dim(rect.left, rect.top + 1, rect.width(), 1, clr);
+            //pgraphics->fill_solid_rect(0, 1, rect.right, CY_BORDER, clr);
          }
 
          // draw right and bottom
          if (dwStyle & CBRS_BORDER_RIGHT)
-            pgraphics->FillSolidRect(rect.right, rect2.top, -CX_BORDER, rect2.height(), clr);
+            pgraphics->fill_solid_rect_dim(rect.right, rect2.top, -CX_BORDER, rect2.height(), clr);
          if (dwStyle & CBRS_BORDER_BOTTOM)
-            pgraphics->FillSolidRect(0, rect.bottom, rect.right, -CY_BORDER, clr);
+            pgraphics->fill_solid_rect_dim(0, rect.bottom, rect.right, -CY_BORDER, clr);
       }
 
       if (dwStyle & CBRS_BORDER_LEFT)
@@ -977,7 +977,7 @@ namespace user
          // draw the gripper in the border
          if (m_dwStyle & CBRS_ORIENT_HORZ)
          {
-            //pgraphics->Draw3dRect(rect.left+CX_BORDER_GRIPPER,
+            //pgraphics->draw3d_rect(rect.left+CX_BORDER_GRIPPER,
             //   rect.top+m_cyTopBorder,
             //   CX_GRIPPER, rect.height()-m_cyTopBorder-m_cyBottomBorder,
             //   afxData.clrBtnHilite, afxData.clrBtnShadow);
@@ -997,7 +997,7 @@ namespace user
          }
          else
          {
-            //         pgraphics->Draw3dRect(rect.left+m_cyTopBorder,
+            //         pgraphics->draw3d_rect(rect.left+m_cyTopBorder,
             //            rect.top+CY_BORDER_GRIPPER,
             //            rect.width()-m_cyTopBorder-m_cyBottomBorder, CY_GRIPPER,
             //            afxData.clrBtnHilite, afxData.clrBtnShadow);

@@ -1,13 +1,9 @@
 #pragma once
 
 
-/////////////////////////////////////////////////////////////////////////////
-// point - A 2-D point, similar to Windows POINT structure.
-
 class CLASS_DECL_AURA point : public POINT
 {
 public:
-// Constructors
 
    typedef POINT BASE;
 
@@ -19,40 +15,38 @@ public:
 
    typedef ::size SIZE;
 
-   // create an uninitialized point
-   point() NOTHROW;
-   // create from two integers
-   point(int64_t initX, int64_t initY) NOTHROW;
-   // create from another point
-   point(POINT initPt) NOTHROW;
-   point(const POINT * pinitPt) NOTHROW;
-   point(POINT64 initPt) NOTHROW;
-   point(const POINT64 * pinitPt) NOTHROW;
-   point(POINTD initPt) NOTHROW;
-   point(const POINTD * pinitPt) NOTHROW;
-   // create from a size
-   point(SIZE initSize) NOTHROW;
-   // create from an LPARAM: x = LOWORD(dw) y = HIWORD(dw)
-   point(const ::lparam & dwPoint) NOTHROW;
+   point() NOTHROW {}
+   point(i64 a, i64 b) NOTHROW { x = a; y = b; }
+   point(const POINT & pt) NOTHROW { *(POINT *)this = pt; }
+explicit point(const ::lparam & lparam) NOTHROW:point(lparam.x(), lparam.y()) {}
+
+point(const POINTD & pt) NOTHROW : point(pt.x, pt.y) {}
+point(const POINT64 & pt) NOTHROW : point(pt.x, pt.y) {}
+point(const SIZE & sz) NOTHROW : point((const POINT*)&sz) {}
+point(const SIZED & sz) NOTHROW : point((const POINTD*)&sz) {}
+point(const SIZE64 & sz) NOTHROW : point((const POINT64*)&sz) {}
+point(const POINT * ppt) NOTHROW : point(*ppt) {}
+point(const POINTD * ppt) NOTHROW : point(*ppt) {}
+point(const POINT64 * ppt) NOTHROW : point(*ppt) {}
+point(const SIZE * psz) NOTHROW : point(*psz) {}
+point(const SIZED * psz) NOTHROW : point(*psz) {}
+point(const SIZE64 * psz) NOTHROW : point(*psz) {}
+
+   operator POINT *() NOTHROW { return this; }
+   operator const POINT *() const NOTHROW { return this; }
+   operator ::lparam() const { return lparam(); }
+
+   uint32_t u32() const NOTHROW;
+   uint64_t uint64() const NOTHROW;
+   ::lparam lparam() const NOTHROW;
 
 
-   operator POINT *() NOTHROW;
-   operator const POINT *() const NOTHROW;
-
-// Operations
-
-// translate the point
    void offset(int32_t xOffset, int32_t yOffset) NOTHROW;
    void offset(POINT point) NOTHROW;
    void offset(SIZE size) NOTHROW;
    void SetPoint(int32_t X, int32_t Y) NOTHROW;
 
 
-   uint32_t u32() const NOTHROW;
-   uint64_t uint64() const NOTHROW;
-   ::lparam lparam() const NOTHROW;
-
-   operator ::lparam() const { return lparam(); }
 
    inline LONG get_dimension(e_orientation eorientation) const NOTHROW;
    inline LONG get_orthogonal_dimension(e_orientation eorientation) const NOTHROW;
@@ -102,21 +96,26 @@ public:
 
    typedef ::size64 SIZE;
 
-   // create an uninitialized point64
-   point64() NOTHROW;
-   // create from two integers
-   point64(int64_t initX, int64_t initY) NOTHROW;
-   // create from another point64
-   point64(POINT64 initPt) NOTHROW;
-   point64(POINT pt) NOTHROW;
-   point64(const POINT64 * pinitPt) NOTHROW;
-   // create from a size
-   point64(SIZE64 initSize) NOTHROW;
-   // create from an UINT64: x = LODWORD(dw) y = HIDWORD(dw)
-   point64(const ::lparam & dwPoint) NOTHROW;
+   point64() NOTHROW {}
+   point64(i64 a, i64 b) NOTHROW { x = a; y = b; }
+   point64(const POINT64 & pt) NOTHROW { *(POINT64*)this = pt; }
+explicit point64(const ::lparam & lparam) NOTHROW : point64(lparam.x(), lparam.y()) {}
 
-   operator POINT64 *() NOTHROW;
-   operator const POINT64 *() const NOTHROW;
+point64(const POINT & pt) NOTHROW : point64(pt.x, pt.y) {}
+point64(const POINTD & pt) NOTHROW : point64(pt.x, pt.y) {}
+point64(const SIZE & sz) NOTHROW : point64((const POINT*)&sz) {}
+point64(const SIZED & sz) NOTHROW : point64((const POINTD*)&sz) {}
+point64(const SIZE64 & sz) NOTHROW : point64((const POINT64*)&sz) {}
+point64(const POINT * ppt) NOTHROW : point64(*ppt) {}
+point64(const POINTD * ppt) NOTHROW : point64(*ppt) {}
+point64(const POINT64 * ppt) NOTHROW : point64(*ppt) {}
+point64(const SIZE * psz) NOTHROW : point64(*psz) {}
+point64(const SIZED * psz) NOTHROW : point64(*psz) {}
+point64(const SIZE64 * psz) NOTHROW : point64(*psz) {}
+
+
+   operator POINT64 *() NOTHROW { return this; }
+   operator const POINT64 *() const NOTHROW { return this; }
 
 // Operations
 
@@ -182,18 +181,25 @@ public:
 
    typedef ::sized SIZE;
 
-   pointd() NOTHROW;
-   pointd(double x, double y) NOTHROW;
-   pointd(const POINTD & point) NOTHROW;
-   pointd(const POINTD * lppt) NOTHROW;
-   pointd(const POINT * lppt) NOTHROW;
-   pointd(const POINT64 * lppt) NOTHROW;
-   pointd(const SIZED * sz) NOTHROW;
-   pointd(const LPARAM & lparam) NOTHROW;
+   pointd() NOTHROW {}
+   pointd(double a, double b) NOTHROW { x = a; y = b; }
+   pointd(const POINTD & pt) NOTHROW { *(POINTD*)this = pt; }
+explicit pointd(const lparam & lparam) NOTHROW :pointd(lparam.x(), lparam.y()) {}
 
+pointd(const POINT & pt) NOTHROW : pointd(pt.x, pt.y) {}
+pointd(const POINT64 & pt) NOTHROW : pointd(pt.x, pt.y) {}
+pointd(const SIZE & sz) NOTHROW : pointd((const POINT*) &sz) {}
+pointd(const SIZED & sz) NOTHROW : pointd((const POINTD*)&sz) {}
+pointd(const SIZE64 & sz) NOTHROW : pointd((const POINT64*)&sz) {}
+pointd(const POINT * ppt) NOTHROW : pointd(*ppt) {}
+pointd(const POINTD * ppt) NOTHROW : pointd(*ppt) {}
+pointd(const POINT64 * ppt) NOTHROW : pointd(*ppt) {}
+pointd(const SIZE * psz) NOTHROW : pointd(*psz) {}
+pointd(const SIZED * psz) NOTHROW : pointd(*psz) {}
+pointd(const SIZE64 * psz) NOTHROW : pointd(*psz) {}
 
-   operator POINTD *() NOTHROW;
-   operator const POINTD *() const NOTHROW;
+   operator POINTD *() NOTHROW { return this; }
+   operator const POINTD *() const NOTHROW { return this; }
 
 // Operations
 
@@ -466,6 +472,9 @@ struct CLASS_DECL_AURA POINT3D
    double z;
 };
 
+using LPPOINT3D = POINT3D * ;
+using LPCPOINT3D = const POINT3D *;
+
 class CLASS_DECL_AURA point3d:
    public POINT3D
 {
@@ -508,5 +517,14 @@ public:
 
    point3d rotate(point3d d);
 
+   operator LPPOINT3D() { return this; }
+   operator LPCPOINT3D() const { return this; }
+
 };
 
+
+
+inline point pointxy(LPCPOINT3D lppt)
+{
+   return point(lppt->x, lppt->y);
+}

@@ -80,7 +80,7 @@ void rect_array::add_dim(int x,int y,int cx,int cy)
 
 void rect_array::add(POINT pt, SIZE sz)
 {
-   array < rect >::add(rect(pt, sz));
+   array < rect >::add(::rect(pt, sz));
 }
 
 

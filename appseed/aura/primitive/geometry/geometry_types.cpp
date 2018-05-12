@@ -89,7 +89,7 @@ bool y_null_intersect_rect(LPRECT lprect,LPCRECT lpcrect1,LPCRECT lpcrect2)
 CLASS_DECL_AURA bool null_intersect_rect(LPRECT lprect,LPCRECT lpcrect1,LPCRECT lpcrect2)
 {
    if(x_null_intersect_rect(lprect,lpcrect1,lpcrect2)
-      && y_null_intersect_rect(lprect,lpcrect1,lpcrect2))
+         && y_null_intersect_rect(lprect,lpcrect1,lpcrect2))
    {
       return true;
    }
@@ -139,7 +139,7 @@ bool y_top_null_intersect_rect(LPRECT lprect,LPCRECT lpcrect1,LPCRECT lpcrect2)
 CLASS_DECL_AURA bool top_left_null_intersect_rect(LPRECT lprect,LPCRECT lpcrect1,LPCRECT lpcrect2)
 {
    if(x_left_null_intersect_rect(lprect,lpcrect1,lpcrect2)
-      && y_top_null_intersect_rect(lprect,lpcrect1,lpcrect2))
+         && y_top_null_intersect_rect(lprect,lpcrect1,lpcrect2))
    {
       return true;
    }
@@ -198,15 +198,15 @@ bool copy(RECT64 * prectDest, const RECTD * prectSrc)
 bool is_empty(const RECTD * prect)
 {
    return
-      prect->left   >= prect->right
-      && prect->top >= prect->bottom;
+   prect->left   >= prect->right
+   && prect->top >= prect->bottom;
 }
 
 bool contains(const RECTD * prect, POINTD pt)
 {
    return
-      pt.x >= prect->left && pt.x <= prect->right
-      && pt.y >= prect->top && pt.y <= prect->bottom;
+   pt.x >= prect->left && pt.x <= prect->right
+   && pt.y >= prect->top && pt.y <= prect->bottom;
 }
 bool set_rect(RECTD * prectDest, double x1, double y1, double x2, double y2)
 {
@@ -228,10 +228,10 @@ bool is_equal(const RECTD * prect1, const RECTD * prect2)
 {
 
    return
-      prect1->left      == prect2->left &&
-      prect1->top       == prect2->top &&
-      prect1->right     == prect2->right &&
-      prect1->bottom    == prect2->bottom;
+   prect1->left      == prect2->left &&
+   prect1->top       == prect2->top &&
+   prect1->right     == prect2->right &&
+   prect1->bottom    == prect2->bottom;
 
 }
 
@@ -274,8 +274,8 @@ bool offset(RECTD * prect, double x, double y)
 
 bool x_intersect_rect(RECTD * prect, const RECTD * prect1, const RECTD * prect2)
 {
-   prect->left    = MAX(prect1->left   , prect2->left);
-   prect->right   = MIN(prect1->right  , prect2->right);
+   prect->left    = MAX(prect1->left, prect2->left);
+   prect->right   = MIN(prect1->right, prect2->right);
    if(prect->right > prect->left)
    {
       return true;
@@ -289,8 +289,8 @@ bool x_intersect_rect(RECTD * prect, const RECTD * prect1, const RECTD * prect2)
 
 bool y_intersect_rect(RECTD * prect, const RECTD * prect1, const RECTD * prect2)
 {
-   prect->top     = MAX(prect1->top    , prect2->top);
-   prect->bottom  = MIN(prect1->bottom , prect2->bottom);
+   prect->top     = MAX(prect1->top, prect2->top);
+   prect->bottom  = MIN(prect1->bottom, prect2->bottom);
    if(prect->top < prect->bottom)
    {
       return true;
@@ -339,7 +339,7 @@ bool y_null_intersect_rect(RECTD * prect,const RECTD * prect1,const RECTD * prec
 bool intersect(RECTD * prect, const RECTD * prect1, const RECTD * prect2)
 {
    if(x_intersect_rect(prect, prect1, prect2)
-   && y_intersect_rect(prect, prect1, prect2))
+         && y_intersect_rect(prect, prect1, prect2))
    {
       return true;
    }
@@ -371,12 +371,12 @@ bool unite(RECTD * prect, const RECTD * prect1, const RECTD * prect2)
       *prect = *prect1;
       return true;
    }
-   prect->left    = MIN(prect1->left   , prect2->left);
-   prect->right   = MAX(prect1->right  , prect2->right);
-   prect->top     = MIN(prect1->top    , prect2->top);
-   prect->bottom  = MAX(prect1->bottom , prect2->bottom);
+   prect->left    = MIN(prect1->left, prect2->left);
+   prect->right   = MAX(prect1->right, prect2->right);
+   prect->top     = MIN(prect1->top, prect2->top);
+   prect->bottom  = MAX(prect1->bottom, prect2->bottom);
    if(prect->right > prect->left &&
-      prect->bottom > prect->top)
+         prect->bottom > prect->top)
    {
       return true;
    }
@@ -450,8 +450,8 @@ bool copy(RECT * prectDest, const RECT64 * prectSrc)
 bool is_empty(const RECT64 * prect)
 {
    return
-      prect->left   >= prect->right
-      && prect->top >= prect->bottom;
+   prect->left   >= prect->right
+   && prect->top >= prect->bottom;
 }
 
 
@@ -459,8 +459,8 @@ bool contains(const RECT64 * prect, point64 pt)
 {
 
    return
-      pt.x >= prect->left && pt.x <= prect->right
-      && pt.y >= prect->top && pt.y <= prect->bottom;
+   pt.x >= prect->left && pt.x <= prect->right
+   && pt.y >= prect->top && pt.y <= prect->bottom;
 
 }
 
@@ -490,10 +490,10 @@ bool null(RECT64 * prectDest)
 bool is_equal(const RECT64 * prect1, const RECT64 * prect2)
 {
    return
-      prect1->left      == prect2->left &&
-      prect1->top       == prect2->top &&
-      prect1->right     == prect2->right &&
-      prect1->bottom    == prect2->bottom;
+   prect1->left      == prect2->left &&
+   prect1->top       == prect2->top &&
+   prect1->right     == prect2->right &&
+   prect1->bottom    == prect2->bottom;
 }
 
 bool inflate(RECT64 * prect, int64_t x, int64_t y)
@@ -552,8 +552,8 @@ bool reverse_size(RECT64 * prect,int64_t cx,int64_t cy)
 bool x_intersect_rect(RECT64 * prect, const RECT64 * prect1, const RECT64 * prect2)
 {
 
-   prect->left    = MAX(prect1->left   , prect2->left);
-   prect->right   = MIN(prect1->right  , prect2->right);
+   prect->left    = MAX(prect1->left, prect2->left);
+   prect->right   = MIN(prect1->right, prect2->right);
 
    if(prect->right > prect->left)
    {
@@ -569,8 +569,8 @@ bool x_intersect_rect(RECT64 * prect, const RECT64 * prect1, const RECT64 * prec
 
 bool y_intersect_rect(RECT64 * prect, const RECT64 * prect1, const RECT64 * prect2)
 {
-   prect->top     = MAX(prect1->top    , prect2->top);
-   prect->bottom  = MIN(prect1->bottom , prect2->bottom);
+   prect->top     = MAX(prect1->top, prect2->top);
+   prect->bottom  = MIN(prect1->bottom, prect2->bottom);
    if(prect->top < prect->bottom)
    {
       return true;
@@ -587,7 +587,7 @@ bool y_intersect_rect(RECT64 * prect, const RECT64 * prect1, const RECT64 * prec
 bool intersect(RECT64 * prect, const RECT64 * prect1, const RECT64 * prect2)
 {
    if(x_intersect_rect(prect, prect1, prect2)
-   && y_intersect_rect(prect, prect1, prect2))
+         && y_intersect_rect(prect, prect1, prect2))
    {
       return true;
    }
@@ -620,12 +620,12 @@ bool unite(RECT64 * prect, const RECT64 * prect1, const RECT64 * prect2)
       *prect = *prect1;
       return true;
    }
-   prect->left    = MIN(prect1->left   , prect2->left);
-   prect->right   = MAX(prect1->right  , prect2->right);
-   prect->top     = MIN(prect1->top    , prect2->top);
-   prect->bottom  = MAX(prect1->bottom , prect2->bottom);
+   prect->left    = MIN(prect1->left, prect2->left);
+   prect->right   = MAX(prect1->right, prect2->right);
+   prect->top     = MIN(prect1->top, prect2->top);
+   prect->bottom  = MAX(prect1->bottom, prect2->bottom);
    if(prect->right > prect->left &&
-      prect->bottom > prect->top)
+         prect->bottom > prect->top)
    {
       return true;
    }
@@ -656,7 +656,7 @@ CLASS_DECL_AURA bool deflate(LPRECT prect,const RECT & rect)
 }
 
 
-bool polygon_contains(LPPOINT lppt, LPPOINT lpptPolygon, int iCount)
+bool polygon_contains(LPCPOINT lppt, LPCPOINT lpptPolygon, i32 iCount)
 {
 
    int i, j = iCount - 1;
@@ -678,7 +678,7 @@ bool polygon_contains(LPPOINT lppt, LPPOINT lpptPolygon, int iCount)
 }
 
 
-bool polygon_contains(LPPOINT64 lppt,LPPOINT64 lpptPolygon,int iCount)
+bool polygon_contains(LPCPOINT64 lppt,LPCPOINT64 lpptPolygon,i32 iCount)
 {
 
    int i,j = iCount - 1;
@@ -699,7 +699,7 @@ bool polygon_contains(LPPOINT64 lppt,LPPOINT64 lpptPolygon,int iCount)
 
 }
 
-bool polygon_contains(LPPOINTD lppt,LPPOINTD lpptPolygon,int iCount)
+bool polygon_contains(LPCPOINTD lppt,LPCPOINTD lpptPolygon,i32 iCount)
 {
 
    int i,j = iCount - 1;
@@ -722,9 +722,9 @@ bool polygon_contains(LPPOINTD lppt,LPPOINTD lpptPolygon,int iCount)
 
 CLASS_DECL_AURA bool copy(POINT64 * lpptDst,const POINT * lpptSrc)
 {
-   
+
    lpptDst->x = lpptSrc->x;
-   
+
    lpptDst->y = lpptSrc->y;
 
    return true;
@@ -771,13 +771,13 @@ void copy(LPRECT lprectDst, const CGRect & rectSrc)
 
 void copy(CGRect & rect, LPCRECT lpcrect)
 {
-   
+
    rect.origin.x = lpcrect->left;
    rect.origin.y = lpcrect->top;
    rect.size.width = width(lpcrect);
    rect.size.height = height(lpcrect);
-   
-   
+
+
 }
 
 #endif

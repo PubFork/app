@@ -1041,13 +1041,13 @@ void simple_scroll_bar::_001OnVerisimpleDraw(::draw2d::graphics * pgraphics)
       if (Session.savings().is_trying_to_save(::aura::resource_processing))
       {
 
-         pgraphics->FillSolidRect(rectClient, RGB(255, 255, 255));
+         pgraphics->fill_solid_rect(rectClient, RGB(255, 255, 255));
 
       }
       else
       {
 
-         pgraphics->FillSolidRect(rectClient, ARGB(255, 240, 240, 240));
+         pgraphics->fill_solid_rect(rectClient, ARGB(255, 240, 240, 240));
 
       }
 
@@ -1070,7 +1070,7 @@ void simple_scroll_bar::_001OnVerisimpleDraw(::draw2d::graphics * pgraphics)
 
    pgraphics->SelectObject(m_brushDraw);
 
-   pgraphics->FillRectangle(rectTrack);
+   pgraphics->fill_rect(rectTrack);
 
 
    if (m_bTracking || (bool)oprop("tracking_on"))
@@ -1214,7 +1214,7 @@ void simple_scroll_bar::_001OnVerisimpleDraw(::draw2d::graphics * pgraphics)
 
    pgraphics->SelectObject(m_brushDraw);
 
-   pgraphics->FillRectangle(m_rectA);
+   pgraphics->fill_rect(m_rectA);
 
    //penArrow->create_solid(1.0, scrollbar_lite_border_color(::user::element_scrollbar_rectB));
 
@@ -1224,7 +1224,7 @@ void simple_scroll_bar::_001OnVerisimpleDraw(::draw2d::graphics * pgraphics)
 
    pgraphics->SelectObject(m_brushDraw);
 
-   pgraphics->FillRectangle(m_rectB);
+   pgraphics->fill_rect(m_rectB);
 
    ::rect rect;
 
@@ -1237,7 +1237,7 @@ void simple_scroll_bar::_001OnVerisimpleDraw(::draw2d::graphics * pgraphics)
 
       pgraphics->SelectObject(m_brushDraw);
 
-      pgraphics->FillRectangle(rect);
+      pgraphics->fill_rect(rect);
 
    }
    else if (m_eelement == ::user::element_scrollbar_pageB || m_eelementHover == ::user::element_scrollbar_pageB)
@@ -1249,7 +1249,7 @@ void simple_scroll_bar::_001OnVerisimpleDraw(::draw2d::graphics * pgraphics)
 
       pgraphics->SelectObject(m_brushDraw);
 
-      pgraphics->FillRectangle(rect);
+      pgraphics->fill_rect(rect);
 
 
    }

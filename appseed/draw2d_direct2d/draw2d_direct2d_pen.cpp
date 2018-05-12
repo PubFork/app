@@ -7,7 +7,7 @@ namespace draw2d_direct2d
 
    pen::pen(::aura::application * papp) :
       ::object(papp)
-   { 
+   {
 
       m_bMetroColor     = false;
       m_crMetro         = 0;
@@ -15,7 +15,7 @@ namespace draw2d_direct2d
    }
 
    pen::~pen()
-   { 
+   {
 
       destroy();
 
@@ -111,7 +111,7 @@ namespace draw2d_direct2d
 
    if(graphicsMem->SelectObject(pDest))
    {
-   graphicsMem->FillSolidRect(0, 0, bm.bmWidth, bm.bmHeight, crBackground);
+   graphicsMem->fill_solid_rect(0, 0, bm.bmWidth, bm.bmHeight, crBackground);
 
    graphicsMem->SetBkColor(RGB(255, 255, 255));
 
@@ -162,7 +162,7 @@ namespace draw2d_direct2d
    graphicsMem->SetBkColor(RGB(255, 255, 255));
    graphicsMask->BitBlt(0, 0, bm.bmWidth, bm.bmHeight, graphicsMem, 0, 0, NOTSRCERASE);
 
-   pgraphics->FillSolidRect(x, y, bm.bmWidth, bm.bmHeight, crBackground);
+   pgraphics->fill_solid_rect(x, y, bm.bmWidth, bm.bmHeight, crBackground);
 
    pgraphics->SetBkColor(RGB(255, 255, 255));
 
@@ -231,7 +231,7 @@ namespace draw2d_direct2d
    {
    cr1 = graphicsDest->SetTextColor(cr1);
    cr2 = graphicsDest->SetBkColor(cr2);
-   graphicsDest->FillRect(rect(0, 0, bm.bmWidth, bm.bmHeight), &brChecker);
+   graphicsDest->fill_rect(rect(0, 0, bm.bmWidth, bm.bmHeight), &brChecker);
    graphicsDest->SetTextColor(cr1);
    graphicsDest->SetBkColor(cr2);
 
@@ -291,7 +291,7 @@ namespace draw2d_direct2d
    // Checker the background with white and crBackground
    cr1 = pgraphics->SetTextColor(cr1);
    cr2 = pgraphics->SetBkColor(cr2);
-   pgraphics->FillRect(rect(x, y, x + bm.bmWidth, y + bm.bmHeight), &brChecker);
+   pgraphics->fill_rect(rect(x, y, x + bm.bmWidth, y + bm.bmHeight), &brChecker);
    pgraphics->SetTextColor(cr1);
    pgraphics->SetBkColor(cr2);
 
@@ -325,14 +325,14 @@ namespace draw2d_direct2d
 
       //METROWIN_DC(pgraphics)->m_pdc->CreateSolidColorBrush(ca, &m_psolidbrush);
 
-/*      CreatePatternBrush(METROWIN_DC(pgraphics)->m_pdevicecontext, &ca, &m_pimagebrush);
+      /*      CreatePatternBrush(METROWIN_DC(pgraphics)->m_pdevicecontext, &ca, &m_pimagebrush);
 
-      if(m_pimagebrush != NULL)
-      {
-         m_crMetro         = m_cr;
-         m_bMetroColor     = true;
-      }
-      */
+            if(m_pimagebrush != NULL)
+            {
+               m_crMetro         = m_cr;
+               m_bMetroColor     = true;
+            }
+            */
 
       return TRUE;
 
@@ -380,7 +380,7 @@ namespace draw2d_direct2d
 
    bool pen::destroy()
    {
-      
+
       m_pimagebrush = nullptr;
 
       return true;
@@ -454,13 +454,13 @@ namespace draw2d_direct2d
          props.interpolationMode = D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR;
 
          hr = pDeviceContext->CreateImageBrush(
-            pCommandList,&props,NULL,&pImageBrush);
+              pCommandList,&props,NULL,&pImageBrush);
       }
 
       // Fill a rectangle with the image brush.
       /*if (SUCCEEDED(hr))
       {
-      pDeviceContext->FillRectangle(
+      pDeviceContext->fill_rect(
       D2D1::RectF(0, 0, 100, 100), pImageBrush);
       }*/
 

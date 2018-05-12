@@ -694,7 +694,7 @@ namespace user
 
          GetClientRect(rectClient);
 
-         pgraphics->FillSolidRect(rectClient, ARGB(255, 255, 255, 255));
+         pgraphics->fill_solid_rect(rectClient, ARGB(255, 255, 255, 255));
 
       }
 

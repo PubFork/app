@@ -52,6 +52,11 @@ namespace lemon
       template < typename T >
       inline bool are_all_elements_equal(const spa(T) & a1, const spa(T) & a2);
 
+
+      template < typename A, typename PA >
+      void copy_points(A & a, const PA * pa, ::count c);
+
+
    } // namespace array
 
 

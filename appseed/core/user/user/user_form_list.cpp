@@ -1893,7 +1893,7 @@ namespace user
 
             COLORREF crBackHover = _001GetColor(::user::color_background_hover, ARGB(40, 0, 0, 0));
 
-            pdrawitem->m_pgraphics->FillSolidRect(pdrawitem->m_rectSubItem, crBackHover);
+            pdrawitem->m_pgraphics->fill_solid_rect(pdrawitem->m_rectSubItem, crBackHover);
 
          }
 

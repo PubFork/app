@@ -1,11 +1,5 @@
 ﻿#include "framework.h"
 
-//#ifdef WINDOWS
-//#undef new
-////#include <gdiplus.h>
-//#endif
-
-
 extern CLASS_DECL_CORE thread_int_ptr < DWORD_PTR > t_time1;
 
 // pgraphics->GetTextExtent("->:<-"); // oh no!! omg!! The size is the size of the alien!!
@@ -871,7 +865,7 @@ namespace user
 
       pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
-      pgraphics->FillSolidRect(get_data()->m_rectTab, ARGB(0xc0, 250, 255, 255));
+      pgraphics->fill_solid_rect(get_data()->m_rectTab, ARGB(0xc0, 250, 255, 255));
 
       pgraphics->set_alpha_mode(::draw2d::alpha_mode_set);
 

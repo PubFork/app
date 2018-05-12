@@ -513,11 +513,11 @@ namespace fontopus
    void dialog::_000OnDraw(::draw2d::graphics * pgraphics)
    {
 
-      //pgraphics->FillSolidRect(0, 0, 100, 100, ARGB(255, 255, 0, 0));
+      //pgraphics->fill_solid_rect(0, 0, 100, 100, ARGB(255, 255, 0, 0));
 
       ::simple_ui::interaction::_000OnDraw(pgraphics);
 
-      //pgraphics->FillSolidRect(100, 100, 100, 100, ARGB(255, 0, 255, 0));
+      //pgraphics->fill_solid_rect(100, 100, 100, 100, ARGB(255, 0, 255, 0));
 
    }
 

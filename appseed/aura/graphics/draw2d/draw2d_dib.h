@@ -80,7 +80,7 @@ namespace draw2d
       COLORREF *        m_pcolorref;
       class ::size      m_size;
       class ::size      m_sizeAlloc;
-      int32_t           m_iScan;
+      i32           m_iScan;
       bool              m_bMapped; // optionally used by implementation
       descriptor        m_descriptor;
       bool              m_bReduced; // optionally used by implementation
@@ -133,11 +133,18 @@ namespace draw2d
       virtual void create_helper_map();
 
 
-      virtual void construct(int32_t cx, int32_t cy);
+      virtual void construct(i32 cx, i32 cy);
 
       virtual void stretch_dib(dib * pdib);
 
       virtual ::size get_size() const;
+
+      class size & size() { return m_size; }
+      const class size & size() const { return m_size; }
+
+      class rect rect(point pt = ::null_point()) { return class rect(pt, m_size); }
+      const class rect rect(point pt = ::null_point()) const { return class rect(pt, m_size); }
+
 
       void rate_rgb(int iMul,int iDiv);
       virtual bool dc_select(bool bSelect = true);
@@ -145,7 +152,7 @@ namespace draw2d
       virtual COLORREF GetAverageColor();
       virtual COLORREF GetAverageOpaqueColor();
       virtual bool blend(dib * pdib, dib * pdibRate);
-      virtual bool Blend(dib *pdib, dib * pdibA, int32_t A);
+      virtual bool Blend(dib *pdib, dib * pdibA, i32 A);
       virtual bool Blend(dib *pdib, dib * pdibA);
       virtual bool blend(point ptDst, ::draw2d::dib * pdibSrc, point ptSrc, ::draw2d::dib * pdibAlf, point ptDstAlf, class size size);
       virtual bool precision_blend(point ptDst, ::draw2d::dib * pdibAlf, point ptAlf, class size size);
@@ -157,12 +164,12 @@ namespace draw2d
       virtual bool fork_blend(point ptDst, ::draw2d::dib * pdibAlf, point ptAlf, class size size, byte bA);
       virtual bool bitmap_blend(::draw2d::graphics * pgraphics, LPCRECT lprect);
       virtual bool color_blend(COLORREF cr, BYTE bAlpha);
-      virtual void BitBlt(dib * pdib, int32_t op);
-      virtual void BitBlt(int cxParam, int cyParam, dib * pdib,int32_t op);
-      virtual int32_t cos(int32_t i, int32_t iAngle);
-      virtual int32_t sin(int32_t i, int32_t iAngle);
-      virtual int32_t cos10(int32_t i, int32_t iAngle);
-      virtual int32_t sin10(int32_t i, int32_t iAngle);
+      virtual void BitBlt(dib * pdib, i32 op);
+      virtual void BitBlt(int cxParam, int cyParam, dib * pdib,i32 op);
+      virtual i32 cos(i32 i, i32 iAngle);
+      virtual i32 sin(i32 i, i32 iAngle);
+      virtual i32 cos10(i32 i, i32 iAngle);
+      virtual i32 sin10(i32 i, i32 iAngle);
 
       virtual void hue_offset(double dRate);
 
@@ -176,8 +183,8 @@ namespace draw2d
       virtual bool is_rgb_black();
       virtual void do_xor(dib * pdib);
 
-      virtual void ToAlpha(int32_t i);
-      virtual void ToAlphaAndFill(int32_t i, COLORREF cr);
+      virtual void ToAlpha(i32 i);
+      virtual void ToAlphaAndFill(i32 i, COLORREF cr);
       virtual void GrayToARGB(COLORREF cr);
 
       virtual void from_alpha();
@@ -197,21 +204,21 @@ namespace draw2d
 
 
       virtual void set_rgb(COLORREF cr);
-      virtual void set_rgb(int32_t R, int32_t G, int32_t B);
-      virtual void tint(::draw2d::dib * pdib, int32_t R, int32_t G, int32_t B);
-      virtual void set_rgb_pre_alpha(int32_t R, int32_t G, int32_t B, int32_t A);
+      virtual void set_rgb(i32 R, i32 G, i32 B);
+      virtual void tint(::draw2d::dib * pdib, i32 R, i32 G, i32 B);
+      virtual void set_rgb_pre_alpha(i32 R, i32 G, i32 B, i32 A);
       virtual bool rgb_from(::draw2d::dib * pdib);
 
 
       virtual void saturation(double dRate);
 
 
-      virtual void SetIconMask(::visual::icon * picon, int32_t cx, int32_t cy);
-      virtual void RadialFill(BYTE a, BYTE r, BYTE g, BYTE b, int32_t x, int32_t y, int32_t iRadius);
+      virtual void SetIconMask(::visual::icon * picon, i32 cx, i32 cy);
+      virtual void RadialFill(BYTE a, BYTE r, BYTE g, BYTE b, i32 x, i32 y, i32 iRadius);
       virtual void RadialFill(
       BYTE a1, BYTE r1, BYTE g1, BYTE b1, // center colors
       BYTE a2, BYTE r2, BYTE g2, BYTE b2, // border colors
-      int32_t x, int32_t y, int32_t iRadius);
+      i32 x, i32 y, i32 iRadius);
 
       virtual void gradient_fill(COLORREF clr1, COLORREF clr2, POINT pt1, POINT pt2);
       virtual void gradient_horizontal_fill(COLORREF clr1, COLORREF clr2, int start, int end);
@@ -224,14 +231,14 @@ namespace draw2d
          return ::draw2d::get_pixel(m_pcolorref, m_iScan, m_size.cy, x, y);
       }
 
-      virtual uint32_t GetPixel(int32_t x, int32_t y);
+      virtual uint32_t GetPixel(i32 x, i32 y);
       virtual void Mask(COLORREF crMask, COLORREF crInMask, COLORREF crOutMask);
       virtual void channel_mask(BYTE uchFind, BYTE uchSet, BYTE uchUnset, visual::rgba::echannel echannel);
       virtual void transparent_color(color color);
 
       virtual bool create(class size);
-      virtual bool create(int32_t iWidth, int32_t iHeight);
-      virtual bool host(COLORREF * pcolorref, int iScan, int32_t iWidth, int32_t iHeight);
+      virtual bool create(i32 iWidth, i32 iHeight);
+      virtual bool host(COLORREF * pcolorref, int iScan, i32 iWidth, i32 iHeight);
       virtual bool create(::draw2d::graphics * pgraphics);
       virtual bool destroy();
       virtual bool detach(::draw2d::dib * pdib);
@@ -245,11 +252,11 @@ namespace draw2d
       virtual bool is_realized() const;
       virtual bool defer_realize(::draw2d::graphics * pgraphics) const;
 
-      virtual void DivideRGB(int32_t iDivide);
-      virtual void DivideARGB(int32_t iDivide);
-      virtual void DivideA(int32_t iDivide);
+      virtual void DivideRGB(i32 iDivide);
+      virtual void DivideARGB(i32 iDivide);
+      virtual void DivideA(i32 iDivide);
 
-      virtual bool to(dib *dib) const;
+      virtual bool to(dib * pdib) const;
       virtual bool from(const ::draw2d::dib * pdib);
       virtual bool from(::draw2d::graphics * pgraphics);
       virtual bool from(point ptDst, ::draw2d::graphics * pgraphics, point ptSrc, class size size);
@@ -266,19 +273,19 @@ namespace draw2d
       virtual bool to(::draw2d::graphics * pgraphics, point pt, class size size, point ptSrc);
 
 
-      virtual bool pixelate(int32_t iSize);
+      virtual bool pixelate(i32 iSize);
 
 
 
-      virtual void fill_channel(int32_t C, visual::rgba::echannel echannel);
-      virtual void white_fill_channel(int32_t C, visual::rgba::echannel echannel);
+      virtual void fill_channel(i32 C, visual::rgba::echannel echannel);
+      virtual void white_fill_channel(i32 C, visual::rgba::echannel echannel);
       virtual void FillByte(uchar uch);
       virtual void Fill(COLORREF level);
-      virtual void Fill (int32_t A, int32_t R, int32_t G, int32_t B );
-//      virtual void Fill ( int32_t R, int32_t G, int32_t B );
-      virtual void set ( int32_t R, int32_t G, int32_t B );
-      virtual void FillGlass ( int32_t R, int32_t G, int32_t B, int32_t A );
-      virtual void FillStippledGlass ( int32_t R, int32_t G, int32_t B );
+      virtual void Fill (i32 A, i32 R, i32 G, i32 B);
+//      virtual void Fill(i32 R, i32 G, i32 B);
+      virtual void set(i32 R, i32 G, i32 B);
+      virtual void FillGlass(i32 R, i32 G, i32 B, i32 A);
+      virtual void FillStippledGlass(i32 R, i32 G, i32 B);
       virtual void Invert();
       virtual void channel_invert(visual::rgba::echannel echannel);
       virtual void channel_multiply(visual::rgba::echannel echannel, double dRate, bool bIfAlphaIgnorePreDivPosMult = false);
@@ -291,7 +298,7 @@ namespace draw2d
       virtual void channel_copy(visual::rgba::echannel echannelDst, visual::rgba::echannel echannelSrc);
       virtual void channel_copy(visual::rgba::echannel echannelDst, visual::rgba::echannel echannelSrc, ::draw2d::dib * pdib);
 
-      virtual void Map (int32_t ToRgb, int32_t FromRgb );
+      virtual void Map (i32 ToRgb, i32 FromRgb);
 
       virtual void create_nanosvg(string str);
       virtual void nanosvg(NSVGimage * pimage);
@@ -299,39 +306,40 @@ namespace draw2d
 
       virtual bool op(string str);
 
-      //virtual void from( dib *dib );
+      //virtual void from( dib * pdib);
 
-      virtual void Blend ( dib *dib, int32_t A );
-      virtual void Darken ( dib *dib );
-      virtual void Difference ( dib *dib );
-      virtual void Lighten ( dib *dib );
-      virtual void Multiply ( dib *dib );
-      virtual void Screen ( dib *dib );
+      virtual void Blend(dib * pdib, i32 A);
+      virtual void Darken(dib * pdib);
+      virtual void Difference(dib * pdib);
+      virtual void Lighten(dib * pdib);
+      virtual void Multiply(dib * pdib);
+      virtual void Screen(dib * pdib);
 
-      virtual void copy ( dib *dib, int32_t x, int32_t y );
-      virtual void PasteRect ( dib *dib, int32_t x, int32_t y );
+      virtual void copy(dib * pdib, i32 x, i32 y);
+      virtual void PasteRect(dib * pdib, i32 x, i32 y);
 
-      virtual void FillRect ( int32_t x, int32_t y, int32_t w, int32_t h, int32_t R, int32_t G, int32_t B );
-      virtual void FillRect ( int32_t x, int32_t y, int32_t w, int32_t h, int32_t A, int32_t R, int32_t G, int32_t B );
-      virtual void FillGlassRect ( int32_t x, int32_t y, int32_t w, int32_t h, int32_t R, int32_t G, int32_t B, int32_t A );
-      virtual void FillStippledGlassRect ( int32_t x, int32_t y, int32_t w, int32_t h, int32_t R, int32_t G, int32_t B );
+      virtual void fill_rect(LPCRECT lpcrect, COLORREF cr);
+      virtual void fill_rect(LPCRECT lpcrect, i32 R, i32 G, i32 B);
 
-      virtual void BlendRect ( dib *dib, int32_t x, int32_t y, int32_t A );
-      virtual void DarkenRect ( dib *dib, int32_t x, int32_t y );
-      virtual void DifferenceRect ( dib *dib, int32_t x, int32_t y );
-      virtual void LightenRect ( dib *dib, int32_t x, int32_t y );
-      virtual void MultiplyRect ( dib *dib, int32_t x, int32_t y );
-      virtual void ScreenRect ( dib *dib, int32_t x, int32_t y );
+      virtual void fill_glass_rect(LPCRECT lpcrect, i32 R, i32 G, i32 B, i32 A);
+      virtual void fill_stippled_glass_rect(LPCRECT lpcrect, i32 R, i32 G, i32 B);
 
-      virtual void horizontal_line(int32_t y, int32_t R, int32_t G, int32_t B, int32_t A = 0, int32_t x1 = 0, int32_t x2 = -1);
-      virtual void Line ( int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t R, int32_t G, int32_t B );
-      virtual void LineGlass ( int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t R, int32_t G, int32_t B, int32_t A );
+      virtual void BlendRect(dib * pdib, i32 x, i32 y, i32 A);
+      virtual void DarkenRect(dib * pdib, i32 x, i32 y);
+      virtual void DifferenceRect(dib * pdib, i32 x, i32 y);
+      virtual void LightenRect(dib * pdib, i32 x, i32 y);
+      virtual void MultiplyRect(dib * pdib, i32 x, i32 y);
+      virtual void ScreenRect(dib * pdib, i32 x, i32 y);
 
-      virtual void create_frame(class size size, int32_t iFrameCount);
-      virtual void set_frame2(void * lpdata, int32_t iFrame, int32_t iFrameCount);
-      virtual void set_frame1(void * lpdata, int32_t iFrame, int32_t iFrameCount);
-      virtual void get_frame(void * lpdata, int32_t iFrame, int32_t iFrameCount);
-      virtual void xor_dib_frame2(void * lpdata, int32_t iFrame, int32_t iFrameCount);
+      virtual void horizontal_line(i32 y, i32 R, i32 G, i32 B, i32 A = 0, i32 x1 = 0, i32 x2 = -1);
+      virtual void Line(i32 x1, i32 y1, i32 x2, i32 y2, i32 R, i32 G, i32 B);
+      virtual void LineGlass(i32 x1, i32 y1, i32 x2, i32 y2, i32 R, i32 G, i32 B, i32 A);
+
+      virtual void create_frame(class size size, i32 iFrameCount);
+      virtual void set_frame2(void * lpdata, i32 iFrame, i32 iFrameCount);
+      virtual void set_frame1(void * lpdata, i32 iFrame, i32 iFrameCount);
+      virtual void get_frame(void * lpdata, i32 iFrame, i32 iFrameCount);
+      virtual void xor_dib_frame2(void * lpdata, i32 iFrame, i32 iFrameCount);
 
       virtual bool create_circle(dib * pdib, int diameter);
       virtual bool create_framed_square(dib * pdib, int inner, int outer, COLORREF cr);
@@ -340,17 +348,14 @@ namespace draw2d
       virtual void invert_rgb(LPCRECT lpcrect);
 
 
-      //virtual int32_t width();
-      //virtual int32_t height();
+      //virtual i32 width();
+      //virtual i32 height();
       inline int64_t area() const
       {
          return m_size.area();
       }
+
       virtual double pi() const;
-      inline class ::size size() const
-      {
-         return m_size;
-      }
 
       virtual void write(::file::ostream & ostream) const;
       virtual void read(::file::istream & istream);
@@ -361,13 +366,20 @@ namespace draw2d
 
       static void static_initialize();
 
-      virtual COLORREF make_colorref(int32_t a, int32_t r, int32_t g, int32_t b);
+      virtual COLORREF make_colorref(i32 a, i32 r, i32 g, i32 b);
 
       dib & operator = (const dib & dib);
 
       virtual int64_t scan_area();
 
       virtual bool load_thumbnail(const char * pszPath);
+
+
+      inline void fill_rect_dim(i32 x, i32 y, i32 w, i32 h, COLORREF cr) { return fill_rect(::rect_dim(x, y, w, h), cr); }
+      inline void fill_rect_dim(i32 x, i32 y, i32 w, i32 h, i32 R, i32 G, i32 B) { return fill_rect(::rect_dim(x, y, w, h), R, G, B); }
+      inline void fill_rect_coord(i32 x1, i32 y1, i32 x2, i32 y2, COLORREF cr) { return fill_rect(::rect(x1, y1, x2, y2), cr); }
+      inline void fill_rect_coord(i32 x1, i32 y1, i32 x2, i32 y2, i32 R, i32 G, i32 B) { return fill_rect(::rect(x1, y1, x2, y2), R, G, B); }
+
 
    };
 

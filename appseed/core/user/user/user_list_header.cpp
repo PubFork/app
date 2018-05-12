@@ -55,7 +55,7 @@ namespace user
 
          r.Align(::align_left_center, rC);
 
-         pgraphics->BitBlt(r, plist->m_columna.get_visible(iColumn)->m_dibHeader->get_graphics());
+         pgraphics->draw(r, plist->m_columna.get_visible(iColumn)->m_dibHeader->get_graphics());
 
          rectColumn.left = r.right + m_iImageSpacing;
 
@@ -685,7 +685,7 @@ namespace user
 
       pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
-      pgraphics->FillSolidRect(rectUpdate, _001GetColor(::user::color_list_header_background));
+      pgraphics->fill_solid_rect(rectUpdate, _001GetColor(::user::color_list_header_background));
 
       ::draw2d::item drawitem;
       drawitem.m_pgraphics = pgraphics;
@@ -702,7 +702,7 @@ namespace user
          pgraphics->SelectObject(p);
          pgraphics->move_to(rectDivider.left, rectDivider.top);
          pgraphics->line_to(rectDivider.left, rectDivider.bottom);
-         //pgraphics->Draw3dRect(rectDivider, Session.get_default_color(COLOR_BTNSHADOW), Session.get_default_color(COLOR_BTNHIGHLIGHT));
+         //pgraphics->draw3d_rect(rectDivider, Session.get_default_color(COLOR_BTNSHADOW), Session.get_default_color(COLOR_BTNHIGHLIGHT));
       }
 
    }

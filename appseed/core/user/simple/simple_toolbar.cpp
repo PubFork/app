@@ -239,7 +239,7 @@ void simple_toolbar::_001OnDraw(::draw2d::graphics * pgraphics)
 
    pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
-   pgraphics->FillSolidRect(rectClient, _001GetColor(::user::color_toolbar_background));
+   pgraphics->fill_solid_rect(rectClient, _001GetColor(::user::color_toolbar_background));
 
    //::user::interaction::_001OnDraw(pgraphics);
 
@@ -323,9 +323,9 @@ void simple_toolbar::TransparentEraseNonClient(::draw2d::graphics * pgraphics)
    else
    {
 #ifdef WINDOWSEX
-      pgraphics->FillSolidRect(rectWindow, Session.get_default_color(COLOR_3DFACE));
+      pgraphics->fill_solid_rect(rectWindow, Session.get_default_color(COLOR_3DFACE));
 #else
-      pgraphics->FillSolidRect(rectWindow, ARGB(255, 184, 184, 177));
+      pgraphics->fill_solid_rect(rectWindow, ARGB(255, 184, 184, 177));
 #endif
    }
 
@@ -367,7 +367,7 @@ void simple_toolbar::TransparentEraseNonClient(::draw2d::graphics * pgraphics)
 
    // draw borders in non-client area
    DrawBorders(pgraphics, rectWindow);
-   /*   pgraphics->FillSolidRect(
+   /*   pgraphics->fill_solid_rect(
    rectWindow.left + 7, rectWindow.top,
    rectWindow.right, rectWindow.top + 1,
    RGB(128, 128, 123));*/
@@ -787,7 +787,7 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
 
       rectSeparator.bottom = rectImage.bottom;
 
-      pgraphics->Draw3dRect(rectSeparator, ARGB(255, 92, 92, 92), ARGB(255, 255, 255, 255));
+      pgraphics->draw3d_rect(rectSeparator, ARGB(255, 92, 92, 92), ARGB(255, 255, 255, 255));
 
    }
    else
@@ -813,7 +813,7 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
                rectItem.height(),
                RGB(255, 255, 250), 208);
 
-               pgraphics->Draw3dRect(rectItem, ARGB(255, 127, 127, 127), ARGB(255, 255, 255, 255));
+               pgraphics->draw3d_rect(rectItem, ARGB(255, 127, 127, 127), ARGB(255, 255, 255, 255));
 
             }
 
@@ -856,7 +856,7 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
 
                ::draw2d::brush * pbrushOld = pgraphics->SelectObject(brush);
 
-               pgraphics->Rectangle(rectItem);
+               pgraphics->rectangle(rectItem);
 
                pgraphics->SelectObject(ppenOld);
 
@@ -904,7 +904,7 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
 
             ::draw2d::brush * pbrushOld = pgraphics->SelectObject(brush);
 
-            pgraphics->Rectangle(rectItem);
+            pgraphics->rectangle(rectItem);
 
             pgraphics->SelectObject(ppenOld);
 
@@ -938,14 +938,14 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
 
             _001GetElementRect(iItem, rectItem, element_item);
 
-            pgraphics->FillSolidRect(rectItem, ARGB(184, 255, 255, 255));
+            pgraphics->fill_solid_rect(rectItem, ARGB(184, 255, 255, 255));
 
          }
 
          if ((nStyle & TBBS_CHECKED) != 0)
          {
 
-            pgraphics->Draw3dRect(rectItem, ARGB(255, 127, 127, 127), ARGB(255, 255, 255, 255));
+            pgraphics->draw3d_rect(rectItem, ARGB(255, 127, 127, 127), ARGB(255, 255, 255, 255));
 
          }
 

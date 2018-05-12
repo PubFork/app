@@ -90,7 +90,7 @@ namespace user
 
       pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
-      pgraphics->FillSolidRect(rectClient, _001GetColor(color_list_background));
+      pgraphics->fill_solid_rect(rectClient, _001GetColor(color_list_background));
 
 
       point ptCursor;
@@ -246,30 +246,30 @@ namespace user
       {
          if(Session.savings().is_trying_to_save(::aura::resource_processing))
          {
-            data.m_pdc->FillSolidRect(
-               data.m_rect,
-               RGB(96,96,96));
+            data.m_pdc->fill_solid_rect(
+            data.m_rect,
+            RGB(96,96,96));
          }
          else
          {
             class rect rectUnion;
             _001GetItemElementRect(
-               rect,
-               data,
-               tree_element_image);
+            rect,
+            data,
+            tree_element_image);
             rectUnion = rect;
             _001GetItemElementRect(
-               rect,
-               data,
-               tree_element_text);
+            rect,
+            data,
+            tree_element_text);
             rectUnion.unite(rect, rectUnion);
             class imaging & imaging = Application.imaging();
             COLORREF crTranslucid = RGB(0, 0, 0);
             imaging.color_blend(
-               data.m_pdc,
-               rectUnion.left, rectUnion.top,
-               rectUnion.width(), rectUnion.height(),
-               crTranslucid, 127);
+            data.m_pdc,
+            rectUnion.left, rectUnion.top,
+            rectUnion.width(), rectUnion.height(),
+            crTranslucid, 127);
          }
       }
 
@@ -279,14 +279,14 @@ namespace user
          if(iImage >= 0)
          {
             _001GetItemElementRect(
-               rect,
-               data,
-               tree_element_image);
+            rect,
+            data,
+            tree_element_image);
             pimagelistItem->draw(
-               data.m_pdc,
-               iImage,
-               rect.top_left(),
-               0);
+            data.m_pdc,
+            iImage,
+            rect.top_left(),
+            0);
          }
       }
 
@@ -648,9 +648,9 @@ namespace user
 
 
    bool tree::_001GetItemElementRect(
-      LPRECT lprect,
-      ::user::tree_draw_item &drawitem,
-      ::user::e_tree_element eelement)
+   LPRECT lprect,
+   ::user::tree_draw_item &drawitem,
+   ::user::e_tree_element eelement)
    {
       switch(eelement)
       {

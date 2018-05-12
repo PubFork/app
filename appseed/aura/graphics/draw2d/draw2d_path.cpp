@@ -592,10 +592,10 @@ namespace draw2d
          get_bounding_rect(lprect,e.m_stringpath);
          break;
       case ::draw2d::path::element::type_end:
-         {
+      {
 
-         }
-         break;
+      }
+      break;
       default:
          _throw(::simple_exception(get_app(), "unexpected simple os graphics element type"));
       }
@@ -654,28 +654,28 @@ namespace draw2d
 
       pt2.y          = (LONG) (a.m_yCenter - a.m_dRadiusY * sin(f2));
 
-      lprect->left   = (LONG) MIN(pt1.x       , lprect->left);
+      lprect->left   = (LONG) MIN(pt1.x, lprect->left);
 
-      lprect->top    = (LONG) MIN(pt1.y       , lprect->top);
+      lprect->top    = (LONG) MIN(pt1.y, lprect->top);
 
-      lprect->right  = (LONG) MAX(pt1.x       , lprect->right);
+      lprect->right  = (LONG) MAX(pt1.x, lprect->right);
 
-      lprect->bottom = (LONG) MAX(pt1.y       , lprect->bottom);
+      lprect->bottom = (LONG) MAX(pt1.y, lprect->bottom);
 
-      lprect->left   = (LONG) MIN(pt2.x       , lprect->left);
+      lprect->left   = (LONG) MIN(pt2.x, lprect->left);
 
-      lprect->top    = (LONG) MIN(pt2.y       , lprect->top);
+      lprect->top    = (LONG) MIN(pt2.y, lprect->top);
 
-      lprect->right  = (LONG) MAX(pt2.x       , lprect->right);
+      lprect->right  = (LONG) MAX(pt2.x, lprect->right);
 
-      lprect->bottom = (LONG) MAX(pt2.y       , lprect->bottom);
+      lprect->bottom = (LONG) MAX(pt2.y, lprect->bottom);
 
       if((f1 >= 0 && f2 <= f1) || (f1 <= 0 && f2 >= 0))
       {
 
-         lprect->left   = (LONG) MIN(r.right        , lprect->left);
+         lprect->left   = (LONG) MIN(r.right, lprect->left);
 
-         lprect->right  = (LONG) MAX(r.right        , lprect->right);
+         lprect->right  = (LONG) MAX(r.right, lprect->right);
 
       }
 
@@ -686,22 +686,9 @@ namespace draw2d
       if((f1 >= 0 && f2 <= f1) || (f1 <= 0 && f2 >= 0))
       {
 
-         lprect->top    = (LONG) MIN(r.top        , lprect->top);
+         lprect->top    = (LONG) MIN(r.top, lprect->top);
 
-         lprect->bottom = (LONG) MAX(r.top        , lprect->bottom);
-
-      }
-
-      f1 -= System.math().GetPi() / 2.0;
-
-      f2 -= System.math().GetPi() / 2.0;
-
-      if((f1 >= 0 && f2 <= f1) || (f1 <= 0 && f2 >= 0))
-      {
-
-         lprect->left   = (LONG) MIN(r.left        , lprect->left);
-
-         lprect->right  = (LONG) MAX(r.left        , lprect->right);
+         lprect->bottom = (LONG) MAX(r.top, lprect->bottom);
 
       }
 
@@ -712,9 +699,22 @@ namespace draw2d
       if((f1 >= 0 && f2 <= f1) || (f1 <= 0 && f2 >= 0))
       {
 
-         lprect->top    = (LONG) MIN(r.bottom        , lprect->top);
+         lprect->left   = (LONG) MIN(r.left, lprect->left);
 
-         lprect->bottom = (LONG) MAX(r.bottom        , lprect->bottom);
+         lprect->right  = (LONG) MAX(r.left, lprect->right);
+
+      }
+
+      f1 -= System.math().GetPi() / 2.0;
+
+      f2 -= System.math().GetPi() / 2.0;
+
+      if((f1 >= 0 && f2 <= f1) || (f1 <= 0 && f2 >= 0))
+      {
+
+         lprect->top    = (LONG) MIN(r.bottom, lprect->top);
+
+         lprect->bottom = (LONG) MAX(r.bottom, lprect->bottom);
 
       }
 
@@ -785,7 +785,7 @@ namespace draw2d
    //
    // get_round_rect()
    //
-   // Purpose:     Defines a Rounded Rectangle and places it in the GraphicsPath
+   // Purpose:     Defines a Rounded rectangle and places it in the GraphicsPath
    //
    // Parameters:  path.m_ppath		- [out] pointer to GraphicsPath that will recieve the
    //									path data

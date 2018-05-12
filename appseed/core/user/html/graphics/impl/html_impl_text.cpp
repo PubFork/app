@@ -601,15 +601,15 @@ namespace html
             {
                if(m_bHover && m_pelemental->m_style.get_color("background-color", "hover", pdata, m_pelemental, cr))
                {
-                  pgraphics->FillSolidRect(rect, cr);
+                  pgraphics->fill_solid_rect(rect, cr);
                }
                else if(has_link() && m_pelemental->m_style.get_color("background-color", "link", pdata, m_pelemental, cr))
                {
-                  pgraphics->FillSolidRect(rect, cr);
+                  pgraphics->fill_solid_rect(rect, cr);
                }
                else if (m_pelemental->m_style.get_color("background-color", "", pdata, m_pelemental, cr))
                {
-                  pgraphics->FillSolidRect(rect, cr);
+                  pgraphics->fill_solid_rect(rect, cr);
                }
             }
          }
@@ -764,7 +764,7 @@ namespace html
                   //pgraphics->SetBkMode(OPAQUE);
                   pgraphics->SelectObject(brushBackground);
                   ::size size2 = pgraphics->GetTextExtent(strExtent2);
-                  pgraphics->FillSolidRect((int32_t)(left + size1.cx),(int32_t)y,size2.cx,size2.cy,crBkSel);
+                  pgraphics->fill_solid_rect_dim((int32_t)(left + size1.cx),(int32_t)y,size2.cx,size2.cy,crBkSel);
 
                   //pgraphics->set_text_color(crSel);
                   brushText->create_solid(crSel);
@@ -795,14 +795,14 @@ namespace html
                else
                {
                   pgraphics->text_out(left,top,strLine);
-                  //pgraphics->FillSolidRect(left,top,50,50,ARGB(255,0,255,0));
+                  //pgraphics->fill_solid_rect(left,top,50,50,ARGB(255,0,255,0));
                }
 
                cy += m_sizea[i].cy;
                lim += strLine.get_length();
             }
          }
-         //pgraphics->FillSolidRect(0, 0, 100, 100, RGB(0, 255, 0));
+         //pgraphics->fill_solid_rect(0, 0, 100, 100, RGB(0, 255, 0));
 
       }
 

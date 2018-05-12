@@ -343,9 +343,7 @@ namespace hotplugin
    // if composer on paint returns (returns true), it has painted something meaningful : no other painting is needed or even desired (finally when system, and host are ok,
    // if host returns in a fashion-timed way the response for bitmap, it draw this bitmap, and not the default waiting [hall] screen painted by this composer).
 
-#ifdef WINDOWSEX
-
-   bool composer::windows_on_paint(HDC hdc)
+   bool composer::windows_on_paint(::draw2d::graphics * pgraphics)
    {
 
       if((!m_bOk || !m_bResponsive) || m_paxishost == NULL || !m_paxishost->hotplugin_host_is_initialized() || m_strEntryHallText.has_char())
@@ -369,11 +367,7 @@ namespace hotplugin
 
             //::SetViewportOrgEx(hdc, rect.left, rect.top, &pt);
 
-#if !defined (METROWIN)
-
-            ::hotplugin::entry_hall_windows_on_paint(hdc,m_rect,m_strEntryHallText);
-
-#endif
+            ::hotplugin::entry_hall_windows_on_paint(pgraphics,m_rect,m_strEntryHallText);
 
          }
 
@@ -409,7 +403,6 @@ namespace hotplugin
 
    }
 
-#endif
 
    void composer::deferred_prodevian_redraw()
    {

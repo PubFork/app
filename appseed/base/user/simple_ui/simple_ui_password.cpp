@@ -128,7 +128,7 @@ namespace simple_ui
       ca.set_rgb(RGB(227,227,210));
       ca.hls_rate(0.0,-0.33,-0.23);
 //      COLORREF crBorder = ca.get_rgb() | (0xff << 24);
-      //pgraphics->Draw3dRect(rectClient,crBorder,crBorder);
+      //pgraphics->draw3d_rect(rectClient,crBorder,crBorder);
 
       if(m_ptree == NULL)
          return;
@@ -178,7 +178,7 @@ namespace simple_ui
       rectClient.left = m_pt.x;
       rectClient.bottom = rectClient.top + m_size.cy;
       rectClient.right = rectClient.left + m_size.cx;*/
-      //      pgraphics->FillSolidRect(rectClient, crBk);
+      //      pgraphics->fill_solid_rect(rectClient, crBk);
 
 //
 
@@ -249,7 +249,7 @@ namespace simple_ui
 
          if(iEnd > iStart)
          {
-            pgraphics->FillSolidRect((int32_t)(left + size1.cx),(int32_t)y,(int32_t)size2.cx,(int32_t)size2.cy,ARGB(255,120,240,180));
+            pgraphics->fill_solid_rect_dim((int32_t)(left + size1.cx),(int32_t)y,(int32_t)size2.cx,(int32_t)size2.cy,ARGB(255,120,240,180));
             brushText->create_solid(crSel);
             pgraphics->SelectObject(brushText);
             pgraphics->text_out(left + size1.cx,y,strExtent2);

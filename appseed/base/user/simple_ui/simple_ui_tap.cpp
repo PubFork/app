@@ -203,11 +203,11 @@ namespace simple_ui
 
          GetClientRect(rectClient);
 
-         pgraphics->FillRect(rectClient, br);
+         pgraphics->fill_rect(rectClient, br);
 
       }
 
-     simple_ui_draw_text(pgraphics);
+      simple_ui_draw_text(pgraphics);
 
    }
 
@@ -268,28 +268,29 @@ namespace simple_ui
 
 #else
 
-             if (timeNow.GetHour() >= 6 && timeNow.GetHour() <= 17)
-             {
-                 
+            if (timeNow.GetHour() >= 6 && timeNow.GetHour() <= 17)
+            {
 
-            crOut = ARGB(184 + 49, 230, 255, 225);
 
-            crIn = ARGB(255, 133, 255, 77 + 49);
+               crOut = ARGB(184 + 49, 230, 255, 225);
 
-            crBorderOut = ARGB(184, 100, 150, 100);
+               crIn = ARGB(255, 133, 255, 77 + 49);
 
-            crBorderIn = ARGB(184, 240, 255, 235);
-             }
-        else {
-            crOut = ARGB(184 + 49, 230, 255, 225);
-            
-            crIn = ARGB(255, 133, 255, 77 + 49);
-            
-            crBorderOut = ARGB(184, 100, 150, 100);
-            
-            crBorderIn = ARGB(184, 240, 255, 235);
+               crBorderOut = ARGB(184, 100, 150, 100);
 
-                 }
+               crBorderIn = ARGB(184, 240, 255, 235);
+            }
+            else
+            {
+               crOut = ARGB(184 + 49, 230, 255, 225);
+
+               crIn = ARGB(255, 133, 255, 77 + 49);
+
+               crBorderOut = ARGB(184, 100, 150, 100);
+
+               crBorderIn = ARGB(184, 240, 255, 235);
+
+            }
 
 #endif
 
@@ -349,7 +350,7 @@ namespace simple_ui
 
             pgraphics->SelectObject(br);
 
-            pgraphics->FillRect(rectClient,br);
+            pgraphics->fill_rect(rectClient,br);
 
             ::draw2d::pen_sp pen(allocer());
 
@@ -369,11 +370,11 @@ namespace simple_ui
 
          br->CreateLinearGradientBrush(point(rectClient.left, rectClient.top - 1), point(rectClient.left, rectClient.top + iBorderH + 2), crOut, crIn);
 
-         pgraphics->FillRect(rect(rectClient.left + 1, rectClient.top + 1, (int32_t)rectClient.width(), iBorderH), br);
+         pgraphics->fill_rect(rect(rectClient.left + 1, rectClient.top + 1, (int32_t)rectClient.width(), iBorderH), br);
 
          br->CreateLinearGradientBrush(point(rectClient.left, rectClient.top + iBorderH - 1), point(rectClient.left, rectClient.top + iBorderH * 2 + 2), crIn, crOut);
 
-         pgraphics->FillRect(rect(rectClient.left + 1, rectClient.top + iBorderH, rectClient.left + (int32_t)rectClient.width(), rectClient.top + iBorderH + iBorderH), br);
+         pgraphics->fill_rect(rect(rectClient.left + 1, rectClient.top + iBorderH, rectClient.left + (int32_t)rectClient.width(), rectClient.top + iBorderH + iBorderH), br);
 
          /*Gdiplus::Pen pen1(crBorderOut);
 
@@ -381,7 +382,7 @@ namespace simple_ui
 
          ::draw2d::pen_sp pen(pgraphics, 1.0, crBorderIn);
 
-         pgraphics->DrawRect(rect(rectClient.left + 1, rectClient.top + 1, rectClient.left + (int32_t)rectClient.width() - 2, rectClient.top + iBorderH * 2 - 2), pen);
+         pgraphics->draw_rect(rect(rectClient.left + 1, rectClient.top + 1, rectClient.left + (int32_t)rectClient.width() - 2, rectClient.top + iBorderH * 2 - 2), pen);
 
       }
 
@@ -417,24 +418,24 @@ namespace simple_ui
 
       }
       else
-      { 
-      
+      {
+
          crText = ARGB(223, 255, 255, 255);
-      
+
       }
-      
+
 
 #else
 
       if (timeNow.GetHour() >= 6 && timeNow.GetHour() <= 17)
       {
-         
+
          crText = ARGB(223, 49, 84, 23);
-         
+
       }
       else
       {
-         
+
          crText = ARGB(223, 49, 84, 23);
       }
 

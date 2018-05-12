@@ -122,7 +122,7 @@ namespace draw2d
 
       g->SelectObject(this);
 
-      dib->get_graphics()->BitBlt(null_point(), dib->m_size, g, null_point(), SRCCOPY);
+      dib->get_graphics()->draw(dib->rect(), g);
 
       return CreateHBITMAP(dib->m_pcolorref, dib->m_iScan, dib->m_size.cx, dib->m_size.cy);
 

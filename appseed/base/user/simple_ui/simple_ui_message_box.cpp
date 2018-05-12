@@ -228,7 +228,7 @@ namespace simple_ui
 
       }
 
-      pgraphics->FillSolidRect(rectClient,crBk);
+      pgraphics->fill_solid_rect(rectClient,crBk);
 
       sp(::draw2d::font) font(allocer());
 

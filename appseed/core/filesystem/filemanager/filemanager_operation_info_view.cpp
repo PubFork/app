@@ -25,18 +25,18 @@ namespace filemanager
       for(x = ileft; x < iMaxW; x+=iW)
       {
          cr = RGB(
-            255 - iDeltaVermelho - iDeltaDark,
-            (255 - (iDeltaV2 / 2.0) + (int32_t)(sin((double)x / dSoft + dAnime)  *(iDeltaV2 / 2.0))) - iDeltaV1 - iDeltaDark,
-            255 - iDeltaAzul - 23 - iDeltaDark);
-         pgraphics->FillSolidRect(x,iTop,iW,cy,cr);
+              255 - iDeltaVermelho - iDeltaDark,
+              (255 - (iDeltaV2 / 2.0) + (int32_t)(sin((double)x / dSoft + dAnime)  *(iDeltaV2 / 2.0))) - iDeltaV1 - iDeltaDark,
+              255 - iDeltaAzul - 23 - iDeltaDark);
+         pgraphics->fill_solid_rect_dim(x,iTop,iW,cy,cr);
       }
       if(x < iRight)
       {
          cr = RGB(
-            255 - iDeltaVermelho - iDeltaDark,
-            (255 - (iDeltaV2 / 2.0) + (int32_t)(sin((double)x / dSoft + dAnime)  *(iDeltaV2 / 2.0))) - iDeltaV1 - iDeltaDark,
-            255 - iDeltaAzul - 23 - iDeltaDark);
-         pgraphics->FillSolidRect(x,iTop,iRight - x,cy,cr);
+              255 - iDeltaVermelho - iDeltaDark,
+              (255 - (iDeltaV2 / 2.0) + (int32_t)(sin((double)x / dSoft + dAnime)  *(iDeltaV2 / 2.0))) - iDeltaV1 - iDeltaDark,
+              255 - iDeltaAzul - 23 - iDeltaDark);
+         pgraphics->fill_solid_rect_dim(x,iTop,iRight - x,cy,cr);
       }
    }
 
@@ -51,9 +51,9 @@ namespace filemanager
    void operation_info_view::_001OnDraw(::draw2d::graphics * pgraphics)
    {
 
-      
 
-      /*::FillRect(hdc, &rectProgress, g_hbrushProgress3);
+
+      /*::fill_rect(hdc, &rectProgress, g_hbrushProgress3);
       rectProgress.left++;
       rectProgress.right--;
       rectProgress.top++;
@@ -63,7 +63,7 @@ namespace filemanager
       int32_t iLineCount = 23;
       double dBarHeight = (double)rectClient.height() / (double)iLineCount;
       double dTop = 0.0;
-      RECT rectProgress;
+      rect rectProgress;
       rectProgress = rectClient;
       //rectProgress.left += 23;
       //rectProgress.right -= 23;
@@ -72,7 +72,7 @@ namespace filemanager
       double dProgressL = 0.0;
       double dProgressU;
       double dProgressD = 1.0 / (double)iLineCount;
-      RECT rectBar;
+      rect rectBar;
       double dProgress;
       dProgress = get_document()->m_thread.get_progress_rate();
       for(int32_t iLine = 0; iLine < iLineCount; iLine++)
@@ -82,7 +82,7 @@ namespace filemanager
          dProgressU = dProgressL + dProgressD;
          if(dProgress < dProgressU)
          {
-            pgraphics->FillSolidRect(rectProgress,RGB(255,240,200));
+            pgraphics->fill_solid_rect(rectProgress,RGB(255,240,200));
          }
          if(dProgress > dProgressL)
          {
@@ -91,14 +91,14 @@ namespace filemanager
                rectBar.right = ((int32_t)((rectProgress.right - rectProgress.left) * (dProgress - dProgressL) * ((double)iLineCount))) + rectProgress.left;
             }
             DoBar(pgraphics,rectBar.left,rectBar.top,
-               rectBar.right - rectBar.left,rectBar.bottom - rectBar.top,m_dAnime);
+                  rectBar.right - rectBar.left,rectBar.bottom - rectBar.top,m_dAnime);
          }
          dTop += dBarHeight;
          rectProgress.top = (LONG)dTop;
          rectProgress.bottom = (LONG)(dTop + dBarHeight);
          dProgressL = dProgressU;
       }
-      //::FillRect(hdc, &rectProgress, g_hbrushProgress1);
+      //::fill_rect(hdc, &rectProgress, g_hbrushProgress1);
 
    }
 

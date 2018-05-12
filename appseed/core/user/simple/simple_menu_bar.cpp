@@ -722,13 +722,13 @@ size simple_menu_bar::CalcFixedLayout(bool bStretch, bool bHorz)
       ::draw2d::brush_sp brushShadow(get_app(), RGB(127, 127, 127));
       ::draw2d::pen * ppenOld = pgraphics->SelectObject(penShadow);
       ::draw2d::brush * pbrushOld = pgraphics->SelectObject(brushShadow);
-      pgraphics->Rectangle(rectShadow);
+      pgraphics->rectangle(rectShadow);
 
       ::draw2d::pen_sp pen(get_app(), PS_SOLID, 1, RGB(92, 92, 92));
       ::draw2d::brush_sp brush(get_app(), RGB(255, 255, 255));
       pgraphics->SelectObject(pen);
       pgraphics->SelectObject(brush);
-      pgraphics->Rectangle(rectItem);
+      pgraphics->rectangle(rectItem);
       pgraphics->SelectObject(ppenOld);
       pgraphics->SelectObject(pbrushOld);
 

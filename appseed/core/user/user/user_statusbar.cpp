@@ -577,10 +577,16 @@ namespace user
    {
 
       if (pbase->m_id != WM_DRAWITEM)
+      {
+
          return ::user::interaction::OnChildNotify(pbase);
 
+      }
+
 #ifdef WINDOWSEX
-      DrawItem((LPDRAWITEMSTRUCT)pbase->m_lparam);
+
+      DrawItem(pbase->m_lparam.cast < DRAWITEMSTRUCT >());
+
 #endif
 
       return true;

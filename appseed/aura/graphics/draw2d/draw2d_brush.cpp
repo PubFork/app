@@ -162,12 +162,14 @@ namespace draw2d
       return 0;
    }
 
+
    bool brush::CreateLinearGradientBrush(point p1,point p2,COLORREF cr1,COLORREF cr2)
    {
 
-      return CreateLinearGradientBrush((pointd)p1,(pointd)p2,cr1,cr2);
+      return CreateLinearGradientBrush(pointd(p1),pointd(p2),cr1,cr2);
 
    }
+
 
    bool brush::CreateRadialGradientBrush(point p1,size p2,COLORREF cr1,COLORREF cr2)
    {

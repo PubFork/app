@@ -1672,7 +1672,7 @@ void simple_frame_window::_001OnDeferPaintLayeredWindowBackground(::draw2d::grap
 
       GetClientRect(rectClient);
 
-      pgraphics->FillSolidRect(rectClient, RGB(0, 0, 0));
+      pgraphics->fill_solid_rect(rectClient, RGB(0, 0, 0));
 
    }
    else
@@ -1777,7 +1777,7 @@ void simple_frame_window::_000OnDraw(::draw2d::graphics * pgraphicsParam)
 
 #if TEST
 
-         pgraphics->FillSolidRect(0, 0, 100, 100, ARGB(128, 255, 0, 0));
+         pgraphics->fill_solid_rect(0, 0, 100, 100, ARGB(128, 255, 0, 0));
 
 #endif
 
@@ -1785,7 +1785,7 @@ void simple_frame_window::_000OnDraw(::draw2d::graphics * pgraphicsParam)
 
 #if TEST
 
-         pgraphics->FillSolidRect(0, 100, 100, 100, ARGB(128, 0, 0, 255));
+         pgraphics->fill_solid_rect(0, 100, 100, 100, ARGB(128, 0, 0, 255));
 
 #endif
 
@@ -1797,7 +1797,7 @@ void simple_frame_window::_000OnDraw(::draw2d::graphics * pgraphicsParam)
 
 #if TEST
 
-         pgraphics->FillSolidRect(60, 10, 50, 50, ARGB(128, 184, 180, 90));
+         pgraphics->fill_solid_rect(60, 10, 50, 50, ARGB(128, 184, 180, 90));
 
 #endif
 
@@ -1809,7 +1809,7 @@ void simple_frame_window::_000OnDraw(::draw2d::graphics * pgraphicsParam)
 
 #if TEST
 
-         pgraphics->FillSolidRect(10, 60, 50, 50, ARGB(128, 184, 180, 90));
+         pgraphics->fill_solid_rect(10, 60, 50, 50, ARGB(128, 184, 180, 90));
 
 #endif
 
@@ -1846,7 +1846,7 @@ void simple_frame_window::_001OnDraw(::draw2d::graphics * pgraphics)
       if(Session.savings().is_trying_to_save(::aura::resource_translucent_background))
       {
 
-         //pgraphics->FillSolidRect(rectClient, RGB(150, 220, 140));
+         //pgraphics->fill_solid_rect(rectClient, RGB(150, 220, 140));
 
       }
       else if(Session.savings().is_trying_to_save(::aura::resource_processing)
@@ -2852,7 +2852,7 @@ void simple_frame_window::_011OnDraw(::draw2d::graphics * pgraphics)
 
    //   pgraphics->set_al
 
-   //   pgraphics->FillSolidRect(rect, _001GetColor(::user::color_background));
+   //   pgraphics->fill_solid_rect(rect, _001GetColor(::user::color_background));
 
    //}
 

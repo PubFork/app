@@ -551,7 +551,7 @@ namespace user
 
       if(pdrawitem->m_bListItemHover)
       {
-         pdrawitem->m_pgraphics->FillSolidRect(pdrawitem->m_rectItem,ARGB(128,255,255,255));
+         pdrawitem->m_pgraphics->fill_solid_rect(pdrawitem->m_rectItem,ARGB(128,255,255,255));
          select_font(pdrawitem->m_pgraphics, font_list_hover);
       }
       else
@@ -574,7 +574,7 @@ namespace user
       {
          if(Session.savings().is_trying_to_save(::aura::resource_processing))
          {
-            pdrawitem->m_pgraphics->FillSolidRect(pdrawitem->m_rectItem,ARGB(255,96,96,96));
+            pdrawitem->m_pgraphics->fill_solid_rect(pdrawitem->m_rectItem,ARGB(255,96,96,96));
          }
          else
          {
@@ -650,7 +650,7 @@ namespace user
          class rect rectHighlight(pdrawitem->m_rectItem);
          rectHighlight.inflate(8,0,8,-1);
          pdrawitem->m_pgraphics->SelectObject(ppenHighlight);
-         pdrawitem->m_pgraphics->DrawRectangle(rectHighlight);
+         pdrawitem->m_pgraphics->draw_rect(rectHighlight);
       }
 
 

@@ -464,7 +464,7 @@ namespace visual
          COLORREF crBack = m_sparray->m_crBack;
 
          // We simply draw on the previous frames. Do nothing here.
-         m_sparray->m_dibCompose->get_graphics()->FillSolidRect(m_sparray->element_at(m_sparray->m_iLastFrame)->m_rect, crBack);
+         m_sparray->m_dibCompose->get_graphics()->fill_solid_rect(m_sparray->element_at(m_sparray->m_iLastFrame)->m_rect, crBack);
 
       }
       break;
@@ -476,7 +476,7 @@ namespace visual
          COLORREF crBack = m_sparray->m_crBack;
          //byte bAlpha = argb_get_a_value(crBack);
 
-         m_sparray->m_dibCompose->get_graphics()->FillSolidRect(m_sparray->element_at(m_sparray->m_iLastFrame)->m_rect, crBack);
+         m_sparray->m_dibCompose->get_graphics()->fill_solid_rect(m_sparray->element_at(m_sparray->m_iLastFrame)->m_rect, crBack);
       }
       break;
       case dib_sp::pointer::disposal_previous:

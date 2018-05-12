@@ -252,7 +252,7 @@ namespace user
 
       GetClientRect(rectClient);
 
-      pgraphics->FillSolidRect(rectClient, _001GetColor(::user::color_edit_background));
+      pgraphics->fill_solid_rect(rectClient, _001GetColor(::user::color_edit_background));
 
 
       cr = _001GetColor(color_edit_text);
@@ -329,7 +329,7 @@ namespace user
          rectClient.left = m_pt.x;
          rectClient.bottom = rectClient.top + m_size.cy;
          rectClient.right = rectClient.left + m_size.cx;*/
-      //      pgraphics->FillSolidRect(rectClient, crBk);
+      //      pgraphics->fill_solid_rect(rectClient, crBk);
 
 
       point ptOffset = get_viewport_offset();
@@ -444,7 +444,7 @@ namespace user
          //      x1 = (int)(get_line_extent(iLine, x));
          //      if (pregion->styled()->bback)
          //      {
-         //         pgraphics->FillSolidRect((int32_t)(left + x1), (int32_t)y, x1, m_iLineHeight, pregion->styled()->back);
+         //         pgraphics->fill_solid_rect((int32_t)(left + x1), (int32_t)y, x1, m_iLineHeight, pregion->styled()->back);
          //      }
          //      ::draw2d::brush_sp brushText(allocer());
          //      if (pregion->styled()->bfore)
@@ -563,7 +563,7 @@ namespace user
             if (iCurLineSelEnd > iCurLineSelBeg)
             {
 
-               pgraphics->FillSolidRect(
+               pgraphics->fill_solid_rect_dim(
                (double)((double)left + x1),
                (double)y,
                (double)MIN(x2-x1, (double)rectClient.right - ((double)left + x1)),
@@ -639,7 +639,7 @@ namespace user
 
                pgraphics->SelectObject(p);
 
-               pgraphics->DrawErrorLine((int)xA, m_iLineHeight, (int)xB, 1);
+               pgraphics->draw_error_line((int)xA, m_iLineHeight, (int)xB, 1);
 
             }
 

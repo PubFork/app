@@ -180,8 +180,8 @@ bool xfplayer_view_line::to(::draw2d::graphics * pgraphics, bool bDraw, const RE
    {
       m_bCacheEmboss = false;
       CalcCharsPositions(
-         pgraphics,
-         rect);
+      pgraphics,
+      rect);
    }
 
    ::rect rectTextOut;
@@ -190,162 +190,162 @@ bool xfplayer_view_line::to(::draw2d::graphics * pgraphics, bool bDraw, const RE
    switch (m_iAnimateType)
    {
    case AnimateNoAnimate:
+   {
+      if (bDraw)
       {
-         if (bDraw)
+         strsize iLink = 0;
+         strsize iChar = 0;
+         while (true)
          {
-            strsize iLink = 0;
-            strsize iChar = 0;
-            while (true)
+            pgraphics->SelectObject(m_font);
+            if (iChar >= strFinal.get_length())
+               break;
+            if (iLink >= m_iaLinkStart.get_size())
             {
-               pgraphics->SelectObject(m_font);
-               if (iChar >= strFinal.get_length())
-                  break;
-               if (iLink >= m_iaLinkStart.get_size())
-               {
-                  size size = pgraphics->GetTextExtent(strFinal.Left(iChar));
-                  EmbossedTextOut(pgraphics, strFinal.Mid(iChar), rectTextOut.left + size.cx, rectTextOut.top, 0, m_cr, m_crOutline, strFinal.get_length() - iChar, dBlend);
-                  break;
-               }
-               else if (m_iaLinkStart[iLink] > iChar)
-               {
-                  size size = pgraphics->GetTextExtent(strFinal.Left(iChar));
-                  EmbossedTextOut(pgraphics, strFinal.Mid(iChar), rectTextOut.left + size.cx, rectTextOut.top, 0, m_cr, m_crOutline, m_iaLinkStart[iLink], dBlend);
-               }
-               pgraphics->SelectObject(m_fontLink);
-               size size = pgraphics->GetTextExtent(strFinal.Left(m_iaLinkStart[iLink]));
-
-               EmbossedTextOut(pgraphics, strFinal.Mid(m_iaLinkStart[iLink]), rectTextOut.left + size.cx, rectTextOut.top, 0, m_cr, m_crOutline, m_iaLinkEnd[iLink] - m_iaLinkStart[iLink] + 1, dBlend);
-               iChar = m_iaLinkEnd[iLink] + 1;
-               iLink++;
+               size size = pgraphics->GetTextExtent(strFinal.Left(iChar));
+               EmbossedTextOut(pgraphics, strFinal.Mid(iChar), rectTextOut.left + size.cx, rectTextOut.top, 0, m_cr, m_crOutline, strFinal.get_length() - iChar, dBlend);
+               break;
             }
-            if (GetSelection().m_iCharStartSource >= 0)
+            else if (m_iaLinkStart[iLink] > iChar)
             {
-               index iStart;
-               index iLineStart;
-               index iLineEnd;
-               strsize iCharStart;
-               strsize iCharEnd;
-               GetSelection().GetNormalSelection(iLineStart, iCharStart, iLineEnd, iCharEnd);
-               if (iLineStart < m_iIndex)
-               {
-                  iStart = 0;
-               }
-               else if (iLineStart > m_iIndex)
-               {
-                  iStart = m_iaPosition.get_count();
-               }
-               else
-               {
-                  iStart = iCharStart;
-               }
-               index iEnd;
-               if (iLineEnd < m_iIndex)
-               {
-                  iEnd = -1;
-               }
-               else if (iLineEnd > m_iIndex)
-               {
-                  iEnd = m_iaPosition.get_upper_bound();
-               }
-               else
-               {
-                  iEnd = iCharEnd;
-               }
-               if (iStart < iEnd)
-               {
-                  class rect rectPlacement;
-                  GetPlacement(rectPlacement);
-                  class rect rect = rectPlacement;
-                  size size1 = pgraphics->GetTextExtent(strFinal.Left(iStart));
-                  size size2 = pgraphics->GetTextExtent(strFinal.Left(iEnd + 1));
-                  rect.left = rectPlacement.left + size1.cx;
-                  rect.right = rectPlacement.left + size2.cx;
-                  ::draw2d::dib_sp dib(allocer());
-                  if (rect.area() > 0)
-                  {
-                     dib->create(rect.size());
-                     dib->Fill(255, 255, 255, 255);
-                     dib->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_blend);
-                     pgraphics->flush();
+               size size = pgraphics->GetTextExtent(strFinal.Left(iChar));
+               EmbossedTextOut(pgraphics, strFinal.Mid(iChar), rectTextOut.left + size.cx, rectTextOut.top, 0, m_cr, m_crOutline, m_iaLinkStart[iLink], dBlend);
+            }
+            pgraphics->SelectObject(m_fontLink);
+            size size = pgraphics->GetTextExtent(strFinal.Left(m_iaLinkStart[iLink]));
 
-                     point pt = pgraphics->GetViewportOrg();
-                     dib->from(null_point(), pgraphics, pt + rect.top_left(), rect.size());
-                     //dib->get_graphics()->FillSolidRect(0, 0, 16, 16, ARGB(255, 255, 0, 255));
-                     dib->Invert();
-                     //dib->fill_channel(0, ::visual::rgba::channel_blue);
-                     dib->fill_channel(255, ::visual::rgba::channel_alpha);
-                     dib->to(pgraphics, rect.top_left(), rect.size(), null_point());
-                  }
+            EmbossedTextOut(pgraphics, strFinal.Mid(m_iaLinkStart[iLink]), rectTextOut.left + size.cx, rectTextOut.top, 0, m_cr, m_crOutline, m_iaLinkEnd[iLink] - m_iaLinkStart[iLink] + 1, dBlend);
+            iChar = m_iaLinkEnd[iLink] + 1;
+            iLink++;
+         }
+         if (GetSelection().m_iCharStartSource >= 0)
+         {
+            index iStart;
+            index iLineStart;
+            index iLineEnd;
+            strsize iCharStart;
+            strsize iCharEnd;
+            GetSelection().GetNormalSelection(iLineStart, iCharStart, iLineEnd, iCharEnd);
+            if (iLineStart < m_iIndex)
+            {
+               iStart = 0;
+            }
+            else if (iLineStart > m_iIndex)
+            {
+               iStart = m_iaPosition.get_count();
+            }
+            else
+            {
+               iStart = iCharStart;
+            }
+            index iEnd;
+            if (iLineEnd < m_iIndex)
+            {
+               iEnd = -1;
+            }
+            else if (iLineEnd > m_iIndex)
+            {
+               iEnd = m_iaPosition.get_upper_bound();
+            }
+            else
+            {
+               iEnd = iCharEnd;
+            }
+            if (iStart < iEnd)
+            {
+               class rect rectPlacement;
+               GetPlacement(rectPlacement);
+               class rect rect = rectPlacement;
+               size size1 = pgraphics->GetTextExtent(strFinal.Left(iStart));
+               size size2 = pgraphics->GetTextExtent(strFinal.Left(iEnd + 1));
+               rect.left = rectPlacement.left + size1.cx;
+               rect.right = rectPlacement.left + size2.cx;
+               ::draw2d::dib_sp dib(allocer());
+               if (rect.area() > 0)
+               {
+                  dib->create(rect.size());
+                  dib->Fill(255, 255, 255, 255);
+                  dib->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_blend);
+                  pgraphics->flush();
+
+                  point pt = pgraphics->GetViewportOrg();
+                  dib->from(null_point(), pgraphics, pt + rect.top_left(), rect.size());
+                  //dib->get_graphics()->fill_solid_rect(0, 0, 16, 16, ARGB(255, 255, 0, 255));
+                  dib->Invert();
+                  //dib->fill_channel(0, ::visual::rgba::channel_blue);
+                  dib->fill_channel(255, ::visual::rgba::channel_alpha);
+                  dib->to(pgraphics, rect.top_left(), rect.size(), null_point());
                }
             }
+         }
 
+      }
+   }
+   break;
+   case AnimateRHL:
+   {
+      int32_t iLeft = m_iaPosition.element_at(0);
+      int32_t iLeftDiff = 0;
+      int32_t iLastLeftDiff = 0;
+      int32_t i;
+      for (i = 0; i < m_iaPosition.get_size(); i++)
+      {
+         iLastLeftDiff = iLeftDiff;
+         iLeftDiff = m_iaPosition.element_at(i) - iLeft;
+         if ((int32_t)m_dAnimateProgress <= iLeftDiff)
+         {
+            //i--;
+            break;
          }
       }
-      break;
-   case AnimateRHL:
+      ::draw2d::region rgn;
+      string strFinal(m_str);
+      string strLeft = strFinal.Right(strFinal.get_length() - i);
+      int32_t iLeftOffset;
+      iLeftOffset = iLastLeftDiff - (int32_t)m_dAnimateProgress;
+      ::rect rectTextOut;
+      GetPlacement(rectTextOut);
+      rectTextOut.left += iLeftOffset;
+      if (bDraw)
       {
-         int32_t iLeft = m_iaPosition.element_at(0);
-         int32_t iLeftDiff = 0;
-         int32_t iLastLeftDiff = 0;
+         EmbossedTextOut(pgraphics, strLeft, rectTextOut.left, rectTextOut.top,
+                         0,
+                         m_cr,
+                         m_crOutline,
+                         strFinal.get_length(),
+                         dBlend);
+      }
+      int32_t iMaxCounter = MAX((int32_t)m_iaPosition.element_at(m_str.get_length()) - m_iaPosition.element_at(0) + 100, m_rect.right - m_rect.left);
+      int32_t iRight = iMaxCounter - (int32_t)m_dAnimateProgress;
+      if (iRight < m_rect.right)
+      {
+         int32_t iRightEnd;
          int32_t i;
          for (i = 0; i < m_iaPosition.get_size(); i++)
          {
-            iLastLeftDiff = iLeftDiff;
-            iLeftDiff = m_iaPosition.element_at(i) - iLeft;
-            if ((int32_t)m_dAnimateProgress <= iLeftDiff)
+            iRightEnd = iRight + m_iaPosition.element_at(i) - iLeft;
+            if (iRightEnd >= m_rect.right)
             {
-               //i--;
                break;
             }
          }
-         ::draw2d::region rgn;
-         string strFinal(m_str);
-         string strLeft = strFinal.Right(strFinal.get_length() - i);
-         int32_t iLeftOffset;
-         iLeftOffset = iLastLeftDiff - (int32_t)m_dAnimateProgress;
-         ::rect rectTextOut;
-         GetPlacement(rectTextOut);
-         rectTextOut.left += iLeftOffset;
+         string strRight = strFinal.Left(i);
+         rectTextOut.left = iRight;
          if (bDraw)
          {
-            EmbossedTextOut(pgraphics, strLeft, rectTextOut.left, rectTextOut.top,
-                            0,
-                            m_cr,
-                            m_crOutline,
-                            strFinal.get_length(),
-                            dBlend);
-         }
-         int32_t iMaxCounter = MAX((int32_t)m_iaPosition.element_at(m_str.get_length()) - m_iaPosition.element_at(0) + 100, m_rect.right - m_rect.left);
-         int32_t iRight = iMaxCounter - (int32_t)m_dAnimateProgress;
-         if (iRight < m_rect.right)
-         {
-            int32_t iRightEnd;
-            int32_t i;
-            for (i = 0; i < m_iaPosition.get_size(); i++)
-            {
-               iRightEnd = iRight + m_iaPosition.element_at(i) - iLeft;
-               if (iRightEnd >= m_rect.right)
-               {
-                  break;
-               }
-            }
-            string strRight = strFinal.Left(i);
-            rectTextOut.left = iRight;
-            if (bDraw)
-            {
-               EmbossedTextOut(pgraphics, strRight, rectTextOut.left, rectTextOut.top, 0, m_cr, m_crOutline, strFinal.get_length(), dBlend);
-            }
-         }
-
-         if (is_set_ref(rectaModified))
-         {
-            ::rect baserect;
-            rgn.get_bounding_box(baserect);
-            rectaModified.add(baserect);
-
+            EmbossedTextOut(pgraphics, strRight, rectTextOut.left, rectTextOut.top, 0, m_cr, m_crOutline, strFinal.get_length(), dBlend);
          }
       }
-      break;
+
+      if (is_set_ref(rectaModified))
+      {
+         ::rect baserect;
+         rgn.get_bounding_box(baserect);
+         rectaModified.add(baserect);
+
+      }
+   }
+   break;
    default:
       ASSERT(FALSE);
    }
@@ -405,118 +405,118 @@ bool xfplayer_view_line::to(::draw2d::graphics * pgraphics, bool bDraw, const RE
    switch (m_iAnimateType)
    {
    case AnimateNoAnimate:
+   {
+      string strFinal;
+      strFinal = m_str;
+      pgraphics->SelectObject(sppen);
+
+      ::draw2d::brush_sp brushText(allocer(), crColor);
+
+      pgraphics->SelectObject(brushText);
+
+      //pgraphics->set_text_color(crColor);
+
+      ::rect rectTextOut;
+      GetPlacement(rectTextOut);
+      if (bDraw)
       {
-         string strFinal;
-         strFinal = m_str;
-         pgraphics->SelectObject(sppen);
-
-         ::draw2d::brush_sp brushText(allocer(), crColor);
-
-         pgraphics->SelectObject(brushText);
-
-         //pgraphics->set_text_color(crColor);
-
-         ::rect rectTextOut;
-         GetPlacement(rectTextOut);
-         if (bDraw)
-         {
-            pgraphics->_DrawText(
-               strFinal, strFinal.get_length(),
-               rectTextOut,
-               DT_LEFT | DT_BOTTOM);
-         }
+         pgraphics->_DrawText(
+         strFinal, strFinal.get_length(),
+         rectTextOut,
+         DT_LEFT | DT_BOTTOM);
       }
-      break;
+   }
+   break;
    case AnimateRHL:
+   {
+      if (m_iaPosition.get_size() <= 0)
+         break;
+      //         int32_t iLeft = m_iaPosition.element_at(0);
+      int32_t iLeftDiff = 0;
+      //int32_t iLastLeftDiff = 0;
+      int32_t i = 0;
+      /*            for(int32_t i = 0; i < m_iaPosition.get_size(); i++)
+                  {
+                      iLastLeftDiff = iLeftDiff;
+                      iLeftDiff = m_iaPosition.element_at(i) - iLeft;
+                      if(iLeftDiff >= (int32_t) m_dAnimateProgress)
+                      {
+                          break;
+                      }
+                  }*/
+
+      string strFinal(m_str);
+      string strLeft = strFinal.Right(strFinal.get_length() - i);
+      int32_t iLeftOffset;
+      iLeftOffset = iLeftDiff - (int32_t)m_dAnimateProgress;
+
+      pgraphics->SelectObject(sppen);
+      ::draw2d::brush_sp brushText(allocer(), crColor);
+
+      pgraphics->SelectObject(brushText);
+
+      pgraphics->SelectObject(m_font);
+      ::rect rectTextOut;
+      GetPlacement(rectTextOut);
+      rectTextOut.left += iLeftOffset;
+      if (bDraw)
       {
-         if (m_iaPosition.get_size() <= 0)
-            break;
-         //         int32_t iLeft = m_iaPosition.element_at(0);
-         int32_t iLeftDiff = 0;
-         //int32_t iLastLeftDiff = 0;
-         int32_t i = 0;
-         /*            for(int32_t i = 0; i < m_iaPosition.get_size(); i++)
-                     {
-                         iLastLeftDiff = iLeftDiff;
-                         iLeftDiff = m_iaPosition.element_at(i) - iLeft;
-                         if(iLeftDiff >= (int32_t) m_dAnimateProgress)
-                         {
-                             break;
-                         }
-                     }*/
-
-         string strFinal(m_str);
-         string strLeft = strFinal.Right(strFinal.get_length() - i);
-         int32_t iLeftOffset;
-         iLeftOffset = iLeftDiff - (int32_t)m_dAnimateProgress;
-
-         pgraphics->SelectObject(sppen);
-         ::draw2d::brush_sp brushText(allocer(), crColor);
-
-         pgraphics->SelectObject(brushText);
-
-         pgraphics->SelectObject(m_font);
-         ::rect rectTextOut;
-         GetPlacement(rectTextOut);
-         rectTextOut.left += iLeftOffset;
+         pgraphics->_DrawText(
+         strLeft, strLeft.get_length(),
+         rectTextOut,
+         DT_LEFT | DT_BOTTOM);
+      }
+      /*           pFont->TextOutEx(
+                      pdcForeground,
+                    rectTextOut,
+                  1.0,
+                  rectTextOut.height(),
+                    strLeft,
+                    m_iaPosition.get_data(),
+                      m_iaPosition.get_size(),
+                    0,
+                      MapToFontEffect(m_iTextEffect));   */
+      int32_t iSpacing = 100;
+      int32_t iMaxCounter = MAX(
+                            (int32_t)m_iaPosition.element_at(m_str.get_length())
+                            - m_iaPosition.element_at(0) + iSpacing, m_rect.right - m_rect.left);
+      int32_t iRight = iMaxCounter - (int32_t)m_dAnimateProgress;
+      if (iRight < m_rect.right)
+      {
+         /*    int32_t iRightEnd;
+             for(int32_t i = 0; i < m_iaPosition.get_size(); i++)
+             {
+                 iRightEnd = iRight + m_iaPosition.element_at(i) - iLeft;
+                 if(iRightEnd >= m_rect.right)
+                 {
+                     break;
+                 }
+             }*/
+         //string strRight = strFinal.Left(i);
+         string strRight = strFinal;
+         rectTextOut.left = iRight;
          if (bDraw)
          {
+
             pgraphics->_DrawText(
-               strLeft, strLeft.get_length(),
-               rectTextOut,
-               DT_LEFT | DT_BOTTOM);
+            strRight, strRight.get_length(),
+            rectTextOut,
+            DT_LEFT | DT_BOTTOM);
          }
-         /*           pFont->TextOutEx(
-                         pdcForeground,
-                       rectTextOut,
-                     1.0,
-                     rectTextOut.height(),
-                       strLeft,
-                       m_iaPosition.get_data(),
-                         m_iaPosition.get_size(),
-                       0,
-                         MapToFontEffect(m_iTextEffect));   */
-         int32_t iSpacing = 100;
-         int32_t iMaxCounter = MAX(
-                                  (int32_t)m_iaPosition.element_at(m_str.get_length())
-                                  - m_iaPosition.element_at(0) + iSpacing, m_rect.right - m_rect.left);
-         int32_t iRight = iMaxCounter - (int32_t)m_dAnimateProgress;
-         if (iRight < m_rect.right)
-         {
-            /*    int32_t iRightEnd;
-                for(int32_t i = 0; i < m_iaPosition.get_size(); i++)
-                {
-                    iRightEnd = iRight + m_iaPosition.element_at(i) - iLeft;
-                    if(iRightEnd >= m_rect.right)
-                    {
-                        break;
-                    }
-                }*/
-            //string strRight = strFinal.Left(i);
-            string strRight = strFinal;
-            rectTextOut.left = iRight;
-            if (bDraw)
-            {
-
-               pgraphics->_DrawText(
-                  strRight, strRight.get_length(),
-                  rectTextOut,
-                  DT_LEFT | DT_BOTTOM);
-            }
-            /*               pFont->TextOutEx(
-                                pdcForeground,
-                              rectTextOut,
-                           1.0,
-                           rectTextOut.height(),
-                              strRight,
-                              m_iaPosition.get_data(),
-                                m_iaPosition.get_size(),
-                              0,
-                                MapToFontEffect(m_iTextEffect));   */
-         }
-
+         /*               pFont->TextOutEx(
+                             pdcForeground,
+                           rectTextOut,
+                        1.0,
+                        rectTextOut.height(),
+                           strRight,
+                           m_iaPosition.get_data(),
+                             m_iaPosition.get_size(),
+                           0,
+                             MapToFontEffect(m_iTextEffect));   */
       }
-      break;
+
+   }
+   break;
    default:
       ASSERT(FALSE);
    }
@@ -680,9 +680,9 @@ void xfplayer_view_line::CalcCharsPositions(::draw2d::graphics *             pgr
    if (size.cx > rectClient.width())
    {
       m_floatRateX =
-         (float)
-         rectClient.width() /
-         size.cx;
+      (float)
+      rectClient.width() /
+      size.cx;
    }
    else
    {
@@ -739,27 +739,27 @@ void xfplayer_view_line::CalcCharsPositions(::draw2d::graphics *             pgr
       for (i = 1; i <= m_strPrefix.get_length(); i++)
       {
          m_dcextension.GetTextExtent(
-            pgraphics,
-            m_strPrefix,
-            i,
-            size);
+         pgraphics,
+         m_strPrefix,
+         i,
+         size);
          m_iaPosition.add(size.cx);
       }
       int iSize = size.cx;
       m_dcextension.GetTextExtent(
-         pgraphics,
-         " ",
-         1,
-         size);
+      pgraphics,
+      " ",
+      1,
+      size);
       m_iaPosition.add(iSize + size.cx);
       pgraphics->SelectObject(m_font);
       for (i = 1; i <= m_strRoot.get_length(); i++)
       {
          m_dcextension.GetTextExtent(
-            pgraphics,
-            m_strRoot,
-            i,
-            size);
+         pgraphics,
+         m_strRoot,
+         i,
+         size);
          m_iaPosition.add(iSize + size.cx);
       }
    }
@@ -772,10 +772,10 @@ void xfplayer_view_line::CalcCharsPositions(::draw2d::graphics *             pgr
       for (i = 1; i <= m_str.get_length(); i++)
       {
          m_dcextension.GetTextExtent(
-            pgraphics,
-            m_str,
-            i,
-            size);
+         pgraphics,
+         m_str,
+         i,
+         size);
          m_iaPosition[i] = size.cx;
       }
 
@@ -1023,24 +1023,24 @@ void xfplayer_view_line::OnTimerAnimate(::draw2d::graphics * pdcForeground, rect
       case AnimateNoAnimate:
          break;
       case AnimateRHL:
+      {
+         m_dAnimateProgress += m_dAnimateProgressIncrement;
+         if (m_iaPosition.get_size() > 0)
          {
-            m_dAnimateProgress += m_dAnimateProgressIncrement;
-            if (m_iaPosition.get_size() > 0)
-            {
-               if ((int32_t)m_dAnimateProgress > MAX(m_iaPosition.element_at(m_str.get_length()) - m_iaPosition.element_at(0) + 100, m_rect.right - m_rect.left))
-                  m_dAnimateProgress = 0.0;
-               rect rect;
-               GetPlacement(rect);
-               Invalidate();
-               rectaModified.add(rect);
-               /*to(
-                   pdcForeground,
-                   false,
-                   rect, rectaModified,
-                   false);*/
-            }
+            if ((int32_t)m_dAnimateProgress > MAX(m_iaPosition.element_at(m_str.get_length()) - m_iaPosition.element_at(0) + 100, m_rect.right - m_rect.left))
+               m_dAnimateProgress = 0.0;
+            rect rect;
+            GetPlacement(rect);
+            Invalidate();
+            rectaModified.add(rect);
+            /*to(
+                pdcForeground,
+                false,
+                rect, rectaModified,
+                false);*/
          }
-         break;
+      }
+      break;
       default:
          ASSERT(FALSE);
       }
@@ -1248,16 +1248,16 @@ void xfplayer_view_line::EmbossedTextOut(::draw2d::graphics * pgraphics, const c
    single_lock sl(m_pContainer->m_pmutex);
 
    EmbossedTextOut(
-      pgraphics,
-      m_dibMain,
-      lpcsz,
-      iLeft,
-      iTop,
-      iWidth,
-      cr,
-      crOutline,
-      iLen,
-      dBlend);
+   pgraphics,
+   m_dibMain,
+   lpcsz,
+   iLeft,
+   iTop,
+   iWidth,
+   cr,
+   crOutline,
+   iLen,
+   dBlend);
 
    /*   rect rect;
       size size;
@@ -1419,7 +1419,7 @@ void xfplayer_view_line::EmbossedTextOut(::draw2d::graphics * pgraphics, const c
       }
 
 
-      m_dc1.FillSolidRect(0, 0, size.cx,size.cy, RGB(0, 0, 0));
+      m_dc1.fill_solid_rect(0, 0, size.cx,size.cy, RGB(0, 0, 0));
       m_dc1.SetTextColor(RGB(255, 255, 255));
       ::TextOutW(m_dc1.get_os_data(), 0, 0, lpcsz, iLen);
 
@@ -1469,9 +1469,9 @@ void xfplayer_view_line::EmbossedTextOut(::draw2d::graphics * pgraphics, ::draw2
 
    if (bSaveProcessing)
    {
-      pgraphics->BeginPath();
+      pgraphics->begin_path();
       pgraphics->text_out(iLeft, iTop, string(lpcsz, iLen));
-      pgraphics->EndPath();
+      pgraphics->end_path();
 
       //      LOGBRUSH lb;
       //    lb.lbStyle = BS_SOLID;
@@ -1488,7 +1488,7 @@ void xfplayer_view_line::EmbossedTextOut(::draw2d::graphics * pgraphics, ::draw2
 
 
       ::draw2d::pen * ppenOld = pgraphics->SelectObject(pen);
-      pgraphics->StrokePath();
+      pgraphics->stroke_path();
       pgraphics->SelectObject(ppenOld);
 
 

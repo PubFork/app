@@ -147,8 +147,11 @@ namespace draw3d
             {
                pen->m_etype = ::draw2d::pen::type_solid;
             }
+
             m_pdc->SelectObject(pen);
-            m_pdc->draw_line((float)p[p1[iMax]].x,(float)p[p1[iMax]].y,(float)p[p2[iMax]].x,(float)p[p2[iMax]].y);
+
+            m_pdc->draw_line(pointxy(p[p1[iMax]]),pointxy(p[p2[iMax]]));
+
          }
          p1.remove_at(iMax);
          p2.remove_at(iMax);

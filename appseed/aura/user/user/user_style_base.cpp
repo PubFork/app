@@ -808,7 +808,7 @@ namespace user
    //
    //            pgraphics->SelectObject(brush);
    //
-   //            pgraphics->FillRectangle(rectClient);
+   //            pgraphics->fill_rect(rectClient);
    //
    //         }
    //
@@ -822,7 +822,7 @@ namespace user
    //
    //               ::draw2d::pen_sp pen(pgraphics, 1.0, pui->get_action_hover_border_color());
    //
-   //               pgraphics->DrawRect(rectClient, pen);
+   //               pgraphics->draw_rect(rectClient, pen);
    //
    //            }
    //            else
@@ -831,7 +831,7 @@ namespace user
    //               //::draw2d::pen_sp pen(pgraphics, 1.0, ARGB(255, 108, 149, 255));
    //               ::draw2d::pen_sp pen(pgraphics, 1.0, ARGB(184, 84, 90, 80));
    //
-   //               pgraphics->DrawRect(rectClient, pen);
+   //               pgraphics->draw_rect(rectClient, pen);
    //
    //            }
    //
@@ -849,7 +849,7 @@ namespace user
    //                  //::draw2d::pen_sp pen(pgraphics, 1.0, ARGB(255, 108, 149, 255));
    //                  ::draw2d::pen_sp pen(pgraphics, 1.0, bError ? ARGB(195, 255, 130, 120) : bHover? ARGB(220, 120, 190, 255) : ARGB(220, 150, 190, 235));
    //
-   //                  pgraphics->DrawRect(rectClient, pen);
+   //                  pgraphics->draw_rect(rectClient, pen);
    //
    //               }
    //
@@ -873,7 +873,7 @@ namespace user
    //
    //                  pgraphics->SelectObject(pen);
    //
-   //                  pgraphics->DrawRect(rectClient, pen);
+   //                  pgraphics->draw_rect(rectClient, pen);
    //
    //               }
    //
@@ -897,7 +897,7 @@ namespace user
    //
    //                  pgraphics->SelectObject(pen);
    //
-   //                  pgraphics->DrawRect(rectClient, pen);
+   //                  pgraphics->draw_rect(rectClient, pen);
    //
    //               }
    //
@@ -921,7 +921,7 @@ namespace user
    //
    //                  pgraphics->SelectObject(pen);
    //
-   //                  pgraphics->DrawRect(rectClient, pen);
+   //                  pgraphics->draw_rect(rectClient, pen);
    //
    //               }
    //
@@ -946,7 +946,7 @@ namespace user
    //
    //                  pgraphics->SelectObject(pen);
    //
-   //                  pgraphics->DrawRect(rectClient, pen);
+   //                  pgraphics->draw_rect(rectClient, pen);
    //
    //               }
    //
@@ -972,7 +972,7 @@ namespace user
    //
    //                  pgraphics->SelectObject(pen);
    //
-   //                  pgraphics->DrawRect(rectClient, pen);
+   //                  pgraphics->draw_rect(rectClient, pen);
    //
    //               }
    //
@@ -1001,7 +1001,7 @@ namespace user
    //
    //               pgraphics->SelectObject(pen);
    //
-   //               pgraphics->DrawRect(rectClient, pen);
+   //               pgraphics->draw_rect(rectClient, pen);
    //
    //               }
    //               */
@@ -1014,7 +1014,7 @@ namespace user
    //
    //            ::draw2d::pen_sp pen(pgraphics, 3.0, ARGB(255, 90, 80, 255));
    //
-   //            pgraphics->DrawRect(rectClient, pen);
+   //            pgraphics->draw_rect(rectClient, pen);
    //
    //         }
    //
@@ -1024,7 +1024,7 @@ namespace user
    //
    //         ::draw2d::pen_sp pen(pgraphics, 1.0, ARGB(255, 149, 149, 123));
    //
-   //         pgraphics->DrawRect(rectClient, pen);
+   //         pgraphics->draw_rect(rectClient, pen);
    //
    //      }
    //
@@ -1104,9 +1104,9 @@ namespace user
    //         rectCheckBox.bottom = 15 * h / 15;
    //         if (echeck == check::tristate)
    //         {
-   //            pgraphics->FillSolidRect(rectCheckBox, ARGB(255, 220, 220, 220));
+   //            pgraphics->fill_solid_rect(rectCheckBox, ARGB(255, 220, 220, 220));
    //         }
-   //         pgraphics->Draw3dRect(rectCheckBox, ARGB(255, 128, 128, 128), ARGB(255, 128, 128, 128));
+   //         pgraphics->draw3d_rect(rectCheckBox, ARGB(255, 128, 128, 128), ARGB(255, 128, 128, 128));
    //         if (echeck == check::tristate
    //            || echeck == check::checked)
    //         {

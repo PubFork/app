@@ -1453,7 +1453,7 @@ namespace user
          r.right = (LONG) (r.left + m_pscrollbarVert->m_pimpl->m_rectParentClientRequest.width());
          r.bottom = (LONG) (r.top + m_pscrollbarHorz->m_pimpl->m_rectParentClientRequest.height());
 
-         pgraphics->FillSolidRect(r, _001GetColor(color_scrollbar_background));
+         pgraphics->fill_solid_rect(r, _001GetColor(color_scrollbar_background));
 
       }
 

@@ -1874,7 +1874,7 @@ namespace windows
    {
 
       ASSERT(pbase != NULL);
-      NMHDR* pNMHDR = (NMHDR*)pbase->m_lparam;
+      NMHDR* pNMHDR = pbase->m_lparam.cast < NMHDR>();
       oswindow oswindow_Ctrl = pNMHDR->hwndFrom;
 
       // get the child ID from the interaction_impl itself
@@ -2376,7 +2376,7 @@ namespace windows
       case WM_NOTIFY:
       {
          // reflect the message through the message map as OCM_NOTIFY
-         NMHDR* pNMHDR = (NMHDR*)pbase->m_lparam;
+         NMHDR* pNMHDR = pbase->m_lparam.cast < NMHDR >();
          //            int32_t nCode = pNMHDR->code;
          //            __NOTIFY notify;
          //          notify.pResult = pResult;
@@ -2853,7 +2853,7 @@ namespace windows
       GetClientRect(rectClient);
 
 
-      //pgraphics->FillSolidRect(rectClient, 0x00000000);
+      //pgraphics->fill_solid_rect(rectClient, 0x00000000);
 
       //return;
       rect rectUpdate;

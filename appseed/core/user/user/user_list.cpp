@@ -317,9 +317,9 @@ namespace user
 
             pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
-            pgraphics->Draw3dRect(x1, y1, x2 - x1, y2 - y1, ARGB(184, 184, 184, 208), ARGB(184, 184, 184, 208));
+            pgraphics->draw3d_rect_dim(x1, y1, x2 - x1, y2 - y1, ARGB(184, 184, 184, 208), ARGB(184, 184, 184, 208));
 
-            pgraphics->FillSolidRect(x1, y1, x2 - x1, y2 - y1, ARGB(84, 250, 250, 255));
+            pgraphics->fill_solid_rect_dim(x1, y1, x2 - x1, y2 - y1, ARGB(84, 250, 250, 255));
 
          }
 
@@ -579,9 +579,9 @@ namespace user
 
             pdrawitem->m_pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
-            pdrawitem->m_pgraphics->Draw3dRect(pdrawitem->m_rectItem, ARGB(77, 235, 235, 255), ARGB(77, 235, 235, 255));
+            pdrawitem->m_pgraphics->draw3d_rect(pdrawitem->m_rectItem, ARGB(77, 235, 235, 255), ARGB(77, 235, 235, 255));
 
-            pdrawitem->m_pgraphics->FillSolidRect(pdrawitem->m_rectItem, ARGB(40, 255, 255, 255));
+            pdrawitem->m_pgraphics->fill_solid_rect(pdrawitem->m_rectItem, ARGB(40, 255, 255, 255));
 
          }
 
@@ -623,13 +623,13 @@ namespace user
          else if (Session.savings().is_trying_to_save(::aura::resource_processing))
          {
 
-            pdrawitem->m_pgraphics->FillSolidRect(pdrawitem->m_rectItem, ARGB(255, 96, 96, 96));
+            pdrawitem->m_pgraphics->fill_solid_rect(pdrawitem->m_rectItem, ARGB(255, 96, 96, 96));
 
          }
          else
          {
 
-            pdrawitem->m_pgraphics->FillSolidRect(pdrawitem->m_rectItem, pdrawitem->m_crItemBackground);
+            pdrawitem->m_pgraphics->fill_solid_rect(pdrawitem->m_rectItem, pdrawitem->m_crItemBackground);
 
          }
 
@@ -637,7 +637,7 @@ namespace user
       else if (pdrawitem->m_crItemBackground != 0)
       {
 
-         pdrawitem->m_pgraphics->FillSolidRect(pdrawitem->m_rectItem, pdrawitem->m_crItemBackground);
+         pdrawitem->m_pgraphics->fill_solid_rect(pdrawitem->m_rectItem, pdrawitem->m_crItemBackground);
 
       }
 
@@ -713,7 +713,7 @@ namespace user
 
          pdrawitem->m_pgraphics->SelectObject(ppenHighlight);
 
-         pdrawitem->m_pgraphics->DrawRectangle(rectHighlight);
+         pdrawitem->m_pgraphics->draw_rect(rectHighlight);
 
       }
 
@@ -727,7 +727,7 @@ namespace user
 
             pdrawitem->m_pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
-            pdrawitem->m_pgraphics->FillSolidRect(pdrawitem->m_rectItem, ARGB(84, argb_get_r_value(cr), argb_get_g_value(cr), argb_get_b_value(cr)));
+            pdrawitem->m_pgraphics->fill_solid_rect(pdrawitem->m_rectItem, ARGB(84, argb_get_r_value(cr), argb_get_g_value(cr), argb_get_b_value(cr)));
 
          }
 
@@ -6823,7 +6823,7 @@ namespace user
 
                dib->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
 
-               dib->get_graphics()->FillSolidRect(0, 0, dib->m_size.cx, dib->m_size.cy, 0);
+               dib->get_graphics()->fill_solid_rect_dim(0, 0, dib->m_size.cx, dib->m_size.cy, 0);
 
                get_image_list()->draw(dib->get_graphics(), (int32_t)m_iImage,
                                       point(m_plist->m_iIconBlurRadius*iRate, m_plist->m_iIconBlurRadius *iRate), m_rectImage.size(), point(0, 0), 0);
@@ -6855,7 +6855,7 @@ namespace user
             rect rDib(m_rectImage.top_left() - size(m_plist->m_iIconBlurRadius *iRate, m_plist->m_iIconBlurRadius * iRate),
                       m_rectImage.size() + size(m_plist->m_iIconBlurRadius *iRate * 2, m_plist->m_iIconBlurRadius * iRate * 2));
 
-            m_pgraphics->BitBlt(rDib, dib->get_graphics());
+            m_pgraphics->draw(rDib, dib->get_graphics());
 
             rect rI;
 
@@ -6877,7 +6877,7 @@ namespace user
 
                //m_plist->m_dibTime->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
 
-               //m_plist->m_dibTime->get_graphics()->FillSolidRect(r, 0);
+               //m_plist->m_dibTime->get_graphics()->fill_solid_rect(r, 0);
 
                rect r2 = rI;
 
@@ -6897,7 +6897,7 @@ namespace user
 
                m_pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
-               m_pgraphics->BitBlt(rI, m_plist->m_dibTime->get_graphics(), r2.top_left());
+               m_pgraphics->draw(rI, m_plist->m_dibTime->get_graphics(), r2.top_left());
 
             }
 
@@ -7043,7 +7043,7 @@ namespace user
 
             m_pgraphics->draw_text(m_strText, m_rectText, m_iDrawTextFlags);
 
-            //m_pgraphics->FillSolidRect(m_rectText.left, m_rectText.top, 100, 100, ARGB(128, 100, 125, 255));
+            //m_pgraphics->fill_solid_rect(m_rectText.left, m_rectText.top, 100, 100, ARGB(128, 100, 125, 255));
 
             if (m_strText == "LOVE OR NOTHING")
             {

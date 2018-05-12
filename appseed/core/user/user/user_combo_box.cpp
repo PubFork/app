@@ -155,7 +155,7 @@ namespace user
 
       pgraphics->SelectObject(br);
 
-      pgraphics->FillRectangle(rectDropDown);
+      pgraphics->fill_rect(rectDropDown);
 
       ::draw2d::path_sp path(allocer());
 
@@ -225,7 +225,7 @@ namespace user
 
          //pgraphics->SelectObject(br);
 
-         //pgraphics->FillRectangle(rectClient);
+         //pgraphics->fill_rect(rectClient);
 
          //pgraphics->set_alpha_mode(::draw2d::alpha_mode_set);
 
@@ -237,7 +237,7 @@ namespace user
 
          //COLORREF crBorder = ca.get_rgb() | (0xff << 24);
 
-         //pgraphics->Draw3dRect(rectClient, crBorder, crBorder);
+         //pgraphics->draw3d_rect(rectClient, crBorder, crBorder);
 
          _001OnDrawStaticText(pgraphics);
 
@@ -315,7 +315,7 @@ namespace user
 
       rectDropIn.right++;
       rectDropIn.bottom++;
-      pgraphics->FillRectangle(rectDropIn);
+      pgraphics->fill_rect(rectDropIn);
 
 
       br->create_solid(ARGB(210, 77, 184, 49));

@@ -156,7 +156,7 @@ namespace user
       pgraphics->SelectObject(brush);
 
       pgraphics->Ellipse(rectCheckBox);
-      //   pgraphics->Draw3dRect(rectCheckBox, ARGB(255, 128, 128, 128), ARGB(255, 128, 128, 128));
+      //   pgraphics->draw3d_rect(rectCheckBox, ARGB(255, 128, 128, 128), ARGB(255, 128, 128, 128));
       //   if (m_echeck == check::tristate
       //      || m_echeck == check::checked)
       //   {

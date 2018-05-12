@@ -1,45 +1,5 @@
 #include "framework.h"
 
-// point
-point::point() NOTHROW
-{ /* random filled */ }
-point::point(int64_t initX, int64_t initY) NOTHROW
-{ x = (int32_t) initX; y = (int32_t) initY; }
-point::point(POINT initPt) NOTHROW
-{ *(POINT*)this = initPt; }
-point::point(SIZE initSize) NOTHROW
-{ *(SIZE*)this = initSize; }
-point::point(POINT64 pt) NOTHROW
-{ x = (int32_t) pt.x; y = (int32_t) pt.y; }
-point::point(const POINT64 * ppt) NOTHROW
-{
-   x = (int32_t)ppt->x; y = (int32_t)ppt->y;
-}
-
-
-point::point(const ::lparam & dwPoint) NOTHROW
-{
-
-   x = dwPoint.x();
-
-   y = dwPoint.y();
-
-}
-
-
-point::point(POINTD pt) NOTHROW
-{
-   x = (int32_t)pt.x; y = (int32_t)pt.y;
-}
-point::point(const POINTD * ppt) NOTHROW
-{
-   x = (int32_t)ppt->x; y = (int32_t)ppt->y;
-}
-
-point::operator POINT *() NOTHROW
-{ return this; }
-point::operator const POINT *() const NOTHROW
-{ return this; }
 
 void point::offset(int32_t xOffset, int32_t yOffset) NOTHROW
 { x += xOffset; y += yOffset; }
@@ -96,36 +56,6 @@ uint64_t point::uint64() const NOTHROW
 
 
 
-
-// point64
-point64::point64() NOTHROW
-{ /* random filled */ }
-point64::point64(int64_t initX, int64_t initY) NOTHROW
-{ x = initX; y = initY; }
-point64::point64(POINT64 initPt) NOTHROW
-{ *(POINT64*)this = initPt; }
-point64::point64(POINT initPt) NOTHROW
-{ x = initPt.x; y = initPt.y; }
-point64::point64(const POINT64 * pinitPt) NOTHROW
-{ *(POINT64*)this = *pinitPt; }
-point64::point64(SIZE64 initSize) NOTHROW
-{ *(SIZE64*)this = initSize; }
-
-
-point64::point64(const ::lparam & dwPoint) NOTHROW
-{
-
-   x = dwPoint.x();
-
-   y = dwPoint.y();
-
-}
-
-
-point64::operator POINT64 *() NOTHROW
-{ return this; }
-point64::operator const POINT64 *() const NOTHROW
-{ return this; }
 
 
 void point64::offset(int64_t xOffset, int64_t yOffset) NOTHROW
@@ -186,66 +116,6 @@ LPARAM point64::lparam() const NOTHROW
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// pointd
-pointd::pointd() NOTHROW
-{ /* random filled */ }
-pointd::pointd(double initX, double initY) NOTHROW
-{ x = (double) initX; y = (double) initY; }
-pointd::pointd(POINTD initPt) NOTHROW
-{ *(POINTD*)this = initPt; }
-pointd::pointd(POINT initPt) NOTHROW
-{
-   x = (double) initPt.x;
-   y = (double) initPt.y;
-}
-pointd::pointd(SIZED initSize) NOTHROW
-{ *(SIZED*)this = initSize; }
-
-pointd::pointd(POINT64 pt) NOTHROW
-{
-
-   x = (int32_t) pt.x;
-
-   y = (int32_t) pt.y;
-
-}
-
-
-pointd::pointd(const ::lparam & dwPoint) NOTHROW
-{
-
-   x = dwPoint.x();
-
-   y = dwPoint.y();
-
-}
-
-
-pointd::operator POINTD *() NOTHROW
-{ return this; }
-pointd::operator const POINTD *() const NOTHROW
-{ return this; }
 
 void pointd::offset(int32_t xOffset, int32_t yOffset) NOTHROW
 { x += xOffset; y += yOffset; }

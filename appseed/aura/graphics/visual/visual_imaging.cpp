@@ -3,15 +3,6 @@
 //#include "visual_FreeImageFileProc.h"
 #ifdef WINDOWSEX
 
-#undef new
-#define min MIN
-#define max MAX
-//#include <gdiplus.h>
-#undef min
-#undef max
-#define new AURA_NEW
-
-
 //void fastblur(::draw2d::dib * pimg, int32_t radius);
 
 #elif defined(METROWIN)
@@ -1456,7 +1447,7 @@ bOk = false;
 
 GdiFlush();
 
-dibA->get_graphics()->FillSolidRect(0, 0, size.cx, size.cy, RGB(255, 255, 255));
+dibA->get_graphics()->fill_solid_rect(0, 0, size.cx, size.cy, RGB(255, 255, 255));
 dibB->get_graphics()->from(null_point(), size, dibA->get_graphics(), null_point(), SRCAND);
 
 //dibA->get_graphics()->BitBlt(0, 0, cx, cy, pdcAlpha, x3, y3, SRCCOPY);
@@ -1768,7 +1759,7 @@ brush->CreatePatternBrush(dibPat->get_bitmap());
 ::draw2d::dib_sp spdib(allocer());
 spdib->create(size);
 
-spdib->get_graphics()->FillRect(rect, brush);
+spdib->get_graphics()->fill_rect(rect, brush);
 
 try
 {
@@ -2182,7 +2173,7 @@ BYTE alpha)
 bool imaging::clip_color_blend(::draw2d::graphics * pgraphics,point pt,size size,COLORREF cr,BYTE bA)
 {
 
-   pgraphics->FillSolidRect(0,0,size.cx,size.cy,ARGB(bA,argb_get_r_value(cr),argb_get_g_value(cr),argb_get_b_value(cr)));
+   pgraphics->fill_solid_rect(rect(size), ARGB(bA,argb_get_r_value(cr),argb_get_g_value(cr),argb_get_b_value(cr)));
 
    return true;
 
@@ -2277,7 +2268,7 @@ bool imaging::color_blend(::draw2d::graphics * pgraphics,point pt,size size,COLO
 
    pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
-   pgraphics->FillSolidRect(pt.x,pt.y,size.cx,size.cy,(cr & 0x00ffffff) | (bA << 24));
+   pgraphics->fill_solid_rect(rect(pt, size), (cr & 0x00ffffff) | (bA << 24));
 
    return true;
 
@@ -2663,7 +2654,7 @@ int32_t cy)
    }
    if(bCreate)
    {
-      pgraphics->FillSolidRect(rect(0,0,cxout,cyout),RGB(0,0,0));
+      pgraphics->fill_solid_rect(rect(0,0,cxout,cyout),RGB(0,0,0));
    }
    return true;
 }
@@ -2705,7 +2696,7 @@ bool imaging::CreateBitmap(::draw2d::graphics *pgraphics,::draw2d::bitmap * pbit
    }
    if(bCreate)
    {
-      pgraphics->FillSolidRect(rect(0,0,cxout,cyout),RGB(255,196,255));
+      pgraphics->fill_solid_rect(rect(0,0,cxout,cyout),RGB(255,196,255));
    }
    return true;
 }
@@ -5018,7 +5009,7 @@ breakFilter2:
 //   y2 = yDest + iSize;
 //   for(int32_t y = 0; y < cyDest; y++)
 //   {
-//   pdcDst->FillSolidRect(x1, y1, x2, y2, dibB->get_graphics()->GetPixel(x, y));
+//   pdcDst->fill_solid_rect(x1, y1, x2, y2, dibB->get_graphics()->GetPixel(x, y));
 //   y1 += iSize;
 //   y2 += iSize;
 //   }

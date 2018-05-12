@@ -1,15 +1,5 @@
 ﻿#include "framework.h"
-//#include "core/user/user/user.h"
 
-
-#ifdef WINDOWS
-#undef new
-#define min MIN
-#define max MAX
-////#include <gdiplus.h>
-#undef min
-#undef max
-#endif
 
 #if defined(LINUX) || defined(ANDROID) || defined(APPLEOS)
 //#include <sys/mman.h>
@@ -54,9 +44,6 @@ namespace plugin
       m_bAppStarted           = false;
 //      m_pbReady               = NULL;
       m_bMainReady            = false;
-
-      m_pbitmap               = NULL;
-      m_pgraphics             = NULL;
 
       m_pmutexBitmap          = NULL;
 

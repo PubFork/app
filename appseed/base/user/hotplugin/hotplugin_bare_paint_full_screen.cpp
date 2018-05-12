@@ -51,7 +51,7 @@ namespace hotplugin
          get_progress_color(uchR, uchG, uchB, dRate, 0);
          br->create_solid(ARGB(255, uchR, uchG, uchB));
          r = rect_dim(lprect.left, lprect.top, cx, cy);
-         pgraphics->FillRect(r, br);
+         pgraphics->fill_rect(r, br);
 
       }
 

@@ -1,25 +1,12 @@
 ﻿#include "framework.h"
-#include "coated/gdiplus.h"
 
 
 namespace hotplugin
 {
 
-   CLASS_DECL_AXIS void entry_hall_windows_on_paint(HDC hdc, const RECT & rect, const string & strEntryHallText)
+
+   CLASS_DECL_AXIS void entry_hall_windows_on_paint(::draw2d::graphics * pgraphics, const RECT & rect, const string & strEntryHallText)
    {
-
-#if 0
-
-      _throw(simple_exception(get_app(), "TODO trying to get rid of GDI PLUS dependency on Windows, is it possible to use GDI with coached alpha extensions?"));
-
-#else
-
-#ifndef METROWIN
-
-      Graphics g(hdc);
-
-      Graphics * pgraphics = &g;
-
 
       int h = 33;
       int m = 49 * 2;
@@ -66,7 +53,7 @@ namespace hotplugin
 
       int32_t cx = width(rect);
       int32_t cy = height(rect);
-      pgraphics->SetCompositingMode(CompositingModeSourceOver);
+      pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
       string str(strEntryHallText);
 
@@ -88,19 +75,19 @@ namespace hotplugin
 
       }
 
-      SolidBrush brush(Color(184, 49, 49, 49));
+      ::draw2d::brush_sp brush(::aura::system::g_p->allocer(), ARGB(184, 49, 49, 49));
 
-      pgraphics->FillRectangle(&brush, rectBar.left, rectBar.top, width(rectBar), height(rectBar));
+      pgraphics->fill_rect(rectBar, brush);
 
       if (!bStatic)
       {
 
-         SolidBrush brushGren(Color(190, 80, 184, 123));
+         ::draw2d::brush_sp brushGreen(::aura::system::g_p->allocer(), ARGB(190, 80, 190, 123));
 
          if (rectDraw.intersect(rectBar, rectBrick))
          {
 
-            pgraphics->FillRectangle(&brushGren, rectDraw.left, rectDraw.top, width(rectDraw), height(rectDraw));
+            pgraphics->fill_rect(rectDraw, brushGreen);
 
          }
 
@@ -109,7 +96,7 @@ namespace hotplugin
          if (rectDraw.intersect(rectBar, rectBrick))
          {
 
-            pgraphics->FillRectangle(&brushGren, rectDraw.left, rectDraw.top, width(rectDraw), height(rectDraw));
+            pgraphics->fill_rect(rectDraw, brushGreen);
 
          }
 
@@ -118,42 +105,31 @@ namespace hotplugin
          if (rectDraw.intersect(rectBar, rectBrick))
          {
 
-            pgraphics->FillRectangle(&brushGren, rectDraw.left, rectDraw.top, width(rectDraw), height(rectDraw));
+            pgraphics->fill_rect(rectDraw, brushGreen);
 
          }
 
       }
 
-      Pen pen(Color(149, 149, 149, 142), 1.0f);
+      ::draw2d::pen_sp pen(pgraphics, 1.0f, ARGB(149, 149, 149, 142));
 
-      pgraphics->DrawRectangle(&pen, rectBar.left, rectBar.top, width(rectBar), height(rectBar));
+      pgraphics->draw_rect(rectBar, pen);
 
-      Font f(L"Calibri", 18, 0, UnitPixel);
+      ::draw2d::font_sp f(::aura::system::g_p->allocer());
 
-      //f->create_pixel_font("Calibri",18);
+      f->create_pixel_font("Calibri", 18.0);
 
       rectBar.left += 4;
 
       rectBar.top += 5;
 
-      pgraphics->SetTextRenderingHint(TextRenderingHintClearTypeGridFit);
+      pgraphics->set_text_color(ARGB(184, 255, 255, 255));
 
-      wstring wstr;
-
-      wstr = str;
-
-      SolidBrush b(Color(184, 255, 255, 255));
-
-      pgraphics->DrawString(wstr, (INT)wstr.get_length(), &f, PointF((REAL)rectBar.left, (REAL)rectBar.top), &b);
-
-#endif
-
-#endif
+      pgraphics->text_out(rectBar.left, rectBar.top, str);
 
    }
 
 
-
-
-
 } // namespace hotplugin
+
+

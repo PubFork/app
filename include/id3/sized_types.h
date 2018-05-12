@@ -8,12 +8,12 @@
  * under the terms of the GNU Library General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or (at your
  * option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Library General Public
  * License for more details.
- * 
+ *
  * You should have received a copy of the GNU Library General Public License
  * along with this library; if not, write to the Free Software Foundation,
  * Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
@@ -23,7 +23,7 @@
  * send such submissions.  See the AUTHORS file for a list of people who have
  * contributed to id3lib.  See the ChangeLog file for a list of changes to
  * id3lib.  These files are distributed with id3lib at
- * http://download.sourceforge.net/id3lib/ 
+ * http://download.sourceforge.net/id3lib/
  */
 
 /**
@@ -32,7 +32,7 @@
  **/
 
 #ifndef _SIZED_TYPES_H_
-#define _SIZED_TYPES_H_ 
+#define _SIZED_TYPES_H_
 
 #include <limits.h>
 
@@ -66,17 +66,17 @@ typedef short            int16;
 /* Define 32-bit types */
 #if UINT_MAX == 0xfffffffful
 
-typedef unsigned int    uint32;
+typedef unsigned int    u32;
 typedef int              int32;
 
 #elif ULONG_MAX == 0xfffffffful
 
-typedef unsigned long   uint32;
+typedef unsigned long   u32;
 typedef long             int32;
 
 #elif USHRT_MAX == 0xfffffffful
 
-typedef unsigned short  uint32;
+typedef unsigned short  u32;
 typedef short            int32;
 
 #else

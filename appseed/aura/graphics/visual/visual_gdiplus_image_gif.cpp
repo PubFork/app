@@ -532,7 +532,7 @@ bool freeimage_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file
 
          ::rect r = pdiba->element_at(uFrameIndex - 1)->m_rect;
 
-         dibCompose->get_graphics()->FillSolidRect(r, crBack);
+         dibCompose->get_graphics()->fill_solid_rect(r, crBack);
 
       }
 
@@ -549,7 +549,7 @@ bool freeimage_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file
 
          dibCompose->set_alpha_mode(::draw2d::alpha_mode_set);
 
-         dibCompose->get_graphics()->FillSolidRect(0, 0, pdiba->m_size.cx, pdiba->m_size.cy, 0);
+         dibCompose->get_graphics()->fill_solid_rect(pdiba->rect(), 0);
 
       }
 
@@ -2413,7 +2413,7 @@ UINT uFrameIndex)
 
    //         RECT r = pdiba->element_at(uFrameIndex - 1)->m_rect;
 
-   //         pdibCompose->get_graphics()->FillSolidRect(r, crBack);
+   //         pdibCompose->get_graphics()->fill_solid_rect(r, crBack);
 
    //      }
 

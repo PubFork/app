@@ -77,7 +77,7 @@ namespace message
       else
       {
 
-         m_pWndOther = System.ui_from_handle((void *)lparam);
+         m_pWndOther = System.ui_from_handle(lparam.cast < void >());
 
       }
 
@@ -274,7 +274,7 @@ namespace message
       base::set(pwnd,uiMessage,wparam,lparam,lresult);
       m_nSBCode = (int16_t)LOWORD(wparam);
       m_nPos = (int16_t)HIWORD(wparam);
-      m_pScrollBar = (::user::primitive *) lparam;
+      m_pScrollBar = lparam.cast < ::user::primitive > ();
    }
 
    void show_window::set(::user::primitive * pwnd,UINT uiMessage,WPARAM wparam,::lparam lparam,LRESULT & lresult)

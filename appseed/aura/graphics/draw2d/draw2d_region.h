@@ -1,6 +1,9 @@
 #pragma once
 
 
+using LPCINT = const i32 *;
+
+
 namespace draw2d
 {
 
@@ -45,7 +48,7 @@ namespace draw2d
       double                  m_y3;
       LPPOINTD                m_lppoints;
       LPINT                   m_lppolycounts;
-      int32_t                 m_nCount;
+      i32                 m_nCount;
       ::draw2d::e_fill_mode   m_efillmode;
       sp(::draw2d::region)    m_pregion1;
       sp(::draw2d::region)    m_pregion2;
@@ -59,30 +62,30 @@ namespace draw2d
 
       virtual bool create_rect(LPCRECT lpRect);
       virtual bool create_oval(LPCRECT lpRect);
-      virtual bool create_polygon(const LPPOINT lpPoints, int32_t nCount, ::draw2d::e_fill_mode efillmode);
-      virtual bool create_polygon(const LPPOINTD lpPoints,int32_t nCount,::draw2d::e_fill_mode efillmode);
-      virtual bool create_poly_polygon(const LPPOINTD lpPoints, LPINT lpPolyCounts, int32_t nCount, ::draw2d::e_fill_mode efillmode);
-      virtual bool create_poly_polygon(const LPPOINT lpPoints,LPINT lpPolyCounts,int32_t nCount,::draw2d::e_fill_mode efillmode);
+      virtual bool create_polygon(LPCPOINT lpPoints, i32 nCount, ::draw2d::e_fill_mode efillmode);
+      virtual bool create_polygon(LPCPOINTD lpPoints, i32 nCount,::draw2d::e_fill_mode efillmode);
+      virtual bool create_poly_polygon(LPCPOINTD lpPoints, LPCINT lpPolyCounts, i32 nCount, ::draw2d::e_fill_mode efillmode);
+      virtual bool create_poly_polygon(LPCPOINT lpPoints, LPCINT lpPolyCounts, i32 nCount,::draw2d::e_fill_mode efillmode);
       virtual bool combine(const ::draw2d::region * prgn1, const ::draw2d::region * prgn2, e_combine ecombine);
-      virtual bool translate(const LPPOINT point);
+      virtual bool translate(LPCPOINT point);
       virtual bool get_bounding_box(LPRECT lpRect);
-      virtual bool contains(const LPPOINT point);
-      virtual bool contains(const LPPOINTD point);
+      virtual bool contains(LPCPOINT point);
+      virtual bool contains(LPCPOINTD point);
 
-      bool internal_contains(LPPOINT lppt);
-      bool internal_rect_contains(LPPOINT lppt);
-      bool internal_oval_contains(LPPOINT lppt);
-      bool internal_polygon_contains(LPPOINT lppt);
-      bool internal_poly_polygon_contains(LPPOINT lppt);
-      bool internal_combine_contains(LPPOINT lppt);
+      bool internal_contains(LPCPOINT lppt);
+      bool internal_rect_contains(LPCPOINT lppt);
+      bool internal_oval_contains(LPCPOINT lppt);
+      bool internal_polygon_contains(LPCPOINT lppt);
+      bool internal_poly_polygon_contains(LPCPOINT lppt);
+      bool internal_combine_contains(LPCPOINT lppt);
 
 
-      bool internal_contains(LPPOINTD lpptd);
-      bool internal_rect_contains(LPPOINTD lpptd);
-      bool internal_oval_contains(LPPOINTD lpptd);
-      bool internal_polygon_contains(LPPOINTD lpptd);
-      bool internal_poly_polygon_contains(LPPOINTD lpptd);
-      bool internal_combine_contains(LPPOINTD lpptd);
+      bool internal_contains(LPCPOINTD lpptd);
+      bool internal_rect_contains(LPCPOINTD lpptd);
+      bool internal_oval_contains(LPCPOINTD lpptd);
+      bool internal_polygon_contains(LPCPOINTD lpptd);
+      bool internal_poly_polygon_contains(LPCPOINTD lpptd);
+      bool internal_combine_contains(LPCPOINTD lpptd);
 
       virtual void max_bounding_box(LPRECT lpRect);
       virtual void max_bounding_box_rect(LPRECT lpRect);
@@ -101,6 +104,11 @@ namespace draw2d
       virtual bool destroy();
 
       region & operator = (const ::draw2d::region & regionSrc);
+
+      inline bool create_rect_coord(i32 x1, i32 y1, i32 x2, i32 y2) { return create_rect(::rect(x1, y1, x2, y2)); }
+      inline bool create_rect_dim(i32 x, i32 y, i32 cx, i32 cy) { return create_rect(rect_dim(x, y, cx, cy)); }
+      inline bool create_oval_coord(i32 x1, i32 y1, i32 x2, i32 y2) { return create_oval(::rect(x1, y1, x2, y2)); }
+      inline bool create_oval_dim(i32 x, i32 y, i32 cx, i32 cy) { return create_oval(rect_dim(x, y, cx, cy)); }
 
    };
 

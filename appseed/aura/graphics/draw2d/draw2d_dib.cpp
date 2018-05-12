@@ -123,7 +123,7 @@ namespace draw2d
    }
 
 
-   void dib::construct(int32_t cx, int32_t cy)
+   void dib::construct(i32 cx, i32 cy)
    {
 
       UNREFERENCED_PARAMETER(cx);
@@ -189,14 +189,14 @@ namespace draw2d
    }
 
 
-   bool dib::create(int32_t width, int32_t height)
+   bool dib::create(i32 width, i32 height)
    {
 
       return create(::size(width, height));
 
    }
 
-   bool dib::host(COLORREF * pcolorref, int iScan, int32_t width, int32_t height)
+   bool dib::host(COLORREF * pcolorref, int iScan, i32 width, i32 height)
    {
       // callers should be able to deal with graphics backend that doesn't support "hosting" portions of RAM
       return false;
@@ -537,7 +537,7 @@ namespace draw2d
 
          get_graphics()->set_alpha_mode(m_ealphamode);
 
-         return get_graphics()->BitBlt(ptDst, size, pdibSrc->get_graphics(), ptSrc, SRCCOPY);
+         return get_graphics()->draw(ptDst, size, pdibSrc->get_graphics(), ptSrc);
 
       }
 
@@ -587,9 +587,9 @@ namespace draw2d
       if (yEnd < 0)
          return false;
 
-      int32_t scanDst = pdibDst->m_iScan;
+      i32 scanDst = pdibDst->m_iScan;
 
-      int32_t scanSrc = pdibSrc->m_iScan;
+      i32 scanSrc = pdibSrc->m_iScan;
 
       byte * pdst = &((byte *)pdibDst->m_pcolorref)[scanDst * ptDst.y + ptDst.x * sizeof(COLORREF)];
 
@@ -678,9 +678,9 @@ namespace draw2d
       if (yEnd < 0)
          return false;
 
-      int32_t scanDst = pdibDst->m_iScan;
+      i32 scanDst = pdibDst->m_iScan;
 
-      int32_t scanSrc = pdibSrc->m_iScan;
+      i32 scanSrc = pdibSrc->m_iScan;
 
       byte * pdst = &((byte *)pdibDst->m_pcolorref)[scanDst * ptDst.y + ptDst.x * sizeof(COLORREF)];
 
@@ -772,9 +772,9 @@ namespace draw2d
       if (yEnd < 0)
          return false;
 
-      int32_t scanDst = pdibDst->m_iScan;
+      i32 scanDst = pdibDst->m_iScan;
 
-      int32_t scanSrc = pdibSrc->m_iScan;
+      i32 scanSrc = pdibSrc->m_iScan;
 
       byte * pdst = &((byte *)pdibDst->m_pcolorref)[scanDst * ptDst.y + ptDst.x * sizeof(COLORREF)];
 
@@ -952,9 +952,9 @@ namespace draw2d
       if (yEnd < 0)
          return false;
 
-      int32_t scanDst = pdibDst->m_iScan;
+      i32 scanDst = pdibDst->m_iScan;
 
-      int32_t scanSrc = pdibSrc->m_iScan;
+      i32 scanSrc = pdibSrc->m_iScan;
 
 
       byte * pdst2;
@@ -1264,9 +1264,9 @@ namespace draw2d
       if (yEnd < 0)
          return false;
 
-      int32_t scanDst = pdibDst->m_iScan;
+      i32 scanDst = pdibDst->m_iScan;
 
-      int32_t scanSrc = pdibSrc->m_iScan;
+      i32 scanSrc = pdibSrc->m_iScan;
 
       byte * pdst = &((byte *)pdibDst->m_pcolorref)[scanDst * ptDst.y + ptDst.x * sizeof(COLORREF)];
 
@@ -2093,9 +2093,9 @@ restart:
       if (yEnd <= 0)
          return false;
 
-      int32_t scanDst = pdibDst->m_iScan;
+      i32 scanDst = pdibDst->m_iScan;
 
-      int32_t scanSrc = pdibSrc->m_iScan;
+      i32 scanSrc = pdibSrc->m_iScan;
 
       byte * pdst = &((byte *)pdibDst->m_pcolorref)[scanDst * ptDst.y + ptDst.x * sizeof(COLORREF)];
 
@@ -2237,9 +2237,9 @@ restart:
       if (yEnd < 0)
          return false;
 
-      int32_t s1 = m_iScan / sizeof(COLORREF);
+      i32 s1 = m_iScan / sizeof(COLORREF);
 
-      int32_t s2 = pdib->m_iScan / sizeof(COLORREF);
+      i32 s2 = pdib->m_iScan / sizeof(COLORREF);
 
       COLORREF * pdst = &m_pcolorref[s1 * ptDst.y] + ptDst.x;
 
@@ -2339,11 +2339,11 @@ restart:
       {
       }
 
-      int32_t scanDst = pdibDst->m_iScan;
+      i32 scanDst = pdibDst->m_iScan;
 
-      int32_t scanSrc = pdibSrc->m_iScan;
+      i32 scanSrc = pdibSrc->m_iScan;
 
-      int32_t scanAlf = pdibAlf->m_iScan;
+      i32 scanAlf = pdibAlf->m_iScan;
 
       byte * pdst = &((byte *)pdibDst->m_pcolorref)[scanDst * ptDst.y + ptDst.x * sizeof(COLORREF)];
 
@@ -2488,9 +2488,9 @@ restart:
 
 
 
-      int32_t scanDst = pdibDst->m_iScan;
+      i32 scanDst = pdibDst->m_iScan;
 
-      int32_t scanSrc = pdibSrc->m_iScan;
+      i32 scanSrc = pdibSrc->m_iScan;
 
    #ifdef APPLEOS
 
@@ -2551,7 +2551,7 @@ restart:
    }
    */
 
-   void dib::set(int32_t R, int32_t G, int32_t B)
+   void dib::set(i32 R, i32 G, i32 B)
    {
       int64_t size = scan_area();
 
@@ -2568,7 +2568,7 @@ restart:
       ::sort::swap(&R, &B);
 #endif
 
-      for (int32_t i = 0; i < size; i++)
+      for (i32 i = 0; i < size; i++)
       {
          ((byte *)pcr)[0] = R;
          ((byte *)pcr)[1] = G;
@@ -2578,7 +2578,7 @@ restart:
 
    }
 
-   /*   void dib::Fill ( int32_t R, int32_t G, int32_t B )
+   /*   void dib::Fill ( i32 R, i32 G, i32 B )
       {
          COLORREF color=RGB ( B, G, R );
          int64_t size = area();
@@ -2586,7 +2586,7 @@ restart:
          COLORREF * pcr;
 
          int64_t iSize32 = size / 32;
-         int32_t i;
+         i32 i;
          for (i=0; i < iSize32; i+=32 )
          {
             pcr = &get_data()[i];
@@ -2699,7 +2699,7 @@ restart:
    }
 
 
-   void dib::ToAlpha(int32_t i)
+   void dib::ToAlpha(i32 i)
    {
       BYTE *dst = (BYTE*)get_data();
       int64_t size = scan_area();
@@ -2744,46 +2744,46 @@ restart:
 
       while (size >= 8)
       {
-         dst[0] = LOBYTE(((int32_t)dst[0] * (int32_t)dst[3]) >> 8);
-         dst[1] = LOBYTE(((int32_t)dst[1] * (int32_t)dst[3]) >> 8);
-         dst[2] = LOBYTE(((int32_t)dst[2] * (int32_t)dst[3]) >> 8);
+         dst[0] = LOBYTE(((i32)dst[0] * (i32)dst[3]) >> 8);
+         dst[1] = LOBYTE(((i32)dst[1] * (i32)dst[3]) >> 8);
+         dst[2] = LOBYTE(((i32)dst[2] * (i32)dst[3]) >> 8);
 
-         dst[4 + 0] = LOBYTE(((int32_t)dst[4 + 0] * (int32_t)dst[4 + 3]) >> 8);
-         dst[4 + 1] = LOBYTE(((int32_t)dst[4 + 1] * (int32_t)dst[4 + 3]) >> 8);
-         dst[4 + 2] = LOBYTE(((int32_t)dst[4 + 2] * (int32_t)dst[4 + 3]) >> 8);
+         dst[4 + 0] = LOBYTE(((i32)dst[4 + 0] * (i32)dst[4 + 3]) >> 8);
+         dst[4 + 1] = LOBYTE(((i32)dst[4 + 1] * (i32)dst[4 + 3]) >> 8);
+         dst[4 + 2] = LOBYTE(((i32)dst[4 + 2] * (i32)dst[4 + 3]) >> 8);
 
-         dst[8 + 0] = LOBYTE(((int32_t)dst[8 + 0] * (int32_t)dst[8 + 3]) >> 8);
-         dst[8 + 1] = LOBYTE(((int32_t)dst[8 + 1] * (int32_t)dst[8 + 3]) >> 8);
-         dst[8 + 2] = LOBYTE(((int32_t)dst[8 + 2] * (int32_t)dst[8 + 3]) >> 8);
+         dst[8 + 0] = LOBYTE(((i32)dst[8 + 0] * (i32)dst[8 + 3]) >> 8);
+         dst[8 + 1] = LOBYTE(((i32)dst[8 + 1] * (i32)dst[8 + 3]) >> 8);
+         dst[8 + 2] = LOBYTE(((i32)dst[8 + 2] * (i32)dst[8 + 3]) >> 8);
 
-         dst[12 + 0] = LOBYTE(((int32_t)dst[12 + 0] * (int32_t)dst[12 + 3]) >> 8);
-         dst[12 + 1] = LOBYTE(((int32_t)dst[12 + 1] * (int32_t)dst[12 + 3]) >> 8);
-         dst[12 + 2] = LOBYTE(((int32_t)dst[12 + 2] * (int32_t)dst[12 + 3]) >> 8);
+         dst[12 + 0] = LOBYTE(((i32)dst[12 + 0] * (i32)dst[12 + 3]) >> 8);
+         dst[12 + 1] = LOBYTE(((i32)dst[12 + 1] * (i32)dst[12 + 3]) >> 8);
+         dst[12 + 2] = LOBYTE(((i32)dst[12 + 2] * (i32)dst[12 + 3]) >> 8);
 
-         dst[16 + 0] = LOBYTE(((int32_t)dst[16 + 0] * (int32_t)dst[16 + 3]) >> 8);
-         dst[16 + 1] = LOBYTE(((int32_t)dst[16 + 1] * (int32_t)dst[16 + 3]) >> 8);
-         dst[16 + 2] = LOBYTE(((int32_t)dst[16 + 2] * (int32_t)dst[16 + 3]) >> 8);
+         dst[16 + 0] = LOBYTE(((i32)dst[16 + 0] * (i32)dst[16 + 3]) >> 8);
+         dst[16 + 1] = LOBYTE(((i32)dst[16 + 1] * (i32)dst[16 + 3]) >> 8);
+         dst[16 + 2] = LOBYTE(((i32)dst[16 + 2] * (i32)dst[16 + 3]) >> 8);
 
-         dst[20 + 0] = LOBYTE(((int32_t)dst[20 + 0] * (int32_t)dst[20 + 3]) >> 8);
-         dst[20 + 1] = LOBYTE(((int32_t)dst[20 + 1] * (int32_t)dst[20 + 3]) >> 8);
-         dst[20 + 2] = LOBYTE(((int32_t)dst[20 + 2] * (int32_t)dst[20 + 3]) >> 8);
+         dst[20 + 0] = LOBYTE(((i32)dst[20 + 0] * (i32)dst[20 + 3]) >> 8);
+         dst[20 + 1] = LOBYTE(((i32)dst[20 + 1] * (i32)dst[20 + 3]) >> 8);
+         dst[20 + 2] = LOBYTE(((i32)dst[20 + 2] * (i32)dst[20 + 3]) >> 8);
 
-         dst[24 + 0] = LOBYTE(((int32_t)dst[24 + 0] * (int32_t)dst[24 + 3]) >> 8);
-         dst[24 + 1] = LOBYTE(((int32_t)dst[24 + 1] * (int32_t)dst[24 + 3]) >> 8);
-         dst[24 + 2] = LOBYTE(((int32_t)dst[24 + 2] * (int32_t)dst[24 + 3]) >> 8);
+         dst[24 + 0] = LOBYTE(((i32)dst[24 + 0] * (i32)dst[24 + 3]) >> 8);
+         dst[24 + 1] = LOBYTE(((i32)dst[24 + 1] * (i32)dst[24 + 3]) >> 8);
+         dst[24 + 2] = LOBYTE(((i32)dst[24 + 2] * (i32)dst[24 + 3]) >> 8);
 
-         dst[28 + 0] = LOBYTE(((int32_t)dst[28 + 0] * (int32_t)dst[28 + 3]) >> 8);
-         dst[28 + 1] = LOBYTE(((int32_t)dst[28 + 1] * (int32_t)dst[28 + 3]) >> 8);
-         dst[28 + 2] = LOBYTE(((int32_t)dst[28 + 2] * (int32_t)dst[28 + 3]) >> 8);
+         dst[28 + 0] = LOBYTE(((i32)dst[28 + 0] * (i32)dst[28 + 3]) >> 8);
+         dst[28 + 1] = LOBYTE(((i32)dst[28 + 1] * (i32)dst[28 + 3]) >> 8);
+         dst[28 + 2] = LOBYTE(((i32)dst[28 + 2] * (i32)dst[28 + 3]) >> 8);
 
          dst += 4 * 8;
          size -= 8;
       }
       while (size--)
       {
-         dst[0] = LOBYTE(((int32_t)dst[0] * (int32_t)dst[3]) >> 8);
-         dst[1] = LOBYTE(((int32_t)dst[1] * (int32_t)dst[3]) >> 8);
-         dst[2] = LOBYTE(((int32_t)dst[2] * (int32_t)dst[3]) >> 8);
+         dst[0] = LOBYTE(((i32)dst[0] * (i32)dst[3]) >> 8);
+         dst[1] = LOBYTE(((i32)dst[1] * (i32)dst[3]) >> 8);
+         dst[2] = LOBYTE(((i32)dst[2] * (i32)dst[3]) >> 8);
          dst += 4;
       }
    }
@@ -2803,46 +2803,46 @@ restart:
 
       while (size >= 8)
       {
-         dst[0] = byte_clip2(((int32_t)dst[0] * (int32_t)dst[3]) / 255);
-         dst[1] = byte_clip2(((int32_t)dst[1] * (int32_t)dst[3]) / 255);
-         dst[2] = byte_clip2(((int32_t)dst[2] * (int32_t)dst[3]) / 255);
+         dst[0] = byte_clip2(((i32)dst[0] * (i32)dst[3]) / 255);
+         dst[1] = byte_clip2(((i32)dst[1] * (i32)dst[3]) / 255);
+         dst[2] = byte_clip2(((i32)dst[2] * (i32)dst[3]) / 255);
 
-         dst[4 + 0] = byte_clip2(((int32_t)dst[4 + 0] * (int32_t)dst[4 + 3]) / 255);
-         dst[4 + 1] = byte_clip2(((int32_t)dst[4 + 1] * (int32_t)dst[4 + 3]) / 255);
-         dst[4 + 2] = byte_clip2(((int32_t)dst[4 + 2] * (int32_t)dst[4 + 3]) / 255);
+         dst[4 + 0] = byte_clip2(((i32)dst[4 + 0] * (i32)dst[4 + 3]) / 255);
+         dst[4 + 1] = byte_clip2(((i32)dst[4 + 1] * (i32)dst[4 + 3]) / 255);
+         dst[4 + 2] = byte_clip2(((i32)dst[4 + 2] * (i32)dst[4 + 3]) / 255);
 
-         dst[8 + 0] = byte_clip2(((int32_t)dst[8 + 0] * (int32_t)dst[8 + 3]) / 255);
-         dst[8 + 1] = byte_clip2(((int32_t)dst[8 + 1] * (int32_t)dst[8 + 3]) / 255);
-         dst[8 + 2] = byte_clip2(((int32_t)dst[8 + 2] * (int32_t)dst[8 + 3]) / 255);
+         dst[8 + 0] = byte_clip2(((i32)dst[8 + 0] * (i32)dst[8 + 3]) / 255);
+         dst[8 + 1] = byte_clip2(((i32)dst[8 + 1] * (i32)dst[8 + 3]) / 255);
+         dst[8 + 2] = byte_clip2(((i32)dst[8 + 2] * (i32)dst[8 + 3]) / 255);
 
-         dst[12 + 0] = byte_clip2(((int32_t)dst[12 + 0] * (int32_t)dst[12 + 3]) / 255);
-         dst[12 + 1] = byte_clip2(((int32_t)dst[12 + 1] * (int32_t)dst[12 + 3]) / 255);
-         dst[12 + 2] = byte_clip2(((int32_t)dst[12 + 2] * (int32_t)dst[12 + 3]) / 255);
+         dst[12 + 0] = byte_clip2(((i32)dst[12 + 0] * (i32)dst[12 + 3]) / 255);
+         dst[12 + 1] = byte_clip2(((i32)dst[12 + 1] * (i32)dst[12 + 3]) / 255);
+         dst[12 + 2] = byte_clip2(((i32)dst[12 + 2] * (i32)dst[12 + 3]) / 255);
 
-         dst[16 + 0] = byte_clip2(((int32_t)dst[16 + 0] * (int32_t)dst[16 + 3]) / 255);
-         dst[16 + 1] = byte_clip2(((int32_t)dst[16 + 1] * (int32_t)dst[16 + 3]) / 255);
-         dst[16 + 2] = byte_clip2(((int32_t)dst[16 + 2] * (int32_t)dst[16 + 3]) / 255);
+         dst[16 + 0] = byte_clip2(((i32)dst[16 + 0] * (i32)dst[16 + 3]) / 255);
+         dst[16 + 1] = byte_clip2(((i32)dst[16 + 1] * (i32)dst[16 + 3]) / 255);
+         dst[16 + 2] = byte_clip2(((i32)dst[16 + 2] * (i32)dst[16 + 3]) / 255);
 
-         dst[20 + 0] = byte_clip2(((int32_t)dst[20 + 0] * (int32_t)dst[20 + 3]) / 255);
-         dst[20 + 1] = byte_clip2(((int32_t)dst[20 + 1] * (int32_t)dst[20 + 3]) / 255);
-         dst[20 + 2] = byte_clip2(((int32_t)dst[20 + 2] * (int32_t)dst[20 + 3]) / 255);
+         dst[20 + 0] = byte_clip2(((i32)dst[20 + 0] * (i32)dst[20 + 3]) / 255);
+         dst[20 + 1] = byte_clip2(((i32)dst[20 + 1] * (i32)dst[20 + 3]) / 255);
+         dst[20 + 2] = byte_clip2(((i32)dst[20 + 2] * (i32)dst[20 + 3]) / 255);
 
-         dst[24 + 0] = byte_clip2(((int32_t)dst[24 + 0] * (int32_t)dst[24 + 3]) / 255);
-         dst[24 + 1] = byte_clip2(((int32_t)dst[24 + 1] * (int32_t)dst[24 + 3]) / 255);
-         dst[24 + 2] = byte_clip2(((int32_t)dst[24 + 2] * (int32_t)dst[24 + 3]) / 255);
+         dst[24 + 0] = byte_clip2(((i32)dst[24 + 0] * (i32)dst[24 + 3]) / 255);
+         dst[24 + 1] = byte_clip2(((i32)dst[24 + 1] * (i32)dst[24 + 3]) / 255);
+         dst[24 + 2] = byte_clip2(((i32)dst[24 + 2] * (i32)dst[24 + 3]) / 255);
 
-         dst[28 + 0] = byte_clip2(((int32_t)dst[28 + 0] * (int32_t)dst[28 + 3]) / 255);
-         dst[28 + 1] = byte_clip2(((int32_t)dst[28 + 1] * (int32_t)dst[28 + 3]) / 255);
-         dst[28 + 2] = byte_clip2(((int32_t)dst[28 + 2] * (int32_t)dst[28 + 3]) / 255);
+         dst[28 + 0] = byte_clip2(((i32)dst[28 + 0] * (i32)dst[28 + 3]) / 255);
+         dst[28 + 1] = byte_clip2(((i32)dst[28 + 1] * (i32)dst[28 + 3]) / 255);
+         dst[28 + 2] = byte_clip2(((i32)dst[28 + 2] * (i32)dst[28 + 3]) / 255);
 
          dst += 4 * 8;
          size -= 8;
       }
       while (size--)
       {
-         dst[0] = byte_clip2(((int32_t)dst[0] * (int32_t)dst[3]) / 255);
-         dst[1] = byte_clip2(((int32_t)dst[1] * (int32_t)dst[3]) / 255);
-         dst[2] = byte_clip2(((int32_t)dst[2] * (int32_t)dst[3]) / 255);
+         dst[0] = byte_clip2(((i32)dst[0] * (i32)dst[3]) / 255);
+         dst[1] = byte_clip2(((i32)dst[1] * (i32)dst[3]) / 255);
+         dst[2] = byte_clip2(((i32)dst[2] * (i32)dst[3]) / 255);
          dst += 4;
       }
    }
@@ -2867,9 +2867,9 @@ restart:
          }
          else if (dst[3] != 255)
          {
-            dst[0] = byte_clip2(((int32_t)dst[0] * (int32_t)dst[3]) >> 8);
-            dst[1] = byte_clip2(((int32_t)dst[1] * (int32_t)dst[3]) >> 8);
-            dst[2] = byte_clip2(((int32_t)dst[2] * (int32_t)dst[3]) >> 8);
+            dst[0] = byte_clip2(((i32)dst[0] * (i32)dst[3]) >> 8);
+            dst[1] = byte_clip2(((i32)dst[1] * (i32)dst[3]) >> 8);
+            dst[2] = byte_clip2(((i32)dst[2] * (i32)dst[3]) >> 8);
          }
          dst += 4;
       }
@@ -2911,7 +2911,7 @@ restart:
       if (yEnd < 0)
          return;
 
-      int32_t scanDst = pdibDst->m_iScan;
+      i32 scanDst = pdibDst->m_iScan;
 
 #ifdef APPLEOS
 
@@ -2941,9 +2941,9 @@ restart:
          for (int x = 0; x < xEnd; x++)
          {
 
-            pdst2[0] = byte_clip(((int32_t)pdst2[0] * (int32_t)pdst2[3]) / 255);
-            pdst2[1] = byte_clip(((int32_t)pdst2[1] * (int32_t)pdst2[3]) / 255);
-            pdst2[2] = byte_clip(((int32_t)pdst2[2] * (int32_t)pdst2[3]) / 255);
+            pdst2[0] = byte_clip(((i32)pdst2[0] * (i32)pdst2[3]) / 255);
+            pdst2[1] = byte_clip(((i32)pdst2[1] * (i32)pdst2[3]) / 255);
+            pdst2[2] = byte_clip(((i32)pdst2[2] * (i32)pdst2[3]) / 255);
 
             pdst2 += 4;
 
@@ -2980,37 +2980,37 @@ restart:
 
       /*      while (size >= 8)
             {
-               dst[0] = LOBYTE(((int32_t)dst[0] * (int32_t)dst[3])>> 8);
-               dst[1] = LOBYTE(((int32_t)dst[1] * (int32_t)dst[3])>> 8);
-               dst[2] = LOBYTE(((int32_t)dst[2] * (int32_t)dst[3])>> 8);
+               dst[0] = LOBYTE(((i32)dst[0] * (i32)dst[3])>> 8);
+               dst[1] = LOBYTE(((i32)dst[1] * (i32)dst[3])>> 8);
+               dst[2] = LOBYTE(((i32)dst[2] * (i32)dst[3])>> 8);
 
-               dst[4+0] = LOBYTE(((int32_t)dst[4+0] * (int32_t)dst[4+3])>> 8);
-               dst[4+1] = LOBYTE(((int32_t)dst[4+1] * (int32_t)dst[4+3])>> 8);
-               dst[4+2] = LOBYTE(((int32_t)dst[4+2] * (int32_t)dst[4+3])>> 8);
+               dst[4+0] = LOBYTE(((i32)dst[4+0] * (i32)dst[4+3])>> 8);
+               dst[4+1] = LOBYTE(((i32)dst[4+1] * (i32)dst[4+3])>> 8);
+               dst[4+2] = LOBYTE(((i32)dst[4+2] * (i32)dst[4+3])>> 8);
 
-               dst[8+0] = LOBYTE(((int32_t)dst[8+0] * (int32_t)dst[8+3])>> 8);
-               dst[8+1] = LOBYTE(((int32_t)dst[8+1] * (int32_t)dst[8+3])>> 8);
-               dst[8+2] = LOBYTE(((int32_t)dst[8+2] * (int32_t)dst[8+3])>> 8);
+               dst[8+0] = LOBYTE(((i32)dst[8+0] * (i32)dst[8+3])>> 8);
+               dst[8+1] = LOBYTE(((i32)dst[8+1] * (i32)dst[8+3])>> 8);
+               dst[8+2] = LOBYTE(((i32)dst[8+2] * (i32)dst[8+3])>> 8);
 
-               dst[12+0] = LOBYTE(((int32_t)dst[12+0] * (int32_t)dst[12+3])>> 8);
-               dst[12+1] = LOBYTE(((int32_t)dst[12+1] * (int32_t)dst[12+3])>> 8);
-               dst[12+2] = LOBYTE(((int32_t)dst[12+2] * (int32_t)dst[12+3])>> 8);
+               dst[12+0] = LOBYTE(((i32)dst[12+0] * (i32)dst[12+3])>> 8);
+               dst[12+1] = LOBYTE(((i32)dst[12+1] * (i32)dst[12+3])>> 8);
+               dst[12+2] = LOBYTE(((i32)dst[12+2] * (i32)dst[12+3])>> 8);
 
-               dst[16+0] = LOBYTE(((int32_t)dst[16+0] * (int32_t)dst[16+3])>> 8);
-               dst[16+1] = LOBYTE(((int32_t)dst[16+1] * (int32_t)dst[16+3])>> 8);
-               dst[16+2] = LOBYTE(((int32_t)dst[16+2] * (int32_t)dst[16+3])>> 8);
+               dst[16+0] = LOBYTE(((i32)dst[16+0] * (i32)dst[16+3])>> 8);
+               dst[16+1] = LOBYTE(((i32)dst[16+1] * (i32)dst[16+3])>> 8);
+               dst[16+2] = LOBYTE(((i32)dst[16+2] * (i32)dst[16+3])>> 8);
 
-               dst[20+0] = LOBYTE(((int32_t)dst[20+0] * (int32_t)dst[20+3])>> 8);
-               dst[20+1] = LOBYTE(((int32_t)dst[20+1] * (int32_t)dst[20+3])>> 8);
-               dst[20+2] = LOBYTE(((int32_t)dst[20+2] * (int32_t)dst[20+3])>> 8);
+               dst[20+0] = LOBYTE(((i32)dst[20+0] * (i32)dst[20+3])>> 8);
+               dst[20+1] = LOBYTE(((i32)dst[20+1] * (i32)dst[20+3])>> 8);
+               dst[20+2] = LOBYTE(((i32)dst[20+2] * (i32)dst[20+3])>> 8);
 
-               dst[24+0] = LOBYTE(((int32_t)dst[24+0] * (int32_t)dst[24+3])>> 8);
-               dst[24+1] = LOBYTE(((int32_t)dst[24+1] * (int32_t)dst[24+3])>> 8);
-               dst[24+2] = LOBYTE(((int32_t)dst[24+2] * (int32_t)dst[24+3])>> 8);
+               dst[24+0] = LOBYTE(((i32)dst[24+0] * (i32)dst[24+3])>> 8);
+               dst[24+1] = LOBYTE(((i32)dst[24+1] * (i32)dst[24+3])>> 8);
+               dst[24+2] = LOBYTE(((i32)dst[24+2] * (i32)dst[24+3])>> 8);
 
-               dst[28+0] = LOBYTE(((int32_t)dst[28+0] * (int32_t)dst[28+3])>> 8);
-               dst[28+1] = LOBYTE(((int32_t)dst[28+1] * (int32_t)dst[28+3])>> 8);
-               dst[28+2] = LOBYTE(((int32_t)dst[28+2] * (int32_t)dst[28+3])>> 8);
+               dst[28+0] = LOBYTE(((i32)dst[28+0] * (i32)dst[28+3])>> 8);
+               dst[28+1] = LOBYTE(((i32)dst[28+1] * (i32)dst[28+3])>> 8);
+               dst[28+2] = LOBYTE(((i32)dst[28+2] * (i32)dst[28+3])>> 8);
 
                dst += 4 * 8;
                size -= 8;
@@ -3025,9 +3025,9 @@ restart:
          }
          else
          {
-            dst[0] = byte_clip((int32_t)dst[0] * 255 / (int32_t)dst[3]);
-            dst[1] = byte_clip((int32_t)dst[1] * 255 / (int32_t)dst[3]);
-            dst[2] = byte_clip((int32_t)dst[2] * 255 / (int32_t)dst[3]);
+            dst[0] = byte_clip((i32)dst[0] * 255 / (i32)dst[3]);
+            dst[1] = byte_clip((i32)dst[1] * 255 / (i32)dst[3]);
+            dst[2] = byte_clip((i32)dst[2] * 255 / (i32)dst[3]);
          }
 
          dst += 4;
@@ -3071,7 +3071,7 @@ restart:
       if (yEnd < 0)
          return;
 
-      int32_t scanDst = pdibDst->m_iScan;
+      i32 scanDst = pdibDst->m_iScan;
 
 #ifdef APPLEOS
 
@@ -3109,9 +3109,9 @@ restart:
             }
             else
             {
-               pdst2[0] = byte_clip((int32_t)pdst2[0] * 255 / (int32_t)pdst2[3]);
-               pdst2[1] = byte_clip((int32_t)pdst2[1] * 255 / (int32_t)pdst2[3]);
-               pdst2[2] = byte_clip((int32_t)pdst2[2] * 255 / (int32_t)pdst2[3]);
+               pdst2[0] = byte_clip((i32)pdst2[0] * 255 / (i32)pdst2[3]);
+               pdst2[1] = byte_clip((i32)pdst2[1] * 255 / (i32)pdst2[3]);
+               pdst2[2] = byte_clip((i32)pdst2[2] * 255 / (i32)pdst2[3]);
             }
 
             pdst2 += 4;
@@ -3122,7 +3122,7 @@ restart:
 
    }
 
-   void dib::Map(int32_t ToRgb, int32_t FromRgb)
+   void dib::Map(i32 ToRgb, i32 FromRgb)
    {
       byte * dst = (byte *)get_data();
       int64_t size = scan_area();
@@ -3135,7 +3135,7 @@ restart:
    }
 
 
-   void dib::ToAlphaAndFill(int32_t i, COLORREF cr)
+   void dib::ToAlphaAndFill(i32 i, COLORREF cr)
    {
       BYTE *dst = (BYTE*)get_data();
       int64_t size = scan_area();
@@ -3174,7 +3174,7 @@ restart:
    }
 
 
-   void dib::BitBlt(dib *pdib, int32_t op)
+   void dib::BitBlt(dib *pdib, i32 op)
    {
       if (op == 123) // zero dest RGB, invert alpha, and OR src RGB
       {
@@ -3202,7 +3202,7 @@ restart:
 
    }
 
-   void dib::BitBlt(int cxParam, int cyParam, dib *pdib, int32_t op)
+   void dib::BitBlt(int cxParam, int cyParam, dib *pdib, i32 op)
    {
 
       map();
@@ -3290,7 +3290,7 @@ restart:
    {
       int64_t size = scan_area();
       LPBYTE lpb = (LPBYTE)get_data();
-      for (int32_t i = 0; i < size; i++)
+      for (i32 i = 0; i < size; i++)
       {
          lpb[0] = 255 - lpb[0];
          lpb[1] = 255 - lpb[1];
@@ -3303,8 +3303,8 @@ restart:
    {
       int64_t size = scan_area();
       LPBYTE lpb = (LPBYTE)get_data();
-      lpb += ((int32_t)echannel) % 4;
-      for (int32_t i = 0; i < size; i++)
+      lpb += ((i32)echannel) % 4;
+      for (i32 i = 0; i < size; i++)
       {
          *lpb = 255 - *lpb;
          lpb += 4;
@@ -3323,10 +3323,10 @@ restart:
       //#endif
       int64_t size = scan_area();
       LPBYTE lpb = (LPBYTE)get_data();
-      lpb += ((int32_t)echannel) % 4;
-      int32_t iDiv = 256 * 256;
-      int32_t iMul = (int32_t)(dRate * ((double)iDiv));
-      int32_t iRes;
+      lpb += ((i32)echannel) % 4;
+      i32 iDiv = 256 * 256;
+      i32 iMul = (i32)(dRate * ((double)iDiv));
+      i32 iRes;
       for (int64_t i = 0; i < size; i++)
       {
          iRes = *lpb * iMul / iDiv;
@@ -3358,18 +3358,18 @@ restart:
 
       LPBYTE lpb2 = (LPBYTE)pdib->get_data();
 
-      lpb1 += ((int32_t)echannel) % 4;
+      lpb1 += ((i32)echannel) % 4;
 
-      lpb2 += ((int32_t)echannel) % 4;
+      lpb2 += ((i32)echannel) % 4;
 
-      for (int32_t y = 0; y < m_size.cy; y++)
+      for (i32 y = 0; y < m_size.cy; y++)
       {
 
          LPBYTE lpb1_2 = lpb1 + (m_iScan * y);
 
          LPBYTE lpb2_2 = lpb2 + (pdib->m_iScan * y);
 
-         for (int32_t x = 0; x < m_size.cx; x++)
+         for (i32 x = 0; x < m_size.cx; x++)
          {
 
             int i = (BYTE)(((uint32_t)*lpb1_2 * (uint32_t)*lpb2_2) / 255);
@@ -3395,8 +3395,8 @@ restart:
       int64_t size = scan_area();
       LPBYTE lpb1 = (LPBYTE)get_data();
       LPBYTE lpb2 = (LPBYTE)pdib->get_data();
-      lpb1 += ((int32_t)echannel) % 4;
-      lpb2 += ((int32_t)echannel) % 4;
+      lpb1 += ((i32)echannel) % 4;
+      lpb2 += ((i32)echannel) % 4;
       for (int64_t i = 0; i < size; i++)
       {
          *lpb1 = *lpb1 < *lpb2 ? *lpb1 : *lpb2;
@@ -3410,8 +3410,8 @@ restart:
       int64_t size = scan_area();
       LPBYTE lpb1 = (LPBYTE)get_data();
       LPBYTE lpb2 = (LPBYTE)pdib->get_data();
-      lpb1 += ((int32_t)echannel) % 4;
-      lpb2 += ((int32_t)echannel) % 4;
+      lpb1 += ((i32)echannel) % 4;
+      lpb2 += ((i32)echannel) % 4;
       for (int64_t i = 0; i < size; i++)
       {
          *lpb1 = *lpb1 > *lpb2 ? *lpb1 : *lpb2;
@@ -3428,8 +3428,8 @@ restart:
       int64_t size64 = size / 64;
       LPBYTE lpb1 = (LPBYTE)get_data();
       LPBYTE lpb2 = (LPBYTE)pdib->get_data();
-      lpb1 += ((int32_t)echannel) % 4;
-      lpb2 += ((int32_t)echannel) % 4;
+      lpb1 += ((i32)echannel) % 4;
+      lpb2 += ((i32)echannel) % 4;
       int64_t i = 0;
       for (; i < size64; i++)
       {
@@ -3519,20 +3519,16 @@ restart:
 
       pdib->map();
 
-      rect r1(null_point(), m_size);
+      class rect r;
 
-      rect r;
-
-      if (!r.intersect(r1, lpcrect))
+      if (!r.intersect(rect(), lpcrect))
       {
 
          return;
 
       }
 
-      rect r2(null_point(), pdib->m_size);
-
-      if (!r.intersect(r2, lpcrect))
+      if (!r.intersect(pdib->rect(), lpcrect))
       {
 
          return;
@@ -3543,9 +3539,9 @@ restart:
 
       LPBYTE lpb2 = ((LPBYTE)pdib->get_data()) + (r.left * sizeof(COLORREF) + r.top * pdib->m_iScan);
 
-      lpb1 += ((int32_t)echannel) % 4;
+      lpb1 += ((i32)echannel) % 4;
 
-      lpb2 += ((int32_t)echannel) % 4;
+      lpb2 += ((i32)echannel) % 4;
 
       int h = r.height();
 
@@ -3586,30 +3582,27 @@ restart:
 
       pdib->map();
 
+      class rect r;
 
-
-      rect r1(null_point(), m_size);
-
-      rect r;
-
-      if (!r.intersect(r1, lpcrect))
+      if (!r.intersect(rect(), lpcrect))
       {
 
          return;
 
       }
 
-      rect r2(null_point(), pdib->m_size);
-
-      if (!r.intersect(r2, lpcrect))
+      if (!r.intersect(pdib->rect(), lpcrect))
       {
 
          return;
 
       }
+
       if (!bIfAlphaIgnorePreDivPosMult && echannel == visual::rgba::channel_alpha)
       {
+
          div_alpha(r.top_left(), r.size());
+
       }
 
 #ifdef APPLEOS
@@ -3626,9 +3619,9 @@ restart:
 
 #endif
 
-      lpb1 += ((int32_t)echannel) % 4;
+      lpb1 += ((i32)echannel) % 4;
 
-      lpb2 += ((int32_t)echannel) % 4;
+      lpb2 += ((i32)echannel) % 4;
 
       int h = r.height();
 
@@ -3670,15 +3663,15 @@ restart:
 
       if (!bIfAlphaIgnorePreDivPosMult && echannel == visual::rgba::channel_alpha)
       {
-         mult_alpha(r.top_left(), r.size());
-      }
 
+         mult_alpha(r.top_left(), r.size());
+
+      }
 
    }
 
 
-
-   void dib::FillGlass(int32_t R, int32_t G, int32_t B, int32_t A)
+   void dib::FillGlass(i32 R, i32 G, i32 B, i32 A)
    {
       BYTE *dst = (BYTE*)get_data();
       int64_t size = scan_area();
@@ -3692,15 +3685,15 @@ restart:
       }
    }
 
-   void dib::FillStippledGlass(int32_t R, int32_t G, int32_t B)
+   void dib::FillStippledGlass(i32 R, i32 G, i32 B)
    {
       COLORREF color = RGB(B, G, R);
-      int32_t w = m_size.cx;
-      int32_t h = m_size.cy;
+      i32 w = m_size.cx;
+      i32 h = m_size.cy;
 
-      for (int32_t j = 0; j < w; j++)
+      for (i32 j = 0; j < w; j++)
       {
-         for (int32_t i = 0; i < h; i++)
+         for (i32 i = 0; i < h; i++)
          {
             get_data()[j*w + i] = ((i + j) & 0x1) ? get_data()[j*w + i] : color;
          }
@@ -3775,12 +3768,11 @@ restart:
 
    }
 
-   bool dib::bitmap_blend(::draw2d::graphics * pgraphics, LPCRECT lprect)
+
+   bool dib::bitmap_blend(::draw2d::graphics * pgraphics, LPCRECT lpcrect)
    {
 
-      rect rect(lprect);
-
-      return pgraphics->BitBlt(rect.left, rect.top, rect.width(), rect.height(), get_graphics(), 0, 0, SRCCOPY) != FALSE;
+      return pgraphics->draw(lpcrect, get_graphics()) != FALSE;
 
    }
 
@@ -3837,7 +3829,7 @@ restart:
    }
 
 
-   void dib::Blend(dib * dib, int32_t A)
+   void dib::Blend(dib * dib, i32 A)
    {
       if (m_size != dib->m_size)
          return;
@@ -3856,7 +3848,7 @@ restart:
       }
    }
 
-   bool dib::Blend(dib *pDib, dib *DibA, int32_t A)
+   bool dib::Blend(dib *pDib, dib *DibA, i32 A)
    {
       if (m_size != pDib->m_size ||
             m_size != DibA->size())
@@ -3926,14 +3918,14 @@ restart:
 
       while (size >= 2)
       {
-         dst[00] = (BYTE)(((((int32_t)src[00] - (int32_t)dst[00]) * (int32_t)alf[00]) + (int32_t)dst[00] * (int32_t)255) / 255);
-         dst[01] = (BYTE)(((((int32_t)src[01] - (int32_t)dst[01]) * (int32_t)alf[01]) + (int32_t)dst[01] * (int32_t)255) / 255);
-         dst[02] = (BYTE)(((((int32_t)src[02] - (int32_t)dst[02]) * (int32_t)alf[02]) + (int32_t)dst[02] * (int32_t)255) / 255);
-         dst[03] = (BYTE)(((((int32_t)src[03] - (int32_t)dst[03]) * (int32_t)alf[03]) + (int32_t)dst[03] * (int32_t)255) / 255);
-         dst[04] = (BYTE)(((((int32_t)src[04] - (int32_t)dst[04]) * (int32_t)alf[04]) + (int32_t)dst[04] * (int32_t)255) / 255);
-         dst[05] = (BYTE)(((((int32_t)src[05] - (int32_t)dst[05]) * (int32_t)alf[05]) + (int32_t)dst[05] * (int32_t)255) / 255);
-         dst[06] = (BYTE)(((((int32_t)src[06] - (int32_t)dst[06]) * (int32_t)alf[06]) + (int32_t)dst[06] * (int32_t)255) / 255);
-         dst[07] = (BYTE)(((((int32_t)src[07] - (int32_t)dst[07]) * (int32_t)alf[07]) + (int32_t)dst[07] * (int32_t)255) / 255);
+         dst[00] = (BYTE)(((((i32)src[00] - (i32)dst[00]) * (i32)alf[00]) + (i32)dst[00] * (i32)255) / 255);
+         dst[01] = (BYTE)(((((i32)src[01] - (i32)dst[01]) * (i32)alf[01]) + (i32)dst[01] * (i32)255) / 255);
+         dst[02] = (BYTE)(((((i32)src[02] - (i32)dst[02]) * (i32)alf[02]) + (i32)dst[02] * (i32)255) / 255);
+         dst[03] = (BYTE)(((((i32)src[03] - (i32)dst[03]) * (i32)alf[03]) + (i32)dst[03] * (i32)255) / 255);
+         dst[04] = (BYTE)(((((i32)src[04] - (i32)dst[04]) * (i32)alf[04]) + (i32)dst[04] * (i32)255) / 255);
+         dst[05] = (BYTE)(((((i32)src[05] - (i32)dst[05]) * (i32)alf[05]) + (i32)dst[05] * (i32)255) / 255);
+         dst[06] = (BYTE)(((((i32)src[06] - (i32)dst[06]) * (i32)alf[06]) + (i32)dst[06] * (i32)255) / 255);
+         dst[07] = (BYTE)(((((i32)src[07] - (i32)dst[07]) * (i32)alf[07]) + (i32)dst[07] * (i32)255) / 255);
          dst += 4 * 2;
          src += 4 * 2;
          alf += 4 * 2;
@@ -3941,10 +3933,10 @@ restart:
       }
       while (size > 0)
       {
-         dst[00] = (BYTE)(((((int32_t)src[00] - (int32_t)dst[00]) * (int32_t)alf[00]) + (int32_t)dst[00] * (int32_t)255) / 255);
-         dst[01] = (BYTE)(((((int32_t)src[01] - (int32_t)dst[01]) * (int32_t)alf[01]) + (int32_t)dst[01] * (int32_t)255) / 255);
-         dst[02] = (BYTE)(((((int32_t)src[02] - (int32_t)dst[02]) * (int32_t)alf[02]) + (int32_t)dst[02] * (int32_t)255) / 255);
-         dst[03] = (BYTE)(((((int32_t)src[03] - (int32_t)dst[03]) * (int32_t)alf[03]) + (int32_t)dst[03] * (int32_t)255) / 255);
+         dst[00] = (BYTE)(((((i32)src[00] - (i32)dst[00]) * (i32)alf[00]) + (i32)dst[00] * (i32)255) / 255);
+         dst[01] = (BYTE)(((((i32)src[01] - (i32)dst[01]) * (i32)alf[01]) + (i32)dst[01] * (i32)255) / 255);
+         dst[02] = (BYTE)(((((i32)src[02] - (i32)dst[02]) * (i32)alf[02]) + (i32)dst[02] * (i32)255) / 255);
+         dst[03] = (BYTE)(((((i32)src[03] - (i32)dst[03]) * (i32)alf[03]) + (i32)dst[03] * (i32)255) / 255);
          dst += 4;
          src += 4;
          alf += 4;
@@ -3984,7 +3976,7 @@ restart:
 
       while (size--)
       {
-         int32_t Difference;
+         i32 Difference;
          Difference = src[0] - dst[0];
          dst[0] = (BYTE)((Difference < 0) ? -Difference : Difference);
          Difference = src[1] - dst[1];
@@ -4054,16 +4046,16 @@ restart:
    }
 
    //////////////////////////////////////////////////////////////////////
-   // Rectangle Functions
+   // rectangle Functions
    //////////////////////////////////////////////////////////////////////
 
-   void dib::copy(dib *dib, int32_t x, int32_t y)
+   void dib::copy(dib *dib, i32 x, i32 y)
    {
       // Clip Rect
-      int32_t px = (x >= 0) ? x : 0;
-      int32_t py = (y >= 0) ? y : 0;
-      int32_t dx = ((x + dib->m_size.cx) < m_size.cx) ? dib->m_size.cx : m_size.cx - x;
-      int32_t dy = ((y + dib->m_size.cy) < m_size.cy) ? dib->m_size.cy : m_size.cy - y;
+      i32 px = (x >= 0) ? x : 0;
+      i32 py = (y >= 0) ? y : 0;
+      i32 dx = ((x + dib->m_size.cx) < m_size.cx) ? dib->m_size.cx : m_size.cx - x;
+      i32 dy = ((y + dib->m_size.cy) < m_size.cy) ? dib->m_size.cy : m_size.cy - y;
       dx = (x >= 0) ? dx : dx + x;
       dy = (y >= 0) ? dy : dy + y;
 
@@ -4084,7 +4076,7 @@ restart:
       // Do copy
       while (dy--)
       {
-         for (int32_t i = 0; i < dx; i++)
+         for (i32 i = 0; i < dx; i++)
             dst[i] = src[i];
          src += m_size.cx;
          dst += dib->m_size.cx;
@@ -4092,13 +4084,13 @@ restart:
 
    }
 
-   void dib::PasteRect(dib *dib, int32_t x, int32_t y)
+   void dib::PasteRect(dib *dib, i32 x, i32 y)
    {
       // Clip Rect
-      int32_t px = (x >= 0) ? x : 0;
-      int32_t py = (y >= 0) ? y : 0;
-      int32_t dx = ((x + dib->m_size.cx) < m_size.cx) ? dib->m_size.cx : m_size.cx - x;
-      int32_t dy = ((y + dib->m_size.cy) < m_size.cy) ? dib->m_size.cy : m_size.cy - y;
+      i32 px = (x >= 0) ? x : 0;
+      i32 py = (y >= 0) ? y : 0;
+      i32 dx = ((x + dib->m_size.cx) < m_size.cx) ? dib->m_size.cx : m_size.cx - x;
+      i32 dy = ((y + dib->m_size.cy) < m_size.cy) ? dib->m_size.cy : m_size.cy - y;
       dx = (x >= 0) ? dx : dx + x;
       dy = (y >= 0) ? dy : dy + y;
 
@@ -4113,20 +4105,24 @@ restart:
       // Do Paste
       while (dy--)
       {
-         for (int32_t i = 0; i < dx; i++)
+         for (i32 i = 0; i < dx; i++)
             dst[i] = src[i];
          src += dib->m_size.cx;
          dst += m_size.cx;
       }
    }
 
-   void dib::FillRect(int32_t x, int32_t y, int32_t w, int32_t h, int32_t R, int32_t G, int32_t B)
+   void dib::fill_rect(LPCRECT lpcrect, i32 R, i32 G, i32 B)
    {
+      i32 x = lpcrect->left;
+      i32 y = lpcrect->top;
+      i32 w = ::width(lpcrect);
+      i32 h = ::height(lpcrect);
       // Clip Rect
-      int32_t px = (x >= 0) ? x : 0;
-      int32_t py = (y >= 0) ? y : 0;
-      int32_t dx = ((x + w) < m_size.cx) ? w : m_size.cx - x;
-      int32_t dy = ((y + h) < m_size.cy) ? h : m_size.cy - y;
+      i32 px = (x >= 0) ? x : 0;
+      i32 py = (y >= 0) ? y : 0;
+      i32 dx = ((x + w) < m_size.cx) ? w : m_size.cx - x;
+      i32 dy = ((y + h) < m_size.cy) ? h : m_size.cy - y;
       dx = (x >= 0) ? dx : dx + x;
       dy = (y >= 0) ? dy : dy + y;
 
@@ -4134,72 +4130,123 @@ restart:
       if ((dx <= 0) || (dy <= 0))
          return;
 
-      // Prepare buffer Address
-      COLORREF *dst = get_data() + (py*m_size.cx) + px;
-      COLORREF color = RGB(B, G, R);
+      map();
 
-      // Do Fill
+      COLORREF *dst = get_data() + (py*m_size.cx) + px;
+
       while (dy--)
       {
-         for (int32_t i = 0; i < dx; i++)
+
+         for (i32 i = 0; i < dx; i++)
          {
-            dst[i] = color;
+
+            ((byte *)&dst[i])[0] = R;
+            ((byte *)&dst[i])[1] = G;
+            ((byte *)&dst[i])[2] = B;
+
          }
-         dst += m_size.cx;
+
+         dst += m_iScan / sizeof(COLORREF);
+
       }
+
    }
 
-   void dib::FillRect(int32_t x, int32_t y, int32_t w, int32_t h, int32_t A, int32_t R, int32_t G, int32_t B)
+
+   void dib::fill_rect(LPCRECT lpcrect, COLORREF cr)
    {
-      // Clip Rect
-      int32_t px = x;
-      if (w < 0)
+
+      if (m_bMapped)
       {
-         px += w;
-         w = -w;
-      }
 
-      px = (px >= 0) ? px : 0;
-      int32_t py = y;
-      if (h < 0)
-      {
-         py += h;
-         h = -h;
-      }
-      py = (py >= 0) ? py : 0;
-      int32_t dx;
-      dx = ((px + w) < m_size.cx) ? w : m_size.cx - px;
-      int32_t dy;
-      dy = ((py + h) < m_size.cy) ? h : m_size.cy - py;
-      dx = (px >= 0) ? dx : dx + x;
-      dy = (py >= 0) ? dy : dy + y;
-
-      // If Nothing to Fill return
-      if ((dx <= 0) || (dy <= 0))
-         return;
-
-      // Prepare buffer Address
-      COLORREF *dst = get_data() + (py*m_size.cx) + px;
-      COLORREF color = ARGB(A, B, G, R);
-
-      // Do Fill
-      while (dy--)
-      {
-         for (int32_t i = 0; i < dx; i++)
+         i32 x = lpcrect->left;
+         i32 y = lpcrect->top;
+         i32 w = ::width(lpcrect);
+         i32 h = ::height(lpcrect);
+         // Clip Rect
+         i32 px = x;
+         if (w < 0)
          {
-            dst[i] = color;
+            px += w;
+            w = -w;
          }
-         dst += m_size.cx;
+
+         px = (px >= 0) ? px : 0;
+         i32 py = y;
+         if (h < 0)
+         {
+            py += h;
+            h = -h;
+         }
+         py = (py >= 0) ? py : 0;
+         i32 dx;
+         dx = ((px + w) < m_size.cx) ? w : m_size.cx - px;
+         i32 dy;
+         dy = ((py + h) < m_size.cy) ? h : m_size.cy - py;
+         dx = (px >= 0) ? dx : dx + x;
+         dy = (py >= 0) ? dy : dy + y;
+
+         // If Nothing to Fill return
+         if ((dx <= 0) || (dy <= 0))
+            return;
+
+         // Prepare buffer Address
+         COLORREF *dst = get_data() + (py*m_size.cx) + px;
+
+         while (dy--)
+         {
+
+            for (i32 i = 0; i < dx; i++)
+            {
+
+               dst[i] = cr;
+
+            }
+
+            dst += m_iScan / sizeof(COLORREF);
+
+         }
+
       }
+      else
+      {
+
+         ::draw2d::e_alpha_mode emodeOld = get_graphics()->m_ealphamode;
+
+         if (get_graphics()->m_ealphamode != ::draw2d::alpha_mode_set)
+         {
+
+            get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
+
+         }
+
+         get_graphics()->fill_solid_rect(lpcrect, cr);
+
+         if (get_graphics()->m_ealphamode != emodeOld)
+         {
+
+            get_graphics()->set_alpha_mode(emodeOld);
+
+         }
+
+      }
+
    }
 
-   void dib::FillGlassRect(int32_t x, int32_t y, int32_t w, int32_t h, int32_t R, int32_t G, int32_t B, int32_t A)
+
+   void dib::fill_glass_rect(LPCRECT lpcrect, i32 R, i32 G, i32 B, i32 A)
    {
+
+      i32 x = lpcrect->left;
+      i32 y = lpcrect->top;
+      i32 w = ::width(lpcrect);
+      i32 h = ::height(lpcrect);
+
       // Clip Rect
-      int32_t px = (x >= 0) ? x : 0;
-      int32_t py = (y >= 0) ? y : 0;
-      int32_t dx = ((x + w) < m_size.cx) ? w : m_size.cx - x;
-      int32_t dy = ((y + h) < m_size.cy) ? h : m_size.cy - y;
+      i32 px = (x >= 0) ? x : 0;
+      i32 py = (y >= 0) ? y : 0;
+      i32 dx = ((x + w) < m_size.cx) ? w : m_size.cx - x;
+      i32 dy = ((y + h) < m_size.cy) ? h : m_size.cy - y;
       dx = (x >= 0) ? dx : dx + x;
       dy = (y >= 0) ? dy : dy + y;
 
@@ -4213,24 +4260,34 @@ restart:
       // Do FillGlass
       while (dy--)
       {
-         for (int32_t i = 0; i < dx; i++)
+         for (i32 i = 0; i < dx; i++)
          {
             dst[0] = (BYTE)(((B - dst[0])*A + (dst[0] << 8)) >> 8);
             dst[1] = (BYTE)(((G - dst[1])*A + (dst[1] << 8)) >> 8);
             dst[2] = (BYTE)(((R - dst[2])*A + (dst[2] << 8)) >> 8);
             dst += 4;
          }
+
          dst += (m_size.cx - dx) << 2;
+
       }
+
    }
 
-   void dib::FillStippledGlassRect(int32_t x, int32_t y, int32_t w, int32_t h, int32_t R, int32_t G, int32_t B)
+
+   void dib::fill_stippled_glass_rect(LPCRECT lpcrect, i32 R, i32 G, i32 B)
    {
+
+      i32 x = lpcrect->left;
+      i32 y = lpcrect->top;
+      i32 w = ::width(lpcrect);
+      i32 h = ::height(lpcrect);
+
       // Clip Rect
-      int32_t px = (x >= 0) ? x : 0;
-      int32_t py = (y >= 0) ? y : 0;
-      int32_t dx = ((x + w) < m_size.cx) ? w : m_size.cx - x;
-      int32_t dy = ((y + h) < m_size.cy) ? h : m_size.cy - y;
+      i32 px = (x >= 0) ? x : 0;
+      i32 py = (y >= 0) ? y : 0;
+      i32 dx = ((x + w) < m_size.cx) ? w : m_size.cx - x;
+      i32 dy = ((y + h) < m_size.cy) ? h : m_size.cy - y;
       dx = (x >= 0) ? dx : dx + x;
       dy = (y >= 0) ? dy : dy + y;
 
@@ -4243,9 +4300,9 @@ restart:
       COLORREF color = RGB(B, G, R);
 
       // Do FillStippledGlass
-      for (int32_t j = 0; j < dy; j++)
+      for (i32 j = 0; j < dy; j++)
       {
-         for (int32_t i = 0; i < dx; i++)
+         for (i32 i = 0; i < dx; i++)
          {
             dst[i] = ((i + j) & 0x1) ? dst[i] : color;
          }
@@ -4253,13 +4310,13 @@ restart:
       }
    }
 
-   void dib::BlendRect(dib *dib, int32_t x, int32_t y, int32_t A)
+   void dib::BlendRect(dib *dib, i32 x, i32 y, i32 A)
    {
       // Clip Rect
-      int32_t px = (x >= 0) ? x : 0;
-      int32_t py = (y >= 0) ? y : 0;
-      int32_t dx = ((x + dib->m_size.cx) < m_size.cx) ? dib->m_size.cx : m_size.cx - x;
-      int32_t dy = ((y + dib->m_size.cy) < m_size.cy) ? dib->m_size.cy : m_size.cy - y;
+      i32 px = (x >= 0) ? x : 0;
+      i32 py = (y >= 0) ? y : 0;
+      i32 dx = ((x + dib->m_size.cx) < m_size.cx) ? dib->m_size.cx : m_size.cx - x;
+      i32 dy = ((y + dib->m_size.cy) < m_size.cy) ? dib->m_size.cy : m_size.cy - y;
       dx = (x >= 0) ? dx : dx + x;
       dy = (y >= 0) ? dy : dy + y;
 
@@ -4274,7 +4331,7 @@ restart:
       // Do Blend
       while (dy--)
       {
-         for (int32_t i = 0; i < dx; i++)
+         for (i32 i = 0; i < dx; i++)
          {
             dst[0] = (BYTE)(((src[0] - dst[0])*A + (dst[0] << 8)) >> 8);
             dst[1] = (BYTE)(((src[1] - dst[1])*A + (dst[1] << 8)) >> 8);
@@ -4287,13 +4344,13 @@ restart:
       }
    }
 
-   void dib::DarkenRect(dib *dib, int32_t x, int32_t y)
+   void dib::DarkenRect(dib *dib, i32 x, i32 y)
    {
       // Clip Rect
-      int32_t px = (x >= 0) ? x : 0;
-      int32_t py = (y >= 0) ? y : 0;
-      int32_t dx = ((x + dib->m_size.cx) < m_size.cx) ? dib->m_size.cx : m_size.cx - x;
-      int32_t dy = ((y + dib->m_size.cy) < m_size.cy) ? dib->m_size.cy : m_size.cy - y;
+      i32 px = (x >= 0) ? x : 0;
+      i32 py = (y >= 0) ? y : 0;
+      i32 dx = ((x + dib->m_size.cx) < m_size.cx) ? dib->m_size.cx : m_size.cx - x;
+      i32 dy = ((y + dib->m_size.cy) < m_size.cy) ? dib->m_size.cy : m_size.cy - y;
       dx = (x >= 0) ? dx : dx + x;
       dy = (y >= 0) ? dy : dy + y;
 
@@ -4308,7 +4365,7 @@ restart:
       // Do Darken
       while (dy--)
       {
-         for (int32_t i = 0; i < dx; i++)
+         for (i32 i = 0; i < dx; i++)
          {
             dst[0] = (BYTE)((src[0] < dst[0]) ? src[0] : dst[0]);
             dst[1] = (BYTE)((src[1] < dst[1]) ? src[1] : dst[1]);
@@ -4321,13 +4378,13 @@ restart:
       }
    }
 
-   void dib::DifferenceRect(dib *dib, int32_t x, int32_t y)
+   void dib::DifferenceRect(dib *dib, i32 x, i32 y)
    {
       // Clip Rect
-      int32_t px = (x >= 0) ? x : 0;
-      int32_t py = (y >= 0) ? y : 0;
-      int32_t dx = ((x + dib->m_size.cx) < m_size.cx) ? dib->m_size.cx : m_size.cx - x;
-      int32_t dy = ((y + dib->m_size.cy) < m_size.cy) ? dib->m_size.cy : m_size.cy - y;
+      i32 px = (x >= 0) ? x : 0;
+      i32 py = (y >= 0) ? y : 0;
+      i32 dx = ((x + dib->m_size.cx) < m_size.cx) ? dib->m_size.cx : m_size.cx - x;
+      i32 dy = ((y + dib->m_size.cy) < m_size.cy) ? dib->m_size.cy : m_size.cy - y;
       dx = (x >= 0) ? dx : dx + x;
       dy = (y >= 0) ? dy : dy + y;
 
@@ -4342,9 +4399,9 @@ restart:
       // Do Difference
       while (dy--)
       {
-         for (int32_t i = 0; i < dx; i++)
+         for (i32 i = 0; i < dx; i++)
          {
-            int32_t Difference;
+            i32 Difference;
             Difference = src[0] - dst[0];
             dst[0] = (BYTE)((Difference < 0) ? -Difference : Difference);
             Difference = src[1] - dst[1];
@@ -4359,13 +4416,13 @@ restart:
       }
    }
 
-   void dib::LightenRect(dib *dib, int32_t x, int32_t y)
+   void dib::LightenRect(dib *dib, i32 x, i32 y)
    {
       // Clip Rect
-      int32_t px = (x >= 0) ? x : 0;
-      int32_t py = (y >= 0) ? y : 0;
-      int32_t dx = ((x + dib->m_size.cx) < m_size.cx) ? dib->m_size.cx : m_size.cx - x;
-      int32_t dy = ((y + dib->m_size.cy) < m_size.cy) ? dib->m_size.cy : m_size.cy - y;
+      i32 px = (x >= 0) ? x : 0;
+      i32 py = (y >= 0) ? y : 0;
+      i32 dx = ((x + dib->m_size.cx) < m_size.cx) ? dib->m_size.cx : m_size.cx - x;
+      i32 dy = ((y + dib->m_size.cy) < m_size.cy) ? dib->m_size.cy : m_size.cy - y;
       dx = (x >= 0) ? dx : dx + x;
       dy = (y >= 0) ? dy : dy + y;
 
@@ -4380,7 +4437,7 @@ restart:
       // Do Lighten
       while (dy--)
       {
-         for (int32_t i = 0; i < dx; i++)
+         for (i32 i = 0; i < dx; i++)
          {
             dst[0] = (BYTE)((src[0] > dst[0]) ? src[0] : dst[0]);
             dst[1] = (BYTE)((src[1] > dst[1]) ? src[1] : dst[1]);
@@ -4393,13 +4450,13 @@ restart:
       }
    }
 
-   void dib::MultiplyRect(dib *dib, int32_t x, int32_t y)
+   void dib::MultiplyRect(dib *dib, i32 x, i32 y)
    {
       // Clip Rect
-      int32_t px = (x >= 0) ? x : 0;
-      int32_t py = (y >= 0) ? y : 0;
-      int32_t dx = ((x + dib->m_size.cx) < m_size.cx) ? dib->m_size.cx : m_size.cx - x;
-      int32_t dy = ((y + dib->m_size.cy) < m_size.cy) ? dib->m_size.cy : m_size.cy - y;
+      i32 px = (x >= 0) ? x : 0;
+      i32 py = (y >= 0) ? y : 0;
+      i32 dx = ((x + dib->m_size.cx) < m_size.cx) ? dib->m_size.cx : m_size.cx - x;
+      i32 dy = ((y + dib->m_size.cy) < m_size.cy) ? dib->m_size.cy : m_size.cy - y;
       dx = (x >= 0) ? dx : dx + x;
       dy = (y >= 0) ? dy : dy + y;
 
@@ -4414,7 +4471,7 @@ restart:
       // Do Multiply
       while (dy--)
       {
-         for (int32_t i = 0; i < dx; i++)
+         for (i32 i = 0; i < dx; i++)
          {
             dst[0] = (BYTE)(((src[0])*(dst[0])) >> 8);
             dst[1] = (BYTE)(((src[1])*(dst[1])) >> 8);
@@ -4427,13 +4484,13 @@ restart:
       }
    }
 
-   void dib::ScreenRect(dib *dib, int32_t x, int32_t y)
+   void dib::ScreenRect(dib *dib, i32 x, i32 y)
    {
       // Clip Rect
-      int32_t px = (x >= 0) ? x : 0;
-      int32_t py = (y >= 0) ? y : 0;
-      int32_t dx = ((x + dib->m_size.cx) < m_size.cx) ? dib->m_size.cx : m_size.cx - x;
-      int32_t dy = ((y + dib->m_size.cy) < m_size.cy) ? dib->m_size.cy : m_size.cy - y;
+      i32 px = (x >= 0) ? x : 0;
+      i32 py = (y >= 0) ? y : 0;
+      i32 dx = ((x + dib->m_size.cx) < m_size.cx) ? dib->m_size.cx : m_size.cx - x;
+      i32 dy = ((y + dib->m_size.cy) < m_size.cy) ? dib->m_size.cy : m_size.cy - y;
       dx = (x >= 0) ? dx : dx + x;
       dy = (y >= 0) ? dy : dy + y;
 
@@ -4448,7 +4505,7 @@ restart:
       // Do Screen
       while (dy--)
       {
-         for (int32_t i = 0; i < dx; i++)
+         for (i32 i = 0; i < dx; i++)
          {
             dst[0] = (BYTE)(255 - (((255 - src[0])*(255 - dst[0])) >> 8));
             dst[1] = (BYTE)(255 - (((255 - src[1])*(255 - dst[1])) >> 8));
@@ -4465,9 +4522,9 @@ restart:
    // Line Functions
    //////////////////////////////////////////////////////////////////////
 
-   /*void dib::Line ( int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t R, int32_t G, int32_t B )
+   /*void dib::Line ( i32 x1, i32 y1, i32 x2, i32 y2, i32 R, i32 G, i32 B )
    {
-   int32_t dx, dy, k1, k2, d, x, y;
+   i32 dx, dy, k1, k2, d, x, y;
    COLORREF color=RGB ( B, G, R );
 
    dx=x2-x1;
@@ -4497,7 +4554,7 @@ restart:
    }*/
 
 
-   void dib::horizontal_line(int32_t y, int32_t R, int32_t G, int32_t B, int32_t A, int32_t x1, int32_t x2)
+   void dib::horizontal_line(i32 y, i32 R, i32 G, i32 B, i32 A, i32 x1, i32 x2)
    {
       map();
       if (m_size.cx == 0)
@@ -4520,7 +4577,7 @@ restart:
 
 #endif
 
-      for (int32_t x = x1; x <= x2; x++)
+      for (i32 x = x1; x <= x2; x++)
       {
 
          *pdata = color;
@@ -4532,9 +4589,9 @@ restart:
    }
 
 
-   void dib::Line(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t R, int32_t G, int32_t B)
+   void dib::Line(i32 x1, i32 y1, i32 x2, i32 y2, i32 R, i32 G, i32 B)
    {
-      int32_t d, x, y, core, ay, sx, sy, dx, dy;
+      i32 d, x, y, core, ay, sx, sy, dx, dy;
       COLORREF color = RGB(B, G, R);
 
       dx = x2 - x1;
@@ -4578,9 +4635,9 @@ restart:
       }
    }
 
-   void dib::LineGlass(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t R, int32_t G, int32_t B, int32_t A)
+   void dib::LineGlass(i32 x1, i32 y1, i32 x2, i32 y2, i32 R, i32 G, i32 B, i32 A)
    {
-      int32_t d, x, y, core, ay, sx, sy, dx, dy;
+      i32 d, x, y, core, ay, sx, sy, dx, dy;
       //      COLORREF color=RGB ( B, G, R );
       BYTE *dst = (BYTE *)get_data();
 
@@ -4637,7 +4694,7 @@ restart:
 
       int64_t size = scan_area();
 
-      for (int32_t i = 0; i < size; i++)
+      for (i32 i = 0; i < size; i++)
          if (get_data()[i] == crFind)
             get_data()[i] = crSet;
          else
@@ -4650,7 +4707,7 @@ restart:
       COLORREF crFind = color.get_rgb();
       int64_t iSize = scan_area();
 
-      for (int32_t i = 0; i < iSize; i++)
+      for (i32 i = 0; i < iSize; i++)
          if ((get_data()[i] & 0x00ffffff) == crFind)
             ((LPBYTE)&get_data()[i])[3] = 255;
          else
@@ -4659,11 +4716,11 @@ restart:
 
    void dib::channel_mask(uchar uchFind, uchar uchSet, uchar uchUnset, visual::rgba::echannel echannel)
    {
-      int32_t size = (m_iScan / sizeof(COLORREF)) * m_size.cy;
+      i32 size = (m_iScan / sizeof(COLORREF)) * m_size.cy;
       uchar * puch = (uchar *)get_data();
-      puch += ((int32_t)echannel) % 4;
+      puch += ((i32)echannel) % 4;
 
-      for (int32_t i = 0; i < size; i++)
+      for (i32 i = 0; i < size; i++)
       {
          if (*puch == uchFind)
             *puch = uchSet;
@@ -4673,7 +4730,7 @@ restart:
       }
    }
 
-   uint32_t dib::GetPixel(int32_t x, int32_t y)
+   uint32_t dib::GetPixel(i32 x, i32 y)
    {
       uint32_t dw = *(get_data() + x + (m_size.cy - y - 1) * (m_iScan / sizeof(COLORREF)));
       int iA = rgba_get_a(dw);
@@ -4692,19 +4749,19 @@ restart:
    // The gradient can´t have more then 256 levels of the most bright color
    // (white). So creating a radial fill of radius 256 and then using fasting
    // stretching algorithms is much faster than calculating radial fill.
-   void dib::RadialFill(BYTE alpha, BYTE red, BYTE green, BYTE blue, int32_t xCenter, int32_t yCenter, int32_t iRadius)
+   void dib::RadialFill(BYTE alpha, BYTE red, BYTE green, BYTE blue, i32 xCenter, i32 yCenter, i32 iRadius)
    {
       if (iRadius == 0)
          return;
       /*if(version == 0)
       {
 
-      int32_t iR = iRadius - 1;
+      i32 iR = iRadius - 1;
 
-      int32_t xL = xCenter - iR;
-      int32_t xU = xCenter + iR;
-      int32_t yL = yCenter - iR;
-      int32_t yU = yCenter + iR;
+      i32 xL = xCenter - iR;
+      i32 xU = xCenter + iR;
+      i32 yL = yCenter - iR;
+      i32 yU = yCenter + iR;
 
 
       if(xL < 0) xL = 0;
@@ -4715,26 +4772,26 @@ restart:
 
       BYTE *dst = ((BYTE*)(get_data() + xL + yL * m_Size.(m_iScan / sizeof(COLORREF))));
       uint32_t dwAdd = ((m_Size.(m_iScan / sizeof(COLORREF)) - 1 - xU) + xL) * 4;
-      int32_t size=m_Size.(m_iScan / sizeof(COLORREF))*m_Size.m_size.cy;
+      i32 size=m_Size.(m_iScan / sizeof(COLORREF))*m_Size.m_size.cy;
       double iLevel;
 
-      int32_t dx, dy;
-      int32_t dx0, dy0;
-      int32_t dx1, dy1;
-      int32_t dx2, dy2;
-      int32_t dx3, dy3;
-      int32_t dx4, dy4;
-      int32_t dx5, dy5;
-      int32_t dx6, dy6;
-      int32_t dx7, dy7;
-      int32_t dx8, dy8;
-      int32_t dx9, dy9;
-      int32_t dxA, dyA;
-      int32_t dxB, dyB;
-      int32_t dxC, dyC;
-      int32_t dxD, dyD;
-      int32_t dxE, dyE;
-      int32_t dxF, dyF;
+      i32 dx, dy;
+      i32 dx0, dy0;
+      i32 dx1, dy1;
+      i32 dx2, dy2;
+      i32 dx3, dy3;
+      i32 dx4, dy4;
+      i32 dx5, dy5;
+      i32 dx6, dy6;
+      i32 dx7, dy7;
+      i32 dx8, dy8;
+      i32 dx9, dy9;
+      i32 dxA, dyA;
+      i32 dxB, dyB;
+      i32 dxC, dyC;
+      i32 dxD, dyD;
+      i32 dxE, dyE;
+      i32 dxF, dyF;
 
       unsigned long dr;
       unsigned long dq;
@@ -4754,7 +4811,7 @@ restart:
       unsigned long drD, dqD;
       unsigned long drE, dqE;
       unsigned long drF, dqF;
-      int32_t x, y;
+      i32 x, y;
 
       {
       for(y = yL; y <= yU; y++)
@@ -4784,16 +4841,16 @@ restart:
          LPBYTE lpb = ((LPBYTE)NULL) + (*((uint_ptr *)&lpbAlloc[3]) & ~3);
 
 
-         int32_t x, y;
-         int32_t b;
+         i32 x, y;
+         i32 b;
 
-         //         int32_t r2 = iRadius * iRadius;
+         //         i32 r2 = iRadius * iRadius;
 
          for (y = 0; y < iRadius; y++)
          {
             for (x = y; x < iRadius; x++)
             {
-               b = (int32_t)(sqrt((double)(x * x) + (y * y)) * 255 / iRadius);
+               b = (i32)(sqrt((double)(x * x) + (y * y)) * 255 / iRadius);
                if (b > 255)
                   b = 0;
                else
@@ -4806,12 +4863,12 @@ restart:
          }
 
 
-         int32_t iR = iRadius - 1;
+         i32 iR = iRadius - 1;
 
-         int32_t xL = xCenter - iR;
-         int32_t xU = xCenter + iR;
-         int32_t yL = yCenter - iR;
-         int32_t yU = yCenter + iR;
+         i32 xL = xCenter - iR;
+         i32 xU = xCenter + iR;
+         i32 yL = yCenter - iR;
+         i32 yU = yCenter + iR;
 
 
          if (xL < 0) xL = 0;
@@ -4824,7 +4881,7 @@ restart:
          uint32_t dwAdd = (((m_iScan / sizeof(COLORREF)) - 1 - xU) + xL) * 4;
          //         int64_t size = area();
 
-         int32_t dx, dy;
+         i32 dx, dy;
 
          // Top Left
 
@@ -4852,7 +4909,7 @@ restart:
    void dib::RadialFill(
    BYTE alpha1, BYTE red1, BYTE green1, BYTE blue1,
    BYTE alpha2, BYTE red2, BYTE green2, BYTE blue2,
-   int32_t xCenter, int32_t yCenter, int32_t iRadius)
+   i32 xCenter, i32 yCenter, i32 iRadius)
    {
       if (iRadius == 0)
          return;
@@ -4861,12 +4918,12 @@ restart:
       /*if(version == 0)
       {
 
-      int32_t iR = iRadius - 1;
+      i32 iR = iRadius - 1;
 
-      int32_t xL = xCenter - iR;
-      int32_t xU = xCenter + iR;
-      int32_t yL = yCenter - iR;
-      int32_t yU = yCenter + iR;
+      i32 xL = xCenter - iR;
+      i32 xU = xCenter + iR;
+      i32 yL = yCenter - iR;
+      i32 yU = yCenter + iR;
 
 
       if(xL < 0) xL = 0;
@@ -4877,26 +4934,26 @@ restart:
 
       BYTE *dst = ((BYTE*)(get_data() + xL + yL * m_Size.(m_iScan / sizeof(COLORREF))));
       uint32_t dwAdd = ((m_Size.(m_iScan / sizeof(COLORREF)) - 1 - xU) + xL) * 4;
-      int32_t size=m_Size.(m_iScan / sizeof(COLORREF))*m_Size.m_size.cy;
+      i32 size=m_Size.(m_iScan / sizeof(COLORREF))*m_Size.m_size.cy;
       double iLevel;
 
-      int32_t dx, dy;
-      int32_t dx0, dy0;
-      int32_t dx1, dy1;
-      int32_t dx2, dy2;
-      int32_t dx3, dy3;
-      int32_t dx4, dy4;
-      int32_t dx5, dy5;
-      int32_t dx6, dy6;
-      int32_t dx7, dy7;
-      int32_t dx8, dy8;
-      int32_t dx9, dy9;
-      int32_t dxA, dyA;
-      int32_t dxB, dyB;
-      int32_t dxC, dyC;
-      int32_t dxD, dyD;
-      int32_t dxE, dyE;
-      int32_t dxF, dyF;
+      i32 dx, dy;
+      i32 dx0, dy0;
+      i32 dx1, dy1;
+      i32 dx2, dy2;
+      i32 dx3, dy3;
+      i32 dx4, dy4;
+      i32 dx5, dy5;
+      i32 dx6, dy6;
+      i32 dx7, dy7;
+      i32 dx8, dy8;
+      i32 dx9, dy9;
+      i32 dxA, dyA;
+      i32 dxB, dyB;
+      i32 dxC, dyC;
+      i32 dxD, dyD;
+      i32 dxE, dyE;
+      i32 dxF, dyF;
 
       unsigned long dr;
       unsigned long dq;
@@ -4916,7 +4973,7 @@ restart:
       unsigned long drD, dqD;
       unsigned long drE, dqE;
       unsigned long drF, dqF;
-      int32_t x, y;
+      i32 x, y;
 
       {
       for(y = yL; y <= yU; y++)
@@ -4951,17 +5008,17 @@ restart:
          //         LPBYTE lpb = lpbAlloc;
          //
          //
-         //         int32_t x, y;
-         //         int32_t b;
+         //         i32 x, y;
+         //         i32 b;
          //
-         ////         int32_t r2 = iRadius * iRadius;
+         ////         i32 r2 = iRadius * iRadius;
          //
          //         for(y = 0; y < iRadius; y++)
          //         {
          //            for(x = y; x < iRadius; x++)
          //            {
          //
-         //               b = (int32_t) (sqrt((double) (x * x) + (y * y)) * 255 / iRadius);
+         //               b = (i32) (sqrt((double) (x * x) + (y * y)) * 255 / iRadius);
          //
          //               if(b > 255)
          //                  b = 255;
@@ -4973,12 +5030,12 @@ restart:
          //         }
 
 
-         int32_t iR = iRadius;
+         i32 iR = iRadius;
 
-         int32_t xL = xCenter - iR;
-         int32_t xU = xCenter + iR;
-         int32_t yL = yCenter - iR;
-         int32_t yU = yCenter + iR;
+         i32 xL = xCenter - iR;
+         i32 xU = xCenter + iR;
+         i32 yL = yCenter - iR;
+         i32 yU = yCenter + iR;
 
 
          if (xL < 0) xL = 0;
@@ -5032,7 +5089,7 @@ restart:
 
 
 
-   void dib::SetIconMask(::visual::icon * picon, int32_t cx, int32_t cy)
+   void dib::SetIconMask(::visual::icon * picon, i32 cx, i32 cy)
    {
 
 //      _throw(todo(get_app()));
@@ -5121,7 +5178,7 @@ restart:
 //      BYTE * r2 = (BYTE*)spdib2->get_data();
 //      BYTE * srcM = (BYTE*)dibM.get_data();
 //      BYTE * dest = (BYTE*)get_data();
-//      int32_t iSize = m_size.cx*m_size.cy;
+//      i32 iSize = m_size.cx*m_size.cy;
 //
 //      BYTE b;
 //      BYTE bMax;
@@ -5181,15 +5238,15 @@ restart:
    void dib::rotate(dib * pdib, double dAngle, double dScale)
    {
 
-      int32_t l = MAX(m_size.cx, m_size.cy);
+      i32 l = MAX(m_size.cx, m_size.cy);
 
-      int32_t jmax = MIN(l, m_size.cy / 2);
+      i32 jmax = MIN(l, m_size.cy / 2);
 
-      int32_t jmin = -jmax;
+      i32 jmin = -jmax;
 
-      int32_t imax = MIN(l, m_size.cx / 2);
+      i32 imax = MIN(l, m_size.cx / 2);
 
-      int32_t imin = -imax;
+      i32 imin = -imax;
 
       int xoff = pdib->m_size.cx / 2;
 
@@ -5213,15 +5270,15 @@ restart:
 
       int y;
 
-      for (int32_t j = jmin; j < jmax; j++)
+      for (i32 j = jmin; j < jmax; j++)
       {
 
-         for (int32_t i = imin; i < imax; i++)
+         for (i32 i = imin; i < imax; i++)
          {
 
-            x = (int32_t)fabs((dCos * i - dSin * j) + xoff);
+            x = (i32)fabs((dCos * i - dSin * j) + xoff);
 
-            y = (int32_t)fabs((dSin * i + dCos * j) + yoff);
+            y = (i32)fabs((dSin * i + dCos * j) + yoff);
 
             x %= pdib->m_size.cx;
 
@@ -5238,13 +5295,13 @@ restart:
    void dib::Rotate034(dib * pdib, double dAngle, double dScale)
    {
 
-      int32_t l = MAX(m_size.cx, m_size.cy);
+      i32 l = MAX(m_size.cx, m_size.cy);
 
 
-      int32_t jmax = MIN(l, m_size.cy / 2);
-      int32_t jmin = -jmax;
-      int32_t imax = MIN(l, m_size.cx / 2);
-      int32_t imin = -imax;
+      i32 jmax = MIN(l, m_size.cy / 2);
+      i32 jmin = -jmax;
+      i32 imax = MIN(l, m_size.cx / 2);
+      i32 imin = -imax;
 
 
       if ((m_size.cy % 2) == 1)
@@ -5253,27 +5310,27 @@ restart:
       if ((m_size.cx % 2) == 1)
          imax++;
 
-      int32_t joff = m_size.cy / 2;
-      int32_t ioff = m_size.cx / 2;
+      i32 joff = m_size.cy / 2;
+      i32 ioff = m_size.cx / 2;
 
       int stride_unit = m_iScan / sizeof(COLORREF);
-      int32_t k = 0;
+      i32 k = 0;
       double dCos = ::cos(dAngle * pi() / 180.0) * dScale;
       double dSin = ::sin(dAngle * pi() / 180.0) * dScale;
-      int32_t cx1 = m_size.cx - 1;
-      int32_t cy1 = m_size.cy - 1;
-      for (int32_t j = jmin; j < jmax; j++)
+      i32 cx1 = m_size.cx - 1;
+      i32 cy1 = m_size.cy - 1;
+      for (i32 j = jmin; j < jmax; j++)
       {
-         for (int32_t i = imin; i < imax; i++)
+         for (i32 i = imin; i < imax; i++)
          {
-            int32_t x, y;
+            i32 x, y;
 
             // A Combination of a 2d Translation/rotation/Scale Matrix
-            //x=abs((int32_t(dCos * i - dSin * j) + ioff) % m_size.cx);
-            //y=abs((int32_t(dSin * i + dCos * j) + joff) % m_size.cy);
+            //x=abs((i32(dCos * i - dSin * j) + ioff) % m_size.cx);
+            //y=abs((i32(dSin * i + dCos * j) + joff) % m_size.cy);
 
-            x = (int32_t)fabs((dCos * i - dSin * j) + ioff);
-            y = (int32_t)fabs((dSin * i + dCos * j) + joff);
+            x = (i32)fabs((dCos * i - dSin * j) + ioff);
+            y = (i32)fabs((dSin * i + dCos * j) + joff);
 
             if ((x / m_size.cx) % 2 == 0)
             {
@@ -5302,43 +5359,34 @@ restart:
       }
    }
 
+
    void dib::rotate(dib * pdib, LPCRECT lpcrect, double dAngle, double dScale)
    {
-      // ::draw2d::dib_sp spdib(allocer());
-      //   spdib->Paste(this);
 
+      i32 l = MAX(m_size.cx, m_size.cy);
 
+      i32 jmax = MIN(l, m_size.cy / 2);
+      i32 jmin = -jmax;
+      i32 imax = MIN(l, m_size.cx / 2);
+      i32 imin = -imax;
 
-      rect rect(lpcrect);
-
-      //      int32_t cx = rect.width();
-      //    int32_t cy = rect.height();
-
-      int32_t l = MAX(m_size.cx, m_size.cy);
-
-      int32_t jmax = MIN(l, m_size.cy / 2);
-      int32_t jmin = -jmax;
-      int32_t imax = MIN(l, m_size.cx / 2);
-      int32_t imin = -imax;
-
-
-      int32_t joff = m_size.cy / 2 + rect.left;
-      int32_t ioff = m_size.cx / 2 + rect.top;
+      i32 joff = m_size.cy / 2 + lpcrect->left;
+      i32 ioff = m_size.cx / 2 + lpcrect->top;
       int stride_unit = m_iScan / sizeof(COLORREF);
-      //int32_t iAngle = iStep % 360;
-      //int32_t iAngle = iStep;
-      //int32_t iAngle = 1;
-      //int32_t k = 0;
+      //i32 iAngle = iStep % 360;
+      //i32 iAngle = iStep;
+      //i32 iAngle = 1;
+      //i32 k = 0;
 
-      /*     for ( int32_t j=jmin; j<jmax; j++ )
+      /*     for ( i32 j=jmin; j<jmax; j++ )
       {
-      for ( int32_t i=imin; i<imax; i++ )
+      for ( i32 i=imin; i<imax; i++ )
       {
-      int32_t x, y;
+      i32 x, y;
 
       // A Combination of a 2d Translation/rotation/Scale Matrix
-      x=int32_t(cos10(i, iAngle) - sin10(j, iAngle)) + ioff;
-      y=int32_t(sin10(i, iAngle) + cos10(j, iAngle)) + joff;
+      x=i32(cos10(i, iAngle) - sin10(j, iAngle)) + ioff;
+      y=i32(sin10(i, iAngle) + cos10(j, iAngle)) + joff;
       get_data()[(j+joff)*m_size.cx+(i+ioff)]=
       spdib->get_data()[abs(y%m_size.cy)*m_size.cx+abs(x%m_size.cx)];
       //k++;
@@ -5346,23 +5394,23 @@ restart:
       (j+joff)*m_size.cx+(i+ioff)
       }*/
 
-      int32_t k = 0;
+      i32 k = 0;
       double dCos = ::cos(dAngle * pi() / 180.0) * dScale;
       double dSin = ::sin(dAngle * pi() / 180.0) * dScale;
-      int32_t cx1 = m_size.cx - 1;
-      int32_t cy1 = m_size.cy - 1;
-      for (int32_t j = jmin; j < jmax; j++)
+      i32 cx1 = m_size.cx - 1;
+      i32 cy1 = m_size.cy - 1;
+      for (i32 j = jmin; j < jmax; j++)
       {
-         for (int32_t i = imin; i < imax; i++)
+         for (i32 i = imin; i < imax; i++)
          {
-            int32_t x, y;
+            i32 x, y;
 
             // A Combination of a 2d Translation/rotation/Scale Matrix
-            //x=abs((int32_t(dCos * i - dSin * j) + ioff) % m_size.cx);
-            //y=abs((int32_t(dSin * i + dCos * j) + joff) % m_size.cy);
+            //x=abs((i32(dCos * i - dSin * j) + ioff) % m_size.cx);
+            //y=abs((i32(dSin * i + dCos * j) + joff) % m_size.cy);
 
-            x = (int32_t)fabs((dCos * i - dSin * j) + ioff);
-            y = (int32_t)fabs((dSin * i + dCos * j) + joff);
+            x = (i32)fabs((dCos * i - dSin * j) + ioff);
+            y = (i32)fabs((dSin * i + dCos * j) + joff);
 
             if ((x / m_size.cx) % 2 == 0)
             {
@@ -5382,23 +5430,25 @@ restart:
                y = cy1 - (y % m_size.cy);
             }
 
+            get_data()[(j + joff)*stride_unit + (i + ioff)] =  pdib->get_data()[y * stride_unit + x];
 
-
-            get_data()[(j + joff)*stride_unit + (i + ioff)] =
-            pdib->get_data()[y * stride_unit + x];
             k++;
+
          }
+
       }
+
    }
 
-   /*int32_t dib::cos(int32_t i, int32_t iAngle)
+
+   /*i32 dib::cos(i32 i, i32 iAngle)
    {
-   return (int32_t) (((_int64) i * CosN[iAngle]) >> 32);
+   return (i32) (((_int64) i * CosN[iAngle]) >> 32);
    }
 
-   int32_t dib::sin(int32_t i, int32_t iAngle)
+   i32 dib::sin(i32 i, i32 iAngle)
    {
-   return (int32_t) (((_int64) i * SinN[iAngle]) >> 32);
+   return (i32) (((_int64) i * SinN[iAngle]) >> 32);
    }*/
 
 
@@ -5455,14 +5505,14 @@ restart:
 
          get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
 
-         get_graphics()->FillSolidRect(rect(null_point(), m_size), cr);
+         get_graphics()->fill_solid_rect(rect(), cr);
 
       }
 
    }
 
 
-   COLORREF dib::make_colorref(int32_t a, int32_t r, int32_t g, int32_t b)
+   COLORREF dib::make_colorref(i32 a, i32 r, i32 g, i32 b)
    {
 
       return ARGB(a, b, g, r);
@@ -5470,7 +5520,7 @@ restart:
    }
 
 
-   void dib::Fill(int32_t a, int32_t r, int32_t g, int32_t b)
+   void dib::Fill(i32 a, i32 r, i32 g, i32 b)
    {
 
       if (a == r && a == g && a == b)
@@ -5513,12 +5563,12 @@ restart:
 
          iBLine = 0;
 
-         for (int32_t y = 0; y < m_size.cy; y++)
+         for (i32 y = 0; y < m_size.cy; y++)
          {
 
             LPBYTE lpb = ((LPBYTE)get_data()) + m_iScan * y;
 
-            for (int32_t x = 0; x < m_size.cx; x++)
+            for (i32 x = 0; x < m_size.cx; x++)
             {
 
                iRLine += lpb[2];
@@ -5533,11 +5583,11 @@ restart:
 
          }
 
-         int32_t iR = (int32_t)(iRLine / iDiv);
+         i32 iR = (i32)(iRLine / iDiv);
 
-         int32_t iG = (int32_t)(iGLine / iDiv);
+         i32 iG = (i32)(iGLine / iDiv);
 
-         int32_t iB = (int32_t)(iBLine / iDiv);
+         i32 iB = (i32)(iBLine / iDiv);
 
          return RGB(iR, iG, iB);
 
@@ -5558,20 +5608,20 @@ restart:
       double dR = 0.0;
       double dG = 0.0;
       double dB = 0.0;
-      int32_t iRLine;
-      int32_t iGLine;
-      int32_t iBLine;
+      i32 iRLine;
+      i32 iGLine;
+      i32 iBLine;
       double dDiv = m_size.cx * m_size.cy;
       if (dDiv > 0)
       {
 
-         for (int32_t y = 0; y < m_size.cy; y++)
+         for (i32 y = 0; y < m_size.cy; y++)
          {
             iRLine = 0;
             iGLine = 0;
             iBLine = 0;
             LPBYTE lpb = ((LPBYTE)get_data()) + m_iScan * y;
-            for (int32_t x = 0; x < m_size.cx; x++)
+            for (i32 x = 0; x < m_size.cx; x++)
             {
                if (lpb[3] == 255)
                {
@@ -5587,9 +5637,9 @@ restart:
             dG += iGLine / dDiv;
             dB += iBLine / dDiv;
          }
-         int32_t iR = (int32_t)dR;
-         int32_t iG = (int32_t)dG;
-         int32_t iB = (int32_t)dB;
+         i32 iR = (i32)dR;
+         i32 iG = (i32)dG;
+         i32 iB = (i32)dB;
          return RGB(iR, iG, iB);
       }
       else
@@ -5607,10 +5657,10 @@ restart:
       {
          return;
       }
-      int32_t iCount = m_size.cx * m_size.cy;
+      i32 iCount = m_size.cx * m_size.cy;
       LPDWORD lpd1 = (LPDWORD)get_data();
       LPDWORD lpd2 = (LPDWORD)pdib->get_data();
-      for (int32_t i = 0; i < iCount; i++)
+      for (i32 i = 0; i < iCount; i++)
       {
          *lpd1 = *lpd1 ^ *lpd2;
          lpd1++;
@@ -5618,30 +5668,30 @@ restart:
       }
    }
 
-   void dib::create_frame(::size size, int32_t iFrameCount)
+   void dib::create_frame(::size size, i32 iFrameCount)
    {
-      int32_t iSliceCount = (int32_t)sqrt((double)iFrameCount);
-      int32_t iFrameWidth = size.cx / iSliceCount;
-      int32_t iFrameHeight = size.cy / iSliceCount;
+      i32 iSliceCount = (i32)sqrt((double)iFrameCount);
+      i32 iFrameWidth = size.cx / iSliceCount;
+      i32 iFrameHeight = size.cy / iSliceCount;
       create(iFrameWidth, iFrameHeight);
    }
 
-   void dib::set_frame1(void * lpdata, int32_t iFrame, int32_t iFrameCount)
+   void dib::set_frame1(void * lpdata, i32 iFrame, i32 iFrameCount)
    {
-      int32_t iSliceCount = (int32_t)sqrt((double)iFrameCount);
+      i32 iSliceCount = (i32)sqrt((double)iFrameCount);
       if (iSliceCount == 0)
          iSliceCount = 1;
-      int32_t iFrameWidth = m_size.cx / iSliceCount;
-      int32_t iFrameHeight = m_size.cy / iSliceCount;
-      int32_t iX = iFrame % iSliceCount;
-      int32_t iY = iFrame / iSliceCount;
+      i32 iFrameWidth = m_size.cx / iSliceCount;
+      i32 iFrameHeight = m_size.cy / iSliceCount;
+      i32 iX = iFrame % iSliceCount;
+      i32 iY = iFrame / iSliceCount;
       COLORREF * lpDest = &get_data()[iFrameWidth * iX + iY * iFrameHeight * m_size.cx];
       COLORREF * lpSrc = (COLORREF *)lpdata;
       COLORREF * lpDestLine;
-      for (int32_t y = 0; y < iFrameHeight; y++)
+      for (i32 y = 0; y < iFrameHeight; y++)
       {
          lpDestLine = &lpDest[y * m_size.cx];
-         for (int32_t x = 0; x < iFrameWidth; x++)
+         for (i32 x = 0; x < iFrameWidth; x++)
          {
             *lpDestLine = *lpSrc;
             lpDestLine++;
@@ -5650,22 +5700,22 @@ restart:
       }
    }
 
-   void dib::set_frame2(void * lpdata, int32_t iFrame, int32_t iFrameCount)
+   void dib::set_frame2(void * lpdata, i32 iFrame, i32 iFrameCount)
    {
-      int32_t iSliceCount = (int32_t)sqrt((double)iFrameCount);
+      i32 iSliceCount = (i32)sqrt((double)iFrameCount);
       if (iSliceCount == 0)
          iSliceCount = 1;
-      int32_t iFrameWidth = m_size.cx / iSliceCount;
-      int32_t iFrameHeight = m_size.cy / iSliceCount;
-      int32_t iX = iFrame % iSliceCount;
-      int32_t iY = iFrame / iSliceCount;
+      i32 iFrameWidth = m_size.cx / iSliceCount;
+      i32 iFrameHeight = m_size.cy / iSliceCount;
+      i32 iX = iFrame % iSliceCount;
+      i32 iY = iFrame / iSliceCount;
       COLORREF * lpDest = &get_data()[iFrameWidth * iX + iY * iFrameHeight * m_size.cx];
       COLORREF * lpSrc = (COLORREF *)lpdata;
       COLORREF * lpDestLine;
-      for (int32_t y = iFrameHeight - 1; y >= 0; y--)
+      for (i32 y = iFrameHeight - 1; y >= 0; y--)
       {
          lpDestLine = &lpDest[y * m_size.cx];
-         for (int32_t x = 0; x < iFrameWidth; x++)
+         for (i32 x = 0; x < iFrameWidth; x++)
          {
             *lpDestLine = *lpSrc;
             lpDestLine++;
@@ -5674,22 +5724,22 @@ restart:
       }
    }
 
-   void dib::xor_dib_frame2(void * lpdata, int32_t iFrame, int32_t iFrameCount)
+   void dib::xor_dib_frame2(void * lpdata, i32 iFrame, i32 iFrameCount)
    {
-      int32_t iSliceCount = (int32_t)sqrt((double)iFrameCount);
+      i32 iSliceCount = (i32)sqrt((double)iFrameCount);
       if (iSliceCount == 0)
          iSliceCount = 1;
-      int32_t iFrameWidth = m_size.cx / iSliceCount;
-      int32_t iFrameHeight = m_size.cy / iSliceCount;
-      int32_t iX = iFrame % iSliceCount;
-      int32_t iY = iFrame / iSliceCount;
+      i32 iFrameWidth = m_size.cx / iSliceCount;
+      i32 iFrameHeight = m_size.cy / iSliceCount;
+      i32 iX = iFrame % iSliceCount;
+      i32 iY = iFrame / iSliceCount;
       COLORREF * lpDest = &get_data()[iFrameWidth * iX + iY * iFrameHeight * m_size.cx];
       COLORREF * lpSrc = (COLORREF *)lpdata;
       COLORREF * lpDestLine;
-      for (int32_t y = iFrameHeight - 1; y >= 0; y--)
+      for (i32 y = iFrameHeight - 1; y >= 0; y--)
       {
          lpDestLine = &lpDest[y * m_size.cx];
-         for (int32_t x = 0; x < iFrameWidth; x++)
+         for (i32 x = 0; x < iFrameWidth; x++)
          {
             *lpDestLine ^= *lpSrc;
             lpDestLine++;
@@ -5698,20 +5748,20 @@ restart:
       }
    }
 
-   void dib::get_frame(void * lpdata, int32_t iFrame, int32_t iFrameCount)
+   void dib::get_frame(void * lpdata, i32 iFrame, i32 iFrameCount)
    {
-      int32_t iSliceCount = (int32_t)sqrt((double)iFrameCount);
-      int32_t iFrameWidth = m_size.cx / iSliceCount;
-      int32_t iFrameHeight = m_size.cy / iSliceCount;
-      int32_t iX = iFrame % iSliceCount;
-      int32_t iY = iFrame / iSliceCount;
+      i32 iSliceCount = (i32)sqrt((double)iFrameCount);
+      i32 iFrameWidth = m_size.cx / iSliceCount;
+      i32 iFrameHeight = m_size.cy / iSliceCount;
+      i32 iX = iFrame % iSliceCount;
+      i32 iY = iFrame / iSliceCount;
       COLORREF * lpSrc = &get_data()[iFrameWidth * iX + iY * iFrameHeight *  m_size.cx];
       COLORREF * lpDest = (COLORREF *)lpdata;
       COLORREF * lpSrcLine;
-      for (int32_t y = 0; y < iFrameHeight; y++)
+      for (i32 y = 0; y < iFrameHeight; y++)
       {
          lpSrcLine = &lpSrc[y * m_size.cx];
-         for (int32_t x = 0; x < iFrameWidth; x++)
+         for (i32 x = 0; x < iFrameWidth; x++)
          {
             *lpDest = *lpSrcLine;
             lpDest++;
@@ -5722,9 +5772,9 @@ restart:
 
    bool dib::is_rgb_black()
    {
-      int32_t iSize = m_size.cx * m_size.cy;
+      i32 iSize = m_size.cx * m_size.cy;
       COLORREF * lp = get_data();
-      for (int32_t i = 0; i < iSize; i++)
+      for (i32 i = 0; i < iSize; i++)
       {
          if ((*lp & 0x00FFFFFF) != 0)
             return false;
@@ -5733,16 +5783,16 @@ restart:
       return true;
    }
 
-   void dib::DivideRGB(int32_t iDivide)
+   void dib::DivideRGB(i32 iDivide)
    {
       if (iDivide == 0)
       {
          return;
       }
-      int32_t iCount = m_size.cx * m_size.cy;
+      i32 iCount = m_size.cx * m_size.cy;
       LPBYTE lp = ((LPBYTE)get_data());
-      int32_t i = 0;
-      int32_t iCount1 = iCount - iCount % 8;
+      i32 i = 0;
+      i32 iCount1 = iCount - iCount % 8;
       for (; i < iCount1; i++)
       {
          lp[0] /= (byte)iDivide;
@@ -5788,15 +5838,15 @@ restart:
       }
    }
 
-   void dib::DivideARGB(int32_t iDivide)
+   void dib::DivideARGB(i32 iDivide)
    {
       if (iDivide == 0)
       {
          return;
       }
-      int32_t iCount = m_size.cx * m_size.cy;
+      i32 iCount = m_size.cx * m_size.cy;
       LPBYTE lp = ((LPBYTE)get_data());
-      for (int32_t i = 0; i < iCount; i++)
+      for (i32 i = 0; i < iCount; i++)
       {
          lp[0] /= (byte)iDivide;
          lp[1] /= (byte)iDivide;
@@ -5806,15 +5856,15 @@ restart:
       }
    }
 
-   void dib::DivideA(int32_t iDivide)
+   void dib::DivideA(i32 iDivide)
    {
       if (iDivide == 0)
       {
          return;
       }
-      int32_t iCount = m_size.cx * m_size.cy;
+      i32 iCount = m_size.cx * m_size.cy;
       LPBYTE lp = ((LPBYTE)get_data());
-      for (int32_t i = 0; i < iCount; i++)
+      for (i32 i = 0; i < iCount; i++)
       {
          lp[3] /= (byte)iDivide;
          lp += 4;
@@ -6194,7 +6244,7 @@ restart:
    }
 
 
-   int32_t dib::cos(int32_t i, int32_t iAngle)
+   i32 dib::cos(i32 i, i32 iAngle)
    {
 
       UNREFERENCED_PARAMETER(i);
@@ -6207,7 +6257,7 @@ restart:
    }
 
 
-   int32_t dib::sin(int32_t i, int32_t iAngle)
+   i32 dib::sin(i32 i, i32 iAngle)
    {
 
       UNREFERENCED_PARAMETER(i);
@@ -6220,7 +6270,7 @@ restart:
    }
 
 
-   int32_t dib::cos10(int32_t i, int32_t iAngle)
+   i32 dib::cos10(i32 i, i32 iAngle)
    {
 
       UNREFERENCED_PARAMETER(i);
@@ -6233,7 +6283,7 @@ restart:
    }
 
 
-   int32_t dib::sin10(int32_t i, int32_t iAngle)
+   i32 dib::sin10(i32 i, i32 iAngle)
    {
 
       UNREFERENCED_PARAMETER(i);
@@ -6245,12 +6295,12 @@ restart:
 
    }
 
-   /*   int32_t dib::m_size.cx
+   /*   i32 dib::m_size.cx
       {
          ::exception::throw_interface_only(get_app());
       }
 
-      int32_t dib::m_size.cy
+      i32 dib::m_size.cy
       {
          ::exception::throw_interface_only(get_app());
       }
@@ -6274,10 +6324,10 @@ restart:
    }
 
 
-   void dib::fill_channel(int32_t intensity, visual::rgba::echannel echannel)
+   void dib::fill_channel(i32 intensity, visual::rgba::echannel echannel)
    {
       map();
-      int32_t offset = ((int32_t)echannel) % 4;
+      i32 offset = ((i32)echannel) % 4;
       int64_t size = scan_area();
 
       COLORREF * pcr = (COLORREF *) &((byte *)m_pcolorref)[offset];
@@ -6285,7 +6335,7 @@ restart:
       BYTE * pb;
 
       int64_t iSize32 = size / 32;
-      int32_t i;
+      i32 i;
       for (i = 0; i < iSize32; i += 32)
       {
          pb = (byte *)&pcr[i];
@@ -6329,10 +6379,10 @@ restart:
       }
    }
 
-   void dib::white_fill_channel(int32_t intensity, visual::rgba::echannel echannel)
+   void dib::white_fill_channel(i32 intensity, visual::rgba::echannel echannel)
    {
       map();
-      int32_t offset = ((int32_t)echannel) % 4;
+      i32 offset = ((i32)echannel) % 4;
       int64_t size = scan_area();
 
       COLORREF * pcr = (COLORREF *) &((byte *)m_pcolorref)[offset];
@@ -6340,7 +6390,7 @@ restart:
       //      BYTE * pb;
 
       int64_t iSize32 = size / 32;
-      int32_t i;
+      i32 i;
       //      for (i=0; i < iSize32; i+=32 )
       //      {
       //         pb = (byte *) &pcr[i];
@@ -6397,24 +6447,24 @@ restart:
 
       map();
 
-      echannelDst = (visual::rgba::echannel) (((int32_t)echannelDst) % 4);
-      echannelSrc = (visual::rgba::echannel) (((int32_t)echannelSrc) % 4);
+      echannelDst = (visual::rgba::echannel) (((i32)echannelDst) % 4);
+      echannelSrc = (visual::rgba::echannel) (((i32)echannelSrc) % 4);
 
       if (echannelDst == echannelSrc)
          return;
 
-      byte * pdataDst = (byte *)get_data() + ((int32_t)echannelDst);
+      byte * pdataDst = (byte *)get_data() + ((i32)echannelDst);
 
-      byte * pdataSrc = (byte *)get_data() + ((int32_t)echannelSrc);
+      byte * pdataSrc = (byte *)get_data() + ((i32)echannelSrc);
 
-      for (int32_t y = 0; y < m_size.cy; y++)
+      for (i32 y = 0; y < m_size.cy; y++)
       {
 
          byte * pdst = &pdataDst[m_iScan * y];
 
          byte * psrc = &pdataSrc[m_iScan * y];
 
-         for (int32_t x = 0; x < m_size.cx; x++)
+         for (i32 x = 0; x < m_size.cx; x++)
          {
 
             *pdst = *psrc;
@@ -6443,21 +6493,21 @@ restart:
       if (pdib->m_pcolorref == NULL)
          return;
 
-      echannelDst = (visual::rgba::echannel) (((int32_t)echannelDst) % 4);
-      echannelSrc = (visual::rgba::echannel) (((int32_t)echannelSrc) % 4);
+      echannelDst = (visual::rgba::echannel) (((i32)echannelDst) % 4);
+      echannelSrc = (visual::rgba::echannel) (((i32)echannelSrc) % 4);
 
-      byte * pdataDst = (byte *)get_data() + ((int32_t)echannelDst);
+      byte * pdataDst = (byte *)get_data() + ((i32)echannelDst);
 
-      byte * pdataSrc = (byte *)pdib->get_data() + ((int32_t)echannelSrc);
+      byte * pdataSrc = (byte *)pdib->get_data() + ((i32)echannelSrc);
 
-      for (int32_t y = 0; y < m_size.cy; y++)
+      for (i32 y = 0; y < m_size.cy; y++)
       {
 
          byte * pdst = &pdataDst[m_iScan * y];
 
          byte * psrc = &pdataSrc[pdib->m_iScan * y];
 
-         for (int32_t x = 0; x < m_size.cx; x++)
+         for (i32 x = 0; x < m_size.cx; x++)
          {
 
             *pdst = *psrc;
@@ -6474,17 +6524,17 @@ restart:
    void dib::write(::file::ostream & ostream) const
    {
 
-      ostream << (int32_t)m_size.cx;
+      ostream << (i32)m_size.cx;
 
-      ostream << (int32_t)m_size.cy;
+      ostream << (i32)m_size.cy;
 
-      ostream << (int32_t)m_sizeAlloc.cx;
+      ostream << (i32)m_sizeAlloc.cx;
 
-      ostream << (int32_t)m_sizeAlloc.cy;
+      ostream << (i32)m_sizeAlloc.cy;
 
-      ostream << (int32_t)m_iScan;
+      ostream << (i32)m_iScan;
 
-      ostream << (int32_t)m_emipmap;
+      ostream << (i32)m_emipmap;
 
       if (area() <= 0)
       {
@@ -6503,32 +6553,32 @@ restart:
    void dib::read(::file::istream & istream)
    {
 
-      int32_t width;
+      i32 width;
       istream >> width;
       if (istream.fail())
          return;
 
-      int32_t height;
+      i32 height;
       istream >> height;
       if (istream.fail())
          return;
 
-      int32_t widthAlloc;
+      i32 widthAlloc;
       istream >> widthAlloc;
       if (istream.fail())
          return;
 
-      int32_t heightAlloc;
+      i32 heightAlloc;
       istream >> heightAlloc;
       if (istream.fail())
          return;
 
-      int32_t iScan;
+      i32 iScan;
       istream >> iScan;
       if (istream.fail())
          return;
 
-      int32_t iMipmap;
+      i32 iMipmap;
       istream >> iMipmap;
       if (istream.fail())
          return;
@@ -6565,7 +6615,7 @@ restart:
    }
 
 
-   void dib::tint(::draw2d::dib * pdib, int32_t R, int32_t G, int32_t B)
+   void dib::tint(::draw2d::dib * pdib, i32 R, i32 G, i32 B)
    {
 
       if (!create(pdib->m_size))
@@ -6585,7 +6635,7 @@ restart:
       BYTE uchG = (byte)G;
       BYTE uchR = (byte)B;
 
-      //      int32_t i = 0;;
+      //      i32 i = 0;;
 
 
       //while (size > 16)
@@ -6739,7 +6789,7 @@ restart:
       int iDiv = 255 * 255;
       int iMul = (int)(dRate * (double)iDiv);
 
-      //      int32_t i = 0;;
+      //      i32 i = 0;;
 
       while (size > 0)
       {
@@ -6758,7 +6808,7 @@ restart:
 
 
 
-   void dib::set_rgb_pre_alpha(int32_t R, int32_t G, int32_t B, int32_t A)
+   void dib::set_rgb_pre_alpha(i32 R, i32 G, i32 B, i32 A)
    {
 
       map();
@@ -6770,7 +6820,7 @@ restart:
       BYTE uchG = (byte)G;
       BYTE uchR = (byte)B;
 
-      //      int32_t i = 0;;
+      //      i32 i = 0;;
 
       while (size > 0)
       {
@@ -6880,7 +6930,7 @@ restart:
 
    }
 
-   void dib::set_rgb(int32_t R, int32_t G, int32_t B)
+   void dib::set_rgb(i32 R, i32 G, i32 B)
    {
 
       set(R, G, B);
@@ -6896,7 +6946,7 @@ restart:
       //      BYTE uchG = (byte) G;
       //      BYTE uchR = (byte) B;
       //
-      ////      int32_t i = 0;;
+      ////      i32 i = 0;;
       //
       //
       //      while ( size-- )
@@ -6915,7 +6965,7 @@ restart:
       //            COLORREF * pcr;
       //
       //            int64_t iSize32 = size / 32;
-      //            int32_t i;
+      //            i32 i;
       //            for (i = 0; i < iSize32; i += 32)
       //            {
       //               pcr = &m_pcolorref[i];
@@ -6987,7 +7037,7 @@ restart:
    }
 
 
-   bool dib::pixelate(int32_t iSize)
+   bool dib::pixelate(i32 iSize)
    {
 
       if (iSize <= 1)
@@ -6995,34 +7045,34 @@ restart:
 
 
 
-      int32_t w = m_size.cx;
-      int32_t h = m_size.cy;
-      int32_t s = m_iScan / sizeof(COLORREF);
+      i32 w = m_size.cx;
+      i32 h = m_size.cy;
+      i32 s = m_iScan / sizeof(COLORREF);
 
-      int32_t xCount = w / iSize;
-      int32_t yCount = h / iSize;
+      i32 xCount = w / iSize;
+      i32 yCount = h / iSize;
 
 
 
-      int32_t iDiv;
-      int32_t iDiv2;
+      i32 iDiv;
+      i32 iDiv2;
 
-      int32_t a;
-      int32_t r;
-      int32_t g;
-      int32_t b;
-      int32_t a2;
-      int32_t r2;
-      int32_t g2;
-      int32_t b2;
+      i32 a;
+      i32 r;
+      i32 g;
+      i32 b;
+      i32 a2;
+      i32 r2;
+      i32 g2;
+      i32 b2;
       //bool bFirst;
       COLORREF * pdata = get_data();
-      int32_t x1;
-      int32_t y1;
-      for (int32_t x = 0; x < xCount; x++)
+      i32 x1;
+      i32 y1;
+      for (i32 x = 0; x < xCount; x++)
       {
          x1 = x * iSize;
-         for (int32_t y = 0; y < yCount; y++)
+         for (i32 y = 0; y < yCount; y++)
          {
             y1 = y * iSize;
             a = 0;
@@ -7036,9 +7086,9 @@ restart:
             iDiv = 0;
             iDiv2 = 0;
             //bFirst = true;
-            for (int32_t i = 0; i < iSize; i++)
+            for (i32 i = 0; i < iSize; i++)
             {
-               for (int32_t j = 0; j < iSize; j++)
+               for (i32 j = 0; j < iSize; j++)
                {
                   COLORREF cr = pdata[x1 + i + (y1 + j) * s];
                   a += argb_get_a_value(cr);
@@ -7069,9 +7119,9 @@ restart:
                b2 = (b2 * iDiv2 + b / iDiv) / (iDiv2 + 1);
             }
             COLORREF cr = ARGB(a2, r2, g2, b2);
-            for (int32_t i = 0; i < iSize; i++)
+            for (i32 i = 0; i < iSize; i++)
             {
-               for (int32_t j = 0; j < iSize; j++)
+               for (i32 j = 0; j < iSize; j++)
                {
                   pdata[x1 + i + (y1 + j) * s] = cr;
                }
@@ -7083,10 +7133,10 @@ restart:
 
       if (w % iSize != 0)
       {
-         int32_t x = xCount;
-         int32_t x1 = x * iSize;
-         int32_t iMax = w - xCount * iSize;
-         for (int32_t y = 0; y < yCount; y++)
+         i32 x = xCount;
+         i32 x1 = x * iSize;
+         i32 iMax = w - xCount * iSize;
+         for (i32 y = 0; y < yCount; y++)
          {
             y1 = y * iSize;
             a = 0;
@@ -7100,9 +7150,9 @@ restart:
             iDiv = 0;
             iDiv2 = 0;
             //bFirst = true;
-            for (int32_t i = 0; i < iMax; i++)
+            for (i32 i = 0; i < iMax; i++)
             {
-               for (int32_t j = 0; j < iSize; j++)
+               for (i32 j = 0; j < iSize; j++)
                {
                   COLORREF cr = pdata[x1 + i + (y1 + j) * w];
                   a += argb_get_a_value(cr);
@@ -7133,9 +7183,9 @@ restart:
                b2 = (b2 * iDiv2 + b / iDiv) / (iDiv2 + 1);
             }
             COLORREF cr = ARGB(a2, r2, g2, b2);
-            for (int32_t i = 0; i < iMax; i++)
+            for (i32 i = 0; i < iMax; i++)
             {
-               for (int32_t j = 0; j < iSize; j++)
+               for (i32 j = 0; j < iSize; j++)
                {
                   pdata[x1 + i + (y1 + j) * w] = cr;
                }
@@ -7146,10 +7196,10 @@ restart:
 
       if (h % iSize != 0)
       {
-         int32_t y = yCount;
-         int32_t y1 = y * iSize;
-         int32_t jMax = h - yCount * iSize;
-         for (int32_t x = 0; x < xCount; x++)
+         i32 y = yCount;
+         i32 y1 = y * iSize;
+         i32 jMax = h - yCount * iSize;
+         for (i32 x = 0; x < xCount; x++)
          {
             x1 = x * iSize;
             a = 0;
@@ -7163,9 +7213,9 @@ restart:
             iDiv = 0;
             iDiv2 = 0;
             //bFirst = true;
-            for (int32_t i = 0; i < iSize; i++)
+            for (i32 i = 0; i < iSize; i++)
             {
-               for (int32_t j = 0; j < jMax; j++)
+               for (i32 j = 0; j < jMax; j++)
                {
                   COLORREF cr = pdata[x1 + i + (y1 + j) * w];
                   a += argb_get_a_value(cr);
@@ -7196,9 +7246,9 @@ restart:
                b2 = (b2 * iDiv2 + b / iDiv) / (iDiv2 + 1);
             }
             COLORREF cr = ARGB(a2, r2, g2, b2);
-            for (int32_t i = 0; i < iSize; i++)
+            for (i32 i = 0; i < iSize; i++)
             {
-               for (int32_t j = 0; j < jMax; j++)
+               for (i32 j = 0; j < jMax; j++)
                {
                   pdata[x1 + i + (y1 + j) * w] = cr;
                }
@@ -7209,12 +7259,12 @@ restart:
 
       if (w % iSize != 0)
       {
-         int32_t x = xCount;
-         int32_t x1 = x * iSize;
-         int32_t iMax = w - xCount * iSize;
-         int32_t y = yCount;
-         int32_t y1 = y * iSize;
-         int32_t jMax = h - yCount * iSize;
+         i32 x = xCount;
+         i32 x1 = x * iSize;
+         i32 iMax = w - xCount * iSize;
+         i32 y = yCount;
+         i32 y1 = y * iSize;
+         i32 jMax = h - yCount * iSize;
          x1 = x * iSize;
          a = 0;
          r = 0;
@@ -7227,9 +7277,9 @@ restart:
          iDiv = 0;
          iDiv2 = 0;
          //bFirst = true;
-         for (int32_t i = 0; i < iMax; i++)
+         for (i32 i = 0; i < iMax; i++)
          {
-            for (int32_t j = 0; j < jMax; j++)
+            for (i32 j = 0; j < jMax; j++)
             {
                COLORREF cr = pdata[x1 + i + (y1 + j) * w];
                a += argb_get_a_value(cr);
@@ -7260,9 +7310,9 @@ restart:
             b2 = (b2 * iDiv2 + b / iDiv) / (iDiv2 + 1);
          }
          COLORREF cr = ARGB(a2, r2, g2, b2);
-         for (int32_t i = 0; i < iMax; i++)
+         for (i32 i = 0; i < iMax; i++)
          {
-            for (int32_t j = 0; j < jMax; j++)
+            for (i32 j = 0; j < jMax; j++)
             {
                pdata[x1 + i + (y1 + j) * w] = cr;
             }
@@ -7408,7 +7458,7 @@ restart:
 
             double sin = ::sin(angle);
 
-            dib->create((int32_t)(dim / sin), (int32_t)(dim / sin));
+            dib->create((i32)(dim / sin), (i32)(dim / sin));
 
             dib->gradient_horizontal_fill(clr1, clr2, pt1.y, pt2.y);
 
@@ -7420,7 +7470,7 @@ restart:
 
             double cos = ::cos(angle);
 
-            dib->create((int32_t)(dim / cos), (int32_t)(dim / cos));
+            dib->create((i32)(dim / cos), (i32)(dim / cos));
 
             dib->gradient_vertical_fill(clr1, clr2, pt1.x, pt2.x);
 
@@ -7558,7 +7608,7 @@ restart:
       double dSin;
       double d32 = (1U << 31);
       dPi = atan(1.0) * 4.0;;
-      int32_t i;
+      i32 i;
       for (i = 0; i < 360; i++)
       {
          dCos = ::cos(i / 180.0*dPi);

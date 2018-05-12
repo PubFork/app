@@ -12,18 +12,18 @@ BaseSplitWnd::~BaseSplitWnd()
 {
 }
 
-bool BaseSplitWnd::pre_create_window(::user::create_struct& cs) 
+bool BaseSplitWnd::pre_create_window(::user::create_struct& cs)
 {
    cs.dwExStyle &= ~WS_EX_CLIENTEDGE;
-   
+
    return ::user::interaction::pre_create_window(cs);
 }
 
 void BaseSplitWnd::_001OnDraw(::draw2d::graphics * pgraphics)
 {
 
-   
-   
+
+
    int32_t i;
    rect rect;
    COLORREF cr = RGB(92, 92, 80);
@@ -32,36 +32,36 @@ void BaseSplitWnd::_001OnDraw(::draw2d::graphics * pgraphics)
       CalcPaneRect(i, &rect);
 
       // Top
-      pgraphics->FillSolidRect(
-         rect.left, 
-         rect.top, 
-         rect.width(),
-         m_cyBorder,
-         cr);
+      pgraphics->fill_solid_rect_dim(
+      rect.left,
+      rect.top,
+      rect.width(),
+      m_cyBorder,
+      cr);
 
       // Right
-      pgraphics->FillSolidRect(
-         rect.right - m_cxBorder, 
-         rect.top, 
-         m_cxBorder,
-         rect.height(),
-         cr);
+      pgraphics->fill_solid_rect_dim(
+      rect.right - m_cxBorder,
+      rect.top,
+      m_cxBorder,
+      rect.height(),
+      cr);
 
       // Bottom
-      pgraphics->FillSolidRect(
-         rect.left, 
-         rect.bottom - m_cyBorder, 
-         rect.width(),
-         m_cyBorder,
-         cr);
+      pgraphics->fill_solid_rect_dim(
+      rect.left,
+      rect.bottom - m_cyBorder,
+      rect.width(),
+      m_cyBorder,
+      cr);
 
       // Left
-      pgraphics->FillSolidRect(
-         rect.left, 
-         rect.top, 
-         m_cxBorder,
-         rect.height(),
-         cr);
+      pgraphics->fill_solid_rect_dim(
+      rect.left,
+      rect.top,
+      m_cxBorder,
+      rect.height(),
+      cr);
    }
 
 }

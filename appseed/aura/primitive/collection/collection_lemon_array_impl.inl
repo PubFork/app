@@ -26,6 +26,20 @@ namespace lemon
 
       }
 
+      template < typename A, typename PA >
+      void copy_points(A & a, const PA * pa, ::count c)
+      {
+
+         a.set_size(c);
+
+         for (index i = 0; i < c; i++)
+         {
+
+            a[i] = (typename A::BASE_TYPE) pa[i];
+
+         }
+
+      }
 
    } // namespace array
 

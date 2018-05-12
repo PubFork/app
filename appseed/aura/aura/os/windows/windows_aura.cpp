@@ -7,13 +7,7 @@
 
 #endif
 
-#undef new
-#define min MIN
-#define max MAX
-#include <gdiplus.h>
-#undef min
-#undef max
-#define new AURA_NEW
+#include "windows_gdiplus.h"
 #include <ddeml.h>
 
 void __term_threading();

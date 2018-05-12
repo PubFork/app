@@ -23,10 +23,10 @@ namespace user
 
    void split_view::install_message_routing(::message::sender * pinterface)
    {
-      
+
       split_layout::install_message_routing(pinterface);
       impact::install_message_routing(pinterface);
-      
+
       IGUI_MSG_LINK(WM_CREATE, pinterface, this, &split_view::_001OnCreate);
 
       //IGUI_MSG_LINK(WM_SIZE, pinterface, this, &split_view::_001OnSize);
@@ -155,18 +155,18 @@ namespace user
 
 
 //      int32_t i;
-      
+
       //rect rect;
-      
+
       //COLORREF cr = ARGB(184, 92, 92, 80);
 
       //for(i = 0; i < get_pane_count(); i++)
       //{
-      //  
+      //
       //   CalcPaneRect(i, &rect);
 
       //   // Top
-      //   pgraphics->FillSolidRect(
+      //   pgraphics->fill_solid_rect(
       //      rect.left,
       //      rect.top,
       //      rect.width(),
@@ -174,7 +174,7 @@ namespace user
       //      cr);
 
       //   // Right
-      //   pgraphics->FillSolidRect(
+      //   pgraphics->fill_solid_rect(
       //      rect.right - m_cxBorder,
       //      rect.top,
       //      m_cxBorder,
@@ -182,7 +182,7 @@ namespace user
       //      cr);
 
       //   // Bottom
-      //   pgraphics->FillSolidRect(
+      //   pgraphics->fill_solid_rect(
       //      rect.left,
       //      rect.bottom - m_cyBorder,
       //      rect.width(),
@@ -190,7 +190,7 @@ namespace user
       //      cr);
 
       //   // Left
-      //   pgraphics->FillSolidRect(
+      //   pgraphics->fill_solid_rect(
       //      rect.left,
       //      rect.top,
       //      m_cxBorder,

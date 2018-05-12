@@ -22,9 +22,11 @@ namespace visual
 
       pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
-      return pgraphics->BitBlt(pt - m_szHotspotOffset, m_dib->m_size, m_dib->get_graphics(), null_point());
+      return pgraphics->draw(pt - m_szHotspotOffset, m_dib->m_size, m_dib->get_graphics(), null_point());
 
    }
+
+
 #ifdef WINDOWSEX
 
    bool cursor::initialize_system_default()
@@ -82,10 +84,10 @@ namespace visual
       }
 
       m_hcursor = LoadCursor(NULL, psz);
-            
+
       if (m_hcursor == NULL)
       {
-         
+
          return false;
 
       }

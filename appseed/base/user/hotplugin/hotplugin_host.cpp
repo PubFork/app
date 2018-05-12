@@ -2,14 +2,6 @@
 //#include "base/user/user.h"
 
 
-#undef new
-#ifdef WINDOWS
-#define min MIN
-#define max MAX
-//#include <gdiplus.h>
-#undef min
-#undef max
-#endif
 
 #if defined(LINUX) || defined(ANDROID) || defined(APPLEOS) || defined(SOLARIS)
 int_ptr get_map_failed();
@@ -41,7 +33,6 @@ namespace hotplugin
       m_bCa2InstallationReady    = false;
       m_bStream                  = false;
 
-      m_pbitmap                  = NULL;
       m_pmutexBitmap             = NULL;
       m_bHostStarterStart        = false;
 
@@ -578,13 +569,7 @@ namespace hotplugin
 
       memcpy(m_dib->m_pcolorref, m_memorymapBitmap.get_data(), (size_t) (m_dib->area() * sizeof(COLORREF)));
 
-      pgraphics->BitBlt(point(lprectOut.left,lprectOut.top), size(m_sizeBitmap.cx, m_sizeBitmap.cy), m_dib->get_graphics(), null_point());
-
-      //{
-
-      //   pgraphics->FillSolidRect(100, 100, 100, 100,ARGB(255,50,255,180));
-
-      //}
+      pgraphics->draw((LPCPOINT) &lprectOut, m_sizeBitmap, m_dib->get_graphics());
 
    }
 

@@ -27,15 +27,15 @@ namespace user
 
    bool split_bar::create_window(const RECT & rect, split_layout * pparent)
    {
-      
+
       m_pparent = pparent;
 //      int32_t nClassStyle = 0;
 //      const char * lpClassName = System.RegisterWndClass(
-         //nClassStyle,
-         //0,
-         //0,
-         //0);
-   //   rect rect(0, 0, 0, 0);
+      //nClassStyle,
+      //0,
+      //0,
+      //0);
+      //   rect rect(0, 0, 0, 0);
 
       if(!::user::interaction::create_window(rect, pparent, 0))
       {
@@ -64,8 +64,8 @@ namespace user
 
       GetClientRect(rectClient);
 
-      pgraphics->FillSolidRect(rectClient, ARGB(255, 180, 180, 180));
-      
+      pgraphics->fill_solid_rect(rectClient, ARGB(255, 180, 180, 180));
+
 
    }
 
@@ -94,7 +94,7 @@ namespace user
       cslock sl(&m_pparent->m_mutex);
       m_pparent->m_iIndex = m_iIndex;
       if(m_iIndex >= 0 && m_iIndex < m_pparent->m_splitbara.get_count()
-         && !m_pparent->m_panea[m_iIndex]->m_bFixedSize)
+            && !m_pparent->m_panea[m_iIndex]->m_bFixedSize)
       {
          m_pparent->m_iState = split_layout::stateDragging;
          SetCapture();

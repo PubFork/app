@@ -66,7 +66,7 @@ bool gif_load_frame(::draw2d::dib * pdibCompose, ::visual::dib_sp::array * pdiba
 
    //      r.offset(5, 5);
 
-   //      pdibCompose->get_graphics()->FillSolidRect(r, crBack);
+   //      pdibCompose->get_graphics()->fill_solid_rect(r, crBack);
 
    //   }
 
@@ -230,7 +230,7 @@ bool gif_load_frame(::draw2d::dib * pdibCompose, ::visual::dib_sp::array * pdiba
 
          ::rect r = pdiba->element_at(uFrameIndex - 1)->m_rect;
 
-         pdibCompose->get_graphics()->FillSolidRect(r, crBack);
+         pdibCompose->get_graphics()->fill_solid_rect(r, crBack);
 
       }
 

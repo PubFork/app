@@ -113,7 +113,7 @@ namespace user
             if(m_iHover == 0 || Session.m_puiLastLButtonDown == this)
             {
 
-               pgraphics->FillSolidRect(rectClient,ARGB(255,127,127,127));
+               pgraphics->fill_solid_rect(rectClient,ARGB(255,127,127,127));
 
                pgraphics->set_text_color(ARGB(255,0,100,255));
 
@@ -121,7 +121,7 @@ namespace user
             else
             {
 
-               pgraphics->FillSolidRect(rectClient,ARGB(255,127,127,127));
+               pgraphics->fill_solid_rect(rectClient,ARGB(255,127,127,127));
 
                pgraphics->set_text_color(ARGB(255,0,0,0));
 
@@ -133,11 +133,11 @@ namespace user
             if(m_iHover == 0 || Session.m_puiLastLButtonDown == this)
             {
 
-               //pgraphics->Draw3dRect(rectClient,m_puserstyle->_001GetColor(color_border_hover),m_puserstyle->_001GetColor(color_border_hover));
+               //pgraphics->draw3d_rect(rectClient,m_puserstyle->_001GetColor(color_border_hover),m_puserstyle->_001GetColor(color_border_hover));
 
                //rectClient.deflate(1,1);
 
-               pgraphics->FillSolidRect(rectClient, _001GetColor(color_button_background_hover));
+               pgraphics->fill_solid_rect(rectClient, _001GetColor(color_button_background_hover));
 
                pgraphics->set_text_color(_001GetColor(color_button_text_hover));
 
@@ -145,11 +145,11 @@ namespace user
             else
             {
 
-               //pgraphics->Draw3dRect(rectClient,m_puserstyle->_001GetColor(color_border_normal),m_puserstyle->_001GetColor(color_border_normal));
+               //pgraphics->draw3d_rect(rectClient,m_puserstyle->_001GetColor(color_border_normal),m_puserstyle->_001GetColor(color_border_normal));
 
                //rectClient.deflate(1,1);
 
-               pgraphics->FillSolidRect(rectClient, _001GetColor(color_button_background_normal));
+               pgraphics->fill_solid_rect(rectClient, _001GetColor(color_button_background_normal));
 
                pgraphics->set_text_color(_001GetColor(color_button_text_normal));
 
@@ -607,7 +607,7 @@ namespace user
       }
       else
       {
-         pgraphics->FillSolidRect(rectClient, crBk);
+         pgraphics->fill_solid_rect(rectClient, crBk);
       }
 
 
@@ -632,7 +632,7 @@ namespace user
       if(_001GetFlag(flag_border))
       {
 
-         pgraphics->Draw3dRect(rectClient, crBorder, crBorder);
+         pgraphics->draw3d_rect(rectClient, crBorder, crBorder);
 
       }
 
@@ -1085,7 +1085,7 @@ namespace user
 
       if(bSubItemHover)
       {
-         pgraphics->Draw3dRect(
+         pgraphics->draw3d_rect(
          rectClient,
          RGB(255,255,255),
          RGB(155,155,105));

@@ -28,24 +28,24 @@ namespace user
       switch(pbase->m_id)
       {
       case WM_MOUSEMOVE:
+      {
+         if(ptool->BaseToolTipGetWnd()->GetTopLevel() == pbase->m_pwnd)
          {
-            if(ptool->BaseToolTipGetWnd()->GetTopLevel() == pbase->m_pwnd)
-            {
-               point pt;
-               Session.get_cursor_pos(&pt);
-               if(m_iEventTool != ptool->BaseToolTipGetIndex()
+            point pt;
+            Session.get_cursor_pos(&pt);
+            if(m_iEventTool != ptool->BaseToolTipGetIndex()
                   || pt != m_pt)
-               {
-                  m_pt = pt;
-                  m_iEventTool = ptool->BaseToolTipGetIndex();
-                  //ptool->BaseToolTipGetWnd()->ScreenToClient(&m_pt);
-                  KillTimer(TimerShowDelayed);
-                  HideTip();
-                  SetTimer(TimerShowDelayed, 500, NULL);
-               }
+            {
+               m_pt = pt;
+               m_iEventTool = ptool->BaseToolTipGetIndex();
+               //ptool->BaseToolTipGetWnd()->ScreenToClient(&m_pt);
+               KillTimer(TimerShowDelayed);
+               HideTip();
+               SetTimer(TimerShowDelayed, 500, NULL);
             }
          }
-         break;
+      }
+      break;
       default:
          break;
       }
@@ -53,8 +53,8 @@ namespace user
 
 
    void tool_tip_window::ShowTip(
-         int32_t iTool,    // [in] item selected
-         bool bForce)
+   int32_t iTool,    // [in] item selected
+   bool bForce)
    {
       if(!IsTipEnabled())
       {
@@ -95,13 +95,13 @@ namespace user
          m_sizeArrow.cx = 12;
          m_sizeArrow.cy = 12;
          if(((m_ealign & AlignLeft) == AlignLeft) &&
-            ((m_ealign & AlignTop) == AlignTop))
+               ((m_ealign & AlignTop) == AlignTop))
          {
             m_ptOffset.x = + (rect.width() == 0 ? 0 : rect.width() * 3 / 5);
             m_ptOffset.y = + (rect.height() == 0 ? 0 : rect.height() * 3 / 5);
          }
          else if(((m_ealign & AlignRight) == AlignRight) &&
-            ((m_ealign & AlignTop) == AlignTop))
+                 ((m_ealign & AlignTop) == AlignTop))
          {
             m_ptOffset.x = - (rect.width() == 0 ? 0 : rect.width() * 3 / 5);
             m_ptOffset.y = + (rect.height() == 0 ? 0 : rect.height() * 3 / 5);
@@ -146,12 +146,12 @@ namespace user
 
 
       SetWindowPos(
-         ZORDER_TOPMOST,
-         rect.left,
-         rect.top,
-         rect.width(),
-         rect.height(),
-         SWP_NOACTIVATE  );
+      ZORDER_TOPMOST,
+      rect.left,
+      rect.top,
+      rect.width(),
+      rect.height(),
+      SWP_NOACTIVATE  );
 
       update_drawing_objects();
 
@@ -175,7 +175,7 @@ namespace user
       pgraphics->SelectObject(m_font);
       size size = pgraphics->GetTextExtent(lpcsz);
       if(((m_ealign & AlignLeft) == AlignLeft) &&
-         ((m_ealign & AlignTop) == AlignTop))
+            ((m_ealign & AlignTop) == AlignTop))
       {
          lprect->right = m_pt.x - (m_pt.x - lprectTool->left) / 2;
          lprect->left = lprect->right - size.cx - m_sizeArrow.cx - 4;
@@ -183,7 +183,7 @@ namespace user
          lprect->top = lprect->bottom - size.cy - m_sizeArrow.cy - 4;
       }
       else if(((m_ealign & AlignRight) == AlignRight) &&
-         ((m_ealign & AlignTop) == AlignTop))
+              ((m_ealign & AlignTop) == AlignTop))
       {
          lprect->left = m_pt.x + (lprectTool->right - m_pt.x) / 2;
          lprect->bottom = m_pt.y - (m_pt.y - lprectTool->top) / 2;
@@ -215,7 +215,7 @@ namespace user
    void tool_tip_window::OnPaint()
    {
       ::exception::throw_not_implemented(get_app());
-       /*CPaintDC spgraphics(this);
+      /*CPaintDC spgraphics(this);
       ::draw2d::graphics * pgraphics = &spgraphics;
       pgraphics->SelectObject(m_font);
       rect rectClient;
@@ -223,45 +223,45 @@ namespace user
       rect rectText;
       pgraphics->SetBkMode(TRANSPARENT);
       if(((m_ealign & AlignLeft) == AlignLeft) &&
-         ((m_ealign & AlignTop) == AlignTop))
+        ((m_ealign & AlignTop) == AlignTop))
       {
-         rect rectArrow(rectClient.right - m_sizeArrow.cx * 2, rectClient.bottom - m_sizeArrow.cy * 2, rectClient.right, rectClient.bottom);
-         rectClient.right -= m_sizeArrow.cx;
-         rectClient.bottom -= m_sizeArrow.cy;
-         pgraphics->FillSolidRect(rectArrow, RGB(0, 120, 180));
-         pgraphics->FillSolidRect(rectClient, RGB(220, 240, 250));
-         pgraphics->Draw3dRect(rectClient, RGB(0, 120, 180), RGB(0, 120, 180));
-         pgraphics->set_text_color(RGB(0, 60, 90));
-         rectText = rectClient;
-         rectText.deflate(2, 2, 2, 2);
-         pgraphics->draw_text(m_strTip, rectText, DT_LEFT | DT_BOTTOM | DT_END_ELLIPSIS);
+        rect rectArrow(rectClient.right - m_sizeArrow.cx * 2, rectClient.bottom - m_sizeArrow.cy * 2, rectClient.right, rectClient.bottom);
+        rectClient.right -= m_sizeArrow.cx;
+        rectClient.bottom -= m_sizeArrow.cy;
+        pgraphics->fill_solid_rect(rectArrow, RGB(0, 120, 180));
+        pgraphics->fill_solid_rect(rectClient, RGB(220, 240, 250));
+        pgraphics->draw3d_rect(rectClient, RGB(0, 120, 180), RGB(0, 120, 180));
+        pgraphics->set_text_color(RGB(0, 60, 90));
+        rectText = rectClient;
+        rectText.deflate(2, 2, 2, 2);
+        pgraphics->draw_text(m_strTip, rectText, DT_LEFT | DT_BOTTOM | DT_END_ELLIPSIS);
       }
       else if(((m_ealign & AlignRight) == AlignRight) &&
-         ((m_ealign & AlignTop) == AlignTop))
+        ((m_ealign & AlignTop) == AlignTop))
       {
-         rect rectArrow(0, rectClient.bottom - m_sizeArrow.cy * 2, m_sizeArrow.cx * 2, rectClient.bottom);
-         rectClient.left = m_sizeArrow.cx;
-         rectClient.bottom -= m_sizeArrow.cy;
-         pgraphics->FillSolidRect(rectArrow, RGB(0, 120, 180));
-         pgraphics->FillSolidRect(rectClient, RGB(220, 240, 250));
-         pgraphics->Draw3dRect(rectClient, RGB(0, 120, 180), RGB(0, 120, 180));
-         pgraphics->set_text_color(RGB(0, 60, 90));
-         rectText = rectClient;
-         rectText.deflate(2, 2, 2, 2);
-         pgraphics->draw_text(m_strTip, rectText, DT_LEFT | DT_BOTTOM | DT_END_ELLIPSIS);
+        rect rectArrow(0, rectClient.bottom - m_sizeArrow.cy * 2, m_sizeArrow.cx * 2, rectClient.bottom);
+        rectClient.left = m_sizeArrow.cx;
+        rectClient.bottom -= m_sizeArrow.cy;
+        pgraphics->fill_solid_rect(rectArrow, RGB(0, 120, 180));
+        pgraphics->fill_solid_rect(rectClient, RGB(220, 240, 250));
+        pgraphics->draw3d_rect(rectClient, RGB(0, 120, 180), RGB(0, 120, 180));
+        pgraphics->set_text_color(RGB(0, 60, 90));
+        rectText = rectClient;
+        rectText.deflate(2, 2, 2, 2);
+        pgraphics->draw_text(m_strTip, rectText, DT_LEFT | DT_BOTTOM | DT_END_ELLIPSIS);
       }
       else
       {
-         rect rectArrow(0, 0, m_sizeArrow.cx * 2, m_sizeArrow.cy * 2);
-         rectClient.left = m_sizeArrow.cx;
-         rectClient.top = m_sizeArrow.cy;
-         pgraphics->FillSolidRect(rectArrow, RGB(0, 120, 180));
-         pgraphics->FillSolidRect(rectClient, RGB(220, 240, 250));
-         pgraphics->Draw3dRect(rectClient, RGB(0, 120, 180), RGB(0, 120, 180));
-         pgraphics->set_text_color(RGB(0, 60, 90));
-         rectText = rectClient;
-         rectText.deflate(2, 2, 2, 2);
-         pgraphics->draw_text(m_strTip, rectText, DT_LEFT | DT_BOTTOM | DT_END_ELLIPSIS);
+        rect rectArrow(0, 0, m_sizeArrow.cx * 2, m_sizeArrow.cy * 2);
+        rectClient.left = m_sizeArrow.cx;
+        rectClient.top = m_sizeArrow.cy;
+        pgraphics->fill_solid_rect(rectArrow, RGB(0, 120, 180));
+        pgraphics->fill_solid_rect(rectClient, RGB(220, 240, 250));
+        pgraphics->draw3d_rect(rectClient, RGB(0, 120, 180), RGB(0, 120, 180));
+        pgraphics->set_text_color(RGB(0, 60, 90));
+        rectText = rectClient;
+        rectText.deflate(2, 2, 2, 2);
+        pgraphics->draw_text(m_strTip, rectText, DT_LEFT | DT_BOTTOM | DT_END_ELLIPSIS);
       }*/
    }
 
@@ -282,17 +282,17 @@ namespace user
       switch(nIDEvent)
       {
       case TimerHideWindow:
-         {
-            ShowWindow(SW_HIDE);
-            KillTimer(nIDEvent);
-         }
-         break;
+      {
+         ShowWindow(SW_HIDE);
+         KillTimer(nIDEvent);
+      }
+      break;
       case TimerShowDelayed:
-         {
-            m_iTool = m_iEventTool;
-            ShowTip();
-            KillTimer(nIDEvent);
-         }
+      {
+         m_iTool = m_iEventTool;
+         ShowTip();
+         KillTimer(nIDEvent);
+      }
       default:
          break;
       }
@@ -375,7 +375,7 @@ namespace user
    //
    ///////////////////////////////////////////////////////////
    void tool_tip_window::EnableTip(
-         bool bEnable)  // [in] define if the tip will be enabled
+   bool bEnable)  // [in] define if the tip will be enabled
    {
       m_bTipEnable = bEnable;
       if(!bEnable)
@@ -415,7 +415,7 @@ namespace user
    ///////////////////////////////////////////////////////////
    void tool_tip_window::OnDestroy()
    {
-   //    window::OnDestroy();
+      //    window::OnDestroy();
    }
 
    ///////////////////////////////////////////////////////////
@@ -509,8 +509,8 @@ namespace user
          pta[5].y = rectClient.top + m_sizeArrow.cy * 2;
       }*/
 
-     // rgn.CreatePolygonRgn(pta, 6, ALTERNATE);
-   //   SetWindowRgn((HRGN) rgn.detach(), TRUE);
+      // rgn.CreatePolygonRgn(pta, 6, ALTERNATE);
+      //   SetWindowRgn((HRGN) rgn.detach(), TRUE);
    }
 
 

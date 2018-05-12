@@ -108,37 +108,37 @@ namespace html
       class font font;
 
       if(!pelemental->m_pimpl->m_bHover
-      || !pelemental->m_style.get_text("font-family", "hover", this, pelemental, font.m_strFamily))
+            || !pelemental->m_style.get_text("font-family", "hover", this, pelemental, font.m_strFamily))
       {
          if(!pelemental->m_pimpl->has_link()
-            || !pelemental->m_style.get_text("font-family", "link", this, pelemental, font.m_strFamily))
+               || !pelemental->m_style.get_text("font-family", "link", this, pelemental, font.m_strFamily))
          {
             pelemental->m_style.get_text("font-family", "", this, pelemental, font.m_strFamily);
          }
       }
       if(!pelemental->m_pimpl->m_bHover
-      || !pelemental->m_style.get_text("font-size", "hover", this, pelemental, font.m_strSize))
+            || !pelemental->m_style.get_text("font-size", "hover", this, pelemental, font.m_strSize))
       {
          if(!pelemental->m_pimpl->has_link()
-            || !pelemental->m_style.get_text("font-size", "link", this, pelemental, font.m_strSize))
+               || !pelemental->m_style.get_text("font-size", "link", this, pelemental, font.m_strSize))
          {
             pelemental->m_style.get_text("font-size", "", this, pelemental, font.m_strSize);
          }
       }
       if(!pelemental->m_pimpl->m_bHover
-      || !pelemental->m_style.get_text("font-weight", "hover", this, pelemental, font.m_strWeight))
+            || !pelemental->m_style.get_text("font-weight", "hover", this, pelemental, font.m_strWeight))
       {
          if(!pelemental->m_pimpl->has_link()
-            || !pelemental->m_style.get_text("font-weight", "link", this, pelemental, font.m_strWeight))
+               || !pelemental->m_style.get_text("font-weight", "link", this, pelemental, font.m_strWeight))
          {
             pelemental->m_style.get_text("font-weight", "", this, pelemental, font.m_strWeight);
          }
       }
       if(pelemental->m_pimpl->m_bHover
-      && !pelemental->m_style.get_text("text-decoration", "hover", this, pelemental, font.m_strTextDecoration))
+            && !pelemental->m_style.get_text("text-decoration", "hover", this, pelemental, font.m_strTextDecoration))
       {
          if(pelemental->m_pimpl->has_link()
-            && !pelemental->m_style.get_text("text-decoration", "link", this, pelemental, font.m_strTextDecoration))
+               && !pelemental->m_style.get_text("text-decoration", "link", this, pelemental, font.m_strTextDecoration))
          {
             pelemental->m_style.get_text("text-decoration", "", this, pelemental, font.m_strTextDecoration);
          }
@@ -299,12 +299,12 @@ namespace html
          return;
 
       bool bImplemented = false;
-         if (!m_bImplemented)
-         {
-            bImplemented = true;
-            implement(pgraphics);
+      if (!m_bImplemented)
+      {
+         bImplemented = true;
+         implement(pgraphics);
 
-         }
+      }
 
       keep < bool > keepLayout(&m_bLayout, true, false, true);
 
@@ -339,14 +339,14 @@ namespace html
       synch_lock sl(m_pmutex);
 
 //      if(is_locked())
-  //       return;
+      //       return;
 
       m_pgraphics = pgraphics;
 
       //if(m_strPathName.find_ci("alarms_index") >= 0)
       //{
 
-      //   pgraphics->FillSolidRect(100,100,100,100,ARGB(184,255,0,0));
+      //   pgraphics->fill_solid_rect(100,100,100,100,ARGB(184,255,0,0));
 
       //}
 
@@ -357,7 +357,7 @@ namespace html
       //if(m_strPathName.find_ci("alarms_index") >= 0)
       //{
 
-      //   pgraphics->FillSolidRect(200,200,100,100,ARGB(184,0,255,0));
+      //   pgraphics->fill_solid_rect(200,200,100,100,ARGB(184,0,255,0));
 
       //}
 
@@ -448,7 +448,7 @@ namespace html
       {
       }
       else if(::str::begins(m_strPathName, "http://") ||
-         ::str::begins(m_strPathName, "https://"))
+              ::str::begins(m_strPathName, "https://"))
       {
          strUrl = System.url().path(m_strPathName, strUrl);
       }
@@ -572,59 +572,59 @@ namespace html
 
 restart:
 
-         if(m_strPathName.has_char())
+      if(m_strPathName.has_char())
+      {
+
+         if (varFile.get_type() == var::type_propset && varFile.propset()["url"].get_string().has_char())
          {
 
-            if (varFile.get_type() == var::type_propset && varFile.propset()["url"].get_string().has_char())
-            {
+            varFile["url"] = defer_solve_relative_name(varFile["url"], m_strPathName);
 
-               varFile["url"] = defer_solve_relative_name(varFile["url"], m_strPathName);
+         }
+         else if (varFile.get_type() == var::type_string || varFile.get_type() == var::type_pstring)
+         {
 
-            }
-            else if (varFile.get_type() == var::type_string || varFile.get_type() == var::type_pstring)
-            {
-
-               varFile = defer_solve_relative_name(varFile, m_strPathName);
-
-            }
+            varFile = defer_solve_relative_name(varFile, m_strPathName);
 
          }
 
-            string strPathName;
+      }
 
-            if(varFile.get_type() == var::type_propset && varFile.propset()["url"].get_string().has_char())
-            {
+      string strPathName;
 
-               strPathName = varFile.propset()["url"];
+      if(varFile.get_type() == var::type_propset && varFile.propset()["url"].get_string().has_char())
+      {
 
-            }
-            else if(varFile.cast < ::file::binary_file > () != NULL)
-            {
+         strPathName = varFile.propset()["url"];
 
-               strPathName = System.datetime().international().get_gmt_date_time() + ".html";
+      }
+      else if(varFile.cast < ::file::binary_file > () != NULL)
+      {
 
-            }
-            else
-            {
+         strPathName = System.datetime().international().get_gmt_date_time() + ".html";
 
-               strPathName = varFile;
+      }
+      else
+      {
 
-            }
+         strPathName = varFile;
 
-            if(strPathName.Mid(3) == "wb:")
-               return FALSE;
+      }
+
+      if(strPathName.Mid(3) == "wb:")
+         return FALSE;
 
 
 
       byte_array ba;
       bool bCancel = FALSE;
       OnBeforeNavigate2(
-         varFile,
-         0,
-         0,
-         ba,
-         NULL,
-         &bCancel);
+      varFile,
+      0,
+      0,
+      ba,
+      NULL,
+      &bCancel);
       if(bCancel)
          return FALSE;
       if(m_strUser.get_length() > 0)
@@ -694,12 +694,12 @@ restart:
             return FALSE;
          }
          strPathName = strCandidate;
-/*         string strPath(lpszPathName);
-         ::fontopus::user * puser = m_puser != NULL ? m_puser : &ApplicationUser;
-         if(puser != NULL && puser->m_strSessid.has_char())
-         {
-            System.url().string_set(strPath, "sessid", puser->m_strSessid);
-         }*/
+         /*         string strPath(lpszPathName);
+                  ::fontopus::user * puser = m_puser != NULL ? m_puser : &ApplicationUser;
+                  if(puser != NULL && puser->m_strSessid.has_char())
+                  {
+                     System.url().string_set(strPath, "sessid", puser->m_strSessid);
+                  }*/
          /*if(!System.sync_load_url(str, strPath,
             puser, m_pcookies))
                       return FALSE;*/
@@ -711,7 +711,7 @@ restart:
       m_strSource = str;
       //if(m_propset["bReplaceEx1"])
       {
-        m_propertyset.replace_gen(str);
+         m_propertyset.replace_gen(str);
       }
       TRACE("%s", str);
       if(str.has_char())

@@ -13,13 +13,6 @@
 #endif
 
 
-#ifdef WINDOWSEX
-#define min MIN
-#define max MAX
-#include <gdiplus.h>
-#undef min
-#undef max
-#endif
 
 #if defined(LINUX) || defined(ANDROID) || defined(APPLEOS) || defined(SOLARIS)
 int_ptr get_map_failed();
@@ -82,15 +75,6 @@ namespace hotplugin
    {
 
       free_memory();
-
-#if !defined(APPLEOS) && !defined(LINUX) && !defined(METROWIN) && !defined(ANDROID) && !defined(SOLARIS)
-      if(m_pbitmap != NULL)
-         delete (Gdiplus::Bitmap *) m_pbitmap;
-      //if(m_pcolorref != NULL)
-      //   memory_free_dbg(m_pcolorref, 0);
-#endif
-
-      //delete m_pinfo;
 
    }
 
@@ -615,7 +599,7 @@ namespace hotplugin
       if(m_phost != NULL && !m_phost->m_bShowProgress)
          return;
 
-      RECT rectWindow = lprect;
+      rect rectWindow = lprect;
 
       int32_t cx = rectWindow.right - rectWindow.left;
 
@@ -633,7 +617,7 @@ namespace hotplugin
 
       int32_t pcy = cy / iLineCount;
 
-      RECT rectP;
+      rect rectP;
 
       for(int32_t iLine = 0; iLine < iLineCount; iLine++)
       {
@@ -661,7 +645,7 @@ namespace hotplugin
 
             rectP.right    = rectWindow.right;
 
-            pgraphics->FillSolidRect(rectP, ARGB(84, 84, 90, 80));
+            pgraphics->fill_solid_rect(rectP, ARGB(84, 84, 90, 80));
 
          }
 

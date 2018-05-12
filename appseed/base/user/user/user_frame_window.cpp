@@ -2283,7 +2283,7 @@ namespace user
 
 #if TEST
 
-         pgraphics->FillSolidRect(0, 0, 100, 100, ARGB(128, 255, 0, 0));
+         pgraphics->fill_solid_rect(0, 0, 100, 100, ARGB(128, 255, 0, 0));
 
 #endif
 
@@ -2295,7 +2295,7 @@ namespace user
 
 #if TEST
 
-         pgraphics->FillSolidRect(0, 100, 100, 100, ARGB(128, 0, 0, 255));
+         pgraphics->fill_solid_rect(0, 100, 100, 100, ARGB(128, 0, 0, 255));
 
 #endif
 
@@ -2305,7 +2305,7 @@ namespace user
 
 #if TEST
 
-         pgraphics->FillSolidRect(60, 10, 50, 50, ARGB(128, 184, 180, 90));
+         pgraphics->fill_solid_rect(60, 10, 50, 50, ARGB(128, 184, 180, 90));
 
 #endif
 
@@ -2317,7 +2317,7 @@ namespace user
 
 #if TEST
 
-         pgraphics->FillSolidRect(10, 60, 50, 50, ARGB(128, 184, 180, 90));
+         pgraphics->fill_solid_rect(10, 60, 50, 50, ARGB(128, 184, 180, 90));
 
 #endif
 

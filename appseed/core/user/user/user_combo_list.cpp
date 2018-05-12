@@ -98,7 +98,7 @@ namespace user
 
       pgraphics->SelectObject(br);
 
-      pgraphics->FillRectangle(rectClient);
+      pgraphics->fill_rect(rectClient);
 
       pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
 
@@ -112,7 +112,7 @@ namespace user
 
          COLORREF crBorder = ca.get_rgb() | (0xff << 24);
 
-         pgraphics->Draw3dRect(rectClient, crBorder, crBorder);
+         pgraphics->draw3d_rect(rectClient, crBorder, crBorder);
 
       }
 
@@ -159,7 +159,7 @@ namespace user
                ::draw2d::pen_sp pen(allocer());
                pen->create_solid(m_iItemHeight / 8, ARGB(230, 77, 184, 63));
                pgraphics->SelectObject(pen);
-               pgraphics->DrawRectangle(rectItem);
+               pgraphics->draw_rect(rectItem);
             }
             m_pcombo->_001GetListText(i, strItem);
             pgraphics->text_out(rectItem.left, rectItem.top, strItem);
@@ -180,7 +180,7 @@ namespace user
             br->create_solid(ARGB(190, 80, 184, 63));
          }
          pgraphics->SelectObject(br);
-         pgraphics->FillRectangle(rectItem);
+         pgraphics->fill_rect(rectItem);
          br->create_solid(ARGB(255, 255, 255, 240));
          m_pcombo->_001GetListText(m_pcombo->m_iSel, strItem);
          pgraphics->SelectObject(br);
@@ -210,7 +210,7 @@ namespace user
 
       pgraphics->SelectObject(br);
 
-      pgraphics->FillRectangle(rectClient);
+      pgraphics->fill_rect(rectClient);
 
       {
 
@@ -222,7 +222,7 @@ namespace user
 
          COLORREF crBorder = ca.get_rgb() | (0xff << 24);
 
-         pgraphics->Draw3dRect(rectClient, crBorder, crBorder);
+         pgraphics->draw3d_rect(rectClient, crBorder, crBorder);
 
       }
 
@@ -274,7 +274,7 @@ namespace user
                ::draw2d::pen_sp pen(allocer());
                pen->create_solid(m_iItemHeight / 8, ARGB(230, 77, 184, 63));
                pgraphics->SelectObject(pen);
-               pgraphics->DrawRectangle(rectItem);
+               pgraphics->draw_rect(rectItem);
             }
             m_pcombo->_001GetListText(i, strItem);
             pgraphics->draw_text(strItem, rectItem, 0);
@@ -295,7 +295,7 @@ namespace user
             br->create_solid(ARGB(190, 80, 184, 63));
          }
          pgraphics->SelectObject(br);
-         pgraphics->FillRectangle(rectItem);
+         pgraphics->fill_rect(rectItem);
          br->create_solid(ARGB(255, 255, 255, 240));
          m_pcombo->_001GetListText(m_pcombo->m_iSel, strItem);
          pgraphics->SelectObject(br);
@@ -325,7 +325,7 @@ namespace user
 
       pgraphics->SelectObject(br);
 
-      pgraphics->FillRectangle(rectClient);
+      pgraphics->fill_rect(rectClient);
 
       //{
 
@@ -337,7 +337,7 @@ namespace user
 
       //   COLORREF crBorder = ca.get_rgb() | (0xff << 24);
 
-      //   pgraphics->Draw3dRect(rectClient,crBorder,crBorder);
+      //   pgraphics->draw3d_rect(rectClient,crBorder,crBorder);
 
       //}
 
@@ -398,7 +398,7 @@ namespace user
             //br->create_solid(ARGB(190, 80, 184, 63));
             br->create_solid(_001GetColor(::user::color_background_selected));
             pgraphics->SelectObject(br);
-            pgraphics->FillRectangle(rectItem);
+            pgraphics->fill_rect(rectItem);
             br->create_solid(ARGB(255, 255, 255, 240));
             m_pcombo->_001GetListText(i, strItem);
             pgraphics->SelectObject(br);
@@ -434,7 +434,7 @@ namespace user
 
       pgraphics->SelectObject(br);
 
-      pgraphics->FillRectangle(rectClient);
+      pgraphics->fill_rect(rectClient);
 
       //{
 
@@ -446,7 +446,7 @@ namespace user
 
       //   COLORREF crBorder = ca.get_rgb() | (0xff << 24);
 
-      //   pgraphics->Draw3dRect(rectClient,crBorder,crBorder);
+      //   pgraphics->draw3d_rect(rectClient,crBorder,crBorder);
 
       //}
 
@@ -509,7 +509,7 @@ namespace user
             //br->create_solid(ARGB(190, 80, 184, 63));
             br->create_solid(_001GetColor(::user::color_background_selected));
             pgraphics->SelectObject(br);
-            pgraphics->FillRectangle(rectItem);
+            pgraphics->fill_rect(rectItem);
             br->create_solid(ARGB(255, 255, 255, 240));
             m_pcombo->_001GetListText(i, strItem);
             pgraphics->SelectObject(br);
