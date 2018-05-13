@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 namespace file
@@ -439,6 +439,8 @@ namespace file
       {
 
          str.replace("\\", "/");
+
+         str.trim_left("/");
 
          return ::file::path(strPath + "/" + str, m_epath, path.m_iDir);
 
