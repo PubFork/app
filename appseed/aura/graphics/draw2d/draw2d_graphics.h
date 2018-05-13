@@ -387,17 +387,12 @@ namespace draw2d
       virtual bool round_rect(LPCRECT lpcrect, LPCPOINT lppt);
       virtual bool round_rect(LPCRECTD lpcrect, LPCPOINTD lppt);
 
-      // Bitmap Functions
       virtual bool from(point ptDst, size size, ::draw2d::graphics * pgraphicsSrc, point ptSrc, u32 dwRop);
       virtual bool from(size size, ::draw2d::graphics * pgraphicsSrc, point ptSrc, u32 dwRop);
       virtual bool from(size size, ::draw2d::graphics * pgraphicsSrc, u32 dwRop);
       virtual bool PatBlt(i32 x, i32 y, i32 nWidth, i32 nHeight, u32 dwRop);
 
-
-      virtual bool BitBlt(i32 x, i32 y, i32 w, i32 h, ::draw2d::graphics * pgraphicsSrc, i32 xSrc = 0, i32 ySrc = 0, u32 dwRop = SRCCOPY);
       virtual bool draw(LPCRECT lpcrect, ::draw2d::graphics * pgraphicsSrc, LPCPOINT lpptSrc = ::null_point(), u32 dwRop = SRCCOPY);
-      virtual bool draw(LPCPOINT lpptDst, LPCSIZE lpcsize, ::draw2d::graphics * pgraphicsSrc, LPCPOINT lpptSrc = ::null_point(), u32 dwRop = SRCCOPY);
-
 
       virtual bool BitBltRaw(i32 x, i32 y, i32 nWidth, i32 nHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc = 0, i32 ySrc = 0, u32 dwRop = SRCCOPY);
       virtual bool BitBltAlphaBlend(i32 x, i32 y, i32 nWidth, i32 nHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc = 0, i32 ySrc = 0, u32 dwRop = SRCCOPY);
@@ -605,7 +600,7 @@ namespace draw2d
       virtual bool widen_path();
       virtual float GetMiterLimit();
       virtual bool SetMiterLimit(float fMiterLimit);
-      virtual i32 GetPath(LPPOINT lpPoints, LPBYTE lpTypes,count nCount);
+      virtual i32 GetPath(LPPOINT lpPoints, LPBYTE lpTypes, count nCount);
       virtual bool SelectClipPath(i32 nMode);
 
       virtual bool draw_path(::draw2d::path * ppath, ::draw2d::pen * ppen);
@@ -792,6 +787,10 @@ namespace draw2d
       inline void draw3d_rect_coord(i32 x1, i32 y1, i32 x2, i32 y2, COLORREF cr) { return draw3d_rect(rect(x1, y1, x2, y2), cr); }
       inline void draw3d_rect_coord(f64 x1, f64 y1, f64 x2, f64 y2, COLORREF cr) { return draw3d_rect(rectd(x1, y1, x2, y2), cr); }
 
+      inline bool draw(LPCPOINT lpptDst, LPCSIZE lpcsize, ::draw2d::graphics * pgraphicsSrc, LPCPOINT lpptSrc = ::null_point(), u32 dwRop = SRCCOPY) { return draw(rect(lpptDst, lpcsize), pgraphicsSrc, lpptSrc, dwRop); }
+      inline bool draw(LPCSIZE lpcsize, ::draw2d::graphics * pgraphicsSrc, LPCPOINT lpptSrc = ::null_point(), u32 dwRop = SRCCOPY) { return draw(rect(lpcsize), pgraphicsSrc, lpptSrc, dwRop); }
+      inline bool draw_dim(i32 x, i32 y, i32 w, i32 h, ::draw2d::graphics * pgraphicsSrc, i32 xSrc = 0, i32 ySrc = 0, u32 dwRop = SRCCOPY) { return draw(rect_dim(x, y, w, h), pgraphicsSrc, point(xSrc, ySrc), dwRop); }
+      inline bool BitBlt(i32 x, i32 y, i32 w, i32 h, ::draw2d::graphics * pgraphicsSrc, i32 xSrc = 0, i32 ySrc = 0, u32 dwRop = SRCCOPY) { return draw_dim(x, y, w, h, pgraphicsSrc, xSrc, ySrc, dwRop); }
 
    };
 

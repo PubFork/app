@@ -267,12 +267,12 @@ namespace user
          }
 
       }
-      
+
       if(is_set(pgraphics))
       {
 
          pgraphics->select_font(font);
-         
+
       }
 
       return true;
@@ -1290,6 +1290,54 @@ namespace user
       {
 
          cr = ARGB(255, 83, 104, 255);
+
+      }
+      else if (ecolor == color_list_item_text)
+      {
+
+         return style_color(cr, color_text_normal, pui);
+
+      }
+      else if (ecolor == color_list_item_text_hover)
+      {
+
+         return style_color(cr, color_text_highlight, pui);
+
+      }
+      else if (ecolor == color_list_item_text_selected)
+      {
+
+         return style_color(cr, color_text_selected, pui);
+
+      }
+      else if (ecolor == color_list_item_text_selected_hover)
+      {
+
+         return style_color(cr, color_text_selected_highlight, pui);
+
+      }
+      else if (ecolor == color_list_item_background)
+      {
+
+         return style_color(cr, color_background_normal, pui);
+
+      }
+      else if (ecolor == color_list_item_background_hover)
+      {
+
+         return style_color(cr, color_background_highlight, pui);
+
+      }
+      else if (ecolor == color_list_item_background_selected)
+      {
+
+         return style_color(cr, color_background_selected, pui);
+
+      }
+      else if (ecolor == color_list_item_background_selected_hover)
+      {
+
+         return style_color(cr, color_background_selected_highlight, pui);
 
       }
       else

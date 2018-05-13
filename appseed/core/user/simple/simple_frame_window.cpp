@@ -3176,6 +3176,23 @@ void simple_frame_window::OnNotifyIconContextMenu(UINT uiNotifyIcon)
 
    string strExtraXml = notification_area_extra_get_xml_menu();
 
+   if (m_workset.m_pframeschema != NULL)
+   {
+
+      if (m_workset.m_pframeschema->get_control_box()->has_button(::user::wndfrm::frame::button_transparent_frame))
+      {
+
+         if (!strExtraXml.contains_ci("\"transparent_frame\""))
+         {
+
+            strExtraXml += "<item id=\"transparent_frame\">Transparent Frame</item>";
+
+         }
+
+      }
+
+   }
+
    if (strExtraXml.has_char())
    {
 

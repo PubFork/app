@@ -54,8 +54,7 @@ namespace wndfrm_anthill
       class rect r1;
       ptab->GetClientRect(r1);
 
-      pgraphics->FillSolidRect(r1, ARGB(255, 255, 255, 255));
-
+      pgraphics->fill_solid_rect(r1, ARGB(255, 255, 255, 255));
 
       ptab->get_data()->m_pen->create_solid(1,RGB(32,32,32));
 
@@ -83,11 +82,11 @@ namespace wndfrm_anthill
 
       COLORREF crbk = ptab->_001GetColor(::user::color_tab_layout_background);
 
-      pgraphics->FillSolidRect(rcTabs, crbk);
+      pgraphics->fill_solid_rect(rcTabs, crbk);
 
       crbk= ptab->_001GetColor(::user::color_tab_client_background);
 
-      pgraphics->FillSolidRect(rcClient, crbk);
+      pgraphics->fill_solid_rect(rcClient, crbk);
 
       int32_t iTab = -1;
 
@@ -230,7 +229,7 @@ namespace wndfrm_anthill
 
                   pgraphics->SelectObject(ptab->get_data()->m_penBorder);
 
-                  pgraphics->DrawLine(rcTab.left, rectClient.bottom, rectBorder.left, rectClient.bottom);
+                  pgraphics->draw_line(rcTab.left, rectClient.bottom, rectBorder.left, rectClient.bottom);
 
                }
 
@@ -351,7 +350,7 @@ namespace wndfrm_anthill
 
                   pgraphics->SelectObject(ptab->get_data()->m_penBorder);
 
-                  pgraphics->DrawLine(rectBorder.right - 1, rectClient.bottom, rcTab.right, rectClient.bottom);
+                  pgraphics->draw_line(rectBorder.right - 1, rectClient.bottom, rcTab.right, rectClient.bottom);
 
                }
 
@@ -446,7 +445,7 @@ namespace wndfrm_anthill
                pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
                if(ptab->m_eelementHover == (int)::user::element_split + i)
                {
-                  pgraphics->FillSolidRect(rectEmp,ARGB(128,149,184,255));
+                  pgraphics->fill_solid_rect(rectEmp,ARGB(128,149,184,255));
                   pgraphics->SelectObject(ptab->get_data()->m_brushTextHover);
                }
                else
@@ -844,7 +843,7 @@ namespace wndfrm_anthill
          rectSeparator.right = rectSeparator.left + 2;
          rectSeparator.top = rectImage.top;
          rectSeparator.bottom = rectImage.bottom;
-         pgraphics->Draw3dRect(rectSeparator, ARGB(255, 92, 92, 92), ARGB(255, 255, 255, 255));
+         pgraphics->draw3d_rect(rectSeparator, ARGB(255, 92, 92, 92), ARGB(255, 255, 255, 255));
       }
       else
       {
@@ -867,7 +866,7 @@ namespace wndfrm_anthill
                   rectItem.height(),
                   RGB(255, 255, 250), 208);
 
-                  pgraphics->Draw3dRect(rectItem, ARGB(255, 127, 127, 127), ARGB(255, 255, 255, 255));
+                  pgraphics->draw3d_rect(rectItem, ARGB(255, 127, 127, 127), ARGB(255, 255, 255, 255));
                }
 
                if (uiImage != 0xffffffffu)
@@ -905,7 +904,7 @@ namespace wndfrm_anthill
                   ::draw2d::brush_sp brush(allocer(), ARGB(123, 177, 184, 255));
                   ::draw2d::pen * ppenOld = pgraphics->SelectObject(pen);
                   ::draw2d::brush * pbrushOld = pgraphics->SelectObject(brush);
-                  pgraphics->Rectangle(rectItem);
+                  pgraphics->rectangle(rectItem);
                   pgraphics->SelectObject(ppenOld);
                   pgraphics->SelectObject(pbrushOld);
 
@@ -946,7 +945,7 @@ namespace wndfrm_anthill
                ::draw2d::brush_sp brush(allocer(), ARGB(255, 255, 255, 255));
                ::draw2d::pen * ppenOld = pgraphics->SelectObject(pen);
                ::draw2d::brush * pbrushOld = pgraphics->SelectObject(brush);
-               pgraphics->Rectangle(rectItem);
+               pgraphics->rectangle(rectItem);
                pgraphics->SelectObject(ppenOld);
                pgraphics->SelectObject(pbrushOld);
 
@@ -978,14 +977,14 @@ namespace wndfrm_anthill
 
                ptoolbar->_001GetElementRect(iItem, rectItem, ::user::toolbar::element_item);
 
-               pgraphics->FillSolidRect(rectItem, ARGB(184, 255, 255, 255));
+               pgraphics->fill_solid_rect(rectItem, ARGB(184, 255, 255, 255));
 
             }
 
             if ((nStyle & TBBS_CHECKED) != 0)
             {
 
-               pgraphics->Draw3dRect(rectItem, ARGB(255, 127, 127, 127), ARGB(255, 255, 255, 255));
+               pgraphics->draw3d_rect(rectItem, ARGB(255, 127, 127, 127), ARGB(255, 255, 255, 255));
 
             }
 
@@ -1163,7 +1162,7 @@ namespace wndfrm_anthill
                   rectItem.height(),
                   RGB(255, 255, 250), 208);
 
-                  pgraphics->Draw3dRect(rectItem, ARGB(255, 127, 127, 127), ARGB(255, 255, 255, 255));
+                  pgraphics->draw3d_rect(rectItem, ARGB(255, 127, 127, 127), ARGB(255, 255, 255, 255));
                }
 
                if (uiImage != 0xffffffffu)
@@ -1201,7 +1200,7 @@ namespace wndfrm_anthill
                   ::draw2d::brush_sp brush(allocer(), ptoolbar->_001GetColor(::user::color_button_background_hover));
                   ::draw2d::pen * ppenOld = pgraphics->SelectObject(pen);
                   ::draw2d::brush * pbrushOld = pgraphics->SelectObject(brush);
-                  pgraphics->Rectangle(rectItem);
+                  pgraphics->rectangle(rectItem);
                   pgraphics->SelectObject(ppenOld);
                   pgraphics->SelectObject(pbrushOld);
 
@@ -1242,7 +1241,7 @@ namespace wndfrm_anthill
                ::draw2d::brush_sp brush(allocer(), ptoolbar->_001GetColor(::user::color_button_background_press));
                ::draw2d::pen * ppenOld = pgraphics->SelectObject(pen);
                ::draw2d::brush * pbrushOld = pgraphics->SelectObject(brush);
-               pgraphics->Rectangle(rectItem);
+               pgraphics->rectangle(rectItem);
                pgraphics->SelectObject(ppenOld);
                pgraphics->SelectObject(pbrushOld);
 
@@ -1274,14 +1273,14 @@ namespace wndfrm_anthill
 
                ptoolbar->_001GetElementRect(iItem, rectItem, ::user::toolbar::element_item);
 
-               pgraphics->FillSolidRect(rectItem, ARGB(184, 255, 255, 255));
+               pgraphics->fill_solid_rect(rectItem, ARGB(184, 255, 255, 255));
 
             }
 
             if ((nStyle & TBBS_CHECKED) != 0)
             {
 
-               pgraphics->Draw3dRect(rectItem, ARGB(255, 127, 127, 127), ARGB(255, 255, 255, 255));
+               pgraphics->draw3d_rect(rectItem, ARGB(255, 127, 127, 127), ARGB(255, 255, 255, 255));
 
             }
 
@@ -1298,7 +1297,7 @@ namespace wndfrm_anthill
                                         ::user::color_button_background_disabled));
                ::draw2d::pen * ppenOld = pgraphics->SelectObject(pen);
                ::draw2d::brush * pbrushOld = pgraphics->SelectObject(brush);
-               pgraphics->Rectangle(rectItem);
+               pgraphics->rectangle(rectItem);
                pgraphics->SelectObject(ppenOld);
                pgraphics->SelectObject(pbrushOld);
 
@@ -1385,7 +1384,7 @@ namespace wndfrm_anthill
 
       psplitlayout->GetClientRect(rectClient);
 
-      pgraphics->FillSolidRect(rectClient, ARGB(255, 255, 255, 255));
+      pgraphics->fill_solid_rect(rectClient, ARGB(255, 255, 255, 255));
 
       return true;
 

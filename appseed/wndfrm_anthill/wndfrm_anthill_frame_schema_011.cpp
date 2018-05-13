@@ -188,9 +188,9 @@ namespace user
                      }
                   }
                   goto SizingNone;
-               SizingSuccess:
+SizingSuccess:
                   return etest;
-               SizingNone:;
+SizingNone:;
                }
                return HitTestClient;
             }
@@ -231,16 +231,16 @@ namespace user
                rect rectA(lpcrectClient);
 
                if (m_estyle == StyleTranslucidWarmGray
-                  || m_estyle == StyleTranslucidLightBlue
-                  || m_estyle == StyleTranslucidLightGreen)
+                     || m_estyle == StyleTranslucidLightBlue
+                     || m_estyle == StyleTranslucidLightGreen)
                {
                   rect rect;
                   GetBorderRect(lpcrectClient, rect, eside);
                   class imaging & imaging = Application.imaging();
                   imaging.color_blend(pgraphics,
-                     rect,
-                     crMoveableBorder,
-                     127);
+                                      rect,
+                                      crMoveableBorder,
+                                      127);
                }
                else if (m_estyle == StyleLightBlue)
                {
@@ -270,9 +270,9 @@ namespace user
                   GetBorderRect(lpcrectClient, rect, eside);
                   class imaging & imaging = Application.imaging();
                   imaging.color_blend(pgraphics,
-                     rect,
-                     crMoveableBorder,
-                     127);
+                                      rect,
+                                      crMoveableBorder,
+                                      127);
 
                   class rect rectClientB = rectA;
 
@@ -382,10 +382,10 @@ namespace user
                if (get_appearance()->IsZoomed())
                {
                   eborder = (EBorder)
-                     (eborder &
-                        ~(BorderRight
-                           | BorderBottom
-                           | BorderLeft));
+                            (eborder &
+                             ~(BorderRight
+                               | BorderBottom
+                               | BorderLeft));
                }
 
                if (eborder & BorderTop)
@@ -408,9 +408,9 @@ namespace user
             }
 
             void FrameSchemaHardCoded011::GetBorderRect(
-               const RECT & lpcrectClient,
-               LPRECT lprect,
-               EBorder eside)
+            const RECT & lpcrectClient,
+            LPRECT lprect,
+            EBorder eside)
             {
                rect rectBig(lpcrectClient);
                rect rectSmall;
@@ -484,12 +484,12 @@ namespace user
                   rectA.right = 4;
                   rectA.bottom = size;
 
-                  pgraphics->FillSolidRect(rectA, RGB(0x60, 0x65, 0x55));
+                  pgraphics->fill_solid_rect(rectA, RGB(0x60, 0x65, 0x55));
 
                   rectA.right = size;
                   rectA.bottom = 4;
 
-                  pgraphics->FillSolidRect(rectA, RGB(0x60, 0x65, 0x55));
+                  pgraphics->fill_solid_rect(rectA, RGB(0x60, 0x65, 0x55));
 
                }
                break;
@@ -500,12 +500,12 @@ namespace user
                   rectA.left = rectA.right - 4;
                   rectA.bottom = size;
 
-                  pgraphics->FillSolidRect(rectA, RGB(0x60, 0x65, 0x55));
+                  pgraphics->fill_solid_rect(rectA, RGB(0x60, 0x65, 0x55));
 
                   rectA.left = rectA.right - size;
                   rectA.bottom = 4;
 
-                  pgraphics->FillSolidRect(rectA, RGB(0x60, 0x65, 0x55));
+                  pgraphics->fill_solid_rect(rectA, RGB(0x60, 0x65, 0x55));
                }
                break;
                case GripBottomLeft:
@@ -515,12 +515,12 @@ namespace user
                   rectA.right = 4;
                   rectA.top = rectA.bottom - size;
 
-                  pgraphics->FillSolidRect(rectA, RGB(0x60, 0x65, 0x55));
+                  pgraphics->fill_solid_rect(rectA, RGB(0x60, 0x65, 0x55));
 
                   rectA.right = size;
                   rectA.top = rectA.bottom - 4;
 
-                  pgraphics->FillSolidRect(rectA, RGB(0x60, 0x65, 0x55));
+                  pgraphics->fill_solid_rect(rectA, RGB(0x60, 0x65, 0x55));
                }
                break;
                case GripBottomRight:
@@ -530,12 +530,12 @@ namespace user
                   rectA.left = rectA.right - 4;
                   rectA.top = rectA.bottom - size;
 
-                  pgraphics->FillSolidRect(rectA, RGB(0x60, 0x65, 0x55));
+                  pgraphics->fill_solid_rect(rectA, RGB(0x60, 0x65, 0x55));
 
                   rectA.left = rectA.right - size;
                   rectA.top = rectA.bottom - 4;
 
-                  pgraphics->FillSolidRect(rectA, RGB(0x60, 0x65, 0x55));
+                  pgraphics->fill_solid_rect(rectA, RGB(0x60, 0x65, 0x55));
                }
                break;
                case GripCenterTop:
@@ -546,7 +546,7 @@ namespace user
                   rectA.right = rectA.left + size;
                   rectA.bottom = 4;
 
-                  pgraphics->FillSolidRect(rectA, RGB(0x60, 0x65, 0x55));
+                  pgraphics->fill_solid_rect(rectA, RGB(0x60, 0x65, 0x55));
 
                }
                break;
@@ -558,7 +558,7 @@ namespace user
                   rectA.right = rectA.left + size;
                   rectA.top = rectA.bottom - 4;
 
-                  pgraphics->FillSolidRect(rectA, RGB(0x60, 0x65, 0x55));
+                  pgraphics->fill_solid_rect(rectA, RGB(0x60, 0x65, 0x55));
                }
                break;
                case GripCenterLeft:
@@ -569,7 +569,7 @@ namespace user
                   rectA.top = rectA.top + rectA.height() / 2 - size / 2;
                   rectA.bottom = rectA.top + size;
 
-                  pgraphics->FillSolidRect(rectA, RGB(0x60, 0x65, 0x55));
+                  pgraphics->fill_solid_rect(rectA, RGB(0x60, 0x65, 0x55));
                }
                break;
                case GripCenterRight:
@@ -580,7 +580,7 @@ namespace user
                   rectA.top = rectA.top + rectA.height() / 2 - size / 2;
                   rectA.bottom = rectA.top + size;
 
-                  pgraphics->FillSolidRect(rectA, RGB(0x60, 0x65, 0x55));
+                  pgraphics->fill_solid_rect(rectA, RGB(0x60, 0x65, 0x55));
                }
                break;
                default:
@@ -597,21 +597,21 @@ namespace user
 
                rect rect(rectParam);
 
-               pgraphics->Draw3dRect(rect, Session.get_default_color(COLOR_BTNFACE), Session.get_default_color(COLOR_3DDKSHADOW));
+               pgraphics->draw3d_rect(rect, Session.get_default_color(COLOR_BTNFACE), Session.get_default_color(COLOR_3DDKSHADOW));
 
                rect.top++;
                rect.bottom--;
                rect.left++;
                rect.right--;
 
-               pgraphics->Draw3dRect(rect, Session.get_default_color(COLOR_BTNHILIGHT), Session.get_default_color(COLOR_BTNSHADOW));
+               pgraphics->draw3d_rect(rect, Session.get_default_color(COLOR_BTNHILIGHT), Session.get_default_color(COLOR_BTNSHADOW));
 
                rect.top++;
                rect.bottom--;
                rect.left++;
                rect.right--;
 
-               pgraphics->FillSolidRect(rect, Session.get_default_color(COLOR_BTNFACE));
+               pgraphics->fill_solid_rect(rect, Session.get_default_color(COLOR_BTNFACE));
 
             }
 

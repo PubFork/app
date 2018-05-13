@@ -484,7 +484,7 @@ namespace draw2d_direct2d
       bool widen_path() override;
       float GetMiterLimit() override;
       bool SetMiterLimit(float fMiterLimit) override;
-      int GetPath(LPPOINT lpPoints, LPBYTE lpTypes, int nCount) override;
+      virtual i32 GetPath(LPPOINT lpPoints, LPBYTE lpTypes, ::count nCount) override;
       bool SelectClipPath(int nMode) override;
 
       // Misc Helper Functions

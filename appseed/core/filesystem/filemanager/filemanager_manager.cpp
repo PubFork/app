@@ -1108,7 +1108,7 @@ namespace filemanager
    bool manager::HandleDefaultFileManagerItemCmdMsg(::user::command * pcommand, ::fs::item_array & itema)
    {
 
-      if (pcommand->m_id.m_emessagetype == ::message::type_command)
+      if (pcommand->m_id.m_emessagetype == ::message::type_command_probe)
       {
 
          if (get_filemanager_data()->m_pcallback->GetFileManagerItemCallback(get_filemanager_data(), pcommand->m_id, itema))
@@ -1121,7 +1121,7 @@ namespace filemanager
          }
 
       }
-      else
+      else if (pcommand->m_id.m_emessagetype == ::message::type_command)
       {
 
          if (get_filemanager_data()->m_pcallback->GetFileManagerItemCallback(get_filemanager_data(), pcommand->m_id, itema))

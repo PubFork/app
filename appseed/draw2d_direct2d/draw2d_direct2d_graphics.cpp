@@ -2541,7 +2541,8 @@ namespace draw2d_direct2d
 
    }
 
-   int graphics::GetPath(LPPOINT lpPoints, LPBYTE lpTypes, int nCount)
+
+   i32 graphics::GetPath(LPPOINT lpPoints, LPBYTE lpTypes, ::count nCount)
    {
 
       _throw(todo(get_app()));
@@ -2549,8 +2550,9 @@ namespace draw2d_direct2d
       //ASSERT(get_handle1() != NULL);
       //return ::GetPath(get_handle1(), lpPoints, lpTypes, nCount);
 
-
    }
+
+
    bool graphics::SetMiterLimit(float fMiterLimit)
    {
 

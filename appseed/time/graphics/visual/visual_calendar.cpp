@@ -21,7 +21,7 @@ namespace visual
    void calendar::_001OnDraw(::draw2d::graphics * pgraphics)
    {
 
-      
+
 
       pgraphics->SelectObject(m_font);
       ::datetime::time timeNow = ::datetime::time::get_current_time();
@@ -45,12 +45,12 @@ namespace visual
       for(iDay = 1; iDay <= 33; iDay++)
       {
          if((timeNow.GetDay() == iDay &&
-            timeNow.GetMonth() == iMonth &&
-            timeNow.GetYear() == iYear)
-            ||
-            (iDay == m_time.GetDay() &&
-            iMonth == m_time.GetMonth() &&
-            iYear == m_time.GetYear()))
+               timeNow.GetMonth() == iMonth &&
+               timeNow.GetYear() == iYear)
+               ||
+               (iDay == m_time.GetDay() &&
+                iMonth == m_time.GetMonth() &&
+                iYear == m_time.GetYear()))
          {
             time += timespan;
             if(time.GetMonth() != iMonth)
@@ -59,7 +59,7 @@ namespace visual
          }
          GetRectDay(time,rectDay);
          crBorder = RGB(184,184,177);
-         pgraphics->Draw3dRect(rectDay,crBorder,crBorder);
+         pgraphics->draw3d_rect(rectDay,crBorder,crBorder);
          rectDay.deflate(m_iColWidth / 5,m_iLineHeight / 5);
          string strDay;
          strDay.Format("%d",iDay);
@@ -69,15 +69,15 @@ namespace visual
             break;
       }
       if(timeNow.GetMonth() == iMonth
-         && timeNow.GetYear() == iYear)
+            && timeNow.GetYear() == iYear)
       {
          crBorder = RGB(90, 90, 80);
          GetRectDay(timeNow,rectDay);
          rectDay.inflate(m_iColWidth / 10,m_iColWidth / 10);
-         pgraphics->FillSolidRect(rectDay,RGB(220,220,210));
-         pgraphics->Draw3dRect(rectDay,crBorder,crBorder);
+         pgraphics->fill_solid_rect(rectDay,RGB(220,220,210));
+         pgraphics->draw3d_rect(rectDay,crBorder);
          rectDay.deflate(1,1);
-         pgraphics->Draw3dRect(rectDay,crBorder,crBorder);
+         pgraphics->draw3d_rect(rectDay,crBorder);
          rectDay.deflate(m_iColWidth / 5,m_iLineHeight / 5);
          string strDay;
          strDay.Format("%d",timeNow.GetDay());
@@ -85,16 +85,16 @@ namespace visual
       }
       ::datetime::time timeEmp = m_time;
       for(int32_t iDay = timeEmp.GetDay(); time.GetYear() == iYear
-         && time.GetMonth() == iMonth &&
-         (m_time.GetDay() == iDay || (
-         m_bRange && time <= m_timeEnd)); time += timespan)
+            && time.GetMonth() == iMonth &&
+            (m_time.GetDay() == iDay || (
+             m_bRange && time <= m_timeEnd)); time += timespan)
       {
          crBorder = RGB(240,120,52);
          GetRectDay(m_time,rectDay);
          rectDay.inflate(m_iColWidth / 10,m_iColWidth / 10);
-         pgraphics->Draw3dRect(rectDay,crBorder,crBorder);
+         pgraphics->draw3d_rect(rectDay,crBorder);
          rectDay.deflate(1,1);
-         pgraphics->Draw3dRect(rectDay,crBorder,crBorder);
+         pgraphics->draw3d_rect(rectDay,crBorder);
          rectDay.deflate(m_iColWidth / 5,m_iLineHeight / 5);
          string strDay;
          strDay.Format("%d",timeEmp.GetDay());

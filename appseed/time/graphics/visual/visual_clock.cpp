@@ -19,7 +19,7 @@ namespace visual
    void clock::_001OnDraw(::draw2d::graphics * pgraphics)
    {
 
-      
+
 
       ::datetime::time timeNow = ::datetime::time::get_current_time() + m_timespan;
 
@@ -57,8 +57,8 @@ namespace visual
             pgraphics->SelectObject(penMinute);
          }
          ptInt.offset(ptCenter);
-         pgraphics->MoveTo(ptInt);
-         pgraphics->LineTo(ptExt);
+         pgraphics->move_to(ptInt);
+         pgraphics->line_to(ptExt);
       }
 
       double dRHour = rect.width() * 11 / 32;
@@ -68,28 +68,28 @@ namespace visual
       ::draw2d::pen_sp penHM(pgraphics,2,ARGB(255,0,0,0));
       pgraphics->SelectObject(penHM);
 
-      pgraphics->MoveTo(ptCenter);
+      pgraphics->move_to(ptCenter);
       {
          double angle = System.math().GetPi() / 2.0 - timeNow.GetHour() * System.math().GetPi() * 2.0 / (12.0);
          point ptHour((int64_t)(cos(angle) * dRHour),(int64_t)(-sin(angle) * dRHour));
          ptHour.offset(ptCenter);
-         pgraphics->LineTo(ptHour);
+         pgraphics->line_to(ptHour);
       }
-      pgraphics->MoveTo(ptCenter);
+      pgraphics->move_to(ptCenter);
       {
          double angle = System.math().GetPi() / 2.0 - timeNow.GetMinute() * System.math().GetPi() * 2.0 / (60.0);
          point ptMinute((int64_t)(cos(angle) * dRMinute),(int64_t)(-sin(angle) * dRMinute));
          ptMinute.offset(ptCenter);
-         pgraphics->LineTo(ptMinute);
+         pgraphics->line_to(ptMinute);
       }
       ::draw2d::pen_sp penRed(pgraphics,1,ARGB(255,200,0,0));
       pgraphics->SelectObject(penRed);
-      pgraphics->MoveTo(ptCenter);
+      pgraphics->move_to(ptCenter);
       {
          double angle = System.math().GetPi() / 2.0 - timeNow.GetSecond() * System.math().GetPi() * 2.0 / (60.0);
          point ptSecond((int64_t)(cos(angle) * dRSecond),(int64_t)(-sin(angle) * dRSecond));
          ptSecond.offset(ptCenter);
-         pgraphics->LineTo(ptSecond);
+         pgraphics->line_to(ptSecond);
       }
 
 

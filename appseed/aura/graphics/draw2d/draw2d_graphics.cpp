@@ -595,7 +595,7 @@ namespace draw2d
    bool graphics::draw_line(LPCPOINT lppt1, LPCPOINT lppt2)
    {
 
-      return draw_line(pointd(lppt1), pointd(lppt2));
+      return draw_line(lppt1, lppt2, m_sppen);
 
    }
 
@@ -611,7 +611,7 @@ namespace draw2d
    bool graphics::draw_line(LPCPOINTD lppt1, LPCPOINTD lppt2)
    {
 
-      return draw_line(point(lppt1), point(lppt2));
+      return draw_line(lppt1, lppt2, m_sppen);
 
    }
 
@@ -1421,24 +1421,15 @@ namespace draw2d
    }
 
 
-   bool graphics::draw(LPCRECT lpcrect, ::draw2d::graphics * pgraphicsSrc, LPCPOINT lpcptSrc, u32 dwRop)
+   bool graphics::draw(LPCRECT lpcrect, ::draw2d::graphics * pgraphicsSrc, LPCPOINT ppt, u32 dwRop)
    {
 
-      return BitBlt(lpcrect->left, lpcrect->top, ::width(lpcrect), ::height(lpcrect), pgraphicsSrc, lpcptSrc->x, lpcptSrc->y, dwRop);
-
-   }
-
-
-   bool graphics::draw(LPCPOINT lpcptDst, LPCSIZE lpcsize, ::draw2d::graphics * pgraphicsSrc, LPCPOINT lpcptSrc, u32 dwRop)
-   {
-
-      return BitBlt(lpcptDst->x, lpcptDst->y, lpcsize->cx, lpcsize->cy, pgraphicsSrc, lpcptSrc->x, lpcptSrc->y, dwRop);
-
-   }
-
-
-   bool graphics::BitBlt(i32 x, i32 y, i32 nWidth, i32 nHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, u32 dwRop)
-   {
+      i32 x = lpcrect->left;
+      i32 y = lpcrect->top;
+      i32 nWidth = ::width(lpcrect);
+      i32 nHeight = ::height(lpcrect);
+      i32 xSrc = ppt->x;
+      i32 ySrc = ppt->y;
 
       if (BitBltAlphaBlend(x, y, nWidth, nHeight, pgraphicsSrc, xSrc, ySrc, dwRop))
       {

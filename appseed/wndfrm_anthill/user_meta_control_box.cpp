@@ -2,9 +2,9 @@
 
 
 MetaControlBox::MetaControlBox(::aura::application * papp) :
-object(papp),
-::user::interaction(papp),
-::user::wndfrm::frame::control_box(papp)
+   object(papp),
+   ::user::interaction(papp),
+   ::user::wndfrm::frame::control_box(papp)
 {
    m_iDefaultButtonMargin = 0;
 
@@ -59,7 +59,7 @@ void MetaControlBox::_001OnDraw(::draw2d::graphics * pgraphics)
 
    }
 
-   pgraphics->FillSolidRect(rectClient, m_crBackground);
+   pgraphics->fill_solid_rect(rectClient, m_crBackground);
 
 }
 
@@ -99,7 +99,7 @@ void MetaControlBox::_001OnTimer(::timer * ptimer)
 
 void MetaControlBox::install_message_routing(::message::sender *pinterface)
 {
-   
+
    ::user::wndfrm::frame::control_box::install_message_routing(pinterface);
 
    IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &MetaControlBox::_001OnShowWindow);
