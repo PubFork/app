@@ -331,18 +331,18 @@ namespace draw2d_cairo
       //virtual int32_t internal_draw_text_cairo(const char * lpszString, strsize nCount, const RECT & lpRect, UINT nFormat, PFN_CAIRO_TEXT pfnText);
       virtual int32_t internal_draw_text_pango(const char * lpszString, strsize nCount, const RECTD & lpRect, UINT nFormat, PFN_PANGO_TEXT pfnText);
       virtual int32_t internal_draw_text(const char * lpszString, strsize nCount, const RECTD & lpRect, UINT nFormat);
-      #else
+#else
       virtual int32_t internal_draw_text(const char * lpszString, strsize nCount, const RECT & lpRect, UINT nFormat, PFN_CAIRO_TEXT ftext);
-      #endif
+#endif
       virtual int32_t draw_text(const char * lpszString, strsize nCount, const RECT & lpRect, UINT nFormat);
       virtual int32_t draw_text(const string & str, const RECT & lpRect, UINT nFormat);
 
       virtual int32_t draw_text_ex(LPTSTR lpszString, strsize nCount, const RECT & lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams);
       virtual int32_t draw_text_ex(const string & str, const RECT & lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams);
 
-      sized GetTextExtent(const char * lpszString, strsize nCount, strsize iIndex) const override;
-      sized GetTextExtent(const char * lpszString, strsize nCount) const override;
-      sized GetTextExtent(const string & str) const override;
+      sized GetTextExtent(const char * lpszString, strsize nCount, strsize iIndex) override;
+      sized GetTextExtent(const char * lpszString, strsize nCount) override;
+      sized GetTextExtent(const string & str) override;
       bool _GetTextExtent(sized & size, const char * lpszString, strsize nCount, strsize iIndex) const;
       bool GetTextExtent(sized & size, const char * lpszString, strsize nCount, strsize iIndex) const;
       bool GetTextExtent(sized & size, const char * lpszString, strsize nCount) const;
@@ -358,8 +358,8 @@ namespace draw2d_cairo
       UINT SetTextAlign(UINT nFlags);
       int32_t GetTextFace(count nCount, LPTSTR lpszFacename) const;
       int32_t GetTextFace(string & rString) const;
-      bool get_text_metrics(::draw2d::text_metric * lpMetrics) const;
-      bool get_output_text_metrics(::draw2d::text_metric * lpMetrics) const;
+      bool get_text_metrics(::draw2d::text_metric * lpMetrics) override;
+      bool get_output_text_metrics(::draw2d::text_metric * lpMetrics) override;
       int32_t SetTextJustification(int32_t nBreakExtra, int32_t nBreakCount);
       int32_t GetTextCharacterExtra() const;
       int32_t SetTextCharacterExtra(int32_t nCharExtra);
@@ -500,9 +500,9 @@ namespace draw2d_cairo
       bool set_os_color(COLORREF cr);
       bool set(const ::draw2d::brush * pbrush);
       bool set(const ::draw2d::pen * ppen);
-      #if !defined(USE_PANGO)
+#if !defined(USE_PANGO)
       bool set(const ::draw2d::font * pfont);
-      #endif
+#endif
       bool set(const ::draw2d::path * ppath);
       bool set(const ::draw2d::path::element & e);
       bool set(const ::draw2d::path::arc & arc);

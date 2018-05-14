@@ -5500,7 +5500,7 @@ restart:
             pcr[i] = cr;
 
       }
-      else
+      else if(get_graphics() != NULL)
       {
 
          get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);

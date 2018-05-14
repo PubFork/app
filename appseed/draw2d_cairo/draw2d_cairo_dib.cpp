@@ -2615,7 +2615,7 @@ namespace draw2d_cairo
 
       map(true);
 
-      rect rect(rectWindow);
+      class rect rect(rectWindow);
 
       //Application.window_graphics_update_window(pwnd->get_window_graphics(), pwnd->get_handle(), m_pcolorref, rect,m_size.cx, m_size.cy, m_iScan);
 
@@ -2634,7 +2634,7 @@ namespace draw2d_cairo
 
       m_spgraphics->attach((HDC) pbase->m_wparam);
 
-      rect rectx;
+      class rect rectx;
 
       ::draw2d::bitmap * pbitmap = m_spgraphics->get_current_bitmap();
 
@@ -2651,7 +2651,7 @@ namespace draw2d_cairo
       try
       {
 
-         rect rectWindow;
+         class rect rectWindow;
 
          pwnd->GetWindowRect(rectWindow);
 
@@ -2665,8 +2665,8 @@ namespace draw2d_cairo
          if(pgraphics->get_os_data() == NULL)
             return false;
 
-         rect rectPaint;
-         rect rectUpdate;
+         class rect rectPaint;
+         class rect rectUpdate;
          rectUpdate = rectWindow;
          rectPaint = rectWindow;
          rectPaint.offset(-rectPaint.top_left());
@@ -2690,7 +2690,7 @@ namespace draw2d_cairo
       catch(...)
       {
       }
-      m_spgraphics->FillSolidRect(rectx, RGB(255, 255, 255));
+      m_spgraphics->fill_solid_rect(rectx, RGB(255, 255, 255));
       pobj->m_bRet = true;
       pbase->set_lresult(0);
 

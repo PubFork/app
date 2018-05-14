@@ -61,10 +61,12 @@ public:
    sp(sockets::http_session)                    m_phttpsession;
    string_map < db_str_set_item >               m_map;
    bool                                         m_bIndexed;
-   ::simpledb::database *                          m_psimpledbUser;
+   ::simpledb::database *                       m_psimpledbUser;
    string                                       m_strUser;
-
-   sp(class db_str_sync_queue)                    m_pqueue;
+   int                                          m_iSelectId;
+   int                                          m_iUpdateId;
+   int                                          m_iUpdateVal;
+   sp(class db_str_sync_queue)                  m_pqueue;
    sqlite3_stmt *                               m_pstmtSelect;
    sqlite3_stmt *                               m_pstmtUpdate;
 
@@ -466,7 +468,8 @@ bool db_str_set::load(const string & strKey, string & strValue)
 
       synch_lock slDatabase(pmutex);
 
-      if (pcore->m_pstmtSelect == NULL)
+      if (pcore->m_pstmtSelect == NULL
+            || pcore->m_iSelectId == 0)
       {
 
 
@@ -481,6 +484,8 @@ bool db_str_set::load(const string & strKey, string & strValue)
 
          }
 
+         pcore->m_iSelectId = sqlite3_bind_parameter_index(pcore->m_pstmtSelect, ":id");
+
       }
       else
       {
@@ -489,17 +494,16 @@ bool db_str_set::load(const string & strKey, string & strValue)
 
       }
 
+      int res = sqlite3_bind_text(pcore->m_pstmtSelect, pcore->m_iSelectId, strKey, int (strKey.get_length()), SQLITE_TRANSIENT);
 
-      int index = sqlite3_bind_parameter_index(pcore->m_pstmtSelect, ":id");
-      if (index == 0)
-         return false;
-
-      int res = sqlite3_bind_text(pcore->m_pstmtSelect, index, strKey, int (strKey.get_length()), SQLITE_TRANSIENT);
       if (res != SQLITE_OK)
+      {
+
          return false;
+
+      }
 
       res = sqlite3_step(pcore->m_pstmtSelect);
-
 
       if (res != SQLITE_ROW)
       {
@@ -513,21 +517,6 @@ bool db_str_set::load(const string & strKey, string & strValue)
       strsize iLen = sqlite3_column_bytes(pcore->m_pstmtSelect, 0);
 
       strValue = string(psz, iLen);
-      //TRACE("value=%s\n", strValue);
-      //slDatabase.lock();
-      //try
-      //{
-      //   m_pcore->m_pdataset->query(strSql);
-      //}
-      //catch(...)
-      //{
-      //   return false;
-      //}
-
-      //if(m_pcore->m_pdataset->num_rows() <= 0)
-      //   return false;
-
-      //strValue = m_pcore->m_pdataset->fv("value");
 
    }
 
@@ -607,7 +596,9 @@ bool db_str_set::save(const string & strKey, const string & strValue)
 
             single_lock slDatabase(m_pcore->db()->get_database()->m_pmutex);
 
-            if (pcore->m_pstmtUpdate == NULL)
+            if (pcore->m_pstmtUpdate == NULL ||
+                  pcore->m_iUpdateId == 0 ||
+                  pcore->m_iUpdateVal == 0)
             {
 
                if (pdb->setErr(
@@ -623,32 +614,42 @@ bool db_str_set::save(const string & strKey, const string & strValue)
 
                }
 
+               pcore->m_iUpdateVal = sqlite3_bind_parameter_index(pcore->m_pstmtUpdate, ":val");
+
+               pcore->m_iUpdateId = sqlite3_bind_parameter_index(pcore->m_pstmtUpdate, ":id");
+
             }
             else
             {
-
-
 
                sqlite3_reset(pcore->m_pstmtUpdate);
 
             }
 
-            int index = sqlite3_bind_parameter_index(pcore->m_pstmtUpdate, ":val");
+            if (pcore->m_iUpdateId == 0 || pcore->m_iUpdateVal == 0)
+            {
 
-            if (index == 0)
                return false;
 
-            int res = sqlite3_bind_text(pcore->m_pstmtUpdate, index, strValue, int (strValue.get_length()), SQLITE_TRANSIENT);
+            }
+
+            int res = sqlite3_bind_text(pcore->m_pstmtUpdate, pcore->m_iUpdateVal, strValue, int (strValue.get_length()), SQLITE_TRANSIENT);
+
             if (res != SQLITE_OK)
+            {
+
                return false;
 
-            index = sqlite3_bind_parameter_index(pcore->m_pstmtUpdate, ":id");
-            if (index == 0)
-               return false;
+            }
 
-            res = sqlite3_bind_text(pcore->m_pstmtUpdate, index, strKey, int (strKey.get_length()), SQLITE_TRANSIENT);
+            res = sqlite3_bind_text(pcore->m_pstmtUpdate, pcore->m_iUpdateId, strKey, int (strKey.get_length()), SQLITE_TRANSIENT);
+
             if (res != SQLITE_OK)
+            {
+
                return false;
+
+            }
 
             res = sqlite3_step(pcore->m_pstmtUpdate);
 

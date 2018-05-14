@@ -787,6 +787,7 @@ namespace draw2d
       inline void draw3d_rect_coord(i32 x1, i32 y1, i32 x2, i32 y2, COLORREF cr) { return draw3d_rect(rect(x1, y1, x2, y2), cr); }
       inline void draw3d_rect_coord(f64 x1, f64 y1, f64 x2, f64 y2, COLORREF cr) { return draw3d_rect(rectd(x1, y1, x2, y2), cr); }
 
+      inline bool draw(::draw2d::dib * pdib) { return draw(rect(pdib->m_size), pdib->get_graphics()); }
       inline bool draw(LPCPOINT lpptDst, LPCSIZE lpcsize, ::draw2d::graphics * pgraphicsSrc, LPCPOINT lpptSrc = ::null_point(), u32 dwRop = SRCCOPY) { return draw(rect(lpptDst, lpcsize), pgraphicsSrc, lpptSrc, dwRop); }
       inline bool draw(LPCSIZE lpcsize, ::draw2d::graphics * pgraphicsSrc, LPCPOINT lpptSrc = ::null_point(), u32 dwRop = SRCCOPY) { return draw(rect(lpcsize), pgraphicsSrc, lpptSrc, dwRop); }
       inline bool draw_dim(i32 x, i32 y, i32 w, i32 h, ::draw2d::graphics * pgraphicsSrc, i32 xSrc = 0, i32 ySrc = 0, u32 dwRop = SRCCOPY) { return draw(rect_dim(x, y, w, h), pgraphicsSrc, point(xSrc, ySrc), dwRop); }

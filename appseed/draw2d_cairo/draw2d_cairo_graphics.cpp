@@ -1849,7 +1849,7 @@ namespace draw2d_cairo
    }
 
 
-   bool graphics::get_text_metrics(::draw2d::text_metric * lpMetrics) const
+   bool graphics::get_text_metrics(::draw2d::text_metric * lpMetrics)
    {
 
       synch_lock sl(cairo_mutex());
@@ -1964,7 +1964,7 @@ namespace draw2d_cairo
    }
 
 
-   bool graphics::get_output_text_metrics(::draw2d::text_metric * lpMetrics) const
+   bool graphics::get_output_text_metrics(::draw2d::text_metric * lpMetrics)
    {
 
       ::exception::throw_not_implemented(get_app());
@@ -3941,12 +3941,14 @@ namespace draw2d_cairo
 
       cairo_move_to(m_pdc, x, y);
 
-      m_x = x;
+      m_pt.x = x;
 
-      m_y = y;
+      m_pt.y = y;
 
       return point;
+
    }
+
 
    pointd graphics::MoveTo(double x, double y)
    {
@@ -3970,9 +3972,9 @@ namespace draw2d_cairo
 
       cairo_move_to(m_pdc, x, y);
 
-      m_x = x;
+      m_pt.x = x;
 
-      m_y = y;
+      m_pt.y = y;
 
 
       return point;
@@ -4667,7 +4669,7 @@ namespace draw2d_cairo
    }
 
 
-   sized graphics::GetTextExtent(const char * lpszString, strsize nCount, strsize iIndex) const
+   sized graphics::GetTextExtent(const char * lpszString, strsize nCount, strsize iIndex)
    {
 
       sized sz;
@@ -4684,7 +4686,7 @@ namespace draw2d_cairo
    }
 
 
-   sized graphics::GetTextExtent(const char * lpszString, strsize nCount) const
+   sized graphics::GetTextExtent(const char * lpszString, strsize nCount)
    {
 
       return GetTextExtent(lpszString, nCount, -1);
@@ -4692,7 +4694,7 @@ namespace draw2d_cairo
    }
 
 
-   sized graphics::GetTextExtent(const string & str) const
+   sized graphics::GetTextExtent(const string & str)
    {
 
       return GetTextExtent(str, str.get_length());
@@ -5173,15 +5175,15 @@ namespace draw2d_cairo
 
       synch_lock ml(cairo_mutex());
 
-      cairo_move_to(m_pdc, m_x, m_y);
+      cairo_move_to(m_pdc, m_pt.x, m_pt.y);
 
       cairo_line_to(m_pdc, x, y);
 
       draw();
 
-      m_x = x;
+      m_pt.x = x;
 
-      m_y = y;
+      m_pt.y = y;
 
       return true;
 

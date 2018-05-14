@@ -205,32 +205,47 @@ class forking_count_pred :
 public:
 
    PRED m_pred;
-   index m_iOrder;
-   index m_iIndex;
-   index m_iScan;
-   ::count m_cCount;
 
+   struct fork_index
+   {
+
+      index       m_iOrder;
+      index       m_iIndex;
+      index       m_iScan;
+      ::count     m_cCount;
+      index       m_i;
+
+      operator index()
+      {
+
+         return m_i;
+
+      }
+
+   };
+
+   fork_index m_index;
 
    forking_count_pred(::aura::application * papp, index iOrder, index iIndex, ::count iScan, ::count cCount, PRED pred) :
       ::object(papp),
       ::pred_holder_base(papp),
       m_pred(pred)
    {
-      m_iOrder = iOrder;
-      m_iIndex = iIndex;
-      m_iScan = iScan;
-      m_cCount = cCount;
+
+      m_index.m_iOrder  = iOrder;
+      m_index.m_iIndex  = iIndex;
+      m_index.m_iScan   = iScan;
+      m_index.m_cCount  = cCount;
 
    }
 
    virtual void run()
    {
 
-      for (index i = m_iIndex; i < m_cCount; i += m_iScan)
+      for (m_index.m_i = m_index.m_iIndex; m_index.m_i < m_index.m_cCount; m_index.m_i += m_index.m_iScan)
       {
 
-         //m_pred(m_iOrder, m_iIndex, m_cCount, m_iScan);
-         m_pred(m_iIndex);
+         m_pred(m_index);
 
       }
 
