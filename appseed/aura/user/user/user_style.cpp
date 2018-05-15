@@ -93,7 +93,7 @@ namespace user
       create_session_default_opaque_color(color_text_press, COLOR_HIGHLIGHT);
       create_opaque_color(color_text_disabled, ::color_gray);
       create_session_default_opaque_color(color_text_hover, COLOR_HIGHLIGHT);
-      create_session_default_opaque_color(color_background_normal, COLOR_3DFACE);
+      create_session_default_opaque_color(color_background, COLOR_3DFACE);
       create_session_default_opaque_color(color_background_press, COLOR_3DFACE);
       create_session_default_opaque_color(color_background_disabled, COLOR_3DFACE);
       create_session_default_opaque_color(color_background_hover, COLOR_3DFACE);
@@ -114,7 +114,7 @@ namespace user
       create_session_default_color(color_text_press, 200, COLOR_HIGHLIGHT);
       create_color(color_text_disabled, alpha_color(200, ::color_gray));
       create_session_default_color(color_text_hover, 200, COLOR_HIGHLIGHT);
-      create_color(color_background_normal, ARGB(100, 180, 192, 255));
+      create_color(color_background, ARGB(100, 180, 192, 255));
       create_color(color_background_press, ARGB(200, 180, 192, 255));
       create_color(color_background_disabled, ARGB(100, 180, 192, 255));
       create_color(color_background_hover, ARGB(125, 180, 192, 255));
@@ -135,7 +135,7 @@ namespace user
       create_session_default_color(color_text_press, 200, COLOR_HIGHLIGHT);
       create_color(color_text_disabled, alpha_color(200, ::color_gray));
       create_session_default_color(color_text_hover, 200, COLOR_HIGHLIGHT);
-      create_session_default_color(color_background_normal, 200, COLOR_3DHIGHLIGHT);
+      create_session_default_color(color_background, 200, COLOR_3DHIGHLIGHT);
       create_session_default_color(color_background_press, 200, COLOR_3DHIGHLIGHT);
       create_session_default_color(color_background_disabled, 200, COLOR_3DHIGHLIGHT);
       create_session_default_color(color_background_hover, 200, COLOR_3DHIGHLIGHT);
@@ -156,7 +156,7 @@ namespace user
       create_session_default_color(color_text_press, 200, COLOR_HIGHLIGHT);
       create_color(color_text_disabled, alpha_color(200, ::color_gray));
       create_session_default_color(color_text_hover, 200, COLOR_HIGHLIGHT);
-      create_session_default_color(color_background_normal, 200, COLOR_3DFACE);
+      create_session_default_color(color_background, 200, COLOR_3DFACE);
       create_session_default_color(color_background_press, 200, COLOR_3DFACE);
       create_session_default_color(color_background_disabled, 200, COLOR_3DFACE);
       create_session_default_color(color_background_hover, 200, COLOR_3DFACE);
@@ -176,7 +176,7 @@ namespace user
       create_color(color_text_press, ARGB(225, 255, 0, 0));
       create_color(color_text_disabled, ARGB(200, 127, 127, 127));
       create_color(color_text_hover, ARGB(200, 255, 50, 50));
-      create_color(color_background_normal, ARGB(200, 210, 192, 192));
+      create_color(color_background, ARGB(200, 210, 192, 192));
       create_color(color_background_press, ARGB(225, 255, 192, 192));
       create_color(color_background_disabled, ARGB(200, 192, 192, 192));
       create_color(color_background_hover, ARGB(200, 223, 192, 192));
@@ -197,7 +197,7 @@ namespace user
       create_session_default_color(color_text_press, 200, COLOR_HIGHLIGHT);
       create_color(color_text_disabled, alpha_color(200, ::color_gray));
       create_session_default_color(color_text_hover, 200, COLOR_HIGHLIGHT);
-      create_session_default_color(color_background_normal, 200, COLOR_3DFACE);
+      create_session_default_color(color_background, 200, COLOR_3DFACE);
       create_session_default_color(color_background_press, 200, COLOR_3DFACE);
       create_session_default_color(color_background_disabled, 200, COLOR_3DFACE);
       create_session_default_color(color_background_hover, 200, COLOR_3DFACE);

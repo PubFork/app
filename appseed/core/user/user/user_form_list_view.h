@@ -17,6 +17,9 @@ namespace user
       virtual ~form_list_view();
 
 
+      virtual void assert_valid() const override;
+      virtual void dump(dump_context & dumpcontext) const override;
+
       virtual bool pre_create_window(::user::create_struct & createstruct) override;
 
       virtual void install_message_routing(::message::sender *pinterface) override;

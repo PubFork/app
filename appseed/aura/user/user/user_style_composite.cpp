@@ -1112,7 +1112,7 @@ namespace user
          }
 
       }
-      else if (ecolor == color_border_normal)
+      else if (ecolor == color_border)
       {
 
          cr = ARGB(255, 84, 90, 80);
@@ -1136,7 +1136,7 @@ namespace user
          cr = ARGB(255, 80, 80, 80);
 
       }
-      else if (ecolor == color_background_normal)
+      else if (ecolor == color_background)
       {
 
          cr = ARGB(255, 255, 255, 255);
@@ -1190,10 +1190,10 @@ namespace user
          return get_color(cr, color_background_hover, pui);
 
       }
-      else if (ecolor == color_button_background_normal)
+      else if (ecolor == color_button_background)
       {
 
-         return get_color(cr, color_background_normal, pui);
+         return get_color(cr, color_background_selected, pui);
 
       }
       else if (ecolor == color_button_background_press)
@@ -1214,10 +1214,10 @@ namespace user
          return get_color(cr, color_text_hover, pui);
 
       }
-      else if (ecolor == color_button_text_normal)
+      else if (ecolor == color_button_text)
       {
 
-         return get_color(cr, color_text_normal, pui);
+         return get_color(cr, color_text_selected, pui);
 
       }
       else if (ecolor == color_button_text_press)
@@ -1242,6 +1242,12 @@ namespace user
       {
 
          cr = ARGB(128, 255, 255, 255);
+
+      }
+      else if (ecolor == color_edit_text_empty)
+      {
+
+         cr = ARGB(128, 96, 96, 96);
 
       }
       else if (ecolor == color_edit_background_selected)
@@ -1319,7 +1325,7 @@ namespace user
       else if (ecolor == color_list_item_background)
       {
 
-         return style_color(cr, color_background_normal, pui);
+         return style_color(cr, color_background, pui);
 
       }
       else if (ecolor == color_list_item_background_hover)

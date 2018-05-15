@@ -149,9 +149,9 @@ namespace user
 
                //rectClient.deflate(1,1);
 
-               pgraphics->fill_solid_rect(rectClient, _001GetColor(color_button_background_normal));
+               pgraphics->fill_solid_rect(rectClient, _001GetColor(color_button_background));
 
-               pgraphics->set_text_color(_001GetColor(color_button_text_normal));
+               pgraphics->set_text_color(_001GetColor(color_button_text));
 
             }
 
@@ -592,7 +592,7 @@ namespace user
       }
       else
       {
-         crBk = _001GetColor(color_button_background_normal);
+         crBk = _001GetColor(color_button_background);
       }
 
 
@@ -678,7 +678,7 @@ namespace user
       else
       {
 //         pgraphics->set_text_color(m_puserstyle->m_crTextNormal);
-         brushText->create_solid(_001GetColor(color_button_text_normal));
+         brushText->create_solid(_001GetColor(color_button_text));
       }
 
       pgraphics->SelectObject(brushText);
@@ -778,7 +778,7 @@ namespace user
       else
       {
 
-         color.set_rgb(_001GetColor(::user::color_button_background_normal));
+         color.set_rgb(_001GetColor(::user::color_button_background));
 
       }
 

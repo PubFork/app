@@ -43,7 +43,7 @@ namespace sqlite
    }
 
 
-   database::set * base::CreateDataset() const
+   database::set * base::CreateDataset()
    {
       return canew(class set((base*)this));
    }
@@ -243,8 +243,6 @@ namespace sqlite
    }
 
 
-   // methods for transactions
-   // ---------------------------------------------
    void base::start_transaction()
    {
 
@@ -299,7 +297,7 @@ namespace sqlite
 
          set.query("select * from sqlite_master where type like 'table' and name like '" + strTable + "'");
 
-         if(set.num_rows() == 0)
+         if (set.num_rows() == 0)
          {
 
             set.exec("create table '" + strTable + "' (id text primary key, value integer)");
@@ -308,7 +306,7 @@ namespace sqlite
          commit_transaction();
 
       }
-      catch(...)
+      catch (...)
       {
 
          rollback_transaction();
@@ -316,7 +314,6 @@ namespace sqlite
       }
 
    }
-
 
    void base::create_string_set(const string & strTable)
    {

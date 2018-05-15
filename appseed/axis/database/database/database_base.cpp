@@ -16,12 +16,12 @@ namespace database
       defer_create_mutex();
    }
 
-   base::~base() 
+   base::~base()
    {
       disconnect();      // Disconnect if connected to base
    }
 
-   int32_t base::connectFull(const char *newHost, const char *newPort, const char *newDb, const char *newLogin, const char *newPasswd) 
+   int32_t base::connectFull(const char *newHost, const char *newPort, const char *newDb, const char *newLogin, const char *newPasswd)
    {
       host = newHost;
       port = newPort;
@@ -38,7 +38,6 @@ namespace database
       return DB_COMMAND_OK;
 
    }
-
    void base::create_long_set(const string & strTable)
    {
    }
@@ -48,6 +47,36 @@ namespace database
    }
 
 
+
+
+   var base::query_rows(const char * pszQuery)
+   {
+
+      sp(set) s(CreateDataset());
+
+      return s->query_rows(pszQuery);
+
+   }
+
+
+   var base::query_items(const char * pszQuery)
+   {
+
+      sp(set) s(CreateDataset());
+
+      return s->query_items(pszQuery);
+
+   }
+
+
+   var base::query_item(const char * pszQuery)
+   {
+
+      sp(set) s(CreateDataset());
+
+      return s->query_item(pszQuery);
+
+   }
 
 } // namespace database
 

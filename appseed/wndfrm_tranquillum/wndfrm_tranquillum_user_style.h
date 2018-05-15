@@ -11,8 +11,8 @@ namespace wndfrm_tranquillum
    public:
 
 
-      ::draw2d::font_sp                m_fontEdit;
-      ::draw2d::font_sp                m_fontList;
+      //::draw2d::font_sp                m_fontEdit;
+      //::draw2d::font_sp                m_fontList;
 
 
       user_style(::aura::application * papp);

@@ -135,8 +135,8 @@ namespace sqlite
    {
       //cout <<"rr "<<result.records.size()<<"|" << frecno <<"\n";
       if ((db == NULL)
-      || (result.record_header.get_size() == 0)
-      || (result.records.get_size() < frecno))
+            || (result.record_header.get_size() == 0)
+            || (result.records.get_size() < frecno))
          return;
 
       if (fields_object.get_size() == 0) // Filling columns name
@@ -219,7 +219,7 @@ namespace sqlite
 
    bool set::query(const char *query)
    {
-    
+
       if(db == NULL)
       {
          TRACE("set::query: base is not Defined");
@@ -248,74 +248,74 @@ namespace sqlite
       }
 
       synch_lock sl(db->m_pmutex);
-      
+
       close();
 
       char * errmsg = NULL;
-      
+
       int iResult =sqlite3_exec((sqlite3 *) handle(),query,&axis_sqlite_callback,&result,&errmsg);
-      
+
       db->setErr(iResult);
 
       if(iResult == SQLITE_OK)
       {
-         
+
          m_strQueryErrorMessage = "";
-         
+
          m_strDatabaseErrorMessage = "";
-         
+
          if (errmsg != NULL)
          {
-            
+
             sqlite3_free(errmsg);
-            
+
             errmsg = NULL;
-            
+
          }
 
          active = true;
-         
+
          ds_state = database::dsSelect;
-         
+
          first();
-         
+
          return true;
-         
+
       }
       else
       {
-         
+
          m_strQueryErrorMessage = errmsg;
-         
+
          if (errmsg != NULL)
          {
-            
+
             sqlite3_free(errmsg);
-            
+
             errmsg = NULL;
-            
+
          }
-         
+
          m_strDatabaseErrorMessage = db->getErrorMsg();
-         
+
          TRACE("set::query: Error: %s, %s", errmsg, db->getErrorMsg());
-         
+
          return false;
-         
+
       }
-      
+
    }
 
-   
+
    void set::open(const char * sql)
    {
-      
+
       set_select_sql(sql);
-      
+
       open();
-      
+
    }
-   
+
 
    void set::open()
    {
@@ -489,6 +489,13 @@ namespace sqlite
       //  return false;
    }
 
+   var set::field_value_at(index iFieldIndex)
+   {
+
+      return FieldValueAt(iFieldIndex);
+
+   }
+
    var & set::FieldValueAt(index iFieldIndex)
    {
       //if(ds_state == dsSelect)
@@ -545,16 +552,16 @@ namespace sqlite
                iFound = i;
                break;
             }
-            if (iFound < 0) _throw(database::DbErrors("Field not found: %s",fieldname));
-            ::count iNumRows = num_rows();
-            for(i=0; i < iNumRows; i++)
-               if(result.records[i][iFound] == value)
-               {
-                  seek(i);
-                  return true;
-               }
+         if (iFound < 0) _throw(database::DbErrors("Field not found: %s",fieldname));
+         ::count iNumRows = num_rows();
+         for(i=0; i < iNumRows; i++)
+            if(result.records[i][iFound] == value)
+            {
+               seek(i);
+               return true;
+            }
 
-               return false;
+         return false;
       }
       _throw(database::DbErrors("not in Select state"));
    }
@@ -608,11 +615,12 @@ namespace sqlite
 //************* Callback function ***************************
 
 extern "C"
-int32_t axis_sqlite_callback(void * res_ptr,int32_t ncol, char** reslt,char** cols){
-   
+int32_t axis_sqlite_callback(void * res_ptr,int32_t ncol, char** reslt,char** cols)
+{
+
    database::result_set* r = (database::result_set*)res_ptr;//dynamic_cast<result_set*>(res_ptr);
    ::count sz = r->records.get_size();
-   
+
    //if (reslt == NULL ) cout << "EMPTY!!!\n";
    if (r->record_header.get_size() <= 0)
    {
@@ -639,11 +647,11 @@ int32_t axis_sqlite_callback(void * res_ptr,int32_t ncol, char** reslt,char** co
 //         }
       }
    }
-   
-   
+
+
    database::record rec;
    var v;
-   
+
    if (reslt != NULL)
    {
       for (int32_t i=0; i<ncol; i++)

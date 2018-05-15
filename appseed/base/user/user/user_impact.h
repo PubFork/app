@@ -123,17 +123,17 @@ namespace user
 
       static_function::user::document * get_document(::user::interaction * pui);
 
-      
+
       virtual void dump(dump_context &) const override;
       virtual void assert_valid() const override;
-      
+
 
       // Advanced: for implementing custom print preview
       /*   bool DoPrintPreview(UINT nIDResource, sp(view) pPrintView,
       sp(type) pPreviewViewClass, CPrintPreviewState* pState);*/
 
       virtual void CalcWindowRect(LPRECT lpClientRect,
-         UINT nAdjustType = adjustBorder) override;
+                                  UINT nAdjustType = adjustBorder) override;
 //      virtual CScrollBar* GetScrollBarCtrl(int32_t nBar) const;
 
 
@@ -169,7 +169,7 @@ namespace user
       //         DECL_GEN_SIGNAL(_001OnLButtonDown);
       DECL_GEN_SIGNAL(_001OnMButtonDown);
 
-         void OnPaint();
+      void OnPaint();
       //int32_t OnMouseActivate(::window_sp pDesktopWnd, UINT nHitTest, UINT message);
       // commands
       void OnUpdateSplitCmd(::user::command* pCmdUI);
@@ -186,7 +186,7 @@ namespace user
       virtual int32_t  get_total_page_count(::job * pjob) override;
 
 
-         virtual ::user::interaction::e_type get_window_type() override;
+      virtual ::user::interaction::e_type get_window_type() override;
 
       virtual void on_simple_view_update_hint(sp(::user::impact) pviewSender, e_hint ehint, object * phint);
 
@@ -233,7 +233,7 @@ namespace user
       //      virtual bool pre_create_window(::user::create_struct& cs);
 
 
-         //         virtual void install_message_routing(::message::sender * pinterface);
+      //         virtual void install_message_routing(::message::sender * pinterface);
 
       virtual bool _001HasCommandHandler(::user::command * pcommand) override;
 
@@ -243,7 +243,7 @@ namespace user
       virtual string calc_data_id() override;
 
       virtual bool is_local_data() override;
-      
+
 
    };
 
@@ -268,9 +268,23 @@ namespace user
       {
       }
 
+
+      virtual void assert_valid() const override
+      {
+         impact::assert_valid();
+         VIEW::assert_valid();
+
+      }
+      virtual void dump(dump_context & dumpcontext) const override
+      {
+         impact::dump(dumpcontext);
+         VIEW::dump(dumpcontext);
+      }
+
+
       virtual void install_message_routing(::message::sender * pinterface) override
       {
-         
+
          VIEW::install_message_routing(pinterface);
          ::user::impact::install_message_routing(pinterface);
 

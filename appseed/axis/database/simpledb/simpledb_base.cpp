@@ -65,13 +65,13 @@ namespace simpledb
       return new table(this, pszName);
    }
 
-   ::simpledb::set * base::create_dataset() const
+   ::simpledb::set * base::create_dataset()
    {
       return new ::simpledb::set(const_cast < ::simpledb::base * > (this));
    }
 
 
-   class ::database::set * base::CreateDataset() const
+   class ::database::set * base::CreateDataset()
    {
       return create_dataset();
    }

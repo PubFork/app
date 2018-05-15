@@ -15,24 +15,24 @@ namespace wndfrm_tranquillum
 
    user_style::user_style(::aura::application * papp):
       object(papp),
-      ::user::style(papp),
-      m_fontEdit(allocer()),
-      m_fontList(allocer())
+      ::user::style(papp)
+      //m_fontEdit(allocer()),
+      //m_fontList(allocer())
    {
 
-      m_fontEdit->create_point_font("MS Sans Serif", 9.0);
+//      m_fontEdit->create_point_font("MS Sans Serif", 9.0);
 
-      m_fontList->create_point_font("Tahoma", 10, FW_BOLD);
+      //    m_fontList->create_point_font("Tahoma", 10, FW_BOLD);
 
       defer_create_user_schema(::user::schema_default);
 
       userstyle()->m_mapTranslucency[::user::element_none] = ::user::translucency_present;
 
-      create_point_font(::user::font_default,"MS Sans Serif", 12.0);
+      create_point_font(::user::font_default,"Tahoma", 12.0);
 
       userstyle()->m_mapFont[::user::font_default]->m_etextrendering = ::draw2d::text_rendering_anti_alias_grid_fit;
 
-      create_color(::user::color_button_text_normal, ARGB(255, 255, 255, 255));
+      create_color(::user::color_button_text, ARGB(255, 255, 255, 255));
       create_color(::user::color_list_header_background, ARGB(255, 250, 250, 250));
       create_color(::user::color_list_background, ARGB(255, 255, 255, 255));
       create_color(::user::color_list_item_text, ARGB(255, 50, 50, 50));
@@ -43,6 +43,13 @@ namespace wndfrm_tranquillum
       create_color(::user::color_list_item_background_hover, ARGB(255, 255, 255, 255));
       create_color(::user::color_list_item_background_selected, ARGB(255, 100, 150, 230));
       create_color(::user::color_list_item_background_selected_hover, ARGB(255, 130, 180, 240));
+      create_color(::user::color_button_background, ARGB(255, 80, 150, 220));
+      create_color(::user::color_button_background_hover, ARGB(255, 110, 180, 240));
+      create_color(::user::color_button_text, ARGB(255, 255, 255, 255));
+      create_color(::user::color_button_text_hover, ARGB(255, 255, 255, 255));
+      create_point_font(::user::font_button, "Tahoma", 12.0, 800);
+      create_point_font(::user::font_plain_edit, "Tahoma", 12.0, 800);
+
 
    }
 
@@ -1303,11 +1310,11 @@ namespace wndfrm_tranquillum
 
                ::draw2d::pen_sp pen(pgraphics, 1, ptoolbar->_001GetColor(
                                     (nStyle & TBBS_DISABLED) == 0 ?
-                                    ::user::color_button_background_normal :
+                                    ::user::color_button_background :
                                     ::user::color_button_background_disabled));
                ::draw2d::brush_sp brush(allocer(), ptoolbar->_001GetColor(
                                         (nStyle & TBBS_DISABLED) == 0 ?
-                                        ::user::color_button_background_normal :
+                                        ::user::color_button_background :
                                         ::user::color_button_background_disabled));
                ::draw2d::pen * ppenOld = pgraphics->SelectObject(pen);
                ::draw2d::brush * pbrushOld = pgraphics->SelectObject(brush);
@@ -1406,44 +1413,7 @@ namespace wndfrm_tranquillum
    bool user_style::get_font(::draw2d::font_sp & sp, ::user::e_font efont, ::user::interaction * pui)
    {
 
-      if (efont == ::user::font_list_item)
-      {
-
-         sp = m_fontList;
-
-         return true;
-
-      }
-      else if (efont == ::user::font_list_hover)
-      {
-
-         sp = m_fontList;
-
-         return true;
-
-      }
-      else if (efont == ::user::font_tree)
-      {
-
-         sp = m_fontList;
-
-         return true;
-
-      }
-      else if (efont == ::user::font_plain_edit)
-      {
-
-         sp = m_fontEdit;
-
-         return true;
-
-      }
-      else
-      {
-
-         return false;
-
-      }
+      return ::user::style::get_font(sp, efont, pui);
 
    }
 

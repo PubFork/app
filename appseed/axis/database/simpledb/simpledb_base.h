@@ -6,7 +6,7 @@ namespace simpledb
    class table;
    class set;
 
-   class CLASS_DECL_AXIS base : 
+   class CLASS_DECL_AXIS base :
       public ::database::base
    {
    public:
@@ -22,15 +22,14 @@ namespace simpledb
 
       virtual int32_t connect();
 
-
-      virtual class ::simpledb::set * create_dataset() const;
+      virtual class ::simpledb::set * create_dataset();
 
       table * get_table(const char * pszName);
       table * create_table(const char * pszName);
 
 
       // class ::database::base
-      virtual class ::database::set * CreateDataset() const;
+      virtual class ::database::set * CreateDataset();
       virtual int32_t setErr(int32_t err_code);
       virtual long nextid(const char* sname);
 

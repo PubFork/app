@@ -61,8 +61,8 @@ namespace sphere
 
       }
       else if (ecolor == ::user::color_background
-         || ecolor == ::user::color_edit_background
-         || ecolor == ::user::color_toolbar_background)
+               || ecolor == ::user::color_edit_background
+               || ecolor == ::user::color_toolbar_background)
       {
 
 
@@ -103,7 +103,7 @@ namespace sphere
          }
 
       }
-      else if (ecolor == ::user::color_border_normal)
+      else if (ecolor == ::user::color_border)
       {
 
          cr = ARGB(255, 84, 90, 80);

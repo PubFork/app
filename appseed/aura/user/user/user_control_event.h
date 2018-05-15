@@ -29,6 +29,7 @@ namespace user
       ::datetime::time                 m_timeOuterEnd;
       ::datetime::time                 m_timeBeg;
       ::datetime::time                 m_timeEnd;
+      index                            m_iItem;
 
 
       control_event();

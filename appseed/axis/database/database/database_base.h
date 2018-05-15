@@ -24,19 +24,19 @@ namespace database
       base();
       /* destructor */
       virtual ~base();
-      virtual class set *CreateDataset() const = 0;
+      virtual class set *CreateDataset() = 0;
       /* sets a new host name */
       void setHostName(const char *newHost) { host = newHost; }
       /* gets a host name */
-      string getHostName() const { return host; }
+      string getHostName() { return host; }
       /* sets a new port */
       void setPort(const char *newPort) { port = newPort; }
       /* gets a port */
-      string getPort() const { return port; }
+      string getPort() { return port; }
       /* sets a new database name */
       void setDatabase(const char *newDb) { db = newDb; }
       /* gets a database name */
-      string getDatabase() const { return db; }
+      string getDatabase() { return db; }
       /* sets a new login to database */
       void setLogin(const char *newLogin) { login = newLogin; }
       /* gets a login */
@@ -44,14 +44,13 @@ namespace database
       /* sets a password */
       void setPasswd(const char *newPasswd) { passwd = newPasswd; }
       /* gets a password */
-      string getPasswd() const { return passwd; }
+      string getPasswd() { return passwd; }
       /* active status is OK state */
-      virtual bool isActive() const { return active; }
+      virtual bool isActive() { return active; }
       /* set new name of sequence table */
       void setSequenceTable(const char *new_seq_table) { sequence_table = new_seq_table; };
       /* get name of sequence table */
       const char *getSequenceTable() { return sequence_table; }
-
 
       /* virtual methods that must be overloaded in derived classes */
 
@@ -62,7 +61,7 @@ namespace database
 
       virtual int32_t connect() { return DB_COMMAND_OK; }
       virtual int32_t connectFull( const char *newDb, const char *newHost=NULL,
-         const char *newLogin=NULL, const char *newPasswd=NULL,const char *newPort=NULL);
+                                   const char *newLogin=NULL, const char *newPasswd=NULL,const char *newPort=NULL);
       virtual void disconnect() { active = false; }
       virtual int32_t reset() { return DB_COMMAND_OK; }
       virtual int32_t create() { return DB_COMMAND_OK; }
@@ -79,6 +78,12 @@ namespace database
 
       virtual void create_long_set(const string & strTable);
       virtual void create_string_set(const string & strTable);
+
+
+      var query_rows(const char * pszQuery);
+      var query_items(const char * pszQuery);
+      var query_item(const char * pszQuery);
+
 
    };
 

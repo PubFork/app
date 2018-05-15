@@ -78,6 +78,7 @@ namespace sqlite
       virtual bool SetFieldValue(const char *f_name, const var &value);
       virtual bool SetFieldValue(index iFieldIndex, const var &value);
 
+      virtual var field_value_at(index iFieldIndex) override;
       virtual var & FieldValueAt(index iFieldIndex);
       virtual int32_t GetFieldIndex(const char *f_name);
 

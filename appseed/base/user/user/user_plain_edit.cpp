@@ -15,6 +15,7 @@ namespace user
       ::draw2d::brush_sp            m_brushText;
       ::draw2d::brush_sp            m_brushTextCr;
       ::draw2d::brush_sp            m_brushTextSel;
+      ::draw2d::brush_sp            m_brushTextEmpty;
 
       void update(plain_edit * pedit);
 
@@ -392,6 +393,8 @@ namespace user
 
          if (m_strEmtpyText.has_char())
          {
+
+            pgraphics->SelectObject(m_pinternal->m_brushTextEmpty);
 
             pgraphics->text_out(left, y, m_strEmtpyText);
 
@@ -5346,6 +5349,8 @@ finished_update:
 
       m_brushTextSel.release();
 
+      m_brushTextEmpty.release();
+
       m_penCaret.alloc(pedit->allocer());
 
       m_brushText.alloc(pedit->allocer());
@@ -5354,11 +5359,15 @@ finished_update:
 
       m_brushTextSel.alloc(pedit->allocer());
 
+      m_brushTextEmpty.alloc(pedit->allocer());
+
       m_penCaret->create_solid(1.0, pedit->_001GetColor(color_edit_text));
 
       m_brushTextCr->create_solid(pedit->_001GetColor(color_edit_text));
 
       m_brushTextSel->create_solid(pedit->_001GetColor(color_edit_text_selected));
+
+      m_brushTextEmpty->create_solid(pedit->_001GetColor(color_edit_text_empty));
 
    }
 

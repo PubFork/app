@@ -36,7 +36,7 @@ namespace user
 
       if(phint != NULL)
       {
-         
+
          ::user::form_update_hint * puh = dynamic_cast <::user::form_update_hint *> (phint);
 
          if(puh != NULL)
@@ -95,7 +95,7 @@ namespace user
             //      get_html_data()->implement(dc);
 
             //   }
-            //   
+            //
             //}
 
          }
@@ -112,6 +112,25 @@ namespace user
    }
 
 
+   void form_list_view::assert_valid() const
+   {
+
+      form_list::assert_valid();
+      form_view::assert_valid();
+      list_view::assert_valid();
+
+   }
+
+
+   void form_list_view::dump(dump_context & dumpcontext) const
+   {
+
+      form_list::dump(dumpcontext);
+      form_view::dump(dumpcontext);
+      list_view::dump(dumpcontext);
+
+   }
+
 
    bool form_list_view::pre_create_window(::user::create_struct & createstruct)
    {
@@ -127,7 +146,7 @@ namespace user
 
    }
 
-   
+
    void form_list_view::_001OnDraw(::draw2d::graphics * pgraphics)
    {
 
