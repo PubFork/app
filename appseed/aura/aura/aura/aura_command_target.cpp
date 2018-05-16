@@ -62,7 +62,7 @@ void command_target::_001SendCommand(::user::command * pcommand)
 
       SRESTORE(pcommand->m_id.m_emessagetype, ::message::type_command);
 
-      _001OnCmdMsg(pcommand);
+      route_command_message(pcommand);
 
    }
 
@@ -78,27 +78,30 @@ void command_target::_001SendCommandProbe(::user::command * pcommand)
 
       SRESTORE(pcommand->m_id.m_emessagetype, ::message::type_command_probe);
 
-      _001OnCmdMsg(pcommand);
+      route_command_message(pcommand);
 
    }
 
 }
 
 
-void command_target::_001OnCmdMsg(::user::command * pcommand)
+void command_target::route_command_message(::user::command * pcommand)
 {
+
 
    if (pcommand->m_id.m_emessagetype == ::message::type_command)
    {
 
+      pcommand->m_bHasCommandHandler = has_command_handler(pcommand);
+
       on_command_probe(pcommand);
 
       if (!pcommand->m_bEnableChanged
-         && !pcommand->m_bRadioChanged
-         && pcommand->m_echeck == check::undefined
-         && !pcommand->m_bHasCommandHandler)
+            && !pcommand->m_bRadioChanged
+            && pcommand->m_echeck == check::undefined
+            && !pcommand->m_bHasCommandHandler)
       {
-         
+
          return;
 
       }
@@ -109,9 +112,15 @@ void command_target::_001OnCmdMsg(::user::command * pcommand)
    else if (pcommand->m_id.m_emessagetype == ::message::type_command_probe)
    {
 
+      pcommand->m_bHasCommandHandler = has_command_handler(pcommand);
+
       on_command_probe(pcommand);
 
-      pcommand->m_bHasCommandHandler = _001HasCommandHandler(pcommand);
+   }
+   else if (pcommand->m_id.m_emessagetype == ::message::type_has_command_handler)
+   {
+
+      pcommand->m_bHasCommandHandler = has_command_handler(pcommand);
 
    }
    else
@@ -138,12 +147,19 @@ void command_target::on_command(::user::command * pcommand)
 }
 
 
-bool command_target::_001HasCommandHandler(::user::command * pcommand)
+bool command_target::has_command_handler(::user::command * pcommand)
 {
 
    synch_lock sl(m_pmutexIdRoute);
 
    SRESTORE(pcommand->m_id.m_emessagetype, ::message::type_command);
+
+   if (m_idaHandledCommands.contains(pcommand->m_id))
+   {
+
+      return true;
+
+   }
 
    return m_idroute[pcommand->m_id].has_elements();
 
@@ -159,12 +175,12 @@ void command_target::on_command_probe(::user::command * pcommand)
 
       route_message(pcommand);
 
-      pcommand->m_bHasCommandHandler = _001HasCommandHandler(pcommand);
+      pcommand->m_bHasCommandHandler = has_command_handler(pcommand);
 
       pcommand->m_bRet =
-         pcommand->m_bEnableChanged
-         || pcommand->m_bRadioChanged
-         || pcommand->m_echeck != check::undefined;
+      pcommand->m_bEnableChanged
+      || pcommand->m_bRadioChanged
+      || pcommand->m_echeck != check::undefined;
 
    }
 

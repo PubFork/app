@@ -3299,6 +3299,7 @@ namespace user
 
                      }
 
+                     _001OnSelectionChange();
                   }
 
                }
@@ -3478,6 +3479,8 @@ namespace user
 
                }
 
+               _001OnSelectionChange();
+
             }
 
          }
@@ -3527,6 +3530,8 @@ namespace user
                {
 
                   m_rangeSelection.clear();
+
+                  _001OnSelectionChange();
 
                }
 
@@ -3785,7 +3790,7 @@ namespace user
       if (m_pformcallback != NULL)
       {
 
-         m_pformcallback->BaseOnControlEvent(&ev);
+         m_pformcallback->on_control_event(&ev);
 
       }
       else if (get_form() != NULL)
@@ -3801,7 +3806,7 @@ namespace user
 
       }
 
-      return ev.m_bProcessed;
+      return ev.m_bRet;
 
    }
 
@@ -5560,6 +5565,7 @@ namespace user
       {
          RedrawWindow();
       }
+      _001OnSelectionChange();
    }
 
 
@@ -5612,7 +5618,7 @@ namespace user
       item_range itemrange;
       itemrange.set(iItem, iItem, iSubItem, iSubItem, -1, -1);
       m_rangeSelection.add_item(itemrange);
-
+      _001OnSelectionChange();
    }
 
    index list::StrictToDisplay(index iStrict)
@@ -6632,6 +6638,13 @@ namespace user
    void list::_001OnSelectionChange()
    {
 
+      ::user::control_event ev;
+
+      ev.m_puie = this;
+      ev.m_eevent = ::user::event_after_change_cur_sel;
+
+      on_control_event(&ev);
+
       RedrawWindow();
 
    }
@@ -6648,6 +6661,7 @@ namespace user
          itemrange.set_upper_bound(iSel);
          m_rangeSelection.add_item(itemrange);
       }
+      _001OnSelectionChange();
       return iOld;
    }
 
@@ -6661,7 +6675,7 @@ namespace user
          itemrange.set_upper_bound(iaSel[i]);
          m_rangeSelection.add_item(itemrange);
       }
-
+      _001OnSelectionChange();
    }
 
    index list::get_cur_sel()

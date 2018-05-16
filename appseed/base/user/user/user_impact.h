@@ -141,7 +141,7 @@ namespace user
       //virtual void on_draw_view(::draw2d::graphics * pgraphics, spa(::data::data) spadata);
       //virtual void defer_draw_view(::draw2d::dib * pdib);
 
-      virtual void _001OnCmdMsg(::user::command * pcommand) override;
+      virtual void route_command_message(::user::command * pcommand) override;
 
       virtual bool pre_create_window(::user::create_struct& cs) override;
       virtual void PostNcDestroy() override;
@@ -228,14 +228,14 @@ namespace user
 
 
 
-      //      virtual void _001OnCmdMsg(::user::command * pcommand);
+      //      virtual void route_command_message(::user::command * pcommand);
 
       //      virtual bool pre_create_window(::user::create_struct& cs);
 
 
       //         virtual void install_message_routing(::message::sender * pinterface);
 
-      virtual bool _001HasCommandHandler(::user::command * pcommand) override;
+      virtual bool has_command_handler(::user::command * pcommand) override;
 
       virtual void walk_pre_translate_tree(::message::message * pobj,sp(::user::interaction) puiStop);
 
@@ -287,6 +287,14 @@ namespace user
 
          VIEW::install_message_routing(pinterface);
          ::user::impact::install_message_routing(pinterface);
+
+      }
+
+
+      virtual void route_command_message(::user::command * pcommand) override
+      {
+
+         ::user::impact::route_command_message(pcommand);
 
       }
 

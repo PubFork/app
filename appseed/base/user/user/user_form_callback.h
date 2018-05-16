@@ -19,7 +19,7 @@ namespace user
 
 
       virtual void on_update(::user::impact * pform,sp(::user::impact) pSender,LPARAM lHint,object* phint);
-      virtual bool BaseOnControlEvent(::user::control_event * pevent);
+      virtual void on_control_event(::user::control_event * pevent);
       virtual void OnUser123(WPARAM wparam,LPARAM lparam);
       virtual void OnBeforeNavigate2(::html::data * pdata,var & varFile,uint32_t nFlags,const char * lpszTargetFrameName,byte_array& baPostedData,const char * lpszHeaders,bool* pbCancel);
       virtual void _001InitializeFormPreData(::user::form * pform);

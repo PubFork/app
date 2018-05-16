@@ -53,13 +53,13 @@ namespace user
    }
 
 
-   void menu_list_view::_001OnCmdMsg(::user::command * pcommand)
+   void menu_list_view::route_command_message(::user::command * pcommand)
    {
 
       if (m_puiNotify != NULL && m_puiNotify != this)
       {
 
-         m_puiNotify->_001OnCmdMsg(pcommand);
+         m_puiNotify->route_command_message(pcommand);
 
          //if(pcommand->m_bRet)
          {
@@ -70,7 +70,7 @@ namespace user
 
       }
 
-      return impact::_001OnCmdMsg(pcommand);
+      return impact::route_command_message(pcommand);
 
    }
 

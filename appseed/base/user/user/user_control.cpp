@@ -416,12 +416,7 @@ namespace user
 
       ev.m_eevent = ::user::event_set_focus;
 
-      if(!BaseOnControlEvent(&ev))
-      {
-
-         return true;
-
-      }
+      on_control_event(&ev);
 
       return ev.m_bOk;
 
@@ -439,7 +434,7 @@ namespace user
 
       ev.m_eevent = ::user::event_kill_focus;
 
-      BaseOnControlEvent(&ev);
+      on_control_event(&ev);
 
       return ev.m_bOk;
 
@@ -808,20 +803,20 @@ namespace user
 //}
 
 
-   bool control::BaseOnControlEvent(::user::control_event * pevent)
+   void control::on_control_event(::user::control_event * pevent)
    {
 
       if (m_pauraapp != NULL)
       {
 
-         Application.BaseOnControlEvent(pevent);
+         Application.on_control_event(pevent);
 
-      }
+         if (pevent->m_bRet)
+         {
 
-      if (pevent->m_bProcessed)
-      {
+            return;
 
-         return true;
+         }
 
       }
 
@@ -830,14 +825,14 @@ namespace user
       if (puiParent != NULL)
       {
 
-         pevent->m_bProcessed = puiParent->BaseOnControlEvent(pevent);
+         puiParent->on_control_event(pevent);
 
-      }
+         if (pevent->m_bRet)
+         {
 
-      if (pevent->m_bProcessed)
-      {
+            return;
 
-         return true;
+         }
 
       }
 
@@ -846,26 +841,24 @@ namespace user
       if (pform != NULL && !IsAscendant(pform))
       {
 
-         pevent->m_bProcessed = pform->BaseOnControlEvent(pevent);
+         pform->on_control_event(pevent);
+
+         if (pevent->m_bRet)
+         {
+
+            return;
+
+         }
 
       }
-
-      if (pevent->m_bProcessed)
-      {
-
-         return true;
-
-      }
-
-      return false;
 
    }
 
 
-   bool control::simple_process_system_message(::message::message * pobj, ::user::e_event eevent)
+   bool control::simple_process_system_message(::message::message * pmessage, ::user::e_event eevent)
    {
 
-      SCAST_PTR(::message::base, pbase, pobj);
+      SCAST_PTR(::message::base, pbase, pmessage);
 
       ::user::control_event ev;
 
@@ -873,13 +866,13 @@ namespace user
 
       ev.m_eevent = eevent;
 
-      ev.m_pobj = pobj;
+      ev.m_pmessage = pmessage;
 
-      BaseOnControlEvent(&ev);
+      on_control_event(&ev);
 
-      pobj->m_bRet = ev.m_bRet;
+      pmessage->m_bRet = ev.m_bRet;
 
-      if (pobj->m_bRet)
+      if (pmessage->m_bRet)
       {
 
          if (pbase != NULL)
@@ -891,7 +884,7 @@ namespace user
 
       }
 
-      return ev.m_bProcessed;
+      return ev.m_bRet;
 
    }
 
@@ -900,6 +893,38 @@ namespace user
    {
 
       ::user::box::_001OnDraw(pgraphics);
+   }
+
+
+   void control::route_command_message(::user::command * pcommand)
+   {
+
+      ::user::box::route_command_message(pcommand);
+
+      if (pcommand->m_bRet)
+      {
+
+         return;
+
+      }
+
+      sp(::user::interaction) puiParent = get_parent();
+
+      while (puiParent.is_set() && puiParent->is_place_holder())
+      {
+
+         puiParent = puiParent->get_parent();
+
+      }
+
+      if (puiParent != NULL)
+      {
+
+         puiParent->route_command_message(pcommand);
+
+      }
+
+
    }
 
 

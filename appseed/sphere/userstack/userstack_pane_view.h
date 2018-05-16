@@ -41,7 +41,7 @@ namespace userstack
       void check_desktop_dir(const ::file::path & psz);
 
       void _001InitializeFormPreData(::user::form * pform);
-      bool BaseOnControlEvent(::user::control_event * pevent);
+      void on_control_event(::user::control_event * pevent);
 
       /*   virtual void OnFileManagerOpenContextMenuFolder(
             ::filemanager::data * pdata,

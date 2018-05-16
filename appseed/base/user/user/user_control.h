@@ -51,7 +51,7 @@ namespace user
       virtual void _001OnDraw(::draw2d::graphics * pgraphics) override;
 
 
-
+      virtual void route_command_message(::user::command * pcommand) override;
       virtual index get_hover();
 
       class control_descriptor & descriptor();
@@ -97,7 +97,7 @@ namespace user
       DECL_GEN_SIGNAL(_001OnKeyDown);
 
 
-      virtual bool BaseOnControlEvent(::user::control_event * pevent) override;
+      virtual void on_control_event(::user::control_event * pevent) override;
 
       virtual bool simple_process_system_message(::message::message * pobj, ::user::e_event eevent);
 

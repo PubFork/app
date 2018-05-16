@@ -308,10 +308,10 @@ namespace user
    }
 
 
-   void impact_system::_001OnCmdMsg(::user::command * pcommand)
+   void impact_system::route_command_message(::user::command * pcommand)
    {
 
-      command_target::_001OnCmdMsg(pcommand);
+      command_target::route_command_message(pcommand);
 
    }
 

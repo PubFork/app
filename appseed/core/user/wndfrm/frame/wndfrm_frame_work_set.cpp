@@ -380,7 +380,7 @@ namespace user
          }*/
 
 
-         bool WorkSet::BaseOnControlEvent(::user::control_event * pevent)
+         void WorkSet::on_control_event(::user::control_event * pevent)
          {
 
             if(pevent->m_eevent == ::user::event_button_down)
@@ -389,7 +389,7 @@ namespace user
                sp(WorkSetClientInterface) pinterface = m_pwndCommand;
 
                if(pinterface == NULL)
-                  return false;
+                  return;
 
                e_button ebutton = m_pframeschema->get_control_box()->get_control_box_button_type(pevent->m_puie->GetDlgCtrlId());
 
@@ -397,9 +397,9 @@ namespace user
                {
 
                   if(!pinterface->WfiOnStartDock())
-                     return false;
+                     return;
 
-                  pinterface->m_workset.GetDockingManager()->_000OnLButtonDown(dynamic_cast <::message::mouse *> (pevent->m_pobj));
+                  pinterface->m_workset.GetDockingManager()->_000OnLButtonDown(dynamic_cast <::message::mouse *> (pevent->m_pmessage));
 
                   rect rectWindow;
 
@@ -407,7 +407,9 @@ namespace user
 
                   pinterface->m_workset.GetDockingManager()->m_ptCursorOrigin = rectWindow.center();
 
-                  return true;
+                  pevent->m_bRet = true;
+
+                  return;
 
                }
 
@@ -418,36 +420,43 @@ namespace user
                sp(WorkSetClientInterface) pinterface = m_pwndCommand;
 
                if(pinterface == NULL)
-                  return false;
+                  return;
                ASSERT(pinterface != NULL);
                e_button ebutton = m_pframeschema->get_control_box()->get_control_box_button_type(pevent->m_puie->GetDlgCtrlId());
                switch(ebutton)
                {
                case ::user::wndfrm::frame::button_close:
                   pinterface->WfiClose();
-                  return TRUE;
+                  pevent->m_bRet = true;
+                  return;
                case ::user::wndfrm::frame::button_minimize:
                   pinterface->WfiMinimize();
-                  return TRUE;
+                  pevent->m_bRet = true;
+                  return;
                case ::user::wndfrm::frame::button_maximize:
                   pinterface->WfiMaximize();
-                  return TRUE;
+                  pevent->m_bRet = true;
+                  return;
                case ::user::wndfrm::frame::button_restore:
                   pinterface->WfiRestore(true);
-                  return TRUE;
+                  pevent->m_bRet = true;
+                  return;
                case ::user::wndfrm::frame::button_up:
                   pinterface->WfiUp();
-                  return TRUE;
+                  pevent->m_bRet = true;
+                  return;
                case ::user::wndfrm::frame::button_down:
                   pinterface->WfiDown();
-                  return TRUE;
+                  pevent->m_bRet = true;
+                  return;
                case ::user::wndfrm::frame::button_transparent_frame:
                   pinterface->WfiToggleTransparentFrame();
-                  return TRUE;
-
+                  pevent->m_bRet = true;
+                  return;
                case ::user::wndfrm::frame::button_notify_icon:
                   pinterface->WfiNotifyIcon();
-                  return TRUE;
+                  pevent->m_bRet = true;
+                  return;
                default:
                   break;
 
@@ -455,12 +464,10 @@ namespace user
 
             }
 
-            return false;
-
          }
 
 
-         void WorkSet::_001OnCmdMsg(::user::command * pcommand)
+         void WorkSet::route_command_message(::user::command * pcommand)
          {
 
             if(pcommand->m_id.m_emessagetype == ::message::type_command && m_pwndCommand != NULL)

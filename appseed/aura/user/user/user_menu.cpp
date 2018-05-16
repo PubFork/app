@@ -718,8 +718,6 @@ namespace user
 
       ::user::control_event ev;
 
-      ev.m_bRet = false;
-
       ev.m_eevent = ::user::event_context_menu_close;
 
       ::user::interaction * puiTarget = get_target_window();
@@ -727,7 +725,7 @@ namespace user
       if (puiTarget != NULL)
       {
 
-         BaseOnControlEvent(&ev);
+         on_control_event(&ev);
 
       }
 
@@ -741,7 +739,7 @@ namespace user
    }
 
 
-   bool menu::BaseOnControlEvent(::user::control_event * pevent)
+   void menu::on_control_event(::user::control_event * pevent)
    {
 
       if (pevent->m_eevent == ::user::event_button_clicked)
@@ -796,12 +794,12 @@ namespace user
 
                   }
 
-                  pevent->m_bProcessed = true;
+                  pevent->m_bRet = true;
 
                }
             }
          }
-         return true;
+
       }
       else if (pevent->m_eevent == ::user::event_mouse_enter)
       {
@@ -865,11 +863,11 @@ namespace user
                            if (puiTarget == NULL)
                            {
 
-                              return false;
+                              return;
 
                            }
 
-                           return puiTarget->BaseOnControlEvent(&ev);
+                           return puiTarget->on_control_event(&ev);
 
                         }
 
@@ -883,7 +881,9 @@ namespace user
 
          }
 
-         return true;
+         pevent->m_bRet = true;
+
+         return;
 
       }
       else if (pevent->m_eevent == ::user::event_mouse_leave)
@@ -893,18 +893,14 @@ namespace user
             KillTimer(timer_menu);
             m_idTimerMenu.is_empty();
          }
-         return true;
-      }
 
+         pevent->m_bRet = true;
 
-      if (::user::interaction::BaseOnControlEvent(pevent))
-      {
-
-         return true;
+         return;
 
       }
 
-      return false;
+      ::user::interaction::on_control_event(pevent);
 
    }
 

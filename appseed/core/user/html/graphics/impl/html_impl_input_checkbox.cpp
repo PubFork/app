@@ -101,7 +101,7 @@ namespace html
             ev.m_actioncontext = ::action::source::add(::action::source_data, ::action::source_load);
             ev.m_eevent = ::user::event_initialize_control;
             ev.m_uiEvent = 0;
-            pdata->m_pform->BaseOnControlEvent(&ev);
+            pdata->m_pform->on_control_event(&ev);
          }
       }
 

@@ -753,10 +753,10 @@ namespace core
    }
 
 
-   void application::_001OnCmdMsg(::user::command * pcommand)
+   void application::route_command_message(::user::command * pcommand)
    {
 
-      ::base::application::_001OnCmdMsg(pcommand);
+      ::base::application::route_command_message(pcommand);
 
    }
 

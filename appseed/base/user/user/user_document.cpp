@@ -45,19 +45,18 @@ namespace user
    }
 
 
-   void document::_001OnCmdMsg(::user::command * pcommand)
+   void document::route_command_message(::user::command * pcommand)
    {
 
-      command_target::_001OnCmdMsg(pcommand);
+      command_target::route_command_message(pcommand);
 
       if(pcommand->m_bRet)
          return;
 
-      // otherwise check template
       if (m_pimpactsystem != NULL)
       {
 
-         m_pimpactsystem->_001OnCmdMsg(pcommand);
+         m_pimpactsystem->route_command_message(pcommand);
 
          if (pcommand->m_bRet)
             return;

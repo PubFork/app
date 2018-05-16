@@ -89,7 +89,7 @@ namespace core
 
       void _001OnFileNew();
 
-      virtual void _001OnCmdMsg(::user::command * pcommand) override;
+      virtual void route_command_message(::user::command * pcommand) override;
 
       virtual ::user::document * userex_on_request(::create * pcreate);
 

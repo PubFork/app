@@ -93,7 +93,7 @@ namespace user
 
       bool operator == (const control & control) const;
 
-      bool BaseOnControlEvent(::user::control_event * pevent) override;
+      void on_control_event(::user::control_event * pevent) override;
       void _001SetControlFactory();
 
 
@@ -113,7 +113,7 @@ namespace user
       //      ::user::form_window(::aura::application * papp);
 
       //void on_update(::user::impact * pSender,LPARAM lHint,object* phint);
-      //      virtual bool BaseOnControlEvent(::user::control_event * pevent);
+      //      virtual void on_control_event(::user::control_event * pevent);
       //      DECL_GEN_SIGNAL(_001OnCreate);
       void _001OnTimer(::timer * ptimer) override;
       DECL_GEN_SIGNAL(_001OnUser123);

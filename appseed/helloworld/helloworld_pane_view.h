@@ -37,7 +37,7 @@ namespace helloworld
       virtual void dump(dump_context & dumpcontext) const;
 
       DECL_GEN_SIGNAL(_001OnCreate);
-      bool BaseOnControlEvent(::user::control_event * pevent);
+      void on_control_event(::user::control_event * pevent);
       void on_show_view();
 
       virtual ::file::path prepare_menu_view();

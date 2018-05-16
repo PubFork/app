@@ -819,7 +819,7 @@ namespace user
    }
 
 
-   void plain_edit::_001OnKeyDown(::message::message * pobj)
+   void plain_edit::_001OnKeyDown(::message::message * pmessage)
    {
 
       //synch_lock sl(m_pmutex);
@@ -832,28 +832,22 @@ namespace user
 
          ev.m_eevent = ::user::event_key_down;
 
-         ev.m_pobj = pobj;
+         ev.m_pmessage = pmessage;
 
          ev.m_actioncontext = ::action::source_user;
 
-         if (BaseOnControlEvent(&ev))
+         on_control_event(&ev);
+
+         if (ev.m_bRet)
          {
 
-            if (ev.m_bRet)
-            {
-
-               return;
-
-            }
+            return;
 
          }
 
       }
 
-
-
-
-      SCAST_PTR(::message::key, pkey, pobj);
+      SCAST_PTR(::message::key, pkey, pmessage);
 
       if (pkey->m_ekey == ::user::key_return)
       {
@@ -878,14 +872,16 @@ namespace user
 
             ev.m_actioncontext = ::action::source_user;
 
-            if (BaseOnControlEvent(&ev))
+            on_control_event(&ev);
+
+            if(!ev.m_bRet && ev.m_bOk)
             {
 
                on_action("submit");
 
             }
 
-            pobj->m_bRet = true;
+            pmessage->m_bRet = true;
 
             return;
 
@@ -917,7 +913,9 @@ namespace user
 
             ev.m_actioncontext = ::action::source_user;
 
-            if (!BaseOnControlEvent(&ev))
+            on_control_event(&ev);
+
+            if(!ev.m_bRet && ev.m_bOk)
             {
 
                sp(::user::interaction) pui = keyboard_get_next_focusable();
@@ -953,14 +951,16 @@ namespace user
 
          ev.m_actioncontext = ::action::source_user;
 
-         if (!BaseOnControlEvent(&ev))
+         on_control_event(&ev);
+
+         if(!ev.m_bRet && ev.m_bOk)
          {
 
             on_action("escape");
 
          }
 
-         pobj->m_bRet = true;
+         pmessage->m_bRet = true;
 
          return;
 
@@ -4690,7 +4690,7 @@ finished_update:
 
       ev.m_actioncontext = actioncontext;
 
-      BaseOnControlEvent(&ev);
+      on_control_event(&ev);
 
    }
 
@@ -4748,7 +4748,9 @@ finished_update:
 
          ev.m_actioncontext = ::action::source_paste;
 
-         if (BaseOnControlEvent(&ev))
+         on_control_event(&ev);
+
+         if(!ev.m_bRet && ev.m_bOk)
          {
 
             on_action("submit");

@@ -3662,10 +3662,8 @@ namespace axis
 
 
 
-   bool application::BaseOnControlEvent(::user::control_event * pevent)
+   void application::on_control_event(::user::control_event * pevent)
    {
-
-      return false;
 
    }
 

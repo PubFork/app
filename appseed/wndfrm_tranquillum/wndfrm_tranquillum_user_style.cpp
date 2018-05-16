@@ -45,8 +45,10 @@ namespace wndfrm_tranquillum
       create_color(::user::color_list_item_background_selected_hover, ARGB(255, 130, 180, 240));
       create_color(::user::color_button_background, ARGB(255, 80, 150, 220));
       create_color(::user::color_button_background_hover, ARGB(255, 110, 180, 240));
+      create_color(::user::color_button_background_disabled, ARGB(255, 180, 190, 200));
       create_color(::user::color_button_text, ARGB(255, 255, 255, 255));
       create_color(::user::color_button_text_hover, ARGB(255, 255, 255, 255));
+      create_color(::user::color_button_text_disabled, ARGB(255, 130, 150, 160));
       create_point_font(::user::font_button, "Tahoma", 12.0, 800);
       create_point_font(::user::font_plain_edit, "Tahoma", 12.0, 800);
 

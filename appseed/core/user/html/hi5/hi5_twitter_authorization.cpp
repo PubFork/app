@@ -250,7 +250,7 @@ namespace hi5
       }
 
 
-      bool authorization::BaseOnControlEvent( ::user::control_event * pevent)
+      void authorization::on_control_event( ::user::control_event * pevent)
       {
 
          if(pevent->m_eevent == ::user::event_button_clicked || pevent->m_eevent == ::user::event_enter_key)
@@ -272,8 +272,6 @@ namespace hi5
             }
 
          }
-
-         return false;
 
       }
 

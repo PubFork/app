@@ -46,10 +46,10 @@ bool simple_child_frame::pre_create_window(::user::create_struct& cs)
 }
 
 
-void simple_child_frame::_001OnCmdMsg(::user::command * pcommand)
+void simple_child_frame::route_command_message(::user::command * pcommand)
 {
 
-   simple_frame_window::_001OnCmdMsg(pcommand);
+   simple_frame_window::route_command_message(pcommand);
 
 }
 

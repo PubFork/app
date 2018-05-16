@@ -22,9 +22,8 @@ namespace user
       uint32_t                         m_uiVKey;
       uint32_t                         m_uiFlags;
       bool                             m_bRet;
-      bool                             m_bProcessed;
       bool                             m_bOk;
-      ::message::message *             m_pobj;
+      ::message::message *             m_pmessage;
       ::datetime::time                 m_timeOuterBeg;
       ::datetime::time                 m_timeOuterEnd;
       ::datetime::time                 m_timeBeg;
@@ -34,6 +33,8 @@ namespace user
 
       control_event();
       virtual ~control_event();
+
+      void nok();
 
       //impact * get_view();
       //::user::document * get_document();

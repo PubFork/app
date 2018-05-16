@@ -1640,7 +1640,7 @@ namespace user
 
 
 
-   bool form_list::BaseOnControlEvent(::user::control_event * pevent)
+   void form_list::on_control_event(::user::control_event * pevent)
    {
 
       if (pevent->m_eevent == ::user::event_after_change_cur_sel)
@@ -1651,12 +1651,12 @@ namespace user
 
             if (m_pcontrolEdit->descriptor().has_function(::user::control_function_data_selection))
             {
+
                _001SaveEdit(m_pcontrolEdit);
+
                pevent->m_bRet = true;
-               pevent->m_bProcessed = true;
 
             }
-
 
          }
 
@@ -1668,10 +1668,10 @@ namespace user
          {
 
             _001SaveEdit(m_pcontrolEdit);
+
             _001HideControl(m_pcontrolEdit);
 
             pevent->m_bRet = true;
-            pevent->m_bProcessed = true;
 
          }
 
@@ -1691,10 +1691,10 @@ namespace user
             iSubItem = m_pcontrolEdit->descriptor().m_iSubItem;
 
             _001SaveEdit(m_pcontrolEdit);
+
             _001HideControl(m_pcontrolEdit);
 
             pevent->m_bRet = true;
-            pevent->m_bProcessed = true;
 
          }
 
@@ -1722,15 +1722,13 @@ namespace user
 
             pevent->m_bRet = true;
 
-            pevent->m_bProcessed = true;
-
          }
 
       }
       else if (pevent->m_eevent == ::user::event_key_down)
       {
 
-         SCAST_PTR(::message::key, pkey, pevent->m_pobj);
+         SCAST_PTR(::message::key, pkey, pevent->m_pmessage);
 
          if (pkey->m_ekey == key_down || pkey->m_ekey == key_up
                || pkey->m_ekey == key_left || pkey->m_ekey == key_right)
@@ -1764,7 +1762,7 @@ namespace user
                   if (pkey->m_ekey == key_left && iSel != 0)
                   {
 
-                     return false;
+                     return;
 
                   }
                   else if (pkey->m_ekey == key_right)
@@ -1775,7 +1773,7 @@ namespace user
                      if (iSel != iLen)
                      {
 
-                        return false;
+                        return;
 
                      }
 
@@ -1791,7 +1789,6 @@ namespace user
                _001HideControl(m_pcontrolEdit);
 
                pevent->m_bRet = true;
-               pevent->m_bProcessed = true;
 
             }
 
@@ -1855,8 +1852,6 @@ namespace user
 
                pevent->m_bRet = true;
 
-               pevent->m_bProcessed = true;
-
             }
 
          }
@@ -1864,9 +1859,13 @@ namespace user
       }
 
       if (pevent->m_bRet)
-         return pevent->m_bProcessed;
+      {
 
-      return form_mesh::BaseOnControlEvent(pevent);
+         return;
+
+      }
+
+      return form_mesh::on_control_event(pevent);
    }
 
 

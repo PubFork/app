@@ -87,7 +87,7 @@ namespace user
          ev.m_eevent = ::user::event_button_clicked;
          ev.m_actioncontext = ::action::source_user;
          
-         BaseOnControlEvent(&ev);
+         on_control_event(&ev);
 
       }
 

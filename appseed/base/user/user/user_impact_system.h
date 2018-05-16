@@ -130,7 +130,7 @@ namespace user
       
 
          virtual void on_idle();             // for all documents
-         virtual void _001OnCmdMsg(::user::command * pcommand);
+         virtual void route_command_message(::user::command * pcommand);
 
 
          bool on_open_document(::user::document * pdoc, var varFile);

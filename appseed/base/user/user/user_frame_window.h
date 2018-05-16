@@ -226,7 +226,7 @@ namespace user
 
       virtual bool LoadToolBar(id idToolBar, const char * pszToolBar, uint32_t dwCtrlStyle = TBSTYLE_FLAT, uint32_t dwStyle = WS_CHILD | WS_VISIBLE | CBRS_ALIGN_TOP) override;
 
-      virtual void _001OnCmdMsg(::user::command * pcommand) override;
+      virtual void route_command_message(::user::command * pcommand) override;
       virtual void on_update_frame_title(bool bAddToTitle);
       virtual void OnUpdateFrameMenu(HMENU hMenuAlt);
       virtual HACCEL GetDefaultAccelerator();
@@ -299,7 +299,7 @@ namespace user
       virtual void _000OnDraw(::draw2d::graphics * pgraphics) override;
 
 
-      virtual bool BaseOnControlEvent(::user::control_event * pevent) override;
+      virtual void on_control_event(::user::control_event * pevent) override;
 
 
       sp(::user::interaction) WindowDataGetWnd();
@@ -314,7 +314,7 @@ namespace user
       void data_on_after_change(::message::message * pobj);
 
 
-      virtual bool _001HasCommandHandler(::user::command * pcommand) override;
+      virtual bool has_command_handler(::user::command * pcommand) override;
 
 
       virtual bool get_window_minimum_size(::size & sizeMin) override;

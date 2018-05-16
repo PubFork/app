@@ -1,4 +1,4 @@
-#include "framework.h" 
+#include "framework.h"
 
 
 
@@ -86,12 +86,10 @@ namespace user
 
    }
 
-   bool elemental::BaseOnControlEvent(control_event * pevent)
+   void elemental::on_control_event(control_event * pevent)
    {
 
       UNREFERENCED_PARAMETER(pevent);
-
-      return false;
 
    }
 
@@ -114,7 +112,7 @@ namespace user
       return Application.keyboard_focus_OnSetFocus(this);
    }
 
-   
+
    bool elemental::keyboard_focus_OnKillFocus()
    {
 
@@ -284,9 +282,9 @@ namespace user
    {
 
       string str;
-      
+
       _001GetText(str);
-      
+
       return str.get_length();
 
    }
@@ -302,19 +300,19 @@ namespace user
       strncpy(psz,str,len);
 
    }
-   
-   
+
+
    void get_text::_001GetText(string & str, strsize iBeg, strsize iEnd) const
    {
-      
+
       // default implementation, probably inefficient
       // _001GetText(string) returns big string
       // or retrieving entire string, instead of portions, is slow
-      
+
       string strText;
-      
+
       _001GetText(strText);
-      
+
       str = strText.Mid(iBeg, iEnd - iBeg);
 
    }
@@ -327,64 +325,64 @@ namespace user
 
    }
 
-   
+
    void edit_text::_001GetSel(strsize & iBeg, strsize & iEnd) const
    {
-      
+
       UNREFERENCED_PARAMETER(iBeg);
       UNREFERENCED_PARAMETER(iEnd);
-      
+
    }
-   
-   
+
+
    void edit_text::_001SetSel(strsize iBeg, strsize iEnd)
    {
-      
+
       UNREFERENCED_PARAMETER(iBeg);
       UNREFERENCED_PARAMETER(iEnd);
-      
+
    }
-   
-   
+
+
    void edit_text::_001GetViewSel(strsize & iBeg, strsize & iEnd) const
    {
-      
+
       UNREFERENCED_PARAMETER(iBeg);
       UNREFERENCED_PARAMETER(iEnd);
-      
+
    }
-   
-   
+
+
    void edit_text::_001SetSelEnd(strsize iEnd)
    {
-      
+
       UNREFERENCED_PARAMETER(iEnd);
-      
+
    }
-   
-   
+
+
    void edit_text::_001GetSelText(string & str) const
    {
-      
+
       // default implementation, maybe inefficient (if _001GetText is the default implementation)
-      
+
       index iBeg, iEnd;
-      
+
       _001GetSel(iBeg, iEnd);
 
       _001GetText(str, iBeg, iEnd);
 
    }
-   
-   
+
+
    void edit_text::MacroBegin()
    {
-      
+
    }
-   
+
    void edit_text::MacroEnd()
    {
-      
+
    }
 
 
@@ -445,7 +443,7 @@ namespace user
 
    }
 
-   
+
    ::user::elemental * elemental::first_child_elemental()
    {
 
@@ -514,20 +512,20 @@ namespace user
 
    }
 
-   
+
    void elemental::on_reset_focus_start_tick()
    {
 
       m_dwFocusStartTick = ::get_tick_count();
 
    }
-   
-   
+
+
    bool elemental::IsWindow() const
    {
-    
+
       return m_bUserElementalOk;
-      
+
    }
 
 

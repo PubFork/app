@@ -399,6 +399,8 @@ namespace draw2d
 
       virtual bool StretchBlt(rect rectDst, ::draw2d::graphics * pgraphicsSrc);
 
+      virtual bool draw(LPCRECT lpcrectDst, ::draw2d::graphics * pgraphicsSrc, LPCRECT lpcrectSrc, u32 dwRop = SRCCOPY);
+
       virtual bool StretchBlt(rect rectDst, ::draw2d::graphics * pgraphicsSrc, rect rectSrc, u32 dwRop = SRCCOPY);
 
       virtual bool StretchBlt(i32 x, i32 y, i32 nWidth, i32 nHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, i32 nSrcWidth, i32 nSrcHeight, u32 dwRop = SRCCOPY);

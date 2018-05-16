@@ -63,13 +63,16 @@ namespace user
             rectClient.width() - get_final_y_scroll_bar_width(),
             GetSystemMetrics(SM_CYHSCROLL), ifswp);
 
-            m_pscrollbarHorz->on_layout();
-
          }
          else
          {
+
             m_pscrollbarHorz->ShowWindow(SW_HIDE);
+
          }
+
+         m_pscrollbarHorz->set_need_layout();
+
       }
 
    }
@@ -920,13 +923,15 @@ namespace user
             GetSystemMetrics(SM_CXVSCROLL),
             rectClient.height() - get_final_x_scroll_bar_width(), ifswp);
 
-            m_pscrollbarVert->on_layout();
-
          }
          else
          {
+
             m_pscrollbarVert->ShowWindow(SW_HIDE);
+
          }
+
+         m_pscrollbarVert->set_need_layout();
 
       }
 

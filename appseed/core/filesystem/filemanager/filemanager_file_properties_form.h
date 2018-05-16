@@ -31,7 +31,7 @@ namespace filemanager
       void page1();
       void page2();
 
-      virtual bool BaseOnControlEvent(::user::control_event * pevent);
+      virtual void on_control_event(::user::control_event * pevent);
 
    };
 

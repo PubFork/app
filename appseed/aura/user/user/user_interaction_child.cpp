@@ -540,7 +540,9 @@ namespace user
       if(uiMessage == ::message::message_event)
       {
 
-         ((::user::control_event *) pbase->m_lparam.m_lparam)->m_bProcessed = m_pui->BaseOnControlEvent((control_event *)pbase->m_lparam.m_lparam);
+         ::user::control_event * pevent = pbase->m_lparam.cast < ::user::control_event >();
+
+         m_pui->on_control_event(pevent);
 
          return;
 

@@ -7,6 +7,7 @@ class CLASS_DECL_AURA command_target:
 {
 public:
 
+   id_array    m_idaHandledCommands;
 
    command_target();
    command_target(::aura::application * papp);
@@ -43,7 +44,7 @@ public:
    template < class T >
    void connect_command(id id,void (T::*pfn)(::message::message *))
    {
-   
+
       connect_command(id, dynamic_cast < T * > (this), pfn);
 
    }
@@ -51,7 +52,7 @@ public:
    template < class T >
    void connect_command_probe(::id id, T * p, void (T::*pfn)(::message::message *))
    {
-      
+
       ::message::id messageid;
 
       messageid = ::message::type_command_probe;
@@ -61,8 +62,8 @@ public:
       add_route(p, pfn, messageid);
 
    }
-   
-   
+
+
    template < class T >
    void connect_command(::id id,T * p,void (T::*pfn)(::message::message *))
    {
@@ -76,8 +77,8 @@ public:
       add_route(p, pfn, messageid);
 
    }
-   
-   
+
+
    //template < class T >
    //bool connect_update_cmd_range_ui(int32_t iStart,int32_t iEnd,void (T::*pfn)(::message::message *))
    //{
@@ -92,8 +93,8 @@ public:
    //   }
    //   return true;
    //}
-   
-   
+
+
    //template < class T >
    //bool connect_command_range(int32_t iStart,int32_t iEnd,void (T::*pfn)(::message::message *))
    //{
@@ -109,19 +110,15 @@ public:
    //   return true;
    //}
 
-   
+
    virtual void _001SendCommand(::user::command * pcommand);
    virtual void _001SendCommandProbe(::user::command * pcommand);
 
    virtual void on_command(::user::command * pcommand);
-   virtual bool _001HasCommandHandler(::user::command * pcommand);
+   virtual bool has_command_handler(::user::command * pcommand);
    virtual void on_command_probe(::user::command * pcommand);
 
-   //virtual void on_simple_command_probe(::user::command * pcommand);
-   virtual void _001OnCmdMsg(::user::command * pcommand);
-   //virtual bool _001HasCommandHandler(const char * pszId);
-
-   //void get_command_signal_array(::user::command::e_type etype,::dispatch::message::sender_item_ptr_array & signalptra,id id);
+   virtual void route_command_message(::user::command * pcommand);
 
 
    virtual void install_message_routing(::message::sender * psender);
@@ -139,7 +136,7 @@ public:
    // Overridables
    // route and dispatch standard command message types
    //   (more sophisticated than OnCommand)
-   //   virtual void _001OnCmdMsg(::user::command * pcommand);
+   //   virtual void route_command_message(::user::command * pcommand);
 
 
 

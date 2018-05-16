@@ -7,8 +7,6 @@ namespace prompt
 
    pane_view::pane_view(::aura::application * papp) :
       ::object(papp),
-      ::user::tab(papp),
-
       ::user::tab_view(papp),
       ::userex::pane_tab_view(papp),
       place_holder_container(papp)
@@ -313,24 +311,19 @@ namespace prompt
    }
 
 
-   bool pane_view::BaseOnControlEvent(::user::control_event * pevent)
+   void pane_view::on_control_event(::user::control_event * pevent)
    {
 
-      if (::prompt::form_callback::BaseOnControlEvent(pevent))
+      ::prompt::form_callback::on_control_event(pevent);
+
+      if(pevent->m_bRet)
       {
 
-         return true;
+         return;
 
       }
 
-      if (::userex::pane_tab_view::BaseOnControlEvent(pevent))
-      {
-
-         return true;
-
-      }
-
-      return false;
+      ::userex::pane_tab_view::on_control_event(pevent);
 
    }
 

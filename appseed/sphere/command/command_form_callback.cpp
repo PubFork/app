@@ -20,7 +20,7 @@ namespace prompt
    }
 
 
-   bool form_callback::BaseOnControlEvent(::user::control_event * pevent)
+   void form_callback::on_control_event(::user::control_event * pevent)
    {
 
       sp(::user::interaction) pui =  (this);
@@ -28,11 +28,9 @@ namespace prompt
       if(pui != NULL && pui->GetParent() != NULL)
       {
 
-         return pui->GetParent()->BaseOnControlEvent(pevent);
+         return pui->GetParent()->on_control_event(pevent);
 
       }
-
-      return false;
 
    }
 

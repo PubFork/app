@@ -223,7 +223,7 @@ namespace user
       virtual bool ContinueModal();
       virtual void EndModalLoop(id nResult);
 
-      virtual bool BaseOnControlEvent(::user::control_event * pevent) override;
+      virtual void on_control_event(::user::control_event * pevent) override;
 
       // Dialog data support
       virtual bool update_data(bool bSaveAndValidate = true);
@@ -507,7 +507,7 @@ namespace user
 
       virtual sp(place_holder) place(::user::interaction * pui);
 
-      virtual bool _001HasCommandHandler(::user::command * pcommand) override;
+      virtual bool has_command_handler(::user::command * pcommand) override;
 
 
 

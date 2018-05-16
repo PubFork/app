@@ -68,7 +68,7 @@ namespace userex
 
       virtual void term() override;
 
-      virtual void _001OnCmdMsg(::user::command * pcommand);
+      virtual void route_command_message(::user::command * pcommand);
 
 
       virtual void _001OnFileNew();

@@ -71,7 +71,7 @@ namespace user
 
          virtual void install_message_routing(::message::sender *pinterface) override;
 
-         bool BaseOnControlEvent(::user::control_event * pevent) override;
+         void on_control_event(::user::control_event * pevent) override;
 
          virtual void _001OnColumnChange() override;
 

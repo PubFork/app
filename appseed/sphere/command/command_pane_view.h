@@ -32,7 +32,7 @@ namespace prompt
 
       DECL_GEN_SIGNAL(_001OnMenuMessage);
 
-      virtual bool BaseOnControlEvent(::user::control_event * pevent) override;
+      virtual void on_control_event(::user::control_event * pevent) override;
 
       virtual void assert_valid() const override;
       virtual void dump(dump_context & dumpcontext) const override;

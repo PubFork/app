@@ -2232,10 +2232,10 @@ bool simple_frame_window::create_window(const char * lpszClassName,const char * 
 }
 
 
-void simple_frame_window::_001OnCmdMsg(::user::command * pcommand)
+void simple_frame_window::route_command_message(::user::command * pcommand)
 {
 
-   m_workset._001OnCmdMsg(pcommand);
+   m_workset.route_command_message(pcommand);
 
    if (pcommand->m_bRet)
    {
@@ -2248,7 +2248,7 @@ void simple_frame_window::_001OnCmdMsg(::user::command * pcommand)
    {
 
       // then pump through frame
-      ::user::frame_window::_001OnCmdMsg(pcommand);
+      ::user::frame_window::route_command_message(pcommand);
 
       if (pcommand->m_bRet)
       {
@@ -2265,7 +2265,7 @@ void simple_frame_window::_001OnCmdMsg(::user::command * pcommand)
    if (pview != NULL)
    {
 
-      pview->_001OnCmdMsg(pcommand);
+      pview->route_command_message(pcommand);
 
       if (pcommand->m_bRet)
       {
@@ -2281,7 +2281,7 @@ void simple_frame_window::_001OnCmdMsg(::user::command * pcommand)
    if (pview != NULL)
    {
 
-      pview->_001OnCmdMsg(pcommand);
+      pview->route_command_message(pcommand);
 
       if (pcommand->m_bRet)
       {
@@ -2296,7 +2296,7 @@ void simple_frame_window::_001OnCmdMsg(::user::command * pcommand)
    {
 
       // then pump through frame
-      ::user::frame_window::_001OnCmdMsg(pcommand);
+      ::user::frame_window::route_command_message(pcommand);
 
       if (pcommand->m_bRet)
       {
@@ -2313,7 +2313,7 @@ void simple_frame_window::_001OnCmdMsg(::user::command * pcommand)
    if (puiParent != NULL)
    {
 
-      puiParent->_001OnCmdMsg(pcommand);
+      puiParent->route_command_message(pcommand);
 
       if (pcommand->m_bRet)
       {
@@ -2330,7 +2330,7 @@ void simple_frame_window::_001OnCmdMsg(::user::command * pcommand)
    if (papp != NULL)
    {
 
-      papp->_001OnCmdMsg(pcommand);
+      papp->route_command_message(pcommand);
 
       if (pcommand->m_bRet)
       {
@@ -2346,7 +2346,7 @@ void simple_frame_window::_001OnCmdMsg(::user::command * pcommand)
    if (ptarget != NULL)
    {
 
-      ptarget->_001OnCmdMsg(pcommand);
+      ptarget->route_command_message(pcommand);
 
       if (pcommand->m_bRet)
       {
@@ -2609,17 +2609,19 @@ void simple_frame_window::_001OnQueryEndSession(::message::message * pobj)
 }
 
 
-bool simple_frame_window::BaseOnControlEvent(::user::control_event * pevent)
+void simple_frame_window::on_control_event(::user::control_event * pevent)
 {
 
-   if (m_workset.BaseOnControlEvent(pevent))
+   m_workset.on_control_event(pevent);
+
+   if(pevent->m_bRet)
    {
 
-      return true;
+      return;
 
    }
 
-   return ::user::frame_window::BaseOnControlEvent(pevent);
+   return ::user::frame_window::on_control_event(pevent);
 
 }
 

@@ -3,9 +3,8 @@
 //#include "core/filesystem/filemanager/filemanager.h"
 //#include "usernet_network_configuration.h"
 
-// Included in _user.cpp
 
-namespace usernet // ca8 + cube
+namespace usernet
 {
 
 
@@ -67,7 +66,7 @@ namespace usernet // ca8 + cube
 
    }
 
-   bool network_configuration::BaseOnControlEvent(::user::control_event * pevent)
+   void network_configuration::on_control_event(::user::control_event * pevent)
    {
 
 
@@ -117,11 +116,9 @@ namespace usernet // ca8 + cube
 
       }
 
-      return false;
-
    }
 
 
-} // namespace usernet // ca8 + cube
+} // namespace usernet
 
 

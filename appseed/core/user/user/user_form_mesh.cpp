@@ -615,7 +615,7 @@ namespace user
    }
 
 
-   bool form_mesh::BaseOnControlEvent(::user::control_event * pevent)
+   void form_mesh::on_control_event(::user::control_event * pevent)
    {
 
 
@@ -623,7 +623,7 @@ namespace user
       //{
          ///pdescriptor->m_pcontrol->m_iEditItem = m_iControlItem;
       //}
-      return form::BaseOnControlEvent(pevent);
+      return form::on_control_event(pevent);
    }
 
 

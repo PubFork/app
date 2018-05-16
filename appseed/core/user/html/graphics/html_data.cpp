@@ -323,7 +323,7 @@ namespace html
          ::user::control_event ev;
          ev.m_puie = m_pui;
          ev.m_eevent = ::user::event_form_initialize;
-         m_pui->BaseOnControlEvent(&ev);
+         m_pui->on_control_event(&ev);
 
       }
 

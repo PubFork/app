@@ -168,7 +168,7 @@ namespace user
 
             void _001OnDraw(::draw2d::graphics * pgraphics);
 
-            virtual bool BaseOnControlEvent(::user::control_event * pevent);
+            virtual void on_control_event(::user::control_event * pevent);
 
 
             void EnableDock(bool bEnable);
@@ -186,7 +186,7 @@ namespace user
             bool IsFullScreen();
             bool ViewFullScreen(bool bFullScreen);
 
-            virtual void _001OnCmdMsg(::user::command * pcommand);
+            virtual void route_command_message(::user::command * pcommand);
 
             virtual void OnSize(UINT nType, int32_t cx, int32_t cy);
 

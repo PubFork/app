@@ -25,7 +25,7 @@ namespace usernet
 
       void on_show();
 
-      bool BaseOnControlEvent(::user::control_event * pevent);
+      void on_control_event(::user::control_event * pevent);
 
    };
 

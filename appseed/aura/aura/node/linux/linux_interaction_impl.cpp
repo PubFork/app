@@ -1178,15 +1178,15 @@ namespace linux
 
 
 
-   void interaction_impl::_001OnCmdMsg(::user::command * pcommand)
+   void interaction_impl::route_command_message(::user::command * pcommand)
    {
 
-      command_target::_001OnCmdMsg(pcommand);
+      command_target::route_command_message(pcommand);
 
    }
 
 
-   bool interaction_impl::BaseOnControlEvent(::user::control_event * pevent)
+   void interaction_impl::on_control_event(::user::control_event * pevent)
    {
       UNREFERENCED_PARAMETER(pevent);
       return false;
@@ -1565,11 +1565,11 @@ namespace linux
       {
          if(m_pui != NULL)
          {
-            m_pui->BaseOnControlEvent((::user::control_event *) pbase->m_lparam.m_lparam);
+            m_pui->on_control_event((::user::control_event *) pbase->m_lparam.m_lparam);
          }
          else
          {
-            BaseOnControlEvent((::user::control_event *) pbase->m_lparam.m_lparam);
+            on_control_event((::user::control_event *) pbase->m_lparam.m_lparam);
          }
          return;
       }

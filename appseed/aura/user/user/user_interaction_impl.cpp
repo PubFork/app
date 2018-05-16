@@ -918,7 +918,7 @@ namespace user
 //#endif
 
 
-   void interaction_impl::_001OnCmdMsg(::user::command * pcommand)
+   void interaction_impl::route_command_message(::user::command * pcommand)
    {
 
       UNREFERENCED_PARAMETER(pcommand);

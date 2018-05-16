@@ -7,8 +7,6 @@ namespace filehandler
 
    pane_view::pane_view(::aura::application * papp) :
       ::object(papp),
-      ::user::tab(papp),
-
       ::user::tab_view(papp),
       ::userex::pane_tab_view(papp),
       place_holder_container(papp)
@@ -163,41 +161,41 @@ namespace filehandler
       switch(pcreatordata->m_id)
       {
       case pane_view_new:
+      {
+         /*               sp(::create) createcontext(get_app());
+         createcontext->m_bMakeVisible = true;
+         createcontext->m_puiParent = this;
+         rtprxsp(::document) pdoc = dynamic_cast < rtprxsp(::document) > (papp->m_ptemplateVideo->request_create(createcontext));
+         if(pdoc != NULL)
          {
-            /*               sp(::create) createcontext(get_app());
-            createcontext->m_bMakeVisible = true;
-            createcontext->m_puiParent = this;
-            rtprxsp(::document) pdoc = dynamic_cast < rtprxsp(::document) > (papp->m_ptemplateVideo->request_create(createcontext));
-            if(pdoc != NULL)
-            {
-            sp(::user::impact) pview = pdoc->get_view();
-            pview->on_update(NULL, 0, NULL);
-            if(pview != NULL)
-            {
-            sp(::user::frame_window) pframe =  (pview->GetParentFrame());
-            if(pframe != NULL)
-            {
-            pcreatordata->m_pdoc = pdoc;
-            pcreatordata->m_pwnd = pframe;
+         sp(::user::impact) pview = pdoc->get_view();
+         pview->on_update(NULL, 0, NULL);
+         if(pview != NULL)
+         {
+         sp(::user::frame_window) pframe =  (pview->GetParentFrame());
+         if(pframe != NULL)
+         {
+         pcreatordata->m_pdoc = pdoc;
+         pcreatordata->m_pwnd = pframe;
 
-            //                  pdoc->Initialize(true);
-            }
-            }
-            }*/
-            /*         create_context cc;
-            cc.m_pCurrentDoc = get_document();
-            cc.m_typeinfoNewView =  System.type_info < rtprx::view > ();
-
-            sp(::user::impact) pview = (CreateView(&cc, 101, this));
-            if(pview != NULL)
-            {
-            pcreatordata = new ViewData();
-            pcreatordata->m_eview = eview;
-            pcreatordata->m_pdoc = get_document();
-            pcreatordata->m_pwnd = pview;
-            }*/
+         //                  pdoc->Initialize(true);
          }
-         break;
+         }
+         }*/
+         /*         create_context cc;
+         cc.m_pCurrentDoc = get_document();
+         cc.m_typeinfoNewView =  System.type_info < rtprx::view > ();
+
+         sp(::user::impact) pview = (CreateView(&cc, 101, this));
+         if(pview != NULL)
+         {
+         pcreatordata = new ViewData();
+         pcreatordata->m_eview = eview;
+         pcreatordata->m_pdoc = get_document();
+         pcreatordata->m_pwnd = pview;
+         }*/
+      }
+      break;
       default:
          //ASSERT(FALSE);
          break;
@@ -219,7 +217,7 @@ namespace filehandler
       ::userex::pane_tab_view::install_message_routing(pinterface);
 
       IGUI_MSG_LINK(WM_CREATE, pinterface, this, &pane_view::_001OnCreate);
-      IGUI_MSG_LINK(WM_USER + 1122  , pinterface, this, &pane_view::_001OnMenuMessage);
+      IGUI_MSG_LINK(WM_USER + 1122, pinterface, this, &pane_view::_001OnMenuMessage);
    }
 
 

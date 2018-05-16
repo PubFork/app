@@ -88,7 +88,7 @@ namespace user
       DECL_GEN_SIGNAL(_001OnShowWindow);
       DECL_GEN_SIGNAL(_001OnClose);
 
-      virtual bool BaseOnControlEvent(::user::control_event * pevent) override;
+      virtual void on_control_event(::user::control_event * pevent) override;
 
       bool pre_create_window(::user::create_struct& cs) override;
 

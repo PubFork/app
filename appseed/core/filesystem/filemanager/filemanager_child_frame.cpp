@@ -51,10 +51,10 @@ namespace filemanager
    }
 
 
-   void child_frame::_001OnCmdMsg(::user::command * pcommand)
+   void child_frame::route_command_message(::user::command * pcommand)
    {
 
-      simple_child_frame::_001OnCmdMsg(pcommand);
+      simple_child_frame::route_command_message(pcommand);
 
    }
 

@@ -48,7 +48,7 @@ public:
         LPARAM lParam   // address of structure with message data
         );
 
-   virtual void _001OnCmdMsg(::user::command * pcommand) override;
+   virtual void route_command_message(::user::command * pcommand) override;
    virtual void pre_translate_message(::message::message * pobj) override;
    protected:
    virtual bool pre_create_window(::user::create_struct& cs) override;

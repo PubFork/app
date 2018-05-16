@@ -28,12 +28,10 @@ namespace userstack
    }
 
 
-   bool form_callback::BaseOnControlEvent(::user::control_event * pevent)
+   void form_callback::on_control_event(::user::control_event * pevent)
    {
 
       UNREFERENCED_PARAMETER(pevent);
-
-      return false;
 
    }
 

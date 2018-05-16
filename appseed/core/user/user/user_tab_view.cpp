@@ -7,7 +7,6 @@ namespace user
 
    tab_view::tab_view(::aura::application * papp) :
       object(papp),
-      ::user::tab(papp),
       place_holder_container(papp)
    {
 
@@ -867,7 +866,7 @@ namespace user
    }
 
 
-   void tab_view::_001OnCmdMsg(::user::command * pcommand)
+   void tab_view::route_command_message(::user::command * pcommand)
    {
 
       if (!handle(pcommand))
@@ -880,7 +879,7 @@ namespace user
       if (get_view_uie() != NULL)
       {
 
-         get_view_uie()->_001OnCmdMsg(pcommand);
+         get_view_uie()->route_command_message(pcommand);
 
          if (pcommand->m_bRet)
          {
@@ -891,7 +890,7 @@ namespace user
 
       }
 
-      return impact::_001OnCmdMsg(pcommand);
+      return impact::route_command_message(pcommand);
 
    }
 

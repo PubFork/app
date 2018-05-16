@@ -1330,6 +1330,14 @@ restart:
    }
 
 
+   bool interaction::is_frame_window()
+   {
+
+      return false;
+
+   }
+
+
    void interaction::translate()
    {
 
@@ -2885,7 +2893,7 @@ restart:
 
       //      ev.m_actioncontext        = ::action::source_user;
 
-      //      if(!BaseOnControlEvent(&ev))
+      //      if(!on_control_event(&ev))
       //      {
 
       //         sp(::user::interaction) pui = Session.get_keyboard_focus();
@@ -4670,7 +4678,7 @@ restart:
    }
 
 
-   bool interaction::BaseOnControlEvent(control_event * pevent)
+   void interaction::on_control_event(control_event * pevent)
    {
 
       ::user::interaction * puiParent = GetParent();
@@ -4678,13 +4686,7 @@ restart:
       if (puiParent != NULL)
       {
 
-         return puiParent->BaseOnControlEvent(pevent);
-
-      }
-      else
-      {
-
-         return false;
+         puiParent->on_control_event(pevent);
 
       }
 
@@ -5938,25 +5940,13 @@ restart:
    }
 
 
-   bool interaction::_001HasCommandHandler(::user::command * pcommand)
+   bool interaction::has_command_handler(::user::command * pcommand)
    {
 
-      if (command_target::_001HasCommandHandler(pcommand))
+      if (command_target::has_command_handler(pcommand))
       {
 
          return true;
-
-      }
-
-      if (GetParent() != NULL)
-      {
-
-         if (GetParent()->_001HasCommandHandler(pcommand))
-         {
-
-            return true;
-
-         }
 
       }
 
@@ -8051,9 +8041,9 @@ restart:
          ev.m_eevent = ::user::event_tab_key;
          ev.m_actioncontext = ::action::source_user;
 
-         GetParent()->BaseOnControlEvent(&ev);
+         GetParent()->on_control_event(&ev);
 
-         BaseOnControlEvent(&ev);
+         on_control_event(&ev);
 
       }
 
@@ -8192,10 +8182,12 @@ restart:
    }
 
 
-   void interaction::BaseOnControlEvent(::message::base * pbase)
+   void interaction::on_control_event(::message::base * pbase)
    {
 
-      ((::user::control_event *) pbase->m_lparam.m_lparam)->m_bRet = BaseOnControlEvent((::user::control_event *) pbase->m_lparam.m_lparam);
+      auto pevent = pbase->m_lparam.cast < ::user::control_event >();
+
+      on_control_event(pevent);
 
    }
 

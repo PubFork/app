@@ -1420,17 +1420,17 @@ namespace windows
 
 
 
-   void interaction_impl::_001OnCmdMsg(::user::command * pcommand)
+   void interaction_impl::route_command_message(::user::command * pcommand)
    {
 
-      command_target::_001OnCmdMsg(pcommand);
+      command_target::route_command_message(pcommand);
 
       if (pcommand->m_bRet)
          return;
 
       command_target * pcmdtarget = dynamic_cast <command_target *> (this);
 
-      pcmdtarget->command_target::_001OnCmdMsg(pcommand);
+      pcmdtarget->command_target::route_command_message(pcommand);
 
    }
 
@@ -1834,7 +1834,7 @@ namespace windows
       }
       if (uiMessage == ::message::message_event)
       {
-         m_pui->BaseOnControlEvent(pbase);
+         m_pui->on_control_event(pbase);
          return;
       }
 

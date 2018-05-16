@@ -56,7 +56,7 @@ namespace userex
 
             if (m_ptopview != NULL && puh->m_pui == m_ptopview->m_peditview)
             {
-               
+
                synch_lock sl(m_pview->m_pfontlistdata->m_pmutex);
 
                string strText;
@@ -111,12 +111,12 @@ namespace userex
    }
 
 
-   bool font_view::BaseOnControlEvent(::user::control_event * pevent)
+   void font_view::on_control_event(::user::control_event * pevent)
    {
 
 
       if (pevent->m_eevent == ::user::event_after_change_cur_sel
-         || pevent->m_eevent == ::user::event_after_change_cur_hover)
+            || pevent->m_eevent == ::user::event_after_change_cur_hover)
       {
 
          if (m_pview == pevent->m_puie)
@@ -132,8 +132,9 @@ namespace userex
 
          }
 
+         pevent->m_bRet = true;
+
       }
-      return true;
 
    }
 

@@ -67,7 +67,7 @@ namespace userex
 
       virtual void _001OnNcDraw(::draw2d::graphics * pgraphics) override;
 
-      virtual bool BaseOnControlEvent(::user::control_event * pevent) override;
+      virtual void on_control_event(::user::control_event * pevent) override;
 
       virtual void prepare_form(id id, ::html_document * pdocument);
 

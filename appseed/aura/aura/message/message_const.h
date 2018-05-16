@@ -25,6 +25,7 @@ namespace message
       type_id,
       type_command,
       type_command_probe,
+      type_has_command_handler,
       type_application,
       type_http,
       type_html,

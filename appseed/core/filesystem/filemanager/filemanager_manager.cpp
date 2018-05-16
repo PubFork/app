@@ -675,7 +675,7 @@ namespace filemanager
    }
 
 
-   /*bool manager::_001OnCmdMsg(::user::command * pcommand)
+   /*bool manager::route_command_message(::user::command * pcommand)
    {
    if (nCode == CN_UPDATE_::user::command)
    {
@@ -704,7 +704,7 @@ namespace filemanager
    }
    }
    }*/
-   /*   return ::user::document::_001OnCmdMsg(pcommand);
+   /*   return ::user::document::route_command_message(pcommand);
    }
    */
 

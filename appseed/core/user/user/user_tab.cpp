@@ -69,18 +69,16 @@ namespace user
 
    }
 
-   tab::tab(::aura::application * papp) :
-      object(papp),
-      place_holder_container(papp),
-      m_dcextension(papp)
+   tab::tab() :
+      m_dcextension(get_app())
    {
 
       m_estate = state_initial;
 
       m_iRestoredTabCount = 0;
 
-      m_spdata = canew(data(papp));
-      get_data()->m_panea.set_app(papp);
+      m_spdata = canew(data(get_app()));
+      get_data()->m_panea.set_app(get_app());
       get_data()->m_iHeightAddUp = 0;
       get_data()->m_pcallback    = NULL;
       get_data()->m_bCreated     = false;
@@ -1854,7 +1852,7 @@ namespace user
 
          ev.m_eevent    = ::user::event_on_create_tab;
 
-         BaseOnControlEvent(&ev);
+         on_control_event(&ev);
 
       }
 

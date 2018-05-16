@@ -26,7 +26,7 @@ namespace prompt
       virtual void term_instance() override;
 
 
-      virtual void _001OnCmdMsg(::user::command * pcommand) override;
+      virtual void route_command_message(::user::command * pcommand) override;
 
 
       void OnFileManagerOpenFile(::filemanager::data * pdata, ::fs::item_array & itema);

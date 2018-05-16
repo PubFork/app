@@ -130,7 +130,15 @@ namespace user
          }
          else
          {
-            if(m_iHover == 0 || Session.m_puiLastLButtonDown == this)
+            if (!is_window_enabled())
+            {
+
+               pgraphics->fill_solid_rect(rectClient, _001GetColor(color_button_background_disabled));
+
+               pgraphics->set_text_color(_001GetColor(color_button_text_disabled));
+
+            }
+            else if(m_iHover == 0 || Session.m_puiLastLButtonDown == this)
             {
 
                //pgraphics->draw3d_rect(rectClient,m_puserstyle->_001GetColor(color_border_hover),m_puserstyle->_001GetColor(color_border_hover));
@@ -313,9 +321,22 @@ namespace user
 
             ev.m_eevent = ::user::event_button_clicked;
 
-            BaseOnControlEvent(&ev);
+            on_control_event(&ev);
 
             pobj->m_bRet = ev.m_bRet;
+
+            if (!pobj->m_bRet)
+            {
+
+               ::user::command command;
+
+               command.m_id = m_id;
+
+               route_command_message(&command);
+
+               pobj->m_bRet = command.m_bRet;
+
+            }
 
             if (pobj->m_bRet)
             {
@@ -700,10 +721,10 @@ namespace user
    }
 
 
-   void button::_001OnKeyDown(::message::message * pobj)
+   void button::_001OnKeyDown(::message::message * pmessage)
    {
 
-      SCAST_PTR(::message::key,pkey,pobj);
+      SCAST_PTR(::message::key,pkey, pmessage);
 
       ::user::e_key iKey = pkey->m_ekey;
 
@@ -713,10 +734,10 @@ namespace user
          ::user::control_event ev;
          ev.m_puie = this;
          ev.m_eevent = ::user::event_button_clicked;
-         ev.m_pobj = pobj;
-         BaseOnControlEvent(&ev);
-         pobj->m_bRet = ev.m_bRet;
-         if(pobj->m_bRet)
+         ev.m_pmessage = pmessage;
+         on_control_event(&ev);
+         pmessage->m_bRet = ev.m_bRet;
+         if(pmessage->m_bRet)
          {
             pkey->set_lresult(1);
          }
@@ -729,6 +750,61 @@ namespace user
 
    void button::_001OnDrawBitmap(::draw2d::graphics * pgraphics)
    {
+
+
+
+      string strText;
+
+      get_window_text(strText);
+
+      rect rectClient;
+      GetClientRect(rectClient);
+
+
+      if (m_puserstyle == NULL)
+      {
+
+         if (m_iHover == 0 || Session.m_puiLastLButtonDown == this)
+         {
+
+            pgraphics->fill_solid_rect(rectClient, ARGB(255, 127, 127, 127));
+
+         }
+         else
+         {
+
+            pgraphics->fill_solid_rect(rectClient, ARGB(255, 127, 127, 127));
+
+         }
+
+      }
+      else
+      {
+         if (!is_window_enabled())
+         {
+
+            pgraphics->fill_solid_rect(rectClient, _001GetColor(color_button_background_disabled));
+
+         }
+         else if (m_iHover == 0 || Session.m_puiLastLButtonDown == this)
+         {
+
+            //pgraphics->draw3d_rect(rectClient,m_puserstyle->_001GetColor(color_border_hover),m_puserstyle->_001GetColor(color_border_hover));
+
+            //rectClient.deflate(1,1);
+
+            pgraphics->fill_solid_rect(rectClient, _001GetColor(color_button_background_hover));
+
+         }
+         else
+         {
+
+            pgraphics->fill_solid_rect(rectClient, _001GetColor(color_button_background));
+
+         }
+
+      }
+
 
       if(!(m_pbitmap->m_dib.is_set() && m_pbitmap->m_dib->area() > 0))
          return;
@@ -747,7 +823,30 @@ namespace user
       else if(!is_window_enabled() && m_pbitmap->m_dibDisabled.is_set() && m_pbitmap->m_dibDisabled->area() > 0)
          pdib = m_pbitmap->m_dibDisabled;   // last image for disabled
 
-      pgraphics->from(pdib->m_size, pdib->get_graphics(), SRCCOPY);
+      if (pdib->area() > 0 && rectClient.area() > 0)
+      {
+
+         rect rectAspect;
+
+         rectAspect.left = 0;
+
+         rectAspect.top = 0;
+
+         double dW = (double) rectClient.width() / (double)pdib->m_size.cx;
+
+         double dH = (double) rectClient.height() / (double) pdib->m_size.cy;
+
+         double dMin = MAX(MIN(dW, dH), 1.0);
+
+         rectAspect.right = pdib->m_size.cx * dMin;
+
+         rectAspect.bottom = pdib->m_size.cy * dMin;
+
+         rectAspect.Align(align_center, rectClient);
+
+         pgraphics->draw(rectClient, pdib->get_graphics(), rect(pdib->m_size));
+
+      }
 
    }
 

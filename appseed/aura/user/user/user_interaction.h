@@ -202,6 +202,8 @@ namespace user
       virtual void clear_need_translation();
       virtual void translate();
 
+      virtual bool is_frame_window();
+
       virtual bool defer_check_show_flags();
       virtual bool check_show_flags();
       virtual void clear_show_flags();
@@ -247,7 +249,7 @@ namespace user
 
       virtual void ExitHelpMode();
 
-      virtual void BaseOnControlEvent(::message::base * pbase);
+      virtual void on_control_event(::message::base * pbase);
 
       virtual LONG get_window_long(int32_t nIndex) const override;
       virtual LONG set_window_long(int32_t nIndex,LONG lValue) override;
@@ -401,7 +403,7 @@ namespace user
       virtual bool ContinueModal() override;
       virtual void EndModalLoop(id nResult) override;
 
-      virtual bool BaseOnControlEvent(::user::control_event * pevent) override;
+      virtual void on_control_event(::user::control_event * pevent) override;
 
       // Dialog data support
       virtual bool update_data(bool bSaveAndValidate = true) override;
@@ -823,7 +825,7 @@ namespace user
          return nullptr;
       }
 #endif
-      virtual bool _001HasCommandHandler(::user::command * pcommand) override;
+      virtual bool has_command_handler(::user::command * pcommand) override;
 
 
 

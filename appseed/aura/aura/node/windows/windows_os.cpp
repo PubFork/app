@@ -2198,6 +2198,10 @@ repeat:
          if (SUCCEEDED(hr))
          {
 
+            FILEOPENDIALOGOPTIONS options = 0;
+
+            hr = pfileopen->GetOptions(&options);
+
             array < COMDLG_FILTERSPEC > rgSpec;
 
             array < wstring > wstraSpecs;
@@ -2226,9 +2230,18 @@ repeat:
             if (rgSpec.get_size() > 0)
             {
 
-               pfileopen->SetFileTypes(UINT (rgSpec.get_size()), rgSpec.get_data());
+               pfileopen->SetFileTypes(UINT(rgSpec.get_size()), rgSpec.get_data());
 
             }
+
+            if ((bool)set["allow_multi_select"])
+            {
+
+               options |= FOS_ALLOWMULTISELECT;
+
+            }
+
+            hr = pfileopen->SetOptions(options);
 
             if (set["default_file_extension"].get_string().get_length() > 0)
             {
@@ -2268,25 +2281,74 @@ repeat:
             if (SUCCEEDED(hr))
             {
 
-               // Get the file name from the dialog box.
-               comptr < IShellItem > pitem;
-
-               hr = pfileopen->GetResult(&pitem);
-
-               if (SUCCEEDED(hr))
+               if (options & FOS_ALLOWMULTISELECT)
                {
 
-                  cotaskp(PWSTR) pwszFilePath;
+                  comptr < IShellItemArray > pitema;
 
-                  hr = pitem->GetDisplayName(SIGDN_FILESYSPATH, &pwszFilePath);
+                  hr = pfileopen->GetResults(&pitema);
 
-                  // Display the file name to the user.
+                  if (SUCCEEDED(hr))
+                  {
+                     DWORD dwNumItems = 0; // number of items in multiple selection
+
+                     hr = pitema->GetCount(&dwNumItems);  // get number of selected items
+
+                     // Loop through IShellItemArray and construct string for display
+                     for (DWORD i = 0; i < dwNumItems; i++)
+                     {
+                        comptr < IShellItem > pitem;
+
+                        hr = pitema->GetItemAt(i, &pitem); // get a selected item from the IShellItemArray
+
+                        if (SUCCEEDED(hr))
+                        {
+
+                           cotaskp(PWSTR) pwszFilePath;
+
+                           hr = pitem->GetDisplayName(SIGDN_FILESYSPATH, &pwszFilePath);
+
+                           // Display the file name to the user.
+                           if (SUCCEEDED(hr))
+                           {
+
+                              set["file_name"].stra().add(string((PWSTR)pwszFilePath));
+
+                              bOk = true;
+
+                           }
+
+                        }
+
+                     }
+
+                  }
+
+               }
+               else
+               {
+
+                  // Get the file name from the dialog box.
+                  comptr < IShellItem > pitem;
+
+                  hr = pfileopen->GetResult(&pitem);
+
                   if (SUCCEEDED(hr))
                   {
 
-                     set["file_name"] = string((PWSTR) pwszFilePath);
+                     cotaskp(PWSTR) pwszFilePath;
 
-                     bOk = true;
+                     hr = pitem->GetDisplayName(SIGDN_FILESYSPATH, &pwszFilePath);
+
+                     // Display the file name to the user.
+                     if (SUCCEEDED(hr))
+                     {
+
+                        set["file_name"] = string((PWSTR)pwszFilePath);
+
+                        bOk = true;
+
+                     }
 
                   }
 

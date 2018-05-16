@@ -48,7 +48,9 @@ namespace file
 
       ::file::path application::matter(const ::file::path & path,bool bDir,const ::file::path & pszRoot,const ::file::path & pszApp)
       {
-         return m_pauraapp->m_paurasystem->m_spdir->matter(get_app(), path, bDir, pszRoot, pszApp);
+         string str = path;
+         ::str::begins_eat_ci(str, "matter://");
+         return m_pauraapp->m_paurasystem->m_spdir->matter(get_app(), str, bDir, pszRoot, pszApp);
       }
 
       //::file::path application::matter(const string & str, const string & str2, bool bDir, const string & pszRoot, const string & pszApp)

@@ -481,7 +481,7 @@ namespace filemanager
       //SetTimer(1234567, 50, NULL);
    }
 
-   void file_list::_001OnCmdMsg(::user::command * pcommand)
+   void file_list::route_command_message(::user::command * pcommand)
    {
 
       ::fs::item_array itema;
@@ -497,7 +497,7 @@ namespace filemanager
 
       }
 
-      ::user::impact::_001OnCmdMsg(pcommand);
+      ::user::impact::route_command_message(pcommand);
 
    }
 

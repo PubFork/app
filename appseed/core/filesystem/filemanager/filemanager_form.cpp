@@ -15,13 +15,13 @@ namespace filemanager
    {
 
    }
-   
+
    void form::install_message_routing(::message::sender * psender)
    {
-      
+
       ::filemanager::impact::install_message_routing(psender);
       ::html_form_view::install_message_routing(psender);
-      
+
    }
 
    void form::on_update(::user::impact * pSender,LPARAM lHint,object* phint)
@@ -42,7 +42,7 @@ namespace filemanager
    }
 
 
-   bool form::BaseOnControlEvent(::user::control_event * pevent)
+   void form::on_control_event(::user::control_event * pevent)
    {
       if(pevent->m_eevent == ::user::event_button_clicked)
       {
@@ -100,13 +100,14 @@ namespace filemanager
                ptext->_001GetText(uh.m_str);
                sp(::filemanager::manager) pdoc = get_filemanager_manager();
                pdoc->update_all_views(NULL, 0, &uh);
+
             }
+
          }
+
       }
-      return false;
+
    }
-
-
 
 
 } // namespace filemanager

@@ -27,7 +27,7 @@ namespace user
       virtual void _001OnDraw(::draw2d::graphics * pgraphics) override;
       virtual void _001OnTimer(::timer * ptime) override;
 
-
+      virtual void route_command_message(::user::command * pcommand) override;
       virtual void on_update(::user::impact * pviewSender, LPARAM lparam, ::object * pobjectHint) override;
 
       virtual void set_viewport_offset(int, int) override;

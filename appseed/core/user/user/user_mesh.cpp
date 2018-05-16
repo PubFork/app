@@ -2809,6 +2809,9 @@ namespace user
             {
 
                m_rangeSelection.clear();
+
+               _001OnSelectionChange();
+
             }
 
          }
@@ -2833,6 +2836,8 @@ namespace user
 
                   m_iShiftFirstSelection = iItem;
 
+                  _001OnSelectionChange();
+
                }
 
             }
@@ -2853,6 +2858,8 @@ namespace user
                   _001AddSelection(itemrange);
 
                   m_iShiftFirstSelection = iItem;
+
+                  _001OnSelectionChange();
 
                }
 
@@ -2886,6 +2893,8 @@ namespace user
                   _001AddSelection(itemrange);
 
                }
+
+               _001OnSelectionChange();
 
             }
 
@@ -3087,7 +3096,7 @@ namespace user
       if(m_pformcallback != NULL)
       {
 
-         m_pformcallback->BaseOnControlEvent(&ev);
+         m_pformcallback->on_control_event(&ev);
 
       }
       else if(get_form() != NULL)

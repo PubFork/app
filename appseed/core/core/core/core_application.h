@@ -193,7 +193,7 @@ namespace core
       void OnUpdateRecentFileMenu(::user::command * pcommand);
 
       //virtual void send_app_language_changed();
-      virtual void _001OnCmdMsg(::user::command * pcommand) override;
+      virtual void route_command_message(::user::command * pcommand) override;
 
 
 

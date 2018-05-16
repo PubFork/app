@@ -1798,12 +1798,10 @@ Restart:
    }
 
 
-   bool interaction_base::BaseOnControlEvent(control_event * pevent)
+   void interaction_base::on_control_event(control_event * pevent)
    {
 
       ::exception::throw_interface_only(get_app());
-
-      return false;
 
    }
 
@@ -2364,7 +2362,7 @@ Restart:
    }
 
 
-   bool interaction_base::_001HasCommandHandler(::user::command * pcommand)
+   bool interaction_base::has_command_handler(::user::command * pcommand)
    {
 
       ::exception::throw_interface_only(get_app());

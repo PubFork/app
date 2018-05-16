@@ -1095,13 +1095,10 @@ namespace user
    }
 
 
-   void frame_window::_001OnCmdMsg(::user::command * pcommand)
+   void frame_window::route_command_message(::user::command * pcommand)
    {
 
-      ::user::interaction::_001OnCmdMsg(pcommand);
-
-      if (pcommand->m_bRet)
-         return;
+      ::user::interaction::route_command_message(pcommand);
 
    }
 
@@ -2227,10 +2224,10 @@ namespace user
 
 
 
-   bool frame_window::BaseOnControlEvent(::user::control_event * pevent)
+   void frame_window::on_control_event(::user::control_event * pevent)
    {
 
-      return ::user::interaction::BaseOnControlEvent(pevent);
+      return ::user::interaction::on_control_event(pevent);
 
    }
 
@@ -2335,10 +2332,10 @@ namespace user
    }
 
 
-   bool frame_window::_001HasCommandHandler(::user::command * pcommand)
+   bool frame_window::has_command_handler(::user::command * pcommand)
    {
 
-      if (command_target::_001HasCommandHandler(pcommand))
+      if (command_target::has_command_handler(pcommand))
       {
 
          return true;
@@ -2348,7 +2345,7 @@ namespace user
       if (m_pviewActive != NULL)
       {
 
-         if (m_pviewActive->_001HasCommandHandler(pcommand))
+         if (m_pviewActive->has_command_handler(pcommand))
          {
 
             return true;
@@ -2360,7 +2357,7 @@ namespace user
       if (GetParent() != NULL)
       {
 
-         if (GetParent()->_001HasCommandHandler(pcommand))
+         if (GetParent()->has_command_handler(pcommand))
          {
 
             return true;

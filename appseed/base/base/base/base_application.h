@@ -76,8 +76,8 @@ namespace base
 
 
 
-      using ::axis::application::BaseOnControlEvent;
-      using ::user::form_callback::BaseOnControlEvent;
+      using ::axis::application::on_control_event;
+      using ::user::form_callback::on_control_event;
 
 
       virtual void remove_document_template(::user::impact_system * pimpactsystem);
@@ -98,7 +98,7 @@ namespace base
 
       virtual ::visual::icon * get_icon(object * pobject, bool bBigIcon) const override;
 
-      virtual bool BaseOnControlEvent(::user::control_event * pevent) override;
+      virtual void on_control_event(::user::control_event * pevent) override;
 
       virtual ::user::interaction * create_menu_interaction();
 

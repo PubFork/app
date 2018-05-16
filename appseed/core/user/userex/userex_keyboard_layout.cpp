@@ -135,7 +135,7 @@ namespace userex // ca8 + cube
    }
 
 
-   bool keyboard_layout::BaseOnControlEvent(::user::control_event * pevent)
+   void keyboard_layout::on_control_event(::user::control_event * pevent)
    {
 
       if(pevent->m_eevent == ::user::event_list_clicked)
@@ -211,8 +211,6 @@ namespace userex // ca8 + cube
          }
 
       }
-
-      return false;
 
    }
 

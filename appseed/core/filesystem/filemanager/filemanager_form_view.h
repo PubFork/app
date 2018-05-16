@@ -16,7 +16,7 @@ namespace filemanager
 
 
       void on_update(::aura::impact * pSender,LPARAM lHint,object* phint);
-      virtual bool BaseOnControlEvent(::user::control_event * pevent);
+      virtual void on_control_event(::user::control_event * pevent);
 
 
    };

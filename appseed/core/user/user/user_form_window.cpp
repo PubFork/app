@@ -850,7 +850,7 @@ namespace user
       ev.m_eevent       = ::user::event_initialize_control;
       ev.m_uiEvent      = 0;
 
-      BaseOnControlEvent(&ev);
+      on_control_event(&ev);
 
    }
 
@@ -1051,13 +1051,17 @@ namespace user
    }
 
 
-   bool form_window::BaseOnControlEvent(::user::control_event * pevent)
+   void form_window::on_control_event(::user::control_event * pevent)
    {
 
-      ::user::form_control::BaseOnControlEvent(pevent);
+      ::user::form_control::on_control_event(pevent);
 
-      if(pevent->m_bRet)
-         return pevent->m_bProcessed;
+      if (pevent->m_bRet)
+      {
+
+         return;
+
+      }
 
       if(pevent->m_eevent == ::user::event_tab_key)
       {
@@ -1078,25 +1082,29 @@ namespace user
          control * pcontrol = dynamic_cast <control *> (pevent->m_puie);
 
          if(pcontrol == NULL)
-            return false;
+            return;
 
          class control_descriptor * pdescriptor = pcontrol->m_pdescriptor;
 
          if(pdescriptor == NULL)
-            return false;
+            return;
 
          if(pdescriptor->has_function(control_function_action))
          {
+
             if(pcontrol != NULL)
             {
+
                _001OnButtonAction(pcontrol);
-               return true;
+
+               pevent->m_bRet = true;
+
             }
-            else
-            {
-               return false;
-            }
+
+            return;
+
          }
+
       }
       else if(pevent->m_eevent == ::user::event_set_check && pevent->m_actioncontext.is_user_source())
       {
@@ -1104,12 +1112,12 @@ namespace user
          control * pcontrol = dynamic_cast <control *> (pevent->m_puie);
 
          if(pcontrol == NULL)
-            return false;
+            return;
 
          class control_descriptor * pdescriptor = pcontrol->m_pdescriptor;
 
          if(pdescriptor == NULL)
-            return false;
+            return;
 
          if(pdescriptor->m_eddx == control_ddx_dbflags)
          {
@@ -1142,8 +1150,6 @@ namespace user
          }
 
       }
-
-      return false;
 
    }
 

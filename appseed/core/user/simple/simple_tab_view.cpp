@@ -3,8 +3,7 @@
 
 simple_tab_view::simple_tab_view(::aura::application * papp) :
    object(papp),
-   ::user::interaction(papp), 
-   ::user::tab(papp),
+   ::user::interaction(papp),
    place_holder_container(papp)
 {
 }
@@ -44,7 +43,7 @@ void simple_tab_view::on_layout()
 
 bool simple_tab_view::GetClientRect(LPRECT lprect)
 {
-   
+
    if(!::user::impact::GetClientRect(lprect))
    {
 
@@ -67,7 +66,7 @@ void simple_tab_view::_001OnCreate(::message::message * pobj)
 
    if(pcreate->previous())
       return;
-   
+
    if(!::user::control::create_window(null_rect(), this, 1))
    {
       pcreate->set_lresult(-1);

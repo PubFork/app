@@ -773,7 +773,7 @@ namespace user
       ev.m_eevent       = ::user::event_initialize_control;
       ev.m_uiEvent      = 0;
 
-      BaseOnControlEvent(&ev);
+      on_control_event(&ev);
 
    }
 
@@ -948,7 +948,7 @@ namespace user
    }
 
 
-   bool form_control::BaseOnControlEvent(::user::control_event * pevent)
+   void form_control::on_control_event(::user::control_event * pevent)
    {
 
       if(pevent->m_eevent == ::user::event_set_focus)
@@ -957,13 +957,9 @@ namespace user
          if(!_001OnControlSetFocus(pevent->m_puie))
          {
 
-            pevent->m_bProcessed = true;
+            pevent->nok();
 
-            pevent->m_bRet = true;
-
-            pevent->m_bOk = false;
-
-            return true;
+            return;
 
          }
 
@@ -975,22 +971,20 @@ namespace user
          if(!_001OnControlKillFocus(pevent->m_puie))
          {
 
-            pevent->m_bProcessed = true;
+            pevent->nok();
 
-            pevent->m_bRet = true;
-
-            pevent->m_bOk = false;
-
-            return true;
+            return;
 
          }
 
       }
 
-      if(Application.BaseOnControlEvent(pevent))
+      Application.on_control_event(pevent);
+
+      if(pevent->m_bRet)
       {
 
-         return true;
+         return;
 
       }
 
@@ -998,10 +992,12 @@ namespace user
       if(m_pcallback != NULL)
       {
 
-         if (m_pcallback->BaseOnControlEvent(pevent))
+         m_pcallback->on_control_event(pevent);
+
+         if(pevent->m_bRet)
          {
 
-            return true;
+            return;
 
          }
 
@@ -1025,28 +1021,36 @@ namespace user
 
          control * pcontrol = dynamic_cast <control *> (pevent->m_puie);
 
-         if(pcontrol == NULL)
-            return false;
+         if(pcontrol != NULL)
+            return;
 
          class control_descriptor * pdescriptor = pcontrol->m_pdescriptor;
 
          if(pdescriptor == NULL)
-            return false;
+            return;
 
          if(pdescriptor->has_function(control_function_action))
          {
+
             if(pcontrol != NULL)
             {
+
                _001OnButtonAction(pcontrol);
+
                pevent->m_bRet = true;
-               pevent->m_bProcessed = true;
-               return true;
+
+               return;
+
             }
             else
             {
-               return false;
+
+               return;
+
             }
+
          }
+
       }
       else if(pevent->m_eevent == ::user::event_set_check && pevent->m_actioncontext.is_user_source())
       {
@@ -1054,12 +1058,12 @@ namespace user
          control * pcontrol = dynamic_cast <control *> (pevent->m_puie);
 
          if(pcontrol == NULL)
-            return false;
+            return;
 
          class control_descriptor * pdescriptor = pcontrol->m_pdescriptor;
 
          if(pdescriptor == NULL)
-            return false;
+            return;
 
          if(pdescriptor->m_eddx == control_ddx_dbflags)
          {
@@ -1083,9 +1087,11 @@ namespace user
             pdescriptor->m_ddx.m_pdbflags->m_key.m_pclient->data_load(
             pdescriptor->m_ddx.m_pdbflags->m_key.m_id,
             ia);
+
          }
+
       }
-      return false;
+
    }
 
 
@@ -1221,14 +1227,16 @@ namespace user
 
          ev.m_uiEvent = ptimer->m_nIDEvent;
 
-         if(Application.BaseOnControlEvent(&ev))
+         Application.on_control_event(&ev);
+
+         if(ev.m_bRet)
          {
 
             return;
 
          }
 
-         m_pcallback->BaseOnControlEvent(&ev);
+         m_pcallback->on_control_event(&ev);
 
       }
 

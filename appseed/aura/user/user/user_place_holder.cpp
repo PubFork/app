@@ -295,11 +295,11 @@ namespace user
    }
 
 
-   void place_holder::_001OnCmdMsg(::user::command * pcommand)
+   void place_holder::route_command_message(::user::command * pcommand)
    {
 
       // then pump through frame
-      ::user::interaction::_001OnCmdMsg(pcommand);
+      ::user::interaction::route_command_message(pcommand);
 
       if(pcommand->m_bRet)
          return;
@@ -310,7 +310,7 @@ namespace user
       if (puiParent != NULL)
       {
 
-         puiParent->_001OnCmdMsg(pcommand);
+         puiParent->route_command_message(pcommand);
 
          if (pcommand->m_bRet)
             return;

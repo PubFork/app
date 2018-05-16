@@ -109,7 +109,7 @@ namespace user
       virtual ::user::interaction * get_wnd() const;
       virtual ::user::interaction_impl * get_impl() const;
       virtual ::user::elemental * get_wnd_elemental() const;
-      virtual bool BaseOnControlEvent(control_event * pevent);
+      virtual void on_control_event(control_event * pevent);
       virtual elemental * keyboard_get_next_focusable(elemental * pfocus = NULL,bool bSkipChild = false,bool bSkipSiblings = false,bool bSkipParent = false);
       virtual bool keyboard_set_focus();
 

@@ -27,7 +27,7 @@ namespace userex
 
       void on_show();
 
-      bool BaseOnControlEvent(::user::control_event * pevent);
+      void on_control_event(::user::control_event * pevent);
 
       virtual void _001GetItemText(::user::mesh_item * pitem);
 

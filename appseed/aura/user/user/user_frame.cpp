@@ -17,6 +17,14 @@ namespace user
    }
 
 
+   bool frame::is_frame_window()
+   {
+
+      return true;
+
+   }
+
+
 } // namespace user
 
 

@@ -7,9 +7,7 @@ namespace userex
 
    pane_tab_view::pane_tab_view(::aura::application * papp):
       object(papp),
-
       ::user::tab_view(papp),
-      ::user::tab(papp),
       place_holder_container(papp)
    {
 
@@ -675,7 +673,7 @@ namespace userex
 
    }
 
-   bool pane_tab_view::BaseOnControlEvent(::user::control_event * pevent)
+   void pane_tab_view::on_control_event(::user::control_event * pevent)
    {
 
       if (pevent->m_eevent == ::user::event_context_menu_close)
@@ -686,23 +684,18 @@ namespace userex
 
             set_cur_tab_by_id(m_pviewdataOld->m_id);
 
-            return true;
+            pevent->m_bRet = true;
+
+            return;
 
          }
 
       }
 
-
-      if (::user::tab_view::BaseOnControlEvent(pevent))
-      {
-
-         return true;
-
-      }
-
-      return false;
+      ::user::tab_view::on_control_event(pevent);
 
    }
+
 
    bool pane_tab_view::create_app_options(::user::view_creator_data * pcreatordata)
    {

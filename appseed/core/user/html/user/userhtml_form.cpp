@@ -188,7 +188,7 @@ void html_form::on_layout()
 
    ev.m_puie = this;
 
-   BaseOnControlEvent(&ev);
+   on_control_event(&ev);
 
 }
 

@@ -6,8 +6,7 @@ namespace userex
 
 
    class CLASS_DECL_CORE top_toggle_view :
-      virtual public ::user::impact,
-      virtual public ::user::button
+      virtual public ::user::show < ::user::button >
    {
    public:
 

@@ -142,10 +142,10 @@ bool simple_menu_bar::pre_create_window(::user::create_struct& cs)
 }*/
 
 
-void simple_menu_bar::_001OnCmdMsg(::user::command * pcommand)
+void simple_menu_bar::route_command_message(::user::command * pcommand)
 {
 
-   simple_toolbar::_001OnCmdMsg(pcommand);
+   simple_toolbar::route_command_message(pcommand);
 
 }
 

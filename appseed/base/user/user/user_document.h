@@ -198,7 +198,7 @@ namespace user
          virtual void on_idle();
          virtual void on_final_release();
 
-         virtual void _001OnCmdMsg(::user::command * pcommand) override;
+         virtual void route_command_message(::user::command * pcommand) override;
 
          friend class impact_system;
 

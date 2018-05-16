@@ -15,39 +15,41 @@ void menu_view::on_update(::user::impact * pSender, LPARAM lHint, object* phint)
 }
 
 
-bool menu_view::BaseOnControlEvent(::user::control_event * pevent)
+void menu_view::on_control_event(::user::control_event * pevent)
 {
 
-   if(Application.BaseOnControlEvent(pevent))
+   Application.on_control_event(pevent);
+
+   if(pevent->m_bRet)
    {
 
-      return true;
+      return;
 
    }
 
    if(m_pcallback != NULL)
    {
 
-      m_pcallback->BaseOnControlEvent(pevent);
+      m_pcallback->on_control_event(pevent);
 
    }
 
    if(GetParent() != NULL)
    {
 
-      if (GetParent()->BaseOnControlEvent(pevent))
+      GetParent()->on_control_event(pevent);
+
+      if(pevent->m_bRet)
       {
 
-         return true;
+         return;
 
       }
 
    }
 
-
-   return false;
-
 }
+
 
 void menu_view::install_message_routing(::message::sender * pinterface)
 {
@@ -81,14 +83,16 @@ void menu_view::_001OnTimer(::timer * ptimer)
 
       ev.m_puie = this;
 
-      if(Application.BaseOnControlEvent(&ev))
+      Application.on_control_event(&ev);
+
+      if(ev.m_bRet)
       {
 
          return;
 
       }
 
-      m_pcallback->BaseOnControlEvent(&ev);
+      m_pcallback->on_control_event(&ev);
 
    }
 

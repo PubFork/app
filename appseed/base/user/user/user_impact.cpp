@@ -96,11 +96,10 @@ namespace user
    }
 
 
-   void impact::_001OnCreate(::message::message * pobj)
+   void impact::_001OnCreate(::message::message * pmessage)
    {
-      SCAST_PTR(::message::create, pmessagecreate, pobj);
 
-
+      SCAST_PTR(::message::create, pmessagecreate, pmessage);
 
       // if ok, wire in the current ::user::document
       ASSERT(::user::impact::get_document() == NULL);
@@ -143,9 +142,9 @@ namespace user
 
          ev.m_eevent    = ::user::event_on_create_view;
 
-         ev.m_pobj      = pobj;
+         ev.m_pmessage  = pmessage;
 
-         BaseOnControlEvent(&ev);
+         on_control_event(&ev);
 
       }
 
@@ -221,11 +220,10 @@ namespace user
    /////////////////////////////////////////////////////////////////////////////
    // Command routing
 
-   void impact::_001OnCmdMsg(::user::command * pcommand)
+   void impact::route_command_message(::user::command * pcommand)
    {
 
-      // first pump through pane
-      ::user::interaction::_001OnCmdMsg(pcommand);
+      ::user::box::route_command_message(pcommand);
 
       if(pcommand->m_bRet)
       {
@@ -234,27 +232,10 @@ namespace user
 
       }
 
-      sp(::user::interaction) puiParent = GetParent();
-
-      if (puiParent.cast < ::user::impact > () != NULL)
-      {
-
-         puiParent->_001OnCmdMsg(pcommand);
-
-         if (pcommand->m_bRet)
-         {
-
-            return;
-
-         }
-
-      }
-
-      // then pump through document
       if (::user::impact::get_document() != NULL)
       {
 
-         ::user::impact::get_document()->_001OnCmdMsg(pcommand);
+         ::user::impact::get_document()->route_command_message(pcommand);
 
          if(pcommand->m_bRet)
          {
@@ -263,35 +244,28 @@ namespace user
 
          }
 
-         for (auto pview : ::user::impact::get_document()->m_viewspa)
-         {
+      }
 
-            ASSERT_VALID(pview);
+      sp(::user::interaction) puiParent = GetParent();
 
-            if (pview != NULL && pview != this && !IsAscendant(pview))
-            {
+      while (puiParent.is_set() && puiParent->is_place_holder())
+      {
 
-               pview->::user::interaction::_001OnCmdMsg(pcommand);
-
-               if(pcommand->m_bRet)
-               {
-
-                  return;
-
-               }
-
-            }
-
-         }
+         puiParent = puiParent->get_parent();
 
       }
 
-      Application._001OnCmdMsg(pcommand);
-
-      if (pcommand->m_bRet)
+      if (puiParent.is_set() && !puiParent->is_frame_window())
       {
 
-         return;
+         puiParent->route_command_message(pcommand);
+
+         if (pcommand->m_bRet)
+         {
+
+            return;
+
+         }
 
       }
 
@@ -1207,10 +1181,10 @@ namespace user
    }
 
 
-   bool impact::_001HasCommandHandler(::user::command * pcommand)
+   bool impact::has_command_handler(::user::command * pcommand)
    {
 
-      if (command_target::_001HasCommandHandler(pcommand))
+      if (command_target::has_command_handler(pcommand))
       {
 
          return true;
@@ -1220,7 +1194,19 @@ namespace user
       if (get_document() != NULL)
       {
 
-         if (get_document()->_001HasCommandHandler(pcommand))
+         if (get_document()->has_command_handler(pcommand))
+         {
+
+            return true;
+
+         }
+
+      }
+
+      if (get_parent() != NULL)
+      {
+
+         if (get_parent()->has_command_handler(pcommand))
          {
 
             return true;

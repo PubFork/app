@@ -154,7 +154,11 @@ namespace user
 
    }
 
+   void form_list_view::route_command_message(::user::command * pcommand)
+   {
+      ::user::impact::route_command_message(pcommand);
 
+   }
    void form_list_view::_001OnTimer(::timer * ptimer)
    {
 

@@ -650,7 +650,7 @@ namespace base
    }
 
 
-   bool application::BaseOnControlEvent(::user::control_event * pevent)
+   void application::on_control_event(::user::control_event * pevent)
    {
 
       if (pevent->m_eevent == ::user::event_initialize_control)
@@ -702,7 +702,9 @@ namespace base
 
                }
 
-               return true;
+               pevent->m_bRet = true;
+
+               return;
 
             }
             catch (...)
@@ -713,8 +715,6 @@ namespace base
          }
 
       }
-
-      return false;
 
    }
 

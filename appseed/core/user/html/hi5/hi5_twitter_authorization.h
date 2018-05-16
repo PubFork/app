@@ -47,7 +47,7 @@ namespace hi5
          virtual void on_show_view() override;
 
 
-         virtual bool BaseOnControlEvent(::user::control_event * pevent) override;
+         virtual void on_control_event(::user::control_event * pevent) override;
 
          virtual bool style_translucency(::user::e_translucency & etranslucency, ::user::e_element);
 

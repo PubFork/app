@@ -9,6 +9,7 @@ namespace user
       ::object(papp)
    {
 
+      m_pui = NULL;
       m_spitema      = canew(menu_item_ptra(this));
       m_iLevel       = 0;
       m_bPopup       = false;

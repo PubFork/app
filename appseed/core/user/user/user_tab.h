@@ -182,7 +182,7 @@ namespace user
       bool                             m_bDrawTabAtBackground;
 
 
-      tab(::aura::application * papp);
+      tab();
       virtual ~tab();
 
 

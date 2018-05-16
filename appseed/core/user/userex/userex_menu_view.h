@@ -11,7 +11,7 @@ public:
 
 
    void on_update(::user::impact * pSender, LPARAM lHint, object* phint);
-   virtual bool BaseOnControlEvent(::user::control_event * pevent);
+   virtual void on_control_event(::user::control_event * pevent);
    DECL_GEN_SIGNAL(_001OnCreate);
    void _001OnTimer(::timer * ptimer);
    DECL_GEN_SIGNAL(_001OnUser123);

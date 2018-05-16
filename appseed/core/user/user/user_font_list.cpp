@@ -128,7 +128,7 @@ namespace user
 
          ev.m_actioncontext = ::action::source_user;
 
-         BaseOnControlEvent(&ev);
+         on_control_event(&ev);
 
          pmouse->set_lresult(0);
 
@@ -160,7 +160,7 @@ namespace user
          ev.m_eevent = ::user::event_after_change_cur_hover;
          ev.m_actioncontext = ::action::source_user;
 
-         BaseOnControlEvent(&ev);
+         on_control_event(&ev);
 
       }
 

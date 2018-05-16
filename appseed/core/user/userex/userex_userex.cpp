@@ -1116,7 +1116,7 @@ retry_license:
    }
 
 
-   void userex::_001OnCmdMsg(::user::command * pcommand)
+   void userex::route_command_message(::user::command * pcommand)
    {
 
       UNREFERENCED_PARAMETER(pcommand);

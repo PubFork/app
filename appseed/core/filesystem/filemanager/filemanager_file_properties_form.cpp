@@ -123,7 +123,7 @@ namespace filemanager
       }
    }
 
-   bool file_properties_form::BaseOnControlEvent(::user::control_event * pevent)
+   void file_properties_form::on_control_event(::user::control_event * pevent)
    {
 
       if(pevent->m_eevent == ::user::event_button_clicked)
@@ -135,8 +135,6 @@ namespace filemanager
          }
 
       }
-
-      return false;
 
    }
 

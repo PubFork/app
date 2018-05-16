@@ -38,7 +38,7 @@ namespace userex // ca8 + cube
    {
 
       ::dialog::on_show(pszMatter, ppropertyset);
-      
+
    }
 
 
@@ -62,7 +62,7 @@ namespace userex // ca8 + cube
 
       if(m_dwDelay > 0)
       {
-         
+
          SetTimer(5432175, 50, NULL);
 
       }
@@ -74,7 +74,7 @@ namespace userex // ca8 + cube
    }
 
 
-   bool wait_message_dialog::BaseOnControlEvent(::user::control_event * pevent)
+   void wait_message_dialog::on_control_event(::user::control_event * pevent)
    {
 
       if(pevent->m_eevent == ::user::event_button_clicked)
@@ -86,14 +86,12 @@ namespace userex // ca8 + cube
 
       }
 
-      return false;
-
    }
 
 
    bool wait_message_dialog::on_timeout_check()
    {
-      
+
       uint32_t dwTimeout = ::get_tick_count() - m_dwStartTime;
 
       if (dwTimeout > m_dwDelay)
@@ -123,7 +121,7 @@ namespace userex // ca8 + cube
 
    bool wait_message_dialog::on_timeout()
    {
-      
+
       m_strResponse = "timeout";
 
       return true;
@@ -133,9 +131,9 @@ namespace userex // ca8 + cube
 
    void wait_message_dialog::on_timer_soft_reload(uint32_t dwTimeout)
    {
-      
+
       ::user::interaction * pui = get_child_by_id("timeout");
-      
+
       if (pui != NULL)
       {
 
@@ -144,7 +142,7 @@ namespace userex // ca8 + cube
          str.Format("%d", (int32_t)((m_dwDelay - dwTimeout) / 1000));
 
          sp(::user::edit_text) pedit = pui;
-         
+
          pedit->_001SetText(str, ::action::source_sync);
 
       }
@@ -157,7 +155,7 @@ namespace userex // ca8 + cube
          //m_pdocument->soft_reload();
 
       }
-      
+
       set_need_redraw();
 
    }

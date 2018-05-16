@@ -285,10 +285,10 @@ namespace core
    }
 
 
-   void session::_001OnCmdMsg(::user::command * pcommand)
+   void session::route_command_message(::user::command * pcommand)
    {
 
-      return application::_001OnCmdMsg(pcommand);
+      return application::route_command_message(pcommand);
 
    }
 

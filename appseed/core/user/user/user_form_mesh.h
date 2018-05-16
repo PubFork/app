@@ -99,7 +99,7 @@ namespace user
 
       virtual void install_message_routing(::message::sender *pinterface);
 
-      virtual bool BaseOnControlEvent(::user::control_event * pevent);
+      virtual void on_control_event(::user::control_event * pevent);
 
       virtual bool _001OnControlSetFocus(::user::interaction * pui);
 

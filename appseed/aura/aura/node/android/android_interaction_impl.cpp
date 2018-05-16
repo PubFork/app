@@ -1214,10 +1214,10 @@ namespace android
 
 
 
-   void interaction_impl::_001OnCmdMsg(::user::command * pcommand)
+   void interaction_impl::route_command_message(::user::command * pcommand)
    {
 
-      command_target::_001OnCmdMsg(pcommand);
+      command_target::route_command_message(pcommand);
 
       if (pcommand->m_bRet)
       {
@@ -1233,7 +1233,7 @@ namespace android
 
       command_target * pcmdtarget = dynamic_cast <command_target *> (this);
 
-      pcmdtarget->command_target::_001OnCmdMsg(pcommand);
+      pcmdtarget->command_target::route_command_message(pcommand);
 
    }
 
@@ -1512,7 +1512,7 @@ namespace android
       {
          if(m_pui != NULL)
          {
-            ((::user::control_event *) pmessage->m_lparam.m_lparam)->m_bRet = m_pui->BaseOnControlEvent((::user::control_event *) pmessage->m_lparam.m_lparam);
+            ((::user::control_event *) pmessage->m_lparam.m_lparam)->m_bRet = m_pui->on_control_event((::user::control_event *) pmessage->m_lparam.m_lparam);
          }
          return;
       }

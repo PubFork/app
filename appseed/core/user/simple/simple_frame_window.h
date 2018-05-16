@@ -245,7 +245,7 @@ public:
 
    void _001OnQueryEndSession(::message::message * pobj);
 
-   virtual bool BaseOnControlEvent(::user::control_event * pevent) override;
+   virtual void on_control_event(::user::control_event * pevent) override;
 
    virtual bool WfiOnMove(bool bTracking) override;
    virtual bool WfiOnSize(bool bTracking) override;
@@ -258,7 +258,7 @@ public:
 
    virtual bool DeferFullScreen(bool bFullScreen, bool bRestore);
 
-   virtual void _001OnCmdMsg(::user::command * pcommand) override;
+   virtual void route_command_message(::user::command * pcommand) override;
 
    virtual void data_on_after_change(::message::message * pobj);
 

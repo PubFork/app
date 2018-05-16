@@ -826,7 +826,7 @@ namespace user
 
          ev.m_actioncontext = actioncontext;
 
-         BaseOnControlEvent(&ev);
+         on_control_event(&ev);
 
       }
 

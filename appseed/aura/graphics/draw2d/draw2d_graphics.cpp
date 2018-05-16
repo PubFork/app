@@ -1549,6 +1549,14 @@ namespace draw2d
    }
 
 
+   bool graphics::draw(LPCRECT lpcrectDst, ::draw2d::graphics * pgraphicsSrc, LPCRECT lpcrectSrc, u32 dwRop)
+   {
+
+      return StretchBlt(lpcrectDst, pgraphicsSrc, lpcrectSrc, dwRop);
+
+   }
+
+
    bool graphics::StretchBlt(rect rectDst, ::draw2d::graphics * pgraphicsSrc, rect rectSrc, u32 dwRop)
    {
 

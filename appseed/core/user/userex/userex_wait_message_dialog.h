@@ -24,7 +24,7 @@ namespace userex
 
       virtual void on_show(const char * pszMatter, property_set * propertyset) override;
 
-      virtual bool BaseOnControlEvent(::user::control_event * pevent) override;
+      virtual void on_control_event(::user::control_event * pevent) override;
 
       virtual void _001OnTimer(::timer * ptimer) override;
 

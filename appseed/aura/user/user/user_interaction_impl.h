@@ -159,7 +159,7 @@ namespace user
       bool attach(oswindow oswindow_New) override;
       oswindow detach() override;
 
-      virtual void _001OnCmdMsg(::user::command * pcommand) override;
+      virtual void route_command_message(::user::command * pcommand) override;
 
       DECL_GEN_SIGNAL(_002OnDraw);
 

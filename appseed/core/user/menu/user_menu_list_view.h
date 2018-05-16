@@ -24,7 +24,7 @@ namespace user
 
       //virtual void GuieProc(::message::message * pobj);
 
-      virtual void _001OnCmdMsg(::user::command * pcommand) override;
+      virtual void route_command_message(::user::command * pcommand) override;
 
       bool load_menu(::xml::node * pnode, ::user::interaction * puiNotify, UINT uiCallbackMessage);
          

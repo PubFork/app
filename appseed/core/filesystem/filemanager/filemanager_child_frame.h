@@ -26,7 +26,7 @@ namespace filemanager
 
       bool on_create_bars() override;
       bool DestroyBars();
-      virtual void _001OnCmdMsg(::user::command * pcommand) override;
+      virtual void route_command_message(::user::command * pcommand) override;
 
       DECL_GEN_SIGNAL(_001OnCreate);
       DECL_GEN_SIGNAL(_001OnAppLanguage);

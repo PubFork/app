@@ -59,9 +59,9 @@ namespace ios
       
       virtual ::user::interaction * get_wnd() const override;
       
-      virtual void _001OnCmdMsg(::user::command * pcommand) override;
+      virtual void route_command_message(::user::command * pcommand) override;
       
-      virtual bool BaseOnControlEvent(::user::control_event * pevent) override;
+      virtual void on_control_event(::user::control_event * pevent) override;
       
       void _002OnDraw(::draw2d::graphics * pgraphics);
       

@@ -53,7 +53,7 @@ namespace user
 
       ::user::interaction * _001GetTabWnd(int32_t iTab);
 
-      void _001OnCmdMsg(::user::command * pcommand) override;
+      void route_command_message(::user::command * pcommand) override;
 
 
       virtual void set_view_creator(::user::view_creator * pview);

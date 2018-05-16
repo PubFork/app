@@ -99,7 +99,7 @@ namespace windows
       //virtual ::user::interaction * get_owner();
       //virtual void set_owner(::user::interaction * pOwnerWnd);
 
-      virtual void _001OnCmdMsg(::user::command * pcommand) override;
+      virtual void route_command_message(::user::command * pcommand) override;
 
       void _002OnDraw(::draw2d::dib * pdib);
 
