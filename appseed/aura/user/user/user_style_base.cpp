@@ -57,7 +57,7 @@ namespace user
    //      set_color(color_text_press,color | (0xff << 24));
    //      set_color(color_text_disabled,ARGB(255,127,127,127));
    //      set_color(color_text_hover,color | (0xff << 24));
-   //      set_color(color_background_normal,Session.get_default_color(COLOR_3DFACE) | (0xff << 24));
+   //      set_color(color_background,Session.get_default_color(COLOR_3DFACE) | (0xff << 24));
    //      set_color(color_background_press,Session.get_default_color(COLOR_3DFACE) | (0xff << 24));
    //      set_color(color_background_disabled,Session.get_default_color(COLOR_3DFACE) | (0xff << 24));
    //      set_color(color_background_hover,Session.get_default_color(COLOR_3DFACE) | (0xff << 24));
@@ -79,7 +79,7 @@ namespace user
    //      set_color(color_text_press,color | (184 << 24));
    //      set_color(color_text_disabled,ARGB(184,127,127,127));
    //      set_color(color_text_hover,color | (184 << 24));
-   //      set_color(color_background_normal,ARGB(84, 180, 192, 255));
+   //      set_color(color_background,ARGB(84, 180, 192, 255));
    //      set_color(color_background_press,ARGB(184,180,192,255));
    //      set_color(color_background_disabled,ARGB(84,180,192,255));
    //      set_color(color_background_hover,ARGB(127,180,192,255));
@@ -104,7 +104,7 @@ namespace user
    //      set_color(color_text_press,color | (184 << 24));
    //      set_color(color_text_disabled,ARGB(184,127,127,127));
    //      set_color(color_text_hover,color | (184 << 24));
-   //      set_color(color_background_normal, Session.get_default_color(COLOR_3DHIGHLIGHT) | (184 << 24));
+   //      set_color(color_background, Session.get_default_color(COLOR_3DHIGHLIGHT) | (184 << 24));
    //      set_color(color_background_press,Session.get_default_color(COLOR_3DHIGHLIGHT) | (184 << 24));
    //      set_color(color_background_disabled,Session.get_default_color(COLOR_3DHIGHLIGHT) | (184 << 24));
    //      set_color(color_background_hover,Session.get_default_color(COLOR_3DHIGHLIGHT) | (184 << 24));
@@ -126,7 +126,7 @@ namespace user
    //      set_color(color_text_press,color | (184 << 24));
    //      set_color(color_text_disabled,ARGB(184,127,127,127));
    //      set_color(color_text_hover,color | (184 << 24));
-   //      set_color(color_background_normal,Session.get_default_color(COLOR_3DFACE) | (184 << 24));
+   //      set_color(color_background,Session.get_default_color(COLOR_3DFACE) | (184 << 24));
    //      set_color(color_background_press,Session.get_default_color(COLOR_3DFACE) | (184 << 24));
    //      set_color(color_background_disabled,Session.get_default_color(COLOR_3DFACE) | (184 << 24));
    //      set_color(color_background_hover,Session.get_default_color(COLOR_3DFACE) | (184 << 24));
@@ -145,7 +145,7 @@ namespace user
    //      set_color(color_text_press,ARGB(223,255,0,0));
    //      set_color(color_text_disabled,ARGB(184,127,127,127));
    //      set_color(color_text_hover,ARGB(184,255,49,49));
-   //      set_color(color_background_normal,ARGB(184,208,192,192));
+   //      set_color(color_background,ARGB(184,208,192,192));
    //      set_color(color_background_press,ARGB(223,255,192,192));
    //      set_color(color_background_disabled,ARGB(184,192,192,192));
    //      set_color(color_background_hover,ARGB(184,223,192,192));
@@ -482,7 +482,7 @@ namespace user
    //         }
    //
    //      }
-   //      else if (ecolor == color_border_normal)
+   //      else if (ecolor == color_border)
    //      {
    //
    //         return ARGB(255, 84, 90, 80);
@@ -506,7 +506,7 @@ namespace user
    //         return ARGB(255, 80, 80, 80);
    //
    //      }
-   //      else if (ecolor == color_background_normal)
+   //      else if (ecolor == color_background)
    //      {
    //
    //         return ARGB(255, 255, 255, 255);
@@ -554,10 +554,10 @@ namespace user
    //         return _001GetColor(color_background_hover);
    //
    //      }
-   //      else if (ecolor == color_button_background_normal)
+   //      else if (ecolor == color_button_background)
    //      {
    //
-   //         return _001GetColor(color_background_normal);
+   //         return _001GetColor(color_background);
    //
    //      }
    //      else if (ecolor == color_button_background_press)
@@ -578,7 +578,7 @@ namespace user
    //         return _001GetColor(color_text_hover);
    //
    //      }
-   //      else if (ecolor == color_button_text_normal)
+   //      else if (ecolor == color_button_text)
    //      {
    //
    //         return _001GetColor(color_text_normal);

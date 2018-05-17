@@ -153,7 +153,7 @@ namespace user
             else
             {
 
-               //pgraphics->draw3d_rect(rectClient,m_puserstyle->_001GetColor(color_border_normal),m_puserstyle->_001GetColor(color_border_normal));
+               //pgraphics->draw3d_rect(rectClient,m_puserstyle->_001GetColor(color_border),m_puserstyle->_001GetColor(color_border));
 
                //rectClient.deflate(1,1);
 

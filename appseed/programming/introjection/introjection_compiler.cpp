@@ -20,7 +20,7 @@ namespace introjection
 
    library::library(::aura::application * papp):
       object(papp),
-      m_library(papp),
+      m_plibrary(canew(::aura::library(papp))),
       m_memfileError(papp)
    {
 
@@ -451,7 +451,7 @@ namespace introjection
 
 
 
-   ::aura::library & compiler::compile(string strFilePath,bool & bNew)
+   ::aura::library * compiler::compile(string strFilePath,bool & bNew)
    {
 
       if (m_strApp.is_empty())
@@ -475,11 +475,11 @@ namespace introjection
 
          bNew = false;
 
-         return lib->m_library;
+         return lib->m_plibrary;
 
       }
 
-      lib->m_library.close();
+      lib->m_plibrary->close();
 
       bNew = true;
 
@@ -513,7 +513,7 @@ namespace introjection
       }
       else
       {
-         return lib->m_library;
+         return lib->m_plibrary;
       }
 
 
@@ -1265,21 +1265,21 @@ namespace introjection
 
 #ifdef WINDOWS
 
-      lib->m_library.open(strTargetPath + ".dll");
+      lib->m_plibrary->open(strTargetPath + ".dll");
 
 #elif defined(MACOS)
 
-      lib->m_library.open(strTargetPath + ".dylib");
+      lib->m_plibrary->open(strTargetPath + ".dylib");
 
 #else
 
-      lib->m_library.open(strTargetPath + ".so");
+      lib->m_plibrary->open(strTargetPath + ".so");
 
 #endif
 
-      lib->m_library.open_ca2_library();
+      lib->m_plibrary->open_ca2_library();
 
-      return lib->m_library;
+      return lib->m_plibrary;
 
    }
 

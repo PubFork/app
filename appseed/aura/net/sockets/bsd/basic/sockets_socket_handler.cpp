@@ -395,7 +395,7 @@ namespace sockets
             for (auto & p : m_sockets)
             {
 
-               while (p.m_element2->on_select_idle())
+               while (p.m_element2.is_set() && p.m_element2->on_select_idle())
                {
 
                }
@@ -1503,11 +1503,11 @@ end_processing_adding:
          return;
       }
       socket_id_list& ref =
-         (which_one == LIST_CALLONCONNECT) ? m_fds_callonconnect :
-         (which_one == LIST_DETACH) ? m_fds_detach :
-         (which_one == LIST_TIMEOUT) ? m_fds_timeout :
-         (which_one == LIST_RETRY) ? m_fds_retry :
-         (which_one == LIST_CLOSE) ? m_fds_close : m_fds_close;
+      (which_one == LIST_CALLONCONNECT) ? m_fds_callonconnect :
+      (which_one == LIST_DETACH) ? m_fds_detach :
+      (which_one == LIST_TIMEOUT) ? m_fds_timeout :
+      (which_one == LIST_RETRY) ? m_fds_retry :
+      (which_one == LIST_CLOSE) ? m_fds_close : m_fds_close;
       if (add)
       {
          /*         TRACE("AddList;  %5d: %s: %s\n", s, (which_one == LIST_CALLONCONNECT) ? "CallOnConnect" :

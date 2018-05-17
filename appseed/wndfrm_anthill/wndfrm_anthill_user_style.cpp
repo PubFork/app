@@ -1289,11 +1289,11 @@ namespace wndfrm_anthill
 
                ::draw2d::pen_sp pen(pgraphics, 1, ptoolbar->_001GetColor(
                                     (nStyle & TBBS_DISABLED) == 0 ?
-                                    ::user::color_button_background_normal :
+                                    ::user::color_button_background :
                                     ::user::color_button_background_disabled));
                ::draw2d::brush_sp brush(allocer(), ptoolbar->_001GetColor(
                                         (nStyle & TBBS_DISABLED) == 0 ?
-                                        ::user::color_button_background_normal :
+                                        ::user::color_button_background :
                                         ::user::color_button_background_disabled));
                ::draw2d::pen * ppenOld = pgraphics->SelectObject(pen);
                ::draw2d::brush * pbrushOld = pgraphics->SelectObject(brush);

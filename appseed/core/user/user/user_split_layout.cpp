@@ -100,9 +100,16 @@ namespace user
 
          pcomponent = m_panea.element_at(i);
 
+         if (pcomponent == NULL)
+         {
+
+            continue;
+
+         }
+
          pwnd = pcomponent->m_pholder;
 
-         if (pwnd == NULL)
+         if ( pwnd == NULL)
          {
 
             continue;
@@ -663,6 +670,13 @@ namespace user
       }
 
       split_layout::Pane * ppane = m_panea[iPane];
+
+      if (ppane == NULL)
+      {
+
+         return false;
+
+      }
 
       sp(::user::place_holder) pholder = ppane->m_pholder;
 

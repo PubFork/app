@@ -801,7 +801,7 @@ SizingNone:
                      return true;
 
                   }
-                  else if (ecolor == ::user::color_button_background_normal)
+                  else if (ecolor == ::user::color_button_background)
                   {
 
                      if (m_estyle == StyleDarkRed)
@@ -839,7 +839,7 @@ SizingNone:
                      return true;
 
                   }
-                  else if (ecolor == ::user::color_button_text_normal)
+                  else if (ecolor == ::user::color_button_text)
                   {
 
                      cr = ARGB(255, 255, 255, 255);

@@ -876,21 +876,21 @@ namespace user
 
       }
 
-      if (get_view_uie() != NULL)
-      {
+      //if (get_view_uie() != NULL)
+      //{
 
-         get_view_uie()->route_command_message(pcommand);
+      //   get_view_uie()->route_command_message(pcommand);
 
-         if (pcommand->m_bRet)
-         {
+      //   if (pcommand->m_bRet)
+      //   {
 
-            return;
+      //      return;
 
-         }
+      //   }
 
-      }
+      //}
 
-      return impact::route_command_message(pcommand);
+      impact::route_command_message(pcommand);
 
    }
 

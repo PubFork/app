@@ -675,38 +675,6 @@ namespace filemanager
    }
 
 
-   /*bool manager::route_command_message(::user::command * pcommand)
-   {
-   if (nCode == CN_UPDATE_::user::command)
-   {
-   ::user::command * pcommand = (::user::command *) pExtra;
-   if(nID == get_filemanager_template()->m_uiLevelUp)
-   {
-   FileManagerOnUpdateLevelUp(pcommand);
-   return TRUE;
-   }
-   }
-   else
-   {
-   int32_t nMsg = HIWORD(nCode);
-   nCode = LOWORD(nCode);
-
-   // for backward compatibility HIWORD(nCode)==0 is WM_COMMAND
-   if (nMsg == 0)
-   nMsg = WM_COMMAND;
-
-   if(nMsg == WM_COMMAND)
-   {
-   if(nID == get_filemanager_template()->m_uiLevelUp)
-   {
-   FileManagerOnLevelUp();
-   return TRUE;
-   }
-   }
-   }*/
-   /*   return ::user::document::route_command_message(pcommand);
-   }
-   */
 
    void manager::_001OnUpdateNewManager(::message::message * pobj)
    {

@@ -30,27 +30,6 @@ namespace filemanager
    }
 
 
-   // BEGIN_MESSAGE_MAP(folder_list, ::user::impact)
-   //{{__MSG_MAP(folder_list)
-   /*
-   ON_WM_LBUTTONDBLCLK()
-   ON_WM_CANCELMODE()
-   */
-   //}}__MSG_MAP
-   // END_MESSAGE_MAP()
-
-   /////////////////////////////////////////////////////////////////////////////
-   // folder_list drawing
-
-   void folder_list::OnDraw(::draw2d::graphics * pgraphics)
-   {
-
-      UNREFERENCED_PARAMETER(pgraphics);
-
-   }
-
-   /////////////////////////////////////////////////////////////////////////////
-   // folder_list diagnostics
 
 
    void folder_list::assert_valid() const

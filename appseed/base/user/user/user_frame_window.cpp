@@ -2342,29 +2342,29 @@ namespace user
 
       }
 
-      if (m_pviewActive != NULL)
-      {
+      //if (m_pviewActive != NULL)
+      //{
 
-         if (m_pviewActive->has_command_handler(pcommand))
-         {
+      //   if (m_pviewActive->has_command_handler(pcommand))
+      //   {
 
-            return true;
+      //      return true;
 
-         }
+      //   }
 
-      }
+      //}
 
-      if (GetParent() != NULL)
-      {
+      //if (GetParent() != NULL)
+      //{
 
-         if (GetParent()->has_command_handler(pcommand))
-         {
+      //   if (GetParent()->has_command_handler(pcommand))
+      //   {
 
-            return true;
+      //      return true;
 
-         }
+      //   }
 
-      }
+      //}
 
       return false;
 

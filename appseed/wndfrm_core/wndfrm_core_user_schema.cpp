@@ -1050,7 +1050,7 @@ namespace wndfrm_core
          return true;
 
       }
-      else if (ecolor == ::user::color_button_background_normal)
+      else if (ecolor == ::user::color_button_background)
       {
 
          cr = ARGB(255, 0x30, 0x75, 0xA0);
@@ -1080,7 +1080,7 @@ namespace wndfrm_core
          return true;
 
       }
-      else if (ecolor == ::user::color_button_text_normal)
+      else if (ecolor == ::user::color_button_text)
       {
 
          cr = ARGB(255, 255, 255, 255);

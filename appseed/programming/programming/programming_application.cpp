@@ -52,9 +52,9 @@ namespace programming
 
          bool bNew;
 
-         ::aura::library & lib = pcompiler->compile(::dir::system() / "config\\xmpp_resident\\room\\ca2@livecoding.tv\\xmpp_bot.cpp", bNew);
+         sp(::aura::library) lib = pcompiler->compile(::dir::system() / "config\\xmpp_resident\\room\\ca2@livecoding.tv\\xmpp_bot.cpp", bNew);
 
-         if (lib.m_pca2library == NULL)
+         if (lib->m_pca2library == NULL)
          {
 
             return;
@@ -62,7 +62,7 @@ namespace programming
 
          }
 
-         sp(object) p = lib.create_object(get_app(), "plugin", this);
+         sp(object) p = lib->create_object(get_app(), "plugin", this);
 
          if (p.is_null())
             return;

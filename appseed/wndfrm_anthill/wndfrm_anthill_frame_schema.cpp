@@ -529,11 +529,11 @@ namespace user
 
                ca.set_rgb(crBase);
                ca.hls_rate(0.0, -0.49, -0.49);
-               create_color(color_border_normal, ca.get_rgb() | (0xff << 24));
+               create_color(color_border, ca.get_rgb() | (0xff << 24));
 
                ca.set_rgb(crBase);
                ca.hls_rate(0.0, -0.11, -0.11);
-               create_color(color_background_normal, ca.get_rgb() | (0xff << 24));
+               create_color(color_background, ca.get_rgb() | (0xff << 24));
 
                ca.set_rgb(crBase);
                ca.hls_rate(0.0, -0.49, -0.49);
