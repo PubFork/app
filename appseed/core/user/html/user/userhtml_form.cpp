@@ -139,25 +139,6 @@ void html_form::install_message_routing(::message::sender * pinterface)
 }
 
 
-/*
-bool html_form::open_document(const char * lpszPathName)
-{
-   string strPathName(lpszPathName);
-   if(strPathName.Mid(3) == "wb:")
-      return FALSE;
-   string str = Application.file().as_string(lpszPathName);
-   if(str.is_empty())
-   {
-      System.sync_load_url(str, lpszPathName, &ApplicationUser, mm_pcookies);
-   }
-   m_strPathName = lpszPathName;
-   get_html_data()->m_strPathName = m_strPathName;
-   get_html_data()->load(str);
-   on_layout();
-   return TRUE;
-
-}
-*/
 
 void html_form::GetClientBox(::html::box & box)
 {

@@ -979,16 +979,6 @@ namespace user
 
       }
 
-      Application.on_control_event(pevent);
-
-      if(pevent->m_bRet)
-      {
-
-         return;
-
-      }
-
-
       if(m_pcallback != NULL)
       {
 

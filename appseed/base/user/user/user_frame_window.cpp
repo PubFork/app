@@ -2227,7 +2227,7 @@ namespace user
    void frame_window::on_control_event(::user::control_event * pevent)
    {
 
-      return ::user::interaction::on_control_event(pevent);
+      ::user::interaction::on_control_event(pevent);
 
    }
 

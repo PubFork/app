@@ -7322,6 +7322,15 @@ run:
    }
 
 
+   void application::on_control_event(::user::control_event * pevent)
+   {
+
+      UNREFERENCED_PARAMETER(pevent);
+
+   }
+
+
+
 } // namespace aura
 
 

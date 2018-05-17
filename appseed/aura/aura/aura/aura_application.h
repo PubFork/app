@@ -631,6 +631,7 @@ namespace aura
 
       virtual ::visual::icon * get_icon(object * pobject, bool bBigIcon) const;
 
+      virtual void on_control_event(::user::control_event * pevent);
 
    };
 

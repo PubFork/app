@@ -806,10 +806,12 @@ namespace user
    void control::on_control_event(::user::control_event * pevent)
    {
 
-      if (m_pauraapp != NULL)
+      ::user::form * pform = get_form();
+
+      if (pform != NULL)
       {
 
-         Application.on_control_event(pevent);
+         pform->on_control_event(pevent);
 
          if (pevent->m_bRet)
          {
@@ -822,7 +824,7 @@ namespace user
 
       ::user::interaction * puiParent = GetParent();
 
-      if (puiParent != NULL)
+      if (puiParent != NULL && puiParent != pform)
       {
 
          puiParent->on_control_event(pevent);
@@ -836,21 +838,7 @@ namespace user
 
       }
 
-      ::user::form * pform = get_form();
 
-      if (pform != NULL && !IsAscendant(pform))
-      {
-
-         pform->on_control_event(pevent);
-
-         if (pevent->m_bRet)
-         {
-
-            return;
-
-         }
-
-      }
 
    }
 

@@ -28,6 +28,8 @@ namespace html
 
          m_pedit->m_bMultiLine      = false;
 
+         m_pedit->m_pform = pdata->m_pform;
+
       }
 
 
@@ -76,7 +78,7 @@ namespace html
          m_cxMin = 200;
       }
 
-      
+
       bool input_text::layout_phase1(data * pdata)
       {
 
@@ -110,15 +112,15 @@ namespace html
          ::draw2d::graphics * pgraphics = pdata->m_pgraphics;
 
          rect rectWindow;
-         
+
          m_pedit->GetWindowRect(rectWindow);
-         
+
          m_pedit->get_wnd()->ScreenToClient(rectWindow);
 
          ::draw2d::savedc savedc(pgraphics);
 
          pgraphics->SetViewportOrg(rectWindow.top_left());
-         
+
          m_pedit->_000OnDraw(pgraphics);
 
       }
@@ -126,9 +128,9 @@ namespace html
 
       void input_text::on_change_layout(data * pdata)
       {
-         
+
          UNREFERENCED_PARAMETER(pdata);
-         
+
          m_pedit->SetWindowPos(0, (int32_t) m_box.left, (int32_t) m_box.top, (int32_t) m_box.get_cx(), (int32_t) m_box.get_cy(), SWP_NOREDRAW);
 
       }

@@ -4689,6 +4689,24 @@ restart:
          puiParent->on_control_event(pevent);
 
       }
+      else
+      {
+
+         if (m_pauraapp != NULL)
+         {
+
+            Application.on_control_event(pevent);
+
+            if (pevent->m_bRet)
+            {
+
+               return;
+
+            }
+
+         }
+
+      }
 
    }
 
