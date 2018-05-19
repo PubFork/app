@@ -254,9 +254,9 @@ namespace base
 
          pbutton->m_econtroltype = ::user::control_type_menu_button_close;
 
-         pbutton->resize_to_fit();
-
          pbutton->set_stock_icon(stock_icon_close);
+
+         pbutton->resize_to_fit();
 
          return true;
 
