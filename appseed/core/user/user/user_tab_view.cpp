@@ -1003,14 +1003,14 @@ namespace user
    }
 
 
-   bool tab_drop_target_window::get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement, ::user::interaction * pui)
-   {
+   //bool tab_drop_target_window::get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement, ::user::interaction * pui)
+   //{
 
-      etranslucency = translucency_present;
+   //   etranslucency = translucency_present;
 
-      return true;
+   //   return true;
 
-   }
+   //}
 
    void tab_drop_target_window::_001OnLButtonUp(::message::message * pobj)
    {

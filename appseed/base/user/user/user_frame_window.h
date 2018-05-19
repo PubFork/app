@@ -59,8 +59,6 @@ namespace user
       };
       spa(::user::control_bar)                    m_barptra; // array of all control bars that have this interaction_impl as their dock site
 
-      bool                                m_bblur_Background;
-
       bool                       m_bAutoWindowFrame;
       bool                       m_bWindowFrame;
       bool                       m_bLayered;

@@ -114,12 +114,12 @@ namespace user
    }
 
 
-   void control_descriptor::set_type(e_control_type e_type)
+   void control_descriptor::set_control_type(e_control_type econtroltype)
    {
 
-      m_etype = e_type;
+      m_econtroltype = econtroltype;
 
-      switch (m_etype)
+      switch (m_econtroltype)
       {
       case control_type_edit:
 
@@ -143,10 +143,10 @@ namespace user
    }
 
 
-   e_control_type control_descriptor::get_type()
+   e_control_type control_descriptor::get_control_type()
    {
 
-      return m_etype;
+      return m_econtroltype;
 
    }
 
@@ -188,7 +188,7 @@ namespace user
 
       string str;
 
-      if (control_descriptor().get_type() == control_type_edit)
+      if (control_descriptor().get_control_type() == control_type_edit)
       {
 
          sp(::user::edit_text) pedit = pwnd.m_p;

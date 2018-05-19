@@ -30,7 +30,7 @@ namespace user
       index                         m_iSubItem;
       id                            m_idPrivateDataSection;
       bool                          m_bTransparent;
-      e_control_type                m_etype;
+      e_control_type                m_econtroltype;
       bool                          m_bCreated;
       bool                          m_bSubclassed;
       e_control_ddx                 m_eddx;
@@ -52,8 +52,8 @@ namespace user
       void clear();
       bool operator == (const control_descriptor & control_descriptor) const;
       control_descriptor & operator = (const control_descriptor & control_descriptor);
-      e_control_type get_type();
-      void set_type(e_control_type e_type);
+      e_control_type get_control_type();
+      void set_control_type(e_control_type e_control);
       void add_function(e_control_function e_control_function);
       void remove_function(e_control_function e_control_function);
       bool has_function(e_control_function e_control_function);

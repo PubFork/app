@@ -9,6 +9,9 @@ namespace user
       menu(get_app())
    {
 
+      m_econtroltype = control_type_menu;
+      m_bCloseButton = true;
+
    }
 
 
@@ -17,12 +20,14 @@ namespace user
       m_itemClose(papp)
    {
 
+      m_econtroltype = control_type_menu;
+      m_bCloseButton = true;
+
       m_iFlags = 0;
       m_bPositionHint = false;
-      m_itemClose.m_id = "close";
+      m_itemClose.m_id = "close_menu";
       m_itemClose.m_pmenu = this;
       m_bAutoDelete = true;
-      m_puserstyle = NULL;
       m_bOwnItem = true;
       m_puiParent = NULL;
       m_puiNotify = NULL;
@@ -32,6 +37,7 @@ namespace user
       m_bInline = false;
       m_bMenuOk = false;
       m_pmenuitemSub = NULL;
+
    }
 
 
@@ -39,6 +45,8 @@ namespace user
       ::object(papp),
       m_itemClose(papp)
    {
+
+      m_econtroltype = control_type_menu;
 
       m_iFlags = 0;
       m_bPositionHint = false;
@@ -48,7 +56,6 @@ namespace user
       m_pmenuParent = NULL;
       m_psubmenu = NULL;
       m_bAutoDelete = true;
-      m_puserstyle = NULL;
       m_pitem = pitem;
       m_bOwnItem = false;
       m_bInline = false;
@@ -181,6 +188,9 @@ namespace user
 
       }
 
+      m_bCloseButton = lpnode->attrs()["close_button"].is_empty() ||
+                       (bool)lpnode->attrs()["close_button"];
+
       m_pitem->m_pmenu = this;
 
       if (!m_pitem->load_menu(lpnode))
@@ -221,6 +231,13 @@ namespace user
 
       if (!doc.load(pszString))
       {
+
+         if (is_debugger_attached())
+         {
+
+            Application.simple_message_box("menu::load_xml_string_menu\n\nBad XML document!!", MB_OK);
+
+         }
 
          return false;
 
@@ -293,51 +310,51 @@ namespace user
 
       LPVOID lpvoid = NULL;
 
-      if (m_puserstyle == NULL)
-      {
+      //if (m_puserstyle == NULL)
+      //{
 
-         ::user::interaction * pui = m_puiParent;
+      //   ::user::interaction * pui = m_puiParent;
 
-         while (pui != NULL)
-         {
+      //   while (pui != NULL)
+      //   {
 
-            m_puserstyle = pui->m_puserstyle;
+      //      m_puserstyle = pui->m_puserstyle;
 
-            if (m_puserstyle != NULL)
-            {
+      //      if (m_puserstyle != NULL)
+      //      {
 
-               break;
+      //         break;
 
-            }
+      //      }
 
-            pui = pui->GetParent();
+      //      pui = pui->GetParent();
 
-         }
+      //   }
 
-         if (m_puserstyle == NULL)
-         {
+      //   if (m_puserstyle == NULL)
+      //   {
 
-            ::user::interaction * pui = m_puiNotify;
+      //      ::user::interaction * pui = m_puiNotify;
 
-            while (pui != NULL)
-            {
+      //      while (pui != NULL)
+      //      {
 
-               m_puserstyle = pui->m_puserstyle;
+      //         m_puserstyle = pui->m_puserstyle;
 
-               if (m_puserstyle != NULL)
-               {
+      //         if (m_puserstyle != NULL)
+      //         {
 
-                  break;
+      //            break;
 
-               }
+      //         }
 
-               pui = pui->GetParent();
+      //         pui = pui->GetParent();
 
-            }
+      //      }
 
-         }
+      //   }
 
-      }
+      //}
 
       if (!IsWindow())
       {
@@ -367,33 +384,38 @@ namespace user
 
       }
 
-      if (m_itemClose.m_pui == NULL)
+      if (m_bCloseButton)
       {
 
-         m_itemClose.m_pui = create_menu_button(get_app());
-
-      }
-
-      {
-
-         //control_descriptor descriptor;
-
-         //descriptor.m_puiParent = this;
-
-         //descriptor.m_id = "close";
-
-         //descriptor.m_iItem = 65536;
-
-         if (!m_itemClose.m_pui->create_window(null_rect(), this, "close"))
+         if (m_itemClose.m_pui == NULL)
          {
 
-            return false;
+            m_itemClose.m_pui = create_menu_button(&m_itemClose);
 
          }
 
-      }
+         {
 
-      m_itemClose.m_pui->set_window_text("r");
+            //control_descriptor descriptor;
+
+            //descriptor.m_puiParent = this;
+
+            //descriptor.m_id = "close";
+
+            //descriptor.m_iItem = 65536;
+
+            if (!m_itemClose.m_pui->create_window(null_rect(), this, "close_menu"))
+            {
+
+               return false;
+
+            }
+
+         }
+
+         m_itemClose.m_pui->set_window_text("r");
+
+      }
 
       if (!m_pitem->create_buttons(this))
       {
@@ -501,11 +523,17 @@ namespace user
 
       size size = pgraphics->GetTextExtent(unitext("XXXMMMÁÇg"));
 
-      int32_t iMaxHeight = size.cy;
+      {
 
-      int32_t iMaxWidth = size.cx;
+         int32_t iMaxHeight = size.cy;
 
-      m_iCheckBoxSize = iMaxHeight;
+         int32_t iMaxWidth = size.cx;
+
+         m_iItemHeight = iMaxHeight;
+
+      }
+
+      m_iCheckBoxSize = m_iItemHeight;
 
       m_iHeaderHeight = size.cy;
 
@@ -515,123 +543,121 @@ namespace user
 
       rect rectMargin = _001GetRect(rect_menu_margin);
 
-      int iElementPadding = _001GetInt(int_menu_button_padding);
+      rect rectBorder = _001GetRect(rect_menu_border);
+
+      rect rectPadding = _001GetRect(rect_menu_padding);
+
+      int iElementPadding = _001GetInt(int_menu_check_padding);
+
+      int x = rectMargin.left + rectBorder.left + rectPadding.left;
+
+      int y = rectMargin.top + rectBorder.top + rectPadding.top;
+
+      class calc_size calcsize;
+
+      calcsize.m_pgraphics = pgraphics;
+
+      if (m_bCloseButton)
+      {
+
+         m_itemClose.m_pui->on_calc_size(&calcsize);
+
+         m_itemClose.m_rectUi.left = x;
+         m_itemClose.m_rectUi.right = x + calcsize.m_size.cx;
+         m_itemClose.m_rectUi.top = y;
+         m_itemClose.m_rectUi.bottom = y + calcsize.m_size.cy;
+
+         y += calcsize.m_size.cy;
+
+      }
+
+      int yClose = y;
+
+      m_iaColumnWidth.set_size(1);
+
+      m_iaColumnHeight.set_size(1);
+
+      m_iaColumnWidth[0] = calcsize.m_size.cx;
+
+      m_iaColumnHeight[0] = yClose;
+
+      index iColumn = 0;
 
       for (int32_t i = 0; i < spitema->get_size(); i++)
       {
 
          string strButtonText = spitema->element_at(i)->m_pui->get_window_text();
 
-         class size size = pgraphics->GetTextExtent(strButtonText);
+         spitema->element_at(i)->m_iColumn = iColumn;
 
-         size.cx += rectMargin.left;
+         spitema->element_at(i)->m_pui->on_calc_size(&calcsize);
 
-         size.cx += rectMargin.right;
+         spitema->element_at(i)->m_rectUi.left = x;
+         spitema->element_at(i)->m_rectUi.right = x + calcsize.m_size.cx;
+         spitema->element_at(i)->m_rectUi.top = y;
+         spitema->element_at(i)->m_rectUi.bottom = y + calcsize.m_size.cy;
 
-         size.cx += _001GetInt(int_menu_button_padding);
+         y += calcsize.m_size.cy;
 
-         size.cx += m_iCheckBoxSize;
+         m_iaColumnHeight[0] = y;
 
-         if (spitema->element_at(i)->IsPopup())
+         if (calcsize.m_size.cx > m_iaColumnWidth[0])
          {
 
-            size.cx += _001GetInt(int_menu_button_padding);
-
-            size.cx += m_iCheckBoxSize;
+            m_iaColumnWidth[0] = calcsize.m_size.cx;
 
          }
 
-         size.cy += rectMargin.top;
-
-         size.cy += rectMargin.bottom;
-
-         if (size.cy > iMaxHeight)
+         if (spitema->element_at(i)->m_bBreak)
          {
 
-            iMaxHeight = size.cy;
+            x += m_iaColumnWidth[0];
 
-         }
+            y = yClose;
 
-         if (size.cx > iMaxWidth)
-         {
+            iColumn++;
 
-            iMaxWidth = size.cx;
+            m_iaColumnWidth.add(0);
+
+            m_iaColumnHeight.add(yClose);
 
          }
 
       }
 
-      m_iItemHeight = iMaxHeight;
+      m_size.cx = m_iaColumnWidth.get_total()
+                  + rectMargin.left + rectMargin.right
+                  + rectBorder.left + rectBorder.right
+                  + rectPadding.left + rectPadding.right;
 
-      m_size.cx = iMaxWidth + rectMargin.left + rectMargin.right;
+      m_size.cy = m_iaColumnHeight.get_maximum_value()
+                  + rectMargin.top + rectMargin.bottom
+                  + rectBorder.top + rectBorder.bottom
+                  + rectPadding.top + rectPadding.bottom;
 
       ::count iItemCount = spitema->get_size();
-
-      //int32_t iSeparatorCount = pitem->m_iSeparatorCount;
-
-      int x = rectMargin.left;
-
-      string str;
-
-      int cx = iMaxWidth;
-
-      int cy;
-
-      int y = rectMargin.top;
-
-      y += m_iItemHeight;
-
-      y += iElementPadding;
 
       for (int32_t i = 0; i < iItemCount; i++)
       {
 
          ::user::menu_item * pitem = spitema->element_at(i);
 
-         if (pitem->m_id == "separator")
-         {
-
-            cy = rectMargin.top;
-
-            cy += rectMargin.bottom;
-
-         }
-         else
-         {
-
-            cy = m_iItemHeight;
-
-         }
-
-         //pitem->m_pui = Application.create_menu_interaction();
-         //
-         //pitem->m_pmenu = this;
-         //
-         //pitem->m_pui->create_window(null_rect(), this, pitem->m_id);
-         //
+         spitema->element_at(i)->m_rectUi.right = x + m_iaColumnWidth[pitem->m_iColumn];
 
          prepare_menu(pitem);
 
-         pitem->m_pui->SetWindowPos(0, x, y, cx, cy, SWP_SHOWWINDOW | SWP_NOZORDER);
-
-         y += cy;
-
-         y += iElementPadding;
+         pitem->m_pui->SetWindowPos(0, pitem->m_rectUi, SWP_SHOWWINDOW | SWP_NOZORDER);
 
       }
 
-      y -= iElementPadding;
+      if (m_bCloseButton)
+      {
 
-      y += rectMargin.bottom;
+         prepare_menu(&m_itemClose);
 
-      m_size.cy = y;
+         m_itemClose.m_pui->SetWindowPos(0, m_itemClose.m_rectUi);
 
-
-      //m_itemClose->m_button.resize_to_fit();
-
-      Session.userstyle()->prepare_menu(&m_itemClose);
-
-      m_itemClose.m_pui->MoveWindow(0, 0);
+      }
 
       rect rectWindow;
 
@@ -1017,6 +1043,11 @@ namespace user
 
       UNREFERENCED_PARAMETER(pobj);
 
+      //create_color(color_background, ARGB(84 + 77, 185, 184, 177));
+      //create_translucency(::user::translucency_present;
+
+
+
    }
 
 
@@ -1161,35 +1192,14 @@ namespace user
    }
 
 
-   bool menu::get_color(COLORREF & cr, ::user::e_color ecolor, ::user::interaction * pui)
-   {
-
-      if (ecolor == ::user::color_background)
-      {
-
-         cr = ARGB(84 + 77, 185, 184, 177);
-
-         return true;
-
-      }
-      else
-      {
-
-         return ::user::interaction::get_color(cr, ecolor, this);
-
-      }
-
-   }
 
 
-   bool menu::get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement, ::user::interaction * pui)
-   {
+   //bool menu::get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement, ::user::interaction * pui)
+   //{
 
-      etranslucency = ::user::translucency_present;
+   //   return true;
 
-      return true;
-
-   }
+   //}
 
 
    ::user::interaction * menu::get_target_window()
@@ -1280,10 +1290,10 @@ namespace user
    }
 
 
-   ::user::interaction * menu::create_menu_button(::aura::application * papp)
+   ::user::menu_interaction * menu::create_menu_button(menu_item * pitem)
    {
 
-      return Session.create_menu_button(papp);
+      return Session.create_menu_button(pitem);
 
    }
 

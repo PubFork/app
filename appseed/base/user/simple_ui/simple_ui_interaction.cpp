@@ -21,8 +21,6 @@ namespace simple_ui
 
    {
 
-      m_puserstyle       = NULL;
-
    }
 
    interaction::~interaction()

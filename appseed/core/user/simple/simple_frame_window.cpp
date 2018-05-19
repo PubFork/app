@@ -105,7 +105,7 @@ simple_frame_window::simple_frame_window(::aura::application * papp) :
 
    m_bTransparentFrame = false;
 
-   m_bblur_Background = false;
+   //m_bblur_Background = false;
 
    m_bCustomFrameBefore = true;
 
@@ -1684,7 +1684,6 @@ void simple_frame_window::_001OnDeferPaintLayeredWindowBackground(::draw2d::grap
 
 }
 
-
 void simple_frame_window::_000OnDraw(::draw2d::graphics * pgraphicsParam)
 {
 
@@ -1740,80 +1739,64 @@ void simple_frame_window::_000OnDraw(::draw2d::graphics * pgraphicsParam)
 
    }
 
+   ::user::style_context style(this);
+
    if(dAlpha > 0.0)
    {
 
-      if(m_puserstyle != NULL && m_puserstyle->_001OnDrawMainFrameBackground(pgraphics,this))
+      bool bBlurBackground = _001GetFlag(::user::flag_blur_background);
+
+      int iDrawingOrder = DRAWING_ORDER_CLIENT_OVER;
+
+      if (!bBlurBackground)
       {
 
-         windowing_output_debug_string("\nsimple_frame_window::_000OnDraw C.1");
+         iDrawingOrder = _001GetInt(::user::int_top_level_drawing_order);
+
+         while (style)
+         {
+
+            if (style->_001OnDrawMainFrameBackground(pgraphics, this))
+            {
+
+               break;
+
+            }
+
+            style.next();
+
+         }
+
+      }
+
+#if TEST
+
+      pgraphics->fill_solid_rect(0, 0, 100, 100, ARGB(128, 255, 0, 0));
+
+#endif
+
+      if (iDrawingOrder == DRAWING_ORDER_CLIENT_OVER)
+      {
 
          _001DrawThis(pgraphics);
 
          _001DrawChildren(pgraphics);
-
-         _008CallOnDraw(pgraphics);
-
-      }
-      else if (m_bblur_Background)
-      {
-
-         windowing_output_debug_string("\nsimple_frame_window::_000OnDraw C.2");
-
-         _001DrawThis(pgraphics);
-
-         _001DrawChildren(pgraphics);
-
-         _008CallOnDraw(pgraphics);
-
-      }
-      else if(!Session.savings().is_trying_to_save(::aura::resource_processing)
-              && !Session.savings().is_trying_to_save(::aura::resource_display_bandwidth)
-              && !Session.savings().is_trying_to_save(::aura::resource_memory))
-         //&& (GetParent() != NULL || (this->GetExStyle() & WS_EX_LAYERED) != 0))
-      {
-
-         windowing_output_debug_string("\nsimple_frame_window::_000OnDraw C.3");
-
-#if TEST
-
-         pgraphics->fill_solid_rect(0, 0, 100, 100, ARGB(128, 255, 0, 0));
-
-#endif
-
-         _010OnDraw(pgraphics);
-
-#if TEST
-
-         pgraphics->fill_solid_rect(0, 100, 100, 100, ARGB(128, 0, 0, 255));
-
-#endif
 
       }
       else
       {
 
-         windowing_output_debug_string("\nsimple_frame_window::_000OnDraw C.4");
-
-#if TEST
-
-         pgraphics->fill_solid_rect(60, 10, 50, 50, ARGB(128, 184, 180, 90));
-
-#endif
-
-         _001DrawThis(pgraphics);
-
-         _001DrawChildren(pgraphics);
-
-         _008CallOnDraw(pgraphics);
-
-#if TEST
-
-         pgraphics->fill_solid_rect(10, 60, 50, 50, ARGB(128, 184, 180, 90));
-
-#endif
+         draw_frame_and_control_box_over(pgraphics);
 
       }
+
+      _008CallOnDraw(pgraphics);
+
+#if TEST
+
+      pgraphics->fill_solid_rect(0, 100, 100, 100, ARGB(128, 0, 0, 255));
+
+#endif
 
    }
 
@@ -1832,7 +1815,9 @@ void simple_frame_window::_000OnDraw(::draw2d::graphics * pgraphicsParam)
 void simple_frame_window::_001OnDraw(::draw2d::graphics * pgraphics)
 {
 
-   if(m_bblur_Background)
+   bool bBlurBackground = _001GetFlag(::user::flag_blur_background);
+
+   if(bBlurBackground)
    {
 
       class imaging & imaging = Application.imaging();
@@ -1887,9 +1872,10 @@ void simple_frame_window::_001OnDraw(::draw2d::graphics * pgraphics)
          }
 #endif
       }
+
    }
 
-   _011OnDraw(pgraphics);
+   draw_frame(pgraphics);
 
 
 }
@@ -1901,7 +1887,11 @@ bool simple_frame_window::on_before_set_parent(sp(::user::interaction) pinterfac
    WindowDataSaveWindowRect();
 
    if (!::user::box::on_before_set_parent(pinterface))
+   {
+
       return false;
+
+   }
 
    return true;
 
@@ -1910,8 +1900,6 @@ bool simple_frame_window::on_before_set_parent(sp(::user::interaction) pinterfac
 
 void simple_frame_window::on_set_parent(::user::interaction * puiParent)
 {
-
-
 
    ::user::frame_window::on_set_parent(puiParent);
 
@@ -2035,7 +2023,6 @@ bool simple_frame_window::GetClientRect(LPRECT lprect)
       return ::user::frame_window::GetClientRect(lprect);
 
    }
-
 
 }
 
@@ -2711,101 +2698,39 @@ void simple_frame_window::_001OnClip(::draw2d::graphics * pgraphics)
 }
 
 
-void simple_frame_window::_010OnDraw(::draw2d::graphics * pgraphics)
+void simple_frame_window::draw_frame_and_control_box_over(::draw2d::graphics * pgraphics)
 {
 
    if (!is_this_visible())
       return;
 
 
-   if(GetExStyle() & WS_EX_LAYERED)
+   ::user::interaction_spa uia;
+
    {
 
-      ::user::interaction_spa uia;
+      synch_lock sl(m_pmutex);
 
+      uia = m_uiptraChild;
+
+   }
+
+   {
+
+      ::draw2d::keep k(pgraphics);
+
+      //if (0)
       {
-
-         synch_lock sl(m_pmutex);
-
-         uia = m_uiptraChild;
-
-      }
-
-      {
-
-         ::draw2d::keep k(pgraphics);
-
-         //if (0)
-         {
-            try
-            {
-
-               for (auto & pui : uia)
-               {
-
-                  if (!base_class < ::user::wndfrm::frame::control_box > ::bases(pui))
-                  {
-
-                     pui->_000OnDraw(pgraphics);
-
-                  }
-
-               }
-
-            }
-            catch (...)
-            {
-
-            }
-
-         }
-
-      }
-
-
-
-      _001DrawThis(pgraphics);
-
-
-
-      if (!m_bTransparentFrame || this == GetActiveWindow())
-      {
-
-         ::draw2d::keep k(pgraphics);
-
          try
          {
 
             for (auto & pui : uia)
             {
 
-               if (base_class < ::user::wndfrm::frame::control_box > ::bases(pui))
+               if (!base_class < ::user::wndfrm::frame::control_box > ::bases(pui))
                {
 
-                  string str;
-
-                  pui->get_window_text(str);
-
-                  if (str == "r")
-                  {
-
-                     //TRACE0("x button");
-
-                  }
-
-                  if (pui->IsWindowVisible())
-                  {
-
-                     if (str == "r")
-                     {
-
-                        //TRACE0("x button visible");
-
-                     }
-
-                     pui->_000OnDraw(pgraphics);
-
-                  }
+                  pui->_000OnDraw(pgraphics);
 
                }
 
@@ -2819,24 +2744,71 @@ void simple_frame_window::_010OnDraw(::draw2d::graphics * pgraphics)
 
       }
 
-      _008CallOnDraw(pgraphics);
-
    }
-   else
+
+
+
+   _001DrawThis(pgraphics);
+
+
+
+   if (!m_bTransparentFrame || this == GetActiveWindow())
    {
 
-      _001DrawThis(pgraphics);
+      ::draw2d::keep k(pgraphics);
 
-      _001DrawChildren(pgraphics);
+      try
+      {
 
-      _008CallOnDraw(pgraphics);
+         for (auto & pui : uia)
+         {
+
+            if (base_class < ::user::wndfrm::frame::control_box > ::bases(pui))
+            {
+
+               string str;
+
+               pui->get_window_text(str);
+
+               if (str == "r")
+               {
+
+                  //TRACE0("x button");
+
+               }
+
+               if (pui->IsWindowVisible())
+               {
+
+                  if (str == "r")
+                  {
+
+                     //TRACE0("x button visible");
+
+                  }
+
+                  pui->_000OnDraw(pgraphics);
+
+               }
+
+            }
+
+         }
+
+      }
+      catch (...)
+      {
+
+      }
 
    }
+
+   _008CallOnDraw(pgraphics);
 
 }
 
 
-void simple_frame_window::_011OnDraw(::draw2d::graphics * pgraphics)
+void simple_frame_window::draw_frame(::draw2d::graphics * pgraphics)
 {
 
    if (m_bWindowFrame && !Session.savings().is_trying_to_save(::aura::resource_display_bandwidth))
@@ -2845,18 +2817,6 @@ void simple_frame_window::_011OnDraw(::draw2d::graphics * pgraphics)
       ::user::wndfrm::frame::WorkSetClientInterface::_001OnDraw(pgraphics);
 
    }
-   //else if(!_001IsTranslucent())
-   //{
-
-   //   rect rect;
-
-   //   GetClientRect(rect);
-
-   //   pgraphics->set_al
-
-   //   pgraphics->fill_solid_rect(rect, _001GetColor(::user::color_background));
-
-   //}
 
 }
 
@@ -3020,21 +2980,21 @@ bool simple_frame_window::calc_layered()
 }
 
 
-bool simple_frame_window::get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement, ::user::interaction * pui)
-{
-
-   if (m_etranslucency != ::user::translucency_undefined)
-   {
-
-      etranslucency = m_etranslucency;
-
-      return true;
-
-   }
-
-   return ::user::frame_window::get_translucency(etranslucency, eelement, pui);
-
-}
+//bool simple_frame_window::get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement, ::user::interaction * pui)
+//{
+//
+//   if (m_etranslucency != ::user::translucency_undefined)
+//   {
+//
+//      etranslucency = m_etranslucency;
+//
+//      return true;
+//
+//   }
+//
+//   return ::user::frame_window::get_translucency(etranslucency, eelement, pui);
+//
+//}
 
 
 void simple_frame_window::data_on_after_change(::message::message * pobj)
@@ -3378,31 +3338,31 @@ bool simple_frame_window::IsNotifyIconEnabled()
 }
 
 
-bool simple_frame_window::get_color(COLORREF & cr, ::user::e_color ecolor, ::user::interaction * pui)
-{
-
-   if (m_workset.m_pframeschema != NULL)
-   {
-
-
-      if (m_workset.m_pframeschema->get_color(cr, ecolor, pui))
-      {
-
-         return true;
-
-      }
-
-   }
-
-   return ::user::frame_window::get_color(cr, ecolor, pui);
-
-}
-
-
+//bool simple_frame_window::get_color(COLORREF & cr, ::user::e_color ecolor, ::user::interaction * pui)
+//{
+//
+//   if (m_workset.m_pframeschema != NULL)
+//   {
+//
+//
+//      if (m_workset.m_pframeschema->get_color(cr, ecolor, pui))
+//      {
+//
+//         return true;
+//
+//      }
+//
+//   }
+//
+//   return ::user::frame_window::get_color(cr, ecolor, pui);
+//
+//}
+//
+//
 void simple_frame_window::on_select_user_style()
 {
 
-   if (m_puserstyle == NULL)
+   if (m_pstyle.is_null())
    {
 
       string strSchema = m_varFrame["wndfrm"];
@@ -3410,15 +3370,44 @@ void simple_frame_window::on_select_user_style()
       if (strSchema.has_char() || GetParent() == NULL)
       {
 
-         m_puserstyle = Session.get_user_style(strSchema, get_app());
+         m_pstyle = Session.get_user_theme(strSchema, get_app());
+
+         m_puserstyle = m_pstyle;
 
       }
 
    }
 
-   ::user::frame_window::on_select_user_style();
+   //::user::frame_window::on_select_user_style();
 
 }
+
+
+void simple_frame_window::nextstyle(::user::style_context * pcontext)
+{
+
+   if (m_pstyle.is_set())
+   {
+
+      pcontext->m_pstyle = m_pstyle;
+
+   }
+   else if (get_parent() == NULL)
+   {
+
+      Session.userstyle(pcontext);
+
+   }
+   else
+   {
+
+      pcontext->m_pstyle = get_parent();
+
+   }
+
+}
+
+
 
 
 void simple_frame_window::notification_area_extra_action(const char * pszId)
@@ -3477,3 +3466,5 @@ string simple_frame_window::notification_area_extra_get_xml_menu()
    return strXml;
 
 }
+
+

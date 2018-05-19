@@ -53,7 +53,7 @@
     <ClCompile Include="wndfrm_tranquillum_library.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="wndfrm_tranquillum_user_style.cpp">
+    <ClCompile Include="wndfrm_tranquillum_user_theme.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -100,7 +100,7 @@
     <ClInclude Include="wndfrm_tranquillum_library.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="wndfrm_tranquillum_user_style.h">
+    <ClInclude Include="wndfrm_tranquillum_user_theme.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -602,7 +602,7 @@ SizingNone:
             }
 
 
-            bool FrameSchemaHardCoded008::get_color(COLORREF & cr, ::user::e_color ecolor, ::user::interaction * pui)
+            bool FrameSchemaHardCoded008::get_color(COLORREF & cr, ::user::e_color ecolor, ::user::style_context * pstyle)
             {
 
                if (m_estyle == StyleLightGreen)
@@ -649,7 +649,7 @@ SizingNone:
 
                   }
 
-                  return ::user::wndfrm::frame::frame::get_color(cr, ecolor, pui);
+                  return ::user::wndfrm::frame::frame::get_color(cr, ecolor, pstyle);
 
                }
                else // if (m_estyle != StyleLightGreen)

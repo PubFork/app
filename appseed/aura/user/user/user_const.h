@@ -1,10 +1,10 @@
 #pragma once
 
-#pragma once
-
 
 namespace user
 {
+
+
    enum e_object
    {
 
@@ -22,23 +22,6 @@ namespace user
       theme_dark
 
    };
-
-
-   enum e_schema
-   {
-
-      schema_default,
-      schema_menu,
-      schema_button,
-      schema_menu_button,
-      schema_menu_close,
-      schema_menu_popup,
-      schema_system_menu_button,
-      schema_system_menu_close,
-      schema_system_menu_popup,
-
-   };
-
 
 
    enum e_appearance
@@ -95,7 +78,14 @@ namespace user
       control_type_tab,
       control_type_toolbar,
       control_type_statusbar,
-      control_type_menu
+      control_type_menu,
+      control_type_menu_popup,
+      control_type_menu_button,
+      control_type_menu_button_close,
+      control_type_system_menu,
+      control_type_system_menu_popup,
+      control_type_system_menu_button,
+      control_type_system_menu_close,
    };
 
 
@@ -253,6 +243,7 @@ namespace user
 
       flag_none,
       flag_border,
+      flag_blur_background
 
    };
 
@@ -262,7 +253,15 @@ namespace user
    {
 
       rect_none,
+      rect_button_margin,
+      rect_button_padding,
+      rect_button_border,
       rect_menu_margin,
+      rect_menu_padding,
+      rect_menu_border,
+      rect_menu_item_margin,
+      rect_menu_item_padding,
+      rect_menu_item_border,
 
    };
 
@@ -274,10 +273,17 @@ namespace user
       int_none,
       int_border,
       int_element_padding,
-      int_menu_button_padding,
-      int_check_box_size
+      int_menu_check_padding,
+      int_check_box_size,
+      int_button_draw_text_flags,
+      int_menu_item_draw_text_flags,
+      int_top_level_drawing_order,
 
    };
+
+#define DRAWING_ORDER_FRAME_OVER 0
+#define DRAWING_ORDER_CLIENT_OVER 1
+
 
    enum e_double
    {

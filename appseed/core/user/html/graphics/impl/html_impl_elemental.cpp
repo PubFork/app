@@ -662,21 +662,23 @@ namespace html
 
             pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
-            if (m_pelemental->m_style.get_alpha("", pdata, m_pelemental, d))
+            //if (m_pelemental->m_style.get_alpha("", pdata, m_pelemental, d))
+            //{
+
+            //   if (m_pelemental->get_color(cr, ::user::color_background, pdata->m_pform))
+            //   {
+
+            //      App(pdata->get_app()).imaging().color_blend(pgraphics, rect, cr, MAX(0, MIN(255, (BYTE)(d * 255))));
+
+            //   }
+
+            //}
+            //else
             {
 
-               if (m_pelemental->get_color(cr, ::user::color_background, pdata->m_pform))
-               {
+               ::user::style_context style(m_pelemental);
 
-                  App(pdata->get_app()).imaging().color_blend(pgraphics, rect, cr, MAX(0, MIN(255, (BYTE)(d * 255))));
-
-               }
-
-            }
-            else
-            {
-
-               if(m_pelemental->get_color(cr,::user::color_background, pdata->m_pform))
+               if(m_pelemental->get_color(cr,::user::color_background, &style))
                {
 
                   pgraphics->fill_solid_rect(rect, cr);

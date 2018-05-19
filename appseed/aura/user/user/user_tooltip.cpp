@@ -64,7 +64,7 @@ namespace user
    }
 
 
-   bool tooltip::get_translucency(::user::e_translucency  & etranslucency, ::user::e_element eelement, ::user::interaction * pui)
+   bool tooltip::get_translucency(::user::e_translucency  & etranslucency, ::user::e_element eelement, style_context * pcontext)
    {
 
       etranslucency = ::user::translucency_present;
@@ -77,7 +77,7 @@ namespace user
    void tooltip::_001OnDraw(::draw2d::graphics * pgraphics)
    {
 
-      
+
 
       pgraphics->SelectClipRgn(NULL);
 

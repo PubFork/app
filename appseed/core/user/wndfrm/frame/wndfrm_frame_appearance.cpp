@@ -39,44 +39,44 @@ namespace user
 
          sp(::user::interaction) appearance::get_window()
          {
-            
+
             return m_pworkset->GetRegionWindow();
-            
+
          }
-         
+
 
          bool appearance::update()
          {
-            
+
             if (m_pworkset == NULL)
             {
-               
+
                return false;
-               
+
             }
-            
+
             if(m_pworkset->m_pframeschema == NULL)
             {
-               
+
                return false;
-               
-            }
-
-            try
-            {
-
-               if (m_pworkset->m_pframeschema->m_puserstyle.is_null())
-               {
-
-                  m_pworkset->m_pframeschema->m_puserstyle = m_pworkset->GetWndDraw()->m_puserstyle;
-
-               }
 
             }
-            catch (...)
-            {
 
-            }
+            //try
+            //{
+
+            //   if (m_pworkset->m_pframeschema->m_puserstyle.is_null())
+            //   {
+
+            //      m_pworkset->m_pframeschema->m_puserstyle = m_pworkset->GetWndDraw()->m_puserstyle;
+
+            //   }
+
+            //}
+            //catch (...)
+            //{
+
+            //}
 
             try
             {
@@ -84,15 +84,15 @@ namespace user
                m_pworkset->m_pframeschema->on_initialize_appearance();
 
                return true;
-               
+
             }
             catch (...)
             {
-               
+
             }
 
             return false;
-            
+
          }
 
 
@@ -282,11 +282,11 @@ namespace user
 
 
          void appearance::CTool001::Update(::draw2d::graphics * pgraphics, const RECT & rect,
-            COLORREF crHighlight,
-            COLORREF crLight,
-            COLORREF crBody,
-            COLORREF crShadow,
-            COLORREF crDkShadow)
+                                           COLORREF crHighlight,
+                                           COLORREF crLight,
+                                           COLORREF crBody,
+                                           COLORREF crShadow,
+                                           COLORREF crDkShadow)
          {
 
             UNREFERENCED_PARAMETER(crLight);
@@ -396,7 +396,7 @@ namespace user
          void appearance::CTool001::draw(::draw2d::graphics * pgraphics)
          {
 
-            
+
 
             pgraphics->SelectObject(m_brushBody);
 
@@ -409,11 +409,11 @@ namespace user
             point pt(0, 0);
 
             System.visual().api().DrawAndFillBeziers(
-               pgraphics,
-               m_pointsetBody.get_data(),
-               (int32_t)m_pointsetBody.get_size(),
-               1.0,
-               &pt);
+            pgraphics,
+            m_pointsetBody.get_data(),
+            (int32_t)m_pointsetBody.get_size(),
+            1.0,
+            &pt);
 
             for (int32_t i = 0; i < m_colorbezieraOutsideBorder.get_size(); i++)
             {
@@ -430,11 +430,11 @@ namespace user
             point pt(0, 0);
 
             Sys(pgraphics->get_app()).visual().api().DrawAndFillBeziers(
-               pgraphics,
-               m_pointset.get_data(),
-               (int32_t)m_pointset.get_size(),
-               1.0,
-               &pt);
+            pgraphics,
+            m_pointset.get_data(),
+            (int32_t)m_pointset.get_size(),
+            1.0,
+            &pt);
 
          }
 

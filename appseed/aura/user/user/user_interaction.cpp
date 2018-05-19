@@ -95,7 +95,6 @@ namespace user
       m_bBackgroundBypass = false;
       m_bEnableSaveWindowRect = false;
 
-      m_puserstyle = NULL;
       m_bLockWindowUpdate = false;
 
 
@@ -112,8 +111,6 @@ namespace user
 
       m_pform = NULL;
       m_pformParent = NULL;
-
-      set_user_schema(::user::schema_default);
 
    }
 
@@ -1323,8 +1320,6 @@ restart:
 
       single_lock sl(m_pmutex, true);
 
-      select_user_schema();
-
       on_layout();
 
    }
@@ -1951,11 +1946,7 @@ restart:
 
          pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
-         COLORREF cr = ARGB(200, 255, 255, 255);
-
-         style_color(cr, m_ecolorBackground);
-
-         pgraphics->fill_solid_rect(rectClient, cr);
+         pgraphics->fill_solid_rect(rectClient, _001GetColor(m_ecolorBackground, ARGB(200, 255, 255,255)));
 
       }
 
@@ -2093,10 +2084,6 @@ restart:
       {
 
       }
-
-
-      on_select_user_style();
-
 
    }
 
@@ -4050,10 +4037,6 @@ restart:
       m_puiOwner = pui;
 
       ::user::interaction * puiRet = m_pimpl->SetOwner(pui);
-
-      m_puserstyle = NULL;
-
-      on_select_user_style();
 
       return puiRet;
 
@@ -6133,7 +6116,7 @@ restart:
    }
 
 
-   bool interaction::track_popup_xml_string_menu(const char * pszString, int32_t iFlags, POINT pt)
+   sp(::user::menu) interaction::track_popup_xml_string_menu(const char * pszString, int32_t iFlags, POINT pt)
    {
 
       sp(::user::menu) pmenu = Application.alloc(System.type_info < ::user::menu >());
@@ -6143,7 +6126,7 @@ restart:
 
          pmenu.release();
 
-         return false;
+         return pmenu;
 
       }
 
@@ -6154,11 +6137,11 @@ restart:
 
          pmenu.release();
 
-         return false;
+         return pmenu;
 
       }
 
-      return true;
+      return pmenu;
 
    }
 
@@ -7623,17 +7606,17 @@ restart:
    //   }
 
 
-   ::user::style * interaction::parent_userstyle()
-   {
+   //::user::style * interaction::parent_userstyle()
+   //{
 
-      ::user::interaction * puiParent = GetParent();
+   //   ::user::interaction * puiParent = GetParent();
 
-      if (puiParent == NULL)
-         return NULL;
+   //   if (puiParent == NULL)
+   //      return NULL;
 
-      return puiParent->userstyle();
+   //   return puiParent->userstyle();
 
-   }
+   //}
 
 
 
@@ -8661,105 +8644,105 @@ restart:
    }
 
 
-   void interaction::on_select_user_style()
-   {
+   //void interaction::on_select_user_style()
+   //{
 
-      if (get_app()->m_pcoresession == NULL)
-      {
+   //   if (get_app()->m_pcoresession == NULL)
+   //   {
 
-         return;
+   //      return;
 
-      }
+   //   }
 
-      if (m_puserstyle == NULL)
-      {
+   //   if (m_puserstyle == NULL)
+   //   {
 
-         ::user::interaction * pui = GetOwner();
+   //      ::user::interaction * pui = GetOwner();
 
-         while (pui != NULL)
-         {
+   //      while (pui != NULL)
+   //      {
 
-            m_puserstyle = pui->m_puserstyle;
+   //         m_puserstyle = pui->m_puserstyle;
 
-            if (m_puserstyle != NULL)
-            {
+   //         if (m_puserstyle != NULL)
+   //         {
 
-               break;
+   //            break;
 
-            }
+   //         }
 
-            pui = pui->GetOwner();
+   //         pui = pui->GetOwner();
 
-         }
+   //      }
 
-      }
-
-
-      if (m_puserstyle == NULL)
-      {
-
-         ::user::interaction * pui = GetParent();
-
-         while (pui != NULL)
-         {
-
-            m_puserstyle = pui->m_puserstyle;
-
-            if (m_puserstyle != NULL)
-            {
-
-               break;
-
-            }
-
-            pui = pui->GetParent();
-
-         }
-
-      }
+   //   }
 
 
-      sp(::user::style) puserstyle = m_puserstyle;
+   //   if (m_puserstyle == NULL)
+   //   {
 
-      if (puserstyle.is_null())
-      {
+   //      ::user::interaction * pui = GetParent();
 
-         puserstyle = Session.m_puserstyle;
+   //      while (pui != NULL)
+   //      {
 
-         if (puserstyle == NULL)
-         {
+   //         m_puserstyle = pui->m_puserstyle;
 
-            puserstyle = Application.m_puserstyle;
+   //         if (m_puserstyle != NULL)
+   //         {
 
-            if (puserstyle == NULL)
-            {
+   //            break;
 
-               puserstyle = Session.m_puserstyle;
+   //         }
 
-               if (puserstyle == NULL)
-               {
+   //         pui = pui->GetParent();
 
-                  Session.m_puserstyle = Session.get_user_style("", get_app());
+   //      }
 
-                  m_puserstyle = Session.m_puserstyle;
-
-               }
-
-            }
-
-         }
-
-      }
+   //   }
 
 
-      //if (m_puserstyle == NULL)
-      {
+   //   sp(::user::style) puserstyle = m_puserstyle;
 
-         ::user::style::on_select_user_style();
+   //   if (puserstyle.is_null())
+   //   {
 
-      }
+   //      puserstyle = Session.m_puserstyle;
 
-   }
+   //      if (puserstyle == NULL)
+   //      {
+
+   //         puserstyle = Application.m_puserstyle;
+
+   //         if (puserstyle == NULL)
+   //         {
+
+   //            puserstyle = Session.m_puserstyle;
+
+   //            if (puserstyle == NULL)
+   //            {
+
+   //               Session.m_puserstyle = Session.get_user_style("", get_app());
+
+   //               m_puserstyle = Session.m_puserstyle;
+
+   //            }
+
+   //         }
+
+   //      }
+
+   //   }
+
+
+   //   //if (m_puserstyle == NULL)
+   //   {
+
+   //      ::user::style::on_select_user_style();
+
+   //   }
+
+   //}
 
    //bool interaction::get_color(COLORREF & cr, e_color ecolor)
    //{
@@ -8968,68 +8951,68 @@ restart:
 
    }
 
-   // e_style composition
-   bool interaction::style_color(COLORREF & cr, e_color ecolor)
-   {
+   //// e_style composition
+   //bool interaction::style_color(COLORREF & cr, e_color ecolor)
+   //{
 
-      return style_color(cr, ecolor, this);
+   //   return style_color(cr, ecolor, this);
 
-   }
-
-
-   bool interaction::style_font(::draw2d::font_sp & font, e_font efont)
-   {
-
-      return style_font(font, efont, this);
-
-   }
+   //}
 
 
-   bool interaction::style_translucency(e_translucency & etranslucency, e_element eelement)
-   {
+   //bool interaction::style_font(::draw2d::font_sp & font, e_font efont)
+   //{
 
-      return style_translucency(etranslucency, eelement, this);
+   //   return style_font(font, efont, this);
 
-   }
-
-
-   bool interaction::style_flag(bool & bSet, ::user::e_flag eflag)
-   {
-
-      return style_flag(bSet, eflag, this);
-
-   }
+   //}
 
 
-   bool interaction::style_rect(RECT & rect, ::user::e_rect erect)
-   {
+   //bool interaction::style_translucency(e_translucency & etranslucency, e_element eelement)
+   //{
 
-      return style_rect(rect, erect, this);
+   //   return style_translucency(etranslucency, eelement, this);
 
-   }
-
-
-   bool interaction::style_int(int & i, ::user::e_int eint)
-   {
-
-      return style_int(i, eint, this);
-
-   }
+   //}
 
 
-   bool interaction::style_double(double & d, ::user::e_double edouble)
-   {
+   //bool interaction::style_flag(bool & bSet, ::user::e_flag eflag)
+   //{
 
-      return style_double(d, edouble, this);
+   //   return style_flag(bSet, eflag, this);
 
-   }
+   //}
 
-   ::user::e_control_type interaction::get_control_type()
-   {
 
-      return m_econtroltype;
+   //bool interaction::style_rect(RECT & rect, ::user::e_rect erect)
+   //{
 
-   }
+   //   return style_rect(rect, erect, this);
+
+   //}
+
+
+   //bool interaction::style_int(int & i, ::user::e_int eint)
+   //{
+
+   //   return style_int(i, eint, this);
+
+   //}
+
+
+   //bool interaction::style_double(double & d, ::user::e_double edouble)
+   //{
+
+   //   return style_double(d, edouble, this);
+
+   //}
+
+   //::user::e_control_type interaction::get_control_type()
+   //{
+
+   //   return m_econtroltype;
+
+   //}
 
    void interaction::set_stock_icon(e_stock_icon eicon)
    {
@@ -9104,6 +9087,56 @@ restart:
       lprect->bottom += get_final_x_scroll_bar_width();
 
       return true;
+
+   }
+
+
+   void interaction::on_calc_size(calc_size * psize)
+   {
+
+      rect rectWindow;
+
+      GetWindowRect(rectWindow);
+
+      psize->m_size = rectWindow.size();
+
+   }
+
+
+   e_control_type interaction::get_control_type()
+   {
+
+      return m_econtroltype;
+
+   }
+
+
+   void interaction::nextstyle(style_context * pcontext)
+   {
+
+      if (get_parent() == NULL)
+      {
+
+         if (GetOwner() == NULL)
+         {
+
+            Session.userstyle(pcontext);
+
+         }
+         else
+         {
+
+            pcontext->m_pstyle = GetOwner();
+
+         }
+
+      }
+      else
+      {
+
+         pcontext->m_pstyle = get_parent();
+
+      }
 
    }
 

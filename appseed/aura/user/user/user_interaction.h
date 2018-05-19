@@ -26,6 +26,18 @@ namespace user
    class tooltip;
 
 
+   class CLASS_DECL_AURA calc_size
+   {
+   public:
+
+
+      ::draw2d::graphics *    m_pgraphics;
+      size                    m_size;
+
+
+   };
+
+
    class CLASS_DECL_AURA alpha_source
    {
    public:
@@ -73,7 +85,7 @@ namespace user
             m_pgraphics(pgraphics)
          {
 
-            m_pui->select_user_schema();
+            // m_pui->select_user_schema();
 
             m_pui->select(pgraphics);
 
@@ -86,7 +98,9 @@ namespace user
 
       };
 
+
       e_control_type                      m_econtroltype;
+
       flags < e_non_client >              m_flagNonClient;
 
       bool                                m_bMouseHover;
@@ -584,6 +598,9 @@ namespace user
       virtual interaction * GetActiveWindow() override;
       virtual interaction * SetActiveWindow() override;
 
+
+      virtual void on_calc_size(calc_size * pcalcsize);
+
       virtual void walk_pre_translate_tree(::message::message * pobj, ::user::interaction * puiStop = NULL);
 
       virtual interaction * GetDescendantWindow(id id) const override;
@@ -832,7 +849,7 @@ namespace user
       virtual bool track_popup_menu(::user::menu_item * pitem,int32_t iFlags, POINT pt) override;
       virtual bool track_popup_menu(::xml::node * lpnode,int32_t iFlags, POINT pt) override;
       virtual bool track_popup_xml_matter_menu(const char * pszMatter,int32_t iFlags,POINT pt) override;
-      virtual bool track_popup_xml_string_menu(const char * pszString, int32_t iFlags, POINT pt) override;
+      virtual sp(::user::menu) track_popup_xml_string_menu(const char * pszString, int32_t iFlags, POINT pt) override;
 
       virtual bool track_popup_menu(::user::menu_item * pitem,int32_t iFlags,::message::message * pobj) override;
       virtual bool track_popup_menu(::xml::node * lpnode,int32_t iFlags,::message::message * pobj) override;
@@ -911,7 +928,7 @@ namespace user
 
 
       //virtual ::user::style * get_user_style() override;
-      virtual ::user::style * parent_userstyle() override;
+//      virtual ::user::style * parent_userstyle() override;
 
 //      bool select_font(::draw2d::graphics * pgraphics, e_font efont);
 
@@ -1035,7 +1052,7 @@ namespace user
 
       virtual bool has_pending_redraw_flags() override;
 
-      virtual void on_select_user_style() override;
+//      virtual void on_select_user_style() override;
 
 
       virtual void set_ipc_copy(bool bSet = true) override;
@@ -1110,28 +1127,28 @@ namespace user
       using style::_001HasTranslucency;
       virtual bool _001HasTranslucency(e_element eelement = element_none);
 
-      // e_style composition
-      using style::style_color;
-      virtual bool style_color(COLORREF & cr, e_color ecolor);
-      using style::style_font;
-      virtual bool style_font(::draw2d::font_sp & sp, e_font efont);
-      using style::style_translucency;
-      virtual bool style_translucency(e_translucency & etranslucency, e_element eelement);
-      using style::style_flag;
-      virtual bool style_flag(bool & bSet, ::user::e_flag eflag);
-      using style::style_rect;
-      virtual bool style_rect(RECT & rect, ::user::e_rect erect);
-      using style::style_int;
-      virtual bool style_int(int & i, ::user::e_int eint);
-      using style::style_double;
-      virtual bool style_double(double & i, ::user::e_double edouble);
-
-      virtual ::user::e_control_type get_control_type();
+      //// e_style composition
+      //using style::style_color;
+      //virtual bool style_color(COLORREF & cr, e_color ecolor);
+      //using style::style_font;
+      //virtual bool style_font(::draw2d::font_sp & sp, e_font efont);
+      //using style::style_translucency;
+      //virtual bool style_translucency(e_translucency & etranslucency, e_element eelement);
+      //using style::style_flag;
+      //virtual bool style_flag(bool & bSet, ::user::e_flag eflag);
+      //using style::style_rect;
+      //virtual bool style_rect(RECT & rect, ::user::e_rect erect);
+      //using style::style_int;
+      //virtual bool style_int(int & i, ::user::e_int eint);
+      //using style::style_double;
+      //virtual bool style_double(double & i, ::user::e_double edouble);
 
       virtual void set_stock_icon(e_stock_icon eicon);
       virtual e_stock_icon get_stock_icon();
 
+      virtual e_control_type get_control_type();
 
+      virtual void nextstyle(style_context * pcontext) override;
 
    };
 

@@ -89,7 +89,7 @@ namespace user
          if (pcontrol->descriptor().has_function(::user::control_function_action))
          {
 
-            if (pcontrol->descriptor().get_type() == ::user::control_type_button)
+            if (pcontrol->descriptor().get_control_type() == ::user::control_type_button)
             {
 
 
@@ -203,7 +203,7 @@ namespace user
          if(pcontrol->descriptor().has_function(::user::control_function_action))
          {
 
-            if(pcontrol->descriptor().get_type() == ::user::control_type_button)
+            if(pcontrol->descriptor().get_control_type() == ::user::control_type_button)
             {
 
 
@@ -601,8 +601,8 @@ namespace user
          return;
       keep<bool> keepUpdateLock(&m_bOnEditUpdate, true, false, true);
 
-      ASSERT(pcontrol->descriptor().get_type() == control_type_edit
-             || pcontrol->descriptor().get_type() == control_type_edit_plain_text);
+      ASSERT(pcontrol->descriptor().get_control_type() == control_type_edit
+             || pcontrol->descriptor().get_control_type() == control_type_edit_plain_text);
 
       sp(::user::plain_edit) pedit = pcontrol;
 
@@ -688,7 +688,7 @@ namespace user
 
       keep<bool> keepUpdateLock(&m_bOnEditUpdate, true, false, true);
 
-      ASSERT(pcontrol->descriptor().get_type() == control_type_combo_box);
+      ASSERT(pcontrol->descriptor().get_control_type() == control_type_combo_box);
 
       sp(::user::combo_box) pcombo = pcontrol;
 
@@ -732,7 +732,7 @@ namespace user
       if (pcontrol == NULL)
          return false;
 
-      if (pcontrol->descriptor().get_type() == control_type_check_box)
+      if (pcontrol->descriptor().get_control_type() == control_type_check_box)
       {
 
          sp(::user::check) pcheckbox = pcontrol;
@@ -811,8 +811,8 @@ namespace user
          return true;
       }
 
-      ASSERT(pcontrol->descriptor().get_type() == control_type_edit || pcontrol->descriptor().get_type() == control_type_edit_plain_text
-             || pcontrol->descriptor().get_type() == control_type_combo_box);
+      ASSERT(pcontrol->descriptor().get_control_type() == control_type_edit || pcontrol->descriptor().get_control_type() == control_type_edit_plain_text
+             || pcontrol->descriptor().get_control_type() == control_type_combo_box);
 
       sp(::user::edit_text) pedit = get_child_by_id(pcontrol->m_id);
 
@@ -1006,7 +1006,7 @@ namespace user
 
       user::Notify * pnotify = (user::Notify *) lparam;
 
-      switch(pcontrol->descriptor().get_type())
+      switch(pcontrol->descriptor().get_control_type())
       {
       case control_type_edit:
       switch(pnotify->m_uiCode)
@@ -1126,8 +1126,8 @@ namespace user
    {
       if(pcontrol->m_pdescriptor != NULL)
       {
-         if(pcontrol->m_pdescriptor->m_etype == control_type_edit
-               || pcontrol->m_pdescriptor->m_etype == control_type_edit_plain_text)
+         if(pcontrol->m_pdescriptor->m_econtroltype == control_type_edit
+               || pcontrol->m_pdescriptor->m_econtroltype == control_type_edit_plain_text)
          {
             if(pcontrol == _001GetEditControl())
             {

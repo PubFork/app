@@ -12,7 +12,7 @@ namespace user
       menu_list_window(get_app())
    {
 
-      m_econtroltype = ::user::control_type_menu;
+      m_econtroltype = control_type_menu;
       m_bInline = true;
 
    }
@@ -28,7 +28,7 @@ namespace user
       m_puiNotify          = NULL;
       m_bAutoClose         = true;
       m_bInline            = true;
-      
+
    }
 
 
@@ -257,25 +257,25 @@ namespace user
 
          if(pitem->m_pui == NULL)
          {
-            
+
             continue;
-            
+
          }
-         
+
          pitem->m_pui->SetWindowPos(
-            0,
-            lprect->left + pitem->m_iLevel * g_base_menu_indent,
-            lprect->top,
-            iMaxWidth - pitem->m_iLevel * g_base_menu_indent,
-            lprect->bottom - lprect->top,
-            0);
+         0,
+         lprect->left + pitem->m_iLevel * g_base_menu_indent,
+         lprect->top,
+         iMaxWidth - pitem->m_iLevel * g_base_menu_indent,
+         lprect->bottom - lprect->top,
+         0);
 
          lprect->top = lprect->bottom + 2;
-         
+
          layout_buttons(pitem, iMaxWidth, lprect, lpcrectBound);
-         
+
       }
-      
+
    }
 
 

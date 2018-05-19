@@ -38,7 +38,7 @@ namespace filemanager
 
    }
 
-   
+
 
    void data::OnFileManagerOpenContextMenuFolder(sp(::fs::item)  item, stringa & straCommand, stringa & straCommandTitle, ::action::context actioncontext)
    {
@@ -104,7 +104,7 @@ namespace filemanager
       }
       else if(m_pcallback != NULL)
       {
-         
+
          var varFile;
 
          var varQuery;
@@ -216,9 +216,9 @@ namespace filemanager
 
    void data::FileManagerBrowse(const char * lpcsz, ::action::context actioncontext)
    {
-      
+
       ASSERT(m_pmanager != NULL);
-      
+
       if(m_pmanager != NULL)
       {
 
@@ -236,146 +236,146 @@ namespace filemanager
    }
 
 
-   bool data::get_color(COLORREF & cr, ::user::e_color ecolor, ::user::interaction * pui)
-   {
+   //bool data::get_color(COLORREF & cr, ::user::e_color ecolor, ::user::interaction * pui)
+   //{
 
-      if(ecolor == ::user::color_text)
-      {
+   //   if(ecolor == ::user::color_text)
+   //   {
 
-         cr = ARGB(255,0,0,0);
+   //      cr = ARGB(255,0,0,0);
 
-         return true;
+   //      return true;
 
-      }
-      //else if(ecolor == ::user::color_background)
-      //{
+   //   }
+   //   //else if(ecolor == ::user::color_background)
+   //   //{
 
-         //if(m_bTransparentBackground)
-         //{
+   //      //if(m_bTransparentBackground)
+   //      //{
 
-         //   if(is_topic())
-         //   {
+   //      //   if(is_topic())
+   //      //   {
 
-         //      if (m_pmanager->m_emode == manager::mode_saving)
-         //      {
+   //      //      if (m_pmanager->m_emode == manager::mode_saving)
+   //      //      {
 
-         //         cr = ARGB(184, 255, 210, 180);
+   //      //         cr = ARGB(184, 255, 210, 180);
 
-         //      }
-         //      else if (m_pmanager->m_emode == manager::mode_import)
-         //      {
+   //      //      }
+   //      //      else if (m_pmanager->m_emode == manager::mode_import)
+   //      //      {
 
-         //         cr = ARGB(184, 180, 210, 255);
+   //      //         cr = ARGB(184, 180, 210, 255);
 
-         //      }
-         //      else if (m_pmanager->m_emode == manager::mode_export)
-         //      {
+   //      //      }
+   //      //      else if (m_pmanager->m_emode == manager::mode_export)
+   //      //      {
 
-         //         cr = ARGB(184, 255, 250, 210);
+   //      //         cr = ARGB(184, 255, 250, 210);
 
-         //      }
-         //      else
-         //      {
+   //      //      }
+   //      //      else
+   //      //      {
 
-         //         cr = ARGB(184, 210, 255, 180);
+   //      //         cr = ARGB(184, 210, 255, 180);
 
-         //      }
+   //      //      }
 
-         //   }
-         //   else
-         //   {
+   //      //   }
+   //      //   else
+   //      //   {
 
-         //      cr = ARGB(184,255,255,250);
+   //      //      cr = ARGB(184,255,255,250);
 
-         //   }
+   //      //   }
 
-         //}
-         //else
-         //{
+   //      //}
+   //      //else
+   //      //{
 
-         //   if(is_topic())
-         //   {
+   //      //   if(is_topic())
+   //      //   {
 
-         //      if (m_pmanager->m_emode == manager::mode_saving)
-         //      {
+   //      //      if (m_pmanager->m_emode == manager::mode_saving)
+   //      //      {
 
-         //         cr = ARGB(255, 255, 210, 180);
+   //      //         cr = ARGB(255, 255, 210, 180);
 
-         //      }
-         //      else if (m_pmanager->m_emode == manager::mode_import)
-         //      {
+   //      //      }
+   //      //      else if (m_pmanager->m_emode == manager::mode_import)
+   //      //      {
 
-         //         cr = ARGB(184, 180, 210, 255);
+   //      //         cr = ARGB(184, 180, 210, 255);
 
-         //      }
-         //      else if (m_pmanager->m_emode == manager::mode_export)
-         //      {
+   //      //      }
+   //      //      else if (m_pmanager->m_emode == manager::mode_export)
+   //      //      {
 
-         //         cr = ARGB(184, 255, 250, 210);
+   //      //         cr = ARGB(184, 255, 250, 210);
 
-         //      }
-         //      else 
-         //      {
+   //      //      }
+   //      //      else
+   //      //      {
 
-         //         cr = ARGB(184, 210, 255, 180);
+   //      //         cr = ARGB(184, 210, 255, 180);
 
-         //      }
+   //      //      }
 
-         //   }
-         //   else
-         //   {
+   //      //   }
+   //      //   else
+   //      //   {
 
-         //      cr = ARGB(255,255,255,250);
+   //      //      cr = ARGB(255,255,255,250);
 
-         //   }
+   //      //   }
 
-         //}
+   //      //}
 
-         //return true;
+   //      //return true;
 
-      //}
-      else
-      {
+   //   //}
+   //   else
+   //   {
 
-         return ::user::style::get_color(cr, ecolor, pui);
+   //      return ::user::style::get_color(cr, ecolor, pui);
 
-      }
+   //   }
 
-   }
-
-
-   bool data::get_font(::draw2d::font_sp & font, ::user::e_font efont, ::user::interaction * pui)
-   {
-
-      if(m_spfont.is_null())
-         return false;
-      
-      font = m_spfont;
-
-      return true;
-
-   }
+   //}
 
 
-   bool data::get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement, ::user::interaction * pui)
-   {
+   //bool data::get_font(::draw2d::font_sp & font, ::user::e_font efont, ::user::interaction * pui)
+   //{
 
-      if(m_bTransparentBackground)
-      {
+   //   if(m_spfont.is_null())
+   //      return false;
 
-         etranslucency = ::user::translucency_present;
+   //   font = m_spfont;
 
-      }
-      else
-      {
+   //   return true;
 
-         etranslucency = ::user::translucency_none;
+   //}
 
-      }
 
-      return true;
+   //bool data::get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement, ::user::interaction * pui)
+   //{
 
-   }
+   //   if(m_bTransparentBackground)
+   //   {
+
+   //      etranslucency = ::user::translucency_present;
+
+   //   }
+   //   else
+   //   {
+
+   //      etranslucency = ::user::translucency_none;
+
+   //   }
+
+   //   return true;
+
+   //}
 
 
    sp(::filemanager::manager_template) data::get_filemanager_template()

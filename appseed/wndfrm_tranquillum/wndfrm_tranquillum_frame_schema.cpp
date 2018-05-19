@@ -521,7 +521,7 @@ namespace user
             void frame_schema::set_button_color_schema_001(COLORREF crMoveableBorder)
             {
 
-               defer_create_user_schema(::user::schema_button);
+               ///defer_create_user_schema(::user::schema_button);
 
                COLORREF crBase = crMoveableBorder;
 
@@ -735,9 +735,11 @@ namespace user
             {
 
                if (!m_pworkset->IsAppearanceEnabled())
+               {
+
                   return;
 
-
+               }
 
                pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
 

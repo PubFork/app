@@ -38,7 +38,7 @@ namespace user
       if(pdescriptor->m_bTransparent)
       {
 
-         switch(pdescriptor->m_etype)
+         switch(pdescriptor->m_econtroltype)
          {
          case control_type_static:
          {
@@ -129,7 +129,7 @@ namespace user
       if(pcontrol == NULL)
          return false;
 
-      switch(pcontrol->descriptor().get_type())
+      switch(pcontrol->descriptor().get_control_type())
       {
       case control_type_button:
          OnCommandButton(pcontrol, uiNotificationCode, lparam);
@@ -162,7 +162,7 @@ namespace user
       if(pcontrol == NULL)
          return false;
 
-      ASSERT(pcontrol->descriptor().get_type() == control_type_button);
+      ASSERT(pcontrol->descriptor().get_control_type() == control_type_button);
 
 #ifdef WINDOWS
 
@@ -197,7 +197,7 @@ namespace user
       if(pcontrol == NULL)
          return false;
 
-      ASSERT(pcontrol->descriptor().get_type() == control_type_check_box);
+      ASSERT(pcontrol->descriptor().get_control_type() == control_type_check_box);
 
 #ifdef WINDOWS
 
@@ -231,7 +231,7 @@ namespace user
       if(pcontrol == NULL)
          return false;
 
-      ASSERT(pcontrol->descriptor().get_type() == control_type_combo_box);
+      ASSERT(pcontrol->descriptor().get_control_type() == control_type_combo_box);
 
 #ifdef WINDOWS
 
@@ -273,7 +273,7 @@ namespace user
       if(pcontrol == NULL)
          return false;
 
-      ASSERT(pcontrol->descriptor().get_type() == control_type_edit);
+      ASSERT(pcontrol->descriptor().get_control_type() == control_type_edit);
 
 #ifdef WINDOWS
 
@@ -308,7 +308,7 @@ namespace user
       if(pcontrol == NULL)
          return false;
 
-      ASSERT(pcontrol->descriptor().get_type() == control_type_edit || pcontrol->descriptor().get_type() == control_type_edit_plain_text);
+      ASSERT(pcontrol->descriptor().get_control_type() == control_type_edit || pcontrol->descriptor().get_control_type() == control_type_edit_plain_text);
 
       sp(::user::edit_text) pedit = get_child_by_id(pcontrol->m_id);
 
@@ -380,7 +380,7 @@ namespace user
       ASSERT(pcontrol != NULL);
       if(pcontrol == NULL)
          return;
-      switch(pcontrol->descriptor().get_type())
+      switch(pcontrol->descriptor().get_control_type())
       {
       case control_type_check_box:
          _001UpdateCheckBox(pcontrol);
@@ -405,7 +405,7 @@ namespace user
       ASSERT(pcontrol != NULL);
       if(pcontrol == NULL)
          return;
-      switch(pcontrol->descriptor().get_type())
+      switch(pcontrol->descriptor().get_control_type())
       {
       case control_type_check_box:
          _001UpdateDbFlagsCheckBox(pcontrol);
@@ -430,7 +430,7 @@ namespace user
       ASSERT(pcontrol != NULL);
       if(pcontrol == NULL)
          return;
-      ASSERT(pcontrol->descriptor().get_type() == control_type_check_box);
+      ASSERT(pcontrol->descriptor().get_control_type() == control_type_check_box);
       ASSERT(pcontrol->descriptor().m_eddx == control_ddx_dbflags);
       int_ptr_array ia;
       try
@@ -464,7 +464,7 @@ namespace user
       ASSERT(pcontrol != NULL);
       if(pcontrol == NULL)
          return;
-      ASSERT(pcontrol->descriptor().get_type() == control_type_check_box);
+      ASSERT(pcontrol->descriptor().get_control_type() == control_type_check_box);
       int32_t i;
       if(data_get(pcontrol->descriptor().m_dataid, i))
       {
@@ -478,7 +478,7 @@ namespace user
       ASSERT(pcontrol != NULL);
       if(pcontrol == NULL)
          return;
-      /* linux   ASSERT(pcontrol->descriptor().get_type() == control_type_combo_box);
+      /* linux   ASSERT(pcontrol->descriptor().get_control_type() == control_type_combo_box);
          int32_t i;
          if(VmsDataGet(pcontrol->descriptor().m_dataid, 0, 0, i))
          {
@@ -501,8 +501,8 @@ namespace user
          return;
       keep<bool> keepUpdateLock(&m_bOnEditUpdate, true, false, true);
 
-      ASSERT(pcontrol->descriptor().get_type() == control_type_edit
-             || pcontrol->descriptor().get_type() == control_type_edit_plain_text);
+      ASSERT(pcontrol->descriptor().get_control_type() == control_type_edit
+             || pcontrol->descriptor().get_control_type() == control_type_edit_plain_text);
 
       if(pcontrol->descriptor().has_function(control_function_vms_data_edit))
       {
@@ -567,7 +567,7 @@ namespace user
       if(pcontrol == NULL)
          return;
 
-      ASSERT(pcontrol->descriptor().get_type() == control_type_simple_list);
+      ASSERT(pcontrol->descriptor().get_control_type() == control_type_simple_list);
 
       /*      ::user::list * plist = dynamic_cast<::user::list *>(get_child_by_id(pcontrol->m_id));
 
@@ -1214,7 +1214,7 @@ namespace user
 
       }
 
-      pdescriptor->m_typeinfo = Session.user()->controltype_to_typeinfo(pdescriptor->get_type());
+      pdescriptor->m_typeinfo = Session.user()->controltype_to_typeinfo(pdescriptor->get_control_type());
 
       if(pdescriptor->m_typeinfo)
       {

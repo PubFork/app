@@ -5,6 +5,38 @@ namespace user
 {
 
 
+   style_context::style_context(style * pstyleSource)
+   {
+
+      m_pstyleSource = pstyleSource;
+
+      m_econtroltype = pstyleSource->get_control_type();
+
+      m_pstyle = pstyleSource;
+
+   }
+
+
+   style_context & style_context::operator = (style * pstyleSource)
+   {
+
+      m_pstyleSource = pstyleSource;
+
+      m_econtroltype = pstyleSource->get_control_type();
+
+      m_pstyle = pstyleSource;
+
+      return *this;
+
+   }
+
+   void style_context::next()
+   {
+
+      m_pstyle->nextstyle(this);
+
+   }
+
    //   style::style(::aura::application * papp) :
    //   ::object(papp)
    //   {
@@ -1248,7 +1280,7 @@ namespace user
    }
 
 
-   bool style_base::get_color(COLORREF & cr, e_color ecolor, ::user::interaction * pui)
+   bool style_base::get_color(COLORREF & cr, e_color ecolor, style_context * pcontext)
    {
 
       return false;
@@ -1256,7 +1288,7 @@ namespace user
    }
 
 
-   bool style_base::get_font(::draw2d::font_sp & font, e_font efont, ::user::interaction * pui)
+   bool style_base::get_font(::draw2d::font_sp & font, e_font efont, style_context * pcontext)
    {
 
       return false;
@@ -1264,7 +1296,7 @@ namespace user
    }
 
 
-   bool style_base::get_translucency(e_translucency & etranslucency, e_element eelement, ::user::interaction * pui)
+   bool style_base::get_translucency(e_translucency & etranslucency, e_element eelement, style_context * pcontext)
    {
 
       return false;
@@ -1272,7 +1304,7 @@ namespace user
    }
 
 
-   bool style_base::get_flag(bool & bSet, e_flag eflag, ::user::interaction * pui)
+   bool style_base::get_flag(bool & bSet, e_flag eflag, style_context * pcontext)
    {
 
       return false;
@@ -1280,7 +1312,7 @@ namespace user
    }
 
 
-   bool style_base::get_rect(RECT & rect, e_rect erect, ::user::interaction * pui)
+   bool style_base::get_rect(RECT & rect, e_rect erect, style_context * pcontext)
    {
 
       return false;
@@ -1288,7 +1320,7 @@ namespace user
    }
 
 
-   bool style_base::get_int(int & i, e_int eint, ::user::interaction * pui)
+   bool style_base::get_int(int & i, e_int eint, style_context * pcontext)
    {
 
       return false;
@@ -1296,10 +1328,18 @@ namespace user
    }
 
 
-   bool style_base::get_double(double & d, e_double edouble, ::user::interaction * pui)
+   bool style_base::get_double(double & d, e_double edouble, style_context * pcontext)
    {
 
       return false;
+
+   }
+
+
+   e_control_type style_base::get_control_type()
+   {
+
+      return control_type_none;
 
    }
 

@@ -39,7 +39,7 @@ namespace base
 
 
 
-      virtual sp(type) user_default_controltype_to_typeinfo(::user::e_control_type e_type);
+      virtual sp(type) user_default_controltype_to_typeinfo(::user::e_control_type econtroltype);
 
 
       virtual void on_create_view(::user::view_creator_data * pcreatordata);

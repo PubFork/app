@@ -45,7 +45,7 @@ namespace hotplugin
 
       m_iDelta = 5000;
 
-      m_pstyle          = this;
+      m_puserstyle      = this;
       m_phost           = NULL;
       m_bInitialized    = false;
       m_bOk             = false;

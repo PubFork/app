@@ -789,6 +789,7 @@ namespace user
             _throw(resource_exception(get_app()));
 
          }
+         m_plist->SetOwner(this);
          sp(::user::interaction_impl) pimpl = m_plist->m_pimpl;
 
          if (pimpl.is_set())
@@ -1580,7 +1581,7 @@ namespace user
    bool combo_box::create_control(class control_descriptor * pdescriptor)
    {
 
-      ASSERT(pdescriptor->get_type() == control_type_combo_box);
+      ASSERT(pdescriptor->get_control_type() == control_type_combo_box);
 
       if (!::user::control::create_control(pdescriptor))
       {

@@ -74,6 +74,7 @@ public:
    visual::fastblur                    m_fastblur;
    ::user::e_translucency              m_etranslucency;
 
+   ::user::style_sp                    m_pstyle;
 
    map < ::id, const ::id &, ::user::toolbar * > m_toolbarmap;
 
@@ -113,7 +114,7 @@ public:
 
    virtual bool is_application_main_window();
 
-   virtual bool get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement, ::user::interaction * pui) override;
+//   virtual bool get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement, ::user::interaction * pui) override;
 
    bool GetCustomFrame();
    void SetCustomFrame(bool bCustom);
@@ -165,10 +166,10 @@ public:
    virtual void pre_translate_message(::message::message * pobj) override;
 
    virtual void _000OnDraw(::draw2d::graphics * pgraphics) override;
-   virtual void _010OnDraw(::draw2d::graphics * pgraphics);
+   virtual void draw_frame_and_control_box_over(::draw2d::graphics * pgraphics);
 
    virtual void _001OnDraw(::draw2d::graphics * pgraphics) override;
-   virtual void _011OnDraw(::draw2d::graphics * pgraphics);
+   virtual void draw_frame(::draw2d::graphics * pgraphics);
 
 
    virtual void _001OnClip(::draw2d::graphics * pgraphics) override;
@@ -300,13 +301,15 @@ public:
    //virtual ::user::style * get_user_style() override;
 
    using ::user::frame_window::get_color;
-   virtual bool get_color(COLORREF & cr, ::user::e_color ecolor, ::user::interaction * pui) override;
+//   virtual bool get_color(COLORREF & cr, ::user::e_color ecolor, ::user::interaction * pui) override;
 
-   virtual void on_select_user_style() override;
+   virtual void on_select_user_style();
 
    virtual void notification_area_extra_action(const char * pszId) override;
 
    virtual string notification_area_extra_get_xml_menu();
+
+   virtual void nextstyle(::user::style_context * pcontext);
 
 
 };

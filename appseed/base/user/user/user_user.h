@@ -53,17 +53,10 @@ namespace user
 
       virtual void term() override;
 
-
-
-
-      virtual sp(type) controltype_to_typeinfo(::user::e_control_type type);
-
-
-
+      virtual sp(type) controltype_to_typeinfo(::user::e_control_type econtroltype);
 
 
    };
-
 
 
 } // namespace user

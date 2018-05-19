@@ -9,6 +9,9 @@ namespace user
       button(get_app())
    {
 
+      m_erectMargin = rect_button_margin;
+      m_erectBorder = rect_button_border;
+      m_erectPadding = rect_button_padding;
       //set_user_schema(schema_button);
 
    }
@@ -29,7 +32,6 @@ namespace user
       m_plist           = NULL;
       m_iHover          = -1;
       m_echeck          = ::check::unchecked;
-      m_puserstyle      = NULL;
       m_iClick          = 0;
 
    }
@@ -97,8 +99,6 @@ namespace user
       else
       {
 
-
-
          string strText;
 
          get_window_text(strText);
@@ -106,29 +106,36 @@ namespace user
          rect rectClient;
          GetClientRect(rectClient);
 
+         rect rectMargin = _001GetRect(m_erectMargin);
 
-         if(m_puserstyle == NULL)
-         {
+         rect rectBorder = _001GetRect(m_erectBorder);
 
-            if(m_iHover == 0 || Session.m_puiLastLButtonDown == this)
-            {
+         rectClient.deflate(rectMargin);
 
-               pgraphics->fill_solid_rect(rectClient,ARGB(255,127,127,127));
+         rectClient.deflate(rectBorder);
 
-               pgraphics->set_text_color(ARGB(255,0,100,255));
+         //if(m_puserstyle == NULL)
+         //{
 
-            }
-            else
-            {
+         //   if(m_iHover == 0 || Session.m_puiLastLButtonDown == this)
+         //   {
 
-               pgraphics->fill_solid_rect(rectClient,ARGB(255,127,127,127));
+         //      pgraphics->fill_solid_rect(rectClient,ARGB(255,127,127,127));
 
-               pgraphics->set_text_color(ARGB(255,0,0,0));
+         //      pgraphics->set_text_color(ARGB(255,0,100,255));
 
-            }
+         //   }
+         //   else
+         //   {
 
-         }
-         else
+         //      pgraphics->fill_solid_rect(rectClient,ARGB(255,127,127,127));
+
+         //      pgraphics->set_text_color(ARGB(255,0,0,0));
+
+         //   }
+
+         //}
+         //else
          {
             if (!is_window_enabled())
             {
@@ -140,10 +147,6 @@ namespace user
             }
             else if(m_iHover == 0 || Session.m_puiLastLButtonDown == this)
             {
-
-               //pgraphics->draw3d_rect(rectClient,m_puserstyle->_001GetColor(color_border_hover),m_puserstyle->_001GetColor(color_border_hover));
-
-               //rectClient.deflate(1,1);
 
                pgraphics->fill_solid_rect(rectClient, _001GetColor(color_button_background_hover));
 
@@ -165,12 +168,18 @@ namespace user
 
          }
 
+         rect rectPadding = _001GetRect(m_erectPadding);
+
+         rectClient.deflate(rectPadding);
+
          if(m_estockicon == stock_icon_none)
          {
 
+            int iDrawTextFlags = _001GetInt(m_eintTextAlign, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+
             select_font(pgraphics, font_button);
 
-            pgraphics->text_out(m_rectText.left,m_rectText.top,strText);
+            pgraphics->draw_text(strText, rectClient, iDrawTextFlags);
 
          }
          else
@@ -331,6 +340,8 @@ namespace user
                ::user::command command;
 
                command.m_id = m_id;
+
+               command.m_puiOther = this;
 
                route_command_message(&command);
 
@@ -589,8 +600,8 @@ namespace user
    void button::_002OnDraw(::draw2d::graphics * pgraphics)
    {
 
-      if(m_puserstyle == NULL)
-         return;
+      //if(m_puserstyle == NULL)
+      //   return;
 
 
 
@@ -761,24 +772,24 @@ namespace user
       GetClientRect(rectClient);
 
 
-      if (m_puserstyle == NULL)
-      {
+      //if (m_puserstyle == NULL)
+      //{
 
-         if (m_iHover == 0 || Session.m_puiLastLButtonDown == this)
-         {
+      //   if (m_iHover == 0 || Session.m_puiLastLButtonDown == this)
+      //   {
 
-            pgraphics->fill_solid_rect(rectClient, ARGB(255, 127, 127, 127));
+      //      pgraphics->fill_solid_rect(rectClient, ARGB(255, 127, 127, 127));
 
-         }
-         else
-         {
+      //   }
+      //   else
+      //   {
 
-            pgraphics->fill_solid_rect(rectClient, ARGB(255, 127, 127, 127));
+      //      pgraphics->fill_solid_rect(rectClient, ARGB(255, 127, 127, 127));
 
-         }
+      //   }
 
-      }
-      else
+      //}
+      //else
       {
          if (!is_window_enabled())
          {
@@ -868,13 +879,13 @@ namespace user
 
       color color;
 
-      if(m_puserstyle == NULL)
-      {
+      //if(m_puserstyle == NULL)
+      //{
 
-         color.set_rgb(ARGB(255,127,127,127));
+      //   color.set_rgb(ARGB(255,127,127,127));
 
-      }
-      else
+      //}
+      //else
       {
 
          color.set_rgb(_001GetColor(::user::color_button_background));

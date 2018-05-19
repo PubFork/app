@@ -29,7 +29,7 @@ namespace user
 
       virtual string get_path();
       virtual bool open_document(var varFile);
-      sp(type) controltype_to_typeinfo(::user::e_control_type e_type);
+      sp(type) controltype_to_typeinfo(::user::e_control_type econtroltype);
 
 
 

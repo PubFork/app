@@ -1556,10 +1556,12 @@ namespace core
       return ::base::application::simple_message_box_timeout(pwndOwner, pszMessage, durationTimeOut, fuStyle);
 
    }
-   sp(type) application::user_default_controltype_to_typeinfo(::user::e_control_type e_type)
+
+
+   sp(type) application::user_default_controltype_to_typeinfo(::user::e_control_type econtroltype)
    {
 
-      return Sess(this).user()->controltype_to_typeinfo(e_type);
+      return Sess(this).user()->controltype_to_typeinfo(econtroltype);
 
 
    }

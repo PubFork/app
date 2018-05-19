@@ -1602,7 +1602,7 @@ namespace html
    }
 
 
-   bool elemental::get_color(COLORREF & cr, ::user::e_color ecolor, ::user::interaction * pui)
+   bool elemental::get_color(COLORREF & cr, ::user::e_color ecolor, ::user::style_context * pcontext)
    {
 
       if(ecolor == ::user::color_text)
@@ -1628,19 +1628,19 @@ namespace html
 
       }
 
-      if (m_pparent != NULL && m_pparent->get_color(cr, ecolor, pui))
+      if (m_pparent != NULL && m_pparent->get_color(cr, ecolor, pcontext))
       {
 
          return true;
 
       }
 
-      return m_pdata->m_pform->style_color(cr, ecolor, pui);
+      return m_pdata->m_pform->get_color(cr, ecolor, pcontext);
 
    }
 
 
-   bool elemental::get_font(::draw2d::font_sp & font, ::user::e_font efont, ::user::interaction * pui)
+   bool elemental::get_font(::draw2d::font_sp & font, ::user::e_font efont, ::user::style_context * pcontext)
    {
 
       font = m_pdata->get_font(this)->m_font;
@@ -1648,7 +1648,7 @@ namespace html
       if (font.is_null())
       {
 
-         return m_pdata->m_pform->style_font(font, efont, pui);
+         return m_pdata->m_pform->get_font(font, efont, pcontext);
 
       }
 

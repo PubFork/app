@@ -4,6 +4,8 @@
 #include "user_elemental.h"
 #include "user_window_util.h"
 #include "user_style.h"
+#include "user_theme.h"
+
 
 
 namespace user
@@ -514,7 +516,7 @@ namespace user
       virtual bool track_popup_menu(::user::menu_item * pitem,int32_t iFlags, POINT pt);
       virtual bool track_popup_menu(::xml::node * lpnode,int32_t iFlags, POINT pt);
       virtual bool track_popup_xml_matter_menu(const char * pszMatter,int32_t iFlags, POINT pt);
-      virtual bool track_popup_xml_string_menu(const char * pszString, int32_t iFlags, POINT pt);
+      virtual sp(::user::menu) track_popup_xml_string_menu(const char * pszString, int32_t iFlags, POINT pt);
 
       virtual bool track_popup_menu(::user::menu_item * pitem,int32_t iFlags,::message::message * pobj);
       virtual bool track_popup_menu(::xml::node * lpnode,int32_t iFlags,::message::message * pobj);

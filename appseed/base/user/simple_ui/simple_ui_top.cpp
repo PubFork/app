@@ -46,8 +46,6 @@ namespace simple_ui
       if(pcreate->previous())
          return;
 
-      m_puserstyle = this;
-
    }
 
 

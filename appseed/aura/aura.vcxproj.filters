@@ -2708,6 +2708,12 @@
     <ClInclude Include="aura\os\windows\windows_d2d1_1.h">
       <Filter>Header Files\aura\os\windows</Filter>
     </ClInclude>
+    <ClInclude Include="user\user\user_menu_interaction.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_theme.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="multithreading\multithreading_condition.cpp">
@@ -4712,6 +4718,12 @@
       <Filter>Source Files\aura\os\windows</Filter>
     </ClCompile>
     <ClCompile Include="user\user\user_form.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_menu_interaction.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_theme.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
   </ItemGroup>

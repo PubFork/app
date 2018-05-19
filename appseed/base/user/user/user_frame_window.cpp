@@ -2240,7 +2240,11 @@ namespace user
       defer_check_zorder();
 
       if (!IsWindowVisible() || WfiIsIconic())
+      {
+
          return;
+
+      }
 
       rect rectClient;
 
@@ -2248,21 +2252,31 @@ namespace user
 
       rectClient -= rectClient.top_left();
 
-      //bool bDib = false;
+      style_context style(this);
 
-      //double dAlpha = get_alpha();
-
-      if (m_puserstyle != NULL && m_puserstyle->_001OnDrawMainFrameBackground(pgraphics, this))
+      while(style)
       {
 
-         _001DrawThis(pgraphics);
+         if (style->_001OnDrawMainFrameBackground(pgraphics, this))
+         {
 
-         _001DrawChildren(pgraphics);
+            _001DrawThis(pgraphics);
 
-         _008CallOnDraw(pgraphics);
+            _001DrawChildren(pgraphics);
+
+            _008CallOnDraw(pgraphics);
+
+            return;
+
+         }
+
+         style.next();
 
       }
-      else if (m_bblur_Background)
+
+      bool bBlurBackground = _001GetFlag(::user::flag_blur_background);
+
+      if (bBlurBackground)
       {
 
          _001DrawThis(pgraphics);

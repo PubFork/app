@@ -13,9 +13,9 @@ namespace wndfrm_tranquillum
 {
 
 
-   user_style::user_style(::aura::application * papp):
+   theme::theme(::aura::application * papp):
       object(papp),
-      ::user::style(papp)
+      ::user::theme(papp)
       //m_fontEdit(allocer()),
       //m_fontList(allocer())
    {
@@ -24,14 +24,27 @@ namespace wndfrm_tranquillum
 
       //    m_fontList->create_point_font("Tahoma", 10, FW_BOLD);
 
-      defer_create_user_schema(::user::schema_default);
+      //theme_current_control(::user::control_none);
 
-      userstyle()->m_mapTranslucency[::user::element_none] = ::user::translucency_present;
+      //create_translucency(::user::element_none, ::user::translucency_none);
 
       create_point_font(::user::font_default,"Tahoma", 12.0);
+      create_point_font(::user::font_button, "Tahoma", 12.0, 800);
+      create_point_font(::user::font_plain_edit, "Tahoma", 12.0, 800);
 
-      userstyle()->m_mapFont[::user::font_default]->m_etextrendering = ::draw2d::text_rendering_anti_alias_grid_fit;
+      create_rect_coord(::user::rect_menu_item_padding, 5, 5, 5, 5);
 
+      create_color(::user::color_text, ARGB(255, 0, 0, 0));
+      create_color(::user::color_edit_text, ARGB(255, 0, 0, 0));
+      create_color(::user::color_edit_text_selected, ARGB(255, 255, 255, 255));
+      create_color(::user::color_edit_background_selected, ARGB(255, 100, 150, 230));
+      create_color(::user::color_text_selected, ARGB(255, 255, 255, 255));
+      create_color(::user::color_text_selected_highlight, ARGB(255, 255, 255, 255));
+      create_color(::user::color_text_highlight, ARGB(255, 255, 255, 255));
+      create_color(::user::color_background_selected, ARGB(255, 100, 150, 230));
+      create_color(::user::color_background_selected_highlight, ARGB(255, 110, 180, 240));
+      create_color(::user::color_background_highlight, ARGB(255, 120, 200, 250));
+      create_color(::user::color_background, ARGB(255, 255, 255, 255));
       create_color(::user::color_button_text, ARGB(255, 255, 255, 255));
       create_color(::user::color_list_header_background, ARGB(255, 250, 250, 250));
       create_color(::user::color_list_background, ARGB(255, 255, 255, 255));
@@ -49,20 +62,18 @@ namespace wndfrm_tranquillum
       create_color(::user::color_button_text, ARGB(255, 255, 255, 255));
       create_color(::user::color_button_text_hover, ARGB(255, 255, 255, 255));
       create_color(::user::color_button_text_disabled, ARGB(255, 130, 150, 160));
-      create_point_font(::user::font_button, "Tahoma", 12.0, 800);
-      create_point_font(::user::font_plain_edit, "Tahoma", 12.0, 800);
 
 
    }
 
 
-   user_style::~user_style()
+   theme::~theme()
    {
 
    }
 
 
-   bool user_style::_001TabOnDrawSchema01(::draw2d::graphics * pgraphics,::user::tab * ptab)
+   bool theme::_001TabOnDrawSchema01(::draw2d::graphics * pgraphics,::user::tab * ptab)
    {
 
       class rect rect;
@@ -427,8 +438,23 @@ namespace wndfrm_tranquillum
 
    }
 
+   bool theme::_001OnDrawMainFrameBackground(::draw2d::graphics * pgraphics, ::user::frame * pframe)
+   {
 
-   void user_style::_001OnTabPaneDrawTitle(::user::tab_pane & pane,::user::tab * ptab,::draw2d::graphics * pgraphics,LPCRECT lpcrect,::draw2d::brush_sp & brushText)
+      rect rectClient;
+
+      pframe->GetClientRect(rectClient);
+
+      COLORREF crBackground = pframe->_001GetColor(::user::color_background);
+
+      pgraphics->fill_solid_rect(rectClient, crBackground);
+
+      return true;
+
+   }
+
+
+   void theme::_001OnTabPaneDrawTitle(::user::tab_pane & pane,::user::tab * ptab,::draw2d::graphics * pgraphics,LPCRECT lpcrect,::draw2d::brush_sp & brushText)
    {
 
       stringa & straTitle = pane.m_straTitle;
@@ -489,7 +515,7 @@ namespace wndfrm_tranquillum
 
 
 
-   bool user_style::_001OnTabLayout(::user::tab * ptab)
+   bool theme::_001OnTabLayout(::user::tab * ptab)
    {
 
 
@@ -742,7 +768,7 @@ namespace wndfrm_tranquillum
    }
 
 
-   bool user_style::on_ui_event(::user::e_event eevent, ::user::e_object eobject, ::user::interaction * pui)
+   bool theme::on_ui_event(::user::e_event eevent, ::user::e_object eobject, ::user::interaction * pui)
    {
 
       if (eevent == ::user::event_calc_item_height)
@@ -759,7 +785,7 @@ namespace wndfrm_tranquillum
    }
 
 
-   bool user_style::_001DrawToolbarItem(::draw2d::graphics * pgraphics, int32_t iItem, ::user::toolbar * ptoolbar)
+   bool theme::_001DrawToolbarItem(::draw2d::graphics * pgraphics, int32_t iItem, ::user::toolbar * ptoolbar)
    {
 
 //      if (1)
@@ -780,7 +806,7 @@ namespace wndfrm_tranquillum
    }
 
 
-   void user_style::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, int32_t iItem, ::user::toolbar * ptoolbar)
+   void theme::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, int32_t iItem, ::user::toolbar * ptoolbar)
    {
 
       pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
@@ -1077,7 +1103,7 @@ namespace wndfrm_tranquillum
 
    }
 
-   void user_style::_001DrawTranquillumToolbarItem(::draw2d::graphics * pgraphics, int32_t iItem, ::user::toolbar * ptoolbar)
+   void theme::_001DrawTranquillumToolbarItem(::draw2d::graphics * pgraphics, int32_t iItem, ::user::toolbar * ptoolbar)
    {
 
       pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
@@ -1398,7 +1424,7 @@ namespace wndfrm_tranquillum
    }
 
 
-   bool user_style::_001OnDrawSplitLayout(::draw2d::graphics * pgraphics, ::user::split_layout * psplitlayout)
+   bool theme::_001OnDrawSplitLayout(::draw2d::graphics * pgraphics, ::user::split_layout * psplitlayout)
    {
 
       rect rectClient;
@@ -1412,14 +1438,14 @@ namespace wndfrm_tranquillum
    }
 
 
-   bool user_style::get_font(::draw2d::font_sp & sp, ::user::e_font efont, ::user::interaction * pui)
+   bool theme::get_font(::draw2d::font_sp & sp, ::user::e_font efont, ::user::style_context * pcontext)
    {
 
-      return ::user::style::get_font(sp, efont, pui);
+      return ::user::theme::get_font(sp, efont, pcontext);
 
    }
 
-   bool user_style::get_double(double & d, ::user::e_double edouble, ::user::interaction * pui)
+   bool theme::get_double(double & d, ::user::e_double edouble, ::user::style_context * pcontext)
    {
 
       if (edouble == ::user::double_height_rate)
@@ -1431,7 +1457,7 @@ namespace wndfrm_tranquillum
 
       }
 
-      return ::user::style::get_double(d, edouble, pui);
+      return ::user::theme::get_double(d, edouble, pcontext);
 
    }
 

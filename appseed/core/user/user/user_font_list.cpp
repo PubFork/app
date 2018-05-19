@@ -30,6 +30,7 @@ namespace user
    void font_list::font_list_common_construct()
    {
 
+      m_econtroltype = control_type_list;
       m_scrolldataVert.m_bScrollEnable = true;
 
    }
@@ -366,21 +367,21 @@ namespace user
    }
 
 
-   bool font_list::get_color(COLORREF & cr, e_color ecolor, ::user::interaction * pui)
-   {
+   //bool font_list::get_color(COLORREF & cr, e_color ecolor, ::user::interaction * pui)
+   //{
 
-      if (ecolor == color_background)
-      {
+   //   if (ecolor == color_background)
+   //   {
 
-         cr = ARGB(128, 255, 255, 255);
+   //      cr = ARGB(128, 255, 255, 255);
 
-         return true;
+   //      return true;
 
-      }
+   //   }
 
-      return control::get_color(cr, ecolor, pui);
+   //   return control::get_color(cr, ecolor, pui);
 
-   }
+   //}
 
 
 } // namespace user

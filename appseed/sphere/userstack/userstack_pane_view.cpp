@@ -579,25 +579,25 @@ namespace userstack
       class user::control_descriptor control;
 
       control.m_bTransparent = true;
-      control.set_type(user::control_type_check_box);
+      control.set_control_type(user::control_type_check_box);
       control.m_id = "save_display_bandwidth";
       control.set_ddx_dbflags("ca2.savings", ::aura::resource_display_bandwidth);
       pform->_001AddControl(control);
 
       control.m_bTransparent = true;
-      control.set_type(user::control_type_check_box);
+      control.set_control_type(user::control_type_check_box);
       control.m_id = "save_processing";
       control.set_ddx_dbflags("ca2.savings", ::aura::resource_processing);
       pform->_001AddControl(control);
 
       control.m_bTransparent = true;
-      control.set_type(user::control_type_check_box);
+      control.set_control_type(user::control_type_check_box);
       control.m_id = "save_memory";
       control.set_ddx_dbflags("ca2.savings", ::aura::resource_memory);
       pform->_001AddControl(control);
 
       control.m_bTransparent = true;
-      control.set_type(user::control_type_check_box);
+      control.set_control_type(user::control_type_check_box);
       control.m_id = "enable_wallpaper";
       control.set_ddx_dbflags(
       "ca2.bergedge",

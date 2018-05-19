@@ -43,9 +43,9 @@ namespace simple_ui
       //virtual void EndModalLoop(id nResult);
 
       virtual bool has_pending_graphical_update() override;
-      
-      
-      virtual void on_select_user_style() override;
+
+
+//      virtual void on_select_user_style() override;
 
 
    };

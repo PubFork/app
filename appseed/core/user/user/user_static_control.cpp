@@ -28,7 +28,7 @@ namespace user
    }
 
 
-   
+
    bool static_control::create_window(const RECT & rect, sp(::user::interaction) pParentWnd,id id)
    {
 
@@ -64,7 +64,7 @@ namespace user
    {
 
 //      SCAST_PTR(::message::mouse, pmouse, pobj);
-       UNREFERENCED_PARAMETER(pobj);
+      UNREFERENCED_PARAMETER(pobj);
 
       m_bLButtonDown = true;
 
@@ -73,20 +73,20 @@ namespace user
 
    void static_control::_001OnLButtonUp(::message::message * pobj)
    {
-      
+
 //      SCAST_PTR(::message::mouse, pmouse, pobj);
-       UNREFERENCED_PARAMETER(pobj);
+      UNREFERENCED_PARAMETER(pobj);
 
       if (m_bLButtonDown)
       {
-         
+
          m_bLButtonDown = false;
 
          ::user::control_event ev;
          ev.m_puie = this;
          ev.m_eevent = ::user::event_button_clicked;
          ev.m_actioncontext = ::action::source_user;
-         
+
          on_control_event(&ev);
 
       }
@@ -98,15 +98,15 @@ namespace user
    {
 
 //      SCAST_PTR(::message::mouse, pmouse, pobj);
-       UNREFERENCED_PARAMETER(pobj);
- }
+      UNREFERENCED_PARAMETER(pobj);
+   }
 
 
    void static_control::_001OnMouseLeave(::message::message * pobj)
    {
 
 //      SCAST_PTR(::message::mouse, pleave, pobj);
-       UNREFERENCED_PARAMETER(pobj);
+      UNREFERENCED_PARAMETER(pobj);
 
       m_bLButtonDown = false;
 
@@ -115,7 +115,7 @@ namespace user
    void static_control::_001OnDraw(::draw2d::graphics * pgraphics)
    {
 
-      
+
 
       COLORREF crText = ARGB(255, 0, 0, 0);
 
@@ -123,7 +123,7 @@ namespace user
       {
 
          point pt;
-         
+
          Session.get_cursor_pos(&pt);
 
          ::rect rectWindow;
@@ -162,12 +162,12 @@ namespace user
 
    bool static_control::OnChildNotify(::message::base * pbase)
    {
-      
+
       if (pbase->m_id != WM_DRAWITEM)
-          return ::user::interaction::OnChildNotify(pbase);
+         return ::user::interaction::OnChildNotify(pbase);
 
 #ifdef WINDOWSEX
-      
+
 //      DrawItem((LPDRAWITEMSTRUCT)pbase->m_lparam);
 
 #endif

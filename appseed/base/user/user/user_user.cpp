@@ -262,7 +262,7 @@ namespace user
 //
 //   }
 
-   sp(type) user::controltype_to_typeinfo(::user::e_control_type e_type)
+   sp(type) user::controltype_to_typeinfo(::user::e_control_type econtroltype)
    {
 
       return sp(type)();

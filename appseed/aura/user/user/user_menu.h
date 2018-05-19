@@ -37,6 +37,9 @@ namespace user
       bool                                   m_bInline;
       bool                                   m_bMenuOk;
       menu_item *                            m_pmenuitemSub;
+      int_array                              m_iaColumnWidth;
+      int_array                              m_iaColumnHeight;
+      bool                                   m_bCloseButton;
 
 
 
@@ -98,8 +101,8 @@ namespace user
 
       sp(::user::menu_item) get_item(::user::interaction * pui);
 
-      virtual bool get_color(COLORREF & cr,::user::e_color ecolor, ::user::interaction * pui) override;
-      virtual bool get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement, ::user::interaction * pui) override;
+      //virtual bool get_color(COLORREF & cr,::user::e_color ecolor, style_context * pcontext) override;
+      //virtual bool get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement, style_context * pcontext) override;
       virtual bool has_pending_graphical_update() override;
 
       virtual bool create_menu(const stringa & straCommand, const stringa & straCommandTitle);
@@ -120,7 +123,8 @@ namespace user
 
       virtual void defer_close();
 
-      virtual ::user::interaction * create_menu_button(::aura::application * papp) override;
+      virtual ::user::menu_interaction * create_menu_button(::user::menu_item * pitem) override;
+
 
    };
 

@@ -45,7 +45,7 @@ namespace user
 
       m_id.is_empty();
       m_iItem = 0;
-      m_etype = control_type_none;
+      m_econtroltype = control_type_none;
       m_bTransparent = false;
       m_bCreated = false;
       m_edatatype = control_data_type_string;
@@ -74,7 +74,7 @@ namespace user
 
       m_iItem = control_descriptor.m_iItem;
       m_id = control_descriptor.m_id;
-      m_etype = control_descriptor.m_etype;
+      m_econtroltype = control_descriptor.m_econtroltype;
       m_dataid = control_descriptor.m_dataid;
       m_bTransparent = control_descriptor.m_bTransparent;
       m_flagsfunction = control_descriptor.m_flagsfunction;
@@ -103,7 +103,7 @@ namespace user
    {
 
       return m_id == control_descriptor.m_id
-             && m_etype == control_descriptor.m_etype
+             && m_econtroltype == control_descriptor.m_econtroltype
              && m_dataid == control_descriptor.m_dataid
              && m_puiParent == control_descriptor.m_puiParent;
 

@@ -5,13 +5,22 @@ namespace user
 {
 
 
-   menu_button::menu_button(::aura::application * papp):
-      object(papp),
-      ::user::interaction(papp),
-      ::user::button(papp)
+   menu_button::menu_button(menu_item * pitem):
+      object(pitem->get_app()),
+      ::user::interaction(pitem->get_app()),
+      ::user::menu_interaction(pitem),
+      ::user::button(pitem->get_app())
    {
 
-      set_user_schema(schema_menu_button);
+      m_econtroltype = control_type_menu_button;
+
+      m_erectMargin = rect_menu_item_margin;
+      m_erectBorder = rect_menu_item_border;
+      m_erectPadding = rect_menu_item_padding;
+      m_eintTextAlign = int_menu_item_draw_text_flags;
+
+      m_flagNonClient.unsignalize(::user::interaction::non_client_focus_rect);
+
 
    }
 
@@ -32,8 +41,22 @@ namespace user
    }
 
 
+   bool menu_button::create_window(const RECT & rect, ::user::interaction *pparent, id id)
+   {
 
-   void menu_button::_001OnDraw(::draw2d::graphics * pgraphics)
+      if (!button::create_window(rect, pparent, id))
+      {
+
+         return false;
+
+      }
+
+      return true;
+
+   }
+
+
+   void menu_button::_001OnDrawDefault(::draw2d::graphics * pgraphics)
    {
 
       rect rectClient;
@@ -43,15 +66,19 @@ namespace user
       if (m_id == "separator")
       {
 
+         pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
+
+         pgraphics->fill_solid_rect(rectClient, _001GetColor(color_button_background));
+
          ::draw2d::pen_sp pen(allocer());
 
-         pen->create_solid(2.0, ARGB(127, 80, 80, 80));
+         pen->create_solid(1.0, ARGB(127, 80, 80, 80));
 
          pgraphics->SelectObject(pen);
 
-         pgraphics->move_to(rectClient.left, (rectClient.top + rectClient.bottom) / 2);
+         pgraphics->move_to(rectClient.left + rectClient.width() / 8, (rectClient.top + rectClient.bottom) / 2);
 
-         pgraphics->line_to(rectClient.right, (rectClient.top + rectClient.bottom) / 2);
+         pgraphics->line_to(rectClient.right - rectClient.width() / 8, (rectClient.top + rectClient.bottom) / 2);
 
          return;
 
@@ -59,7 +86,7 @@ namespace user
 
       button::_001OnDraw(pgraphics);
 
-      if(m_pmenuitem != NULL && m_pmenuitem->m_bPopup)
+      if (m_pmenuitem != NULL && m_pmenuitem->m_bPopup)
       {
 
          ::draw2d::brush_sp br(allocer(), RGB(0, 0, 0));
@@ -83,6 +110,21 @@ namespace user
       }
 
       _001DrawCheck(pgraphics);
+
+   }
+
+
+   void menu_button::_001OnDraw(::draw2d::graphics * pgraphics)
+   {
+
+      if (m_puserstyle != NULL && m_puserstyle->_001OnDrawMenuInteraction(pgraphics, this))
+      {
+
+         return;
+
+      }
+
+      _001OnDrawDefault(pgraphics);
 
    }
 
@@ -182,10 +224,10 @@ namespace user
       }
 
    }
+
+
    void menu_button::_001OnCreate(::message::message * pobj)
    {
-
-
 
       pobj->previous();
 
@@ -202,6 +244,52 @@ namespace user
 
    }
 
+
+   void menu_button::on_calc_size(calc_size * pcalcsize)
+   {
+
+      sp(::draw2d::font) pfont = _001GetFont(font_button);
+
+      pcalcsize->m_pgraphics->SelectObject(pfont);
+
+      string strButtonText;
+
+      strButtonText = get_window_text();
+
+      class ::size size = pcalcsize->m_pgraphics->GetTextExtent(strButtonText);
+
+      rect rectMargin = _001GetRect(rect_menu_item_margin);
+
+      rect rectBorder = _001GetRect(rect_menu_item_border);
+
+      rect rectPadding = _001GetRect(rect_menu_item_padding);
+
+      size.cx += rectMargin.left + rectBorder.left + rectPadding.left;
+
+      size.cx += rectMargin.right;
+
+      size.cx += m_pitem->m_pmenu->m_iCheckBoxSize;
+
+      size.cx += _001GetInt(int_menu_check_padding);
+
+      if (m_pitem->IsPopup())
+      {
+
+         size.cx += _001GetInt(int_menu_check_padding);
+
+         size.cx += m_pitem->m_pmenu->m_iCheckBoxSize;
+
+      }
+
+      size.cx += rectMargin.right + rectBorder.right + rectPadding.right;
+
+      size.cy += rectMargin.top + rectBorder.top + rectPadding.top;
+
+      size.cy += rectMargin.bottom + rectBorder.bottom + rectPadding.bottom;
+
+      pcalcsize->m_size = size;
+
+   }
 
 
 

@@ -47,7 +47,7 @@ namespace base
 
       virtual void on_finally_focus_set(::user::elemental * pelementalFocus) override;
 
-      virtual ::user::interaction * create_menu_button(::aura::application * papp) override;
+      //virtual ::user::menu_interaction * create_menu_button(::user::menu_item * pitem) override;
 
       //virtual oswindow get_capture() override;
 

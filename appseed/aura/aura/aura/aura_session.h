@@ -37,8 +37,8 @@ namespace aura
       ::visual::e_cursor               m_ecursorDefault;
       ::visual::e_cursor               m_ecursor;
 
-      ::user::style_sp                 m_puserstyle;
-      string_map < ::user::style_sp >  m_mapStyle;
+      ::user::theme_sp                 m_ptheme;
+      string_map < ::user::theme_sp >  m_mapTheme;
 
       ::user::interaction *            m_puiCapture;
       bool                                                     m_bDrawCursor;
@@ -191,7 +191,7 @@ namespace aura
       virtual bool is_licensed(const char * pszId, bool bInteractive = true);
 
 
-
+      virtual void userstyle(::user::style_context * pcontext);
 
       virtual bool get_auth(const string & pszForm, string & strUsername, string & strPassword);
 
@@ -289,51 +289,18 @@ namespace aura
       virtual index get_ui_wkspace(::user::interaction * pui);
 
 
-      virtual void defer_create_user_style(const char * pszUiInteractionLibrary = NULL);
-      sp(::user::style) create_new_user_style(const char * pszUinteractionLibrary, ::aura::application * papp = NULL);
-      sp(::user::style) get_user_style(const char * pszUinteractionLibrary, ::aura::application * papp = NULL);
+      virtual void defer_instantiate_user_theme(const char * pszUiInteractionLibrary = NULL);
+      ::user::theme_sp instantiate_user_theme(const char * pszUinteractionLibrary, ::aura::application * papp = NULL);
+      ::user::theme_sp get_user_theme(const char * pszUinteractionLibrary, ::aura::application * papp = NULL);
 
 
       virtual void _001OnDefaultTabPaneDrawTitle(::user::tab_pane & pane, ::user::tab * ptab, ::draw2d::graphics * pgraphics, LPCRECT lpcrect, ::draw2d::brush_sp & brushText);
+
 
    };
 
 
 } // namespace aura
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

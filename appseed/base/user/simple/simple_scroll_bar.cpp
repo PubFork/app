@@ -822,19 +822,19 @@ void simple_scroll_bar::_001OnCreate(::message::message * pobj)
    SCAST_PTR(::message::create, pcreate, pobj);
 
 
-   if (m_puserstyle == NULL)
-   {
+   //if (m_puserstyle == NULL)
+   //{
 
-      m_puserstyle = GetTopLevel();
+   //   m_puserstyle = GetTopLevel();
 
-   }
+   //}
 
-   if (m_puserstyle == NULL)
-   {
+   //if (m_puserstyle == NULL)
+   //{
 
-      m_puserstyle = Application.userstyle();
+   //   m_puserstyle = Application.userstyle();
 
-   }
+   //}
 
    update_drawing_objects();
 
@@ -991,31 +991,39 @@ public:
    }
 };
 
+
 void simple_scroll_bar::_001OnDraw(::draw2d::graphics * pgraphics)
 {
 
-   if (m_puserstyle != NULL)
+   ::user::style_context style(this);
+
+   while(style)
    {
 
-      if (m_puserstyle->_001DrawSimpleScrollBar(pgraphics, this))
+      if (style->_001DrawSimpleScrollBar(pgraphics, this))
       {
 
          return;
 
       }
+
+      style.next();
 
    }
 
+   style = this;
 
-   if (m_puserstyle != NULL)
+   while (style)
    {
 
-      if (m_puserstyle->_001DrawScrollBar(pgraphics, this))
+      if (style->_001DrawScrollBar(pgraphics, this))
       {
 
          return;
 
       }
+
+      style.next();
 
    }
 

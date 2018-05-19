@@ -1135,12 +1135,13 @@ namespace core
 
    }
 
-   ::user::interaction * session::create_menu_button(::aura::application * papp)
+   ::user::menu_interaction * session::create_menu_button(::user::menu_item * pitem)
    {
 
-      return canew(::user::menu_button(papp));
+      return canew(::user::menu_button(pitem));
 
    }
+
 
 } // namespace plane
 

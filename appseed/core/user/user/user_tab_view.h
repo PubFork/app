@@ -106,7 +106,7 @@ namespace user
       virtual ~tab_drop_target_window();
 
 
-      virtual bool get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement, ::user::interaction * pui) override;
+      //virtual bool get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement, style_context * pcontext) override;
 
       virtual void install_message_routing(::message::sender * pinterface) override;
 

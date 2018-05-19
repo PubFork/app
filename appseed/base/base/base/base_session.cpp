@@ -62,7 +62,7 @@ namespace base
 
       //m_paxissystem->m_basesessionptra.add_unique(this);
 
-      m_puserstyle = NULL;
+//      m_puserstyle = NULL;
 
       //m_puserstyle           = NULL;
 
@@ -249,10 +249,10 @@ namespace base
 
       sp(::user::button) pbutton = pitem->m_pui;
 
-      if (pbutton->m_id == "close")
+      if (pbutton->m_id == "close_menu")
       {
 
-         pbutton->set_user_schema(::user::schema_menu_close);
+         pbutton->m_econtroltype = ::user::control_type_menu_button_close;
 
          pbutton->resize_to_fit();
 
@@ -264,7 +264,7 @@ namespace base
       else
       {
 
-         pbutton->set_user_schema(::user::schema_menu_button);
+         pbutton->m_econtroltype = ::user::control_type_menu_button;
 
          int cx = pbutton->width();
 
@@ -435,12 +435,14 @@ namespace base
    }
 
 
-   ::user::interaction * session::create_menu_button(::aura::application * papp)
-   {
+   //::user::menu_interaction * session::create_menu_button(::user::menu_item * pitem)
+   //{
 
-      return canew(::user::button(get_app()));
+   //   return canew(::user::button(get_app()));
 
-   }
+   //}
+
+
    void session::on_finally_focus_set(::user::elemental * pelementalFocus)
    {
 

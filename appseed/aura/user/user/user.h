@@ -3,8 +3,10 @@
 
 #include "user_const.h"
 
+
 namespace user
 {
+
    class copydesk;
    class create_struct;
    class control_event;
@@ -15,6 +17,8 @@ namespace user
    class place_holder;
    class tab;
    class tab_pane;
+   class menu_interaction;
+   class menu_button;
    class menu_item;
    class menu_item_ptra;
    class frame_window;
@@ -22,9 +26,11 @@ namespace user
    class scroll_bar;
    class split_layout;
    class style;
+   class theme;
    class scroll_info;
    class window_map;
    using style_sp = sp(style);
+   using theme_sp = sp(theme);
    namespace wndfrm
    {
       namespace frame
@@ -63,6 +69,7 @@ class simple_scroll_bar;
 #include "aura/user/user/user_job.h"
 #include "aura/user/user/user_frame.h"
 #include "aura/user/user/user_menu_command.h"
+#include "aura/user/user/user_menu_interaction.h"
 #include "aura/user/user/user_menu_item.h"
 #include "aura/user/user/user_menu.h"
 #include "aura/user/user/user_control_event.h"

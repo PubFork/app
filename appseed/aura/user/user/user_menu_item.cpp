@@ -9,6 +9,7 @@ namespace user
       ::object(papp)
    {
 
+      m_bBreak = false;
       m_pui = NULL;
       m_spitema      = canew(menu_item_ptra(this));
       m_iLevel       = 0;
@@ -167,7 +168,7 @@ namespace user
          if (pitem->m_pui == NULL)
          {
 
-            pitem->m_pui = m_pmenu->create_menu_button(get_app());
+            pitem->m_pui = m_pmenu->create_menu_button(this);
 
          }
 

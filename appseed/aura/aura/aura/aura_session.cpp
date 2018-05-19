@@ -1295,8 +1295,6 @@ namespace aura
 
 
 
-
-
    bool session::get_auth(const string & pszForm, string & strUsername, string & strPassword)
    {
 
@@ -2854,15 +2852,15 @@ ret:
 
    }
 
-   sp(::user::style) session::get_user_style(const char * pszUinteractionLibrary, ::aura::application * papp)
+   ::user::theme_sp session::get_user_theme(const char * pszUinteractionLibrary, ::aura::application * papp)
    {
 
-      sp(::user::style) & p = m_mapStyle[pszUinteractionLibrary];
+      ::user::theme_sp & p = m_mapTheme[pszUinteractionLibrary];
 
       if (p.is_null())
       {
 
-         p = create_new_user_style(pszUinteractionLibrary, papp);
+         p = instantiate_user_theme(pszUinteractionLibrary, papp);
 
       }
 
@@ -2870,7 +2868,8 @@ ret:
 
    }
 
-   sp(::user::style) session::create_new_user_style(const char * pszUinteractionLibrary, ::aura::application * papp)
+
+   ::user::theme_sp session::instantiate_user_theme(const char * pszUinteractionLibrary, ::aura::application * papp)
    {
 
       thisstart;
@@ -2989,7 +2988,7 @@ ret:
 
       straLibrary.add("wndfrm_core");
 
-      sp(::user::style) pschema;
+      ::user::theme_sp ptheme;
 
       for (string strLibrary : straLibrary)
       {
@@ -3059,9 +3058,9 @@ ret:
 
          }
 
-         pschema = plibrary->create_object(papp, "user_style", NULL);
+         ptheme = plibrary->create_object(papp, "user_theme", NULL);
 
-         if (pschema.is_null())
+         if (ptheme.is_null())
          {
 
             thisinfo << "could not create user_style from " << strLibrary;
@@ -3072,34 +3071,43 @@ ret:
 
          }
 
-         pschema->m_plibrary = plibrary;
+         ptheme->m_plibrary = plibrary;
 
          break;
 
       }
 
-      if (pschema.is_null())
+      if (ptheme.is_null())
       {
 
-         pschema = canew(::user::style(this));
+         ptheme = canew(::user::theme(this));
 
       }
 
-      return pschema;
+      if (ptheme.is_set())
+      {
+
+         ptheme->initialize_theme();
+
+
+      }
+
+
+      return ptheme;
 
    }
 
 
 
-   void session::defer_create_user_style(const char * pszUiInteractionLibrary)
+   void session::defer_instantiate_user_theme(const char * pszUiInteractionLibrary)
    {
 
-      if (m_puserstyle == NULL)
+      if (m_ptheme.is_null())
       {
 
-         m_puserstyle = get_user_style(pszUiInteractionLibrary);
+         m_ptheme = get_user_theme(pszUiInteractionLibrary);
 
-         if (m_puserstyle == NULL)
+         if (m_ptheme.is_null())
          {
 
             thisfail << 1;
@@ -3112,6 +3120,13 @@ ret:
 
    }
 
+
+   void session::userstyle(::user::style_context * pcontext)
+   {
+
+      pcontext->m_pstyle = m_ptheme;
+
+   }
 
 
    class ::user::window_map & session::window_map()

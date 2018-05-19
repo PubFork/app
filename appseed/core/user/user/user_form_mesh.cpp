@@ -71,7 +71,7 @@ namespace user
       {
          if(pcontrol->descriptor().has_function(::user::control_function_action))
          {
-            if(pcontrol->descriptor().get_type() == ::user::control_type_button)
+            if(pcontrol->descriptor().get_control_type() == ::user::control_type_button)
             {
 
 
@@ -103,7 +103,7 @@ namespace user
 
    sp(control) form_mesh::_001GetControl(index iItem, index iSubItem)
    {
-       return NULL;
+      return NULL;
 
    }
 
@@ -129,12 +129,12 @@ namespace user
       {
          _001Update(pcontrol);
          pcontrol->SetWindowPos(
-            ZORDER_TOP,
-            rect.left,
-            rect.top,
-            rect.width(),
-            rect.height(),
-            SWP_SHOWWINDOW);
+         ZORDER_TOP,
+         rect.left,
+         rect.top,
+         rect.width(),
+         rect.height(),
+         SWP_SHOWWINDOW);
          _001SetEditControl(pcontrol);
          pcontrol->SetFocus();
       }
@@ -308,7 +308,7 @@ namespace user
 
          class ::user::control_descriptor & descriptor = m_controldescriptorset(i);
 
-         if(descriptor.m_etype == control_type_edit  || descriptor.m_etype == control_type_edit_plain_text)
+         if(descriptor.m_econtroltype == control_type_edit  || descriptor.m_econtroltype == control_type_edit_plain_text)
          {
 
             for(auto pair : descriptor.m_controlmap)
@@ -340,13 +340,13 @@ namespace user
    {
       SCAST_PTR(::message::key,pkey,pobj);
 
-         if(pkey->m_ekey == ::user::key_return)
-         {
-            _001SaveEdit(_001GetEditControl());
-            _001HideEditingControls();
-            pobj->m_bRet = true;
-            return;
-         }
+      if(pkey->m_ekey == ::user::key_return)
+      {
+         _001SaveEdit(_001GetEditControl());
+         _001HideEditingControls();
+         pobj->m_bRet = true;
+         return;
+      }
       pkey->previous();
    }
 
@@ -377,8 +377,8 @@ namespace user
    {
       if(pcontrol->m_pdescriptor != NULL)
       {
-         if(pcontrol->m_pdescriptor->m_etype == control_type_edit
-            || pcontrol->m_pdescriptor->m_etype == control_type_edit_plain_text)
+         if(pcontrol->m_pdescriptor->m_econtroltype == control_type_edit
+               || pcontrol->m_pdescriptor->m_econtroltype == control_type_edit_plain_text)
          {
             if(pcontrol == _001GetEditControl())
             {
@@ -621,7 +621,7 @@ namespace user
 
       //if(pdescriptor != NULL)
       //{
-         ///pdescriptor->m_pcontrol->m_iEditItem = m_iControlItem;
+      ///pdescriptor->m_pcontrol->m_iEditItem = m_iControlItem;
       //}
       return form::on_control_event(pevent);
    }

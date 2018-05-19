@@ -249,9 +249,9 @@ void simple_toolbar::_001OnDraw(::draw2d::graphics * pgraphics)
 
    int iHover = _001GetHoverItem();
 
-   set_user_schema(::user::schema_button);
+   m_econtroltype = ::user::control_type_button;
 
-   select_user_schema();
+//   select_user_schema();
 
    for (int32_t iItem = 0; iItem < m_itema.get_size(); iItem++)
    {

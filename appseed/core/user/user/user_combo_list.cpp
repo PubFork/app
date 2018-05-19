@@ -194,9 +194,7 @@ namespace user
    void combo_list::_001OnDrawSimply(::draw2d::graphics * pgraphics)
    {
 
-
-
-      ::count ca = m_pcombo->_001GetListCount();
+      ::count iListItemCount = m_pcombo->_001GetListCount();
 
       string strItem;
 
@@ -238,13 +236,7 @@ namespace user
 
       ScreenToClient(&ptCursor);
 
-      br->create_solid(ARGB(255, 84, 90, 80));
-
-      //int32_t dSize = (int32_t) (_001GetItemHeight() * 0.7);
-
-      //GetFont()->m_dFontSize = dSize;
-      //GetFont()->m_eunitFontSize = ::draw2d::unit_pixel;
-      //GetFont()->m_bUpdated = false;
+      br->create_solid(::user::color_text);
 
       if (m_pcombo != NULL)
       {
@@ -263,7 +255,7 @@ namespace user
 
       pgraphics->SelectObject(br);
 
-      for (index i = 0; i < ca; i++)
+      for (index i = 0; i < iListItemCount; i++)
       {
          rectItem.top = rectItem.bottom;
          rectItem.bottom = rectItem.top + _001GetItemHeight();
@@ -287,16 +279,22 @@ namespace user
          rectItem.bottom = rectItem.top + _001GetItemHeight();
          if (rectItem.contains(ptCursor))
          {
-            //br->create_solid(ARGB(123, 123, 149, 108));
-            br->create_solid(_001GetColor(::user::color_background_selected));
+            br->create_solid(_001GetColor(::user::color_background_selected_highlight));
          }
          else
          {
-            br->create_solid(ARGB(190, 80, 184, 63));
+            br->create_solid(_001GetColor(::user::color_background_selected));
          }
          pgraphics->SelectObject(br);
          pgraphics->fill_rect(rectItem);
-         br->create_solid(ARGB(255, 255, 255, 240));
+         if (rectItem.contains(ptCursor))
+         {
+            br->create_solid(_001GetColor(::user::color_text_selected_highlight));
+         }
+         else
+         {
+            br->create_solid(_001GetColor(::user::color_text_selected));
+         }
          m_pcombo->_001GetListText(m_pcombo->m_iSel, strItem);
          pgraphics->SelectObject(br);
          pgraphics->draw_text(strItem, rectItem, 0);
@@ -418,9 +416,7 @@ namespace user
    void combo_list::_002OnDrawSimply(::draw2d::graphics * pgraphics)
    {
 
-
-
-      ::count ca = m_pcombo->_001GetListCount();
+      ::count iListItemCount = m_pcombo->_001GetListCount();
 
       string strItem;
 
@@ -428,27 +424,13 @@ namespace user
 
       GetClientRect(rectClient);
 
-      ::draw2d::brush_sp br(allocer());
+      ::draw2d::brush_sp brBk(allocer());
 
-      br->create_solid(ARGB(230, 255, 255, 255));
+      brBk->create_solid(ARGB(230, 255, 255, 255));
 
-      pgraphics->SelectObject(br);
+      pgraphics->SelectObject(brBk);
 
       pgraphics->fill_rect(rectClient);
-
-      //{
-
-      //   color ca;
-
-      //   ca.set_rgb(RGB(227,227,210));
-
-      //   ca.hls_rate(0.0,-0.33,-0.23);
-
-      //   COLORREF crBorder = ca.get_rgb() | (0xff << 24);
-
-      //   pgraphics->draw3d_rect(rectClient,crBorder,crBorder);
-
-      //}
 
       rect rectItem;
 
@@ -469,14 +451,6 @@ namespace user
 
       ScreenToClient(&ptCursor);
 
-      //br->create_solid(ARGB(255,90, 90, 80));
-
-      //int32_t dSize = (int32_t) (_001GetItemHeight() * 0.7);
-
-      //GetFont()->m_dFontSize = dSize;
-      //GetFont()->m_eunitFontSize = ::draw2d::unit_pixel;
-      //GetFont()->m_bUpdated = false;
-
       if (m_pcombo != NULL)
       {
 
@@ -489,42 +463,87 @@ namespace user
          select_font(pgraphics, font_plain_edit);
 
       }
-      //pgraphics->SelectObject(br);
 
       index iHover = m_iHover;
 
-      if (iHover < 0 || iHover >= ca)
+      if (iHover < 0 || iHover >= iListItemCount)
       {
 
-         iHover = m_pcombo->_001GetCurSel();
+         iHover = -1;
 
       }
 
-      for (index i = 0; i < ca; i++)
+      index iCurSel = m_pcombo->_001GetCurSel();
+
+      ::draw2d::brush_sp br(allocer());
+
+      for (index iItem = 0; iItem < iListItemCount; iItem++)
       {
+
          rectItem.top = rectItem.bottom;
+
          rectItem.bottom = rectItem.top + _001GetItemHeight();
-         if (i == iHover)
+
+         COLORREF crBk;
+
+         COLORREF cr;
+
+         if (iItem == iHover)
          {
-            //br->create_solid(ARGB(190, 80, 184, 63));
-            br->create_solid(_001GetColor(::user::color_background_selected));
-            pgraphics->SelectObject(br);
-            pgraphics->fill_rect(rectItem);
-            br->create_solid(ARGB(255, 255, 255, 240));
-            m_pcombo->_001GetListText(i, strItem);
-            pgraphics->SelectObject(br);
-            pgraphics->draw_text(strItem, rectItem, 0);
+
+            if (iItem == iCurSel)
+            {
+
+               crBk = _001GetColor(::user::color_background_selected_highlight);
+
+               cr = _001GetColor(::user::color_text_selected_highlight);
+
+            }
+            else
+            {
+
+               crBk = _001GetColor(::user::color_background_highlight);
+
+               cr = _001GetColor(::user::color_text_highlight);
+
+            }
+
+         }
+         else if (iItem == iCurSel)
+         {
+
+            crBk = _001GetColor(::user::color_background_selected);
+
+            cr = _001GetColor(::user::color_text_selected);
+
          }
          else
          {
-            pgraphics->set_text_color(ARGB(255, 84, 90, 80));
-            m_pcombo->_001GetListText(i, strItem);
-            pgraphics->draw_text(strItem, rectItem, 0);
+
+            crBk = _001GetColor(::user::color_background);
+
+            cr = _001GetColor(::user::color_text);
+
          }
+
+         brBk->create_solid(crBk);
+
+         br->create_solid(cr);
+
+         pgraphics->SelectObject(brBk);
+
+         pgraphics->fill_rect(rectItem);
+
+         m_pcombo->_001GetListText(iItem, strItem);
+
+         pgraphics->SelectObject(br);
+
+         pgraphics->draw_text(strItem, rectItem, 0);
+
       }
 
-
    }
+
 
    void combo_list::query_full_size(LPSIZE lpsize)
    {

@@ -49,6 +49,10 @@ namespace user
 
       //normal
 
+      e_rect                              m_erectMargin;
+      e_rect                              m_erectBorder;
+      e_rect                              m_erectPadding;
+      e_int                               m_eintTextAlign;
       e_style                             m_estyle;
       ::check::e_check                    m_echeck;
       rect                                m_rectText;
@@ -58,7 +62,7 @@ namespace user
       e_stock_icon                        m_estockicon;
 
       rect                    m_rectCheckBox;
-      
+
 
       // bitmap
 

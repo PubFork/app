@@ -58,7 +58,7 @@ namespace fontopus
       if(pcreate->previous())
          return;
 
-      m_puserstyle = this;
+//      m_puserstyle = this;
 
       if(!m_login.create_window(null_rect(), this,"pane_first"))
       {

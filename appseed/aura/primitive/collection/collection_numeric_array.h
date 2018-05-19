@@ -122,14 +122,14 @@ public:
    void CopySorted(const numeric_array < TYPE > & array, TYPE & tOffset, TYPE & tMin);
 
    void Diff(
-      const numeric_array  < TYPE > & array1,
-      const numeric_array  < TYPE > & array2);
+   const numeric_array  < TYPE > & array1,
+   const numeric_array  < TYPE > & array2);
 
    void divide(TYPE i);
 
    void ElementDiff(
-      const numeric_array  < TYPE > & array1,
-      TYPE & tMax);
+   const numeric_array  < TYPE > & array1,
+   TYPE & tMax);
 
    TYPE GetMean();
 
@@ -637,7 +637,7 @@ void numeric_array < TYPE >::unique()
 
 template < class TYPE >
 index numeric_array < TYPE >::
-   Cmp(const numeric_array  < TYPE > & array1)
+Cmp(const numeric_array  < TYPE > & array1)
 {
    ::count iMinSize = MIN(array1.get_size(), this->get_size());
    index i = 0;
@@ -657,16 +657,16 @@ index numeric_array < TYPE >::
 
 template < class TYPE >
 void numeric_array < TYPE >::CopySorted(
-   const numeric_array  < TYPE > & a,
-   TYPE & tOffset,
-   TYPE & tMin)
+const numeric_array  < TYPE > & a,
+TYPE & tOffset,
+TYPE & tMin)
 {
    index i;
    TYPE tStart = tMin - tOffset;
    this->allocate(a.get_size());
    TYPE t;
    for(i = 0; i < a.get_size()
-      && a.get_at(i) <= tStart; i++)
+         && a.get_at(i) <= tStart; i++)
    {
       this->set_at(i, tMin);
    }
@@ -678,8 +678,8 @@ void numeric_array < TYPE >::CopySorted(
 }
 template < class TYPE >
 void numeric_array < TYPE >::Diff(
-   const numeric_array  < TYPE > & array1,
-   const numeric_array  < TYPE > & array2)
+const numeric_array  < TYPE > & array1,
+const numeric_array  < TYPE > & array2)
 {
    ASSERT(array1.get_size() == array2.get_size());
    index i;
@@ -694,8 +694,8 @@ void numeric_array < TYPE >::Diff(
 
 template < class TYPE >
 void numeric_array < TYPE >::ElementDiff(
-   const numeric_array  < TYPE > & a,
-   TYPE & tMax)
+const numeric_array  < TYPE > & a,
+TYPE & tMax)
 {
    index i;
    TYPE t;
@@ -716,20 +716,37 @@ void numeric_array < TYPE >::ElementDiff(
    }
 }
 
+
 template < class TYPE >
 index numeric_array < TYPE >::find_first_maximum_value()
 {
+
    TYPE tMax = this->element_at(0);
+
+   index iFind = 0;
+
    for(index i = 1; i < this->get_size(); i++)
    {
-      if(this->element_at(i) > tMax)
-         return i;
+
+      if (this->element_at(i) > tMax)
+      {
+
+         iFind = i;
+
+         tMax = this->element_at(i);
+
+      }
+
    }
-   return -1;
+
+   return iFind;
+
 }
+
+
 template < class TYPE >
 TYPE & numeric_array < TYPE >::
-   get_maximum_value()
+get_maximum_value()
 {
    ASSERT(this->get_size() > 0);
    return this->element_at(find_first_maximum_value());
@@ -871,14 +888,14 @@ inline TYPE numeric_array < TYPE > ::pop_to()
 
 template < class TYPE >
 unique_number_sort_array < TYPE >::
-   unique_number_sort_array(::aura::application * papp) :
+unique_number_sort_array(::aura::application * papp) :
    object(papp)
 {
 }
 
 template < class TYPE >
 unique_number_sort_array < TYPE >::
-   unique_number_sort_array(const unique_number_sort_array < TYPE > & a) :
+unique_number_sort_array(const unique_number_sort_array < TYPE > & a) :
    ::object(a.get_app())
 {
    numeric_array < TYPE > ::operator = (a);

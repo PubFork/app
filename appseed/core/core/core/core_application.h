@@ -510,7 +510,7 @@ namespace core
 
       virtual void on_create_keyboard() override;
 
-      virtual sp(type) user_default_controltype_to_typeinfo(::user::e_control_type e_type) override;
+      virtual sp(type) user_default_controltype_to_typeinfo(::user::e_control_type econtroltype) override;
 
       virtual void set_form_impact_system(::user::impact_system * pdoctemplate,::user::impact_system * pdoctemplateChild,::user::impact_system * pdoctemplatePlaceHolder);
 

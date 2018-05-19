@@ -4873,7 +4873,7 @@ finished_update:
    bool plain_edit::create_control(class control_descriptor * pdescriptor)
    {
 
-      ASSERT(pdescriptor->get_type() == control_type_edit_plain_text);
+      ASSERT(pdescriptor->get_control_type() == control_type_edit_plain_text);
 
       if (!::user::control::create_control(pdescriptor))
       {

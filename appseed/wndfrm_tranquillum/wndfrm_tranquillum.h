@@ -7,9 +7,9 @@
 
 
 #ifdef _CA2_CORE_WNDFRM_TRANQUILLUM_LIBRARY
-    #define CLASS_DECL_APP_WNDFRM_TRANQUILLUM  CLASS_DECL_EXPORT
+#define CLASS_DECL_APP_WNDFRM_TRANQUILLUM  CLASS_DECL_EXPORT
 #else
-    #define CLASS_DECL_APP_WNDFRM_TRANQUILLUM  CLASS_DECL_IMPORT
+#define CLASS_DECL_APP_WNDFRM_TRANQUILLUM  CLASS_DECL_IMPORT
 #endif
 
 #include "user_meta_button.h"
@@ -31,7 +31,7 @@
 #include "wndfrm_tranquillum_interaction.h"
 
 
-#include "wndfrm_tranquillum_user_style.h"
+#include "wndfrm_tranquillum_user_theme.h"
 
 
 #include "wndfrm_tranquillum_library.h"
