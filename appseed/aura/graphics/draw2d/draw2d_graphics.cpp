@@ -1497,14 +1497,14 @@ namespace draw2d
 //               g_pdiba->add(dib1);
 //#endif
 
-               dib1->create(rectBlt.size());
+               dib1->create(rectBlt.get_size());
 
                dib1->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
 
-               if (!dib1->from(null_point(), pgraphicsSrc, point(xSrc, ySrc), rectBlt.size()))
+               if (!dib1->from(null_point(), pgraphicsSrc, point(xSrc, ySrc), rectBlt.get_size()))
                   return false;
 
-               dib1->blend(point(0, 0), m_pdibAlphaBlend, point((int)MAX(0, x - m_ptAlphaBlend.x), (int)MAX(0, y - m_ptAlphaBlend.y)), rectBlt.size());
+               dib1->blend(point(0, 0), m_pdibAlphaBlend, point((int)MAX(0, x - m_ptAlphaBlend.x), (int)MAX(0, y - m_ptAlphaBlend.y)), rectBlt.get_size());
 
                BitBltRaw(x, y, nWidth, nHeight, dib1->get_graphics(), 0, 0, dwRop);
 
@@ -1826,7 +1826,7 @@ namespace draw2d
 //            g_pdiba->add(dib1);
 //#endif
 
-            dib1->create(rectText.size());
+            dib1->create(rectText.get_size());
 
             dib1->get_graphics()->SelectObject(get_current_font());
 
@@ -1836,7 +1836,7 @@ namespace draw2d
 
             dib1->get_graphics()->text_out(0, 0, lpszString, nCount);
 
-            dib1->blend(null_point(), m_pdibAlphaBlend, point((int)MAX(0, x - m_ptAlphaBlend.x), (int)MAX(0, y - m_ptAlphaBlend.y)), rectText.size());
+            dib1->blend(null_point(), m_pdibAlphaBlend, point((int)MAX(0, x - m_ptAlphaBlend.x), (int)MAX(0, y - m_ptAlphaBlend.y)), rectText.get_size());
 
             BitBltRaw((int)x, (int)y, rectText.width(), rectText.height(), dib1->get_graphics(), 0, 0, SRCCOPY);
 
@@ -3675,7 +3675,7 @@ namespace draw2d
    bool graphics::alpha_blend(rect & r, ::draw2d::graphics * pgraphicsSrc, double dOpacity)
    {
 
-      return alpha_blend(r.top_left(), r.size(), pgraphicsSrc, dOpacity);
+      return alpha_blend(r.top_left(), r.get_size(), pgraphicsSrc, dOpacity);
 
    }
 

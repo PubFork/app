@@ -238,7 +238,7 @@ bool gif_load_frame(::draw2d::dib * pdibCompose, ::visual::dib_sp::array * pdiba
 
       ::point pt = pointer->m_rect.top_left();
 
-      ::size sz = pointer->m_rect.size();
+      ::size sz = pointer->m_rect.get_size();
 
       if (uFrameIndex <= 0)
       {

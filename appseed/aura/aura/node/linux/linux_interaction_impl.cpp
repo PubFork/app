@@ -1188,8 +1188,9 @@ namespace linux
 
    void interaction_impl::on_control_event(::user::control_event * pevent)
    {
+
       UNREFERENCED_PARAMETER(pevent);
-      return false;
+
    }
 
    void interaction_impl::_002OnDraw(::draw2d::dib * pdib)

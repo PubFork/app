@@ -42,7 +42,7 @@ namespace visual
 
          }
 
-         class size size = rectEmboss.size();
+         class size size = rectEmboss.get_size();
 
          dib2.initialize(size, iEffectiveBlurRadius);
 

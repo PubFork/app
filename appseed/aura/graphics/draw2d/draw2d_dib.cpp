@@ -3601,7 +3601,7 @@ restart:
       if (!bIfAlphaIgnorePreDivPosMult && echannel == visual::rgba::channel_alpha)
       {
 
-         div_alpha(r.top_left(), r.size());
+         div_alpha(r.top_left(), r.get_size());
 
       }
 
@@ -3664,7 +3664,7 @@ restart:
       if (!bIfAlphaIgnorePreDivPosMult && echannel == visual::rgba::channel_alpha)
       {
 
-         mult_alpha(r.top_left(), r.size());
+         mult_alpha(r.top_left(), r.get_size());
 
       }
 

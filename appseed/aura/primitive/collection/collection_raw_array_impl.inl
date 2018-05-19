@@ -606,7 +606,7 @@ typename raw_array < TYPE, ARG_TYPE, ALLOCATOR >::iterator raw_array < TYPE, ARG
    }
    else
    {
-      return end();
+      return this->end();
    }
 }
 
@@ -623,12 +623,12 @@ typename  raw_array < TYPE, ARG_TYPE, ALLOCATOR >::iterator raw_array < TYPE, AR
       }
       else
       {
-         return end();
+         return this->end();
       }
    }
    else
    {
-      return end();
+      return this->end();
    }
 }
 

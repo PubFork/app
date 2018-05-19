@@ -7513,7 +7513,7 @@ restart:
 
       GetClientRect(rectClient);
 
-      return rectClient.size();
+      return rectClient.get_size();
 
    }
 
@@ -7531,7 +7531,7 @@ restart:
 
       GetClientRect(rectClient);
 
-      return rectClient.size();
+      return rectClient.get_size();
 
    }
 
@@ -9098,7 +9098,7 @@ restart:
 
       GetWindowRect(rectWindow);
 
-      psize->m_size = rectWindow.size();
+      psize->m_size = rectWindow.get_size();
 
    }
 

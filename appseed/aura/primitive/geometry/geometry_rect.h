@@ -32,8 +32,8 @@ rect(point ptTopLeft, point ptBottomRight) NOTHROW : rect(ptTopLeft.x, ptTopLeft
    // returns the height
    int32_t height() const NOTHROW;
    // returns the size
-   class size size() const NOTHROW;
-   class size size(LONG cx, LONG cy) NOTHROW;
+   class ::size get_size() const NOTHROW;
+   class ::size set_size(LONG cx, LONG cy) NOTHROW;
    // reference to the top-left point
    point& top_left() NOTHROW;
    // reference to the bottom-right point

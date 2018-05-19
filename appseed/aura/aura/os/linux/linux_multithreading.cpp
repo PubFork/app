@@ -45,7 +45,7 @@ namespace multithreading
 
       sched_param schedparam = {};
 
-      pthread_getschedparam(pthread_self, &iPolicy, &schedparam);
+      pthread_getschedparam(pthread_self(), &iPolicy, &schedparam);
 
       return thread_get_scheduling_priority(iPolicy, &schedparam);
 

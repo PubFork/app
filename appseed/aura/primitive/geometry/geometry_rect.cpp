@@ -171,7 +171,7 @@ void rect::constraint_v5(const RECT & rect, const class size sizeMin)
 void rect::constraint_v7(const RECT & rect)
 {
 
-   ::size size = this->size();
+   ::size size = this->get_size();
 
    if(size.cx > ::width(rect))
    {
@@ -705,12 +705,12 @@ int32_t rect::width() const NOTHROW
 { return right - left; }
 int32_t rect::height() const NOTHROW
 { return bottom - top; }
-class size rect::size() const NOTHROW
+class size rect::get_size() const NOTHROW
 {
    class size sizeRet(right - left, bottom - top);
    return sizeRet;
 }
-class size rect::size(LONG cx, LONG cy) NOTHROW
+class size rect::set_size(LONG cx, LONG cy) NOTHROW
 {
    right = left + cx;
    bottom = top + cy;

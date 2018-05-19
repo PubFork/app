@@ -2164,7 +2164,7 @@ BYTE alpha)
    return clip_color_blend(
           pgraphics,
           rect.top_left(),
-          rect.size(),
+          rect.get_size(),
           cr,
           alpha);
 }
@@ -2250,7 +2250,7 @@ BYTE alpha)
    return color_blend(
           pgraphics,
           rect.top_left(),
-          rect.size(),
+          rect.get_size(),
           cr,
           alpha);
 }
@@ -3937,7 +3937,7 @@ bool imaging::color_blend(::draw2d::graphics * pgraphics,point pt,size size,::dr
 bool imaging::color_blend(::draw2d::graphics * pgraphics,const RECT & rectParam,::draw2d::graphics * pdcColorAlpha,point ptAlpha,double dBlend)
 {
    class rect rect(rectParam);
-   return color_blend(pgraphics,rect.top_left(),rect.size(),pdcColorAlpha,ptAlpha,dBlend);
+   return color_blend(pgraphics,rect.top_left(),rect.get_size(),pdcColorAlpha,ptAlpha,dBlend);
 }
 
 

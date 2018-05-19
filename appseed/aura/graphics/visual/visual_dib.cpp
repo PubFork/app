@@ -411,7 +411,7 @@ namespace visual
 
       pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
-      if (!m_dib->to(pgraphics, m_rect.top_left(), m_rect.size()))
+      if (!m_dib->to(pgraphics, m_rect.top_left(), m_rect.get_size()))
       {
 
          return false;
