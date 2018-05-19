@@ -142,8 +142,8 @@ namespace draw2d
       class size & size() { return m_size; }
       const class size & size() const { return m_size; }
 
-      class rect rect(point pt = ::null_point()) { return class rect(pt, m_size); }
-      const class rect rect(point pt = ::null_point()) const { return class rect(pt, m_size); }
+      class ::rect rect(point pt = ::null_point()) { return ::rect(pt, m_size); }
+      const class rect rect(point pt = ::null_point()) const { return ::rect(pt, m_size); }
 
 
       void rate_rgb(int iMul,int iDiv);

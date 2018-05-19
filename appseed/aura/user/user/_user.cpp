@@ -31,6 +31,7 @@
 #include "user_style.cpp"
 #include "user_style_base.cpp"
 #include "user_style_composite.cpp"
+#include "user_theme.cpp"
 #include "user_tooltip.cpp"
 #include "user_validate.cpp"
 #include "user_windowing.cpp"

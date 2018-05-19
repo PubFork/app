@@ -150,6 +150,7 @@
 		<Compiler>
 			<Add option="-std=c++14" />
 			<Add option="-fPIC" />
+			<Add option="-fpermissive" />
 			<Add option="-fexceptions" />
 			<Add option="`pkg-config --cflags gtk+-3.0 gdk-3.0 gthread-2.0`" />
 			<Add option="-DLINUX" />

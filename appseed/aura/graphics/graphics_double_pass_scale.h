@@ -18,7 +18,7 @@ typedef struct
         LineLength;              // Length of line (no. or rows / cols)
 } LineContribType;               // Contribution information for an entire line (row or column)
 
-typedef BOOL (*ProgressAnbAbortCallBack)(BYTE bPercentComplete);
+typedef WINBOOL (*ProgressAnbAbortCallBack)(BYTE bPercentComplete);
 
 template <class FilterClass>
 class C2PassScale
@@ -59,7 +59,7 @@ public:
 private:
 
    ProgressAnbAbortCallBack    m_Callback;
-   BOOL                        m_bCanceled;
+   WINBOOL                     m_bCanceled;
 
    LineContribType *AllocContributions (   UINT uLineLength,
                                            UINT uWindowSize);

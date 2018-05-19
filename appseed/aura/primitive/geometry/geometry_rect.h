@@ -16,8 +16,8 @@ public:
    rect(i64 l, int64_t t, int64_t r, int64_t b) NOTHROW { left = l; top = t; right = r;  bottom = b;  }
    rect(const RECT & r) NOTHROW { *this = r; }
 
-rect(const RECTD & rect) NOTHROW : rect(rect.left, rect.top, rect.right, rect.bottom) {}
-rect(const RECT64 & rect) NOTHROW : rect(rect.left, rect.top, rect.right, rect.bottom) {}
+rect(const RECTD & r) NOTHROW : rect(r.left, r.top, r.right, r.bottom) {}
+rect(const RECT64 & r) NOTHROW : rect(r.left, r.top, r.right, r.bottom) {}
 rect(const RECT * prect) NOTHROW : rect(*prect) {}
 rect(const RECTD * prect) NOTHROW : rect(*prect) {}
 rect(const RECT64 * prect) NOTHROW : rect(*prect) {}
