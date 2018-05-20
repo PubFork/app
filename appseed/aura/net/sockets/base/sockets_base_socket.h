@@ -39,7 +39,8 @@ namespace sockets
 
          status_ok,
          status_connection_timed_out,
-         status_timed_out
+         status_timed_out,
+         status_cancelled,
 
       };
 

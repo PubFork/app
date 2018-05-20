@@ -3,18 +3,18 @@
 
 namespace http
 {
-   
+
 
    enum e_status
    {
-      
+
       status_unchanged,
       status_ok,
       status_connection_timed_out,
       status_timed_out,
-      status_fail
-         
-         
+      status_fail,
+      status_cancelled
+
    };
 
 

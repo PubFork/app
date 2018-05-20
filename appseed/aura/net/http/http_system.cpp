@@ -1000,6 +1000,18 @@ retry:
 
             set["http_content_length"] = psession->m_content_length;
 
+            if(set.has_property("cancel"))
+            {
+
+               if(set["cancel"].get_bool())
+               {
+
+                  break;
+
+               }
+
+            }
+
             double dRateDownloaded = 0.0;
 
             int64_t iContentLength = set["http_content_length"].i64();
@@ -1081,7 +1093,13 @@ retry:
 
          int32_t iStatusCode = psession->outattr("http_status_code");
 
-         if(iStatusCode == 0)
+         if(set.has_property("cancel") && set["cancel"].get_bool())
+         {
+
+            psession->m_estatus = ::sockets::socket::status_cancelled;
+
+         }
+         else if(iStatusCode == 0)
          {
 
 #if defined(BSD_STYLE_SOCKETS)
@@ -1112,7 +1130,13 @@ retry:
 
          e_status estatus = status_ok;
 
-         if (psession->m_estatus == ::sockets::socket::status_connection_timed_out)
+         if(psession->m_estatus == ::sockets::socket::status_cancelled)
+         {
+
+            estatus = status_cancelled;
+
+         }
+         else if (psession->m_estatus == ::sockets::socket::status_connection_timed_out)
          {
             estatus = status_connection_timed_out;
          }
@@ -1804,6 +1828,14 @@ retry_session:
 
          int64_t iBodySizeDownloaded = set["http_body_size_downloaded"].i64();
 
+         if(set.has_property("cancel") && set["cancel"].get_bool())
+         {
+
+            break;
+
+         }
+
+
          if (iContentLength > 0)
          {
 
@@ -1874,8 +1906,12 @@ retry_session:
 
       set["http_status_code"] = psocket->outattr("http_status_code");
       iTry++;
+      if(set.has_property("cancel") && set["cancel"].get_bool())
+      {
+         psocket->m_estatus = ::sockets::socket::status_cancelled;
+      }
 #ifdef BSD_STYLE_SOCKETS
-      if(iStatusCode == 0)
+      else if(iStatusCode == 0)
       {
          DWORD dwDelta = get_tick_count() - dwStart;
          if (iTry <= 1 &&  dwDelta < iTimeoutTotalMs)
@@ -1886,7 +1922,11 @@ retry_session:
       }
 #endif
 
-      if (psocket->m_estatus == ::sockets::socket::status_connection_timed_out)
+      if (psocket->m_estatus == ::sockets::socket::status_cancelled)
+      {
+         estatus = status_cancelled;
+      }
+      else if (psocket->m_estatus == ::sockets::socket::status_connection_timed_out)
       {
          estatus = status_connection_timed_out;
       }
