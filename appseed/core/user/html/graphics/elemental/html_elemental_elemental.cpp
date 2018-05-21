@@ -1657,6 +1657,14 @@ namespace html
    }
 
 
+   void elemental::nextstyle(::user::style_context * pcontext)
+   {
+
+      pcontext->m_pstyle = m_pdata->m_pform;
+
+   }
+
+
 } // namespace html
 
 

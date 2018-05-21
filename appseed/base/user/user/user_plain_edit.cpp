@@ -322,17 +322,6 @@ namespace user
 
       ::draw2d::brush_sp & brushTextSel = m_pinternal->m_brushTextSel;
 
-
-
-
-
-      /*   rectClient.top = m_pt.y;
-         rectClient.left = m_pt.x;
-         rectClient.bottom = rectClient.top + m_size.cy;
-         rectClient.right = rectClient.left + m_size.cx;*/
-      //      pgraphics->fill_solid_rect(rectClient, crBk);
-
-
       point ptOffset = get_viewport_offset();
 
       if (m_iLineHeight > 0)
@@ -5085,7 +5074,7 @@ finished_update:
 
       }
 
-      m_bCalcLayoutHintNoTextChange = true;
+      //m_bCalcLayoutHintNoTextChange = true;
 
       _001OnCalcLayout();
 

@@ -5,18 +5,16 @@ namespace wndfrm_anthill
 {
 
 
-   class CLASS_DECL_APP_CORE_WNDFRM_ANTHILL user_style:
-      virtual public ::user::style
+   class CLASS_DECL_APP_CORE_WNDFRM_ANTHILL theme:
+      virtual public ::user::theme
    {
    public:
 
 
-      ::draw2d::font_sp                m_fontEdit;
-      ::draw2d::font_sp                m_fontList;
 
 
-      user_style(::aura::application * papp);
-      virtual ~user_style();
+      theme(::aura::application * papp);
+      virtual ~theme();
 
       virtual int64_t add_ref() override
       {
@@ -49,42 +47,14 @@ namespace wndfrm_anthill
       virtual void _001DrawAnthillToolbarItem(::draw2d::graphics * pgraphics, int32_t iItem, ::user::toolbar * ptoolbar);
       virtual bool _001OnDrawSplitLayout(::draw2d::graphics * pgraphics, ::user::split_layout * psplitlayout) override;
 
-      virtual bool get_font(::draw2d::font_sp & sp, ::user::e_font efont, ::user::interaction * pui) override;
-      virtual bool get_double(double & d, ::user::e_double edouble, ::user::interaction * pui) override;
+      virtual bool get_font(::draw2d::font_sp & sp, ::user::e_font efont, ::user::style_context * pcontext) override;
+      virtual bool get_double(double & d, ::user::e_double edouble, ::user::style_context * pcontext) override;
 
 
    };
 
 
-} // namespace wndfrm_rootkiller
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+} // namespace wndfrm_anthill
 
 
 

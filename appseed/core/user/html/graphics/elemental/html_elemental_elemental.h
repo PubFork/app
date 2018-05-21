@@ -46,7 +46,7 @@ namespace html
 
       void destroy(data * pdoc);
 
-
+      virtual void nextstyle(::user::style_context * pcontext) override;
 
 
       elemental * get_element_by_name(id id);

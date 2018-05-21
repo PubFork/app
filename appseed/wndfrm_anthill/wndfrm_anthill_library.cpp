@@ -17,7 +17,7 @@ namespace user
             object(papp),
             ::aura::library(papp,0,"")
          {
-            }
+         }
 
 
          library::~library()
@@ -54,10 +54,10 @@ namespace user
                return new ::user::meta_button(papp);
 
             }
-            else if(string(pszClass) == "user_style")
+            else if(string(pszClass) == "user_theme")
             {
 
-               return new ::wndfrm_anthill::user_style(get_app());
+               return new ::wndfrm_anthill::theme(get_app());
 
             }
             else

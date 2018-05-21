@@ -3372,8 +3372,6 @@ void simple_frame_window::on_select_user_style()
 
          m_pstyle = Session.get_user_theme(strSchema, get_app());
 
-         m_puserstyle = m_pstyle;
-
       }
 
    }
@@ -3386,7 +3384,13 @@ void simple_frame_window::on_select_user_style()
 void simple_frame_window::nextstyle(::user::style_context * pcontext)
 {
 
-   if (m_pstyle.is_set())
+   if (pcontext->m_pstyle == this && m_bWindowFrame && m_workset.m_pframeschema.is_set())
+   {
+
+      pcontext->m_pstyle = m_workset.m_pframeschema;
+
+   }
+   else if (m_pstyle.is_set())
    {
 
       pcontext->m_pstyle = m_pstyle;

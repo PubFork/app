@@ -48,7 +48,7 @@
     <ClCompile Include="wndfrm_anthill_frame_schema_Minimal001.cpp" />
     <ClCompile Include="wndfrm_anthill_interaction.cpp" />
     <ClCompile Include="wndfrm_anthill_library.cpp" />
-    <ClCompile Include="wndfrm_anthill_user_style.cpp" />
+    <ClCompile Include="wndfrm_anthill_user_theme.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
@@ -65,7 +65,7 @@
     <ClInclude Include="wndfrm_anthill_frame_schema_Minimal001.h" />
     <ClInclude Include="wndfrm_anthill_interaction.h" />
     <ClInclude Include="wndfrm_anthill_library.h" />
-    <ClInclude Include="wndfrm_anthill_user_style.h" />
+    <ClInclude Include="wndfrm_anthill_user_theme.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\app\appseed\ace\ace.vcxproj">

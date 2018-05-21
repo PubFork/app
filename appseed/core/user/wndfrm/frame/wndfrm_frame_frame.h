@@ -163,6 +163,10 @@ namespace user
 
             virtual void GetFrameRect(rect * lprect);
 
+
+            virtual void nextstyle(style_context * pcontext);
+
+
          };
 
 

@@ -1161,6 +1161,14 @@ namespace user
          }
 
 
+         void frame::nextstyle(style_context * pcontext)
+         {
+
+            m_pworkset->GetWndDraw()->nextstyle(pcontext);
+
+         }
+
+
       } // namespace frame
 
 

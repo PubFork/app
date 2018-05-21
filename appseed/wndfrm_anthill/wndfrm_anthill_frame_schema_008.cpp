@@ -602,7 +602,7 @@ SizingNone:
             }
 
 
-            bool FrameSchemaHardCoded008::get_color(COLORREF & cr, ::user::e_color ecolor, ::user::interaction * pui)
+            bool FrameSchemaHardCoded008::get_color(COLORREF & cr, ::user::e_color ecolor, ::user::style_context * pcontext)
             {
 
                if (m_estyle == StyleLightGreen)
@@ -649,7 +649,7 @@ SizingNone:
 
                   }
 
-                  return ::user::wndfrm::frame::frame::get_color(cr, ecolor, pui);
+                  return ::user::wndfrm::frame::frame::get_color(cr, ecolor, pcontext );
 
                }
                else // if (m_estyle != StyleLightGreen)
@@ -858,9 +858,7 @@ SizingNone:
 
                }
 
-               return false;
-
-               //               return m_mapColor.Lookup(ecolor, cr);
+               return frame_schema::get_color(cr, ecolor, pcontext);
 
             }
 

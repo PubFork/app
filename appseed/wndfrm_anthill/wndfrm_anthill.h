@@ -7,9 +7,9 @@
 
 
 #ifdef _CA2_CORE_WNDFRM_ANTHILL_LIBRARY
-    #define CLASS_DECL_APP_CORE_WNDFRM_ANTHILL  CLASS_DECL_EXPORT
+#define CLASS_DECL_APP_CORE_WNDFRM_ANTHILL  CLASS_DECL_EXPORT
 #else
-    #define CLASS_DECL_APP_CORE_WNDFRM_ANTHILL  CLASS_DECL_IMPORT
+#define CLASS_DECL_APP_CORE_WNDFRM_ANTHILL  CLASS_DECL_IMPORT
 #endif
 
 #include "user_meta_button.h"
@@ -31,7 +31,7 @@
 #include "wndfrm_anthill_interaction.h"
 
 
-#include "wndfrm_anthill_user_style.h"
+#include "wndfrm_anthill_user_theme.h"
 
 
 #include "wndfrm_anthill_library.h"

@@ -22,7 +22,7 @@ namespace user
             {
             public:
 
-               
+
                bool     m_bHollow;
 
 
@@ -40,7 +40,7 @@ namespace user
                virtual EHitTest _000HitTest(point pt) override;
                COLORREF get_border_main_body_color() override;
 
-               virtual bool get_color(COLORREF & cr, ::user::e_color ecolor, ::user::interaction * pui) override;
+               virtual bool get_color(COLORREF & cr, ::user::e_color ecolor, ::user::style_context * pcontext) override;
 
 
             };

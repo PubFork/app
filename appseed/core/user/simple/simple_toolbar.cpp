@@ -643,15 +643,19 @@ size simple_toolbar::CalcSize(int32_t nCount)
 void simple_toolbar::_001DrawItem(::draw2d::graphics * pgraphics, int32_t iItem)
 {
 
-   if (m_puserstyle != NULL)
+   ::user::style_context style(this);
+
+   while(style)
    {
 
-      if (m_puserstyle->_001DrawToolbarItem(pgraphics, iItem, this))
+      if (style->_001DrawToolbarItem(pgraphics, iItem, this))
       {
 
          return;
 
       }
+
+      style.next();
 
    }
 

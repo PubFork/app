@@ -462,7 +462,7 @@ namespace user
 
          (*pcontext) = pcontext->m_pstyleSource;
 
-         return get_font(font, font_default, pcontext);
+         return pcontext->m_pstyle->get_font(font, font_default, pcontext);
 
       }
 

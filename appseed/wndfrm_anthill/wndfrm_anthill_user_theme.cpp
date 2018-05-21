@@ -13,35 +13,32 @@ namespace wndfrm_anthill
 {
 
 
-   user_style::user_style(::aura::application * papp):
+   theme::theme(::aura::application * papp):
       object(papp),
       ::user::style(papp),
-      m_fontEdit(allocer()),
-      m_fontList(allocer())
+      ::user::theme(papp)
    {
 
-      m_fontEdit->create_point_font("MS Sans Serif", 9.0);
+      create_translucency(::user::element_none, ::user::translucency_present);
 
-      m_fontList->create_point_font("Tahoma", 10, FW_BOLD);
+      create_point_font(::user::font_default,"Segoe UI", 12.0);
 
-      defer_create_user_schema(::user::schema_default);
+      userstyle()->m_mapFont->operator[](::user::font_default)->m_etextrendering = ::draw2d::text_rendering_clear_type_grid_fit;
 
-      userstyle()->m_mapTranslucency[::user::element_none] = ::user::translucency_present;
+      create_color(::user::color_text, ARGB(255, 0, 0, 0));
+      create_color(::user::color_edit_text, ARGB(255, 0, 0, 0));
 
-      create_point_font(::user::font_default,"MS Sans Serif", 12.0);
-
-      userstyle()->m_mapFont[::user::font_default]->m_etextrendering = ::draw2d::text_rendering_anti_alias_grid_fit;
 
    }
 
 
-   user_style::~user_style()
+   theme::~theme()
    {
 
    }
 
 
-   bool user_style::_001TabOnDrawSchema01(::draw2d::graphics * pgraphics,::user::tab * ptab)
+   bool theme::_001TabOnDrawSchema01(::draw2d::graphics * pgraphics,::user::tab * ptab)
    {
 
       class rect rect;
@@ -407,7 +404,7 @@ namespace wndfrm_anthill
    }
 
 
-   void user_style::_001OnTabPaneDrawTitle(::user::tab_pane & pane,::user::tab * ptab,::draw2d::graphics * pgraphics,LPCRECT lpcrect,::draw2d::brush_sp & brushText)
+   void theme::_001OnTabPaneDrawTitle(::user::tab_pane & pane,::user::tab * ptab,::draw2d::graphics * pgraphics,LPCRECT lpcrect,::draw2d::brush_sp & brushText)
    {
 
       stringa & straTitle = pane.m_straTitle;
@@ -468,7 +465,7 @@ namespace wndfrm_anthill
 
 
 
-   bool user_style::_001OnTabLayout(::user::tab * ptab)
+   bool theme::_001OnTabLayout(::user::tab * ptab)
    {
 
 
@@ -721,7 +718,7 @@ namespace wndfrm_anthill
    }
 
 
-   bool user_style::on_ui_event(::user::e_event eevent, ::user::e_object eobject, ::user::interaction * pui)
+   bool theme::on_ui_event(::user::e_event eevent, ::user::e_object eobject, ::user::interaction * pui)
    {
 
       if (eevent == ::user::event_calc_item_height)
@@ -738,28 +735,17 @@ namespace wndfrm_anthill
    }
 
 
-   bool user_style::_001DrawToolbarItem(::draw2d::graphics * pgraphics, int32_t iItem, ::user::toolbar * ptoolbar)
+   bool theme::_001DrawToolbarItem(::draw2d::graphics * pgraphics, int32_t iItem, ::user::toolbar * ptoolbar)
    {
 
-//      if (1)
-      {
-
-         _001DrawAnthillToolbarItem(pgraphics, iItem, ptoolbar);
-
-      }
-//      else
-//      {
-//
-//         _001DrawSimpleToolbarItem(pgraphics, iItem, ptoolbar);
-//
-//      }
+      _001DrawAnthillToolbarItem(pgraphics, iItem, ptoolbar);
 
       return true;
 
    }
 
 
-   void user_style::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, int32_t iItem, ::user::toolbar * ptoolbar)
+   void theme::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, int32_t iItem, ::user::toolbar * ptoolbar)
    {
 
       pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
@@ -917,7 +903,7 @@ namespace wndfrm_anthill
 
                   ptoolbar->_001GetElementRect(iItem, rect, ::user::toolbar::ElementImageHover);
 
-                  Application.imaging().color_blend(pgraphics, rect.top_left(), rect.size(), item.m_spdib->get_graphics(), null_point(), 0.84);
+                  Application.imaging().color_blend(pgraphics, rect.top_left(), rect.get_size(), item.m_spdib->get_graphics(), null_point(), 0.84);
 
                }
                else if (uiImage != 0xffffffffu)
@@ -958,7 +944,7 @@ namespace wndfrm_anthill
 
                ptoolbar->_001GetElementRect(iItem, rect, ::user::toolbar::ElementImagePress);
 
-               Application.imaging().color_blend(pgraphics, rect.top_left(), rect.size(), item.m_spdib->get_graphics(), null_point(), 1.0);
+               Application.imaging().color_blend(pgraphics, rect.top_left(), rect.get_size(), item.m_spdib->get_graphics(), null_point(), 1.0);
 
             }
             else if (uiImage != 0xffffffff)
@@ -995,7 +981,7 @@ namespace wndfrm_anthill
 
                ptoolbar->_001GetElementRect(iItem, rect, ::user::toolbar::element_image);
 
-               Application.imaging().color_blend(pgraphics, rect.top_left(), rect.size(), item.m_spdib->get_graphics(), null_point(), 0.23);
+               Application.imaging().color_blend(pgraphics, rect.top_left(), rect.get_size(), item.m_spdib->get_graphics(), null_point(), 0.23);
 
             }
             else if (uiImage != 0xffffffff)
@@ -1055,7 +1041,7 @@ namespace wndfrm_anthill
 
    }
 
-   void user_style::_001DrawAnthillToolbarItem(::draw2d::graphics * pgraphics, int32_t iItem, ::user::toolbar * ptoolbar)
+   void theme::_001DrawAnthillToolbarItem(::draw2d::graphics * pgraphics, int32_t iItem, ::user::toolbar * ptoolbar)
    {
 
       pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
@@ -1079,10 +1065,13 @@ namespace wndfrm_anthill
       ::user::toolbar::e_element eelement = ::user::toolbar::element_item;
       ::user::toolbar::e_element eelementImage = ::user::toolbar::element_image;
       ::user::toolbar::e_element eelementText = ::user::toolbar::element_text;
+
       if ((nStyle & TBBS_SEPARATOR) == 0)
       {
+
          if ((nStyle & TBBS_DISABLED) == 0)
          {
+
             // item is enabled
             if (ptoolbar->m_iButtonPressItem >= 0)
             {
@@ -1213,7 +1202,7 @@ namespace wndfrm_anthill
 
                   ptoolbar->_001GetElementRect(iItem, rect, ::user::toolbar::ElementImageHover);
 
-                  Application.imaging().color_blend(pgraphics, rect.top_left(), rect.size(), item.m_spdib->get_graphics(), null_point(), 0.84);
+                  Application.imaging().color_blend(pgraphics, rect.top_left(), rect.get_size(), item.m_spdib->get_graphics(), null_point(), 0.84);
 
                }
                else if (uiImage != 0xffffffffu)
@@ -1254,7 +1243,7 @@ namespace wndfrm_anthill
 
                ptoolbar->_001GetElementRect(iItem, rect, ::user::toolbar::ElementImagePress);
 
-               Application.imaging().color_blend(pgraphics, rect.top_left(), rect.size(), item.m_spdib->get_graphics(), null_point(), 1.0);
+               Application.imaging().color_blend(pgraphics, rect.top_left(), rect.get_size(), item.m_spdib->get_graphics(), null_point(), 1.0);
 
             }
             else if (uiImage != 0xffffffff)
@@ -1310,7 +1299,7 @@ namespace wndfrm_anthill
 
                ptoolbar->_001GetElementRect(iItem, rect, ::user::toolbar::element_image);
 
-               Application.imaging().color_blend(pgraphics, rect.top_left(), rect.size(), item.m_spdib->get_graphics(), null_point(), 0.23);
+               Application.imaging().color_blend(pgraphics, rect.top_left(), rect.get_size(), item.m_spdib->get_graphics(), null_point(), 0.23);
 
             }
             else if (uiImage != 0xffffffff)
@@ -1368,7 +1357,9 @@ namespace wndfrm_anthill
          if (ptoolbar->_001GetElementRect(iItem, rectText, eelementText) && rectText.right > 0)
          {
 
-            pgraphics->_DrawText(item.m_str, item.m_str.get_length(), rectText, DT_BOTTOM | DT_LEFT | DT_NOPREFIX);
+            pgraphics->SelectObject(brushText);
+
+            pgraphics->draw_text(item.m_str, item.m_str.get_length(), rectText, DT_BOTTOM | DT_LEFT | DT_NOPREFIX);
 
          }
 
@@ -1377,7 +1368,7 @@ namespace wndfrm_anthill
    }
 
 
-   bool user_style::_001OnDrawSplitLayout(::draw2d::graphics * pgraphics, ::user::split_layout * psplitlayout)
+   bool theme::_001OnDrawSplitLayout(::draw2d::graphics * pgraphics, ::user::split_layout * psplitlayout)
    {
 
       rect rectClient;
@@ -1391,51 +1382,14 @@ namespace wndfrm_anthill
    }
 
 
-   bool user_style::get_font(::draw2d::font_sp & sp, ::user::e_font efont, ::user::interaction * pui)
+   bool theme::get_font(::draw2d::font_sp & sp, ::user::e_font efont, ::user::style_context * pcontext)
    {
 
-      if (efont == ::user::font_list_item)
-      {
-
-         sp = m_fontList;
-
-         return true;
-
-      }
-      else if (efont == ::user::font_list_hover)
-      {
-
-         sp = m_fontList;
-
-         return true;
-
-      }
-      else if (efont == ::user::font_tree)
-      {
-
-         sp = m_fontList;
-
-         return true;
-
-      }
-      else if (efont == ::user::font_plain_edit)
-      {
-
-         sp = m_fontEdit;
-
-         return true;
-
-      }
-      else
-      {
-
-         return false;
-
-      }
+      return ::user::theme::get_font(sp, efont, pcontext);
 
    }
 
-   bool user_style::get_double(double & d, ::user::e_double edouble, ::user::interaction * pui)
+   bool theme::get_double(double & d, ::user::e_double edouble, ::user::style_context * pcontext)
    {
 
       if (edouble == ::user::double_height_rate)
@@ -1447,7 +1401,7 @@ namespace wndfrm_anthill
 
       }
 
-      return ::user::style::get_double(d, edouble, pui);
+      return ::user::style::get_double(d, edouble, pcontext);
 
    }
 

@@ -42,8 +42,6 @@ namespace user
 
 
 
-               ::draw2d::font_sp                m_fontButton;
-               ::draw2d::font_sp                m_fontCaption;
                e_style                          m_estyle;
                //::user::front_end_schema         m_schema;
                COLORREF                         m_crFrameBorder;
