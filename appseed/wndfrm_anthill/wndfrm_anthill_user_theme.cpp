@@ -27,7 +27,32 @@ namespace wndfrm_anthill
 
       create_color(::user::color_text, ARGB(255, 0, 0, 0));
       create_color(::user::color_edit_text, ARGB(255, 0, 0, 0));
-
+      create_color(::user::color_background, ARGB(255, 255, 255, 255));
+      create_color(::user::color_list_background, ARGB(255, 255, 255, 255));
+      create_color(::user::color_edit_background, ARGB(255, 255, 255, 255));
+      create_color(::user::color_tree_background, ARGB(255, 255, 255, 255));
+      create_color(::user::color_view_background, ARGB(255, 255, 255, 255));
+      create_color(::user::color_scrollbar_background, ARGB(255, 255, 255, 255));
+      create_color(::user::color_tab_layout_background, ARGB(255, 255, 255, 255));
+      create_color(::user::color_tab_client_background, ARGB(255, 255, 255, 255));
+      create_color(::user::color_split_layout_background, ARGB(255, 255, 255, 255));
+      create_color(::user::color_background_selected, ARGB(255, 155, 185, 255));
+      create_color(::user::color_list_header, ARGB(255, 255, 255, 255));
+      create_color(::user::color_list_header_background, ARGB(255, 0x58, 0x5C, 0x5D));
+      create_color(::user::color_list_item_background, ARGB(30, 0, 0, 0));
+      create_color(::user::color_list_item_background_hover, ARGB(50, 0, 0, 0));
+      create_color(::user::color_list_item_background_selected, ARGB(255, 160, 210, 235));
+      create_color(::user::color_list_item_background_selected_hover, ARGB(255, 160, 220, 255));
+      create_color(::user::color_list_header_separator, 0);
+      create_color(::user::color_toolbar_background, ARGB(255, 0xF3, 0XF5, 0xF5));
+      create_color(::user::color_button_background_disabled, ARGB(255, 128, 128, 128));
+      create_color(::user::color_button_background_hover, ARGB(255, 0x55, 0x99, 0xC2));
+      create_color(::user::color_button_background, ARGB(255, 0x30, 0x75, 0xA0));
+      create_color(::user::color_button_background_press, ARGB(255, 0x07, 0x6D, 0x91));
+      create_color(::user::color_button_text_disabled, ARGB(255, 0xD0, 0xD0, 0xD0));
+      create_color(::user::color_button_text_hover, ARGB(255, 255, 255, 255));
+      create_color(::user::color_button_text, ARGB(255, 255, 255, 255));
+      create_color(::user::color_button_text_press, ARGB(255, 255, 255, 255));
 
    }
 

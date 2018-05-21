@@ -242,8 +242,6 @@ namespace user
 
       pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
 
-
-
       COLORREF crBk;
       COLORREF crBkSel;
       COLORREF crSel;

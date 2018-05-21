@@ -605,258 +605,258 @@ SizingNone:
             bool FrameSchemaHardCoded008::get_color(COLORREF & cr, ::user::e_color ecolor, ::user::style_context * pcontext)
             {
 
-               if (m_estyle == StyleLightGreen)
-               {
+               //if (m_estyle == StyleLightGreen)
+               //{
 
-                  if (ecolor == ::user::color_face_lite)
-                  {
+               //   if (ecolor == ::user::color_face_lite)
+               //   {
 
-                     cr = ARGB(80, 160, 160, 160);
+               //      cr = ARGB(80, 160, 160, 160);
 
-                     return true;
+               //      return true;
 
-                  }
-                  else if (ecolor == ::user::color_text)
-                  {
+               //   }
+               //   else if (ecolor == ::user::color_text)
+               //   {
 
-                     cr = ARGB(200, 80, 80, 80);
+               //      cr = ARGB(200, 80, 80, 80);
 
-                     return true;
+               //      return true;
 
-                  }
-                  else if (ecolor == ::user::color_text_hover)
-                  {
+               //   }
+               //   else if (ecolor == ::user::color_text_hover)
+               //   {
 
-                     cr = ARGB(200, 80, 80, 80);
+               //      cr = ARGB(200, 80, 80, 80);
 
-                     return true;
+               //      return true;
 
-                  }
-                  else if (ecolor == ::user::color_text_highlight)
-                  {
+               //   }
+               //   else if (ecolor == ::user::color_text_highlight)
+               //   {
 
-                     cr = ARGB(200, 80, 80, 80);
+               //      cr = ARGB(200, 80, 80, 80);
 
-                     return true;
+               //      return true;
 
-                  }
-                  else if (ecolor == ::user::color_background_hover)
-                  {
+               //   }
+               //   else if (ecolor == ::user::color_background_hover)
+               //   {
 
-                     cr = ARGB(20, 0, 0, 0);
+               //      cr = ARGB(20, 0, 0, 0);
 
-                     return true;
+               //      return true;
 
-                  }
+               //   }
 
-                  return ::user::wndfrm::frame::frame::get_color(cr, ecolor, pcontext );
+               //   return ::user::wndfrm::frame::frame::get_color(cr, ecolor, pcontext );
 
-               }
-               else // if (m_estyle != StyleLightGreen)
-               {
+               //}
+               //else // if (m_estyle != StyleLightGreen)
+               //{
 
-                  if (ecolor == ::user::color_background)
-                  {
+               //   if (ecolor == ::user::color_background)
+               //   {
 
-                     cr = ARGB(255, 255, 255, 255);
+               //      cr = ARGB(255, 255, 255, 255);
 
-                     return true;
+               //      return true;
 
-                  }
-                  else if (ecolor == ::user::color_list_background)
-                  {
+               //   }
+               //   else if (ecolor == ::user::color_list_background)
+               //   {
 
-                     cr = ARGB(255, 255, 255, 255);
+               //      cr = ARGB(255, 255, 255, 255);
 
-                     return true;
+               //      return true;
 
-                  }
-                  else if (ecolor == ::user::color_edit_background)
-                  {
+               //   }
+               //   else if (ecolor == ::user::color_edit_background)
+               //   {
 
-                     cr = ARGB(255, 255, 255, 255);
+               //      cr = ARGB(255, 255, 255, 255);
 
-                     return true;
+               //      return true;
 
-                  }
-                  else if (ecolor == ::user::color_tree_background)
-                  {
+               //   }
+               //   else if (ecolor == ::user::color_tree_background)
+               //   {
 
-                     cr = ARGB(255, 255, 255, 255);
+               //      cr = ARGB(255, 255, 255, 255);
 
-                     return true;
+               //      return true;
 
-                  }
-                  else if (ecolor == ::user::color_view_background)
-                  {
+               //   }
+               //   else if (ecolor == ::user::color_view_background)
+               //   {
 
-                     cr = ARGB(255, 255, 255, 255);
+               //      cr = ARGB(255, 255, 255, 255);
 
-                     return true;
+               //      return true;
 
-                  }
-                  else if (ecolor == ::user::color_scrollbar_background)
-                  {
+               //   }
+               //   else if (ecolor == ::user::color_scrollbar_background)
+               //   {
 
-                     cr = ARGB(255, 255, 255, 255);
+               //      cr = ARGB(255, 255, 255, 255);
 
-                     return true;
+               //      return true;
 
-                  }
-                  else if (ecolor == ::user::color_tab_layout_background)
-                  {
+               //   }
+               //   else if (ecolor == ::user::color_tab_layout_background)
+               //   {
 
-                     cr = ARGB(255, 255, 255, 255);
+               //      cr = ARGB(255, 255, 255, 255);
 
-                     return true;
+               //      return true;
 
-                  }
-                  else if (ecolor == ::user::color_tab_client_background)
-                  {
+               //   }
+               //   else if (ecolor == ::user::color_tab_client_background)
+               //   {
 
-                     cr = ARGB(255, 0xF3, 0XF5, 0xF5);
+               //      cr = ARGB(255, 0xF3, 0XF5, 0xF5);
 
-                     return true;
+               //      return true;
 
-                  }
-                  else if (ecolor == ::user::color_split_layout_background)
-                  {
+               //   }
+               //   else if (ecolor == ::user::color_split_layout_background)
+               //   {
 
-                     cr = ARGB(255, 255, 255, 255);
+               //      cr = ARGB(255, 255, 255, 255);
 
-                     return true;
+               //      return true;
 
-                  }
-                  else if (ecolor == ::user::color_background_selected)
-                  {
+               //   }
+               //   else if (ecolor == ::user::color_background_selected)
+               //   {
 
-                     cr = ARGB(255, 155, 185, 255);
+               //      cr = ARGB(255, 155, 185, 255);
 
-                     return true;
+               //      return true;
 
-                  }
-                  else if (ecolor == ::user::color_list_header)
-                  {
+               //   }
+               //   else if (ecolor == ::user::color_list_header)
+               //   {
 
-                     cr = ARGB(255, 255, 255, 255);
+               //      cr = ARGB(255, 255, 255, 255);
 
-                     return true;
+               //      return true;
 
-                  }
-                  else if (ecolor == ::user::color_list_header_background)
-                  {
+               //   }
+               //   else if (ecolor == ::user::color_list_header_background)
+               //   {
 
-                     cr = ARGB(255, 0x58, 0x5C, 0x5D);
+               //      cr = ARGB(255, 0x58, 0x5C, 0x5D);
 
-                     return true;
+               //      return true;
 
-                  }
-                  else if (ecolor == ::user::color_list_item_background)
-                  {
+               //   }
+               //   else if (ecolor == ::user::color_list_item_background)
+               //   {
 
-                     cr = ARGB(30, 0, 0, 0);
+               //      cr = ARGB(30, 0, 0, 0);
 
-                     return true;
+               //      return true;
 
-                  }
-                  else if (ecolor == ::user::color_list_header_separator)
-                  {
+               //   }
+               //   else if (ecolor == ::user::color_list_header_separator)
+               //   {
 
-                     cr = 0;
+               //      cr = 0;
 
-                     return true;
+               //      return true;
 
-                  }
-                  else if (ecolor == ::user::color_toolbar_background)
-                  {
+               //   }
+               //   else if (ecolor == ::user::color_toolbar_background)
+               //   {
 
-                     cr = ARGB(255, 0xF3, 0XF5, 0xF5);
+               //      cr = ARGB(255, 0xF3, 0XF5, 0xF5);
 
-                     return true;
+               //      return true;
 
 
-                  }
-                  else if (ecolor == ::user::color_button_background_disabled)
-                  {
+               //   }
+               //   else if (ecolor == ::user::color_button_background_disabled)
+               //   {
 
-                     cr = ARGB(255, 128, 128, 128);
+               //      cr = ARGB(255, 128, 128, 128);
 
-                     return true;
+               //      return true;
 
 
-                  }
-                  else if (ecolor == ::user::color_button_background_hover)
-                  {
+               //   }
+               //   else if (ecolor == ::user::color_button_background_hover)
+               //   {
 
-                     if (m_estyle == StyleDarkRed)
-                     {
-                        cr = ARGB(255, 205, 72, 72);
-                     }
-                     else
-                     {
-                        cr = ARGB(255, 0x55, 0x99, 0xC2);
+               //      if (m_estyle == StyleDarkRed)
+               //      {
+               //         cr = ARGB(255, 205, 72, 72);
+               //      }
+               //      else
+               //      {
+               //         cr = ARGB(255, 0x55, 0x99, 0xC2);
 
-                     }
+               //      }
 
-                     return true;
+               //      return true;
 
-                  }
-                  else if (ecolor == ::user::color_button_background)
-                  {
+               //   }
+               //   else if (ecolor == ::user::color_button_background)
+               //   {
 
-                     if (m_estyle == StyleDarkRed)
-                     {
-                        cr = ARGB(255, 165, 32, 32);
-                     }
-                     else
-                     {
-                        cr = ARGB(255, 0x30, 0x75, 0xA0);
-                     }
+               //      if (m_estyle == StyleDarkRed)
+               //      {
+               //         cr = ARGB(255, 165, 32, 32);
+               //      }
+               //      else
+               //      {
+               //         cr = ARGB(255, 0x30, 0x75, 0xA0);
+               //      }
 
 
-                     return true;
-                  }
-                  else if (ecolor == ::user::color_button_background_press)
-                  {
+               //      return true;
+               //   }
+               //   else if (ecolor == ::user::color_button_background_press)
+               //   {
 
-                     cr = ARGB(255, 0x07, 0x6D, 0x91);
+               //      cr = ARGB(255, 0x07, 0x6D, 0x91);
 
-                     return true;
-                  }
-                  else if (ecolor == ::user::color_button_text_disabled)
-                  {
+               //      return true;
+               //   }
+               //   else if (ecolor == ::user::color_button_text_disabled)
+               //   {
 
-                     cr = ARGB(255, 0xD0, 0xD0, 0xD0);
+               //      cr = ARGB(255, 0xD0, 0xD0, 0xD0);
 
-                     return true;
+               //      return true;
 
-                  }
-                  else if (ecolor == ::user::color_button_text_hover)
-                  {
+               //   }
+               //   else if (ecolor == ::user::color_button_text_hover)
+               //   {
 
-                     cr = ARGB(255, 255, 255, 255);
+               //      cr = ARGB(255, 255, 255, 255);
 
-                     return true;
+               //      return true;
 
-                  }
-                  else if (ecolor == ::user::color_button_text)
-                  {
+               //   }
+               //   else if (ecolor == ::user::color_button_text)
+               //   {
 
-                     cr = ARGB(255, 255, 255, 255);
+               //      cr = ARGB(255, 255, 255, 255);
 
-                     return true;
+               //      return true;
 
-                  }
-                  else if (ecolor == ::user::color_button_text_press)
-                  {
+               //   }
+               //   else if (ecolor == ::user::color_button_text_press)
+               //   {
 
-                     cr = ARGB(255, 255, 255, 255);
+               //      cr = ARGB(255, 255, 255, 255);
 
-                     return true;
+               //      return true;
 
-                  }
+               //   }
 
-               }
+               //}
 
                return frame_schema::get_color(cr, ecolor, pcontext);
 
