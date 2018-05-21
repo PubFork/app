@@ -1693,11 +1693,12 @@ void SortEx(ARRAYCOMPARE * pacompare,
 typedef CLASS_DECL_AURA string_array < string > stringa;
 
 
-class string2a:
+class CLASS_DECL_AURA string2a:
    public array < stringa >
 {
 public:
 
+   void add_csv(string str);
 
 };
 
@@ -3877,5 +3878,9 @@ void string_array < Type, RawType > ::collate_sort_ci()
    });
 
 }
+
+CLASS_DECL_AURA bool next_csv(string & str, const char * & psz);
+CLASS_DECL_AURA void add_csv(stringa & stra, const string & str);
+
 
 

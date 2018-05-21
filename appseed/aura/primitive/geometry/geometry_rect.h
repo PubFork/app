@@ -225,7 +225,7 @@ rect64(point64 ptTopLeft, point64 ptBottomRight) NOTHROW : rect64(ptTopLeft.x, p
    // returns the height
    int64_t height() const NOTHROW;
    // returns the size
-   size64 size() const NOTHROW;
+   size64 get_size() const NOTHROW;
    // reference to the top-left POINT64
    point64& top_left() NOTHROW;
    // reference to the bottom-right POINT64

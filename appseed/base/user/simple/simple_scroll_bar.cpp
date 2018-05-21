@@ -494,7 +494,7 @@ void simple_scroll_bar::on_layout()
 
    rect rectClient;
    GetClientRect(rectClient);
-   class size size = rectClient.size();
+   class size size = rectClient.get_size();
 
    int iArrowForce = 4;
    int iArrowStability = size.get_orthogonal_dimension(m_eorientation) - 2 - 3 * 2;
@@ -1168,7 +1168,7 @@ void simple_scroll_bar::_001OnVerisimpleDraw(::draw2d::graphics * pgraphics)
       if (bSimple)
       {
 
-         int iSize = rectTrack.size().get_normal(m_eorientation) * 6 / 8;
+         int iSize = rectTrack.get_size().get_normal(m_eorientation) * 6 / 8;
 
          rectMachineThumb.top_left() = rectTrack.top_left() + m_ptTrackOffset - size(iSize / 2, iSize / 2);
 
@@ -1188,7 +1188,7 @@ void simple_scroll_bar::_001OnVerisimpleDraw(::draw2d::graphics * pgraphics)
       else
       {
 
-         int iSize = rectTrack.size().get_normal(m_eorientation);
+         int iSize = rectTrack.get_size().get_normal(m_eorientation);
 
          rectMachineThumb.top_left() = rectTrack.top_left() + m_ptTrackOffset - size(iSize / 2, iSize / 2);
 

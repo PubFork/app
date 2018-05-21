@@ -397,7 +397,7 @@ namespace user
 
                   GetWindowRect(r);
 
-                  dib->create(r.size());
+                  dib->create(r.get_size());
 
                   ::draw2d::graphics * pgraphics = pimpl->m_spgraphics->on_begin_draw();
 
@@ -409,9 +409,9 @@ namespace user
 
                   ::visual::dib_sp dib2(allocer());
 
-                  dib2->create(284, r.size().cy * 284 / r.size().cx);
+                  dib2->create(284, r.get_size().cy * 284 / r.get_size().cx);
                   dib2->get_graphics()->SetStretchBltMode(HALFTONE);
-                  dib2->get_graphics()->StretchBlt(0, 0, dib2->m_size.cx, dib2->m_size.cy, dib->get_graphics(), 0, 0, r.size().cx, r.size().cy, SRCCOPY);
+                  dib2->get_graphics()->StretchBlt(0, 0, dib2->m_size.cx, dib2->m_size.cy, dib->get_graphics(), 0, 0, r.get_size().cx, r.get_size().cy, SRCCOPY);
                   dib2.save_to_file(::dir::system() / "control_alt_p_w284.png");
                   pkey->m_bRet = true;
                   pkey->set_lresult(1);

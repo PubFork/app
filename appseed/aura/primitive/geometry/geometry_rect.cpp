@@ -904,7 +904,11 @@ rect rect::MulDiv(int32_t nMultiplier, int32_t nDivisor) const NOTHROW
 }
 
 int64_t rect::area()
-{ return size().area(); }
+{
+
+   return get_size().area();
+
+}
 
 
 void rect::get_bounding_rect(const POINT * lppoint, ::count count)
@@ -994,7 +998,7 @@ int64_t rect64::width() const NOTHROW
 { return right - left; }
 int64_t rect64::height() const NOTHROW
 { return bottom - top; }
-size64 rect64::size() const NOTHROW
+size64 rect64::get_size() const NOTHROW
 { return size64(right - left, bottom - top); }
 point64& rect64::top_left() NOTHROW
 { return *((point64*)this); }
@@ -1168,7 +1172,11 @@ rect64 rect64::MulDiv(int64_t nMultiplier, int64_t nDivisor) const NOTHROW
 }
 
 int64_t rect64::area()
-{ return size().area(); }
+{
+
+   return get_size().area();
+
+}
 
 
 

@@ -1211,7 +1211,7 @@ namespace user
 
       }
 
-      m_sizeTotal = rect.size();
+      m_sizeTotal = rect.get_size();
 
       ::user::box::on_change_view_size();
 
@@ -6841,13 +6841,13 @@ namespace user
                if (m_plist->m_iIconBlur > 0 && m_plist->m_iIconBlurRadius > 0)
                {
 
-                  dib.initialize(m_rectImage.size() + size(m_plist->m_iIconBlurRadius * iRate * 2, m_plist->m_iIconBlurRadius * iRate * 2), m_plist->m_iIconBlurRadius);
+                  dib.initialize(m_rectImage.get_size() + size(m_plist->m_iIconBlurRadius * iRate * 2, m_plist->m_iIconBlurRadius * iRate * 2), m_plist->m_iIconBlurRadius);
 
                }
                else
                {
 
-                  dib->create(m_rectImage.size());
+                  dib->create(m_rectImage.get_size());
 
                }
 
@@ -6856,7 +6856,7 @@ namespace user
                dib->get_graphics()->fill_solid_rect_dim(0, 0, dib->m_size.cx, dib->m_size.cy, 0);
 
                get_image_list()->draw(dib->get_graphics(), (int32_t)m_iImage,
-                                      point(m_plist->m_iIconBlurRadius*iRate, m_plist->m_iIconBlurRadius *iRate), m_rectImage.size(), point(0, 0), 0);
+                                      point(m_plist->m_iIconBlurRadius*iRate, m_plist->m_iIconBlurRadius *iRate), m_rectImage.get_size(), point(0, 0), 0);
 
 
                if (m_plist->m_iIconBlur > 0 && m_plist->m_iIconBlurRadius > 0)
@@ -6883,7 +6883,7 @@ namespace user
             m_pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
             rect rDib(m_rectImage.top_left() - size(m_plist->m_iIconBlurRadius *iRate, m_plist->m_iIconBlurRadius * iRate),
-                      m_rectImage.size() + size(m_plist->m_iIconBlurRadius *iRate * 2, m_plist->m_iIconBlurRadius * iRate * 2));
+                      m_rectImage.get_size() + size(m_plist->m_iIconBlurRadius *iRate * 2, m_plist->m_iIconBlurRadius * iRate * 2));
 
             m_pgraphics->draw(rDib, dib->get_graphics());
 
@@ -6917,7 +6917,7 @@ namespace user
 
                get_image_list()->draw(m_plist->m_dibTime->get_graphics(), (int32_t)m_iImage,
                                       r2.top_left(),
-                                      r.size(), r.top_left(), 0);
+                                      r.get_size(), r.top_left(), 0);
 
                //m_plist->m_dibTime->div_alpha(r2.top_left(), r2.size());
 
@@ -6944,7 +6944,7 @@ namespace user
          else
          {
             m_pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
-            return get_image_list()->draw(m_pgraphics, (int32_t)m_iImage, m_rectImage.top_left(), m_rectImage.size(), point(0, 0), 0);
+            return get_image_list()->draw(m_pgraphics, (int32_t)m_iImage, m_rectImage.top_left(), m_rectImage.get_size(), point(0, 0), 0);
          }
       }
       return false;
@@ -6953,7 +6953,7 @@ namespace user
 
    bool draw_list_item::draw_group_image()
    {
-      return m_plist->m_pilGroup->draw(m_pgraphics, (int32_t)m_iImage, m_rectImage.top_left(), m_rectImage.size(), point(0, 0), 0);
+      return m_plist->m_pilGroup->draw(m_pgraphics, (int32_t)m_iImage, m_rectImage.top_left(), m_rectImage.get_size(), point(0, 0), 0);
    }
 
 

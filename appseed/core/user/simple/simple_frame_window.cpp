@@ -1727,7 +1727,7 @@ void simple_frame_window::_000OnDraw(::draw2d::graphics * pgraphicsParam)
 
       }
 
-      m_dibAlpha->create(rectClient.size());
+      m_dibAlpha->create(rectClient.get_size());
 
       m_dibAlpha->Fill(0,0,0,0);
 
@@ -1805,7 +1805,7 @@ void simple_frame_window::_000OnDraw(::draw2d::graphics * pgraphicsParam)
 
       pgraphicsParam->set_alpha_mode(::draw2d::alpha_mode_blend);
 
-      pgraphicsParam->alpha_blend(null_point(),rectClient.size(),pgraphics,null_point(),dAlpha);
+      pgraphicsParam->alpha_blend(null_point(),rectClient.get_size(),pgraphics,null_point(),dAlpha);
 
    }
 
@@ -1844,14 +1844,14 @@ void simple_frame_window::_001OnDraw(::draw2d::graphics * pgraphics)
       else
       {
 #ifndef LINUX
-         if(rectClient.size() != m_dibBk->size())
+         if(rectClient.get_size() != m_dibBk->size())
          {
-            m_dibBk->create(rectClient.size());
+            m_dibBk->create(rectClient.get_size());
             m_dibBk->Fill(0,184,184,170);
             //HMODULE hmodule = ::LoadLibrary("ca2performance.dll");
             //::visual::fastblur *( *pfnNew )(sp(::aura::application)) = (::visual::fastblur *(*)(sp(::aura::application))) ::GetProcAddress(hmodule, "new_fastblur");
             m_fastblur.alloc(allocer());
-            m_fastblur.initialize(rectClient.size(),2);
+            m_fastblur.initialize(rectClient.get_size(),2);
          }
          if(m_fastblur.is_set() && m_fastblur->area() > 0)
          {
@@ -1861,11 +1861,11 @@ void simple_frame_window::_001OnDraw(::draw2d::graphics * pgraphics)
             imaging.bitmap_blend(
             m_fastblur->get_graphics(),
             null_point(),
-            rectClient.size(),
+            rectClient.get_size(),
             m_dibBk->get_graphics(),
             null_point(),
             49);
-            pgraphics->from(rectClient.size(),
+            pgraphics->from(rectClient.get_size(),
                             m_fastblur->get_graphics(),
                             null_point(),
                             SRCCOPY);

@@ -91,7 +91,7 @@ namespace user
    bool interaction_impl_base::check_need_layout()
    {
 
-      return m_pui->m_bNeedLayout || m_rectParentClientRequest.size() != m_rectParentClient.size();
+      return m_pui->m_bNeedLayout || m_rectParentClientRequest.get_size() != m_rectParentClient.get_size();
 
    }
 
@@ -331,7 +331,7 @@ namespace user
 
       }
 
-      if (rectOld.size() != rectNew.size())
+      if (rectOld.get_size() != rectNew.get_size())
       {
 
          m_pui->message_call(WM_SIZE);

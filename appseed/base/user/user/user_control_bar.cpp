@@ -713,7 +713,7 @@ namespace user
          rect rect;
          rect.copy(&lpLayout->rect);
 
-         size sizeAvail = rect.size();  // maximum size available
+         size sizeAvail = rect.get_size();  // maximum size available
 
          // get maximum requested size
          uint32_t dwMode = lpLayout->bStretch ? LM_STRETCH : 0;

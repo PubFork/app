@@ -42,7 +42,7 @@ window_dc::~window_dc()
 
    }
 
-   m_spgraphics->on_begin_draw(m_pimpl->m_oswindow, m_pimpl->m_rectParentClient.size());
+   m_spgraphics->on_begin_draw(m_pimpl->m_oswindow, m_pimpl->m_rectParentClient.get_size());
 
    return m_spgraphics;
 

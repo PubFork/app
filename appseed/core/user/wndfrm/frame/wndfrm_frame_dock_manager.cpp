@@ -73,7 +73,7 @@ namespace user
 
             m_pworkset->get_draw_window()->GetWindowRect(rectWindow);
 
-            m_sizeOrigin = rectWindow.size();
+            m_sizeOrigin = rectWindow.get_size();
 
             GetEventWindow()->SetCapture();
 
@@ -222,7 +222,7 @@ namespace user
             int cy2 =  screen.height() / 3;
 
 //            int cx =  rectWork.width() / 3;
-  //          int cy =  rectWork.height() / 3;
+            //          int cy =  rectWork.height() / 3;
 
             if((ptCursor.x >= screen.left && ptCursor.x - screen.left <= cx2) || (ptCursor.x >= screen.center().x - cx2 && ptCursor.x <= screen.center().x + cx2) || (ptCursor.x >= screen.right - cx2 && ptCursor.x <= screen.right))
             {
@@ -250,7 +250,7 @@ namespace user
                      }
                      else
                      {
-  //                      if(m_eappearanceOrigin != ::user::appearance_bottom)
+                        //                      if(m_eappearanceOrigin != ::user::appearance_bottom)
                         {
                            GetDockWindow()->set_appearance(::user::appearance_bottom);
                            ::rect rectDock = rect_dim(rectWork.left,rectWork.top + rectWork.height() / 2,rectWork.width(),rectWork.height() / 2);
@@ -500,16 +500,16 @@ namespace user
                return;
             }
             else if(pbase->m_id == WM_MOUSEMOVE ||
-               pbase->m_id == WM_LBUTTONUP)
+                    pbase->m_id == WM_LBUTTONUP)
             {
                sp(::user::interaction) pWndCapture = Session.GetCapture();
                TRACE("DockManager::message_handler oswindow Capture %x\n",Session.GetCapture().m_p);
                if(!m_bDocking ||
-                  pWndCapture == NULL ||
-                  pWndCapture->get_handle() != GetEventWindow()->get_handle())
+                     pWndCapture == NULL ||
+                     pWndCapture->get_handle() != GetEventWindow()->get_handle())
                {
                   if(pWndCapture != NULL
-                     && pWndCapture->get_handle() == GetEventWindow()->get_handle())
+                        && pWndCapture->get_handle() == GetEventWindow()->get_handle())
                   {
                      Session.ReleaseCapture();
                   }
@@ -544,7 +544,7 @@ namespace user
                   rect rectIntersect;
                   rectIntersect.intersect(rectParentClient,rectEvent);
                   if(rectIntersect.width() <= 30 ||
-                     rectIntersect.height() <= 30)
+                        rectIntersect.height() <= 30)
                      bMove = false;
                }
 

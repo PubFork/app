@@ -1925,7 +1925,7 @@ namespace user
 
          m_iViewSize = 0;
 
-         m_sizeTotal = rectClient.size();
+         m_sizeTotal = rectClient.get_size();
 
          on_change_view_size();
 
@@ -2256,7 +2256,7 @@ namespace user
 
          class size sizePage;
 
-         sizePage = rectClient.size();
+         sizePage = rectClient.get_size();
 
          if (m_sizeTotal.cy < sizePage.cy)
          {

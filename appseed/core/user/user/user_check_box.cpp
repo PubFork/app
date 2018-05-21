@@ -113,7 +113,7 @@ namespace user
       rect rectClient;
       GetClientRect(rectClient);
 
-      int iMin = MAX(MIN(rectClient.size().cx, rectClient.size().cy) -1, 1);
+      int iMin = MAX(MIN(rectClient.get_size().cx, rectClient.get_size().cy) -1, 1);
 
       rect rectCheckBox;
       rectCheckBox.left = 1;

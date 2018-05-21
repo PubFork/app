@@ -1390,7 +1390,7 @@ namespace user
             GetItemRect(i, rectItem);
             rectSize.unite(rectSize, rectItem);
          }
-         sizeResult = rectSize.size();
+         sizeResult = rectSize.get_size();
 
          delete[] pData;
       }

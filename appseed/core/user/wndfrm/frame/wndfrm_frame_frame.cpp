@@ -83,13 +83,13 @@ namespace user
 
          }
 
-         
+
          void frame::OnDetach()
          {
-            
+
          }
-         
-         
+
+
          bool frame::is_control_box_moveable()
          {
 
@@ -134,7 +134,7 @@ namespace user
 
          }
 
-         
+
 
          appearance * frame::get_appearance()
          {
@@ -203,12 +203,12 @@ namespace user
                {
                   rect rect(0, 0, 32767, 32767);
                   pwnd->RepositionBars(0, 0xffff, "pane_first", pwnd->reposQuery,
-                     &rect, &rect, FALSE);
+                                       &rect, &rect, FALSE);
                   rect.offset(rectClient.top_left());
                   class rect rectBorder;
                   pfrmwnd->GetBorderRect(rectBorder);
                   pwnd->RepositionBars(0, 0xffff, "pane_first", pwnd->reposExtra,
-                     &rectBorder, &rect, TRUE);
+                                       &rectBorder, &rect, TRUE);
                   pfrmwnd->SetBorderRect(rectBorder);
                   pwnd->CalcWindowRect(&rect);
                   OnNcCalcSize(&rect);
@@ -216,7 +216,7 @@ namespace user
                   //CalcWndClient(rectSnap, rectSnap);
                   //rect.deflate(rectSnap);
                   pwnd->SetWindowPos(0, 0, 0, rect.width(), rect.height(),
-                     SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOZORDER);
+                                     SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOZORDER);
 
                }
                else
@@ -234,21 +234,21 @@ namespace user
 
             update_window_region(rectWindow);
 
-/*            if (pwnd->IsWindowVisible())
-            {
-               pwnd->RedrawWindow(NULL, NULL, RDW_INVALIDATE);
+            /*            if (pwnd->IsWindowVisible())
+                        {
+                           pwnd->RedrawWindow(NULL, NULL, RDW_INVALIDATE);
 
-#if !defined(METROWIN) && !defined(LINUX) && !defined(APPLEOS)
-               RedrawWindow(NULL,
-                  m_pworkset->m_rectPending,
-                  NULL,
-                  RDW_INVALIDATE | RDW_ALLCHILDREN);
-#endif
+            #if !defined(METROWIN) && !defined(LINUX) && !defined(APPLEOS)
+                           RedrawWindow(NULL,
+                              m_pworkset->m_rectPending,
+                              NULL,
+                              RDW_INVALIDATE | RDW_ALLCHILDREN);
+            #endif
 
-               m_pworkset->m_rectPending.set(0, 0, 0, 0);
-            }
+                           m_pworkset->m_rectPending.set(0, 0, 0, 0);
+                        }
 
-*/
+            */
 
          }
 
@@ -333,7 +333,7 @@ namespace user
             {
 
                //if(m_pworkset->GetDockingManager()->_000OnLButtonDown(pmouse))
-                 // return true;
+               // return true;
 
                if(m_pworkset->GetSizingManager()->_000OnLButtonDown(pmouse))
                   return true;
@@ -374,12 +374,12 @@ namespace user
             {
 
                if(!m_pworkset->GetMovingManager()->IsMoving()
-               && !m_pworkset->GetSizingManager()->IsSizing()
-               && m_pworkset->GetDockingManager()->_000OnMouseMove(pmouse))
+                     && !m_pworkset->GetSizingManager()->IsSizing()
+                     && m_pworkset->GetDockingManager()->_000OnMouseMove(pmouse))
                   return true;
 
                if(!m_pworkset->GetMovingManager()->IsMoving()
-               && m_pworkset->GetSizingManager()->_000OnMouseMove(pmouse))
+                     && m_pworkset->GetSizingManager()->_000OnMouseMove(pmouse))
                   return true;
 
                if(m_pworkset->GetMovingManager()->_000OnMouseMove(pmouse))
@@ -437,12 +437,12 @@ namespace user
             {
 
                if(!m_pworkset->GetMovingManager()->IsMoving()
-                  && !m_pworkset->GetSizingManager()->IsSizing()
-                  && m_pworkset->GetDockingManager()->_000OnMouseMove(pmouse))
+                     && !m_pworkset->GetSizingManager()->IsSizing()
+                     && m_pworkset->GetDockingManager()->_000OnMouseMove(pmouse))
                   return true;
 
                if(!m_pworkset->GetMovingManager()->IsMoving()
-                  && m_pworkset->GetSizingManager()->_000OnMouseMove(pmouse))
+                     && m_pworkset->GetSizingManager()->_000OnMouseMove(pmouse))
                   return true;
 
                if(m_pworkset->GetMovingManager()->_000OnMouseMove(pmouse))
@@ -744,26 +744,26 @@ namespace user
 
             get_control_box()->GetWindowRect(rectControlBoxWindow);
 
-            if(prectControlBox->size() != rectControlBoxWindow.size())
+            if(prectControlBox->get_size() != rectControlBoxWindow.get_size())
             {
 
                get_control_box()->defer_set_window_pos(
-                  ZORDER_TOP,
-                  prectControlBox->left,
-                  prectControlBox->top,
-                  prectControlBox->width(),
-                  prectControlBox->height(),(bShow ? SWP_SHOWWINDOW : 0) | SWP_NOZORDER);
+               ZORDER_TOP,
+               prectControlBox->left,
+               prectControlBox->top,
+               prectControlBox->width(),
+               prectControlBox->height(),(bShow ? SWP_SHOWWINDOW : 0) | SWP_NOZORDER);
 
             }
             else
             {
 
                get_control_box()->defer_set_window_pos(
-                  ZORDER_TOP,
-                  prectControlBox->left,
-                  prectControlBox->top,
-                  prectControlBox->width(),
-                  prectControlBox->height(), (bShow ? SWP_SHOWWINDOW : 0) | SWP_NOZORDER);
+               ZORDER_TOP,
+               prectControlBox->left,
+               prectControlBox->top,
+               prectControlBox->width(),
+               prectControlBox->height(), (bShow ? SWP_SHOWWINDOW : 0) | SWP_NOZORDER);
 
                if(get_control_box()->m_eappearance != pappearance->GetAppearance())
                {
@@ -774,7 +774,7 @@ namespace user
 
                }
 
-               
+
 
             }
 
@@ -890,7 +890,7 @@ namespace user
 
          bool frame::get_window_client_rect(LPRECT lprect)
          {
-            
+
             *lprect = m_rectClient;
 
             return true;
@@ -1032,7 +1032,7 @@ namespace user
 
 
             int iRightDeflate;
-            
+
             if(get_appearance()->GetAppearance() == ::user::appearance_minimal)
             {
 

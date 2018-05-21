@@ -263,18 +263,18 @@ bool xfplayer_view_line::to(::draw2d::graphics * pgraphics, bool bDraw, const RE
                ::draw2d::dib_sp dib(allocer());
                if (rect.area() > 0)
                {
-                  dib->create(rect.size());
+                  dib->create(rect.get_size());
                   dib->Fill(255, 255, 255, 255);
                   dib->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_blend);
                   pgraphics->flush();
 
                   point pt = pgraphics->GetViewportOrg();
-                  dib->from(null_point(), pgraphics, pt + rect.top_left(), rect.size());
+                  dib->from(null_point(), pgraphics, pt + rect.top_left(), rect.get_size());
                   //dib->get_graphics()->fill_solid_rect(0, 0, 16, 16, ARGB(255, 255, 0, 255));
                   dib->Invert();
                   //dib->fill_channel(0, ::visual::rgba::channel_blue);
                   dib->fill_channel(255, ::visual::rgba::channel_alpha);
-                  dib->to(pgraphics, rect.top_left(), rect.size(), null_point());
+                  dib->to(pgraphics, rect.top_left(), rect.get_size(), null_point());
                }
             }
          }

@@ -734,7 +734,7 @@ namespace windows
       if (rectWindow.area() <= 0)
          return;
 
-      if (m_size != rectWindow.size())
+      if (m_size != rectWindow.get_size())
       {
 
          //if(m_spdib.is_null())
@@ -742,7 +742,7 @@ namespace windows
 
          //m_spdib->create(rectWindow.size());
 
-         m_size = rectWindow.size();
+         m_size = rectWindow.get_size();
 
       }
 
@@ -3722,7 +3722,7 @@ namespace windows
 
       }
 
-      if (rectOld.size() != rectNew.size())
+      if (rectOld.get_size() != rectNew.get_size())
       {
 
          m_pui->message_call(WM_SIZE);
@@ -3774,7 +3774,7 @@ namespace windows
 
       }
 
-      if (rectOld.size() != rectNew.size())
+      if (rectOld.get_size() != rectNew.get_size())
       {
 
          m_pui->message_call(WM_SIZE);
@@ -3826,7 +3826,7 @@ namespace windows
 
       }
 
-      if (rectOld.size() != rectNew.size())
+      if (rectOld.get_size() != rectNew.get_size())
       {
 
          m_pui->message_call(WM_SIZE);

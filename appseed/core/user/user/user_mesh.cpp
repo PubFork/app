@@ -855,7 +855,7 @@ namespace user
 
          GetClientRect(rectClient);
 
-         size sizePage = rectClient.size();
+         size sizePage = rectClient.get_size();
 
          m_nGridColumnCount = _001GetColumnCount();
 
@@ -898,7 +898,7 @@ namespace user
 
          GetClientRect(rectClient);
 
-         size sizePage = rectClient.size();
+         size sizePage = rectClient.get_size();
 
          m_nGridItemCount = _001GetItemCount();
 
@@ -1068,7 +1068,7 @@ namespace user
 
             rect.unite(itemFirst.m_rectItem,itemLast.m_rectItem);
 
-            sizeTotal = rect.size();
+            sizeTotal = rect.get_size();
 
          }
 
@@ -1112,7 +1112,7 @@ namespace user
 
          rect.unite(rect,itemTopRight.m_rectItem);
 
-         sizeTotal = rect.size();
+         sizeTotal = rect.get_size();
 
       }
 
@@ -6160,7 +6160,7 @@ namespace user
 
    bool draw_mesh_item::draw_group_image()
    {
-      return m_pmesh->m_pilGroup->draw(m_pgraphics,(int32_t)m_iImage,m_rectImage.top_left(),m_rectImage.size(),point(0,0),0);
+      return m_pmesh->m_pilGroup->draw(m_pgraphics,(int32_t)m_iImage,m_rectImage.top_left(),m_rectImage.get_size(),point(0,0),0);
    }
 
 
@@ -6212,7 +6212,7 @@ namespace user
          if(m_pmesh->m_eview == mesh::view_icon && m_pmesh->m_bEmboss)
          {
 
-            class size size = m_rectText.size();
+            class size size = m_rectText.get_size();
             size.cx += 4;
             size.cy += 4;
 

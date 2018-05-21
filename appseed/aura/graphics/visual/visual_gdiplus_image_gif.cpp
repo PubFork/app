@@ -540,7 +540,7 @@ bool freeimage_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file
 
       ::point pt = p->m_rect.top_left();
 
-      ::size sz = p->m_rect.size();
+      ::size sz = p->m_rect.get_size();
 
       if (uFrameIndex <= 0)
       {
