@@ -142,7 +142,7 @@ namespace user
       virtual bool create_rect_dim(e_rect erect, LONG l, LONG t, LONG r, LONG b);
       virtual bool create_rect(e_rect erect, LPCRECT lpcrect);
       virtual bool create_int(e_int eint, int i);
-
+      virtual bool create_double(e_double eint, double d);
 
       virtual e_control_type get_control_type() override;
 

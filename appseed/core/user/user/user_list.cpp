@@ -1390,7 +1390,7 @@ namespace user
    int32_t list::_001CalcItemHeight(int iBaseHeight)
    {
 
-      return (int32_t) (iBaseHeight * _001GetDouble(::user::double_height_rate, 1.0));
+      return (int32_t) (iBaseHeight * _001GetDouble(::user::double_list_item_height_rate, 1.0));
 
    }
 
@@ -7186,6 +7186,7 @@ namespace user
 
       mesh::_001OnClip(pgraphics);
 
+      return;
       if (m_bHeaderCtrl && m_plistheader != NULL)
       {
 

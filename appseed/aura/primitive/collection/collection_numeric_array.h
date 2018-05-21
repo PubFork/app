@@ -84,6 +84,8 @@ public:
 
    index find_first_maximum_value();
    TYPE & get_maximum_value();
+   index find_first_minimum_value();
+   TYPE & get_minimum_value();
 
    //::count append_sequence(TYPE start, TYPE end, TYPE increment = 1);
    //::count set_sequence(TYPE start, TYPE end, TYPE increment = 1);
@@ -753,14 +755,119 @@ get_maximum_value()
 }
 
 template < class TYPE >
+index numeric_array < TYPE >::find_first_minimum_value()
+{
+
+   TYPE tMin = this->element_at(0);
+
+   index iFind = 0;
+
+   for (index i = 1; i < this->get_size(); i++)
+   {
+
+      if (this->element_at(i) < tMin)
+      {
+
+         iFind = i;
+
+         tMin = this->element_at(i);
+
+      }
+
+   }
+
+   return iFind;
+
+}
+
+
+template < class TYPE >
+TYPE & numeric_array < TYPE >::
+get_minimum_value()
+{
+   ASSERT(this->get_size() > 0);
+   return this->element_at(find_first_minimum_value());
+}
+
+template < typename INT >
+inline INT get_integer_mean(const INT * pt, ::count N)
+{
+   int64_t x = 0;
+   int64_t y = 0;
+   ::count c = N;
+   while (c > 0)
+   {
+      int64_t a = *pt;
+      x += a / N;
+      if (a >= 0)
+      {
+         int b = a % N;
+         if (y >= N - b)
+         {
+            x++;
+            y -= N - b;
+         }
+         else
+         {
+            y += b;
+         }
+      }
+      else
+      {
+         int b = (-a) % N;
+         if (y <= -N + b)
+         {
+            x--;
+            y -= -N + b;
+         }
+         else
+         {
+            y -= b;
+         }
+      }
+      c--;
+      pt++;
+   }
+   return x + y / N;
+
+}
+
+
+template < typename T >
+inline T get_mean(const T * pt, ::count N)
+{
+
+   double dSum = 0.0;
+
+   ::count c = N;
+
+   while(c > 0)
+   {
+
+      dSum += *pt;
+
+      pt++;
+
+      c--;
+
+   }
+
+   return (typename ::numeric_info < T >::TYPE) (dSum / (double)N);
+
+}
+
+
+inline int get_mean(const int * A, ::count N)
+{
+   return get_integer_mean(A, N);
+}
+
+template < class TYPE >
 TYPE numeric_array < TYPE >::GetMean()
 {
-   double dSum = 0.0;
-   for(index i = 0; i < this->get_size(); i++)
-   {
-      dSum += this->element_at(i);
-   }
-   return (typename ::numeric_info < TYPE >::TYPE) (dSum / (double) this->get_size());
+
+   return get_mean(get_data(), get_count());
+
 }
 
 template < class TYPE >

@@ -1519,11 +1519,9 @@ restart:
          while (pui != NULL)
          {
 
-            pui->GetWindowRect(rectClient);
-
             pui->GetClientRect(rectFocus);
 
-            rectFocus.offset(rectClient.top_left());
+            pui->ClientToScreen(rectFocus);
 
             ScreenToClient(rectFocus);
 

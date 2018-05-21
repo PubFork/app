@@ -28,9 +28,13 @@ namespace wndfrm_tranquillum
 
       //create_translucency(::user::element_none, ::user::translucency_none);
 
-      create_point_font(::user::font_default,"Tahoma", 12.0);
-      create_point_font(::user::font_button, "Tahoma", 12.0, 800);
-      create_point_font(::user::font_plain_edit, "Tahoma", 12.0, 800);
+      create_point_font(::user::font_default,"Segoe UI", 12.0);
+      create_point_font(::user::font_button, "Segoe UI", 12.0, 800);
+      create_point_font(::user::font_plain_edit, "Segoe UI", 12.0, 800);
+      create_point_font(::user::font_list_header, "Segoe UI", 12.0, 800);
+
+
+      create_double(::user::double_list_item_height_rate, 1.65);
 
       create_rect_coord(::user::rect_menu_item_padding, 5, 5, 5, 5);
 
@@ -46,7 +50,8 @@ namespace wndfrm_tranquillum
       create_color(::user::color_background_highlight, ARGB(255, 120, 200, 250));
       create_color(::user::color_background, ARGB(255, 255, 255, 255));
       create_color(::user::color_button_text, ARGB(255, 255, 255, 255));
-      create_color(::user::color_list_header_background, ARGB(255, 250, 250, 250));
+      create_color(::user::color_list_header, ARGB(255, 40, 40, 40));
+      create_color(::user::color_list_header_background, ARGB(255, 230, 230, 230));
       create_color(::user::color_list_background, ARGB(255, 255, 255, 255));
       create_color(::user::color_list_item_text, ARGB(255, 50, 50, 50));
       create_color(::user::color_list_item_text_hover, ARGB(255, 50, 50, 50));
@@ -1438,28 +1443,28 @@ namespace wndfrm_tranquillum
    }
 
 
-   bool theme::get_font(::draw2d::font_sp & sp, ::user::e_font efont, ::user::style_context * pcontext)
-   {
+   //bool theme::get_font(::draw2d::font_sp & sp, ::user::e_font efont, ::user::style_context * pcontext)
+   //{
 
-      return ::user::theme::get_font(sp, efont, pcontext);
+   //   return ::user::theme::get_font(sp, efont, pcontext);
 
-   }
+   //}
 
-   bool theme::get_double(double & d, ::user::e_double edouble, ::user::style_context * pcontext)
-   {
+   //bool theme::get_double(double & d, ::user::e_double edouble, ::user::style_context * pcontext)
+   //{
 
-      if (edouble == ::user::double_height_rate)
-      {
+   //   if (edouble == ::user::double_height_rate)
+   //   {
 
-         d = 1.65;
+   //      d = 1.65;
 
-         return true;
+   //      return true;
 
-      }
+   //   }
 
-      return ::user::theme::get_double(d, edouble, pcontext);
+   //   return ::user::theme::get_double(d, edouble, pcontext);
 
-   }
+   //}
 
 } // namespace wndfrm_tranquillum
 

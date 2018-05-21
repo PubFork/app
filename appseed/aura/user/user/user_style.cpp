@@ -1307,6 +1307,22 @@ namespace user
    }
 
 
+   bool style::create_double(e_double edouble, double d)
+   {
+
+      if (userstyle()->m_mapDouble.is_null())
+      {
+
+         userstyle()->m_mapDouble = canew(::user::double_map);
+
+      }
+
+      (*userstyle()->m_mapDouble)[edouble] = d;
+
+      return true;
+
+   }
+
    e_control_type style::get_control_type()
    {
 

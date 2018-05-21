@@ -50,8 +50,8 @@ namespace wndfrm_tranquillum
       virtual void _001DrawTranquillumToolbarItem(::draw2d::graphics * pgraphics, int32_t iItem, ::user::toolbar * ptoolbar);
       virtual bool _001OnDrawSplitLayout(::draw2d::graphics * pgraphics, ::user::split_layout * psplitlayout) override;
 
-      virtual bool get_font(::draw2d::font_sp & sp, ::user::e_font efont, ::user::style_context * pcontext) override;
-      virtual bool get_double(double & d, ::user::e_double edouble, ::user::style_context * pcontext) override;
+      //virtual bool get_font(::draw2d::font_sp & sp, ::user::e_font efont, ::user::style_context * pcontext) override;
+      //virtual bool get_double(double & d, ::user::e_double edouble, ::user::style_context * pcontext) override;
 
 
    };

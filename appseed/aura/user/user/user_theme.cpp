@@ -25,8 +25,10 @@ namespace user
    void theme::initialize_theme()
    {
 
+      create_int(int_still_draw_text_flags, DT_LEFT | DT_BOTTOM | DT_SINGLELINE);
       create_int(int_menu_item_draw_text_flags, DT_LEFT | DT_VCENTER | DT_SINGLELINE);
       create_color(color_edit_text_empty, ARGB(127, 0x80, 0x80, 0x80));
+
 
    }
 

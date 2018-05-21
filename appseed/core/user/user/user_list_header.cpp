@@ -15,6 +15,8 @@ namespace user
       m_bHover = false;
       m_iImageSpacing = 4;
       m_ecolorBackground = color_list_header_background;
+      m_flagNonClient.unsignalize(::user::interaction::non_client_background);
+      m_flagNonClient.unsignalize(::user::interaction::non_client_focus_rect);
    }
 
    list_header::~list_header()
@@ -70,13 +72,13 @@ namespace user
       if (str.has_char())
       {
 
-         select_font(pdrawitem->m_pgraphics, font_list_item);
+         select_font(pdrawitem->m_pgraphics, font_list_header);
          //      pgraphics->SetBkMode(TRANSPARENT);
 
          pgraphics->set_text_color(_001GetColor(::user::color_list_header));
          int i = plist->_001GetDrawTextFlags(plist->m_eview);
 
-         pgraphics->_DrawText(str, str.get_length(), rectColumn, i);
+         pgraphics->draw_text(str, str.get_length(), rectColumn, i);
 
       }
 
@@ -566,9 +568,6 @@ namespace user
    void list_header::_001OnClip(::draw2d::graphics * pgraphics)
    {
 
-
-
-
       try
       {
 
@@ -607,8 +606,6 @@ namespace user
          while (pui != NULL)
          {
 
-            pui->GetWindowRect(rectClient);
-
             if (i == 1)
             {
                // guess list client rect doesn't include header?
@@ -622,7 +619,7 @@ namespace user
 
             }
 
-            rectFocus.offset(rectClient.top_left());
+            pui->ClientToScreen(rectFocus);
 
             ScreenToClient(rectFocus);
 
@@ -672,10 +669,11 @@ namespace user
 
       rect rectUpdate(rectClient);
 
-      rectUpdate.bottom;
       rect rectClipBox;
 
       pgraphics->GetClipBox(rectClipBox);
+
+      rectClipBox.right--;
 
       if(rectClipBox.is_empty())
       {

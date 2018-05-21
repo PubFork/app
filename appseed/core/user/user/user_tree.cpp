@@ -1183,7 +1183,7 @@ namespace user
          iItemHeight = MAX(size.cy, iItemHeight);
       }
 
-      m_iItemHeight = (int32_t) (iItemHeight * _001GetDouble(::user::double_height_rate));
+      m_iItemHeight = (int32_t) (iItemHeight * _001GetDouble(::user::double_tree_item_height_rate));
 
       on_ui_event(event_calc_item_height, object_tree, this);
 

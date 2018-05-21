@@ -231,6 +231,7 @@ namespace user
       font_tree,
       font_list_item,
       font_list_hover,
+      font_list_header,
       font_static,
       font_toolbar,
 
@@ -275,6 +276,7 @@ namespace user
       int_element_padding,
       int_menu_check_padding,
       int_check_box_size,
+      int_still_draw_text_flags,
       int_button_draw_text_flags,
       int_menu_item_draw_text_flags,
       int_top_level_drawing_order,
@@ -291,7 +293,8 @@ namespace user
       double_none,
       double_default_one_min,
       double_width_rate,
-      double_height_rate,
+      double_list_item_height_rate,
+      double_tree_item_height_rate,
       double_default_one_max,
 
    };
