@@ -217,17 +217,17 @@ void window_xlib::update_window(::draw2d::dib * pdib)
 
    }
 
-   if(!m_spdibBuffer->create(m_pimpl->m_rectParentClient.size()))
+   if(!m_spdibBuffer->create(m_pimpl->m_rectParentClient.get_size()))
    {
 
       return NULL;
 
    }
 
-   if (m_cx != m_pimpl->m_rectParentClient.size().cx || m_cy != m_pimpl->m_rectParentClient.size().cy)
+   if (m_cx != m_pimpl->m_rectParentClient.get_size().cx || m_cy != m_pimpl->m_rectParentClient.get_size().cy)
    {
 
-      create_window_graphics_(m_pimpl->m_rectParentClient.size().cx, m_pimpl->m_rectParentClient.size().cy, m_spdibBuffer->m_iScan);
+      create_window_graphics_(m_pimpl->m_rectParentClient.get_size().cx, m_pimpl->m_rectParentClient.get_size().cy, m_spdibBuffer->m_iScan);
 
    }
 

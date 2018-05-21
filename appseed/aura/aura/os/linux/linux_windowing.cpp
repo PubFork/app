@@ -2068,7 +2068,7 @@ bool process_message(osdisplay_data * pdata, Display * display)
 
                }
 
-               if(rectWindow.size() != rect.size())
+               if(rectWindow.get_size() != rect.get_size())
                {
 
                   pimpl->m_pui->post_message(WM_SIZE);
