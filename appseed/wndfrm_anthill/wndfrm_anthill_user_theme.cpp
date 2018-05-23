@@ -1414,10 +1414,11 @@ namespace wndfrm_anthill
 
    }
 
+
    bool theme::get_double(double & d, ::user::e_double edouble, ::user::style_context * pcontext)
    {
 
-      if (edouble == ::user::double_height_rate)
+      if (edouble == ::user::double_list_item_height_rate)
       {
 
          d = 1.65;
@@ -1430,13 +1431,8 @@ namespace wndfrm_anthill
 
    }
 
+
 } // namespace wndfrm_anthill
-
-
-
-
-
-
 
 
 

@@ -357,7 +357,7 @@ namespace draw2d_direct2d
 
             dib2->get_graphics()->fill_solid_rect(rectDib1, ARGB(255, 0, 0, 0));
 
-            if (!dib2->from(null_point(), m_pdibAlphaBlend, pt - m_ptAlphaBlend, rectIntersect.size()))
+            if (!dib2->from(null_point(), m_pdibAlphaBlend, pt - m_ptAlphaBlend, rectIntersect.get_size()))
             {
 
                return false;
@@ -456,7 +456,7 @@ namespace draw2d_direct2d
 
             dib2->get_graphics()->fill_solid_rect(rectDib1, ARGB(255, 0, 0, 0));
 
-            if (!dib2->from(null_point(), m_pdibAlphaBlend, pt - m_ptAlphaBlend, rectIntersect.size()))
+            if (!dib2->from(null_point(), m_pdibAlphaBlend, pt - m_ptAlphaBlend, rectIntersect.get_size()))
             {
 
                return false;
