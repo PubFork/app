@@ -75,6 +75,7 @@
 			<Add option="-Wl,-z,defs" />
 			<Add directory="../../../time/x64/basis" />
 		</Linker>
+		<Unit filename="and_wndfrm_anthill.vcxproj" />
 		<Unit filename="framework.cpp" />
 		<Unit filename="framework.h">
 			<Option compile="1" />
@@ -106,7 +107,8 @@
 		<Unit filename="wndfrm_anthill_library.cpp" />
 		<Unit filename="wndfrm_anthill_library.h" />
 		<Unit filename="wndfrm_anthill_user_style.cpp" />
-		<Unit filename="wndfrm_anthill_user_style.h" />
+		<Unit filename="wndfrm_anthill_user_theme.cpp" />
+		<Unit filename="wndfrm_anthill_user_theme.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />

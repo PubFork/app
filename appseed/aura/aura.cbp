@@ -1519,6 +1519,7 @@
 		<Unit filename="user/user/user_key_enum.h" />
 		<Unit filename="user/user/user_menu.h" />
 		<Unit filename="user/user/user_menu_command.h" />
+		<Unit filename="user/user/user_menu_interaction.cpp" />
 		<Unit filename="user/user/user_menu_item.h" />
 		<Unit filename="user/user/user_mouse.h" />
 		<Unit filename="user/user/user_place_holder.cpp">

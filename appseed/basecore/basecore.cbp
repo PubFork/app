@@ -47,7 +47,7 @@
 			<Add option="-Wno-attributes" />
 			<Add option="-Winvalid-pch" />
 			<Add option="-Wno-conversion-null" />
-			<Add option="`pkg-config --cflags gtk+-3.0 gdk-3.0 appindicator-0.1`" />
+			<Add option="`pkg-config --cflags gtk+-3.0 gdk-3.0 appindicator3-0.1`" />
 			<Add directory="../../../include" />
 			<Add directory="../../include" />
 			<Add directory="." />
@@ -64,7 +64,6 @@
 		</Compiler>
 		<Linker>
 			<Add option="-Wl,-rpath=\\$$$ORIGIN" />
-			<Add option="-lappindicator" />
 			<Add option="`pkg-config --libs gtk+-3.0 gdk-3.0 appindicator3-0.1`" />
 			<Add option="-lgthread-2.0" />
 			<Add option="-laura" />
