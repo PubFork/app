@@ -33,11 +33,24 @@ namespace wndfrm_tranquillum
       create_point_font(::user::font_plain_edit, "Segoe UI", 12.0, 800);
       create_point_font(::user::font_list_header, "Segoe UI", 12.0, 800);
 
+      create_point_font(::user::font_tab, "Segoe UI", 13.0, 400);
+      {
+         auto font = create_point_font(::user::font_tab_hover, "Segoe UI", 13.0, 400);
+         font->m_bUnderline = true;
+      }
+      create_point_font(::user::font_tab_sel, "Segoe UI", 13.0, 800);
+      {
+         auto font = create_point_font(::user::font_tab_sel_hover, "Segoe UI", 13.0, 800);
+         font->m_bUnderline = true;
+      }
+      create_point_font(::user::font_tab_big_bold, "Segoe UI", 13.0, 800);
+
 
       create_double(::user::double_list_item_height_rate, 1.65);
 
       create_rect_coord(::user::rect_menu_item_padding, 5, 5, 5, 5);
 
+      create_color(::user::color_background, ARGB(255, 255, 255, 255));
       create_color(::user::color_text, ARGB(255, 0, 0, 0));
       create_color(::user::color_edit_text, ARGB(255, 0, 0, 0));
       create_color(::user::color_edit_text_selected, ARGB(255, 255, 255, 255));
@@ -78,7 +91,267 @@ namespace wndfrm_tranquillum
    }
 
 
-   bool theme::_001TabOnDrawSchema01(::draw2d::graphics * pgraphics,::user::tab * ptab)
+
+   bool theme::_001OnDrawMainFrameBackground(::draw2d::graphics * pgraphics, ::user::frame * pframe)
+   {
+
+      rect rectClient;
+
+      pframe->GetClientRect(rectClient);
+
+      COLORREF crBackground = pframe->_001GetColor(::user::color_background);
+
+      pgraphics->fill_solid_rect(rectClient, crBackground);
+
+      return true;
+
+   }
+
+
+   bool theme::_001OnTabLayout(::user::tab * ptab)
+   {
+
+      if (!ptab->get_data()->m_bCreated)
+         return false;
+
+      ptab->m_bDrawTabAtBackground = true;
+
+      ptab->defer_handle_auto_hide_tabs(false);
+
+      ::draw2d::memory_graphics pgraphics(allocer());
+      pgraphics->SelectObject(_001GetFont(ptab, ::user::font_tab_sel));
+
+      ptab->m_dcextension.GetTextExtent(pgraphics, MAGIC_PALACE_TAB_SIZE, ptab->get_data()->m_sizeSep);
+
+      if (ptab->get_data()->m_bVertical)
+      {
+         int32_t iTabWidth = 16;
+         int32_t iTabHeight = 8;
+         int32_t cx;
+         int32_t cy;
+         for (int32_t iPane = 0; iPane < ptab->get_data()->m_panea.get_size(); iPane++)
+         {
+
+            ::user::tab_pane & tab_pane = ptab->get_data()->m_panea(iPane);
+
+            if (!tab_pane.m_bTabPaneVisible)
+               continue;
+
+            string str = tab_pane.get_title();
+
+            tab_pane.do_split_layout(ptab->m_dcextension, pgraphics);
+
+            ::size size;
+
+            ptab->m_dcextension.GetTextExtent(pgraphics, str, size);
+
+
+
+            if (tab_pane.m_dib.is_set())
+            {
+               size.cx += tab_pane.m_dib->m_size.cx + 2;
+               size.cy = MAX(size.cy, tab_pane.m_dib->m_size.cy);
+            }
+            cx = size.cx + 2;
+
+            if (!tab_pane.m_bPermanent)
+            {
+               cx += 2 + 16 + 2;
+            }
+
+            if (cx > iTabWidth)
+            {
+               iTabWidth = cx;
+            }
+            cy = size.cy + 2;
+            if (cy > iTabHeight)
+            {
+               iTabHeight = cy;
+            }
+         }
+
+         // close tab button
+         cy = 2 + 16 + 2;
+         if (cy > iTabHeight)
+         {
+            iTabHeight = cy;
+         }
+
+         iTabWidth += ptab->get_data()->m_rectBorder.left + ptab->get_data()->m_rectBorder.right +
+                      ptab->get_data()->m_rectMargin.left + ptab->get_data()->m_rectMargin.right +
+                      ptab->get_data()->m_rectTextMargin.left + ptab->get_data()->m_rectTextMargin.right;
+
+         ptab->get_data()->m_iTabWidth = iTabWidth;
+
+         iTabHeight += ptab->get_data()->m_rectBorder.top + ptab->get_data()->m_rectBorder.bottom +
+                       ptab->get_data()->m_rectMargin.top + ptab->get_data()->m_rectMargin.bottom +
+                       ptab->get_data()->m_rectTextMargin.top + ptab->get_data()->m_rectTextMargin.bottom;
+
+         ptab->get_data()->m_iTabHeight = iTabHeight;
+
+         rect rectClient;
+         ptab->GetClientRect(rectClient);
+
+         ptab->get_data()->m_rectTab.left = rectClient.left;
+         ptab->get_data()->m_rectTab.top = rectClient.top;
+         ptab->get_data()->m_rectTab.right = ptab->get_data()->m_rectTab.left + ptab->get_data()->m_iTabWidth;
+         ptab->get_data()->m_rectTab.bottom = rectClient.bottom;
+
+         /*      m_pui->SetWindowPos(
+         ZORDER_TOP,
+         m_rectTab.left,
+         m_rectTab.top,
+         m_rectTab.width(),
+         m_rectTab.height(),
+         0);*/
+
+         ptab->get_data()->m_rectTabClient.left = ptab->m_bShowTabs ? ptab->get_data()->m_rectTab.right : rectClient.left;
+         ptab->get_data()->m_rectTabClient.top = ptab->get_data()->m_rectTab.top;
+         ptab->get_data()->m_rectTabClient.right = rectClient.right;
+         ptab->get_data()->m_rectTabClient.bottom = ptab->get_data()->m_rectTab.bottom;
+
+      }
+      else
+      {
+         int32_t iTabHeight = 16;
+         int32_t cy;
+         ::draw2d::graphics_sp graphics(allocer());
+         graphics->CreateCompatibleDC(NULL);
+         ::draw2d::graphics * pgraphics = graphics;
+         pgraphics->SelectObject(_001GetFont(ptab, ::user::font_tab_sel));
+
+         rect rectClient;
+         ptab->GetClientRect(rectClient);
+         int x = rectClient.left;
+
+         int32_t ixAdd;
+         for (int32_t iPane = 0; iPane < ptab->get_data()->m_panea.get_size(); iPane++)
+         {
+
+            ::user::tab_pane & tab_pane = ptab->get_data()->m_panea(iPane);
+
+            if (!tab_pane.m_bTabPaneVisible)
+               return false;
+
+            string str = tab_pane.get_title();
+
+            tab_pane.do_split_layout(ptab->m_dcextension, pgraphics);
+
+            size size;
+
+            ptab->m_dcextension.GetTextExtent(pgraphics, str, size);
+
+            if (tab_pane.m_dib.m_p != NULL)
+            {
+               size.cy = MAX(size.cy, tab_pane.m_dib->size().cy);
+            }
+            cy = size.cy + 2;
+
+            if (cy > iTabHeight)
+            {
+               iTabHeight = cy;
+            }
+
+            tab_pane.m_pt.x = x;
+            tab_pane.m_pt.y = rectClient.top;
+
+
+            //            string str = tab_pane.get_title();
+
+            //            size size;
+
+            ixAdd = 5;
+
+            if (tab_pane.m_dib.is_set())
+            {
+               //::image_list::info ii;
+               ixAdd += tab_pane.m_dib->m_size.cx + 2;
+            }
+
+            if (!tab_pane.m_bPermanent)
+            {
+               ixAdd += 2 + 16 + 2;
+            }
+
+
+
+
+            tab_pane.m_size.cx = size.cx + ixAdd
+                                 + ptab->get_data()->m_rectBorder.left + ptab->get_data()->m_rectBorder.right
+                                 + ptab->get_data()->m_rectMargin.left + ptab->get_data()->m_rectMargin.right
+                                 + ptab->get_data()->m_rectTextMargin.left + ptab->get_data()->m_rectTextMargin.right;
+
+            x += tab_pane.m_size.cx;
+         }
+
+         // close tab button
+         cy = 2 + 16 + 2;
+         if (cy > iTabHeight)
+         {
+            iTabHeight = cy;
+         }
+
+         iTabHeight += ptab->get_data()->m_rectBorder.top + ptab->get_data()->m_rectBorder.bottom +
+                       ptab->get_data()->m_rectMargin.top + ptab->get_data()->m_rectMargin.bottom + ptab->get_data()->m_iHeightAddUp;
+
+         ptab->get_data()->m_iTabHeight = iTabHeight + 8;
+
+         for (int32_t iPane = 0; iPane < ptab->get_data()->m_panea.get_size(); iPane++)
+         {
+
+            ::user::tab_pane & tab_pane = ptab->get_data()->m_panea(iPane);
+
+            tab_pane.m_size.cy = iTabHeight;
+
+         }
+
+
+
+
+         ptab->get_data()->m_rectTab.left = rectClient.left;
+         ptab->get_data()->m_rectTab.top = rectClient.top;
+         ptab->get_data()->m_rectTab.right = rectClient.right;
+         ptab->get_data()->m_rectTab.bottom = ptab->get_data()->m_rectTab.top + ptab->get_data()->m_iTabHeight;
+
+         /*      SetWindowPos(
+         ZORDER_TOP,
+         m_rectTab.left,
+         m_rectTab.top,
+         m_rectTab.width(),
+         m_rectTab.height(),
+         0);*/
+
+         rect & rectTabClient = ptab->get_data()->m_rectTabClient;
+
+         rectTabClient.left = ptab->get_data()->m_rectTab.left;
+         rectTabClient.top = ptab->m_bShowTabs ? ptab->get_data()->m_rectTab.bottom : rectClient.top;
+         rectTabClient.right = ptab->get_data()->m_rectTab.right;
+         rectTabClient.bottom = rectClient.bottom;
+
+         //TRACE0("rectTabClient");
+
+      }
+
+      for (int32_t iPane = 0; iPane < ptab->get_data()->m_panea.get_size(); iPane++)
+      {
+
+         if (iPane != ptab->_001GetSel())
+         {
+
+            ptab->layout_pane(iPane);
+
+         }
+
+      }
+
+      ptab->layout_pane(ptab->_001GetSel(), ptab->IsWindowVisible());
+
+      return true;
+
+   }
+
+
+   bool theme::_001TabOnDrawSchema01(::draw2d::graphics * pgraphics, ::user::tab * ptab)
    {
 
       class rect rect;
@@ -91,9 +364,14 @@ namespace wndfrm_tranquillum
       class rect r1;
       ptab->GetClientRect(r1);
 
-      pgraphics->fill_solid_rect(r1, ARGB(255, 255, 255, 255));
+      if (!ptab->get_data()->m_bNoClient)
+      {
 
-      ptab->get_data()->m_pen->create_solid(1,RGB(32,32,32));
+         pgraphics->fill_solid_rect(r1, ARGB(255, 255, 255, 255));
+
+      }
+
+      ptab->get_data()->m_pen->create_solid(1, RGB(32, 32, 32));
 
       pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias_grid_fit);
 
@@ -102,6 +380,19 @@ namespace wndfrm_tranquillum
       ::rect rcTab;
 
       rcTab = ptab->get_data()->m_rectTab;
+
+      if (ptab->get_data()->m_bNoClient)
+      {
+
+         pgraphics->fill_solid_rect(rcTab, ARGB(255, 255, 255, 255));
+
+      }
+      ::rect rcTape(rcTab);
+
+      rcTape.top = rcTape.bottom - 8;
+
+      pgraphics->fill_solid_rect(rcTape, ARGB(255, 192, 192, 192));
+
 
       ::rect rcTabs(rcTab);
 
@@ -121,7 +412,7 @@ namespace wndfrm_tranquillum
 
       pgraphics->fill_solid_rect(rcTabs, crbk);
 
-      crbk= ptab->_001GetColor(::user::color_tab_client_background);
+      crbk = ptab->_001GetColor(::user::color_tab_client_background);
 
       pgraphics->fill_solid_rect(rcClient, crbk);
 
@@ -129,55 +420,53 @@ namespace wndfrm_tranquillum
 
       ::draw2d::brush_sp brushText;
 
-      for(int32_t iPane = 0; iPane < ptab->get_data()->m_panea.get_size(); iPane++)
+      for (int32_t iPane = 0; iPane < ptab->get_data()->m_panea.get_size(); iPane++)
       {
 
          ::user::tab_pane & pane = ptab->get_data()->m_panea(iPane);
 
-         if(!pane.m_bTabPaneVisible)
+         if (!pane.m_bTabPaneVisible)
             continue;
 
          iTab++;
 
-         if(!ptab->get_element_rect(iTab,rect,::user::element_tab))
+         if (!ptab->get_element_rect(iTab, rect, ::user::element_tab))
             continue;
 
-         if(!ptab->get_element_rect(iTab,rectBorder, ::user::element_border))
+         if (!ptab->get_element_rect(iTab, rectBorder, ::user::element_border))
             continue;
 
-         if(!ptab->get_element_rect(iTab,rectClient, ::user::element_client))
+         if (!ptab->get_element_rect(iTab, rectClient, ::user::element_client))
             continue;
 
-         if(ptab->get_data()->m_bVertical)
+         if (ptab->get_data()->m_bVertical)
          {
 
-            if(ptab->get_element_rect(iTab,rectIcon, ::user::element_icon))
+            if (ptab->get_element_rect(iTab, rectIcon, ::user::element_icon))
             {
 
                pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
-               pane.m_dib->bitmap_blend(pgraphics,rectIcon);
+               pane.m_dib->bitmap_blend(pgraphics, rectIcon);
 
             }
 
             ::draw2d::path_sp path(allocer());
 
-            if(true)
+            if (true)
             {
 
-               if(ptab->get_data()->m_idaSel.contains(pane.m_id))
+               if (ptab->get_data()->m_idaSel.contains(pane.m_id))
                {
 
-                  //path->start_figure();
+                  ::rect rSel;
 
-                  path->add_line(rectBorder.right,rectBorder.bottom,rectBorder.left + 1,rectBorder.bottom);
-                  //path->add_line(rectClient.right, rectBorder.top);
-                  path->add_line(rectBorder.left,rectBorder.top - (rectBorder.left - rectClient.left));
-                  path->add_line(rectClient.left,rectBorder.top);
-                  path->add_line(rectBorder.right,rectBorder.top);
+                  rSel = rectClient;
 
-                  path->end_figure(false);
+                  rSel.bottom = rectClient.top + 3;
 
-                  pane.m_brushFillSel->CreateLinearGradientBrush(rectBorder.top_left(),rectBorder.bottom_left(),ARGB(230,235,235,230),ARGB(250,255,255,250));
+                  pgraphics->fill_solid_rect(rSel, ARGB(255, 120, 155, 240));
+
+                  pane.m_brushFillSel->CreateLinearGradientBrush(rectBorder.top_left(), rectBorder.bottom_left(), ARGB(230, 235, 235, 230), ARGB(250, 255, 255, 250));
 
                   pgraphics->SelectObject(pane.m_brushFillSel);
 
@@ -187,7 +476,18 @@ namespace wndfrm_tranquillum
 
                   pgraphics->draw_path(path);
 
-                  pgraphics->set_font(ptab->get_data()->m_font);
+                  if (iTab == ptab->m_iHover && ptab->m_eelementHover != ::user::element_close_tab_button && ptab->m_eelementHover < ::user::element_split && ptab->m_eelementHover >(::user::element_split + 100))
+                  {
+
+                     pgraphics->set_font(_001GetFont(ptab, ::user::font_tab_sel_hover));
+
+                  }
+                  else
+                  {
+
+                     pgraphics->set_font(_001GetFont(ptab, ::user::font_tab_sel));
+
+                  }
 
                   brushText = ptab->get_data()->m_brushTextSel;
 
@@ -197,18 +497,18 @@ namespace wndfrm_tranquillum
 
                   //path->start_figure();
 
-                  path->add_line(rectBorder.right,rectBorder.bottom,rectBorder.left + 1,rectBorder.bottom);
-                  path->add_line(rectBorder.left,rectBorder.top - (rectBorder.left - rectClient.left));
-                  path->add_line(rectText.left,rectBorder.top);
-                  path->add_line(rectBorder.right,rectBorder.top);
-                  path->add_line(rectBorder.right,rectBorder.bottom);
+                  path->add_line(rectBorder.right, rectBorder.bottom, rectBorder.left + 1, rectBorder.bottom);
+                  path->add_line(rectBorder.left, rectBorder.top - (rectBorder.left - rectClient.left));
+                  path->add_line(rectText.left, rectBorder.top);
+                  path->add_line(rectBorder.right, rectBorder.top);
+                  path->add_line(rectBorder.right, rectBorder.bottom);
 
                   path->end_figure(true);
 
-                  if(iTab == ptab->m_iHover && ptab->m_eelementHover != ::user::element_close_tab_button && ptab->m_eelementHover < ::user::element_split && ptab->m_eelementHover >(::user::element_split + 100))
+                  if (iTab == ptab->m_iHover && ptab->m_eelementHover != ::user::element_close_tab_button && ptab->m_eelementHover < ::user::element_split && ptab->m_eelementHover >(::user::element_split + 100))
                   {
 
-                     pane.m_brushFillHover->CreateLinearGradientBrush(rectBorder.top_left(),rectBorder.bottom_left(),ARGB(230,215,215,210),ARGB(250,235,235,230));
+                     pane.m_brushFillHover->CreateLinearGradientBrush(rectBorder.top_left(), rectBorder.bottom_left(), ARGB(230, 215, 215, 210), ARGB(250, 235, 235, 230));
 
                      pgraphics->SelectObject(pane.m_brushFillHover);
 
@@ -218,7 +518,7 @@ namespace wndfrm_tranquillum
 
                      pgraphics->draw_path(path);
 
-                     pgraphics->set_font(ptab->get_data()->m_fontUnderline);
+                     pgraphics->set_font(_001GetFont(ptab, ::user::font_tab_hover));
 
                      brushText = ptab->get_data()->m_brushTextHover;
 
@@ -226,7 +526,7 @@ namespace wndfrm_tranquillum
                   else
                   {
 
-                     pane.m_brushFill->CreateLinearGradientBrush(rectBorder.top_left(),rectBorder.bottom_left(),ARGB(230,175,175,170),ARGB(250,195,195,190));
+                     pane.m_brushFill->CreateLinearGradientBrush(rectBorder.top_left(), rectBorder.bottom_left(), ARGB(230, 175, 175, 170), ARGB(250, 195, 195, 190));
 
                      pgraphics->SelectObject(pane.m_brushFill);
 
@@ -236,7 +536,7 @@ namespace wndfrm_tranquillum
 
                      pgraphics->draw_path(path);
 
-                     pgraphics->set_font(ptab->get_data()->m_font);
+                     pgraphics->set_font(_001GetFont(ptab, ::user::font_tab));
 
                      brushText = ptab->get_data()->m_brushText;
 
@@ -250,54 +550,43 @@ namespace wndfrm_tranquillum
          else
          {
 
-            if(ptab->get_element_rect(iTab,rectIcon, ::user::element_icon))
+            if (ptab->get_element_rect(iTab, rectIcon, ::user::element_icon))
             {
 
                pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
-               pane.m_dib->bitmap_blend(pgraphics,rectIcon);
+               pane.m_dib->bitmap_blend(pgraphics, rectIcon);
 
             }
-            if (iPane == 0)
-            {
+            //if (iPane == 0)
+            //{
 
-               if (rcTab.left < rectBorder.left)
-               {
+            //   if (rcTab.left < rectBorder.left)
+            //   {
 
-                  pgraphics->SelectObject(ptab->get_data()->m_penBorder);
+            //      pgraphics->SelectObject(ptab->get_data()->m_penBorder);
 
-                  pgraphics->draw_line(rcTab.left, rectClient.bottom, rectBorder.left, rectClient.bottom);
+            //      pgraphics->draw_line(rcTab.left, rectClient.bottom, rectBorder.left, rectClient.bottom);
 
-               }
+            //   }
 
-            }
+            //}
 
-            if(true)
+            if (true)
             {
 
                ::draw2d::path_sp path(allocer());
 
-               if(ptab->get_data()->m_idaSel.contains(pane.m_id))
+               if (ptab->get_data()->m_idaSel.contains(pane.m_id))
                {
 
-                  if (iPane > 0)
-                  {
+                  ::rect rSel;
 
-                     path->add_line(rect.left, rectClient.bottom, rectBorder.left, rectClient.bottom);
+                  rSel = rect;
 
-                  }
+                  rSel.bottom = rectClient.top + 3;
 
-                  path->add_line(rectBorder.left,rectClient.bottom,rectBorder.left,rectBorder.top);
-
-                  path->add_line(rectClient.right,rectBorder.top);
-
-                  path->add_line(rectBorder.right,rectBorder.top + (rectBorder.right - rectClient.right));
-
-                  path->add_line(rectBorder.right - 1,rectClient.bottom);
-
-                  path->end_figure(false);
-
-                  //pane.m_brushFillSel->CreateLinearGradientBrush(rectBorder.top_left(),rectBorder.bottom_left(),ARGB(230,235,235,230),ARGB(250,255,255,250));
+                  pgraphics->fill_solid_rect(rSel, ARGB(255, 120, 155, 240));
 
                   pane.m_brushFillSel->create_solid(ARGB(255, 255, 255, 255));
 
@@ -305,13 +594,25 @@ namespace wndfrm_tranquillum
 
                   pgraphics->fill_path(path);
 
-                  ptab->get_data()->m_penBorderSel->create_solid(1.0,ARGB(255,0,0,0));
+                  ptab->get_data()->m_penBorderSel->create_solid(1.0, ARGB(255, 0, 0, 0));
 
                   pgraphics->SelectObject(ptab->get_data()->m_penBorderSel);
 
                   pgraphics->draw_path(path);
 
-                  pgraphics->set_font(ptab->get_data()->m_font);
+                  if (iTab == ptab->m_iHover && ptab->m_eelementHover != ::user::element_close_tab_button && ptab->m_eelementHover < ::user::element_split || ptab->m_eelementHover >(::user::element_split + 100))
+                  {
+
+                     pgraphics->set_font(_001GetFont(ptab, ::user::font_tab_sel_hover));
+
+                  }
+                  else
+                  {
+
+                     pgraphics->set_font(_001GetFont(ptab, ::user::font_tab_sel));
+
+
+                  }
 
                   brushText = ptab->get_data()->m_brushTextSel;
 
@@ -319,29 +620,11 @@ namespace wndfrm_tranquillum
                else
                {
 
-                  //path->begin_figure(true, ::draw2d::fill_mode_winding);
 
-                  if (iPane > 0)
+                  if (iTab == ptab->m_iHover && ptab->m_eelementHover != ::user::element_close_tab_button && (ptab->m_eelementHover < ::user::element_split || ptab->m_eelementHover >(::user::element_split + 100)))
                   {
 
-                     path->add_line(rect.left, rectClient.bottom, rectBorder.left, rectClient.bottom);
-
-                  }
-
-                  path->add_line(rectBorder.left,rectClient.bottom,rectBorder.left,rectBorder.top);
-
-                  path->add_line(rectClient.right,rectBorder.top);
-
-                  path->add_line(rectBorder.right,rectBorder.top + (rectBorder.right - rectClient.right));
-
-                  path->add_line(rectBorder.right - 1,rectClient.bottom);
-
-                  path->end_figure(true);
-
-                  if(iTab == ptab->m_iHover && ptab->m_eelementHover != ::user::element_close_tab_button && (ptab->m_eelementHover < ::user::element_split || ptab->m_eelementHover >(::user::element_split + 100)))
-                  {
-
-                     pane.m_brushFillHover->CreateLinearGradientBrush(rectBorder.top_left(),rectBorder.bottom_left(),ARGB(230,215,215,210),ARGB(250,235,235,230));
+                     pane.m_brushFillHover->CreateLinearGradientBrush(rectBorder.top_left(), rectBorder.bottom_left(), ARGB(230, 215, 215, 210), ARGB(250, 235, 235, 230));
 
                      pgraphics->SelectObject(pane.m_brushFillHover);
 
@@ -351,7 +634,7 @@ namespace wndfrm_tranquillum
 
                      pgraphics->draw_path(path);
 
-                     pgraphics->set_font(ptab->get_data()->m_fontUnderline);
+                     pgraphics->set_font(_001GetFont(ptab, ::user::font_tab_hover));
 
                      brushText = ptab->get_data()->m_brushTextHover;
 
@@ -359,7 +642,7 @@ namespace wndfrm_tranquillum
                   else
                   {
 
-                     pane.m_brushFill->CreateLinearGradientBrush(rectBorder.top_left(),rectBorder.bottom_left(),ARGB(230,175,175,170),ARGB(250,195,195,190));
+                     pane.m_brushFill->CreateLinearGradientBrush(rectBorder.top_left(), rectBorder.bottom_left(), ARGB(230, 175, 175, 170), ARGB(250, 195, 195, 190));
 
                      pgraphics->SelectObject(pane.m_brushFill);
 
@@ -369,7 +652,7 @@ namespace wndfrm_tranquillum
 
                      pgraphics->draw_path(path);
 
-                     pgraphics->set_font(ptab->get_data()->m_font);
+                     pgraphics->set_font(_001GetFont(ptab, ::user::font_tab));
 
                      brushText = ptab->get_data()->m_brushTextSel;
 
@@ -379,44 +662,51 @@ namespace wndfrm_tranquillum
 
             }
 
-            if (iPane == ptab->get_data()->m_panea.get_upper_bound())
-            {
+            ::rect rVertLine;
 
-               if (rectBorder.right - 1 < rcTab.right)
-               {
+            rVertLine = rect;
 
-                  pgraphics->SelectObject(ptab->get_data()->m_penBorder);
+            rVertLine.left = rVertLine.right - 1;
+            pgraphics->fill_solid_rect(rVertLine, ARGB(127, 80, 80, 80));
 
-                  pgraphics->draw_line(rectBorder.right - 1, rectClient.bottom, rcTab.right, rectClient.bottom);
+            //if (iPane == ptab->get_data()->m_panea.get_upper_bound())
+            //{
 
-               }
+            //   if (rectBorder.right - 1 < rcTab.right)
+            //   {
 
-            }
+            //      pgraphics->SelectObject(ptab->get_data()->m_penBorder);
 
+            //      pgraphics->draw_line(rectBorder.right - 1, rectClient.bottom, rcTab.right, rectClient.bottom);
 
-         }
+            //   }
 
-         if(true)
-         {
+            //}
 
-            if(ptab->get_element_rect(iTab,rectText, ::user::element_text))
-            {
-
-               _001OnTabPaneDrawTitle(pane,ptab,pgraphics,rectText,brushText);
-
-            }
 
          }
 
-         if(true)
+         if (true)
          {
 
-            if(ptab->get_element_rect(iTab,rectClose, ::user::element_close_tab_button))
+            if (ptab->get_element_rect(iTab, rectText, ::user::element_text))
             {
 
-               pgraphics->set_font(ptab->get_data()->m_fontBold);
+               _001OnTabPaneDrawTitle(pane, ptab, pgraphics, rectText, brushText);
 
-               if(iTab == ptab->m_iHover && ptab->m_eelementHover == ::user::element_close_tab_button)
+            }
+
+         }
+
+         if (true)
+         {
+
+            if (ptab->get_element_rect(iTab, rectClose, ::user::element_close_tab_button))
+            {
+
+               pgraphics->set_font(_001GetFont(ptab, ::user::font_tab_big_bold));
+
+               if (iTab == ptab->m_iHover && ptab->m_eelementHover == ::user::element_close_tab_button)
                {
 
                   brushText = ptab->get_data()->m_brushCloseHover;
@@ -431,7 +721,7 @@ namespace wndfrm_tranquillum
 
                pgraphics->SelectObject(brushText);
 
-               pgraphics->draw_text("x",rectClose,DT_CENTER | DT_VCENTER);
+               pgraphics->draw_text("x", rectClose, DT_CENTER | DT_VCENTER);
 
             }
 
@@ -443,20 +733,6 @@ namespace wndfrm_tranquillum
 
    }
 
-   bool theme::_001OnDrawMainFrameBackground(::draw2d::graphics * pgraphics, ::user::frame * pframe)
-   {
-
-      rect rectClient;
-
-      pframe->GetClientRect(rectClient);
-
-      COLORREF crBackground = pframe->_001GetColor(::user::color_background);
-
-      pgraphics->fill_solid_rect(rectClient, crBackground);
-
-      return true;
-
-   }
 
 
    void theme::_001OnTabPaneDrawTitle(::user::tab_pane & pane,::user::tab * ptab,::draw2d::graphics * pgraphics,LPCRECT lpcrect,::draw2d::brush_sp & brushText)
@@ -505,7 +781,7 @@ namespace wndfrm_tranquillum
                   //pgraphics->FillSolidRect(rectEmp,ARGB(128,208,223,233));
                   pgraphics->SelectObject(ptab->get_data()->m_brushText);
                }
-               pgraphics->set_font(ptab->get_data()->m_fontBigBold);
+               pgraphics->set_font(_001GetFont(ptab, ::user::font_tab_big_bold));
                pgraphics->set_alpha_mode(emode);
                pgraphics->_DrawText(MAGIC_PALACE_TAB_TEXT,rectText,DT_CENTER | DT_VCENTER | DT_NOPREFIX);
                rectText.left += sSep.cx;
@@ -520,257 +796,6 @@ namespace wndfrm_tranquillum
 
 
 
-   bool theme::_001OnTabLayout(::user::tab * ptab)
-   {
-
-
-      {
-
-         //         DWORD dwTime2 = ::get_tick_count();
-
-         //TRACE("message_handler call time0= %d ms",dwTime2 - t_time1.operator DWORD_PTR());
-         //TRACE("usertab::on_layout call time1= %d ms",dwTime2 - t_time1.operator DWORD_PTR());
-      }
-      if(!ptab->get_data()->m_bCreated)
-         return false;
-
-      ptab->m_bDrawTabAtBackground = true;
-
-      ptab->defer_handle_auto_hide_tabs(false);
-
-      ::draw2d::memory_graphics pgraphics(allocer());
-      pgraphics->SelectObject(ptab->get_data()->m_fontBold);
-
-      ptab->m_dcextension.GetTextExtent(pgraphics,MAGIC_PALACE_TAB_SIZE,ptab->get_data()->m_sizeSep);
-
-
-
-      if(ptab->get_data()->m_bVertical)
-      {
-         int32_t iTabWidth = 16;
-         int32_t iTabHeight = 8;
-         int32_t cx;
-         int32_t cy;
-         for(int32_t iPane = 0; iPane < ptab->get_data()->m_panea.get_size(); iPane++)
-         {
-
-            ::user::tab_pane & tab_pane = ptab->get_data()->m_panea(iPane);
-
-            if(!tab_pane.m_bTabPaneVisible)
-               continue;
-
-            string str = tab_pane.get_title();
-
-            tab_pane.do_split_layout(ptab->m_dcextension,pgraphics);
-
-            ::size size;
-
-            ptab->m_dcextension.GetTextExtent(pgraphics,str,size);
-
-
-
-            if(tab_pane.m_dib.is_set())
-            {
-               size.cx += tab_pane.m_dib->m_size.cx + 2;
-               size.cy = MAX(size.cy,tab_pane.m_dib->m_size.cy);
-            }
-            cx = size.cx + 2;
-
-            if(!tab_pane.m_bPermanent)
-            {
-               cx += 2 + 16 + 2;
-            }
-
-            if(cx > iTabWidth)
-            {
-               iTabWidth = cx;
-            }
-            cy = size.cy + 2;
-            if(cy > iTabHeight)
-            {
-               iTabHeight = cy;
-            }
-         }
-
-         // close tab button
-         cy = 2 + 16 + 2;
-         if(cy > iTabHeight)
-         {
-            iTabHeight = cy;
-         }
-
-         iTabWidth += ptab->get_data()->m_rectBorder.left + ptab->get_data()->m_rectBorder.right +
-                      ptab->get_data()->m_rectMargin.left + ptab->get_data()->m_rectMargin.right +
-                      ptab->get_data()->m_rectTextMargin.left + ptab->get_data()->m_rectTextMargin.right;
-
-         ptab->get_data()->m_iTabWidth = iTabWidth;
-
-         iTabHeight += ptab->get_data()->m_rectBorder.top + ptab->get_data()->m_rectBorder.bottom +
-                       ptab->get_data()->m_rectMargin.top + ptab->get_data()->m_rectMargin.bottom +
-                       ptab->get_data()->m_rectTextMargin.top + ptab->get_data()->m_rectTextMargin.bottom;
-
-         ptab->get_data()->m_iTabHeight = iTabHeight;
-
-         rect rectClient;
-         ptab->GetClientRect(rectClient);
-
-         ptab->get_data()->m_rectTab.left       = rectClient.left;
-         ptab->get_data()->m_rectTab.top        = rectClient.top;
-         ptab->get_data()->m_rectTab.right      = ptab->get_data()->m_rectTab.left + ptab->get_data()->m_iTabWidth;
-         ptab->get_data()->m_rectTab.bottom     = rectClient.bottom;
-
-         /*      m_pui->SetWindowPos(
-         ZORDER_TOP,
-         m_rectTab.left,
-         m_rectTab.top,
-         m_rectTab.width(),
-         m_rectTab.height(),
-         0);*/
-
-         ptab->get_data()->m_rectTabClient.left       = ptab->m_bShowTabs ? ptab->get_data()->m_rectTab.right : rectClient.left;
-         ptab->get_data()->m_rectTabClient.top        = ptab->get_data()->m_rectTab.top;
-         ptab->get_data()->m_rectTabClient.right      = rectClient.right;
-         ptab->get_data()->m_rectTabClient.bottom     = ptab->get_data()->m_rectTab.bottom;
-
-      }
-      else
-      {
-         int32_t iTabHeight = 16;
-         int32_t cy;
-         ::draw2d::graphics_sp graphics(allocer());
-         graphics->CreateCompatibleDC(NULL);
-         ::draw2d::graphics * pgraphics = graphics;
-         pgraphics->SelectObject(ptab->get_data()->m_fontBold);
-
-         rect rectClient;
-         ptab->GetClientRect(rectClient);
-         int x = rectClient.left;
-
-         int32_t ixAdd;
-         for(int32_t iPane = 0; iPane < ptab->get_data()->m_panea.get_size(); iPane++)
-         {
-
-            ::user::tab_pane & tab_pane = ptab->get_data()->m_panea(iPane);
-
-            if(!tab_pane.m_bTabPaneVisible)
-               return false;
-
-            string str = tab_pane.get_title();
-
-            tab_pane.do_split_layout(ptab->m_dcextension,pgraphics);
-
-            size size;
-
-            ptab->m_dcextension.GetTextExtent(pgraphics,str,size);
-
-            if(tab_pane.m_dib.m_p != NULL)
-            {
-               size.cy = MAX(size.cy,tab_pane.m_dib->size().cy);
-            }
-            cy = size.cy + 2;
-
-            if(cy > iTabHeight)
-            {
-               iTabHeight = cy;
-            }
-
-            tab_pane.m_pt.x = x;
-            tab_pane.m_pt.y = rectClient.top;
-
-
-            //            string str = tab_pane.get_title();
-
-            //            size size;
-
-            ixAdd = 5;
-
-            if(tab_pane.m_dib.is_set())
-            {
-               //::image_list::info ii;
-               ixAdd += tab_pane.m_dib->m_size.cx + 2;
-            }
-
-            if(!tab_pane.m_bPermanent)
-            {
-               ixAdd += 2 + 16 + 2;
-            }
-
-
-
-
-            tab_pane.m_size.cx = size.cx + ixAdd
-                                 + ptab->get_data()->m_rectBorder.left + ptab->get_data()->m_rectBorder.right
-                                 + ptab->get_data()->m_rectMargin.left + ptab->get_data()->m_rectMargin.right
-                                 + ptab->get_data()->m_rectTextMargin.left + ptab->get_data()->m_rectTextMargin.right;
-
-            x += tab_pane.m_size.cx;
-         }
-
-         // close tab button
-         cy = 2 + 16 + 2;
-         if(cy > iTabHeight)
-         {
-            iTabHeight = cy;
-         }
-
-         iTabHeight += ptab->get_data()->m_rectBorder.top + ptab->get_data()->m_rectBorder.bottom +
-                       ptab->get_data()->m_rectMargin.top + ptab->get_data()->m_rectMargin.bottom + ptab->get_data()->m_iHeightAddUp;
-
-         ptab->get_data()->m_iTabHeight = iTabHeight;
-
-         for(int32_t iPane = 0; iPane < ptab->get_data()->m_panea.get_size(); iPane++)
-         {
-
-            ::user::tab_pane & tab_pane = ptab->get_data()->m_panea(iPane);
-
-            tab_pane.m_size.cy = iTabHeight;
-
-         }
-
-
-
-
-         ptab->get_data()->m_rectTab.left       = rectClient.left;
-         ptab->get_data()->m_rectTab.top        = rectClient.top;
-         ptab->get_data()->m_rectTab.right      = rectClient.right;
-         ptab->get_data()->m_rectTab.bottom     = ptab->get_data()->m_rectTab.top + ptab->get_data()->m_iTabHeight;
-
-         /*      SetWindowPos(
-         ZORDER_TOP,
-         m_rectTab.left,
-         m_rectTab.top,
-         m_rectTab.width(),
-         m_rectTab.height(),
-         0);*/
-
-         rect & rectTabClient = ptab->get_data()->m_rectTabClient;
-
-         rectTabClient.left       = ptab->get_data()->m_rectTab.left;
-         rectTabClient.top        = ptab->m_bShowTabs ? ptab->get_data()->m_rectTab.bottom : rectClient.top;
-         rectTabClient.right      = ptab->get_data()->m_rectTab.right;
-         rectTabClient.bottom     = rectClient.bottom;
-
-         //TRACE0("rectTabClient");
-
-      }
-
-      for(int32_t iPane = 0; iPane < ptab->get_data()->m_panea.get_size(); iPane++)
-      {
-
-         if(iPane != ptab->_001GetSel())
-         {
-
-            ptab->layout_pane(iPane);
-
-         }
-
-      }
-
-      ptab->layout_pane(ptab->_001GetSel(), ptab->IsWindowVisible());
-
-      return true;
-
-   }
 
 
    bool theme::on_ui_event(::user::e_event eevent, ::user::e_object eobject, ::user::interaction * pui)

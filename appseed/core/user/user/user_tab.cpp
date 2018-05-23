@@ -17,10 +17,6 @@ namespace user
       ::data::data(papp),
       m_imagelist(papp),
       m_pen(allocer()),
-      m_font(allocer()),
-      m_fontUnderline(allocer()),
-      m_fontBigBold(allocer()),
-      m_fontBold(allocer()),
       m_brushTextHover(allocer()),
       m_brushTextSel(allocer()),
       m_brushText(allocer()),
@@ -33,7 +29,7 @@ namespace user
       m_dcextension(papp),
       m_panea(papp)
    {
-
+      m_bNoClient = false;
       m_brushTextHover->create_solid(ARGB(255, 0, 127, 255));
       m_brushTextSel->create_solid(ARGB(255, 0, 0, 0));
       m_brushText->create_solid(ARGB(163, 0, 0, 0));
@@ -333,6 +329,16 @@ namespace user
    }
 
 
+   void tab::remove_all_tabs()
+   {
+
+      get_data()->m_panea.remove_all();
+
+      on_change_pane_count();
+
+   }
+
+
    bool tab::defer_handle_auto_hide_tabs(bool bLayout)
    {
 
@@ -535,6 +541,23 @@ namespace user
       if(GetTopLevel()->frame_is_transparent())
          return;
 
+      style_context style(this);
+
+      while (style)
+      {
+
+         if (style->_001TabOnDrawSchema01(pgraphics, this))
+         {
+
+            return;
+
+         }
+
+         style.next();
+
+      }
+
+
       if(m_puserstyle == NULL)
       {
 
@@ -634,7 +657,7 @@ namespace user
 
                   pgraphics->draw_path(path);
 
-                  pgraphics->set_font(get_data()->m_font);
+                  pgraphics->set_font(_001GetFont(this, ::user::font_tab));
 
                   brushText = get_data()->m_brushTextSel;
 
@@ -665,7 +688,7 @@ namespace user
 
                      pgraphics->draw_path(path);
 
-                     pgraphics->set_font(get_data()->m_fontUnderline);
+                     pgraphics->set_font(_001GetFont(this, ::user::font_tab_hover));
 
                      brushText = get_data()->m_brushTextHover;
 
@@ -683,7 +706,7 @@ namespace user
 
                      pgraphics->draw_path(path);
 
-                     pgraphics->set_font(get_data()->m_font);
+                     pgraphics->set_font(_001GetFont(this, ::user::font_tab));
 
                      brushText = get_data()->m_brushText;
 
@@ -736,7 +759,7 @@ namespace user
 
                   pgraphics->draw_path(path);
 
-                  pgraphics->set_font(get_data()->m_font);
+                  pgraphics->set_font(_001GetFont(this, ::user::font_tab));
 
                   brushText = get_data()->m_brushTextSel;
 
@@ -769,7 +792,7 @@ namespace user
 
                      pgraphics->draw_path(path);
 
-                     pgraphics->set_font(get_data()->m_fontUnderline);
+                     pgraphics->set_font(_001GetFont(this, ::user::font_tab_hover));
 
                      brushText = get_data()->m_brushTextHover;
 
@@ -787,7 +810,7 @@ namespace user
 
                      pgraphics->draw_path(path);
 
-                     pgraphics->set_font(get_data()->m_font);
+                     pgraphics->set_font(_001GetFont(this, ::user::font_tab));
 
                      brushText = get_data()->m_brushTextSel;
 
@@ -817,7 +840,7 @@ namespace user
             if (get_element_rect(iTab, rectClose, ::user::element_close_tab_button))
             {
 
-               pgraphics->set_font(get_data()->m_fontBold);
+               pgraphics->set_font(_001GetFont(this, ::user::font_tab_big_bold));
 
                if (iTab == m_iHover && m_eelementHover == ::user::element_close_tab_button)
                {
@@ -914,7 +937,7 @@ namespace user
                pgraphics->line_to(rectClient.left, rectBorder.top);
                pgraphics->line_to(rectBorder.right, rectBorder.top);
 
-               pgraphics->set_font(get_data()->m_fontBold);
+               pgraphics->set_font(_001GetFont(this, ::user::font_tab_sel));
 
                brushText = get_data()->m_brushTextSel;
 
@@ -936,12 +959,12 @@ namespace user
                pgraphics->line_to(rectBorder.right, rectBorder.bottom);
                if(iVisiblePane == m_iHover && m_eelementHover != element_close_tab_button)
                {
-                  pgraphics->set_font(get_data()->m_fontUnderline);
+                  pgraphics->set_font(_001GetFont(this, ::user::font_tab_hover));
                   brushText = get_data()->m_brushClose;
                }
                else
                {
-                  pgraphics->set_font(get_data()->m_font);
+                  pgraphics->set_font(_001GetFont(this, ::user::font_tab));
                   brushText = get_data()->m_brushText;
                }
             }
@@ -976,7 +999,7 @@ namespace user
                pgraphics->line_to(rectBorder.right, rectBorder.top + (rectBorder.right - rectClient.right));
                pgraphics->line_to(rectBorder.right - 1, rectClient.bottom);
                //pgraphics->line_to(rect.right, rectText.bottom);
-               pgraphics->set_font(get_data()->m_fontBold);
+               pgraphics->set_font(_001GetFont(this, ::user::font_tab_sel));
                brushText->create_solid(ARGB(255, 0, 0, 0));
             }
             else
@@ -999,12 +1022,12 @@ namespace user
 
                if (iVisiblePane == m_iHover && m_eelementHover != element_close_tab_button)
                {
-                  pgraphics->set_font(get_data()->m_fontUnderline);
+                  pgraphics->set_font(_001GetFont(this, ::user::font_tab_hover));
                   brushText->create_solid(ARGB(255, 0, 127, 255));
                }
                else
                {
-                  pgraphics->set_font(get_data()->m_font);
+                  pgraphics->set_font(_001GetFont(this, ::user::font_tab));
                   brushText = get_data()->m_brushText;
                }
             }
@@ -1022,7 +1045,7 @@ namespace user
 
          if (get_element_rect(iVisiblePane, rectClose, element_close_tab_button))
          {
-            pgraphics->set_font(get_data()->m_fontBold);
+            pgraphics->set_font(_001GetFont(this, ::user::font_tab_big_bold));
             if (iVisiblePane == m_iHover && m_eelementHover == element_close_tab_button)
             {
                brushText = get_data()->m_brushCloseSel;
@@ -1091,30 +1114,19 @@ namespace user
 
 
 
+      style_context style(this);
 
-      if (m_puserstyle == NULL)
+      while(style)
       {
 
-         m_puserstyle = GetTopLevelFrame();
-
-      }
-
-      if (m_puserstyle == NULL)
-      {
-
-         m_puserstyle = Application.userstyle();
-
-      }
-
-      if(m_puserstyle != NULL)
-      {
-
-         if (m_puserstyle->_001OnTabLayout(this))
+         if (style->_001OnTabLayout(this))
          {
 
             return;
 
          }
+
+         style.next();
 
       }
 
@@ -1128,10 +1140,42 @@ namespace user
       if(!get_data()->m_bCreated)
          return;
 
+      if (get_data()->m_bVertical)
+      {
+
+         get_data()->m_rectMargin.set(2, 3, 1, 0);
+
+         get_data()->m_rectBorder.set(11, 1, 6, 0);
+
+         get_data()->m_rectTextMargin.set(3, 0, 1, 0);
+
+         get_data()->m_iTabHeight += get_data()->m_rectBorder.top + get_data()->m_rectBorder.bottom +
+                                     get_data()->m_rectMargin.top + get_data()->m_rectMargin.bottom;
+
+         get_data()->m_iTabWidth += get_data()->m_rectBorder.left + get_data()->m_rectBorder.right +
+                                    get_data()->m_rectMargin.left + get_data()->m_rectMargin.right;
+      }
+      else
+      {
+
+         get_data()->m_rectMargin.set(3, 2, 0, 1);
+
+         get_data()->m_rectBorder.set(0, 1, 11, 6);
+
+         get_data()->m_rectTextMargin.set(3, 0, 1, 0);
+
+         get_data()->m_iTabHeight += get_data()->m_rectBorder.top + get_data()->m_rectBorder.bottom +
+                                     get_data()->m_rectMargin.top + get_data()->m_rectMargin.bottom;
+
+         get_data()->m_iTabWidth += get_data()->m_rectBorder.left + get_data()->m_rectBorder.right +
+                                    get_data()->m_rectMargin.left + get_data()->m_rectMargin.right;
+      }
+
+
       defer_handle_auto_hide_tabs(false);
 
       ::draw2d::memory_graphics pgraphics(allocer());
-      pgraphics->SelectObject(get_data()->m_fontBold);
+      pgraphics->SelectObject(_001GetFont(this, ::user::font_tab_big_bold));
 
       m_dcextension.GetTextExtent(pgraphics,MAGIC_PALACE_TAB_SIZE,get_data()->m_sizeSep);
 
@@ -1233,7 +1277,7 @@ namespace user
          ::draw2d::graphics_sp graphics(allocer());
          graphics->CreateCompatibleDC(NULL);
          ::draw2d::graphics * pgraphics = graphics;
-         pgraphics->SelectObject(get_data()->m_fontBold);
+         pgraphics->SelectObject(_001GetFont(this, ::user::font_tab_sel));
 
          rect rectClient;
          GetClientRect(rectClient);
@@ -1813,17 +1857,6 @@ namespace user
 
       spgraphics->CreateCompatibleDC(NULL);
 
-      get_data()->m_font->create_point_font(FONT_SANS, 10);
-
-      get_data()->m_fontBold->create_point_font(FONT_SANS, 10, FW_BOLD);
-
-      get_data()->m_fontBigBold->create_point_font(FONT_SANS, 12, FW_EXTRABOLD);
-
-      get_data()->m_fontUnderline->create_point_font(FONT_SANS, 10, FW_NORMAL, false, true);
-
-      //m_puserstyle = Application.userstyle();
-      //  m_pimagelist = new image_list(get_app());
-
       get_data()->m_bCreated = true;
 
       pbase->set_lresult(0);
@@ -2390,38 +2423,9 @@ namespace user
 
    void tab:: _001SetVertical(bool bVertical)
    {
+
       get_data()->m_bVertical = bVertical;
 
-      if(get_data()->m_bVertical)
-      {
-
-         get_data()->m_rectMargin.set(2, 3, 1, 0);
-
-         get_data()->m_rectBorder.set(11, 1, 6, 0);
-
-         get_data()->m_rectTextMargin.set(3, 0, 1, 0);
-
-         get_data()->m_iTabHeight += get_data()->m_rectBorder.top + get_data()->m_rectBorder.bottom +
-                                     get_data()->m_rectMargin.top + get_data()->m_rectMargin.bottom;
-
-         get_data()->m_iTabWidth += get_data()->m_rectBorder.left + get_data()->m_rectBorder.right +
-                                    get_data()->m_rectMargin.left + get_data()->m_rectMargin.right;
-      }
-      else
-      {
-
-         get_data()->m_rectMargin.set(3, 2, 0, 1);
-
-         get_data()->m_rectBorder.set(0, 1, 11, 6);
-
-         get_data()->m_rectTextMargin.set(3, 0, 1, 0);
-
-         get_data()->m_iTabHeight += get_data()->m_rectBorder.top + get_data()->m_rectBorder.bottom +
-                                     get_data()->m_rectMargin.top + get_data()->m_rectMargin.bottom;
-
-         get_data()->m_iTabWidth += get_data()->m_rectBorder.left + get_data()->m_rectBorder.right +
-                                    get_data()->m_rectMargin.left + get_data()->m_rectMargin.right;
-      }
    }
 
 

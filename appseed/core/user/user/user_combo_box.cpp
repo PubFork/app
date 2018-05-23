@@ -823,6 +823,8 @@ namespace user
 
          ev.m_puie = this;
 
+         ev.m_id = m_id;
+
          ev.m_eevent = ::user::event_after_change_cur_sel;
 
          ev.m_actioncontext = actioncontext;
@@ -1138,6 +1140,8 @@ namespace user
 
       m_straValue.remove_all();
 
+      m_iSel = -1;
+      m_iHover = -1;
 
    }
 

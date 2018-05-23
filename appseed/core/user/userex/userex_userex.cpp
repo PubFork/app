@@ -78,6 +78,8 @@ namespace userex
       System.factory().creatable_small < top_toggle_view >();
       System.factory().creatable_small < top_view >();
 
+      System.factory().creatable_small < ::user::tab_view >();
+
 
 
       if(!create_user_shell())

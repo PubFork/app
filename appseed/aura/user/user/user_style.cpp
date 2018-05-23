@@ -1114,7 +1114,7 @@ namespace user
    }
 
 
-   bool style::create_point_font(e_font efont, const char * pszFamilyName, double dFontSize, int iFontWeight)
+   ::draw2d::font_sp style::create_point_font(e_font efont, const char * pszFamilyName, double dFontSize, int iFontWeight)
    {
 
       if (userstyle()->m_mapFont.is_null())
@@ -1133,14 +1133,9 @@ namespace user
 
       }
 
-      if (!font->create_point_font(pszFamilyName, dFontSize, iFontWeight))
-      {
+      font->create_point_font(pszFamilyName, dFontSize, iFontWeight);
 
-         return false;
-
-      }
-
-      return true;
+      return font;
 
    }
 

@@ -52,6 +52,8 @@ namespace database
    var base::query_rows(const char * pszQuery)
    {
 
+      synch_lock sl(m_pmutex);
+
       sp(set) s(CreateDataset());
 
       return s->query_rows(pszQuery);
@@ -62,6 +64,8 @@ namespace database
    var base::query_items(const char * pszQuery)
    {
 
+      synch_lock sl(m_pmutex);
+
       sp(set) s(CreateDataset());
 
       return s->query_items(pszQuery);
@@ -71,6 +75,8 @@ namespace database
 
    var base::query_item(const char * pszQuery)
    {
+
+      synch_lock sl(m_pmutex);
 
       sp(set) s(CreateDataset());
 

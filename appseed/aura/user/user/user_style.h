@@ -55,15 +55,15 @@ namespace user
 
       virtual bool on_ui_event(e_event eevent, e_object eobject, ::user::interaction * pui) override;
 
-      virtual bool _001TabOnDrawSchema01(::draw2d::graphics * pgraphics,tab * ptab) override;
-
       virtual bool _001OnDrawMenuInteraction(::draw2d::graphics * pgraphics, menu_interaction * pbutton) override;
-
-      virtual void _001OnTabPaneDrawTitle(::user::tab_pane & pane,::user::tab * ptab,::draw2d::graphics * pgraphics,LPCRECT lpcrect,::draw2d::brush_sp & brushText) override;
 
       virtual bool _001OnTabLayout(::user::tab * ptab) override;
 
-//      virtual bool _001GetMainFrameTranslucency(::user::e_translucency & etranslucency) override;
+      virtual bool _001TabOnDrawSchema01(::draw2d::graphics * pgraphics, tab * ptab) override;
+
+      virtual void _001OnTabPaneDrawTitle(::user::tab_pane & pane, ::user::tab * ptab, ::draw2d::graphics * pgraphics, LPCRECT lpcrect, ::draw2d::brush_sp & brushText) override;
+
+      //      virtual bool _001GetMainFrameTranslucency(::user::e_translucency & etranslucency) override;
 
       virtual void _001DrawCheckBox(::draw2d::graphics * pgraphics, LPCRECT lpcrectClient, ::check::e_check echeck) override;
 
@@ -130,7 +130,7 @@ namespace user
       virtual void select(::draw2d::graphics * pgraphics);
 
       //virtual void defer_create_user_schema(::user::e_schema eschema);
-      virtual bool create_point_font(e_font efont, const char * pszFamilyName, double dFontSize, int iFontWeight = FW_NORMAL);
+      virtual ::draw2d::font_sp create_point_font(e_font efont, const char * pszFamilyName, double dFontSize, int iFontWeight = FW_NORMAL);
       virtual bool create_color(e_color eusercolor, COLORREF cr);
       virtual bool create_opaque_color(e_color eusercolor, COLORREF cr);
       virtual bool create_opaque_color(e_color eusercolor, ::e_color ecolor);

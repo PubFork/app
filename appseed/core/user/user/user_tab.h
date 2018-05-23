@@ -111,10 +111,6 @@ namespace user
          size                             m_sizeSep;
          int32_t                          m_iHeightAddUp;
          ::draw2d::pen_sp                 m_pen;
-         ::draw2d::font_sp                m_font;
-         ::draw2d::font_sp                m_fontUnderline;
-         ::draw2d::font_sp                m_fontBigBold;
-         ::draw2d::font_sp                m_fontBold;
          ::draw2d::brush_sp               m_brushTextHover;
          ::draw2d::brush_sp               m_brushTextSel;
          ::draw2d::brush_sp               m_brushText;
@@ -143,6 +139,8 @@ namespace user
          bool                             m_bVertical;
          ::core::match::any               m_matchanyRestore;
          bool                             m_bEnableCloseAll;
+         bool                             m_bNoClient;
+         size                             m_sizeTabTotal;
 
 
          data(::aura::application * papp);
@@ -258,6 +256,7 @@ namespace user
       virtual bool set_image_tab(const char * lpcsz, const char * pszImage, id idTab = id(), bool bVisible = true);
       virtual bool remove_tab_by_id(id idTab = id());
       virtual void remove_tab(::index iTab, bool bVisible = true);
+      virtual void remove_all_tabs();
       virtual bool show_tab_by_id(id idTab = id(), bool bShow = true);
       virtual bool show_pane(::index iPane, bool bShow = true);
       virtual bool hide_tab(::index iTab);

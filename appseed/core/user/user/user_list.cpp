@@ -4523,6 +4523,11 @@ namespace user
       for (index i = 0; i < this->get_size(); i++)
       {
          list_column * pcolumn = element_at(i);
+         if (pcolumn == NULL)
+         {
+            continue;
+
+         }
          if (pcolumn->m_bVisible)
             iCount++;
       }

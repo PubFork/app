@@ -523,36 +523,36 @@ namespace user
 
                ///defer_create_user_schema(::user::schema_button);
 
-               COLORREF crBase = crMoveableBorder;
+               //COLORREF crBase = crMoveableBorder;
 
-               color ca;
+               //color ca;
 
-               ca.set_rgb(crBase);
-               ca.hls_rate(0.0, -0.49, -0.49);
-               create_color(color_border, ca.get_rgb() | (0xff << 24));
+               //ca.set_rgb(crBase);
+               //ca.hls_rate(0.0, -0.49, -0.49);
+               //create_color(color_border, ca.get_rgb() | (0xff << 24));
 
-               ca.set_rgb(crBase);
-               ca.hls_rate(0.0, -0.11, -0.11);
-               create_color(color_background, ca.get_rgb() | (0xff << 24));
+               //ca.set_rgb(crBase);
+               //ca.hls_rate(0.0, -0.11, -0.11);
+               //create_color(color_background, ca.get_rgb() | (0xff << 24));
 
-               ca.set_rgb(crBase);
-               ca.hls_rate(0.0, -0.49, -0.49);
-               create_color(color_text_normal, ca.get_rgb() | (0xff << 24));
-
-
+               //ca.set_rgb(crBase);
+               //ca.hls_rate(0.0, -0.49, -0.49);
+               //create_color(color_text_normal, ca.get_rgb() | (0xff << 24));
 
 
-               ca.set_rgb(crBase);
-               ca.hls_rate(0.0, -0.45, 0.11);
-               create_color(color_border_hover, ca.get_rgb() | (0xff << 24));
 
-               ca.set_rgb(crBase);
-               ca.hls_rate(0.0, 0.33, 0.0);
-               create_color(color_background_hover, ca.get_rgb() | (0xff << 24));
 
-               ca.set_rgb(crBase);
-               ca.hls_rate(0.0, -0.55, 0.11);
-               create_color(color_text_hover, ca.get_rgb() | (0xff << 24));
+               //ca.set_rgb(crBase);
+               //ca.hls_rate(0.0, -0.45, 0.11);
+               //create_color(color_border_hover, ca.get_rgb() | (0xff << 24));
+
+               //ca.set_rgb(crBase);
+               //ca.hls_rate(0.0, 0.33, 0.0);
+               //create_color(color_background_hover, ca.get_rgb() | (0xff << 24));
+
+               //ca.set_rgb(crBase);
+               //ca.hls_rate(0.0, -0.55, 0.11);
+               //create_color(color_text_hover, ca.get_rgb() | (0xff << 24));
 
             }
 

@@ -1096,7 +1096,7 @@ namespace core
                   //pgraphics->fill_solid_rect(rectEmp,ARGB(128,208,223,233));
                   pgraphics->SelectObject(ptab->get_data()->m_brushText);
                }
-               pgraphics->set_font(ptab->get_data()->m_fontBigBold);
+               pgraphics->set_font(_001GetFont(ptab, ::user::font_tab_big_bold));
                pgraphics->set_alpha_mode(emode);
                pgraphics->_DrawText(MAGIC_PALACE_TAB_TEXT, rectText, DT_CENTER | DT_VCENTER | DT_NOPREFIX);
                rectText.left += sSep.cx;

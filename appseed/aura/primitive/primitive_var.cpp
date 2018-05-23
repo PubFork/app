@@ -2107,9 +2107,16 @@ var_array & var::vara()
    else if(m_etype != type_vara)
    {
       var_array * pvara =  canew(var_array());
-      for(int32_t i = 0; i < array_get_count(); i++)
+      if (is_empty() || !operator bool())
       {
-         pvara->add(at(i));
+
+      }
+      else
+      {
+         for (int32_t i = 0; i < array_get_count(); i++)
+         {
+            pvara->add(at(i));
+         }
       }
       set_type(type_vara, false);
       ASSERT(m_sp.is_null());

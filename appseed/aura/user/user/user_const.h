@@ -234,6 +234,11 @@ namespace user
       font_list_header,
       font_static,
       font_toolbar,
+      font_tab,
+      font_tab_hover,
+      font_tab_sel,
+      font_tab_sel_hover,
+      font_tab_big_bold
 
    };
 
