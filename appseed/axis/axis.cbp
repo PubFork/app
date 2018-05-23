@@ -17,6 +17,7 @@
 				<Compiler>
 					<Add option="-std=c++14" />
 					<Add option="-pg" />
+					<Add option="-fPIC" />
 					<Add option="-g" />
 					<Add option="-D_DEBUG" />
 				</Compiler>
@@ -45,6 +46,7 @@
 		</Build>
 		<Compiler>
 			<Add option="-std=c++0x" />
+			<Add option="-fPIC" />
 			<Add option="`pkg-config --cflags gtk+-3.0`" />
 			<Add option="-fexceptions" />
 			<Add option="-fpermissive" />
@@ -54,7 +56,6 @@
 			<Add option="-Wno-pointer-arith" />
 			<Add option="-Wno-attributes" />
 			<Add option="-Winvalid-pch" />
-			<Add option="-fPIC" />
 			<Add option="-DLINUX" />
 			<Add option="-DBASE_FREEIMAGE" />
 			<Add option="-DSIXTY_FOUR_BIT_LONG" />
@@ -83,7 +84,7 @@
 			<Add option="-lcrypto" />
 			<Add option="-lidn" />
 			<Add option="-lssl" />
-			<Add option="`pkg-config --libs gtk+-3.0`" />
+			<Add option="`pkg-config --libs gtk+-3.0 freetype2`" />
 			<Add option="-laura" />
 			<Add option="-Wl,-z,defs" />
 			<Add option="-fopenmp" />
@@ -180,6 +181,7 @@
 		<Unit filename="axis/os/linux/linux_cross_win_gdi_internal.h" />
 		<Unit filename="axis/os/linux/wanadel_linux_cross_win_gdi.h" />
 		<Unit filename="axis/os/os.h" />
+		<Unit filename="axis/os/windows/windows_hotplugin.cpp" />
 		<Unit filename="axis/os/x11/x11.h" />
 		<Unit filename="axis/os/x11/x11_exception.h" />
 		<Unit filename="axis/os/x11/x11_keyboard.cpp" />

@@ -16,6 +16,7 @@
 				<Option createStaticLib="1" />
 				<Compiler>
 					<Add option="-pg" />
+					<Add option="-fPIC" />
 					<Add option="-g" />
 					<Add option="-D_DEBUG" />
 				</Compiler>
@@ -44,6 +45,7 @@
 		</Build>
 		<Compiler>
 			<Add option="-std=c++14" />
+			<Add option="-fPIC" />
 			<Add option="-fexceptions" />
 			<Add option="-fpermissive" />
 			<Add option="-fnon-call-exceptions" />
@@ -52,9 +54,8 @@
 			<Add option="-Wno-pointer-arith" />
 			<Add option="-Wno-attributes" />
 			<Add option="-Winvalid-pch" />
-			<Add option="-fPIC" />
 			<Add option="`freetype-config --cflags`" />
-			<Add option="`pkg-config --cflags glib-2.0`" />
+			<Add option="`pkg-config --cflags glib-2.0 freetype2`" />
 			<Add option="-DLINUX" />
 			<Add directory="../../../include" />
 			<Add directory="../../include" />
@@ -80,7 +81,7 @@
 			<Add option="-lbz2" />
 			<Add option="-lz" />
 			<Add option="`freetype-config --libs`" />
-			<Add option="`pkg-config --libs gio-2.0`" />
+			<Add option="`pkg-config --libs gio-2.0 freetype2`" />
 			<Add option="-lgthread-2.0" />
 			<Add option="-laxis" />
 			<Add option="-Wl,-z,defs" />

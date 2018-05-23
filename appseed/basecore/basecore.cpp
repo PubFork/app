@@ -8,7 +8,12 @@
 #include <sys/utsname.h>
 
 //int uname(struct utsname *buf);
+#ifndef MANJARO
+#include <libappindicator3-0.1/libappindicator/app-indicator.h>
+#else // MANJARO
 #include <libappindicator-0.1/libappindicator/app-indicator.h>
+#endif
+
 
 #include <malloc.h>
 

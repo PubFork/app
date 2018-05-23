@@ -63,7 +63,11 @@ namespace hotplugin
    CLASS_DECL_BASE void set_hinstance(HINSTANCE hinstance);
    //CLASS_DECL_BASE void entry_hall_windows_on_paint(HDC hdc,const RECT & rect,const string & strEntryHallText);
 
+
+
 #endif
+
+      CLASS_DECL_AXIS void entry_hall_windows_on_paint(::draw2d::graphics * pgraphics, const RECT & rect, const string & strEntryHallText);
 
 } // namespace ca2plugin_container
 

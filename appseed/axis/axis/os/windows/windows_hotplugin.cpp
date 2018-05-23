@@ -44,7 +44,7 @@ namespace hotplugin
 
       int w = 284;
 
-      int v = ::GetTickCount() * 484 / 1000;
+      int v = ::get_tick_count() * 484 / 1000;
 
       int x = v % rectBar.width();
 

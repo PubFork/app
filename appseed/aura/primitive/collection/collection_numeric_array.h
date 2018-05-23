@@ -866,7 +866,7 @@ template < class TYPE >
 TYPE numeric_array < TYPE >::GetMean()
 {
 
-   return get_mean(get_data(), get_count());
+   return get_mean(this->get_data(), this->get_count());
 
 }
 
