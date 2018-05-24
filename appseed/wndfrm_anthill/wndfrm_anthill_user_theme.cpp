@@ -172,7 +172,18 @@ namespace wndfrm_anthill
 
                   pgraphics->draw_path(path);
 
-                  pgraphics->set_font(ptab->get_data()->m_font);
+                  if (iTab == ptab->m_iHover && ptab->m_eelementHover != ::user::element_close_tab_button && ptab->m_eelementHover < ::user::element_split || ptab->m_eelementHover >(::user::element_split + 100))
+                  {
+
+                     pgraphics->set_font(_001GetFont(ptab, ::user::font_tab_sel_hover));
+
+                  }
+                  else
+                  {
+
+                     pgraphics->set_font(_001GetFont(ptab, ::user::font_tab_sel));
+
+                  }
 
                   brushText = ptab->get_data()->m_brushTextSel;
 
@@ -190,7 +201,7 @@ namespace wndfrm_anthill
 
                   path->end_figure(true);
 
-                  if(iTab == ptab->m_iHover && ptab->m_eelementHover != ::user::element_close_tab_button && ptab->m_eelementHover < ::user::element_split && ptab->m_eelementHover >(::user::element_split + 100))
+                  if(iTab == ptab->m_iHover && ptab->m_eelementHover != ::user::element_close_tab_button && ptab->m_eelementHover < ::user::element_split || ptab->m_eelementHover >(::user::element_split + 100))
                   {
 
                      pane.m_brushFillHover->CreateLinearGradientBrush(rectBorder.top_left(),rectBorder.bottom_left(),ARGB(230,215,215,210),ARGB(250,235,235,230));
@@ -203,7 +214,7 @@ namespace wndfrm_anthill
 
                      pgraphics->draw_path(path);
 
-                     pgraphics->set_font(ptab->get_data()->m_fontUnderline);
+                     pgraphics->set_font(_001GetFont(ptab, ::user::font_tab_hover));
 
                      brushText = ptab->get_data()->m_brushTextHover;
 
@@ -221,7 +232,7 @@ namespace wndfrm_anthill
 
                      pgraphics->draw_path(path);
 
-                     pgraphics->set_font(ptab->get_data()->m_font);
+                     pgraphics->set_font(_001GetFont(ptab, ::user::font_tab));
 
                      brushText = ptab->get_data()->m_brushText;
 
@@ -296,7 +307,18 @@ namespace wndfrm_anthill
 
                   pgraphics->draw_path(path);
 
-                  pgraphics->set_font(ptab->get_data()->m_font);
+                  if (iTab == ptab->m_iHover && ptab->m_eelementHover != ::user::element_close_tab_button && ptab->m_eelementHover < ::user::element_split || ptab->m_eelementHover >(::user::element_split + 100))
+                  {
+
+                     pgraphics->set_font(_001GetFont(ptab, ::user::font_tab_sel_hover));
+
+                  }
+                  else
+                  {
+
+                     pgraphics->set_font(_001GetFont(ptab, ::user::font_tab_sel));
+
+                  }
 
                   brushText = ptab->get_data()->m_brushTextSel;
 
@@ -336,7 +358,7 @@ namespace wndfrm_anthill
 
                      pgraphics->draw_path(path);
 
-                     pgraphics->set_font(ptab->get_data()->m_fontUnderline);
+                     pgraphics->set_font(_001GetFont(ptab, ::user::font_tab_hover));
 
                      brushText = ptab->get_data()->m_brushTextHover;
 
@@ -354,7 +376,7 @@ namespace wndfrm_anthill
 
                      pgraphics->draw_path(path);
 
-                     pgraphics->set_font(ptab->get_data()->m_font);
+                     pgraphics->set_font(_001GetFont(ptab, ::user::font_tab));
 
                      brushText = ptab->get_data()->m_brushTextSel;
 
@@ -399,7 +421,7 @@ namespace wndfrm_anthill
             if(ptab->get_element_rect(iTab,rectClose, ::user::element_close_tab_button))
             {
 
-               pgraphics->set_font(ptab->get_data()->m_fontBold);
+               pgraphics->set_font(_001GetFont(ptab, ::user::font_tab_big_bold));
 
                if(iTab == ptab->m_iHover && ptab->m_eelementHover == ::user::element_close_tab_button)
                {
@@ -475,7 +497,7 @@ namespace wndfrm_anthill
                   //pgraphics->FillSolidRect(rectEmp,ARGB(128,208,223,233));
                   pgraphics->SelectObject(ptab->get_data()->m_brushText);
                }
-               pgraphics->set_font(ptab->get_data()->m_fontBigBold);
+               pgraphics->set_font(_001GetFont(ptab, ::user::font_tab_big_bold));
                pgraphics->set_alpha_mode(emode);
                pgraphics->_DrawText(MAGIC_PALACE_TAB_TEXT,rectText,DT_CENTER | DT_VCENTER | DT_NOPREFIX);
                rectText.left += sSep.cx;
@@ -509,7 +531,8 @@ namespace wndfrm_anthill
       ptab->defer_handle_auto_hide_tabs(false);
 
       ::draw2d::memory_graphics pgraphics(allocer());
-      pgraphics->SelectObject(ptab->get_data()->m_fontBold);
+
+      pgraphics->SelectObject(_001GetFont(ptab, ::user::font_tab_sel));
 
       ptab->m_dcextension.GetTextExtent(pgraphics,MAGIC_PALACE_TAB_SIZE,ptab->get_data()->m_sizeSep);
 
@@ -610,7 +633,8 @@ namespace wndfrm_anthill
          ::draw2d::graphics_sp graphics(allocer());
          graphics->CreateCompatibleDC(NULL);
          ::draw2d::graphics * pgraphics = graphics;
-         pgraphics->SelectObject(ptab->get_data()->m_fontBold);
+
+         pgraphics->SelectObject(_001GetFont(ptab, ::user::font_tab_sel));
 
          rect rectClient;
          ptab->GetClientRect(rectClient);

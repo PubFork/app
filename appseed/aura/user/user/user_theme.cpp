@@ -31,6 +31,14 @@ namespace user
       create_color(::user::color_action_hover_border_color, ARGB(255, 0x50, 0xA0, 0xe0));
       create_color(color_edit_text_selected, ARGB(255, 0xff, 0xff, 0xff));
       create_color(color_edit_background_selected, ARGB(255, 0x47, 0x90, 0xd0));
+      create_color(color_list_item_text, ARGB(255, 0, 0, 0));
+      create_color(color_list_item_text_selected, ARGB(255, 255, 255, 255));
+      create_color(color_list_item_text_hover, ARGB(255, 85, 115, 155));
+      create_color(color_list_item_text_selected_hover, ARGB(255, 205, 235, 255));
+      create_color(color_list_item_background, ARGB(0, 0, 0, 0));
+      create_color(color_list_item_background_selected, ARGB(127, 85, 115, 155));
+      create_color(color_list_item_background_hover, ARGB(80, 125, 185, 235));
+      create_color(color_list_item_background_selected_hover, ARGB(127, 105, 135, 185));
 
 
    }
