@@ -7078,7 +7078,9 @@ namespace user
 
             m_pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
 
-            m_pgraphics->draw_text(m_strText, m_rectText, m_iDrawTextFlags);
+            int iDrawTextFlags = m_plist->_001GetInt(int_list_item_draw_text_flags);
+
+            m_pgraphics->draw_text(m_strText, m_rectText, iDrawTextFlags);
 
             //m_pgraphics->fill_solid_rect(m_rectText.left, m_rectText.top, 100, 100, ARGB(128, 100, 125, 255));
 

@@ -400,6 +400,7 @@ bool db_str_set::load(const string & strKey, string & strValue)
          strUrl += System.url().url_encode(strKey);
 
          set["user"] = &ApplicationUser;
+         set["timeout"] = 500;
 
          {
 

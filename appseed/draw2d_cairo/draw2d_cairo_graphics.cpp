@@ -714,7 +714,11 @@ namespace draw2d_cairo
       //g().SetCompositingQuality(Gdiplus::CompositingQualityGammaCorrected);
 
       if (lpRect->right <= lpRect->left || lpRect->bottom <= lpRect->top)
-         return;
+      {
+
+         return false;
+
+      }
 
       set(pBrush);
 
@@ -3271,10 +3275,10 @@ namespace draw2d_cairo
 
    void graphics::draw3d_rect(LPCRECT lpcrect, COLORREF clrTopLeft, COLORREF clrBottomRight)
    {
-       int x = lpcrect->left;
-       int y = lpcrect->top;
-       int cx = ::width(lpcrect);
-       int cy = ::height(lpcrect);
+      int x = lpcrect->left;
+      int y = lpcrect->top;
+      int cx = ::width(lpcrect);
+      int cy = ::height(lpcrect);
       fill_solid_rect_dim(x, y, cx - 1, 1, clrTopLeft);
       fill_solid_rect_dim(x, y, 1, cy - 1, clrTopLeft);
       fill_solid_rect_dim(x + cx - 1, y, 1, cy, clrBottomRight);
@@ -4967,7 +4971,7 @@ namespace draw2d_cairo
    }
 
 
-      void graphics::fill_solid_rect(LPCRECTD lpRect, COLORREF clr)
+   void graphics::fill_solid_rect(LPCRECTD lpRect, COLORREF clr)
    {
 
       synch_lock ml(cairo_mutex());

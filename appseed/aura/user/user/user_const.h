@@ -284,6 +284,7 @@ namespace user
       int_still_draw_text_flags,
       int_button_draw_text_flags,
       int_menu_item_draw_text_flags,
+      int_list_item_draw_text_flags,
       int_top_level_drawing_order,
 
    };

@@ -206,15 +206,19 @@ namespace user
 
    void tree::_001DrawItem(tree_draw_item & data)
    {
+
       rect rect;
 
       sp(tree) ptree = this;
+
       sp(::data::tree_item) pitem = data.m_pitem;
 
       sp(image_list) pimagelistItem = pitem->get_image_list();
+
       sp(image_list) pimagelistTree = get_image_list();
 
       bool bSelected    = ptree->is_selected(pitem.m_p);
+
       bool bHover       = ptree->is_hover(pitem);
 
       data.m_pdc->set_alpha_mode(::draw2d::alpha_mode_blend);
@@ -228,18 +232,25 @@ namespace user
             _001GetItemElementRect(rect, data, tree_element_expand_box);
 
             int32_t iImage;
+
             if(data.m_pitem->m_dwState & ::data::tree_item_state_expanded)
             {
+
                iImage = (int32_t) ptree->m_iImageCollapse;
+
             }
             else
             {
-               iImage = (int32_t) ptree->m_iImageExpand;
-            }
-            pimagelistTree->draw(data.m_pdc, iImage, rect.top_left(), 0, m_uchHoverAlpha);
-         }
-      }
 
+               iImage = (int32_t) ptree->m_iImageExpand;
+
+            }
+
+            pimagelistTree->draw(data.m_pdc, iImage, rect.top_left(), 0, m_uchHoverAlpha);
+
+         }
+
+      }
 
       //      ::aura::savings & savings = Session.savings();
       if(bSelected) // selected
@@ -1615,6 +1626,13 @@ namespace user
       index iIndex = get_proper_item_index(pitem, &iLevel);
 
       point ptOffset = get_viewport_offset();
+
+      if (m_iItemHeight <= 0)
+      {
+
+         m_iItemHeight = 18;
+
+      }
 
       index iMinVisibleIndex = (index)(ptOffset.y / m_iItemHeight);
       index iMaxVisibleIndex = (index)(iMinVisibleIndex + _001GetVisibleItemCount());

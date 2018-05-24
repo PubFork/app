@@ -1107,12 +1107,9 @@ namespace user
       if (r1.is_empty())
       {
 
-
          return;
 
       }
-
-
 
       style_context style(this);
 
@@ -1130,15 +1127,12 @@ namespace user
 
       }
 
+      if (!get_data()->m_bCreated)
       {
 
-//         DWORD dwTime2 = ::get_tick_count();
-
-         //TRACE("message_handler call time0= %d ms",dwTime2 - t_time1.operator DWORD_PTR());
-         //TRACE("usertab::on_layout call time1= %d ms",dwTime2 - t_time1.operator DWORD_PTR());
-      }
-      if(!get_data()->m_bCreated)
          return;
+
+      }
 
       if (get_data()->m_bVertical)
       {
@@ -1154,6 +1148,7 @@ namespace user
 
          get_data()->m_iTabWidth += get_data()->m_rectBorder.left + get_data()->m_rectBorder.right +
                                     get_data()->m_rectMargin.left + get_data()->m_rectMargin.right;
+
       }
       else
       {
@@ -1169,8 +1164,8 @@ namespace user
 
          get_data()->m_iTabWidth += get_data()->m_rectBorder.left + get_data()->m_rectBorder.right +
                                     get_data()->m_rectMargin.left + get_data()->m_rectMargin.right;
-      }
 
+      }
 
       defer_handle_auto_hide_tabs(false);
 

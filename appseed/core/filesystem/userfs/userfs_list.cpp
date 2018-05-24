@@ -18,6 +18,8 @@ namespace userfs
       m_rectMargin.bottom = 0;
       m_rectMargin.right = 0;
 
+      create_int(::user::int_list_item_draw_text_flags, DT_LEFT | DT_VCENTER | DT_SINGLELINE | DT_PATH_ELLIPSIS);
+
    }
 
 

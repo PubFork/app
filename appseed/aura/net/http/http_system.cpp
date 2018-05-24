@@ -1813,6 +1813,8 @@ retry_session:
 
 //      ::file::timeout_file * ptimeoutbuffer = set["file_out"].cast < ::file::timeout_file >();
 
+      DWORD dwTimeoutStart = get_tick_count();
+
       while(handler.get_count() > 0 && (::get_thread() == NULL || ::get_thread_run()))
       {
 
@@ -1880,6 +1882,12 @@ retry_session:
          dw2 = ::get_tick_count();
          TRACE("system::get time(%d) = %d, %d, %d\n", iIteration, dw1, dw2, dw2 - dw1);
          iIteration++;
+         if (set.has_property("timeout") && get_tick_count() - dwTimeoutStart > set["timeout"].operator uint32_t())
+         {
+
+            break;
+
+         }
       }
       keeplive.keep_alive();
 
