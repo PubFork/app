@@ -4007,6 +4007,24 @@ restart:
       }
    }
 
+   /// centered on 0.
+   /// > 0 lighter (safe)
+   /// < 0 darker (non safe)
+   void dib::lighten(double dRate)
+   {
+      BYTE *dst = (BYTE*)get_data();
+      int64_t size = scan_area();
+
+      while (size--)
+      {
+         dst[0] += (dst[3] - dst[0]) * dRate;
+         dst[1] += (dst[3] - dst[1]) * dRate;
+         dst[2] += (dst[3] - dst[2]) * dRate;
+         dst += 4;
+      }
+
+   }
+
    void dib::Multiply(dib *dib)
    {
       if (size() != dib->m_size)

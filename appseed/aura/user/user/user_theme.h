@@ -21,6 +21,7 @@ namespace user
       theme(::aura::application * papp);
       virtual ~theme();
 
+      virtual void construct_fallback_theme();
 
       virtual void initialize_theme();
 

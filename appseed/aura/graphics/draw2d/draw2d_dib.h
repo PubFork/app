@@ -315,6 +315,8 @@ namespace draw2d
       virtual void Multiply(dib * pdib);
       virtual void Screen(dib * pdib);
 
+      virtual void lighten(double dRate);
+
       virtual void copy(dib * pdib, i32 x, i32 y);
       virtual void PasteRect(dib * pdib, i32 x, i32 y);
 

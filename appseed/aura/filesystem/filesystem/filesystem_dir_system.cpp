@@ -423,6 +423,19 @@ namespace file
       ::file::listing & system::ls(::aura::application * papp, listing & l)
       {
 
+         if (l.m_path.begins_ci("matter://"))
+         {
+
+            ::file::path path = l.m_path;
+
+            ::str::begins_eat_ci(path, "matter://");
+
+            matter_ls(papp, path, l);
+
+            return l;
+
+         }
+
          if (l.m_bRecursive)
          {
 

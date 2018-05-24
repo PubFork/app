@@ -11,6 +11,8 @@ namespace user
 
       m_plibrary = NULL;
 
+      construct_fallback_theme();
+
    }
 
 
@@ -22,7 +24,7 @@ namespace user
    }
 
 
-   void theme::initialize_theme()
+   void theme::construct_fallback_theme()
    {
 
       create_int(int_still_draw_text_flags, DT_LEFT | DT_BOTTOM | DT_SINGLELINE);
@@ -45,6 +47,13 @@ namespace user
       create_color(color_text_selected, ARGB(255, 255, 255, 255));
       create_color(color_background, ARGB(0, 0, 0, 0));
       create_color(color_background_selected, ARGB(127, 85, 115, 155));
+
+   }
+
+
+   void theme::initialize_theme()
+   {
+
 
 
    }
