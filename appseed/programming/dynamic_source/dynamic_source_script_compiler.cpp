@@ -152,7 +152,7 @@ namespace dynamic_source
 
          }
 
-         m_strVCVersion = "10.0.16299.0";
+         m_strVCVersion = "10.0.17134.0";
 
 
       }

@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #ifdef WINDOWSEX
 #include "aura/aura/node/windows/windows_registry.h"
 #endif
@@ -180,7 +180,7 @@ namespace introjection
 
          }
 
-         m_strVCVersion = "10.0.16299.0";
+         m_strVCVersion = "10.0.17134.0";
 
       }
       else if (m_strVs == "2015")

@@ -30,7 +30,7 @@
     <ProjectGuid>{A33B9D31-3BFE-496C-A4F5-DC3086D5B27F}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>math</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='basis|Win32'" Label="Configuration">
