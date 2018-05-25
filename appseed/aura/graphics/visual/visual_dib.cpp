@@ -113,6 +113,17 @@ namespace visual
    bool dib_sp::load_from_file(var varFile, bool bCache, bool bCreateHelperMaps)
    {
 
+      auto * pdib = varFile.cast<::draw2d::dib>();
+
+      if (pdib != NULL)
+      {
+
+         ::draw2d::dib_sp::operator =(pdib);
+
+         return true;
+
+      }
+
       if (varFile.is_empty())
       {
 

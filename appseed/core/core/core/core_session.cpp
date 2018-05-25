@@ -1138,7 +1138,18 @@ namespace core
    ::user::menu_interaction * session::create_menu_button(::user::menu_item * pitem)
    {
 
-      return canew(::user::menu_button(pitem));
+      ::user::menu_button * pui = canew(::user::menu_button(pitem));
+
+      if (pitem->m_dib.is_set() && pitem->m_dib->area() > 0)
+      {
+
+         pui->set_button_style(::user::button::style_image_and_text);
+
+         pui->LoadBitmaps(pitem->m_dib);
+
+      }
+
+      return pui;
 
    }
 

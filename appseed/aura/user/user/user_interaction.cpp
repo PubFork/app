@@ -6114,10 +6114,12 @@ restart:
    }
 
 
-   sp(::user::menu) interaction::track_popup_xml_string_menu(const char * pszString, int32_t iFlags, POINT pt)
+   sp(::user::menu) interaction::track_popup_xml_string_menu(const char * pszString, int32_t iFlags, POINT pt, size sizeMinimum)
    {
 
       sp(::user::menu) pmenu = Application.alloc(System.type_info < ::user::menu >());
+
+      pmenu->m_sizeMinimum = sizeMinimum;
 
       if (!pmenu->load_xml_string_menu(pszString))
       {
@@ -7917,13 +7919,10 @@ restart:
 
    }
 
-   bool interaction::get_window_minimum_size(::size & sizeMin)
+   size interaction::get_window_minimum_size()
    {
 
-      sizeMin.cx = 0;
-      sizeMin.cy = 0;
-
-      return true;
+      return size(0, 0);
 
    }
 

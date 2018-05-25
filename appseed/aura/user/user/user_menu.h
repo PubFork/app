@@ -13,7 +13,7 @@ namespace user
    {
    public:
 
-
+      size                                   m_sizeMinimum;
       menu *                                 m_pmenuParent;
       sp(menu_item)                          m_pitem;
       ::user::interaction *                  m_puiParent;
@@ -48,6 +48,8 @@ namespace user
       menu(::aura::application * papp, ::user::menu_item * pitem);
       virtual ~menu();
 
+
+      virtual size get_window_minimum_size();
 
       virtual int64_t add_ref() override
       {

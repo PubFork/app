@@ -97,19 +97,11 @@ namespace user
 
          }
 
+
          size frame::GetMinSize()
          {
 
-            ::size sizeMin;
-
-            if(!get_draw_window()->get_window_minimum_size(sizeMin))
-            {
-
-               Session.get_window_minimum_size(sizeMin);
-
-            }
-
-            return sizeMin;
+            return get_draw_window()->get_window_minimum_size();
 
          }
 

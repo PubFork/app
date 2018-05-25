@@ -162,7 +162,7 @@ namespace aura
 
       //virtual index initial_frame_position(LPRECT lprect,const RECT & rect, bool bMove);
 
-      virtual bool  get_window_minimum_size(LPSIZE lpsize);
+      virtual size get_window_minimum_size();
 
 
       virtual void frame_pre_translate_message(::message::message * pobj);

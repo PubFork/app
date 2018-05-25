@@ -635,6 +635,12 @@ namespace user
                   + rectBorder.top + rectBorder.bottom
                   + rectPadding.top + rectPadding.bottom;
 
+
+      m_size.cx = MAX(m_sizeMinimum.cx, m_size.cx);
+
+
+      m_size.cy = MAX(m_sizeMinimum.cy, m_size.cy);
+
       ::count iItemCount = spitema->get_size();
 
       for (int32_t i = 0; i < iItemCount; i++)
@@ -645,6 +651,8 @@ namespace user
          spitema->element_at(i)->m_rectUi.right = x + m_iaColumnWidth[pitem->m_iColumn];
 
          prepare_menu(pitem);
+
+         pitem->m_pui->SizeWindow(::size(m_size.cx, pitem->m_pui->height()));
 
          pitem->m_pui->SetWindowPos(0, pitem->m_rectUi, SWP_SHOWWINDOW | SWP_NOZORDER);
 
@@ -1104,6 +1112,12 @@ namespace user
       pbase->set_lresult(DefWindowProc(WM_NCACTIVATE, pbase->m_wparam, -1));
    }
 
+   size menu::get_window_minimum_size()
+   {
+
+      return m_sizeMinimum;
+
+   }
 
    void menu::_001OnNcCalcSize(::message::message * pobj)
    {
@@ -1123,8 +1137,8 @@ namespace user
          LPRECT lprect = (LPRECT)pbase->m_lparam.m_lparam;
          lprect->left = m_ptTrack.x;
          lprect->top = m_ptTrack.y;
-         lprect->right = lprect->left + m_size.cx;
-         lprect->bottom = lprect->left + m_size.cx;
+         lprect->right = lprect->left + MAX(::user::interaction::get_window_minimum_size().cx, m_size.cx);
+         lprect->bottom = lprect->left + MAX(::user::interaction::get_window_minimum_size().cy, m_size.cy);
          pbase->m_bRet = true;
          pbase->set_lresult(0);
 

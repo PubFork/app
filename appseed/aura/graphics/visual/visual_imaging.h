@@ -15,8 +15,11 @@ class CLASS_DECL_AURA imaging :
 public:
 
 
+
    imaging(::aura::application * papp);
    virtual ~imaging();
+
+
 
 
    virtual void pixelate_24CC(LPBYTE lpbDest, int32_t xDest, int32_t yDest, int32_t wDest, int32_t cx, int32_t cy, LPBYTE lpbSrc, int32_t xSrc, int32_t ySrc, int32_t wSrc, int32_t iSize);

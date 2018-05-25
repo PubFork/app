@@ -1,6 +1,10 @@
 #include "framework.h"
 
-
+#ifdef WINDOWS
+#define FILE_SYSTEM_CASE_INSENSITIVE 1
+#else
+#define FILE_SYSTEM_CASE_INSENSITIVE 0
+#endif
 
 void os_post_quit();
 
@@ -60,6 +64,8 @@ namespace aura
    class ::id system::idEmpty;
 
    system * system::g_p = NULL;
+   mutex * g_pmutexDib = NULL;
+
 
 
    system::system(::aura::application * papp, app_core * pappcore) :
@@ -68,6 +74,10 @@ namespace aura
       m_httpsystem(this),
       m_emaildepartment(this)
    {
+
+      g_pmutexDib = new mutex(this);
+
+      g_pmutexDib->m_ulFlags |= ::object::flag_shared;
 
 #ifdef WINDOWSEX
 
@@ -3707,6 +3717,79 @@ success:
 #endif
 
       return iMainWkspace;
+
+   }
+
+   ::draw2d::dib_sp system::get_dib(::file::path path)
+   {
+
+#ifdef FILE_SYSTEM_CASE_INSENSITIVE
+
+      path.make_lower();
+
+#endif
+
+      synch_lock slSystem(g_pmutexDib);
+
+      auto & dib = m_mapDib[path];
+
+      if (dib.is_null())
+      {
+
+         dib.alloc(allocer());
+
+         /// temporary mutex for dib creation
+         dib->defer_create_mutex();
+
+         synch_lock sl(dib->m_pmutex);
+
+         slSystem.unlock();
+
+         if (!dib.load_from_file(path))
+         {
+
+            if (is_debugger_attached())
+            {
+
+               simple_message_box("missing image from resource: \"" + path + "\"", MB_OK);
+
+            }
+
+            if (!dib.load_from_matter("missing_image.png"))
+            {
+
+               if (is_debugger_attached())
+               {
+
+                  simple_message_box("missing framework image from system resource: \"matter://missing_image.png\"", MB_OK);
+
+               }
+
+               dib->create(32, 48);
+
+               dib->Fill(255, 255, 255, 255);
+
+               dib->get_graphics()->set_text_color(ARGB(255, 255, 0, 0));
+
+               dib->get_graphics()->draw3d_rect_coord(0, 0, 31, 47, ARGB(255, 128, 128, 128));
+
+               dib->get_graphics()->draw_text("x", rect(0, 0, 32, 48), DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+
+            }
+
+         }
+
+         mutex * pmutex = dib->m_pmutex;
+
+         dib->m_pmutex = g_pmutexDib;
+
+         sl.unlock();
+
+         ::aura::del(pmutex);
+
+      }
+
+      return dib;
 
    }
 

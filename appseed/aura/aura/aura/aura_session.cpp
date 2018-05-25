@@ -162,14 +162,10 @@ namespace aura
 
 
 
-   bool  session::get_window_minimum_size(LPSIZE lpsize)
+   size session::get_window_minimum_size()
    {
 
-      lpsize->cx = 184 + 177;
-
-      lpsize->cy = 184 + 177;
-
-      return true;
+      return size(300, 300);
 
    }
 
@@ -2609,13 +2605,13 @@ namespace aura
       if (pui != NULL)
       {
 
-         pui->get_window_minimum_size(sizeMin);
+         sizeMin  = pui->get_window_minimum_size();
 
       }
       else
       {
 
-         get_window_minimum_size(&sizeMin);
+         sizeMin = get_window_minimum_size();
 
       }
 

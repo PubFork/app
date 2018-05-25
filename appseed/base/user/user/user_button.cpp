@@ -751,6 +751,8 @@ namespace user
 
          COLORREF crText = get_button_text_color();
 
+         pgraphics->set_text_color(crText);
+
          ::draw2d::pen_sp pen(allocer());
 
          pen->m_cr = crText;

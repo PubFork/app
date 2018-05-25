@@ -84,7 +84,7 @@ namespace axis
       //inline ::sockets::sockets &               sockets()      { return *m_psockets; }
 
 
-      virtual bool  get_window_minimum_size(LPSIZE lpsize) override;
+      virtual size get_window_minimum_size() override;
 
 
       //virtual void  get_cursor_pos(LPPOINT lppoint);

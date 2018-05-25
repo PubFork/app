@@ -134,6 +134,7 @@ namespace aura
       application();
       virtual ~application();
 
+      ::draw2d::dib_sp get_matter_dib(string strMatter);
 
       virtual void assert_valid() const override;
       virtual void dump(dump_context & dumpcontext) const override;

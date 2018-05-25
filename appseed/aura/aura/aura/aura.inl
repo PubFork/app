@@ -284,6 +284,48 @@ namespace xml
 namespace aura
 {
 
+   template <  >
+   inline void del(::object * & p)
+   {
+
+      //Thank you Fiora a Eterna!!
+
+      //Fiora Aeterna☄ ‏@FioraAeterna 20m20 minutes ago
+
+      //   maybe it's cynical but I'm starting to think the real reason so many newer games have constant autosaves is because they crash all the time
+      //   Details
+
+      // BRT 2015-02-18 19:08
+      // catch all (...) here in aura::del ... but should remove try catch from all underlying calls (frees, memory_frees, memory_dbg_frees).
+
+      try
+      {
+
+         if (p != NULL)
+         {
+
+            if (!(p->m_ulFlags & ::object::flag_shared))
+            {
+
+               ::object * pdel = p;
+
+               p = NULL;
+
+               delete pdel;
+
+            }
+
+         }
+
+      }
+      catch (...)
+      {
+
+      }
+
+   }
+
+
 
    template < class APP >
    sp(::aura::application) single_application_library < APP > ::get_new_application(const char * pszAppId)

@@ -315,7 +315,7 @@ namespace user
       virtual bool has_command_handler(::user::command * pcommand) override;
 
 
-      virtual bool get_window_minimum_size(::size & sizeMin) override;
+      virtual size get_window_minimum_size() override;
 
 
       virtual ::user::style * userstyle() override;

@@ -169,6 +169,7 @@ namespace aura
       raw_array < MONITORINFO >                    m_monitorinfoaDesk;
 
 #endif
+      map < ::file::path, const ::file::path &, ::visual::dib_sp > m_mapDib;
 
 
       system(::aura::application * papp, app_core * pappcore);
@@ -254,6 +255,7 @@ namespace aura
 
       }
 
+      ::draw2d::dib_sp get_dib(::file::path path);
 
       template < class T >
       ::type * type_info()

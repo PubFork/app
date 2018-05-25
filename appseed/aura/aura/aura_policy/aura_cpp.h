@@ -441,6 +441,9 @@ namespace aura
 
    }
 
+   template <  >
+   inline void del(::object * & p);
+
    template < typename T >
    inline void adel(T * & p)
    {

@@ -401,6 +401,15 @@ namespace aura
 
    }
 
+   ::draw2d::dib_sp application::get_matter_dib(string strMatter)
+   {
+
+      ::file::path path = Application.dir().matter(strMatter);
+
+      return System.get_dib(path);
+
+   }
+
 
    bool application::app_data_get(class id id, ::file::istream & is)
    {

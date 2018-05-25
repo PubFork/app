@@ -2462,7 +2462,7 @@ Restart:
    }
 
 
-   sp(::user::menu) interaction_base::track_popup_xml_string_menu(const char * pszString, int32_t iFlags, POINT pt)
+   sp(::user::menu) interaction_base::track_popup_xml_string_menu(const char * pszString, int32_t iFlags, POINT pt, size sizeMinimum)
    {
 
       ::exception::throw_interface_only(get_app());

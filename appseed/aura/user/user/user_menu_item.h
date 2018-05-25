@@ -23,6 +23,7 @@ namespace user
       string                     m_strTitle;
       rect                       m_rectUi;
       int                        m_iColumn;
+      ::draw2d::dib_sp           m_dib;
 
 
       menu_item(::aura::application * papp);

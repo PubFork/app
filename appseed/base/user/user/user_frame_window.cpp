@@ -2385,25 +2385,21 @@ namespace user
    }
 
 
-   bool frame_window::get_window_minimum_size(::size & sizeMin)
+   size frame_window::get_window_minimum_size()
    {
 
       if (get_appearance() == ::user::appearance_minimal)
       {
 
-         sizeMin.cx = 8;
-
-         sizeMin.cy = 8;
+         return size(8, 8);
 
       }
       else
       {
 
-         Session.get_window_minimum_size(&sizeMin);
+         return Session.get_window_minimum_size();
 
       }
-
-      return true;
 
    }
 

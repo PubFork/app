@@ -133,6 +133,15 @@ namespace user
 
          m_strTitle = strText;
 
+         string strImage = pnode->attr("image");
+
+         if (strImage.has_char())
+         {
+
+            m_dib = Application.get_matter_dib(strImage);
+
+         }
+
       }
 
 
@@ -168,7 +177,7 @@ namespace user
          if (pitem->m_pui == NULL)
          {
 
-            pitem->m_pui = m_pmenu->create_menu_button(this);
+            pitem->m_pui = m_pmenu->create_menu_button(pitem);
 
          }
 

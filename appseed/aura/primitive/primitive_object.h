@@ -180,7 +180,8 @@ public:
       flag_ready_for_delete = 1 << 2,
       flag_auto_delete = 1 << 3,
       flag_heap_alloc = 1 << 4,
-      flag_locked = 1 << 5
+      flag_locked = 1 << 5,
+      flag_shared = 1 << 6
 
    };
 

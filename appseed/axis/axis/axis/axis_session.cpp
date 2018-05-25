@@ -137,22 +137,12 @@ namespace axis
    }
 
 
-
-
-
-
-   bool  session::get_window_minimum_size(LPSIZE lpsize)
+   size  session::get_window_minimum_size()
    {
 
-      lpsize->cx = 184 + 177;
-
-      lpsize->cy = 184 + 177;
-
-      return true;
+      return size(300, 300);
 
    }
-
-
 
 
    bool session::process_init()
