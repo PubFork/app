@@ -1,5 +1,6 @@
 #pragma once
 
+
 enum e_stock_icon
 {
 
@@ -19,20 +20,9 @@ enum e_stock_icon
    stock_icon_control_box_end = stock_icon_dock
 };
 
+
 namespace draw2d
 {
-
-
-   class object;
-   class pen;
-   class graphics;
-   class bitmap;
-   class brush;
-   class font;
-   class palette;
-   class region;
-   // backlink from ca.dll on 2012-10-14 11:04 Alameda Princesa Izabel, 3000 - CWB-PR-Brasil
-
 
    enum e_smooth_mode
    {
@@ -41,11 +31,13 @@ namespace draw2d
       smooth_mode_high,
    };
 
+
    enum e_alpha_mode
    {
       alpha_mode_set,
       alpha_mode_blend
    };
+
 
    enum e_fill_mode
    {
@@ -54,4 +46,31 @@ namespace draw2d
    };
 
 
+   enum e_unit
+   {
+
+      unit_pixel,
+      unit_point,
+      unit_em
+
+   };
+
+
+   enum e_text_rendering
+   {
+
+      text_rendering_undefined,
+      text_rendering_none,
+      text_rendering_anti_alias,
+      text_rendering_anti_alias_grid_fit,
+      text_rendering_single_bit_per_pixel,
+      text_rendering_clear_type_grid_fit
+
+   };
+
+
 } // namespace draw2d
+
+
+
+

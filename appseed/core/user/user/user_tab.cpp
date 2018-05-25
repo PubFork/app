@@ -657,7 +657,7 @@ namespace user
 
                   pgraphics->draw_path(path);
 
-                  pgraphics->set_font(_001GetFont(this, ::user::font_tab));
+                  pgraphics->set_font(_001GetFont(::user::font_tab));
 
                   brushText = get_data()->m_brushTextSel;
 
@@ -688,7 +688,7 @@ namespace user
 
                      pgraphics->draw_path(path);
 
-                     pgraphics->set_font(_001GetFont(this, ::user::font_tab_hover));
+                     pgraphics->set_font(_001GetFont(::user::font_tab_hover));
 
                      brushText = get_data()->m_brushTextHover;
 
@@ -706,7 +706,7 @@ namespace user
 
                      pgraphics->draw_path(path);
 
-                     pgraphics->set_font(_001GetFont(this, ::user::font_tab));
+                     pgraphics->set_font(_001GetFont(::user::font_tab));
 
                      brushText = get_data()->m_brushText;
 
@@ -759,7 +759,7 @@ namespace user
 
                   pgraphics->draw_path(path);
 
-                  pgraphics->set_font(_001GetFont(this, ::user::font_tab));
+                  pgraphics->set_font(_001GetFont(::user::font_tab));
 
                   brushText = get_data()->m_brushTextSel;
 
@@ -792,7 +792,7 @@ namespace user
 
                      pgraphics->draw_path(path);
 
-                     pgraphics->set_font(_001GetFont(this, ::user::font_tab_hover));
+                     pgraphics->set_font(_001GetFont(::user::font_tab_hover));
 
                      brushText = get_data()->m_brushTextHover;
 
@@ -810,7 +810,7 @@ namespace user
 
                      pgraphics->draw_path(path);
 
-                     pgraphics->set_font(_001GetFont(this, ::user::font_tab));
+                     pgraphics->set_font(_001GetFont(::user::font_tab));
 
                      brushText = get_data()->m_brushTextSel;
 
@@ -840,7 +840,7 @@ namespace user
             if (get_element_rect(iTab, rectClose, ::user::element_close_tab_button))
             {
 
-               pgraphics->set_font(_001GetFont(this, ::user::font_tab_big_bold));
+               pgraphics->set_font(_001GetFont(::user::font_tab_big_bold));
 
                if (iTab == m_iHover && m_eelementHover == ::user::element_close_tab_button)
                {
@@ -937,7 +937,7 @@ namespace user
                pgraphics->line_to(rectClient.left, rectBorder.top);
                pgraphics->line_to(rectBorder.right, rectBorder.top);
 
-               pgraphics->set_font(_001GetFont(this, ::user::font_tab_sel));
+               pgraphics->set_font(_001GetFont(::user::font_tab_sel));
 
                brushText = get_data()->m_brushTextSel;
 
@@ -959,12 +959,12 @@ namespace user
                pgraphics->line_to(rectBorder.right, rectBorder.bottom);
                if(iVisiblePane == m_iHover && m_eelementHover != element_close_tab_button)
                {
-                  pgraphics->set_font(_001GetFont(this, ::user::font_tab_hover));
+                  pgraphics->set_font(_001GetFont(::user::font_tab_hover));
                   brushText = get_data()->m_brushClose;
                }
                else
                {
-                  pgraphics->set_font(_001GetFont(this, ::user::font_tab));
+                  pgraphics->set_font(_001GetFont(::user::font_tab));
                   brushText = get_data()->m_brushText;
                }
             }
@@ -999,7 +999,7 @@ namespace user
                pgraphics->line_to(rectBorder.right, rectBorder.top + (rectBorder.right - rectClient.right));
                pgraphics->line_to(rectBorder.right - 1, rectClient.bottom);
                //pgraphics->line_to(rect.right, rectText.bottom);
-               pgraphics->set_font(_001GetFont(this, ::user::font_tab_sel));
+               pgraphics->set_font(_001GetFont(::user::font_tab_sel));
                brushText->create_solid(ARGB(255, 0, 0, 0));
             }
             else
@@ -1022,12 +1022,12 @@ namespace user
 
                if (iVisiblePane == m_iHover && m_eelementHover != element_close_tab_button)
                {
-                  pgraphics->set_font(_001GetFont(this, ::user::font_tab_hover));
+                  pgraphics->set_font(_001GetFont(::user::font_tab_hover));
                   brushText->create_solid(ARGB(255, 0, 127, 255));
                }
                else
                {
-                  pgraphics->set_font(_001GetFont(this, ::user::font_tab));
+                  pgraphics->set_font(_001GetFont(::user::font_tab));
                   brushText = get_data()->m_brushText;
                }
             }
@@ -1045,7 +1045,7 @@ namespace user
 
          if (get_element_rect(iVisiblePane, rectClose, element_close_tab_button))
          {
-            pgraphics->set_font(_001GetFont(this, ::user::font_tab_big_bold));
+            pgraphics->set_font(_001GetFont(::user::font_tab_big_bold));
             if (iVisiblePane == m_iHover && m_eelementHover == element_close_tab_button)
             {
                brushText = get_data()->m_brushCloseSel;
@@ -1170,7 +1170,7 @@ namespace user
       defer_handle_auto_hide_tabs(false);
 
       ::draw2d::memory_graphics pgraphics(allocer());
-      pgraphics->SelectObject(_001GetFont(this, ::user::font_tab_big_bold));
+      pgraphics->SelectObject(_001GetFont(::user::font_tab_big_bold));
 
       m_dcextension.GetTextExtent(pgraphics,MAGIC_PALACE_TAB_SIZE,get_data()->m_sizeSep);
 
@@ -1272,7 +1272,7 @@ namespace user
          ::draw2d::graphics_sp graphics(allocer());
          graphics->CreateCompatibleDC(NULL);
          ::draw2d::graphics * pgraphics = graphics;
-         pgraphics->SelectObject(_001GetFont(this, ::user::font_tab_sel));
+         pgraphics->SelectObject(_001GetFont(::user::font_tab_sel));
 
          rect rectClient;
          GetClientRect(rectClient);

@@ -182,7 +182,7 @@ namespace draw2d
 
       static string get_sample_text(e_cs ecs);
 
-
+      virtual double get_pixel_font_height(::draw2d::graphics * pgraphics);
 
    };
 

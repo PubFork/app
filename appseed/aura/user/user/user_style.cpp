@@ -240,12 +240,12 @@ namespace user
 
 
 
-   COLORREF style::_001GetColor(::user::interaction * pui, e_color ecolor, COLORREF crDefault)
+   COLORREF style::_001GetColor(e_color ecolor, COLORREF crDefault)
    {
 
       COLORREF cr;
 
-      style_context style(pui);
+      style_context style(this);
 
       if (get_color(cr, ecolor, &style))
       {
@@ -259,12 +259,12 @@ namespace user
    }
 
 
-   ::draw2d::font_sp style::_001GetFont(::user::interaction * pui, e_font efont, ::draw2d::font * pfontDefault)
+   ::draw2d::font_sp style::_001GetFont(e_font efont, ::draw2d::font * pfontDefault)
    {
 
       ::draw2d::font_sp font;
 
-      style_context style(pui);
+      style_context style(this);
 
       if (get_font(font, efont, &style))
       {
@@ -278,12 +278,12 @@ namespace user
    }
 
 
-   e_translucency style::_001GetTranslucency(::user::interaction * pui, e_element eelement, e_translucency etranslucencyDefault)
+   e_translucency style::_001GetTranslucency(e_element eelement, e_translucency etranslucencyDefault)
    {
 
       e_translucency etranslucency = translucency_undefined;
 
-      style_context style(pui);
+      style_context style(this);
 
       if (get_translucency(etranslucency, eelement, &style))
       {
@@ -302,12 +302,12 @@ namespace user
    }
 
 
-   bool style::_001GetFlag(::user::interaction * pui, e_flag eflag, bool bDefault)
+   bool style::_001GetFlag(e_flag eflag, bool bDefault)
    {
 
       bool bSet = bDefault;
 
-      style_context style(pui);
+      style_context style(this);
 
       if (get_flag(bSet, eflag, &style))
       {
@@ -321,15 +321,19 @@ namespace user
    }
 
 
-   RECT style::_001GetRect(::user::interaction * pui, e_rect erect, rect rectDefault)
+   RECT style::_001GetRect(e_rect erect, rect rectDefault)
    {
 
       ::rect rect(rectDefault);
 
-      style_context style(pui);
+      style_context style(this);
 
-      if (get_rect(rect, erect, &style))
+      style_rect stylerect;
+
+      if (get_rect(stylerect, erect, &style))
       {
+
+         stylerect.get_rect(rect, style.m_pstyleSource->userstyle()->m_pgraphics);
 
          return rect;
 
@@ -340,12 +344,12 @@ namespace user
    }
 
 
-   int style::_001GetInt(::user::interaction * pui, e_int eint, int iDefault)
+   int style::_001GetInt(e_int eint, int iDefault)
    {
 
       int i = iDefault;
 
-      style_context style(pui);
+      style_context style(this);
 
       if (get_int(i, eint, &style))
       {
@@ -359,12 +363,12 @@ namespace user
    }
 
 
-   double style::_001GetDouble(::user::interaction * pui, e_double edouble, double dDefault)
+   double style::_001GetDouble(e_double edouble, double dDefault)
    {
 
       double d = dDefault;
 
-      style_context style(pui);
+      style_context style(this);
 
       if (get_double(d, edouble, &style))
       {
@@ -378,38 +382,38 @@ namespace user
    }
 
 
-   bool style::_001IsTranslucent(::user::interaction * pui, e_element eelement)
+   bool style::_001IsTranslucent(e_element eelement)
    {
 
-      e_translucency etranslucency = _001GetTranslucency(pui, eelement);
+      e_translucency etranslucency = _001GetTranslucency(eelement);
 
       return etranslucency == translucency_present || etranslucency == translucency_total;
 
    }
 
 
-   bool style::_001IsBackgroundBypass(::user::interaction * pui, e_element eelement)
+   bool style::_001IsBackgroundBypass(e_element eelement)
    {
 
-      return _001GetTranslucency(pui, eelement) == translucency_total;
+      return _001GetTranslucency(eelement) == translucency_total;
 
    }
 
 
-   bool style::_001HasTranslucency(::user::interaction * pui, e_element eelement)
+   bool style::_001HasTranslucency(e_element eelement)
    {
 
-      e_translucency etranslucency = _001GetTranslucency(pui, eelement);
+      e_translucency etranslucency = _001GetTranslucency(eelement);
 
       return etranslucency == translucency_present || etranslucency == translucency_total;
 
    }
 
 
-   bool style::_001IsTransparent(::user::interaction * pui, e_element eelement)
+   bool style::_001IsTransparent(e_element eelement)
    {
 
-      return _001GetTranslucency(pui, eelement) == translucency_total;
+      return _001GetTranslucency(eelement) == translucency_total;
 
    }
 
@@ -536,10 +540,10 @@ namespace user
    }
 
 
-   bool style::get_rect(RECT & rect, e_rect erect, style_context * pcontext)
+   bool style::get_rect(style_rect & rect, e_rect erect, style_context * pcontext)
    {
 
-      if (userstyle()->m_mapRect.is_set() && userstyle()->m_mapRect->Lookup(erect, (::rect &) rect))
+      if (userstyle()->m_mapRect.is_set() && userstyle()->m_mapRect->Lookup(erect, (style_rect &) rect))
       {
 
          return true;
@@ -620,7 +624,7 @@ namespace user
 
 
 
-   bool style::select_layered_frame()
+   bool style::set_translucent()
    {
 
 
@@ -1234,7 +1238,55 @@ namespace user
    }
 
 
-   bool style::create_rect_coord(e_rect erect, LONG l, LONG t, LONG r, LONG b)
+   bool style::create_pixel_rect_coord(e_rect erect, double l, double t, double r, double b)
+   {
+
+      return create_rect_coord(erect, l, t, r, b, ::draw2d::unit_pixel);
+
+   }
+
+
+   bool style::create_pixel_rect_dim(e_rect erect, double l, double t, double w, double h)
+   {
+
+      return create_rect_dim(erect, l, t, w, h, ::draw2d::unit_pixel);
+
+   }
+
+
+   bool style::create_pixel_rect(e_rect erect, rectd r)
+   {
+
+      return create_rect(erect, r, ::draw2d::unit_pixel);
+
+   }
+
+
+   bool style::create_point_rect_coord(e_rect erect, double l, double t, double r, double b)
+   {
+
+      return create_rect_coord(erect, l, t, r, b, ::draw2d::unit_point);
+
+   }
+
+
+   bool style::create_point_rect_dim(e_rect erect, double l, double t, double w, double h)
+   {
+
+      return create_rect_dim(erect, l, t, w, h, ::draw2d::unit_point);
+
+   }
+
+
+   bool style::create_point_rect(e_rect erect, rectd r)
+   {
+
+      return create_rect(erect, r, ::draw2d::unit_point);
+
+   }
+
+
+   bool style::create_rect_coord(e_rect erect, double l, double t, double r, double b, ::draw2d::e_unit eunit)
    {
 
       if (userstyle()->m_mapRect.is_null())
@@ -1244,43 +1296,25 @@ namespace user
 
       }
 
-      (*userstyle()->m_mapRect)[erect] = rect(l, t, r, b);
+      (*userstyle()->m_mapRect)[erect].set_rect_coord(l, t, r, b, eunit);
 
       return true;
 
    }
 
 
-   bool style::create_rect_dim(e_rect erect, LONG l, LONG t, LONG cx, LONG cy)
+   bool style::create_rect_dim(e_rect erect, double l, double t, double w, double h, ::draw2d::e_unit eunit)
    {
 
-      if (userstyle()->m_mapRect.is_null())
-      {
-
-         userstyle()->m_mapRect = canew(rect_map);
-
-      }
-
-      (*userstyle()->m_mapRect)[erect] = rect_dim(l, t, cx, cy);
-
-      return true;
+      return create_rect_coord(erect, l, t, l + w, t + h, eunit);
 
    }
 
 
-   bool style::create_rect(e_rect erect, LPCRECT lpcrect)
+   bool style::create_rect(e_rect erect, rectd r, ::draw2d::e_unit eunit)
    {
 
-      if (userstyle()->m_mapRect.is_null())
-      {
-
-         userstyle()->m_mapRect = canew(rect_map);
-
-      }
-
-      (*userstyle()->m_mapRect)[erect] = *lpcrect;
-
-      return true;
+      return create_rect_coord(erect, r.left, r.top, r.right, r.bottom, eunit);
 
    }
 

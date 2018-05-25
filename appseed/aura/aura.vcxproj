@@ -2350,6 +2350,8 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="user\user\user_style_coord.cpp" />
+    <ClCompile Include="user\user\user_style_rect.cpp" />
     <ClCompile Include="user\user\user_theme.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
@@ -2441,7 +2443,6 @@
     <ClInclude Include="aura\aura\aura_definition.h" />
     <ClInclude Include="aura\aura\aura_department.h" />
     <ClInclude Include="aura\aura\aura_department_container.h" />
-    <ClInclude Include="aura\aura\aura_draw2d.h" />
     <ClInclude Include="aura\aura\aura_draw_context.h" />
     <ClInclude Include="aura\aura\aura_draw_interface.h" />
     <ClInclude Include="aura\aura\aura_enum.h" />
@@ -4216,6 +4217,8 @@
     <ClInclude Include="user\user\user_style.h" />
     <ClInclude Include="user\user\user_style_base.h" />
     <ClInclude Include="user\user\user_style_composite.h" />
+    <ClInclude Include="user\user\user_style_coord.h" />
+    <ClInclude Include="user\user\user_style_rect.h" />
     <ClInclude Include="user\user\user_theme.h" />
     <ClInclude Include="user\user\user_tooltip.h" />
     <ClInclude Include="user\user\user_validate.h" />

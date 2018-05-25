@@ -5,14 +5,9 @@ namespace user
 {
 
 
-   button::button():
+   button::button() :
       button(get_app())
    {
-
-      m_erectMargin = rect_button_margin;
-      m_erectBorder = rect_button_border;
-      m_erectPadding = rect_button_padding;
-      //set_user_schema(schema_button);
 
    }
 
@@ -22,19 +17,22 @@ namespace user
       ::user::interaction(papp)
    {
 
-      //set_user_schema(schema_button);
+      m_erectMargin = rect_button_margin;
+      m_erectBorder = rect_button_border;
+      m_erectPadding = rect_button_padding;
+      m_eintTextAlign = int_button_draw_text_flags;
 
-      m_estockicon      = stock_icon_none;
 
-      m_estyle          = style_none;
-
-      m_pbitmap         = NULL;
-      m_plist           = NULL;
-      m_iHover          = -1;
-      m_echeck          = ::check::unchecked;
-      m_iClick          = 0;
+      m_estockicon = stock_icon_none;
+      m_estyle = style_none;
+      m_pbitmap = NULL;
+      m_plist = NULL;
+      m_iHover = -1;
+      m_echeck = ::check::unchecked;
+      m_iClick = 0;
 
    }
+
 
    button::~button()
    {
@@ -66,147 +64,42 @@ namespace user
       IGUI_MSG_LINK(WM_MBUTTONUP, pinterface, this, &button::_001OnMButtonUp);
       IGUI_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &button::_001OnMouseMove);
       IGUI_MSG_LINK(WM_MOUSELEAVE, pinterface, this, &button::_001OnMouseLeave);
-      IGUI_MSG_LINK(WM_KEYDOWN,pinterface,this,&button::_001OnKeyDown);
+      IGUI_MSG_LINK(WM_KEYDOWN, pinterface, this, &button::_001OnKeyDown);
 
    }
-
-
-
-
 
 
    void button::_001OnDraw(::draw2d::graphics * pgraphics)
    {
 
-      if(m_estyle == style_push)
+      if (m_estyle == style_push)
       {
 
-         _001OnDrawPush(pgraphics);
+         _001OnButtonDrawPush(pgraphics);
 
       }
-      else if(m_estyle == style_list)
+      else if (m_estyle == style_list)
       {
 
-         _001OnDrawList(pgraphics);
+         _001OnButtonDrawList(pgraphics);
 
       }
-      else if(m_estyle == style_bitmap)
+      else if (m_estyle == style_bitmap)
       {
 
-         _001OnDrawBitmap(pgraphics);
+         _001OnButtonDrawBitmap(pgraphics);
+
+      }
+      else if (m_estyle == style_image_and_text)
+      {
+
+         _001OnButtonDrawImageAndText(pgraphics);
 
       }
       else
       {
 
-         string strText;
-
-         get_window_text(strText);
-
-         rect rectClient;
-         GetClientRect(rectClient);
-
-         rect rectMargin = _001GetRect(m_erectMargin);
-
-         rect rectBorder = _001GetRect(m_erectBorder);
-
-         rectClient.deflate(rectMargin);
-
-         rectClient.deflate(rectBorder);
-
-         //if(m_puserstyle == NULL)
-         //{
-
-         //   if(m_iHover == 0 || Session.m_puiLastLButtonDown == this)
-         //   {
-
-         //      pgraphics->fill_solid_rect(rectClient,ARGB(255,127,127,127));
-
-         //      pgraphics->set_text_color(ARGB(255,0,100,255));
-
-         //   }
-         //   else
-         //   {
-
-         //      pgraphics->fill_solid_rect(rectClient,ARGB(255,127,127,127));
-
-         //      pgraphics->set_text_color(ARGB(255,0,0,0));
-
-         //   }
-
-         //}
-         //else
-         {
-            if (!is_window_enabled())
-            {
-
-               pgraphics->fill_solid_rect(rectClient, _001GetColor(color_button_background_disabled));
-
-               pgraphics->set_text_color(_001GetColor(color_button_text_disabled));
-
-            }
-            else if(m_iHover == 0 || Session.m_puiLastLButtonDown == this)
-            {
-
-               pgraphics->fill_solid_rect(rectClient, _001GetColor(color_button_background_hover));
-
-               pgraphics->set_text_color(_001GetColor(color_button_text_hover));
-
-            }
-            else
-            {
-
-               //pgraphics->draw3d_rect(rectClient,m_puserstyle->_001GetColor(color_border),m_puserstyle->_001GetColor(color_border));
-
-               //rectClient.deflate(1,1);
-
-               pgraphics->fill_solid_rect(rectClient, _001GetColor(color_button_background));
-
-               pgraphics->set_text_color(_001GetColor(color_button_text));
-
-            }
-
-         }
-
-         rect rectPadding = _001GetRect(m_erectPadding);
-
-         rectClient.deflate(rectPadding);
-
-         if(m_estockicon == stock_icon_none)
-         {
-
-            int iDrawTextFlags = _001GetInt(m_eintTextAlign, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
-
-            select_font(pgraphics, font_button);
-
-            pgraphics->draw_text(strText, rectClient, iDrawTextFlags);
-
-         }
-         else
-         {
-
-            //::draw2d::brush_sp brush(allocer());
-
-            //brush->create_solid(pgraphics->get_current_pen()->m_cr);
-
-            //pgraphics->SelectObject(brush);
-
-            ::draw2d::pen_sp pen(allocer());
-
-            pen->m_cr = pgraphics->get_current_brush()->m_cr;
-
-            pen->m_dWidth = 1.0;
-
-            pgraphics->SelectObject(pen);
-
-            class rect rectIcon(rectClient);
-
-            rectIcon.deflate(rectIcon.width() / 4,rectIcon.height() / 4);
-
-            pgraphics->draw_stock_icon(rectIcon,m_estockicon);
-
-
-         }
+         _001OnButtonDrawNormal(pgraphics);
 
       }
 
@@ -216,16 +109,16 @@ namespace user
    void button::_001OnLButtonDown(::message::message * pobj)
    {
 
-      SCAST_PTR(::message::mouse,pmouse,pobj);
+      SCAST_PTR(::message::mouse, pmouse, pobj);
 
       pobj->previous();
 
       e_element eelement;
 
-      if(hit_test(pmouse->m_pt, eelement) >= 0)
+      if (hit_test(pmouse->m_pt, eelement) >= 0)
       {
 
-         if(!simple_process_system_message(pobj,::user::event_button_down))
+         if (!simple_process_system_message(pobj, ::user::event_button_down))
          {
 
             Session.m_puiLastLButtonDown = this;
@@ -308,7 +201,7 @@ namespace user
 
       ScreenToClient(&pt);
 
-      if(hit_test(pmouse->m_pt, eelement) >= 0 && Session.m_puiLastLButtonDown == this)
+      if (hit_test(pmouse->m_pt, eelement) >= 0 && Session.m_puiLastLButtonDown == this)
       {
 
          Session.m_puiLastLButtonDown = NULL;
@@ -371,7 +264,7 @@ namespace user
       e_element eelement;
 
       index iHover = hit_test(pmouse->m_pt, eelement);
-      if(iHover != m_iHover)
+      if (iHover != m_iHover)
       {
          index iOldHover = m_iHover;
          m_iHover = iHover;
@@ -385,23 +278,23 @@ namespace user
          }
 
 
-         if(iOldHover == -1)
+         if (iOldHover == -1)
          {
             ::user::control_event ev;
             ev.m_puie = this;
             ev.m_eevent = ::user::event_mouse_enter;
             GetParent()->send_message(
             ::message::message_event, 0, (LPARAM)&ev);
-//               m_bActionHover = true;
+            //               m_bActionHover = true;
          }
-         else if(iHover == -1)
+         else if (iHover == -1)
          {
             ::user::control_event ev;
             ev.m_puie = this;
             ev.m_eevent = ::user::event_mouse_leave;
             GetParent()->send_message(
             ::message::message_event, 0, (LPARAM)&ev);
-//             m_bActionHover = false;
+            //             m_bActionHover = false;
          }
       }
       pobj->m_bRet = false;
@@ -415,13 +308,13 @@ namespace user
       SCAST_PTR(::message::base, pbase, pobj);
       index iOldHover = m_iHover;
       m_iHover = -1;
-      if(iOldHover >= 0)
+      if (iOldHover >= 0)
       {
          RedrawWindow();
          ::user::control_event ev;
          ev.m_puie = this;
          ev.m_eevent = ::user::event_mouse_leave;
-         if(GetParent() != NULL)
+         if (GetParent() != NULL)
          {
             GetParent()->send_message(::message::message_event, 0, (LPARAM)&ev);
          }
@@ -435,7 +328,7 @@ namespace user
    {
       rect rectWindow;
       GetWindowRect(rectWindow);
-      if(rectWindow.contains(pt))
+      if (rectWindow.contains(pt))
       {
          eelement = element_area;
          return 0;
@@ -453,7 +346,7 @@ namespace user
 
       ::draw2d::memory_graphics pgraphics(allocer());
 
-      if(pgraphics.is_null())
+      if (pgraphics.is_null())
          return size(0, 0);
 
       select_font(pgraphics, font_button);
@@ -480,7 +373,7 @@ namespace user
    void button::resize_to_fit()
    {
 
-      if(m_estyle == style_simple)
+      if (m_estyle == style_simple)
       {
 
          ::draw2d::memory_graphics pgraphics(allocer());
@@ -491,20 +384,20 @@ namespace user
          get_window_text(str);
          size size = pgraphics->GetTextExtent(str);
 
-         rect rect(0,0,0,0);
+         rect rect(0, 0, 0, 0);
          rect.right = LONG(size.cx * 1.6);
          rect.bottom = LONG(size.cy * 1.4);
 
-         SetWindowPos(0,0,0,rect.width(),rect.height(),SWP_NOMOVE);
+         SetWindowPos(0, 0, 0, rect.width(), rect.height(), SWP_NOMOVE);
 
 
       }
-      else if(m_estyle == style_bitmap)
+      else if (m_estyle == style_bitmap)
       {
 
          class size size = m_pbitmap->m_dib->size();
 
-         SetWindowPos(0,0,0,size.cx,size.cy,SWP_NOMOVE | SWP_NOZORDER);
+         SetWindowPos(0, 0, 0, size.cx, size.cy, SWP_NOMOVE | SWP_NOZORDER);
 
       }
       else
@@ -512,11 +405,11 @@ namespace user
 
          ::size sizeTotal = calc_text_size();
 
-         sizeTotal.cx = (LONG) (sizeTotal.cx * 1.6);
+         sizeTotal.cx = (LONG)(sizeTotal.cx * 1.6);
 
-         sizeTotal.cy = (LONG) (sizeTotal.cy * 1.4);
+         sizeTotal.cy = (LONG)(sizeTotal.cy * 1.4);
 
-         SetWindowPos(0,0,0,sizeTotal.cx,sizeTotal.cy,SWP_NOMOVE);
+         SetWindowPos(0, 0, 0, sizeTotal.cx, sizeTotal.cy, SWP_NOMOVE);
 
       }
 
@@ -552,7 +445,7 @@ namespace user
 
       UNREFERENCED_PARAMETER(pobj);
 
-      if(m_estyle == style_none)
+      if (m_estyle == style_none)
       {
 
          set_button_style(style_normal);
@@ -610,15 +503,15 @@ namespace user
       GetClientRect(rectClient);
 
       COLORREF crBk;
-      if(!is_window_enabled())
+      if (!is_window_enabled())
       {
          crBk = _001GetColor(color_button_background_disabled);
       }
-      else if(is_pressed())
+      else if (is_pressed())
       {
          crBk = _001GetColor(color_button_background_press);
       }
-      else if(m_iHover >= 0)
+      else if (m_iHover >= 0)
       {
          crBk = _001GetColor(color_button_background_hover);
       }
@@ -628,7 +521,7 @@ namespace user
       }
 
 
-      if(_001IsTranslucent())
+      if (_001IsTranslucent())
       {
          class imaging & imaging = Application.imaging();
          imaging.color_blend(
@@ -644,15 +537,15 @@ namespace user
 
 
       COLORREF crBorder;
-      if(!is_window_enabled())
+      if (!is_window_enabled())
       {
          crBorder = ARGB(255, 127, 127, 127);
       }
-      else if(is_pressed())
+      else if (is_pressed())
       {
          crBorder = ARGB(255, 255, 255, 255);
       }
-      else if(m_iHover >= 0)
+      else if (m_iHover >= 0)
       {
          crBorder = ARGB(255, 100, 100, 200);
       }
@@ -661,29 +554,29 @@ namespace user
          crBorder = ARGB(255, 10, 10, 100);
       }
 
-      if(_001GetFlag(flag_border))
+      if (_001GetFlag(flag_border))
       {
 
          pgraphics->draw3d_rect(rectClient, crBorder, crBorder);
 
       }
 
-//      pgraphics->SetBkMode(TRANSPARENT);
+      //      pgraphics->SetBkMode(TRANSPARENT);
 
-      rectClient.left   += 3;
-      rectClient.top    += 3;
+      rectClient.left += 3;
+      rectClient.top += 3;
       rect rectText = m_rectText;
-//      string str = ::str::international::utf8_to_unicode(str);
-      if(m_pbitmap->m_dib.is_set())
+      //      string str = ::str::international::utf8_to_unicode(str);
+      if (m_pbitmap->m_dib.is_set())
       {
-         if(m_pbitmap->m_dib->m_size.cx > 0 && m_pbitmap->m_dib->m_size.cy > 0)
+         if (m_pbitmap->m_dib->m_size.cx > 0 && m_pbitmap->m_dib->m_size.cy > 0)
          {
             rect rectDib;
             rectDib = m_rectText;
-            rectDib.bottom = MIN(rectText.top + m_pbitmap->m_dib->m_size.cy,rectText.bottom);
-            rectDib.right = MIN(rectText.left + m_pbitmap->m_dib->m_size.cx,rectText.right);
+            rectDib.bottom = MIN(rectText.top + m_pbitmap->m_dib->m_size.cy, rectText.bottom);
+            rectDib.right = MIN(rectText.left + m_pbitmap->m_dib->m_size.cx, rectText.right);
             //m_dib->to(pgraphics, rectDib);
-            m_pbitmap->m_dib->bitmap_blend(pgraphics,rectDib);
+            m_pbitmap->m_dib->bitmap_blend(pgraphics, rectDib);
             rectText.left += m_pbitmap->m_dib->m_size.cx;
          }
       }
@@ -692,26 +585,8 @@ namespace user
       ::draw2d::brush_sp brushText(allocer());
 
 
-      if(!is_window_enabled())
-      {
-//         pgraphics->set_text_color(m_puserstyle->m_crTextDisabled);
-         brushText->create_solid(_001GetColor(color_button_text_disabled));
-      }
-      else if(is_pressed())
-      {
-//         pgraphics->set_text_color(m_puserstyle->m_crTextPress);
-         brushText->create_solid(_001GetColor(color_button_text_press));
-      }
-      else if(m_iHover >= 0)
-      {
-//         pgraphics->set_text_color(m_puserstyle->m_crTextHover);
-         brushText->create_solid(_001GetColor(color_button_text_hover));
-      }
-      else
-      {
-//         pgraphics->set_text_color(m_puserstyle->m_crTextNormal);
-         brushText->create_solid(_001GetColor(color_button_text));
-      }
+      COLORREF crText = get_button_text_color();
+
 
       pgraphics->SelectObject(brushText);
 
@@ -735,11 +610,11 @@ namespace user
    void button::_001OnKeyDown(::message::message * pmessage)
    {
 
-      SCAST_PTR(::message::key,pkey, pmessage);
+      SCAST_PTR(::message::key, pkey, pmessage);
 
       ::user::e_key iKey = pkey->m_ekey;
 
-      if(iKey == ::user::key_return || iKey == ::user::key_space)
+      if (iKey == ::user::key_return || iKey == ::user::key_space)
       {
 
          ::user::control_event ev;
@@ -748,7 +623,7 @@ namespace user
          ev.m_pmessage = pmessage;
          on_control_event(&ev);
          pmessage->m_bRet = ev.m_bRet;
-         if(pmessage->m_bRet)
+         if (pmessage->m_bRet)
          {
             pkey->set_lresult(1);
          }
@@ -758,67 +633,184 @@ namespace user
    }
 
 
-
-   void button::_001OnDrawBitmap(::draw2d::graphics * pgraphics)
+   COLORREF button::get_button_text_color()
    {
 
+      COLORREF crText;
+
+      if (!is_window_enabled())
+      {
+
+         crText = _001GetColor(color_button_text_disabled, ARGB(255, 0, 0, 0));
+
+      }
+      else if (is_pressed())
+      {
+
+         crText = _001GetColor(color_button_text_press, ARGB(255, 0, 0, 0));
+
+      }
+      else if (m_iHover >= 0)
+      {
+
+         crText = _001GetColor(color_button_text_hover, ARGB(255, 0, 0, 0));
+
+      }
+      else
+      {
+
+         crText = _001GetColor(color_button_text, ARGB(255, 0, 0, 0));
+
+      }
+
+      return crText;
+
+   }
 
 
-      string strText;
-
-      get_window_text(strText);
+   void button::_001OnButtonDrawBackground(::draw2d::graphics * pgraphics)
+   {
 
       rect rectClient;
+
       GetClientRect(rectClient);
 
+      COLORREF crBackground;
 
-      //if (m_puserstyle == NULL)
-      //{
-
-      //   if (m_iHover == 0 || Session.m_puiLastLButtonDown == this)
-      //   {
-
-      //      pgraphics->fill_solid_rect(rectClient, ARGB(255, 127, 127, 127));
-
-      //   }
-      //   else
-      //   {
-
-      //      pgraphics->fill_solid_rect(rectClient, ARGB(255, 127, 127, 127));
-
-      //   }
-
-      //}
-      //else
+      if (!is_window_enabled())
       {
-         if (!is_window_enabled())
+
+         crBackground = _001GetColor(color_button_background_disabled, ARGB(255, 180, 180, 180));
+
+      }
+      else if (is_pressed())
+      {
+
+         crBackground = _001GetColor(color_button_background_press, ARGB(255, 240, 240, 240));
+
+      }
+      else if (m_iHover >= 0)
+      {
+
+         crBackground = _001GetColor(color_button_background_hover, ARGB(255, 240, 240, 240));
+
+      }
+      else
+      {
+
+         crBackground = _001GetColor(color_button_background, ARGB(255, 240, 240, 240));
+
+      }
+
+      pgraphics->fill_solid_rect(rectClient, crBackground);
+
+   }
+
+
+   void button::_001OnButtonDrawTextLayer(::draw2d::graphics * pgraphics, LPRECT lprectText)
+   {
+
+      rect rectText(lprectText);
+
+      if (m_estockicon == stock_icon_none)
+      {
+
+         string strText;
+
+         get_window_text(strText);
+
+         if (strText.has_char())
          {
 
-            pgraphics->fill_solid_rect(rectClient, _001GetColor(color_button_background_disabled));
+            COLORREF crText = get_button_text_color();
 
-         }
-         else if (m_iHover == 0 || Session.m_puiLastLButtonDown == this)
-         {
+            pgraphics->set_text_color(crText);
 
-            //pgraphics->draw3d_rect(rectClient,m_puserstyle->_001GetColor(color_border_hover),m_puserstyle->_001GetColor(color_border_hover));
+            int iDrawTextFlags;
 
-            //rectClient.deflate(1,1);
+            if (m_estyle == style_image_and_text)
+            {
 
-            pgraphics->fill_solid_rect(rectClient, _001GetColor(color_button_background_hover));
+               iDrawTextFlags = _001GetInt(int_button_draw_text_and_image_flags, DT_LEFT | DT_BOTTOM | DT_SINGLELINE);
 
-         }
-         else
-         {
+            }
+            else
+            {
 
-            pgraphics->fill_solid_rect(rectClient, _001GetColor(color_button_background));
+               iDrawTextFlags = _001GetInt(m_eintTextAlign, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+
+            }
+
+            pgraphics->draw_text(strText, rectText, iDrawTextFlags);
 
          }
 
       }
+      else
+      {
+
+         COLORREF crText = get_button_text_color();
+
+         ::draw2d::pen_sp pen(allocer());
+
+         pen->m_cr = crText;
+
+         pen->m_dWidth = 1.0;
+
+         pgraphics->SelectObject(pen);
+
+         class rect rectIcon(rectText);
+
+         rectIcon.deflate(rectIcon.width() / 4, rectIcon.height() / 4);
+
+         pgraphics->draw_stock_icon(rectIcon, m_estockicon);
+
+      }
+
+   }
 
 
-      if(!(m_pbitmap->m_dib.is_set() && m_pbitmap->m_dib->area() > 0))
+   void button::_001OnButtonDrawNormal(::draw2d::graphics * pgraphics)
+   {
+
+      rect rectClient;
+
+      GetClientRect(rectClient);
+
+      select_font(pgraphics, font_button);
+
+      rect rectMargin = _001GetRect(m_erectMargin);
+
+      rect rectBorder = _001GetRect(m_erectBorder);
+
+      rectClient.deflate(rectMargin);
+
+      rectClient.deflate(rectBorder);
+
+      _001OnButtonDrawBackground(pgraphics);
+
+      rect rectPadding = _001GetRect(m_erectPadding);
+
+      rectClient.deflate(rectPadding);
+
+      _001OnButtonDrawTextLayer(pgraphics, rectClient);
+
+   }
+
+
+   void button::_001OnButtonDrawBitmap(::draw2d::graphics * pgraphics)
+   {
+
+      select_font(pgraphics, font_button);
+
+      _001OnButtonDrawBackground(pgraphics);
+
+      if (!(m_pbitmap->m_dib.is_set() && m_pbitmap->m_dib->area() > 0))
+      {
+
          return;
+
+      }
 
       ASSERT(m_pbitmap->m_dib.is_set() && m_pbitmap->m_dib->area() > 0); // required
 
@@ -834,6 +826,22 @@ namespace user
       else if(!is_window_enabled() && m_pbitmap->m_dibDisabled.is_set() && m_pbitmap->m_dibDisabled->area() > 0)
          pdib = m_pbitmap->m_dibDisabled;   // last image for disabled
 
+      rect rectClient;
+
+      GetClientRect(rectClient);
+
+      rect rectMargin = _001GetRect(m_erectMargin);
+
+      rect rectBorder = _001GetRect(m_erectBorder);
+
+      rectClient.deflate(rectMargin);
+
+      rectClient.deflate(rectBorder);
+
+      rect rectPadding = _001GetRect(m_erectPadding);
+
+      rectClient.deflate(rectPadding);
+
       if (pdib->area() > 0 && rectClient.area() > 0)
       {
 
@@ -847,7 +855,7 @@ namespace user
 
          double dH = (double) rectClient.height() / (double) pdib->m_size.cy;
 
-         double dMin = MAX(MIN(dW, dH), 1.0);
+         double dMin = MIN(MIN(dW, dH), 1.0);
 
          rectAspect.right = pdib->m_size.cx * dMin;
 
@@ -855,98 +863,118 @@ namespace user
 
          rectAspect.Align(align_center, rectClient);
 
-         pgraphics->draw(rectClient, pdib->get_graphics(), rect(pdib->m_size));
+         pgraphics->SetStretchBltMode(HALFTONE);
+
+         pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
+
+         pgraphics->draw(rectAspect, pdib->get_graphics(), rect(pdib->m_size));
 
       }
 
    }
 
 
-   void button::_001OnDrawPush(::draw2d::graphics * pgraphics)
+   void button::_001OnButtonDrawImageAndText(::draw2d::graphics * pgraphics)
    {
 
+      select_font(pgraphics, font_button);
 
+      _001OnButtonDrawBackground(pgraphics);
 
-      //   int32_t iOriginalBkMode = pgraphics->GetBkMode();
-      //   pgraphics->SetBkMode(TRANSPARENT);
       rect rectClient;
+
       GetClientRect(rectClient);
 
-      //   state::state state = _001GetState();
-      //   const int32_t ihilite = 0x0004; // hilighted
-      //   const int32_t ifocus = 0x0008; // focus
-      //   const int32_t iPushState = state & 3;
+      rect rectPadded(rectClient);
+
+      int iPadding = _001GetInt(::user::int_element_padding);
+
+      rectPadded.deflate(iPadding, iPadding);
+
+      if (!(m_pbitmap->m_dib.is_set() && m_pbitmap->m_dib->area() > 0))
+         return;
+
+      ASSERT(m_pbitmap->m_dib.is_set() && m_pbitmap->m_dib->area() > 0); // required
+
+      // use the main bitmap for up, the selected bitmap for down
+      ::draw2d::dib * pdib = m_pbitmap->m_dib;
+
+      if (_001GetCheck() == ::check::checked && m_pbitmap->m_dibSel.is_set() && m_pbitmap->m_dibSel->area() > 0)
+         pdib = m_pbitmap->m_dibSel;
+      else if (m_iHover >= 0 && is_window_enabled() && m_pbitmap->m_dibHover.is_set() && m_pbitmap->m_dibHover->area() > 0)
+         pdib = m_pbitmap->m_dibHover;
+      else if (Session.get_focus_ui() == this && m_pbitmap->m_dibFocus.is_set() && m_pbitmap->m_dibFocus->area() > 0)
+         pdib = m_pbitmap->m_dibFocus;   // third image for focused
+      else if (!is_window_enabled() && m_pbitmap->m_dibDisabled.is_set() && m_pbitmap->m_dibDisabled->area() > 0)
+         pdib = m_pbitmap->m_dibDisabled;   // last image for disabled
+
+      rect rectAspect(rectPadded);
+
+      if (pdib->area() > 0 && rectClient.area() > 0)
+      {
+
+         rectAspect.left = 0;
+
+         rectAspect.top = 0;
+
+         double dW = (double)rectPadded.width() / (double)pdib->m_size.cx;
+
+         double dH = (double)rectPadded.height() / (double)pdib->m_size.cy;
+
+         double dMin = MIN(MIN(dW, dH), 1.0);
+
+         rectAspect.right = pdib->m_size.cx * dMin;
+
+         rectAspect.bottom = pdib->m_size.cy * dMin;
+
+         rectAspect.Align(align_bottom_left, rectPadded);
+
+         pgraphics->SetStretchBltMode(HALFTONE);
+
+         pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
+
+         pgraphics->draw(rectAspect, pdib->get_graphics(), rect(pdib->m_size));
+
+         rectAspect.left = rectAspect.right + iPadding;
+         rectAspect.right = rectPadded.right;
+         rectAspect.top = rectPadded.top;
+         rectAspect.bottom = rectPadded.bottom;
+
+      }
+
+      _001OnButtonDrawTextLayer(pgraphics, rectAspect);
+
+   }
+
+
+   void button::_001OnButtonDrawPush(::draw2d::graphics * pgraphics)
+   {
+
+      rect rectClient;
+
+      GetClientRect(rectClient);
 
       color color;
 
-      //if(m_puserstyle == NULL)
-      //{
-
-      //   color.set_rgb(ARGB(255,127,127,127));
-
-      //}
-      //else
-      {
-
-         color.set_rgb(_001GetColor(::user::color_button_background));
-
-      }
+      color.set_rgb(_001GetColor(::user::color_button_background));
 
       COLORREF cr;
 
-      //if(m_pcolorschema != NULL)
-      //{
-      //   if(is_pushed())
-      //   {
-      //      color.hls_rate(m_pcolorschema->m_hlsRatePush);
-      //   }
-      //   if(m_bHover)
-      //   {
-      //      color.hls_rate(m_pcolorschema->m_hlsRateHover);
-      //   }
-      //}
-      //else
+      if(_001GetCheck() == ::check::checked)
       {
-         if(_001GetCheck() == ::check::checked)
-         {
-            color.hls_rate(0.0,- 0.2,- 0.3);
-         }
-         if(m_iHover >= 0)
-         {
-            color.hls_rate(0.0,0.2,0.0);
-         }
-      }
-      cr = color;
-      //if(m_bTransitionEffect)
-      //{
-      //   class color color;
-      //   color.set_rgb(cr);
-      //   cr = color;
 
-      //   double dH,dL,dS;
-      //   color.get_hls(dH,dL,dS);
-      //   color.set_hls(dH,dL,dS);
-      //   cr = color;
-      //   double dRate;
-      //   if(m_iStep <= m_iStepCount / 2)
-      //   {
-      //      dRate = m_iStep * 2.0 / m_iStepCount;
-      //   }
-      //   else
-      //   {
-      //      dRate = (m_iStepCount - m_iStep) * 2.0 / m_iStepCount;
-      //   }
-      //   if(is_pushed())
-      //   {
-      //      dL = dL * (1.0 - dRate);
-      //   }
-      //   else
-      //   {
-      //      dL = (1.0 - dL) * dRate + dL;
-      //   }
-      //   color.set_hls(dH,dL,dS);
-      //   cr = color.get_rgb();
-      //}
+         color.hls_rate(0.0,- 0.2,- 0.3);
+
+      }
+
+      if(m_iHover >= 0)
+      {
+
+         color.hls_rate(0.0,0.2,0.0);
+
+      }
+
+      cr = color;
 
       class color colorExt1TL;
       class color colorExt2TL;
@@ -957,19 +985,24 @@ namespace user
       colorExt2TL.set_rgb(cr);
       colorExt1BR.set_rgb(cr);
       colorExt2BR.set_rgb(cr);
+
       if(_001GetCheck() == ::check::checked)
       {
+
          colorExt1TL.hls_rate(0.0,- 0.5,0.0);
          colorExt2TL.hls_rate(0.0,- 0.2,0.0);
          colorExt2BR.hls_rate(0.0,0.2,0.0);
          colorExt1BR.hls_rate(0.0,0.85,0.0);
+
       }
       else
       {
+
          colorExt1TL.hls_rate(0.0,0.85,0.0);
          colorExt2TL.hls_rate(0.0,0.2,0.0);
          colorExt2BR.hls_rate(0.0,- 0.2,0.0);
          colorExt1BR.hls_rate(0.0,- 0.5,0.0);
+
       }
 
       class imaging & imaging = Application.imaging();
@@ -985,8 +1018,10 @@ namespace user
       rect.deflate(1,1,1,1);
       imaging.color_blend(pgraphics,rect.left,rect.top,rect.width(),rect.height(),cr,200);
       rect.deflate(1,1,1,1);
+
       int32_t x1 = rect.left;
       int32_t x2 = x1 + rect.width() / 3;
+
       rect.left = x1;
       rect.right = x2;
       rect.bottom = rect.top + 5;
@@ -994,10 +1029,6 @@ namespace user
       pgraphics->SelectObject(pen);
       imaging.color_blend_3dRect(pgraphics,rect,colorExt1TL,220,colorExt1BR,220);
 
-
-
-
-      //   pgraphics->SetBkMode(iOriginalBkMode);
 
    }
 
@@ -1020,7 +1051,7 @@ namespace user
    void button::on_enter_button_style(e_style estyle)
    {
 
-      if(estyle == style_bitmap)
+      if(estyle == style_bitmap || estyle == style_image_and_text)
       {
 
          m_pbitmap = new bitmap();
@@ -1050,13 +1081,13 @@ namespace user
    void button::on_exit_button_style(e_style estyle)
    {
 
-      if(estyle == style_bitmap)
+      if(estyle == style_bitmap || estyle == style_image_and_text)
       {
 
          ::aura::del(m_pbitmap);
 
       }
-      else if(estyle == style_bitmap)
+      else if(estyle == style_list)
       {
 
          ::aura::del(m_plist);
@@ -1078,7 +1109,13 @@ namespace user
    bool button::LoadBitmaps(::var var,::var varSel,::var varFocus,::var varDisabled,::var varHover)
    {
 
-      set_button_style(style_bitmap);
+      if (m_estyle != style_bitmap &&
+            m_estyle != style_image_and_text)
+      {
+
+         set_button_style(style_bitmap);
+
+      }
 
       if(!var.is_empty())
       {
@@ -1161,11 +1198,7 @@ namespace user
    }
 
 
-
-
-
-
-   void button::_001OnDrawList(::draw2d::graphics * pgraphics)
+   void button::_001OnButtonDrawList(::draw2d::graphics * pgraphics)
    {
       rect rectClient;
       bool bItemHover;

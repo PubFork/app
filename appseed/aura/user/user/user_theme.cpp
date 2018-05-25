@@ -19,8 +19,6 @@ namespace user
    theme::~theme()
    {
 
-      ::aura::del(m_plibrary);
-
    }
 
 
@@ -29,10 +27,12 @@ namespace user
 
       create_int(int_still_draw_text_flags, DT_LEFT | DT_BOTTOM | DT_SINGLELINE);
       create_int(int_menu_item_draw_text_flags, DT_LEFT | DT_VCENTER | DT_SINGLELINE);
+      create_int(int_edit_draw_text_flags, DT_LEFT | DT_VCENTER | DT_SINGLELINE);
       create_double(double_list_item_height_rate, 1.0);
       create_double(double_tree_item_height_rate, 1.0);
+      create_rect_coord(rect_edit_padding, 0.2, 0.2, 0.2, 0.2);
       create_color(color_edit_text_empty, ARGB(127, 0x80, 0x80, 0x80));
-      create_color(::user::color_action_hover_border_color, ARGB(255, 0x50, 0xA0, 0xe0));
+      create_color(color_action_hover_border_color, ARGB(255, 0x50, 0xA0, 0xe0));
       create_color(color_edit_text_selected, ARGB(255, 0xff, 0xff, 0xff));
       create_color(color_edit_background_selected, ARGB(255, 0x47, 0x90, 0xd0));
       create_color(color_list_item_text, ARGB(255, 0, 0, 0));

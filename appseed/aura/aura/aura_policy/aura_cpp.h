@@ -1054,13 +1054,8 @@ inline void dump_elements(dump_context & dumpcontext, const TYPE* pElements, ::c
 #include "aura/multithreading/multithreading.h"
 
 
-#include "aura/aura/aura/aura_draw2d.h"
-
-
-//CLASS_DECL_AURA mutex * draw2d_mutex();
-
-
 #include "aura/aura/aura/aura_gudo.h"
+
 
 namespace aura
 {
@@ -1176,8 +1171,6 @@ CLASS_DECL_AURA string get_system_error_message(uint32_t dwError);
 
 #include "aura/aura/message/message_base.h"
 #include "aura/aura/message/message_timer.h"
-
-//#include "aura/user/user/user_const.h"
 
 #include "aura/user/user/user_command.h"
 //#include "aura/aura/aura/aura_::user::command.h"

@@ -8,7 +8,7 @@ namespace user
    class combo_list;
 
 
-   class CLASS_DECL_CORE combo_box : 
+   class CLASS_DECL_CORE combo_box :
       virtual public ::user::plain_edit
    {
    public:
@@ -16,7 +16,7 @@ namespace user
 
       enum e_style
       {
-         
+
          style_verisimple,
          style_simply,
 
@@ -80,10 +80,10 @@ namespace user
 
       virtual bool create_control(class control_descriptor * pdescriptor);
 
-      virtual bool get_element_rect(LPRECT lprect, e_element eelement) const;
-      virtual e_element hit_test(point pt) const;
+      virtual bool get_element_rect(LPRECT lprect, e_element eelement);
+      virtual e_element hit_test(point pt);
 
-      virtual void get_simple_drop_down_open_arrow_path(point_array & pointa) const;
+      virtual void get_simple_drop_down_open_arrow_polygon(point_array & pointa);
 
 
       DECL_GEN_SIGNAL(_001OnLButtonDblClk);
@@ -132,9 +132,9 @@ namespace user
       int32_t SetDroppedWidth(UINT nWidth);
       int32_t GetDroppedWidth();
 
-   #if defined(WINDOWSEX) && (WINVER >= 0x0500)
+#if defined(WINDOWSEX) && (WINVER >= 0x0500)
       bool GetComboBoxInfo(PCOMBOBOXINFO pcbi);
-   #endif   // WINVER >= 0x0500
+#endif   // WINVER >= 0x0500
 
       // for edit control
       bool GetEditSel(strsize & nStartChar, strsize & nEndChar);
@@ -158,7 +158,7 @@ namespace user
       void GetDroppedControlRect(LPRECT lprect);
       bool GetDroppedState();
 
-   // Operations
+      // Operations
       // for drop-down combo boxes
       void ShowDropDown(bool bShowIt = TRUE);
 
@@ -179,7 +179,7 @@ namespace user
       void Cut();
       void Paste();
 
-   // Overridables (must override draw, measure and compare for owner draw)
+      // Overridables (must override draw, measure and compare for owner draw)
 #ifdef WINDOWSEX
       virtual void DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct);
       virtual void MeasureItem(LPMEASUREITEMSTRUCT lpMeasureItemStruct);
@@ -202,8 +202,8 @@ namespace user
       //virtual void _001OnDraw(::draw2d::graphics * pgraphics);
 
 //      virtual void _001GetListText(index iSel,string & str) const;
-  //    virtual index _001FindListText(const string & str) const;
-    //  virtual count _001GetListCount() const;
+      //    virtual index _001FindListText(const string & str) const;
+      //  virtual count _001GetListCount() const;
 
 
 //      virtual index AddString(const char * lpszString,uint_ptr dwItemData);

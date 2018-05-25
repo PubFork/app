@@ -15,7 +15,7 @@ namespace user
 
       //style_map               m_map;
 
-      ::aura::library *       m_plibrary;
+      sp(::aura::library)     m_plibrary;
 
 
       theme(::aura::application * papp);

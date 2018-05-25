@@ -1312,7 +1312,7 @@ namespace user
    }
 
 
-   bool style_base::get_rect(RECT & rect, e_rect erect, style_context * pcontext)
+   bool style_base::get_rect(style_rect & rect, e_rect erect, style_context * pcontext)
    {
 
       return false;

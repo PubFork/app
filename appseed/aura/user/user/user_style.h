@@ -24,13 +24,6 @@ namespace user
       ::draw2d::graphics *       m_pgraphics;
 
 
-      //bool                     m_bBorder;
-      //COLORREF                 m_crTextNormal;
-      //rect                     m_rectItemMargin;
-      //int                      m_iElementPadding;
-
-
-
       style();
       style(::aura::application * papp);
       virtual ~style();
@@ -49,7 +42,7 @@ namespace user
 
       virtual void DrawCheck(::check::e_check echeck, const RECT & rect, ::draw2d::graphics * pgraphics) override;
 
-      virtual bool select_layered_frame();
+      virtual bool set_translucent();
 
       virtual bool simple_ui_draw_focus_rect(::user::interaction * pui,::draw2d::graphics * pgraphics) override;
 
@@ -94,42 +87,33 @@ namespace user
       virtual bool select_font(::user::interaction * pui, e_font efont = font_default);
 
 
-
-      virtual COLORREF           _001GetColor(::user::interaction * pui, e_color ecolor, COLORREF crDefault = 0);
-      virtual ::draw2d::font_sp  _001GetFont(::user::interaction * pui, e_font efont, ::draw2d::font * pfont = NULL);
-      virtual e_translucency     _001GetTranslucency(::user::interaction * pui, e_element eelement = element_none, e_translucency etranslucencyDefault = translucency_undefined);
-      virtual bool               _001GetFlag(::user::interaction * pui, ::user::e_flag eflag, bool bDefault = false);
-      virtual RECT               _001GetRect(::user::interaction * pui, ::user::e_rect erect, rect rectDefault = ::null_rect());
-      virtual int                _001GetInt(::user::interaction * pui, ::user::e_int eint, int iDefault = 0);
-      virtual double             _001GetDouble(::user::interaction * pui, ::user::e_double edouble, double dDefault = 0.0);
-
-      virtual bool _001IsBackgroundBypass(::user::interaction * pui, e_element eelement = element_none);
-      virtual bool _001IsTransparent(::user::interaction * pui, e_element eelement = element_none);
-      virtual bool _001IsTranslucent(::user::interaction * pui, e_element eelement = element_none);
-      virtual bool _001HasTranslucency(::user::interaction * pui, e_element eelement = element_none);
+      virtual COLORREF           _001GetColor(e_color ecolor, COLORREF crDefault = 0);
+      virtual ::draw2d::font_sp  _001GetFont(e_font efont, ::draw2d::font * pfont = NULL);
+      virtual e_translucency     _001GetTranslucency(e_element eelement = element_none, e_translucency etranslucencyDefault = translucency_undefined);
+      virtual bool               _001GetFlag(::user::e_flag eflag, bool bDefault = false);
+      virtual RECT               _001GetRect(::user::e_rect erect, rect rectDefault = ::null_rect());
+      virtual int                _001GetInt(::user::e_int eint, int iDefault = 0);
+      virtual double             _001GetDouble(::user::e_double edouble, double dDefault = 0.0);
 
 
+      virtual bool _001IsBackgroundBypass(e_element eelement = element_none);
+      virtual bool _001IsTransparent(e_element eelement = element_none);
+      virtual bool _001IsTranslucent(e_element eelement = element_none);
+      virtual bool _001HasTranslucency(e_element eelement = element_none);
 
 
       virtual bool get_color(COLORREF & cr, e_color eusercolor, style_context * pcontext) override;
       virtual bool get_font(::draw2d::font_sp & sp, e_font efont, style_context * pcontext) override;
       virtual bool get_translucency(e_translucency & etranslucency, e_element element, style_context * pcontext) override;
       virtual bool get_flag(bool & bSet, e_flag eflag, style_context * pcontext) override;
-      virtual bool get_rect(RECT & rect, e_rect erect, style_context * pcontext) override;
+      virtual bool get_rect(style_rect & rect, e_rect erect, style_context * pcontext) override;
       virtual bool get_int(int & i, e_int eint, style_context * pcontext) override;
       virtual bool get_double(double & d, e_double edouble, style_context * pcontext) override;
 
 
-      //virtual void select_default();
-
-
-//      virtual void set_user_schema(::user::e_schema eschema);
-      //    virtual void select_user_schema();
-
-
       virtual void select(::draw2d::graphics * pgraphics);
 
-      //virtual void defer_create_user_schema(::user::e_schema eschema);
+
       virtual ::draw2d::font_sp create_point_font(e_font efont, const char * pszFamilyName, double dFontSize, int iFontWeight = FW_NORMAL);
       virtual bool create_color(e_color eusercolor, COLORREF cr);
       virtual bool create_opaque_color(e_color eusercolor, COLORREF cr);
@@ -138,11 +122,18 @@ namespace user
       virtual bool create_session_default_color(e_color eusercolor, BYTE bAlpha, uint64_t ui);
       virtual bool create_flag(e_flag eflag, bool bSet = true);
       virtual bool create_translucency(e_element eelement, e_translucency etranslucency);
-      virtual bool create_rect_coord(e_rect erect, LONG l, LONG t, LONG r, LONG b);
-      virtual bool create_rect_dim(e_rect erect, LONG l, LONG t, LONG r, LONG b);
-      virtual bool create_rect(e_rect erect, LPCRECT lpcrect);
+      virtual bool create_pixel_rect_coord(e_rect erect, double l, double t, double r, double b);
+      virtual bool create_pixel_rect_dim(e_rect erect, double l, double t, double w, double h);
+      virtual bool create_pixel_rect(e_rect erect, rectd r);
+      virtual bool create_point_rect_coord(e_rect erect, double l, double t, double r, double b);
+      virtual bool create_point_rect_dim(e_rect erect, double l, double t, double w, double h);
+      virtual bool create_point_rect(e_rect erect, rectd r);
+      virtual bool create_rect_coord(e_rect erect, double l, double t, double r, double b, ::draw2d::e_unit eunit = ::draw2d::unit_em);
+      virtual bool create_rect_dim(e_rect erect, double l, double t, double w, double h, ::draw2d::e_unit eunit = ::draw2d::unit_em);
+      virtual bool create_rect(e_rect erect, rectd r, ::draw2d::e_unit eunit = ::draw2d::unit_em);
       virtual bool create_int(e_int eint, int i);
       virtual bool create_double(e_double eint, double d);
+
 
       virtual e_control_type get_control_type() override;
 
@@ -155,7 +146,6 @@ namespace user
 
 
    };
-
 
 
 } // namespace user

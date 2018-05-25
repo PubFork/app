@@ -16,7 +16,8 @@ namespace userstack
       WfiEnableFullScreen();
 
       m_bLayered = true;
-      select_layered_frame();
+
+      set_translucent();
 
       m_ppaneview = NULL;
 

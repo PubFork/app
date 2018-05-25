@@ -8862,92 +8862,92 @@ restart:
    //}
 
 
-   bool interaction::_001IsBackgroundBypass(e_element eelement)
-   {
+   //bool interaction::_001IsBackgroundBypass(e_element eelement)
+   //{
 
-      return _001IsBackgroundBypass(this, eelement);
+   //   return _001IsBackgroundBypass(this, eelement);
 
-   }
-
-
-   bool interaction::_001IsTransparent(e_element eelement)
-   {
-
-      return _001IsTransparent(this, eelement);
-
-   }
+   //}
 
 
-   bool interaction::_001IsTranslucent(e_element eelement)
-   {
+   //bool interaction::_001IsTransparent(e_element eelement)
+   //{
 
-      return _001IsTranslucent(this, eelement);
+   //   return _001IsTransparent(this, eelement);
 
-   }
-
-
-   bool interaction::_001HasTranslucency(e_element eelement)
-   {
-
-      return _001HasTranslucency(this, eelement);
-
-   }
+   //}
 
 
-   COLORREF interaction::_001GetColor(e_color ecolor, COLORREF crDefault)
-   {
+   //bool interaction::_001IsTranslucent(e_element eelement)
+   //{
 
-      return _001GetColor(this, ecolor, crDefault);
+   //   return _001IsTranslucent(this, eelement);
 
-   }
-
-
-   ::draw2d::font_sp interaction::_001GetFont(e_font efont, ::draw2d::font * pfont)
-   {
-
-      return _001GetFont(this, efont, pfont);
-
-   }
+   //}
 
 
-   e_translucency interaction::_001GetTranslucency(e_element eelement, e_translucency etranslucencyDefault)
-   {
+   //bool interaction::_001HasTranslucency(e_element eelement)
+   //{
 
-      return _001GetTranslucency(this, eelement, etranslucencyDefault);
+   //   return _001HasTranslucency(this, eelement);
 
-   }
-
-
-   bool interaction::_001GetFlag(::user::e_flag eflag, bool bDefault)
-   {
-
-      return _001GetFlag(this, eflag, bDefault);
-
-   }
+   //}
 
 
-   RECT interaction::_001GetRect(::user::e_rect erect, rect rectDefault)
-   {
+   //COLORREF interaction::_001GetColor(e_color ecolor, COLORREF crDefault)
+   //{
 
-      return _001GetRect(this, erect, rectDefault);
+   //   return _001GetColor(this, ecolor, crDefault);
 
-   }
-
-
-   int interaction::_001GetInt(::user::e_int eint, int iDefault)
-   {
-
-      return _001GetInt(this, eint, iDefault);
-
-   }
+   //}
 
 
-   double interaction::_001GetDouble(::user::e_double edouble, double dDefault)
-   {
+   //::draw2d::font_sp interaction::_001GetFont(e_font efont, ::draw2d::font * pfont)
+   //{
 
-      return _001GetDouble(this, edouble, dDefault);
+   //   return _001GetFont(this, efont, pfont);
 
-   }
+   //}
+
+
+   //e_translucency interaction::_001GetTranslucency(e_element eelement, e_translucency etranslucencyDefault)
+   //{
+
+   //   return _001GetTranslucency(this, eelement, etranslucencyDefault);
+
+   //}
+
+
+   //bool interaction::_001GetFlag(::user::e_flag eflag, bool bDefault)
+   //{
+
+   //   return _001GetFlag(this, eflag, bDefault);
+
+   //}
+
+
+   //RECT interaction::_001GetRect(::user::e_rect erect, rect rectDefault)
+   //{
+
+   //   return _001GetRect(this, erect, rectDefault);
+
+   //}
+
+
+   //int interaction::_001GetInt(::user::e_int eint, int iDefault)
+   //{
+
+   //   return _001GetInt(this, eint, iDefault);
+
+   //}
+
+
+   //double interaction::_001GetDouble(::user::e_double edouble, double dDefault)
+   //{
+
+   //   return _001GetDouble(this, edouble, dDefault);
+
+   //}
 
    //// e_style composition
    //bool interaction::style_color(COLORREF & cr, e_color ecolor)

@@ -38,6 +38,9 @@ namespace user
          string      m_strMessage;
       };
 
+
+      e_rect                        m_erectPadding;
+      e_int                         m_eintDrawTextFlags;
       DWORD                         m_dwLastDraw;
       array <error> m_errora;
       //WPARAM                        m_dwLastKeyWparam;

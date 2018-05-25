@@ -1,7 +1,6 @@
 #pragma once
 
 
-
 namespace draw2d
 {
 

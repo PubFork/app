@@ -268,10 +268,11 @@ namespace user
       rect_menu_item_margin,
       rect_menu_item_padding,
       rect_menu_item_border,
+      rect_edit_padding,
 
    };
 
-   using rect_map = ::map < e_rect,e_rect,rect,rect >;
+   using rect_map = ::map < e_rect,e_rect, style_rect >;
 
    enum e_int
    {
@@ -283,6 +284,8 @@ namespace user
       int_check_box_size,
       int_still_draw_text_flags,
       int_button_draw_text_flags,
+      int_button_draw_text_and_image_flags,
+      int_edit_draw_text_flags,
       int_menu_item_draw_text_flags,
       int_list_item_draw_text_flags,
       int_top_level_drawing_order,

@@ -356,6 +356,20 @@ namespace draw2d
    }
 
 
+   double font::get_pixel_font_height(::draw2d::graphics * pgraphics)
+   {
+
+      if (m_eunitFontSize == unit_point)
+      {
+
+         return m_dFontSize * pgraphics->get_dpiy() / 72.0;
+
+      }
+
+      return m_dFontSize;
+
+   }
+
 
 } // namespace draw2d
 

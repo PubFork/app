@@ -59,6 +59,7 @@ namespace user
 
       ASSERT(get_app() != NULL);
 
+      m_eintDrawTextFlags = int_edit_draw_text_flags;
 
       m_bEnterKeyOnPaste = false;
 
@@ -69,31 +70,33 @@ namespace user
       m_pinsert = NULL;
 
       m_bColorerTake5 = false;
-      //m_pcolorereditor = NULL;
-      //m_plines = new colorertake5::text_lines;
 
-//      m_plines->lines.set_size(10, 100);
       m_straLines.set_size(10, 100);
 
       m_daExtent.set_size(10, 100);
 
       m_iTabWidth = 3;
+
       m_bTabInsertSpaces = false;
 
       m_iLineHeight = 0;
+
       m_bPassword = false;
 
       m_bOwnData = false;
 
       m_bMultiLine = false;
+
       m_bReadOnly = false;
+
       m_bSendEnterKey = false;
 
       m_bActionHover = false;
 
-
       m_bCalcLayoutHintNoTextChange = false;
+
       m_scrolldataHorz.m_bScrollEnable = false;
+
       m_scrolldataVert.m_bScrollEnable = false;
 
       m_y = -1;
@@ -107,26 +110,6 @@ namespace user
 
 
    }
-
-
-   //colorertake5::base_editor * plain_edit::colorertake5()
-   //{
-
-   //   if(m_bColorerTake5)
-   //   {
-
-   //      if (m_pcolorereditor == NULL)
-   //      {
-
-   //         m_pcolorereditor = new colorertake5::base_editor(get_app());
-
-   //      }
-
-   //   }
-
-   //   return m_pcolorereditor;
-
-   //}
 
 
    void plain_edit::install_message_routing(::message::sender * pinterface)

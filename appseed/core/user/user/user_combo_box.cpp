@@ -73,8 +73,6 @@ namespace user
    void combo_box::_001OnDrawStaticText(::draw2d::graphics * pgraphics)
    {
 
-
-
       string strText;
 
       if (m_bEdit)
@@ -103,26 +101,21 @@ namespace user
 
       rect rectText;
 
-      get_element_rect(rectText, element_text);;
-
-      //int32_t iMargin = rectClient.height();
-
-      //rectText.deflate(iMargin, iMargin);
+      get_element_rect(rectText, element_text);
 
       select_font(pgraphics, font_plain_edit);
 
       pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
 
-      pgraphics->text_out(rectText.left, rectText.top, strText);
+      int iDrawTextFlags = _001GetInt(m_eintDrawTextFlags);
+
+      pgraphics->draw_text(strText, rectText, iDrawTextFlags);
 
    }
 
 
-
    void combo_box::_001OnDrawVerisimple(::draw2d::graphics * pgraphics)
    {
-
-
 
       pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
@@ -145,8 +138,6 @@ namespace user
 
       ::draw2d::brush_sp br(allocer());
 
-//      int32_t iMargin = rectClient.height() / 8;
-
       rect rectDropDown;
 
       get_element_rect(rectDropDown, element_drop_down);
@@ -161,7 +152,7 @@ namespace user
 
       point_array pointa;
 
-      get_simple_drop_down_open_arrow_path(pointa);
+      get_simple_drop_down_open_arrow_polygon(pointa);
 
       if(pointa.get_count() >= 3)
       {
@@ -210,47 +201,15 @@ namespace user
 
          pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
-         //if(m_bDropDownHover)
-         //{
-
-         //   br->create_solid(ARGB(184,180,230,140));
-
-         //}
-         //else
-         //{
-
-         //   br->create_solid(ARGB(84,255,255,255));
-
-         //}
-
-         //pgraphics->SelectObject(br);
-
-         //pgraphics->fill_rect(rectClient);
-
-         //pgraphics->set_alpha_mode(::draw2d::alpha_mode_set);
-
-         //color ca;
-
-         //ca.set_rgb(RGB(227, 227, 210));
-
-         //ca.hls_rate(0.0, -0.33, -0.23);
-
-         //COLORREF crBorder = ca.get_rgb() | (0xff << 24);
-
-         //pgraphics->draw3d_rect(rectClient, crBorder, crBorder);
-
          _001OnDrawStaticText(pgraphics);
 
       }
-
-
 
       pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
       rect rectDropDown;
 
       get_element_rect(rectDropDown, element_drop_down);
-
 
       int32_t iMargin = rectClient.height() / 8;
 
@@ -260,96 +219,25 @@ namespace user
 
       int32_t iColorRate = 6;
 
-      for(int32_t radius = iMargin * 2 / 3; radius >= 1; radius--)
-      {
-
-         iColorRate = ((iMargin * 2 / 3) - radius) * 26 / (iMargin * 2 / 3);
-         {
-            if(i == 0)
-            {
-               COLORREF ca(ARGB(230, 130, 130, 120));
-               pgraphics->draw_round_top_left(r, ca, radius, 1);
-            }
-            else if(i == 1)
-            {
-               COLORREF ca(ARGB(230, 210, 210, 200));
-               pgraphics->draw_round_top_left(r, ca, radius, 1);
-            }
-            else
-            {
-               COLORREF ca(ARGB(230, 230 - iColorRate, 230 - iColorRate, 220 - iColorRate));
-               pgraphics->draw_round_top_left(r, ca, radius, 1);
-            }
-         }
-         {
-            if(i == 0)
-            {
-               COLORREF ca(ARGB(230, 130, 130, 120));
-               pgraphics->draw_round_bottom_right(r, ca, radius, 1);
-            }
-            else if(i == 1)
-            {
-               COLORREF ca(ARGB(230, 210, 210, 200));
-               pgraphics->draw_round_bottom_right(r, ca, radius, 1);
-            }
-            else
-            {
-               COLORREF ca(ARGB(230, 190 + iColorRate, 190 + iColorRate, 180 + iColorRate));
-               pgraphics->draw_round_bottom_right(r, ca, radius, 1);
-            }
-         }
-
-         r.inflate(-1, -1);
-
-         i++;
-
-      }
-
       rect rectDropIn(rectDropDown);
 
-      rectDropIn.deflate(iMargin * 2 / 3, iMargin * 2 / 3);
-
-      br->create_solid(ARGB(210, 230 - iColorRate, 230 - iColorRate, 220 - iColorRate));
+      br->create_solid(ARGB(210, 230, 230, 230));
 
       pgraphics->SelectObject(br);
 
-      rectDropIn.right++;
-      rectDropIn.bottom++;
       pgraphics->fill_rect(rectDropIn);
-
-
-      br->create_solid(ARGB(210, 77, 184, 49));
-
 
       ::draw2d::path_sp path(allocer());
 
       point_array pointa;
 
-      get_simple_drop_down_open_arrow_path(pointa);
+      get_simple_drop_down_open_arrow_polygon(pointa);
 
-      if(pointa.get_count() >= 3)
-      {
-
-         path->add_line(pointa[0], pointa[1]);
-
-         for(index i = 2; i < pointa.get_count(); i++)
-         {
-
-            path->add_line(pointa[i]);
-
-         }
-
-         path->add_line(pointa[0]);
-
-      }
-
-      //br->create_solid(ARGB(210, 77, 184, 49));
-
-      br->create_solid(_001GetColor(::user::color_background_selected));
+      br->create_solid(ARGB(210, 0, 0, 0));
 
       pgraphics->SelectObject(br);
 
-      pgraphics->fill_path(path);
+      pgraphics->fill_polygon(pointa);
 
 
    }
@@ -360,8 +248,6 @@ namespace user
 
       ::user::control::_001OnDraw(pgraphics);
 
-
-      //if(m_estyle == style_simply)
       if(m_plist == NULL)
       {
 
@@ -376,6 +262,7 @@ namespace user
       }
 
    }
+
 
    void combo_box::_001GetText(string & str) const
    {
@@ -435,11 +322,7 @@ namespace user
 
       }
 
-
-
    }
-
-
 
 
    index combo_box::_001GetListCount() const
@@ -450,7 +333,7 @@ namespace user
    }
 
 
-   bool combo_box::get_element_rect(LPRECT lprect, e_element eelement) const
+   bool combo_box::get_element_rect(LPRECT lprect, e_element eelement)
    {
 
       if(eelement == element_drop_down)
@@ -496,6 +379,10 @@ namespace user
 
          rectText.right -= (iW + iMargin);
 
+         rect rectPadding = _001GetRect(::user::rect_edit_padding);
+
+         rectText.deflate(rectPadding);
+
          *lprect = rectText;
 
          return true;
@@ -506,42 +393,56 @@ namespace user
 
    }
 
-   void combo_box::get_simple_drop_down_open_arrow_path(point_array & pointa) const
+
+   void combo_box::get_simple_drop_down_open_arrow_polygon(point_array & pointa)
    {
-
-      rect rectClient;
-
-      ((combo_box *) this)->GetClientRect(rectClient);
-
-      int32_t iMargin = rectClient.height() / 8;
 
       rect rectDropDown;
 
       get_element_rect(rectDropDown, element_drop_down);
 
-      pointa.add(rectDropDown.left + iMargin, rectDropDown.top + iMargin * 2);
-      pointa.add(rectDropDown.right - iMargin, rectDropDown.top + iMargin * 2);
-      pointa.add((rectDropDown.right + rectDropDown.left) / 2, rectDropDown.bottom - iMargin * 2);
+      int32_t cx = rectDropDown.width() / 3;
+
+      int32_t cy = cx * 2 / 3;
+
+      point ptCenter = rectDropDown.center();
+
+      pointa.add(ptCenter.x - cx / 2, ptCenter.y - cy / 2);
+
+      pointa.add(ptCenter.x + cx / 2, ptCenter.y - cy / 2);
+
+      pointa.add(ptCenter.x, ptCenter.y + cy / 2);
 
    }
 
 
-
-   e_element combo_box::hit_test(point pt) const
+   e_element combo_box::hit_test(point pt)
    {
 
       rect rectElement;
 
       if(get_element_rect(rectElement, element_drop_down))
       {
-         if(rectElement.contains(pt))
+
+         if (rectElement.contains(pt))
+         {
+
             return element_drop_down;
+
+         }
+
       }
 
       if(get_element_rect(rectElement, element_text))
       {
-         if(rectElement.contains(pt))
+
+         if (rectElement.contains(pt))
+         {
+
             return element_text;
+
+         }
+
       }
 
       return element_none;

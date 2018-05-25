@@ -9,33 +9,34 @@ namespace filehandler
       ::object(papp),
       simple_frame_window(papp)
    {
-      
+
       WfiEnableFullScreen();
 
-      select_layered_frame();
-
+      set_translucent();
 
    }
+
 
    frame::~frame()
    {
-   }
 
-   /////////////////////////////////////////////////////////////////////////////
-   // frame diagnostics
+   }
 
 
    void frame::assert_valid() const
    {
+
       simple_frame_window::assert_valid();
+
    }
+
 
    void frame::dump(dump_context & dumpcontext) const
    {
+
       simple_frame_window::dump(dumpcontext);
+
    }
-
-
 
 
 } // namespace filehandler

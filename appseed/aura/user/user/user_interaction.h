@@ -1103,29 +1103,29 @@ namespace user
 
 
 
-      using style::_001GetColor;
-      virtual COLORREF           _001GetColor(e_color ecolor, COLORREF crDefault = 0);
-      using style::_001GetFont;
-      virtual ::draw2d::font_sp  _001GetFont(e_font efont, ::draw2d::font * pfont = NULL);
-      using style::_001GetTranslucency;
-      virtual e_translucency     _001GetTranslucency(e_element eelement = element_none, e_translucency etranslucencyDefault = translucency_undefined);
-      using style::_001GetFlag;
-      virtual bool               _001GetFlag(::user::e_flag eflag, bool bDefault = false);
-      using style::_001GetRect;
-      virtual RECT               _001GetRect(::user::e_rect erect, rect rectDefault = ::null_rect());
-      using style::_001GetInt;
-      virtual int                _001GetInt(::user::e_int eint, int iDefault = 0);
-      using style::_001GetDouble;
-      virtual double             _001GetDouble(::user::e_double edouble, double dDefault = 0.0);
+      //using style::_001GetColor;
+      //virtual COLORREF           _001GetColor(e_color ecolor, COLORREF crDefault = 0);
+      //using style::_001GetFont;
+      //virtual ::draw2d::font_sp  _001GetFont(e_font efont, ::draw2d::font * pfont = NULL);
+      //using style::_001GetTranslucency;
+      //virtual e_translucency     _001GetTranslucency(e_element eelement = element_none, e_translucency etranslucencyDefault = translucency_undefined);
+      //using style::_001GetFlag;
+      //virtual bool               _001GetFlag(::user::e_flag eflag, bool bDefault = false);
+      //using style::_001GetRect;
+      //virtual RECT               _001GetRect(::user::e_rect erect, rect rectDefault = ::null_rect());
+      //using style::_001GetInt;
+      //virtual int                _001GetInt(::user::e_int eint, int iDefault = 0);
+      //using style::_001GetDouble;
+      //virtual double             _001GetDouble(::user::e_double edouble, double dDefault = 0.0);
 
-      using style::_001IsBackgroundBypass;
-      virtual bool _001IsBackgroundBypass(e_element eelement = element_none);
-      using style::_001IsTransparent;
-      virtual bool _001IsTransparent(e_element eelement = element_none);
-      using style::_001IsTranslucent;
-      virtual bool _001IsTranslucent(e_element eelement = element_none);
-      using style::_001HasTranslucency;
-      virtual bool _001HasTranslucency(e_element eelement = element_none);
+      //using style::_001IsBackgroundBypass;
+      //virtual bool _001IsBackgroundBypass(e_element eelement = element_none);
+      //using style::_001IsTransparent;
+      //virtual bool _001IsTransparent(e_element eelement = element_none);
+      //using style::_001IsTranslucent;
+      //virtual bool _001IsTranslucent(e_element eelement = element_none);
+      //using style::_001HasTranslucency;
+      //virtual bool _001HasTranslucency(e_element eelement = element_none);
 
       //// e_style composition
       //using style::style_color;

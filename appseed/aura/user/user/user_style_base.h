@@ -26,13 +26,11 @@ namespace user
 
    };
 
+
    class CLASS_DECL_AURA style_base :
       virtual public object
    {
    public:
-
-
-
 
 
       virtual ::user::menu_interaction * create_menu_button(menu_item * pitem) = 0;
@@ -59,7 +57,7 @@ namespace user
       virtual bool get_font(::draw2d::font_sp & sp, e_font efont, style_context * pcontext);
       virtual bool get_translucency(e_translucency & etranslucency, e_element eelement, style_context * pcontext);
       virtual bool get_flag(bool & bSet, ::user::e_flag eflag, style_context * pcontext);
-      virtual bool get_rect(RECT & rect, ::user::e_rect erect, style_context * pcontext);
+      virtual bool get_rect(style_rect & rect, ::user::e_rect erect, style_context * pcontext);
       virtual bool get_int(int & i, ::user::e_int eint, style_context * pcontext);
       virtual bool get_double(double & d, ::user::e_double edouble, style_context * pcontext);
 
@@ -70,7 +68,6 @@ namespace user
 
 
 } // namespace user
-
 
 
 

@@ -1,6 +1,8 @@
 ﻿#pragma once
 
 
+#include "user_style_coord.h"
+#include "user_style_rect.h"
 #include "user_const.h"
 
 

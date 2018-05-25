@@ -17,6 +17,7 @@ namespace user
          style_normal,
          style_simple,
          style_bitmap,
+         style_image_and_text,
          style_push,
          style_list
       };
@@ -57,20 +58,10 @@ namespace user
       ::check::e_check                    m_echeck;
       rect                                m_rectText;
       index                               m_iClick;
-//      ::user::front_end_schema::button *  m_pschema;
-//      ::user::front_end_schema::button *  m_pschemaDraw;
       e_stock_icon                        m_estockicon;
-
-      rect                    m_rectCheckBox;
-
-
-      // bitmap
-
+      rect                                m_rectCheckBox;
       bitmap *                            m_pbitmap;
-
       list *                              m_plist;
-      //bool                                m_bActionHover;
-
 
 
       button();
@@ -83,9 +74,13 @@ namespace user
 
       virtual void install_message_routing(::message::sender * pinterface) override;
 
-      virtual void _001OnDrawPush(::draw2d::graphics * pgraphics);
-      virtual void _001OnDrawList(::draw2d::graphics * pgraphics);
-      virtual void _001OnDrawBitmap(::draw2d::graphics * pgraphics);
+      virtual void _001OnButtonDrawPush(::draw2d::graphics * pgraphics);
+      virtual void _001OnButtonDrawList(::draw2d::graphics * pgraphics);
+      virtual void _001OnButtonDrawBitmap(::draw2d::graphics * pgraphics);
+      virtual void _001OnButtonDrawImageAndText(::draw2d::graphics * pgraphics);
+      virtual void _001OnButtonDrawBackground(::draw2d::graphics * pgraphics);
+      virtual void _001OnButtonDrawTextLayer(::draw2d::graphics * pgraphics, LPRECT lprectText);
+      virtual void _001OnButtonDrawNormal(::draw2d::graphics * pgraphics);
 
       virtual void _001OnDraw(::draw2d::graphics * pgraphics) override;
       virtual void _002OnDraw(::draw2d::graphics * pgraphics);
@@ -135,6 +130,9 @@ namespace user
 
       virtual void set_stock_icon(e_stock_icon eicon) override;
       virtual e_stock_icon get_stock_icon() override;
+
+      virtual COLORREF get_button_text_color();
+
 
    };
 

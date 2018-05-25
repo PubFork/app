@@ -252,6 +252,8 @@ namespace user
 
       pcalcsize->m_pgraphics->SelectObject(pfont);
 
+      select(pcalcsize->m_pgraphics);
+
       string strButtonText;
 
       strButtonText = get_window_text();
