@@ -4594,6 +4594,12 @@
     <ClCompile Include="graphics\visual\visual_gdiplus_image_gif.cpp">
       <Filter>Source Files\graphics\visual</Filter>
     </ClCompile>
+    <ClCompile Include="user\user\user_style_coord.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_style_rect.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="multithreading\multithreading.inl">

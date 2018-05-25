@@ -17,7 +17,6 @@ namespace user
 
 
       void get_rect(LPRECT lprect, ::draw2d::graphics * pgraphics);
-      void set_rect(LPCRECT lpcrect);
       void set_pixel_rect_coord(double l, double t, double r, double b);
       void set_pixel_rect_dim(double l, double t, double w, double h);
       void set_pixel_rect(rectd r);

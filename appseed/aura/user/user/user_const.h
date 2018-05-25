@@ -269,6 +269,9 @@ namespace user
       rect_menu_item_padding,
       rect_menu_item_border,
       rect_edit_padding,
+      rect_tab_margin,
+      rect_tab_border,
+      rect_tab_padding,
 
    };
 

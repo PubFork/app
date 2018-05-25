@@ -864,7 +864,7 @@ namespace user
 
                   pgraphics->SelectObject(brushText);
 
-                  pgraphics->SelectObject(_001GetFont(pwndiDraw, ::user::font_default));
+                  pgraphics->SelectObject(pwndiDraw->_001GetFont(::user::font_default));
 
                   pgraphics->draw_text(wstrWindowText, m_rectWindowText, DT_LEFT | DT_VCENTER | DT_NOPREFIX);
 
