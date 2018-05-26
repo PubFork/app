@@ -549,6 +549,10 @@ SizingNone:
                   //m_penHollow5->create_solid(1.0, ARGB(255, 90, 220, 100));
                   m_crCaptionTextBk = ARGB(255, 200, 200, 200);
                   m_crActiveCaptionTextBk = ARGB(255, 165, 32, 32);
+                  create_color(::user::color_button_background, ARGB(255, 165, 32, 32));
+                  create_color(::user::color_button_background_hover, ARGB(255, 195, 64, 64));
+                  create_color(::user::color_button_background_press, ARGB(255, 208, 72, 72));
+
                }
                else if (m_estyle == StyleLightGreen)
                {

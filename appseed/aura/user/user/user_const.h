@@ -292,7 +292,8 @@ namespace user
       int_menu_item_draw_text_flags,
       int_list_item_draw_text_flags,
       int_top_level_drawing_order,
-
+      int_button_press_shift_cx,
+      int_button_press_shift_cy
    };
 
 #define DRAWING_ORDER_FRAME_OVER 0

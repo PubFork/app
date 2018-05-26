@@ -54,7 +54,11 @@ namespace wndfrm_anthill
       create_color(::user::color_button_text, ARGB(255, 255, 255, 255));
       create_color(::user::color_button_text_press, ARGB(255, 255, 255, 255));
 
-      create_rect_coord(::user::rect_tab_padding, 0.2, 0.2, 0.2, 0.2);
+      create_rect_coord(::user::rect_tab_padding, 0.4, 0.4, 0.4, 0.4);
+
+      create_int(::user::int_button_press_shift_cx, 4);
+      create_int(::user::int_button_press_shift_cy, 4);
+
 
    }
 
@@ -1345,7 +1349,7 @@ namespace wndfrm_anthill
 
                ptoolbar->_001GetElementRect(iItem, rectItem, ::user::toolbar::element_item);
 
-               pgraphics->fill_solid_rect(rectItem, ARGB(184, 255, 255, 255));
+               pgraphics->fill_solid_rect(rectItem, _001GetColor(::user::color_button_background));
 
             }
 

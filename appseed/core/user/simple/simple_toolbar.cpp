@@ -51,7 +51,7 @@ simple_toolbar::simple_toolbar(::aura::application * papp) :
 
    m_iImageSpacing = -1;
 
-   m_sizePress.set(-1);
+   m_sizePress.set(0);
 
    m_sizeSpacing.set(-1);
 
@@ -1229,21 +1229,9 @@ return TRUE;
 void simple_toolbar::on_layout()
 {
 
-   synch_lock ml(m_pmutex);
+   m_sizePress.cx = _001GetInt(::user::int_button_press_shift_cx);
 
-   if (m_puserstyle == NULL)
-   {
-
-      m_puserstyle = GetTopLevel();
-
-   }
-
-   if (m_puserstyle == NULL)
-   {
-
-      m_puserstyle = Application.userstyle();
-
-   }
+   m_sizePress.cy = _001GetInt(::user::int_button_press_shift_cy);
 
    m_bDelayedButtonLayout = false;
 
@@ -2658,26 +2646,10 @@ rect simple_toolbar::get_bar_border()
 size simple_toolbar::get_press_shift()
 {
 
-   size s;
-
-   s = m_sizePress;
-
-   if (s.cx < 0)
-   {
-
-      s.cx = get_item_pad().right - 1 + get_item_spacing().cx;
-
-   }
-   if (s.cy < 0)
-   {
-
-      s.cy = get_item_pad().bottom - 1 + get_item_spacing().cy;
-
-   }
-
-   return s;
+   return m_sizePress;
 
 }
+
 
 size simple_toolbar::get_item_spacing()
 {
