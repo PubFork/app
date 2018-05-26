@@ -11,13 +11,13 @@
 #endif
 
 
-
+#define VS2017_CURRENT_BUILD "10.0.17134.0"
 
 namespace programming
 {
 
 
-class application;
+   class application;
 
 
 } // namespace netnode

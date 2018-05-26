@@ -180,7 +180,7 @@ namespace introjection
 
          }
 
-         m_strVCVersion = "10.0.17134.0";
+         m_strVCVersion = VS2017_CURRENT_BUILD;
 
       }
       else if (m_strVs == "2015")
@@ -351,7 +351,7 @@ namespace introjection
       else if (m_strVs == "2017")
       {
 
-         strBuildCmd = "\"" + strBuildCmd + "\" " + m_strPlat2 + " 10.0.16299.0";
+         strBuildCmd = "\"" + strBuildCmd + "\" " + m_strPlat2 + " " VS2017_CURRENT_BUILD;
 
       }
 
