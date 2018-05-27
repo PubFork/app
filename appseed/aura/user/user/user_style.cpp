@@ -333,7 +333,7 @@ namespace user
       if (get_rect(stylerect, erect, &style))
       {
 
-         stylerect.get_rect(rect, style.m_pstyleSource->userstyle()->m_pgraphics);
+         stylerect.get_rect(rect, style.m_pstyleSource->m_pgraphics);
 
          return rect;
 
