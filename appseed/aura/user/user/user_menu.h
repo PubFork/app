@@ -13,6 +13,7 @@ namespace user
    {
    public:
 
+
       size                                   m_sizeMinimum;
       menu *                                 m_pmenuParent;
       sp(menu_item)                          m_pitem;
@@ -86,12 +87,15 @@ namespace user
       DECL_GEN_SIGNAL(_001OnLButtonDown);
       DECL_GEN_SIGNAL(_001OnCreate);
       DECL_GEN_SIGNAL(_001OnDestroy);
-      //DECL_GEN_SIGNAL(_001OnIdleUpdateCmdUI);
       DECL_GEN_SIGNAL(_001OnNcActivate);
       DECL_GEN_SIGNAL(_001OnNcCalcSize);
       DECL_GEN_SIGNAL(_001OnEnable);
       DECL_GEN_SIGNAL(_001OnShowWindow);
       DECL_GEN_SIGNAL(_001OnClose);
+      DECL_GEN_SIGNAL(_001OnMouseActivate);
+      DECL_GEN_SIGNAL(_001OnActivate);
+      DECL_GEN_SIGNAL(_001OnNcCreate);
+
 
       virtual void on_control_event(::user::control_event * pevent) override;
 

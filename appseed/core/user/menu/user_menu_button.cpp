@@ -245,6 +245,15 @@ namespace user
    }
 
 
+   bool menu_button::keyboard_focus_is_focusable()
+   {
+
+      return false;
+
+
+   }
+
+
    void menu_button::on_calc_size(calc_size * pcalcsize)
    {
 

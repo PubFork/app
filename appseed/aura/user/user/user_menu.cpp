@@ -75,7 +75,6 @@ namespace user
 
       ::user::interaction::install_message_routing(psender);
 
-      //IGUI_MSG_LINK(WM_IDLEUPDATECMDUI  , psender, this, &menu::_001OnIdleUpdateCmdUI);
       IGUI_MSG_LINK(WM_CREATE, psender, this, &menu::_001OnCreate);
       IGUI_MSG_LINK(WM_DESTROY, psender, this, &menu::_001OnDestroy);
       IGUI_MSG_LINK(WM_NCACTIVATE, psender, this, &menu::_001OnNcActivate);
@@ -83,7 +82,9 @@ namespace user
       IGUI_MSG_LINK(WM_ENABLE, psender, this, &menu::_001OnEnable);
       IGUI_MSG_LINK(WM_SHOWWINDOW, psender, this, &menu::_001OnShowWindow);
       IGUI_MSG_LINK(WM_CLOSE, psender, this, &menu::_001OnClose);
-      IGUI_MSG_LINK(WM_SHOWWINDOW, psender, this, &menu::_001OnShowWindow);
+      IGUI_MSG_LINK(WM_MOUSEACTIVATE, psender, this, &menu::_001OnMouseActivate);
+      IGUI_MSG_LINK(WM_ACTIVATE, psender, this, &menu::_001OnActivate);
+      IGUI_MSG_LINK(WM_NCCREATE, psender, this, &menu::_001OnNcCreate);
 
    }
 
@@ -494,11 +495,11 @@ namespace user
 
       set_need_layout();
 
-      SetActiveWindow();
+      //SetActiveWindow();
 
-      SetForegroundWindow();
+      //SetForegroundWindow();
 
-      BringWindowToTop();
+      //BringWindowToTop();
 
       return true;
 
@@ -709,7 +710,7 @@ namespace user
 
       }
 
-      SetWindowPos(ZORDER_TOPMOST, rectWindow, SWP_FRAMECHANGED | SWP_SHOWWINDOW);
+      SetWindowPos(ZORDER_TOPMOST, rectWindow, SWP_FRAMECHANGED | SWP_SHOWWINDOW | SWP_NOACTIVATE);
 
       SetTimer(::user::timer_command_probe, 100, NULL);
 
@@ -743,6 +744,47 @@ namespace user
    {
 
       pobj->previous();
+
+   }
+
+
+   void menu::_001OnMouseActivate(::message::message * pobj)
+   {
+
+      SCAST_PTR(::message::mouse_activate, pmouseactivate, pobj);
+
+      pmouseactivate->set_lresult(MA_NOACTIVATE);
+
+      pmouseactivate->m_bRet = true;
+
+
+   }
+
+
+   void menu::_001OnNcCreate(::message::message * pobj)
+   {
+
+      SCAST_PTR(::message::base, pbase, pobj);
+
+      //pactivate->set_lresult(0);
+
+      pbase->m_bRet = true;
+
+      pbase->set_lresult(1);
+
+
+   }
+
+
+   void menu::_001OnActivate(::message::message * pobj)
+   {
+
+      SCAST_PTR(::message::activate, pactivate, pobj);
+
+      pactivate->set_lresult(0);
+
+      pactivate->m_bRet = true;
+
 
    }
 
@@ -1109,7 +1151,7 @@ namespace user
    {
       SCAST_PTR(::message::base, pbase, pobj);
       pbase->m_bRet = true;
-      pbase->set_lresult(DefWindowProc(WM_NCACTIVATE, pbase->m_wparam, -1));
+      pbase->set_lresult(FALSE);
    }
 
    size menu::get_window_minimum_size()

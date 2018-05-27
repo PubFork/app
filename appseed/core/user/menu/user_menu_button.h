@@ -34,6 +34,9 @@ namespace user
 
       virtual void on_calc_size(calc_size * psize);
 
+      virtual bool keyboard_focus_is_focusable() override;
+
+
    };
 
 
