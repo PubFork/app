@@ -652,7 +652,7 @@ namespace user
 
          prepare_menu(pitem);
 
-         pitem->m_pui->SizeWindow(::size(m_size.cx, pitem->m_pui->height()));
+         pitem->m_rectUi.right = MAX(pitem->m_rectUi.right, pitem->m_rectUi.left + m_sizeMinimum.cx);
 
          pitem->m_pui->SetWindowPos(0, pitem->m_rectUi, SWP_SHOWWINDOW | SWP_NOZORDER);
 

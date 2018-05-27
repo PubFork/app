@@ -50,6 +50,8 @@ namespace wndfrm_tranquillum
 
       create_pixel_rect_coord(::user::rect_menu_item_padding, 5, 5, 5, 5);
 
+      create_int(::user::int_element_padding, 4);
+
       create_color(::user::color_background, ARGB(255, 255, 255, 255));
       create_color(::user::color_text, ARGB(255, 0, 0, 0));
       create_color(::user::color_edit_text, ARGB(255, 0, 0, 0));
