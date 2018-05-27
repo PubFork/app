@@ -20,7 +20,7 @@ namespace math
       HCRYPTKEY      m_hDuplicateKey;
 #endif
 
-      math_os_data(LPBYTE pbData = NULL)
+      math_os_data()
       {
 #ifdef WINDOWSEX
          m_hCryptProv = NULL;
@@ -102,11 +102,17 @@ namespace math
             //debug_print("Error during CryptSetKeyParam.");
          }
 
+		 memory m;
+
+		 m.allocate(256);
+
+
+
          // Generate a random initialization vector.
          if (CryptGenRandom(
                m_hCryptProv,
-               8,
-               pbData))
+               m.get_size(),
+               m.get_data()))
          {
             //debug_print("Random sequence generated. \n");
          }
@@ -119,7 +125,7 @@ namespace math
          if (CryptSetKeyParam(
                m_hOriginalKey,
                KP_IV,
-               pbData,
+               m.get_data(),
                0))
          {
             //debug_print("Parameter set with random sequence as initialization vector. \n");
