@@ -84,7 +84,7 @@ namespace data
 
 //      mutex  *                               m_pmutex;
 
-      ::data::data_container_base *          m_pcontainerbase;
+      ::data::data_container_base *          m_pdocument;
 
 
       data(::aura::application * papp);
@@ -104,7 +104,7 @@ namespace data
       template < class EDIT >
       EDIT * validate_edit(base_edit * pedit);
 
-      inline ::data::data_container_base * get_data_container_base() { return m_pcontainerbase; }
+      inline ::data::data_container_base * get_document() { return m_pdocument; }
 
    };
 

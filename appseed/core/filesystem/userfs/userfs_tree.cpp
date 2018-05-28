@@ -545,7 +545,7 @@ namespace userfs
    ::userfs::document * tree::get_document()
    {
 
-      return  dynamic_cast < ::userfs::document * > (::data::data::get_data_container_base());
+      return  dynamic_cast < ::userfs::document * > (::data::data::get_document());
 
    }
 

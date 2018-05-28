@@ -1522,7 +1522,7 @@ namespace user
       if(pview.is_set())
       {
 
-         ptree->m_pcontainerbase = (::data::data_container_base *) pview->get_document();
+         ptree->m_pdocument = pview->get_document();
 
       }
 

@@ -352,6 +352,20 @@ namespace aura
    }
 
 
+
+   template < class APP >
+   void single_application_library < APP > ::get_extension_list(stringa & stra)
+   {
+
+      if (m_strFileExt.has_char())
+      {
+
+         stra.add(m_strFileExt);
+
+      }
+
+   }
+
    template < typename T >
    void application::alloc(T * & pt)
    {

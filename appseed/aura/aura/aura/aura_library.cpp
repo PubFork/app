@@ -460,6 +460,12 @@ namespace aura
 
    }
 
+   void library::get_extension_list(stringa & stra)
+   {
+
+
+   }
+
 
    void library::get_app_list(stringa & stra)
    {

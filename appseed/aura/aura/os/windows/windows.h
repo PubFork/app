@@ -4,7 +4,14 @@
 #include <shellapi.h>
 #include <wincrypt.h>
 
+#include "framework.h"
 
+
+#ifndef CUBE
+
+CLASS_DECL_AURA WINBOOL _001DefaultDllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved);
+
+#endif
 
 #include "windows_file.h"
 #include "windows_multithreading.h"

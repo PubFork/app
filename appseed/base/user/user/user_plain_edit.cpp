@@ -4656,6 +4656,8 @@ finished_update:
 
       ev.m_puie = this;
 
+      ev.m_id = m_id;
+
       ev.m_eevent = ::user::event_after_change_text;
 
       ev.m_actioncontext = actioncontext;

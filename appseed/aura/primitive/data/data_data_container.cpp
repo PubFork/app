@@ -55,7 +55,7 @@ namespace data
 
       }
 
-      pdata->m_pcontainerbase = this;
+      pdata->m_pdocument = this;
 
       m_spadata.add(pdata);
 

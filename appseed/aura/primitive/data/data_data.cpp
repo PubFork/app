@@ -63,7 +63,7 @@ namespace data
       object(papp)
    {
       
-      m_pcontainerbase = NULL;
+      m_pdocument = NULL;
 
    }
 

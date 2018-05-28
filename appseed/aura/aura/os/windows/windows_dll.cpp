@@ -49,3 +49,56 @@ BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 }
 
 #endif
+
+
+
+#include "framework.h"
+
+
+#ifndef CUBE
+
+#ifdef METROWIN
+[MTAThread]
+#endif
+WINBOOL CLASS_DECL_AURA _001DefaultDllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
+{
+
+   char sz[1024];
+
+   ::GetModuleFileNameEx(::GetCurrentProcess(), hInstance, sz, sizeof(sz));
+
+   char sz2[1024];
+
+   strcpy(sz2, strrchr(sz, '\\'));
+
+   strcpy(sz, sz2 + 1);
+
+
+
+   UNREFERENCED_PARAMETER(hInstance);
+
+   UNREFERENCED_PARAMETER(lpReserved);
+
+   if (dwReason == DLL_PROCESS_ATTACH)
+   {
+      
+      strcat(sz, " ::initializing!\n");
+
+      ::output_debug_string(sz);
+
+   }
+   else if (dwReason == DLL_PROCESS_DETACH)
+   {
+
+      strcat(sz, " ::terminating!\n");
+
+      ::output_debug_string(sz);
+
+   }
+
+   return 1;   // ok
+
+}
+
+
+#endif

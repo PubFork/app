@@ -2668,6 +2668,7 @@
     <ClInclude Include="aura\os\cross\ansios\ansios_file.h" />
     <ClInclude Include="aura\os\cross\ansios\ansios_file_raw.h" />
     <ClInclude Include="aura\os\cross\cross.h" />
+    <ClInclude Include="aura\os\default_library.inl" />
     <ClInclude Include="aura\os\os.h" />
     <ClInclude Include="aura\os\os2.h" />
     <ClInclude Include="aura\os\os_binreloc.h" />
@@ -4251,6 +4252,7 @@
     <None Include="aura\os\windows\windows.inl" />
     <None Include="aura\os\windows\windows_app.inl" />
     <None Include="aura\os\windows\windows_app_console.inl" />
+    <None Include="aura\os\windows_common\windows_common_default_dll.inl" />
     <None Include="filesystem\filesystem.inl" />
     <None Include="net\net.inl" />
     <None Include="primitive\collection\collection_array_base.inl">

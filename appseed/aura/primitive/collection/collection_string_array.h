@@ -223,6 +223,9 @@ public:
    index find_first_begins_ci(const char * lpcsz,index find = 0,index last = -1) const;
    index find_first_begins(const Type & strPrefix,index find = 0,index last = -1) const;
 
+   index find_first_ends_ci(const char * lpcsz, index find = 0, index last = -1) const;
+   index find_first_ends(const Type & strPrefix, index find = 0, index last = -1) const;
+
    bool str_begins_ci(const char * lpcsz, index find = 0, index last = -1) const;
    bool str_begins(const char * lpcsz, index find = 0, index last = -1) const;
 
@@ -2261,6 +2264,21 @@ index string_array < Type, RawType > ::find_first_suffixes_ci(const char * lpcsz
    return -1;
 }
 
+template < class Type, class RawType >
+index string_array < Type, RawType > ::find_first_ends_ci(const char * lpcsz, index find, index last) const
+{
+   if (find < 0)
+      find += this->get_count();
+   if (last < 0)
+      last += this->get_count();
+   for (; find < this->get_count(); find++)
+   {
+      if (::str::ends_ci(this->element_at(find), lpcsz))
+         return find;
+   }
+   return -1;
+}
+
 
 template < class Type, class RawType >
 index string_array < Type, RawType > ::find_first_suffixes(const char * lpcsz, index find, index last) const
@@ -2308,6 +2326,24 @@ index string_array < Type, RawType > ::find_first_begins(const Type & strPrefix,
    }
    return -1;
 }
+
+
+
+template < class Type, class RawType >
+index string_array < Type, RawType > ::find_first_ends(const Type & strPrefix, index find, index last) const
+{
+   if (find < 0)
+      find += this->get_count();
+   if (last < 0)
+      last += this->get_count();
+   for (; find < this->get_count(); find++)
+   {
+      if (::str::ends(this->element_at(find), strPrefix))
+         return find;
+   }
+   return -1;
+}
+
 
 
 template < class Type, class RawType >

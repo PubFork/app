@@ -2774,6 +2774,9 @@
     <ClInclude Include="graphics\visual\visual_water_routine.h">
       <Filter>Header Files\graphics\visual</Filter>
     </ClInclude>
+    <ClInclude Include="aura\os\default_library.inl">
+      <Filter>Header Files\aura\os</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="multithreading\multithreading_condition.cpp">
@@ -4874,6 +4877,9 @@
     </None>
     <None Include="aura\exception\exception.inl">
       <Filter>Header Files\aura\exception</Filter>
+    </None>
+    <None Include="aura\os\windows_common\windows_common_default_dll.inl">
+      <Filter>Header Files\aura\os\windows_common</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
