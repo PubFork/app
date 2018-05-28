@@ -11,6 +11,7 @@ namespace asphere
    public:
 
 
+      bool                                         m_bContextTheme;
       colorertake5::ParserFactory *                m_pparserfactory;
 
 

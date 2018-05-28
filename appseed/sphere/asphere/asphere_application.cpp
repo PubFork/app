@@ -14,29 +14,7 @@ namespace asphere
    application::application()
    {
 
-      m_mapBg["dark"] = ARGB(160, 0x16, 0x19, 0x1e);
-      m_mapBg["blue"] = ARGB(160, 0xA0, 0xA8, 0xB8);
-      m_mapBg["lite"] = ARGB(160, 0xff, 0xff, 0xff);
-
-      m_mapIconGlow["dark"] = ARGB(255, 0x16, 0x19, 0x1e);
-      m_mapIconGlow["blue"] = ARGB(255, 0x48, 0x58, 0x88);
-      m_mapIconGlow["lite"] = ARGB(255, 0xff, 0xff, 0xff);
-
-      m_mapMg["dark"] = ARGB(151, 0x16, 0x19, 0x1e);
-      m_mapMg["blue"] = ARGB(151, 0xA0, 0xA8, 0xB8);
-      m_mapMg["lite"] = ARGB(140, 255, 255, 255);
-
-      m_mapFg["dark"] = ARGB(255, 223, 223, 208);
-      m_mapFg["blue"] = ARGB(255, 255, 255, 255);
-      m_mapFg["lite"] = ARGB(255, 0, 0, 0);
-
-      m_mapText["dark"] = ARGB(255, 155, 155, 155);
-      m_mapText["blue"] = ARGB(255, 55, 50, 80);
-      m_mapText["lite"] = ARGB(255, 0, 0, 0);
-
-      m_mapBack["dark"] = ARGB(160, 0, 0, 0);
-      m_mapBack["blue"] = ARGB(160, 205, 200, 250);
-      m_mapBack["lite"] = ARGB(160, 255, 255, 255);
+      m_bContextTheme = true;
 
 
    }
@@ -58,7 +36,34 @@ namespace asphere
 
       }
 
-      Sess(this).userex()->shell()->m_straThemeableIconName.add("google-android.ico");
+      if (m_bContextTheme)
+      {
+
+         m_mapBg["dark"] = ARGB(160, 0x16, 0x19, 0x1e);
+         m_mapBg["blue"] = ARGB(160, 0xA0, 0xA8, 0xB8);
+         m_mapBg["lite"] = ARGB(160, 0xff, 0xff, 0xff);
+
+         m_mapIconGlow["dark"] = ARGB(255, 0x16, 0x19, 0x1e);
+         m_mapIconGlow["blue"] = ARGB(255, 0x48, 0x58, 0x88);
+         m_mapIconGlow["lite"] = ARGB(255, 0xff, 0xff, 0xff);
+
+         m_mapMg["dark"] = ARGB(151, 0x16, 0x19, 0x1e);
+         m_mapMg["blue"] = ARGB(151, 0xA0, 0xA8, 0xB8);
+         m_mapMg["lite"] = ARGB(140, 255, 255, 255);
+
+         m_mapFg["dark"] = ARGB(255, 223, 223, 208);
+         m_mapFg["blue"] = ARGB(255, 255, 255, 255);
+         m_mapFg["lite"] = ARGB(255, 0, 0, 0);
+
+         m_mapText["dark"] = ARGB(255, 155, 155, 155);
+         m_mapText["blue"] = ARGB(255, 55, 50, 80);
+         m_mapText["lite"] = ARGB(255, 0, 0, 0);
+
+         m_mapBack["dark"] = ARGB(160, 0, 0, 0);
+         m_mapBack["blue"] = ARGB(160, 205, 200, 250);
+         m_mapBack["lite"] = ARGB(160, 255, 255, 255);
+
+         Sess(this).userex()->shell()->m_straThemeableIconName.add("google-android.ico");
       Sess(this).userex()->shell()->m_straThemeableIconName.add("Folders-OS-Windows-8-Metro.ico");
       Sess(this).userex()->shell()->m_straThemeableIconName.add("firefox_weather.ico");
 
@@ -86,23 +91,25 @@ namespace asphere
 
       connect_command("theme", &application::_001OnTheme);
 
-      sync_context_theme();
+         sync_context_theme();
 
-      fork([&]()
-      {
-
-         while (get_thread_run())
+         fork([&]()
          {
 
-            sync_context_theme();
+            while (get_thread_run())
+            {
 
-            Sleep(1000);
+               sync_context_theme();
 
-         }
+               Sleep(1000);
 
-         TRACE("finished sync context theme thread");
+            }
 
-      });
+            TRACE("finished sync context theme thread");
+
+         });
+
+      }
 
       return true;
 
