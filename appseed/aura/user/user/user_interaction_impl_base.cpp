@@ -1005,8 +1005,15 @@ namespace user
 
    }
 
+   bool interaction_impl_base::defer_set_window_pos(int_ptr z, const RECT & rect, UINT nFlags) // only set_windows_pos if get_parent()->ScreenToClient(get_window_rect) different of rect(x, y, cx, cy)
+   {
 
-   bool interaction_impl_base::defer_set_window_pos(int32_t z,int32_t x,int32_t y,int32_t cx,int32_t cy,UINT nFlags) // only set_windows_pos if get_parent()->ScreenToClient(get_window_rect) different of rect(x, y, cx, cy)
+      return m_pui->defer_set_window_pos(z, rect, nFlags);
+
+   }
+
+
+   bool interaction_impl_base::defer_set_window_pos(int_ptr z,int32_t x,int32_t y,int32_t cx,int32_t cy,UINT nFlags) // only set_windows_pos if get_parent()->ScreenToClient(get_window_rect) different of rect(x, y, cx, cy)
    {
 
       return m_pui->defer_set_window_pos(z, x, y, cx, cy, nFlags);

@@ -746,6 +746,30 @@ restart:
       return true;
 
    }
+   
+   
+   bool interaction::GetWindowPos(LPRECT lprect)
+   {
+
+      if (!GetWindowRect(lprect))
+      {
+
+         return false;
+
+      }
+
+      ::user::interaction * puiParent = GetParent();
+
+      if (puiParent != NULL)
+      {
+
+         puiParent->ScreenToClient(lprect);
+
+      }
+
+      return true;
+
+   }
 
 
    bool interaction::GetWindowRect(LPRECT lprect)
@@ -858,7 +882,14 @@ restart:
 
    }
 
-   bool interaction::defer_set_window_pos(int32_t z, int32_t x, int32_t y, int32_t cx, int32_t cy, UINT nFlags) // only set_windows_pos if GetParent()->ScreenToClient(get_window_rect) different of rect(x, y, cx, cy)
+   bool interaction::defer_set_window_pos(int_ptr z, const RECT & rect, UINT nFlags)
+   {
+
+      return defer_set_window_pos(z, rect.left, rect.top, ::width(rect), ::height(rect), nFlags);
+
+   }
+
+   bool interaction::defer_set_window_pos(int_ptr z, int32_t x, int32_t y, int32_t cx, int32_t cy, UINT nFlags) // only set_windows_pos if GetParent()->ScreenToClient(get_window_rect) different of rect(x, y, cx, cy)
    {
 
       rect rectWindow;

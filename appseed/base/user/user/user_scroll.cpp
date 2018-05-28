@@ -51,27 +51,27 @@ namespace user
       if (m_pscrollbarHorz != NULL)
       {
 
-         if (m_scrolldataHorz.m_bScroll)
+         if ( m_scrolldataHorz.m_bScroll)
          {
 
             _001GetXScrollInfo(m_pscrollbarHorz->m_scrollinfo);
 
-            m_pscrollbarHorz->SetWindowPos(
-            ZORDER_TOP,
-            rectClient.left,
-            rectClient.bottom - GetSystemMetrics(SM_CYHSCROLL),
-            rectClient.width() - get_final_y_scroll_bar_width(),
-            GetSystemMetrics(SM_CYHSCROLL), ifswp);
+            ::rect rectNewPos;
+            
+            rectNewPos.left = rectClient.left;
+            rectNewPos.top = rectClient.bottom - GetSystemMetrics(SM_CYHSCROLL);
+            rectNewPos.right = rectNewPos.left + rectClient.width() - get_final_y_scroll_bar_width();
+            rectNewPos.bottom = rectNewPos.top + GetSystemMetrics(SM_CYHSCROLL);
+            
+            m_pscrollbarHorz->defer_set_window_pos(ZORDER_TOP, rectNewPos, ifswp);
 
          }
-         else
+         else if(m_pscrollbarHorz->is_this_visible())
          {
 
             m_pscrollbarHorz->ShowWindow(SW_HIDE);
 
          }
-
-         m_pscrollbarHorz->set_need_layout();
 
       }
 
@@ -916,12 +916,14 @@ namespace user
 
             _001GetYScrollInfo(m_pscrollbarVert->m_scrollinfo);
 
-            m_pscrollbarVert->SetWindowPos(
-            ZORDER_TOP,
-            rectClient.right - GetSystemMetrics(SM_CXVSCROLL),
-            rectClient.top,
-            GetSystemMetrics(SM_CXVSCROLL),
-            rectClient.height() - get_final_x_scroll_bar_width(), ifswp);
+            ::rect rectNewPos;
+
+            rectNewPos.left = rectClient.right - GetSystemMetrics(SM_CXVSCROLL);
+            rectNewPos.top = rectClient.top;
+            rectNewPos.right = rectNewPos.left + GetSystemMetrics(SM_CXVSCROLL);
+            rectNewPos.bottom = rectNewPos.top+ rectClient.height() - get_final_x_scroll_bar_width();
+
+            m_pscrollbarVert->defer_set_window_pos(ZORDER_TOP, rectNewPos, ifswp);
 
          }
          else
@@ -930,8 +932,6 @@ namespace user
             m_pscrollbarVert->ShowWindow(SW_HIDE);
 
          }
-
-         m_pscrollbarVert->set_need_layout();
 
       }
 

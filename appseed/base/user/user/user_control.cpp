@@ -339,13 +339,16 @@ namespace user
    }
 
 
+
+
+
+
    bool control::GetWindowRect(LPRECT lprect)
    {
 
       return ::user::box::GetWindowRect(lprect);
 
    }
-
 
 
 

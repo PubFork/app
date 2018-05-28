@@ -442,6 +442,7 @@ namespace user
       virtual bool scroll_bar_get_client_rect(LPRECT lprect);
       virtual bool GetClientRect(LPRECT lprect) override;
       virtual bool GetClientRect(RECT64 * lprect) override;
+      virtual bool GetWindowPos(LPRECT lprect) override;
       virtual bool GetWindowRect(LPRECT lprect) override;
       virtual bool GetWindowRect(RECT64 * lprect) override;
       virtual bool ClientToScreen(LPRECT lprect) override;
@@ -463,7 +464,8 @@ namespace user
       virtual bool ResizeWindow(SIZE sz,UINT nFlags = 0) override;
       virtual bool SetWindowPos(int_ptr z,const RECT & rect,UINT nFlags = 0) override;
       virtual bool SetWindowPos(int_ptr z,int32_t x,int32_t y,int32_t cx,int32_t cy,UINT nFlags = 0) override;
-      virtual bool defer_set_window_pos(int32_t z,int32_t x,int32_t y,int32_t cx,int32_t cy,UINT nFlags) override; // only set_windows_pos if get_parent()->ScreenToClient(get_window_rect) different of rect(x, y, cx, cy)      virtual bool set_placement(LPRECT lprect) override;
+      virtual bool defer_set_window_pos(int_ptr z, const RECT & rect, UINT nFlags) override; // only set_windows_pos if get_parent()->ScreenToClient(get_window_rect) different of rect(x, y, cx, cy)      virtual bool set_placement(LPRECT lprect) override;
+      virtual bool defer_set_window_pos(int_ptr z,int32_t x,int32_t y,int32_t cx,int32_t cy,UINT nFlags) override; // only set_windows_pos if get_parent()->ScreenToClient(get_window_rect) different of rect(x, y, cx, cy)      virtual bool set_placement(LPRECT lprect) override;
       //virtual int32_t SetWindowRgn(HRGN hRgn,bool bRedraw) override;
       //virtual int32_t GetWindowRgn(HRGN hRgn) override;
 
