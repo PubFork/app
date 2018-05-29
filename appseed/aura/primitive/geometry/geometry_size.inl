@@ -207,12 +207,20 @@ inline void size::operator-=(SIZE size) NOTHROW
 
 }
 
-inline void size::set_size(int32_t CX,int32_t CY) NOTHROW
+inline void size::set_size(LONG CX, LONG CY) NOTHROW
 {
 
    cx = CX;
 
    cy = CY;
+
+}
+
+
+inline void size::set_size(LPCSIZE lpcsize) NOTHROW
+{
+
+   set_size(lpcsize->cx, lpcsize->cy);
 
 }
 

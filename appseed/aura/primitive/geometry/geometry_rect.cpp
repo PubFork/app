@@ -710,12 +710,14 @@ class size rect::get_size() const NOTHROW
    class size sizeRet(right - left, bottom - top);
    return sizeRet;
 }
-class size rect::set_size(LONG cx, LONG cy) NOTHROW
+void rect::set_size(LONG cx, LONG cy) NOTHROW
 {
    right = left + cx;
    bottom = top + cy;
-   class size sizeRet(right - left,bottom - top);
-   return sizeRet;
+}
+void rect::set_size(LPCSIZE lpcsize) NOTHROW
+{
+   set_size(lpcsize->cx, lpcsize->cy);
 }
 point& rect::top_left() NOTHROW
 { return *((point*)this); }

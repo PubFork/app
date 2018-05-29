@@ -38,7 +38,8 @@ public:
    bool operator!=(SIZE size) const NOTHROW;
    void operator+=(SIZE size) NOTHROW;
    void operator-=(SIZE size) NOTHROW;
-   void set_size(int32_t CX, int32_t CY) NOTHROW;
+   void set_size(LONG CX, LONG CY) NOTHROW;
+   void set_size(LPCSIZE lpcsize) NOTHROW;
 
 // Operators returning size values
    size operator+(SIZE size) const NOTHROW;
@@ -138,6 +139,7 @@ public:
    void operator+=(SIZE64 size64) NOTHROW;
    void operator-=(SIZE64 size64) NOTHROW;
    void set_size(int64_t CX, int64_t CY) NOTHROW;
+   void set_size(LPCSIZE64 lpcsize) NOTHROW;
 
 // Operators returning size64 values
    size64 operator+(SIZE64 size64) const NOTHROW;
@@ -220,7 +222,8 @@ public:
    bool operator!=(SIZED size) const NOTHROW;
    void operator+=(SIZED size) NOTHROW;
    void operator-=(SIZED size) NOTHROW;
-   void set_size(int32_t CX, int32_t CY) NOTHROW;
+   void set_size(double CX, double CY) NOTHROW;
+   void set_size(LPCSIZED lpcsize) NOTHROW;
 
 // Operators returning sized values
    sized operator+(SIZED size) const NOTHROW;

@@ -3745,7 +3745,7 @@ success:
 
          slSystem.unlock();
 
-         if (!dib.load_from_file(path))
+         if (!dib.load_from_file(path, false))
          {
 
             if (is_debugger_attached())

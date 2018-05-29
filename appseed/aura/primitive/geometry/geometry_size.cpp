@@ -229,6 +229,10 @@ void size64::operator-=(SIZE64 size64) NOTHROW
 { cx -= size64.cx; cy -= size64.cy; }
 void size64::set_size(int64_t CX, int64_t CY) NOTHROW
 { cx = CX; cy = CY; }
+void size64::set_size(LPCSIZE64 lpcsize) NOTHROW
+{
+   set_size(lpcsize->cx, lpcsize->cy);
+}
 
 
 size64 size64::operator+(SIZE64 size) const NOTHROW
@@ -387,8 +391,12 @@ void sized::operator+=(SIZED sized) NOTHROW
 { cx += sized.cx; cy += sized.cy; }
 void sized::operator-=(SIZED sized) NOTHROW
 { cx -= sized.cx; cy -= sized.cy; }
-void sized::set_size(int32_t CX, int32_t CY) NOTHROW
+void sized::set_size(double CX, double CY) NOTHROW
 { cx = CX; cy = CY; }
+void sized::set_size(LPCSIZED lpcsize) NOTHROW
+{
+   set_size(lpcsize->cx, lpcsize->cy);
+}
 class sized sized::operator+(SIZED sized) const NOTHROW
 {
    class sized sizeRet;
