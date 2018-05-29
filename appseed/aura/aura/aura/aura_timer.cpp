@@ -144,6 +144,8 @@ void timer::call_on_timer()
 
       ::set_thread(this);
 
+      m_bTemporary = true;
+
       try
       {
 

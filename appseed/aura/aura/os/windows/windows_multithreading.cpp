@@ -61,7 +61,12 @@ void attach_thread_input_to_main_thread(bool bAttach)
 
    MSG msg;
 
-   PeekMessage(&msg,NULL,0,0xffffffff,FALSE);
+   if (bAttach)
+   {
+
+      PeekMessage(&msg, NULL, 0, 0xffffffff, FALSE);
+
+   }
 
    AttachThreadInput(::GetCurrentThreadId(),get_main_thread_id(),bAttach ? TRUE : FALSE);
 

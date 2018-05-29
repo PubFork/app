@@ -49,7 +49,7 @@ namespace user
       menu(::aura::application * papp, ::user::menu_item * pitem);
       virtual ~menu();
 
-
+      virtual void nextstyle(::user::style_context * pcontext) override;
       virtual size get_window_minimum_size();
 
       virtual int64_t add_ref() override

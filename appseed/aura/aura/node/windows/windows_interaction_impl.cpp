@@ -1451,6 +1451,13 @@ namespace windows
 
       uiMessage = UINT(pbase->m_id.i64());
 
+      if (uiMessage == WM_NCCALCSIZE)
+      {
+
+         output_debug_string("WM_NCCALCSIZE");
+
+      }
+
       //if(uiMessage == WM_MOUSEMOVE)
       //{
       //

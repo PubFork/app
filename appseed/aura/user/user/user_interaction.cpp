@@ -6118,6 +6118,22 @@ restart:
    bool interaction::track_popup_xml_matter_menu(const char * pszMatter, int32_t iFlags, POINT pt)
    {
 
+      if (get_thread()->m_bTemporary)
+      {
+
+         string strMatter(pszMatter);
+
+         Application.post_pred([=]()
+         {
+            
+            track_popup_xml_matter_menu(strMatter, iFlags, pt);
+
+         });
+
+         return true;
+
+      }
+
       sp(::user::menu) pmenu = Application.alloc(System.type_info < ::user::menu >());
 
       if (!pmenu->load_xml_menu(pszMatter))
@@ -8419,7 +8435,12 @@ restart:
 
                sp(::user::interaction) spui = this;
 
-               spui->defer_notify_mouse_move(pt);
+               if (spui->IsWindowVisible())
+               {
+
+                  //spui->defer_notify_mouse_move(pt);
+
+               }
 
             }
 

@@ -379,7 +379,8 @@ namespace user
          if (puiNotify != NULL)
          {
 
-            SetOwner(puiNotify);
+            //SetOwner(puiNotify);
+
 
          }
 
@@ -429,6 +430,24 @@ namespace user
 
       return true;
 
+
+   }
+
+   void menu::nextstyle(::user::style_context * pcontext)
+   {
+
+      if (get_parent() == NULL)
+      {
+
+         pcontext->m_pstyle = m_puiNotify;
+
+      }
+      else
+      {
+
+         pcontext->m_pstyle = get_parent();
+
+      }
 
    }
 
@@ -747,46 +766,6 @@ namespace user
 
    }
 
-
-   void menu::_001OnMouseActivate(::message::message * pobj)
-   {
-
-      SCAST_PTR(::message::mouse_activate, pmouseactivate, pobj);
-
-      pmouseactivate->set_lresult(MA_NOACTIVATE);
-
-      pmouseactivate->m_bRet = true;
-
-
-   }
-
-
-   void menu::_001OnNcCreate(::message::message * pobj)
-   {
-
-      SCAST_PTR(::message::base, pbase, pobj);
-
-      //pactivate->set_lresult(0);
-
-      pbase->m_bRet = true;
-
-      pbase->set_lresult(1);
-
-
-   }
-
-
-   void menu::_001OnActivate(::message::message * pobj)
-   {
-
-      SCAST_PTR(::message::activate, pactivate, pobj);
-
-      pactivate->set_lresult(0);
-
-      pactivate->m_bRet = true;
-
-
-   }
 
 
    void menu::defer_close()
@@ -1147,12 +1126,53 @@ namespace user
    }
 
 
+   void menu::_001OnNcCreate(::message::message * pobj)
+   {
+
+      SCAST_PTR(::message::base, pbase, pobj);
+
+      pbase->m_bRet = true;
+
+      pbase->set_lresult(1);
+
+   }
+
+
    void menu::_001OnNcActivate(::message::message * pobj)
    {
+      
       SCAST_PTR(::message::base, pbase, pobj);
+      
       pbase->m_bRet = true;
-      pbase->set_lresult(FALSE);
+      
+      pbase->set_lresult(0);
+
    }
+
+
+   void menu::_001OnActivate(::message::message * pobj)
+   {
+
+      SCAST_PTR(::message::activate, pactivate, pobj);
+
+      pactivate->set_lresult(0);
+
+      pactivate->m_bRet = true;
+
+   }
+
+
+   void menu::_001OnMouseActivate(::message::message * pobj)
+   {
+
+      SCAST_PTR(::message::mouse_activate, pmouseactivate, pobj);
+
+      pmouseactivate->set_lresult(MA_NOACTIVATE);
+
+      pmouseactivate->m_bRet = true;
+
+   }
+
 
    size menu::get_window_minimum_size()
    {
@@ -1161,30 +1181,35 @@ namespace user
 
    }
 
+
    void menu::_001OnNcCalcSize(::message::message * pobj)
    {
 
       SCAST_PTR(::message::base, pbase, pobj);
 
-      if (pbase->m_wparam == TRUE)
-      {
+      pobj->previous();
 
-         pbase->m_bRet = true;
-         pbase->set_lresult(0);
+      return;
 
-      }
-      else
-      {
+      //if (pbase->m_wparam == TRUE)
+      //{
 
-         LPRECT lprect = (LPRECT)pbase->m_lparam.m_lparam;
-         lprect->left = m_ptTrack.x;
-         lprect->top = m_ptTrack.y;
-         lprect->right = lprect->left + MAX(::user::interaction::get_window_minimum_size().cx, m_size.cx);
-         lprect->bottom = lprect->left + MAX(::user::interaction::get_window_minimum_size().cy, m_size.cy);
-         pbase->m_bRet = true;
-         pbase->set_lresult(0);
+      //   pbase->m_bRet = true;
+      //   pbase->set_lresult(0);
 
-      }
+      //}
+      //else
+      //{
+
+      //   LPRECT lprect = (LPRECT)pbase->m_lparam.m_lparam;
+      //   lprect->left = m_ptTrack.x;
+      //   lprect->top = m_ptTrack.y;
+      //   lprect->right = lprect->left + MAX(::user::interaction::get_window_minimum_size().cx, m_size.cx);
+      //   lprect->bottom = lprect->left + MAX(::user::interaction::get_window_minimum_size().cy, m_size.cy);
+      //   pbase->m_bRet = true;
+      //   pbase->set_lresult(0);
+
+      //}
 
    }
 
