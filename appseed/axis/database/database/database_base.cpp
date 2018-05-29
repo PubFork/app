@@ -84,5 +84,41 @@ namespace database
 
    }
 
+
+   bool base::query_rows(var & rows, const char * pszQuery)
+   {
+
+      synch_lock sl(m_pmutex);
+
+      sp(set) s(CreateDataset());
+
+      return s->query_rows(rows, pszQuery);
+
+   }
+
+
+   bool base::query_items(var & items, const char * pszQuery)
+   {
+
+      synch_lock sl(m_pmutex);
+
+      sp(set) s(CreateDataset());
+
+      return s->query_items(items, pszQuery);
+
+   }
+
+
+   bool base::query_item(var & item, const char * pszQuery)
+   {
+
+      synch_lock sl(m_pmutex);
+
+      sp(set) s(CreateDataset());
+
+      return s->query_item(item, pszQuery);
+
+   }
+
 } // namespace database
 

@@ -1766,6 +1766,15 @@ namespace windows
             pmouse->m_ecursor = visual::cursor_default;
          }
 
+         if (Session.m_puiCapture != NULL)
+         {
+
+            Session.m_puiCapture->_000OnMouse(pmouse);
+
+            return;
+
+         }
+
          _008OnMouse(pmouse);
 
          return;
@@ -2591,12 +2600,14 @@ namespace windows
 
                double_array daFrame;
 
-               bool bUpdateScreen = false;
+               bool bUpdateScreen;
 
                while (::get_thread_run())
                {
 
                   dwStart = ::get_tick_count();
+
+                  bUpdateScreen = false;
 
                   if (GetExStyle() & WS_EX_LAYERED)
                   {

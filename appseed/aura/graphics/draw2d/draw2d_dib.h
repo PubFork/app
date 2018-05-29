@@ -113,6 +113,8 @@ namespace draw2d
       virtual ::draw2d::bitmap_sp get_bitmap() const; // is semantically const (besides may not be implementationly constant)
       virtual ::draw2d::bitmap_sp detach_bitmap();
 
+      inline ::draw2d::graphics * g() const { return get_graphics(); }
+
       virtual ::count get_dib_count();
       virtual ::draw2d::dib * get_dib(index i);
 

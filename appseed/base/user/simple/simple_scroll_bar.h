@@ -9,9 +9,12 @@ class CLASS_DECL_BASE simple_scroll_bar :
 {
 public:
 
-
+   ::draw2d::dib_sp           m_dibDots;
    ::draw2d::pen_sp           m_penDraw;
    ::draw2d::brush_sp         m_brushDraw;
+   bool                       m_bTrackOffsetThumbAdjusted;
+   point                      m_ptTrack;
+   rect                       m_rectTrack;
    point                      m_ptTrackOffset;
    rect                       m_rectA;
    rect                       m_rectB;

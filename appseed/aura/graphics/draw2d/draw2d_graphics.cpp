@@ -3446,7 +3446,7 @@ namespace draw2d
    }
 
 
-   i32 graphics::draw_text(const char * lpszString,strsize nCount,const RECT & lpRect,UINT nFormat)
+   bool graphics::draw_text(const char * lpszString,strsize nCount,const RECT & lpRect,UINT nFormat)
    {
 
       return draw_text(string(lpszString, nCount), lpRect, nFormat);
@@ -3454,7 +3454,7 @@ namespace draw2d
    }
 
 
-   i32 graphics::draw_text(const string & str,const RECT & lpRect,UINT nFormat)
+   bool graphics::draw_text(const string & str,const RECT & lpRect,UINT nFormat)
    {
 
       RECTD r;
@@ -3466,7 +3466,7 @@ namespace draw2d
    }
 
 
-   i32 graphics::draw_text(const char * lpszString,strsize nCount,const RECTD & lpRect,UINT nFormat)
+   bool graphics::draw_text(const char * lpszString,strsize nCount,const RECTD & lpRect,UINT nFormat)
    {
 
       return draw_text(string(lpszString,nCount),lpRect,nFormat);
@@ -3474,7 +3474,7 @@ namespace draw2d
    }
 
 
-   i32 graphics::draw_text(const string & strParam,const RECTD & lpRect,UINT nFormat)
+   bool graphics::draw_text(const string & strParam,const RECTD & lpRect,UINT nFormat)
    {
 
       string str(strParam);
@@ -3580,7 +3580,7 @@ namespace draw2d
 
 #ifndef METROWIN
 
-   i32 graphics::draw_text_ex(const char * lpszString,strsize nCount,const RECT & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
+   bool graphics::draw_text_ex(const char * lpszString,strsize nCount,const RECT & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
    {
       UNREFERENCED_PARAMETER(lpszString);
       UNREFERENCED_PARAMETER(nCount);
@@ -3591,7 +3591,7 @@ namespace draw2d
       return -1;
    }
 
-   i32 graphics::draw_text_ex(const string & str,const RECT & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
+   bool graphics::draw_text_ex(const string & str,const RECT & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
    {
       UNREFERENCED_PARAMETER(str);
       UNREFERENCED_PARAMETER(lpRect);
@@ -3600,7 +3600,7 @@ namespace draw2d
       _throw(interface_only_exception(get_app()));
       return -1;
    }
-   i32 graphics::draw_text_ex(const char * lpszString,strsize nCount,const RECTD & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
+   bool graphics::draw_text_ex(const char * lpszString,strsize nCount,const RECTD & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
    {
       UNREFERENCED_PARAMETER(lpszString);
       UNREFERENCED_PARAMETER(nCount);
@@ -3611,7 +3611,7 @@ namespace draw2d
       return -1;
    }
 
-   i32 graphics::draw_text_ex(const string & str,const RECTD & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
+   bool graphics::draw_text_ex(const string & str,const RECTD & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
    {
       UNREFERENCED_PARAMETER(str);
       UNREFERENCED_PARAMETER(lpRect);

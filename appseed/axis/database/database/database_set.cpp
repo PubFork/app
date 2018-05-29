@@ -535,11 +535,25 @@ namespace database
       return -1;
    }
 
-
    var set::query_rows(const char * pszQuery)
    {
 
-      var var;
+      var rows;
+
+      if (!query_rows(rows, pszQuery))
+      {
+
+         return false;
+
+      }
+
+      return rows;
+
+   }
+
+
+   bool set::query_rows(var & rows, const char * pszQuery)
+   {
 
       if (!query(pszQuery))
       {
@@ -550,21 +564,23 @@ namespace database
 
       }
 
-      while (!eof())
+      ::count c = num_rows();
+
+      var_array & vara = rows.vara();
+
+      vara.set_size(c);
+
+      for (index i = 0; i < c; i++)
       {
 
+         var_array & row = vara[i].vara();
+
+         row.set_size(field_count());
+
+         for (index j = 0; j < field_count(); j++)
          {
 
-            ::var row;
-
-            for (index i = 0; i < fieldCount(); i++)
-            {
-
-               row.vara().add(field_value_at(i));
-
-            }
-
-            var.vara().add(row);
+            row[j] = field_value_at(j);
 
          }
 
@@ -572,7 +588,7 @@ namespace database
 
       }
 
-      return var;
+      return true;
 
    }
 
@@ -580,7 +596,22 @@ namespace database
    var set::query_items(const char * pszQuery)
    {
 
-      var var;
+      var items;
+
+      if (!query_items(items, pszQuery))
+      {
+
+         return false;
+
+      }
+
+      return items;
+
+   }
+
+
+   bool set::query_items(var & items, const char * pszQuery)
+   {
 
       if (!query(pszQuery))
       {
@@ -594,21 +625,36 @@ namespace database
       while (!eof())
       {
 
-         var.vara().add(field_value_at(0));
+         items.vara().add(field_value_at(0));
 
          next();
 
       }
 
-      return var;
+      return true;
+
+   }
+
+   
+   var set::query_item(const char * pszQuery)
+   {
+
+      var item;
+
+      if (!query_item(item, pszQuery))
+      {
+
+         return false;
+
+      }
+
+      return item;
 
    }
 
 
-   var set::query_item(const char * pszQuery)
+   bool set::query_item(var & item, const char * pszQuery)
    {
-
-      var var;
 
       if (!query(pszQuery))
       {
@@ -619,9 +665,12 @@ namespace database
 
       }
 
-      return field_value_at(0);
+      item = field_value_at(0);
+
+      return true;
 
    }
+
 
 } // namespace vmssqlite
 

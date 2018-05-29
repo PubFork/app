@@ -463,16 +463,16 @@ namespace draw2d
       virtual bool TextOutAlphaBlend(f64 x, f64 y, const char * lpszString, strsize nCount);
 
 
-      virtual i32 draw_text(const char * lpszString,strsize nCount,const RECT & lpRect,UINT nFormat);
-      virtual i32 draw_text(const string & str, const RECT & lpRect, UINT nFormat);
-      virtual i32 draw_text(const char * lpszString,strsize nCount,const RECTD & lpRect,UINT nFormat);
-      virtual i32 draw_text(const string & str,const RECTD & lpRect,UINT nFormat);
+      virtual bool draw_text(const char * lpszString,strsize nCount,const RECT & lpRect,UINT nFormat);
+      virtual bool draw_text(const string & str, const RECT & lpRect, UINT nFormat);
+      virtual bool draw_text(const char * lpszString,strsize nCount,const RECTD & lpRect,UINT nFormat);
+      virtual bool draw_text(const string & str,const RECTD & lpRect,UINT nFormat);
 
 #ifndef METROWIN
-      virtual i32 draw_text_ex(const char * lpszString,strsize nCount,const RECT & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams);
-      virtual i32 draw_text_ex(const string & str,const RECT & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams);
-      virtual i32 draw_text_ex(const char * lpszString,strsize nCount,const RECTD & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams);
-      virtual i32 draw_text_ex(const string & str,const RECTD & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams);
+      virtual bool draw_text_ex(const char * lpszString,strsize nCount,const RECT & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams);
+      virtual bool draw_text_ex(const string & str,const RECT & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams);
+      virtual bool draw_text_ex(const char * lpszString,strsize nCount,const RECTD & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams);
+      virtual bool draw_text_ex(const string & str,const RECTD & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams);
 #endif
 
       virtual ::count GetEachCharTextExtent(array < size > & sizea, const string & str, strsize iStart = 0, strsize iCount = -1);

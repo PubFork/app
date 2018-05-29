@@ -57,12 +57,12 @@ namespace user
             _001GetXScrollInfo(m_pscrollbarHorz->m_scrollinfo);
 
             ::rect rectNewPos;
-            
+
             rectNewPos.left = rectClient.left;
             rectNewPos.top = rectClient.bottom - GetSystemMetrics(SM_CYHSCROLL);
             rectNewPos.right = rectNewPos.left + rectClient.width() - get_final_y_scroll_bar_width();
             rectNewPos.bottom = rectNewPos.top + GetSystemMetrics(SM_CYHSCROLL);
-            
+
             m_pscrollbarHorz->defer_set_window_pos(ZORDER_TOP, rectNewPos, ifswp);
 
          }
@@ -1236,7 +1236,9 @@ namespace user
    {
       scroll_x::on_change_viewport_offset();
       scroll_y::on_change_viewport_offset();
+      ::user::interaction::on_change_viewport_offset();
    }
+
    void scroll::layout_scroll_bar()
    {
       scroll_x::layout_scroll_bar();

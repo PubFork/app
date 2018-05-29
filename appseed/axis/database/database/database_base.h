@@ -84,6 +84,9 @@ namespace database
       var query_items(const char * pszQuery);
       var query_item(const char * pszQuery);
 
+      bool query_rows(var & rows, const char * pszQuery);
+      bool query_items(var & items, const char * pszQuery);
+      bool query_item(var & item, const char * pszQuery);
 
    };
 

@@ -144,6 +144,16 @@ namespace visual
       virtual bool save_to_file(var varFile, save_image * psaveimage = NULL);
       virtual bool write_to_file(var  varFile, save_image * psaveimage = NULL);
 
+
+      inline dib_sp & operator = (::draw2d::dib * p)
+      {
+
+         ::draw2d::dib_sp::operator=(p);
+
+         return *this;
+
+      }
+
 //#ifndef  WINDOWS
 //      virtual bool from(::draw2d::graphics * pgraphics, FIBITMAP * pfibitmap, bool bUnloadFI);
 //#endif

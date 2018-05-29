@@ -746,8 +746,8 @@ restart:
       return true;
 
    }
-   
-   
+
+
    bool interaction::GetWindowPos(LPRECT lprect)
    {
 
@@ -1729,7 +1729,7 @@ restart:
 
             ::draw2d::keep keep(pgraphics);
 
-            if (!pui->is_custom_draw())
+            if (pui.is_set() && !pui->is_custom_draw())
             {
 
                pui->_000OnDraw(pgraphics);
@@ -6125,7 +6125,7 @@ restart:
 
          Application.post_pred([=]()
          {
-            
+
             track_popup_xml_matter_menu(strMatter, iFlags, pt);
 
          });
@@ -7540,7 +7540,7 @@ restart:
    void interaction::on_change_viewport_offset()
    {
 
-      RedrawWindow();
+      set_need_redraw();
 
    }
 
@@ -8558,8 +8558,6 @@ restart:
    {
 
       ::user::interaction_base::on_after_graphical_update();
-
-      m_bRedraw = false;
 
       if(m_pimpl.is_set())
       {

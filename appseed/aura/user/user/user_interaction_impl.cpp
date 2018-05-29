@@ -2547,6 +2547,8 @@ namespace user
    void interaction_impl::_001UpdateBuffer()
    {
 
+      m_pui->m_bRedraw = false;
+
       windowing_output_debug_string("\n_001UpdateBuffer : before draw2d::lock");
 
 //      ::draw2d::lock draw2dlock;

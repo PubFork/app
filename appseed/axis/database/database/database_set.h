@@ -244,6 +244,9 @@ namespace database
       virtual var query_items(const char *query);
       virtual var query_item(const char *query);
 
+      virtual bool query_rows(var & rows, const char *query);
+      virtual bool query_items(var & items, const char *query);
+      virtual bool query_item(var & item, const char *query);
 
    };
 

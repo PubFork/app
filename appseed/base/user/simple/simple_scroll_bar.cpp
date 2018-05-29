@@ -2,7 +2,36 @@
 #include "simple_scroll_bar.h"
 
 
+void constraint(POINT & pt, LPCRECT lpcrect)
+{
 
+   if (pt.x < lpcrect->left)
+   {
+
+      pt.x = lpcrect->left;
+
+   }
+   else if (pt.x > lpcrect->right)
+   {
+
+      pt.x = lpcrect->right;
+
+   }
+
+   if (pt.y < lpcrect->top)
+   {
+
+      pt.y = lpcrect->top;
+
+   }
+   else if (pt.y > lpcrect->bottom)
+   {
+
+      pt.y = lpcrect->bottom;
+
+   }
+
+}
 
 
 simple_scroll_bar::simple_scroll_bar(::aura::application * papp) :
@@ -88,10 +117,16 @@ void simple_scroll_bar::_001OnMouseMove(::message::message * pobj)
    if(m_bTracking)
    {
 
+      pt -= m_ptTrackOffset;
+
       SetTrackingPos(pt);
+
       send_scroll_message(SB_THUMBTRACK);
+
       pmouse->set_lresult(1);
+
       pmouse->m_bRet = true;
+
       pmouse->m_ecursor = ::visual::cursor_arrow;
 
    }
@@ -160,13 +195,17 @@ void simple_scroll_bar::_001OnLButtonDown(::message::message * pobj)
 
    if(m_eelement == ::user::element_scrollbar_rect)
    {
+
       m_bTracking = true;
-      point ptTrackOffset;
-      ptTrackOffset = pt;
-      rect rectTrack;
-      GetTrackRect(rectTrack);
-      ptTrackOffset -= rectTrack.top_left();
-      m_ptTrackOffset = ptTrackOffset;
+
+      m_ptTrack = pt;
+
+      GetTrackRect(m_rectTrack);
+
+      m_ptTrackOffset = m_ptTrack - m_rectTrack.top_left();
+
+      set_need_redraw();
+
    }
    else
    {
@@ -193,6 +232,8 @@ void simple_scroll_bar::_001OnLButtonUp(::message::message * pobj)
 
    KillTimer(((uint_ptr)this)+1);
 
+   ReleaseCapture();
+
    pmouse->m_bRet = false;
 
    simple_scroll_bar * pcapture = Session.GetCapture().cast < simple_scroll_bar >();
@@ -200,7 +241,7 @@ void simple_scroll_bar::_001OnLButtonUp(::message::message * pobj)
    if((pcapture != NULL && pcapture == this) || m_bTracking)
    {
 
-      Session.ReleaseCapture();
+
 
       bool bWasTracking = m_bTracking;
 
@@ -213,13 +254,15 @@ void simple_scroll_bar::_001OnLButtonUp(::message::message * pobj)
 
          ScreenToClient(&pt);
 
+         pt -= m_ptTrackOffset;
+
          SetTrackingPos(pt);
 
       }
 
       send_scroll_message(SB_THUMBPOSITION);
 
-      Redraw();
+      set_need_redraw();
 
    }
 
@@ -230,35 +273,77 @@ bool simple_scroll_bar::GetTrackRect(LPRECT lpRect)
 {
 
    rect rectClient;
+
    GetClientRect(rectClient);
+
    size sizeTrack;
+
    GetTrackSize(sizeTrack);
+
    int32_t iPos;
-   if(m_bTracking)
+
+   if (m_bTracking)
+   {
+
       iPos = m_scrollinfo.nTrackPos;
+
+   }
    else
+   {
+
       iPos = m_scrollinfo.nPos;
+
+   }
+
    if(m_eorientation == orientation_horizontal)
    {
-      int32_t iWidth = rectClient.width() - GetSystemMetrics(SM_CXHSCROLL) * 2 - sizeTrack.cx - 2;
+
+      int32_t iWidth = rectClient.width() - GetSystemMetrics(SM_CXHSCROLL) * 2 - sizeTrack.cx;
+
       lpRect->top = rectClient.top;
+
       lpRect->bottom = rectClient.top + sizeTrack.cy;
-      if(m_scrollinfo.nMax - m_scrollinfo.nMin - m_scrollinfo.nPage == 0)
+
+      if (m_scrollinfo.nMax - m_scrollinfo.nMin - m_scrollinfo.nPage == 0)
+      {
+
          lpRect->left = 0;
+
+      }
       else
-         lpRect->left = GetSystemMetrics(SM_CXHSCROLL) + 1 + (iPos - m_scrollinfo.nMin) * iWidth / (m_scrollinfo.nMax - m_scrollinfo.nMin - m_scrollinfo.nPage);
+      {
+
+         lpRect->left = GetSystemMetrics(SM_CXHSCROLL) + (iPos - m_scrollinfo.nMin) * iWidth / (m_scrollinfo.nMax - m_scrollinfo.nMin - m_scrollinfo.nPage);
+
+      }
+
       lpRect->right = lpRect->left + sizeTrack.cx;
+
    }
    else if(m_eorientation == orientation_vertical)
    {
-      int32_t iHeight = rectClient.height() - GetSystemMetrics(SM_CYVSCROLL) * 2 - sizeTrack.cy - 2;
-      if(m_scrollinfo.nMax - m_scrollinfo.nMin - m_scrollinfo.nPage == 0)
-         lpRect->top = 1;
-      else
-         lpRect->top = GetSystemMetrics(SM_CYVSCROLL) + 2 + (iPos - m_scrollinfo.nMin) * iHeight / (m_scrollinfo.nMax - m_scrollinfo.nMin - m_scrollinfo.nPage);
-      lpRect->bottom = lpRect->top + sizeTrack.cy;
+
+      int32_t iHeight = rectClient.height() - GetSystemMetrics(SM_CYVSCROLL) * 2 - sizeTrack.cy;
+
       lpRect->left = rectClient.left;
+
       lpRect->right = lpRect->left + sizeTrack.cx;
+
+      if (m_scrollinfo.nMax - m_scrollinfo.nMin - m_scrollinfo.nPage == 0)
+      {
+
+         lpRect->top = 0;
+
+      }
+      else
+      {
+
+         lpRect->top = GetSystemMetrics(SM_CYVSCROLL) + (iPos - m_scrollinfo.nMin) * iHeight / (m_scrollinfo.nMax - m_scrollinfo.nMin - m_scrollinfo.nPage);
+
+      }
+
+      lpRect->bottom = lpRect->top + sizeTrack.cy;
+
    }
 
    return true;
@@ -364,37 +449,81 @@ int32_t simple_scroll_bar::GetTrackSize(size &size)
 
    if(m_eorientation == orientation_horizontal)
    {
+
       int32_t iWidth = rectClient.width() - GetSystemMetrics(SM_CXHSCROLL) * 2;
-      int32_t cx = 5;
+
+      int32_t cx = 0;
+
       if(iWidth > 0)
       {
+
          int32_t iRange = (m_scrollinfo.nMax - m_scrollinfo.nMin);
-         if(iRange == 0)
+
+         if (iRange == 0)
+         {
+
             cx = 0;
+
+         }
          else
-            cx = m_scrollinfo.nPage * iWidth / iRange;
+         {
+
+            cx = (m_scrollinfo.nPage  * iWidth) / iRange;
+
+         }
+
       }
-      if(cx < 5)
+
+      if (cx < 5)
+      {
+
          cx = 5;
+
+      }
+
       size.cx = cx;
-      size.cy = rectClient.height() - 1;
+
+      size.cy = rectClient.height();
+
    }
    else if(m_eorientation == orientation_vertical)
    {
+
       int32_t iHeight = rectClient.height() - GetSystemMetrics(SM_CYVSCROLL) * 2;
-      int32_t cy = 5;
+
+      int32_t cy = 0;
+
       if(iHeight > 0)
       {
+
          int32_t iRange = (m_scrollinfo.nMax - m_scrollinfo.nMin);
-         if(iRange == 0)
+
+         if (iRange == 0)
+         {
+
             cy = 0;
+
+         }
          else
-            cy = m_scrollinfo.nPage * iHeight / iRange;
+         {
+
+            cy = (m_scrollinfo.nPage  * iHeight) / iRange;
+
+         }
+
       }
-      if(cy < 5)
+
+      if (cy < 5)
+      {
+
          cy = 5;
+
+      }
+
       size.cy = cy;
-      size.cx = rectClient.width() - 1;
+
+      size.cx = rectClient.width();
+
    }
 
    return true;
@@ -419,14 +548,8 @@ int32_t simple_scroll_bar::SetTrackingPos(point point)
    {
 
       int32_t iWidth = rectClient.width() - GetSystemMetrics(SM_CXHSCROLL) * 2 - sizeTrack.cx;
-      //nPos = point.x - m_ptTrackOffset.x;
-      //nPos -= GetSystemMetrics(SM_CXHSCROLL);
-      //nPos *= (m_scrollinfo.nMax - m_scrollinfo.nMin );
-      //if(iWidth != 0)
-      //   nPos /= iWidth;
-      //nPos += m_scrollinfo.nMin;
 
-      double dRate = (double)(point.x - m_ptTrackOffset.x) / (double)iWidth;
+      double dRate = (double)(point.x - GetSystemMetrics(SM_CXHSCROLL)) / (double)iWidth;
 
       dRate = MIN(1.0, dRate);
 
@@ -440,7 +563,7 @@ int32_t simple_scroll_bar::SetTrackingPos(point point)
 
       int32_t iHeight = rectClient.height() - GetSystemMetrics(SM_CYVSCROLL) * 2 - sizeTrack.cy;
 
-      double dRate = (double) (point.y - m_ptTrackOffset.y) / (double) iHeight;
+      double dRate = (double)(point.y - GetSystemMetrics(SM_CYVSCROLL)) / (double) iHeight;
 
       dRate = MIN(1.0, dRate);
 
@@ -451,22 +574,38 @@ int32_t simple_scroll_bar::SetTrackingPos(point point)
    }
    else
    {
+
       ASSERT(FALSE);
+
    }
-   if(nPos < m_scrollinfo.nMin)
+
+   if (nPos < m_scrollinfo.nMin)
+   {
+
       nPos = m_scrollinfo.nMin;
-   else if(nPos > m_scrollinfo.nMax)
+
+   }
+   else if (nPos > m_scrollinfo.nMax)
+   {
+
       nPos = m_scrollinfo.nMax;
+
+   }
+
    if(m_bTracking)
    {
+
       m_scrollinfo.nTrackPos = nPos;
+
    }
    else
    {
+
       m_scrollinfo.nPos = nPos;
+
    }
+
    m_scrollinfo.fMask = SIF_ALL;
-   // trans   ::user::interaction::SetScrollInfo(SB_CTL, &m_scrollinfo);
 
    return true;
 
@@ -1084,9 +1223,9 @@ void simple_scroll_bar::_001OnVerisimpleDraw(::draw2d::graphics * pgraphics)
    if (m_bTracking || (bool)oprop("tracking_on"))
    {
 
-      DWORD dwFadeIn = 490;
+      DWORD dwFadeIn = 300;
 
-      DWORD dwFadeOut = 490;
+      DWORD dwFadeOut = 300;
 
       byte uchAlpha = MAX(0, MIN(255, oprop("tracking_alpha").u32()));
 
@@ -1098,17 +1237,38 @@ void simple_scroll_bar::_001OnVerisimpleDraw(::draw2d::graphics * pgraphics)
             oprop("tracking_start") = (uint32_t)(get_tick_count() + uchAlpha * dwFadeIn / 255);
             oprop("tracking_fade_in") = true;
             oprop("tracking_fade_out") = false;
-            oprop("tracking_simple") = System.math().RandRange(1, 2) == 1;
+            oprop("tracking_type") = System.math().RandRange(1, 2);
+
+            if (oprop("tracking_simple").i32() == 2)
+            {
+
+               int iDeflate = rectTrack.get_size().get_normal(m_eorientation);
+
+               iDeflate /= 2;
+
+               rect rectConstraint(m_rectTrack);
+
+               rectConstraint.deflate(iDeflate, iDeflate);
+
+               constraint(m_ptTrack, rectConstraint);
+
+               m_ptTrackOffset = m_ptTrack - m_rectTrack.top_left();
+
+            }
+            //oprop("tracking_simple") = 0;
             //oprop("tracking_window") = canew(trw(get_app()));
          }
       }
       else
       {
+
          if (!(bool)oprop("tracking_fade_out"))
          {
+
             oprop("tracking_fade_in") = false;
             oprop("tracking_fade_out") = true;
             oprop("tracking_start") = (uint32_t)(get_tick_count() + (255 - uchAlpha) * dwFadeOut / 255);
+
          }
 
       }
@@ -1139,7 +1299,6 @@ void simple_scroll_bar::_001OnVerisimpleDraw(::draw2d::graphics * pgraphics)
             uchAlpha = 255;
             oprop("tracking_fade_in") = false;
          }
-
       }
       else if ((bool)oprop("tracking_fade_out"))
       {
@@ -1154,7 +1313,6 @@ void simple_scroll_bar::_001OnVerisimpleDraw(::draw2d::graphics * pgraphics)
             oprop("tracking_on") = false;
             oprop("tracking_fade_out") = false;
          }
-
       }
       else
       {
@@ -1163,12 +1321,12 @@ void simple_scroll_bar::_001OnVerisimpleDraw(::draw2d::graphics * pgraphics)
 
       ::rect rectMachineThumb;
 
-      bool bSimple = (bool)oprop("tracking_simple");
+      i32 iType = oprop("tracking_type").i32();
 
-      if (bSimple)
+      if (iType == 1)
       {
 
-         int iSize = rectTrack.get_size().get_normal(m_eorientation) * 6 / 8;
+         int iSize = rectTrack.get_size().get_normal(m_eorientation);
 
          rectMachineThumb.top_left() = rectTrack.top_left() + m_ptTrackOffset - size(iSize / 2, iSize / 2);
 
@@ -1192,19 +1350,17 @@ void simple_scroll_bar::_001OnVerisimpleDraw(::draw2d::graphics * pgraphics)
 
          rectMachineThumb.top_left() = rectTrack.top_left() + m_ptTrackOffset - size(iSize / 2, iSize / 2);
 
-         rectMachineThumb.bottom_right() = rectMachineThumb.top_left() + size(iSize, iSize);
+         rectMachineThumb.set_size(iSize, iSize);
 
          rectMachineThumb.assign_normal(rectTrack, m_eorientation);
-
-         rectMachineThumb.constraint_v7(rectTrack);
-
-         rectMachineThumb.deflate(1, 1);
 
          draw_mac_thumb_dots(pgraphics, rectMachineThumb, rectTrack, uchAlpha);
 
       }
 
       oprop("tracking_alpha") = uchAlpha;
+
+      set_need_redraw();
 
    }
 
@@ -1301,13 +1457,17 @@ void simple_scroll_bar::_001OnDestroy(::message::message * pobj)
 void simple_scroll_bar::draw_mac_thumb_simple(::draw2d::graphics * pgraphics,LPCRECT lpcrectDraw,LPCRECT lpcrectClip,byte uchAlpha)
 {
 
+   ::draw2d::savedc dc(pgraphics);
+
+   pgraphics->SelectClipRgn(NULL);
+
    rect rectDraw(lpcrectDraw);
 
    rectDraw.deflate(1,1);
 
    ::draw2d::pen_sp pen(allocer());
 
-   pen->create_solid(2.0,ARGB(149 * uchAlpha / 255,84 + 23,84 + 23,77 + 23));
+   pen->create_solid(2.0,ARGB(150 * uchAlpha / 255,108, 108, 100));
 
    pgraphics->SelectObject(pen);
 
@@ -1317,11 +1477,11 @@ void simple_scroll_bar::draw_mac_thumb_simple(::draw2d::graphics * pgraphics,LPC
 
    ::rect rectDotto(0,0,5,5);
 
-   brush->create_solid(ARGB(149 * uchAlpha / 255,84 + 23,84 + 23,77 + 23));
+   brush->create_solid(ARGB(150 * uchAlpha / 255,108,108,100));
 
    pgraphics->SelectObject(brush);
 
-   rectDotto.CenterOf(rectDraw);
+   rectDotto.Align(align_center, rectDraw);
 
    pgraphics->FillEllipse(rectDotto);
 
@@ -1332,141 +1492,68 @@ void simple_scroll_bar::draw_mac_thumb_simple(::draw2d::graphics * pgraphics,LPC
 void simple_scroll_bar::draw_mac_thumb_dots(::draw2d::graphics * pgraphics,LPCRECT lpcrectDraw,LPCRECT lpcrectClip,byte uchAlpha)
 {
 
-   ::draw2d::dib_sp dib(allocer());
+   rect rDraw(lpcrectDraw);
 
-   dib->create(1,1);
+   rDraw.bottom--;
 
-   //   int iDarkLevel = 11;
+   rDraw.right--;
 
-   int iDarkLevel = 23 + 10 + 23;
+   double iDiv = 10;
 
-   int iSmoothing = 23 + 8;
+   if (m_dibDots.is_null())
+   {
 
-   dib->Fill(184 * uchAlpha / 255,84 - iDarkLevel,84 - iDarkLevel,77 - iDarkLevel);
+      m_dibDots.alloc(allocer());
 
-   rect rectDraw(lpcrectDraw);
+      m_dibDots->create(rDraw.width() * iDiv, rDraw.height() * iDiv);
 
-   int iModelSize = MIN(rectDraw.width(), rectDraw.height());
+      m_dibDots->FillByte(0);
 
-   iModelSize = (iModelSize / 4) * 4;
+      m_dibDots->g()->set_alpha_mode(::draw2d::alpha_mode_blend);
 
-   int iSize = 1;
+      double iDiv2 = iDiv / 2;
 
-   rect rectSource;
+      double iDiv3 = iDiv2 / 2;
 
-   rectSource.CenterOf(rectDraw,size(iModelSize+1,iModelSize+1));
+      double x = m_dibDots->m_size.cx / (iDiv * 2);
 
-   rect rectBound(rectSource);
+      double iSize = iDiv3;
 
-   rectDraw = rectBound;
+      for (int i = 0; i <= iDiv2; i++)
+      {
 
-   pgraphics->from(rectDraw.top_left(),size(1,1),dib->get_graphics(), null_point(),SRCCOPY);
-   pgraphics->from(rectDraw.top_right(),size(1,1),dib->get_graphics(),null_point(),SRCCOPY);
-   pgraphics->from(rectDraw.bottom_left(),size(1,1),dib->get_graphics(),null_point(),SRCCOPY);
-   pgraphics->from(rectDraw.bottom_right(),size(1,1),dib->get_graphics(),null_point(),SRCCOPY);
+         double y = m_dibDots->m_size.cy / (iDiv * 2);
 
-   int iSize2 = iModelSize / 4;
+         for (int j = 0; j <= iDiv2; j++)
+         {
 
-   rectDraw = rectBound;
+            iSize = MAX(abs(m_dibDots->m_size.cx / 2 - x), abs(m_dibDots->m_size.cx / 2 - y));
 
-   rectDraw.deflate(iSize2+1,0);
+            iSize = (m_dibDots->m_size.cx / 2) - iSize;
 
-   pgraphics->from(rectDraw.top_left(),size(1,1),dib->get_graphics(),null_point(),SRCCOPY);
-   pgraphics->from(rectDraw.top_right(),size(1,1),dib->get_graphics(),null_point(),SRCCOPY);
-   pgraphics->from(rectDraw.bottom_left(),size(1,1),dib->get_graphics(),null_point(),SRCCOPY);
-   pgraphics->from(rectDraw.bottom_right(),size(1,1),dib->get_graphics(),null_point(),SRCCOPY);
+            iSize = pow(iSize, 0.55);
 
-   rectDraw = rectBound;
+            rectd r(x - iSize, y - iSize, x + iSize, y + iSize);
 
-   rectDraw.deflate(0,iSize2+1);
+            m_dibDots->g()->fill_solid_rect(r, ARGB(80, 0, 0, 0));
 
-   pgraphics->from(rectDraw.top_left(),size(1,1),dib->get_graphics(),null_point(),SRCCOPY);
-   pgraphics->from(rectDraw.top_right(),size(1,1),dib->get_graphics(),null_point(),SRCCOPY);
-   pgraphics->from(rectDraw.bottom_left(),size(1,1),dib->get_graphics(),null_point(),SRCCOPY);
-   pgraphics->from(rectDraw.bottom_right(),size(1,1),dib->get_graphics(),null_point(),SRCCOPY);
+            y += m_dibDots->m_size.cy / (iDiv2 + 1.0);
 
-   rectDraw = rectBound;
+         }
 
-   rectDraw.deflate(iSize,iSize);
+         x += m_dibDots->m_size.cx / (iDiv2 + 1.0);
 
-   iSize += 1;
+      }
 
-   ::rect rect = ::rect(0,0,iSize,iSize);
+   }
 
-   ::draw2d::brush_sp brushGrip(allocer());
+   pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
-   brushGrip->create_solid(ARGB(184 * uchAlpha / 255,84 - iDarkLevel + iSmoothing,84 - iDarkLevel + iSmoothing,77 - iDarkLevel + iSmoothing));
+   pgraphics->SetStretchBltMode(HALFTONE);
 
-   pgraphics->SelectObject(brushGrip);
-
-   rect.Align(align_top_left,rectDraw);
-
-   pgraphics->FillEllipse(rect);
-
-   rect.Align(align_top_center,rectDraw);
-
-   pgraphics->FillEllipse(rect);
-
-   rect.Align(align_top_right,rectDraw);
-
-   pgraphics->FillEllipse(rect);
-
-   rect.Align(align_left_center,rectDraw);
-
-   pgraphics->FillEllipse(rect);
-
-   rect.Align(align_right_center,rectDraw);
-
-   pgraphics->FillEllipse(rect);
-
-   rect.Align(align_bottom_left,rectDraw);
-
-   pgraphics->FillEllipse(rect);
-
-   rect.Align(align_bottom_center,rectDraw);
-
-   pgraphics->FillEllipse(rect);
-
-   rect.Align(align_bottom_right,rectDraw);
-
-   pgraphics->FillEllipse(rect);
-
-   rectDraw.deflate(iSize,iSize);
-
-   iSize += 1;
-
-   brushGrip->create_solid(ARGB(184 * uchAlpha / 255,84 - iDarkLevel + iSmoothing * 2,84 - iDarkLevel + iSmoothing * 2,77 - iDarkLevel + iSmoothing * 2));
-
-   pgraphics->SelectObject(brushGrip);
-
-   rect = ::rect(0,0,iSize,iSize);
-
-   rect.Align(align_top_left,rectDraw);
-
-   pgraphics->FillEllipse(rect);
-
-   rect.Align(align_top_right,rectDraw);
-
-   pgraphics->FillEllipse(rect);
-
-   rect.Align(align_bottom_left,rectDraw);
-
-   pgraphics->FillEllipse(rect);
-
-   rect.Align(align_bottom_right,rectDraw);
-
-   pgraphics->FillEllipse(rect);
-
-   //iSize += 2;
-
-   rect = ::rect(0,0,iSize,iSize);
-
-   rect.CenterOf(rectDraw);
-
-   pgraphics->FillEllipse(rect);
+   pgraphics->alpha_blend(rDraw.top_left(), rDraw.get_size(), m_dibDots->g(), point(iDiv, iDiv), m_dibDots->m_size - size(iDiv*2, iDiv *2), uchAlpha / 255.0);
 
 }
-
 
 
 index simple_scroll_bar::hit_test(point pt,::user::e_element & eelement)
