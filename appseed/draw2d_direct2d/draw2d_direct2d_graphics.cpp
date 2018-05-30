@@ -4297,8 +4297,7 @@ namespace draw2d_direct2d
    }
 
 
-
-   int graphics::draw_text(const char * lpszString, strsize nCount, const RECT & lpRect, UINT nFormat)
+   bool graphics::draw_text(const char * lpszString, strsize nCount, const RECT & lpRect, UINT nFormat)
    {
 
       if (nCount < 0)
@@ -4312,7 +4311,8 @@ namespace draw2d_direct2d
 
    }
 
-   int graphics::draw_text(const string & str,const RECT & lpRect,UINT nFormat)
+
+   bool graphics::draw_text(const string & str,const RECT & lpRect,UINT nFormat)
    {
 
       if(str.is_empty())

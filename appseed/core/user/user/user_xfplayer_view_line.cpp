@@ -1521,7 +1521,7 @@ void xfplayer_view_line::EmbossedTextOut(::draw2d::graphics * pgraphics, ::draw2
 
       pt.y = (LONG) (iTop - 1 - (m_font->m_dFontSize > 8 ? 32 / m_font->m_dFontSize : 0));
 
-      Application.imaging().color_blend(pgraphics, pt, m_dibMain->m_size, m_dibMain->get_graphics(), point(iLeft, 0), dBlend);
+      Application.imaging().color_blend(pgraphics, pt, m_dibMain->m_size, m_dibMain->get_graphics(), point(0, 0), dBlend);
 
       if (m_bColonPrefix)
       {

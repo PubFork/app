@@ -127,63 +127,63 @@
 //       typedef std::streamoff 	off_type;
 //       typedef streampos 	pos_type;
 //       typedef mbstate_t 	state_type;
-//       
-//       static void 
+//
+//       static void
 //       assign(char_type& __c1, const char_type& __c2)
 //       { __c1 = __c2; }
-// 
-//       static bool 
+//
+//       static bool
 //       eq(const char_type& __c1, const char_type& __c2)
 //       { return __c1 == __c2; }
-// 
-//       static bool 
+//
+//       static bool
 //       lt(const char_type& __c1, const char_type& __c2)
 //       { return __c1 < __c2; }
-// 
-//       static int 
+//
+//       static int
 //       compare(const char_type* __s1, const char_type* __s2, size_t __n)
 //       { return wmemcmp(__s1, __s2, __n); }
-// 
+//
 //       static size_t
 //       length(const char_type* __s)
 //       { return wcslen(__s); }
-// 
-//       static const char_type* 
+//
+//       static const char_type*
 //       find(const char_type* __s, size_t __n, const char_type& __a)
 //       { return wmemchr(__s, __a, __n); }
-// 
-//       static char_type* 
+//
+//       static char_type*
 //       move(char_type* __s1, const char_type* __s2, int_type __n)
 //       { return wmemmove(__s1, __s2, __n); }
-// 
-//       static char_type* 
+//
+//       static char_type*
 //       copy(char_type* __s1, const char_type* __s2, size_t __n)
 //       { return wmemcpy(__s1, __s2, __n); }
-// 
-//       static char_type* 
+//
+//       static char_type*
 //       assign(char_type* __s, size_t __n, char_type __a)
 //       { return wmemset(__s, __a, __n); }
-// 
-//       static char_type 
+//
+//       static char_type
 //       to_char_type(const int_type& __c) { return char_type(__c); }
-// 
-//       static int_type 
+//
+//       static int_type
 //       to_int_type(const char_type& __c) { return int_type(__c); }
-// 
-//       static bool 
+//
+//       static bool
 //       eq_int_type(const int_type& __c1, const int_type& __c2)
 //       { return __c1 == __c2; }
-// 
-//       static state_type 
+//
+//       static state_type
 //       _S_get_state(const pos_type& __pos) { return __pos.state(); }
-// 
-//       static int_type 
+//
+//       static int_type
 //       eof() { return static_cast<int_type>(WEOF); }
-// 
-//       static int_type 
+//
+//       static int_type
 //       _S_eos() { return char_type(); }
-// 
-//       static int_type 
+//
+//       static int_type
 //       not_eof(const int_type& __c)
 //       { return eq_int_type(__c, eof()) ? 0 : __c; }
 //   };
@@ -206,8 +206,8 @@
 
 namespace dami
 {
-   
-   typedef string ID3String;
+
+   typedef memstring ID3String;
    typedef bstring BString;
    typedef wstring WString;
 

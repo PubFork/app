@@ -3912,7 +3912,7 @@ bool imaging::color_blend(::draw2d::graphics * pgraphics,point pt,size size,::dr
    if(dBlend >= 1.0)
    {
 
-      return pgraphics->BitBlt(pt.x,pt.y,size.cx,size.cy,pdcColorAlpha,0,0,SRCCOPY) != FALSE;
+      return pgraphics->BitBlt(pt.x,pt.y,size.cx,size.cy,pdcColorAlpha,ptAlpha.x,ptAlpha.y,SRCCOPY) != FALSE;
 
    }
    else
