@@ -212,7 +212,6 @@ namespace user
       {
       public:
 
-         index *                 m_piLink;
          array < item_range >    m_itemrangea;
 
 

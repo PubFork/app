@@ -2320,16 +2320,7 @@ namespace user
 
    bool mesh::range::has_item(index iItem) const
    {
-      try
-      {
-         if (!is_ptr_null(m_piLink, 4096))
-         {
-            return *m_piLink == iItem;
-         }
-      }
-      catch (...)
-      {
-      }
+
       for(index i = 0; i < m_itemrangea.get_size(); i++)
       {
          const item_range & itemrange = m_itemrangea[i];
@@ -5541,15 +5532,12 @@ namespace user
    mesh::range::range()
    {
 
-      m_piLink = NULL;
-
    }
 
 
    mesh::range::range(const range & range)
    {
 
-      m_piLink = NULL;
       m_itemrangea = range.m_itemrangea;
 
    }
