@@ -11,31 +11,38 @@ namespace str
 
 } // namespace str
 
-inline int trailingBytesForUTF8(int i)
+inline int trailingBytesForUTF8(char ch)
 {
-   if (i <= 0)
+
+   if(ch == 0)
+   {
       return -1;
-   else if (i >= 1 && i <= 191)
+   }
+   else if (ch >= 1 && ch <= 127)
    {
       return 0;
    }
-   else if (i >= 192 && i <= 223)
+   else if (ch >= -128 && ch <= -65)
+   {
+      return 0;
+   }
+   else if (ch >= -64 && ch <=-33)
    {
       return 1;
    }
-   else if (i >= 224 && i <= 239)
+   else if (ch >= -32 && ch <= -17)
    {
       return 2;
    }
-   else if (i >= 240 && i <= 247)
+   else if (ch >= -16 && ch <= -9)
    {
       return 3;
    }
-   else if (i >= 248 && i <= 251)
+   else if (ch >= -8 && ch <= -5)
    {
       return 4;
    }
-   else if (i >= 252 && i <= 255)
+   else if (ch >= -4 && ch <= -1)
    {
       return 5;
    }

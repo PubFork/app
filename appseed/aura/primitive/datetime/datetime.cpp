@@ -1,7 +1,7 @@
 #include "framework.h"
 //#include <time.h>
 
-#ifdef RASPBIAN
+#ifndef WINDOWS
 
 #include <sys/time.h>
 

@@ -1537,7 +1537,10 @@
 		<Unit filename="user/user/user_scroll_info.h" />
 		<Unit filename="user/user/user_style.h" />
 		<Unit filename="user/user/user_style_base.h" />
+		<Unit filename="user/user/user_style_composite.cpp" />
 		<Unit filename="user/user/user_style_composite.h" />
+		<Unit filename="user/user/user_style_coord.cpp" />
+		<Unit filename="user/user/user_style_rect.cpp" />
 		<Unit filename="user/user/user_tooltip.h" />
 		<Unit filename="user/user/user_validate.h" />
 		<Unit filename="user/user/user_window_map.h" />

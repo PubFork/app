@@ -25,7 +25,7 @@ namespace core
 }
 
 
-inline int trailingBytesForUTF8(int i);
+inline int trailingBytesForUTF8(char ch);
 
 #ifdef APPLEOS
 #undef err_none

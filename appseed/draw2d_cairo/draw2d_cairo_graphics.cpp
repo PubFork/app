@@ -4398,7 +4398,7 @@ namespace draw2d_cairo
    }
 
 
-   int32_t graphics::draw_text(const char * lpszString, strsize nCount, const RECT & lpRect, UINT nFormat)
+   bool graphics::draw_text(const char * lpszString, strsize nCount, const RECT & lpRect, UINT nFormat)
    {
 
       return draw_text(string(lpszString, nCount), lpRect, nFormat);
@@ -4409,7 +4409,7 @@ namespace draw2d_cairo
 #if defined(USE_PANGO)
 
 
-   int32_t graphics::draw_text(const string & strParam, const RECT & rect, UINT nFormat)
+   bool graphics::draw_text(const string & strParam, const RECT & rect, UINT nFormat)
    {
 
       cairo_keep keep(m_pdc);
@@ -4426,7 +4426,7 @@ namespace draw2d_cairo
    }
 
 
-   int32_t graphics::internal_draw_text(const char * lpszString, strsize nCount, const RECTD & rectd, UINT nFormat)
+   bool graphics::internal_draw_text(const char * lpszString, strsize nCount, const RECTD & rectd, UINT nFormat)
    {
 
       return internal_draw_text_pango(lpszString, nCount, rectd, nFormat, &pango_cairo_show_layout);
@@ -4434,7 +4434,7 @@ namespace draw2d_cairo
    }
 
 
-   int32_t graphics::internal_draw_text_pango(const char * lpszString, strsize nCount, const RECTD & rectd, UINT nFormat, PFN_PANGO_TEXT pfnPango)
+   bool graphics::internal_draw_text_pango(const char * lpszString, strsize nCount, const RECTD & rectd, UINT nFormat, PFN_PANGO_TEXT pfnPango)
    {
 
       PangoLayout * playout;                            // layout for a paragraph of text
@@ -4464,7 +4464,7 @@ namespace draw2d_cairo
 
 #else
 
-   int32_t graphics::draw_text(const string & strParam, const RECT & lpRect, UINT nFormat)
+   bool graphics::draw_text(const string & strParam, const RECT & lpRect, UINT nFormat)
    {
 
       return internal_draw_text(strParam, strParam.get_length(), lpRect, nFormat, &cairo_show_text);
@@ -4472,7 +4472,7 @@ namespace draw2d_cairo
    }
 
 
-   int32_t graphics::internal_draw_text(const char * lpszString, strsize nCount, const RECT & lpRect, UINT nFormat, PFN_CAIRO_TEXT ftext)
+   bool graphics::internal_draw_text(const char * lpszString, strsize nCount, const RECT & lpRect, UINT nFormat, PFN_CAIRO_TEXT ftext)
    {
 
 
@@ -4619,7 +4619,7 @@ namespace draw2d_cairo
 
 #endif
 
-   int32_t graphics::draw_text_ex(LPTSTR lpszString, strsize nCount, const RECT & lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams)
+   bool graphics::draw_text_ex(LPTSTR lpszString, strsize nCount, const RECT & lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams)
    {
 
       ::exception::throw_not_implemented(get_app());
@@ -4629,7 +4629,7 @@ namespace draw2d_cairo
    }
 
 
-   int32_t graphics::draw_text_ex(const string & str, const RECT & lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams)
+   bool graphics::draw_text_ex(const string & str, const RECT & lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams)
    {
 
       ::exception::throw_not_implemented(get_app());

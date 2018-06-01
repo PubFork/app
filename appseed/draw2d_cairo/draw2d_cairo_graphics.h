@@ -323,17 +323,17 @@ namespace draw2d_cairo
       virtual size TabbedTextOut(int32_t x, int32_t y, const string & str, count nTabPositions, LPINT lpnTabStopPositions, int32_t nTabOrigin) override;
 
 #if defined(USE_PANGO)
-      //virtual int32_t internal_draw_text_cairo(const char * lpszString, strsize nCount, const RECT & lpRect, UINT nFormat, PFN_CAIRO_TEXT pfnText);
-      virtual int32_t internal_draw_text_pango(const char * lpszString, strsize nCount, const RECTD & lpRect, UINT nFormat, PFN_PANGO_TEXT pfnText);
-      virtual int32_t internal_draw_text(const char * lpszString, strsize nCount, const RECTD & lpRect, UINT nFormat);
+      //virtual bool internal_draw_text_cairo(const char * lpszString, strsize nCount, const RECT & lpRect, UINT nFormat, PFN_CAIRO_TEXT pfnText);
+      virtual bool internal_draw_text_pango(const char * lpszString, strsize nCount, const RECTD & lpRect, UINT nFormat, PFN_PANGO_TEXT pfnText);
+      virtual bool internal_draw_text(const char * lpszString, strsize nCount, const RECTD & lpRect, UINT nFormat);
 #else
-      virtual int32_t internal_draw_text(const char * lpszString, strsize nCount, const RECT & lpRect, UINT nFormat, PFN_CAIRO_TEXT ftext);
+      virtual bool internal_draw_text(const char * lpszString, strsize nCount, const RECT & lpRect, UINT nFormat, PFN_CAIRO_TEXT ftext);
 #endif
-      virtual int32_t draw_text(const char * lpszString, strsize nCount, const RECT & lpRect, UINT nFormat) override;
-      virtual int32_t draw_text(const string & str, const RECT & lpRect, UINT nFormat) override;
+      virtual bool draw_text(const char * lpszString, strsize nCount, const RECT & lpRect, UINT nFormat) override;
+      virtual bool draw_text(const string & str, const RECT & lpRect, UINT nFormat) override;
 
-      virtual int32_t draw_text_ex(LPTSTR lpszString, strsize nCount, const RECT & lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams);
-      virtual int32_t draw_text_ex(const string & str, const RECT & lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams) override;
+      virtual bool draw_text_ex(LPTSTR lpszString, strsize nCount, const RECT & lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams);
+      virtual bool draw_text_ex(const string & str, const RECT & lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams) override;
 
       sized GetTextExtent(const char * lpszString, strsize nCount, strsize iIndex) override;
       sized GetTextExtent(const char * lpszString, strsize nCount) override;

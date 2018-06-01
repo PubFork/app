@@ -27,7 +27,7 @@
     @ingroup unicode
 */
 
-inline int trailingBytesForUTF8(int i);
+inline int trailingBytesForUTF8(char ch);
 
 inline int ch_uni_len(int c)
 {

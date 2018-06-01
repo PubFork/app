@@ -1463,8 +1463,8 @@ break_mid_loop:
 
       }
 
-      template < typename ARRAY_TYPE, typename T,  typename PRED >
-      index pred_binary_search(const ARRAY_TYPE  & a, const typename T & t, PRED pred)
+      template < typename ARRAY_TYPE, typename T, typename PRED >
+      index pred_binary_search(const ARRAY_TYPE & a, const T & t, PRED pred)
       {
 
          index iLPos, iUPos, iMPos;

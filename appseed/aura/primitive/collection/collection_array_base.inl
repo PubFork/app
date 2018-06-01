@@ -142,8 +142,6 @@ template < class TYPE, class ARG_TYPE, class ALLOCATOR >
 void array_base < TYPE, ARG_TYPE, ALLOCATOR >::destroy()
 {
 
-   ASSERT_VALID(this);
-
    if(m_pData != NULL)
    {
 
@@ -163,8 +161,6 @@ void array_base < TYPE, ARG_TYPE, ALLOCATOR >::destroy()
 template < class TYPE, class ARG_TYPE, class ALLOCATOR >
 index array_base < TYPE, ARG_TYPE, ALLOCATOR >::insert_at(index nIndex,const TYPE & newElement,::count nCount /*=1*/)
 {
-
-   ASSERT_VALID(this);
 
    ASSERT(nIndex >= 0);    // will expand to meet need
 
@@ -221,8 +217,6 @@ template < class TYPE, class ARG_TYPE, class ALLOCATOR >
 ::count array_base < TYPE, ARG_TYPE, ALLOCATOR >::append(const array_base < TYPE, ARG_TYPE, ALLOCATOR > & src)
 {
 
-   ASSERT_VALID(this);
-
    ::count nOldSize = m_nSize;
 
    ::count nSrcSize = src.m_nSize;   // to enable to append to itself
@@ -240,10 +234,12 @@ template < class TYPE, class ARG_TYPE, class ALLOCATOR >
 void array_base < TYPE, ARG_TYPE, ALLOCATOR >::copy(const array_base < TYPE, ARG_TYPE, ALLOCATOR > & src)
 {
 
-   ASSERT_VALID(this);
-
    if(this == &src)
+   {
+
       return;
+
+   }
 
    allocate(src.m_nSize);
 
@@ -542,8 +538,6 @@ template < class TYPE, class ARG_TYPE, class ALLOCATOR >
 {
 
    ::count countOld = get_count();
-
-   ASSERT_VALID(this);
 
    ASSERT(nNewSize >= 0);
 
