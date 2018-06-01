@@ -451,7 +451,9 @@ public:
    // find routines
 
    // find the first occurrence of character 'ch', starting at index 'iStart'
-   strsize find(char ch, strsize start = 0, strsize count = -1) const RELEASENOTHROW;
+   strsize find(char ch) const RELEASENOTHROW;
+   strsize find(char ch, strsize start) const RELEASENOTHROW;
+   strsize find(char ch, strsize start, strsize count) const RELEASENOTHROW;
    strsize find_ci(char ch, strsize start = 0, strsize count = -1) const RELEASENOTHROW;
 
    strsize find_skip_or_length(char ch, strsize start = 0) const RELEASENOTHROW

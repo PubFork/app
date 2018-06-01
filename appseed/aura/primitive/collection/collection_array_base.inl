@@ -81,7 +81,6 @@ index array_base < TYPE, ARG_TYPE, ALLOCATOR >::remove_at(index nIndex,::count n
 template < class TYPE, class ARG_TYPE, class ALLOCATOR >
 void array_base < TYPE, ARG_TYPE, ALLOCATOR >::free_extra()
 {
-   ASSERT_VALID(this);
 
    if(m_nSize != m_nMaxSize)
    {
@@ -333,9 +332,7 @@ template < class TYPE, class ARG_TYPE, class ALLOCATOR >
 index array_base < TYPE, ARG_TYPE, ALLOCATOR >::insert_at(index nIndex,array_base < TYPE, ARG_TYPE, ALLOCATOR > * pNewArray)
 {
 
-   ASSERT_VALID(this);
    ASSERT(pNewArray != NULL);
-   ASSERT_VALID(pNewArray);
    ASSERT(nIndex >= 0);    // will expand to meet need
 
    ::count nCount = pNewArray->get_size();
@@ -396,7 +393,7 @@ template < class TYPE, class ARG_TYPE, class ALLOCATOR >
 ::count array_base < TYPE, ARG_TYPE, ALLOCATOR >::set_raw_size(::count nNewSize,::count nGrowBy)
 {
    ::count countOld = get_count();
-   ASSERT_VALID(this);
+
    ASSERT(nNewSize >= 0);
 
    if(nNewSize < 0)

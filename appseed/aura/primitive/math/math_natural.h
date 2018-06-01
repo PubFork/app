@@ -129,3 +129,25 @@ t  min_non_neg(const t & t1,const t & t2)
       return t2;
    }
 }
+
+
+template < typename t >
+t min_non_null(const t & t1, const t & t2)
+{
+   if (t1 == (t) 0)
+   {
+      return t2;
+   }
+   else if (t2 == (t) 0)
+   {
+      return t1;
+   }
+   else if (t1 < t2)
+   {
+      return t1;
+   }
+   else
+   {
+      return t2;
+   }
+}

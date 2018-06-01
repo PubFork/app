@@ -11,22 +11,20 @@ namespace str
 
 } // namespace str
 
-inline int trailingBytesForUTF8(char ch)
-{
+CLASS_DECL_AURA extern const char g_ptrailingBytesForUTF8[256];
 
-   if(ch == 0)
-   {
-      return -1;
-   }
-   else if (ch >= 1 && ch <= 127)
-   {
-      return 0;
-   }
-   else if (ch >= -128 && ch <= -65)
-   {
-      return 0;
-   }
-   else if (ch >= -64 && ch <=-33)
+#define GOOD_AT_BRANCHING 1
+#ifdef WINDOWS
+#define STRONG_INLINE __forceinline
+#else
+#define STRONG_INLINE inline
+#endif
+
+#if GOOD_AT_BRANCHING
+
+inline int trailingBytesForUTF8_2(char ch)
+{
+   if (ch >= -64 && ch <= -33)
    {
       return 1;
    }
@@ -50,14 +48,24 @@ inline int trailingBytesForUTF8(char ch)
    {
       return -1;
    }
-   //   (const char)  -1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-   //   0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-   //   0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-   //   0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-   //   0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-   //   0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-   //   1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-   //   2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 3,3,3,3,3,3,3,3,4,4,4,4,5,5,5,5
-   //};
 }
+// based on the fact that many strings are just ASCII single char
+STRONG_INLINE int trailingBytesForUTF8(char ch)
+{
+   if ((byte)ch <= 192)
+   {
+      return ch == 0 ? -1 : 0;
+   }
+   else
+   {
+      return trailingBytesForUTF8_2(ch);
+   }
+}
+#else
+inline int trailingBytesForUTF8(char ch)
+{
+   return g_ptrailingBytesForUTF8[(byte)ch];
+}
+#endif
+
 

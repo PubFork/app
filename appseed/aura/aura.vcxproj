@@ -258,6 +258,7 @@
       </IgnoreSpecificDefaultLibraries>
       <SubSystem>Windows</SubSystem>
       <ShowProgress>NotSet</ShowProgress>
+      <Profile>true</Profile>
     </Link>
     <PreBuildEvent>
       <Command>
@@ -492,6 +493,7 @@
       </EntryPointSymbol>
       <SubSystem>Windows</SubSystem>
       <MapFileName>$(TargetDir)$(TargetName).map</MapFileName>
+      <Profile>true</Profile>
     </Link>
     <PreBuildEvent>
       <Command>

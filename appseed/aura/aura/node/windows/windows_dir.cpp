@@ -679,8 +679,9 @@ namespace windows
 
    bool dir::name_is(const ::file::path & str, ::aura::application * papp)
    {
-      //output_debug_string(str);
+
       strsize iLast = str.get_length() - 1;
+
       while(iLast >= 0)
       {
          if(str.m_pszData[iLast] != '\\' && str.m_pszData[iLast] != '/' && str.m_pszData[iLast] != ':')
@@ -710,64 +711,65 @@ namespace windows
          return true; // assume empty string is root_ones directory
       }
 
-
       bool bIsDir;
-
 
       uint32_t uiLastError;
 
       if(m_isdirmap.lookup(str, bIsDir, uiLastError, (int32_t) iLast))
       {
+
          if(!bIsDir)
          {
-            ::set_last_error(uiLastError);
-         }
-         return bIsDir;
-      }
 
+            ::set_last_error(uiLastError);
+
+         }
+
+         return bIsDir;
+
+      }
 
       if(::get_thread() != NULL && ::get_thread()->m_bZipIsDir && iLast >= 3 && !strnicmp_dup(&((const char *)str)[iLast - 3],".zip",4))
       {
+
          m_isdirmap.set(str.Left(iLast + 1), true, 0);
+
          return true;
+
       }
-
-
-
 
       wstring wstrPath;
 
-      //strsize iLen = ::str::international::utf8_to_unicode_count(str, iLast + 1);
-
-      //wstrPath.alloc(iLen + 32);
-
       wstrPath = ::str::international::utf8_to_unicode(str, iLast + 1);
-
-      //output_debug_string(wstrPath);
 
       if(wstrPath.get_length() >= MAX_PATH)
       {
+
          if(::str::begins(wstrPath, L"\\\\"))
          {
+
             ::str::begin(wstrPath, L"\\\\?\\UNC");
+
          }
          else
          {
+
             ::str::begin(wstrPath, L"\\\\?\\");
+
          }
+
       }
+
       DWORD dwAttrib;
+
       dwAttrib = GetFileAttributesW(wstrPath);
-      /*if(dwAttrib == INVALID_FILE_ATTRIBUTES)
-      {
-         dwAttrib = GetFileAttributes(strPath);
-      }*/
 
       bIsDir = (dwAttrib != INVALID_FILE_ATTRIBUTES) && (dwAttrib & FILE_ATTRIBUTE_DIRECTORY);
 
       m_isdirmap.set(str.Left(iLast + 1), bIsDir, bIsDir ? 0 : ::get_last_error());
 
       return bIsDir;
+
    }
 
 

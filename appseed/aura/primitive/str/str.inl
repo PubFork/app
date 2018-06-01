@@ -1175,3 +1175,24 @@ inline bool string::equals_ci(const char * psz) const
    return compare_ci(psz) == 0;
 
 }
+
+// find the first occurrence of character 'ch', starting at strsize 'iStart'
+inline strsize string::find(char ch) const RELEASENOTHROW
+{
+
+   const char * psz = strchr(m_pszData, ch);
+
+   return psz == NULL ? npos : psz - m_pszData;
+
+}
+
+
+// find the first occurrence of character 'ch', starting at strsize 'iStart'
+inline strsize string::find(char ch, strsize iStart) const RELEASENOTHROW
+{
+
+   const char * psz = strchr(&m_pszData[iStart], ch);
+
+   return psz == NULL ? npos : psz - m_pszData;
+
+}

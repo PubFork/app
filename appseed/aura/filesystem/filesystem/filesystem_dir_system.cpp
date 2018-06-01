@@ -772,13 +772,22 @@ namespace file
 
       system::is_dir_map::is_dir_map()
       {
+
       }
 
 
-      bool system::is_dir_map::lookup(const ::file::path & path,bool &bIsDir,uint32_t & dwLastError)
+      bool system::is_dir_map::lookup(const ::file::path & path, bool &bIsDir, u32 & dwLastError)
       {
 
-         if(path.get_length() <= 0)
+         return lookup(path, bIsDir, dwLastError, path.length());
+
+      }
+
+
+      bool system::is_dir_map::lookup(const ::file::path & path, bool &bIsDir, u32 &dwLastError, i32 iLastChar)
+      {
+
+         if (path.get_length() <= 0)
          {
 
             bIsDir = false;
@@ -787,7 +796,35 @@ namespace file
 
          }
 
+         if (iLastChar < 0)
+         {
+
+            bIsDir = true; // root_ones dir
+
+            return true;
+
+         }
+
          cslock sl(&m_cs);
+
+         if (path.length() + 1 < 2048)
+         {
+
+            return lookup_small(path, bIsDir, dwLastError, iLastChar);
+
+         }
+         else
+         {
+
+            return lookup_dynamic(path, bIsDir, dwLastError, iLastChar);
+
+         }
+
+      }
+
+
+      bool system::is_dir_map::lookup_dynamic(const ::file::path & path, bool &bIsDir, u32 & dwLastError, i32 iLastChar)
+      {
 
          is_dir * pdir = this;
 
@@ -797,7 +834,7 @@ namespace file
 
          index iFind3 = 0;
 
-         while(iFind3 >= 0)
+         while (iFind3 >= 0 && iFind3 < iLastChar)
          {
 
             index iFind1 = path.find('/', iFind0);
@@ -839,7 +876,7 @@ namespace file
 
          }
 
-         if(::get_fast_tick_count() > pdir->m_dwLastCheck + m_dwTimeOut)
+         if (::get_fast_tick_count() > pdir->m_dwLastCheck + m_dwTimeOut)
          {
 
             return false;
@@ -862,43 +899,43 @@ namespace file
       }
 
 
-      bool system::is_dir_map::lookup(const ::file::path & path,bool &bIsDir,uint32_t &dwLastError,int32_t iLast)
+      bool system::is_dir_map::lookup_small(const ::file::path & path,bool &bIsDir,u32 &dwLastError, i32 iLastChar)
       {
 
-         if(iLast < 0)
-         {
-            bIsDir = true; // root_ones dir
-            return true;
-         }
+         const char * pszEnd = path.c_str() + iLastChar;
 
-         cslock sl(&m_cs);
+         char sz[2048];
 
-         string strPath(path);
+         is_dir_work find;
+
+         find.m_psz = sz;
+
+         strcpy(sz, path);
 
          is_dir * pdir = this;
 
-         is_dir find;
+         char * psz3 = find.m_psz;
 
-         index iFind0 = 0;
-         index iFind3 = 0;
-         while (iFind3 >= 0)
+         while (psz3 != NULL && psz3 < pszEnd)
          {
 
-            index iFind1 = strPath.find('/', iFind0);
-            index iFind2 = strPath.find('\\', iFind0);
-            iFind3 = min_non_neg(iFind1, iFind2);
-            if (iFind3 < 0)
+            char * psz1 = strchr(find.m_psz, '/');
+
+            char * psz2 = strchr(find.m_psz, '\\');
+
+            psz3 = min_non_null(psz1, psz2);
+
+            if (psz3 != NULL)
             {
-               find.m_str = strPath.Mid(iFind0);
+
+               *psz3 = '\0';
+
             }
-            else
-            {
-               find.m_str = strPath.Mid(iFind0, iFind3 - iFind0);
-            }
+
             index iFind = pdir->pred_binary_search(&find, [&](auto & t1, auto & t2)
             {
 
-               return t1->m_str.compare_ci(t2->m_str) < 0;
+               return stricmp(t1->c_str(), t2->c_str()) < 0;
 
             });
 
@@ -910,9 +947,96 @@ namespace file
             }
 
             pdir = pdir->element_at(iFind);
-            iFind0 = iFind3 + 1;
+
+            find.m_psz = psz3 + 1;
+
+            if (psz1 == NULL)
+            {
+
+               goto lookup_backslash;
+
+            }
+            else if (psz2 == NULL)
+            {
+
+               goto lookup_slash;
+
+            }
+
          }
 
+         goto end;
+
+lookup_slash:
+
+         while (psz3 != NULL && psz3 < pszEnd)
+         {
+
+            psz3 = strchr(find.m_psz, '/');
+
+            if (psz3 != NULL)
+            {
+
+               *psz3 = '\0';
+
+            }
+
+            index iFind = pdir->pred_binary_search(&find, [&](auto & t1, auto & t2)
+            {
+
+               return stricmp(t1->c_str(), t2->c_str()) < 0;
+
+            });
+
+            if (iFind < 0)
+            {
+
+               return false;
+
+            }
+
+            pdir = pdir->element_at(iFind);
+
+            find.m_psz = psz3 + 1;
+
+         }
+
+         goto end;
+
+lookup_backslash:
+         while (psz3 != NULL && psz3 < pszEnd)
+         {
+
+            psz3 = strchr(find.m_psz, '\\');
+
+            if (psz3 != NULL)
+            {
+
+               *psz3 = '\0';
+
+            }
+
+            index iFind = pdir->pred_binary_search(&find, [&](auto & t1, auto & t2)
+            {
+
+               return stricmp(t1->c_str(), t2->c_str()) < 0;
+
+            });
+
+            if (iFind < 0)
+            {
+
+               return false;
+
+            }
+
+            pdir = pdir->element_at(iFind);
+
+            find.m_psz = psz3 + 1;
+
+         }
+
+end:
          if (::get_fast_tick_count() > pdir->m_dwLastCheck + m_dwTimeOut)
          {
 

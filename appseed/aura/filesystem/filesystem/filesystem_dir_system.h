@@ -20,7 +20,6 @@ namespace file
          ::zip::util *       m_pziputil;
 
 
-
          class CLASS_DECL_AURA is_dir :
             virtual public sspa(is_dir)
          {
@@ -30,6 +29,23 @@ namespace file
             uint32_t       m_dwLastCheck;
             uint32_t       m_dwError;
             string         m_str;
+            inline const char * c_str()
+            {
+               return m_str.c_str();
+            }
+
+         };
+
+         class CLASS_DECL_AURA is_dir_work
+         {
+         public:
+
+            char *   m_psz;
+
+            inline const char * c_str()
+            {
+               return m_psz;
+            }
 
          };
 
@@ -44,9 +60,10 @@ namespace file
 
             is_dir_map();
 
-
-            bool lookup(const ::file::path & path,bool &bIsDir,uint32_t & dwLastError);
-            bool lookup(const ::file::path & path,bool &bIsDir,uint32_t & dwLastError,int32_t iLast);
+            bool lookup(const ::file::path & path, bool &bIsDir, uint32_t & dwLastError);
+            bool lookup(const ::file::path & path, bool &bIsDir, uint32_t & dwLastError, i32 iLastChar);
+            bool lookup_dynamic(const ::file::path & path, bool &bIsDir, u32 & dwLastError, i32 iLastChar);
+            bool lookup_small(const ::file::path & path, bool &bIsDir,u32 & dwLastError,i32 iLastChar);
             void set(const ::file::path & path,bool bIsDir,uint32_t dwLastError);
 
 

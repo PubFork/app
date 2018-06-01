@@ -315,112 +315,6 @@ plex_heap_alloc::plex_heap_alloc(UINT nAllocSize, UINT nBlockSize)
 
 void Free_check_pointer_in_cpp(void * p);
 
-inline void * plex_heap_alloc_sync::Alloc()
-{
-
-   cslock sl(&m_protect);
-
-   if (m_pnodeFree == NULL)
-   {
-
-      NewBlock();
-
-   }
-
-   void * pnode = m_pnodeFree;
-
-#ifdef DEBUG
-
-   defer_check_plex_heap_alloc_sync_node_palace_guard(m_pnodeFree, m_nAllocSize);
-
-   pnode = ((byte*)pnode) + 16 + sizeof(node *) + 16;
-
-#endif
-
-   m_pnodeFree = m_pnodeFree->m_pnext;
-
-   memset(pnode, 0, m_nAllocSize);
-
-   return pnode;
-
-}
-
-
-void plex_heap_alloc_sync::Free(void * pParam)
-{
-
-   if (is_null(pParam))
-   {
-
-      return;
-
-   }
-
-#ifdef DEBUG
-
-   void * p = ((byte*)pParam) - (16 + sizeof(node *) + 16);
-
-   node * pnode = (node *)p;
-
-   defer_check_plex_heap_alloc_sync_node_palace_guard(pnode, m_nAllocSize);
-
-#else
-
-   node * pnode = (node *)pParam;
-
-#endif
-
-   cslock sl(&m_protect);
-
-#ifdef MEMDFREE // Free Debug - duplicate freeing ?
-
-   node * pnodeFree = m_pnodeFree;
-
-   while (pnodeFree != NULL)
-   {
-
-      if (pnode == pnodeFree) // dbgsnp - debug snippet
-      {
-
-         // already in free list
-
-         if (is_debugger_attached())
-         {
-
-            debug_break();
-
-         }
-
-         return;
-
-      }
-
-      pnodeFree = pnodeFree->m_pnext;
-
-   }
-
-#endif
-
-#if STORE_LAST_BLOCK
-
-   if (m_pnodeLastBlock != NULL)
-   {
-
-      system_heap_free(m_pnodeLastBlock);
-
-   }
-
-   m_pnodeLastBlock = (node *)system_heap_alloc(m_nAllocSize + 32);
-
-   memcpy(m_pnodeLastBlock, pnode, m_nAllocSize + 32);
-
-#endif
-
-   pnode->m_pnext = m_pnodeFree;
-
-   m_pnodeFree = pnode;
-
-}
 
 
 plex_heap_alloc::~plex_heap_alloc()
@@ -466,11 +360,32 @@ void plex_heap_alloc::pre_finalize()
 }
 
 
-extern plex_heap_alloc_array * g_pheap;
+//extern plex_heap_alloc_array * g_pheap;
+//
+//u64 b[64];
+//
+//void init_log2()
+//{
+//   for (int i = 0; i<64; ++i)
+//      b[u64(c*((2 << i) - 1)) >> s] = i;
+//   return;
+//}
+//u64 log2(u64 v)
+//{//first round down to one less than a power of 2
+//   for (int i = 1; i<64; i <<= 1) //unroll for speed
+//      v |= v >> i;
+//   return b[u64(v*c) >> s];
+//}
+
+//
+
+
+
+
 
 plex_heap_alloc_array::plex_heap_alloc_array()
 {
-
+   //init_log2();
    if(g_pheap == NULL)
    {
 
@@ -865,69 +780,3 @@ void plex_heap_alloc_array::_free(void * p,size_t size)
 }
 
 
-void * plex_heap_alloc::Alloc()
-{
-
-   // veripseudo-random generator, don't need to be
-   // perfectly sequential or perfectly distributed,
-   // just fair well distributed
-   // but very important is extremely fast
-
-   return element_at((m_uiAlloc++) % m_uiShareCount)->Alloc();
-
-}
-
-void plex_heap_alloc::Free(void * p)
-{
-
-   // veripseudo-random generator, don't need to be
-   // perfectly sequential or perfectly distributed,
-   // just fair well distributed
-   // but very important is extremely fast
-
-   element_at((m_uiFree++) % m_uiShareCount)->Free(p);
-
-}
-
-
-inline plex_heap_alloc * plex_heap_alloc_array::find(size_t nAllocSize)
-{
-
-   for (index i = 0; i < m_nSize; i++)
-   {
-
-      if (this->m_pData[i]->m_uiAllocSize >= nAllocSize)
-      {
-
-         return this->m_pData[i];
-
-      }
-
-   }
-
-   return NULL;
-
-}
-
-
-
-
-void * plex_heap_alloc_array::_alloc(size_t size)
-{
-
-   plex_heap_alloc * palloc = find(size);
-
-   if (palloc != NULL)
-   {
-
-      return palloc->Alloc();
-
-   }
-   else
-   {
-
-      return ::system_heap_alloc(size);
-
-   }
-
-}

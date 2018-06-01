@@ -44,6 +44,30 @@ public:
 };
 
 
+inline void * plex_heap_alloc::Alloc()
+{
+
+   // veripseudo-random generator, don't need to be
+   // perfectly sequential or perfectly distributed,
+   // just fair well distributed
+   // but very important is extremely fast
+
+   return element_at((m_uiAlloc++) % m_uiShareCount)->Alloc();
+
+}
+
+inline void plex_heap_alloc::Free(void * p)
+{
+
+   // veripseudo-random generator, don't need to be
+   // perfectly sequential or perfectly distributed,
+   // just fair well distributed
+   // but very important is extremely fast
+
+   element_at((m_uiFree++) % m_uiShareCount)->Free(p);
+
+}
+
 
 
 
@@ -81,13 +105,13 @@ public:
 
 
 
-   void * _alloc(size_t nAllocSize);
+   //void * _alloc(size_t nAllocSize);
    void * _realloc(void * p, size_t nAllocSize, size_t nOldAllocSize, int align);
    void _free(void * p, size_t nAllocSize);
 
    void pre_finalize();
 
-   plex_heap_alloc * find(size_t nAllocSize);
+   //plex_heap_alloc * find(size_t nAllocSize);
 
    void * alloc_dbg(size_t nAllocSize, int32_t nBlockUse, const char * szFileName, int32_t iLine);
    void * realloc_dbg(void * p, size_t nAllocSize, size_t nOldAllocSize, int align, int32_t nBlockUse, const char * szFileName, int32_t iLine);
@@ -102,6 +126,52 @@ public:
    {
       system_heap_free(p);
    }
+
+
+   inline plex_heap_alloc * find(size_t nAllocSize)
+   {
+      index i = u32_log2(nAllocSize) - 4;
+      if (i <= 0) return m_pData[0];
+      return i >= 20 ? NULL : m_pData[i];
+      //          for (index i = 0; i < m_nSize; i++)
+      //{
+
+      //   if (this->m_pData[i]->m_uiAllocSize >= nAllocSize)
+      //   {
+
+      //      return this->m_pData[i];
+
+      //   }
+
+      //}
+
+      //   return NULL;
+
+   }
+
+
+
+
+   inline void * plex_heap_alloc_array::_alloc(size_t size)
+   {
+
+      plex_heap_alloc * palloc = find(size);
+
+      if (palloc != NULL)
+      {
+
+         return palloc->Alloc();
+
+      }
+      else
+      {
+
+         return ::system_heap_alloc(size);
+
+      }
+
+   }
+
 
 };
 
