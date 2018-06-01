@@ -1565,9 +1565,10 @@ namespace user
                || pt.y < 0
                || pt.x > rectClient.bottom)
          {
-            return false;
-         }
 
+            return false;
+
+         }
 
       }
 
