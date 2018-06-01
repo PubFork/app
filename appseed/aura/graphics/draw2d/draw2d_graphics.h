@@ -47,7 +47,6 @@ namespace draw2d
 
 
 
-
       void draw_ca2(int x,int y,int z,COLORREF crBk,COLORREF cr);
       void draw_ca2_with_border(int x,int y,int z,int b,COLORREF crBk,COLORREF cr,COLORREF crOut);
       void draw_ca2_border2(int x,int y,int z,int bOut,int bIn,COLORREF crBk,COLORREF cr,COLORREF crBorderOut,COLORREF crIn);

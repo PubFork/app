@@ -215,6 +215,8 @@ namespace visual
 
       }
 
+      m_p->on_load_image();
+
       m_eload = load_ok;
 
       return true;

@@ -680,6 +680,8 @@ namespace visual
 //}
 
 
+
+
 bool dib_from_wicbitmapsource(::draw2d::dib * pdib, IWICBitmapSource * piConverter, IWICImagingFactory * piFactory)
 {
 
@@ -823,6 +825,41 @@ bool imaging::_load_image(::draw2d::dib * pdib, ::file::file * pfile)
    hr = piDecoder->GetFrame(0, &piBitmapFrame);
 
    if (hr != S_OK) return false;
+
+   {
+
+
+      HRESULT hrExif = hr;
+      // Not shown: image decoding
+      comptr<IWICMetadataQueryReader>pQueryReader;
+      comptr<IWICMetadataQueryReader>pIFDReader = NULL;
+
+      // Get the query reader.
+      if (SUCCEEDED(hrExif))
+      {
+         hrExif = piDecoder->GetMetadataQueryReader(&pQueryReader);
+      }
+
+      if (SUCCEEDED(hrExif))
+      {
+         PROPVARIANT value;
+         PropVariantClear(&value);
+         // Get the nested IFD reader.
+         hrExif = pQueryReader->GetMetadataByName(L"/app1/ifd/{ushort=274}", &value);
+         if (FAILED(hrExif))
+         {
+            hrExif = pQueryReader->GetMetadataByName(L"/ifd/{ushort=274}", &value);
+         }
+         if (SUCCEEDED(hrExif))
+         {
+            dib->oprop("exif_orientation") = value.uiVal;
+         }
+         PropVariantClear(&value); // Clear value for new query.
+
+      }
+
+   }
+
 
    // Convert the image format to 32bppPBGRA
    // (DXGI_FORMAT_B8G8R8A8_UNORM + D2D1_ALPHA_MODE_PREMULTIPLIED).

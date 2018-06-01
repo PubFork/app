@@ -2698,6 +2698,37 @@ restart:
 
    }
 
+   void dib::flipx(::draw2d::dib * pdib)
+   {
+
+      flip_horizontal(pdib);
+
+   }
+
+   void dib::flipy(::draw2d::dib * pdib)
+   {
+
+      flip_vertical(pdib);
+
+   }
+
+   dib & dib::flipx()
+   {
+
+      flipx(clone());
+
+      return *this;
+
+   }
+
+   dib & dib::flipy()
+   {
+
+      flipy(clone());
+
+      return *this;
+
+   }
 
    void dib::ToAlpha(i32 i)
    {
@@ -5459,6 +5490,178 @@ restart:
    }
 
 
+   void dib::rotate90(dib * pdib)
+   {
+
+      create(pdib->m_size.cy, pdib->m_size.cx);
+
+      i32 cx = pdib->m_size.cx;
+
+      i32 cy = pdib->m_size.cy;
+
+      for (i32 i = 0; i < cx; i++)
+      {
+
+         for (i32 j = 0; j < cy; j++)
+         {
+
+            m_pcolorref[j * m_iScan + i] = pdib->m_pcolorref[i * pdib->m_iScan + j];
+
+         }
+
+      }
+
+   }
+
+
+   void dib::rotate180(dib * pdib)
+   {
+
+      create(pdib->m_size.cx, pdib->m_size.cy);
+
+      i32 cx = m_size.cx;
+
+      i32 cy = m_size.cy;
+
+      for (i32 i = 0; i < cy; i++)
+      {
+
+         for (i32 j = 0; j < cx; j++)
+         {
+
+            m_pcolorref[(cy - i - 1)*m_iScan + (cx - j - 1)] = pdib->m_pcolorref[i * pdib->m_iScan + j];
+
+         }
+
+      }
+
+   }
+
+
+   void dib::rotate270(dib * pdib)
+   {
+
+      create(pdib->m_size.cy, pdib->m_size.cx);
+
+      i32 cx = pdib->m_size.cx;
+
+      i32 cy = pdib->m_size.cy;
+
+      for (i32 i = 0; i < cx; i++)
+      {
+
+         for (i32 j = 0; j < cy; j++)
+         {
+
+            m_pcolorref[(cy - j - 1) * m_iScan + i] = pdib->m_pcolorref[i * pdib->m_iScan + j];
+
+         }
+
+      }
+
+   }
+
+   void dib::rotate90()
+   {
+      rotate90(dynamic_cast < dib *> (clone()));
+   }
+
+   void dib::rotate180()
+   {
+      rotate180(dynamic_cast < dib *> (clone()));
+   }
+
+   void dib::rotate270()
+   {
+      rotate270(dynamic_cast < dib *> (clone()));
+   }
+
+   void dib::rotate90flipx(dib * pdib)
+   {
+
+      create(pdib->m_size.cy, pdib->m_size.cx);
+
+      i32 cx = pdib->m_size.cx;
+
+      i32 cy = pdib->m_size.cy;
+
+      for (i32 i = 0; i < cx; i++)
+      {
+
+         for (i32 j = 0; j < cy; j++)
+         {
+
+            m_pcolorref[j * m_iScan + i] = pdib->m_pcolorref[i * pdib->m_iScan + j];
+
+         }
+
+      }
+
+   }
+
+
+   void dib::rotate180flipx(dib * pdib)
+   {
+
+      create(pdib->m_size.cx, pdib->m_size.cy);
+
+      i32 cx = m_size.cx;
+
+      i32 cy = m_size.cy;
+
+      for (i32 i = 0; i < cy; i++)
+      {
+
+         for (i32 j = 0; j < cx; j++)
+         {
+
+            m_pcolorref[(cy - i - 1)*m_iScan + (cx - j - 1)] = pdib->m_pcolorref[i * pdib->m_iScan + j];
+
+         }
+
+      }
+
+   }
+
+
+   void dib::rotate270flipx(dib * pdib)
+   {
+
+      create(pdib->m_size.cy, pdib->m_size.cx);
+
+      i32 cx = pdib->m_size.cx;
+
+      i32 cy = pdib->m_size.cy;
+
+      for (i32 i = 0; i < cx; i++)
+      {
+
+         for (i32 j = 0; j < cy; j++)
+         {
+
+            m_pcolorref[(cy - j - 1) * m_iScan + i] = pdib->m_pcolorref[i * pdib->m_iScan + j];
+
+         }
+
+      }
+
+   }
+
+   void dib::rotate90flipx()
+   {
+      rotate90(dynamic_cast < dib *> (clone()));
+   }
+
+   void dib::rotate180flipx()
+   {
+      rotate180(dynamic_cast < dib *> (clone()));
+   }
+
+   void dib::rotate270flipx()
+   {
+      rotate270flipx(dynamic_cast < dib *> (clone()));
+   }
+
    /*i32 dib::cos(i32 i, i32 iAngle)
    {
    return (i32) (((_int64) i * CosN[iAngle]) >> 32);
@@ -8161,6 +8364,69 @@ error:
          dst += 4;
       }
 
+
+   }
+
+   void dib::on_load_image()
+   {
+
+      if (oprop("exif_orientation").i32() != 0)
+      {
+
+         on_exif_orientation();
+
+      }
+
+   }
+
+
+   void dib::on_exif_orientation()
+   {
+
+      e_rotate_flip erotateflip = exif_orientation_rotate_flip(oprop("exif_orientation").i32());
+
+      if (erotateflip == rotate_90_flip_none)
+      {
+
+         rotate90();
+
+      }
+      else if (erotateflip == rotate_180_flip_none)
+      {
+
+         rotate180();
+
+      }
+      else if (erotateflip == rotate_270_flip_none)
+      {
+
+         rotate270();
+
+      }
+      else if (rotate_none_flip_x == rotate_none_flip_x)
+      {
+
+         flipx();
+
+      }
+      else if (erotateflip == rotate_90_flip_x)
+      {
+
+         rotate90flipx();
+
+      }
+      else if (erotateflip == rotate_180_flip_x)
+      {
+
+         rotate180flipx();
+
+      }
+      else if (erotateflip == rotate_270_flip_x)
+      {
+
+         rotate270flipx();
+
+      }
 
    }
 

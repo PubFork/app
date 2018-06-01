@@ -24,6 +24,28 @@ enum e_stock_icon
 namespace draw2d
 {
 
+   enum e_rotate_flip
+   {
+      rotate_none_flip_none = 0,
+      rotate_90_flip_none = 1,
+      rotate_180_flip_none = 2,
+      rotate_270_flip_none = 3,
+
+      rotate_none_flip_x = 4,
+      rotate_90_flip_x = 5,
+      rotate_180_flip_x = 6,
+      rotate_270_flip_x = 7,
+
+      rotate_none_flip_y = rotate_180_flip_x,
+      rotate_90_flip_y = rotate_270_flip_x,
+      rotate_180_flip_y = rotate_none_flip_x,
+      rotate_270_flip_y = rotate_90_flip_x,
+
+      rotate_none_flip_xy = rotate_180_flip_none,
+      rotate_90_flip_xy = rotate_270_flip_none,
+      rotate_180_flip_xy = rotate_none_flip_none,
+      rotate_270_flip_xy = rotate_90_flip_none
+   };
    enum e_smooth_mode
    {
       smooth_mode_none,

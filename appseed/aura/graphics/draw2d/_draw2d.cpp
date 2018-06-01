@@ -4,6 +4,7 @@
 #include "draw2d_bitmap.cpp"
 #include "draw2d_brush.cpp"
 #include "draw2d_debug.cpp"
+#include "draw2d_draw2d.cpp"
 #include "draw2d_dib.cpp"
 #include "draw2d_dibmap.cpp"
 #include "draw2d_font.cpp"

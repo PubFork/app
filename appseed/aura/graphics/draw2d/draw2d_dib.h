@@ -93,6 +93,7 @@ namespace draw2d
       sp(::draw2d::dib) m_pnext;
 
 
+
       static float Cosines[360];
       static float Sines[360];
       static int64_t CosN[360]; // * 1 << 31
@@ -134,6 +135,8 @@ namespace draw2d
 
       virtual void create_helper_map();
 
+      virtual void on_load_image();
+      virtual void on_exif_orientation();
 
       virtual void construct(i32 cx, i32 cy);
 
@@ -181,6 +184,10 @@ namespace draw2d
 
       virtual bool flip_vertical(::draw2d::dib * pdib);
       virtual bool flip_horizontal(::draw2d::dib * pdib);
+      virtual void flipx(::draw2d::dib * pdib);
+      virtual void flipy(::draw2d::dib * pdib);
+      virtual dib & flipx();
+      virtual dib & flipy();
 
       virtual bool is_rgb_black();
       virtual void do_xor(dib * pdib);
@@ -203,6 +210,19 @@ namespace draw2d
       virtual void rotate(dib * pdib, double dAngle, double dScale);
       virtual bool rotate(dib * pdib, double dAngle);
       virtual void Rotate034(dib * pdib, double dAngle, double dScale);
+
+      virtual void rotate90(dib * pdib);
+      virtual void rotate180(dib * pdib);
+      virtual void rotate270(dib * pdib);
+      virtual void rotate90();
+      virtual void rotate180();
+      virtual void rotate270();
+      virtual void rotate90flipx(dib * pdib);
+      virtual void rotate180flipx(dib * pdib);
+      virtual void rotate270flipx(dib * pdib);
+      virtual void rotate90flipx();
+      virtual void rotate180flipx();
+      virtual void rotate270flipx();
 
 
       virtual void set_rgb(COLORREF cr);
