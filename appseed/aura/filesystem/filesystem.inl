@@ -5,7 +5,7 @@ namespace file
 {
 
 //   inline path::path(const var & var,e_path epath): path(var.get_file_path(),epath){}
-   inline path::path(const property & property,e_path epath, int iDir): path(property.get_value().get_file_path(),epath, iDir){}
+   inline path::path(const property & property,e_path epath, int iDir): path(property.get_value().get_file_path(),epath, iDir) {}
    inline path & path::operator = (const var & var) { return operator = (var.get_string()); }
    inline path & path::operator += (const var & var) { return operator += (var.get_string()); }
    inline path path::operator + (const var & var) const { return operator + (var.get_string()); }
@@ -21,7 +21,7 @@ namespace file
    inline string path::extension() const { return &m_pszData[find_skip_or_length('.', rfind(sep()) + 1)]; }
    inline string path::final_extension() const { return file_final_extension_dup(operator const char *()); }
    inline patha path::ascendants_path() const { patha patha; return ascendants_path(patha); }
-   inline patha path::ascendants_name() const { patha patha; return ascendants_name(patha); }
+   inline stringa path::ascendants_name() const { stringa patha; return ascendants_name(patha); }
 //   inline path path::folder() const { return ::dir::name(*this); }
    inline bool path::operator == (const var & var) const { return operator == (string(var)); }
    inline bool path::operator != (const var & var) const { return operator != (string(var)); }

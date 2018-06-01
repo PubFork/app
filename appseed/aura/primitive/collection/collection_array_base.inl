@@ -13,24 +13,18 @@ array_base < TYPE, ARG_TYPE, ALLOCATOR >::array_base()
 }
 
 
-template < class TYPE, class ARG_TYPE, class ALLOCATOR >
-array_base < TYPE, ARG_TYPE, ALLOCATOR >::array_base(::aura::application * papp):
-   object(papp)
-{
-
-   m_nGrowBy = 0;
-   m_pData = NULL;
-   m_nSize = 0;
-   m_nMaxSize = 0;
-
-}
 
 
 template < class TYPE, class ARG_TYPE, class ALLOCATOR >
 array_base < TYPE, ARG_TYPE, ALLOCATOR >::~array_base ()
 {
 
-   destroy();
+   if (m_pData != NULL)
+   {
+
+      destroy();
+
+   }
 
 }
 

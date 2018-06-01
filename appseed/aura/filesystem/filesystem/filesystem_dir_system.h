@@ -22,7 +22,7 @@ namespace file
 
 
          class CLASS_DECL_AURA is_dir :
-            virtual public spa(is_dir)
+            virtual public sspa(is_dir)
          {
          public:
 
@@ -39,10 +39,10 @@ namespace file
          {
          public:
 
-            mutex                m_mutex;
+            critical_section     m_cs;
             uint32_t             m_dwTimeOut;
 
-            is_dir_map(::aura::application * papp);
+            is_dir_map();
 
 
             bool lookup(const ::file::path & path,bool &bIsDir,uint32_t & dwLastError);
@@ -76,7 +76,9 @@ namespace file
 
          virtual bool  is(const ::file::path & lpcsz,::aura::application * papp);
 
-         virtual bool  is_or_definitively_not(bool & bIs, const ::file::path & lpcsz,::aura::application * papp);
+         virtual bool  is_impl(const ::file::path & lpcsz, ::aura::application * papp);
+
+         virtual bool  is_cached(bool & bIs, const ::file::path & lpcsz,::aura::application * papp);
 
          virtual bool  name_is(const ::file::path & lpcsz,::aura::application * papp);
 

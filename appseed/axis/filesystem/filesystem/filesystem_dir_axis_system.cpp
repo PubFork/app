@@ -450,18 +450,19 @@ namespace file
          //}
 
 
-         bool system::is_or_definitively_not(bool & bIs, const ::file::path & lpcszPath, ::aura::application * papp)
+         bool system::is_cached(bool & bIs, const ::file::path & lpcszPath, ::aura::application * papp)
          {
 
-            return false;
+            return ::file::dir::system::is_cached(bIs, lpcszPath, papp);
 
          }
 
 
-         bool system::is(const ::file::path & strPath, ::aura::application * papp)
+         bool system::is_impl(const ::file::path & strPath, ::aura::application * papp)
          {
 
-            return ::file::dir::system::system::is(strPath, papp);
+            return false;
+
          }
 
 

@@ -589,10 +589,10 @@ namespace windows
 
 
 
-   bool dir::is(const ::file::path & lpcszPath, ::aura::application * papp)
+   bool dir::is_impl(const ::file::path & lpcszPath, ::aura::application * papp)
    {
 
-      if(::file::dir::system::is(lpcszPath, papp))
+      if(::file::dir::system::is_impl(lpcszPath, papp))
          return true;
 
       string strPath(lpcszPath);

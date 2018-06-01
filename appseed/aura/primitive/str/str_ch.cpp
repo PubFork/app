@@ -10,7 +10,7 @@ namespace str
 
    int32_t utf8_char::parse(const char * psz)
    {
-      char chLen =  1 + trailingBytesForUTF8[(uchar) *psz];
+      char chLen =  1 + trailingBytesForUTF8(*psz);
       char ch = 0;
       for(; ch < chLen; ch++)
       {
@@ -30,7 +30,7 @@ namespace str
    namespace ch
    {
 
-       void * char_bidi_names_non_usage_warning();
+      void * char_bidi_names_non_usage_warning();
 
       int32_t ref_tables();
 
@@ -39,91 +39,100 @@ namespace str
          return sizeof(char_bidi_names);
       }
 
-      string to_lower_case(const char * pszUtf8Char){
+      string to_lower_case(const char * pszUtf8Char)
+      {
          int64_t ca = uni_index(pszUtf8Char);
          if(!is_legal_uni_index(ca))
             return "";
-        uint32_t c1 = CHAR_PROP(ca);
+         uint32_t c1 = CHAR_PROP(ca);
 #ifdef __GNUC__
-        if (CHAR_CATEGORY(c1) == CHAR_CATEGORY_Ll) return string(unichar(ca), 1);
-        if (CHAR_CATEGORY(c1) == CHAR_CATEGORY_Lt) return string(unichar(ca+1), 1);
-        return string(unichar(ca - (c1>>16)), 1);
+         if (CHAR_CATEGORY(c1) == CHAR_CATEGORY_Ll) return string(unichar(ca), 1);
+         if (CHAR_CATEGORY(c1) == CHAR_CATEGORY_Lt) return string(unichar(ca+1), 1);
+         return string(unichar(ca - (c1>>16)), 1);
 #else
-        if (CHAR_CATEGORY(c1) == CHAR_CATEGORY_Ll) return string(unichar(ca));
-        if (CHAR_CATEGORY(c1) == CHAR_CATEGORY_Lt) return string(unichar(ca+1));
-        return string(unichar(ca - (c1>>16)));
+         if (CHAR_CATEGORY(c1) == CHAR_CATEGORY_Ll) return string(unichar(ca));
+         if (CHAR_CATEGORY(c1) == CHAR_CATEGORY_Lt) return string(unichar(ca+1));
+         return string(unichar(ca - (c1>>16)));
 #endif
       }
-      string to_upper_case(const char * pszUtf8Char){
+      string to_upper_case(const char * pszUtf8Char)
+      {
          int64_t ca = uni_index(pszUtf8Char);
          if(!is_legal_uni_index(ca))
             return "";
-        uint32_t c1 = CHAR_PROP(ca);
-        if (CHAR_CATEGORY(c1) == CHAR_CATEGORY_Lu) return string(unichar(ca), 1);
-        if (CHAR_CATEGORY(c1) == CHAR_CATEGORY_Lt) return string(unichar(ca-1), 1);
-        return string(unichar(ca - (c1>>16)), 1);
+         uint32_t c1 = CHAR_PROP(ca);
+         if (CHAR_CATEGORY(c1) == CHAR_CATEGORY_Lu) return string(unichar(ca), 1);
+         if (CHAR_CATEGORY(c1) == CHAR_CATEGORY_Lt) return string(unichar(ca-1), 1);
+         return string(unichar(ca - (c1>>16)), 1);
       }
       string to_title_case(const char * pszUtf8Char)
       {
          int64_t ca = uni_index(pszUtf8Char);
          if(!is_legal_uni_index(ca))
             return "";
-        uint32_t c1 = CHAR_PROP(ca);
-        if (TITLE_CASE(c1)){ // titlecase exists
-          if (CHAR_CATEGORY(c1) == CHAR_CATEGORY_Lu) return string(unichar(ca+1), 1);
-          if (CHAR_CATEGORY(c1) == CHAR_CATEGORY_Ll) return string(unichar(ca-1), 1);
-          return string(unichar(ca), 1);
-        }else // has no titlecase form
-          if (CHAR_CATEGORY(c1) == CHAR_CATEGORY_Ll)
-            return string(unichar(ca - (c1>>16)), 1);
-        return string(unichar(ca), 1);
+         uint32_t c1 = CHAR_PROP(ca);
+         if (TITLE_CASE(c1))  // titlecase exists
+         {
+            if (CHAR_CATEGORY(c1) == CHAR_CATEGORY_Lu) return string(unichar(ca+1), 1);
+            if (CHAR_CATEGORY(c1) == CHAR_CATEGORY_Ll) return string(unichar(ca-1), 1);
+            return string(unichar(ca), 1);
+         }
+         else  // has no titlecase form
+            if (CHAR_CATEGORY(c1) == CHAR_CATEGORY_Ll)
+               return string(unichar(ca - (c1>>16)), 1);
+         return string(unichar(ca), 1);
       }
 
 
-      bool is_lower_case(const char * pszUtf8Char){
+      bool is_lower_case(const char * pszUtf8Char)
+      {
          int64_t ca = uni_index(pszUtf8Char);
          if(!is_legal_uni_index(ca))
             return false;
-        return CHAR_CATEGORY(CHAR_PROP(ca)) == CHAR_CATEGORY_Ll;
+         return CHAR_CATEGORY(CHAR_PROP(ca)) == CHAR_CATEGORY_Ll;
       }
-      bool is_upper_case(const char * pszUtf8Char){
+      bool is_upper_case(const char * pszUtf8Char)
+      {
          int64_t ca = uni_index(pszUtf8Char);
          if(!is_legal_uni_index(ca))
             return false;
-        return CHAR_CATEGORY(CHAR_PROP(ca)) == CHAR_CATEGORY_Lu;
+         return CHAR_CATEGORY(CHAR_PROP(ca)) == CHAR_CATEGORY_Lu;
       }
-      bool is_title_case(const char * pszUtf8Char){
+      bool is_title_case(const char * pszUtf8Char)
+      {
          int64_t ca = uni_index(pszUtf8Char);
          if(!is_legal_uni_index(ca))
             return false;
-        return CHAR_CATEGORY(CHAR_PROP(ca)) == CHAR_CATEGORY_Lt;
+         return CHAR_CATEGORY(CHAR_PROP(ca)) == CHAR_CATEGORY_Lt;
       }
 
 
-      bool is_letter(const char * pszUtf8Char){
+      bool is_letter(const char * pszUtf8Char)
+      {
          int64_t ca = uni_index(pszUtf8Char);
          if(!is_legal_uni_index(ca))
             return false;
-        uint32_t c1 = CHAR_CATEGORY(CHAR_PROP(ca));
-        return ((( (1 << CHAR_CATEGORY_Lu) |
-                   (1 << CHAR_CATEGORY_Ll) |
-                   (1 << CHAR_CATEGORY_Lt) |
-                   (1 << CHAR_CATEGORY_Lm) |
-                   (1 << CHAR_CATEGORY_Lo)
-                 ) >> c1) & 1) != 0;
+         uint32_t c1 = CHAR_CATEGORY(CHAR_PROP(ca));
+         return ((( (1 << CHAR_CATEGORY_Lu) |
+                    (1 << CHAR_CATEGORY_Ll) |
+                    (1 << CHAR_CATEGORY_Lt) |
+                    (1 << CHAR_CATEGORY_Lm) |
+                    (1 << CHAR_CATEGORY_Lo)
+                  ) >> c1) & 1) != 0;
       }
-      bool is_letter_or_digit(const char * pszUtf8Char){
+      bool is_letter_or_digit(const char * pszUtf8Char)
+      {
          int64_t ca = uni_index(pszUtf8Char);
          if(!is_legal_uni_index(ca))
             return false;
-        uint32_t c1 = CHAR_CATEGORY(CHAR_PROP(ca));
-        return ((( (1 << CHAR_CATEGORY_Lu) |
-                   (1 << CHAR_CATEGORY_Ll) |
-                   (1 << CHAR_CATEGORY_Lt) |
-                   (1 << CHAR_CATEGORY_Lm) |
-                   (1 << CHAR_CATEGORY_Lo) |
-                   (1 << CHAR_CATEGORY_Nd)
-                 ) >> c1) & 1) != 0;
+         uint32_t c1 = CHAR_CATEGORY(CHAR_PROP(ca));
+         return ((( (1 << CHAR_CATEGORY_Lu) |
+                    (1 << CHAR_CATEGORY_Ll) |
+                    (1 << CHAR_CATEGORY_Lt) |
+                    (1 << CHAR_CATEGORY_Lm) |
+                    (1 << CHAR_CATEGORY_Lo) |
+                    (1 << CHAR_CATEGORY_Nd)
+                  ) >> c1) & 1) != 0;
       }
 
       bool is_digit(const char * pszUtf8Char)
@@ -146,94 +155,104 @@ namespace str
       }
 
 
-      bool is_assigned(const char * pszUtf8Char){
+      bool is_assigned(const char * pszUtf8Char)
+      {
          int64_t ca = uni_index(pszUtf8Char);
          if(!is_legal_uni_index(ca))
             return false;
-        return CHAR_CATEGORY(CHAR_PROP(ca)) != CHAR_CATEGORY_Cn;
+         return CHAR_CATEGORY(CHAR_PROP(ca)) != CHAR_CATEGORY_Cn;
       }
 
-      bool is_space_char(const char * pszUtf8Char){
+      bool is_space_char(const char * pszUtf8Char)
+      {
          int64_t ca = uni_index(pszUtf8Char);
          if(!is_legal_uni_index(ca))
             return false;
-        return  ((((1 << CHAR_CATEGORY_Zs) |
-                   (1 << CHAR_CATEGORY_Zl)  |
-                   (1 << CHAR_CATEGORY_Zp)
-                  ) >> CHAR_CATEGORY(CHAR_PROP(ca))) & 1) != 0;
-      }
-      bool is_whitespace(const char * pszUtf8Char){
-         int64_t ca = uni_index(pszUtf8Char);
-         if(!is_legal_uni_index(ca))
-            return false;
-        return  (ca == 0x20)
-                 ||
-                ((ca <= 0x0020) &&
-                 (((((1 << 0x0009) |
-                 (1 << 0x000A) |
-                 (1 << 0x000C) |
-                 (1 << 0x000D)) >> ca) & 1) != 0))
-                 ||
-                (((((1 << CHAR_CATEGORY_Zs) |
-                    (1 << CHAR_CATEGORY_Zl) |
+         return  ((((1 << CHAR_CATEGORY_Zs) |
+                    (1 << CHAR_CATEGORY_Zl)  |
                     (1 << CHAR_CATEGORY_Zp)
-                   ) >> CHAR_CATEGORY(CHAR_PROP(ca))) & 1) != 0);
+                   ) >> CHAR_CATEGORY(CHAR_PROP(ca))) & 1) != 0;
       }
-      bool is_whitespace(const char * pszUtf8Char, const char * pszEnd){
+      bool is_whitespace(const char * pszUtf8Char)
+      {
+         int64_t ca = uni_index(pszUtf8Char);
+         if(!is_legal_uni_index(ca))
+            return false;
+         return  (ca == 0x20)
+                 ||
+                 ((ca <= 0x0020) &&
+                  (((((1 << 0x0009) |
+                      (1 << 0x000A) |
+                      (1 << 0x000C) |
+                      (1 << 0x000D)) >> ca) & 1) != 0))
+                 ||
+                 (((((1 << CHAR_CATEGORY_Zs) |
+                     (1 << CHAR_CATEGORY_Zl) |
+                     (1 << CHAR_CATEGORY_Zp)
+                    ) >> CHAR_CATEGORY(CHAR_PROP(ca))) & 1) != 0);
+      }
+      bool is_whitespace(const char * pszUtf8Char, const char * pszEnd)
+      {
          int64_t ca = uni_index(pszUtf8Char, pszEnd);
          if(!is_legal_uni_index(ca))
             return false;
-        return  (ca == 0x20)
+         return  (ca == 0x20)
                  ||
-                ((ca <= 0x0020) &&
-                 (((((1 << 0x0009) |
-                 (1 << 0x000A) |
-                 (1 << 0x000C) |
-                 (1 << 0x000D)) >> ca) & 1) != 0))
+                 ((ca <= 0x0020) &&
+                  (((((1 << 0x0009) |
+                      (1 << 0x000A) |
+                      (1 << 0x000C) |
+                      (1 << 0x000D)) >> ca) & 1) != 0))
                  ||
-                (((((1 << CHAR_CATEGORY_Zs) |
-                    (1 << CHAR_CATEGORY_Zl) |
-                    (1 << CHAR_CATEGORY_Zp)
-                   ) >> CHAR_CATEGORY(CHAR_PROP(ca))) & 1) != 0);
+                 (((((1 << CHAR_CATEGORY_Zs) |
+                     (1 << CHAR_CATEGORY_Zl) |
+                     (1 << CHAR_CATEGORY_Zp)
+                    ) >> CHAR_CATEGORY(CHAR_PROP(ca))) & 1) != 0);
       }
 
-      bool is_number(const char * pszUtf8Char){
+      bool is_number(const char * pszUtf8Char)
+      {
          int64_t ca = uni_index(pszUtf8Char);
          if(!is_legal_uni_index(ca))
             return false;
-        return NUMBER(CHAR_PROP(ca)) != 0;
+         return NUMBER(CHAR_PROP(ca)) != 0;
       }
 
 
-      ECharCategory get_category(const char * pszUtf8Char){
+      ECharCategory get_category(const char * pszUtf8Char)
+      {
          int64_t ca = uni_index(pszUtf8Char);
          if(!is_legal_uni_index(ca))
             return CHAR_CATEGORY_LAST;
-        return ECharCategory(CHAR_CATEGORY(CHAR_PROP(ca)));
+         return ECharCategory(CHAR_CATEGORY(CHAR_PROP(ca)));
       }
 
-      string get_category_name(const char * pszUtf8Char){
+      string get_category_name(const char * pszUtf8Char)
+      {
          int64_t ca = uni_index(pszUtf8Char);
          if(!is_legal_uni_index(ca))
             return "";
-        return string(char_category_names[CHAR_CATEGORY(CHAR_PROP(ca))]);
+         return string(char_category_names[CHAR_CATEGORY(CHAR_PROP(ca))]);
       }
 
-      int32_t get_combining_class(const char * pszUtf8Char){
+      int32_t get_combining_class(const char * pszUtf8Char)
+      {
          int64_t ca = uni_index(pszUtf8Char);
          if(!is_legal_uni_index(ca))
             return false;
-        return COMBINING_CLASS(CHAR_PROP(ca));
+         return COMBINING_CLASS(CHAR_PROP(ca));
       }
-      bool is_mirrored(const char * pszUtf8Char){
+      bool is_mirrored(const char * pszUtf8Char)
+      {
          int64_t ca = uni_index(pszUtf8Char);
          if(!is_legal_uni_index(ca))
             return false;
-        return MIRRORED(CHAR_PROP(ca)) != 0;
+         return MIRRORED(CHAR_PROP(ca)) != 0;
       }
 
-      int32_t size_of_tables(){
-        return sizeof(arr_idxCharInfo)+sizeof(arr_CharInfo)+sizeof(arr_idxCharInfo2)+sizeof(arr_CharInfo2);
+      int32_t size_of_tables()
+      {
+         return sizeof(arr_idxCharInfo)+sizeof(arr_CharInfo)+sizeof(arr_idxCharInfo2)+sizeof(arr_CharInfo2);
       }
 
       /* --------------------------------------------------------------------- */
@@ -245,15 +264,16 @@ namespace str
        * left as-is for anyone who may want to do such conversion, which was
        * allowed in earlier algorithms.
        */
-      static const char trailingBytesForUTF8[256] = {
-          0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-          0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-          0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-          0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-          0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-          0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-          1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-          2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 3,3,3,3,3,3,3,3,4,4,4,4,5,5,5,5
+      static const char trailingBytesForUTF8[256] =
+      {
+         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+         1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+         2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 3,3,3,3,3,3,3,3,4,4,4,4,5,5,5,5
       };
 
       /*
@@ -262,7 +282,8 @@ namespace str
        * in a UTF-8 sequence.
        */
       static const uint32_t offsetsFromUTF8[6] = { 0x00000000UL, 0x00003080UL, 0x000E2080UL,
-                 0x03C82080UL, 0xFA082080UL, 0x82082080UL };
+                                                   0x03C82080UL, 0xFA082080UL, 0x82082080UL
+                                                 };
 
 
 
@@ -280,27 +301,27 @@ namespace str
             return -1;
          switch (extraBytesToRead)
          {
-            case 5: ch += *source++; ch <<= 6;
-                if(*source == '\0') return -1;
-            case 4: ch += *source++; ch <<= 6;
-                if(*source == '\0') return -1;
-            case 3: ch += *source++; ch <<= 6;
-                if(*source == '\0') return -1;
-            case 2: ch += *source++; ch <<= 6;
-                if(*source == '\0') return -1;
-            case 1: ch += *source++; ch <<= 6;
-                if(*source == '\0') return -1;
-            case 0: ch += *source++;
+         case 5: ch += *source++; ch <<= 6;
+            if(*source == '\0') return -1;
+         case 4: ch += *source++; ch <<= 6;
+            if(*source == '\0') return -1;
+         case 3: ch += *source++; ch <<= 6;
+            if(*source == '\0') return -1;
+         case 2: ch += *source++; ch <<= 6;
+            if(*source == '\0') return -1;
+         case 1: ch += *source++; ch <<= 6;
+            if(*source == '\0') return -1;
+         case 0: ch += *source++;
          }
          ch -= offsetsFromUTF8[extraBytesToRead];
          return ch;
       }
 
 
-       void * char_bidi_names_non_usage_warning()
-       {
-           return char_bidi_names;
-       }
+      void * char_bidi_names_non_usage_warning()
+      {
+         return char_bidi_names;
+      }
 
 
    } // namespace ch

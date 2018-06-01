@@ -1463,8 +1463,8 @@ break_mid_loop:
 
       }
 
-      template < typename ARRAY_TYPE, typename PRED >
-      index pred_binary_search(const ARRAY_TYPE  & a, const typename ARRAY_TYPE::BASE_TYPE & t, PRED pred)
+      template < typename ARRAY_TYPE, typename T,  typename PRED >
+      index pred_binary_search(const ARRAY_TYPE  & a, const typename T & t, PRED pred)
       {
 
          index iLPos, iUPos, iMPos;
@@ -1490,7 +1490,7 @@ break_mid_loop:
                else
                {
 
-                  iUPos = iMPos - 1;
+                  iLPos = iMPos + 1;
 
                }
 
@@ -1507,7 +1507,7 @@ break_mid_loop:
                else
                {
 
-                  iLPos = iMPos + 1;
+                  iUPos = iMPos - 1;
 
                }
 
@@ -2180,14 +2180,13 @@ void array_base < TYPE, ARG_TYPE, ALLOCATOR >::pred_sort(PRED pred)
 
 
 template < class TYPE, class ARG_TYPE, class ALLOCATOR >
-template < typename PRED >
-index array_base < TYPE, ARG_TYPE, ALLOCATOR >::pred_binary_search(const TYPE & t, PRED pred) const
+template < typename T, typename PRED >
+index array_base < TYPE, ARG_TYPE, ALLOCATOR >::pred_binary_search(const T & t, PRED pred) const
 {
 
    return ::sort::array::pred_binary_search(*this, t, pred);
 
 }
-
 
 template < typename TYPE >
 void numeric_array < TYPE >::sort(bool bAsc)

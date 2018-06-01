@@ -351,9 +351,11 @@ void memory_free_dbg(void * pmemory, int32_t iBlockType)
 
    void * pbase = (void *)(((int_ptr)pmemory) - pheap->m_back);
 
+#ifndef DEBUG
 
    pheap->check_padding_after();
 
+#endif
 
    if(pheap->m_blockuse == 0)
    {

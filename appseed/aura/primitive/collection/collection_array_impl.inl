@@ -333,8 +333,7 @@ inline array < TYPE, ARG_TYPE, ALLOCATOR >  & array < TYPE, ARG_TYPE, ALLOCATOR 
 
 template < class TYPE, class ARG_TYPE, class ALLOCATOR >
 array < TYPE, ARG_TYPE, ALLOCATOR > ::array(::aura::application * papp, ::count nGrowBy) :
-   object(papp),
-   array_base < TYPE, ARG_TYPE, ALLOCATOR >(papp)
+   object(papp)
 {
 //   this->m_nGrowBy = MAX(0, nGrowBy);
 //   this->m_pData = NULL;
@@ -344,8 +343,7 @@ array < TYPE, ARG_TYPE, ALLOCATOR > ::array(::aura::application * papp, ::count 
 
 template < class TYPE, class ARG_TYPE, class ALLOCATOR >
 array < TYPE, ARG_TYPE, ALLOCATOR > ::array(const array & a) :
-   object(a),
-   array_base < TYPE, ARG_TYPE, ALLOCATOR >(a.get_app())
+   object(a)
 {
 
    operator = (a);

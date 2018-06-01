@@ -61,11 +61,11 @@ namespace file
 
 
 
-            virtual bool  is(const ::file::path & str,::aura::application * papp);
+            virtual bool  is_impl(const ::file::path & str, ::aura::application * papp);
 
             //virtual bool  has_subdir(::aura::application * papp,const char * lpcsz);
 
-            virtual bool  is_or_definitively_not(bool & bIs,const ::file::path & lpcsz,::aura::application * papp);
+            virtual bool  is_cached(bool & bIs,const ::file::path & lpcsz,::aura::application * papp) override;
 
             virtual bool  name_is(const ::file::path & str,::aura::application * papp);
 

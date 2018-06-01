@@ -25,7 +25,7 @@ namespace core
 }
 
 
-extern CLASS_DECL_AURA const char trailingBytesForUTF8[256];
+inline int trailingBytesForUTF8(int i);
 
 #ifdef APPLEOS
 #undef err_none
@@ -156,7 +156,7 @@ namespace str
    string CLASS_DECL_AURA if_null(const char * psz, const char * pszIfNull = NULL);
 
 
-   FORCEINLINE  const char * __utf8_inc(const char * psz) { return psz + 1 + trailingBytesForUTF8[(byte) *psz]; }
+   FORCEINLINE  const char * __utf8_inc(const char * psz) { return psz + 1 + trailingBytesForUTF8(*psz); }
 
    static_inline e_err           err() { return g_eerr; }
    static_inline void            set_err(e_err eerr) { g_eerr = eerr; }

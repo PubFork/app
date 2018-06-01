@@ -4,7 +4,8 @@
 
 template < class TYPE, class ARG_TYPE = const TYPE &, class ALLOCATOR = ::allocator::def < TYPE > >
 class array :
-   public ::array_base < TYPE, ARG_TYPE, ALLOCATOR >
+   virtual public ::array_base < TYPE, ARG_TYPE, ALLOCATOR >,
+   virtual public ::object
 {
 public:
 

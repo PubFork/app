@@ -25,7 +25,7 @@ namespace windows
          virtual ::file::listing & ls_relative_name(::aura::application * papp, ::file::listing & ls);
 
          //virtual bool  is(const char * lpcsz,::aura::application * papp);
-         virtual bool  is(const ::file::path & str,::aura::application * papp);
+         virtual bool  is_impl(const ::file::path & str,::aura::application * papp);
          virtual bool  name_is(const ::file::path & str,::aura::application * papp);
          //virtual bool  is_inside(const char * lpcszDir,const char * lpcszPath,::aura::application * papp);
          //virtual bool  is_inside_time(const char * lpcsz,::aura::application * papp);

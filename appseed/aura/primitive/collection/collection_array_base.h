@@ -1,9 +1,9 @@
 ﻿// raw_array is an array that does not call constructors or destructor in elements
 // array is an array that call only copy constructor and destructor in elements
 // array is an array that call default constructors, copy constructs and destructors in elements
-template < class TYPE, class ARG_TYPE, class ALLOCATOR = allocator::nodef < TYPE > >
+template < class TYPE, class ARG_TYPE = const TYPE &, class ALLOCATOR = allocator::nodef < TYPE > >
 class array_base :
-   virtual public ::object
+   virtual public ::simple_object
 {
 public:
 
@@ -305,7 +305,6 @@ public:
    ::count        m_nGrowBy;  // grow amount
 
    array_base();
-   array_base(::aura::application * papp);
    virtual ~array_base();
 
 
@@ -554,6 +553,13 @@ public:
    }
 
 
+   inline index add(ARG_TYPE newElement)
+   {
+      index nIndex = this->m_nSize;
+      this->allocate(nIndex + 1);
+      this->last() = newElement;
+      return nIndex;
+   }
    template < typename PRED >
    ::count pred_remove(PRED pred)
    {
@@ -617,9 +623,8 @@ public:
    template < typename PRED >
    void pred_sort(PRED pred);
 
-   template < typename PRED >
-   index pred_binary_search(const TYPE & t, PRED pred) const;
-
+   template < typename T, typename PRED >
+   index pred_binary_search(const T & t, PRED pred) const;
 
    inline bool valid_iter(iterator first, iterator last)
    {

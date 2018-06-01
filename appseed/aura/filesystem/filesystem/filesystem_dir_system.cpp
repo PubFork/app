@@ -29,7 +29,6 @@ namespace file
 
       system::system(::aura::application * papp) :
          ::object(papp),
-         m_isdirmap(papp),
          m_mutex(papp),
          ::file_watcher::file_watcher(papp) //,
          //::file_watcher::listener_thread(papp)
@@ -563,7 +562,7 @@ namespace file
       }
 
 
-      bool system::is_or_definitively_not(bool & bIs, const ::file::path & lpcszPath, ::aura::application * papp)
+      bool system::is_cached(bool & bIs, const ::file::path & lpcszPath, ::aura::application * papp)
       {
 
          bIs = false;
@@ -596,18 +595,18 @@ namespace file
 #endif
 #endif
 
-         bIs = false;
+         //bIs = false;
 
-         if (::str::begins_ci(lpcszPath, "http://") || ::str::begins_ci(lpcszPath, "https://"))
-         {
+         //if (::str::begins_ci(lpcszPath, "http://") || ::str::begins_ci(lpcszPath, "https://"))
+         //{
 
-            property_set set(get_app());
+         //   property_set set(get_app());
 
-            bIs = Sess(papp).http().exists(lpcszPath, set);
+         //   bIs = Sess(papp).http().exists(lpcszPath, set);
 
-            return true;
+         //   return true;
 
-         }
+         //}
 
          if (::get_thread() != NULL && ::get_thread()->m_bZipIsDir && (::str::ends_ci(lpcszPath, ".zip")))
          {
@@ -643,81 +642,105 @@ namespace file
 
          }
 
-#ifdef WINDOWSEX
-#ifdef WINDOWSEX
-         if (::str::ends_ci(lpcszPath, ".lnk"))
+//#ifdef WINDOWSEX
+//#ifdef WINDOWSEX
+//         if (::str::ends_ci(lpcszPath, ".lnk"))
+//         {
+//#endif
+//
+//            string strTarget;
+//
+//            string strFolder;
+//
+//            string strParams;
+//
+//            if (System.file().resolve_link(strTarget, strFolder, strParams, lpcszPath))
+//            {
+//
+//               bIs = is(strTarget, papp);
+//
+//               return true;
+//
+//            }
+//
+//#ifdef WINDOWSEX
+//         }
+//#endif
+//#endif
+
+         bool bHasSubFolder;
+
+         u32 dwLastError;
+
+         if (!m_isdirmap.lookup(lpcszPath, bHasSubFolder, dwLastError))
          {
-#endif
-
-            string strTarget;
-
-            string strFolder;
-
-            string strParams;
-
-            if (System.file().resolve_link(strTarget, strFolder, strParams, lpcszPath))
-            {
-
-               bIs = is(strTarget, papp);
-
-               return true;
-
-            }
-
-#ifdef WINDOWSEX
+            return false;
          }
-#endif
-#endif
-
-
-         return false;
+         bIs = bHasSubFolder;
+         return true;
 
       }
 
 
-      bool system::is(const ::file::path & strPath,::aura::application * papp)
+      bool system::is(const ::file::path & path,::aura::application * papp)
       {
 
          bool bIs;
 
-         if (strPath.ends_ci("://") || strPath.ends_ci(":/") || strPath.ends_ci(":"))
+         if (is_cached(bIs, path, papp))
+         {
+
+            return bIs;
+
+         }
+
+         return is_impl(path, papp);
+
+      }
+
+
+      bool system::is_impl(const ::file::path & path, ::aura::application * papp)
+      {
+
+         if (path.ends_ci("://") || path.ends_ci(":/") || path.ends_ci(":"))
          {
 
             return true;
 
          }
 
-         if (!is_or_definitively_not(bIs, strPath, papp) || !bIs)
-            return false;
-
-         if (::str::begins_ci(strPath, "http://") || ::str::begins_ci(strPath, "https://"))
+         if (::str::begins_ci(path, "http://") || ::str::begins_ci(path, "https://"))
          {
 
             property_set set(get_app());
 
-            return Sess(papp).http().exists(strPath, set);
+            return Sess(papp).http().exists(path, set);
 
          }
 
-
-         if (::get_thread() != NULL && ::get_thread()->m_bZipIsDir && (::str::ends_ci(strPath, ".zip")))
+         if (::get_thread() != NULL && ::get_thread()->m_bZipIsDir && (::str::ends_ci(path, ".zip")))
          {
-            m_isdirmap.set(strPath, true, 0);
+
+            m_isdirmap.set(path, true, 0);
+
             return true;
+
          }
-         if (::get_thread() != NULL && ::get_thread()->m_bZipIsDir && (::str::find_file_extension("zip:", strPath) >= 0))
+
+         if (::get_thread() != NULL && ::get_thread()->m_bZipIsDir && (::str::find_file_extension("zip:", path) >= 0))
          {
+
             bool bHasSubFolder;
-            uint32_t dwLastError;
-            if (m_isdirmap.lookup(strPath, bHasSubFolder, dwLastError))
-               return bHasSubFolder;
-            bHasSubFolder = m_pziputil->has_sub_folder(papp, strPath);
-            m_isdirmap.set(strPath, bHasSubFolder, get_last_error());
+
+            bHasSubFolder = m_pziputil->has_sub_folder(papp, path);
+
+            m_isdirmap.set(path, bHasSubFolder, get_last_error());
+
             return bHasSubFolder;
+
          }
 
-
-         return true;
+         return false;
 
       }
 
@@ -747,16 +770,15 @@ namespace file
       }
 
 
-      system::is_dir_map::is_dir_map(::aura::application * papp) :
-         m_mutex(papp)
+      system::is_dir_map::is_dir_map()
       {
       }
 
 
-      bool system::is_dir_map::lookup(const ::file::path & strPath,bool &bIsDir,uint32_t & dwLastError)
+      bool system::is_dir_map::lookup(const ::file::path & path,bool &bIsDir,uint32_t & dwLastError)
       {
 
-         if(strPath.get_length() <= 0)
+         if(path.get_length() <= 0)
          {
 
             bIsDir = false;
@@ -765,22 +787,39 @@ namespace file
 
          }
 
-         synch_lock sl(&m_mutex);
-
-         ::file::patha namea;
-
-         strPath.ascendants_name(namea);
+         cslock sl(&m_cs);
 
          is_dir * pdir = this;
 
-         sp(is_dir) pfind(canew(is_dir));
+         is_dir find;
 
-         for (auto & name : namea)
+         index iFind0 = 0;
+
+         index iFind3 = 0;
+
+         while(iFind3 >= 0)
          {
 
-            pfind->m_str = name;
+            index iFind1 = path.find('/', iFind0);
 
-            index iFind = pdir->pred_binary_search(pfind, [&](auto & t1, auto & t2)
+            index iFind2 = path.find('\\', iFind0);
+
+            iFind3 = min_non_neg(iFind1, iFind2);
+
+            if (iFind3 < 0)
+            {
+
+               find.m_str = path.Mid(iFind0);
+
+            }
+            else
+            {
+
+               find.m_str = path.Mid(iFind0, iFind3 - iFind0);
+
+            }
+
+            index iFind = pdir->pred_binary_search(&find, [&](auto & t1, auto & t2)
             {
 
                return t1->m_str.compare_ci(t2->m_str) < 0;
@@ -796,9 +835,11 @@ namespace file
 
             pdir = pdir->element_at(iFind);
 
+            iFind0 = iFind3 + 1;
+
          }
 
-         if(::get_tick_count() > pdir->m_dwLastCheck + m_dwTimeOut)
+         if(::get_fast_tick_count() > pdir->m_dwLastCheck + m_dwTimeOut)
          {
 
             return false;
@@ -821,7 +862,7 @@ namespace file
       }
 
 
-      bool system::is_dir_map::lookup(const ::file::path & strPath,bool &bIsDir,uint32_t &dwLastError,int32_t iLast)
+      bool system::is_dir_map::lookup(const ::file::path & path,bool &bIsDir,uint32_t &dwLastError,int32_t iLast)
       {
 
          if(iLast < 0)
@@ -830,22 +871,31 @@ namespace file
             return true;
          }
 
-         synch_lock sl(&m_mutex);
+         cslock sl(&m_cs);
 
-         ::file::patha namea;
-
-         strPath.ascendants_name(namea);
+         string strPath(path);
 
          is_dir * pdir = this;
 
-         sp(is_dir) pfind(canew(is_dir));
+         is_dir find;
 
-         for (auto & name : namea)
+         index iFind0 = 0;
+         index iFind3 = 0;
+         while (iFind3 >= 0)
          {
 
-            pfind->m_str = name;
-
-            index iFind = pdir->pred_binary_search(pfind, [&](auto & t1, auto & t2)
+            index iFind1 = strPath.find('/', iFind0);
+            index iFind2 = strPath.find('\\', iFind0);
+            iFind3 = min_non_neg(iFind1, iFind2);
+            if (iFind3 < 0)
+            {
+               find.m_str = strPath.Mid(iFind0);
+            }
+            else
+            {
+               find.m_str = strPath.Mid(iFind0, iFind3 - iFind0);
+            }
+            index iFind = pdir->pred_binary_search(&find, [&](auto & t1, auto & t2)
             {
 
                return t1->m_str.compare_ci(t2->m_str) < 0;
@@ -860,10 +910,10 @@ namespace file
             }
 
             pdir = pdir->element_at(iFind);
-
+            iFind0 = iFind3 + 1;
          }
 
-         if (::get_tick_count() > pdir->m_dwLastCheck + m_dwTimeOut)
+         if (::get_fast_tick_count() > pdir->m_dwLastCheck + m_dwTimeOut)
          {
 
             return false;
@@ -889,20 +939,30 @@ namespace file
       void system::is_dir_map::set(const ::file::path & path,bool bIsDir,uint32_t dwLastError)
       {
 
-         single_lock sl(&m_mutex, TRUE);
+         cslock sl(&m_cs);
 
-         ::file::patha namea;
-
-         path.ascendants_name(namea);
+         string strPath(path);
 
          is_dir * pdir = this;
 
          sp(is_dir) pfind(canew(is_dir));
 
-         for (index i = 0; i < namea.get_count(); i++)
+         index iFind0 = 0;
+         index iFind3 = 0;
+         while (iFind3 >= 0)
          {
 
-            pfind->m_str = namea[i];
+            index iFind1 = strPath.find('/', iFind0);
+            index iFind2 = strPath.find('\\', iFind0);
+            iFind3 = min_non_neg(iFind1, iFind2);
+            if (iFind3 < 0)
+            {
+               pfind->m_str = strPath.Mid(iFind0);
+            }
+            else
+            {
+               pfind->m_str = strPath.Mid(iFind0, iFind3 - iFind0);
+            }
 
             index iFind = pdir->pred_binary_search(pfind, [&](auto & t1, auto & t2)
             {
@@ -911,39 +971,50 @@ namespace file
 
             });
 
-            while(iFind < 0)
+            if (iFind < 0)
             {
-
-               pfind->m_str = namea[i];
-
-               pfind->m_iIsDir = bIsDir ? 1 : (i < namea.get_upper_bound() ? -1 : 0);
-
-               pfind->m_dwError = dwLastError;
-
-               pfind->m_dwLastCheck = ::get_tick_count();
-
-               pdir->add(pfind);
-
-               pdir->pred_sort([&](auto & t1, auto & t2)
+               while (true)
                {
 
-                  return t1->m_str.compare_ci(t2->m_str) < 0;
 
-               });
+                  index iFind1 = strPath.find('/', iFind0);
+                  index iFind2 = strPath.find('\\', iFind0);
+                  iFind3 = min_non_neg(iFind1, iFind2);
+                  if (iFind3 < 0)
+                  {
+                     pfind->m_str = strPath.Mid(iFind0);
+                  }
+                  else
+                  {
+                     pfind->m_str = strPath.Mid(iFind0, iFind3 - iFind0);
+                  }
+                  pfind->m_iIsDir = bIsDir ? 1 : (iFind3 >= 0 ? -1 : 0);
 
-               i++;
+                  pfind->m_dwError = dwLastError;
 
-               if (i >= namea.get_count())
-               {
+                  pfind->m_dwLastCheck = ::get_fast_tick_count();
 
-                  return;
+                  pdir->add(pfind);
 
+                  pdir->pred_sort([&](auto & t1, auto & t2)
+                  {
+
+                     return t1->m_str.compare_ci(t2->m_str) < 0;
+
+                  });
+
+                  if (iFind3 < 0)
+                  {
+
+                     return;
+
+                  }
+
+                  pdir = pfind;
+
+                  pfind = canew(is_dir);
+                  iFind0 = iFind3 + 1;
                }
-
-               pdir = pfind;
-
-               pfind = canew(is_dir);
-
             }
 
             pdir = pdir->element_at(iFind);
@@ -955,8 +1026,8 @@ namespace file
 
             }
 
-            pdir->m_dwLastCheck = ::get_tick_count();
-
+            pdir->m_dwLastCheck = ::get_fast_tick_count();
+            iFind0 = iFind3 + 1;
          }
 
 

@@ -294,13 +294,13 @@ namespace file
 
       //};
 
-      void split(patha & patha) const;
+      void split(stringa & patha) const;
       bool is_relative();
 
       patha & ascendants_path(patha & patha) const;
-      patha & ascendants_name(patha & namea) const;
+      stringa & ascendants_name(stringa & namea) const;
       patha ascendants_path() const;
-      patha ascendants_name() const;
+      stringa ascendants_name() const;
 
       path relative() const;
 

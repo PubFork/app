@@ -236,8 +236,7 @@ inline raw_array < TYPE, ARG_TYPE, ALLOCATOR > & raw_array < TYPE, ARG_TYPE, ALL
 
 template<class TYPE, class ARG_TYPE, class ALLOCATOR >
 raw_array < TYPE, ARG_TYPE, ALLOCATOR >::raw_array(::aura::application * papp, ::count nGrowBy) :
-   object(papp),
-   array_base < TYPE, ARG_TYPE, ALLOCATOR > (papp)
+   object(papp)
 {
 }
 

@@ -51,22 +51,25 @@ namespace windows
       }
 
 
-      bool dir::is(const ::file::path & strPath,::aura::application * papp)
+      bool dir::is_impl(const ::file::path & strPath,::aura::application * papp)
       {
 
-         if (::windows::dir::is(strPath, papp))
+         bool bIs;
+
+         if (::file::dir::axis::system::is_impl(strPath, papp))
          {
 
             return true;
 
          }
 
-         if (::file::dir::axis::system::is(strPath, papp))
+         if (::windows::dir::is_impl(strPath, papp))
          {
 
             return true;
 
          }
+
 
          return false;
 

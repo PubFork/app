@@ -3,7 +3,7 @@
 
 #ifdef RASPBIAN
 
-   #include <sys/time.h>
+#include <sys/time.h>
 
 #endif
 
@@ -604,7 +604,7 @@ CLASS_DECL_AURA double first_milli()
 CLASS_DECL_AURA DWORD get_tick_count()
 {
 
-   #ifdef RASPBIAN
+#ifdef RASPBIAN
 
    struct timeval tv;
 
@@ -621,7 +621,31 @@ CLASS_DECL_AURA DWORD get_tick_count()
 
    return (DWORD) (((uint64_t) get_nanos() / (uint64_t) (1000 * 1000)) % ((uint64_t)0x100000000ULL));
 
-   #endif
+#endif
+
+}
+
+CLASS_DECL_AURA DWORD get_fast_tick_count()
+{
+
+#ifdef WINDOWS
+
+   return GetTickCount();
+
+#else
+
+   struct timeval tv;
+
+   if (gettimeofday(&tv, NULL) != 0)
+   {
+
+      return 0;
+
+   }
+
+   return tv.tv_sec * 1000 + tv.tv_usec / 1000;
+
+#endif
 
 }
 

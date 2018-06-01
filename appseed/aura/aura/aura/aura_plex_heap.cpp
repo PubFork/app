@@ -478,21 +478,21 @@ plex_heap_alloc_array::plex_heap_alloc_array()
 
    }
 
-   add(new plex_heap_alloc(8,256));
-   add(new plex_heap_alloc(16, 256));
-   add(new plex_heap_alloc(24, 256));
+   //add(new plex_heap_alloc(8,256));
+   //add(new plex_heap_alloc(16, 256));
+   //add(new plex_heap_alloc(24, 256));
    add(new plex_heap_alloc(32, 256));
-   add(new plex_heap_alloc(48, 256));
+   //add(new plex_heap_alloc(48, 256));
 
    add(new plex_heap_alloc(64, 128));
-   add(new plex_heap_alloc(96, 128));
+   //add(new plex_heap_alloc(96, 128));
    add(new plex_heap_alloc(128, 128));
-   add(new plex_heap_alloc(192, 128));
+   //add(new plex_heap_alloc(192, 128));
    add(new plex_heap_alloc(256, 128));
 
-   add(new plex_heap_alloc(384, 64));
+   //add(new plex_heap_alloc(384, 64));
    add(new plex_heap_alloc(512, 64));
-   add(new plex_heap_alloc(768, 64));
+   //add(new plex_heap_alloc(768, 64));
    add(new plex_heap_alloc(1024, 64));
    add(new plex_heap_alloc(1024 * 2, 64));
 
@@ -504,11 +504,11 @@ plex_heap_alloc_array::plex_heap_alloc_array()
    add(new plex_heap_alloc(1024 * 64, 16));
    add(new plex_heap_alloc(1024 * 128,16));
 
-   add(new plex_heap_alloc(1024 * 192, 4));
+   //add(new plex_heap_alloc(1024 * 192, 4));
    add(new plex_heap_alloc(1024 * 256, 4));
-   add(new plex_heap_alloc(1024 * 384, 4));
+   //add(new plex_heap_alloc(1024 * 384, 4));
    add(new plex_heap_alloc(1024 * 512, 4));
-   add(new plex_heap_alloc(1024 * 768, 4));
+   //add(new plex_heap_alloc(1024 * 768, 4));
    add(new plex_heap_alloc(1024 * 1024, 4));
 
    add(new plex_heap_alloc(1024 * 1024 * 2, 2));

@@ -212,7 +212,7 @@ namespace file
 //   }
 
 
-   void path::split(patha & patha) const
+   void path::split(stringa & patha) const
    {
 
       ascendants_name(patha);
@@ -223,7 +223,7 @@ namespace file
    patha & path::ascendants_path(patha & straParam) const
    {
 
-      ::file::patha stra;
+      stringa stra;
 
       ascendants_name(stra);
 
@@ -249,7 +249,7 @@ namespace file
    string path::name(index i) const
    {
 
-      patha patha;
+      stringa patha;
 
       ascendants_name(patha);
 
@@ -280,7 +280,7 @@ namespace file
    }
 
 
-   patha & path::ascendants_name(patha & straParam) const
+   stringa & path::ascendants_name(stringa & straParam) const
    {
 
       string strPath = *this;
@@ -309,13 +309,30 @@ namespace file
 
       }
 
-      stringa straSeparator;
+//      stringa straSeparator;
 
-      straSeparator.add("/");
+      //    straSeparator.add("/");
 
-      straSeparator.add("\\");
+      //  straSeparator.add("\\");
 
-      straParam.add_smallest_tokens(strPath,straSeparator,FALSE);
+      //straParam.add_smallest_tokens(strPath,straSeparator,FALSE);
+
+      index iFind = 0;
+      while (true)
+      {
+
+         index iFind1 = strPath.find('/', iFind);
+         index iFind2 = strPath.find('\\', iFind);
+         index iFind3 = min_non_neg(iFind1, iFind2);
+         if (iFind3 < 0)
+         {
+            straParam.add(strPath.Mid(iFind));
+            break;
+         }
+         straParam.add(strPath.Mid(iFind, iFind3 - iFind));
+         iFind = iFind3 + 1;
+      }
+
 
       if(strPath.begins_ci("/"))
       {

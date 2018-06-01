@@ -27,10 +27,16 @@
     @ingroup unicode
 */
 
-extern CLASS_DECL_AURA const char trailingBytesForUTF8[256];
+inline int trailingBytesForUTF8(int i);
 
-#define ch_uni_len(c) (trailingBytesForUTF8[(byte)c] + 1)
-#define str_uni_len(pszUtf8) (ch_uni_len(*(pszUtf8)))
+inline int ch_uni_len(int c)
+{
+   return trailingBytesForUTF8(c) + 1;
+}
+inline int str_uni_len(const char * pszUtf8)
+{
+   return ch_uni_len(*pszUtf8);
+}
 
 
 
@@ -242,10 +248,10 @@ namespace str
 
       inline unichar to_lower_case(unichar wch)
       {
-        uint32_t c1 = CHAR_PROP(wch);
-        if (CHAR_CATEGORY(c1) == CHAR_CATEGORY_Ll) return unichar(wch);
-        if (CHAR_CATEGORY(c1) == CHAR_CATEGORY_Lt) return unichar(wch+1);
-        return unichar(wch - (c1>>16));
+         uint32_t c1 = CHAR_PROP(wch);
+         if (CHAR_CATEGORY(c1) == CHAR_CATEGORY_Ll) return unichar(wch);
+         if (CHAR_CATEGORY(c1) == CHAR_CATEGORY_Lt) return unichar(wch+1);
+         return unichar(wch - (c1>>16));
       }
 
       inline int64_t to_lower_case(int64_t ca)
@@ -256,10 +262,10 @@ namespace str
 
       inline unichar to_upper_case(unichar wch)
       {
-        uint32_t c1 = CHAR_PROP(wch);
-        if (CHAR_CATEGORY(c1) == CHAR_CATEGORY_Lu) return unichar(wch);
-        if (CHAR_CATEGORY(c1) == CHAR_CATEGORY_Lt) return unichar(wch-1);
-        return unichar(wch - (c1>>16));
+         uint32_t c1 = CHAR_PROP(wch);
+         if (CHAR_CATEGORY(c1) == CHAR_CATEGORY_Lu) return unichar(wch);
+         if (CHAR_CATEGORY(c1) == CHAR_CATEGORY_Lt) return unichar(wch-1);
+         return unichar(wch - (c1>>16));
       }
 
       inline int64_t to_upper_case(int64_t ca)
@@ -273,10 +279,10 @@ namespace str
          int64_t ca = uni_index(pszUtf8Char);
          if(!is_legal_uni_index(ca))
             return false;
-        uint32_t c1 = CHAR_PROP(ca);
-        if (!NUMBER(c1)) return false;
-        *f = CHAR_PROP2(ca);
-        return true;
+         uint32_t c1 = CHAR_PROP(ca);
+         if (!NUMBER(c1)) return false;
+         *f = CHAR_PROP2(ca);
+         return true;
       }
 
 

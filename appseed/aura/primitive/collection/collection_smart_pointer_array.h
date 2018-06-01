@@ -1771,7 +1771,7 @@ namespace xml
 
 
 
-
+#define sspa(TYPE) array_base < sp(TYPE) >
 #define spa(TYPE) ::smart_pointer_array < TYPE >
 #define spa2(TYPE) ::smart_pointer_array2 < TYPE >
 #define xmlspa(TYPE) ::smart_pointer_array < TYPE >
