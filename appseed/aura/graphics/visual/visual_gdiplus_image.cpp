@@ -826,40 +826,49 @@ bool imaging::_load_image(::draw2d::dib * pdib, ::file::file * pfile)
 
    if (hr != S_OK) return false;
 
+   int iOrientation = -1;
+
    {
 
-
       HRESULT hrExif = hr;
-      // Not shown: image decoding
-      comptr<IWICMetadataQueryReader>pQueryReader;
-      comptr<IWICMetadataQueryReader>pIFDReader = NULL;
 
-      // Get the query reader.
+      comptr<IWICMetadataQueryReader> pQueryReader;
+
       if (SUCCEEDED(hrExif))
       {
-         hrExif = piDecoder->GetMetadataQueryReader(&pQueryReader);
+
+         hrExif = piBitmapFrame->GetMetadataQueryReader(&pQueryReader);
+
       }
 
       if (SUCCEEDED(hrExif))
       {
+
          PROPVARIANT value;
+
          PropVariantClear(&value);
-         // Get the nested IFD reader.
+
          hrExif = pQueryReader->GetMetadataByName(L"/app1/ifd/{ushort=274}", &value);
+
          if (FAILED(hrExif))
          {
+
             hrExif = pQueryReader->GetMetadataByName(L"/ifd/{ushort=274}", &value);
+
          }
+
          if (SUCCEEDED(hrExif))
          {
-            dib->oprop("exif_orientation") = value.uiVal;
+
+            iOrientation = value.uiVal;
+
          }
+
          PropVariantClear(&value); // Clear value for new query.
 
       }
 
    }
-
 
    // Convert the image format to 32bppPBGRA
    // (DXGI_FORMAT_B8G8R8A8_UNORM + D2D1_ALPHA_MODE_PREMULTIPLIED).
@@ -874,7 +883,16 @@ bool imaging::_load_image(::draw2d::dib * pdib, ::file::file * pfile)
 
    if (hr != S_OK) return false;
 
-   return dib_from_wicbitmapsource(pdib, piConverter, piFactory);
+   if (!dib_from_wicbitmapsource(pdib, piConverter, piFactory))
+   {
+
+      return false;
+
+   }
+
+   pdib->oprop("exif_orientation") = iOrientation;
+
+   return true;
 
 }
 

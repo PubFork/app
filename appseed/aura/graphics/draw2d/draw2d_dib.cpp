@@ -196,6 +196,7 @@ namespace draw2d
 
    }
 
+
    bool dib::host(COLORREF * pcolorref, int iScan, i32 width, i32 height)
    {
       // callers should be able to deal with graphics backend that doesn't support "hosting" portions of RAM
@@ -2715,7 +2716,7 @@ restart:
    dib & dib::flipx()
    {
 
-      flipx(clone());
+      flipx(dynamic_cast < dib * > (clone()));
 
       return *this;
 
@@ -2724,7 +2725,7 @@ restart:
    dib & dib::flipy()
    {
 
-      flipy(clone());
+      flipy(dynamic_cast < dib * > (clone()));
 
       return *this;
 
@@ -5499,13 +5500,17 @@ restart:
 
       i32 cy = pdib->m_size.cy;
 
+      int s = m_iScan / sizeof(COLORREF);
+
+      int srcS = pdib->m_iScan / sizeof(COLORREF);
+
       for (i32 i = 0; i < cx; i++)
       {
 
          for (i32 j = 0; j < cy; j++)
          {
 
-            m_pcolorref[j * m_iScan + i] = pdib->m_pcolorref[i * pdib->m_iScan + j];
+            m_pcolorref[i * s + j] = pdib->m_pcolorref[(cy - j - 1) * srcS + i];
 
          }
 
@@ -5523,13 +5528,17 @@ restart:
 
       i32 cy = m_size.cy;
 
+      int s = m_iScan / sizeof(COLORREF);
+
+      int srcS = pdib->m_iScan / sizeof(COLORREF);
+
       for (i32 i = 0; i < cy; i++)
       {
 
          for (i32 j = 0; j < cx; j++)
          {
 
-            m_pcolorref[(cy - i - 1)*m_iScan + (cx - j - 1)] = pdib->m_pcolorref[i * pdib->m_iScan + j];
+            m_pcolorref[(cy - i - 1) * s + (cx - j - 1)] = pdib->m_pcolorref[i * srcS + j];
 
          }
 
@@ -5547,13 +5556,17 @@ restart:
 
       i32 cy = pdib->m_size.cy;
 
+      int s = m_iScan / sizeof(COLORREF);
+
+      int srcS = pdib->m_iScan / sizeof(COLORREF);
+
       for (i32 i = 0; i < cx; i++)
       {
 
          for (i32 j = 0; j < cy; j++)
          {
 
-            m_pcolorref[(cy - j - 1) * m_iScan + i] = pdib->m_pcolorref[i * pdib->m_iScan + j];
+            m_pcolorref[i * s + j] = pdib->m_pcolorref[j * srcS + (cx - i - 1)];
 
          }
 
@@ -5585,13 +5598,17 @@ restart:
 
       i32 cy = pdib->m_size.cy;
 
+      int s = m_iScan / sizeof(COLORREF);
+
+      int srcS = pdib->m_iScan / sizeof(COLORREF);
+
       for (i32 i = 0; i < cx; i++)
       {
 
          for (i32 j = 0; j < cy; j++)
          {
 
-            m_pcolorref[j * m_iScan + i] = pdib->m_pcolorref[i * pdib->m_iScan + j];
+            m_pcolorref[i * s + j] = pdib->m_pcolorref[j * srcS + i];
 
          }
 
@@ -5609,13 +5626,17 @@ restart:
 
       i32 cy = m_size.cy;
 
+      int s = m_iScan / sizeof(COLORREF);
+
+      int srcS = pdib->m_iScan / sizeof(COLORREF);
+
       for (i32 i = 0; i < cy; i++)
       {
 
          for (i32 j = 0; j < cx; j++)
          {
 
-            m_pcolorref[(cy - i - 1)*m_iScan + (cx - j - 1)] = pdib->m_pcolorref[i * pdib->m_iScan + j];
+            m_pcolorref[i * s + j] = pdib->m_pcolorref[(cy - i - 1) * srcS + j];
 
          }
 
@@ -5633,13 +5654,17 @@ restart:
 
       i32 cy = pdib->m_size.cy;
 
+      int s = m_iScan / sizeof(COLORREF);
+
+      int srcS = pdib->m_iScan / sizeof(COLORREF);
+
       for (i32 i = 0; i < cx; i++)
       {
 
          for (i32 j = 0; j < cy; j++)
          {
 
-            m_pcolorref[(cy - j - 1) * m_iScan + i] = pdib->m_pcolorref[i * pdib->m_iScan + j];
+            m_pcolorref[i * s + j] = pdib->m_pcolorref[(cy - j - 1) * srcS + (cx - i - 1)];
 
          }
 
@@ -5649,12 +5674,12 @@ restart:
 
    void dib::rotate90flipx()
    {
-      rotate90(dynamic_cast < dib *> (clone()));
+      rotate90flipx(dynamic_cast < dib *> (clone()));
    }
 
    void dib::rotate180flipx()
    {
-      rotate180(dynamic_cast < dib *> (clone()));
+      rotate180flipx(dynamic_cast < dib *> (clone()));
    }
 
    void dib::rotate270flipx()
@@ -8370,7 +8395,7 @@ error:
    void dib::on_load_image()
    {
 
-      if (oprop("exif_orientation").i32() != 0)
+      if (oprop("exif_orientation").i32() > 0)
       {
 
          on_exif_orientation();
@@ -8403,7 +8428,7 @@ error:
          rotate270();
 
       }
-      else if (rotate_none_flip_x == rotate_none_flip_x)
+      else if (erotateflip == rotate_none_flip_x)
       {
 
          flipx();
