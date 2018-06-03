@@ -8438,7 +8438,7 @@ restart:
                if (spui->IsWindowVisible())
                {
 
-                  //spui->defer_notify_mouse_move(pt);
+                  spui->defer_notify_mouse_move(pt);
 
                }
 

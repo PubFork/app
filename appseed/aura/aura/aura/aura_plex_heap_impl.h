@@ -159,7 +159,7 @@ public:
 
       if (palloc != NULL)
       {
-
+         ASSERT(size <= palloc->m_uiAllocSize);
          return palloc->Alloc();
 
       }
