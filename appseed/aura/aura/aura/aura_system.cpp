@@ -871,6 +871,17 @@ namespace aura
 
       }
 
+      try
+      {
+
+         m_mapDib.remove_all();
+
+      }
+      catch (...)
+      {
+
+      }
+
       m_pvisual.release();
 
       m_spfile.release();
@@ -917,6 +928,8 @@ namespace aura
       }
 
 #endif
+
+
 
       try
       {

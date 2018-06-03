@@ -2777,6 +2777,9 @@
     <ClInclude Include="aura\os\default_library.inl">
       <Filter>Header Files\aura\os</Filter>
     </ClInclude>
+    <ClInclude Include="graphics\draw2d\draw2d_matrix.h">
+      <Filter>Header Files\graphics\draw2d</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="multithreading\multithreading_condition.cpp">
@@ -4796,6 +4799,9 @@
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
     <ClCompile Include="graphics\draw2d\draw2d_draw2d.cpp">
+      <Filter>Source Files\graphics\draw2d</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\draw2d\draw2d_matrix.cpp">
       <Filter>Source Files\graphics\draw2d</Filter>
     </ClCompile>
   </ItemGroup>

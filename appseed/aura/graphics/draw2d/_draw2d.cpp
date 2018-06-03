@@ -10,6 +10,7 @@
 #include "draw2d_font.cpp"
 #include "draw2d_graphics.cpp"
 #include "draw2d_keep.cpp"
+#include "draw2d_matrix.cpp"
 #include "draw2d_object.cpp"
 #include "draw2d_palette.cpp"
 #include "draw2d_path.cpp"

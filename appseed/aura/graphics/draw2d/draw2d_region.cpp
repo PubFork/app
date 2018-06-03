@@ -709,8 +709,6 @@ namespace draw2d
       return contains(pointd(ppt));
 
    }
-
-
    void region::max_bounding_box(LPRECT lprect)
    {
 

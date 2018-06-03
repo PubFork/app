@@ -5574,6 +5574,39 @@ namespace draw2d
    }
 
 
+   bool graphics::get(matrix & matrix)
+   {
+
+      return false;
+
+   }
+
+
+   bool graphics::set(const matrix & matrix)
+   {
+
+      return false;
+
+   }
+
+
+   bool graphics::append(const matrix & matrix)
+   {
+
+      return false;
+
+   }
+
+
+   bool graphics::prepend(const matrix & matrix)
+   {
+
+      return false;
+
+   }
+
+
 } // namespace draw2d
+
 
 

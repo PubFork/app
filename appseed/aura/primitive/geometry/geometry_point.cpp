@@ -117,13 +117,13 @@ LPARAM point64::lparam() const NOTHROW
 
 
 
-void pointd::offset(int32_t xOffset, int32_t yOffset) NOTHROW
+void pointd::offset(double xOffset, double yOffset) NOTHROW
 { x += xOffset; y += yOffset; }
 void pointd::offset(POINTD pointd) NOTHROW
 { x += pointd.x; y += pointd.y; }
 void pointd::offset(SIZED size) NOTHROW
 { x += size.cx; y += size.cy; }
-void pointd::SetPoint(int32_t X, int32_t Y) NOTHROW
+void pointd::SetPoint(double X, double Y) NOTHROW
 { x = X; y = Y; }
 bool pointd::operator==(POINTD pointd) const NOTHROW
 { return (x == pointd.x && y == pointd.y); }

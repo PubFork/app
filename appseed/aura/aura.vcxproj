@@ -1297,6 +1297,14 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="graphics\draw2d\draw2d_matrix.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="graphics\draw2d\draw2d_nanosvg.cpp" />
     <ClCompile Include="graphics\draw2d\draw2d_object.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>
@@ -3399,6 +3407,7 @@
     <ClInclude Include="graphics\draw2d\draw2d_graphics.h" />
     <ClInclude Include="graphics\draw2d\draw2d_igui.h" />
     <ClInclude Include="graphics\draw2d\draw2d_keep.h" />
+    <ClInclude Include="graphics\draw2d\draw2d_matrix.h" />
     <ClInclude Include="graphics\draw2d\draw2d_object.h" />
     <ClInclude Include="graphics\draw2d\draw2d_palette.h" />
     <ClInclude Include="graphics\draw2d\draw2d_path.h" />

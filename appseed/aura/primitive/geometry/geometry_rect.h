@@ -157,6 +157,9 @@ rect(point ptTopLeft, point ptBottomRight) NOTHROW : rect(ptTopLeft.x, ptTopLeft
    void constraint_v5(const RECT & rect, const class size sizeMin);
    void constraint_v7(const RECT & rect);
    void Align(int32_t align,const RECT & rect);
+   void align_rate(double x, double y, const RECT & rect);
+   void align_x(double x, const RECT & rect);
+   void align_y(double y, const RECT & rect);
    void ScaleHeightAspect(int32_t iNewHeight, int32_t iCenterX, int32_t iCenterY);
    void ScaleRect(double dx, double dy, int32_t ix, int32_t iy);
    void ExtendOnCenter(const RECT & rect);
@@ -167,8 +170,8 @@ rect(point ptTopLeft, point ptBottomRight) NOTHROW : rect(ptTopLeft.x, ptTopLeft
    void DeflateBottomRightSizeByRate(double dRate);
    void SetBottomRightSize(int32_t iWidth, int32_t iHeight);
    void SetBottomRightSize(SIZE sz);
-   inline point top_right();
-   inline point bottom_left();
+   inline point top_right() const;
+   inline point bottom_left() const;
 
    void SubtractRectMajor(LPCRECT lpcrectMajor, LPCRECT lpcrectMinor);
    void SubtractRectMinor(LPCRECT lpcrectMajor, LPCRECT lpcrectMinor);
@@ -381,12 +384,12 @@ rect64(point64 ptTopLeft, point64 ptBottomRight) NOTHROW : rect64(ptTopLeft.x, p
 
 
 
-inline point rect::top_right()
+inline point rect::top_right() const
 {
    return point(right, top);
 }
 
-inline point rect::bottom_left()
+inline point rect::bottom_left() const
 {
    return point(left, bottom);
 }
@@ -602,8 +605,8 @@ rectd(pointd ptTopLeft, pointd ptBottomRight) NOTHROW : rectd(ptTopLeft.x, ptTop
    void CenterOf(LPCRECTD lpcrect,SIZED size);
    void DeflateBottomRightSizeByRate(double dRate);
    void SetBottomRightSize(double iWidth, double iHeight);
-   inline pointd top_right();
-   inline pointd bottom_left();
+   inline pointd top_right() const;
+   inline pointd bottom_left() const;
 
    void SubtractRectMajor(LPCRECTD lpcrectMajor, LPCRECTD lpcrectMinor);
    void SubtractRectMinor(LPCRECTD lpcrectMajor, LPCRECTD lpcrectMinor);

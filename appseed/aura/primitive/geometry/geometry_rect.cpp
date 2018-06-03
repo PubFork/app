@@ -150,6 +150,41 @@ void rect::Align(int32_t align, const RECT & rect)
 
 }
 
+
+void rect::align_rate(double x, double y, const RECT & rect)
+{
+
+   align_x(x, rect);
+
+   align_y(y, rect);
+
+}
+
+
+void rect::align_x(double dRate, const RECT & rect)
+{
+
+   int x;
+
+   x = rect.left + (rect.right - rect.left - width()) * ((dRate + 1.0) / 2.0);
+
+   move_to_x(x);
+
+}
+
+
+void rect::align_y(double dRate, const RECT & rect)
+{
+
+   int y;
+
+   y = rect.top + (rect.bottom - rect.top - height()) * ((dRate + 1.0) / 2.0);
+
+   move_to_y(y);
+
+}
+
+
 void rect::constraint_v5(const RECT & rect, const class size sizeMin)
 {
    if(left < rect.left)

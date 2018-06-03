@@ -204,10 +204,10 @@ pointd(const SIZE64 * psz) NOTHROW : pointd(*psz) {}
 // Operations
 
 // translate the pointd
-   void offset(int32_t xOffset, int32_t yOffset) NOTHROW;
+   void offset(double xOffset, double yOffset) NOTHROW;
    void offset(POINTD pointd) NOTHROW;
    void offset(SIZED sized) NOTHROW;
-   void SetPoint(int32_t X, int32_t Y) NOTHROW;
+   void SetPoint(double X, double Y) NOTHROW;
 
    bool operator==(POINTD pointd) const NOTHROW;
    bool operator!=(POINTD pointd) const NOTHROW;

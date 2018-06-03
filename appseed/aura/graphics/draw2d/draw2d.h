@@ -4,6 +4,7 @@
 #include "draw2d_fwd.h"
 #include "draw2d_const.h"
 #include "draw2d_common.h"
+#include "draw2d_matrix.h"
 
 
 namespace draw2d

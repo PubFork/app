@@ -632,6 +632,11 @@ namespace draw2d
       virtual bool setFont(::draw2d::font * pfont);
       virtual bool set_font(::draw2d::font * pfont);
 
+      virtual bool get(matrix & matrix);
+      virtual bool set(const matrix & matrix);
+      virtual bool append(const matrix & matrix);
+      virtual bool prepend(const matrix & matrix);
+
 
 
       //=============================================================================

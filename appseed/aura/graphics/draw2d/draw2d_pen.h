@@ -18,6 +18,7 @@ namespace draw2d
          type_solid,
          type_dot,
          type_brush,
+         type_dash
 
       };
 

@@ -27,6 +27,46 @@ CLASS_DECL_AURA int max_cvt_dup(char *buf,int nchar,double arg,int ndigits,int *
 
 
 
+#define DOUBLE_PI 3.14159265358979323846
+
+#include <math.h>
+
+
+namespace degree
+{
+
+   inline CLASS_DECL_AURA double to_radian(double dAngleDegrees)
+   {
+
+      return dAngleDegrees * DOUBLE_PI / 180.0;
+
+   }
+
+   inline CLASS_DECL_AURA double sin(double dAngleDegrees)
+   {
+
+      return ::sin(to_radian(dAngleDegrees));
+
+   }
+
+   inline CLASS_DECL_AURA double cos(double dAngleDegrees)
+   {
+
+      return ::cos(to_radian(dAngleDegrees));
+
+   }
+
+   inline CLASS_DECL_AURA double tan(double dAngleDegrees)
+   {
+
+      return ::tan(to_radian(dAngleDegrees));
+
+   }
+
+} // namespace degree
+
+
+
 
 
 
