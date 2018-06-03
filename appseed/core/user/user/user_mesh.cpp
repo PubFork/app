@@ -1563,7 +1563,7 @@ namespace user
          if(pt.x < 0
                || pt.x > rectClient.right
                || pt.y < 0
-               || pt.x > rectClient.bottom)
+               || pt.y > rectClient.bottom)
          {
 
             return false;
