@@ -27,17 +27,24 @@
     @ingroup unicode
 */
 
+
 inline int trailingBytesForUTF8(char ch);
+
 
 inline int ch_uni_len(int c)
 {
+
    return trailingBytesForUTF8(c) + 1;
-}
-inline int str_uni_len(const char * pszUtf8)
-{
-   return ch_uni_len(*pszUtf8);
+
 }
 
+
+inline int str_uni_len(const char * pszUtf8)
+{
+
+   return ch_uni_len(*pszUtf8);
+
+}
 
 
 namespace str

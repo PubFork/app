@@ -2827,7 +2827,7 @@ bool simple_frame_window::WfiOnMove(bool bTracking)
    if (!bTracking)
    {
 
-      ::fork(get_app(), [this]()
+      fork([this]()
       {
 
          WindowDataSaveWindowRect();

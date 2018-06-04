@@ -176,9 +176,9 @@ namespace user
 
    void plain_edit::_001OnDestroy(::message::message * pobj)
    {
-      UNREFERENCED_PARAMETER(pobj);
-   }
 
+
+   }
 
 
    void plain_edit::VirtualOnSize()
@@ -195,28 +195,14 @@ namespace user
 
    void plain_edit::_001OnPaint(::message::message * pobj)
    {
-      UNREFERENCED_PARAMETER(pobj);
+
    }
 
    void plain_edit::on_viewport_offset(::draw2d::graphics * pgraphics)
    {
+
    }
 
-   //bool plain_edit::get_font(::draw2d::font_sp & spfont, e_font efont, ::user::interaction * pui)
-   //{
-
-   //   if (m_spfont.is_set() && pui == this)
-   //   {
-
-   //      spfont = m_spfont;
-
-   //      return true;
-
-   //   }
-
-   //   return ::user::style::get_font(spfont, efont, pui);
-
-   //}
 
    void plain_edit::_001OnDraw(::draw2d::graphics * pgraphics)
    {
@@ -698,21 +684,22 @@ namespace user
 
    }
 
+
    void plain_edit::_001OnContextMenu(::message::message * pobj)
    {
-      //      SCAST_PTR(::message::context_menu, pcontextmenu, pobj);
-      //      point point = pcontextmenu->GetPoint();
 
    }
 
+
    void plain_edit::_001OnRButtonUp(::message::message * pobj)
    {
-      SCAST_PTR(::message::mouse, pmouse, pobj);
 
+      SCAST_PTR(::message::mouse, pmouse, pobj);
 
       point pt = pmouse->m_pt;
 
       ScreenToClient(&pt);
+
       {
 
          synch_lock sl(m_pmutex);
@@ -729,17 +716,10 @@ namespace user
             _001SetSel(0, _001GetTextLength());
 
          }
-         //else
-
-         //strsize iSel = char_hit_test(pt.x, pt.y);
-
-         //m_ptree->m_iSelEnd = char_hit_test(pt.x, pt.y);
-
-         //m_iColumn = SelToColumnX(m_ptree->m_iSelEnd, m_iColumnX);
 
       }
 
-      RedrawWindow();
+      set_need_redraw();
 
       m_bRMouseDown = false;
 
@@ -1114,6 +1094,8 @@ namespace user
 
       synch_lock sl(m_pmutex);
 
+
+
       return strsize (m_ptree->m_editfile.get_length());
 
    }
@@ -1126,6 +1108,8 @@ namespace user
          return;
 
       synch_lock sl(m_pmutex);
+
+
 
       file_size_t iSize = m_ptree->m_editfile.get_length();
 
@@ -1154,6 +1138,8 @@ namespace user
    {
 
       synch_lock sl(m_pmutex);
+
+
 
       ::sort::sort_non_negative(iBegParam, iEndParam);
 
@@ -1232,6 +1218,8 @@ namespace user
       {
 
          synch_lock sl(m_pmutex);
+
+
 
          m_ptree->m_editfile.seek(m_ptree->m_iSelBeg, ::file::seek_begin);
 
@@ -1505,6 +1493,8 @@ namespace user
    {
 
       synch_lock sl(m_pmutex);
+
+
 
       rect rectClient;
 
@@ -1863,6 +1853,8 @@ namespace user
    {
 
       synch_lock sl(m_pmutex);
+
+
 
       rect rectClient;
 
@@ -2844,6 +2836,9 @@ end:
 
       synch_lock sl(m_pmutex);
 
+
+
+
       if (m_ptree == NULL)
       {
 
@@ -2925,6 +2920,8 @@ end:
 
       synch_lock sl(m_pmutex);
 
+
+
       m_ptree->m_editfile.flush();
 
    }
@@ -2946,6 +2943,8 @@ end:
    {
 
       synch_lock sl(m_pmutex);
+
+
 
       memory m;
 
@@ -3327,6 +3326,8 @@ finished_update:
    void plain_edit::_001EditDelete()
    {
 
+      synch_lock sl(m_pmutex);
+
       bool bFullUpdate = false;
 
       index iLineUpdate = -1;
@@ -3462,6 +3463,8 @@ finished_update:
    bool plain_edit::_001DeleteSel(bool & bFullUpdate, index & iLineUpdate)
    {
 
+      synch_lock sl(m_pmutex);
+
       strsize i1 = m_ptree->m_iSelBeg;
 
       strsize i2 = m_ptree->m_iSelEnd;
@@ -3556,6 +3559,8 @@ finished_update:
 
    bool plain_edit::_001ReplaceSel(const char * pszText, bool & bFullUpdate, index & iLineUpdate)
    {
+
+      synch_lock sl(m_pmutex);
 
       strsize i1 = m_ptree->m_iSelBeg;
 
@@ -4612,6 +4617,8 @@ finished_update:
 
          synch_lock sl(m_pmutex);
 
+
+
          m_ptree->m_editfile.seek(0, ::file::seek_begin);
          m_ptree->m_editfile.Delete((memory_size_t)m_ptree->m_editfile.get_length());
          m_ptree->m_editfile.seek(0, ::file::seek_begin);
@@ -5165,6 +5172,8 @@ finished_update:
    {
 
       synch_lock sl(m_pmutex);
+
+
 
       bool bFullUpdate = false;
 

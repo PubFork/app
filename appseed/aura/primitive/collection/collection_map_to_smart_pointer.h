@@ -8,9 +8,9 @@ class map_to_smart_pointer :
 public:
 
 
-   map_to_smart_pointer(::aura::application * papp = NULL, ::count nBlockSize = 10) :
+   map_to_smart_pointer(::aura::application * papp = NULL) :
       object(papp),
-      map < TYPE, ARG_TYPE, smart_pointer < T >, const smart_pointer < T > & > (papp, nBlockSize)
+      map < TYPE, ARG_TYPE, smart_pointer < T >, const smart_pointer < T > & > (papp)
    {
    }
 
@@ -30,9 +30,9 @@ class string_to_smart_pointer :
 public:
 
 
-   string_to_smart_pointer(::aura::application * papp = NULL, ::count nBlockSize = 10) :
+   string_to_smart_pointer(::aura::application * papp = NULL) :
       object(papp),
-      string_map < smart_pointer < T >, const smart_pointer < T > & > (papp, nBlockSize)
+      string_map < smart_pointer < T >, const smart_pointer < T > & > (papp)
    {
 
    }

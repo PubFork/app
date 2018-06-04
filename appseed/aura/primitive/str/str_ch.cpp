@@ -8,6 +8,26 @@ namespace str
 {
 
 
+   /* --------------------------------------------------------------------- */
+
+   /*
+   * Index into the table below with the first byte of a UTF-8 sequence to
+   * get the number of trailing bytes that are supposed to follow it.
+   * Note that *legal* UTF-8 values can't have 4 or 5-bytes. The table is
+   * left as-is for anyone who may want to do such conversion, which was
+   * allowed in earlier algorithms.
+   */
+   CLASS_DECL_AURA const char g_trailingBytesForUTF8[256] =
+   {
+      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+      1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+      2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 3,3,3,3,3,3,3,3,4,4,4,4,5,5,5,5
+   };
    int32_t utf8_char::parse(const char * psz)
    {
       char chLen =  1 + trailingBytesForUTF8(*psz);
@@ -255,26 +275,6 @@ namespace str
          return sizeof(arr_idxCharInfo)+sizeof(arr_CharInfo)+sizeof(arr_idxCharInfo2)+sizeof(arr_CharInfo2);
       }
 
-      /* --------------------------------------------------------------------- */
-
-      /*
-       * Index into the table below with the first byte of a UTF-8 sequence to
-       * get the number of trailing bytes that are supposed to follow it.
-       * Note that *legal* UTF-8 values can't have 4 or 5-bytes. The table is
-       * left as-is for anyone who may want to do such conversion, which was
-       * allowed in earlier algorithms.
-       */
-      static const char trailingBytesForUTF8[256] =
-      {
-         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-         1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-         2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 3,3,3,3,3,3,3,3,4,4,4,4,5,5,5,5
-      };
 
       /*
        * Magic values subtracted from a buffer value during UTF8 conversion.
@@ -295,7 +295,7 @@ namespace str
       {
          uchar * source = (uchar *) pszUtf8;
          int64_t ch = 0;
-         int32_t extraBytesToRead = trailingBytesForUTF8[*source];
+         int32_t extraBytesToRead = trailingBytesForUTF8(*source);
          if(*source == '\0') return -1;
          if((source + extraBytesToRead + 1) > (uchar *) pszEnd)
             return -1;

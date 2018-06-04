@@ -1140,11 +1140,11 @@ namespace user
 
    void menu::_001OnNcActivate(::message::message * pobj)
    {
-      
+
       SCAST_PTR(::message::base, pbase, pobj);
-      
+
       pbase->m_bRet = true;
-      
+
       pbase->set_lresult(0);
 
    }
@@ -1310,7 +1310,7 @@ namespace user
    bool menu::has_pending_graphical_update()
    {
 
-      return true;
+      return m_bRedraw;
 
    }
 

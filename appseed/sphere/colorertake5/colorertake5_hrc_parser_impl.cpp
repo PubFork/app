@@ -7,12 +7,12 @@ namespace colorertake5
 
    HRCParserImpl::HRCParserImpl(::aura::application * papp) :
       object(papp),
-      fileTypeHash(papp, 200),
-      schemeHash(papp, 4000),
-      regionNamesHash(papp, 1000)
+      fileTypeHash(papp),
+      schemeHash(papp),
+      regionNamesHash(papp)
    {
-      regionNamesVector.allocate(0, 200);
-      fileTypeVector.allocate(0, 200);
+      regionNamesVector.allocate(0, 203);
+      fileTypeVector.allocate(0, 203);
       parseType = NULL;
       errorHandler = NULL;
       updateStarted = false;

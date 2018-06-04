@@ -131,9 +131,9 @@ CLASS_DECL_AURA bool solve_relative_compressions_inline(string & str, bool & bUr
 
    bool bDup = false;
 
-   char * psz = (char *) str.c_str();
-
    strsize iLen = str.get_length();
+
+   char * psz = str.GetBufferSetLength(iLen);
 
    //string strAbsolute(strParam);
 

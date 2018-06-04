@@ -246,11 +246,11 @@ _Out_ LPDWORD lpNumberOfBytesRead
 
 
 int_bool __stdcall My_ReadProcessMemory (
-   HANDLE      hProcess,
-   DWORD64     qwBaseAddress,
-   PVOID       lpBuffer,
-   DWORD       nSize,
-   LPDWORD     lpNumberOfBytesRead
+HANDLE      hProcess,
+DWORD64     qwBaseAddress,
+PVOID       lpBuffer,
+DWORD       nSize,
+LPDWORD     lpNumberOfBytesRead
 )
 {
 
@@ -305,17 +305,17 @@ namespace exception
    CLASS_DECL_AURA class ::exception::engine & engine()
    {
 
-         return *g_pexceptionengine;
+      return *g_pexceptionengine;
 
    }
 
    typedef int_bool (__stdcall *PReadProcessMemoryRoutine)(
-      HANDLE      hProcess,
-      DWORD64     qwBaseAddress,
-      PVOID       lpBuffer,
-      uint32_t       nSize,
-      LPDWORD     lpNumberOfBytesRead,
-      LPVOID      pUserData  // optional data, which was passed in "ShowCallstack"
+   HANDLE      hProcess,
+   DWORD64     qwBaseAddress,
+   PVOID       lpBuffer,
+   uint32_t       nSize,
+   LPDWORD     lpNumberOfBytesRead,
+   LPVOID      pUserData  // optional data, which was passed in "ShowCallstack"
    );
 
    // The following is used to pass the "userData"-Pointer to the user-provided readMemoryFunction
@@ -335,7 +335,7 @@ namespace exception
       m_mutex(papp)
 #ifdef WINDOWSEX
       ,m_bOk(false)
-      ,m_iRef(0)
+      ,m_bInit(false)
 #endif
    {
 
@@ -553,29 +553,29 @@ namespace exception
 
 #if OSBIT == 64
          bool r = StackWalk64(
-                     dwType,   // __in      uint32_t MachineType,
-                     hprocess,        // __in      HANDLE hProcess,
-                     get_current_thread(),         // __in      HANDLE hThread,
-                     &m_stackframe,                       // __inout   LP STACKFRAME64 StackFrame,
-                     &m_context,                  // __inout   PVOID ContextRecord,
-                     My_ReadProcessMemory,                     // __in_opt  PREAD_PROCESS_MEMORY_ROUTINE64 ReadMemoryRoutine,
-                     //NULL,                     // __in_opt  PREAD_PROCESS_MEMORY_ROUTINE64 ReadMemoryRoutine,
-                     SymFunctionTableAccess64,                      // __in_opt  PFUNCTION_TABLE_ACCESS_ROUTINE64 FunctionTableAccessRoutine,
-                     SymGetModuleBase64,                     // __in_opt  PGET_MODULE_AXIS_ROUTINE64 GetModuleBaseRoutine,
-                     NULL                       // __in_opt  PTRANSLATE_ADDRESS_ROUTINE64 TranslateAddress
+                  dwType,   // __in      uint32_t MachineType,
+                  hprocess,        // __in      HANDLE hProcess,
+                  get_current_thread(),         // __in      HANDLE hThread,
+                  &m_stackframe,                       // __inout   LP STACKFRAME64 StackFrame,
+                  &m_context,                  // __inout   PVOID ContextRecord,
+                  My_ReadProcessMemory,                     // __in_opt  PREAD_PROCESS_MEMORY_ROUTINE64 ReadMemoryRoutine,
+                  //NULL,                     // __in_opt  PREAD_PROCESS_MEMORY_ROUTINE64 ReadMemoryRoutine,
+                  SymFunctionTableAccess64,                      // __in_opt  PFUNCTION_TABLE_ACCESS_ROUTINE64 FunctionTableAccessRoutine,
+                  SymGetModuleBase64,                     // __in_opt  PGET_MODULE_AXIS_ROUTINE64 GetModuleBaseRoutine,
+                  NULL                       // __in_opt  PTRANSLATE_ADDRESS_ROUTINE64 TranslateAddress
                   ) != FALSE;
 #else
          bool r = StackWalk(
-                     dwType,   // __in      uint32_t MachineType,
-                     hprocess,        // __in      HANDLE hProcess,
-                     get_current_thread(),         // __in      HANDLE hThread,
-                     &m_stackframe,                       // __inout   LP STACKFRAME64 StackFrame,
-                     &m_context,                  // __inout   PVOID ContextRecord,
-                     My_ReadProcessMemory32,                     // __in_opt  PREAD_PROCESS_MEMORY_ROUTINE64 ReadMemoryRoutine,
-                     //NULL,                     // __in_opt  PREAD_PROCESS_MEMORY_ROUTINE64 ReadMemoryRoutine,
-                     SymFunctionTableAccess,                      // __in_opt  PFUNCTION_TABLE_ACCESS_ROUTINE64 FunctionTableAccessRoutine,
-                     SymGetModuleBase,                     // __in_opt  PGET_MODULE_AXIS_ROUTINE64 GetModuleBaseRoutine,
-                     NULL                       // __in_opt  PTRANSLATE_ADDRESS_ROUTINE64 TranslateAddress
+                  dwType,   // __in      uint32_t MachineType,
+                  hprocess,        // __in      HANDLE hProcess,
+                  get_current_thread(),         // __in      HANDLE hThread,
+                  &m_stackframe,                       // __inout   LP STACKFRAME64 StackFrame,
+                  &m_context,                  // __inout   PVOID ContextRecord,
+                  My_ReadProcessMemory32,                     // __in_opt  PREAD_PROCESS_MEMORY_ROUTINE64 ReadMemoryRoutine,
+                  //NULL,                     // __in_opt  PREAD_PROCESS_MEMORY_ROUTINE64 ReadMemoryRoutine,
+                  SymFunctionTableAccess,                      // __in_opt  PFUNCTION_TABLE_ACCESS_ROUTINE64 FunctionTableAccessRoutine,
+                  SymGetModuleBase,                     // __in_opt  PGET_MODULE_AXIS_ROUTINE64 GetModuleBaseRoutine,
+                  NULL                       // __in_opt  PTRANSLATE_ADDRESS_ROUTINE64 TranslateAddress
                   ) != FALSE;
 
 #endif
@@ -826,95 +826,97 @@ namespace exception
    bool engine::load_modules()
    {
 
-      HANDLE hprocess = SymGetProcessHandle();
-      uint32_t  dwPid = GetCurrentProcessId();
+      return true;
 
-      // enumerate modules
-      if (is_windows_nt())
-      {
-         typedef bool (WINAPI *ENUMPROCESSMODULES)(HANDLE, HMODULE*, uint32_t, LPDWORD);
-
-         HINSTANCE hInst = LoadLibrary("psapi.dll");
-         if (hInst)
-         {
-            ENUMPROCESSMODULES fnEnumProcessModules =
-               (ENUMPROCESSMODULES)GetProcAddress(hInst, "EnumProcessModules");
-            DWORD cbNeeded = 0;
-            if (fnEnumProcessModules &&
-                  fnEnumProcessModules(GetCurrentProcess(), 0, 0, &cbNeeded) &&
-                  cbNeeded)
-            {
-               HMODULE * pmod = (HMODULE *)alloca(cbNeeded);
-               DWORD cb = cbNeeded;
-               if (fnEnumProcessModules(GetCurrentProcess(), pmod, cb, &cbNeeded))
-               {
-                  m_iRef = 0;
-                  for (uint32_t i = 0; i < cb / sizeof (HMODULE); ++i)
-                  {
-                     if (!load_module(hprocess, pmod[i]))
-                     {
-                        //   m_iRef = -1;
-                        //   break;
-//                        _ASSERTE(0);
-                        m_iRef = -1;
-                        break;
-                     }
-                  }
-               }
-            }
-            else
-            {
-               _ASSERTE(0);
-            }
-            VERIFY(FreeLibrary(hInst));
-         }
-         else
-         {
-            _ASSERTE(0);
-         }
-      }
-      else
-      {
-         typedef HANDLE (WINAPI *CREATESNAPSHOT)(uint32_t, uint32_t);
-         typedef bool (WINAPI *MODULEWALK)(HANDLE, LPMODULEENTRY32);
-
-         HMODULE hMod = GetModuleHandle("kernel32");
-         CREATESNAPSHOT fnCreateToolhelp32Snapshot = (CREATESNAPSHOT)GetProcAddress(hMod, "CreateToolhelp32Snapshot");
-         MODULEWALK fnModule32First = (MODULEWALK)GetProcAddress(hMod, "Module32First");
-         MODULEWALK fnModule32Next  = (MODULEWALK)GetProcAddress(hMod, "Module32Next");
-
-         if (fnCreateToolhelp32Snapshot &&
-               fnModule32First &&
-               fnModule32Next)
-         {
-            HANDLE hModSnap = fnCreateToolhelp32Snapshot(TH32CS_SNAPMODULE, dwPid);
-            if (hModSnap)
-            {
-               MODULEENTRY32 me32 = {0};
-               me32.dwSize = sizeof(MODULEENTRY32);
-               if (fnModule32First(hModSnap, &me32))
-               {
-                  m_iRef = 0;
-                  do
-                  {
-                     if (!load_module(hprocess, me32.hModule))
-                     {
-                        //   m_iRef = -1;
-                        //   break;
-                     }
-                  }
-                  while(fnModule32Next(hModSnap, &me32));
-               }
-               VERIFY(CloseHandle(hModSnap));
-            }
-         }
-      }
-
-      if (m_iRef == -1)
-      {
-         VERIFY(SymCleanup(SymGetProcessHandle()));
-      }
-
+//      HANDLE hprocess = SymGetProcessHandle();
+//      uint32_t  dwPid = GetCurrentProcessId();
+//
+//      // enumerate modules
+//      if (is_windows_nt())
+//      {
+//         typedef bool (WINAPI *ENUMPROCESSMODULES)(HANDLE, HMODULE*, uint32_t, LPDWORD);
+//
+//         HINSTANCE hInst = LoadLibrary("psapi.dll");
+//         if (hInst)
+//         {
+//            ENUMPROCESSMODULES fnEnumProcessModules =
+//            (ENUMPROCESSMODULES)GetProcAddress(hInst, "EnumProcessModules");
+//            DWORD cbNeeded = 0;
+//            if (fnEnumProcessModules &&
+//                  fnEnumProcessModules(GetCurrentProcess(), 0, 0, &cbNeeded) &&
+//                  cbNeeded)
+//            {
+//               HMODULE * pmod = (HMODULE *)alloca(cbNeeded);
+//               DWORD cb = cbNeeded;
+//               if (fnEnumProcessModules(GetCurrentProcess(), pmod, cb, &cbNeeded))
+//               {
+//                  m_iRef = 0;
+//                  for (uint32_t i = 0; i < cb / sizeof (HMODULE); ++i)
+//                  {
+//                     if (!load_module(hprocess, pmod[i]))
+//                     {
+//                        //   m_iRef = -1;
+//                        //   break;
+////                        _ASSERTE(0);
+//                        m_iRef = -1;
+//                        break;
+//                     }
+//                  }
+//               }
+//            }
+//            else
+//            {
+//               _ASSERTE(0);
+//            }
+//            VERIFY(FreeLibrary(hInst));
+//         }
+//         else
+//         {
+//            _ASSERTE(0);
+//         }
+//      }
+//      else
+//      {
+//         typedef HANDLE (WINAPI *CREATESNAPSHOT)(uint32_t, uint32_t);
+//         typedef bool (WINAPI *MODULEWALK)(HANDLE, LPMODULEENTRY32);
+//
+//         HMODULE hMod = GetModuleHandle("kernel32");
+//         CREATESNAPSHOT fnCreateToolhelp32Snapshot = (CREATESNAPSHOT)GetProcAddress(hMod, "CreateToolhelp32Snapshot");
+//         MODULEWALK fnModule32First = (MODULEWALK)GetProcAddress(hMod, "Module32First");
+//         MODULEWALK fnModule32Next  = (MODULEWALK)GetProcAddress(hMod, "Module32Next");
+//
+//         if (fnCreateToolhelp32Snapshot &&
+//               fnModule32First &&
+//               fnModule32Next)
+//         {
+//            HANDLE hModSnap = fnCreateToolhelp32Snapshot(TH32CS_SNAPMODULE, dwPid);
+//            if (hModSnap)
+//            {
+//               MODULEENTRY32 me32 = {0};
+//               me32.dwSize = sizeof(MODULEENTRY32);
+//               if (fnModule32First(hModSnap, &me32))
+//               {
+//                  m_iRef = 0;
+//                  do
+//                  {
+//                     if (!load_module(hprocess, me32.hModule))
+//                     {
+//                        //   m_iRef = -1;
+//                        //   break;
+//                     }
+//                  }
+//                  while(fnModule32Next(hModSnap, &me32));
+//               }
+//               VERIFY(CloseHandle(hModSnap));
+//            }
+//         }
+//      }
+//
+//      if (m_iRef == -1)
+//      {
+//         VERIFY(SymCleanup(SymGetProcessHandle()));
+//      }
+//
       return true;
 
    }
@@ -937,7 +939,82 @@ namespace exception
 
 
 #ifdef WINDOWSEX
+#define LDR_DLL_NOTIFICATION_REASON_LOADED     1
+#define LDR_DLL_NOTIFICATION_REASON_UNLOADED     2
 
+
+
+   typedef struct _LDR_DLL_LOADED_NOTIFICATION_DATA
+   {
+      ULONG Flags;                    //Reserved.
+      PCUNICODE_STRING FullDllName;   //The full path name of the DLL module.
+      PCUNICODE_STRING BaseDllName;   //The base file name of the DLL module.
+      PVOID DllBase;                  //A pointer to the base address for the DLL in memory.
+      ULONG SizeOfImage;              //The size of the DLL image, in bytes.
+   } LDR_DLL_LOADED_NOTIFICATION_DATA, *PLDR_DLL_LOADED_NOTIFICATION_DATA;
+   //The LDR_DLL_UNLOADED_NOTIFICATION_DATA structure has the following definition :
+
+   typedef struct _LDR_DLL_UNLOADED_NOTIFICATION_DATA
+   {
+      ULONG Flags;                    //Reserved.
+      PCUNICODE_STRING FullDllName;   //The full path name of the DLL module.
+      PCUNICODE_STRING BaseDllName;   //The base file name of the DLL module.
+      PVOID DllBase;                  //A pointer to the base address for the DLL in memory.
+      ULONG SizeOfImage;              //The size of the DLL image, in bytes.
+   } LDR_DLL_UNLOADED_NOTIFICATION_DATA, *PLDR_DLL_UNLOADED_NOTIFICATION_DATA;
+
+   typedef union _LDR_DLL_NOTIFICATION_DATA
+   {
+      LDR_DLL_LOADED_NOTIFICATION_DATA Loaded;
+      LDR_DLL_UNLOADED_NOTIFICATION_DATA Unloaded;
+   } LDR_DLL_NOTIFICATION_DATA, *PLDR_DLL_NOTIFICATION_DATA;
+
+
+   VOID CALLBACK LdrDllNotification(
+   ULONG NotificationReason,
+   PLDR_DLL_NOTIFICATION_DATA NotificationData,
+   PVOID Context
+   )
+   {
+      class ::exception::engine * pengine = (class ::exception::engine *)Context;
+      if (NotificationReason == LDR_DLL_NOTIFICATION_REASON_LOADED)
+      {
+
+         ::WaitForSingleObjectEx(pengine->m_pmutex->m_object, INFINITE, FALSE);
+
+         HANDLE hprocess = SymGetProcessHandle();
+         SymRefreshModuleList(hprocess);
+
+         ::ReleaseMutex(pengine->m_pmutex->m_object);
+      }
+
+   }
+
+   typedef NTSTATUS NTAPI FN_LdrUnregisterDllNotification(
+   _In_ PVOID Cookie
+   );
+   typedef FN_LdrUnregisterDllNotification * PFN_LdrUnregisterDllNotification;
+
+
+   PFN_LdrUnregisterDllNotification g_pLdrUnregisterDllNotification = NULL;
+
+   typedef VOID CALLBACK FN_LdrDllNotification(
+   ULONG NotificationReason,
+   PLDR_DLL_NOTIFICATION_DATA NotificationData,
+   PVOID Context
+   );
+   typedef FN_LdrDllNotification * PFN_LdrDllNotification;
+
+   typedef NTSTATUS NTAPI FN_LdrRegisterDllNotification(
+   _In_     ULONG                          Flags,
+   _In_     PFN_LdrDllNotification NotificationFunction,
+   _In_opt_ PVOID                          Context,
+   _Out_    PVOID                          *Cookie
+   );
+   typedef FN_LdrRegisterDllNotification * PFN_LdrRegisterDllNotification;
+
+
+   PFN_LdrRegisterDllNotification g_pLdrRegisterDllNotification = NULL;
 
 
    bool engine::init()
@@ -951,31 +1028,51 @@ namespace exception
 
       single_lock sl(m_pmutex, true);
 
-      if (!m_iRef)
+      if (m_bInit)
       {
-         m_iRef = -1;
 
-         HANDLE hprocess = SymGetProcessHandle();
-         uint32_t  dwPid = GetCurrentProcessId();
+         return true;
 
-         // initializes
-         SymSetOptions(SymGetOptions()|SYMOPT_DEFERRED_LOADS|SYMOPT_LOAD_LINES);
-         //   SymSetOptions (SYMOPT_UNDNAME|SYMOPT_LOAD_LINES);
-         if (::SymInitialize(hprocess, 0, TRUE))
-         {
-            load_modules();
-         }
-         else
-         {
-            _ASSERTE(0);
-         }
       }
-      if (m_iRef == -1)
+
+      HANDLE hprocess = SymGetProcessHandle();
+      uint32_t  dwPid = GetCurrentProcessId();
+
+      // initializes
+      SymSetOptions(SymGetOptions()|SYMOPT_DEFERRED_LOADS|SYMOPT_LOAD_LINES);
+      //   SymSetOptions (SYMOPT_UNDNAME|SYMOPT_LOAD_LINES);
+      if (!::SymInitialize(hprocess, 0, TRUE))
+      {
+         DWORD dw = ::GetLastError();
+         output_debug_string("Last Error = " + ::str::from(dw));
+         _ASSERTE(0);
+
+         //load_modules();
          return false;
-      if (0 == m_iRef)
-         ++m_iRef; // lock it once
-      //   ++m_iRef;
+      }
+
+      if (g_pLdrUnregisterDllNotification == NULL)
+      {
+         HINSTANCE h = LoadLibrary("Ntdll.dll");
+
+         g_pLdrUnregisterDllNotification = (PFN_LdrUnregisterDllNotification) GetProcAddress(h, "LdrUnregisterDllNotification");
+         g_pLdrRegisterDllNotification = (PFN_LdrRegisterDllNotification) GetProcAddress(h, "LdrRegisterDllNotification");
+
+      }
+      m_bInit = true;
+
+      m_pvoidDllNotificationCookie = NULL;
+
+      if (g_pLdrUnregisterDllNotification != NULL &&
+            g_pLdrRegisterDllNotification != NULL)
+      {
+
+         (*g_pLdrRegisterDllNotification)(0, &LdrDllNotification, this, &m_pvoidDllNotificationCookie);
+
+      }
+
       return true;
+
    }
 
 #endif
@@ -1000,7 +1097,8 @@ namespace exception
    bool engine::fail() const
    {
 
-      return m_iRef == -1;
+//      return m_iRef == -1;
+      return !m_bInit;
 
    }
 
@@ -1013,17 +1111,29 @@ namespace exception
 #ifdef WINDOWSEX
 
 
+
+
    void engine::clear()
    {
 
       single_lock sl(m_pmutex, true);
 
-      if (m_iRef ==  0) return;
-      if (m_iRef == -1) return;
-      if (--m_iRef == 0)
+      if (!m_bInit)
       {
-         VERIFY(SymCleanup(SymGetProcessHandle()));
+
+         return;
+
       }
+
+      if (g_pLdrUnregisterDllNotification != NULL)
+      {
+         (*g_pLdrUnregisterDllNotification)(&m_pvoidDllNotificationCookie);
+
+      }
+
+      VERIFY(SymCleanup(SymGetProcessHandle()));
+      m_bInit = false;
+
    }
 
 #endif
@@ -1042,8 +1152,20 @@ namespace exception
       single_lock sl(m_pmutex, true);
 
 #ifdef WINDOWSEX
-      clear();
-      init();
+      //clear();
+      //init();
+      if (!m_bInit)
+      {
+
+         init();
+
+      }
+      else
+      {
+         HANDLE hprocess = SymGetProcessHandle();
+         SymRefreshModuleList(hprocess);
+
+      }
 #endif
 
    }
@@ -1130,8 +1252,8 @@ namespace exception
 #ifdef WINDOWSEX
 
 
-   /////////////////////////////////////////////
-   // prints a current thread's stack
+/////////////////////////////////////////////
+// prints a current thread's stack
 
    struct current_context : CONTEXT
    {

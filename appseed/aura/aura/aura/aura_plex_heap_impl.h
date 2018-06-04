@@ -30,16 +30,8 @@ public:
 
    void pre_finalize();
 
-   void * operator new(size_t s)
-   {
-      return system_heap_alloc(sizeof(plex_heap_alloc));
-   }
-
-   void operator delete(void * p)
-   {
-      system_heap_free(p);
-   }
-
+   void * operator new(size_t s);
+   void operator delete(void * p);
 
 };
 
@@ -85,101 +77,32 @@ class CLASS_DECL_AURA plex_heap_alloc_array :
 public:
 
 
-
-
-   //::count        m_aa[PLEX_HEAP_ALLOC_ARRAY_AINDEX_COUNT];
-   //unsigned int   m_aaSize[PLEX_HEAP_ALLOC_ARRAY_AINDEX_COUNT];
-
-
-   //::count        m_bb[PLEX_HEAP_ALLOC_ARRAY_BINDEX_COUNT];
-   //unsigned int   m_bbSize[PLEX_HEAP_ALLOC_ARRAY_BINDEX_COUNT];
-
-   //::count m_iWorkingSize;
-
-
-//   static memdleak_block * s_pmemdleakList;
-
    plex_heap_alloc_array();
    virtual ~plex_heap_alloc_array();
 
 
+   plex_heap_alloc * find(size_t nAllocSize);
 
 
-   //void * _alloc(size_t nAllocSize);
+   void * _alloc(size_t size);
    void * _realloc(void * p, size_t nAllocSize, size_t nOldAllocSize, int align);
    void _free(void * p, size_t nAllocSize);
 
    void pre_finalize();
 
-   //plex_heap_alloc * find(size_t nAllocSize);
-
    void * alloc_dbg(size_t nAllocSize, int32_t nBlockUse, const char * szFileName, int32_t iLine);
    void * realloc_dbg(void * p, size_t nAllocSize, size_t nOldAllocSize, int align, int32_t nBlockUse, const char * szFileName, int32_t iLine);
    void free_dbg(void * p, size_t nAllocSize);
 
-   void * operator new(size_t s)
-   {
-      return system_heap_alloc(sizeof(plex_heap_alloc_array));
-   }
+   void * operator new(size_t s);
 
-   void operator delete(void * p)
-   {
-      system_heap_free(p);
-   }
-
-
-   inline plex_heap_alloc * find(size_t nAllocSize)
-   {
-      index i = u32_log2(nAllocSize) - 4;
-      if (i <= 0) return m_pData[0];
-      return i >= 20 ? NULL : m_pData[i];
-      //          for (index i = 0; i < m_nSize; i++)
-      //{
-
-      //   if (this->m_pData[i]->m_uiAllocSize >= nAllocSize)
-      //   {
-
-      //      return this->m_pData[i];
-
-      //   }
-
-      //}
-
-      //   return NULL;
-
-   }
-
-
-
-
-   inline void * plex_heap_alloc_array::_alloc(size_t size)
-   {
-
-      plex_heap_alloc * palloc = find(size);
-
-      if (palloc != NULL)
-      {
-         ASSERT(size <= palloc->m_uiAllocSize);
-         return palloc->Alloc();
-
-      }
-      else
-      {
-
-         return ::system_heap_alloc(size);
-
-      }
-
-   }
+   void operator delete(void * p);
 
 
 };
 
 
-
-
-
-
 #define new AURA_NEW
+
 
 

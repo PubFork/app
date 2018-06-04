@@ -360,7 +360,9 @@ void memory_free_dbg(void * pmemory, int32_t iBlockType)
    if(pheap->m_blockuse == 0)
    {
 
-      g_pheap->_free(pbase,heap_memory::aligned_provision_get_size(pheap->m_size));
+      memory_size_t iAlignedSize = heap_memory::aligned_provision_get_size(pheap->m_size);
+
+      g_pheap->_free(pbase, iAlignedSize);
 
    }
    else if(pheap->m_blockuse == 1)
@@ -388,7 +390,9 @@ void memory_free_dbg(void * pmemory, int32_t iBlockType)
    else if(pheap->m_blockuse == 2)
    {
 
-      g_pheap->_free(pbase,heap_memory::unaligned_provision_get_size(pheap->m_size));
+      memory_size_t iUnalignedSize = heap_memory::unaligned_provision_get_size(pheap->m_size);
+
+      g_pheap->_free(pbase, iUnalignedSize);
 
    }
    else if(pheap->m_blockuse == 3)

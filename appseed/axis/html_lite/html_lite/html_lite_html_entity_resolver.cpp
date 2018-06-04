@@ -27,7 +27,7 @@
 #include "framework.h"
 
 LiteHTMLEntityResolver::CharEntityRefs::CharEntityRefs(::aura::application * papp) :
-   string_map < char, char >(papp, 55)
+   string_map < char, char >(papp)
 {
    /** C0 Controls and Basic Latin */
    (*this)["quot"]      = '\x22';
@@ -179,8 +179,8 @@ int32_t LiteHTMLEntityResolver::resolveEntity(const char * lpszEntity, string & 
       lpszBegin++;
       chTemp = *lpszBegin;
       int32_t   core = (::isdigit(chTemp) ? 10 :
-               (chTemp == 'x' ||
-                  chTemp == 'X' ? 16 : 0));
+                        (chTemp == 'x' ||
+                         chTemp == 'X' ? 16 : 0));
       if (core)
       {
          if (core == 16)
@@ -200,7 +200,7 @@ int32_t LiteHTMLEntityResolver::resolveEntity(const char * lpszEntity, string & 
       // because some character entity references are
       // case-sensitive, we must fix them manually
       if (!strKey.compare_ci("eth") ||
-         !strKey.compare_ci("thorn"))
+            !strKey.compare_ci("thorn"))
       {
          if (::isupper(strKey[0]))
             strKey.make_upper();
@@ -223,12 +223,12 @@ int32_t LiteHTMLEntityResolver::resolveEntity(const char * lpszEntity, string & 
          string   strT = strKey.Mid(1);
          strKey.make_lower();
          if (strT.compare_ci("grave") == 0 ||
-            strT.compare_ci("acute") == 0 ||
-            strT.compare_ci("circ")  == 0 ||
-            strT.compare_ci("uml")   == 0 ||
-            strT.compare_ci("tilde") == 0 ||
-            strT.compare_ci("cedil") == 0 ||
-            strT.compare_ci("ring")  == 0)
+               strT.compare_ci("acute") == 0 ||
+               strT.compare_ci("circ")  == 0 ||
+               strT.compare_ci("uml")   == 0 ||
+               strT.compare_ci("tilde") == 0 ||
+               strT.compare_ci("cedil") == 0 ||
+               strT.compare_ci("ring")  == 0)
          {
             strKey.set_at(0, strT[0]);
          }

@@ -67,10 +67,11 @@ namespace exception
       int                  m_iAddressRead;
       int                  m_iAddressWrite;
       bool                 m_bOk;
-
+      bool                 m_bRefreshSymbols;
+      PVOID                m_pvoidDllNotificationCookie;
       CONTEXT              m_context;
 
-      int32_t              m_iRef;
+      bool                 m_bInit;
       HMODULE              m_ha[4096];
       int                  m_iHa;
 

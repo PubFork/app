@@ -260,7 +260,7 @@ namespace file
          }
          //else
          //{
-         // 
+         //
          //   if (pfile->m_dwStopPosition > m_dwPosition)
          //   {
 
@@ -416,14 +416,14 @@ namespace file
 
          for(index i = get_upper_bound(); i >= 0; i--)
          {
-            
+
             if (this->operator[](i)->read_byte(pbyte, pfile))
             {
 
                return true;
 
             }
-               
+
          }
 
       }
@@ -453,15 +453,15 @@ namespace file
       ::data::data(papp),
       ::file::file_sp(papp),
       ::data::tree(papp)
-      {
+   {
 
-         m_iBranch = 0;
-         m_pgroupitem = NULL;
+      m_iBranch = 0;
+      m_pgroupitem = NULL;
 
-         m_ptreeitem = get_base_item();
-         m_ptreeitemFlush = get_base_item();
+      m_ptreeitem = get_base_item();
+      m_ptreeitemFlush = get_base_item();
 
-      }
+   }
 
    edit_file::~edit_file()
    {
@@ -471,6 +471,8 @@ namespace file
 
    void edit_file::SetFile(::file::file_sp  pfile)
    {
+
+
 
       if(pfile.cast < ::memory_file >() == NULL || pfile.cast < ::file::buffered_file >() == NULL)
       {
@@ -496,6 +498,8 @@ namespace file
    memory_size_t edit_file::read(void *lpBuf,memory_size_t nCount)
    {
 
+
+
       if (nCount <= 0)
       {
 
@@ -509,7 +513,7 @@ namespace file
          return (memory_size_t) (m_dwPosition = m_pfile->read(lpBuf, nCount));
 
       }
-      
+
       byte * buf = (byte *)lpBuf;
 
       memory_size_t uiRead = 0;
@@ -574,7 +578,7 @@ namespace file
          m_dwIterationPosition = m_dwPosition;
 
          ptreeitem = m_ptreeitem;
-         
+
          bRead = false;
 
          while (ptreeitem != NULL && (!m_bRootDirection || ptreeitem->m_pitem.is_set()))
@@ -609,14 +613,14 @@ namespace file
             {
 
                ptreeitem = ptreeitem->get_previous_or_parent();
-               
+
             }
 
-         } 
+         }
 
          if(!bRead)
          {
-            
+
             m_pfile->seek_begin(m_dwIterationPosition);
 
             bRead = m_pfile->read(&b, 1) == 1;
@@ -638,7 +642,8 @@ namespace file
 
          m_dwPosition++;
 
-      } while(nCount > 0 && m_dwPosition < m_dwLength);
+      }
+      while(nCount > 0 && m_dwPosition < m_dwLength);
 
       return uiRead;
 
@@ -647,10 +652,12 @@ namespace file
 
    void edit_file::TreeInsert(Item * pitem)
    {
-      
+
+
+
       if(m_pgroupitem != NULL && m_pgroupitem != pitem)
       {
-         
+
          m_pgroupitem->add(pitem);
 
          return;
@@ -684,6 +691,9 @@ namespace file
 
    void edit_file::write(const void * lpBuf,memory_size_t nCount)
    {
+
+
+
       sp(EditItem) pedit;
       pedit = canew(EditItem);
       pedit->m_dwPosition = m_dwPosition;
@@ -695,6 +705,9 @@ namespace file
 
    edit_file::InsertItem * edit_file::Insert(const void * lpBuf,memory_size_t nCount)
    {
+
+
+
       sp(InsertItem) pinsert;
       pinsert = canew(InsertItem);
       pinsert->m_dwPosition = m_dwPosition;
@@ -709,6 +722,8 @@ namespace file
 
    edit_file::DeleteItem * edit_file::Delete(memory_size_t uiCount)
    {
+
+
 
       sp(DeleteItem) pdelete;
 
@@ -742,6 +757,8 @@ namespace file
    file_position_t edit_file::seek(file_offset_t lOff,::file::e_seek nFrom)
    {
 
+
+
       if (m_ptreeitem == m_ptreeitemFlush)
       {
 
@@ -760,22 +777,22 @@ namespace file
       switch(nFrom)
       {
       case ::file::seek_begin:
-         
+
          dwNew = (file_position_t)lOff;
-         
+
          break;
 
       case ::file::seek_end:
-         
+
          dwNew = get_length() - lOff;
-         
+
          break;
 
       case ::file::seek_current:
-         
+
          if(lOff < 0)
          {
-         
+
             dwNew = m_dwPosition + lOff;
 
             if (dwNew > m_dwPosition)
@@ -823,6 +840,8 @@ namespace file
    void edit_file::flush()
    {
 
+
+
       string strTimeFile;
 
       strTimeFile = Application.file().time_square();
@@ -858,11 +877,11 @@ namespace file
       }
 
       m_pfile->flush();
-      
+
       m_dwFileLength = m_pfile->get_length();
 
       ASSERT(m_dwFileLength == dwLen);
-      
+
       m_ptreeitemFlush = m_ptreeitem;
 
    }
@@ -870,6 +889,9 @@ namespace file
 
    bool edit_file::SaveTo(::file::ostream & ostream)
    {
+
+
+
       char buf[4096];
       memory_size_t uiRead;
       seek(0,::file::seek_begin);
@@ -885,6 +907,9 @@ namespace file
 
    bool edit_file::Save(::file::file & file)
    {
+
+
+
       char buf[4096];
       memory_size_t uiRead;
       file.set_length(0);
@@ -900,6 +925,9 @@ namespace file
 
    bool edit_file::Save_N_to_CRLF(::file::file & file)
    {
+
+
+
       char buf[4096];
       string str;
       memory_size_t uiRead;
@@ -920,28 +948,39 @@ namespace file
 
    bool edit_file::CanUndo()
    {
+
+
+
       return m_ptreeitem != get_base_item();
    }
 
    bool edit_file::CanRedo()
    {
+
+
+
       return m_iBranch < m_ptreeitem->get_expandable_children_count()
-         || m_ptreeitem->get_next() != NULL;
+             || m_ptreeitem->get_next() != NULL;
    }
 
    ::count edit_file::GetRedoBranchCount()
    {
+
+
+
       if(m_ptreeitem == NULL)
          return 1;
       else
          return   m_ptreeitem->get_expandable_children_count()
-         + (m_ptreeitem->get_next() != NULL ? 1 : 0)
-         + (m_ptreeitem->get_children_count() > 0 ? 1 : 0);
+                  + (m_ptreeitem->get_next() != NULL ? 1 : 0)
+                  + (m_ptreeitem->get_children_count() > 0 ? 1 : 0);
    }
 
 
    bool edit_file::Undo()
    {
+
+
 
       if (!CanUndo())
       {
@@ -961,6 +1000,9 @@ namespace file
 
    bool edit_file::Redo()
    {
+
+
+
       if(m_iBranch < 0 || m_iBranch >= GetRedoBranchCount())
       {
          return false;
@@ -982,6 +1024,9 @@ namespace file
 
    void edit_file::MacroBegin()
    {
+
+
+
       GroupItem * pgroupitem = canew(GroupItem);
       pgroupitem->m_pgroupitem = m_pgroupitem;
       m_pgroupitem = pgroupitem;
@@ -989,6 +1034,9 @@ namespace file
 
    void edit_file::MacroEnd()
    {
+
+
+
       if(m_pgroupitem == NULL)
       {
          ASSERT(FALSE);
@@ -1005,12 +1053,13 @@ namespace file
 
    bool edit_file::calc_root_direction()
    {
+
       sp(::data::tree_item) ptreeitem;
       if(m_ptreeitem == m_ptreeitemFlush)
          return false;
       for(ptreeitem  = m_ptreeitem;
-         ptreeitem != m_ptreeitemFlush && ptreeitem != get_base_item() && ptreeitem != NULL;
-         ptreeitem  = ptreeitem->get_previous_or_parent())
+            ptreeitem != m_ptreeitemFlush && ptreeitem != get_base_item() && ptreeitem != NULL;
+            ptreeitem  = ptreeitem->get_previous_or_parent())
       {
       }
       return ptreeitem == m_ptreeitemFlush;

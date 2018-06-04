@@ -1,5 +1,9 @@
 #pragma once
 
+
+#define new AURA_NEW
+
+
 template < typename PAIR, const int DEFAULT_HASH_TABLE_SIZE = 17 >
 class map_dynamic_hash_table
 {
@@ -343,8 +347,8 @@ public:
       return const_iterator(NULL, (map *) this);
    }
 
-   void construct(::count nBlockSize = 10);
-   map(::aura::application * papp = NULL, ::count nBlockSize = 10);
+   void construct();
+   map(::aura::application * papp = NULL);
    map(pair pairs[], int32_t iCount);
    map(const map & m);
 
@@ -456,10 +460,10 @@ public:
 
    //Implementation
    ::count           m_nCount;
-   assoc *           m_passocFree;
+   //assoc *           m_passocFree;
    assoc *           m_passocHead;
-   struct ::plex *   m_pplex;
-   ::count           m_nBlockSize;
+   //struct ::plex *   m_pplex;
+   //::count           m_nBlockSize;
 
    assoc * new_assoc(ARG_KEY key);
    void free_assoc(assoc * passoc);
@@ -1069,24 +1073,23 @@ typename map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::assoc* map < KEY, ARG_KEY
 /////////////////////////////////////////////////////////////////////////////
 // map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR > out-of-line functions
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class PAIR >
-void map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::construct(::count nBlockSize)
+void map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::construct()
 {
-   ASSERT(nBlockSize > 0);
 
    //m_ppassocHash     = NULL;
    //m_nHashTableSize  = 17;  // default size
    m_nCount          = 0;
-   m_passocFree      = NULL;
-   m_pplex           = NULL;
-   m_nBlockSize      = nBlockSize;
+//   m_passocFree      = NULL;
+//   m_pplex           = NULL;
+   // m_nBlockSize      = nBlockSize;
    m_passocHead      = NULL;
 }
 
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class PAIR >
-map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::map(::aura::application * papp, ::count nBlockSize) :
+map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::map(::aura::application * papp) :
    object(papp)
 {
-   construct(nBlockSize);
+   construct();
 }
 
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class PAIR >
@@ -1133,18 +1136,20 @@ void map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::remove_all()
    m_hashtable.remove_all();
 
    m_nCount = 0;
-   m_passocFree = NULL;
+   //m_passocFree = NULL;
 
-   if(m_pplex != NULL)
-   {
+   //if(m_pplex != NULL)
+   //{
 
-      m_pplex->FreeDataChain();
-      m_pplex = NULL;
+   //   m_pplex->FreeDataChain();
+   //   m_pplex = NULL;
 
-   }
+   //}
 
    m_passocHead = NULL;
+
 }
+
 
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class PAIR >
 inline void map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::clear()
@@ -1170,29 +1175,32 @@ typename map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::assoc *
 map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::new_assoc(ARG_KEY key)
 {
 
-   if(m_passocFree == NULL)
-   {
-      // add another block
-      plex * newBlock = plex::create(m_pplex, m_nBlockSize, sizeof(map::assoc));
-      // chain them into free list
-      map::assoc* passoc = (map::assoc*) newBlock->data();
-      // free in reverse order to make it easier to debug
-      index i = m_nBlockSize - 1;
-      for (passoc = &passoc[i]; i >= 0; i--, passoc--)
-      {
-         passoc->m_pnext = m_passocFree;
-         m_passocFree = passoc;
+   //if(m_passocFree == NULL)
+   //{
+   //   // add another block
+   //   //plex * newBlock = plex::create(m_pplex, m_nBlockSize, sizeof(map::assoc));
+   //   //// chain them into free list
+   //   //map::assoc* passoc = (map::assoc*) newBlock->data();
+   //   //// free in reverse order to make it easier to debug
+   //   //index i = m_nBlockSize - 1;
+   //   //for (passoc = &passoc[i]; i >= 0; i--, passoc--)
+   //   //{
+   //   //   passoc->m_pnext = m_passocFree;
+   //   //   m_passocFree = passoc;
 
-      }
-   }
+   //   //}
+   //   m_passocFree = new assoc();
 
-   ENSURE(m_passocFree != NULL);  // we must have something
+   //}
 
-   typename map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::assoc * passoc = m_passocFree;
+   //ENSURE(m_passocFree != NULL);  // we must have something
 
-   m_passocFree  = m_passocFree->m_pnext;
+   typename map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::assoc * passoc =
+   new assoc(key);
 
-   ZEROP(passoc);
+   //m_passocFree  = m_passocFree->m_pnext;
+
+   //ZEROP(passoc);
 
    if(m_passocHead != NULL)
    {
@@ -1210,8 +1218,6 @@ map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::new_assoc(ARG_KEY key)
    m_nCount++;
 
    ASSERT(m_nCount > 0);  // make sure we don't overflow
-
-   ::new(passoc) typename map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::assoc(key);
 
    return passoc;
 
@@ -1251,11 +1257,11 @@ void map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::free_assoc(assoc * passoc)
 
    }
 
-   passoc->assoc::~assoc();
+   delete passoc;
 
-   passoc->m_pnext = m_passocFree;
+   //passoc->m_pnext = m_passocFree;
 
-   m_passocFree = passoc;
+   //m_passocFree = passoc;
 
    m_nCount--;
 
