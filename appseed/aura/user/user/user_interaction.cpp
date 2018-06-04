@@ -9161,16 +9161,27 @@ restart:
    void interaction::nextstyle(style_context * pcontext)
    {
 
-      if (GetParentFrame() == NULL)
+      if (GetParent() == NULL)
       {
 
-         Session.userstyle(pcontext);
+         if (GetOwner() == NULL)
+         {
+
+            Session.userstyle(pcontext);
+
+         }
+         else
+         {
+
+            pcontext->m_pstyle = GetOwner();
+
+         }
 
       }
       else
       {
 
-         pcontext->m_pstyle = GetParentFrame();
+         pcontext->m_pstyle = GetParent();
 
       }
 

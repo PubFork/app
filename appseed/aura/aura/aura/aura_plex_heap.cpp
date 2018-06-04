@@ -471,22 +471,36 @@ plex_heap_alloc_array::plex_heap_alloc_array()
    add(new plex_heap_alloc(1 << i++, 64)); // 512
    add(new plex_heap_alloc(1 << i++, 64)); // 1024
 
-   add(new plex_heap_alloc(1 << i++, 256)); // 2 * 1024
-   add(new plex_heap_alloc(1 << i++, 128)); // 4 * 1024
-   add(new plex_heap_alloc(1 << i++, 128)); // 8 * 1024
-   add(new plex_heap_alloc(1 << i++, 128)); // 16 * 1024
-   add(new plex_heap_alloc(1 << i++, 64)); // 32 * 1024
-   add(new plex_heap_alloc(1 << i++, 64)); // 64 * 1024
-   add(new plex_heap_alloc(1 << i++, 64)); // 128 * 1024
-   add(new plex_heap_alloc(1 << i++, 64)); // 256 * 1024
-   add(new plex_heap_alloc(1 << i++, 64)); // 512 * 1024
-   add(new plex_heap_alloc(1 << i++, 64)); // 1024 * 1024
 
+#if OSBIT > 32
+
+   int iDiv = 1;
+
+#else
+
+   int iDiv = 4;
+
+#endif
+
+   add(new plex_heap_alloc(1 << i++, 256 / iDiv)); // 2 * 1024
+   add(new plex_heap_alloc(1 << i++, 128 / iDiv)); // 4 * 1024
+   add(new plex_heap_alloc(1 << i++, 128 / iDiv)); // 8 * 1024
+   add(new plex_heap_alloc(1 << i++, 128 / iDiv)); // 16 * 1024
+   add(new plex_heap_alloc(1 << i++, 64 / iDiv)); // 32 * 1024
+   add(new plex_heap_alloc(1 << i++, 64 / iDiv)); // 64 * 1024
+   add(new plex_heap_alloc(1 << i++, 64 / iDiv)); // 128 * 1024
+   add(new plex_heap_alloc(1 << i++, 64 / iDiv)); // 256 * 1024
+   add(new plex_heap_alloc(1 << i++, 64 / iDiv)); // 512 * 1024
+   add(new plex_heap_alloc(1 << i++, 64 / iDiv)); // 1024 * 1024
+
+#if OSBIT > 32
 
    add(new plex_heap_alloc(1 << i++, 2)); // 2 * 1024 * 1024
    add(new plex_heap_alloc(1 << i++, 2)); // 4 * 1024 * 1024
    add(new plex_heap_alloc(1 << i++, 2)); // 8 * 1024 * 1024
    add(new plex_heap_alloc(1 << i++, 2)); // 16 * 1024 * 1024
+
+#endif
 
 }
 
