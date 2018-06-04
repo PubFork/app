@@ -1,7 +1,10 @@
 ﻿#pragma once
 
 
-#pragma pack(1)
+#pragma pack(show)
+
+
+#pragma pack(push, 1)
 
 
 #undef new
@@ -70,4 +73,4 @@ public:
 
 
 
-#pragma pack()
+#pragma pack(pop)

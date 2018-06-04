@@ -26,27 +26,26 @@ inline UINT HashKey(IDTHREAD key)
 
 #endif
 
-
+#pragma pack(show)
 
 class thread_startup :
    virtual public object
 {
-   public:
+public:
 
 
-      ::thread *              m_pthread;
-//   ::thread_impl *         m_pthreadimpl;
-      manual_reset_event      m_event;
-      manual_reset_event      m_event2;
-      DWORD                   m_dwCreateFlags;
-      bool                    m_bError;
-      error                   m_error;
-      bool                    m_bSynch;
-      int32_t                 m_iPriority;
+   ::thread *              m_pthread;
+   manual_reset_event      m_event;
+   manual_reset_event      m_event2;
+   DWORD                   m_dwCreateFlags;
+   bool                    m_bError;
+   error                   m_error;
+   bool                    m_bSynch;
+   int32_t                 m_iPriority;
 
 
-      thread_startup(::aura::application * papp);
-      ~thread_startup();
+   thread_startup(::aura::application * papp);
+   virtual ~thread_startup();
 
 };
 

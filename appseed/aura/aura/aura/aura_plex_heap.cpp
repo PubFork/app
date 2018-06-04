@@ -953,6 +953,7 @@ void plex_heap_alloc_sync::Free(void * pParam)
 
    }
 
+
 #ifdef DEBUG
 
    void * p = ((byte*)pParam) - (16 + sizeof(node *) + 16);
@@ -964,6 +965,14 @@ void plex_heap_alloc_sync::Free(void * pParam)
 #else
 
    node * pnode = (node *)pParam;
+
+#endif
+
+#ifdef DEBUG
+
+   memset(pParam, 0xCD, m_nAllocSize);
+
+   memset(pnode, 0xCD, 16 + sizeof(node *) + 16);
 
 #endif
 

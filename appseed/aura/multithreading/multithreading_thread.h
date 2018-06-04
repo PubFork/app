@@ -387,7 +387,7 @@ public:
    virtual void delete_this() override;
 
    /// thread implementation
-   virtual int32_t thread_startup(::thread_startup * pstartup);
+   virtual int32_t do_thread_startup(::thread_startup * pstartup);
    virtual bool thread_entry();
    virtual int32_t thread_exit();
    virtual int32_t thread_term();

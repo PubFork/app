@@ -67,8 +67,6 @@ class user_interaction_ptr_array;
 
 class thread_startup;
 
-
-
 namespace multithreading
 {
 

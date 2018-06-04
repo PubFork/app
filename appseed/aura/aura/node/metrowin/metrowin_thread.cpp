@@ -40,21 +40,6 @@ void CLASS_DECL_AURA __term_thread()
 
 
 }
-namespace core
-{
-
-   /*
-   thread_startup::thread_startup()
-   {
-   }
-
-   thread_startup::~thread_startup()
-   {
-   }
-   */
-
-} // namespace core
-
 
 
 bool __node_init_thread(::thread * pthread)

@@ -1726,8 +1726,6 @@ thread_startup::~thread_startup()
 }
 
 
-
-
 bool thread::begin_thread(bool bSynch, int32_t epriority,uint_ptr nStackSize,uint32_t dwCreateFlagsParam,LPSECURITY_ATTRIBUTES lpSecurityAttrs, IDTHREAD * puiId, error * perror)
 {
 
@@ -2063,7 +2061,7 @@ uint32_t __thread_entry(void * pparam)
       try
       {
 
-         pthread->thread_startup(pstartup);
+         pthread->do_thread_startup(pstartup);
 
       }
       catch(...)
@@ -2556,7 +2554,7 @@ void thread::set_os_int(IDTHREAD iData)
 
 
 
-int32_t thread::thread_startup(::thread_startup * pstartup)
+int32_t thread::do_thread_startup(::thread_startup * pstartup)
 {
 
    ASSERT(pstartup != NULL);
