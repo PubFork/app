@@ -154,7 +154,7 @@ object::~object()
 
    ::aura::del(m_psetObject);
 
-   ::aura::del(m_pmutex);
+   ::aura::delobj(m_pmutex);
 
 }
 
