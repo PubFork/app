@@ -3336,6 +3336,8 @@ namespace user
 
       pmouse->previous(); // give chance to child control
 
+      set_need_redraw();
+
       track_mouse_leave();
 
    }
