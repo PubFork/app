@@ -6839,6 +6839,16 @@ restart:
          return;
       if (iScan <= 0)
          return;
+      if (widthAlloc < width)
+      {
+         istream.setstate(::file::badbit);
+         return;
+      }
+      if (heightAlloc < height)
+      {
+         istream.setstate(::file::badbit);
+         return;
+      }
       if (!create(widthAlloc, heightAlloc))
          _throw(simple_exception(get_app(), "dib::read"));
       map();
@@ -6850,7 +6860,12 @@ restart:
       {
          memory mem;
          mem.allocate(iScan * m_size.cy);
-         istream.read(mem.get_data(), iScan * m_size.cy);
+         size_t s = istream.read(mem.get_data(), iScan * m_size.cy);
+         if (s / iScan < height)
+         {
+            istream.setstate(::file::badbit);
+            return;
+         }
          ::draw2d::copy_colorref(width, height, get_data(), m_iScan, (COLORREF *)mem.get_data(), iScan);
 
       }

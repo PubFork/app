@@ -936,7 +936,7 @@ void * plex_heap_alloc_sync::Alloc()
 
    m_pnodeFree = m_pnodeFree->m_pnext;
 
-   memset(pnode, 0, m_nAllocSize);
+   zero(pnode, m_nAllocSize);
 
    return pnode;
 
@@ -972,7 +972,7 @@ void plex_heap_alloc_sync::Free(void * pParam)
 
    memset(pParam, 0xCD, m_nAllocSize);
 
-   memset(pnode, 0xCD, 16 + sizeof(node *) + 16);
+   setup_plex_heap_alloc_sync_node_palace_guard(pnode, m_nAllocSize);
 
 #endif
 
