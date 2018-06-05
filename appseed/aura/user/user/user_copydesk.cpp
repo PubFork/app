@@ -210,29 +210,81 @@ namespace user
    bool copydesk::desk_to_dib(::draw2d::dib * pdib)
    {
 
-      UNREFERENCED_PARAMETER(pdib);
-      ::exception::throw_interface_only(get_app());
+      if (_has_dib())
+      {
+
+         return _desk_to_dib(pdib);
+
+      }
+
+      if (has_plain_text())
+      {
+
+         string str;
+
+         if (get_plain_text(str))
+         {
+
+            pdib->create(1, 1);
+
+            auto pfont = Session._001GetFont(::user::font_default);
+
+            pdib->g()->selectFont(pfont);
+
+            sized s = pdib->g()->GetTextExtent(str);
+
+            if (s.area() > 0)
+            {
+
+               pdib->create(ceil(s.cx), ceil(s.cy));
+
+               pdib->FillByte(0);
+
+               pdib->g()->selectFont(pfont);
+
+               pdib->g()->set_text_color(ARGB(255, 0, 0, 0));
+
+               pdib->g()->draw_text(str, rect(pdib->m_size), DT_LEFT | DT_BOTTOM);
+
+               return true;
+
+            }
+
+         }
+
+      }
 
       return false;
 
    }
+
 
    bool copydesk::dib_to_desk(::draw2d::dib * pdib)
    {
 
-      UNREFERENCED_PARAMETER(pdib);
-      ::exception::throw_interface_only(get_app());
-
-      return false;
+      return _dib_to_desk(pdib);
 
    }
+
 
    bool copydesk::has_dib()
    {
 
-      ::exception::throw_interface_only(get_app());
+      if (_has_dib())
+      {
 
-      return 0;
+         return true;
+
+      }
+
+      if (has_plain_text())
+      {
+
+         return true;
+
+      }
+
+      return false;
 
    }
 

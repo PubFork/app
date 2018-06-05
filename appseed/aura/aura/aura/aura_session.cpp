@@ -2860,6 +2860,13 @@ ret:
 
       }
 
+      if (m_puserstyle == NULL || m_puserstyle == this)
+      {
+
+         m_puserstyle = p;
+
+      }
+
       return p;
 
    }
