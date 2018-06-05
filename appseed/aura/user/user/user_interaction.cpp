@@ -671,7 +671,7 @@ restart:
 
                         pimpl->m_pui = NULL;
 
-                        pimplOld.release();
+                        //pimplOld.release();
 
                         if (oswindow != NULL)
                         {

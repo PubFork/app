@@ -269,6 +269,15 @@ namespace user
 
       }
 
+      Application.route_command_message(pcommand);
+
+      if (pcommand->m_bRet)
+      {
+
+         return;
+
+      }
+
    }
 
 
