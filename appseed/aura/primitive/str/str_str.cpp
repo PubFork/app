@@ -1885,6 +1885,20 @@ namespace str
    const char * utf8_inc(const char * psz)
    {
 
+      if (psz == NULL)
+      {
+
+         return NULL;
+
+      }
+
+      if (*psz == '\0')
+      {
+
+         return psz;
+
+      }
+
       clear_err();
 
       char len =  1 + trailingBytesForUTF8(*psz);

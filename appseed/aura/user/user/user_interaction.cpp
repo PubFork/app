@@ -3976,7 +3976,7 @@ restart:
    // for custom cleanup after WM_NCDESTROY
    void interaction::PostNcDestroy()
    {
-
+      sp(::user::interaction) pui = this;
       {
 
          synch_lock sl(m_pmutex);

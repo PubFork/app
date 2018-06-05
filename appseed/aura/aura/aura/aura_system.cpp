@@ -2398,14 +2398,14 @@ RetryBuildNumber:
 
          //MESSAGE msg;
 
-         for (auto papp : ptra)
+         for (auto & papp : ptra)
          {
 
             papp->m_bFranceExit = false;
 
          }
 
-         for (auto papp : ptra)
+         for (auto & papp : ptra)
          {
 
             fork([papp]()

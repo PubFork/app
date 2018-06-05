@@ -646,27 +646,50 @@ namespace user
 
          synch_lock sl(m_pmutex);
 
-         auto viewspa = m_viewspa;
+         int iTry = 3;
 
-         for (auto & pview : viewspa)
+         while (iTry >= 0)
          {
 
-            sl.unlock();
-
-            ASSERT_VALID(pview);
-
-            sp(::user::frame_window) pframe = pview->GetParentFrame();
-
-            if (pframe != NULL)
+            for (index i = 0; i < m_viewspa.get_count();)
             {
 
-               pre_close_frame(pframe);
+               auto pview = m_viewspa[i];
 
-               pframe->DestroyWindow();
+               sl.unlock();
+
+               ASSERT_VALID(pview);
+
+               sp(::user::frame_window) pframe = pview->GetParentFrame();
+
+               if (pframe != NULL)
+               {
+
+                  pre_close_frame(pframe);
+
+                  pframe->DestroyWindow();
+
+               }
+
+               sl.lock();
+
+               if (i >= m_viewspa.get_count())
+               {
+
+                  break;
+
+               }
+
+               if (m_viewspa[i] == pview)
+               {
+
+                  i++;
+
+               }
 
             }
 
-            sl.lock();
+            iTry--;
 
          }
 

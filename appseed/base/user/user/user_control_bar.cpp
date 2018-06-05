@@ -187,8 +187,8 @@ namespace user
    void control_bar::PostNcDestroy()
    {
       ::user::interaction::PostNcDestroy();
-      if (m_bAutoDelete)      // Automatic cleanup?
-         delete this;
+      //if (m_bAutoDelete)      // Automatic cleanup?
+      // delete this;
    }
 
    /////////////////////////////////////////////////////////////////////////////

@@ -17,52 +17,12 @@ namespace message
    sender::~sender()
    {
 
-      try
-      {
-
-         synch_lock sl(m_pmutexIdRoute);
-
-         for (auto & idroute : m_idroute)
-         {
-
-            try
-            {
-
-               for (auto & route : idroute.m_element2)
-               {
-
-                  try
-                  {
-
-                     synch_lock sl(route->m_preceiver->m_pmutex);
-
-                     route->m_preceiver->m_sendera.remove(this);
-
-                  }
-                  catch(...)
-                  {
-
-                  }
-
-               }
-
-            }
-            catch(...)
-            {
-
-            }
-
-         }
-
-      }
-      catch(...)
-      {
-
-      }
+      remove_all_routes();
 
       ::aura::del(m_pmutexIdRoute);
 
    }
+
 
    void sender::remove_receiver(::message::receiver * preceiver)
    {
@@ -119,17 +79,39 @@ namespace message
    void sender::remove_all_routes()
    {
 
-      synch_lock sl(m_pmutexIdRoute);
-
-      for (auto & id_route_array : m_idroute)
+      try
       {
 
-         id_route_array.m_element2.pred_each([=](auto & pitem)
+         synch_lock sl(m_pmutexIdRoute);
+
+         for (auto & id_route_array : m_idroute)
          {
 
-            pitem->m_preceiver->m_sendera.remove(this);
+            id_route_array.m_element2.pred_each([=](auto & route)
+            {
 
-         });
+               try
+               {
+
+                  synch_lock sl(route->m_preceiver->m_pmutex);
+
+                  route->m_preceiver->m_sendera.remove(this);
+
+               }
+               catch (...)
+               {
+
+               }
+
+            });
+
+         }
+
+         m_idroute.remove_all();
+
+      }
+      catch (...)
+      {
 
       }
 
