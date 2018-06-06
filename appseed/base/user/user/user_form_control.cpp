@@ -957,7 +957,7 @@ namespace user
          if(!_001OnControlSetFocus(pevent->m_puie))
          {
 
-            pevent->nok();
+            pevent->Nok();
 
             return;
 
@@ -971,7 +971,7 @@ namespace user
          if(!_001OnControlKillFocus(pevent->m_puie))
          {
 
-            pevent->nok();
+            pevent->Nok();
 
             return;
 

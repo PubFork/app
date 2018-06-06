@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace user
@@ -51,7 +51,7 @@ namespace user
 
 
 
-
+      combo_box();
       combo_box(::aura::application * papp);
       virtual ~combo_box();
 

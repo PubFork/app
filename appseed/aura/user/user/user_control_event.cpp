@@ -1,4 +1,4 @@
-#include "framework.h" // from "base/user/user.h"
+﻿#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 
@@ -27,7 +27,21 @@ namespace user
 
    }
 
-   void control_event::nok()
+   ::user::form * control_event::get_form()
+   {
+
+      if (m_puie == NULL)
+      {
+
+         return NULL;
+
+      }
+
+      return m_puie->get_form();
+
+   }
+
+   void control_event::Nok()
    {
 
       m_bOk = false;
@@ -36,6 +50,21 @@ namespace user
 
    }
 
+   void control_event::Ret()
+   {
+
+      m_bRet = true;
+
+   }
+
+   void control_event::Ok()
+   {
+
+      m_bOk = true;
+
+      m_bRet = true;
+
+   }
 
    //impact * control_event::get_view()
    //{

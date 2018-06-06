@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace user
@@ -34,12 +34,17 @@ namespace user
       control_event();
       virtual ~control_event();
 
-      void nok();
+      void Ret();
+      void Ok();
+      void Nok();
 
       //impact * get_view();
       //::user::document * get_document();
       //::user::impact_system * get_impact_system();
       //string get_impact_matter();
+
+      virtual ::user::form * get_form();
+
 
    };
 

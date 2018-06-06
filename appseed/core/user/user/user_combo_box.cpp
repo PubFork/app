@@ -1,8 +1,15 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace user
 {
+
+
+   combo_box::combo_box() :
+      ::user::combo_box(get_app())
+   {
+
+   }
 
 
    combo_box::combo_box(::aura::application * papp) :
