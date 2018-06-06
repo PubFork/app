@@ -185,10 +185,14 @@ namespace user
 
    }
 
+
    bool button::is_pressed()
    {
+
       return Session.m_puiLastLButtonDown == this;
+
    }
+
 
    void button::_001OnLButtonUp(::message::message * pobj)
    {
@@ -507,7 +511,7 @@ namespace user
       {
          crBk = _001GetColor(color_button_background_disabled);
       }
-      else if (is_pressed())
+      else if (is_pressed() || _001GetCheck() == ::check::checked)
       {
          crBk = _001GetColor(color_button_background_press);
       }
@@ -541,7 +545,7 @@ namespace user
       {
          crBorder = ARGB(255, 127, 127, 127);
       }
-      else if (is_pressed())
+      else if (is_pressed() || _001GetCheck() == ::check::checked)
       {
          crBorder = ARGB(255, 255, 255, 255);
       }
@@ -644,7 +648,7 @@ namespace user
          crText = _001GetColor(color_button_text_disabled, ARGB(255, 0, 0, 0));
 
       }
-      else if (is_pressed())
+      else if (is_pressed() || _001GetCheck() == ::check::checked)
       {
 
          crText = _001GetColor(color_button_text_press, ARGB(255, 0, 0, 0));
@@ -683,7 +687,7 @@ namespace user
          crBackground = _001GetColor(color_button_background_disabled, ARGB(255, 180, 180, 180));
 
       }
-      else if (is_pressed())
+      else if (is_pressed() || _001GetCheck() == ::check::checked)
       {
 
          crBackground = _001GetColor(color_button_background_press, ARGB(255, 240, 240, 240));
@@ -701,6 +705,8 @@ namespace user
          crBackground = _001GetColor(color_button_background, ARGB(255, 240, 240, 240));
 
       }
+
+      pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
       pgraphics->fill_solid_rect(rectClient, crBackground);
 
