@@ -182,7 +182,7 @@ namespace metrowin
 
 
 
-   bool dir::is(const ::file::path & lpcszPath,::aura::application *  papp)
+   bool dir::is_impl(const ::file::path & lpcszPath,::aura::application *  papp)
    {
 
       if(lpcszPath.compare_ci("winmetro-Pictures:") == 0)
@@ -196,19 +196,19 @@ namespace metrowin
 
       uint32_t dwLastError;
 
-      if(m_isdirmap.lookup(lpcszPath,bIsDir,dwLastError))
-      {
-         if(!bIsDir)
-         {
-            ::set_last_error(dwLastError);
-         }
-         return bIsDir;
-      }
+      //if(m_isdirmap.lookup(lpcszPath,bIsDir,dwLastError))
+      //{
+      //   if(!bIsDir)
+      //   {
+      //      ::set_last_error(dwLastError);
+      //   }
+      //   return bIsDir;
+      //}
 
       bool bIs;
 
-      if(::file::dir::system::is_or_definitively_not(bIs,lpcszPath,papp))
-         return bIs;
+      //if(::file::dir::system::is_or_definitively_not(bIs,lpcszPath,papp))
+      //   return bIs;
 
 
       string strPath(lpcszPath);

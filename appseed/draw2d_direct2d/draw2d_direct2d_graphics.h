@@ -448,7 +448,7 @@ namespace draw2d_direct2d
 #if (_WIN32_WINNT >= 0x0500)
 
 //      bool GetCharABCWidthsI(UINT giFirst, UINT cgi, LPWORD pgi, LPABC lpabc) override;
-      bool GetCharWidthI(UINT giFirst, UINT cgi, LPWORD pgi, LPINT lpBuffer) override;
+//      bool GetCharWidthI(UINT giFirst, UINT cgi, LPWORD pgi, LPINT lpBuffer) override;
 
 #endif
 

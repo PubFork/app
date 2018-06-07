@@ -31,7 +31,7 @@ namespace metrowin
       //virtual bool  rls_dir(::aura::application *  papp,const char * lpcsz,stringa * pstraPath = NULL,stringa * pstraTitle = NULL,stringa * pstraRelative = NULL);
       //virtual bool  ls_dir(::aura::application *  papp,const char * lpcsz,stringa * pstraPath = NULL,stringa * pstraTitle = NULL);
       //virtual bool  ls_file(::aura::application *  papp,const char * lpcsz,stringa * pstraPath = NULL,stringa * pstraTitle = NULL);
-      virtual bool  is(const ::file::path & path,::aura::application *  papp);
+      virtual bool  is_impl(const ::file::path & path,::aura::application *  papp) override;
       //virtual bool  is(const string & str,::aura::application *  papp);
       virtual bool  name_is(const ::file::path & str,::aura::application *  papp);
       virtual bool  has_subdir(::aura::application *  papp, const ::file::path & path);

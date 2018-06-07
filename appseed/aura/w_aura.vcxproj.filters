@@ -4450,6 +4450,18 @@
     <ClCompile Include="aura\node\windows\windows_uac_tools.cpp">
       <Filter>Source Files\aura\node\windows</Filter>
     </ClCompile>
+    <ClCompile Include="user\user\user_menu_interaction.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_form.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_style_rect.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_style_coord.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="aura.rc">

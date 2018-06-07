@@ -538,3 +538,9 @@ os_system_window::os_system_window()
 
 
 
+__int64 oswindow_id(struct oswindow_data * pdata)
+{
+
+   return (__int64)pdata;
+
+}

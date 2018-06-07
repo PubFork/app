@@ -1324,9 +1324,13 @@ namespace metrowin
 
    void interaction_impl::on_control_event(::user::control_event * pevent)
    {
+
       UNREFERENCED_PARAMETER(pevent);
-      return false;
+
+//      return false;
+
    }
+
 
    void interaction_impl::_002OnDraw(::draw2d::dib * pdib)
    {
@@ -1538,18 +1542,18 @@ namespace metrowin
                   return;
             }
          }
-         pbase->set_lresult(DefWindowProc((UINT) pbase->m_id.int64(),pbase->m_wparam,pbase->m_lparam));
+         pbase->set_lresult(DefWindowProc((UINT) pbase->m_id.i64(),pbase->m_wparam,pbase->m_lparam));
          return;
       }
       if(pbase->m_id == ::message::message_event)
       {
          if(m_pui != NULL)
          {
-            m_pui->on_control_event((::user::control_event *) pbase->m_lparam);
+            m_pui->on_control_event((::user::control_event *) pbase->m_lparam.m_lparam);
          }
          else
          {
-            on_control_event((::user::control_event *) pbase->m_lparam);
+            on_control_event((::user::control_event *) pbase->m_lparam.m_lparam);
          }
          return;
       }
@@ -1572,7 +1576,7 @@ namespace metrowin
       return;
       }
       */
-      pbase->set_lresult(DefWindowProc((UINT) pbase->m_id.int64(),pbase->m_wparam,pbase->m_lparam));
+      pbase->set_lresult(DefWindowProc((UINT) pbase->m_id.i64(),pbase->m_wparam,pbase->m_lparam));
    }
 
    /*
