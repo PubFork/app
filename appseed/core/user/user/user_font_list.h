@@ -9,7 +9,7 @@ namespace user
 
 
    class CLASS_DECL_CORE font_list :
-      virtual public control
+      virtual public combo_list
    {
    public:
 
@@ -20,10 +20,10 @@ namespace user
 
       };
 
-
+      ::visual::font_list::layout      m_layout;
       rect                             m_rectMargin;
       int                              m_iSel;
-      sp(::visual::font_list_data)     m_pfontlistdata;
+      sp(::visual::font_list)          m_pfontlist;
 
 
       font_list();
@@ -33,8 +33,8 @@ namespace user
 
 
 
-      void attach_font_list_data(::visual::font_list_data * pdata);
-      //virtual void on_update_data(::visual::font_list_data * pdata, int32_t iHint);
+      void attach_visual_font_list(::visual::font_list * pdata);
+      //virtual void on_update_data(::visual::font_list * pdata, int32_t iHint);
 
       void font_list_common_construct();
 
@@ -71,6 +71,9 @@ namespace user
 
       bool set_sel_by_name(string str);
 
+      virtual void query_full_size(LPSIZE lpsize) override;
+
+
    };
 
 
@@ -78,23 +81,6 @@ namespace user
 
 
 } // namespace user
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

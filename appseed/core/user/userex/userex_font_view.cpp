@@ -57,13 +57,13 @@ namespace userex
             if (m_ptopview != NULL && puh->m_pui == m_ptopview->m_peditview)
             {
 
-               synch_lock sl(m_pview->m_pfontlistdata->m_pmutex);
+               synch_lock sl(m_pview->m_pfontlist->m_pmutex);
 
                string strText;
 
                m_ptopview->m_peditview->_001GetText(strText);
 
-               m_pview->m_pfontlistdata->m_strText = strText;
+               m_pview->m_pfontlist->m_strText = strText;
 
             }
 

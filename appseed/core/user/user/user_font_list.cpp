@@ -30,6 +30,7 @@ namespace user
    void font_list::font_list_common_construct()
    {
 
+      m_layout.m_puserstyle = this;
       m_econtroltype = control_type_list;
       m_scrolldataVert.m_bScrollEnable = true;
 
@@ -42,10 +43,10 @@ namespace user
       try
       {
 
-         if(m_pfontlistdata.is_set())
+         if(m_pfontlist.is_set())
          {
 
-            m_pfontlistdata->m_uiptra.remove(this);
+            m_pfontlist->m_uiptra.remove(this);
 
          }
 
@@ -80,7 +81,9 @@ namespace user
       if (pcreate->m_bRet)
          return;
 
-      attach_font_list_data(Session.m_pfontlistdata);
+      attach_visual_font_list(Session.m_pfontlist);
+
+      m_pfontlist->defer_update_layout(&m_layout);
 
       SetTimer(timer_update_font, 10 * 1000, NULL);
 
@@ -93,10 +96,12 @@ namespace user
       if (ptimer->m_nIDEvent == timer_update_font)
       {
 
-         if (m_pfontlistdata.is_set())
+         if (m_pfontlist.is_set())
          {
 
-            m_pfontlistdata->update();
+            m_pfontlist->update();
+
+            m_pfontlist->defer_update_layout(&m_layout);
 
          }
 
@@ -116,10 +121,10 @@ namespace user
 
       index iSel = hit_test(pt);
 
-      if (iSel != m_pfontlistdata->m_iSel)
+      if (iSel != m_pfontlist->m_iSel)
       {
 
-         m_pfontlistdata->m_iSel = (index) (iSel);
+         m_pfontlist->m_iSel = (index) (iSel);
 
          ::user::control_event ev;
 
@@ -128,6 +133,8 @@ namespace user
          ev.m_eevent = ::user::event_after_change_cur_sel;
 
          ev.m_actioncontext = ::action::source_user;
+
+         ev.m_iItem = iSel;
 
          on_control_event(&ev);
 
@@ -151,10 +158,10 @@ namespace user
 
       auto iHover = hit_test(pt);
 
-      if (m_pfontlistdata->m_iHover != iHover)
+      if (m_pfontlist->m_iHover != iHover)
       {
 
-         m_pfontlistdata->m_iHover = iHover;
+         m_pfontlist->m_iHover = iHover;
 
          ::user::control_event ev;
          ev.m_puie = this;
@@ -162,6 +169,8 @@ namespace user
          ev.m_actioncontext = ::action::source_user;
 
          on_control_event(&ev);
+
+         set_need_redraw();
 
       }
 
@@ -193,35 +202,47 @@ namespace user
    void font_list::_001OnDraw(::draw2d::graphics * pgraphics)
    {
 
-      if (m_pfontlistdata == NULL)
+      if (m_pfontlist == NULL)
       {
 
          return;
 
       }
 
-      synch_lock sl(m_pfontlistdata->m_pmutex);
+      synch_lock sl(m_pfontlist->m_pmutex);
 
-      if (m_pfontlistdata->m_strText != m_pfontlistdata->m_strTextLayout)
+      if (m_pfontlist->m_strText != m_pfontlist->m_strTextLayout)
       {
 
-         m_pfontlistdata->m_strTextLayout = m_pfontlistdata->m_strText;
+         m_pfontlist->m_strTextLayout = m_pfontlist->m_strText;
 
          on_layout();
 
       }
 
-      m_pfontlistdata->_001OnDraw(pgraphics);
+      m_pfontlist->_001OnDraw(pgraphics, &m_layout);
 
    }
 
 
-   void font_list::attach_font_list_data(::visual::font_list_data * pdata)
+   void font_list::attach_visual_font_list(::visual::font_list * pdata)
    {
 
-      m_pfontlistdata = pdata;
+      m_pfontlist = pdata;
 
       pdata->m_uiptra.add(this);
+
+   }
+
+
+   void font_list::query_full_size(LPSIZE lpsize)
+   {
+
+      m_pfontlist->on_layout(&m_layout);
+
+      *lpsize = m_layout.m_size + ::size(
+                GetSystemMetrics(SM_CXVSCROLL),
+                GetSystemMetrics(SM_CYHSCROLL));
 
    }
 
@@ -240,14 +261,14 @@ namespace user
 
       }
 
-      if (m_pfontlistdata.is_null())
+      if (m_pfontlist.is_null())
       {
 
          return;
 
       }
 
-      synch_lock sl(m_pfontlistdata->m_pmutex);
+      synch_lock sl(m_pfontlist->m_pmutex);
 
       ::rect rectFontList;
 
@@ -255,9 +276,14 @@ namespace user
 
       rectFontList.right -= GetSystemMetrics(SM_CXVSCROLL);
 
-      m_pfontlistdata->m_rectClient = rectFontList;
+      m_pfontlist->m_rectClient = rectFontList;
 
-      m_pfontlistdata->on_layout(&m_sizeTotal);
+      m_pfontlist->on_layout(&m_layout);
+
+      m_sizeTotal = m_layout.m_size -
+                    ::size(
+                    ::GetSystemMetrics(SM_CXVSCROLL),
+                    ::GetSystemMetrics(SM_CYHSCROLL));
 
       ::user::control::on_layout();
 
@@ -276,7 +302,7 @@ namespace user
 
       }
 
-      return m_pfontlistdata->m_itemptra[iSel]->m_strFont;
+      return m_layout[iSel]->m_strFont;
 
    }
 
@@ -293,7 +319,7 @@ namespace user
 
       }
 
-      return m_pfontlistdata->m_itemptra[iHover]->m_strFont;
+      return m_layout[iHover]->m_strFont;
 
    }
 
@@ -301,21 +327,21 @@ namespace user
    index font_list::get_cur_sel()
    {
 
-      if (m_pfontlistdata->m_iSel < 0)
+      if (m_pfontlist->m_iSel < 0)
       {
 
          return -1;
 
       }
 
-      if (m_pfontlistdata->m_iSel >= m_pfontlistdata->m_itemptra.get_count())
+      if (m_pfontlist->m_iSel >= m_layout.get_count())
       {
 
          return -1;
 
       }
 
-      return m_pfontlistdata->m_iSel;
+      return m_pfontlist->m_iSel;
 
    }
 
@@ -323,21 +349,21 @@ namespace user
    index font_list::get_cur_hover()
    {
 
-      if (m_pfontlistdata->m_iHover < 0)
+      if (m_pfontlist->m_iHover < 0)
       {
 
          return -1;
 
       }
 
-      if (m_pfontlistdata->m_iHover >= m_pfontlistdata->m_itemptra.get_count())
+      if (m_pfontlist->m_iHover >= m_layout.get_count())
       {
 
          return -1;
 
       }
 
-      return m_pfontlistdata->m_iHover;
+      return m_pfontlist->m_iHover;
 
    }
 
@@ -347,7 +373,7 @@ namespace user
 
       pt += m_ptScrollPassword1;
 
-      return m_pfontlistdata->hit_test(pt);
+      return m_pfontlist->hit_test(pt, &m_layout);
 
    }
 
@@ -355,33 +381,16 @@ namespace user
    bool font_list::set_sel_by_name(string str)
    {
 
-      index iSel = m_pfontlistdata->find_name(str);
+      index iSel = m_pfontlist->find_name(str, &m_layout);
 
       if (iSel < 0)
          return false;
 
-      m_pfontlistdata->m_iSel = iSel;
+      m_pfontlist->m_iSel = iSel;
 
       return true;
 
    }
-
-
-   //bool font_list::get_color(COLORREF & cr, e_color ecolor, ::user::interaction * pui)
-   //{
-
-   //   if (ecolor == color_background)
-   //   {
-
-   //      cr = ARGB(128, 255, 255, 255);
-
-   //      return true;
-
-   //   }
-
-   //   return control::get_color(cr, ecolor, pui);
-
-   //}
 
 
 } // namespace user

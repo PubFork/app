@@ -5,6 +5,13 @@ namespace user
 {
 
 
+   combo_list::combo_list() :
+      combo_list(get_app())
+   {
+
+   }
+
+
    combo_list::combo_list(::aura::application * papp) :
       object(papp)
    {
@@ -913,13 +920,22 @@ namespace user
          if (eelement == element_item)
          {
 
-            m_pcombo->_001SetCurSel(iItem, ::action::source_user);
+
+            ::user::control_event ev;
+
+            ev.m_puie = this;
+
+            ev.m_eevent = ::user::event_after_change_cur_sel;
+
+            ev.m_actioncontext = ::action::source_user;
+
+            ev.m_iItem = iItem;
+
+            on_control_event(&ev);
 
          }
 
       }
-
-      m_pcombo->_001ShowDropDown(false);
 
       pobj->m_bRet = true;
 

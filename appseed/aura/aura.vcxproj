@@ -1488,7 +1488,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="graphics\visual\visual_font_list_data.cpp">
+    <ClCompile Include="graphics\visual\visual_font_list.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>
@@ -3430,7 +3430,7 @@
     <ClInclude Include="graphics\visual\visual_font.h" />
     <ClInclude Include="graphics\visual\visual_font_department.h" />
     <ClInclude Include="graphics\visual\visual_font_enumeration.h" />
-    <ClInclude Include="graphics\visual\visual_font_list_data.h" />
+    <ClInclude Include="graphics\visual\visual_font_list.h" />
     <ClInclude Include="graphics\visual\visual_freeimage_image.h" />
     <ClInclude Include="graphics\visual\visual_glyph.h" />
     <ClInclude Include="graphics\visual\visual_glyph_set.h" />

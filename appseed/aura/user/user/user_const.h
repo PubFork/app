@@ -169,6 +169,7 @@ namespace user
       color_background_highlight,
       color_background_selected,
       color_background_selected_highlight,
+      color_background_selected_hover,
       color_border,
       color_border_hover,
       color_border_press,

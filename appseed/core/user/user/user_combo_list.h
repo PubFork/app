@@ -4,7 +4,7 @@
 namespace user
 {
 
-   
+
    class combo_box;
    namespace wndfrm
    {
@@ -15,7 +15,7 @@ namespace user
    }
 
 
-   class CLASS_DECL_CORE combo_list : 
+   class CLASS_DECL_CORE combo_list :
       virtual public ::user::control
    {
    public:
@@ -31,10 +31,11 @@ namespace user
       ::user::wndfrm::frame::WorkSet *    m_puiDeactivateTogetherSet;
 
 
+      combo_list();
       combo_list(::aura::application * papp);
       virtual ~combo_list();
 
-      
+
       virtual void install_message_routing(::message::sender * psender) override;
 
       void _001OnShowWindow(::message::message * pobj);

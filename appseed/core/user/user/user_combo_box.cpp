@@ -1525,6 +1525,36 @@ namespace user
    }
 
 
+   void combo_box::on_control_event(::user::control_event * pevent)
+   {
+
+      if(pevent->m_eevent == ::user::event_after_change_cur_sel)
+      {
+
+         if(pevent->m_puie == m_plist)
+         {
+
+            if (pevent->m_iItem >= 0)
+            {
+
+               _001SetCurSel(pevent->m_iItem, ::action::source_user);
+
+            }
+
+            _001ShowDropDown(false);
+
+            pevent->Ret();
+
+            return;
+
+         }
+
+      }
+
+      ::user::plain_edit::on_control_event(pevent);
+
+   }
+
 } // namespace user
 
 

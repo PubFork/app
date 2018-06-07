@@ -2744,9 +2744,6 @@
     <ClInclude Include="graphics\visual\visual_font_enumeration.h">
       <Filter>Header Files\graphics\visual</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\visual\visual_font_list_data.h">
-      <Filter>Header Files\graphics\visual</Filter>
-    </ClInclude>
     <ClInclude Include="graphics\visual\visual_freeimage_image.h">
       <Filter>Header Files\graphics\visual</Filter>
     </ClInclude>
@@ -2779,6 +2776,9 @@
     </ClInclude>
     <ClInclude Include="graphics\draw2d\draw2d_matrix.h">
       <Filter>Header Files\graphics\draw2d</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\visual\visual_font_list.h">
+      <Filter>Header Files\graphics\visual</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -4678,9 +4678,6 @@
     <ClCompile Include="graphics\visual\visual_font_enumeration.cpp">
       <Filter>Source Files\graphics\visual</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\visual\visual_font_list_data.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
     <ClCompile Include="graphics\visual\visual_freeimage_image.cpp">
       <Filter>Source Files\graphics\visual</Filter>
     </ClCompile>
@@ -4803,6 +4800,9 @@
     </ClCompile>
     <ClCompile Include="graphics\draw2d\draw2d_matrix.cpp">
       <Filter>Source Files\graphics\draw2d</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\visual\visual_font_list.cpp">
+      <Filter>Source Files\graphics\visual</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

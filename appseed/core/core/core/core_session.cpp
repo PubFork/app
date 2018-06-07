@@ -25,7 +25,7 @@ namespace core
       ::thread(papp)
    {
 
-      m_pfontlistdata = NULL;
+      m_pfontlist = NULL;
 
       m_pdocs = create_session_docs();
 

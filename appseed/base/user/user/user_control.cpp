@@ -841,6 +841,21 @@ namespace user
 
       }
 
+      ::user::interaction * puiOwner = GetOwner();
+
+      if (puiOwner != NULL && puiOwner != pform && puiOwner != puiParent)
+      {
+
+         puiOwner->on_control_event(pevent);
+
+         if (pevent->m_bRet)
+         {
+
+            return;
+
+         }
+
+      }
 
 
    }

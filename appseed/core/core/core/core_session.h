@@ -54,7 +54,7 @@ namespace core
       sp(::object)                                       m_pobjectUserex;
       ::userex::userex *                                 m_puserex;
 
-      ::visual::font_list_data *                         m_pfontlistdata;
+      ::visual::font_list *                         m_pfontlist;
 
 
 

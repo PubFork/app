@@ -63,6 +63,8 @@ namespace wndfrm_tranquillum
       create_color(::user::color_background_selected, ARGB(255, 100, 150, 230));
       create_color(::user::color_background_selected_highlight, ARGB(255, 110, 180, 240));
       create_color(::user::color_background_highlight, ARGB(255, 120, 200, 250));
+      create_color(::user::color_background_hover, ARGB(255, 120, 200, 250));
+      create_color(::user::color_background_selected_hover, ARGB(255, 130, 220, 252));
       create_color(::user::color_background, ARGB(255, 255, 255, 255));
       create_color(::user::color_button_text, ARGB(255, 255, 255, 255));
       create_color(::user::color_list_header, ARGB(255, 40, 40, 40));

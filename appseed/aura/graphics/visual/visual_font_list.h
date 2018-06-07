@@ -5,10 +5,19 @@ namespace visual
 {
 
 
-   class CLASS_DECL_AURA font_list_data :
+   class CLASS_DECL_AURA font_list :
       virtual public ::object
    {
    public:
+
+      enum e_layout
+      {
+
+         layout_wide,
+         layout_single_column,
+
+      };
+
 
       class CLASS_DECL_AURA text_box
       {
@@ -24,10 +33,11 @@ namespace visual
          ~text_box();
 
 
-         void update(font_list_data * pdata, int iBox, string strText);
+         void update(font_list * pdata, int iBox, string strText);
 
 
       };
+
 
       class CLASS_DECL_AURA item :
          virtual public simple_object
@@ -45,13 +55,32 @@ namespace visual
       };
 
 
+      class CLASS_DECL_AURA layout :
+         virtual public spa(item),
+         virtual public ::user::style
+      {
+      public:
+
+         int            m_iUpdate;
+         e_layout       m_elayout;
+         point          m_pt;
+         ::size         m_size;
+
+
+         layout();
+         virtual ~layout();
+
+
+      };
+
+
+      int                                       m_iUpdate;
       sp(::visual::font_enumeration)            m_pfontenumeration;
       ::draw2d::font::enum_item_array           m_itema;
 
       string                                    m_strText;
       string                                    m_strTextLayout;
 
-      spa(item)                                 m_itemptra;
       rect                                      m_rectClient;
       rect                                      m_rectMargin;
       index                                     m_iSel;
@@ -62,20 +91,28 @@ namespace visual
       int                                       m_iUpdated;
       pointer_array < ::user::interaction * >   m_uiptra;
 
-      font_list_data(::aura::application * papp);
-      virtual ~font_list_data();
+
+      font_list(::aura::application * papp);
+      virtual ~font_list();
 
 
       virtual void update();
 
-      virtual index find_name(string str);
+      virtual index find_name(string str, layout * playout);
 
-      virtual index hit_test(point pt);
+      virtual index hit_test(point pt, layout * playout);
+      virtual index hit_test_wide(point pt, layout * playout);
+      virtual index hit_test_single_column(point pt, layout * playout);
 
-      virtual void _001OnDraw(::draw2d::graphics * pgraphics);
+      virtual void _001OnDraw(::draw2d::graphics * pgraphics, layout * playout);
+      virtual void _001OnDrawWide(::draw2d::graphics * pgraphics, layout * playout);
+      virtual void _001OnDrawSingleColumn(::draw2d::graphics * pgraphics, layout * playout);
 
-      virtual void on_layout(SIZE * psize);
+      virtual void on_layout(layout * playout);
+      virtual void on_layout_wide(layout * playout);
+      virtual void on_layout_single_column(layout * playout);
 
+      virtual void defer_update_layout(layout * playout);
 
    };
 
