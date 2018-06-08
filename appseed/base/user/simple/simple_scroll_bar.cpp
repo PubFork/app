@@ -52,15 +52,15 @@ simple_scroll_bar::simple_scroll_bar(::aura::application * papp) :
    m_scrollinfo.nPos    = 0;
 
 
-   m_cr = ARGB(0,0,0,0);
-   m_crStrong = ARGB(150, 150, 150, 150);
-   m_crBorder = ARGB(184,180, 180, 180);
-   m_crLiteBorder = ARGB(184,84 + 23,84 + 23,77 + 23);
+   //m_cr = ARGB(127,180,80,120);
+   //m_crStrong = ARGB(150, 150, 150, 150);
+   //m_crBorder = ARGB(184,180, 180, 180);
+   //m_crLiteBorder = ARGB(184,84 + 23,84 + 23,77 + 23);
 
-   m_crHover = ARGB(100,190,180,250);
-   m_crHoverStrong = ARGB(130, 190, 180, 250);
-   m_crHoverBorder = ARGB(184,160,150,180);
-   m_crHoverLiteBorder = ARGB(184,84 + 23 - 23,84 + 23,77 + 23 + 84);
+   //m_crHover = ARGB(100,190,180,250);
+   //m_crHoverStrong = ARGB(130, 190, 180, 250);
+   //m_crHoverBorder = ARGB(184,160,150,180);
+   //m_crHoverLiteBorder = ARGB(184,84 + 23 - 23,84 + 23,77 + 23 + 84);
 
 }
 
@@ -1625,23 +1625,25 @@ index simple_scroll_bar::hit_test(point pt,::user::e_element & eelement)
 
 }
 
+
 COLORREF simple_scroll_bar::scrollbar_color_strong(::user::e_element eelement)
 {
 
    if (m_eelement == eelement || m_eelementHover == eelement)
    {
 
-      return m_crHoverStrong;
+      return _001GetColor(::user::color_scrollbar_strong_hover, ARGB(130, 190, 180, 250));
 
    }
    else
    {
 
-      return m_crStrong;
+      return _001GetColor(::user::color_scrollbar_strong, ARGB(150, 150, 150, 150));
 
    }
 
 }
+
 
 COLORREF simple_scroll_bar::scrollbar_color(::user::e_element eelement)
 {
@@ -1649,13 +1651,13 @@ COLORREF simple_scroll_bar::scrollbar_color(::user::e_element eelement)
    if(m_eelement == eelement || m_eelementHover == eelement)
    {
 
-      return m_crHover;
+      return _001GetColor(::user::color_scrollbar_hover, ARGB(100, 190, 180, 250));
 
    }
    else
    {
 
-      return m_cr;
+      return _001GetColor(::user::color_scrollbar, ARGB(150, 150, 150, 150));
 
    }
 
@@ -1668,18 +1670,17 @@ COLORREF simple_scroll_bar::scrollbar_border_color(::user::e_element eelement)
    if(m_eelement == eelement || m_eelementHover == eelement)
    {
 
-      return m_crHoverBorder;
+      return _001GetColor(::user::color_scrollbar_border_hover, ARGB(190, 180, 180, 180));
 
    }
    else
    {
 
-      return m_crBorder;
+      return _001GetColor(::user::color_scrollbar_border, ARGB(190, 160, 160, 160));
 
    }
 
 }
-
 
 
 COLORREF simple_scroll_bar::scrollbar_lite_border_color(::user::e_element eelement)
@@ -1688,15 +1689,16 @@ COLORREF simple_scroll_bar::scrollbar_lite_border_color(::user::e_element eeleme
    if(m_eelement == eelement || m_eelementHover == eelement)
    {
 
-      return m_crHoverLiteBorder;
+      return _001GetColor(::user::color_scrollbar_lite_border_hover, ARGB(190, 90, 110, 180));
 
    }
    else
    {
 
-      return m_crLiteBorder;
+      return _001GetColor(::user::color_scrollbar_lite_border, ARGB(190, 110, 110, 100));
 
    }
+
 
 }
 

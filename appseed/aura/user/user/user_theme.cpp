@@ -28,6 +28,7 @@ namespace user
       create_int(int_still_draw_text_flags, DT_LEFT | DT_BOTTOM | DT_SINGLELINE);
       create_int(int_menu_item_draw_text_flags, DT_LEFT | DT_VCENTER | DT_SINGLELINE);
       create_int(int_edit_draw_text_flags, DT_LEFT | DT_VCENTER | DT_SINGLELINE);
+      create_point_font(::user::font_default, FONT_SANS, 12.0);
       create_double(double_list_item_height_rate, 1.0);
       create_double(double_tree_item_height_rate, 1.0);
       create_rect_coord(rect_edit_padding, 0.2, 0.2, 0.2, 0.2);
@@ -47,6 +48,10 @@ namespace user
       create_color(color_text_selected, ARGB(255, 255, 255, 255));
       create_color(color_background, ARGB(0, 0, 0, 0));
       create_color(color_background_selected, ARGB(127, 85, 115, 155));
+      create_color(color_scrollbar_strong_hover, ARGB(127, 240, 140, 220));
+      create_color(color_scrollbar_strong, ARGB(127, 220, 120, 200));
+      create_color(color_scrollbar_hover, ARGB(127, 200, 200, 200));
+      create_color(color_scrollbar, ARGB(127, 155, 155, 155));
 
    }
 

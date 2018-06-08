@@ -83,9 +83,14 @@ void timer::impl_stop()
 bool timer::impl_restart()
 {
 
-   m_timer->Cancel();
+   if (m_timer != nullptr)
+   {
 
-   m_timer = nullptr;
+      m_timer->Cancel();
+
+      m_timer = nullptr;
+
+   }
 
    ::Windows::Foundation::TimeSpan span;
 

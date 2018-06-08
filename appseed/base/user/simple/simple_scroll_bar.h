@@ -25,14 +25,14 @@ public:
    UINT                       m_uiTimer;
    ::user::e_element          m_eelement;
 
-   COLORREF                   m_cr;
-   COLORREF                   m_crStrong;
-   COLORREF                   m_crBorder;
-   COLORREF                   m_crLiteBorder;
-   COLORREF                   m_crHover;
-   COLORREF                   m_crHoverStrong;
-   COLORREF                   m_crHoverBorder;
-   COLORREF                   m_crHoverLiteBorder;
+   //COLORREF                   m_cr;
+   //COLORREF                   m_crStrong;
+   //COLORREF                   m_crBorder;
+   //COLORREF                   m_crLiteBorder;
+   //COLORREF                   m_crHover;
+   //COLORREF                   m_crHoverStrong;
+   //COLORREF                   m_crHoverBorder;
+   //COLORREF                   m_crHoverLiteBorder;
 
 
    simple_scroll_bar(::aura::application * papp);

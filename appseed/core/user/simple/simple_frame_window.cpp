@@ -3367,7 +3367,11 @@ void simple_frame_window::on_select_user_style()
 
       string strSchema = m_varFrame["wndfrm"];
 
-      if (strSchema.has_char() || GetParent() == NULL)
+      if (strSchema.has_char() || GetParent() == NULL
+#ifdef METROWIN
+            || GetParent() == System.m_possystemwindow->m_pui
+#endif
+         )
       {
 
          m_pstyle = Session.get_user_theme(strSchema, get_app());
@@ -3396,7 +3400,7 @@ void simple_frame_window::nextstyle(::user::style_context * pcontext)
       pcontext->m_pstyle = m_pstyle;
 
    }
-   else if (get_parent() == NULL)
+   else if (get_parent() == NULL || get_parent() == System.m_possystemwindow->m_pui)
    {
 
       Session.userstyle(pcontext);

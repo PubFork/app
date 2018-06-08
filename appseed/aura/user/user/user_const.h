@@ -212,13 +212,21 @@ namespace user
       color_edit_text_empty,
       color_tree_background,
       color_view_background,
-      color_scrollbar_background,
       color_toolbar_background,
       color_toolbar_separator,
       color_split_layout_background,
       color_tab_client_background,
       color_tab_layout_background,
       color_action_hover_border_color,
+      color_scrollbar_background,
+      color_scrollbar_strong_hover,
+      color_scrollbar_strong,
+      color_scrollbar_hover,
+      color_scrollbar,
+      color_scrollbar_border_hover,
+      color_scrollbar_border,
+      color_scrollbar_lite_border_hover,
+      color_scrollbar_lite_border,
    };
 
    using color_map = map < e_color,e_color,COLORREF,COLORREF >;

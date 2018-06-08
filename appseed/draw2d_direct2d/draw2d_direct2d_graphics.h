@@ -329,7 +329,7 @@ namespace draw2d_direct2d
       using ::draw2d::graphics::draw_rect;
       using ::draw2d::graphics::fill_rect;
       using ::draw2d::graphics::round_rect;
-      //virtual bool rectangle(LPCRECTD lpRect) override;
+      virtual bool rectangle(LPCRECTD lpRect) override;
       virtual bool draw_rect(LPCRECTD lpRect, ::draw2d::pen * ppen) override;
       virtual bool fill_rect(LPCRECTD lpRect, ::draw2d::brush * ppen) override;
       virtual bool round_rect(LPCRECTD lpRect, LPCPOINTD point) override;

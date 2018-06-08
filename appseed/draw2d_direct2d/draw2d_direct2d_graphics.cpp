@@ -1401,6 +1401,22 @@ namespace draw2d_direct2d
 
    //}
 
+   bool graphics::rectangle(LPCRECTD lpcrect)
+   {
+
+      bool bOk1;
+
+      bOk1 = fill_rect(lpcrect);
+
+      bool bOk2;
+
+      bOk2 = draw_rect(lpcrect);
+
+      return bOk1 && bOk2;
+
+   }
+
+
 
    bool graphics::draw_rect(LPCRECTD lpcrect, ::draw2d::pen * ppen)
    {
