@@ -27,6 +27,7 @@
 #include "user_scroll_bar.cpp"
 #include "user_server.cpp"
 #include "user_single_document_template.cpp"
+#include "user_still.cpp"
 #include "user_user.cpp"
 #include "user_view_container.cpp"
 #include "user_view_creator.cpp"

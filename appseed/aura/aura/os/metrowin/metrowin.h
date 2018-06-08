@@ -14,7 +14,11 @@ CLASS_DECL_AURA void WINAPI Sleep(DWORD dwMilliseconds);
 
 #endif
 
+#ifndef CUBE
 
+CLASS_DECL_AURA WINBOOL _001DefaultDllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved);
+
+#endif
 /*#define GetAValue(rgb)      (LOBYTE((rgb)>>24))
 #define ARGB(a, r,g,b)          ((COLORREF)(((BYTE)(r)|((WORD)((BYTE)(g))<<8))|(((DWORD)(BYTE)(b))<<16)|(((DWORD)(BYTE)(a))<<24)))*/
 

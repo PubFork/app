@@ -1,17 +1,24 @@
 #include "framework.h"
 
+#ifdef METROWIN
+
+#include <Psapi.h>
+
+#endif
+
 /*BEGIN_EXTERN_C
 
 BOOL WINAPI openssl_DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved);
 
 END_EXTERN_C*/
+#ifndef METROWIN
 #ifndef CUBE
 #ifdef METROWIN
-[Session::MTAThread]
+[Platform::MTAThread]
 #endif
 BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 {
-   
+
    //Sleep(30000);
 
 //   ASSERT(FALSE);
@@ -31,7 +38,7 @@ BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
       output_debug_string(L"aura.dll initializing!\n");
 
       xxdebug_box("aura.dll DllMain", "box", MB_OK);
-      
+
    }
    else if (dwReason == DLL_PROCESS_DETACH)
    {
@@ -49,7 +56,7 @@ BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 }
 
 #endif
-
+#endif
 
 
 #include "framework.h"
@@ -63,15 +70,15 @@ BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 WINBOOL CLASS_DECL_AURA _001DefaultDllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 {
 
-   char sz[1024];
+   wchar_t wsz[1024];
 
-   ::GetModuleFileNameEx(::GetCurrentProcess(), hInstance, sz, sizeof(sz));
+   ::GetModuleFileNameExW(::GetCurrentProcess(), hInstance, wsz, sizeof(wsz) / sizeof(wchar_t));
 
-   char sz2[1024];
+   wchar_t wsz2[1024];
 
-   strcpy(sz2, strrchr(sz, '\\'));
+   wcscpy(wsz2, wcsrchr(wsz, '\\'));
 
-   strcpy(sz, sz2 + 1);
+   wcscpy(wsz, wsz2 + 1);
 
 
 
@@ -81,18 +88,18 @@ WINBOOL CLASS_DECL_AURA _001DefaultDllMain(HINSTANCE hInstance, DWORD dwReason, 
 
    if (dwReason == DLL_PROCESS_ATTACH)
    {
-      
-      strcat(sz, " ::initializing!\n");
 
-      ::output_debug_string(sz);
+      wcscat(wsz, L" ::initializing!\n");
+
+      ::output_debug_string(wsz);
 
    }
    else if (dwReason == DLL_PROCESS_DETACH)
    {
 
-      strcat(sz, " ::terminating!\n");
+      wcscat(wsz, L" ::terminating!\n");
 
-      ::output_debug_string(sz);
+      ::output_debug_string(wsz);
 
    }
 

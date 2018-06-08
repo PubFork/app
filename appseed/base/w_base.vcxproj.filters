@@ -121,6 +121,9 @@
     <Filter Include="Source Files\user\hotplugin">
       <UniqueIdentifier>{2b3bed5e-9fb7-48db-a0ef-85a72b58afd2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\user\hotplugin\windows">
+      <UniqueIdentifier>{61b753e2-08c0-479f-9d3b-a20115b89427}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -549,6 +552,9 @@
     </ClCompile>
     <ClCompile Include="user\hotplugin\hotplugin_bare_paint_discreet.cpp">
       <Filter>Source Files\user\hotplugin</Filter>
+    </ClCompile>
+    <ClCompile Include="user\hotplugin\hotplugin_windows.cpp">
+      <Filter>Source Files\user\hotplugin\windows</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -39,12 +39,12 @@ void __trace_message(const char * lpszPrefix,::message::message * pobj)
    else if(pbase->m_id >= WM_USER)
    {
       // User message
-      sprintf_s(szBuf,_countof(szBuf),"WM_USER+0x%04X", (UINT) (pbase->m_id.int64() - WM_USER));
+      sprintf_s(szBuf,_countof(szBuf),"WM_USER+0x%04X", (UINT) (pbase->m_id.i64() - WM_USER));
       lpszMsgName = szBuf;
    }
    else
    {
-      lpszMsgName = get_windows_message_name((UINT) pbase->m_id.int64());
+      lpszMsgName = get_windows_message_name((UINT) pbase->m_id.i64());
    }
 
    if(lpszMsgName != NULL)

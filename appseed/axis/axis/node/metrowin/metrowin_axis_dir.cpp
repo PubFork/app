@@ -132,14 +132,22 @@ namespace metrowin
       //}
 
 
-      bool dir::is(const ::file::path & lpcszPath,::aura::application * papp)
+      bool dir::is_impl(const ::file::path & path,::aura::application * papp)
       {
 
-         if(::metrowin::dir::is(lpcszPath,papp))
+         if (::file::dir::axis::system::is_impl(path, papp))
+         {
+
             return true;
 
-         if(::file::dir::axis::system::is(lpcszPath,papp))
+         }
+
+         if (::metrowin::dir::is_impl(path, papp))
+         {
+
             return true;
+
+         }
 
          return false;
 
