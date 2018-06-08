@@ -83,17 +83,21 @@ namespace user
 
       attach_visual_font_list(Session.m_pfontlist);
 
-      m_pfontlist->defer_update_layout(&m_layout);
+      update_data(false);
 
       SetTimer(timer_update_font, 10 * 1000, NULL);
 
    }
 
 
-   void font_list::_001OnTimer(::timer * ptimer)
+   bool font_list::update_data(bool bSaveAndValidate)
    {
 
-      if (ptimer->m_nIDEvent == timer_update_font)
+      if (bSaveAndValidate)
+      {
+
+      }
+      else
       {
 
          if (m_pfontlist.is_set())
@@ -106,6 +110,23 @@ namespace user
          }
 
       }
+
+      return true;
+
+   }
+
+
+   void font_list::_001OnTimer(::timer * ptimer)
+   {
+
+      if (ptimer->m_nIDEvent == timer_update_font)
+      {
+
+         update_data(false);
+
+      }
+
+      ::user::combo_list::_001OnTimer(ptimer);
 
    }
 
@@ -278,7 +299,12 @@ namespace user
 
       m_pfontlist->m_rectClient = rectFontList;
 
-      m_pfontlist->on_layout(&m_layout);
+      if (!m_pfontlist->on_layout(&m_layout))
+      {
+
+         set_need_layout();
+
+      }
 
       m_sizeTotal = m_layout.m_size -
                     ::size(

@@ -73,6 +73,8 @@ namespace user
 
       virtual void query_full_size(LPSIZE lpsize) override;
 
+      virtual bool update_data(bool bSaveAndValidate) override;
+
 
    };
 

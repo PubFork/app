@@ -585,7 +585,6 @@ namespace user
 
       }
 
-
       return bOk;
 
    }

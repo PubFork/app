@@ -354,24 +354,34 @@ namespace visual
    void font_list::defer_update_layout(layout * playout)
    {
 
-      if (playout->get_count() == m_itema.get_count() && playout->m_iUpdate == m_iUpdate)
+      index iCount;
+
       {
 
-         return;
+         synch_lock sl(m_pmutex);
+
+         synch_lock slLayout(playout->m_pmutex);
+
+         if (playout->get_count() == m_itema.get_count() && playout->m_iUpdate == m_iUpdate)
+         {
+
+            return;
+
+         }
+
+         playout->m_iUpdate = m_iUpdate;
+
+         iCount = m_itema.get_count();
+
+         playout->set_size(iCount);
+
+         output_debug_string("Middle");
+
+         m_iUpdated = 0;
+
+         output_debug_string("End");
 
       }
-
-      playout->m_iUpdate = m_iUpdate;
-
-      index iCount = m_itema.get_count();
-
-      playout->set_size(iCount);
-
-      output_debug_string("Middle");
-
-      m_iUpdated = 0;
-
-      output_debug_string("End");
 
       ::fork_count(get_app(), iCount, [=](index iOrder, index i, index iCount, index iScan)
       {
@@ -395,9 +405,11 @@ namespace visual
          if (layout.m_elayout == layout_wide)
          {
 
+            int i = 18;
+            int iAddUp = 12;
             iaSize.add(18);
-            iaSize.add(24);
             iaSize.add(30);
+            iaSize.add(42);
 
          }
          else
@@ -410,175 +422,173 @@ namespace visual
          for (; i < iCount; i += iScan)
          {
 
-            synch_lock sl(m_pmutex);
-
-            item * pitem = canew(item());
-
-            layout[i] = pitem;
-
-            pitem->m_strFont = m_itema[i]->m_strFile;
-
-            pitem->m_strName = m_itema[i]->m_strName;
-
-            string str = pitem->m_strFont;
-
-            for (index j = 0; j < iaSize.get_count(); j++)
             {
 
-               text_box * pbox = &pitem->m_box[j];
+               synch_lock sl(m_pmutex);
 
-               pbox->m_font.alloc(allocer());
+               synch_lock slLayout(playout->m_pmutex);
 
-               pbox->m_dib.alloc(allocer());
+               item * pitem = canew(item());
 
-               if (str.compare_ci("GOUDY STOUT") == 0)
+               layout[i] = pitem;
+
+               pitem->m_strFont = m_itema[i]->m_strFile;
+
+               pitem->m_strName = m_itema[i]->m_strName;
+
+               string str = pitem->m_strFont;
+
+               for (index j = 0; j < iaSize.get_count(); j++)
                {
 
-                  output_debug_string("test05");
+                  text_box * pbox = &pitem->m_box[j];
 
-               }
+                  pbox->m_font.alloc(allocer());
 
-               pbox->m_font->create_pixel_font(str, iaSize[j]);
+                  pbox->m_dib.alloc(allocer());
 
-               pgraphics->SelectFont(pbox->m_font);
-
-               pbox->m_font->m_ecs = m_itema[i]->m_ecs;
-
-               if (j == 0)
-               {
-
-                  strText = m_strTextLayout;
-
-                  if (strText.is_empty() || (pbox->m_font->m_ecs != ::draw2d::font::cs_ansi && pbox->m_font->m_ecs != ::draw2d::font::cs_default))
+                  if (str.compare_ci("GOUDY STOUT") == 0)
                   {
 
-                     strText = ::draw2d::font::get_sample_text(pbox->m_font->m_ecs);
-
-                     if (strText.is_empty())
-                     {
-
-                        strText = pitem->m_strName;
-
-                     }
+                     output_debug_string("test05");
 
                   }
 
-                  s = pgraphics->GetTextExtent(strText);
+                  pbox->m_font->create_pixel_font(str, iaSize[j]);
 
-                  if (strText.has_char() && s.area() <= 0)
+                  pgraphics->SelectFont(pbox->m_font);
+
+                  pbox->m_font->m_ecs = m_itema[i]->m_ecs;
+
+                  if (j == 0)
                   {
 
-                     string strSample;
-                     int maxarea = 0;
-                     //::draw2d::font::e_cs ecs;
-                     ::draw2d::font::e_cs ecsFound = pbox->m_font->m_ecs;
-                     size sSample;
+                     strText = m_strTextLayout;
 
-
-                     if (maxarea <= 0)
+                     if (strText.is_empty() || (pbox->m_font->m_ecs != ::draw2d::font::cs_ansi && pbox->m_font->m_ecs != ::draw2d::font::cs_default))
                      {
 
-                        strSample = m_strTextLayout;
+                        strText = ::draw2d::font::get_sample_text(pbox->m_font->m_ecs);
 
-                        if (strSample.has_char())
+                        if (strText.is_empty())
                         {
 
-                           sSample = pgraphics->GetTextExtent(strSample);
-
-                           if (sSample.area() > maxarea)
-                           {
-
-                              maxarea = (int)(sSample.area());
-
-                              strText = strSample;
-
-                              s = sSample;
-
-                           }
+                           strText = pitem->m_strName;
 
                         }
 
                      }
 
-                     if (maxarea <= 0)
+                     s = pgraphics->GetTextExtent(strText);
+
+                     if (strText.has_char() && s.area() <= 0)
                      {
 
-                        strSample = pitem->m_strName[i];
+                        string strSample;
+                        int maxarea = 0;
+                        //::draw2d::font::e_cs ecs;
+                        ::draw2d::font::e_cs ecsFound = pbox->m_font->m_ecs;
+                        size sSample;
 
-                        if (strSample.has_char())
+
+                        if (maxarea <= 0)
                         {
 
-                           sSample = pgraphics->GetTextExtent(strSample);
+                           strSample = m_strTextLayout;
 
-                           if (sSample.area() > maxarea)
+                           if (strSample.has_char())
                            {
 
-                              maxarea = (int)(sSample.area());
+                              sSample = pgraphics->GetTextExtent(strSample);
 
-                              strText = strSample;
+                              if (sSample.area() > maxarea)
+                              {
 
-                              s = sSample;
+                                 maxarea = (int)(sSample.area());
+
+                                 strText = strSample;
+
+                                 s = sSample;
+
+                              }
 
                            }
 
                         }
 
+                        if (maxarea <= 0)
+                        {
+
+                           strSample = pitem->m_strName[i];
+
+                           if (strSample.has_char())
+                           {
+
+                              sSample = pgraphics->GetTextExtent(strSample);
+
+                              if (sSample.area() > maxarea)
+                              {
+
+                                 maxarea = (int)(sSample.area());
+
+                                 strText = strSample;
+
+                                 s = sSample;
+
+                              }
+
+                           }
+
+                        }
+
+                        pbox->m_font->m_ecs = ecsFound;
+
+
                      }
-
-                     pbox->m_font->m_ecs = ecsFound;
-
+                     pitem->m_strSample = strText;
 
                   }
-                  pitem->m_strSample = strText;
-
-               }
-               else
-               {
-
-                  pbox->m_font->m_ecs = pitem->m_box[j - 1].m_font->m_ecs;
-
-                  s = pgraphics->GetTextExtent(pitem->m_strSample);
-
-               }
-
-               s.cx += m_rectMargin.left + m_rectMargin.right;
-               s.cy += m_rectMargin.top + m_rectMargin.bottom;
-
-
-               pbox->m_size = s;
-
-
-               pbox->m_bOk = false;
-               //pitem->m_box[1].m_bOk = false;
-               //pitem->m_box[2].m_bOk = false;
-
-               m_iUpdated++;
-
-               if (m_iUpdated == iCount)
-               {
-
-                  for (auto * pui : m_uiptra)
+                  else
                   {
 
-                     try
-                     {
+                     pbox->m_font->m_ecs = pitem->m_box[j - 1].m_font->m_ecs;
 
-                        pui->set_need_layout();
-
-                     }
-                     catch (...)
-                     {
-
-                     }
+                     s = pgraphics->GetTextExtent(pitem->m_strSample);
 
                   }
+
+                  s.cx += m_rectMargin.left + m_rectMargin.right;
+                  s.cy += m_rectMargin.top + m_rectMargin.bottom;
+
+                  pbox->m_size = s;
+
+                  pbox->m_bOk = false;
+
+                  m_iUpdated++;
+
+
+               }
+
+            }
+
+
+
+            for (auto * pui : m_uiptra)
+            {
+
+               try
+               {
+
+                  pui->set_need_layout();
+
+               }
+               catch (...)
+               {
 
                }
 
 
             }
-
-            sl.unlock();
 
          }
 
@@ -590,7 +600,7 @@ namespace visual
    }
 
 
-   void font_list::on_layout(layout * playout)
+   bool font_list::on_layout(layout * playout)
    {
 
       synch_lock sl(m_pmutex);
@@ -598,23 +608,21 @@ namespace visual
       if (playout->m_elayout == layout_wide)
       {
 
-         on_layout_wide(playout);
+         return on_layout_wide(playout);
 
       }
       else
       {
 
-         on_layout_single_column(playout);
+         return on_layout_single_column(playout);
 
       }
 
    }
 
 
-   void font_list::on_layout_wide(layout * playout)
+   bool font_list::on_layout_wide(layout * playout)
    {
-
-      synch_lock sl(m_pmutex);
 
       layout & layout = *playout;
 
@@ -628,7 +636,7 @@ namespace visual
 
       int h = 0;
 
-      sl.lock();
+      int hExtra = 0;
 
       int nextx;
 
@@ -642,7 +650,9 @@ namespace visual
          if (pitem == NULL)
          {
 
-            continue;
+            playout->m_size.cy = y + hExtra + 5;
+
+            return false;
 
          }
 
@@ -658,6 +668,7 @@ namespace visual
             nextx = s.cx;
             y += h;
             h = 0;
+            hExtra = 0;
          }
 
          //pgraphics->text_out(x + m_rectMargin.left,y + m_rectMargin.top,strText);
@@ -670,6 +681,8 @@ namespace visual
          x = nextx;
 
          h = MAX(h, s.cy);
+
+         hExtra = MAX(hExtra, s.cy);
 
          for (index j = 1; j < 3; j++)
          {
@@ -685,19 +698,21 @@ namespace visual
             r2.right = r2.left + s2.cx;
             r2.bottom = r2.top + s2.cy;
 
+            hExtra = MAX(hExtra, s2.cy);
+
          }
 
       }
 
-      playout->m_size.cy = y + h;
+      playout->m_size.cy = y + hExtra + 5;
+
+      return true;
 
    }
 
 
-   void font_list::on_layout_single_column(layout * playout)
+   bool font_list::on_layout_single_column(layout * playout)
    {
-
-      synch_lock sl(m_pmutex);
 
       layout & layout = *playout;
 
@@ -706,8 +721,6 @@ namespace visual
       size s;
 
       int h = 0;
-
-      sl.lock();
 
       int nextx;
 
@@ -724,7 +737,9 @@ namespace visual
          if (pitem == NULL)
          {
 
-            continue;
+            playout->m_size.cy = ySingleColumn;
+
+            return false;
 
          }
 
@@ -748,6 +763,8 @@ namespace visual
       }
 
       playout->m_size.cy = ySingleColumn;
+
+      return true;
 
    }
 
@@ -793,23 +810,23 @@ namespace visual
 
          }
 
-         if (i == m_iSel)
-         {
-            if (layout[i]->m_box[BOX_SEL].m_rect.contains(pt))
-            {
+         //if (i == m_iSel)
+         //{
+         //   if (layout[i]->m_box[BOX_SEL].m_rect.contains(pt))
+         //   {
 
-               return i;
-            }
-         }
-         else if (i == m_iHover)
-         {
-            if (layout[i]->m_box[BOX_HOVER].m_rect.contains(pt))
-            {
+         //      return i;
+         //   }
+         //}
+         //else if (i == m_iHover)
+         //{
+         //   if (layout[i]->m_box[BOX_HOVER].m_rect.contains(pt))
+         //   {
 
-               return i;
-            }
-         }
-         else
+         //      return i;
+         //   }
+         //}
+         //else
          {
             if (layout[i]->m_box[BOX].m_rect.contains(pt))
             {
@@ -863,7 +880,9 @@ namespace visual
 
       return layout.pred_find_first([&](item *pitem)
       {
-         return pitem->m_strName.compare_ci(str) == 0;
+
+         return pitem != NULL && pitem->m_strName.compare_ci(str) == 0;
+
       });
 
    }

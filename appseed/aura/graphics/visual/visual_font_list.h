@@ -108,9 +108,9 @@ namespace visual
       virtual void _001OnDrawWide(::draw2d::graphics * pgraphics, layout * playout);
       virtual void _001OnDrawSingleColumn(::draw2d::graphics * pgraphics, layout * playout);
 
-      virtual void on_layout(layout * playout);
-      virtual void on_layout_wide(layout * playout);
-      virtual void on_layout_single_column(layout * playout);
+      virtual bool on_layout(layout * playout);
+      virtual bool on_layout_wide(layout * playout);
+      virtual bool on_layout_single_column(layout * playout);
 
       virtual void defer_update_layout(layout * playout);
 

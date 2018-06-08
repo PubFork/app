@@ -2967,16 +2967,16 @@ namespace draw2d_direct2d
       */
 #endif
 
-   inline bool graphics::GetCharWidthI(UINT giFirst, UINT cgi, LPWORD pgi, LPINT lpBuffer)
-   {
+   //inline bool graphics::GetCharWidthI(UINT giFirst, UINT cgi, LPWORD pgi, LPINT lpBuffer)
+   //{
 
-      _throw(todo(get_app()));
+   //   _throw(todo(get_app()));
 
-      //ASSERT(get_handle1() != NULL);
+   //   //ASSERT(get_handle1() != NULL);
 
-      //return ::GetCharWidthI(get_handle1(), giFirst, cgi, pgi, lpBuffer) != FALSE;
+   //   //return ::GetCharWidthI(get_handle1(), giFirst, cgi, pgi, lpBuffer) != FALSE;
 
-   }
+   //}
 
    inline bool graphics::GetTextExtentExPointI(LPWORD pgiIn, int cgi, int nMaxExtent, LPINT lpnFit, LPINT alpDx, LPSIZE lpSize)
    {
