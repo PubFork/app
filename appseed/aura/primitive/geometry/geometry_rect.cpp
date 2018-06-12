@@ -174,7 +174,7 @@ void rect::_001AlignX(double dRate, const RECT & rect)
 
       dRate -= 1000.0;
 
-      x = rect.right + width() * dRate;
+      double x = rect.right + width() * dRate;
 
       move_to_x(x);
 
@@ -185,7 +185,7 @@ void rect::_001AlignX(double dRate, const RECT & rect)
 
       dRate += 1000.0;
 
-      x = rect.left + width() * dRate;
+      double x = rect.left + width() * dRate;
 
       move_to_x(x - width());
 
@@ -208,7 +208,7 @@ void rect::_001AlignY(double dRate, const RECT & rect)
 
       dRate -= 1000.0;
 
-      y = rect.bottom + height() * dRate;
+      double y = rect.bottom + height() * dRate;
 
       move_to_y(y);
 
@@ -219,7 +219,7 @@ void rect::_001AlignY(double dRate, const RECT & rect)
 
       dRate += 1000.0;
 
-      y = rect.top + height() * dRate;
+      double y = rect.top + height() * dRate;
 
       move_to_y(y - height());
 
