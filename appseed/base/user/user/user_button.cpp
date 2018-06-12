@@ -227,6 +227,8 @@ namespace user
 
             ev.m_eevent = ::user::event_button_clicked;
 
+            ev.m_actioncontext.signalize(::action::source_user);
+
             on_control_event(&ev);
 
             pobj->m_bRet = ev.m_bRet;

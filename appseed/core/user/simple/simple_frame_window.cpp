@@ -3400,7 +3400,11 @@ void simple_frame_window::nextstyle(::user::style_context * pcontext)
       pcontext->m_pstyle = m_pstyle;
 
    }
-   else if (get_parent() == NULL || get_parent() == System.m_possystemwindow->m_pui)
+   else if (get_parent() == NULL
+#ifdef METROWIN
+            || get_parent() == System.m_possystemwindow->m_pui
+#endif
+           )
    {
 
       Session.userstyle(pcontext);

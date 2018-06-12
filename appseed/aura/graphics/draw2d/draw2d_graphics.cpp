@@ -3258,7 +3258,7 @@ namespace draw2d
    }
 
 
-   ::count graphics::GetEachCharTextExtent(array < size > & sizea, const string & str, strsize iStart, strsize iCount)
+   ::count graphics::GetEachCharTextExtent(array < sized > & sizea, const string & str, strsize iStart, strsize iCount)
    {
 
       sizea.remove_all();

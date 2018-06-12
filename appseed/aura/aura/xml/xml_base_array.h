@@ -27,13 +27,13 @@ namespace xml
 
    template < int32_t m_iNodeNameIndex, class TYPE, class ARG_TYPE, class ARRAY >
    array<m_iNodeNameIndex, TYPE, ARG_TYPE, ARRAY>::
-      array()
+   array()
    {
    }
 
    template < int32_t m_iNodeNameIndex, class TYPE, class ARG_TYPE, class ARRAY >
    array<m_iNodeNameIndex, TYPE, ARG_TYPE, ARRAY>::
-      array(const array & xmla) :
+   array(const array & xmla) :
       ARRAY (xmla)
    {
    }
@@ -42,8 +42,8 @@ namespace xml
 
    template < int32_t m_iNodeNameIndex, class TYPE, class ARG_TYPE, class ARRAY >
    void
-      array<m_iNodeNameIndex, TYPE, ARG_TYPE, ARRAY>::
-      xml_export(output_tree & xmlof)
+   array<m_iNodeNameIndex, TYPE, ARG_TYPE, ARRAY>::
+   xml_export(output_tree & xmlof)
    {
       xmlof.set_attr("count", this->get_size());
       for(int32_t i = 0; i < this->get_size(); i++)
@@ -56,8 +56,8 @@ namespace xml
 
    template < int32_t m_iNodeNameIndex, class TYPE, class ARG_TYPE, class ARRAY >
    void
-      array<m_iNodeNameIndex, TYPE, ARG_TYPE, ARRAY>::
-      xml_import(input_tree & xmlif)
+   array<m_iNodeNameIndex, TYPE, ARG_TYPE, ARRAY>::
+   xml_import(input_tree & xmlif)
    {
       int32_t iSize;
       xmlif.get_attr("count", iSize);
@@ -66,7 +66,7 @@ namespace xml
       {
          attr_array attra(this->get_app());
          attra.set_at("array_index", i);
-         xmlif.import_node(xmlif.get_node_name(m_iNodeNameIndex), attra, this->element_at(i));
+         xmlif.import_node(xmlif.get_node_name(m_iNodeNameIndex), attra, *this->element_at(i));
       }
    }
 

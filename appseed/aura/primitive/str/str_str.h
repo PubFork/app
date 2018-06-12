@@ -536,6 +536,10 @@ namespace str
    CLASS_DECL_AURA bool is_true(string str);
 
 
+   CLASS_DECL_AURA inline strsize utf8_dec_len(const char * pszBeg, const char * psz);
+
+   CLASS_DECL_AURA inline strsize utf8_inc_len(const char * psz);
+
 } // namespace str
 
 

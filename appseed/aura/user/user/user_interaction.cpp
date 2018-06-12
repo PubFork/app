@@ -4704,15 +4704,28 @@ restart:
       else
       {
 
-         if (m_pauraapp != NULL)
+         ::user::interaction * puiOwner = GetOwner();
+
+         if (puiOwner != NULL)
          {
 
-            Application.on_control_event(pevent);
+            puiOwner->on_control_event(pevent);
 
-            if (pevent->m_bRet)
+         }
+         else
+         {
+
+            if (m_pauraapp != NULL)
             {
 
-               return;
+               Application.on_control_event(pevent);
+
+               if (pevent->m_bRet)
+               {
+
+                  return;
+
+               }
 
             }
 

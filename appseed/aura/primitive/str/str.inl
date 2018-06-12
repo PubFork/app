@@ -1155,6 +1155,30 @@ namespace str
    }
 
 
+   inline strsize utf8_dec_len(const char * pszBeg, const char * psz)
+   {
+
+      const char * pszDec = ::str::utf8_dec(pszBeg, psz);
+
+      if (pszDec == NULL)
+      {
+
+         return -1;
+
+      }
+
+      return psz - pszDec;
+
+   }
+
+   inline  strsize utf8_inc_len(const char * psz)
+   {
+
+      return get_utf8_char_length(psz);
+
+   }
+
+
 } // namespace str
 
 

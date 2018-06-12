@@ -59,14 +59,32 @@ namespace xml
       return export_node(lpcszName, m_varexchange);
    }
 
-   void output_tree::set_attr(const char * lpcszName, const char * lpcszValue)
+   void output_tree::set_attr(const char * lpcszName, const char * lpcszValue, bool bOptional)
    {
+      if ((lpcszValue == NULL || *lpcszValue == '\0') && bOptional)
+         return;
       m_pnode->set_attr(lpcszName, lpcszValue);
    }
 
-   void output_tree::set_attr(const char * lpcszName, int64_t iValue)
+   void output_tree::set_attr(const char * lpcszName, int64_t iValue, bool bOptional)
    {
+      if (iValue == 0 && bOptional)
+         return;
       m_pnode->set_attr(lpcszName, iValue);
+   }
+
+   void output_tree::set_bool_attr(const char * lpcszName, bool bValue, bool bOptional)
+   {
+      if (!bValue && bOptional)
+      {
+         return;
+      }
+      m_pnode->set_attr(lpcszName, bValue ? 1 : 0);
+   }
+
+   void output_tree::set_double_attr(const char * lpcszName, double dValue)
+   {
+      m_pnode->set_attr(lpcszName, ::str::from(dValue));
    }
 
    void output_tree::set_value(const char * lpcszValue)

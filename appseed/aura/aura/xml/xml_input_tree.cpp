@@ -82,15 +82,104 @@ namespace xml
 
 
 
-   bool input_tree::get_attr(const char * lpcszName, string & strValue)
+   bool input_tree::load_attr(const char * lpcszName, string & strValue)
    {
       return m_pnode->get_attr(lpcszName, strValue);
    }
 
 
-   bool input_tree::get_attr(const char * lpcszName, int32_t & iValue)
+   bool input_tree::load_attr(const char * lpcszName, int32_t & iValue)
    {
       return m_pnode->get_attr(lpcszName, iValue);
+   }
+
+   bool input_tree::load_attr(const char * lpcszName, bool & b)
+   {
+      int32_t iValue;
+      if (!m_pnode->get_attr(lpcszName, iValue))
+      {
+         return false;
+      }
+      b = iValue != 0;
+      return true;
+   }
+
+
+   bool input_tree::load_attr(const char * lpcszName, double & d)
+   {
+      string strValue;
+      if (!m_pnode->get_attr(lpcszName, strValue))
+      {
+         return false;
+      }
+      d = ::strtod(strValue, NULL);
+      return true;
+   }
+
+
+   bool input_tree::get_attr(const char * lpcszName, string & strValue, string strDefault)
+   {
+
+      if (!load_attr(lpcszName, strValue))
+      {
+
+         strValue = strDefault;
+
+         return false;
+
+      }
+
+      return true;
+
+   }
+
+   bool input_tree::get_attr(const char * lpcszName, bool & b, bool bDefault)
+   {
+
+      if (!load_attr(lpcszName, b))
+      {
+
+         b = bDefault;
+
+         return false;
+
+      }
+
+      return true;
+
+   }
+
+   bool input_tree::get_attr(const char * lpcszName, double & d, double dDefault)
+   {
+
+      if (!load_attr(lpcszName, d))
+      {
+
+         d = dDefault;
+
+         return false;
+
+      }
+
+      return true;
+
+   }
+
+
+   bool input_tree::get_attr(const char * lpcszName, int32_t & iValue, int iDefault)
+   {
+
+      if (!load_attr(lpcszName, iValue))
+      {
+
+         iValue = iDefault;
+
+         return false;
+
+      }
+
+      return true;
+
    }
 
 
