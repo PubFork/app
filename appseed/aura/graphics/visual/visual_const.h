@@ -26,7 +26,8 @@ namespace visual
       cursor_size_bottom_left,
       cursor_size_left,
       cursor_size_vertical,
-      cursor_size_horizontal
+      cursor_size_horizontal,
+      cursor_move
 
    };
 

@@ -29,7 +29,7 @@ namespace aura
 
       m_ecursor = ::visual::cursor_default;
 
-      m_bDrawCursor = true;
+      m_bDrawCursor = false;
 
       m_pappCurrent = NULL;
       m_psockets = NULL;

@@ -157,6 +157,10 @@ rect(point ptTopLeft, point ptBottomRight) NOTHROW : rect(ptTopLeft.x, ptTopLeft
    void constraint_v5(const RECT & rect, const class size sizeMin);
    void constraint_v7(const RECT & rect);
    void Align(int32_t align,const RECT & rect);
+   void align_outsize_rate(double x, double y, const RECT & rect);
+   void _001Align(double x, double y, const RECT & rect);
+   void _001AlignX(double x, const RECT & rect);
+   void _001AlignY(double y, const RECT & rect);
    void align_rate(double x, double y, const RECT & rect);
    void align_x(double x, const RECT & rect);
    void align_y(double y, const RECT & rect);

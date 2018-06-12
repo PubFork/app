@@ -8613,6 +8613,30 @@ restart:
    }
 
 
+   ::size interaction::get_size()
+   {
+
+      rect rectWindow;
+
+      GetWindowRect(rectWindow);
+
+      return rectWindow.get_size();
+
+   }
+
+
+   ::size interaction::get_client_size()
+   {
+
+      rect rectClient;
+
+      GetClientRect(rectClient);
+
+      return rectClient.get_size();
+
+   }
+
+
    int interaction::width()
    {
 

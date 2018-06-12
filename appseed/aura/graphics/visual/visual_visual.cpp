@@ -408,6 +408,14 @@ namespace visual
       {
          set_cursor_file(::visual::cursor_size_horizontal, pszDir / "arrow.png", bFromCache);
       }
+      if (set_cursor_file(::visual::cursor_move, pszDir / "move.png", false))
+      {
+         count++;
+      }
+      else
+      {
+         set_cursor_file(::visual::cursor_move, pszDir / "arrow.png", bFromCache);
+      }
 
       return count;
    }

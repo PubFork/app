@@ -1047,6 +1047,8 @@ namespace user
       virtual int client_width();
       virtual int client_height();
 
+      virtual ::size get_size();
+      virtual ::size get_client_size();
 
       virtual void resize_to_fit();
 
