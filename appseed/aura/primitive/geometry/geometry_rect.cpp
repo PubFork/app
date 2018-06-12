@@ -150,6 +150,83 @@ void rect::Align(int32_t align, const RECT & rect)
 
 }
 
+void rect::_001Align(double x, double y, const RECT & rect)
+{
+
+   _001AlignX(x, rect);
+
+   _001AlignY(y, rect);
+
+}
+
+
+void rect::_001AlignX(double dRate, const RECT & rect)
+{
+
+   if (fabs(dRate) < 1000.0)
+   {
+
+      align_x(dRate, rect);
+
+   }
+   else if(dRate >= 1000.0)
+   {
+
+      dRate -= 1000.0;
+
+      x = rect.right + width() * dRate;
+
+      move_to_x(x);
+
+
+   }
+   else if (dRate <= -1000.0)
+   {
+
+      dRate += 1000.0;
+
+      x = rect.left + width() * dRate;
+
+      move_to_x(x - width());
+
+   }
+
+}
+
+
+void rect::_001AlignY(double dRate, const RECT & rect)
+{
+
+   if (fabs(dRate) < 1000.0)
+   {
+
+      align_y(dRate, rect);
+
+   }
+   else if (dRate >= 1000.0)
+   {
+
+      dRate -= 1000.0;
+
+      y = rect.bottom + height() * dRate;
+
+      move_to_y(y);
+
+
+   }
+   else if (dRate <= -1000.0)
+   {
+
+      dRate += 1000.0;
+
+      y = rect.top + height() * dRate;
+
+      move_to_y(y - height());
+
+   }
+
+
+}
 
 void rect::align_rate(double x, double y, const RECT & rect)
 {
@@ -159,7 +236,6 @@ void rect::align_rate(double x, double y, const RECT & rect)
    align_y(y, rect);
 
 }
-
 
 void rect::align_x(double dRate, const RECT & rect)
 {
