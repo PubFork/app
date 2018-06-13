@@ -38,9 +38,9 @@ public:
 
    static void get_bounding_rect(typename POINT2D::LPRECT lprect,const typename POINT2D::BASE * lppoint,::count count);
 
-   bool bounding_rect_contains_pt(typename POINT2D::BASE pt);
+   bool bounding_rect_contains_pt(typename POINT2D::BASE pt) const;
 
-   bool polygon_contains(typename POINT2D::BASE pt);
+   bool polygon_contains(typename POINT2D::BASE pt) const;
 
    inline index add(typename POINT2D::TYPE x,typename POINT2D::TYPE y) { return comparable_array < POINT2D >::add(POINT2D(x,y)); }
    inline index add(typename POINT2D::BASE point) { return comparable_array < POINT2D >::add(POINT2D(point)); }

@@ -560,180 +560,264 @@ namespace user
    }
 
 
-   bool interaction_impl_base::ClientToScreen(LPRECT lprect)
-   {
+   //bool interaction_impl_base::ClientToScreen(LPRECT lprect)
+   //{
 
-      if(m_pui == NULL)
-      {
+   //   if(m_pui == NULL)
+   //   {
 
-         return false;
+   //      return false;
 
-      }
+   //   }
 
-      if(!m_pui->ClientToScreen(lprect))
-      {
+   //   if(!m_pui->ClientToScreen(lprect))
+   //   {
 
-         return false;
+   //      return false;
 
-      }
+   //   }
 
-      return true;
+   //   return true;
 
-   }
+   //}
 
+   //bool interaction_impl_base::ClientToScreen(LPRECTD lprect)
+   //{
 
-   bool interaction_impl_base::ClientToScreen(LPPOINT lppoint)
-   {
+   //   if (m_pui == NULL)
+   //   {
 
-      if(m_pui == NULL)
-      {
+   //      return false;
 
-         return false;
+   //   }
 
-      }
+   //   if (!m_pui->ClientToScreen(lprect))
+   //   {
 
-      if(!m_pui->ClientToScreen(lppoint))
-      {
+   //      return false;
 
-         return false;
+   //   }
 
-      }
+   //   return true;
 
-      return true;
+   //}
 
-   }
 
+   //bool interaction_impl_base::ClientToScreen(LPPOINT lppoint)
+   //{
 
-   bool interaction_impl_base::ClientToScreen(RECT64 * lprect)
-   {
+   //   if(m_pui == NULL)
+   //   {
 
-      if(m_pui == NULL)
-      {
+   //      return false;
 
-         return false;
+   //   }
 
-      }
+   //   if(!m_pui->ClientToScreen(lppoint))
+   //   {
 
-      if(!m_pui->ClientToScreen(lprect))
-      {
+   //      return false;
 
-         return false;
+   //   }
 
-      }
+   //   return true;
 
-      return true;
+   //}
 
-   }
 
+   //bool interaction_impl_base::ClientToScreen(LPPOINTD lppoint)
+   //{
 
-   bool interaction_impl_base::ClientToScreen(POINT64 * lppoint)
-   {
+   //   if (m_pui == NULL)
+   //   {
 
-      if(m_pui == NULL)
-      {
+   //      return false;
 
-         return false;
+   //   }
 
-      }
+   //   if (!m_pui->ClientToScreen(lppoint))
+   //   {
 
-      if(!m_pui->ClientToScreen(lppoint))
-      {
+   //      return false;
 
-         return false;
+   //   }
 
-      }
+   //   return true;
 
-      return true;
+   //}
 
-   }
+   //bool interaction_impl_base::ClientToScreen(RECT64 * lprect)
+   //{
 
+   //   if(m_pui == NULL)
+   //   {
 
-   bool interaction_impl_base::ScreenToClient(LPRECT lprect)
-   {
+   //      return false;
 
-      if(m_pui == NULL)
-      {
+   //   }
 
-         return false;
+   //   if(!m_pui->ClientToScreen(lprect))
+   //   {
 
-      }
+   //      return false;
 
-      if(!m_pui->ScreenToClient(lprect))
-      {
+   //   }
 
-         return false;
+   //   return true;
 
-      }
+   //}
 
-      return true;
 
-   }
+   //bool interaction_impl_base::ClientToScreen(POINT64 * lppoint)
+   //{
 
+   //   if(m_pui == NULL)
+   //   {
 
-   bool interaction_impl_base::ScreenToClient(LPPOINT lppoint)
-   {
+   //      return false;
 
-      if(m_pui == NULL)
-      {
+   //   }
 
-         return false;
+   //   if(!m_pui->ClientToScreen(lppoint))
+   //   {
 
-      }
+   //      return false;
 
-      if(!m_pui->ScreenToClient(lppoint))
-      {
+   //   }
 
-         return false;
+   //   return true;
 
-      }
+   //}
 
-      return true;
 
-   }
+   //bool interaction_impl_base::ScreenToClient(LPRECT lprect)
+   //{
 
+   //   if(m_pui == NULL)
+   //   {
 
-   bool interaction_impl_base::ScreenToClient(RECT64 * lprect)
-   {
+   //      return false;
 
-      if(m_pui == NULL)
-      {
+   //   }
 
-         return false;
+   //   if(!m_pui->ScreenToClient(lprect))
+   //   {
 
-      }
+   //      return false;
 
-      if(!m_pui->ScreenToClient(lprect))
-      {
+   //   }
 
-         return false;
+   //   return true;
 
-      }
+   //}
 
-      return true;
+   //bool interaction_impl_base::ScreenToClient(LPRECTD lprect)
+   //{
 
-   }
+   //   if (m_pui == NULL)
+   //   {
 
+   //      return false;
 
-   bool interaction_impl_base::ScreenToClient(POINT64 * lppoint)
-   {
+   //   }
 
-      if(m_pui == NULL)
-      {
+   //   if (!m_pui->ScreenToClient(lprect))
+   //   {
 
-         return false;
+   //      return false;
 
-      }
+   //   }
 
-      if(!m_pui->ScreenToClient(lppoint))
-      {
+   //   return true;
 
-         return false;
+   //}
 
-      }
 
-      return true;
+   //bool interaction_impl_base::ScreenToClient(LPPOINT lppoint)
+   //{
 
-   }
+   //   if(m_pui == NULL)
+   //   {
+
+   //      return false;
+
+   //   }
+
+   //   if(!m_pui->ScreenToClient(lppoint))
+   //   {
+
+   //      return false;
+
+   //   }
+
+   //   return true;
+
+   //}
+
+
+   //bool interaction_impl_base::ScreenToClient(LPPOINTD lppoint)
+   //{
+
+   //   if (m_pui == NULL)
+   //   {
+
+   //      return false;
+
+   //   }
+
+   //   if (!m_pui->ScreenToClient(lppoint))
+   //   {
+
+   //      return false;
+
+   //   }
+
+   //   return true;
+
+   //}
+
+   //bool interaction_impl_base::ScreenToClient(RECT64 * lprect)
+   //{
+
+   //   if(m_pui == NULL)
+   //   {
+
+   //      return false;
+
+   //   }
+
+   //   if(!m_pui->ScreenToClient(lprect))
+   //   {
+
+   //      return false;
+
+   //   }
+
+   //   return true;
+
+   //}
+
+
+   //bool interaction_impl_base::ScreenToClient(POINT64 * lppoint)
+   //{
+
+   //   if(m_pui == NULL)
+   //   {
+
+   //      return false;
+
+   //   }
+
+   //   if(!m_pui->ScreenToClient(lppoint))
+   //   {
+
+   //      return false;
+
+   //   }
+
+   //   return true;
+
+   //}
 
 
    bool interaction_impl_base::GetWindowRect(LPRECT lprect)

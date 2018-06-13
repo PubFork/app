@@ -62,3 +62,8 @@ inline bool operator < (const point & p, const point & pt) NOTHROW
 
 
 inline point null_point() { return point(0, 0); }
+
+
+
+inline pointd::pointd(const SIZE & sz) NOTHROW : pointd(sz.cx, sz.cy) {}
+inline pointd::pointd(const SIZE64 & sz) NOTHROW : pointd(sz.cx, sz.cy) {}

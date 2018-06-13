@@ -59,6 +59,8 @@ rect(point ptTopLeft, point ptBottomRight) NOTHROW : rect(ptTopLeft.x, ptTopLeft
    bool is_null() const NOTHROW;
    // returns TRUE if point is within rectangle
    bool contains(POINT point) const NOTHROW;
+   bool contains_x(i32 x) const NOTHROW;
+   bool contains_y(i32 y) const NOTHROW;
 
 // Operations
 
@@ -97,6 +99,8 @@ rect(point ptTopLeft, point ptBottomRight) NOTHROW : rect(ptTopLeft.x, ptTopLeft
 
    // translate the rectangle by moving its top and left
    void offset(int32_t x, int32_t y) NOTHROW;
+   void offset_x(int32_t x) NOTHROW;
+   void offset_y(int32_t x) NOTHROW;
    void offset(SIZE size) NOTHROW;
    void offset(POINT point) NOTHROW;
    void normalize() NOTHROW;
@@ -154,16 +158,22 @@ rect(point ptTopLeft, point ptBottomRight) NOTHROW : rect(ptTopLeft.x, ptTopLeft
    int64_t area();
 
    bool contains(const RECT & rect) const;
+   void _001Constraint(LPCRECT lpcrect);
+   void _001ConstraintX(LPCRECT lpcrect);
+   void _001ConstraintY(LPCRECT lpcrect);
+   void _001Constraint(LPCRECT lpcrect, LPRECT lpcrectBounding);
+   void _001ConstraintX(LPCRECT lpcrect, LPRECT lpcrectBounding);
+   void _001ConstraintY(LPCRECT lpcrect, LPRECT lpcrectBounding);
    void constraint_v5(const RECT & rect, const class size sizeMin);
    void constraint_v7(const RECT & rect);
    void Align(int32_t align,const RECT & rect);
    void align_outsize_rate(double x, double y, const RECT & rect);
-   void _001Align(double x, double y, const RECT & rect);
-   void _001AlignX(double x, const RECT & rect);
-   void _001AlignY(double y, const RECT & rect);
-   void align_rate(double x, double y, const RECT & rect);
-   void align_x(double x, const RECT & rect);
-   void align_y(double y, const RECT & rect);
+   void _001Align(double x, double y, LPCRECT rect);
+   void _001AlignX(double x, LPCRECT rect);
+   void _001AlignY(double y, LPCRECT rect);
+   void align_rate(double x, double y, LPCRECT rect);
+   void align_x(double x, LPCRECT rect);
+   void align_y(double y, LPCRECT rect);
    void ScaleHeightAspect(int32_t iNewHeight, int32_t iCenterX, int32_t iCenterY);
    void ScaleRect(double dx, double dy, int32_t ix, int32_t iy);
    void ExtendOnCenter(const RECT & rect);
@@ -492,7 +502,11 @@ rectd(pointd ptTopLeft, pointd ptBottomRight) NOTHROW : rectd(ptTopLeft.x, ptTop
    // returns the height
    double height() const NOTHROW;
    // returns the size
-   class sized size() const NOTHROW;
+   class sized get_size() const NOTHROW;
+
+   void set_size(double cx, double cy) NOTHROW;
+   void set_size(LPCSIZED psz) NOTHROW;
+
    // reference to the top-left point
    pointd& top_left() NOTHROW;
    // reference to the bottom-right point
@@ -517,10 +531,14 @@ rectd(pointd ptTopLeft, pointd ptBottomRight) NOTHROW : rectd(ptTopLeft.x, ptTop
    bool is_null() const NOTHROW;
    // returns TRUE if point is within rectangle
    bool contains(POINTD point) const NOTHROW;
+   bool contains_x(double x) const NOTHROW;
+   bool contains_y(double y) const NOTHROW;
+
 
 // Operations
 
    // set rectangle from left, top, right, and bottom
+   void set(double d) NOTHROW;
    void set(double x1, double y1, double x2, double y2) NOTHROW;
    void set(POINTD topLeft, POINTD bottomRight) NOTHROW;
    // is_empty the rectangle
@@ -553,6 +571,8 @@ rectd(pointd ptTopLeft, pointd ptBottomRight) NOTHROW : rectd(ptTopLeft.x, ptTop
 
    // translate the rectangle by moving its top and left
    void offset(double x, double y) NOTHROW;
+   void offset_x(double x) NOTHROW;
+   void offset_y(double x) NOTHROW;
    void offset(SIZED size) NOTHROW;
    void offset(POINTD point) NOTHROW;
    void normalize() NOTHROW;
@@ -564,7 +584,14 @@ rectd(pointd ptTopLeft, pointd ptBottomRight) NOTHROW : rectd(ptTopLeft.x, ptTop
    void move_to(POINTD point) NOTHROW;
 
    // set this rectangle to intersection of two others
+   bool intersect_x(LPCRECTD lpRect1, LPCRECTD lpRect2) NOTHROW;
+   bool intersect_y(LPCRECTD lpRect1, LPCRECTD lpRect2) NOTHROW;
    bool intersect(LPCRECTD lpRect1, LPCRECTD lpRect2) NOTHROW;
+   bool intersects_x(LPCRECTD lpRect) const NOTHROW;
+   bool intersects_y(LPCRECTD lpRect) const NOTHROW;
+   bool intersects(LPCRECTD lpRect) const NOTHROW;
+   rectd & intersect(LPCRECTD lpRect2) NOTHROW;
+   rectd intersect(LPCRECTD lpRect2) const NOTHROW;
 
    // set this rectangle to bounding union of two others
    bool unite(LPCRECTD lpRect1, LPCRECTD lpRect2) NOTHROW;
@@ -599,7 +626,22 @@ rectd(pointd ptTopLeft, pointd ptBottomRight) NOTHROW : rectd(ptTopLeft.x, ptTop
    double area();
 
    bool contains(LPCRECTD lpcrect) const;
+   void _001Constraint(LPCRECTD lpcrect);
+   void _001ConstraintX(LPCRECTD lpcrect);
+   void _001ConstraintY(LPCRECTD lpcrect);
+   void _001Constraint(LPCRECTD lpcrect, LPRECTD lpcrectBounding);
+   void _001ConstraintX(LPCRECTD lpcrect, LPRECTD lpcrectBounding);
+   void _001ConstraintY(LPCRECTD lpcrect, LPRECTD lpcrectBounding);
    void ConstraintV5(LPCRECTD lpcrect, const class size sizeMin);
+
+   void _001Align(double x, double y, LPCRECTD rect);
+   void _001AlignX(double x, LPCRECTD rect);
+   void _001AlignY(double y, LPCRECTD rect);
+   void align_rate(double x, double y, LPCRECTD rect);
+   void align_x(double x, LPCRECTD rect);
+   void align_y(double y, LPCRECTD rect);
+
+
    void Align(double align, LPCRECTD lpcrect);
    void ScaleHeightAspect(double iNewHeight, double iCenterX, double iCenterY);
    void ScaleRect(double dx, double dy, double ix, double iy);

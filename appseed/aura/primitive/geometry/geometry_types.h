@@ -245,6 +245,34 @@ inline CLASS_DECL_AURA POINT & offset(POINT & pt, LONG x, LONG y)
    return pt;
 }
 
+inline CLASS_DECL_AURA LONG offset_x(LPRECT lprect, LONG x)
+{
+   lprect->left += x;
+   lprect->right+= x;
+   return x;
+}
+
+inline CLASS_DECL_AURA LONG  offset_y(LPRECT lprect, LONG y)
+{
+   lprect->top += y;
+   lprect->bottom += y;
+   return y;
+}
+
+inline CLASS_DECL_AURA double offset_x(LPRECTD lprect, double x)
+{
+   lprect->left += x;
+   lprect->right += x;
+   return x;
+}
+
+inline CLASS_DECL_AURA double  offset_y(LPRECTD lprect, double y)
+{
+   lprect->top += y;
+   lprect->bottom += y;
+   return y;
+}
+
 CLASS_DECL_AURA bool polygon_contains(LPCPOINT lppt, LPCPOINT lpptPolygon, i32 iCount);
 
 CLASS_DECL_AURA bool polygon_contains(LPCPOINT64 lppt, LPCPOINT64 lpptPolygon, i32 iCount);

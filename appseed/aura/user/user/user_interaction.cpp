@@ -2234,6 +2234,12 @@ restart:
 
    }
 
+   double interaction::get_rotate()
+   {
+
+      return 0.0;
+
+   }
 
    void interaction::_000OnMouse(::message::mouse * pmouse)
    {
@@ -7247,180 +7253,279 @@ restart:
    }
 
 
-   bool interaction::ClientToScreen(LPRECT lprect)
+   pointd interaction::client_to_screen()
    {
 
-      if (m_pimpl == NULL)
+      if (m_pimpl.is_set())
       {
 
-         return false;
+         return m_pimpl->client_to_screen();
 
       }
 
-      if (!m_pimpl->ClientToScreen(lprect))
-      {
-
-         return false;
-
-      }
-
-      return true;
+      return ::user::interaction_base::client_to_screen();
 
    }
 
 
-   bool interaction::ClientToScreen(LPPOINT lppoint)
-   {
+   //bool interaction::ClientToScreen(LPRECT lprect)
+   //{
 
-      if (m_pimpl == NULL)
-      {
+   //   if (m_pimpl == NULL)
+   //   {
 
-         return false;
+   //      return false;
 
-      }
+   //   }
 
-      if (!m_pimpl->ClientToScreen(lppoint))
-      {
+   //   if (!m_pimpl->ClientToScreen(lprect))
+   //   {
 
-         return false;
+   //      return false;
 
-      }
+   //   }
 
-      return true;
+   //   return true;
 
-   }
+   //}
 
 
-   bool interaction::ClientToScreen(RECT64 * lprect)
-   {
+   //bool interaction::ClientToScreen(LPRECTD lprect)
+   //{
 
-      if (m_pimpl == NULL)
-      {
+   //   if (m_pimpl == NULL)
+   //   {
 
-         return false;
+   //      return false;
 
-      }
+   //   }
 
-      if (!m_pimpl->ClientToScreen(lprect))
-      {
+   //   if (!m_pimpl->ClientToScreen(lprect))
+   //   {
 
-         return false;
+   //      return false;
 
-      }
+   //   }
 
-      return true;
+   //   return true;
 
-   }
+   //}
 
 
-   bool interaction::ClientToScreen(POINT64 * lppoint)
-   {
+   //bool interaction::ClientToScreen(LPPOINT lppoint)
+   //{
 
-      if (m_pimpl == NULL)
-      {
+   //   if (m_pimpl == NULL)
+   //   {
 
-         return false;
+   //      return false;
 
-      }
+   //   }
 
-      if (!m_pimpl->ClientToScreen(lppoint))
-      {
+   //   if (!m_pimpl->ClientToScreen(lppoint))
+   //   {
 
-         return false;
+   //      return false;
 
-      }
+   //   }
 
-      return true;
+   //   return true;
 
-   }
+   //}
 
 
-   bool interaction::ScreenToClient(LPRECT lprect)
-   {
+   //bool interaction::ClientToScreen(LPPOINTD lppoint)
+   //{
 
-      if (m_pimpl == NULL)
-      {
+   //   if (m_pimpl == NULL)
+   //   {
 
-         return false;
+   //      return false;
 
-      }
+   //   }
 
-      if (!m_pimpl->ScreenToClient(lprect))
-      {
+   //   if (!m_pimpl->ClientToScreen(lppoint))
+   //   {
 
-         return false;
+   //      return false;
 
-      }
+   //   }
 
-      return true;
+   //   return true;
 
-   }
+   //}
 
+   //bool interaction::ClientToScreen(RECT64 * lprect)
+   //{
 
-   bool interaction::ScreenToClient(LPPOINT lppoint)
-   {
+   //   if (m_pimpl == NULL)
+   //   {
 
-      if (m_pimpl == NULL)
-      {
+   //      return false;
 
-         return false;
+   //   }
 
-      }
+   //   if (!m_pimpl->ClientToScreen(lprect))
+   //   {
 
-      if (!m_pimpl->ScreenToClient(lppoint))
-      {
+   //      return false;
 
-         return false;
+   //   }
 
-      }
+   //   return true;
 
-      return true;
+   //}
 
-   }
 
+   //bool interaction::ClientToScreen(POINT64 * lppoint)
+   //{
 
-   bool interaction::ScreenToClient(RECT64 * lprect)
-   {
+   //   if (m_pimpl == NULL)
+   //   {
 
-      if (m_pimpl == NULL)
-      {
+   //      return false;
 
-         return false;
+   //   }
 
-      }
+   //   if (!m_pimpl->ClientToScreen(lppoint))
+   //   {
 
-      if (!m_pimpl->ScreenToClient(lprect))
-      {
+   //      return false;
 
-         return false;
+   //   }
 
-      }
+   //   return true;
 
-      return true;
+   //}
 
-   }
 
+   //bool interaction::ScreenToClient(LPRECT lprect)
+   //{
 
-   bool interaction::ScreenToClient(POINT64 * lppoint)
-   {
+   //   if (m_pimpl == NULL)
+   //   {
 
-      if (m_pimpl == NULL)
-      {
+   //      return false;
 
-         return false;
+   //   }
 
-      }
+   //   if (!m_pimpl->ScreenToClient(lprect))
+   //   {
 
-      if (!m_pimpl->ScreenToClient(lppoint))
-      {
+   //      return false;
 
-         return false;
+   //   }
 
-      }
+   //   return true;
 
-      return true;
+   //}
 
-   }
+   //bool interaction::ScreenToClient(LPRECTD lprect)
+   //{
+
+   //   if (m_pimpl == NULL)
+   //   {
+
+   //      return false;
+
+   //   }
+
+   //   if (!m_pimpl->ScreenToClient(lprect))
+   //   {
+
+   //      return false;
+
+   //   }
+
+   //   return true;
+
+   //}
+
+   //bool interaction::ScreenToClient(LPPOINT lppoint)
+   //{
+
+   //   if (m_pimpl == NULL)
+   //   {
+
+   //      return false;
+
+   //   }
+
+   //   if (!m_pimpl->ScreenToClient(lppoint))
+   //   {
+
+   //      return false;
+
+   //   }
+
+   //   return true;
+
+   //}
+
+
+   //bool interaction::ScreenToClient(LPPOINTD lppoint)
+   //{
+
+   //   if (m_pimpl == NULL)
+   //   {
+
+   //      return false;
+
+   //   }
+
+   //   if (!m_pimpl->ScreenToClient(lppoint))
+   //   {
+
+   //      return false;
+
+   //   }
+
+   //   return true;
+
+   //}
+
+   //bool interaction::ScreenToClient(RECT64 * lprect)
+   //{
+
+   //   if (m_pimpl == NULL)
+   //   {
+
+   //      return false;
+
+   //   }
+
+   //   if (!m_pimpl->ScreenToClient(lprect))
+   //   {
+
+   //      return false;
+
+   //   }
+
+   //   return true;
+
+   //}
+
+
+   //bool interaction::ScreenToClient(POINT64 * lppoint)
+   //{
+
+   //   if (m_pimpl == NULL)
+   //   {
+
+   //      return false;
+
+   //   }
+
+   //   if (!m_pimpl->ScreenToClient(lppoint))
+   //   {
+
+   //      return false;
+
+   //   }
+
+   //   return true;
+
+   //}
 
 
    bool interaction::GetClientRect(RECT64 * lprect)
@@ -7558,7 +7663,7 @@ restart:
    }
 
 
-   point interaction::get_viewport_offset()
+   pointd interaction::get_viewport_offset()
    {
 
       return m_ptScrollPassword1;
@@ -7595,12 +7700,13 @@ restart:
 
    }
 
-   point interaction::get_ascendant_viewport_offset()
+
+   pointd interaction::get_ascendant_viewport_offset()
    {
 
       sp(::user::interaction) puser = GetParent();
 
-      point pt(0, 0);
+      pointd pt(0.0, 0.0);
 
       while (puser.is_set())
       {
@@ -7641,7 +7747,7 @@ restart:
    }
 
 
-   point interaction::get_parent_viewport_offset()
+   pointd interaction::get_parent_viewport_offset()
    {
 
       ::user::interaction * puser = GetParent();
@@ -8613,7 +8719,7 @@ restart:
    }
 
 
-   ::size interaction::get_size()
+   ::sized interaction::get_size()
    {
 
       rect rectWindow;
@@ -8625,7 +8731,7 @@ restart:
    }
 
 
-   ::size interaction::get_client_size()
+   ::sized interaction::get_client_size()
    {
 
       rect rectClient;

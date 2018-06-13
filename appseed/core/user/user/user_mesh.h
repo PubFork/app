@@ -712,7 +712,7 @@ namespace user
 
       virtual void defer_create_mesh_data();
 
-      virtual point get_viewport_offset();
+      virtual pointd get_viewport_offset();
 
       //virtual rect get_scroll_margin();
 

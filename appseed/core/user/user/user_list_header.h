@@ -121,30 +121,30 @@ namespace user
       bool GetItemRect(LPRECT lprect, e_element eelement, index iItem);
 
       bool GetItemRect(LPRECT lprect, e_element eelementLButtonDown, index iItemLButtonDown,
-         e_element eelement,
-         index iItem);
+                       e_element eelement,
+                       index iItem);
 
       bool hit_test(
-         POINT point,
-         e_element & eelement,
-         index & iItem);
+      POINT point,
+      e_element & eelement,
+      index & iItem);
 
       bool hit_test(
-         POINT point,
-         e_element eelementLButtonDown,
-         index iItemLButtonDown,
-         e_element & eelement,
-         index & iItem);
+      POINT point,
+      e_element eelementLButtonDown,
+      index iItemLButtonDown,
+      e_element & eelement,
+      index & iItem);
 
 
-      virtual point get_parent_viewport_offset() override;
+      virtual pointd get_parent_viewport_offset() override;
 
       // Message Handlers
    protected:
       DECL_GEN_SIGNAL(_001OnLButtonDown);
       DECL_GEN_SIGNAL(_001OnLButtonUp);
       DECL_GEN_SIGNAL(_001OnLButtonDblClk);
-         DECL_GEN_SIGNAL(_001OnMouseMove);
+      DECL_GEN_SIGNAL(_001OnMouseMove);
 
    };
 

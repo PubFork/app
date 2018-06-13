@@ -464,7 +464,7 @@ namespace user
       if(item.m_bOk)
       {
 
-         rect rectControl(item.m_rectSubItem);
+         rectd rectControl(item.m_rectSubItem);
 
          rectControl.offset(get_viewport_offset());
 

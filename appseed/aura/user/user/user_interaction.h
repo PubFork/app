@@ -197,7 +197,7 @@ namespace user
 
       tooltip *         get_tooltip();
 
-
+      virtual double get_rotate();
       virtual ::user::form * get_form();
 
       virtual ::user::form * get_parent_form();
@@ -445,14 +445,18 @@ namespace user
       virtual bool GetWindowPos(LPRECT lprect) override;
       virtual bool GetWindowRect(LPRECT lprect) override;
       virtual bool GetWindowRect(RECT64 * lprect) override;
-      virtual bool ClientToScreen(LPRECT lprect) override;
-      virtual bool ClientToScreen(RECT64 * lprect) override;
-      virtual bool ClientToScreen(LPPOINT lppoint) override;
-      virtual bool ClientToScreen(POINT64 * lppoint) override;
-      virtual bool ScreenToClient(LPRECT lprect) override;
-      virtual bool ScreenToClient(RECT64 * lprect) override;
-      virtual bool ScreenToClient(LPPOINT lppoint) override;
-      virtual bool ScreenToClient(POINT64 * lprect) override;
+      //virtual bool ClientToScreen(LPRECTD lprect) override;
+      //virtual bool ClientToScreen(LPRECT lprect) override;
+      //virtual bool ClientToScreen(RECT64 * lprect) override;
+      //virtual bool ClientToScreen(LPPOINTD lppoint) override;
+      //virtual bool ClientToScreen(LPPOINT lppoint) override;
+      //virtual bool ClientToScreen(POINT64 * lppoint) override;
+      //virtual bool ScreenToClient(LPRECT lprect) override;
+      //virtual bool ScreenToClient(LPRECTD lprect) override;
+      //virtual bool ScreenToClient(RECT64 * lprect) override;
+      //virtual bool ScreenToClient(LPPOINT lppoint) override;
+      //virtual bool ScreenToClient(LPPOINTD lppoint) override;
+      //virtual bool ScreenToClient(POINT64 * lprect) override;
       virtual bool SetPlacement(const RECT & rect,UINT nFlags = 0) override;
       virtual bool RepositionWindow(const RECT & rect, UINT nFlags = 0) override;
       virtual bool RepositionWindow(int32_t x,int32_t y,int32_t cx,int32_t cy,UINT nFlags = 0) override;
@@ -801,6 +805,9 @@ namespace user
       virtual bool IsNotifyIconEnabled();
       virtual void set_viewport_org(::draw2d::graphics * pgraphics) override;
 
+
+      virtual pointd client_to_screen() override;
+
       virtual void viewport_screen_to_client(POINT * ppt) override;
       virtual void viewport_client_to_screen(POINT * ppt) override;
       virtual void viewport_client_to_screen(RECT * ppt) override;
@@ -918,12 +925,12 @@ namespace user
       virtual void offset_viewport_offset(int x, int y);
       virtual void on_change_viewport_offset();
       virtual void on_viewport_offset(::draw2d::graphics * pgraphics);
-      virtual point get_viewport_offset();
+      virtual pointd get_viewport_offset();
       virtual size get_total_size();
       virtual void on_change_view_size();
       virtual size get_page_size();
-      virtual point get_parent_viewport_offset();
-      virtual point get_ascendant_viewport_offset();
+      virtual pointd get_parent_viewport_offset();
+      virtual pointd get_ascendant_viewport_offset();
       virtual void get_margin_rect(LPRECT lprectMargin);
       virtual int get_final_x_scroll_bar_width();
       virtual int get_final_y_scroll_bar_width();
@@ -1047,8 +1054,8 @@ namespace user
       virtual int client_width();
       virtual int client_height();
 
-      virtual ::size get_size();
-      virtual ::size get_client_size();
+      virtual ::sized get_size();
+      virtual ::sized get_client_size();
 
       virtual void resize_to_fit();
 

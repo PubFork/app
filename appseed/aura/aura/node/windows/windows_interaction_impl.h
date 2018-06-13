@@ -217,14 +217,8 @@ namespace windows
       using ::user::interaction_impl::GetClientRect;
       virtual bool GetClientRect(RECT64 * lpRect);
 
-      virtual bool ClientToScreen(LPRECT lprect);
-      virtual bool ClientToScreen(LPPOINT lppoint);
-      virtual bool ClientToScreen(RECT64 * lprect);
-      virtual bool ClientToScreen(POINT64 * lppoint);
-      virtual bool ScreenToClient(LPRECT lprect);
-      virtual bool ScreenToClient(LPPOINT lppoint);
-      virtual bool ScreenToClient(RECT64 * lprect);
-      virtual bool ScreenToClient(POINT64 * lppoint);
+      virtual pointd client_to_screen() override;
+
 
       virtual bool GetWindowPlacement(WINDOWPLACEMENT* lpwndpl);
       virtual bool SetWindowPlacement(const WINDOWPLACEMENT* lpwndpl);

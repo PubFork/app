@@ -108,6 +108,18 @@ namespace draw2d
 
    }
 
+   void matrix::transform(pointd & pt)
+   {
+
+      pointd p;
+
+      p.x = pt.x * a1 + pt.y * b1 + c1;
+      p.y = pt.x * a2 + pt.y * b2 + c2;
+
+      pt = p;
+
+   }
+
    // 6 (six) elements
    void matrix::SetElements(float * fa)
    {

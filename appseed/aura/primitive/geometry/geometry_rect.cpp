@@ -150,23 +150,23 @@ void rect::Align(int32_t align, const RECT & rect)
 
 }
 
-void rect::_001Align(double x, double y, const RECT & rect)
+void rect::_001Align(double x, double y, LPCRECT prect)
 {
 
-   _001AlignX(x, rect);
+   _001AlignX(x, prect);
 
-   _001AlignY(y, rect);
+   _001AlignY(y, prect);
 
 }
 
 
-void rect::_001AlignX(double dRate, const RECT & rect)
+void rect::_001AlignX(double dRate, LPCRECT prect)
 {
 
    if (fabs(dRate) < 1000.0)
    {
 
-      align_x(dRate, rect);
+      align_x(dRate, prect);
 
    }
    else if(dRate >= 1000.0)
@@ -174,7 +174,7 @@ void rect::_001AlignX(double dRate, const RECT & rect)
 
       dRate -= 1000.0;
 
-      double x = rect.right + width() * dRate;
+      double x = prect->right + width() * dRate;
 
       move_to_x(x);
 
@@ -185,7 +185,7 @@ void rect::_001AlignX(double dRate, const RECT & rect)
 
       dRate += 1000.0;
 
-      double x = rect.left + width() * dRate;
+      double x = prect->left + width() * dRate;
 
       move_to_x(x - width());
 
@@ -194,13 +194,13 @@ void rect::_001AlignX(double dRate, const RECT & rect)
 }
 
 
-void rect::_001AlignY(double dRate, const RECT & rect)
+void rect::_001AlignY(double dRate, LPCRECT prect)
 {
 
    if (fabs(dRate) < 1000.0)
    {
 
-      align_y(dRate, rect);
+      align_y(dRate, prect);
 
    }
    else if (dRate >= 1000.0)
@@ -208,7 +208,7 @@ void rect::_001AlignY(double dRate, const RECT & rect)
 
       dRate -= 1000.0;
 
-      double y = rect.bottom + height() * dRate;
+      double y = prect->bottom + height() * dRate;
 
       move_to_y(y);
 
@@ -219,7 +219,7 @@ void rect::_001AlignY(double dRate, const RECT & rect)
 
       dRate += 1000.0;
 
-      double y = rect.top + height() * dRate;
+      double y = prect->top + height() * dRate;
 
       move_to_y(y - height());
 
@@ -228,33 +228,33 @@ void rect::_001AlignY(double dRate, const RECT & rect)
 
 }
 
-void rect::align_rate(double x, double y, const RECT & rect)
+void rect::align_rate(double x, double y, LPCRECT prect)
 {
 
-   align_x(x, rect);
+   align_x(x, prect);
 
-   align_y(y, rect);
+   align_y(y, prect);
 
 }
 
-void rect::align_x(double dRate, const RECT & rect)
+void rect::align_x(double dRate, LPCRECT prect)
 {
 
    int x;
 
-   x = rect.left + (rect.right - rect.left - width()) * ((dRate + 1.0) / 2.0);
+   x = prect->left + (prect->right - prect->left - width()) * ((dRate + 1.0) / 2.0);
 
    move_to_x(x);
 
 }
 
 
-void rect::align_y(double dRate, const RECT & rect)
+void rect::align_y(double dRate, LPCRECT prect)
 {
 
    int y;
 
-   y = rect.top + (rect.bottom - rect.top - height()) * ((dRate + 1.0) / 2.0);
+   y = prect->top + (prect->bottom - prect->top - height()) * ((dRate + 1.0) / 2.0);
 
    move_to_y(y);
 
@@ -333,6 +333,108 @@ void rect::constraint_v7(const RECT & rect)
    }
 
 }
+
+void rect::_001Constraint(LPCRECT lpcrect)
+{
+
+   _001ConstraintX(lpcrect);
+
+   _001ConstraintY(lpcrect);
+
+}
+
+
+void rect::_001ConstraintX(LPCRECT lpcrect)
+{
+
+   if (right > lpcrect->right)
+   {
+
+      offset_x(lpcrect->right - right);
+
+   }
+
+   if (left < lpcrect->left)
+   {
+
+      offset_x(lpcrect->left - left);
+
+   }
+
+
+}
+
+
+void rect::_001ConstraintY(LPCRECT lpcrect)
+{
+
+   if (bottom > lpcrect->bottom)
+   {
+
+      offset_y(lpcrect->bottom - bottom);
+
+   }
+
+   if (top < lpcrect->top)
+   {
+
+      offset_y(lpcrect->top - top);
+
+   }
+
+}
+
+
+void rect::_001Constraint(LPCRECT lpcrect, LPRECT lprectBounding)
+{
+
+   _001ConstraintX(lpcrect, lprectBounding);
+
+   _001ConstraintY(lpcrect, lprectBounding);
+
+}
+
+
+void rect::_001ConstraintX(LPCRECT lpcrect, LPRECT lprectBounding)
+{
+
+   if (lprectBounding->right > lpcrect->right)
+   {
+
+      offset_x(::offset_x(lprectBounding, lpcrect->right - lprectBounding->right));
+
+   }
+
+   if (lprectBounding->left < lpcrect->left)
+   {
+
+      offset_x(::offset_x(lprectBounding, lpcrect->left - lprectBounding->left));
+
+   }
+
+
+}
+
+
+void rect::_001ConstraintY(LPCRECT lpcrect, LPRECT lprectBounding)
+{
+
+   if (lprectBounding->bottom > lpcrect->bottom)
+   {
+
+      offset_y(::offset_y(lprectBounding, lpcrect->bottom - lprectBounding->bottom));
+
+   }
+
+   if (lprectBounding->top < lpcrect->top)
+   {
+
+      offset_y(::offset_y(lprectBounding, lpcrect->top - lprectBounding->top));
+
+   }
+
+}
+
 
 bool rect::contains(const RECT & rect) const
 {
@@ -848,6 +950,14 @@ rect::operator LPCRECT() const NOTHROW
 { return (LPCRECT) this; }
 bool rect::contains(POINT point) const NOTHROW
 { return ::PtInRect((LPCRECT) this, point) != FALSE; }
+bool rect::contains_x(i32 x) const NOTHROW
+{
+   return left <= x && x <= right;
+}
+bool rect::contains_y(i32 y) const NOTHROW
+{
+   return top <= y && y <= bottom;
+}
 void rect::set(int32_t i) NOTHROW
 {
    ::SetRect(this, i, i, i, i);
@@ -876,6 +986,16 @@ void rect::deflate(SIZE size) NOTHROW
 { ::InflateRect(this, -size.cx, -size.cy); }
 void rect::offset(int32_t x, int32_t y) NOTHROW
 { ::OffsetRect(this, x, y); }
+void rect::offset_x(int32_t x) NOTHROW
+{
+   left += x;
+   right += x;
+}
+void rect::offset_y(int32_t y) NOTHROW
+{
+   top += y;
+   bottom += y;
+}
 void rect::offset(POINT point) NOTHROW
 { ::OffsetRect(this, point.x, point.y); }
 void rect::offset(SIZE size) NOTHROW
@@ -1343,11 +1463,29 @@ double rectd::width() const NOTHROW
 { return right - left; }
 double rectd::height() const NOTHROW
 { return bottom - top; }
-class sized rectd::size() const NOTHROW
+
+class sized rectd::get_size() const NOTHROW
 {
-   class sized sizeRet(right - left, bottom - top);
-   return sizeRet;
+   return ::sized(right - left, bottom - top);
 }
+
+
+void rectd::set_size(double cx, double cy) NOTHROW
+{
+
+   right = left + cx;
+   bottom = top + cy;
+
+}
+
+
+void rectd::set_size(LPCSIZED lpcsize) NOTHROW
+{
+
+   set_size(lpcsize->cx, lpcsize->cy);
+
+}
+
 
 pointd & rectd::top_left() NOTHROW
 { return *((pointd*)this); }
@@ -1399,8 +1537,24 @@ void rectd::move_to(double x, double y) NOTHROW
 { move_to_x(x); move_to_y(y); }
 void rectd::move_to(POINTD pt) NOTHROW
 { move_to_x(pt.x); move_to_y(pt.y); }
+//bool rectd::intersect_x(LPCRECTD lpRect1, LPCRECTD lpRect2) NOTHROW
+//{
+//   return ::x_intersect_rect(this, lpRect1, lpRect2) != FALSE;
+//}
+//bool rectd::intersect_y(LPCRECTD lpRect1, LPCRECTD lpRect2) NOTHROW
+//{
+//   return ::y_intersect_rect(this, lpRect1, lpRect2) != FALSE;
+//}
 bool rectd::intersect(LPCRECTD lpRect1, LPCRECTD lpRect2) NOTHROW
-{ return ::intersect(this, lpRect1, lpRect2) != FALSE;}
+{
+   return ::intersect(this, lpRect1, lpRect2) != FALSE;
+}
+//rectd rectd::intersect(LPCRECTD lpcrect) const NOTHROW
+//{
+//   ::rectd rect;
+//   ::intersect(&rect, this, lpcrect);
+//   return rect;
+//}
 bool rectd::unite(LPCRECTD lpRect1, LPCRECTD lpRect2) NOTHROW
 { return ::unite(this, lpRect1, lpRect2) != FALSE; }
 void rectd::operator=(const RECTD& srcRect) NOTHROW
@@ -1539,7 +1693,7 @@ void rectd::CenterOf(LPCRECTD lpcrect,SIZED size)
 void rectd::CenterOf(LPCRECTD lpcrect)
 {
 
-   CenterOf(lpcrect,size());
+   CenterOf(lpcrect,get_size());
 
 }
 
@@ -1622,3 +1776,330 @@ double rectd::maximum_signed_absolute_dimension(bool bPositivePreference) const 
 
 double rectd::minimum_absolute_dimension() const NOTHROW { return MIN(fabs(width()),fabs(height())); }
 double rectd::maximum_absolute_dimension() const NOTHROW { return MIN(fabs(width()),fabs(height())); }
+
+
+
+
+bool rectd::contains_x(double x) const NOTHROW
+{
+   return left <= x && x <= right;
+}
+bool rectd::contains_y(double y) const NOTHROW
+{
+   return top <= y && y <= bottom;
+}
+
+
+rectd & rectd::intersect(LPCRECTD lpcrect) NOTHROW
+{
+   ::intersect(this, this, lpcrect);
+   return *this;
+}
+
+
+rectd rectd::intersect(LPCRECTD lpcrect) const NOTHROW
+{
+   ::rectd rect;
+   ::intersect(&rect, this, lpcrect);
+   return rect;
+}
+
+
+
+
+
+void rectd::set(double d) NOTHROW
+{
+
+   set(d, d, d, d);
+
+}
+
+
+bool rectd::is_null() const NOTHROW
+{
+
+   return left == 0.0 && right == 0.0 && top == 0.0 && bottom == 0.0;
+
+}
+
+
+
+
+
+
+
+void rectd::_001Constraint(LPCRECTD lpcrect)
+{
+
+   _001ConstraintX(lpcrect);
+
+   _001ConstraintY(lpcrect);
+
+}
+
+
+void rectd::_001ConstraintX(LPCRECTD lpcrect)
+{
+
+   if (right > lpcrect->right)
+   {
+
+      offset_x(lpcrect->right - right);
+
+   }
+
+   if (left < lpcrect->left)
+   {
+
+      offset_x(lpcrect->left - left);
+
+   }
+
+
+}
+
+
+void rectd::_001ConstraintY(LPCRECTD lpcrect)
+{
+
+   if (bottom > lpcrect->bottom)
+   {
+
+      offset_y(lpcrect->bottom - bottom);
+
+   }
+
+   if (top < lpcrect->top)
+   {
+
+      offset_y(lpcrect->top - top);
+
+   }
+
+}
+
+
+void rectd::_001Constraint(LPCRECTD lpcrect, LPRECTD lprectBounding)
+{
+
+   _001ConstraintX(lpcrect, lprectBounding);
+
+   _001ConstraintY(lpcrect, lprectBounding);
+
+}
+
+
+void rectd::_001ConstraintX(LPCRECTD lpcrect, LPRECTD lprectBounding)
+{
+
+   if (lprectBounding->right > lpcrect->right)
+   {
+
+      offset_x(::offset_x(lprectBounding, lpcrect->right - lprectBounding->right));
+
+   }
+
+   if (lprectBounding->left < lpcrect->left)
+   {
+
+      offset_x(::offset_x(lprectBounding, lpcrect->left - lprectBounding->left));
+
+   }
+
+
+}
+
+
+void rectd::_001ConstraintY(LPCRECTD lpcrect, LPRECTD lprectBounding)
+{
+
+   if (lprectBounding->bottom > lpcrect->bottom)
+   {
+
+      offset_y(::offset_y(lprectBounding, lpcrect->bottom - lprectBounding->bottom));
+
+   }
+
+   if (lprectBounding->top < lpcrect->top)
+   {
+
+      offset_y(::offset_y(lprectBounding, lpcrect->top - lprectBounding->top));
+
+   }
+
+}
+
+
+
+void rectd::offset_x(double x) NOTHROW
+{
+   left += x;
+   right += x;
+}
+
+
+void rectd::offset_y(double y) NOTHROW
+{
+   top += y;
+   bottom += y;
+}
+
+
+pointd rectd::center() const
+{
+
+   return pointd((left + right) / 2.0, (top + bottom) / 2.0);
+
+}
+
+
+pointd rectd::top_right() const
+{
+
+   return pointd(right,top);
+
+}
+
+pointd rectd::bottom_left() const
+{
+
+   return pointd(left,bottom);
+
+}
+
+
+void rectd::_001Align(double x, double y, LPCRECTD prect)
+{
+
+   _001AlignX(x, prect);
+
+   _001AlignY(y, prect);
+
+}
+
+
+void rectd::_001AlignX(double dRate, LPCRECTD prect)
+{
+
+   if (fabs(dRate) < 1000.0)
+   {
+
+      align_x(dRate, prect);
+
+   }
+   else if (dRate >= 1000.0)
+   {
+
+      dRate -= 1000.0;
+
+      double x = prect->right + width() * dRate;
+
+      move_to_x(x);
+
+
+   }
+   else if (dRate <= -1000.0)
+   {
+
+      dRate += 1000.0;
+
+      double x = prect->left + width() * dRate;
+
+      move_to_x(x - width());
+
+   }
+
+}
+
+
+void rectd::_001AlignY(double dRate, LPCRECTD prect)
+{
+
+   if (fabs(dRate) < 1000.0)
+   {
+
+      align_y(dRate, prect);
+
+   }
+   else if (dRate >= 1000.0)
+   {
+
+      dRate -= 1000.0;
+
+      double y = prect->bottom + height() * dRate;
+
+      move_to_y(y);
+
+
+   }
+   else if (dRate <= -1000.0)
+   {
+
+      dRate += 1000.0;
+
+      double y = prect->top + height() * dRate;
+
+      move_to_y(y - height());
+
+   }
+
+
+}
+
+void rectd::align_rate(double x, double y, LPCRECTD prect)
+{
+
+   align_x(x, prect);
+
+   align_y(y, prect);
+
+}
+
+void rectd::align_x(double dRate, LPCRECTD prect)
+{
+
+   int x;
+
+   x = prect->left + (prect->right - prect->left - width()) * ((dRate + 1.0) / 2.0);
+
+   move_to_x(x);
+
+}
+
+
+void rectd::align_y(double dRate, LPCRECTD prect)
+{
+
+   int y;
+
+   y = prect->top + (prect->bottom - prect->top - height()) * ((dRate + 1.0) / 2.0);
+
+   move_to_y(y);
+
+}
+
+
+bool rectd::intersects(LPCRECTD lpRect) const NOTHROW
+{
+
+   return intersects_x(lpRect) && intersects_y(lpRect);
+
+}
+
+
+bool rectd::intersects_x(LPCRECTD lpRect) const NOTHROW
+{
+   return (left >= lpRect->left && left <= lpRect->right) ||
+          (right >= lpRect->left && right <= lpRect->right) ||
+          (lpRect->left >= left && lpRect->left <= right) ||
+          (lpRect->right >= left && lpRect->right <= right);
+}
+
+bool rectd::intersects_y(LPCRECTD lpRect) const NOTHROW
+{
+   return (top >= lpRect->top && top <= lpRect->bottom) ||
+          (bottom >= lpRect->top && bottom <= lpRect->bottom) ||
+          (lpRect->top >= top && lpRect->top <= bottom) ||
+          (lpRect->bottom >= top && lpRect->bottom <= bottom);
+}

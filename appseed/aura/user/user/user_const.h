@@ -113,6 +113,10 @@ namespace user
       element_scrollbar_rectB,
       element_scrollbar_pageA,
       element_scrollbar_pageB,
+      element_margin_top,
+      element_margin_left,
+      element_margin_right,
+      element_margin_bottom,
 
 
       element_split = 10000,

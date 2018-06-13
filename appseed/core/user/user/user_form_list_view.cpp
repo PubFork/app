@@ -175,7 +175,7 @@ namespace user
 
    }
 
-   ::point form_list_view::get_viewport_offset()
+   ::pointd form_list_view::get_viewport_offset()
    {
 
       return ::user::list_view::get_viewport_offset();

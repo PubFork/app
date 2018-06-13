@@ -278,9 +278,18 @@ Restart:
    bool interaction_base::ClientToScreen(LPRECT lprect)
    {
 
-      ::exception::throw_interface_only(get_app());
+      ::offset(lprect, client_to_screen());
 
-      return false;
+      return true;
+
+   }
+
+   bool interaction_base::ClientToScreen(LPRECTD lprect)
+   {
+
+      ::offset(lprect, client_to_screen());
+
+      return true;
 
    }
 
@@ -288,19 +297,27 @@ Restart:
    bool interaction_base::ClientToScreen(LPPOINT lppoint)
    {
 
-      ::exception::throw_interface_only(get_app());
+      ::offset(lppoint, client_to_screen());
 
-      return false;
+      return true;
 
    }
 
+   bool interaction_base::ClientToScreen(LPPOINTD lppoint)
+   {
+
+      ::offset(lppoint, client_to_screen());
+
+      return true;
+
+   }
 
    bool interaction_base::ClientToScreen(RECT64 * lprect)
    {
 
-      ::exception::throw_interface_only(get_app());
+      ::offset(lprect, client_to_screen());
 
-      return false;
+      return true;
 
    }
 
@@ -308,9 +325,9 @@ Restart:
    bool interaction_base::ClientToScreen(POINT64 * lppoint)
    {
 
-      ::exception::throw_interface_only(get_app());
+      ::offset(lppoint, client_to_screen());
 
-      return false;
+      return true;
 
    }
 
@@ -318,9 +335,18 @@ Restart:
    bool interaction_base::ScreenToClient(LPRECT lprect)
    {
 
-      ::exception::throw_interface_only(get_app());
+      ::offset(lprect, -client_to_screen());
 
-      return false;
+      return true;
+
+   }
+
+   bool interaction_base::ScreenToClient(LPRECTD lprect)
+   {
+
+      ::offset(lprect, -client_to_screen());
+
+      return true;
 
    }
 
@@ -328,9 +354,18 @@ Restart:
    bool interaction_base::ScreenToClient(LPPOINT lppoint)
    {
 
-      ::exception::throw_interface_only(get_app());
+      ::offset(lppoint, -client_to_screen());
 
-      return false;
+      return true;
+
+   }
+
+   bool interaction_base::ScreenToClient(LPPOINTD lppoint)
+   {
+
+      ::offset(lppoint, -client_to_screen());
+
+      return true;
 
    }
 
@@ -338,9 +373,9 @@ Restart:
    bool interaction_base::ScreenToClient(RECT64 * lprect)
    {
 
-      ::exception::throw_interface_only(get_app());
+      ::offset(lprect, -client_to_screen());
 
-      return false;
+      return true;
 
    }
 
@@ -348,9 +383,9 @@ Restart:
    bool interaction_base::ScreenToClient(POINT64 * lppoint)
    {
 
-      ::exception::throw_interface_only(get_app());
+      ::offset(lppoint, -client_to_screen());
 
-      return false;
+      return true;
 
    }
 
@@ -381,6 +416,15 @@ Restart:
    //   return GetClientRect(lprect);
 
    //}
+
+   pointd interaction_base::client_to_screen()
+   {
+
+      ::exception::throw_interface_only(get_app());
+
+      return pointd(0.0, 0.0);
+
+   }
 
 
    bool interaction_base::GetClientRect(LPRECT lprect)

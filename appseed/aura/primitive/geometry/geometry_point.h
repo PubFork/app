@@ -188,9 +188,9 @@ explicit pointd(const lparam & lparam) NOTHROW :pointd(lparam.x(), lparam.y()) {
 
 pointd(const POINT & pt) NOTHROW : pointd(pt.x, pt.y) {}
 pointd(const POINT64 & pt) NOTHROW : pointd(pt.x, pt.y) {}
-pointd(const SIZE & sz) NOTHROW : pointd((const POINT*) &sz) {}
+   pointd(const SIZE & sz) NOTHROW;
 pointd(const SIZED & sz) NOTHROW : pointd((const POINTD*)&sz) {}
-pointd(const SIZE64 & sz) NOTHROW : pointd((const POINT64*)&sz) {}
+   pointd(const SIZE64 & sz) NOTHROW;
 pointd(const POINT * ppt) NOTHROW : pointd(*ppt) {}
 pointd(const POINTD * ppt) NOTHROW : pointd(*ppt) {}
 pointd(const POINT64 * ppt) NOTHROW : pointd(*ppt) {}

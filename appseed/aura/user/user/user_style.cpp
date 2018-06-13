@@ -635,67 +635,49 @@ namespace user
    }
 
 
-
-   //   bool style::select_text_color(::draw2d::graphics * pgraphics, e_color ecolor)
-   //   {
-   //
-   //      COLORREF crText;
-   //
-   //      if (!get_color(crText, ecolor))
-   //         return false;
-   //
-   //      return pgraphics->set_text_color(crText);
-   //
-   //   }
-
-
-   //   bool style::select_font(::draw2d::graphics * pgraphics, e_font efont, style_context * pcontext)
-   //   {
-   //
-   //      ::draw2d::font_sp spfont;
-   //
-   //      if (!get_font(spfont, efont, pui))
-   //      {
-   //
-   //         spfont.alloc(allocer());
-   //
-   //         if (!spfont->create_point_font(FONT_SANS, 12.0))
-   //         {
-   //
-   //            return false;
-   //
-   //         }
-   //
-   //      }
-   //
-   //      if (spfont.is_null())
-   //         return false;
-   //
-   //      return pgraphics->set_font(spfont);
-   //
-   //   }
-
-
    bool style::simple_ui_draw_focus_rect(::user::interaction * pui, ::draw2d::graphics * pgraphics)
    {
-      //
-      //      if (m_puserstyle != NULL && m_puserstyle != this)
-      //      {
-      //
-      //         if (m_puserstyle->simple_ui_draw_focus_rect(pui, pgraphics))
-      //            return true;
-      //
-      //      }
-
-
 
       bool bError = pui->m_ptooltip.is_set()
                     && pui->m_ptooltip->IsWindowVisible()
                     && pui->get_tooltip()->m_bError;
 
+      ::draw2d::savedc savedc(pgraphics);
+
+      ::draw2d::matrix mRot;
+
+      mRot.append(::draw2d::matrix::rotation(pui->get_rotate()));
+
+      pgraphics->prepend(mRot);
+
+      ::draw2d::matrix mTrans;
+
+      rect rectWindow;
+
+      pui->GetWindowRect(rectWindow);
+
+      point ptCenter;
+
+      if (pui->GetParent() != NULL)
+      {
+
+         pui->GetParent()->ScreenToClient(rectWindow);
+
+      }
+
+      ptCenter = rectWindow.center();
+
+      point ptOffset = ptCenter - rectWindow.top_left();
+
+      mTrans.append(::draw2d::matrix::translation(ptOffset.x, ptOffset.y));
+
+      pgraphics->append(mTrans);
+
       rect rectClient;
 
       pui->::user::interaction::GetClientRect(rectClient);
+
+      rectClient -= ptOffset;
 
       pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
@@ -768,15 +750,6 @@ namespace user
 
                {
 
-                  /*::draw2d::path_sp pathRound(allocer());
-
-                  pathRound->begin_figure(true, ::draw2d::fill_mode_winding);
-
-                  pathRound->add_round_rect(rectClient, 1 * 2);
-
-                  pathRound->end_figure(true);*/
-
-                  //::draw2d::pen_sp pen(pgraphics, 1.0, ARGB(84, 108, 149, 255));
                   ::draw2d::pen_sp pen(pgraphics, 1.0, bError ? ARGB(155, 255, 150, 140) : bHover ? ARGB(200, 140, 200, 255) : ARGB(200, 150, 210, 235));
 
                   pgraphics->SelectObject(pen);
@@ -887,33 +860,6 @@ namespace user
 
 
 
-               /*
-               rectClient.left--;
-               rectClient.right++;
-               rectClient.top--;
-               rectClient.bottom++;
-
-               {
-
-               ::draw2d::path_sp pathRound(allocer());
-
-               pathRound->begin_figure(true, ::draw2d::fill_mode_winding);
-
-               pathRound->add_round_rect(rectClient, 1 * 2);
-
-               pathRound->end_figure(true);
-
-               //::draw2d::pen_sp pen(pgraphics, 1.0, ARGB(24, 108, 149, 255));
-
-               ::draw2d::pen_sp pen(pgraphics, 1.0, ARGB(25, 240, 250, 255));
-
-               pgraphics->SelectObject(pen);
-
-               pgraphics->draw_rect(rectClient, pen);
-
-               }
-               */
-
             }
 
          }
@@ -930,7 +876,7 @@ namespace user
       else
       {
 
-         ::draw2d::pen_sp pen(pgraphics, 1.0, ARGB(255, 149, 149, 123));
+         ::draw2d::pen_sp pen(pgraphics, 1.0, pui->_001GetColor(::user::color_border));
 
          pgraphics->draw_rect(rectClient, pen);
 

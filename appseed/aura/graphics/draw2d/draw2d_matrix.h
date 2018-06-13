@@ -74,6 +74,8 @@ namespace draw2d
 
       void transform(point & pt);
 
+      void transform(pointd & pt);
+
    };
 
 

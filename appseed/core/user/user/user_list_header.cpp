@@ -712,7 +712,7 @@ namespace user
    }
 
 
-   point list_header::get_parent_viewport_offset()
+   pointd list_header::get_parent_viewport_offset()
    {
 
       sp(::user::interaction) puser = GetParent();

@@ -234,6 +234,9 @@ public:
    pointd operator+(POINTD point) const NOTHROW;
    pointd operator-(POINTD point) const NOTHROW;
 
+   sized operator /(double d);
+
+
 // Operators returning rectd values
    rectd operator+(LPCRECTD lpRect) const NOTHROW;
    rectd operator-(LPCRECTD lpRect) const NOTHROW;

@@ -32,6 +32,7 @@ namespace user
       create_double(double_list_item_height_rate, 1.0);
       create_double(double_tree_item_height_rate, 1.0);
       create_rect_coord(rect_edit_padding, 0.2, 0.2, 0.2, 0.2);
+      create_color(color_border, ARGB(127, 149, 149, 123));
       create_color(color_edit_text_empty, ARGB(127, 0x80, 0x80, 0x80));
       create_color(color_action_hover_border_color, ARGB(255, 0x50, 0xA0, 0xe0));
       create_color(color_edit_text_selected, ARGB(255, 0xff, 0xff, 0xff));

@@ -6335,7 +6335,7 @@ namespace user
    }
 
 
-   point mesh::get_viewport_offset()
+   pointd mesh::get_viewport_offset()
    {
 
       return ::user::control::get_viewport_offset();

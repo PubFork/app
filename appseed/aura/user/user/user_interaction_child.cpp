@@ -848,244 +848,353 @@ namespace user
 
 
 
-   bool interaction_child::ClientToScreen(LPRECT lprect)
+   pointd interaction_child::client_to_screen()
    {
 
-      lprect->left   += (LONG)m_rectParentClient.left;
-      lprect->right  += (LONG)m_rectParentClient.left;
-      lprect->top    += (LONG)m_rectParentClient.top;
-      lprect->bottom += (LONG)m_rectParentClient.top;
+      pointd pt(0.0, 0.0);
+
+      pt.x += m_rectParentClient.left;
+      pt.y += m_rectParentClient.top;
 
       if(GetParent() != NULL)
       {
 
-         if(!GetParent()->ClientToScreen(lprect))
-         {
+         pt += GetParent()->client_to_screen();
 
-            return false;
+         pointd ptScroll = m_pui->get_parent_viewport_offset();
 
-         }
-
-         point ptScroll = m_pui->get_parent_viewport_offset();
-
-         lprect->left   -= (LONG)ptScroll.x;
-         lprect->right  -= (LONG)ptScroll.x;
-         lprect->top    -= (LONG)ptScroll.y;
-         lprect->bottom -= (LONG)ptScroll.y;
+         pt.x -= ptScroll.x;
+         pt.y -= ptScroll.y;
 
       }
 
-      return true;
+      return pt;
 
    }
 
+   //bool interaction_child::ClientToScreen(LPRECTD lprect)
+   //{
 
-   bool interaction_child::ClientToScreen(LPPOINT lppoint)
-   {
+   //   lprect->left += (LONG)m_rectParentClient.left;
+   //   lprect->right += (LONG)m_rectParentClient.left;
+   //   lprect->top += (LONG)m_rectParentClient.top;
+   //   lprect->bottom += (LONG)m_rectParentClient.top;
 
-      lppoint->x     += (LONG)m_rectParentClient.left;
-      lppoint->y     += (LONG)m_rectParentClient.top;
+   //   if (GetParent() != NULL)
+   //   {
 
-      if(GetParent() != NULL)
-      {
+   //      if (!GetParent()->ClientToScreen(lprect))
+   //      {
 
-         if(!GetParent()->ClientToScreen(lppoint))
-         {
+   //         return false;
 
-            return false;
+   //      }
 
-         }
+   //      point ptScroll = m_pui->get_parent_viewport_offset();
 
-         point ptScroll = m_pui->get_parent_viewport_offset();
+   //      lprect->left -= (LONG)ptScroll.x;
+   //      lprect->right -= (LONG)ptScroll.x;
+   //      lprect->top -= (LONG)ptScroll.y;
+   //      lprect->bottom -= (LONG)ptScroll.y;
 
-         lppoint->x  -= (LONG)ptScroll.x;
-         lppoint->y  -= (LONG)ptScroll.y;
+   //   }
 
-      }
+   //   return true;
 
-      return true;
+   //}
 
-   }
 
+   //bool interaction_child::ClientToScreen(LPPOINT lppoint)
+   //{
 
-   bool interaction_child::ClientToScreen(RECT64 * lprect)
-   {
+   //   lppoint->x     += (LONG)m_rectParentClient.left;
+   //   lppoint->y     += (LONG)m_rectParentClient.top;
 
-      lprect->left   += m_rectParentClient.left;
-      lprect->right  += m_rectParentClient.left;
-      lprect->top    += m_rectParentClient.top;
-      lprect->bottom += m_rectParentClient.top;
+   //   if(GetParent() != NULL)
+   //   {
 
-      if(GetParent() != NULL)
-      {
+   //      if(!GetParent()->ClientToScreen(lppoint))
+   //      {
 
-         if(!GetParent()->ClientToScreen(lprect))
-         {
+   //         return false;
 
-            return false;
+   //      }
 
-         }
+   //      point ptScroll = m_pui->get_parent_viewport_offset();
 
-         point ptScroll = m_pui->get_parent_viewport_offset();
+   //      lppoint->x  -= (LONG)ptScroll.x;
+   //      lppoint->y  -= (LONG)ptScroll.y;
 
-         lprect->left   -= (LONG)ptScroll.x;
-         lprect->right  -= (LONG)ptScroll.x;
-         lprect->top    -= (LONG)ptScroll.y;
-         lprect->bottom -= (LONG)ptScroll.y;
+   //   }
 
-      }
+   //   return true;
 
-      return true;
+   //}
 
-   }
+   //bool interaction_child::ClientToScreen(LPPOINTD lppoint)
+   //{
 
+   //   lppoint->x += (LONG)m_rectParentClient.left;
+   //   lppoint->y += (LONG)m_rectParentClient.top;
 
-   bool interaction_child::ClientToScreen(POINT64 * lppoint)
-   {
+   //   if (GetParent() != NULL)
+   //   {
 
-      lppoint->x     += m_rectParentClient.left;
-      lppoint->y     += m_rectParentClient.top;
+   //      if (!GetParent()->ClientToScreen(lppoint))
+   //      {
 
-      if(GetParent() != NULL)
-      {
+   //         return false;
 
-         if(!GetParent()->ClientToScreen(lppoint))
-         {
+   //      }
 
-            return false;
+   //      point ptScroll = m_pui->get_parent_viewport_offset();
 
-         }
+   //      lppoint->x -= (LONG)ptScroll.x;
+   //      lppoint->y -= (LONG)ptScroll.y;
 
-         point ptScroll = m_pui->get_parent_viewport_offset();
+   //   }
 
-         lppoint->x  -= (LONG)ptScroll.x;
-         lppoint->y  -= (LONG)ptScroll.y;
+   //   return true;
 
-      }
+   //}
 
-      return true;
 
-   }
+   //bool interaction_child::ClientToScreen(RECT64 * lprect)
+   //{
 
+   //   lprect->left   += m_rectParentClient.left;
+   //   lprect->right  += m_rectParentClient.left;
+   //   lprect->top    += m_rectParentClient.top;
+   //   lprect->bottom += m_rectParentClient.top;
 
-   bool interaction_child::ScreenToClient(LPRECT lprect)
-   {
+   //   if(GetParent() != NULL)
+   //   {
 
-      lprect->left   -= (LONG)m_rectParentClient.left;
-      lprect->right  -= (LONG)m_rectParentClient.left;
-      lprect->top    -= (LONG)m_rectParentClient.top;
-      lprect->bottom -= (LONG)m_rectParentClient.top;
+   //      if(!GetParent()->ClientToScreen(lprect))
+   //      {
 
-      if(GetParent() != NULL)
-      {
+   //         return false;
 
-         if(!GetParent()->ScreenToClient(lprect))
-         {
+   //      }
 
-            return false;
+   //      point ptScroll = m_pui->get_parent_viewport_offset();
 
-         }
+   //      lprect->left   -= (LONG)ptScroll.x;
+   //      lprect->right  -= (LONG)ptScroll.x;
+   //      lprect->top    -= (LONG)ptScroll.y;
+   //      lprect->bottom -= (LONG)ptScroll.y;
 
-         point ptScroll = m_pui->get_parent_viewport_offset();
+   //   }
 
-         lprect->left   += (LONG)ptScroll.x;
-         lprect->right  += (LONG)ptScroll.x;
-         lprect->top    += (LONG)ptScroll.y;
-         lprect->bottom += (LONG)ptScroll.y;
+   //   return true;
 
-      }
+   //}
 
-      return true;
 
-   }
+   //bool interaction_child::ClientToScreen(POINT64 * lppoint)
+   //{
 
+   //   lppoint->x     += m_rectParentClient.left;
+   //   lppoint->y     += m_rectParentClient.top;
 
-   bool interaction_child::ScreenToClient(LPPOINT lppoint)
-   {
+   //   if(GetParent() != NULL)
+   //   {
 
-      lppoint->x     -= (LONG)m_rectParentClient.left;
-      lppoint->y     -= (LONG)m_rectParentClient.top;
+   //      if(!GetParent()->ClientToScreen(lppoint))
+   //      {
 
-      if(GetParent() != NULL)
-      {
+   //         return false;
 
-         if(!GetParent()->ScreenToClient(lppoint))
-         {
+   //      }
 
-            return false;
+   //      point ptScroll = m_pui->get_parent_viewport_offset();
 
-         }
+   //      lppoint->x  -= (LONG)ptScroll.x;
+   //      lppoint->y  -= (LONG)ptScroll.y;
 
-         point ptScroll = m_pui->get_parent_viewport_offset();
+   //   }
 
-         lppoint->x  += (LONG)ptScroll.x;
-         lppoint->y  += (LONG)ptScroll.y;
+   //   return true;
 
-      }
+   //}
 
-      return true;
 
-   }
+   //bool interaction_child::ScreenToClient(LPRECT lprect)
+   //{
 
+   //   lprect->left   -= (LONG)m_rectParentClient.left;
+   //   lprect->right  -= (LONG)m_rectParentClient.left;
+   //   lprect->top    -= (LONG)m_rectParentClient.top;
+   //   lprect->bottom -= (LONG)m_rectParentClient.top;
 
-   bool interaction_child::ScreenToClient(RECT64 * lprect)
-   {
+   //   if(GetParent() != NULL)
+   //   {
 
-      lprect->left   -= m_rectParentClient.left;
-      lprect->right  -= m_rectParentClient.left;
-      lprect->top    -= m_rectParentClient.top;
-      lprect->bottom -= m_rectParentClient.top;
+   //      if(!GetParent()->ScreenToClient(lprect))
+   //      {
 
-      if(GetParent() != NULL)
-      {
+   //         return false;
 
-         if(!GetParent()->ScreenToClient(lprect))
-         {
+   //      }
 
-            return false;
+   //      point ptScroll = m_pui->get_parent_viewport_offset();
 
-         }
+   //      lprect->left   += (LONG)ptScroll.x;
+   //      lprect->right  += (LONG)ptScroll.x;
+   //      lprect->top    += (LONG)ptScroll.y;
+   //      lprect->bottom += (LONG)ptScroll.y;
 
-         point ptScroll = m_pui->get_parent_viewport_offset();
+   //   }
 
-         lprect->left   += (LONG)ptScroll.x;
-         lprect->right  += (LONG)ptScroll.x;
-         lprect->top    += (LONG)ptScroll.y;
-         lprect->bottom += (LONG)ptScroll.y;
+   //   return true;
 
-      }
+   //}
 
-      return true;
+   //bool interaction_child::ScreenToClient(LPRECTD lprect)
+   //{
 
-   }
+   //   lprect->left -= (LONG)m_rectParentClient.left;
+   //   lprect->right -= (LONG)m_rectParentClient.left;
+   //   lprect->top -= (LONG)m_rectParentClient.top;
+   //   lprect->bottom -= (LONG)m_rectParentClient.top;
 
+   //   if (GetParent() != NULL)
+   //   {
 
-   bool interaction_child::ScreenToClient(POINT64 * lppoint)
-   {
+   //      if (!GetParent()->ScreenToClient(lprect))
+   //      {
 
-      lppoint->x     -= m_rectParentClient.left;
-      lppoint->y     -= m_rectParentClient.top;
+   //         return false;
 
-      if(GetParent() != NULL)
-      {
+   //      }
 
-         if(!GetParent()->ScreenToClient(lppoint))
-         {
+   //      point ptScroll = m_pui->get_parent_viewport_offset();
 
-            return false;
+   //      lprect->left += (LONG)ptScroll.x;
+   //      lprect->right += (LONG)ptScroll.x;
+   //      lprect->top += (LONG)ptScroll.y;
+   //      lprect->bottom += (LONG)ptScroll.y;
 
-         }
+   //   }
 
-         point ptScroll = m_pui->get_parent_viewport_offset();
+   //   return true;
 
-         lppoint->x  += (LONG)ptScroll.x;
-         lppoint->y  += (LONG)ptScroll.y;
+   //}
 
-      }
 
-      return true;
+   //bool interaction_child::ScreenToClient(LPPOINT lppoint)
+   //{
 
-   }
+   //   lppoint->x     -= (LONG)m_rectParentClient.left;
+   //   lppoint->y     -= (LONG)m_rectParentClient.top;
+
+   //   if(GetParent() != NULL)
+   //   {
+
+   //      if(!GetParent()->ScreenToClient(lppoint))
+   //      {
+
+   //         return false;
+
+   //      }
+
+   //      point ptScroll = m_pui->get_parent_viewport_offset();
+
+   //      lppoint->x  += (LONG)ptScroll.x;
+   //      lppoint->y  += (LONG)ptScroll.y;
+
+   //   }
+
+   //   return true;
+
+   //}
+
+   //bool interaction_child::ScreenToClient(LPPOINTD lppoint)
+   //{
+
+   //   lppoint->x -= (LONG)m_rectParentClient.left;
+   //   lppoint->y -= (LONG)m_rectParentClient.top;
+
+   //   if (GetParent() != NULL)
+   //   {
+
+   //      if (!GetParent()->ScreenToClient(lppoint))
+   //      {
+
+   //         return false;
+
+   //      }
+
+   //      point ptScroll = m_pui->get_parent_viewport_offset();
+
+   //      lppoint->x += (LONG)ptScroll.x;
+   //      lppoint->y += (LONG)ptScroll.y;
+
+   //   }
+
+   //   return true;
+
+   //}
+
+
+   //bool interaction_child::ScreenToClient(RECT64 * lprect)
+   //{
+
+   //   lprect->left   -= m_rectParentClient.left;
+   //   lprect->right  -= m_rectParentClient.left;
+   //   lprect->top    -= m_rectParentClient.top;
+   //   lprect->bottom -= m_rectParentClient.top;
+
+   //   if(GetParent() != NULL)
+   //   {
+
+   //      if(!GetParent()->ScreenToClient(lprect))
+   //      {
+
+   //         return false;
+
+   //      }
+
+   //      point ptScroll = m_pui->get_parent_viewport_offset();
+
+   //      lprect->left   += (LONG)ptScroll.x;
+   //      lprect->right  += (LONG)ptScroll.x;
+   //      lprect->top    += (LONG)ptScroll.y;
+   //      lprect->bottom += (LONG)ptScroll.y;
+
+   //   }
+
+   //   return true;
+
+   //}
+
+
+   //bool interaction_child::ScreenToClient(POINT64 * lppoint)
+   //{
+
+   //   lppoint->x     -= m_rectParentClient.left;
+   //   lppoint->y     -= m_rectParentClient.top;
+
+   //   if(GetParent() != NULL)
+   //   {
+
+   //      if(!GetParent()->ScreenToClient(lppoint))
+   //      {
+
+   //         return false;
+
+   //      }
+
+   //      point ptScroll = m_pui->get_parent_viewport_offset();
+
+   //      lppoint->x  += (LONG)ptScroll.x;
+   //      lppoint->y  += (LONG)ptScroll.y;
+
+   //   }
+
+   //   return true;
+
+   //}
 
 
    bool interaction_child::keyboard_focus_OnKillFocus()

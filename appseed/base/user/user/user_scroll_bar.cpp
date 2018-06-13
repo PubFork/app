@@ -72,7 +72,7 @@ namespace user
    }
 
 
-   point scroll_bar::get_ascendant_viewport_offset()
+   pointd scroll_bar::get_ascendant_viewport_offset()
    {
 
       if(GetParent() == NULL)
@@ -83,7 +83,7 @@ namespace user
    }
 
 
-   point scroll_bar::get_parent_viewport_offset()
+   pointd scroll_bar::get_parent_viewport_offset()
    {
 
       return point(0,0);

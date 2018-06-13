@@ -8,119 +8,125 @@ namespace user
    class CLASS_DECL_AURA interaction_child :
       virtual public ::user::interaction_impl_base
    {
-      public:
+   public:
 
 
-         // interaction_impl rectangle relative to the parent
-         // this rectangle comes before in importance compared to m_rectWindow
-         // m_rectWindow should be sychronized and recalculated based
-         // on m_rectParentClient values of the interaction_impl and its ascendants.
-         size                                m_size;
-         bool                                m_bEnabled;
-         bool                                m_bCreate;
-         sp(::user::interaction)             m_puiMessage;
-         interaction *                       m_puiOwner;
+      // interaction_impl rectangle relative to the parent
+      // this rectangle comes before in importance compared to m_rectWindow
+      // m_rectWindow should be sychronized and recalculated based
+      // on m_rectParentClient values of the interaction_impl and its ascendants.
+      size                                m_size;
+      bool                                m_bEnabled;
+      bool                                m_bCreate;
+      sp(::user::interaction)             m_puiMessage;
+      interaction *                       m_puiOwner;
 
 
-         interaction_child();
-         interaction_child(::aura::application * papp);
-         virtual ~interaction_child();
+      interaction_child();
+      interaction_child(::aura::application * papp);
+      virtual ~interaction_child();
 
-         ::user::interaction_child * get_user_interaction_child() override;
+      ::user::interaction_child * get_user_interaction_child() override;
 
-         virtual void message_handler(::message::base * pbase) override;
+      virtual void message_handler(::message::base * pbase) override;
 
-         using ::user::interaction_base::SetWindowPos;
-         //virtual bool SetWindowPos(int_ptr z,int32_t x,int32_t y,int32_t cx,int32_t cy,UINT nFlags = SWP_SHOWWINDOW) override;
-
-
-         virtual ::user::interaction * GetDescendantWindow(id id) const override;
+      using ::user::interaction_base::SetWindowPos;
+      //virtual bool SetWindowPos(int_ptr z,int32_t x,int32_t y,int32_t cx,int32_t cy,UINT nFlags = SWP_SHOWWINDOW) override;
 
 
-         // Advanced: virtual AdjustWindowRect
-         enum AdjustType { adjustBorder = 0,adjustOutside = 1 };
-         virtual void CalcWindowRect(LPRECT lpClientRect,UINT nAdjustType = adjustBorder) override;
-
-         virtual bool SetFocus() override;
-
-         //void RepositionBars(UINT nIDFirst,UINT nIDLast,id nIDLeftOver,UINT nFlags,LPRECT lpRectParam,LPCRECT lpRectClient,bool bStretch);
+      virtual ::user::interaction * GetDescendantWindow(id id) const override;
 
 
-         //virtual int32_t RunModalLoop(uint32_t dwFlags = 0, ::object * pliveobject = NULL);
+      // Advanced: virtual AdjustWindowRect
+      enum AdjustType { adjustBorder = 0,adjustOutside = 1 };
+      virtual void CalcWindowRect(LPRECT lpClientRect,UINT nAdjustType = adjustBorder) override;
+
+      virtual bool SetFocus() override;
+
+      //void RepositionBars(UINT nIDFirst,UINT nIDLast,id nIDLeftOver,UINT nFlags,LPRECT lpRectParam,LPCRECT lpRectClient,bool bStretch);
 
 
-         virtual bool DestroyWindow() override;
+      //virtual int32_t RunModalLoop(uint32_t dwFlags = 0, ::object * pliveobject = NULL);
 
-         virtual uint32_t GetStyle() const override;
-         virtual uint32_t GetExStyle() const override;
-         virtual LRESULT Default() override;
 
-         //virtual LRESULT send_message(UINT uiMessage,WPARAM wparam = 0,lparam lparam = 0);
+      virtual bool DestroyWindow() override;
+
+      virtual uint32_t GetStyle() const override;
+      virtual uint32_t GetExStyle() const override;
+      virtual LRESULT Default() override;
+
+      //virtual LRESULT send_message(UINT uiMessage,WPARAM wparam = 0,lparam lparam = 0);
 
 #ifdef LINUX
 
-         virtual LRESULT send_x11_event(void * pevent); // XEvent *
+      virtual LRESULT send_x11_event(void * pevent); // XEvent *
 
 #endif
 
-         // as hosting interaction_impl
-         virtual void install_message_routing(::message::sender * pinterface) override;
-         // as virtual interaction_impl
-         virtual void _002InstallMessageHandling(::message::sender * pinterface);
+      // as hosting interaction_impl
+      virtual void install_message_routing(::message::sender * pinterface) override;
+      // as virtual interaction_impl
+      virtual void _002InstallMessageHandling(::message::sender * pinterface);
 
 
-         virtual bool create_window(::user::interaction * pui, const RECT & rect, ::user::interaction * pparent, id id) override;
-         virtual bool create_window(::user::interaction * pui, const char * lpszClassName, const char * lpszWindowName, uint32_t dwStyle, const RECT & rect, ::user::interaction * pParentWnd, id id, ::create * pContext = NULL) override;
-         virtual bool create_window_ex(::user::interaction * pui, uint32_t dwExStyle, const char * lpszClassName, const char * lpszWindowName, uint32_t dwStyle, const RECT & rect, ::user::interaction * puiParent, id id, LPVOID lpParam = NULL) override;
+      virtual bool create_window(::user::interaction * pui, const RECT & rect, ::user::interaction * pparent, id id) override;
+      virtual bool create_window(::user::interaction * pui, const char * lpszClassName, const char * lpszWindowName, uint32_t dwStyle, const RECT & rect, ::user::interaction * pParentWnd, id id, ::create * pContext = NULL) override;
+      virtual bool create_window_ex(::user::interaction * pui, uint32_t dwExStyle, const char * lpszClassName, const char * lpszWindowName, uint32_t dwStyle, const RECT & rect, ::user::interaction * puiParent, id id, LPVOID lpParam = NULL) override;
 
 
-         virtual bool ShowWindow(int32_t nCmdShow) override;
+      virtual bool ShowWindow(int32_t nCmdShow) override;
 
 
-         virtual bool IsWindow() const override;
-         virtual bool is_window_enabled() override;
-         virtual bool enable_window(bool bEnable = true) override;
-         virtual bool IsWindowVisible() override;
+      virtual bool IsWindow() const override;
+      virtual bool is_window_enabled() override;
+      virtual bool enable_window(bool bEnable = true) override;
+      virtual bool IsWindowVisible() override;
 
-         virtual void VirtualOnSize();
-
-
-
+      virtual void VirtualOnSize();
 
 
 
 
-         DECL_GEN_SIGNAL(_001OnDestroy);
-         DECL_GEN_SIGNAL(_001OnNcDestroy);
-         DECL_GEN_SIGNAL(_001OnShowWindow);
-
-         void send_message_to_descendants(UINT message,WPARAM wParam = 0,lparam lParam = 0,bool bDeep = true,bool bOnlyPerm = 0) override;
-
-         virtual bool post_message(UINT uiMessage,WPARAM wparam,lparam lparam) override;
-
-         virtual void set_viewport_org(::draw2d::graphics * pgraphics) override;
 
 
-         virtual bool RedrawWindow(LPCRECT lpRectUpdate,::draw2d::region* prgnUpdate,UINT flags) override;
 
-         virtual ::user::interaction * SetOwner(::user::interaction * pui) override;
-         virtual ::user::interaction * GetOwner() const override;
+      DECL_GEN_SIGNAL(_001OnDestroy);
+      DECL_GEN_SIGNAL(_001OnNcDestroy);
+      DECL_GEN_SIGNAL(_001OnShowWindow);
 
-         using ::user::interaction_impl_base::GetWindowRect;
-         bool GetWindowRect(RECT64 * lprect) override;
-         using ::user::interaction_impl_base::GetClientRect;
-         bool GetClientRect(RECT64 * lprect) override;
+      void send_message_to_descendants(UINT message,WPARAM wParam = 0,lparam lParam = 0,bool bDeep = true,bool bOnlyPerm = 0) override;
 
-         virtual bool ClientToScreen(LPRECT lprect) override;
-         virtual bool ClientToScreen(RECT64 * lprect) override;
-         virtual bool ClientToScreen(LPPOINT lppoint) override;
-         virtual bool ClientToScreen(POINT64 * lppoint) override;
-         virtual bool ScreenToClient(LPRECT lprect) override;
-         virtual bool ScreenToClient(RECT64 * lprect) override;
-         virtual bool ScreenToClient(LPPOINT lppoint) override;
-         virtual bool ScreenToClient(POINT64 * lppoint) override;
+      virtual bool post_message(UINT uiMessage,WPARAM wparam,lparam lparam) override;
 
-         virtual bool keyboard_focus_OnKillFocus() override;
+      virtual void set_viewport_org(::draw2d::graphics * pgraphics) override;
+
+
+      virtual bool RedrawWindow(LPCRECT lpRectUpdate,::draw2d::region* prgnUpdate,UINT flags) override;
+
+      virtual ::user::interaction * SetOwner(::user::interaction * pui) override;
+      virtual ::user::interaction * GetOwner() const override;
+
+      using ::user::interaction_impl_base::GetWindowRect;
+      bool GetWindowRect(RECT64 * lprect) override;
+      using ::user::interaction_impl_base::GetClientRect;
+      bool GetClientRect(RECT64 * lprect) override;
+
+      virtual pointd client_to_screen() override;
+
+      //virtual bool ClientToScreen(LPRECTD lprect) override;
+      //virtual bool ClientToScreen(LPRECT lprect) override;
+      //virtual bool ClientToScreen(RECT64 * lprect) override;
+      //virtual bool ClientToScreen(LPPOINTD lppoint) override;
+      //virtual bool ClientToScreen(LPPOINT lppoint) override;
+      //virtual bool ClientToScreen(POINT64 * lppoint) override;
+      //virtual bool ScreenToClient(LPRECTD lprect) override;
+      //virtual bool ScreenToClient(LPRECT lprect) override;
+      //virtual bool ScreenToClient(RECT64 * lprect) override;
+      //virtual bool ScreenToClient(LPPOINTD lppoint) override;
+      //virtual bool ScreenToClient(LPPOINT lppoint) override;
+      //virtual bool ScreenToClient(POINT64 * lppoint) override;
+
+      virtual bool keyboard_focus_OnKillFocus() override;
 
 
    };

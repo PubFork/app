@@ -4890,6 +4890,9 @@
     <None Include="aura\os\windows_common\windows_common_default_dll.inl">
       <Filter>Header Files\aura\os\windows_common</Filter>
     </None>
+    <None Include="primitive\geometry\geometry.inl">
+      <Filter>Header Files\primitive\geometry</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="aura\scripting\javascript\from_tiny_js_42.txt">

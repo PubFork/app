@@ -269,3 +269,74 @@ CLASS_DECL_AURA bool deflate(LPRECT prect, const RECT & rect);
 
 
 CLASS_DECL_AURA double d_distance(POINT p1, POINT p2);
+
+
+
+
+inline CLASS_DECL_AURA bool offset(LPRECTD prect, LPCPOINTD lppt)
+{
+
+   prect->left += lppt->x;
+   prect->right += lppt->x;
+   prect->top += lppt->y;
+   prect->right += lppt->y;
+
+   return true;
+
+}
+
+inline CLASS_DECL_AURA bool offset(LPRECT64 prect, LPCPOINTD lppt)
+{
+
+   prect->left += lppt->x;
+   prect->right += lppt->x;
+   prect->top += lppt->y;
+   prect->right += lppt->y;
+
+   return true;
+
+}
+
+
+inline CLASS_DECL_AURA bool offset(LPRECT prect, LPCPOINTD lppt)
+{
+
+   prect->left += lppt->x;
+   prect->right += lppt->x;
+   prect->top += lppt->y;
+   prect->right += lppt->y;
+
+   return true;
+
+}
+
+inline CLASS_DECL_AURA bool offset(LPPOINTD ppt, LPCPOINTD lppt)
+{
+
+   ppt->x += lppt->x;
+   ppt->y += lppt->y;
+
+   return true;
+
+}
+
+inline CLASS_DECL_AURA bool offset(LPPOINT64 ppt, LPCPOINTD lppt)
+{
+
+   ppt->x += lppt->x;
+   ppt->y += lppt->y;
+
+   return true;
+
+}
+
+
+inline CLASS_DECL_AURA bool offset(LPPOINT ppt, LPCPOINTD lppt)
+{
+
+   ppt->x += lppt->x;
+   ppt->y += lppt->y;
+
+   return true;
+
+}

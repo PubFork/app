@@ -292,7 +292,7 @@ void point2d_array_base < POINT2D >::get_bounding_rect(typename POINT2D::LPRECT 
 
 
 template < typename POINT2D >
-bool point2d_array_base < POINT2D >::bounding_rect_contains_pt(typename POINT2D::BASE pt)
+bool point2d_array_base < POINT2D >::bounding_rect_contains_pt(typename POINT2D::BASE pt) const
 {
    typename POINT2D::RECT rect;
    this->get_bounding_rect(&rect);
@@ -301,7 +301,7 @@ bool point2d_array_base < POINT2D >::bounding_rect_contains_pt(typename POINT2D:
 
 
 template < typename POINT2D >
-bool point2d_array_base < POINT2D >::polygon_contains(typename POINT2D::BASE pt)
+bool point2d_array_base < POINT2D >::polygon_contains(typename POINT2D::BASE pt) const
 {
 
    return ::polygon_contains(&pt,this->get_data(),(int)this->get_size());

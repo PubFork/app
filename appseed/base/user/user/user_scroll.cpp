@@ -161,7 +161,7 @@ namespace user
 
       size sizeTotal = get_total_size();
 
-      point ptOffset = get_viewport_offset();
+      pointd ptOffset = get_viewport_offset();
 
       if (ptOffset.y < 0)
       {
@@ -1088,7 +1088,7 @@ namespace user
 
       size sizePage = get_page_size();
 
-      point ptOffset = get_viewport_offset();
+      pointd ptOffset = get_viewport_offset();
 
       if (ptOffset.y < 0)
       {

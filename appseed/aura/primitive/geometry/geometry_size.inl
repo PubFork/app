@@ -360,3 +360,8 @@ inline size size::operator +(double d) { return size((int64_t)(cx + d), (int64_t
 inline size size::operator -(int i) { return size(cx - i, cy - i); }
 inline size size::operator -(double d) { return size((int64_t)(cx - d), (int64_t)(cy - d)); }
 
+
+
+
+
+inline sized sized::operator /(double d) { return sized((cx / d), (cy / d)); }

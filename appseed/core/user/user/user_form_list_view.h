@@ -31,7 +31,7 @@ namespace user
       virtual void on_update(::user::impact * pviewSender, LPARAM lparam, ::object * pobjectHint) override;
 
       virtual void set_viewport_offset(int, int) override;
-      virtual ::point get_viewport_offset() override;
+      virtual ::pointd get_viewport_offset() override;
       virtual ::size get_total_size() override;
 
    };

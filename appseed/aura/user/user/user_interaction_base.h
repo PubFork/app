@@ -101,19 +101,25 @@ namespace user
 
       virtual void PreSubClassWindow();
 
+      virtual pointd client_to_screen();
+
       //virtual bool GetFocusRect(LPRECT lprect);
       virtual bool GetClientRect(LPRECT lprect);
       virtual bool GetClientRect(RECT64 * lprect);
       virtual bool GetWindowPos(LPRECT lprect);
       virtual bool GetWindowRect(LPRECT lprect) override;
       virtual bool GetWindowRect(RECT64 * lprect) override;
+      virtual bool ClientToScreen(LPRECTD lprect);
       virtual bool ClientToScreen(LPRECT lprect);
       virtual bool ClientToScreen(RECT64 * lprect);
+      virtual bool ClientToScreen(LPPOINTD lppoint);
       virtual bool ClientToScreen(LPPOINT lppoint);
       virtual bool ClientToScreen(POINT64 * lppoint);
       virtual bool ScreenToClient(LPRECT lprect);
+      virtual bool ScreenToClient(LPRECTD lprect);
       virtual bool ScreenToClient(RECT64 * lprect);
       virtual bool ScreenToClient(LPPOINT lppoint);
+      virtual bool ScreenToClient(LPPOINTD lppoint);
       virtual bool ScreenToClient(POINT64 * lppoint);
       virtual rect GetWindowRect() override;
       virtual rect64 GetWindowRect64() override;
