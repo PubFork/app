@@ -420,8 +420,6 @@ Restart:
    pointd interaction_base::client_to_screen()
    {
 
-      ::exception::throw_interface_only(get_app());
-
       return pointd(0.0, 0.0);
 
    }
