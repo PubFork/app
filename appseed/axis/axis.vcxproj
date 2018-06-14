@@ -595,8 +595,6 @@
     </ClCompile>
     <ClCompile Include="axis\node\windows\windows_copydesk.cpp" />
     <ClCompile Include="axis\os\ansios\ansios_crypt.cpp" />
-    <ClCompile Include="axis\os\windows\windows_hotplugin.cpp">
-    </ClCompile>
     <ClCompile Include="axis\os\windows\windows_trace_message.cpp">
     </ClCompile>
     <ClCompile Include="filesystem\file\file.cpp" />
@@ -618,6 +616,7 @@
     </ClCompile>
     <ClCompile Include="user\userpresence\userpresence_user_presence.cpp">
     </ClCompile>
+    <ClCompile Include="user\user\user_hotplugin.cpp" />
     <ClCompile Include="user\user\user_keyboard.cpp">
     </ClCompile>
     <ClCompile Include="user\user\user_keyboard_layout.cpp">
