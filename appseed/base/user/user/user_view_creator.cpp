@@ -1,6 +1,9 @@
 ﻿#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
+#ifdef LINUX
+#include <unistd.h>
+#endif
 
 namespace user
 {

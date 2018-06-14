@@ -4,6 +4,7 @@
 #if defined(APPLEOS)
 #include <sys/stat.h>
 #elif defined(LINUX)
+#include <unistd.h>
 #include <sys/stat.h>
 #elif defined(ANDROID)
 #include <sys/stat.h>

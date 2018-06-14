@@ -46,9 +46,6 @@
 #define _zip_H
 
 
-#ifndef __cplusplus
-#include "core/ca_c.h"
-#endif
 
 #ifdef __cplusplus
 extern "C" {

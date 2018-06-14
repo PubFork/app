@@ -35,7 +35,7 @@ namespace zip
          };
 
 
-         unz_file_info        m_fi;
+         void *               m_punzfileinfo;
          string               m_strFileName;
          uint64_t             m_iPosition;
          stringa              m_straPath;

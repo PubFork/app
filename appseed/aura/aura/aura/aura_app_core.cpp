@@ -35,6 +35,8 @@ string ca2_command_line2();
 
 #else
 
+#include <unistd.h>
+
 #define APP_CORE_BASE_DIR "/var/tmp/ca2/config/system"
 
 #endif
@@ -150,15 +152,7 @@ app_core::app_core(aura_main_data * pdata)
 
    int iPid;
 
-#ifdef WINDOWS
-
    iPid = ::GetCurrentProcessId();
-
-#else
-
-   iPid = getpid();
-
-#endif
 
    printf("%s", ("\n\napplication_pid=" + ::str::from(iPid) + "\n\n").c_str());
    fprintf(stderr, "%s", ("\n\napplication_pid=" + ::str::from(iPid) + "\n\n").c_str());

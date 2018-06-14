@@ -1,14 +1,14 @@
 #pragma once
 
 
-#include "zip_unzip.h"
+//#include "zip_unzip.h"
 
 
 namespace zip
 {
 
-   
-   class CLASS_DECL_AURA api  
+
+   class CLASS_DECL_AURA api
    {
    public:
 
@@ -17,12 +17,12 @@ namespace zip
       virtual ~api();
 
 
-      static unzFile unzip_open(memory_file * pfile);
-      static unzFile unzip_open(file * pfile);
+      static void * unzip_open(memory_file * pfile);
+      static void * unzip_open(file * pfile);
 
-      static zipFile zip_open(file * pfile);
+      static void * zip_open(file * pfile);
 
-      
+
 
 
    };

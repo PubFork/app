@@ -1,4 +1,5 @@
 #include "framework.h"
+#include "zip_unzip.h"
 
 
 void * zip_filefuncdef_malloc();
@@ -8,8 +9,8 @@ void zip_filefuncdef_set_file(void * pvoid, ::file::file * pfile);
 
 namespace zip
 {
-   
-   
+
+
    file::file(::aura::application * papp) :
       ::object(papp)
    {
@@ -29,7 +30,7 @@ namespace zip
       {
          zipClose(m_pfZip, NULL);
       }
-      
+
       free(m_pvoidFileFuncDef);
 
    }
@@ -45,31 +46,31 @@ namespace zip
       {
          if(spfile->open(lpcwsz, ::file::mode_read | ::file::type_binary).failed())
          {
-            
+
             return false;
-            
+
          }
-         
+
       }
       catch(exception::exception * pe)
       {
-         
+
          pe->Delete();
-         
+
          return false;
-         
+
       }
       catch(...)
       {
-         
+
          return false;
-         
+
       }
-      
+
       return unzip_open(spfile);
-      
+
    }
-   
+
 
    bool file::unzip_open(::file::file_sp pfile, int iBufferLevel)
    {
@@ -83,25 +84,25 @@ namespace zip
          m_pbuffile1 = NULL;
          m_pbuffile2 = new ::file::buffered_file(get_app(), pfile, 1024 * 32);
       }
-      else 
+      else
       {
          // good option if pfile is memory file?
          m_pbuffile2 = pfile;
-         
+
       }
-      
+
       m_pbuffile2->seek_to_begin();
-      
+
       m_pfile = m_pbuffile2;
-      
+
       zip_filefuncdef_set_file(m_pvoidFileFuncDef, m_pfile);
-      
+
       m_pfUnzip = api::unzip_open(this);
-      
+
       return true;
-      
+
    }
-   
+
 
    bool file::zip_open(const char * lpcwsz)
    {
@@ -126,34 +127,34 @@ namespace zip
       return zip_open(spfile);
    }
 
-   
+
    bool file::zip_open(::file::file_sp pfile)
    {
-      
+
       m_pbuffile1 = new ::file::buffered_file(get_app(), pfile, 1024 * 256);
-      
+
       m_pbuffile2 = new ::file::buffered_file(get_app(), m_pbuffile1, 1024 * 256);
-      
+
       m_pbuffile2->seek_to_begin();
-      
+
       m_pfile = m_pbuffile2;
-      
+
       zip_filefuncdef_set_file(m_pvoidFileFuncDef, m_pfile);
-      
+
       m_pfZip = api::zip_open(this);
-      
+
       return true;
-      
+
    }
-   
+
 
    void  file::write_to_file(::file::file_sp  pfileOut, const unichar * lpcsz)
    {
-      
+
       string str;
-      
+
       ::str::international::unicode_to_utf8(str, lpcsz);
-      
+
       str.replace("\\", "/");
       if(unzLocateFile(m_pfUnzip, str, 1) != UNZ_OK)
          return;
@@ -329,7 +330,7 @@ void * zip_filefuncdef_malloc()
 
 void zip_filefuncdef_set_file(void * pvoid, ::file::file * pfile)
 {
-   
+
    zlib_filefunc_def_s * p = (zlib_filefunc_def_s *)pvoid;
 
    p->opaque = (voidpf)pfile;

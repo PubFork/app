@@ -7,6 +7,7 @@
 */
 #include "framework.h"
 #include "zutil.h"
+#include "zip_internal.h"
 
 
 

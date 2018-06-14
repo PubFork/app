@@ -213,7 +213,7 @@ static inline int32_t FLOATTIME_DateFromJulian(int32_t dateIn)
 }*/
 
 /* Convert Day/Month/Year to a Julian date - from PostgreSQL */
-static inline double FLOATTIME_JulianFromDMY(USHORT year, USHORT month, USHORT day)
+static inline double FLOATTIME_JulianFromDMY(u16 year, u16 month, u16 day)
 {
   int32_t m12 = (month - 14) / 12;
 
@@ -239,7 +239,7 @@ static inline double FLOATTIME_JulianFromDMY(USHORT year, USHORT month, USHORT d
  *  This function uses the United States English locale for the conversion. Use
  *  VarDateFromUdateEx() for alternate locales.
  */
-CLASS_DECL_CA2_TIME HRESULT FloatTimeFromUdate(UDATE *pUdateIn, ULONG dwFlags, DATE *pDateOut)
+CLASS_DECL_CA2_TIME HRESULT FloatTimeFromUdate(UDATE *pUdateIn, u32 dwFlags, DATE *pDateOut)
 {
   LCID lcid = MAKELCID(MAKELANGID(LANG_ENGLISH, SUBLANG_ENGLISH_US), SORT_DEFAULT);
 
@@ -262,7 +262,7 @@ CLASS_DECL_CA2_TIME HRESULT FloatTimeFromUdate(UDATE *pUdateIn, ULONG dwFlags, D
  *  Success: S_OK. *pDateOut contains the converted value.
  *  Failure: E_INVALIDARG, if pUdateIn cannot be represented in VT_DATE format.
  */
-CLASS_DECL_CA2_TIME HRESULT FloatTimeFromUdateEx(UDATE *pUdateIn, LCID lcid, ULONG dwFlags, DATE *pDateOut)
+CLASS_DECL_CA2_TIME HRESULT FloatTimeFromUdateEx(UDATE *pUdateIn, LCID lcid, u32 dwFlags, DATE *pDateOut)
 {
   UDATE ud;
   double dateVal, dateSign;
@@ -326,9 +326,9 @@ CLASS_DECL_CA2_TIME HRESULT FloatTimeFromUdateEx(UDATE *pUdateIn, LCID lcid, ULO
  *  the date is invalid in that format, in which the most compatible format
  *  that produces a valid date will be used.
  */
-CLASS_DECL_CA2_TIME HRESULT FloatTimeFromStr(const char * strIn, LCID lcid, ULONG dwFlags, DATE* pdateOut)
+CLASS_DECL_CA2_TIME HRESULT FloatTimeFromStr(const char * strIn, LCID lcid, u32 dwFlags, DATE* pdateOut)
 {
-  static const USHORT ParseDateTokens[] =
+  static const u16 ParseDateTokens[] =
   {
     LOCALE_SMONTHNAME1, LOCALE_SMONTHNAME2, LOCALE_SMONTHNAME3, LOCALE_SMONTHNAME4,
     LOCALE_SMONTHNAME5, LOCALE_SMONTHNAME6, LOCALE_SMONTHNAME7, LOCALE_SMONTHNAME8,

@@ -34,6 +34,7 @@ woven in by Terry Thorsen 1/2003.
   version without encryption capabilities).
  */
 #include "framework.h"
+#include "zip_unzip.h"
 #include "zip_crypt.h"
 #include "zutil.h"
 

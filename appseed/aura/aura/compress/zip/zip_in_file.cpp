@@ -1,5 +1,9 @@
 #include "framework.h"
-//#include"in_file.h"
+#include "zip_unzip.h"
+//#include "in_file.h"
+
+
+#define UNZ_FILE_INFO ((unz_file_info *) m_punzfileinfo)
 
 
 namespace zip
@@ -10,6 +14,8 @@ namespace zip
       ::object(papp)
    {
 
+    m_punzfileinfo = new unz_file_info;
+
    }
 
 
@@ -17,6 +23,8 @@ namespace zip
    {
       if(get_zip_file() != NULL)
          close();
+
+     delete UNZ_FILE_INFO;
    }
 
 
@@ -323,7 +331,7 @@ namespace zip
       if(unzOpenCurrentFile(get_zip_file()->m_pfUnzip) != UNZ_OK)
          return false;
       if(unzGetCurrentFileInfo(get_zip_file()->m_pfUnzip,
-                               &m_fi,
+                               UNZ_FILE_INFO,
                                NULL,
                                0,
                                NULL,
@@ -424,7 +432,7 @@ namespace zip
       }
       else if(nFrom == ::file::seek_end)
       {
-         iNewPos = m_fi.uncompressed_size - lOff;
+         iNewPos = UNZ_FILE_INFO->uncompressed_size - lOff;
       }
       else if(nFrom == ::file::seek_current)
       {
@@ -524,7 +532,7 @@ namespace zip
 
    file_size_t in_file::get_length() const
    {
-      return m_fi.uncompressed_size;
+      return UNZ_FILE_INFO->uncompressed_size;
    }
 
    // in_file does not support direct buffering (CMemFile does)
