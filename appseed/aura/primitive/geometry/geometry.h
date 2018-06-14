@@ -279,7 +279,7 @@ inline CLASS_DECL_AURA bool offset(LPRECTD prect, LPCPOINTD lppt)
    prect->left += lppt->x;
    prect->right += lppt->x;
    prect->top += lppt->y;
-   prect->right += lppt->y;
+   prect->bottom += lppt->y;
 
    return true;
 
@@ -291,7 +291,7 @@ inline CLASS_DECL_AURA bool offset(LPRECT64 prect, LPCPOINTD lppt)
    prect->left += lppt->x;
    prect->right += lppt->x;
    prect->top += lppt->y;
-   prect->right += lppt->y;
+   prect->bottom += lppt->y;
 
    return true;
 
@@ -304,7 +304,7 @@ inline CLASS_DECL_AURA bool offset(LPRECT prect, LPCPOINTD lppt)
    prect->left += lppt->x;
    prect->right += lppt->x;
    prect->top += lppt->y;
-   prect->right += lppt->y;
+   prect->bottom += lppt->y;
 
    return true;
 
