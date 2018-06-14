@@ -884,10 +884,6 @@ namespace aura
 
       m_pvisual.release();
 
-      m_spfile.release();
-
-      m_spdir.release();
-
       try
       {
 
@@ -907,6 +903,11 @@ namespace aura
       {
 
       }
+
+      m_spfile.release();
+      
+      m_spdir.release();
+      
 
       m_plog.release();
 

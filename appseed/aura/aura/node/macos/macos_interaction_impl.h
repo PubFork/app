@@ -185,14 +185,15 @@ namespace macos
         using ::user::interaction_impl::GetClientRect;
         virtual bool GetClientRect(RECT64 * lpRect) override;
 
-        virtual bool ClientToScreen(LPRECT lprect) override;
-        virtual bool ClientToScreen(LPPOINT lppoint) override;
-        virtual bool ClientToScreen(RECT64 * lprect) override;
-        virtual bool ClientToScreen(POINT64 * lppoint) override;
-        virtual bool ScreenToClient(LPRECT lprect) override;
-        virtual bool ScreenToClient(LPPOINT lppoint) override;
-        virtual bool ScreenToClient(RECT64 * lprect) override;
-        virtual bool ScreenToClient(POINT64 * lppoint) override;
+         virtual pointd client_to_screen() override;
+//        virtual bool ClientToScreen(LPRECT lprect) override;
+//        virtual bool ClientToScreen(LPPOINT lppoint) override;
+//        virtual bool ClientToScreen(RECT64 * lprect) override;
+//        virtual bool ClientToScreen(POINT64 * lppoint) override;
+//        virtual bool ScreenToClient(LPRECT lprect) override;
+//        virtual bool ScreenToClient(LPPOINT lppoint) override;
+//        virtual bool ScreenToClient(RECT64 * lprect) override;
+//        virtual bool ScreenToClient(POINT64 * lppoint) override;
 
         virtual bool GetWindowPlacement(WINDOWPLACEMENT* lpwndpl);
         virtual bool SetWindowPlacement(const WINDOWPLACEMENT* lpwndpl);

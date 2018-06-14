@@ -353,7 +353,7 @@ namespace draw2d_quartz2d
       
       virtual bool BitBltAlphaBlend(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, uint32_t dwRop) override;
       
-      
+      virtual bool draw_line(LPCPOINTD lppt1, LPCPOINTD lppt2, ::draw2d::pen * ppen) override;
       virtual bool text_out(int32_t x, int32_t y, const char * lpszString, strsize nCount) override;
       
       virtual bool text_out(int32_t x, int32_t y, const string & str) override;

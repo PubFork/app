@@ -3427,173 +3427,190 @@ namespace macos
 
    }
 
-
-   bool interaction_impl::ClientToScreen(LPRECT lprect)
+   
+   pointd interaction_impl::client_to_screen()
    {
-
+      
       class rect64 rectWindow;
-
+      
       if (!m_pui->GetWindowRect(rectWindow))
       {
-
-         return false;
-
+         
+         return point(0.0, 0.0);
+         
       }
 
-      lprect->left += (LONG)rectWindow.left;
-      lprect->right += (LONG)rectWindow.left;
-      lprect->top += (LONG)rectWindow.top;
-      lprect->bottom += (LONG)rectWindow.top;
-
-      return true;
-
+      return rectWindow.top_left();
+      
    }
 
 
-   bool interaction_impl::ClientToScreen(LPPOINT lppoint)
-   {
-
-      class rect64 rectWindow;
-
-      if (!m_pui->GetWindowRect(rectWindow))
-      {
-
-         return false;
-
-      }
-
-      lppoint->x += (LONG)rectWindow.left;
-      lppoint->y += (LONG)rectWindow.top;
-
-      return true;
-
-   }
-
-
-   bool interaction_impl::ClientToScreen(RECT64 * lprect)
-   {
-
-      class rect rectWindow;
-
-      if (!m_pui->GetWindowRect(rectWindow))
-      {
-
-         return false;
-
-      }
-
-      lprect->left += rectWindow.left;
-      lprect->right += rectWindow.left;
-      lprect->top += rectWindow.top;
-      lprect->bottom += rectWindow.top;
-
-      return true;
-
-   }
-
-
-   bool interaction_impl::ClientToScreen(POINT64 * lppoint)
-   {
-
-      class rect64 rectWindow;
-
-      if (!m_pui->GetWindowRect(rectWindow))
-      {
-
-         return false;
-
-      }
-
-      lppoint->x += rectWindow.left;
-      lppoint->y += rectWindow.top;
-
-      return true;
-
-   }
-
-
-   bool interaction_impl::ScreenToClient(LPRECT lprect)
-   {
-
-      class rect64 rectWindow;
-
-      if (!m_pui->GetWindowRect(rectWindow))
-      {
-
-         return false;
-
-      }
-
-      lprect->left -= (LONG)rectWindow.left;
-      lprect->right -= (LONG)rectWindow.left;
-      lprect->top -= (LONG)rectWindow.top;
-      lprect->bottom -= (LONG)rectWindow.top;
-
-      return true;
-
-   }
-
-
-   bool interaction_impl::ScreenToClient(LPPOINT lppoint)
-   {
-
-      class rect64 rectWindow;
-
-      if (!m_pui->GetWindowRect(rectWindow))
-      {
-
-         return false;
-
-      }
-
-      lppoint->x -= (LONG)rectWindow.left;
-      lppoint->y -= (LONG)rectWindow.top;
-
-      return true;
-
-   }
-
-
-   bool interaction_impl::ScreenToClient(RECT64 * lprect)
-   {
-
-      class rect64 rectWindow;
-
-      if (!m_pui->GetWindowRect(rectWindow))
-      {
-
-         return false;
-
-      }
-
-      lprect->left -= rectWindow.left;
-      lprect->right -= rectWindow.left;
-      lprect->top -= rectWindow.top;
-      lprect->bottom -= rectWindow.top;
-
-      return true;
-
-   }
-
-
-   bool interaction_impl::ScreenToClient(POINT64 * lppoint)
-   {
-
-      class rect64 rectWindow;
-
-      if (!m_pui->GetWindowRect(rectWindow))
-      {
-
-         return false;
-
-      }
-
-      lppoint->x -= rectWindow.left;
-      lppoint->y -= rectWindow.top;
-
-      return true;
-
-   }
+//   bool interaction_impl::ClientToScreen(LPRECT lprect)
+//   {
+//
+//      class rect64 rectWindow;
+//
+//      if (!m_pui->GetWindowRect(rectWindow))
+//      {
+//
+//         return false;
+//
+//      }
+//
+//      lprect->left += (LONG)rectWindow.left;
+//      lprect->right += (LONG)rectWindow.left;
+//      lprect->top += (LONG)rectWindow.top;
+//      lprect->bottom += (LONG)rectWindow.top;
+//
+//      return true;
+//
+//   }
+//
+//
+//   bool interaction_impl::ClientToScreen(LPPOINT lppoint)
+//   {
+//
+//      class rect64 rectWindow;
+//
+//      if (!m_pui->GetWindowRect(rectWindow))
+//      {
+//
+//         return false;
+//
+//      }
+//
+//      lppoint->x += (LONG)rectWindow.left;
+//      lppoint->y += (LONG)rectWindow.top;
+//
+//      return true;
+//
+//   }
+//
+//
+//   bool interaction_impl::ClientToScreen(RECT64 * lprect)
+//   {
+//
+//      class rect rectWindow;
+//
+//      if (!m_pui->GetWindowRect(rectWindow))
+//      {
+//
+//         return false;
+//
+//      }
+//
+//      lprect->left += rectWindow.left;
+//      lprect->right += rectWindow.left;
+//      lprect->top += rectWindow.top;
+//      lprect->bottom += rectWindow.top;
+//
+//      return true;
+//
+//   }
+//
+//
+//   bool interaction_impl::ClientToScreen(POINT64 * lppoint)
+//   {
+//
+//      class rect64 rectWindow;
+//
+//      if (!m_pui->GetWindowRect(rectWindow))
+//      {
+//
+//         return false;
+//
+//      }
+//
+//      lppoint->x += rectWindow.left;
+//      lppoint->y += rectWindow.top;
+//
+//      return true;
+//
+//   }
+//
+//
+//   bool interaction_impl::ScreenToClient(LPRECT lprect)
+//   {
+//
+//      class rect64 rectWindow;
+//
+//      if (!m_pui->GetWindowRect(rectWindow))
+//      {
+//
+//         return false;
+//
+//      }
+//
+//      lprect->left -= (LONG)rectWindow.left;
+//      lprect->right -= (LONG)rectWindow.left;
+//      lprect->top -= (LONG)rectWindow.top;
+//      lprect->bottom -= (LONG)rectWindow.top;
+//
+//      return true;
+//
+//   }
+//
+//
+//   bool interaction_impl::ScreenToClient(LPPOINT lppoint)
+//   {
+//
+//      class rect64 rectWindow;
+//
+//      if (!m_pui->GetWindowRect(rectWindow))
+//      {
+//
+//         return false;
+//
+//      }
+//
+//      lppoint->x -= (LONG)rectWindow.left;
+//      lppoint->y -= (LONG)rectWindow.top;
+//
+//      return true;
+//
+//   }
+//
+//
+//   bool interaction_impl::ScreenToClient(RECT64 * lprect)
+//   {
+//
+//      class rect64 rectWindow;
+//
+//      if (!m_pui->GetWindowRect(rectWindow))
+//      {
+//
+//         return false;
+//
+//      }
+//
+//      lprect->left -= rectWindow.left;
+//      lprect->right -= rectWindow.left;
+//      lprect->top -= rectWindow.top;
+//      lprect->bottom -= rectWindow.top;
+//
+//      return true;
+//
+//   }
+//
+//
+//   bool interaction_impl::ScreenToClient(POINT64 * lppoint)
+//   {
+//
+//      class rect64 rectWindow;
+//
+//      if (!m_pui->GetWindowRect(rectWindow))
+//      {
+//
+//         return false;
+//
+//      }
+//
+//      lppoint->x -= rectWindow.left;
+//      lppoint->y -= rectWindow.top;
+//
+//      return true;
+//
+//   }
 
 
    bool interaction_impl::GetWindowRect(RECT64 * lprect)

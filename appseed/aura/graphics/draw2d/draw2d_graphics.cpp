@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 //#include "draw2d.h"
 //#include <math.h>
 
@@ -603,7 +603,7 @@ namespace draw2d
    bool graphics::draw_line(LPCPOINT lppt1, LPCPOINT lppt2, ::draw2d::pen * ppen)
    {
 
-      return draw_line(point(lppt1), point(lppt2));
+      return draw_line(pointd(lppt1), pointd(lppt2), ppen);
 
    }
 

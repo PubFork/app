@@ -4439,6 +4439,23 @@ namespace draw2d_quartz2d
 
    }
 
+   
+   bool graphics::draw_line(LPCPOINTD lppt1, LPCPOINTD lppt2, ::draw2d::pen * ppen)
+   {
+      
+      CGContextBeginPath(m_pdc);
+      
+      CGContextMoveToPoint(m_pdc, lppt1->x, lppt1->y);
+      
+      CGContextAddLineToPoint(m_pdc, lppt2->x, lppt2->y);
+      
+      draw(ppen);
+      
+      m_pt = *lppt2;
+      
+      return true;
+
+   }
 
    bool graphics::line_to(LPCPOINTD lppt)
    {

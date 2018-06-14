@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 #include "aura/aura/compress/zip/zip.h"
@@ -34,6 +34,7 @@ namespace file
          //::file_watcher::listener_thread(papp)
       {
 
+         ::file::dir::system::g_pthis = this;
          m_isdirmap.m_dwTimeOut = 180000;
 
          m_pathInstall = ::dir::install();
