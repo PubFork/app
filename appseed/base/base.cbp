@@ -87,6 +87,7 @@
 			<Add option="-Wl,-z,defs" />
 			<Add directory="../../../time/x64/basis" />
 		</Linker>
+		<Unit filename="../axis/user/user/user_hotplugin.cpp" />
 		<Unit filename="base/base/aaa_want_to_remove_base_system_str.h" />
 		<Unit filename="base/base/base.cpp" />
 		<Unit filename="base/base/base.h" />

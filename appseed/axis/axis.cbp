@@ -181,7 +181,6 @@
 		<Unit filename="axis/os/linux/linux_cross_win_gdi_internal.h" />
 		<Unit filename="axis/os/linux/wanadel_linux_cross_win_gdi.h" />
 		<Unit filename="axis/os/os.h" />
-		<Unit filename="axis/os/windows/windows_hotplugin.cpp" />
 		<Unit filename="axis/os/x11/x11.h" />
 		<Unit filename="axis/os/x11/x11_exception.h" />
 		<Unit filename="axis/os/x11/x11_keyboard.cpp" />
