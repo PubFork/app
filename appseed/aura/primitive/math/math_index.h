@@ -16,7 +16,7 @@ inline u32 u32_log2(u32 v)
 
    //unsigned int v; // 32-bit word to find the log of
    unsigned r;     // r will be lg(v)
-   register unsigned int t, tt; // temporaries
+   unsigned int t, tt; // temporaries
 
    if (tt = v >> 16)
    {

@@ -392,7 +392,7 @@ void plex_heap_alloc::pre_finalize()
 }
 
 
-//extern plex_heap_alloc_array * g_pheap;
+extern plex_heap_alloc_array * g_pheap;
 //
 //u64 b[64];
 //

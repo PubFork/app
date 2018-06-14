@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Quasar Science Update Utility</key>
+	<array>
+		<dict>
+			<key>architectures</key>
+			<array>
+				<string>x86_64</string>
+			</array>
+			<key>certificate</key>
+			<dict>
+				<key>SHA1</key>
+				<string>12257C8CE0576A1550AAB68A5E9EF30B34CA88C8</string>
+				<key>dateExpires</key>
+				<string>09/03/23</string>
+				<key>type</key>
+				<string>Developer ID Application</string>
+			</dict>
+			<key>embeddedBinaries</key>
+			<array>
+				<dict>
+					<key>architectures</key>
+					<array>
+						<string>x86_64</string>
+					</array>
+					<key>certificate</key>
+					<dict>
+						<key>SHA1</key>
+						<string>12257C8CE0576A1550AAB68A5E9EF30B34CA88C8</string>
+						<key>dateExpires</key>
+						<string>09/03/23</string>
+						<key>type</key>
+						<string>Developer ID Application</string>
+					</dict>
+					<key>name</key>
+					<string>libace.dylib</string>
+					<key>team</key>
+					<dict>
+						<key>id</key>
+						<string>L8N5V6TZE5</string>
+						<key>name</key>
+						<string>Camilo Tsumanuma</string>
+					</dict>
+				</dict>
+				<dict>
+					<key>architectures</key>
+					<array>
+						<string>x86_64</string>
+					</array>
+					<key>certificate</key>
+					<dict>
+						<key>SHA1</key>
+						<string>12257C8CE0576A1550AAB68A5E9EF30B34CA88C8</string>
+						<key>dateExpires</key>
+						<string>09/03/23</string>
+						<key>type</key>
+						<string>Developer ID Application</string>
+					</dict>
+					<key>name</key>
+					<string>libaura.dylib</string>
+					<key>team</key>
+					<dict>
+						<key>id</key>
+						<string>L8N5V6TZE5</string>
+						<key>name</key>
+						<string>Camilo Tsumanuma</string>
+					</dict>
+				</dict>
+				<dict>
+					<key>architectures</key>
+					<array>
+						<string>x86_64</string>
+					</array>
+					<key>certificate</key>
+					<dict>
+						<key>SHA1</key>
+						<string>12257C8CE0576A1550AAB68A5E9EF30B34CA88C8</string>
+						<key>dateExpires</key>
+						<string>09/03/23</string>
+						<key>type</key>
+						<string>Developer ID Application</string>
+					</dict>
+					<key>name</key>
+					<string>libaxisidn.dylib</string>
+					<key>team</key>
+					<dict>
+						<key>id</key>
+						<string>L8N5V6TZE5</string>
+						<key>name</key>
+						<string>Camilo Tsumanuma</string>
+					</dict>
+				</dict>
+				<dict>
+					<key>architectures</key>
+					<array>
+						<string>x86_64</string>
+					</array>
+					<key>certificate</key>
+					<dict>
+						<key>SHA1</key>
+						<string>12257C8CE0576A1550AAB68A5E9EF30B34CA88C8</string>
+						<key>dateExpires</key>
+						<string>09/03/23</string>
+						<key>type</key>
+						<string>Developer ID Application</string>
+					</dict>
+					<key>name</key>
+					<string>libaxiswinpr.dylib</string>
+					<key>team</key>
+					<dict>
+						<key>id</key>
+						<string>L8N5V6TZE5</string>
+						<key>name</key>
+						<string>Camilo Tsumanuma</string>
+					</dict>
+				</dict>
+				<dict>
+					<key>architectures</key>
+					<array>
+						<string>x86_64</string>
+					</array>
+					<key>certificate</key>
+					<dict>
+						<key>SHA1</key>
+						<string>12257C8CE0576A1550AAB68A5E9EF30B34CA88C8</string>
+						<key>dateExpires</key>
+						<string>09/03/23</string>
+						<key>type</key>
+						<string>Developer ID Application</string>
+					</dict>
+					<key>name</key>
+					<string>libdraw2d_quartz2d.dylib</string>
+					<key>team</key>
+					<dict>
+						<key>id</key>
+						<string>L8N5V6TZE5</string>
+						<key>name</key>
+						<string>Camilo Tsumanuma</string>
+					</dict>
+				</dict>
+			</array>
+			<key>name</key>
+			<string>Quasar Science Update Utility.app</string>
+			<key>team</key>
+			<dict>
+				<key>id</key>
+				<string>L8N5V6TZE5</string>
+				<key>name</key>
+				<string>Camilo Tsumanuma</string>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>

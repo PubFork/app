@@ -1,0 +1,147 @@
+2018-06-13 01:25:48 +0000  Initial pipeline context: <IDEDistributionProcessingPipelineContext: 0x7ffa7dd17ec0; archive(resolved)='<IDEArchive: 0x7ffa94d3fda0>', distributionTask(resolved)='2', distributionMethod(resolved)='<IDEDistributionMethodDirectDistribution: 0x7ffa95aeb1d0>', team(resolved)='<IDEProvisioningBasicTeam 0x7ffa918abea0: teamID: L8N5V6TZE5, teamName: Camilo Tsumanuma>'>
+	Chain (10, self inclusive):
+	<IDEDistributionProcessingPipelineContext: 0x7ffa7dd17ec0; archive = '<IDEArchive: 0x7ffa94d3fda0>', distributionMethod='<IDEDistributionMethodDirectDistribution: 0x7ffa95aeb1d0>', team='<IDEProvisioningBasicTeam 0x7ffa918abea0: teamID: L8N5V6TZE5, teamName: Camilo Tsumanuma>'>
+	<IDEDistributionProcessingPipelineContext: 0x7ffa7eb4e790; archive = '<IDEArchive: 0x7ffa94d3fda0>', distributionMethod='<IDEDistributionMethodDirectDistribution: 0x7ffa95aeb1d0>', team='<IDEProvisioningBasicTeam 0x7ffa918abea0: teamID: L8N5V6TZE5, teamName: Camilo Tsumanuma>'>
+	<IDEDistributionContext: 0x7ffa911510a0; archive = '<IDEArchive: 0x7ffa94d3fda0>', distributionMethod='<IDEDistributionMethodDirectDistribution: 0x7ffa95aeb1d0>', team='<IDEProvisioningBasicTeam 0x7ffa918abea0: teamID: L8N5V6TZE5, teamName: Camilo Tsumanuma>'>
+	<IDEDistributionContext: 0x7ffa7dacdac0; archive = '<IDEArchive: 0x7ffa94d3fda0>', distributionMethod='<IDEDistributionMethodDirectDistribution: 0x7ffa95aeb1d0>', team='<IDEProvisioningBasicTeam 0x7ffa918abea0: teamID: L8N5V6TZE5, teamName: Camilo Tsumanuma>'>
+	<IDEDistributionContext: 0x7ffa7dad2120; archive = '<IDEArchive: 0x7ffa94d3fda0>', distributionMethod='<IDEDistributionMethodDirectDistribution: 0x7ffa95aeb1d0>', team='<IDEProvisioningBasicTeam 0x7ffa918abea0: teamID: L8N5V6TZE5, teamName: Camilo Tsumanuma>'>
+	<IDEDistributionContext: 0x7ffa7ea863b0; archive = '<IDEArchive: 0x7ffa94d3fda0>', distributionMethod='<IDEDistributionMethodDirectDistribution: 0x7ffa95aeb1d0>', team='<IDEProvisioningBasicTeam 0x7ffa918abea0: teamID: L8N5V6TZE5, teamName: Camilo Tsumanuma>'>
+	<IDEDistributionContext: 0x7ffa7e8529d0; archive = '<IDEArchive: 0x7ffa94d3fda0>', distributionMethod='<IDEDistributionMethodDirectDistribution: 0x7ffa95aeb1d0>', team='<IDEProvisioningBasicTeam 0x7ffa918abea0: teamID: L8N5V6TZE5, teamName: Camilo Tsumanuma>'>
+	<IDEDistributionContext: 0x7ffa91d673c0; archive = '<IDEArchive: 0x7ffa94d3fda0>', distributionMethod='<IDEDistributionMethodDirectDistribution: 0x7ffa95aeb1d0>', team='<IDEProvisioningBasicTeam 0x7ffa918abea0: teamID: L8N5V6TZE5, teamName: Camilo Tsumanuma>'>
+	<IDEDistributionContext: 0x7ffa9183bf50; archive = '<IDEArchive: 0x7ffa94d3fda0>', distributionMethod='<IDEDistributionMethodDirectDistribution: 0x7ffa95aeb1d0>', team='(null)'>
+	<IDEDistributionContext: 0x7ffa7da39020; archive = '<IDEArchive: 0x7ffa94d3fda0>', distributionMethod='(null)', team='(null)'>
+</IDEDistributionProcessingPipelineContext: 0x7ffa7dd17ec0>
+2018-06-13 01:25:48 +0000  Processing step: IDEDistributionCreateDestRootStep
+2018-06-13 01:25:48 +0000  Processing step: IDEDistributionCopyItemStep
+2018-06-13 01:25:48 +0000  Running /usr/bin/ditto '-V' '/Volumes/apple/archive/Xcode/Archives/2018-06-12/Quasar Science Update Utility 12-06-18 22.25.xcarchive/Products/Applications/Quasar Science Update Utility.app' '/var/folders/gg/2rqkhw2s2sxg8hvlxv4cx77c0000gn/T/XcodeDistPipeline.TyO/Root/Applications/Quasar Science Update Utility.app'
+2018-06-13 01:25:48 +0000  >>> Copying /Volumes/apple/archive/Xcode/Archives/2018-06-12/Quasar Science Update Utility 12-06-18 22.25.xcarchive/Products/Applications/Quasar Science Update Utility.app 
+2018-06-13 01:25:48 +0000  copying file ./Contents/_CodeSignature/CodeResources ... 
+2018-06-13 01:25:48 +0000  5585 bytes for ./Contents/_CodeSignature/CodeResources
+2018-06-13 01:25:48 +0000  copying file ./Contents/Info.plist ... 
+2018-06-13 01:25:48 +0000  1752 bytes for ./Contents/Info.plist
+2018-06-13 01:25:48 +0000  copying file ./Contents/MacOS/libace.dylib ... 
+2018-06-13 01:25:48 +0000  20080 bytes for ./Contents/MacOS/libace.dylib
+2018-06-13 01:25:48 +0000  copying file ./Contents/MacOS/libaura.dylib ... 
+2018-06-13 01:25:48 +0000  14030512 bytes for ./Contents/MacOS/libaura.dylib
+copying file ./Contents/MacOS/libaxisidn.dylib ... 
+2018-06-13 01:25:48 +0000  207120 bytes for ./Contents/MacOS/libaxisidn.dylib
+copying file ./Contents/MacOS/libaxiswinpr.dylib ... 
+2018-06-13 01:25:48 +0000  3415120 bytes for ./Contents/MacOS/libaxiswinpr.dylib
+copying file ./Contents/MacOS/libdraw2d_quartz2d.dylib ... 
+648240 bytes for ./Contents/MacOS/libdraw2d_quartz2d.dylib
+copying file ./Contents/MacOS/Quasar Science Update Utility ... 
+421248 bytes for ./Contents/MacOS/Quasar Science Update Utility
+copying file ./Contents/PkgInfo ... 
+8 bytes for ./Contents/PkgInfo
+copying file ./Contents/Resources/AppIcon.icns ... 
+40305 bytes for ./Contents/Resources/AppIcon.icns
+copying file ./Contents/Resources/Base.lproj/MainMenu.nib ... 
+2018-06-13 01:25:48 +0000  /usr/bin/ditto exited with 0
+2018-06-13 01:25:48 +0000  35300 bytes for ./Contents/Resources/Base.lproj/MainMenu.nib
+copying file ./Contents/Resources/Image.png ... 
+76857 bytes for ./Contents/Resources/Image.png
+copying file ./Contents/Resources/MainWindow.nib ... 
+18446 bytes for ./Contents/Resources/MainWindow.nib
+copying file ./Contents/Resources/qslogo.png ... 
+76857 bytes for ./Contents/Resources/qslogo.png
+2018-06-13 01:25:48 +0000  Processing step: IDEDistributionEmbedProfileStep
+2018-06-13 01:25:48 +0000  Skipping profile for item: <IDEDistributionItem: 0x7ffa7e9d4470 '(null)' '<DVTFilePath:0x7ffa7e1a0de0:'/Volumes/apple/archive/Xcode/Archives/2018-06-12/Quasar Science Update Utility 12-06-18 22.25.xcarchive/Products/Applications/Quasar Science Update Utility.app/Contents/MacOS/libace.dylib'>'>
+2018-06-13 01:25:48 +0000  Skipping profile for item: <IDEDistributionItem: 0x7ffa7e9a70c0 '(null)' '<DVTFilePath:0x7ffa7e6e62e0:'/Volumes/apple/archive/Xcode/Archives/2018-06-12/Quasar Science Update Utility 12-06-18 22.25.xcarchive/Products/Applications/Quasar Science Update Utility.app/Contents/MacOS/libaura.dylib'>'>
+2018-06-13 01:25:48 +0000  Skipping profile for item: <IDEDistributionItem: 0x7ffa7e9b1280 '(null)' '<DVTFilePath:0x7ffa7e9ed880:'/Volumes/apple/archive/Xcode/Archives/2018-06-12/Quasar Science Update Utility 12-06-18 22.25.xcarchive/Products/Applications/Quasar Science Update Utility.app/Contents/MacOS/libaxisidn.dylib'>'>
+2018-06-13 01:25:48 +0000  Skipping profile for item: <IDEDistributionItem: 0x7ffa7e997660 '(null)' '<DVTFilePath:0x7ffa7e9d4e00:'/Volumes/apple/archive/Xcode/Archives/2018-06-12/Quasar Science Update Utility 12-06-18 22.25.xcarchive/Products/Applications/Quasar Science Update Utility.app/Contents/MacOS/libaxiswinpr.dylib'>'>
+2018-06-13 01:25:48 +0000  Skipping profile for item: <IDEDistributionItem: 0x7ffa7e4f4050 '(null)' '<DVTFilePath:0x7ffaa8734a80:'/Volumes/apple/archive/Xcode/Archives/2018-06-12/Quasar Science Update Utility 12-06-18 22.25.xcarchive/Products/Applications/Quasar Science Update Utility.app/Contents/MacOS/libdraw2d_quartz2d.dylib'>'>
+2018-06-13 01:25:48 +0000  Skipping profile for item: <IDEDistributionItem: 0x7ffa7d6ce640 'com.ca2.app-ca2-quasar-science-update-utility' '<DVTFilePath:0x7ffa7db15350:'/Volumes/apple/archive/Xcode/Archives/2018-06-12/Quasar Science Update Utility 12-06-18 22.25.xcarchive/Products/Applications/Quasar Science Update Utility.app'>'>
+2018-06-13 01:25:48 +0000  Processing step: IDEDistributionAppThinningPlistStep
+2018-06-13 01:25:48 +0000  Processing step: IDEDistributionCompileBitcodeStep
+2018-06-13 01:25:48 +0000  Skipping step: IDEDistributionCompileBitcodeStep because it said so
+2018-06-13 01:25:48 +0000  Processing step: IDEDistributionCodeSlimmingStep
+2018-06-13 01:25:48 +0000  Processing step: IDEDistributionCopyBCSymbolMapsStep
+2018-06-13 01:25:48 +0000  Skipping step: IDEDistributionCopyBCSymbolMapsStep because it said so
+2018-06-13 01:25:48 +0000  Skipping step: IDEDistributionCopyBCSymbolMapsStep because it said so
+2018-06-13 01:25:48 +0000  Skipping step: IDEDistributionCopyBCSymbolMapsStep because it said so
+2018-06-13 01:25:48 +0000  Skipping step: IDEDistributionCopyBCSymbolMapsStep because it said so
+2018-06-13 01:25:48 +0000  Skipping step: IDEDistributionCopyBCSymbolMapsStep because it said so
+2018-06-13 01:25:48 +0000  Skipping step: IDEDistributionCopyBCSymbolMapsStep because it said so
+2018-06-13 01:25:48 +0000  Processing step: IDEDistributionSymbolsStep
+2018-06-13 01:25:48 +0000  Skipping step: IDEDistributionSymbolsStep because it said so
+2018-06-13 01:25:48 +0000  Skipping step: IDEDistributionSymbolsStep because it said so
+2018-06-13 01:25:48 +0000  Skipping step: IDEDistributionSymbolsStep because it said so
+2018-06-13 01:25:48 +0000  Skipping step: IDEDistributionSymbolsStep because it said so
+2018-06-13 01:25:48 +0000  Skipping step: IDEDistributionSymbolsStep because it said so
+2018-06-13 01:25:48 +0000  Skipping step: IDEDistributionSymbolsStep because it said so
+2018-06-13 01:25:48 +0000  Processing step: IDEDistributionAppThinningStep
+2018-06-13 01:25:48 +0000  Skipping step: IDEDistributionAppThinningStep because it said so
+2018-06-13 01:25:48 +0000  Processing step: IDEDistributionODRStep
+2018-06-13 01:25:48 +0000  Processing step: IDEDistributionStripXattrsStep
+2018-06-13 01:25:48 +0000  Skipping stripping extended attributes of item: <IDEDistributionItem: 0x7ffa7e9d4470 '(null)' '<DVTFilePath:0x7ffa7e1a0de0:'/Volumes/apple/archive/Xcode/Archives/2018-06-12/Quasar Science Update Utility 12-06-18 22.25.xcarchive/Products/Applications/Quasar Science Update Utility.app/Contents/MacOS/libace.dylib'>'>
+2018-06-13 01:25:48 +0000  Skipping stripping extended attributes of item: <IDEDistributionItem: 0x7ffa7e9a70c0 '(null)' '<DVTFilePath:0x7ffa7e6e62e0:'/Volumes/apple/archive/Xcode/Archives/2018-06-12/Quasar Science Update Utility 12-06-18 22.25.xcarchive/Products/Applications/Quasar Science Update Utility.app/Contents/MacOS/libaura.dylib'>'>
+2018-06-13 01:25:48 +0000  Skipping stripping extended attributes of item: <IDEDistributionItem: 0x7ffa7e9b1280 '(null)' '<DVTFilePath:0x7ffa7e9ed880:'/Volumes/apple/archive/Xcode/Archives/2018-06-12/Quasar Science Update Utility 12-06-18 22.25.xcarchive/Products/Applications/Quasar Science Update Utility.app/Contents/MacOS/libaxisidn.dylib'>'>
+2018-06-13 01:25:48 +0000  Skipping stripping extended attributes of item: <IDEDistributionItem: 0x7ffa7e997660 '(null)' '<DVTFilePath:0x7ffa7e9d4e00:'/Volumes/apple/archive/Xcode/Archives/2018-06-12/Quasar Science Update Utility 12-06-18 22.25.xcarchive/Products/Applications/Quasar Science Update Utility.app/Contents/MacOS/libaxiswinpr.dylib'>'>
+2018-06-13 01:25:48 +0000  Skipping stripping extended attributes of item: <IDEDistributionItem: 0x7ffa7e4f4050 '(null)' '<DVTFilePath:0x7ffaa8734a80:'/Volumes/apple/archive/Xcode/Archives/2018-06-12/Quasar Science Update Utility 12-06-18 22.25.xcarchive/Products/Applications/Quasar Science Update Utility.app/Contents/MacOS/libdraw2d_quartz2d.dylib'>'>
+2018-06-13 01:25:48 +0000  Running /usr/bin/xattr '-crs' '/var/folders/gg/2rqkhw2s2sxg8hvlxv4cx77c0000gn/T/XcodeDistPipeline.TyO/Root/Applications/Quasar Science Update Utility.app'
+2018-06-13 01:25:48 +0000  /usr/bin/xattr exited with 0
+2018-06-13 01:25:48 +0000  Processing step: IDEDistributionCodesignStep
+2018-06-13 01:25:48 +0000  Applying entitlements delta for <IDEDistributionItem: 0x7ffa7e9d4470 '(null)' '<DVTFilePath:0x7ffa7e1a0de0:'/Volumes/apple/archive/Xcode/Archives/2018-06-12/Quasar Science Update Utility 12-06-18 22.25.xcarchive/Products/Applications/Quasar Science Update Utility.app/Contents/MacOS/libace.dylib'>'> from <IDEiCloudEntitlementsProcessor: 0x7ffaa73d8330>: {
+}
+2018-06-13 01:25:48 +0000  Entitlements for <IDEDistributionItem: 0x7ffa7e9d4470 '(null)' '<DVTFilePath:0x7ffa7e1a0de0:'/Volumes/apple/archive/Xcode/Archives/2018-06-12/Quasar Science Update Utility 12-06-18 22.25.xcarchive/Products/Applications/Quasar Science Update Utility.app/Contents/MacOS/libace.dylib'>'>: {
+}
+2018-06-13 01:25:48 +0000  Writing entitlements for <IDEDistributionItem: 0x7ffa7e9d4470 '(null)' '<DVTFilePath:0x7ffa7e1a0de0:'/Volumes/apple/archive/Xcode/Archives/2018-06-12/Quasar Science Update Utility 12-06-18 22.25.xcarchive/Products/Applications/Quasar Science Update Utility.app/Contents/MacOS/libace.dylib'>'> to: /var/folders/gg/2rqkhw2s2sxg8hvlxv4cx77c0000gn/T/XcodeDistPipeline.TyO/entitlementsdkbV7Q
+2018-06-13 01:25:48 +0000  Running /usr/bin/codesign '-vvv' '--force' '--sign' '12257C8CE0576A1550AAB68A5E9EF30B34CA88C8' '--preserve-metadata=identifier,flags' '--entitlements' '/var/folders/gg/2rqkhw2s2sxg8hvlxv4cx77c0000gn/T/XcodeDistPipeline.TyO/entitlementsdkbV7Q' '--requirements' '=designated => anchor apple generic  and identifier "$self.identifier" and ((cert leaf[field.1.2.840.113635.100.6.1.9] exists) or ( certificate 1[field.1.2.840.113635.100.6.2.6] exists and certificate leaf[field.1.2.840.113635.100.6.1.13] exists  and certificate leaf[subject.OU] = "L8N5V6TZE5" ))' '/var/folders/gg/2rqkhw2s2sxg8hvlxv4cx77c0000gn/T/XcodeDistPipeline.TyO/Root/Applications/Quasar Science Update Utility.app/Contents/MacOS/libace.dylib'
+2018-06-13 01:25:48 +0000  /var/folders/gg/2rqkhw2s2sxg8hvlxv4cx77c0000gn/T/XcodeDistPipeline.TyO/Root/Applications/Quasar Science Update Utility.app/Contents/MacOS/libace.dylib: replacing existing signature
+2018-06-13 01:25:49 +0000  /var/folders/gg/2rqkhw2s2sxg8hvlxv4cx77c0000gn/T/XcodeDistPipeline.TyO/Root/Applications/Quasar Science Update Utility.app/Contents/MacOS/libace.dylib: signed Mach-O thin (x86_64) [libace]
+2018-06-13 01:25:49 +0000  /usr/bin/codesign exited with 0
+2018-06-13 01:25:49 +0000  Applying entitlements delta for <IDEDistributionItem: 0x7ffa7e9a70c0 '(null)' '<DVTFilePath:0x7ffa7e6e62e0:'/Volumes/apple/archive/Xcode/Archives/2018-06-12/Quasar Science Update Utility 12-06-18 22.25.xcarchive/Products/Applications/Quasar Science Update Utility.app/Contents/MacOS/libaura.dylib'>'> from <IDEiCloudEntitlementsProcessor: 0x7ffaa775ab60>: {
+}
+2018-06-13 01:25:49 +0000  Entitlements for <IDEDistributionItem: 0x7ffa7e9a70c0 '(null)' '<DVTFilePath:0x7ffa7e6e62e0:'/Volumes/apple/archive/Xcode/Archives/2018-06-12/Quasar Science Update Utility 12-06-18 22.25.xcarchive/Products/Applications/Quasar Science Update Utility.app/Contents/MacOS/libaura.dylib'>'>: {
+}
+2018-06-13 01:25:49 +0000  Writing entitlements for <IDEDistributionItem: 0x7ffa7e9a70c0 '(null)' '<DVTFilePath:0x7ffa7e6e62e0:'/Volumes/apple/archive/Xcode/Archives/2018-06-12/Quasar Science Update Utility 12-06-18 22.25.xcarchive/Products/Applications/Quasar Science Update Utility.app/Contents/MacOS/libaura.dylib'>'> to: /var/folders/gg/2rqkhw2s2sxg8hvlxv4cx77c0000gn/T/XcodeDistPipeline.TyO/entitlementsllGpVe
+2018-06-13 01:25:49 +0000  Running /usr/bin/codesign '-vvv' '--force' '--sign' '12257C8CE0576A1550AAB68A5E9EF30B34CA88C8' '--preserve-metadata=identifier,flags' '--entitlements' '/var/folders/gg/2rqkhw2s2sxg8hvlxv4cx77c0000gn/T/XcodeDistPipeline.TyO/entitlementsllGpVe' '--requirements' '=designated => anchor apple generic  and identifier "$self.identifier" and ((cert leaf[field.1.2.840.113635.100.6.1.9] exists) or ( certificate 1[field.1.2.840.113635.100.6.2.6] exists and certificate leaf[field.1.2.840.113635.100.6.1.13] exists  and certificate leaf[subject.OU] = "L8N5V6TZE5" ))' '/var/folders/gg/2rqkhw2s2sxg8hvlxv4cx77c0000gn/T/XcodeDistPipeline.TyO/Root/Applications/Quasar Science Update Utility.app/Contents/MacOS/libaura.dylib'
+2018-06-13 01:25:49 +0000  /var/folders/gg/2rqkhw2s2sxg8hvlxv4cx77c0000gn/T/XcodeDistPipeline.TyO/Root/Applications/Quasar Science Update Utility.app/Contents/MacOS/libaura.dylib: replacing existing signature
+2018-06-13 01:25:49 +0000  /var/folders/gg/2rqkhw2s2sxg8hvlxv4cx77c0000gn/T/XcodeDistPipeline.TyO/Root/Applications/Quasar Science Update Utility.app/Contents/MacOS/libaura.dylib: signed Mach-O thin (x86_64) [libaura]
+2018-06-13 01:25:49 +0000  /usr/bin/codesign exited with 0
+2018-06-13 01:25:49 +0000  Applying entitlements delta for <IDEDistributionItem: 0x7ffa7e9b1280 '(null)' '<DVTFilePath:0x7ffa7e9ed880:'/Volumes/apple/archive/Xcode/Archives/2018-06-12/Quasar Science Update Utility 12-06-18 22.25.xcarchive/Products/Applications/Quasar Science Update Utility.app/Contents/MacOS/libaxisidn.dylib'>'> from <IDEiCloudEntitlementsProcessor: 0x7ffa907400f0>: {
+}
+2018-06-13 01:25:49 +0000  Entitlements for <IDEDistributionItem: 0x7ffa7e9b1280 '(null)' '<DVTFilePath:0x7ffa7e9ed880:'/Volumes/apple/archive/Xcode/Archives/2018-06-12/Quasar Science Update Utility 12-06-18 22.25.xcarchive/Products/Applications/Quasar Science Update Utility.app/Contents/MacOS/libaxisidn.dylib'>'>: {
+}
+2018-06-13 01:25:49 +0000  Writing entitlements for <IDEDistributionItem: 0x7ffa7e9b1280 '(null)' '<DVTFilePath:0x7ffa7e9ed880:'/Volumes/apple/archive/Xcode/Archives/2018-06-12/Quasar Science Update Utility 12-06-18 22.25.xcarchive/Products/Applications/Quasar Science Update Utility.app/Contents/MacOS/libaxisidn.dylib'>'> to: /var/folders/gg/2rqkhw2s2sxg8hvlxv4cx77c0000gn/T/XcodeDistPipeline.TyO/entitlementsIOEVbI
+2018-06-13 01:25:49 +0000  Running /usr/bin/codesign '-vvv' '--force' '--sign' '12257C8CE0576A1550AAB68A5E9EF30B34CA88C8' '--preserve-metadata=identifier,flags' '--entitlements' '/var/folders/gg/2rqkhw2s2sxg8hvlxv4cx77c0000gn/T/XcodeDistPipeline.TyO/entitlementsIOEVbI' '--requirements' '=designated => anchor apple generic  and identifier "$self.identifier" and ((cert leaf[field.1.2.840.113635.100.6.1.9] exists) or ( certificate 1[field.1.2.840.113635.100.6.2.6] exists and certificate leaf[field.1.2.840.113635.100.6.1.13] exists  and certificate leaf[subject.OU] = "L8N5V6TZE5" ))' '/var/folders/gg/2rqkhw2s2sxg8hvlxv4cx77c0000gn/T/XcodeDistPipeline.TyO/Root/Applications/Quasar Science Update Utility.app/Contents/MacOS/libaxisidn.dylib'
+2018-06-13 01:25:49 +0000  /var/folders/gg/2rqkhw2s2sxg8hvlxv4cx77c0000gn/T/XcodeDistPipeline.TyO/Root/Applications/Quasar Science Update Utility.app/Contents/MacOS/libaxisidn.dylib: replacing existing signature
+2018-06-13 01:25:50 +0000  /var/folders/gg/2rqkhw2s2sxg8hvlxv4cx77c0000gn/T/XcodeDistPipeline.TyO/Root/Applications/Quasar Science Update Utility.app/Contents/MacOS/libaxisidn.dylib: signed Mach-O thin (x86_64) [libaxisidn]
+2018-06-13 01:25:50 +0000  /usr/bin/codesign exited with 0
+2018-06-13 01:25:50 +0000  Applying entitlements delta for <IDEDistributionItem: 0x7ffa7e997660 '(null)' '<DVTFilePath:0x7ffa7e9d4e00:'/Volumes/apple/archive/Xcode/Archives/2018-06-12/Quasar Science Update Utility 12-06-18 22.25.xcarchive/Products/Applications/Quasar Science Update Utility.app/Contents/MacOS/libaxiswinpr.dylib'>'> from <IDEiCloudEntitlementsProcessor: 0x7ffa8ac81170>: {
+}
+2018-06-13 01:25:50 +0000  Entitlements for <IDEDistributionItem: 0x7ffa7e997660 '(null)' '<DVTFilePath:0x7ffa7e9d4e00:'/Volumes/apple/archive/Xcode/Archives/2018-06-12/Quasar Science Update Utility 12-06-18 22.25.xcarchive/Products/Applications/Quasar Science Update Utility.app/Contents/MacOS/libaxiswinpr.dylib'>'>: {
+}
+2018-06-13 01:25:50 +0000  Writing entitlements for <IDEDistributionItem: 0x7ffa7e997660 '(null)' '<DVTFilePath:0x7ffa7e9d4e00:'/Volumes/apple/archive/Xcode/Archives/2018-06-12/Quasar Science Update Utility 12-06-18 22.25.xcarchive/Products/Applications/Quasar Science Update Utility.app/Contents/MacOS/libaxiswinpr.dylib'>'> to: /var/folders/gg/2rqkhw2s2sxg8hvlxv4cx77c0000gn/T/XcodeDistPipeline.TyO/entitlementsC3cATP
+2018-06-13 01:25:50 +0000  Running /usr/bin/codesign '-vvv' '--force' '--sign' '12257C8CE0576A1550AAB68A5E9EF30B34CA88C8' '--preserve-metadata=identifier,flags' '--entitlements' '/var/folders/gg/2rqkhw2s2sxg8hvlxv4cx77c0000gn/T/XcodeDistPipeline.TyO/entitlementsC3cATP' '--requirements' '=designated => anchor apple generic  and identifier "$self.identifier" and ((cert leaf[field.1.2.840.113635.100.6.1.9] exists) or ( certificate 1[field.1.2.840.113635.100.6.2.6] exists and certificate leaf[field.1.2.840.113635.100.6.1.13] exists  and certificate leaf[subject.OU] = "L8N5V6TZE5" ))' '/var/folders/gg/2rqkhw2s2sxg8hvlxv4cx77c0000gn/T/XcodeDistPipeline.TyO/Root/Applications/Quasar Science Update Utility.app/Contents/MacOS/libaxiswinpr.dylib'
+2018-06-13 01:25:50 +0000  /var/folders/gg/2rqkhw2s2sxg8hvlxv4cx77c0000gn/T/XcodeDistPipeline.TyO/Root/Applications/Quasar Science Update Utility.app/Contents/MacOS/libaxiswinpr.dylib: replacing existing signature
+2018-06-13 01:25:50 +0000  /var/folders/gg/2rqkhw2s2sxg8hvlxv4cx77c0000gn/T/XcodeDistPipeline.TyO/Root/Applications/Quasar Science Update Utility.app/Contents/MacOS/libaxiswinpr.dylib: signed Mach-O thin (x86_64) [libaxiswinpr]
+2018-06-13 01:25:50 +0000  /usr/bin/codesign exited with 0
+2018-06-13 01:25:50 +0000  Applying entitlements delta for <IDEDistributionItem: 0x7ffa7e4f4050 '(null)' '<DVTFilePath:0x7ffaa8734a80:'/Volumes/apple/archive/Xcode/Archives/2018-06-12/Quasar Science Update Utility 12-06-18 22.25.xcarchive/Products/Applications/Quasar Science Update Utility.app/Contents/MacOS/libdraw2d_quartz2d.dylib'>'> from <IDEiCloudEntitlementsProcessor: 0x7ffa8adbb6e0>: {
+}
+2018-06-13 01:25:50 +0000  Entitlements for <IDEDistributionItem: 0x7ffa7e4f4050 '(null)' '<DVTFilePath:0x7ffaa8734a80:'/Volumes/apple/archive/Xcode/Archives/2018-06-12/Quasar Science Update Utility 12-06-18 22.25.xcarchive/Products/Applications/Quasar Science Update Utility.app/Contents/MacOS/libdraw2d_quartz2d.dylib'>'>: {
+}
+2018-06-13 01:25:50 +0000  Writing entitlements for <IDEDistributionItem: 0x7ffa7e4f4050 '(null)' '<DVTFilePath:0x7ffaa8734a80:'/Volumes/apple/archive/Xcode/Archives/2018-06-12/Quasar Science Update Utility 12-06-18 22.25.xcarchive/Products/Applications/Quasar Science Update Utility.app/Contents/MacOS/libdraw2d_quartz2d.dylib'>'> to: /var/folders/gg/2rqkhw2s2sxg8hvlxv4cx77c0000gn/T/XcodeDistPipeline.TyO/entitlementsGFkNlx
+2018-06-13 01:25:50 +0000  Running /usr/bin/codesign '-vvv' '--force' '--sign' '12257C8CE0576A1550AAB68A5E9EF30B34CA88C8' '--preserve-metadata=identifier,flags' '--entitlements' '/var/folders/gg/2rqkhw2s2sxg8hvlxv4cx77c0000gn/T/XcodeDistPipeline.TyO/entitlementsGFkNlx' '--requirements' '=designated => anchor apple generic  and identifier "$self.identifier" and ((cert leaf[field.1.2.840.113635.100.6.1.9] exists) or ( certificate 1[field.1.2.840.113635.100.6.2.6] exists and certificate leaf[field.1.2.840.113635.100.6.1.13] exists  and certificate leaf[subject.OU] = "L8N5V6TZE5" ))' '/var/folders/gg/2rqkhw2s2sxg8hvlxv4cx77c0000gn/T/XcodeDistPipeline.TyO/Root/Applications/Quasar Science Update Utility.app/Contents/MacOS/libdraw2d_quartz2d.dylib'
+2018-06-13 01:25:50 +0000  /var/folders/gg/2rqkhw2s2sxg8hvlxv4cx77c0000gn/T/XcodeDistPipeline.TyO/Root/Applications/Quasar Science Update Utility.app/Contents/MacOS/libdraw2d_quartz2d.dylib: replacing existing signature
+2018-06-13 01:25:50 +0000  /var/folders/gg/2rqkhw2s2sxg8hvlxv4cx77c0000gn/T/XcodeDistPipeline.TyO/Root/Applications/Quasar Science Update Utility.app/Contents/MacOS/libdraw2d_quartz2d.dylib: signed Mach-O thin (x86_64) [libdraw2d_quartz2d]
+2018-06-13 01:25:50 +0000  /usr/bin/codesign exited with 0
+2018-06-13 01:25:50 +0000  Applying entitlements delta for <IDEDistributionItem: 0x7ffa7d6ce640 'com.ca2.app-ca2-quasar-science-update-utility' '<DVTFilePath:0x7ffa7db15350:'/Volumes/apple/archive/Xcode/Archives/2018-06-12/Quasar Science Update Utility 12-06-18 22.25.xcarchive/Products/Applications/Quasar Science Update Utility.app'>'> from <IDEiCloudEntitlementsProcessor: 0x7ffa7eb0aae0>: {
+}
+2018-06-13 01:25:50 +0000  Entitlements for <IDEDistributionItem: 0x7ffa7d6ce640 'com.ca2.app-ca2-quasar-science-update-utility' '<DVTFilePath:0x7ffa7db15350:'/Volumes/apple/archive/Xcode/Archives/2018-06-12/Quasar Science Update Utility 12-06-18 22.25.xcarchive/Products/Applications/Quasar Science Update Utility.app'>'>: {
+}
+2018-06-13 01:25:50 +0000  Writing entitlements for <IDEDistributionItem: 0x7ffa7d6ce640 'com.ca2.app-ca2-quasar-science-update-utility' '<DVTFilePath:0x7ffa7db15350:'/Volumes/apple/archive/Xcode/Archives/2018-06-12/Quasar Science Update Utility 12-06-18 22.25.xcarchive/Products/Applications/Quasar Science Update Utility.app'>'> to: /var/folders/gg/2rqkhw2s2sxg8hvlxv4cx77c0000gn/T/XcodeDistPipeline.TyO/entitlements4zThML
+2018-06-13 01:25:50 +0000  Running /usr/bin/codesign '-vvv' '--force' '--sign' '12257C8CE0576A1550AAB68A5E9EF30B34CA88C8' '--preserve-metadata=identifier,flags' '--entitlements' '/var/folders/gg/2rqkhw2s2sxg8hvlxv4cx77c0000gn/T/XcodeDistPipeline.TyO/entitlements4zThML' '--requirements' '=designated => anchor apple generic  and identifier "$self.identifier" and ((cert leaf[field.1.2.840.113635.100.6.1.9] exists) or ( certificate 1[field.1.2.840.113635.100.6.2.6] exists and certificate leaf[field.1.2.840.113635.100.6.1.13] exists  and certificate leaf[subject.OU] = "L8N5V6TZE5" ))' '/var/folders/gg/2rqkhw2s2sxg8hvlxv4cx77c0000gn/T/XcodeDistPipeline.TyO/Root/Applications/Quasar Science Update Utility.app'
+2018-06-13 01:25:50 +0000  /var/folders/gg/2rqkhw2s2sxg8hvlxv4cx77c0000gn/T/XcodeDistPipeline.TyO/Root/Applications/Quasar Science Update Utility.app: replacing existing signature
+2018-06-13 01:25:50 +0000  /var/folders/gg/2rqkhw2s2sxg8hvlxv4cx77c0000gn/T/XcodeDistPipeline.TyO/Root/Applications/Quasar Science Update Utility.app: signed bundle with Mach-O thin (x86_64) [com.ca2.app-ca2-quasar-science-update-utility]
+2018-06-13 01:25:50 +0000  /usr/bin/codesign exited with 0
+2018-06-13 01:25:50 +0000  Processing step: IDEDistributionStreamingZipItemStep
+2018-06-13 01:25:50 +0000  Skipping step: IDEDistributionStreamingZipItemStep because it said so
+2018-06-13 01:25:50 +0000  Skipping step: IDEDistributionStreamingZipItemStep because it said so
+2018-06-13 01:25:50 +0000  Skipping step: IDEDistributionStreamingZipItemStep because it said so
+2018-06-13 01:25:50 +0000  Skipping step: IDEDistributionStreamingZipItemStep because it said so
+2018-06-13 01:25:50 +0000  Skipping step: IDEDistributionStreamingZipItemStep because it said so
+2018-06-13 01:25:50 +0000  Skipping step: IDEDistributionStreamingZipItemStep because it said so
+2018-06-13 01:25:50 +0000  Processing step: IDEDistributionSkipPackagingStep
+2018-06-13 01:25:50 +0000  Processing step: IDEDistributionCreateManifestStep
+2018-06-13 01:25:50 +0000  Skipping step: IDEDistributionCreateManifestStep because it said so

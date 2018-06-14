@@ -1399,7 +1399,7 @@ namespace macos
 
          }
 
-         pbase->set_lresult(DefWindowProc((UINT) pbase->m_id.int64(), pbase->m_wparam, pbase->m_lparam));
+         pbase->set_lresult(DefWindowProc((UINT) pbase->m_id.i64(), pbase->m_wparam, pbase->m_lparam));
 
          return;
 
@@ -1411,13 +1411,13 @@ namespace macos
          if (m_pui != NULL)
          {
 
-            m_pui->on_control_event((::user::control_event *) pbase->m_lparam);
+            m_pui->on_control_event((::user::control_event *) pbase->m_lparam.m_lparam);
 
          }
          else
          {
 
-            on_control_event((::user::control_event *) pbase->m_lparam);
+            on_control_event((::user::control_event *) pbase->m_lparam.m_lparam);
 
          }
 
@@ -1436,7 +1436,7 @@ namespace macos
 
       }
 
-      pbase->set_lresult(DefWindowProc((UINT) pbase->m_id.int64(), pbase->m_wparam, pbase->m_lparam));
+      pbase->set_lresult(DefWindowProc((UINT) pbase->m_id.i64(), pbase->m_wparam, pbase->m_lparam));
 
    }
 
@@ -6004,7 +6004,7 @@ namespace macos
 
          m_rectParentClient.size(rect.size.width, rect.size.height);
 
-         sz = m_rectParentClient.size();
+         sz = m_rectParentClient.get_size();
 
       }
 
