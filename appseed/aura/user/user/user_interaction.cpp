@@ -48,6 +48,8 @@ namespace user
    void interaction::user_interaction_common_construct()
    {
 
+      m_bProDevian = false;
+
       m_ecolorBackground = color_background;
 
       m_econtroltype = control_type_none;
@@ -8474,6 +8476,13 @@ restart:
 
    bool interaction::has_pending_graphical_update()
    {
+
+      if (m_bProDevian)
+      {
+
+         return true;
+
+      }
 
 #ifdef APPLE_IOS
 

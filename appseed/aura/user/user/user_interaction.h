@@ -120,6 +120,7 @@ namespace user
       bool                                m_bMoving;
       bool                                m_bMoveWindow;
       bool                                m_bMayProDevian;
+      bool                                m_bProDevian;
       bool                                m_bVoidPaint;
       bool                                m_bRedrawing;
       bool                                m_bLockWindowUpdate;

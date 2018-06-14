@@ -64,6 +64,7 @@ public:
 
    };
 
+
    bool                                m_bDefaultCreateToolbar;
    helper_task *                       m_phelpertask;
    bool                                m_bFullScreenAlt;
@@ -310,7 +311,6 @@ public:
    virtual string notification_area_extra_get_xml_menu();
 
    virtual void nextstyle(::user::style_context * pcontext);
-
 
 };
 
