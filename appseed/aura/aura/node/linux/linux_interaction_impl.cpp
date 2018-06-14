@@ -3838,16 +3838,16 @@ namespace linux
 
     class rect64 rectWindow;
 
-//      if(!GetWindowRect(rectWidnow))
-//      {
-//
-//         return false;
-//
-//      }
-//
-//      return rectWindow.top_left();
-//
-//   }
+      if(!GetWindowRect(rectWindow))
+      {
+
+         return pointd(0.0,0.0);
+
+      }
+
+      return rectWindow.top_left();
+
+   }
 //
 //
 //   bool interaction_impl::ClientToScreen(LPRECT lprect)
