@@ -331,6 +331,7 @@
 		9A9D7B221F5D6420009EC103 /* user_keyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7B121F5D6418009EC103 /* user_keyboard.cpp */; };
 		9A9F0A8A1D7F35D600ED6D8A /* libaxisidn.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A9F0A311D7F341700ED6D8A /* libaxisidn.dylib */; };
 		9AB6283E1F3D116D0007966E /* NSPasteboard++.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9AB6283D1F3D116D0007966E /* NSPasteboard++.mm */; };
+		9ACB7A5820D239D600C1C857 /* windows_hotplugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9ACB7A5620D239D600C1C857 /* windows_hotplugin.cpp */; };
 		9ACBD0BF1DDFAEB2004AF08F /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A18AAF11DDFAB4D00C57231 /* libcrypto.a */; };
 		9ACBD0C01DDFAEB5004AF08F /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A18AAF21DDFAB4D00C57231 /* libssl.a */; };
 		9AE1AB461F7856BD0005113C /* ios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577A31F6212AD00623508 /* ios.cpp */; };
@@ -782,6 +783,7 @@
 		9AB6283D1F3D116D0007966E /* NSPasteboard++.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSPasteboard++.mm"; sourceTree = "<group>"; };
 		9AC18A441D4EA0C900977347 /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/usr/lib/libbz2.tbd; sourceTree = DEVELOPER_DIR; };
 		9AC62E651D20BE4F00A4AC0A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		9ACB7A5620D239D600C1C857 /* windows_hotplugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = windows_hotplugin.cpp; sourceTree = "<group>"; };
 		9AE24D341904CEFE001AEFFB /* libios_axis.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libios_axis.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AE24D361904CEFE001AEFFB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		9AEB686D1F81BBDA00F40B32 /* apple_ip_enum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = apple_ip_enum.cpp; sourceTree = "<group>"; };
@@ -1124,6 +1126,7 @@
 				07A373601B26054100E4F888 /* ansios */,
 				07A373661B26054100E4F888 /* cross */,
 				07A374181B26054100E4F888 /* macos */,
+				9ACB7A5920D239E100C1C857 /* windows */,
 				07A3744B1B26054100E4F888 /* os.h */,
 			);
 			path = os;
@@ -1360,6 +1363,15 @@
 				9A9F0A331D7F341700ED6D8A /* libios_axisidn.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		9ACB7A5920D239E100C1C857 /* windows */ = {
+			isa = PBXGroup;
+			children = (
+				9ACB7A5620D239D600C1C857 /* windows_hotplugin.cpp */,
+			);
+			name = windows;
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 		9AE24D351904CEFE001AEFFB /* Frameworks */ = {
@@ -1827,6 +1839,7 @@
 				9A9874641F5CBB9900CB62EB /* axis_session.cpp in Sources */,
 				9A9D79E01F5D6305009EC103 /* database_stringhelper.cpp in Sources */,
 				9A98748E1F5CBBF600CB62EB /* macos_main.cpp in Sources */,
+				9ACB7A5820D239D600C1C857 /* windows_hotplugin.cpp in Sources */,
 				9A98748C1F5CBBF600CB62EB /* macos_file_set.cpp in Sources */,
 				0747A6FD1B2637BC00E85AC7 /* sqlitedb_base.cpp in Sources */,
 				9A9D7ABF1F5D63A3009EC103 /* filesystem_axis_application.cpp in Sources */,

@@ -1946,7 +1946,7 @@ void rectd::offset_y(double y) NOTHROW
 }
 
 
-pointd rectd::center() const
+pointd rectd::center() const NOTHROW
 {
 
    return pointd((left + right) / 2.0, (top + bottom) / 2.0);
