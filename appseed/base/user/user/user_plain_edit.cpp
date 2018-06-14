@@ -1909,6 +1909,13 @@ namespace user
 
       sized sizeUniText;
 
+      if (pgraphics == NULL)
+      {
+
+         return;
+
+      }
+
       pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
 
       pgraphics->GetTextExtent(sizeUniText, unitext("gqYALﾍWMÍÎÄÃÄÅ"));
