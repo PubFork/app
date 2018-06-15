@@ -370,7 +370,7 @@ sized::sized(const SIZE *  pinitSize) NOTHROW
 }
 sized::sized(POINT initPt) NOTHROW
 {
-   *(POINT*)this = initPt;
+   *(pointd*)this = initPt;
 }
 sized::sized(uint32_t dwSize) NOTHROW
 {
