@@ -45,6 +45,7 @@ namespace user
       create_color(color_list_item_background_selected, ARGB(127, 85, 115, 155));
       create_color(color_list_item_background_hover, ARGB(80, 125, 185, 235));
       create_color(color_list_item_background_selected_hover, ARGB(127, 105, 135, 185));
+      create_color(color_edit_text, ARGB(255, 0, 0, 0));
       create_color(color_text, ARGB(255, 0, 0, 0));
       create_color(color_text_selected, ARGB(255, 255, 255, 255));
       create_color(color_background, ARGB(0, 0, 0, 0));
