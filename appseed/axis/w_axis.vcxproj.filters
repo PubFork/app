@@ -112,9 +112,6 @@
     <Filter Include="Source Files\user\userpresence">
       <UniqueIdentifier>{c1c604a0-cb3d-4711-a6b6-5a193137f1b1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\axis\os\windows">
-      <UniqueIdentifier>{ee16ee19-0ff3-41cc-8ff2-2819ac727dc4}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -724,8 +721,8 @@
     <ClCompile Include="axis\node\metrowin\_node_metrowin.cpp">
       <Filter>Source Files\axis\node\metrowin</Filter>
     </ClCompile>
-    <ClCompile Include="axis\os\windows\windows_hotplugin.cpp">
-      <Filter>Source Files\axis\os\windows</Filter>
+    <ClCompile Include="user\user\user_hotplugin.cpp">
+      <Filter>Source Files\user\user</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
