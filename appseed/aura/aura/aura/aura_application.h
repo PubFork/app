@@ -575,7 +575,7 @@ namespace aura
 
       virtual string fontopus_get_cred(::aura::application * papp, const string & strRequestUrl, const RECT & rect, string & strUsername, string & strPassword, string strToken, string strTitle, bool bInteractive, ::user::interactive * pinteractive = NULL) override;
 
-      virtual void draw2d_factory_exchange();
+      virtual bool draw2d_factory_exchange();
 
       virtual ::file::path get_executable_path();
       virtual string get_executable_extension();

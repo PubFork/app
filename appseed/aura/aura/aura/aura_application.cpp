@@ -6418,7 +6418,7 @@ retry_license:
    }
 
 
-   void application::draw2d_factory_exchange()
+   bool application::draw2d_factory_exchange()
    {
 
 //#if defined(METROWIN) || defined(CUBE)
@@ -6431,7 +6431,7 @@ retry_license:
       sp(::aura::library) & library = System.m_mapLibrary["draw2d"];
 
       if (library->is_opened())
-         return;
+         return true;
 
       string strLibrary;
 
@@ -6506,7 +6506,7 @@ retry_license:
       }
 
       output_debug_string("No draw2d pluging available!!.");
-      return;
+      return false;
 
 finalize:
 
@@ -6516,6 +6516,7 @@ finalize:
 
 #endif
 
+	  return true;
 
    }
 

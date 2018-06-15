@@ -36,10 +36,6 @@ namespace aura
       m_paurasession = this;
       m_bMatterFromHttpCache = m_paurasystem->m_bMatterFromHttpCache;
 
-      m_pstyle = canew(::user::theme(this));
-
-      m_puserstyle = m_pstyle;
-
 #ifdef WINDOWS
 
       if (m_hinstance == NULL)
