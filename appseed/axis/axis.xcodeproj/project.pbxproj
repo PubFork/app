@@ -2211,7 +2211,7 @@
 					"-Wno-comment",
 					"-Wno-unused-value",
 				);
-				WorkspaceDir = "$(SRCROOT)/../../../nodeapp/seed/metaseed";
+				WorkspaceDir = "$(SRCROOT)/../../../nodeapp/seed/macos";
 			};
 			name = Debug;
 		};
@@ -2288,7 +2288,7 @@
 					"-Wno-comment",
 					"-Wno-unused-value",
 				);
-				WorkspaceDir = "$(SRCROOT)/../../../nodeapp/seed/metaseed";
+				WorkspaceDir = "$(SRCROOT)/../../../nodeapp/seed/macos";
 			};
 			name = Release;
 		};

@@ -1,5 +1,5 @@
 #include "framework.h"
-#include "zip_unzip.h"
+#include "zip_internal.h"
 
 
 void * zip_filefuncdef_malloc();

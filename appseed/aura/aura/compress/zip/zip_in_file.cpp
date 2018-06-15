@@ -1,6 +1,5 @@
 #include "framework.h"
-#include "zip_unzip.h"
-//#include "in_file.h"
+#include "zip_internal.h"
 
 
 #define UNZ_FILE_INFO ((unz_file_info *) m_punzfileinfo)

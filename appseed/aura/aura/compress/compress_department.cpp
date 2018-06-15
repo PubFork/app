@@ -1,5 +1,6 @@
 #include "framework.h"
 #include "zip/zip.h"
+#include "zip/zip_internal.h"
 #include "compress_gz.h"
 #include "compress_bz.h"
 

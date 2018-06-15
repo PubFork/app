@@ -9813,7 +9813,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = ". .. $(WorkspaceDir)/../../.. $(WorkspaceDir)/../../../app $(WorkspaceDir)/../../../app/appseed $(WorkspaceDir)/../../../app/appseed/ca $(WorkspaceDir)/../../../app/appseed/ca2 $(WorkspaceDir)/../.. $(WorkspaceDir)/../.. $(WorkspaceDir)/../../thirdparty/include $(WorkspaceDir)/../../../app/thirdparty/include $(WorkspaceDir)/../../appseed $(WorkspaceDir)/../../../app/thirdparty/appseed";
-				WorkspaceDir = "$(SRCROOT)/../../../nodeapp/seed/metaseed";
+				WorkspaceDir = "$(SRCROOT)/../../../nodeapp/seed/macos";
 			};
 			name = Debug;
 		};
@@ -9849,7 +9849,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = ". .. $(WorkspaceDir)/../../.. $(WorkspaceDir)/../../../app $(WorkspaceDir)/../../../app/appseed $(WorkspaceDir)/../../../app/appseed/ca $(WorkspaceDir)/../../../app/appseed/ca2 $(WorkspaceDir)/../.. $(WorkspaceDir)/../.. $(WorkspaceDir)/../../thirdparty/include $(WorkspaceDir)/../../../app/thirdparty/include $(WorkspaceDir)/../../appseed $(WorkspaceDir)/../../../app/thirdparty/appseed";
-				WorkspaceDir = "$(SRCROOT)/../../../nodeapp/seed/metaseed";
+				WorkspaceDir = "$(SRCROOT)/../../../nodeapp/seed/macos";
 			};
 			name = Release;
 		};

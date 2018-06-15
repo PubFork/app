@@ -1,5 +1,8 @@
 #include "framework.h"
 //#include"in_file.h"
+#include "zip_unzip.h"
+
+
 namespace str
 {
 
@@ -96,7 +99,7 @@ namespace zip
          return false;
       }
 
-      unzFile pf = infile.get_zip_file()->m_pfUnzip;
+      void * pf = infile.get_zip_file()->m_pfUnzip;
 
       string str;
 

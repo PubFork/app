@@ -525,10 +525,8 @@
 		9A0254C51EA59238003C82CF /* libbsdiff.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A02549B1EA59238003C82CF /* libbsdiff.h */; };
 		9A0254C81EA59238003C82CF /* compress.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A02549E1EA59238003C82CF /* compress.h */; };
 		9A0254CA1EA59238003C82CF /* compress_bz.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A0254A01EA59238003C82CF /* compress_bz.h */; };
-		9A0254CB1EA59238003C82CF /* compress_bzip.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A0254A11EA59238003C82CF /* compress_bzip.h */; };
 		9A0254CE1EA59238003C82CF /* compress_department.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A0254A41EA59238003C82CF /* compress_department.h */; };
 		9A0254D01EA59238003C82CF /* compress_gz.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A0254A61EA59238003C82CF /* compress_gz.h */; };
-		9A0254D11EA59238003C82CF /* compress_gzip.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A0254A71EA59238003C82CF /* compress_gzip.h */; };
 		9A0254DB1EA59238003C82CF /* zip.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A0254B31EA59238003C82CF /* zip.h */; };
 		9A0254DF1EA59238003C82CF /* zip_internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A0254B71EA59238003C82CF /* zip_internal.h */; };
 		9A0254ED1EA5927C003C82CF /* compress_bz.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A0254EB1EA5927C003C82CF /* compress_bz.cpp */; };
@@ -2766,10 +2764,8 @@
 		9A02549B1EA59238003C82CF /* libbsdiff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libbsdiff.h; sourceTree = "<group>"; };
 		9A02549E1EA59238003C82CF /* compress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = compress.h; sourceTree = "<group>"; };
 		9A0254A01EA59238003C82CF /* compress_bz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = compress_bz.h; sourceTree = "<group>"; };
-		9A0254A11EA59238003C82CF /* compress_bzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = compress_bzip.h; sourceTree = "<group>"; };
 		9A0254A41EA59238003C82CF /* compress_department.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = compress_department.h; sourceTree = "<group>"; };
 		9A0254A61EA59238003C82CF /* compress_gz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = compress_gz.h; sourceTree = "<group>"; };
-		9A0254A71EA59238003C82CF /* compress_gzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = compress_gzip.h; sourceTree = "<group>"; };
 		9A0254B31EA59238003C82CF /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
 		9A0254B71EA59238003C82CF /* zip_internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip_internal.h; sourceTree = "<group>"; };
 		9A0254EB1EA5927C003C82CF /* compress_bz.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = compress_bz.cpp; sourceTree = "<group>"; };
@@ -5179,10 +5175,8 @@
 				9A6FAB1A1F5C6F1300AF31B2 /* compress_department.cpp */,
 				9A02549E1EA59238003C82CF /* compress.h */,
 				9A0254A01EA59238003C82CF /* compress_bz.h */,
-				9A0254A11EA59238003C82CF /* compress_bzip.h */,
 				9A0254A41EA59238003C82CF /* compress_department.h */,
 				9A0254A61EA59238003C82CF /* compress_gz.h */,
-				9A0254A71EA59238003C82CF /* compress_gzip.h */,
 			);
 			path = compress;
 			sourceTree = "<group>";
@@ -7542,7 +7536,6 @@
 				07F5B1A4184A3B430092C3E1 /* file_buffer.h in Headers */,
 				9A02569C1EA593AC003C82CF /* sockets_socket.h in Headers */,
 				9A6FAFDA1F5C796800AF31B2 /* multithreading_tools.h in Headers */,
-				9A0254CB1EA59238003C82CF /* compress_bzip.h in Headers */,
 				9A640E1C1EA6BABB00866C2C /* fontopus_contact_list.h in Headers */,
 				07B094F518495C2B007A0560 /* collection_stringa.h in Headers */,
 				9A16450919C4A4CF00966C5E /* xml.h in Headers */,
@@ -8376,7 +8369,6 @@
 				07B094FE18495C2B007A0560 /* collection_unique_array.h in Headers */,
 				9AF4C3981F836F8400197385 /* aura_plex_heap.h in Headers */,
 				9AC20A5020998C2F0077FEBF /* user_form.h in Headers */,
-				9A0254D11EA59238003C82CF /* compress_gzip.h in Headers */,
 				9AE4C7F81996D29C00E50F88 /* data_item.h in Headers */,
 				9A16420419C4A4CE00966C5E /* exception_exit.h in Headers */,
 				07F5B1E1184A3B430092C3E1 /* file_stream.h in Headers */,
@@ -9993,7 +9985,7 @@
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "$(WorkspaceDir)/../../../include $(WorkspaceDir)/../../../app/include . .. $(WorkspaceDir)/../../.. $(WorkspaceDir)/../../../app/appseed/base/base $(WorkspaceDir)/../../../app/base/include $(WorkspaceDir)/../../../app/appseed/base/base $(WorkspaceDir)/../../appseed $(WorkspaceDir)/../.. $(WorkspaceDir)/../../../app/base $(WorkspaceDir)/../../../app/appseed/base/framework aura/aura $(WorkspaceDir)/../../../app $(WorkspaceDir)/../../../nodeapp/include";
 				WARNING_CFLAGS = "";
-				WorkspaceDir = "$(SRCROOT)/../../../nodeapp/seed/metaseed";
+				WorkspaceDir = "$(SRCROOT)/../../../nodeapp/seed/macos";
 			};
 			name = Debug;
 		};
@@ -10062,7 +10054,7 @@
 				USER_HEADER_SEARCH_PATHS = "$(WorkspaceDir)/../../../include $(WorkspaceDir)/../../../app/include . .. $(WorkspaceDir)/../../.. $(WorkspaceDir)/../../../app/appseed/base/base $(WorkspaceDir)/../../../app/base/include $(WorkspaceDir)/../../../app/appseed/base/base $(WorkspaceDir)/../../appseed $(WorkspaceDir)/../.. $(WorkspaceDir)/../../../app/base $(WorkspaceDir)/../../../app/appseed/base/framework aura/aura $(WorkspaceDir)/../../../app $(WorkspaceDir)/../../../nodeapp/include";
 				VALIDATE_PRODUCT = YES;
 				WARNING_CFLAGS = "";
-				WorkspaceDir = "$(SRCROOT)/../../../nodeapp/seed/metaseed";
+				WorkspaceDir = "$(SRCROOT)/../../../nodeapp/seed/macos";
 			};
 			name = Release;
 		};
