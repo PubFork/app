@@ -636,9 +636,9 @@ namespace aura
 	  if (m_mapLibrary["draw2d"]->is_opened())
 	  {
 
-		  m_paurasession->m_pstyle = canew(::user::theme(this));
+		  m_paurasession->m_ptheme = canew(::user::theme(this));
 
-		  m_paurasession->m_puserstyle = m_paurasession->m_pstyle;
+		  m_paurasession->m_puserstyle = m_paurasession->m_ptheme;
 
 	  }
 

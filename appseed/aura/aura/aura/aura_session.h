@@ -59,12 +59,7 @@ namespace aura
       sp(::fontopus::fontopus)                                 m_pfontopus;
       sp(class ::fontopus::licensing)                          m_splicensing;
 
-      sp(::user::style)										            m_pstyle;
-
-
       string_map < ::aura::application * >                     m_mapApplication;
-
-
 
       application_ptra                                         m_appptra;
       sp(::aura::savings)                                      m_psavings;
