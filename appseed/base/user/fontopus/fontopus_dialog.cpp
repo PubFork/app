@@ -21,7 +21,6 @@ namespace fontopus
       m_bMayProDevian = false;
 #endif
       m_etheme = ::user::theme_lite;
-      m_login.m_pstyle = this;
       m_bLButtonDown = false;
       m_bFontopusSimpleUiLayout = false;
       //m_flagNonClient.signalize(non_client_background);

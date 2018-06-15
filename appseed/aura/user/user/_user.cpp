@@ -28,7 +28,7 @@
 #include "user_place_holder_container.cpp"
 #include "user_primitive.cpp"
 #include "user_print_job.cpp"
-#include "user_style.cpp"
+//#include "user_style.cpp"
 #include "user_style_base.cpp"
 #include "user_style_composite.cpp"
 #include "user_theme.cpp"
