@@ -2428,7 +2428,17 @@ namespace user
             for (auto & pui : uia)
             {
 
-               pui->send_message(WM_MOUSELEAVE);
+               try
+               {
+
+                  pui->send_message(WM_MOUSELEAVE);
+
+               }
+               catch (...)
+               {
+
+               }
+
 
             }
 
@@ -2442,6 +2452,35 @@ namespace user
 
          }
 
+         {
+
+            ::user::interaction_spa uia;
+
+            {
+
+               synch_lock sl(m_pmutex);
+
+               uia = m_pui->m_uiptraChild;
+
+            }
+
+            for (auto & pui : uia)
+            {
+
+               try
+               {
+
+                  pui->send_message(WM_SHOWWINDOW, 0, SW_PARENTCLOSING);
+
+               }
+               catch (...)
+               {
+
+               }
+
+            }
+
+         }
 
 
       }

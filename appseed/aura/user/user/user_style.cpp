@@ -694,7 +694,7 @@ namespace user
          if (pui->has_action_hover() && !pui->has_text_input())
          {
 
-            brush->create_solid(ARGB(184, 150, 230, 180));
+            brush->create_solid(_001GetColor(::user::color_background_hover));
 
             pgraphics->SelectObject(brush);
 

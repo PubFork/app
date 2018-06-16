@@ -121,74 +121,74 @@ namespace user
    }
 
 
-   void combo_box::_001OnDrawVerisimple(::draw2d::graphics * pgraphics)
-   {
+   //void combo_box::_001OnDrawVerisimple(::draw2d::graphics * pgraphics)
+   //{
 
-      pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
+   //   pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
-      if(m_bEdit)
-      {
+   //   if(m_bEdit)
+   //   {
 
-         ::user::plain_edit::_001OnDraw(pgraphics);
+   //      ::user::plain_edit::_001OnDraw(pgraphics);
 
-      }
-      else
-      {
+   //   }
+   //   else
+   //   {
 
-         _001OnDrawStaticText(pgraphics);
+   //      _001OnDrawStaticText(pgraphics);
 
-      }
+   //   }
 
-      rect rectClient;
+   //   rect rectClient;
 
-      GetClientRect(rectClient);
+   //   GetClientRect(rectClient);
 
-      ::draw2d::brush_sp br(allocer());
+   //   ::draw2d::brush_sp br(allocer());
 
-      rect rectDropDown;
+   //   rect rectDropDown;
 
-      get_element_rect(rectDropDown, element_drop_down);
+   //   get_element_rect(rectDropDown, element_drop_down);
 
-      br->create_solid(ARGB(184, 255, 255, 255));
+   //   br->create_solid(ARGB(184, 255, 255, 255));
 
-      pgraphics->SelectObject(br);
+   //   pgraphics->SelectObject(br);
 
-      pgraphics->fill_rect(rectDropDown);
+   //   pgraphics->fill_rect(rectDropDown);
 
-      ::draw2d::path_sp path(allocer());
+   //   ::draw2d::path_sp path(allocer());
 
-      point_array pointa;
+   //   point_array pointa;
 
-      get_simple_drop_down_open_arrow_polygon(pointa);
+   //   get_simple_drop_down_open_arrow_polygon(pointa);
 
-      if(pointa.get_count() >= 3)
-      {
+   //   if(pointa.get_count() >= 3)
+   //   {
 
-         path->add_line(pointa[0], pointa[1]);
+   //      path->add_line(pointa[0], pointa[1]);
 
-         for(index i = 2; i < pointa.get_count(); i++)
-         {
+   //      for(index i = 2; i < pointa.get_count(); i++)
+   //      {
 
-            path->add_line(pointa[i]);
+   //         path->add_line(pointa[i]);
 
-         }
+   //      }
 
-         path->add_line(pointa[0]);
+   //      path->add_line(pointa[0]);
 
-      }
+   //   }
 
-      //br->create_solid(ARGB(210, 77, 184, 49));
-      br->create_solid(_001GetColor(::user::color_background_selected));
+   //   //br->create_solid(ARGB(210, 77, 184, 49));
+   //   br->create_solid(_001GetColor(::user::color_background_selected));
 
-      pgraphics->SelectObject(br);
+   //   pgraphics->SelectObject(br);
 
-      pgraphics->fill_path(path);
+   //   pgraphics->fill_path(path);
 
 
 
-   }
+   //}
 
-   void combo_box::_001OnDrawSimply(::draw2d::graphics * pgraphics)
+   void combo_box::_001OnDrawCombo(::draw2d::graphics * pgraphics)
    {
 
       rect rectClient;
@@ -250,23 +250,33 @@ namespace user
    }
 
 
+   void combo_box::_000OnDraw(::draw2d::graphics * pgraphics)
+   {
+
+      ::user::plain_edit::_000OnDraw(pgraphics);
+
+
+   }
+
+
+
    void combo_box::_001OnDraw(::draw2d::graphics * pgraphics)
    {
 
       ::user::control::_001OnDraw(pgraphics);
 
-      if(m_plist == NULL)
+      //if(m_plist == NULL)
       {
 
-         _001OnDrawSimply(pgraphics);
+         _001OnDrawCombo(pgraphics);
 
       }
-      else
-      {
+      //else
+      //{
 
-         _001OnDrawVerisimple(pgraphics);
+      //   _001OnDrawVerisimple(pgraphics);
 
-      }
+      //}
 
    }
 
@@ -618,18 +628,15 @@ namespace user
    void combo_box::_001ToggleDropDown()
    {
 
-
       defer_create_combo_list();
 
       _001ShowDropDown(!m_plist->IsWindowVisible());
-
 
    }
 
 
    void combo_box::_001ShowDropDown(bool bShow)
    {
-
 
       if(bShow)
       {
@@ -641,10 +648,6 @@ namespace user
          m_plist->query_full_size(m_sizeFull);
 
          rect rectWindow;
-
-         //rectWindow = m_pimpl->m_rectParentClientRequest;
-
-         //ClientToScreen(rectWindow);
 
          GetWindowRect(rectWindow);
 
@@ -662,7 +665,6 @@ namespace user
          }
 
       }
-
 
    }
 
@@ -689,6 +691,29 @@ namespace user
 
       if (!m_plist->IsWindow())
       {
+
+//#ifdef WINDOWS
+//
+//         GetTopLevel()->m_pthread->synch_pred([this]()
+//         {
+//
+//            if (!m_plist->create_window_ex(0, NULL, "combo_list", 0, rect(0, 0, 0, 0), GetTopLevel(), 0, NULL))
+//            {
+//
+//               m_plist.release();
+//
+//               _throw(resource_exception(get_app()));
+//
+//            }
+//
+//            ASSERT(m_plist->IsWindow());
+//
+//         });
+//
+//         ASSERT(!m_plist->IsWindowVisible());
+//
+//#else
+//
          if (!m_plist->create_window_ex(0, NULL, "combo_list", 0, rect(0, 0, 0, 0), NULL, 0, NULL))
          {
 
@@ -697,7 +722,12 @@ namespace user
             _throw(resource_exception(get_app()));
 
          }
+
          m_plist->SetOwner(this);
+
+//#endif
+//
+//
          sp(::user::interaction_impl) pimpl = m_plist->m_pimpl;
 
          if (pimpl.is_set())
@@ -718,6 +748,7 @@ namespace user
 
 
    }
+
 
    void combo_box::_001SetCurSel(index iSel, ::action::context actioncontext)
    {

@@ -125,7 +125,7 @@ namespace user
                pgraphics->set_text_color(_001GetColor(color_text_disabled));
 
             }
-            else if (should_hover() && m_iHover == 0 || Session.m_puiLastLButtonDown == this)
+            else if (should_hover() && (m_iHover == 0 || Session.m_puiLastLButtonDown == this))
             {
 
                pgraphics->fill_solid_rect(rectClient, _001GetColor(color_background_hover));

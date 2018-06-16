@@ -75,7 +75,7 @@ namespace wndfrm_tranquillum
       create_color(::user::color_list_item_text_selected, ARGB(255, 250, 250, 250));
       create_color(::user::color_list_item_text_selected_hover, ARGB(255, 250, 250, 250));
       create_color(::user::color_list_item_background, ARGB(255, 255, 255, 255));
-      create_color(::user::color_list_item_background_hover, ARGB(255, 255, 255, 255));
+      create_color(::user::color_list_item_background_hover, ARGB(255, 205, 235, 255));
       create_color(::user::color_list_item_background_selected, ARGB(255, 100, 150, 230));
       create_color(::user::color_list_item_background_selected_hover, ARGB(255, 130, 180, 240));
       create_color(::user::color_button_background, ARGB(255, 80, 150, 220));
@@ -86,6 +86,10 @@ namespace wndfrm_tranquillum
       create_color(::user::color_button_text_hover, ARGB(255, 255, 255, 255));
       create_color(::user::color_button_text_press, ARGB(255, 255, 255, 255));
       create_color(::user::color_button_text_disabled, ARGB(255, 200, 210, 220));
+      create_color(::user::color_scrollbar_strong, ARGB(255, 210, 210, 210));
+      create_color(::user::color_scrollbar_strong_hover, ARGB(255, 200, 200, 200));
+      create_color(::user::color_scrollbar, ARGB(255, 230, 230, 230));
+      create_color(::user::color_scrollbar_hover, ARGB(255, 225, 225, 225));
 
 
    }

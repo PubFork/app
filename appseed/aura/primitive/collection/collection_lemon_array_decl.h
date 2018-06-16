@@ -59,6 +59,13 @@ namespace lemon
 
    } // namespace array
 
+   namespace array2d
+   {
+
+      template < typename A >
+      ::count predominant_column_count(A & a);
+
+   } // namespace array2d
 
    template < class TYPE >
    ::count remove_greater_than(::numeric_array < TYPE > & a,TYPE hi);

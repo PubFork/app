@@ -59,9 +59,10 @@ namespace user
       virtual void install_message_routing(::message::sender * psender);
 
 
+      virtual void _000OnDraw(::draw2d::graphics * pgraphics);
       virtual void _001OnDraw(::draw2d::graphics * pgraphics);
-      virtual void _001OnDrawVerisimple(::draw2d::graphics * pgraphics);
-      virtual void _001OnDrawSimply(::draw2d::graphics * pgraphics);
+      //virtual void _001OnDrawVerisimple(::draw2d::graphics * pgraphics);
+      virtual void _001OnDrawCombo(::draw2d::graphics * pgraphics);
       virtual void _001OnDrawStaticText(::draw2d::graphics * pgraphics);
 
 

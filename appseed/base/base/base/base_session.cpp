@@ -41,16 +41,11 @@ namespace base
 
       m_puiMouseMoveCapture = NULL;
 
-      m_puiLastLButtonDown = NULL;
-
-
       m_ecursorDefault = ::visual::cursor_arrow;
 
       m_ecursor = ::visual::cursor_default;
 
       m_puiMouseMoveCapture = NULL;
-
-      m_puiLastLButtonDown = NULL;
 
       m_psavings = canew(class ::aura::savings(this));
 

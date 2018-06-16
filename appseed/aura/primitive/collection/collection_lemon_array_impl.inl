@@ -197,7 +197,45 @@ namespace lemon
    } // namespace array
 
 
+   namespace array2d
+   {
 
+      template < typename A >
+      ::count predominant_column_count(A & a)
+      {
+
+         int_to_int column_count;
+
+         for (index i = 0; i < a.get_size(); i++)
+         {
+
+            column_count[a[i].get_count()]++;
+
+         }
+
+         ::count c = -1;
+
+         ::count cMax = -1;
+
+         for (auto & assoc : column_count)
+         {
+
+            if (assoc.m_element2 > cMax || (assoc.m_element2 == cMax && assoc.m_element1 > c))
+            {
+
+               c = assoc.m_element1;
+
+               cMax = assoc.m_element2;
+
+            }
+
+         }
+
+         return c;
+
+      }
+
+   } //namespace array2d
 
 
 } // namespace lemon

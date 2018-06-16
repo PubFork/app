@@ -1049,6 +1049,38 @@ restart:
       try
       {
 
+         for (index i = 0; i < m_uiptraOwned.get_size(); i++)
+         {
+
+            try
+            {
+
+               if (m_uiptraOwned[i].is_set())
+               {
+
+                  m_uiptraOwned[i]->ShowWindow(SW_HIDE);
+
+
+               }
+
+            }
+            catch (...)
+            {
+
+            }
+
+         }
+
+      }
+      catch (...)
+      {
+
+      }
+
+
+      try
+      {
+
          if (m_pauraapp != NULL && m_pauraapp->m_paurasession != NULL)
          {
 
@@ -2312,12 +2344,20 @@ restart:
       {
 
          if (m_pimpl == NULL)
+         {
+
             return;
+
+         }
 
          m_pimpl->route_message(pmouse);
 
          if (pmouse->get_lresult() != 0)
+         {
+
             return;
+
+         }
 
       }
       catch (...)
@@ -2412,7 +2452,7 @@ restart:
          try
          {
 
-            route_message(pkey);
+            m_pimpl->route_message(pkey);
 
             if (pkey->get_lresult() != 0)
             {
@@ -3313,12 +3353,12 @@ restart:
          //}
 #if !defined(METROWIN)
 
-         if (pParentWnd == NULL)
+         if ((WS_CHILD & dwStyle) == 0)
          {
 
             m_pimpl = Application.alloc(System.type_info < interaction_impl >());
 
-            dwStyle &= ~WS_CHILD;
+            //dwStyle &= ~WS_CHILD;
 
             if (!m_pimpl->create_window_ex(this, dwExStyle, lpszClassName, lpszWindowName, dwStyle, rect, pParentWnd, id, lpParam))
             {
@@ -4071,7 +4111,16 @@ restart:
       if (m_pimpl == NULL)
          return NULL;
 
+      if (m_puiOwner != NULL)
+      {
+
+         m_puiOwner->m_uiptraOwned.remove(this);
+
+      }
+
       m_puiOwner = pui;
+
+      pui->m_uiptraOwned.add(this);
 
       ::user::interaction * puiRet = m_pimpl->SetOwner(pui);
 
@@ -5026,8 +5075,11 @@ restart:
 
       try
       {
+
          if (puiParent != NULL)
          {
+
+            m_pthread.release();
 
             single_lock sl(puiParent->m_pmutex, TRUE);
 
@@ -5036,6 +5088,7 @@ restart:
             puiParent->m_uiptraChild.add_unique(this);
 
          }
+
       }
       catch (...)
       {

@@ -154,6 +154,7 @@ namespace user
       sp(interaction_impl_base)           m_pimpl;
 
 
+      interaction_spa                     m_uiptraOwned;
       interaction_spa                     m_uiptraChild;
       string                              m_strName;
       id                                  m_id;
@@ -171,6 +172,8 @@ namespace user
 
       bool                                m_bModal;
       ::thread *                          m_pthreadModal;
+
+      sp(::thread)                        m_pthread;
 
       id                                  m_idModalResult; // for return values from interaction_impl::RunModalLoop
 

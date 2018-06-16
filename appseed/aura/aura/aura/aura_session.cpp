@@ -36,6 +36,9 @@ namespace aura
       m_paurasession = this;
       m_bMatterFromHttpCache = m_paurasystem->m_bMatterFromHttpCache;
 
+      m_puiLastLButtonDown = NULL;
+
+
 #ifdef WINDOWS
 
       if (m_hinstance == NULL)
@@ -1547,11 +1550,19 @@ namespace aura
       return m_pkeyboardfocus;
 
    }
+
+
    void session::set_keyboard_focus(::user::elemental * pkeyboardfocus)
    {
 
-      if (m_pkeyboardfocus != NULL && m_pkeyboardfocus != pkeyboardfocus
-            && m_pkeyboardfocusRequest != pkeyboardfocus)
+      if (pkeyboardfocus == NULL)
+      {
+
+         pkeyboardfocus = (::user::elemental *) (ulong_ptr) 1;
+
+      }
+
+      if (m_pkeyboardfocus != NULL && m_pkeyboardfocus != pkeyboardfocus && m_pkeyboardfocusRequest != pkeyboardfocus)
       {
 
          ::user::elemental * pkeyboardfocusOld = m_pkeyboardfocus;
@@ -1573,6 +1584,15 @@ namespace aura
 
                }
 
+               sp(::user::interaction) pui = pkeyboardfocusOld;
+
+               if (pui.is_set())
+               {
+
+                  pui->send_message(WM_KILLFOCUS);
+
+               }
+
             }
 
          }
@@ -1580,6 +1600,13 @@ namespace aura
          {
 
          }
+
+      }
+
+      if (pkeyboardfocus == (::user::elemental *) (ulong_ptr) 1)
+      {
+
+         pkeyboardfocus = NULL;
 
       }
 

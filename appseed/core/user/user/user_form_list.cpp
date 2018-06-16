@@ -93,8 +93,6 @@ namespace user
             {
 
 
-               Session.m_puiLastLButtonDown = NULL;
-
                ::user::control_event ev;
 
                ev.m_puie = pcontrol;
@@ -206,8 +204,6 @@ namespace user
             if(pcontrol->descriptor().get_control_type() == ::user::control_type_button)
             {
 
-
-               Session.m_puiLastLButtonDown      = NULL;
 
                ::user::control_event ev;
 

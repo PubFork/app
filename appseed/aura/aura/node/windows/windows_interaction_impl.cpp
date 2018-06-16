@@ -471,6 +471,9 @@ namespace windows
       if (!unhook_window_create())
          PostNcDestroy();        // cleanup if CreateWindowEx fails too soon
 
+
+      m_pui->m_pthread = ::get_thread();
+
       //::simple_message_box(NULL,"h2","h2",MB_OK);
 
       //if (cs.hwndParent != HWND_MESSAGE)
@@ -1598,7 +1601,6 @@ namespace windows
          ::GetWindowPlacement(get_handle(), &wp);
          bool bZoomed = ::IsZoomed(get_handle()) != FALSE;
          bool bIconic = ::IsIconic(get_handle()) != FALSE;
-         Session.m_puiLastLButtonDown = m_pui;
       }
       else if (uiMessage == WM_MOUSEMOVE
                || uiMessage == WM_SETCURSOR

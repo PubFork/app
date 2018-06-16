@@ -232,9 +232,9 @@ public:
 
    virtual uint32_t ResumeThread();
    virtual bool post_message(UINT message, WPARAM wParam = 0, lparam lParam = 0);
-   virtual bool send_message(UINT message,WPARAM wParam = 0,lparam lParam = 0, ::duration durWaitStep = millis(1));
+   virtual bool send_message(UINT message,WPARAM wParam = 0,lparam lParam = 0, ::duration durationTimeout = ::duration::infinite());
    virtual bool post_object(UINT message, WPARAM wParam, lparam lParam);
-   virtual bool send_object(UINT message, WPARAM wParam, lparam lParam, ::duration durWaitStep = millis(1));
+   virtual bool send_object(UINT message, WPARAM wParam, lparam lParam, ::duration durationTimeout = ::duration::infinite());
    virtual bool post_message(::user::primitive * pui, UINT message, WPARAM wParam = 0, lparam lParam = 0);
 
    template < typename PRED >
@@ -250,15 +250,15 @@ public:
    }
 
    template < typename PRED >
-   bool send_pred(sp(object) phold, PRED pred)
+   bool send_pred(sp(object) phold, PRED pred, ::duration durationTimeout = ::duration::infinite())
    {
-      return send_object(message_system, system_message_pred, dynamic_cast < pred_holder_base *>(canew(pred_holder < PRED >(get_app(), phold, pred))));
+      return send_object(message_system, system_message_pred, dynamic_cast < pred_holder_base *>(canew(pred_holder < PRED >(get_app(), phold, pred))), durationTimeout);
    }
 
    template < typename PRED >
-   bool send_pred(PRED pred)
+   bool send_pred(PRED pred, ::duration durationTimeout = ::duration::infinite())
    {
-      return send_object(message_system, system_message_pred, dynamic_cast < pred_holder_base *>(canew(pred_holder < PRED >(get_app(), pred))));
+      return send_object(message_system, system_message_pred, dynamic_cast < pred_holder_base *>(canew(pred_holder < PRED >(get_app(), pred))), durationTimeout);
    }
 
    template < typename PRED >
@@ -274,15 +274,25 @@ public:
    }
 
    template < typename PRED >
-   bool synch_pred(sp(object) phold, PRED pred)
+   bool synch_pred(sp(object) phold, PRED pred, ::duration durationTimeout = ::duration::infinite())
    {
-      return send_pred(phold, pred);
+      if (this == ::get_thread())
+      {
+         pred();
+         return true;
+      }
+      return send_pred(phold, pred, durationTimeout);
    }
 
    template < typename PRED >
-   bool synch_pred(PRED pred)
+   bool synch_pred(PRED pred, ::duration durationTimeout = ::duration::infinite())
    {
-      return send_pred(pred);
+      if (this == ::get_thread())
+      {
+         pred();
+         return true;
+      }
+      return send_pred(pred, durationTimeout);
    }
 
    virtual bool on_run_exception(::exception::exception * pexception);

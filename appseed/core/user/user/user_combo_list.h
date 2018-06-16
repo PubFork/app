@@ -41,11 +41,11 @@ namespace user
       void _001OnShowWindow(::message::message * pobj);
       virtual void _001OnDraw(::draw2d::graphics * pgraphics) override;
 
-      virtual void _001OnDrawVerisimple(::draw2d::graphics * pgraphics);
-      virtual void _001OnDrawSimply(::draw2d::graphics * pgraphics);
+      //virtual void _001OnDrawVerisimple(::draw2d::graphics * pgraphics);
+      //virtual void _001OnDrawSimply(::draw2d::graphics * pgraphics);
 
-      virtual void _002OnDrawVerisimple(::draw2d::graphics * pgraphics);
-      virtual void _002OnDrawSimply(::draw2d::graphics * pgraphics);
+      //virtual void _002OnDrawVerisimple(::draw2d::graphics * pgraphics);
+      virtual void _001OnDrawComboList(::draw2d::graphics * pgraphics);
 
       virtual void query_full_size(LPSIZE lpsize);
 

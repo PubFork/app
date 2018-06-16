@@ -121,8 +121,6 @@ namespace user
          if (!simple_process_system_message(pobj, ::user::event_button_down))
          {
 
-            Session.m_puiLastLButtonDown = this;
-
             pmouse->m_bRet = true;
 
          }
@@ -146,8 +144,6 @@ namespace user
 
          if (!simple_process_system_message(pobj, ::user::event_m_button_down))
          {
-
-            //Session.m_puiLastLButtonDown = this;
 
             pmouse->m_bRet = true;
 
@@ -173,13 +169,9 @@ namespace user
          if (!simple_process_system_message(pobj, ::user::event_m_button_up))
          {
 
-            //Session.m_puiLastLButtonDown = this;
-
             pmouse->m_bRet = true;
 
          }
-
-
 
       }
 
