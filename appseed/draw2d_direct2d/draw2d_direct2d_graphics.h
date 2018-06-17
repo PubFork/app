@@ -176,6 +176,10 @@ namespace draw2d_direct2d
       int GetGraphicsMode() override;
 
 
+      virtual bool get(::draw2d::matrix & matrix);
+      virtual bool set(const ::draw2d::matrix & matrix);
+
+
       virtual bool draw_path(::draw2d::path * ppath) override;
       virtual bool fill_path(::draw2d::path * ppath) override;
       virtual bool path(::draw2d::path * ppath) override;

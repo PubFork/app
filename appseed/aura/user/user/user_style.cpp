@@ -475,8 +475,6 @@ namespace user
    }
 
 
-
-
    bool style::get_translucency(e_translucency & etranslucency, e_element eelement, style_context * pcontext)
    {
 

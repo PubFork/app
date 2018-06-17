@@ -866,6 +866,13 @@ namespace user
 
       SCAST_PTR(::message::base, pbase, pmessage);
 
+      if (eevent == ::user::event_button_down)
+      {
+
+         Session.m_puiLastLButtonDown = this;
+
+      }
+
       ::user::control_event ev;
 
       ev.m_puie = this;

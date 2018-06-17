@@ -5593,7 +5593,25 @@ namespace draw2d
    bool graphics::append(const matrix & matrix)
    {
 
-      return false;
+      ::draw2d::matrix m;
+
+      if (!get(m))
+      {
+
+         return false;
+
+      }
+
+      m.append(matrix);
+
+      if (!set(m))
+      {
+
+         return false;
+
+      }
+
+      return true;
 
    }
 
@@ -5601,7 +5619,25 @@ namespace draw2d
    bool graphics::prepend(const matrix & matrix)
    {
 
-      return false;
+      ::draw2d::matrix m;
+
+      if (!get(m))
+      {
+
+         return false;
+
+      }
+
+      m.prepend(matrix);
+
+      if (!set(m))
+      {
+
+         return false;
+
+      }
+
+      return true;
 
    }
 
