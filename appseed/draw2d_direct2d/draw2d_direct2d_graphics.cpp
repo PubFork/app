@@ -4838,6 +4838,34 @@ namespace draw2d_direct2d
    }
 
 
+   bool graphics::draw_line(LPCPOINTD lppt1, LPCPOINTD lppt2, ::draw2d::pen * ppen)
+   {
+
+
+      D2D1_POINT_2F p1;
+      p1.x = (FLOAT)lppt1->x;
+      p1.y = (FLOAT)lppt1->y;
+
+      D2D1_POINT_2F p2;
+      p2.x = (FLOAT)lppt2->x;
+      p2.y = (FLOAT)lppt2->y;
+
+      ID2D1Brush * pbrush = get_os_pen_brush(m_sppen);
+
+      if (pbrush == NULL)
+         return false;
+
+
+      m_prendertarget->DrawLine(p1, p2, pbrush, (FLOAT)(dynamic_cast < ::draw2d_direct2d::pen * > (m_sppen.m_p))->m_dWidth);
+
+      m_pt = *lppt2;
+
+      return true;
+
+
+   }
+
+
    bool graphics::line_to(LPCPOINTD lppt)
    {
 

@@ -22,7 +22,7 @@ namespace fontopus
       m_bMayProDevian = false;
 #endif
 //      m_eschema = ::user::schema_default;
-      m_login.m_pstyle = this;
+//      m_login.m_pstyle = this;
       m_bFontopusSimpleUiLayout = false;
 
 

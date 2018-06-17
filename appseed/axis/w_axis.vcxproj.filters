@@ -724,5 +724,8 @@
     <ClCompile Include="user\user\user_hotplugin.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
+    <ClCompile Include="axis\node\windows\windows_copydesk.cpp">
+      <Filter>Source Files\axis\node\windows</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

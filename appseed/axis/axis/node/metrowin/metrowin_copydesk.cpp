@@ -5,6 +5,14 @@
 
 bool windows_load_dib_from_file(::draw2d::dib * pdib, Windows::Storage::Streams::IRandomAccessStream ^stream, ::aura::application * papp);
 
+#ifdef METROWIN
+
+
+CLASS_DECL_AURA bool windows_write_dib_to_file(Windows::Storage::Streams::InMemoryRandomAccessStream ^ randomAccessStream, ::draw2d::dib * pdib, ::visual::save_image * psaveimage);
+
+
+#endif
+
 
 namespace metrowin
 {
@@ -20,104 +28,130 @@ namespace metrowin
    {
    }
 
-   int copydesk::get_file_count()
+
+   bool copydesk::_has_filea()
    {
 
-      int iFileCount = 0;
+      bool bHasFile = false;
 
       ::wait(
       Windows::ApplicationModel::Core::CoreApplication::MainView->CoreWindow->Dispatcher->RunAsync(
       ::Windows::UI::Core::CoreDispatcherPriority::Normal,
-      ref new Windows::UI::Core::DispatchedHandler([&iFileCount, this]()
+      ref new Windows::UI::Core::DispatchedHandler([&bHasFile, this]()
       {
+
          ::Windows::ApplicationModel::DataTransfer::DataPackageView ^ view = ::Windows::ApplicationModel::DataTransfer::Clipboard::GetContent();
 
          if(view == nullptr)
          {
-            iFileCount = 0;
+
+            //iFileCount = 0;
             return;
+
          }
 
          if(view->Contains(::Windows::ApplicationModel::DataTransfer::StandardDataFormats::ApplicationLink))
          {
-            iFileCount = 1;
-         }
-         else if(view->Contains("FileDrop"))
-         {
 
-            HGLOBAL hglobal;
-
-            ::Windows::Storage::Streams::IInputStream ^ stream = (::Windows::Storage::Streams::IInputStream ^):: wait(view->GetDataAsync("FileDrop"));
-
-            ::Windows::Storage::Streams::IBuffer ^ buffer = ref new ::Windows::Storage::Streams::Buffer(sizeof(HGLOBAL));
-
-            stream->ReadAsync(buffer, sizeof(HGLOBAL), ::Windows::Storage::Streams::InputStreamOptions::None);
-
-            memory memory(get_app());
-
-            memory.set_os_buffer(buffer);
-
-            memcpy(&hglobal, memory.get_data(), sizeof(HGLOBAL));
-
-            //iCount = ::DragQueryFile(hglobal , 0xFFFFFFFF, NULL, 0);
-
-            _throw(todo(get_app()));
+            bHasFile = true;
 
          }
+         //else if(view->Contains("FileDrop"))
+         //{
+
+         //   HGLOBAL hglobal;
+
+         //   ::Windows::Storage::Streams::IInputStream ^ stream = (::Windows::Storage::Streams::IInputStream ^):: wait(view->GetDataAsync("FileDrop"));
+
+         //   ::Windows::Storage::Streams::IBuffer ^ buffer = ref new ::Windows::Storage::Streams::Buffer(sizeof(HGLOBAL));
+
+         //   stream->ReadAsync(buffer, sizeof(HGLOBAL), ::Windows::Storage::Streams::InputStreamOptions::None);
+
+         //   memory memory(get_app());
+
+         //   memory.set_os_buffer(buffer);
+
+         //   memcpy(&hglobal, memory.get_data(), sizeof(HGLOBAL));
+
+         //   //iCount = ::DragQueryFile(hglobal , 0xFFFFFFFF, NULL, 0);
+
+         //   //_throw(todo(get_app()));
+         //   // assumes true
+
+         //   bHasFile = true;
+
+         //}
          else if(view->Contains(::Windows::ApplicationModel::DataTransfer::StandardDataFormats::StorageItems))
          {
 
             ::Windows::Foundation::Collections::IVectorView < ::Windows::Storage::IStorageItem ^ > ^ items = ::wait(view->GetStorageItemsAsync());
 
-            iFileCount = items->Size;
-
-         }
-         else
-         {
-
-            iFileCount = 0;
+            bHasFile = true;
 
          }
 
       })));
 
-      return iFileCount;
+      return bHasFile;
 
 
    }
 
 
-   void copydesk::get_filea(::file::patha & patha)
+   bool copydesk::_get_filea(::file::patha & patha, e_op & eop)
    {
-      int iCount = get_file_count();
-      if(iCount <= 0)
-         return;
-//      if(!m_p->OpenClipboard())
-      //       return;
-#ifdef WINDOWSEX
 
-      HDROP hdrop = (HDROP) ::GetClipboardData(CF_HDROP);
-      string str;
-      for(int i = 0; i < iCount; i++)
+      bool bHasFile = false;
+
+      ::wait(
+      Windows::ApplicationModel::Core::CoreApplication::MainView->CoreWindow->Dispatcher->RunAsync(
+      ::Windows::UI::Core::CoreDispatcherPriority::Normal,
+      ref new Windows::UI::Core::DispatchedHandler([&bHasFile, &patha, this]()
       {
-         UINT uiLen = ::DragQueryFileW(hdrop, i, NULL, 0);
-         unichar * lpwsz = (unichar *) malloc(sizeof(unichar) * (uiLen + 1));
-         ::DragQueryFileW(hdrop, i, lpwsz, uiLen + 1);
-         stra.add(::str::international::unicode_to_utf8(lpwsz));
-         free(lpwsz);
-      }
-      ::CloseClipboard();
-#else
 
-      _throw(todo(get_app()));
+         ::Windows::ApplicationModel::DataTransfer::DataPackageView ^ view = ::Windows::ApplicationModel::DataTransfer::Clipboard::GetContent();
 
-#endif
+         if (view == nullptr)
+         {
+
+            return;
+
+         }
+
+         if (view->Contains(::Windows::ApplicationModel::DataTransfer::StandardDataFormats::ApplicationLink))
+         {
+
+            bHasFile = true;
+
+         }
+         else if (view->Contains(::Windows::ApplicationModel::DataTransfer::StandardDataFormats::StorageItems))
+         {
+
+            ::Windows::Foundation::Collections::IVectorView < ::Windows::Storage::IStorageItem ^ > ^ items = ::wait(view->GetStorageItemsAsync());
+
+            for (int i = 0; i < items->Size; i++)
+            {
+
+               patha.add(items->GetAt(i)->Path->Begin());
+
+            }
+
+            bHasFile = true;
+
+         }
+
+      })));
+
+      return bHasFile;
 
    }
 
-   void copydesk::set_filea(const ::file::patha & patha)
+
+   bool copydesk::_set_filea(const ::file::patha & patha, e_op eop)
    {
+
 #ifdef WINDOWSEX
+
       ASSERT(m_p->IsWindow());
 
       strsize iLen = 0;
@@ -159,11 +193,16 @@ namespace metrowin
       EmptyClipboard();
       SetClipboardData(CF_HDROP, hglbCopy);
       VERIFY(::CloseClipboard());
-#else
-      _throw(todo(get_app()));
-#endif
-   }
 
+#else
+
+      _throw(todo(get_app()));
+
+#endif
+
+      return false;
+
+   }
 
 
    bool copydesk::initialize()
@@ -171,9 +210,6 @@ namespace metrowin
 
       if(!::user::copydesk::initialize())
          return false;
-
-      /*if(!m_p->CreateEx(0, System.RegisterWndClass(0), NULL, 0, rect(0, 0, 0, 0), NULL, id()))
-         return false;*/
 
       return true;
 
@@ -187,85 +223,151 @@ namespace metrowin
 
       bOk = ::user::copydesk::finalize();
 
-      /*      if(::user::window_sp::is_set() && ::user::window_sp::m_p->IsWindow())
-            {
-               bOk = ::user::window_sp::m_p->DestroyWindow() != FALSE;
-            }
-            else
-            {
-               bOk = false;
-            }*/
+      return bOk;
+
+   }
+
+
+   bool copydesk::_set_plain_text(const string & str)
+   {
+
+      auto package = ref new ::Windows::ApplicationModel::DataTransfer::DataPackage;
+
+      if (package == nullptr)
+      {
+
+         return false;
+
+      }
+
+      package->RequestedOperation = ::Windows::ApplicationModel::DataTransfer::DataPackageOperation::Copy;
+
+      package->SetText(str);
+
+      ::wait(
+      Windows::ApplicationModel::Core::CoreApplication::MainView->CoreWindow->Dispatcher->RunAsync(
+      ::Windows::UI::Core::CoreDispatcherPriority::Normal,
+      ref new Windows::UI::Core::DispatchedHandler([&package, this]()
+      {
+
+         ::Windows::ApplicationModel::DataTransfer::Clipboard::SetContent(package);
+
+      })));
+
+      return true;
+
+   }
+
+
+   bool copydesk::_get_plain_text(string & str)
+   {
+
+      bool bOk = false;
+
+      ::wait(
+      Windows::ApplicationModel::Core::CoreApplication::MainView->CoreWindow->Dispatcher->RunAsync(
+      ::Windows::UI::Core::CoreDispatcherPriority::Normal,
+      ref new Windows::UI::Core::DispatchedHandler([&str, &bOk, this]()
+      {
+
+         auto dataPackage = ::Windows::ApplicationModel::DataTransfer::Clipboard::GetContent();
+
+         if (dataPackage == nullptr)
+         {
+
+            return;
+
+         }
+
+         if (!dataPackage->Contains(::Windows::ApplicationModel::DataTransfer::StandardDataFormats::Text))
+         {
+
+            return;
+
+         }
+
+         str = ::wait(dataPackage->GetTextAsync())->Begin();
+
+         bOk = true;
+
+      })));
 
       return bOk;
 
    }
 
-   void copydesk::set_plain_text(const char * psz)
+
+   bool copydesk::_has_plain_text()
    {
-#ifdef WINDOWSEX
-      ASSERT(m_p->IsWindow());
-      //   int iLen = 0;
 
-      string str;
-      str = ::str::international::utf8_to_unicode(psz);
+      bool bOk = false;
 
-
-
-      ASSERT(m_p->IsWindow());
-      if(!m_p->OpenClipboard())
+      ::wait(
+      Windows::ApplicationModel::Core::CoreApplication::MainView->CoreWindow->Dispatcher->RunAsync(
+      ::Windows::UI::Core::CoreDispatcherPriority::Normal,
+      ref new Windows::UI::Core::DispatchedHandler([&bOk, this]()
       {
-         return;
-      }
-      EmptyClipboard();
 
+         auto dataPackage = ::Windows::ApplicationModel::DataTransfer::Clipboard::GetContent();
 
-      count iCount = ::str::international::utf8_to_unicode_count(str) + 1;
-      HGLOBAL hglbCopy = ::GlobalAlloc(GMEM_MOVEABLE, iCount * sizeof(WCHAR));
-      unichar * lpwstrCopy  = (unichar *) ::GlobalLock(hglbCopy);
-      ::str::international::utf8_to_unicode(lpwstrCopy, iCount, str);
-      ::GlobalUnlock(hglbCopy);
+         if (dataPackage == nullptr)
+         {
 
-      HGLOBAL hglbCopy2 = ::GlobalAlloc(GMEM_MOVEABLE, sizeof(CHAR) * (strlen(psz) + 1));
-      char * lpstrCopy  = (char *) ::GlobalLock(hglbCopy2);
-      strcpy(lpstrCopy, psz);
-      ::GlobalUnlock(hglbCopy2);
+            return;
 
+         }
 
-      SetClipboardData(CF_UNICODETEXT, hglbCopy);
-      SetClipboardData(CF_TEXT, hglbCopy2);
-      VERIFY(::CloseClipboard());
-#else
-      _throw(todo(get_app()));
-#endif
+         if (!dataPackage->Contains(::Windows::ApplicationModel::DataTransfer::StandardDataFormats::Text))
+         {
+
+            return;
+
+         }
+
+         bOk = true;
+
+      })));
+
+      return bOk;
 
    }
 
 
-   string copydesk::get_plain_text()
+   bool copydesk::_has_dib()
    {
 
-      auto dataPackage = ::Windows::ApplicationModel::DataTransfer::Clipboard::GetContent();
+      bool bOk = false;
 
-      if(dataPackage == nullptr)
+      ::wait(Windows::ApplicationModel::Core::CoreApplication::MainView->CoreWindow->Dispatcher->RunAsync(
+             Windows::UI::Core::CoreDispatcherPriority::Normal,
+             ref new Windows::UI::Core::DispatchedHandler([&bOk]()
       {
 
-         return "";
+         auto dataPackage = ::Windows::ApplicationModel::DataTransfer::Clipboard::GetContent();
 
-      }
+         if (dataPackage == nullptr)
+         {
 
-      if(!dataPackage->Contains(::Windows::ApplicationModel::DataTransfer::StandardDataFormats::Text))
-      {
+            return;
 
-         return "";
+         }
 
-      }
+         if (dataPackage->Contains(::Windows::ApplicationModel::DataTransfer::StandardDataFormats::Bitmap))
+         {
 
-      return ::wait(dataPackage->GetTextAsync());
+            bOk = true;
+
+            return;
+
+         }
+
+      })));
+
+      return bOk;
 
    }
 
-
-   bool copydesk::desk_to_dib(::draw2d::dib * pdib)
+   bool copydesk::_desk_to_dib(::draw2d::dib * pdib)
    {
 
       bool bOk = true;
@@ -307,6 +409,7 @@ namespace metrowin
          }
 
          ::Windows::Storage::Streams::IRandomAccessStreamWithContentType ^ stream = ::wait(ref->OpenReadAsync());
+
          if (stream == nullptr)
          {
 
@@ -329,50 +432,63 @@ namespace metrowin
 
       })));
 
-
-
       return bOk;
 
-#ifdef WINDOWSEX
-      if(!m_p->OpenClipboard())
+   }
+
+
+   bool copydesk::_dib_to_desk(::draw2d::dib * pdib)
+   {
+
+      bool bOk = true;
+
+      auto package = ref new ::Windows::ApplicationModel::DataTransfer::DataPackage;
+
+      if (package == nullptr)
+      {
+
          return false;
-      bool bOk = false;
-      HBITMAP hbitmap = (HBITMAP) ::GetClipboardData(CF_BITMAP);
-      try
-      {
-         ::draw2d::bitmap_sp bitmap(get_app());
-         bitmap->Attach(hbitmap);
-         //HDC hdc = ::CreateCompatibleDC(NULL);
-         //::draw2d::graphics_sp g(get_app());
-         //g->Attach(hdc);
-         //::draw2d::graphics * pgraphics = Application.graphics_from_os_data(hdc);
-         //g->SelectObject(hbitmap);
-         //  BITMAP bm;
-         //::GetObjectA(hbitmap, sizeof(bm), &bm);
-         //if(!pdib->create(bm.bmWidth, bm.bmHeight))
-         // return false;
-         ::draw2d::graphics_sp g(get_app());
-         g->SelectObject(bitmap);
-         size sz = bitmap->GetBitmapDimension();
-         if(pdib->create(sz))
-         {
-            bOk = pdib->get_graphics()->BitBlt(0, 0, sz.cx, sz.cy, g, 0, 0, SRCCOPY) != FALSE;
-         }
+
       }
-      catch(...)
+
+      Windows::Storage::Streams::InMemoryRandomAccessStream ^ randomAccessStream = ref new Windows::Storage::Streams::InMemoryRandomAccessStream();
+
+      ::visual::save_image saveimage;
+
+      saveimage.m_eformat = ::visual::image::format_png;
+
+      saveimage.m_iQuality = 100;
+
+      if (!windows_write_dib_to_file(randomAccessStream, pdib, &saveimage))
       {
+
+         return false;
+
       }
-      ::DeleteObject((HGDIOBJ) hbitmap);
-      //::DeleteDC(hdc);
-      ::CloseClipboard();
-      return bOk;
-#else
-      _throw(todo(get_app()));
-#endif
+
+      package->RequestedOperation = ::Windows::ApplicationModel::DataTransfer::DataPackageOperation::Copy;
+
+      auto reference = ::Windows::Storage::Streams::RandomAccessStreamReference::CreateFromStream(randomAccessStream);
+
+      package->SetBitmap(reference);
+
+      ::wait(
+      Windows::ApplicationModel::Core::CoreApplication::MainView->CoreWindow->Dispatcher->RunAsync(
+      ::Windows::UI::Core::CoreDispatcherPriority::Normal,
+      ref new Windows::UI::Core::DispatchedHandler([&package, this]()
+      {
+
+         ::Windows::ApplicationModel::DataTransfer::Clipboard::SetContent(package);
+
+      })));
+
+      return true;
+
    }
 
 
 } // namespace metrowin
+
 
 
 

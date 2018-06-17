@@ -256,6 +256,7 @@ namespace draw2d_direct2d
       //    point move_to(POINT point) override;
       using ::draw2d::graphics::line_to;
       bool line_to(LPCPOINTD lppt) override;
+      bool draw_line(LPCPOINTD lppt1, LPCPOINTD lppt2, ::draw2d::pen * ppen) override;
       //  bool line_to(POINT point) override;
       bool Arc(double x1, double y1, double w, double h, double start, double extends) override;
       bool Arc(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4) override;

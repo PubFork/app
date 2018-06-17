@@ -5,6 +5,18 @@
 #endif
 
 
+bool windows_write_dib_to_file(IStream * pstream, ::draw2d::dib * pdib, ::visual::save_image * psaveimage);
+
+
+#ifdef METROWIN
+
+
+CLASS_DECL_AURA bool windows_write_dib_to_file(Windows::Storage::Streams::InMemoryRandomAccessStream ^ randomAccessStream, ::draw2d::dib * pdib, ::visual::save_image * psaveimage);
+
+
+#endif
+
+
 namespace visual
 {
 
@@ -981,6 +993,30 @@ return hBitmapSource;
 //#endif // WINDOWSEX
 
 
+#ifdef METROWIN
+
+
+bool windows_write_dib_to_file(Windows::Storage::Streams::InMemoryRandomAccessStream ^ randomAccessStream, ::draw2d::dib * pdib, ::visual::save_image * psaveimage)
+{
+
+   comptr < IStream > pstream;
+
+   ::CreateStreamOverRandomAccessStream(randomAccessStream, IID_PPV_ARGS(&pstream));
+
+   if (!windows_write_dib_to_file(pstream, pdib, psaveimage))
+   {
+
+      return false;
+
+   }
+
+   return true;
+
+}
+
+
+#endif
+
 
 
 bool windows_write_dib_to_file(::file::file_sp pfile, ::draw2d::dib * pdib, ::visual::save_image * psaveimage, ::aura::application * papp)
@@ -1002,9 +1038,56 @@ bool windows_write_dib_to_file(::file::file_sp pfile, ::draw2d::dib * pdib, ::vi
 
 #endif
 
-   //m_spmemfile->Truncate(0);
+   if (!windows_write_dib_to_file(pstream, pdib, psaveimage))
+   {
 
-   //m_spmemfile->seek_to_begin();
+      return false;
+
+   }
+
+   STATSTG stg;
+   ZERO(stg);
+   pstream->Stat(&stg, STATFLAG_NONAME);
+   LARGE_INTEGER l;
+   l.QuadPart = 0;
+   pstream->Seek(l, STREAM_SEEK_SET, NULL);
+
+
+   memory mem(papp);
+
+   mem.allocate(1024 * 1024);
+
+   ULONG ulPos = 0;
+   ULONG ulRead;
+   ULONGLONG ul;
+   do
+   {
+
+      ulRead = 0;
+
+      ul = stg.cbSize.QuadPart - ulPos;
+
+      pstream->Read(mem.get_data(), (ULONG)MIN(ul, mem.get_size()), &ulRead);
+
+      if (ulRead > 0)
+      {
+
+         pfile->write(mem.get_data(), ulRead);
+
+         ulPos += ulRead;
+
+      }
+
+   }
+   while (ulRead > 0 && stg.cbSize.QuadPart - ulPos > 0);
+
+   return true;
+
+}
+
+
+bool windows_write_dib_to_file(IStream * pstream, ::draw2d::dib * pdib, ::visual::save_image * psaveimage)
+{
 
    comptr < IWICImagingFactory > piFactory = NULL;
    comptr < IWICBitmapEncoder > piEncoder = NULL;
@@ -1024,16 +1107,21 @@ bool windows_write_dib_to_file(::file::file_sp pfile, ::draw2d::dib * pdib, ::vi
 
    if (SUCCEEDED(hr))
    {
+
       hr = piFactory->CreateStream(&piStream);
+
    }
 
    if (SUCCEEDED(hr))
    {
+
       hr = piStream->InitializeFromIStream(pstream);
+
    }
 
    if (SUCCEEDED(hr))
    {
+
       switch (psaveimage->m_eformat)
       {
       case ::visual::image::format_bmp:
@@ -1051,20 +1139,26 @@ bool windows_write_dib_to_file(::file::file_sp pfile, ::draw2d::dib * pdib, ::vi
       default:
          break;
       }
+
    }
 
    if (SUCCEEDED(hr))
    {
+
       hr = piEncoder->Initialize(piStream, WICBitmapEncoderNoCache);
+
    }
 
    if (SUCCEEDED(hr))
    {
+
       hr = piEncoder->CreateNewFrame(&piBitmapFrame, &pPropertybag);
+
    }
 
    if (SUCCEEDED(hr))
    {
+
       //if(m_bJxr)
       //{
       //   //PROPBAG2 option ={0};
@@ -1118,42 +1212,63 @@ bool windows_write_dib_to_file(::file::file_sp pfile, ::draw2d::dib * pdib, ::vi
       //}
       if (psaveimage->m_eformat == ::visual::image::format_jpeg)
       {
+
          PROPBAG2 option = { 0 };
          option.pstrName = L"ImageQuality";
          VARIANT varValue;
          VariantInit(&varValue);
          varValue.vt = VT_R4;
          varValue.fltVal = MAX(0.f, MIN(1.f, psaveimage->m_iQuality / 100.0f));
+
          if (SUCCEEDED(hr))
          {
+
             hr = pPropertybag->Write(1, &option, &varValue);
+
          }
+
       }
+
       if (SUCCEEDED(hr))
       {
+
          hr = piBitmapFrame->Initialize(pPropertybag);
+
       }
+
    }
 
    if (SUCCEEDED(hr))
    {
+
       hr = piBitmapFrame->SetSize(uiWidth, uiHeight);
+
    }
 
    WICPixelFormatGUID formatGUID = GUID_WICPixelFormat32bppBGRA;
+
    if (SUCCEEDED(hr))
    {
+
       hr = piBitmapFrame->SetPixelFormat(&formatGUID);
+
    }
+
    pdib->map();
+
    if (SUCCEEDED(hr))
    {
+
       if (IsEqualGUID(formatGUID, GUID_WICPixelFormat32bppBGRA))
       {
+
          if (SUCCEEDED(hr))
          {
+
             hr = piBitmapFrame->WritePixels(uiHeight, pdib->m_iScan, uiHeight*pdib->m_iScan, (BYTE *)pdib->m_pcolorref);
+
          }
+
       }
       else
       {
@@ -1162,6 +1277,7 @@ bool windows_write_dib_to_file(::file::file_sp pfile, ::draw2d::dib * pdib, ::vi
 
          if (SUCCEEDED(hr))
          {
+
             hr = piFactory->CreateBitmapFromMemory(
                  pdib->size().cx,
                  pdib->size().cy,
@@ -1171,6 +1287,7 @@ bool windows_write_dib_to_file(::file::file_sp pfile, ::draw2d::dib * pdib, ::vi
                  (BYTE *)pdib->m_pcolorref,
                  &pbitmap
                  );
+
          }
 
          comptr<IWICFormatConverter> pconverter;
@@ -1182,104 +1299,41 @@ bool windows_write_dib_to_file(::file::file_sp pfile, ::draw2d::dib * pdib, ::vi
 
          }
 
-
-
          if (SUCCEEDED(hr))
          {
 
             hr = pconverter->Initialize(pbitmap, formatGUID, WICBitmapDitherTypeNone, NULL, 0.f, WICBitmapPaletteTypeCustom);
+
          }
-
-         //Step 4: Create render target and D2D bitmap from IWICBitmapSource
-         //UINT width=0;
-         //UINT height=0;
-         //if(SUCCEEDED(hr))
-         //{
-         //   hr = pbitmap->GetSize(&width,&height);
-         //}
-
-         //pdib->create(width,height);
 
          if (SUCCEEDED(hr))
          {
+
             hr = piBitmapFrame->WriteSource(pconverter, NULL);
+
          }
 
-
-         //for(int k = 0; k < height; k++)
-         //{
-         //   memcpy(&pb[k * iStride],&mem.get_data()[(height - 1 - k) * iStride],iStride);
-         //}
-
       }
+
    }
-
-
 
    if (SUCCEEDED(hr))
    {
+
       hr = piBitmapFrame->Commit();
+
    }
 
    if (SUCCEEDED(hr))
    {
+
       hr = piEncoder->Commit();
-   }
-
-   //if(piFactory)
-   //   piFactory->Release();
-
-   //if(piBitmapFrame)
-   //   piBitmapFrame->Release();
-
-   //if(piEncoder)
-   //   piEncoder->Release();
-
-   //if(piStream)
-   //   piStream->Release();
-
-
-
-   STATSTG stg;
-   ZERO(stg);
-   pstream->Stat(&stg, STATFLAG_NONAME);
-   LARGE_INTEGER l;
-   l.QuadPart = 0;
-   pstream->Seek(l, STREAM_SEEK_SET, NULL);
-
-
-   memory mem(papp);
-
-   mem.allocate(1024 * 1024);
-
-   ULONG ulPos = 0;
-   ULONG ulRead;
-   ULONGLONG ul;
-   do
-   {
-
-      ulRead = 0;
-
-      ul = stg.cbSize.QuadPart - ulPos;
-
-      pstream->Read(mem.get_data(), (ULONG)MIN(ul, mem.get_size()), &ulRead);
-
-      if (ulRead > 0)
-      {
-
-         pfile->write(mem.get_data(), ulRead);
-
-         ulPos += ulRead;
-
-      }
 
    }
-   while (ulRead > 0 && stg.cbSize.QuadPart - ulPos > 0);
-
-   //pstream->Release();
 
    return true;
 
 }
+
 
 

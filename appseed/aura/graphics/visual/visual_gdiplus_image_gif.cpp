@@ -2797,7 +2797,9 @@ bool windows_load_dib_from_file(::draw2d::dib * pdib, ::file::file_sp pfile, ::a
 
 }
 
+
 #ifdef METROWIN
+
 
 CLASS_DECL_AURA bool windows_load_dib_from_file(::draw2d::dib * pdib, Windows::Storage::Streams::IRandomAccessStream ^stream, ::aura::application * papp)
 {
@@ -2860,4 +2862,70 @@ CLASS_DECL_AURA bool windows_load_dib_from_file(::draw2d::dib * pdib, Windows::S
 
 }
 
+
+CLASS_DECL_AURA bool windows_save_dib_to_file(::draw2d::dib * pdib, Windows::Storage::Streams::IRandomAccessStream ^stream, ::aura::application * papp)
+{
+
+   if (!defer_co_initialize_ex(true))
+      return false;
+
+   try
+   {
+
+      comptr < IStream > pstream;
+
+      ::CreateStreamOverRandomAccessStream(stream, IID_PPV_ARGS(&pstream));
+
+      comptr < IWICImagingFactory > piFactory = NULL;
+
+      comptr< IWICBitmapDecoder > decoder;
+      HRESULT hr = CoCreateInstance(
+                   CLSID_WICImagingFactory,
+                   NULL,
+                   CLSCTX_INPROC_SERVER,
+                   IID_IWICImagingFactory,
+                   (LPVOID*)&piFactory);
+
+      if (SUCCEEDED(hr))
+      {
+
+         hr = piFactory->CreateDecoderFromStream(pstream, NULL, WICDecodeMetadataCacheOnDemand, &decoder);
+      }
+
+      //if(SUCCEEDED(hr))
+      //{
+
+      //   hr = decoder->Initialize(pstream,WICDecodeMetadataCacheOnDemand);
+
+      //}
+
+      comptr< IWICBitmapFrameDecode> pframe;
+
+      if (!windows_load_dib_from_frame(pframe, pdib, piFactory, decoder, 0))
+      {
+
+         return false;
+
+      }
+
+   }
+   catch (...)
+   {
+      return false;
+   }
+   //DWORD dw2 =::get_tick_count();
+   //TRACE("InPath %d ms\n",dw2 - dw1);
+   //dwLast = dw2;
+
+   //memfile.Truncate(0);
+
+   //}
+   return true;
+
+}
+
+
 #endif
+
+
+
