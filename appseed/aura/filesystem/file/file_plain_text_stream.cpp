@@ -233,8 +233,6 @@ namespace file
    plain_text_stream_string::plain_text_stream_string()
    {
 
-      m_pstr = &m_str;
-
    }
 
 

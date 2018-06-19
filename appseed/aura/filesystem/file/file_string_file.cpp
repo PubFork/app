@@ -7,57 +7,57 @@ namespace file
 
    string_file::string_file()
    {
-      m_bOwn = false;
-      m_pstr      = NULL;
+      
       m_iPos = 0;
+
    }
 
+   
    string_file::string_file(::aura::application * papp) :
       object(papp)
    {
-      m_bOwn = false;
-      m_pstr = NULL;
+      
       m_iPos = 0;
+
    }
 
+   
    string_file::string_file(const string & str)
    {
-      m_bOwn = false;
-      m_pstr = NULL;
+
       m_iPos = 0;
+
       append(str);
+
    }
+
 
    string_file::string_file(const string_file & text)
    {
-      m_bOwn = false;
-      m_pstr       = NULL;
+
       m_iPos = 0;
+
       append(::str::from(text));
-   }
-
-   string_file::string_file(string * pstr, bool bReferenceOnly)
-   {
-
-      m_pstr = pstr;
-      m_bOwn = !bReferenceOnly;
-      m_iPos = 0;
-
 
    }
+
 
    string_file::~string_file()
    {
+
       close();
+
    }
 
 
    memory_size_t string_file::read(void *lpBuf, memory_size_t nCount)
    {
-      if(m_iPos >= m_pstr->get_length())
+
+      if (m_iPos >= m_str.get_length())
+            
          return 0;
-      memory_size_t uiRead = MIN(nCount, (memory_size_t) (m_pstr->get_length() - m_iPos));
-      memcpy(lpBuf, &(*m_pstr)[m_iPos], uiRead);
+      memory_size_t uiRead = MIN(nCount, (memory_size_t) (m_str.get_length() - m_iPos));
+      memcpy(lpBuf, &(m_str)[m_iPos], uiRead);
       m_iPos += uiRead;
       return uiRead;
    };
@@ -71,13 +71,7 @@ namespace file
    ::string string_file::str() const
    {
 
-      if(m_pstr == NULL)
-         return "";
-
-      if(m_pstr == NULL)
-         return "";
-
-      return *m_pstr;
+      return m_str;
 
    }
 
@@ -103,11 +97,7 @@ namespace file
 
    void string_file::destroy()
    {
-      if (m_bOwn)
-      {
-         delete m_pstr;
-      }
-      m_pstr = NULL;
+      m_str.Empty();
       m_iPos = 0;
    }
 
@@ -159,16 +149,8 @@ namespace file
          len = 0;
       }
 
-      if (m_pstr == NULL)
-      {
+      m_str.assign(psz, len);
 
-         m_pstr = new string();
-
-         m_bOwn = true;
-
-      }
-
-      m_pstr->assign(psz, len);
    }
 
    void string_file::append(const char * psz,strsize len)
@@ -177,19 +159,12 @@ namespace file
       if(psz == NULL || *psz == '\0' || len <= 0)
          return;
 
-      if (m_pstr == NULL)
-      {
-
-         m_pstr = new string();
-
-         m_bOwn = true;
-
-      }
-
-      m_pstr->append(psz, len);
+      m_str.append(psz, len);
 
    }
 
+
 } // namespace file
+
 
 

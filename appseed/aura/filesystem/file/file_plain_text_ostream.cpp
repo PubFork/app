@@ -285,13 +285,13 @@ plain_text_stream_log_line::~plain_text_stream_log_line()
    m_strTag.replace("(", "");
    m_strTag.replace(")", "");
 
-   m_pfile->m_pstr->replace("::", ".");
-   m_pfile->m_pstr->replace(":", "_");
+   m_pfile->m_str.replace("::", ".");
+   m_pfile->m_str.replace(":", "_");
 
    m_strFile.replace(":", "_");
 
-   ::str::begins_eat_ci(*m_pfile->m_pstr, m_strTag);
+   ::str::begins_eat_ci(m_pfile->m_str, m_strTag);
 
-   ::trace(m_elevel, m_strTag, *m_pfile->m_pstr, m_strFile, m_iLine);
+   ::trace(m_elevel, m_strTag, m_pfile->m_str, m_strFile, m_iLine);
 
 }

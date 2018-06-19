@@ -258,19 +258,17 @@ namespace str
    string base64::encode(primitive::memory_base & storageBinary)
    {
       
-      string strRet;
-
       ::memory_file buf(get_app(), &storageBinary);
 
       ::file::byte_istream istream(&buf);
 
-      ::file::string_file file(&strRet);
+      ::file::string_file file;
 
       ::file::plain_text_ostream ostream(&file);
 
       encode(ostream, istream);
 
-      return strRet;
+      return file.m_str;
 
    }
 
@@ -324,15 +322,13 @@ namespace str
 
       buf.seek_to_begin();
 
-      string strRet;
-
-      ::file::string_file file(&strRet);
+      ::file::string_file file;
 
       ::file::plain_text_ostream ostream(&file);
 
       encode(ostream, stream);
 
-      return strRet;
+      return file.m_str;
 
    }
 

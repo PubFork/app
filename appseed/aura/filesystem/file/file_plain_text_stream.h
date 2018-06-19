@@ -86,9 +86,6 @@ namespace file
    {
    public:
 
-      string m_str;
-
-
       plain_text_stream_string();
       virtual ~plain_text_stream_string();
 

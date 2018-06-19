@@ -18,12 +18,10 @@ namespace file
    {
    public:
 
-      string *       m_pstr;
+      string         m_str;
       strsize        m_iPos;
-      bool           m_bOwn;
 
       string_file();
-      string_file(string * pstr, bool bReferenceOnly = true);
       string_file(::aura::application * papp);
       string_file(const string & str);
       string_file(const string_file & str);
@@ -48,7 +46,7 @@ namespace file
       bool is_empty() const
       {
 
-         return m_pstr == NULL || m_pstr->is_empty();
+         return m_str.is_empty();
 
       }
 
@@ -57,7 +55,7 @@ namespace file
 
       file_size_t get_length() const
       {
-         return m_pstr->get_length();
+         return m_str.get_length();
       }
 
 
@@ -87,13 +85,13 @@ namespace file
 
       operator const char *() const
       {
-         return *m_pstr;
+         return m_str;
       }
 
       string & to_string(string &str) const
       {
 
-         str = *m_pstr;
+         str = m_str;
 
          return str;
 
@@ -114,13 +112,7 @@ namespace file
    };
 
 
-
 } // namespace file
-
-
-
-
-
 
 
 

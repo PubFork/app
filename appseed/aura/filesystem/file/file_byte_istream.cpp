@@ -408,33 +408,11 @@ namespace file
          do
          {
 
-            try
-            {
-
-               if (strbuffer.m_pstr == NULL)
-               {
-
-                  strbuffer.m_pstr = new string();
-
-                  strbuffer.m_bOwn = true;
-
-               }
-
-            }
-            catch(...)
-            {
-
-               break;
-
-            }
-
             uiRead =  m_spfile->read((void *) &((const char *) strbuffer)[uiPos], (memory_size_t) (strbuffer.get_length() - uiPos));
 
             uiPos += uiRead;
 
          } while(uiRead > 0);
-
-         //strbuffer.m_iSize = uiPos;
 
          str = strbuffer.str();
 
