@@ -277,17 +277,16 @@ namespace user
    }
 
 
-   bool interaction_impl::create_window_ex(::user::interaction * pui, ::user::interaction * puiParent, id id, ::user::create_struct & cs, LPVOID lpParam /* = NULL */)
+   bool interaction_impl::create_window_ex(::user::interaction * pui, ::user::create_struct & cs, ::user::interaction * puiParent, id id)
    {
-      
+
       UNREFERENCED_PARAMETER(puiParent);
       UNREFERENCED_PARAMETER(cs);
       UNREFERENCED_PARAMETER(id);
-      UNREFERENCED_PARAMETER(lpParam);
       ::exception::throw_interface_only(get_app());
 
       return false;
-      
+
    }
 
 

@@ -74,7 +74,7 @@ namespace user
       virtual bool create_message_queue(::user::interaction * pui, const char * pszName);
       virtual bool create_window(::user::interaction * pui, const RECT & rect, ::user::interaction *pparent, id id);
       virtual bool create_window(::user::interaction * pui, const char * lpszClassName, const char * lpszWindowName, uint32_t dwStyle, const RECT & rect, ::user::interaction * pParentWnd, id id, ::create * pcreate = NULL);
-      virtual bool create_window_ex(::user::interaction * pui, ::user::interaction * pParentWnd, id id, ::user::create_struct & cs, LPVOID lpParam = NULL);
+      virtual bool create_window_ex(::user::interaction * pui, ::user::create_struct & cs, ::user::interaction * puiParent = NULL, id id = ::id());
 
 
       virtual void _001WindowMinimize(bool bNoActivate) override;

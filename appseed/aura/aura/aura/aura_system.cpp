@@ -633,14 +633,14 @@ namespace aura
 
       }
 
-	  if (m_mapLibrary["draw2d"]->is_opened())
-	  {
+      if (m_mapLibrary["draw2d"]->is_opened())
+      {
 
-		  m_paurasession->m_ptheme = canew(::user::theme(this));
+         m_paurasession->m_ptheme = canew(::user::theme(this));
 
-		  m_paurasession->m_puserstyle = m_paurasession->m_ptheme;
+         m_paurasession->m_puserstyle = m_paurasession->m_ptheme;
 
-	  }
+      }
 
       m_pvisual = canew(::visual::visual(this));
 
@@ -914,9 +914,9 @@ namespace aura
       }
 
       m_spfile.release();
-      
+
       m_spdir.release();
-      
+
       ::file::dir::system::g_pthis.release();
 
       m_plog.release();
@@ -2334,7 +2334,7 @@ RetryBuildNumber:
 
       fork([=]()
       {
-         
+
          set_thread_priority(::multithreading::priority_highest);
 
          auto ptra = Session.m_appptra;
@@ -2445,7 +2445,7 @@ RetryBuildNumber:
                }
                else
                {
-                  
+
                   TRACE("Waiting France Exit of %s", typeid(*ptra[j]).name());
 
                   j++;
@@ -3315,7 +3315,10 @@ success:
 
 //      dappy(string(typeid(*this).name()) + " : Going to ::axis::system::m_spwindow->create_window_ex : " + ::str::from(m_iErrorCode));
 
-      if (!m_psystemwindow->create_window_ex(0, NULL, NULL, 0, null_rect(), NULL, "::axis::system::interaction_impl::no_twf"))
+
+      ::user::create_struct cs;
+
+      if (!m_psystemwindow->create_window_ex(cs, NULL, "::axis::system::interaction_impl::no_twf"))
       {
 
          //       dappy(string(typeid(*this).name()) + " : ::axis::system::m_spwindow->create_window_ex failure : " + ::str::from(m_iErrorCode));

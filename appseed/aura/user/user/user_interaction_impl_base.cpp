@@ -62,7 +62,7 @@ namespace user
    }
 
 
-   bool interaction_impl_base::create_window_ex(::user::interaction * pui, ::user::interaction * puiParent, id id, ::user::create_struct & cs,  LPVOID lpParam)
+   bool interaction_impl_base::create_window_ex(::user::interaction * pui, ::user::create_struct & cs, ::user::interaction * puiParent, id id)
    {
 
       ::exception::throw_interface_only(get_app());
@@ -70,6 +70,7 @@ namespace user
       return true;
 
    }
+
 
    ::user::interaction_impl * interaction_impl_base::get_user_interaction_impl()
    {

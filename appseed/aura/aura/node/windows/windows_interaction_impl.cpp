@@ -377,20 +377,20 @@ namespace windows
    }
 
 
-   bool interaction_impl::create_window_ex(::user::interaction * pui, uint32_t dwExStyle, const char * lpszClassName, const char * lpszWindowName, uint32_t dwStyle, const RECT & rect, ::user::interaction * puiParent, id id, LPVOID lpParam)
+   bool interaction_impl::create_window_ex(::user::interaction * pui, ::user::create_struct & cs, ::user::interaction * puiParent, id id)
    {
 
       if (puiParent == NULL)
       {
 
-         if (!native_create_window_ex(pui, dwExStyle, lpszClassName, lpszWindowName, dwStyle, rect, NULL, id, lpParam))
+         if (!native_create_window_ex(pui, cs, NULL, id))
             return false;
 
       }
       else
       {
 
-         if (!native_create_window_ex(pui, dwExStyle, lpszClassName, lpszWindowName, dwStyle, rect, puiParent->get_safe_handle(), id, lpParam))
+         if (!native_create_window_ex(pui, cs,  puiParent->get_safe_handle(), id))
             return false;
 
       }
@@ -400,35 +400,33 @@ namespace windows
    }
 
 
-   bool interaction_impl::native_create_window_ex(::user::interaction * pui, uint32_t dwExStyle, const char * lpszClassName, const char * lpszWindowName, uint32_t dwStyle, const RECT & rect, oswindow oswindowParent, id id, LPVOID lpParam)
+   bool interaction_impl::native_create_window_ex(::user::interaction * pui, ::user::create_struct & cs, oswindow oswindowParent, id id)
    {
-      //::simple_message_box(NULL,"h1","h1",MB_OK);
-      UNREFERENCED_PARAMETER(id);
-      ASSERT(lpszClassName == NULL || __is_valid_string(lpszClassName) ||
-             __is_valid_atom(lpszClassName));
-      ENSURE_ARG(lpszWindowName == NULL || __is_valid_string(lpszWindowName));
 
-      // allow modification of several common create parameters
-      ::user::create_struct cs;
-      cs.dwExStyle = dwExStyle;
+      UNREFERENCED_PARAMETER(id);
+
+      ASSERT(cs.lpszClass == NULL || __is_valid_string(cs.lpszClass) || __is_valid_atom(cs.lpszClass));
+
+      ENSURE_ARG(cs.lpszName == NULL || __is_valid_string(cs.lpszName));
 
       m_pui = pui;
-      wstring wstrClassName = calc_window_class();
-      wstring wstrWindowName(lpszWindowName);
-      cs.lpszClass = wstrClassName.is_empty() ? NULL : (const unichar *)wstrClassName;
-      cs.lpszName = wstrWindowName;
-      cs.style = dwStyle;
 
-      cs.x = rect.left;
-      cs.y = rect.top;
-      cs.cx = width(rect);
-      cs.cy = height(rect);
+      string strClassName(cs.lpszClass);
+
+      if (strClassName.is_empty())
+      {
+
+         strClassName = calc_window_class();
+
+      }
+
+      cs.lpszClass = strClassName;
 
       cs.hwndParent = oswindowParent;
-      //   cs.hMenu = oswindow_Parent == NULL ? NULL : nIDorHMenu;
+
       cs.hMenu = NULL;
+
       cs.hInstance = System.m_hinstance;
-      cs.lpCreateParams = lpParam;
 
       if (!m_pui->pre_create_window(cs))
       {
@@ -459,18 +457,30 @@ namespace windows
 
       }
 
-      // if window is not created, it may destroy this object,
-      // so keep the app as local var
+      // if window is not created, it may destroy this object, so keep the app as local var
+
       ::aura::application * papp = m_pauraapp;
 
-      oswindow oswindow = ::CreateWindowExW(cs.dwExStyle, cs.lpszClass, cs.lpszName, cs.style, cs.x, cs.y, cs.cx, cs.cy, cs.hwndParent, cs.hMenu, cs.hInstance, cs.lpCreateParams);
+      wstring wstrClassName(cs.lpszClass);
 
+      wstring wstrWindowName(cs.lpszName);
+
+      oswindow oswindow = ::CreateWindowExW(
+                          cs.dwExStyle,
+                          wstrClassName,
+                          wstrWindowName,
+                          cs.style,
+                          cs.x, cs.y, cs.cx, cs.cy,
+                          cs.hwndParent, cs.hMenu, cs.hInstance, cs.lpCreateParams);
 
       uint32_t dwLastError = get_last_error();
 
       if (!unhook_window_create())
+      {
+
          PostNcDestroy();        // cleanup if CreateWindowEx fails too soon
 
+      }
 
       m_pui->m_pthread = ::get_thread();
 
@@ -601,7 +611,20 @@ namespace windows
       ASSERT(pParentWnd != NULL);
       ASSERT((dwStyle & WS_POPUP) == 0);
 
-      return create_window_ex(pui, 0, lpszClassName, lpszWindowName, dwStyle | WS_CHILD, rect, pParentWnd, id, (LPVOID)pcreate);
+      ::user::create_struct cs;
+
+      cs.dwExStyle = 0;
+      cs.lpszClass = lpszClassName;
+      cs.lpszName = lpszWindowName;
+      cs.style = dwStyle | WS_CHILD;
+      cs.x = rect.left;
+      cs.y = rect.top;
+      cs.cx = width(rect);
+      cs.cy = height(rect);
+      cs.hwndParent = pParentWnd->get_safe_handle();
+      cs.lpCreateParams = (LPVOID) pcreate;
+
+      return create_window_ex(pui, cs, pParentWnd, id);
 
    }
 
@@ -616,7 +639,9 @@ namespace windows
 
       }
 
-      if (!native_create_window_ex(pui, 0, NULL, pszName, WS_CHILD, null_rect(), HWND_MESSAGE, 0, NULL))
+      ::user::create_struct cs(0, NULL, pszName, WS_CHILD, null_rect(), HWND_MESSAGE);
+
+      if (!native_create_window_ex(pui, cs, HWND_MESSAGE))
       {
 
          return false;
@@ -5409,7 +5434,7 @@ namespace windows
       if (pcursor != NULL && pcursor->m_ecursor != ::visual::cursor_system)
       {
 
-         pcursor->set_current();
+         pcursor->set_current(&Session);
 
       }
 

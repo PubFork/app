@@ -140,10 +140,10 @@ namespace windows
       virtual bool create_window(::user::interaction * pui, const char * lpszClassName, const char * lpszWindowName, uint32_t dwStyle, const RECT & rect, ::user::interaction * puiParent, id id, ::create * pcreate = NULL) override;
 
       // advanced creation (allows access to extended styles)
-      virtual bool create_window_ex(::user::interaction * pui, uint32_t dwExStyle, const char * lpszClassName, const char * lpszWindowName, uint32_t dwStyle, const RECT & rect, ::user::interaction * puiParent, id id, LPVOID lpParam = NULL) override;
+      virtual bool create_window_ex(::user::interaction * pui, ::user::create_struct & cs, ::user::interaction * puiParent, id id) override;
 
       // advanced creation (allows access to extended styles)
-      virtual bool native_create_window_ex(::user::interaction * pui, uint32_t dwExStyle, const char * lpszClassName, const char * lpszWindowName, uint32_t dwStyle, const RECT & rect, oswindow oswindowParent, id id, LPVOID lpParam = NULL);
+      virtual bool native_create_window_ex(::user::interaction * pui, ::user::create_struct & cs, oswindow oswindowParent = NULL, id id = ::id());
 
       virtual bool DestroyWindow();
 

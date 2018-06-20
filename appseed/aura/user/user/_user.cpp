@@ -9,6 +9,7 @@
 #include "user_control_event.cpp"
 #include "user_copydesk.cpp"
 #include "user_create.cpp"
+#include "user_create_struct.cpp"
 #include "user_elemental.cpp"
 #include "user_frame.cpp"
 //#include "user_frame_window.cpp"

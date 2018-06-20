@@ -50,7 +50,7 @@ namespace user
    }
 
 
-   bool interaction_child::create_window_ex(::user::interaction * pui, ::user::interaction * pparent,id id, ::user::create_struct & cs, LPVOID lpParam)
+   bool interaction_child::create_window_ex(::user::interaction * pui, ::user::create_struct & cs, ::user::interaction * puiParent,id id)
    {
 
       if(IsWindow())
@@ -73,39 +73,21 @@ namespace user
 
          install_message_routing(this);
 
-         if(pparent != m_pui && !pparent->is_descendant(m_pui) && !m_pui->is_descendant(pparent))
+         if(puiParent != m_pui && !puiParent->is_descendant(m_pui) && !m_pui->is_descendant(puiParent))
          {
 
-            m_pui->on_set_parent(pparent);
+            m_pui->on_set_parent(puiParent);
 
          }
 
-//         ::user::create_struct cs;
-//
-//         cs = rect;
-//         cs.dwExStyle   = dwExStyle;
-//         cs.style       = dwStyle;
-#ifdef WINDOWSEX
-         wstring wstrClassName(lpszClassName);
-         wstring wstrWindowName(lpszWindowName);
-         cs.lpszClass = wstrClassName;
-         cs.lpszName = wstrWindowName;
-#else
-         //cs.lpszClass = lpszClassName;
-         //cs.lpszName = lpszWindowName;
-#endif
-         cs.hwndParent = pparent->get_handle();
-         cs.hMenu = NULL;
-         cs.hInstance = System.m_hinstance;
-         cs.hInstance = NULL;
          //cs.lpCreateParams = lpParam;
 
-         m_pui->pre_create_window(cs);
+         //m_pui->pre_create_window(cs);
 
          m_pui->send_message(WM_CREATE,0,(lparam)(LPARAM)&cs);
 
          ::rect rectChild;
-         
+
          cs.get_rect(rectChild);
 
          if(rectChild.area() > 0)
@@ -174,15 +156,8 @@ namespace user
 
          cs.dwExStyle = 0;
          cs.style = dwStyle;
-#ifdef WINDOWSEX
-         wstring wstrClassName(lpszClassName);
-         wstring wstrWindowName(lpszWindowName);
-         cs.lpszClass   = wstrClassName;
-         cs.lpszName    = wstrWindowName;
-#else
          cs.lpszClass   = lpszClassName;
          cs.lpszName    = lpszWindowName;
-#endif
          cs.hwndParent  = pparent->get_handle();
          cs.hInstance   = System.m_hinstance;
          cs.hMenu = NULL;
@@ -294,7 +269,7 @@ namespace user
             ShowWindow(SW_SHOW);
 
          }
-         
+
       }
       catch(...)
       {

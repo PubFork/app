@@ -190,7 +190,7 @@ namespace user
       // for child windows, views, panes etc
       virtual bool create_window(::user::interaction * pui, const char * lpszClassName,const char * lpszWindowName,uint32_t dwStyle,const RECT & rect,::user::interaction * pParentWnd,id id, ::create * pcreate = NULL) override;
 
-      virtual bool create_window_ex(::user::interaction * pui, ::user::interaction * pParentWnd, id id, ::user::create_struct & cs, LPVOID lpParam = NULL) override;
+      virtual bool create_window_ex(::user::interaction * pui, ::user::create_struct & cs, ::user::interaction * pParentWnd, id id) override;
 
       virtual bool DestroyWindow() override;
 
