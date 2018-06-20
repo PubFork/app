@@ -232,8 +232,10 @@ namespace fontopus
          }
          return "";
       }
+      
+      ::user::create_struct cs(rectFontopus);
 
-      if(!create_window_ex(0,NULL,NULL,0,rectFontopus,puiParent,"fontopus"))
+      if(!create_window_ex(cs, puiParent))
          return "";
 
       set_window_text( "fontopus Auth Windows");

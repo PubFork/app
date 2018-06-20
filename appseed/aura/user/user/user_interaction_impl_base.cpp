@@ -1,4 +1,4 @@
-﻿#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 
@@ -62,7 +62,7 @@ namespace user
    }
 
 
-   bool interaction_impl_base::create_window_ex(::user::interaction * pui, uint32_t dwExStyle, const char * lpszClassName, const char * lpszWindowName, uint32_t dwStyle, const RECT & rect, ::user::interaction * pParentWnd, id id, LPVOID lpParam)
+   bool interaction_impl_base::create_window_ex(::user::interaction * pui, ::user::interaction * puiParent, id id, ::user::create_struct & cs,  LPVOID lpParam)
    {
 
       ::exception::throw_interface_only(get_app());

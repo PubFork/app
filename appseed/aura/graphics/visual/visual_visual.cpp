@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 /*
 namespace visual
@@ -303,7 +303,9 @@ namespace visual
 
    ::count visual::set_cursor_set_from_dir(const ::file::path & pszDir, bool bFromCache)
    {
+      
       ::count count = 0;
+      
       if (set_cursor_file(::visual::cursor_arrow, pszDir / "arrow.png", bFromCache))
       {
          count++;

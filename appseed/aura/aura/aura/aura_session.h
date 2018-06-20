@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 
@@ -34,6 +34,7 @@ namespace aura
       point                                                    m_ptCursor;
 
       ::visual::cursor *               m_pcursor;
+      ::visual::cursor *               m_pcursorCursor;
       ::visual::e_cursor               m_ecursorDefault;
       ::visual::e_cursor               m_ecursor;
 

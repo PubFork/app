@@ -1,5 +1,18 @@
 #include "framework.h"
 
+
+#ifdef MACOS
+
+void set_cursor_dib(void * dib, int xHotSpot, int yHotSpot);
+
+void SetCursor(void * pnscursor);
+
+void * CreateAlphaCursor(void * dib, int xHotSpot, int yHotSpot);
+
+
+#endif
+
+
 namespace visual
 {
 
@@ -8,7 +21,7 @@ namespace visual
       m_dib(allocer())
    {
 
-#ifdef WINDOWSEX
+#if defined(WINDOWSEX) || defined(MACOS)
 
       m_hcursor = NULL;
 
@@ -26,6 +39,37 @@ namespace visual
 
    }
 
+   void cursor::set_current(::aura::session * psession)
+   {
+      
+      synch_lock sl(psession->m_pmutex);
+      
+#if defined(MACOS) || defined(WINDOWS)
+      
+      ::SetCursor(get_HCURSOR());
+      
+#endif
+      
+      //psession->m_pcursorCursor = this;
+      
+   }
+   
+   
+   void cursor::reset(::aura::session * psession)
+   {
+      
+      synch_lock sl(psession->m_pmutex);
+      
+#if defined(MACOS) || defined(WINDOWS)
+         
+      ::SetCursor(NULL);
+         
+#endif
+         
+      //psession->m_pcursorCursor = NULL;
+         
+   }
+   
 
 #ifdef WINDOWSEX
 
@@ -104,7 +148,9 @@ namespace visual
    }
 
 #endif
-#ifdef WINDOWSEX
+   
+   
+#if defined(MACOS) || defined(WINDOWSEX)
 
    HCURSOR cursor::get_HCURSOR()
    {
@@ -121,6 +167,7 @@ namespace visual
    }
 
 #endif
+
 
 
    void cursor_alloc(::aura::application * papp,cursor * & pdib,int xHotspot,int yHotspot)

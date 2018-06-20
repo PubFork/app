@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 #include "user_elemental.h"
@@ -282,7 +282,7 @@ namespace user
 
       virtual bool create_window(const RECT & rect, ::user::interaction *pparent,id id);
       virtual bool create_window(const char * lpszClassName, const char * lpszWindowName,uint32_t dwStyle, const RECT & rect, ::user::interaction * pParentWnd,id id, ::create * pcreate = NULL);
-      virtual bool create_window_ex(uint32_t dwExStyle,const char * lpszClassName, const char * lpszWindowName,uint32_t dwStyle, const RECT & rect,  ::user::interaction * pParentWnd,id id,LPVOID lpParam = NULL);
+      virtual bool create_window_ex(::user::create_struct & cs, ::user::interaction * puiParent, id id);
       virtual void CalcWindowRect(LPRECT lpClientRect,UINT nAdjustType = adjustBorder);
 
       virtual bool IsTopParentActive();

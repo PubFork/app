@@ -5409,7 +5409,7 @@ namespace windows
       if (pcursor != NULL && pcursor->m_ecursor != ::visual::cursor_system)
       {
 
-         ::SetCursor(pcursor->get_HCURSOR());
+         pcursor->set_current();
 
       }
 

@@ -432,7 +432,7 @@ namespace net
 
       auto * pnet = &psockets->net();
 
-#ifdef APPLE_IOS
+#ifdef APPLEOS
       if (pnet->convert(u.m_addr.sin_addr, strAddress))
       {
          

@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 namespace user
@@ -368,8 +368,10 @@ namespace user
             iStyleEx = WS_EX_LAYERED | WS_EX_TOOLWINDOW;
 
          }
+         
+         ::user::create_struct cs(iStyleEx, NULL, NULL, 0, null_rect(), lpvoid);
 
-         if (!create_window_ex(iStyleEx, NULL, NULL, 0, rect(0, 0, 0, 0), puiParent, id(), lpvoid))
+         if (!create_window_ex(cs, puiParent))
          {
 
             return false;

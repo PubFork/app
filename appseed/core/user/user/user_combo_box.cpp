@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 namespace user
@@ -714,7 +714,10 @@ namespace user
 //
 //#else
 //
-         if (!m_plist->create_window_ex(0, NULL, "combo_list", 0, rect(0, 0, 0, 0), NULL, 0, NULL))
+         
+         ::user::create_struct cs(0, NULL, "combo_list");
+         
+         if (!m_plist->create_window_ex(cs))
          {
 
             m_plist.release();

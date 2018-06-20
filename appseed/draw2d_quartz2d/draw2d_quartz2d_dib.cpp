@@ -380,6 +380,22 @@ namespace draw2d_quartz2d
       
    }
    
+   bool dib::detach(::draw2d::dib * pdib)
+   {
+      
+      sp(dib) dib = pdib;
+      
+      m_spgraphics = dib->m_spgraphics;
+      m_spbitmap = dib->m_spbitmap;
+      
+      ::draw2d::dib::detach(pdib);
+      
+      dib->m_spbitmap.release();
+      dib->m_spgraphics.release();
+      
+      
+   }
+
    
    void dib::unmap() const
    {

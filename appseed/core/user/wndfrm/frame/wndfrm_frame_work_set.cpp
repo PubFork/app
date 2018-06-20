@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 extern CLASS_DECL_CORE thread_int_ptr < DWORD_PTR > t_time1;
 
@@ -1031,155 +1031,155 @@ namespace user
          }
 
 
-         void WorkSet::WindowProcHover(::user::interaction * pui,::message::base * pbase)
-         {
+//         void WorkSet::WindowProcHover(::user::interaction * pui,::message::base * pbase)
+//         {
+//
+//            if(m_bHoverModeOn)
+//            {
+//
+//               if(pbase->m_id == WM_TIMER && pbase->m_wparam == 16319 && IsHoverModeOn())
+//               {
+//
+//                  rect rectWindow;
+//
+//                  sp(::user::interaction) pwnd = GetWndRegion();
+//
+//                  pwnd->GetWindowRect(rectWindow);
+//
+//                  point ptCursor;
+//
+//                  Session.get_cursor_pos(&ptCursor);
+//
+//                  if(rectWindow.contains(ptCursor))
+//                  {
+//
+//                     if (!IsHoverActive())
+//                     {
+//
+//                        Hover(true);
+//
+//                     }
+//
+//                  }
+//                  else if(!m_pmovemanager->IsMoving() && !m_psizemanager->IsSizing())
+//                  {
+//
+//                     if (IsHoverActive())
+//                     {
+//
+//                        Hover(false);
+//
+//                     }
+//
+//                  }
+//
+//               }
+//
+//            }
+//
+//         }
 
-            if(m_bHoverModeOn)
-            {
 
-               if(pbase->m_id == WM_TIMER && pbase->m_wparam == 16319 && IsHoverModeOn())
-               {
-
-                  rect rectWindow;
-
-                  sp(::user::interaction) pwnd = GetWndRegion();
-
-                  pwnd->GetWindowRect(rectWindow);
-
-                  point ptCursor;
-
-                  Session.get_cursor_pos(&ptCursor);
-
-                  if(rectWindow.contains(ptCursor))
-                  {
-
-                     if (!IsHoverActive())
-                     {
-
-                        Hover(true);
-
-                     }
-
-                  }
-                  else if(!m_pmovemanager->IsMoving() && !m_psizemanager->IsSizing())
-                  {
-
-                     if (IsHoverActive())
-                     {
-
-                        Hover(false);
-
-                     }
-
-                  }
-
-               }
-
-            }
-
-         }
-
-
-         void WorkSet::WindowProcBefore(::user::interaction * pui, ::message::base * pbase)
-         {
-
-            WindowProcHover(pui,pbase);
-
-            if (pbase->m_bRet)
-            {
-
-               return;
-
-            }
-
-            if(m_pappearance != NULL && (!m_pappearance->IsFullScreen() || !m_pappearance->IsZoomed()))
-            {
-
-               if(IsSizingEnabled() && m_psizemanager != NULL)
-               {
-
-                  m_psizemanager->message_handler(pui, pbase);
-
-                  if (pbase->m_bRet)
-                  {
-
-                     return;
-
-                  }
-
-               }
-
-               if(IsMovingEnabled() && m_pmovemanager != NULL)
-               {
-
-                  m_pmovemanager->message_handler(pui, pbase);
-
-                  if (pbase->m_bRet)
-                  {
-
-                     return;
-
-                  }
-
-               }
-
-               if(!m_pappearance->IsFullScreen())
-               {
-
-                  if(IsSysMenuEnabled() && m_psystemmenumanager != NULL)
-                  {
-
-                     m_psystemmenumanager->message_handler(pui, pbase);
-
-                     if (pbase->m_bRet)
-                     {
-
-                        return;
-
-                     }
-
-                  }
-
-               }
-
-            }
-
-            pbase->set_lresult(0);
-
-            if(pbase->m_id == WM_COMMAND)
-            {
-
-               SCAST_PTR(::message::command,pcommand,pbase);
-
-               _001OnCommand(pcommand);
-
-               if(pcommand->m_bRet)
-               {
-
-                  pcommand->set_lresult(1);
-
-                  return;
-
-               }
-
-            }
-            else if(pbase->m_id == WM_MOVE)
-            {
-
-               OnMove();
-
-            }
-            else if(pbase->m_id == WM_SIZE)
-            {
-               //      OnSizeRegion(wparam, LOWORD(lparam), HIWORD(lparam));
-            }
-            else if(pbase->m_id == WM_ACTIVATE)
-            {
-               ASSERT(FALSE);
-               //      _001OnActivate();
-            }
-
-         }
+//         void WorkSet::WindowProcBefore(::user::interaction * pui, ::message::base * pbase)
+//         {
+//
+//            WindowProcHover(pui,pbase);
+//
+//            if (pbase->m_bRet)
+//            {
+//
+//               return;
+//
+//            }
+//
+//            if(m_pappearance != NULL && (!m_pappearance->IsFullScreen() || !m_pappearance->IsZoomed()))
+//            {
+//
+//               if(IsSizingEnabled() && m_psizemanager != NULL)
+//               {
+//
+//                  m_psizemanager->message_handler(pui, pbase);
+//
+//                  if (pbase->m_bRet)
+//                  {
+//
+//                     return;
+//
+//                  }
+//
+//               }
+//
+//               if(IsMovingEnabled() && m_pmovemanager != NULL)
+//               {
+//
+//                  m_pmovemanager->message_handler(pui, pbase);
+//
+//                  if (pbase->m_bRet)
+//                  {
+//
+//                     return;
+//
+//                  }
+//
+//               }
+//
+//               if(!m_pappearance->IsFullScreen())
+//               {
+//
+//                  if(IsSysMenuEnabled() && m_psystemmenumanager != NULL)
+//                  {
+//
+//                     m_psystemmenumanager->message_handler(pui, pbase);
+//
+//                     if (pbase->m_bRet)
+//                     {
+//
+//                        return;
+//
+//                     }
+//
+//                  }
+//
+//               }
+//
+//            }
+//
+//            pbase->set_lresult(0);
+//
+//            if(pbase->m_id == WM_COMMAND)
+//            {
+//
+//               SCAST_PTR(::message::command,pcommand,pbase);
+//
+//               _001OnCommand(pcommand);
+//
+//               if(pcommand->m_bRet)
+//               {
+//
+//                  pcommand->set_lresult(1);
+//
+//                  return;
+//
+//               }
+//
+//            }
+//            else if(pbase->m_id == WM_MOVE)
+//            {
+//
+//               OnMove();
+//
+//            }
+//            else if(pbase->m_id == WM_SIZE)
+//            {
+//               //      OnSizeRegion(wparam, LOWORD(lparam), HIWORD(lparam));
+//            }
+//            else if(pbase->m_id == WM_ACTIVATE)
+//            {
+//               ASSERT(FALSE);
+//               //      _001OnActivate();
+//            }
+//
+//         }
 
 
          void WorkSet::_001OnActivate(::message::message * pobj)

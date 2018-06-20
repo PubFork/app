@@ -1,4 +1,4 @@
-﻿#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 
@@ -50,7 +50,7 @@ namespace user
    }
 
 
-   bool interaction_child::create_window_ex(::user::interaction * pui, uint32_t dwExStyle,const char * lpszClassName,const char * lpszWindowName,uint32_t dwStyle,const RECT & rect,::user::interaction * pparent,id id,LPVOID lpParam)
+   bool interaction_child::create_window_ex(::user::interaction * pui, ::user::interaction * pparent,id id, ::user::create_struct & cs, LPVOID lpParam)
    {
 
       if(IsWindow())
@@ -80,39 +80,41 @@ namespace user
 
          }
 
-         ::user::create_struct cs;
-
-         cs = rect;
-         cs.dwExStyle   = dwExStyle;
-         cs.style       = dwStyle;
+//         ::user::create_struct cs;
+//
+//         cs = rect;
+//         cs.dwExStyle   = dwExStyle;
+//         cs.style       = dwStyle;
 #ifdef WINDOWSEX
          wstring wstrClassName(lpszClassName);
          wstring wstrWindowName(lpszWindowName);
          cs.lpszClass = wstrClassName;
          cs.lpszName = wstrWindowName;
 #else
-         cs.lpszClass = lpszClassName;
-         cs.lpszName = lpszWindowName;
+         //cs.lpszClass = lpszClassName;
+         //cs.lpszName = lpszWindowName;
 #endif
          cs.hwndParent = pparent->get_handle();
          cs.hMenu = NULL;
          cs.hInstance = System.m_hinstance;
          cs.hInstance = NULL;
-         cs.lpCreateParams = lpParam;
+         //cs.lpCreateParams = lpParam;
 
          m_pui->pre_create_window(cs);
 
          m_pui->send_message(WM_CREATE,0,(lparam)(LPARAM)&cs);
 
-         ::rect rectChild(rect);
+         ::rect rectChild;
+         
+         cs.get_rect(rectChild);
 
          if(rectChild.area() > 0)
          {
 
-            m_pui->SetWindowPos(0,rectChild,(dwStyle & WS_VISIBLE) ? SWP_SHOWWINDOW : 0);
+            m_pui->SetWindowPos(0,rectChild,(cs.style & WS_VISIBLE) ? SWP_SHOWWINDOW : 0);
 
          }
-         else if(dwStyle & WS_VISIBLE)
+         else if(cs.style & WS_VISIBLE)
          {
 
             ShowWindow(SW_SHOW);
@@ -168,7 +170,7 @@ namespace user
 
          ::user::create_struct cs;
 
-         cs = rect;
+         cs.set_rect(&rect);
 
          cs.dwExStyle = 0;
          cs.style = dwStyle;
@@ -264,7 +266,7 @@ namespace user
 
          ::user::create_struct cs;
 
-         cs                =  rect;
+         cs.set_rect(&rect);
          cs.style          = WS_CHILD | WS_VISIBLE;
          cs.dwExStyle      = 0;
          cs.lpszClass      = NULL;
@@ -292,6 +294,7 @@ namespace user
             ShowWindow(SW_SHOW);
 
          }
+         
       }
       catch(...)
       {
@@ -305,7 +308,6 @@ namespace user
       return true;
 
    }
-
 
 
    void interaction_child::VirtualOnSize()

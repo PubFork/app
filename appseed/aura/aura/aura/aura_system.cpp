@@ -917,6 +917,7 @@ namespace aura
       
       m_spdir.release();
       
+      ::file::dir::system::g_pthis.release();
 
       m_plog.release();
 

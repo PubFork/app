@@ -546,16 +546,38 @@ restart:
             string strName;
 
             get_window_text(strName);
-
-            int32_t iStyle = get_window_long(GWL_STYLE);
-
-            iStyle &= ~WS_CHILD;
+            
+//            string strClassName;
+//
+//            GetClassName(strClassName);
+            
+            const char * lpszClassName = NULL;
 
             rect rectWindow;
-
+            
             GetWindowRect(rectWindow);
 
-            if (!pimplNew->create_window_ex(this, 0, NULL, strName, iStyle, rectWindow, NULL, GetDlgCtrlId()))
+            ::user::create_struct cs(
+                                     get_window_long(GWL_EXSTYLE),
+                                     lpszClassName,
+                                     strName,
+                                     get_window_long(GWL_STYLE),
+                                     rectWindow
+                                     );
+
+            cs.style &= ~WS_CHILD;
+            
+            if(!pre_create_window(cs))
+            {
+               
+               pimplNew.release();
+               
+               pimplNew = NULL;
+               
+               m_pimpl = pimplOld;
+
+            }
+            else if (!pimplNew->create_window_ex(this, NULL, GetDlgCtrlId(), cs))
             {
 
                pimplNew.release();
@@ -3299,16 +3321,34 @@ restart:
    }
 
 
-   bool interaction::create_window_ex(uint32_t dwExStyle, const char * lpszClassName, const char * lpszWindowName, uint32_t dwStyle, const RECT & rect, ::user::interaction * pParentWnd, id id, LPVOID lpParam)
+   bool interaction::create_window_ex(::user::create_struct & cs, ::user::interaction * puiParent, id id)
    {
 
+      cs.hMenu = NULL;
+      
+      if(puiParent != NULL)
+      {
+         
+         cs.hwndParent = puiParent->get_safe_handle();
+         
+      }
+      
+      if (!pre_create_window(cs))
+      {
+         
+         PostNcDestroy();
+         
+         return FALSE;
+         
+      }
+         
       if (IsWindow())
       {
 
          DestroyWindow();
 
       }
-
+   
       try
       {
 
@@ -3353,14 +3393,14 @@ restart:
          //}
 #if !defined(METROWIN)
 
-         if ((WS_CHILD & dwStyle) == 0)
+         if ((WS_CHILD & cs.style) == 0)
          {
 
             m_pimpl = Application.alloc(System.type_info < interaction_impl >());
 
             //dwStyle &= ~WS_CHILD;
 
-            if (!m_pimpl->create_window_ex(this, dwExStyle, lpszClassName, lpszWindowName, dwStyle, rect, pParentWnd, id, lpParam))
+            if (!m_pimpl->create_window_ex(this, puiParent, id, cs))
             {
 
                m_bUserElementalOk = false;
@@ -3381,16 +3421,20 @@ restart:
             if (pParentWnd == NULL)
                pParentWnd = System.m_possystemwindow->m_pui;
 #endif
+            
+            ::rect rect;
+            
+            cs.get_rect(rect);
 
             ::rect rectFrame(0, 0, 0, 0);
 
             if (IsRectEmpty(&rect))
             {
 
-               if (rectFrame.is_null() && pParentWnd->is_place_holder())
+               if (rectFrame.is_null() && puiParent->is_place_holder())
                {
 
-                  pParentWnd->GetClientRect(rectFrame);
+                  puiParent->GetClientRect(rectFrame);
 
                }
 
@@ -3406,7 +3450,7 @@ restart:
 
             m_pimpl = canew(::user::interaction_child(get_app()));
             m_pimpl->m_pui = this;
-            if (!m_pimpl->create_window_ex(this, dwExStyle, lpszClassName, lpszWindowName, dwStyle, rectFrame, pParentWnd, id, lpParam))
+            if (!m_pimpl->create_window_ex(this, puiParent, id, cs))
             {
 
                m_bUserElementalOk = false;
@@ -8373,8 +8417,10 @@ restart:
       {
 
          m_ptooltip = canew(tooltip(get_app()));
+         
+         ::user::create_struct cs(WS_EX_LAYERED | WS_EX_TOOLWINDOW, NULL, "tooltip", 0, ::null_rect());
 
-         m_ptooltip->create_window_ex(WS_EX_LAYERED | WS_EX_TOOLWINDOW, NULL, "tooltip", 0, ::null_rect(), NULL);
+         m_ptooltip->create_window_ex(cs);
 
       }
 

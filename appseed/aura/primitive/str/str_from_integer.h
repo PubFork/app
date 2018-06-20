@@ -11,7 +11,7 @@ CLASS_DECL_AURA string ui64toa_dup(int64_t i);
 
 
 
-inline string itoa_dup(int64_t i);
+inline string itoa_dup(i64 i);
 inline char * itocat_dup(char * psz, int64_t i);
 
 
@@ -46,7 +46,7 @@ inline char * itocat_dup(char * psz, i64 i)
 }
 
 
-inline string itoa_dup(i32 i)
+inline string i32toa_dup(i32 i)
 {
    char sz[16];
 #if defined(LINUX) || defined(MACOS) || defined(ANDROID)

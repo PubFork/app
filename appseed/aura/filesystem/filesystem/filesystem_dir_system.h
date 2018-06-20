@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 namespace file
@@ -70,7 +70,7 @@ namespace file
          };
 
 
-         static system *      g_pthis;
+         static sp(system)    g_pthis;
          is_dir_map           m_isdirmap;
          mutex                m_mutex;
          string               m_strApiCc;

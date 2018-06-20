@@ -652,7 +652,7 @@ bool simple_frame_window::pre_create_window(::user::create_struct& cs)
 
 
    //cs.style = WS_OVERLAPPEDWINDOW & ~WS_THICKFRAME;
-   cs.style = WS_POPUP;
+   cs.style |= WS_POPUP;
    cs.style &= ~WS_VISIBLE;
    cs.style |= WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
 
@@ -1411,8 +1411,10 @@ bool simple_frame_window::LoadFrame(const char * pszMatter, uint32_t dwDefaultSt
    }
 
    output_debug_string("\nm_bLayoutEnable FALSE");
-
-   if (!create_window_ex(0L, NULL, lpszTitle, dwDefaultStyle, rectFrame, pParentWnd, ::id::type_null, pcreate))
+   
+   ::user::create_struct cs(0L, NULL, lpszTitle, dwDefaultStyle, rectFrame, pcreate);
+   
+   if (!create_window_ex(cs, pParentWnd))
    {
 
       return false;   // will self destruct on failure normally

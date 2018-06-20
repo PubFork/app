@@ -1,4 +1,4 @@
-﻿#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 
@@ -995,7 +995,7 @@ Restart:
    }
 
 
-   bool interaction_base::create_window_ex(uint32_t dwExStyle,const char * lpszClassName,const char * lpszWindowName,uint32_t dwStyle,const RECT & rect,::user::interaction * pParentWnd,id id,LPVOID lpParam)
+   bool interaction_base::create_window_ex(::user::create_struct & cs, ::user::interaction * puiParent, id id)
    {
 
       ::exception::throw_interface_only(get_app());

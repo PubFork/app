@@ -1318,44 +1318,59 @@ namespace aura
 
       m_ecursor = ::visual::cursor_visual;
 
-#ifdef WINDOWSEX
-
       m_pcursor = pcursor;
 
       if (pcursor != NULL)
       {
 
-         ::SetCursor(pcursor->get_HCURSOR());
+         pcursor->set_current(this);
 
       }
+      else
+      {
+         
+         ::visual::cursor::reset(this);
+         
+      }
 
-#endif
 
    }
 
+   
    void session::set_cursor(::visual::e_cursor ecursor)
    {
 
       m_ecursor = ecursor;
-
-#ifdef WINDOWSEX
+      
+      if(ecursor == ::visual::cursor_size_bottom_right
+         || (ecursor == ::visual::cursor_default
+             && m_ecursorDefault == ::visual::cursor_size_bottom_right))
+      {
+         
+         output_debug_string("\nbottom_right_cursor   ");
+         
+      }
+      else 
+      {
+         
+         output_debug_string("\nNOT_bottom_right_cursor   ");
+      
+      }
 
       ::visual::cursor * pcursor = get_cursor();
 
       if (pcursor != NULL)
       {
-
-         ::SetCursor(pcursor->get_HCURSOR());
-
+         
+         pcursor->set_current(this);
+         
       }
       else
       {
-
-         ::SetCursor(NULL);
-
+         
+         ::visual::cursor::reset(this);
+         
       }
-
-#endif
 
    }
 

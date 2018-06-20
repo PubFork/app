@@ -65,7 +65,27 @@ namespace draw2d
       matrix & prepend(const matrix & m);
       matrix & append(const matrix & m);
 
-
+      
+      double determinant() const;
+      
+      static bool invert(matrix & aDst, const matrix & aSrc);
+      
+      bool invert()
+      {
+         
+         matrix m(*this);
+         
+         if(!invert(*this, m))
+         {
+            
+            return false;
+            
+         }
+         
+         return true;
+         
+      }
+      
       matrix & operator * (const matrix & m);
 
       // 6 (six) elements

@@ -38,23 +38,24 @@ namespace file
 
    enum e_open
    {
-      mode_read                        = (int32_t) 0x00001,
-      mode_write                       = (int32_t) 0x00002,
-      mode_read_write                  = (int32_t) 0x00003,
-      share_compat                     = (int32_t) 0x00000,
-      share_exclusive                  = (int32_t) 0x00010,
-      share_deny_write                 = (int32_t) 0x00020,
-      share_deny_read                  = (int32_t) 0x00030,
-      share_deny_none                  = (int32_t) 0x00040,
-      mode_no_inherit                  = (int32_t) 0x00080,
-      mode_create                      = (int32_t) 0x01000,
-      mode_no_truncate                 = (int32_t) 0x02000,
-      type_text                        = (int32_t) 0x04000, // type_text and type_binary are used in
-      type_binary                      = (int32_t) 0x08000, // derived classes only
-      defer_create_directory           = (int32_t) 0x10000,
-      hint_unknown_length_supported    = (int32_t) 0x20000,
-      mode_truncate                    = (int32_t) 0x40000,
-      no_call_stack                    = (int32_t) 0x80000,
+      mode_read                        = (i32) 0x000001,
+      mode_write                       = (i32) 0x000002,
+      mode_read_write                  = (i32) 0x000003,
+      share_compat                     = (i32) 0x000000,
+      share_exclusive                  = (i32) 0x000010,
+      share_deny_write                 = (i32) 0x000020,
+      share_deny_read                  = (i32) 0x000030,
+      share_deny_none                  = (i32) 0x000040,
+      mode_no_inherit                  = (i32) 0x000080,
+      mode_create                      = (i32) 0x001000,
+      mode_no_truncate                 = (i32) 0x002000,
+      type_text                        = (i32) 0x004000, // type_text and type_binary are used in
+      type_binary                      = (i32) 0x008000, // derived classes only
+      defer_create_directory           = (i32) 0x010000,
+      hint_unknown_length_supported    = (i32) 0x020000,
+      mode_truncate                    = (i32) 0x040000,
+      no_call_stack                    = (i32) 0x080000,
+      no_cache                         = (i32) 0x100000,
       binary                           = type_binary,
       out                              = mode_write,
       in                               = mode_read,

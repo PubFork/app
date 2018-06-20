@@ -112,6 +112,18 @@ int32_t uni_to_utf8_2_or_more(char * dest, int32_t ch)
    return 0;
 
 }
+::count unichar_len(const unichar * psz)
+{
+   if(psz == NULL)
+      return -1;
+   int32_t count = 0;
+   while(*psz != 0)
+   {
+      psz++;
+      count++;
+   }
+   return count;
+}
 
 
 ::count utf16_len(const char * psz)

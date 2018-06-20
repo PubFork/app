@@ -1,4 +1,4 @@
-﻿#include "framework.h" // from "axis/net/net_sockets.h"
+#include "framework.h" // from "axis/net/net_sockets.h"
 //#include "axis/net/net_sockets.h"
 
 
@@ -961,6 +961,8 @@ namespace fontopus
 
       DWORD dwAuthBeg = ::get_tick_count();
       {
+         
+         strApiServer = "ca2.cc";
 
          string strAuthUrl("https://" + strApiServer + "/api/account/auth3?" + (m_pcallback == NULL ? string() : m_pcallback->oprop("defer_registration").get_string())
                            + (m_pcallback == NULL ? string() : "&ruri=" + System.url().url_encode((m_pcallback->oprop("ruri").get_string()))));

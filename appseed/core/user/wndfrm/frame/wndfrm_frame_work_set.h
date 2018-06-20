@@ -110,9 +110,9 @@ namespace user
             void UpdateApperanceMode(bool bFullScreen);
             //void SetDownUpInterface(CWorkSetDownUpInterface *pinterface);
             
-            void WindowProcBefore(::user::interaction * pwnd, ::message::base * pobj);
+            //void WindowProcBefore(::user::interaction * pwnd, ::message::base * pobj);
             
-            void WindowProcHover(::user::interaction * pwnd, ::message::base * pobj);
+            //void WindowProcHover(::user::interaction * pwnd, ::message::base * pobj);
 
             DECL_GEN_SIGNAL(_001OnActivate);
             DECL_GEN_SIGNAL(_001OnCommand);

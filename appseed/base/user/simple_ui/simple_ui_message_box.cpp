@@ -1,4 +1,4 @@
-﻿#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 #ifdef WINDOWSEX
@@ -132,8 +132,10 @@ namespace simple_ui
       rectFontopus.right = rectFontopus.left + w;
 
       rectFontopus.bottom = rectFontopus.top + h;
+      
+      ::user::create_struct cs(WS_EX_LAYERED, NULL, NULL, 0, rectFontopus);
 
-      if(!create_window_ex(WS_EX_LAYERED,NULL,NULL,0,rectFontopus,puiParent,"fontopus"))
+      if(!create_window_ex(cs, puiParent))
          _throw(simple_exception(get_app(),"not excepted! Failing Message box!!"));
 
       TRACE("(1) Just after create_window_ex for simple_message_box (m_pimpl.m_p) : %d",m_pimpl.m_p);

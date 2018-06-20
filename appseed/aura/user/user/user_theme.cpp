@@ -54,7 +54,11 @@ namespace user
       create_color(color_scrollbar_strong, ARGB(127, 220, 120, 200));
       create_color(color_scrollbar_hover, ARGB(127, 200, 200, 200));
       create_color(color_scrollbar, ARGB(127, 155, 155, 155));
-
+      create_color(color_scrollbar_strong, ARGB(255, 210, 210, 210));
+      create_color(color_scrollbar_strong_hover, ARGB(255, 200, 200, 200));
+      create_color(color_scrollbar, ARGB(255, 230, 230, 230));
+      create_color(color_scrollbar_hover, ARGB(255, 225, 225, 225));
+      
    }
 
 

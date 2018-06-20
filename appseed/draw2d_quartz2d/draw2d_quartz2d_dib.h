@@ -42,6 +42,9 @@ namespace draw2d_quartz2d
       virtual ~dib();
       
       
+      virtual bool detach(::draw2d::dib * pdib) override;
+
+      
       void map(bool bApplyAlphaTransform = true) const override;
       void unmap() const override;
       

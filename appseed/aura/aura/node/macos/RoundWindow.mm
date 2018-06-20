@@ -32,6 +32,8 @@
 	if(self == NULL)
       return NULL;
    
+
+   
 	[self setOpaque:NO];
    
    //	[self setOpaque:YES];
@@ -77,7 +79,7 @@
 //   [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(windowDidMiniaturize::) name: NSWindowDidMiniaturizeNotification object: self];
 //
 //   [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(windowDidDeminiaturize:) name: NSWindowDidDeminiaturizeNotification object: self];
- 
+   
    [self create_view];
    
    m_pwindow->round_window_add_ref();
@@ -85,6 +87,7 @@
    return self;
    
 }
+
 
 
 //

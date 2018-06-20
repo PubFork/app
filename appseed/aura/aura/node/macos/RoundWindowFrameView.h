@@ -31,6 +31,7 @@ struct mf_context
 //   mf_context* mfc;
    APPLE_KEYBOARD_TYPE appleKeyboardType;
    RoundWindow * m_roundwindow;
+   NSTrackingArea * trackingArea;
    bool m_bLShift;
    bool m_bRShift;
    bool m_bLControl;

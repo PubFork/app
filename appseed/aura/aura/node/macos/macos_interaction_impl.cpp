@@ -248,15 +248,13 @@ namespace macos
    }
 
 
-   bool interaction_impl::create_window_ex(::user::interaction * pui, DWORD dwExStyle, const char * lpszClassName,
-                                           const char * lpszWindowName, DWORD dwStyle,
-                                           const RECT& rect, ::user::interaction *  pParentWnd, id id,
+   bool interaction_impl::create_window_ex(::user::interaction * pui,  ::user::interaction *  pParentWnd, id id,
+                                           ::user::create_struct & cs,
                                            LPVOID lpParam /* = NULL */)
    {
 
-      if (!native_create_window_ex(pui, dwExStyle, lpszClassName, lpszWindowName, dwStyle,
-                                   rect,
-                                   pParentWnd == NULL ? NULL : pParentWnd->get_safe_handle(), id, lpParam))
+      if (!native_create_window_ex(pui, 
+                                   pParentWnd == NULL ? NULL : pParentWnd->get_safe_handle(), id, cs, lpParam))
       {
 
          return false;
@@ -268,10 +266,12 @@ namespace macos
    }
 
 
-   bool interaction_impl::native_create_window_ex(::user::interaction * pui, DWORD dwExStyle, const char * lpszClassName,
-         const char * lpszWindowName, DWORD dwStyle,
-         const RECT& rectParam,
-         oswindow hWndParent, id id, LPVOID lpParam)
+   bool interaction_impl::native_create_window_ex(
+                                                  ::user::interaction * pui,
+                                                  oswindow hWndParent,
+                                                  id id,
+                                                  ::user::create_struct & cs,
+                                                  LPVOID lpParam)
    {
 
       if (::IsWindow(get_handle()))
@@ -285,60 +285,29 @@ namespace macos
 
       //      ASSERT(lpszClassName == NULL || __is_valid_string(lpszClassName) ||
       //       __is_valid_atom(lpszClassName));
-      ENSURE_ARG(lpszWindowName == NULL || __is_valid_string(lpszWindowName));
+      ENSURE_ARG(cs.lpszName == NULL || __is_valid_string(cs.lpszName));
 
       // allow modification of several common create parameters
-      ::user::create_struct cs;
-      cs.dwExStyle = dwExStyle;
-      cs.lpszClass = lpszClassName;
-      cs.lpszName = lpszWindowName;
-      cs.style = dwStyle;
-      cs = rectParam;
+      //::user::create_struct cs;
       //      cs.hwndParent = hWndParent;
       //   cs.hMenu = hWndParent == NULL ? NULL : nIDorHMenu;
       cs.hMenu = NULL;
       //      cs.hInstance = System.m_hInstance;
-      cs.lpCreateParams = lpParam;
+      //cs.lpCreateParams = lpParam;
 
-      if (m_pui != NULL)
-      {
-
-         if (!m_pui->pre_create_window(cs))
-         {
-
-            PostNcDestroy();
-
-            return FALSE;
-
-         }
-
-      }
-      else
-      {
-
-         if (!pre_create_window(cs))
-         {
-
-            PostNcDestroy();
-
-            return FALSE;
-
-         }
-
-      }
-
-      if (cs.hwndParent == NULL)
-      {
-
-         cs.style &= ~WS_CHILD;
-
-      }
 
       install_message_routing(this);
 
       hook_window_create(m_pui);
 
       CGRect rect;
+      
+      RECT rectParam;
+      
+      rectParam.left = cs.x;
+      rectParam.top = cs.y;
+      rectParam.right = cs.x + cs.cx;
+      rectParam.bottom = cs.y + cs.cy;
 
       copy(rect, rectParam);
 
@@ -427,21 +396,19 @@ namespace macos
       return true;
    }
 
-   bool interaction_impl::create_window(::user::interaction * pui, const char * lpszClassName,
-                                        const char * lpszWindowName, DWORD dwStyle,
-                                        const RECT& rect,
-                                        ::user::interaction *  pParentWnd, id id,
+   
+   bool interaction_impl::create_window(::user::interaction * pui,
+                                        ::user::interaction *  pParentWnd, id id,::user::create_struct & cs,
                                         sp(::create) pContext)
    {
       // can't use for desktop or pop-up windows (use CreateEx instead)
       ASSERT(pParentWnd != NULL);
-      ASSERT((dwStyle & WS_POPUP) == 0);
+      ASSERT((cs.style & WS_POPUP) == 0);
 
-      return create_window_ex(pui, 0, lpszClassName, lpszWindowName,
-                              dwStyle | WS_CHILD,
-                              rect,
-                              pParentWnd, id, (LPVOID)pContext);
+      return create_window_ex(pui, pParentWnd, id, cs,  (LPVOID)pContext);
+      
    }
+   
 
    bool interaction_impl::create_message_queue(::user::interaction * pui, const char * pszName)
    {
@@ -454,8 +421,10 @@ namespace macos
       }
       else
       {
+         
+         ::user::create_struct cs(0, NULL, pszName, WS_CHILD, null_rect());
 
-         if (!native_create_window_ex(pui, 0, NULL, pszName, WS_CHILD, null_rect(), MESSAGE_WINDOW_PARENT))
+         if (!native_create_window_ex(pui, MESSAGE_WINDOW_PARENT, "message_queue", cs))
          {
 
             return false;
@@ -4347,6 +4316,8 @@ namespace macos
                         | SWP_DEFERERASE);
 
          m_rectLastPos = m_rectParentClientRequest;
+         
+         //Session.set_cursor(Session.get_cursor());
 
       }
 

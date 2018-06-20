@@ -66,10 +66,10 @@ namespace user
 
                   point ptHitTest = ptCursor;
 
-                  if(rectEvent.left < 0)
-                     ptHitTest.x -= rectEvent.left;
-                  if(rectEvent.top < 0)
-                     ptHitTest.y -= rectEvent.top;
+//                  if(rectEvent.left < 0)
+//                     ptHitTest.x -= rectEvent.left;
+//                  if(rectEvent.top < 0)
+//                     ptHitTest.y -= rectEvent.top;
 
                   if(egrip & GripTopLeft)
                   {

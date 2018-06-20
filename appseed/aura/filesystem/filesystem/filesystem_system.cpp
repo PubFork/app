@@ -2281,7 +2281,7 @@ restart:
    }
 
 
-   ::file::file_sp system::get_file(var varFile,UINT nOpenFlags,cres * pfesp,::aura::application * papp)
+   ::file::file_sp system::get_file(var varFile, UINT nOpenFlags,cres * pfesp,::aura::application * papp)
    {
 
       if(pfesp != NULL)
@@ -2477,7 +2477,9 @@ restart:
 
                single_lock sl(System.http().m_pmutexDownload, true);
 
-               if (App(papp).file().exists(strFile) && !(System.http().m_straDownloading.contains(strPath) || System.http().m_straExists.contains(strPath)))
+               if ((nOpenFlags & ::file::no_cache) == 0
+                   && App(papp).file().exists(strFile)
+                   && !(System.http().m_straDownloading.contains(strPath) || System.http().m_straExists.contains(strPath)))
                {
 
                   sl.unlock();
@@ -2507,6 +2509,7 @@ restart:
                   }
                   catch (...)
                   {
+                     
                   }
 
                }

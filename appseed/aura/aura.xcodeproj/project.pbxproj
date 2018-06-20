@@ -2066,6 +2066,7 @@
 		9AD186431F9C3127001CEA8E /* visual_apple_image_gif.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AD186411F9C3127001CEA8E /* visual_apple_image_gif.cpp */; };
 		9AD186861F9C3F31001CEA8E /* _user.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AD186851F9C3F30001CEA8E /* _user.cpp */; };
 		9AD186871F9C3F3E001CEA8E /* _user.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AD186851F9C3F30001CEA8E /* _user.cpp */; };
+		9AD4E30C20D8D28E00ACF638 /* user_create_struct.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AD4E30B20D8D28E00ACF638 /* user_create_struct.cpp */; };
 		9ADD53EA1F20E1B70008AA41 /* zip_api.h in Headers */ = {isa = PBXBuildFile; fileRef = 9ADD53E01F20E1B70008AA41 /* zip_api.h */; };
 		9ADD53EB1F20E1B70008AA41 /* zip_crypt.h in Headers */ = {isa = PBXBuildFile; fileRef = 9ADD53E11F20E1B70008AA41 /* zip_crypt.h */; };
 		9ADD53EC1F20E1B70008AA41 /* zip_file.h in Headers */ = {isa = PBXBuildFile; fileRef = 9ADD53E21F20E1B70008AA41 /* zip_file.h */; };
@@ -2241,7 +2242,6 @@
 		9AF4C3451F836F8300197385 /* aura_department.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AF4C2731F836F8200197385 /* aura_department.h */; };
 		9AF4C3461F836F8300197385 /* aura_department_container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4C2741F836F8200197385 /* aura_department_container.cpp */; };
 		9AF4C3471F836F8300197385 /* aura_department_container.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AF4C2751F836F8200197385 /* aura_department_container.h */; };
-		9AF4C3481F836F8300197385 /* aura_draw2d.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AF4C2761F836F8200197385 /* aura_draw2d.h */; };
 		9AF4C3491F836F8300197385 /* aura_draw_context.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4C2771F836F8200197385 /* aura_draw_context.cpp */; };
 		9AF4C34A1F836F8300197385 /* aura_draw_context.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AF4C2781F836F8200197385 /* aura_draw_context.h */; };
 		9AF4C34B1F836F8300197385 /* aura_draw_interface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4C2791F836F8200197385 /* aura_draw_interface.cpp */; };
@@ -4103,6 +4103,7 @@
 		9AD1863F1F9C30F0001CEA8E /* visual_apple_image.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = visual_apple_image.cpp; sourceTree = "<group>"; };
 		9AD186411F9C3127001CEA8E /* visual_apple_image_gif.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = visual_apple_image_gif.cpp; sourceTree = "<group>"; };
 		9AD186851F9C3F30001CEA8E /* _user.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = _user.cpp; sourceTree = "<group>"; };
+		9AD4E30B20D8D28E00ACF638 /* user_create_struct.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = user_create_struct.cpp; sourceTree = "<group>"; };
 		9ADB20551FCB6CA600C154DF /* aura_malloc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = aura_malloc.h; sourceTree = "<group>"; };
 		9ADD53DF1F20E1B70008AA41 /* zip_algorithm.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = zip_algorithm.txt; sourceTree = "<group>"; };
 		9ADD53E01F20E1B70008AA41 /* zip_api.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip_api.h; sourceTree = "<group>"; };
@@ -4296,7 +4297,6 @@
 		9AF4C2731F836F8200197385 /* aura_department.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_department.h; sourceTree = "<group>"; };
 		9AF4C2741F836F8200197385 /* aura_department_container.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aura_department_container.cpp; sourceTree = "<group>"; };
 		9AF4C2751F836F8200197385 /* aura_department_container.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_department_container.h; sourceTree = "<group>"; };
-		9AF4C2761F836F8200197385 /* aura_draw2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_draw2d.h; sourceTree = "<group>"; };
 		9AF4C2771F836F8200197385 /* aura_draw_context.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aura_draw_context.cpp; sourceTree = "<group>"; };
 		9AF4C2781F836F8200197385 /* aura_draw_context.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_draw_context.h; sourceTree = "<group>"; };
 		9AF4C2791F836F8200197385 /* aura_draw_interface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aura_draw_interface.cpp; sourceTree = "<group>"; };
@@ -4940,6 +4940,7 @@
 				9A6FAD531F5C760100AF31B2 /* user_create.cpp */,
 				9A6FAD541F5C760100AF31B2 /* user_create.h */,
 				9A51A7261F9BE302004D02D4 /* user_create_struct.h */,
+				9AD4E30B20D8D28E00ACF638 /* user_create_struct.cpp */,
 				9A51A7471F9BE30C004D02D4 /* user_elemental.cpp */,
 				9A51A7461F9BE30C004D02D4 /* user_elemental.h */,
 				9A51A7171F9BE2FE004D02D4 /* user_enum.h */,
@@ -6047,8 +6048,8 @@
 		9A2A53211F1FEDFD001AB0F8 /* visual */ = {
 			isa = PBXGroup;
 			children = (
-				9AE47F8B20D0987000648DFD /* visual_font_list.cpp */,
-				9AE47F8A20D0987000648DFD /* visual_font_list.h */,
+				9AD1860A1F9C2982001CEA8E /* visual.inl */,
+				9A2A53231F1FEDFD001AB0F8 /* visual.h */,
 				9A4BE0D51FFED87B00DED594 /* visual_ios_image_mm.mm */,
 				9A2F5F6F1FA0F6DE006CA37F /* visual_macos_image_mm.mm */,
 				9AD186411F9C3127001CEA8E /* visual_apple_image_gif.cpp */,
@@ -6063,6 +6064,9 @@
 				9AD185EC1F9C2976001CEA8E /* visual_api.h */,
 				9AD185E71F9C2976001CEA8E /* visual_buffered_graphics.cpp */,
 				9AD185FD1F9C297C001CEA8E /* visual_buffered_graphics.h */,
+				9A2A53241F1FEDFD001AB0F8 /* visual_const.h */,
+				9A6FAFE01F5C79B700AF31B2 /* visual_cursor.cpp */,
+				9A2A53261F1FEDFD001AB0F8 /* visual_cursor.h */,
 				9AD185FF1F9C297C001CEA8E /* visual_dib_pal.h */,
 				9AD185F31F9C2977001CEA8E /* visual_dib.cpp */,
 				9AD186011F9C297F001CEA8E /* visual_dib.h */,
@@ -6074,6 +6078,8 @@
 				9AD185DE1F9C2974001CEA8E /* visual_font_enumeration.h */,
 				9AD185E01F9C2975001CEA8E /* visual_font.cpp */,
 				9AD186051F9C2982001CEA8E /* visual_font.h */,
+				9AE47F8B20D0987000648DFD /* visual_font_list.cpp */,
+				9AE47F8A20D0987000648DFD /* visual_font_list.h */,
 				9AD185FB1F9C297B001CEA8E /* visual_freeimage_image_gif.cpp */,
 				9AD186001F9C297D001CEA8E /* visual_freeimage_image.cpp */,
 				9AD186021F9C2981001CEA8E /* visual_freeimage_image.h */,
@@ -6083,6 +6089,8 @@
 				9AD186081F9C2982001CEA8E /* visual_glyph.h */,
 				9AD186041F9C2981001CEA8E /* visual_graphics_extension.cpp */,
 				9AD185E21F9C2975001CEA8E /* visual_graphics_extension.h */,
+				9A6FAFE11F5C79B700AF31B2 /* visual_icon.cpp */,
+				9A2A53281F1FEDFD001AB0F8 /* visual_icon.h */,
 				9AD1860B1F9C2983001CEA8E /* visual_image_list.cpp */,
 				9AD185F71F9C2979001CEA8E /* visual_image_list.h */,
 				9AD185E11F9C2975001CEA8E /* visual_imaging.cpp */,
@@ -6093,13 +6101,6 @@
 				9AD185F81F9C297A001CEA8E /* visual_visual.h */,
 				9AD185F91F9C297A001CEA8E /* visual_water_routine.cpp */,
 				9AD186031F9C2981001CEA8E /* visual_water_routine.h */,
-				9AD1860A1F9C2982001CEA8E /* visual.inl */,
-				9A6FAFE01F5C79B700AF31B2 /* visual_cursor.cpp */,
-				9A6FAFE11F5C79B700AF31B2 /* visual_icon.cpp */,
-				9A2A53231F1FEDFD001AB0F8 /* visual.h */,
-				9A2A53241F1FEDFD001AB0F8 /* visual_const.h */,
-				9A2A53261F1FEDFD001AB0F8 /* visual_cursor.h */,
-				9A2A53281F1FEDFD001AB0F8 /* visual_icon.h */,
 			);
 			path = visual;
 			sourceTree = "<group>";
@@ -6920,7 +6921,6 @@
 				9AF4C2731F836F8200197385 /* aura_department.h */,
 				9AF4C2741F836F8200197385 /* aura_department_container.cpp */,
 				9AF4C2751F836F8200197385 /* aura_department_container.h */,
-				9AF4C2761F836F8200197385 /* aura_draw2d.h */,
 				9AF4C2771F836F8200197385 /* aura_draw_context.cpp */,
 				9AF4C2781F836F8200197385 /* aura_draw_context.h */,
 				9AF4C2791F836F8200197385 /* aura_draw_interface.cpp */,
@@ -8229,7 +8229,6 @@
 				9AF4C3751F836F8400197385 /* aura_library.h in Headers */,
 				07F5B1DB184A3B430092C3E1 /* file_seekable.h in Headers */,
 				9A41731820004E7A0056265A /* crypto.h in Headers */,
-				9AF4C3481F836F8300197385 /* aura_draw2d.h in Headers */,
 				9A6FAC0D1F5C70D200AF31B2 /* message_timer.h in Headers */,
 				9AF4C3781F836F8400197385 /* aura_live_signal.h in Headers */,
 				079E279C1B6EB7A60065FDE7 /* math_int_biunique.h in Headers */,
@@ -9308,6 +9307,7 @@
 				9A6FAE1E1F5C771400AF31B2 /* str_format.cpp in Sources */,
 				9A41714F200033F50056265A /* _os_ansios.cpp in Sources */,
 				9A6FB15F1F5C9DF800AF31B2 /* draw2d_object.cpp in Sources */,
+				9AD4E30C20D8D28E00ACF638 /* user_create_struct.cpp in Sources */,
 				9A6FACA81F5C719700AF31B2 /* cross_windows_nt.cpp in Sources */,
 				9A6FAB3A1F5C707800AF31B2 /* fontopus_authentication_map.cpp in Sources */,
 				9A6FB0541F5C79CF00AF31B2 /* file_memory_file.cpp in Sources */,

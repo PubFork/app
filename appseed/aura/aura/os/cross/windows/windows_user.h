@@ -1020,12 +1020,7 @@ typedef struct _hmenu
 
 struct visual_cursor;
 
-typedef struct _hcursor
-{
-
-   struct visual_cursor * m_p;
-
-} * HCURSOR;
+typedef void * HCURSOR;
 
 
 typedef void * HDROP;

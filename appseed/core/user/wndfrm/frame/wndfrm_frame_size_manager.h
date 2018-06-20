@@ -60,7 +60,7 @@ namespace user
             void MoveWindow(sp(::user::interaction) pwnd, const RECT & rect);
 
             
-            void message_handler(::user::interaction * pui, ::message::base * pbase);
+            //void message_handler(::user::interaction * pui, ::message::base * pbase);
 
 
          };

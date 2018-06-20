@@ -281,12 +281,12 @@ public:
 
 
 
-   virtual bool LoadImage(::visual::dib_sp::array * pdiba, var varFile);
-   virtual bool LoadImage(::draw2d::dib * pdib, var varFile);
+   virtual bool LoadImage(::visual::dib_sp::array * pdiba, var varFile, bool bCache = true);
+   virtual bool LoadImage(::draw2d::dib * pdib, var varFile, bool bCache = true);
    virtual bool LoadImageFromFile(::visual::dib_sp::array * pdiba, ::file::file * buffer);
    virtual bool LoadImageFromFile(::draw2d::dib * pdib, ::file::file * buffer);
 
-   virtual bool load_image(::draw2d::dib * pdib, var varFile);
+   virtual bool load_image(::draw2d::dib * pdib, var varFile, bool bCache = true);
    virtual bool _load_image(::draw2d::dib * pdib, ::file::file * pfile);
    virtual bool _load_image(::draw2d::dib * pdib, int cx, int cy, int iScan, COLORREF * pdata);
 #ifdef APPLEOS

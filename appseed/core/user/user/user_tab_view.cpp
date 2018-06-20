@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 namespace user
@@ -326,8 +326,10 @@ namespace user
       rect = pinterface->get_data()->m_rectTabClient;
 
       pinterface->ClientToScreen(&rect);
+      
+      ::user::create_struct cs(WS_EX_LAYERED, NULL, NULL, 0, rect);
 
-      m_pdroptargetwindow->create_window_ex(WS_EX_LAYERED, NULL, NULL, 0, rect, NULL, id());
+      m_pdroptargetwindow->create_window_ex(cs);
 
       m_pdroptargetwindow->ShowWindow(SW_SHOW);
 

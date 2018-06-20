@@ -1,4 +1,4 @@
-﻿#include "framework.h" // #include "axis/net/sockets/bsd/sockets.h"
+#include "framework.h" // #include "axis/net/sockets/bsd/sockets.h"
 #include "aura/net/net_sockets.h"
 #include <stdio.h>
 
@@ -309,7 +309,7 @@ namespace sockets
 #ifndef __CYGWIN__
          error += gai_strerror(n);
 #endif
-         thiserr << error;
+         thiserr << error << " for " << str;
          item.r = false;
          item.m_bTimeout = true;
          item.m_dwLastChecked = ::get_tick_count();

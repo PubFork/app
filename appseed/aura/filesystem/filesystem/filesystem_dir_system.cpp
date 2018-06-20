@@ -24,7 +24,7 @@ namespace file
    {
 
 
-      system * system::g_pthis = NULL;
+      sp(system) system::g_pthis;
 
 
       system::system(::aura::application * papp) :

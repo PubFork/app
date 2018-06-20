@@ -21,7 +21,33 @@ void copy(CGRect &r, LPCRECTD pr)
 namespace draw2d_quartz2d
 {
 
+   
+   void copy(CGAffineTransform & affine, const ::draw2d::matrix & m)
+   {
+      
+      affine.a = m.a1;
+      affine.b = m.a2;
+      affine.c = m.b1;
+      affine.d = m.b2;
+      affine.tx = m.c1;
+      affine.ty = m.c2;
+      
+   }
+   
+   
+   void copy(::draw2d::matrix & m, const CGAffineTransform & affine)
+   {
+      
+      m.a1 = affine.a;
+      m.a2 = affine.b;
+      m.b1 = affine.c;
+      m.b2 = affine.d;
+      m.c1 = affine.tx;
+      m.c2 = affine.ty;
 
+   }
+
+   
    graphics::graphics(::aura::application * papp) :
       ::object(papp),
       ::draw2d::graphics(papp)
@@ -3608,7 +3634,44 @@ namespace draw2d_quartz2d
       return point(affine.tx, affine.ty);
 
    }
+   
 
+   bool graphics::get(::draw2d::matrix & matrix)
+   {
+      
+      synch_lock sl(m_pmutex);
+      
+      CGAffineTransform affine = CGContextGetCTM(m_pdc);
+      
+      copy(matrix, affine);
+
+      return true;
+      
+   }
+   
+   
+   bool graphics::set(const ::draw2d::matrix & matrix)
+   {
+      
+      synch_lock sl(m_pmutex);
+      
+      CGAffineTransform affine = CGContextGetCTM(m_pdc);
+      
+      ::draw2d::matrix m;
+      
+      copy(m, affine);
+      
+      m.invert();
+      
+      m.append(matrix);
+      
+      copy(affine, m);
+      
+      CGContextConcatCTM(m_pdc, affine);
+      
+      return true;
+
+   }
 
 
    point graphics::SetViewportOrg(int32_t x, int32_t y)

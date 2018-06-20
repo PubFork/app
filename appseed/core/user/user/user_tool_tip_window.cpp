@@ -321,7 +321,8 @@ namespace user
          return false;
       }
       m_font->create_point_font(FONT_SANS, 10.0);
-      return create_window_ex(WS_EX_TOOLWINDOW, NULL, NULL, WS_POPUP, null_rect(), NULL, id) != 0;
+      ::user::create_struct cs(WS_EX_TOOLWINDOW, NULL, NULL, WS_POPUP, null_rect());
+      return create_window_ex(cs, NULL, id) != 0;
    }
 
    ///////////////////////////////////////////////////////////

@@ -712,6 +712,13 @@ namespace user
 
 #endif
 
+      if(cs.hwndParent != NULL)
+      {
+         
+         cs.style |= WS_CHILD;
+         
+      }
+      
       cs.style &= ~WS_VISIBLE;
 
       return true;
@@ -725,8 +732,10 @@ namespace user
       UNREFERENCED_PARAMETER(lpszMenuName);
 
       m_strTitle = lpszWindowName;    // save title for later
+      
+      ::user::create_struct cs(dwExStyle, lpszClassName, lpszWindowName, dwStyle, rect, pcreate);
 
-      if (!::user::interaction::create_window_ex(dwExStyle, lpszClassName, lpszWindowName, dwStyle, rect, puiParent, id(), pcreate))
+      if (!::user::interaction::create_window_ex(cs, puiParent))
       {
 
          TRACE(::aura::trace::category_AppMsg, 0, "Warning: failed to create frame_window.\n");
@@ -867,8 +876,10 @@ namespace user
       }
 
       output_debug_string("\nm_bLayoutEnable FALSE");
+      
+      ::user::create_struct cs(0L, NULL, lpszTitle, dwDefaultStyle, rectFrame, pcreate);
 
-      if (!create_window_ex(0L, NULL, lpszTitle, dwDefaultStyle, rectFrame, puiParent, /*nIDResource*/ 0, pcreate))
+      if (!create_window_ex(cs, puiParent))
       {
 
          return false;   // will self destruct on failure normally

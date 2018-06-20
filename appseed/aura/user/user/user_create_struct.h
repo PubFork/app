@@ -12,45 +12,23 @@ namespace user
       public CREATESTRUCTA
 #endif
    {
-      public:
+   public:
 
+      
+      create_struct(const create_struct &) = default;
+      create_struct(
+                    u32 uiExStyle = 0,
+                    const char * pszClassName = 0,
+                    const char * pszWindowName = 0,
+                    u32 uiStyle = 0,
+                    ::rect rect = ::null_rect(),
+                    LPVOID pvCreateParams = NULL);
+      create_struct(LPCRECT lpcrect);
 
-         create_struct & operator = (const RECT & rect)
-         {
-
-            x = rect.left;
-            y = rect.top;
-            cx = rect.right - rect.left;
-            cy = rect.bottom - rect.top;
-
-            return *this;
-
-         }
-
-
-         create_struct & operator = (LPCRECT lpcrect)
-         {
-
-            if (lpcrect == NULL)
-            {
-
-               x = 0;
-               y = 0;
-               cx = 0;
-               cy = 0;
-
-            }
-            else
-            {
-
-               operator = (*lpcrect);
-
-            }
-
-            return *this;
-
-         }
-
+      
+      void set_rect(LPCRECT lpcrect);
+      void get_rect(LPRECT lprect);
+      
 
    };
 

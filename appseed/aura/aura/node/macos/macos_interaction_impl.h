@@ -103,20 +103,19 @@ namespace macos
 
       using ::user::interaction_impl::create_window;
       // for child windows, views, panes etc
-      virtual bool create_window(::user::interaction * pui, const char * lpszClassName,
-                          const char * lpszWindowName, DWORD dwStyle,
-                          const RECT& rect,
-                          ::user::interaction *   pParentWnd, id id,
+      virtual bool create_window(::user::interaction * pui, 
+                          ::user::interaction *   pParentWnd, id id, ::user::create_struct & cs,
                           sp(::create) pContext = NULL);
 
       // advanced creation (allows access to extended styles)
-      virtual bool create_window_ex(::user::interaction * pui, DWORD dwExStyle = 0, const char * lpszClassName=0, const char * lpszWindowName= 0, DWORD dwStyle= 0, const RECT& rect= null_rect(), ::user::interaction *   pParentWnd=NULL, id id=::id(),                      LPVOID lpParam = NULL) override;
+      virtual bool create_window_ex(
+                                    ::user::interaction * pui, ::user::interaction *   pParentWnd, id id, ::user::create_struct & cs, LPVOID lpParam = NULL) override;
 
-       virtual bool native_create_window_ex(::user::interaction * pui, DWORD dwExStyle= 0, const char * lpszClassName= NULL,
-                                     const char * lpszWindowName= 0, DWORD dwStyle= 0,
-                                            const RECT& rect = ::null_rect(),
-                                            oswindow hwndParent= NULL, id id=::id(),
-                                     LPVOID lpParam = NULL);
+       virtual bool native_create_window_ex(
+                                            ::user::interaction * pui,
+                                            oswindow hwndParent, id id,
+                                            ::user::create_struct & cs,
+                                            LPVOID lpParam = NULL);
 
       virtual bool DestroyWindow() override;
 

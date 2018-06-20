@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 //#include "freeimage/Source/FreeImage.h"
 //#include "visual_FreeImageFileProc.h"
 #ifdef WINDOWSEX
@@ -133,10 +133,12 @@ imaging::~imaging()
 
 
 
-bool imaging::LoadImage(::visual::dib_sp::array * pdiba, var varFile)
+bool imaging::LoadImage(::visual::dib_sp::array * pdiba, var varFile, bool bCache)
 {
+   
+restart:
 
-   ::file::file_sp file = App(pdiba->get_app()).file().get_file(varFile, ::file::type_binary | ::file::mode_read | ::file::share_deny_write);
+   ::file::file_sp file = App(pdiba->get_app()).file().get_file(varFile, ::file::type_binary | ::file::mode_read | ::file::share_deny_write | (bCache ? 0 : ::file::no_cache));
 
    if(file.is_null())
    {
@@ -147,6 +149,15 @@ bool imaging::LoadImage(::visual::dib_sp::array * pdiba, var varFile)
 
    if(!LoadImageFromFile(pdiba, file))
    {
+      
+      if(bCache)
+      {
+         
+         bCache = false;
+         
+         goto restart;
+         
+      }
 
       return false;
 
@@ -157,10 +168,10 @@ bool imaging::LoadImage(::visual::dib_sp::array * pdiba, var varFile)
 }
 
 
-bool imaging::LoadImage(::draw2d::dib * pdib,var varFile)
+bool imaging::LoadImage(::draw2d::dib * pdib,var varFile, bool bCache)
 {
 
-   ::file::file_sp file = App(pdib->get_app()).file().get_file(varFile, ::file::type_binary | ::file::mode_read | ::file::share_deny_write);
+   ::file::file_sp file = App(pdib->get_app()).file().get_file(varFile, ::file::type_binary | ::file::mode_read | ::file::share_deny_write | (bCache ? 0 : ::file::no_cache));
 
    if(file.is_null())
    {
@@ -6096,13 +6107,23 @@ bool imaging::load_from_file(::draw2d::dib * pdib,var varFile,bool bCache)
       }
    }
 
+restart:
 
    try
    {
 
-
-      if(!LoadImage(pdib,varFile))
+      if(!LoadImage(pdib,varFile, bCache) || pdib->m_size.area() <= 0 ||
+         pdib->m_pcolorref == NULL)
       {
+         
+         if(bCache)
+         {
+            
+            bCache = false;
+            
+            goto restart;
+            
+         }
 
          return false;
 
@@ -6167,10 +6188,11 @@ bool imaging::load_from_file(::visual::cursor * pcursor,var varFile, bool bFromC
 }
 
 
-bool imaging::load_image(::draw2d::dib * pdib, var varFile)
+bool imaging::load_image(::draw2d::dib * pdib, var varFile, bool bCache)
 {
 
-   ::file::file_sp file = Application.file().get_file(varFile, ::file::type_binary | ::file::mode_read | ::file::share_deny_write);
+   ::file::file_sp file = Application.file().get_file(varFile, ::file::type_binary | ::file::mode_read | ::file::share_deny_write |
+                                                      (bCache ? 0 : ::file::no_cache));
 
    if (file.is_null())
    {

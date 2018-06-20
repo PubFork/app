@@ -17,12 +17,13 @@ namespace user
             object(papp),
             ::user::wndfrm::interaction(papp)
          {
-            ::fork(get_app(), [&]()
-            {
-
-               System.visual().set_cursor_set_system_default();
-
-            });
+            
+            fork([&]()
+                   {
+                      
+                      System.visual().set_cursor_set_from_matter("cursor/polar");
+                      
+                   });
 
          }
 

@@ -16,11 +16,10 @@ namespace visual
       size                    m_szHotspotOffset;
 
 
-
-#ifdef WINDOWSEX
+#if defined(MACOS) || defined(WINDOWSEX)
 
       HCURSOR                 m_hcursor;
-
+      
 #endif
 
 
@@ -30,11 +29,15 @@ namespace visual
 
       bool initialize_system_default();
 
-#ifdef WINDOWSEX
+#if defined(MACOS) || defined(WINDOWSEX) 
 
       HCURSOR get_HCURSOR();
 
 #endif
+
+      void set_current(::aura::session * psession);
+
+      static void reset(::aura::session * psession);
 
 
    };
@@ -57,9 +60,9 @@ namespace visual
 // on 2014-06-29!! During World Cup Games 2014!! Oitavas de Final, third game between Nederland and Mexico!!
 // Thank you God!!
 // Thank you Microsoft!!
-// Thank you Pappi!! Pelo passeio no Mercado Municipal de Curitiba com a Mummi e pelo almoÁo com o-bento de sushi e onigiri delicioso!!
-// Obrigado Mummi por tudo!! E por hoje tambÈm e por propiciar isso tudo!! Por falar t„o profundamente do Chico Xavier mesmo com muitas d˙vidas minhas!!
-// Obrigado Carlos!! VocÅEpoderia colaborar, n„o ÅE!
+// Thank you Pappi!! Pelo passeio no Mercado Municipal de Curitiba com a Mummi e pelo almoÔøΩo com o-bento de sushi e onigiri delicioso!!
+// Obrigado Mummi por tudo!! E por hoje tambÔøΩm e por propiciar isso tudo!! Por falar tÔøΩo profundamente do Chico Xavier mesmo com muitas dÔøΩvidas minhas!!
+// Obrigado Carlos!! VocÔøΩEpoderia colaborar, nÔøΩo ÔøΩE!
 // Meu Deus me ajude!!
 
 CLASS_DECL_AURA HBITMAP CreateAlphaBitmapV5(::draw2d::dib * pdib);

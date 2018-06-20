@@ -13,7 +13,7 @@
 //
 #import "macos_mm.h"
 
-
+extern NSCursor * g_pcurrentNscursor;
 
 /**
  * Key Flags
@@ -268,7 +268,12 @@ DWORD fixKeyCode(DWORD keyCode, unichar keyChar, enum APPLE_KEYBOARD_TYPE type)
    m_bRAlt              = false;
    m_bLCommand          = false;
    m_bRCommand          = false;
-
+   if (self) {
+      trackingArea = [[NSTrackingArea alloc] initWithRect:[self bounds]
+                                                  options: (NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved | NSTrackingActiveInKeyWindow )
+                                                    owner:self userInfo:nil];
+      [self addTrackingArea:trackingArea];
+   }
    return self;
    
 }
@@ -943,6 +948,28 @@ m_f = true; \
    
 }
 
+- (void)viewWillMoveToWindow:(NSWindow *)newWindow {
+   NSTrackingArea *const trackingArea = [[NSTrackingArea alloc] initWithRect:NSZeroRect options:(NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved | NSTrackingActiveAlways | NSTrackingInVisibleRect) owner:self userInfo:nil];
+   [self addTrackingArea:trackingArea];
+   [self.window invalidateCursorRectsForView:self];
+}
+
+- (void)resetCursorRects {
+   [super resetCursorRects];
+   [self addCursorRect:self.bounds cursor:g_pcurrentNscursor];
+}
+
+- (void)mouseEntered:(NSEvent *)theEvent {
+   [super mouseEntered:theEvent];
+   [g_pcurrentNscursor push];
+}
+
+- (void)mouseExited:(NSEvent *)theEvent {
+   [super mouseExited:theEvent];
+   [g_pcurrentNscursor pop];
+}
+
+
 @end
 
 
@@ -1013,6 +1040,7 @@ unsigned int event_key_code(NSEvent * event)
    return uiKeyCode;
    
 }
+
 
 
 

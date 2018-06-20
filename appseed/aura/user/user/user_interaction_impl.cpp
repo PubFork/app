@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 void windowing_output_debug_string(const char * pszDebugString);
@@ -277,21 +277,18 @@ namespace user
    }
 
 
-   bool interaction_impl::create_window_ex(::user::interaction * pui, uint32_t dwExStyle,const char * lpszClassName,const char * lpszWindowName,uint32_t dwStyle,const RECT & rect,::user::interaction * pParentWnd,id id,LPVOID lpParam /* = NULL */)
+   bool interaction_impl::create_window_ex(::user::interaction * pui, ::user::interaction * puiParent, id id, ::user::create_struct & cs, LPVOID lpParam /* = NULL */)
    {
-      UNREFERENCED_PARAMETER(dwExStyle);
-      UNREFERENCED_PARAMETER(lpszClassName);
-      UNREFERENCED_PARAMETER(lpszWindowName);
-      UNREFERENCED_PARAMETER(dwStyle);
-      UNREFERENCED_PARAMETER(rect);
-      UNREFERENCED_PARAMETER(pParentWnd);
+      
+      UNREFERENCED_PARAMETER(puiParent);
+      UNREFERENCED_PARAMETER(cs);
       UNREFERENCED_PARAMETER(id);
       UNREFERENCED_PARAMETER(lpParam);
       ::exception::throw_interface_only(get_app());
 
       return false;
+      
    }
-
 
 
    // for child windows

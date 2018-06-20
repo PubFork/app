@@ -188,6 +188,49 @@ namespace draw2d
       }
 
    }
+   
+
+   double matrix::determinant() const
+   {
+
+      return
+      a[0][0] * (a[1][1] * a[2][2] - a[2][1] * a[1][2]) -
+      a[0][1] * (a[1][0] * a[2][2] - a[1][2] * a[2][0]) +
+      a[0][2] * (a[1][0] * a[2][1] - a[1][1] * a[2][0]);
+      
+   }
+   
+   
+   bool matrix::invert(matrix & aDst, const matrix & aSrc)
+   {
+
+      double det = aSrc.determinant();
+      
+      if (det == 0.0)
+      {
+         
+         //cout << "Singular matrix, can't find its inverse";
+         
+         return false;
+         
+      }
+      
+      double invdet = 1 / det;
+      
+      aDst.a[0][0] = (aSrc.a[1][1] * aSrc.a[2][2] - aSrc.a[2][1] * aSrc.a[1][2]) * invdet;
+      aDst.a[0][1] = (aSrc.a[0][2] * aSrc.a[2][1] - aSrc.a[0][1] * aSrc.a[2][2]) * invdet;
+      aDst.a[0][2] = (aSrc.a[0][1] * aSrc.a[1][2] - aSrc.a[0][2] * aSrc.a[1][1]) * invdet;
+      aDst.a[1][0] = (aSrc.a[1][2] * aSrc.a[2][0] - aSrc.a[1][0] * aSrc.a[2][2]) * invdet;
+      aDst.a[1][1] = (aSrc.a[0][0] * aSrc.a[2][2] - aSrc.a[0][2] * aSrc.a[2][0]) * invdet;
+      aDst.a[1][2] = (aSrc.a[1][0] * aSrc.a[0][2] - aSrc.a[0][0] * aSrc.a[1][2]) * invdet;
+      aDst.a[2][0] = (aSrc.a[1][0] * aSrc.a[2][1] - aSrc.a[2][0] * aSrc.a[1][1]) * invdet;
+      aDst.a[2][1] = (aSrc.a[2][0] * aSrc.a[0][1] - aSrc.a[0][0] * aSrc.a[2][1]) * invdet;
+      aDst.a[2][2] = (aSrc.a[0][0] * aSrc.a[1][1] - aSrc.a[1][0] * aSrc.a[0][1]) * invdet;
+
+      return true;
+      
+   }
+   
 
 } // namespace draw2d
 

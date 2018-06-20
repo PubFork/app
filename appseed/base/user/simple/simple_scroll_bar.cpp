@@ -1105,8 +1105,10 @@ public:
 
    trw(::aura::application * papp): ::object(papp),::user::interaction(papp)
    {
+      
+      ::user::create_struct cs(WS_EX_LAYERED,NULL,"",WS_VISIBLE);
 
-      if(create_window_ex(WS_EX_LAYERED,NULL,"",WS_VISIBLE,null_rect(),NULL, /*nIDResource*/ 0,NULL))
+      if(create_window_ex(cs))
       {
 
          TRACE("created trw");

@@ -11,21 +11,10 @@
 CFDataRef CopyImagePixels(CGImageRef inImage);
 
 
-void * get_png_image_data(unsigned long & size, CGImageRef image);
-void * get_jpeg_image_data(unsigned long & size, CGImageRef image);
-
-
-bool imaging::_save_image(::file::file * pfile, ::draw2d::dib * pdib, ::visual::save_image * psaveimage)
+CGImageRef cgimageref_from_dib(void * dib)
 {
    
-   if(pdib == NULL)
-   {
-      
-      return NULL;
-      
-   }
-   
-   unsigned long size;
+   ::draw2d::dib * pdib = (::draw2d::dib *) dib;
    
    ::aura::malloc < COLORREF * > pdst;
    
@@ -55,12 +44,81 @@ bool imaging::_save_image(::file::file * pfile, ::draw2d::dib * pdib, ::visual::
    if(context == NULL)
    {
       
-      return false;
+      return NULL;
       
       
    }
    
    CGImageRef cgimage = CGBitmapContextCreateImage(context);
+   
+   CGContextRelease(context);
+   
+   return cgimage;
+   
+}
+
+void ns_set_cursor_cgimageref(CGImageRef image, int cx, int cy, int xHotSpot, int yHotSpot);
+
+void * nscursor_from_cgimageref(CGImageRef image, int cx, int cy, int xHotSpot, int yHotSpot);
+
+void * CreateAlphaCursor(void * dib, int xHotSpot, int yHotSpot)
+{
+   
+   if(dib == NULL)
+   {
+      
+      return NULL;
+      
+   }
+   else
+   {
+      
+      ::draw2d::dib * pdib = (::draw2d::dib *) dib;
+      
+      return nscursor_from_cgimageref(cgimageref_from_dib(pdib), pdib->m_size.cx, pdib->m_size.cy, xHotSpot, yHotSpot);
+
+   }
+   
+}
+
+void set_cursor_dib(void * dib, int xHotSpot, int yHotSpot)
+{
+   
+   if(dib == NULL)
+   {
+      
+      ns_set_cursor_cgimageref(NULL, 0, 0, 0, 0);
+      
+   }
+   else
+   {
+      
+      ::draw2d::dib * pdib = (::draw2d::dib *) dib;
+   
+      ns_set_cursor_cgimageref(cgimageref_from_dib(pdib), pdib->m_size.cx, pdib->m_size.cy, xHotSpot, yHotSpot);
+      
+   }
+   
+}
+
+
+void * get_png_image_data(unsigned long & size, CGImageRef image);
+void * get_jpeg_image_data(unsigned long & size, CGImageRef image);
+
+
+bool imaging::_save_image(::file::file * pfile, ::draw2d::dib * pdib, ::visual::save_image * psaveimage)
+{
+   
+   if(pdib == NULL)
+   {
+      
+      return NULL;
+      
+   }
+   
+   unsigned long size;
+   
+   CGImageRef cgimage = cgimageref_from_dib(pdib);
    
    ::aura::malloc < COLORREF * > p;
    
@@ -83,8 +141,6 @@ bool imaging::_save_image(::file::file * pfile, ::draw2d::dib * pdib, ::visual::
    }
    
    CGImageRelease(cgimage);
-   
-   CGContextRelease(context);
    
    pfile->write(p, size);
    
