@@ -2334,7 +2334,7 @@ RetryBuildNumber:
 
       fork([=]()
       {
-
+         
          set_thread_priority(::multithreading::priority_highest);
 
          auto ptra = Session.m_appptra;
@@ -2429,17 +2429,10 @@ RetryBuildNumber:
 
          }
 
-         int i = 500;
+         int i = 50;
 
          while (i > 0 && ptra.get_size() > 0)
          {
-
-            //   //if (::PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE))
-            //   //{
-
-            //   //   ::get_thread()->defer_pump_message();
-
-            //   //}
 
             for (index j = 0; j < ptra.get_size(); )
             {
@@ -2452,6 +2445,8 @@ RetryBuildNumber:
                }
                else
                {
+                  
+                  TRACE("Waiting France Exit of %s", typeid(*ptra[j]).name());
 
                   j++;
 
@@ -2459,7 +2454,7 @@ RetryBuildNumber:
 
             }
 
-            Sleep(50);
+            Sleep(500);
 
             i--;
 

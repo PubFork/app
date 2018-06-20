@@ -1,4 +1,4 @@
-﻿#include "framework.h" // previously aura/user/user.h
+#include "framework.h" // previously aura/user/user.h
 
 
 namespace aura
@@ -100,7 +100,7 @@ namespace aura
 
       m_map.remove_key(nIDEvent);
 
-      threadrefa_add(ptimer);
+      threadrefa_remove(ptimer);
 
       sl.unlock();
 

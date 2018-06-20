@@ -71,15 +71,38 @@ namespace multithreading
    }
 
 
-   CLASS_DECL_AURA uint32_t __on_thread_finally(thread * pthread)
+   CLASS_DECL_AURA uint32_t __on_thread_finally(thread * thread)
    {
+      
+      int nExitCode = -1;
+      
 
-      if (pthread == NULL)
+      
+      if (thread == NULL)
       {
-
+         
          return -1;
-
+         
       }
+
+      
+      {
+      
+      sp(::thread) pthread = thread;
+      
+      try
+      {
+         
+         pthread->unregister_from_required_threads();
+         
+      }
+      catch(...)
+      {
+         
+         
+      }
+      
+
 
       try
       {
@@ -121,22 +144,8 @@ namespace multithreading
 
       }
 
-      int nExitCode = -1;
-
       try
       {
-
-         try
-         {
-
-            pthread->unregister_from_required_threads();
-
-         }
-         catch(...)
-         {
-
-
-         }
 
 
          __node_term_thread(pthread);
@@ -172,23 +181,27 @@ namespace multithreading
 
          __end_thread(papp);
 
-         try
-         {
-
-            ::release(pthread);
-
-         }
-         catch(...)
-         {
-
-         }
 
       }
       catch(...)
       {
 
       }
+         
+      }
 
+      try
+      {
+         
+         ::release(thread);
+
+      }
+      catch(...)
+      {
+         
+      }
+
+      
       set_thread_off(::GetCurrentThreadId());
 
       return nExitCode;
@@ -474,6 +487,30 @@ void thread_ptra::post_quit()
 
 }
 
+::count thread_ptra::get_count_except_current_thread()
+{
+   
+   thread * pthread = ::get_thread();
+   
+   ::count c = 0;
+   
+   for(index i = 0; i < spa(thread)::get_count(); i++)
+   {
+      
+      if(element_at(i) != pthread)
+      {
+         
+         TRACE("thread_ptra::get_count_except_current_thread %s", typeid(*element_at(i).m_p).name());
+         
+         c++;
+         
+      }
+      
+   }
+   
+   return c;
+   
+}
 
 void thread_ptra::wait(const duration & duration, ::sync_interface * psyncParent)
 {
@@ -485,7 +522,7 @@ void thread_ptra::wait(const duration & duration, ::sync_interface * psyncParent
 
       synch_lock sl(m_pmutex);
 
-      ::count cCount = get_count();
+      ::count cCount = get_count_except_current_thread();
 
       ::datetime::time timeNow = ::datetime::time::get_current_time();
 
@@ -504,9 +541,9 @@ void thread_ptra::wait(const duration & duration, ::sync_interface * psyncParent
 
          timeNow = ::datetime::time::get_current_time();
 
-         cCount = get_count();
+         cCount = get_count_except_current_thread();
 
-         Sleep(200);
+         Sleep(500);
 
          if (psyncParent != NULL)
          {

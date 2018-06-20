@@ -1004,7 +1004,7 @@ void thread::close_dependent_threads(const ::duration & dur)
 void thread::signal_close_dependent_threads()
 {
 
-   thread_ptra ptra;
+   spa(::thread) ptra;
 
    {
 
@@ -1017,7 +1017,7 @@ void thread::signal_close_dependent_threads()
    for(index i = 0; i < ptra.get_count(); i++)
    {
 
-      thread * pthread = ptra[i];
+      sp(thread) pthread = ptra[i];
 
       try
       {
@@ -2346,7 +2346,7 @@ void thread::post_to_all_threads(UINT message,WPARAM wparam,LPARAM lparam)
          try
          {
 
-            pthread = dynamic_cast < thread * >(threadptra[i]);
+            pthread = threadptra[i];
 
             pthread->post_quit();
 

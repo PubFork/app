@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 #ifdef APPLEOS
@@ -113,7 +113,7 @@ class sync_interface;
 
 
 class CLASS_DECL_AURA thread_ptra :
-   virtual public ::pointer_array < thread * >
+   virtual public spa(thread)
 {
 public:
 
@@ -121,6 +121,7 @@ public:
    thread_ptra();
    virtual ~thread_ptra();
 
+   virtual ::count get_count_except_current_thread();
    virtual void post_quit();
    virtual void wait(const duration & duration, ::sync_interface * psyncParent = NULL);
 

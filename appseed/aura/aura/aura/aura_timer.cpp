@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 timer::timer(::aura::application * papp, uint_ptr uiTimer, PFN_TIMER pfnTimer, void * pvoidData, mutex * pmutex) :
@@ -103,7 +103,7 @@ void timer::stop()
       if (m_pcallback != NULL)
       {
 
-         m_pcallback->threadrefa_add(this);
+         m_pcallback->threadrefa_remove(this);
 
       }
 

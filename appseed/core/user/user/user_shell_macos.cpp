@@ -45,8 +45,7 @@ namespace user
          for (index i = 0; i < iThreadCount; i++)
          {
 
-            m_threadaGetImage.add(::fork(get_app(),
-               [&]()
+            m_threadaGetImage.add(fork([&]()
             {
 
                ::multithreading::set_priority(::multithreading::priority_highest);
