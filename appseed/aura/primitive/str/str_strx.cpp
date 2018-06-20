@@ -112,7 +112,9 @@ int32_t uni_to_utf8_2_or_more(char * dest, int32_t ch)
    return 0;
 
 }
-::count unichar_len(const unichar * psz)
+
+
+CLASS_DECL_AURA ::count unichar_len(const unichar * psz)
 {
    if(psz == NULL)
       return -1;
