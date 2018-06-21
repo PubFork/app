@@ -940,27 +940,7 @@ void object::threadrefa_post_quit()
 void object::threadrefa_wait(::duration duration)
 {
 
-   {
-
-      synch_lock sl(m_pmutex);
-
-      try
-      {
-
-         if (m_pthreadrefa != NULL)
-         {
-
-            m_pthreadrefa->wait(duration, &sl);
-
-         }
-
-      }
-      catch (...)
-      {
-
-      }
-
-   }
+   synch_lock sl(m_pmutex);
 
    try
    {
@@ -968,7 +948,7 @@ void object::threadrefa_wait(::duration duration)
       if (m_pthreadrefa != NULL)
       {
 
-         m_pthreadrefa->wait(duration);
+         m_pthreadrefa->wait(duration, m_pmutex);
 
       }
 

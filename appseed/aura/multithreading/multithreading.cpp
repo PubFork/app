@@ -73,96 +73,51 @@ namespace multithreading
 
    CLASS_DECL_AURA uint32_t __on_thread_finally(thread * thread)
    {
-      
-      int nExitCode = -1;
-      
 
-      
+      int nExitCode = -1;
+
+
+
       if (thread == NULL)
       {
-         
+
          return -1;
-         
-      }
-
-      
-      {
-      
-      sp(::thread) pthread = thread;
-      
-      try
-      {
-         
-         pthread->unregister_from_required_threads();
-         
-      }
-      catch(...)
-      {
-         
-         
-      }
-      
-
-
-      try
-      {
-
-         synch_lock sl(pthread->m_objectptraDependent.m_pmutex);
-
-         for (auto pobject : pthread->m_objectptraDependent)
-         {
-
-            pobject->threadrefa_remove(pthread);
-
-         }
-
-      }
-      catch (...)
-      {
 
       }
 
-      try
+
       {
 
-         pthread->threadrefa_post_quit();
-
-      }
-      catch (...)
-      {
-
-      }
-
-      try
-      {
-
-         pthread->threadrefa_wait(one_minute());
-
-      }
-      catch (...)
-      {
-
-      }
-
-      try
-      {
-
-
-         __node_term_thread(pthread);
-
-         ::multithreading::__node_on_term_thread(pthread);
-
-         ::aura::application * papp = pthread->get_app();
-
-         nExitCode = pthread->m_error.get_exit_code();
+         sp(::thread) pthread = thread;
 
          try
          {
 
-            pthread->m_idroute.remove_all();
+            pthread->unregister_from_required_threads();
 
          }
          catch(...)
+         {
+
+
+         }
+
+
+
+         try
+         {
+
+            synch_lock sl(pthread->m_objectptraDependent.m_pmutex);
+
+            for (auto pobject : pthread->m_objectptraDependent)
+            {
+
+               pobject->threadrefa_remove(pthread);
+
+            }
+
+         }
+         catch (...)
          {
 
          }
@@ -170,7 +125,62 @@ namespace multithreading
          try
          {
 
-            pthread->thread_term();
+            pthread->threadrefa_post_quit();
+
+         }
+         catch (...)
+         {
+
+         }
+
+         try
+         {
+
+            pthread->threadrefa_wait(one_minute());
+
+         }
+         catch (...)
+         {
+
+         }
+
+         try
+         {
+
+
+            __node_term_thread(pthread);
+
+            ::multithreading::__node_on_term_thread(pthread);
+
+            ::aura::application * papp = pthread->get_app();
+
+            nExitCode = pthread->m_error.get_exit_code();
+
+            try
+            {
+
+               pthread->m_idroute.remove_all();
+
+            }
+            catch(...)
+            {
+
+            }
+
+            try
+            {
+
+               pthread->thread_term();
+
+            }
+            catch(...)
+            {
+
+            }
+
+
+            __end_thread(papp);
+
 
          }
          catch(...)
@@ -178,30 +188,20 @@ namespace multithreading
 
          }
 
-
-         __end_thread(papp);
-
-
-      }
-      catch(...)
-      {
-
-      }
-         
       }
 
       try
       {
-         
+
          ::release(thread);
 
       }
       catch(...)
       {
-         
+
       }
 
-      
+
       set_thread_off(::GetCurrentThreadId());
 
       return nExitCode;
@@ -487,32 +487,34 @@ void thread_ptra::post_quit()
 
 }
 
+
 ::count thread_ptra::get_count_except_current_thread()
 {
-   
+
    thread * pthread = ::get_thread();
-   
+
    ::count c = 0;
-   
+
    for(index i = 0; i < spa(thread)::get_count(); i++)
    {
-      
+
       if(element_at(i) != pthread)
       {
-         
+
          TRACE("thread_ptra::get_count_except_current_thread %s", typeid(*element_at(i).m_p).name());
-         
+
          c++;
-         
+
       }
-      
+
    }
-   
+
    return c;
-   
+
 }
 
-void thread_ptra::wait(const duration & duration, ::sync_interface * psyncParent)
+
+void thread_ptra::wait(const duration & duration, ::sync_object * psyncParent)
 {
 
    ::datetime::time timeEnd = ::datetime::time::get_current_time() + MAX(seconds(2), duration);
@@ -520,7 +522,7 @@ void thread_ptra::wait(const duration & duration, ::sync_interface * psyncParent
    try
    {
 
-      synch_lock sl(m_pmutex);
+      synch_lock sl(psyncParent);
 
       ::count cCount = get_count_except_current_thread();
 
@@ -529,28 +531,13 @@ void thread_ptra::wait(const duration & duration, ::sync_interface * psyncParent
       while (cCount > 0 &&  timeNow < timeEnd)
       {
 
-
          sl.unlock();
-
-         if (psyncParent != NULL)
-         {
-
-            psyncParent->unlock();
-
-         }
 
          timeNow = ::datetime::time::get_current_time();
 
          cCount = get_count_except_current_thread();
 
          Sleep(500);
-
-         if (psyncParent != NULL)
-         {
-
-            psyncParent->lock();
-
-         }
 
          sl.lock();
 
@@ -563,3 +550,6 @@ void thread_ptra::wait(const duration & duration, ::sync_interface * psyncParent
    }
 
 }
+
+
+

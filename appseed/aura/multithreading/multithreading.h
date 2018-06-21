@@ -123,7 +123,7 @@ public:
 
    virtual ::count get_count_except_current_thread();
    virtual void post_quit();
-   virtual void wait(const duration & duration, ::sync_interface * psyncParent = NULL);
+   virtual void wait(const duration & duration, ::sync_object * psyncParent);
 
 
 };

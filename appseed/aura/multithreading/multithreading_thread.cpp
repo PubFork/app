@@ -386,14 +386,13 @@ void thread::CommonConstruct()
 }
 
 
-
 thread::~thread()
 {
 
    try
    {
 
-      synch_lock sl(m_objectptraDependent.m_pmutex);
+      synch_lock sl(m_pmutex);
 
       for (auto pobject : m_objectptraDependent)
       {
@@ -950,9 +949,9 @@ bool thread::on_register_dependent_thread(::thread * pthreadDependent)
 
    {
 
-      synch_lock slRequired(pthreadDependent->m_threadrefaRequired.m_pmutex);
+      synch_lock slDependent(m_pmutex);
 
-      synch_lock slDependent(m_threadrefaDependent.m_pmutex);
+      synch_lock slRequired(pthreadDependent->m_pmutex);
 
       m_threadrefaDependent.add_unique(pthreadDependent);
 
@@ -974,9 +973,9 @@ void thread::on_unregister_dependent_thread(::thread * pthreadDependent)
 
    {
 
-      synch_lock slRequired(pthreadDependent->m_threadrefaRequired.m_pmutex);
+      synch_lock slDependent(m_pmutex);
 
-      synch_lock slDependent(m_threadrefaDependent.m_pmutex);
+      synch_lock slRequired(pthreadDependent->m_pmutex);
 
       m_threadrefaDependent.remove(pthreadDependent);
 
@@ -1008,7 +1007,7 @@ void thread::signal_close_dependent_threads()
 
    {
 
-      synch_lock sl(m_threadrefaDependent.m_pmutex);
+      synch_lock sl(m_pmutex);
 
       ptra = m_threadrefaDependent;
 
@@ -1053,9 +1052,7 @@ void thread::wait_close_dependent_threads(const duration & duration)
 
       {
 
-         synch_lock slLog(g_pmutexThreadWaitClose);
-
-         synch_lock sl(m_threadrefaDependent.m_pmutex);
+         synch_lock sl(m_pmutex);
 
          if (m_threadrefaDependent.get_count() <= 0)
          {
@@ -1165,7 +1162,7 @@ bool thread::register_at_required_threads()
 void thread::unregister_from_required_threads()
 {
 
-   synch_lock sl(m_threadrefaRequired.m_pmutex);
+   synch_lock sl(m_pmutex);
 
    for(index i = m_threadrefaRequired.get_upper_bound(); i >= 0;)
    {
@@ -3629,8 +3626,6 @@ CLASS_DECL_AURA void forking_count_thread_null_end(int iOrder)
 }
 
 
-
-
 ::thread_tools * thread::tools(::multithreading::e_priority epriority)
 {
 
@@ -3655,8 +3650,6 @@ CLASS_DECL_AURA void forking_count_thread_null_end(int iOrder)
    return m_toolmap[epriority];
 
 }
-
-
 
 
 ::thread_toolset * thread::toolset(e_tool etool)
@@ -3708,8 +3701,6 @@ CLASS_DECL_AURA uint32_t random_processor_index_generator()
 
 thread_ptra::thread_ptra()
 {
-
-   defer_create_mutex();
 
 }
 
