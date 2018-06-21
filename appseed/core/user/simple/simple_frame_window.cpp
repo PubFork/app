@@ -1,11 +1,41 @@
 #include "framework.h"
 
-
+#include <dwmapi.h>
+#include <VersionHelpers.h>
+#include <shellapi.h>
+#pragma comment(lib, "Dwmapi.lib" )
 
 
 #ifdef WINDOWSEX
 #include <dde.h>
 #endif
+
+#ifndef WM_NCUAHDRAWCAPTION
+#define WM_NCUAHDRAWCAPTION (0x00AE)
+#endif
+#ifndef WM_NCUAHDRAWFRAME
+#define WM_NCUAHDRAWFRAME (0x00AF)
+#endif
+static bool has_autohide_appbar(UINT edge, RECT mon) // Interface Update - Infinisys Ltd.
+{
+   if (IsWindows8Point1OrGreater())
+   {
+      APPBARDATA data = {};
+      data.cbSize = sizeof(APPBARDATA);
+      data.uEdge = edge;
+      data.rc = mon;
+      return SHAppBarMessage(0x0000000b, &data);
+   }
+
+   /* Before Windows 8.1, it was not possible to specify a monitor when
+   checking for hidden appbars, so check only on the primary monitor */
+   if (mon.left != 0 || mon.top != 0)
+      return false;
+   APPBARDATA data = {};
+   data.cbSize = sizeof(APPBARDATA);
+   data.uEdge = edge;
+   return SHAppBarMessage(ABM_GETAUTOHIDEBAR, &data);
+}
 
 #define TEST 0
 
@@ -171,6 +201,8 @@ void simple_frame_window::install_message_routing(::message::sender * pinterface
    IGUI_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &simple_frame_window::_001OnMouseMove);
    IGUI_MSG_LINK(WM_DISPLAYCHANGE, pinterface, this, &simple_frame_window::_001OnDisplayChange);
    IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &simple_frame_window::_001OnShowWindow);
+   IGUI_MSG_LINK(WM_DWMNCRENDERINGCHANGED, pinterface, this, &simple_frame_window::_001OnDwm);
+   IGUI_MSG_LINK(WM_NCCALCSIZE, pinterface, this, &simple_frame_window::_001OnNcCalcSize);
 
    connect_command_probe("transparent_frame", &simple_frame_window::_001OnUpdateToggleTransparentFrame);
    connect_command("transparent_frame", &simple_frame_window::_001OnToggleTransparentFrame);
@@ -399,23 +431,8 @@ void simple_frame_window::_001OnCreate(::message::message * pobj)
 
    }
 
-
-
    if (m_bWindowFrame)
    {
-      /*WNDCLASS wndclass;
-
-      char szBuf [64];
-      ::GetClassName(get_handle(), szBuf, _countof(szBuf));
-
-      GetClassInfo(System.m_hInstance,
-      szBuf,
-      &wndclass);*/
-
-      // trans      SetIcon(wndclass.hIcon, false);
-
-      // trans      HICON hicon = GetIcon(false);
-
       sp(::user::wndfrm::frame::frame) pinteractionframe = NULL;
 
       try
@@ -424,14 +441,6 @@ void simple_frame_window::_001OnCreate(::message::message * pobj)
          pinteractionframe = create_frame_schema();
 
       }
-//      catch (not_installed * pexception)
-//      {
-//
-//         System.remove_frame(this);
-//
-//         _rethrow(pexception);
-//
-//      }
       catch (::exception::exception * pexception)
       {
 
@@ -460,46 +469,10 @@ void simple_frame_window::_001OnCreate(::message::message * pobj)
 
       }
 
-      //frame::FrameSchema * pschema = dynamic_cast < ::frame::FrameSchema * > (pinteractionframe);
-
-      if (pinteractionframe != NULL && (_ca_is_basis() || Application.handler()->m_varTopicQuery["version"] == "basis"))
-      {
-
-         //pinteractionframe->set_style("BlueRedPurple");
-
-      }
-
-      /*{
-         frame::FrameSchemaHardCoded001 * pschemaSpec = dynamic_cast < frame::FrameSchemaHardCoded001 * > (pschema);
-         if(pschemaSpec != NULL && (_ca_is_basis() || Application.handler()->m_varTopicQuery["version"] == "basis"))
-         {
-         pschemaSpec->SetStyle(frame::FrameSchemaHardCoded001::StyleBlueRedPurple);
-         }
-         }
-         {
-         frame::FrameSchemaHardCoded002 * pschemaSpec = dynamic_cast < frame::FrameSchemaHardCoded002 * > (pschema);
-         if(pschemaSpec != NULL && (_ca_is_basis() || Application.handler()->m_varTopicQuery["version"] == "basis"))
-         {
-         pschemaSpec->SetStyle(frame::FrameSchemaHardCoded002::StyleBlueRedPurple);
-         }
-         }
-         {
-         frame::FrameSchemaHardCoded005 * pschemaSpec = dynamic_cast < frame::FrameSchemaHardCoded005 * > (pschema);
-         if(pschemaSpec != NULL && (_ca_is_basis() || Application.handler()->m_varTopicQuery["version"] == "basis"))
-         {
-         pschemaSpec->SetStyle(frame::FrameSchemaHardCoded005::StyleBlueRedPurple);
-         }
-         }
-         {
-         frame::FrameSchemaHardCoded008 * pschemaSpec = dynamic_cast < frame::FrameSchemaHardCoded008 * > (pschema);
-         if(pschemaSpec != NULL && (_ca_is_basis() || Application.handler()->m_varTopicQuery["version"] == "basis"))
-         {
-         pschemaSpec->SetStyle(frame::FrameSchemaHardCoded008::StyleBlueRedPurple);
-         }
-         }*/
-
       m_pframeschema = pinteractionframe;
+
       m_workset.AttachFrameSchema(m_pframeschema);
+
       if (!m_workset.update(
             this,
             this,
@@ -518,22 +491,9 @@ void simple_frame_window::_001OnCreate(::message::message * pobj)
 
    }
 
+   m_strTitle = Application.get_app_user_friendly_task_bar_name();
 
-   if (get_window_text().is_empty())
-   {
-
-      set_window_text(Application.get_app_user_friendly_task_bar_name());
-
-   }
-
-
-   //if (GetParent() == NULL)
-   {
-
-      defer_synch_layered();
-
-   }
-
+   defer_synch_layered();
 
    create_bars();
 
@@ -542,8 +502,6 @@ void simple_frame_window::_001OnCreate(::message::message * pobj)
    defer_create_notification_icon();
 
    m_pimpl->show_task(m_bShowTask);
-
-   //post_message(WM_USER + 184, 2);
 
    pcreate->m_bRet = false;
 
@@ -648,16 +606,21 @@ bool simple_frame_window::pre_create_window(::user::create_struct& cs)
 {
 
    if (!::user::frame_window::pre_create_window(cs))
-      return FALSE;
+   {
 
+      return false;
+
+   }
 
    //cs.style = WS_OVERLAPPEDWINDOW & ~WS_THICKFRAME;
    cs.style |= WS_POPUP;
    cs.style &= ~WS_VISIBLE;
    cs.style |= WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
 
-   return TRUE;
+   return true;
+
 }
+
 
 void simple_frame_window::on_layout()
 {
@@ -1411,9 +1374,9 @@ bool simple_frame_window::LoadFrame(const char * pszMatter, uint32_t dwDefaultSt
    }
 
    output_debug_string("\nm_bLayoutEnable FALSE");
-   
+
    ::user::create_struct cs(0L, NULL, lpszTitle, dwDefaultStyle, rectFrame, pcreate);
-   
+
    if (!create_window_ex(cs, pParentWnd))
    {
 
@@ -1995,7 +1958,7 @@ void simple_frame_window::on_set_parent(::user::interaction * puiParent)
 
    }
 
-   if (puiParent == NULL || !puiParent->is_place_holder())
+   if (puiParent == NULL || puiParent->is_frame_window())
    {
 
       WindowDataLoadWindowRect(false);
@@ -2006,9 +1969,10 @@ void simple_frame_window::on_set_parent(::user::interaction * puiParent)
 
    set_need_layout();
 
-   RedrawWindow();
+   set_need_redraw();
 
 }
+
 
 bool simple_frame_window::GetClientRect(LPRECT lprect)
 {
@@ -3483,4 +3447,129 @@ string simple_frame_window::notification_area_extra_get_xml_menu()
 
 
 
+
+
+
+void simple_frame_window::_001OnDwm(::message::message * pobj)
+{
+
+   SCAST_PTR(::message::base, pbase, pobj);
+
+   WPARAM wparam;
+   LPARAM lparam;
+
+   wparam = pbase->m_wparam;
+   lparam = pbase->m_lparam;
+   //return Default();
+   BOOL enabled = FALSE;
+   DwmIsCompositionEnabled(&enabled);
+   //data->composition_enabled = enabled;
+
+   if (enabled)
+   {
+      /* The window needs a frame to show a shadow, so give it the smallest
+      amount of frame possible */
+      //MARGINS m={0,0,0,1};
+      MARGINS m = { 0,0,0,0 };
+      DWORD  dw = DWMNCRP_ENABLED;
+      DwmExtendFrameIntoClientArea(get_safe_handle(), &m);
+      DwmSetWindowAttribute(get_safe_handle(), DWMWA_NCRENDERING_POLICY,
+                            &dw, sizeof(DWORD));
+   }
+   else
+   {
+   }
+
+   //update_region(data);
+   //      long dwEx = ::GetWindowLong(GetSafeHwnd(),GWL_EXSTYLE);
+   //      dwEx &= ~(WS_EX_LAYERED);
+   //      ::SetWindowLong(GetSafeHwnd(),GWL_EXSTYLE,dwEx);
+   //      ::InvalidateRect(GetSafeHwnd(),NULL,true);
+   //      ::UpdateWindow(GetSafeHwnd());
+   //      //MoveAnchorsImmediatelly(hwndDlg);
+   pbase->m_bRet = true;
+   pbase->set_lresult(0);
+
+}
+
+
+void simple_frame_window::_001OnNcCalcSize(::message::message * pmessage)
+{
+
+   SCAST_PTR(::message::nc_calc_size, pcalcsize, pmessage);
+
+
+   BOOL bCalcValidRects = pcalcsize->GetCalcValidRects();
+   NCCALCSIZE_PARAMS* lpncsp = pcalcsize->m_pparams;
+
+   // TODO: Add your message handler code here and/or call default
+   //if(bCalcValidRects)
+   //{
+   //   TRACE("1");
+   //   lpncsp->rgrc[0].left = lpncsp->lppos->x + 1;
+   //   lpncsp->rgrc[0].right = lpncsp->lppos->x + lpncsp->lppos->cx - 1;
+   //   lpncsp->rgrc[0].top = lpncsp->lppos->y + 32;
+   //   lpncsp->rgrc[0].bottom = lpncsp->lppos->y + lpncsp->lppos->cy - 1;
+   //}
+   //else
+   //{
+   //   CRect * prect = (CRect *) lpncsp;
+   //   prect->top += 32;
+   //   prect->left++;
+   //   prect->bottom--;
+   //   prect->right--;
+
+   //   TRACE("2");
+   //}
+   RECT nonclient = lpncsp->rgrc[0];
+   //CMiniFrameWnd::OnNcCalcSize(bCalcValidRects, lpncsp);
+   RECT client = lpncsp->rgrc[0];
+   if (WfiIsZoomed())
+   {
+      WINDOWINFO wi = {};
+      wi.cbSize = sizeof(wi);
+      ::GetWindowInfo(get_safe_handle(), &wi);
+
+      /* Maximized windows always have a non-client border that hangs over
+      the edge of the screen, so the size proposed by WM_NCCALCSIZE is
+      fine. Just adjust the top border to remove the window title. */
+      lpncsp->rgrc[0].left = client.left;
+      lpncsp->rgrc[0].top = nonclient.top + wi.cyWindowBorders;
+      lpncsp->rgrc[0].right = client.right;
+      lpncsp->rgrc[0].bottom = client.bottom;
+
+      HMONITOR mon = MonitorFromWindow(get_safe_handle(), MONITOR_DEFAULTTOPRIMARY);
+      MONITORINFO mi = {};
+      mi.cbSize = sizeof(mi);
+      GetMonitorInfoW(mon, &mi);
+
+      /* If the client rectangle is the same as the monitor's rectangle,
+      the shell assumes that the window has gone fullscreen, so it removes
+      the topmost attribute from any auto-hide appbars, making them
+      inaccessible. To avoid this, reduce the size of the client area by
+      one pixel on a certain edge. The edge is chosen based on which side
+      of the monitor is likely to contain an auto-hide appbar, so the
+      missing client area is covered by it. */
+      if (EqualRect(&lpncsp->rgrc[0], &mi.rcMonitor))
+      {
+         if (has_autohide_appbar(ABE_BOTTOM, mi.rcMonitor))
+            lpncsp->rgrc[0].bottom--;
+         else if (has_autohide_appbar(ABE_LEFT, mi.rcMonitor))
+            lpncsp->rgrc[0].left++;
+         else if (has_autohide_appbar(ABE_TOP, mi.rcMonitor))
+            lpncsp->rgrc[0].top++;
+         else if (has_autohide_appbar(ABE_RIGHT, mi.rcMonitor))
+            lpncsp->rgrc[0].right--;
+      }
+   }
+   else
+   {
+      /* For the non-maximized case, set the output RECT to what it was
+      before WM_NCCALCSIZE modified it. This will make the client size the
+      same as the non-client size. */
+      lpncsp->rgrc[0] = nonclient;
+
+   }
+
+}
 

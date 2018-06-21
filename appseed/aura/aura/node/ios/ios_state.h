@@ -57,7 +57,7 @@ class CToolTipCtrl;
 // xxx class ::user::interaction;
 namespace ca2
 {
-   
+
    class thread;
    class window;
 }
@@ -82,16 +82,16 @@ class CLASS_DECL_AURA __MODULE_THREAD_STATE
 public:
    __MODULE_THREAD_STATE();
    virtual ~__MODULE_THREAD_STATE();
-   
+
    // current thread pointer
    class ::ios::thread* m_pCurrentWinThread;
-   
-   
-   
+
+
+
    // thread-local ca2 API new handler (separate from C-runtime)
    _PNH m_pfnNewHandler;
-   
-   
+
+
    // common controls thread state
    CToolTipCtrl* m_pToolTip;
    ::window * m_pLastHit;       // last ::window to own tooltip
@@ -122,7 +122,7 @@ public:
    // xxx   bool bSystem = FALSE);
    __MODULE_STATE(bool bDLL, DWORD dwVersion, bool bSystem = FALSE);
    ~__MODULE_STATE();
-   
+
    ::aura::application * m_pCurrentWinApp;
    HINSTANCE m_hCurrentInstanceHandle;
    HINSTANCE m_hCurrentResourceHandle;
@@ -130,37 +130,35 @@ public:
    bool m_bDLL;    // TRUE if module is a DLL, FALSE if it is an EXE
    bool m_bSystem; // TRUE if module is a "system" module, FALSE if not
    bool m_bReserved[2]; // padding
-   
+
    DWORD m_fRegisteredClasses; // flags for registered ::window classes
-   
+
    hwnd_map       * m_pmapHWND;
    mutex             * m_pmutexHwnd;
    //   hdc_map        * m_pmapHDC;
    //   hgdiobj_map    * m_pmapHGDIOBJ;
    hmenu_map      * m_pmapHMENU;
-   
-   
-   
-   
+
+
+
+
    // number of locked OLE objects
    long m_nObjectCount;
    bool m_bUserCtrl;
-   
-   // __register_class and System.RegisterWndClass data
-   
+
    string * m_pstrUnregisterList;
-   
+
    // xxx WNDPROC m_pfn_window_procedure;
    DWORD m_dwVersion;  // version that module linked against
-   
+
    // variables related to a given process in a module
    //  (used to be __MODULE_PROCESS_STATE)
    void (PASCAL *m_pfnFilterToolTipMessage)(MESSAGE*, ::window *);
-   
-   
+
+
    // define thread local portions of module state
    thread_pointer < __MODULE_THREAD_STATE > t_pthread;
-   
+
    //Fusion: declare pointer to array of pointers to isolation aware dll wrappers (ex: comctl32).
    CDllIsolationWrapperBase** m_pDllIsolationWrappers;
    //Defaults to TRUE. When FALSE - ca2 API will not activate context in __MAINTAIN_STATE2 (used by __MANAGE_STATE).
@@ -188,7 +186,7 @@ struct CLASS_DECL_AURA __MAINTAIN_STATE
 {
    explicit __MAINTAIN_STATE(__MODULE_STATE* pModuleState) NOTHROW;
    ~__MAINTAIN_STATE();
-   
+
 protected:
    __MODULE_STATE* m_pPrevModuleState;
 };
@@ -198,11 +196,11 @@ struct CLASS_DECL_AURA __MAINTAIN_STATE2
 {
    explicit __MAINTAIN_STATE2(__MODULE_STATE* pModuleState);
    ~__MAINTAIN_STATE2();
-   
+
 protected:
    __MODULE_STATE* m_pPrevModuleState;
    ___THREAD_STATE* m_pThreadState;
-   
+
    uint_ptr m_ulActCtxCookie;
    bool m_bValidActCtxCookie;
 };
@@ -224,26 +222,26 @@ class __EXCEPTION_CONTEXT;
 
 #define ___TEMP_CLASS_NAME_SIZE 96
 class CLASS_DECL_AURA ___THREAD_STATE :
-public ::thread_state
+   public ::thread_state
 {
 public:
    ___THREAD_STATE();
    virtual ~___THREAD_STATE();
-   
+
    // override for m_pModuleState in ___APP_STATE
    __MODULE_STATE* m_pModuleState;
    __MODULE_STATE* m_pPrevModuleState;
-   
-   
+
+
    ::ios::thread * m_pCurrentWinThread;
-   
-   
+
+
    // memory safety pool for temp maps
    void * m_pSafetyPoolBuffer;    // current buffer
-   
+
    // thread local exception context
    __EXCEPTION_CONTEXT * m_exceptionContext;
-   
+
    // ::window create, gray dialog hook, and other hook data
    ::user::interaction * m_pWndInit;
    ::window * m_pAlternateWndInit;      // special case commdlg hooking
@@ -252,30 +250,30 @@ public:
    oswindow m_hWndInit;
    // xxx   HHOOK m_hHookOldCbtFilter;
    // xxx   HHOOK m_hHookOldMsgFilter;
-   
+
    // message pump for run
    MESSAGE m_msgCur;                   // current message
    point m_ptCursorLast;          // last mouse position
    UINT m_nMsgLast;                // last mouse message
-   
+
 #ifdef DEBUG
    int32_t m_nDisablePumpCount; // Diagnostic trap to detect illegal re-entrancy
 #endif
-   
+
    // other ::window modal data
-   MESSAGE m_lastSentMsg;              
+   MESSAGE m_lastSentMsg;
    oswindow m_hTrackingWindow;         // see ::window::track_popup_menu
    HMENU m_hTrackingMenu;
    char m_szTempClassName[___TEMP_CLASS_NAME_SIZE];    // see System.RegisterWndClass
    oswindow m_hLockoutNotifyWindow;    // see ::window::OnCommand
    bool m_bInMsgFilter;
-   
+
    // other framework modal data
    CPushRoutingView* m_pPushRoutingView;
-   
+
    // ca2 API/DB thread-local data
    bool m_bWaitForDataSource;
-   
+
    // OLE control thread-local data
    ::window * m_pWndPark;       // "parking space" ::window
    long m_nCtrlRef;        // reference count on parking ::window
@@ -289,7 +287,7 @@ CLASS_DECL_AURA ___THREAD_STATE * __get_thread_state();
 
 namespace ios
 {
-   
+
    CLASS_DECL_AURA ::thread_state * __get_thread_state();
-   
+
 } // namespace ios

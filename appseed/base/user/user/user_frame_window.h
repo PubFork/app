@@ -14,11 +14,8 @@ namespace user
 
 
    struct PrintPreviewState;  // forward reference (see afxext.h)
-   class CReBar;               // forward reference (see afxext.h)
 
-   class BaseDockBar;             // forward reference (see afxpriv.h)
    class mini_dock_frame_window;    // forward reference (see afxpriv.h)
-   class CDockState;           // forward reference (see afxpriv.h)
 
 
    class FrameInitialUpdate
@@ -63,7 +60,6 @@ namespace user
       bool                       m_bWindowFrame;
       bool                       m_bLayered;
       int32_t                    m_iFrameData;
-      string                     m_strFrameClass;
       ::id                       m_idHelp;         // xxx mrs
       ::user::impact_system *    m_pdocumenttemplate;
 

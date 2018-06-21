@@ -35,33 +35,6 @@ inline void SafeRelease(T *&p)
 
 #define AC_SRC_ALPHA                0x01
 
-//#ifdef WINDOWS
-//
-//const imaging::CSysColorMap imaging::s_psyscolormap[] =
-//{
-//   // mapping from color in DIB to system color
-//   {RGB_TO_RGBQUAD(0x00,0x00,0x00),COLOR_BTNTEXT},       // black
-//   {RGB_TO_RGBQUAD(0x80,0x80,0x80),COLOR_BTNSHADOW},     // dark gray
-//   {RGB_TO_RGBQUAD(0xC0,0xC0,0xC0),COLOR_BTNFACE},       // bright gray
-//   {RGB_TO_RGBQUAD(0xFF,0xFF,0xFF),COLOR_BTNHIGHLIGHT},   // white
-//   {RGB_TO_RGBQUAD(0xFF,0xFF,0xFF),0x80000000}
-//};
-//
-//#else
-//
-//// throw todo(get_app());
-//
-//const imaging::CSysColorMap imaging::s_psyscolormap[] =
-//{
-//   // mapping from color in DIB to system color
-//   {RGB_TO_RGBQUAD(0x00,0x00,0x00),0x80000000},       // black
-//   {RGB_TO_RGBQUAD(0x80,0x80,0x80),0x80000000},     // dark gray
-//   {RGB_TO_RGBQUAD(0xC0,0xC0,0xC0),0x80000000},       // bright gray
-//   {RGB_TO_RGBQUAD(0xFF,0xFF,0xFF),0x80000000},   // white
-//   {RGB_TO_RGBQUAD(0xFF,0xFF,0xFF),0x80000000}
-//};
-//
-//#endif
 
 imaging::imaging(::aura::application * papp):
    ::object(papp)
@@ -71,71 +44,17 @@ imaging::imaging(::aura::application * papp):
 
 }
 
+
 imaging::~imaging()
 {
-   //    if(m_lpVoid != NULL)
-   //        free(m_lpVoid);
+
+
 }
-
-
-
-
-//FIBITMAP * imaging::HBITMAPtoFI(HBITMAP hbitmap)
-//{
-//
-//   //if (pbitmap == NULL)
-//   //   return NULL;
-//
-//
-//
-//   //HBITMAP hbitmap = pbitmap->GetHBITMAP();
-//
-//   if (hbitmap == NULL)
-//      return NULL;
-//
-//   // ...
-//   // the following code assumes that you have a valid HBITMAP loaded into the memory
-//   BITMAP bm;
-//   ::GetObject(hbitmap, sizeof(BITMAP), (char *)&bm);
-//   if (bm.bmWidth <= 0 || bm.bmHeight <= 0)
-//      return NULL;
-//   FIBITMAP * fi;
-//   //if(bm.bmBitsPixel == 32)
-//   {
-//      // fi = FreeImage_AllocateT(bm.bmWidth,bm.bmHeight,bm.bmBitsPixel);
-//   }
-//   //else
-//   {
-//      fi = FreeImage_Allocate(bm.bmWidth, bm.bmHeight, bm.bmBitsPixel);
-//   }
-//   // The GetDIBits function clears the biClrUsed and biClrImportant BITMAPINFO members (dont't know why)
-//   // So we save these infos below. This is needed for palettized images only.
-//   int32_t nColors = FreeImage_GetColorsUsed(fi);
-//   HDC hdc = ::CreateCompatibleDC(NULL);
-//
-//   GetDIBits(hdc, (HBITMAP)hbitmap, 0, FreeImage_GetHeight(fi), FreeImage_GetBits(fi), FreeImage_GetInfo(fi), DIB_RGB_COLORS);
-//
-//   ::DeleteDC(hdc);
-//
-//   ///   pbitmap->ReleaseHBITMAP(hbitmap);
-//
-//   // restore BITMAPINFO members
-//   FreeImage_GetInfoHeader(fi)->biClrUsed = nColors;
-//   FreeImage_GetInfoHeader(fi)->biClrImportant = nColors;
-//   return fi;
-//
-//
-//}
-
-
-//#ifndef  METROWIN
-
-
 
 
 bool imaging::LoadImage(::visual::dib_sp::array * pdiba, var varFile, bool bCache)
 {
-   
+
 restart:
 
    ::file::file_sp file = App(pdiba->get_app()).file().get_file(varFile, ::file::type_binary | ::file::mode_read | ::file::share_deny_write | (bCache ? 0 : ::file::no_cache));
@@ -149,14 +68,14 @@ restart:
 
    if(!LoadImageFromFile(pdiba, file))
    {
-      
+
       if(bCache)
       {
-         
+
          bCache = false;
-         
+
          goto restart;
-         
+
       }
 
       return false;
@@ -171,6 +90,8 @@ restart:
 bool imaging::LoadImage(::draw2d::dib * pdib,var varFile, bool bCache)
 {
 
+restart:
+
    ::file::file_sp file = App(pdib->get_app()).file().get_file(varFile, ::file::type_binary | ::file::mode_read | ::file::share_deny_write | (bCache ? 0 : ::file::no_cache));
 
    if(file.is_null())
@@ -182,6 +103,15 @@ bool imaging::LoadImage(::draw2d::dib * pdib,var varFile, bool bCache)
 
    if(!LoadImageFromFile(pdib, file))
    {
+
+      if (bCache)
+      {
+
+         bCache = false;
+
+         goto restart;
+
+      }
 
       return false;
 
@@ -6074,56 +6004,40 @@ bool imaging::load_from_file(::visual::dib_sp::array * pdiba, var varFile, bool 
 bool imaging::load_from_file(::draw2d::dib * pdib,var varFile,bool bCache)
 {
 
-   string strFile;
+   ::file::path pathDib;
 
    if(bCache && varFile.get_type() == var::type_string)
    {
-      strFile = varFile;
-      strFile.replace(":/","\\_");
-      strFile.replace(":\\","\\_\\");
-      strFile.replace("/","\\");
-      strFile = System.dir().time()/"cache"/strFile;
-      strFile += ".dib";
-      if (Session.file().exists(strFile))
-      {
-         try
-         {
-            ::file::file_sp file = Session.file().get_file(strFile, ::file::mode_read | ::file::share_deny_write | ::file::type_binary);
-            if (file.is_null())
-            {
-               return true;
-            }
-            pdib->destroy();
-            ::file::byte_istream istream(file);
-            istream >> *pdib;
-            if (!istream.fail() && pdib->m_pcolorref != NULL)
-            {
-               return true;
-            }
-         }
-         catch (...)
-         {
-         }
-      }
-   }
 
-restart:
+      pathDib = varFile.get_file_path();
+
+      pathDib.replace(":/","/_");
+
+      pathDib.replace(":\\","/_/");
+
+      pathDib = System.dir().time() / "cache" / pathDib;
+
+      pathDib += ".dib";
+
+      if (Session.file().exists(pathDib))
+      {
+
+         if (pdib->load_from_dib(pathDib))
+         {
+
+            return true;
+
+         }
+
+      }
+
+   }
 
    try
    {
 
-      if(!LoadImage(pdib,varFile, bCache) || pdib->m_size.area() <= 0 ||
-         pdib->m_pcolorref == NULL)
+      if(!LoadImage(pdib,varFile, bCache) || pdib->m_size.area() <= 0 || pdib->m_pcolorref == NULL)
       {
-         
-         if(bCache)
-         {
-            
-            bCache = false;
-            
-            goto restart;
-            
-         }
 
          return false;
 
@@ -6137,10 +6051,12 @@ restart:
 
    }
 
-   if (bCache && strFile.has_char())
+   if (bCache && pathDib.has_char())
    {
 
-      pdib->m_pathCache = strFile;
+      pdib->m_pathCache = pathDib;
+
+      pdib->defer_save_to_cache();
 
    }
 
@@ -6192,7 +6108,7 @@ bool imaging::load_image(::draw2d::dib * pdib, var varFile, bool bCache)
 {
 
    ::file::file_sp file = Application.file().get_file(varFile, ::file::type_binary | ::file::mode_read | ::file::share_deny_write |
-                                                      (bCache ? 0 : ::file::no_cache));
+                          (bCache ? 0 : ::file::no_cache));
 
    if (file.is_null())
    {

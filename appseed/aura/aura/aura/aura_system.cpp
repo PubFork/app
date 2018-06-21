@@ -3313,15 +3313,10 @@ success:
 
 #ifdef WINDOWSEX
 
-//      dappy(string(typeid(*this).name()) + " : Going to ::axis::system::m_spwindow->create_window_ex : " + ::str::from(m_iErrorCode));
-
-
       ::user::create_struct cs;
 
       if (!m_psystemwindow->create_window_ex(cs, NULL, "::axis::system::interaction_impl::no_twf"))
       {
-
-         //       dappy(string(typeid(*this).name()) + " : ::axis::system::m_spwindow->create_window_ex failure : " + ::str::from(m_iErrorCode));
 
          return false;
 

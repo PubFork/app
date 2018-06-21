@@ -697,24 +697,16 @@ namespace user
       //// force WM_NCACTIVATE for floating windows too
    }
 
-   /////////////////////////////////////////////////////////////////////////////
-   // frame_window second phase creation
 
    bool frame_window::pre_create_window(::user::create_struct& cs)
    {
 
       if (cs.style & FWS_ADDTOTITLE)
+      {
+
          cs.style |= FWS_PREFIXTITLE;
 
-#ifdef WINDOWS
-
-      //cs.dwExStyle |= WS_EX_CLIENTEDGE;
-
-#endif
-
-      m_strFrameClass = calc_window_class();
-
-      cs.lpszClass = m_strFrameClass;
+      }
 
       if(cs.hwndParent != NULL)
       {
@@ -724,6 +716,8 @@ namespace user
       }
 
       cs.style &= ~WS_VISIBLE;
+
+      cs.style &= ~WS_CAPTION;
 
       return true;
 
@@ -1558,8 +1552,10 @@ namespace user
          UpdateFrameTitleForDocument(NULL);
    }
 
+
    void frame_window::UpdateFrameTitleForDocument(const char * lpszDocName)
    {
+
       string WindowText;
 
       if (GetStyle() & FWS_PREFIXTITLE)

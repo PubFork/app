@@ -105,14 +105,6 @@ namespace user
 
          }
 
-         /*
-         void frame::OnNcCalcSize(LPRECT lprect)
-         {
-
-            UNREFERENCED_PARAMETER(lprect);
-
-         }
-         */
 
          void frame::OnNcCalcSize(LPRECT lprect)
          {
@@ -159,7 +151,6 @@ namespace user
          }
 
 
-
          void frame::on_layout()
          {
 
@@ -173,13 +164,27 @@ namespace user
 
             synch_lock sl(pwndDraw->m_pmutex);
 
+            pwndDraw->GetWindowRect(rectWindow);
+
+            if (rectWindow.area() <= 0)
+            {
+
+               return;
+
+            }
+
             sp(::user::wndfrm::frame::WorkSetClientInterface) pinterface = pwndDraw;
 
             title_bar_layout(pinterface != NULL && pinterface->m_bInitialFramePosition);
 
             update_window_client_rect();
 
-            pwndDraw->GetWindowRect(rectWindow);
+            if (rectWindow.width() < 1920)
+            {
+
+               output_debug_string("frame window < 1920");
+
+            }
 
             pwndDraw->GetClientRect(rectClient);
 
@@ -226,22 +231,6 @@ namespace user
 
             update_window_region(rectWindow);
 
-            /*            if (pwnd->IsWindowVisible())
-                        {
-                           pwnd->RedrawWindow(NULL, NULL, RDW_INVALIDATE);
-
-            #if !defined(METROWIN) && !defined(LINUX) && !defined(APPLEOS)
-                           RedrawWindow(NULL,
-                              m_pworkset->m_rectPending,
-                              NULL,
-                              RDW_INVALIDATE | RDW_ALLCHILDREN);
-            #endif
-
-                           m_pworkset->m_rectPending.set(0, 0, 0, 0);
-                        }
-
-            */
-
          }
 
 
@@ -252,71 +241,6 @@ namespace user
 
          }
 
-         /*
-         bool frame::_000OnLButtonDown(::message::mouse * pmouse)
-         {
-
-            UNREFERENCED_PARAMETER(pmouse);
-
-            return false;
-
-         }
-
-         bool frame::_000OnLButtonUp(::message::mouse * pmouse)
-         {
-
-            UNREFERENCED_PARAMETER(pmouse);
-
-            return false;
-
-         }
-
-         bool frame::_000OnMouseMove(::message::mouse * pmouse)
-         {
-
-            UNREFERENCED_PARAMETER(pmouse);
-
-            return false;
-
-         }
-
-         bool frame::_000OnNcLButtonDown(::message::mouse * pmouse)
-         {
-
-            UNREFERENCED_PARAMETER(pmouse);
-
-            return false;
-
-         }
-
-         bool frame::_000OnNcLButtonUp(::message::mouse * pmouse)
-         {
-
-            UNREFERENCED_PARAMETER(pmouse);
-
-            return false;
-
-         }
-
-         bool frame::_000OnNcMouseMove(::message::mouse * pmouse)
-         {
-
-            UNREFERENCED_PARAMETER(pmouse);
-
-            return false;
-
-         }
-
-         bool frame::_000OnNcHitTest(point pt, LRESULT & nHitTest)
-         {
-
-            UNREFERENCED_PARAMETER(pt);
-            UNREFERENCED_PARAMETER(nHitTest);
-
-            return false;
-
-         }
-         */
 
          bool frame::_000OnLButtonDown(::message::mouse * pmouse)
          {
@@ -966,7 +890,17 @@ namespace user
             if (pwnd == NULL)
                return;
 
+#ifdef WINDOWSEX
             //pwnd->SetWindowRgn(NULL, TRUE);
+
+            //pwnd->get_wnd()->m_pthread->post_pred([=]()
+            //{
+
+            //   ::SetWindowRgn(pwnd->get_safe_handle(), NULL, TRUE);
+
+            //});
+
+#endif
 
          }
 

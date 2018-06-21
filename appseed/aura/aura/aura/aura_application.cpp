@@ -5760,6 +5760,10 @@ retry_license:
 
       }
 
+      ::file::path path = ::file::app_module();
+
+      Application.file().put_contents(::dir::system() / "config" / strAppId / "path.txt", path);
+
       if(!os_on_start_application())
       {
 

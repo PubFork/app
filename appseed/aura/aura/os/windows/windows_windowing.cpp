@@ -53,7 +53,7 @@ wstring windows_calc_icon_window_class(::user::interaction * pui, uint32_t dwDef
 
    HICON hIcon = (HICON) ::LoadImageW(NULL, wstring(strPath), IMAGE_ICON, 256, 256, LR_LOADFROMFILE);
 
-   wstring strClass = get_user_interaction_window_class(pui);
+   wstring strClass = windows_get_user_interaction_window_class(pui);
 
    if (hIcon != NULL)
    {
@@ -171,4 +171,29 @@ CLASS_DECL_AURA const unichar * windows_register_window_class(::aura::applicatio
    // return thread-local pointer
    return lpszName;
 }
+
+
+CLASS_DECL_AURA bool windows_register_class(WNDCLASSW* lpWndClass)
+{
+
+   WNDCLASSW wndcls;
+
+   if (GetClassInfoW(lpWndClass->hInstance, lpWndClass->lpszClassName, &wndcls))
+   {
+      return TRUE;
+   }
+
+   if (!::RegisterClassW(lpWndClass))
+   {
+      return FALSE;
+   }
+
+   bool bRet = TRUE;
+
+
+   return bRet;
+}
+
+
+
 

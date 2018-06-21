@@ -2360,7 +2360,7 @@ restart:
 
       }
       // these try catchs are needed for multi threading : multi threaded windows: the hell
-      // Now I understand why Microsoft (TM) Windows (R) windows are single threaded.
+      // Now I understand why many OSes windows are single threaded.
       sp(::user::interaction) pui;
       //      int32_t iSize;
       try
@@ -7934,7 +7934,7 @@ restart:
 
       }
 
-      RedrawWindow();
+      set_need_redraw();
 
    }
 

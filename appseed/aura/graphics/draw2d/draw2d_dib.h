@@ -405,6 +405,12 @@ namespace draw2d
       inline void fill_rect_coord(i32 x1, i32 y1, i32 x2, i32 y2, i32 R, i32 G, i32 B) { return fill_rect(::rect(x1, y1, x2, y2), R, G, B); }
 
 
+      virtual void defer_save_to_cache();
+
+      virtual void save_to_dib(const ::file::path & pathDib);
+      virtual bool load_from_dib(const ::file::path & pathDib);
+
+
    };
 
 

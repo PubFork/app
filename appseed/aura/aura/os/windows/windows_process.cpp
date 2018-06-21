@@ -938,21 +938,25 @@ CLASS_DECL_AURA void shared_library_process(dword_array & dwa, stringa & straPro
 
 
 
-CLASS_DECL_AURA ::file::path core_app_path(string strApp)
+CLASS_DECL_AURA ::file::path core_app_path(string strAppId)
 {
 
-   strApp.replace("-", "_");
+   ::file::path path = file_as_string_dup(::dir::system() / "config" / strAppId / "path.txt");
 
-   strApp.replace("/", "_");
-
-   if(strApp == "app_veriwell_waven")
+   if (path.has_char())
    {
 
-      return "C:\\core\\time\\Win32\\basis\\" + strApp + ".exe";
+      return path;
 
    }
 
-   return "C:\\core\\time\\x64\\basis\\" + strApp + ".exe";
+   strAppId.replace("-", "_");
+
+   strAppId.replace("/", "_");
+
+   path = "C:\\core\\time\\x64\\basis\\" + strAppId + ".exe";
+
+   return path;
 
 }
 

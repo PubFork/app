@@ -201,40 +201,6 @@ namespace windows
 
 
 
-   //void window_buffer::ipc_copy(int cx, int cy)
-   //{
-
-   //   void * pdata = m_memorymap.get_data();
-
-   //   if (pdata == NULL)
-   //   {
-
-   //      return;
-
-   //   }
-
-   //   synch_lock sl(m_memorymap.m_pmutex);
-
-   //   try
-   //   {
-
-   //      int64_t * p = (int64_t *)pdata;
-
-   //      *p++ = cx;
-   //      *p++ = cy;
-   //      *p++ = sizeof(COLORREF) * cx;
-
-   //      ::draw2d::copy_colorref(cx, cy, (COLORREF *)p, sizeof(COLORREF) * cx, m_pcolorref, m_iScan);
-
-   //   }
-   //   catch (...)
-   //   {
-
-   //   }
-
-   //}
-
-
    void window_buffer::update_window(::draw2d::dib * pdib)
    {
 
@@ -320,12 +286,34 @@ namespace windows
 
          if (bLayered && !m_pimpl->m_bShowWindow)
          {
+
             if (m_pimpl->m_iShowFlags & SWP_SHOWWINDOW)
             {
 
                ::ShowWindow(m_pimpl->m_oswindow, SW_NORMAL);
 
+               if (bLayered)
+               {
+
+                  m_pimpl->m_pui->ModifyStyle(0, WS_VISIBLE);
+
+               }
+
             }
+            else if (m_pimpl->m_iShowFlags & SWP_HIDEWINDOW)
+            {
+
+               ::ShowWindow(m_pimpl->m_oswindow, SW_HIDE);
+
+               if (bLayered)
+               {
+
+                  m_pimpl->m_pui->ModifyStyle(WS_VISIBLE, 0);
+
+               }
+
+            }
+
          }
 
          m_rectLast = rectWindow;
@@ -342,6 +330,24 @@ namespace windows
       {
 
          ::ShowWindow(m_pimpl->m_oswindow, m_pimpl->m_iShowWindow);
+
+         if (bLayered)
+         {
+
+            if (m_pimpl->m_iShowWindow == SW_HIDE)
+            {
+
+               m_pimpl->m_pui->ModifyStyle(WS_VISIBLE, 0);
+
+            }
+            else
+            {
+
+               m_pimpl->m_pui->ModifyStyle(0, WS_VISIBLE);
+
+            }
+
+         }
 
          m_pimpl->m_bShowWindow = false;
 

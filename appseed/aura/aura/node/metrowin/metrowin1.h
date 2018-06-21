@@ -37,7 +37,7 @@ struct CLASS_DECL_AURA __exception_link
 
    __exception_link();       // for initialization and linking
    ~__exception_link()       // for cleanup and unlinking
-      { __try_cleanup(); };
+   { __try_cleanup(); };
 };
 
 // Exception global state - never access directly
@@ -62,8 +62,6 @@ void CLASS_DECL_AURA __abort();
 
 // helpers for registering your own WNDCLASSes
 #ifndef METROWIN
-CLASS_DECL_AURA const char * __register_window_class(UINT nClassStyle, HCURSOR hCursor = 0, HBRUSH hbrBackground = 0, HICON hIcon = 0);
-CLASS_DECL_AURA bool __register_class(WNDCLASS* lpWndClass);
 
 CLASS_DECL_AURA LRESULT CALLBACK __window_procedure(oswindow hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
 CLASS_DECL_AURA WNDPROC __get_window_procedure();

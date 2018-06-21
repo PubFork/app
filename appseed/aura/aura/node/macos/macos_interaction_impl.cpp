@@ -67,25 +67,25 @@ namespace macos
    {
 
    }
-   
-   
+
+
    void interaction_impl::round_window_add_ref()
    {
-    
+
       add_ref();
-      
+
       m_pui->add_ref();
-      
+
    }
-   
+
 
    void interaction_impl::round_window_dec_ref()
    {
-      
+
       m_pui->dec_ref();
-      
+
       dec_ref();
-      
+
    }
 
 
@@ -156,7 +156,7 @@ namespace macos
       return NULL;
 
    }
-   
+
 
    LRESULT interaction_impl::Default()
    {
@@ -253,7 +253,7 @@ namespace macos
                                            LPVOID lpParam /* = NULL */)
    {
 
-      if (!native_create_window_ex(pui, 
+      if (!native_create_window_ex(pui,
                                    pParentWnd == NULL ? NULL : pParentWnd->get_safe_handle(), id, cs, lpParam))
       {
 
@@ -267,11 +267,11 @@ namespace macos
 
 
    bool interaction_impl::native_create_window_ex(
-                                                  ::user::interaction * pui,
-                                                  oswindow hWndParent,
-                                                  id id,
-                                                  ::user::create_struct & cs,
-                                                  LPVOID lpParam)
+   ::user::interaction * pui,
+   oswindow hWndParent,
+   id id,
+   ::user::create_struct & cs,
+   LPVOID lpParam)
    {
 
       if (::IsWindow(get_handle()))
@@ -301,9 +301,9 @@ namespace macos
       hook_window_create(m_pui);
 
       CGRect rect;
-      
+
       RECT rectParam;
-      
+
       rectParam.left = cs.x;
       rectParam.top = cs.y;
       rectParam.right = cs.x + cs.cx;
@@ -396,7 +396,7 @@ namespace macos
       return true;
    }
 
-   
+
    bool interaction_impl::create_window(::user::interaction * pui,
                                         ::user::interaction *  pParentWnd, id id,::user::create_struct & cs,
                                         sp(::create) pContext)
@@ -406,9 +406,9 @@ namespace macos
       ASSERT((cs.style & WS_POPUP) == 0);
 
       return create_window_ex(pui, pParentWnd, id, cs,  (LPVOID)pContext);
-      
+
    }
-   
+
 
    bool interaction_impl::create_message_queue(::user::interaction * pui, const char * pszName)
    {
@@ -421,7 +421,7 @@ namespace macos
       }
       else
       {
-         
+
          ::user::create_struct cs(0, NULL, pszName, WS_CHILD, null_rect());
 
          if (!native_create_window_ex(pui, MESSAGE_WINDOW_PARENT, "message_queue", cs))
@@ -548,70 +548,70 @@ namespace macos
 
 //         if(!m_pui->WfiIsMoving() && !m_pui->WfiIsSizing())
 //         {
-//            
+//
 //            rect rectIntersect;
-//            
+//
 //            if(m_pui->WfiIsFullScreen())
 //            {
-//            
+//
 //               rect rectMonitor;
-//               
+//
 //            for(index iMonitor = 0; iMonitor < System.get_monitor_count(); iMonitor++)
 //            {
-//               
+//
 //               System.get_monitor_rect(iMonitor, rectMonitor);
-//               
+//
 //               if(rectIntersect.intersect(rect32, rectMonitor))
 //               {
-//                
-//                  
+//
+//
 //                  if(rectIntersect != rect32)
 //                  {
 //                  m_pui->SetPlacement(rectIntersect);
-//                     
+//
 //                  }
-//                  
-//                  
+//
+//
 //               }
-//               
+//
 //            }
-//               
+//
 //            }
-//            
+//
 //            else
 //            {
-//               
+//
 //               rect rectWkSpace;
-//               
+//
 //
 //               for(index iWkSpace = 0; iWkSpace < System.get_wkspace_count(); iWkSpace++)
 //               {
-//                  
+//
 //                  System.get_monitor_rect(iWkSpace, rectWkSpace);
-//                  
+//
 //                  if(rectIntersect.intersect(rect32, rectWkSpace))
 //                  {
-//                     
+//
 //                     if(rectIntersect != rect32)
 //                     {
-//                     
+//
 //                        m_pui->SetPlacement(rectIntersect);
-//                        
+//
 //                     }
-//                     
-//                     
+//
+//
 //                  }
 //
 //               }
 //
-//               
+//
 //            }
-//            
-//            
-//            
-//            
+//
+//
+//
+//
 //         }
-         
+
       }
 
       //m_pui->on_layout();
@@ -1259,52 +1259,52 @@ namespace macos
 
          if (m_bTranslateMouseMessageCursor)
          {
-            
+
             rect rect;
 
             if(!pmouse->m_bTranslated)
             {
 
-            pmouse->m_bTranslated = true;
+               pmouse->m_bTranslated = true;
 
-            if (System.get_monitor_count() > 0)
-            {
-
-               System.get_monitor_rect(0, &rect);
-
-            }
-            else
-            {
-
-               if (m_bScreenRelativeMouseMessagePosition)
+               if (System.get_monitor_count() > 0)
                {
 
-                  ::GetWindowRect(get_handle(), &rect);
+                  System.get_monitor_rect(0, &rect);
 
                }
                else
                {
 
-                  m_pui->GetWindowRect(rect);
+                  if (m_bScreenRelativeMouseMessagePosition)
+                  {
+
+                     ::GetWindowRect(get_handle(), &rect);
+
+                  }
+                  else
+                  {
+
+                     m_pui->GetWindowRect(rect);
+
+                  }
 
                }
 
-            }
+               if (rect.left >= 0)
+               {
 
-            if (rect.left >= 0)
-            {
+                  pmouse->m_pt.x += (LONG)rect.left;
 
-               pmouse->m_pt.x += (LONG)rect.left;
+               }
 
-            }
+               if (rect.top >= 0)
+               {
 
-            if (rect.top >= 0)
-            {
+                  pmouse->m_pt.y += (LONG)rect.top;
 
-               pmouse->m_pt.y += (LONG)rect.top;
+               }
 
-            }
-               
             }
 
          }
@@ -2313,12 +2313,12 @@ namespace macos
                      break;
 
                   }
-                  
+
                   if(m_oswindow != NULL)
                   {
-                  
+
                      m_oswindow->m_bNsWindowRect = false;
-                     
+
                   }
 
                   if (!m_pui->m_bLockWindowUpdate)
@@ -2342,12 +2342,12 @@ namespace macos
                      {
 
                         _001UpdateBuffer();
-                        
+
                         if(m_pui == NULL)
                         {
-                           
+
                            break;
-                           
+
                         }
 
                         m_pui->on_after_graphical_update();
@@ -2366,7 +2366,7 @@ namespace macos
                      _001UpdateScreen();
 
                   }
-                  
+
 
                   DWORD dwSpan = ::get_tick_count() - dwStart;
 
@@ -3396,21 +3396,21 @@ namespace macos
 
    }
 
-   
+
    pointd interaction_impl::client_to_screen()
    {
-      
+
       class rect64 rectWindow;
-      
+
       if (!m_pui->GetWindowRect(rectWindow))
       {
-         
+
          return point(0.0, 0.0);
-         
+
       }
 
       return rectWindow.top_left();
-      
+
    }
 
 
@@ -4316,7 +4316,7 @@ namespace macos
                         | SWP_DEFERERASE);
 
          m_rectLastPos = m_rectParentClientRequest;
-         
+
          //Session.set_cursor(Session.get_cursor());
 
       }
@@ -5963,18 +5963,18 @@ namespace macos
 
    void interaction_impl::round_window_resized(CGRect rect)
    {
-      
+
       if(m_pui == NULL)
       {
-         
+
          return;
-         
+
       }
 
       ::size sz;
 
       point64 pt(rect.origin.x, rect.origin.y);
-      
+
       bool bMove = false;
 
       {
@@ -6056,12 +6056,12 @@ namespace macos
    {
 
       ::DeactivateWindow(get_handle());
-      
+
       if(m_pui == NULL)
       {
-         
+
          return;
-         
+
       }
 
       m_pui->RedrawWindow();
@@ -6253,21 +6253,6 @@ namespace macos
 
 
 
-   /////////////////////////////////////////////////////////////////////////////
-   // Standard init called by WinMain
-
-   //__STATIC bool CLASS_DECL_BASE __register_with_icon(WNDCLASS* pWndCls,
-   //                                                  const char * lpszClassName, UINT nIDIcon)
-   //{
-   //   pWndCls->lpszClassName = lpszClassName;
-   //   pWndCls->hIcon = ::LoadIcon(NULL, IDI_APPLICATION);
-   //   return __register_class(pWndCls);
-   //}
-
-
-
-   /////////////////////////////////////////////////////////////////////////////
-   // Special WndProcs (activation handling & gray dialogs)
 
 
    LRESULT CALLBACK

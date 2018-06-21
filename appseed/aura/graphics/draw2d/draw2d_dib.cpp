@@ -72,22 +72,22 @@ namespace draw2d
    void dib::draw2d_dib_common_construct()
    {
 
-      m_pcolorref             = NULL;
-      m_dIsotropicRate        = 1.0;
-      m_size                  = ::size(0, 0);
-      m_sizeAlloc             = ::size(0, 0);
-      m_iScan                 = 0;
-      m_bMapped               = false;
-      m_descriptor.m_etype    = type_complex;
-      m_descriptor.m_cr       = 0;
-      m_descriptor.m_size     = ::size(0, 0);
-      m_bReduced              = false;
-      m_pt                    = point(0, 0);
-      m_dFontFactor           = 1.0;
-      m_ealphamode            = ::draw2d::alpha_mode_blend;
-      m_bOwn                  = true;
+      m_pcolorref = NULL;
+      m_dIsotropicRate = 1.0;
+      m_size = ::size(0, 0);
+      m_sizeAlloc = ::size(0, 0);
+      m_iScan = 0;
+      m_bMapped = false;
+      m_descriptor.m_etype = type_complex;
+      m_descriptor.m_cr = 0;
+      m_descriptor.m_size = ::size(0, 0);
+      m_bReduced = false;
+      m_pt = point(0, 0);
+      m_dFontFactor = 1.0;
+      m_ealphamode = ::draw2d::alpha_mode_blend;
+      m_bOwn = true;
       m_memoryMap.allocate(0);
-      m_emipmap               = mipmap_none;
+      m_emipmap = mipmap_none;
       m_pathCache.Empty();
 
    }
@@ -259,7 +259,7 @@ namespace draw2d
 
       ::draw2d::dib * pdib = this;
 
-      while(i > 0)
+      while (i > 0)
       {
 
          if (pdib->m_pnext.is_null())
@@ -362,42 +362,95 @@ namespace draw2d
    }
 
 
-   bool dib::destroy()
+   void dib::defer_save_to_cache()
    {
 
-      // image cache write
       if (m_pathCache.has_char())
       {
 
-         try
+         ::file::path pathDib = m_pathCache;
+
+         m_pathCache.Empty();
+
+         fork([=]()
          {
 
-            ::file::file_sp file = Application.file().get_file(m_pathCache, ::file::mode_create | ::file::mode_write | ::file::type_binary | ::file::defer_create_directory);
+            sp(dib) pthis = this;
 
-            if (file.is_set())
-            {
+            pthis->threadrefa_remove(::get_thread());
 
-               ::file::byte_ostream ostream(file);
+            pthis->save_to_dib(pathDib);
 
-               ostream << *this;
+         });
 
-            }
+      }
 
-         }
-         catch (...)
+   }
+
+
+   bool dib::load_from_dib(const ::file::path & pathDib)
+   {
+
+      ::file::file_sp file = Session.file().get_file(pathDib, ::file::mode_read | ::file::share_deny_write | ::file::type_binary);
+
+      if (file.is_null())
+      {
+
+         return false;
+
+      }
+
+      destroy();
+
+      ::file::byte_istream istream(file);
+
+      istream >> *this;
+
+      if (istream.fail() || m_pcolorref == NULL || m_size.area() <= 0)
+      {
+         return false;
+      }
+
+      return true;
+
+   }
+
+
+   void dib::save_to_dib(const ::file::path & pathDib)
+   {
+
+      try
+      {
+
+         ::file::file_sp file = Application.file().get_file(pathDib, ::file::mode_create | ::file::mode_write | ::file::type_binary | ::file::defer_create_directory);
+
+         if (file.is_set())
          {
+
+            ::file::byte_ostream ostream(file);
+
+            ostream << *this;
 
          }
 
       }
+      catch (...)
+      {
 
-      m_pathCache.Empty();
+      }
+
+   }
+
+
+   bool dib::destroy()
+   {
 
       m_pnext.release();
 
       return true;
 
    }
+
 
    bool dib::detach(::draw2d::dib * pdib)
    {

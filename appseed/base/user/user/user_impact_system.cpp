@@ -154,6 +154,7 @@ namespace user
    sp(::user::frame_window) impact_system::create_new_frame(::user::document * pdocument, sp(::user::frame_window) pOther, ::create * pcreate)
    {
 
+      bool bAddToTitle = (bool) m_set["add_to_title"];
       // create a frame wired to the specified ::user::document
 
       ASSERT(m_strMatter.get_length() > 0); // must have a resource ID to load from
@@ -231,7 +232,8 @@ namespace user
 
       // create new from resource
       if (!pframe->LoadFrame(m_strMatter,
-                             WS_OVERLAPPEDWINDOW | FWS_ADDTOTITLE,   // default frame styles
+                             WS_OVERLAPPEDWINDOW |
+                             (bAddToTitle ? FWS_ADDTOTITLE : 0),   // default frame styles
                              dynamic_cast < ::user::interaction * > (pcreate->m_puiParent), pcreate))
       {
 

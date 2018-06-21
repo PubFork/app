@@ -209,6 +209,9 @@ public:
 
    using ::user::wndfrm::frame::WorkSetListener::attach;
    DECL_GEN_SIGNAL(guserbaseOnInitialUpdate);
+   DECL_GEN_SIGNAL(_001OnDwm);
+   DECL_GEN_SIGNAL(_001OnNcCalcSize);
+
 
    virtual class mini_dock_frame_window* CreateFloatingFrame(uint32_t dwStyle);
    virtual void NotifyFloatingWindows(uint32_t dwFlags) override;

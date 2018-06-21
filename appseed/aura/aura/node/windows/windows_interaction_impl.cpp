@@ -62,11 +62,7 @@ namespace windows
    }
 
 
-   HRESULT STDMETHODCALLTYPE interaction_impl::DragEnter(
-   /* [unique][in] */ __RPC__in_opt IDataObject *pDataObj,
-   /* [in] */ DWORD grfKeyState,
-   /* [in] */ POINTL pt,
-   /* [out][in] */ __RPC__inout DWORD *pdwEffect)
+   HRESULT STDMETHODCALLTYPE interaction_impl::DragEnter(IDataObject *pDataObj, DWORD grfKeyState, POINTL pt, DWORD *pdwEffect)
    {
 
       ::message::drag_and_drop m(this, MESSAGE_OLE_DRAGENTER);
@@ -106,11 +102,10 @@ namespace windows
 
    }
 
-   HRESULT STDMETHODCALLTYPE interaction_impl::DragOver(
-   /* [in] */ DWORD grfKeyState,
-   /* [in] */ POINTL pt,
-   /* [out][in] */ __RPC__inout DWORD *pdwEffect)
+
+   HRESULT STDMETHODCALLTYPE interaction_impl::DragOver(DWORD grfKeyState, POINTL pt,  DWORD *pdwEffect)
    {
+
       ::message::drag_and_drop m(this, MESSAGE_OLE_DRAGOVER);
 
       m.pDataObj = NULL;
@@ -148,8 +143,10 @@ namespace windows
       return S_OK;
    }
 
+
    HRESULT STDMETHODCALLTYPE interaction_impl::DragLeave(void)
    {
+
       ::message::drag_and_drop m(this, MESSAGE_OLE_DRAGLEAVE);
 
       m.pDataObj = NULL;
@@ -179,11 +176,8 @@ namespace windows
 
    }
 
-   HRESULT STDMETHODCALLTYPE interaction_impl::Drop(
-   /* [unique][in] */ __RPC__in_opt IDataObject *pDataObj,
-   /* [in] */ DWORD grfKeyState,
-   /* [in] */ POINTL pt,
-   /* [out][in] */ __RPC__inout DWORD *pdwEffect)
+
+   HRESULT STDMETHODCALLTYPE interaction_impl::Drop(IDataObject * pDataObj, DWORD grfKeyState, POINTL pt, DWORD * pdwEffect)
    {
 
       ::message::drag_and_drop m(this, MESSAGE_OLE_DRAGDROP);
@@ -223,6 +217,7 @@ namespace windows
 
    }
 
+
    HRESULT STDMETHODCALLTYPE interaction_impl::QueryInterface(REFIID riid, void **ppvObject)
    {
 
@@ -246,14 +241,20 @@ namespace windows
 
    }
 
+
    ULONG STDMETHODCALLTYPE interaction_impl::AddRef(void)
    {
+
       return (ULONG)add_ref();
+
    }
+
 
    ULONG STDMETHODCALLTYPE interaction_impl::Release(void)
    {
+
       return (ULONG)release();
+
    }
 
 
@@ -269,7 +270,6 @@ namespace windows
    {
 
       m_pfnSuper = NULL;
-      //m_pthreadDraw        = NULL;
       m_bUseDnDHelper = false;
       m_bUpdateGraphics = false;
       m_bIgnoreSizeEvent = false;
@@ -302,8 +302,6 @@ namespace windows
    }
 
 
-
-
    void * interaction_impl::get_os_data() const
    {
 
@@ -311,9 +309,6 @@ namespace windows
 
    }
 
-
-
-   // Change a interaction_impl's style
 
    __STATIC bool CLASS_DECL_AURA __modify_style(oswindow oswindow, int32_t nStyleOffset,
          uint32_t dwRemove, uint32_t dwAdd, UINT nFlags)
@@ -346,7 +341,6 @@ namespace windows
 
       }
 
-
       return bOk;
 
    }
@@ -368,12 +362,9 @@ namespace windows
    }
 
 
-
-
-
    void interaction_impl::pre_subclass_window()
    {
-      // no default processing
+
    }
 
 
@@ -421,10 +412,10 @@ namespace windows
 
       string strClassName(cs.lpszClass);
 
-      if (strClassName.is_empty() && oswindowParent != HWND_MESSAGE)
+      if (strClassName.is_empty())
       {
 
-         strClassName = calc_window_class();
+         strClassName = m_pui->calc_window_class();
 
       }
 
@@ -470,24 +461,8 @@ namespace windows
 
       m_pui->m_pthread = ::get_thread();
 
-      //::simple_message_box(NULL,"h2","h2",MB_OK);
-
-      //if (cs.hwndParent != HWND_MESSAGE)
-      //{
-
-      //   m_spgraphics.alloc(allocer());
-
-      //   m_spgraphics->on_create_window(this);
-
-      //}
-
       if (oswindow == NULL)
       {
-
-         //::simple_message_box(NULL,"h3","h3",MB_OK);
-
-         //if(m_pauraapp == NULL)
-         //   return FALSE;
 
          if (papp == NULL)
          {
@@ -497,9 +472,10 @@ namespace windows
          }
 
          string strLastError = FormatMessageFromSystem(dwLastError);
-         string strMessage;
-         strMessage.Format("%s\n\nSystem Error Code: %d", strLastError, dwLastError);
 
+         string strMessage;
+
+         strMessage.Format("%s\n\nSystem Error Code: %d", strLastError, dwLastError);
 
          APPTRACE(::aura::trace::category_AppMsg, 0, "Warning: Window creation failed: get_last_error returned:\n");
 
@@ -530,14 +506,11 @@ namespace windows
       }
 
       if (oswindow == NULL)
-         return FALSE;
+      {
 
-      //if (!m_pui->m_bMessageWindow)
-      //{
+         return false;
 
-      //   m_spgraphics.alloc
-
-      //}
+      }
 
       bool bUnicode = ::IsWindowUnicode(oswindow) != FALSE;
 
@@ -555,33 +528,32 @@ namespace windows
       }
 
       WNDCLASSW wndcls;
-      if (wstrClassName.get_length() > 0 && GetClassInfoW(System.m_hinstance, wstrClassName, &wndcls) &&
-            wndcls.hIcon != NULL)
+
+      if (wstrClassName.get_length() > 0 && GetClassInfoW(System.m_hinstance, wstrClassName, &wndcls) && wndcls.hIcon != NULL)
       {
+
          Application.set_icon(m_pui, canew(::visual::icon(get_app(), wndcls.hIcon)), false);
+
          Application.set_icon(m_pui, canew(::visual::icon(get_app(), wndcls.hIcon)), true);
+
       }
-      //::simple_message_box(NULL,"h4","h4",MB_OK);
-      //      oswindow oswindowHandle = get_handle();
+
       if (oswindow != get_handle())
       {
-         //::simple_message_box(NULL,"h4.dame","h4.dame",MB_OK);
 
          ASSERT(FALSE); // should have been set in send msg hook
 
       }
-      //::simple_message_box(NULL,"h4.ok","h4.ok",MB_OK);
 
       /// this Windows native window "holds" reference to the
       /// wrapping object.
       pui->add_ref();
 
-      return TRUE;
+      return true;
 
    }
 
 
-   // for child windows
    bool interaction_impl::pre_create_window(::user::create_struct& cs)
    {
 
@@ -625,7 +597,9 @@ namespace windows
 
       }
 
-      ::user::create_struct cs(0, NULL, pszName, WS_CHILD, null_rect(), HWND_MESSAGE);
+      ::user::create_struct cs(0, NULL, pszName, WS_CHILD, null_rect());
+
+      cs.hwndParent = HWND_MESSAGE;
 
       if (!native_create_window_ex(pui, cs, HWND_MESSAGE))
       {
@@ -4263,7 +4237,7 @@ namespace windows
 
       const unichar * pwszText = wstrText;
 
-      if (!::SendMessageTimeoutW(get_handle(), WM_SETTEXT, 0, (LPARAM)pwszText, SMTO_ABORTIFHUNG, 84, &lresult))
+      if (!::SendMessageTimeoutW(get_handle(), WM_SETTEXT, 0, (LPARAM)pwszText, SMTO_ABORTIFHUNG, 500, &lresult))
          return;
 
    }
@@ -6194,9 +6168,6 @@ LRESULT CALLBACK __window_procedure(oswindow oswindow, UINT message, WPARAM wpar
    {
 
       output_debug_string("WM_SHOWWINDOW");
-      //return 0;
-
-      //
 
    }
 
@@ -6354,115 +6325,6 @@ void CLASS_DECL_AURA _handle_activate(::window_sp pwindow, WPARAM nState, ::wind
 //   }
 //   return FALSE;
 //}
-
-
-
-/////////////////////////////////////////////////////////////////////////////
-// Standard init called by WinMain
-
-
-
-
-
-/////////////////////////////////////////////////////////////////////////////
-// Special WndProcs (activation handling & gray dialogs)
-
-
-//LRESULT CALLBACK
-//__activation_window_procedure(oswindow oswindow,UINT nMsg,WPARAM wParam,LPARAM lParam)
-//{
-//   WNDPROC oldWndProc = (WNDPROC)::GetProp(oswindow,gen_OldWndProc);
-//   ASSERT(oldWndProc != NULL);
-//
-//   LRESULT lResult = 0;
-//   try
-//   {
-//      bool bCallDefault = TRUE;
-//      switch(nMsg)
-//      {
-//      case WM_INITDIALOG:
-//      {
-//                           rect rectOld;
-//                           ::window_sp pwindow = System.ui_from_handle(oswindow);
-//                           bCallDefault = FALSE;
-//                           lResult = CallWindowProc(oldWndProc,oswindow,nMsg,wParam,lParam);
-//      }
-//         break;
-//
-//      case WM_ACTIVATE:
-//         __handle_activate(System.ui_from_handle(oswindow),wParam,
-//            System.ui_from_handle((::oswindow) lParam));
-//         break;
-//
-//      case WM_SETCURSOR:
-////         bCallDefault = !__handle_set_cursor(System.ui_from_handle(oswindow),
-//  //          (int16_t)LOWORD(lParam),HIWORD(lParam));
-//         break;
-//
-//      case WM_NCDESTROY:
-//         SetWindowLongPtr(oswindow,GWLP_WNDPROC,reinterpret_cast<int_ptr>(oldWndProc));
-//         RemoveProp(oswindow,gen_OldWndProc);
-//         GlobalDeleteAtom(GlobalFindAtom(gen_OldWndProc));
-//         break;
-//      }
-//
-//      // call original wndproc for default handling
-//      if(bCallDefault)
-//         lResult = CallWindowProc(oldWndProc,oswindow,nMsg,wParam,lParam);
-//   }
-//   catch(::exception::base * pe)
-//   {
-//      // handle exception
-//      MSG msg;
-//      msg.hwnd = oswindow;
-//      msg.message = nMsg;
-//      msg.wParam = wParam;
-//      msg.lParam = lParam;
-//
-//      //lResult = __process_window_procedure_exception(pe, &msg);
-//      //      TRACE(::aura::trace::category_AppMsg, 0, "Warning: Uncaught exception in __activation_window_procedure (returning %ld).\n",
-//      //       lResult);
-//      pe->Delete();
-//   }
-//
-//
-//   return lResult;
-//}
-
-
-
-
-/////////////////////////////////////////////////////////////////////////////
-// Additional helpers for WNDCLASS init
-
-// like RegisterClass, except will automatically call UnregisterClass
-bool CLASS_DECL_AURA __register_class(WNDCLASSW* lpWndClass)
-{
-
-   WNDCLASSW wndcls;
-
-   if (GetClassInfoW(lpWndClass->hInstance, lpWndClass->lpszClassName, &wndcls))
-   {
-      return TRUE;
-   }
-
-   if (!::RegisterClassW(lpWndClass))
-   {
-      return FALSE;
-   }
-
-   bool bRet = TRUE;
-
-
-   return bRet;
-}
-
-
-
-
-
-
-
 
 
 void __term_windowing()
