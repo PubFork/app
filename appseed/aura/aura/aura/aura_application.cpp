@@ -2318,27 +2318,27 @@ namespace aura
    void application::term_thread()
    {
 
-      try
-      {
+      //try
+      //{
 
-         Application.signal_close_dependent_threads();
+      //   signal_close_dependent_threads();
 
-      }
-      catch (...)
-      {
+      //}
+      //catch (...)
+      //{
 
-      }
+      //}
 
-      try
-      {
+      //try
+      //{
 
-         wait_close_dependent_threads(seconds(60));
+      //   wait_close_dependent_threads(seconds(60));
 
-      }
-      catch (...)
-      {
+      //}
+      //catch (...)
+      //{
 
-      }
+      //}
 
       thisstart;
 
@@ -6516,7 +6516,7 @@ finalize:
 
 #endif
 
-	  return true;
+      return true;
 
    }
 

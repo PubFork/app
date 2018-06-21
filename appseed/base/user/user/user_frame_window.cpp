@@ -712,13 +712,17 @@ namespace user
 
 #endif
 
+      m_strFrameClass = calc_window_class();
+
+      cs.lpszClass = m_strFrameClass;
+
       if(cs.hwndParent != NULL)
       {
-         
+
          cs.style |= WS_CHILD;
-         
+
       }
-      
+
       cs.style &= ~WS_VISIBLE;
 
       return true;
@@ -732,7 +736,7 @@ namespace user
       UNREFERENCED_PARAMETER(lpszMenuName);
 
       m_strTitle = lpszWindowName;    // save title for later
-      
+
       ::user::create_struct cs(dwExStyle, lpszClassName, lpszWindowName, dwStyle, rect, pcreate);
 
       if (!::user::interaction::create_window_ex(cs, puiParent))
@@ -876,7 +880,7 @@ namespace user
       }
 
       output_debug_string("\nm_bLayoutEnable FALSE");
-      
+
       ::user::create_struct cs(0L, NULL, lpszTitle, dwDefaultStyle, rectFrame, pcreate);
 
       if (!create_window_ex(cs, puiParent))
@@ -1999,37 +2003,6 @@ namespace user
 
 
 
-
-
-
-   extern const CHAR _vfxWndFrameOrView[];
-   //const CHAR _vfxWndFrameOrView[] = __WNDFRAMEORVIEW;
-
-   /////////////////////////////////////////////////////////////////////////////
-   // frame_window second phase creation
-
-   //bool frame_window::pre_create_window(::user::create_struct& cs)
-   //{
-
-   //   if ((cs.style & FWS_ADDTOTITLE))
-   //      cs.style |= FWS_PREFIXTITLE;
-
-   //   //if (afxData.bWin4)
-   //   cs.dwExStyle |= WS_EX_CLIENTEDGE;
-
-   //   return TRUE;
-   //}
-
-
-
-   //void frame_window::_001OnCreate(::message::message * pobj)
-   //{
-   //   UNREFERENCED_PARAMETER(pobj);
-
-   //   if(pobj->previous())
-   //      return;
-
-   //}
 
 
 

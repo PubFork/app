@@ -63,7 +63,7 @@ namespace user
       bool                       m_bWindowFrame;
       bool                       m_bLayered;
       int32_t                    m_iFrameData;
-
+      string                     m_strFrameClass;
       ::id                       m_idHelp;         // xxx mrs
       ::user::impact_system *    m_pdocumenttemplate;
 

@@ -1003,20 +1003,10 @@ void thread::close_dependent_threads(const ::duration & dur)
 void thread::signal_close_dependent_threads()
 {
 
-   spa(::thread) ptra;
+   synch_lock sl(m_pmutex);
 
+   for(auto & pthread : m_threadrefaDependent)
    {
-
-      synch_lock sl(m_pmutex);
-
-      ptra = m_threadrefaDependent;
-
-   }
-
-   for(index i = 0; i < ptra.get_count(); i++)
-   {
-
-      sp(thread) pthread = ptra[i];
 
       try
       {
@@ -1043,7 +1033,6 @@ void thread::signal_close_dependent_threads()
 
 void thread::wait_close_dependent_threads(const duration & duration)
 {
-
 
    DWORD dwStart = ::get_tick_count();
 

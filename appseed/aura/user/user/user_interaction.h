@@ -49,7 +49,6 @@ namespace user
 
    };
 
-
    class CLASS_DECL_AURA interaction:
       virtual public interaction_base
    {
@@ -982,6 +981,8 @@ namespace user
       virtual bool OnUpDownTargetAttach(::user::wndfrm::frame::WorkSetUpDownInterface * pupdown);
       virtual bool OnUpDownTargetDetach(::user::wndfrm::frame::WorkSetUpDownInterface * pupdown);
 
+
+      virtual string calc_window_class();
 
 
       virtual void user_interaction_on_destroy();

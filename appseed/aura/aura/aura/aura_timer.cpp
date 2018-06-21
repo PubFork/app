@@ -105,6 +105,8 @@ void timer::stop()
 
          m_pcallback->threadrefa_remove(this);
 
+         m_pcallback = NULL;
+
       }
 
    }
@@ -196,17 +198,17 @@ void timer::call_on_timer()
    if(!bRepeat)
    {
 
-      try
-      {
+      //try
+      //{
 
-         // intentionally may repeat the operation
-         post_quit();
+      //   // intentionally may repeat the operation
+      //   post_quit();
 
-      }
-      catch(...)
-      {
+      //}
+      //catch(...)
+      //{
 
-      }
+      //}
 
       try
       {
@@ -222,7 +224,7 @@ void timer::call_on_timer()
       try
       {
 
-         synch_lock sl(m_objectptraDependent.m_pmutex);
+         synch_lock sl(m_pmutex);
 
          for (auto pobject : m_objectptraDependent)
          {

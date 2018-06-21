@@ -2712,6 +2712,7 @@
     <ClInclude Include="aura\os\windows\windows_shell.h" />
     <ClInclude Include="aura\os\windows\windows_simple_hold_handle.h" />
     <ClInclude Include="aura\os\windows\windows_utils.h" />
+    <ClInclude Include="aura\os\windows\windows_windowing.h" />
     <ClInclude Include="aura\os\windows\windows_windows.h" />
     <ClInclude Include="aura\os\windows\windows_window_buffer.h" />
     <ClInclude Include="aura\os\windows_common\draw2d_direct2d_global.h" />

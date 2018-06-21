@@ -1,4 +1,5 @@
 #include "framework.h"
+#include "aura/os/windows/windows_windowing.h"
 
 
 ::user::interaction * get_system_window_interaction(::os_system_window * psystemwindow);
@@ -1903,6 +1904,38 @@ restart:
       );
 
    }
+
+
+   string interaction::calc_window_class()
+   {
+
+#ifdef WINDOWSEX
+
+      uint32_t uiStyle = get_window_default_style();
+
+      string strIcon = get_window_icon_matter();
+
+      if (strIcon.has_char())
+      {
+
+         return windows_calc_icon_window_class(this, uiStyle, strIcon);
+
+      }
+      else
+      {
+
+         return windows_get_user_interaction_window_class(this);
+
+      }
+
+#else
+
+      return "";
+
+#endif
+
+   }
+
 
 
    void interaction::_000OnDraw(::draw2d::graphics * pgraphics)

@@ -372,6 +372,13 @@ namespace windows
 
          sl.lock();
 
+         SelectClipRgn(m_hdcScreen, NULL);
+
+         SelectClipRgn(m_hdc, NULL);
+
+         SetViewportOrgEx(m_hdcScreen, 0, 0, NULL);
+
+         SetViewportOrgEx(m_hdc, 0, 0, NULL);
 
          bool bOk = ::UpdateLayeredWindow(m_pimpl->m_oswindow, m_hdcScreen, &pt, &sz, m_hdc, &ptSrc, RGB(0, 0, 0), &blendPixelFunction, ULW_ALPHA) != FALSE;
 

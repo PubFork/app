@@ -102,9 +102,11 @@ namespace aura
 
       threadrefa_remove(ptimer);
 
-      sl.unlock();
+      ptimer->m_pmutex = NULL;
 
       ptimer->stop();
+
+      sl.unlock();
 
       return true;
 

@@ -76,15 +76,12 @@ namespace multithreading
 
       int nExitCode = -1;
 
-
-
       if (thread == NULL)
       {
 
          return -1;
 
       }
-
 
       {
 
@@ -102,12 +99,10 @@ namespace multithreading
 
          }
 
-
-
          try
          {
 
-            synch_lock sl(pthread->m_objectptraDependent.m_pmutex);
+            synch_lock sl(pthread->m_pmutex);
 
             for (auto pobject : pthread->m_objectptraDependent)
             {
@@ -147,7 +142,6 @@ namespace multithreading
          try
          {
 
-
             __node_term_thread(pthread);
 
             ::multithreading::__node_on_term_thread(pthread);
@@ -178,9 +172,7 @@ namespace multithreading
 
             }
 
-
             __end_thread(papp);
-
 
          }
          catch(...)
@@ -200,7 +192,6 @@ namespace multithreading
       {
 
       }
-
 
       set_thread_off(::GetCurrentThreadId());
 
