@@ -268,7 +268,7 @@ namespace sockets
 
          }
 
-         SSL_CTX_set_tmp_dh_callback(m_psslcontext->m_ssl_ctx, &tmp_dh_callback);
+         SSL_CTX_set_tmp_dh_callback(m_psslcontext->m_pclientcontext->m_pcontext, &tmp_dh_callback);
 
       }
 
@@ -280,24 +280,24 @@ namespace sockets
 
          EC_KEY *ecdh = EC_KEY_new_by_curve_name(NID_secp384r1);
 
-         SSL_CTX_set_tmp_ecdh(m_psslcontext->m_ssl_ctx, ecdh);
+         SSL_CTX_set_tmp_ecdh(m_psslcontext->m_pclientcontext->m_pcontext, ecdh);
 
       }
 
       if (m_strCipherList.find("DH") >= 0)
       {
 
-         SSL_CTX_set_options(m_psslcontext->m_ssl_ctx, SSL_CTX_get_options(m_psslcontext->m_ssl_ctx) | SSL_OP_SINGLE_DH_USE | SSL_OP_CIPHER_SERVER_PREFERENCE);
+         SSL_CTX_set_options(m_psslcontext->m_pclientcontext->m_pcontext, SSL_CTX_get_options(m_psslcontext->m_pclientcontext->m_pcontext) | SSL_OP_SINGLE_DH_USE | SSL_OP_CIPHER_SERVER_PREFERENCE);
 
       }
       else
       {
 
-         SSL_CTX_set_options(m_psslcontext->m_ssl_ctx, SSL_CTX_get_options(m_psslcontext->m_ssl_ctx) | SSL_OP_CIPHER_SERVER_PREFERENCE);
+         SSL_CTX_set_options(m_psslcontext->m_pclientcontext->m_pcontext, SSL_CTX_get_options(m_psslcontext->m_pclientcontext->m_pcontext) | SSL_OP_CIPHER_SERVER_PREFERENCE);
 
       }
 
-      SSL_CTX_set_cipher_list(m_psslcontext->m_ssl_ctx, strCipherList);
+      SSL_CTX_set_cipher_list(m_psslcontext->m_pclientcontext->m_pcontext, strCipherList);
 
    }
 

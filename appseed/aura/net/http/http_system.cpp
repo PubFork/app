@@ -1104,7 +1104,7 @@ retry:
 
 #if defined(BSD_STYLE_SOCKETS)
 
-            if(psession->m_psslcontext->m_ssl_ctx != NULL && psession->m_psslcontext->m_iSslCtxRetry == 1 && iTry < 8)
+            if(psession->m_psslcontext->m_pclientcontext->m_pcontext != NULL && psession->m_psslcontext->m_iSslCtxRetry == 1 && iTry < 8)
             {
 
                goto retry;

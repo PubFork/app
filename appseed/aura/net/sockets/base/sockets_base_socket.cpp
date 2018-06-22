@@ -675,9 +675,7 @@ namespace sockets
       SetRemoteHostname(psocket -> GetRemoteHostname());
       psocket->m_socket = INVALID_SOCKET;
       psocket->m_psslcontext->m_iSslCtxRetry = 0;
-      psocket->m_psslcontext->m_ssl_ctx = NULL;
-      psocket->m_psslcontext->m_ssl_session = NULL;
-      psocket->m_psslcontext->m_ssl_method = NULL;
+      psocket->m_psslcontext->m_pclientcontext.release();
       psocket->m_spsslclientcontext.release();
       psocket->m_psslcontext->m_ssl = NULL;
       psocket->m_psslcontext->m_sbio = NULL;
@@ -2135,28 +2133,10 @@ namespace sockets
 
       synch_lock sl(m_pmutex);
 
-      if (m_psslcontext->m_ssl_session != NULL)
+      if (m_psslcontext->m_pclientcontext->m_psession != NULL)
       {
 
-         SSL_SESSION_free(m_psslcontext->m_ssl_session);
-
-         try
-         {
-
-            if (m_spsslclientcontext.is_set())
-            {
-
-               m_spsslclientcontext->m_psession = NULL;
-
-            }
-
-         }
-         catch (...)
-         {
-
-         }
-
-         m_psslcontext->m_ssl_session = NULL;
+         m_psslcontext->m_pclientcontext.release();
 
       }
 
@@ -2168,17 +2148,10 @@ namespace sockets
 
       synch_lock sl(m_pmutex);
 
-      if (m_psslcontext->m_ssl_session == NULL)
+      if (m_psslcontext->m_pclientcontext->m_psession == NULL)
       {
 
-         if (m_spsslclientcontext.is_set())
-         {
-
-            m_spsslclientcontext->m_psession = SSL_get1_session(m_psslcontext->m_ssl);
-
-            m_psslcontext->m_ssl_session = m_spsslclientcontext->m_psession;
-
-         }
+         m_psslcontext->m_pclientcontext->m_psession = SSL_get1_session(m_psslcontext->m_ssl);
 
       }
 

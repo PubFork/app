@@ -2,6 +2,41 @@
 //#include <math.h>
 
 
+void rect::rate(double d) NOTHROW
+{
+
+   point pt = center();
+
+   LONG w = (d * width());
+
+   LONG h = (d * height());
+
+   left = pt.x - w / 2;
+
+   right = left + w;
+
+   top = pt.y - h / 2;
+
+   bottom= top + h;
+
+}
+
+point rect::random_point()
+{
+   return point(
+          Sys(::aura::system::g_p).math().RandRange(left, right),
+          Sys(::aura::system::g_p).math().RandRange(top, bottom));
+}
+
+point rect::random_point(double dRate)
+{
+   rect r(this);
+   r.rate(dRate);
+   return point(
+          Sys(::aura::system::g_p).math().RandRange(left, right),
+          Sys(::aura::system::g_p).math().RandRange(top, bottom));
+}
+
 void rect::DeflateBottomRightSizeByRate(double dRate)
 {
    double dx = width();
@@ -2103,3 +2138,7 @@ bool rectd::intersects_y(LPCRECTD lpRect) const NOTHROW
           (lpRect->top >= top && lpRect->top <= bottom) ||
           (lpRect->bottom >= top && lpRect->bottom <= bottom);
 }
+
+
+
+

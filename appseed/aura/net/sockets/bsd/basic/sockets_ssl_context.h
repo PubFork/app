@@ -8,27 +8,29 @@
 
 #include <openssl/ssl.h>
 
+#include "sockets_ssl_client_context.h"
+
 namespace sockets
 {
-   
+
+
+
    class CLASS_DECL_AURA ssl_context
    {
    public:
 
-      
+
       int m_iSslCtxRetry;
 
-      SSL_CTX *m_ssl_ctx; ///< ssl context
-      SSL_SESSION * m_ssl_session; ///< ssl session
-      const SSL_METHOD * m_ssl_method; ///< ssl method
+      sp(ssl_client_context)  m_pclientcontext;
       SSL *m_ssl; ///< ssl 'socket'
       BIO *m_sbio; ///< ssl bio
-      
-      
+
+
       ssl_context();
       ~ssl_context();
 
    };
-   
+
 } // namespace sockets
 

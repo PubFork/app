@@ -91,11 +91,18 @@ rect(point ptTopLeft, point ptBottomRight) NOTHROW : rect(ptTopLeft.x, ptTopLeft
    void inflate(int32_t l, int32_t t, int32_t r, int32_t b) NOTHROW;
 
    // deflate the rectangle's width and height without
-   // moving its top or left
+   // Left side is moved to the right, right side is moved to the left,
+   // top is moved down and bottom is moved up.
    void deflate(int32_t x, int32_t y) NOTHROW;
    void deflate(SIZE size) NOTHROW;
    void deflate(LPCRECT lpRect) NOTHROW;
    void deflate(int32_t l, int32_t t, int32_t r, int32_t b) NOTHROW;
+
+   void rate(double d) NOTHROW;
+
+   point random_point();
+
+   point random_point(double dRate);
 
    // translate the rectangle by moving its top and left
    void offset(int32_t x, int32_t y) NOTHROW;
@@ -568,6 +575,7 @@ rectd(pointd ptTopLeft, pointd ptBottomRight) NOTHROW : rectd(ptTopLeft.x, ptTop
    void deflate(SIZED size) NOTHROW;
    void deflate(LPCRECTD lpRect) NOTHROW;
    void deflate(double l, double t, double r, double b) NOTHROW;
+
 
    // translate the rectangle by moving its top and left
    void offset(double x, double y) NOTHROW;

@@ -16,7 +16,7 @@ namespace sockets
       ::object(papp),
       m_mutex(papp)
    {
-      
+
       m_psession = NULL;
       m_pcontext = NULL;
 
@@ -69,14 +69,14 @@ namespace sockets
 
    void ssl_client_context::set_context(const char * pszContext)
    {
-      
+
       UNREFERENCED_PARAMETER(pszContext);
 
    }
 
    void ssl_client_context::set_context(const char * pszFontopus, const char * pszSessId)
    {
-      
+
       UNREFERENCED_PARAMETER(pszFontopus);
 
       UNREFERENCED_PARAMETER(pszSessId);
