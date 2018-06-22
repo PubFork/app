@@ -357,7 +357,12 @@ namespace user
 
          ShowWindow(SW_HIDE);
 
-         m_pcombo->SetFocus();
+         if (m_pcombo != NULL)
+         {
+
+            m_pcombo->SetFocus();
+
+         }
 
       }
 
