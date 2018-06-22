@@ -1527,6 +1527,14 @@ namespace user
 
       ::draw2d::graphics_sp pgraphics = m_pmemorygraphics;
 
+
+      if (pgraphics.is_null())
+      {
+
+         return;
+
+      }
+
       select_font(pgraphics, font_plain_edit);
 
       //const int iLenUniText = 14;

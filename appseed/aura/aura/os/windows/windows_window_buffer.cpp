@@ -331,19 +331,29 @@ namespace windows
 
          ::ShowWindow(m_pimpl->m_oswindow, m_pimpl->m_iShowWindow);
 
-         if (bLayered)
+         if (bLayered && m_pimpl->m_pui != NULL)
          {
 
-            if (m_pimpl->m_iShowWindow == SW_HIDE)
+            try
             {
 
-               m_pimpl->m_pui->ModifyStyle(WS_VISIBLE, 0);
+               if (m_pimpl->m_iShowWindow == SW_HIDE)
+               {
+
+                  m_pimpl->m_pui->ModifyStyle(WS_VISIBLE, 0);
+
+               }
+               else
+               {
+
+                  m_pimpl->m_pui->ModifyStyle(0, WS_VISIBLE);
+
+               }
 
             }
-            else
+            catch (...)
             {
 
-               m_pimpl->m_pui->ModifyStyle(0, WS_VISIBLE);
 
             }
 
