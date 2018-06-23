@@ -573,13 +573,29 @@ namespace windows
             if (pdib->m_size.area() > 0)
             {
 
+               pdib->Fill(0);
+
                HDC hdc = (HDC)pdib->get_graphics()->get_os_data_ex(1);
 
                hdcMem = ::CreateCompatibleDC(NULL);
 
                hbitmapOld = ::SelectObject(hdcMem, hbitmap);
 
-               ::BitBlt(hdc, 0, 0, pdib->m_size.cx, pdib->m_size.cy, hdcMem, 0, 0, SRCCOPY);
+               BITMAPINFO bi;
+
+               bi.bmiHeader.biSize = sizeof(BITMAPINFO);
+               bi.bmiHeader.biWidth = bm.bmWidth;
+               bi.bmiHeader.biHeight = -bm.bmHeight;
+               bi.bmiHeader.biPlanes = 1;
+               bi.bmiHeader.biBitCount = 32;
+               bi.bmiHeader.biCompression = BI_RGB;
+               bi.bmiHeader.biSizeImage = pdib->m_iScan * bm.bmHeight;
+               bi.bmiHeader.biXPelsPerMeter = 0;
+               bi.bmiHeader.biYPelsPerMeter = 0;
+               bi.bmiHeader.biClrUsed = 0;
+               bi.bmiHeader.biClrImportant = 0;
+
+               GetDIBits(hdcMem, hbitmap, 0, bm.bmHeight, pdib->m_pcolorref, &bi, DIB_RGB_COLORS);
 
                pdib->get_graphics()->release_os_data_ex(1, hdc);
 

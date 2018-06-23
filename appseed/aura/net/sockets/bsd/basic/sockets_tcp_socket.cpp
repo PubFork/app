@@ -1984,12 +1984,10 @@ namespace sockets
       if (!bSetToReuse)
       {
 
-         if (m_psslcontext->m_pclientcontext->m_pcontext)
+         if (m_psslcontext->m_pclientcontext.is_set())
          {
 
-            SSL_CTX_free(m_psslcontext->m_pclientcontext->m_pcontext);
-
-            m_psslcontext->m_pclientcontext->m_pcontext = NULL;
+            m_psslcontext->m_pclientcontext.release();
 
          }
 
