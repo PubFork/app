@@ -12,24 +12,44 @@
 		07B65775190F3CA2002DAADE /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07B65774190F3CA2002DAADE /* XCTest.framework */; };
 		07B65776190F3CA2002DAADE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07B65766190F3CA2002DAADE /* Foundation.framework */; };
 		07B65778190F3CA2002DAADE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07B65777190F3CA2002DAADE /* UIKit.framework */; };
-		07B6577B190F3CA2002DAADE /* libmath_ios.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 07B65764190F3CA2002DAADE /* libmath_ios.dylib */; };
+		07B6577B190F3CA2002DAADE /* libtime_ios.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 07B65764190F3CA2002DAADE /* libtime_ios.dylib */; };
 		07B65781190F3CA2002DAADE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 07B6577F190F3CA2002DAADE /* InfoPlist.strings */; };
 		07B65783190F3CA2002DAADE /* math_iosTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 07B65782190F3CA2002DAADE /* math_iosTests.m */; };
+		9A237A4620E0284C00FB91CA /* visual_clock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A237A3C20E0284C00FB91CA /* visual_clock.cpp */; };
+		9A237A4720E0284C00FB91CA /* visual_calendar.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A237A3D20E0284C00FB91CA /* visual_calendar.h */; };
+		9A237A4820E0284C00FB91CA /* visual_calendar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A237A3E20E0284C00FB91CA /* visual_calendar.cpp */; };
+		9A237A4920E0284C00FB91CA /* visual_clock.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A237A3F20E0284C00FB91CA /* visual_clock.h */; };
+		9A237A4A20E0284C00FB91CA /* visual.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A237A4020E0284C00FB91CA /* visual.h */; };
+		9A237A4B20E0284C00FB91CA /* graphics.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A237A4120E0284C00FB91CA /* graphics.h */; };
+		9A237A4C20E0284C00FB91CA /* time.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A237A4320E0284C00FB91CA /* time.h */; };
+		9A237A4D20E0284C00FB91CA /* debug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A237A4420E0284C00FB91CA /* debug.cpp */; };
+		9A237A6920E0285C00FB91CA /* datetime_parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A237A5020E0285C00FB91CA /* datetime_parser.cpp */; };
+		9A237A6A20E0285C00FB91CA /* datetime_element.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A237A5120E0285C00FB91CA /* datetime_element.cpp */; };
+		9A237A6B20E0285C00FB91CA /* datetime_parser.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A237A5220E0285C00FB91CA /* datetime_parser.h */; };
+		9A237A6C20E0285C00FB91CA /* datetime_token.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A237A5320E0285C00FB91CA /* datetime_token.h */; };
+		9A237A6D20E0285C00FB91CA /* datetime_parser_exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A237A5420E0285C00FB91CA /* datetime_parser_exception.cpp */; };
+		9A237A6E20E0285C00FB91CA /* datetime_element.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A237A5520E0285C00FB91CA /* datetime_element.h */; };
+		9A237A6F20E0285C00FB91CA /* calculator.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A237A5620E0285C00FB91CA /* calculator.h */; };
+		9A237A7020E0285C00FB91CA /* datetime_scanner.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A237A5720E0285C00FB91CA /* datetime_scanner.h */; };
+		9A237A7120E0285C00FB91CA /* datetime_parser_exception.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A237A5820E0285C00FB91CA /* datetime_parser_exception.h */; };
+		9A237A7220E0285C00FB91CA /* datetime_token.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A237A5920E0285C00FB91CA /* datetime_token.cpp */; };
+		9A237A7320E0285C00FB91CA /* datetime_scanner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A237A5A20E0285C00FB91CA /* datetime_scanner.cpp */; };
+		9A237A7420E0285C00FB91CA /* datetime_calendar_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A237A5C20E0285C00FB91CA /* datetime_calendar_interface.h */; };
+		9A237A7520E0285C00FB91CA /* datetime_clock.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A237A5D20E0285C00FB91CA /* datetime_clock.h */; };
+		9A237A7620E0285C00FB91CA /* datetime_windows_file_time.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A237A5E20E0285C00FB91CA /* datetime_windows_file_time.cpp */; };
+		9A237A7720E0285C00FB91CA /* datetime_clock_interface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A237A5F20E0285C00FB91CA /* datetime_clock_interface.cpp */; };
+		9A237A7820E0285C00FB91CA /* datetime.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A237A6020E0285C00FB91CA /* datetime.h */; };
+		9A237A7920E0285C00FB91CA /* datetime_clock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A237A6120E0285C00FB91CA /* datetime_clock.cpp */; };
+		9A237A7A20E0285C00FB91CA /* datetime_float_time.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A237A6220E0285C00FB91CA /* datetime_float_time.h */; };
+		9A237A7B20E0285C00FB91CA /* datetime_windows_file_time.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A237A6320E0285C00FB91CA /* datetime_windows_file_time.h */; };
+		9A237A7C20E0285C00FB91CA /* datetime_calendar.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A237A6420E0285C00FB91CA /* datetime_calendar.h */; };
+		9A237A7D20E0285C00FB91CA /* datetime_calendar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A237A6520E0285C00FB91CA /* datetime_calendar.cpp */; };
+		9A237A7E20E0285C00FB91CA /* datetime_calendar_interface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A237A6620E0285C00FB91CA /* datetime_calendar_interface.cpp */; };
+		9A237A7F20E0285C00FB91CA /* datetime_float_time.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A237A6720E0285C00FB91CA /* datetime_float_time.cpp */; };
+		9A237A8020E0285C00FB91CA /* datetime_clock_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A237A6820E0285C00FB91CA /* datetime_clock_interface.h */; };
 		9A57509E16AAB9A1000CC4EF /* framework.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A574D2B16AAB99E000CC4EF /* framework.cpp */; };
 		9A57509F16AAB9A1000CC4EF /* framework.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A574D2C16AAB99E000CC4EF /* framework.h */; };
 		9A8CCAE617EA060200F87A02 /* libbase.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A8CCAE317EA060200F87A02 /* libbase.dylib */; };
-		9AD4FD7817BD5A480008F751 /* kiss_fft.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AD4FD6817BD5A480008F751 /* kiss_fft.cpp */; };
-		9AD4FD7917BD5A480008F751 /* kiss_fft.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AD4FD6917BD5A480008F751 /* kiss_fft.h */; };
-		9AD4FD7A17BD5A480008F751 /* kiss_fft_guts.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AD4FD6A17BD5A480008F751 /* kiss_fft_guts.h */; };
-		9AD4FD7B17BD5A480008F751 /* kiss_fft_shared.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AD4FD6B17BD5A480008F751 /* kiss_fft_shared.cpp */; };
-		9AD4FD7C17BD5A480008F751 /* kiss_ifft.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AD4FD6C17BD5A480008F751 /* kiss_ifft.cpp */; };
-		9AD4FD7D17BD5A480008F751 /* kiss_ifft.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AD4FD6D17BD5A480008F751 /* kiss_ifft.h */; };
-		9AD4FD7E17BD5A480008F751 /* kissfft.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AD4FD6E17BD5A480008F751 /* kissfft.h */; };
-		9AD4FD7F17BD5A480008F751 /* kissfft_fftd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AD4FD6F17BD5A480008F751 /* kissfft_fftd.cpp */; };
-		9AD4FD8017BD5A480008F751 /* kissfft_fftd.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AD4FD7017BD5A480008F751 /* kissfft_fftd.h */; };
-		9AD4FD8117BD5A480008F751 /* kissfft_ifftd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AD4FD7117BD5A480008F751 /* kissfft_ifftd.cpp */; };
-		9AD4FD8217BD5A480008F751 /* kissfft_ifftd.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AD4FD7217BD5A480008F751 /* kissfft_ifftd.h */; };
-		9AD4FD8517BD5A480008F751 /* math_math.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AD4FD7617BD5A480008F751 /* math_math.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,26 +60,33 @@
 			remoteGlobalIDString = 07B65763190F3CA2002DAADE;
 			remoteInfo = math_ios;
 		};
-		9A2EA37219A62C9E004DAFFC /* PBXContainerItemProxy */ = {
+		9A237A8720E0287B00FB91CA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 9A2EA36C19A62C9E004DAFFC /* axis.xcodeproj */;
+			containerPortal = 9A237A8120E0287B00FB91CA /* core.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 9A98A6151771D67E000AE16E;
-			remoteInfo = base;
+			remoteGlobalIDString = 9A19A1A519C6F50B0018DF7D;
+			remoteInfo = core;
 		};
-		9A2EA37419A62C9E004DAFFC /* PBXContainerItemProxy */ = {
+		9A237A8920E0287B00FB91CA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 9A2EA36C19A62C9E004DAFFC /* axis.xcodeproj */;
+			containerPortal = 9A237A8120E0287B00FB91CA /* core.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 9AE24D341904CEFE001AEFFB;
-			remoteInfo = base_ios;
+			remoteGlobalIDString = 9AE24DDC1904CF6E001AEFFB;
+			remoteInfo = ios_core;
 		};
-		9A2EA37619A62C9E004DAFFC /* PBXContainerItemProxy */ = {
+		9A237A8B20E0287B00FB91CA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 9A2EA36C19A62C9E004DAFFC /* axis.xcodeproj */;
+			containerPortal = 9A237A8120E0287B00FB91CA /* core.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 9AE24D431904CEFE001AEFFB;
-			remoteInfo = base_iosTests;
+			remoteGlobalIDString = 9AE24DEB1904CF6E001AEFFB;
+			remoteInfo = core_iosTests;
+		};
+		9A237A8D20E0288700FB91CA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9A237A8120E0287B00FB91CA /* core.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 9A19A1A419C6F50B0018DF7D;
+			remoteInfo = core;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -77,7 +104,7 @@
 
 /* Begin PBXFileReference section */
 		07B59074188664C3002C6FEC /* libcore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcore.dylib; path = ../../../../Users/carlos/.Trash/build/Debug/libcore.dylib; sourceTree = "<group>"; };
-		07B65764190F3CA2002DAADE /* libmath_ios.dylib */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libmath_ios.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		07B65764190F3CA2002DAADE /* libtime_ios.dylib */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libtime_ios.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		07B65766190F3CA2002DAADE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		07B65773190F3CA2002DAADE /* math_iosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = math_iosTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		07B65774190F3CA2002DAADE /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -85,23 +112,43 @@
 		07B6577E190F3CA2002DAADE /* math_iosTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "math_iosTests-Info.plist"; sourceTree = "<group>"; };
 		07B65780190F3CA2002DAADE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		07B65782190F3CA2002DAADE /* math_iosTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = math_iosTests.m; sourceTree = "<group>"; };
-		9A2EA36C19A62C9E004DAFFC /* axis.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = axis.xcodeproj; path = ../axis/axis.xcodeproj; sourceTree = "<group>"; };
+		9A237A3C20E0284C00FB91CA /* visual_clock.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = visual_clock.cpp; sourceTree = "<group>"; };
+		9A237A3D20E0284C00FB91CA /* visual_calendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = visual_calendar.h; sourceTree = "<group>"; };
+		9A237A3E20E0284C00FB91CA /* visual_calendar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = visual_calendar.cpp; sourceTree = "<group>"; };
+		9A237A3F20E0284C00FB91CA /* visual_clock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = visual_clock.h; sourceTree = "<group>"; };
+		9A237A4020E0284C00FB91CA /* visual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = visual.h; sourceTree = "<group>"; };
+		9A237A4120E0284C00FB91CA /* graphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graphics.h; sourceTree = "<group>"; };
+		9A237A4320E0284C00FB91CA /* time.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = time.h; sourceTree = "<group>"; };
+		9A237A4420E0284C00FB91CA /* debug.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = debug.cpp; sourceTree = "<group>"; };
+		9A237A5020E0285C00FB91CA /* datetime_parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = datetime_parser.cpp; sourceTree = "<group>"; };
+		9A237A5120E0285C00FB91CA /* datetime_element.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = datetime_element.cpp; sourceTree = "<group>"; };
+		9A237A5220E0285C00FB91CA /* datetime_parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = datetime_parser.h; sourceTree = "<group>"; };
+		9A237A5320E0285C00FB91CA /* datetime_token.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = datetime_token.h; sourceTree = "<group>"; };
+		9A237A5420E0285C00FB91CA /* datetime_parser_exception.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = datetime_parser_exception.cpp; sourceTree = "<group>"; };
+		9A237A5520E0285C00FB91CA /* datetime_element.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = datetime_element.h; sourceTree = "<group>"; };
+		9A237A5620E0285C00FB91CA /* calculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = calculator.h; sourceTree = "<group>"; };
+		9A237A5720E0285C00FB91CA /* datetime_scanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = datetime_scanner.h; sourceTree = "<group>"; };
+		9A237A5820E0285C00FB91CA /* datetime_parser_exception.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = datetime_parser_exception.h; sourceTree = "<group>"; };
+		9A237A5920E0285C00FB91CA /* datetime_token.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = datetime_token.cpp; sourceTree = "<group>"; };
+		9A237A5A20E0285C00FB91CA /* datetime_scanner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = datetime_scanner.cpp; sourceTree = "<group>"; };
+		9A237A5C20E0285C00FB91CA /* datetime_calendar_interface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = datetime_calendar_interface.h; sourceTree = "<group>"; };
+		9A237A5D20E0285C00FB91CA /* datetime_clock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = datetime_clock.h; sourceTree = "<group>"; };
+		9A237A5E20E0285C00FB91CA /* datetime_windows_file_time.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = datetime_windows_file_time.cpp; sourceTree = "<group>"; };
+		9A237A5F20E0285C00FB91CA /* datetime_clock_interface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = datetime_clock_interface.cpp; sourceTree = "<group>"; };
+		9A237A6020E0285C00FB91CA /* datetime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = datetime.h; sourceTree = "<group>"; };
+		9A237A6120E0285C00FB91CA /* datetime_clock.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = datetime_clock.cpp; sourceTree = "<group>"; };
+		9A237A6220E0285C00FB91CA /* datetime_float_time.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = datetime_float_time.h; sourceTree = "<group>"; };
+		9A237A6320E0285C00FB91CA /* datetime_windows_file_time.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = datetime_windows_file_time.h; sourceTree = "<group>"; };
+		9A237A6420E0285C00FB91CA /* datetime_calendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = datetime_calendar.h; sourceTree = "<group>"; };
+		9A237A6520E0285C00FB91CA /* datetime_calendar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = datetime_calendar.cpp; sourceTree = "<group>"; };
+		9A237A6620E0285C00FB91CA /* datetime_calendar_interface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = datetime_calendar_interface.cpp; sourceTree = "<group>"; };
+		9A237A6720E0285C00FB91CA /* datetime_float_time.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = datetime_float_time.cpp; sourceTree = "<group>"; };
+		9A237A6820E0285C00FB91CA /* datetime_clock_interface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = datetime_clock_interface.h; sourceTree = "<group>"; };
+		9A237A8120E0287B00FB91CA /* core.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = core.xcodeproj; path = ../core/core.xcodeproj; sourceTree = "<group>"; };
 		9A574B9816AAB906000CC4EF /* libmath.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libmath.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A574D2B16AAB99E000CC4EF /* framework.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = framework.cpp; sourceTree = "<group>"; };
 		9A574D2C16AAB99E000CC4EF /* framework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = framework.h; sourceTree = "<group>"; };
 		9A8CCAE317EA060200F87A02 /* libbase.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbase.dylib; path = "../../../../Users/camilo/Library/Developer/Xcode/DerivedData/all-dlckdugtwkhfjkdbgurajmehstei/Build/Products/Debug/libbase.dylib"; sourceTree = "<group>"; };
-		9AD4FD6817BD5A480008F751 /* kiss_fft.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kiss_fft.cpp; sourceTree = "<group>"; };
-		9AD4FD6917BD5A480008F751 /* kiss_fft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kiss_fft.h; sourceTree = "<group>"; };
-		9AD4FD6A17BD5A480008F751 /* kiss_fft_guts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kiss_fft_guts.h; sourceTree = "<group>"; };
-		9AD4FD6B17BD5A480008F751 /* kiss_fft_shared.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kiss_fft_shared.cpp; sourceTree = "<group>"; };
-		9AD4FD6C17BD5A480008F751 /* kiss_ifft.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kiss_ifft.cpp; sourceTree = "<group>"; };
-		9AD4FD6D17BD5A480008F751 /* kiss_ifft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kiss_ifft.h; sourceTree = "<group>"; };
-		9AD4FD6E17BD5A480008F751 /* kissfft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kissfft.h; sourceTree = "<group>"; };
-		9AD4FD6F17BD5A480008F751 /* kissfft_fftd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kissfft_fftd.cpp; sourceTree = "<group>"; };
-		9AD4FD7017BD5A480008F751 /* kissfft_fftd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kissfft_fftd.h; sourceTree = "<group>"; };
-		9AD4FD7117BD5A480008F751 /* kissfft_ifftd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kissfft_ifftd.cpp; sourceTree = "<group>"; };
-		9AD4FD7217BD5A480008F751 /* kissfft_ifftd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kissfft_ifftd.h; sourceTree = "<group>"; };
-		9AD4FD7617BD5A480008F751 /* math_math.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = math_math.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,7 +166,7 @@
 			files = (
 				07B65775190F3CA2002DAADE /* XCTest.framework in Frameworks */,
 				07B65778190F3CA2002DAADE /* UIKit.framework in Frameworks */,
-				07B6577B190F3CA2002DAADE /* libmath_ios.dylib in Frameworks */,
+				07B6577B190F3CA2002DAADE /* libtime_ios.dylib in Frameworks */,
 				07B65776190F3CA2002DAADE /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -164,12 +211,80 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		9A2EA36D19A62C9E004DAFFC /* Products */ = {
+		9A237A3A20E0284C00FB91CA /* graphics */ = {
 			isa = PBXGroup;
 			children = (
-				9A2EA37319A62C9E004DAFFC /* libaxis.dylib */,
-				9A2EA37519A62C9E004DAFFC /* libaxis.dylib */,
-				9A2EA37719A62C9E004DAFFC /* base_iosTests.xctest */,
+				9A237A3B20E0284C00FB91CA /* visual */,
+				9A237A4120E0284C00FB91CA /* graphics.h */,
+			);
+			path = graphics;
+			sourceTree = "<group>";
+		};
+		9A237A3B20E0284C00FB91CA /* visual */ = {
+			isa = PBXGroup;
+			children = (
+				9A237A3C20E0284C00FB91CA /* visual_clock.cpp */,
+				9A237A3D20E0284C00FB91CA /* visual_calendar.h */,
+				9A237A3E20E0284C00FB91CA /* visual_calendar.cpp */,
+				9A237A3F20E0284C00FB91CA /* visual_clock.h */,
+				9A237A4020E0284C00FB91CA /* visual.h */,
+			);
+			path = visual;
+			sourceTree = "<group>";
+		};
+		9A237A4220E0284C00FB91CA /* time */ = {
+			isa = PBXGroup;
+			children = (
+				9A237A4320E0284C00FB91CA /* time.h */,
+				9A237A4420E0284C00FB91CA /* debug.cpp */,
+			);
+			path = time;
+			sourceTree = "<group>";
+		};
+		9A237A4F20E0285C00FB91CA /* calculator */ = {
+			isa = PBXGroup;
+			children = (
+				9A237A5020E0285C00FB91CA /* datetime_parser.cpp */,
+				9A237A5120E0285C00FB91CA /* datetime_element.cpp */,
+				9A237A5220E0285C00FB91CA /* datetime_parser.h */,
+				9A237A5320E0285C00FB91CA /* datetime_token.h */,
+				9A237A5420E0285C00FB91CA /* datetime_parser_exception.cpp */,
+				9A237A5520E0285C00FB91CA /* datetime_element.h */,
+				9A237A5620E0285C00FB91CA /* calculator.h */,
+				9A237A5720E0285C00FB91CA /* datetime_scanner.h */,
+				9A237A5820E0285C00FB91CA /* datetime_parser_exception.h */,
+				9A237A5920E0285C00FB91CA /* datetime_token.cpp */,
+				9A237A5A20E0285C00FB91CA /* datetime_scanner.cpp */,
+			);
+			path = calculator;
+			sourceTree = "<group>";
+		};
+		9A237A5B20E0285C00FB91CA /* datetime */ = {
+			isa = PBXGroup;
+			children = (
+				9A237A5C20E0285C00FB91CA /* datetime_calendar_interface.h */,
+				9A237A5D20E0285C00FB91CA /* datetime_clock.h */,
+				9A237A5E20E0285C00FB91CA /* datetime_windows_file_time.cpp */,
+				9A237A5F20E0285C00FB91CA /* datetime_clock_interface.cpp */,
+				9A237A6020E0285C00FB91CA /* datetime.h */,
+				9A237A6120E0285C00FB91CA /* datetime_clock.cpp */,
+				9A237A6220E0285C00FB91CA /* datetime_float_time.h */,
+				9A237A6320E0285C00FB91CA /* datetime_windows_file_time.h */,
+				9A237A6420E0285C00FB91CA /* datetime_calendar.h */,
+				9A237A6520E0285C00FB91CA /* datetime_calendar.cpp */,
+				9A237A6620E0285C00FB91CA /* datetime_calendar_interface.cpp */,
+				9A237A6720E0285C00FB91CA /* datetime_float_time.cpp */,
+				9A237A6820E0285C00FB91CA /* datetime_clock_interface.h */,
+			);
+			path = datetime;
+			sourceTree = "<group>";
+		};
+		9A237A8220E0287B00FB91CA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9A237A8820E0287B00FB91CA /* libcore.dylib */,
+				9A237A8A20E0287B00FB91CA /* libios_core.a */,
+				9A237A8C20E0287B00FB91CA /* core_iosTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -177,8 +292,8 @@
 		9A574B8D16AAB906000CC4EF = {
 			isa = PBXGroup;
 			children = (
-				9A2EA36C19A62C9E004DAFFC /* axis.xcodeproj */,
-				9ACABEAC17BD04FF004C3F85 /* math */,
+				9A237A8120E0287B00FB91CA /* core.xcodeproj */,
+				9ACABEAC17BD04FF004C3F85 /* time */,
 				07B6577C190F3CA2002DAADE /* math_iosTests */,
 				07B65765190F3CA2002DAADE /* Frameworks */,
 				9A574B9916AAB906000CC4EF /* Products */,
@@ -191,47 +306,23 @@
 			isa = PBXGroup;
 			children = (
 				9A574B9816AAB906000CC4EF /* libmath.dylib */,
-				07B65764190F3CA2002DAADE /* libmath_ios.dylib */,
+				07B65764190F3CA2002DAADE /* libtime_ios.dylib */,
 				07B65773190F3CA2002DAADE /* math_iosTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		9ACABEAC17BD04FF004C3F85 /* math */ = {
+		9ACABEAC17BD04FF004C3F85 /* time */ = {
 			isa = PBXGroup;
 			children = (
-				9AD4FD6617BD5A480008F751 /* kissfft */,
-				9AD4FD7317BD5A480008F751 /* math */,
+				9A237A4F20E0285C00FB91CA /* calculator */,
+				9A237A5B20E0285C00FB91CA /* datetime */,
+				9A237A3A20E0284C00FB91CA /* graphics */,
+				9A237A4220E0284C00FB91CA /* time */,
 				9A574D2B16AAB99E000CC4EF /* framework.cpp */,
 				9A574D2C16AAB99E000CC4EF /* framework.h */,
 			);
-			name = math;
-			sourceTree = "<group>";
-		};
-		9AD4FD6617BD5A480008F751 /* kissfft */ = {
-			isa = PBXGroup;
-			children = (
-				9AD4FD6817BD5A480008F751 /* kiss_fft.cpp */,
-				9AD4FD6917BD5A480008F751 /* kiss_fft.h */,
-				9AD4FD6A17BD5A480008F751 /* kiss_fft_guts.h */,
-				9AD4FD6B17BD5A480008F751 /* kiss_fft_shared.cpp */,
-				9AD4FD6C17BD5A480008F751 /* kiss_ifft.cpp */,
-				9AD4FD6D17BD5A480008F751 /* kiss_ifft.h */,
-				9AD4FD6E17BD5A480008F751 /* kissfft.h */,
-				9AD4FD6F17BD5A480008F751 /* kissfft_fftd.cpp */,
-				9AD4FD7017BD5A480008F751 /* kissfft_fftd.h */,
-				9AD4FD7117BD5A480008F751 /* kissfft_ifftd.cpp */,
-				9AD4FD7217BD5A480008F751 /* kissfft_ifftd.h */,
-			);
-			path = kissfft;
-			sourceTree = "<group>";
-		};
-		9AD4FD7317BD5A480008F751 /* math */ = {
-			isa = PBXGroup;
-			children = (
-				9AD4FD7617BD5A480008F751 /* math_math.h */,
-			);
-			path = math;
+			name = time;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -241,23 +332,34 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A237A6F20E0285C00FB91CA /* calculator.h in Headers */,
+				9A237A4B20E0284C00FB91CA /* graphics.h in Headers */,
+				9A237A4920E0284C00FB91CA /* visual_clock.h in Headers */,
+				9A237A4720E0284C00FB91CA /* visual_calendar.h in Headers */,
+				9A237A7420E0285C00FB91CA /* datetime_calendar_interface.h in Headers */,
+				9A237A7B20E0285C00FB91CA /* datetime_windows_file_time.h in Headers */,
+				9A237A7120E0285C00FB91CA /* datetime_parser_exception.h in Headers */,
+				9A237A6C20E0285C00FB91CA /* datetime_token.h in Headers */,
+				9A237A7020E0285C00FB91CA /* datetime_scanner.h in Headers */,
+				9A237A7520E0285C00FB91CA /* datetime_clock.h in Headers */,
+				9A237A4C20E0284C00FB91CA /* time.h in Headers */,
+				9A237A4A20E0284C00FB91CA /* visual.h in Headers */,
+				9A237A7A20E0285C00FB91CA /* datetime_float_time.h in Headers */,
+				9A237A7C20E0285C00FB91CA /* datetime_calendar.h in Headers */,
+				9A237A6B20E0285C00FB91CA /* datetime_parser.h in Headers */,
+				9A237A6E20E0285C00FB91CA /* datetime_element.h in Headers */,
+				9A237A7820E0285C00FB91CA /* datetime.h in Headers */,
+				9A237A8020E0285C00FB91CA /* datetime_clock_interface.h in Headers */,
 				9A57509F16AAB9A1000CC4EF /* framework.h in Headers */,
-				9AD4FD7917BD5A480008F751 /* kiss_fft.h in Headers */,
-				9AD4FD7A17BD5A480008F751 /* kiss_fft_guts.h in Headers */,
-				9AD4FD7D17BD5A480008F751 /* kiss_ifft.h in Headers */,
-				9AD4FD7E17BD5A480008F751 /* kissfft.h in Headers */,
-				9AD4FD8017BD5A480008F751 /* kissfft_fftd.h in Headers */,
-				9AD4FD8217BD5A480008F751 /* kissfft_ifftd.h in Headers */,
-				9AD4FD8517BD5A480008F751 /* math_math.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		07B65763190F3CA2002DAADE /* math_ios */ = {
+		07B65763190F3CA2002DAADE /* time_ios */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 07B65788190F3CA2002DAADE /* Build configuration list for PBXNativeTarget "math_ios" */;
+			buildConfigurationList = 07B65788190F3CA2002DAADE /* Build configuration list for PBXNativeTarget "time_ios" */;
 			buildPhases = (
 				07B65760190F3CA2002DAADE /* Sources */,
 				07B65761190F3CA2002DAADE /* Frameworks */,
@@ -267,9 +369,9 @@
 			);
 			dependencies = (
 			);
-			name = math_ios;
+			name = time_ios;
 			productName = math_ios;
-			productReference = 07B65764190F3CA2002DAADE /* libmath_ios.dylib */;
+			productReference = 07B65764190F3CA2002DAADE /* libtime_ios.dylib */;
 			productType = "com.apple.product-type.library.static";
 		};
 		07B65772190F3CA2002DAADE /* math_iosTests */ = {
@@ -290,9 +392,9 @@
 			productReference = 07B65773190F3CA2002DAADE /* math_iosTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		9A574B9716AAB906000CC4EF /* math */ = {
+		9A574B9716AAB906000CC4EF /* time */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9A574B9C16AAB906000CC4EF /* Build configuration list for PBXNativeTarget "math" */;
+			buildConfigurationList = 9A574B9C16AAB906000CC4EF /* Build configuration list for PBXNativeTarget "time" */;
 			buildPhases = (
 				9A574B9416AAB906000CC4EF /* Sources */,
 				9A574B9516AAB906000CC4EF /* Frameworks */,
@@ -301,8 +403,9 @@
 			buildRules = (
 			);
 			dependencies = (
+				9A237A8E20E0288700FB91CA /* PBXTargetDependency */,
 			);
-			name = math;
+			name = time;
 			productName = ca2;
 			productReference = 9A574B9816AAB906000CC4EF /* libmath.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
@@ -321,7 +424,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 9A574B9216AAB906000CC4EF /* Build configuration list for PBXProject "math" */;
+			buildConfigurationList = 9A574B9216AAB906000CC4EF /* Build configuration list for PBXProject "time" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -333,39 +436,39 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 9A2EA36D19A62C9E004DAFFC /* Products */;
-					ProjectRef = 9A2EA36C19A62C9E004DAFFC /* axis.xcodeproj */;
+					ProductGroup = 9A237A8220E0287B00FB91CA /* Products */;
+					ProjectRef = 9A237A8120E0287B00FB91CA /* core.xcodeproj */;
 				},
 			);
 			projectRoot = "";
 			targets = (
-				9A574B9716AAB906000CC4EF /* math */,
-				07B65763190F3CA2002DAADE /* math_ios */,
+				9A574B9716AAB906000CC4EF /* time */,
+				07B65763190F3CA2002DAADE /* time_ios */,
 				07B65772190F3CA2002DAADE /* math_iosTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		9A2EA37319A62C9E004DAFFC /* libaxis.dylib */ = {
+		9A237A8820E0287B00FB91CA /* libcore.dylib */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.dylib";
-			path = libaxis.dylib;
-			remoteRef = 9A2EA37219A62C9E004DAFFC /* PBXContainerItemProxy */;
+			path = libcore.dylib;
+			remoteRef = 9A237A8720E0287B00FB91CA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		9A2EA37519A62C9E004DAFFC /* libaxis.dylib */ = {
+		9A237A8A20E0287B00FB91CA /* libios_core.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libaxis.dylib;
-			remoteRef = 9A2EA37419A62C9E004DAFFC /* PBXContainerItemProxy */;
+			path = libios_core.a;
+			remoteRef = 9A237A8920E0287B00FB91CA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		9A2EA37719A62C9E004DAFFC /* base_iosTests.xctest */ = {
+		9A237A8C20E0287B00FB91CA /* core_iosTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = base_iosTests.xctest;
-			remoteRef = 9A2EA37619A62C9E004DAFFC /* PBXContainerItemProxy */;
+			path = core_iosTests.xctest;
+			remoteRef = 9A237A8B20E0287B00FB91CA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -401,12 +504,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A237A4620E0284C00FB91CA /* visual_clock.cpp in Sources */,
+				9A237A6920E0285C00FB91CA /* datetime_parser.cpp in Sources */,
+				9A237A7D20E0285C00FB91CA /* datetime_calendar.cpp in Sources */,
+				9A237A7620E0285C00FB91CA /* datetime_windows_file_time.cpp in Sources */,
+				9A237A6A20E0285C00FB91CA /* datetime_element.cpp in Sources */,
+				9A237A4D20E0284C00FB91CA /* debug.cpp in Sources */,
+				9A237A4820E0284C00FB91CA /* visual_calendar.cpp in Sources */,
+				9A237A7220E0285C00FB91CA /* datetime_token.cpp in Sources */,
+				9A237A7F20E0285C00FB91CA /* datetime_float_time.cpp in Sources */,
+				9A237A6D20E0285C00FB91CA /* datetime_parser_exception.cpp in Sources */,
+				9A237A7720E0285C00FB91CA /* datetime_clock_interface.cpp in Sources */,
 				9A57509E16AAB9A1000CC4EF /* framework.cpp in Sources */,
-				9AD4FD7817BD5A480008F751 /* kiss_fft.cpp in Sources */,
-				9AD4FD7B17BD5A480008F751 /* kiss_fft_shared.cpp in Sources */,
-				9AD4FD7C17BD5A480008F751 /* kiss_ifft.cpp in Sources */,
-				9AD4FD7F17BD5A480008F751 /* kissfft_fftd.cpp in Sources */,
-				9AD4FD8117BD5A480008F751 /* kissfft_ifftd.cpp in Sources */,
+				9A237A7920E0285C00FB91CA /* datetime_clock.cpp in Sources */,
+				9A237A7E20E0285C00FB91CA /* datetime_calendar_interface.cpp in Sources */,
+				9A237A7320E0285C00FB91CA /* datetime_scanner.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,8 +527,13 @@
 /* Begin PBXTargetDependency section */
 		07B6577A190F3CA2002DAADE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 07B65763190F3CA2002DAADE /* math_ios */;
+			target = 07B65763190F3CA2002DAADE /* time_ios */;
 			targetProxy = 07B65779190F3CA2002DAADE /* PBXContainerItemProxy */;
+		};
+		9A237A8E20E0288700FB91CA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = core;
+			targetProxy = 9A237A8D20E0288700FB91CA /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -668,7 +785,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		07B65788190F3CA2002DAADE /* Build configuration list for PBXNativeTarget "math_ios" */ = {
+		07B65788190F3CA2002DAADE /* Build configuration list for PBXNativeTarget "time_ios" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				07B65784190F3CA2002DAADE /* Debug */,
@@ -686,7 +803,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9A574B9216AAB906000CC4EF /* Build configuration list for PBXProject "math" */ = {
+		9A574B9216AAB906000CC4EF /* Build configuration list for PBXProject "time" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9A574B9A16AAB906000CC4EF /* Debug */,
@@ -695,7 +812,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9A574B9C16AAB906000CC4EF /* Build configuration list for PBXNativeTarget "math" */ = {
+		9A574B9C16AAB906000CC4EF /* Build configuration list for PBXNativeTarget "time" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9A574B9D16AAB906000CC4EF /* Debug */,

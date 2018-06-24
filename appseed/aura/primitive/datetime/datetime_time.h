@@ -1,7 +1,7 @@
 #pragma once
 
 
-#ifdef ANDROID
+#if defined(ANDROID) || defined(__APPLE__)
 
 struct tm;
 
