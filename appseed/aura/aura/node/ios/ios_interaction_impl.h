@@ -108,12 +108,8 @@ namespace ios
                                     ::user::interaction *   pParentWnd=NULL, id id=::id(),
                                     LPVOID lpParam = NULL) override;
       
-      virtual bool native_create_window_ex(::user::interaction * pui,DWORD dwExStyle, const char * lpszClassName,
-                                           const char * lpszWindowName, DWORD dwStyle,
-                                           const RECT& rect,
-                                           oswindow hwndParent, id id,
-                                           ::user::create_struct & cs,
-                                           LPVOID lpParam = NULL);
+      virtual bool native_create_window_ex(::user::interaction * pui,::user::create_struct & cs,
+                                           oswindow hwndParent, id id);
       
       virtual bool DestroyWindow() override;
       

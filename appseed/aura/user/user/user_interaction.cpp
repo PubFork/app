@@ -1,11 +1,10 @@
 #include "framework.h"
-#include "aura/os/windows/windows_windowing.h"
 
 
 ::user::interaction * get_system_window_interaction(::os_system_window * psystemwindow);
 
 #ifdef WINDOWSEX
-
+#include "aura/os/windows/windows_windowing.h"
 #define MESSAGE_WINDOW_PARENT HWND_MESSAGE
 #include "aura/aura/os/windows/windows_system_interaction_impl.h"
 

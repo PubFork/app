@@ -248,13 +248,11 @@ namespace macos
    }
 
 
-   bool interaction_impl::create_window_ex(::user::interaction * pui,  ::user::interaction *  pParentWnd, id id,
-                                           ::user::create_struct & cs,
-                                           LPVOID lpParam /* = NULL */)
+   bool interaction_impl::create_window_ex(::user::interaction * pui, ::user::create_struct & cs, ::user::interaction *  pParentWnd, id id)
    {
 
-      if (!native_create_window_ex(pui,
-                                   pParentWnd == NULL ? NULL : pParentWnd->get_safe_handle(), id, cs, lpParam))
+      if (!native_create_window_ex(pui, cs,
+                                   pParentWnd == NULL ? NULL : pParentWnd->get_safe_handle(), id))
       {
 
          return false;
@@ -268,10 +266,9 @@ namespace macos
 
    bool interaction_impl::native_create_window_ex(
    ::user::interaction * pui,
+                                                  ::user::create_struct & cs,
    oswindow hWndParent,
-   id id,
-   ::user::create_struct & cs,
-   LPVOID lpParam)
+   id id)
    {
 
       if (::IsWindow(get_handle()))
@@ -405,7 +402,7 @@ namespace macos
       ASSERT(pParentWnd != NULL);
       ASSERT((cs.style & WS_POPUP) == 0);
 
-      return create_window_ex(pui, pParentWnd, id, cs,  (LPVOID)pContext);
+      return create_window_ex(pui, cs, pParentWnd, id);
 
    }
 
@@ -424,7 +421,7 @@ namespace macos
 
          ::user::create_struct cs(0, NULL, pszName, WS_CHILD, null_rect());
 
-         if (!native_create_window_ex(pui, MESSAGE_WINDOW_PARENT, "message_queue", cs))
+         if (!native_create_window_ex(pui, cs, MESSAGE_WINDOW_PARENT, "message_queue"))
          {
 
             return false;

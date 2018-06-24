@@ -109,13 +109,11 @@ namespace macos
 
       // advanced creation (allows access to extended styles)
       virtual bool create_window_ex(
-                                    ::user::interaction * pui, ::user::interaction *   pParentWnd, id id, ::user::create_struct & cs, LPVOID lpParam = NULL) override;
+                                    ::user::interaction * pui, ::user::create_struct & cs, ::user::interaction *   pParentWnd, id id) override;
 
        virtual bool native_create_window_ex(
                                             ::user::interaction * pui,
-                                            oswindow hwndParent, id id,
-                                            ::user::create_struct & cs,
-                                            LPVOID lpParam = NULL);
+                                            ::user::create_struct & cs, oswindow hwndParent, id id);
 
       virtual bool DestroyWindow() override;
 

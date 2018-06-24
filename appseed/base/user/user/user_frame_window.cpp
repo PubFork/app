@@ -716,8 +716,12 @@ namespace user
       }
 
       cs.style &= ~WS_VISIBLE;
+       
+#ifdef WINDOWSEX
 
       cs.style &= ~WS_CAPTION;
+       
+#endif
 
       return true;
 

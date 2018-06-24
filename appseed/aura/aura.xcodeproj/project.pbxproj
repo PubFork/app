@@ -2066,7 +2066,6 @@
 		9AD186431F9C3127001CEA8E /* visual_apple_image_gif.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AD186411F9C3127001CEA8E /* visual_apple_image_gif.cpp */; };
 		9AD186861F9C3F31001CEA8E /* _user.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AD186851F9C3F30001CEA8E /* _user.cpp */; };
 		9AD186871F9C3F3E001CEA8E /* _user.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AD186851F9C3F30001CEA8E /* _user.cpp */; };
-		9AD4E30C20D8D28E00ACF638 /* user_create_struct.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AD4E30B20D8D28E00ACF638 /* user_create_struct.cpp */; };
 		9ADD53EA1F20E1B70008AA41 /* zip_api.h in Headers */ = {isa = PBXBuildFile; fileRef = 9ADD53E01F20E1B70008AA41 /* zip_api.h */; };
 		9ADD53EB1F20E1B70008AA41 /* zip_crypt.h in Headers */ = {isa = PBXBuildFile; fileRef = 9ADD53E11F20E1B70008AA41 /* zip_crypt.h */; };
 		9ADD53EC1F20E1B70008AA41 /* zip_file.h in Headers */ = {isa = PBXBuildFile; fileRef = 9ADD53E21F20E1B70008AA41 /* zip_file.h */; };
@@ -9307,7 +9306,6 @@
 				9A6FAE1E1F5C771400AF31B2 /* str_format.cpp in Sources */,
 				9A41714F200033F50056265A /* _os_ansios.cpp in Sources */,
 				9A6FB15F1F5C9DF800AF31B2 /* draw2d_object.cpp in Sources */,
-				9AD4E30C20D8D28E00ACF638 /* user_create_struct.cpp in Sources */,
 				9A6FACA81F5C719700AF31B2 /* cross_windows_nt.cpp in Sources */,
 				9A6FAB3A1F5C707800AF31B2 /* fontopus_authentication_map.cpp in Sources */,
 				9A6FB0541F5C79CF00AF31B2 /* file_memory_file.cpp in Sources */,
