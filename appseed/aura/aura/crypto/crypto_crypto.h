@@ -36,7 +36,7 @@ namespace crypto
       virtual int32_t encrypt(string & str,const char * psz,const char * pszKey);
       virtual int32_t decrypt(string & str,const char * psz,const char * pszKey);
 
-	   static_function uint32_t crc32(uint32_t dwPrevious, const char * psz);
+      static_function uint32_t crc32(uint32_t dwPrevious, const char * psz);
       virtual string md5(const char * psz);
       virtual string sha1(const char * psz);
       virtual string nessie(const char * psz);
@@ -47,6 +47,7 @@ namespace crypto
 
       virtual void md5(memory & memMd5,const memory & mem);
       virtual void sha1(memory & memSha1,const memory & mem);
+      virtual void sha256(memory & memSha256, const memory & mem);
       virtual void nessie(memory & memNessie,const memory & mem);
 
       // result is 20-byte digest
@@ -98,7 +99,7 @@ namespace crypto
          const string & iqmp,
          string strError);*/
 
-      
+
       virtual string spa_login_crypt(const char * psz,const string & pszRsa);
       virtual string spa_login_decrypt(const char * psz,const string & pszRsa);
 
@@ -138,14 +139,14 @@ namespace crypto
       rsa(::aura::application * papp);
       rsa(::aura::application * papp, const string & n);
       rsa(::aura::application * papp,
-         const string & n,
-         const string & e,
-         const string & d,
-         const string & p,
-         const string & q,
-         const string & dmp1,
-         const string & dmq1,
-         const string & iqmp);
+          const string & n,
+          const string & e,
+          const string & d,
+          const string & p,
+          const string & q,
+          const string & dmp1,
+          const string & dmq1,
+          const string & iqmp);
       virtual ~rsa();
 
       int public_encrypt(memory & out, const memory & in, string & strError);

@@ -1789,11 +1789,13 @@ uint32_t var::u32(uint32_t uiDefault) const
    case type_int32:
       return m_i32;
    case type_uint32:
-      return (uint32_t) m_ui32;
+      return (::u32) m_ui32;
    case type_element:
-      return uiDefault;
+      return (::u32) uiDefault;
+   case type_int64:
+      return (::u32)m_i64;
    case type_uint64:
-      return (uint32_t) m_ui64;
+      return (::u32) m_ui64;
    case type_pvar:
       return m_pvar->u32(uiDefault);
    default:

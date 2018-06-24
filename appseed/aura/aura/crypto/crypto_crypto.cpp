@@ -740,6 +740,24 @@ namespace crypto
 
    }
 
+   void crypto::sha256(memory & memSha256, const memory & mem)
+   {
+
+      //#ifdef METROWIN
+      //
+      //      _throw(interface_only_exception(get_app()));
+      //
+      //#else
+
+      memSha256.allocate(SHA256_DIGEST_LENGTH); // 32 bytes (2^5 * 2^3) (32*8) (2^(5+3)) (256 bits)
+
+      // 10^2 * 10^3 = 10^5 = 100.000 = 10 * 10 * 10 * 10 * 10
+
+      SHA256(mem.get_data(), mem.get_size(), memSha256.get_data());
+
+      //#endif
+
+   }
    void crypto::nessie(memory & memNessie,const memory & mem)
    {
 
