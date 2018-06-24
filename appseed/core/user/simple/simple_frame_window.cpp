@@ -1,15 +1,11 @@
 #include "framework.h"
 
+#ifdef WINDOWSEX
+#include <dde.h>
 #include <dwmapi.h>
 #include <VersionHelpers.h>
 #include <shellapi.h>
 #pragma comment(lib, "Dwmapi.lib" )
-
-
-#ifdef WINDOWSEX
-#include <dde.h>
-#endif
-
 #ifndef WM_NCUAHDRAWCAPTION
 #define WM_NCUAHDRAWCAPTION (0x00AE)
 #endif
@@ -18,24 +14,26 @@
 #endif
 static bool has_autohide_appbar(UINT edge, RECT mon) // Interface Update - Infinisys Ltd.
 {
-   if (IsWindows8Point1OrGreater())
-   {
-      APPBARDATA data = {};
-      data.cbSize = sizeof(APPBARDATA);
-      data.uEdge = edge;
-      data.rc = mon;
-      return SHAppBarMessage(0x0000000b, &data);
-   }
-
-   /* Before Windows 8.1, it was not possible to specify a monitor when
-   checking for hidden appbars, so check only on the primary monitor */
-   if (mon.left != 0 || mon.top != 0)
-      return false;
-   APPBARDATA data = {};
-   data.cbSize = sizeof(APPBARDATA);
-   data.uEdge = edge;
-   return SHAppBarMessage(ABM_GETAUTOHIDEBAR, &data);
+    if (IsWindows8Point1OrGreater())
+    {
+        APPBARDATA data = {};
+        data.cbSize = sizeof(APPBARDATA);
+        data.uEdge = edge;
+        data.rc = mon;
+        return SHAppBarMessage(0x0000000b, &data);
+    }
+    
+    /* Before Windows 8.1, it was not possible to specify a monitor when
+     checking for hidden appbars, so check only on the primary monitor */
+    if (mon.left != 0 || mon.top != 0)
+        return false;
+    APPBARDATA data = {};
+    data.cbSize = sizeof(APPBARDATA);
+    data.uEdge = edge;
+    return SHAppBarMessage(ABM_GETAUTOHIDEBAR, &data);
 }
+#endif
+
 
 #define TEST 0
 
@@ -3454,6 +3452,9 @@ void simple_frame_window::_001OnDwm(::message::message * pobj)
 {
 
    SCAST_PTR(::message::base, pbase, pobj);
+    
+    
+#ifdef WINDOWSEX
 
    WPARAM wparam;
    LPARAM lparam;
@@ -3489,6 +3490,8 @@ void simple_frame_window::_001OnDwm(::message::message * pobj)
    //      //MoveAnchorsImmediatelly(hwndDlg);
    pbase->m_bRet = true;
    pbase->set_lresult(0);
+    
+#endif
 
 }
 
@@ -3499,6 +3502,7 @@ void simple_frame_window::_001OnNcCalcSize(::message::message * pmessage)
    SCAST_PTR(::message::nc_calc_size, pcalcsize, pmessage);
 
 
+#ifdef WINDOWSEX
    BOOL bCalcValidRects = pcalcsize->GetCalcValidRects();
    NCCALCSIZE_PARAMS* lpncsp = pcalcsize->m_pparams;
 
@@ -3570,6 +3574,8 @@ void simple_frame_window::_001OnNcCalcSize(::message::message * pmessage)
       lpncsp->rgrc[0] = nonclient;
 
    }
-
+    
+#endif
+    
 }
 
