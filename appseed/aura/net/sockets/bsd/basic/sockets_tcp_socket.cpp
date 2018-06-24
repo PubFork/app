@@ -1350,7 +1350,8 @@ namespace sockets
       //synch_lock slMap(&Session.sockets().m_servercontextmap.m_mutex);
 
       {
-         if(m_psslcontext->m_pclientcontext->m_pcontext)
+         if(m_psslcontext->m_pclientcontext.is_set()
+            && m_psslcontext->m_pclientcontext->m_pcontext != NULL)
          {
             TRACE("SSL Context already initialized - closing socket\n");
             SetCloseAndDelete(true);
@@ -1738,9 +1739,15 @@ namespace sockets
    void tcp_socket::InitializeContext(const string & context,const string & keyfile,const string & password,const SSL_METHOD *meth_in)
    {
 
-      m_psslcontext->m_pclientcontext->m_pmethod = meth_in != NULL ? meth_in : TLS_server_method();
+      if (m_psslcontext->m_pclientcontext.is_null())
+      {
 
-      m_psslcontext->m_pclientcontext->m_pcontext = SSL_CTX_new(m_psslcontext->m_pclientcontext->m_pmethod);
+         m_psslcontext->m_pclientcontext = canew(ssl_client_context(get_app(),
+            meth_in != NULL ? meth_in : TLS_server_method()));
+
+      }
+
+      //m_psslcontext->m_pclientcontext->m_pcontext = SSL_CTX_new(m_psslcontext->m_pclientcontext->m_pmethod);
       SSL_CTX_set_mode(m_psslcontext->m_pclientcontext->m_pcontext, SSL_MODE_AUTO_RETRY | SSL_MODE_RELEASE_BUFFERS) ;
       SSL_CTX_set_options(m_psslcontext->m_pclientcontext->m_pcontext, SSL_OP_NO_COMPRESSION | SSL_CTX_get_options(m_psslcontext->m_pclientcontext->m_pcontext));
       // session id
