@@ -63,7 +63,7 @@ void calendar::_001GetHtml(sp(::html::file) pfile)
                   iDayOfWeek = 1;
             }
             pfile->raw_print("<td>");
-            pfile->printf("%s", GetTinyWeekDay(pfile->str_context(), iDayOfWeek));
+            pfile->printf("%s", GetTinyWeekDay(pfile->str_context(), iDayOfWeek).c_str());
             pfile->raw_print("</td>");
          }
          pfile->raw_print("</tr>");

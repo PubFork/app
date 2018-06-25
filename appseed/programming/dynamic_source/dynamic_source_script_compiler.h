@@ -60,11 +60,12 @@ namespace dynamic_source
 
       string_map < sp(library) > m_mapLib;
 
-
+#ifdef WINDOWSEX
       string                                    m_strVs;
       string                                    m_strVsTools;
-      ::file::path                              m_pathProjectDir;
       string                                    m_strVCVersion;
+#endif
+      ::file::path                              m_pathProjectDir;
       string                                    m_strDynamicSourceConfiguration;
       ::file::path                              m_strDynamicSourceStage;
       ::file::path                              m_strDynamicSourceStageFolder;

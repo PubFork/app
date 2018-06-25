@@ -33,6 +33,8 @@ namespace dynamic_source
       file_watcher(papp)
    {
 
+#ifdef WINDOWSEX
+       
       {
 
          ::file::path path;
@@ -67,6 +69,8 @@ namespace dynamic_source
          }
 
       }
+       
+#endif
 
       ::file::path path;
 
@@ -109,16 +113,16 @@ namespace dynamic_source
       run_persistent();
       parse_pstr_set();
    }
+    
 
    void script_compiler::prepare_compile_and_link_environment()
    {
 
-      Application.dir().mk(::dir::system() / "netnodelite\\symbols");
-
+      Application.dir().mk(::dir::system() / "netnodelite/symbols");
 
       ::file::path strVars;
 
-#ifndef METROWIN
+#ifdef WINDOWSEX
 
       if (m_strVs == "2015")
       {
@@ -128,7 +132,6 @@ namespace dynamic_source
       }
 
 #endif
-
 
 #ifdef WINDOWSEX
 
@@ -157,25 +160,22 @@ namespace dynamic_source
 
          m_strVCVersion = VS2017_CURRENT_BUILD;
 
-
       }
       else if (m_strVs == "2015")
       {
 
          m_strEnv = strVars.up(2);
-         m_strEnv = m_strEnv / "vc\\vcvarsall.bat";
-         //m_strEnv = ".\\vc_vars.bat";
 
+         m_strEnv = m_strEnv / "vc\\vcvarsall.bat";
+         
       }
 
 #endif
 
-
       m_strTime = System.dir().install() / "time";
 
-      //m_strEnv = "C:\\Program Files\\Microsoft SDKs\\Windows\\v7.1\\Bin\\SetEnv.cmd";
-
-      //m_strSdk1 = "windows7.1sdk";
+#ifdef WINDOWSEX
+      
       if (m_strVs == "2015")
       {
 
@@ -188,144 +188,87 @@ namespace dynamic_source
          m_strSdk1 = "vc141";
 
       }
-
+      
+#endif
 
 #ifdef OS64BIT
+      
 #ifdef LINUX
+      
       m_strPlat1     = "64";
       m_strPlatform = "x86";
       m_strStagePlatform = "x86";
       m_strLibPlatform = "x86/";
+      
 #else
+      
       m_strPlat1     = "64";
       m_strPlat2 = "x86_amd64";
       //m_strPlat2 = "amd64";
       m_strPlatform = "x64";
       m_strStagePlatform = "x64";
       m_strLibPlatform = "x64/";
+      
 #endif
 #else
+      
       m_strPlat1     = "32";
       m_strPlat2 = " x86";
       m_strPlatform = "Win32";
       m_strStagePlatform = "x86";
       m_strLibPlatform = "x86/";
+      
 #endif
 
-      //System.file().lines(m_straSync, "C:\\core\\database\\text\\dynamic_source\\syncer.txt", get_app());
-#if defined(LINUX)
+#if defined(LINUX) || defined(MACOS)
+
       prepare1(m_strDynamicSourceConfiguration  + "_cl" + m_strPlat1 + ".bash",
                m_strDynamicSourceConfiguration  + "_cl" + m_strPlat1 + ".bash");
       prepare1(m_strDynamicSourceConfiguration  + "_libc" + m_strPlat1 + ".bash",
                m_strDynamicSourceConfiguration  + "_libc" + m_strPlat1 + ".bash");
       prepare1(m_strDynamicSourceConfiguration  + "_libl" + m_strPlat1 + ".bash",
                m_strDynamicSourceConfiguration  + "_libl" + m_strPlat1 + ".bash");
+
 #else
+
       prepare1(m_strPlat1,m_strPlat1);
-      //prepare1(m_strDynamicSourceConfiguration  + "_cl" + m_strPlat1 + ".bat",
-      //   m_strDynamicSourceConfiguration  + "_cl" + m_strPlat1 + ".bat");
-      //prepare1(m_strDynamicSourceConfiguration  + "_libc" + m_strPlat1 + ".bat",
-      //   m_strDynamicSourceConfiguration  + "_libc" + m_strPlat1 + ".bat");
-      //prepare1(m_strDynamicSourceConfiguration  + "_libl" + m_strPlat1 + ".bat",
-      //   m_strDynamicSourceConfiguration  + "_libl" + m_strPlat1 + ".bat");
+
 #endif
+
       System.dir().mk(System.dir().install()/m_strDynamicSourceStage / "front",get_app());
 
-//#ifdef WINDOWS
-//      string vars1batSrc;
-//      string vars2batSrc;
-//      string vars1batDst;
-//      string vars2batDst;
-//      vars1batSrc = System.dir().install()/"nodeapp/stage/dynamic_source/vc_vars.bat";
-//      vars2batSrc = System.dir().install()/"nodeapp/stage/dynamic_source/vc_vars_query_registry.bat";
-//      vars1batDst = System.dir().install()/ m_strDynamicSourceStage / "front"/"vc_vars.bat";
-//      vars2batDst = System.dir().install()/m_strDynamicSourceStage /"front"/"vc_vars_query_registry.bat";
-//      try
-//      {
-//         Application.file().copy(vars1batDst, vars1batSrc, false);
-//      }
-//      catch(...)
-//      {
-//      }
-//      try
-//      {
-//         Application.file().copy(vars2batDst, vars2batSrc, false);
-//      }
-//      catch(...)
-//      {
-//      }
-//
-//#endif
-
-
-//#ifdef METROWIN
-//
-//   _throw(todo(get_app()));
-//
-//#elif defined(LINUX)
-//#else
-//   string strCmd = "\"" + ::file::path(m_strEnv) + "\" " + m_strPlat2 + " " + m_strVCVersion;
-//   var var = System.process().get_output(strCmd);
-//   TRACE0(var.get_string());
-//
-//#endif
 
       string str;
+      
       string strItem;
 
       strItem = System.dir().install() / m_strDynamicSourceStage /m_strStagePlatform;
+      
       str = str + strItem + ";";
 
       strItem = System.dir().install()/ m_strDynamicSourceStage /  m_strStagePlatform / "dynamic_source\\library";
+      
       str = str + strItem + ";";
+      
 #ifdef WINDOWSEX
+      
       uint32_t dwSize = GetEnvironmentVariable("PATH", NULL, 0);
       LPTSTR lpsz = new char[dwSize + 1];
       dwSize = GetEnvironmentVariable("PATH", lpsz, dwSize + 1);
       str += lpsz;
       delete lpsz;
+      
 #endif
-//#elif defined(METROWIN)
-//
-//   _throw(todo(get_app()));
-//
-//#else
-//   str += getenv("PATH");
-//#endif
-//   bool bResult;
-//#ifdef WINDOWSEX
-//   bResult = SetEnvironmentVariable("PATH", str) != FALSE;
-//#elif defined(METROWIN)
-//
-//   _throw(todo(get_app()));
-//
-//#elif defined(LINUX)
-//#else
-//   bResult = setenv("PATH", str, TRUE);
-//#endif
-//   TRACE("script_compiler::prepare_compile_and_link_environment SetEnvironmentVariable return bool %d", bResult);
 
    }
-
-
-
-
-
-
-
-
-
-
 
 
    void script_compiler::compile(ds_script * pscript)
    {
 
-
       synch_lock sl(pscript->m_pmutex);
 
       TRACE("Compiling script \"%s\"\n",pscript->m_strName.c_str());
-
 
       ::file::plain_text_ostream & ostreamError = pscript->m_memfileError;
 
@@ -428,13 +371,9 @@ namespace dynamic_source
 
       strO = strDynamicSourceScriptFolder / strTransformName.name() / strTransformName + ".bat";
 
-
 #endif
-      //pscript->m_strBuildBat = strB;
+      
       pscript->m_strScriptPath = m_pmanager->get_script_path(strName);
-      //#else
-      // pscript->m_strLibraryPath.Format(System.dir().install(m_strDynamicSourceStage /" Release\\%s.dll"), strName);
-      //#endif
 
       try
       {

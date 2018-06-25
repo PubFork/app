@@ -1,5 +1,8 @@
 #include "framework.h"
 
+//#include <math.h>
+#include <time.h>
+
 namespace datetime
 {
 
@@ -869,7 +872,7 @@ VARIANT_MakeDate_OK:
 #ifndef WINDOWS
 
 static inline int VARIANT_JulianFromDate(int dateIn);
-static inline void VARIANT_DMYFromJulian(int jd, USHORT *year, USHORT *month, USHORT *day);
+static inline void VARIANT_DMYFromJulian(int jd, u16 *year, u16 *month, u16 *day);
 static HRESULT VARIANT_RollUdate(UDATE *lpUd);
 
 /* Convert a VT_DATE value to a Julian Date */
@@ -886,7 +889,7 @@ static inline int VARIANT_JulianFromDate(int dateIn)
 
 
 /* Convert a Julian date to Day/Month/Year - from PostgreSQL */
-static inline void VARIANT_DMYFromJulian(int jd, USHORT *year, USHORT *month, USHORT *day)
+static inline void VARIANT_DMYFromJulian(int jd, u16 *year, u16 *month, u16 *day)
 {
   int j, i, l, n;
 
@@ -986,10 +989,10 @@ static HRESULT VARIANT_RollUdate(UDATE *lpUd)
 *  Success: S_OK. *lpUdate contains the converted value.
 *  Failure: E_INVALIDARG, if dateIn is too large or small.
 */
-HRESULT WINAPI VarUdateFromDate(DATE dateIn, ULONG dwFlags, UDATE *lpUdate)
+HRESULT WINAPI VarUdateFromDate(DATE dateIn, u32 dwFlags, UDATE *lpUdate)
 {
   /* Cumulative totals of days per month */
-  static const USHORT cumulativeDays[] =
+  static const u16 cumulativeDays[] =
   {
     0, 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334
   };
@@ -1098,5 +1101,64 @@ namespace datetime
       return *this;
    }
 
+    float_time WINAPI float_time::GetCurrentTime() RELEASENOTHROW
+    {
+        
+#ifdef WINDOWS
+        
+        return float_time(::_time64(NULL));
+        
+#else
+        
+        return float_time(::time(NULL));
+        
+#endif
+        
+    }
 
+
+    
 } //    namespace datetime
+
+
+#ifndef _ATL_USE_WINAPI_FAMILY_DESKTOP_APP
+#ifdef APPLEOS
+inline bool GetAsSystemTimeHelper(const time_t& timeSrc, SYSTEMTIME& timeDest)
+#else
+inline bool GetAsSystemTimeHelper(const __time64_t& timeSrc, SYSTEMTIME& timeDest)
+#endif
+{
+    struct tm ttm;
+    
+#ifdef WINDOWS
+    if (_localtime64_s(&ttm, &timeSrc) != 0)
+    {
+        return false;
+    }
+    
+#else
+    
+    ttm = *localtime(&timeSrc);
+    
+    if(errno != 0)
+    {
+        return false;
+    }
+    
+#endif
+    
+    timeDest.wYear = (WORD) (1900 + ttm.tm_year);
+    timeDest.wMonth = (WORD) (1 + ttm.tm_mon);
+    timeDest.wDayOfWeek = (WORD) ttm.tm_wday;
+    timeDest.wDay = (WORD) ttm.tm_mday;
+    timeDest.wHour = (WORD) ttm.tm_hour;
+    timeDest.wMinute = (WORD) ttm.tm_min;
+    timeDest.wSecond = (WORD) ttm.tm_sec;
+    timeDest.wMilliseconds = 0;
+    
+    return true;
+    
+}
+
+#endif // _ATL_USE_WINAPI_FAMILY_DESKTOP_APP
+

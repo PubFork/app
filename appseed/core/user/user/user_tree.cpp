@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 //#include <math.h>
 
 
@@ -462,6 +462,9 @@ namespace user
 
       if(pitem != NULL)
       {
+         
+         fork([=]()
+              {
 
          if(eelement == tree_element_expand_box)
          {
@@ -476,6 +479,8 @@ namespace user
 
          }
 
+              } );
+                 
       }
 
    }

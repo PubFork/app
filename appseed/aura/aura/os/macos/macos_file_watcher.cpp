@@ -78,7 +78,7 @@ namespace file_watcher
 		id                      m_id;
 		string                  m_strDirName;
 		listener *              m_plistener;
-      thread *                m_pthread;
+      sp(thread)              m_pthread;
       bool                    m_bRecursive;
 		
 		// index 0 is always the directory
@@ -98,6 +98,12 @@ namespace file_watcher
 			//m_iChangeCount = 0;
 			addAll();
 		}
+      
+      ~watch_struct()
+      {
+         removeAll();
+         
+      }
 		
 //		void addFile(const char * name, bool imitEvents = true)
 //		{
@@ -348,7 +354,8 @@ namespace file_watcher
                                }
                                while (!done && ::get_thread_run());
                                
-                               
+            output_debug_string("exited");
+            m_pthread.release();
                             });
 
          
@@ -386,6 +393,7 @@ namespace file_watcher
 		{
          
          FSEventStreamStop(m_stream);
+         ::multithreading::post_quit_and_wait(m_pthread, seconds (10));
          FSEventStreamInvalidate(m_stream);
          FSEventStreamRelease(m_stream);
          

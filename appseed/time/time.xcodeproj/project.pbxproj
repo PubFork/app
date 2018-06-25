@@ -21,8 +21,7 @@
 		9A237A4920E0284C00FB91CA /* visual_clock.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A237A3F20E0284C00FB91CA /* visual_clock.h */; };
 		9A237A4A20E0284C00FB91CA /* visual.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A237A4020E0284C00FB91CA /* visual.h */; };
 		9A237A4B20E0284C00FB91CA /* graphics.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A237A4120E0284C00FB91CA /* graphics.h */; };
-		9A237A4C20E0284C00FB91CA /* time.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A237A4320E0284C00FB91CA /* time.h */; };
-		9A237A4D20E0284C00FB91CA /* debug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A237A4420E0284C00FB91CA /* debug.cpp */; };
+		9A237A4C20E0284C00FB91CA /* time_time.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A237A4320E0284C00FB91CA /* time_time.h */; };
 		9A237A6920E0285C00FB91CA /* datetime_parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A237A5020E0285C00FB91CA /* datetime_parser.cpp */; };
 		9A237A6A20E0285C00FB91CA /* datetime_element.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A237A5120E0285C00FB91CA /* datetime_element.cpp */; };
 		9A237A6B20E0285C00FB91CA /* datetime_parser.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A237A5220E0285C00FB91CA /* datetime_parser.h */; };
@@ -47,6 +46,8 @@
 		9A237A7E20E0285C00FB91CA /* datetime_calendar_interface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A237A6620E0285C00FB91CA /* datetime_calendar_interface.cpp */; };
 		9A237A7F20E0285C00FB91CA /* datetime_float_time.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A237A6720E0285C00FB91CA /* datetime_float_time.cpp */; };
 		9A237A8020E0285C00FB91CA /* datetime_clock_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A237A6820E0285C00FB91CA /* datetime_clock_interface.h */; };
+		9A4D773E20E03A520024E696 /* libaxis.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A4D773D20E03A520024E696 /* libaxis.dylib */; };
+		9A4D774020E03A5C0024E696 /* libaura.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A4D773F20E03A5C0024E696 /* libaura.dylib */; };
 		9A57509E16AAB9A1000CC4EF /* framework.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A574D2B16AAB99E000CC4EF /* framework.cpp */; };
 		9A57509F16AAB9A1000CC4EF /* framework.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A574D2C16AAB99E000CC4EF /* framework.h */; };
 		9A8CCAE617EA060200F87A02 /* libbase.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A8CCAE317EA060200F87A02 /* libbase.dylib */; };
@@ -118,8 +119,7 @@
 		9A237A3F20E0284C00FB91CA /* visual_clock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = visual_clock.h; sourceTree = "<group>"; };
 		9A237A4020E0284C00FB91CA /* visual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = visual.h; sourceTree = "<group>"; };
 		9A237A4120E0284C00FB91CA /* graphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graphics.h; sourceTree = "<group>"; };
-		9A237A4320E0284C00FB91CA /* time.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = time.h; sourceTree = "<group>"; };
-		9A237A4420E0284C00FB91CA /* debug.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = debug.cpp; sourceTree = "<group>"; };
+		9A237A4320E0284C00FB91CA /* time_time.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = time_time.h; sourceTree = "<group>"; };
 		9A237A5020E0285C00FB91CA /* datetime_parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = datetime_parser.cpp; sourceTree = "<group>"; };
 		9A237A5120E0285C00FB91CA /* datetime_element.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = datetime_element.cpp; sourceTree = "<group>"; };
 		9A237A5220E0285C00FB91CA /* datetime_parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = datetime_parser.h; sourceTree = "<group>"; };
@@ -145,7 +145,9 @@
 		9A237A6720E0285C00FB91CA /* datetime_float_time.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = datetime_float_time.cpp; sourceTree = "<group>"; };
 		9A237A6820E0285C00FB91CA /* datetime_clock_interface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = datetime_clock_interface.h; sourceTree = "<group>"; };
 		9A237A8120E0287B00FB91CA /* core.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = core.xcodeproj; path = ../core/core.xcodeproj; sourceTree = "<group>"; };
-		9A574B9816AAB906000CC4EF /* libmath.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libmath.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A4D773D20E03A520024E696 /* libaxis.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libaxis.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A4D773F20E03A5C0024E696 /* libaura.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libaura.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A574B9816AAB906000CC4EF /* libtime.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libtime.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A574D2B16AAB99E000CC4EF /* framework.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = framework.cpp; sourceTree = "<group>"; };
 		9A574D2C16AAB99E000CC4EF /* framework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = framework.h; sourceTree = "<group>"; };
 		9A8CCAE317EA060200F87A02 /* libbase.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbase.dylib; path = "../../../../Users/camilo/Library/Developer/Xcode/DerivedData/all-dlckdugtwkhfjkdbgurajmehstei/Build/Products/Debug/libbase.dylib"; sourceTree = "<group>"; };
@@ -175,6 +177,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A4D774020E03A5C0024E696 /* libaura.dylib in Frameworks */,
+				9A4D773E20E03A520024E696 /* libaxis.dylib in Frameworks */,
 				9A8CCAE617EA060200F87A02 /* libbase.dylib in Frameworks */,
 				07B59075188664C3002C6FEC /* libcore.dylib in Frameworks */,
 			);
@@ -186,6 +190,8 @@
 		07B65765190F3CA2002DAADE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9A4D773F20E03A5C0024E696 /* libaura.dylib */,
+				9A4D773D20E03A520024E696 /* libaxis.dylib */,
 				07B65766190F3CA2002DAADE /* Foundation.framework */,
 				07B65774190F3CA2002DAADE /* XCTest.framework */,
 				07B65777190F3CA2002DAADE /* UIKit.framework */,
@@ -235,8 +241,7 @@
 		9A237A4220E0284C00FB91CA /* time */ = {
 			isa = PBXGroup;
 			children = (
-				9A237A4320E0284C00FB91CA /* time.h */,
-				9A237A4420E0284C00FB91CA /* debug.cpp */,
+				9A237A4320E0284C00FB91CA /* time_time.h */,
 			);
 			path = time;
 			sourceTree = "<group>";
@@ -305,7 +310,7 @@
 		9A574B9916AAB906000CC4EF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9A574B9816AAB906000CC4EF /* libmath.dylib */,
+				9A574B9816AAB906000CC4EF /* libtime.dylib */,
 				07B65764190F3CA2002DAADE /* libtime_ios.dylib */,
 				07B65773190F3CA2002DAADE /* math_iosTests.xctest */,
 			);
@@ -342,7 +347,7 @@
 				9A237A6C20E0285C00FB91CA /* datetime_token.h in Headers */,
 				9A237A7020E0285C00FB91CA /* datetime_scanner.h in Headers */,
 				9A237A7520E0285C00FB91CA /* datetime_clock.h in Headers */,
-				9A237A4C20E0284C00FB91CA /* time.h in Headers */,
+				9A237A4C20E0284C00FB91CA /* time_time.h in Headers */,
 				9A237A4A20E0284C00FB91CA /* visual.h in Headers */,
 				9A237A7A20E0285C00FB91CA /* datetime_float_time.h in Headers */,
 				9A237A7C20E0285C00FB91CA /* datetime_calendar.h in Headers */,
@@ -407,7 +412,7 @@
 			);
 			name = time;
 			productName = ca2;
-			productReference = 9A574B9816AAB906000CC4EF /* libmath.dylib */;
+			productReference = 9A574B9816AAB906000CC4EF /* libtime.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 /* End PBXNativeTarget section */
@@ -509,7 +514,6 @@
 				9A237A7D20E0285C00FB91CA /* datetime_calendar.cpp in Sources */,
 				9A237A7620E0285C00FB91CA /* datetime_windows_file_time.cpp in Sources */,
 				9A237A6A20E0285C00FB91CA /* datetime_element.cpp in Sources */,
-				9A237A4D20E0284C00FB91CA /* debug.cpp in Sources */,
 				9A237A4820E0284C00FB91CA /* visual_calendar.cpp in Sources */,
 				9A237A7220E0285C00FB91CA /* datetime_token.cpp in Sources */,
 				9A237A7F20E0285C00FB91CA /* datetime_float_time.cpp in Sources */,
@@ -574,7 +578,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MACH_O_TYPE = mh_dylib;
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 			};
@@ -602,7 +605,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MACH_O_TYPE = mh_dylib;
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				VALIDATE_PRODUCT = YES;
@@ -721,6 +723,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "$(WorkspaceDir)/../../../include $(WorkspaceDir)/../../../app/include . .. $(WorkspaceDir)/../../.. $(WorkspaceDir)/../../../app $(WorkspaceDir)/../../../app/appseed $(WorkspaceDir)/../../../app/appseed/core $(WorkspaceDir)/../../../app/appseed/base $(WorkspaceDir)/../.. $(WorkspaceDir)/../../base/include $(WorkspaceDir)/../../../app/base/include $(WorkspaceDir)/../../appseed $(WorkspaceDir)/../../../app/base";
 				WorkspaceDir = "$(SRCROOT)/../../../nodeapp/seed/macos";
@@ -760,6 +763,7 @@
 					"\"$(TARGET_BUILD_DIR)\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "$(WorkspaceDir)/../../../include $(WorkspaceDir)/../../../app/include . .. $(WorkspaceDir)/../../.. $(WorkspaceDir)/../../../app $(WorkspaceDir)/../../../app/appseed $(WorkspaceDir)/../../../app/appseed/core $(WorkspaceDir)/../../../app/appseed/base $(WorkspaceDir)/../.. $(WorkspaceDir)/../../base/include $(WorkspaceDir)/../../../app/base/include $(WorkspaceDir)/../../appseed $(WorkspaceDir)/../../../app/base";
 				WorkspaceDir = "$(SRCROOT)/../../../nodeapp/seed/macos";
@@ -769,16 +773,16 @@
 		9A574B9D16AAB906000CC4EF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				COMBINE_HIDPI_IMAGES = YES;
-				PRODUCT_NAME = math;
 			};
 			name = Debug;
 		};
 		9A574B9E16AAB906000CC4EF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				COMBINE_HIDPI_IMAGES = YES;
-				PRODUCT_NAME = math;
 			};
 			name = Release;
 		};

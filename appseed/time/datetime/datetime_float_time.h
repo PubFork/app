@@ -1,9 +1,13 @@
 #pragma once
 
 
-#include <math.h>
-#include <time.h>
-
+//#include <math.h>
+//#include <time.h>
+//#ifdef __APPLE__
+//#include <sys/time.h>
+//#endif
+//
+//#undef time
 
 typedef double FLOAT_DATE;
 
@@ -22,7 +26,7 @@ typedef struct
 #define VTDATEGRE_MAX 2958465 /* Maximum possible Gregorian date: 31/12/9999 */
 
 
-CLASS_DECL_CA2_TIME HRESULT   VarUdateFromDate(FLOAT_DATE dateIn, WINULONG dwFlags, UDATE *lpUdate);
+CLASS_DECL_CA2_TIME HRESULT   VarUdateFromDate(FLOAT_DATE dateIn, u32 dwFlags, UDATE *lpUdate);
 CLASS_DECL_CA2_TIME int_bool   FileTimeToLocalFileTime(const FILETIME *utcft, LPFILETIME localft );
 CLASS_DECL_CA2_TIME int_bool   FileTimeToSystemTime(const FILETIME * ft, LPSYSTEMTIME syst);
 
@@ -522,20 +526,6 @@ inline float_time_span::float_time_span(double dblSpanSrc) RELEASENOTHROW :
    // float_time
    /////////////////////////////////////////////////////////////////////////////
 
-   inline float_time WINAPI float_time::GetCurrentTime() RELEASENOTHROW
-   {
-
-#ifdef WINDOWS
-
-      return float_time(::_time64(NULL));
-
-#else
-
-      return float_time(::time(NULL));
-
-#endif
-
-   }
 
 inline float_time::float_time() RELEASENOTHROW :
    m_dt( 0 ), m_status(valid)

@@ -144,6 +144,7 @@ namespace introjection
       ::file::path strVars;
 
 #ifndef METROWIN
+#ifdef WINDOWSEX
 
       if (m_strVs == "2015")
       {
@@ -151,7 +152,7 @@ namespace introjection
          strVars = getenv("VS140COMNTOOLS");
 
       }
-
+#endif
 #endif
 
 
