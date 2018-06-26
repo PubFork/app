@@ -128,6 +128,7 @@ namespace sockets
          if (m_fields.has_property("json") && m_fields["json"].get_value().get_type() == var::type_propset)
          {
             m_fields["json"].propset().get_json(body);
+            TRACE("JSON BODY:\n%s\n\n", body);
             if (inheader(__id(content_type)).get_string().find_ci("application/json") < 0)
             {
                inheader(__id(content_type)) = "application/json" + ::str::has_char(inheader(__id(content_type)).get_string(), "; ");
