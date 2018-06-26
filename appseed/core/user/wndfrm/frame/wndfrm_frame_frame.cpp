@@ -607,6 +607,8 @@ namespace user
 
                pwndDraw->GetWindowRect(rectParent);
 
+               m_rectControlBoxNormal._001Constraint(m_rectCaption);
+
             }
 
             rectParent -= rectParent.top_left();

@@ -2300,7 +2300,7 @@ namespace user
 
       }
 
-      return _001GetTextLength();
+      return m_iaLineBeg.get_count();
 
    }
 
