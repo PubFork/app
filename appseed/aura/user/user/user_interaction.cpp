@@ -3401,10 +3401,10 @@ restart:
 
 #if defined(APPLE_IOS) || defined(VSNORD) || defined(METROWIN)
 
-         if (pParentWnd == NULL || pParentWnd == System.m_possystemwindow->m_pui)
+         if (puiParent == NULL || puiParent == System.m_possystemwindow->m_pui)
          {
 
-            pParentWnd = System.m_possystemwindow->m_pui;
+            puiParent = System.m_possystemwindow->m_pui;
 
             //         if(!Application.defer_initialize_twf())
             //         {
@@ -3452,8 +3452,14 @@ restart:
 #endif
          {
 #if defined(METROWIN) || defined(APPLE_IOS) || defined(VSNORD)
-            if (pParentWnd == NULL)
-               pParentWnd = System.m_possystemwindow->m_pui;
+
+            if (puiParent == NULL)
+            {
+
+               puiParent = System.m_possystemwindow->m_pui;
+
+            }
+
 #endif
 
             ::rect rect;

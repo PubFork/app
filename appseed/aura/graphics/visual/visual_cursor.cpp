@@ -44,7 +44,7 @@ namespace visual
       
       synch_lock sl(psession->m_pmutex);
       
-#if defined(MACOS) || defined(WINDOWS)
+#if defined(MACOS) || defined(WINDOWSEX)
       
       ::SetCursor(get_HCURSOR());
       
@@ -60,7 +60,7 @@ namespace visual
       
       synch_lock sl(psession->m_pmutex);
       
-#if defined(MACOS) || defined(WINDOWS)
+#if defined(MACOS) || defined(WINDOWSEX)
          
       ::SetCursor(NULL);
          

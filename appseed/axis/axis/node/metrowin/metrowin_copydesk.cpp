@@ -34,10 +34,7 @@ namespace metrowin
 
       bool bHasFile = false;
 
-      ::wait(
-      Windows::ApplicationModel::Core::CoreApplication::MainView->CoreWindow->Dispatcher->RunAsync(
-      ::Windows::UI::Core::CoreDispatcherPriority::Normal,
-      ref new Windows::UI::Core::DispatchedHandler([&bHasFile, this]()
+      defer_main_thread([&bHasFile, this]()
       {
 
          ::Windows::ApplicationModel::DataTransfer::DataPackageView ^ view = ::Windows::ApplicationModel::DataTransfer::Clipboard::GetContent();
@@ -90,7 +87,7 @@ namespace metrowin
 
          }
 
-      })));
+      });
 
       return bHasFile;
 
@@ -103,10 +100,7 @@ namespace metrowin
 
       bool bHasFile = false;
 
-      ::wait(
-      Windows::ApplicationModel::Core::CoreApplication::MainView->CoreWindow->Dispatcher->RunAsync(
-      ::Windows::UI::Core::CoreDispatcherPriority::Normal,
-      ref new Windows::UI::Core::DispatchedHandler([&bHasFile, &patha, this]()
+      defer_main_thread([&bHasFile, &patha, this]()
       {
 
          ::Windows::ApplicationModel::DataTransfer::DataPackageView ^ view = ::Windows::ApplicationModel::DataTransfer::Clipboard::GetContent();
@@ -244,15 +238,12 @@ namespace metrowin
 
       package->SetText(str);
 
-      ::wait(
-      Windows::ApplicationModel::Core::CoreApplication::MainView->CoreWindow->Dispatcher->RunAsync(
-      ::Windows::UI::Core::CoreDispatcherPriority::Normal,
-      ref new Windows::UI::Core::DispatchedHandler([&package, this]()
+      defer_main_thread([&package, this]()
       {
 
          ::Windows::ApplicationModel::DataTransfer::Clipboard::SetContent(package);
 
-      })));
+      });
 
       return true;
 
@@ -264,10 +255,7 @@ namespace metrowin
 
       bool bOk = false;
 
-      ::wait(
-      Windows::ApplicationModel::Core::CoreApplication::MainView->CoreWindow->Dispatcher->RunAsync(
-      ::Windows::UI::Core::CoreDispatcherPriority::Normal,
-      ref new Windows::UI::Core::DispatchedHandler([&str, &bOk, this]()
+      defer_main_thread([&str, &bOk, this]()
       {
 
          auto dataPackage = ::Windows::ApplicationModel::DataTransfer::Clipboard::GetContent();
@@ -290,7 +278,7 @@ namespace metrowin
 
          bOk = true;
 
-      })));
+      });
 
       return bOk;
 
@@ -302,10 +290,7 @@ namespace metrowin
 
       bool bOk = false;
 
-      ::wait(
-      Windows::ApplicationModel::Core::CoreApplication::MainView->CoreWindow->Dispatcher->RunAsync(
-      ::Windows::UI::Core::CoreDispatcherPriority::Normal,
-      ref new Windows::UI::Core::DispatchedHandler([&bOk, this]()
+      defer_main_thread([&bOk, this]()
       {
 
          auto dataPackage = ::Windows::ApplicationModel::DataTransfer::Clipboard::GetContent();
@@ -326,7 +311,7 @@ namespace metrowin
 
          bOk = true;
 
-      })));
+      });
 
       return bOk;
 
@@ -338,9 +323,7 @@ namespace metrowin
 
       bool bOk = false;
 
-      ::wait(Windows::ApplicationModel::Core::CoreApplication::MainView->CoreWindow->Dispatcher->RunAsync(
-             Windows::UI::Core::CoreDispatcherPriority::Normal,
-             ref new Windows::UI::Core::DispatchedHandler([&bOk]()
+      defer_main_thread([&bOk]()
       {
 
          auto dataPackage = ::Windows::ApplicationModel::DataTransfer::Clipboard::GetContent();
@@ -361,7 +344,7 @@ namespace metrowin
 
          }
 
-      })));
+      });
 
       return bOk;
 
@@ -372,9 +355,7 @@ namespace metrowin
 
       bool bOk = true;
 
-      ::wait(Windows::ApplicationModel::Core::CoreApplication::MainView->CoreWindow->Dispatcher->RunAsync(
-             Windows::UI::Core::CoreDispatcherPriority::Normal,
-             ref new Windows::UI::Core::DispatchedHandler([&]()
+      defer_main_thread([&]()
       {
 
          auto dataPackage = ::Windows::ApplicationModel::DataTransfer::Clipboard::GetContent();
@@ -430,7 +411,7 @@ namespace metrowin
 
          }
 
-      })));
+      }));
 
       return bOk;
 
@@ -472,10 +453,7 @@ namespace metrowin
 
       package->SetBitmap(reference);
 
-      ::wait(
-      Windows::ApplicationModel::Core::CoreApplication::MainView->CoreWindow->Dispatcher->RunAsync(
-      ::Windows::UI::Core::CoreDispatcherPriority::Normal,
-      ref new Windows::UI::Core::DispatchedHandler([&package, this]()
+      defer_main_thread([&package, this]()
       {
 
          ::Windows::ApplicationModel::DataTransfer::Clipboard::SetContent(package);
