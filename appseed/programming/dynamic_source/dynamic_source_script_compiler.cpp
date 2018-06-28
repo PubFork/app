@@ -590,7 +590,7 @@ namespace dynamic_source
 
       string strBuildCmd;
 
-#ifdef LINUX
+#if defined(LINUX) || defined(MACOS)
       strBuildCmd.Format(System.dir().install() / "nodeapp\\stage\\dynamic_source" / m_strDynamicSourceConfiguration + "_cl" + m_strPlat1 + ".bash");
 #else
       strBuildCmd.Format(System.dir().install() / ("nodeapp\\stage\\dynamic_source_" + m_strVsTools) / m_strDynamicSourceConfiguration + ::file::path("_c") + m_strPlat1 + ".bat");
@@ -711,7 +711,7 @@ namespace dynamic_source
 
          //strBuildCmd;
 
-#ifdef LINUX
+#if defined(LINUX) || defined(MACOS)
          strBuildCmd.Format(System.dir().install() / "nodeapp\\stage\\dynamic_source" / m_strDynamicSourceConfiguration + "_cl" + m_strPlat1 + ".bash");
 #else
          strBuildCmd.Format(System.dir().install() / ("nodeapp\\stage\\dynamic_source_" + m_strVsTools) / m_strDynamicSourceConfiguration + ::file::path("_l") + m_strPlat1 + ".bat");
