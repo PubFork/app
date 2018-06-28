@@ -610,7 +610,7 @@ namespace user
 
          string strButtonText = spitema->element_at(i)->m_pui->get_window_text();
 
-         spitema->element_at(i)->m_iColumn = iColumn;
+         spitema->element_at(i)->m_iColumn = (int) iColumn;
 
          spitema->element_at(i)->m_pui->on_calc_size(&calcsize);
 

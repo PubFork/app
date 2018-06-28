@@ -182,7 +182,9 @@ inline int type_is_null(const T * p)
 
 
        CLASS_DECL_AURA int get_aura_init();
+extern "C"
 CLASS_DECL_AURA int_bool defer_aura_init();
+extern "C"
 CLASS_DECL_AURA int_bool defer_aura_term();
 
 BEGIN_EXTERN_C

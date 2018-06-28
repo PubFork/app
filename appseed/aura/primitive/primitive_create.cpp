@@ -94,7 +94,12 @@ create & create::operator = (const create & create)
    m_spApplicationBias        .oattrib(create.m_spApplicationBias);
    m_spCommandLine            .oattrib(create.m_spCommandLine);
 
-   m_phandlerParent->merge(this);
+   if(m_phandlerParent != NULL)
+   {
+      
+      m_phandlerParent->merge(this);
+      
+   }
 
    return *this;
 

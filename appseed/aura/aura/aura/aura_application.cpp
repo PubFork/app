@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #ifdef WINDOWSEX
 #include "aura/aura/os/windows/windows_system_interaction_impl.h"
 #endif
@@ -89,37 +89,22 @@ namespace aura
 
 
    application::application() :
+   ::object(this),
+   ::thread(this),
       m_allocer(this),
       m_mutexMatterLocator(this),
       m_mutexStr(this)
    {
 
-
-//      string strAppId = m_strAppId;
-//
-//      string strBuild = m_strBuild;
-//
-//      string strPlatform = m_strPlatform;
-//
-//      string strConfiguration = m_strConfiguration;
-//
-//      string strLocale = m_strLocale;
-//
-//      string strSchema = m_strSchema;
-
       m_strBuild = "installed";
-
       m_strLocale = "_std";
-
       m_strSchema = "_std";
-
       m_bSimpleMessageLoop = false;
 
       // default value for acid apps
       // (but any acid app can have installer, just change this flag to true in the derived application class constructor).
       m_bAppHasInstallerProtected = true;
       m_bAppHasInstallerChangedProtected = false;
-
 
       m_strHttpUserAgentToken = "ca2";
       m_strHttpUserAgentVersion = "1.0";
@@ -135,8 +120,6 @@ namespace aura
       m_bAgreeExitOk = true;
       m_bFranceExit = true;
 
-      //m_pmutex = new mutex(this);
-
       m_paurasystem = NULL;
       m_paurasession = NULL;
       m_paxisapp = NULL;
@@ -148,9 +131,8 @@ namespace aura
       m_pcoreapp = NULL;
       m_pcoresystem = NULL;
       m_pcoresession = NULL;
-      //m_peventReady = NULL;
-      m_pimaging = NULL;
 
+      m_pimaging = NULL;
 
 #ifdef WINDOWS
 
@@ -158,72 +140,7 @@ namespace aura
 
 #endif
 
-      if (m_pauraapp == NULL)
-      {
-
-         m_pauraapp = this;
-
-      }
-
-      if (m_pauraapp != NULL)
-      {
-
-         m_paurasystem = m_pauraapp->m_paurasystem;
-
-         m_paxissystem = m_pauraapp->m_paxissystem;
-
-         m_paxissession = m_pauraapp->m_paxissession;
-
-         m_paxisapp = m_pauraapp->m_paxisapp;
-
-         m_pbasesystem = m_pauraapp->m_pbasesystem;
-
-         m_pbasesession = m_pauraapp->m_pbasesession;
-
-         m_pbaseapp = m_pauraapp->m_pbaseapp;
-
-         m_pcoresystem = m_pauraapp->m_pcoresystem;
-
-         m_pcoresession = m_pauraapp->m_pcoresession;
-
-         m_pcoreapp = m_pauraapp->m_pcoreapp;
-
-         if (m_pauraapp->m_paurasession == NULL && m_paurasystem != NULL)
-         {
-
-            m_paurasession = m_paurasystem->m_paurasession;
-
-         }
-         else
-         {
-
-            m_paurasession = m_pauraapp->m_paurasession;
-
-         }
-
-#ifdef WINDOWS
-
-         m_hinstance = m_pauraapp->m_hinstance;
-
-#endif
-
-      }
-      else
-      {
-
-         m_paurasystem = NULL;
-
-      }
-
-
       m_puiptraFrame = new ::user::interaction_spa();
-
-
-      //      m_pcoreapp                 = NULL;
-
-
-
-
 
       m_phandler = canew(::handler(this));
 

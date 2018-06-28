@@ -2,13 +2,20 @@
 
 
 // return string length or -1 if UNICODE string is found in the archive
-__STATIC UINT __read_string_length(::file::byte_istream ar)
+__STATIC UINT __read_string_length(::file::byte_istream & ar)
 {
    uint32_t nNewLen;
 
    // attempt BYTE length first
    byte bLen;
    ar >> bLen;
+   
+   if(ar.fail())
+   {
+      
+      throw io_exception(ar.get_app());
+      
+   }
 
    if (bLen < 0xff)
       return bLen;

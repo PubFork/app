@@ -2308,9 +2308,9 @@
 		9AF4C3941F836F8400197385 /* aura_os_alloc.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AF4C2C31F836F8200197385 /* aura_os_alloc.h */; };
 		9AF4C3951F836F8400197385 /* aura_plex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4C2C41F836F8200197385 /* aura_plex.cpp */; };
 		9AF4C3961F836F8400197385 /* aura_plex.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AF4C2C51F836F8200197385 /* aura_plex.h */; };
-		9AF4C3971F836F8400197385 /* aura_plex_heap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4C2C61F836F8200197385 /* aura_plex_heap.cpp */; };
-		9AF4C3981F836F8400197385 /* aura_plex_heap.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AF4C2C71F836F8200197385 /* aura_plex_heap.h */; };
-		9AF4C3991F836F8400197385 /* aura_plex_heap_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AF4C2C81F836F8200197385 /* aura_plex_heap_impl.h */; };
+		9AF4C3971F836F8400197385 /* aura_plex_heap1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4C2C61F836F8200197385 /* aura_plex_heap1.cpp */; };
+		9AF4C3981F836F8400197385 /* aura_plex_heap1.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AF4C2C71F836F8200197385 /* aura_plex_heap1.h */; };
+		9AF4C3991F836F8400197385 /* aura_plex_heap_impl1.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AF4C2C81F836F8200197385 /* aura_plex_heap_impl1.h */; };
 		9AF4C39B1F836F8400197385 /* aura_printer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4C2CA1F836F8200197385 /* aura_printer.cpp */; };
 		9AF4C39C1F836F8400197385 /* aura_printer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AF4C2CB1F836F8200197385 /* aura_printer.h */; };
 		9AF4C39D1F836F8400197385 /* aura_printf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4C2CC1F836F8200197385 /* aura_printf.cpp */; };
@@ -2420,7 +2420,7 @@
 		9AF4C4131F83702B00197385 /* aura_new.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4C2BE1F836F8200197385 /* aura_new.cpp */; };
 		9AF4C4141F83702B00197385 /* aura_os.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4C2C11F836F8200197385 /* aura_os.cpp */; };
 		9AF4C4151F83702B00197385 /* aura_plex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4C2C41F836F8200197385 /* aura_plex.cpp */; };
-		9AF4C4161F83702B00197385 /* aura_plex_heap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4C2C61F836F8200197385 /* aura_plex_heap.cpp */; };
+		9AF4C4161F83702B00197385 /* aura_plex_heap1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4C2C61F836F8200197385 /* aura_plex_heap1.cpp */; };
 		9AF4C4171F83702B00197385 /* aura_printer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4C2CA1F836F8200197385 /* aura_printer.cpp */; };
 		9AF4C4181F83702B00197385 /* aura_printf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4C2CC1F836F8200197385 /* aura_printf.cpp */; };
 		9AF4C4191F83702B00197385 /* aura_profiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4C2CE1F836F8200197385 /* aura_profiler.cpp */; };
@@ -4370,9 +4370,9 @@
 		9AF4C2C31F836F8200197385 /* aura_os_alloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_os_alloc.h; sourceTree = "<group>"; };
 		9AF4C2C41F836F8200197385 /* aura_plex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aura_plex.cpp; sourceTree = "<group>"; };
 		9AF4C2C51F836F8200197385 /* aura_plex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_plex.h; sourceTree = "<group>"; };
-		9AF4C2C61F836F8200197385 /* aura_plex_heap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aura_plex_heap.cpp; sourceTree = "<group>"; };
-		9AF4C2C71F836F8200197385 /* aura_plex_heap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_plex_heap.h; sourceTree = "<group>"; };
-		9AF4C2C81F836F8200197385 /* aura_plex_heap_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_plex_heap_impl.h; sourceTree = "<group>"; };
+		9AF4C2C61F836F8200197385 /* aura_plex_heap1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aura_plex_heap1.cpp; sourceTree = "<group>"; };
+		9AF4C2C71F836F8200197385 /* aura_plex_heap1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_plex_heap1.h; sourceTree = "<group>"; };
+		9AF4C2C81F836F8200197385 /* aura_plex_heap_impl1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_plex_heap_impl1.h; sourceTree = "<group>"; };
 		9AF4C2CA1F836F8200197385 /* aura_printer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aura_printer.cpp; sourceTree = "<group>"; };
 		9AF4C2CB1F836F8200197385 /* aura_printer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_printer.h; sourceTree = "<group>"; };
 		9AF4C2CC1F836F8200197385 /* aura_printf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aura_printf.cpp; sourceTree = "<group>"; };
@@ -6996,9 +6996,9 @@
 				9AF4C2C31F836F8200197385 /* aura_os_alloc.h */,
 				9AF4C2C41F836F8200197385 /* aura_plex.cpp */,
 				9AF4C2C51F836F8200197385 /* aura_plex.h */,
-				9AF4C2C61F836F8200197385 /* aura_plex_heap.cpp */,
-				9AF4C2C71F836F8200197385 /* aura_plex_heap.h */,
-				9AF4C2C81F836F8200197385 /* aura_plex_heap_impl.h */,
+				9AF4C2C61F836F8200197385 /* aura_plex_heap1.cpp */,
+				9AF4C2C71F836F8200197385 /* aura_plex_heap1.h */,
+				9AF4C2C81F836F8200197385 /* aura_plex_heap_impl1.h */,
 				9AF4C2CA1F836F8200197385 /* aura_printer.cpp */,
 				9AF4C2CB1F836F8200197385 /* aura_printer.h */,
 				9AF4C2CC1F836F8200197385 /* aura_printf.cpp */,
@@ -8152,7 +8152,7 @@
 				07B0951418495C2B007A0560 /* geometry_align.h in Headers */,
 				9AE7256A17E83B69003E47F9 /* primitive_memory.h in Headers */,
 				9A6FB05D1F5C79CF00AF31B2 /* file_plain_text_ostream.h in Headers */,
-				9AF4C3991F836F8400197385 /* aura_plex_heap_impl.h in Headers */,
+				9AF4C3991F836F8400197385 /* aura_plex_heap_impl1.h in Headers */,
 				9A6FAE701F5C773700AF31B2 /* datetime_zonetime.h in Headers */,
 				9AE47FA420D098E800648DFD /* user_edit_text.h in Headers */,
 				9AF4C3A01F836F8400197385 /* aura_profiler.h in Headers */,
@@ -8365,7 +8365,7 @@
 				9A16451819C4A4CF00966C5E /* xml_entity.h in Headers */,
 				9AF4C3D11F836F8400197385 /* aura_user.h in Headers */,
 				07B094FE18495C2B007A0560 /* collection_unique_array.h in Headers */,
-				9AF4C3981F836F8400197385 /* aura_plex_heap.h in Headers */,
+				9AF4C3981F836F8400197385 /* aura_plex_heap1.h in Headers */,
 				9AC20A5020998C2F0077FEBF /* user_form.h in Headers */,
 				9AE4C7F81996D29C00E50F88 /* data_item.h in Headers */,
 				9A16420419C4A4CE00966C5E /* exception_exit.h in Headers */,
@@ -8642,7 +8642,7 @@
 				9A9579D81F6225B800623508 /* exception_user.cpp in Sources */,
 				9A9579D91F6225B800623508 /* exception_verisimple.cpp in Sources */,
 				9A9579DA1F6225B800623508 /* exception_void_implementation.cpp in Sources */,
-				9AF4C4161F83702B00197385 /* aura_plex_heap.cpp in Sources */,
+				9AF4C4161F83702B00197385 /* aura_plex_heap1.cpp in Sources */,
 				9A9579DB1F6225B800623508 /* exception.cpp in Sources */,
 				9A41736E2000D5100056265A /* apple_debug.cpp in Sources */,
 				9A9579DC1F6225B800623508 /* message_base.cpp in Sources */,
@@ -9230,7 +9230,7 @@
 				9AF4C3C81F836F8400197385 /* aura_timer_callback.cpp in Sources */,
 				9A6FACCF1F5C71AF00AF31B2 /* macos_os.cpp in Sources */,
 				9A6FAED21F5C778800AF31B2 /* collection_2d_array.cpp in Sources */,
-				9AF4C3971F836F8400197385 /* aura_plex_heap.cpp in Sources */,
+				9AF4C3971F836F8400197385 /* aura_plex_heap1.cpp in Sources */,
 				9AF4C39F1F836F8400197385 /* aura_profiler.cpp in Sources */,
 				9A6FACCB1F5C71AF00AF31B2 /* macos_lock.cpp in Sources */,
 				9A4B9C311E149015000D0E92 /* os_debug.cpp in Sources */,
@@ -9973,7 +9973,7 @@
 				INSTALL_PATH = "@executable_path";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				RUN_CLANG_STATIC_ANALYZER = NO;
@@ -10043,7 +10043,7 @@
 				INSTALL_PATH = "@executable_path";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				RUN_CLANG_STATIC_ANALYZER = NO;
 				SDKROOT = macosx;

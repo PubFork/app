@@ -339,7 +339,7 @@ local int32_t ziplocal_getShort (
     uint_ptr *pX)
 {
     uint_ptr x ;
-    int32_t i;
+    int32_t i = 0;
     int32_t err;
 
     err = ziplocal_getByte(pzlib_filefunc_def,filestream,&i);
@@ -367,7 +367,7 @@ local int32_t ziplocal_getLong (
     uint_ptr *pX)
 {
     uint_ptr x ;
-    int32_t i;
+    int32_t i = 0;
     int32_t err;
 
     err = ziplocal_getByte(pzlib_filefunc_def,filestream,&i);
@@ -575,6 +575,7 @@ extern zipFile CLASS_DECL_AURA zipOpen2 (
         if (err!=ZIP_OK)
         {
             ZCLOSE(ziinit.z_filefunc, ziinit.filestream);
+           TRYFREE(zi);
             return NULL;
         }
 

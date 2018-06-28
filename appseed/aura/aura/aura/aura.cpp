@@ -123,7 +123,7 @@ CLASS_DECL_AURA int get_aura_init()
 
 }
 
-
+extern "C"
 CLASS_DECL_AURA ::aura::system * aura_create_aura_system(app_core * pappcore)
 {
 
@@ -131,7 +131,7 @@ CLASS_DECL_AURA ::aura::system * aura_create_aura_system(app_core * pappcore)
 
 }
 
-
+extern "C"
 CLASS_DECL_AURA int_bool defer_aura_init()
 {
 
@@ -153,7 +153,7 @@ CLASS_DECL_AURA int_bool defer_aura_init()
 
 }
 
-
+extern "C"
 CLASS_DECL_AURA int_bool defer_aura_term()
 {
 

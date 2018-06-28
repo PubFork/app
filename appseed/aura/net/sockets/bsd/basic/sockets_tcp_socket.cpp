@@ -1502,7 +1502,6 @@ namespace sockets
             const char* error_str = ERR_error_string(error, NULL);
             printf("could not SSL_connect: %s\n", error_str);
 
-            int iError = errno;
             int iErrorSsl = SSL_get_error(m_psslcontext->m_ssl,r);
 
             //if(m_spsslclientcontext.is_set() &&

@@ -1756,9 +1756,6 @@ namespace exception
             *offset_begin++ = '\0';
             *offset_end++ = '\0';
 
-            int32_t status;
-
-//            char * real_name = abi::__cxa_demangle(mangled_name, 0, 0, &status);
             string real_name = demangle(mangled_name);
 
             strcat(_strS, "[bt]: (");
@@ -1768,30 +1765,12 @@ namespace exception
             strcat(_strS, messages[i]);
             strcat(_strS, " : ");
 
-            if (status == 0)
-            {
-
-               strcat(_strS, real_name);
-
-            }
-            else
-            {
-
-               strcat(_strS, mangled_name);
-
-            }
+            strcat(_strS, real_name);
 
             strcat(_strS, "+");
             strcat(_strS, offset_begin);
             strcat(_strS, offset_end);
             strcat(_strS,"\n");
-
-//            if(real_name != NULL)
-//            {
-//
-//               free(real_name);
-//
-//            }
 
          }
          else

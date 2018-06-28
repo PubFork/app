@@ -17,15 +17,15 @@ namespace user
       menu_interaction(menu_item * pitem);
       virtual ~menu_interaction();
 
-      virtual void install_message_routing(::message::sender * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface) override;
 
-      virtual void on_layout();
+      virtual void on_layout() override;
 
       virtual void _001DrawCheck(::draw2d::graphics * pgraphics);
 
-      virtual void _001OnNcDraw(::draw2d::graphics * pgraphics);
+      virtual void _001OnNcDraw(::draw2d::graphics * pgraphics) override;
 
-      virtual void _001OnDraw(::draw2d::graphics * pgraphics);
+      virtual void _001OnDraw(::draw2d::graphics * pgraphics) override;
 
       virtual void _001OnDrawDefault(::draw2d::graphics * pgraphics);
 

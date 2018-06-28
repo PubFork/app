@@ -1,4 +1,4 @@
-﻿/*
+/*
  * TinyJS
  *
  * A single-file Javascript-alike engine
@@ -797,10 +797,10 @@ CScriptVarLink::CScriptVarLink(const CScriptVarLink &link)
 
 CScriptVarLink::~CScriptVarLink()
 {
+   var->unref();
 #if DEBUG_MEMORY
    mark_deallocated(this);
 #endif
-   var->unref();
 }
 
 void CScriptVarLink::replaceWith(CScriptVar *newVar)

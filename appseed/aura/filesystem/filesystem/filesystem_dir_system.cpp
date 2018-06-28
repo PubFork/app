@@ -780,7 +780,7 @@ namespace file
       bool system::is_dir_map::lookup(const ::file::path & path, bool &bIsDir, u32 & dwLastError)
       {
 
-         return lookup(path, bIsDir, dwLastError, path.length());
+         return lookup(path, bIsDir, dwLastError, (i32) path.length());
 
       }
 

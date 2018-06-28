@@ -200,6 +200,8 @@ namespace draw2d_quartz2d
       if(m_layer == NULL)
       {
 
+         CGContextRelease(cg);
+         
          return false;
 
       }

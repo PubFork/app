@@ -2246,7 +2246,7 @@ static void nsvg__addUse(NSVGparser* p)
    if (list == NULL)
       return;
 
-   path = (NSVGpath *)malloc(sizeof(path));
+   path = (NSVGpath *)malloc(sizeof(NSVGpath));
    if (path == NULL)
       return;
 

@@ -18,7 +18,14 @@ namespace aura
       object(papp),
       ::thread(papp)
    {
-
+      
+      
+      m_pauraapp = papp;
+      
+      m_paurasession = this;
+      
+      m_paurasystem = papp->m_paurasystem;
+      
       m_strAppId = "session";
 
       m_ecursorDefault = ::visual::cursor_arrow;
@@ -1976,8 +1983,13 @@ namespace aura
             return -1;
 
          }
+         
+         if(lprect != NULL)
+         {
 
-         *lprect = m_rectaWkspace[iMainWkspace];
+            *lprect = m_rectaWkspace[iMainWkspace];
+            
+         }
 
          return iMainWkspace;
 
@@ -2600,7 +2612,12 @@ namespace aura
       if (iMatchingWkspace >= 0)
       {
 
-         *lprect = rectMatch;
+         if(lprect != NULL)
+         {
+            
+            *lprect = rectMatch;
+            
+         }
 
          return iMatchingWkspace;
 

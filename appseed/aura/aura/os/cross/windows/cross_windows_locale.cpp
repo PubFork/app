@@ -34,7 +34,7 @@ int32_t WINAPI GetLocaleInfoW( LCID lcid, LCTYPE lctype, LPWSTR buffer, int32_t 
     //HGLOBAL hmem;
     int32_t ret;
     uint32_t lcflags;
-    const WCHAR *p;
+    const WCHAR *p = NULL;
     unsigned int i;
 
     if (len < 0 || (len && !buffer))

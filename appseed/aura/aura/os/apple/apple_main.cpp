@@ -24,7 +24,7 @@ uint32_t __start_system_with_file(const char * pszFileName)
 
    }
 
-   const char ** psza = (const char **) malloc(sizeof(const char **) * 1);
+   const char ** psza = (const char **) malloc(sizeof(const char *) * 1);
 
    psza[0] = strdup(pszFileName);
 

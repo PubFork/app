@@ -16,7 +16,7 @@ public:
    typedef ::size SIZE;
 
    point() NOTHROW {}
-   point(i64 a, i64 b) NOTHROW { x = a; y = b; }
+   point(i64 a, i64 b) NOTHROW { x = (LONG) a; y = (LONG)b; }
    point(const POINT & pt) NOTHROW { *(POINT *)this = pt; }
 explicit point(const ::lparam & lparam) NOTHROW:point(lparam.x(), lparam.y()) {}
 

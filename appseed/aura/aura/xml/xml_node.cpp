@@ -1135,7 +1135,7 @@ namespace xml
                for( int32_t i = 0 ; i < opt->tab_base ; i++)
                   ostring += '\t';
             }
-            ostring += (opt->reference_value&&opt->m_pentities?opt->m_pentities->entity_to_ref(m_strValue):m_strValue);
+            ostring += (opt &&opt->reference_value&&opt->m_pentities?opt->m_pentities->entity_to_ref(m_strValue):m_strValue);
          }
 
          // </TAG> CloseTag

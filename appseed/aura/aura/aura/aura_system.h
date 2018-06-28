@@ -66,7 +66,7 @@ namespace aura
 
 
       static class id                              idEmpty;
-      class ::str::base64                          m_base64;
+      sp(class ::str::base64)                      m_spbase64;
 
       ::string_to_string                           m_mapAppLibrary;
       sp(class machine_event_central)              m_pmachineeventcentral;
@@ -100,7 +100,7 @@ namespace aura
       bool                                         m_bGudoNetCache;
 
 
-      ::process::department                       m_process;
+      sp(::process::department)                    m_spprocess;
 
 
       int32_t                                      m_nCmdShow;
@@ -119,7 +119,7 @@ namespace aura
       ::file::system_sp                            m_spfile;
       ::file::dir::system_sp                       m_spdir;
 
-      ::http::system                               m_httpsystem;
+      sp(::http::system)                           m_sphttpsystem;
 
 
 
@@ -148,7 +148,7 @@ namespace aura
 
 //      sp(::install::install)                       m_spinstall;
 
-      ::net::email_department                     m_emaildepartment;
+      sp(::net::email_department)                     m_spemaildepartment;
 
       stringa                                      m_straCommandLineAccumul;
       stringa                                      m_straCommandLineExtra;
@@ -434,7 +434,7 @@ namespace aura
 
       inline class ::http::system                  & http()
       {
-         return m_httpsystem;
+         return *m_sphttpsystem;
       }
 
       class ::crypto::crypto                       & crypto();
@@ -539,25 +539,10 @@ namespace aura
       virtual index get_ui_wkspace(::user::interaction * pui);
 
 
-
-
-
-      // #ifdef APPLE_IOS
-
-      //       virtual void * initialize_native_window2(LPCRECT lpcrect) override;
-
-      // #endif
-
-
-
-
-
    };
 
 
 } // namespace aura
-
-
 
 
 CLASS_DECL_AURA ::aura::system * create_aura_system(app_core * pappcore);

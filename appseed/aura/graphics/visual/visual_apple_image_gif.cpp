@@ -231,6 +231,12 @@ bool imaging::apple_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file:
 
    }
    
+   CFRelease(gifproperties);
+   
+   CFRelease(imagesource);
+   
+   CFRelease(imagesourcetype);
+   
    return true;
    
 }

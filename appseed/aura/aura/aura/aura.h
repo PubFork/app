@@ -1,5 +1,6 @@
 #pragma once
 
+//#pragma pack(show)
 
 #include "setup/debug.h"
 

@@ -393,6 +393,7 @@ namespace draw2d_quartz2d
       dib->m_spbitmap.release();
       dib->m_spgraphics.release();
       
+      return true;
       
    }
 

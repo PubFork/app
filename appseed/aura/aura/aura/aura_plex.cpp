@@ -1,5 +1,9 @@
 #include "framework.h"
 
+#include "aura_plex_heap1.h"
+
+#include "aura_plex_heap_impl1.h"
+
 
 #undef new
 

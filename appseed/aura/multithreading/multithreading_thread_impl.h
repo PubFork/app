@@ -26,7 +26,7 @@ inline UINT HashKey(IDTHREAD key)
 
 #endif
 
-#pragma pack(show)
+//#pragma pack(show)
 
 class thread_startup :
    virtual public object

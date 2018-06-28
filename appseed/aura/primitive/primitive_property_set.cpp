@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 property_set::property_set(::aura::application * papp, bool bAutoAdd, bool bMultiValue) :
@@ -910,11 +910,8 @@ string property_set::gen_eval(const char * psz)
 
    string str;
 
-   ASSERT(psz != NULL);
-
-   ASSERT(psz[0] == '$'); // until now accepts only one var
-
-   ASSERT(strlen(psz) >= 2);
+   // until now accepts only one var
+   ASSERT(psz != NULL && psz[0] == '$' && strlen(psz) >= 2);
 
    str = &psz[1];
 

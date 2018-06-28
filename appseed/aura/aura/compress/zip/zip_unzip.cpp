@@ -186,7 +186,7 @@ local int32_t unzlocal_getShort OF((
 local int32_t unzlocal_getShort (const zlib_filefunc_def * pzlib_filefunc_def, voidpf filestream, uint_ptr * pX)
 {
     uint_ptr x ;
-    int32_t i;
+    int32_t i = 0;
     int32_t err;
 
     err = unzlocal_getByte(pzlib_filefunc_def,filestream,&i);

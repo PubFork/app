@@ -13,7 +13,7 @@ public:
 
 
    rect() NOTHROW {}
-   rect(i64 l, int64_t t, int64_t r, int64_t b) NOTHROW { left = l; top = t; right = r;  bottom = b;  }
+   rect(i64 l, int64_t t, int64_t r, int64_t b) NOTHROW { left = (LONG) l; top = (LONG) t; right = (LONG) r;  bottom = (LONG) b;  }
    rect(const RECT & r) NOTHROW { *this = r; }
 
 rect(const RECTD & r) NOTHROW : rect(r.left, r.top, r.right, r.bottom) {}

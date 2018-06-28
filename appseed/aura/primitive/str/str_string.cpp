@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include <stdio.h>
 
 const int string::npos = -1;
@@ -676,7 +676,7 @@ strsize __cdecl crt_char_traits::GetCharLen(const char* pch) NOTHROW
 
 uint32_t __cdecl crt_char_traits::GetEnvironmentVariable(const char * pszVar, char * pszBuffer,uint32_t dwSize )
 {
-
+   
 #ifdef METROWIN
 
    _throw(todo(get_app()));
@@ -687,7 +687,19 @@ uint32_t __cdecl crt_char_traits::GetEnvironmentVariable(const char * pszVar, ch
 
 #else
 
-   return (uint32_t)strlen(strncpy(pszBuffer,getenv(pszVar),dwSize));
+   const char * pszEnv = getenv(pszVar);
+   if(pszBuffer == NULL)
+   {
+      if(pszEnv == NULL)
+      {
+         return 0;
+      }
+      else
+      {
+         return (u32)strlen(pszEnv);
+      }
+   }
+   return (u32)strlen(strncpy(pszBuffer,pszEnv,dwSize));
 
 #endif
 

@@ -68,211 +68,225 @@ namespace aura
 
 
 
-   system::system(::aura::application * papp, app_core * pappcore) :
-      m_base64(this),
-      m_process(this),
-      m_httpsystem(this),
-      m_emaildepartment(this)
+   system::system(::aura::application * papp, app_core * pappcore):
+   ::object(papp == NULL ? this : papp),
+   ::thread(papp == NULL ? this : papp)
    {
-
-      g_pmutexDib = new mutex(this);
-
-      g_pmutexDib->m_ulFlags |= ::object::flag_shared;
-
-#ifdef WINDOWSEX
-
-      m_psystemwindow = NULL;
-
-#endif
-
-      m_strAppId = "system";
-
+      
       m_pappcore = pappcore;
-
-      m_bThreadToolsForIncreasedFps = false;
-
-      m_typemap.InitHashTable(2048);
-
-#ifdef DEBUG
-
-      m_pdumpcontext = new dump_context();
-
-#endif
-
-#ifndef WINDOWS
-
-      exception::translator::attach();
-
-#endif
-
-      if (g_p == NULL)
-      {
-
-         g_p = this;
-
-      }
-
-      g_pszCooperativeLevel = "aura";
-
-#ifdef MATTER_CACHE_FROM_HTTP_SERVER
-
-      m_bMatterFromHttpCache = true;
-
-#else
-
-      m_bMatterFromHttpCache = false;
-
-#endif
-
-      set_app(this);
-
-//#ifdef APPLEOS
-      //    translator::attach();
-//#endif
-
-      m_nSafetyPoolSize          = 512;        // default size
-
-      m_pmath                    = canew(math::math(this));
-      m_pgeometry                = canew(geometry::geometry(this));
-//      m_phtml = NULL;
-
-
-      m_paurasystem = this;
-
+      
       if(papp == NULL)
       {
-
-         oprop("parent_system") = (sp(object)) NULL;
-
+         
+         m_pauraapp = this;
+         
+         m_paurasystem = this;
+         
       }
       else
       {
-
-         oprop("parent_system") = papp->m_paurasystem;
-
+         
+         m_pauraapp = papp;
+         
+         if(papp->is_system())
+         {
+          
+            m_paurasystem = dynamic_cast<::aura::system *>(papp);
+            
+         }
+         else
+         {
+            
+            m_paurasystem = this;
+            
+         }
+         
       }
 
-
-//      m_pfnVerb = &system::install_uninstall_verb;
-
-
-
+      m_spbase64 = canew(::str::base64(this));
+      m_spprocess = canew(::process::department(this));
+      m_sphttpsystem = canew(::http::system(this));
+      m_spemaildepartment = canew(::net::email_department(this));
+      
+      
+      g_pmutexDib = new mutex(this);
+      
+      g_pmutexDib->m_ulFlags |= ::object::flag_shared;
+      
+#ifdef WINDOWSEX
+      
+      m_psystemwindow = NULL;
+      
+#endif
+      
+      m_strAppId = "system";
+      
+      m_bThreadToolsForIncreasedFps = false;
+      
+      m_typemap.InitHashTable(2048);
+      
+#ifdef DEBUG
+      
+      m_pdumpcontext = new dump_context();
+      
+#endif
+      
+#ifndef WINDOWS
+      
+      exception::translator::attach();
+      
+#endif
+      
+      if (g_p == NULL)
+      {
+         
+         g_p = this;
+         
+      }
+      
+      g_pszCooperativeLevel = "aura";
+      
+#ifdef MATTER_CACHE_FROM_HTTP_SERVER
+      
+      m_bMatterFromHttpCache = true;
+      
+#else
+      
+      m_bMatterFromHttpCache = false;
+      
+#endif
+      
+      set_app(this);
+      
+      //#ifdef APPLEOS
+      //    translator::attach();
+      //#endif
+      
+      m_nSafetyPoolSize          = 512;        // default size
+      
+      m_pmath                    = canew(math::math(this));
+      m_pgeometry                = canew(geometry::geometry(this));
+      //      m_phtml = NULL;
+      
+      
       m_bDoNotExitIfNoApplications              = true;
-
-
-
-//      m_peengine = NULL;
-
-
+      
+      
+      
+      //      m_peengine = NULL;
+      
+      
       m_pmachineeventcentral = NULL;
-
+      
       //::ca::application::m_file.set_app(this);
       //::ca::application::m_dir.set_app(this);
-
+      
       string strId;
       //strId = m_strAppName;
       //strId += ::str::has_char(m_strAppId, ".");
       //strId += ::str::has_char(m_strBaseSupportId, ".");
-
-
+      
+      
       strId = "ca2log";
-
-
+      
+      
       xxdebug_box("Going to start Log","Just before (initialize) log",0);
-
+      
       // log starts here - ENABLE_TRACE macro should be non-zero during
       // compilation to enable log tracing
       if(!initialize_log(strId))
       {
-
+         
          xxdebug_box("Could not initialize log","Failed to initialize log",0);
-
+         
          _throw(simple_exception(get_app(), "failed to initialize log"));
-
+         
       }
-
+      
       /*
-      if(psystemParent == NULL)
-      {
-
-      m_peengine                                = new ::exception::engine(this);
-
-      }
-      else
-      {
-
-      m_peengine                                = psystemParent->m_peengine;
-
-      }
-      */
-
+       if(psystemParent == NULL)
+       {
+       
+       m_peengine                                = new ::exception::engine(this);
+       
+       }
+       else
+       {
+       
+       m_peengine                                = psystemParent->m_peengine;
+       
+       }
+       */
+      
       m_ftlibrary = NULL;
-
+      
       //use_base_ca2_allocator();
-
-
+      
+      
       m_pfactory = canew(class base_factory(this));
       m_pfactory->set_app(this);
-
+      
       m_pfactory->creatable_large < ::file::simple_binary_file >(type_info < ::file::binary_file >());
       m_pfactory->creatable_large < ::file::string_file >();
       m_pfactory->creatable_large < ::memory_file >();
       m_pfactory->creatable_large < ::int64_array >();
       m_pfactory->creatable_large < ::double_array >();
-
+      
       factory().default_cloneable_large < stringa >();
       factory().default_cloneable_large < memory >();
       factory().default_cloneable_large < int_array >();
-
+      
       factory().creatable_small < ::file::application >();
       factory().creatable_small < ::file::dir::application >();
-
+      
       m_phtml = NULL;
-
+      
       __node_aura_factory_exchange(this);
-
+      
       m_pdatetime = canew(class ::datetime::department(this));
-
-
+      
+      
       thread::s_bAllocReady = true;
-
+      
       m_pxml = canew(::xml::department(this));
-
+      
       m_pxml->construct(this);
-
+      
       if(!m_pxml->init1())
          _throw(simple_exception(this,"failed to construct system m_pxml->init1()"));
-
+      
       if(!m_pxml->init())
          _throw(simple_exception(this,"failed to construct system m_pxml->initialize()"));
-
-
-//      m_spmutexFactory = canew(mutex(get_app()));
-
+      
+      
+      //      m_spmutexFactory = canew(mutex(get_app()));
+      
       m_bGudoNetCache = true;
-
+      
       m_purldepartment = NULL;
-
+      
       m_pcompress = NULL;
-
+      
       m_strAppName               = "system";
       m_strInstallToken          = "system";
-
+      
       m_dwAfterApplicationFirstRequest = 0;
-
-
+      
+      
       factory().creatable_small < ::visual::icon >();
       m_mapLibrary["draw2d"] = canew(::aura::library(this));
       m_purldepartment = new url::department(this);
-
+      
       m_pcompress = new ::compress_department(this);
-
+      
       m_pcompress->set_app(this);
-
+      
       ::draw2d::dib::static_initialize();
-
-//      m_spinstall = canew(::install::install(this));
-
+      
+      //      m_spinstall = canew(::install::install(this));
+      
+      
+      //m_peengine = new ::exception::engine(this);
 
    }
 
@@ -461,7 +475,6 @@ namespace aura
    bool system::process_init()
    {
 
-      //m_peengine = new ::exception::engine(this);
 
       m_pfactory->cloneable_large < ::create >();
       m_pfactory->cloneable_large < application_bias >();
@@ -1309,7 +1322,7 @@ namespace aura
    class ::str::base64 & system::base64()
    {
 
-      return m_base64;
+      return *m_spbase64;
 
    }
 
@@ -1356,7 +1369,7 @@ namespace aura
    ::process::department & system::process()
    {
 
-      return m_process;
+      return *m_spprocess;
 
    }
 
@@ -2436,8 +2449,10 @@ RetryBuildNumber:
 
             for (index j = 0; j < ptra.get_size(); )
             {
+               
+               auto * pappItem = ptra[j].m_p;
 
-               if (ptra[j]->m_bFranceExit)
+               if (pappItem == NULL || pappItem->m_bFranceExit)
                {
 
                   ptra.remove_at(j);
@@ -2446,7 +2461,7 @@ RetryBuildNumber:
                else
                {
 
-                  TRACE("Waiting France Exit of %s", typeid(*ptra[j]).name());
+                  TRACE("Waiting France Exit of %s", typeid(*pappItem).name());
 
                   j++;
 
@@ -3331,7 +3346,7 @@ success:
    ::net::email_department & system::email()
    {
 
-      return m_emaildepartment;
+      return *m_spemaildepartment;
 
    }
    void system::enum_display_monitors()

@@ -259,7 +259,9 @@ string get_cmdline(unsigned int uiPid)
    
    struct proc_taskallinfo info = {};
    
-   int ret = proc_pidinfo((pid_t) uiPid, PROC_PIDTASKALLINFO, SHOW_ZOMBIES, &info, sizeof(struct proc_taskallinfo));
+   //int ret = proc_pidinfo((pid_t) uiPid, PROC_PIDTASKALLINFO, SHOW_ZOMBIES, &info, sizeof(struct proc_taskallinfo));
+   
+   proc_pidinfo((pid_t) uiPid, PROC_PIDTASKALLINFO, SHOW_ZOMBIES, &info, sizeof(struct proc_taskallinfo));
    
    return info.pbsd.pbi_comm;
    
@@ -460,6 +462,13 @@ int get_process_pid(const char * csProcessName)
    iNamesLength = 3;
    
    iRetCode = sysctl(aiNames, (u_int) iNamesLength, NULL, &iSize, NULL, 0);
+   
+   if(iRetCode == -1)
+   {
+      
+      return -1;
+      
+   }
    
    /*
     * Allocate memory and populate info in the  processes structure

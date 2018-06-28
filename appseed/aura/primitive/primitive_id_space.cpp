@@ -192,7 +192,7 @@ id id_space::operator()(int64_t i)
 bool id_space::find(const char * pszFind,index & iIndex)
 {
    
-   if(m_psza.m_nSize == 0)
+   if(m_psza.m_nSize <= 0)
    {
 
       iIndex = 0;
@@ -205,7 +205,7 @@ bool id_space::find(const char * pszFind,index & iIndex)
 
    index iUpperBound = m_psza.get_upper_bound();
 
-   int64_t iCompare;
+   int64_t iCompare = 0;
    
    const char * psz;
 

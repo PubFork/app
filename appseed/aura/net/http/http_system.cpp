@@ -1,4 +1,4 @@
-﻿#include "framework.h" // from "aura/net/net_sockets.h"
+#include "framework.h" // from "aura/net/net_sockets.h"
 #include "aura/net/net_sockets.h"
 #include "aura/net/sockets/bsd/basic/sockets_ssl_context.h"
 #include <time.h>

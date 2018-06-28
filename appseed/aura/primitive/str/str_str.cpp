@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include <stdio.h>
 
 
@@ -2314,7 +2314,7 @@ namespace str
          cc == CHAR_CATEGORY_Cf || cc == CHAR_CATEGORY_Cs)
          return NULL;*/
       };
-      if (*pszChar == '\0')
+      if (pszChar == NULL || *pszChar == '\0')
          return false;
       str = string(&psz[1], pszChar - psz - 1);
       return true;
@@ -2466,7 +2466,6 @@ namespace str
       if(psz == pszXml)
       {
          throw_parsing_exception("empty natural found");
-         goto end;
       }
       ui = ::str::to_uint(string(pszXml, psz - pszXml));
       if(ui < uiMin)
@@ -2477,9 +2476,7 @@ namespace str
       {
          throw_parsing_exception("natural greater than MAX");
       }
-end:
       pszXml = psz;
-
       return ui;
 
    }

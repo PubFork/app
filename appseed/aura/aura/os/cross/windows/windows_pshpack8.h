@@ -102,7 +102,7 @@
 #   pragma warning(disable:4103)
 #  endif
 
-#  pragma pack(8)
+//#  pragma pack(8)
 
 #endif
 

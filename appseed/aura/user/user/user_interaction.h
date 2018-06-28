@@ -1162,7 +1162,7 @@ namespace user
       virtual void set_stock_icon(e_stock_icon eicon);
       virtual e_stock_icon get_stock_icon();
 
-      virtual e_control_type get_control_type();
+      virtual e_control_type get_control_type() override;
 
       virtual void nextstyle(style_context * pcontext) override;
 

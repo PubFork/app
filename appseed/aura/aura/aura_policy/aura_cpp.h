@@ -615,7 +615,9 @@ namespace core
 class app_core;
 
 
-typedef ::aura::system * CREATE_SYSTEM(app_core * pappcore);
+extern "C"
+typedef ::aura::system *  CREATE_SYSTEM(app_core * pappcore);
+
 typedef CREATE_SYSTEM * LPFN_CREATE_SYSTEM;
 
 CLASS_DECL_AURA extern LPFN_CREATE_SYSTEM g_pfn_create_system;
@@ -1159,8 +1161,6 @@ public:
 CLASS_DECL_AURA string get_system_error_message(uint32_t dwError);
 
 
-#include "aura/aura/aura/aura_plex_heap.h"
-
 #include "aura/primitive/primitive_type.h"
 
 
@@ -1364,7 +1364,7 @@ CLASS_DECL_AURA string get_exe_path();
 #include "aura/aura/exception/exception_engine.h"
 
 #include "aura/aura/aura/aura_fixed_alloc_impl.h"
-#include "aura/aura/aura/aura_plex_heap_impl.h"
+//#include "aura/aura/aura/aura_plex_heap_impl.h"
 #include "aura/primitive/primitive_command_line.h"
 #include "aura/user/user/user_create.h"
 #include "aura/primitive/primitive_create.h"

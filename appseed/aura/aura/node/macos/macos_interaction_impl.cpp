@@ -1637,7 +1637,7 @@ namespace macos
     */
    int32_t interaction_impl::GetScrollLimit(int32_t nBar)
    {
-      int32_t nMin, nMax;
+      int32_t nMin = 0, nMax = 0;
       GetScrollRange(nBar, &nMin, &nMax);
       /*      SCROLLINFO info;
        if (GetScrollInfo(nBar, &info, SIF_PAGE))
@@ -3946,37 +3946,21 @@ namespace macos
       //      ::MapWindowPoints(get_handle(), (oswindow) pwndTo->get_handle(), (LPPOINT)lpRect, 2);
    }
 
+   
    ::draw2d::graphics * interaction_impl::GetDC()
    {
-      ::draw2d::graphics_sp g(allocer());
-      oswindow oswindow;
-      if (get_handle() == NULL)
-      {
-         //         oswindow = ::GetDesktopWindow();
-
-      }
-      else
-      {
-         oswindow = (::oswindow) get_handle();
-      }
-      rect rectClient;
-      //oswindow.get_client_rect(rectClient);
-      rectClient.left = 0;
-      rectClient.top = 0;
-      rectClient.right = 500;
-      rectClient.bottom = 500;
-      //      (dynamic_cast < ::draw2d_quartz2d::graphics * >(g.m_p))->attach(cairo_create(cairo_xlib_surface_create(oswindow.display(), oswindow.user::interaction(), DefaultVisual(oswindow.display(), 0), rectClient.width(), rectClient.height())));
-      return g.detach();
+      
+      return NULL;
+      
    }
 
    ::draw2d::graphics * interaction_impl::GetWindowDC()
    {
-//      ASSERT(::IsWindow(get_handle()));
-//      ::draw2d::graphics_sp g(allocer());
-//      g->attach(::GetWindowDC(get_handle()));
-//      return g.detach();
+
       return NULL;
+      
    }
+   
 
    bool interaction_impl::ReleaseDC(::draw2d::graphics * pgraphics)
    {
@@ -5462,50 +5446,9 @@ namespace macos
 
    oswindow PASCAL interaction_impl::GetSafeOwner_(oswindow hParent, oswindow* pWndTop)
    {
-      // get ::user::interaction to start with
-      oswindow hWnd = hParent;
-      if (hWnd == NULL)
-      {
-         /* trans      frame_window* pFrame = command_target::GetRoutingFrame_();
-          if (pFrame != NULL)
-          hWnd = pFrame->get_handle();
-          else
-          hWnd = System.GetMainWnd()->get_handle();*/
-      }
-
-      // a popup ::user::interaction cannot be owned by a child ::user::interaction
-      while (hWnd != NULL && (::GetWindowLong(hWnd, GWL_STYLE) & WS_CHILD))
-         hWnd = ::GetParent(hWnd);
-
-      // determine toplevel ::user::interaction to disable as well
-      oswindow hWndTop = hWnd, hWndTemp = hWnd;
-      for (;;)
-      {
-         if (hWndTemp == NULL)
-            break;
-         else
-            hWndTop = hWndTemp;
-         hWndTemp = ::GetParent(hWndTop);
-      }
-
-      _throw(todo(::get_app()));
-      // get last active popup of first non-child that was found
-      //    if (hParent == NULL && hWnd != NULL)
-      //       hWnd = ::GetLastActivePopup(hWnd);
-
-      // disable and store top level parent ::user::interaction if specified
-//      if (pWndTop != NULL)
-//      {
-//         /*         if (hWndTop != NULL && ::IsWindowEnabled(hWndTop) && hWndTop != hWnd)
-//          {
-//          *pWndTop = hWndTop;
-//          ::EnableWindow(hWndTop, FALSE);
-//          }
-//          else
-//          *pWndTop = ::caNULL;*/
-//      }
-//
-//      return hWnd;    // return the owner as oswindow
+      
+      return NULL;
+      
    }
 
    LRESULT CALLBACK __cbt_filter_hook(int32_t code, WPARAM wparam, LPARAM lparam)

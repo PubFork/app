@@ -139,7 +139,7 @@ void bit_array::clear_range(int32_t s, int32_t e)
    }
    for(int32_t idx = cs; idx <= ce; idx++)
       m_pdata[idx] = 0x0;
-   if(cs == 0 && ce == m_iDataCount - 1)
+   if(cs == 0 && ce == m_iDataCount - 1 && m_pdata != 0 && m_pdata != (i32 *) 1)
    {
       delete[] m_pdata;
       m_pdata = (int32_t*)0;

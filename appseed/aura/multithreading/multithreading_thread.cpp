@@ -3078,20 +3078,6 @@ bool thread::process_message(LPMESSAGE lpmessage)
                               if(spbase->m_bRet)
                                  return true;
 
-                              /*                                 try
-                              {
-                              if(m_pauraapp->m_paurasystem->m_pcube != NULL)
-                              {
-                              m_pauraapp->m_paurasystem->m_pcubeInterface->pre_translate_message(spbase);
-                              if(spbase->m_bRet)
-                              return TRUE;
-                              }
-                              }
-                              catch(...)
-                              {
-                              }
-
-                              */
 
                            }
 
@@ -3118,40 +3104,28 @@ bool thread::process_message(LPMESSAGE lpmessage)
 
                            }
 
-                           /*                              try
-                           {
-                           if(m_pauraapp->m_paurasession->m_pbergedge != NULL)
-                           {
-                           m_pauraapp->m_paurasession->m_pbergedgeInterface->pre_translate_message(spbase);
-                           if(spbase->m_bRet)
-                           return TRUE;
-                           }
-                           }
-                           catch(...)
-                           {
-                           }*/
 
                         }
 
                      }
 
-                  }
-                  catch(...)
-                  {
-
-                  }
-
-                  try
-                  {
-
-                     if(!m_pauraapp->is_system() && m_pauraapp->is_session())
+                     try
                      {
 
-                        m_pauraapp->pre_translate_message(spbase);
-
-                        if(spbase->m_bRet)
-                           return true;
-
+                        if(!m_pauraapp->is_system() && m_pauraapp->is_session())
+                        {
+                           
+                           m_pauraapp->pre_translate_message(spbase);
+                           
+                           if(spbase->m_bRet)
+                              return true;
+                           
+                        }
+                        
+                     }
+                     catch(...)
+                     {
+                        
                      }
 
                   }
@@ -3160,13 +3134,9 @@ bool thread::process_message(LPMESSAGE lpmessage)
 
                   }
 
+
                }
 
-               //__pre_translate_message(spbase);
-               //if(spbase->m_bRet)
-               // return TRUE;
-
-               //     spbase.release();
             }
 
          }

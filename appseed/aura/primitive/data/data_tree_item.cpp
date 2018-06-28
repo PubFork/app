@@ -85,14 +85,6 @@ namespace data
 
       }
 
-      for (auto c : m_pparent->m_children)
-      {
-
-//         c->update_pointers();
-
-      }
-
-
       return ca;
 
    }

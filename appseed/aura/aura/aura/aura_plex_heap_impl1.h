@@ -1,5 +1,6 @@
 #pragma once
 
+#include "aura_plex_heap1.h"
 
 #undef new
 

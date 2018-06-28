@@ -18,7 +18,7 @@ inline u32 u32_log2(u32 v)
    unsigned r;     // r will be lg(v)
    unsigned int t, tt; // temporaries
 
-   if (tt = (v >> 16))
+   if ((tt = (v >> 16)))
    {
       r = (t = tt >> 8) ? 24 + log2_LogTable256[t] : 16 + log2_LogTable256[tt];
    }

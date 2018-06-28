@@ -643,7 +643,7 @@ CLASS_DECL_AURA DWORD get_fast_tick_count()
 
    }
 
-   return tv.tv_sec * 1000 + tv.tv_usec / 1000;
+   return (DWORD)(tv.tv_sec * 1000 + tv.tv_usec / 1000);
 
 #endif
 

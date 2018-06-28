@@ -801,7 +801,7 @@ inline INT get_integer_mean(const INT * pt, ::count N)
       x += a / N;
       if (a >= 0)
       {
-         int b = a % N;
+         int b = (int) (a % N);
          if (y >= N - b)
          {
             x++;
@@ -814,7 +814,7 @@ inline INT get_integer_mean(const INT * pt, ::count N)
       }
       else
       {
-         int b = (-a) % N;
+         int b = (int) ((-a) % N);
          if (y <= -N + b)
          {
             x--;
@@ -828,7 +828,7 @@ inline INT get_integer_mean(const INT * pt, ::count N)
       c--;
       pt++;
    }
-   return x + y / N;
+   return (int) (x + y / N);
 
 }
 

@@ -61,11 +61,8 @@ namespace process
       };
 
 
-
-
       department(::aura::application * papp);
       virtual ~department();
-
 
 
       // run process and get output

@@ -403,7 +403,7 @@ public:
       if (iCmp == 0)
       {
 
-         iCmp = get_size() - bstr.get_size();
+         iCmp = (int) (get_size() - bstr.get_size());
 
       }
 

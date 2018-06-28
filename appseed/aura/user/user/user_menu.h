@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 namespace user
@@ -50,7 +50,7 @@ namespace user
       virtual ~menu();
 
       virtual void nextstyle(::user::style_context * pcontext) override;
-      virtual size get_window_minimum_size();
+      virtual size get_window_minimum_size() override;
 
       virtual int64_t add_ref() override
       {

@@ -1589,7 +1589,7 @@ end_processing_adding:
       {
          data.SetSource(m_trigger_src[id]);
          socket_bool::pair * ppair = m_trigger_dst[id].PGetFirstAssoc();
-         while (ppair != NULL);
+         while (ppair != NULL)
          {
             sp(socket) dst = ppair->m_element1;
             if (Valid(dst))

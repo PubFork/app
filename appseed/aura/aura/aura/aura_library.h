@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 namespace aura
@@ -98,7 +98,7 @@ namespace aura
       single_application_library(::aura::application * papp,const char * pszRoot, const char * pszFileExtension = NULL): object(papp),::aura::library(papp,0, pszRoot) {}
 
       // impl
-      virtual sp(::aura::application) get_new_application(const char * pszAppId);
+      virtual sp(::aura::application) get_new_application(const char * pszAppId) override;
 
 
       virtual void get_extension_list(stringa & stra) override;
