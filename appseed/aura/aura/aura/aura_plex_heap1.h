@@ -1,32 +1,11 @@
-﻿#pragma once
+#pragma once
 
 
-#pragma pack(show)
+class plex_heap;
 
-
-#pragma pack(push, 1)
 
 
 #undef new
-
-
-class CLASS_DECL_AURA plex_heap     // warning var length structure
-{
-public:
-   plex_heap* pNext;
-   // BYTE data[maxNum*elementSize];
-
-   void * data() { return this+1; }
-
-   static plex_heap* create(plex_heap*& head, uint_ptr nMax, uint_ptr cbElement);
-   // like 'calloc' but no zero fill
-   // may _throw( memory exceptions
-
-   void FreeDataChain();       // free this one and links
-};
-
-
-
 
 class CLASS_DECL_AURA plex_heap_alloc_sync
 {
@@ -72,5 +51,3 @@ public:
 };
 
 
-
-#pragma pack(pop)
