@@ -1520,6 +1520,11 @@ end_processing_adding:
       if (add)
       {
          ref.add_tail_unique(s);
+         if (which_one == LIST_CLOSE)
+         {
+
+            output_debug_string("list_close");
+         }
          return;
       }
       // remove

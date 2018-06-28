@@ -516,7 +516,7 @@ namespace sockets
             }
 
             n = SSL_read(m_psslcontext->m_ssl, buf, (int)nBufSize);
-            if (n == -1)
+            if (n <= 0)
             {
                n = SSL_get_error(m_psslcontext->m_ssl, (int)n);
                switch (n)
@@ -526,6 +526,7 @@ namespace sockets
                case SSL_ERROR_WANT_WRITE:
                   break;
                case SSL_ERROR_ZERO_RETURN:
+                  //if(SSL_m_psslcontext->m_pclientcontext->m_psession)
                   TRACE("SSL_read() returns zero - closing socket\n");
                   OnDisconnect();
                   SetCloseAndDelete(true);
@@ -548,16 +549,16 @@ namespace sockets
                }
                TRACE("tcp_socket::recv ssl error(1)");
             }
-            else if (!n)
-            {
-               OnDisconnect();
-               SetCloseAndDelete(true);
-               SetFlushBeforeClose(false);
-               SetLost();
-               SetShutdown(SHUT_WR);
-               //TRACE("tcp_socket::recv ssl disconnect(2)");
+            //else if (!n)
+            //{
+            //   OnDisconnect();
+            //   SetCloseAndDelete(true);
+            //   SetFlushBeforeClose(false);
+            //   SetLost();
+            //   SetShutdown(SHUT_WR);
+            //   //TRACE("tcp_socket::recv ssl disconnect(2)");
 
-            }
+            //}
             else if (n > 0 && n <= nBufSize)
             {
                return n;

@@ -59,7 +59,7 @@ namespace sockets
 
          /** Connection pool class for internal use by the base_socket_handler.
          \ingroup internal */
-         class pool_socket : public socket
+         class CLASS_DECL_AURA pool_socket : public socket
          {
             public:
 

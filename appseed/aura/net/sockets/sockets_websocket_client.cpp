@@ -205,7 +205,7 @@ int client_send(memory & m, int fin, memory & memory, bool useMask)
 
 }
 
-int client_send(memory & m, memory & memory)
+int client_send_binary(memory & m, memory & memory)
 {
 
    return client_send(m, 0x82, memory, true);
@@ -308,12 +308,12 @@ int client_send_text(memory & m, const char* src)
 }
 
 
-int client_send_text_masked(memory & m, const char* src)
+int client_send_text(memory & m, const char* src, bool bMasked)
 {
 
    memory m2(src, strlen(src));
 
-   return client_send(m, 0x81, m2, true);
+   return client_send(m, 0x81, m2, bMasked);
 
 }
 
@@ -342,6 +342,10 @@ namespace sockets
       m_mutexWebsocketWrite(h.get_app())
    {
 
+      m_dwLastSpontaneousPong = 0;
+      m_memPong.allocate(2);
+      m_memPong.get_data()[0] = 0x8a;
+      m_memPong.get_data()[1] = 0;
       m_iClientPingTimeout = -1;
 
       m_bUseMask = false;
@@ -372,6 +376,10 @@ namespace sockets
       http_client_socket(h, url_in),
       m_mutexWebsocketWrite(h.get_app())
    {
+
+      m_memPong.allocate(2);
+      m_memPong.get_data()[0] = 0x8a;
+      m_memPong.get_data()[1] = 0;
 
       m_iClientPingTimeout = -1;
 
@@ -458,7 +466,7 @@ namespace sockets
 
       }
 
-      if (m_eping == ping_sent_ping && get_tick_count() - m_dwLastPing > 60 * m_iClientPingTimeout)
+      if (m_eping == ping_sent_ping && get_tick_count() - m_dwLastPing >  m_iClientPingTimeout)
       {
 
          thisinfo << "PING TIMEOUT!!";
@@ -469,7 +477,7 @@ namespace sockets
 
       }
 
-      if ((m_eping == ping_none  || m_eping == ping_pong_received) && (get_tick_count() - m_dwLastPong) > 30 * 1000)
+      if ((m_eping == ping_none  || m_eping == ping_pong_received) && (get_tick_count() - m_dwLastPong) > m_iClientPingTimeout * 2000)
       {
 
          m_dwLastPing = get_tick_count();
@@ -515,60 +523,80 @@ namespace sockets
    void websocket_client::step()
    {
 
-      inheader("Host") = m_host;
-
-
-//      if (!(bool)inattr("minimal_headers"))
+      if (!m_bWebSocket)
       {
-         //inheader("Accept") = "text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1";
-         //inheader("Accept-Language") = "en-us,en;q=0.5";
-         //if (m_pfile == NULL) // by the time, inline gzip decompression not yet implemented
-         //{
-         //   inheader(__id(accept_encoding)) = "gzip,deflate";
-         //}
-         //inheader("Accept-Charset") = "ISO-8859-1,utf-8;q=0.7,*;q=0.7";
-         string strUserAgent = MyUseragent();
-         inheader(__id(user_agent)) = strUserAgent;
+         inheader("Host") = m_host;
+
+
+         //      if (!(bool)inattr("minimal_headers"))
+         {
+            //inheader("Accept") = "text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1";
+            //inheader("Accept-Language") = "en-us,en;q=0.5";
+            //if (m_pfile == NULL) // by the time, inline gzip decompression not yet implemented
+            //{
+            //   inheader(__id(accept_encoding)) = "gzip,deflate";
+            //}
+            //inheader("Accept-Charset") = "ISO-8859-1,utf-8;q=0.7,*;q=0.7";
+            string strUserAgent = MyUseragent();
+            inheader(__id(user_agent)) = strUserAgent;
+         }
+         //inheader("Content-Length") = 0;
+         inheader("Upgrade") = "websocket";
+         inheader("Connection") = "Upgrade";
+
+         memory m;
+
+         m.random_bytes(16);
+
+         m_strBase64 = System.base64().encode(m);
+
+         int iLen;
+
+         iLen = (int)(m_strBase64.get_length());
+
+         inheader("Sec-WebSocket-Key") = m_strBase64;
+         if (m_strWebSocketProtocol.has_char())
+         {
+            inheader("Sec-WebSocket-Protocol") = m_strWebSocketProtocol;
+
+         }
+         inheader("Sec-WebSocket-Version") = "13";
+
+         if (m_strOrigin.has_char())
+         {
+
+            inheader("Origin") = m_strOrigin;
+
+         }
+
+
+         /*      if (GetUrlPort() != 80 && GetUrlPort() != 443)
+         inheader(__id(host)) = GetUrlHost() + ":" + ::str::from(GetUrlPort());
+         else
+         inheader(__id(host)) = GetUrlHost();*/
+
+         m_bExpectResponse = true;
+         m_bExpectRequest = false;
+         m_bRequestSent = true;
+         SendRequest();
       }
-      //inheader("Content-Length") = 0;
-      inheader("Upgrade") = "websocket";
-      inheader("Connection") = "Upgrade";
-
-      memory m;
-
-      m.random_bytes(16);
-
-      m_strBase64 = System.base64().encode(m);
-
-      int iLen;
-
-      iLen = (int)(m_strBase64.get_length());
-
-      inheader("Sec-WebSocket-Key") = m_strBase64;
-      if (m_strWebSocketProtocol.has_char())
-      {
-         inheader("Sec-WebSocket-Protocol") = m_strWebSocketProtocol;
-
-      }
-      inheader("Sec-WebSocket-Version") = "13";
-
-      if (m_strOrigin.has_char())
-      {
-
-         inheader("Origin") = m_strOrigin;
-
-      }
-
-
-      /*      if (GetUrlPort() != 80 && GetUrlPort() != 443)
-      inheader(__id(host)) = GetUrlHost() + ":" + ::str::from(GetUrlPort());
       else
-      inheader(__id(host)) = GetUrlHost();*/
+      {
+         //if (m_memPong.get_size() > 0 && (get_tick_count() - m_dwLastSpontaneousPong) > 10000)
+         //{
+         // 
+         //   write(m_memPong.get_data(), m_memPong.get_size());
 
-      m_bExpectResponse = true;
-      m_bExpectRequest = false;
-      m_bRequestSent = true;
-      SendRequest();
+         //   m_memPong.allocate(2);
+
+         //   m_memPong.get_data()[1] = 0;
+
+         //   m_dwLastSpontaneousPong = get_tick_count();
+
+         //}
+
+
+      }
    }
 
    void websocket_client::OnLine(const string & line)
@@ -691,7 +719,7 @@ namespace sockets
    }
 
 
-   void websocket_client::send_json(var varJson)
+   bool websocket_client::send_json(var varJson)
    {
 
       string strJson;
@@ -700,21 +728,25 @@ namespace sockets
 
       memory m;
 
-      client_send_text_masked(m, strJson);
+      client_send_text(m, strJson, true);
 
       write(m.get_data(), m.get_size());
+
+      return !Lost();
 
    }
 
 
-   void websocket_client::send_memory(memory & memory)
+   bool websocket_client::send_memory(memory & memory)
    {
 
       ::memory m;
 
-      client_send(m, memory);
+      client_send_binary(m, memory);
 
       write(m.get_data(), m.get_size());
+
+      return !Lost();
 
    }
 
@@ -945,7 +977,8 @@ namespace sockets
                   for (memory_size_t i = 0; i < m_iN; i++)
                   {
 
-                     data[m_i + m_header_size] ^= m_maskingkey[m_i & 0x3];
+                     //data[m_i + m_header_size] ^= m_maskingkey[m_i & 0x3];
+                     data[m_i + i+ m_header_size] ^= m_maskingkey[(m_i + i) & 0x3];
 
                   }
 
@@ -953,11 +986,11 @@ namespace sockets
 
                memory m1(&data[m_header_size], m_iN);
 
-               memory m;
+               m_memPong.allocate(0);
 
-               client_send(m, e_opcode::PONG, m1, m_bUseMask);
+               client_send(m_memPong, e_opcode::PONG, m1, true);
 
-               write(m.get_data(), m.get_size());
+               write(m_memPong.get_data(), m_memPong.get_size());
 
             }
             else if (m_opcode == e_opcode::PONG)

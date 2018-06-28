@@ -29,7 +29,9 @@ namespace sockets
       bool        m_bUseMask;
       DWORD       m_dwLastPing;
       DWORD       m_dwLastPong;
+      DWORD       m_dwLastSpontaneousPong;
       e_ping      m_eping;
+      memory      m_memPong;
 
       int         m_iClientPingTimeout;
 
@@ -65,8 +67,8 @@ namespace sockets
 
       virtual void write(const void *buf, memory_size_t c) override;
 
-      virtual void send_json(var varJson);
-      virtual void send_memory(memory & memory);
+      virtual bool send_json(var varJson);
+      virtual bool send_memory(memory & memory);
 
       virtual void OnRawData(char *buf, size_t len) override;
 

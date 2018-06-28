@@ -101,7 +101,7 @@ namespace sockets
       size_t GetDataLength() const;
 
       /** close socket when response received. */
-      void SetCloseOnComplete(bool = true);
+      virtual void SetCloseOnComplete(bool = true);
 
       /** get protocol used from url. */
       const string & GetUrlProtocol();

@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
       /** \defgroup async Asynchronous DNS */
       /** Async DNS resolver thread. 
       \ingroup async */
-      class resolv_server : 
+      class CLASS_DECL_AURA resolv_server :
          public go_thread
       {
       public:

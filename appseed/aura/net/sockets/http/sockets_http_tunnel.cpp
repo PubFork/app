@@ -188,7 +188,10 @@ namespace sockets
    bool http_tunnel::open(bool bConfigProxy)
    {
 
-      if (bConfigProxy)
+      if (m_strProxy.has_char() && m_iProxyPort > 0 && !m_bDirect)
+      {
+      }
+      else if (bConfigProxy)
       {
 
          System.http().config_proxy(get_url(), this);
