@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 namespace plugin
@@ -6,11 +6,11 @@ namespace plugin
 
 
    system::system(::aura::application * papp, ::app_core * pappcore) :
-      object(papp),
-      ::aura::system(papp, pappcore),
-      ::axis::system(papp, pappcore),
-      ::base::system(papp, pappcore),
-      ::core::system(papp, pappcore)
+      object(papp == NULL ? this : papp),
+      ::aura::system(papp == NULL ? this : papp, pappcore),
+      ::axis::system(papp == NULL ? this : papp, pappcore),
+      ::base::system(papp == NULL ? this : papp, pappcore),
+      ::core::system(papp == NULL ? this : papp, pappcore)
    {
 
    }

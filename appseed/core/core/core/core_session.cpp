@@ -29,29 +29,16 @@ namespace core
 
       m_pdocs = create_session_docs();
 
-      m_paurasystem                       = papp->m_paurasystem;
-
-      m_paxissystem                       = papp->m_paxissystem;
-
-      m_pbasesystem                       = papp->m_pbasesystem;
-
-      m_paurasystem->m_pcoresession       = this;
-
-      m_paxissession                      = this;
-
-      m_pbasesession                      = this;
-
       m_pcoresession                      = this;
-
-      m_pauraapp                          = this;
-
-      m_paxisapp                          = this;
-
-      m_pbaseapp                          = this;
-
-      m_pcoreapp                          = this;
-
-      m_pcoresession                      = this;
+      
+      if(papp->is_system())
+      {
+         
+         m_pcoresystem = dynamic_cast< ::core::system * >(papp);
+         
+      }
+      
+      m_pcoresystem->m_pcoresession       = this;
 
       m_bLicense				               = false;
 

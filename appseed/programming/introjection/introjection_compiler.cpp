@@ -529,8 +529,10 @@ namespace introjection
       string strSrcName = ::file::path(strCmd).title();
       strTargetPath =  System.dir().module() / "lib" + strSrcName;
       string strDsymPath = (System.dir().module().folder(3)) /  "lib" + strSrcName;
-      string strDdPath = System.dir().module().folder(6);
+      string strDdPath = System.dir().module().folder(7);
+      string strBuildFolderPath = System.dir().module().folder(5);
       string strSrcFolder = ::file::path(strCmd).folder();
+      string strFramework = m_strFramework;
       strClog = strCmd + "-osxc.txt";
       strLlog = strCmd + "-osxl.txt";
       strLCmd = strCmd + "-osxl";
@@ -544,6 +546,8 @@ namespace introjection
          str2.replace("%TARGET_PATH%", strTargetPath);
          str2.replace("%DSYM_PATH%", strDsymPath);
          str2.replace("%DERIVED_DATA%", strDdPath);
+         str2.replace("%FRAMEWORK%", strFramework);
+         str2.replace("%BUILD_FOLDER%", strBuildFolderPath);
          str2.replace("%SRC_FOLDER%", strSrcFolder);
          str2.replace("%SRC_NAME%", strSrcName);
          Application.file().put_contents(strLfl + "2.LinkFileList", str2);
@@ -975,6 +979,8 @@ namespace introjection
          str2.replace("%TARGET_PATH%", strTargetPath);
          str2.replace("%DSYM_PATH%", strDsymPath);
          str2.replace("%DERIVED_DATA%", strDdPath);
+         str2.replace("%FRAMEWORK%", strFramework);
+         str2.replace("%BUILD_FOLDER%", strBuildFolderPath);
          str2.replace("%SRC_FOLDER%", strSrcFolder);
          str2.replace("%SRC_NAME%", strSrcName);
          Application.file().put_contents(strCmd + "2", str2);
@@ -1144,6 +1150,8 @@ namespace introjection
             str2.replace("%TARGET_PATH%", strTargetPath);
             str2.replace("%DSYM_PATH%", strDsymPath);
             str2.replace("%DERIVED_DATA%", strDdPath);
+            str2.replace("%FRAMEWORK%", strFramework);
+            str2.replace("%BUILD_FOLDER%", strBuildFolderPath);
             str2.replace("%SRC_FOLDER%", strSrcFolder);
             str2.replace("%SRC_NAME%", strSrcName);
             Application.file().put_contents(strLCmd + "2", str2);
@@ -1156,6 +1164,8 @@ namespace introjection
                str2.replace("%TARGET_PATH%", strTargetPath);
                str2.replace("%DSYM_PATH%", strDsymPath);
                str2.replace("%DERIVED_DATA%", strDdPath);
+               str2.replace("%FRAMEWORK%", strFramework);
+               str2.replace("%BUILD_FOLDER%", strBuildFolderPath);
                str2.replace("%SRC_FOLDER%", strSrcFolder);
                str2.replace("%SRC_NAME%", strSrcName);
                Application.file().put_contents(strDCmd + "2", str2);

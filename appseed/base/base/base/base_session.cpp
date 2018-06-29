@@ -14,6 +14,13 @@ namespace base
    {
 
       m_pbasesession = this;
+      
+      if(papp->is_system())
+      {
+         
+         m_pbasesystem = dynamic_cast< ::base::system * > (papp);
+         
+      }
 
       m_bMatterFromHttpCache = m_pbasesystem->m_bMatterFromHttpCache;
 

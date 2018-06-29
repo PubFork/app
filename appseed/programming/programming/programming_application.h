@@ -11,8 +11,7 @@ namespace programming
    public:
 
 
-      semaphore                                 m_semCompiler;
-
+      semaphore                     m_semCompiler;
       //      script_manager *                            m_pmanager;
 
 

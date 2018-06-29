@@ -39,6 +39,7 @@ namespace introjection
       string                                    m_strDynamicSourceConfiguration;
       ::file::path                              m_strDynamicSourceStage;
       ::file::path                              m_strDynamicSourceStageFolder;
+      string                                    m_strFramework;
 
       string                                    m_strApp;
 

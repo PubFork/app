@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 //#include "core/user/user/user.h"
 ////#include "axis/net/net_sockets.h"
 //#include "charguess.h"
@@ -27,10 +27,10 @@ namespace core
 
 
    system::system(::aura::application * papp, app_core * pappcore):
-      ::object(papp),
-      ::aura::system(papp, pappcore),
-      ::axis::system(papp, pappcore),
-      ::base::system(papp, pappcore),
+   ::object(papp == NULL ? this : papp),
+      ::aura::system(papp == NULL ? this : papp, pappcore),
+      ::axis::system(papp == NULL ? this : papp, pappcore),
+      ::base::system(papp == NULL ? this : papp, pappcore),
       m_mutexDelete(this),
       m_mutex(this)
    {
@@ -666,7 +666,7 @@ namespace core
    ::http::system & system::http()
    {
 
-      return m_httpsystem;
+      return *m_sphttpsystem;
 
    }
 

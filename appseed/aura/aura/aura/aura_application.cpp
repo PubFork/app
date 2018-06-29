@@ -95,6 +95,13 @@ namespace aura
       m_mutexMatterLocator(this),
       m_mutexStr(this)
    {
+      
+      if(m_pauraapp == NULL)
+      {
+         
+         m_pauraapp = this;
+         
+      }
 
       m_strBuild = "installed";
       m_strLocale = "_std";
