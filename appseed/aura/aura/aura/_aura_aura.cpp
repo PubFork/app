@@ -61,7 +61,6 @@
 #include "aura_new.cpp"
 #include "aura_os.cpp"
 #include "aura_plex.cpp"
-#include "aura_plex_heap.cpp"
 #include "aura_printer.cpp"
 #include "aura_printf.cpp"
 #include "aura_profiler.cpp"
