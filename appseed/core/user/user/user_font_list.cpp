@@ -19,6 +19,7 @@ namespace user
 
    font_list::font_list(::aura::application * papp) :
       object(papp),
+   ::user::combo_list(papp),
       ::user::interaction(papp)
    {
 

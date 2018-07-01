@@ -67,6 +67,9 @@ namespace user
       button();
       button(::aura::application * papp);
       virtual ~button();
+      
+      
+      void user_button_construct();
 
       virtual bool create_control(class control_descriptor * pdescriptor) override;
 

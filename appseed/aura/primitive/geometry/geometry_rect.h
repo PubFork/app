@@ -659,8 +659,8 @@ rectd(pointd ptTopLeft, pointd ptBottomRight) NOTHROW : rectd(ptTopLeft.x, ptTop
    void CenterOf(LPCRECTD lpcrect,SIZED size);
    void DeflateBottomRightSizeByRate(double dRate);
    void SetBottomRightSize(double iWidth, double iHeight);
-   inline pointd top_right() const;
-   inline pointd bottom_left() const;
+   pointd top_right() const;
+   pointd bottom_left() const;
 
    void SubtractRectMajor(LPCRECTD lpcrectMajor, LPCRECTD lpcrectMinor);
    void SubtractRectMinor(LPCRECTD lpcrectMajor, LPCRECTD lpcrectMinor);

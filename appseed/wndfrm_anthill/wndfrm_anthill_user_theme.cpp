@@ -178,7 +178,7 @@ namespace wndfrm_anthill
 
                   pgraphics->draw_path(path);
 
-                  if (iTab == ptab->m_iHover && ptab->m_eelementHover != ::user::element_close_tab_button && ptab->m_eelementHover < ::user::element_split || ptab->m_eelementHover >(::user::element_split + 100))
+                  if (iTab == ptab->m_iHover && ptab->m_eelementHover != ::user::element_close_tab_button && (ptab->m_eelementHover < ::user::element_split || ptab->m_eelementHover >(::user::element_split + 100)))
                   {
 
                      pgraphics->set_font(ptab->_001GetFont(::user::font_tab_sel_hover));
@@ -207,7 +207,7 @@ namespace wndfrm_anthill
 
                   path->end_figure(true);
 
-                  if(iTab == ptab->m_iHover && ptab->m_eelementHover != ::user::element_close_tab_button && ptab->m_eelementHover < ::user::element_split || ptab->m_eelementHover >(::user::element_split + 100))
+                  if(iTab == ptab->m_iHover && ptab->m_eelementHover != ::user::element_close_tab_button && (ptab->m_eelementHover < ::user::element_split || ptab->m_eelementHover >(::user::element_split + 100)))
                   {
 
                      pane.m_brushFillHover->CreateLinearGradientBrush(rectBorder.top_left(),rectBorder.bottom_left(),ARGB(230,215,215,210),ARGB(250,235,235,230));
@@ -313,7 +313,7 @@ namespace wndfrm_anthill
 
                   pgraphics->draw_path(path);
 
-                  if (iTab == ptab->m_iHover && ptab->m_eelementHover != ::user::element_close_tab_button && ptab->m_eelementHover < ::user::element_split || ptab->m_eelementHover >(::user::element_split + 100))
+                  if (iTab == ptab->m_iHover && ptab->m_eelementHover != ::user::element_close_tab_button &&( ptab->m_eelementHover < ::user::element_split || ptab->m_eelementHover >(::user::element_split + 100)))
                   {
 
                      pgraphics->set_font(ptab->_001GetFont(::user::font_tab_sel_hover));

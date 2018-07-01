@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 //#include "axis/net/net_sockets.h"
 //#include "db_str_set.h"
 #include "aura/net/sockets/bsd/basic/sockets_socket_handler.h"

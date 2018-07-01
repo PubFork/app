@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 #define DBLCLKMS 500
@@ -7214,37 +7214,37 @@ namespace user
       mesh::_001OnClip(pgraphics);
 
       return;
-      if (m_bHeaderCtrl && m_plistheader != NULL)
-      {
-
-         try
-         {
-
-            rect rectClient;
-
-            GetClientRect(rectClient);
-
-            rect rectClientHeader;
-
-            m_plistheader->GetClientRect(rectClientHeader);
-
-            m_plistheader->ClientToScreen(rectClientHeader);
-
-            ScreenToClient(rectClientHeader);
-
-            rectClient.top = rectClientHeader.bottom;
-
-            pgraphics->IntersectClipRect(rectClient);
-
-         }
-         catch (...)
-         {
-
-            TRACE("Exception : ::list::_001OnClip");
-
-         }
-
-      }
+//      if (m_bHeaderCtrl && m_plistheader != NULL)
+//      {
+//
+//         try
+//         {
+//
+//            rect rectClient;
+//
+//            GetClientRect(rectClient);
+//
+//            rect rectClientHeader;
+//
+//            m_plistheader->GetClientRect(rectClientHeader);
+//
+//            m_plistheader->ClientToScreen(rectClientHeader);
+//
+//            ScreenToClient(rectClientHeader);
+//
+//            rectClient.top = rectClientHeader.bottom;
+//
+//            pgraphics->IntersectClipRect(rectClient);
+//
+//         }
+//         catch (...)
+//         {
+//
+//            TRACE("Exception : ::list::_001OnClip");
+//
+//         }
+//
+//      }
 
    }
 

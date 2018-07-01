@@ -161,7 +161,9 @@ namespace core
 
 
 CLASS_DECL_CORE int get_core_init();
+extern "C"
 CLASS_DECL_CORE int_bool defer_core_init();
+extern "C"
 CLASS_DECL_CORE int_bool defer_core_term();
 
 

@@ -23,7 +23,9 @@
 
 
 CLASS_DECL_BASE int get_base_init();
+extern "C"
 CLASS_DECL_BASE int_bool defer_base_init();
+extern "C"
 CLASS_DECL_BASE int_bool defer_base_term();
 
 

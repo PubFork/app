@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 class cregexp;
 
@@ -253,16 +253,16 @@ namespace user
       virtual void install_message_routing(::message::sender * pinterface) override;
 
       //mesh_data * GetDataInterface();
-      void UpdateHover();
+      void UpdateHover() override;
       //::draw2d::font * _001GetFont();
       //::draw2d::font * _001GetFontHover();
       //::draw2d::pen * _001GetPenFocused();
       //::draw2d::pen * _001GetPenHighlight();
       virtual void PreSubClassWindow() override;
       virtual void _OnDraw(::draw2d::graphics * pgraphics) override;
-      void _001MaximizeColumnWidth(index iColumn);
-      int32_t _001CalcItemWidth(index iItem, index iSubItem);
-      int32_t _001CalcColumnWidth(index iColumn);
+      void _001MaximizeColumnWidth(index iColumn) override;
+      int32_t _001CalcItemWidth(index iItem, index iSubItem) override;
+      int32_t _001CalcColumnWidth(index iColumn) override;
       int32_t _001CalcListWidth();
       virtual void _001OnSort() override;
 

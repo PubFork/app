@@ -376,8 +376,6 @@ namespace user
    string keyboard::process_key(key * pkey)
    {
 
-      int iScan = pkey->m_iCode;
-
       if(m_playout == NULL)
       {
 

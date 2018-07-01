@@ -1,21 +1,33 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 namespace user
 {
 
 
-   combo_list::combo_list() :
-      combo_list(get_app())
+   combo_list::combo_list()
    {
 
+      defer_create_mutex();
+      
+      m_bComboList = true;
+      
+      m_puiDeactivateTogether = NULL;
+      
+      m_puiDeactivateTogetherSet = NULL;
+      
+      m_pcombo = NULL;
+      
+      m_iHover = -1;
+      
+      m_iBorder = 6;
+      
    }
 
 
    combo_list::combo_list(::aura::application * papp) :
       object(papp)
    {
-
 
       defer_create_mutex();
 
@@ -30,8 +42,6 @@ namespace user
       m_iHover = -1;
 
       m_iBorder = 6;
-
-//      m_spfont->create_point_font("Arial", 10.0);
 
    }
 
@@ -437,7 +447,7 @@ namespace user
    void combo_list::_001OnSetFocus(::message::message * pobj)
    {
 
-      SCAST_PTR(::message::set_focus, psetfocus, pobj);
+//      SCAST_PTR(::message::set_focus, psetfocus, pobj);
 
       //psetfocus->m_bRet = true;
 

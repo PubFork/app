@@ -24,7 +24,14 @@ void * __node_library_touch(const char * pszPath, string & strMessage)
          goto found;
          
       }
-      
+
+      if(::file::path(image_name).title().compare_ci(("lib" + ::file::path(pszPath).title())) == 0)
+      {
+         
+         goto found;
+         
+      }
+
    }
    
    return NULL;

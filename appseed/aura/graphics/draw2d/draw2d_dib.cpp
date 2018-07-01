@@ -372,14 +372,14 @@ namespace draw2d
 
          m_pathCache.Empty();
 
-         fork([=]()
+         sp(dib) pthis = this;
+         
+         fork([pthis, pathDib]()
          {
+            
+            sp(dib) pdib = pthis;
 
-            sp(dib) pthis = this;
-
-            pthis->threadrefa_remove(::get_thread());
-
-            pthis->save_to_dib(pathDib);
+            pdib->save_to_dib(pathDib);
 
          });
 

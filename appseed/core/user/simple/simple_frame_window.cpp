@@ -3451,11 +3451,10 @@ string simple_frame_window::notification_area_extra_get_xml_menu()
 void simple_frame_window::_001OnDwm(::message::message * pobj)
 {
 
-   SCAST_PTR(::message::base, pbase, pobj);
-    
-    
 #ifdef WINDOWSEX
 
+   SCAST_PTR(::message::base, pbase, pobj);
+   
    WPARAM wparam;
    LPARAM lparam;
 
@@ -3499,10 +3498,10 @@ void simple_frame_window::_001OnDwm(::message::message * pobj)
 void simple_frame_window::_001OnNcCalcSize(::message::message * pmessage)
 {
 
-   SCAST_PTR(::message::nc_calc_size, pcalcsize, pmessage);
-
-
 #ifdef WINDOWSEX
+
+   SCAST_PTR(::message::nc_calc_size, pcalcsize, pmessage);
+   
    BOOL bCalcValidRects = pcalcsize->GetCalcValidRects();
    NCCALCSIZE_PARAMS* lpncsp = pcalcsize->m_pparams;
 

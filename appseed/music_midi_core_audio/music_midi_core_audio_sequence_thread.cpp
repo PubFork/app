@@ -69,7 +69,7 @@ namespace music
       bool sequence_thread::PostMidiSequenceEvent(::music::midi::sequence * pseq, ::music::midi::sequence::e_event eevent, LPMIDIHDR lpmh)
       {
          
-         return post_object(::music::midi::sequence::message_event,  (WPARAM) pseq, pseq->create_new_event(eevent, lpmh));
+         return post_object(::music::midi::sequence::message_event,  (WPARAM) pseq, pseq->create_new_event(eevent));
          
       }
       

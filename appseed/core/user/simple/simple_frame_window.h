@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #define WM_APPEXIT WM_APP + 1444
 
@@ -313,7 +313,7 @@ public:
 
    virtual string notification_area_extra_get_xml_menu();
 
-   virtual void nextstyle(::user::style_context * pcontext);
+   virtual void nextstyle(::user::style_context * pcontext) override;
 
 };
 

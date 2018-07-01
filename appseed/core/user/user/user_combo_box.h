@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 namespace user
@@ -56,11 +56,11 @@ namespace user
       virtual ~combo_box();
 
 
-      virtual void install_message_routing(::message::sender * psender);
+      virtual void install_message_routing(::message::sender * psender) override;
 
 
-      virtual void _000OnDraw(::draw2d::graphics * pgraphics);
-      virtual void _001OnDraw(::draw2d::graphics * pgraphics);
+      virtual void _000OnDraw(::draw2d::graphics * pgraphics) override;
+      virtual void _001OnDraw(::draw2d::graphics * pgraphics) override;
       //virtual void _001OnDrawVerisimple(::draw2d::graphics * pgraphics);
       virtual void _001OnDrawCombo(::draw2d::graphics * pgraphics);
       virtual void _001OnDrawStaticText(::draw2d::graphics * pgraphics);
@@ -71,15 +71,15 @@ namespace user
 
       virtual void _001SetCurSelByData(uint_ptr ui, ::action::context actioncontext);
 
-      virtual void _001GetText(string & str) const;
-      virtual void _001SetText(const string & str, ::action::context actioncontext);
+      virtual void _001GetText(string & str) const override;
+      virtual void _001SetText(const string & str, ::action::context actioncontext) override;
 
 
       virtual bool _001GetListText(index iSel, string & str) const;
       virtual index _001FindListText(const string & str) const;
       virtual count _001GetListCount() const;
 
-      virtual bool create_control(class control_descriptor * pdescriptor);
+      virtual bool create_control(class control_descriptor * pdescriptor) override;
 
       virtual bool get_element_rect(LPRECT lprect, e_element eelement);
       virtual e_element hit_test(point pt);
@@ -104,17 +104,17 @@ namespace user
 
       virtual void defer_create_combo_list();
 
-      virtual bool has_action_hover();
-      virtual bool has_text_input();
+      virtual bool has_action_hover() override;
+      virtual bool has_text_input() override;
       virtual bool is_drop_down();
 
 
 
-      virtual void on_layout();
+      virtual void on_layout() override;
 
-      virtual void _001OnAfterChangeText(::action::context actioncontext);
+      virtual void _001OnAfterChangeText(::action::context actioncontext) override;
 
-      virtual void _001OnInitialUpdate();
+      virtual void _001OnInitialUpdate() override;
 
 
 
@@ -188,7 +188,7 @@ namespace user
       virtual void DeleteItem(LPDELETEITEMSTRUCT lpDeleteItemStruct);
 #endif
 
-      virtual bool OnChildNotify(::message::base * pbase);
+      virtual bool OnChildNotify(::message::base * pbase) override;
 
 
       virtual void _001SetCurSelByStringValue(const string & strValue,::action::context eaction_source);
@@ -197,7 +197,7 @@ namespace user
       virtual string _001GetCurSelStringValue();
 
 
-      virtual COLORREF get_action_hover_border_color();
+      virtual COLORREF get_action_hover_border_color() override;
 
 
       //virtual void _001OnDraw(::draw2d::graphics * pgraphics);
@@ -211,7 +211,7 @@ namespace user
       virtual index AddString(const char * lpszString,const string & strValue);
 
 
-      virtual bool keyboard_focus_is_focusable();
+      virtual bool keyboard_focus_is_focusable() override;
 
 
       virtual void on_control_event(::user::control_event * pevent) override;

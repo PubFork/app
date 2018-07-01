@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 //#include "base/user/user.h"
 
 
@@ -360,12 +360,6 @@ namespace hotplugin
 
          if(get_tick_count() - m_dwEntryHallTextStart > ((1984 + 1951 + 1977) / 3))
          {
-
-            ::rect rect = m_rect;
-
-//            POINT pt;
-
-            //::SetViewportOrgEx(hdc, rect.left, rect.top, &pt);
 
             ::hotplugin::entry_hall_windows_on_paint(pgraphics,m_rect,m_strEntryHallText);
 

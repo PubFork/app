@@ -218,14 +218,6 @@ namespace user
 
       get_element_rect(rectDropDown, element_drop_down);
 
-      int32_t iMargin = rectClient.height() / 8;
-
-      rect r = rectDropDown;
-
-      int32_t i = 0;
-
-      int32_t iColorRate = 6;
-
       rect rectDropIn(rectDropDown);
 
       br->create_solid(ARGB(210, 230, 230, 230));

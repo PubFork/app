@@ -1445,7 +1445,7 @@ namespace macos
     //}
     
     
-   ::file::path dir::get_home_folder()
+   ::file::path dir::home()
    {
       
       return ::dir::home();
@@ -1453,7 +1453,7 @@ namespace macos
    }
    
    
-   ::file::path dir::get_desktop_folder()
+   ::file::path dir::desktop()
    {
       
       return ::str::from_strdup(ns_user_local_desktop_folder());
@@ -1462,7 +1462,7 @@ namespace macos
    }
    
    
-   ::file::path dir::get_document_folder()
+   ::file::path dir::document()
    {
       
       return ::str::from_strdup(ns_user_local_documents_folder());
@@ -1470,7 +1470,7 @@ namespace macos
       
    }
    
-   ::file::path dir::get_download_folder()
+   ::file::path dir::download()
    {
       
       return ::str::from_strdup(ns_user_local_downloads_folder());
@@ -1478,7 +1478,7 @@ namespace macos
    }
    
 
-   ::file::path dir::get_music_folder()
+   ::file::path dir::music()
    {
    
       return ::str::from_strdup(ns_user_local_music_folder());
@@ -1486,7 +1486,7 @@ namespace macos
    }
    
    
-   ::file::path dir::get_video_folder()
+   ::file::path dir::video()
    {
       
       return ::str::from_strdup(ns_user_local_video_folder());
@@ -1494,7 +1494,7 @@ namespace macos
    }
    
    
-   ::file::path dir::get_image_folder()
+   ::file::path dir::image()
    {
       
       return ::str::from_strdup(ns_user_local_image_folder());

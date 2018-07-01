@@ -3662,14 +3662,26 @@ namespace draw2d_quartz2d
       ::draw2d::matrix m;
       
       copy(m, affine);
+
+      ::draw2d::matrix m1;
       
+      copy(m1, affine);
+
       m.invert();
       
-      m.append(matrix);
+      CGAffineTransform affine3;
       
-      copy(affine, m);
+      copy(affine3, m);
+
+      CGContextConcatCTM(m_pdc, affine3);
+
+      CGAffineTransform affine2 = CGContextGetCTM(m_pdc);
+
+      CGAffineTransform affine4;
+
+      copy(affine4, matrix);
       
-      CGContextConcatCTM(m_pdc, affine);
+      CGContextConcatCTM(m_pdc, affine4);
       
       return true;
 
@@ -4266,6 +4278,14 @@ namespace draw2d_quartz2d
    int32_t graphics::SelectClipRgn(::draw2d::region* pRgn, int32_t nMode)
    {
 
+      if(nMode == RGN_AND)
+      {
+         
+         add_path(pRgn);
+         CGContextClip(m_pdc);
+         
+      }
+      
 //      _throw(not_implemented(get_app()));
       return 0;
 

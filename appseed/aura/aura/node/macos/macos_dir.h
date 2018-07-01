@@ -29,42 +29,42 @@ namespace macos
        
        
        // rls fetchs should set a meaningful m_iRelative value at each returned path
-       virtual ::file::listing & ls(::aura::application * papp, ::file::listing & path);
+       virtual ::file::listing & ls(::aura::application * papp, ::file::listing & path) override;
        
        
-       virtual bool  is(const ::file::path & path, ::aura::application * papp);
-       virtual bool  is_inside(const ::file::path & pathFolder,const ::file::path & path,::aura::application * papp);
-       virtual bool  is_inside_time(const ::file::path & path,::aura::application * papp);
-       virtual bool  name_is(const ::file::path & path,::aura::application * papp);
-       virtual bool  has_subdir(::aura::application * papp, const ::file::path & path);
+       virtual bool  is(const ::file::path & path, ::aura::application * papp) override;
+       virtual bool  is_inside(const ::file::path & pathFolder,const ::file::path & path,::aura::application * papp) override;
+       virtual bool  is_inside_time(const ::file::path & path,::aura::application * papp) override;
+       virtual bool  name_is(const ::file::path & path,::aura::application * papp) override;
+       virtual bool  has_subdir(::aura::application * papp, const ::file::path & path) override;
        
-       virtual ::file::listing & root_ones(::file::listing & listing,::aura::application * papp);
-       virtual bool mk(const ::file::path & path,::aura::application * papp);
-       virtual bool rm(::aura::application * papp, const ::file::path & path, bool bRecursive = true);
+       virtual ::file::listing & root_ones(::file::listing & listing,::aura::application * papp) override;
+       virtual bool mk(const ::file::path & path,::aura::application * papp) override;
+       virtual bool rm(::aura::application * papp, const ::file::path & path, bool bRecursive = true) override;
        
        
        virtual ::file::path name(const ::file::path & path);
        
-       virtual ::file::path time();
-       virtual ::file::path stage();
-       virtual ::file::path stageapp();
-       virtual ::file::path netseed();
-       virtual ::file::path install();
+       virtual ::file::path time() override;
+       virtual ::file::path stage() override;
+       virtual ::file::path stageapp() override;
+       virtual ::file::path netseed() override;
+       virtual ::file::path install() override;
 //       virtual ::file::path profile();
        
-       virtual ::file::path module();
-       virtual ::file::path ca2module();
+       virtual ::file::path module() override;
+       virtual ::file::path ca2module() override;
        virtual ::file::path time_square(::aura::application * papp, const string & strPrefix = cnull, const string & strSuffix = cnull);
        virtual ::file::path time_log();
        
        
-       virtual ::file::path trash_that_is_not_trash(const ::file::path & path);
+       virtual ::file::path trash_that_is_not_trash(const ::file::path & path) override;
        
        
        
-       virtual ::file::path appdata();
-       virtual ::file::path commonappdata_root();
-       virtual ::file::path commonappdata();
+       virtual ::file::path appdata() override;
+       virtual ::file::path commonappdata_root() override;
+       virtual ::file::path commonappdata() override;
        
 //       virtual ::file::path usersystemappdata(::aura::application * papp, const char * lpcszPrefix);
 //       virtual ::file::path userappdata(::aura::application * papp);
@@ -74,21 +74,21 @@ namespace macos
 //       virtual ::file::path default_userappdata(::aura::application * papp,const string & lpcszPrefix,const string & lpcszLogin );
 //       virtual ::file::path default_userdata(::aura::application * papp,const string & lpcszPrefix,const string & lpcszLogin);
 //       virtual ::file::path default_userfolder(::aura::application * papp,const string & lpcszPrefix,const string & lpcszLogin);
-       virtual ::file::path userquicklaunch(::aura::application * papp);
-       virtual ::file::path userprograms(::aura::application * papp);
+       virtual ::file::path userquicklaunch(::aura::application * papp) override;
+       virtual ::file::path userprograms(::aura::application * papp) override;
        
-       virtual ::file::path commonprograms();
+       virtual ::file::path commonprograms() override;
        
-       virtual bool initialize();
+       virtual bool initialize() override;
        
-      virtual ::file::path get_home_folder();
-      virtual ::file::path get_desktop_folder();
-      virtual ::file::path get_document_folder();
-      virtual ::file::path get_download_folder();
+      virtual ::file::path home() override;
+      virtual ::file::path desktop() override;
+      virtual ::file::path document() override;
+      virtual ::file::path download() override;
       
-      virtual ::file::path get_music_folder();
-      virtual ::file::path get_video_folder();
-      virtual ::file::path get_image_folder();
+      virtual ::file::path music() override;
+      virtual ::file::path video() override;
+      virtual ::file::path image() override;
       
       
    };

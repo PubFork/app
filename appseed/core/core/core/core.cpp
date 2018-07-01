@@ -205,7 +205,7 @@ bool core_init()
 
 }
 
-
+extern "C"
 int_bool defer_core_init()
 {
 
@@ -221,7 +221,7 @@ int_bool defer_core_init()
 
 }
 
-
+extern "C"
 CLASS_DECL_CORE int_bool defer_core_term()
 {
 

@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 #define WM_VIEW (WM_USER + 1023)
@@ -255,7 +255,8 @@ namespace user
    {
    public:
 
-      show()
+      show() :
+      show(get_app())
       {
 
       }

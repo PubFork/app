@@ -658,8 +658,6 @@ namespace html
 
             COLORREF cr;
 
-            double d;
-
             pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
             //if (m_pelemental->m_style.get_alpha("", pdata, m_pelemental, d))

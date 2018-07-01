@@ -1349,20 +1349,20 @@ namespace aura
 
       m_ecursor = ecursor;
       
-      if(ecursor == ::visual::cursor_size_bottom_right
-         || (ecursor == ::visual::cursor_default
-             && m_ecursorDefault == ::visual::cursor_size_bottom_right))
-      {
-         
-         output_debug_string("\nbottom_right_cursor   ");
-         
-      }
-      else 
-      {
-         
-         output_debug_string("\nNOT_bottom_right_cursor   ");
-      
-      }
+//      if(ecursor == ::visual::cursor_size_bottom_right
+//         || (ecursor == ::visual::cursor_default
+//             && m_ecursorDefault == ::visual::cursor_size_bottom_right))
+//      {
+//         
+//         output_debug_string("\nbottom_right_cursor   ");
+//         
+//      }
+//      else 
+//      {
+//         
+//         output_debug_string("\nNOT_bottom_right_cursor   ");
+//      
+//      }
 
       ::visual::cursor * pcursor = get_cursor();
 
