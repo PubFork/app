@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 namespace process
@@ -29,7 +29,7 @@ namespace process
       virtual bool write(const char * psz);
       virtual string read(bool bUntilExit = false);
 
-      virtual void synch_elevated(const char * pszCmdLine,int iShow,const ::duration & durationTimeOut,bool * pbTimeOut);
+      virtual bool synch_elevated(const char * pszCmdLine,int iShow,const ::duration & durationTimeOut,bool * pbTimeOut);
 
       virtual bool kill();
 

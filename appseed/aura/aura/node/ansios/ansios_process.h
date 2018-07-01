@@ -19,7 +19,7 @@ namespace ansios
 
       virtual bool has_exited() override;
 
-      virtual void synch_elevated(const char * pszCmdLine,int iShow,const ::duration & durationTimeOut,bool * pbTimeOut) override;
+      virtual bool synch_elevated(const char * pszCmdLine,int iShow,const ::duration & durationTimeOut,bool * pbTimeOut) override;
 
    };
 

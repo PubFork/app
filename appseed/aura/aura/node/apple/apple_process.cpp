@@ -375,15 +375,12 @@ namespace ansios
    }
 
 
-   void process::synch_elevated(const char * pszCmdLineParam,int iShow,const ::duration & durationTimeOut,bool * pbTimeOut)
+   bool process::synch_elevated(const char * pszCmdLineParam,int iShow,const ::duration & durationTimeOut,bool * pbTimeOut)
    {
-
       
 #if defined(MACOS)
       
       uid_t uid = getuid();
-
-//      string strFallback = ::ca2_module_folder_dup();
 
       string str(pszCmdLineParam);
 
@@ -446,8 +443,6 @@ namespace ansios
 
       string strFolder = strFallback;
 
-//      ::dir::eat_end_level(strFolder, 2, NULL);
-
       string strCurrent = getenv("DYLD_FALLBACK_LIBRARY_PATH");
 
       if(strCurrent == strFallback || ::str::ends(strCurrent, ":" + strFallback) || str::begins(strCurrent, strFallback + ":") || strCurrent.contains(":"+strFallback +":"))
@@ -482,7 +477,7 @@ namespace ansios
 
          TRACE("Error Creating Initial Authorization: %d", status);
 
-         return -1;
+         return false;
 
       }
 
@@ -496,14 +491,17 @@ namespace ansios
 
       // Call AuthorizationCopyRights to determine or extend the allowable rights.
       status = AuthorizationCopyRights(authorizationRef, &rights, NULL, flags, NULL);
+      
       if (status != errAuthorizationSuccess)
       {
+         
          TRACE("Copy Rights Unsuccessful: %d", status);
-         return -1;
+         
+         return false;
+         
       }
 
       TRACE("\n\n** %s **\n\n", "This command should work.");
-
 
 //      stringa straParam;
 //
@@ -533,12 +531,12 @@ namespace ansios
       
       stringa straParam;
       
-      straParam = get_c_args(pszCmdLineParam);
-      straParam.add("uid=" + ::str::from(uid));
+      straParam = get_c_args_for_c(pszCmdLineParam);
+      //straParam.add("uid=" + ::str::from(uid));
             for(index i = 0; i < straParam.get_count(); i++)
             {
-      
-               argv.add((char *)(const char *)straParam[i]);
+               char * psz = (char *)(const char *)straParam[i];
+               argv.add(psz);
       
             }
       
@@ -626,8 +624,11 @@ namespace ansios
       status = AuthorizationExecuteWithPrivileges(authorizationRef, tool, kAuthorizationFlagDefaults, args, &pipe);
       if (status != errAuthorizationSuccess)
       {
+         
          TRACE("AuthorizationExecuteWithPrivileges Error: %d", status);
-         return -1;
+         
+         return false;
+         
       }
 
       /*
@@ -656,34 +657,34 @@ namespace ansios
 //        int pptp_pid = 0;
 
          //       fscanf(pipe, "%d", &pptp_pid);
-         bool bNewLine = true;
-         index i = 0;
-         while(i < 1000)
-         {
-            char szBuffer[1000];
-            memset(szBuffer, 0, sizeof(szBuffer));
-            fgets(szBuffer, sizeof(szBuffer), pipe);
-            if(szBuffer[sizeof(szBuffer)-2] == '\n' || szBuffer[sizeof(szBuffer)-2] == '\0')
-            {
-               if(bNewLine)
-               {
-                  string strLine = szBuffer;
-                  if(::str::begins_eat_ci(strLine, "application_pid="))
-                  {
-                     m_iPid = atoi(strLine);
-                     break;
-                  }
-               }
-               else
-               {
-                  bNewLine = true;
-               }
-            }
-            else
-            {
-               bNewLine = false;
-            }
-            i++;
+//         bool bNewLine = true;
+//         index i = 0;
+//         while(i < 1000)
+//         {
+//            char szBuffer[1000];
+//            memset(szBuffer, 0, sizeof(szBuffer));
+//            fgets(szBuffer, sizeof(szBuffer), pipe);
+//            if(szBuffer[sizeof(szBuffer)-2] == '\n' || szBuffer[sizeof(szBuffer)-2] == '\0')
+//            {
+//               if(bNewLine)
+//               {
+//                  string strLine = szBuffer;
+//                  if(::str::begins_eat_ci(strLine, "application_pid="))
+//                  {
+//                     m_iPid = atoi(strLine);
+//                     break;
+//                  }
+//               }
+//               else
+//               {
+//                  bNewLine = true;
+//               }
+//            }
+//            else
+//            {
+//               bNewLine = false;
+//            }
+//            i++;
          }
 
 //         pid_t pptp_pid = 0;
@@ -699,23 +700,29 @@ namespace ansios
          char sz[1025];
 
          int iRead;
+      
+      int iCount0 = 100;
 
-         while(!has_exited() && get_tick_count() - dwStart < dwTimeOut)
+         while(!has_exited() && get_tick_count() - dwStart < dwTimeOut && iCount0 > 0)
          {
-//            memset(sz, 0, sizeof(sz));
-//               iRead = fread(sz,1,1024, pipe);
-//               if(iRead >0)
-//               {
-//                  ::output_debug_string(sz);
-//               }
-//               else if(ferror(pipe))
-//               {
-//                  TRACE("Error reading from file");
-//                  break;
-//               }
-//               else
-//               {
-//               }
+            memset(sz, 0, sizeof(sz));
+            iRead =(int) fread(sz,1,1024, pipe);
+               if(iRead >0)
+               {
+                 ::output_debug_string(sz);
+               }
+            else if(iRead <= 0)
+            {
+               iCount0--;
+            }
+               else if(ferror(pipe))
+               {
+                  TRACE("Error reading from file");
+                  break;
+               }
+               else
+               {
+               }
 
             Sleep(100);
          }
@@ -755,7 +762,7 @@ namespace ansios
                   TRACE0(strRead);*/
 
 
-      }
+      //}
 
       // The only way to guarantee that a credential acquired when you
       // request a right is not shared with other authorization instances is
@@ -770,7 +777,7 @@ namespace ansios
       }
 
       //return dwExitCode;
-      return;
+      return true;
       
 #else
 
