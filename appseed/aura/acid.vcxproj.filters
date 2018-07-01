@@ -3283,9 +3283,6 @@
     <ClCompile Include="aura\aura\aura_plex.cpp">
       <Filter>Source Files\aura\aura</Filter>
     </ClCompile>
-    <ClCompile Include="aura\aura\aura_plex_heap.cpp">
-      <Filter>Source Files\aura\aura</Filter>
-    </ClCompile>
     <ClCompile Include="aura\aura\aura_printf.cpp">
       <Filter>Source Files\aura\aura</Filter>
     </ClCompile>
@@ -4599,6 +4596,9 @@
     </ClCompile>
     <ClCompile Include="user\user\user_style_rect.cpp">
       <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_plex_heap1.cpp">
+      <Filter>Source Files\aura\aura</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -208,7 +208,7 @@ namespace windows
    }
 
 
-   void process::synch_elevated(const char * pszCmdLine,int iShow,const ::duration & durationTimeOut,bool * pbTimeOut)
+   bool process::synch_elevated(const char * pszCmdLine,int iShow,const ::duration & durationTimeOut,bool * pbTimeOut)
    {
 
       DWORD dwExitCode = 0;
@@ -241,7 +241,7 @@ namespace windows
       else
       {
 
-         return;
+         return false;
 
       }
 
@@ -282,6 +282,8 @@ namespace windows
          *pbTimeOut = bTimedOut;
 
       }
+
+      return !bTimedOut;
 
    }
 
