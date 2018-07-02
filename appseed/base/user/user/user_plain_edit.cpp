@@ -1,4 +1,5 @@
 #include "framework.h" // from "base/user/user.h"
+#include "aura/user/user/user_const.h"
 //#include "base/user/user.h"
 //include "aura/user/colorertake5/colorertake5.h"
 
@@ -743,11 +744,64 @@ namespace user
       pobj->previous();
    }
 
+
    void plain_edit::_001OnTimer(::timer * ptimer)
    {
+
       control::_001OnTimer(ptimer);
-      if (ptimer->m_nIDEvent >= 100
-            && ptimer->m_nIDEvent <= 200)
+
+      e_timer etimer = (e_timer) ptimer->m_nIDEvent;
+
+      if (etimer == timer_overflow_scrolling)
+      {
+
+         if (m_bLMouseDown)
+         {
+
+            point ptCursor;
+
+            Session.get_cursor_pos(&ptCursor);
+
+            ScreenToClient(ptCursor);
+
+            rect rectActiveClient;
+
+            GetActiveClientRect(rectActiveClient);
+
+            if (ptCursor.x < rectActiveClient.left)
+            {
+
+               scroll_left_line();
+
+            }
+            else if (ptCursor.x > rectActiveClient.right)
+            {
+
+               scroll_right_line();
+
+            }
+
+            if (ptCursor.y < rectActiveClient.top)
+            {
+
+               scroll_up_line();
+
+            }
+            else if (ptCursor.y > rectActiveClient.bottom)
+            {
+
+               scroll_down_line();
+
+            }
+
+
+
+         }
+
+
+      }
+      else if (ptimer->m_nIDEvent >= 100
+               && ptimer->m_nIDEvent <= 200)
       {
          if (this == Session.get_keyboard_focus())
          {
@@ -1391,6 +1445,8 @@ namespace user
 
          m_bLMouseDown = true;
 
+         SetTimer(timer_overflow_scrolling, 50, NULL);
+
          SetCapture();
 
          m_ptree->m_iSelBeg = char_hit_test(pt.x, pt.y);
@@ -1926,9 +1982,15 @@ namespace user
 
       pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
 
-      pgraphics->GetTextExtent(sizeUniText, unitext("gqYALﾍWMÍÎÄÃÄÅ"));
+      wstring wstr = "gqYALﾍWMÍÎÄÃÄÅ";
+
+      pgraphics->GetTextExtent(sizeUniText, wstr);
 
       m_iLineHeight = (int)sizeUniText.cy;
+
+      m_scrolldataVert.m_iLine = m_iLineHeight;
+
+      m_scrolldataHorz.m_iLine = sizeUniText.cx / wstr.get_length();
 
       if (m_iLineHeight <= 0)
       {

@@ -225,28 +225,39 @@ namespace user
          if (get_plain_text(str))
          {
 
-            pdib->create(1, 1);
+            var varFile;
 
-            auto pfont = Session._001GetFont(::user::font_default);
+            varFile["url"] = str;
+            varFile["http_set"]["raw_http"] = true;
+            varFile["http_set"]["disable_common_name_cert_check"] = true;
 
-            pdib->g()->selectFont(pfont);
-
-            sized s = pdib->g()->GetTextExtent(str);
-
-            if (s.area() > 0)
+            if (!System.imaging().load_from_file(pdib, varFile))
             {
 
-               pdib->create(ceil(s.cx), ceil(s.cy));
+               pdib->create(1, 1);
 
-               pdib->FillByte(0);
+               auto pfont = Session._001GetFont(::user::font_default);
 
                pdib->g()->selectFont(pfont);
 
-               pdib->g()->set_text_color(ARGB(255, 0, 0, 0));
+               sized s = pdib->g()->GetTextExtent(str);
 
-               pdib->g()->draw_text(str, rect(pdib->m_size), DT_LEFT | DT_BOTTOM);
+               if (s.area() > 0)
+               {
 
-               return true;
+                  pdib->create(ceil(s.cx), ceil(s.cy));
+
+                  pdib->FillByte(0);
+
+                  pdib->g()->selectFont(pfont);
+
+                  pdib->g()->set_text_color(ARGB(255, 0, 0, 0));
+
+                  pdib->g()->draw_text(str, rect(pdib->m_size), DT_LEFT | DT_BOTTOM);
+
+                  return true;
+
+               }
 
             }
 

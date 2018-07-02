@@ -9,12 +9,12 @@ __STATIC UINT __read_string_length(::file::byte_istream & ar)
    // attempt BYTE length first
    byte bLen;
    ar >> bLen;
-   
+
    if(ar.fail())
    {
-      
-      throw io_exception(ar.get_app());
-      
+
+      return 0;
+
    }
 
    if (bLen < 0xff)
@@ -50,7 +50,7 @@ namespace file
 
    // FindSignature.cpp
    // from 7-zip on 2012-12-23, lunch time
-   #include "framework.h"
+#include "framework.h"
 
    /*//#include "Common/Buffer.h"
 
@@ -419,7 +419,8 @@ namespace file
 
             uiPos += uiRead;
 
-         } while(uiRead > 0);
+         }
+         while(uiRead > 0);
 
          str = strbuffer.str();
 

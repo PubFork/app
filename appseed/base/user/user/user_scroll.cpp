@@ -1,5 +1,4 @@
-﻿#include "framework.h" // from "base/user/user.h"
-//#include "base/user/user.h"
+﻿#include "framework.h"
 
 
 namespace user
@@ -17,8 +16,11 @@ namespace user
 
    }
 
+
    scroll_x::~scroll_x()
    {
+
+
    }
 
 
@@ -34,7 +36,6 @@ namespace user
    //   *lprect = rectScroll;
 
    //}
-
 
 
    void scroll_x::layout_scroll_bar()
@@ -131,7 +132,42 @@ namespace user
 
          synch_lock slUser(m_pmutex);
 
-         set_viewport_offset_x(pscroll->m_nPos);
+         if (pscroll->m_nSBCode == SB_LINELEFT)
+         {
+
+            set_viewport_offset_x(get_viewport_offset().x - m_scrolldataHorz.m_iLine);
+
+         }
+         else if (pscroll->m_nSBCode == SB_PAGELEFT)
+         {
+
+            set_viewport_offset_x(get_viewport_offset().x - m_scrolldataHorz.m_iPage);
+
+         }
+         else if (pscroll->m_nSBCode == SB_PAGERIGHT)
+         {
+
+            set_viewport_offset_x(get_viewport_offset().x + m_scrolldataHorz.m_iPage);
+
+         }
+         else if (pscroll->m_nSBCode == SB_LINERIGHT)
+         {
+
+            set_viewport_offset_x(get_viewport_offset().x + m_scrolldataHorz.m_iLine);
+
+         }
+         else if (pscroll->m_nSBCode == SB_THUMBTRACK)
+         {
+
+            set_viewport_offset_x(pscroll->m_nPos);
+
+         }
+         else if (pscroll->m_nSBCode == SB_THUMBPOSITION)
+         {
+
+            set_viewport_offset_x(pscroll->m_nPos);
+
+         }
 
       }
 
@@ -150,6 +186,8 @@ namespace user
          m_pscrollbarHorz->m_scrollinfo.nPos = m_ptScrollPassword1.x;
 
       }
+
+      _001ConstrainXScrollPosition();
 
    }
 
@@ -986,14 +1024,42 @@ namespace user
       SCAST_PTR(::message::scroll, pscroll, pobj);
 
 
+      if (pscroll->m_nSBCode == SB_LINEUP)
       {
 
-         synch_lock slUser(m_pmutex);
+         set_viewport_offset_y(get_viewport_offset().y - m_scrolldataVert.m_iLine);
+
+      }
+      else if (pscroll->m_nSBCode == SB_PAGEUP)
+      {
+
+         set_viewport_offset_y(get_viewport_offset().y - m_scrolldataVert.m_iPage);
+
+      }
+      else if (pscroll->m_nSBCode == SB_PAGEDOWN)
+      {
+
+         set_viewport_offset_y(get_viewport_offset().y + m_scrolldataVert.m_iPage);
+
+      }
+      else if (pscroll->m_nSBCode == SB_LINEDOWN)
+      {
+
+         set_viewport_offset_y(get_viewport_offset().y + m_scrolldataVert.m_iLine);
+
+      }
+      else if (pscroll->m_nSBCode == SB_THUMBTRACK)
+      {
 
          set_viewport_offset_y(pscroll->m_nPos);
 
       }
+      else if (pscroll->m_nSBCode == SB_THUMBPOSITION)
+      {
 
+         set_viewport_offset_y(pscroll->m_nPos);
+
+      }
    }
 
 
@@ -1018,6 +1084,8 @@ namespace user
          m_pscrollbarVert->m_scrollinfo.nPos = m_ptScrollPassword1.y;
 
       }
+
+      _001ConstrainYScrollPosition();
 
    }
 
@@ -1226,6 +1294,7 @@ namespace user
    {
    }
 
+
    void scroll::install_message_routing(::message::sender * pinterface)
    {
       scroll_x::install_message_routing(pinterface);
@@ -1337,6 +1406,34 @@ namespace user
 
    }
 
+
+   void scroll_x::send_xscroll_message(int nSBCode)
+   {
+
+      sp(::message::scroll) pscroll = canew(::message::scroll(get_app()));
+
+      pscroll->m_nSBCode = nSBCode;
+
+      if (m_pscrollbarHorz.is_set())
+      {
+
+         pscroll->m_nPos = m_pscrollbarHorz->m_scrollinfo.nPos;
+
+      }
+      else
+      {
+
+         pscroll->m_nPos = get_viewport_offset().x;
+
+      }
+
+      pscroll->m_id = WM_HSCROLL;
+
+      send(pscroll);
+
+   }
+
+
    void scroll_x::create_x_scroll_bar(const RECT & rect)
    {
 
@@ -1352,6 +1449,73 @@ namespace user
       }
 
       m_pscrollbarHorz = pbar;
+
+   }
+
+
+   void scroll_x::scroll_left_line()
+   {
+
+      send_xscroll_message(SB_LINELEFT);
+
+   }
+
+
+   void scroll_x::scroll_right_line()
+   {
+
+      send_xscroll_message(SB_LINERIGHT);
+
+   }
+
+
+   void scroll_x::scroll_left_page()
+   {
+
+      send_xscroll_message(SB_PAGELEFT);
+
+   }
+
+
+   void scroll_x::scroll_right_page()
+   {
+
+      send_xscroll_message(SB_PAGERIGHT);
+
+   }
+
+
+   void scroll_x::scroll_horz(int nPos)
+   {
+
+      set_viewport_offset_x(nPos);
+
+   }
+
+
+   void scroll_y::send_yscroll_message(int nSBCode)
+   {
+
+      sp(::message::scroll) pscroll = canew(::message::scroll(get_app()));
+
+      pscroll->m_nSBCode = nSBCode;
+
+      if (m_pscrollbarVert.is_set())
+      {
+
+         pscroll->m_nPos = m_pscrollbarVert->m_scrollinfo.nPos;
+
+      }
+      else
+      {
+
+         pscroll->m_nPos = get_viewport_offset().y;
+
+      }
+
+      pscroll->m_id = WM_VSCROLL;
+
+      send(pscroll);
 
    }
 
@@ -1375,34 +1539,67 @@ namespace user
    }
 
 
-   //void scroll::GetClientRect(LPRECT lprect)
-   //{
-   //   ::rect rectScroll;
+   void scroll_y::scroll_down_line()
+   {
 
-   //   GetClientRect(rectScroll);
+      send_yscroll_message(SB_LINEDOWN);
 
-   //   //if (m_scrolldataHorz.m_bScroll)
-   //   //{
-
-   //   //   rectScroll.bottom -= GetSystemMetrics(SM_CYHSCROLL);
-
-   //   //}
+   }
 
 
-   //   //if (m_scrolldataVert.m_bScroll)
-   //   //{
+   void scroll_y::scroll_up_line()
+   {
 
-   //   //   rectScroll.right -= GetSystemMetrics(SM_CXVSCROLL);
+      send_yscroll_message(SB_LINEUP);
 
-   //   //}
+   }
 
 
+   void scroll_y::scroll_up_page()
+   {
 
-   //   rectScroll.offset(get_viewport_offset());
+      send_yscroll_message(SB_PAGEUP);
 
-   //   *lprect = rectScroll;
+   }
 
-   //}
+
+   void scroll_y::scroll_down_page()
+   {
+
+      send_yscroll_message(SB_PAGEDOWN);
+
+   }
+
+
+   void scroll_y::scroll_vert(int nPos)
+   {
+
+      set_viewport_offset_y(nPos);
+
+   }
+
+   bool scroll::GetActiveClientRect(LPRECT lprect)
+   {
+
+      if (!::user::interaction::GetClientRect(lprect))
+      {
+
+         return false;
+
+      }
+
+      size sizeTotal = get_total_size();
+
+      point ptOffset = get_viewport_offset();
+
+      lprect->right = lprect->left + MIN(::width(lprect), sizeTotal.cx - m_scrolldataHorz.m_iPage - ptOffset.x);
+
+      lprect->bottom = lprect->top + MIN(::height(lprect), sizeTotal.cy - m_scrolldataVert.m_iPage - ptOffset.y);
+
+      return true;
+
+   }
+
 
    bool scroll::GetClientRect(LPRECT lprect)
    {
@@ -1422,14 +1619,12 @@ namespace user
    }
 
 
-
    bool scroll::GetFocusRect(LPRECT lprect)
    {
 
       return ::user::interaction::GetClientRect(lprect);
 
    }
-
 
 
    ::size scroll::get_total_size()
@@ -1468,9 +1663,6 @@ namespace user
 
 
 }  // namespace core
-
-
-
 
 
 

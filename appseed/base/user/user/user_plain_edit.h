@@ -139,6 +139,7 @@ namespace user
       //void on_change_view_size();
 
       // virtual bool get_font(::draw2d::font_sp & spfont, e_font efont, ::user::interaction * pui) override;
+      void _001OnTimer(::timer * ptimer) override;
 
       DECL_GEN_SIGNAL(_001OnLButtonDown);
       DECL_GEN_SIGNAL(_001OnLButtonUp);
@@ -148,7 +149,6 @@ namespace user
       DECL_GEN_SIGNAL(_001OnMouseLeave);
       DECL_GEN_SIGNAL(_001OnKeyDown);
       DECL_GEN_SIGNAL(_001OnKeyUp);
-      void _001OnTimer(::timer * ptimer) override;
       DECL_GEN_SIGNAL(_001OnChar);
       DECL_GEN_SIGNAL(_001OnUniChar);
 
