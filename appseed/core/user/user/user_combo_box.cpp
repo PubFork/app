@@ -1091,28 +1091,44 @@ namespace user
 
    }
 
+
    index combo_box::FindString(index nStartAfter, const char * lpszString)
    {
 
-//      ASSERT(IsWindow());
+      for (index i = nStartAfter++; i < m_straList.get_count(); i++)
+      {
 
-//      return (index)send_message( CB_FINDSTRING, nStartAfter, (LPARAM)lpszString);
+         if (m_straList[i].compare(lpszString) == 0)
+         {
+
+            return i;
+
+         }
+
+      }
 
       return -1;
 
    }
 
-   index combo_box::SelectString(index nStartAfter, const char * lpszString)
+
+   index combo_box::SelectString(index nStartAfter, const char * lpszString, ::action::context context)
    {
 
-//      ASSERT(IsWindow());
+      index iSel = FindString(nStartAfter, lpszString);
 
-//      return (index)send_message( CB_SELECTSTRING, nStartAfter, (LPARAM)lpszString);
+      if (iSel >= 0)
+      {
+
+         _001SetCurSel(iSel, context);
+
+      }
 
       return -1;
 
    }
 
+   
    void combo_box::clear()
    {
 
@@ -1121,6 +1137,7 @@ namespace user
       //send_message(WM_CLEAR, 0, 0);
 
    }
+
 
    void combo_box::copy()
    {

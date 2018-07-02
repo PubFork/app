@@ -170,15 +170,12 @@ namespace user
       void ResetContent();
       index Dir(index attr, const char * lpszWildCard);
 
-      // selection helpers
-      index FindString(index nStartAfter, const char * lpszString);
-      index SelectString(index nStartAfter, const char * lpszString);
 
-      // Clipboard operations
       void clear();
       void copy();
       void Cut();
       void Paste();
+
 
       // Overridables (must override draw, measure and compare for owner draw)
 #ifdef WINDOWSEX
