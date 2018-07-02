@@ -706,9 +706,9 @@ namespace user
 //
 //#else
 //
-         
+
          ::user::create_struct cs(0, NULL, "combo_list");
-         
+
          if (!m_plist->create_window_ex(cs))
          {
 
@@ -1092,43 +1092,43 @@ namespace user
    }
 
 
-   index combo_box::FindString(index nStartAfter, const char * lpszString)
-   {
+   //index combo_box::FindString(index nStartAfter, const char * lpszString)
+   //{
 
-      for (index i = nStartAfter++; i < m_straList.get_count(); i++)
-      {
+   //   for (index i = nStartAfter++; i < m_straList.get_count(); i++)
+   //   {
 
-         if (m_straList[i].compare(lpszString) == 0)
-         {
+   //      if (m_straList[i].compare(lpszString) == 0)
+   //      {
 
-            return i;
+   //         return i;
 
-         }
+   //      }
 
-      }
+   //   }
 
-      return -1;
+   //   return -1;
 
-   }
+   //}
 
 
-   index combo_box::SelectString(index nStartAfter, const char * lpszString, ::action::context context)
-   {
+   //index combo_box::SelectString(index nStartAfter, const char * lpszString, ::action::context context)
+   //{
 
-      index iSel = FindString(nStartAfter, lpszString);
+   //   index iSel = FindString(nStartAfter, lpszString);
 
-      if (iSel >= 0)
-      {
+   //   if (iSel >= 0)
+   //   {
 
-         _001SetCurSel(iSel, context);
+   //      _001SetCurSel(iSel, context);
 
-      }
+   //   }
 
-      return -1;
+   //   return -1;
 
-   }
+   //}
 
-   
+   //
    void combo_box::clear()
    {
 
