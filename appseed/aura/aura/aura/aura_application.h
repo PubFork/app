@@ -41,6 +41,8 @@ namespace aura
 
 
 
+      stringa                                         m_straMatter;
+
 
 
 
@@ -89,7 +91,6 @@ namespace aura
 
       bool                                            m_bService;
 
-      ::file::patha                                   m_straMatterLocator;
       string                                          m_strLibraryName;
       string                                          m_strAppId;
       string                                          m_strRelativeFolder;
@@ -133,6 +134,10 @@ namespace aura
 
       application();
       virtual ~application();
+
+
+      virtual void add_matter_locator(string strMatter);
+      virtual void add_matter_locator(::aura::application * papp);
 
       ::draw2d::dib_sp get_matter_dib(string strMatter);
 

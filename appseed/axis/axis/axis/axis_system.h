@@ -71,10 +71,6 @@ namespace axis
       virtual bool verb() override; // ambigous inheritance from ::aura::system/::axis::application
 
 
-      virtual ::file::path dir_appmatter_locator(::aura::application * papp) override;
-
-
-
       virtual bool is_system() override;
 
 

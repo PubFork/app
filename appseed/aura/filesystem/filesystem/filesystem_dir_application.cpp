@@ -22,19 +22,28 @@ namespace file
       {
       }
 
+
       application::~application()
       {
+
       }
+
 
       ::file::path application::locale_schema(const string & pszLocale,const string & pszStyle)
       {
+
          return m_pauraapp->m_paurasystem->m_spdir->locale_schema(get_app(), pszLocale, pszStyle);
+
       }
 
-      ::file::patha application::locale_schema_matter(const string & pszLocale,const string & pszStyle,const ::file::path & pszRoot,const ::file::path & pszApp)
+
+      stringa application::locale_schema_matter(const string & pszLocale,const string & pszStyle, const ::file::path & pszApp)
       {
-         return m_pauraapp->m_paurasystem->m_spdir->locale_schema_matter(get_app(), pszLocale, pszStyle, pszRoot, pszApp);
+
+         return m_pauraapp->m_paurasystem->m_spdir->locale_schema_matter(get_app(), pszLocale, pszStyle, pszApp);
+
       }
+
 
       void application::matter_ls(const ::file::path & str,::file::patha & stra)
       {
@@ -46,11 +55,16 @@ namespace file
          m_pauraapp->m_paurasystem->m_spdir->matter_ls_file(get_app(), str, stra);
       }
 
-      ::file::path application::matter(const ::file::path & path,bool bDir,const ::file::path & pszRoot,const ::file::path & pszApp)
+
+      string application::matter(const ::file::path & path, bool bDir, const ::file::path & pathRoot,const ::file::path & pathApp)
       {
+
          string str = path;
+
          ::str::begins_eat_ci(str, "matter://");
-         return m_pauraapp->m_paurasystem->m_spdir->matter(get_app(), str, bDir, pszRoot, pszApp);
+
+         return m_pauraapp->m_paurasystem->m_spdir->matter(get_app(), str, bDir, pathRoot, pathApp);
+
       }
 
       //::file::path application::matter(const string & str, const string & str2, bool bDir, const string & pszRoot, const string & pszApp)
@@ -82,10 +96,14 @@ namespace file
 
       }
 
-      ::file::path application::matter(const ::file::patha & stra,bool bDir,const ::file::path & pszRoot,const ::file::path & pszApp)
+
+      string application::matter(const ::file::patha & stra,bool bDir,const ::file::path & pszRoot,const ::file::path & pszApp)
       {
+
          return m_pauraapp->m_paurasystem->m_spdir->matter(get_app(), stra, bDir, pszRoot, pszApp);
+
       }
+
 
       //::file::path application::usersystemappdata(const string & lpcszPrefix)
       //{

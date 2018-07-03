@@ -33,7 +33,6 @@ namespace user
 
       ::user::list_view::on_update(pSender, lHint, phint);
 
-
       if(phint != NULL)
       {
 
@@ -48,11 +47,9 @@ namespace user
                if(!puh->m_strForm.is_empty())
                {
 
-                  string str;
+                  string strMatter = Application.dir().matter(puh->m_strForm);
 
-                  str = Application.dir().matter(puh->m_strForm);
-
-                  if(get_document()->on_open_document(str))
+                  if(get_document()->on_open_document(strMatter))
                   {
 
                      m_strPath = puh->m_strForm;

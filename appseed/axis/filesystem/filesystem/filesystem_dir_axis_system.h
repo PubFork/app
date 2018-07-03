@@ -94,11 +94,11 @@ namespace file
             //virtual void time_square(string &str);
             //virtual string time_log(const char * pszId);
 
-            virtual ::file::path locale_schema(::aura::application * papp,const string & strLocale,const string & strStyle) override;
-            virtual ::file::patha locale_schema_matter(::aura::application * papp,const string & strLocale,const string & strStyle,const ::file::path & pathRoot = cnull,const ::file::path & pathDomain = cnull) override;
-            virtual ::file::patha locale_schema_matter(const string & strLocator,const string & strLocale,const string & strStyle) override;
-            virtual ::file::path matter(::aura::application * papp,const ::file::patha & stra,bool bDir = false,const ::file::path & pathRoot = cnull,const ::file::path & pathDomain = cnull) override;
-            virtual ::file::path matter(::aura::application * papp,const ::file::path & str,bool bDir = false,const ::file::path & pathRoot = cnull,const ::file::path & pathDomain = cnull) override;
+///            virtual ::file::path locale_schema(::aura::application * papp,const string & strLocale,const string & strStyle) override;
+//            virtual ::file::patha locale_schema_matter(::aura::application * papp,const string & strLocale,const string & strStyle,const ::file::path & pathRoot = cnull,const ::file::path & pathDomain = cnull) override;
+            //          virtual ::file::patha locale_schema_matter(const string & strLocator,const string & strLocale,const string & strStyle) override;
+            //virtual ::file::path matter(::aura::application * papp,const ::file::patha & stra,bool bDir = false,const ::file::path & pathRoot = cnull,const ::file::path & pathDomain = cnull) override;
+            //virtual ::file::path matter(::aura::application * papp,const ::file::path & str,bool bDir = false,const ::file::path & pathRoot = cnull,const ::file::path & pathDomain = cnull) override;
             //virtual ::file::path matter(::aura::application * papp,const string & str,bool bDir = false,const ::file::path & pathRoot = cnull,const ::file::path & pathDomain = cnull);
 
             //virtual void   matter_ls(::aura::application * papp,const ::file::path & str,::file::patha & stra);
@@ -107,16 +107,16 @@ namespace file
             //virtual ::file::path matter(::aura::application * papp);
 
             //virtual ::file::path matter_from_locator(::aura::str_context * pcontext,const string & strLocator);
-            virtual ::file::path matter_from_locator(::aura::str_context * pcontext,const string & strLocator,const ::file::path & str) override;
-            //virtual ::file::path matter_from_locator(::aura::str_context * pcontext,const string & strLocator,const string & str,const string & str2);
-            virtual void appmatter_locators(::file::path & strRoot,::file::path & strDomain,::aura::application * papp) override;
-            virtual void appmatter_locators(::file::path & strRoot,::file::path & strDomain,const string & strLibraryName,const string & strAppName) override;
-            virtual void appmatter_locators(::file::path & strRoot,::file::path & strDomain,const string & strAppName) override;
-            virtual ::file::path appmatter_locator(::aura::application * papp) override;
-            virtual ::file::path appmatter_locator(const string & strLibraryName,const string & strAppName) override;
-            virtual ::file::path appmatter_locator(const string & strAppName) override;
-            virtual ::file::path base_appmatter_locator(const ::file::path & strBase,const string & strLibraryName,const string & strAppName) override;
-            virtual ::file::path base_appmatter_locator(const ::file::path & strBase,const string & strAppName) override;
+            //virtual ::file::path matter_from_locator(::aura::str_context * pcontext,const string & strLocator,const ::file::path & str) override;
+            ////virtual ::file::path matter_from_locator(::aura::str_context * pcontext,const string & strLocator,const string & str,const string & str2);
+            //virtual void appmatter_locators(::file::path & strRoot,::file::path & strDomain,::aura::application * papp) override;
+            //virtual void appmatter_locators(::file::path & strRoot,::file::path & strDomain,const string & strLibraryName,const string & strAppName) override;
+            //virtual void appmatter_locators(::file::path & strRoot,::file::path & strDomain,const string & strAppName) override;
+            //virtual ::file::path appmatter_locator(::aura::application * papp) override;
+            //virtual ::file::path appmatter_locator(const string & strLibraryName,const string & strAppName) override;
+            //virtual ::file::path appmatter_locator(const string & strAppName) override;
+            //virtual ::file::path base_appmatter_locator(const ::file::path & strBase,const string & strLibraryName,const string & strAppName) override;
+            //virtual ::file::path base_appmatter_locator(const ::file::path & strBase,const string & strAppName) override;
 
 
 

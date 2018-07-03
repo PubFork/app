@@ -23,16 +23,18 @@ namespace file
       }
 
 
-      bool system::exists(const ::file::path & path, var * pvarQuery, ::aura::application * papp)
+      bool system::exists(::file::path path, var * pvarQuery, ::aura::application * papp)
       {
+
+         path = System.defer_process_matter_path(path, papp);
 
          if (::str::begins(path, astr.strUifsProtocol))
          {
-            
+
             return AppUser(papp).m_pifs->file_exists(path);
-            
+
          }
-         
+
          return ::file::system::exists(path, pvarQuery, papp);
 
       }
@@ -98,7 +100,7 @@ namespace file
 
 
          return spfile;
-   
+
       }
 
 

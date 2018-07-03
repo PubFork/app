@@ -44,11 +44,11 @@ public:
    int32_t reserve_image(int iItem = -1);
 
    int32_t add(::visual::icon * picon, int iItem = -1);
-   int32_t add_icon(const char * lpcsz, int iItem = -1);
+   int32_t add_icon(var varFile, int iItem = -1);
    int32_t add_dib(::draw2d::dib * pdib, int x = 0, int y = 0, int iItem = -1);
    int32_t add_icon_os_data(void * pvoid, int iItem = -1);
    int32_t add_matter_icon(const char * lpcszMatter, int iItem = -1);
-   int32_t add_file(const char * lpcsz, int iItem = -1);
+   int32_t add_file(var varFile, int iItem = -1);
    int32_t add_matter(const char * lpcsz, ::aura::application * papp = NULL, int iItem = -1);
    int32_t add_std_matter(const char * lpcsz, int iItem = -1);
    int32_t add_image(image_list * pil, int iImage, int iItem = - 1);

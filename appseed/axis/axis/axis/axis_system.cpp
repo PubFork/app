@@ -287,13 +287,6 @@ namespace axis
    }
 
 
-   ::file::path system::dir_appmatter_locator(::aura::application * papp)
-   {
-
-      return dir().appmatter_locator(papp);
-
-   }
-
 
    string system::crypto_md5_text(const string & str)
    {

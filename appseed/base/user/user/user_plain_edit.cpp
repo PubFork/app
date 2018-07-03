@@ -692,6 +692,47 @@ namespace user
    }
 
 
+   void plain_edit::_001OnRButtonDown(::message::message * pobj)
+   {
+
+      SCAST_PTR(::message::mouse, pmouse, pobj);
+
+      point pt = pmouse->m_pt;
+
+      ScreenToClient(&pt);
+
+      m_bRMouseDown = true;
+
+      {
+
+         synch_lock sl(m_pmutex);
+
+         strsize iHit = char_hit_test(pt.x, pt.y);
+
+         if (iHit <= m_ptree->m_iSelBeg || iHit >= m_ptree->m_iSelEnd)
+         {
+
+            m_ptree->m_iSelBeg = iHit;
+
+            m_ptree->m_iSelEnd = iHit;
+
+         }
+
+      }
+
+      RedrawWindow();
+
+      Session.set_keyboard_focus(this);
+
+      Session.user()->set_mouse_focus_RButtonDown(this);
+
+      pmouse->m_bRet = true;
+
+      pmouse->set_lresult(1);
+
+   }
+
+
    void plain_edit::_001OnRButtonUp(::message::message * pobj)
    {
 
@@ -701,24 +742,24 @@ namespace user
 
       ScreenToClient(&pt);
 
-      {
+      //{
 
-         synch_lock sl(m_pmutex);
+      //   synch_lock sl(m_pmutex);
 
-         strsize iSelStart = -1;
+      //   strsize iSelStart = -1;
 
-         strsize iSelEnd = -1;
+      //   strsize iSelEnd = -1;
 
-         _001GetSel(iSelStart, iSelEnd);
+      //   _001GetSel(iSelStart, iSelEnd);
 
-         if (iSelStart == iSelEnd)
-         {
+      //   if (iSelStart == iSelEnd)
+      //   {
 
-            _001SetSel(0, _001GetTextLength());
+      //      _001SetSel(0, _001GetTextLength());
 
-         }
+      //   }
 
-      }
+      //}
 
       set_need_redraw();
 
@@ -1503,38 +1544,6 @@ namespace user
    }
 
 
-   void plain_edit::_001OnRButtonDown(::message::message * pobj)
-   {
-
-      SCAST_PTR(::message::mouse, pmouse, pobj);
-
-      point pt = pmouse->m_pt;
-
-      ScreenToClient(&pt);
-
-      m_bRMouseDown = true;
-
-      //{
-
-      //   synch_lock sl(m_pmutex);
-
-      //   m_ptree->m_iSelBeg = char_hit_test(pt.x, pt.y);
-
-      //   m_ptree->m_iSelEnd = m_ptree->m_iSelBeg;
-
-      //}
-
-      RedrawWindow();
-
-      Session.set_keyboard_focus(this);
-
-      Session.user()->set_mouse_focus_RButtonDown(this);
-
-      pmouse->m_bRet = true;
-
-      pmouse->set_lresult(1);
-
-   }
 
 
    void debug_func(const string & str)
@@ -4783,16 +4792,6 @@ finished_update:
 
       insert_text(str, true);
 
-
-      ////str.replace("\r\n","\n");
-      //_001SetSelText(str,::action::source::user());
-      //MacroBegin();
-      //MacroRecord(canew(plain_text_file_command()));
-      //MacroEnd();
-
-      //_001OnUpdate(::action::source::user());
-      ////_001OnAfterChangeText(::action::source::user());
-
       if(m_bEnterKeyOnPaste)
       {
 
@@ -5250,17 +5249,16 @@ finished_update:
 
       synch_lock sl(m_pmutex);
 
-
-
       bool bFullUpdate = false;
 
       index iLineUpdate = -1;
 
       strsize i1 = m_ptree->m_iSelBeg;
+
       strsize i2 = m_ptree->m_iSelEnd;
 
-
       bFullUpdate = strText.find('\n') >= 0 || strText.find('\r') >= 0;
+
       if (!bForceNewStep && !bFullUpdate && i1 == i2 && i1 >= 0 && m_pinsert != NULL
             && m_pinsert->m_dwPosition + m_pinsert->m_memstorage.get_size() == i1
             && m_ptree->m_editfile.m_ptreeitem != m_ptree->m_editfile.m_ptreeitemFlush)

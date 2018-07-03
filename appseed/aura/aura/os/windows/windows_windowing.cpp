@@ -51,7 +51,7 @@ wstring windows_calc_icon_window_class(::user::interaction * pui, uint32_t dwDef
 
    string strPath = App(pui->get_app()).dir().matter(pszMatter, "icon.ico");
 
-   HICON hIcon = (HICON) ::LoadImageW(NULL, wstring(strPath), IMAGE_ICON, 256, 256, LR_LOADFROMFILE);
+   HICON hIcon = (HICON) ::LoadImageW(NULL, wstring(Sys(pui->get_app()).get_matter_path(strPath)), IMAGE_ICON, 256, 256, LR_LOADFROMFILE);
 
    wstring strClass = windows_get_user_interaction_window_class(pui);
 

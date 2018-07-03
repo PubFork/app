@@ -4,7 +4,7 @@
 namespace file
 {
 
-   
+
    namespace axis
    {
 
@@ -22,14 +22,14 @@ namespace file
 
          using ::file::system::exists;
 
-         virtual bool exists(const path & path,var * pvarQuery,::aura::application * papp);
+         virtual bool exists(::file::path path,var * pvarQuery,::aura::application * papp);
 
          virtual var length(const path & path,::aura::application * papp);
 
          virtual var length(const path & path,var * pvarQuery,::aura::application * papp);
 
          using ::file::system::time_square;
-         
+
          template < class T >
          string time_square(::aura::application * papp,T * p,bool (T::*lpfnOutput)(ostream &,const path &),const path & lpszSource)
          {

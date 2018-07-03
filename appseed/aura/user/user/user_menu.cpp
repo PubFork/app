@@ -206,12 +206,10 @@ namespace user
    }
 
 
-   bool menu::load_xml_menu(const char * pszMatter)
+   bool menu::load_xml_menu(var varFile)
    {
 
-      string strPath = Application.dir().matter(pszMatter);
-
-      string strXml = Application.file().as_string(strPath);
+      string strXml = Application.file().as_string(varFile);
 
       if (!load_xml_string_menu(strXml))
       {
@@ -368,7 +366,7 @@ namespace user
             iStyleEx = WS_EX_LAYERED | WS_EX_TOOLWINDOW;
 
          }
-         
+
          ::user::create_struct cs(iStyleEx, NULL, NULL, 0, null_rect(), lpvoid);
 
          if (!create_window_ex(cs, puiParent))

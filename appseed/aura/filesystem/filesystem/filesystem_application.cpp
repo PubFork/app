@@ -248,6 +248,13 @@ namespace file
 
          strPath.trim("\"'");
 
+         if (strPath.begins_ci("appmatter://"))
+         {
+
+            strPath = System.get_matter_cache_path(strPath);
+
+         }
+
       }
       else if(varFile.get_type() == var::type_stra)
       {

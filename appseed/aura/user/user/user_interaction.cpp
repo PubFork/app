@@ -6217,8 +6217,6 @@ restart:
 
       point pt = pmouse->m_pt;
 
-      //ScreenToClient(&pt);
-
       return track_popup_xml_matter_menu(pszMatter, iFlags, pt);
 
    }
@@ -6296,7 +6294,16 @@ restart:
 
       sp(::user::menu) pmenu = Application.alloc(System.type_info < ::user::menu >());
 
-      if (!pmenu->load_xml_menu(pszMatter))
+      string strMatter(pszMatter);
+
+      if (!strMatter.begins_ci("matter://"))
+      {
+
+         strMatter = "matter://" + strMatter;
+
+      }
+
+      if (!pmenu->load_xml_menu(strMatter))
       {
 
          pmenu.release();

@@ -69,223 +69,223 @@ namespace aura
 
 
    system::system(::aura::application * papp, app_core * pappcore):
-   ::object(papp == NULL ? this : papp),
-   ::thread(papp == NULL ? this : papp)
+      ::object(papp == NULL ? this : papp),
+      ::thread(papp == NULL ? this : papp)
    {
-      
+
       m_pappcore = pappcore;
-      
+
       if(papp == NULL)
       {
-         
+
          m_pauraapp = this;
-         
+
          m_paurasystem = this;
-         
+
       }
       else
       {
-         
+
          m_pauraapp = papp;
-         
+
          if(papp->is_system())
          {
-          
+
             m_paurasystem = dynamic_cast<::aura::system *>(papp);
-            
+
          }
          else
          {
-            
+
             m_paurasystem = this;
-            
+
          }
-         
+
       }
 
       m_spbase64 = canew(::str::base64(this));
       m_spprocess = canew(::process::department(this));
       m_sphttpsystem = canew(::http::system(this));
       m_spemaildepartment = canew(::net::email_department(this));
-      
-      
+
+
       g_pmutexDib = new mutex(this);
-      
+
       g_pmutexDib->m_ulFlags |= ::object::flag_shared;
-      
+
 #ifdef WINDOWSEX
-      
+
       m_psystemwindow = NULL;
-      
+
 #endif
-      
+
       m_strAppId = "system";
-      
+
       m_bThreadToolsForIncreasedFps = false;
-      
+
       m_typemap.InitHashTable(2048);
-      
+
 #ifdef DEBUG
-      
+
       m_pdumpcontext = new dump_context();
-      
+
 #endif
-      
+
 #ifndef WINDOWS
-      
+
       exception::translator::attach();
-      
+
 #endif
-      
+
       if (g_p == NULL)
       {
-         
+
          g_p = this;
-         
+
       }
-      
+
       g_pszCooperativeLevel = "aura";
-      
+
 #ifdef MATTER_CACHE_FROM_HTTP_SERVER
-      
+
       m_bMatterFromHttpCache = true;
-      
+
 #else
-      
+
       m_bMatterFromHttpCache = false;
-      
+
 #endif
-      
+
       set_app(this);
-      
+
       //#ifdef APPLEOS
       //    translator::attach();
       //#endif
-      
+
       m_nSafetyPoolSize          = 512;        // default size
-      
+
       m_pmath                    = canew(math::math(this));
       m_pgeometry                = canew(geometry::geometry(this));
       //      m_phtml = NULL;
-      
-      
+
+
       m_bDoNotExitIfNoApplications              = true;
-      
-      
-      
+
+
+
       //      m_peengine = NULL;
-      
-      
+
+
       m_pmachineeventcentral = NULL;
-      
+
       //::ca::application::m_file.set_app(this);
       //::ca::application::m_dir.set_app(this);
-      
+
       string strId;
       //strId = m_strAppName;
       //strId += ::str::has_char(m_strAppId, ".");
       //strId += ::str::has_char(m_strBaseSupportId, ".");
-      
-      
+
+
       strId = "ca2log";
-      
-      
+
+
       xxdebug_box("Going to start Log","Just before (initialize) log",0);
-      
+
       // log starts here - ENABLE_TRACE macro should be non-zero during
       // compilation to enable log tracing
       if(!initialize_log(strId))
       {
-         
+
          xxdebug_box("Could not initialize log","Failed to initialize log",0);
-         
+
          _throw(simple_exception(get_app(), "failed to initialize log"));
-         
+
       }
-      
+
       /*
        if(psystemParent == NULL)
        {
-       
+
        m_peengine                                = new ::exception::engine(this);
-       
+
        }
        else
        {
-       
+
        m_peengine                                = psystemParent->m_peengine;
-       
+
        }
        */
-      
+
       m_ftlibrary = NULL;
-      
+
       //use_base_ca2_allocator();
-      
-      
+
+
       m_pfactory = canew(class base_factory(this));
       m_pfactory->set_app(this);
-      
+
       m_pfactory->creatable_large < ::file::simple_binary_file >(type_info < ::file::binary_file >());
       m_pfactory->creatable_large < ::file::string_file >();
       m_pfactory->creatable_large < ::memory_file >();
       m_pfactory->creatable_large < ::int64_array >();
       m_pfactory->creatable_large < ::double_array >();
-      
+
       factory().default_cloneable_large < stringa >();
       factory().default_cloneable_large < memory >();
       factory().default_cloneable_large < int_array >();
-      
+
       factory().creatable_small < ::file::application >();
       factory().creatable_small < ::file::dir::application >();
-      
+
       m_phtml = NULL;
-      
+
       __node_aura_factory_exchange(this);
-      
+
       m_pdatetime = canew(class ::datetime::department(this));
-      
-      
+
+
       thread::s_bAllocReady = true;
-      
+
       m_pxml = canew(::xml::department(this));
-      
+
       m_pxml->construct(this);
-      
+
       if(!m_pxml->init1())
          _throw(simple_exception(this,"failed to construct system m_pxml->init1()"));
-      
+
       if(!m_pxml->init())
          _throw(simple_exception(this,"failed to construct system m_pxml->initialize()"));
-      
-      
+
+
       //      m_spmutexFactory = canew(mutex(get_app()));
-      
+
       m_bGudoNetCache = true;
-      
+
       m_purldepartment = NULL;
-      
+
       m_pcompress = NULL;
-      
+
       m_strAppName               = "system";
       m_strInstallToken          = "system";
-      
+
       m_dwAfterApplicationFirstRequest = 0;
-      
-      
+
+
       factory().creatable_small < ::visual::icon >();
       m_mapLibrary["draw2d"] = canew(::aura::library(this));
       m_purldepartment = new url::department(this);
-      
+
       m_pcompress = new ::compress_department(this);
-      
+
       m_pcompress->set_app(this);
-      
+
       ::draw2d::dib::static_initialize();
-      
+
       //      m_spinstall = canew(::install::install(this));
-      
-      
+
+
       //m_peengine = new ::exception::engine(this);
 
    }
@@ -1785,10 +1785,10 @@ namespace aura
    //}
 
 
-   ::file::path system::dir_appmatter_locator(::aura::application * papp)
+   string system::dir_appmatter_locator(::aura::application * papp)
    {
 
-      return "";
+      return dir().appmatter_locator(papp);
 
    }
 
@@ -2103,6 +2103,110 @@ RetryBuildNumber:
       ::output_debug_string("::aura::system::on_request session = " + demangle(typeid(*psession).name()) + "("+::str::from((int_ptr) psession)+")\n\n");
 
       psession->request_create(pcreate);
+
+   }
+
+
+   ::file::path system::defer_process_matter_path(::file::path path, ::aura::application * papp)
+   {
+
+      if (::str::begins_eat_ci(path, "matter://"))
+      {
+
+         path = dir().matter(papp, path);
+
+      }
+
+      if (path.begins_ci("appmatter://"))
+      {
+
+         path = get_matter_cache_path(path);
+
+      }
+
+      return path;
+
+   }
+
+
+   ::file::path system::get_matter_path(string strMatter)
+   {
+
+      ::str::begins_eat_ci(strMatter, "appmatter://");
+
+      return dir().install() / strMatter;
+
+   }
+
+
+   ::file::path system::get_matter_cache_path(string strMatter)
+   {
+
+      ::file::path path = get_matter_path(strMatter);
+
+      if (path.begins_ci("http://") || path.begins_ci("https://"))
+      {
+
+         ::file::path pathCache = dir().cache() / strMatter;
+
+         ::str::begins_eat_ci(strMatter, "appmatter://");
+
+         ::file::path pathMeta = pathCache + ".meta_information";
+
+         string strFirstLine = file_line_dup(pathMeta, 0);
+
+         if (strFirstLine == "directory" && dir::is(pathCache))
+         {
+
+            return pathCache;
+
+         }
+         else if (strFirstLine == "file" && file_exists_dup(pathCache))
+         {
+
+            return pathCache;
+
+         }
+
+         if (file().exists(path, this))
+         {
+
+            file_set_line_dup(pathMeta, 0, "file");
+
+            property_set set;
+
+            set["raw_http"] = true;
+
+            set["disable_common_name_cert_check"] = true;
+
+            http().download(pathCache, path, set);
+
+         }
+         else if (dir().is(path, this))
+         {
+
+            file_set_line_dup(pathMeta, 0, "directory");
+
+            dir().mk(pathCache, this);
+
+         }
+         else
+         {
+
+            if (file_delete_dup(pathMeta))
+            {
+
+               file_put_contents_dup(pathMeta, "");
+
+            }
+
+         }
+
+         return pathCache;
+
+      }
+
+      return path;
 
    }
 
@@ -2449,7 +2553,7 @@ RetryBuildNumber:
 
             for (index j = 0; j < ptra.get_size(); )
             {
-               
+
                auto * pappItem = ptra[j].m_p;
 
                if (pappItem == NULL || pappItem->m_bFranceExit)

@@ -36,9 +36,9 @@ namespace file
 
       virtual cres replace(const path & pszContext,const string & pszFind,const string & pszReplace,::aura::application * papp);
 
-      virtual bool exists(const path & path,::aura::application * papp);
+      virtual bool exists(path path, ::aura::application * papp);
 
-      virtual bool exists(const path & path,var * pvarQuery,::aura::application * papp);
+      virtual bool exists(path path, var * pvarQuery,::aura::application * papp);
 
       virtual var length(const path & path,::aura::application * papp);
 

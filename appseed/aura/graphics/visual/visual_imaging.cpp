@@ -6015,7 +6015,7 @@ bool imaging::load_from_file(::draw2d::dib * pdib,var varFile,bool bCache)
 
       pathDib.replace(":\\","/_/");
 
-      pathDib = System.dir().time() / "cache" / pathDib;
+      pathDib = System.dir().cache() / pathDib;
 
       pathDib += ".dib";
 

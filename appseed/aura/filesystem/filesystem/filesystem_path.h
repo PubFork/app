@@ -14,7 +14,6 @@ namespace file
 
    typedef CLASS_DECL_AURA ::string_array < ::file::path, string > patha;
 
-
    enum e_path
    {
       path_none,
@@ -106,7 +105,6 @@ namespace file
       path & operator = (const ::file::path & path);
 
       path & operator = (const string & str);
-
 
       bool is_equal(const path & path) const
       {
@@ -378,3 +376,7 @@ inline UINT HashKey<const ::file::path &>(const ::file::path &  key)
    return HashKey<const string & >(key);
 
 }
+
+
+
+

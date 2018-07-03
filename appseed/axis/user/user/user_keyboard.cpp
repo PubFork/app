@@ -120,19 +120,30 @@ namespace user
    bool keyboard::initialize()
    {
 
-      string strPath;
+      string strFile;
+
 #ifdef MACOS
-      strPath = Application.dir().matter("keyboard/windows/default.xml");
+
+      strFile = Application.dir().matter("keyboard/windows/default.xml");
 
 #elif defined( LINUX)
-      strPath = Application.dir().matter("keyboard/linux/default.xml");
+
+      strFile = Application.dir().matter("keyboard/linux/default.xml");
+
 #elif defined(APPLEOS)
-      strPath = Application.dir().matter("keyboard/macos/default.xml");
+
+      strFile = Application.dir().matter("keyboard/macos/default.xml");
+
 #elif defined(ANDROID)
+
       //strPath = Application.dir().matter("keyboard/android/default.xml");
-      strPath = Application.dir().matter("keyboard/windows/default.xml");
+
+      strFile = Application.dir().matter("keyboard/windows/default.xml");
+
 #else
+
 #ifndef METROWIN
+
       WCHAR wsz[KL_NAMELENGTH];
 
       WORD w;
@@ -175,23 +186,23 @@ namespace user
 
       string str = ::str::from(w);
 
-      strPath = Application.dir().matter("keyboard/windows/" + str + ".xml");
+      strFile = Application.dir().matter("keyboard/windows/" + str + ".xml");
 
-      if(Application.file().exists(strPath))
+      if(Application.file().exists(strFile))
       {
 
-         if(load_os_layout(strPath))
+         if(load_os_layout(strFile))
             return true;
 
       }
 
 #endif
 
-      strPath = Application.dir().matter("keyboard/windows/default.xml");
+      strFile = Application.dir().matter("keyboard/windows/default.xml");
 
 #endif
 
-      if(!Application.file().exists(strPath))
+      if(!Application.file().exists(strFile))
       {
 
          if(is_debugger_attached())
@@ -205,8 +216,12 @@ namespace user
 
       }
 
-      if(!load_os_layout(strPath))
+      if (!load_os_layout(strFile))
+      {
+
          return false;
+
+      }
 
       return true;
 

@@ -38,49 +38,16 @@ BaseMenuCentral * BaseMenuCentral::GetMenuCentral(::aura::application * papp)
    return Sess(papp).userex()->get_menucentral();
 }
 
-/*bool BaseMenuCentral::MenuV033CreateImageMap(UINT uiaMenuV003Map [][2])
-{
-   UINT user = 0;
-   int32_t i;
-   while(true)
-   {
-      if(uiaMenuV003Map[user][0] == 0xffffffff &&
-         uiaMenuV003Map[user][1] == 0xffffffff)
-         break;
-      i = MenuV033GetImageList()->add(System.LoadIcon(uiaMenuV003Map[user][1]));
-      m_mapCommandToImage.set_at(uiaMenuV003Map[user][0], i);
-      m_mapImageToCommand.set_at(i, uiaMenuV003Map[user][0]);
-      user++;
-   }
-
-   ::draw2d::graphics_sp spgraphics(allocer());
-   spgraphics->CreateCompatibleDC(NULL);
-
-   Application.imaging().CreateHueImageList(
-      &spgraphics,
-      MenuV033GetImageListHueLight(),
-      MenuV033GetImageList(),
-      RGB(220, 220, 215),
-      0.50);
-
-
-
-
-   return ;
-}
-
-*/
-
 bool BaseMenuCentral::MenuV033AddImageMap(sp(::xml::node) lpnode)
 {
 
-/*   if(!MenuV033GetImageList()->create(
-      16, 16,
-      ILC_COLOR24 | ILC_MASK,
-      0, 10))
-   {
-      return FALSE;
-   }*/
+   /*   if(!MenuV033GetImageList()->create(
+         16, 16,
+         ILC_COLOR24 | ILC_MASK,
+         0, 10))
+      {
+         return FALSE;
+      }*/
    int32_t iIndex;
    id id;
    for(int32_t i = 0; i < lpnode->children().get_count(); i++)
@@ -103,24 +70,24 @@ bool BaseMenuCentral::MenuV033AddImageMap(sp(::xml::node) lpnode)
    class imaging & imaging = Application.imaging();
 
    imaging.CreateHueImageList(
-      spgraphics,
-      m_pilHue,
-      MenuV033GetImageList(),
-      RGB(192, 192, 180),
-      0.50);
+   spgraphics,
+   m_pilHue,
+   MenuV033GetImageList(),
+   RGB(192, 192, 180),
+   0.50);
 
    imaging.Createcolor_blend_ImageList(
-      m_pilBlend,
-      MenuV033GetImageList(),
-      RGB(255, 255, 240),
-      64);
+   m_pilBlend,
+   MenuV033GetImageList(),
+   RGB(255, 255, 240),
+   64);
 
    imaging.CreateHueImageList(
-      spgraphics,
-      m_pilHueLight,
-      m_pil,
-      RGB(220, 220, 215),
-      0.5);
+   spgraphics,
+   m_pilHueLight,
+   m_pil,
+   RGB(220, 220, 215),
+   0.5);
 
    return true;
 
@@ -202,22 +169,22 @@ id BaseMenuCentral::ImageToCommand(int iImage)
 
 sp(image_list) BaseMenuCentral::MenuV033GetImageList()
 {
-    return m_pil;
+   return m_pil;
 }
 
 sp(image_list) BaseMenuCentral::MenuV033GetImageListHue()
 {
-    return m_pilHue;
+   return m_pilHue;
 }
 
 sp(image_list) BaseMenuCentral::MenuV033GetImageListBlend()
 {
-    return m_pilBlend;
+   return m_pilBlend;
 }
 
 sp(image_list) BaseMenuCentral::MenuV033GetImageListHueLight()
 {
-    return m_pilHueLight;
+   return m_pilHueLight;
 }
 
 

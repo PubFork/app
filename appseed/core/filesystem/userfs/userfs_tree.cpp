@@ -57,25 +57,6 @@ namespace userfs
             filemanager::update_hint * puh = (filemanager::update_hint *)phint;
             if (puh->is_type_of(filemanager::update_hint::TypeInitialize))
             {
-               //if (get_filemanager_template()->get_filemanager_data()->m_bTransparentBackground)
-               //{
-               //   ::user::tree::m_etranslucency = ::user::tree::translucency_present;
-               //}
-               /* xxx _001SetExpandImage(
-                  System.LoadIcon(
-                  get_filemanager_template()->get_filemanager_template()->m_uiExpandBox));
-                  _001SetCollapseImage(
-                  System.LoadIcon(
-                  get_filemanager_template()->get_filemanager_template()->m_uiCollapseBox));*/
-
-
-               //            VmsDataInitialize(this);
-               //          SetDataInterface(&m_datainterface);
-               //        AddClient(&m_datainterface);
-               /*               string str;
-                              str.Format("tree(%s)", get_filemanager_template()->get_filemanager_data()->m_strDataKeyModifier);
-                              m_dataid = str;*/
-               //            _001UpdateColumns();
             }
             if (puh->is_type_of(filemanager::update_hint::TypeFilter))
             {

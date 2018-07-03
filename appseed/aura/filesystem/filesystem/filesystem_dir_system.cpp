@@ -4,7 +4,6 @@
 #include "aura/aura/compress/zip/zip.h"
 
 
-
 #ifdef WINDOWS
 
 #define DIR_SEPARATOR "\\"
@@ -30,114 +29,23 @@ namespace file
       system::system(::aura::application * papp) :
          ::object(papp),
          m_mutex(papp),
-         ::file_watcher::file_watcher(papp) //,
-         //::file_watcher::listener_thread(papp)
+         ::file_watcher::file_watcher(papp)
       {
 
          ::file::dir::system::g_pthis = this;
+
          m_isdirmap.m_dwTimeOut = 180000;
 
          m_pathInstall = ::dir::install();
 
       }
 
+
       system::~system()
       {
-//         if(m_pziputil != NULL)
-//         {
-////            delete m_pziputil;
-//         }
+
       }
 
-
-
-      //::file::path system::path(const string & pszFolder, strsize iLenFolder, const string & pszRelative, strsize iLenRelative, const string & psz2, strsize iLen2, bool bUrl)
-      //{
-      //   UNREFERENCED_PARAMETER(pszFolder);
-      //   UNREFERENCED_PARAMETER(iLenFolder);
-      //   UNREFERENCED_PARAMETER(pszRelative);
-      //   UNREFERENCED_PARAMETER(iLenRelative);
-      //   UNREFERENCED_PARAMETER(psz2);
-      //   UNREFERENCED_PARAMETER(iLen2);
-      //   UNREFERENCED_PARAMETER(bUrl);
-      //   _throw(interface_only_exception(get_app(), "this is an interface"));
-      //}
-
-      //::file::path system::path(const string & pszFolder, strsize iLenFolder, const string & pszRelative, strsize iLenRelative, bool bUrl)
-      //{
-
-      //   return path(pszFolder, iLenFolder, pszRelative, iLenRelative, NULL, 0, bUrl);
-
-      //}
-
-      //::file::path system::path(const string & pszFolder, strsize iLenFolder, const string & pszRelative, strsize iLenRelative, const string & psz2, strsize iLen2)
-      //{
-
-      //   return path(pszFolder, iLenFolder, pszRelative, iLenRelative, psz2, iLen2, ::url::is_url(pszFolder));
-
-      //}
-
-      //::file::path system::path(const string & strFolder, const string & strRelative)
-      //{
-
-      //   return path(strFolder, strFolder.get_length(), strRelative, strRelative.get_length(), NULL, 0, ::url::is_url(strFolder));
-
-      //}
-
-
-      //::file::path system::path(const string & strFolder, const string & strRelative, const string & str2)
-      //{
-
-      //   return path(strFolder, strFolder.get_length(), strRelative, strRelative.get_length(), str2, str2.get_length(), ::url::is_url(strFolder));
-
-      //}
-
-
-      //::file::path system::sibling(const string & strPath,const string & strRelative,bool bUrl)
-      //{
-
-      //   return path(name(strPath),strRelative,bUrl);
-
-      //}
-
-
-      //::file::path system::sibling(const string & strPath,const string & strRelative,const string & str2,bool bUrl)
-      //{
-
-      //   return path(name(strPath),strRelative,str2,bUrl);
-
-      //}
-
-
-      //::file::path system::sibling(const string & strPath,const string & strRelative)
-      //{
-
-      //   return sibling(strPath,strRelative,::url::is_url(strPath));
-
-      //}
-
-
-      //::file::path system::sibling(const string & strPath,const string & strRelative,const string & str2)
-      //{
-
-      //   return sibling(strPath,strRelative, str2,::url::is_url(strPath));
-
-      //}
-
-
-      //::file::path system::path(const string & strFolder, const string & strRelative, bool bUrl)
-      //{
-
-      //   return path(strFolder, strFolder.get_length(), strRelative, strRelative.get_length(), NULL, 0, bUrl);
-
-      //}
-
-      //::file::path system::path(const string & strFolder, const string & strRelative, const string & str2, bool bUrl)
-      //{
-
-      //   return path(strFolder, strFolder.get_length(), strRelative, strRelative.get_length(), str2, str2.get_length(), bUrl);
-
-      //}
 
       inline bool myspace(char ch)
       {
@@ -683,8 +591,23 @@ namespace file
       }
 
 
-      bool system::is(const ::file::path & path,::aura::application * papp)
+      bool system::is(const ::file::path & pathParam,::aura::application * papp)
       {
+
+         ::file::path path;
+
+         if (pathParam.begins_ci("appmatter://"))
+         {
+
+            path = install() / path.Mid(12);
+
+         }
+         else
+         {
+
+            path = pathParam;
+
+         }
 
          bool bIs;
 
@@ -1296,25 +1219,17 @@ end:
 
 
 
-      ::file::patha system::locale_schema_matter(::aura::application * papp,const string & strLocale,const string & strSchema,const ::file::path & strRoot,const ::file::path & strDomain)
+      stringa system::locale_schema_matter(::aura::application * papp, const string & strLocale, const string & strSchema, const ::file::path & domain)
       {
 
-         //single_lock sl(&papp->m_mutexMatterLocator, true);
-         if(strRoot.has_char() && strDomain.has_char())
+         stringa straMatter;
+
+         if ( domain.has_char())
          {
 
-            ::file::patha patha;
+            string strHint = "appmatter" / domain / papp->m_paurasession->get_locale_schema_dir(strLocale, strSchema);
 
-            if(Session.m_bMatterFromHttpCache)
-            {
-
-               return   {strRoot / "appmatter" / strDomain / papp->m_paurasession->get_locale_schema_dir(strLocale,strSchema)};
-            }
-            else
-            {
-               return {install() / strRoot / "appmatter" / strDomain / papp->m_paurasession->get_locale_schema_dir(strLocale,strSchema) };
-
-            }
+            straMatter.add(strHint);
 
          }
          else
@@ -1322,24 +1237,44 @@ end:
 
             ::file::patha stra;
 
-            for (index i = 0; i < papp->m_straMatterLocator.get_count(); i++)
+            ::file::path pathLocator;
+
+            string strMatter;
+
+            ::file::path path;
+
+            ::file::path pathAdd = papp->m_paurasession->get_locale_schema_dir(strLocale, strSchema);
+
+            for (index i = 0; i < papp->m_straMatter.get_size(); i++)
             {
 
-               stra.add_unique(papp->m_straMatterLocator[i] / papp->m_paurasession->get_locale_schema_dir(strLocale, strSchema));
+               string strMatter = papp->m_straMatter[i];
+
+               strMatter = papp->m_straMatter[i];
+
+               ::file::path pathMatter = strMatter;
+
+               pathMatter /= pathAdd;
+
+               straMatter.add_unique_ci(pathMatter);
 
             }
 
-            return stra;
-
          }
 
+         return straMatter;
 
       }
 
-      ::file::patha system::locale_schema_matter(const string & strLocator, const string & strLocale, const string & strSchema)
+
+      string system::locale_schema_matter(const string & strMatter, const string & strLocale, const string & strSchema)
       {
 
-         return{::file::path(strLocator) / strLocale / strSchema};
+         string str;
+
+         str = ::file::path(strMatter) / strLocale / strSchema;
+
+         return str;
 
       }
 
@@ -1371,7 +1306,7 @@ end:
 
             set["raw_http"] = true;
 
-            ::file::path strFile = System.dir().commonappdata() / "cache" / strMatter / "list_dir.list_dir";
+            ::file::path strFile = System.dir().cache() / strMatter / "list_dir.list_dir";
 
             iFind = strFile.find(DIR_SEPARATOR);
 
@@ -1457,7 +1392,7 @@ end:
 
             set["raw_http"] = true;
 
-            string strFile = System.dir().commonappdata() / "cache"/ strDir/ "list_dir.list_dir";
+            string strFile = System.dir().cache() / strDir/ "list_dir.list_dir";
 
             strsize iFind = strFile.find(DIR_SEPARATOR);
 
@@ -1513,7 +1448,8 @@ end:
 
       }
 
-      ::file::path system::matter(::aura::application * papp,const ::file::patha & stra,bool bDir,const ::file::path & root,const ::file::path & domain)
+
+      string system::matter(::aura::application * papp,const ::file::patha & stra, bool bDir,const ::file::path & root,const ::file::path & domain)
       {
 
          ::aura::str_context * pcontext = Sess(papp).str_context();
@@ -1522,7 +1458,7 @@ end:
 
          ::count ca = stra.get_count();
 
-         ::file::path strPath;
+         string strMatter;
 
          string strLocale;
 
@@ -1542,7 +1478,11 @@ end:
             ::count ca = stra.get_count();
 
             if (ca <= 0)
+            {
+
                return "";
+
+            }
 
             ::aura::str_context * pcontext = Sess(papp).str_context();
 
@@ -1551,21 +1491,20 @@ end:
             if (Session.m_bMatterFromHttpCache)
             {
 
-
                ::file::patha patha;
 
                strLocale = pcontext->m_plocaleschema->m_idLocale;
 
                strSchema = pcontext->m_plocaleschema->m_idSchema;
 
-               straLs = locale_schema_matter(papp, strLocale, strSchema, root, domain);
+               straLs = locale_schema_matter(papp, strLocale, strSchema, domain);
 
                for (index l = 0; l < straLs.get_count(); l++)
                {
 
                   strLs = straLs[l];
 
-                  strFile = System.dir().commonappdata() / "cache" / papp->m_paurasession->get_locale_schema_dir(strLocale, strSchema) / stra.implode(",") + ".map_question";
+                  strFile = System.dir().cache() / papp->m_paurasession->get_locale_schema_dir(strLocale, strSchema) / stra.implode(",") + ".map_question";
 
                   strsize iFind = strFile.find(DIR_SEPARATOR);
 
@@ -1576,12 +1515,19 @@ end:
 
                   }
 
-                  strPath = Application.file().as_string(strFile);
-
-                  if (strPath.has_char())
                   {
-                     // todo: keep cache timeout information;
-                     return strPath;
+
+                     strMatter = Application.file().as_string(strFile);
+
+                     if(strMatter.has_char())
+                     {
+
+                        // todo: keep cache timeout information;
+
+                        return strMatter;
+
+                     }
+
                   }
 
                   for (j = 0; j < ca; j++)
@@ -1595,8 +1541,10 @@ end:
                   {
 
                      strLocale = pcontext->localeschema().m_idaLocale[i];
+
                      strSchema = pcontext->localeschema().m_idaSchema[i];
-                     straLs = locale_schema_matter(papp, strLocale, strSchema, root, domain);
+
+                     straLs = locale_schema_matter(papp, strLocale, strSchema, domain);
 
                      for (int k = 0; k < straLs.get_count(); k++)
                      {
@@ -1615,6 +1563,7 @@ end:
                   }
 
                   straLs = locale_schema_matter(papp, "en", "en");
+
                   for (int k = 0; k < straLs.get_count(); k++)
                   {
 
@@ -1632,75 +1581,121 @@ end:
 
                   if (bDir)
                   {
-                     strPath = Sess(papp).http().get("https://" + get_api_cc() + "/api/matter/query_dir?candidate=" + strParam, set);
+
+                     strMatter = Sess(papp).http().get("https://" + get_api_cc() + "/api/matter/query_dir?candidate=" + strParam, set);
+
                   }
                   else
                   {
-                     strPath = Sess(papp).http().get("https://" + get_api_cc() + "/api/matter/query_file?candidate=" + strParam, set);
+
+                     strMatter = Sess(papp).http().get("https://" + get_api_cc() + "/api/matter/query_file?candidate=" + strParam, set);
+
                   }
 
-                  if (strPath.has_char())
+                  if(strMatter.has_char())
+                  {
+
+                     strMatter = "appmatter://" + strMatter;
+
                      goto ret;
+
+                  }
 
                }
 
             }
-
             else
             {
 
                strLocale = pcontext->m_plocaleschema->m_idLocale;
+
                strSchema = pcontext->m_plocaleschema->m_idSchema;
-               straLs = locale_schema_matter(papp, strLocale, strSchema, root, domain);
+
+               straLs = locale_schema_matter(papp, strLocale, strSchema, domain);
 
                for (index l = 0; l < straLs.get_count(); l++)
                {
+
                   strLs = straLs[l];
 
                   for (j = 0; j < ca; j++)
                   {
 
-                     strPath = strLs / stra[j];
+                     strMatter = strLs / stra[j];
 
                      if (bDir)
                      {
-                        if (System.dir().is(strPath, get_app()))
-                           return strPath;
+
+                        if (System.dir().is(install() / strMatter, get_app()))
+                        {
+
+                           strMatter = "appmatter://" + strMatter;
+
+                           return strMatter;
+
+                        }
+
                      }
                      else
                      {
-                        if (System.file().exists(strPath, get_app()))
-                           return strPath;
+
+                        if (System.file().exists(install() / strMatter, get_app()))
+                        {
+
+                           strMatter = "appmatter://" + strMatter;
+
+                           return strMatter;
+
+                        }
+
                      }
 
                   }
-
 
                   for (int32_t i = 0; i < pcontext->localeschema().m_idaLocale.get_count(); i++)
                   {
 
                      strLocale = pcontext->localeschema().m_idaLocale[i];
+
                      strSchema = pcontext->localeschema().m_idaSchema[i];
-                     straLs = locale_schema_matter(papp, strLocale, strSchema, root, domain);
+
+                     straLs = locale_schema_matter(papp, strLocale, strSchema, domain);
 
                      for (index l = 0; l < straLs.get_count(); l++)
                      {
+
                         strLs = straLs[l];
 
                         for (j = 0; j < ca; j++)
                         {
 
-                           strPath = strLs / stra[j];
+                           strMatter = strLs / stra[j];
 
                            if (bDir)
                            {
-                              if (System.dir().is(strPath, get_app()))
-                                 return strPath;
+
+                              if (System.dir().is(install() / strMatter, get_app()))
+                              {
+
+                                 strMatter = "appmatter://" + strMatter;
+
+                                 return strMatter;
+
+                              }
+
                            }
                            else
                            {
-                              if (System.file().exists(strPath, get_app()))
-                                 return strPath;
+
+                              if (System.file().exists(install() / strMatter, get_app()))
+                              {
+
+                                 strMatter = "appmatter://" + strMatter;
+
+                                 return strMatter;
+
+                              }
+
                            }
 
                         }
@@ -1713,10 +1708,7 @@ end:
 
             }
 
-
-
-
-            straLs = locale_schema_matter(papp, "en", "en", root, domain);
+            straLs = locale_schema_matter(papp, "en", "en", domain);
 
             for (index l = 0; l < straLs.get_count(); l++)
             {
@@ -1726,47 +1718,64 @@ end:
                for (j = 0; j < ca; j++)
                {
 
-                  strPath = strLs / stra[j];
+                  strMatter = strLs / stra[j];
 
                   if (bDir)
                   {
-                     if (System.dir().is(strPath, get_app()))
-                        goto ret;
+
+                     if (System.dir().is(install() / strMatter, get_app()))
+                     {
+
+                        strMatter = "appmatter://" + strMatter;
+
+                        return strMatter;
+
+                     }
+
                   }
                   else
                   {
-                     if (System.file().exists(strPath, get_app()))
-                        goto ret;
+
+                     if (System.file().exists(install() / strMatter, get_app()))
+                     {
+
+                        strMatter = "appmatter://" + strMatter;
+
+                        return strMatter;
+
+                     }
+
                   }
 
                }
 
+            }
+
+            if (ca <= 0)
+            {
+
+               return strMatter;
 
             }
 
-
-            if (ca <= 0)
-               return "";
-
          }
 
-
          if (Session.m_bMatterFromHttpCache)
-
          {
-
 
             ::file::patha patha;
 
             strLocale = pcontext->m_plocaleschema->m_idLocale;
+
             strSchema = pcontext->m_plocaleschema->m_idSchema;
+
             straLs = locale_schema_matter(papp, strLocale, strSchema);
 
             for (index l = 0; l < straLs.get_count(); l++)
             {
                strLs = straLs[l];
 
-               strFile = System.dir().commonappdata() / "cache" / papp->m_paurasession->get_locale_schema_dir(strLocale, strSchema) / stra.implode(",") + ".map_question";
+               strFile = System.dir().cache() / papp->m_paurasession->get_locale_schema_dir(strLocale, strSchema) / stra.implode(",") + ".map_question";
 
                strsize iFind = strFile.find(DIR_SEPARATOR);
 
@@ -1777,12 +1786,19 @@ end:
 
                }
 
-               strPath = Application.file().as_string(strFile);
-
-               if (strPath.has_char())
                {
-                  // todo: keep cache timeout information;
-                  return strPath;
+
+                  strMatter = Application.file().as_string(strFile);
+
+                  if (strMatter.has_char())
+                  {
+
+                     // todo: keep cache timeout information;
+
+                     return strMatter;
+
+                  }
+
                }
 
                for (j = 0; j < ca; j++)
@@ -1796,8 +1812,11 @@ end:
                {
 
                   strLocale = pcontext->localeschema().m_idaLocale[i];
+
                   strSchema = pcontext->localeschema().m_idaSchema[i];
+
                   straLs = locale_schema_matter(papp, strLocale, strSchema);
+
                   for (int k = 0; k < straLs.get_count(); k++)
                   {
 
@@ -1815,11 +1834,14 @@ end:
                }
 
                straLs = locale_schema_matter(papp, "en", "en");
+
                for (int k = 0; k < straLs.get_count(); k++)
                {
 
                   strLs = straLs[k];
+
                   patha.add(strLs / stra[0]);
+
                }
 
                property_set set(papp);
@@ -1830,28 +1852,37 @@ end:
 
                if (bDir)
                {
-                  strPath = Sess(papp).http().get("http://" + get_api_cc() + "/api/matter/query_dir?candidate=" + strParam, set);
+
+                  strMatter = Sess(papp).http().get("http://" + get_api_cc() + "/api/matter/query_dir?candidate=" + strParam, set);
+
                }
                else
                {
-                  strPath = Sess(papp).http().get("http://" + get_api_cc() + "/api/matter/query_file?candidate=" + strParam, set);
+
+                  strMatter = Sess(papp).http().get("http://" + get_api_cc() + "/api/matter/query_file?candidate=" + strParam, set);
+
                }
 
-               if (strPath.has_char())
+               if (strMatter.has_char())
+               {
+
+                  strMatter = "appmatter://" + strMatter;
+
                   goto ret;
+
+               }
 
             }
 
          }
-
          else
-
          {
 
             strLocale = pcontext->m_plocaleschema->m_idLocale;
-            strSchema = pcontext->m_plocaleschema->m_idSchema;
-            straLs = locale_schema_matter(papp, strLocale, strSchema);
 
+            strSchema = pcontext->m_plocaleschema->m_idSchema;
+
+            straLs = locale_schema_matter(papp, strLocale, strSchema);
 
             for (index l = 0; l < straLs.get_count(); l++)
             {
@@ -1861,29 +1892,46 @@ end:
                for (j = 0; j < ca; j++)
                {
 
-                  strPath = strLs / stra[j];
+                  strMatter = strLs / stra[j];
 
                   if (bDir)
                   {
-                     if (System.dir().is(strPath, get_app()))
-                        return strPath;
+
+                     if (System.dir().is(install() / strMatter, get_app()))
+                     {
+
+                        strMatter = "appmatter://" + strMatter;
+
+                        return strMatter;
+
+                     }
+
                   }
                   else
                   {
-                     if (System.file().exists(strPath, get_app()))
-                        return strPath;
+
+                     if (System.file().exists(install() / strMatter, get_app()))
+                     {
+
+                        strMatter = "appmatter://" + strMatter;
+
+                        return strMatter;
+
+                     }
+
                   }
 
                }
 
             }
 
-
             for (int32_t i = 0; i < pcontext->localeschema().m_idaLocale.get_count(); i++)
             {
 
                strLocale = pcontext->localeschema().m_idaLocale[i];
+
                strSchema = pcontext->localeschema().m_idaSchema[i];
+
                straLs = locale_schema_matter(papp, strLocale, strSchema);
 
                for (index l = 0; l < straLs.get_count(); l++)
@@ -1894,17 +1942,33 @@ end:
                   for (j = 0; j < ca; j++)
                   {
 
-                     strPath = strLs / stra[j];
+                     strMatter = strLs / stra[j];
 
                      if (bDir)
                      {
-                        if (System.dir().is(strPath, get_app()))
-                           return strPath;
+
+                        if (System.dir().is(install() / strMatter, get_app()))
+                        {
+
+                           strMatter = "appmatter://" + strMatter;
+
+                           return strMatter;
+
+                        }
+
                      }
                      else
                      {
-                        if (System.file().exists(strPath, get_app()))
-                           return strPath;
+
+                        if (System.file().exists(install() / strMatter, get_app()))
+                        {
+
+                           strMatter = "appmatter://" + strMatter;
+
+                           return strMatter;
+
+                        }
+
                      }
 
                   }
@@ -1914,7 +1978,6 @@ end:
             }
 
          }
-
 
          straLs = locale_schema_matter(papp, "en", "en");
 
@@ -1927,86 +1990,117 @@ end:
             for (j = 0; j < ca; j++)
             {
 
-               strPath = strLs / stra[j];
+               strMatter = strLs / stra[j];
 
                if (bDir)
                {
-                  if (System.dir().is(strPath, get_app()))
+
+                  if (System.dir().is(install() / strMatter, get_app()))
+                  {
+
+                     strMatter = "appmatter://" + strMatter;
+
                      goto ret;
+
+                  }
+
                }
                else
                {
-                  if (System.file().exists(strPath, get_app()))
+
+                  if (System.file().exists(install() / strMatter, get_app()))
+                  {
+
+                     strMatter = "appmatter://" + strMatter;
+
                      goto ret;
+
+                  }
+
                }
 
             }
 
          }
 
-
          if (papp->m_paurasession != NULL && papp->m_paurasession != papp &&
                (sp(::aura::application)) papp->m_paurasystem != (sp(::aura::application)) papp)
          {
-            strPath = matter(papp->m_paurasession, stra, bDir);
+
+            strMatter = this->matter(papp->m_paurasession, stra, bDir);
+
             if (bDir)
             {
-               if (System.dir().is(strPath, get_app()))
+
+               if (System.dir().is(strMatter, get_app()))
+               {
+
                   goto ret;
+
+               }
+
             }
             else
             {
-               if (System.file().exists(strPath, get_app()))
+
+               if (System.file().exists(strMatter, get_app()))
+               {
+
                   goto ret;
+
+               }
+
             }
          }
 
          if (papp->m_paurasystem != NULL && papp->m_paurasystem != papp &&
                (sp(::aura::application)) papp->m_paurasystem != (sp(::aura::application)) papp->m_paurasession)
          {
-            strPath = matter(papp->m_paurasystem, stra, bDir);
+
+            strMatter = this->matter(papp->m_paurasystem, stra, bDir);
+
             if (bDir)
             {
-               if (System.dir().is(strPath, get_app()))
+
+               if (System.dir().is(strMatter, get_app()))
+               {
+
                   goto ret;
+
+               }
+
             }
             else
             {
-               if (System.file().exists(strPath, get_app()))
+
+               if (System.file().exists(strMatter, get_app()))
+               {
+
                   goto ret;
+
+               }
+
             }
+
          }
 
-         strPath = strLs / stra[0];
+         strMatter = "appmatter://" + strLs / stra[0];
 
 ret:
 
          if (Session.m_bMatterFromHttpCache)
          {
-            Application.file().put_contents(strFile, strPath);
+
+            Application.file().put_contents(strFile, strMatter);
+
          }
 
-         return strPath;
+         return strMatter;
 
       }
 
-      //string system::matter(::aura::application * papp, const char * psz, const char * psz2, bool bDir, const char * pszRoot, const char * pszApp)
-      //{
-      //   return matter(papp, string(psz), string(psz2), bDir, pszRoot, pszApp);
-      //}
 
-      //string system::matter(::aura::application * papp, const string & str, const char * psz, bool bDir, const char * pszRoot, const char * pszApp)
-      //{
-      //   return matter(papp, str, string(psz), bDir, pszRoot, pszApp);
-      //}
-
-      //string system::matter(::aura::application * papp, const char * psz, const string & str, bool bDir, const char * pszRoot, const char * pszApp)
-      //{
-      //   return matter(papp, string(psz), str, bDir, pszRoot, pszApp);
-      //}
-
-
-      ::file::path system::matter(::aura::application * papp, const ::file::path & str, bool bDir, const ::file::path & root, const ::file::path & domain)
+      string system::matter(::aura::application * papp, const ::file::path & str, bool bDir, const ::file::path & root, const ::file::path & domain)
       {
 
          ::aura::str_context * pcontext = Sess(papp).str_context();
@@ -2015,11 +2109,13 @@ ret:
 
          string strSchema;
 
-         ::file::path path;
+         string strMatter;
 
          ::file::path pathLs;
 
          ::file::path pathFind;
+
+         ::file::path pathMatterHint;
 
          ::file::path pathMapFile;
 
@@ -2036,10 +2132,12 @@ ret:
                ::file::patha patha;
 
                strLocale = pcontext->m_plocaleschema->m_idLocale;
-               strSchema = pcontext->m_plocaleschema->m_idSchema;
-               pathaLs = locale_schema_matter(papp, strLocale, strSchema, root, domain);
 
-               pathMapFile = System.dir().commonappdata() / "cache" / papp->m_paurasession->get_locale_schema_dir(strLocale, strSchema) / str + ".map_question";
+               strSchema = pcontext->m_plocaleschema->m_idSchema;
+
+               pathaLs = locale_schema_matter(papp, strLocale, strSchema, domain);
+
+               pathMapFile = System.dir().cache() / papp->m_paurasession->get_locale_schema_dir(strLocale, strSchema) / str + ".map_question";
 
                strsize iFind = pathMapFile.find(DIR_SEPARATOR);
 
@@ -2050,14 +2148,18 @@ ret:
 
                }
 
-               pathFind = Application.file().as_string(pathMapFile);
-
-               if (pathFind.has_char())
                {
 
-                  // todo: keep cache timeout information;
+                  strMatter = Application.file().as_string(pathMapFile);
 
-                  return pathFind;
+                  if (strMatter.has_char())
+                  {
+
+                     // todo: keep cache timeout information;
+
+                     return strMatter;
+
+                  }
 
                }
 
@@ -2066,7 +2168,7 @@ ret:
 
                   pathLs = pathaLs[k];
 
-                  path = pathLs / str;
+                  ::file::path path = pathLs / str;
 
                   patha.add(path);
 
@@ -2079,14 +2181,14 @@ ret:
 
                   strSchema = pcontext->localeschema().m_idaSchema[i];
 
-                  pathaLs = locale_schema_matter(papp, strLocale, strSchema, root, domain);
+                  pathaLs = locale_schema_matter(papp, strLocale, strSchema, domain);
 
                   for (int k = 0; k < pathaLs.get_count(); k++)
                   {
 
                      pathLs = pathaLs[k];
 
-                     path = pathLs / path;
+                     ::file::path path = pathLs / path;
 
                      patha.add(path);
 
@@ -2101,7 +2203,7 @@ ret:
 
                   pathLs = pathaLs[k];
 
-                  path = pathLs / str;
+                  ::file::path path = pathLs / str;
 
                   patha.add(path);
 
@@ -2118,27 +2220,28 @@ ret:
                if (bDir)
                {
 
-                  pathFind = Sess(papp).http().get("http://" + get_api_cc() + "/api/matter/query_dir?candidate=" + strCandidate, set);
+                  strMatter = Sess(papp).http().get("http://" + get_api_cc() + "/api/matter/query_dir?candidate=" + strCandidate, set);
 
                }
                else
                {
 
-                  pathFind = Sess(papp).http().get("http://" + get_api_cc() + "/api/matter/query_file?candidate=" + strCandidate, set);
+                  strMatter = Sess(papp).http().get("http://" + get_api_cc() + "/api/matter/query_file?candidate=" + strCandidate, set);
 
                }
 
-               pathFind.trim();
+               strMatter.trim();
 
-               if (pathFind.has_char())
+               if (strMatter.has_char())
                {
+
+                  strMatter = "https://server.ca2.cc/appmatter" / pathFind;
 
                   goto ret;
 
                }
 
             }
-
             else
             {
 
@@ -2146,20 +2249,22 @@ ret:
 
                strSchema = pcontext->m_plocaleschema->m_idSchema;
 
-               pathaLs = locale_schema_matter(papp, strLocale, strSchema, root, domain);
+               pathaLs = locale_schema_matter(papp, strLocale, strSchema, domain);
 
                for (index l = 0; l < pathaLs.get_count(); l++)
                {
 
                   pathLs = pathaLs[l];
 
-                  pathFind = pathLs / str;
+                  strMatter = pathLs / str;
 
                   if (bDir)
                   {
 
-                     if (System.dir().is(pathFind, papp))
+                     if (System.dir().is(install() / strMatter, papp))
                      {
+
+                        strMatter = "appmatter://" + strMatter;
 
                         goto ret;
 
@@ -2169,8 +2274,10 @@ ret:
                   else
                   {
 
-                     if (System.file().exists(pathFind, papp))
+                     if (System.file().exists(install() / strMatter, papp))
                      {
+
+                        strMatter = "appmatter://" + strMatter;
 
                         goto ret;
 
@@ -2188,20 +2295,22 @@ ret:
 
                   strSchema = pcontext->localeschema().m_idaSchema[i];
 
-                  pathaLs = locale_schema_matter(papp, strLocale, strSchema, root, domain);
+                  pathaLs = locale_schema_matter(papp, strLocale, strSchema, domain);
 
                   for (index l = 0; l < pathaLs.get_count(); l++)
                   {
 
                      pathLs = pathaLs[l];
 
-                     pathFind = pathLs / str;
+                     strMatter = pathLs / str;
 
                      if (bDir)
                      {
 
-                        if (System.dir().is(pathFind, papp))
+                        if (System.dir().is(install() / strMatter, papp))
                         {
+
+                           strMatter = "appmatter://" + strMatter;
 
                            goto ret;
 
@@ -2211,33 +2320,38 @@ ret:
                      else
                      {
 
-                        if (System.file().exists(pathFind, papp))
+                        if (System.file().exists(install() / strMatter, papp))
                         {
+
+                           strMatter = "appmatter://" + strMatter;
 
                            goto ret;
 
                         }
 
                      }
+
                   }
 
                }
 
 
-               pathaLs = locale_schema_matter(papp, "en", "en", root, domain);
+               pathaLs = locale_schema_matter(papp, "en", "en", domain);
 
                for (index l = 0; l < pathaLs.get_count(); l++)
                {
 
                   pathLs = pathaLs[l];
 
-                  pathFind = pathLs / str;
+                  strMatter = pathLs / str;
 
                   if (bDir)
                   {
 
-                     if (System.dir().is(pathFind, papp))
+                     if (System.dir().is(install() / strMatter, papp))
                      {
+
+                        strMatter = "appmatter://" + strMatter;
 
                         goto ret;
 
@@ -2247,13 +2361,14 @@ ret:
                   else
                   {
 
-                     if (System.file().exists(pathFind, papp))
+                     if (System.file().exists(install() / strMatter, papp))
                      {
+
+                        strMatter = "appmatter://" + strMatter;
 
                         goto ret;
 
                      }
-
                   }
                }
 
@@ -2273,7 +2388,7 @@ ret:
 
             pathaLs = locale_schema_matter(papp, strLocale, strSchema);
 
-            pathMapFile = System.dir().commonappdata() / "cache" / papp->m_paurasession->get_locale_schema_dir(strLocale, strSchema) / str + ".map_question";
+            pathMapFile = System.dir().cache() / papp->m_paurasession->get_locale_schema_dir(strLocale, strSchema) / str + ".map_question";
 
             strsize iFind = pathMapFile.find(DIR_SEPARATOR);
 
@@ -2284,24 +2399,27 @@ ret:
 
             }
 
-            pathFind = Application.file().as_string(pathMapFile);
-
-            if (pathFind.has_char())
             {
 
-               // todo: keep cache timeout information;
+               strMatter = Application.file().as_string(pathMapFile);
 
-               return pathFind;
+               if (strMatter.has_char())
+               {
+
+                  // todo: keep cache timeout information;
+
+                  return strMatter;
+
+               }
 
             }
-
 
             for (int k = 0; k < pathaLs.get_count(); k++)
             {
 
                pathLs = pathaLs[k];
 
-               path = pathLs / str;
+               ::file::path path = pathLs / str;
 
                patha.add(path);
 
@@ -2321,7 +2439,7 @@ ret:
 
                   pathLs = pathaLs[k];
 
-                  path = pathLs / str;
+                  ::file::path path = pathLs / str;
 
                   patha.add(path);
 
@@ -2336,7 +2454,7 @@ ret:
 
                pathLs = pathaLs[k];
 
-               path = pathLs / str;
+               ::file::path path = pathLs / str;
 
                patha.add(path);
 
@@ -2380,6 +2498,8 @@ ret:
             if (pathFind.has_char())
             {
 
+               strMatter = "appmatter://" / pathFind;
+
                goto ret;
 
             }
@@ -2399,13 +2519,15 @@ ret:
 
                pathLs = pathaLs[l];
 
-               pathFind = pathLs / str;
+               strMatter = pathLs / str;
 
                if (bDir)
                {
 
-                  if (System.dir().is(pathFind, papp))
+                  if (System.dir().is(install() / strMatter, papp))
                   {
+
+                     strMatter = "appmatter://" + strMatter;
 
                      goto ret;
 
@@ -2415,13 +2537,14 @@ ret:
                else
                {
 
-                  if (System.file().exists(pathFind, papp))
+                  if (System.file().exists(install() / strMatter, papp))
                   {
+
+                     strMatter = "appmatter://" + strMatter;
 
                      goto ret;
 
                   }
-
                }
 
             }
@@ -2440,24 +2563,27 @@ ret:
 
                   pathLs = pathaLs[l];
 
-                  pathFind = pathLs / str;
+                  strMatter = pathLs / str;
 
                   if (bDir)
                   {
 
-                     if (System.dir().is(pathFind, papp))
+                     if (System.dir().is(install() / strMatter, papp))
                      {
+
+                        strMatter = "appmatter://" + strMatter;
 
                         goto ret;
 
                      }
-
                   }
                   else
                   {
 
-                     if (System.file().exists(pathFind, papp))
+                     if (System.file().exists(install() / strMatter, papp))
                      {
+
+                        strMatter = "appmatter://" + strMatter;
 
                         goto ret;
 
@@ -2476,13 +2602,15 @@ ret:
 
                pathLs = pathaLs[l];
 
-               pathFind = pathLs / str;
+               strMatter = pathLs / str;
 
                if (bDir)
                {
 
-                  if (System.dir().is(pathFind, papp))
+                  if (System.dir().is(install() / strMatter, papp))
                   {
+
+                     strMatter = "appmatter://" + strMatter;
 
                      goto ret;
 
@@ -2492,8 +2620,10 @@ ret:
                else
                {
 
-                  if (System.file().exists(pathFind, papp))
+                  if (System.file().exists(install() / strMatter, papp))
                   {
+
+                     strMatter = "appmatter://" + strMatter;
 
                      goto ret;
 
@@ -2508,12 +2638,12 @@ ret:
                   && papp->m_paurasession->m_bAuraInitialize1)
             {
 
-               pathFind = matter(papp->m_paurasession, str, bDir);
+               strMatter = this->matter(papp->m_paurasession, str, bDir);
 
                if (bDir)
                {
 
-                  if (System.dir().is(pathFind, papp))
+                  if (System.dir().is(strMatter, papp))
                   {
 
                      goto ret;
@@ -2524,7 +2654,7 @@ ret:
                else
                {
 
-                  if (System.file().exists(pathFind, papp))
+                  if (System.file().exists(strMatter, papp))
                   {
 
                      goto ret;
@@ -2542,12 +2672,12 @@ ret:
                && papp->m_paurasystem->m_bAuraInitialize1)
          {
 
-            pathFind = matter(papp->m_paurasystem, str, bDir);
+            strMatter = this->matter(papp->m_paurasystem, str, bDir);
 
             if (bDir)
             {
 
-               if (System.dir().is(pathFind, get_app()))
+               if (System.dir().is(strMatter, get_app()))
                {
 
                   goto ret;
@@ -2558,7 +2688,7 @@ ret:
             else
             {
 
-               if (System.file().exists(pathFind, get_app()))
+               if (System.file().exists(strMatter, get_app()))
                {
 
                   goto ret;
@@ -2569,7 +2699,7 @@ ret:
 
          }
 
-         pathFind = pathLs / str;
+         strMatter = "appmatter://" / pathLs / str;
 
 ret:
 
@@ -2578,19 +2708,19 @@ ret:
 
             Application.file().put_contents(pathMapFile, pathFind);
 
-            path = pathFind;
+            ::file::path path = pathFind;
 
             path.replace(":", "_");
             path.replace("//", "/");
             path.replace("?", "%19");
 
-            path = System.dir().appdata() / "cache" / path + ".exists_question";
+            path = System.dir().cache() / path + ".exists_question";
 
             Application.file().put_contents(path, "yes");
 
          }
 
-         return pathFind;
+         return strMatter;
 
 
          /*static const string strEn("en");
@@ -2642,8 +2772,8 @@ ret:
          return strPath;
          }
          return path(locale_schema_matter(papp, strEmpty, strEmpty), str);*/
-      }
 
+      }
 
 
       ::file::path system::appmatter(string strApp, ::file::path pathRel)
@@ -2944,58 +3074,48 @@ ret:
          */
       }
 
-      ::file::path system::appmatter_locator(::aura::application * papp)
+
+      string system::appmatter_locator(::aura::application * papp)
       {
 
          ::file::path strRoot;
+
          ::file::path strDomain;
 
          appmatter_locators(strRoot,strDomain,papp);
 
-         if(Session.m_bMatterFromHttpCache)
-         {
-            return strRoot/ "appmatter"/ strDomain;
-
-         }
-         else
-         {
-            return install()/ strRoot/"appmatter"/strDomain;
-
-         }
+         return strRoot / "appmatter" / strDomain;
 
       }
 
-      ::file::path system::appmatter_locator(const string & strLibraryName, const string & strAppName)
+
+      string system::appmatter_locator(const string & strLibraryName, const string & strAppName)
       {
 
          ::file::path strRoot;
+
          ::file::path strDomain;
 
          appmatter_locators(strRoot, strDomain, strLibraryName, strAppName);
 
-         return install() / strRoot / "appmatter"/ strDomain;
+         return strRoot / "appmatter"/ strDomain;
 
       }
 
-      ::file::path system::appmatter_locator(const string & strAppName)
+
+      string system::appmatter_locator(const string & strAppName)
       {
 
          ::file::path strRoot;
+
          ::file::path strDomain;
 
          appmatter_locators(strRoot, strDomain, System.m_mapAppLibrary[strAppName], strAppName);
 
-#if defined(CUBE) || defined(VSNORD) || defined(METROWIN)
-
-         return strRoot /  "appmatter" /  strDomain;
-
-#else
-
-         return install() / strRoot / "appmatter"/ strDomain;
-
-#endif
+         return strRoot / "appmatter" / strDomain;
 
       }
+
 
       ::file::path system::base_appmatter_locator(const ::file::path & strBase,const string & strLibraryName,const string & strAppName)
       {
@@ -3116,6 +3236,14 @@ ret:
       {
 
          _throw(interface_only_exception(get_app(), "this is an interface"));
+
+      }
+
+
+      ::file::path system::cache()
+      {
+
+         return ::dir::system() / "cache";
 
       }
 

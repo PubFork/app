@@ -48,7 +48,7 @@ void html_form_view::install_message_routing(::message::sender * pinterface)
 // html_form_view drawing
 void html_form_view::OnDraw(::draw2d::graphics * pgraphics)
 {
-   
+
    UNREFERENCED_PARAMETER(pgraphics);
 
 }
@@ -94,7 +94,7 @@ void html_form_view::on_update(::user::impact * pSender, LPARAM lHint, object* p
    if(phint != NULL)
    {
       html_view_update_hint * puh = dynamic_cast < html_view_update_hint * >
-         (phint);
+                                    (phint);
       if(puh != NULL)
       {
          if(puh->m_etype == html_view_update_hint::type_document_complete)
@@ -128,69 +128,76 @@ void html_form_view::on_update(::user::impact * pSender, LPARAM lHint, object* p
       }
    }
 
-      if(phint != NULL)
+   if(phint != NULL)
+   {
+      ::user::form_update_hint * puh = dynamic_cast < ::user::form_update_hint * > (phint);
+      if(puh != NULL)
       {
-         ::user::form_update_hint * puh = dynamic_cast < ::user::form_update_hint * > (phint);
-         if(puh != NULL)
+         if(puh->m_etype == ::user::form_update_hint::type_browse)
          {
-            if(puh->m_etype == ::user::form_update_hint::type_browse)
+            if(!puh->m_strForm.is_empty())
             {
-               if(!puh->m_strForm.is_empty())
+
+               ::file::path matter;
+
+               matter = Application.dir().matter(puh->m_strForm);
+
+               if(get_document()->on_open_document(matter))
                {
-                  string str;
-                  str = Application.dir().matter(puh->m_strForm);
-                  if(get_document()->on_open_document(str))
-                  {
-                     m_strPath = puh->m_strForm;
-                  }
+
+                  m_strPath = puh->m_strForm;
+
                }
+
             }
-            else if(puh->m_etype == ::user::form_update_hint::type_get_form_view)
-            {
-               puh->m_pform = this;
-            }
+
          }
-         else
+         else if(puh->m_etype == ::user::form_update_hint::type_get_form_view)
          {
-            //html_view_update_hint * puh = dynamic_cast < html_view_update_hint * > (phint);
-            //if(puh != NULL)
-            //{
-            //   if(puh->m_etype == html_view_update_hint::type_document_complete)
-            //   {
-            //      for(int32_t i = 0; i < get_html_data()->m_propertyset.m_propertya.get_count(); i++)
-            //      {
-            //         html::elemental * pelemental = get_html_data()->get_element_by_id(get_html_data()->m_propertyset.m_propertya[i]->name());
-            //         if(pelemental != NULL)
-            //         {
-            //            pelemental->set_string(get_html_data()->m_propertyset.m_propertya[i]->get_string(), ::action::source_data);
-            //         }
-            //      }
-            //   }
-
-            //   {
-
-            //      sp(::draw2d::graphics) dc(allocer());
-
-            //      dc->CreateCompatibleDC(NULL);
-
-            //      get_html_data()->implement(dc);
-
-            //   }
-            //   
-            //}
-
+            puh->m_pform = this;
          }
-
       }
-
-      if(m_pcallback != NULL)
+      else
       {
+         //html_view_update_hint * puh = dynamic_cast < html_view_update_hint * > (phint);
+         //if(puh != NULL)
+         //{
+         //   if(puh->m_etype == html_view_update_hint::type_document_complete)
+         //   {
+         //      for(int32_t i = 0; i < get_html_data()->m_propertyset.m_propertya.get_count(); i++)
+         //      {
+         //         html::elemental * pelemental = get_html_data()->get_element_by_id(get_html_data()->m_propertyset.m_propertya[i]->name());
+         //         if(pelemental != NULL)
+         //         {
+         //            pelemental->set_string(get_html_data()->m_propertyset.m_propertya[i]->get_string(), ::action::source_data);
+         //         }
+         //      }
+         //   }
 
-         m_pcallback->on_update(this,pSender,lHint,phint);
+         //   {
+
+         //      sp(::draw2d::graphics) dc(allocer());
+
+         //      dc->CreateCompatibleDC(NULL);
+
+         //      get_html_data()->implement(dc);
+
+         //   }
+         //
+         //}
 
       }
 
-   
+   }
+
+   if(m_pcallback != NULL)
+   {
+
+      m_pcallback->on_update(this,pSender,lHint,phint);
+
+   }
+
+
 }
 
 
@@ -209,8 +216,8 @@ bool html_form_view::Refresh2(int32_t i)
 bool html_form_view::Navigate(const char * pszUrl)
 {
    ASSERT(FALSE);
-/*   if(!open_document(pszUrl))
-      return false;*/
+   /*   if(!open_document(pszUrl))
+         return false;*/
    m_strPath = pszUrl;
    return true;
 }

@@ -19,33 +19,6 @@ namespace user
       UNREFERENCED_PARAMETER(papp);
       UNREFERENCED_PARAMETER(uiaMenuV003Map);
       ::exception::throw_not_implemented(get_app());
-      /*
-      m_pimagelist         = new image_list(papp);
-      m_pimagelistDisable  = new image_list(papp);
-      set_app(papp);
-      if(!GetImageList().create(
-         16, 16,
-         ILC_COLOR24 | ILC_MASK,
-         0, 10))
-      {
-         return FALSE;
-      }
-      UINT user = 0;
-      int32_t i;
-      while(true)
-      {
-         if(uiaMenuV003Map[user][0] == 0xffffffff &&
-            uiaMenuV003Map[user][1] == 0xffffffff)
-            break;
-         i = GetImageList().add(System.LoadIcon(uiaMenuV003Map[user][1]));
-         m_rel.set_at(uiaMenuV003Map[user][0], i);
-         user++;
-      }
-
-      Application.imaging().CreateGrayVRCPImageList(
-         NULL,
-         &GetImageListDisable(),
-         &GetImageList());*/
 
       return true;
 

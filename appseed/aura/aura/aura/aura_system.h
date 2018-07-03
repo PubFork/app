@@ -428,7 +428,7 @@ namespace aura
       //virtual ::file::path get_module_name();
 
 
-      virtual ::file::path dir_appmatter_locator(::aura::application * papp);
+      virtual string dir_appmatter_locator(::aura::application * papp);
 
       virtual string crypto_md5_text(const string & str);
 
@@ -446,6 +446,9 @@ namespace aura
       //   return *m_spinstall;
       //}
 
+      virtual ::file::path defer_process_matter_path(::file::path path, ::aura::application * papp);
+      virtual ::file::path get_matter_path(string strMatter);
+      virtual ::file::path get_matter_cache_path(string strMatter);
 
       virtual bool find_applications_from_cache();
       virtual bool find_applications_to_cache(bool bSave = true);

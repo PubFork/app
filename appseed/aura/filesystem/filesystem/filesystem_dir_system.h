@@ -125,10 +125,10 @@ namespace file
          virtual ::file::path time_log(const string & strId);
 
          virtual ::file::path locale_schema(::aura::application * papp,const string & strLocale = cnull,const string & strStyle = cnull);
-         virtual ::file::patha locale_schema_matter(::aura::application * papp,const string & strLocale = cnull,const string & strStyle = cnull,const ::file::path & pszRoot = cnull,const ::file::path & pszApp = cnull);
-         virtual ::file::patha locale_schema_matter(const string & strLocator, const string & strLocale = cnull, const string & strStyle = cnull);
-         virtual ::file::path matter(::aura::application * papp,const ::file::patha & stra,bool bDir = false,const ::file::path & pszRoot = cnull,const ::file::path & pszApp = cnull);
-         virtual ::file::path matter(::aura::application * papp,const ::file::path & path,bool bDir = false,const ::file::path & pszRoot = cnull,const ::file::path & pszApp = cnull);
+         virtual stringa locale_schema_matter(::aura::application * papp,const string & strLocale = cnull,const string & strStyle = cnull, const ::file::path & pszApp = cnull);
+         virtual string locale_schema_matter(const string & strMatter, const string & strLocale = cnull, const string & strStyle = cnull);
+         virtual string matter(::aura::application * papp,const ::file::patha & patha,bool bDir = false,const ::file::path & pszRoot = cnull,const ::file::path & pszApp = cnull);
+         virtual string matter(::aura::application * papp,const ::file::path & path,bool bDir = false,const ::file::path & pszRoot = cnull,const ::file::path & pszApp = cnull);
 
          virtual ::file::path appmatter(string strApp, ::file::path pathRel);
 
@@ -141,9 +141,9 @@ namespace file
          virtual void appmatter_locators(::file::path & strRoot,::file::path & strDomain,::aura::application * papp);
          virtual void appmatter_locators(::file::path & strRoot,::file::path & strDomain,const string & strLibraryName,const string & strAppName);
          virtual void appmatter_locators(::file::path & strRoot,::file::path & strDomain,const string & strAppName);
-         virtual ::file::path appmatter_locator(::aura::application * papp);
-         virtual ::file::path appmatter_locator(const string & strLibraryName,const string & strAppName);
-         virtual ::file::path appmatter_locator(const string & strAppName);
+         virtual string appmatter_locator(::aura::application * papp);
+         virtual string appmatter_locator(const string & strLibraryName, const string & strAppName);
+         virtual string appmatter_locator(const string & strAppName);
          virtual ::file::path base_appmatter_locator(const ::file::path & strBase,const string & strLibraryName,const string & strAppName);
          virtual ::file::path base_appmatter_locator(const ::file::path & strBase,const string & strAppName);
 
@@ -152,6 +152,7 @@ namespace file
 
          virtual ::file::path trash_that_is_not_trash(const ::file::path & psz);
 
+         virtual ::file::path cache();
          virtual ::file::path appdata();
          virtual ::file::path commonappdata_root();
          virtual ::file::path commonappdata();

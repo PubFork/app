@@ -88,11 +88,11 @@ namespace file
             {
                string strFileExists = strPath;
                strFileExists.replace(":", "_");
-               strFileExists = m_pauraapp->m_paurasystem->m_spdir->appdata() / "cache" / strFileExists + ".exists_question";
+               strFileExists = System.dir().cache() / strFileExists + ".exists_question";
                strFileExists.replace("\\\\", "\\", 2);
                string strFile = strPath;
                strFile.replace(":", "_");
-               strFile = m_pauraapp->m_paurasystem->m_spdir->appdata() / "cache" / strFile + ".local_copy";
+               strFile = System.dir().cache() / strFile + ".local_copy";
                strFile.replace("\\\\", "\\", 2);
                if (Application.file().exists(strFileExists))
                {

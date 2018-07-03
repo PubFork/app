@@ -59,70 +59,51 @@ namespace file
 
 
 
-   bool system::exists(const ::file::path & pszPath, ::aura::application * papp)
+   bool system::exists(::file::path path, ::aura::application * papp)
    {
 
-      return exists(pszPath, NULL, papp);
+      path = Sys(papp).defer_process_matter_path(path, papp);
+
+      return exists(path, NULL, papp);
 
    }
 
 
-   bool system::exists(const ::file::path & strPath,var * pvarQuery,::aura::application * papp)
+   bool system::exists(::file::path path,var * pvarQuery,::aura::application * papp)
    {
 
-      if (::str::begins(strPath, astr.strHttpProtocol) || ::str::begins(strPath, astr.strHttpsProtocol))
+      if (::str::begins(path, astr.strHttpProtocol) || ::str::begins(path, astr.strHttpsProtocol))
       {
 
          property_set set(papp);
 
-         return App(papp).http().exists(strPath, pvarQuery, set);
+         return App(papp).http().exists(path, pvarQuery, set);
 
       }
-
 
       if (::get_thread() != NULL && ::get_thread()->m_bZipIsDir)
       {
 
-         strsize iFind = ::str::find_file_extension("zip:", strPath);
+         strsize iFind = ::str::find_file_extension("zip:", path);
 
          ::zip::util ziputil;
 
          if (iFind >= 0)
          {
 
-            if (!exists(strPath.Mid(0, iFind + 4), papp))
+            if (!exists(path.Mid(0, iFind + 4), papp))
                return false;
 
-            return ziputil.exists(papp, strPath);
+            return ziputil.exists(papp, path);
 
          }
 
-
       }
 
-
-
-
-      //if (!papp->m_paurasystem->dir().name_is(strPath, papp))
-      //   return false;
-
-#ifdef WINDOWS
-
-
-      return file_exists_dup(strPath) != FALSE;
-
-#else
-
-      struct stat st;
-
-      if (stat(strPath, &st) != 0)
-         return false;
-
-      return S_ISREG(st.st_mode) || S_ISDIR(st.st_mode);
-
-#endif
+      return file_exists_dup(path) != FALSE;
 
    }
+
 
    var system::length(const ::file::path & pszPath,::aura::application * papp)
    {
@@ -513,6 +494,8 @@ restart:
       {
 
          string strFilePath(varFile.get_file_path());
+
+         strFilePath = System.defer_process_matter_path(strFilePath, papp);
 
          if (::get_thread() != NULL && ::get_thread()->m_bZipIsDir && (::str::find_file_extension("zip:", strFilePath) >= 0))
          {
@@ -2473,13 +2456,13 @@ restart:
 #else
                strFile.replace("://", "_/");
 #endif
-               strFile = System.dir().appdata() / "cache" / strFile + ".local_copy";
+               strFile = System.dir().cache() / strFile + ".local_copy";
 
                single_lock sl(System.http().m_pmutexDownload, true);
 
                if ((nOpenFlags & ::file::no_cache) == 0
-                   && App(papp).file().exists(strFile)
-                   && !(System.http().m_straDownloading.contains(strPath) || System.http().m_straExists.contains(strPath)))
+                     && App(papp).file().exists(strFile)
+                     && !(System.http().m_straDownloading.contains(strPath) || System.http().m_straExists.contains(strPath)))
                {
 
                   sl.unlock();
@@ -2509,7 +2492,7 @@ restart:
                   }
                   catch (...)
                   {
-                     
+
                   }
 
                }
@@ -2670,9 +2653,11 @@ restart:
             else
             {
 
-               ::file::path pathUrl = App(papp).dir().matter(strPath);
+               strPath = App(papp).dir().matter(strPath);
 
-               spfile = get_file(pathUrl, nOpenFlags, &cres, papp);
+               strPath = Sys(papp).get_matter_cache_path(strPath);
+
+               spfile = get_file(strPath, nOpenFlags, &cres, papp);
 
             }
 

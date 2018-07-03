@@ -420,6 +420,7 @@ namespace file
 
    }
 
+
    patha path::operator / (const stringa & stra) const
    {
 
@@ -435,6 +436,7 @@ namespace file
       return patha;
 
    }
+
 
    path path::operator / (const path & path) const
    {
@@ -470,6 +472,7 @@ namespace file
       return ::file::path(strPath + str, m_epath, path.m_iDir);
 
    }
+
 
    path path::operator / (const string & str) const
    {

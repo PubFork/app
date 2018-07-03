@@ -15,6 +15,8 @@ HICON load_icon(::aura::application * papp, stringa & straMatter, string strIcon
 
       path = App(papp).dir().matter(path / strIcon);
 
+      path = Sys(papp).get_matter_cache_path(path);
+
       hicon = (HICON)LoadImage(NULL, path, IMAGE_ICON, cx, cy, LR_LOADFROMFILE);
 
       if (hicon != NULL)

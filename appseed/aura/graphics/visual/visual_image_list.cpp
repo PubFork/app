@@ -251,7 +251,7 @@ int32_t image_list::add(::visual::icon * picon, int iItem)
 }
 
 
-int32_t image_list::add_icon(const char * psz, int iItem)
+int32_t image_list::add_icon(var varFile, int iItem)
 {
 
    ::visual::icon icon(get_app());
@@ -260,7 +260,7 @@ int32_t image_list::add_icon(const char * psz, int iItem)
 
    int32_t iSize = MIN(m_size.cx, m_size.cy);
 
-   icon.m_picon = (void *) (HICON) ::LoadImage(NULL, psz, IMAGE_ICON, iSize, iSize, LR_LOADFROMFILE);
+   icon.m_picon = (void *) (HICON) ::LoadImage(NULL, varFile.get_file_path(), IMAGE_ICON, iSize, iSize, LR_LOADFROMFILE);
 
 #endif
 
@@ -277,12 +277,12 @@ int32_t image_list::add_matter_icon(const char * pszMatter, int iItem)
 }
 
 
-int32_t image_list::add_file(const char * lpcsz, int iItem)
+int32_t image_list::add_file(var varFile, int iItem)
 {
 
    ::visual::dib_sp dib(allocer());
 
-   if(!dib.load_from_file(lpcsz))
+   if(!dib.load_from_file(varFile))
    {
 
       return -1;
@@ -325,14 +325,14 @@ int32_t image_list::add_dib(::draw2d::dib * pdib, int x, int y, int iItem)
 int32_t image_list::add_matter(const char * lpcsz, ::aura::application * papp, int iItem)
 {
 
-   string strMatter;
+   ::file::path path;
 
    if(papp == NULL)
    {
 
       auto & dir = Application.dir();
 
-      strMatter = dir.matter(lpcsz);
+      path = dir.matter(lpcsz);
 
    }
    else
@@ -340,11 +340,11 @@ int32_t image_list::add_matter(const char * lpcsz, ::aura::application * papp, i
 
       auto & dir = Sess(papp).dir();
 
-      strMatter = dir.matter(lpcsz);
+      path = dir.matter(lpcsz);
 
    }
 
-   return add_file(strMatter, iItem);
+   return add_file(path, iItem);
 
 }
 

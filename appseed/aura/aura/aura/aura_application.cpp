@@ -89,18 +89,18 @@ namespace aura
 
 
    application::application() :
-   ::object(this),
-   ::thread(this),
+      ::object(this),
+      ::thread(this),
       m_allocer(this),
       m_mutexMatterLocator(this),
       m_mutexStr(this)
    {
-      
+
       if(m_pauraapp == NULL)
       {
-         
+
          m_pauraapp = this;
-         
+
       }
 
       m_strBuild = "installed";
@@ -3789,7 +3789,7 @@ retry_license:
 
       m_dwAlive = ::get_tick_count();
 
-      m_straMatterLocator.add_unique(System.dir_appmatter_locator(this));
+      add_matter_locator(this);
 
       if (!ca_init1())
       {
@@ -7267,6 +7267,27 @@ run:
 
    }
 
+
+   void application::add_matter_locator(string strMatter)
+   {
+
+      m_straMatter.add(strMatter);
+
+   }
+
+
+   void application::add_matter_locator(::aura::application * papp)
+   {
+
+      ::file::path pathMatter;
+
+      string strMatter;
+
+      strMatter = System.dir_appmatter_locator(this);
+
+      add_matter_locator(strMatter);
+
+   }
 
 
 } // namespace aura

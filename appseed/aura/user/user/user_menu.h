@@ -117,7 +117,7 @@ namespace user
 
       virtual bool load_menu(::xml::node * pnode);
 
-      virtual bool load_xml_menu(const char * pszMatter);
+      virtual bool load_xml_menu(var varFile);
 
       virtual bool load_xml_string_menu(const char * pszString);
 
