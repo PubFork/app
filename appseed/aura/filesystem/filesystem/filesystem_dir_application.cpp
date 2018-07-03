@@ -29,18 +29,34 @@ namespace file
       }
 
 
-      ::file::path application::locale_schema(const string & pszLocale,const string & pszStyle)
+      //stringa application::locale_schema_matter(string & strLocale, const string & strStyle)
+      //{
+
+      //   return m_pauraapp->m_paurasystem->m_spdir->locale_schema_matter(get_app(), strLocale, strStyle);
+
+      //}
+
+
+      //stringa application::locale_schema_matter(string & strLocale, const string & strStyle, const string & pathRoot, const ::file::path & pathDomain)
+      //{
+
+      //   return m_pauraapp->m_paurasystem->m_spdir->locale_schema_matter(get_app(), strLocale, strStyle, pathRoot, pathDomain);
+
+      //}
+
+
+      string application::matter(const ::file::patha & patha, bool bDir)
       {
 
-         return m_pauraapp->m_paurasystem->m_spdir->locale_schema(get_app(), pszLocale, pszStyle);
+         return m_pauraapp->m_paurasystem->m_spdir->matter(get_app(), patha, bDir);
 
       }
 
 
-      stringa application::locale_schema_matter(const string & pszLocale,const string & pszStyle, const ::file::path & pszApp)
+      string application::matter(const ::file::path & path, bool bDir)
       {
 
-         return m_pauraapp->m_paurasystem->m_spdir->locale_schema_matter(get_app(), pszLocale, pszStyle, pszApp);
+         return m_pauraapp->m_paurasystem->m_spdir->matter(get_app(), path, bDir);
 
       }
 
@@ -56,37 +72,6 @@ namespace file
       }
 
 
-      string application::matter(const ::file::path & path, bool bDir, const ::file::path & pathRoot,const ::file::path & pathApp)
-      {
-
-         string str = path;
-
-         ::str::begins_eat_ci(str, "matter://");
-
-         return m_pauraapp->m_paurasystem->m_spdir->matter(get_app(), str, bDir, pathRoot, pathApp);
-
-      }
-
-      //::file::path application::matter(const string & str, const string & str2, bool bDir, const string & pszRoot, const string & pszApp)
-      //{
-      //   return m_pauraapp->m_paurasystem->m_spdir->matter(get_app(), str, str2, bDir, pszRoot, pszApp);
-      //}
-
-      //::file::path application::matter(const string & str, const string & psz, bool bDir, const string & pszRoot, const string & pszApp)
-      //{
-      //   return m_pauraapp->m_paurasystem->m_spdir->matter(get_app(), str, psz, bDir, pszRoot, pszApp);
-      //}
-
-      //::file::path application::matter(const string & psz, const string & str, bool bDir, const string & pszRoot, const string & pszApp)
-      //{
-      //   return m_pauraapp->m_paurasystem->m_spdir->matter(get_app(), psz, str, bDir, pszRoot, pszApp);
-      //}
-
-      //::file::path application::matter(const string & lpcsz, const string & lpcsz2, bool bDir, const string & pszRoot, const string & pszApp)
-      //{
-      //   return m_pauraapp->m_paurasystem->m_spdir->matter(get_app(), bDir, pszRoot, pszApp);
-      //}
-
       ::file::path application::matter_file(const ::file::path & lpcsz,  bool bDir)
       {
 
@@ -97,58 +82,11 @@ namespace file
       }
 
 
-      string application::matter(const ::file::patha & stra,bool bDir,const ::file::path & pszRoot,const ::file::path & pszApp)
-      {
-
-         return m_pauraapp->m_paurasystem->m_spdir->matter(get_app(), stra, bDir, pszRoot, pszApp);
-
-      }
-
-
-      //::file::path application::usersystemappdata(const string & lpcszPrefix)
-      //{
-      //   return m_pauraapp->m_paurasystem->m_spdir->usersystemappdata(get_app(), lpcszPrefix);
-      //}
-
-      //::file::path application::userappdata()
-      //{
-      //   return m_pauraapp->m_paurasystem->m_spdir->userappdata(get_app());
-      //}
-
-      //::file::path application::userdata()
-      //{
-      //   return m_pauraapp->m_paurasystem->m_spdir->userdata(get_app());
-      //}
-
-      //::file::path application::userfolder()
-      //{
-      //   return m_pauraapp->m_paurasystem->m_spdir->userfolder(get_app());
-      //}
-
-      //::file::path application::default_os_user_path_prefix()
-      //{
-      //   return m_pauraapp->m_paurasystem->m_spdir->default_os_user_path_prefix(get_app());
-      //}
-
-      //::file::path application::default_userappdata(const string & lpcszPrefix, const string & lpcszLogin)
-      //{
-      //   return m_pauraapp->m_paurasystem->m_spdir->default_userappdata(get_app(), lpcszPrefix, lpcszLogin);
-      //}
-
-      //::file::path application::default_userdata(const string & lpcszPrefix,const string & lpcszLogin)
-      //{
-      //   return m_pauraapp->m_paurasystem->m_spdir->default_userdata(get_app(), lpcszPrefix, lpcszLogin);
-      //}
-
-      //::file::path application::default_userfolder(const string & lpcszPrefix,const string & lpcszLogin)
-      //{
-      //   return m_pauraapp->m_paurasystem->m_spdir->default_userfolder(get_app(), lpcszPrefix, lpcszLogin);
-      //}
-
-
       ::file::path application::userquicklaunch()
       {
+
          return m_pauraapp->m_paurasystem->m_spdir->userquicklaunch(get_app());
+
       }
 
 

@@ -1635,162 +1635,6 @@ namespace aura
    }
 
 
-//   ::file::path system::get_ca2_module_folder()
-//   {
-//
-//      single_lock sl(m_pmutex,true);
-//
-//      return m_pathCa2ModuleFolder;
-//
-//   }
-//
-//
-//   ::file::path system::get_ca2_module_file_path()
-//   {
-//
-//      string strModuleFileName;
-//
-//#ifdef WINDOWSEX
-//
-//      unichar lpszModuleFilePath[MAX_PATH + 1];
-//
-//      if(GetModuleFileNameW(::GetModuleHandleA("core.dll"),lpszModuleFilePath,MAX_PATH + 1))
-//      {
-//
-//         strModuleFileName = lpszModuleFilePath;
-//
-//      }
-//
-//#elif defined(METROWIN)
-//
-//      _throw(todo(this));
-//
-//#elif defined(ANDROID)
-//
-//      _throw(todo(this));
-//
-//#else
-//
-//#if defined(LINUX)
-//
-//      {
-//
-//         void * handle = dlopen("core.so",0);
-//
-//         if(handle == NULL)
-//            return "";
-//
-//         link_map * plm;
-//
-//         dlinfo(handle,RTLD_DI_LINKMAP,&plm);
-//
-//         strModuleFileName = plm->l_name;
-//
-//         dlclose(handle);
-//
-//         //         m_strCa2ModuleFolder = dir::name(strModuleFileName);
-//
-//      }
-//
-//#else
-//
-//      {
-//
-//         char * pszCurDir = getcwd(NULL,0);
-//
-//         string strCurDir = pszCurDir;
-//
-//         free(pszCurDir);
-//
-//         strModuleFileName = strCurDir,"libbase.dylib");
-//
-//         if(Application.file().exists(strModuleFileName))
-//         {
-////            m_strCa2ModuleFolder = strCurDir;
-//            goto finishedCa2Module;
-//         }
-//
-//         strModuleFileName = m_strModuleFolder,"libbase.dylib");
-//
-//         if(Application.file().exists(strModuleFileName))
-//         {
-////            m_strCa2ModuleFolder = m_strModuleFolder;
-//            goto finishedCa2Module;
-//         }
-//
-//         strModuleFileName = Application.dir_pathfind(getenv("LD_LIBRARY_PATH"),"libbase.dylib","rfs"); // readable - normal file - non zero sized
-//
-//         if(Application.file().exists(strModuleFileName))
-//         {
-////            m_strCa2ModuleFolder = System.dir().name(strModuleFileName);
-//            goto finishedCa2Module;
-//         }
-//
-//      }
-//
-//   finishedCa2Module:;
-//
-//#endif
-//
-//#endif
-//
-//      return strModuleFileName;
-//
-//
-//   }
-
-
-   //::file::path system::get_module_folder()
-   //{
-
-   //   return m_pathModuleFolder;
-
-   //}
-
-
-   //::file::path system::get_module_file_path()
-   //{
-
-
-   //}
-
-
-   //::file::path system::get_module_title()
-   //{
-
-   //   return get_module_file_path().title();
-
-   //}
-
-
-   //::file::path system::get_module_name()
-   //{
-
-   //   return get_module_file_path().name();
-
-   //}
-
-   //colorertake5::ParserFactory & system::parser_factory()
-   //{
-
-   //   if(m_pparserfactory == NULL)
-   //   {
-
-   //      m_pparserfactory = new colorertake5::ParserFactory(this);
-
-   //   }
-
-   //   return *m_pparserfactory;
-
-   //}
-
-
-   string system::dir_appmatter_locator(::aura::application * papp)
-   {
-
-      return dir().appmatter_locator(papp);
-
-   }
 
 
    string system::crypto_md5_text(const string & str)
@@ -2132,9 +1976,14 @@ RetryBuildNumber:
    ::file::path system::get_matter_path(string strMatter)
    {
 
-      ::str::begins_eat_ci(strMatter, "appmatter://");
+      if (::str::begins_eat_ci(strMatter, "appmatter://"))
+      {
 
-      return dir().install() / strMatter;
+         return dir().install() / strMatter;
+
+      }
+
+      return strMatter;
 
    }
 
@@ -2142,71 +1991,83 @@ RetryBuildNumber:
    ::file::path system::get_matter_cache_path(string strMatter)
    {
 
-      ::file::path path = get_matter_path(strMatter);
 
-      if (path.begins_ci("http://") || path.begins_ci("https://"))
+      if (::str::begins_eat_ci(strMatter, "appmatter://"))
       {
 
-         ::file::path pathCache = dir().cache() / strMatter;
-
-         ::str::begins_eat_ci(strMatter, "appmatter://");
-
-         ::file::path pathMeta = pathCache + ".meta_information";
-
-         string strFirstLine = file_line_dup(pathMeta, 0);
-
-         if (strFirstLine == "directory" && dir::is(pathCache))
+         if (System.m_bMatterFromHttpCache)
          {
+
+            ::file::path path = "https://server.ca2.cc/appmatter" / strMatter;
+
+            ::file::path pathCache = dir().cache() / strMatter;
+
+            ::str::begins_eat_ci(strMatter, "appmatter://");
+
+            ::file::path pathMeta = pathCache + ".meta_information";
+
+            string strFirstLine = file_line_dup(pathMeta, 0);
+
+            if (strFirstLine == "directory" && dir::is(pathCache))
+            {
+
+               return pathCache;
+
+            }
+            else if (strFirstLine == "file" && file_exists_dup(pathCache))
+            {
+
+               return pathCache;
+
+            }
+
+            if (file().exists(path, this))
+            {
+
+               file_set_line_dup(pathMeta, 0, "file");
+
+               property_set set;
+
+               set["raw_http"] = true;
+
+               set["disable_common_name_cert_check"] = true;
+
+               http().download(pathCache, path, set);
+
+            }
+            else if (dir().is(path, this))
+            {
+
+               file_set_line_dup(pathMeta, 0, "directory");
+
+               dir().mk(pathCache, this);
+
+            }
+            else
+            {
+
+               if (file_delete_dup(pathMeta))
+               {
+
+                  file_put_contents_dup(pathMeta, "");
+
+               }
+
+            }
 
             return pathCache;
-
-         }
-         else if (strFirstLine == "file" && file_exists_dup(pathCache))
-         {
-
-            return pathCache;
-
-         }
-
-         if (file().exists(path, this))
-         {
-
-            file_set_line_dup(pathMeta, 0, "file");
-
-            property_set set;
-
-            set["raw_http"] = true;
-
-            set["disable_common_name_cert_check"] = true;
-
-            http().download(pathCache, path, set);
-
-         }
-         else if (dir().is(path, this))
-         {
-
-            file_set_line_dup(pathMeta, 0, "directory");
-
-            dir().mk(pathCache, this);
 
          }
          else
          {
 
-            if (file_delete_dup(pathMeta))
-            {
-
-               file_put_contents_dup(pathMeta, "");
-
-            }
+            return dir().install() / strMatter;
 
          }
 
-         return pathCache;
-
       }
 
-      return path;
+      return strMatter;
 
    }
 

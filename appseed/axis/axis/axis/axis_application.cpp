@@ -264,11 +264,15 @@ namespace axis
 
       if(strApp.is_empty())
       {
-         strLocator = System.dir().appmatter_locator(this);
+
+         strLocator = matter_locator(this);
+
       }
       else
       {
-         strLocator = System.dir().appmatter_locator(strApp);
+
+         strLocator = matter_locator(strApp);
+
       }
 
       if(pszId.is_empty())
@@ -289,7 +293,9 @@ namespace axis
       }
 
       ::xml::document doc(get_app());
-      string strFilePath = System.dir().matter_from_locator(Sess(this).str_context(),strLocator,strMatter);
+
+      string strFilePath = System.dir().matter_from_locator(this, strLocator, { strLocator }, strMatter);
+
       if(!System.file().exists(strFilePath,this))
       {
          //try

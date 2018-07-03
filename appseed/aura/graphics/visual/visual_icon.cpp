@@ -117,6 +117,8 @@ namespace visual
 
 #ifdef WINDOWSEX
 
+      strPath = System.defer_process_matter_path(strPath, get_app());
+
       int_array ia;
 
       ia.add(16);
@@ -144,7 +146,6 @@ namespace visual
          }
 
       }
-
 
       return m_picon != NULL;
 

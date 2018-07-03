@@ -30,10 +30,10 @@ namespace file
          virtual ~application();
 
 
-         virtual ::file::path locale_schema(const string & pszLocale = cnull,const string & pszStyle = cnull);
-         virtual stringa locale_schema_matter(const string & pszLocale = cnull,const string & pszStyle = cnull, const ::file::path & pszApp = cnull);
-         virtual string matter(const ::file::path & path, bool bDir = false,const ::file::path & pszRoot = cnull,const ::file::path & pszApp = cnull);
-         virtual string matter(const ::file::patha & stra, bool bDir = false,const ::file::path & pszRoot = cnull,const ::file::path & pszApp = cnull);
+         //virtual stringa locale_schema_matter(string & strLocale, const string & strStyle);
+         //virtual stringa locale_schema_matter(string & strLocale, const string & strStyle, const string & pathRoot, const ::file::path & pathDomain);
+         virtual string matter(const ::file::patha & patha, bool bDir = false);
+         virtual string matter(const ::file::path & path, bool bDir = false);
 
          virtual void   matter_ls(const ::file::path & str, ::file::patha & stra);
          virtual ::file::path matter_file(const ::file::path & path,bool bDir = false);

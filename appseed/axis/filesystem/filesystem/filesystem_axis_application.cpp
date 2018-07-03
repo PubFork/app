@@ -286,6 +286,13 @@ namespace file
 
          }
 
+         if (varFile.m_etype == ::var::type_string)
+         {
+
+            varFile = System.defer_process_matter_path(varFile.get_file_path(), m_pauraapp);
+
+         }
+
          ::file::file_sp pfile = m_pauraapp->m_paxissystem->m_spfile->get_file(varFile,nOpenFlags,pfesp,m_pauraapp);
 
          if (pfile.is_set())

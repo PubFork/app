@@ -420,16 +420,6 @@ namespace aura
       virtual ::count get_application_count();
 
 
-      //virtual ::file::path get_ca2_module_folder();
-      //virtual ::file::path get_ca2_module_file_path();
-      //virtual ::file::path get_module_folder();
-      //virtual ::file::path get_module_file_path();
-      //virtual ::file::path get_module_title();
-      //virtual ::file::path get_module_name();
-
-
-      virtual string dir_appmatter_locator(::aura::application * papp);
-
       virtual string crypto_md5_text(const string & str);
 
       inline class ::http::system                  & http()

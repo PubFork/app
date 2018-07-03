@@ -3358,6 +3358,27 @@ retry_license:
    bool application::process_init()
    {
 
+      if (is_system() || is_session())
+      {
+
+         on_update_matter_locator();
+
+      }
+      else
+      {
+
+         stringa stra;
+
+         stra.explode("/", m_strAppId);
+
+         m_strRoot = stra[0];
+
+         m_strDomain = stra.slice(1).implode("/");
+
+         add_matter_locator(this);
+
+      }
+
       if (!m_bAppHasInstallerChangedProtected)
       {
 
@@ -3789,7 +3810,7 @@ retry_license:
 
       m_dwAlive = ::get_tick_count();
 
-      add_matter_locator(this);
+      //add_matter_locator(this);
 
       if (!ca_init1())
       {
@@ -5345,6 +5366,44 @@ retry_license:
          return ::file::path(strLocale) / get_schema();
 
       }
+
+   }
+
+
+   void application::matter_locator_locale_schema_matter(stringa & stra, const stringa & straMatterLocator, const string & strLocale, const string & strSchema)
+   {
+
+      for (auto & strMatterLocator : straMatterLocator)
+      {
+
+         stra.add_unique(::file::path(strMatterLocator) / get_locale_schema_dir(strLocale, strSchema));
+
+      }
+
+   }
+
+
+   void application::locale_schema_matter(stringa & stra, const stringa & straMatterLocator, const string & strLocale, const string & strSchema)
+   {
+
+      matter_locator_locale_schema_matter(stra, straMatterLocator, strLocale, strSchema);
+
+      ::aura::str_context * pcontext = Session.str_context();
+
+      for (int32_t i = 0; i < pcontext->localeschema().m_idaLocale.get_count(); i++)
+      {
+
+         string strLocale = pcontext->localeschema().m_idaLocale[i];
+
+         string strSchema = pcontext->localeschema().m_idaSchema[i];
+
+         matter_locator_locale_schema_matter(stra, straMatterLocator, strLocale, strSchema);
+
+      }
+
+      matter_locator_locale_schema_matter(stra, straMatterLocator, "en", "en");
+
+      matter_locator_locale_schema_matter(stra, straMatterLocator, "_std", "_std");
 
    }
 
@@ -7268,10 +7327,60 @@ run:
    }
 
 
-   void application::add_matter_locator(string strMatter)
+   string application::matter_locator(string strApp)
    {
 
-      m_straMatter.add(strMatter);
+      string strMatterLocator = strApp;
+
+      if (!strMatterLocator.contains_ci("/appmatter/"))
+      {
+
+         stringa stra;
+
+         stra.explode("/", strMatterLocator);
+
+         if (stra.get_count() >= 2)
+         {
+
+            strMatterLocator = stra[0] + "/appmatter/" + stra.slice(1).implode("/");
+
+         }
+
+      }
+
+      return strMatterLocator;
+
+   }
+
+
+   string application::matter_locator(::aura::application * papp)
+   {
+
+      return ::file::path(papp->m_strRoot) / "appmatter" / papp->m_strDomain;
+
+   }
+
+
+   void application::add_matter_locator(string strApp)
+   {
+
+      string strMatterLocator = matter_locator(strApp);
+
+      m_straMatterLocatorPriority.add(strMatterLocator);
+
+      on_update_matter_locator();
+
+   }
+
+
+   void application::on_update_matter_locator()
+   {
+
+      m_straMatterLocator.remove_all();
+
+      m_straMatterLocator.add(m_straMatterLocatorPriority);
+
+      m_straMatterLocator.add(matter_locator("app/main"));
 
    }
 
@@ -7279,13 +7388,9 @@ run:
    void application::add_matter_locator(::aura::application * papp)
    {
 
-      ::file::path pathMatter;
+      string strMatterLocator = matter_locator(papp);
 
-      string strMatter;
-
-      strMatter = System.dir_appmatter_locator(this);
-
-      add_matter_locator(strMatter);
+      add_matter_locator(strMatterLocator);
 
    }
 

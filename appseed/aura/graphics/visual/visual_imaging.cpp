@@ -6011,6 +6011,8 @@ bool imaging::load_from_file(::draw2d::dib * pdib,var varFile,bool bCache)
 
       pathDib = varFile.get_file_path();
 
+      ::str::begins_eat_ci(pathDib, "appmatter://");
+
       pathDib.replace(":/","/_");
 
       pathDib.replace(":\\","/_/");

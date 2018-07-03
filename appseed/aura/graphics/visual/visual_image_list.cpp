@@ -260,7 +260,11 @@ int32_t image_list::add_icon(var varFile, int iItem)
 
    int32_t iSize = MIN(m_size.cx, m_size.cy);
 
-   icon.m_picon = (void *) (HICON) ::LoadImage(NULL, varFile.get_file_path(), IMAGE_ICON, iSize, iSize, LR_LOADFROMFILE);
+   ::file::path path = varFile.get_file_path();
+
+   path = System.defer_process_matter_path(path, get_app());
+
+   icon.m_picon = (void *) (HICON) ::LoadImage(NULL, path, IMAGE_ICON, iSize, iSize, LR_LOADFROMFILE);
 
 #endif
 

@@ -922,25 +922,6 @@ namespace user
 
                str.trim();
 
-               /*HICON hicon16 = (HICON) ::LoadImage(NULL, Application.dir().matter(str + "/mainframe/icon.ico"), IMAGE_ICON, 16, 16, LR_LOADFROMFILE);
-               HICON hicon48 = (HICON) ::LoadImage(NULL, Application.dir().matter(str + "/mainframe/icon.ico"), IMAGE_ICON, 48, 48, LR_LOADFROMFILE);
-               synch_lock sl1(m_pil48Hover->m_pmutex);
-               synch_lock sl2(m_pil48->m_pmutex);
-               iImage = m_pil16->add_icon_os_data(hicon16);
-               m_pil48Hover->add_icon_os_data(hicon48);
-
-               if (crBk == 0)
-               {
-               Application.imaging().Createcolor_blend_ImageList(
-               m_pil48,
-               m_pil48Hover,
-               RGB(255, 255, 240),
-               64);
-               }
-               else
-               {
-               *m_pil48 = *m_pil48Hover;
-               }*/
 
             }
 
@@ -1342,6 +1323,8 @@ namespace user
          auto iaSize = m_iaSize;
 
          sl.unlock();
+
+         path = System.get_matter_cache_path(path);
 
          for (auto iSize : m_iaSize)
          {

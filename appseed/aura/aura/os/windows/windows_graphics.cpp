@@ -33,7 +33,6 @@ HICON load_icon(::aura::application * papp, stringa & straMatter, string strIcon
 }
 
 
-
 CLASS_DECL_AURA bool os_init_imaging()
 {
 

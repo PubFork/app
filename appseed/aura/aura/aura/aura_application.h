@@ -40,8 +40,8 @@ namespace aura
 
 
 
-
-      stringa                                         m_straMatter;
+      stringa                                         m_straMatterLocatorPriority;
+      stringa                                         m_straMatterLocator;
 
 
 
@@ -136,8 +136,6 @@ namespace aura
       virtual ~application();
 
 
-      virtual void add_matter_locator(string strMatter);
-      virtual void add_matter_locator(::aura::application * papp);
 
       ::draw2d::dib_sp get_matter_dib(string strMatter);
 
@@ -480,7 +478,6 @@ namespace aura
 
       virtual bool process_command(::command::command * pcommand);
 
-      virtual string http_get_locale_schema(const char * pszUrl,const char * pszLocale,const char * pszSchema);
 
       virtual sp(::message::base) get_message_base(LPMESSAGE lpmsg);
       virtual sp(::message::base) get_message_base(UINT message, WPARAM wparam, lparam lparam);
@@ -499,7 +496,21 @@ namespace aura
 
       virtual string get_locale();
       virtual string get_schema();
-      virtual ::file::path get_locale_schema_dir(const string & strLocale,const string & strSchema);
+
+      virtual string http_get_locale_schema(const char * pszUrl, const char * pszLocale, const char * pszSchema);
+
+      virtual string matter_locator(string strApp);
+      virtual string matter_locator(::aura::application * papp);
+
+      virtual void on_update_matter_locator();
+
+      virtual void add_matter_locator(string strApp);
+      virtual void add_matter_locator(::aura::application * papp);
+
+      virtual void locale_schema_matter(stringa & stra, const stringa & straMatterLocator, const string & strLocale, const string & strSchema);
+      virtual void matter_locator_locale_schema_matter(stringa & stra, const stringa & straMatterLocator, const string & strLocale, const string & strSchema);
+
+      virtual ::file::path get_locale_schema_dir(const string & strLocale, const string & strSchema);
       virtual ::file::path get_locale_schema_dir(const string & strLocale);
       virtual ::file::path get_locale_schema_dir();
 
@@ -512,21 +523,8 @@ namespace aura
       virtual void fill_locale_schema(::str::international::locale_schema & localeschema);
       virtual void fill_locale_schema(::str::international::locale_schema & localeschema,const string & pszLocale,const string & pszSchema);
 
-
-      //virtual void defer_add_thread_run_wait(sync_object_ptra & soa) override;
-
-
-      //DECL_GEN_SIGNAL(_001OnApplicationRequest);
-
-
-
-
-
-
-
       virtual bool platform_open_by_file_extension(index iEdge, const char * pszPathName,application_bias * pbiasCreate = NULL);
       virtual bool platform_open_by_file_extension(index iEdge,::create * pcc);
-
 
       virtual sp(::aura::application) instantiate_application(const char * pszAppId, application_bias * pbias);
       virtual sp(::aura::application) create_application(const char * pszAppId, bool bSynch, application_bias * pbias);

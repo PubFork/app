@@ -58,7 +58,6 @@ namespace file
    }
 
 
-
    bool system::exists(::file::path path, ::aura::application * papp)
    {
 
