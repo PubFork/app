@@ -1378,6 +1378,8 @@ end:
          else
          {
 
+            strDir = System.get_matter_cache_path(strDir);
+
             stra = listing(papp).ls(strDir);
 
          }
