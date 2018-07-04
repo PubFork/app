@@ -2,25 +2,32 @@
 
 
 class serializable;
-
+struct POINTD;
 
 #define FIRST_VERSION 0
 
 
 class CLASS_DECL_AURA serialize :
-   virtual public object
+   virtual public ::file::istream,
+   virtual public ::file::ostream
 {
 public:
 
 
-   index    m_iVersion;
-   bool     m_bStoring;
+   index          m_iVersion;
+   bool           m_bStoring;
 
 
    serialize(::aura::application * papp);
    virtual ~serialize();
 
-   virtual void operator()(serializable & serializable);
+   virtual void stream(serializable & serializable);
+
+   virtual void stream_file(::file::path path, ::serializable & serializable);
+
+   virtual void stream_link(serializable & serializable);
+
+   virtual ::file::path get_link_path(string strLink);
 
    bool is_version(index i);
 
@@ -31,7 +38,7 @@ public:
    }
 
    template < typename ARRAY >
-   void serialize_array(ARRAY & a)
+   void stream_array(ARRAY & a)
    {
       for (auto & element : a)
       {
@@ -39,48 +46,46 @@ public:
       }
    }
 
-   virtual void operator()(void * p, memory_size_t s) = 0;
+   template < typename STREAMABLE >
+   void operator()(STREAMABLE & streamable)
+   {
 
-   virtual void operator()(RECTD & rectd);
-   virtual void operator()(double & d);
-   virtual void operator()(bool & b);
-   virtual void operator()(POINTD & d);
+      if (m_bStoring)
+      {
+
+         *this << streamable;
+
+      }
+      else
+      {
+
+         *this >> streamable;
+
+      }
+
+   }
+
+   virtual void stream(void * p, memory_size_t s);
+   virtual void write(void * p, memory_size_t s);
+   virtual memory_size_t read(void * p, memory_size_t s);
+
+   //virtual void operator()(RECTD & rectd);
+   //virtual void operator()(double & d);
+   //virtual void operator()(bool & b);
+   //virtual void operator()(POINTD & d);
 
 };
 
 
 class CLASS_DECL_AURA serializable :
-   virtual public object
+   virtual public ::object
 {
 public:
 
 
-   virtual void operator()(serialize & serialize);
+   virtual void stream(serialize & serialize);
 
 
 };
-
-
-namespace file
-{
-
-
-   class CLASS_DECL_AURA serialize :
-      virtual public ::serialize
-   {
-   public:
-
-      ::file::file_sp   m_pfile;
-
-      serialize(::aura::application * papp);
-      virtual ~serialize();
-
-      virtual void operator()(void * p, memory_size_t s);
-
-   };
-
-
-} // namespace file
-
 
 

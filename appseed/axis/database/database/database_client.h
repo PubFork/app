@@ -120,9 +120,9 @@ namespace database
       virtual bool data_set(class id, const char * lpsz, update_hint * puh = NULL);
       virtual bool data_set(class id, const unichar * lpsz, update_hint * puh = NULL);
       virtual bool data_set(class id, ::file::file & obj, update_hint * puh = NULL);
-      virtual bool data_set(class id, ::file::serializable & obj, update_hint * puh = NULL);
+      virtual bool data_set(class id, ::serializable & obj, update_hint * puh = NULL);
       virtual bool data_set(class id, ::file::istream & obj, update_hint * puh = NULL);
-//      virtual bool data_set(class id, ::file::serializable & obj, update_hint * puh = NULL);
+//      virtual bool data_set(class id, ::serializable & obj, update_hint * puh = NULL);
       //virtual bool data_set(class id, ::core::plain_text_istream & obj, update_hint * puh = NULL);
       virtual bool data_set(selection & selection, const char * lpsz, update_hint * puh = NULL);
       virtual bool data_set(selection & selection, var & var, update_hint * puh = NULL);
@@ -159,9 +159,9 @@ namespace database
 #endif
       virtual bool data_get(class id, string & str);
       virtual bool data_get(class id, ::file::file & obj);
-      virtual bool data_get(class id, ::file::serializable & obj);
+      virtual bool data_get(class id, ::serializable & obj);
       virtual bool data_get(class id, ::file::ostream & obj);
-//      virtual bool data_get(class id, ::file::serializable & obj);
+//      virtual bool data_get(class id, ::serializable & obj);
       //virtual bool data_get(class id, ::core::plain_text_ostream & obj);
 //      virtual bool data_get(class id dataid, class id, string & str);
 

@@ -217,8 +217,8 @@ template < class TYPE, class ARRAY_TYPE = raw_ref_array < TYPE * > >
 }
 
 
-CLASS_DECL_AURA bool file_put(const char * path, ::file::serializable & s, ::aura::application * papp = NULL);
-CLASS_DECL_AURA bool file_as(::file::serializable & s, const char * path, ::aura::application * papp = NULL);
+CLASS_DECL_AURA bool file_put(const char * path, ::serializable & s, ::aura::application * papp = NULL);
+CLASS_DECL_AURA bool file_as(::serializable & s, const char * path, ::aura::application * papp = NULL);
 
 
 template < class ARRAY >

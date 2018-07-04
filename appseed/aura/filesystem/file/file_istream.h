@@ -1,12 +1,14 @@
 #pragma once
 
 
+class serializable;
+
+
 namespace file
 {
 
    class writer;
    class reader;
-   class serializable;
 
 
    typedef smart_pointer < reader > istream_sp;
@@ -66,7 +68,7 @@ namespace file
       inline istream & operator >> (LPRECT            lprect          ) { read(lprect         ); return *this; }
       inline istream & operator >> (SIZE            & size            ) { read(size           ); return *this; }
       inline istream & operator >> (sp(type)        & info            ) { read(info           ); return *this; }
-      inline istream & operator >> (serializable    & serializable    ) { read(serializable   ); return *this; }
+      inline istream & operator >> (::serializable  & serializable    ) { read(serializable   ); return *this; }
       inline istream & operator >> (id              & id              ) { read(id             ); return *this; }
       inline istream & operator >> (var             & var             ) { read(var            ); return *this; }
       inline istream & operator >> (property        & property        ) { read(property       ); return *this; }
@@ -99,7 +101,7 @@ namespace file
       virtual void read (LPRECT lprect);
       virtual void read (SIZE & size);
       virtual void read (sp(type) info);
-      virtual void read (serializable & serializable);
+      virtual void read (::serializable & serializable);
       virtual void read (id & id);
       virtual void read (var & var);
       virtual void read (property & property);

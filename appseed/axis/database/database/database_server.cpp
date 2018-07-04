@@ -73,7 +73,7 @@ namespace database
 
    }
 
-   bool server::data_server_load(client * pclient, class id id, ::file::serializable & obj, update_hint * puh)
+   bool server::data_server_load(client * pclient, class id id, ::serializable & obj, update_hint * puh)
    {
 
       memory_file file(get_app());
@@ -92,7 +92,7 @@ namespace database
 
          file.seek_to_begin();
 
-         obj.read(stream);
+         stream >> obj;
 
       }
       catch(...)
@@ -147,7 +147,7 @@ namespace database
       return var_save(pclient, id,  istream, puh);
    }
 
-   bool server::data_server_save(client * pclient, class id id, ::file::serializable & obj, update_hint * puh)
+   bool server::data_server_save(client * pclient, class id id, ::serializable & obj, update_hint * puh)
    {
 
       memory_file file(get_app());
@@ -160,7 +160,7 @@ namespace database
 
 #endif
 
-      obj.write(stream);
+      stream << obj;
 
       file.seek_to_begin();
 

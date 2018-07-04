@@ -2,8 +2,8 @@
 
 template < class T, class T_to_T = map < T, T, T, T > >
 class  biunique :
-   public object,
-   public ::file::serializable
+   virtual public ::object,
+   virtual public ::serializable
 {
 public:
    biunique(::aura::application * papp = NULL);

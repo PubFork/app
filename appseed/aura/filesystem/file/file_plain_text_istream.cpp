@@ -144,7 +144,8 @@ namespace file
 
    void plain_text_istream::read (serializable & serializable)
    {
-      serializable.read(*this);
+      
+      *this >> serializable;
 
    }
 

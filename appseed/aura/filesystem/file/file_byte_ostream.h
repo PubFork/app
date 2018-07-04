@@ -13,8 +13,6 @@ namespace file
 
    class byte_ostream;
    class istream;
-   class serializable;
-
 
 
    class CLASS_DECL_AURA byte_ostream :

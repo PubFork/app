@@ -956,10 +956,10 @@ void var::read(::file::istream & is)
       {
          _throw(simple_exception(get_app(), "object allocation is not implemented"));
       }
-      ::file::serializable * pserializable = m_sp.cast < ::file::serializable >();
+      ::serializable * pserializable = m_sp.cast < ::serializable >();
       if(pserializable != NULL)
       {
-         pserializable->read(is);
+         is >> *pserializable;
       }
       else
       {
@@ -1038,11 +1038,11 @@ void var::write(::file::ostream & ostream) const
       sp(type) info(Sys(ostream.m_spfile->get_app()).get_type_info(typeid(*m_sp.m_p)));
       ostream << info;
 
-      ::file::serializable * pserializable = m_sp.cast < ::file::serializable > ();
+      ::serializable * pserializable = m_sp.cast < ::serializable > ();
 
       if(pserializable != NULL)
       {
-         pserializable->write(ostream);
+         ostream << *pserializable;
       }
       else
       {

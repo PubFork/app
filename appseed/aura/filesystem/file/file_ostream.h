@@ -67,7 +67,7 @@ namespace file
       inline ostream & operator << (const SIZE & size                    ) { write(size            ); return *this;}
       inline ostream & operator << (const sp(type) info                  ) { write(info            ); return *this;}
       inline ostream & operator << (const std_type_info & info           ) { write(info            ); return *this;}
-      inline ostream & operator << (const serializable & serializable    ) { write(serializable    ); return *this;}
+      inline ostream & operator << (const ::serializable & serializable  ) { write(serializable    ); return *this;}
       inline ostream & operator << (const char * psz                     ) { write(psz             ); return *this;}
       inline ostream & operator << (const id & id                        ) { write(id              ); return *this;}
       inline ostream & operator << (const var & var                      ) { write(var             ); return *this;}
@@ -105,7 +105,7 @@ namespace file
       virtual void write (const SIZE & size);
       virtual void write (const sp(type) info);
       virtual void write (const std_type_info & info);
-      virtual void write (const serializable & serializable);
+      virtual void write (const ::serializable & serializable);
       virtual void write (const char * psz);
       virtual void write (const id & id);
       virtual void write (const var & var);

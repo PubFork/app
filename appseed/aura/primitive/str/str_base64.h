@@ -1,5 +1,6 @@
 #pragma once
 
+class serializable;
 
 namespace str
 {
@@ -26,12 +27,12 @@ namespace str
       string encode(primitive::memory_base & storageBinary);
       string encode(byte * p, ::count ca);
       string encode(const char * psz);
-      string serialize(::file::serializable & serializable);
+      string serialize(::serializable & serializable);
 
       void decode(::file::ostream & ostreamBinary, ::file::istream & istreamBase64);
       void decode(primitive::memory_base & storageBinary, const char * pszBase64);
       string decode(const char * psz);
-      void unserialize(::file::serializable & serializable, const char * pszBase64);
+      void unserialize(::serializable & serializable, const char * pszBase64);
 
    
    };

@@ -7,7 +7,7 @@
 template < class ENUM >
 class flags :
    virtual public ::object,
-   virtual public ::file::serializable
+   virtual public ::serializable
 {
 public:
 

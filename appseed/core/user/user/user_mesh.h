@@ -237,7 +237,7 @@ namespace user
 
 
       class CLASS_DECL_CORE mesh_layout:
-         virtual public ::file::serializable
+         virtual public ::serializable
       {
       public:
          mesh_layout();
@@ -251,7 +251,7 @@ namespace user
       };
 
       class CLASS_DECL_CORE icon_layout:
-         virtual public ::file::serializable
+         virtual public ::serializable
       {
       public:
          icon_layout();

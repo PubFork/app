@@ -12,7 +12,7 @@ public:
 
 
    class get_fs_size :
-      public ::file::serializable
+      public ::serializable
    {
    public:
 

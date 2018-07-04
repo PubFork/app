@@ -528,3 +528,25 @@ inline point pointxy(LPCPOINT3D lppt)
 {
    return point(lppt->x, lppt->y);
 }
+
+
+
+inline ::file::ostream & operator << (::file::ostream & os, const pointd & p)
+{
+
+   os << p.x;
+   os << p.y;
+
+   return os;
+
+}
+
+inline ::file::istream & operator >> (::file::istream & is, pointd & p)
+{
+
+   is >> p.x;
+   is >> p.y;
+
+   return is;
+
+}

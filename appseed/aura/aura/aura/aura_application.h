@@ -146,8 +146,8 @@ namespace aura
       virtual bool app_data_set(class id id, ::file::ostream & os);
       virtual bool app_data_get(class id id, ::file::istream & is);
 
-      virtual bool app_data_set(class id id, ::file::serializable & obj);
-      virtual bool app_data_get(class id id, ::file::serializable & obj);
+      virtual bool app_data_set(class id id, ::serializable & obj);
+      virtual bool app_data_get(class id id, ::serializable & obj);
 
       virtual void install_message_routing(::message::sender * psender) override;
 
@@ -468,8 +468,8 @@ namespace aura
 
       // name by Mummi (Japanese -> Guddo : from English : Good, ca2 interpretation : Goods).
       // get/set serializables to user directory
-      bool gudo_get(const string & strKey,::file::serializable & obj);
-      bool gudo_set(const string & strKey,::file::serializable & obj);
+      bool gudo_get(const string & strKey,::serializable & obj);
+      bool gudo_set(const string & strKey,::serializable & obj);
 
 
       virtual bool assert_user_logged_in();

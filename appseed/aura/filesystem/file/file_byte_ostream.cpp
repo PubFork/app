@@ -277,11 +277,14 @@ namespace file
 
    }
 
+
    void byte_ostream:: write (serializable & serializable)
    {
-      serializable.write(*this);
+     
+      *this << serializable;
 
    }
+
 
    void byte_ostream:: write (const char * psz)
    {

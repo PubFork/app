@@ -68,7 +68,7 @@ namespace database
 
 
    class CLASS_DECL_AXIS field_properties :
-      virtual public ::file::serializable
+      virtual public ::serializable
    {
    public:
 
@@ -136,7 +136,7 @@ namespace database
 
    class CLASS_DECL_AXIS result_set :
       virtual public object,
-      virtual public ::file::serializable
+      virtual public ::serializable
    {
    public:
 

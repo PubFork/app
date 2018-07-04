@@ -1,6 +1,9 @@
 #pragma once
 
 
+#include "aura_serialize.h"
+
+
 namespace file
 {
 
@@ -9,17 +12,8 @@ namespace file
    class ostream;
 
 
-   class CLASS_DECL_AURA serializable
-   {
-   public:
 
 
-      virtual void write(ostream & ostream);
-      virtual void write(ostream & ostream) const;
-      virtual void read(istream & istream);
-
-
-   };
 
 
    namespace array
@@ -269,8 +263,8 @@ template < class POINTER, class ARRAY_TYPE = comparable_array < POINTER, POINTER
 }
 
 
-CLASS_DECL_AURA bool file_put(const char * path, ::file::serializable & s, ::aura::application * papp = NULL);
-CLASS_DECL_AURA bool file_as(::file::serializable & s, const char * path, ::aura::application * papp = NULL);
+CLASS_DECL_AURA bool file_put(const char * path, ::serializable & s, ::aura::application * papp = NULL);
+CLASS_DECL_AURA bool file_as(::serializable & s, const char * path, ::aura::application * papp = NULL);
 
 
 template < class ARRAY >

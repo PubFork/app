@@ -874,3 +874,27 @@ inline bool rect::intersects(LPCRECT lpRect) const NOTHROW
 
 }
 
+inline ::file::ostream & operator << (::file::ostream & os, const rectd & r)
+{
+
+   os << r.left;
+   os << r.top;
+   os << r.right;
+   os << r.bottom;
+   
+   return os;
+
+}
+
+
+inline ::file::istream & operator >> (::file::istream & is, rectd & r)
+{
+
+   is >> r.left;
+   is >> r.top;
+   is >> r.right;
+   is >> r.bottom;
+
+   return is;
+
+}

@@ -232,9 +232,11 @@ namespace file
    }
 
 
-   void istream::read (serializable & serializable)
+   void istream::read (::serializable & serializable)
    {
-      serializable.read(*this);
+      
+      *this >> serializable;
+
    }
 
 

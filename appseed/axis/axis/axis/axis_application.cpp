@@ -3762,7 +3762,7 @@ namespace axis
    }
 
 
-   bool application::app_data_set(class id id, ::file::serializable & obj)
+   bool application::app_data_set(class id id, ::serializable & obj)
    {
 
       return data_set(id, obj);
@@ -3770,7 +3770,7 @@ namespace axis
    }
 
 
-   bool application::app_data_get(class id id, ::file::serializable & obj)
+   bool application::app_data_get(class id id, ::serializable & obj)
    {
 
       return data_get(id, obj);

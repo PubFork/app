@@ -312,9 +312,11 @@ namespace file
 
    void byte_istream::read(serializable & serializable)
    {
-      serializable.read(*this);
+
+      *this >> serializable;
 
    }
+
 
    void byte_istream::read(id & id)
    {

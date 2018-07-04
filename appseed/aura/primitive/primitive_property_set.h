@@ -5,7 +5,7 @@
 // property set key is case insensitive
 class CLASS_DECL_AURA property_set :
    public property_map,
-   public ::file::serializable
+   public serializable
 {
 public:
 

@@ -200,10 +200,14 @@ namespace file
 
    }
 
+   
    void ostream:: write (const serializable & serializable)
    {
-      serializable.write(*this);
+
+      *this << serializable;
+
    }
+
 
    void ostream:: write (const char * psz)
    {

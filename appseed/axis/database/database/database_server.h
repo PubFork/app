@@ -27,9 +27,9 @@ namespace database
 
          virtual bool data_server_load       (client * pclient, class id id, var & var, update_hint * phint = NULL);
          virtual bool data_server_load       (client * pclient, class id id, ::file::ostream & ostream, update_hint * phint = NULL);
-         virtual bool data_server_load       (client * pclient, class id id, ::file::serializable & obj, update_hint * phint = NULL);
+         virtual bool data_server_load       (client * pclient, class id id, ::serializable & obj, update_hint * phint = NULL);
 //      virtual bool data_server_load       (client * pclient, class id id, ::core::plain_text_ostream & ostream, update_hint * phint = NULL);
-//      virtual bool data_server_load       (client * pclient, class id id, ::file::serializable & obj, update_hint * phint = NULL);
+//      virtual bool data_server_load       (client * pclient, class id id, ::serializable & obj, update_hint * phint = NULL);
 
 
 
@@ -39,9 +39,9 @@ namespace database
 
          virtual bool data_server_save       (client * pclient, class id id, var & var, update_hint * phint = NULL);
          virtual bool data_server_save       (client * pclient, class id id, ::file::istream & istream, update_hint * phint = NULL);
-         virtual bool data_server_save       (client * pclient, class id id, ::file::serializable & obj, update_hint * phint = NULL);
+         virtual bool data_server_save       (client * pclient, class id id, ::serializable & obj, update_hint * phint = NULL);
 //      virtual bool data_server_save       (client * pclient, class id id, ::core::plain_text_istream & istream, update_hint * phint = NULL);
-//      virtual bool data_server_save       (client * pclient, class id id, ::file::serializable & obj, update_hint * phint = NULL);
+//      virtual bool data_server_save       (client * pclient, class id id, ::serializable & obj, update_hint * phint = NULL);
 
 
 

@@ -411,7 +411,7 @@ namespace file
    }
 
 
-   bool application::save(var varFile,::file::serializable & o)
+   bool application::save(var varFile,::serializable & o)
    {
 
       sp(::memory_file) pfile = Application.file().get_file(varFile,::file::mode_write | ::file::type_binary | ::file::mode_create | ::file::defer_create_directory);
@@ -432,7 +432,7 @@ namespace file
    }
 
 
-   bool application::load(::file::serializable & o,var varFile)
+   bool application::load(::serializable & o,var varFile)
    {
 
       sp(::memory_file) pfile = Application.file().get_file(varFile,::file::mode_read | ::file::type_binary);

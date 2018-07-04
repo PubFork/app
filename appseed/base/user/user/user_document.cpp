@@ -523,7 +523,7 @@ namespace user
       try
       {
          wait_cursor wait(get_app());
-         read(is);     // load me
+         is >> *this;     // load me
          spfile->close();
       }
       catch (::exception::base & e)
@@ -602,7 +602,7 @@ namespace user
          else
          {
 
-            write(os);
+            os << *this;
 
          }
 

@@ -196,7 +196,7 @@ namespace file
    void plain_text_ostream:: write (serializable & serializable)
    {
 
-      serializable.write(*this);
+      *this << serializable;
 
    }
 

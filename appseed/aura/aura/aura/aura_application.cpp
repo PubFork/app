@@ -343,7 +343,7 @@ namespace aura
    }
 
 
-   bool application::app_data_set(class id id, ::file::serializable & obj)
+   bool application::app_data_set(class id id, ::serializable & obj)
    {
 
       return false;
@@ -351,7 +351,7 @@ namespace aura
    }
 
 
-   bool application::app_data_get(class id id, ::file::serializable & obj)
+   bool application::app_data_get(class id id, ::serializable & obj)
    {
 
       return false;
@@ -4989,7 +4989,7 @@ retry_license:
 
 
 
-   bool application::gudo_get(const string & strKey, ::file::serializable & obj)
+   bool application::gudo_get(const string & strKey, ::serializable & obj)
    {
 
       ::file::path strPath(strKey);
@@ -5016,7 +5016,7 @@ retry_license:
          try
          {
 
-            obj.read(is);
+            is >> obj;
 
          }
          catch (...)
@@ -5030,7 +5030,7 @@ retry_license:
 
    }
 
-   bool application::gudo_set(const string & strKey, ::file::serializable & obj)
+   bool application::gudo_set(const string & strKey, ::serializable & obj)
    {
 
       string strPath(strKey);
@@ -5057,7 +5057,7 @@ retry_license:
          try
          {
 
-            obj.write(os);
+            os << obj;
 
          }
          catch (...)

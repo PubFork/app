@@ -309,7 +309,7 @@ namespace str
 
    }
 
-   string base64::serialize(::file::serializable & serializable)
+   string base64::serialize(::serializable & serializable)
    {
 
       memory storageBinary;
@@ -318,7 +318,7 @@ namespace str
 
       ::file::byte_stream stream(&buf);
 
-      serializable.write(stream);
+      stream << serializable;
 
       buf.seek_to_begin();
 
@@ -333,7 +333,7 @@ namespace str
    }
 
 
-   void base64::unserialize(::file::serializable & serializable, const char * pszBase64)
+   void base64::unserialize(::serializable & serializable, const char * pszBase64)
    {
       
       string str(pszBase64);
@@ -352,7 +352,7 @@ namespace str
 
       buf.seek_to_begin();
 
-      serializable.read(stream);
+      stream >> serializable;
 
    }
 
