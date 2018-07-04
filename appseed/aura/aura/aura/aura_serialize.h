@@ -7,7 +7,7 @@ class serializable;
 #define FIRST_VERSION 0
 
 
-class CLASS_DECL_APP_CORE_TEXTFORMAT serialize :
+class CLASS_DECL_AURA serialize :
    virtual public object
 {
 public:
@@ -49,7 +49,7 @@ public:
 };
 
 
-class CLASS_DECL_APP_CORE_TEXTFORMAT serializable :
+class CLASS_DECL_AURA serializable :
    virtual public object
 {
 public:
@@ -65,7 +65,7 @@ namespace file
 {
 
 
-   class CLASS_DECL_APP_CORE_TEXTFORMAT serialize :
+   class CLASS_DECL_AURA serialize :
       virtual public ::serialize
    {
    public:

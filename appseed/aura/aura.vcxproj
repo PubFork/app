@@ -612,6 +612,7 @@
     </ClCompile>
     <ClCompile Include="aura\aura\aura_plex_heap1.cpp" />
     <ClCompile Include="aura\aura\aura_pointer.cpp" />
+    <ClCompile Include="aura\aura\aura_serialize.cpp" />
     <ClCompile Include="aura\aura\aura_simple_log.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
