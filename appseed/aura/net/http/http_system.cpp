@@ -21,21 +21,14 @@ namespace http
       m_pmutexProxy = NULL;
       m_pmutexDownload = NULL;
 
-
-
-
-
-
-
    }
 
 
    system::~system()
    {
 
-//      ::aura::del(m_phandler);
-
    }
+
 
    int32_t system::auto_config_proxy_count()
    {
@@ -90,6 +83,7 @@ namespace http
 //         Application.file().put_contents(System.dir().appdata()/"proxy.xml", "proxy");
 //      }
    }
+
 
    void system::defer_auto_initialize_proxy_configuration()
    {
@@ -233,8 +227,9 @@ namespace http
    system::proxy::proxy(::aura::application * papp) :
       ::object(papp)
    {
-   }
 
+
+   }
 
 
    ::http::system::proxy * system::get_proxy(const char * pszUrl)
@@ -294,13 +289,9 @@ namespace http
       string strHost;
 
       strHost = System.url().get_server(pszUrl);
+
       int32_t port = System.url().get_port(pszUrl);
 
-      /*         ipaddr_t l;
-            if (!Session.sockets().net().u2ip(strHost,l))
-            {
-               return false;
-            }*/
       ::net::address ad(strHost, port);
 
       strHost = ad.get_display_number();
@@ -317,7 +308,9 @@ namespace http
 
       if(var.compare_ci("DIRECT") == 0)
       {
+
          pproxy->m_bDirect = true;
+
       }
       else if(::str::begins_eat_ci(var, "PROXY"))
       {
@@ -336,6 +329,7 @@ namespace http
       return true;
 
    }
+
 
    void system::config_proxy(const char * pszUrl, ::sockets::http_tunnel * psocket)
    {
