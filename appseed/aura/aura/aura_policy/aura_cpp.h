@@ -2008,6 +2008,10 @@ CLASS_DECL_AURA ::aura::application * get_aura(void * p);
 
 #include "aura/user/user/user_controller.h"
 
+
+#include "aura/aura/aura/aura_serialize.h"
+
+
 #if !defined(METROWIN)
 
 #include "aura/aura/aura/aura_serial.h"

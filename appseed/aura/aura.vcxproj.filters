@@ -2786,6 +2786,9 @@
     <ClInclude Include="aura\os\windows\windows_windowing.h">
       <Filter>Header Files\aura\os\windows</Filter>
     </ClInclude>
+    <ClInclude Include="aura\aura\aura_serialize.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="multithreading\multithreading_condition.cpp">

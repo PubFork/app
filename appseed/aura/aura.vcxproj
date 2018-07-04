@@ -2511,6 +2511,7 @@
     <ClInclude Include="aura\aura\aura_restore.h" />
     <ClInclude Include="aura\aura\aura_savings.h" />
     <ClInclude Include="aura\aura\aura_serial.h" />
+    <ClInclude Include="aura\aura\aura_serialize.h" />
     <ClInclude Include="aura\aura\aura_session.h" />
     <ClInclude Include="aura\aura\aura_session_common.h" />
     <ClInclude Include="aura\aura\aura_session_heap.h" />
