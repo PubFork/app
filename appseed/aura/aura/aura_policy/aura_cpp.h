@@ -2056,6 +2056,9 @@ namespace user
 #include "aura/graphics/graphics.inl"
 
 
+#include "aura/filesystem/file/file_serializable.inl"
+
+
 
 
 

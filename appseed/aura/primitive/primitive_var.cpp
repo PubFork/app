@@ -925,7 +925,7 @@ void var::stream(serialize & serialize)
          serialize(memory());
          break;
       case type_stra:
-         ostream << stra();
+         serialize(stra());
          break;
       case type_propset:
          ostream << propset();
@@ -1023,12 +1023,12 @@ void var::stream(serialize & serialize)
       break;
       case type_stra:
       {
-         is >> stra();
+         serialize(stra());
       }
       break;
       case type_propset:
       {
-         is >> propset();
+         serialize(propset());
       }
       break;
       case type_id:
@@ -4695,3 +4695,28 @@ void var::_001Add(const stringa & straParam)
    stra().add_unique_ci(straParam);
 
 }
+
+
+
+
+CLASS_DECL_AURA serialize & operator << (serialize & s, var & var)
+{
+
+   var.stream(s);
+
+   return s;
+
+}
+
+
+CLASS_DECL_AURA serialize & operator >> (serialize & s, var & var)
+{
+
+   var.stream(s);
+
+   return s;
+
+}
+
+
+

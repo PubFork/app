@@ -229,6 +229,7 @@ public:
 
 
    reader(reader && reader);
+   reader(::aura::application * papp, index iVersion = FIRST_VERSION);
    reader(::file::file * pfile, index iVersion = FIRST_VERSION);
    virtual ~reader();
 
@@ -246,6 +247,7 @@ public:
 
 
    writer(writer && writer);
+   writer(::aura::application * papp, index iVersion = FIRST_VERSION);
    writer(::file::file * pfile, index iVersion = FIRST_VERSION);
    virtual ~writer();
 
@@ -287,6 +289,7 @@ class CLASS_DECL_AURA memory_reader :
 public:
 
 
+   memory_reader(memory_reader && reader);
    memory_reader(::aura::application * papp, index iVersion = FIRST_VERSION);
    virtual ~memory_reader();
 
@@ -303,6 +306,7 @@ class CLASS_DECL_AURA memory_writer :
 public:
 
 
+   memory_writer(memory_writer && writer);
    memory_writer(::aura::application * papp, index iVersion = FIRST_VERSION);
    virtual ~memory_writer();
 

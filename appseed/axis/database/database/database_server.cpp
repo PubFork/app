@@ -75,21 +75,17 @@ namespace database
    bool server::data_server_load(client * pclient, class id id, ::serializable & obj, update_hint * puh)
    {
 
-      memory_file file(get_app());
+      memory_reader reader(get_app());
 
-      if (!data_server_load(pclient, id, *file.get_memory(), puh) || file.get_length() <= 0)
+      if (!data_server_load(pclient, id, reader.memory(), puh))
       {
 
          return false;
 
       }
 
-      file.seek_begin();
-
       try
       {
-
-         reader reader(&file);
 
          reader(obj);
 
@@ -101,7 +97,7 @@ namespace database
 
       }
 
-      return file.get_position() == file.get_length();
+      return true;
 
    }
 

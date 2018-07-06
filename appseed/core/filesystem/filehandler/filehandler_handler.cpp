@@ -213,7 +213,7 @@ namespace filehandler
             ostream << (int32_t)iLevel;
             ostream << (int32_t) dynamic_cast <item *> (pitem->m_pitem.m_p)->m_etopictype;
             ostream << dynamic_cast <item *> (pitem->m_pitem.m_p)->m_strTopic;
-            ostream << dynamic_cast <item *> (pitem->m_pitem.m_p)->m_straApp;
+            serialize << dynamic_cast <item *> (pitem->m_pitem.m_p)->m_straApp;
          }
 
          ostream << (int32_t)-1;
@@ -256,7 +256,7 @@ namespace filehandler
 
                istream >> (int32_t &) dynamic_cast <item *> (pitem->m_pitem.m_p)->m_etopictype;
                istream >> dynamic_cast <item *> (pitem->m_pitem.m_p)->m_strTopic;
-               istream >> dynamic_cast <item *> (pitem->m_pitem.m_p)->m_straApp;
+               serialize >> dynamic_cast <item *> (pitem->m_pitem.m_p)->m_straApp;
             }
          }
       }

@@ -93,7 +93,7 @@ namespace file
    {
 
       template < class type_map >
-      void write(ostream & ostream, const type_map & m)
+      void write(serialize & ostream, const type_map & m)
       {
 
          ostream.write_arbitrary(m.get_count());
@@ -115,7 +115,7 @@ namespace file
 
 
       template < class type_map >
-      void read(istream & istream, type_map & m)
+      void read(serialize & istream, type_map & m)
       {
 
          ::count count;
@@ -129,9 +129,9 @@ namespace file
 
          }
 
-         typename type_map::AXIS_KEY key;
+         typename type_map::BASE_KEY key;
 
-         typename type_map::AXIS_VALUE value;
+         typename type_map::BASE_VALUE value;
 
          for (index index = 0; index < count; index++)
          {
@@ -169,64 +169,86 @@ namespace file
 } // namespace file
 
 
-template < class TYPE, class ARG_TYPE = const TYPE &, class DEFCONSTRUCTOR = ::constructor::def < TYPE > >
-::file::ostream & operator << (::file::ostream & os, const array < TYPE, ARG_TYPE, DEFCONSTRUCTOR > & a)
+template < class TYPE, class ARG_TYPE = const TYPE &, class ALLOCATOR = ::allocator::def < TYPE > >
+serialize & operator << (serialize & s, array < TYPE, ARG_TYPE, ALLOCATOR > & a)
 {
-   ::file::array::write(os, a);
-   return os;
-}
 
-template < class TYPE, class ARG_TYPE = const TYPE &, class DEFCONSTRUCTOR = ::constructor::def < TYPE > >
-::file::istream & operator >> (::file::istream & is, array < TYPE, ARG_TYPE, DEFCONSTRUCTOR > & a)
-{
-   ::file::array::read(is, a);
-   return is;
+   s.stream_array(a);
+
+   return s;
+
 }
 
 
+template < class TYPE, class ARG_TYPE = const TYPE &, class ALLOCATOR = ::allocator::def < TYPE > >
+serialize & operator >> (serialize & s, array < TYPE, ARG_TYPE, ALLOCATOR > & a)
+{
+
+   s.stream_array(a);
+
+   return s;
+
+}
 
 
 
 template<class TYPE, class ARG_TYPE = const TYPE &>
-::file::ostream & operator << (::file::ostream & os, const raw_array < TYPE, ARG_TYPE> & a)
+serialize & operator << (serialize & serialize, raw_array < TYPE, ARG_TYPE> & a)
 {
-   ::file::array::write(os, a);
-   return os;
+
+   ASSERT(serialize.is_storing());
+
+   serialize.stream_array(a);
+
+   return serialize;
+
 }
+
 
 template<class TYPE, class ARG_TYPE = const TYPE &>
-::file::istream & operator >> (::file::istream & is, raw_array < TYPE, ARG_TYPE > & a)
+serialize & operator >> (serialize & s, raw_array < TYPE, ARG_TYPE > & a)
 {
-   ::file::array::read(is, a);
-   return is;
+
+   s.stream_array(a);
+
+   return s;
+
 }
 
 
-template < class TYPE, class ARRAY_TYPE = raw_ref_array < TYPE * > >
-::file::ostream & operator << (::file::ostream & os, const ref_array < TYPE, ARRAY_TYPE> & a)
-{
-   ::file::ptra::write(os, a);
-   return os;
-}
 
-template < class TYPE, class ARRAY_TYPE = raw_ref_array < TYPE * > >
-::file::istream & operator >> (::file::istream & is, ref_array < TYPE, ARRAY_TYPE > & a)
-{
-   ::file::ptra::read(is, a);
-   return is;
-}
+//template < class TYPE, class ARRAY_TYPE = raw_ref_array < TYPE * > >
+//serialize & operator << (serialize & s, const ref_array < TYPE, ARRAY_TYPE> & a)
+//{
+//
+//   s.stream_array(a);
+//
+//   return s;
+//
+//}
+//
+//
+//template < class TYPE, class ARRAY_TYPE = raw_ref_array < TYPE * > >
+//serialize & operator >> (serialize & s, ref_array < TYPE, ARRAY_TYPE > & a)
+//{
+//
+//   s.stream_array(a);
+//
+//   return s;
+//
+//}
 
 
-CLASS_DECL_AURA bool file_put(const char * path, ::serializable & s, ::aura::application * papp = NULL);
-CLASS_DECL_AURA bool file_as(::serializable & s, const char * path, ::aura::application * papp = NULL);
-
-
-template < class ARRAY >
-bool file_put_array(const char * path, const ARRAY & a, ::aura::application * papp = NULL);
-
-
-template < class ARRAY >
-bool file_as_array(ARRAY & a, const char * path, ::aura::application * papp = NULL);
+//CLASS_DECL_AURA bool file_put(const char * path, ::serializable & s, ::aura::application * papp = NULL);
+//CLASS_DECL_AURA bool file_as(::serializable & s, const char * path, ::aura::application * papp = NULL);
+//
+//
+//template < class ARRAY >
+//bool file_put_array(const char * path, const ARRAY & a, ::aura::application * papp = NULL);
+//
+//
+//template < class ARRAY >
+//bool file_as_array(ARRAY & a, const char * path, ::aura::application * papp = NULL);
 
 
 

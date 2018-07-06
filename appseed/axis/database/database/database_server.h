@@ -21,13 +21,13 @@ namespace database
       virtual ~server();
 
 
-      virtual bool data_server_load(client * pclient, class id id, memory & mem, update_hint * phint = NULL) = 0;
+      virtual bool data_server_load(client * pclient, class id id, memory & mem, update_hint * phint = NULL);
       virtual bool data_server_load(client * pclient, class id id, ::file::file & obj, update_hint * phint = NULL);
       virtual bool data_server_load(client * pclient, class id id, serialize & serialize, update_hint * phint = NULL);
       virtual bool data_server_load(client * pclient, class id id, serializable & obj, update_hint * phint = NULL);
 
 
-      virtual bool data_server_save(client * pclient, class id id, memory & mem, update_hint * phint = NULL) = 0;
+      virtual bool data_server_save(client * pclient, class id id, memory & mem, update_hint * phint = NULL);
       virtual bool data_server_save(client * pclient, class id id, ::file::file & obj, update_hint * phint = NULL);
       virtual bool data_server_save(client * pclient, class id id, serialize & serialize, update_hint * phint = NULL);
       virtual bool data_server_save(client * pclient, class id id, serializable & obj, update_hint * phint = NULL);

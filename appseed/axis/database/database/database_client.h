@@ -16,12 +16,11 @@ namespace file
 
 
    class CLASS_DECL_AXIS data_trigger_ostream :
-      virtual public ::writer
+      virtual public memory_writer
    {
    public:
 
 
-      memory_file             m_file;
       ::database::client *    m_pclient;
       class ::database::id    m_id;
 
@@ -35,12 +34,9 @@ namespace file
 
 
    class CLASS_DECL_AXIS data_trigger_istream :
-      virtual public ::reader
+      virtual public memory_reader
    {
    public:
-
-
-      memory_file    m_file;
 
 
       data_trigger_istream(data_trigger_istream && d);
@@ -153,7 +149,7 @@ namespace database
 
             ::file::data_trigger_istream is(this,id);
 
-            is >> t;
+            is(t);
 
             if(is.fail())
                return false;

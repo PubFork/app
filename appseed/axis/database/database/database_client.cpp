@@ -868,11 +868,10 @@ namespace file
       ::file::ostream(::move(d)),
       serialize(::move(d)),
       writer(::move(d)),
-      m_file(::move(d.m_file)),
+      memory_writer(::move(d)),
       m_id(::move(d.m_id))
    {
 
-      m_spfile = &m_file;
       m_pclient = d.m_pclient;
       d.m_pclient = NULL;
 
@@ -882,8 +881,8 @@ namespace file
    data_trigger_ostream::data_trigger_ostream(::database::client * pclient,class ::database::id id) :
       ::object(pclient->get_app()),
       ::serialize(pclient->get_app()),
-      m_file(pclient->get_app()),
-      writer(&m_file)
+      ::writer(pclient->get_app()),
+      ::memory_writer(pclient->get_app())
    {
 
       m_id = id;
@@ -896,12 +895,12 @@ namespace file
    data_trigger_ostream::~data_trigger_ostream()
    {
 
+      m_spfile->seek_to_begin();
+
       if(m_pclient != NULL)
       {
 
-         m_file.seek_to_begin();
-
-         ::reader reader(&m_file);
+         ::reader reader(m_spfile);
 
          m_pclient->data_set(m_id, reader);
 
@@ -916,10 +915,8 @@ namespace file
       ::file::ostream(::move(d)),
       serialize(::move(d)),
       reader(::move(d)),
-      m_file(::move(d.m_file))
+      memory_reader(::move(d))
    {
-
-      m_spfile = &m_file;
 
    }
 
@@ -927,21 +924,19 @@ namespace file
    data_trigger_istream::data_trigger_istream(::database::client * pclient,class ::database::id id) :
       ::object(pclient->get_app()),
       ::serialize(pclient->get_app()),
-      m_file(pclient->get_app()),
-      reader(&m_file)
+      ::reader(pclient->get_app()),
+      ::memory_reader(pclient->get_app())
    {
-
-      m_spfile = &m_file;
 
       {
 
-         ::writer writer(&m_file);
+         ::writer writer(m_spfile);
 
          pclient->data_get(id, writer);
 
       }
 
-      seek_to_begin();
+      m_spfile->seek_to_begin();
 
    }
 

@@ -5,8 +5,6 @@ namespace file
 {
 
 
-
-
    set::set(::aura::application * papp) :
       ::object(papp)
    {
@@ -20,6 +18,7 @@ namespace file
    {
 
    }
+
 
    void set::add_search(const ::file::path & pathSearchFolder, bool bRecursive)
    {
@@ -56,7 +55,6 @@ namespace file
    }
 
 
-
    ::count set::get_file_count()
    {
 
@@ -79,8 +77,6 @@ namespace file
       return m_straFile.find_first_ci(lpcsz, iStart);
 
    }
-
-
 
 
    void set::refresh()
@@ -221,17 +217,24 @@ namespace file
       }
 
       refresh();
-      
+
       if(m_straFile.is_empty())
       {
-         
-         if (!System.os().::aura::os::initialize_wallpaper_fileset(this, bAddSearch))
+
+         if (!bAddSearch)
          {
-            
-            return false;
-            
+
+            System.os().initialize_wallpaper_fileset(this, true);
+
+            if (m_straFile.is_empty())
+            {
+
+               System.os().::aura::os::initialize_wallpaper_fileset(this, bAddSearch);
+
+            }
+
          }
-         
+
          refresh();
 
       }

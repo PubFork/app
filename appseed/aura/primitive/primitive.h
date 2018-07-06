@@ -50,11 +50,10 @@ namespace file
 //CLASS_DECL_AURA ::file::istream & operator >> (::file::istream & istream, property & prop);
 //
 //
-//CLASS_DECL_AURA ::file::ostream & operator << (::file::ostream & ostream, const var & var);
-//CLASS_DECL_AURA ::file::istream & operator >> (::file::istream & istream, var & var);
 
-CLASS_DECL_AURA serialize & operator << (serialize & ostream, const property_set & set);
-CLASS_DECL_AURA serialize & operator >> (serialize & istream, property_set & set);
+
+//CLASS_DECL_AURA serialize & operator << (serialize & ostream, const property_set & set);
+//CLASS_DECL_AURA serialize & operator >> (serialize & istream, property_set & set);
 
 
 

@@ -135,143 +135,87 @@ namespace file
 
    } // namespace array
 
-   namespace map
-   {
+   //namespace map
+   //{
 
-      template < class type_map >
-      void write(ostream & ostream,const type_map & m)
-      {
+   //   template < class type_map >
+   //   void write(ostream & ostream,const type_map & m)
+   //   {
 
-         ostream.write_arbitrary(m.get_count());
+   //      ostream.write_arbitrary(m.get_count());
 
-         auto p = m.PGetFirstAssoc();
+   //      auto p = m.PGetFirstAssoc();
 
-         while(p != NULL)
-         {
+   //      while(p != NULL)
+   //      {
 
-            ostream << p->m_element1;
+   //         ostream << p->m_element1;
 
-            ostream << p->m_element2;
+   //         ostream << p->m_element2;
 
-            p = m.PGetNextAssoc(p);
+   //         p = m.PGetNextAssoc(p);
 
-         }
+   //      }
 
-      }
+   //   }
 
 
-      template < class type_map >
-      void read(istream & istream,type_map & m)
-      {
+   //   template < class type_map >
+   //   void read(istream & istream,type_map & m)
+   //   {
 
-         ::count count;
+   //      ::count count;
 
-         istream.read_arbitrary(count);
+   //      istream.read_arbitrary(count);
 
-         if (istream.fail())
-         {
+   //      if (istream.fail())
+   //      {
 
-            return;
+   //         return;
 
-         }
+   //      }
 
-         typename type_map::BASE_KEY key;
+   //      typename type_map::BASE_KEY key;
 
-         typename type_map::BASE_VALUE value;
+   //      typename type_map::BASE_VALUE value;
 
-         for(index index = 0; index < count; index++)
-         {
+   //      for(index index = 0; index < count; index++)
+   //      {
 
-            istream >> key;
+   //         istream >> key;
 
-            if (istream.fail())
-            {
+   //         if (istream.fail())
+   //         {
 
-               return;
+   //            return;
 
-            }
+   //         }
 
-            istream >> value;
+   //         istream >> value;
 
-            if (istream.fail())
-            {
+   //         if (istream.fail())
+   //         {
 
-               return;
+   //            return;
 
-            }
+   //         }
 
-            m.set_at(key,value);
+   //         m.set_at(key,value);
 
-         }
+   //      }
 
-         m.on_after_read();
+   //      m.on_after_read();
 
-      }
+   //   }
 
-   } // namespace map
+   //} // namespace map
 
 
 
 } // namespace file
 
 
-//template < class TYPE,class ARG_TYPE = const TYPE &,class DEFCONSTRUCTOR = ::constructor::def < TYPE > >
-//::file::ostream & operator << (::file::ostream & os,const array < TYPE,ARG_TYPE,DEFCONSTRUCTOR > & a)
-//{
-//   ::file::array::write(os,a);
-//   return os;
-//}
-//
-//template < class TYPE,class ARG_TYPE = const TYPE &,class DEFCONSTRUCTOR = ::constructor::def < TYPE > >
-//::file::istream & operator >> (::file::istream & is,array < TYPE,ARG_TYPE,DEFCONSTRUCTOR > & a)
-//{
-//   ::file::array::read(is,a);
-//   return is;
-//}
 
-
-template<class TYPE,class ARG_TYPE = const TYPE &>
-serialize & operator << (serialize & serialize, raw_array < TYPE,ARG_TYPE> & a)
-{
-
-   ASSERT(serialize.is_storing());
-
-   serialize.stream_array(a);
-
-   return serialize;
-
-}
-
-
-template<class TYPE,class ARG_TYPE = const TYPE &>
-serialize & operator >> (serialize & serialize,raw_array < TYPE,ARG_TYPE > & a)
-{
-
-   ASSERT(!serialize.is_storing());
-
-   serialize.stream_array(a);
-
-   return serialize;
-
-}
-
-
-//template < class POINTER, class ARRAY_TYPE = comparable_array < POINTER, POINTER, comparable_eq_array < POINTER, POINTER, raw_array < POINTER, POINTER, ::allocator::zero < POINTER > > > > >
-//::file::ostream & operator << (serialize & serialize,const pointer_array < POINTER, ARRAY_TYPE> & a)
-//{
-//   ASSERT(serialize.is_storing())
-//   serialize.stream_ptra(a);
-//   return os;
-//}
-//
-//template < class POINTER, class ARRAY_TYPE = comparable_array < POINTER, POINTER, comparable_eq_array < POINTER, POINTER, raw_array < POINTER, POINTER, ::allocator::zero < POINTER > > > > >
-//::file::istream & operator >> (::file::istream & is, pointer_array < POINTER, ARRAY_TYPE > & a)
-//{
-//   ASSERT(!serialize.is_storing())
-//   serialize.stream_ptra(a);
-//   return is;
-//}
-//
 
 CLASS_DECL_AURA bool file_put(const char * path, ::serializable & s, ::aura::application * papp = NULL);
 CLASS_DECL_AURA bool file_as(::serializable & s, const char * path, ::aura::application * papp = NULL);

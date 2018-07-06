@@ -2675,19 +2675,25 @@ return -1;
 
 
 template < class Type, class RawType >
-::file::ostream & operator << (::file::ostream & ostream, const string_array < Type, RawType > & a)
+serialize & operator << (serialize & ostream, string_array < Type, RawType > & a)
 {
+
    ostream.write_arbitrary(a.m_nSize);
+
    for(int32_t i = 0; i < a.get_size(); i++)
    {
+
       ostream << a.element_at(i);
+
    }
+
    return ostream;
+
 }
 
 
 template < class Type, class RawType >
-::file::istream & operator >> (::file::istream & istream, string_array < Type, RawType > & a)
+serialize & operator >> (serialize & istream, string_array < Type, RawType > & a)
 {
 
    if(istream.fail())

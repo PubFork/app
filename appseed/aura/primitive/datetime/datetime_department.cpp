@@ -743,9 +743,9 @@ namespace datetime
                if (file.is_set())
                {
 
-                  ::file::byte_istream is(file);
+                  reader reader(file);
 
-                  is >> m_cityTimeZone;
+                  reader(m_cityTimeZone);
 
                }
 
@@ -837,9 +837,9 @@ namespace datetime
 
          auto file = Application.file().friendly_get_file(path, ::file::type_binary | ::file::mode_write | ::file::mode_create | ::file::defer_create_directory);
 
-         ::file::byte_ostream os(file);
+         writer writer(file);
 
-         os << m_cityTimeZone;
+         writer(m_cityTimeZone);
 
       }
 
@@ -1517,59 +1517,66 @@ namespace datetime
 
 
 
-CLASS_DECL_AURA file::istream &operator >> (file::istream & is, class ::datetime::department::time_zone & z)
+CLASS_DECL_AURA serialize & operator >> (serialize & s, class ::datetime::department::time_zone & z)
 {
 
-   is >> z.m_strZone;
-   is >> z.m_dZone;
-   is >> z.m_time;
+   s >> z.m_strZone;
+   s >> z.m_dZone;
+   s >> z.m_time;
 
-   return is;
-}
-
-CLASS_DECL_AURA file::ostream &operator << (file::ostream & os, const class ::datetime::department::time_zone & z)
-{
-
-   os << z.m_strZone;
-   os << z.m_dZone;
-   os << z.m_time;
-
-   return os;
-}
-
-CLASS_DECL_AURA file::istream &operator >> (file::istream & is, string_map < class ::datetime::department::time_zone > & m)
-{
-
-   ::file::map::read(is, m);
-
-   return is;
+   return s;
 
 }
 
-CLASS_DECL_AURA ::file::ostream &operator << (file::ostream & os, const string_map < class ::datetime::department::time_zone > & m)
+
+CLASS_DECL_AURA serialize & operator << (serialize & s, class ::datetime::department::time_zone & z)
 {
 
-   ::file::map::write(os, m);
+   s << z.m_strZone;
+   s << z.m_dZone;
+   s << z.m_time;
 
-   return os;
+   return s;
 
 }
 
-CLASS_DECL_AURA file::istream &operator >> (file::istream & is, int_ptr_map < class ::datetime::department::time_zone > & m)
+
+CLASS_DECL_AURA serialize & operator >> (serialize & s, string_map < class ::datetime::department::time_zone > & m)
 {
 
-   ::file::map::read(is, m);
+   s.stream_map(m);
 
-   return is;
+   return s;
 
 }
 
-CLASS_DECL_AURA::file::ostream &operator << (file::ostream & os, const int_ptr_map < class ::datetime::department::time_zone > & m)
+
+CLASS_DECL_AURA serialize & operator << (serialize & s, string_map < class ::datetime::department::time_zone > & m)
 {
 
-   ::file::map::write(os, m);
+   s.stream_map(m);
 
-   return os;
+   return s;
+
+}
+
+
+CLASS_DECL_AURA serialize & operator >> (serialize & s, int_ptr_map < class ::datetime::department::time_zone > & m)
+{
+
+   s.stream_map(m);
+
+   return s;
+
+}
+
+
+CLASS_DECL_AURA serialize &operator << (serialize & s, int_ptr_map < class ::datetime::department::time_zone > & m)
+{
+
+   s.stream_map(m);
+
+   return s;
 
 }
 

@@ -34,20 +34,20 @@ namespace datetime
       public:
          international(::aura::application * papp);
          void parse_str(const char * psz,property_set & set);
-         
-         
+
+
          string get_gmt_date_time(const ::datetime::time & time, string strFormat = INTERNATIONAL_DATE_TIME_FORMAT);
          string get_gmt_date_time(string strFormat = INTERNATIONAL_DATE_TIME_FORMAT);
          string get_local_date_time(const ::datetime::time & time, string strFormat = INTERNATIONAL_DATE_TIME_FORMAT);
          string get_local_date_time(string strFormat = INTERNATIONAL_DATE_TIME_FORMAT);
-         
-         
+
+
          inline string get_gmt(string strFormat = INTERNATIONAL_DATE_TIME_FORMAT) { return get_gmt_date_time(strFormat);  }
          inline string get_gmt(const ::datetime::time & time, string strFormat = INTERNATIONAL_DATE_TIME_FORMAT) { return get_gmt_date_time(time, strFormat); }
          inline string get_local(string strFormat = INTERNATIONAL_DATE_TIME_FORMAT) { return get_local_date_time(strFormat); }
          inline string get_local(const ::datetime::time & time, string strFormat = INTERNATIONAL_DATE_TIME_FORMAT) { return get_local_date_time(time, strFormat); }
-         
-         
+
+
          inline string gmt() { return get_gmt(); }
          inline string gmt(const ::datetime::time & time) { return get_gmt(time); }
          inline string local() { return get_local(); }
@@ -150,8 +150,8 @@ namespace datetime
 } // namespace aura
 
 
-CLASS_DECL_AURA ::file::istream &operator >> (file::istream & is, class ::datetime::department::time_zone & z);
-CLASS_DECL_AURA ::file::ostream &operator << (file::ostream & os, const class ::datetime::department::time_zone & z);
+CLASS_DECL_AURA serialize & operator >> (serialize & s, class ::datetime::department::time_zone & z);
+CLASS_DECL_AURA serialize & operator << (serialize & s, class ::datetime::department::time_zone & z);
 
 
 

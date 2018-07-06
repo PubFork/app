@@ -428,6 +428,14 @@ reader::reader(reader && reader) :
 }
 
 
+reader::reader(::aura::application * papp, index iVersion) :
+   ::object(papp),
+   ::serialize(papp, iVersion)
+{
+
+}
+
+
 reader::reader(::file::file * pfile, index iVersion) :
    ::object(pfile->get_app()),
    ::serialize(pfile->get_app(), iVersion)
@@ -458,6 +466,15 @@ writer::writer(writer && writer) :
 {
 
 }
+
+
+writer::writer(::aura::application * papp, index iVersion) :
+   ::object(papp),
+   ::serialize(papp, iVersion)
+{
+
+}
+
 
 
 writer::writer(::file::file * pfile, index iVersion) :
@@ -513,14 +530,23 @@ CLASS_DECL_AURA serialize & operator >> (serialize & serialize, serializable & s
 
 
 
+memory_reader::memory_reader(memory_reader && reader) :
+   object(::move(reader)),
+   ::serialize(::move(reader)),
+   ::reader(::move(reader))
+{
+
+
+}
 
 
 memory_reader::memory_reader(::aura::application * papp, index iVersion) :
    object(papp),
    ::serialize(papp, iVersion),
-   ::reader(canew(memory_file(papp)), iVersion)
+   ::reader(papp, iVersion)
 {
 
+   m_spfile = canew(memory_file(papp));
 
 }
 
@@ -539,12 +565,23 @@ memory & memory_reader::memory()
 }
 
 
+memory_writer::memory_writer(memory_writer && reader) :
+   object(::move(reader)),
+   ::serialize(::move(reader)),
+   ::writer(::move(reader))
+{
+
+
+}
+
+
 memory_writer::memory_writer(::aura::application * papp, index iVersion) :
    object(papp),
    ::serialize(papp, iVersion),
-   ::writer(canew(memory_file(papp)), iVersion)
+   ::writer(papp, iVersion)
 {
 
+   m_spfile = canew(memory_file(papp));
 
 }
 

@@ -1667,17 +1667,24 @@ void map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::assert_valid() const
 
 
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class PAIR >
-::file::ostream & operator << (::file::ostream & os,const map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR > & a)
+serialize & operator << (serialize & s,const map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR > & a)
 {
-   ::file::map::write(os,a);
-   return os;
+
+   s.stream_map(a);
+
+   return s;
+
 }
 
+
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class PAIR >
-::file::istream & operator >> (::file::istream & is,map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR > & a)
+serialize & operator >> (serialize & s,map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR > & a)
 {
-   ::file::map::read(is,a);
-   return is;
+
+   s.stream_map(a);
+
+   return s;
+
 }
 
 
