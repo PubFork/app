@@ -771,6 +771,13 @@ namespace xml
       return xml;
    }
 
+   char * node::load(const char * pszXml, parse_info * pi)
+   { 
+      
+      return _load(pszXml, pszXml + strlen(pszXml), pi); 
+   
+   }
+
    // <TAG attr1="value1" attr2='value2' attr3=value3 >
    // </TAG>
    // or
@@ -788,11 +795,12 @@ namespace xml
    //========================================================
    char * node::_load(const char * pszXml,const char * pszEndXml,parse_info * pparseinfo)
    {
-      if(pparseinfo == NULL)
-         pparseinfo = System.xml().m_pparseinfoDefault;
 
       // close it
       close();
+
+      if(pparseinfo == NULL)
+         pparseinfo = System.xml().m_pparseinfoDefault;
 
       char * xml = (char *)pszXml;
 
@@ -2128,22 +2136,26 @@ namespace xml
 
    }
 
-   void node::write(::file::ostream & ostream) const
+   void node::stream(serialize & serialize)
    {
-
-      string str = get_xml();
-      ostream << str;
-
-   }
-
-   void node::read(::file::istream & istream)
-   {
-
-      close();
 
       string str;
-      istream >> str;
-      load(str);
+      
+      if (serialize.is_storing())
+      {
+
+         str = get_xml();
+
+      }
+      
+      serialize(str);
+
+      if (!serialize.is_storing())
+      {
+
+         load(str);
+
+      }
 
    }
 

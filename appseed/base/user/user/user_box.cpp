@@ -158,83 +158,101 @@ namespace user
 
          memory_file file(get_app());
 
-         ::file::byte_stream memstream(&file);
-
-         if (!data_get(id, memstream))
          {
 
-            return false;
+            writer writer(&file);
+
+            if (!data_get(id, writer))
+            {
+
+               return false;
+
+            }
 
          }
 
-         memstream.seek_to_begin();
+         file.seek_to_begin();
 
-         int iBefore = 0;
-
-         memstream >> iBefore;
-
-         set_appearance_before((::user::e_appearance)iBefore);
-
-         bool bZoomed = false;
-
-         memstream >> bZoomed;
-
-         bool bFullScreen = false;
-
-         memstream >> bFullScreen;
-
-         bool bIconic = false;
-
-         memstream >> bIconic;
-
-         int iAppearance = 0;
-
-         memstream >> iAppearance;
-
-         ::user::e_appearance eappearance = (::user::e_appearance) iAppearance;
-
-         rect rectRestored;
-
-         memstream >> rectRestored;
-
-         rect rectWindow;
-
-         memstream >> rectWindow;
-
-         if (error)
-            return false;
-
-         if (!bForceRestore)
          {
 
-            if (bZoomed || (bInitialFramePosition && m_eappearanceBefore == ::user::appearance_zoomed))
+            reader reader(&file);
+
+            int iBefore = 0;
+
+            reader >> iBefore;
+
+            set_appearance_before((::user::e_appearance)iBefore);
+
+            bool bZoomed = false;
+
+            reader >> bZoomed;
+
+            bool bFullScreen = false;
+
+            reader >> bFullScreen;
+
+            bool bIconic = false;
+
+            reader >> bIconic;
+
+            int iAppearance = 0;
+
+            reader >> iAppearance;
+
+            ::user::e_appearance eappearance = (::user::e_appearance) iAppearance;
+
+            rect rectRestored;
+
+            reader >> rectRestored;
+
+            rect rectWindow;
+
+            reader >> rectWindow;
+
+            if (error)
+               return false;
+
+            if (!bForceRestore)
             {
 
-               pwindow->set_appearance(::user::appearance_zoomed);
+               if (bZoomed || (bInitialFramePosition && m_eappearanceBefore == ::user::appearance_zoomed))
+               {
 
-               pwindow->best_wkspace(NULL, rectWindow, true);
+                  pwindow->set_appearance(::user::appearance_zoomed);
 
-            }
-            else if (bFullScreen || (bInitialFramePosition && m_eappearanceBefore == ::user::appearance_full_screen))
-            {
+                  pwindow->best_wkspace(NULL, rectWindow, true);
 
-               pwindow->set_appearance(::user::appearance_full_screen);
+               }
+               else if (bFullScreen || (bInitialFramePosition && m_eappearanceBefore == ::user::appearance_full_screen))
+               {
 
-               pwindow->best_monitor(NULL, rectWindow, true);
+                  pwindow->set_appearance(::user::appearance_full_screen);
 
-            }
-            else if (bIconic && !bInitialFramePosition)
-            {
+                  pwindow->best_monitor(NULL, rectWindow, true);
 
-               pwindow->set_appearance(::user::appearance_iconic);
+               }
+               else if (bIconic && !bInitialFramePosition)
+               {
 
-               pwindow->good_iconify(NULL, rectWindow, true);
+                  pwindow->set_appearance(::user::appearance_iconic);
 
-            }
-            else if (::user::is_docking_appearance(eappearance))
-            {
+                  pwindow->good_iconify(NULL, rectWindow, true);
 
-               pwindow->make_zoneing(NULL, rectWindow, true, &eappearance);
+               }
+               else if (::user::is_docking_appearance(eappearance))
+               {
+
+                  pwindow->make_zoneing(NULL, rectWindow, true, &eappearance);
+
+               }
+               else
+               {
+
+                  pwindow->set_appearance(::user::appearance_normal);
+
+                  pwindow->good_restore(NULL, rectRestored, true);
+
+               }
 
             }
             else
@@ -245,14 +263,6 @@ namespace user
                pwindow->good_restore(NULL, rectRestored, true);
 
             }
-
-         }
-         else
-         {
-
-            pwindow->set_appearance(::user::appearance_normal);
-
-            pwindow->good_restore(NULL, rectRestored, true);
 
          }
 
@@ -283,16 +293,21 @@ namespace user
 
    bool box::SaveWindowRect_(::database::id id, sp(::user::box) pwindow)
    {
-      //WINDOWPLACEMENT wp;
-      //pwindow->GetWindowPlacement(&wp);
-
-      memory_file file(get_app());
-      ::file::byte_stream stream(&file);
 
       memory_file fileGet(get_app());
-      ::file::byte_stream streamGet(&fileGet);
-      bool bGet = data_get(id, streamGet);
-      streamGet.seek_to_begin();
+
+      bool bGet;
+
+      {
+
+         writer writer(&fileGet);
+
+         bGet = data_get(id, writer);
+
+      }
+
+      fileGet.seek_to_begin();
+
       int iBeforeOld = 0;
       bool bZoomedOld = false;
       bool bFullScreenOld = false;
@@ -302,48 +317,76 @@ namespace user
       rect rectRestoredOld;
       if (bGet)
       {
+
+         reader reader(&fileGet);
+
          try
          {
+
             sync_io_error error;
-            streamGet >> iBeforeOld;
-            streamGet >> bZoomedOld;
-            streamGet >> bFullScreenOld;
-            streamGet >> bIconicOld;
-            streamGet >> iAppearanceOld;
-            streamGet >> rectRestoredOld;
-            streamGet >> rectOld;
+
+            reader >> iBeforeOld;
+            reader >> bZoomedOld;
+            reader >> bFullScreenOld;
+            reader >> bIconicOld;
+            reader >> iAppearanceOld;
+            reader >> rectRestoredOld;
+            reader >> rectOld;
+
             bGet = error.none();
+
          }
          catch (...)
          {
+
             bGet = false;
+
          }
+
       }
 
       e_appearance eappearance = get_appearance_before();
 
-      int iBefore = (int)eappearance;
-      stream << iBefore;
-      bool bZoomed = pwindow->WfiIsZoomed() != FALSE;
-      stream << bZoomed;
-      bool bFullScreen = pwindow->WfiIsFullScreen();
-      stream << bFullScreen;
-      bool bIconic = pwindow->WfiIsIconic();
-      stream << bIconic;
-      int iAppearance = (int)pwindow->get_appearance();
-      stream << iAppearance;
-      rect rect;
-      pwindow->GetWindowRect(rect);
-      if (bGet && (bZoomed || bFullScreen || bIconic || ::user::is_docking_appearance((::user::e_appearance)iAppearance)))
+      memory_file file(get_app());
+
       {
-         stream << rectRestoredOld;
+
+         writer writer(&file);
+
+         int iBefore = (int)eappearance;
+         writer << iBefore;
+         bool bZoomed = pwindow->WfiIsZoomed() != FALSE;
+         writer << bZoomed;
+         bool bFullScreen = pwindow->WfiIsFullScreen();
+         writer << bFullScreen;
+         bool bIconic = pwindow->WfiIsIconic();
+         writer << bIconic;
+         int iAppearance = (int)pwindow->get_appearance();
+         writer << iAppearance;
+         rect rect;
+         pwindow->GetWindowRect(rect);
+         if (bGet && (bZoomed || bFullScreen || bIconic || ::user::is_docking_appearance((::user::e_appearance)iAppearance)))
+         {
+            writer << rectRestoredOld;
+         }
+         else
+         {
+            writer << rect;
+         }
+         writer << rect;
+
       }
-      else
+
+      file.seek_begin();
+
       {
-         stream << rect;
+
+         reader reader(&file);
+
+         return data_set(id, reader);
+
       }
-      stream << rect;
-      return data_set(id, stream);
+
    }
 
 

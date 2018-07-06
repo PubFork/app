@@ -36,7 +36,6 @@ namespace file
       virtual void read (LPRECT lprect);
       virtual void read (SIZE & size);
       virtual void read (sp(type) info);
-      virtual void read (serializable & writable);
 
       virtual ::string get_location() const;
 

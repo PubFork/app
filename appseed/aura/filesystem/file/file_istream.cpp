@@ -10,7 +10,7 @@ namespace file
 
    // FindSignature.cpp
    // from 7-zip on 2012-12-23, lunch time
-   #include "framework.h"
+#include "framework.h"
 
    /*//#include "Common/Buffer.h"
 
@@ -121,129 +121,160 @@ namespace file
 
    void istream::read (bool & b)
    {
-      UNREFERENCED_PARAMETER(b);
-      ::exception::throw_interface_only(get_app());
+
+      blt(b);
+
    }
 
 
    void istream::read (char & ch)
    {
-      UNREFERENCED_PARAMETER(ch);
-      ::exception::throw_interface_only(get_app());
+
+      blt(ch);
+
    }
 
 
    void istream::read (uchar & uch)
    {
-      UNREFERENCED_PARAMETER(uch);
-      ::exception::throw_interface_only(get_app());
+
+      blt(uch);
+
    }
+
 
 #ifdef WINDOWS
+
+
    void istream::read (unichar & wch)
    {
-      UNREFERENCED_PARAMETER(wch);
-      ::exception::throw_interface_only(get_app());
+
+      blt(wch);
+
    }
 
+
 #endif
+
+
    void istream::read (int16_t & sh)
    {
-      UNREFERENCED_PARAMETER(sh);
-      ::exception::throw_interface_only(get_app());
+
+      blt(sh);
+
    }
 
 
    void istream::read (uint16_t & ui)
    {
-      UNREFERENCED_PARAMETER(ui);
-      ::exception::throw_interface_only(get_app());
+
+      blt(ui);
+
    }
 
 
    void istream::read (int32_t & i)
    {
-      UNREFERENCED_PARAMETER(i);
-      ::exception::throw_interface_only(get_app());
+
+      blt(i);
+
    }
 
 
    void istream::read (uint32_t & ui)
    {
-      UNREFERENCED_PARAMETER(ui);
-      ::exception::throw_interface_only(get_app());
+
+      blt(ui);
+
    }
 
 
    void istream::read (int64_t & i)
    {
-      UNREFERENCED_PARAMETER(i);
-      ::exception::throw_interface_only(get_app());
+
+      blt(i);
+
    }
 
 
    void istream::read (uint64_t & ui)
    {
-      UNREFERENCED_PARAMETER(ui);
-      ::exception::throw_interface_only(get_app());
+
+      blt(ui);
+
    }
+
 
 #ifdef APPLEOS
 
    void istream::read(unsigned long & ui)
    {
 
+      blt(ui);
+
    }
 
 #endif
 
+
    void istream::read (float & f)
    {
-      UNREFERENCED_PARAMETER(f);
-      ::exception::throw_interface_only(get_app());
+
+      blt(f);
+
    }
 
 
    void istream::read (double & d)
    {
-      UNREFERENCED_PARAMETER(d);
-      ::exception::throw_interface_only(get_app());
+
+      blt(d);
+
    }
 
 
    void istream::read (LPRECT lprect)
    {
-      UNREFERENCED_PARAMETER(lprect);
-      ::exception::throw_interface_only(get_app());
+
+      blt(*lprect);
+
    }
 
 
    void istream::read (SIZE & size)
    {
-      UNREFERENCED_PARAMETER(size);
-      ::exception::throw_interface_only(get_app());
+
+      blt(size);
+
    }
 
 
    void istream::read (sp(type) info)
    {
-      UNREFERENCED_PARAMETER(info);
-      ::exception::throw_interface_only(get_app());
-   }
 
+      string str;
 
-   void istream::read (::serializable & serializable)
-   {
-      
-      *this >> serializable;
+      read(str);
+
+      info->m_id = str;
+
+      read(str);
+
+      info->m_idFriendly = str;
+
+      info->m_pfactoryitem = System.factory().m_mapItem[info->m_id];
+
 
    }
 
 
    void istream::read (id & id)
    {
+
       UNREFERENCED_PARAMETER(id);
+
       ::exception::throw_interface_only(get_app());
+
    }
 
 
@@ -263,9 +294,10 @@ namespace file
 
    void istream::read(string & str)
    {
-      UNREFERENCED_PARAMETER(str);
-      ::exception::throw_interface_only(get_app());
+
+
    }
+
 
    int istream::get()
    {
@@ -356,9 +388,9 @@ namespace file
 #endif
       if(dwStart == (file_position_t) -1)
       {
-		   dwStart = tellg();
-	   }
-	   else
+         dwStart = tellg();
+      }
+      else
       {
          seek_from_begin(dwStart);
       }

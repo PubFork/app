@@ -12,7 +12,8 @@ memory::memory(manager * pmanager)
 }
 
 
-memory::memory(const memory & s, manager * pmanager)
+memory::memory(const memory & s, manager * pmanager) :
+   ::object(s)
 {
 
    UNREFERENCED_PARAMETER(pmanager);
@@ -23,7 +24,8 @@ memory::memory(const memory & s, manager * pmanager)
 }
 
 
-memory::memory(const memory * ps, manager * pmanager)
+memory::memory(const memory * ps, manager * pmanager) :
+   ::object(*ps)
 {
 
    UNREFERENCED_PARAMETER(pmanager);
@@ -47,7 +49,7 @@ memory::memory(const byte * pchSrc, strsize nLength, manager * pmanager)
 
 
 memory::memory(::aura::application * papp) :
-   object(papp)
+   ::object(papp)
 {
 
    m_pprimitivememory      = this;
@@ -103,7 +105,7 @@ memory::memory(const memory_base & s)
 
 memory::memory(const memory & s)
 {
-   
+
    m_pprimitivememory      = this;
    m_bAligned              = s.m_bAligned;
    memory_base::operator   = (s);
@@ -124,7 +126,8 @@ memory::memory(const char * psz)
 }
 
 
-memory::memory(primitive::memory_container * pcontainer, memory_size_t dwAllocationAddUp, UINT nAllocFlags)
+memory::memory(primitive::memory_container * pcontainer, memory_size_t dwAllocationAddUp, UINT nAllocFlags) :
+   ::object(pcontainer == NULL ? ::get_app() : pcontainer->get_app())
 {
 
    UNREFERENCED_PARAMETER(nAllocFlags);
@@ -146,7 +149,7 @@ memory::memory(primitive::memory_container * pcontainer, memory_size_t dwAllocat
 
 memory::memory(primitive::memory_container * pcontainer, void * pMemory, memory_size_t dwSize)
 {
-   
+
    m_pprimitivememory   = this;
    m_pbStorage          = (LPBYTE) pMemory;
    m_pbComputed         = m_pbStorage;
@@ -210,7 +213,7 @@ LPBYTE memory::impl_alloc(memory_size_t dwAllocation)
       return (LPBYTE)memory_alloc((size_t)dwAllocation);
    }
 
-   #else
+#else
    if(m_strTag.has_char() && ::get_thread() != NULL)
    {
       if(::get_thread()->m_strDebug.has_char())
@@ -259,7 +262,7 @@ LPBYTE memory::impl_alloc(memory_size_t dwAllocation)
       }
    }
 
-   #endif
+#endif
 
 }
 

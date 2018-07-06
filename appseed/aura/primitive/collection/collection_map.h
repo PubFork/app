@@ -126,10 +126,10 @@ class map :
 public:
 
    typedef map_dynamic_hash_table < PAIR >         HASH_TABLE;
-   typedef KEY                                     AXIS_KEY;
-   typedef ARG_KEY                                 AXIS_ARG_KEY;
-   typedef VALUE                                   AXIS_VALUE;
-   typedef ARG_VALUE                               AXIS_ARG_VALUE;
+   typedef KEY                                     BASE_KEY;
+   typedef ARG_KEY                                 BASE_ARG_KEY;
+   typedef VALUE                                   BASE_VALUE;
+   typedef ARG_VALUE                               BASE_ARG_VALUE;
 
    typedef ::map_association < PAIR >              assoc;
    typedef typename assoc::pair                    pair;

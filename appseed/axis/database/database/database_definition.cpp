@@ -113,9 +113,20 @@ namespace database
       operator = (record);
    }
 
+
    record::~record()
    {
+
    }
+
+
+   void query_data::stream(serialize & serialize)
+   {
+
+      serialize.stream_array(*this);
+
+   }
+
 
    record & record::operator = (const record & record)
    {
@@ -131,9 +142,9 @@ namespace database
    {
    }
 
-   
+
    result_set::result_set(::aura::application * papp) :
-   ::object(papp)
+      ::object(papp)
    {
    }
 
@@ -156,40 +167,28 @@ namespace database
 
    }
 
-   void result_set::write(::file::ostream & ostream) const
+
+   void result_set::stream(serialize & serialize)
    {
-      ostream << record_header;
-      ostream << records;
+
+      serialize.stream_array(record_header);
+      serialize.stream_array(records);
+
    }
 
-   void result_set::read(::file::istream & istream)
-   {
-      istream >> record_header;
-      istream >> records;
-   }
 
-   void field_properties::write(::file::ostream & ostream) const
+   void field_properties::stream(serialize & serialize)
    {
-      ostream << name;
-      ostream << display_name;
-      ostream << (int32_t) type;
-      ostream << field_table; //?
-      ostream << read_only;
-      ostream << field_len;
-      ostream << field_flags;
-      ostream << idx;
-   }
 
-   void field_properties::read(::file::istream & istream)
-   {
-      istream >> name;
-      istream >> display_name;
-      istream >> (int32_t &) type;
-      istream >> field_table; //?
-      istream >> read_only;
-      istream >> field_len;
-      istream >> field_flags;
-      istream >> idx;
+      serialize(name);
+      serialize(display_name);
+      serialize((i32 &) type);
+      serialize(field_table); //?
+      serialize(read_only);
+      serialize(field_len);
+      serialize(field_flags);
+      serialize(idx);
+
    }
 
 

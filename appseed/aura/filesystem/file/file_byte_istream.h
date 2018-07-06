@@ -49,10 +49,7 @@ namespace file
       virtual void read (LPRECT lprect);
       virtual void read (SIZE & size);
       virtual void read (sp(type) info);
-      virtual void read (serializable & serializable);
       virtual void read (id & id);
-      virtual void read (var & var);
-      virtual void read (property & property);
       virtual void read (string & str);
 
       // read until MSB is not set ignoring this MSB when writing to target

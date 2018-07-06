@@ -4,21 +4,25 @@
 namespace simpledb
 {
 
-   class CLASS_DECL_AXIS record_row : 
+
+   class CLASS_DECL_AXIS record_row :
       virtual public ::serializable
    {
    public:
+
 
       table *     m_ptable;
       stringa     m_straFields;
       var         m_var;
 
-      virtual void write(::file::ostream & ostream) const;
-      virtual void read(::file::istream & ostream);
+
+      virtual void stream(serialize & serialize);
+
 
    };
 
 
 } // namespace simpledb
+
 
 

@@ -405,6 +405,12 @@ void var_array::skip_json(const char * & pszJson, const char * pszEnd)
 }
 
 
+void var_array::stream(serialize & serialize)
+{
+
+   serialize.stream_array(*this);
+
+}
 
 
 

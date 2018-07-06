@@ -34,7 +34,7 @@ inline strsize safe_strlen(void * p, strsize n)
 
 
 class CLASS_DECL_AURA memory :
-   public ::primitive::memory_base
+   virtual public ::primitive::memory_base
 {
 public:
 

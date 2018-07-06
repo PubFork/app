@@ -10,7 +10,6 @@ namespace xml
 
 
    class CLASS_DECL_AURA node :
-      virtual public ::object,
       virtual public ::serializable
    {
    public:
@@ -100,7 +99,7 @@ namespace xml
 
 
       // Load/Save XML
-      char *   load(const char * pszXml,parse_info * pi = NULL) { return _load(pszXml,pszXml + strlen(pszXml),pi); }
+      char *   load(const char * pszXml, parse_info * pi = NULL);
       char *   _load(const char * pszXml, const char * pszEndXml, parse_info * pi = NULL);
 
       string get_xml(disp_option * opt = NULL) const;
@@ -200,8 +199,7 @@ namespace xml
       void close();
 
 
-      virtual void write(::file::ostream & ostream) const;
-      virtual void read(::file::istream & istream);
+      virtual void stream(serialize & serialize);
 
 
    };

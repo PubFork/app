@@ -31,8 +31,7 @@ public:
       get_fs_size & operator = (const get_fs_size & getfssize);
 
 
-      virtual void write(::file::ostream & ostream) const;
-      virtual void read(::file::istream & istream);
+      virtual void stream(serialize & serialize);
 
 
    };

@@ -16,8 +16,7 @@ namespace xml
       virtual ~data();
 
 
-      virtual void write(::file::ostream & ostream) const;
-      virtual void read(::file::istream & istream);
+      virtual void stream(serialize & serialize);
 
 
    };

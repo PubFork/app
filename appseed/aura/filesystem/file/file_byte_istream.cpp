@@ -310,14 +310,6 @@ namespace file
    }
 
 
-   void byte_istream::read(serializable & serializable)
-   {
-
-      *this >> serializable;
-
-   }
-
-
    void byte_istream::read(id & id)
    {
 
@@ -341,31 +333,12 @@ namespace file
    }
 
 
-   void byte_istream::read(var & var)
-   {
-
-      var.read(*this);
-
-   }
-
-   void byte_istream::read(property & property)
-   {
-
-      property.read(*this);
-
-   }
-
-
    string byte_istream::get_location() const
    {
+
       return "<unknown byte_istream location>";
+
    }
-
-
-   /*file_position_t byte_istream::seek(file_offset_t offset, e_seek seekOrigin)
-   {
-   return m_spfile->seek(offset, seekOrigin);
-   }*/
 
 
    void byte_istream::full_load(string & str)

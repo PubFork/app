@@ -32,7 +32,7 @@ namespace primitive
 
    }
 
-   
+
    memory_base::~memory_base()
    {
 
@@ -124,7 +124,7 @@ namespace primitive
 
       if((m_iOffset + dwNewLength) > m_dwAllocation)
       {
-         
+
          if (!allocate_internal(m_iOffset + dwNewLength))
          {
 
@@ -329,18 +329,21 @@ namespace primitive
    }
 
 
-   void memory_base::read(::file::istream & istream)
+   void memory_base::stream(serialize & serialize)
    {
 
-      transfer_from(istream);
+      if (serialize.is_storing())
+      {
 
-   }
+         transfer_to(serialize);
 
+      }
+      else
+      {
 
-   void memory_base::write(::file::ostream & ostream) const
-   {
+         transfer_from(serialize);
 
-      transfer_to(ostream);
+      }
 
    }
 
@@ -536,8 +539,8 @@ namespace primitive
    {
 
       if(get_size() >= 2
-         && get_data()[0] == 255
-         && get_data()[1] == 60)
+            && get_data()[0] == 255
+            && get_data()[1] == 60)
       {
          memory mem;
          mem = *this;
@@ -547,9 +550,9 @@ namespace primitive
          return (char *) get_data();
       }
       else if(get_size() >= 3
-         && get_data()[0] == 255
-         && get_data()[1] == 254
-         && get_data()[2] == 0x73)
+              && get_data()[0] == 255
+              && get_data()[1] == 254
+              && get_data()[2] == 0x73)
       {
          memory mem;
          mem = *this;
@@ -559,9 +562,9 @@ namespace primitive
          return (char *)get_data();
       }
       else if(get_size() >= 3
-         && get_data()[0] == 0xef
-         && get_data()[1] == 0xbb
-         && get_data()[2] == 0xbf)
+              && get_data()[0] == 0xef
+              && get_data()[1] == 0xbb
+              && get_data()[2] == 0xbf)
       {
          len = get_size() - 3;
          return (char *)&get_data()[3];
@@ -629,7 +632,7 @@ namespace primitive
 
    }
 
-   
+
    void memory_base::set_data(void *pdata, memory_size_t uiSize)
    {
 
@@ -739,7 +742,7 @@ namespace primitive
          }
 
          pchDst++;
-         
+
          if (((pchSrc[dw] & 0x0f)) < 10)
          {
 
@@ -761,7 +764,7 @@ namespace primitive
 
    }
 
-   
+
    string memory_base::to_hex(memory_position_t pos, memory_size_t size)
    {
 
@@ -853,6 +856,40 @@ namespace primitive
          pch++;
 
       }
+
+   }
+
+
+   void memory_base::to_base64(string & str, memory_position_t pos, memory_size_t size)
+   {
+
+      if (get_data() == NULL)
+      {
+
+         return;
+
+      }
+
+      str = System.base64().encode(&get_data()[pos], MIN(get_size() - pos, size));
+
+   }
+
+
+   string memory_base::to_base64(memory_position_t pos, memory_size_t size)
+   {
+
+      string str;
+
+      to_base64(str, pos, size);
+
+      return str;
+
+   }
+
+   void memory_base::from_base64(const char * psz, strsize nCount)
+   {
+
+      System.base64().decode(*this, psz, nCount);
 
    }
 
@@ -1193,7 +1230,7 @@ namespace primitive
 
    }
 
-   
+
    void memory_base::append(memory_size_t iCount, uchar uch)
    {
 
@@ -1212,7 +1249,7 @@ namespace primitive
 
    }
 
-   
+
    void memory_base::splice(const byte * pbMemory, memory_offset_t iCountSrc, memory_offset_t iStartDst, memory_offset_t iCountDst)
    {
 
@@ -1247,7 +1284,7 @@ namespace primitive
       }
       else if (iCountSrc < iCountDst)
       {
-         
+
          //_____________ddd
          //aaaaaaaaaaaaabbbbbbbbbbbbbbbbcccccccccccccccccccccccc
 
@@ -1270,7 +1307,7 @@ namespace primitive
 
    }
 
-   
+
    void memory_base::assign(memory_size_t iCount, uchar uch)
    {
 
@@ -1288,7 +1325,7 @@ namespace primitive
    }
 
 
-   
+
    void memory_base::assign(const char * psz)
    {
 
@@ -1422,7 +1459,7 @@ namespace lemon
 
 
 
-   CLASS_DECL_AURA void transfer_to(::file::writer & writer, const ::primitive::memory_base & mem, memory_size_t uiBufferSize)
+   CLASS_DECL_AURA void transfer_to(serialize & writer, ::primitive::memory_base & mem, memory_size_t uiBufferSize)
    {
 
       if (mem.get_data() == NULL || mem.get_size() <= 0)
@@ -1448,7 +1485,7 @@ namespace lemon
 
    }
 
-   CLASS_DECL_AURA void transfer_from_begin(::file::reader & reader, ::primitive::memory_base & mem, memory_size_t uiBufferSize)
+   CLASS_DECL_AURA void transfer_from_begin(serialize & reader, ::primitive::memory_base & mem, memory_size_t uiBufferSize)
    {
 
       reader.seek_to_begin();
@@ -1457,7 +1494,7 @@ namespace lemon
 
    }
 
-   CLASS_DECL_AURA void transfer_from(::file::reader & reader, ::primitive::memory_base & mem, memory_size_t uiBufferSize)
+   CLASS_DECL_AURA void transfer_from(serialize & reader, ::primitive::memory_base & mem, memory_size_t uiBufferSize)
    {
 
       if (reader.get_internal_data() != NULL && reader.get_internal_data_size() > reader.get_position())
@@ -1503,8 +1540,7 @@ namespace lemon
 
 
 
-
-CLASS_DECL_AURA::file::istream & operator >> (::file::istream & istream, ::primitive::memory_container & memcontainer)
+CLASS_DECL_AURA serialize & operator << (serialize & serialize, ::primitive::memory_container & memcontainer)
 {
 
    if (memcontainer.get_memory() == NULL)
@@ -1514,28 +1550,48 @@ CLASS_DECL_AURA::file::istream & operator >> (::file::istream & istream, ::primi
 
    }
 
-   istream >> *memcontainer.get_memory();
-   return istream;
-}
+   serialize << *memcontainer.get_memory();
 
-
-CLASS_DECL_AURA::file::ostream & operator << (::file::ostream & ostream, const ::primitive::memory_base & mem)
-{
-
-   ::lemon::transfer_to(ostream, mem);
-
-   return ostream;
+   return serialize;
 
 }
 
 
 
-CLASS_DECL_AURA::file::istream & operator >> (::file::istream & istream, ::primitive::memory_base & mem)
+CLASS_DECL_AURA serialize & operator >> (serialize & serialize, ::primitive::memory_container & memcontainer)
 {
 
-   ::lemon::transfer_from(istream, mem);
+   if (memcontainer.get_memory() == NULL)
+   {
 
-   return istream;
+      memcontainer.set_memory(canew(memory(&memcontainer)));
+
+   }
+
+   serialize >> *memcontainer.get_memory();
+
+   return serialize;
+
+}
+
+
+CLASS_DECL_AURA serialize & operator << (serialize & serialize, ::primitive::memory_base & mem)
+{
+
+   ::lemon::transfer_to(serialize, mem);
+
+   return serialize;
+
+}
+
+
+
+CLASS_DECL_AURA serialize & operator >> (serialize & serialize, ::primitive::memory_base & mem)
+{
+
+   ::lemon::transfer_from(serialize, mem);
+
+   return serialize;
 
 }
 

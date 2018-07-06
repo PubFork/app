@@ -502,8 +502,7 @@ public:
    bool operator > (int32_t i) const;
    bool operator > (bool b) const;
 
-   void write(::file::ostream & ostream) const;
-   void read(::file::istream & ostream);
+   void stream(serialize & serialize);
 
    string implode(const char * pszGlue) const;
    var explode(const char * pszGlue,bool bAddEmpty = true) const;

@@ -47,12 +47,12 @@ namespace xml
 
    }
 
-   bool document::load(::file::istream & is)
+   bool document::load(serialize & s)
    {
 
       memory memory;
 
-      memory.read(is);
+      s.stream_object(memory);
 
       return load(memory.to_string());
 
@@ -202,6 +202,14 @@ namespace xml
       }
       va_end(ptr);
       return (char *) &((const char *)m_strData)[iPos + (bExt ? 0 : strValue.get_length())];
+   }
+
+
+   void document::stream(serialize & serialize)
+   {
+
+      ::xml::node::stream(serialize);
+
    }
 
 

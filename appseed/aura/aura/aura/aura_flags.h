@@ -6,7 +6,6 @@
 
 template < class ENUM >
 class flags :
-   virtual public ::object,
    virtual public ::serializable
 {
 public:
@@ -75,15 +74,14 @@ public:
       return m_ia.has_elements();
    }
 
-   void write(::file::ostream & os) const
+   
+   void stream(serialize & serialize)
    {
-      ::file::array::write(os, m_ia);
+      
+      serialize.stream_array(m_ia);
+
    }
 
-   void read(::file::istream & is)
-   {
-      ::file::array::read(is,m_ia);
-   }
 
 };
 

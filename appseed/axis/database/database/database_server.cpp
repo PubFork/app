@@ -16,83 +16,82 @@ namespace database
 
    server::~server()
    {
+
    }
 
 
-   bool server::data_server_load(client * pclient, class id id, ::file::file & writable, update_hint * puh)
+   bool server::data_server_load(client * pclient, class id id, ::file::file & file, update_hint * puh)
    {
 
-      file::ostream ostream(&writable);
-      return var_load(pclient, id, ostream, puh);
-   }
+      memory mem;
 
-   bool server::data_server_load(client * pclient, class id id, var & var, update_hint * puh)
-   {
-
-      memory_file file(get_app());
-
-      ::file::byte_stream stream(&file);
-
-#if MEMDLEAK
-
-      file.get_memory()->m_strTag = "memory://member=database::server::data_server_load";
-
-#endif
-
-      if (!data_server_load(pclient, id, stream, puh) || file.get_length() <= 0)
+      if (!data_server_load(pclient, id, mem, puh))
       {
 
          return false;
 
       }
 
-      try
-      {
-
-         file.seek_to_begin();
-
-         stream >> var;
-
-      }
-      catch(...)
-      {
-
-         return false;
-
-      }
+      file.write(mem.get_data(), mem.get_size());
 
       return true;
 
    }
 
 
-   bool server::data_server_load(client * pclient, class id id, ::file::ostream & ostream, update_hint * puh)
+   bool server::data_server_load(client * pclient, class id id, memory & mem, update_hint * puh)
    {
 
-      return var_load(pclient, id, ostream, puh);
+#if MEMDLEAK
+
+      mem.m_strTag = "memory://member=database::server::data_server_load(1)";
+
+#endif
+
+      return true;
 
    }
 
-   bool server::data_server_load(client * pclient, class id id, ::serializable & obj, update_hint * puh)
+
+   bool server::data_server_load(client * pclient, class id id, serialize & serialize, update_hint * puh)
    {
 
-      memory_file file(get_app());
+      memory mem;
 
-      ::file::byte_stream stream(&file);
-
-      if (!data_server_load(pclient, id, stream, puh) || file.get_length() <= 0)
+      if (!data_server_load(pclient, id, mem, puh))
       {
 
          return false;
 
       }
 
+      serialize.write(mem.get_data(), mem.get_size());
+
+      return true;
+
+   }
+
+
+   bool server::data_server_load(client * pclient, class id id, ::serializable & obj, update_hint * puh)
+   {
+
+      memory_file file(get_app());
+
+      if (!data_server_load(pclient, id, *file.get_memory(), puh) || file.get_length() <= 0)
+      {
+
+         return false;
+
+      }
+
+      file.seek_begin();
+
       try
       {
 
-         file.seek_to_begin();
+         reader reader(&file);
 
-         stream >> obj;
+         reader(obj);
 
       }
       catch(...)
@@ -107,30 +106,16 @@ namespace database
    }
 
 
-   bool server::data_server_save(client * pclient, class id id, ::file::file & readable, update_hint * puh)
-   {
-      ::file::istream istream(&readable);
-      return var_save(pclient, id, istream, puh);
-   }
-
-   bool server::data_server_save(client * pclient, class id id, var & var, update_hint * puh)
+   bool server::data_server_save(client * pclient, class id id, ::file::file & file, update_hint * puh)
    {
 
-      memory_file file(get_app());
+      memory mem;
 
-      ::file::byte_stream stream(&file);
+      mem.allocate(file.get_length() - file.get_position());
 
-#if MEMDLEAK
+      file.read(mem.get_data(), mem.get_size());
 
-      file.get_memory()->m_strTag = "memory://member=database::server::data_server_save(1)";
-
-#endif
-
-      stream << var;
-
-      file.seek_to_begin();
-
-      if (!data_server_save(pclient, id, stream, puh))
+      if (!data_server_save(pclient, id, mem, puh))
       {
 
          return false;
@@ -142,29 +127,60 @@ namespace database
    }
 
 
-   bool server::data_server_save(client * pclient, class id id, ::file::istream & istream, update_hint * puh)
+   bool server::data_server_save(client * pclient, class id id, memory & mem, update_hint * puh)
    {
-      return var_save(pclient, id,  istream, puh);
+
+#if MEMDLEAK
+
+      mem.m_strTag = "memory://member=database::server::data_server_save(1)";
+
+#endif
+
+      return true;
+
    }
+
+
+   bool server::data_server_save(client * pclient, class id id, serialize & serialize, update_hint * puh)
+   {
+
+      memory mem;
+
+      mem.allocate(serialize.get_left());
+
+      serialize.read(mem.get_data(), mem.get_size());
+
+      if (!data_server_save(pclient, id, mem, puh))
+      {
+
+         return false;
+
+      }
+
+      return true;
+
+   }
+
 
    bool server::data_server_save(client * pclient, class id id, ::serializable & obj, update_hint * puh)
    {
 
-      memory_file file(get_app());
+      memory_writer writer(get_app());
 
-      ::file::byte_stream stream(&file);
+      try
+      {
 
-#if MEMDLEAK
+         writer(obj);
 
-      file.get_memory()->m_strTag = "memory://member=database::server::data_server_save(2)";
+      }
+      catch (...)
+      {
 
-#endif
+         return false;
 
-      stream << obj;
+      }
 
-      file.seek_to_begin();
-
-      if (!data_server_save(pclient, id, stream, puh))
+      if (!data_server_load(pclient, id, writer.memory(), puh))
       {
 
          return false;
@@ -213,37 +229,104 @@ namespace database
       return true;
    }
 
+   //var server::data_load(client * pclient, class id id, update_hint * phint)
+   //{
+   //   var var;
+   //   if(data_server_load(pclient, id, var, phint))
+   //      return var;
+   //   return ::var(::var::type_new);
+   //}
+
+   //bool server::data_save(client * pclient, class id id, var var, update_hint * phint)
+   //{
+   //   return data_server_save(pclient, id, var, phint);
+   //}
+
+
+   //bool server::var_load(client * pclient, class id id, serialize & serialize, update_hint * puh)
+   //{
+
+   //   string str;
+
+   //   if (!data_server_load(pclient, id, str, puh))
+   //   {
+
+   //      return false;
+
+   //   }
+
+   //   memory m;
+
+   //   System.
+
+   //   ASSERT(serialize.is_storing());
+
+   //   serialize(var);
+
+   //   return true;
+
+   //}
+
+
+   //bool server::var_save(client * pclient, class id id, serialize & serialize, update_hint * puh)
+   //{
+
+   //   var var;
+
+   //   ASSERT(!serialize.is_storing());
+
+   //   serialize(var);
+
+   //   if (!data_server_save(pclient, id, var, puh))
+   //   {
+
+   //      return false;
+
+   //   }
+
+   //   return true;
+
+   //}
+
+
    var server::data_load(client * pclient, class id id, update_hint * phint)
    {
+
+      memory_reader reader(get_app());
+
+      if (!data_server_load(pclient, id, reader.memory(), phint))
+      {
+
+         return var::type_null;
+
+      }
+
       var var;
-      if(data_server_load(pclient, id, var, phint))
-         return var;
-      return ::var(::var::type_new);
+
+      reader(var);
+
+      return var;
+
    }
 
-   bool server::data_save(client * pclient, class id id, var var, update_hint * phint)
-   {
-      return data_server_save(pclient, id, var, phint);
-   }
 
-   bool server::var_load(client * pclient, class id id, ::file::ostream & ostream, update_hint * puh)
+   bool server::data_save(client * pclient, class id id, var & var, update_hint * phint)
    {
-      var var;
-      if(!data_server_load(pclient, id, var, puh))
+
+      memory_reader writer(get_app());
+
+      writer(var);
+
+      if (!data_server_load(pclient, id, writer.memory(), phint))
+      {
+
          return false;
-      var.write(ostream);
-      return true;
-   }
 
-   bool server::var_save(client * pclient, class id id, ::file::istream & istream, update_hint * puh)
-   {
-      var var;
-      var.read(istream);
-      if(!data_server_save(pclient, id, var, puh))
-         return false;
-      return true;
-   }
+      }
 
+      return true;
+
+   }
 
 
 } // namespace database

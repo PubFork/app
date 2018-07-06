@@ -152,8 +152,8 @@ public:
    static void skip_json(const char * & pszJson, const char * pszEnd);
 
 
-   virtual void write(::file::ostream & ostream) const;
-   virtual void read(::file::istream & ostream);
+   virtual void stream(serialize & serialize);
+
 
    virtual string implode(const char * pszGlue) const;
    //::count get_count() const;

@@ -27,7 +27,7 @@ namespace core
 
 
    system::system(::aura::application * papp, app_core * pappcore):
-   ::object(papp == NULL ? this : papp),
+      ::object(papp == NULL ? this : papp),
       ::aura::system(papp == NULL ? this : papp, pappcore),
       ::axis::system(papp == NULL ? this : papp, pappcore),
       ::base::system(papp == NULL ? this : papp, pappcore),
@@ -336,14 +336,14 @@ namespace core
 
    }
 
-   void system::on_end_find_applications_from_cache(::file::byte_istream & is)
+   void system::on_end_find_applications_from_cache(serialize & is)
    {
 
       is >> *m_pfilehandler;
 
    }
 
-   void system::on_end_find_applications_to_cache(::file::byte_ostream & os)
+   void system::on_end_find_applications_to_cache(serialize & os)
    {
 
       os << *m_pfilehandler;

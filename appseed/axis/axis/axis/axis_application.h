@@ -62,11 +62,11 @@ namespace axis
       virtual void dump(dump_context & dumpcontext) const override;
 
 
-      virtual bool app_data_get(class id id, ::file::ostream & os);
-      virtual bool app_data_set(class id id, ::file::istream & is);
+      virtual bool app_data_get(class id id, serialize & os);
+      virtual bool app_data_set(class id id, serialize & is);
 
-      virtual bool app_data_set(class id id, ::serializable & obj) override;
-      virtual bool app_data_get(class id id, ::serializable & obj) override;
+      virtual bool app_data_set(class id id, serializable & obj) override;
+      virtual bool app_data_get(class id id, serializable & obj) override;
 
 
       virtual string fontopus_get_cred(::aura::application * papp, const string & strRequestUrl, const RECT & rect, string & strUsername, string & strPassword, string strToken, string strTitle, bool bInteractive, ::user::interactive * pinteractive) override;

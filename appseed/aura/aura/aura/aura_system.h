@@ -465,9 +465,9 @@ namespace aura
 
 
       virtual void on_start_find_applications_from_cache();
-      virtual void on_end_find_applications_from_cache(::file::byte_istream & is);
+      virtual void on_end_find_applications_from_cache(serialize & is);
 
-      virtual void on_end_find_applications_to_cache(::file::byte_ostream & os);
+      virtual void on_end_find_applications_to_cache(serialize & os);
 
       virtual void on_map_application_library(::aura::library & library);
 

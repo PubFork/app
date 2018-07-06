@@ -71,9 +71,9 @@ CLASS_DECL_AURA bool file_put(const char * path, ::serializable & s, ::aura::app
 
       }
 
-      ::file::byte_ostream os(pfile);
+      writer writer(pfile);
 
-      os << s;
+      writer(s);
 
       return true;
 
@@ -118,9 +118,9 @@ CLASS_DECL_AURA bool file_as(::serializable & s, const char * path, ::aura::appl
 
       }
 
-      ::file::byte_istream is(pfile);
+      reader reader(pfile);
 
-      is >> s;
+      reader(s);
 
       return true;
 

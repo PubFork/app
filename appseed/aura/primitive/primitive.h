@@ -53,8 +53,8 @@ namespace file
 //CLASS_DECL_AURA ::file::ostream & operator << (::file::ostream & ostream, const var & var);
 //CLASS_DECL_AURA ::file::istream & operator >> (::file::istream & istream, var & var);
 
-CLASS_DECL_AURA ::file::ostream & operator << (::file::ostream & ostream, const property_set & set);
-CLASS_DECL_AURA ::file::istream & operator >> (::file::istream & istream, property_set & set);
+CLASS_DECL_AURA serialize & operator << (serialize & ostream, const property_set & set);
+CLASS_DECL_AURA serialize & operator >> (serialize & istream, property_set & set);
 
 
 
@@ -64,20 +64,20 @@ CLASS_DECL_AURA ::file::istream & operator >> (::file::istream & istream, proper
 namespace lemon
 {
 
-   CLASS_DECL_AURA void transfer_to(::file::writer & writer, const ::primitive::memory_base & mem, memory_size_t uiBufferSize = 1024 * 1024);
+   CLASS_DECL_AURA void transfer_to(serialize & writer, ::primitive::memory_base & mem, memory_size_t uiBufferSize = 1024 * 1024);
 
-   CLASS_DECL_AURA void transfer_from_begin(::file::reader & reader, ::primitive::memory_base & mem, memory_size_t uiBufferSize = 1024 * 1024);
+   CLASS_DECL_AURA void transfer_from_begin(serialize & reader, ::primitive::memory_base & mem, memory_size_t uiBufferSize = 1024 * 1024);
 
-   CLASS_DECL_AURA void transfer_from(::file::reader & reader, ::primitive::memory_base & mem, memory_size_t uiBufferSize = 1024 * 1024);
+   CLASS_DECL_AURA void transfer_from(serialize & reader, ::primitive::memory_base & mem, memory_size_t uiBufferSize = 1024 * 1024);
 
 
 } // namespace lemon
 
-CLASS_DECL_AURA::file::istream & operator >> (::file::istream & istream, ::primitive::memory_container & memcontainer);
+CLASS_DECL_AURA serialize & operator >> (serialize & istream, ::primitive::memory_container & memcontainer);
 
-CLASS_DECL_AURA::file::ostream & operator << (::file::ostream & ostream, const ::primitive::memory_base & mem);
+CLASS_DECL_AURA serialize & operator << (serialize & ostream, ::primitive::memory_base & mem);
 
-CLASS_DECL_AURA::file::istream & operator >> (::file::istream & istream, ::primitive::memory_base & mem);
+CLASS_DECL_AURA serialize & operator >> (serialize & istream, ::primitive::memory_base & mem);
 
 
 #include "primitive.inl"

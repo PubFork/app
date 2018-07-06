@@ -48,6 +48,13 @@ namespace data
 
    }
 
+   
+   void simple_data::stream(serialize & serialize)
+   {
+
+
+   }
+
 
 //   lock::lock(::data::data * pdata) :
 //      interlocked_long_pulse(pdata != NULL ? &pdata->m_lockedlong : NULL, 1)

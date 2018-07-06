@@ -240,28 +240,35 @@ namespace user
          virtual public ::serializable
       {
       public:
+
+
          mesh_layout();
          virtual ~mesh_layout();
 
          index_array   m_iaDisplayToStrict;
          int32_t            m_iWidth;
 
-         virtual void write(::file::ostream & ostream) const;
-         virtual void read(::file::istream & istream);
+         virtual void stream(serialize & serialize) override;
+
+
       };
 
       class CLASS_DECL_CORE icon_layout:
          virtual public ::serializable
       {
       public:
+
+
+         index_biunique    m_iaDisplayToStrict;
+
+
          icon_layout();
          virtual ~icon_layout();
 
-         index_biunique    m_iaDisplayToStrict;
-         //int32_t           m_iWidth;
 
-         virtual void write(::file::ostream & ostream) const;
-         virtual void read(::file::istream & istream);
+         virtual void stream(serialize & serialize);
+
+
       };
 
 

@@ -5011,12 +5011,12 @@ retry_license:
 
          ::file::buffered_file buffer(this, file);
 
-         ::file::byte_istream is(&buffer);
+         reader reader(&buffer);
 
          try
          {
 
-            is >> obj;
+            reader(obj);
 
          }
          catch (...)
@@ -5052,12 +5052,12 @@ retry_license:
 
          ::file::buffered_file buffer(this, file);
 
-         ::file::byte_ostream os(&buffer);
+         writer writer(&buffer);
 
          try
          {
 
-            os << obj;
+            writer(obj);
 
          }
          catch (...)

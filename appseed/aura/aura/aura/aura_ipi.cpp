@@ -389,9 +389,11 @@ started:
 
       memory_file m(get_app());
 
-      ::file::byte_ostream os(&m);
+      serialize serialize(&m);
 
-      os << va;
+      m.m_nOpenFlags = ::file::mode_write;
+
+      serialize.stream_array(va);
 
       return m.get_primitive_memory()->to_hex();
 
@@ -481,9 +483,11 @@ started:
 
       m.seek_to_begin();
 
-      ::file::byte_istream is(&m);
+      serialize is(&m);
 
-      is >> va;
+      m.m_nOpenFlags = ::file::mode_read;
+
+      is.stream_array(va);
 
       //return
       //stra.explode(";",str1);

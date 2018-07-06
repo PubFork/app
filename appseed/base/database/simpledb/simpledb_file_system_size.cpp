@@ -419,9 +419,13 @@ bool FileSystemSizeWnd::get_fs_size(int64_t & i64Size, const char * pszPath, boo
 
    memory_file file(get_app());
 
-   ::file::byte_stream stream(&file);
+   {
 
-   size.write(stream);
+      writer writer(&file);
+
+      writer(size);
+
+   }
 
    COPYDATASTRUCT data;
    data.dwData = 0;
@@ -467,9 +471,13 @@ void FileSystemSizeWnd::_001OnCopyData(::message::message * pobj)
       file_size_table::get_fs_size size;
       memory_file file(get_app(), pstruct->lpData, pstruct->cbData);
 
-      ::file::byte_stream stream(&file);
+      {
 
-      size.read(stream);
+         reader reader(&file);
+
+         reader(size);
+
+      }
 
       cslock sl(&m_cs);
 
@@ -484,13 +492,18 @@ void FileSystemSizeWnd::_001OnCopyData(::message::message * pobj)
    }
    else if(pstruct->dwData == 1)
    {
+
       file_size_table::get_fs_size size;
 
       memory_file file(get_app(), pstruct->lpData, pstruct->cbData);
 
-      ::file::byte_stream stream(&file);
+      {
 
-      size.read(stream);
+         reader reader(&file);
+
+         reader(size);
+
+      }
 
       m_bRet = true;
 
@@ -514,31 +527,43 @@ void FileSystemSizeWnd::_001OnTimer(::timer * ptimer)
 
 #ifdef WINDOWSEX
 
-//    super::_001OnTimer(ptimer);;
    if(ptimer->m_nIDEvent == 100)
    {
-      //::PostMessage(pbase->m_wparam, WM_COPYDATA, (WPARAM) get_handle(), (LPARAM) &data);
+
       if(m_sizea.get_size() > 0)
       {
+
          COPYDATASTRUCT data;
+
          data.dwData = 1;
 
          memory_file file(get_app());
 
-         ::file::byte_stream stream(&file);
+         writer writer(&file);
 
          while(m_sizea.get_size() > 0)
          {
+
             cslock sl(&m_cs);
+
             file_size_table::get_fs_size & size = m_sizea[0];
+
             file.Truncate(0);
-            size.write(stream);
+
+            writer(size);
+
             data.cbData = (uint32_t) file.get_length();
+
             data.lpData = file.get_data();
+
             ::SendMessage(size.m_oswindow, WM_COPYDATA, (WPARAM) m_pui->get_os_data(), (LPARAM) &data);
+
             m_sizea.remove_at(0);
+
          }
+
       }
+
    }
 
 #else
@@ -592,44 +617,46 @@ void FileSystemSizeWnd::ClientStartServer()
 }
 
 
-void file_size_table::get_fs_size::write(::file::ostream & ostream) const
+void file_size_table::get_fs_size::stream(serialize & serialize)
 {
-   ostream << m_strPath;
-   ostream << m_bPending;
-   ostream << m_iSize;
-   ostream << m_bRet;
 
-#ifdef WINDOWSEX
+   serialize(m_strPath);
+   serialize(m_bPending);
+   serialize(m_iSize);
+   serialize(m_bRet);
 
-   ostream << (int_ptr) m_oswindow;
-
-#else
-
-   _throw(not_implemented(::get_app()));
-
-#endif
-
+//#ifdef WINDOWSEX
+//
+//   serialize((int_ptr &) m_oswindow);
+//
+//#else
+//
+//   _throw(not_implemented(::get_app()));
+//
+//#endif
 
 }
 
-void file_size_table::get_fs_size::read(::file::istream & istream)
-{
-   istream >> m_strPath;
-   istream >> m_bPending;
-   istream >> m_iSize;
-   istream >> m_bRet;
 
-#ifdef WINDOWS
+//void file_size_table::get_fs_size::read(::file::istream & istream)
+//{
+//   istream >> m_strPath;
+//   istream >> m_bPending;
+//   istream >> m_iSize;
+//   istream >> m_bRet;
+//
+////#ifdef WINDOWS
+////
+////   istream >> (int32_t &) m_oswindow;
+////
+////#else
+////
+////   _throw(not_implemented(::get_app()));
+////
+////#endif
+//
+//
+//}
 
-   istream >> (int32_t &) m_oswindow;
-
-#else
-
-   _throw(not_implemented(::get_app()));
-
-#endif
-
-
-}
 
 

@@ -4,13 +4,13 @@
 namespace user
 {
 
-   
+
    controller::controller(::aura::application * papp) :
       ::object(papp),
       ::command_target(papp),
       ::data::data_container_base(papp)
    {
-      
+
       m_bModified = false;
       m_bNew = true;
       m_bAutoDelete = false;
@@ -22,6 +22,12 @@ namespace user
    controller::~controller()
    {
 
+
+   }
+
+
+   void controller::stream(serialize & serialize)
+   {
 
    }
 

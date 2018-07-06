@@ -31,7 +31,7 @@ namespace data
 
 
    class CLASS_DECL_AURA simple_data :
-      virtual public ::object
+      virtual public ::serializable
    {
    public:
 
@@ -45,10 +45,9 @@ namespace data
       virtual ~simple_data();
 
 
-//      virtual bool is_locked() const;
-
-
       virtual void on_update_data(int32_t iHint);
+
+      void stream(serialize & serialize) override;
 
 
    };

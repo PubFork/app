@@ -19,16 +19,16 @@ namespace file
    namespace array
    {
 
-      template < class ARRAY >
-      void write(ostream & ostream,const ARRAY & a)
-      {
-         ::count count = a.get_count();
-         ostream.write_arbitrary(count);
-         for(index index = 0; index < count; index++)
-         {
-            ostream << a.element_at(index);
-         }
-      }
+      //template < class ARRAY >
+      //void s(ostream & ostream,const ARRAY & a)
+      //{
+      //   ::count count = a.get_count();
+      //   ostream.write_arbitrary(count);
+      //   for(index index = 0; index < count; index++)
+      //   {
+      //      ostream << a.element_at(index);
+      //   }
+      //}
 
       template < class TYPE >
       void defer_alloc(TYPE & t)
@@ -36,60 +36,60 @@ namespace file
 
       }
 
-      template < class ARRAY >
-      void read(istream & istream,ARRAY & a)
-      {
-         ::count count;
-         //istream >> count;
-         istream.read_arbitrary(count);
+      //template < class ARRAY >
+      //void read(istream & istream,ARRAY & a)
+      //{
+      //   ::count count;
+      //   //istream >> count;
+      //   istream.read_arbitrary(count);
 
-         if(istream.fail())
-         {
-            return;
-         }
+      //   if(istream.fail())
+      //   {
+      //      return;
+      //   }
 
-         a.allocate(count);
-         for(index index = 0; index < count; index++)
-         {
-            defer_alloc(a.element_at(index));
-            istream >> a.element_at(index);
-            if(istream.fail())
-            {
-               return;
-            }
-         }
-         a.on_after_read();
-      }
+      //   a.allocate(count);
+      //   for(index index = 0; index < count; index++)
+      //   {
+      //      defer_alloc(a.element_at(index));
+      //      istream >> a.element_at(index);
+      //      if(istream.fail())
+      //      {
+      //         return;
+      //      }
+      //   }
+      //   a.on_after_read();
+      //}
 
-      template < typename TYPE >
-      void read(istream & istream, sp(TYPE) & a)
-      {
-         ::count count;
-         //istream >> count;
-         istream.read_arbitrary(count);
+      //template < typename TYPE >
+      //void read(istream & istream, sp(TYPE) & a)
+      //{
+      //   ::count count;
+      //   //istream >> count;
+      //   istream.read_arbitrary(count);
 
-         if(istream.fail())
-         {
-            return;
-         }
+      //   if(istream.fail())
+      //   {
+      //      return;
+      //   }
 
-         a.allocate(count);
-         for(index index = 0; index < count; index++)
-         {
-            if(a.is_null())
-            {
+      //   a.allocate(count);
+      //   for(index index = 0; index < count; index++)
+      //   {
+      //      if(a.is_null())
+      //      {
 
-               a = canew(TYPE);
+      //         a = canew(TYPE);
 
-            }
-            istream >> a.element_at(index);
-            if(istream.fail())
-            {
-               return;
-            }
-         }
-         a.on_after_read();
-      }
+      //      }
+      //      istream >> a.element_at(index);
+      //      if(istream.fail())
+      //      {
+      //         return;
+      //      }
+      //   }
+      //   a.on_after_read();
+      //}
 
 
    } // namespace array
@@ -97,40 +97,40 @@ namespace file
    namespace ptra
    {
 
-      template < class ARRAY >
-      void write(ostream & ostream,const ARRAY & a)
-      {
-         ::count count = a.get_count();
-         ostream.write_arbitrary(count);
-         for(index index = 0; index < count; index++)
-         {
-            ostream << *a.element_at(index);
-         }
-      }
+      //template < class ARRAY >
+      //void write(ostream & ostream,const ARRAY & a)
+      //{
+      //   ::count count = a.get_count();
+      //   ostream.write_arbitrary(count);
+      //   for(index index = 0; index < count; index++)
+      //   {
+      //      ostream << *a.element_at(index);
+      //   }
+      //}
 
-      template < class ARRAY >
-      void read(istream & istream,ARRAY & a)
-      {
-         ::count count;
-         //istream >> count;
-         istream.read_arbitrary(count);
+      //template < class ARRAY >
+      //void read(istream & istream,ARRAY & a)
+      //{
+      //   ::count count;
+      //   //istream >> count;
+      //   istream.read_arbitrary(count);
 
-         if(istream.fail())
-         {
-            return;
-         }
+      //   if(istream.fail())
+      //   {
+      //      return;
+      //   }
 
-         a.allocate(count);
-         for(index index = 0; index < count; index++)
-         {
-            istream >> *a.element_at(index);
-            if(istream.fail())
-            {
-               return;
-            }
-         }
-         a.on_after_read();
-      }
+      //   a.allocate(count);
+      //   for(index index = 0; index < count; index++)
+      //   {
+      //      istream >> *a.element_at(index);
+      //      if(istream.fail())
+      //      {
+      //         return;
+      //      }
+      //   }
+      //   a.on_after_read();
+      //}
 
 
    } // namespace array
@@ -175,9 +175,9 @@ namespace file
 
          }
 
-         typename type_map::AXIS_KEY key;
+         typename type_map::BASE_KEY key;
 
-         typename type_map::AXIS_VALUE value;
+         typename type_map::BASE_VALUE value;
 
          for(index index = 0; index < count; index++)
          {
@@ -215,53 +215,63 @@ namespace file
 } // namespace file
 
 
-template < class TYPE,class ARG_TYPE = const TYPE &,class DEFCONSTRUCTOR = ::constructor::def < TYPE > >
-::file::ostream & operator << (::file::ostream & os,const array < TYPE,ARG_TYPE,DEFCONSTRUCTOR > & a)
-{
-   ::file::array::write(os,a);
-   return os;
-}
-
-template < class TYPE,class ARG_TYPE = const TYPE &,class DEFCONSTRUCTOR = ::constructor::def < TYPE > >
-::file::istream & operator >> (::file::istream & is,array < TYPE,ARG_TYPE,DEFCONSTRUCTOR > & a)
-{
-   ::file::array::read(is,a);
-   return is;
-}
-
-
-
+//template < class TYPE,class ARG_TYPE = const TYPE &,class DEFCONSTRUCTOR = ::constructor::def < TYPE > >
+//::file::ostream & operator << (::file::ostream & os,const array < TYPE,ARG_TYPE,DEFCONSTRUCTOR > & a)
+//{
+//   ::file::array::write(os,a);
+//   return os;
+//}
+//
+//template < class TYPE,class ARG_TYPE = const TYPE &,class DEFCONSTRUCTOR = ::constructor::def < TYPE > >
+//::file::istream & operator >> (::file::istream & is,array < TYPE,ARG_TYPE,DEFCONSTRUCTOR > & a)
+//{
+//   ::file::array::read(is,a);
+//   return is;
+//}
 
 
 template<class TYPE,class ARG_TYPE = const TYPE &>
-::file::ostream & operator << (::file::ostream & os,const raw_array < TYPE,ARG_TYPE> & a)
+serialize & operator << (serialize & serialize, raw_array < TYPE,ARG_TYPE> & a)
 {
-   ::file::array::write(os,a);
-   return os;
+
+   ASSERT(serialize.is_storing());
+
+   serialize.stream_array(a);
+
+   return serialize;
+
 }
+
 
 template<class TYPE,class ARG_TYPE = const TYPE &>
-::file::istream & operator >> (::file::istream & is,raw_array < TYPE,ARG_TYPE > & a)
+serialize & operator >> (serialize & serialize,raw_array < TYPE,ARG_TYPE > & a)
 {
-   ::file::array::read(is,a);
-   return is;
+
+   ASSERT(!serialize.is_storing());
+
+   serialize.stream_array(a);
+
+   return serialize;
+
 }
 
 
-template < class POINTER, class ARRAY_TYPE = comparable_array < POINTER, POINTER, comparable_eq_array < POINTER, POINTER, raw_array < POINTER, POINTER, ::allocator::zero < POINTER > > > > >
-::file::ostream & operator << (::file::ostream & os,const pointer_array < POINTER, ARRAY_TYPE> & a)
-{
-   ::file::ptra::write(os,a);
-   return os;
-}
-
-template < class POINTER, class ARRAY_TYPE = comparable_array < POINTER, POINTER, comparable_eq_array < POINTER, POINTER, raw_array < POINTER, POINTER, ::allocator::zero < POINTER > > > > >
-::file::istream & operator >> (::file::istream & is, pointer_array < POINTER, ARRAY_TYPE > & a)
-{
-   ::file::ptra::read(is,a);
-   return is;
-}
-
+//template < class POINTER, class ARRAY_TYPE = comparable_array < POINTER, POINTER, comparable_eq_array < POINTER, POINTER, raw_array < POINTER, POINTER, ::allocator::zero < POINTER > > > > >
+//::file::ostream & operator << (serialize & serialize,const pointer_array < POINTER, ARRAY_TYPE> & a)
+//{
+//   ASSERT(serialize.is_storing())
+//   serialize.stream_ptra(a);
+//   return os;
+//}
+//
+//template < class POINTER, class ARRAY_TYPE = comparable_array < POINTER, POINTER, comparable_eq_array < POINTER, POINTER, raw_array < POINTER, POINTER, ::allocator::zero < POINTER > > > > >
+//::file::istream & operator >> (::file::istream & is, pointer_array < POINTER, ARRAY_TYPE > & a)
+//{
+//   ASSERT(!serialize.is_storing())
+//   serialize.stream_ptra(a);
+//   return is;
+//}
+//
 
 CLASS_DECL_AURA bool file_put(const char * path, ::serializable & s, ::aura::application * papp = NULL);
 CLASS_DECL_AURA bool file_as(::serializable & s, const char * path, ::aura::application * papp = NULL);

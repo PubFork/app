@@ -414,18 +414,9 @@ namespace file
    bool application::save(var varFile,::serializable & o)
    {
 
-      sp(::memory_file) pfile = Application.file().get_file(varFile,::file::mode_write | ::file::type_binary | ::file::mode_create | ::file::defer_create_directory);
+      serialize s(get_app());
 
-      if(pfile.is_null())
-      {
-
-         return false;
-
-      }
-
-      ::file::ostream os(pfile);
-
-      os << o;
+      s.save(varFile, o);
 
       return true;
 
@@ -435,22 +426,14 @@ namespace file
    bool application::load(::serializable & o,var varFile)
    {
 
-      sp(::memory_file) pfile = Application.file().get_file(varFile,::file::mode_read | ::file::type_binary);
+      serialize s(get_app());
 
-      if(pfile.is_null())
-      {
-
-         return false;
-
-      }
-
-      ::file::istream is(pfile);
-
-      is >> o;
+      s.load(varFile, o);
 
       return true;
 
    }
+
 
    bool application::save_lines(var varFile,stringa & stra)
    {

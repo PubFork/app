@@ -39,13 +39,15 @@ namespace simpledb
          }
       }
 
-      ::file::istream is(m_spfileMeta);
+      reader is(m_spfileMeta);
 
       if(!m_xmldocumentMeta.load(is))
          return DB_ERROR;
 
       return DB_COMMAND_OK;
+
    }
+
 
    table * base::get_table(const char * pszName)
    {

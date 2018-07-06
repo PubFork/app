@@ -154,7 +154,7 @@ public:
 
 //   using BASE_ARRAY::operator new;
 
-  // using BASE_ARRAY::operator delete;
+   // using BASE_ARRAY::operator delete;
 
    using BASE_ARRAY::set_app;
 
@@ -169,16 +169,16 @@ public:
    template<class ARRAY>
    friend bool lemon::array::binary_search(ARRAY & a,typename ARRAY::BASE_ARG_TYPE t,index & iIndex,index(* fCompare) (typename ARRAY::BASE_ARG_TYPE,typename ARRAY::BASE_ARG_TYPE),index_array & ia);
 
-   template < class ARRAY >
-   friend void ::file::array::write(::file::ostream & ostream,const ARRAY & a);
+   //template < class ARRAY >
+   //friend void ::file::array::write(::file::ostream & ostream,const ARRAY & a);
 
-   template < class ARRAY >
-   friend void ::file::array::read(::file::istream & ostream,ARRAY & a);
+   //template < class ARRAY >
+   //friend void ::file::array::read(::file::istream & ostream,ARRAY & a);
 
 
    sort_array & operator = (const sort_array & a)
    {
-	   return copy(a);
+      return copy(a);
    }
 
    sort_array & copy (const sort_array & a)

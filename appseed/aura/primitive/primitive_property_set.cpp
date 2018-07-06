@@ -925,17 +925,10 @@ void property_set::clear()
    remove_all();
 }
 
-void property_set::write(::file::ostream & ostream) const
+void property_set::stream(serialize & serialize)
 {
 
-   ostream << (const ::property_map &) *this;
-
-}
-
-void property_set::read(::file::istream & istream)
-{
-
-   istream >> (::property_map &) *this;
+   serialize.stream_map(*this);
 
 }
 

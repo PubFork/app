@@ -30,11 +30,11 @@ namespace str
       string serialize(::serializable & serializable);
 
       void decode(::file::ostream & ostreamBinary, ::file::istream & istreamBase64);
-      void decode(primitive::memory_base & storageBinary, const char * pszBase64);
+      void decode(primitive::memory_base & storageBinary, const char * pszBase64, strsize s = -1);
       string decode(const char * psz);
       void unserialize(::serializable & serializable, const char * pszBase64);
 
-   
+
    };
 
 

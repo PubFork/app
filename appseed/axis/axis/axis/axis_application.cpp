@@ -3746,18 +3746,18 @@ namespace axis
 
    }
 
-   bool application::app_data_set(class id id, ::file::istream & is)
+   bool application::app_data_set(class id id, serialize & serialize)
    {
 
-      return data_set(id, is);
+      return data_set(id, serialize);
 
    }
 
 
-   bool application::app_data_get(class id id, ::file::ostream & os)
+   bool application::app_data_get(class id id, serialize & serialize)
    {
 
-      return data_get(id, os);
+      return data_get(id, serialize);
 
    }
 

@@ -24,7 +24,6 @@ namespace draw2d
 
 
    class CLASS_DECL_AURA dib :
-      virtual public ::object,
       virtual public ::serializable
    {
    public:
@@ -381,8 +380,7 @@ namespace draw2d
 
       virtual double pi() const;
 
-      virtual void write(::file::ostream & ostream) const;
-      virtual void read(::file::istream & istream);
+      virtual void stream(serialize & serialize);
 
       //virtual bool update_window(::aura::draw_interface * pui,::message::message * pobj,bool bTransferBuffer = true);
       //virtual bool print_window(::aura::draw_interface * pui,::message::message * pobj);

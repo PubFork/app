@@ -373,10 +373,10 @@ namespace draw2d
          m_pathCache.Empty();
 
          sp(dib) pthis = this;
-         
+
          fork([pthis, pathDib]()
          {
-            
+
             sp(dib) pdib = pthis;
 
             pdib->save_to_dib(pathDib);
@@ -402,13 +402,15 @@ namespace draw2d
 
       destroy();
 
-      ::file::byte_istream istream(file);
+      ::reader reader(file);
 
-      istream >> *this;
+      reader(this);
 
-      if (istream.fail() || m_pcolorref == NULL || m_size.area() <= 0)
+      if (reader.fail() || m_pcolorref == NULL || m_size.area() <= 0)
       {
+
          return false;
+
       }
 
       return true;
@@ -427,9 +429,9 @@ namespace draw2d
          if (file.is_set())
          {
 
-            ::file::byte_ostream ostream(file);
+            ::writer writer(file);
 
-            ostream << *this;
+            writer(this);
 
          }
 
@@ -6820,113 +6822,119 @@ restart:
    }
 
 
-   void dib::write(::file::ostream & ostream) const
+   void dib::stream(::serialize & serialize)
    {
 
-      ostream << (i32)m_size.cx;
-
-      ostream << (i32)m_size.cy;
-
-      ostream << (i32)m_sizeAlloc.cx;
-
-      ostream << (i32)m_sizeAlloc.cy;
-
-      ostream << (i32)m_iScan;
-
-      ostream << (i32)m_emipmap;
-
-      if (area() <= 0)
+      if(serialize.is_storing())
       {
 
-         return;
+         serialize((i32&)m_size.cx);
 
-      }
+         serialize((i32&)m_size.cy);
 
-      map();
+         serialize((i32&)m_sizeAlloc.cx);
 
-      ostream.write(m_pcolorref, m_iScan * m_size.cy);
+         serialize((i32&)m_sizeAlloc.cy);
 
-   }
+         serialize((i32&)m_iScan);
+
+         serialize((i32&)m_emipmap);
+
+         if (area() <= 0)
+         {
+
+            return;
+
+         }
 
 
-   void dib::read(::file::istream & istream)
-   {
+         map();
 
-      i32 width;
-      istream >> width;
-      if (istream.fail())
-         return;
+         serialize.write(m_pcolorref, m_iScan * m_size.cy);
 
-      i32 height;
-      istream >> height;
-      if (istream.fail())
-         return;
-
-      i32 widthAlloc;
-      istream >> widthAlloc;
-      if (istream.fail())
-         return;
-
-      i32 heightAlloc;
-      istream >> heightAlloc;
-      if (istream.fail())
-         return;
-
-      i32 iScan;
-      istream >> iScan;
-      if (istream.fail())
-         return;
-
-      i32 iMipmap;
-      istream >> iMipmap;
-      if (istream.fail())
-         return;
-
-      if (width <= 0)
-         return;
-      if (height <= 0)
-         return;
-      if (widthAlloc <= 0)
-         return;
-      if (heightAlloc <= 0)
-         return;
-      if (iScan <= 0)
-         return;
-      if (widthAlloc < width)
-      {
-         istream.setstate(::file::badbit);
-         return;
-      }
-      if (heightAlloc < height)
-      {
-         istream.setstate(::file::badbit);
-         return;
-      }
-      if (!create(widthAlloc, heightAlloc))
-         _throw(simple_exception(get_app(), "dib::read"));
-      map();
-      if (iScan == m_iScan)
-      {
-         istream.read(get_data(), iScan * m_size.cy);
       }
       else
       {
-         memory mem;
-         mem.allocate(iScan * m_size.cy);
-         size_t s = istream.read(mem.get_data(), iScan * m_size.cy);
-         if (s / iScan < height)
+
+         i32 width;
+         serialize((i32&)width);
+         if (serialize.fail())
+            return;
+
+         i32 height;
+         serialize((i32&)height);
+         if (serialize.fail())
+            return;
+
+         i32 widthAlloc;
+         serialize((i32&)widthAlloc);
+         if (serialize.fail())
+            return;
+
+         i32 heightAlloc;
+         serialize((i32&)heightAlloc);
+         if (serialize.fail())
+            return;
+
+         i32 iScan;
+         serialize((i32&)iScan);
+         if (serialize.fail())
+            return;
+
+         i32 iMipmap;
+         serialize((i32&)iMipmap);
+         if (serialize.fail())
+            return;
+
+         if (width <= 0)
+            return;
+         if (height <= 0)
+            return;
+         if (widthAlloc <= 0)
+            return;
+         if (heightAlloc <= 0)
+            return;
+         if (iScan <= 0)
+            return;
+         if (widthAlloc < width)
          {
-            istream.setstate(::file::badbit);
+            serialize.setstate(::file::badbit);
             return;
          }
-         ::draw2d::copy_colorref(width, height, get_data(), m_iScan, (COLORREF *)mem.get_data(), iScan);
+         if (heightAlloc < height)
+         {
+            serialize.setstate(::file::badbit);
+            return;
+         }
+         if (!create(widthAlloc, heightAlloc))
+            _throw(simple_exception(get_app(), "dib::read"));
+         map();
+         if (iScan == m_iScan)
+         {
+            serialize.read(get_data(), iScan * m_size.cy);
+         }
+         else
+         {
+            memory mem;
+            mem.allocate(iScan * m_size.cy);
+            size_t s = serialize.read(mem.get_data(), iScan * m_size.cy);
+            if (s / iScan < height)
+            {
+               serialize.setstate(::file::badbit);
+               return;
+            }
+            ::draw2d::copy_colorref(width, height, get_data(), m_iScan, (COLORREF *)mem.get_data(), iScan);
+
+         }
+
+         m_size.cx = width;
+         m_size.cy = height;
 
       }
 
-      m_size.cx = width;
-      m_size.cy = height;
-
    }
+
+
 
 
    void dib::tint(::draw2d::dib * pdib, i32 R, i32 G, i32 B)

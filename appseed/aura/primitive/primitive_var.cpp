@@ -869,191 +869,201 @@ bool var::is_new_or_null() const
    return is_new() || is_null();
 }
 
-void var::read(::file::istream & is)
+void var::stream(serialize & serialize)
 {
-   int32_t i;
-   is >> i;
-   set_type(e_type(i), false);
-   switch(get_type())
+
+   if (serialize.is_storing())
    {
-   case type_pstring:
-      set_type(type_string, false);
-   case type_string:
-   {
-      strsize size;
-      is >> size;
-      char * lpsz = m_str.GetBuffer(size + 2);
-      is.read(lpsz, (size + 1) * sizeof(CHAR));
-      m_str.ReleaseBuffer();
-   }
-   break;
-   case type_int32:
-   {
-      is >> m_i32;
-   }
-   break;
-   case type_int64:
-   {
-      is >> m_i64;
-   }
-   break;
-   case type_uint64:
-   {
-      is >> m_ui64;
-   }
-   break;
-   case type_bool:
-   {
-      is >> m_b;
-   }
-   break;
-   case type_double:
-   {
-      is >> m_d;
-   }
-   break;
-   case type_new:
-   case type_null:
-   case type_empty:
+      ::file::ostream & ostream = serialize;
+      int32_t i = get_type();
+      ostream << i;
+      switch (get_type())
+      {
+      case type_string:
+      {
+         strsize len = m_str.get_length();
+         ostream << len;
+         ostream.write((const char *)m_str, m_str.get_length() + 1);
+      }
       break;
-   case type_inta:
-   {
-      int32_t iCount;
-      is >> iCount;
-      inta().allocate(iCount);
-      for(int32_t i = 0; i < m_pia->get_count(); i++)
+      case type_pstring:
       {
-         is >> (int32_t &) m_pia->element_at(i);
+         strsize len = m_pstr->get_length();
+         ostream << len;
+         ostream.write((const char *)*m_pstr, m_pstr->get_length() + 1);
       }
-   }
-   break;
-   case type_memory:
-   {
-      is >> memory();
-   }
-   break;
-   case type_stra:
-   {
-      is >> stra();
-   }
-   break;
-   case type_propset:
-   {
-      is >> propset();
-   }
-   break;
-   case type_id:
-   {
-      is >> m_id;
-   }
-   break;
-   case type_element:
-   {
-      sp(type) info;
-      is >> info;
-      m_sp = Sys(is.m_spfile->get_app()).alloc(info);
-      if(m_sp.is_null())
-      {
-         _throw(simple_exception(get_app(), "object allocation is not implemented"));
-      }
-      ::serializable * pserializable = m_sp.cast < ::serializable >();
-      if(pserializable != NULL)
-      {
-         is >> *pserializable;
-      }
-      else
-      {
-         _throw(io_exception(is.m_spfile->get_app(), "object serialization is not implemented"));
-      }
-   }
-   break;
-   default:
-      is.setstate(::file::failbit); // stream corrupt
       break;
+      case type_int32:
+         ostream << m_i32;
+         break;
+      case type_int64:
+         ostream << m_i64;
+         break;
+      case type_uint64:
+         ostream << m_ui64;
+         break;
+      case type_double:
+         ostream << m_d;
+         break;
+      case type_bool:
+         ostream << m_b;
+         break;
+      case type_new:
+      case type_null:
+      case type_empty:
+         break;
+      case type_inta:
+      {
+         ostream << inta().get_count();
+         for (int32_t i = 0; i < m_pia->get_count(); i++)
+         {
+            ostream << m_pia->element_at(i);
+         }
+      }
+      break;
+      case type_memory:
+         serialize(memory());
+         break;
+      case type_stra:
+         ostream << stra();
+         break;
+      case type_propset:
+         ostream << propset();
+         break;
+      case type_id:
+         ostream << m_id;
+         break;
+      case type_element:
+      {
+
+         sp(type) info(Sys(ostream.m_spfile->get_app()).get_type_info(typeid(*m_sp.m_p)));
+
+         ostream << info;
+
+         ::serializable * pserializable = m_sp.cast < ::serializable >();
+
+         if (pserializable != NULL)
+         {
+            serialize(*pserializable);
+         }
+         else
+         {
+            _throw(io_exception(ostream.m_spfile->get_app(), "object is not serializable"));
+         }
+      }
+      break;
+      default:
+         _throw(simple_exception(get_app(), "var::write var type not recognized"));
+      }
+
+   }
+   else
+   {
+      ::file::istream & is = serialize;
+      int32_t i;
+      is >> i;
+      set_type(e_type(i), false);
+      switch (get_type())
+      {
+      case type_pstring:
+         set_type(type_string, false);
+      case type_string:
+      {
+         strsize size;
+         is >> size;
+         char * lpsz = m_str.GetBuffer(size + 2);
+         is.read(lpsz, (size + 1) * sizeof(CHAR));
+         m_str.ReleaseBuffer();
+      }
+      break;
+      case type_int32:
+      {
+         is >> m_i32;
+      }
+      break;
+      case type_int64:
+      {
+         is >> m_i64;
+      }
+      break;
+      case type_uint64:
+      {
+         is >> m_ui64;
+      }
+      break;
+      case type_bool:
+      {
+         is >> m_b;
+      }
+      break;
+      case type_double:
+      {
+         is >> m_d;
+      }
+      break;
+      case type_new:
+      case type_null:
+      case type_empty:
+         break;
+      case type_inta:
+      {
+         int32_t iCount;
+         is >> iCount;
+         inta().allocate(iCount);
+         for (int32_t i = 0; i < m_pia->get_count(); i++)
+         {
+            is >> (int32_t &)m_pia->element_at(i);
+         }
+      }
+      break;
+      case type_memory:
+      {
+         serialize(memory());
+      }
+      break;
+      case type_stra:
+      {
+         is >> stra();
+      }
+      break;
+      case type_propset:
+      {
+         is >> propset();
+      }
+      break;
+      case type_id:
+      {
+         is >> m_id;
+      }
+      break;
+      case type_element:
+      {
+         sp(type) info;
+         is >> info;
+         m_sp = Sys(is.m_spfile->get_app()).alloc(info);
+         if (m_sp.is_null())
+         {
+            _throw(simple_exception(get_app(), "object allocation is not implemented"));
+         }
+         ::serializable * pserializable = m_sp.cast < ::serializable >();
+         if (pserializable != NULL)
+         {
+            serialize(*pserializable);
+         }
+         else
+         {
+            _throw(io_exception(is.m_spfile->get_app(), "object serialization is not implemented"));
+         }
+      }
+      break;
+      default:
+         is.setstate(::file::failbit); // stream corrupt
+         break;
+      }
+
    }
 }
 
-void var::write(::file::ostream & ostream) const
-{
-   int32_t i = get_type();
-   ostream << i;
-   switch(get_type())
-   {
-   case type_string:
-   {
-      strsize len = m_str.get_length();
-      ostream << len;
-      ostream.write((const char *) m_str, m_str.get_length() + 1);
-   }
-   break;
-   case type_pstring:
-   {
-      strsize len = m_pstr->get_length();
-      ostream << len;
-      ostream.write((const char *)*m_pstr, m_pstr->get_length() + 1);
-   }
-   break;
-   case type_int32:
-      ostream << m_i32;
-      break;
-   case type_int64:
-      ostream << m_i64;
-      break;
-   case type_uint64:
-      ostream << m_ui64;
-      break;
-   case type_double:
-      ostream << m_d;
-      break;
-   case type_bool:
-      ostream << m_b;
-      break;
-   case type_new:
-   case type_null:
-   case type_empty:
-      break;
-   case type_inta:
-   {
-      ostream << inta().get_count();
-      for(int32_t i = 0; i < m_pia->get_count(); i++)
-      {
-         ostream << m_pia->element_at(i);
-      }
-   }
-   break;
-   case type_memory:
-      ostream << memory();
-      break;
-   case type_stra:
-      ostream << stra();
-      break;
-   case type_propset:
-      ostream << propset();
-      break;
-   case type_id:
-      ostream << m_id;
-      break;
-   case type_element:
-   {
-      sp(type) info(Sys(ostream.m_spfile->get_app()).get_type_info(typeid(*m_sp.m_p)));
-      ostream << info;
-
-      ::serializable * pserializable = m_sp.cast < ::serializable > ();
-
-      if(pserializable != NULL)
-      {
-         ostream << *pserializable;
-      }
-      else
-      {
-         _throw(io_exception(ostream.m_spfile->get_app(), "object is not serializable"));
-      }
-   }
-   break;
-   default:
-      _throw(simple_exception(get_app(), "var::write var type not recognized"));
-   }
-}
 
 int32_t var::compare_ci(const class var & var) const
 {

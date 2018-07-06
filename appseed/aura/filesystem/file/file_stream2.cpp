@@ -56,12 +56,6 @@ namespace file
    }
 
 
-   ostream2 & ostream2::operator << (serializable & serializable)
-   {
-      ostream::operator << (serializable);
-      return *this;
-   }
-
    ostream2 & ostream2::operator << (const char * psz)
    {
       write((void *)psz, strlen(psz));

@@ -1,11 +1,33 @@
 #include "framework.h"
 
 
-serialize::serialize(::aura::application * papp) :
+serialize::serialize(serialize && serialize) :
+   ::object(::move(serialize)),
+   ::file::istream(::move(serialize)),
+   ::file::ostream(::move(serialize)),
+   m_iVersion(serialize.m_iVersion)
+{
+
+
+}
+
+
+serialize::serialize(::file::file * pfile, index iVersion) :
+   ::object(pfile->get_app())
+{
+
+   m_spfile = pfile;
+
+   m_iVersion = iVersion;
+
+}
+
+
+serialize::serialize(::aura::application * papp, index iVersion) :
    ::object(papp)
 {
 
-   m_iVersion = 0;
+   m_iVersion = iVersion;
 
 }
 
@@ -17,10 +39,18 @@ serialize::~serialize()
 }
 
 
+bool serialize::is_storing()
+{
+
+   return m_spfile->has_write_mode();
+
+}
+
+
 void serialize::write(void * p, memory_size_t s)
 {
 
-   m_spfile->write(p, s);
+   ostream::write(p, s);
 
 }
 
@@ -28,7 +58,7 @@ void serialize::write(void * p, memory_size_t s)
 memory_size_t serialize::read(void * p, memory_size_t s)
 {
 
-   return m_spfile->read(p, s);
+   return istream::read(p, s);
 
 }
 
@@ -36,7 +66,7 @@ memory_size_t serialize::read(void * p, memory_size_t s)
 void serialize::stream(void * p, memory_size_t s)
 {
 
-   if (m_bStoring)
+   if (is_storing())
    {
 
       write(p, s);
@@ -58,12 +88,47 @@ void serialize::stream(void * p, memory_size_t s)
 
 }
 
-void serialize::stream(serializable & serializable)
+void serialize::stream_object(serializable & serializable)
 {
 
    serializable.stream(*this);
 
 }
+
+
+void serialize::operator()(serializable & serializable)
+{
+
+   stream_object(serializable);
+
+}
+
+void serialize::operator()(serializable * pserializable)
+{
+
+   stream_object(*pserializable);
+
+}
+
+
+//serialize & serialize::operator << (serializable & serialize)
+//{
+//
+//   stream_object(serialize);
+//
+//   return *this;
+//
+//}
+//
+//
+//serialize & serialize::operator >> (serializable & serialize)
+//{
+//
+//   stream_object(serialize);
+//
+//   return *this;
+//
+//}
 
 
 bool serialize::is_version(index i)
@@ -75,23 +140,12 @@ bool serialize::is_version(index i)
 
 
 
-void serializable::stream(serialize & serialize)
+void serializable::stream(::serialize & serialize)
 {
 
-   if (serialize.m_bStoring)
-   {
-
-      serialize << *this;
-
-   }
-   else
-   {
-
-      serialize >> *this;
-
-   }
-
 }
+
+
 
 
 void serialize::stream_file(::file::path path, ::serializable & serializable)
@@ -106,11 +160,9 @@ void serialize::stream_file(::file::path path, ::serializable & serializable)
 
    ::serialize serialize(get_app());
 
-   serialize.m_bStoring = m_bStoring;
-
    UINT nOpenFlags;
 
-   if (m_bStoring)
+   if (is_storing())
    {
 
       nOpenFlags = ::file::type_binary | ::file::mode_write | ::file::mode_create | ::file::mode_truncate | ::file::defer_create_directory | ::file::share_exclusive;
@@ -135,7 +187,7 @@ void serialize::stream_link(serializable & serializable)
 
    string strLink;
 
-   if (m_bStoring)
+   if (is_storing())
    {
 
       strLink = serializable.oprop("read_only_link");
@@ -147,12 +199,7 @@ void serialize::stream_link(serializable & serializable)
       if (bReadOnly)
       {
 
-         if (m_bStoring)
-         {
-
-            return;
-
-         }
+         return;
 
       }
       else
@@ -198,6 +245,14 @@ void serialize::stream_link(serializable & serializable)
 
    }
 
+   stream_link(strLink, serializable);
+
+}
+
+
+void serialize::stream_link(string strLink, serializable & serializable)
+{
+
    ::file::path path = get_link_path(strLink);
 
    if (path.is_empty())
@@ -223,7 +278,6 @@ void serialize::stream_link(serializable & serializable)
    }
 
 }
-
 
 ::file::path serialize::get_link_path(string strLink)
 {
@@ -283,3 +337,228 @@ void serialize::stream_link(serializable & serializable)
 //
 //
 //
+
+
+
+void serialize::load(::file::path path, serializable & serializable, UINT nOpenFlags)
+{
+
+   ::file::file_sp pfile = Application.file().get_file(path, nOpenFlags);
+
+   if (pfile.is_null())
+   {
+
+      return;
+
+   }
+
+   m_spfile = pfile;
+
+   ASSERT(!pfile->has_write_mode());
+
+   if (pfile->has_write_mode())
+   {
+
+      return;
+
+   }
+
+   try
+   {
+
+      operator()(serializable);
+
+   }
+   catch (...)
+   {
+
+
+   }
+
+   m_spfile.release();
+
+}
+
+
+void serialize::save(::file::path path, serializable & serializable, UINT nOpenFlags)
+{
+
+   ::file::file_sp pfile = Application.file().get_file(path, nOpenFlags);
+
+   if (pfile.is_null())
+   {
+
+      return;
+
+   }
+
+   m_spfile = pfile;
+
+   ASSERT(pfile->has_write_mode());
+
+   if (!pfile->has_write_mode())
+   {
+
+      return;
+
+   }
+
+   try
+   {
+
+      operator()(serializable);
+
+   }
+   catch (...)
+   {
+
+
+   }
+
+   m_spfile.release();
+
+}
+
+
+reader::reader(reader && reader) :
+   ::object(::move(reader)),
+   ::serialize(::move(reader))
+{
+
+}
+
+
+reader::reader(::file::file * pfile, index iVersion) :
+   ::object(pfile->get_app()),
+   ::serialize(pfile->get_app(), iVersion)
+{
+
+   m_spfile = pfile;
+
+}
+
+
+reader::~reader()
+{
+
+}
+
+
+bool reader::is_storing()
+{
+
+   return false;
+
+}
+
+
+writer::writer(writer && writer) :
+   ::object(::move(writer)),
+   ::serialize(::move(writer))
+{
+
+}
+
+
+writer::writer(::file::file * pfile, index iVersion) :
+   ::object(pfile->get_app()),
+   ::serialize(pfile->get_app(), iVersion)
+{
+
+   m_spfile = pfile;
+
+}
+
+
+writer::~writer()
+{
+
+}
+
+
+
+bool writer::is_storing()
+{
+
+   return true;
+
+}
+
+
+
+
+CLASS_DECL_AURA serialize & operator << (serialize & serialize, serializable & serializable)
+{
+
+   ASSERT(serialize.is_storing());
+
+   serialize.stream_object(serializable);
+
+   return serialize;
+
+}
+
+
+CLASS_DECL_AURA serialize & operator >> (serialize & serialize, serializable & serializable)
+{
+
+   ASSERT(!serialize.is_storing());
+
+   serialize.stream_object(serializable);
+
+   return serialize;
+
+}
+
+
+
+
+
+
+memory_reader::memory_reader(::aura::application * papp, index iVersion) :
+   object(papp),
+   ::serialize(papp, iVersion),
+   ::reader(canew(memory_file(papp)), iVersion)
+{
+
+
+}
+
+
+memory_reader::~memory_reader()
+{
+
+}
+
+
+memory & memory_reader::memory()
+{
+
+   return *m_spfile.cast < ::memory_file >()->get_primitive_memory();
+
+}
+
+
+memory_writer::memory_writer(::aura::application * papp, index iVersion) :
+   object(papp),
+   ::serialize(papp, iVersion),
+   ::writer(canew(memory_file(papp)), iVersion)
+{
+
+
+}
+
+
+memory_writer::~memory_writer()
+{
+
+}
+
+
+memory & memory_writer::memory()
+{
+
+   return *m_spfile.cast < ::memory_file >()->get_primitive_memory();
+
+}
+

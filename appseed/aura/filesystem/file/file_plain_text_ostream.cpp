@@ -193,14 +193,6 @@ namespace file
    }
 
 
-   void plain_text_ostream:: write (serializable & serializable)
-   {
-
-      *this << serializable;
-
-   }
-
-
    void plain_text_ostream:: write (const char * psz)
    {
 

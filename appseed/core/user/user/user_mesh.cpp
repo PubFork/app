@@ -5873,38 +5873,36 @@ namespace user
    {
    }
 
-   void mesh::mesh_layout::write(::file::ostream & ostream) const
+
+   void mesh::mesh_layout::stream(serialize & serialize)
    {
+
       //ostream << m_iaDisplayToStrict;
-      ostream << m_iWidth;
+      serialize(m_iWidth);
+
    }
 
-   void mesh::mesh_layout::read(::file::istream & istream)
-   {
-      //istream >> m_iaDisplayToStrict;
-      istream >> m_iWidth;
-   }
 
    mesh::icon_layout::icon_layout()
    {
+
 //      m_iWidth = -1;
+
    }
+
 
    mesh::icon_layout::~icon_layout()
    {
    }
 
-   void mesh::icon_layout::write(::file::ostream & ostream) const
+
+   void mesh::icon_layout::stream(serialize & serialize)
    {
-      ostream << m_iaDisplayToStrict;
-//      ostream << m_iWidth;
+
+      serialize(m_iaDisplayToStrict);
+
    }
 
-   void mesh::icon_layout::read(::file::istream & istream)
-   {
-      istream >> m_iaDisplayToStrict;
-//      istream >> m_iWidth;
-   }
 
    class size mesh::get_item_size()
    {

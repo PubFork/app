@@ -16,7 +16,7 @@ namespace file
 
 
    class CLASS_DECL_AXIS data_trigger_ostream :
-      virtual public byte_stream
+      virtual public ::writer
    {
    public:
 
@@ -27,7 +27,7 @@ namespace file
 
 
       data_trigger_ostream(data_trigger_ostream && d);
-      data_trigger_ostream(::database::client * pclient,class ::database::id);
+      data_trigger_ostream(::database::client * pclient, class ::database::id);
       virtual ~data_trigger_ostream();
 
 
@@ -35,7 +35,7 @@ namespace file
 
 
    class CLASS_DECL_AXIS data_trigger_istream :
-      virtual public byte_stream
+      virtual public ::reader
    {
    public:
 
@@ -44,7 +44,7 @@ namespace file
 
 
       data_trigger_istream(data_trigger_istream && d);
-      data_trigger_istream(::database::client * pclient,class ::database::id);
+      data_trigger_istream(::database::client * pclient, class ::database::id);
       virtual ~data_trigger_istream();
 
    };
@@ -58,8 +58,6 @@ namespace database
 
 
    class client_array;
-
-
 
 
    class CLASS_DECL_AXIS client :
@@ -82,10 +80,6 @@ namespace database
       server *    m_pdataserver;
 
 
-
-
-
-
       client();
       virtual ~client();
 
@@ -97,16 +91,6 @@ namespace database
 
       DECL_GEN_SIGNAL(data_on_before_change);
       DECL_GEN_SIGNAL(data_on_after_change);
-
-      //virtual bool data_set(class id, bool b, update_hint * phint = NULL);
-      //virtual bool data_set(class id, const char * lpsz, update_hint * puh = NULL);
-      //virtual bool data_set(class id, int32_t i, update_hint * puh = NULL);
-      //virtual bool data_set(class id, int64_t i, update_hint * puh = NULL);
-
-      //virtual bool data_get(class id, bool & b);
-      //virtual bool data_get(class id, string & str);
-      //virtual bool data_get(class id, int32_t & i);
-      //virtual bool data_get(class id, int64_t & i);
 
       virtual bool data_set(class id, bool b, update_hint * phint = NULL);
       virtual bool data_set(class id, var & var, update_hint * puh = NULL);
@@ -120,24 +104,22 @@ namespace database
       virtual bool data_set(class id, const char * lpsz, update_hint * puh = NULL);
       virtual bool data_set(class id, const unichar * lpsz, update_hint * puh = NULL);
       virtual bool data_set(class id, ::file::file & obj, update_hint * puh = NULL);
-      virtual bool data_set(class id, ::serializable & obj, update_hint * puh = NULL);
-      virtual bool data_set(class id, ::file::istream & obj, update_hint * puh = NULL);
-//      virtual bool data_set(class id, ::serializable & obj, update_hint * puh = NULL);
-      //virtual bool data_set(class id, ::core::plain_text_istream & obj, update_hint * puh = NULL);
+      virtual bool data_set(class id, serializable & obj, update_hint * puh = NULL);
+      virtual bool data_set(class id, serialize & serialize, update_hint * puh = NULL);
       virtual bool data_set(selection & selection, const char * lpsz, update_hint * puh = NULL);
       virtual bool data_set(selection & selection, var & var, update_hint * puh = NULL);
 
       //virtual bool data_set(class id dataid, class id,  const char * lpsz, update_hint * puh = NULL);
 
       template < typename T >
-      inline bool data_save(class id id, const T & t)
+      inline bool data_save(class id id, T & t)
       {
          try
          {
 
             ::file::data_trigger_ostream os(this,id);
 
-            os << t;
+            os(t);
 
          }
          catch(...)
@@ -159,11 +141,8 @@ namespace database
 #endif
       virtual bool data_get(class id, string & str);
       virtual bool data_get(class id, ::file::file & obj);
-      virtual bool data_get(class id, ::serializable & obj);
-      virtual bool data_get(class id, ::file::ostream & obj);
-//      virtual bool data_get(class id, ::serializable & obj);
-      //virtual bool data_get(class id, ::core::plain_text_ostream & obj);
-//      virtual bool data_get(class id dataid, class id, string & str);
+      virtual bool data_get(class id, serializable & obj);
+      virtual bool data_get(class id, serialize & obj);
 
 
       template < typename T >

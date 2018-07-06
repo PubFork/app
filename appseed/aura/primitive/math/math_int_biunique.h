@@ -58,8 +58,7 @@ public:
 
    void copy_data(const biunique & ia);
 
-   virtual void write(::file::ostream & ostream) const;
-   virtual void read(::file::istream & ostream);
+   virtual void stream(::serialize & serialize);
 
    biunique & operator = (const biunique & ia);
 
@@ -171,7 +170,7 @@ T biunique < T, T_to_T > ::array_translate_a(T aNew, T aOld)
    //      a++;
    //   }
    //}
-   
+
    // making room
    if (has_a(aNew))
    {
@@ -455,7 +454,7 @@ void serialize_read(::file::istream & istream, map < t1, t2, t3, t4 > & m)
    {
       t1 iCount;
 //      class map < t1, t2, t3, t4 >::pair * ppair =
-  //       m.PGetFirstAssoc();
+      //       m.PGetFirstAssoc();
       istream >> iCount;
       t1 key;
       t3 value;
@@ -474,70 +473,74 @@ void serialize_read(::file::istream & istream, map < t1, t2, t3, t4 > & m)
    }
 }
 
-template < class T, class T_to_T >
-void biunique < T, T_to_T > ::write(::file::ostream & ostream) const
-{
-   ostream << m_bBiunivoca;
-   ostream << m_iMaxA;
-   ostream << m_iMaxB;
-   ostream << m_iEmptyA;
-   ostream << m_iEmptyB;
-   if(m_bBiunivoca)
-   {
-      ostream << m_ab;
-   }
-   else
-   {
-      ostream << m_ab;
-      ostream << m_ba;
-   }
-}
 
 template < class T, class T_to_T >
-void biunique < T, T_to_T > ::read(::file::istream & istream)
+void biunique < T, T_to_T > ::stream(serialize & serialize)
 {
-   try
+
+   serialize(m_bBiunivoca);
+   serialize(m_iMaxA);
+   serialize(m_iMaxB);
+   serialize(m_iEmptyA);
+   serialize(m_iEmptyB);
+
+   if(serialize.is_storing())
    {
-      istream >> m_bBiunivoca;
-      istream >> m_iMaxA;
-      istream >> m_iMaxB;
-      istream >> m_iEmptyA;
-      istream >> m_iEmptyB;
-      if(m_bBiunivoca)
+
+      if (m_bBiunivoca)
       {
-         T_to_T ab;
-         istream >> ab;
-         typename T_to_T::pair * ppair = ab.PGetFirstAssoc();
-         while(ppair != NULL)
-         {
-            set(ppair->m_element1, ppair->m_element2);
-            ppair = ab.PGetNextAssoc(ppair);
-         }
+         serialize.stream_map(m_ab);
       }
       else
       {
-         istream >> m_ab;
-         istream >> m_ba;
+         serialize.stream_map(m_ab);
+         serialize.stream_map(m_ba);
       }
+
    }
-   catch(const char * psz)
+   else
    {
-      m_ab.remove_all();
-      m_ba.remove_all();
-      m_bBiunivoca = true;
-      m_iEmptyA = - 1;
-      m_iEmptyB = - 1;
-      m_iMaxA = -1;
-      m_iMaxB = -1;
-      _throw(::simple_exception(get_app(), psz));
+
+      try
+      {
+         if (m_bBiunivoca)
+         {
+            T_to_T ab;
+            serialize.stream_map(ab);
+            typename T_to_T::pair * ppair = ab.PGetFirstAssoc();
+            while (ppair != NULL)
+            {
+               set(ppair->m_element1, ppair->m_element2);
+               ppair = ab.PGetNextAssoc(ppair);
+            }
+         }
+         else
+         {
+            serialize.stream_map(m_ab);
+            serialize.stream_map(m_ba);
+         }
+      }
+      catch (const char * psz)
+      {
+         m_ab.remove_all();
+         m_ba.remove_all();
+         m_bBiunivoca = true;
+         m_iEmptyA = -1;
+         m_iEmptyB = -1;
+         m_iMaxA = -1;
+         m_iMaxB = -1;
+         _throw(::simple_exception(get_app(), psz));
+      }
+
    }
 }
+
 
 template < class T, class T_to_T >
 T biunique < T, T_to_T > ::calc_max_a()
 {
    typename T_to_T::pair * ppair =
-      m_ab.PGetFirstAssoc();
+   m_ab.PGetFirstAssoc();
    T iMaxA = -1;
    while(ppair != NULL)
    {
@@ -552,7 +555,7 @@ template < class T, class T_to_T >
 T biunique < T, T_to_T > ::calc_max_b()
 {
    typename T_to_T::pair * ppair =
-      m_ba.PGetFirstAssoc();
+   m_ba.PGetFirstAssoc();
    T iMaxB = -1;
    while(ppair != NULL)
    {

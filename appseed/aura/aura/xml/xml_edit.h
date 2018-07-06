@@ -17,7 +17,6 @@ namespace xml
 
 
    class CLASS_DECL_AURA edit_item :
-      virtual public ::object,
       virtual public ::serializable
    {
    public:
@@ -38,8 +37,7 @@ namespace xml
       void add_attr(const sp(::xml::node) pnode, const attr * pattr);
 
 
-      virtual void write(::file::ostream & ostream) const;
-      virtual void read(::file::istream & istream);
+      virtual void stream(serialize & serialize);
 
 
    };

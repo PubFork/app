@@ -69,26 +69,26 @@
 namespace str
 {
 
-   
+
    base64::base64(::aura::application * papp) :
       ::object(papp)
    {
       int32_t i;
 
       // etable
-      for(i= 0;i<9;i++)
+      for(i= 0; i<9; i++)
       {
          etable[i+N1_A]    = (uchar) ('A'+i);
          etable[i+N1_J]    = (uchar) ('J'+i);
          etable[i+N1_a]    = (uchar) ('a'+i);
          etable[i+N1_j]    = (uchar) ('j'+i);
       }
-      for(i= 0;i<8;i++)
+      for(i= 0; i<8; i++)
       {
          etable[i+N1_S]    = (uchar) ('S'+i);
          etable[i+N1_s]    = (uchar) ('s'+i);
       }
-      for(i= 0;i<10;i++)
+      for(i= 0; i<10; i++)
       {
          etable[i+N1_0]    = (uchar) ('0'+i);
       }
@@ -97,35 +97,35 @@ namespace str
 
 
       // dtable
-      for(i= 0;i<255;i++)
+      for(i= 0; i<255; i++)
       {
          dtable[i]= 0x80;
       }
-      for(i= 'A';i<='I';i++)
+      for(i= 'A'; i<='I'; i++)
       {
          dtable[i]= (uchar) (N1_A+(i-'A'));
       }
-      for(i= 'J';i<='R';i++)
+      for(i= 'J'; i<='R'; i++)
       {
          dtable[i]= (uchar) (N1_J+(i-'J'));
       }
-      for(i= 'S';i<='Z';i++)
+      for(i= 'S'; i<='Z'; i++)
       {
          dtable[i]= (uchar) (N1_S+(i-'S'));
       }
-      for(i= 'a';i<='i';i++)
+      for(i= 'a'; i<='i'; i++)
       {
          dtable[i]= (uchar) (N1_a+(i-'a'));
       }
-      for(i= 'j';i<='r';i++)
+      for(i= 'j'; i<='r'; i++)
       {
          dtable[i]= (uchar) (N1_j+(i-'j'));
       }
-      for(i= 's';i<='z';i++)
+      for(i= 's'; i<='z'; i++)
       {
          dtable[i]= (uchar) (N1_s+(i-'s'));
       }
-      for(i= '0';i<='9';i++)
+      for(i= '0'; i<='9'; i++)
       {
          dtable[i]= (uchar) (N1_0+(i-'0'));
       }
@@ -149,7 +149,7 @@ namespace str
       while(!hiteof)
       {
          igroup[0]= igroup[1]= igroup[2]= 0;
-         for(n= 0;n<3;n++)
+         for(n= 0; n<3; n++)
          {
             if(istream.read(&ch, 1) == 0)
             {
@@ -172,7 +172,7 @@ namespace str
                   ogroup[2]= '=';
                }
             }
-            for(i= 0;i<4;i++)
+            for(i= 0; i<4; i++)
             {
                ostream.write(&ogroup[i], 1);
             }
@@ -189,7 +189,7 @@ namespace str
 
       while(TRUE)
       {
-         for(i= 0;i<4;i++)
+         for(i= 0; i<4; i++)
          {
             if(istream.read(&uch, 1) == 0)
             {
@@ -202,17 +202,17 @@ namespace str
             }
             if(dtable[uch]&0x80)
             {
-               
+
                string str;
-               
+
                str.Format("Illegal character '%ca' in input spfile->\n", uch);
-               
+
                _throw(io_exception(get_app(), str));
-               
+
 //               i--;
-//               
+//
 //               continue;
-               
+
             }
             a[i]= (uchar) uch;
             b[i]= (uchar) dtable[uch];
@@ -229,7 +229,7 @@ namespace str
 
    string base64::encode(const char * psz)
    {
-      
+
       memory storage;
 
       strsize iLen = strlen(psz);
@@ -257,7 +257,7 @@ namespace str
 
    string base64::encode(primitive::memory_base & storageBinary)
    {
-      
+
       ::memory_file buf(get_app(), &storageBinary);
 
       ::file::byte_istream istream(&buf);
@@ -274,17 +274,17 @@ namespace str
 
    string base64::decode(const char * pszBase64)
    {
-      
+
       memory storage;
-      
+
       decode(storage, pszBase64);
-      
+
       string str;
 
       memcpy(
-         str.GetBufferSetLength(storage.get_size()),
-         storage.get_data(),
-         storage.get_size());
+      str.GetBufferSetLength(storage.get_size()),
+      storage.get_data(),
+      storage.get_size());
 
       str.ReleaseBuffer();
 
@@ -292,10 +292,10 @@ namespace str
 
    }
 
-   void base64::decode(::primitive::memory_base & storageBinary, const char * pszBase64)
+   void base64::decode(::primitive::memory_base & storageBinary, const char * pszBase64, strsize s)
    {
 
-      string str(pszBase64);
+      string str(pszBase64, s);
 
       ::file::string_file buf(str);
 
@@ -313,20 +313,22 @@ namespace str
    {
 
       memory storageBinary;
-      
+
       ::memory_file buf(get_app(), &storageBinary);
 
-      ::file::byte_stream stream(&buf);
+      writer writer(&buf);
 
-      stream << serializable;
+      writer(serializable);
 
       buf.seek_to_begin();
 
       ::file::string_file file;
 
+      reader reader(&buf);
+
       ::file::plain_text_ostream ostream(&file);
 
-      encode(ostream, stream);
+      encode(ostream, reader);
 
       return file.m_str;
 
@@ -335,7 +337,7 @@ namespace str
 
    void base64::unserialize(::serializable & serializable, const char * pszBase64)
    {
-      
+
       string str(pszBase64);
 
       ::file::string_file bufIn(str);
@@ -343,7 +345,7 @@ namespace str
       ::file::plain_text_istream istream(&bufIn);
 
       memory storageBinary;
-      
+
       ::memory_file buf(get_app(), &storageBinary);
 
       ::file::byte_stream stream(&buf);
@@ -352,7 +354,9 @@ namespace str
 
       buf.seek_to_begin();
 
-      stream >> serializable;
+      reader reader(&buf);
+
+      reader(serializable);
 
    }
 

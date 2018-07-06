@@ -25,7 +25,7 @@ namespace simpledb
       if(!m_spfileMeta->open(strMetaPath, ::file::type_binary | ::file::mode_read_write | ::file::share_exclusive))
          _throw(simple_exception(get_app(), "integer_exception 1"));
 
-      ::file::istream is(m_spfileMeta);
+      reader is(m_spfileMeta);
 
       if(!m_xmldocumentMeta.load(is))
          _throw(simple_exception(get_app(), "integer_exception 1"));

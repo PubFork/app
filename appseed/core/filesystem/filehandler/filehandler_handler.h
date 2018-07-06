@@ -6,12 +6,11 @@ namespace filehandler
 
 
    class CLASS_DECL_CORE handler :
-      virtual public ::object,
       virtual public ::serializable
    {
    public:
-      
-      
+
+
       sp(tree_interface)         m_sptree;
 
 
@@ -51,8 +50,7 @@ namespace filehandler
       virtual void get_mime_type_app(stringa & straAppId, const char * pszMimeType);
 
 
-      void write(::file::ostream & ostream) const;
-      void read(::file::istream & istream);
+      virtual void stream(serialize & serialize) override;
 
 
    };

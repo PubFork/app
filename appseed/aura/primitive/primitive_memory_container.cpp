@@ -166,13 +166,18 @@ namespace primitive
    }
 
 
-   void memory_container ::read(::file::istream & is)
+   void memory_container ::stream(serialize & serialize)
    {
+
       if(m_spmemory.is_null())
       {
+
          m_spmemory = canew(memory(this));
+
       }
-      m_spmemory->read(is);
+
+      m_spmemory->stream(serialize);
+
    }
 
 

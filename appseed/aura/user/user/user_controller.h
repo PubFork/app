@@ -28,6 +28,9 @@ namespace user
       virtual ~controller();
 
 
+      virtual void stream(serialize & serialize) override;
+
+
    };
 
 

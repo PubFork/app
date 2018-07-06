@@ -7,7 +7,7 @@ namespace file
 
    ostream::ostream()
    {
-   
+
    }
 
 
@@ -38,7 +38,7 @@ namespace file
    }
 
 
-   ostream::ostream(const ostream & ostream) 
+   ostream::ostream(const ostream & ostream)
    {
 
       m_spfile     = ostream.m_spfile;
@@ -62,7 +62,7 @@ namespace file
 
    void ostream::write(const void *lpBuf,memory_size_t nCount)
    {
-      
+
       m_spfile->write(lpBuf, nCount);
 
    }
@@ -77,63 +77,96 @@ namespace file
 
    void ostream:: write (bool b)
    {
-      
+
+      blt(b);
+
    }
 
    void ostream:: write (char ch)
    {
-      
+
+      blt(ch);
+
    }
+
 
    void ostream:: write (uchar uch)
    {
-      
+
+      blt(uch);
+
    }
 
-   void ostream:: write (int16_t i)
+
+   void ostream::write (int16_t i)
    {
 
+      blt(i);
+
    }
+
 
    void ostream:: write (uint16_t ui)
    {
 
+      blt(ui);
+
    }
+
+
 #ifdef WINDOWS
+
+
    void ostream:: write (unichar wch)
    {
 
+      blt(wch);
+
    }
+
+
 #endif
+
+
    void ostream:: write (int32_t i)
    {
 
+      blt(i);
+
    }
+
 
    void ostream:: write (uint32_t ui)
    {
 
+      blt(ui);
+
    }
+
 
    void ostream:: write (int64_t i)
    {
+
+      blt(i);
 
    }
 
    void ostream:: write (uint64_t ui)
    {
 
+      blt(ui);
+
    }
-   
+
 #ifdef APPLEOS
-   
+
    void ostream:: write (unsigned long ui)
    {
-      
+
    }
-   
+
 #endif
-   
+
 
    void ostream::write_arbitrary(int32_t i)
    {
@@ -200,23 +233,15 @@ namespace file
 
    }
 
-   
-   void ostream:: write (const serializable & serializable)
-   {
-
-      *this << serializable;
-
-   }
-
 
    void ostream:: write (const char * psz)
    {
-      
+
    }
+
 
    void ostream:: write (const id & id)
    {
-
 
    }
 
@@ -244,7 +269,7 @@ namespace file
 
    void ostream::flush()
    {
-      
+
       if(m_spfile.is_set())
       {
 
@@ -263,8 +288,8 @@ namespace file
       stream_base::close();
 
    }
-        
-   
+
+
    bool ostream::is_writer_null()
    {
 
@@ -280,7 +305,7 @@ namespace file
 
    }
 
-   
+
    void ostream:: write (const string & str)
    {
 
@@ -290,7 +315,7 @@ namespace file
 
    void ostream::set_length(file_size_t len)
    {
-   
+
       m_spfile->set_length(len);
 
    }

@@ -25,20 +25,13 @@ namespace xml
    }
    
 
-   void data::write(::file::ostream & ostream) const
+   void data::stream(serialize & serialize)
    {
 
-      ostream << (::xml::document &) *this;
+      ::xml::document::stream(serialize);
 
    }
    
-
-   void data::read(::file::istream & istream)
-   {
-
-      istream >> (::xml::document &) *this;
-
-   }
 
 
 } // namespace core

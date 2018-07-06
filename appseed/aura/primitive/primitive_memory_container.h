@@ -52,7 +52,7 @@ namespace primitive
       string to_string();
 
       void read(memory_base *pmemorystorage);
-      void read(::file::istream & is);
+      void stream(serialize & serialize);
 
       void keep_pointer(void **ppvoid);
       void offset_kept_pointers(memory_offset_t iOffset);

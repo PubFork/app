@@ -142,18 +142,13 @@ namespace file
    }
 
 
-   void plain_text_istream::read (serializable & serializable)
-   {
-      
-      *this >> serializable;
-
-   }
-
-
    string plain_text_istream::get_location() const
    {
+
       return "<unknown plain_text_istream location>";
+
    }
+
 
    istream & plain_text_istream::operator = (const istream & istream)
    {

@@ -278,20 +278,13 @@ namespace file
    }
 
 
-   void byte_ostream:: write (serializable & serializable)
-   {
-     
-      *this << serializable;
-
-   }
-
-
    void byte_ostream:: write (const char * psz)
    {
 
       m_spfile->write(psz, strlen(psz));
 
    }
+
 
    void byte_ostream:: write (const id & id)
    {
@@ -308,21 +301,6 @@ namespace file
       }
 
 
-
-   }
-
-
-   void byte_ostream:: write (const var & var)
-   {
-
-      ((::var *)&var)->write(*this);
-
-   }
-
-   void byte_ostream:: write(const property & property)
-   {
-
-      ((::property *)&property)->write(*this);
 
    }
 

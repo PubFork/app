@@ -49,26 +49,15 @@ namespace xml
 
    }
 
-   void edit_item::write(::file::ostream & ostream) const
+   void edit_item::stream(serialize & serialize)
    {
 
-      ostream << (int32_t) m_eaction;
-      ostream << m_iaPath;
-      ostream << m_strName;
-      ostream << m_strValue;
+      serialize((int32_t &) m_eaction);
+      serialize.stream_array(m_iaPath);
+      serialize(m_strName);
+      serialize(m_strValue);
 
    }
-
-   void edit_item::read(::file::istream & istream)
-   {
-
-      istream >> (int32_t &) m_eaction;
-      istream >> m_iaPath;
-      istream >> m_strName;
-      istream >> m_strValue;
-
-   }
-
 
 
    edit::edit(::aura::application * papp) :

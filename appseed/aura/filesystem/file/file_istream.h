@@ -1,17 +1,14 @@
 #pragma once
 
 
-class serializable;
-
-
 namespace file
 {
 
    class writer;
    class reader;
+   class istream;
 
-
-   typedef smart_pointer < reader > istream_sp;
+   typedef smart_pointer < istream > istream_sp;
 
 
    class CLASS_DECL_AURA istream :
@@ -29,7 +26,20 @@ namespace file
       istream(const istream & preader);
       virtual ~istream();
 
+      template < typename TYPE >
+      void blt(TYPE & t)
+      {
 
+         memory_size_t s = read(&t, sizeof(t));
+
+         if (s != sizeof(t))
+         {
+
+            setstate(failbit);
+
+         }
+
+      }
 
       virtual memory_size_t read(void *lpBuf, memory_size_t nCount);
       virtual void full_read(void *lpBuf, memory_size_t nCount);
@@ -68,7 +78,6 @@ namespace file
       inline istream & operator >> (LPRECT            lprect          ) { read(lprect         ); return *this; }
       inline istream & operator >> (SIZE            & size            ) { read(size           ); return *this; }
       inline istream & operator >> (sp(type)        & info            ) { read(info           ); return *this; }
-      inline istream & operator >> (::serializable  & serializable    ) { read(serializable   ); return *this; }
       inline istream & operator >> (id              & id              ) { read(id             ); return *this; }
       inline istream & operator >> (var             & var             ) { read(var            ); return *this; }
       inline istream & operator >> (property        & property        ) { read(property       ); return *this; }
@@ -101,7 +110,6 @@ namespace file
       virtual void read (LPRECT lprect);
       virtual void read (SIZE & size);
       virtual void read (sp(type) info);
-      virtual void read (::serializable & serializable);
       virtual void read (id & id);
       virtual void read (var & var);
       virtual void read (property & property);

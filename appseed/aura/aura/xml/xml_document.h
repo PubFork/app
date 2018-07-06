@@ -33,7 +33,7 @@ namespace xml
       node * get_root() const;
       
       bool load_location(const char * psz);
-      bool load(::file::istream & is);
+      bool load(serialize & s);
       bool load(const char * psz);
 
       document & operator = (const document & document);
@@ -46,6 +46,8 @@ namespace xml
       {
          return ::data::data::validate_edit < ::xml::edit > (pbaseedit);
       }
+
+      virtual void stream(serialize & serialize) override;
 
 
    };

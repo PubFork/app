@@ -268,12 +268,12 @@ void db_server::close()
 }
 
 
-bool db_server::data_server_load(::database::client * pclient, ::database::id id, ::file::ostream & writable, ::database::update_hint * phint)
+bool db_server::data_server_load(::database::client * pclient, ::database::id id, memory & memory, ::database::update_hint * phint)
 {
 
    UNREFERENCED_PARAMETER(phint);
 
-   if (!load(calc_data_key(pclient, id), writable))
+   if (!load(calc_data_key(pclient, id), memory))
    {
 
       return false;
@@ -285,14 +285,14 @@ bool db_server::data_server_load(::database::client * pclient, ::database::id id
 }
 
 
-bool db_server::data_server_save(::database::client * pclient, ::database::id id, ::file::istream & readable, ::database::update_hint * phint)
+bool db_server::data_server_save(::database::client * pclient, ::database::id id, memory & memory, ::database::update_hint * phint)
 {
 
    synch_lock sl(m_pmutex);
 
    UNREFERENCED_PARAMETER(phint);
 
-   if (!save(calc_data_key(pclient, id), readable))
+   if (!save(calc_data_key(pclient, id), memory))
    {
 
       return false;
@@ -316,7 +316,7 @@ bool db_server::load(const char * lpcszKey, string & str)
 
 
 
-bool db_server::load(const char * lpKey, ::file::ostream & ostream)
+bool db_server::load(const char * lpKey, memory & mem)
 {
 
    string str;
@@ -328,9 +328,18 @@ bool db_server::load(const char * lpKey, ::file::ostream & ostream)
 
    }
 
-   ::file::byte_ostream os(ostream);
+   try
+   {
 
-   os.write_from_hex(str);
+      mem.from_base64(str);
+
+   }
+   catch (...)
+   {
+
+      return false;
+
+   }
 
    return true;
 
@@ -350,18 +359,14 @@ bool db_server::save(const char * lpcszKey, const char * lpcsz)
 }
 
 
-bool db_server::save(const char * lpKey, ::file::istream & istream)
+bool db_server::save(const char * lpKey, memory & mem)
 {
 
    synch_lock sl(m_pmutex);
 
    string str;
 
-   file::byte_istream is(istream);
-
-   is.seek_to_begin();
-
-   is.read_to_hex(str);
+   mem.to_base64(str);
 
    if(!save(lpKey, str))
       return false;

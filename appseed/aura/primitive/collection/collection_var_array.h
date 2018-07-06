@@ -4,7 +4,8 @@
 
 
 class CLASS_DECL_AURA var_array :
-   public array < var >
+   virtual public array < var >,
+   virtual public serializable
 {
 public:
 
@@ -92,6 +93,9 @@ public:
       return va.array(vars...);
 
    }
+
+
+   virtual void stream(serialize & serialize) override;
 
 
 };

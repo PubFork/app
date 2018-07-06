@@ -519,11 +519,11 @@ namespace user
       delete_contents();
 
       set_modified_flag();  // dirty during de-serialize
-      ::file::istream is(spfile);
+      reader reader(spfile);
       try
       {
          wait_cursor wait(get_app());
-         is >> *this;     // load me
+         reader(this);     // load me
          spfile->close();
       }
       catch (::exception::base & e)
@@ -588,7 +588,7 @@ namespace user
       }
 
 
-      ::file::ostream os(spfile);
+      writer writer(spfile);
 
       try
       {
@@ -602,7 +602,7 @@ namespace user
          else
          {
 
-            os << *this;
+            writer(*this);
 
          }
 

@@ -615,8 +615,7 @@ public:
    bool operator > (int64_t i) const;
 
 
-   void write(::file::ostream & ostream) const;
-   void read(::file::istream & ostream);
+   void stream(serialize & serialize);
 
 
    string operator + (const char * psz) const;

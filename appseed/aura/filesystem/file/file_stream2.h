@@ -18,7 +18,6 @@ namespace file
       ostream2 & operator << (int32_t i);
       ostream2 & operator << (uint32_t ui);
       ostream2 & operator << (const RECT & rect);
-      ostream2 & operator << (serializable & serializable);
       ostream2 & operator << (const char * psz);
       ostream2 & operator << (const string & str);
    };

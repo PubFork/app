@@ -2,30 +2,42 @@
 #include <stdio.h>
 #include <stdarg.h>
 
+
 thread_int_ptr < int > g_iGenerateSyncIoError;
 thread_int_ptr < int > g_iSyncIoError;
 
+
 CLASS_DECL_AURA int get_sync_io_error()
 {
+
    return g_iSyncIoError;
+
 }
 
 
 CLASS_DECL_AURA void set_sync_io_error(int iError)
 {
+
    g_iSyncIoError = iError;
+
 }
+
 
 CLASS_DECL_AURA int get_generate_sync_io_error()
 {
+
    return g_iGenerateSyncIoError;
+
 }
 
 
 CLASS_DECL_AURA void set_generate_sync_io_error(int iError)
 {
+
    g_iGenerateSyncIoError = iError;
+
 }
+
 
 namespace file
 {
@@ -35,14 +47,36 @@ namespace file
    {
 
       m_dwErrorBlockTimeout = 0;
+      m_nOpenFlags = 0;
 
    }
-
 
 
    file::~file()
    {
+
    }
+
+
+   void file::set_write()
+   {
+
+      m_nOpenFlags &= ~::file::mode_read;
+
+      m_nOpenFlags |= ::file::mode_write;
+
+   }
+
+
+   void file::set_read()
+   {
+
+      m_nOpenFlags &= ~::file::mode_write;
+
+      m_nOpenFlags |= ::file::mode_read;
+
+   }
+
 
    ::file::file_sp  file::Duplicate() const
    {
@@ -89,6 +123,13 @@ namespace file
 
    }
 
+
+   bool file::has_write_mode()
+   {
+
+      return m_nOpenFlags & ::file::mode_write;
+
+   }
 
    file_position_t file::get_position() const
    {

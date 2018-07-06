@@ -1102,24 +1102,13 @@ net::dns_cache_item::dns_cache_item(const dns_cache_item & item)
 }
 
 
-void net::dns_cache_item::write(::file::ostream & ostream) const
+void net::dns_cache_item::stream(serialize & serialize)
 {
 
-   ostream.write(&m_ipaddr, sizeof(m_ipaddr));
-   ostream.write(&m_dwLastChecked,sizeof(m_dwLastChecked));
-   ostream.write(&r,sizeof(r));
-   ostream.write(&m_bTimeout,sizeof(m_bTimeout));
-
-}
-
-
-void net::dns_cache_item::read(::file::istream & istream)
-{
-
-   istream.read(&m_ipaddr,sizeof(m_ipaddr));
-   istream.read(&m_dwLastChecked,sizeof(m_dwLastChecked));
-   istream.read(&r,sizeof(r));
-   istream.read(&m_bTimeout,sizeof(m_bTimeout));
+   serialize.blt(m_ipaddr);
+   serialize.blt(m_dwLastChecked);
+   serialize.blt(r);
+   serialize.blt(m_bTimeout);
 
 }
 
@@ -1158,26 +1147,15 @@ net::reverse_cache_item::reverse_cache_item(const reverse_cache_item & item)
 
 }
 
-void net::reverse_cache_item::write(::file::ostream & ostream) const
+void net::reverse_cache_item::stream(serialize & serialize)
 {
 
-   ostream.write(&m_ipaddr,sizeof(m_ipaddr));
-   ostream.write(m_strReverse);
-   ostream.write(&m_dwLastChecked,sizeof(m_dwLastChecked));
-   ostream.write(&r,sizeof(r));
-   ostream.write(&m_bTimeout,sizeof(m_bTimeout));
+   serialize.blt(m_ipaddr);
+   serialize(m_strReverse);
+   serialize.blt(m_dwLastChecked);
+   serialize.blt(r);
+   serialize.blt(m_bTimeout);
 
-}
-
-
-void net::reverse_cache_item::read(::file::istream & istream)
-{
-
-   istream.read(&m_ipaddr,sizeof(m_ipaddr));
-   istream.read(m_strReverse);
-   istream.read(&m_dwLastChecked,sizeof(m_dwLastChecked));
-   istream.read(&r,sizeof(r));
-   istream.read(&m_bTimeout,sizeof(m_bTimeout));
 }
 
 

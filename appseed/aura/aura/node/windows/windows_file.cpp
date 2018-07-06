@@ -220,6 +220,8 @@ retry:
 
       m_dwAccessMode = dwAccess;
 
+      m_nOpenFlags = nOpenFlags;
+
       return ::no_exception;
 
    }

@@ -481,12 +481,14 @@ restart:
 
       memory storage;
 
-      if (varFile.cast < ::file::file >() != NULL)
+      ::file::file * pfile = varFile.cast < ::file::file >();
+
+      if (pfile != NULL)
       {
 
-         ::file::byte_istream is(varFile.cast < ::file::file >());
+         ::reader reader(pfile);
 
-         storage.read(is);
+         reader(storage);
 
       }
       else
@@ -572,9 +574,9 @@ restart:
                try
                {
 
-                  ::file::byte_istream is(App(papp).file().get_file(strFilePath, ::file::type_binary | ::file::mode_read));
+                  ::reader is(App(papp).file().get_file(strFilePath, ::file::type_binary | ::file::mode_read));
 
-                  is >> storage;
+                  is(storage);
 
                }
                catch (...)
@@ -2696,6 +2698,12 @@ restart:
             *pfesp = cres;
 
          }
+
+      }
+      else
+      {
+
+         spfile->m_nOpenFlags = nOpenFlags;
 
       }
 

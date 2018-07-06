@@ -1884,12 +1884,12 @@ RetryBuildNumber:
 
    }
 
-   void system::on_end_find_applications_from_cache(::file::byte_istream & is)
+   void system::on_end_find_applications_from_cache(serialize & is)
    {
 
    }
 
-   void system::on_end_find_applications_to_cache(::file::byte_ostream & os)
+   void system::on_end_find_applications_to_cache(serialize & os)
    {
 
    }
@@ -2085,7 +2085,7 @@ RetryBuildNumber:
       if(file.is_null())
          return false;
 
-      ::file::byte_istream is(file);
+      serialize is(file);
 
       is >> m_mapAppLibrary;
 

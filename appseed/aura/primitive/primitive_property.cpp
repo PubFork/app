@@ -230,7 +230,7 @@ property & property::operator = (const property & prop)
 
 //property::property(::index iIndex)
 //{
-//   
+//
 //   m_iIndex = iIndex;
 //
 //}
@@ -316,17 +316,17 @@ void property::parse_json(const char * & pszJson,const char * pszEnd)
 
 void property::parse_json_id(id & id, const char * & pszJson, const char * pszEnd)
 {
-   
+
    ::str::consume_spaces(pszJson, 0, pszEnd);
-   
+
    char sz[1024];
-   
+
    char * psz = sz;
-   
+
    strsize iBuffer = sizeof(sz);
-   
+
    ::str::consume_quoted_value_ex2(pszJson, pszEnd, &psz, iBuffer);
-   
+
    id = psz;
 
    if (iBuffer > sizeof(sz))
@@ -457,17 +457,15 @@ var property::at(index iIndex) const
    return this->element_at(iIndex);
 }
 
-void property::write(::file::ostream & ostream) const
+
+void property::stream(serialize & serialize)
 {
-   ostream << m_element1;
-   m_element2.write(ostream);
+
+   serialize(m_element1);
+   serialize(m_element2);
+
 }
 
-void property::read(::file::istream & istream)
-{
-   istream >> m_element1;
-   m_element2.read(istream);
-}
 
 ::count property::get_count() const
 {
@@ -1451,7 +1449,7 @@ string property::get_xml(::xml::disp_option * opt /*= &optDefault*/ )
 
    if(opt == ((::xml::disp_option *) 1))
    {
-      
+
       opt = System.xml().m_poptionDefault;
 
    }
