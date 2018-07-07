@@ -71,7 +71,8 @@ namespace user
       ::object::dump(dumpcontext);
 
       dumpcontext << "m_wstrTitle = " << m_strTitle;
-      dumpcontext << "\nm_wstrPathName = " << m_filepath;
+      dumpcontext << "\nm_filepath = " << m_filepath;
+      dumpcontext << "\nm_filepathEx = " << m_filepathEx;
       dumpcontext << "\nm_bModified = " << m_bModified;
       dumpcontext << "\nm_pDocTemplate = " << (void *)m_pimpactsystem;
 
@@ -119,7 +120,18 @@ namespace user
 
       str += " : ";
 
-      str+= m_filepath;
+      if (m_filepathEx.has_char())
+      {
+
+         str += m_filepathEx;
+
+      }
+      else
+      {
+
+         str += m_filepath;
+
+      }
 
       sp(::user::frame_window) pframe = get_view(0)->GetParentFrame();
 
@@ -414,7 +426,8 @@ namespace user
       ::file::path strFullPath;
       //      System.file_system().FullPath(strFullPath, strPathName);
       strFullPath = strPathName;
-      m_filepath = strFullPath;
+      m_filepath = System.defer_process_path(m_filepath, get_app());
+      m_filepathEx = strFullPath;
       //!m_strPathName.is_empty());       // must be set to something
       m_bEmbedded = FALSE;
 
@@ -483,6 +496,7 @@ namespace user
 
       delete_contents();
       m_filepath.Empty();      // no path name yet
+      m_filepathEx.Empty();      // no path name yet
       set_modified_flag(FALSE);     // make clean
       m_bNew = true;
       return true;
@@ -881,7 +895,7 @@ namespace user
 
       // get name/title of document_interface
       string name;
-      if (m_filepath.is_empty())
+      if (m_filepath.is_empty() && m_filepathEx.is_empty())
       {
          name = m_strTitle;
          if (name.is_empty())
@@ -892,7 +906,14 @@ namespace user
       else
       {
          // get name based on file title of path name
-         name = m_filepath.name();
+         if (m_filepathEx.has_char())
+         {
+            name = m_filepathEx.name();
+         }
+         else
+         {
+            name = m_filepath.name();
+         }
       }
 
       string prompt;

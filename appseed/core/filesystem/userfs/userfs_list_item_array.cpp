@@ -28,7 +28,7 @@ namespace userfs
    {
    }
 
-   
+
    list_item & list_item_array::get_item(index iItem)
    {
 
@@ -57,6 +57,8 @@ namespace userfs
       for(int32_t i = 0; i < this->get_count(); i++)
       {
          if(m_itema.element_at(i)->m_filepath == pszPath)
+            return i;
+         if (m_itema.element_at(i)->m_filepathEx == pszPath)
             return i;
       }
       return -1;

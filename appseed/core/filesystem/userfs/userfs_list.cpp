@@ -91,14 +91,14 @@ namespace userfs
          var varQuery;
          if(iUItem == iLItem)
          {
-            varFile = get_fs_mesh_data()->m_itema.get_item(iLItem).m_filepath;
+            varFile = get_fs_mesh_data()->m_itema.get_item(iLItem).get_friendly_path();
          }
          else
          {
             stringa stra;
             for(index iItem = iLItem; iItem < iLItem; iItem++)
             {
-               stra.add(pdata->m_itema.get_item(iItem).m_filepath);
+               stra.add(pdata->m_itema.get_item(iItem).get_friendly_path());
             }
             varFile = stra;
          }
@@ -206,7 +206,7 @@ namespace userfs
             list_item & item = pdata->m_itema.get_item(iStrict);
             if (!item.IsFolder())
             {
-               array.add(item.m_filepath);
+               array.add(item.get_friendly_path());
             }
          }
       }

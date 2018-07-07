@@ -7,7 +7,7 @@ namespace fs
 
    var item_array::get_var_file() const
    {
-      
+
       if (this->get_count() <= 0)
       {
 
@@ -17,7 +17,18 @@ namespace fs
       else if (this->get_count() == 1)
       {
 
-         return this->element_at(0)->m_filepath;
+         if (this->element_at(0)->m_filepathEx.has_char())
+         {
+
+            return this->element_at(0)->m_filepathEx;
+
+         }
+         else
+         {
+
+            return this->element_at(0)->m_filepath;
+
+         }
 
       }
       else
@@ -28,7 +39,18 @@ namespace fs
          for(index i = 0; i < this->get_count(); i++)
          {
 
-            var.stra().add(this->element_at(i)->m_filepath);
+            if (this->element_at(i)->m_filepathEx.has_char())
+            {
+
+               var.stra().add(this->element_at(i)->m_filepathEx);
+
+            }
+            else
+            {
+
+               var.stra().add(this->element_at(i)->m_filepath);
+
+            }
 
          }
 
@@ -50,7 +72,7 @@ namespace fs
       }
       else if(this->get_count() == 1)
       {
-       
+
          class var var;
 
          var["FileManagerItem_flags"] = new flags < e_flag >(this->element_at(0)->m_flags);

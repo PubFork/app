@@ -496,7 +496,7 @@ restart:
 
          string strFilePath(varFile.get_file_path());
 
-         strFilePath = System.defer_process_matter_path(strFilePath, papp);
+         strFilePath = System.defer_process_path(strFilePath, papp);
 
          if (::get_thread() != NULL && ::get_thread()->m_bZipIsDir && (::str::find_file_extension("zip:", strFilePath) >= 0))
          {
@@ -2318,6 +2318,8 @@ restart:
          {
 
             strPath = varFile["url"];
+
+            strPath = System.defer_process_path(strPath, papp);
 
             //strPath.trim("\"'");
 

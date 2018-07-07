@@ -256,7 +256,7 @@ namespace filemanager
 
             // assume can resume at least from this exception one time
 
-            m_item = canew(::fs::item(strOldPath));
+            m_item = canew(::fs::item(System.defer_process_path(strOldPath, get_app()), strOldPath));
 
             OnFileManagerBrowse(::action::source::sync(actioncontext));
 
@@ -283,7 +283,7 @@ namespace filemanager
    bool manager::FileManagerBrowse(const char * lpcszPath, ::action::context actioncontext)
    {
 
-      FileManagerBrowse(canew(::fs::item(lpcszPath)), actioncontext);
+      FileManagerBrowse(canew(::fs::item(System.defer_process_path(lpcszPath, get_app()), lpcszPath)), actioncontext);
 
       return false;
 

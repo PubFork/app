@@ -436,6 +436,8 @@ namespace aura
       //   return *m_spinstall;
       //}
 
+      virtual ::file::path defer_process_path(::file::path path, ::aura::application * papp);
+
       virtual ::file::path defer_process_matter_path(::file::path path, ::aura::application * papp);
       virtual ::file::path get_matter_path(string strMatter);
       virtual ::file::path get_matter_cache_path(string strMatter);

@@ -1951,6 +1951,45 @@ RetryBuildNumber:
    }
 
 
+   ::file::path system::defer_process_path(::file::path path, ::aura::application * papp)
+   {
+
+      path = defer_process_matter_path(path, papp);
+
+#ifndef METROWIN
+
+      if (::str::begins_eat_ci(path, "music://"))
+      {
+
+         path = System.dir().music() / path;
+
+      }
+      else if (::str::begins_eat_ci(path, "video://"))
+      {
+
+         path = System.dir().video() / path;
+
+      }
+      else if (::str::begins_eat_ci(path, "image://"))
+      {
+
+         path = System.dir().image() / path;
+
+      }
+      else if (::str::begins_eat_ci(path, "document://"))
+      {
+
+         path = System.dir().document() / path;
+
+      }
+
+#endif
+
+      return path;
+
+   }
+
+
    ::file::path system::defer_process_matter_path(::file::path path, ::aura::application * papp)
    {
 

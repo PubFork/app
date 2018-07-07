@@ -246,14 +246,27 @@ namespace file
 
          strPath = varFile;
 
-         strPath.trim("\"'");
+         strPath = System.defer_process_path(strPath, get_app());
 
-         if (strPath.begins_ci("appmatter://"))
-         {
-
-            strPath = System.get_matter_cache_path(strPath);
-
-         }
+//         strPath.trim("\"'");
+//
+//         if (strPath.begins_ci("appmatter://"))
+//         {
+//
+//            strPath = System.get_matter_cache_path(strPath);
+//
+//         }
+//
+//#ifndef METROWIN
+//
+//         if (::str::begins_eat_ci(strPath, "music://"))
+//         {
+//
+//            strPath = System.dir().music() / strPath;
+//
+//         }
+//
+//#endif
 
       }
       else if(varFile.get_type() == var::type_stra)

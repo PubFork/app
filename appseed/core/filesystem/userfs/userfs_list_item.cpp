@@ -17,11 +17,11 @@ namespace userfs
       ::object(listitem.m_pauraapp),
       ::fs::item(listitem),
       m_strName(listitem.m_strName),
-  //    m_iImage(listitem.m_iImage),
+      //    m_iImage(listitem.m_iImage),
       m_iIndex(listitem.m_iIndex),
       m_iArrange(listitem.m_iArrange)
    {
-      
+
    }
 
    list_item::list_item(const list_item & listitem, index iArrange) :
@@ -37,21 +37,21 @@ namespace userfs
 
    index list_item::CompareArrangeByName(const list_item & item) const
    {
-   /*   if(m_iCsidl >= 0)
-      {
-         if(item.m_iCsidl >= 0)
+      /*   if(m_iCsidl >= 0)
          {
-            return Shell::GetCSIDLSort(m_iCsidl) - Shell::GetCSIDLSort(item.m_iCsidl);
+            if(item.m_iCsidl >= 0)
+            {
+               return Shell::GetCSIDLSort(m_iCsidl) - Shell::GetCSIDLSort(item.m_iCsidl);
+            }
+            else
+            {
+               return -1;
+            }
          }
-         else
+         else if(item.m_iCsidl >= 0)
          {
-            return -1;
-         }
-      }
-      else if(item.m_iCsidl >= 0)
-      {
-         return 1;
-      }*/
+            return 1;
+         }*/
       if(item.IsFolder())
       {
          if(IsFolder())
@@ -110,6 +110,7 @@ namespace userfs
 
       m_pauraapp  = item.m_pauraapp;
       m_filepath = item.m_filepath;
+      m_filepathEx = item.m_filepathEx;
       m_strName   = item.m_strName;
 //      m_iImage    = item.m_iImage;
       m_iIndex    = item.m_iIndex;
@@ -130,6 +131,7 @@ template <>
 {
    ::fs::item itemT;
    itemT.m_filepath = item.m_filepath;
+   itemT.m_filepathEx = item.m_filepathEx;
    itemT.m_flags = item.m_flags;
    return itemT;
 }

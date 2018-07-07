@@ -90,7 +90,9 @@ namespace filemanager
       if(_001HitTest_(pmouse->m_pt, iItem))
       {
 
-         get_filemanager_data()->OnFileManagerOpenFolder(canew(::fs::item(m_foldera.GetFolder(iItem).m_strFolderPath)), ::action::source_user);
+         get_filemanager_data()->OnFileManagerOpenFolder(canew(::fs::item(
+               System.defer_process_path(m_foldera.GetFolder(iItem).m_strFolderPath, get_app()),
+               m_foldera.GetFolder(iItem).m_strFolderPath)), ::action::source_user);
 
       }
 
@@ -141,6 +143,7 @@ namespace filemanager
 
    void folder_list::browse_sync(::action::context actioncontext)
    {
+
       string strParent = get_filemanager_item()->m_filepath;
 
       m_foldera.clear();

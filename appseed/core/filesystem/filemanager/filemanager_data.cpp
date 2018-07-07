@@ -96,7 +96,7 @@ namespace filemanager
          sp(manager) pdoc =  (m_pmanager);
          update_hint uh;
          uh.m_pmanager = m_pmanager;
-         uh.m_filepath = itema[0]->m_filepath;
+         uh.m_filepath = itema[0]->get_friendly_path();
          uh.set_type(update_hint::TypeTopicOK);
          pdoc->update_all_views(NULL, 0, &uh);
          m_pdocumentTopic = NULL;
@@ -112,13 +112,13 @@ namespace filemanager
          if(itema.get_count() == 2 && m_id == "left_file")
          {
             {
-               varFile = itema[0]->m_filepath;
+               varFile = itema[0]->get_friendly_path();
                varQuery["::filemanager::id"] = "left_file";
                m_pcallback->request_file_query(varFile, varQuery);
             }
 
             {
-               varFile = itema[1]->m_filepath;
+               varFile = itema[1]->get_friendly_path();
                varQuery["::filemanager::id"] = "right_file";
                m_pcallback->request_file_query(varFile, varQuery);
             }
@@ -126,13 +126,13 @@ namespace filemanager
          else if(itema.get_count() == 2 && m_id == "right_file")
          {
             {
-               varFile = itema[0]->m_filepath;
+               varFile = itema[0]->get_friendly_path();
                varQuery["::filemanager::id"] = "right_file";
                m_pcallback->request_file_query(varFile, varQuery);
             }
 
             {
-               varFile = itema[1]->m_filepath;
+               varFile = itema[1]->get_friendly_path();
                varQuery["::filemanager::id"] = "left_file";
                m_pcallback->request_file_query(varFile, varQuery);
             }

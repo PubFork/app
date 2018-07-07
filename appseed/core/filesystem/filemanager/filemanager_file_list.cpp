@@ -87,7 +87,7 @@ namespace filemanager
 
          get_filemanager_manager()->data_load(get_filemanager_template()->m_dataidStatic, filepatha);
 
-         ::file::path filepath = get_filemanager_item()->m_filepath;
+         ::file::path filepath = get_filemanager_item()->get_friendly_path();
 
          filepath.trim();
 
@@ -99,7 +99,7 @@ namespace filemanager
 
                get_filemanager_manager()->data_save(get_filemanager_template()->m_dataidStatic, filepatha);
 
-               add_item(get_filemanager_item()->m_filepath, get_filemanager_item()->m_filepath.name());
+               add_item(get_filemanager_item()->get_friendly_path(), get_filemanager_item()->m_filepath.name());
 
                _001OnUpdateItemCount();
 
@@ -227,7 +227,7 @@ namespace filemanager
                   if (pmanageruh->m_strFind.has_char())
                   {
 
-                     ::file::path pathFolder = get_filemanager_item()->m_filepath;
+                     ::file::path pathFolder = get_filemanager_item()->get_friendly_path();
 
                      Application.file().replace(pathFolder, pmanageruh->m_strFind, pmanageruh->m_strReplace);
 
@@ -242,7 +242,7 @@ namespace filemanager
                   if (pmanageruh->m_str.has_char())
                   {
 
-                     ::file::path pathFolder = get_filemanager_item()->m_filepath / pmanageruh->m_str;
+                     ::file::path pathFolder = get_filemanager_item()->get_friendly_path() / pmanageruh->m_str;
 
                      Application.dir().mk(pathFolder);
 
@@ -423,7 +423,7 @@ namespace filemanager
             try
             {
 
-               pset->get_fs_size(i64Size, get_fs_mesh_data()->m_itema.get_item(i).m_filepath, bPendingSize);
+               pset->get_fs_size(i64Size, get_fs_mesh_data()->m_itema.get_item(i).get_friendly_path(), bPendingSize);
 
             }
             catch (...)
@@ -698,7 +698,7 @@ namespace filemanager
       for (int32_t i = 0; i < itema.get_size(); i++)
       {
 
-         patha.add(itema[i]->m_filepath);
+         patha.add(itema[i]->get_friendly_path());
 
       }
 
@@ -733,7 +733,7 @@ namespace filemanager
       for (int32_t i = 0; i < itema.get_size(); i++)
       {
 
-         stra.add(itema[i]->m_filepath);
+         stra.add(itema[i]->get_friendly_path());
 
       }
 
@@ -770,7 +770,7 @@ namespace filemanager
          ::fs::item_array itema;
          GetSelected(itema);
 
-         ::file::path strPath = itema[0]->m_filepath;
+         ::file::path strPath = itema[0]->get_friendly_path();
 
          string strExt = strPath.extension();
 
@@ -889,7 +889,7 @@ namespace filemanager
 
          GetSelected(itema);
 
-         ::file::path filepath = itema[0]->m_filepath;
+         ::file::path filepath = itema[0]->get_friendly_path();
 
          System.os().file_open(filepath);
 
@@ -1179,6 +1179,15 @@ namespace filemanager
 
       string strParent = get_filemanager_item()->m_filepath;
 
+      ::file::path pathParentEx = get_filemanager_item()->get_friendly_path();
+
+      if (str::begins_eat_ci(pathParentEx, System.dir().music()))
+      {
+
+         pathParentEx = "music://" / pathParentEx;
+
+      }
+
       int32_t iMaxSize;
       iMaxSize = 1000;
 
@@ -1243,7 +1252,7 @@ namespace filemanager
             }
 
             spitem->m_filepath = fullpath;
-
+            spitem->m_filepathEx = pathParentEx / fullpath.name();
             //spitem->m_iImage = Session.userex()->shell()->get_image(
             //   get_handle(),
             //   path,
@@ -1817,6 +1826,8 @@ namespace filemanager
 
                sp(::fs::item) spitem(canew(::fs::item));
 
+               spitem->m_filepathEx = get_fs_mesh_data()->m_itema.get_item(iStrict).m_filepathEx;
+
                spitem->m_filepath = get_fs_mesh_data()->m_itema.get_item(iStrict).m_filepath;
 
                spitem->m_flags = get_fs_mesh_data()->m_itema.get_item(iStrict).m_flags;
@@ -1854,7 +1865,9 @@ namespace filemanager
 
       ::userfs::list_item item(get_app());
 
-      item.m_filepath = pszPath;
+      item.m_filepath = System.defer_process_path(pszPath, get_app());
+
+      item.m_filepathEx = pszPath;
 
       item.m_strName = pszTitle;
 

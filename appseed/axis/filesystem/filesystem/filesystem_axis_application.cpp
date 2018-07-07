@@ -289,7 +289,7 @@ namespace file
          if (varFile.m_etype == ::var::type_string)
          {
 
-            varFile = System.defer_process_matter_path(varFile.get_file_path(), m_pauraapp);
+            varFile = System.defer_process_path(varFile.get_file_path(), m_pauraapp);
 
          }
 
