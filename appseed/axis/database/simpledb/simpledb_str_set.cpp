@@ -239,7 +239,7 @@ void db_str_sync_queue::run()
 
             set["interactive_user"] = true;
 
-            strUrl = "https://" + System.dir().get_api_cc() + "/account/str_set_save?key=";
+            strUrl = "https://ca2.cc/api/account/str_set_save?key=";
 
             strUrl += System.url().url_encode(pitem->m_strKey);
 
@@ -395,7 +395,7 @@ bool db_str_set::load(const string & strKey, string & strValue)
 
          string strUrl;
 
-         strUrl = "https://" + System.dir().get_api_cc() + "/account/str_set_load?key=";
+         strUrl = "https://ca2.cc/api/account/str_set_load?key=";
 
          strUrl += System.url().url_encode(strKey);
 

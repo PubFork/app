@@ -133,7 +133,7 @@ namespace netserver
          {
             url_domain domain;
             domain.create(System.url().get_server(straValue[i]));
-            if (domain.m_strName == "account.ca2.cc")
+            if (domain.m_strName == "ca2.cc")
             {
                //straValue[i] = "https://" + Application.m_strFontopusServer + System.url().get_object(straValue[i]);
             }

@@ -494,9 +494,9 @@ namespace fontopus
 
       string strFontopusServer;
 
-      if(strHost == "account.ca2.cc")
+      if(strHost == "ca2.cc")
       {
-         strFontopusServer = "account.ca2.cc";
+         strFontopusServer = "ca2.cc";
       }
       else
       {
@@ -521,7 +521,7 @@ retry:
 
       string strGetFontopus;
 
-      if(::str::ends(strHost,".ca2.cc"))
+      if(::str::ends(strHost,".ca2.cc") || strHost == "ca2.cc")
       {
 
          sl.lock();
@@ -535,12 +535,12 @@ retry:
 
          sl.unlock();
 
-         strGetFontopus = "https://" + strHost + "/get_fontopus_login";
+         strGetFontopus = "https://ca2.cc/get_fontopus_login";
 
       }
       else
       {
-         strGetFontopus = "http://" + strHost + "/get_fontopus_login";
+         strGetFontopus = "http://ca2.cc/get_fontopus_login";
       }
 
       System.url().set_param(strGetFontopus,strGetFontopus,"lang",Session.get_locale());
@@ -589,7 +589,7 @@ retry:
       if(strSessId.is_empty())
          goto retry;
 
-      if(strHost != "account.ca2.cc")
+      if(strHost != "ca2.cc")
       {
 
          strFontopusServer = doc.get_root()->attr("fontopus_server");
@@ -697,11 +697,11 @@ retry:
 
       if(::str::ends(strRequestingServer,".ca2.cc"))
       {
-         strGetFontopus = "https://" + strRequestingServer + "/get_fontopus_login";
+         strGetFontopus = "https://ca2.cc/get_fontopus_login";
       }
       else
       {
-         strGetFontopus = "https://" + strRequestingServer + "/get_fontopus_login";
+         strGetFontopus = "https://ca2.cc/get_fontopus_login";
       }
 
 //      ::aura::application * papp = get_app();
@@ -715,8 +715,8 @@ retry:
       if(domainFontopus.m_strRadix != "ca2" && domainFontopus.m_strRadix != "fontopus")
          return "";
 
-      if(strRequestingServer == "account.ca2.cc")
-         return "account.ca2.cc";
+      if(strRequestingServer == "ca2.cc")
+         return "ca2.cc";
 
       DWORD dwGetFontopusEnd = ::get_tick_count();
 

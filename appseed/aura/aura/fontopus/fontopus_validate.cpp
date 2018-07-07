@@ -156,7 +156,7 @@ namespace fontopus
       else
       {
 
-         straRequestingServer.add("account.ca2.cc");
+         straRequestingServer.add("ca2.cc");
 
       }
 
@@ -212,7 +212,7 @@ namespace fontopus
 
          //strApiServer.replace("account","api");
 
-         strApiServer = "account.ca2.cc/api";
+         strApiServer = "ca2.cc/api";
 
          property_set set(get_app());
 
@@ -367,7 +367,7 @@ namespace fontopus
       }
       else
       {
-         straRequestingServer.add("account.ca2.cc");
+         straRequestingServer.add("ca2.cc");
 
          //straRequestingServer.add("eu-account.ca2.cc");
          //straRequestingServer.add("asia-account.ca2.cc");
@@ -377,7 +377,7 @@ namespace fontopus
          }
          else
          {
-            strHost = "account.ca2.cc";
+            strHost = "ca2.cc";
          }
 
          strHost = Session.fontopus()->get_server(strHost);
@@ -811,7 +811,7 @@ namespace fontopus
 
          string strIgnitionServer = file_as_string_dup(::dir::system() / "config\\system\\ignition_server.txt");
 
-         if(::str::ends_ci(strIgnitionServer,".ca2.cc"))
+         /*if(::str::ends_ci(strIgnitionServer,".ca2.cc"))
          {
 
             straRequestingServer.add(strIgnitionServer);
@@ -819,10 +819,11 @@ namespace fontopus
          }
          else
          {
+         */
+         //straRequestingServer.add("account.ca2.cc");
+         straRequestingServer.add("ca2.cc");
 
-            straRequestingServer.add("account.ca2.cc");
-
-         }
+         //}
 
          //straRequestingServer.add("eu-account.ca2.cc");
          //straRequestingServer.add("asia-account.ca2.cc");
@@ -877,7 +878,8 @@ namespace fontopus
       {
 
          Session.fontopus()->m_strFirstFontopusServer = m_strFontopusServer;
-         Session.fontopus()->m_strFirstAccountServer = Session.fontopus()->m_mapSomeBrothersAndSisters[m_strFontopusServer][0];
+         Session.fontopus()->m_strFirstAccountServer = m_strFontopusServer;
+         //Session.fontopus()->m_strFirstAccountServer = Session.fontopus()->m_mapSomeBrothersAndSisters[m_strFontopusServer][0];
 
       }
 
@@ -892,10 +894,10 @@ namespace fontopus
 
       string strApiServer;
 
-      if(m_strRequestingServer == "account.ca2.cc")
+      if(m_strRequestingServer == "ca2.cc")
       {
 
-         strApiServer = "account.ca2.cc";
+         strApiServer = "ca2.cc";
 
       }
       else
@@ -908,7 +910,7 @@ namespace fontopus
 
       m_strFontopusServer = strApiServer;
 
-      m_strLoginUrl = "https://" + strApiServer + "/api/account/login";
+      m_strLoginUrl = "https://ca2.cc/api/account/login";
 
       xml::document doc(get_app());
 
@@ -931,6 +933,12 @@ namespace fontopus
 
       if(strRsaModulus.is_empty())
          return "";
+
+      Session.fontopus()->m_mapFontopusSessId.set_at(strFontopusServer, strSessId);
+
+      Session.fontopus()->m_mapFontopusRsa.set_at(strFontopusServer, strRsaModulus);
+
+      Session.fontopus()->m_mapFontopusServer.set_at(strFontopusServer, strFontopusServer);
 
       DWORD dwGetLoginEnd = ::get_tick_count();
 
@@ -961,7 +969,7 @@ namespace fontopus
 
       DWORD dwAuthBeg = ::get_tick_count();
       {
-         
+
          strApiServer = "ca2.cc";
 
          string strAuthUrl("https://" + strApiServer + "/api/account/auth3?" + (m_pcallback == NULL ? string() : m_pcallback->oprop("defer_registration").get_string())
@@ -1179,7 +1187,7 @@ namespace fontopus
       {
          if(m_bInteractive)
          {
-            propertyset["server"] = "account.ca2.cc";
+            propertyset["server"] = "ca2.cc";
             pageMessage({"err\\user\\network\\connection_timed_out.html"},propertyset);
          }
       }
@@ -1187,7 +1195,7 @@ namespace fontopus
       {
          if(m_bInteractive)
          {
-            propertyset["server"] = "account.ca2.cc";
+            propertyset["server"] = "ca2.cc";
             propertyset["email"] = strUsername;
             pageMessage({"err\\user\\authentication\\registration_deferred.html"},propertyset);
          }

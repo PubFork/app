@@ -48,12 +48,12 @@ namespace fontopus
    {
 
       if(get_app()->is_system()
-      || get_app()->is_system())
+            || get_app()->is_system())
          return false;
 
 
       if(m_strLogin == system_user_1
-      || m_strLogin == system_user_2)
+            || m_strLogin == system_user_2)
          return false;
 
 
@@ -73,12 +73,12 @@ namespace fontopus
    {
       if(pszText == NULL)
       {
-         pszText = "https://account.ca2.cc/";
+         pszText = "https://ca2.cc/";
       }
       string strText(pszText);
       if(strText.is_empty())
       {
-         strText = "https://account.ca2.cc/";
+         strText = "https://ca2.cc/";
       }
       strText = System.url().get_server(strText);
       if(strText.is_empty())
@@ -97,7 +97,7 @@ namespace fontopus
       string strFontopusServer = Session.fontopus()->get_server(strText);
       if(strFontopusServer.has_char())
       {
-         
+
          strSessId = Session.fontopus()->m_mapFontopusSessId[strFontopusServer];
 
          if(strSessId.has_char())
@@ -118,18 +118,18 @@ namespace fontopus
       }
       m_sessionidmap[strText] = strSessId;
       return strSessId;
-    }
+   }
 
    void user::set_sessid(const char * pszSessid, const char * pszText)
    {
       if(pszText == NULL)
       {
-         pszText = "https://account.ca2.cc/";
+         pszText = "https://ca2.cc/";
       }
       string strText(pszText);
       if(strText.is_empty())
       {
-         strText = "https://account.ca2.cc/";
+         strText = "https://ca2.cc/";
       }
       strText = System.url().get_server(strText);
       m_sessionidmap[strText] = pszSessid;

@@ -115,12 +115,12 @@ namespace http
 
       string strHost = Application.file().as_string(System.dir().appdata()/"database\\text\\last_good_known_fontopus_com.txt");
       stringa straRequestingServer;
-      straRequestingServer.add("account.ca2.cc");
+      straRequestingServer.add("ca2.cc");
       //straRequestingServer.add("eu-account.ca2.cc");
       //straRequestingServer.add("asia-account.ca2.cc");
       if(!straRequestingServer.contains_ci(strHost))
       {
-         strHost = "account.ca2.cc";
+         strHost = "ca2.cc";
       }
 
       straRequestingServer.remove(strHost);
@@ -1999,7 +1999,7 @@ retry_session:
 
             Session.fontopus()->m_strFirstAccountServer.Empty();
 
-            string strFontopusServer = Session.fontopus()->get_server("account.ca2.cc", 8);
+            string strFontopusServer = Session.fontopus()->get_server("ca2.cc", 8);
 
             url_domain domainFontopus;
 

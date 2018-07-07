@@ -2450,16 +2450,16 @@ namespace file
             if (&Session == NULL || Session.fontopus().is_null() || Session.fontopus().m_p->m_pthreadCreatingUser != NULL)
                return "api.ca2.cc";
 
-            string strApiServer = "api.ca2.cc";
+            string strApiServer = "ca2.cc";
 
             if (Session.fontopus()->m_strFirstFontopusServer.has_char())
             {
 
-               strApiServer = ::str::replace("account", "api", Session.fontopus()->m_strFirstFontopusServer);
+               strApiServer = ::str::replace("account", "", Session.fontopus()->m_strFirstFontopusServer);
 
             }
 
-            string strGetFontopus("https://" + strApiServer + "/get_fontopus_login"); //("https://api.ca2.cc/get_fontopus_login");
+            string strGetFontopus("https://ca2.cc/get_fontopus_login"); //("https://api.ca2.cc/get_fontopus_login");
 
             string strFontopusServer = Session.fontopus()->get_server(strGetFontopus, 8);
 
