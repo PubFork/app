@@ -94,7 +94,7 @@ namespace file
          if (::str::begins_ci(pszPath, "appmatter://"))
          {
 
-            return m_pauraapp->m_paurasystem->m_spfile->exists(System.get_matter_path(pszPath), m_pauraapp);
+            return m_pauraapp->m_paurasystem->m_spfile->exists(System.get_matter_cache_path(pszPath), m_pauraapp);
 
          }
 

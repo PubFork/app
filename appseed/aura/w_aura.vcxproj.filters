@@ -4465,6 +4465,12 @@
     <ClCompile Include="user\user\user_theme.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
+    <ClCompile Include="aura\aura\aura_serialize.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_plex_heap1.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="aura.rc">

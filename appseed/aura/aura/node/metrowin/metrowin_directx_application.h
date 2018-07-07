@@ -31,6 +31,10 @@ namespace metrowin
 
       Windows::Foundation::Point                m_ptLastCursor;
 
+      DWORD                                     m_dwMouseMoveThrottle;
+
+      DWORD                                     m_dwLastMouseMove;
+
       String ^                                  m_strId;
 
       Agile < Windows::UI::Core::CoreWindow >   m_window;

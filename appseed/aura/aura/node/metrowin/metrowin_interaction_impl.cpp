@@ -1433,7 +1433,7 @@ namespace metrowin
       }*/
       pbase->set_lresult(0);
 
-      _000OnMouseLeave(pbase);
+      //_000OnMouseLeave(pbase);
 
       if(pbase->m_id == WM_LBUTTONDOWN ||
             pbase->m_id == WM_LBUTTONUP ||

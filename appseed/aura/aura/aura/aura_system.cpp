@@ -2037,7 +2037,7 @@ RetryBuildNumber:
          if (System.m_bMatterFromHttpCache)
          {
 
-            ::file::path path = "https://server.ca2.cc/appmatter" / strMatter;
+            ::file::path path = "https://server.ca2.cc/matter" / strMatter;
 
             ::file::path pathCache = dir().cache() / strMatter;
 
@@ -2071,7 +2071,7 @@ RetryBuildNumber:
 
                set["disable_common_name_cert_check"] = true;
 
-               http().download(pathCache, path, set);
+               http().download(path, pathCache, set);
 
             }
             else if (dir().is(path, this))

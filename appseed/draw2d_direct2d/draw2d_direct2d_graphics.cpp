@@ -875,6 +875,7 @@ namespace draw2d_direct2d
 
    }
 
+
    bool graphics::Arc(const RECT & lpRect, POINT ptStart, POINT ptEnd)
    {
 
@@ -884,14 +885,19 @@ namespace draw2d_direct2d
 
    }
 
+
    bool graphics::Polyline(const POINT* lpPoints, count nCount)
    {
 
-      //_throw(todo(get_app()));
-      //ASSERT(get_handle1() != NULL);
+      ::draw2d::path_sp path(allocer());
 
-      //return ::Polyline(get_handle1(), lpPoints, nCount) != FALSE;
-      return true;
+      path->begin_figure(false, ::draw2d::fill_mode_winding);
+
+      path->add_lines(lpPoints, nCount);
+
+      path->end_figure(false);
+
+      return this->draw_path(path);
 
    }
 

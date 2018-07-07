@@ -50,15 +50,17 @@ namespace user
       create_color(color_text_selected, ARGB(255, 255, 255, 255));
       create_color(color_background, ARGB(0, 0, 0, 0));
       create_color(color_background_selected, ARGB(127, 85, 115, 155));
-      create_color(color_scrollbar_strong_hover, ARGB(127, 240, 140, 220));
-      create_color(color_scrollbar_strong, ARGB(127, 220, 120, 200));
-      create_color(color_scrollbar_hover, ARGB(127, 200, 200, 200));
       create_color(color_scrollbar, ARGB(127, 155, 155, 155));
-      create_color(color_scrollbar_strong, ARGB(255, 210, 210, 210));
-      create_color(color_scrollbar_strong_hover, ARGB(255, 200, 200, 200));
-      create_color(color_scrollbar, ARGB(255, 230, 230, 230));
-      create_color(color_scrollbar_hover, ARGB(255, 225, 225, 225));
-      
+      create_color(color_scrollbar_hover, ARGB(127, 200, 200, 200));
+      create_color(color_scrollbar_draw, ARGB(127, 65, 65, 65));
+      create_color(color_scrollbar_draw_hover, ARGB(127, 90, 90, 90));
+      create_color(color_scrollbar_strong, ARGB(127, 120, 120, 120));
+      create_color(color_scrollbar_strong_hover, ARGB(127, 160, 160, 160));
+      create_color(color_scrollbar_border, ARGB(255, 210, 210, 210));
+      create_color(color_scrollbar_border_hover, ARGB(255, 200, 200, 200));
+      create_color(color_scrollbar_lite_border, ARGB(255, 230, 230, 230));
+      create_color(color_scrollbar_lite_border_hover, ARGB(255, 225, 225, 225));
+
    }
 
 

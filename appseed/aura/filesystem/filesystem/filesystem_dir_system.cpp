@@ -1528,24 +1528,26 @@ end:
 
             property_set set(papp);
 
-            string strCandidate = patha.implode("|");
+            string strCandidate = stra.implode("|");
 
             string strParam = System.url().url_encode(strCandidate);
 
             if (bDir)
             {
 
-               strMatter = Sess(papp).http().get("https://" + get_api_cc() + "/api/matter/query_dir?candidate=" + strParam, set);
+               strMatter = Sess(papp).http().get("https://ca2.cc/api/matter/query_dir?candidate=" + strParam, set);
 
             }
             else
             {
 
-               strMatter = Sess(papp).http().get("https://" + get_api_cc() + "/api/matter/query_file?candidate=" + strParam, set);
+               strMatter = Sess(papp).http().get("https://ca2.cc/api/matter/query_file?candidate=" + strParam, set);
 
             }
 
-            if(strMatter.has_char())
+            strMatter.trim();
+
+            if(strMatter.has_char() && str::begins_eat_ci(strMatter, "https://server.ca2.cc/matter/"))
             {
 
                strMatter = "appmatter://" + strMatter;
@@ -1598,67 +1600,6 @@ end:
             }
 
          }
-
-         //if (papp->m_paurasession != NULL && papp->m_paurasession != papp &&
-         //      (sp(::aura::application)) papp->m_paurasystem != (sp(::aura::application)) papp)
-         //{
-
-         //   strMatter = this->matter(papp->m_paurasession, patha, bDir);
-
-         //   if (bDir)
-         //   {
-
-         //      if (System.dir().is(strMatter, get_app()))
-         //      {
-
-         //         goto ret;
-
-         //      }
-
-         //   }
-         //   else
-         //   {
-
-         //      if (System.file().exists(strMatter, get_app()))
-         //      {
-
-         //         goto ret;
-
-         //      }
-
-         //   }
-         //}
-
-         //if (papp->m_paurasystem != NULL && papp->m_paurasystem != papp &&
-         //      (sp(::aura::application)) papp->m_paurasystem != (sp(::aura::application)) papp->m_paurasession)
-         //{
-
-         //   strMatter = this->matter(papp->m_paurasystem, patha, bDir);
-
-         //   if (bDir)
-         //   {
-
-         //      if (System.dir().is(strMatter, get_app()))
-         //      {
-
-         //         goto ret;
-
-         //      }
-
-         //   }
-         //   else
-         //   {
-
-         //      if (System.file().exists(strMatter, get_app()))
-         //      {
-
-         //         goto ret;
-
-         //      }
-
-         //   }
-
-         //}
 
          strMatter = "appmatter://" + straLs[0] / patha[0];
 

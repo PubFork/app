@@ -1500,9 +1500,14 @@ void dir::ls(::file::patha & stra,const ::file::path & psz)
 
                str = stra[0];
 
-               folder = wait(folder->GetFolderAsync(str));
+               if (str.has_char())
+               {
 
-               strPrefix += str + "/";
+                  folder = wait(folder->GetFolderAsync(str));
+
+                  strPrefix += str + "/";
+
+               }
 
                stra.remove_at(0);
 

@@ -49,7 +49,7 @@ public:
 
    void update_drawing_objects();
 
-
+   virtual void _001OnClip(::draw2d::graphics * pgraphics);
 
    bool GetPageARect(LPRECT lpRectClient, LPRECT lpRectTrack,  LPRECT lpRect);
    bool GetPageBRect(LPRECT lpRectClient, LPRECT lpRectTrack,  LPRECT lpRect);
@@ -96,6 +96,8 @@ public:
    virtual COLORREF scrollbar_color(::user::e_element eelement);
    virtual COLORREF scrollbar_border_color(::user::e_element eelement);
    virtual COLORREF scrollbar_lite_border_color(::user::e_element eelement);
+   virtual COLORREF scrollbar_draw_color(::user::e_element eelement);
+
 
 };
 

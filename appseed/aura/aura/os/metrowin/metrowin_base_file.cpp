@@ -2166,226 +2166,6 @@ string file_as_string_dup(const char * path)
 }
 
 
-string file_line_dup(const char * path, index iLine)
-{
-
-   string str;
-
-   FILE * file = ::fopen_dup(path, "r", _SH_DENYNO);
-
-   if (file == NULL)
-   {
-
-      DWORD dw = ::get_last_error();
-
-      return "";
-
-   }
-
-   int iChar;
-
-   string strLine;
-
-   int iLastChar = -1;
-
-   while (iLine >= 0)
-   {
-
-      iChar = fgetc(file);
-
-      if (iChar == EOF)
-      {
-
-         break;
-
-      }
-
-      if (iChar == '\r')
-      {
-
-         iLine--;
-
-      }
-      else if (iChar == '\n')
-      {
-
-         if (iLastChar != '\r')
-         {
-
-            iLine--;
-
-         }
-
-      }
-      else if (iLine == 0)
-      {
-
-         str += (char) iChar;
-
-      }
-
-      iLastChar = iChar;
-
-   }
-
-   return str;
-
-}
-
-
-bool file_set_line_dup(const char * path, index iLine, const char * pszLine)
-{
-
-   if (iLine < 0)
-   {
-
-      return false;
-
-   }
-
-   string str;
-
-   FILE * file = ::fopen_dup(path, "a+", _SH_DENYWR);
-
-   if (file == NULL)
-   {
-
-      DWORD dw = ::get_last_error();
-
-      return "";
-
-   }
-
-   int iChar;
-
-   string strLine;
-
-   int iLastChar = -1;
-
-   index iPosStart = -1;
-
-   index iPosEnd = -1;
-
-   while (iLine >= 0)
-   {
-
-      iChar = fgetc(file);
-
-      if (iChar == EOF)
-      {
-
-         break;
-
-      }
-
-      if (iChar == '\r')
-      {
-
-         iLine--;
-
-      }
-      else if (iChar == '\n')
-      {
-
-         if (iLastChar != '\r')
-         {
-
-            iLine--;
-
-         }
-
-      }
-      else if (iLine == 0)
-      {
-
-         if (iPosStart <= 0)
-         {
-
-            iPosStart = ftell(file);
-
-         }
-
-      }
-
-      iLastChar = iChar;
-
-   }
-
-   if (iLine > 0)
-   {
-
-      fwrite("\n", 1, iLine, file);
-
-      fwrite(pszLine, 1, strlen(pszLine), file);
-
-      fclose(file);
-
-   }
-   else
-   {
-
-      iPosEnd = ftell(file);
-
-      ::file::path pathTime = path;
-
-      pathTime += ".time";
-
-      FILE * file2 = ::fopen_dup(pathTime, "w", _SH_DENYWR);
-
-      if (iPosStart > 0)
-      {
-
-         memory m;
-
-         fseek(file, 0, SEEK_SET);
-
-         m.allocate(iPosStart);
-
-         fread(m.get_data(), 1, iPosStart, file);
-
-         fwrite(m.get_data(), 1, iPosStart, file2);
-
-      }
-
-      fwrite(pszLine, 1, strlen(pszLine), file);
-
-      index iEnd = fseek(file, 0, SEEK_END);
-
-      if (iEnd - iPosEnd > 0)
-      {
-
-         memory m;
-
-         fseek(file, iPosEnd, SEEK_SET);
-
-         m.allocate(iEnd - iPosEnd);
-
-         fread(m.get_data(), 1, m.get_size(), file);
-
-         fwrite(m.get_data(), 1, m.get_size(), file2);
-
-      }
-
-      fclose(file2);
-
-      fclose(file);
-
-      if (!file_copy_dup(path, pathTime.c_str(), true))
-      {
-
-         return false;
-
-      }
-
-      file_delete_dup(pathTime);
-
-   }
-
-   return true;
-
-}
-
-
 bool file_get_memory_dup(::primitive::memory_base & memory,const char * path)
 {
 
@@ -2748,7 +2528,7 @@ int_bool file_set_length(const char * pszName,size_t iSize)
 
 
 
-bool file_copy_dup(const string & strNew,const string & strSrc,bool bOverwrite)
+bool file_copy_dup(const char  * pszNew, const char * pszSrc,bool bOverwrite)
 {
 
    ::Windows::Storage::StorageFolder ^ folder = nullptr;
@@ -2756,7 +2536,7 @@ bool file_copy_dup(const string & strNew,const string & strSrc,bool bOverwrite)
    try
    {
 
-      folder = get_os_folder(::dir::name(strNew));
+      folder = get_os_folder(::dir::name(pszNew));
 
       if(folder == nullptr)
          return false;
@@ -2775,7 +2555,7 @@ bool file_copy_dup(const string & strNew,const string & strSrc,bool bOverwrite)
    try
    {
 
-      fileSrc = get_os_file(strSrc,0,0,NULL,OPEN_EXISTING,0,NULL);
+      fileSrc = get_os_file(pszSrc,0,0,NULL,OPEN_EXISTING,0,NULL);
 
       if(fileSrc == nullptr)
          return false;
@@ -2788,7 +2568,7 @@ bool file_copy_dup(const string & strNew,const string & strSrc,bool bOverwrite)
 
    }
 
-   wstring wstrNew(strNew);
+   wstring wstrNew(pszNew);
 
    return ::wait(fileSrc->CopyAsync(folder,wstrNew,bOverwrite ?
                                     ::Windows::Storage::NameCollisionOption::ReplaceExisting :
@@ -2807,5 +2587,227 @@ uint64_t fsize_dup(HANDLE h)
    DWORD dwLo = ::GetFileSize(h, &dwHi);
 
    return dwLo | (((DWORD64) dwHi) << 32);
+
+}
+
+
+
+
+string file_line_dup(const char * path, index iLine)
+{
+
+   string str;
+
+   FILE * file = ::fopen_dup(path, "r", _SH_DENYNO);
+
+   if (file == NULL)
+   {
+
+      DWORD dw = ::get_last_error();
+
+      return "";
+
+   }
+
+   int iChar;
+
+   string strLine;
+
+   int iLastChar = -1;
+
+   while (iLine >= 0)
+   {
+
+      iChar = fgetc(file);
+
+      if (iChar == EOF)
+      {
+
+         break;
+
+      }
+
+      if (iChar == '\r')
+      {
+
+         iLine--;
+
+      }
+      else if (iChar == '\n')
+      {
+
+         if (iLastChar != '\r')
+         {
+
+            iLine--;
+
+         }
+
+      }
+      else if (iLine == 0)
+      {
+
+         str += (char)iChar;
+
+      }
+
+      iLastChar = iChar;
+
+   }
+
+   return str;
+
+}
+
+
+bool file_set_line_dup(const char * path, index iLine, const char * pszLine)
+{
+
+   if (iLine < 0)
+   {
+
+      return false;
+
+   }
+
+   string str;
+
+   FILE * file = ::fopen_dup(path, "a+", _SH_DENYWR);
+
+   if (file == NULL)
+   {
+
+      DWORD dw = ::get_last_error();
+
+      return "";
+
+   }
+
+   int iChar;
+
+   string strLine;
+
+   int iLastChar = -1;
+
+   index iPosStart = -1;
+
+   index iPosEnd = -1;
+
+   while (iLine >= 0)
+   {
+
+      iChar = fgetc(file);
+
+      if (iChar == EOF)
+      {
+
+         break;
+
+      }
+
+      if (iChar == '\r')
+      {
+
+         iLine--;
+
+      }
+      else if (iChar == '\n')
+      {
+
+         if (iLastChar != '\r')
+         {
+
+            iLine--;
+
+         }
+
+      }
+      else if (iLine == 0)
+      {
+
+         if (iPosStart <= 0)
+         {
+
+            iPosStart = ftell(file);
+
+         }
+
+      }
+
+      iLastChar = iChar;
+
+   }
+
+   if (iLine > 0)
+   {
+
+      fwrite("\n", 1, iLine, file);
+
+      fwrite(pszLine, 1, strlen(pszLine), file);
+
+      fclose(file);
+
+   }
+   else
+   {
+
+      iPosEnd = ftell(file);
+
+      ::file::path pathTime = path;
+
+      pathTime += ".time";
+
+      FILE * file2 = ::fopen_dup(pathTime, "w", _SH_DENYWR);
+
+      if (iPosStart > 0)
+      {
+
+         memory m;
+
+         fseek(file, 0, SEEK_SET);
+
+         m.allocate(iPosStart);
+
+         fread(m.get_data(), 1, iPosStart, file);
+
+         fwrite(m.get_data(), 1, iPosStart, file2);
+
+      }
+
+      fwrite(pszLine, 1, strlen(pszLine), file);
+
+      index iEnd = fseek(file, 0, SEEK_END);
+
+      if (iEnd - iPosEnd > 0)
+      {
+
+         memory m;
+
+         fseek(file, iPosEnd, SEEK_SET);
+
+         m.allocate(iEnd - iPosEnd);
+
+         fread(m.get_data(), 1, m.get_size(), file);
+
+         fwrite(m.get_data(), 1, m.get_size(), file2);
+
+      }
+
+      fclose(file2);
+
+      fclose(file);
+
+      if (!file_copy_dup(path, pathTime.c_str(), true))
+      {
+
+         return false;
+
+      }
+
+      file_delete_dup(pathTime);
+
+   }
+
+   return true;
 
 }

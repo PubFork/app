@@ -438,6 +438,8 @@ namespace metrowin
       m_mutex(NULL)
    {
 
+      m_dwMouseMoveThrottle = 10;
+
       m_pimpl = NULL;
 
       m_ptLastCursor.X = 0;
@@ -954,6 +956,13 @@ namespace metrowin
    void directx_application::OnPointerMoved(Windows::UI::Core::CoreWindow ^, Windows::UI::Core::PointerEventArgs ^ args)
    {
 
+      if (m_dwMouseMoveThrottle && get_tick_count() - m_dwLastMouseMove < m_dwMouseMoveThrottle)
+      {
+
+         return;
+
+      }
+
       if(m_psystem == NULL)
          return;
 
@@ -981,6 +990,8 @@ namespace metrowin
       m_ptLastCursor = pointerPoint->RawPosition;
 
       m_psystem->m_possystemwindow->m_pui->m_pimpl->queue_message_handler(spbase);
+
+      m_dwLastMouseMove = get_tick_count();
 
    }
 

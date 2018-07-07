@@ -134,7 +134,7 @@ namespace metrowin
 
          }
 
-      })));
+      });
 
       return bHasFile;
 
@@ -411,7 +411,7 @@ namespace metrowin
 
          }
 
-      }));
+      });
 
       return bOk;
 
@@ -458,7 +458,7 @@ namespace metrowin
 
          ::Windows::ApplicationModel::DataTransfer::Clipboard::SetContent(package);
 
-      })));
+      });
 
       return true;
 
