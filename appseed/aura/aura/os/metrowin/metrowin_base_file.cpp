@@ -695,8 +695,8 @@ HANDLE OnlyGetDrv()
    // Delete the temp file...
    //DeleteFile( csPath );
    HANDLE hFile = CreateFile(DRV_DOS_NAME,GENERIC_READ | GENERIC_WRITE,
-      FILE_SHARE_READ | FILE_SHARE_WRITE,0,
-      OPEN_EXISTING,FILE_FLAG_OVERLAPPED,0);
+                             FILE_SHARE_READ | FILE_SHARE_WRITE,0,
+                             OPEN_EXISTING,FILE_FLAG_OVERLAPPED,0);
    return hFile;
 
 }
@@ -728,7 +728,8 @@ extern "C" CLASS_DECL_AURA void GetOpenedFiles(LPCWSTR lpPath,OF_TYPE Filter,OF_
       // Now walk all handles
       EnumerateOpenedFiles(csPath,CallBackProc,pUserContext,hDriver,pGetFinalPathNameByHandle);
       //if( hDriver )
-      {	// Time to wind up
+      {
+         // Time to wind up
          //StopAndUninstallDrv( hDriver );
       }
    }
@@ -742,7 +743,8 @@ typedef struct _SYSTEM_HANDLE_INFORMATION
    SYSTEM_HANDLE Handles[1];
 } SYSTEM_HANDLE_INFORMATION,*PSYSTEM_HANDLE_INFORMATION,**PPSYSTEM_HANDLE_INFORMATION;
 
-typedef enum _SYSTEM_INFORMATION_CLASS {
+typedef enum _SYSTEM_INFORMATION_CLASS
+{
    SystemHandleInformation = 0X10,
 } SYSTEM_INFORMATION_CLASS;
 
@@ -750,9 +752,9 @@ typedef enum _SYSTEM_INFORMATION_CLASS {
 
 typedef NTSTATUS(WINAPI *PNtQuerySystemInformation)
 (IN	SYSTEM_INFORMATION_CLASS SystemInformationClass,
-OUT	PVOID					 SystemInformation,
-IN	ULONG					 SystemInformationLength,
-OUT	PULONG					 ReturnLength OPTIONAL);
+ OUT	PVOID					 SystemInformation,
+ IN	ULONG					 SystemInformationLength,
+ OUT	PULONG					 ReturnLength OPTIONAL);
 
 UINT g_CurrentIndex = 0;
 struct THREAD_PARAMS
@@ -812,7 +814,7 @@ uint32_t ThreadProc(void * lParam)
 }
 
 void EnumerateOpenedFiles(string& csPath,OF_CALLBACK CallBackProc,uint_ptr pUserContext,HANDLE hDriver,
-   GetFinalPathNameByHandleDef pGetFinalPathNameByHandle)
+                          GetFinalPathNameByHandleDef pGetFinalPathNameByHandle)
 {
    int32_t nFileType;
 
@@ -951,7 +953,7 @@ void EnumerateOpenedFiles(string& csPath,OF_CALLBACK CallBackProc,uint_ptr pUser
       string csDir;
       if(hDriver)
       {
-         HANDLE_INFO stHandle ={0};
+         HANDLE_INFO stHandle = {0};
          ADDRESS_INFO stAddress;
          stAddress.pAddress = sh.pAddress;
          DWORD dwReturn = 0;
@@ -959,8 +961,8 @@ void EnumerateOpenedFiles(string& csPath,OF_CALLBACK CallBackProc,uint_ptr pUser
 
 
          if(bSuccess && stHandle.tcFileName[0] != 0 &&
-            stHandle.uType != FILE_DEVICE_SOUND &&
-            stHandle.uType != FILE_DEVICE_NAMED_PIPE)
+               stHandle.uType != FILE_DEVICE_SOUND &&
+               stHandle.uType != FILE_DEVICE_NAMED_PIPE)
          {
 
             if(stHandle.uType != FILE_DEVICE_NETWORK_FILE_SYSTEM)
@@ -1065,7 +1067,7 @@ void EnumerateLoadedModules(string& csPath,OF_CALLBACK CallBackProc,uint_ptr pUs
    int32_t nCount = dwReturned / sizeof(uint32_t);
    int32_t nItemCount = -1;
    // Enumerate modules of the above process
-   for(int32_t nIdx = 0; nIdx < nCount;nIdx++)
+   for(int32_t nIdx = 0; nIdx < nCount; nIdx++)
    {
       if(0 != pDwId[nIdx])
       {
@@ -1135,7 +1137,8 @@ void EnumerateLoadedModules(string& csPath,OF_CALLBACK CallBackProc,uint_ptr pUs
 
             stOFInfo.lpFile = wstrCallback;
             CallBackProc(stOFInfo,pUserContext);
-         } while(Module32Next(hModuleSnap,&me32));
+         }
+         while(Module32Next(hModuleSnap,&me32));
          CloseHandle(hModuleSnap);
       }
    }
@@ -2162,6 +2165,227 @@ string file_as_string_dup(const char * path)
 
 }
 
+
+string file_line_dup(const char * path, index iLine)
+{
+
+   string str;
+
+   FILE * file = ::fopen_dup(path, "r", _SH_DENYNO);
+
+   if (file == NULL)
+   {
+
+      DWORD dw = ::get_last_error();
+
+      return "";
+
+   }
+
+   int iChar;
+
+   string strLine;
+
+   int iLastChar = -1;
+
+   while (iLine >= 0)
+   {
+
+      iChar = fgetc(file);
+
+      if (iChar == EOF)
+      {
+
+         break;
+
+      }
+
+      if (iChar == '\r')
+      {
+
+         iLine--;
+
+      }
+      else if (iChar == '\n')
+      {
+
+         if (iLastChar != '\r')
+         {
+
+            iLine--;
+
+         }
+
+      }
+      else if (iLine == 0)
+      {
+
+         str += (char) iChar;
+
+      }
+
+      iLastChar = iChar;
+
+   }
+
+   return str;
+
+}
+
+
+bool file_set_line_dup(const char * path, index iLine, const char * pszLine)
+{
+
+   if (iLine < 0)
+   {
+
+      return false;
+
+   }
+
+   string str;
+
+   FILE * file = ::fopen_dup(path, "a+", _SH_DENYWR);
+
+   if (file == NULL)
+   {
+
+      DWORD dw = ::get_last_error();
+
+      return "";
+
+   }
+
+   int iChar;
+
+   string strLine;
+
+   int iLastChar = -1;
+
+   index iPosStart = -1;
+
+   index iPosEnd = -1;
+
+   while (iLine >= 0)
+   {
+
+      iChar = fgetc(file);
+
+      if (iChar == EOF)
+      {
+
+         break;
+
+      }
+
+      if (iChar == '\r')
+      {
+
+         iLine--;
+
+      }
+      else if (iChar == '\n')
+      {
+
+         if (iLastChar != '\r')
+         {
+
+            iLine--;
+
+         }
+
+      }
+      else if (iLine == 0)
+      {
+
+         if (iPosStart <= 0)
+         {
+
+            iPosStart = ftell(file);
+
+         }
+
+      }
+
+      iLastChar = iChar;
+
+   }
+
+   if (iLine > 0)
+   {
+
+      fwrite("\n", 1, iLine, file);
+
+      fwrite(pszLine, 1, strlen(pszLine), file);
+
+      fclose(file);
+
+   }
+   else
+   {
+
+      iPosEnd = ftell(file);
+
+      ::file::path pathTime = path;
+
+      pathTime += ".time";
+
+      FILE * file2 = ::fopen_dup(pathTime, "w", _SH_DENYWR);
+
+      if (iPosStart > 0)
+      {
+
+         memory m;
+
+         fseek(file, 0, SEEK_SET);
+
+         m.allocate(iPosStart);
+
+         fread(m.get_data(), 1, iPosStart, file);
+
+         fwrite(m.get_data(), 1, iPosStart, file2);
+
+      }
+
+      fwrite(pszLine, 1, strlen(pszLine), file);
+
+      index iEnd = fseek(file, 0, SEEK_END);
+
+      if (iEnd - iPosEnd > 0)
+      {
+
+         memory m;
+
+         fseek(file, iPosEnd, SEEK_SET);
+
+         m.allocate(iEnd - iPosEnd);
+
+         fread(m.get_data(), 1, m.get_size(), file);
+
+         fwrite(m.get_data(), 1, m.get_size(), file2);
+
+      }
+
+      fclose(file2);
+
+      fclose(file);
+
+      if (!file_copy_dup(path, pathTime.c_str(), true))
+      {
+
+         return false;
+
+      }
+
+      file_delete_dup(pathTime);
+
+   }
+
+   return true;
+
+}
+
+
 bool file_get_memory_dup(::primitive::memory_base & memory,const char * path)
 {
 
@@ -2447,7 +2671,7 @@ return false;
 //
 //   auto optionNew = ::Windows::Storage::CreationCollisionOption::ReplaceExisting;
 //
-//   // create target file 
+//   // create target file
 //   ::Windows::Storage::IStorageFile ^ fileNew = wait(folderNew->CreateFileAsync(file_title_dup(pszNew),optionNew));
 //
 //   if(fileNew == nullptr)
@@ -2455,7 +2679,7 @@ return false;
 //
 //   ::Windows::Storage::IStorageFolder ^ folderSrc = wait(::Windows::Storage::StorageFolder::GetFolderFromPathAsync(dir::name(pszSrc)));
 //
-//   // create source file 
+//   // create source file
 //   ::Windows::Storage::IStorageFile ^ fileSrc = wait(folderSrc->GetFileAsync(file_title_dup(pszNew)));
 //
 //   if(fileSrc == nullptr)
@@ -2567,8 +2791,8 @@ bool file_copy_dup(const string & strNew,const string & strSrc,bool bOverwrite)
    wstring wstrNew(strNew);
 
    return ::wait(fileSrc->CopyAsync(folder,wstrNew,bOverwrite ?
-      ::Windows::Storage::NameCollisionOption::ReplaceExisting :
-      ::Windows::Storage::NameCollisionOption::FailIfExists)) ? TRUE : FALSE;
+                                    ::Windows::Storage::NameCollisionOption::ReplaceExisting :
+                                    ::Windows::Storage::NameCollisionOption::FailIfExists)) ? TRUE : FALSE;
 
 
 }

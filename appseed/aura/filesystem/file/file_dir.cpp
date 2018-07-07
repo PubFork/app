@@ -892,7 +892,7 @@ bool dir::_mk(const ::file::path & path)
             }
 
          }
-         
+
 #ifdef WINDOWSEX
 
          char * pszError;
@@ -904,7 +904,7 @@ bool dir::_mk(const ::file::path & path)
          ::LocalFree(pszError);
 
          //m_isdirmap.set(stra[i], false);
-         
+
 #endif
 
          return false;
@@ -1327,10 +1327,10 @@ void dir::ls(::file::patha & stra,const ::file::path & psz)
    try
    {
 
-      if(string(psz).compare_ci("winmetro-Pictures://") == 0)
+      if(string(psz).compare_ci("image://") == 0)
       {
 
-         strPrefix = "winmetro-Pictures://";
+         strPrefix = "image://";
 
          try
          {
@@ -1346,10 +1346,10 @@ void dir::ls(::file::patha & stra,const ::file::path & psz)
          }
 
       }
-      else if (string(psz).compare_ci("winmetro-Music://") == 0)
+      else if (string(psz).compare_ci("music://") == 0)
       {
 
-         strPrefix = "winmetro-Music://";
+         strPrefix = "music://";
 
          try
          {
@@ -1365,10 +1365,10 @@ void dir::ls(::file::patha & stra,const ::file::path & psz)
          }
 
       }
-      else if (string(psz).compare_ci("winmetro-Videos://") == 0)
+      else if (string(psz).compare_ci("video://") == 0)
       {
 
-         strPrefix = "winmetro-Videos://";
+         strPrefix = "video://";
 
          try
          {
@@ -1384,10 +1384,10 @@ void dir::ls(::file::patha & stra,const ::file::path & psz)
          }
 
       }
-      else if (string(psz).compare_ci("winmetro-Document://") == 0)
+      else if (string(psz).compare_ci("document://") == 0)
       {
 
-         strPrefix = "winmetro-Document://";
+         strPrefix = "document://";
 
          try
          {
@@ -1406,10 +1406,10 @@ void dir::ls(::file::patha & stra,const ::file::path & psz)
       else
       {
 
-         if (::str::begins_eat_ci(str, "winmetro-Pictures://"))
+         if (::str::begins_eat_ci(str, "image://"))
          {
 
-            strPrefix = "winmetro-Pictures://";
+            strPrefix = "image://";
 
             try
             {
@@ -1426,10 +1426,10 @@ void dir::ls(::file::patha & stra,const ::file::path & psz)
 
          }
 
-         if(::str::begins_eat_ci(str, "winmetro-Music://"))
+         if(::str::begins_eat_ci(str, "music://"))
          {
 
-            strPrefix = "winmetro-Music://";
+            strPrefix = "music://";
 
             try
             {
@@ -1446,10 +1446,10 @@ void dir::ls(::file::patha & stra,const ::file::path & psz)
 
          }
 
-         if (::str::begins_eat_ci(str, "winmetro-Videos://"))
+         if (::str::begins_eat_ci(str, "video://"))
          {
 
-            strPrefix = "winmetro-Videos://";
+            strPrefix = "video://";
 
             try
             {
@@ -1466,10 +1466,10 @@ void dir::ls(::file::patha & stra,const ::file::path & psz)
 
          }
 
-         if (::str::begins_eat_ci(str, "winmetro-Document://"))
+         if (::str::begins_eat_ci(str, "document://"))
          {
 
-            strPrefix = "winmetro-Document://";
+            strPrefix = "document://";
 
             try
             {

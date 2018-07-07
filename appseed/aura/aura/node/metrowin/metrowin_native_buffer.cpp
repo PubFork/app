@@ -8,34 +8,34 @@
 CLASS_DECL_AURA::Windows::Storage::StorageFolder ^ winrt_folder1(string & strPath, string & strPrefix)
 {
 
-   if (str::begins_eat_ci(strPath, "winmetro-Pictures://"))
+   if (str::begins_eat_ci(strPath, "image://"))
    {
 
-      strPrefix = "winmetro-Pictures://";
+      strPrefix = "image://";
 
       return ::Windows::Storage::KnownFolders::PicturesLibrary;
 
    }
-   else if (str::begins_eat_ci(strPath, "winmetro-Music://"))
+   else if (str::begins_eat_ci(strPath, "music://"))
    {
 
-      strPrefix = "winmetro-Music://";
+      strPrefix = "music://";
 
       return ::Windows::Storage::KnownFolders::MusicLibrary;
 
    }
-   else if (str::begins_eat_ci(strPath, "winmetro-Videos://"))
+   else if (str::begins_eat_ci(strPath, "video://"))
    {
 
-      strPrefix = "winmetro-Videos://";
+      strPrefix = "video://";
 
       return ::Windows::Storage::KnownFolders::VideosLibrary;
 
    }
-   else if (str::begins_eat_ci(strPath, "winmetro-Document://"))
+   else if (str::begins_eat_ci(strPath, "document://"))
    {
 
-      strPrefix = "winmetro-Document://";
+      strPrefix = "document://";
 
       return ::Windows::Storage::KnownFolders::DocumentsLibrary;
 

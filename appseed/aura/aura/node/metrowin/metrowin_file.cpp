@@ -88,16 +88,16 @@ namespace metrowin
 
       string strPath = path;
 
-      str::begins_eat_ci(strPath,"winmetro-Pictures:\\\\");
+      str::begins_eat_ci(strPath,"image:\\\\");
 
-      str::begins_eat_ci(strPath, "winmetro-Music:\\\\");
+      str::begins_eat_ci(strPath, "music:\\\\");
 
-      str::begins_eat_ci(strPath, "winmetro-Videos:\\\\");
+      str::begins_eat_ci(strPath, "video:\\\\");
 
-      if (str::begins_eat_ci(strPath, "winmetro-Document:\\\\"))
+      if (str::begins_eat_ci(strPath, "document:\\\\"))
       {
 
-         output_debug_string("winmetro-Document:\\\\" + strPath);
+         output_debug_string("document:\\\\" + strPath);
 
       }
 

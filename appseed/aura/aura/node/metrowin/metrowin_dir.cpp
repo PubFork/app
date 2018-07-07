@@ -26,11 +26,11 @@ namespace metrowin
    ::file::listing & dir::root_ones(::file::listing & listing,::aura::application *  papp)
    {
 
-      listing.add("winmetro-Pictures://");
+      listing.add("image://");
       listing.last().m_iDir = 1;
-      listing.add("winmetro-Music://");
+      listing.add("music://");
       listing.last().m_iDir = 1;
-      listing.add("winmetro-Videos://");
+      listing.add("video://");
 
       listing.last().m_iDir = 1;
 
@@ -185,11 +185,11 @@ namespace metrowin
    bool dir::is_impl(const ::file::path & lpcszPath,::aura::application *  papp)
    {
 
-      if(lpcszPath.compare_ci("winmetro-Pictures:") == 0)
+      if(lpcszPath.compare_ci("image:") == 0)
          return true;
-      if (lpcszPath.compare_ci("winmetro-Music:") == 0)
+      if (lpcszPath.compare_ci("music:") == 0)
          return true;
-      if (lpcszPath.compare_ci("winmetro-Videos:") == 0)
+      if (lpcszPath.compare_ci("video:") == 0)
          return true;
 
       bool bIsDir;
@@ -793,7 +793,7 @@ try1:;
    ::file::path dir::document()
    {
 
-      return "winmetro-Document://";
+      return "document://";
 
    }
 
@@ -801,7 +801,7 @@ try1:;
    ::file::path dir::music()
    {
 
-      return "winmetro-Music://";
+      return "music://";
 
    }
 
@@ -809,7 +809,7 @@ try1:;
    ::file::path dir::video()
    {
 
-      return "winmetro-Videos://";
+      return "video://";
 
    }
 
@@ -817,7 +817,7 @@ try1:;
    ::file::path dir::image()
    {
 
-      return "winmetro-Pictures://";
+      return "image://";
 
    }
 
