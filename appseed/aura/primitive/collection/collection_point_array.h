@@ -23,6 +23,7 @@ class point2d_array_base:
 {
 public:
    inline point2d_array_base(): comparable_array < POINT2D >() {}
+   inline point2d_array_base(point2d_array_base && pointset) : comparable_array < POINT2D > (::move(pointset)) { }
    inline point2d_array_base(const point2d_array_base & pointset) { operator=(pointset); }
    virtual ~point2d_array_base() { }
 
@@ -134,6 +135,9 @@ class CLASS_DECL_AURA pointd_array :
 public:
 
 
+   inline pointd_array() : point2d_array_base < pointd >() {}
+   inline pointd_array(pointd_array && pointset) : point2d_array_base < pointd >(::move(pointset)) { }
+   inline pointd_array(const pointd_array & pointset) { operator=(pointset); }
    virtual ~pointd_array();
 
    //void offset(double x, double y);
@@ -148,7 +152,8 @@ public:
 
    //__inline index add(double x, double y) {return comparable_array < pointd >::add(pointd(x, y)); }
    //__inline index add(pointd point) {return add(point.x, point.y); }
-   //__inline pointd_array & operator =(const pointd_array & pointset) { copy(pointset); return *this; }
+   inline pointd_array & operator =(const pointd_array & pointset) { copy(pointset); return *this; }
+   inline pointd_array & operator =(pointd_array && pointset) { move(::move(pointset)); return *this; }
    //void rotate(double dAngle);
 
 

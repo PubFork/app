@@ -164,7 +164,7 @@ namespace user
 
             if(i == 8)
             {
-               string str(wstring(wsz,4)); // first four digits
+               string str(wstring(&wsz[4],4)); // least significant four digits
 
                w = (WORD) ::hex::to_int64(str);
 
@@ -484,7 +484,7 @@ namespace user
 
          string strPath = Application.dir().matter("keyboard layout/" + strOverride + ".xml");
 
-         strTest = file_as_string_dup(strPath);
+         strTest = Application.file().as_string(strPath);
 
          if(strTest.has_char())
          {

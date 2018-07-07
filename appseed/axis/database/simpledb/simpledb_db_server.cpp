@@ -120,19 +120,19 @@ bool db_server::initialize()
    if (Application.is_system())
    {
 
-      str = System.dir().appdata() / strAppName / "system.sqlite";
+      str = System.dir().appdata() / "system.sqlite";
 
    }
    else if (Application.is_session())
    {
 
-      str = System.dir().appdata() / strAppName / "session.sqlite";
+      str = System.dir().appdata() / "session.sqlite";
 
    }
    else
    {
 
-      str = System.dir().appdata() / strAppName / "app.sqlite";
+      str = System.dir().appdata() / "app.sqlite";
 
    }
 

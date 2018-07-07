@@ -26,7 +26,7 @@ namespace draw2d_cairo
 #ifdef WINDOWS
       HBITMAP                 m_hbitmap;
 //      BITMAPINFO              m_bitmapinfo;
-  //    BITMAPINFO              m_info;
+      //    BITMAPINFO              m_info;
 #endif
 
 
@@ -158,7 +158,7 @@ namespace draw2d_cairo
       //double pi();
 
 
-      virtual void read(::file::istream & istream);
+      virtual void stream(serialize & serialize);
 
 
       virtual bool blend(point ptDst, ::draw2d::dib * pdibSrc, point ptSrc, class size size, byte bA) override;

@@ -37,27 +37,35 @@ namespace draw2d_cairo
 
    ::draw2d::bitmap_sp dib::detach_bitmap()
    {
+
       return m_spbitmap.detach();
+
    }
 
 
-   void dib::read(::file::istream & istream)
+   void dib::stream(serialize & serialize)
    {
 
       synch_lock ml(cairo_mutex());
 
-      ::draw2d::dib::read(istream);
+      ::draw2d::dib::stream(serialize);
 
-      cairo_surface_t * surface = dynamic_cast < ::draw2d_cairo::bitmap * > (m_spbitmap.m_p)->m_psurface;
-
-      if(surface != NULL)
+      if (!serialize.is_storing())
       {
 
-         cairo_surface_mark_dirty(surface);
+         cairo_surface_t * surface = dynamic_cast <::draw2d_cairo::bitmap *> (m_spbitmap.m_p)->m_psurface;
+
+         if (surface != NULL)
+         {
+
+            cairo_surface_mark_dirty(surface);
+
+         }
 
       }
 
    }
+
 
    void    dib::construct (int32_t cx,  int32_t cy)
    {
