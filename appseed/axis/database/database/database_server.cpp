@@ -176,7 +176,7 @@ namespace database
 
       }
 
-      if (!data_server_load(pclient, id, writer.memory(), puh))
+      if (!data_server_save(pclient, id, writer.memory(), puh))
       {
 
          return false;
