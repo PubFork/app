@@ -14,23 +14,23 @@
 #endif
 static bool has_autohide_appbar(UINT edge, RECT mon) // Interface Update - Infinisys Ltd.
 {
-    if (IsWindows8Point1OrGreater())
-    {
-        APPBARDATA data = {};
-        data.cbSize = sizeof(APPBARDATA);
-        data.uEdge = edge;
-        data.rc = mon;
-        return SHAppBarMessage(0x0000000b, &data);
-    }
-    
-    /* Before Windows 8.1, it was not possible to specify a monitor when
-     checking for hidden appbars, so check only on the primary monitor */
-    if (mon.left != 0 || mon.top != 0)
-        return false;
-    APPBARDATA data = {};
-    data.cbSize = sizeof(APPBARDATA);
-    data.uEdge = edge;
-    return SHAppBarMessage(ABM_GETAUTOHIDEBAR, &data);
+   if (IsWindows8Point1OrGreater())
+   {
+      APPBARDATA data = {};
+      data.cbSize = sizeof(APPBARDATA);
+      data.uEdge = edge;
+      data.rc = mon;
+      return SHAppBarMessage(0x0000000b, &data);
+   }
+
+   /* Before Windows 8.1, it was not possible to specify a monitor when
+    checking for hidden appbars, so check only on the primary monitor */
+   if (mon.left != 0 || mon.top != 0)
+      return false;
+   APPBARDATA data = {};
+   data.cbSize = sizeof(APPBARDATA);
+   data.uEdge = edge;
+   return SHAppBarMessage(ABM_GETAUTOHIDEBAR, &data);
 }
 #endif
 
@@ -623,34 +623,21 @@ bool simple_frame_window::pre_create_window(::user::create_struct& cs)
 void simple_frame_window::on_layout()
 {
 
-   //{
-
-   //   DWORD dwTime2 = ::get_tick_count();
-
-   //   //TRACE("message_handler call time0= %d ms",dwTime2 - t_time1.operator DWORD_PTR());
-   //   TRACE("smpfrmwnd::lyot call timeF= %d ms",dwTime2 - t_time1.operator DWORD_PTR());
-
-   //}
-
    if (m_bWindowFrame && m_workset.IsAppearanceEnabled())
    {
+
       m_workset.on_layout();
+
    }
    else
    {
+
       ::user::frame_window::on_layout();
+
    }
-   //{
-
-   //   DWORD dwTime2 = ::get_tick_count();
-
-   //   //TRACE("message_handler call time0= %d ms",dwTime2 - t_time1.operator DWORD_PTR());
-   //   TRACE("smpfrmwnd::lyot call timeG= %d ms",dwTime2 - t_time1.operator DWORD_PTR());
-
-   //}
-
 
 }
+
 
 void simple_frame_window::ViewOnActivateFrame(sp(::user::impact) pview, UINT user, sp(::user::interaction) pframe)
 {
@@ -3454,7 +3441,7 @@ void simple_frame_window::_001OnDwm(::message::message * pobj)
 #ifdef WINDOWSEX
 
    SCAST_PTR(::message::base, pbase, pobj);
-   
+
    WPARAM wparam;
    LPARAM lparam;
 
@@ -3489,7 +3476,7 @@ void simple_frame_window::_001OnDwm(::message::message * pobj)
    //      //MoveAnchorsImmediatelly(hwndDlg);
    pbase->m_bRet = true;
    pbase->set_lresult(0);
-    
+
 #endif
 
 }
@@ -3501,7 +3488,7 @@ void simple_frame_window::_001OnNcCalcSize(::message::message * pmessage)
 #ifdef WINDOWSEX
 
    SCAST_PTR(::message::nc_calc_size, pcalcsize, pmessage);
-   
+
    BOOL bCalcValidRects = pcalcsize->GetCalcValidRects();
    NCCALCSIZE_PARAMS* lpncsp = pcalcsize->m_pparams;
 
@@ -3573,8 +3560,8 @@ void simple_frame_window::_001OnNcCalcSize(::message::message * pmessage)
       lpncsp->rgrc[0] = nonclient;
 
    }
-    
+
 #endif
-    
+
 }
 

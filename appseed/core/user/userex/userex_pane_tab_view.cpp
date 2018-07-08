@@ -11,6 +11,8 @@ namespace userex
       place_holder_container(papp)
    {
 
+      m_pcolorview = NULL;
+
       m_pfilemanager = NULL;
       m_pfilemanagerTabbed = NULL;
 
@@ -163,6 +165,43 @@ namespace userex
    }
 
 
+   void pane_tab_view::defer_hide_tab_with_id_that_contains_preserve_current(string strIdPart)
+   {
+
+      if (::str::begins_ci(m_pviewdata->m_id, strIdPart))
+      {
+
+         hide_tab_with_id_that_contains_preserve_current(strIdPart);
+
+      }
+
+   }
+
+
+   void pane_tab_view::hide_tab_with_id_that_contains_preserve_current(string strIdPart)
+   {
+
+      for (auto & p : m_viewmap)
+      {
+
+         if (p.m_element2 == m_pviewdata || !p.m_element2->m_id.is_text())
+         {
+
+            continue;
+
+         }
+
+         if (::str::find_ci(p.m_element2->m_id.m_psz, strIdPart) >= 0)
+         {
+
+            p.m_element2->m_pholder->ShowWindow(SW_HIDE);
+
+         }
+
+      }
+
+   }
+
    void pane_tab_view::on_show_view()
    {
       ::user::tab_view::on_show_view();
@@ -189,56 +228,13 @@ namespace userex
       if (m_pviewdata != NULL)
       {
 
-         if (::str::begins_ci(m_pviewdata->m_id, "file_manager"))
-         {
+         defer_hide_tab_with_id_that_contains_preserve_current("file_manager");
 
-            for (auto & p : m_viewmap)
-            {
+         defer_hide_tab_with_id_that_contains_preserve_current("font_sel");
 
-               if (p.m_element2 == m_pviewdata || !p.m_element2->m_id.is_text())
-               {
-
-                  continue;
-
-               }
-
-               if (::str::find_ci(p.m_element2->m_id.m_psz, "file_manager") >= 0)
-               {
-
-                  p.m_element2->m_pholder->ShowWindow(SW_HIDE);
-
-               }
-
-            }
-
-         }
-         else if (::str::begins_ci(m_pviewdata->m_id, "font_sel"))
-         {
-
-            for (auto & p : m_viewmap)
-            {
-
-               if (p.m_element2 == m_pviewdata || !p.m_element2->m_id.is_text())
-               {
-
-                  continue;
-
-               }
-
-               if (::str::find_ci(p.m_element2->m_id.m_psz, "font_sel") >= 0)
-               {
-
-                  p.m_element2->m_pholder->ShowWindow(SW_HIDE);
-
-               }
-
-            }
-
-         }
+         defer_hide_tab_with_id_that_contains_preserve_current("color_sel");
 
       }
-
-
 
    }
 
@@ -428,6 +424,16 @@ namespace userex
          m_pfontview = pdoc->get_typed_view<font_view>();
 
          pcreatordata->m_pwnd = m_pfontview;
+
+      }
+      else if (::str::begins_ci(pcreatordata->m_id, "color_sel"))
+      {
+
+         auto pdoc = Session.userex()->m_ptemplateColorSel->open_document_file(::var::type_null, false, pcreatordata->m_pholder);
+
+         m_pcolorview = pdoc->get_typed_view<color_view>();
+
+         pcreatordata->m_pwnd = m_pcolorview;
 
       }
       else if(::str::begins_ci(pcreatordata->m_id, "file_manager")

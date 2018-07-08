@@ -18,6 +18,7 @@ namespace user
          {
          public:
 
+
             WorkSet *                     m_pworkset;
             DWORD                         m_dwShowTime;
             bool                          m_bShowAttempt;

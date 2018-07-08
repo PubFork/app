@@ -19,6 +19,7 @@ namespace userex
       ::object *                       m_pfilemanagerTabbed;
       sp(::user::document)             m_pdocAppOptions;
       font_view *                      m_pfontview;
+      color_view *                     m_pcolorview;
 
 
       pane_tab_view(::aura::application * papp);
@@ -36,6 +37,10 @@ namespace userex
       virtual id get_view_id() override;
 
       virtual void on_show_view() override;
+
+      virtual void defer_hide_tab_with_id_that_contains_preserve_current(string strIdPart);
+
+      virtual void hide_tab_with_id_that_contains_preserve_current(string strIdPart);
 
       virtual bool on_prepare_view_creator_data(::user::view_creator_data * pcreatordata) override;
 

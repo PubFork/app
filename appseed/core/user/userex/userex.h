@@ -42,6 +42,8 @@ namespace userex
 #include "userex_top_toggle_view.h"
 #include "userex_top_view.h"
 
+#include "userex_color_view.h"
+
 
 #include "userex_font_view.h"
 
@@ -64,7 +66,6 @@ namespace userex
 #include "userex_wait_message_dialog.h"
 #include "userex_message_box.h"
 #include "userex_keyboard_layout.h"
-
 
 #include "userex_userex.h"
 

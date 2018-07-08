@@ -40,12 +40,8 @@ namespace user
             point                                        m_pointWindowIcon;
             point                                        m_pointMoveGripMinimal;
 
-            COLORREF                         m_crMoveableBorder;
-            COLORREF                         m_crMoveableBorderShadow;
-
-
-            //sp(type)                                     m_typeinfoControlBoxButton;
-            //sp(type)                                     m_typeinfoControlBox;
+            COLORREF                                     m_crMoveableBorder;
+            COLORREF                                     m_crMoveableBorderShadow;
 
 
             ::user::wndfrm::interaction *                m_pinteraction;
@@ -73,17 +69,11 @@ namespace user
             bool                                         m_bInitialControlBoxPosition;
 
 
-            //virtual int get_control_box_right();
-            //virtual bool control_box_align_right();
-
-
             frame(::aura::application * papp);
             virtual ~frame();
 
 
             virtual appearance * get_appearance();
-
-            //virtual ::user::front_end_schema * get_user_front_end_schema();
 
             virtual void set_style(const char * pszStyle);
             virtual void on_initialize_appearance();
@@ -107,6 +97,7 @@ namespace user
             virtual sp(::user::interaction) get_window();
 
 
+            virtual void get_parent_rect(LPRECT lprect);
             virtual rect * get_control_box_rect();
             virtual rect * get_control_box_margin_rect();
             virtual rect * get_margin_rect();
@@ -118,6 +109,7 @@ namespace user
 
             virtual void on_layout();
 
+            virtual i32 calc_control_box_left(bool bLayout);
 
             virtual sp(control_box) get_control_box();
 
@@ -135,7 +127,6 @@ namespace user
             virtual void OnActivate();
             virtual void OnNcCalcSize(LPRECT lprect);
             virtual void _000OnBeforeSize(const RECT & lpcrectWindow);
-            virtual void on_layout();
 
 
             virtual EHitTest _000HitTest(point pt);

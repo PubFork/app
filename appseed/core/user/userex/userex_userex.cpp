@@ -18,6 +18,7 @@ namespace userex
    {
 
       m_pshell  = NULL;
+      m_ptemplateColorSel = NULL;
       m_ptemplateFontSel = NULL;
       m_ptemplateForm = NULL;
       m_ptemplateChildForm = NULL;
@@ -65,6 +66,16 @@ namespace userex
 
       }
 
+      if (m_ptemplateColorSel != NULL)
+      {
+
+         m_ptemplateColorSel->close_all_documents(false);
+
+         ::aura::del(m_ptemplateColorSel);
+
+      }
+
+
    }
 
 
@@ -77,6 +88,7 @@ namespace userex
       System.factory().creatable_small < top_edit_view >();
       System.factory().creatable_small < top_toggle_view >();
       System.factory().creatable_small < top_view >();
+      System.factory().creatable_small < color_view >();
 
       System.factory().creatable_small < ::user::tab_view >();
 
@@ -1914,6 +1926,12 @@ finished:
       System.type_info < ::simple_frame_window >(),
       System.type_info < ::userex::font_view >());
 
+      userex()->m_ptemplateColorSel = new ::user::single_document_template(
+      get_app(),
+      "main",
+      System.type_info < ::user::document >(),
+      System.type_info < ::simple_frame_window >(),
+      System.type_info < ::userex::color_view >());
 
       //if (!is_installing() && !is_uninstalling())
       {

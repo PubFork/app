@@ -626,6 +626,8 @@ namespace user
       virtual bool IsWindowVisible() override;
 
       virtual void _000OnMouse(::message::mouse * pmouse);
+      virtual void _000OnThisMouse(::message::mouse * pmouse);
+      virtual void _000OnChildrenMouse(::message::mouse * pmouse);
       virtual void _000OnKey(::message::key * pkey);
       virtual void _000OnDrag(::message::drag_and_drop * pdrag);
       DECL_GEN_SIGNAL(_001OnLButtonDown);

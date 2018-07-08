@@ -154,7 +154,14 @@ namespace user
          void frame::on_layout()
          {
 
-            reset_layout();
+            if (m_spcontrolbox.is_set())
+            {
+
+               m_spcontrolbox->reset_layout();
+
+            }
+
+            m_iCaptionHeight = calc_caption_height();
 
             rect rectWindow;
 
@@ -179,12 +186,12 @@ namespace user
 
             update_window_client_rect();
 
-            if (rectWindow.width() < 1920)
-            {
+            //if (rectWindow.width() < 1920)
+            //{
 
-               output_debug_string("frame window < 1920");
+            //   output_debug_string("frame window < 1920");
 
-            }
+            //}
 
             pwndDraw->GetClientRect(rectClient);
 
@@ -230,6 +237,57 @@ namespace user
             update_window();
 
             update_window_region(rectWindow);
+
+            //if(m_spcontrolbox->is_this_visible())
+            //{
+
+            //   rect rectControlBox;
+
+            //   m_spcontrolbox->GetWindowRect(rectControlBox);
+
+            //   if (rectControlBox.area() > 0)
+            //   {
+
+            //      pwndDraw->ScreenToClient(rectWindow);
+
+            //      int iControlBoxRightToLeft = pwndDraw->oprop("control_box_right_to_right").i32();
+
+            //      int iControlBoxLeft = rectWindow.right - iControlBoxRightToLeft;
+
+            //      if (iControlBoxLeft < 0)
+            //      {
+
+            //         iControlBoxLeft = 0;
+
+            //      }
+
+            //      int iControlBoxMaxLeft = rectWindow.right - rectControlBox.width();
+
+            //      if (iControlBoxLeft > iControlBoxMaxLeft)
+            //      {
+
+            //         iControlBoxLeft = iControlBoxMaxLeft;
+
+            //      }
+
+            //      iControlBoxRightToLeft = rectWindow.right - iControlBoxLeft;
+
+            //      if (m_pworkset->GetWndDraw()->oprop("control_box_right_to_right") != iControlBoxRightToLeft)
+            //      {
+
+            //         m_pworkset->GetWndDraw()->oprop("control_box_right_to_right") = iControlBoxRightToLeft;
+
+            //         sp(::user::box) pbox = pwndDraw;
+
+            //         pbox->WindowDataSaveWindowRect();
+
+            //      }
+
+            //      m_spcontrolbox->SetWindowPos(ZORDER_TOP, iControlBoxLeft, rectControlBox.top, 0, 0, SWP_SHOWWINDOW | SWP_NOSIZE);
+
+            //   }
+
+            //}
 
          }
 
@@ -304,7 +362,9 @@ namespace user
             }
 
             return false;
+
          }
+
 
          bool frame::_000OnNcLButtonDown(::message::mouse * pmouse)
          {
@@ -431,51 +491,6 @@ namespace user
          }
 
 
-         //int32_t frame::get_margin()
-         //{
-         //   int32_t iMargin = m_iMargin;
-
-         //   /*            if (get_appearance()->GetAppearance() == appearance_zoomed
-         //   || get_appearance()->GetAppearance() == appearance_full_screen)
-         //   {
-         //   iMargin = 0;
-         //   }*/
-
-         //   return iMargin;
-         //}
-
-         void frame::reset_layout()
-         {
-
-            if (m_spcontrolbox.is_set())
-            {
-
-               m_spcontrolbox->reset_layout();
-
-            }
-
-            m_iCaptionHeight = calc_caption_height();
-
-
-            /*         m_rectControlBoxMarginFullScreen.left = 0;
-                     m_rectControlBoxMarginFullScreen.top = 0;
-                     m_rectControlBoxMarginFullScreen.right = 0;
-                     m_rectControlBoxMarginFullScreen.bottom = 0;
-
-                     m_rectControlBoxMarginZoomed.left = 0;
-                     m_rectControlBoxMarginZoomed.top = 0;
-                     m_rectControlBoxMarginZoomed.right = 0;
-                     m_rectControlBoxMarginZoomed.bottom = 0;
-
-                     m_rectControlBoxMarginNormal.left = m_iMargin + 3;
-                     m_rectControlBoxMarginNormal.top = 3;
-                     m_rectControlBoxMarginNormal.right = m_iMargin - 3;
-                     m_rectControlBoxMarginNormal.bottom = 0;*/
-
-
-         }
-
-
          int32_t frame::get_caption_height()
          {
 
@@ -516,6 +531,68 @@ namespace user
          }
 
 
+         i32 frame::calc_control_box_left(bool bLayout)
+         {
+
+            sp(::user::interaction) pwndDraw = get_draw_window();
+
+            rect rectClient;
+
+            pwndDraw->GetWindowRect(rectClient);
+
+            rectClient -= rectClient.top_left();
+
+            rect * prectControlBoxMargin = get_control_box_margin_rect();
+
+            rect * prectMargin = get_margin_rect();
+
+            rect * prectControlBox = get_control_box_rect();
+
+            rect rectParent;
+
+            get_parent_rect(rectParent);
+
+            i32 x;
+
+            m_bControlBoxAlignRight = prectControlBox->center().x > rectClient.center().x;
+
+            if (bLayout && is_control_box_moveable())
+            {
+
+               if (m_bControlBoxAlignRight)
+               {
+
+                  x = rectClient.right - m_iControlBoxRight - prectControlBox->width();
+
+               }
+               else
+               {
+
+                  x = prectControlBox->left;
+
+               }
+
+            }
+            else
+            {
+
+               x = prectControlBox->left;
+
+            }
+
+            rectParent -= rectParent.top_left();
+
+            if (x > rectParent.right - prectMargin->right - prectControlBoxMargin->right - prectControlBox->width())
+               x = rectParent.right - prectMargin->right - prectControlBoxMargin->right - prectControlBox->width();
+
+            if (x < rectParent.left + prectMargin->left + prectControlBoxMargin->left)
+               x = rectParent.left + prectMargin->left + prectControlBoxMargin->left;
+
+            return x;
+
+         }
+
+
          int32_t frame::title_bar_layout(bool bInitialControlBoxPosition)
          {
 
@@ -526,8 +603,6 @@ namespace user
             rect * prectControlBoxMargin = get_control_box_margin_rect();
 
             rect * prectMargin = get_margin_rect();
-
-//            int32_t iCaptionHeight = get_caption_height();
 
             rect rectClient;
 
@@ -543,9 +618,6 @@ namespace user
             m_rectCaption.top = rectClient.top + prectMargin->top + prectControlBoxMargin->top;
             m_rectCaption.right = rectClient.right - +prectMargin->right + prectControlBoxMargin->right;
             m_rectCaption.bottom = m_rectCaption.top + iControlBoxHeight;
-
-
-
 
             bool bShow = true;
 
@@ -615,38 +687,7 @@ namespace user
 
             iControlBoxRightMargin = prectControlBoxMargin->right;
 
-            int x;
-
-            if (!bInitialControlBoxPosition && is_control_box_moveable())
-            {
-
-               if (m_bControlBoxAlignRight)
-               {
-
-                  x = rectClient.width() - m_iControlBoxRight - prectControlBox->width();
-
-               }
-               else
-               {
-
-                  x = prectControlBox->left;
-
-               }
-
-            }
-            else
-            {
-
-               x = prectControlBox->left;
-
-            }
-
-
-            if (x > rectParent.width() - prectMargin->right - prectControlBoxMargin->right - prectControlBox->width())
-               x = rectParent.width() - prectMargin->right - prectControlBoxMargin->right - prectControlBox->width();
-
-            if (x < rectParent.left + prectMargin->left + prectControlBoxMargin->left)
-               x = rectParent.left + prectMargin->left + prectControlBoxMargin->left;
+            int x = calc_control_box_left(!bInitialControlBoxPosition);
 
             int y = prectMargin->top + prectControlBoxMargin->top;
 
@@ -691,8 +732,6 @@ namespace user
                   get_control_box()->on_layout();
 
                }
-
-
 
             }
 
@@ -1048,6 +1087,32 @@ namespace user
 
          }
 
+
+         void frame::get_parent_rect(LPRECT lprect)
+         {
+
+            if (m_pworkset->get_appearance()->GetAppearance() == appearance_full_screen)
+            {
+
+               get_draw_window()->best_monitor(lprect);
+
+            }
+            else if (m_pworkset->get_appearance()->GetAppearance() == appearance_zoomed)
+            {
+
+               get_draw_window()->GetWindowRect(lprect);
+
+            }
+            else
+            {
+
+               get_draw_window()->GetWindowRect(lprect);
+
+            }
+
+         }
+
+
          rect * frame::get_control_box_rect()
          {
 
@@ -1071,6 +1136,7 @@ namespace user
             }
 
          }
+
 
          EHitTest frame::_000HitTest(point pt)
          {

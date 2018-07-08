@@ -46,34 +46,34 @@ namespace user
 
             if(!m_pworkset->IsSizingEnabled())
             {
-               
+
                return false;
-               
+
             }
 
             class point ptCursor = pmouse->m_pt;
-            
+
             m_ptCursorOrigin = ptCursor;
-            
+
             rect rectWindow;
-            
+
             GetSizingWindow()->GetWindowRect(rectWindow);
 
             m_rcWindowOrigin = rectWindow;
-            
+
             rect rectEvent;
-            
+
             GetEventWindow()->GetWindowRect(rectEvent);
-            
+
             //EHitTest ehittest = hit_test(ptCursor);
-            
+
             EHitTest ehittest = m_ehittestCursor;
 
             sp(WorkSetClientInterface) pinterface = m_pworkset->get_draw_window();
 
             if(ehittest != HitTestNone)
             {
-               
+
                UINT nHitTest = HTCLIENT;
 
                switch(ehittest)
@@ -115,7 +115,34 @@ namespace user
                // SizeManager captures the mouse and
                // now have priority with mouse messages
                m_pworkset->m_bSizingCapture = true;
+
+               rect r;
+
+               GetEventWindow()->GetClientRect(r);
+
+               GetEventWindow()->ClientToScreen(r);
+
+               point p;
+
+               Session.get_cursor_pos(p);
+
+               //point pNew(p);
+
+               //if (pNew.x < r.left)
+               //   pNew.x = r.left;
+               //else if (pNew.x >= r.right)
+               //   pNew.x = r.right - 1;
+               //if (pNew.y < r.top)
+               //   pNew.y = r.top;
+               //else if (pNew.y >= r.bottom)
+               //   pNew.y = r.bottom - 1;
+
+               //SetCursorPos(pNew.x, pNew.y);
+
                GetEventWindow()->SetCapture();
+
+//               SetCursorPos(p.x, p.y);
+
                pmouse->m_bRet = true;
             }
             else
@@ -135,9 +162,9 @@ namespace user
 
             if(m_ehittestMode == HitTestNone)
             {
-               
+
                return false;
-               
+
             }
             else
             {
@@ -161,70 +188,70 @@ namespace user
                SizeWindow(GetSizingWindow(), pmouse->m_pt, true);
 
                pmouse->m_ecursor = translate(m_ehittestMode);
-               
+
                pmouse->set_lresult(1);
-               
+
                pmouse->m_bRet = true;
-               
+
                return true;
-               
+
             }
 
             m_ehittestCursor = hit_test(pmouse->m_pt);
 
             if(m_ehittestCursor != HitTestNone)
             {
-               
+
                pmouse->m_ecursor = translate(m_ehittestCursor);
-               
+
                pmouse->set_lresult(1);
-               
+
                pmouse->m_bRet = true;
-               
+
                return true;
-               
+
             }
 
             return false;
 
          }
-         
+
 
          bool SizeManager::_000OnLButtonUp(::message::mouse * pmouse)
          {
-            
+
             if(!m_pworkset->IsSizingEnabled())
             {
-               
+
                return false;
-               
+
             }
-            
+
             ASSERT(pmouse->m_id == WM_LBUTTONUP || pmouse->m_id == WM_NCLBUTTONUP);
-            
+
             if(m_ehittestMode != HitTestNone)
             {
-               
+
                pmouse->m_bRet = true;
-               
+
                SizeWindow(GetSizingWindow(), pmouse->m_pt, false);
-               
+
                m_ehittestMode = HitTestNone;
-               
+
                m_pworkset->m_bSizingCapture = false;
-               
+
                Session.ReleaseCapture();
-               
+
                Session.set_cursor(::visual::cursor_default);
-               
+
                return true;
-               
+
             }
-            
+
             return false;
-            
+
          }
-         
+
 
          bool SizeManager::Relay(::message::mouse * pmouse)
          {
@@ -286,7 +313,7 @@ namespace user
             class rect rectMonitor;
 
             pwnd->best_monitor(rectMonitor);
-            
+
             int xPad = -4;
             int yPad = -4;
 
@@ -639,301 +666,6 @@ namespace user
          }
 
 
-//         void SizeManager::message_handler(::user::interaction * pui, ::message::base * pbase)
-//         {
-//
-//            if(pbase->m_id == WM_LBUTTONDOWN)
-//            {
-//
-//               SCAST_PTR(::message::mouse, pmouse, pbase);
-//
-//               point ptCursor((int16_t)LOWORD(pbase->m_lparam), (int16_t)HIWORD(pbase->m_lparam));
-//
-//               pui->ClientToScreen(&ptCursor);
-//
-//               //         UINT uiFlags = pbase->m_wparam;
-//               m_ptCursorOrigin = ptCursor;
-//               rect rectWindow;
-//               GetSizingWindow()->GetWindowRect(rectWindow);
-//
-//               m_rcWindowOrigin = rectWindow;
-//
-//               rect rectEvent;
-//               GetEventWindow()->GetWindowRect(rectEvent);
-//               EHitTest emode = hit_test(ptCursor);
-//               if(emode != HitTestNone)
-//                  GetEventWindow()->SetCapture();
-//               else
-//                  Session.ReleaseCapture();
-//               pmouse->m_ecursor = translate(emode);
-//               m_ehittestCursor = HitTestNone;
-//               m_ehittestMode = emode;
-//               if(m_ehittestMode == HitTestNone)
-//                  return;
-//               else
-//               {
-//                  pbase->m_bRet = true;
-//                  return;
-//               }
-//            }
-//            else if(pbase->m_id == WM_MOUSEMOVE || pbase->m_id == WM_LBUTTONUP)
-//            {
-//
-//               SCAST_PTR(::message::mouse, pmouse, pbase);
-//
-//               point ptCursor((int16_t)LOWORD(pbase->m_lparam), (int16_t)HIWORD(pbase->m_lparam));
-//
-//               pui->ClientToScreen(&ptCursor);
-//
-//               rect rectEvent;
-//
-//               GetEventWindow()->GetWindowRect(rectEvent);
-//
-//               //sp(::aura::application) pApp = &System;
-//               bool bSize = false;
-//
-//               rect rectWindow;
-//
-//               if(m_ehittestMode == HitTestNone)
-//               {
-//                  bSize = false;
-//                  sp(::user::interaction) pWndCapture = Session.GetCapture();
-//                  if(pWndCapture == NULL ||
-//                        pWndCapture->get_handle() != GetEventWindow()->get_handle())
-//                  {
-//                     EHitTest emode = hit_test(ptCursor);
-//                     if(emode != HitTestNone)
-//                        GetEventWindow()->SetCapture();
-//                     pmouse->m_ecursor = translate(emode);
-//                     m_ehittestCursor = emode;
-//                  }
-//                  else
-//                  {
-//                     if(m_ehittestCursor == HitTestNone)
-//                        return;
-//                     EHitTest emode = hit_test(ptCursor);
-//                     if(emode == HitTestNone)
-//                        Session.ReleaseCapture();
-//                     if(emode != m_ehittestCursor)
-//                     {
-//                        pmouse->m_ecursor = translate(emode);
-//                        m_ehittestCursor = emode;
-//                     }
-//                  }
-//               }
-//               else if(m_ehittestMode == HitTestSizingTopLeft)
-//               {
-//                  point pt;
-//                  pt = ptCursor;
-//                  sp(::user::interaction) pWndParent = GetSizingWindow()->GetParent();
-//                  if(pWndParent != NULL)
-//                  {
-//                     pWndParent->ScreenToClient(&pt);
-//                  }
-//
-//                  rectWindow.top = pt.y;
-//                  rectWindow.left = pt.x;
-//                  rectWindow.bottom = m_rcWindowOrigin.bottom;
-//                  rectWindow.right = m_rcWindowOrigin.right;
-//                  bSize = rectWindow.width() > 0 &&
-//                          rectWindow.height() > 0;
-//                  if(rectWindow.width() < m_minSize.cx)
-//                  {
-//                     rectWindow.left = m_rcWindowOrigin.right - m_minSize.cx;
-//
-//                  }
-//                  if(rectWindow.height() < m_minSize.cy)
-//                  {
-//                     rectWindow.top = m_rcWindowOrigin.bottom - m_minSize.cy;
-//                  }
-//               }
-//               else if(m_ehittestMode == HitTestSizingTop)
-//               {
-//                  bSize = true;
-//                  point pt;
-//                  pt = ptCursor;
-//                  sp(::user::interaction) pWndParent = GetSizingWindow()->GetParent();
-//                  if(pWndParent != NULL)
-//                  {
-//                     pWndParent->ScreenToClient(&pt);
-//                  }
-//
-//                  rectWindow.top = pt.y;
-//                  rectWindow.left = m_rcWindowOrigin.left;
-//                  rectWindow.bottom = m_rcWindowOrigin.bottom;
-//                  rectWindow.right = m_rcWindowOrigin.right;
-//                  if(rectWindow.height() < m_minSize.cy)
-//                  {
-//                     rectWindow.top = m_rcWindowOrigin.bottom - m_minSize.cy;
-//                  }
-//               }
-//               else if(m_ehittestMode == HitTestSizingTopRight)
-//               {
-//                  bSize = true;
-//                  point pt;
-//                  pt = ptCursor;
-//                  sp(::user::interaction) pWndParent = GetSizingWindow()->GetParent();
-//                  if(pWndParent != NULL)
-//                  {
-//                     pWndParent->ScreenToClient(&pt);
-//                  }
-//
-//                  rectWindow.top = pt.y;
-//                  rectWindow.left = m_rcWindowOrigin.left;
-//                  rectWindow.bottom = m_rcWindowOrigin.bottom;
-//                  rectWindow.right = pt.x;
-//                  if(rectWindow.width() < m_minSize.cx)
-//                  {
-//                     rectWindow.right = m_rcWindowOrigin.left + m_minSize.cx;
-//
-//                  }
-//                  if(rectWindow.height() < m_minSize.cy)
-//                  {
-//                     rectWindow.top = m_rcWindowOrigin.bottom - m_minSize.cy;
-//                  }
-//               }
-//               else if(m_ehittestMode == HitTestSizingRight)
-//               {
-//                  bSize = true;
-//                  point pt;
-//                  pt = ptCursor;
-//                  sp(::user::interaction) pWndParent = GetSizingWindow()->GetParent();
-//                  if(pWndParent != NULL)
-//                  {
-//                     pWndParent->ScreenToClient(&pt);
-//                  }
-//
-//                  rectWindow.top = m_rcWindowOrigin.top;
-//                  rectWindow.left = m_rcWindowOrigin.left;
-//                  rectWindow.bottom = m_rcWindowOrigin.bottom;
-//                  rectWindow.right = pt.x;
-//                  if(rectWindow.width() < m_minSize.cx)
-//                  {
-//                     rectWindow.right = m_rcWindowOrigin.left + m_minSize.cx;
-//
-//                  }
-//               }
-//               else if(m_ehittestMode == HitTestSizingBottomRight)
-//               {
-//                  bSize = true;
-//                  point pt;
-//                  pt = ptCursor;
-//                  sp(::user::interaction) pWndParent = GetSizingWindow()->GetParent();
-//                  if(pWndParent != NULL)
-//                  {
-//                     pWndParent->ScreenToClient(&pt);
-//                  }
-//
-//                  rectWindow.top = m_rcWindowOrigin.top;
-//                  rectWindow.left = m_rcWindowOrigin.left;
-//                  rectWindow.bottom = pt.y;
-//                  rectWindow.right = pt.x;
-//                  if(rectWindow.width() < m_minSize.cx)
-//                  {
-//                     rectWindow.right = m_rcWindowOrigin.left + m_minSize.cx;
-//
-//                  }
-//                  if(rectWindow.height() < m_minSize.cy)
-//                  {
-//                     rectWindow.bottom = m_rcWindowOrigin.top + m_minSize.cy;
-//                  }
-//               }
-//               else if(m_ehittestMode == HitTestSizingBottom)
-//               {
-//                  bSize = true;
-//                  point pt;
-//                  pt = ptCursor;
-//                  sp(::user::interaction) pWndParent = GetSizingWindow()->GetParent();
-//                  if(pWndParent != NULL)
-//                  {
-//                     pWndParent->ScreenToClient(&pt);
-//                  }
-//
-//                  rectWindow.top = m_rcWindowOrigin.top;
-//                  rectWindow.left = m_rcWindowOrigin.left;
-//                  rectWindow.bottom = pt.y;
-//                  rectWindow.right = m_rcWindowOrigin.right;
-//                  if(rectWindow.height() < m_minSize.cy)
-//                  {
-//                     rectWindow.bottom = m_rcWindowOrigin.top + m_minSize.cy;
-//                  }
-//               }
-//               else if(m_ehittestMode == HitTestSizingBottomLeft)
-//               {
-//                  bSize = true;
-//                  point pt;
-//                  pt = ptCursor;
-//                  sp(::user::interaction) pWndParent = GetSizingWindow()->GetParent();
-//                  if(pWndParent != NULL)
-//                  {
-//                     pWndParent->ScreenToClient(&pt);
-//                  }
-//
-//                  rectWindow.top = m_rcWindowOrigin.top;
-//                  rectWindow.left = pt.x;
-//                  rectWindow.bottom = pt.y;
-//                  rectWindow.right = m_rcWindowOrigin.right;
-//                  if(rectWindow.width() < m_minSize.cx)
-//                  {
-//                     rectWindow.left = m_rcWindowOrigin.right - m_minSize.cx;
-//
-//                  }
-//                  if(rectWindow.height() < m_minSize.cy)
-//                  {
-//                     rectWindow.bottom = m_rcWindowOrigin.top + m_minSize.cy;
-//                  }
-//               }
-//               else if(m_ehittestMode == HitTestSizingLeft)
-//               {
-//                  bSize = true;
-//                  point pt;
-//                  pt = ptCursor;
-//                  sp(::user::interaction) pWndParent = GetSizingWindow()->GetParent();
-//                  if(pWndParent != NULL)
-//                  {
-//                     pWndParent->ScreenToClient(&pt);
-//                  }
-//
-//                  rectWindow.top = m_rcWindowOrigin.top;
-//                  rectWindow.left = pt.x;
-//                  rectWindow.bottom = m_rcWindowOrigin.bottom;
-//                  rectWindow.right = m_rcWindowOrigin.right;
-//                  if(rectWindow.width() < m_minSize.cx)
-//                  {
-//                     rectWindow.left = m_rcWindowOrigin.right - m_minSize.cx;
-//
-//                  }
-//               }
-//               if(bSize)
-//               {
-//                  MoveWindow(GetSizingWindow(), rectWindow);
-//
-//                  sp(WorkSetClientInterface) pinterface = m_pworkset->GetEventWindow();
-//
-//                  pinterface->WfiOnSize(pbase->m_id == WM_MOUSEMOVE);
-//                  NotifyFramework((EHitTest)m_ehittestMode);
-//               }
-//               if(pbase->m_id == WM_LBUTTONUP)
-//               {
-//                  if(m_ehittestMode != HitTestNone)
-//                  {
-//                     Session.ReleaseCapture();
-//                     Session.set_cursor(::visual::cursor_default);
-//                     m_ehittestMode = HitTestNone;
-//                     pbase->m_bRet = true;
-//                     return;
-//                  }
-//               }
-//               else if(pbase->m_id == WM_MOUSEMOVE)
-//               {
-//                  if(m_ehittestMode != HitTestNone)
-//                  {
-//                     pbase->m_bRet = true;
-//                     return;
-//                  }
-//               }
-//            }
-//         }
 
          EHitTest SizeManager::hit_test(point ptCursor)
          {

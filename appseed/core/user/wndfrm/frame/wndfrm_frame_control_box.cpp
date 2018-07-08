@@ -27,24 +27,24 @@ namespace user
             m_penButtonBackDisabled(allocer())
          {
 
-               set_control_box_button_id(button_close, "frame::ButtonClose");
-               set_control_box_button_id(button_up, "frame::button_up");
-               set_control_box_button_id(button_down, "frame::button_down");
-               set_control_box_button_id(button_minimize, "frame::button_minimize");
-               set_control_box_button_id(button_maximize, "frame::button_maximize");
-               set_control_box_button_id(button_restore, "frame::button_restore");
-               set_control_box_button_id(button_notify_icon, "frame::button_notify_icon");
-               set_control_box_button_id(button_transparent_frame,"frame::button_transparent_frame");
-               set_control_box_button_id(button_dock,"frame::button_dock");
-               m_bDrag = false;
-               m_iDefaultButtonMargin = 3;
+            set_control_box_button_id(button_close, "frame::ButtonClose");
+            set_control_box_button_id(button_up, "frame::button_up");
+            set_control_box_button_id(button_down, "frame::button_down");
+            set_control_box_button_id(button_minimize, "frame::button_minimize");
+            set_control_box_button_id(button_maximize, "frame::button_maximize");
+            set_control_box_button_id(button_restore, "frame::button_restore");
+            set_control_box_button_id(button_notify_icon, "frame::button_notify_icon");
+            set_control_box_button_id(button_transparent_frame,"frame::button_transparent_frame");
+            set_control_box_button_id(button_dock,"frame::button_dock");
+            m_bDrag = false;
+            m_iDefaultButtonMargin = 3;
 
-               m_fontMarlett->create_pixel_font("Marlett", 16.0);
-
-
+            m_fontMarlett->create_pixel_font("Marlett", 16.0);
 
 
-            }
+
+
+         }
 
 
          control_box::~control_box()
@@ -59,8 +59,8 @@ namespace user
 
 
             if (m_pworkset != NULL
-               && m_pworkset->m_pframeschema != NULL
-               && m_pworkset->m_pframeschema->is_control_box_moveable())
+                  && m_pworkset->m_pframeschema != NULL
+                  && m_pworkset->m_pframeschema->is_control_box_moveable())
             {
 
                m_bDrag = true;
@@ -84,11 +84,15 @@ namespace user
             SCAST_PTR(::message::mouse, pmouse, pobj);
 
             if (m_pworkset != NULL
-               && m_pworkset->m_pframeschema != NULL
-               && m_pworkset->m_pframeschema->is_control_box_moveable())
+                  && m_pworkset->m_pframeschema != NULL
+                  && m_pworkset->m_pframeschema->is_control_box_moveable())
             {
 
-               drag(pmouse->m_pt);
+               point pt = pmouse->m_pt;
+
+               m_pworkset->GetWndDraw()->ScreenToClient(&pt);
+
+               drag(pt);
 
                m_bDrag = false;
 
@@ -107,14 +111,18 @@ namespace user
             SCAST_PTR(::message::mouse, pmouse, pobj);
 
             if (m_pworkset != NULL
-               && m_pworkset->m_pframeschema != NULL
-               && m_pworkset->m_pframeschema->is_control_box_moveable())
+                  && m_pworkset->m_pframeschema != NULL
+                  && m_pworkset->m_pframeschema->is_control_box_moveable())
             {
 
                if (m_bDrag)
                {
 
-                  drag(pmouse->m_pt);
+                  point pt = pmouse->m_pt;
+
+                  m_pworkset->GetWndDraw()->ScreenToClient(&pt);
+
+                  drag(pt);
 
                }
 
@@ -124,35 +132,48 @@ namespace user
 
          }
 
+
          void control_box::drag(point pt)
          {
 
             int x = pt.x - m_ptDrag.x;
 
             if (x < 0)
+            {
+
                x = 0;
+
+            }
 
             rect rectParent;
 
-            GetParent()->GetWindowRect(rectParent);
+            GetParent()->GetClientRect(rectParent);
 
             rect rectClient;
 
             GetClientRect(rectClient);
 
-            if (x > rectParent.right - rectClient.width())
-               x = rectParent.right - rectClient.width();
-
-            if (x < rectParent.left)
-               x = rectParent.left;
-
             rect rectWindow;
 
             GetWindowRect(rectWindow);
 
+            GetParent()->ScreenToClient(rectWindow);
+
+            m_pworkset->m_pframeschema->m_iControlBoxRight = rectParent.right - x - rectWindow.width();
+
+            m_pworkset->m_pframeschema->get_control_box_rect()->move_to_x(x);
+
+            x = m_pworkset->m_pframeschema->calc_control_box_left(true);
+
             point ptClient(x, rectWindow.top);
 
-            GetParent()->ScreenToClient(ptClient);
+            point ptScreen(ptClient);
+
+            GetParent()->ClientToScreen(ptScreen);
+
+            m_pworkset->m_pframeschema->m_iControlBoxRight = rectParent.right - ptClient.x - rectWindow.width();
+
+            oprop("control_box_right_to_right") = m_pworkset->m_pframeschema->m_iControlBoxRight;
 
             SetWindowPos(ZORDER_TOP, ptClient.x, ptClient.y, 0, 0, SWP_NOSIZE);
 
@@ -164,7 +185,7 @@ namespace user
 
             SCAST_PTR(::message::show_window, pshow, pobj);
 
-               m_bDrag = false;
+            m_bDrag = false;
 
             m_bShowAttempt = false;
 
@@ -370,17 +391,28 @@ namespace user
 
             m_pworkset->GetWndDraw()->GetWindowRect(rectWindow);
 
+            ::rect rectParent(rectWindow);
+
+            m_pworkset->GetWndDraw()->ScreenToClient(rectParent);
+
             ::rect rect;
 
             GetWindowRect(rect);
 
             m_pworkset->GetWndDraw()->ScreenToClient(rect);
 
-            m_pworkset->m_pframeschema->m_iControlBoxRight = rectWindow.width() - rect.right;
-
-            m_pworkset->m_pframeschema->m_bControlBoxAlignRight = rect.center().x > (rectWindow.width() / 2);
+            m_pworkset->m_pframeschema->m_iControlBoxRight = rectParent.right - rect.right;
 
             *m_pworkset->m_pframeschema->get_control_box_rect() = rect;
+
+            if (is_this_visible() &&
+                  m_pworkset->GetWndDraw()->oprop("control_box_right_to_right")
+                  != m_pworkset->m_pframeschema->m_iControlBoxRight)
+            {
+
+               m_pworkset->GetWndDraw()->oprop("control_box_right_to_right") = m_pworkset->m_pframeschema->m_iControlBoxRight;
+
+            }
 
             reset_layout();
 
@@ -428,7 +460,7 @@ namespace user
                rect.right = rect.left - rectMargin.right;
                rect.left = rect.right - sizeButton.cx;
 
-               get_box_button(button_up)->::user::interaction::SetWindowPos(ZORDER_TOP, rect.left , rect.top, rect.width(), rect.height(), SWP_SHOWWINDOW);
+               get_box_button(button_up)->::user::interaction::SetWindowPos(ZORDER_TOP, rect.left, rect.top, rect.width(), rect.height(), SWP_SHOWWINDOW);
                get_box_button(button_up)->UpdateWndRgn();
                rect.left -= rectMargin.left;
             }
@@ -452,12 +484,12 @@ namespace user
                rect.left = rect.right - sizeButton.cx;
 
                get_box_button(button_down)->::user::interaction::SetWindowPos(
-                  ZORDER_TOP,
-                  rect.left,
-                  rect.top,
-                  rect.width(),
-                  rect.height(),
-                  SWP_SHOWWINDOW);
+               ZORDER_TOP,
+               rect.left,
+               rect.top,
+               rect.width(),
+               rect.height(),
+               SWP_SHOWWINDOW);
                get_box_button(button_down)->UpdateWndRgn();
                rect.left -= rectMargin.left;
             }
@@ -485,12 +517,12 @@ namespace user
                rect.left = rect.right - sizeButton.cx;
 
                get_box_button(button_maximize)->::user::interaction::SetWindowPos(
-                  ZORDER_TOP,
-                  rect.left,
-                  rect.top,
-                  rect.width(),
-                  rect.height(),
-                  SWP_SHOWWINDOW);
+               ZORDER_TOP,
+               rect.left,
+               rect.top,
+               rect.width(),
+               rect.height(),
+               SWP_SHOWWINDOW);
                get_box_button(button_maximize)->UpdateWndRgn();
                rect.left -= rectMargin.left;
             }
@@ -500,9 +532,9 @@ namespace user
                get_box_button(button_restore)->ShowWindow(SW_HIDE);
             }
             else if (pappearance->IsIconic()
-               || pappearance->IsFullScreen()
-               || pappearance->IsZoomed()
-               || pappearance->IsDocked())
+                     || pappearance->IsFullScreen()
+                     || pappearance->IsZoomed()
+                     || pappearance->IsDocked())
             {
                sizeButton = get_button_size(button_restore);
                rectMargin = get_button_margin(button_restore);
@@ -513,12 +545,12 @@ namespace user
                rect.left = rect.right - sizeButton.cx;
 
                get_box_button(button_restore)->::user::interaction::SetWindowPos(
-                  ZORDER_TOP,
-                  rect.left,
-                  rect.top,
-                  rect.width(),
-                  rect.height(),
-                  SWP_SHOWWINDOW);
+               ZORDER_TOP,
+               rect.left,
+               rect.top,
+               rect.width(),
+               rect.height(),
+               SWP_SHOWWINDOW);
                get_box_button(button_restore)->UpdateWndRgn();
                rect.left -= rectMargin.left;
             }
@@ -831,6 +863,8 @@ namespace user
 
             m_sizeButtonDefault = size(iDefaultButtonSize,iDefaultButtonSize);
 
+            m_pworkset->m_pframeschema->m_iControlBoxRight = oprop("control_box_right_to_right").i32();
+
          }
 
 
@@ -1004,7 +1038,7 @@ namespace user
          void control_box::_001OnSize(::message::message * pobj)
          {
 
-          
+
 
          }
 

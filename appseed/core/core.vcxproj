@@ -1153,6 +1153,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="user\simple\_simple.cpp" />
+    <ClCompile Include="user\userex\userex_color_view.cpp" />
     <ClCompile Include="user\userex\userex_top_toggle_view.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
@@ -1725,6 +1726,7 @@
     <ClInclude Include="user\simple\simple_toolbar.h" />
     <ClInclude Include="user\simple\simple_tree_view.h" />
     <ClInclude Include="user\simple\simple.h" />
+    <ClInclude Include="user\userex\userex_color_view.h" />
     <ClInclude Include="user\userex\userex_font_view.h" />
     <ClInclude Include="user\userex\userex_keyboard_layout.h" />
     <ClInclude Include="user\userex\userex_message_box.h" />

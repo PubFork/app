@@ -19,6 +19,7 @@ namespace userex
       ::user::impact_system *                   m_ptemplateChildForm;
       ::user::impact_system *                   m_ptemplatePlaceHolder;
       ::user::impact_system *                   m_ptemplateFontSel;
+      ::user::impact_system *                   m_ptemplateColorSel;
 
 
       map < ::type *, type *, ::user::impact_system *, ::user::impact_system * > m_mapTemplate;
@@ -104,16 +105,16 @@ namespace userex
 
 
       virtual bool create_user_shell();
-      
-      
+
+
       virtual string get_wallpaper(index iScreen);
       virtual bool set_wallpaper(index iScreen, string strWallpaper);
-      
-      
+
+
       virtual stringa get_wallpaper();
       virtual void set_wallpaper(const stringa & strWallpaper);
-      
-      
+
+
       virtual string impl_get_wallpaper(index iScreen);
       virtual bool impl_set_wallpaper(index iScreen, string strWallpaper);
 

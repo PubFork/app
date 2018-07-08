@@ -842,15 +842,10 @@ namespace user
 
             if(m_pframeschema != NULL)
             {
-               m_pframeschema->on_layout();
-            }
 
-            /*
-            if (m_pappearance != NULL)
-            {
-            m_pdockmanager->on_layout();
+               m_pframeschema->on_layout();
+
             }
-            */
 
          }
 

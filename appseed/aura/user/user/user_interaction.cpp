@@ -1,6 +1,7 @@
 #include "framework.h"
 
 
+
 ::user::interaction * get_system_window_interaction(::os_system_window * psystemwindow);
 
 #ifdef WINDOWSEX
@@ -2329,8 +2330,11 @@ restart:
 
    }
 
+
    void interaction::_000OnMouse(::message::mouse * pmouse)
    {
+
+      bool bThisCapture = false;
 
       try
       {
@@ -2342,9 +2346,9 @@ restart:
 
          }
 
-         if (!_001IsPointInside(pmouse->m_pt)
-               && !(Session.GetCapture() == this ||
-                    is_descendant(Session.GetCapture())))
+         bThisCapture = Session.GetCapture() == this;
+
+         if (!bThisCapture && !is_descendant(Session.GetCapture()) && !_001IsPointInside(pmouse->m_pt))
          {
 
             return;
@@ -2358,10 +2362,79 @@ restart:
          return;
 
       }
+
+      if (bThisCapture)
+      {
+
+         _000OnThisMouse(pmouse);
+
+         if (pmouse->m_bRet)
+         {
+
+            return;
+
+         }
+
+         _000OnChildrenMouse(pmouse);
+
+      }
+      else
+      {
+
+         _000OnChildrenMouse(pmouse);
+
+         if (pmouse->m_bRet)
+         {
+
+            return;
+
+         }
+
+         _000OnThisMouse(pmouse);
+
+      }
+
+   }
+
+
+   void interaction::_000OnThisMouse(::message::mouse * pmouse)
+   {
+
+      try
+      {
+
+         if (m_pimpl == NULL)
+         {
+
+            return;
+
+         }
+
+         m_pimpl->route_message(pmouse);
+
+         if (pmouse->get_lresult() != 0)
+         {
+
+            return;
+
+         }
+
+      }
+      catch (...)
+      {
+
+      }
+
+   }
+
+
+   void interaction::_000OnChildrenMouse(::message::mouse * pmouse)
+   {
+
       // these try catchs are needed for multi threading : multi threaded windows: the hell
       // Now I understand why many OSes windows are single threaded.
       sp(::user::interaction) pui;
-      //      int32_t iSize;
+
       try
       {
          while (rget_child(pui))
@@ -2392,31 +2465,6 @@ restart:
       }
       catch (...)
       {
-      }
-
-      try
-      {
-
-         if (m_pimpl == NULL)
-         {
-
-            return;
-
-         }
-
-         m_pimpl->route_message(pmouse);
-
-         if (pmouse->get_lresult() != 0)
-         {
-
-            return;
-
-         }
-
-      }
-      catch (...)
-      {
-
       }
 
    }

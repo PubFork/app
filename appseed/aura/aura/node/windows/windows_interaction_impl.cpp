@@ -1541,7 +1541,7 @@ namespace windows
                || uiMessage == WM_SETCURSOR
                || uiMessage == WM_NCMOUSEMOVE)
       {
-
+         output_debug_string(".");
       }
       else
       {
@@ -1629,17 +1629,6 @@ namespace windows
 
          message::mouse * pmouse = dynamic_cast <::message::mouse * > (pbase);
 
-         //if(::GetCapture() == m_oswindow)
-         //{
-
-         //   pmouse->m_ptDesired = pmouse->m_pt;
-         //
-         //   pmouse->m_pt = Session.m_ptCursor;
-
-         //   SetCursorPos(Session.m_ptCursor.x,Session.m_ptCursor.y);
-
-         //}
-
          Session.on_ui_mouse_message(pmouse);
 
          if (m_bTranslateMouseMessageCursor && !pmouse->m_bTranslated)
@@ -1659,20 +1648,11 @@ namespace windows
             {
                m_pui->GetWindowRect(rectWindow);
             }
-            /*if(System.get_monitor_count() > 0)
-            {
-            rect rcMonitor;
-            System.get_monitor_rect(0,&rcMonitor);
-            if(rectWindow.left >= rcMonitor.left)
+
             pmouse->m_pt.x += (LONG)rectWindow.left;
-            if(rectWindow.top >= rcMonitor.top)
+
             pmouse->m_pt.y += (LONG)rectWindow.top;
-            }
-            else*/
-            //if(rectWindow.left >= 0)
-            pmouse->m_pt.x += (LONG)rectWindow.left;
-            //if(rectWindow.top >= 0)
-            pmouse->m_pt.y += (LONG)rectWindow.top;
+
          }
 
 

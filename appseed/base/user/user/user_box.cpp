@@ -209,8 +209,14 @@ namespace user
 
             reader >> rectWindow;
 
+            int iControlBoxRightToLeft;
+
+            reader >> iControlBoxRightToLeft;
+
             if (error)
                return false;
+
+            oprop("control_box_right_to_right") = iControlBoxRightToLeft;
 
             if (!bForceRestore)
             {
@@ -374,6 +380,10 @@ namespace user
             writer << rect;
          }
          writer << rect;
+
+         int iControlBoxRightToLeft = oprop("control_box_right_to_right");
+
+         writer << iControlBoxRightToLeft;
 
       }
 
