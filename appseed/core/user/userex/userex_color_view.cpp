@@ -260,7 +260,7 @@ namespace flag
 
       for (index j = 0; j < h; j++)
       {
-         double dL = (double) j / dh;
+         double dL = 1.0 - ((double) j / dh);
 
          //double dS = 1.0 - ((double)j / dh);
 
@@ -288,7 +288,7 @@ namespace flag
          //m_uchB = (BYTE)primitive_color_round(m_dB * 255.0);
 
          pline = pdib->m_pcolorref + uScan * j;
-         COLORREF cr = ARGB(255, BYTE(_dR*255.0), BYTE(_dG*255.0), BYTE(_dB*255.0));
+         COLORREF cr = ARGB(255, BYTE(_dB*255.0), BYTE(_dG*255.0), BYTE(_dR*255.0));
          for (index i = 0; i < w; i++)
          {
 
@@ -392,6 +392,7 @@ namespace userex
 
       pmessage->previous();
 
+
    }
 
    color color_view::get_color()
@@ -401,35 +402,81 @@ namespace userex
 
       color.set_hls(m_hls);
 
-      return color;
+      color.m_uchA = 255;
+
+      return color.get_rgba();
 
    }
 
-   void color_view::recalc_luminance(point pt)
+   void color_view::set_COLORREF(COLORREF cr)
    {
-
-      if (pt.x >= m_dib->m_size.cx)
-         return;
-      if (pt.y >= m_dib->m_size.cy)
-         return;
-      if (pt.x < 0)
-         return;
-      if (pt.y < 0)
-         return;
-
-      COLORREF cr = m_dib->m_pcolorref[pt.x + (m_dib->m_iScan / sizeof(COLORREF)) * pt.y];
 
       color c(cr);
 
-      color::hls hls;
+      c.get_hls(m_hls);
 
-      c.get_hls(hls);
 
-      m_hls.m_dH = hls.m_dH;
+   }
 
-      m_hls.m_dS = hls.m_dS;
+   void color_view::on_mouse(point pt)
+   {
 
-      rebuild_luminance();
+      if (pt.y >= m_rectColors.bottom)
+         return;
+      if (pt.x < m_rectColors.left)
+         return;
+      if (pt.y < m_rectColors.top)
+         return;
+      if (pt.x < m_rectColors.center().x)
+      {
+
+         pt -= m_rectColors.top_left();
+
+         COLORREF cr = m_dib->m_pcolorref[pt.x + (m_dib->m_iScan / sizeof(COLORREF)) * pt.y];
+
+         color c(ARGB(argb_get_a_value(cr), argb_get_b_value(cr), argb_get_g_value(cr), argb_get_r_value(cr)));
+
+         color::hls hls;
+
+         c.get_hls(hls);
+
+         m_hls.m_dH = hls.m_dH;
+
+         m_hls.m_dS = hls.m_dS;
+
+         rebuild_luminance();
+
+         ::user::control_event ev;
+
+         ev.m_eevent = ::user::event_after_change_cur_hover;
+
+         ev.m_id = m_id;
+
+         ev.m_puie = this;
+
+         on_control_event(&ev);
+
+      }
+      else if (pt.x < m_rectColors.center().x + m_rectColors.width() / 8)
+      {
+
+         pt -= size(m_rectColors.center().x, m_rectColors.top);
+
+         COLORREF cr = m_dibLuminance->m_pcolorref[pt.x + (m_dib->m_iScan / sizeof(COLORREF)) * pt.y];
+
+         m_hls.m_dL = 1.0 - ((double) pt.y / (double) m_dib->m_size.cy);
+
+         ::user::control_event ev;
+
+         ev.m_eevent = ::user::event_after_change_cur_hover;
+
+         ev.m_id = m_id;
+
+         ev.m_puie = this;
+
+         on_control_event(&ev);
+
+      }
 
    }
 
@@ -442,9 +489,37 @@ namespace userex
 
    void color_view::_001OnDraw(::draw2d::graphics * pgraphics)
    {
+
+      rect rC;
+
+      GetClientRect(rC);
+
       pgraphics->SetStretchBltMode(HALFTONE);
-      pgraphics->draw(rect_dim(0, 0, m_dib->m_size.cx, m_dib->m_size.cy), m_dib->g(), rect_dim(0, 0, m_dib->m_size.cx, m_dib->m_size.cy));
-      pgraphics->draw(m_dibLuminance->rect() + ::size(m_dib->m_size.cx, 0), m_dibLuminance->g(), m_dib->rect());
+
+      rect r1;
+
+      r1.top_left() = m_rectColors.top_left();
+
+      r1.set_size(m_dib->m_size);
+
+      rect r2 = m_dib->rect();
+
+      pgraphics->draw(r1, m_dib->g(), r2);
+
+      r1.top_left() = m_rectColors.top_left() + size(m_dib->m_size.cx-1, 0);
+
+      r1.set_size(m_dibLuminance->m_size);
+
+      r2 = m_dibLuminance->rect();
+
+      pgraphics->draw(r1, m_dibLuminance->g(), r2);
+
+      r1.top_left() = m_rectColors.top_left() + size(m_dib->m_size.cx - 1 + m_dibLuminance->m_size.cx - 1, 0);
+
+      r1.set_size(m_rectColors.right - r1.left, m_dib->m_size.cy);
+
+      pgraphics->fill_solid_rect(r1, get_color());
+
    }
 
    void color_view::_001OnLButtonDown(::message::message * pmessage)
@@ -452,22 +527,38 @@ namespace userex
       SCAST_PTR(::message::mouse, pmouse, pmessage);
       point pt = pmouse->m_pt;
       ScreenToClient(pt);
-      recalc_luminance(pt);
+      on_mouse(pt);
       pmouse->m_bRet = true;
       SetCapture();
       m_bLButtonPressed = true;
    }
+
 
    void color_view::_001OnLButtonUp(::message::message * pmessage)
    {
       SCAST_PTR(::message::mouse, pmouse, pmessage);
       point pt = pmouse->m_pt;
       ScreenToClient(pt);
-      recalc_luminance(pt);
+      on_mouse(pt);
       pmouse->m_bRet = true;
       ReleaseCapture();
       m_bLButtonPressed = false;
+
+      ::user::control_event ev;
+
+      ev.m_eevent = ::user::event_after_change_cur_sel;
+
+      ev.m_id = m_id;
+
+      ev.m_puie = this;
+
+      on_control_event(&ev);
+
+
+
    }
+
+
    void color_view::_001OnMouseMove(::message::message * pmessage)
    {
       SCAST_PTR(::message::mouse, pmouse, pmessage);
@@ -476,7 +567,7 @@ namespace userex
       {
          point pt = pmouse->m_pt;
          ScreenToClient(pt);
-         recalc_luminance(pt);
+         on_mouse(pt);
          pmouse->m_bRet = true;
          ReleaseCapture();
 
@@ -499,11 +590,23 @@ namespace userex
 
       }
 
-      m_dib->create(rectClient.get_size() / 2);
+      rect rectColors;
+
+      GetClientRect(rectColors);
+
+      rectColors.left = rectClient.center().x;
+      rectColors.bottom = rectClient.center().y;
+
+      rectColors.deflate(rectClient.width() / 16, rectClient.height() / 16);
+
+      m_rectColors = rectColors;
+
+
+      m_dib->create(m_rectColors.width() / 2, m_rectColors.height());
 
       m_dib->g()->draw(m_dib->rect(), m_dibTemplate->get_graphics(), m_dibTemplate->rect());
 
-      m_dibLuminance->create(rectClient.width() / 4, rectClient.height() / 2);
+      m_dibLuminance->create(m_rectColors.width() / 8, m_rectColors.height());
 
       rebuild_luminance();
 

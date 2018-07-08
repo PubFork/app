@@ -22,6 +22,8 @@ namespace userex
 
       color::hls                       m_hls;
 
+      rect                             m_rectColors;
+
 
       color_view(::aura::application * papp);
       virtual ~color_view();
@@ -46,10 +48,11 @@ namespace userex
 
       virtual void on_layout() override;
 
-      virtual void recalc_luminance(point pt);
+      virtual void on_mouse(point pt);
       virtual void rebuild_luminance();
 
       virtual color get_color();
+      virtual void set_COLORREF(COLORREF cr);
 
    };
 
