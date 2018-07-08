@@ -116,7 +116,7 @@ namespace user
 
             virtual int32_t title_bar_layout(bool bInitialControlBoxPosition);
 
-            virtual void reset_layout();
+            virtual void on_layout();
 
 
             virtual sp(control_box) get_control_box();
