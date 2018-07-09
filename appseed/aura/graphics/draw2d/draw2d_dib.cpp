@@ -284,9 +284,9 @@ namespace draw2d
    bool dib::create_isotropic(::draw2d::dib * pdib)
    {
 
-      int cx = pdib->m_dIsotropicRate * m_size.cx;
+      int cx = (int) (pdib->m_dIsotropicRate * m_size.cx);
 
-      int cy = pdib->m_dIsotropicRate * m_size.cy;
+      int cy = (int) (pdib->m_dIsotropicRate * m_size.cy);
 
       pdib->create(cx, cy);
 
@@ -4104,9 +4104,9 @@ restart:
 
       while (size--)
       {
-         dst[0] += (dst[3] - dst[0]) * dRate;
-         dst[1] += (dst[3] - dst[1]) * dRate;
-         dst[2] += (dst[3] - dst[2]) * dRate;
+         dst[0] += (BYTE) ((dst[3] - dst[0]) * dRate);
+         dst[1] += (BYTE) ((dst[3] - dst[1]) * dRate);
+         dst[2] += (BYTE) ((dst[3] - dst[2]) * dRate);
          dst += 4;
       }
 
@@ -6228,7 +6228,7 @@ restart:
 
          double newcy = cy;
 
-         if (!create(newcx, newcy))
+         if (!create((i32)newcx, (i32)newcy))
          {
 
             throw resource_exception(get_app());
@@ -6241,7 +6241,7 @@ restart:
 
          int y = 0;
 
-         get_graphics()->BitBlt(0, 0, cx, cy, dib->get_graphics());
+         get_graphics()->BitBlt(0, 0, (i32) cx, (i32) cy, dib->get_graphics());
 
          while (cx >= 1.0 && cy >= 1.0)
          {
@@ -6259,8 +6259,8 @@ restart:
 
                scale.Scale(
                &m_pcolorref[x + y * m_iScan / sizeof(COLORREF)],
-               cx,
-               cy,
+               (UINT) cx,
+               (UINT)cy,
                m_iScan,
                dib->m_pcolorref,
                dib->m_size.cx,
@@ -6272,11 +6272,11 @@ restart:
             else
             {
 
-               get_graphics()->StretchBlt(x, y, cx, cy, dib->get_graphics(), 0, 0, dib->m_size.cx, dib->m_size.cy);
+               get_graphics()->StretchBlt(x, y, (i32) cx, (i32) cy, dib->get_graphics(), 0, 0, dib->m_size.cx, dib->m_size.cy);
 
             }
 
-            y += cy;
+            y += (i32) cy;
 
          }
 
@@ -6290,7 +6290,7 @@ restart:
 
          double newcy = cy * 2.0 - 1.0;
 
-         if (!create(newcx, newcy))
+         if (!create((i32)newcx, (i32) newcy))
          {
 
             throw resource_exception(get_app());
@@ -6298,8 +6298,6 @@ restart:
          }
 
          int dx;
-
-         int dy;
 
          int x = 0;
 
@@ -6312,13 +6310,13 @@ restart:
          cxPrevious = dib->m_size.cx;
          ::draw2d::dib * pdib = dib;
 
-         for (dx = cx; dx > 0; x += dx, dx /= 2)
+         for (dx = (i32) cx; dx > 0; x += dx, dx /= 2)
          {
 
             yPrevious = 0;
             cyPrevious = dib->m_size.cy;
 
-            for (int y = 0, dy = cy; dy > 0; y += dy, dy /= 2)
+            for (int y = 0, dy = (i32) cy; dy > 0; y += dy, dy /= 2)
             {
 
                if (::multithreading::priority() == ::multithreading::priority_idle)
@@ -6825,6 +6823,23 @@ restart:
    void dib::stream(::serialize & serialize)
    {
 
+      if (m_psetObject != NULL)
+      {
+
+         if (m_psetObject->has_property("read_only_link")
+               || m_psetObject->has_property("link"))
+         {
+
+
+            serialize.stream_link(*this);
+
+
+            return;
+
+         }
+
+      }
+
       if(serialize.is_storing())
       {
 
@@ -6918,7 +6933,7 @@ restart:
             memory mem;
             mem.allocate(iScan * m_size.cy);
             size_t s = serialize.read(mem.get_data(), iScan * m_size.cy);
-            if (s / iScan < height)
+            if ((i32) s / iScan < height)
             {
                serialize.setstate(::file::badbit);
                return;

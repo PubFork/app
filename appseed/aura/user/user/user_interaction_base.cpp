@@ -278,7 +278,7 @@ Restart:
    bool interaction_base::ClientToScreen(LPRECT lprect)
    {
 
-      ::offset(lprect, client_to_screen());
+      ::offset(lprect, point(client_to_screen()));
 
       return true;
 
@@ -297,7 +297,7 @@ Restart:
    bool interaction_base::ClientToScreen(LPPOINT lppoint)
    {
 
-      ::offset(lppoint, client_to_screen());
+      ::offset(lppoint, point(client_to_screen()));
 
       return true;
 
@@ -315,7 +315,7 @@ Restart:
    bool interaction_base::ClientToScreen(RECT64 * lprect)
    {
 
-      ::offset(lprect, client_to_screen());
+      ::offset(lprect, point64(client_to_screen()));
 
       return true;
 
@@ -325,7 +325,7 @@ Restart:
    bool interaction_base::ClientToScreen(POINT64 * lppoint)
    {
 
-      ::offset(lppoint, client_to_screen());
+      ::offset(lppoint, point64(client_to_screen()));
 
       return true;
 
@@ -335,7 +335,7 @@ Restart:
    bool interaction_base::ScreenToClient(LPRECT lprect)
    {
 
-      ::offset(lprect, -client_to_screen());
+      ::offset(lprect, -point(client_to_screen()));
 
       return true;
 
@@ -354,7 +354,7 @@ Restart:
    bool interaction_base::ScreenToClient(LPPOINT lppoint)
    {
 
-      ::offset(lppoint, -client_to_screen());
+      ::offset(lppoint, -point(client_to_screen()));
 
       return true;
 
@@ -373,7 +373,7 @@ Restart:
    bool interaction_base::ScreenToClient(RECT64 * lprect)
    {
 
-      ::offset(lprect, -client_to_screen());
+      ::offset(lprect, -point64(client_to_screen()));
 
       return true;
 
@@ -383,7 +383,7 @@ Restart:
    bool interaction_base::ScreenToClient(POINT64 * lppoint)
    {
 
-      ::offset(lppoint, -client_to_screen());
+      ::offset(lppoint, -point64(client_to_screen()));
 
       return true;
 

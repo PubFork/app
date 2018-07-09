@@ -8,6 +8,7 @@ serialize::serialize(serialize && serialize) :
    m_iVersion(serialize.m_iVersion)
 {
 
+   m_pset = NULL;
 
 }
 
@@ -15,6 +16,8 @@ serialize::serialize(serialize && serialize) :
 serialize::serialize(::file::file * pfile, index iVersion) :
    ::object(pfile->get_app())
 {
+
+   m_pset = NULL;
 
    m_spfile = pfile;
 
@@ -26,6 +29,8 @@ serialize::serialize(::file::file * pfile, index iVersion) :
 serialize::serialize(::aura::application * papp, index iVersion) :
    ::object(papp)
 {
+
+   m_pset = NULL;
 
    m_iVersion = iVersion;
 
@@ -60,6 +65,21 @@ memory_size_t serialize::read(void * p, memory_size_t s)
 
    return istream::read(p, s);
 
+}
+
+
+string serialize::get_object_type_id(::object * pelement)
+{
+
+   return System.get_type_info(typeid(*pelement))->m_id;
+
+}
+
+
+::object * serialize::create_object_from_type_id(string strType)
+{
+
+   return System.alloc(System.get_type_info((id)strType));
 }
 
 
@@ -196,21 +216,16 @@ void serialize::stream_link(serializable & serializable)
 
       operator()(bReadOnly);
 
-      if (bReadOnly)
-      {
-
-         return;
-
-      }
-      else
+      if (!bReadOnly)
       {
 
          strLink = serializable.oprop("link");
 
-         if (strLink.is_empty())
+         //if (strLink.is_empty())
          {
 
-            throw io_exception(get_app(), "link property is missing");
+            // throw io_exception(get_app(), "link property is missing");
+            //return;
 
          }
 
@@ -218,13 +233,18 @@ void serialize::stream_link(serializable & serializable)
 
       operator()(strLink);
 
+      if (bReadOnly)
+      {
+
+         return;
+
+      }
+
    }
    else
    {
 
       bool bReadOnly;
-
-      string strLink;
 
       operator()(bReadOnly);
 
@@ -245,7 +265,12 @@ void serialize::stream_link(serializable & serializable)
 
    }
 
-   stream_link(strLink, serializable);
+   if (strLink.has_char())
+   {
+
+      stream_link(strLink, serializable);
+
+   }
 
 }
 

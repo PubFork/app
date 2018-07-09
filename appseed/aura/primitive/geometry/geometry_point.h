@@ -20,8 +20,8 @@ public:
    point(const POINT & pt) NOTHROW { *(POINT *)this = pt; }
 explicit point(const ::lparam & lparam) NOTHROW:point(lparam.x(), lparam.y()) {}
 
-point(const POINTD & pt) NOTHROW : point(pt.x, pt.y) {}
-point(const POINT64 & pt) NOTHROW : point(pt.x, pt.y) {}
+point(const POINTD & pt) NOTHROW : point((LONG) pt.x, (LONG)pt.y) {}
+point(const POINT64 & pt) NOTHROW : point((LONG)pt.x, (LONG)pt.y) {}
 point(const SIZE & sz) NOTHROW : point((const POINT*)&sz) {}
 point(const SIZED & sz) NOTHROW : point((const POINTD*)&sz) {}
 point(const SIZE64 & sz) NOTHROW : point((const POINT64*)&sz) {}
@@ -102,7 +102,7 @@ public:
 explicit point64(const ::lparam & lparam) NOTHROW : point64(lparam.x(), lparam.y()) {}
 
 point64(const POINT & pt) NOTHROW : point64(pt.x, pt.y) {}
-point64(const POINTD & pt) NOTHROW : point64(pt.x, pt.y) {}
+point64(const POINTD & pt) NOTHROW : point64((i64)pt.x, (i64)pt.y) {}
 point64(const SIZE & sz) NOTHROW : point64((const POINT*)&sz) {}
 point64(const SIZED & sz) NOTHROW : point64((const POINTD*)&sz) {}
 point64(const SIZE64 & sz) NOTHROW : point64((const POINT64*)&sz) {}
@@ -187,7 +187,7 @@ public:
 explicit pointd(const lparam & lparam) NOTHROW :pointd(lparam.x(), lparam.y()) {}
 
 pointd(const POINT & pt) NOTHROW : pointd(pt.x, pt.y) {}
-pointd(const POINT64 & pt) NOTHROW : pointd(pt.x, pt.y) {}
+pointd(const POINT64 & pt) NOTHROW : pointd((double)pt.x, (double)pt.y) {}
    pointd(const SIZE & sz) NOTHROW;
 pointd(const SIZED & sz) NOTHROW : pointd((const POINTD*)&sz) {}
    pointd(const SIZE64 & sz) NOTHROW;
@@ -526,12 +526,12 @@ public:
 
 inline point pointxy(LPCPOINT3D lppt)
 {
-   return point(lppt->x, lppt->y);
+   return point((LONG)lppt->x, (LONG)lppt->y);
 }
 
 
 
-inline ::file::ostream & operator << (::file::ostream & os, const pointd & p)
+inline serialize & operator << (serialize & os, const pointd & p)
 {
 
    os << p.x;
@@ -541,7 +541,7 @@ inline ::file::ostream & operator << (::file::ostream & os, const pointd & p)
 
 }
 
-inline ::file::istream & operator >> (::file::istream & is, pointd & p)
+inline serialize & operator >> (serialize & is, pointd & p)
 {
 
    is >> p.x;

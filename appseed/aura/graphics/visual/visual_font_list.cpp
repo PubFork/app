@@ -722,8 +722,6 @@ namespace visual
 
       int h = 0;
 
-      int nextx;
-
       playout->m_size.cx = 0;
 
       int xSingleColumn = 0;

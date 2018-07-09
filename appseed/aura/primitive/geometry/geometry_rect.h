@@ -16,8 +16,8 @@ public:
    rect(i64 l, int64_t t, int64_t r, int64_t b) NOTHROW { left = (LONG) l; top = (LONG) t; right = (LONG) r;  bottom = (LONG) b;  }
    rect(const RECT & r) NOTHROW { *this = r; }
 
-rect(const RECTD & r) NOTHROW : rect(r.left, r.top, r.right, r.bottom) {}
-rect(const RECT64 & r) NOTHROW : rect(r.left, r.top, r.right, r.bottom) {}
+rect(const RECTD & r) NOTHROW : rect((LONG)r.left, (LONG)r.top, (LONG)r.right, (LONG)r.bottom) {}
+rect(const RECT64 & r) NOTHROW : rect((LONG)r.left, (LONG)r.top, (LONG)r.right, (LONG)r.bottom) {}
 rect(const RECT * prect) NOTHROW : rect(*prect) {}
 rect(const RECTD * prect) NOTHROW : rect(*prect) {}
 rect(const RECT64 * prect) NOTHROW : rect(*prect) {}
@@ -235,8 +235,8 @@ public:
    rect64(const RECT64 & rect) NOTHROW { *this = rect; }
 
 
-rect64(const RECT & rect) NOTHROW : rect64(rect.left, rect.top, rect.right, rect.bottom) {}
-rect64(const RECTD & rect) NOTHROW : rect64(rect.left, rect.top, rect.right, rect.bottom) {}
+rect64(const RECT & rect) NOTHROW : rect64(rect.left,rect.top, rect.right, rect.bottom) {}
+rect64(const RECTD & rect) NOTHROW : rect64((i64)rect.left, (i64)rect.top, (i64)rect.right, (i64)rect.bottom) {}
 rect64(const RECT * prect) NOTHROW : rect64(*prect) {}
 rect64(const RECTD * prect) NOTHROW : rect64(*prect) {}
 rect64(const RECT64 * prect) NOTHROW : rect64(*prect) {}
@@ -495,8 +495,8 @@ public:
    rectd(const RECTD & rect) NOTHROW { *this = rect; }
 
 
-rectd(const RECT & rect) NOTHROW : rectd(rect.left, rect.top, rect.right, rect.bottom) {}
-rectd(const RECT64 & rect) NOTHROW : rectd(rect.left, rect.top, rect.right, rect.bottom) {}
+rectd(const RECT & rect) NOTHROW : rectd((double)rect.left, (double)rect.top, (double)rect.right, (double)rect.bottom) {}
+rectd(const RECT64 & rect) NOTHROW : rectd((double)rect.left, (double)rect.top, (double)rect.right, (double)rect.bottom) {}
 rectd(const RECT * prect) NOTHROW : rectd(*prect) {}
 rectd(const RECTD * prect) NOTHROW : rectd(*prect) {}
 rectd(const RECT64 * prect) NOTHROW : rectd(*prect) {}
@@ -874,20 +874,20 @@ inline bool rect::intersects(LPCRECT lpRect) const NOTHROW
 
 }
 
-inline ::file::ostream & operator << (::file::ostream & os, const rectd & r)
+inline serialize & operator << (serialize & os, rectd & r)
 {
 
    os << r.left;
    os << r.top;
    os << r.right;
    os << r.bottom;
-   
+
    return os;
 
 }
 
 
-inline ::file::istream & operator >> (::file::istream & is, rectd & r)
+inline serialize & operator >> (serialize & is, rectd & r)
 {
 
    is >> r.left;

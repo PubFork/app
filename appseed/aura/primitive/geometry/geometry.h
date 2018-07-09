@@ -285,7 +285,7 @@ inline CLASS_DECL_AURA bool offset(LPRECTD prect, LPCPOINTD lppt)
 
 }
 
-inline CLASS_DECL_AURA bool offset(LPRECT64 prect, LPCPOINTD lppt)
+inline CLASS_DECL_AURA bool offset(LPRECT64 prect, LPCPOINT64 lppt)
 {
 
    prect->left += lppt->x;
@@ -298,7 +298,7 @@ inline CLASS_DECL_AURA bool offset(LPRECT64 prect, LPCPOINTD lppt)
 }
 
 
-inline CLASS_DECL_AURA bool offset(LPRECT prect, LPCPOINTD lppt)
+inline CLASS_DECL_AURA bool offset(LPRECT prect, LPCPOINT lppt)
 {
 
    prect->left += lppt->x;
@@ -320,7 +320,7 @@ inline CLASS_DECL_AURA bool offset(LPPOINTD ppt, LPCPOINTD lppt)
 
 }
 
-inline CLASS_DECL_AURA bool offset(LPPOINT64 ppt, LPCPOINTD lppt)
+inline CLASS_DECL_AURA bool offset(LPPOINT64 ppt, LPCPOINT64 lppt)
 {
 
    ppt->x += lppt->x;
@@ -331,7 +331,7 @@ inline CLASS_DECL_AURA bool offset(LPPOINT64 ppt, LPCPOINTD lppt)
 }
 
 
-inline CLASS_DECL_AURA bool offset(LPPOINT ppt, LPCPOINTD lppt)
+inline CLASS_DECL_AURA bool offset(LPPOINT ppt, LPCPOINT lppt)
 {
 
    ppt->x += lppt->x;

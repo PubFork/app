@@ -3580,6 +3580,7 @@ namespace draw2d
 
 #ifndef METROWIN
 
+
    bool graphics::draw_text_ex(const char * lpszString,strsize nCount,const RECT & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
    {
       UNREFERENCED_PARAMETER(lpszString);
@@ -3588,8 +3589,9 @@ namespace draw2d
       UNREFERENCED_PARAMETER(nFormat);
       UNREFERENCED_PARAMETER(lpDTParams);
       _throw(interface_only_exception(get_app()));
-      return -1;
+      return false;
    }
+
 
    bool graphics::draw_text_ex(const string & str,const RECT & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
    {
@@ -3598,8 +3600,10 @@ namespace draw2d
       UNREFERENCED_PARAMETER(nFormat);
       UNREFERENCED_PARAMETER(lpDTParams);
       _throw(interface_only_exception(get_app()));
-      return -1;
+      return false;
    }
+
+
    bool graphics::draw_text_ex(const char * lpszString,strsize nCount,const RECTD & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
    {
       UNREFERENCED_PARAMETER(lpszString);
@@ -3608,7 +3612,7 @@ namespace draw2d
       UNREFERENCED_PARAMETER(nFormat);
       UNREFERENCED_PARAMETER(lpDTParams);
       _throw(interface_only_exception(get_app()));
-      return -1;
+      return false;
    }
 
    bool graphics::draw_text_ex(const string & str,const RECTD & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
@@ -3618,7 +3622,7 @@ namespace draw2d
       UNREFERENCED_PARAMETER(nFormat);
       UNREFERENCED_PARAMETER(lpDTParams);
       _throw(interface_only_exception(get_app()));
-      return -1;
+      return false;
    }
 
 #endif
@@ -4898,7 +4902,7 @@ namespace draw2d
 
          double w = x2 - x1 + 1;
 
-         dib->create(w,6);
+         dib->create((i32) w,6);
 
          if (dib->area() <= 0)
          {
@@ -5366,10 +5370,10 @@ namespace draw2d
 
          float* p = &pts[i * 2];
 
-         move_to(point(p[0], p[1]));
-         line_to(point(p[2], p[3]));
-         line_to(point(p[4], p[5]));
-         line_to(point(p[6], p[7]));
+         move_to(point((i64) p[0], (i64)p[1]));
+         line_to(point((i64)p[2], (i64)p[3]));
+         line_to(point((i64)p[4], (i64)p[5]));
+         line_to(point((i64)p[6], (i64)p[7]));
 
       }
 

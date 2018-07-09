@@ -1296,10 +1296,10 @@ int_bool file_is_equal_path(const char * psz1,const char * psz2)
 
    int32_t iCmp = -1;
 
-   if(GetFullPathNameW(pwsz1, pwszPath1.m_iSize / sizeof(unichar), pwszPath1, &pwszFile1))
+   if(GetFullPathNameW(pwsz1, (DWORD)( pwszPath1.m_iSize / sizeof(unichar)), pwszPath1, &pwszFile1))
    {
 
-      if(GetFullPathNameW(pwsz2, pwszPath2.m_iSize / sizeof(unichar), pwszPath2, &pwszFile2))
+      if(GetFullPathNameW(pwsz2, (DWORD) (pwszPath2.m_iSize / sizeof(unichar)), pwszPath2, &pwszFile2))
       {
 
          iCmp = _wcsicmp(pwszPath1, pwszPath2);

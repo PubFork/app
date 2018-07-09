@@ -553,3 +553,22 @@ template<> inline UINT HashKey<size> (size key)
 
 
 
+inline serialize & operator << (serialize & os, sized & s)
+{
+
+   os << s.cx;
+   os << s.cy;
+
+   return os;
+
+}
+
+inline serialize & operator >> (serialize & is, sized & s)
+{
+
+   is >> s.cx;
+   is >> s.cy;
+
+   return is;
+
+}

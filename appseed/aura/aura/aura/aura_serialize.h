@@ -1,6 +1,9 @@
 #pragma once
 
 
+CLASS_DECL_AURA void xml_export(string & strXml, ::xml::exportable & xmlexportable);
+CLASS_DECL_AURA void xml_import(::xml::importable & xmlimportable, string & strXml);
+
 class serializable;
 struct POINTD;
 
@@ -15,6 +18,7 @@ public:
 
 
    index                   m_iVersion;
+   property_set *          m_pset;
 
    serialize(serialize && serialize);
    serialize(::file::file * pfile, index iVersion = FIRST_VERSION);
@@ -40,6 +44,58 @@ public:
    virtual ::file::path get_link_path(string strLink);
 
    bool is_version(index i);
+
+   void prop_start(property_set & set)
+   {
+
+      m_pset = &set;
+
+      if (!is_storing())
+      {
+
+         operator()(*m_pset);
+
+
+      }
+
+   }
+
+
+   template < typename TYPE >
+   void prop_serial(const char * pszName, TYPE & t)
+   {
+
+      if (is_storing())
+      {
+
+         m_pset->operator[](pszName) = t;
+
+
+      }
+      else
+      {
+
+         t = (TYPE)m_pset->operator[](pszName);
+
+      }
+
+   }
+
+   void prop_end()
+   {
+
+      if (is_storing())
+      {
+
+         operator()(*m_pset);
+
+
+      }
+
+      m_pset = NULL;
+
+   }
+
 
    template < typename BLOCK_TYPE >
    void blt(BLOCK_TYPE & t) // block transfer // classes/structures with no virtual members
@@ -72,29 +128,30 @@ public:
    }
 
 
-   //template < typename PTR_ARRAY >
-   //void stream_ptra(PTR_ARRAY & ptra)
-   //{
-   //   if (is_storing())
-   //   {
-   //      ::count c = a.get_count();
-   //      operator()(c);
-   //      for (auto & pelement : a)
-   //      {
-   //         operator()(*pelement);
-   //      }
-   //   }
-   //   else
-   //   {
-   //      ::count c = 0;
-   //      operator()(c);
-   //      a.set_size(c);
-   //      for (auto & pelement : a)
-   //      {
-   //         operator()(*pelement);
-   //      }
-   //   }
-   //}
+   template < typename XML_SERIALIZABLE >
+   void stream_as_xml(XML_SERIALIZABLE & xmlserializable)
+   {
+
+      string strXml;
+
+      if (is_storing())
+      {
+
+         xml_export(strXml, xmlserializable);
+
+         operator()(strXml);
+
+      }
+      else
+      {
+
+         operator()(strXml);
+
+         xml_import(xmlserializable, strXml);
+
+      }
+
+   }
 
    template < typename SET >
    void stream_set(SET & s)
@@ -161,6 +218,8 @@ public:
          operator()(c);
          for (auto & element : a)
          {
+            string strType = get_object_type_id(element);
+            operator()(strType);
             operator()(element);
          }
       }
@@ -171,7 +230,9 @@ public:
          a.set_size(c);
          for (auto & element : a)
          {
-            element.alloc(allocer());
+            string strType;
+            operator()(strType);
+            element = create_object_from_type_id(strType);
             operator()(element);
          }
       }
@@ -207,6 +268,9 @@ public:
    void operator()(serializable & serializable);
 
    void operator()(serializable * pserializable);
+
+   virtual string get_object_type_id(::object * pelement);
+   virtual ::object * create_object_from_type_id(string strType);
 
    //using ostream::operator <<;
    //serialize & operator << (serializable & serialize);

@@ -875,9 +875,10 @@ void var::stream(serialize & serialize)
    if (serialize.is_storing())
    {
       ::file::ostream & ostream = serialize;
-      int32_t i = get_type();
+      e_type etype = get_type();
+      int32_t i = etype;
       ostream << i;
-      switch (get_type())
+      switch (etype)
       {
       case type_string:
       {
@@ -898,6 +899,9 @@ void var::stream(serialize & serialize)
          break;
       case type_int64:
          ostream << m_i64;
+         break;
+      case type_uint32:
+         ostream << m_ui32;
          break;
       case type_uint64:
          ostream << m_ui64;
@@ -962,7 +966,9 @@ void var::stream(serialize & serialize)
       ::file::istream & is = serialize;
       int32_t i;
       is >> i;
-      set_type(e_type(i), false);
+      e_type etype = (e_type)i;
+      set_type(etype, false);
+      etype = get_type();
       switch (get_type())
       {
       case type_pstring:
@@ -984,6 +990,11 @@ void var::stream(serialize & serialize)
       case type_int64:
       {
          is >> m_i64;
+      }
+      break;
+      case type_uint32:
+      {
+         is >> m_ui32;
       }
       break;
       case type_uint64:

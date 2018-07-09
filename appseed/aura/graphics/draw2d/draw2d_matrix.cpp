@@ -101,8 +101,8 @@ namespace draw2d
 
       point p;
 
-      p.x = pt.x * a1 + pt.y * b1 + c1;
-      p.y = pt.x * a2 + pt.y * b2 + c2;
+      p.x = (LONG) (pt.x * a1 + pt.y * b1 + c1);
+      p.y = (LONG) (pt.x * a2 + pt.y * b2 + c2);
 
       pt = p;
 

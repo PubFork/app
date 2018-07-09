@@ -1482,8 +1482,6 @@ end:
 
          papp->locale_schema_matter(straLs, straMatterLocator, strLocale, strSchema);
 
-         ::index j;
-
          ::aura::str_context * pcontext = Sess(papp).str_context();
 
          ::file::path pathAppMatter;

@@ -237,7 +237,7 @@ public:
    inline const char & operator [](strsize i) const
    {
 
-      return (const char &)get_data()[i];
+      return *((const char *)&get_data()[i]);
 
    }
 

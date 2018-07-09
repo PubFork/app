@@ -84,3 +84,37 @@ namespace xml
 
 
 
+CLASS_DECL_AURA void xml_export(string & strXml, xml::exportable & exportable)
+{
+
+   ::xml::output_tree o(exportable.get_app());
+
+   o.m_pdocument = canew(::xml::document(exportable.get_app()));
+
+   o.m_pnode = o.m_pdocument->get_root();
+
+   exportable.xml_export(o);
+
+   strXml = o.m_pdocument->get_xml();
+
+}
+
+
+CLASS_DECL_AURA void xml_import(xml::importable & importable, string & strXml)
+{
+
+   ::xml::input_tree i(importable.get_app());
+
+   i.m_pdocument = canew(xml::document(importable.get_app()));
+
+   if (i.m_pdocument->load(strXml))
+   {
+
+      i.m_pnode = i.m_pdocument->get_root();
+
+      importable.xml_import(i);
+
+   }
+
+}
+
