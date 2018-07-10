@@ -133,6 +133,8 @@ simple_frame_window::simple_frame_window(::aura::application * papp) :
 
    m_bTransparentFrame = false;
 
+   m_bTransparentFrameEnable = true;
+
    //m_bblur_Background = false;
 
    m_bCustomFrameBefore = true;
@@ -348,7 +350,8 @@ void simple_frame_window::_001OnCreate(::message::message * pobj)
 
    }
 
-   if (m_varFrame["control_box"]["transparent_button"]["visible"].is_false())
+   if (m_varFrame["control_box"]["transparent_button"]["visible"].is_false()
+         || !m_bTransparentFrameEnable)
    {
 
       m_workset.m_ebuttonaHide.add(::user::wndfrm::frame::button_transparent_frame);
@@ -761,7 +764,7 @@ bool simple_frame_window::WfiToggleTransparentFrame()
 bool simple_frame_window::frame_is_transparent()
 {
 
-   return m_bTransparentFrame;
+   return m_bTransparentFrame && m_bTransparentFrameEnable;
 
 }
 
@@ -2703,7 +2706,7 @@ void simple_frame_window::draw_frame_and_control_box_over(::draw2d::graphics * p
 
 
 
-   if (!m_bTransparentFrame || this == GetActiveWindow())
+   if (!frame_is_transparent() || this == GetActiveWindow())
    {
 
       ::draw2d::keep k(pgraphics);

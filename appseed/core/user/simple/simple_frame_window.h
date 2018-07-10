@@ -66,6 +66,7 @@ public:
 
 
    bool                                m_bDefaultCreateToolbar;
+   bool                                m_bTransparentFrameEnable;
    helper_task *                       m_phelpertask;
    bool                                m_bFullScreenAlt;
    bool                                m_bFullScreenCtrl;
