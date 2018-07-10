@@ -5,7 +5,7 @@ namespace user
 {
 
 
-   class CLASS_DECL_APP_CORE_WNDFRM_ANTHILL meta_button :
+   class CLASS_DECL_APP_WNDFRM_ANTHILL meta_button :
       virtual public ::user::wndfrm::frame::control_box_button
    {
    public:

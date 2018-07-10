@@ -17,7 +17,7 @@ namespace user
          {
 
 
-            class CLASS_DECL_APP_CORE_WNDFRM_ANTHILL FrameSchemaHardCoded002 :
+            class CLASS_DECL_APP_WNDFRM_ANTHILL FrameSchemaHardCoded002 :
                public frame_schema
             {
             public:

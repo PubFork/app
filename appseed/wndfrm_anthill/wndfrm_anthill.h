@@ -6,10 +6,10 @@
 #include "core/user/wndfrm/wndfrm.h"    // thank you (mummy)
 
 
-#ifdef _CA2_CORE_WNDFRM_ANTHILL_LIBRARY
-#define CLASS_DECL_APP_CORE_WNDFRM_ANTHILL  CLASS_DECL_EXPORT
+#ifdef _APP_WNDFRM_ANTHILL_LIBRARY
+#define CLASS_DECL_APP_WNDFRM_ANTHILL  CLASS_DECL_EXPORT
 #else
-#define CLASS_DECL_APP_CORE_WNDFRM_ANTHILL  CLASS_DECL_IMPORT
+#define CLASS_DECL_APP_WNDFRM_ANTHILL  CLASS_DECL_IMPORT
 #endif
 
 #include "user_meta_button.h"

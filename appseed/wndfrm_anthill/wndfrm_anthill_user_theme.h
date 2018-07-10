@@ -5,7 +5,7 @@ namespace wndfrm_anthill
 {
 
 
-   class CLASS_DECL_APP_CORE_WNDFRM_ANTHILL theme:
+   class CLASS_DECL_APP_WNDFRM_ANTHILL theme:
       virtual public ::user::theme
    {
    public:

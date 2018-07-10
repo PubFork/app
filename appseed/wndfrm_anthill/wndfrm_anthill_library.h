@@ -12,7 +12,7 @@ namespace user
       {
 
 
-         class CLASS_DECL_APP_CORE_WNDFRM_ANTHILL library:
+         class CLASS_DECL_APP_WNDFRM_ANTHILL library:
             virtual public ::aura::library
          {
          public:

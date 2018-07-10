@@ -444,6 +444,19 @@ namespace user
    interaction * interaction::GetParent() const
    {
 
+#ifdef METROWIN
+
+      if (m_pparent == System.m_possystemwindow->m_pui)
+      {
+
+         return NULL;
+
+      }
+
+#else !defined(WINDOWEX) && !defined(MACOS)
+#error "error"
+#endif
+
       return m_pparent;
 
    }

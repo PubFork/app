@@ -1,7 +1,7 @@
 #pragma once
 
 
-class CLASS_DECL_APP_CORE_WNDFRM_ANTHILL MetaControlBox :
+class CLASS_DECL_APP_WNDFRM_ANTHILL MetaControlBox :
    virtual public ::user::wndfrm::frame::control_box
 {
 public:

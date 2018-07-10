@@ -17,12 +17,12 @@ namespace user
          {
 
 
-            class CLASS_DECL_APP_CORE_WNDFRM_ANTHILL FrameSchemaHardCodedMinimal001 :
+            class CLASS_DECL_APP_WNDFRM_ANTHILL FrameSchemaHardCodedMinimal001 :
                public frame_schema
             {
             public:
 
-               
+
                FrameSchemaHardCodedMinimal001(::aura::application * papp);
                virtual ~FrameSchemaHardCodedMinimal001();
 

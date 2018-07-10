@@ -2827,7 +2827,7 @@ CLASS_DECL_AURA bool windows_load_dib_from_file(::draw2d::dib * pdib, Windows::S
       if (SUCCEEDED(hr))
       {
 
-         hr = piFactory->CreateDecoderFromStream(pstream, NULL, WICDecodeMetadataCacheOnDemand, &decoder);
+         hr = piFactory->CreateDecoderFromStream(pstream, NULL, WICDecodeMetadataCacheOnLoad, &decoder);
       }
 
       //if(SUCCEEDED(hr))

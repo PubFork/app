@@ -13,13 +13,13 @@ namespace user
       {
 
 
-         class CLASS_DECL_APP_CORE_WNDFRM_ANTHILL interaction:
+         class CLASS_DECL_APP_WNDFRM_ANTHILL interaction:
             public ::user::wndfrm::interaction
          {
          public:
 
 
-            
+
 
 
             interaction(::aura::application * papp);
