@@ -210,18 +210,18 @@ namespace draw2d
       virtual bool rotate(dib * pdib, double dAngle);
       virtual void Rotate034(dib * pdib, double dAngle, double dScale);
 
-      virtual void rotate90(dib * pdib);
-      virtual void rotate180(dib * pdib);
-      virtual void rotate270(dib * pdib);
-      virtual void rotate90();
-      virtual void rotate180();
-      virtual void rotate270();
-      virtual void rotate90flipx(dib * pdib);
-      virtual void rotate180flipx(dib * pdib);
-      virtual void rotate270flipx(dib * pdib);
-      virtual void rotate90flipx();
-      virtual void rotate180flipx();
-      virtual void rotate270flipx();
+      virtual bool rotate90(dib * pdib);
+      virtual bool rotate180(dib * pdib);
+      virtual bool rotate270(dib * pdib);
+      virtual bool rotate90();
+      virtual bool rotate180();
+      virtual bool rotate270();
+      virtual bool rotate90flipx(dib * pdib);
+      virtual bool rotate180flipx(dib * pdib);
+      virtual bool rotate270flipx(dib * pdib);
+      virtual bool rotate90flipx();
+      virtual bool rotate180flipx();
+      virtual bool rotate270flipx();
 
 
       virtual void set_rgb(COLORREF cr);

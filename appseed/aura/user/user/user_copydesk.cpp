@@ -224,12 +224,30 @@ namespace user
 
          if (get_plain_text(str))
          {
-
             var varFile;
 
-            varFile["url"] = str;
-            varFile["http_set"]["raw_http"] = true;
-            varFile["http_set"]["disable_common_name_cert_check"] = true;
+            sp(memory_file) f;
+
+            if (str::begins_eat_ci(str, "data:image/jpeg;base64,"))
+            {
+
+               f = canew(memory_file(get_app()));
+
+               System.base64().decode(*f->get_primitive_memory(), str);
+
+               varFile = f;
+
+            }
+            else
+            {
+
+               varFile["url"] = str;
+               varFile["http_set"]["raw_http"] = true;
+               varFile["http_set"]["disable_common_name_cert_check"] = true;
+
+
+            }
+
 
             if (!System.imaging().load_from_file(pdib, varFile))
             {
@@ -242,10 +260,8 @@ namespace user
 
                sized s = pdib->g()->GetTextExtent(str);
 
-               if (s.area() > 0)
+               if (s.area() > 0 && pdib->create(ceil(s.cx), ceil(s.cy)))
                {
-
-                  pdib->create(ceil(s.cx), ceil(s.cy));
 
                   pdib->FillByte(0);
 

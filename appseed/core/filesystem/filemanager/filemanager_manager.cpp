@@ -192,7 +192,7 @@ namespace filemanager
    manager::~manager()
    {
 
-      if (m_filewatcherid > 0)
+      if (m_filewatcherid >= 0)
       {
 
          System.dir().remove_watch(m_filewatcherid);
@@ -266,14 +266,25 @@ namespace filemanager
 
       }
 
-      if (m_filewatcherid > 0)
+      if (m_filewatcherid >= 0)
       {
 
          System.dir().remove_watch(m_filewatcherid);
 
       }
 
-      m_filewatcherid = System.dir().add_watch(m_item->m_filepath, this, false);
+      try
+      {
+
+         m_filewatcherid = System.dir().add_watch(m_item->m_filepath, this, false);
+
+      }
+      catch (...)
+      {
+
+         m_filewatcherid = -1;
+
+      }
 
       return true;
 

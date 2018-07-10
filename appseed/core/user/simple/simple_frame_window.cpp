@@ -133,7 +133,15 @@ simple_frame_window::simple_frame_window(::aura::application * papp) :
 
    m_bTransparentFrame = false;
 
+#if define(METROWIN)
+
+   m_bTransparentFrameEnable = false;
+
+#else
+
    m_bTransparentFrameEnable = true;
+
+#endif
 
    //m_bblur_Background = false;
 

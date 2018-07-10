@@ -5546,10 +5546,19 @@ restart:
    }
 
 
-   void dib::rotate90(dib * pdib)
+   bool dib::rotate90(dib * pdib)
    {
 
-      create(pdib->m_size.cy, pdib->m_size.cx);
+      if (!create(pdib->m_size.cy, pdib->m_size.cx))
+      {
+
+         return false;
+
+      }
+
+      map();
+
+      pdib->map();
 
       i32 cx = pdib->m_size.cx;
 
@@ -5571,13 +5580,24 @@ restart:
 
       }
 
+      return true;
+
    }
 
 
-   void dib::rotate180(dib * pdib)
+   bool dib::rotate180(dib * pdib)
    {
 
-      create(pdib->m_size.cx, pdib->m_size.cy);
+      if (!create(pdib->m_size.cx, pdib->m_size.cy))
+      {
+
+         return false;
+
+      }
+
+      map();
+
+      pdib->map();
 
       i32 cx = m_size.cx;
 
@@ -5599,13 +5619,24 @@ restart:
 
       }
 
+      return true;
+
    }
 
 
-   void dib::rotate270(dib * pdib)
+   bool dib::rotate270(dib * pdib)
    {
 
-      create(pdib->m_size.cy, pdib->m_size.cx);
+      if (!create(pdib->m_size.cy, pdib->m_size.cx))
+      {
+
+         return false;
+
+      }
+
+      map();
+
+      pdib->map();
 
       i32 cx = pdib->m_size.cx;
 
@@ -5627,27 +5658,54 @@ restart:
 
       }
 
+      return true;
+
    }
 
-   void dib::rotate90()
+
+   bool dib::rotate90()
    {
-      rotate90(dynamic_cast < dib *> (clone()));
+
+      sp(dib) pdib = clone();
+
+      return rotate90(pdib);
+
    }
 
-   void dib::rotate180()
+
+   bool dib::rotate180()
    {
-      rotate180(dynamic_cast < dib *> (clone()));
+
+      sp(dib) pdib = clone();
+
+      return rotate180(pdib);
+
    }
 
-   void dib::rotate270()
+
+   bool dib::rotate270()
    {
-      rotate270(dynamic_cast < dib *> (clone()));
+
+      sp(dib) pdib = clone();
+
+      return rotate270(pdib);
+
    }
 
-   void dib::rotate90flipx(dib * pdib)
+
+   bool dib::rotate90flipx(dib * pdib)
    {
 
-      create(pdib->m_size.cy, pdib->m_size.cx);
+      if (!create(pdib->m_size.cy, pdib->m_size.cx))
+      {
+
+         return false;
+
+      }
+
+      map();
+
+      pdib->map();
 
       i32 cx = pdib->m_size.cx;
 
@@ -5669,13 +5727,24 @@ restart:
 
       }
 
+      return true;
+
    }
 
 
-   void dib::rotate180flipx(dib * pdib)
+   bool dib::rotate180flipx(dib * pdib)
    {
 
-      create(pdib->m_size.cx, pdib->m_size.cy);
+      if (!create(pdib->m_size.cx, pdib->m_size.cy))
+      {
+
+         return false;
+
+      }
+
+      map();
+
+      pdib->map();
 
       i32 cx = m_size.cx;
 
@@ -5697,13 +5766,24 @@ restart:
 
       }
 
+      return true;
+
    }
 
 
-   void dib::rotate270flipx(dib * pdib)
+   bool dib::rotate270flipx(dib * pdib)
    {
 
-      create(pdib->m_size.cy, pdib->m_size.cx);
+      if (!create(pdib->m_size.cy, pdib->m_size.cx))
+      {
+
+         return false;
+
+      }
+
+      map();
+
+      pdib->map();
 
       i32 cx = pdib->m_size.cx;
 
@@ -5725,32 +5805,38 @@ restart:
 
       }
 
+      return true;
+
    }
 
-   void dib::rotate90flipx()
+
+   bool dib::rotate90flipx()
    {
-      rotate90flipx(dynamic_cast < dib *> (clone()));
+
+      sp(dib) pdib = clone();
+
+      return rotate90flipx(pdib);
+
    }
 
-   void dib::rotate180flipx()
+
+   bool dib::rotate180flipx()
    {
-      rotate180flipx(dynamic_cast < dib *> (clone()));
+
+      sp(dib) pdib = clone();
+
+      return rotate180flipx(pdib);
+
    }
 
-   void dib::rotate270flipx()
+   bool dib::rotate270flipx()
    {
-      rotate270flipx(dynamic_cast < dib *> (clone()));
-   }
 
-   /*i32 dib::cos(i32 i, i32 iAngle)
-   {
-   return (i32) (((_int64) i * CosN[iAngle]) >> 32);
-   }
+      sp(dib) pdib = clone();
 
-   i32 dib::sin(i32 i, i32 iAngle)
-   {
-   return (i32) (((_int64) i * SinN[iAngle]) >> 32);
-   }*/
+      return rotate270flipx(pdib);
+
+   }
 
 
    void dib::FillByte(uchar uch)
