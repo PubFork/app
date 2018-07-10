@@ -18,6 +18,12 @@ color::color(COLORREF cr)
    operator = (cr);
 }
 
+
+color::color(const hls & hls)
+{
+   operator = (hls);
+}
+
 //color::color(RGBQUAD quad)
 //{
 //   operator = (quad);
@@ -59,7 +65,7 @@ proc hls2rgb {h l s} {
   */
 
 void color::get_hls(
-   double & h,double & l,double & s) const
+double & h,double & l,double & s) const
 {
 
    double r = m_dR;
@@ -326,9 +332,9 @@ double primitive_color_round(double d)
 #define dsin(x) (sin(((x) *2.0 * 3.1415) / 360.0))
 
 void color::set_hls(
-   double dH,
-   double dL,
-   double dS)
+double dH,
+double dL,
+double dS)
 {
    ASSERT(dH >= 0.0);
    ASSERT(dH <= 1.0);
@@ -558,14 +564,14 @@ void color::hue_offset(double dRadians)
    double oldg = m_uchG;
    double oldb = m_uchB;
    m_uchR = clampAndConvert((.299 + .701*U + .168*W)*oldr
-      + (.587 - .587*U + .330*W)*oldg
-      + (.114 - .114*U - .497*W)*oldb);
+                            + (.587 - .587*U + .330*W)*oldg
+                            + (.114 - .114*U - .497*W)*oldb);
    m_uchG = clampAndConvert((.299 - .299*U - .328*W)*oldr
-      + (.587 + .413*U + .035*W)*oldg
-      + (.114 - .114*U + .292*W)*oldb);
+                            + (.587 + .413*U + .035*W)*oldg
+                            + (.114 - .114*U + .292*W)*oldb);
    m_uchB = clampAndConvert((.299 - .3*U + 1.25*W)*oldr
-      + (.587 - .588*U - 1.05*W)*oldg
-      + (.114 + .886*U - .203*W)*oldb);
+                            + (.587 - .588*U - 1.05*W)*oldg
+                            + (.114 + .886*U - .203*W)*oldb);
 
 
 
@@ -603,14 +609,14 @@ void color::hls_rate(double dRateH,double dRateL,double dRateS)
    get_hls(dH,dL,dS);
 
    dH = dRateH >= 0 ?
-      (1.0 - dH) * dRateH + dH :
-      (1.0 + dRateH) * dH;
+        (1.0 - dH) * dRateH + dH :
+        (1.0 + dRateH) * dH;
    dL = dRateL >= 0 ?
-      (1.0 - dL) * dRateL + dL :
-      (1.0 + dRateL) * dL;
+        (1.0 - dL) * dRateL + dL :
+        (1.0 + dRateL) * dL;
    dS = dRateS >= 0 ?
-      (1.0 - dS) * dRateS + dS :
-      (1.0 + dRateS) * dS;
+        (1.0 - dS) * dRateS + dS :
+        (1.0 + dRateS) * dS;
 
    if(dH > 1.0)
       dH = 1.0;
@@ -667,12 +673,12 @@ void color::hls_rate(hls & hls)
    hls_rate(hls.m_dH,hls.m_dL,hls.m_dS);
 }
 void color::get_hls(
-   hls & hls) const
+hls & hls) const
 {
    get_hls(hls.m_dH,hls.m_dL,hls.m_dS);
 }
 void color::set_hls(
-   const hls & hls)
+const hls & hls)
 {
    set_hls(hls.m_dH,hls.m_dL,hls.m_dS);
 }
@@ -837,6 +843,17 @@ color & color::operator = (COLORREF cr)
    return *this;
 }
 
+
+color & color::operator = (const hls & hls)
+{
+
+   set_hls(hls);
+
+   return *this;
+
+}
+
+
 //color & color::operator = (RGBQUAD rgbquad)
 //{
 //   set_rgbquad(rgbquad);
@@ -853,7 +870,7 @@ bool color::parse_color(const char * psz)
    str.trim();
    str += " ";
    if(str.Left(1) == "#" && str.get_length() >= 7 && ishexdigit(str[1]) && ishexdigit(str[2]) && ishexdigit(str[3]) && ishexdigit(str[4])
-      && ishexdigit(str[5]) && ishexdigit(str[6]))
+         && ishexdigit(str[5]) && ishexdigit(str[6]))
    {
       if(str.get_length() >= 9 && ishexdigit(str[7]) && ishexdigit(str[8]) && !ishexdigit(str[9]))
       {
@@ -877,10 +894,10 @@ bool color::parse_color(const char * psz)
          int32_t a,r,g,b;
          sscanf(str,"#%1x%1x%1x%1x",&a,&r,&g,&b);
          set_COLORREF(ARGB(
-            duplicate_color_nible(a),
-            duplicate_color_nible(r),
-            duplicate_color_nible(g),
-            duplicate_color_nible(b)));
+                      duplicate_color_nible(a),
+                      duplicate_color_nible(r),
+                      duplicate_color_nible(g),
+                      duplicate_color_nible(b)));
          return true;
       }
       else if(!ishexdigit(str[4]))
@@ -888,9 +905,9 @@ bool color::parse_color(const char * psz)
          int32_t r,g,b;
          sscanf(str,"#%1x%1x%1x",&r,&g,&b);
          set_COLORREF(ARGB(255,
-            duplicate_color_nible(r),
-            duplicate_color_nible(g),
-            duplicate_color_nible(b)));
+                           duplicate_color_nible(r),
+                           duplicate_color_nible(g),
+                           duplicate_color_nible(b)));
          return true;
       }
    }
@@ -946,35 +963,35 @@ CLASS_DECL_AURA COLORREF pure_color(e_color ecolor)
 
    switch(ecolor)
    {
-      case color_black:
-         cr = RGB(0, 0, 0);
-         break;
-      case color_red:
-         cr = RGB(255, 0, 0);
-         break;
-      case color_green:
-         cr = RGB(0, 255, 0);
-         break;
-      case color_blue:
-         cr = RGB(0, 0, 255);
-         break;
-      case color_white:
-         cr = RGB(255, 255, 255);
-         break;
-      case color_yellow:
-         cr = RGB(255, 255, 0);
-         break;
-      case color_magenta:
-         cr = RGB(255, 0, 255);
-         break;
-      case color_cyan:
-         cr = RGB(0, 255, 255);
-         break;
-     case color_gray:
-         cr = RGB(127, 127, 127);
-      default:
-         cr = 0;
-         break;
+   case color_black:
+      cr = RGB(0, 0, 0);
+      break;
+   case color_red:
+      cr = RGB(255, 0, 0);
+      break;
+   case color_green:
+      cr = RGB(0, 255, 0);
+      break;
+   case color_blue:
+      cr = RGB(0, 0, 255);
+      break;
+   case color_white:
+      cr = RGB(255, 255, 255);
+      break;
+   case color_yellow:
+      cr = RGB(255, 255, 0);
+      break;
+   case color_magenta:
+      cr = RGB(255, 0, 255);
+      break;
+   case color_cyan:
+      cr = RGB(0, 255, 255);
+      break;
+   case color_gray:
+      cr = RGB(127, 127, 127);
+   default:
+      cr = 0;
+      break;
    };
 
    return cr;

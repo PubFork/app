@@ -382,6 +382,33 @@ namespace userex
    void color_view::on_control_event(::user::control_event * pevent)
    {
 
+
+      if (pevent->m_eevent == ::user::event_after_change_cur_sel
+            || pevent->m_eevent == ::user::event_after_change_cur_hover)
+      {
+
+         if (this == pevent->m_puie)
+         {
+
+            ::user::view_update_hint uh(get_app());
+
+            uh.m_ehint = ::user::view_update_hint::hint_control_event;
+            uh.m_pusercontrolevent = pevent;
+            uh.m_pui = this;
+
+            GetTypedParent<::userex::pane_tab_view>()->get_document()->update_all_views(this, 0, &uh);
+
+         }
+
+         if (pevent->m_bRet)
+         {
+
+            return;
+
+         }
+
+      }
+
       ::user::impact::on_control_event(pevent);
 
    }
@@ -394,6 +421,7 @@ namespace userex
 
 
    }
+
 
    color color_view::get_color()
    {
@@ -408,15 +436,14 @@ namespace userex
 
    }
 
-   void color_view::set_COLORREF(COLORREF cr)
+
+   void color_view::set_color(color color)
    {
 
-      color c(cr);
-
-      c.get_hls(m_hls);
-
+      color.get_hls(m_hls);
 
    }
+
 
    void color_view::on_mouse(point pt)
    {

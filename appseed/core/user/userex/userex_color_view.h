@@ -52,7 +52,7 @@ namespace userex
       virtual void rebuild_luminance();
 
       virtual color get_color();
-      virtual void set_COLORREF(COLORREF cr);
+      virtual void set_color(color color);
 
    };
 

@@ -49,6 +49,7 @@ public:
    color();
    color(const color & color);
    color(e_color ecolor);
+   color(const hls & hls);
    color(COLORREF cr);
 //   color(RGBQUAD quad);
    virtual ~color();
@@ -59,20 +60,20 @@ public:
    void set_bgr(uint32_t dw);
 //   void set_rgbquad(RGBQUAD quad);
    void get_hls(
-      double & dH,
-      double & dL,
-      double & dS) const;
+   double & dH,
+   double & dL,
+   double & dS) const;
 
    void set_hls(
-      double dHue,
-      double dLightness,
-      double dSaturation);
+   double dHue,
+   double dLightness,
+   double dSaturation);
    void hls_mult(hls & hls);
    void hls_rate(hls & hls);
    void get_hls(
-      hls & hls) const;
+   hls & hls) const;
    void set_hls(
-      const hls & hls);
+   const hls & hls);
 
    uint32_t get_rgb() const;
    uint32_t get_bgr() const;
@@ -86,7 +87,7 @@ public:
 
    color & operator = (const color & color);
    color & operator = (COLORREF cr);
-//   color & operator = (RGBQUAD rgbquad);
+   color & operator = (const hls & hls);
 
    bool parse_color(const char * psz);
 
