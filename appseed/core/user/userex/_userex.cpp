@@ -26,4 +26,7 @@
 #include "userex_wait_message_dialog.cpp"
 
 
+#include "userex_color_view.cpp"
+
+
 

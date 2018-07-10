@@ -29,6 +29,8 @@ namespace flag
    void gay_with_shades_of_grey(::draw2d::dib * pdib)
    {
 
+      pdib->map();
+
       ::count w = pdib->m_size.cx;
 
       ::count h = pdib->m_size.cy;
@@ -171,6 +173,8 @@ namespace flag
 
    void shades_of_luminance(::draw2d::dib * pdib, double dH, double dS)
    {
+
+      pdib->map();
 
       ::count w = pdib->m_size.cx;
 
@@ -448,14 +452,20 @@ namespace userex
    void color_view::on_mouse(point pt)
    {
 
+      synch_lock sl(m_pmutex);
+
       if (pt.y >= m_rectColors.bottom)
          return;
       if (pt.x < m_rectColors.left)
          return;
       if (pt.y < m_rectColors.top)
          return;
+
       if (pt.x < m_rectColors.center().x)
       {
+
+         m_dib->map();
+
 
          pt -= m_rectColors.top_left();
 
@@ -486,6 +496,8 @@ namespace userex
       }
       else if (pt.x < m_rectColors.center().x + m_rectColors.width() / 8)
       {
+
+         m_dibLuminance->map();
 
          pt -= size(m_rectColors.center().x, m_rectColors.top);
 
