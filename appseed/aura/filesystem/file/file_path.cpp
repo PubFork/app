@@ -101,7 +101,7 @@ namespace path
 
    }
 
-   string from(string str)
+   CLASS_DECL_AURA string from(string str)
    {
 
       string strFsSafe;
