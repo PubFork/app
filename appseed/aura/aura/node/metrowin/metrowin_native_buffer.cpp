@@ -471,6 +471,8 @@ namespace metrowin
 
       m_dwAccess = dwAccess;
 
+      m_nOpenFlags = nOpenFlags;
+
       return no_exception;
 
    }
