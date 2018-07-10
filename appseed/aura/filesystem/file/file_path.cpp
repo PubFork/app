@@ -101,6 +101,33 @@ namespace path
 
    }
 
+   string from(string str)
+   {
+
+      string strFsSafe;
+
+      for (index i = 0; i < str.length(); i++)
+      {
+
+         if (isalnum_dup(str[i]))
+         {
+
+            strFsSafe += str[i];
+
+         }
+         else
+         {
+
+            strFsSafe += "-" + ::hex::lower_from(str[i]);
+
+         }
+
+      }
+
+      return strFsSafe;
+
+   }
+
 
 } // namespace path
 
