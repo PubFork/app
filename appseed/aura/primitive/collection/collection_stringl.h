@@ -2,11 +2,11 @@
 
 
 class CLASS_DECL_AURA stringl :
-   virtual public string_list,
-   virtual public serializable
+   virtual public string_list
 {
 public:
 
+   
    stringl();
    virtual ~stringl();
 
@@ -20,8 +20,8 @@ public:
    void add_tail_tokens(const char * lpcsz, const char * lpcszSeparator, bool bAddEmpty);
 
 
-   void write(::file::ostream & ostream) const;
-   void read(::file::istream & istream);
+   void write(serialize & ostream) const;
+   void read(serialize & istream);
 
 
 };

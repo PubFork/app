@@ -16,7 +16,7 @@ class SharedInputSource : input_source
 
 public:
 
-  static SharedInputSource *getInputSource(string path, ::file::istream & aura);
+  static SharedInputSource *getInputSource(string path, serialize & aura);
 
   /** Increments reference counter */
   int32_t addref(){
@@ -60,12 +60,12 @@ public:
 
 private:
 
-  SharedInputSource(::file::istream & source);
+  SharedInputSource(serialize & source);
   ~SharedInputSource();
 
   static Hashtable<SharedInputSource*> *isHash;
 
-  ::file::istream & is;
+  serialize & is;
   const byte *stream;
   int32_t ref_count;
 };

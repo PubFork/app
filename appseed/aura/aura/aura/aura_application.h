@@ -143,11 +143,11 @@ namespace aura
       virtual void dump(dump_context & dumpcontext) const override;
 
 
-      virtual bool app_data_set(class id id, ::file::ostream & os);
-      virtual bool app_data_get(class id id, ::file::istream & is);
+      virtual bool app_data_set(class id id, serialize & os);
+      virtual bool app_data_get(class id id, serialize & is);
 
-      virtual bool app_data_set(class id id, ::serializable & obj);
-      virtual bool app_data_get(class id id, ::serializable & obj);
+      virtual bool app_data_set(class id id, ::object & obj);
+      virtual bool app_data_get(class id id, ::object & obj);
 
       virtual void install_message_routing(::message::sender * psender) override;
 
@@ -468,8 +468,8 @@ namespace aura
 
       // name by Mummi (Japanese -> Guddo : from English : Good, ca2 interpretation : Goods).
       // get/set serializables to user directory
-      bool gudo_get(const string & strKey,::serializable & obj);
-      bool gudo_set(const string & strKey,::serializable & obj);
+      bool gudo_get(const string & strKey,::object & obj);
+      bool gudo_set(const string & strKey,::object & obj);
 
 
       virtual bool assert_user_logged_in();
@@ -570,7 +570,7 @@ namespace aura
 
       virtual string http_get(const string & strUrl, ::property_set & set);
 
-      virtual bool compress_ungz(::file::ostream & ostreamUncompressed, const ::file::path & lpcszGzFileCompressed);
+      virtual bool compress_ungz(serialize & ostreamUncompressed, const ::file::path & lpcszGzFileCompressed);
       virtual bool compress_ungz(::primitive::memory_base & mem);
       virtual bool compress_gz(::file::file * pfileOut, const ::file::path & lpcszUncompressed, int iLevel = 6);
       virtual bool compress_gz(::file::file * pfileOut, ::file::file * pfileIn, int iLevel = 6);

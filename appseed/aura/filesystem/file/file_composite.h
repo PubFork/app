@@ -16,7 +16,7 @@ namespace file
 
 
          composite();
-         composite(::file::file_sp  pfile);
+         composite(file * pfile);
          virtual ~composite();
 
 
@@ -66,11 +66,11 @@ namespace file
 
 
          using ::file::file::write;
-         void write(ostream & ostream);
+         virtual void write(serialize & ostream) override;
 
 
          using ::file::file::read;
-         void read(istream & istream);
+         virtual void read(serialize & istream) override;
 
 
 

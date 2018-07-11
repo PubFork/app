@@ -1,6 +1,9 @@
 #pragma once
 
 
+#define FIRST_VERSION 0
+
+
 #ifdef WINDOWS
 
 #define LINE_SEPARATOR "\r\n"
@@ -71,7 +74,9 @@ inline bool file_as_pod(POD & pod, const char * path)
 #include "file_file_base.h"
 
 
-#include "file_stream_base.h"
+#include "file_reader.h"
+#include "file_writer.h"
+#include "file_stream.h"
 
 
 
@@ -79,8 +84,6 @@ inline bool file_as_pod(POD & pod, const char * path)
 
 
 
-#include "file_reader.h"
-#include "file_writer.h"
 
 #include "file_file.h"
 
@@ -153,4 +156,7 @@ namespace file
    using iostate = ::file::e_iostate;
    using seekdir = ::file::e_seek;
 }
+
+
+#include "file_byte_stream_memory_file.h"
 

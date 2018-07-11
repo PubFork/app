@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "webserver_http_form.h"
 #include "webserver_http_transaction.h"
@@ -19,7 +19,7 @@ namespace http
       string                           m_strHttpHost;
       id                               m_idHttpMethod;
       memory_file              m_memfileBody;
-      ::http::ostream            m_ostream;
+      ::http::stream            m_ostream;
       string m_null;
       http::form m_form;
 
@@ -47,7 +47,7 @@ namespace http
 
       http::form & form();
 
-      ::http::ostream & ostream()   { return m_ostream; }
+      ::http::stream & ostream()   { return m_ostream; }
       ::file::file & file()      { return m_memfileBody; }
 
       virtual void clear();

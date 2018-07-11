@@ -318,7 +318,7 @@ namespace aura
    }
 
 
-   bool application::app_data_set(class id id, ::file::ostream & os)
+   bool application::app_data_set(class id id, serialize & os)
    {
 
       return false;
@@ -335,7 +335,7 @@ namespace aura
    }
 
 
-   bool application::app_data_get(class id id, ::file::istream & is)
+   bool application::app_data_get(class id id, serialize & is)
    {
 
       return false;
@@ -343,7 +343,7 @@ namespace aura
    }
 
 
-   bool application::app_data_set(class id id, ::serializable & obj)
+   bool application::app_data_set(class id id, ::object & obj)
    {
 
       return false;
@@ -351,7 +351,7 @@ namespace aura
    }
 
 
-   bool application::app_data_get(class id id, ::serializable & obj)
+   bool application::app_data_get(class id id, ::object & obj)
    {
 
       return false;
@@ -4989,7 +4989,7 @@ retry_license:
 
 
 
-   bool application::gudo_get(const string & strKey, ::serializable & obj)
+   bool application::gudo_get(const string & strKey, ::object & obj)
    {
 
       ::file::path strPath(strKey);
@@ -5030,7 +5030,7 @@ retry_license:
 
    }
 
-   bool application::gudo_set(const string & strKey, ::serializable & obj)
+   bool application::gudo_set(const string & strKey, ::object & obj)
    {
 
       string strPath(strKey);
@@ -6325,7 +6325,7 @@ retry_license:
    }
 
 
-   bool application::compress_ungz(::file::ostream & ostreamUncompressed, const ::file::path & lpcszGzFileCompressed)
+   bool application::compress_ungz(serialize & ostreamUncompressed, const ::file::path & lpcszGzFileCompressed)
    {
 
       return System.compress().ungz(this, ostreamUncompressed, lpcszGzFileCompressed);

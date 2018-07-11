@@ -6,7 +6,7 @@ namespace simpledb
 
 
    class CLASS_DECL_AXIS record_row :
-      virtual public ::serializable
+      virtual public ::object
    {
    public:
 

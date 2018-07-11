@@ -2,7 +2,7 @@
 
 
 // return string length or -1 if UNICODE string is found in the archive
-__STATIC UINT __read_string_length(::file::byte_istream & ar)
+__STATIC UINT __read_string_length(::file::byte_stream & ar)
 {
    uint32_t nNewLen;
 
@@ -50,7 +50,7 @@ namespace file
 
    // FindSignature.cpp
    // from 7-zip on 2012-12-23, lunch time
-#include "framework.h"
+//#include "framework.h"
 
    /*//#include "Common/Buffer.h"
 
@@ -59,39 +59,39 @@ namespace file
    //#include "../../Common/StreamUtils.h"*/
 
 
-   byte_istream::byte_istream()
-   {
-   }
+//   byte_stream::byte_stream()
+//   {
+//   }
+//
+//   byte_stream::byte_stream(file * preader) :
+//      istream(preader)
+//   {
+//
+//   }
+//
+//   byte_stream::byte_stream(const istream & is) :
+//      istream(is)
+//   {
+//
+//   }
+//
+//   byte_stream::~byte_stream()
+//   {
+//
+//   }
 
-   byte_istream::byte_istream(file * preader) :
-      istream(preader)
-   {
-
-   }
-
-   byte_istream::byte_istream(const istream & is) :
-      istream(is)
-   {
-
-   }
-
-   byte_istream::~byte_istream()
-   {
-
-   }
-
-   void byte_istream::read(char & ch)
+   void byte_stream::read(char & ch)
    {
 
       if(m_spfile->read(&ch, sizeof(ch)) != sizeof(ch))
-         _throw(io_exception(get_app(), "byte_istream::read"));
+         _throw(io_exception(get_app(), "byte_stream::read"));
 
 
 
    }
 
 
-   void byte_istream::read(uchar & uch)
+   void byte_stream::read(uchar & uch)
    {
 
       if(fail())
@@ -113,178 +113,174 @@ namespace file
    }
 
 
-   void byte_istream::read(int16_t & i)
+   void byte_stream::read(int16_t & i)
    {
 
-      read_arbitrary(&i, sizeof(i));
+      blt(i);
 
 
 
    }
 
-   void byte_istream::read(uint16_t & ui)
+   void byte_stream::read(uint16_t & ui)
    {
-      read_arbitrary(&ui, sizeof(ui));
+      blt(ui);
 
    }
 #ifdef WINDOWS
-   void byte_istream::read(unichar & wch)
+   void byte_stream::read(unichar & wch)
    {
-      read_arbitrary(&wch, sizeof(wch));
+      blt(wch);
 
    }
 #endif
-   void byte_istream::read(bool & b)
+   void byte_stream::read(bool & b)
    {
-      m_spfile->read(&b, sizeof(b));
+      blt(b);
 
    }
 
-   void byte_istream::read(int32_t & i)
+//   void byte_stream::read(int32_t & i)
+//   {
+//      blt(i);
+//
+//   }
+//
+//   void byte_stream::read(uint32_t & ui)
+//   {
+//      blt(ui);
+//
+//   }
+//
+//   void byte_stream::read(int64_t & i)
+//   {
+//      blt(i);
+//
+//   }
+//
+//   void byte_stream::read(uint64_t & ui)
+//   {
+//      blt(ui);
+//
+//   }
+
+   void byte_stream::read(int32_t & i)
    {
-      read_arbitrary(&i, sizeof(i));
+
+      blt(i);
 
    }
 
-   void byte_istream::read(uint32_t & ui)
+   void byte_stream::read(uint32_t & ui)
    {
-      read_arbitrary(&ui, sizeof(ui));
+
+      blt(ui);
 
    }
 
-   void byte_istream::read(int64_t & i)
+   void byte_stream::read(int64_t & i)
    {
-      read_arbitrary(&i, sizeof(i));
+
+      blt(i);
 
    }
 
-   void byte_istream::read(uint64_t & ui)
+   void byte_stream::read(uint64_t & ui)
    {
-      read_arbitrary(&ui, sizeof(ui));
+
+      blt(ui);
 
    }
 
-   void byte_istream::read_arbitrary(int32_t & i)
+//   void byte_stream::read(void * p, ::count nMax)
+//   {
+//
+//      if(fail())
+//         return;
+//
+//      byte b;
+//
+//      full_read(&b,sizeof(b));
+//
+//      if(fail())
+//         return;
+//
+//      if(b == 0)
+//      {
+//
+//         memset(p, 0, nMax);
+//
+//         return;
+//
+//      }
+//
+//      uint64_t uiRead = 0;
+//
+//      int len = b & 0x3f;
+//
+//      if(len > (int) sizeof(uiRead) || len > nMax)
+//      {
+//
+//         setstate(failbit);
+//
+//         return;
+//
+//      }
+//
+//      full_read(&uiRead,len);
+//
+//      if(fail())
+//         return;
+//
+//      if(b & 0x40)
+//      {
+//
+//         int64_t i = - ((int64_t) uiRead);
+//
+//         memcpy(p, &i, nMax);
+//
+//      }
+//      else
+//      {
+//
+//         memcpy(p, &uiRead, nMax);
+//
+//      }
+//
+//   }
+
+
+   void byte_stream::read(float & f)
    {
 
-      read_arbitrary(&i, sizeof(i));
-
-   }
-
-   void byte_istream::read_arbitrary(uint32_t & ui)
-   {
-
-      read_arbitrary(&ui, sizeof(ui));
-
-   }
-
-   void byte_istream::read_arbitrary(int64_t & i)
-   {
-
-      read_arbitrary(&i, sizeof(i));
-
-   }
-
-   void byte_istream::read_arbitrary(uint64_t & ui)
-   {
-
-      read_arbitrary(&ui, sizeof(ui));
-
-   }
-
-   void byte_istream::read_arbitrary(void * p, ::count nMax)
-   {
-
-      if(fail())
-         return;
-
-      byte b;
-
-      full_read(&b,sizeof(b));
-
-      if(fail())
-         return;
-
-      if(b == 0)
-      {
-
-         memset(p, 0, nMax);
-
-         return;
-
-      }
-
-      uint64_t uiRead = 0;
-
-      int len = b & 0x3f;
-
-      if(len > (int) sizeof(uiRead) || len > nMax)
-      {
-
-         setstate(failbit);
-
-         return;
-
-      }
-
-      full_read(&uiRead,len);
-
-      if(fail())
-         return;
-
-      if(b & 0x40)
-      {
-
-         int64_t i = - ((int64_t) uiRead);
-
-         memcpy(p, &i, nMax);
-
-      }
-      else
-      {
-
-         memcpy(p, &uiRead, nMax);
-
-      }
-
-   }
-
-
-   void byte_istream::read(float & f)
-   {
-
-      full_read(&f, sizeof(f));
-
-   }
-
-
-   void byte_istream::read(double & d)
-   {
-
-      full_read(&d, sizeof(d));
-
-   }
-
-   void byte_istream::read(LPRECT lprect)
-   {
-
-      full_read(&lprect->left,     sizeof(lprect->left));
-      full_read(&lprect->top,      sizeof(lprect->top));
-      full_read(&lprect->right,    sizeof(lprect->right));
-      full_read(&lprect->bottom,   sizeof(lprect->bottom));
-
-   }
-
-   void byte_istream::read(SIZE & size)
-   {
-
-      full_read(&size.cx,     sizeof(size.cx));
-      full_read(&size.cy,      sizeof(size.cy));
+      blt(f);
 
    }
 
 
-   void byte_istream::read(sp(type) info)
+   void byte_stream::read(double & d)
+   {
+
+      blt(d);
+
+   }
+
+   void byte_stream::read(LPRECT lprect)
+   {
+
+      blt(*lprect);
+
+   }
+
+   void byte_stream::read(SIZE & size)
+   {
+
+      blt(size);
+
+   }
+
+
+   void byte_stream::read(sp(type) info)
    {
 
       memory m;
@@ -310,7 +306,7 @@ namespace file
    }
 
 
-   void byte_istream::read(id & id)
+   void byte_stream::read(id & id)
    {
 
       bool bNull;
@@ -333,15 +329,15 @@ namespace file
    }
 
 
-   string byte_istream::get_location() const
+   string byte_stream::get_location() const
    {
 
-      return "<unknown byte_istream location>";
+      return "<unknown byte_stream location>";
 
    }
 
 
-   void byte_istream::full_load(string & str)
+   void byte_stream::full_load(string & str)
    {
 
       if(m_spfile.is_null())
@@ -404,7 +400,7 @@ namespace file
    }
 
 
-   void byte_istream::read (string & string)
+   void byte_stream::read (string & string)
    {
       int32_t nConvert = 0;   // if we get UNICODE, convert
 

@@ -2206,7 +2206,7 @@ RetryBuildNumber:
 //
 //      }
 //
-//      ::file::byte_ostream os(file);
+//      ::file::byte_stream os(file);
 //
 //      os << m_mapAppLibrary;
 //

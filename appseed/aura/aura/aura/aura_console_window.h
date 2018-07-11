@@ -47,7 +47,7 @@ namespace console
    public:
 
 
-      ::file::plain_text_ostream   cout;
+      ::file::plain_text_stream   cout;
 
 
       virtual void redirect_io();

@@ -18,7 +18,7 @@ namespace colorertake5
    @param lineRegions Linked list of LineRegion structures.
    Only region references are used there.
    */
-   void ParsedLineWriter::tokenWrite(::file::ostream & markupWriter, ::file::ostream & textWriter, string_to_string * docLinkHash, const char  *line, LineRegion *lineRegions)
+   void ParsedLineWriter::tokenWrite(serialize & markupWriter, serialize & textWriter, string_to_string * docLinkHash, const char  *line, LineRegion *lineRegions)
    {
       UNREFERENCED_PARAMETER(docLinkHash);
       index pos = 0;
@@ -71,7 +71,7 @@ namespace colorertake5
    @param line Line of text
    @param lineRegions Linked list of LineRegion structures
    */
-   void ParsedLineWriter::markupWrite(::file::ostream & markupWriter, ::file::ostream & textWriter, string_to_string *docLinkHash, const char *line, LineRegion *lineRegions)
+   void ParsedLineWriter::markupWrite(serialize & markupWriter, serialize & textWriter, string_to_string *docLinkHash, const char *line, LineRegion *lineRegions)
    {
       UNREFERENCED_PARAMETER(docLinkHash);
 
@@ -131,7 +131,7 @@ namespace colorertake5
    @param line Line of text
    @param lineRegions Linked list of LineRegion structures
    */
-   void ParsedLineWriter::htmlRGBWrite(::file::ostream & markupWriter, ::file::ostream & textWriter, string_to_string *docLinkHash, const char *line, LineRegion *lineRegions)
+   void ParsedLineWriter::htmlRGBWrite(serialize & markupWriter, serialize & textWriter, string_to_string *docLinkHash, const char *line, LineRegion *lineRegions)
    {
 
       index pos = 0;
@@ -173,7 +173,7 @@ namespace colorertake5
 
    /** Puts into stream style attributes from RegionDefine object.
    */
-   void ParsedLineWriter::writeStyle(::file::ostream & writer, const StyledRegion *lr)
+   void ParsedLineWriter::writeStyle(serialize & writer, const StyledRegion *lr)
    {
       static char span[256];
       int32_t cp = 0;
@@ -188,7 +188,7 @@ namespace colorertake5
 
    /** Puts into stream starting HTML \<span> tag with requested style specification
    */
-   void ParsedLineWriter::writeStart(::file::ostream & writer, const StyledRegion *lr)
+   void ParsedLineWriter::writeStart(serialize & writer, const StyledRegion *lr)
    {
       if (!lr->bfore && !lr->bback) return;
       writer << "<span style='";
@@ -198,13 +198,13 @@ namespace colorertake5
 
    /** Puts into stream ending HTML \</span> tag
    */
-   void ParsedLineWriter::writeEnd(::file::ostream & writer, const StyledRegion *lr)
+   void ParsedLineWriter::writeEnd(serialize & writer, const StyledRegion *lr)
    {
       if (!lr->bfore && !lr->bback) return;
       writer << "</span>";
    }
 
-   void ParsedLineWriter::writeHref(::file::ostream & writer, string_to_string *docLinkHash, const class scheme *scheme, const string &token, bool start)
+   void ParsedLineWriter::writeHref(serialize & writer, string_to_string *docLinkHash, const class scheme *scheme, const string &token, bool start)
    {
       string url;
       if (scheme != NULL)

@@ -1,9 +1,13 @@
 #pragma once
 
 
+#include "file_file_base.h"
+
+
 namespace file
 {
 
+   class reader;
 
    class writer;
 

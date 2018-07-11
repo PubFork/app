@@ -541,6 +541,7 @@ inline serialize & operator << (serialize & os, const pointd & p)
 
 }
 
+
 inline serialize & operator >> (serialize & is, pointd & p)
 {
 
@@ -550,3 +551,6 @@ inline serialize & operator >> (serialize & is, pointd & p)
    return is;
 
 }
+
+
+

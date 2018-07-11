@@ -30,7 +30,7 @@ namespace file
 
 
    template < class T >
-   bool ::file::system::output(::aura::application * papp, const ::file::path & pathOut, T * p, bool (T::*lpfnOuput)(::file::ostream &, ::file::istream &), const ::file::path & pathIn)
+   bool ::file::system::output(::aura::application * papp, const ::file::path & pathOut, T * p, bool (T::*lpfnOuput)(serialize &, serialize &), const ::file::path & pathIn)
    {
 
       ::file::path pathDownloading;
@@ -38,7 +38,7 @@ namespace file
       try
       {
 
-         ::file::ostream os;
+         serialize os;
 
          if (!prepare_output(papp, pathDownloading, pathOut, os))
          {
@@ -47,7 +47,7 @@ namespace file
 
          }
 
-         ::file::istream is;
+         serialize is;
 
          if (!prepare_input(papp, is, pathIn))
          {
@@ -96,7 +96,7 @@ namespace file
 
 
    template < class T >
-   bool ::file::system::output(::aura::application * papp, const ::file::path & pathOut, T * p, bool (T::*lpfnOuput)(::file::ostream &, ::file::istream &), ::file::file * pfileIn)
+   bool ::file::system::output(::aura::application * papp, const ::file::path & pathOut, T * p, bool (T::*lpfnOuput)(serialize &, serialize &), ::file::file * pfileIn)
    {
 
       ::file::path pathDownloading;
@@ -104,7 +104,7 @@ namespace file
       try
       {
 
-         ::file::ostream os;
+         serialize os;
 
          if (!prepare_output(papp, pathDownloading, pathOut, os))
          {
@@ -113,7 +113,7 @@ namespace file
 
          }
 
-         ::file::istream is;
+         serialize is;
 
          if (!prepare_input(papp, is, pfileIn))
          {
@@ -162,7 +162,7 @@ namespace file
 
 
    template < class T >
-   bool system::output(::aura::application * papp, const ::file::path & pathOut, T * p, bool (T::*lpfnOuput)(::file::ostream &, ::file::istream &), ::file::istream & is)
+   bool system::output(::aura::application * papp, const ::file::path & pathOut, T * p, bool (T::*lpfnOuput)(serialize &, serialize &), serialize & is)
    {
 
       ::file::path pathDownloading;
@@ -170,7 +170,7 @@ namespace file
       try
       {
 
-         ::file::ostream os;
+         serialize os;
 
          if (!prepare_output(papp, pathDownloading, pathOut, os))
          {
@@ -225,7 +225,7 @@ namespace file
 
 
    template < class T >
-   bool ::file::system::output(::aura::application * papp, file * pfileOut, T * p, bool (T::*lpfnOuput)(::file::ostream &, ::file::istream &), const ::file::path & pathIn)
+   bool ::file::system::output(::aura::application * papp, file * pfileOut, T * p, bool (T::*lpfnOuput)(serialize &, serialize &), const ::file::path & pathIn)
    {
 
       ::file::path pathDownloading;
@@ -233,7 +233,7 @@ namespace file
       try
       {
 
-         ostream os(pfileOut);
+         serialize os(pfileOut);
 
          if (os.m_spfile.is_null())
          {
@@ -242,7 +242,7 @@ namespace file
 
          }
 
-         ::file::istream is;
+         serialize is;
 
          if (!prepare_input(papp, is, pathIn))
          {
@@ -272,7 +272,7 @@ namespace file
 
 
    template < class T >
-   bool ::file::system::output(::aura::application * papp, file * pfileOut, T * p, bool (T::*lpfnOuput)(::file::ostream &, ::file::istream &), ::file::file * pfileIn)
+   bool ::file::system::output(::aura::application * papp, file * pfileOut, T * p, bool (T::*lpfnOuput)(serialize &, serialize &), ::file::file * pfileIn)
    {
 
       ::file::path pathDownloading;
@@ -280,7 +280,7 @@ namespace file
       try
       {
 
-         ostream os(pfileOut);
+         serialize os(pfileOut);
 
          if (os.m_spfile.is_null())
          {
@@ -289,7 +289,7 @@ namespace file
 
          }
 
-         ::file::istream is;
+         serialize is;
 
          if (!prepare_input(papp, is, pfileIn))
          {
@@ -319,7 +319,7 @@ namespace file
 
 
    template < class T >
-   bool system::output(::aura::application * papp, file * pfileOut, T * p, bool (T::*lpfnOuput)(::file::ostream &, ::file::istream &), ::file::istream & is)
+   bool system::output(::aura::application * papp, file * pfileOut, T * p, bool (T::*lpfnOuput)(serialize &, serialize &), serialize & is)
    {
 
       ::file::path pathDownloading;
@@ -327,7 +327,7 @@ namespace file
       try
       {
 
-         ostream os(pfileOut);
+         serialize os(pfileOut);
 
          if (os.m_spfile.is_null())
          {
@@ -366,7 +366,7 @@ namespace file
 
 
    template < class T >
-   bool ::file::system::output(::aura::application * papp, ostream & os, T * p, bool (T::*lpfnOuput)(::file::ostream &, ::file::istream &), const ::file::path & pathIn)
+   bool ::file::system::output(::aura::application * papp, serialize & os, T * p, bool (T::*lpfnOuput)(serialize &, serialize &), const ::file::path & pathIn)
    {
 
       ::file::path pathDownloading;
@@ -374,7 +374,7 @@ namespace file
       try
       {
 
-         ::file::istream is;
+         serialize is;
 
          if (!prepare_input(papp, is, pathIn))
          {
@@ -404,7 +404,7 @@ namespace file
 
 
    template < class T >
-   bool ::file::system::output(::aura::application * papp, ostream & os, T * p, bool (T::*lpfnOuput)(::file::ostream &, ::file::istream &), ::file::file * pfileIn)
+   bool ::file::system::output(::aura::application * papp, serialize & os, T * p, bool (T::*lpfnOuput)(serialize &, serialize &), ::file::file * pfileIn)
    {
 
       ::file::path pathDownloading;
@@ -412,7 +412,7 @@ namespace file
       try
       {
 
-         ::file::istream is;
+         serialize is;
 
          if (!prepare_input(papp, is, pfileIn))
          {
@@ -442,7 +442,7 @@ namespace file
 
 
    template < class T >
-   bool system::output(::aura::application * papp, ostream & os, T * p, bool (T::*lpfnOuput)(::file::ostream &, ::file::istream &), ::file::istream & is)
+   bool system::output(::aura::application * papp, serialize & os, T * p, bool (T::*lpfnOuput)(serialize &, serialize &), serialize & is)
    {
 
       ::file::path pathDownloading;
@@ -478,7 +478,7 @@ namespace file
 
 
    template < class T >
-   bool application::output(const ::file::path & pathOut, T * p, bool (T::*lpfnOuput)(::file::ostream &, ::file::istream &), const ::file::path & pathIn)
+   bool application::output(const ::file::path & pathOut, T * p, bool (T::*lpfnOuput)(serialize &, serialize &), const ::file::path & pathIn)
    {
 
       return System.file().output(get_app(), pathOut, p, lpfnOuput, pathIn);
@@ -487,7 +487,7 @@ namespace file
 
 
    template < class T >
-   bool application::output(const ::file::path & pathOut, T * p, bool (T::*lpfnOuput)(::file::ostream &, ::file::istream &), ::file::file * pfileIn)
+   bool application::output(const ::file::path & pathOut, T * p, bool (T::*lpfnOuput)(serialize &, serialize &), ::file::file * pfileIn)
    {
 
       return System.file().output(get_app(), pathOut, p, lpfnOuput, pfileIn);
@@ -496,7 +496,7 @@ namespace file
 
 
    template < class T >
-   bool application::output(const ::file::path & pathOut, T * p, bool (T::*lpfnOuput)(::file::ostream &, ::file::istream &), ::file::istream & istream)
+   bool application::output(const ::file::path & pathOut, T * p, bool (T::*lpfnOuput)(serialize &, serialize &), serialize & istream)
    {
 
       return System.file().output(get_app(), pathOut, p, lpfnOuput, istream);
@@ -504,7 +504,7 @@ namespace file
    }
 
    template < class T >
-   bool application::output(file * pfileOut, T * p, bool (T::*lpfnOuput)(::file::ostream &, ::file::istream &), const ::file::path & pathIn)
+   bool application::output(file * pfileOut, T * p, bool (T::*lpfnOuput)(serialize &, serialize &), const ::file::path & pathIn)
    {
 
       return System.file().output(get_app(), pfileOut, p, lpfnOuput, pathIn);
@@ -513,7 +513,7 @@ namespace file
 
 
    template < class T >
-   bool application::output(file * pfileOut, T * p, bool (T::*lpfnOuput)(::file::ostream &, ::file::istream &), ::file::file * pfileIn)
+   bool application::output(file * pfileOut, T * p, bool (T::*lpfnOuput)(serialize &, serialize &), ::file::file * pfileIn)
    {
 
       return System.file().output(get_app(), pfileOut, p, lpfnOuput, pfileIn);
@@ -522,7 +522,7 @@ namespace file
 
 
    template < class T >
-   bool application::output(file * pfileOut, T * p, bool (T::*lpfnOuput)(::file::ostream &, ::file::istream &), ::file::istream & istream)
+   bool application::output(file * pfileOut, T * p, bool (T::*lpfnOuput)(serialize &, serialize &), serialize & istream)
    {
 
       return System.file().output(get_app(), pfileOut, p, lpfnOuput, istream);
@@ -531,7 +531,7 @@ namespace file
 
 
    template < class T >
-   bool application::output(ostream & os, T * p, bool (T::*lpfnOuput)(::file::ostream &, ::file::istream &), const ::file::path & pathIn)
+   bool application::output(serialize & os, T * p, bool (T::*lpfnOuput)(serialize &, serialize &), const ::file::path & pathIn)
    {
 
       return System.file().output(get_app(), os, p, lpfnOuput, pathIn);
@@ -540,7 +540,7 @@ namespace file
 
 
    template < class T >
-   bool application::output(ostream & os, T * p, bool (T::*lpfnOuput)(::file::ostream &, ::file::istream &), ::file::file * pfileIn)
+   bool application::output(serialize & os, T * p, bool (T::*lpfnOuput)(serialize &, serialize &), ::file::file * pfileIn)
    {
 
       return System.file().output(get_app(), os, p, lpfnOuput, pfileIn);
@@ -549,7 +549,7 @@ namespace file
 
 
    template < class T >
-   bool application::output(ostream & os, T * p, bool (T::*lpfnOuput)(::file::ostream &, ::file::istream &), ::file::istream & istream)
+   bool application::output(serialize & os, T * p, bool (T::*lpfnOuput)(serialize &, serialize &), serialize & istream)
    {
 
       return System.file().output(get_app(), os, p, lpfnOuput, istream);
@@ -600,16 +600,16 @@ bool file_put_array(const char * path, const ARRAY & a, ::aura::application * pa
 
       }
 
-      ::file::byte_ostream ostream(pfile);
+      ::file::byte_stream serialize(pfile);
 
       ::count count = a.get_count();
 
-      ostream.write_arbitrary(count);
+      serialize.write(count);
 
       for (index index = 0; index < count; index++)
       {
 
-         ostream << a.element_at(index);
+         serialize << a.element_at(index);
 
       }
 
@@ -657,11 +657,11 @@ bool file_as_array(ARRAY & a, const char * path, ::aura::application * papp)
 
       }
 
-      ::file::byte_istream istream(pfile);
+      ::file::byte_stream istream(pfile);
 
       ::count count;
-      //istream >> count;
-      istream.read_arbitrary(count);
+
+      istream.read(count);
 
       if (istream.fail())
       {

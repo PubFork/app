@@ -1,6 +1,9 @@
 #pragma once
 
 
+#include "file_writer_flush.h"
+
+
 namespace file
 {
 

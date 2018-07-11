@@ -58,7 +58,7 @@ public:
    virtual ~compress_gz();
 
 
-   bool transfer(::file::ostream & ostreamGzFileCompressed, ::file::istream & istreamUncompressed);
+   bool transfer(serialize & ostreamGzFileCompressed, serialize & istreamUncompressed);
 
 
 };
@@ -74,7 +74,7 @@ public:
    virtual ~uncompress_gz();
    
 
-   bool transfer(::file::ostream & ostreamUncompressed, ::file::istream & istreamGzFileCompressed);
+   bool transfer(serialize & ostreamUncompressed, serialize & istreamGzFileCompressed);
 
 
 };

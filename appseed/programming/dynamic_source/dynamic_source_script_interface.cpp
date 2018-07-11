@@ -98,7 +98,7 @@ bool script_interface::main_finalize()
    }
 }
 
-::file::ostream & script_interface::ostream()
+serialize & script_interface::ostream()
 {
    if(m_pinstanceMain == this)
    {

@@ -43,7 +43,7 @@ namespace http
    }
 
 
-   ::file::ostream & ostream::operator << (::memory_file & memfile)
+   serialize & ostream::operator << (::memory_file & memfile)
    {
 
       write(memfile.get_data(), (memory_size_t) memfile.get_length());
@@ -88,7 +88,7 @@ namespace http
       return str.has_char();
    }*/
 
-   ::file::ostream & ostream::operator << (::file::file_sp spbuf)
+   serialize & ostream::operator << (::file::file_sp spbuf)
    {
       uint_ptr nRead;
       memory mem;

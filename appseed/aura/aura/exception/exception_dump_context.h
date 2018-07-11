@@ -1,8 +1,8 @@
 #pragma once
 
-
+#include "aura/filesystem/file/file_serialize.h"
 class CLASS_DECL_AURA dump_context :
-   virtual public object
+   virtual public serialize
 {
    public:
 
@@ -13,20 +13,22 @@ class CLASS_DECL_AURA dump_context :
       void SetDepth(int32_t nNewDepth);
 
 // Operations
-      dump_context & operator<<(const char * lpsz);
-      dump_context & operator<<(const unichar * lpsz); // automatically thinned
-      dump_context & operator<<(string str);
-      dump_context & operator<<(const void * lp);
-      dump_context & operator<<(const object* pOb);
-      dump_context & operator<<(const object& ob);
-      dump_context & operator<<(int8_t i);
-      dump_context & operator<<(uint8_t ui);
-      dump_context & operator<<(int16_t i);
-      dump_context & operator<<(uint16_t ui);
-      dump_context & operator<<(int32_t i);
-      dump_context & operator<<(uint32_t ui);
-      dump_context & operator<<(int64_t i);
-      dump_context & operator<<(uint64_t ui);
+      virtual void write(const char * lpsz) override;
+#ifdef WINDOWS
+      virtual void write(const unichar * lpsz) override; // automatically thinned
+#endif
+      virtual void write(string & str) override;;
+      virtual void write(const void * lp);
+      virtual void write(object * pobject) override;
+      virtual void write(object & object) override;
+      virtual void write(char i) override;
+      virtual void write(uchar ui) override;
+      virtual void write(i16 i) override;
+      virtual void write(u16 ui) override;
+      virtual void write(i32 i) override;
+      virtual void write(u32 ui) override;
+      virtual void write(i64 i) override;
+      virtual void write(u64 ui) override;
       dump_context & hex_dump(int8_t i);
       dump_context & hex_dump(uint8_t i);
       dump_context & hex_dump(int16_t i);
@@ -35,19 +37,19 @@ class CLASS_DECL_AURA dump_context :
       dump_context & hex_dump(uint32_t i);
       dump_context & hex_dump(int64_t i);
       dump_context & hex_dump(uint64_t i);
-      dump_context & operator<<(float f);
-      dump_context & operator<<(double d);
-      dump_context & operator<<(oswindow h);
-      dump_context & operator<<(HDC h);
+      virtual void  write(float f) override;
+      virtual void  write(double d) override;
+      virtual void  write(oswindow h);
+      virtual void  write(HDC h);
 
 #ifdef WINDOWS
-      dump_context & operator<<(HMENU h);
-      dump_context & operator<<(HACCEL h);
-      dump_context & operator<<(HFONT h);
+      virtual void  write(HMENU h) override;
+      virtual void  write(HACCEL h) override;
+      virtual void  write(HFONT h) override;
 #endif
 
       void hex_dump(const char * lpszLine, BYTE* pby, int32_t nBytes, int32_t nWidth);
-      void flush();
+      virtual void flush() override;
 
 // Implementation
    protected:

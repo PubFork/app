@@ -39,7 +39,7 @@ namespace xml
       document & operator = (const document & document);
 
 
-      virtual void edit(base_edit * pbaseedit);
+      virtual void edit(base_edit * pbaseedit) override;
 
 
       inline sp(::xml::edit) validate_edit(base_edit * pbaseedit)

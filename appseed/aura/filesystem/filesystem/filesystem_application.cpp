@@ -424,7 +424,7 @@ namespace file
    }
 
 
-   bool application::save(var varFile,::serializable & o)
+   bool application::save(var varFile,::object & o)
    {
 
       serialize s(get_app());
@@ -436,7 +436,7 @@ namespace file
    }
 
 
-   bool application::load(::serializable & o,var varFile)
+   bool application::load(::object & o,var varFile)
    {
 
       serialize s(get_app());
@@ -488,7 +488,7 @@ namespace file
    }
 
 
-   bool application::transfer(const path & pathOut, ::file::istream & is)
+   bool application::transfer(const path & pathOut, serialize & is)
    {
 
       return System.file().transfer(get_app(), pathOut, is);
@@ -512,7 +512,7 @@ namespace file
    }
 
 
-   bool application::transfer(file * pfileOut, ::file::istream & is)
+   bool application::transfer(file * pfileOut, serialize & is)
    {
 
       return System.file().transfer(get_app(), pfileOut, is);
@@ -536,7 +536,7 @@ namespace file
    }
 
 
-   bool application::transfer(ostream & os, ::file::istream & is)
+   bool application::transfer(ostream & os, serialize & is)
    {
 
       return System.file().transfer(get_app(), os, is);

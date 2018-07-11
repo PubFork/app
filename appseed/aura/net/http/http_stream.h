@@ -5,24 +5,24 @@ namespace http
 {
 
 
-   class CLASS_DECL_AURA ostream :
-      virtual public ::file::plain_text_ostream
+   class CLASS_DECL_AURA stream :
+      virtual public ::file::plain_text_stream
    {
    public:
 
 
-      ostream();
-      ostream(::file::file * pbuffer);
-      virtual ~ostream();
+      stream();
+      stream(::file::file * pbuffer);
+      virtual ~stream();
 
 
-      using ::file::plain_text_ostream::write;
+      using ::file::plain_text_stream::write;
       virtual void write (const string & str);
 
 
-      using ::file::plain_text_ostream::operator<<;
-      ::file::ostream & operator << (::memory_file & memfile);
-      ::file::ostream & operator << (::file::file_sp filesp);
+      using ::file::plain_text_stream::operator<<;
+      serialize & operator << (::memory_file & memfile);
+      serialize & operator << (::file::file_sp filesp);
 
 
    };

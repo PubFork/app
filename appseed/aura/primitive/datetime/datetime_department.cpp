@@ -976,7 +976,7 @@ namespace datetime
 //
 //         auto & file = Application.file().friendly_get_file(path, ::file::type_binary | ::file::mode_write | ::file::mode_create | ::file::defer_create_directory);
 //
-//         ::file::byte_ostream os(file);
+//         ::file::byte_stream os(file);
 //
 //         ::file::map::write(os, m_countryLocalityTimeZone);
 //

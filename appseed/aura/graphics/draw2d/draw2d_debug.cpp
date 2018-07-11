@@ -6,18 +6,23 @@
 
 dump_context & operator<<(dump_context & dumpcontext,SIZE size)
 {
-   return dumpcontext << "(" << size.cx << " x " << size.cy << ")";
+   dumpcontext << "(" << size.cx << " x " << size.cy << ")";
+   
+   return dumpcontext;
+   
 }
 
 dump_context & operator<<(dump_context & dumpcontext,POINT point)
 {
-   return dumpcontext << "(" << point.x << ", " << point.y << ")";
+   dumpcontext << "(" << point.x << ", " << point.y << ")";
+   return dumpcontext;
 }
 
 dump_context & operator<<(dump_context & dumpcontext,const RECT& rect)
 {
-   return dumpcontext << "(L " << rect.left << ", T " << rect.top << ", R " <<
+   dumpcontext << "(L " << rect.left << ", T " << rect.top << ", R " <<
           rect.right << ", B " << rect.bottom << ")";
+   return dumpcontext;
 }
 
 

@@ -208,7 +208,7 @@ namespace file
 
 
       void flush();
-      bool SaveTo(::file::ostream & file);
+      bool SaveTo(serialize & file);
       bool Save(::file::file & file);
       bool Save_N_to_CRLF(::file::file & file);
 

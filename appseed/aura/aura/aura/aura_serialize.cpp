@@ -3,8 +3,8 @@
 
 serialize::serialize(serialize && serialize) :
    ::object(::move(serialize)),
-   ::file::istream(::move(serialize)),
-   ::file::ostream(::move(serialize)),
+   serialize(::move(serialize)),
+   serialize(::move(serialize)),
    m_iVersion(serialize.m_iVersion)
 {
 
@@ -108,22 +108,22 @@ void serialize::stream(void * p, memory_size_t s)
 
 }
 
-void serialize::stream_object(serializable & serializable)
+void serialize::stream_object(object & object)
 {
 
-   serializable.stream(*this);
+   object.stream(*this);
 
 }
 
 
-void serialize::operator()(serializable & serializable)
+void serialize::operator()(object & object)
 {
 
-   stream_object(serializable);
+   stream_object(object);
 
 }
 
-void serialize::operator()(serializable * pserializable)
+void serialize::operator()(object * pserializable)
 {
 
    stream_object(*pserializable);
@@ -131,7 +131,7 @@ void serialize::operator()(serializable * pserializable)
 }
 
 
-//serialize & serialize::operator << (serializable & serialize)
+//serialize & serialize::operator << (object & serialize)
 //{
 //
 //   stream_object(serialize);
@@ -141,7 +141,7 @@ void serialize::operator()(serializable * pserializable)
 //}
 //
 //
-//serialize & serialize::operator >> (serializable & serialize)
+//serialize & serialize::operator >> (object & serialize)
 //{
 //
 //   stream_object(serialize);
@@ -160,7 +160,7 @@ bool serialize::is_version(index i)
 
 
 
-void serializable::stream(::serialize & serialize)
+void object::stream(::serialize & serialize)
 {
 
 }
@@ -168,7 +168,7 @@ void serializable::stream(::serialize & serialize)
 
 
 
-void serialize::stream_file(::file::path path, ::serializable & serializable)
+void serialize::stream_file(::file::path path, ::object & object)
 {
 
    if (path.is_empty())
@@ -197,12 +197,12 @@ void serialize::stream_file(::file::path path, ::serializable & serializable)
 
    serialize.m_spfile = Application.file().get_file(path, nOpenFlags);
 
-   serialize(serializable);
+   serialize(object);
 
 }
 
 
-void serialize::stream_link(serializable & serializable)
+void serialize::stream_link(object & object)
 {
 
    string strLink;
@@ -210,7 +210,7 @@ void serialize::stream_link(serializable & serializable)
    if (is_storing())
    {
 
-      strLink = serializable.oprop("read_only_link");
+      strLink = object.oprop("read_only_link");
 
       bool bReadOnly = strLink.has_char();
 
@@ -219,7 +219,7 @@ void serialize::stream_link(serializable & serializable)
       if (!bReadOnly)
       {
 
-         strLink = serializable.oprop("link");
+         strLink = object.oprop("link");
 
          //if (strLink.is_empty())
          {
@@ -253,13 +253,13 @@ void serialize::stream_link(serializable & serializable)
       if (bReadOnly)
       {
 
-         serializable.oprop("read_only_link") = strLink;
+         object.oprop("read_only_link") = strLink;
 
       }
       else
       {
 
-         serializable.oprop("link") = strLink;
+         object.oprop("link") = strLink;
 
       }
 
@@ -268,14 +268,14 @@ void serialize::stream_link(serializable & serializable)
    if (strLink.has_char())
    {
 
-      stream_link(strLink, serializable);
+      stream_link(strLink, object);
 
    }
 
 }
 
 
-void serialize::stream_link(string strLink, serializable & serializable)
+void serialize::stream_link(string strLink, object & object)
 {
 
    ::file::path path = get_link_path(strLink);
@@ -292,7 +292,7 @@ void serialize::stream_link(string strLink, serializable & serializable)
    try
    {
 
-      stream_file(path, serializable);
+      stream_file(path, object);
 
    }
    catch (...)
@@ -365,7 +365,7 @@ void serialize::stream_link(string strLink, serializable & serializable)
 
 
 
-void serialize::load(::file::path path, serializable & serializable, UINT nOpenFlags)
+void serialize::load(::file::path path, object & object, UINT nOpenFlags)
 {
 
    ::file::file_sp pfile = Application.file().get_file(path, nOpenFlags);
@@ -391,7 +391,7 @@ void serialize::load(::file::path path, serializable & serializable, UINT nOpenF
    try
    {
 
-      operator()(serializable);
+      operator()(object);
 
    }
    catch (...)
@@ -405,7 +405,7 @@ void serialize::load(::file::path path, serializable & serializable, UINT nOpenF
 }
 
 
-void serialize::save(::file::path path, serializable & serializable, UINT nOpenFlags)
+void serialize::save(::file::path path, object & object, UINT nOpenFlags)
 {
 
    ::file::file_sp pfile = Application.file().get_file(path, nOpenFlags);
@@ -431,7 +431,7 @@ void serialize::save(::file::path path, serializable & serializable, UINT nOpenF
    try
    {
 
-      operator()(serializable);
+      operator()(object);
 
    }
    catch (...)
@@ -529,24 +529,24 @@ bool writer::is_storing()
 
 
 
-CLASS_DECL_AURA serialize & operator << (serialize & serialize, serializable & serializable)
+CLASS_DECL_AURA serialize & operator << (serialize & serialize, object & object)
 {
 
    ASSERT(serialize.is_storing());
 
-   serialize.stream_object(serializable);
+   serialize.stream_object(object);
 
    return serialize;
 
 }
 
 
-CLASS_DECL_AURA serialize & operator >> (serialize & serialize, serializable & serializable)
+CLASS_DECL_AURA serialize & operator >> (serialize & serialize, object & object)
 {
 
    ASSERT(!serialize.is_storing());
 
-   serialize.stream_object(serializable);
+   serialize.stream_object(object);
 
    return serialize;
 

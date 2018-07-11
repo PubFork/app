@@ -20,7 +20,7 @@ namespace database
       m_bOk = true;
    }
 
-   bool change_event::data_get(::serializable & obj)
+   bool change_event::data_get(::object & obj)
    {
       if(m_pserver != NULL)
       {

@@ -1,90 +1,90 @@
-﻿#pragma once
+#pragma once
 
 
-//class CLASS_DECL_AURA ::object :
-class CLASS_DECL_AURA mini_object
-// virtual public element
-//class CLASS_DECL_AURA waitable :
-//class CLASS_DECL_AURA object
-//   virtual public ::object
-{
-public:
-
-
-   int64_t m_countReference;
-
-   mini_object()
-   {
-      m_countReference = 1;
-   }
-   virtual ~mini_object()
-   {
-
-   }
-
-   virtual int64_t add_ref()
-   {
-
-#ifdef WINDOWS
-
-      return InterlockedIncrement64(&m_countReference);
-
-#elif defined(RASPBIAN) && defined(OS32BIT)
-
-      return __sync_add_and_fetch_4(&m_countReference,1);
-
-#else
-
-      return __sync_add_and_fetch(&m_countReference, 1);
-
-#endif
-
-   }
-
-
-   int64_t dec_ref()
-   {
-
-#ifdef WINDOWS
-
-      return InterlockedDecrement64(&m_countReference);
-
-#elif defined(RASPBIAN) && defined(OS32BIT)
-
-      return __sync_sub_and_fetch_4(&m_countReference,1);
-
-#else
-
-      return __sync_sub_and_fetch(&m_countReference, 1);
-
-#endif
-
-   }
-
-
-   int64_t release()
-   {
-
-      int64_t i = dec_ref();
-
-      if (i == 0)
-      {
-
-         delete this;
-
-      }
-
-      return i;
-
-   }
-
-   inline void set_heap_alloc()
-   {
-
-   }
-
-
-};
+////class CLASS_DECL_AURA ::object :
+//class CLASS_DECL_AURA mini_object
+//// virtual public element
+////class CLASS_DECL_AURA waitable :
+////class CLASS_DECL_AURA object
+////   virtual public ::object
+//{
+//public:
+//
+//
+//   int64_t m_countReference;
+//
+//   mini_object()
+//   {
+//      m_countReference = 1;
+//   }
+//   virtual ~mini_object()
+//   {
+//
+//   }
+//
+//   virtual int64_t add_ref()
+//   {
+//
+//#ifdef WINDOWS
+//
+//      return InterlockedIncrement64(&m_countReference);
+//
+//#elif defined(RASPBIAN) && defined(OS32BIT)
+//
+//      return __sync_add_and_fetch_4(&m_countReference,1);
+//
+//#else
+//
+//      return __sync_add_and_fetch(&m_countReference, 1);
+//
+//#endif
+//
+//   }
+//
+//
+//   int64_t dec_ref()
+//   {
+//
+//#ifdef WINDOWS
+//
+//      return InterlockedDecrement64(&m_countReference);
+//
+//#elif defined(RASPBIAN) && defined(OS32BIT)
+//
+//      return __sync_sub_and_fetch_4(&m_countReference,1);
+//
+//#else
+//
+//      return __sync_sub_and_fetch(&m_countReference, 1);
+//
+//#endif
+//
+//   }
+//
+//
+//   int64_t release()
+//   {
+//
+//      int64_t i = dec_ref();
+//
+//      if (i == 0)
+//      {
+//
+//         delete this;
+//
+//      }
+//
+//      return i;
+//
+//   }
+//
+//   inline void set_heap_alloc()
+//   {
+//
+//   }
+//
+//
+//};
 
 class var;
 class application_bias;
@@ -160,6 +160,12 @@ public:
    virtual int64_t add_ref();
    virtual int64_t dec_ref();
    virtual int64_t release();
+   virtual void
+   stream(
+          serialize
+          &
+          serialize
+          )     ;
 
 
 };

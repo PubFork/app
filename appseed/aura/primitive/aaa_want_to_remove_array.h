@@ -21,9 +21,9 @@
 
 
 template < class Type, class RawType >
-inline ::file::ostream & operator << (::file::ostream & ostream, const string_array < Type, RawType > & a)
+inline serialize & operator << (serialize & ostream, const string_array < Type, RawType > & a)
 {
-   ostream.write_arbitrary(a->get_count());
+   ostream.write(a->get_count());
    for (int32_t i = 0; i < a->get_size(); i++)
    {
       ostream << a->element_at(i);
@@ -33,7 +33,7 @@ inline ::file::ostream & operator << (::file::ostream & ostream, const string_ar
 
 
 template < class Type, class RawType >
-inline ::file::istream &  operator >>(::file::istream & istream, string_array < Type, RawType > & a)
+inline serialize &  operator >>(serialize & istream, string_array < Type, RawType > & a)
 {
 
    if (istream.fail())
@@ -45,7 +45,7 @@ inline ::file::istream &  operator >>(::file::istream & istream, string_array < 
 
    ::count iSize;
 
-   istream.read_arbitrary(iSize);
+   istream.read(iSize);
 
    if (istream.fail())
    {

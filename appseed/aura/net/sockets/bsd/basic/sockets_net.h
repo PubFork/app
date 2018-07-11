@@ -101,7 +101,7 @@ namespace sockets
 
 
       class CLASS_DECL_AURA dns_cache_item :
-         virtual public ::serializable
+         virtual public ::object
       {
       public:
 
@@ -123,7 +123,7 @@ namespace sockets
       };
 
       class CLASS_DECL_AURA reverse_cache_item:
-         virtual public ::serializable
+         virtual public ::object
       {
       public:
 

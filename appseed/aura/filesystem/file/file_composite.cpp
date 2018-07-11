@@ -11,7 +11,7 @@ namespace file
    }
 
 
-   composite::composite(file_sp pfile)
+   composite::composite(file * pfile)
    {
 
       m_spfile = pfile;
@@ -201,7 +201,7 @@ namespace file
    }
 
 
-   void composite::write(ostream & ostream)
+   void composite::write(serialize & ostream)
    {
 
       m_spfile->write(ostream);
@@ -209,7 +209,7 @@ namespace file
    }
 
 
-   void composite::read(istream & istream)
+   void composite::read(serialize & istream)
    {
 
       m_spfile->read(istream);

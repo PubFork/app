@@ -123,7 +123,7 @@ namespace file
    class file;
    class istream;
    class ostream;
-   class serializable;
+   class object;
 
 
 } // namespace file

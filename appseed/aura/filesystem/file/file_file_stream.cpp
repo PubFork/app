@@ -27,12 +27,12 @@ namespace file
    }
 
 
-   file_stream::file_stream(const file_stream & stream):
-      file_ostream(stream),
-      file_istream(stream)
-   {
-
-   }
+//   file_stream::file_stream(const file_stream & stream):
+//      file_ostream(stream),
+//      file_istream(stream)
+//   {
+//
+//   }
 
 
    file_stream::~file_stream()

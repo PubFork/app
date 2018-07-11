@@ -20,7 +20,7 @@ class CLASS_DECL_AURA verisimple_exception:
 
 #ifdef DEBUG
 
-CLASS_DECL_AURA ::file::ostream & operator << (::file::ostream & dumpcontext,const verisimple_exception & e);
+CLASS_DECL_AURA serialize & operator << (serialize & dumpcontext, verisimple_exception & e);
 
 #endif
 

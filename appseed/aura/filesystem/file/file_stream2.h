@@ -1,32 +1,34 @@
 #pragma once
 
 
-
 namespace file
 {
 
-   class CLASS_DECL_AURA ostream2 :
-      virtual public ostream
+   
+   class CLASS_DECL_AURA stream2 :
+      virtual public serialize
    {
    public:
-      ostream2();
-      ostream2(writer * pwriter);
-      virtual ~ostream2();
+      
+      
+      stream2();
+      stream2(writer * pwriter);
+      virtual ~stream2();
+      
 
-      ostream2 & operator << (uchar uch);
-      ostream2 & operator << (uint16_t ui);
-      ostream2 & operator << (int32_t i);
-      ostream2 & operator << (uint32_t ui);
-      ostream2 & operator << (const RECT & rect);
-      ostream2 & operator << (const char * psz);
-      ostream2 & operator << (const string & str);
+      stream2 & operator << (uchar uch);
+      stream2 & operator << (u16 ui);
+      stream2 & operator << (i32 i);
+      stream2 & operator << (u32 ui);
+      stream2 & operator << (RECT & rect);
+      stream2 & operator << (const char * psz);
+      stream2 & operator << (string & str);
+      
+      
    };
 
 
 } // namespace file
-
-
-
 
 
 

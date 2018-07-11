@@ -239,7 +239,7 @@ namespace numeric_info_internal
 
 
 template < typename T > 
-inline ::file::istream &  operator >>(::file::istream & istream, c_number < T > & t)
+inline serialize &  operator >>(serialize & istream, c_number < T > & t)
 {
    
    return istream >> t.m_number;
@@ -247,7 +247,7 @@ inline ::file::istream &  operator >>(::file::istream & istream, c_number < T > 
 }
 
 template < typename T > 
-inline ::file::ostream &  operator <<(::file::ostream & ostream, const c_number < T > & t)
+inline serialize &  operator <<(serialize & ostream, const c_number < T > & t)
 {
    
    return ostream << t.m_number;

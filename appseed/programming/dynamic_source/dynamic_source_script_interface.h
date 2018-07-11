@@ -26,7 +26,7 @@ public:
 
 
    sp(::memory_file)           m_spmemoryfileFallback;
-   ::file::ostream               m_ostreamFallback;
+   serialize               m_ostreamFallback;
 
    script *                            m_pscript;
 
@@ -61,7 +61,7 @@ public:
 
 
    virtual ::file::file & output_file();
-   virtual ::file::ostream & ostream();
+   virtual serialize & ostream();
 
 
    virtual void on_initialize();

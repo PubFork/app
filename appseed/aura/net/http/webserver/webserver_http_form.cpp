@@ -33,7 +33,7 @@ namespace http
 
       }
 
-      ::file::plain_text_istream is(infil);
+      ::file::plain_text_stream is(infil);
 
       UNREFERENCED_PARAMETER(content_length);
 

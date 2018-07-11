@@ -1,8 +1,8 @@
-﻿#pragma once
+#pragma once
 
 
 class CLASS_DECL_AURA critical_section :
-   virtual public mini_object
+   virtual public simple_object
 {
 public:
 

@@ -280,12 +280,12 @@ namespace user
       return m_bNew;
    }
 
-   //void document::write(::file::ostream & ostream) const
+   //void document::write(serialize & ostream) const
    //{
    //   UNREFERENCED_PARAMETER(ostream);
    //}
 
-   //void document::read(::file::istream & istream)
+   //void document::read(serialize & istream)
    //{
    //   UNREFERENCED_PARAMETER(istream);
    //}

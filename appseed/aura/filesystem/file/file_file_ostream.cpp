@@ -6,13 +6,13 @@ namespace file
 {
 
 
-   file_ostream::file_ostream()
+   file_stream::file_stream()
    {
 
    }
 
 
-   file_ostream::file_ostream(const char * lpszFileName,uint32_t nOpenFlags,::aura::application * papp)
+   file_stream::file_stream(const char * lpszFileName,uint32_t nOpenFlags,::aura::application * papp)
    {
 
       open(lpszFileName,nOpenFlags,papp);
@@ -20,21 +20,21 @@ namespace file
    }
 
 
-   file_ostream::file_ostream(file * preader)
+   file_stream::file_stream(file * preader)
    {
 
       m_spfile = preader;
 
    }
 
-   file_ostream::file_ostream(const file_ostream & istream)
-   {
+//   file_stream::file_stream(const file_stream & istream)
+//   {
+//
+//      m_spfile = istream.m_spfile;
+//
+//   }
 
-      m_spfile = istream.m_spfile;
-
-   }
-
-   file_ostream::~file_ostream()
+   file_stream::~file_stream()
    {
 
 

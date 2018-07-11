@@ -887,7 +887,7 @@ namespace file
    }
 
 
-   bool edit_file::SaveTo(::file::ostream & ostream)
+   bool edit_file::SaveTo(serialize & ostream)
    {
 
 

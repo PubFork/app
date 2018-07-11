@@ -19,7 +19,7 @@ namespace file
    //      if >= 0xff characters: 0xff, len:WORD, char chars
    //      if >= 0xfffe characters: 0xff, 0xffff, len:uint32_t, TCHARs
 
-   void byte_ostream:: write (const string & string)
+   void byte_stream:: write (string & string)
    {
       if (string.get_length() < 255)
       {
@@ -45,240 +45,257 @@ namespace file
 
 
 
-   byte_ostream::byte_ostream()
+   byte_stream::byte_stream()
    {
       m_b64bit = false;
    }
 
-   byte_ostream::byte_ostream(file * pwriter) :
-      ostream(pwriter)
+   byte_stream::byte_stream(file * pfile) :
+      serialize(pfile)
    {
       m_b64bit = false;
    }
 
-   byte_ostream::byte_ostream(const  ostream & os) :
-      ostream(os)
+//   byte_stream::byte_stream(const  ostream & os) :
+//      ostream(os)
+//   {
+//      m_b64bit = false;
+//   }
+
+   byte_stream::~byte_stream()
    {
-      m_b64bit = false;
-   }
-
-   byte_ostream::~byte_ostream()
-   {
-
-   }
-
-   void byte_ostream:: write (bool b)
-   {
-
-      m_spfile->write(&b, sizeof(b));
 
    }
 
-   void byte_ostream:: write (char ch)
+   void byte_stream:: write (bool b)
    {
 
-      m_spfile->write(&ch, sizeof(ch));
+      oblt(b);
 
    }
 
-   void byte_ostream:: write (uchar uch)
+   void byte_stream:: write (char ch)
    {
 
-      m_spfile->write(&uch, sizeof(uch));
+      oblt(ch);
 
    }
 
-   void byte_ostream:: write (int16_t i)
+   void byte_stream:: write (uchar uch)
    {
-      write_arbitrary(i);
+
+      oblt(uch);
 
    }
 
-   void byte_ostream:: write (uint16_t ui)
+   
+   void byte_stream:: write (int16_t i)
    {
-      write_arbitrary(ui);
+      
+      oblt(i);
+
+   }
+
+   void byte_stream:: write (u16 ui)
+   {
+      oblt(ui);
 
    }
 #ifdef WINDOWS
-   void byte_ostream:: write (unichar wch)
+   void byte_stream:: write (unichar wch)
    {
-      write_arbitrary(wch);
+      oblt(wch);
 
    }
 #endif
-   void byte_ostream:: write (int32_t i)
+//   void byte_stream:: write (int32_t i)
+//   {
+//      write(i);
+//
+//   }
+//
+//   void byte_stream:: write (uint32_t ui)
+//   {
+//      write(ui);
+//
+//   }
+//
+//   void byte_stream:: write (int64_t i)
+//   {
+//      write(i);
+//
+//   }
+//
+//   void byte_stream:: write (uint64_t ui)
+//   {
+//      write(ui);
+//
+//   }
+
+
+
+   void byte_stream::write(i32 i)
    {
-      write_arbitrary(i);
+
+      oblt(i);
 
    }
 
-   void byte_ostream:: write (uint32_t ui)
+   void byte_stream::write(u32 ui)
    {
-      write_arbitrary(ui);
+
+      oblt(ui);
 
    }
 
-   void byte_ostream:: write (int64_t i)
+//   int get_arbitrary_length(uint64_t ui)
+//   {
+//
+//      if(ui == 0)
+//      {
+//         return 0;
+//      }
+//      else if(ui < (1UL << 8))
+//      {
+//         return 1;
+//      }
+//      else if(ui < (1UL << 16))
+//      {
+//         return 2;
+//      }
+//      else if(ui < (1UL << 24))
+//      {
+//         return 3;
+//      }
+//      else if(ui < (1ULL << 32))
+//      {
+//         return 4;
+//      }
+//      else if(ui < (1ULL << 40))
+//      {
+//         return 5;
+//      }
+//      else if(ui < (1ULL << 48))
+//      {
+//         return 6;
+//      }
+//      else if(ui < (1ULL << 56))
+//      {
+//         return 7;
+//      }
+//      else
+//      {
+//         return 8;
+//      }
+//
+//   }
+
+//   void byte_stream::write(uint64_t ui, int signal)
+//   {
+//
+//      // 0 bit is 0 for 0 version
+//
+//      // 0 version first byte reserved
+//      // 1 bit is signal
+//      // 2-7 bit length in bytes of the arbitrary always positive integer signal by signal bit above
+//
+//      if(signal != 0)
+//         signal = 1;
+//
+//      int len = get_arbitrary_length(ui);
+//
+//      byte b = (signal << 6) | (len & 0x3f);
+//
+//      m_spfile->write(&b, sizeof(b));
+//
+//      m_spfile->write(&ui, len);
+//
+//   }
+
+   void byte_stream::write(i64 i)
    {
-      write_arbitrary(i);
+
+//      if(i < 0)
+//      {
+//         write(-i, 1);
+//      }
+//      else
+//      {
+//         write(i, 0);
+//      }
+      
+      oblt(i);
 
    }
 
-   void byte_ostream:: write (uint64_t ui)
+   void byte_stream::write(u64 ui)
    {
-      write_arbitrary(ui);
+
+      //write(ui, 0);
+      
+      oblt(ui);
 
    }
 
-
-
-   void byte_ostream::write_arbitrary(int32_t i)
+   void byte_stream:: write (float f)
    {
-
-      write_arbitrary((int64_t) i);
+//      m_spfile->write(&f, sizeof(f));
+      
+      oblt(f);
 
    }
 
-   void byte_ostream::write_arbitrary(uint32_t ui)
+   void byte_stream:: write (double d)
    {
-
-      write_arbitrary((uint64_t) ui);
+      //m_spfile->write(&d, sizeof(d));
+      
+      oblt(d);
 
    }
 
-   int get_arbitrary_length(uint64_t ui)
+   void byte_stream:: write (RECT & rect)
    {
-
-      if(ui == 0)
-      {
-         return 0;
-      }
-      else if(ui < (1UL << 8))
-      {
-         return 1;
-      }
-      else if(ui < (1UL << 16))
-      {
-         return 2;
-      }
-      else if(ui < (1UL << 24))
-      {
-         return 3;
-      }
-      else if(ui < (1ULL << 32))
-      {
-         return 4;
-      }
-      else if(ui < (1ULL << 40))
-      {
-         return 5;
-      }
-      else if(ui < (1ULL << 48))
-      {
-         return 6;
-      }
-      else if(ui < (1ULL << 56))
-      {
-         return 7;
-      }
-      else
-      {
-         return 8;
-      }
+//      m_spfile->write(&rect.left,     sizeof(rect.left));
+//      m_spfile->write(&rect.top,      sizeof(rect.top));
+//      m_spfile->write(&rect.right,    sizeof(rect.right));
+//      m_spfile->write(&rect.bottom,   sizeof(rect.bottom));
+      
+      oblt(rect);
 
    }
 
-   void byte_ostream::write_arbitrary(uint64_t ui, int signal)
+   void byte_stream:: write(LPRECT lpcrect)
    {
 
-      // 0 bit is 0 for 0 version
-
-      // 0 version first byte reserved
-      // 1 bit is signal
-      // 2-7 bit length in bytes of the arbitrary always positive integer signal by signal bit above
-
-      if(signal != 0)
-         signal = 1;
-
-      int len = get_arbitrary_length(ui);
-
-      byte b = (signal << 6) | (len & 0x3f);
-
-      m_spfile->write(&b, sizeof(b));
-
-      m_spfile->write(&ui, len);
+      oblt(*lpcrect);
 
    }
 
-   void byte_ostream::write_arbitrary(int64_t i)
+   void byte_stream:: write (SIZE & size)
    {
-
-      if(i < 0)
-      {
-         write_arbitrary(-i, 1);
-      }
-      else
-      {
-         write_arbitrary(i, 0);
-      }
+      //m_spfile->write(&size.cx,     sizeof(size.cx));
+      //m_spfile->write(&size.cy,     sizeof(size.cy));
+      oblt(size);
 
    }
 
-   void byte_ostream::write_arbitrary(uint64_t ui)
+   void byte_stream:: write (sp(type) & info)
    {
-
-      write_arbitrary(ui, 0);
-
-   }
-
-   void byte_ostream:: write (float f)
-   {
-      m_spfile->write(&f, sizeof(f));
-
-   }
-
-   void byte_ostream:: write (double d)
-   {
-      m_spfile->write(&d, sizeof(d));
-
-   }
-
-   void byte_ostream:: write (const RECT & rect)
-   {
-      m_spfile->write(&rect.left,     sizeof(rect.left));
-      m_spfile->write(&rect.top,      sizeof(rect.top));
-      m_spfile->write(&rect.right,    sizeof(rect.right));
-      m_spfile->write(&rect.bottom,   sizeof(rect.bottom));
-
-   }
-
-   void byte_ostream:: write(LPCRECT lpcrect)
-   {
-
-      write(*lpcrect);
-
-   }
-
-   void byte_ostream:: write (const SIZE & size)
-   {
-      m_spfile->write(&size.cx,     sizeof(size.cx));
-      m_spfile->write(&size.cy,     sizeof(size.cy));
-
-   }
-
-   void byte_ostream:: write (const sp(type) info)
-   {
-      strsize iLen = strlen(info->name());
-      m_spfile->write(&iLen, sizeof(iLen));
-      m_spfile->write(info->name(), iLen);
-      iLen = strlen(info->friendly_name());
-      m_spfile->write(&iLen, sizeof(iLen));
-      m_spfile->write(info->friendly_name(), iLen);
+//      strsize iLen = strlen(info->name());
+  //    m_spfile->write(&iLen, sizeof(iLen));
+    //  m_spfile->write(info->name(), iLen);
+      //iLen = strlen(info->friendly_name());
+      //m_spfile->write(&iLen, sizeof(iLen));
+      //m_spfile->write(info->friendly_name(), iLen);
+      
+      string str = info->m_id;
+      
+      write(str);
 
    }
 
 
-   void byte_ostream:: write (const char * psz)
+   void byte_stream:: write (const char * psz)
    {
 
       m_spfile->write(psz, strlen(psz));
@@ -286,9 +303,8 @@ namespace file
    }
 
 
-   void byte_ostream:: write (const id & id)
+   void byte_stream:: write (id & id)
    {
-
 
       bool bNull = id.is_null();
 
@@ -300,29 +316,26 @@ namespace file
          *this << str;
       }
 
-
-
    }
 
 
-   string byte_ostream::get_location() const
+   string byte_stream::get_location() const
    {
 
-      return "<unknown byte_ostream location>";
+      return "<unknown byte_stream location>";
 
    }
 
 
-   ostream & byte_ostream::operator = (const ostream & ostream)
-   {
+//   ostream & byte_stream::operator = (const ostream & ostream)
+//   {
+//
+//      return serialize::operator = (ostream);
+//
+//   }
 
-      return ::file::ostream::operator = (ostream);
 
-   }
-
-
-
-   void byte_ostream::write_from_hex(const char * psz, strsize iLen)
+   void byte_stream::write_from_hex(const char * psz, strsize iLen)
    {
 
       //memory memory(get_app());
@@ -331,30 +344,20 @@ namespace file
 
       //write(memory.get_data(), memory.get_size());
 
-      ::file::ostream::write_from_hex(psz,iLen < 0 ? strlen(psz) + iLen + 1 : iLen);
+      serialize::write_from_hex(psz,iLen < 0 ? strlen(psz) + iLen + 1 : iLen);
 
    }
 
 
-   void byte_ostream::write_from_hex(const string & str)
+   void byte_stream::write_from_hex(const string & str)
    {
 
-      ::file::ostream::write_from_hex(str,str.get_length());
+      serialize::write_from_hex(str,str.get_length());
 
    }
-
-
-
-
-
-
-
-
-
 
 
 } // namespace file
-
 
 
 

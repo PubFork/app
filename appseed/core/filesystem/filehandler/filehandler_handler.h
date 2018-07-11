@@ -6,7 +6,7 @@ namespace filehandler
 
 
    class CLASS_DECL_CORE handler :
-      virtual public ::serializable
+      virtual public ::object
    {
    public:
 

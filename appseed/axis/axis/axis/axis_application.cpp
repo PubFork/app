@@ -3762,7 +3762,7 @@ namespace axis
    }
 
 
-   bool application::app_data_set(class id id, ::serializable & obj)
+   bool application::app_data_set(class id id, ::object & obj)
    {
 
       return data_set(id, obj);
@@ -3770,7 +3770,7 @@ namespace axis
    }
 
 
-   bool application::app_data_get(class id id, ::serializable & obj)
+   bool application::app_data_get(class id id, ::object & obj)
    {
 
       return data_get(id, obj);
@@ -3778,7 +3778,7 @@ namespace axis
    }
 
 
-   bool application::compress_ungz(::file::ostream & ostreamUncompressed, const ::file::path & lpcszGzFileCompressed)
+   bool application::compress_ungz(serialize & ostreamUncompressed, const ::file::path & lpcszGzFileCompressed)
    {
 
       return System.compress().ungz(this, ostreamUncompressed, lpcszGzFileCompressed);

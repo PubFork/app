@@ -199,7 +199,7 @@ namespace filehandler
       if (serialize.is_storing())
       {
 
-         ::file::ostream & ostream = serialize;
+         serialize & ostream = serialize;
          sp(::data::tree_item) pitem = m_sptree->get_base_item();
 
          index iLevel = 0;
@@ -222,7 +222,7 @@ namespace filehandler
       else
       {
 
-         ::file::istream & istream = serialize;
+         serialize & istream = serialize;
          {
 
             sp(::data::tree_item) pitem = m_sptree->get_base_item();

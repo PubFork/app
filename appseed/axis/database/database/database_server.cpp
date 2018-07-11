@@ -72,7 +72,7 @@ namespace database
    }
 
 
-   bool server::data_server_load(client * pclient, class id id, ::serializable & obj, update_hint * puh)
+   bool server::data_server_load(client * pclient, class id id, ::object & obj, update_hint * puh)
    {
 
       memory_reader reader(get_app());
@@ -158,7 +158,7 @@ namespace database
    }
 
 
-   bool server::data_server_save(client * pclient, class id id, ::serializable & obj, update_hint * puh)
+   bool server::data_server_save(client * pclient, class id id, ::object & obj, update_hint * puh)
    {
 
       memory_writer writer(get_app());

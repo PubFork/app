@@ -287,30 +287,34 @@ dump_context & operator <<(dump_context & dumpcontext, ::datetime::zonetime zone
 
    if ((err != 0) || (psz[0] == '\0') || (zonetime.get_time() == 0))
    {
-      return dumpcontext << "::datetime::zonetime(invalid #" << (int_ptr)zonetime.get_time() << ")";
+      dumpcontext << "::datetime::zonetime(invalid #" << (int_ptr)zonetime.get_time() << ")";
+      
+      return dumpcontext;
    }
 
    // format it
-   return dumpcontext << "::datetime::zonetime(\"" << psz << "\")";
+   dumpcontext << "::datetime::zonetime(\"" << psz << "\")";
+   
+   return dumpcontext;
 }
 
 #endif
 
-::file::ostream & operator <<(::file::ostream & os, ::datetime::zonetime zonetime)
+serialize & operator <<(serialize & os, ::datetime::zonetime zonetime)
 {
 
-   os.write_arbitrary((int64_t)zonetime.m_time);
-   os.write_arbitrary((int32_t)zonetime.m_iZoneOffset);
+   os.write((int64_t)zonetime.m_time);
+   os.write((int32_t)zonetime.m_iZoneOffset);
 
    return os;
 
 }
 
-::file::istream & operator >> (::file::istream & is, ::datetime::zonetime& rtime)
+serialize & operator >> (serialize & is, ::datetime::zonetime& rtime)
 {
 
-   is.read_arbitrary((int64_t &)rtime.m_time);
-   is.read_arbitrary((int32_t &)rtime.m_iZoneOffset);
+   is.read((int64_t &)rtime.m_time);
+   is.read((int32_t &)rtime.m_iZoneOffset);
 
    return is;
 

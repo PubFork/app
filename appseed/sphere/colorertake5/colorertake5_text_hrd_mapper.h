@@ -27,7 +27,7 @@ namespace colorertake5
       /**
       * Loads region defines from @ca is input_source
       */
-      void  loadRegionMappings(::file::istream & istream);
+      void  loadRegionMappings(serialize & istream);
 
       /**
       * Saves all loaded region defines into @ca writer.
@@ -35,7 +35,7 @@ namespace colorertake5
       * to input one, because there could be multiple input
       * documents.
       */
-      void  saveRegionMappings(::file::ostream & ostream) const;
+      void  saveRegionMappings(serialize & ostream) const;
 
       /**
       * Changes specified region definition to @ca rdnew

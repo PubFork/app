@@ -27,8 +27,6 @@ namespace str
 
 
 
-CLASS_DECL_AURA serialize & operator << (serialize & s, var & var);
-CLASS_DECL_AURA serialize & operator >> (serialize & s, var & var);
 
 
 

@@ -5,42 +5,42 @@ namespace file
 {
 
 
-   byte_stream::byte_stream()
-   {
+//   byte_stream::byte_stream()
+//   {
+//
+//   }
+//
+//
+//   byte_stream::byte_stream(file * pbuffer) :
+//      stream_base(pbuffer),
+//      stream(pbuffer)
+//   {
+//
+//   }
+//
+//
+//   byte_stream::byte_stream(const stream & strm) :
+//      stream_base(strm),
+//      stream(strm)
+//   {
+//
+//   }
+//
+//
+//   byte_stream::~byte_stream()
+//   {
+//
+//   }
 
-   }
 
-
-   byte_stream::byte_stream(file * pbuffer) :
-      stream_base(pbuffer),
-      stream(pbuffer)
-   {
-
-   }
-
-
-   byte_stream::byte_stream(const stream & strm) :
-      stream_base(strm),
-      stream(strm)
-   {
-
-   }
-
-
-   byte_stream::~byte_stream()
-   {
-
-   }
-
-
-   stream & byte_stream::operator = (const stream & stream)
-   {
-
-      stream::operator = (stream);
-
-      return *this;
-
-   }
+//   stream & byte_stream::operator = (const stream & stream)
+//   {
+//
+//      stream::operator = (stream);
+//
+//      return *this;
+//
+//   }
 
 
    bool byte_stream::is_stream_null()
@@ -62,9 +62,7 @@ namespace file
    void byte_stream::close()
    {
 
-      istream::close();
-
-      ostream::close();
+      serialize::close();
 
    }
 

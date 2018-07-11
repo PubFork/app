@@ -745,28 +745,32 @@ dump_context & operator <<(dump_context & dumpcontext, ::datetime::time time)
 
    if ((err != 0) || (psz[0] == '\0') || (time.get_time() == 0))
    {
-      return dumpcontext << "::datetime::time(invalid #" << (int_ptr) time.get_time() << ")";
+      dumpcontext << "::datetime::time(invalid #" << (int_ptr) time.get_time() << ")";
+      
+      return dumpcontext;
    }
 
    // format it
-   return dumpcontext << "::datetime::time(\"" << psz << "\")";
+   dumpcontext << "::datetime::time(\"" << psz << "\")";
+   
+   return dumpcontext;
 }
 
 #endif
 
-::file::ostream & operator <<(::file::ostream & os, ::datetime::time time)
+serialize & operator <<(serialize & os, ::datetime::time time)
 {
 
-   os.write_arbitrary((int64_t) time.m_time);
+   os.write((int64_t) time.m_time);
 
    return os;
 
 }
 
-::file::istream & operator >>(::file::istream & is, ::datetime::time& rtime)
+serialize & operator >>(serialize & is, ::datetime::time& rtime)
 {
 
-   is.read_arbitrary((int64_t &) rtime.m_time);
+   is.read((int64_t &) rtime.m_time);
 
    return is;
 

@@ -499,7 +499,7 @@ namespace sockets
 
          }
 
-         ::file::istream is(spfile);
+         serialize is(spfile);
 
          transfer_from_begin(is);
 

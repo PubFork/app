@@ -17,7 +17,7 @@ namespace xml
 
 
    class CLASS_DECL_AURA edit_item :
-      virtual public ::serializable
+      virtual public ::object
    {
    public:
 

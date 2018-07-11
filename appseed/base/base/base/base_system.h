@@ -59,7 +59,7 @@ namespace base
 
 
 template < size_t _Bits >
-inline ::file::ostream & operator << (::file::ostream & _Ostr,const bitset<_Bits>& _Right)
+inline serialize & operator << (serialize & _Ostr,const bitset<_Bits>& _Right)
 {
    // insert bitset as a string
    return (_Ostr << _Right.template to_string());
@@ -67,7 +67,7 @@ inline ::file::ostream & operator << (::file::ostream & _Ostr,const bitset<_Bits
 
 // TEMPLATE operator>>
 template < size_t _Bits >
-inline ::file::istream & operator >>(::file::istream &  _Istr,bitset<_Bits>& _Right)
+inline serialize & operator >>(serialize &  _Istr,bitset<_Bits>& _Right)
 {
    // extract bitset as a string
    string _Str;

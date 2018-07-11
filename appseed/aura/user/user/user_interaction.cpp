@@ -453,8 +453,10 @@ namespace user
 
       }
 
-#else !defined(WINDOWEX) && !defined(MACOS)
+#elif !defined(WINDOWSEX) && !defined(MACOS)
+
 #error "error"
+      
 #endif
 
       return m_pparent;

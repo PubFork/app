@@ -68,7 +68,7 @@ namespace database
 
 
    class CLASS_DECL_AXIS field_properties :
-      virtual public ::serializable
+      virtual public ::object
    {
    public:
 
@@ -128,7 +128,7 @@ namespace database
 
    class CLASS_DECL_AXIS query_data :
       virtual public array < record, record & >,
-      virtual public serializable
+      virtual public object
    {
 
       virtual void stream(serialize & serialize) override;
@@ -139,7 +139,7 @@ namespace database
    typedef array < field_properties, field_properties & > record_properties;
 
    class CLASS_DECL_AXIS result_set :
-      virtual public ::serializable
+      virtual public ::object
    {
    public:
 

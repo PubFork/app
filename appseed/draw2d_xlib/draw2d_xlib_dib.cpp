@@ -41,7 +41,7 @@ namespace draw2d_xlib
    }
 
 
-   void dib::read(::file::istream & istream)
+   void dib::read(serialize & istream)
    {
 
       ::draw2d::dib::read(istream);

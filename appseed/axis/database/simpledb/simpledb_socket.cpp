@@ -250,8 +250,8 @@ namespace simpledb
       }
       if(prangea == NULL || prangea->get_count() == 0)
       {
-         ::file::byte_istream is(spfile);
-         ::file::byte_ostream os(&response().file());
+         ::file::byte_stream is(spfile);
+         ::file::byte_stream os(&response().file());
          os.transfer_from(is);
       }
       else

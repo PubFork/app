@@ -116,7 +116,7 @@ namespace colorertake5
          string searchPath();
 
          ::file::path catalogPath;
-         ::file::istream * catalogFIS;
+         serialize * catalogFIS;
          ErrorHandler *fileErrorHandler;
          stringa hrcLocations;
          string_map < string_map < stringa >, const string_map < stringa > & > hrdLocations;

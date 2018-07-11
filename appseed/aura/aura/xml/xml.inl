@@ -45,7 +45,7 @@ namespace xml
   //
   //
   //   template < class T >
-  //   bool system::output(::aura::application * papp,const char * pszOutput,T * p,bool (T::*lpfnOuput)(::file::ostream &,const char *),const char * lpszSource)
+  //   bool system::output(::aura::application * papp,const char * pszOutput,T * p,bool (T::*lpfnOuput)(serialize &,const char *),const char * lpszSource)
   //   {
   //
   //      System.dir().mk(System.dir().name(pszOutput),papp);
@@ -55,7 +55,7 @@ namespace xml
   //      if(fileOut.is_null())
   //         return false;
   //
-  //      ::file::ostream ostream(fileOut);
+  //      serialize ostream(fileOut);
   //
   //      return (p->*lpfnOuput)(ostream,lpszSource);
   //
@@ -63,7 +63,7 @@ namespace xml
   //
   //
   //   template < class T >
-  //   bool system::output(::aura::application * papp,const char * pszOutput,T * p,bool (T::*lpfnOuput)(::file::ostream &,::file::istream &),const char * lpszInput)
+  //   bool system::output(::aura::application * papp,const char * pszOutput,T * p,bool (T::*lpfnOuput)(serialize &,serialize &),const char * lpszInput)
   //   {
   //
   //      System.dir().mk(System.dir().name(pszOutput),papp);
@@ -78,9 +78,9 @@ namespace xml
   //      if(fileIn.is_null())
   //         return false;
   //
-  //      ::file::ostream ostream(fileOut);
+  //      serialize ostream(fileOut);
   //
-  //      ::file::istream istream(fileIn);
+  //      serialize istream(fileIn);
   //
   //      return (p->*lpfnOuput)(ostream,istream);
   //
@@ -88,10 +88,10 @@ namespace xml
   //
   //
   //   template < class T >
-  //   bool system::output(::aura::application * papp,const char * pszOutput,T * p,bool (T::*lpfnOuput)(::file::ostream &,::file::istream &),::file::istream & istream)
+  //   bool system::output(::aura::application * papp,const char * pszOutput,T * p,bool (T::*lpfnOuput)(serialize &,serialize &),serialize & istream)
   //   {
   //
-  //      ::file::ostream ostream(get(pszOutput,papp));
+  //      serialize ostream(get(pszOutput,papp));
   //
   //      return (p->*lpfnOuput)(ostream,istream);
   //

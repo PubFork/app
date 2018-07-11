@@ -18,7 +18,7 @@ namespace colorertake5
    /** Loads region definitions from HRD spfile->
    Multiple files could be loaded.
    */
-   void TextHRDMapper::loadRegionMappings(::file::istream & is)
+   void TextHRDMapper::loadRegionMappings(serialize & is)
    {
 
       string str;
@@ -71,7 +71,7 @@ namespace colorertake5
    XML spfile-> Note, that this method writes all loaded
    defines from all loaded HRD files.
    */
-   void TextHRDMapper::saveRegionMappings(::file::ostream & writer) const
+   void TextHRDMapper::saveRegionMappings(serialize & writer) const
    {
       writer << string("<?xml version=\"1.0\"?>\n\
                        <!DOCTYPE hrd SYSTEM \"../hrd.dtd\">\n\n\

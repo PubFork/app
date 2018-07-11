@@ -28,6 +28,8 @@ namespace command
 
 } // namespace command
 
+class serialize;
+
 // very short name ([{c}])ontext (switchers, as it as context) enums
 enum e_context_switcher_null
 {
@@ -1141,7 +1143,7 @@ namespace aura
 
 
 class CLASS_DECL_AURA openweather_city :
-   virtual public mini_object
+   virtual public simple_object
 {
 public:
 
@@ -1783,11 +1785,11 @@ namespace std
    template < class TYPE >
    using set = ::set< TYPE >;
 
-   using ostream = ::file::ostream;
-   using ofstream = ::file::file_ostream;
+   using ostream = serialize;
+   using ofstream = ::file::file_stream;
 
-   using istream = ::file::istream;
-   using ifstream = ::file::file_istream;
+   using istream = serialize;
+   using ifstream = ::file::file_stream;
 
    using stream = ::file::stream;
    using fstream = ::file::file_stream;

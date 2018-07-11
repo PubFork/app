@@ -84,7 +84,7 @@ void dump_context::flush()
       m_pfile->flush();
 }
 
-dump_context & dump_context::operator<<(const char * lpsz)
+void dump_context::write(const char * lpsz)
 {
    if (lpsz == NULL)
    {
@@ -118,10 +118,11 @@ dump_context & dump_context::operator<<(const char * lpsz)
    }
 
    m_pfile->write(lpsz, strlen(lpsz)*sizeof(char));
-   return *this;
+   
 }
 
-dump_context & dump_context::operator<<(int8_t i)
+
+void dump_context::write(char i)
 {
 
    string str;
@@ -130,10 +131,10 @@ dump_context & dump_context::operator<<(int8_t i)
 
    output_string(str);
 
-   return *this;
-
 }
-dump_context & dump_context::operator<<(uint8_t ui)
+
+
+void dump_context::write(uint8_t ui)
 {
 
    string str;
@@ -145,7 +146,8 @@ dump_context & dump_context::operator<<(uint8_t ui)
    return *this;
 
 }
-dump_context & dump_context::operator<<(int16_t i)
+
+void dump_context::write(int16_t i)
 {
 
    string str;
@@ -158,7 +160,8 @@ dump_context & dump_context::operator<<(int16_t i)
 
 }
 
-dump_context & dump_context::operator<<(uint16_t ui)
+
+void dump_context::write(uint16_t ui)
 {
 
    string str;
@@ -167,11 +170,10 @@ dump_context & dump_context::operator<<(uint16_t ui)
 
    output_string(str);
 
-   return *this;
-
 }
 
-dump_context & dump_context::operator<<(int32_t i)
+
+void dump_context::write(int32_t i)
 {
 
    string str;
@@ -180,11 +182,10 @@ dump_context & dump_context::operator<<(int32_t i)
 
    output_string(str);
 
-   return *this;
-
 }
 
-dump_context & dump_context::operator<<(uint32_t ui)
+
+void dump_context::write(uint32_t ui)
 {
 
    string str;
@@ -193,11 +194,10 @@ dump_context & dump_context::operator<<(uint32_t ui)
 
    output_string(str);
 
-   return *this;
-
 }
 
-dump_context & dump_context::operator<<(int64_t i)
+
+void dump_context::write(int64_t i)
 {
 
    string str;
@@ -206,11 +206,10 @@ dump_context & dump_context::operator<<(int64_t i)
 
    output_string(str);
 
-   return *this;
-
 }
 
-dump_context & dump_context::operator<<(uint64_t ui)
+
+void dump_context::write(uint64_t ui)
 {
 
    string str;
@@ -219,9 +218,8 @@ dump_context & dump_context::operator<<(uint64_t ui)
 
    output_string(str);
 
-   return *this;
-
 }
+
 
 dump_context & dump_context::hex_dump(int8_t i)
 {
@@ -231,8 +229,6 @@ dump_context & dump_context::hex_dump(int8_t i)
    str.Format("0x%02x", (uint32_t) i);
 
    output_string(str);
-
-   return *this;
 
 }
 
@@ -249,6 +245,7 @@ dump_context & dump_context::hex_dump(uint8_t ui)
    return *this;
 
 }
+
 
 dump_context & dump_context::hex_dump(int16_t i)
 {
@@ -277,7 +274,6 @@ dump_context & dump_context::hex_dump(uint16_t ui)
 }
 
 
-
 dump_context & dump_context::hex_dump(int32_t i)
 {
 
@@ -289,6 +285,7 @@ dump_context & dump_context::hex_dump(int32_t i)
 
    return *this;
 }
+
 
 dump_context & dump_context::hex_dump(uint32_t ui)
 {
@@ -303,6 +300,7 @@ dump_context & dump_context::hex_dump(uint32_t ui)
 
 }
 
+
 dump_context & dump_context::hex_dump(int64_t i)
 {
 
@@ -314,6 +312,7 @@ dump_context & dump_context::hex_dump(int64_t i)
 
    return *this;
 }
+
 
 dump_context & dump_context::hex_dump(uint64_t ui)
 {
@@ -328,26 +327,37 @@ dump_context & dump_context::hex_dump(uint64_t ui)
 
 }
 
-dump_context & dump_context::operator<<(const object* pOb)
+
+void dump_context::write(object * pobject)
 {
 
-   if (pOb == NULL)
+   if (pobject == NULL)
+   {
+      
       *this << "NULL";
+      
+   }
    else
-      pOb->dump(*this);
+   {
+      
+      pobject->dump(*this);
 
+   }
+   
    return *this;
 
 }
 
-dump_context & dump_context::operator<<(const object& ob)
+
+void dump_context::write(object & object)
 {
 
-   return *this << &ob;
+   write(&object);
 
 }
 
-dump_context & dump_context::operator<<(const void * lp)
+
+void dump_context::write(const void * lp)
 {
 
    string str;
@@ -361,35 +371,47 @@ dump_context & dump_context::operator<<(const void * lp)
 
 }
 
-dump_context & dump_context::operator<<(oswindow h)
+
+void dump_context::write(oswindow h)
 {
-   return *this << (void *)h;
+   
+   write((void *)h);
+   
 }
 
-dump_context & dump_context::operator<<(HDC h)
+
+void dump_context::write(HDC h)
 {
-   return *this << (void *)h;
+   
+   write((void *)h);
+   
 }
 
 
 #ifdef WINDOWS
 
 
-dump_context & dump_context::operator<<(HMENU h)
+void dump_context::write(HMENU h)
 {
-   return *this << (void *)h;
+   
+   write((void *)h);
+   
 }
 
 
-dump_context & dump_context::operator<<(HACCEL h)
+void dump_context::write(HACCEL h)
 {
-   return *this << (void *)h;
+   
+   write((void *)h);
+   
 }
 
 
-dump_context & dump_context::operator<<(HFONT h)
+void dump_context::write(HFONT h)
 {
-   return *this << (void *)h;
+   
+   write((void *)h);
+   
 }
 
 
@@ -445,7 +467,11 @@ void dump_context::hex_dump(const char * lpszLine, BYTE* pby, int32_t nBytes, in
       *this << "\n";
 }
 
-dump_context & dump_context::operator<<(const unichar * lpsz)
+
+#ifdef WINDOWS
+
+
+void dump_context::write(const unichar * lpsz)
 {
 
    if (lpsz == NULL)
@@ -454,15 +480,19 @@ dump_context & dump_context::operator<<(const unichar * lpsz)
       return *this;
    }
 
-   return *this << ::str::international::unicode_to_utf8(lpsz);
+   *this << ::str::international::unicode_to_utf8(lpsz);
 
 }
 
 
-dump_context & dump_context::operator << (string str)
+#endif
+
+
+void dump_context::write(string & str)
 {
-   operator <<((const char *) str);
-   return *this;
+   
+   write((const char *) str.c_str());
+   
 }
 
 

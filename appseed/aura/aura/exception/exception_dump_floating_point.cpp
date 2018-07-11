@@ -4,16 +4,16 @@
 
 
 
-dump_context & dump_context::operator<<(float f)
+void dump_context::write(float f)
 {
    char szBuffer[32];
    ::aura::gcvt_s(szBuffer, 32, f, FLT_DIG);
 
-   *this << szBuffer;
+   write(szBuffer);
    return *this;
 }
 
-dump_context & dump_context::operator<<(double d)
+void dump_context::write(double d)
 {
    char szBuffer[32];
    ::aura::gcvt_s(szBuffer, 32, d, DBL_DIG);

@@ -155,3 +155,96 @@ namespace file
 
 
 
+
+
+
+namespace file
+{
+   
+   
+   stream::stream()
+   {
+      
+   }
+   
+   
+   stream::stream(file * pfile):
+   m_spfile(pfile)
+   {
+      
+   }
+   
+   
+   //   stream::stream(const stream & stream) :
+   //      stream_base(stream)
+   //   {
+   //
+   //   }
+   
+   
+   stream::~stream()
+   {
+      
+   }
+   
+   
+   //   stream & stream::operator = (const stream & stream)
+   //   {
+   //      istream::operator = (stream);
+   //      ostream::operator = (stream);
+   //      return *this;
+   //   }
+   
+   
+   void stream::close()
+   {
+      //istream::close();
+      //ostream::close();
+      
+      if(m_spfile.is_set())
+      {
+         
+         m_spfile->close();
+         
+         m_spfile.release();
+         
+      }
+      
+   }
+   
+   
+   void * stream::get_internal_data()
+   {
+      
+      return m_spfile->get_internal_data();
+      
+   }
+   
+   
+   memory_size_t stream::get_internal_data_size() const
+   {
+      
+      return m_spfile->get_internal_data_size();
+      
+   }
+   
+   
+   bool stream::set_internal_data_size(memory_size_t c)
+   {
+      
+      return m_spfile->set_internal_data_size(c);
+      
+   }
+   
+   
+   file_position_t stream::get_position() const
+   {
+      
+      return m_spfile->get_position();
+      
+   }
+   
+   
+} // namespace file
+
+

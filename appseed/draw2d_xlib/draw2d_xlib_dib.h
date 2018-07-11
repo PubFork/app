@@ -160,7 +160,7 @@ namespace draw2d_xlib
       //double pi();
 
 
-      virtual void read(::file::istream & istream);
+      virtual void read(serialize & istream);
 
 
    };

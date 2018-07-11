@@ -8,7 +8,7 @@ namespace user
    class CLASS_DECL_AURA controller :
       virtual public command_target,
       virtual public ::data::data_container_base,
-      virtual public ::serializable
+      virtual public ::object
    {
    public:
 

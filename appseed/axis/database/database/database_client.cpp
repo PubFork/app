@@ -314,7 +314,7 @@ namespace database
    }
 
 
-   bool client::data_set(class id id, ::serializable & obj, update_hint * puh)
+   bool client::data_set(class id id, ::object & obj, update_hint * puh)
    {
 
       if(m_pdataserver != NULL)
@@ -581,7 +581,7 @@ namespace database
    }
 
 
-   bool client::data_get(class id id, ::serializable & obj)
+   bool client::data_get(class id id, ::object & obj)
    {
 
       if (m_pdataserver != NULL)
@@ -864,8 +864,8 @@ namespace file
 
    data_trigger_ostream::data_trigger_ostream(data_trigger_ostream && d):
       ::object(::move(d)),
-      ::file::istream(::move(d)),
-      ::file::ostream(::move(d)),
+      serialize(::move(d)),
+      serialize(::move(d)),
       serialize(::move(d)),
       writer(::move(d)),
       memory_writer(::move(d)),
@@ -911,8 +911,8 @@ namespace file
 
    data_trigger_istream::data_trigger_istream(data_trigger_istream && d) :
       ::object(::move(d)),
-      ::file::istream(::move(d)),
-      ::file::ostream(::move(d)),
+      serialize(::move(d)),
+      serialize(::move(d)),
       serialize(::move(d)),
       reader(::move(d)),
       memory_reader(::move(d))

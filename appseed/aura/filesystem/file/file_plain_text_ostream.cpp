@@ -1,30 +1,30 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 namespace file
 {
 
 
-   plain_text_ostream::plain_text_ostream()
+   plain_text_stream::plain_text_stream()
    {
    }
 
-   plain_text_ostream::plain_text_ostream(file * pwriter)
+   plain_text_stream::plain_text_stream(file * pwriter)
    {
       m_spfile = pwriter;
    }
 
-   plain_text_ostream::plain_text_ostream(const ostream & ostream)
+//   plain_text_stream::plain_text_stream(const ostream & ostream)
+//   {
+//      m_spfile = ostream.m_spfile;
+//   }
+
+   plain_text_stream::~plain_text_stream()
    {
-      m_spfile = ostream.m_spfile;
+
    }
 
-   plain_text_ostream::~plain_text_ostream()
-   {
-
-   }
-
-   void plain_text_ostream:: write (bool b)
+   void plain_text_stream:: write (bool b)
    {
       if(b)
          raw_print("true");
@@ -32,35 +32,35 @@ namespace file
          raw_print("false");
    }
 
-   void plain_text_ostream:: write (char ch)
+   void plain_text_stream:: write (char ch)
    {
       m_spfile->write(&ch, sizeof(ch)); // treat as char - character
 
    }
 
-   void plain_text_ostream:: write (uchar uch)
+   void plain_text_stream:: write (uchar uch)
    {
       write ((uint32_t) uch);
    }
 
-   void plain_text_ostream:: write (int16_t i)
+   void plain_text_stream:: write (int16_t i)
    {
       write ((int32_t) i);
    }
 
-   void plain_text_ostream:: write (uint16_t ui)
+   void plain_text_stream:: write (uint16_t ui)
    {
       write ((uint32_t) ui);
    }
 #ifdef WINDOWS
-   void plain_text_ostream:: write (unichar wch)
+   void plain_text_stream:: write (unichar wch)
    {
       raw_print(::str::uni_to_utf8(wch));
    }
 #endif
 
 
-   void plain_text_ostream::print_number(const string & str)
+   void plain_text_stream::print_number(const string & str)
    {
 
       auto estrflag = m_estrflag;
@@ -91,7 +91,7 @@ namespace file
    }
 
 
-   void plain_text_ostream:: write (int32_t i)
+   void plain_text_stream:: write (int32_t i)
    {
 
       print_number(::str::from(i));
@@ -99,7 +99,7 @@ namespace file
    }
 
 
-   void plain_text_ostream:: write (uint32_t ui)
+   void plain_text_stream:: write (uint32_t ui)
    {
 
       print_number(::str::from(ui));
@@ -107,14 +107,14 @@ namespace file
    }
 
 
-   void plain_text_ostream:: write (int64_t i)
+   void plain_text_stream:: write (int64_t i)
    {
 
       print_number(::str::from(i));
 
    }
 
-   void plain_text_ostream:: write (uint64_t ui)
+   void plain_text_stream:: write (uint64_t ui)
    {
 
       print_number(::str::from(ui));
@@ -122,7 +122,7 @@ namespace file
    }
 
 
-   void plain_text_ostream:: write (float f)
+   void plain_text_stream:: write (float f)
    {
 
       string str;
@@ -134,7 +134,7 @@ namespace file
    }
 
 
-   void plain_text_ostream:: write (double d)
+   void plain_text_stream:: write (double d)
    {
 
       string str;
@@ -146,7 +146,7 @@ namespace file
    }
 
 
-   void plain_text_ostream:: write (const RECT & rect)
+   void plain_text_stream:: write (const RECT & rect)
    {
 
       m_estrflag = (e_str_flag)((int)m_estrflag  & ~(int)str_flag_ifnumberparenthesizeandspace);
@@ -158,7 +158,7 @@ namespace file
    }
 
 
-   void plain_text_ostream:: write(LPCRECT lpcrect)
+   void plain_text_stream:: write(LPCRECT lpcrect)
    {
 
       write(*lpcrect);
@@ -166,7 +166,7 @@ namespace file
    }
 
 
-   void plain_text_ostream:: write (const SIZE & size)
+   void plain_text_stream:: write (const SIZE & size)
    {
 
       m_estrflag = (e_str_flag)((int)m_estrflag  & ~(int)str_flag_ifnumberparenthesizeandspace);
@@ -176,7 +176,7 @@ namespace file
    }
 
 
-   void plain_text_ostream:: write (const sp(type) info)
+   void plain_text_stream:: write (const sp(type) info)
    {
 
       raw_print(info->friendly_name());
@@ -184,7 +184,7 @@ namespace file
    }
 
 
-   void plain_text_ostream::write(const std_type_info & info)
+   void plain_text_stream::write(const std_type_info & info)
    {
 
       raw_print(demangle(info.name()));
@@ -193,7 +193,7 @@ namespace file
    }
 
 
-   void plain_text_ostream:: write (const char * psz)
+   void plain_text_stream:: write (const char * psz)
    {
 
       if (psz == NULL)
@@ -208,15 +208,15 @@ namespace file
    }
 
 
-   string plain_text_ostream::get_location() const
+   string plain_text_stream::get_location() const
    {
 
-      return "<unknown plain_text_ostream location>";
+      return "<unknown plain_text_stream location>";
 
    }
 
 
-   void plain_text_ostream::raw_print(const string & str)
+   void plain_text_stream::raw_print(const string & str)
    {
 
       write(str.c_str(), str.size());
@@ -225,14 +225,12 @@ namespace file
 
    }
 
-
-   ostream & plain_text_ostream::operator = (const ostream & ostream)
-   {
-
-      return ostream::operator = (ostream);
-
-   }
-
+//   ostream & plain_text_stream::operator = (const ostream & ostream)
+//   {
+//
+//      return ostream::operator = (ostream);
+//
+//   }
 
 } // namespace core
 

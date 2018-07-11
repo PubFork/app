@@ -1,11 +1,13 @@
 #pragma once
 
+
 template < class T, class T_to_T = map < T, T, T, T > >
-class  biunique :
-   virtual public ::object,
-   virtual public ::serializable
+class biunique :
+   virtual public ::object
 {
 public:
+   
+   
    biunique(::aura::application * papp = NULL);
    virtual ~biunique()
    {
@@ -434,7 +436,7 @@ biunique < T, T_to_T > & biunique < T, T_to_T > ::operator = (const biunique & i
 
 
 template < class t1, class t2, class t3, class t4 >
-void serialize_write(::file::ostream & ostream, map < t1, t2, t3, t4 > & m)
+void serialize_write(serialize & ostream, map < t1, t2, t3, t4 > & m)
 {
    ::count count = m.get_count();
    typename map < t1, t2, t3, t4 >::pair * ppair = m.PGetFirstAssoc();
@@ -448,7 +450,7 @@ void serialize_write(::file::ostream & ostream, map < t1, t2, t3, t4 > & m)
 }
 
 template < class t1, class t2, class t3, class t4 >
-void serialize_read(::file::istream & istream, map < t1, t2, t3, t4 > & m)
+void serialize_read(serialize & istream, map < t1, t2, t3, t4 > & m)
 {
    try
    {

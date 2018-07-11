@@ -5,26 +5,26 @@ namespace file
 {
 
       
-   //serializable::serializable()
+   //object::object()
    //{
 
    //}
 
-   //void serializable::write(ostream & ostream)
+   //void object::write(ostream & ostream)
    //{
 
-   //   ((const serializable *) this)->write(ostream);
+   //   ((const object *) this)->write(ostream);
 
    //}
 
-   //void serializable::write(ostream & ostream) const
+   //void object::write(ostream & ostream) const
    //{
    //   
-   //   ((serializable *) this)->write(ostream);
+   //   ((object *) this)->write(ostream);
 
    //}
 
-   //void serializable::read(istream & istream)
+   //void object::read(istream & istream)
    //{
 
    //}
@@ -42,7 +42,7 @@ namespace file
 
 
 
-CLASS_DECL_AURA bool file_put(const char * path, ::serializable & s, ::aura::application * papp)
+CLASS_DECL_AURA bool file_put(const char * path, ::object & s, ::aura::application * papp)
 {
 
    try
@@ -89,7 +89,7 @@ CLASS_DECL_AURA bool file_put(const char * path, ::serializable & s, ::aura::app
 }
 
 
-CLASS_DECL_AURA bool file_as(::serializable & s, const char * path, ::aura::application * papp)
+CLASS_DECL_AURA bool file_as(::object & s, const char * path, ::aura::application * papp)
 {
 
    try

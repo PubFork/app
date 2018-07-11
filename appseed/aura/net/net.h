@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 #include "net_url.h"
@@ -64,7 +64,7 @@ namespace sockets
 
 
 
-#include "aura/net/http/http_ostream.h"
+#include "aura/net/http/http_stream.h"
 
 
 

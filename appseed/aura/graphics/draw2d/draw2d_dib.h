@@ -24,7 +24,7 @@ namespace draw2d
 
 
    class CLASS_DECL_AURA dib :
-      virtual public ::serializable
+      virtual public ::object
    {
    public:
 

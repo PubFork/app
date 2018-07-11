@@ -4,8 +4,7 @@
 
 
 class CLASS_DECL_AURA var_array :
-   virtual public array < var >,
-   virtual public serializable
+   virtual public array < var >
 {
 public:
 

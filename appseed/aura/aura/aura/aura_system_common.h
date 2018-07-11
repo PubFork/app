@@ -92,8 +92,8 @@ namespace process
 namespace file
 {
 
-   class byte_istream;
-   class byte_ostream;
+   class byte_stream;
+   class byte_stream;
 
 
 } //  namespace file

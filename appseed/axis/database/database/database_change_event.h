@@ -25,7 +25,7 @@ namespace database
       change_event(var & var);
 
 
-      bool data_get(::serializable & obj);
+      bool data_get(::object & obj);
 
 
    };

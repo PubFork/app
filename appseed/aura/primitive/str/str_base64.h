@@ -1,6 +1,6 @@
 #pragma once
 
-class serializable;
+class object;
 
 namespace str
 {
@@ -23,16 +23,16 @@ namespace str
       virtual ~base64();
 
 
-      void encode(::file::ostream & ostreamBase64, ::file::istream & istreamBinary);
+      void encode(serialize & ostreamBase64, serialize & istreamBinary);
       string encode(primitive::memory_base & storageBinary);
       string encode(byte * p, ::count ca);
       string encode(const char * psz);
-      string serialize(::serializable & serializable);
+      string encode(::object & object);
 
-      void decode(::file::ostream & ostreamBinary, ::file::istream & istreamBase64);
+      void decode(::serialize & ostreamBinary, serialize & istreamBase64);
       void decode(primitive::memory_base & storageBinary, const char * pszBase64, strsize s = -1);
       string decode(const char * psz);
-      void unserialize(::serializable & serializable, const char * pszBase64);
+      void decode(::object & object, const char * pszBase64);
 
 
    };

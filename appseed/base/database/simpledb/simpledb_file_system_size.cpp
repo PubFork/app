@@ -638,7 +638,7 @@ void file_size_table::get_fs_size::stream(serialize & serialize)
 }
 
 
-//void file_size_table::get_fs_size::read(::file::istream & istream)
+//void file_size_table::get_fs_size::read(serialize & istream)
 //{
 //   istream >> m_strPath;
 //   istream >> m_bPending;

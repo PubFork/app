@@ -125,11 +125,11 @@ namespace file
 
 
       using ::file::writer::write;
-      void write(ostream & ostream);
+      virtual void write(serialize & ostream);
 
 
       using ::file::reader::read;
-      void read(istream & istream);
+      virtual void read(serialize & istream);
 
 
       virtual bool read(char * pch);

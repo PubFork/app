@@ -202,7 +202,7 @@ namespace file
    }
 
 
-   void file::write(ostream & ostream)
+   void file::write(serialize & ostream)
    {
 
       seek_to_begin();
@@ -212,7 +212,7 @@ namespace file
    }
 
 
-   void file::read(istream & istream)
+   void file::read(serialize & istream)
    {
 
       transfer_from(*istream.m_spfile);

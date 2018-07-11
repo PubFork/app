@@ -1,104 +1,386 @@
 #include "framework.h"
 
-
-namespace file
+serialize::serialize()
 {
+   
+   m_gcount = 0;
+
+}
+
+bool serialize::is_stream_null()
+{
+   //return is_writer_null() && is_reader_null();
+   return m_spfile.is_null();
+}
+
+bool serialize::is_stream_set()
+{
+   //return is_writer_set() || is_reader_set();
+   return m_spfile.is_set();
+}
 
 
-   stream::stream()
-   {
+memory_size_t serialize::read(void * lpBuf, memory_size_t nCount)
+{
+   
+   return m_gcount = m_spfile->read(lpBuf, nCount);
+   
+}
 
-   }
-
-
-   stream::stream(file * pfile):
-      m_spfile(pfile)
+void serialize::full_read(void * lpBuf, memory_size_t nCount)
+{
+   
+   if(fail())
    {
       
+      return;
+      
    }
+   
+   
+   if(!m_spfile->full_read(lpBuf,nCount))
+   {
+      
+      setstate(::file::failbit);
+      
+      return;
+      
+   }
+   
+   
+   
+   m_gcount = nCount;
+   
+}
 
 
-//   stream::stream(const stream & stream) :
-//      stream_base(stream)
-//   {
+void serialize::full_fill(::primitive::memory_base & m)
+{
+   
+   full_read(m.get_data(), m.get_size());
+   
+}
+
+//void serialize::read(int32_t & i)
+//{
+//   
+//   
+//}
 //
-//   }
+//void serialize::read(uint32_t & ui)
+//{
+//   
+//   
+//}
+//
+//void serialize::read(int64_t & i)
+//{
+//   
+//   
+//}
+//
+//void serialize::read(uint64_t & ui)
+//{
+//   
+//   
+//}
 
 
-   stream::~stream()
+void serialize::read (bool & b)
+{
+   
+   iblt(b);
+   
+}
+
+
+void serialize::read (char & ch)
+{
+   
+   iblt(ch);
+   
+}
+
+
+void serialize::read (uchar & uch)
+{
+   
+   iblt(uch);
+   
+}
+
+
+#ifdef WINDOWS
+
+
+void serialize::read (unichar & wch)
+{
+   
+   iblt(wch);
+   
+}
+
+
+#endif
+
+
+void serialize::read (int16_t & sh)
+{
+   
+   iblt(sh);
+   
+}
+
+
+void serialize::read (uint16_t & ui)
+{
+   
+   iblt(ui);
+   
+}
+
+
+void serialize::read (int32_t & i)
+{
+   
+   iblt(i);
+   
+}
+
+
+void serialize::read (uint32_t & ui)
+{
+   
+   iblt(ui);
+   
+}
+
+
+void serialize::read (int64_t & i)
+{
+   
+   iblt(i);
+   
+}
+
+
+void serialize::read (uint64_t & ui)
+{
+   
+   iblt(ui);
+   
+}
+
+
+#ifdef APPLEOS
+
+void serialize::read(unsigned long & ui)
+{
+   
+   iblt(ui);
+   
+}
+
+#endif
+
+
+void serialize::read (float & f)
+{
+   
+   iblt(f);
+   
+}
+
+
+void serialize::read (double & d)
+{
+   
+   iblt(d);
+   
+}
+
+
+void serialize::read (LPRECT lprect)
+{
+   
+   iblt(*lprect);
+   
+}
+
+
+void serialize::read (SIZE & size)
+{
+   
+   iblt(size);
+   
+}
+
+
+void serialize::read (sp(type) & info)
+{
+   
+   string str;
+   
+   read(str);
+   
+   info = System.get_type_info((id)str);
+   
+}
+
+
+void serialize::read (id & id)
+{
+   
+   UNREFERENCED_PARAMETER(id);
+   
+   ::exception::throw_interface_only(get_app());
+   
+}
+
+
+void serialize::read (var & var)
+{
+   UNREFERENCED_PARAMETER(var);
+   ::exception::throw_interface_only(get_app());
+}
+
+
+void serialize::read(property & property)
+{
+   UNREFERENCED_PARAMETER(property);
+   ::exception::throw_interface_only(get_app());
+}
+
+
+void serialize::read(string & str)
+{
+   
+   
+}
+
+
+int serialize::get()
+{
+   unsigned char uch;
+   
+   if(read(&uch,1) == 1)
+      return uch;
+   
+   return EOF;
+   
+}
+
+
+int serialize::peek()
+{
+   unsigned char uch;
+   
+   if(read(&uch,1) == 1)
    {
-
+      seek(-1,::file::seek_current);
+      return uch;
    }
+   
+   return EOF;
+   
+}
 
-
-//   stream & stream::operator = (const stream & stream)
-//   {
-//      istream::operator = (stream);
-//      ostream::operator = (stream);
-//      return *this;
-//   }
-
-   bool stream::is_stream_null()
+serialize & serialize::getline(char * sz,strsize n)
+{
+   int c;
+   while(n > 0)
    {
-      //return is_writer_null() && is_reader_null();
-      return m_spfile.is_null();
-   }
-
-   bool stream::is_stream_set()
-   {
-      //return is_writer_set() || is_reader_set();
-      return m_spfile.is_set();
-   }
-
-   void stream::close()
-   {
-      //istream::close();
-      //ostream::close();
-      
-      if(m_spfile.is_set())
+      c = get();
+      if(c == EOF)
       {
-         
-         m_spfile->close();
-         
-         m_spfile.release();
-         
+         break;
       }
-      
+      else if(c == '\n')
+      {
+         c = get();
+         if(c != '\r' && c != EOF)
+            seek(-1,::file::seek_current);
+         break;
+      }
+      else if(c == '\r')
+      {
+         c = get();
+         if(c != '\n' && c != EOF)
+            seek(-1,::file::seek_current);
+         break;
+      }
+      *sz = (char)c;
+      sz++;
+      n--;
    }
+   
+   return *this;
+   
+}
 
 
-   void * stream::get_internal_data()
+bool serialize::is_reader_null()
+{
+   
+   return m_spfile.is_null() || !(m_spfile->m_nOpenFlags & ::file::mode_read);
+   
+}
+
+
+bool serialize::is_reader_set()
+{
+   
+   return m_spfile.is_set() && (m_spfile->m_nOpenFlags & ::file::mode_read);
+   
+}
+
+
+void serialize::read_to_hex(string & str, file_position_t dwStart, file_position_t dwEnd)
+{
+   memory memory(get_app());
+#if MEMDLEAK
+   memory.m_strTag = "memory://member=serialize::read_to_hex";
+#endif
+   if(dwStart == (file_position_t) -1)
+   {
+      dwStart = tellg();
+   }
+   else
+   {
+      seek_from_begin(dwStart);
+   }
+   memory_position_t uiPos = 0;
+   memory_size_t uiRead;
+   memory.allocate(1024);
+   
+   strsize nCount;
+   
+   if (dwEnd == (file_position_t)-1)
    {
       
-      return m_spfile->get_internal_data();
-
+      nCount = ::numeric_info< strsize >::max();
+      
    }
-
-
-   memory_size_t stream::get_internal_data_size() const
+   else
    {
       
-      return m_spfile->get_internal_data_size();
-
-   }
-
-
-   bool stream::set_internal_data_size(memory_size_t c)
-   {
+      nCount = (strsize)(dwEnd - dwStart);
       
-      return m_spfile->set_internal_data_size(c);
-
    }
-
-
-   file_position_t stream::get_position() const
+   
+   while((uiRead = read(&memory.get_data()[uiPos], MIN(memory.get_size() - uiPos, (memory_size_t) nCount))) > 0)
    {
-      
-      return m_spfile->get_position();
-
+      uiPos += uiRead;
+      nCount -= uiRead;
+      if(memory.get_size() - uiPos <= 0)
+      {
+         memory.allocate_add_up(1024 * 1024);
+      }
    }
+   memory.allocate((memory_size_t) uiPos);
+   memory.to_hex(str);
+}
 
 
-} // namespace file
 
 

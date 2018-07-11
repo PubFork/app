@@ -65,8 +65,8 @@ namespace axis
       virtual bool app_data_get(class id id, serialize & os);
       virtual bool app_data_set(class id id, serialize & is);
 
-      virtual bool app_data_set(class id id, serializable & obj) override;
-      virtual bool app_data_get(class id id, serializable & obj) override;
+      virtual bool app_data_set(class id id, object & obj) override;
+      virtual bool app_data_get(class id id, object & obj) override;
 
 
       virtual string fontopus_get_cred(::aura::application * papp, const string & strRequestUrl, const RECT & rect, string & strUsername, string & strPassword, string strToken, string strTitle, bool bInteractive, ::user::interactive * pinteractive) override;
@@ -267,7 +267,7 @@ namespace axis
 
       virtual string http_get(const string & strUrl, ::property_set & set) override;
 
-      virtual bool compress_ungz(::file::ostream & ostreamUncompressed, const ::file::path & lpcszGzFileCompressed) override;
+      virtual bool compress_ungz(serialize & ostreamUncompressed, const ::file::path & lpcszGzFileCompressed) override;
       virtual bool compress_ungz(::primitive::memory_base & mem) override;
       virtual bool compress_gz(::file::file * pfileOut, const ::file::path & lpcszUncompressed, int iLevel = 6) override;
       virtual bool compress_gz(::file::file * pfileOut, ::file::file * pfileIn, int iLevel = 6) override;

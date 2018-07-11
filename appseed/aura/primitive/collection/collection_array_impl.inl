@@ -430,17 +430,28 @@ inline void array < TYPE, ARG_TYPE, ALLOCATOR > ::copy(const array& src)
 template < class TYPE, class ARG_TYPE, class ALLOCATOR >
 void array < TYPE, ARG_TYPE, ALLOCATOR > ::dump(dump_context & dumpcontext) const
 {
+   
    object::dump(dumpcontext);
 
-   dumpcontext << "with " << this->m_nSize << " elements";
+   dumpcontext << "with ";
+   
+   dumpcontext.write(this->m_nSize);
+   
+   dumpcontext << " elements";
+   
    if (dumpcontext.GetDepth() > 0)
    {
+      
       dumpcontext << "\n";
+      
       dump_elements<TYPE>(dumpcontext, this->get_data(), this->m_nSize);
+      
    }
 
    dumpcontext << "\n";
+   
 }
+
 
 template < class TYPE, class ARG_TYPE, class ALLOCATOR >
 void array < TYPE, ARG_TYPE, ALLOCATOR > ::assert_valid() const

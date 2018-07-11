@@ -209,9 +209,9 @@ namespace file
       ::exception::throw_interface_only(get_app());
    }
 
-   void writer::write (serializable & serializable)
+   void writer::write (object & object)
    {
-      UNREFERENCED_PARAMETER(serializable);
+      UNREFERENCED_PARAMETER(object);
       ::exception::throw_interface_only(get_app());
    }
 

@@ -1341,7 +1341,7 @@ string & property_set::get_http_post(string & strPost) const
 
 
 
-//CLASS_DECL_AURA::file::ostream & operator << (::file::ostream & ostream, const property_set & set)
+//CLASS_DECL_AURAserialize & operator << (serialize & ostream, const property_set & set)
 //{
 //
 //   ostream << (const ::property_map &) set;
@@ -1351,7 +1351,7 @@ string & property_set::get_http_post(string & strPost) const
 //}
 //
 //
-//CLASS_DECL_AURA::file::istream & operator >> (serialize & s, property_set & set)
+//CLASS_DECL_AURAserialize & operator >> (serialize & s, property_set & set)
 //{
 //
 //   istream >> (::property_map &) set;

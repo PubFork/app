@@ -6,9 +6,9 @@ namespace file
 
 
    class CLASS_DECL_AURA file_stream:
-      virtual public stream,
-      virtual public file_ostream,
-      virtual public file_istream
+      virtual public stream //,
+//      virtual public file_ostream,
+//      virtual public file_istream
    {
    public:
 
@@ -16,9 +16,13 @@ namespace file
       file_stream();
       file_stream(const char * lpszFileName,uint32_t nOpenFlags,::aura::application * papp = ::get_app());
       file_stream(file * preader);
-      file_stream(const file_stream & preader);
+//      file_stream(const file_stream & preader);
       virtual ~file_stream();
-
+      
+      
+      void open(const ::file::path & lpszFileName,uint32_t nOpenFlags,::aura::application * papp);
+      
+      
    };
 
 

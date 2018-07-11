@@ -51,7 +51,7 @@ compress_bz::~compress_bz()
 }
 
 
-bool compress_bz::transfer(::file::ostream & ostreamBzFileCompressed, ::file::istream & istreamUncompressed)
+bool compress_bz::transfer(serialize & ostreamBzFileCompressed, serialize & istreamUncompressed)
 {
 
    memory                     memory;
@@ -185,7 +185,7 @@ uncompress_bz::~uncompress_bz()
 }
 
 
-bool uncompress_bz::transfer(::file::ostream & ostreamUncompressed, ::file::istream & istreamGzFileCompressed)
+bool uncompress_bz::transfer(serialize & ostreamUncompressed, serialize & istreamGzFileCompressed)
 {
 
    bool done = false;

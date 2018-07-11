@@ -6537,13 +6537,13 @@ namespace user
    //{
    //}
 
-   //void list::list_layout::write(::file::ostream & ostream) const
+   //void list::list_layout::write(serialize & ostream) const
    //{
    //   //ostream << m_iaDisplayToStrict;
    //   ostream << m_iWidth;
    //}
 
-   //void list::list_layout::read(::file::istream & istream)
+   //void list::list_layout::read(serialize & istream)
    //{
    //   //istream >> m_iaDisplayToStrict;
    //   istream >> m_iWidth;
@@ -6557,13 +6557,13 @@ namespace user
    //{
    //}
 
-   //void list::icon_layout::write(::file::ostream & ostream) const
+   //void list::icon_layout::write(serialize & ostream) const
    //{
    //   ostream << m_iaDisplayToStrict;
    //   ostream << m_iWidth;
    //}
 
-   //void list::icon_layout::read(::file::istream & istream)
+   //void list::icon_layout::read(serialize & istream)
    //{
    //   istream >> m_iaDisplayToStrict;
    //   istream >> m_iWidth;

@@ -4,8 +4,7 @@
 
 // property set key is case insensitive
 class CLASS_DECL_AURA property_set :
-   public property_map,
-   public serializable
+   public property_map
 {
 public:
 
@@ -435,7 +434,7 @@ inline property & property_set::operator[](const id & idName)
 inline property & property_set::get(const id & idName)
 {
 
-   assoc * p = get_assoc(idName);
+   auto * p = get_assoc(idName);
 
    return *p;
 

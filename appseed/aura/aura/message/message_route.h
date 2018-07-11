@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 // with tbs in <3!! (Thomas Boregaard Soerensen)
@@ -7,8 +7,9 @@
 namespace message
 {
 
+   
    class route :
-      virtual public mini_object
+      virtual public simple_object
    {
    public:
 

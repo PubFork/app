@@ -10,7 +10,7 @@ namespace xml
 
 
    class CLASS_DECL_AURA node :
-      virtual public ::serializable
+      virtual public ::object
    {
    public:
 

@@ -1,15 +1,15 @@
 #pragma once
 
 
-#include "aura_serialize.h"
+//#include "aura_serialize.h"
 
 
 namespace file
 {
 
 
-   class istream;
-   class ostream;
+   //class istream;
+   //class ostream;
 
 
 
@@ -23,7 +23,7 @@ namespace file
       //void s(ostream & ostream,const ARRAY & a)
       //{
       //   ::count count = a.get_count();
-      //   ostream.write_arbitrary(count);
+      //   ostream.write(count);
       //   for(index index = 0; index < count; index++)
       //   {
       //      ostream << a.element_at(index);
@@ -41,7 +41,7 @@ namespace file
       //{
       //   ::count count;
       //   //istream >> count;
-      //   istream.read_arbitrary(count);
+      //   istream.read(count);
 
       //   if(istream.fail())
       //   {
@@ -66,7 +66,7 @@ namespace file
       //{
       //   ::count count;
       //   //istream >> count;
-      //   istream.read_arbitrary(count);
+      //   istream.read(count);
 
       //   if(istream.fail())
       //   {
@@ -101,7 +101,7 @@ namespace file
       //void write(ostream & ostream,const ARRAY & a)
       //{
       //   ::count count = a.get_count();
-      //   ostream.write_arbitrary(count);
+      //   ostream.write(count);
       //   for(index index = 0; index < count; index++)
       //   {
       //      ostream << *a.element_at(index);
@@ -113,7 +113,7 @@ namespace file
       //{
       //   ::count count;
       //   //istream >> count;
-      //   istream.read_arbitrary(count);
+      //   istream.read(count);
 
       //   if(istream.fail())
       //   {
@@ -142,7 +142,7 @@ namespace file
    //   void write(ostream & ostream,const type_map & m)
    //   {
 
-   //      ostream.write_arbitrary(m.get_count());
+   //      ostream.write(m.get_count());
 
    //      auto p = m.PGetFirstAssoc();
 
@@ -166,7 +166,7 @@ namespace file
 
    //      ::count count;
 
-   //      istream.read_arbitrary(count);
+   //      istream.read(count);
 
    //      if (istream.fail())
    //      {
@@ -217,8 +217,8 @@ namespace file
 
 
 
-CLASS_DECL_AURA bool file_put(const char * path, ::serializable & s, ::aura::application * papp = NULL);
-CLASS_DECL_AURA bool file_as(::serializable & s, const char * path, ::aura::application * papp = NULL);
+CLASS_DECL_AURA bool file_put(const char * path, ::object & s, ::aura::application * papp = NULL);
+CLASS_DECL_AURA bool file_as(::object & s, const char * path, ::aura::application * papp = NULL);
 
 
 template < class ARRAY >

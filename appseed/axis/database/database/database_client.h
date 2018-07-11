@@ -100,7 +100,7 @@ namespace database
       virtual bool data_set(class id, const char * lpsz, update_hint * puh = NULL);
       virtual bool data_set(class id, const unichar * lpsz, update_hint * puh = NULL);
       virtual bool data_set(class id, ::file::file & obj, update_hint * puh = NULL);
-      virtual bool data_set(class id, serializable & obj, update_hint * puh = NULL);
+      virtual bool data_set(class id, object & obj, update_hint * puh = NULL);
       virtual bool data_set(class id, serialize & serialize, update_hint * puh = NULL);
       virtual bool data_set(selection & selection, const char * lpsz, update_hint * puh = NULL);
       virtual bool data_set(selection & selection, var & var, update_hint * puh = NULL);
@@ -137,7 +137,7 @@ namespace database
 #endif
       virtual bool data_get(class id, string & str);
       virtual bool data_get(class id, ::file::file & obj);
-      virtual bool data_get(class id, serializable & obj);
+      virtual bool data_get(class id, object & obj);
       virtual bool data_get(class id, serialize & obj);
 
 

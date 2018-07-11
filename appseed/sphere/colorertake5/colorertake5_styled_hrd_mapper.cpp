@@ -22,7 +22,7 @@ namespace colorertake5
 //  delete rd;
    };
 
-   void StyledHRDMapper::loadRegionMappings(::file::istream & istream)
+   void StyledHRDMapper::loadRegionMappings(serialize & istream)
    {
 //  DocumentBuilder docbuilder;
 
@@ -70,7 +70,7 @@ namespace colorertake5
        XML spfile-> Note, that this method writes all loaded
        defines from all loaded HRD files.
    */
-   void StyledHRDMapper::saveRegionMappings(::file::ostream & writer) const
+   void StyledHRDMapper::saveRegionMappings(serialize & writer) const
    {
       UNREFERENCED_PARAMETER(writer);
 

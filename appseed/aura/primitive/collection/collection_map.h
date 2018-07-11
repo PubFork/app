@@ -1667,7 +1667,7 @@ void map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::assert_valid() const
 
 
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class PAIR >
-serialize & operator << (serialize & s,const map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR > & a)
+serialize & operator << (serialize & s, map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR > & a)
 {
 
    s.stream_map(a);

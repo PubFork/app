@@ -288,7 +288,7 @@ namespace colorertake5
 
                strPath = strDir / hrdLocV->element_at(idx);
 
-               ::file::byte_istream spfile(Application.file().get_file(strPath, ::file::mode_read | ::file::type_binary));
+               ::file::byte_stream spfile(Application.file().get_file(strPath, ::file::mode_read | ::file::type_binary));
 
                if(spfile.is_reader_set())
                {
@@ -331,7 +331,7 @@ namespace colorertake5
          {
             try
             {
-               ::file::byte_istream stream(Application.file().get_file(hrdLocV->element_at(idx), ::file::mode_read |::file::type_binary));
+               ::file::byte_stream stream(Application.file().get_file(hrdLocV->element_at(idx), ::file::mode_read |::file::type_binary));
                if(stream.is_reader_set())
                {
                   mapper->loadRegionMappings(stream);

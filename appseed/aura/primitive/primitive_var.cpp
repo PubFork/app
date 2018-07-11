@@ -874,7 +874,7 @@ void var::stream(serialize & serialize)
 
    if (serialize.is_storing())
    {
-      ::file::ostream & ostream = serialize;
+      serialize & ostream = serialize;
       e_type etype = get_type();
       int32_t i = etype;
       ostream << i;
@@ -944,7 +944,7 @@ void var::stream(serialize & serialize)
 
          ostream << info;
 
-         ::serializable * pserializable = m_sp.cast < ::serializable >();
+         ::object * pserializable = m_sp.cast < ::object >();
 
          if (pserializable != NULL)
          {
@@ -952,7 +952,7 @@ void var::stream(serialize & serialize)
          }
          else
          {
-            _throw(io_exception(ostream.m_spfile->get_app(), "object is not serializable"));
+            _throw(io_exception(ostream.m_spfile->get_app(), "object is not object"));
          }
       }
       break;
@@ -963,7 +963,7 @@ void var::stream(serialize & serialize)
    }
    else
    {
-      ::file::istream & is = serialize;
+      serialize & is = serialize;
       int32_t i;
       is >> i;
       e_type etype = (e_type)i;
@@ -1056,7 +1056,7 @@ void var::stream(serialize & serialize)
          {
             _throw(simple_exception(get_app(), "object allocation is not implemented"));
          }
-         ::serializable * pserializable = m_sp.cast < ::serializable >();
+         ::object * pserializable = m_sp.cast < ::object >();
          if (pserializable != NULL)
          {
             serialize(*pserializable);

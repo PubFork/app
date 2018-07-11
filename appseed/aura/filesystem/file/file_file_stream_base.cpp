@@ -5,19 +5,19 @@ namespace file
 {
 
 
-   file_stream_base::file_stream_base()
-   {
+//   file_stream_base::file_stream_base()
+//   {
+//
+//   }
+//
+//
+//   file_stream_base::~file_stream_base()
+//   {
+//
+//   }
 
-   }
 
-
-   file_stream_base::~file_stream_base()
-   {
-
-   }
-
-
-   void file_stream_base::open(const ::file::path & lpszFileName,uint32_t nOpenFlags,::aura::application * papp)
+   void file_stream::open(const ::file::path & lpszFileName,uint32_t nOpenFlags,::aura::application * papp)
    {
 
       m_spfile.release();

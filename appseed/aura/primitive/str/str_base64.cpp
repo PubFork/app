@@ -139,7 +139,7 @@ namespace str
 
    }
 
-   void base64::encode(::file::ostream & ostream, ::file::istream & istream)
+   void base64::encode(serialize & ostream, serialize & istream)
    {
       int32_t i,hiteof= FALSE;
       byte igroup[3],ogroup[4];
@@ -181,7 +181,7 @@ namespace str
    }
 
 
-   void base64::decode(::file::ostream & ostream, ::file::istream & istream)
+   void base64::decode(serialize & ostream, serialize & istream)
    {
       int32_t i;
       byte a[4],b[4],o[3];
@@ -260,7 +260,7 @@ namespace str
 
       ::memory_file buf(get_app(), &storageBinary);
 
-      ::file::byte_istream istream(&buf);
+      ::file::byte_stream istream(&buf);
 
       ::file::string_file file;
 
@@ -303,13 +303,13 @@ namespace str
 
       ::memory_file bufOut(get_app(), &storageBinary);
 
-      ::file::byte_ostream ostream(&bufOut);
+      ::file::byte_stream ostream(&bufOut);
 
       decode(ostream, istream);
 
    }
 
-   string base64::serialize(::serializable & serializable)
+   string base64::serialize(::object & object)
    {
 
       memory storageBinary;
@@ -318,7 +318,7 @@ namespace str
 
       writer writer(&buf);
 
-      writer(serializable);
+      writer(object);
 
       buf.seek_to_begin();
 
@@ -335,7 +335,7 @@ namespace str
    }
 
 
-   void base64::unserialize(::serializable & serializable, const char * pszBase64)
+   void base64::unserialize(::object & object, const char * pszBase64)
    {
 
       string str(pszBase64);
@@ -356,7 +356,7 @@ namespace str
 
       reader reader(&buf);
 
-      reader(serializable);
+      reader(object);
 
    }
 

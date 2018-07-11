@@ -1,58 +1,60 @@
 #include "framework.h"
 
 
-namespace file
-{
+//namespace file
+//{
 
 
-   ostream::ostream()
+   serialize::serialize()
    {
+      
+      m_gcount = 0;
 
    }
 
 
-   ostream::ostream(const char * lpszFileName, uint32_t nOpenFlags, ::aura::application * papp)
-   {
-
-      if(papp == NULL)
-      {
-
-         m_spfile = canew(::file::stdio_file(lpszFileName,nOpenFlags | ::file::mode_write));
-
-      }
-      else
-      {
-
-         m_spfile = App(papp).file().get_file(lpszFileName,nOpenFlags | ::file::mode_write);
-
-      }
-
-   }
-
-
-   ostream::ostream(file * pwriter)
-   {
-
-      m_spfile     = pwriter;
-
-   }
+//   stream::stream(const char * lpszFileName, uint32_t nOpenFlags, ::aura::application * papp)
+//   {
+//
+//      if(papp == NULL)
+//      {
+//
+//         m_spfile = canew(::file::stdio_file(lpszFileName,nOpenFlags | ::file::mode_write));
+//
+//      }
+//      else
+//      {
+//
+//         m_spfile = App(papp).file().get_file(lpszFileName,nOpenFlags | ::file::mode_write);
+//
+//      }
+//
+//   }
 
 
-   ostream::ostream(const ostream & ostream)
-   {
+//   serialize::serialize(file * pwriter)
+//   {
+//
+//      m_spfile     = pwriter;
+//
+//   }
 
-      m_spfile     = ostream.m_spfile;
 
-   }
+//   serialize::serialize(const serialize & serialize)
+//   {
+//
+//      m_spfile     = serialize.m_spfile;
+//
+//   }
 
 
-   ostream::~ostream()
+   serialize::~serialize()
    {
       close();
    }
 
 
-   void ostream::write_from_hex(const void *lpBuf,memory_size_t nCount)
+   void serialize::write_from_hex(const void *lpBuf,memory_size_t nCount)
    {
 
       m_spfile->write_from_hex(lpBuf,nCount);
@@ -60,14 +62,14 @@ namespace file
    }
 
 
-   void ostream::write(const void *lpBuf,memory_size_t nCount)
+   void serialize::write(const void *lpBuf,memory_size_t nCount)
    {
 
       m_spfile->write(lpBuf, nCount);
 
    }
 
-   void ostream::write(const void *lpBuf, memory_size_t nCount, memory_size_t * dwWritten)
+   void serialize::write(const void *lpBuf, memory_size_t nCount, memory_size_t * dwWritten)
    {
 
       m_spfile->write(lpBuf, nCount, dwWritten);
@@ -75,41 +77,41 @@ namespace file
    }
 
 
-   void ostream:: write (bool b)
+   void serialize:: write (bool b)
    {
 
-      blt(b);
+      oblt(b);
 
    }
 
-   void ostream:: write (char ch)
+   void serialize:: write (char ch)
    {
 
-      blt(ch);
-
-   }
-
-
-   void ostream:: write (uchar uch)
-   {
-
-      blt(uch);
+      oblt(ch);
 
    }
 
 
-   void ostream::write (int16_t i)
+   void serialize:: write (uchar uch)
    {
 
-      blt(i);
+      oblt(uch);
 
    }
 
 
-   void ostream:: write (uint16_t ui)
+   void serialize::write (int16_t i)
    {
 
-      blt(ui);
+      oblt(i);
+
+   }
+
+
+   void serialize:: write (uint16_t ui)
+   {
+
+      oblt(ui);
 
    }
 
@@ -117,10 +119,10 @@ namespace file
 #ifdef WINDOWS
 
 
-   void ostream:: write (unichar wch)
+   void serialize:: write (unichar wch)
    {
 
-      blt(wch);
+      oblt(wch);
 
    }
 
@@ -128,146 +130,178 @@ namespace file
 #endif
 
 
-   void ostream:: write (int32_t i)
-   {
-
-      blt(i);
-
-   }
-
-
-   void ostream:: write (uint32_t ui)
-   {
-
-      blt(ui);
-
-   }
-
-
-   void ostream:: write (int64_t i)
-   {
-
-      blt(i);
-
-   }
-
-   void ostream:: write (uint64_t ui)
-   {
-
-      blt(ui);
-
-   }
+//   void serialize:: write (int32_t i)
+//   {
+//
+//      oblt(i);
+//
+//   }
+//
+//
+//   void serialize:: write (u32 ui)
+//   {
+//
+//      oblt(ui);
+//
+//   }
+//
+//
+//   void serialize:: write (i64 i)
+//   {
+//
+//      oblt(i);
+//
+//   }
+//
+//   void serialize:: write (u64 ui)
+//   {
+//
+//      oblt(ui);
+//
+//   }
 
 #ifdef APPLEOS
 
-   void ostream:: write (unsigned long ui)
+   void serialize:: write (unsigned long ui)
    {
 
+      oblt(ui);
+      
    }
 
 #endif
 
 
-   void ostream::write_arbitrary(int32_t i)
+   void serialize::write(i32 i)
    {
 
+      oblt(i);
 
    }
 
-   void ostream::write_arbitrary(uint32_t ui)
+   
+   void serialize::write(u32 ui)
    {
 
-
-   }
-
-
-   void ostream::write_arbitrary(uint64_t ui, int signal)
-   {
-
-
-   }
-
-   void ostream::write_arbitrary(int64_t i)
-   {
-
-
-   }
-
-   void ostream::write_arbitrary(uint64_t ui)
-   {
-
-   }
-
-   void ostream:: write (float f)
-   {
-
-   }
-
-   void ostream:: write (double d)
-   {
-
-   }
-
-   void ostream:: write (const RECT & rect)
-   {
-
-   }
-
-   void ostream:: write(LPCRECT lpcrect)
-   {
-      write(*lpcrect);
-   }
-
-   void ostream:: write(const SIZE & size)
-   {
-
-   }
-
-   void ostream:: write(const sp(type) info)
-   {
-
-   }
-
-   void ostream::write(const std_type_info & info)
-   {
+      oblt(ui);
 
    }
 
 
-   void ostream:: write (const char * psz)
+//   void serialize::write(uint64_t ui, int signal)
+//   {
+//
+//
+//   }
+
+   void serialize::write(int64_t i)
+   {
+
+      oblt(i);
+
+   }
+
+
+void serialize::write(uint64_t ui)
+   {
+      
+      oblt(ui);
+
+   }
+
+
+   void serialize:: write (float f)
+   {
+      
+      oblt(f);
+
+   }
+
+
+   void serialize:: write (double d)
+   {
+      
+      oblt(d);
+
+   }
+
+
+   void serialize:: write (RECT & rect)
+   {
+      
+      oblt(rect);
+
+   }
+
+
+   void serialize:: write(LPRECT lpcrect)
+   {
+      
+      oblt(*lpcrect);
+      
+   }
+
+
+   void serialize:: write(SIZE & size)
+   {
+      
+      oblt(size);
+
+   }
+
+
+   void serialize:: write(sp(type) & info)
+   {
+      
+      string str(info->m_id);
+      
+      write(str);
+
+   }
+
+
+   void serialize::write(std_type_info & info)
+   {
+      
+      write(System.get_type_info(info));
+
+   }
+
+
+   void serialize:: write (const char * psz)
    {
 
    }
 
 
-   void ostream:: write (const id & id)
+   void serialize:: write (id & id)
    {
 
    }
 
 
-   void ostream:: write (const var & var)
+   void serialize:: write (var & var)
    {
 
    }
 
 
-   void ostream:: write(const property & property)
+   void serialize:: write( property & property)
    {
 
    }
 
 
-   ostream & ostream::operator = (const ostream & ostream)
-   {
+//   serialize & serialize::operator = (const serialize & serialize)
+//   {
+//
+//      m_spfile = serialize.m_spfile;
+//
+//      return *this;
+//
+//   }
 
-      m_spfile = ostream.m_spfile;
-
-      return *this;
-
-   }
-
-   void ostream::flush()
+   void serialize::flush()
    {
 
       if(m_spfile.is_set())
@@ -280,17 +314,17 @@ namespace file
    }
 
 
-   void ostream::close()
+   void serialize::close()
    {
 
       flush();
 
-      stream_base::close();
+      stream::close();
 
    }
 
 
-   bool ostream::is_writer_null()
+   bool serialize::is_writer_null()
    {
 
       return m_spfile.is_null();
@@ -298,7 +332,7 @@ namespace file
    }
 
 
-   bool ostream::is_writer_set()
+   bool serialize::is_writer_set()
    {
 
       return m_spfile.is_set();
@@ -306,27 +340,27 @@ namespace file
    }
 
 
-   void ostream:: write (const string & str)
+   void serialize:: write (string & str)
    {
 
-      m_spfile->write(str, str.get_length());
+      write(str.c_str(), str.get_length());
 
    }
 
-   void ostream::set_length(file_size_t len)
+   void serialize::set_length(file_size_t len)
    {
 
       m_spfile->set_length(len);
 
    }
 
-   ostream & ostream::put(char ch)
+   serialize & serialize::put(char ch)
    {
       write(ch);
       return *this;
    }
 
-} // namespace file
+//} // namespace file
 
 
 

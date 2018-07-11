@@ -11,10 +11,10 @@ namespace file
    {
 
       template < class ARRAY >
-      void write(ostream & ostream, const ARRAY & a)
+      void write(serialize & ostream, const ARRAY & a)
       {
          ::count count = a.get_count();
-         ostream.write_arbitrary(count);
+         ostream.write(count);
          for (index index = 0; index < count; index++)
          {
             ostream << a.element_at(index);
@@ -22,11 +22,11 @@ namespace file
       }
 
       template < class ARRAY >
-      void read(istream & istream, ARRAY & a)
+      void read(serialize & istream, ARRAY & a)
       {
          ::count count;
          //istream >> count;
-         istream.read_arbitrary(count);
+         istream.read(count);
 
          if (istream.fail())
          {
@@ -52,10 +52,10 @@ namespace file
    {
 
       template < class ARRAY >
-      void write(ostream & ostream, const ARRAY & a)
+      void write(serialize & ostream, const ARRAY & a)
       {
          ::count count = a.get_count();
-         ostream.write_arbitrary(count);
+         ostream.write(count);
          for (index index = 0; index < count; index++)
          {
             ostream << *a.element_at(index);
@@ -63,11 +63,11 @@ namespace file
       }
 
       template < class ARRAY >
-      void read(istream & istream, ARRAY & a)
+      void read(serialize & istream, ARRAY & a)
       {
          ::count count;
          //istream >> count;
-         istream.read_arbitrary(count);
+         istream.read(count);
 
          if (istream.fail())
          {
@@ -96,7 +96,7 @@ namespace file
       void write(serialize & ostream, const type_map & m)
       {
 
-         ostream.write_arbitrary(m.get_count());
+         ostream.write(m.get_count());
 
          auto p = m.PGetFirstAssoc();
 
@@ -120,7 +120,7 @@ namespace file
 
          ::count count;
 
-         istream.read_arbitrary(count);
+         istream.read(count);
 
          if (istream.fail())
          {
@@ -239,8 +239,8 @@ serialize & operator >> (serialize & s, raw_array < TYPE, ARG_TYPE > & a)
 //}
 
 
-//CLASS_DECL_AURA bool file_put(const char * path, ::serializable & s, ::aura::application * papp = NULL);
-//CLASS_DECL_AURA bool file_as(::serializable & s, const char * path, ::aura::application * papp = NULL);
+//CLASS_DECL_AURA bool file_put(const char * path, ::object & s, ::aura::application * papp = NULL);
+//CLASS_DECL_AURA bool file_as(::object & s, const char * path, ::aura::application * papp = NULL);
 //
 //
 //template < class ARRAY >
@@ -252,3 +252,39 @@ serialize & operator >> (serialize & s, raw_array < TYPE, ARG_TYPE > & a)
 
 
 
+
+
+inline file_position_t serialize::tellp()
+{
+   
+   return m_spfile->tell();
+   
+}
+
+
+inline serialize & serialize::seekp(file_position_t position)
+{
+   
+   m_spfile->seek_from_begin(position);
+   
+   return *this;
+   
+}
+
+
+inline serialize & serialize::seekp(file_offset_t offset, ::file::e_seek eseek)
+{
+   
+   m_spfile->seek(offset, eseek);
+   
+   return *this;
+   
+}
+
+
+inline memory_size_t serialize::gcount() { return m_gcount; }
+inline file_position_t serialize::tellg() { return m_spfile->tell(); }
+inline serialize & serialize::seekg(file_position_t position) { m_spfile->seek_from_begin(position); return *this; }
+inline serialize & serialize::seekg(file_offset_t offset, ::file::e_seek eseek) { m_spfile->seek(offset, eseek); return *this; }
+
+inline file_size_t serialize::get_left() { return m_spfile->get_length() - m_spfile->get_position(); }

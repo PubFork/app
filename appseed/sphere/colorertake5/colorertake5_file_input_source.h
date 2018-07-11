@@ -18,7 +18,7 @@ public:
   void closeStream();
   file_size_t get_length() const;
 protected:
-  ::file::istream & createRelative(string relPath);
+  serialize & createRelative(string relPath);
 
   string *baseLocation;
   byte *stream;

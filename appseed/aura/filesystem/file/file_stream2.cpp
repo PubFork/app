@@ -6,18 +6,18 @@ namespace file
 
 
 
-   ostream2::ostream2()
+   stream2::stream2()
    {
    }
 
-   ostream2::ostream2(writer * pwriter)
+   stream2::stream2(writer * pwriter)
    {
 
       m_spfile = pwriter;
 
    }
 
-   ostream2::~ostream2()
+   stream2::~stream2()
    {
    }
 
@@ -25,44 +25,44 @@ namespace file
 
 
 
-   ostream2 & ostream2::operator << (uchar uch)
+   stream2 & stream2::operator << (uchar uch)
    {
-      ostream::operator << (uch);
+      serialize::operator << (uch);
       return *this;
    }
 
-   ostream2 & ostream2::operator << (uint16_t ui)
+   stream2 & stream2::operator << (uint16_t ui)
    {
-      ostream::operator << (ui);
+      serialize::operator << (ui);
       return *this;
    }
 
-   ostream2 & ostream2::operator << (int32_t i)
+   stream2 & stream2::operator << (int32_t i)
    {
-      ostream::operator << (i);
+      serialize::operator << (i);
       return *this;
    }
 
-   ostream2 & ostream2::operator << (uint32_t ui)
+   stream2 & stream2::operator << (uint32_t ui)
    {
-      ostream::operator << (ui);
+      serialize::operator << (ui);
       return *this;
    }
 
-   ostream2 & ostream2::operator << (const RECT & rect)
+   stream2 & stream2::operator << (RECT & rect)
    {
-      ostream::operator << (rect);
+      serialize::operator << (rect);
       return *this;
    }
 
 
-   ostream2 & ostream2::operator << (const char * psz)
+   stream2 & stream2::operator << (const char * psz)
    {
       write((void *)psz, strlen(psz));
       return *this;
    }
 
-   ostream2 & ostream2::operator << (const string & str)
+   stream2 & stream2::operator << (string & str)
    {
       operator <<((const char *)str);
       return *this;

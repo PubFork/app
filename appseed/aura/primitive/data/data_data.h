@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 typedef CLASS_DECL_AURA spa(object) object_spa;
@@ -31,7 +31,7 @@ namespace data
 
 
    class CLASS_DECL_AURA simple_data :
-      virtual public ::serializable
+      virtual public ::object
    {
    public:
 

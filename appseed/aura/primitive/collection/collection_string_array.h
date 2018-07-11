@@ -318,8 +318,8 @@ public:
 
    void replace(const char * lpszSearch,const char * lpszReplace);
 
-   //void write(::file::ostream & ostream) const;
-   //void read(::file::istream & istream);
+   //void write(serialize & ostream) const;
+   //void read(serialize & istream);
 
 
    void get_format_string(Type & str,const char * lpcszSeparator) const;
@@ -1731,7 +1731,7 @@ inline ::count string_array < Type, RawType > ::get_count_except_ci(const char *
 
 
 // return Type length or -1 if UNICODE Type is found in the archive
-__STATIC UINT __read_string_length(::file::istream & ar);
+__STATIC UINT __read_string_length(serialize & ar);
 
 template < class Type, class RawType >
 string_array < Type, RawType > ::string_array(::aura::application * papp):
@@ -2678,7 +2678,7 @@ template < class Type, class RawType >
 serialize & operator << (serialize & ostream, string_array < Type, RawType > & a)
 {
 
-   ostream.write_arbitrary(a.m_nSize);
+   ostream.write(a.m_nSize);
 
    for(int32_t i = 0; i < a.get_size(); i++)
    {
@@ -2705,7 +2705,7 @@ serialize & operator >> (serialize & istream, string_array < Type, RawType > & a
 
    ::count iSize;
 
-   istream.read_arbitrary(iSize);
+   istream.read(iSize);
 
    if(istream.fail())
    {

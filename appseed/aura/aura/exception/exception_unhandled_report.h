@@ -28,9 +28,9 @@
 
 struct unhandled_report
 {
-   ::file::ostream & m_os;
+   serialize & m_os;
 
-   unhandled_report(::file::ostream & System = std::cout) : m_os(System) {}
+   unhandled_report(serialize & System = std::cout) : m_os(System) {}
    unhandled_report(const unhandled_report& p) : m_os(p.m_os) {}
    unhandled_report& operator = (const unhandled_report&) { return *this; }
    
