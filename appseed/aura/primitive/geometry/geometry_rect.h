@@ -874,7 +874,7 @@ inline bool rect::intersects(LPCRECT lpRect) const NOTHROW
 
 }
 
-inline serialize & operator << (serialize & os, rectd & r)
+inline stream & operator << (stream & os, rectd & r)
 {
 
    os << r.left;
@@ -887,7 +887,7 @@ inline serialize & operator << (serialize & os, rectd & r)
 }
 
 
-inline serialize & operator >> (serialize & is, rectd & r)
+inline stream & operator >> (stream & is, rectd & r)
 {
 
    is >> r.left;

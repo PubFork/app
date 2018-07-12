@@ -553,7 +553,7 @@ template<> inline UINT HashKey<size> (size key)
 
 
 
-inline serialize & operator << (serialize & os, sized & s)
+inline stream & operator << (stream & os, sized & s)
 {
 
    os << s.cx;
@@ -563,7 +563,7 @@ inline serialize & operator << (serialize & os, sized & s)
 
 }
 
-inline serialize & operator >> (serialize & is, sized & s)
+inline stream & operator >> (stream & is, sized & s)
 {
 
    is >> s.cx;
