@@ -1982,6 +1982,18 @@ RetryBuildNumber:
          path = System.dir().document() / path;
 
       }
+      else if (::str::begins_eat_ci(path, "dropbox://"))
+      {
+         
+         path = App(papp).dir().dropbox() / path;
+         
+      }
+      else if (::str::begins_eat_ci(path, "usersystem://"))
+      {
+         
+         path = ::dir::system() / path;
+         
+      }
 
 #endif
 

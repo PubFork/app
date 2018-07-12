@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 namespace zip
@@ -69,7 +69,7 @@ namespace file
 
          virtual ::file::path pathfind(const string & pszEnv,const string & pszTopic,const string & pszMode);
 
-
+         virtual ::file::path dropbox();
 
 
       };

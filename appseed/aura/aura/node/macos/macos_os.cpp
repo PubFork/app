@@ -1116,6 +1116,8 @@ namespace macos
    bool os::file_open(::file::path path, string strParams, string strFolder)
    {
       
+      path = System.defer_process_path(path, ::get_app());
+      
       ns_open_file(path.c_str());
       
       return true;
