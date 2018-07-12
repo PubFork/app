@@ -6988,15 +6988,30 @@ restart:
             return;
 
          if (width <= 0)
+         {
+            serialize.setstate(::file::badbit);
             return;
+         }
          if (height <= 0)
+         {
+            serialize.setstate(::file::badbit);
             return;
+         }
          if (widthAlloc <= 0)
+         {
+            serialize.setstate(::file::badbit);
             return;
+         }
          if (heightAlloc <= 0)
+         {
+            serialize.setstate(::file::badbit);
             return;
+         }
          if (iScan <= 0)
+         {
+            serialize.setstate(::file::badbit);
             return;
+         }
          if (widthAlloc < width)
          {
             serialize.setstate(::file::badbit);

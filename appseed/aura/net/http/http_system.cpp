@@ -2259,48 +2259,61 @@ retry_session:
    {
 
       single_lock sl(m_pmutexDownload, true);
-
-      while (m_straExists.contains(pszUrl))
+      
+      int32_t iStatusCode = 0;
+      
+      try
       {
+
+         while (m_straExists.contains(pszUrl))
+         {
+            sl.unlock();
+            Sleep(100);
+            sl.lock();
+         }
+
+         m_straExists.add(pszUrl);
+
          sl.unlock();
-         Sleep(100);
+
+         ::sockets::socket_handler handler(get_app());
+
+         set["only_headers"] = true;
+
+         ::url_domain domain;
+
+         domain.create(System.url().get_server(pszUrl));
+
+         if (::str::begins(System.url().get_object(pszUrl), astr.strMatterUri))
+         {
+
+            set["raw_http"] = true;
+
+         }
+
+         sp(::sockets::http_client_socket) psocket;
+
+         if (!get(handler, psocket, pszUrl, set))
+         {
+            sl.lock();
+            m_straExists.remove(pszUrl);
+            return false;
+         }
+
+         iStatusCode = psocket->outattr("http_status_code");
+
          sl.lock();
+
       }
-
-      m_straExists.add(pszUrl);
-
-      sl.unlock();
-
-      ::sockets::socket_handler handler(get_app());
-
-      set["only_headers"] = true;
-
-      ::url_domain domain;
-
-      domain.create(System.url().get_server(pszUrl));
-
-      if (::str::begins(System.url().get_object(pszUrl), astr.strMatterUri))
+      catch(...)
       {
-
-         set["raw_http"] = true;
-
+         
       }
 
-      sp(::sockets::http_client_socket) psocket;
-
-      if (!get(handler, psocket, pszUrl, set))
-      {
-         sl.lock();
-         m_straExists.remove(pszUrl);
-         return false;
-      }
-
-      int32_t iStatusCode = psocket->outattr("http_status_code");
-
-      sl.lock();
       m_straExists.remove(pszUrl);
 
       return iStatusCode == 200;
+      
    }
 
 

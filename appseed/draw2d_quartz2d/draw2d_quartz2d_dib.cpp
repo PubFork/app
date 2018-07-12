@@ -171,6 +171,8 @@ namespace draw2d_quartz2d
          
       m_size.cy = height;
       
+      m_sizeAlloc = m_size;
+      
       return true;
          
    }

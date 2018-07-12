@@ -344,6 +344,8 @@ bool file_set_line_dup(const char * path, index iLine, const char * pszLine)
       
       fclose(file);
       
+#ifdef WINDOWS
+      
       if (!file_copy_dup(path, pathTime.c_str(), true))
       {
          
@@ -352,6 +354,12 @@ bool file_set_line_dup(const char * path, index iLine, const char * pszLine)
       }
       
       file_delete_dup(pathTime);
+      
+#else
+      
+      ::system("mv -f \"" + string(pathTime) + "\" \"" + string(path) + "\"");
+      
+#endif
       
    }
    
