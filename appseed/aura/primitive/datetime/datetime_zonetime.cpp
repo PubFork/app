@@ -27,26 +27,26 @@ namespace datetime
 
    }
 
-   zonetime::zonetime() NOTHROW :
-      time(0),
-      m_iZoneOffset(0)
+zonetime::zonetime() NOTHROW :
+   time(0),
+        m_iZoneOffset(0)
    {
 
    }
 
 
-   zonetime::zonetime(const zonetime & zonetime) NOTHROW :
-      time(zonetime.m_time),
-      m_iZoneOffset(zonetime.m_iZoneOffset)
+zonetime::zonetime(const zonetime & zonetime) NOTHROW :
+   time(zonetime.m_time),
+   m_iZoneOffset(zonetime.m_iZoneOffset)
    {
 
 
    }
 
 
-   zonetime::zonetime(__time64_t zonetime, int iZoneOffset) NOTHROW :
-      time(zonetime),
-      m_iZoneOffset(iZoneOffset)
+zonetime::zonetime(__time64_t zonetime, int iZoneOffset) NOTHROW :
+   time(zonetime),
+   m_iZoneOffset(iZoneOffset)
    {
    }
 
@@ -288,19 +288,19 @@ dump_context & operator <<(dump_context & dumpcontext, ::datetime::zonetime zone
    if ((err != 0) || (psz[0] == '\0') || (zonetime.get_time() == 0))
    {
       dumpcontext << "::datetime::zonetime(invalid #" << (int_ptr)zonetime.get_time() << ")";
-      
+
       return dumpcontext;
    }
 
    // format it
    dumpcontext << "::datetime::zonetime(\"" << psz << "\")";
-   
+
    return dumpcontext;
 }
 
 #endif
 
-serialize & operator <<(serialize & os, ::datetime::zonetime zonetime)
+stream & operator << (stream & os, ::datetime::zonetime zonetime)
 {
 
    os.write((int64_t)zonetime.m_time);
@@ -310,7 +310,7 @@ serialize & operator <<(serialize & os, ::datetime::zonetime zonetime)
 
 }
 
-serialize & operator >> (serialize & is, ::datetime::zonetime& rtime)
+stream & operator >> (stream & is, ::datetime::zonetime& rtime)
 {
 
    is.read((int64_t &)rtime.m_time);

@@ -111,16 +111,16 @@ namespace datetime
 dump_context & operator <<(dump_context & dumpcontext,::datetime::time_span timeSpan)
 {
    dumpcontext << "time_span(" << timeSpan.GetDays() << " days, " <<
-          timeSpan.GetHours() << " hours, " <<
-          timeSpan.GetMinutes() << " minutes and " <<
-          timeSpan.GetSeconds() << " seconds)";
-   
+               timeSpan.GetHours() << " hours, " <<
+               timeSpan.GetMinutes() << " minutes and " <<
+               timeSpan.GetSeconds() << " seconds)";
+
    return dumpcontext;
 }
 
 #endif
 
-serialize & operator << (serialize & os, ::datetime::time_span span)
+stream & operator << (stream & os, ::datetime::time_span span)
 {
 
    os.write((int64_t)span.m_timeSpan);
@@ -130,7 +130,7 @@ serialize & operator << (serialize & os, ::datetime::time_span span)
 }
 
 
-serialize & operator >>(serialize & is, ::datetime::time_span & span)
+stream & operator >> (stream & is, ::datetime::time_span & span)
 {
 
    is.read((int64_t &)span.m_timeSpan);

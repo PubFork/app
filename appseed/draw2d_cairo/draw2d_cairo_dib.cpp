@@ -43,14 +43,14 @@ namespace draw2d_cairo
    }
 
 
-   void dib::io(stream & serialize)
+   void dib::io(stream & stream)
    {
 
       synch_lock ml(cairo_mutex());
 
       ::draw2d::dib::io(stream);
 
-      if (!serialize.is_storing())
+      if (!stream.is_storing())
       {
 
          cairo_surface_t * surface = dynamic_cast <::draw2d_cairo::bitmap *> (m_spbitmap.m_p)->m_psurface;

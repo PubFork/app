@@ -167,7 +167,7 @@ namespace file
 
 
 template < class TYPE, class ARG_TYPE = const TYPE &, class ALLOCATOR = ::allocator::def < TYPE > >
-serialize & operator << (serialize & s, array < TYPE, ARG_TYPE, ALLOCATOR > & a)
+stream & operator << (stream & s, array < TYPE, ARG_TYPE, ALLOCATOR > & a)
 {
 
    s.stream_array(a);
@@ -190,7 +190,7 @@ stream & operator >> (stream & s, array < TYPE, ARG_TYPE, ALLOCATOR > & a)
 
 
 template<class TYPE, class ARG_TYPE = const TYPE &>
-serialize & operator << (serialize & serialize, raw_array < TYPE, ARG_TYPE> & a)
+stream & operator << (stream & serialize, raw_array < TYPE, ARG_TYPE> & a)
 {
 
    ASSERT(serialize.is_storing());

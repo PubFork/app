@@ -2675,7 +2675,7 @@ return -1;
 
 
 template < class Type, class RawType >
-serialize & operator << (serialize & ostream, string_array < Type, RawType > & a)
+stream & operator << (stream & ostream, string_array < Type, RawType > & a)
 {
 
    ostream.write(a.m_nSize);
@@ -2693,7 +2693,7 @@ serialize & operator << (serialize & ostream, string_array < Type, RawType > & a
 
 
 template < class Type, class RawType >
-serialize & operator >> (serialize & istream, string_array < Type, RawType > & a)
+stream & operator >> (stream & istream, string_array < Type, RawType > & a)
 {
 
    if(istream.fail())
