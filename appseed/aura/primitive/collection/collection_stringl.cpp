@@ -26,19 +26,19 @@ void stringl::implode(string & str, const char * lpcszSeparator, index start, ::
    {
       last = start + count - 1;
    }
-   
+
    index i = start;
 
    auto pos = index_iterator(i);
 
    for(; i <= last; i++)
    {
-      
+
       if(i > start)
       {
          str += strSeparator;
       }
-      
+
       str += *pos;
 
       pos++;
@@ -129,26 +129,29 @@ void stringl::add_tail_tokens(const char * lpcsz, const char * lpcszSeparator, b
 }
 
 
-void stringl::write(serialize & ostream) const
+void stringl::io(stream & s)
 {
-   ostream << m_count;
-   POSITION pos = get_head_position();
-   for(int32_t i = 0; i < m_count; i++)
+   if (s.is_storing())
    {
-      ostream << get_next(pos);
+      s << m_count;
+      POSITION pos = get_head_position();
+      for (int32_t i = 0; i < m_count; i++)
+      {
+         s << get_next(pos);
+      }
+   }
+   else
+   {
+      int32_t iSize;
+      s >> iSize;
+      string str;
+      for (int32_t i = 0; i < iSize; i++)
+      {
+         s >> str;
+         add_tail(str);
+      }
    }
 }
 
-void stringl::read(serialize & istream)
-{
-   int32_t iSize;
-   istream >> iSize;
-   string str;
-   for(int32_t i = 0; i < iSize; i++)
-   {
-      istream >> str;
-      add_tail(str);
-   }
-}
 
 

@@ -28,7 +28,9 @@ namespace command
 
 } // namespace command
 
-class serialize;
+
+class stream;
+
 
 // very short name ([{c}])ontext (switchers, as it as context) enums
 enum e_context_switcher_null
@@ -1785,16 +1787,16 @@ namespace std
    template < class TYPE >
    using set = ::set< TYPE >;
 
-   using ostream = serialize;
+   using ostream = stream;
    using ofstream = ::file::file_stream;
 
-   using istream = serialize;
+   using istream = stream;
    using ifstream = ::file::file_stream;
 
-   using stream = ::file::stream;
+   using stream = stream;
    using fstream = ::file::file_stream;
 
-   using iostream = ::file::stream;
+   using iostream = stream;
    using iofstream = ::file::file_stream;
 
    using stringstream = ::file::plain_text_stream_string_file;
@@ -1821,7 +1823,7 @@ namespace std
 
    using filebuf = ::file::stdio_file;
 
-   //using ios_base = ::file::stream_base;
+   //using ios_base = stream_base;
 
    // replace ::::file:: => ::file::
 

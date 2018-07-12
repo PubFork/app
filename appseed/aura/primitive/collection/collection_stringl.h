@@ -6,7 +6,7 @@ class CLASS_DECL_AURA stringl :
 {
 public:
 
-   
+
    stringl();
    virtual ~stringl();
 
@@ -20,8 +20,7 @@ public:
    void add_tail_tokens(const char * lpcsz, const char * lpcszSeparator, bool bAddEmpty);
 
 
-   void write(serialize & ostream) const;
-   void read(serialize & istream);
+   virtual void io(stream & stream) override;
 
 
 };

@@ -128,9 +128,9 @@ namespace datetime
       else
       {
          time timeT(
-            (int32_t)sysTime.wYear, (int32_t)sysTime.wMonth, (int32_t)sysTime.wDay,
-            (int32_t)sysTime.wHour, (int32_t)sysTime.wMinute, (int32_t)sysTime.wSecond,
-            nDST);
+         (int32_t)sysTime.wYear, (int32_t)sysTime.wMonth, (int32_t)sysTime.wDay,
+         (int32_t)sysTime.wHour, (int32_t)sysTime.wMinute, (int32_t)sysTime.wSecond,
+         nDST);
          *this = timeT;
       }
    }
@@ -733,7 +733,7 @@ namespace datetime
 
 #ifdef DEBUG
 
-dump_context & operator <<(dump_context & dumpcontext, ::datetime::time time)
+dump_context & operator <<(dump_context & dumpcontext, ::datetime::time & time)
 {
    char psz[32];
    psz[0] = '\0';
@@ -746,19 +746,19 @@ dump_context & operator <<(dump_context & dumpcontext, ::datetime::time time)
    if ((err != 0) || (psz[0] == '\0') || (time.get_time() == 0))
    {
       dumpcontext << "::datetime::time(invalid #" << (int_ptr) time.get_time() << ")";
-      
+
       return dumpcontext;
    }
 
    // format it
    dumpcontext << "::datetime::time(\"" << psz << "\")";
-   
+
    return dumpcontext;
 }
 
 #endif
 
-serialize & operator <<(serialize & os, ::datetime::time time)
+stream & operator <<(stream & os, ::datetime::time & time)
 {
 
    os.write((int64_t) time.m_time);
@@ -767,7 +767,7 @@ serialize & operator <<(serialize & os, ::datetime::time time)
 
 }
 
-serialize & operator >>(serialize & is, ::datetime::time& rtime)
+stream & operator >>(stream & is, ::datetime::time & rtime)
 {
 
    is.read((int64_t &) rtime.m_time);

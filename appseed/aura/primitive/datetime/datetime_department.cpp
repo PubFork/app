@@ -976,7 +976,7 @@ namespace datetime
 //
 //         auto & file = Application.file().friendly_get_file(path, ::file::type_binary | ::file::mode_write | ::file::mode_create | ::file::defer_create_directory);
 //
-//         ::file::byte_stream os(file);
+//         stream os(file);
 //
 //         ::file::map::write(os, m_countryLocalityTimeZone);
 //
@@ -1517,7 +1517,7 @@ namespace datetime
 
 
 
-CLASS_DECL_AURA serialize & operator >> (serialize & s, class ::datetime::department::time_zone & z)
+CLASS_DECL_AURA stream & operator >> (stream & s, class ::datetime::department::time_zone & z)
 {
 
    s >> z.m_strZone;
@@ -1529,7 +1529,7 @@ CLASS_DECL_AURA serialize & operator >> (serialize & s, class ::datetime::depart
 }
 
 
-CLASS_DECL_AURA serialize & operator << (serialize & s, class ::datetime::department::time_zone & z)
+CLASS_DECL_AURA stream & operator << (stream & s, class ::datetime::department::time_zone & z)
 {
 
    s << z.m_strZone;
@@ -1541,7 +1541,7 @@ CLASS_DECL_AURA serialize & operator << (serialize & s, class ::datetime::depart
 }
 
 
-CLASS_DECL_AURA serialize & operator >> (serialize & s, string_map < class ::datetime::department::time_zone > & m)
+CLASS_DECL_AURA stream & operator >> (stream & s, string_map < class ::datetime::department::time_zone > & m)
 {
 
    s.stream_map(m);
@@ -1551,7 +1551,7 @@ CLASS_DECL_AURA serialize & operator >> (serialize & s, string_map < class ::dat
 }
 
 
-CLASS_DECL_AURA serialize & operator << (serialize & s, string_map < class ::datetime::department::time_zone > & m)
+CLASS_DECL_AURA stream & operator << (stream & s, string_map < class ::datetime::department::time_zone > & m)
 {
 
    s.stream_map(m);
@@ -1561,7 +1561,7 @@ CLASS_DECL_AURA serialize & operator << (serialize & s, string_map < class ::dat
 }
 
 
-CLASS_DECL_AURA serialize & operator >> (serialize & s, int_ptr_map < class ::datetime::department::time_zone > & m)
+CLASS_DECL_AURA stream & operator >> (stream & s, int_ptr_map < class ::datetime::department::time_zone > & m)
 {
 
    s.stream_map(m);
@@ -1571,7 +1571,7 @@ CLASS_DECL_AURA serialize & operator >> (serialize & s, int_ptr_map < class ::da
 }
 
 
-CLASS_DECL_AURA serialize &operator << (serialize & s, int_ptr_map < class ::datetime::department::time_zone > & m)
+CLASS_DECL_AURA stream &operator << (stream & s, int_ptr_map < class ::datetime::department::time_zone > & m)
 {
 
    s.stream_map(m);

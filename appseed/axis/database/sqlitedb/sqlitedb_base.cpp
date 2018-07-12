@@ -120,22 +120,22 @@ namespace sqlite
          if(setErr(sqlite3_exec((sqlite3 *) getHandle(),"PRAGMA empty_result_callbacks=ON",NULL,NULL,&err)) != SQLITE_OK)
          {
             fprintf(stderr,"Error: %s",err);
-            _throw(database::DbErrors(getErrorMsg()));
+            _throw(database::DbErrors(::get_app(),getErrorMsg()));
          }
          if (setErr(sqlite3_exec((sqlite3 *)getHandle(), "PRAGMA cache_size=-20000", NULL, NULL, &err)) != SQLITE_OK)
          {
             fprintf(stderr, "Error: %s", err);
-            _throw(database::DbErrors(getErrorMsg()));
+            _throw(database::DbErrors(::get_app(),getErrorMsg()));
          }
          if (setErr(sqlite3_exec((sqlite3 *)getHandle(), "PRAGMA synchronous=OFF", NULL, NULL, &err)) != SQLITE_OK)
          {
             fprintf(stderr, "Error: %s", err);
-            _throw(database::DbErrors(getErrorMsg()));
+            _throw(database::DbErrors(::get_app(),getErrorMsg()));
          }
          if (setErr(sqlite3_exec((sqlite3 *)getHandle(), "PRAGMA temp_store=MEMORY", NULL, NULL, &err)) != SQLITE_OK)
          {
             fprintf(stderr, "Error: %s", err);
-            _throw(database::DbErrors(getErrorMsg()));
+            _throw(database::DbErrors(::get_app(),getErrorMsg()));
          }
          active = true;
          return DB_CONNECTION_OK;
@@ -209,7 +209,7 @@ namespace sqlite
 
       }
 
-      if (res.records.get_size() == 0)
+      if (res.m_records.get_size() == 0)
       {
 
          id = 1;
@@ -228,7 +228,7 @@ namespace sqlite
       else
       {
 
-         id = res.records[0][0].i32() + 1;
+         id = res.m_records[0][0].i32() + 1;
 
          sprintf(sqlcmd,"update %s set nextid=%d where seq_name = '%s'",sequence_table.c_str(),id,sname);
 

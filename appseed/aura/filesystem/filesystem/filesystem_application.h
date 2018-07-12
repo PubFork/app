@@ -60,7 +60,7 @@ namespace file
 
 
       virtual ::file::file_sp get_file(var varFile, UINT nOpenFlags, cres * pfesp = NULL);
-      //virtual ::file::byte_stream get_byte_stream(var varFile, UINT nOpenFlags);
+      //virtual ::stream get_byte_stream(var varFile, UINT nOpenFlags);
 
       // get a file and if there are exceptions, should show end user friendly messages
       virtual ::file::file_sp friendly_get_file(var varFile, UINT nOpenFlags, cres * pfesp = NULL);
@@ -82,50 +82,50 @@ namespace file
 
 
       template < class T >
-      bool output(const path & pathOut, T * p, bool (T::*lpfnOuput)(serialize &, serialize &), const path & pathIn);
+      bool output(const path & pathOut, T * p, bool (T::*lpfnOuput)(::stream &, ::stream &), const path & pathIn);
 
       template < class T >
-      bool output(const path & pathOut, T * p, bool (T::*lpfnOuput)(serialize &, serialize &), file * pfileIn);
+      bool output(const path & pathOut, T * p, bool (T::*lpfnOuput)(::stream &, ::stream &), file * pfileIn);
 
       template < class T >
-      bool output(const path & pathOut, T * p, bool (T::*lpfnOuput)(serialize &, serialize &), serialize & is);
+      bool output(const path & pathOut, T * p, bool (T::*lpfnOuput)(::stream &, ::stream &), ::stream & is);
 
       template < class T >
-      bool output(file * pfileOut, T * p, bool (T::*lpfnOuput)(serialize &, serialize &), const path & pathIn);
+      bool output(file * pfileOut, T * p, bool (T::*lpfnOuput)(::stream &, ::stream &), const path & pathIn);
 
       template < class T >
-      bool output(file * pfileOut, T * p, bool (T::*lpfnOuput)(serialize &, serialize &), file * pfileIn);
+      bool output(file * pfileOut, T * p, bool (T::*lpfnOuput)(::stream &, ::stream &), file * pfileIn);
 
       template < class T >
-      bool output(file * pfileOut, T * p, bool (T::*lpfnOuput)(serialize &, serialize &), serialize & is);
+      bool output(file * pfileOut, T * p, bool (T::*lpfnOuput)(::stream &, ::stream &), ::stream & is);
 
       template < class T >
-      bool output(serialize & os, T * p, bool (T::*lpfnOuput)(serialize &, serialize &), const path & pathIn);
+      bool output(::stream & os, T * p, bool (T::*lpfnOuput)(::stream &, ::stream &), const path & pathIn);
 
       template < class T >
-      bool output(serialize & os, T * p, bool (T::*lpfnOuput)(serialize &, serialize &), file * pfileIn);
+      bool output(::stream & os, T * p, bool (T::*lpfnOuput)(::stream &, ::stream &), file * pfileIn);
 
       template < class T >
-      bool output(serialize & os, T * p, bool (T::*lpfnOuput)(serialize &, serialize &), serialize & is);
+      bool output(::stream & os, T * p, bool (T::*lpfnOuput)(::stream &, ::stream &), ::stream & is);
 
 
       virtual bool transfer(const path & pathOut, const path & pathIn);
 
       virtual bool transfer(const path & pathOut, file * pfileIn);
 
-      virtual bool transfer(const path & pathOut, serialize & is);
+      virtual bool transfer(const path & pathOut, ::stream & is);
 
       virtual bool transfer(file * pfileOut, const path & pathIn);
 
       virtual bool transfer(file * pfileOut, file * pfileIn);
 
-      virtual bool transfer(file * pfileOut, serialize & is);
+      virtual bool transfer(file * pfileOut, ::stream & is);
 
-      virtual bool transfer(serialize & os, const path & pathIn);
+      virtual bool transfer(::stream & os, const path & pathIn);
 
-      virtual bool transfer(serialize & os, file * pfileIn);
+      virtual bool transfer(::stream & os, file * pfileIn);
 
-      virtual bool transfer(serialize & os, serialize & is);
+      virtual bool transfer(::stream & os, ::stream & is);
 
       virtual bool touch(const ::file::path & path);
 

@@ -21,7 +21,7 @@
 
 
 template < class Type, class RawType >
-inline serialize & operator << (serialize & ostream, const string_array < Type, RawType > & a)
+inline stream & operator << (stream & ostream, const string_array < Type, RawType > & a)
 {
    ostream.write(a->get_count());
    for (int32_t i = 0; i < a->get_size(); i++)
@@ -33,7 +33,7 @@ inline serialize & operator << (serialize & ostream, const string_array < Type, 
 
 
 template < class Type, class RawType >
-inline serialize &  operator >>(serialize & istream, string_array < Type, RawType > & a)
+inline stream &  operator >>(stream & istream, string_array < Type, RawType > & a)
 {
 
    if (istream.fail())

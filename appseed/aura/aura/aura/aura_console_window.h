@@ -10,7 +10,7 @@ public:
 
 
    std_out_buffer() {}
-   virtual ~std_out_buffer(){}
+   virtual ~std_out_buffer() {}
 
 
    void write(const void * lpBuf,memory_size_t nCount);
@@ -19,11 +19,11 @@ public:
 };
 
 //class console_ostream:
-//   virtual public ::file::plain_text_ostream
+//   virtual public ::file::plain_text_stream
 //{
 //public:
 //
-//   console_ostream(): ::file::plain_text_ostream(canew(std_out_buffer())){}
+//   console_ostream(): ::file::plain_text_stream(canew(std_out_buffer())){}
 //   virtual ~console_ostream(){}
 //
 //};

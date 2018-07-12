@@ -199,7 +199,7 @@ namespace xml
       void close();
 
 
-      virtual void stream(serialize & serialize);
+      virtual void io(stream & stream);
 
 
    };

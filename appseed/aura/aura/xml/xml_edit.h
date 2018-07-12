@@ -4,7 +4,7 @@
 namespace xml
 {
 
-   
+
    enum e_action
    {
 
@@ -37,7 +37,7 @@ namespace xml
       void add_attr(const sp(::xml::node) pnode, const attr * pattr);
 
 
-      virtual void stream(serialize & serialize);
+      virtual void io(stream & stream);
 
 
    };

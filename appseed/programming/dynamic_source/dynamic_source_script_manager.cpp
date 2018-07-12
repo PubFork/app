@@ -948,7 +948,9 @@ namespace dynamic_source
 
                pinsocket->m_in = phttpdsocket;
 
-               pinsocket->m_memfileInput.transfer_from(phttpdsocket->m_memfileInput);
+               ASSERT(pinsocket->m_pmemfileInput != NULL);
+
+               pinsocket->m_pmemfileInput->transfer_from(*phttpdsocket->m_pmemfileInput);
 
                pinsocket->server_to_link_in(phttpdsocket);
 

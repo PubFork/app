@@ -60,7 +60,7 @@ namespace file
 
 
          virtual ::file::file_sp get_file(var varFile,UINT nOpenFlags,cres * pfesp);
-         //virtual ::file::byte_stream get_byte_stream(var varFile, UINT nOpenFlags);
+         //virtual serialize get_byte_stream(var varFile, UINT nOpenFlags);
 
          // get a file and if there are exceptions, should show end user friendly messages
          virtual ::file::file_sp friendly_get_file(var varFile,UINT nOpenFlags,cres * pfesp);

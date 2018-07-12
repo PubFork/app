@@ -43,12 +43,12 @@ namespace draw2d_cairo
    }
 
 
-   void dib::stream(serialize & serialize)
+   void dib::io(stream & serialize)
    {
 
       synch_lock ml(cairo_mutex());
 
-      ::draw2d::dib::stream(serialize);
+      ::draw2d::dib::io(stream);
 
       if (!serialize.is_storing())
       {

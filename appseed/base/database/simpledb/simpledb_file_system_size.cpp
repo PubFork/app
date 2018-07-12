@@ -617,7 +617,7 @@ void FileSystemSizeWnd::ClientStartServer()
 }
 
 
-void file_size_table::get_fs_size::stream(serialize & serialize)
+void file_size_table::get_fs_size::io(stream & serialize)
 {
 
    serialize(m_strPath);

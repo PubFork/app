@@ -5,20 +5,20 @@ namespace http
 {
 
 
-   ostream::ostream()
+   stream::stream()
    {
-   
+
    }
 
 
-   ostream::ostream(::file::file * pbuffer) :
-      ::file::plain_text_ostream(pbuffer)
+   stream::stream(::file::file * pbuffer) :
+      ::file::plain_text_stream(pbuffer)
    {
-   
+
    }
 
 
-   ostream::~ostream()
+   stream::~stream()
    {
 
       close();
@@ -26,7 +26,7 @@ namespace http
    }
 
 
-   /*void ostream::write(const char * lpcsz)
+   /*void stream::write(const char * lpcsz)
    {
 
       write(lpcsz, strlen(lpcsz));
@@ -35,7 +35,7 @@ namespace http
 
    }*/
 
-   void ostream::write (const string & str)
+   void stream::write (const string & str)
    {
 
       write((const char *) str, str.get_length());
@@ -43,7 +43,7 @@ namespace http
    }
 
 
-   serialize & ostream::operator << (::memory_file & memfile)
+   stream & stream::operator << (::memory_file & memfile)
    {
 
       write(memfile.get_data(), (memory_size_t) memfile.get_length());
@@ -56,7 +56,7 @@ namespace http
 
 
 
-   /*bool ostream::read_string(string & str)
+   /*bool stream::read_string(string & str)
    {
       uint_ptr nRead;
       char ch;
@@ -88,7 +88,7 @@ namespace http
       return str.has_char();
    }*/
 
-   serialize & ostream::operator << (::file::file_sp spbuf)
+   stream & stream::operator << (::file::file_sp spbuf)
    {
       uint_ptr nRead;
       memory mem;
@@ -104,13 +104,13 @@ namespace http
    }
 
 
-/*    void ostream::to_string(string & str);
-      {
+   /*    void stream::to_string(string & str);
+         {
 
-         read(str.GetBufferSetLength((int32_t)get_length()), (int32_t)(get_length()));
+            read(str.GetBufferSetLength((int32_t)get_length()), (int32_t)(get_length()));
 
-         str.ReleaseBuffer();
+            str.ReleaseBuffer();
 
-      }*/
+         }*/
 
 } // namespace http

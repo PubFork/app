@@ -337,7 +337,7 @@ namespace user
          for (index index = 0; index < count; index++)
          {
             sp(::user::document) pdocument = get_document(index);
-            dumpcontext << (int_ptr)pdocument.m_p;
+            dumpcontext << (void *)pdocument.m_p;
          }
          dumpcontext << "\n}";
       }

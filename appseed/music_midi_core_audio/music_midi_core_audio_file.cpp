@@ -691,7 +691,7 @@ namespace music
 //
 //      }
 //
-//      ::music::e_result file::StreamEventF1(imedia_position tkDelta,
+//      ::music::e_result streamEventF1(imedia_position tkDelta,
 //         array < ::music::midi::event_v5 *, ::music::midi::event_v5 * > & eventptra,
 //         LPMIDIHDR lpmh,
 //         imedia_position tkMax,
@@ -756,7 +756,7 @@ namespace music
 //         return smfrc;
 //      }
 //
-//      ::music::e_result file::StreamEvent(
+//      ::music::e_result streamEvent(
 //         imedia_position                   tkDelta,
 //         ::music::midi::event_base *        pEvent,
 //         LPMIDIHDR               lpmh,
@@ -765,7 +765,7 @@ namespace music
 //      {
 //         UNREFERENCED_PARAMETER(tkMax);
 //         UNREFERENCED_PARAMETER(cbPrerollNominalMax);
-//         //   TRACE("file::StreamEvent tkDelta %d\n", tkDelta);
+//         //   TRACE("streamEvent tkDelta %d\n", tkDelta);
 //
 //         uint32_t                   dwTempo;
 //         LPDWORD                 lpdw;
@@ -968,7 +968,7 @@ namespace music
 //      *
 //      * @xref <f smfWriteEvents>
 //      *****************************************************************************/
-//      ::music::e_result file::StreamRender(
+//      ::music::e_result streamRender(
 //         LPMIDIHDR               lpmh,
 //         imedia_position                   tkMax,
 //         uint32_t                   cbPrerollNominalMax)

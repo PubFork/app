@@ -4,17 +4,17 @@
 namespace file
 {
 
-   
+
    class CLASS_DECL_AURA stream2 :
-      virtual public serialize
+      virtual public stream
    {
    public:
-      
-      
+
+
       stream2();
       stream2(writer * pwriter);
       virtual ~stream2();
-      
+
 
       stream2 & operator << (uchar uch);
       stream2 & operator << (u16 ui);
@@ -23,8 +23,8 @@ namespace file
       stream2 & operator << (RECT & rect);
       stream2 & operator << (const char * psz);
       stream2 & operator << (string & str);
-      
-      
+
+
    };
 
 

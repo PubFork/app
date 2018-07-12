@@ -17,12 +17,12 @@ namespace libcompress
       public coder_interface,
       public set_input_stream_interface,
       public set_output_stream_interface,
-      public ::file::byte_stream,
+      public serialize,
       public ::file::output_stream_flush,
       public ::crypto::set_password_interface,
       public ::libcompress::set_coder_properties_interface,
       public ::libcompress::write_coder_properties_interface,
-      // public ICryptoResetSalt,
+   // public ICryptoResetSalt,
       public ::crypto::reset_init_vector_interface,
       public ::libcompress::set_decoder_properties2_interface
    {

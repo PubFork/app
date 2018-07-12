@@ -120,26 +120,26 @@ inline UINT HashKey<const wchar_t *>(const wchar_t * key)
 
 
 
-inline serialize & operator << (serialize & serialize, color::hls & hls)
+inline stream & operator << (stream & stream, color::hls & hls)
 {
 
-   serialize(hls.m_dH);
-   serialize(hls.m_dL);
-   serialize(hls.m_dS);
+   stream(hls.m_dH);
+   stream(hls.m_dL);
+   stream(hls.m_dS);
 
-   return serialize;
+   return stream;
 
 }
 
 
 
-inline serialize & operator >> (serialize & serialize, color::hls & hls)
+inline stream & operator >> (stream & stream, color::hls & hls)
 {
 
-   serialize(hls.m_dH);
-   serialize(hls.m_dL);
-   serialize(hls.m_dS);
+   stream(hls.m_dH);
+   stream(hls.m_dL);
+   stream(hls.m_dS);
 
-   return serialize;
+   return stream;
 
 }

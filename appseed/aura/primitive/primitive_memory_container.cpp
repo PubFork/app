@@ -166,7 +166,7 @@ namespace primitive
    }
 
 
-   void memory_container ::stream(serialize & serialize)
+   void memory_container ::io(stream & stream)
    {
 
       if(m_spmemory.is_null())
@@ -176,7 +176,7 @@ namespace primitive
 
       }
 
-      m_spmemory->stream(serialize);
+      m_spmemory->io(stream);
 
    }
 

@@ -80,9 +80,9 @@ namespace sockets
       // Line protocol
       ,m_bLineProtocol(false)
       ,m_skip_c(false),
-      m_memfileInput(h.get_app()),
       m_event(h.get_app())
    {
+      m_pmemfileInput = NULL;
       m_psslcontext = new ssl_context;
       m_iBindPort    = -1;
       m_dwStart      = ::get_tick_count();
@@ -1972,7 +1972,13 @@ namespace sockets
 
       char * buf = (char *) pdata;
 
-      m_memfileInput.write(buf, n);
+      if (m_pmemfileInput != NULL)
+      {
+
+         m_pmemfileInput->write(buf, n);
+
+      }
+
       if (LineProtocol())
       {
          buf[n] = 0;

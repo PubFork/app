@@ -52,7 +52,8 @@ namespace primitive
       string to_string();
 
       void read(memory_base *pmemorystorage);
-      void stream(serialize & serialize);
+
+      void io(stream & serialize);
 
       void keep_pointer(void **ppvoid);
       void offset_kept_pointers(memory_offset_t iOffset);

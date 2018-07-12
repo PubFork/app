@@ -570,7 +570,7 @@ namespace aura
 
       virtual string http_get(const string & strUrl, ::property_set & set);
 
-      virtual bool compress_ungz(serialize & ostreamUncompressed, const ::file::path & lpcszGzFileCompressed);
+      virtual bool compress_ungz(::stream & ostreamUncompressed, const ::file::path & lpcszGzFileCompressed);
       virtual bool compress_ungz(::primitive::memory_base & mem);
       virtual bool compress_gz(::file::file * pfileOut, const ::file::path & lpcszUncompressed, int iLevel = 6);
       virtual bool compress_gz(::file::file * pfileOut, ::file::file * pfileIn, int iLevel = 6);

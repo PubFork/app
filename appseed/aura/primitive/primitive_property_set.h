@@ -151,7 +151,7 @@ public:
    static void skip_json(const char * & pszJson, const char * pszEnd);
 
 
-   virtual void stream(serialize & serialize);
+   virtual void io(stream & stream);
 
 
    virtual string implode(const char * pszGlue) const;

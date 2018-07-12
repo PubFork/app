@@ -27,31 +27,31 @@ namespace file
 
    stream2 & stream2::operator << (uchar uch)
    {
-      serialize::operator << (uch);
+      stream::operator << (uch);
       return *this;
    }
 
    stream2 & stream2::operator << (uint16_t ui)
    {
-      serialize::operator << (ui);
+      stream::operator << (ui);
       return *this;
    }
 
    stream2 & stream2::operator << (int32_t i)
    {
-      serialize::operator << (i);
+      stream::operator << (i);
       return *this;
    }
 
    stream2 & stream2::operator << (uint32_t ui)
    {
-      serialize::operator << (ui);
+      stream::operator << (ui);
       return *this;
    }
 
    stream2 & stream2::operator << (RECT & rect)
    {
-      serialize::operator << (rect);
+      stream::operator << (rect);
       return *this;
    }
 

@@ -48,7 +48,7 @@ namespace libcompress
          virtual public CCoderMixer2
       {
          CBindInfo _bindInfo;
-         spa(::file::stream_binder) _streamBinders;
+         spa(stream_binder) _streamBinders;
          int32_t _progressCoderIndex;
 
          void AddCoderCommon();
@@ -61,10 +61,10 @@ namespace libcompress
          CCoderMixer2MT(sp(::axis::application) papp);
 
          HRes Code(spa(::file::reader) & inStreams,
-            const file_size_t **inSizes,
-            spa(::file::writer) & outStreams,
-            const file_size_t **outSizes,
-            progress_info_interface *progress);
+                   const file_size_t **inSizes,
+                   spa(::file::writer) & outStreams,
+                   const file_size_t **outSizes,
+                   progress_info_interface *progress);
 
          HRes SetBindInfo(const CBindInfo &bindInfo);
          void AddCoder(::libcompress::coder_interface *coder);

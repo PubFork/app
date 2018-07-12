@@ -35,7 +35,7 @@ namespace sockets
 
    void link_in_socket::link_write(void * p, size_t n)
    {
-      
+
       m_in->write((const char *) p, n);
 
    }
@@ -77,12 +77,14 @@ namespace sockets
 
    link_in_socket * link_in_socket::from_server(httpd_socket * psocket)
    {
-      
+
       link_in_socket * pinsocket = new link_in_socket(psocket->Handler());
 
-	   pinsocket->m_in = psocket;
-	
-      pinsocket->m_memfileInput.transfer_from(psocket->m_memfileInput);
+      pinsocket->m_in = psocket;
+
+      ASSERT(pinsocket->m_pmemfileInput != NULL);
+
+      pinsocket->m_pmemfileInput->transfer_from(*psocket->m_pmemfileInput);
 
       pinsocket->server_to_link_in(psocket);
 

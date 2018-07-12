@@ -329,19 +329,19 @@ namespace primitive
    }
 
 
-   void memory_base::stream(serialize & serialize)
+   void memory_base::io(stream & stream)
    {
 
-      if (serialize.is_storing())
+      if (stream.is_storing())
       {
 
-         transfer_to(serialize);
+         transfer_to(stream);
 
       }
       else
       {
 
-         transfer_from(serialize);
+         transfer_from(stream);
 
       }
 
@@ -1459,7 +1459,7 @@ namespace lemon
 
 
 
-   CLASS_DECL_AURA void transfer_to(serialize & writer, ::primitive::memory_base & mem, memory_size_t uiBufferSize)
+   CLASS_DECL_AURA void transfer_to(stream & writer, ::primitive::memory_base & mem, memory_size_t uiBufferSize)
    {
 
       if (mem.get_data() == NULL || mem.get_size() <= 0)
@@ -1485,7 +1485,7 @@ namespace lemon
 
    }
 
-   CLASS_DECL_AURA void transfer_from_begin(serialize & reader, ::primitive::memory_base & mem, memory_size_t uiBufferSize)
+   CLASS_DECL_AURA void transfer_from_begin(stream & reader, ::primitive::memory_base & mem, memory_size_t uiBufferSize)
    {
 
       reader.seek_to_begin();
@@ -1494,7 +1494,7 @@ namespace lemon
 
    }
 
-   CLASS_DECL_AURA void transfer_from(serialize & reader, ::primitive::memory_base & mem, memory_size_t uiBufferSize)
+   CLASS_DECL_AURA void transfer_from(stream & reader, ::primitive::memory_base & mem, memory_size_t uiBufferSize)
    {
 
       if (reader.get_internal_data() != NULL && reader.get_internal_data_size() > reader.get_position())
@@ -1540,7 +1540,7 @@ namespace lemon
 
 
 
-CLASS_DECL_AURA serialize & operator << (serialize & serialize, ::primitive::memory_container & memcontainer)
+CLASS_DECL_AURA stream & operator << (stream & stream, ::primitive::memory_container & memcontainer)
 {
 
    if (memcontainer.get_memory() == NULL)
@@ -1550,15 +1550,15 @@ CLASS_DECL_AURA serialize & operator << (serialize & serialize, ::primitive::mem
 
    }
 
-   serialize << *memcontainer.get_memory();
+   stream << *memcontainer.get_memory();
 
-   return serialize;
+   return stream;
 
 }
 
 
 
-CLASS_DECL_AURA serialize & operator >> (serialize & serialize, ::primitive::memory_container & memcontainer)
+CLASS_DECL_AURA stream & operator >> (stream & stream, ::primitive::memory_container & memcontainer)
 {
 
    if (memcontainer.get_memory() == NULL)
@@ -1568,30 +1568,30 @@ CLASS_DECL_AURA serialize & operator >> (serialize & serialize, ::primitive::mem
 
    }
 
-   serialize >> *memcontainer.get_memory();
+   stream >> *memcontainer.get_memory();
 
-   return serialize;
-
-}
-
-
-CLASS_DECL_AURA serialize & operator << (serialize & serialize, ::primitive::memory_base & mem)
-{
-
-   ::lemon::transfer_to(serialize, mem);
-
-   return serialize;
+   return stream;
 
 }
 
 
-
-CLASS_DECL_AURA serialize & operator >> (serialize & serialize, ::primitive::memory_base & mem)
+CLASS_DECL_AURA stream & operator << (stream & stream, ::primitive::memory_base & mem)
 {
 
-   ::lemon::transfer_from(serialize, mem);
+   ::lemon::transfer_to(stream, mem);
 
-   return serialize;
+   return stream;
+
+}
+
+
+
+CLASS_DECL_AURA stream & operator >> (stream & stream, ::primitive::memory_base & mem)
+{
+
+   ::lemon::transfer_from(stream, mem);
+
+   return stream;
 
 }
 

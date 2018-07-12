@@ -23,15 +23,15 @@ namespace xml
 
 
    }
-   
 
-   void data::stream(serialize & serialize)
+
+   void data::io(stream & stream)
    {
 
-      ::xml::document::stream(serialize);
+      ::xml::document::io(stream);
 
    }
-   
+
 
 
 } // namespace core

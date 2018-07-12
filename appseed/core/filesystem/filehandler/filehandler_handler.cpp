@@ -193,13 +193,12 @@ namespace filehandler
 
    }
 
-   void handler::stream(serialize & serialize)
+   void handler::io(stream & serialize)
    {
 
       if (serialize.is_storing())
       {
 
-         serialize & ostream = serialize;
          sp(::data::tree_item) pitem = m_sptree->get_base_item();
 
          index iLevel = 0;
@@ -210,54 +209,51 @@ namespace filehandler
             iLevel = pitem->m_iLevel;
             if (pitem == NULL)
                break;
-            ostream << (int32_t)iLevel;
-            ostream << (int32_t) dynamic_cast <item *> (pitem->m_pitem.m_p)->m_etopictype;
-            ostream << dynamic_cast <item *> (pitem->m_pitem.m_p)->m_strTopic;
+            serialize << (int32_t)iLevel;
+            serialize << (int32_t) dynamic_cast <item *> (pitem->m_pitem.m_p)->m_etopictype;
+            serialize << dynamic_cast <item *> (pitem->m_pitem.m_p)->m_strTopic;
             serialize << dynamic_cast <item *> (pitem->m_pitem.m_p)->m_straApp;
          }
 
-         ostream << (int32_t)-1;
+         serialize << (int32_t)-1;
 
       }
       else
       {
 
-         serialize & istream = serialize;
+
+         sp(::data::tree_item) pitem = m_sptree->get_base_item();
+
+         int32_t iPreviousLevel = 0;
+         int32_t iLevel = 0;
+
+         while (true)
          {
+            iPreviousLevel = iLevel;
+            serialize >> iLevel;
 
-            sp(::data::tree_item) pitem = m_sptree->get_base_item();
+            if (serialize.fail())
+               return;
 
-            int32_t iPreviousLevel = 0;
-            int32_t iLevel = 0;
-
-            while (true)
+            if (iLevel < 0)
+               break;
+            if (iLevel == iPreviousLevel)
+               pitem = m_sptree->insert_item(canew(item), ::data::RelativeLastSibling, pitem);
+            else if (iLevel > iPreviousLevel)
+               pitem = m_sptree->insert_item(canew(item), ::data::RelativeFirstChild, pitem);
+            else
             {
-               iPreviousLevel = iLevel;
-               istream >> iLevel;
-
-               if (istream.fail())
-                  return;
-
-               if (iLevel < 0)
-                  break;
-               if (iLevel == iPreviousLevel)
-                  pitem = m_sptree->insert_item(canew(item), ::data::RelativeLastSibling, pitem);
-               else if (iLevel > iPreviousLevel)
-                  pitem = m_sptree->insert_item(canew(item), ::data::RelativeFirstChild, pitem);
-               else
+               while (iLevel < iPreviousLevel)
                {
-                  while (iLevel < iPreviousLevel)
-                  {
-                     pitem = pitem->get_parent();
-                     iPreviousLevel--;
-                  }
-                  pitem = m_sptree->insert_item(canew(item), ::data::RelativeLastSibling, pitem);
+                  pitem = pitem->get_parent();
+                  iPreviousLevel--;
                }
-
-               istream >> (int32_t &) dynamic_cast <item *> (pitem->m_pitem.m_p)->m_etopictype;
-               istream >> dynamic_cast <item *> (pitem->m_pitem.m_p)->m_strTopic;
-               serialize >> dynamic_cast <item *> (pitem->m_pitem.m_p)->m_straApp;
+               pitem = m_sptree->insert_item(canew(item), ::data::RelativeLastSibling, pitem);
             }
+
+            serialize >> (int32_t &) dynamic_cast <item *> (pitem->m_pitem.m_p)->m_etopictype;
+            serialize >> dynamic_cast <item *> (pitem->m_pitem.m_p)->m_strTopic;
+            serialize >> dynamic_cast <item *> (pitem->m_pitem.m_p)->m_straApp;
          }
       }
 

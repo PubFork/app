@@ -28,8 +28,8 @@ extern "C"
 
 }
 
-                                      //byte *                   m_outbuf; /* output buffer */
-                                      //uint_ptr                   m_crc;     /* crc32 of uncompressed data */
+//byte *                   m_outbuf; /* output buffer */
+//uint_ptr                   m_crc;     /* crc32 of uncompressed data */
 
 
 
@@ -51,7 +51,7 @@ compress_bz::~compress_bz()
 }
 
 
-bool compress_bz::transfer(serialize & ostreamBzFileCompressed, serialize & istreamUncompressed)
+bool compress_bz::transfer(::stream & ostreamBzFileCompressed, ::stream & istreamUncompressed)
 {
 
    memory                     memory;
@@ -89,14 +89,14 @@ bool compress_bz::transfer(serialize & ostreamBzFileCompressed, serialize & istr
    zstream.next_out = NULL;
    zstream.avail_out = 0;
    m_z_err = BZ_OK;
-   
+
    //   m_crc = crc32(0L,NULL,0);
-   
+
    int32_t err = BZ2_bzCompressInit(&zstream, blockSize100k, verbosity, workFactor);
-   
+
    if (err != BZ_OK || memory.get_data() == NULL)
    {
-      
+
       return false;
 
    }
@@ -124,12 +124,12 @@ bool compress_bz::transfer(serialize & ostreamBzFileCompressed, serialize & istr
             goto stop1;
 
          }
-		 else if (ret == BZ_RUN_OK)
-		 {
+         else if (ret == BZ_RUN_OK)
+         {
 
-			break;
+            break;
 
-		 }
+         }
          else if (ret != BZ_OK)
          {
 
@@ -137,7 +137,8 @@ bool compress_bz::transfer(serialize & ostreamBzFileCompressed, serialize & istr
 
          }
 
-      } while (zstream.avail_out == 0);
+      }
+      while (zstream.avail_out == 0);
 
       uiRead = istreamUncompressed.read(memIn.get_data(), memIn.get_size());
 
@@ -146,19 +147,19 @@ bool compress_bz::transfer(serialize & ostreamBzFileCompressed, serialize & istr
 
          iState = BZ_FINISH;
 
-		 zstream.next_in = (char *)NULL;
+         zstream.next_in = (char *)NULL;
 
-		 zstream.avail_in = (uint32_t)0;
+         zstream.avail_in = (uint32_t)0;
 
-	  }
-	  else
-	  {
+      }
+      else
+      {
 
-		  zstream.next_in = (char *)memIn.get_data();
+         zstream.next_in = (char *)memIn.get_data();
 
-		  zstream.avail_in = (uint32_t)uiRead;
+         zstream.avail_in = (uint32_t)uiRead;
 
-	  }
+      }
 
    }
 
@@ -185,7 +186,7 @@ uncompress_bz::~uncompress_bz()
 }
 
 
-bool uncompress_bz::transfer(serialize & ostreamUncompressed, serialize & istreamGzFileCompressed)
+bool uncompress_bz::transfer(::stream & ostreamUncompressed, ::stream & istreamGzFileCompressed)
 {
 
    bool done = false;
@@ -241,7 +242,8 @@ bool uncompress_bz::transfer(serialize & ostreamUncompressed, serialize & istrea
 
          }
 
-      } while (zstream.avail_out == 0);
+      }
+      while (zstream.avail_out == 0);
 
       if (uiRead == 0)
       {
@@ -258,12 +260,12 @@ bool uncompress_bz::transfer(serialize & ostreamUncompressed, serialize & istrea
 
    }
 
-   stop1:
+stop1:
 
    if(BZ2_bzDecompressEnd(&zstream) != BZ_OK)
    {
 
-       
+
 
    }
 

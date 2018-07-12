@@ -57,7 +57,7 @@ namespace file
       virtual file_sp get(const path & name,::aura::application * papp);
 
       template < class T >
-      string time_square(::aura::application * papp,T * p,bool (T::*lpfnOutput)(serialize &,const path &),const path & lpszSource)
+      string time_square(::aura::application * papp,T * p,bool (T::*lpfnOutput)(::stream &,const path &),const path & lpszSource)
       {
          string strTime = time_square(papp);
          if(strTime.has_char())
@@ -136,62 +136,62 @@ namespace file
 
       virtual file_sp get_file(var varFile,UINT nOpenFlags,cres * pfesp,::aura::application * papp);
 
-      virtual bool prepare_output(::aura::application * papp, path & pathDownloading, const path & pathOut, serialize & os);
+      virtual bool prepare_output(::aura::application * papp, path & pathDownloading, const path & pathOut, ::stream & os);
 
-      virtual bool prepare_input(::aura::application * papp, serialize & is, const path & pathIn);
+      virtual bool prepare_input(::aura::application * papp, ::stream & is, const path & pathIn);
 
-      virtual bool prepare_input(::aura::application * papp, serialize & is, file * pfileIn);
+      virtual bool prepare_input(::aura::application * papp, ::stream & is, file * pfileIn);
 
-      virtual bool prepare_input(::aura::application * papp, serialize & is);
+      virtual bool prepare_input(::aura::application * papp, ::stream & is);
 
       virtual bool post_output(::aura::application * papp, path pathOut, path pathDownloading);
 
       template < class T >
-      bool output(::aura::application * papp, const path & pathOut, T * p, bool (T::*lpfnOuput)(serialize &, serialize &), const path & pathIn);
+      bool output(::aura::application * papp, const path & pathOut, T * p, bool (T::*lpfnOuput)(::stream &, ::stream &), const path & pathIn);
 
       template < class T >
-      bool output(::aura::application * papp, const path & pathOut, T * p, bool (T::*lpfnOuput)(serialize &, serialize &), file * pfileIn);
+      bool output(::aura::application * papp, const path & pathOut, T * p, bool (T::*lpfnOuput)(::stream &, ::stream &), file * pfileIn);
 
       template < class T >
-      bool output(::aura::application * papp, const path & pathOut, T * p, bool (T::*lpfnOuput)(serialize &, serialize &), serialize & is);
+      bool output(::aura::application * papp, const path & pathOut, T * p, bool (T::*lpfnOuput)(::stream &, ::stream &), ::stream & is);
 
       template < class T >
-      bool output(::aura::application * papp, file * pfileOut, T * p, bool (T::*lpfnOuput)(serialize &, serialize &), const path & pathIn);
+      bool output(::aura::application * papp, file * pfileOut, T * p, bool (T::*lpfnOuput)(::stream &, ::stream &), const path & pathIn);
 
       template < class T >
-      bool output(::aura::application * papp, file * pfileOut, T * p, bool (T::*lpfnOuput)(serialize &, serialize &), file * pfileIn);
+      bool output(::aura::application * papp, file * pfileOut, T * p, bool (T::*lpfnOuput)(::stream &, ::stream &), file * pfileIn);
 
       template < class T >
-      bool output(::aura::application * papp, file * pfileOut, T * p, bool (T::*lpfnOuput)(serialize &, serialize &), serialize & is);
+      bool output(::aura::application * papp, file * pfileOut, T * p, bool (T::*lpfnOuput)(::stream &, ::stream &), ::stream & is);
 
       template < class T >
-      bool output(::aura::application * papp, serialize & os, T * p, bool (T::*lpfnOuput)(serialize &, serialize &), const path & pathIn);
+      bool output(::aura::application * papp, ::stream & os, T * p, bool (T::*lpfnOuput)(::stream &, ::stream &), const path & pathIn);
 
       template < class T >
-      bool output(::aura::application * papp, serialize & os, T * p, bool (T::*lpfnOuput)(serialize &, serialize &), file * pfileIn);
+      bool output(::aura::application * papp, ::stream & os, T * p, bool (T::*lpfnOuput)(::stream &, ::stream &), file * pfileIn);
 
       template < class T >
-      bool output(::aura::application * papp, serialize & os, T * p, bool (T::*lpfnOuput)(serialize &, serialize &), serialize & is);
+      bool output(::aura::application * papp, ::stream & os, T * p, bool (T::*lpfnOuput)(::stream &, ::stream &), ::stream & is);
 
       virtual bool transfer(::aura::application * papp, const path & pathOut, const path & pathIn);
 
       virtual bool transfer(::aura::application * papp, const path & pathOut, file * pfileIn);
 
-      virtual bool transfer(::aura::application * papp, const path & pathOut, serialize & is);
+      virtual bool transfer(::aura::application * papp, const path & pathOut, ::stream & is);
 
       virtual bool transfer(::aura::application * papp, file * pfileOut, const path & pathIn);
 
       virtual bool transfer(::aura::application * papp, file * pfileOut, file * pfileIn);
 
-      virtual bool transfer(::aura::application * papp, file * pfileOut, serialize & is);
+      virtual bool transfer(::aura::application * papp, file * pfileOut, ::stream & is);
 
-      virtual bool transfer(::aura::application * papp, serialize & os, const path & pathIn);
+      virtual bool transfer(::aura::application * papp, ::stream & os, const path & pathIn);
 
-      virtual bool transfer(::aura::application * papp, serialize & os, file * pfileIn);
+      virtual bool transfer(::aura::application * papp, ::stream & os, file * pfileIn);
 
-      virtual bool transfer(::aura::application * papp, serialize & os, serialize & is);
+      virtual bool transfer(::aura::application * papp, ::stream & os, ::stream & is);
 
-      virtual bool transfer(serialize & os, serialize & is);
+      virtual bool transfer(::stream & os, ::stream & is);
 
    };
 

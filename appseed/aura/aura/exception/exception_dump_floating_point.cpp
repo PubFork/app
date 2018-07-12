@@ -10,7 +10,7 @@ void dump_context::write(float f)
    ::aura::gcvt_s(szBuffer, 32, f, FLT_DIG);
 
    write(szBuffer);
-   return *this;
+
 }
 
 void dump_context::write(double d)
@@ -19,6 +19,6 @@ void dump_context::write(double d)
    ::aura::gcvt_s(szBuffer, 32, d, DBL_DIG);
 
    *this << szBuffer;
-   return *this;
+
 }
 

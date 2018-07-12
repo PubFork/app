@@ -1,9 +1,6 @@
 #pragma once
 
 
-#include "file_istream.h"
-
-
 namespace file
 {
 
@@ -181,7 +178,7 @@ serialize & operator << (serialize & s, array < TYPE, ARG_TYPE, ALLOCATOR > & a)
 
 
 template < class TYPE, class ARG_TYPE = const TYPE &, class ALLOCATOR = ::allocator::def < TYPE > >
-serialize & operator >> (serialize & s, array < TYPE, ARG_TYPE, ALLOCATOR > & a)
+stream & operator >> (stream & s, array < TYPE, ARG_TYPE, ALLOCATOR > & a)
 {
 
    s.stream_array(a);
@@ -206,7 +203,7 @@ serialize & operator << (serialize & serialize, raw_array < TYPE, ARG_TYPE> & a)
 
 
 template<class TYPE, class ARG_TYPE = const TYPE &>
-serialize & operator >> (serialize & s, raw_array < TYPE, ARG_TYPE > & a)
+stream & operator >> (stream & s, raw_array < TYPE, ARG_TYPE > & a)
 {
 
    s.stream_array(a);
@@ -217,74 +214,39 @@ serialize & operator >> (serialize & s, raw_array < TYPE, ARG_TYPE > & a)
 
 
 
-//template < class TYPE, class ARRAY_TYPE = raw_ref_array < TYPE * > >
-//serialize & operator << (serialize & s, const ref_array < TYPE, ARRAY_TYPE> & a)
-//{
-//
-//   s.stream_array(a);
-//
-//   return s;
-//
-//}
-//
-//
-//template < class TYPE, class ARRAY_TYPE = raw_ref_array < TYPE * > >
-//serialize & operator >> (serialize & s, ref_array < TYPE, ARRAY_TYPE > & a)
-//{
-//
-//   s.stream_array(a);
-//
-//   return s;
-//
-//}
 
 
-//CLASS_DECL_AURA bool file_put(const char * path, ::object & s, ::aura::application * papp = NULL);
-//CLASS_DECL_AURA bool file_as(::object & s, const char * path, ::aura::application * papp = NULL);
-//
-//
-//template < class ARRAY >
-//bool file_put_array(const char * path, const ARRAY & a, ::aura::application * papp = NULL);
-//
-//
-//template < class ARRAY >
-//bool file_as_array(ARRAY & a, const char * path, ::aura::application * papp = NULL);
-
-
-
-
-
-inline file_position_t serialize::tellp()
+inline file_position_t stream::tellp()
 {
-   
+
    return m_spfile->tell();
-   
+
 }
 
 
-inline serialize & serialize::seekp(file_position_t position)
+inline stream & stream::seekp(file_position_t position)
 {
-   
+
    m_spfile->seek_from_begin(position);
-   
+
    return *this;
-   
+
 }
 
 
-inline serialize & serialize::seekp(file_offset_t offset, ::file::e_seek eseek)
+inline stream & stream::seekp(file_offset_t offset, ::file::e_seek eseek)
 {
-   
+
    m_spfile->seek(offset, eseek);
-   
+
    return *this;
-   
+
 }
 
 
-inline memory_size_t serialize::gcount() { return m_gcount; }
-inline file_position_t serialize::tellg() { return m_spfile->tell(); }
-inline serialize & serialize::seekg(file_position_t position) { m_spfile->seek_from_begin(position); return *this; }
-inline serialize & serialize::seekg(file_offset_t offset, ::file::e_seek eseek) { m_spfile->seek(offset, eseek); return *this; }
+inline memory_size_t stream::gcount() { return m_gcount; }
+inline file_position_t stream::tellg() { return m_spfile->tell(); }
+inline stream & stream::seekg(file_position_t position) { m_spfile->seek_from_begin(position); return *this; }
+inline stream & stream::seekg(file_offset_t offset, ::file::e_seek eseek) { m_spfile->seek(offset, eseek); return *this; }
 
-inline file_size_t serialize::get_left() { return m_spfile->get_length() - m_spfile->get_position(); }
+inline file_size_t stream::get_left() { return m_spfile->get_length() - m_spfile->get_position(); }

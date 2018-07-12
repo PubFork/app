@@ -134,13 +134,16 @@ namespace str
       dtable['=']= (uchar) (0);
    }
 
+
    base64::~base64()
    {
 
    }
 
-   void base64::encode(serialize & ostream, serialize & istream)
+
+   void base64::encode(::stream & ostream, ::stream & istream)
    {
+
       int32_t i,hiteof= FALSE;
       byte igroup[3],ogroup[4];
       int32_t n;
@@ -181,7 +184,7 @@ namespace str
    }
 
 
-   void base64::decode(serialize & ostream, serialize & istream)
+   void base64::decode(::stream & ostream, ::stream & istream)
    {
       int32_t i;
       byte a[4],b[4],o[3];
@@ -260,11 +263,11 @@ namespace str
 
       ::memory_file buf(get_app(), &storageBinary);
 
-      ::file::byte_stream istream(&buf);
+      serialize istream(&buf);
 
       ::file::string_file file;
 
-      ::file::plain_text_ostream ostream(&file);
+      ::file::plain_text_stream ostream(&file);
 
       encode(ostream, istream);
 
@@ -299,17 +302,17 @@ namespace str
 
       ::file::string_file buf(str);
 
-      ::file::plain_text_istream istream(&buf);
+      ::file::plain_text_stream istream(&buf);
 
       ::memory_file bufOut(get_app(), &storageBinary);
 
-      ::file::byte_stream ostream(&bufOut);
+      serialize ostream(&bufOut);
 
       decode(ostream, istream);
 
    }
 
-   string base64::serialize(::object & object)
+   string base64::encode(::object & object)
    {
 
       memory storageBinary;
@@ -326,7 +329,7 @@ namespace str
 
       reader reader(&buf);
 
-      ::file::plain_text_ostream ostream(&file);
+      ::file::plain_text_stream ostream(&file);
 
       encode(ostream, reader);
 
@@ -335,20 +338,20 @@ namespace str
    }
 
 
-   void base64::unserialize(::object & object, const char * pszBase64)
+   void base64::decode(::object & object, const char * pszBase64)
    {
 
       string str(pszBase64);
 
       ::file::string_file bufIn(str);
 
-      ::file::plain_text_istream istream(&bufIn);
+      ::file::plain_text_stream istream(&bufIn);
 
       memory storageBinary;
 
       ::memory_file buf(get_app(), &storageBinary);
 
-      ::file::byte_stream stream(&buf);
+      serialize stream(&buf);
 
       decode(stream, istream);
 

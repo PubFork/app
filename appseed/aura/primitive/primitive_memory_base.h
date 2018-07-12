@@ -37,7 +37,7 @@ namespace primitive
    class virtual_memory;
 
    class CLASS_DECL_AURA memory_base :
-   virtual public ::object
+      virtual public ::object
    {
    public:
 
@@ -104,7 +104,7 @@ namespace primitive
       virtual void random_bytes(::count c = -1);
 
 
-      virtual void stream(serialize & serialize);
+      virtual void io(stream & stream);
 
 
       virtual memory_size_t calc_allocation(memory_size_t size);

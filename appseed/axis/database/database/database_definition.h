@@ -26,20 +26,14 @@ namespace database
 {
 
 
-   /******************** Class DbErrors definition *********************
-
-               error handling
-
-   ******************************************************************/
    class CLASS_DECL_AXIS DbErrors :
       virtual public ::exception::exception
    {
 
    public:
 
-      /* constructor */
-      DbErrors();
-      DbErrors(const char *msg, ...);
+      DbErrors(::aura::application * papp);
+      DbErrors(::aura::application * papp, const char *msg, ...);
 
    };
 
@@ -89,7 +83,7 @@ namespace database
       field_properties & operator = (const field_properties & field_properties);
 
 
-      virtual void stream(serialize & serialize);
+      virtual void io(stream & stream);
 
    };
 
@@ -131,7 +125,7 @@ namespace database
       virtual public object
    {
 
-      virtual void stream(serialize & serialize) override;
+      virtual void io(stream & stream) override;
 
    };
 
@@ -144,8 +138,8 @@ namespace database
    public:
 
 
-      record_properties       record_header;
-      query_data              records;
+      record_properties       m_record_header;
+      query_data              m_records;
 
 
       result_set();
@@ -153,7 +147,7 @@ namespace database
       result_set(const result_set & set);
 
 
-      virtual void stream(serialize & serialize);
+      virtual void io(stream & stream);
 
 
       result_set & operator = (const result_set & set);

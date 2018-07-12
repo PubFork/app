@@ -41,23 +41,32 @@ namespace simpledb
 
    bool set::exec(const char * pszSql)
    {
+
       ::database::result_set * r = (::database::result_set *) &m_resultset;
-      r->record_header.remove_all();
-      r->records.remove_all();
+
+      r->m_record_header.remove_all();
+
+      r->m_records.remove_all();
 
       string strInstruction = sql_consume_keyword(pszSql);
 
       if(strInstruction == "select")
       {
+
          return sql_do_select(pszSql);
+
       }
       else if(strInstruction == "insert")
       {
+
          return sql_do_insert(pszSql);
+
       }
 
       return false;
+
    }
+
    /*if (!handle())
    {
       TRACE("vmssqlite::set::exec: No Database Connection");
@@ -65,33 +74,33 @@ namespace simpledb
       m_strDatabaseErrorMessage = "No Database Connection";
       return false;
    }*/
-   /*      m_resultsetExec.record_header.remove_all();
-         m_resultsetExec.records.remove_all();
+   /*      m_resultsetExec.m_record_header.remove_all();
+         m_resultsetExec.m_records.remove_all();
       database::result_set* r = (database::result_set*)res_ptr;//dynamic_cast<result_set*>(res_ptr);
-      int32_t sz = r->records.get_size();
+      int32_t sz = r->m_records.get_size();
 
       //if (reslt == NULL ) cout << "EMPTY!!!\n";
-      if (r->record_header.get_size() <= 0)
+      if (r->m_record_header.get_size() <= 0)
       {
-         r->record_header.set_size(ncol, 32);
+         r->m_record_header.set_size(ncol, 32);
          for (int32_t i=0; i < ncol; i++)
          {
-            r->record_header[i].name = cols[i];
+            r->m_record_header[i].name = cols[i];
             if(cols[i + ncol] != NULL)
             {
                string str(cols[i + ncol]);
                str.make_lower();
                if(str == "integer")
                {
-                  r->record_header[i].type = database::DataTypeLong;
+                  r->m_record_header[i].type = database::DataTypeLong;
                }
                else if(str == "string")
                {
-                  r->record_header[i].type = database::DataTypeString;
+                  r->m_record_header[i].type = database::DataTypeString;
                }
                else if(str == "numeric")
                {
-                  r->record_header[i].type = database::DataTypeDouble;
+                  r->m_record_header[i].type = database::DataTypeDouble;
                }
             }
          }
@@ -112,11 +121,11 @@ namespace simpledb
             }
             else
             {
-               //if(r->record_header[i].type == vmssqlite::DataTypeDouble)
+               //if(r->m_record_header[i].type == vmssqlite::DataTypeDouble)
                //{
                  // v.SetDouble(strtod(reslt[i], NULL));
                //}
-               //if(r->record_header[i].type == vmssqlite::DataTypeLong)
+               //if(r->m_record_header[i].type == vmssqlite::DataTypeLong)
                //{
                  // v.SetLong(atoi(reslt[i]));
                //}
@@ -129,10 +138,10 @@ namespace simpledb
             }
             rec.set_at_grow(i, v);//(long)5;//reslt[i];
          }
-         r->records.set_at_grow(sz, rec);
+         r->m_records.set_at_grow(sz, rec);
       }
-      //cout <<"Fsz:"<<r->record_header.size()<<"\n";
-      // cout << "Recs:"<<r->records.size() <<" m_value |" <<reslt<<"|"<<cols<<"|"<<"\n\n";
+      //cout <<"Fsz:"<<r->m_record_header.size()<<"\n";
+      // cout << "Recs:"<<r->m_records.size() <<" m_value |" <<reslt<<"|"<<cols<<"|"<<"\n\n";
      return 0;
          //if ((strncmp("select",sql,6) == 0) || (strncmp("SELECT",sql,6) == 0))
          if(m_iLastResult = db->setErr(sqlite3_exec(handle(),sql,&callback,&m_resultsetExec,&errmsg)) == SQLITE_OK)
@@ -151,30 +160,30 @@ namespace simpledb
       }
 
       database::result_set* r = (database::result_set*)res_ptr;//dynamic_cast<result_set*>(res_ptr);
-      int32_t sz = r->records.get_size();
+      int32_t sz = r->m_records.get_size();
 
       //if (reslt == NULL ) cout << "EMPTY!!!\n";
-      if (r->record_header.get_size() <= 0)
+      if (r->m_record_header.get_size() <= 0)
       {
-         r->record_header.set_size(ncol, 32);
+         r->m_record_header.set_size(ncol, 32);
          for (int32_t i=0; i < ncol; i++)
          {
-            r->record_header[i].name = cols[i];
+            r->m_record_header[i].name = cols[i];
             if(cols[i + ncol] != NULL)
             {
                string str(cols[i + ncol]);
                str.make_lower();
                if(str == "integer")
                {
-                  r->record_header[i].type = database::DataTypeLong;
+                  r->m_record_header[i].type = database::DataTypeLong;
                }
                else if(str == "string")
                {
-                  r->record_header[i].type = database::DataTypeString;
+                  r->m_record_header[i].type = database::DataTypeString;
                }
                else if(str == "numeric")
                {
-                  r->record_header[i].type = database::DataTypeDouble;
+                  r->m_record_header[i].type = database::DataTypeDouble;
                }
             }
          }
@@ -195,11 +204,11 @@ namespace simpledb
             }
             else
             {
-               //if(r->record_header[i].type == vmssqlite::DataTypeDouble)
+               //if(r->m_record_header[i].type == vmssqlite::DataTypeDouble)
                //{
                  // v.SetDouble(strtod(reslt[i], NULL));
                //}
-               //if(r->record_header[i].type == vmssqlite::DataTypeLong)
+               //if(r->m_record_header[i].type == vmssqlite::DataTypeLong)
                //{
                  // v.SetLong(atoi(reslt[i]));
                //}
@@ -212,10 +221,10 @@ namespace simpledb
             }
             rec.set_at_grow(i, v);//(long)5;//reslt[i];
          }
-         r->records.set_at_grow(sz, rec);
+         r->m_records.set_at_grow(sz, rec);
       }
-      //cout <<"Fsz:"<<r->record_header.size()<<"\n";
-      // cout << "Recs:"<<r->records.size() <<" m_value |" <<reslt<<"|"<<cols<<"|"<<"\n\n";
+      //cout <<"Fsz:"<<r->m_record_header.size()<<"\n";
+      // cout << "Recs:"<<r->m_records.size() <<" m_value |" <<reslt<<"|"<<cols<<"|"<<"\n\n";
      return 0;  */
 
 
@@ -344,7 +353,7 @@ namespace simpledb
                }
                ::database::record rec;
                rec.::var_array::operator = (recrow.m_var.vara());
-               m_resultset.records.add(rec);
+               m_resultset.m_records.add(rec);
                recrow.m_var.vara().remove_all();
             }
          }
@@ -417,7 +426,7 @@ namespace simpledb
          {
             ::database::record rec;
             rec.add(string("one row inserted"));
-            m_resultset.records.add(rec);
+            m_resultset.m_records.add(rec);
          }
          return true;
       }
@@ -425,7 +434,7 @@ namespace simpledb
       {
          ::database::record rec;
          rec.add(string("could not add row"));
-         m_resultset.records.add(rec);
+         m_resultset.m_records.add(rec);
          return false;
       }
 
@@ -509,7 +518,7 @@ namespace simpledb
             db->start_transaction();
 
          if(db == NULL)
-            _throw(::database::DbErrors("No base Connection"));
+            _throw(::database::DbErrors(get_app(), "No base Connection"));
 
          //close();
 
@@ -563,34 +572,34 @@ namespace simpledb
 
    void set::fill_fields()
    {
-      //cout <<"rr "<<m_resultset.records.size()<<"|" << frecno <<"\n";
+      //cout <<"rr "<<m_resultset.m_records.size()<<"|" << frecno <<"\n";
       /*if ((db == NULL)
-      || (m_resultset.record_header.get_size() == 0)
-      || (m_resultset.records.get_size() < frecno))
+      || (m_resultset.m_record_header.get_size() == 0)
+      || (m_resultset.m_records.get_size() < frecno))
          return;
 
       if (fields_object.get_size() == 0) // Filling columns name
       {
-         fields_object.set_size(m_resultset.record_header.get_size());
-         edit_object.set_size(m_resultset.record_header.get_size());
-         for (int32_t i = 0; i < m_resultset.record_header.get_size(); i++)
+         fields_object.set_size(m_resultset.m_record_header.get_size());
+         edit_object.set_size(m_resultset.m_record_header.get_size());
+         for (int32_t i = 0; i < m_resultset.m_record_header.get_size(); i++)
          {
-            fields_object[i].m_properties    = m_resultset.record_header[i];
-            edit_object[i].m_properties      = m_resultset.record_header[i];
+            fields_object[i].m_properties    = m_resultset.m_record_header[i];
+            edit_object[i].m_properties      = m_resultset.m_record_header[i];
          }
       }
 
       //Filling m_resultset
-      if (m_resultset.records.get_size() != 0)
+      if (m_resultset.m_records.get_size() != 0)
       {
-         for (int32_t i = 0; i < m_resultset.records[frecno].get_size(); i++)
+         for (int32_t i = 0; i < m_resultset.m_records[frecno].get_size(); i++)
          {
-            fields_object[i].m_value   = m_resultset.records[frecno][i];
-            edit_object[i].m_value     = m_resultset.records[frecno][i];
+            fields_object[i].m_value   = m_resultset.m_records[frecno][i];
+            edit_object[i].m_value     = m_resultset.m_records[frecno][i];
          }
       }
       else
-         for (int32_t i = 0; i < m_resultset.record_header.get_size(); i++)
+         for (int32_t i = 0; i < m_resultset.m_record_header.get_size(); i++)
          {
             fields_object[i].m_value = "";
             edit_object[i].m_value = "";
@@ -685,8 +694,8 @@ namespace simpledb
    void set::close()
    {
       ::database::set::close();
-      m_resultset.record_header.remove_all();
-      m_resultset.records.remove_all();
+      m_resultset.m_record_header.remove_all();
+      m_resultset.m_records.remove_all();
       edit_object.remove_all();
       fields_object.remove_all();
       ds_state = ::database::dsInactive;
@@ -698,7 +707,7 @@ namespace simpledb
    {
       if ((ds_state == ::database::dsInsert) || (ds_state==::database::dsEdit))
       {
-         if(m_resultset.record_header.get_size())
+         if(m_resultset.m_record_header.get_size())
          {
             ds_state = ::database::dsSelect;
          }
@@ -712,7 +721,7 @@ namespace simpledb
 
    ::count set::num_rows()
    {
-      return m_resultset.records.get_size();
+      return m_resultset.m_records.get_size();
    }
 
 
@@ -784,7 +793,7 @@ namespace simpledb
          return false;
       }
 
-      m_resultset.records.remove_at(frecno);
+      m_resultset.m_records.remove_at(frecno);
 
       fbof = feof = (num_rows()==0)? true: false;
 
@@ -798,15 +807,15 @@ namespace simpledb
       {
          for (int32_t i=0; i < fields_object.get_size(); i++)
          {
-            if(m_resultset.record_header[i].name == f_name)
+            if(m_resultset.m_record_header[i].name == f_name)
             {
-               m_resultset.records[frecno][i] = value;
+               m_resultset.m_records[frecno][i] = value;
                found = true;
             }
          }
          if (!found)
          {
-            _throw(::database::DbErrors("Field not found: %s",f_name));
+            _throw(::database::DbErrors(get_app(), "Field not found: %s",f_name));
          }
          return true;
       }
@@ -825,14 +834,14 @@ namespace simpledb
    {
       if(ds_state == ::database::dsSelect)
       {
-         if(iFieldIndex >= 0 && iFieldIndex < m_resultset.record_header.get_size())
+         if(iFieldIndex >= 0 && iFieldIndex < m_resultset.m_record_header.get_size())
          {
-            m_resultset.records[frecno][iFieldIndex] = value;
+            m_resultset.m_records[frecno][iFieldIndex] = value;
             return true;
          }
          else
          {
-            _throw(::database::DbErrors("Field not found: %d",iFieldIndex));
+            _throw(::database::DbErrors(get_app(), "Field not found: %d",iFieldIndex));
          }
       }
       else
@@ -840,7 +849,7 @@ namespace simpledb
          ASSERT(FALSE);
          //      return set::SetFieldValue(f_name, value);
       }
-      _throw(::database::DbErrors("Not in Insert or Edit or Select state"));
+      _throw(::database::DbErrors(get_app(), "Not in Insert or Edit or Select state"));
       //  return false;
    }
 
@@ -848,13 +857,13 @@ namespace simpledb
    {
       //if(ds_state == dsSelect)
       {
-         if(iFieldIndex >= 0 && iFieldIndex < m_resultset.record_header.get_size())
+         if(iFieldIndex >= 0 && iFieldIndex < m_resultset.m_record_header.get_size())
          {
-            return m_resultset.records[frecno][iFieldIndex];
+            return m_resultset.m_records[frecno][iFieldIndex];
          }
          else
          {
-            _throw(::database::DbErrors("Field not found: %d",iFieldIndex));
+            _throw(::database::DbErrors(get_app(), "Field not found: %d",iFieldIndex));
          }
       }
       //   else
@@ -871,7 +880,7 @@ namespace simpledb
    {
       for (int32_t i=0; i < fields_object.get_size(); i++)
       {
-         if(m_resultset.record_header[i].name == f_name)
+         if(m_resultset.m_record_header[i].name == f_name)
          {
             return i;
 
@@ -887,15 +896,15 @@ namespace simpledb
       {
          index i;
          for(i=0; i < fields_object.get_size(); i++)
-            if(m_resultset.record_header[i].name == fieldname)
+            if(m_resultset.m_record_header[i].name == fieldname)
             {
                iFound = i;
                break;
             }
-         if (iFound < 0) _throw(::database::DbErrors("Field not found: %s",fieldname));
+         if (iFound < 0) _throw(::database::DbErrors(get_app(), "Field not found: %s",fieldname));
          ::count iNumRows = num_rows();
          for(i=0; i < iNumRows; i++)
-            if(m_resultset.records[i][iFound] == value)
+            if(m_resultset.m_records[i][iFound] == value)
             {
                seek(i);
                return true;
@@ -903,7 +912,7 @@ namespace simpledb
 
          return false;
       }
-      _throw(::database::DbErrors("not in Select state"));
+      _throw(::database::DbErrors(get_app(), "not in Select state"));
    }
 
    void set::query_items(stringa & stra, const char * pszSql)
@@ -953,30 +962,30 @@ namespace simpledb
    {
 
       ::database::result_set* r = (::database::result_set*)res_ptr;//dynamic_cast<result_set*>(res_ptr);
-      ::count sz = r->records.get_size();
+      ::count sz = r->m_records.get_size();
 
       //if (reslt == NULL ) cout << "EMPTY!!!\n";
-      if (r->record_header.get_size() <= 0)
+      if (r->m_record_header.get_size() <= 0)
       {
-         r->record_header.set_size(ncol, 32);
+         r->m_record_header.set_size(ncol, 32);
          for (index i=0; i < ncol; i++)
          {
-            r->record_header[i].name = cols[i];
+            r->m_record_header[i].name = cols[i];
             if(cols[i + ncol] != NULL)
             {
                string str(cols[i + ncol]);
                str.make_lower();
                if(str == "integer")
                {
-                  r->record_header[i].type = ::database::DataTypeLong;
+                  r->m_record_header[i].type = ::database::DataTypeLong;
                }
                else if(str == "string")
                {
-                  r->record_header[i].type =::database::DataTypeString;
+                  r->m_record_header[i].type =::database::DataTypeString;
                }
                else if(str == "numeric")
                {
-                  r->record_header[i].type = ::database::DataTypeDouble;
+                  r->m_record_header[i].type = ::database::DataTypeDouble;
                }
             }
          }
@@ -997,11 +1006,11 @@ namespace simpledb
             }
             else
             {
-               //if(r->record_header[i].type == vmssqlite::DataTypeDouble)
+               //if(r->m_record_header[i].type == vmssqlite::DataTypeDouble)
                //{
                // v.SetDouble(strtod(reslt[i], NULL));
                //}
-               //if(r->record_header[i].type == vmssqlite::DataTypeLong)
+               //if(r->m_record_header[i].type == vmssqlite::DataTypeLong)
                //{
                // v.SetLong(atoi(reslt[i]));
                //}
@@ -1014,10 +1023,10 @@ namespace simpledb
             }
             rec.set_at_grow(i, v);//(long)5;//reslt[i];
          }
-         r->records.set_at_grow(sz, rec);
+         r->m_records.set_at_grow(sz, rec);
       }
-      //cout <<"Fsz:"<<r->record_header.size()<<"\n";
-      // cout << "Recs:"<<r->records.size() <<" m_value |" <<reslt<<"|"<<cols<<"|"<<"\n\n";
+      //cout <<"Fsz:"<<r->m_record_header.size()<<"\n";
+      // cout << "Recs:"<<r->m_records.size() <<" m_value |" <<reslt<<"|"<<cols<<"|"<<"\n\n";
       return 0;
    }
 

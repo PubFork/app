@@ -50,7 +50,7 @@ namespace filehandler
       virtual void get_mime_type_app(stringa & straAppId, const char * pszMimeType);
 
 
-      virtual void stream(serialize & serialize) override;
+      virtual void io(stream & stream) override;
 
 
    };

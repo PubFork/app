@@ -248,7 +248,7 @@ namespace user
          index_array   m_iaDisplayToStrict;
          int32_t            m_iWidth;
 
-         virtual void stream(serialize & serialize) override;
+         virtual void io(stream & stream) override;
 
 
       };
@@ -266,7 +266,7 @@ namespace user
          virtual ~icon_layout();
 
 
-         virtual void stream(serialize & serialize);
+         virtual void io(stream & stream);
 
 
       };

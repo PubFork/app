@@ -3778,7 +3778,7 @@ namespace axis
    }
 
 
-   bool application::compress_ungz(serialize & ostreamUncompressed, const ::file::path & lpcszGzFileCompressed)
+   bool application::compress_ungz(stream & ostreamUncompressed, const ::file::path & lpcszGzFileCompressed)
    {
 
       return System.compress().ungz(this, ostreamUncompressed, lpcszGzFileCompressed);

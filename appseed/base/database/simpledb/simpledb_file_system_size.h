@@ -31,7 +31,7 @@ public:
       get_fs_size & operator = (const get_fs_size & getfssize);
 
 
-      virtual void stream(serialize & serialize);
+      virtual void io(stream & stream);
 
 
    };

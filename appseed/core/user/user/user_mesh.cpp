@@ -5874,7 +5874,7 @@ namespace user
    }
 
 
-   void mesh::mesh_layout::stream(serialize & serialize)
+   void mesh::mesh_layout::io(stream & serialize)
    {
 
       //ostream << m_iaDisplayToStrict;
@@ -5896,7 +5896,7 @@ namespace user
    }
 
 
-   void mesh::icon_layout::stream(serialize & serialize)
+   void mesh::icon_layout::io(stream & serialize)
    {
 
       serialize(m_iaDisplayToStrict);

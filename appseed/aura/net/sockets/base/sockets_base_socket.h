@@ -116,7 +116,7 @@ namespace sockets
       bool                 m_b_chunked;
 
 
-      ::memory_file   m_memfileInput;
+      ::memory_file *         m_pmemfileInput;
       bool                    m_bEnd; // should finish by not sending no more writes
       string                  m_strCat;
       string                  m_strCipherList;

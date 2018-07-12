@@ -78,7 +78,7 @@ namespace sqlite
             db->start_transaction();
 
          if(db == NULL)
-            _throw(database::DbErrors("No base Connection"));
+            _throw(database::DbErrors(::get_app(), "No base Connection"));
 
          //close();
 
@@ -92,7 +92,7 @@ namespace sqlite
             {
                fprintf(stderr,"Error: %s",err);
                sqlite3_free(err);
-               _throw(database::DbErrors(db->getErrorMsg()));
+               _throw(database::DbErrors(::get_app(), db->getErrorMsg()));
             }
          } // end of for
 
@@ -133,34 +133,34 @@ namespace sqlite
 
    void set::fill_fields()
    {
-      //cout <<"rr "<<result.records.size()<<"|" << frecno <<"\n";
+      //cout <<"rr "<<result.m_records.size()<<"|" << frecno <<"\n";
       if ((db == NULL)
-            || (result.record_header.get_size() == 0)
-            || (result.records.get_size() < frecno))
+            || (result.m_record_header.get_size() == 0)
+            || (result.m_records.get_size() < frecno))
          return;
 
       if (fields_object.get_size() == 0) // Filling columns name
       {
-         fields_object.set_size(result.record_header.get_size());
-         edit_object.set_size(result.record_header.get_size());
-         for (int32_t i = 0; i < result.record_header.get_size(); i++)
+         fields_object.set_size(result.m_record_header.get_size());
+         edit_object.set_size(result.m_record_header.get_size());
+         for (int32_t i = 0; i < result.m_record_header.get_size(); i++)
          {
-            fields_object[i].m_properties    = result.record_header[i];
-            edit_object[i].m_properties      = result.record_header[i];
+            fields_object[i].m_properties    = result.m_record_header[i];
+            edit_object[i].m_properties      = result.m_record_header[i];
          }
       }
 
       //Filling result
-      if (result.records.get_size() != 0)
+      if (result.m_records.get_size() != 0)
       {
-         for (int32_t i = 0; i < result.records[frecno].get_size(); i++)
+         for (int32_t i = 0; i < result.m_records[frecno].get_size(); i++)
          {
-            fields_object[i].m_value   = result.records[frecno][i];
-            edit_object[i].m_value     = result.records[frecno][i];
+            fields_object[i].m_value   = result.m_records[frecno][i];
+            edit_object[i].m_value     = result.m_records[frecno][i];
          }
       }
       else
-         for (int32_t i = 0; i < result.record_header.get_size(); i++)
+         for (int32_t i = 0; i < result.m_record_header.get_size(); i++)
          {
             fields_object[i].m_value = "";
             edit_object[i].m_value = "";
@@ -178,8 +178,8 @@ namespace sqlite
          return false;
       }
       char * errmsg = NULL;
-      exec_res.record_header.remove_all();
-      exec_res.records.remove_all();
+      exec_res.m_record_header.remove_all();
+      exec_res.m_records.remove_all();
       //if ((strncmp("select",sql,6) == 0) || (strncmp("SELECT",sql,6) == 0))
       if((m_iLastResult = db->setErr(sqlite3_exec((sqlite3 *) handle(),sql,&axis_sqlite_callback,&exec_res,&errmsg))) == SQLITE_OK)
       {
@@ -334,8 +334,8 @@ namespace sqlite
    void set::close()
    {
       ::database::set::close();
-      result.record_header.remove_all();
-      result.records.remove_all();
+      result.m_record_header.remove_all();
+      result.m_records.remove_all();
       edit_object.remove_all();
       fields_object.remove_all();
       ds_state = database::dsInactive;
@@ -347,7 +347,7 @@ namespace sqlite
    {
       if ((ds_state == database::dsInsert) || (ds_state==database::dsEdit))
       {
-         if(result.record_header.get_size())
+         if(result.m_record_header.get_size())
          {
             ds_state = database::dsSelect;
          }
@@ -361,7 +361,7 @@ namespace sqlite
 
    ::count set::num_rows()
    {
-      return result.records.get_size();
+      return result.m_records.get_size();
    }
 
 
@@ -432,7 +432,7 @@ namespace sqlite
          return false;
       }
 
-      result.records.remove_at(frecno);
+      result.m_records.remove_at(frecno);
 
       fbof = feof = (num_rows()==0)? true: false;
 
@@ -446,15 +446,15 @@ namespace sqlite
       {
          for (int32_t i=0; i < fields_object.get_size(); i++)
          {
-            if(result.record_header[i].name == f_name)
+            if(result.m_record_header[i].name == f_name)
             {
-               result.records[frecno][i] = value;
+               result.m_records[frecno][i] = value;
                found = true;
             }
          }
          if (!found)
          {
-            _throw(database::DbErrors("Field not found: %s",f_name));
+            _throw(database::DbErrors(::get_app(),"Field not found: %s",f_name));
          }
          return true;
       }
@@ -462,7 +462,7 @@ namespace sqlite
       {
          return set::SetFieldValue(f_name, value);
       }
-//      _throw(database::DbErrors("Not in Insert or Edit or Select state"));
+//      _throw(database::DbErrors(::get_app(),"Not in Insert or Edit or Select state"));
 //      //  return false;
    }
 
@@ -470,14 +470,14 @@ namespace sqlite
    {
       if(ds_state == database::dsSelect)
       {
-         if(iFieldIndex >= 0 && iFieldIndex < result.record_header.get_size())
+         if(iFieldIndex >= 0 && iFieldIndex < result.m_record_header.get_size())
          {
-            result.records[frecno][iFieldIndex] = value;
+            result.m_records[frecno][iFieldIndex] = value;
             return true;
          }
          else
          {
-            _throw(database::DbErrors("Field not found: %d",iFieldIndex));
+            _throw(database::DbErrors(::get_app(),"Field not found: %d",iFieldIndex));
          }
       }
       else
@@ -485,7 +485,7 @@ namespace sqlite
          ASSERT(FALSE);
          //      return set::SetFieldValue(f_name, value);
       }
-      _throw(database::DbErrors("Not in Insert or Edit or Select state"));
+      _throw(database::DbErrors(::get_app(),"Not in Insert or Edit or Select state"));
       //  return false;
    }
 
@@ -500,13 +500,13 @@ namespace sqlite
    {
       //if(ds_state == dsSelect)
       {
-         if(iFieldIndex >= 0 && iFieldIndex < result.record_header.get_size())
+         if(iFieldIndex >= 0 && iFieldIndex < result.m_record_header.get_size())
          {
-            return result.records[frecno][iFieldIndex];
+            return result.m_records[frecno][iFieldIndex];
          }
          else
          {
-            _throw(database::DbErrors("Field not found: %d",iFieldIndex));
+            _throw(database::DbErrors(::get_app(),"Field not found: %d",iFieldIndex));
          }
       }
       //   else
@@ -515,7 +515,7 @@ namespace sqlite
          //return set::SetFieldValue(f_name, value);
 
       }
-      //_throw(database::DbErrors("Not in Insert or Edit or Select state"));
+      //_throw(database::DbErrors(::get_app(),"Not in Insert or Edit or Select state"));
       //  return false;
    }
 
@@ -526,7 +526,7 @@ namespace sqlite
       for (int32_t i=0; i < fields_object.get_size(); i++)
       {
 
-         if(result.record_header[i].name == f_name)
+         if(result.m_record_header[i].name == f_name)
          {
 
             return i;
@@ -547,15 +547,15 @@ namespace sqlite
       {
          int32_t i;
          for(i=0; i < fields_object.get_size(); i++)
-            if(result.record_header[i].name == fieldname)
+            if(result.m_record_header[i].name == fieldname)
             {
                iFound = i;
                break;
             }
-         if (iFound < 0) _throw(database::DbErrors("Field not found: %s",fieldname));
+         if (iFound < 0) _throw(database::DbErrors(::get_app(),"Field not found: %s",fieldname));
          ::count iNumRows = num_rows();
          for(i=0; i < iNumRows; i++)
-            if(result.records[i][iFound] == value)
+            if(result.m_records[i][iFound] == value)
             {
                seek(i);
                return true;
@@ -563,7 +563,7 @@ namespace sqlite
 
          return false;
       }
-      _throw(database::DbErrors("not in Select state"));
+      _throw(database::DbErrors(::get_app(),"not in Select state"));
    }
 
    void set::query_items(stringa & stra, const char * pszSql)
@@ -619,30 +619,30 @@ int32_t axis_sqlite_callback(void * res_ptr,int32_t ncol, char** reslt,char** co
 {
 
    database::result_set* r = (database::result_set*)res_ptr;//dynamic_cast<result_set*>(res_ptr);
-   ::count sz = r->records.get_size();
+   ::count sz = r->m_records.get_size();
 
    //if (reslt == NULL ) cout << "EMPTY!!!\n";
-   if (r->record_header.get_size() <= 0)
+   if (r->m_record_header.get_size() <= 0)
    {
-      r->record_header.set_size(ncol, 32);
+      r->m_record_header.set_size(ncol, 32);
       for (index i=0; i < ncol; i++)
       {
-         r->record_header[i].name = cols[i];
+         r->m_record_header[i].name = cols[i];
 //         if(cols[i + ncol] != NULL)
 //         {
 //            string str(cols[i + ncol]);
 //            str.make_lower();
 //            if(str == "integer")
 //            {
-//               r->record_header[i].type = database::DataTypeLong;
+//               r->m_record_header[i].type = database::DataTypeLong;
 //            }
 //            else if(str == "string")
 //            {
-//               r->record_header[i].type = database::DataTypeString;
+//               r->m_record_header[i].type = database::DataTypeString;
 //            }
 //            else if(str == "numeric")
 //            {
-//               r->record_header[i].type = database::DataTypeDouble;
+//               r->m_record_header[i].type = database::DataTypeDouble;
 //            }
 //         }
       }
@@ -663,11 +663,11 @@ int32_t axis_sqlite_callback(void * res_ptr,int32_t ncol, char** reslt,char** co
          }
          else
          {
-            //if(r->record_header[i].type == vmssqlite::DataTypeDouble)
+            //if(r->m_record_header[i].type == vmssqlite::DataTypeDouble)
             //{
             // v.SetDouble(strtod(reslt[i], NULL));
             //}
-            //if(r->record_header[i].type == vmssqlite::DataTypeLong)
+            //if(r->m_record_header[i].type == vmssqlite::DataTypeLong)
             //{
             // v.SetLong(atoi(reslt[i]));
             //}
@@ -680,10 +680,10 @@ int32_t axis_sqlite_callback(void * res_ptr,int32_t ncol, char** reslt,char** co
          }
          rec.set_at_grow(i, v);//(long)5;//reslt[i];
       }
-      r->records.set_at_grow(sz, rec);
+      r->m_records.set_at_grow(sz, rec);
    }
-   //cout <<"Fsz:"<<r->record_header.size()<<"\n";
-   // cout << "Recs:"<<r->records.size() <<" m_value |" <<reslt<<"|"<<cols<<"|"<<"\n\n";
+   //cout <<"Fsz:"<<r->m_record_header.size()<<"\n";
+   // cout << "Recs:"<<r->m_records.size() <<" m_value |" <<reslt<<"|"<<cols<<"|"<<"\n\n";
    return 0;
 }
 

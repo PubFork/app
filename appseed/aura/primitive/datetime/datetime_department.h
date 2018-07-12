@@ -150,8 +150,8 @@ namespace datetime
 } // namespace aura
 
 
-CLASS_DECL_AURA serialize & operator >> (serialize & s, class ::datetime::department::time_zone & z);
-CLASS_DECL_AURA serialize & operator << (serialize & s, class ::datetime::department::time_zone & z);
+CLASS_DECL_AURA stream & operator >> (stream & s, class ::datetime::department::time_zone & z);
+CLASS_DECL_AURA stream & operator << (stream & s, class ::datetime::department::time_zone & z);
 
 
 

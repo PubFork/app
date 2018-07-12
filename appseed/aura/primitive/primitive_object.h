@@ -160,12 +160,9 @@ public:
    virtual int64_t add_ref();
    virtual int64_t dec_ref();
    virtual int64_t release();
-   virtual void
-   stream(
-          serialize
-          &
-          serialize
-          )     ;
+
+
+   virtual void io(stream & stream);
 
 
 };

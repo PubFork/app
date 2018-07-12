@@ -458,7 +458,7 @@ var property::at(index iIndex) const
 }
 
 
-void property::stream(serialize & serialize)
+void property::io(stream & serialize)
 {
 
    serialize(m_element1);
@@ -1439,7 +1439,7 @@ PropertySignalObject::PropertySignalObject()
 
 string property::get_xml(::xml::disp_option * opt /*= &optDefault*/ )
 {
-   //   ::file::plain_text_ostream ostring;
+   //   ::file::plain_text_stream ostring;
    //   //ostring << (const char *)m_strName << "='" << (const char *)m_strValue << "' ";
 
    //   ostring << (const char *)m_strName << L"=" << (CHAR)opt->value_quotation_mark

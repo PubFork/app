@@ -94,7 +94,7 @@ public:
    }
 
 
-   virtual void stream(serialize & serialize) override;
+   virtual void io(stream & serialize) override;
 
 
 };

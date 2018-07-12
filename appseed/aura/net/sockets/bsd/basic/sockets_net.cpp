@@ -1102,7 +1102,7 @@ net::dns_cache_item::dns_cache_item(const dns_cache_item & item)
 }
 
 
-void net::dns_cache_item::stream(serialize & serialize)
+void net::dns_cache_item::io(stream & serialize)
 {
 
    serialize.blt(m_ipaddr);
@@ -1147,7 +1147,7 @@ net::reverse_cache_item::reverse_cache_item(const reverse_cache_item & item)
 
 }
 
-void net::reverse_cache_item::stream(serialize & serialize)
+void net::reverse_cache_item::io(stream & serialize)
 {
 
    serialize.blt(m_ipaddr);

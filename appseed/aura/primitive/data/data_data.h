@@ -47,7 +47,7 @@ namespace data
 
       virtual void on_update_data(int32_t iHint);
 
-      void stream(serialize & serialize) override;
+      virtual void io(::stream & stream) override;
 
 
    };

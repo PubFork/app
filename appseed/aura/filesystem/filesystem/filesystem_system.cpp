@@ -2148,7 +2148,7 @@ restart:
 
    }
 
-   bool system::prepare_output(::aura::application * papp, path & pathDownloading, const path & pathOut, serialize & os)
+   bool system::prepare_output(::aura::application * papp, path & pathDownloading, const path & pathOut, ::stream & os)
    {
 
       Sys(papp).dir().mk(pathOut.folder(), papp);
@@ -2188,7 +2188,7 @@ restart:
 
    }
 
-   bool system::prepare_input(::aura::application * papp, serialize & is, const path & pathIn)
+   bool system::prepare_input(::aura::application * papp, ::stream & is, const path & pathIn)
    {
 
       ::file::file_sp fileIn = Sess(papp).file().get_file(pathIn, ::file::type_binary | ::file::mode_read);
@@ -2204,7 +2204,7 @@ restart:
 
    }
 
-   bool system::prepare_input(::aura::application * papp, serialize & is, ::file::file * pfileIn)
+   bool system::prepare_input(::aura::application * papp, ::stream & is, ::file::file * pfileIn)
    {
 
       is.m_spfile = pfileIn;
@@ -2220,7 +2220,7 @@ restart:
 
    }
 
-   bool system::prepare_input(::aura::application * papp, serialize & is)
+   bool system::prepare_input(::aura::application * papp, ::stream & is)
    {
 
       if (is.m_spfile.is_null())
@@ -2731,7 +2731,7 @@ restart:
    }
 
 
-   bool system::transfer(::aura::application * papp, const path & pszOutput, serialize & istream)
+   bool system::transfer(::aura::application * papp, const path & pszOutput, ::stream & istream)
    {
 
       return output(papp, pszOutput, this, &system::transfer, istream);
@@ -2755,7 +2755,7 @@ restart:
    }
 
 
-   bool system::transfer(::aura::application * papp, file * pfileOut, serialize & istream)
+   bool system::transfer(::aura::application * papp, file * pfileOut, ::stream & istream)
    {
 
       return output(papp, pfileOut, this, &system::transfer, istream);
@@ -2763,7 +2763,7 @@ restart:
    }
 
 
-   bool system::transfer(::aura::application * papp, serialize & os, const path & lpszSource)
+   bool system::transfer(::aura::application * papp, ::stream & os, const path & lpszSource)
    {
 
       return output(papp, os, this, &system::transfer, lpszSource);
@@ -2771,7 +2771,7 @@ restart:
    }
 
 
-   bool system::transfer(::aura::application * papp, serialize & os, ::file::file * pfileIn)
+   bool system::transfer(::aura::application * papp, ::stream & os, ::file::file * pfileIn)
    {
 
       return output(papp, os, this, &system::transfer, pfileIn);
@@ -2779,14 +2779,14 @@ restart:
    }
 
 
-   bool system::transfer(::aura::application * papp, serialize & os, serialize & istream)
+   bool system::transfer(::aura::application * papp, ::stream & os, ::stream & istream)
    {
 
       return output(papp, os, this, &system::transfer, istream);
 
    }
 
-   bool system::transfer(serialize & ostream, serialize & istream)
+   bool system::transfer(::stream & ostream, ::stream & istream)
    {
       class memory memory;
       memory.allocate(1024 * 256);

@@ -13,7 +13,7 @@ compress_department::compress_department(::aura::application * papp) :
 
 }
 
-bool compress_department::ungz(::aura::application * papp, serialize & ostreamUncompressed, const ::file::path & lpcszGzFileCompressed)
+bool compress_department::ungz(::aura::application * papp, ::stream & ostreamUncompressed, const ::file::path & lpcszGzFileCompressed)
 {
 
    uncompress_gz ungz(papp);
@@ -68,7 +68,7 @@ bool compress_department::ungz(::aura::application * papp, ::primitive::memory_b
 }
 
 
-bool compress_department::gz(::aura::application * papp, serialize & ostreamCompressed, const ::file::path & lpcszUncompressed, int iLevel)
+bool compress_department::gz(::aura::application * papp, ::stream & ostreamCompressed, const ::file::path & lpcszUncompressed, int iLevel)
 {
 
    compress_gz gz(papp, iLevel);
@@ -121,7 +121,7 @@ bool compress_department::gz(::aura::application * papp, const ::file::path & lp
 }
 
 
-bool compress_department::unbz(::aura::application * papp, serialize & ostreamUncompressed, const ::file::path & lpcszBzFileCompressed)
+bool compress_department::unbz(::aura::application * papp, ::stream & ostreamUncompressed, const ::file::path & lpcszBzFileCompressed)
 {
 
    uncompress_bz unbz(papp);
@@ -131,7 +131,7 @@ bool compress_department::unbz(::aura::application * papp, serialize & ostreamUn
 }
 
 
-bool compress_department::bz(::aura::application * papp, serialize & ostreamBzFileCompressed, const ::file::path & lpcszUncompressed, int iBlockSize, int iVerbosity, int iWorkFactor)
+bool compress_department::bz(::aura::application * papp, ::stream & ostreamBzFileCompressed, const ::file::path & lpcszUncompressed, int iBlockSize, int iVerbosity, int iWorkFactor)
 {
 
    compress_bz bz(papp, iBlockSize, iVerbosity, iWorkFactor);
@@ -151,7 +151,7 @@ bool compress_department::bz(::aura::application * papp, const ::file::path & lp
 }
 
 
-bool compress_department::bz(::aura::application * papp, serialize & ostreamBzFileCompressed, serialize & istreamUncompreseed, int iBlockSize, int iVerbosity, int iWorkFactor)
+bool compress_department::bz(::aura::application * papp, ::stream & ostreamBzFileCompressed, ::stream & istreamUncompreseed, int iBlockSize, int iVerbosity, int iWorkFactor)
 {
 
    compress_bz bz(papp, iBlockSize, iVerbosity, iWorkFactor);

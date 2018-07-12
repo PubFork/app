@@ -25,13 +25,13 @@ namespace xml
 
       document(::aura::application * papp = NULL, parse_info * pparseinfo = NULL);
       virtual ~document();
-    
+
 
       string consume_entity_ref(const char * & pszXml, string & strName, bool useExtEnt, bool & bExt);
       char * patch_entity_ref(const char * & pszXml, int bUseExtEnt, ...);
 
       node * get_root() const;
-      
+
       bool load_location(const char * psz);
       bool load(serialize & s);
       bool load(const char * psz);
@@ -47,7 +47,7 @@ namespace xml
          return ::data::data::validate_edit < ::xml::edit > (pbaseedit);
       }
 
-      virtual void stream(serialize & serialize) override;
+      virtual void io(stream & stream) override;
 
 
    };

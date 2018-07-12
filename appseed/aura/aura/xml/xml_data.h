@@ -16,7 +16,7 @@ namespace xml
       virtual ~data();
 
 
-      virtual void stream(serialize & serialize);
+      virtual void io(stream & stream);
 
 
    };

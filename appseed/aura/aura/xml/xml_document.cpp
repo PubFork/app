@@ -205,10 +205,10 @@ namespace xml
    }
 
 
-   void document::stream(serialize & serialize)
+   void document::io(stream & stream)
    {
 
-      ::xml::node::stream(serialize);
+      ::xml::node::io(stream);
 
    }
 

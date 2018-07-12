@@ -9,12 +9,10 @@ namespace simpledb
    //    stringa     m_straFields;
    //  var         m_var;
 
-   void record_row::stream(serialize & serialize)
+   void record_row::io(stream & serialize)
    {
       if (serialize.is_storing())
       {
-
-         serialize & ostream = serialize;
 
          if (m_straFields.get_size() <= 0)
          {
@@ -34,12 +32,12 @@ namespace simpledb
                      if (item.m_iSize > 0)
                      {
                         strsize iLen = MIN(255, var.get_string().get_length());
-                        ostream << (char)iLen;
-                        ostream.write(var.get_string().Left(iLen), iLen);
+                        serialize << (char)iLen;
+                        serialize.write(var.get_string().Left(iLen), iLen);
                         if (iLen < item.m_iSize)
                         {
                            string str(' ', item.m_iSize - iLen);
-                           ostream.write(str, item.m_iSize - iLen);
+                           serialize.write(str, item.m_iSize - iLen);
                         }
                      }
                   }
@@ -50,7 +48,6 @@ namespace simpledb
       }
       else
       {
-         serialize & istream = serialize;
          if (m_straFields.get_size() <= 0 || (m_straFields.get_size() == 1 && m_straFields[0] == "*"))
          {
             for (int32_t i = 0; i < m_ptable->m_fielddefinition.get_count(); i++)
@@ -62,15 +59,15 @@ namespace simpledb
                   if (item.m_iSize > 0)
                   {
                      byte uchLen;
-                     istream >> uchLen;
+                     serialize >> uchLen;
                      string str;
-                     istream.read(str.GetBufferSetLength(uchLen), uchLen);
+                     serialize.read(str.GetBufferSetLength(uchLen), uchLen);
                      var = str;
                      str.ReleaseBuffer(uchLen);
                      if (uchLen < item.m_iSize)
                      {
                         char sz[255];
-                        istream.read(sz, item.m_iSize - uchLen);
+                        serialize.read(sz, item.m_iSize - uchLen);
                      }
                   }
                }

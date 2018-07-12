@@ -23,13 +23,13 @@ namespace str
       virtual ~base64();
 
 
-      void encode(serialize & ostreamBase64, serialize & istreamBinary);
+      void encode(::stream & ostreamBase64, ::stream & istreamBinary);
       string encode(primitive::memory_base & storageBinary);
       string encode(byte * p, ::count ca);
       string encode(const char * psz);
       string encode(::object & object);
 
-      void decode(::serialize & ostreamBinary, serialize & istreamBase64);
+      void decode(::stream & ostreamBinary, ::stream & istreamBase64);
       void decode(primitive::memory_base & storageBinary, const char * pszBase64, strsize s = -1);
       string decode(const char * psz);
       void decode(::object & object, const char * pszBase64);

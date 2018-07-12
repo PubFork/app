@@ -372,7 +372,7 @@ namespace file
 
    }
 
-   /*   ::file::byte_stream application::get_byte_stream(var varFile, UINT nOpenFlags)
+   /*   ::stream application::get_byte_stream(var varFile, UINT nOpenFlags)
       {
 
          return get_file(varFile, nOpenFlags);
@@ -488,7 +488,7 @@ namespace file
    }
 
 
-   bool application::transfer(const path & pathOut, serialize & is)
+   bool application::transfer(const path & pathOut, ::stream & is)
    {
 
       return System.file().transfer(get_app(), pathOut, is);
@@ -512,7 +512,7 @@ namespace file
    }
 
 
-   bool application::transfer(file * pfileOut, serialize & is)
+   bool application::transfer(file * pfileOut, ::stream & is)
    {
 
       return System.file().transfer(get_app(), pfileOut, is);
@@ -520,7 +520,7 @@ namespace file
    }
 
 
-   bool application::transfer(ostream & os, const path & lpszSource)
+   bool application::transfer(::stream & os, const path & lpszSource)
    {
 
       return System.file().transfer(get_app(), os, lpszSource);
@@ -528,7 +528,7 @@ namespace file
    }
 
 
-   bool application::transfer(ostream & os, ::file::file * pfileIn)
+   bool application::transfer(::stream & os, ::file::file * pfileIn)
    {
 
       return System.file().transfer(get_app(), os, pfileIn);
@@ -536,7 +536,7 @@ namespace file
    }
 
 
-   bool application::transfer(ostream & os, serialize & is)
+   bool application::transfer(::stream & os, ::stream & is)
    {
 
       return System.file().transfer(get_app(), os, is);

@@ -49,7 +49,7 @@ namespace xml
 
    }
 
-   void edit_item::stream(serialize & serialize)
+   void edit_item::io(stream & serialize)
    {
 
       serialize((int32_t &) m_eaction);

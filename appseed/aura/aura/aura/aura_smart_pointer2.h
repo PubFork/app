@@ -379,14 +379,14 @@ bool operator !=(void * p, const smart_pointer < T > & sp) { return ((T *) p) ==
 
 
 template < class T >
-serialize & operator << (serialize & os,const smart_pointer < T > & sp)
+stream & operator << (stream & os,const smart_pointer < T > & sp)
 {
    os << *sp.m_p;
    return os;
 }
 
 template < class T >
-serialize & operator >> (serialize & is, smart_pointer < T > & sp)
+stream & operator >> (stream & is, smart_pointer < T > & sp)
 {
    is >> *sp.m_p;
    return is;

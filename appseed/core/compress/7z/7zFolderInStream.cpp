@@ -13,7 +13,7 @@ namespace n7z
    }
 
    void CFolderInStream::Init(::libcompress::archive_update_callback_interface *updateCallback,
-      const uint32_t *fileIndices, uint32_t numFiles)
+                              const uint32_t *fileIndices, uint32_t numFiles)
    {
       _updateCallback = updateCallback;
       _numFiles = numFiles;
@@ -41,8 +41,8 @@ namespace n7z
          if (stream)
          {
             _fileIsOpen = true;
-            smart_pointer < ::file::stream_get_size > streamGetSize;
-            streamGetSize = dynamic_cast < ::file::stream_get_size * > (stream.m_p);
+            smart_pointer < stream_get_size > streamGetSize;
+            streamGetSize = dynamic_cast < stream_get_size * > (stream.m_p);
             if (streamGetSize)
             {
                RINOK(streamGetSize->GetSize(&_currentSize));

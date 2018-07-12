@@ -21,8 +21,8 @@ namespace http
 
 
       using ::file::plain_text_stream::operator<<;
-      serialize & operator << (::memory_file & memfile);
-      serialize & operator << (::file::file_sp filesp);
+      stream & operator << (::memory_file & memfile);
+      stream & operator << (::file::file_sp filesp);
 
 
    };

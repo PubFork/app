@@ -6906,7 +6906,7 @@ restart:
    }
 
 
-   void dib::stream(::serialize & serialize)
+   void dib::io(stream & serialize)
    {
 
       if (m_psetObject != NULL)

@@ -3,38 +3,38 @@
 
 namespace data
 {
-/*
-   simple_lock::simple_lock(simple_data * pdata) :
-      interlocked_long_pulse(pdata != NULL ? &pdata->m_lockedlong : NULL, 1)
-   {
-      
-      m_spdata = pdata;
-      
-   }
-
-   simple_lock::~simple_lock()
-   {
-   
-      if(m_plockedlong != NULL)
+   /*
+      simple_lock::simple_lock(simple_data * pdata) :
+         interlocked_long_pulse(pdata != NULL ? &pdata->m_lockedlong : NULL, 1)
       {
-         m_plockedlong->subtract(m_lLevel);
-         m_plockedlong = NULL;
+
+         m_spdata = pdata;
+
       }
-      
-   }
-*/
+
+      simple_lock::~simple_lock()
+      {
+
+         if(m_plockedlong != NULL)
+         {
+            m_plockedlong->subtract(m_lLevel);
+            m_plockedlong = NULL;
+         }
+
+      }
+   */
 
    simple_data::simple_data()
    {
 //      m_pmutex = new mutex();
    }
-   
+
    simple_data::~simple_data()
    {
       //::aura::del(m_pmutex);
    }
 
-   
+
 //   bool simple_data::is_locked() const
 //   {
 //
@@ -48,8 +48,8 @@ namespace data
 
    }
 
-   
-   void simple_data::stream(serialize & serialize)
+
+   void simple_data::io(stream & serialize)
    {
 
 
@@ -69,7 +69,7 @@ namespace data
    data::data(::aura::application * papp) :
       object(papp)
    {
-      
+
       m_pdocument = NULL;
 
    }

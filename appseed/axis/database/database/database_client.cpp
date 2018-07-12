@@ -865,8 +865,6 @@ namespace file
    data_trigger_ostream::data_trigger_ostream(data_trigger_ostream && d):
       ::object(::move(d)),
       serialize(::move(d)),
-      serialize(::move(d)),
-      serialize(::move(d)),
       writer(::move(d)),
       memory_writer(::move(d)),
       m_id(::move(d.m_id))
@@ -911,8 +909,6 @@ namespace file
 
    data_trigger_istream::data_trigger_istream(data_trigger_istream && d) :
       ::object(::move(d)),
-      serialize(::move(d)),
-      serialize(::move(d)),
       serialize(::move(d)),
       reader(::move(d)),
       memory_reader(::move(d))

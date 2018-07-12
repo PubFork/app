@@ -925,7 +925,7 @@ void property_set::clear()
    remove_all();
 }
 
-void property_set::stream(serialize & serialize)
+void property_set::io(stream & serialize)
 {
 
    serialize.stream_map(*this);
@@ -1337,29 +1337,6 @@ string & property_set::get_http_post(string & strPost) const
 
 
 
-
-
-
-
-//CLASS_DECL_AURAserialize & operator << (serialize & ostream, const property_set & set)
-//{
-//
-//   ostream << (const ::property_map &) set;
-//
-//   return ostream;
-//
-//}
-//
-//
-//CLASS_DECL_AURAserialize & operator >> (serialize & s, property_set & set)
-//{
-//
-//   istream >> (::property_map &) set;
-//
-//   return istream;
-//
-//
-//}
 
 
 

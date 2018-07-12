@@ -217,70 +217,6 @@ namespace xml
 } // namespace xml
 
 
-//
-//namespace file
-//{
-//
-//
-//   template < class T >
-//   bool system::output(::aura::application * papp,const char * pszOutput,T * p,bool (T::*lpfnOuput)(serialize &,const char *),const char * lpszSource)
-//   {
-//
-//      System.dir().mk(System.dir().name(pszOutput),papp);
-//
-//      ::file::file_sp fileOut = papp->m_paurasession->file_get_file(pszOutput,::file::mode_create | ::file::type_binary | ::file::mode_write);
-//
-//      if(fileOut.is_null())
-//         return false;
-//
-//      serialize ostream(fileOut);
-//
-//      return (p->*lpfnOuput)(ostream,lpszSource);
-//
-//   }
-//
-//
-//   template < class T >
-//   bool system::output(::aura::application * papp,const char * pszOutput,T * p,bool (T::*lpfnOuput)(serialize &,serialize &),const char * lpszInput)
-//   {
-//
-//      System.dir().mk(System.dir().name(pszOutput),papp);
-//
-//      ::file::file_sp fileOut = papp->m_paurasession->file_get_file(pszOutput,::file::mode_create | ::file::type_binary | ::file::mode_write);
-//
-//      if(fileOut.is_null())
-//         return false;
-//
-//      ::file::file_sp fileIn = papp->m_paurasession->file_get_file(lpszInput,::file::type_binary | ::file::mode_read);
-//
-//      if(fileIn.is_null())
-//         return false;
-//
-//      serialize ostream(fileOut);
-//
-//      serialize istream(fileIn);
-//
-//      return (p->*lpfnOuput)(ostream,istream);
-//
-//   }
-//
-//
-//   template < class T >
-//   bool system::output(::aura::application * papp,const char * pszOutput,T * p,bool (T::*lpfnOuput)(serialize &,serialize &),serialize & istream)
-//   {
-//
-//      serialize ostream(get(pszOutput,papp));
-//
-//      return (p->*lpfnOuput)(ostream,istream);
-//
-//   }
-//
-//
-//} // namespace file
-//
-//
-
-
 namespace aura
 {
 
@@ -516,46 +452,46 @@ namespace aura
 {
 
 
-template < typename T >
-inline void delobj(T * & p)
-{
-   
-   //Thank you Fiora a Eterna!!
-   
-   //Fiora Aeterna☄ ‏@FioraAeterna 20m20 minutes ago
-   
-   //   maybe it's cynical but I'm starting to think the real reason so many newer games have constant autosaves is because they crash all the time
-   //   Details
-   
-   // BRT 2015-02-18 19:08
-   // catch all (...) here in aura::del ... but should remove try catch from all underlying calls (frees, memory_frees, memory_dbg_frees).
-   
-   try
+   template < typename T >
+   inline void delobj(T * & p)
    {
-      
-      if (p != NULL)
+
+      //Thank you Fiora a Eterna!!
+
+      //Fiora Aeterna☄ ‏@FioraAeterna 20m20 minutes ago
+
+      //   maybe it's cynical but I'm starting to think the real reason so many newer games have constant autosaves is because they crash all the time
+      //   Details
+
+      // BRT 2015-02-18 19:08
+      // catch all (...) here in aura::del ... but should remove try catch from all underlying calls (frees, memory_frees, memory_dbg_frees).
+
+      try
       {
-         
-         if (!(p->m_ulFlags & ::object::flag_shared))
+
+         if (p != NULL)
          {
-            
-            T * pdel = p;
-            
-            p = NULL;
-            
-            delete pdel;
-            
+
+            if (!(p->m_ulFlags & ::object::flag_shared))
+            {
+
+               T * pdel = p;
+
+               p = NULL;
+
+               delete pdel;
+
+            }
+
          }
-         
+
       }
-      
+      catch (...)
+      {
+
+      }
+
    }
-   catch (...)
-   {
-      
-   }
-   
-}
 
 
 } // namespace aura
@@ -564,31 +500,31 @@ inline void delobj(T * & p)
 
 
 template < typename TYPE >
-void serialize::prop_serial(const char * pszName, TYPE & t)
+void ::stream::prop_serial(const char * pszName, TYPE & t)
 {
-   
+
    if (is_storing())
    {
-      
+
       m_pset->operator[](pszName) = t;
-      
-      
+
+
    }
    else
    {
-      
+
       t = (TYPE)m_pset->operator[](pszName);
-      
+
    }
-   
+
 }
 
 
 
 
 
-CLASS_DECL_AURA serialize & operator << (serialize & os, ::datetime::time time);
-CLASS_DECL_AURA serialize & operator >> (serialize & is, ::datetime::time & time);
+CLASS_DECL_AURA ::stream & operator << (::stream & os, ::datetime::time & time);
+CLASS_DECL_AURA ::stream & operator >> (::stream & is, ::datetime::time & time);
 
 
 

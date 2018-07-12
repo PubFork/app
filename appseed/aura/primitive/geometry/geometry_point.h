@@ -531,7 +531,7 @@ inline point pointxy(LPCPOINT3D lppt)
 
 
 
-inline serialize & operator << (serialize & os, const pointd & p)
+inline stream & operator << (stream & os, const pointd & p)
 {
 
    os << p.x;
@@ -542,7 +542,7 @@ inline serialize & operator << (serialize & os, const pointd & p)
 }
 
 
-inline serialize & operator >> (serialize & is, pointd & p)
+inline stream & operator >> (stream & is, pointd & p)
 {
 
    is >> p.x;

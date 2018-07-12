@@ -38,16 +38,16 @@ public:
 
    inline c_number < T > & from(const string & str);
 
-/*   bool operator == (const c_number & n) const;
-   bool operator > (const c_number & n) const;
-   bool operator < (const c_number & n) const;
-   bool operator >= (const c_number & n) const;
-   bool operator <= (const c_number & n) const;
-   bool operator != (const c_number & n) const;
+   /*   bool operator == (const c_number & n) const;
+      bool operator > (const c_number & n) const;
+      bool operator < (const c_number & n) const;
+      bool operator >= (const c_number & n) const;
+      bool operator <= (const c_number & n) const;
+      bool operator != (const c_number & n) const;
 
-   c_number & operator = (const c_number & n);
-   c_number & operator += (const c_number & n);
-   c_number & operator -= (const c_number & n);*/
+      c_number & operator = (const c_number & n);
+      c_number & operator += (const c_number & n);
+      c_number & operator -= (const c_number & n);*/
 
 
    inline static T max_value()
@@ -228,7 +228,7 @@ namespace numeric_info_internal
 
    template < typename T >
    class CLASS_DECL_AURA numeric_info < ::c_number < T > > :
-   public numeric_info < T >
+      public numeric_info < T >
    {
    public:
 
@@ -238,18 +238,18 @@ namespace numeric_info_internal
 }
 
 
-template < typename T > 
-inline serialize &  operator >>(serialize & istream, c_number < T > & t)
+template < typename T >
+inline stream &  operator >>(stream & istream, c_number < T > & t)
 {
-   
+
    return istream >> t.m_number;
 
 }
 
-template < typename T > 
-inline serialize &  operator <<(serialize & ostream, const c_number < T > & t)
+template < typename T >
+inline stream &  operator <<(stream & ostream, const c_number < T > & t)
 {
-   
+
    return ostream << t.m_number;
 
 }

@@ -615,7 +615,7 @@ public:
    bool operator > (int64_t i) const;
 
 
-   void stream(serialize & serialize);
+   void io(stream & serialize);
 
 
    string operator + (const char * psz) const;

@@ -21,20 +21,20 @@ namespace file
    }
 
 
-   void binary_file::write(ostream & ostream)
+   void binary_file::write(serialize & serialize)
    {
 
       seek_to_begin();
 
-      transfer_to(*ostream.m_spfile);
+      transfer_to(*serialize.m_spfile);
 
    }
 
 
-   void binary_file::read(istream & istream)
+   void binary_file::read(serialize & serialize)
    {
 
-      transfer_from(*istream.m_spfile);
+      transfer_from(*serialize.m_spfile);
 
       seek_to_begin();
 

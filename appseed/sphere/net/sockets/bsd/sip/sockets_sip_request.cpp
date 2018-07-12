@@ -18,10 +18,10 @@ namespace sip
 
    request::request(const request& src) :
       ::object(((request&)src).get_app()),
-   transaction(src),
-   m_null(src.m_null),
-   m_file(((request&) src).get_app()),
-   m_form(((request&) src).get_app())
+      transaction(src),
+      m_null(src.m_null),
+      m_file(((request&) src).get_app()),
+      m_form(((request&) src).get_app())
    {
 
       m_file = src.m_file;
@@ -50,7 +50,7 @@ namespace sip
       m_file.Truncate(0);
       /*if (!m_file.get())
          m_file = smart_pointer<IFile>(new MemFile);
-   DEB(   else
+      DEB(   else
          TRACE("Body data file already opened\n");*/
 
    }
@@ -87,7 +87,7 @@ namespace sip
       attr("http_referer") = header("referer");
       if(m_file.get_size() > 0)
       {
-         //::file::byte_stream is(&m_file);
+         //serialize is(&m_file);
          m_form.parse_body(&m_file, ContentType(), ContentLength());
       }
       m_form.request().merge(m_form.get());
@@ -107,16 +107,16 @@ namespace sip
    void request::clear()
    {
       transaction::clear();
-   /*   attr("http_method") = "";
-      attr("http_protocol") = "";
-      attr("request_uri") = "";
-      attr("remote_address") = "";
-      attr("remote_host") = "";
-      attr("server_name") = "";
-      attr("server_port") = 0;
-      attr("https") = false;*/
+      /*   attr("http_method") = "";
+         attr("http_protocol") = "";
+         attr("request_uri") = "";
+         attr("remote_address") = "";
+         attr("remote_host") = "";
+         attr("server_name") = "";
+         attr("server_port") = 0;
+         attr("https") = false;*/
 
-   //   m_file = smart_pointer<IFile>(NULL);
+      //   m_file = smart_pointer<IFile>(NULL);
       m_form.clear();
       m_cookies.remove_all();
       file().Truncate(0);

@@ -6,7 +6,7 @@ class CLASS_DECL_AURA compress_department :
 {
 public:
 
-      
+
    compress_department(::aura::application * papp);
 
 
@@ -15,26 +15,26 @@ public:
    bool uncompress(memory & memoryUncompressed, memory & memoryCompressed, memory_size_t ulSizeUncompressed);
 
 
-   bool gz(::aura::application * papp, serialize & ostreamGzFileCompressed, const ::file::path & lpcszUncompressed, int iLevel = 6);
+   bool gz(::aura::application * papp, ::stream & ostreamGzFileCompressed, const ::file::path & lpcszUncompressed, int iLevel = 6);
    bool gz(::aura::application * papp, const ::file::path & lpcszGzFileCompressed, const ::file::path & lpcszUncompressed, int iLevel = 6);
    bool gz(::aura::application * papp, ::file::file * pfileOut, const ::file::path & lpcszUncompressed, int iLevel = 6);
    bool gz(::aura::application * papp, ::file::file * pfileOut, ::file::file * pfileIn, int iLevel = 6);
 
 
    bool ungz(::aura::application * papp, const ::file::path & lpcszUncompressed,const ::file::path & lpcszGzFileCompressed);
-   bool ungz(::aura::application * papp, serialize & ostreamUncompressed,const ::file::path & lpcszGzFileCompressed);
+   bool ungz(::aura::application * papp, ::stream & ostreamUncompressed,const ::file::path & lpcszGzFileCompressed);
    bool ungz(::aura::application * papp, ::file::file * pfileOut, ::file::file * pfileIn);
    bool ungz(::aura::application * papp, ::primitive::memory_base & memOut, ::primitive::memory_base & memIn);
    bool ungz(::aura::application * papp, ::primitive::memory_base & mem);
 
 
 
-   bool bz(::aura::application * papp, serialize & ostreamBzFileCompressed, const ::file::path & lpcszUncompressed, int iBlockSize = 9, int iVerbosity = 0, int iWorkFactor = 0);
+   bool bz(::aura::application * papp, ::stream & ostreamBzFileCompressed, const ::file::path & lpcszUncompressed, int iBlockSize = 9, int iVerbosity = 0, int iWorkFactor = 0);
    bool bz(::aura::application * papp, const ::file::path & lpcszBzFileCompressed, const ::file::path & lpcszUncompressed, int iBlockSize = 9, int iVerbosity = 0, int iWorkFactor = 0);
-   bool bz(::aura::application * papp, serialize & ostreamBzFileCompressed, serialize & istreamUncompressed, int iBlockSize = 9, int iVerbosity = 0, int iWorkFactor = 0);
+   bool bz(::aura::application * papp, ::stream & ostreamBzFileCompressed, ::stream & istreamUncompressed, int iBlockSize = 9, int iVerbosity = 0, int iWorkFactor = 0);
 
    bool unbz(::aura::application * papp,const ::file::path & lpcszUncompressed,const ::file::path & lpcszBzFileCompressed);
-   bool unbz(::aura::application * papp, serialize & ostreamUncompressed, const ::file::path & lpcszBzFileCompressed);
+   bool unbz(::aura::application * papp, ::stream & ostreamUncompressed, const ::file::path & lpcszBzFileCompressed);
 
    ::count extract_all(const ::file::path & pszFile, ::aura::application * papp);
 
@@ -43,7 +43,7 @@ public:
 
    bool unzip(::aura::application * papp, const ::file::path & pathUncompressed, const ::file::path & pathZipFileCompressed);
 
-      
+
 };
 
 

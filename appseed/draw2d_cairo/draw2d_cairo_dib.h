@@ -158,7 +158,7 @@ namespace draw2d_cairo
       //double pi();
 
 
-      virtual void stream(serialize & serialize);
+      virtual void io(stream & stream);
 
 
       virtual bool blend(point ptDst, ::draw2d::dib * pdibSrc, point ptSrc, class size size, byte bA) override;

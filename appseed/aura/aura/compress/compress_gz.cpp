@@ -39,7 +39,7 @@ compress_gz::~compress_gz()
 
 
 
-bool compress_gz::transfer(serialize & ostreamGzFileCompressed, serialize & istreamUncompressed)
+bool compress_gz::transfer(::stream & ostreamGzFileCompressed, ::stream & istreamUncompressed)
 {
 
    int iLevel = m_iLevel;
@@ -166,7 +166,7 @@ uncompress_gz::~uncompress_gz()
 
 
 
-bool uncompress_gz::transfer(serialize & ostreamUncompressed, serialize & istreamGzFileCompressed)
+bool uncompress_gz::transfer(::stream & ostreamUncompressed, ::stream & istreamGzFileCompressed)
 {
 
    int32_t status;

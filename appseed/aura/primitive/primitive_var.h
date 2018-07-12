@@ -502,7 +502,7 @@ public:
    bool operator > (int32_t i) const;
    bool operator > (bool b) const;
 
-   void stream(serialize & serialize);
+   void io(stream & serialize);
 
    string implode(const char * pszGlue) const;
    var explode(const char * pszGlue,bool bAddEmpty = true) const;

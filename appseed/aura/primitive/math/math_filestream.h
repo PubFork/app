@@ -2,7 +2,7 @@
 
 
 template < class t1, class t2, class t3, class t4 >
-void serialize_write(serialize & ostream, map < t1, t2, t3, t4 > & m)
+void serialize_write(stream & ostream, map < t1, t2, t3, t4 > & m)
 {
    ::count count = m.get_count();
    typename map < t1, t2, t3, t4 >::pair * ppair = m.PGetFirstAssoc();
@@ -16,7 +16,7 @@ void serialize_write(serialize & ostream, map < t1, t2, t3, t4 > & m)
 }
 
 template < class t1, class t2, class t3, class t4 >
-void serialize_read(serialize & istream, map < t1, t2, t3, t4 > & m)
+void serialize_read(stream & istream, map < t1, t2, t3, t4 > & m)
 {
    try
    {
@@ -43,7 +43,7 @@ void serialize_read(serialize & istream, map < t1, t2, t3, t4 > & m)
 
 
 template < class T, class T_to_T = map < T, T, T, T > >
-serialize & operator <<(serialize & ostream, const biunique< T, T_to_T > & b)
+stream & operator <<(stream & ostream, const biunique< T, T_to_T > & b)
 {
    ostream << m_bBiunivoca;
    ostream << m_iMaxA;
@@ -64,7 +64,7 @@ serialize & operator <<(serialize & ostream, const biunique< T, T_to_T > & b)
 
 }
 
-serialize & operator >> (serialize & istream, biunique< T, T_to_T > & b)
+stream & operator >> (stream & istream, biunique< T, T_to_T > & b)
 {
    try
    {
@@ -101,7 +101,7 @@ serialize & operator >> (serialize & istream, biunique< T, T_to_T > & b)
       m_iMaxB = -1;
       _throw(psz);
    }
-return istream;
+   return istream;
 }
 
 

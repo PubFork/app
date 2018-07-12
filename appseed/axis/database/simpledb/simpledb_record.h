@@ -16,7 +16,7 @@ namespace simpledb
       var         m_var;
 
 
-      virtual void stream(serialize & serialize);
+      virtual void io(stream & stream);
 
 
    };

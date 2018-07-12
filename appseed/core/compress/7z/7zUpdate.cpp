@@ -87,7 +87,7 @@ namespace n7z
 #endif
 
    static HRESULT WriteRange(::file::input_stream *inStream, ::file::writer *outStream,
-      uint64_t position, uint64_t size, ::libcompress::progress_info_interface *progress)
+                             uint64_t position, uint64_t size, ::libcompress::progress_info_interface *progress)
    {
       inStream->seek(position, ::file::seek_begin);
       ::file::limited_reader *streamSpec = new ::file::limited_reader;
@@ -194,7 +194,7 @@ namespace n7z
       CNum NumCopyFiles;
    };
 
-    int32_t CompareFolderRepacks(const CFolderRepack *p1, const CFolderRepack *p2, void *param);
+   int32_t CompareFolderRepacks(const CFolderRepack *p1, const CFolderRepack *p2, void *param);
 
    int32_t CompareFolderRepacks(const CFolderRepack *p1, const CFolderRepack *p2, void *param)
    {
@@ -203,8 +203,8 @@ namespace n7z
       int32_t i2 = p2->FolderIndex;
       const CArchiveDatabaseEx &db = *(const CArchiveDatabaseEx *)param;
       RINOZ(CompareFolders(
-         db.Folders[i1],
-         db.Folders[i2]));
+            db.Folders[i1],
+            db.Folders[i2]));
       return MyCompare(i1, i2);
       /*
       RINOZ_COMP(
@@ -219,7 +219,7 @@ namespace n7z
    }
 
    ////////////////////////////////////////////////////////////
-    int32_t CompareEmptyItems(const int32_t *p1, const int32_t *p2, void *param);
+   int32_t CompareEmptyItems(const int32_t *p1, const int32_t *p2, void *param);
 
    int32_t CompareEmptyItems(const int32_t *p1, const int32_t *p2, void *param)
    {
@@ -241,34 +241,34 @@ namespace n7z
    }
 
    static const char *g_Exts =
-      " lzma 7z ace arc arj bz bz2 deb lzo lzx gz pak rpm sit tgz tbz tbz2 tgz cab ha lha lzh rar zoo"
-      " zip jar ear war msi"
-      " 3gp avi mov mpeg mpg mpe wmv"
-      " aac ape fla flac la mp3 m4a mp4 ofr ogg pac ra rm rka shn swa tta wv wma wav"
-      " swf "
-      " chm hxi hxs"
-      " gif jpeg jpg jp2 png tiff  bmp ico psd psp"
-      " awg ps eps cgm dxf svg vrml wmf emf ai md"
-      " cad dwg pps key sxi"
-      " max 3ds"
-      " iso bin nrg mdf img pdi tar cpio xpi"
-      " vfd vhd vud vmc vsv"
-      " vmdk dsk nvram vmem vmsd vmsn vmss vmtm"
-      " inl inc idl acf asa h hpp hxx ca cpp cxx rc java cs pas bas vb cls ctl frm dlg def"
-      " f77 f f90 f95"
-      " asm sql manifest dep "
-      " mak clw csproj vcproj sln dsp dsw "
-      " class "
-      " bat cmd"
-      " xml xsd xsl xslt hxk hxc htm html xhtml xht mht mhtml htw asp aspx css cgi jsp shtml"
-      " awk sed hta js php php3 php4 php5 phptml pl pm py pyo rb sh tcl vbs"
-      " text txt tex ans asc srt reg ini doc docx mcw dot rtf hlp xls xlr xlt xlw ppt pdf"
-      " sxc sxd sxi sxg sxw stc sti stw stm odt ott odg otg odp otp ods ots odf"
-      " abw afp cwk lwp wpd wps wpt wrf wri"
-      " abf afm bdf fon mgf otf pcf pfa snf ttf"
-      " dbf mdb nsf ntf wdb db fdb gdb"
-      " exe dll ocx vbx sfx sys tlb awx com obj lib out o so "
-      " pdb pch idb ncb opt";
+   " lzma 7z ace arc arj bz bz2 deb lzo lzx gz pak rpm sit tgz tbz tbz2 tgz cab ha lha lzh rar zoo"
+   " zip jar ear war msi"
+   " 3gp avi mov mpeg mpg mpe wmv"
+   " aac ape fla flac la mp3 m4a mp4 ofr ogg pac ra rm rka shn swa tta wv wma wav"
+   " swf "
+   " chm hxi hxs"
+   " gif jpeg jpg jp2 png tiff  bmp ico psd psp"
+   " awg ps eps cgm dxf svg vrml wmf emf ai md"
+   " cad dwg pps key sxi"
+   " max 3ds"
+   " iso bin nrg mdf img pdi tar cpio xpi"
+   " vfd vhd vud vmc vsv"
+   " vmdk dsk nvram vmem vmsd vmsn vmss vmtm"
+   " inl inc idl acf asa h hpp hxx ca cpp cxx rc java cs pas bas vb cls ctl frm dlg def"
+   " f77 f f90 f95"
+   " asm sql manifest dep "
+   " mak clw csproj vcproj sln dsp dsw "
+   " class "
+   " bat cmd"
+   " xml xsd xsl xslt hxk hxc htm html xhtml xht mht mhtml htw asp aspx css cgi jsp shtml"
+   " awk sed hta js php php3 php4 php5 phptml pl pm py pyo rb sh tcl vbs"
+   " text txt tex ans asc srt reg ini doc docx mcw dot rtf hlp xls xlr xlt xlw ppt pdf"
+   " sxc sxd sxi sxg sxw stc sti stw stm odt ott odg otg odp otp ods ots odf"
+   " abw afp cwk lwp wpd wps wpt wrf wri"
+   " abf afm bdf fon mgf otf pcf pfa snf ttf"
+   " dbf mdb nsf ntf wdb db fdb gdb"
+   " exe dll ocx vbx sfx sys tlb awx com obj lib out o so "
+   " pdb pch idb ncb opt";
 
    int32_t GetExtIndex(const char *ext)
    {
@@ -312,7 +312,7 @@ namespace n7z
       strsize NamePos;
       strsize ExtensionIndex;
       CRefItem(uint32_t index, const CUpdateItem &ui, bool sortByType):
-      UpdateItem(&ui),
+         UpdateItem(&ui),
          Index(index),
          ExtensionPos(0),
          NamePos(0),
@@ -356,36 +356,36 @@ namespace n7z
    };
 
    // implement below
-/*   static int32_t CompareUpdateItems(const CRefItem *p1, const CRefItem *p2, void *param)
-   {
-      const CRefItem &a1 = *p1;
-      const CRefItem &a2 = *p2;
-      const CUpdateItem &u1 = *a1.UpdateItem;
-      const CUpdateItem &u2 = *a2.UpdateItem;
-      int32_t n;
-      if (u1.IsDir != u2.IsDir)
-         return (u1.IsDir) ? 1 : -1;
-      if (u1.IsDir)
+   /*   static int32_t CompareUpdateItems(const CRefItem *p1, const CRefItem *p2, void *param)
       {
-         if (u1.IsAnti != u2.IsAnti)
-            return (u1.IsAnti ? 1 : -1);
-         n = MyStringCompareNoCase(u1.Name, u2.Name);
-         return -n;
+         const CRefItem &a1 = *p1;
+         const CRefItem &a2 = *p2;
+         const CUpdateItem &u1 = *a1.UpdateItem;
+         const CUpdateItem &u2 = *a2.UpdateItem;
+         int32_t n;
+         if (u1.IsDir != u2.IsDir)
+            return (u1.IsDir) ? 1 : -1;
+         if (u1.IsDir)
+         {
+            if (u1.IsAnti != u2.IsAnti)
+               return (u1.IsAnti ? 1 : -1);
+            n = MyStringCompareNoCase(u1.Name, u2.Name);
+            return -n;
+         }
+         bool sortByType = *(bool *)param;
+         if (sortByType)
+         {
+            RINOZ_COMP(a1.ExtensionIndex, a2.ExtensionIndex);
+            RINOZ(System.file().extension(u1.Name).compare_ci(System.file().extension(u2.Name)));
+            RINOZ(System.file().name_(u1.Name).compare_ci(System.file().name_(u2.Name)));
+            if (!u1.MTimeDefined && u2.MTimeDefined) return 1;
+            if (u1.MTimeDefined && !u2.MTimeDefined) return -1;
+            if (u1.MTimeDefined && u2.MTimeDefined) RINOZ_COMP(u1.MTime, u2.MTime);
+            RINOZ_COMP(u1.get_count, u2.get_count);
+         }
+         return MyStringCompareNoCase(u1.Name, u2.Name);
       }
-      bool sortByType = *(bool *)param;
-      if (sortByType)
-      {
-         RINOZ_COMP(a1.ExtensionIndex, a2.ExtensionIndex);
-         RINOZ(System.file().extension(u1.Name).compare_ci(System.file().extension(u2.Name)));
-         RINOZ(System.file().name_(u1.Name).compare_ci(System.file().name_(u2.Name)));
-         if (!u1.MTimeDefined && u2.MTimeDefined) return 1;
-         if (u1.MTimeDefined && !u2.MTimeDefined) return -1;
-         if (u1.MTimeDefined && u2.MTimeDefined) RINOZ_COMP(u1.MTime, u2.MTime);
-         RINOZ_COMP(u1.get_count, u2.get_count);
-      }
-      return MyStringCompareNoCase(u1.Name, u2.Name);
-   }
-   */
+      */
 
    struct CSolidGroup :
       virtual element
@@ -420,7 +420,7 @@ namespace n7z
    }
 
    static void MakeExeMethod(const CCompressionMethodMode &method,
-      bool bcj2Filter, CCompressionMethodMode &exeMethod)
+                             bool bcj2Filter, CCompressionMethodMode &exeMethod)
    {
       exeMethod = method;
       if (bcj2Filter)
@@ -471,7 +471,7 @@ namespace n7z
 #endif
 
    static void FromUpdateItemToFileItem(const CUpdateItem &ui,
-      CFileItem &file, CFileItem2 &file2)
+                                        CFileItem &file, CFileItem2 &file2)
    {
       _throw(simple_exception(get_app(), "implement below"));
       /*file.Name = NItemName::MakeLegalName(ui.Name);*/
@@ -509,7 +509,7 @@ namespace n7z
    public:
       //MY_UNKNOWN_IMP
 
-         CFolderOutStream2()
+      CFolderOutStream2()
       {
          _crcStreamSpec = new ::libcompress::writer_with_crc;
          _crcStream = _crcStreamSpec;
@@ -523,7 +523,7 @@ namespace n7z
    };
 
    HRESULT CFolderOutStream2::Init(const CArchiveDatabaseEx *db, uint32_t startIndex,
-      const bool_array *extractStatuses, ::file::writer *outStream)
+                                   const bool_array *extractStatuses, ::file::writer *outStream)
    {
       _db = db;
       _startIndex = startIndex;
@@ -633,7 +633,7 @@ namespace n7z
       ///DECL_EXTERNAL_CODECS_VARS
       ::libcompress::codecs_info_interface * _codecsInfo;
       array < ::libcompress::codec_info_ex > _externalCodecs;
-         CDecoder Decoder;
+      CDecoder Decoder;
 
 #ifndef _7ZIP_ST
       bool MtMode;
@@ -641,9 +641,9 @@ namespace n7z
 #endif
 
       CThreadDecoder(sp(::axis::application) papp):
-      ::object(papp),
-      thread(papp),
-      Decoder(papp, true)
+         ::object(papp),
+         thread(papp),
+         Decoder(papp, true)
       {
 #ifndef _7ZIP_ST
          MtMode = false;
@@ -664,20 +664,20 @@ namespace n7z
          bool passwordIsDefined;
 #endif
          Result = Decoder.Decode(
-            _codecsInfo, &_externalCodecs,
-            InStream,
-            StartPos,
-            PackSizes,
-            *Folder,
-            Fos,
-            NULL
+                  _codecsInfo, &_externalCodecs,
+                  InStream,
+                  StartPos,
+                  PackSizes,
+                  *Folder,
+                  Fos,
+                  NULL
 #ifndef _NO_CRYPTO
-            , GetTextPassword, passwordIsDefined
+                  , GetTextPassword, passwordIsDefined
 #endif
 #ifndef _7ZIP_ST
-            , MtMode, NumThreads
+                  , MtMode, NumThreads
 #endif
-            );
+                  );
       }
       catch(...)
       {
@@ -708,7 +708,7 @@ namespace n7z
       string Password;
 
       //MY_UNKNOWN_IMP
-         HRes CryptoGetTextPassword(string & password);
+      HRes CryptoGetTextPassword(string & password);
    };
 
    HRes CCryptoGetTextPassword::CryptoGetTextPassword(string & password)
@@ -729,20 +729,20 @@ namespace n7z
    { return (encrypted ? 2 : 0) + (bcjFiltered ? 1 : 0); }
 
    HRESULT Update(
-      ::libcompress::codecs_info_interface * codecsInfo,
-      const array < ::libcompress::codec_info_ex > * externalCodecs,
-      ::file::input_stream * inStream,
-      const CArchiveDatabaseEx * db,
-      const smart_pointer_array < CUpdateItem > & updateItems,
-      COutArchive & archive,
-      CArchiveDatabase & newDatabase,
-      ::file::writer * seqOutStream,
-      ::libcompress::archive_update_callback_interface * updateCallback,
-      const CUpdateOptions & options
+   ::libcompress::codecs_info_interface * codecsInfo,
+   const array < ::libcompress::codec_info_ex > * externalCodecs,
+   ::file::input_stream * inStream,
+   const CArchiveDatabaseEx * db,
+   const smart_pointer_array < CUpdateItem > & updateItems,
+   COutArchive & archive,
+   CArchiveDatabase & newDatabase,
+   ::file::writer * seqOutStream,
+   ::libcompress::archive_update_callback_interface * updateCallback,
+   const CUpdateOptions & options
 #ifndef _NO_CRYPTO
-      , ::crypto::get_text_password_interface * getDecoderPassword
+   , ::crypto::get_text_password_interface * getDecoderPassword
 #endif
-      )
+   )
    {
       uint64_t numSolidFiles = options.NumSolidFiles;
       if (numSolidFiles == 0)
@@ -976,7 +976,7 @@ namespace n7z
             {
                uint64_t packSize = db->GetFolderFullPackSize(folderIndex);
                RINOK(WriteRange(inStream, archive.SeqStream,
-                  db->GetFolderStreamPos(folderIndex, 0), packSize, progress));
+                                db->GetFolderStreamPos(folderIndex, 0), packSize, progress));
                lps->ProgressOffset += packSize;
 
                const CFolder &folder = db->Folders[folderIndex];
@@ -991,7 +991,7 @@ namespace n7z
             }
             else
             {
-               ::file::stream_binder sb(codecsInfo->get_app());
+               stream_binder sb(codecsInfo->get_app());
                RINOK(sb.CreateEvents());
                sp(::file::writer) sbOutStream;
                sp(::file::reader) sbInStream;
@@ -1029,9 +1029,9 @@ namespace n7z
                CFolder newFolder;
 
                RINOK(encoder.Encode(
-                  codecsInfo, externalCodecs,
-                  sbInStream, NULL, &inSizeForReduce, newFolder,
-                  archive.SeqStream, newDatabase.PackSizes, progress));
+                     codecsInfo, externalCodecs,
+                     sbInStream, NULL, &inSizeForReduce, newFolder,
+                     archive.SeqStream, newDatabase.PackSizes, progress));
 
                _throw(simple_exception(get_app(), "should implement below"));
 //               threadDecoder.WaitFinish();
@@ -1117,7 +1117,7 @@ namespace n7z
             int32_t numSubFiles;
             string prevExtension;
             for (numSubFiles = 0; i + numSubFiles < numFiles &&
-               numSubFiles < numSolidFiles; numSubFiles++)
+                  numSubFiles < numSolidFiles; numSubFiles++)
             {
                const CUpdateItem &ui = updateItems[indices[i + numSubFiles]];
                totalSize += ui.get_count;
@@ -1128,9 +1128,8 @@ namespace n7z
                   string ext = ui.GetExtension();
                   if (numSubFiles == 0)
                      prevExtension = ext;
-                  else
-                     if (ext.compare_ci(prevExtension) != 0)
-                        break;
+                  else if (ext.compare_ci(prevExtension) != 0)
+                     break;
                }
             }
             if (numSubFiles < 1)
@@ -1144,9 +1143,9 @@ namespace n7z
 
             ::count startPackIndex = newDatabase.PackSizes.get_count();
             RINOK(encoder.Encode(
-               codecsInfo, externalCodecs,
-               solidInStream, NULL, &inSizeForReduce, folderItem,
-               archive.SeqStream, newDatabase.PackSizes, progress));
+                  codecsInfo, externalCodecs,
+                  solidInStream, NULL, &inSizeForReduce, folderItem,
+                  archive.SeqStream, newDatabase.PackSizes, progress));
 
             for (; startPackIndex < newDatabase.PackSizes.get_count(); startPackIndex++)
                lps->OutSize += newDatabase.PackSizes[startPackIndex];

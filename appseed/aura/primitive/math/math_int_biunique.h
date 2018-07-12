@@ -6,8 +6,8 @@ class biunique :
    virtual public ::object
 {
 public:
-   
-   
+
+
    biunique(::aura::application * papp = NULL);
    virtual ~biunique()
    {
@@ -60,7 +60,7 @@ public:
 
    void copy_data(const biunique & ia);
 
-   virtual void stream(::serialize & serialize);
+   virtual void io(stream & serialize);
 
    biunique & operator = (const biunique & ia);
 
@@ -477,26 +477,26 @@ void serialize_read(serialize & istream, map < t1, t2, t3, t4 > & m)
 
 
 template < class T, class T_to_T >
-void biunique < T, T_to_T > ::stream(serialize & serialize)
+void biunique < T, T_to_T > ::io(stream & stream)
 {
 
-   serialize(m_bBiunivoca);
-   serialize(m_iMaxA);
-   serialize(m_iMaxB);
-   serialize(m_iEmptyA);
-   serialize(m_iEmptyB);
+   stream(m_bBiunivoca);
+   stream(m_iMaxA);
+   stream(m_iMaxB);
+   stream(m_iEmptyA);
+   stream(m_iEmptyB);
 
-   if(serialize.is_storing())
+   if(stream.is_storing())
    {
 
       if (m_bBiunivoca)
       {
-         serialize.stream_map(m_ab);
+         stream.stream_map(m_ab);
       }
       else
       {
-         serialize.stream_map(m_ab);
-         serialize.stream_map(m_ba);
+         stream.stream_map(m_ab);
+         stream.stream_map(m_ba);
       }
 
    }
@@ -508,7 +508,7 @@ void biunique < T, T_to_T > ::stream(serialize & serialize)
          if (m_bBiunivoca)
          {
             T_to_T ab;
-            serialize.stream_map(ab);
+            stream.stream_map(ab);
             typename T_to_T::pair * ppair = ab.PGetFirstAssoc();
             while (ppair != NULL)
             {
@@ -518,8 +518,8 @@ void biunique < T, T_to_T > ::stream(serialize & serialize)
          }
          else
          {
-            serialize.stream_map(m_ab);
-            serialize.stream_map(m_ba);
+            stream.stream_map(m_ab);
+            stream.stream_map(m_ba);
          }
       }
       catch (const char * psz)

@@ -772,10 +772,10 @@ namespace xml
    }
 
    char * node::load(const char * pszXml, parse_info * pi)
-   { 
-      
-      return _load(pszXml, pszXml + strlen(pszXml), pi); 
-   
+   {
+
+      return _load(pszXml, pszXml + strlen(pszXml), pi);
+
    }
 
    // <TAG attr1="value1" attr2='value2' attr3=value3 >
@@ -2136,18 +2136,18 @@ namespace xml
 
    }
 
-   void node::stream(serialize & serialize)
+   void node::io(stream & serialize)
    {
 
       string str;
-      
+
       if (serialize.is_storing())
       {
 
          str = get_xml();
 
       }
-      
+
       serialize(str);
 
       if (!serialize.is_storing())

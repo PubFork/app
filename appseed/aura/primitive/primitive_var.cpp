@@ -869,48 +869,47 @@ bool var::is_new_or_null() const
    return is_new() || is_null();
 }
 
-void var::stream(serialize & serialize)
+void var::io(stream & stream)
 {
 
-   if (serialize.is_storing())
+   if (stream.is_storing())
    {
-      serialize & ostream = serialize;
       e_type etype = get_type();
       int32_t i = etype;
-      ostream << i;
+      stream << i;
       switch (etype)
       {
       case type_string:
       {
          strsize len = m_str.get_length();
-         ostream << len;
-         ostream.write((const char *)m_str, m_str.get_length() + 1);
+         stream << len;
+         stream.write((const char *)m_str, m_str.get_length() + 1);
       }
       break;
       case type_pstring:
       {
          strsize len = m_pstr->get_length();
-         ostream << len;
-         ostream.write((const char *)*m_pstr, m_pstr->get_length() + 1);
+         stream << len;
+         stream.write((const char *)*m_pstr, m_pstr->get_length() + 1);
       }
       break;
       case type_int32:
-         ostream << m_i32;
+         stream << m_i32;
          break;
       case type_int64:
-         ostream << m_i64;
+         stream << m_i64;
          break;
       case type_uint32:
-         ostream << m_ui32;
+         stream << m_ui32;
          break;
       case type_uint64:
-         ostream << m_ui64;
+         stream << m_ui64;
          break;
       case type_double:
-         ostream << m_d;
+         stream << m_d;
          break;
       case type_bool:
-         ostream << m_b;
+         stream << m_b;
          break;
       case type_new:
       case type_null:
@@ -918,41 +917,41 @@ void var::stream(serialize & serialize)
          break;
       case type_inta:
       {
-         ostream << inta().get_count();
+         stream << inta().get_count();
          for (int32_t i = 0; i < m_pia->get_count(); i++)
          {
-            ostream << m_pia->element_at(i);
+            stream << m_pia->element_at(i);
          }
       }
       break;
       case type_memory:
-         serialize(memory());
+         stream(memory());
          break;
       case type_stra:
-         serialize(stra());
+         stream(stra());
          break;
       case type_propset:
-         ostream << propset();
+         stream << propset();
          break;
       case type_id:
-         ostream << m_id;
+         stream << m_id;
          break;
       case type_element:
       {
 
-         sp(type) info(Sys(ostream.m_spfile->get_app()).get_type_info(typeid(*m_sp.m_p)));
+         sp(type) info(Sys(stream.m_spfile->get_app()).get_type_info(typeid(*m_sp.m_p)));
 
-         ostream << info;
+         ::stream
 
          ::object * pserializable = m_sp.cast < ::object >();
 
          if (pserializable != NULL)
          {
-            serialize(*pserializable);
+            stream(*pserializable);
          }
          else
          {
-            _throw(io_exception(ostream.m_spfile->get_app(), "object is not object"));
+            _throw(io_exception(stream.m_spfile->get_app(), "object stream not object"));
          }
       }
       break;
@@ -963,9 +962,8 @@ void var::stream(serialize & serialize)
    }
    else
    {
-      serialize & is = serialize;
       int32_t i;
-      is >> i;
+      stream >> i;
       e_type etype = (e_type)i;
       set_type(etype, false);
       etype = get_type();
@@ -976,40 +974,40 @@ void var::stream(serialize & serialize)
       case type_string:
       {
          strsize size;
-         is >> size;
+         stream >> size;
          char * lpsz = m_str.GetBuffer(size + 2);
-         is.read(lpsz, (size + 1) * sizeof(CHAR));
+         stream.read(lpsz, (size + 1) * sizeof(CHAR));
          m_str.ReleaseBuffer();
       }
       break;
       case type_int32:
       {
-         is >> m_i32;
+         stream >> m_i32;
       }
       break;
       case type_int64:
       {
-         is >> m_i64;
+         stream >> m_i64;
       }
       break;
       case type_uint32:
       {
-         is >> m_ui32;
+         stream >> m_ui32;
       }
       break;
       case type_uint64:
       {
-         is >> m_ui64;
+         stream >> m_ui64;
       }
       break;
       case type_bool:
       {
-         is >> m_b;
+         stream >> m_b;
       }
       break;
       case type_double:
       {
-         is >> m_d;
+         stream >> m_d;
       }
       break;
       case type_new:
@@ -1019,56 +1017,56 @@ void var::stream(serialize & serialize)
       case type_inta:
       {
          int32_t iCount;
-         is >> iCount;
+         stream >> iCount;
          inta().allocate(iCount);
          for (int32_t i = 0; i < m_pia->get_count(); i++)
          {
-            is >> (int32_t &)m_pia->element_at(i);
+            stream >> (int32_t &)m_pia->element_at(i);
          }
       }
       break;
       case type_memory:
       {
-         serialize(memory());
+         stream(memory());
       }
       break;
       case type_stra:
       {
-         serialize(stra());
+         stream(stra());
       }
       break;
       case type_propset:
       {
-         serialize(propset());
+         stream(propset());
       }
       break;
       case type_id:
       {
-         is >> m_id;
+         stream >> m_id;
       }
       break;
       case type_element:
       {
          sp(type) info;
-         is >> info;
-         m_sp = Sys(is.m_spfile->get_app()).alloc(info);
+         stream >> info;
+         m_sp = Sys(stream.m_spfile->get_app()).alloc(info);
          if (m_sp.is_null())
          {
-            _throw(simple_exception(get_app(), "object allocation is not implemented"));
+            _throw(simple_exception(get_app(), "object allocation stream not implemented"));
          }
          ::object * pserializable = m_sp.cast < ::object >();
          if (pserializable != NULL)
          {
-            serialize(*pserializable);
+            stream(*pserializable);
          }
          else
          {
-            _throw(io_exception(is.m_spfile->get_app(), "object serialization is not implemented"));
+            _throw(io_exception(stream.m_spfile->get_app(), "object serialization stream not implemented"));
          }
       }
       break;
       default:
-         is.setstate(::file::failbit); // stream corrupt
+         stream.setstate(::file::failbit); // stream corrupt
          break;
       }
 
@@ -2732,7 +2730,7 @@ var var::operator / (uint64_t ul) const
    case ::var::type_null:
       return var(type_null);
    case ::var::type_empty:
-      return 0.0 / ul; // throws division by zero exception if ul is zero
+      return 0.0 / ul; // throws division by zero exception if ul stream zero
    case ::var::type_int32:
       return m_i32 / (int_ptr) ul;
    case ::var::type_uint32:
@@ -2750,7 +2748,7 @@ var var::operator / (uint64_t ul) const
    case ::var::type_pvar:
       return m_pvar->operator / (ul);
    default:
-      return 0.0 / ul; // throws division by zero exception if ul is zero
+      return 0.0 / ul; // throws division by zero exception if ul stream zero
    }
 
 }
@@ -4671,7 +4669,7 @@ bool var::is_false() const
 
 
 // try to set string scalar if suitable.
-// no change if source string array is empty
+// no change if source string array stream empty
 // and avoid duplicate
 void var::_001Add(const stringa & straParam)
 {
@@ -4710,24 +4708,9 @@ void var::_001Add(const stringa & straParam)
 
 
 
-CLASS_DECL_AURA serialize & operator << (serialize & s, var & var)
-{
-
-   var.stream(s);
-
-   return s;
-
-}
 
 
-CLASS_DECL_AURA serialize & operator >> (serialize & s, var & var)
-{
 
-   var.stream(s);
-
-   return s;
-
-}
 
 
 

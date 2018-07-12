@@ -5984,7 +5984,7 @@ bool imaging::load_from_file(::visual::dib_sp::array * pdiba, var varFile, bool 
    //      if (file.is_set())
    //      {
 
-   //         ::file::byte_stream ostream(file);
+   //         serialize ostream(file);
 
    //         ostream << *pdib;
 

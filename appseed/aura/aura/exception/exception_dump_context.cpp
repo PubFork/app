@@ -86,10 +86,11 @@ void dump_context::flush()
 
 void dump_context::write(const char * lpsz)
 {
+
    if (lpsz == NULL)
    {
       output_string("NULL");
-      return *this;
+      return;
    }
 
    ASSERT( lpsz != NULL );
@@ -114,11 +115,13 @@ void dump_context::write(const char * lpsz)
       }
       *lpBuf = '\0';
       output_string(szBuffer);
-      return *this;
+
+      return;
+
    }
 
    m_pfile->write(lpsz, strlen(lpsz)*sizeof(char));
-   
+
 }
 
 
@@ -143,9 +146,8 @@ void dump_context::write(uint8_t ui)
 
    output_string(str);
 
-   return *this;
-
 }
+
 
 void dump_context::write(int16_t i)
 {
@@ -155,8 +157,6 @@ void dump_context::write(int16_t i)
    str.Format("%d", (int32_t) i);
 
    output_string(str);
-
-   return *this;
 
 }
 
@@ -230,6 +230,8 @@ dump_context & dump_context::hex_dump(int8_t i)
 
    output_string(str);
 
+   return *this;
+
 }
 
 
@@ -260,6 +262,7 @@ dump_context & dump_context::hex_dump(int16_t i)
 
 }
 
+
 dump_context & dump_context::hex_dump(uint16_t ui)
 {
 
@@ -284,6 +287,7 @@ dump_context & dump_context::hex_dump(int32_t i)
    output_string(str);
 
    return *this;
+
 }
 
 
@@ -311,6 +315,7 @@ dump_context & dump_context::hex_dump(int64_t i)
    output_string(str);
 
    return *this;
+
 }
 
 
@@ -333,18 +338,16 @@ void dump_context::write(object * pobject)
 
    if (pobject == NULL)
    {
-      
+
       *this << "NULL";
-      
+
    }
    else
    {
-      
+
       pobject->dump(*this);
 
    }
-   
-   return *this;
 
 }
 
@@ -367,24 +370,22 @@ void dump_context::write(const void * lp)
 
    output_string(str);
 
-   return *this;
-
 }
 
 
 void dump_context::write(oswindow h)
 {
-   
+
    write((void *)h);
-   
+
 }
 
 
 void dump_context::write(HDC h)
 {
-   
+
    write((void *)h);
-   
+
 }
 
 
@@ -393,25 +394,25 @@ void dump_context::write(HDC h)
 
 void dump_context::write(HMENU h)
 {
-   
+
    write((void *)h);
-   
+
 }
 
 
 void dump_context::write(HACCEL h)
 {
-   
+
    write((void *)h);
-   
+
 }
 
 
 void dump_context::write(HFONT h)
 {
-   
+
    write((void *)h);
-   
+
 }
 
 
@@ -476,8 +477,11 @@ void dump_context::write(const unichar * lpsz)
 
    if (lpsz == NULL)
    {
+
       output_string("(NULL)");
-      return *this;
+
+      return;
+
    }
 
    *this << ::str::international::unicode_to_utf8(lpsz);
@@ -490,16 +494,10 @@ void dump_context::write(const unichar * lpsz)
 
 void dump_context::write(string & str)
 {
-   
+
    write((const char *) str.c_str());
-   
+
 }
 
-
-//dump_context & dump_context::operator << (double d )
-//{
-//   operator <<(::str::from(d));
-//   return *this;
-//}
 
 

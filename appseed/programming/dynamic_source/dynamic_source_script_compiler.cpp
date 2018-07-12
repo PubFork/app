@@ -34,7 +34,7 @@ namespace dynamic_source
    {
 
 #ifdef WINDOWSEX
-       
+
       {
 
          ::file::path path;
@@ -69,7 +69,7 @@ namespace dynamic_source
          }
 
       }
-       
+
 #endif
 
       ::file::path path;
@@ -113,7 +113,7 @@ namespace dynamic_source
       run_persistent();
       parse_pstr_set();
    }
-    
+
 
    void script_compiler::prepare_compile_and_link_environment()
    {
@@ -167,7 +167,7 @@ namespace dynamic_source
          m_strEnv = strVars.up(2);
 
          m_strEnv = m_strEnv / "vc\\vcvarsall.bat";
-         
+
       }
 
 #endif
@@ -175,7 +175,7 @@ namespace dynamic_source
       m_strTime = System.dir().install() / "time";
 
 #ifdef WINDOWSEX
-      
+
       if (m_strVs == "2015")
       {
 
@@ -188,36 +188,36 @@ namespace dynamic_source
          m_strSdk1 = "vc141";
 
       }
-      
+
 #endif
 
 #ifdef OS64BIT
-      
+
 #ifdef LINUX
-      
+
       m_strPlat1     = "64";
       m_strPlatform = "x86";
       m_strStagePlatform = "x86";
       m_strLibPlatform = "x86/";
-      
+
 #else
-      
+
       m_strPlat1     = "64";
       m_strPlat2 = "x86_amd64";
       //m_strPlat2 = "amd64";
       m_strPlatform = "x64";
       m_strStagePlatform = "x64";
       m_strLibPlatform = "x64/";
-      
+
 #endif
 #else
-      
+
       m_strPlat1     = "32";
       m_strPlat2 = " x86";
       m_strPlatform = "Win32";
       m_strStagePlatform = "x86";
       m_strLibPlatform = "x86/";
-      
+
 #endif
 
 #if defined(LINUX) || defined(MACOS)
@@ -239,25 +239,25 @@ namespace dynamic_source
 
 
       string str;
-      
+
       string strItem;
 
       strItem = System.dir().install() / m_strDynamicSourceStage /m_strStagePlatform;
-      
+
       str = str + strItem + ";";
 
       strItem = System.dir().install()/ m_strDynamicSourceStage /  m_strStagePlatform / "dynamic_source\\library";
-      
+
       str = str + strItem + ";";
-      
+
 #ifdef WINDOWSEX
-      
+
       uint32_t dwSize = GetEnvironmentVariable("PATH", NULL, 0);
       LPTSTR lpsz = new char[dwSize + 1];
       dwSize = GetEnvironmentVariable("PATH", lpsz, dwSize + 1);
       str += lpsz;
       delete lpsz;
-      
+
 #endif
 
    }
@@ -270,7 +270,7 @@ namespace dynamic_source
 
       TRACE("Compiling script \"%s\"\n",pscript->m_strName.c_str());
 
-      ::file::plain_text_ostream & ostreamError = pscript->m_memfileError;
+      ::file::plain_text_stream & ostreamError = pscript->m_memfileError;
 
       ::file::path strName(pscript->m_strName);
 
@@ -372,7 +372,7 @@ namespace dynamic_source
       strO = strDynamicSourceScriptFolder / strTransformName.name() / strTransformName + ".bat";
 
 #endif
-      
+
       pscript->m_strScriptPath = m_pmanager->get_script_path(strName);
 
       try

@@ -9,7 +9,7 @@ namespace calculator
 
 
    class CLASS_DECL_CORE token :
-      virtual public mini_object
+      virtual public simple_object
    {
    public:
 

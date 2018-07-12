@@ -312,11 +312,11 @@ namespace database
          }
          if (!found)
          {
-            _throw(DbErrors("Field not found: %s",f_name));
+            _throw(DbErrors(::get_app(), "Field not found: %s",f_name));
          }
          return true;
       }
-      _throw(DbErrors("Not in Insert or Edit state"));
+      _throw(DbErrors(::get_app(), "Not in Insert or Edit state"));
       //  return false;
    }
 
@@ -330,7 +330,7 @@ namespace database
          {
             if(i < 0 || i >= edit_object.get_size())
             {
-               _throw(DbErrors("field index out of range: %d", i));
+               _throw(DbErrors(::get_app(), "field index out of range: %d", i));
             }
             return edit_object[i].m_value;
          }
@@ -338,12 +338,12 @@ namespace database
          {
             if (i < 0 || i >= fields_object.get_size())
             {
-               _throw(DbErrors("field index out of range: %d", i));
+               _throw(DbErrors(::get_app(), "field index out of range: %d", i));
             }
             return fields_object[i].m_value;
          }
       }
-      _throw(DbErrors("set state is Inactive"));
+      _throw(DbErrors(::get_app(), "set state is Inactive"));
    }
 
 
@@ -360,7 +360,7 @@ namespace database
                   return edit_object[i].m_value;
                }
             }
-            _throw(DbErrors("Field not found: %s",f_name));
+            _throw(DbErrors(::get_app(), "Field not found: %s",f_name));
          }
          else
          {
@@ -371,10 +371,10 @@ namespace database
                   return fields_object[i].m_value;
                }
             }
-            _throw(DbErrors("Field not found: %s",f_name));
+            _throw(DbErrors(::get_app(), "Field not found: %s",f_name));
          }
       }
-      _throw(DbErrors("set state is Inactive"));
+      _throw(DbErrors(::get_app(), "set state is Inactive"));
    }
 
    var set::GetSelectFieldValue(index iField)
@@ -383,14 +383,14 @@ namespace database
       {
          if(iField < 0 || iField >= fields_object.get_size())
          {
-            _throw(DbErrors("Field not found: index = %d", iField));
+            _throw(DbErrors(::get_app(), "Field not found: index = %d", iField));
          }
          else
          {
             return fields_object[iField].m_value;
          }
       }
-      _throw(DbErrors("set state is Inactive"));
+      _throw(DbErrors(::get_app(), "set state is Inactive"));
    }
 
 
@@ -635,7 +635,7 @@ namespace database
 
    }
 
-   
+
    var set::query_item(const char * pszQuery)
    {
 

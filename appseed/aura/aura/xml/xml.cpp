@@ -7,7 +7,7 @@ namespace xml
 
    CLASS_DECL_AURA string get(const property & prop, ::xml::disp_option * opt /*= &optDefault*/)
    {
-      //   ::file::plain_text_ostream ostring;
+      //   ::file::plain_text_stream ostring;
       //   //ostring << (const char *)m_strName << "='" << (const char *)m_strValue << "' ";
 
       //   ostring << (const char *)m_strName << L"=" << (CHAR)opt->value_quotation_mark

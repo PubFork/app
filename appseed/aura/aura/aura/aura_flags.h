@@ -74,10 +74,10 @@ public:
       return m_ia.has_elements();
    }
 
-   
-   void stream(serialize & serialize)
+
+   void io(stream & serialize)
    {
-      
+
       serialize.stream_array(m_ia);
 
    }

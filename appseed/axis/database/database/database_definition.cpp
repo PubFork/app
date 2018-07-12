@@ -1,34 +1,42 @@
 #include "framework.h"
-//#include <stdarg.h>
-#include <stdio.h>
 
 
 namespace database
 {
 
 
-   //************* DbErrors implementation ***************
-
-
-   DbErrors::DbErrors()
+   DbErrors::DbErrors(::aura::application * papp) :
+      object(papp)
    {
 
-      fprintf(stderr, "\nUnknown CDatabase Error\n");
+      string str;
+
+      str = "Unknown CDatabase Error";
+
+      TRACE(str);
+
+      m_pszMessage = strdup(str);
 
    }
 
 
-   DbErrors::DbErrors(const char *msg, ...)
+   DbErrors::DbErrors(::aura::application * papp,const char *msg, ...) :
+      object(papp)
    {
+
+      string str;
 
       va_list vl;
       va_start(vl, msg);
-      //cout << "In db\n\n";
-      char buf[DB_BUFF_MAX]="";
-      //  vsnprintf(buf, DB_BUFF_MAX-1, msg, vl);
+      str.Format(msg, vl);
       va_end(vl);
 
-      fprintf(stderr, "\nDatabase Error: %s\n", buf);
+      str = "CDatabase Error: " + str;
+
+      TRACE(str);
+
+      m_pszMessage = strdup(str);
+
 
    }
 
@@ -120,7 +128,7 @@ namespace database
    }
 
 
-   void query_data::stream(serialize & serialize)
+   void query_data::io(stream & serialize)
    {
 
       serialize.stream_array(*this);
@@ -140,44 +148,53 @@ namespace database
 
    result_set::result_set()
    {
+
    }
 
 
    result_set::result_set(::aura::application * papp) :
       ::object(papp)
    {
+
    }
 
 
    result_set::result_set(const result_set & set) :
       object(set.get_app())
    {
+
       operator = (set);
+
    }
+
 
    result_set & result_set::operator = (const result_set & set)
    {
 
       if(&set != this)
       {
-         record_header     = set.record_header;
-         records           = set.records;
+
+         m_record_header     = set.m_record_header;
+
+         m_records           = set.m_records;
+
       }
+
       return *this;
 
    }
 
 
-   void result_set::stream(serialize & serialize)
+   void result_set::io(stream & serialize)
    {
 
-      serialize.stream_array(record_header);
-      serialize.stream_array(records);
+      serialize.stream_array(m_record_header);
+      serialize.stream_array(m_records);
 
    }
 
 
-   void field_properties::stream(serialize & serialize)
+   void field_properties::io(stream & serialize)
    {
 
       serialize(name);

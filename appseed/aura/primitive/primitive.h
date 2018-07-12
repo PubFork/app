@@ -46,37 +46,24 @@ namespace file
 
 
 
-//CLASS_DECL_AURA serialize & operator << (serialize & ostream, const property & prop);
-//CLASS_DECL_AURA serialize & operator >> (serialize & istream, property & prop);
-//
-//
-
-
-//CLASS_DECL_AURA serialize & operator << (serialize & ostream, const property_set & set);
-//CLASS_DECL_AURA serialize & operator >> (serialize & istream, property_set & set);
-
-
-
-
-
 
 namespace lemon
 {
 
-   CLASS_DECL_AURA void transfer_to(serialize & writer, ::primitive::memory_base & mem, memory_size_t uiBufferSize = 1024 * 1024);
+   CLASS_DECL_AURA void transfer_to(stream & writer, ::primitive::memory_base & mem, memory_size_t uiBufferSize = 1024 * 1024);
 
-   CLASS_DECL_AURA void transfer_from_begin(serialize & reader, ::primitive::memory_base & mem, memory_size_t uiBufferSize = 1024 * 1024);
+   CLASS_DECL_AURA void transfer_from_begin(stream & reader, ::primitive::memory_base & mem, memory_size_t uiBufferSize = 1024 * 1024);
 
-   CLASS_DECL_AURA void transfer_from(serialize & reader, ::primitive::memory_base & mem, memory_size_t uiBufferSize = 1024 * 1024);
+   CLASS_DECL_AURA void transfer_from(stream & reader, ::primitive::memory_base & mem, memory_size_t uiBufferSize = 1024 * 1024);
 
 
 } // namespace lemon
 
-CLASS_DECL_AURA serialize & operator >> (serialize & istream, ::primitive::memory_container & memcontainer);
+CLASS_DECL_AURA stream & operator >> (stream & istream, ::primitive::memory_container & memcontainer);
 
-CLASS_DECL_AURA serialize & operator << (serialize & ostream, ::primitive::memory_base & mem);
+CLASS_DECL_AURA stream & operator << (stream & ostream, ::primitive::memory_base & mem);
 
-CLASS_DECL_AURA serialize & operator >> (serialize & istream, ::primitive::memory_base & mem);
+CLASS_DECL_AURA stream & operator >> (stream & istream, ::primitive::memory_base & mem);
 
 
 #include "primitive.inl"

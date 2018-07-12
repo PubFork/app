@@ -26,7 +26,7 @@ namespace user
    }
 
 
-   void controller::stream(serialize & serialize)
+   void controller::io(stream & serialize)
    {
 
    }

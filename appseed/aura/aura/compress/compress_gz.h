@@ -1,7 +1,7 @@
 /* version: 1.0, Feb, 2003
    Author : Gao Dasheng
    Copyright (C) 1995-2002 Gao Dasheng(dsgao@hotmail.com)
-   
+
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
   arising from the use of this software.
@@ -19,11 +19,11 @@
   3. This notice may not be removed or altered from any source distribution.
 //////////////////////////////////////////////////////////////////////////////
   Introduce:
-     This file includes two classes CA2GZIP and CGZIP2A which do compressing and 
+     This file includes two classes CA2GZIP and CGZIP2A which do compressing and
     uncompressing in memory. and It 's very easy to use for small data compressing.
-    Some compress and uncompress codes came from gzip  unzip function of zlib 1.1.x. 
+    Some compress and uncompress codes came from gzip  unzip function of zlib 1.1.x.
 
-  Usage: 
+  Usage:
      these two classes work used with zlib 1.1.x (http://www.gzip.org/zlib/).
     They were tested in Window OS.
   Exmaple:
@@ -58,7 +58,7 @@ public:
    virtual ~compress_gz();
 
 
-   bool transfer(serialize & ostreamGzFileCompressed, serialize & istreamUncompressed);
+   bool transfer(::stream & ostreamGzFileCompressed, ::stream & istreamUncompressed);
 
 
 };
@@ -69,12 +69,12 @@ class CLASS_DECL_AURA uncompress_gz :
 {
 public:
 
-   
+
    uncompress_gz(::aura::application * papp);
    virtual ~uncompress_gz();
-   
 
-   bool transfer(serialize & ostreamUncompressed, serialize & istreamGzFileCompressed);
+
+   bool transfer(::stream & ostreamUncompressed, ::stream & istreamGzFileCompressed);
 
 
 };

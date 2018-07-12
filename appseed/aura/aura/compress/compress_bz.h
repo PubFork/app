@@ -60,7 +60,7 @@ public:
    virtual ~compress_bz();
 
 
-   virtual bool transfer(serialize & osCompressed, serialize & isUncompressed);
+   virtual bool transfer(::stream & osCompressed, ::stream & isUncompressed);
 
 
 };
@@ -76,7 +76,7 @@ public:
    virtual ~uncompress_bz();
 
 
-   bool transfer(serialize & ostreamUncompressed, serialize & istreamBzFileCompressed);
+   bool transfer(::stream & ostreamUncompressed, ::stream & istreamBzFileCompressed);
 
 
 };

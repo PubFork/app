@@ -4,14 +4,14 @@
 class CLASS_DECL_AURA verisimple_exception:
    public call_stack
 {
-   public:
+public:
 
 
-      string m_strMessage;
+   string m_strMessage;
 
 
-      verisimple_exception(const string& strMessage = "");
-      virtual ~verisimple_exception();
+   verisimple_exception(const string& strMessage = "");
+   virtual ~verisimple_exception();
 
 
 };
@@ -20,7 +20,7 @@ class CLASS_DECL_AURA verisimple_exception:
 
 #ifdef DEBUG
 
-CLASS_DECL_AURA serialize & operator << (serialize & dumpcontext, verisimple_exception & e);
+CLASS_DECL_AURA stream & operator << (stream & dumpcontext, verisimple_exception & e);
 
 #endif
 

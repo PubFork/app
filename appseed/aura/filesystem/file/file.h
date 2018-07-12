@@ -87,14 +87,10 @@ inline bool file_as_pod(POD & pod, const char * path)
 
 #include "file_file.h"
 
-#include "file_istream.h"
 #include "file_ostream_flush.h"
-#include "file_ostream.h"
 #include "file_stream.h"
 
-#include "file_byte_istream.h"
-#include "file_byte_ostream.h"
-#include "file_byte_stream.h"
+#include "file_serialize.h"
 
 
 #include "file_binary_file.h"
@@ -114,12 +110,6 @@ inline bool file_as_pod(POD & pod, const char * path)
 #include "file_text_file.h"
 
 
-#include "file_folder_watch.h"
-
-
-#include "file_plain_text_stream_base.h"
-#include "file_plain_text_istream.h"
-#include "file_plain_text_ostream.h"
 #include "file_plain_text_stream.h"
 
 #include "file_simple_binary_file.h"
@@ -138,9 +128,6 @@ inline bool file_as_pod(POD & pod, const char * path)
 #include "file_stdio_file.h"
 
 
-#include "file_file_stream_base.h"
-#include "file_file_istream.h"
-#include "file_file_ostream.h"
 #include "file_file_stream.h"
 
 

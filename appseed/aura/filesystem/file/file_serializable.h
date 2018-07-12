@@ -222,7 +222,7 @@ CLASS_DECL_AURA bool file_as(::object & s, const char * path, ::aura::applicatio
 
 
 template < class ARRAY >
-bool file_put_array(const char * path, const ARRAY & a, ::aura::application * papp = NULL);
+bool file_put_array(const char * path, ARRAY & a, ::aura::application * papp = NULL);
 
 
 template < class ARRAY >
