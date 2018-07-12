@@ -3675,7 +3675,7 @@ namespace draw2d_quartz2d
 
       CGContextConcatCTM(m_pdc, affine3);
 
-      CGAffineTransform affine2 = CGContextGetCTM(m_pdc);
+      //CGAffineTransform affine2 = CGContextGetCTM(m_pdc);
 
       CGAffineTransform affine4;
 

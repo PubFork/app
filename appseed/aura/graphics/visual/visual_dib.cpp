@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 #ifdef WINDOWS
 #include <wincodec.h>
@@ -227,8 +227,10 @@ namespace visual
    {
 
       ::file::path path = m_p->m_pauraapp->dir().matter(pszMatter);
+      
+      ::draw2d::dib_sp dib(m_p->allocer());
 
-      if (!App(m_p->m_pauraapp).imaging().load_from_file(m_p, path, bCache))
+      if (!App(m_p->m_pauraapp).imaging().load_from_file(dib, path, bCache))
       {
 
          m_eload = load_fail;
@@ -240,9 +242,11 @@ namespace visual
       if (bCreateHelperMaps)
       {
 
-         m_p->create_helper_map();
+         dib->create_helper_map();
 
       }
+      
+      operator = (dib);
 
       m_eload = load_ok;
 

@@ -401,7 +401,7 @@ void serialize::write_from_hex(const char * psz, strsize iLen)
 
    //write(memory.get_data(), memory.get_size());
 
-   serialize::write_from_hex(psz, iLen < 0 ? strlen(psz) + iLen + 1 : iLen);
+   stream::write_from_hex(psz, iLen < 0 ? strlen(psz) + iLen + 1 : iLen);
 
 }
 

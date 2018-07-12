@@ -1,7 +1,10 @@
 #pragma once
 
 
-class point_array;
+template < typename POINT2D >
+class point2d_array_base;
+
+using point_array = point2d_array_base < point >;
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -479,7 +482,9 @@ inline bool rect64::is_empty() const NOTHROW
 
 
 
-class pointd_array;
+
+using pointd_array = point2d_array_base < pointd >;
+
 
 
 /////////////////////////////////////////////////////////////////////////////

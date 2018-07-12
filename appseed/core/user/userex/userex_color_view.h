@@ -29,15 +29,15 @@ namespace userex
       virtual ~color_view();
 
 
-      virtual void assert_valid() const;
+      virtual void assert_valid() const override;
 
-      virtual void dump(dump_context & dumpcontext) const;
+      virtual void dump(dump_context & dumpcontext) const override;
 
       virtual void install_message_routing(::message::sender * psender) override;
 
-      virtual void on_update(::user::impact * pSender, LPARAM lHint, object* pHint);
+      virtual void on_update(::user::impact * pSender, LPARAM lHint, object* pHint) override;
 
-      virtual void on_control_event(::user::control_event * pevent);
+      virtual void on_control_event(::user::control_event * pevent) override;
 
       virtual void _001OnDraw(::draw2d::graphics * pgraphics) override;
 

@@ -62,8 +62,8 @@ namespace axis
       virtual void dump(dump_context & dumpcontext) const override;
 
 
-      virtual bool app_data_get(class id id, serialize & os);
-      virtual bool app_data_set(class id id, serialize & is);
+      virtual bool app_data_get(class id id, serialize & os) override;
+      virtual bool app_data_set(class id id, serialize & is) override;
 
       virtual bool app_data_set(class id id, object & obj) override;
       virtual bool app_data_get(class id id, object & obj) override;

@@ -687,6 +687,8 @@
 		9AEB6A021F81D3A200F40B32 /* user_shell_ios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB69FF1F81D38D00F40B32 /* user_shell_ios.cpp */; };
 		9AEB6A031F81D75E00F40B32 /* user_shell_macos.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A7E85BF1E169A9F00B4534B /* user_shell_macos.cpp */; };
 		9AFEDB401EB9B4D9008F0D19 /* os_cross_windows_crt_debug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07A6D5D7173C27E9009E6FB8 /* os_cross_windows_crt_debug.cpp */; };
+		9AFF969020F7519A0053D9F4 /* userex_color_view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AFF968D20F7519A0053D9F4 /* userex_color_view.cpp */; };
+		9AFF969120F7519A0053D9F4 /* userex_color_view.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AFF968F20F7519A0053D9F4 /* userex_color_view.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1365,6 +1367,8 @@
 		9AF75DCD1F83E97D00FDE7CC /* libios_aura.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libios_aura.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AF75DD01F83E98900FDE7CC /* libios_axis.dylib */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libios_axis.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AF75DD31F83E9AA00FDE7CC /* libios_ace.dylib */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libios_ace.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		9AFF968D20F7519A0053D9F4 /* userex_color_view.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = userex_color_view.cpp; sourceTree = "<group>"; };
+		9AFF968F20F7519A0053D9F4 /* userex_color_view.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = userex_color_view.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1920,6 +1924,8 @@
 		07A6D82B173C27EB009E6FB8 /* userex */ = {
 			isa = PBXGroup;
 			children = (
+				9AFF968D20F7519A0053D9F4 /* userex_color_view.cpp */,
+				9AFF968F20F7519A0053D9F4 /* userex_color_view.h */,
 				9A9D7C791F5D7315009EC103 /* userex_dialog.cpp */,
 				9A9D7C7A1F5D7315009EC103 /* userex_font_view.cpp */,
 				9A9D7C7C1F5D7315009EC103 /* userex_form_child_frame.cpp */,
@@ -2368,6 +2374,7 @@
 				9A9D7CA81F5D7315009EC103 /* userex_top_edit_view.h in Headers */,
 				074DA8641C8E61A500748EB7 /* html_border.h in Headers */,
 				9A19A3AE19C6F5950018DF7D /* wndfrm_frame_work_set.h in Headers */,
+				9AFF969120F7519A0053D9F4 /* userex_color_view.h in Headers */,
 				074DA89C1C8E61A500748EB7 /* html_impl_image.h in Headers */,
 				9A19A39B19C6F5940018DF7D /* wndfrm_frame_constants.h in Headers */,
 				074DA83D1C8E61A500748EB7 /* html_elemental_elemental.h in Headers */,
@@ -2804,6 +2811,7 @@
 				9A9D7D2E1F5D735A009EC103 /* user_list.cpp in Sources */,
 				9A9D7DD01F5D744D009EC103 /* html_impl_table_elemental.cpp in Sources */,
 				9A9D7D371F5D735A009EC103 /* user_mesh.cpp in Sources */,
+				9AFF969020F7519A0053D9F4 /* userex_color_view.cpp in Sources */,
 				9A9D7D981F5D740E009EC103 /* userhtml_child_frame.cpp in Sources */,
 				9A9D7C941F5D7315009EC103 /* userex_dialog.cpp in Sources */,
 				9A9D7CA11F5D7315009EC103 /* userex_pane_split_view.cpp in Sources */,

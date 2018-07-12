@@ -196,8 +196,10 @@ namespace database
       {
 
          memory_writer writer(get_app());
+         
+         i64 i = l;
 
-         writer(l);
+         writer(i);
 
          return m_pdataserver->data_server_save(this, id, writer.memory(), puh);
 
@@ -217,8 +219,10 @@ namespace database
       {
 
          memory_writer writer(get_app());
+         
+         string str(lpsz);
 
-         writer(string(lpsz));
+         writer(str);
 
          return m_pdataserver->data_server_save(this, id, writer.memory(), puh);
 
@@ -235,8 +239,10 @@ namespace database
       {
 
          memory_writer writer(get_app());
+         
+         string str(lpwsz);
 
-         writer(string(lpwsz));
+         writer(str);
 
          return m_pdataserver->data_server_save(this, id, writer.memory(), puh);
 
@@ -522,7 +528,11 @@ namespace database
 
          }
 
-         reader(l);
+         i64 i;
+         
+         reader(i);
+         
+         l = i;
 
          return true;
 

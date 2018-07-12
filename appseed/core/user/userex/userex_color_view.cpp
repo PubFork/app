@@ -41,12 +41,7 @@ namespace flag
 
       double dh = h;
 
-      double dS;
-
       UINT uScan;
-
-
-      //dS = 1.0 - ((double)j / dh);
 
       uScan = pdib->m_iScan / sizeof(COLORREF);
 
@@ -181,8 +176,6 @@ namespace flag
       ::count h = pdib->m_size.cy;
 
       color c;
-
-      double dw = w;
 
       double dh = h;
 
@@ -501,7 +494,7 @@ namespace userex
 
          pt -= size(m_rectColors.center().x, m_rectColors.top);
 
-         COLORREF cr = m_dibLuminance->m_pcolorref[pt.x + (m_dib->m_iScan / sizeof(COLORREF)) * pt.y];
+//         COLORREF cr = m_dibLuminance->m_pcolorref[pt.x + (m_dib->m_iScan / sizeof(COLORREF)) * pt.y];
 
          m_hls.m_dL = 1.0 - ((double) pt.y / (double) m_dib->m_size.cy);
 
