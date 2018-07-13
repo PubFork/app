@@ -408,6 +408,16 @@ namespace draw2d
       virtual void save_to_dib(const ::file::path & pathDib);
       virtual bool load_from_dib(const ::file::path & pathDib);
 
+      inline int line(int line)
+      {
+         
+#ifdef MACOS
+         return m_size.cy - line - 1;
+#else
+         return line;
+#endif
+         
+      }
 
    };
 

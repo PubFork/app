@@ -1,5 +1,20 @@
 #include "framework.h"
 
+#ifdef MACOS
+#define ARGB_COLORREF(A, R, G, B) ARGB(A, R, G, B)
+#define COLORREF_get_a_value(cr) argb_get_a_value(cr)
+#define COLORREF_get_r_value(cr) argb_get_r_value(cr)
+#define COLORREF_get_g_value(cr) argb_get_g_value(cr)
+#define COLORREF_get_b_value(cr) argb_get_b_value(cr)
+#else
+#define ARGB_COLORREF(A, R, G, B) ARGB(A, B, G, R)
+#define COLORREF_get_a_value(cr) argb_get_a_value(cr)
+#define COLORREF_get_r_value(cr) argb_get_b_value(cr)
+#define COLORREF_get_g_value(cr) argb_get_g_value(cr)
+#define COLORREF_get_b_value(cr) argb_get_r_value(cr)
+#endif
+
+
 
 namespace flag
 {
@@ -129,6 +144,9 @@ namespace flag
 
 
             double dS = 1.0 - ((double) j / dh);
+#ifdef MACOS
+            dS = 1.0 - dS;
+#endif
 
             double dCMin;
             double dCAdd;
@@ -154,7 +172,7 @@ namespace flag
             //m_uchB = (BYTE)primitive_color_round(m_dB * 255.0);
 
 
-            *pline = ARGB(255, BYTE(_dB*255.0), BYTE(_dG*255.0), BYTE(_dR*255.0));
+            *pline = ARGB_COLORREF(255, BYTE(_dR*255.0), BYTE(_dG*255.0), BYTE(_dB*255.0));
 
             pline+=uScan;
 
@@ -258,6 +276,10 @@ namespace flag
       for (index j = 0; j < h; j++)
       {
          double dL = 1.0 - ((double) j / dh);
+         
+#ifdef MACOS
+         dL = 1.0 - dL;
+#endif
 
          //double dS = 1.0 - ((double)j / dh);
 
@@ -285,7 +307,7 @@ namespace flag
          //m_uchB = (BYTE)primitive_color_round(m_dB * 255.0);
 
          pline = pdib->m_pcolorref + uScan * j;
-         COLORREF cr = ARGB(255, BYTE(_dB*255.0), BYTE(_dG*255.0), BYTE(_dR*255.0));
+         COLORREF cr = ARGB_COLORREF(255, BYTE(_dR*255.0), BYTE(_dG*255.0), BYTE(_dB*255.0));
          for (index i = 0; i < w; i++)
          {
 
@@ -462,9 +484,9 @@ namespace userex
 
          pt -= m_rectColors.top_left();
 
-         COLORREF cr = m_dib->m_pcolorref[pt.x + (m_dib->m_iScan / sizeof(COLORREF)) * pt.y];
+         COLORREF cr = m_dib->m_pcolorref[pt.x + (m_dib->m_iScan / sizeof(COLORREF)) * m_dib->line(pt.y)];
 
-         color c(ARGB(argb_get_a_value(cr), argb_get_b_value(cr), argb_get_g_value(cr), argb_get_r_value(cr)));
+         color c(ARGB(COLORREF_get_a_value(cr), COLORREF_get_r_value(cr), COLORREF_get_g_value(cr), COLORREF_get_b_value(cr)));
 
          color::hls hls;
 
