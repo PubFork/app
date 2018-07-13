@@ -1049,7 +1049,7 @@ namespace user
          if (nFlags & SWP_SHOWWINDOW)
          {
 
-            if (m_iShowWindow == SW_HIDE)
+            if (m_iShowWindow <= SW_HIDE)
             {
 
                m_iShowWindow = SW_NORMAL;

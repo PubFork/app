@@ -306,6 +306,8 @@ namespace draw2d_quartz2d
       virtual bool set_polygon(const POINT * lpPoints, count nCount);
       virtual bool fill_polygon(const POINTD * lpPoints, count nCount) override;
       virtual bool fill_polygon(const POINT* lpPoints, count nCount) override;
+      virtual bool draw_polygon(const POINTD * lpPoints, count nCount) override;
+      virtual bool draw_polygon(const POINT * lpPoints, count nCount) override;
       virtual bool polygon(LPCPOINTD lpPoints,count nCount) override;
       virtual bool rectangle(LPCRECTD lpcrect) override;
       virtual bool draw_rect(LPCRECTD lpcrect) override;

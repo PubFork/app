@@ -103,9 +103,9 @@ namespace user
 
          string str;
 
-         GetWindowText(str);
+         get_window_text(str);
 
-         select_font(pgraphics, font_button, this);
+         select_font(pgraphics, font_button);
 
          pgraphics->set_text_color(crText);
 
@@ -205,7 +205,7 @@ namespace user
    bool meta_button::keyboard_focus_is_focusable()
    {
 
-      return false && ::user::button::keyboard_focus_is_focusable();
+      return false;
 
    }
 

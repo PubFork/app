@@ -28,6 +28,8 @@ class CLASS_DECL_AURA window_graphics :
 
       virtual void update_window();
 
+   
+   virtual bool is_buffer_ok();
 
       virtual ::draw2d::graphics * on_begin_draw();
 

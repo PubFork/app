@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="NewFilter1">
-      <UniqueIdentifier>{c6600739-8883-445a-9fa8-6d96b978ea26}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{ad416610-b05f-490d-8835-d3d5fa1c9aa6}</UniqueIdentifier>
     </Filter>
@@ -51,10 +48,10 @@
     <ClInclude Include="user_meta_button.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="wndfrm_core_user_schema.h">
+    <ClInclude Include="user_meta_control_box.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="user_meta_control_box.h">
+    <ClInclude Include="wndfrm_core_user_style.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -98,7 +95,10 @@
     <ClCompile Include="user_meta_control_box.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="wndfrm_core_user_schema.cpp">
+    <ClCompile Include="_wndfrm_core.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wndfrm_core_user_style.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

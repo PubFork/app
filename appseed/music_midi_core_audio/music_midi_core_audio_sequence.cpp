@@ -12,42 +12,42 @@ void MyMIDINotifyProc (const MIDINotification  *message, void *refCon) {
    printf("MIDI Notify, messageId=%d,", message->messageID);
 }
 
-static void MyMIDIReadProc(const MIDIPacketList * pktlist, void * refCon, void * connRefCon)
-{
-
-   ::music::midi_core_midi::sequence * pseq = (::music::midi_core_midi::sequence * )refCon;
-   
-   MIDIPacket *packet = (MIDIPacket *)pktlist->packet;
-
-   for (int i = 0; i < pktlist->numPackets; i++)
-   {
-      
-      Byte midiStatus = packet->data[0];
-      Byte velocity = packet->data[2] & 0x7F;
-      
-
-      if(!pseq->m_bStart)
-      {
-         if(((midiStatus) &0xf0) == music::midi::NoteOn && velocity > 0)
-      {
-         pseq->m_bStart = true;
-         pseq->m_uiStart = get_tick_count();
-      }
-      }
-      pseq->m_posPlay = packet->timeStamp;
-      //Byte midiCommand = midiStatus >> 4;
-   
-      Byte note = packet->data[1] & 0x7F;
-
-      OSStatus result = noErr;
-      
-      result = MusicDeviceMIDIEvent(pseq->m_pau->m_synth_unit, midiStatus, note, velocity, 0);
-      
-      packet = MIDIPacketNext(packet);
-      
-   }
-   
-}
+//static void MyMIDIReadProc(const MIDIPacketList * pktlist, void * refCon, void * connRefCon)
+//{
+//
+//   ::music::midi_core_midi::sequence * pseq = (::music::midi_core_midi::sequence * )refCon;
+//   
+//   MIDIPacket *packet = (MIDIPacket *)pktlist->packet;
+//
+//   for (int i = 0; i < pktlist->numPackets; i++)
+//   {
+//      
+//      Byte midiStatus = packet->data[0];
+//      Byte velocity = packet->data[2] & 0x7F;
+//      
+//
+//      if(!pseq->m_bStart)
+//      {
+//         if(((midiStatus) &0xf0) == music::midi::NoteOn && velocity > 0)
+//      {
+//         pseq->m_bStart = true;
+//         pseq->m_uiStart = get_tick_count();
+//      }
+//      }
+//      pseq->m_posPlay = packet->timeStamp;
+//      //Byte midiCommand = midiStatus >> 4;
+//   
+//      Byte note = packet->data[1] & 0x7F;
+//
+//      OSStatus result = noErr;
+//      
+//      result = MusicDeviceMIDIEvent(pseq->m_pau->m_synth_unit, midiStatus, note, velocity, 0);
+//      
+//      packet = MIDIPacketNext(packet);
+//      
+//   }
+//   
+//}
 
 
 namespace music
@@ -375,145 +375,145 @@ namespace music
          
          return ::multimedia::result_internal;
          
-         single_lock sl(m_pmutex, TRUE);
-         
-         if(get_status() != status_pre_rolled)
-            return ::music::translate(::music::EFunctionNotSupported);
-         
-         m_posPlay = 0;
-         // CFStringRef nameRef;
-         // MIDIEndpointRef portRef;
-         // char name[128];
-
-         int portNumber = 0;
-         std::string stringName;
-         CFRunLoopRunInMode( kCFRunLoopDefaultMode, 0, false );
-         if ( portNumber >= MIDIGetNumberOfDestinations() )
-{
-         }
-         
-         //char name[2048];
-//         portRef = MIDIGetDestination( 0 );
-//         nameRef = ConnectedEndpointName(portRef);
-//         CFStringGetCString( nameRef, name, sizeof(name), CFStringGetSystemEncoding());
-//         CFRelease( nameRef );
+//         single_lock sl(m_pmutex, TRUE);
 //
-//         stringName = name;
-         
-         //m_pcmo = new CoreMidiOutput(stringName);
-         
-         //m_bStart = false;
-         
-//         m_pau = new AudioUnitOutput(NULL);
-//         
-//         //m_pau->note_on(128, 128, 0);
-//         
-//         OSStatus result;
-//         
-////         m_cl = NULL;
-////         
-////         
-////         result = CAClockNew(0, &m_cl);
-////         
-////         
+//         if(get_status() != status_pre_rolled)
+//            return ::music::translate(::music::EFunctionNotSupported);
+//
+//         m_posPlay = 0;
+//         // CFStringRef nameRef;
+//         // MIDIEndpointRef portRef;
+//         // char name[128];
+//
+//         int portNumber = 0;
+//         std::string stringName;
+//         CFRunLoopRunInMode( kCFRunLoopDefaultMode, 0, false );
+//         if ( portNumber >= MIDIGetNumberOfDestinations() )
+//{
+//         }
+//
+//         //char name[2048];
+////         portRef = MIDIGetDestination( 0 );
+////         nameRef = ConnectedEndpointName(portRef);
+////         CFStringGetCString( nameRef, name, sizeof(name), CFStringGetSystemEncoding());
+////         CFRelease( nameRef );
+////
+////         stringName = name;
+//
+//         //m_pcmo = new CoreMidiOutput(stringName);
+//
+//         //m_bStart = false;
+//
+////         m_pau = new AudioUnitOutput(NULL);
+////
+////         //m_pau->note_on(128, 128, 0);
+////
+////         OSStatus result;
+////
+//////         m_cl = NULL;
+//////
+//////
+//////         result = CAClockNew(0, &m_cl);
+//////
+//////
+//////         if(result != noErr)
+//////         {
+//////
+//////            return translate_os_status(result);
+//////
+//////         }
+//////         // Create a client
+////         //MIDIClientRef virtualMidi;
+////         result = MIDIClientCreate(CFSTR("Virtual Client"),
+////                                   MyMIDINotifyProc,
+////                                   NULL,
+////                                   &m_virtualMidi);
+////
+////
 ////         if(result != noErr)
 ////         {
-////            
+////
 ////            return translate_os_status(result);
-////            
+////
 ////         }
-////         // Create a client
-//         //MIDIClientRef virtualMidi;
-//         result = MIDIClientCreate(CFSTR("Virtual Client"),
-//                                   MyMIDINotifyProc,
-//                                   NULL,
-//                                   &m_virtualMidi);
+////
+////         // Create an endpoint
+////         //MIDIEndpointRef virtualEndpoint;
+////         result = MIDIDestinationCreate(m_virtualMidi, CFSTR("Virtual Destination"), MyMIDIReadProc, this, &m_virtualEndpoint);
+////
+////
+////         if(result != noErr)
+////         {
+////
+////            return translate_os_status(result);
+////
+////         }
+////         m_sequence = NULL;
+////
+////         OSStatus os = LoadSMF((const char *)m_pfile->get_data(),
+////                               (int) m_pfile->get_size(),
+////                               m_sequence, 0);
+////
+////         if(os != noErr)
+////         {
+////
+////            return translate_os_status(os);
+////
+////         }
+////
+////         MusicSequenceType outType;
+////
+////         MusicSequenceGetSequenceType ( m_sequence, &outType );
+////
+////         // ************* Set the endpoint of the sequence to be our virtual endpoint
+////         MusicSequenceSetMIDIEndpoint(m_sequence, m_virtualEndpoint);
+////
+////         // Create a new music player
+////         // Initialise the music player
+////         os = NewMusicPlayer(&m_player);
+////         if(os != noErr)
+////         {
+////
+////            return translate_os_status(os);
+////
+////         }
+////
+////         // Load the sequence into the music player
+////         os = MusicPlayerSetSequence(m_player, m_sequence);
+////         if(os != noErr)
+////         {
+////
+////            return translate_os_status(os);
+////
+////         }
+////         m_bStart = false;
+////         // Called to do some MusicPlayer setup. This just
+////         // reduces latency when MusicPlayerStart is called
+////         os = MusicPlayerPreroll(m_player);
+////         if(os != noErr)
+////         {
+////
+////            return translate_os_status(os);
+////
+////         }
+////
+////         // Starts the music playing
+////         os = MusicPlayerStart(m_player);
+////
+////         if(os != noErr)
+////         {
+////
+////            return translate_os_status(os);
+////
+////         }
+////
+////         set_status(status_playing);
+////
+////
+////         m_uiStart = get_tick_count();
+////
+////         return ::multimedia::result_success;
 //
-//
-//         if(result != noErr)
-//         {
-//
-//            return translate_os_status(result);
-//
-//         }
-//
-//         // Create an endpoint
-//         //MIDIEndpointRef virtualEndpoint;
-//         result = MIDIDestinationCreate(m_virtualMidi, CFSTR("Virtual Destination"), MyMIDIReadProc, this, &m_virtualEndpoint);
-//
-//
-//         if(result != noErr)
-//         {
-//
-//            return translate_os_status(result);
-//
-//         }
-//         m_sequence = NULL;
-//
-//         OSStatus os = LoadSMF((const char *)m_pfile->get_data(),
-//                               (int) m_pfile->get_size(),
-//                               m_sequence, 0);
-//
-//         if(os != noErr)
-//         {
-//
-//            return translate_os_status(os);
-//
-//         }
-//         
-//         MusicSequenceType outType;
-//         
-//         MusicSequenceGetSequenceType ( m_sequence, &outType );
-//
-//         // ************* Set the endpoint of the sequence to be our virtual endpoint
-//         MusicSequenceSetMIDIEndpoint(m_sequence, m_virtualEndpoint);
-//
-//         // Create a new music player
-//         // Initialise the music player
-//         os = NewMusicPlayer(&m_player);
-//         if(os != noErr)
-//         {
-//
-//            return translate_os_status(os);
-//
-//         }
-//
-//         // Load the sequence into the music player
-//         os = MusicPlayerSetSequence(m_player, m_sequence);
-//         if(os != noErr)
-//         {
-//
-//            return translate_os_status(os);
-//
-//         }
-//         m_bStart = false;
-//         // Called to do some MusicPlayer setup. This just
-//         // reduces latency when MusicPlayerStart is called
-//         os = MusicPlayerPreroll(m_player);
-//         if(os != noErr)
-//         {
-//
-//            return translate_os_status(os);
-//
-//         }
-//         
-//         // Starts the music playing
-//         os = MusicPlayerStart(m_player);
-//
-//         if(os != noErr)
-//         {
-//
-//            return translate_os_status(os);
-//
-//         }
-//
-//         set_status(status_playing);
-//
-//
-//         m_uiStart = get_tick_count();
-//
-//         return ::multimedia::result_success;
-         
       }
       
       /***************************************************************************

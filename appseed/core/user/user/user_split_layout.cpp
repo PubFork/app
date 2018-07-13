@@ -178,7 +178,11 @@ namespace user
    bool split_layout::initialize_split_layout()
    {
 
+#ifdef _DEBUG
+      
       ::count iPaneCount = m_iPaneCount;
+      
+#endif
 
       m_bInitialized = false;
 

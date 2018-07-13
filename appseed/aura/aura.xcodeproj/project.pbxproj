@@ -3981,6 +3981,7 @@
 		9AB8C8581EA98EA0007670A6 /* netserver_socket_handler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = netserver_socket_handler.cpp; sourceTree = "<group>"; };
 		9AB8C8591EA98EA0007670A6 /* netserver_socket_thread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = netserver_socket_thread.cpp; sourceTree = "<group>"; };
 		9AB8C85A1EA98EA0007670A6 /* netserver_socket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = netserver_socket.cpp; sourceTree = "<group>"; };
+		9ABA0F8B20F9101100D0B8B7 /* exception.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = exception.inl; sourceTree = "<group>"; };
 		9AC20A4D20998C2E0077FEBF /* user_form.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = user_form.cpp; sourceTree = "<group>"; };
 		9AC20A4E20998C2F0077FEBF /* user_form.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_form.h; sourceTree = "<group>"; };
 		9AC945281829225F00AA7325 /* primitive_factory_impl.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = primitive_factory_impl.inl; sourceTree = "<group>"; };
@@ -5436,6 +5437,7 @@
 		9A163DD919C4A4CD00966C5E /* exception */ = {
 			isa = PBXGroup;
 			children = (
+				9ABA0F8B20F9101100D0B8B7 /* exception.inl */,
 				9A6FAB951F5C70BE00AF31B2 /* _exception.txt */,
 				9A6FAB961F5C70BE00AF31B2 /* exception_archive_exception.cpp */,
 				9A6FAB971F5C70BE00AF31B2 /* exception_archive.cpp */,

@@ -326,62 +326,62 @@ namespace music
          
          return;
          
-         sp(sequence) pseq = get_sequence();
-         
-//         snd_seq_event_t * pev = NULL;
-         
-         imedia_position pos = 0;
-         
-         pseq->get_position(pos);
-         
-         /*while(snd_seq_event_input_pending(pseq->m_pseq->handle, TRUE) > 0)
-          {
-          
-          if(snd_seq_event_input(pseq->m_pseq->handle, &pev) == -ENOSPC)
-          {
-          
-          pseq->m_iBuffered = 0;
-          
-          }
-          else
-          {
-          
-          pseq->m_iBuffered--;
-          
-          }
-          
-          }*/
-         
-         while(pseq->m_iaBuffered.get_count() > 0 && pseq->m_iaBuffered[0] <= pos)
-         {
-            
-            pseq->m_iaBuffered.remove_at(0);
-            
-         }
-         
-         if(pseq->seq_dump() < 0)
-         {
-            
-            if(pseq->m_iaBuffered.get_count() <= 0)
-            {
-               
-               PostMidiSequenceEvent(pseq, ::music::midi::sequence::EventMidiPlaybackEnd);
-               
-               return;
-               
-            }
-            
-            Sleep(100);
-            
-         }
-         else
-         {
-            
-            Sleep(5);
-            
-         }
-         
-         //post_thread_message(sequence::message_run, 0, 0);
+//         sp(sequence) pseq = get_sequence();
+//         
+////         snd_seq_event_t * pev = NULL;
+//         
+//         imedia_position pos = 0;
+//         
+//         pseq->get_position(pos);
+//         
+//         /*while(snd_seq_event_input_pending(pseq->m_pseq->handle, TRUE) > 0)
+//          {
+//          
+//          if(snd_seq_event_input(pseq->m_pseq->handle, &pev) == -ENOSPC)
+//          {
+//          
+//          pseq->m_iBuffered = 0;
+//          
+//          }
+//          else
+//          {
+//          
+//          pseq->m_iBuffered--;
+//          
+//          }
+//          
+//          }*/
+//         
+//         while(pseq->m_iaBuffered.get_count() > 0 && pseq->m_iaBuffered[0] <= pos)
+//         {
+//            
+//            pseq->m_iaBuffered.remove_at(0);
+//            
+//         }
+//         
+//         if(pseq->seq_dump() < 0)
+//         {
+//            
+//            if(pseq->m_iaBuffered.get_count() <= 0)
+//            {
+//               
+//               PostMidiSequenceEvent(pseq, ::music::midi::sequence::EventMidiPlaybackEnd);
+//               
+//               return;
+//               
+//            }
+//            
+//            Sleep(100);
+//            
+//         }
+//         else
+//         {
+//            
+//            Sleep(5);
+//            
+//         }
+//         
+//         //post_thread_message(sequence::message_run, 0, 0);
          
       }
       

@@ -93,21 +93,26 @@ namespace asphere
 
          sync_context_theme();
 
-         fork([&]()
-         {
-
-            while (get_thread_run())
-            {
-
-               sync_context_theme();
-
-               Sleep(1000);
-
-            }
-
-            TRACE("finished sync context theme thread");
-
-         });
+         // TODO: weather application should notify
+         // ca2 applications of "weather" changes
+         // try to quit these polling checks for
+         // "weather" changes and also, if possible,
+         // avoid polling.
+//         fork([&]()
+//         {
+//
+//            while (get_thread_run())
+//            {
+//
+//               sync_context_theme();
+//
+//               Sleep(1000);
+//
+//            }
+//
+//            TRACE("finished sync context theme thread");
+//
+//         });
 
       }
 

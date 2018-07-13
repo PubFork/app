@@ -38,7 +38,7 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-std=c++0x" />
+			<Add option="-std=c++14" />
 			<Add option="-fexceptions" />
 			<Add option="-fnon-call-exceptions" />
 			<Add option="-fno-pie" />
@@ -68,8 +68,6 @@
 		</Compiler>
 		<Linker>
 			<Add option="-Wl,-rpath=\\$$$ORIGIN" />
-			
-			
 			<Add option="-laura" />
 			<Add option="-laxis" />
 			<Add option="-lbase" />
@@ -108,7 +106,8 @@
 		<Unit filename="wndfrm_core_interaction.h" />
 		<Unit filename="wndfrm_core_library.cpp" />
 		<Unit filename="wndfrm_core_library.h" />
-		<Unit filename="wndfrm_core_user_schema.cpp" />
+		<Unit filename="wndfrm_core_user_theme.cpp" />
+		<Unit filename="wndfrm_core_user_theme.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />

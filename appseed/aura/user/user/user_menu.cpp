@@ -482,6 +482,8 @@ namespace user
       //SetWindowPos(0, 0, 0, rectClient.width(), rectClient.height(), SWP_SHOWWINDOW | SWP_NOZORDER);
 
       set_need_layout();
+      
+      set_need_redraw();
 
       SetTimer(::user::timer_command_probe, 300, NULL);
 

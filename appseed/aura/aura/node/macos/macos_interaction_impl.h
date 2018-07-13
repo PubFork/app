@@ -91,6 +91,10 @@ namespace macos
         bool Attach(oswindow hWndNew);
         oswindow Detach();
 
+      
+      virtual void on_do_show_flags() override;
+      virtual void on_layout() override;
+      
       // subclassing/unsubclassing functions
       virtual void pre_subclass_window() override;
       bool SubclassWindow(oswindow hWnd);

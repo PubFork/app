@@ -77,3 +77,10 @@ void window_graphics::update_window()
 }
 
 
+
+bool window_graphics::is_buffer_ok()
+{
+ 
+   return true;
+   
+}

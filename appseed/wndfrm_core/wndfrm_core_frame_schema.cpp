@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace user
@@ -20,7 +20,6 @@ namespace user
             frame_schema::frame_schema(::aura::application * papp) :
                object(papp),
                ::user::wndfrm::frame::frame(papp),
-               m_schema(papp),
                m_penText1(allocer()),
                m_penFace1(allocer()),
                m_penHilight1(allocer()),
@@ -29,211 +28,16 @@ namespace user
             {
 
 
+               m_crCaptionText = ARGB(255, 0, 0, 0);
+               m_rectClient = null_rect();
 
-                  m_rectClient = null_rect();
+            }
 
-                  //               m_iMargin = 7;
-
-
-               }
 
             frame_schema::~frame_schema()
             {
 
             }
-
-            /*
-
-            EHitTest frame_schema::_000HitTest(point pt)
-            {
-               UNREFERENCED_PARAMETER(pt);
-               return HitTestClient;
-            }
-
-            */
-
-            /*
-
-            bool frame_schema::_000OnLButtonDown(::message::mouse * pmouse)
-            {
-
-               if (m_pworkset->GetAppearance() != ::user::appearance_zoomed && m_pworkset->GetAppearance() != ::user::appearance_full_screen)
-               {
-
-                  if (m_pworkset->GetSizingManager()->_000OnLButtonDown(pmouse))
-                     return true;
-
-                  if (m_pworkset->GetMovingManager()->_000OnLButtonDown(pmouse))
-                     return true;
-
-               }
-
-               return false;
-
-            }
-
-            bool frame_schema::_000OnLButtonUp(::message::mouse * pmouse)
-            {
-
-               if (m_pworkset->GetAppearance() != ::user::appearance_zoomed && m_pworkset->GetAppearance() != ::user::appearance_full_screen)
-               {
-
-                  if (m_pworkset->GetSizingManager()->_000OnLButtonUp(pmouse))
-                     return true;
-
-                  if (m_pworkset->GetMovingManager()->_000OnLButtonUp(pmouse))
-                     return true;
-
-               }
-
-               return false;
-            }
-
-            bool frame_schema::_000OnMouseMove(::message::mouse * pmouse)
-            {
-
-               if (m_pworkset->GetAppearance() != ::user::appearance_zoomed && m_pworkset->GetAppearance() != ::user::appearance_full_screen)
-               {
-
-                  if (m_pworkset->GetSizingManager()->_000OnMouseMove(pmouse))
-                     return true;
-
-                  if (m_pworkset->GetMovingManager()->_000OnMouseMove(pmouse))
-                     return true;
-
-               }
-
-               return false;
-            }
-
-            bool frame_schema::_000OnNcLButtonDown(::message::mouse * pmouse)
-            {
-
-               if (m_pworkset->GetAppearance() != ::user::appearance_zoomed && m_pworkset->GetAppearance() != ::user::appearance_full_screen)
-               {
-
-                  if (m_pworkset->GetSizingManager()->_000OnLButtonDown(pmouse))
-                     return true;
-
-                  if (m_pworkset->GetMovingManager()->_000OnLButtonDown(pmouse))
-                     return true;
-
-               }
-
-               return false;
-            }
-
-            bool frame_schema::_000OnNcLButtonUp(::message::mouse * pmouse)
-            {
-
-               if (m_pworkset->GetAppearance() != ::user::appearance_zoomed && m_pworkset->GetAppearance() != ::user::appearance_full_screen)
-               {
-
-                  if (m_pworkset->GetSizingManager()->Relay(pmouse))
-                     return true;
-
-                  if (m_pworkset->GetMovingManager()->Relay(pmouse))
-                     return true;
-
-               }
-
-               return false;
-            }
-
-            bool frame_schema::_000OnNcMouseMove(::message::mouse * pmouse)
-            {
-
-               if (m_pworkset->GetAppearance() != ::user::appearance_zoomed && m_pworkset->GetAppearance() != ::user::appearance_full_screen)
-               {
-
-                  if (m_pworkset->GetSizingManager()->Relay(pmouse))
-                     return true;
-
-                  if (m_pworkset->GetMovingManager()->Relay(pmouse))
-                     return true;
-
-               }
-
-               return false;
-            }
-
-            bool frame_schema::_000OnNcHitTest(point pt, LRESULT & nHitTest)
-            {
-               UNREFERENCED_PARAMETER(pt);
-               UNREFERENCED_PARAMETER(nHitTest);
-               return false;
-            }
-            */
-
-/*            bool frame_schema::_000OnTimer(uint32_t nIDEvent)
-            {
-               UNREFERENCED_PARAMETER(nIDEvent);
-               return false;
-            }
-
-
-            bool frame_schema::_000OnSize(uint32_t nType, int32_t cx, int32_t cy)
-            {
-
-               UNREFERENCED_PARAMETER(cx);
-               UNREFERENCED_PARAMETER(cy);
-
-               sp(::user::interaction) pwnd = get_window();
-
-               if(pwnd == NULL || pwnd->m_pimpl->m_bIgnoreSizeEvent)
-                  return false;
-
-               on_layout();
-
-               return false;
-
-            }
-
-
-            bool frame_schema::_000OnMove(int32_t x, int32_t y)
-            {
-               UNREFERENCED_PARAMETER(x);
-               UNREFERENCED_PARAMETER(y);
-               return false;
-            }
-
-            bool frame_schema::_000OnCommand(WPARAM wparam, LPARAM lparam, LRESULT & lresult)
-            {
-               UNREFERENCED_PARAMETER(wparam);
-               UNREFERENCED_PARAMETER(lparam);
-               UNREFERENCED_PARAMETER(lresult);
-               return false;
-            }
-
-            bool frame_schema::_000OnDisplayChange(int32_t iBitsPerPixel, size sizeScreen)
-            {
-               UNREFERENCED_PARAMETER(iBitsPerPixel);
-               UNREFERENCED_PARAMETER(sizeScreen);
-               update_drawing_objects();
-               return false;
-            }*/
-
-            /*
-            void frame_schema::OnNcCalcSize(LPRECT lprect)
-            {
-
-               if(get_appearance()->m_bUseNc)
-               {
-
-                  calc_window_client_rect(lprect, lprect);
-
-               }
-
-            }
-
-
-            appearance * frame_schema::get_appearance()
-            {
-               ASSERT(m_pworkset != NULL);
-               return m_pworkset->get_appearance();
-            }
-            */
-
 
 
             void frame_schema::_000OnBeforeMove(const RECT & rect)
@@ -250,9 +54,6 @@ namespace user
                UNREFERENCED_PARAMETER(rect);
 
             }
-
-
-
 
 
             void frame_schema::OnMove(sp(::user::interaction) pwnd)
@@ -277,7 +78,7 @@ namespace user
                if(rectClient.area() <= 0)
                   return;
 
-               
+
 
                int32_t iInflate = 5; // raio 2 pixels + centro 1 pixel
 
@@ -303,12 +104,12 @@ namespace user
                bool b = spdib2->get_graphics()->BitBlt(0, 0, rectClient.width() + iInflate * 2, rectClient.height() + iInflate * 2, pgraphics, rectClient.left - iInflate, rectClient.top - iInflate, SRCCOPY);
                //bool b = ::BitBlt(dc2, 0, 0, rectClient.width() + iInflate * 2, rectClient.height() + iInflate * 2, hdcScreen, rectClient.left - iInflate, rectClient.top - iInflate, SRCCOPY);
                b = imaging.blur(spdib->get_graphics(), point(0, 0),
-                  size(rectClient.width() + iInflate * 2, rectClient.height() + iInflate * 2),
-                  spdib2->get_graphics(), point(0, 0), 2);
+                                size(rectClient.width() + iInflate * 2, rectClient.height() + iInflate * 2),
+                                spdib2->get_graphics(), point(0, 0), 2);
 
-               //spgraphics->Draw3dRect(rectClient, 127 << 24, 127 << 24);
+               //spgraphics->draw3d_rect(rectClient, 127 << 24, 127 << 24);
                //rectClient.deflate(1, 1);
-               //spgraphics->Draw3dRect(rectClient, 64 << 24, 64 << 24);
+               //spgraphics->draw3d_rect(rectClient, 64 << 24, 64 << 24);
                /*b = imaging.bitmap_blend(pgraphics, lprect->left, lprect->top,
                rectWindow.width(),
                rectWindow.height(),
@@ -333,15 +134,11 @@ namespace user
 
             }
 
+
             COLORREF frame_schema::get_border_main_body_color()
             {
+
                return RGB(63, 150, 106);
-            }
-
-            ::user::front_end_schema * frame_schema::get_user_front_end_schema()
-            {
-
-               return &m_schema;
 
             }
 
@@ -352,8 +149,8 @@ namespace user
                /*Gdiplus::Graphics g((HDC) pgraphics->get_os_data());
                g.SetCompositingMode(Gdiplus::CompositingModeSourceOver);
                Gdiplus::SolidBrush solidBrush(Gdiplus::Color(bAlpha, argb_get_r_value(cr), argb_get_g_value(cr), argb_get_b_value(cr)));
-               g.FillRectangle(&solidBrush, lprect->left, lprect->top, lprect->right - lprect->left, lprect->bottom - lprect->top);*/
-               
+               g.fill_rect(&solidBrush, lprect->left, lprect->top, lprect->right - lprect->left, lprect->bottom - lprect->top);*/
+
                Application.imaging().color_blend(pgraphics, lprect, cr, bAlpha);
 
             }
@@ -419,7 +216,7 @@ namespace user
                switch(eelement)
                {
                case ElementTopLeftIcon:
-                  
+
                   if(m_pworkset->m_pappearance == NULL || m_pworkset->m_pappearance->m_picon == NULL)
                      return false;
 
@@ -431,7 +228,7 @@ namespace user
                   return true;
 
                case ElementMoveGripMinimal:
-                  
+
                   if(m_pworkset->m_pappearance == NULL || m_pworkset->m_pappearance->GetAppearance() != ::user::appearance_minimal)
                      return false;
 
@@ -453,8 +250,8 @@ namespace user
             {
                rect rect;
                for(e_element eelement = (e_element)(ElementNone + 1);
-                  eelement < ElementEnd;
-                  eelement++)
+                     eelement < ElementEnd;
+                     eelement++)
                {
                   get_element_rect(rect, eelement);
                   if(rect.contains(point))
@@ -494,36 +291,38 @@ namespace user
             void frame_schema::set_button_color_schema_001(COLORREF crMoveableBorder)
             {
 
-               COLORREF crBase = crMoveableBorder;
+//               defer_create_user_schema(schema_button);
 
-               color ca;
-
-               ca.set_rgb(crBase);
-               ca.hls_rate(0.0, -0.49, -0.49);
-               m_schema.m_button.set_color(color_border, ca.get_rgb() | (0xff << 24));
-
-               ca.set_rgb(crBase);
-               ca.hls_rate(0.0, -0.11, -0.11);
-               m_schema.m_button.set_color(color_background, ca.get_rgb() | (0xff << 24));
-
-               ca.set_rgb(crBase);
-               ca.hls_rate(0.0, -0.49, -0.49);
-               m_schema.m_button.set_color(color_text_normal, ca.get_rgb() | (0xff << 24));
-
-
-
-
-               ca.set_rgb(crBase);
-               ca.hls_rate(0.0, -0.45, 0.11);
-               m_schema.m_button.set_color(color_border_hover, ca.get_rgb() | (0xff << 24));
-
-               ca.set_rgb(crBase);
-               ca.hls_rate(0.0, 0.33, 0.0);
-               m_schema.m_button.set_color(color_background_hover,ca.get_rgb() | (0xff << 24));
-
-               ca.set_rgb(crBase);
-               ca.hls_rate(0.0, -0.55, 0.11);
-               m_schema.m_button.set_color(color_text_hover, ca.get_rgb() | (0xff << 24));
+//               COLORREF crBase = crMoveableBorder;
+//
+//               color ca;
+//
+//               ca.set_rgb(crBase);
+//               ca.hls_rate(0.0, -0.49, -0.49);
+//               create_color(color_border, ca.get_rgb() | (0xff << 24));
+//
+//               ca.set_rgb(crBase);
+//               ca.hls_rate(0.0, -0.11, -0.11);
+//               create_color(color_background, ca.get_rgb() | (0xff << 24));
+//
+//               ca.set_rgb(crBase);
+//               ca.hls_rate(0.0, -0.49, -0.49);
+//               create_color(color_text_normal, ca.get_rgb() | (0xff << 24));
+//
+//
+//
+//
+//               ca.set_rgb(crBase);
+//               ca.hls_rate(0.0, -0.45, 0.11);
+//               create_color(color_border_hover, ca.get_rgb() | (0xff << 24));
+//
+//               ca.set_rgb(crBase);
+//               ca.hls_rate(0.0, 0.33, 0.0);
+//               create_color(color_background_hover,ca.get_rgb() | (0xff << 24));
+//
+//               ca.set_rgb(crBase);
+//               ca.hls_rate(0.0, -0.55, 0.11);
+//               create_color(color_text_hover, ca.get_rgb() | (0xff << 24));
 
             }
 
@@ -561,7 +360,10 @@ namespace user
 
                if(m_estyle == StyleTranslucidWarmGray || m_estyle == StyleDarkWarmBlue)
                {
+
                   pcontrolbox->m_crBackground = m_crCaptionTextBk;
+                  m_crCaptionText = ARGB(255, 255, 255, 255);
+
                }
 
 
@@ -607,10 +409,10 @@ namespace user
             {
 
                return
-                  estyle == StyleTranslucidWarmGray
-                  || estyle == StyleTranslucidLightBlue
-                  || estyle == StyleTranslucidLightGreen
-                  || estyle == StyleTranslucidWarmLiteGray;
+               estyle == StyleTranslucidWarmGray
+               || estyle == StyleTranslucidLightBlue
+               || estyle == StyleTranslucidLightGreen
+               || estyle == StyleTranslucidWarmLiteGray;
 
 
             }
@@ -625,7 +427,7 @@ namespace user
                int32_t cx = rect.width();
                int32_t cy = rect.height();
 
-               
+
 
                pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
@@ -645,18 +447,18 @@ namespace user
                if(eborder & BorderTop)
                {
 
-                  pgraphics->MoveTo(x,y);
+                  pgraphics->move_to(x,y);
 
-                  pgraphics->LineTo(x + cx,y);
+                  pgraphics->line_to(x + cx,y);
 
                }
 
                if(eborder & BorderLeft)
                {
 
-                  pgraphics->MoveTo(x,y);
+                  pgraphics->move_to(x,y);
 
-                  pgraphics->LineTo(x,y+cy);
+                  pgraphics->line_to(x,y+cy);
 
                }
 
@@ -674,18 +476,18 @@ namespace user
                if(eborder & BorderRight)
                {
 
-                  pgraphics->MoveTo(x + cx,y);
+                  pgraphics->move_to(x + cx,y);
 
-                  pgraphics->LineTo(x + cx,y + cy);
+                  pgraphics->line_to(x + cx,y + cy);
 
                }
 
                if(eborder & BorderBottom)
                {
 
-                  pgraphics->MoveTo(x,y + cy);
+                  pgraphics->move_to(x,y + cy);
 
-                  pgraphics->LineTo(x + cx,y + cy);
+                  pgraphics->line_to(x + cx,y + cy);
 
                }
 
@@ -703,10 +505,12 @@ namespace user
             void frame_schema::_001OnDraw(::draw2d::graphics * pgraphics)
             {
 
-               if(!m_pworkset->IsAppearanceEnabled())
+               if (!m_pworkset->IsAppearanceEnabled())
+               {
+
                   return;
 
-               
+               }
 
                pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
 
@@ -748,13 +552,11 @@ namespace user
                      while(i < rectGrip.width() - 5 + 1)
                      {
 
-                        pgraphics->Draw3dRect(rectGrip.left + i,rectGrip.top,3,rectGrip.height(),ARGB(84 + 23,230,230,230),ARGB(84 + 23,108 + 23,108 + 23,108 + 23));
+                        pgraphics->draw3d_rect_dim(rectGrip.left + i,rectGrip.top,3,rectGrip.height(),ARGB(84 + 23,230,230,230),ARGB(84 + 23,108 + 23,108 + 23,108 + 23));
 
                         i += 5;
-   
-                     }
 
-                     //pgraphics->Draw3dRect(rectGrip.left + 12,rectGrip.top,3,rectGrip.height(),ARGB(184,255,255,255),ARGB(184,84,84,84));
+                     }
 
                   }
 
@@ -762,7 +564,7 @@ namespace user
                else if(!pappearance->IsFullScreen() && !m_pworkset->GetWndDraw()->frame_is_transparent())
                {
 
-                  pgraphics->FillSolidRect(m_rectCaptionTextBk, m_crCaptionTextBk);
+                  pgraphics->fill_solid_rect(m_rectCaptionTextBk, m_crCaptionTextBk);
 
                   class rect rectIcon;
 
@@ -829,11 +631,16 @@ namespace user
 
                   ::draw2d::brush_sp brushText(allocer());
 
-                  brushText->create_solid(Session.get_default_color(COLOR_CAPTIONTEXT));
+                  brushText->create_solid(m_crCaptionText);
 
                   pgraphics->SelectObject(brushText);
 
-                  pgraphics->SelectObject(fonts.GetCaptionFont());
+                  if(!::is_null(&fonts))
+                  {
+
+                     pgraphics->SelectObject(fonts.GetCaptionFont());
+
+                  }
 
                   pgraphics->_DrawText(wstrWindowText, m_rectWindowText, DT_LEFT | DT_VCENTER | DT_NOPREFIX);
 

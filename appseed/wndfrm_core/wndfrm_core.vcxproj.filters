@@ -50,10 +50,10 @@
     <ClCompile Include="user_meta_control_box.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="wndfrm_core_user_schema.cpp">
+    <ClCompile Include="wndfrm_core.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="wndfrm_core.cpp">
+    <ClCompile Include="wndfrm_core_user_theme.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -100,7 +100,7 @@
     <ClInclude Include="user_meta_button.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="wndfrm_core_user_schema.h">
+    <ClInclude Include="wndfrm_core_user_theme.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

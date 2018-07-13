@@ -2593,6 +2593,13 @@ namespace user
       m_pui->defer_check_layout();
 
       windowing_output_debug_string("\n_001UpdateBuffer : N");
+      
+      if(m_pui == NULL)
+      {
+         
+         return;
+         
+      }
 
       m_pui->defer_check_zorder();
 

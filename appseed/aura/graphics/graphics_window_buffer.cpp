@@ -46,6 +46,10 @@ void window_buffer::update_window(::draw2d::dib * pdib)
 
 }
 
+bool window_buffer::is_buffer_ok()
+{
+   return m_spdibBuffer.is_set();
+}
 
 ::draw2d::graphics * window_buffer::on_begin_draw()
 {

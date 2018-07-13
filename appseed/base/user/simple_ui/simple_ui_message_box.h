@@ -47,6 +47,9 @@ namespace simple_ui
 
 //      virtual void on_select_user_style() override;
 
+      virtual i64 add_ref() override;
+      virtual i64 dec_ref() override;
+      
 
    };
 

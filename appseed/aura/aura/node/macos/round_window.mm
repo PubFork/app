@@ -89,10 +89,12 @@ void round_window::round_window_destroy()
    }
    
    [[NSNotificationCenter defaultCenter] removeObserver: m_proundwindow];
-
+   
    [m_proundwindow setReleasedWhenClosed: YES];
    
    [[m_proundwindow dd_invokeOnMainThreadAndWaitUntilDone:FALSE] close];
+   
+   m_proundwindow = NULL;
    
 }
 

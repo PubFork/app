@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace user
@@ -39,15 +39,15 @@ namespace user
                };
 
 
-           
+
 
 
                e_style                          m_estyle;
-               ::user::front_end_schema         m_schema;
                COLORREF                         m_crFrameBorder;
                COLORREF                         m_crMoveableBorderHilight;
                COLORREF                         m_crMoveableBorderDkShadow;
                COLORREF                         m_crCaptionTextBk;
+               COLORREF                         m_crCaptionText;
                ::draw2d::pen_sp                 m_penText1;
                ::draw2d::pen_sp                 m_penFace1;
                ::draw2d::pen_sp                 m_penHilight1;
@@ -55,14 +55,14 @@ namespace user
                ::draw2d::pen_sp                 m_penDkShadow1;
                COLORREF                         m_crDkShadow;
                size                             m_minSize;
-               
+
                ::draw2d::pen_sp                 m_penHollow0;
                ::draw2d::pen_sp                 m_penHollow1;
                ::draw2d::pen_sp                 m_penHollow2;
                ::draw2d::pen_sp                 m_penHollow3;
                ::draw2d::pen_sp                 m_penHollow4;
                ::draw2d::pen_sp                 m_penHollow5;
-               
+
 
 
                frame_schema(::aura::application * papp);
@@ -94,7 +94,7 @@ namespace user
                virtual void _000OnBeforeMove(const RECT & lpcrectWindow);
 
                virtual void _000OnBeforeSize(const RECT & lpcrectWindow);
-               
+
                virtual void _001OnDraw(::draw2d::graphics * pgraphics);
 
                virtual bool get_element_rect(LPRECT lprect, e_element eelement);
@@ -105,7 +105,7 @@ namespace user
 
                virtual void ColorGlass(::draw2d::graphics * pgraphics, const RECT & lprect, COLORREF cr, BYTE bAlpha);
 
-               virtual ::user::front_end_schema * get_user_front_end_schema();
+//               virtual ::user::front_end_schema * get_user_front_end_schema();
 
                virtual void Draw3dRectSide(::draw2d::graphics * pgraphics, const RECT & rect, EBorder eborder, COLORREF crTopLeft, COLORREF crBottomRight);
 

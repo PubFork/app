@@ -686,7 +686,9 @@ namespace macos
       {
 
          m_pui->PostNcDestroy();
-
+         
+         m_pui->release();
+         
       }
 
    }
@@ -4257,32 +4259,59 @@ namespace macos
 //      return true;
 //
 //   }
-
-   void interaction_impl::_001UpdateScreen()
+   
+   void interaction_impl::on_do_show_flags()
    {
-
 
       if(m_bShowFlags)
       {
-
+         
          if(!IsWindowVisible() && (m_iShowFlags & SWP_SHOWWINDOW))
          {
-
+            
             round_window_show();
-
+            
          }
          else if(IsWindowVisible() && (m_iShowFlags & SWP_HIDEWINDOW))
          {
-
+            
             round_window_hide();
-
+            
          }
-
+         
       }
 
-      if (m_rectLastPos != m_rectParentClientRequest)
-      {
+            if(m_bShowWindow)
+            {
+               
+               if(!IsWindowVisible() && (m_iShowWindow != SW_HIDE))
+                  {
+                     
+                     round_window_show();
+                     
+                  }
+                  else if(IsWindowVisible() && (m_iShowWindow == SW_HIDE))
+                  {
+                     
+                     round_window_hide();
+                     
+                  }
+                  
+                  }
+      
+      ::user::interaction_impl::on_do_show_flags();
 
+
+   }
+   
+   void interaction_impl::on_layout()
+   {
+      
+      ::user::interaction_impl::on_layout();
+      
+      run_pred_on_main_thread([&]()
+      {
+         
          ::SetWindowPos(m_oswindow, NULL,
                         (int) m_rectParentClientRequest.left,
                         (int) m_rectParentClientRequest.top,
@@ -4295,11 +4324,29 @@ namespace macos
                         | SWP_NOOWNERZORDER
                         | SWP_NOSENDCHANGING
                         | SWP_DEFERERASE);
-
+         
          m_rectLastPos = m_rectParentClientRequest;
+         
+      });
 
-         //Session.set_cursor(Session.get_cursor());
+   }
 
+   void interaction_impl::_001UpdateScreen()
+   {
+
+      if(m_bShowFlags)
+      {
+         
+         on_do_show_flags();
+         
+      }
+      
+
+      if (m_rectLastPos != m_rectParentClientRequest)
+      {
+         
+         on_layout();
+         
       }
 
       if (IsWindowVisible())
@@ -5513,6 +5560,8 @@ namespace macos
       }
 
       synch_lock sl1(pbuffer->m_pmutex);
+      
+//      pbuffer->on_begin_draw();
 
       ::draw2d::dib_sp & spdibBuffer = pbuffer->get_buffer();
 
@@ -5986,6 +6035,13 @@ namespace macos
    {
 
       ::SetActiveWindow(get_handle());
+      
+      if(m_pui == NULL)
+      {
+         
+         return;
+         
+      }
 
       m_pui->RedrawWindow();
 

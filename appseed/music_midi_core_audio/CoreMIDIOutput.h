@@ -77,7 +77,7 @@ public:
    virtual void control_change(int iChannel, unsigned char uchController, unsigned char uchValue) override;
    virtual void pitch_bend(int iChannel, unsigned short ushBend) override;
    
-   virtual void step();
+   virtual void step() override;
    
    virtual void reset_all_controllers() override;
    

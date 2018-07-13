@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 #define GRIP_CORNER_LARGE_CX 16
@@ -44,7 +44,7 @@ namespace user
                m_penHollow3.alloc(allocer());
                m_penHollow4.alloc(allocer());
                m_penHollow5.alloc(allocer());
-               
+
 
 
 
@@ -70,10 +70,10 @@ namespace user
 
                   point ptHitTest = ptCursor;
 
-                  if(rectEvent.left < 0)
-                     ptHitTest.x -= rectEvent.left;
-                  if(rectEvent.top < 0)
-                     ptHitTest.y -= rectEvent.top;
+                  //if(rectEvent.left < 0)
+                  // ptHitTest.x -= rectEvent.left;
+                  //if(rectEvent.top < 0)
+                  // ptHitTest.y -= rectEvent.top;
 
                   if(egrip & GripTopLeft)
                   {
@@ -200,9 +200,9 @@ namespace user
                      }
                   }
                   goto SizingNone;
-               SizingSuccess:
+SizingSuccess:
                   return etest;
-               SizingNone:;
+SizingNone:;
                }
                return HitTestClient;
             }
@@ -266,24 +266,24 @@ namespace user
                      GetBorderRect(lpcrectClient,rect,eside);
                      class imaging & imaging = Application.imaging();
                      imaging.color_blend(pgraphics,
-                        rect,
-                        crMoveableBorder,
-                        127);
+                                         rect,
+                                         crMoveableBorder,
+                                         127);
 
                   }
 
                }
                else if(m_estyle == StyleTranslucidWarmGray
-                  || m_estyle == StyleTranslucidLightBlue
-                  || m_estyle == StyleTranslucidLightGreen)
+                       || m_estyle == StyleTranslucidLightBlue
+                       || m_estyle == StyleTranslucidLightGreen)
                {
                   rect rect;
                   GetBorderRect(lpcrectClient, rect, eside);
                   class imaging & imaging = Application.imaging();
                   imaging.color_blend(pgraphics,
-                     rect,
-                     crMoveableBorder,
-                     127);
+                                      rect,
+                                      crMoveableBorder,
+                                      127);
                }
                else
                {
@@ -291,9 +291,9 @@ namespace user
                   GetBorderRect(lpcrectClient, rect, eside);
                   class imaging & imaging = Application.imaging();
                   imaging.color_blend(pgraphics,
-                     rect,
-                     crMoveableBorder,
-                     127);
+                                      rect,
+                                      crMoveableBorder,
+                                      127);
 
                   class rect rectClientB = rectA;
 
@@ -395,7 +395,7 @@ namespace user
 
             void FrameSchemaHardCoded008::DrawBorder(::draw2d::graphics * pgraphics, const RECT & lpcrectClient)
             {
-               
+
                MoveManager * pwmm = m_pworkset->GetMovingManager();
 
                EBorder eborder = pwmm->GetBorderMask();
@@ -403,10 +403,10 @@ namespace user
                if(get_appearance()->IsZoomed())
                {
                   eborder = (EBorder)
-                     (eborder &
-                     ~(BorderRight
-                     | BorderBottom
-                     | BorderLeft));
+                            (eborder &
+                             ~(BorderRight
+                               | BorderBottom
+                               | BorderLeft));
                }
 
 
@@ -414,7 +414,7 @@ namespace user
                if(m_bHollow)
                {
 
-                  
+
 
                   rect rectA(lpcrectClient);
 
@@ -424,37 +424,37 @@ namespace user
                   pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
                   pgraphics->SelectObject(m_penHollow0);
-                  pgraphics->DrawRect(rectA.left,rectA.top,rectA.right,rectA.bottom);
+                  pgraphics->draw_rect(rectA);
 
                   //Draw3dRectSide(pgraphics,rectA,eside,ARGB(8,50,100,200),ARGB(8,50,100,200));
                   rectA.deflate(1,1,1,1);
 
                   pgraphics->SelectObject(m_penHollow1);
-                  pgraphics->DrawRect(rectA.left,rectA.top,rectA.right,rectA.bottom);
+                  pgraphics->draw_rect(rectA);
 
                   //Draw3dRectSide(pgraphics,rectA,eside,ARGB(11,50,100,200),ARGB(11,50,100,200));
                   rectA.deflate(1,1,1,1);
 
                   pgraphics->SelectObject(m_penHollow2);
-                  pgraphics->DrawRect(rectA.left,rectA.top,rectA.right,rectA.bottom);
+                  pgraphics->draw_rect(rectA);
 
                   //Draw3dRectSide(pgraphics,rectA,eside,ARGB(23,50,100,200),ARGB(23,50,100,200));
                   rectA.deflate(1,1,1,1);
 
                   pgraphics->SelectObject(m_penHollow3);
-                  pgraphics->DrawRect(rectA.left,rectA.top,rectA.right,rectA.bottom);
+                  pgraphics->draw_rect(rectA);
 
                   //Draw3dRectSide(pgraphics,rectA,eside,ARGB(49,50,100,200),ARGB(49,50,100,200));
                   rectA.deflate(1,1,1,1);
 
                   pgraphics->SelectObject(m_penHollow4);
-                  pgraphics->DrawRect(rectA.left,rectA.top,rectA.right,rectA.bottom);
+                  pgraphics->draw_rect(rectA);
 
                   //Draw3dRectSide(pgraphics,rectA,eside,ARGB(49 +23,50,100,200),ARGB(49+23,50,100,200));
                   rectA.deflate(1,1,1,1);
 
                   pgraphics->SelectObject(m_penHollow5);
-                  pgraphics->DrawRect(rectA.left,rectA.top,rectA.right,rectA.bottom);
+                  pgraphics->draw_rect(rectA);
 
                   //Draw3dRectSide(pgraphics,rectA,eside,m_crMoveableBorderDkShadow,m_crMoveableBorderDkShadow);
 
@@ -484,9 +484,9 @@ namespace user
             }
 
             void FrameSchemaHardCoded008::GetBorderRect(
-               const RECT & lpcrectClient,
-               LPRECT lprect,
-               EBorder eside)
+            const RECT & lpcrectClient,
+            LPRECT lprect,
+            EBorder eside)
             {
                rect rectBig(lpcrectClient);
                rect rectSmall;
@@ -547,7 +547,7 @@ namespace user
             void FrameSchemaHardCoded008::DrawGrip(::draw2d::graphics * pgraphics, const RECT & lpcrectClient, EGrip egrip)
             {
 
-               
+
 
                const int32_t size = 16;
 
@@ -563,110 +563,110 @@ namespace user
                case GripTopLeft:
                {
 
-                                  rectA = rectClient;
+                  rectA = rectClient;
 
-                                  rectA.right = 4;
-                                  rectA.bottom = size;
+                  rectA.right = 4;
+                  rectA.bottom = size;
 
-                                  pgraphics->FillSolidRect(rectA, ARGB(255, 0x60, 0x65, 0x55));
+                  pgraphics->fill_solid_rect(rectA, ARGB(255, 0x60, 0x65, 0x55));
 
-                                  rectA.right = size;
-                                  rectA.bottom = 4;
+                  rectA.right = size;
+                  rectA.bottom = 4;
 
-                                  pgraphics->FillSolidRect(rectA, ARGB(255, 0x60, 0x65, 0x55));
+                  pgraphics->fill_solid_rect(rectA, ARGB(255, 0x60, 0x65, 0x55));
 
                }
-                  break;
+               break;
                case GripTopRight:
                {
-                                   rectA = rectClient;
+                  rectA = rectClient;
 
-                                   rectA.left = rectA.right - 4;
-                                   rectA.bottom = size;
+                  rectA.left = rectA.right - 4;
+                  rectA.bottom = size;
 
-                                   pgraphics->FillSolidRect(rectA, ARGB(255, 0x60, 0x65, 0x55));
+                  pgraphics->fill_solid_rect(rectA, ARGB(255, 0x60, 0x65, 0x55));
 
-                                   rectA.left = rectA.right - size;
-                                   rectA.bottom = 4;
+                  rectA.left = rectA.right - size;
+                  rectA.bottom = 4;
 
-                                   pgraphics->FillSolidRect(rectA, ARGB(255, 0x60, 0x65, 0x55));
+                  pgraphics->fill_solid_rect(rectA, ARGB(255, 0x60, 0x65, 0x55));
                }
-                  break;
+               break;
                case GripBottomLeft:
                {
-                                     rectA = rectClient;
+                  rectA = rectClient;
 
-                                     rectA.right = 4;
-                                     rectA.top = rectA.bottom - size;
+                  rectA.right = 4;
+                  rectA.top = rectA.bottom - size;
 
-                                     pgraphics->FillSolidRect(rectA, ARGB(255, 0x60, 0x65, 0x55));
+                  pgraphics->fill_solid_rect(rectA, ARGB(255, 0x60, 0x65, 0x55));
 
-                                     rectA.right = size;
-                                     rectA.top = rectA.bottom - 4;
+                  rectA.right = size;
+                  rectA.top = rectA.bottom - 4;
 
-                                     pgraphics->FillSolidRect(rectA, ARGB(255, 0x60, 0x65, 0x55));
+                  pgraphics->fill_solid_rect(rectA, ARGB(255, 0x60, 0x65, 0x55));
                }
-                  break;
+               break;
                case GripBottomRight:
                {
-                                      rectA = rectClient;
+                  rectA = rectClient;
 
-                                      rectA.left = rectA.right - 4;
-                                      rectA.top = rectA.bottom - size;
+                  rectA.left = rectA.right - 4;
+                  rectA.top = rectA.bottom - size;
 
-                                      pgraphics->FillSolidRect(rectA, ARGB(255, 0x60, 0x65, 0x55));
+                  pgraphics->fill_solid_rect(rectA, ARGB(255, 0x60, 0x65, 0x55));
 
-                                      rectA.left = rectA.right - size;
-                                      rectA.top = rectA.bottom - 4;
+                  rectA.left = rectA.right - size;
+                  rectA.top = rectA.bottom - 4;
 
-                                      pgraphics->FillSolidRect(rectA, ARGB(255, 0x60, 0x65, 0x55));
+                  pgraphics->fill_solid_rect(rectA, ARGB(255, 0x60, 0x65, 0x55));
                }
-                  break;
+               break;
                case GripCenterTop:
                {
-                                    rectA = rectClient;
+                  rectA = rectClient;
 
-                                    rectA.left = rectA.left + rectA.width() / 2 - size / 2;
-                                    rectA.right = rectA.left + size;
-                                    rectA.bottom = 4;
+                  rectA.left = rectA.left + rectA.width() / 2 - size / 2;
+                  rectA.right = rectA.left + size;
+                  rectA.bottom = 4;
 
-                                    pgraphics->FillSolidRect(rectA, ARGB(255, 0x60, 0x65, 0x55));
+                  pgraphics->fill_solid_rect(rectA, ARGB(255, 0x60, 0x65, 0x55));
 
                }
-                  break;
+               break;
                case GripCenterBottom:
                {
-                                       rectA = rectClient;
+                  rectA = rectClient;
 
-                                       rectA.left = rectA.left + rectA.width() / 2 - size / 2;
-                                       rectA.right = rectA.left + size;
-                                       rectA.top = rectA.bottom - 4;
+                  rectA.left = rectA.left + rectA.width() / 2 - size / 2;
+                  rectA.right = rectA.left + size;
+                  rectA.top = rectA.bottom - 4;
 
-                                       pgraphics->FillSolidRect(rectA, ARGB(255, 0x60, 0x65, 0x55));
+                  pgraphics->fill_solid_rect(rectA, ARGB(255, 0x60, 0x65, 0x55));
                }
-                  break;
+               break;
                case GripCenterLeft:
                {
-                                     rectA = rectClient;
+                  rectA = rectClient;
 
-                                     rectA.right = 4;
-                                     rectA.top = rectA.top + rectA.height() / 2 - size / 2;
-                                     rectA.bottom = rectA.top + size;
+                  rectA.right = 4;
+                  rectA.top = rectA.top + rectA.height() / 2 - size / 2;
+                  rectA.bottom = rectA.top + size;
 
-                                     pgraphics->FillSolidRect(rectA, ARGB(255, 0x60, 0x65, 0x55));
+                  pgraphics->fill_solid_rect(rectA, ARGB(255, 0x60, 0x65, 0x55));
                }
-                  break;
+               break;
                case GripCenterRight:
                {
-                                      rectA = rectClient;
+                  rectA = rectClient;
 
-                                      rectA.left = rectA.right - 4;
-                                      rectA.top = rectA.top + rectA.height() / 2 - size / 2;
-                                      rectA.bottom = rectA.top + size;
+                  rectA.left = rectA.right - 4;
+                  rectA.top = rectA.top + rectA.height() / 2 - size / 2;
+                  rectA.bottom = rectA.top + size;
 
-                                      pgraphics->FillSolidRect(rectA, ARGB(255, 0x60, 0x65, 0x55));
+                  pgraphics->fill_solid_rect(rectA, ARGB(255, 0x60, 0x65, 0x55));
                }
-                  break;
+               break;
                default:
                   break;
                }
@@ -677,25 +677,25 @@ namespace user
             void FrameSchemaHardCoded008::DrawRectGrip(::draw2d::graphics * pgraphics,const RECT & rectParam)
             {
 
-               
+
 
                rect rect(rectParam);
 
-               pgraphics->Draw3dRect(rect, Session.get_default_color(COLOR_BTNFACE), Session.get_default_color(COLOR_3DDKSHADOW));
+               pgraphics->draw3d_rect(rect, Session.get_default_color(COLOR_BTNFACE), Session.get_default_color(COLOR_3DDKSHADOW));
 
                rect.top++;
                rect.bottom--;
                rect.left++;
                rect.right--;
 
-               pgraphics->Draw3dRect(rect, Session.get_default_color(COLOR_BTNHILIGHT), Session.get_default_color(COLOR_BTNSHADOW));
+               pgraphics->draw3d_rect(rect, Session.get_default_color(COLOR_BTNHILIGHT), Session.get_default_color(COLOR_BTNSHADOW));
 
                rect.top++;
                rect.bottom--;
                rect.left++;
                rect.right--;
 
-               pgraphics->FillSolidRect(rect, Session.get_default_color(COLOR_BTNFACE));
+               pgraphics->fill_solid_rect(rect, Session.get_default_color(COLOR_BTNFACE));
 
             }
 

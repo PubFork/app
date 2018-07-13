@@ -1306,6 +1306,43 @@ namespace draw2d_quartz2d
    }
 
 
+   bool graphics::draw_polygon(const POINTD * pa, count nCount)
+   {
+      
+      if(nCount <= 0)
+         return TRUE;
+      
+      CGContextBeginPath(m_pdc);
+      
+      set_polygon(pa, nCount);
+      
+      CGContextClosePath(m_pdc);
+      
+      draw();
+      
+      return true;
+      
+   }
+   
+   bool graphics::draw_polygon(const POINT* pa, count nCount)
+   {
+      
+      if(nCount <= 0)
+         return TRUE;
+      
+      CGContextBeginPath(m_pdc);
+      
+      set_polygon(pa, nCount);
+      
+      CGContextClosePath(m_pdc);
+      
+      draw();
+      
+      return true;
+      
+   }
+
+
    bool graphics::polygon(LPCPOINTD pa, count nCount)
    {
 

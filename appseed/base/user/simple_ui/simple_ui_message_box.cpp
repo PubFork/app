@@ -438,6 +438,21 @@ namespace simple_ui
 
    }
 
+   
+   i64 message_box::add_ref()
+   {
+      
+      return simple_ui::top::add_ref();
+      
+   }
+   
+   
+   i64 message_box::dec_ref()
+   {
+      
+      return simple_ui::top::dec_ref();
+      
+   }
 
 //   void message::EndModalLoop(id nResult)
 //   {
@@ -526,7 +541,7 @@ int32_t simple_ui_message_box(oswindow interaction_impl,const char * lpText,cons
 
    {
 
-      ::simple_ui::message_box * pmessagebox = new ::simple_ui::message_box(get_app(),lpText,lpCaption,uiFlags);
+      sp(::simple_ui::message_box) pmessagebox = canew(::simple_ui::message_box(get_app(),lpText,lpCaption,uiFlags));
 
       try
       {
@@ -549,17 +564,6 @@ int32_t simple_ui_message_box(oswindow interaction_impl,const char * lpText,cons
                   }*/
 
          iResult = pmessagebox->m_iResult;
-
-      }
-      catch(...)
-      {
-
-      }
-
-      try
-      {
-
-         delete pmessagebox;
 
       }
       catch(...)

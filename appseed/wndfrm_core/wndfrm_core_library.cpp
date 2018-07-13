@@ -17,7 +17,7 @@ namespace user
             object(papp),
             ::aura::library(papp,0,"")
          {
-            }
+         }
 
 
          library::~library()
@@ -39,25 +39,25 @@ namespace user
             if(string(pszClass) == "wndfrm")
             {
 
-               return new interaction(papp);
+               return canew(interaction(papp));
 
             }
             else if(string(pszClass) == "control_box")
             {
 
-               return new MetaControlBox(papp);
+               return canew(MetaControlBox(papp));
 
             }
             else if(string(pszClass) == "control_box_button")
             {
 
-               return new ::user::meta_button(papp);
+               return canew(::user::meta_button(papp));
 
             }
-            else if(string(pszClass) == "user_style")
+            else if(string(pszClass) == "user_theme")
             {
 
-               return new ::wndfrm_core::user_style(get_app());
+               return canew(::wndfrm_core::theme(get_app()));
 
             }
             else
@@ -79,7 +79,7 @@ namespace user
 } // namespace user
 
 
-#ifdef CUBE
+#if defined(CUBE)
 
 extern "C"
 ::aura::library * wndfrm_core_get_new_library(::aura::application * papp)
@@ -96,7 +96,7 @@ extern "C"
 extern "C"
 ::aura::library * get_new_library(::aura::application * papp)
 {
-   return new ::user::wndfrm::wndfrm_core::library (papp);
+   return canew(::user::wndfrm::wndfrm_core::library (papp));
 }
 
 #endif
