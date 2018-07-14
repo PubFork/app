@@ -103,18 +103,17 @@ bool oswindow_data::screen_to_client(POINT *lppoint)
 WINBOOL move_nswindow(oswindow hwnd, int x, int y);
 
 
-
 WINBOOL set_nswindow_frame(oswindow hwnd, LPCRECT lpcrect, int iDisplay)
 {
    
    NSRect rect;
    
-   NSRect frame = [[[NSScreen screens] objectAtIndex:0] frame];
+   NSRect rectScreen = [[[NSScreen screens] objectAtIndex:0] frame];
    
    rect.origin.x     = lpcrect->left;
-   rect.origin.y     = frame.size.height  -     lpcrect->bottom;
-   rect.size.width   = lpcrect->right     -     lpcrect->left;
-   rect.size.height  = lpcrect->bottom    -     lpcrect->top;
+   rect.origin.y     = rectScreen.size.height   -     lpcrect->bottom;
+   rect.size.width   = lpcrect->right           -     lpcrect->left;
+   rect.size.height  = lpcrect->bottom          -     lpcrect->top;
    
    //rect.origin.x     = 500;
    //rect.origin.y     = 100;
@@ -123,38 +122,39 @@ WINBOOL set_nswindow_frame(oswindow hwnd, LPCRECT lpcrect, int iDisplay)
    
    //printf("\nset nswindow frame (%f, %f)[%f, %f]", rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
 
-   async_main_thread(^
-   {
+   ns_main_async(^
+              {
       
-      [hwnd->window() setFrame : rect display : iDisplay];
+                 [hwnd->window() setFrame : rect display : iDisplay];
       
-   });
+              });
    
    return 1;
    
 }
 
 
-
 WINBOOL move_nswindow(oswindow hwnd, int x, int y)
 {
    
-//   RECT rect;
-   
-//   get_nswindow_rect(hwnd, &rect);
-   
    NSPoint point;
+
+   NSRect rectScreen = [[[NSScreen screens] objectAtIndex:0] frame];
    
    point.x = x;
-   point.y = [[NSScreen mainScreen] frame].size.height - y;
+   
+   point.y = rectScreen.size.height - y;
    
 //   printf("\nmove nswindow (%f, %f)", point.x, point.y);
-
    
-   [[hwnd->window() dd_invokeOnMainThreadAndWaitUntilDone:TRUE]setFrameTopLeftPoint : point];
+   ns_main_async(^
+              {
+                        
+                 [hwnd->window() setFrameTopLeftPoint : point];
+      
+              });
    
    return 1;
-   
    
 }
 
@@ -164,23 +164,31 @@ WINBOOL make_key_and_order_front_nswindow(oswindow hwnd)
 
 //   printf("\nmake_key_and_order_front_nswindow");
 
-   
-   [[hwnd->window() dd_invokeOnMainThreadAndWaitUntilDone:TRUE] makeKeyAndOrderFront: nil];
+   ns_main_async(^
+   {
+                        
+      [hwnd->window() makeKeyAndOrderFront: nil];
+      
+   });
    
    return 1;
-   
    
 }
 
 
 WINBOOL order_front_nswindow(oswindow hwnd)
 {
-//   printf("\norder_front_nswindow");
+
+   //   printf("\norder_front_nswindow");
    
-   [[hwnd->window() dd_invokeOnMainThreadAndWaitUntilDone:TRUE] orderFront: nil];
+   ns_main_async(^
+              {
+                        
+                 [hwnd->window() orderFront: nil];
+                 
+              });
    
    return 1;
-   
    
 }
 

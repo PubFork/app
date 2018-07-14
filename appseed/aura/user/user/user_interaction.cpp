@@ -5100,8 +5100,6 @@ restart:
    }
 
 
-
-
    void interaction::_001UpdateWindow(bool bUpdateBuffer)
    {
 
@@ -5114,9 +5112,6 @@ restart:
       m_pimpl->_001UpdateWindow(bUpdateBuffer);
 
    }
-
-
-
 
 
    void interaction::_001WindowMinimize(bool bNoActivate)

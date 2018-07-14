@@ -88,13 +88,18 @@ void round_window::round_window_destroy()
       
    }
    
-   [[NSNotificationCenter defaultCenter] removeObserver: m_proundwindow];
+   ns_main_async(^
+              {
    
-   [m_proundwindow setReleasedWhenClosed: YES];
+                 [[NSNotificationCenter defaultCenter] removeObserver: m_proundwindow];
    
-   [[m_proundwindow dd_invokeOnMainThreadAndWaitUntilDone:FALSE] close];
+                 [m_proundwindow setReleasedWhenClosed: YES];
    
-   m_proundwindow = NULL;
+                 [m_proundwindow close];
+
+                 m_proundwindow = NULL;
+                 
+              });
    
 }
 
@@ -102,13 +107,14 @@ void round_window::round_window_destroy()
 void round_window::round_window_show()
 {
    
-   sync_main_thread(^
-                     {
-                        [m_proundwindow->m_controller showWindow : m_proundwindow];
+   ns_main_async(^
+              {
+            
+                 [m_proundwindow->m_controller showWindow : m_proundwindow];
                         
-                        [m_proundwindow windowDidExpose];
+                 [m_proundwindow windowDidExpose];
 
-                     });
+              });
    
 }
 
@@ -116,14 +122,25 @@ void round_window::round_window_show()
 void round_window::round_window_hide()
 {
     
-   [[m_proundwindow dd_invokeOnMainThreadAndWaitUntilDone:TRUE] orderOut : m_proundwindow];
+   ns_main_async(^
+              {
+                 
+                 [m_proundwindow orderOut : m_proundwindow];
+                 
+              });
    
 }
+
 
 void round_window::round_window_order_front()
 {
    
-   [[m_proundwindow dd_invokeOnMainThreadAndWaitUntilDone:TRUE] orderFront : m_proundwindow];
+   ns_main_async(^
+              {
+                 
+                 [m_proundwindow orderFront : m_proundwindow];
+                 
+              });
    
 }
 
@@ -131,7 +148,12 @@ void round_window::round_window_order_front()
 void round_window::round_window_make_key_window()
 {
 
-   [[m_proundwindow dd_invokeOnMainThreadAndWaitUntilDone:TRUE] makeKeyWindow];
+   ns_main_async(^
+              {
+                 
+                 [m_proundwindow makeKeyWindow];
+                 
+              });
    
 }
 
@@ -139,7 +161,12 @@ void round_window::round_window_make_key_window()
 void round_window::round_window_make_key_window_and_order_front()
 {
    
-   [[m_proundwindow dd_invokeOnMainThreadAndWaitUntilDone:TRUE] makeKeyAndOrderFront: m_proundwindow];
+   ns_main_async(^
+              {
+                 
+                 [m_proundwindow makeKeyAndOrderFront: m_proundwindow];
+                 
+              });
    
 }
 
@@ -147,7 +174,12 @@ void round_window::round_window_make_key_window_and_order_front()
 void round_window::round_window_make_main_window()
 {
    
-   [[m_proundwindow dd_invokeOnMainThreadAndWaitUntilDone:TRUE] makeMainWindow];
+   ns_main_async(^
+              {
+                 
+                 [m_proundwindow makeMainWindow];
+                 
+              });
    
 }
 
@@ -155,7 +187,12 @@ void round_window::round_window_make_main_window()
 void round_window::round_window_redraw()
 {
 
-   [[m_proundwindow dd_invokeOnMainThreadAndWaitUntilDone:TRUE] display ];
+   ns_main_async(^
+                 {
+                    
+                    [m_proundwindow display];
+                    
+                 });
    
 }
 

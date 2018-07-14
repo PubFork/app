@@ -1200,7 +1200,7 @@ namespace aura
 
          strParam = " -c '" + strCmd + "'";
 
-         run_pred_on_main_thread([=]()
+         main_async([=]()
          {
 
             call_async(shell, strParam, pathDir, SW_SHOWDEFAULT, false);

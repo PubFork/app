@@ -25,9 +25,7 @@ namespace macos
       string                           m_strWindowText;
       ::user::interaction_base *       m_pbasewnd;
       bool                             m_bNeedsUpdate;
-      //sp(::thread)                     m_pthreadDraw;
-      rect64                           m_rectLastPos;
-      uint32_t                         m_dwLastPos;
+      rect64                           m_rectLastOsPlacement;
 
 
       interaction_impl();

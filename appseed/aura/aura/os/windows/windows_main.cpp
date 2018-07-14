@@ -290,7 +290,7 @@ void os_post_quit()
 }
 
 
-CLASS_DECL_AURA void run_runnable_on_main_thread(runnable * prunnable)
+CLASS_DECL_AURA void main_async_runnable(runnable * prunnable)
 {
 
    ::aura::system::g_p->post_pred([prunnable]()
@@ -300,6 +300,16 @@ CLASS_DECL_AURA void run_runnable_on_main_thread(runnable * prunnable)
 
    });
 
-
 }
 
+CLASS_DECL_AURA void main_synch_runnable(runnable * prunnable)
+{
+
+   ::aura::system::g_p->send_pred([prunnable]()
+   {
+
+      prunnable->run();
+
+   });
+
+}

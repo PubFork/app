@@ -169,7 +169,8 @@ public:
 };
 
 
-CLASS_DECL_AURA void run_runnable_on_main_thread(runnable * prunnable);
+CLASS_DECL_AURA void main_async_runnable(runnable * prunnable);
+CLASS_DECL_AURA void main_sync_runnable(runnable * prunnable);
 
 
 template < typename PRED >
@@ -199,14 +200,26 @@ public:
 
 
 template < typename PRED >
-inline void run_pred_on_main_thread(PRED pred)
+inline void main_async(PRED pred)
 {
 
    runnable_pred < PRED > * prunnablepred = new runnable_pred < PRED >(pred);
 
-   run_runnable_on_main_thread(prunnablepred);
+   main_async_runnable(prunnablepred);
 
 }
+
+
+template < typename PRED >
+inline void main_synch(PRED pred)
+{
+
+   runnable_pred < PRED > * prunnablepred = new runnable_pred < PRED >(pred);
+
+   main_synch_runnable(prunnablepred);
+
+}
+
 
 #endif
 

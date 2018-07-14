@@ -1,53 +1,92 @@
-
 #include <CoreFoundation/CoreFoundation.h>
 
+
 void macos_desktop_image_changed();
+
+
 bool mm2_get_file_image(unsigned int * pcr, int cx, int cy, int iScan, const char * psz);
 
-void async_main_thread(dispatch_block_t block)
+
+void ns_main_async(dispatch_block_t block)
 {
    
    //   dispatch_block_t block = ^{
    //      // Code for the method goes here
    //   };
    //
+   
    if ([NSThread isMainThread])
    {
+      
       block();
+      
    }
    else
    {
+      
       dispatch_async(dispatch_get_main_queue(), block);
+      
    }
+   
 }
 
-void sync_main_thread(dispatch_block_t block)
+
+void ns_main_synch(dispatch_block_t block)
 {
    
    //   dispatch_block_t block = ^{
    //      // Code for the method goes here
    //   };
    //
+   
    if ([NSThread isMainThread])
    {
+      
       block();
+      
    }
    else
    {
+      
       dispatch_sync(dispatch_get_main_queue(), block);
+      
    }
+   
 }
 
 
-
-void run_runnable_on_main_thread(runnable * prunnable)
+void main_async_runnable(runnable * prunnable)
 {
    
-   [[mmos get] runRunnableOnMainThread: prunnable];
+   ns_main_async(^
+                 {
+
+                    prunnable->run();
+
+                 });
+   
+   //[[mmos get] runRunnableOnMainThread: prunnable];
    
 }
+
+
+void main_synch_runnable(runnable * prunnable)
+{
+   
+   ns_main_synch(^
+                 {
+
+                    prunnable->run();
+
+                 });
+   
+   //[[mmos get] runRunnableOnMainThread: prunnable];
+   
+}
+
 
 @implementation mmos
+
 
 + (id)get
 {
@@ -79,6 +118,7 @@ void run_runnable_on_main_thread(runnable * prunnable)
    
 }
 
+
 - (void)get_user_wallpaper:(void **)charpp forScreen:(NSScreen *) s;
 {
    
@@ -101,10 +141,9 @@ void run_runnable_on_main_thread(runnable * prunnable)
    
 }
 
+
 - (void)get_user_wallpaper:(void *)charppp getCount:(void *) llp
 {
-   
-   
 
    long long * pll = (long long *) llp;
 
@@ -113,7 +152,6 @@ void run_runnable_on_main_thread(runnable * prunnable)
    *pll = [screenArray count];
    
    char ** p = (char **) malloc(*pll * sizeof(char*));
-   
    
    char *** ppsz = (char ***) charppp;
    
@@ -138,28 +176,34 @@ void run_runnable_on_main_thread(runnable * prunnable)
    
 }
 
+
 -(void)applicationActivity:(NSNotification *)notification
 {
+   
    NSRunningApplication *app = [[notification userInfo] objectForKey:@"NSWorkspaceApplicationKey"];
+   
    if([app.localizedName isEqualToString:@"ScreenSaverEngine"])
    {
       
       macos_desktop_image_changed();
-      // Your code here
+      
    }
+   
 }
+
 
 -(void)monitorWallpaper
 {
    
    NSRunLoop* myRunLoop = [NSRunLoop mainRunLoop];
    
-   
-   
    NSMethodSignature *sgn = [self methodSignatureForSelector:@selector(deferWallpaper:)];
+   
    NSInvocation *inv = [NSInvocation invocationWithMethodSignature: sgn];
+   
    [inv setTarget: self];
-   [inv setSelector:@selector(deferWallpaper:)];
+   
+   [inv setSelector: @selector(deferWallpaper:)];
    
    NSTimer *t = [NSTimer timerWithTimeInterval: 0.1
                                     invocation:inv
@@ -170,13 +214,13 @@ void run_runnable_on_main_thread(runnable * prunnable)
 }
 
 
-
 -(void)runRunnableOnMainThread:(runnable *)prunnable
 {
    
    [[self dd_invokeOnMainThread] runRunnable: prunnable];
    
 }
+
 
 -(void)runRunnable:(runnable *)prunnable
 {
@@ -217,7 +261,6 @@ void run_runnable_on_main_thread(runnable * prunnable)
       
       free(ppszOld);
       
-      
    }
 
    [self->theLock unlock];
@@ -230,20 +273,21 @@ void run_runnable_on_main_thread(runnable * prunnable)
    
    NSRunLoop* myRunLoop = [NSRunLoop mainRunLoop];
    
-   
-   
    NSMethodSignature *sgn = [self methodSignatureForSelector:@selector(deferIconForFile:)];
+
    NSInvocation *inv = [NSInvocation invocationWithMethodSignature: sgn];
+
    [inv setTarget: self];
+
    [inv setSelector:@selector(deferIconForFile:)];
    
-   NSTimer *t = [NSTimer timerWithTimeInterval: 0.1
-                                    invocation:inv
-                                       repeats:YES];
+   NSTimer *t = [NSTimer timerWithTimeInterval: 0.1 invocation:inv repeats:YES];
    
    [myRunLoop addTimer:t forMode:NSDefaultRunLoopMode];
    
 }
+
+
 -(void)deferIconForFile:(NSTimer *)timer
 {
 
@@ -268,9 +312,9 @@ void run_runnable_on_main_thread(runnable * prunnable)
    self->m_iIcon = 0;
    
 }
+
+
 @end
-
-
 
 
 bool mm1a_get_file_image(unsigned int * pcr, int cx, int cy, int iScan, const char * psz)
@@ -280,20 +324,27 @@ bool mm1a_get_file_image(unsigned int * pcr, int cx, int cy, int iScan, const ch
    
    if(os->m_iIcon == 0)
    {
+
       os->m_pszIcon = psz;
+
       os->m_picon = pcr;
+
       os->m_cxIcon = cx;
+
       os->m_cyIcon = cy;
+
       os->m_iScanIcon = iScan;
+
       os->m_iIcon = 1;
+
       while(os->m_iIcon != 0)
       {
          
          Sleep(5);
          
       }
+
    }
-      
    
    return true;
       
@@ -316,10 +367,6 @@ void ns_set_this_process_binary_default_browser()
 }
 
 
-
-
-
-
 void ns_log(const char * pszLog)
 {
  
@@ -328,3 +375,6 @@ void ns_log(const char * pszLog)
    NSLog(@"%@", strLog);
    
 }
+
+
+
