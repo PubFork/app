@@ -3418,14 +3418,16 @@ namespace macos
    {
 
 //      ::user::interaction_impl::on_do_show_flags();
-
-      if(!::IsWindowVisible(m_oswindow) && is_this_visible())
+      
+      if((m_bShowFlags && (m_iShowFlags & SWP_SHOWWINDOW))
+         || (m_bShowWindow && (m_iShowWindow != SW_HIDE)))
       {
          
          round_window_show();
          
       }
-      else if(::IsWindowVisible(m_oswindow) && !is_this_visible())
+      if((m_bShowFlags && (m_iShowFlags & SWP_HIDEWINDOW))
+         || (m_bShowWindow && (m_iShowWindow == SW_HIDE)))
       {
          
          round_window_hide();
