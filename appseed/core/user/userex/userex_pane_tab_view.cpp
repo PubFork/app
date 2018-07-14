@@ -419,7 +419,7 @@ namespace userex
 
          Session.use_font_sel();
 
-         auto pdoc = Session.userex()->m_ptemplateFontSel->open_document_file(::var::type_null, false, pcreatordata->m_pholder);
+         auto pdoc = Session.userex()->m_mapimpactsystem[::userex::view_font_sel]->open_document_file(::var::type_null, false, pcreatordata->m_pholder);
 
          m_pfontview = pdoc->get_typed_view<font_view>();
 
@@ -429,7 +429,7 @@ namespace userex
       else if (::str::begins_ci(pcreatordata->m_id, "color_sel"))
       {
 
-         auto pdoc = Session.userex()->m_ptemplateColorSel->open_document_file(::var::type_null, false, pcreatordata->m_pholder);
+         auto pdoc = Session.userex()->m_mapimpactsystem[::userex::view_font_sel]->open_document_file(::var::type_null, false, pcreatordata->m_pholder);
 
          m_pcolorview = pdoc->get_typed_view<color_view>();
 

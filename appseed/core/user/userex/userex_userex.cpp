@@ -18,8 +18,6 @@ namespace userex
    {
 
       m_pshell  = NULL;
-      m_ptemplateColorSel = NULL;
-      m_ptemplateFontSel = NULL;
       m_ptemplateForm = NULL;
       m_ptemplateChildForm = NULL;
       m_ptemplatePlaceHolder = NULL;
@@ -56,25 +54,22 @@ namespace userex
       //   ::aura::del(m_ptemplatePlaceHolder);
 
       //}
-
-      if (m_ptemplateFontSel != NULL)
+      
+      for(auto & pair : m_mapimpactsystem)
       {
+         
+         auto & psystem = pair.element2();
+         
+         if (psystem != NULL)
+         {
 
-         m_ptemplateFontSel->close_all_documents(false);
+            psystem->close_all_documents(false);
 
-         ::aura::del(m_ptemplateFontSel);
+            psystem->release();
 
+         }
+         
       }
-
-      if (m_ptemplateColorSel != NULL)
-      {
-
-         m_ptemplateColorSel->close_all_documents(false);
-
-         ::aura::del(m_ptemplateColorSel);
-
-      }
-
 
    }
 
@@ -1919,14 +1914,14 @@ finished:
       System.factory().creatable_small < ::user::font_list_view >();
       System.factory().creatable_small < ::userex::font_view >();
 
-      userex()->m_ptemplateFontSel = new ::user::multiple_document_template(
+      userex()->m_mapimpactsystem[::userex::view_font_sel] = new ::user::multiple_document_template(
       get_app(),
       "main",
       System.type_info < ::user::document >(),
       System.type_info < ::simple_frame_window >(),
       System.type_info < ::userex::font_view >());
 
-      userex()->m_ptemplateColorSel = new ::user::multiple_document_template(
+      userex()->m_mapimpactsystem[::userex::view_color_sel] = new ::user::multiple_document_template(
       get_app(),
       "main",
       System.type_info < ::user::document >(),

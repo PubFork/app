@@ -4,6 +4,16 @@
 namespace userex
 {
 
+   
+   enum e_view
+   {
+      
+      view_none,
+      view_color_sel,
+      view_font_sel,
+      
+   };
+   
 
    class CLASS_DECL_CORE userex :
       virtual public ::aura::department,
@@ -18,11 +28,11 @@ namespace userex
       ::user::impact_system *                   m_ptemplateForm;
       ::user::impact_system *                   m_ptemplateChildForm;
       ::user::impact_system *                   m_ptemplatePlaceHolder;
-      ::user::impact_system *                   m_ptemplateFontSel;
-      ::user::impact_system *                   m_ptemplateColorSel;
 
 
       map < ::type *, type *, ::user::impact_system *, ::user::impact_system * > m_mapTemplate;
+
+      map < e_view, e_view, ::user::impact_system * > m_mapimpactsystem;
 
 
       sp(::user::shell::shell)                  m_pshell;
