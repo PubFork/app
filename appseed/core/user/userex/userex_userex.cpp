@@ -1919,14 +1919,14 @@ finished:
       System.factory().creatable_small < ::user::font_list_view >();
       System.factory().creatable_small < ::userex::font_view >();
 
-      userex()->m_ptemplateFontSel = new ::user::single_document_template(
+      userex()->m_ptemplateFontSel = new ::user::multiple_document_template(
       get_app(),
       "main",
       System.type_info < ::user::document >(),
       System.type_info < ::simple_frame_window >(),
       System.type_info < ::userex::font_view >());
 
-      userex()->m_ptemplateColorSel = new ::user::single_document_template(
+      userex()->m_ptemplateColorSel = new ::user::multiple_document_template(
       get_app(),
       "main",
       System.type_info < ::user::document >(),
