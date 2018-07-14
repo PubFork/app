@@ -150,11 +150,17 @@ namespace user
 
       }
 
-      do_show_flags();
-
       layout();
+      
+      translate();
 
+      do_show_flags();
+      
       clear_need_layout();
+      
+      clear_need_translation();
+      
+      clear_show_flags();
 
       return true;
 
@@ -238,11 +244,13 @@ namespace user
 
       }
 
-      do_show_flags();
-
       translate();
 
+      do_show_flags();
+      
       clear_need_translation();
+      
+      clear_show_flags();
 
       return true;
 

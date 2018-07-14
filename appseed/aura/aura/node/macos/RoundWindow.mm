@@ -234,6 +234,33 @@
 }
 
 
+- (void)windowDidMove: (NSNotification *) notification
+{
+   
+   //NSLog(@"test");
+   
+   try
+   {
+      
+      NSRect rect = [self frame];
+      
+      CGPoint pt;
+      
+      pt.x = rect.origin.x;
+      
+      pt.y = [[NSScreen mainScreen] frame].size.height - (rect.origin.y + rect.size.height);
+      
+      m_pwindow->round_window_moved(pt);
+      
+   }
+   catch (...)
+   {
+      
+   }
+   
+}
+
+
 - (void) windowDidResize: (NSNotification *) notification
 {
 
@@ -289,31 +316,6 @@
 }
 
 
-- (void)windowDidMove: (NSNotification *) notification
-{
-
-   //NSLog(@"test");
-   
-   try
-   {
-      
-      NSRect rect = [self frame];
-   
-      CGPoint pt;
-
-      pt.x = rect.origin.x;
-   
-      pt.y = [[NSScreen mainScreen] frame].size.height - (rect.origin.y + rect.size.height);
-   
-      m_pwindow->round_window_moved(pt);
-   
-   }
-   catch (...)
-   {
-      
-   }
-
-}
 
 
 -(void)windowDidExpose

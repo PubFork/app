@@ -31,7 +31,7 @@ void ns_main_async(dispatch_block_t block)
 }
 
 
-void ns_main_synch(dispatch_block_t block)
+void ns_main_sync(dispatch_block_t block)
 {
    
    //   dispatch_block_t block = ^{
@@ -73,12 +73,12 @@ void main_async_runnable(runnable * prunnable)
 void main_synch_runnable(runnable * prunnable)
 {
    
-   ns_main_synch(^
-                 {
+   ns_main_sync(^
+                {
 
-                    prunnable->run();
+                   prunnable->run();
 
-                 });
+                });
    
    //[[mmos get] runRunnableOnMainThread: prunnable];
    

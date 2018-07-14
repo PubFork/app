@@ -147,7 +147,7 @@ WINBOOL move_nswindow(oswindow hwnd, int x, int y)
    
 //   printf("\nmove nswindow (%f, %f)", point.x, point.y);
    
-   ns_main_async(^
+   ns_main_sync(^
               {
                         
                  [hwnd->window() setFrameTopLeftPoint : point];
@@ -261,8 +261,8 @@ WINBOOL get_nswindow_rect(oswindow oswindow, LPRECT lprect)
 WINBOOL SetWindowPos(oswindow hwnd, oswindow hwndInsertAfter, int x, int y, int cx, int cy, UINT uFlags)
 {
    
-   //   int   value_mask = 0;
    bool  bMove = !(uFlags & SWP_NOMOVE);
+
    bool  bSize = !(uFlags & SWP_NOSIZE);
    
    if(bMove && bSize)
@@ -278,7 +278,7 @@ WINBOOL SetWindowPos(oswindow hwnd, oswindow hwndInsertAfter, int x, int y, int 
       set_nswindow_frame(hwnd, &rect, (uFlags & SWP_SHOWWINDOW) != 0);
       
    }
-   else if(bSize) // bSize only
+   else if(bSize)
    {
       
       RECT rect;
@@ -291,22 +291,9 @@ WINBOOL SetWindowPos(oswindow hwnd, oswindow hwndInsertAfter, int x, int y, int 
       set_nswindow_frame(hwnd, &rect, (uFlags & SWP_SHOWWINDOW) != 0);
       
    }
-   else if(bMove) // bMove only
+   else if(bMove)
    {
       
-//      RECT rect;
-//      
-//      GetWindowRect(hwnd, &rect);
-//      
-//      cx = rect.right - rect.left;
-//      cy = rect.bottom - rect.top;
-//      
-//      rect.left      = x;
-//      rect.top       = y;
-//      rect.right     = rect.left + cx;
-//      rect.bottom    = rect.top + cy;
-//      
-//      set_nswindow_frame(hwnd, &rect, (uFlags & SWP_SHOWWINDOW) != 0);
       move_nswindow(hwnd, x, y);
       
    }

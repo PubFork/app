@@ -228,13 +228,12 @@ namespace user
          }
 
       }
-
+      
       m_pui->message_call(WM_SIZE);
 
       m_pui->m_dwLastSizeMove = ::get_tick_count();
 
       m_pui->m_bSizeMove = true;
-
 
    }
 
@@ -242,7 +241,7 @@ namespace user
    void interaction_impl_base::on_translate()
    {
 
-      m_rectParentClient = m_rectParentClientRequest;
+      m_rectParentClient.move_to(m_rectParentClientRequest.top_left());
 
       m_pui->message_call(WM_MOVE);
 
@@ -265,35 +264,6 @@ namespace user
    void interaction_impl_base::on_do_show_flags()
    {
 
-      ::rect64 rectOld = m_rectParentClient;
-
-      ::rect64 rectNew = m_rectParentClientRequest;
-
-      m_rectParentClient = m_rectParentClientRequest;
-
-      if (rectOld.top_left() != rectNew.top_left())
-      {
-
-         m_pui->message_call(WM_MOVE);
-
-      }
-
-      if (rectOld.get_size() != rectNew.get_size())
-      {
-
-         m_pui->message_call(WM_SIZE);
-
-      }
-
-      if (rectNew != rectOld)
-      {
-
-         m_pui->m_dwLastSizeMove = ::get_tick_count();
-
-         m_pui->m_bSizeMove = true;
-
-      }
-      
       if ((m_bShowFlags && (m_iShowFlags & SWP_SHOWWINDOW)) ||
           (m_bShowWindow && (m_iShowWindow != SW_HIDE)))
       {
@@ -306,15 +276,6 @@ namespace user
       {
 
          m_pui->message_call(WM_SHOWWINDOW, 0);
-
-      }
-
-      sp(::user::interaction) pui;
-
-      while (m_pui->get_child(pui))
-      {
-
-         pui->on_translate();
 
       }
 
@@ -750,16 +711,12 @@ namespace user
       if (!(nFlags & SWP_NOMOVE) && (rect.left != x || rect.top != y))
       {
 
-         bShowFlags = true;
-
          rect.move_to(x, y);
 
       }
 
       if (!(nFlags & SWP_NOSIZE) && (rect.width() != cx || rect.height() != cy))
       {
-
-         bShowFlags = true;
 
          rect.size(cx, cy);
 
@@ -1555,8 +1512,6 @@ namespace user
 
    bool interaction_impl_base::ShowWindow(int32_t nCmdShow)
    {
-
-      m_pui->message_call(WM_SHOWWINDOW, nCmdShow != SW_HIDE ? 1 : 0);
 
       if (nCmdShow != SW_HIDE)
       {

@@ -1963,10 +1963,10 @@ namespace macos
 
                   DWORD dwSpan = ::get_tick_count() - dwStart;
 
-                  if (dwSpan < 20)
+                  if (dwSpan < 50)
                   {
 
-                     Sleep(20 - dwSpan);
+                     Sleep(50 - dwSpan);
 
                   }
 
@@ -2910,7 +2910,7 @@ namespace macos
 
       ::ShowWindow(get_handle(), nCmdShow);
 
-      m_pui->send_message(WM_SHOWWINDOW, ::IsWindowVisible(get_handle()));
+      //m_pui->send_message(WM_SHOWWINDOW, ::IsWindowVisible(get_handle()));
 
       return m_pui->IsWindowVisible();
 
@@ -3417,7 +3417,7 @@ namespace macos
    void interaction_impl::on_do_show_flags()
    {
 
-      ::user::interaction_impl::on_do_show_flags();
+//      ::user::interaction_impl::on_do_show_flags();
 
       if(!::IsWindowVisible(m_oswindow) && is_this_visible())
       {
@@ -3435,11 +3435,38 @@ namespace macos
    }
    
    
+   void interaction_impl::on_translate()
+   {
+      
+      if (m_rectLastOsPlacement.top_left() != m_rectParentClientRequest.top_left())
+      {
+         
+         ::SetWindowPos(m_oswindow, NULL,
+                        (int) m_rectParentClientRequest.left,
+                        (int) m_rectParentClientRequest.top,
+                        0,
+                        0,
+                        SWP_NOSIZE
+                        | SWP_NOZORDER
+                        | SWP_NOREDRAW
+                        | SWP_NOCOPYBITS
+                        | SWP_NOACTIVATE
+                        | SWP_NOOWNERZORDER
+                        | SWP_NOSENDCHANGING
+                        | SWP_DEFERERASE);
+         
+         m_rectLastOsPlacement.move_to(m_rectParentClientRequest.top_left());
+         
+      }
+      
+      //::user::interaction_impl::on_translate();
+      
+   }
+
+   
    void interaction_impl::on_layout()
    {
       
-      ::user::interaction_impl::on_layout();
-
       if (m_rectLastOsPlacement != m_rectParentClientRequest)
       {
          
@@ -3456,10 +3483,12 @@ namespace macos
                         | SWP_NOSENDCHANGING
                         | SWP_DEFERERASE);
          
-         m_rectLastOsPlacement = m_rectParentClient;
+         m_rectLastOsPlacement = m_rectParentClientRequest;
          
       }
-
+      
+      //::user::interaction_impl::on_layout();
+      
    }
    
 

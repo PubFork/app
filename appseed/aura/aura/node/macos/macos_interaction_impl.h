@@ -91,6 +91,7 @@ namespace macos
 
       
       virtual void on_do_show_flags() override;
+      virtual void on_translate() override;
       virtual void on_layout() override;
       
       // subclassing/unsubclassing functions

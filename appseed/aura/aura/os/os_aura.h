@@ -211,7 +211,7 @@ inline void main_async(PRED pred)
 
 
 template < typename PRED >
-inline void main_synch(PRED pred)
+inline void main_sync(PRED pred)
 {
 
    runnable_pred < PRED > * prunnablepred = new runnable_pred < PRED >(pred);
