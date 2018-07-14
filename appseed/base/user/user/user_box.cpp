@@ -213,8 +213,12 @@ namespace user
 
             reader >> iControlBoxRightToLeft;
 
-            if (error)
+            if (reader.fail())
+            {
+
                return false;
+               
+            }
 
             oprop("control_box_right_to_right") = iControlBoxRightToLeft;
 

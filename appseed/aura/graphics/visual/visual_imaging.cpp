@@ -6023,12 +6023,21 @@ bool imaging::load_from_file(::draw2d::dib * pdib,var varFile,bool bCache)
 
       if (Session.file().exists(pathDib))
       {
-
-         if (pdib->load_from_dib(pathDib))
+         
+         try
          {
 
-            return true;
+            if (pdib->load_from_dib(pathDib))
+            {
 
+               return true;
+
+            }
+            
+         }
+         catch(...)
+         {
+            
          }
 
       }

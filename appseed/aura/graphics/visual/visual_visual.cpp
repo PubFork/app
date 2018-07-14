@@ -296,7 +296,7 @@ namespace visual
 
       // "arrow.png" is a troll/bait for getting the right path of the cursor file, then the directory where found
 
-      return set_cursor_set_from_dir(::file::path(Application.dir().matter(pszMatter / "arrow.png")).folder(), true);
+      return set_cursor_set_from_dir(::file::path(Application.dir().matter(pszMatter / "arrow.png")).folder());
 
    }
 

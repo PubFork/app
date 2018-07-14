@@ -18,7 +18,7 @@ namespace user
             ::user::wndfrm::interaction(papp)
          {
 
-            ::fork(get_app(), [&]()
+            fork([&]()
             {
 
                System.visual().set_cursor_set_from_matter("cursor/antialiased-classic");

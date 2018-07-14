@@ -102,9 +102,13 @@ void round_window::round_window_destroy()
 void round_window::round_window_show()
 {
    
-   [[m_proundwindow->m_controller dd_invokeOnMainThreadAndWaitUntilDone:TRUE] showWindow : m_proundwindow];
-   
-   [m_proundwindow windowDidExpose];
+   sync_main_thread(^
+                     {
+                        [m_proundwindow->m_controller showWindow : m_proundwindow];
+                        
+                        [m_proundwindow windowDidExpose];
+
+                     });
    
 }
 

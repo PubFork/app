@@ -321,7 +321,7 @@ bool file_set_line_dup(const char * path, index iLine, const char * pszLine)
          
       }
       
-      fwrite(pszLine, 1, strlen(pszLine), file);
+      fwrite(pszLine, 1, strlen(pszLine), file2);
       
       index iEnd = fseek(file, 0, SEEK_END);
       

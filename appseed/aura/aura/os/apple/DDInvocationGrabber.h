@@ -110,3 +110,7 @@
 - (id)prepareWithInvocationTarget:(id)inTarget;
 
 @end
+
+
+void async_main_thread(dispatch_block_t block);
+void sync_main_thread(dispatch_block_t block);

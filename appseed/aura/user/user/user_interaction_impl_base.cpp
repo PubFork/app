@@ -235,28 +235,12 @@ namespace user
 
       m_pui->m_bSizeMove = true;
 
-      if (m_bShowFlags && (m_iShowFlags & SWP_SHOWWINDOW))
-      {
-
-         m_pui->message_call(WM_SHOWWINDOW, 1);
-
-      }
-      else if (m_bShowFlags && (m_iShowFlags & SWP_HIDEWINDOW))
-      {
-
-         m_pui->message_call(WM_SHOWWINDOW, 0);
-
-      }
 
    }
 
 
    void interaction_impl_base::on_translate()
    {
-
-      //::rect64 rectOld = m_rectParentClient;
-
-      //::rect64 rectNew = m_rectParentClientRequest;
 
       m_rectParentClient = m_rectParentClientRequest;
 
@@ -265,19 +249,6 @@ namespace user
       m_pui->m_dwLastSizeMove = ::get_tick_count();
 
       m_pui->m_bSizeMove = true;
-
-      if (m_bShowFlags && (m_iShowFlags & SWP_SHOWWINDOW))
-      {
-
-         m_pui->message_call(WM_SHOWWINDOW, 1);
-
-      }
-      else if (m_bShowFlags && (m_iShowFlags & SWP_HIDEWINDOW))
-      {
-
-         m_pui->message_call(WM_SHOWWINDOW, 0);
-
-      }
 
       sp(::user::interaction) pui;
 
@@ -294,34 +265,9 @@ namespace user
    void interaction_impl_base::on_do_show_flags()
    {
 
-      if(m_bShowFlags)
-      {
-
-         //output_debug_string("\ninteraction_impl_base::on_do_show_flags TRUE " + string(typeid(*m_pui).name()) + string(" 0x") + ::hex::upper_from(m_iShowFlags));
-
-      }
-      else
-      {
-
-         //output_debug_string("\ninteraction_impl_base::on_do_show_flags FALSE" + string(typeid(*m_pui).name()));
-
-      }
-
       ::rect64 rectOld = m_rectParentClient;
 
       ::rect64 rectNew = m_rectParentClientRequest;
-
-      /*output_debug_string("\ninteraction_impl_base::rectOld " + string(typeid(*m_pui).name())
-                          + string(" ") + ::str::from(rectOld.left)
-                          + string(" ") + ::str::from(rectOld.top)
-                          + string(" ") + ::str::from(rectOld.right)
-                          + string(" ") + ::str::from(rectOld.bottom));
-
-      output_debug_string("\ninteraction_impl_base::rectNew " + string(typeid(*m_pui).name())
-                          + string(" ") + ::str::from(rectNew.left)
-                          + string(" ") + ::str::from(rectNew.top)
-                          + string(" ") + ::str::from(rectNew.right)
-                          + string(" ") + ::str::from(rectNew.bottom));*/
 
       m_rectParentClient = m_rectParentClientRequest;
 
@@ -347,19 +293,17 @@ namespace user
          m_pui->m_bSizeMove = true;
 
       }
-
-      if (m_bShowFlags && (m_iShowFlags & SWP_SHOWWINDOW))
+      
+      if ((m_bShowFlags && (m_iShowFlags & SWP_SHOWWINDOW)) ||
+          (m_bShowWindow && (m_iShowWindow != SW_HIDE)))
       {
-
-         //output_debug_string("\ninteraction_impl_base::on_do_show_flags SHOW_WINDOW " + string(typeid(*m_pui).name()));
 
          m_pui->message_call(WM_SHOWWINDOW, 1);
 
       }
-      else if (m_bShowFlags && (m_iShowFlags & SWP_HIDEWINDOW))
+      else if ((m_bShowFlags && (m_iShowFlags & SWP_HIDEWINDOW)) ||
+               (m_bShowWindow && (m_iShowWindow == SW_HIDE)))
       {
-
-         //output_debug_string("\ninteraction_impl_base::on_do_show_flags HIDE_WINDOW " + string(typeid(*m_pui).name()));
 
          m_pui->message_call(WM_SHOWWINDOW, 0);
 
@@ -456,28 +400,28 @@ namespace user
 
       ASSERT(nFlags == 0 || (nFlags & ~reposNoPosLeftOver) == reposQuery || (nFlags & ~reposNoPosLeftOver) == reposExtra);
 
-      SIZEPARENTPARAMS on_layout;
+      SIZEPARENTPARAMS sizeparentparams;
 
       sp(::user::interaction) puiLeft = NULL;
 
-      on_layout.bStretch = bStretch;
+      sizeparentparams.bStretch = bStretch;
 
-      on_layout.sizeTotal.cx = on_layout.sizeTotal.cy = 0;
+      sizeparentparams.sizeTotal.cx = sizeparentparams.sizeTotal.cy = 0;
 
       if(lpRectClient != NULL)
       {
 
-         on_layout.rect = *lpRectClient;
+         sizeparentparams.rect = *lpRectClient;
 
       }
       else
       {
 
-         m_pui->GetClientRect(&on_layout.rect);
+         m_pui->GetClientRect(&sizeparentparams.rect);
 
       }
 
-      if (::IsRectEmpty(on_layout.rect))
+      if (::IsRectEmpty(sizeparentparams.rect))
       {
 
          return;
@@ -500,12 +444,11 @@ namespace user
          else
          {
 
-            pui->send_message(WM_SIZEPARENT, 0, (LPARAM)&on_layout);
+            pui->send_message(WM_SIZEPARENT, 0, (LPARAM)&sizeparentparams);
 
          }
 
       }
-
 
       if((nFlags & ~reposNoPosLeftOver) == reposQuery)
       {
@@ -515,15 +458,15 @@ namespace user
          if (bStretch)
          {
 
-            ::CopyRect(lpRectParam, &on_layout.rect);
+            ::CopyRect(lpRectParam, &sizeparentparams.rect);
 
          }
          else
          {
 
             lpRectParam->left = lpRectParam->top = 0;
-            lpRectParam->right = on_layout.sizeTotal.cx;
-            lpRectParam->bottom = on_layout.sizeTotal.cy;
+            lpRectParam->right = sizeparentparams.sizeTotal.cx;
+            lpRectParam->bottom = sizeparentparams.sizeTotal.cy;
 
          }
 
@@ -540,285 +483,25 @@ namespace user
 
             ASSERT(lpRectParam != NULL);
 
-            on_layout.rect.left += lpRectParam->left;
-            on_layout.rect.top += lpRectParam->top;
-            on_layout.rect.right -= lpRectParam->right;
-            on_layout.rect.bottom -= lpRectParam->bottom;
+            sizeparentparams.rect.left += lpRectParam->left;
+            sizeparentparams.rect.top += lpRectParam->top;
+            sizeparentparams.rect.right -= lpRectParam->right;
+            sizeparentparams.rect.bottom -= lpRectParam->bottom;
 
          }
 
          if((nFlags & reposNoPosLeftOver) != reposNoPosLeftOver)
          {
 
-            puiLeft->CalcWindowRect(&on_layout.rect);
+            puiLeft->CalcWindowRect(&sizeparentparams.rect);
 
-            puiLeft->SetPlacement(on_layout.rect, SWP_SHOWWINDOW | SWP_NOZORDER);
+            puiLeft->SetPlacement(sizeparentparams.rect, SWP_SHOWWINDOW | SWP_NOZORDER);
 
          }
 
       }
 
    }
-
-
-   //bool interaction_impl_base::ClientToScreen(LPRECT lprect)
-   //{
-
-   //   if(m_pui == NULL)
-   //   {
-
-   //      return false;
-
-   //   }
-
-   //   if(!m_pui->ClientToScreen(lprect))
-   //   {
-
-   //      return false;
-
-   //   }
-
-   //   return true;
-
-   //}
-
-   //bool interaction_impl_base::ClientToScreen(LPRECTD lprect)
-   //{
-
-   //   if (m_pui == NULL)
-   //   {
-
-   //      return false;
-
-   //   }
-
-   //   if (!m_pui->ClientToScreen(lprect))
-   //   {
-
-   //      return false;
-
-   //   }
-
-   //   return true;
-
-   //}
-
-
-   //bool interaction_impl_base::ClientToScreen(LPPOINT lppoint)
-   //{
-
-   //   if(m_pui == NULL)
-   //   {
-
-   //      return false;
-
-   //   }
-
-   //   if(!m_pui->ClientToScreen(lppoint))
-   //   {
-
-   //      return false;
-
-   //   }
-
-   //   return true;
-
-   //}
-
-
-   //bool interaction_impl_base::ClientToScreen(LPPOINTD lppoint)
-   //{
-
-   //   if (m_pui == NULL)
-   //   {
-
-   //      return false;
-
-   //   }
-
-   //   if (!m_pui->ClientToScreen(lppoint))
-   //   {
-
-   //      return false;
-
-   //   }
-
-   //   return true;
-
-   //}
-
-   //bool interaction_impl_base::ClientToScreen(RECT64 * lprect)
-   //{
-
-   //   if(m_pui == NULL)
-   //   {
-
-   //      return false;
-
-   //   }
-
-   //   if(!m_pui->ClientToScreen(lprect))
-   //   {
-
-   //      return false;
-
-   //   }
-
-   //   return true;
-
-   //}
-
-
-   //bool interaction_impl_base::ClientToScreen(POINT64 * lppoint)
-   //{
-
-   //   if(m_pui == NULL)
-   //   {
-
-   //      return false;
-
-   //   }
-
-   //   if(!m_pui->ClientToScreen(lppoint))
-   //   {
-
-   //      return false;
-
-   //   }
-
-   //   return true;
-
-   //}
-
-
-   //bool interaction_impl_base::ScreenToClient(LPRECT lprect)
-   //{
-
-   //   if(m_pui == NULL)
-   //   {
-
-   //      return false;
-
-   //   }
-
-   //   if(!m_pui->ScreenToClient(lprect))
-   //   {
-
-   //      return false;
-
-   //   }
-
-   //   return true;
-
-   //}
-
-   //bool interaction_impl_base::ScreenToClient(LPRECTD lprect)
-   //{
-
-   //   if (m_pui == NULL)
-   //   {
-
-   //      return false;
-
-   //   }
-
-   //   if (!m_pui->ScreenToClient(lprect))
-   //   {
-
-   //      return false;
-
-   //   }
-
-   //   return true;
-
-   //}
-
-
-   //bool interaction_impl_base::ScreenToClient(LPPOINT lppoint)
-   //{
-
-   //   if(m_pui == NULL)
-   //   {
-
-   //      return false;
-
-   //   }
-
-   //   if(!m_pui->ScreenToClient(lppoint))
-   //   {
-
-   //      return false;
-
-   //   }
-
-   //   return true;
-
-   //}
-
-
-   //bool interaction_impl_base::ScreenToClient(LPPOINTD lppoint)
-   //{
-
-   //   if (m_pui == NULL)
-   //   {
-
-   //      return false;
-
-   //   }
-
-   //   if (!m_pui->ScreenToClient(lppoint))
-   //   {
-
-   //      return false;
-
-   //   }
-
-   //   return true;
-
-   //}
-
-   //bool interaction_impl_base::ScreenToClient(RECT64 * lprect)
-   //{
-
-   //   if(m_pui == NULL)
-   //   {
-
-   //      return false;
-
-   //   }
-
-   //   if(!m_pui->ScreenToClient(lprect))
-   //   {
-
-   //      return false;
-
-   //   }
-
-   //   return true;
-
-   //}
-
-
-   //bool interaction_impl_base::ScreenToClient(POINT64 * lppoint)
-   //{
-
-   //   if(m_pui == NULL)
-   //   {
-
-   //      return false;
-
-   //   }
-
-   //   if(!m_pui->ScreenToClient(lppoint))
-   //   {
-
-   //      return false;
-
-   //   }
-
-   //   return true;
-
-   //}
 
 
    bool interaction_impl_base::GetWindowRect(LPRECT lprect)

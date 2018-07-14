@@ -4,6 +4,39 @@
 void macos_desktop_image_changed();
 bool mm2_get_file_image(unsigned int * pcr, int cx, int cy, int iScan, const char * psz);
 
+void async_main_thread(dispatch_block_t block)
+{
+   
+   //   dispatch_block_t block = ^{
+   //      // Code for the method goes here
+   //   };
+   //
+   if ([NSThread isMainThread])
+   {
+      block();
+   }
+   else
+   {
+      dispatch_async(dispatch_get_main_queue(), block);
+   }
+}
+
+void sync_main_thread(dispatch_block_t block)
+{
+   
+   //   dispatch_block_t block = ^{
+   //      // Code for the method goes here
+   //   };
+   //
+   if ([NSThread isMainThread])
+   {
+      block();
+   }
+   else
+   {
+      dispatch_sync(dispatch_get_main_queue(), block);
+   }
+}
 
 
 
@@ -135,6 +168,8 @@ void run_runnable_on_main_thread(runnable * prunnable)
    [myRunLoop addTimer:t forMode:NSDefaultRunLoopMode];
    
 }
+
+
 
 -(void)runRunnableOnMainThread:(runnable *)prunnable
 {

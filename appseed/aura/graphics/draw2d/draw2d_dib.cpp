@@ -7022,6 +7022,11 @@ restart:
             serialize.setstate(::file::badbit);
             return;
          }
+         if (iScan < widthAlloc / sizeof(COLORREF))
+         {
+            serialize.setstate(::file::badbit);
+            return;
+         }
          if (!create(widthAlloc, heightAlloc))
             _throw(simple_exception(get_app(), "dib::read"));
          map();

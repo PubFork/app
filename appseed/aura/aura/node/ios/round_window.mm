@@ -51,7 +51,9 @@ void round_window::round_window_show()
 void round_window::round_window_redraw()
 {
    
-   [[m_proundwindow dd_invokeOnMainThreadAndWaitUntilDone :FALSE] display ];
+   ns_main_thread(^{
+      [m_proundwindow : display ];
+   });
    
 }
 

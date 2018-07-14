@@ -116,18 +116,19 @@ WINBOOL set_nswindow_frame(oswindow hwnd, LPCRECT lpcrect, int iDisplay)
    rect.size.width   = lpcrect->right     -     lpcrect->left;
    rect.size.height  = lpcrect->bottom    -     lpcrect->top;
    
-      //rect.origin.x     = 500;
-      //rect.origin.y     = 100;
-      //rect.size.width   = 500;
-      //rect.size.height  = 500;
+   //rect.origin.x     = 500;
+   //rect.origin.y     = 100;
+   //rect.size.width   = 500;
+   //rect.size.height  = 500;
    
-//   printf("\nset nswindow frame (%f, %f)[%f, %f]", rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
+   //printf("\nset nswindow frame (%f, %f)[%f, %f]", rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
 
-   
-   
-   [[hwnd->window() dd_invokeOnMainThreadAndWaitUntilDone:TRUE] setFrame : rect display : iDisplay];
-   
-   //move_nswindow(hwnd, lpcrect->left, lpcrect->top);
+   async_main_thread(^
+   {
+      
+      [hwnd->window() setFrame : rect display : iDisplay];
+      
+   });
    
    return 1;
    

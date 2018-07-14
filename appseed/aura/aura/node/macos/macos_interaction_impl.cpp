@@ -508,33 +508,11 @@ namespace macos
 
    }
 
+
    void interaction_impl::_001OnSize(::message::message * pobj)
    {
+
       UNREFERENCED_PARAMETER(pobj);
-
-
-      /*      if(!m_bRectOk && !(GetExStyle() & WS_EX_LAYERED))
-       {
-       class rect rectWindow;
-       ::GetWindowRect(get_handle(), rectWindow);
-       m_pui->m_rectParentClient = rectWindow;
-       m_rectParentClient = rectWindow;
-       }*/
-
-      /*      if(m_spdibMultAlphaWork.is_null())
-       {
-       m_spdibMultAlphaWork.create(get_app());
-       }
-
-       if(m_spdib.is_null())
-       {
-       m_spdib.create(get_app());
-       }
-
-       if(m_spdib.is_set() && m_rectParentClient.area() > 0)
-       {
-       m_spdib->create(m_rectParentClient.size());
-       }*/
 
       rect rect32;
 
@@ -543,79 +521,9 @@ namespace macos
 
          ::copy(m_rectParentClient, rect32);
 
-//         if(!m_pui->WfiIsMoving() && !m_pui->WfiIsSizing())
-//         {
-//
-//            rect rectIntersect;
-//
-//            if(m_pui->WfiIsFullScreen())
-//            {
-//
-//               rect rectMonitor;
-//
-//            for(index iMonitor = 0; iMonitor < System.get_monitor_count(); iMonitor++)
-//            {
-//
-//               System.get_monitor_rect(iMonitor, rectMonitor);
-//
-//               if(rectIntersect.intersect(rect32, rectMonitor))
-//               {
-//
-//
-//                  if(rectIntersect != rect32)
-//                  {
-//                  m_pui->SetPlacement(rectIntersect);
-//
-//                  }
-//
-//
-//               }
-//
-//            }
-//
-//            }
-//
-//            else
-//            {
-//
-//               rect rectWkSpace;
-//
-//
-//               for(index iWkSpace = 0; iWkSpace < System.get_wkspace_count(); iWkSpace++)
-//               {
-//
-//                  System.get_monitor_rect(iWkSpace, rectWkSpace);
-//
-//                  if(rectIntersect.intersect(rect32, rectWkSpace))
-//                  {
-//
-//                     if(rectIntersect != rect32)
-//                     {
-//
-//                        m_pui->SetPlacement(rectIntersect);
-//
-//                     }
-//
-//
-//                  }
-//
-//               }
-//
-//
-//            }
-//
-//
-//
-//
-//         }
-
       }
 
-      //m_pui->on_layout();
-
       m_pui->set_need_layout();
-
-
 
    }
 
@@ -1637,334 +1545,31 @@ namespace macos
     return ::GetScrollInfo(hWnd, nBar, lpScrollInfo) != FALSE;
     }
     */
+   
+   
    int32_t interaction_impl::GetScrollLimit(int32_t nBar)
    {
+      
       int32_t nMin = 0, nMax = 0;
+      
       GetScrollRange(nBar, &nMin, &nMax);
-      /*      SCROLLINFO info;
-       if (GetScrollInfo(nBar, &info, SIF_PAGE))
-       {
-       nMax -= __max(info.nPage-1,0);
-       }*/
+      
       return nMax;
+      
    }
+   
 
    void interaction_impl::ScrollWindow(int32_t xAmount, int32_t yAmount,
                                        LPCRECT lpRect, LPCRECT lpClipRect)
    {
-      /*      ASSERT(::IsWindow(get_handle()));
-
-       if (IsWindowVisible() || lpRect != NULL || lpClipRect != NULL)
-       {
-       // When visible, let oswindows do the scrolling
-       ::ScrollWindow(get_handle(), xAmount, yAmount, lpRect, lpClipRect);
-       }
-       else
-       {
-       // oswindows does not perform any scrolling if the user::interaction is
-       // not visible.  This leaves child windows unscrolled.
-       // To account for this oversight, the child windows are moved
-       // directly instead.
-       oswindow hWndChild = ::GetWindow(get_handle(), GW_CHILD);
-       if (hWndChild != NULL)
-       {
-       for (; hWndChild != NULL;
-       hWndChild = ::GetNextWindow(hWndChild, GW_HWNDNEXT))
-       {
-       rect rect;
-       ::GetWindowRect(hWndChild, &rect);
-       ScreenToClient(&rect);
-       ::SetWindowPos(hWndChild, NULL,
-       rect.left+xAmount, rect.top+yAmount, 0, 0,
-       SWP_NOSIZE|SWP_NOACTIVATE|SWP_NOZORDER);
-       }
-       }
-       }
-       */
+      
    }
-
-   /////////////////////////////////////////////////////////////////////////////
-   // minimal on_layout support
-
-   /*
-    void interaction_impl::RepositionBars(const char * pszPrefix, const char * pszIdLeftOver,
-    UINT nFlags, LPRECT lpRectParam, LPCRECT lpRectClient, bool bStretch)
-    {
-    ASSERT(nFlags == 0 || (nFlags & ~reposNoPosLeftOver) == reposQuery ||
-    (nFlags & ~reposNoPosLeftOver) == reposExtra);
-
-    // walk kids in order, control bars get the resize notification
-    //   which allow them to shrink the client area
-    // remaining size goes to the 'nIDLeftOver' pane
-    // NOTE: nIDFirst->nIDLast are usually 0->0xffff
-
-    __SIZEPARENTPARAMS on_layout;
-    ::user::interaction * hWndLeftOver = NULL;
-
-    on_layout.bStretch = bStretch;
-    on_layout.sizeTotal.cx = on_layout.sizeTotal.cy = 0;
-    if (lpRectClient != NULL)
-    on_layout.rect = *lpRectClient;    // starting rect comes from parameter
-    else
-    {
-    if(m_pui != this)
-    m_pui->GetClientRect(&on_layout.rect);    // starting rect comes from client rect
-    else
-    GetClientRect(&on_layout.rect);    // starting rect comes from client rect
-    }
-
-    if ((nFlags & ~reposNoPosLeftOver) != reposQuery)
-    on_layout.hDWP = ::BeginDeferWindowPos(8); // reasonable guess
-    else
-    on_layout.hDWP = NULL; // not actually doing on_layout
-
-    if(m_pui != this && m_pui != NULL)
-    {
-    for (::user::interaction * hWndChild = m_pui->GetTopWindow(); hWndChild != NULL;
-    hWndChild = hWndChild->GetNextWindow(GW_HWNDNEXT))
-    {
-    string strIdc = hWndChild->GetDlgCtrlId();
-    ::user::interaction * pWnd = hWndChild;
-    if (strIdc == pszIdLeftOver)
-    hWndLeftOver = hWndChild;
-    else if (::str::begins(strIdc, pszPrefix) && pWnd != NULL)
-    hWndChild->SendMessage(WM_SIZEPARENT, 0, (LPARAM)&on_layout);
-    }
-    for (int32_t i = 0; i < m_pui->m_uiptra.get_count();   i++)
-    {
-    ::user::interaction * hWndChild = m_pui->m_uiptra[i];
-    string strIdc = hWndChild->GetDlgCtrlId();
-    ::user::interaction * pWnd = hWndChild;
-    if (strIdc == pszIdLeftOver)
-    hWndLeftOver = hWndChild;
-    else if (::str::begins(strIdc, pszPrefix) && pWnd != NULL)
-    hWndChild->SendMessage(WM_SIZEPARENT, 0, (LPARAM)&on_layout);
-    }
-    }
-    else
-    {
-    for (::user::interaction * hWndChild = GetTopWindow(); hWndChild != NULL;
-    hWndChild = hWndChild->GetNextWindow(GW_HWNDNEXT))
-    {
-    string strIdc = hWndChild->GetDlgCtrlId();
-    ::user::interaction * pWnd = hWndChild;
-    if (strIdc == pszIdLeftOver)
-    hWndLeftOver = hWndChild;
-    else if (::str::begins(strIdc, pszPrefix) && pWnd != NULL)
-    hWndChild->SendMessage(WM_SIZEPARENT, 0, (LPARAM)&on_layout);
-    }
-    for (int32_t i = 0; i < m_uiptra.get_count();   i++)
-    {
-    ::user::interaction * hWndChild = m_uiptra[i];
-    string strIdc = hWndChild->GetDlgCtrlId();
-    ::user::interaction * pWnd = hWndChild;
-    if (strIdc == pszIdLeftOver)
-    hWndLeftOver = hWndChild;
-    else if (::str::begins(strIdc, pszPrefix) && pWnd != NULL)
-    hWndChild->SendMessage(WM_SIZEPARENT, 0, (LPARAM)&on_layout);
-    }
-    }
-
-    // if just getting the available rectangle, return it now...
-    if ((nFlags & ~reposNoPosLeftOver) == reposQuery)
-    {
-    ASSERT(lpRectParam != NULL);
-    if (bStretch)
-    ::copy(lpRectParam, &on_layout.rect);
-    else
-    {
-    lpRectParam->left = lpRectParam->top = 0;
-    lpRectParam->right = on_layout.sizeTotal.cx;
-    lpRectParam->bottom = on_layout.sizeTotal.cy;
-    }
-    return;
-    }
-
-    // the rest is the client size of the left-over pane
-    if (pszIdLeftOver != NULL && hWndLeftOver != NULL)
-    {
-    ::user::interaction * pLeftOver = hWndLeftOver;
-    // allow extra space as specified by lpRectBorder
-    if ((nFlags & ~reposNoPosLeftOver) == reposExtra)
-    {
-    ASSERT(lpRectParam != NULL);
-    on_layout.rect.left += lpRectParam->left;
-    on_layout.rect.top += lpRectParam->top;
-    on_layout.rect.right -= lpRectParam->right;
-    on_layout.rect.bottom -= lpRectParam->bottom;
-    }
-    // reposition the user::interaction
-    if ((nFlags & reposNoPosLeftOver) != reposNoPosLeftOver)
-    {
-    pLeftOver->CalcWindowRect(&on_layout.rect);
-    __reposition_window(&on_layout, pLeftOver, &on_layout.rect);
-    }
-    }
-
-    // move and resize all the windows at once!
-    if (on_layout.hDWP == NULL || !::EndDeferWindowPos(on_layout.hDWP))
-    TRACE(::ca2::trace::category_AppMsg, 0, "Warning: DeferWindowPos failed - low system resources.\n");
-    }
-
-    */
-   /*
-   void interaction_impl::RepositionBars(UINT nIDFirst, UINT nIDLast, id nIdLeftOver,
-                               UINT nFlags, LPRECT lpRectParam, LPCRECT lpRectClient, bool bStretch)
-   {
-      UNREFERENCED_PARAMETER(nIDFirst);
-      UNREFERENCED_PARAMETER(nIDLast);
-
-      ASSERT(nFlags == 0 || (nFlags & ~reposNoPosLeftOver) == reposQuery ||
-             (nFlags & ~reposNoPosLeftOver) == reposExtra);
-
-      // walk kids in order, control bars get the resize notification
-      //   which allow them to shrink the client area
-      // remaining size goes to the 'nIDLeftOver' pane
-      // NOTE: nIDFirst->nIDLast are usually 0->0xffff
-
-      __SIZEPARENTPARAMS on_layout;
-      ::user::interaction * hWndLeftOver = NULL;
-
-      on_layout.bStretch = bStretch;
-      on_layout.sizeTotal.cx = on_layout.sizeTotal.cy = 0;
-      if (lpRectClient != NULL)
-         on_layout.rect = *lpRectClient;    // starting rect comes from parameter
-      else
-      {
-         if(m_pui != NULL)
-            m_pui->GetClientRect(&on_layout.rect);    // starting rect comes from client rect
-         else
-            GetClientRect(&on_layout.rect);    // starting rect comes from client rect
-      }
-
-   //      if ((nFlags & ~reposNoPosLeftOver) != reposQuery)
-   //         on_layout.hDWP = ::BeginDeferWindowPos(8); // reasonable guess
-   //      else
-         on_layout.hDWP = NULL; // not actually doing on_layout
-
-      if(m_pui != NULL)
-      {
-
-         for(::user::interaction * hWndChild = m_pui->GetTopWindow(); hWndChild != NULL; hWndChild = hWndChild->GetNextWindow(GW_HWNDNEXT))
-         {
-
-            id id = hWndChild->GetDlgCtrlId();
-
-            ::user::interaction * pWnd = hWndChild;
-
-            if (id == nIdLeftOver)
-               hWndLeftOver = hWndChild;
-            else if (pWnd != NULL)
-               hWndChild->send_message(WM_SIZEPARENT, 0, (LPARAM)&on_layout);
-         }
-
-         for(::user::interaction * hWndChild = m_pui->get_top_child(); hWndChild != NULL; hWndChild = hWndChild->under_sibling())
-         {
-
-            id id = hWndChild->GetDlgCtrlId();
-
-            ::user::interaction * pWnd = hWndChild;
-
-            if (id == nIdLeftOver)
-               hWndLeftOver = hWndChild;
-            else if (pWnd != NULL)
-               hWndChild->send_message(WM_SIZEPARENT, 0, (LPARAM)&on_layout);
-         }
-
-       }
-       else
-       {
-
-          for(::user::interaction * hWndChild = GetTopWindow(); hWndChild != NULL; hWndChild = hWndChild->GetNextWindow(GW_HWNDNEXT))
-          {
-
-             id id = hWndChild->GetDlgCtrlId();
-
-             ::user::interaction * pWnd = hWndChild;
-
-             if (id == nIdLeftOver)
-               hWndLeftOver = hWndChild;
-             else if (pWnd != NULL)
-                hWndChild->send_message(WM_SIZEPARENT, 0, (LPARAM)&on_layout);
-
-          }
-
-          for(::user::interaction * hWndChild = m_pui->get_top_child(); hWndChild != NULL; hWndChild = hWndChild->under_sibling())
-          {
-
-             id id = hWndChild->GetDlgCtrlId();
-
-             ::user::interaction * pWnd = hWndChild;
-
-             if(id == nIdLeftOver)
-                hWndLeftOver = hWndChild;
-             else if (pWnd != NULL)
-                hWndChild->send_message(WM_SIZEPARENT, 0, (LPARAM)&on_layout);
-
-          }
-
-       }
-
-       // if just getting the available rectangle, return it now...
-       if ((nFlags & ~reposNoPosLeftOver) == reposQuery)
-       {
-
-          ASSERT(lpRectParam != NULL);
-
-          if(bStretch)
-             ::CopyRect(lpRectParam, &on_layout.rect);
-          else
-          {
-            lpRectParam->left = lpRectParam->top = 0;
-             lpRectParam->right = on_layout.sizeTotal.cx;
-             lpRectParam->bottom = on_layout.sizeTotal.cy;
-          }
-          return;
-       }
-
-       // the rest is the client size of the left-over pane
-       if(!nIdLeftOver.is_null() && hWndLeftOver != NULL)
-       {
-
-          ::user::interaction * pLeftOver = hWndLeftOver;
-
-          // allow extra space as specified by lpRectBorder
-
-          if ((nFlags & ~reposNoPosLeftOver) == reposExtra)
-          {
-             ASSERT(lpRectParam != NULL);
-             on_layout.rect.left += lpRectParam->left;
-             on_layout.rect.top += lpRectParam->top;
-             on_layout.rect.right -= lpRectParam->right;
-             on_layout.rect.bottom -= lpRectParam->bottom;
-          }
-
-          // reposition the user::interaction
-          if ((nFlags & reposNoPosLeftOver) != reposNoPosLeftOver)
-          {
-
-             pLeftOver->CalcWindowRect(&on_layout.rect);
-             __reposition_window(&on_layout, pLeftOver, &on_layout.rect);
-          }
-       }
-
-       // move and resize all the windows at once!
-   //       if (on_layout.hDWP == NULL || !::EndDeferWindowPos(on_layout.hDWP))
-   //     TRACE(::ca2::trace::category_AppMsg, 0, "Warning: DeferWindowPos failed - low system resources.\n");*/
-   //   }
-
 
 
    void interaction_impl::CalcWindowRect(LPRECT lpClientRect, UINT nAdjustType)
    {
-      /*DWORD dwExStyle = GetExStyle();
-       if (nAdjustType == 0)
-       dwExStyle &= ~WS_EX_CLIENTEDGE;
-       ::AdjustWindowRectEx(lpClientRect, GetStyle(), FALSE, dwExStyle);*/
-   }
 
-   /////////////////////////////////////////////////////////////////////////////
-   // Special keyboard/system command processing
+   }
 
    bool interaction_impl::HandleFloatingSysCommand(UINT nID, LPARAM lparam)
    {
@@ -4263,53 +3868,36 @@ namespace macos
    void interaction_impl::on_do_show_flags()
    {
 
-      if(m_bShowFlags)
-      {
-         
-         if(!IsWindowVisible() && (m_iShowFlags & SWP_SHOWWINDOW))
-         {
-            
-            round_window_show();
-            
-         }
-         else if(IsWindowVisible() && (m_iShowFlags & SWP_HIDEWINDOW))
-         {
-            
-            round_window_hide();
-            
-         }
-         
-      }
-
-            if(m_bShowWindow)
-            {
-               
-               if(!IsWindowVisible() && (m_iShowWindow != SW_HIDE))
-                  {
-                     
-                     round_window_show();
-                     
-                  }
-                  else if(IsWindowVisible() && (m_iShowWindow == SW_HIDE))
-                  {
-                     
-                     round_window_hide();
-                     
-                  }
-                  
-                  }
-      
       ::user::interaction_impl::on_do_show_flags();
 
-
    }
+   
    
    void interaction_impl::on_layout()
    {
       
       ::user::interaction_impl::on_layout();
       
-      run_pred_on_main_thread([&]()
+   }
+   
+
+   void interaction_impl::_001UpdateScreen()
+   {
+
+      if(!::IsWindowVisible(m_oswindow) && is_this_visible())
+      {
+         
+         round_window_show();
+         
+      }
+      else if(::IsWindowVisible(m_oswindow) && !is_this_visible())
+      {
+         
+         round_window_hide();
+         
+      }
+
+      if (m_rectLastPos != m_rectParentClientRequest)
       {
          
          ::SetWindowPos(m_oswindow, NULL,
@@ -4326,27 +3914,7 @@ namespace macos
                         | SWP_DEFERERASE);
          
          m_rectLastPos = m_rectParentClientRequest;
-         
-      });
 
-   }
-
-   void interaction_impl::_001UpdateScreen()
-   {
-
-      if(m_bShowFlags)
-      {
-         
-         on_do_show_flags();
-         
-      }
-      
-
-      if (m_rectLastPos != m_rectParentClientRequest)
-      {
-         
-         on_layout();
-         
       }
 
       if (IsWindowVisible())
