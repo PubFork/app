@@ -48,15 +48,13 @@ namespace macos
 		static_function const MESSAGE* PASCAL GetCurrentMessage();
       virtual void install_message_routing(::message::sender * pinterface) override;
 
-      //bool operator==(const ::user::interaction & wnd) const;
-      //bool operator!=(const ::user::interaction & wnd) const;
-
+      
       DWORD GetStyle() const override;
       DWORD GetExStyle() const override;
       bool ModifyStyle(DWORD dwRemove, DWORD dwAdd, UINT nFlags = 0) override;
       bool ModifyStyleEx(DWORD dwRemove, DWORD dwAdd, UINT nFlags = 0) override;
 
-      //virtual ::user::interaction *   GetOwner();
+      
       virtual ::user::interaction *  SetOwner(::user::interaction *   pOwnerWnd) override;
 
       virtual ::user::interaction * get_wnd() const override;
@@ -67,27 +65,27 @@ namespace macos
 
       void _002OnDraw(::draw2d::dib * pdib);
 
-        DECL_GEN_SIGNAL(_001OnEraseBkgnd);
-        DECL_GEN_SIGNAL(_001OnMove);
-        DECL_GEN_SIGNAL(_001OnSize);
-        DECL_GEN_SIGNAL(_001OnProdevianSynch);
-
+      DECL_GEN_SIGNAL(_001OnEraseBkgnd);
+      DECL_GEN_SIGNAL(_001OnMove);
+      DECL_GEN_SIGNAL(_001OnSize);
+      DECL_GEN_SIGNAL(_001OnProdevianSynch);
 
 #if(WINVER >= 0x0500)
 
-        bool GetWindowInfo(PWINDOWINFO pwi) const;
-        bool GetTitleBarInfo(PTITLEBARINFO pti) const;
+      bool GetWindowInfo(PWINDOWINFO pwi) const;
+      bool GetTitleBarInfo(PTITLEBARINFO pti) const;
 
 #endif   // WINVER >= 0x0500
 
-        virtual ::user::interaction_impl * from_os_data(void * pdata) override;
-        virtual void * get_os_data() const override;
+      virtual ::user::interaction_impl * from_os_data(void * pdata) override;
+      virtual void * get_os_data() const override;
 
-        static_function ::user::interaction_impl * from_handle(oswindow hWnd);
-        static_function ::user::interaction_impl * FromHandlePermanent(oswindow hWnd);
-        //static_function void DeleteTempMap();
-        bool Attach(oswindow hWndNew);
-        oswindow Detach();
+      static_function ::user::interaction_impl * from_handle(oswindow hWnd);
+      static_function ::user::interaction_impl * FromHandlePermanent(oswindow hWnd);
+
+      //static_function void DeleteTempMap();
+      bool Attach(oswindow hWndNew);
+      oswindow Detach();
 
       
       virtual void on_do_show_flags() override;
@@ -107,21 +105,27 @@ namespace macos
       using ::user::interaction_impl::create_window;
       // for child windows, views, panes etc
       virtual bool create_window(::user::interaction * pui, 
-                          ::user::interaction *   pParentWnd, id id, ::user::create_struct & cs,
+                          ::user::interaction *   pParentWnd, id id,
+                          ::user::create_struct & cs,
                           sp(::create) pContext = NULL);
 
       // advanced creation (allows access to extended styles)
       virtual bool create_window_ex(
-                                    ::user::interaction * pui, ::user::create_struct & cs, ::user::interaction *   pParentWnd, id id) override;
+                                    ::user::interaction * pui,
+                                    ::user::create_struct & cs,
+                                    ::user::interaction * pParentWnd,
+                                    id id) override;
 
-       virtual bool native_create_window_ex(
-                                            ::user::interaction * pui,
-                                            ::user::create_struct & cs, oswindow hwndParent, id id);
+      virtual bool native_create_window_ex(
+                                           ::user::interaction * pui,
+                                           ::user::create_struct & cs,
+                                           oswindow hwndParent,
+                                           id id);
 
       virtual bool DestroyWindow() override;
 
       // special pre-creation and ::interaction_impl rect adjustment hooks
-       virtual bool pre_create_window(::user::create_struct& cs) override;
+      virtual bool pre_create_window(::user::create_struct& cs) override;
 
       // Advanced: virtual AdjustWindowRect
       enum AdjustType { adjustBorder = 0, adjustOutside = 1 };
@@ -474,7 +478,10 @@ namespace macos
       void OnClose();
       void OnContextMenu(::user::interaction * pWnd, point pos);
       bool OnCopyData(::user::interaction * pWnd, COPYDATASTRUCT* pCopyDataStruct);
+      
+      
       DECL_GEN_SIGNAL(_001OnCreate);
+      DECL_GEN_SIGNAL(_001OnShowWindow);
 
 
       HBRUSH OnCtlColor(::draw2d::graphics * pgraphics, ::user::interaction * pWnd, UINT nCtlColor);

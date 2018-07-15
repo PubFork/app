@@ -237,8 +237,6 @@
 - (void)windowDidMove: (NSNotification *) notification
 {
    
-   //NSLog(@"test");
-   
    try
    {
       
@@ -314,8 +312,6 @@
    }
    
 }
-
-
 
 
 -(void)windowDidExpose

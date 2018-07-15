@@ -475,26 +475,33 @@ namespace macos
       //      IGUI_MSG_LINK(WM_ERASEBKGND        , pinterface, this, &interaction_impl::_001OnEraseBkgnd);
       //      IGUI_MSG_LINK(WM_MOVE              , pinterface, this, &interaction_impl::_001OnMove);
       //      IGUI_MSG_LINK(WM_SIZE              , pinterface, this, &interaction_impl::_001OnSize);
-      //      IGUI_MSG_LINK(WM_SHOWWINDOW        , pinterface, this, &interaction_impl::_001OnShowWindow);
+      IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &interaction_impl::_001OnShowWindow);
       //      IGUI_MSG_LINK(ca2m_PRODEVIAN_SYNCH , pinterface, this, &interaction_impl::_001OnProdevianSynch);
       ////      //IGUI_MSG_LINK(WM_TIMER             , pinterface, this, &interaction_impl::_001OnTimer);
    }
 
+   
+   void interaction_impl::_001OnShowWindow(::message::message * pobj)
+   {
+      
+      UNREFERENCED_PARAMETER(pobj);
+      
+//      do_show_flags();
+//
+//      clear_show_flags();
+      
+   }
+   
    
    void interaction_impl::_001OnMove(::message::message * pobj)
    {
      
       UNREFERENCED_PARAMETER(pobj);
 
-      rect rect32;
-
-      if (::GetWindowRect(get_handle(), rect32))
-      {
-
-         ::copy(m_rectParentClient, rect32);
-
-      }
-
+//      translate();
+//
+//      clear_need_translation();
+      
    }
 
 
@@ -503,17 +510,8 @@ namespace macos
 
       UNREFERENCED_PARAMETER(pobj);
 
-      rect rect32;
-
-      if (::GetWindowRect(get_handle(), rect32))
-      {
-
-         ::copy(m_rectParentClient, rect32);
-
-      }
-
-      m_pui->set_need_layout();
-
+      m_pui->layout();
+      
    }
 
 
@@ -3430,7 +3428,7 @@ namespace macos
          round_window_show();
          
       }
-      if((m_bShowFlags && (m_iShowFlags & SWP_HIDEWINDOW))
+      else if((m_bShowFlags && (m_iShowFlags & SWP_HIDEWINDOW))
          || (m_bShowWindow && (m_iShowWindow == SW_HIDE)))
       {
          
@@ -3488,6 +3486,8 @@ namespace macos
                         | SWP_NOOWNERZORDER
                         | SWP_NOSENDCHANGING
                         | SWP_DEFERERASE);
+         
+         m_rectParentClient = m_rectParentClientRequest;
          
          m_rectLastOsPlacement = m_rectParentClientRequest;
          
