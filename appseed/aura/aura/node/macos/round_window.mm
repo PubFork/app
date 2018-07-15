@@ -109,7 +109,7 @@ void round_window::round_window_destroy()
 void round_window::round_window_show()
 {
    
-   ns_main_async(^
+   ns_main_sync(^
               {
             
                  [m_proundwindow->m_controller showWindow : m_proundwindow];
