@@ -67,6 +67,17 @@ namespace fs
    {
 
       System.dir().root_ones(listing, get_app());
+      
+      ::file::path pathDropbox = System.defer_process_path("dropbox://", get_app());
+
+      if(pathDropbox.has_char() && System.dir().is(pathDropbox, get_app()))
+      {
+         
+         ::file::path & path = listing.insert_at(0, pathDropbox);
+         path.m_iDir = 1;
+         listing.m_straTitle.insert_at(0, unitext("Dropbox"));
+         
+      }
 
       {
 
