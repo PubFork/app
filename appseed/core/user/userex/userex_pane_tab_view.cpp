@@ -748,6 +748,15 @@ namespace userex
 
    }
 
+   
+   void pane_tab_view::_001OnRemoveTab(::user::tab_pane * ptab)
+   {
+      
+      ::user::tab_view::_001OnRemoveTab(ptab);
+      
+      m_viewmap.remove_key(ptab->m_id);
+      
+   }
 
 } // namespace userex
 

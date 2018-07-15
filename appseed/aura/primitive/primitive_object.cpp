@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 simple_object::simple_object()
@@ -948,7 +948,7 @@ void object::threadrefa_wait(::duration duration)
       if (m_pthreadrefa != NULL)
       {
 
-         m_pthreadrefa->wait(duration, m_pmutex);
+         m_pthreadrefa->wait(duration, sl);
 
       }
 
@@ -1002,6 +1002,8 @@ void object::threadrefa_remove(::thread * pthread)
 
    }
 
+   {
+      
    synch_lock slObject(m_pmutex);
 
    if (m_pthreadrefa == NULL)
@@ -1011,13 +1013,18 @@ void object::threadrefa_remove(::thread * pthread)
 
    }
 
-   synch_lock sl(m_pthreadrefa->m_pmutex);
+   //synch_lock sl(m_pthreadrefa->m_pmutex);
 
-   synch_lock slThread(pthread->m_pmutex);
 
    m_pthreadrefa->remove(pthread);
+   
+}
+{
+   synch_lock slThread(pthread->m_pmutex);
 
    pthread->m_objectptraDependent.remove(this);
+   
+}
 
 }
 

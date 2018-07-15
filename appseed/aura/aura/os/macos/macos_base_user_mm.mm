@@ -48,15 +48,21 @@ bool oswindow_data::show_window(int32_t nCmdShow)
    {
    
 //   printf("\nhide window");
-    
-      [[m_nswindow dd_invokeOnMainThreadAndWaitUntilDone:TRUE ]orderOut : nil];
+      
+      ns_main_async(^
+      {
+         [m_nswindow orderOut : nil];
+      });
 
    }
    else if(nCmdShow == SW_SHOWNOACTIVATE)
    {
 
-      [[m_nswindow dd_invokeOnMainThreadAndWaitUntilDone:TRUE] orderFront : nil];
-      
+      ns_main_async(^
+                    {
+                       [m_nswindow orderFront : nil];
+                    });
+
    }
    else
    {
@@ -70,7 +76,11 @@ bool oswindow_data::show_window(int32_t nCmdShow)
       
       //[[m_nswindow dd_invokeOnMainThreadAndWaitUntilDone:TRUE ]showWindow: nil];
 
-      [[m_nswindow dd_invokeOnMainThreadAndWaitUntilDone:TRUE] makeKeyAndOrderFront : nil];
+      ns_main_async(^
+                    {
+                       [m_nswindow makeKeyAndOrderFront : nil];
+                    });
+
       
 //      [[m_nswindow dd_invokeOnMainThreadAndWaitUntilDone:TRUE ]display];
       

@@ -88,13 +88,15 @@ void round_window::round_window_destroy()
       
    }
    
+   [[NSNotificationCenter defaultCenter] removeObserver: m_proundwindow];
+
+   [m_proundwindow setReleasedWhenClosed: YES];
+   
+   m_proundwindow->m_pwindow = NULL;
+   
    ns_main_async(^
-              {
-   
-                 [[NSNotificationCenter defaultCenter] removeObserver: m_proundwindow];
-   
-                 [m_proundwindow setReleasedWhenClosed: YES];
-   
+                 {
+                    
                  [m_proundwindow close];
 
                  m_proundwindow = NULL;
@@ -237,24 +239,28 @@ bool nsapp_activation_policy_is_accessory()
 
 void nsapp_activation_policy_regular()
 {
-   
-   [[NSApp dd_invokeOnMainThreadAndWaitUntilDone: TRUE] setActivationPolicy:NSApplicationActivationPolicyRegular];
+      ns_main_async(^{
+   [NSApp  setActivationPolicy:NSApplicationActivationPolicyRegular];
+      });
    
 }
 
 
 void nsapp_activation_policy_accessory()
 {
-   
-   [[NSApp dd_invokeOnMainThreadAndWaitUntilDone: TRUE] setActivationPolicy:NSApplicationActivationPolicyAccessory];
+   ns_main_async(^{
+      [NSApp setActivationPolicy:NSApplicationActivationPolicyAccessory];
+       
+       } );
    
 }
 
 
 void nsapp_activation_policy_prohibited()
 {
-   
-   [[NSApp dd_invokeOnMainThreadAndWaitUntilDone: TRUE] setActivationPolicy:NSApplicationActivationPolicyProhibited];
+     ns_main_async(^{
+   [NSApp setActivationPolicy:NSApplicationActivationPolicyProhibited];
+     });
    
 }
 
@@ -262,18 +268,21 @@ void nsapp_activation_policy_prohibited()
 void nsapp_activate_ignoring_other_apps(int i)
 {
    
+   ns_main_async(^{
    if(i)
    {
       
-      [[NSApp dd_invokeOnMainThreadAndWaitUntilDone: TRUE] activateIgnoringOtherApps: YES];
+      [NSApp activateIgnoringOtherApps: YES];
       
    }
    else
    {
       
-      [[NSApp dd_invokeOnMainThreadAndWaitUntilDone: TRUE] activateIgnoringOtherApps: NO];
+      [NSApp activateIgnoringOtherApps: NO];
       
    }
+                 
+                 });
    
 }
 

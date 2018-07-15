@@ -110,6 +110,7 @@ namespace multithreading
 
 
 class sync_interface;
+class synch_lock;
 
 
 class CLASS_DECL_AURA thread_ptra :
@@ -123,7 +124,7 @@ public:
 
    virtual ::count get_count_except_current_thread();
    virtual void post_quit();
-   virtual void wait(const duration & duration, ::sync_object * psyncParent);
+   virtual void wait(const duration & duration, ::synch_lock & sl);
 
 
 };

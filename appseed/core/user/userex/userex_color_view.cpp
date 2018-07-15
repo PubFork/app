@@ -444,7 +444,7 @@ namespace userex
 
       pmessage->previous();
       
-      if(get_document()->m_pviewTopic != NULL)
+      if(get_document()->m_pviewTopic == NULL)
       {
 
          get_document()->m_pviewTopic = this;

@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 extern CLASS_DECL_CORE thread_int_ptr < DWORD_PTR > t_time1;
 
@@ -2029,8 +2029,17 @@ namespace user
 
    void tab_pane::set_title(const char * psz)
    {
+      
+      mutex * pmutex = NULL;
+      
+      if(m_ptab != NULL)
+      {
+         
+         pmutex = m_ptab->m_pmutex;
+         
+      }
 
-      synch_lock sl(m_ptab->m_pmutex);
+      synch_lock sl(pmutex);
 
       m_istrTitleEx3 = psz;
 

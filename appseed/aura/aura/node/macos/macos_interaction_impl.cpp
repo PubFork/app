@@ -570,8 +570,12 @@ namespace macos
          }
 
       }
-
-      round_window_destroy();
+      
+      m_bShowFlags = false;
+      
+      m_bShowWindow = false;
+      
+      ::DestroyWindow(get_handle());
 
       Detach();
 

@@ -554,7 +554,7 @@ namespace user
 
             i32 x;
 
-            m_bControlBoxAlignRight = prectControlBox->center().x > rectClient.center().x;
+            m_bControlBoxAlignRight = prectControlBox->center().x > rectClient.center().x || rectClient.width() < prectControlBox->width();
 
             if (bLayout && is_control_box_moveable())
             {
@@ -596,17 +596,24 @@ namespace user
          int32_t frame::title_bar_layout(bool bInitialControlBoxPosition)
          {
 
-            appearance * pappearance = m_pworkset->get_appearance();
-
             sp(::user::interaction) pwndDraw = get_draw_window();
 
+            rect rectClient;
+            
+            pwndDraw->GetWindowRect(rectClient);
+            
+            if(rectClient.area() < 666)
+            {
+               
+               return 0;
+               
+            }
+
+            appearance * pappearance = m_pworkset->get_appearance();
+            
             rect * prectControlBoxMargin = get_control_box_margin_rect();
 
             rect * prectMargin = get_margin_rect();
-
-            rect rectClient;
-
-            pwndDraw->GetWindowRect(rectClient);
 
             int32_t cx = rectClient.width();
 

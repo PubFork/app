@@ -507,7 +507,7 @@ void thread_ptra::post_quit()
 }
 
 
-void thread_ptra::wait(const duration & duration, ::sync_object * psyncParent)
+void thread_ptra::wait(const duration & duration, synch_lock & sl)
 {
 
    ::datetime::time timeEnd = ::datetime::time::get_current_time() + MAX(seconds(2), duration);
@@ -515,8 +515,8 @@ void thread_ptra::wait(const duration & duration, ::sync_object * psyncParent)
    try
    {
 
-      synch_lock sl(psyncParent);
-
+//      synch_lock sl(psyncParent);
+//
       ::count cCount = get_count_except_current_thread();
 
       ::datetime::time timeNow = ::datetime::time::get_current_time();

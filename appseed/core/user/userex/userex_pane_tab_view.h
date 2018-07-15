@@ -31,6 +31,8 @@ namespace userex
 
       DECL_GEN_SIGNAL(_001OnCreate);
 
+      
+      virtual void _001OnRemoveTab(::user::tab_pane * ptab);
 
       virtual ::user::interaction * get_view_uie() override;
 

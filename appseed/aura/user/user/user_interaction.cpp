@@ -718,8 +718,18 @@ restart:
                         oswindow oswindow = oswindow_remove(pimpl);
 
                         pimpl->m_pui = NULL;
-
-                        //pimplOld.release();
+                        
+                        try
+                        {
+                        
+                           pimpl->release();
+                           
+                        }
+                        catch(...)
+                        {
+                           
+                           
+                        }
 
                         if (oswindow != NULL)
                         {

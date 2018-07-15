@@ -514,7 +514,27 @@ void defer_dock_application(bool bDock)
 WINBOOL DestroyWindow(oswindow w)
 {
    
-   UNREFERENCED_PARAMETER(w);
+   if(w == GetFocus())
+   {
+      
+      SetFocus(NULL);
+      
+   }
+   if(w == GetActiveWindow())
+   {
+      
+      SetActiveWindow(NULL);
+      
+   }
+   if(w == GetCapture())
+   {
+      
+      ReleaseCapture();
+      
+   }
+   
+   dynamic_cast < ::macos::interaction_impl* > (w->m_pimpl)->round_window_destroy();
+
    
    return 1;
    
