@@ -753,12 +753,12 @@ WINBOOL GetWindowRect(oswindow hwnd, LPRECT lprect)
     lprect->right     = lprect->left    + attrs.width;
     lprect->bottom    = lprect->top     + attrs.height;*/
    
-   if(!hwnd->m_bNsWindowRect)
+   //if(!hwnd->m_bNsWindowRect)
    {
 
       get_nswindow_rect(hwnd, &hwnd->m_rectNsWindow);
       
-      hwnd->m_bNsWindowRect = true;
+     // hwnd->m_bNsWindowRect = true;
 
    }
    

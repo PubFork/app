@@ -512,6 +512,8 @@ namespace macos
 
       m_pui->layout();
       
+      m_pui->set_need_redraw();
+      
    }
 
 
