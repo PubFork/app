@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 namespace user
@@ -174,7 +174,6 @@ namespace user
    }
 
 
-
    void scroll_x::on_change_viewport_offset()
    {
 
@@ -192,8 +191,6 @@ namespace user
    }
 
 
-
-
    void scroll_x::_001ConstrainXScrollPosition()
    {
 
@@ -201,15 +198,15 @@ namespace user
 
       pointd ptOffset = get_viewport_offset();
 
-      if (ptOffset.y < 0)
-      {
-         ptOffset.y = 0;
-      }
-      else
-      {
-         if (ptOffset.y > sizeTotal.cy)
-            ptOffset.y = sizeTotal.cy;
-      }
+//      if (ptOffset.y < 0)
+//      {
+//         ptOffset.y = 0;
+//      }
+//      else
+//      {
+//         if (ptOffset.y > sizeTotal.cy)
+//            ptOffset.y = sizeTotal.cy;
+//      }
 
       if (ptOffset.x < 0)
       {
@@ -221,7 +218,7 @@ namespace user
             ptOffset.x = sizeTotal.cx;
       }
 
-      if (ptOffset != get_viewport_offset())
+      if (ptOffset.x != get_viewport_offset().x)
       {
 
          set_viewport_offset(ptOffset.x, ptOffset.y);

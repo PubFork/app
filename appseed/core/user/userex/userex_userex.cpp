@@ -1900,9 +1900,26 @@ finished:
    }
 
 
-   void session::use_font_sel()
+   void session::will_use_view_hint(::userex::e_view eview)
    {
+      
+      switch(eview)
+      {
+            
+         case ::userex::view_color_sel:
+         {
+            
+            userex()->m_mapimpactsystem[::userex::view_color_sel] = new ::user::multiple_document_template(
+                                                                                                           get_app(),
+                                                                                                           "main",
+                                                                                                           System.type_info < ::user::document >(),
+                                                                                                           System.type_info < ::simple_frame_window >(),
+                                                                                                           System.type_info < ::userex::color_view >());
 
+         }
+            break;
+         case ::userex::view_font_sel:
+         {
       if (m_pfontlist != NULL)
       {
 
@@ -1921,12 +1938,6 @@ finished:
       System.type_info < ::simple_frame_window >(),
       System.type_info < ::userex::font_view >());
 
-      userex()->m_mapimpactsystem[::userex::view_color_sel] = new ::user::multiple_document_template(
-      get_app(),
-      "main",
-      System.type_info < ::user::document >(),
-      System.type_info < ::simple_frame_window >(),
-      System.type_info < ::userex::color_view >());
 
       //if (!is_installing() && !is_uninstalling())
       {
@@ -1946,6 +1957,11 @@ finished:
 
          });
 
+      }
+         }
+            break;
+         default:
+            break;
       }
 
    }

@@ -8,6 +8,8 @@ namespace user
    impact::impact()
    {
 
+      m_puiViewNotify = NULL;
+      
       m_pdocument = NULL;
 
       m_ulFlags |= object::flag_auto_delete;
@@ -75,7 +77,8 @@ namespace user
    }
 
 
-   /////////////////////////////////////////////////////////////////////////////
+   ////////////////////////////////////////////////////////////////////////////
+   //
    // ::user::impact second phase construction - bind to ::user::document
 
    bool impact::pre_create_window(::user::create_struct & cs)

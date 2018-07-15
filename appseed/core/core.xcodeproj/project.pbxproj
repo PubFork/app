@@ -996,6 +996,7 @@
 		07F5B36F184A4FA00092C3E1 /* user_xfplayer_view_line_selection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_xfplayer_view_line_selection.h; sourceTree = "<group>"; };
 		07F5B371184A4FA00092C3E1 /* user_xfplayer_view_lines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_xfplayer_view_lines.h; sourceTree = "<group>"; };
 		07F5B400184A50E50092C3E1 /* userex_userex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = userex_userex.h; sourceTree = "<group>"; };
+		9A06FA4120FAE0E90024DA18 /* userex_const.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = userex_const.h; sourceTree = "<group>"; };
 		9A19A1A519C6F50B0018DF7D /* libcore.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libcore.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A19A37219C6F5940018DF7D /* wndfrm_frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wndfrm_frame.h; sourceTree = "<group>"; };
 		9A19A37419C6F5940018DF7D /* wndfrm_frame_appearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wndfrm_frame_appearance.h; sourceTree = "<group>"; };
@@ -1974,6 +1975,7 @@
 				07A6D852173C27EB009E6FB8 /* userex_property_sheet.h */,
 				07A6D856173C27EB009E6FB8 /* userex_split_view.h */,
 				07A6D858173C27EB009E6FB8 /* userex_wait_message_dialog.h */,
+				9A06FA4120FAE0E90024DA18 /* userex_const.h */,
 			);
 			path = userex;
 			sourceTree = "<group>";

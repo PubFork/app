@@ -25,7 +25,7 @@ namespace user
 
       m_bAutoDelete        = true;
       m_bOwnItem           = false;
-      m_puiNotify          = NULL;
+      m_puiMenuNotify          = NULL;
       m_bAutoClose         = true;
       m_bInline            = true;
 
@@ -37,7 +37,7 @@ namespace user
       menu(papp)
    {
 
-      m_puiNotify          = NULL;
+      m_puiMenuNotify      = NULL;
       m_bAutoClose         = true;
       m_bAutoDelete        = true;
       m_bOwnItem           = false;

@@ -68,10 +68,13 @@ namespace userex
 
    void pane_view::on_create_view(::user::view_creator_data * pcreatordata)
    {
+      
       for(int32_t i = 0; i < m_menua.get_size(); i++)
       {
+         
          if(pcreatordata->m_id == m_menua[i]->m_id)
          {
+            
             //create_context cc;
             //cc.m_pCurrentDoc = get_document();
             //cc.m_typeinfoNewView = System.type_info < ::user::menu_list_view > ();

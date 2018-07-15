@@ -1,4 +1,4 @@
-﻿#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 
@@ -11,7 +11,7 @@ namespace user
       ::data::data_container_base(papp),
       ::user::controller(papp)
    {
-
+      m_pviewTopic=(::user::impact *) (int_ptr)0;
       m_pimpactsystem = NULL;
 
       m_bModified = FALSE;

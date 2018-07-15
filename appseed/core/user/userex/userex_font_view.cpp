@@ -39,7 +39,32 @@ namespace userex
       ::user::split_view::dump(dumpcontext);
 
    }
+   
+   
+   void font_view::install_message_routing(::message::sender * psender)
+   {
+   
+      ::user::impact::install_message_routing(psender);
+      
+      IGUI_MSG_LINK(WM_CREATE, psender, this, &font_view::_001OnCreate);
+   
+   }
 
+   
+   void font_view::_001OnCreate(::message::message * pmessage)
+   {
+      
+      pmessage->previous();
+      
+      if(get_document()->m_pviewTopic == NULL)
+      {
+         
+         get_document()->m_pviewTopic = this;
+         
+      }
+      
+   }
+   
 
    void font_view::on_update(::user::impact * pSender, LPARAM lHint, object* phint)
    {
@@ -114,29 +139,40 @@ namespace userex
    void font_view::on_control_event(::user::control_event * pevent)
    {
 
-
-      if (pevent->m_eevent == ::user::event_after_change_cur_sel
-            || pevent->m_eevent == ::user::event_after_change_cur_hover)
+      if(m_puiViewNotify != NULL)
       {
-
-         if (m_pview == pevent->m_puie)
-         {
-
-            ::user::view_update_hint uh(get_app());
-
-            uh.m_ehint = ::user::view_update_hint::hint_control_event;
-            uh.m_pusercontrolevent = pevent;
-            uh.m_pui =this;
-
-            GetTypedParent<::userex::pane_tab_view>()->get_document()->update_all_views(this, 0, &uh);
-
-         }
-
-         pevent->m_bRet = true;
-
+         
+         m_puiViewNotify->on_control_event(pevent);
+         
       }
+      
+      ::user::impact::on_control_event(pevent);
+
+//      if (pevent->m_eevent == ::user::event_after_change_cur_sel
+//            || pevent->m_eevent == ::user::event_after_change_cur_hover)
+//      {
+//
+//         if (m_pview == pevent->m_puie)
+//         {
+//
+//            ::user::view_update_hint uh(get_app());
+//
+//            uh.m_ehint = ::user::view_update_hint::hint_control_event;
+//            uh.m_pusercontrolevent = pevent;
+//            uh.m_pui =this;
+//
+//            GetTypedParent<::userex::pane_tab_view>()->get_document()->update_all_views(this, 0, &uh);
+//
+//         }
+//
+//         pevent->m_bRet = true;
+//
+//      }
 
    }
+   
+   
+   
 
 
 } // namespace userex

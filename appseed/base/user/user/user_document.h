@@ -24,6 +24,7 @@ namespace user
          ::user::impact_system *          m_pimpactsystem;
          spa(::user::impact)              m_viewspa;
          ::user::document_data_map        m_datamap;
+      ::user::impact *m_pviewTopic;
 
 
 

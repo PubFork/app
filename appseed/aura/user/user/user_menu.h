@@ -18,7 +18,7 @@ namespace user
       menu *                                 m_pmenuParent;
       sp(menu_item)                          m_pitem;
       ::user::interaction *                  m_puiParent;
-      ::user::interaction *                  m_puiNotify;
+      ::user::interaction *                  m_puiMenuNotify;
       HMENU                                  m_hmenu;
       bool                                   m_bOwnItem;
       size                                   m_size;

@@ -228,6 +228,10 @@ class job;
 class stdio_file;
 struct memory_state;
 
+
+#include "core/user/userex/userex_const.h"
+
+
 #include "core_strn.h"
 
 

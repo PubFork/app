@@ -11,7 +11,6 @@ namespace user
       menu_list_window(papp)
    {
 
-      m_puiNotify = NULL;
       m_bAutoClose = false;
 
    }
@@ -56,10 +55,10 @@ namespace user
    void menu_list_view::route_command_message(::user::command * pcommand)
    {
 
-      if (m_puiNotify != NULL && m_puiNotify != this)
+      if (m_puiMenuNotify != NULL && m_puiMenuNotify != this)
       {
 
-         m_puiNotify->route_command_message(pcommand);
+         m_puiMenuNotify->route_command_message(pcommand);
 
          //if(pcommand->m_bRet)
          {
@@ -87,7 +86,7 @@ namespace user
 
       //menu_fill(GetParentFrame(), this);
 
-      m_puiNotify = puiNotify;
+      m_puiMenuNotify = puiNotify;
 
       return true;
 

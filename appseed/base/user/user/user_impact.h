@@ -53,7 +53,7 @@ namespace user
 
       id                      m_idCreator;
       ::user::document *      m_pdocument;
-
+      ::user::interaction *   m_puiViewNotify;
 
 
       impact();

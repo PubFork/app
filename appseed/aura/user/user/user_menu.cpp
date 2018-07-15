@@ -30,7 +30,7 @@ namespace user
       m_bAutoDelete = true;
       m_bOwnItem = true;
       m_puiParent = NULL;
-      m_puiNotify = NULL;
+      m_puiMenuNotify = NULL;
       m_pmenuParent = NULL;
       m_psubmenu = NULL;
       m_iHoverSubMenu = -1;
@@ -52,7 +52,7 @@ namespace user
       m_bPositionHint = false;
       m_iHoverSubMenu = -1;
       m_puiParent = NULL;
-      m_puiNotify = NULL;
+      m_puiMenuNotify = NULL;
       m_pmenuParent = NULL;
       m_psubmenu = NULL;
       m_bAutoDelete = true;
@@ -297,13 +297,13 @@ namespace user
       if (puiNotify != NULL)
       {
 
-         m_puiNotify = puiNotify;
+         m_puiMenuNotify = puiNotify;
 
       }
-      else if (m_puiNotify == NULL)
+      else if (m_puiMenuNotify == NULL)
       {
 
-         m_puiNotify = m_puiParent;
+         m_puiMenuNotify = m_puiParent;
 
       }
 
@@ -439,7 +439,7 @@ namespace user
       if (get_parent() == NULL)
       {
 
-         pcontext->m_pstyle = m_puiNotify;
+         pcontext->m_pstyle = m_puiMenuNotify;
 
       }
       else
@@ -834,7 +834,7 @@ namespace user
                else
                {
 
-                  ::user::interaction * puiNotify = m_puiNotify;
+                  ::user::interaction * puiNotify = m_puiMenuNotify;
 
                   id idCommand = pevent->m_puie->m_id;
 
@@ -903,7 +903,7 @@ namespace user
 
                            m_psubmenu->hint_position(rect.top_right());
 
-                           m_psubmenu->track_popup_menu(m_puiNotify);
+                           m_psubmenu->track_popup_menu(m_puiMenuNotify);
 
                         }
                         else
@@ -1018,7 +1018,7 @@ namespace user
 
             m_psubmenu->hint_position(rect.top_right());
 
-            m_psubmenu->track_popup_menu(this, m_puiNotify);
+            m_psubmenu->track_popup_menu(this, m_puiMenuNotify);
          }
 
          m_idTimerMenu.is_empty();
@@ -1288,7 +1288,7 @@ namespace user
    ::user::interaction * menu::get_target_window()
    {
 
-      ::user::interaction * puiTarget = m_puiNotify;
+      ::user::interaction * puiTarget = m_puiMenuNotify;
 
       if (puiTarget == NULL)
       {
@@ -1321,7 +1321,7 @@ namespace user
    void menu::update_command(menu_item * pitemParent)
    {
 
-      if (m_puiNotify == NULL)
+      if (m_puiMenuNotify == NULL)
       {
 
          return;
@@ -1357,7 +1357,7 @@ namespace user
 
          command.m_puiOther = pitem->m_pui;
 
-         m_puiNotify->on_command_probe(&command);
+         m_puiMenuNotify->on_command_probe(&command);
 
          if (pitem->m_pmenu != NULL)
          {
