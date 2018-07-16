@@ -186,13 +186,18 @@ namespace user
 
    }
 
+   
+   void form_list_view::on_control_event(::user::control_event * pevent)
+   {
+      
+      form_view::on_control_event(pevent);
+      
+      list_view::on_control_event(pevent);
+      
+   }
 
 
 } // namespace user
-
-
-
-
 
 
 

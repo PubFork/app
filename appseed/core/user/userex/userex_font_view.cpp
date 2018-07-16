@@ -44,7 +44,7 @@ namespace userex
    void font_view::install_message_routing(::message::sender * psender)
    {
    
-      ::user::impact::install_message_routing(psender);
+      ::user::split_view::install_message_routing(psender);
       
       IGUI_MSG_LINK(WM_CREATE, psender, this, &font_view::_001OnCreate);
    
@@ -56,12 +56,6 @@ namespace userex
       
       pmessage->previous();
       
-      if(get_document()->m_pviewTopic == NULL)
-      {
-         
-         get_document()->m_pviewTopic = this;
-         
-      }
       
    }
    
@@ -132,6 +126,14 @@ namespace userex
          System.simple_message_box(NULL, "Could not create file list ::user::impact");
 
       }
+      
+      if(get_document()->m_pviewTopic == NULL)
+      {
+         
+         get_document()->m_pviewTopic = m_pview;
+         
+      }
+
 
    }
 

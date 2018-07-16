@@ -332,6 +332,28 @@ namespace user
          VIEW::_001OnDraw(pgraphics);
 
       }
+      
+      
+      virtual void on_control_event(::user::control_event * pevent) override
+      {
+       
+         VIEW::on_control_event(pevent);
+         
+         if(pevent->m_bRet)
+         {
+          
+            return;
+            
+         }
+      
+         if(m_puiViewNotify != NULL)
+         {
+            
+            m_puiViewNotify->on_control_event(pevent);
+            
+         }
+      
+      }
 
    };
 

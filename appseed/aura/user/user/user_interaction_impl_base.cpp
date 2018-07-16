@@ -132,7 +132,7 @@ namespace user
    bool interaction_impl_base::check_show_flags()
    {
 
-      return m_bShowFlags;
+      return m_bShowFlags || m_bShowWindow;
 
    }
 
@@ -143,6 +143,8 @@ namespace user
       m_rectParentClient = m_rectParentClientRequest;
 
       m_bShowFlags = false;
+      
+      m_bShowWindow = false;
 
    }
 
@@ -1530,6 +1532,9 @@ namespace user
          m_iShowFlags |= SWP_HIDEWINDOW;
 
       }
+      
+      m_bShowWindow = true;
+      m_iShowWindow = nCmdShow;
 
       m_pui->set_need_redraw();
 
