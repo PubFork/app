@@ -51,6 +51,7 @@ namespace user
       COLORREF                         m_crSmallMask;
       int32_t                          m_iSmallImageWidth;
       index                            m_iSubItem;
+      index                            m_iColumn;
       sp(image_list)                   m_pil;
       sp(image_list)                   m_pilHover;
       ::visual::icon_int_map           m_mapIcon;
@@ -391,6 +392,7 @@ namespace user
 
 
       virtual void _001AddColumn(list_column & pcolumn);
+      virtual void _001OnAddColumn(list_column * pcolumn);
 
       virtual void _001GetGroupRect(draw_list_item * pitem);
       virtual void _001GetItemRect(draw_list_item * pitem);
@@ -461,8 +463,10 @@ namespace user
       virtual bool _001OnClick(uint_ptr uiFlags, point point) override;
       virtual bool _001OnRightClick(uint_ptr uiFlags, point point) override;
 
-      void _001GetSelection(range & selection);
+      virtual void _001GetSelection(range & selection);
+      virtual index _001GetCurItem();
 
+      virtual void _001SelectItem(index iItem);
 
       virtual bool _001IsEditing() override;
 

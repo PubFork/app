@@ -1023,6 +1023,8 @@ namespace user
 
       _001OnInitializeForm(pcontrol);
 
+      pdescriptor->m_pui = pcontrol;
+
       return true;
 
    }

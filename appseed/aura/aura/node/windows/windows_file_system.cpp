@@ -380,8 +380,8 @@ namespace windows
          }
 
          HANDLE hFile = ::CreateFileW((LPWSTR)(LPCWSTR)lpszFileName,GENERIC_READ | GENERIC_WRITE,
-            FILE_SHARE_READ,NULL,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,
-            NULL);
+                                      FILE_SHARE_READ,NULL,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,
+                                      NULL);
 
          if(hFile == INVALID_HANDLE_VALUE)
          {
@@ -433,6 +433,18 @@ namespace windows
       }
 
       return NULL;
+
+   }
+
+
+   ::file::path file_system::dropbox_info_json(::aura::application * papp)
+   {
+
+      ::file::path pathJson;
+
+      pathJson = user_appdata_local() / "Dropbox/info.json";
+
+      return pathJson;
 
    }
 

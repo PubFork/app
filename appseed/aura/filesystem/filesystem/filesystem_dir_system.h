@@ -193,6 +193,8 @@ namespace file
          virtual ::file::path video();
          virtual ::file::path image();
 
+         virtual ::file::path dropbox(::aura::application * papp);
+
 
       };
 

@@ -575,6 +575,15 @@ namespace file
       return m_pauraapp->m_paurasystem->m_spfile->nessie(varFile, m_pauraapp);
    }
 
+
+   ::file::path application::dropbox_info_json()
+   {
+
+      return m_pauraapp->m_paurasystem->m_spfile->dropbox_info_json( m_pauraapp);
+
+   }
+
+
 } // namespace file
 
 

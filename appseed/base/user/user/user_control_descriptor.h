@@ -28,6 +28,7 @@ namespace user
       id                            m_uiText;
       sp(type)                      m_typeinfo;
       index                         m_iSubItem;
+      index                         m_iColumn;
       id                            m_idPrivateDataSection;
       bool                          m_bTransparent;
       e_control_type                m_econtroltype;

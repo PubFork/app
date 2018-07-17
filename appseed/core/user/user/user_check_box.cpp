@@ -90,17 +90,89 @@ namespace user
    void check_box::_001OnDrawNormal(::draw2d::graphics * pgraphics)
    {
 
-      if (m_puserstyle != NULL)
+      style_context style(this);
+
+      while (style)
       {
 
-         rect rectClient;
+         if (style->_001DrawCheckBox(pgraphics, this))
+         {
 
-         GetClientRect(rectClient);
+            return;
 
-         m_puserstyle->_001DrawCheckBox(pgraphics, rectClient, _001GetCheck());
+         }
+
+         style.next();
 
       }
 
+      ::rect rectClient;
+
+      GetClientRect(rectClient);
+
+      int w = rectClient.width();
+
+      int h = rectClient.height();
+
+      if (w <= 0 || h <= 0)
+      {
+
+         return;
+
+      }
+
+      ::check::e_check echeck = _001GetCheck();
+
+      ::draw2d::savedc savedc(pgraphics);
+
+      pgraphics->OffsetViewportOrg(rectClient.left, rectClient.top);
+
+      ::rect rectCheckBox;
+
+      ::rect rectText;
+
+      {
+
+         int iSize = MIN(15 * w / 15, 15 * h / 15);
+
+         rectCheckBox.left = 0;
+         rectCheckBox.top = 0;
+         rectCheckBox.right = iSize;
+         rectCheckBox.bottom = iSize;
+
+         rectText = rectClient;
+
+         rectText.left = rectCheckBox.right + 4;
+
+         if (echeck == ::check::tristate)
+         {
+
+            pgraphics->fill_solid_rect(rectCheckBox, ARGB(255, 220, 220, 220));
+
+         }
+
+         pgraphics->draw3d_rect(rectCheckBox, ARGB(255, 128, 128, 128), ARGB(255, 128, 128, 128));
+
+         if (echeck == ::check::tristate || echeck == ::check::checked)
+         {
+
+            draw_check(echeck, rectCheckBox, pgraphics);
+
+         }
+
+      }
+
+      {
+
+         string strText;
+
+         get_window_text(strText);
+
+         int iDrawParams = _001GetInt(::user::int_edit_draw_text_flags);
+
+         pgraphics->draw_text(strText, rectText, iDrawParams);
+
+      }
 
    }
 

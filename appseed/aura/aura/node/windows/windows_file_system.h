@@ -38,12 +38,15 @@ namespace windows
       virtual bool update_module_path();
 
       virtual ::file::file_sp get_file(var varFile,UINT nOpenFlags,cres * pfesp,::aura::application * papp);
-      
+
+
+      virtual ::file::path dropbox_info_json(::aura::application * papp) override;
+
+
    };
 
 
 } // namespace windows
-
 
 
 

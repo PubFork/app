@@ -393,9 +393,6 @@
     <Filter Include="Source Files\aura\os\apple">
       <UniqueIdentifier>{237ca3ba-433e-4aca-8537-907e08518367}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\aura\os\windows\NewFilter1">
-      <UniqueIdentifier>{880667d5-2f79-49b1-89fc-314b7ace040d}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="primitive\primitive_id.h">
@@ -2753,6 +2750,12 @@
     <ClInclude Include="filesystem\file\file_serialize.h">
       <Filter>Header Files\filesystem\file</Filter>
     </ClInclude>
+    <ClInclude Include="aura\os\windows\windows_dir.h">
+      <Filter>Header Files\aura\os\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\windows\windows2.h">
+      <Filter>Header Files\aura\os\windows</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="multithreading\multithreading_condition.cpp">
@@ -4746,6 +4749,9 @@
     </ClCompile>
     <ClCompile Include="filesystem\file\file_serialize.cpp">
       <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_dir.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

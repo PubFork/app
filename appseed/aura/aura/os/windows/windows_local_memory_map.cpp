@@ -15,7 +15,7 @@ bool file_memory_map::open()
 
       m_hfile = INVALID_HANDLE_VALUE;
 
-      m_hfilemap = CreateFileMappingW(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, m_size, wstr);
+      m_hfilemap = CreateFileMappingW(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, (DWORD) m_size, wstr);
 
    }
    else

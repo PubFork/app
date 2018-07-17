@@ -2277,6 +2277,22 @@ ret:
       }
 
 
+      ::file::path system::dropbox(::aura::application * papp)
+      {
+
+         ::file::path pathJson = App(papp).file().dropbox_info_json();
+
+         string strJson = Application.file().as_string(pathJson);
+
+         ::property_set set;
+
+         set.parse_json(strJson);
+
+         return set["personal"]["path"];
+
+      }
+
+
    }  // namespace dir
 
 

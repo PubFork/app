@@ -134,6 +134,9 @@ namespace file
       virtual string nessie(var varFile);
 
 
+      virtual ::file::path dropbox_info_json();
+
+
    };
 
 

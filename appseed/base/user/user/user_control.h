@@ -9,6 +9,9 @@ namespace user
 {
 
 
+   class draw_list_item;
+
+
    class CLASS_DECL_BASE control :
       virtual public ::user::box
    {
@@ -20,7 +23,7 @@ namespace user
          MessageParamGetBaseControlExPtr = 1
       };
 
-
+      ::aura::draw_context *     m_pdrawcontext;
       index                      m_iHover;
       e_element                  m_eelementHover;
       control_descriptor *       m_pdescriptor;

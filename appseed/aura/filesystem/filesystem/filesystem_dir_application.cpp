@@ -174,36 +174,18 @@ namespace file
 
       ::file::path application::pathfind(const string & pszEnv, const string & pszTopic, const string & pszMode)
       {
+
          return m_pauraapp->m_paurasystem->m_spdir->pathfind(pszEnv, pszTopic, pszMode, m_pauraapp);
+
       }
 
-      
+
       ::file::path application::dropbox()
       {
-         
-         
-#ifdef MACOS
-         
-         ::file::path pathJson = ::dir::home() / ".dropbox/info.json";
-         
-         string strJson = Application.file().as_string(pathJson);
-         
-         ::property_set set;
-         
-         set.parse_json(strJson);
-         
-         return set["personal"]["path"];
-      
-#else
-         
-         _throw(todo(get_app()));
-         
-#endif
-         
-         
-         
-      }
 
+         return m_pauraapp->m_paurasystem->m_spdir->dropbox(m_pauraapp);
+
+      }
 
 
    } // namespace dir

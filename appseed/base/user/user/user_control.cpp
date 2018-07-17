@@ -8,6 +8,7 @@ namespace user
    control::control()
    {
 
+      m_pdrawcontext = NULL;
       m_pdescriptor = NULL;
       m_iHover = -1;
       m_bControlExCommandEnabled = true;
@@ -15,6 +16,7 @@ namespace user
       m_pformcallback = NULL;
       m_ulFlags &= ~object::flag_auto_delete;
       m_bDefaultWalkPreTranslateParentTree = true;
+
    }
 
 
@@ -346,6 +348,15 @@ namespace user
    bool control::GetWindowRect(LPRECT lprect)
    {
 
+      if (m_pdrawcontext != NULL)
+      {
+
+         *lprect = m_pdrawcontext->m_rectWindow;
+
+         return true;
+
+      }
+
       return ::user::box::GetWindowRect(lprect);
 
    }
@@ -354,6 +365,18 @@ namespace user
 
    bool control::GetClientRect(LPRECT lprect)
    {
+
+      if (m_pdrawcontext != NULL)
+      {
+
+         *lprect = m_pdrawcontext->m_rectClient;
+
+         offset(lprect, -m_pdrawcontext->m_rectClient.top_left());
+
+         return true;
+
+      }
+
 
       return ::user::box::GetClientRect(lprect);
 

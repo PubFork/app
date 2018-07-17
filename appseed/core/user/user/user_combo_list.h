@@ -21,6 +21,7 @@ namespace user
    public:
 
 
+      bool                                m_bMovingComboBox;
       bool                                m_bComboList;
       combo_box *                         m_pcombo;
       index                               m_iHover;

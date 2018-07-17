@@ -99,7 +99,49 @@ namespace user
 
       GetClientRect(rectClient);
 
-      if(!select_text_color(pgraphics,color_text))
+      ::user::e_color colorText = color_text;
+
+      if (m_pdrawcontext != NULL)
+      {
+
+         if (m_pdrawcontext->is_control_selected())
+         {
+
+            if (m_pdrawcontext->is_control_hover())
+            {
+
+               colorText = color_text_selected_highlight;
+
+            }
+            else
+            {
+
+               colorText = color_text_selected;
+
+            }
+
+         }
+         else
+         {
+
+            if (m_pdrawcontext->is_control_hover())
+            {
+
+               colorText = color_text_hover;
+
+            }
+            else
+            {
+
+               colorText = color_text;
+
+            }
+
+         }
+
+      }
+
+      if(!select_text_color(pgraphics,colorText))
       {
 
          pgraphics->set_text_color(ARGB(255,0,0,0));
@@ -112,7 +154,7 @@ namespace user
 
       select_font(pgraphics, font_plain_edit);
 
-      pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
+      //pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
 
       int iDrawTextFlags = _001GetInt(m_eintDrawTextFlags);
 
@@ -760,6 +802,8 @@ namespace user
          ev.m_id = m_id;
 
          ev.m_eevent = ::user::event_after_change_cur_sel;
+
+         ev.m_iItem = iSel;
 
          ev.m_actioncontext = actioncontext;
 

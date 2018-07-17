@@ -19,6 +19,7 @@ namespace user
    class place_holder;
    class tab;
    class tab_pane;
+   class check_box;
    class menu_interaction;
    class menu_button;
    class menu_item;

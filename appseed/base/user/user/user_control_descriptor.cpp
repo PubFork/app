@@ -54,6 +54,7 @@ namespace user
       m_puiParent = NULL;
       m_bSubclassed = false;
       m_iSubItem = -1;
+      m_iColumn = -1;
 
    }
 
@@ -88,6 +89,7 @@ namespace user
       m_ddx.m_pvoid = control_descriptor.m_ddx.m_pvoid;
       m_puiParent = control_descriptor.m_puiParent;
       m_iSubItem = control_descriptor.m_iSubItem;
+      m_iColumn = control_descriptor.m_iColumn;
       m_setValue = control_descriptor.m_setValue;
       m_iSubItemDisableCheckBox = control_descriptor.m_iSubItemDisableCheckBox;
       m_iSubItemDuplicateCheckBox = control_descriptor.m_iSubItemDuplicateCheckBox;

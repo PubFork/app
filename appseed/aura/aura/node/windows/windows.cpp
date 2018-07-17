@@ -29,6 +29,22 @@ namespace windows
    }
 
 
+   ::file::path CLASS_DECL_AURA shell_get_special_folder_path(int32_t csidl, bool fCreate, oswindow oswindow)
+   {
+
+      ::file::path path;
+
+      if (!shell_get_special_folder_path(NULL, path, csidl, fCreate))
+      {
+
+         return "";
+
+      }
+
+      return path;
+
+   }
+
    DWORD get_file_attributes(const char * lpFileName)
    {
 

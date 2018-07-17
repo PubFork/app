@@ -33,8 +33,13 @@ namespace user
       virtual void set_viewport_offset(int, int) override;
       virtual ::pointd get_viewport_offset() override;
       virtual ::size get_total_size() override;
-      
+
       virtual void on_control_event(::user::control_event * pevent) override;
+
+      virtual void OnActivateView(bool bActivate, sp(::user::impact) pActivateView, sp(::user::impact) pviewDeactivate);
+
+      virtual index _001GetCurItem() override;
+
 
    };
 

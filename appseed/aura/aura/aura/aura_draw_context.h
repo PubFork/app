@@ -92,6 +92,8 @@ namespace aura
       draw_context();
 
 
+      virtual bool is_control_selected();
+      virtual bool is_control_hover();
 
 
    };

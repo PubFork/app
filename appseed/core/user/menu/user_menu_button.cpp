@@ -215,11 +215,12 @@ namespace user
          uiImage,
          rectImage.top_left(),
          0);
+
       }
       else
       {
 
-         m_puserstyle->DrawCheck(m_echeck, m_rectCheckBox, pgraphics);
+         m_puserstyle->draw_check(m_echeck, m_rectCheckBox, pgraphics);
 
       }
 

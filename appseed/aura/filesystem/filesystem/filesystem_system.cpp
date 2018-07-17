@@ -2807,10 +2807,19 @@ restart:
    }
 
 
+   ::file::path system::dropbox_info_json(::aura::application * papp)
+   {
+
+      ::file::path pathJson;
+
+      pathJson = ::dir::home() / ".dropbox/info.json";
+
+      return pathJson;
+
+   }
+
+
 } // namespace file
-
-
-
 
 
 

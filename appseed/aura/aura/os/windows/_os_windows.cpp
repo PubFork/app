@@ -14,6 +14,7 @@
 #include "windows_application.cpp"
 #include "windows_aura.cpp"
 #include "windows_debug.cpp"
+#include "windows_dir.cpp"
 #include "windows_dll.cpp"
 #include "windows_error.cpp"
 #include "windows_file.cpp"

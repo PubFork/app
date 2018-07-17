@@ -1079,6 +1079,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_dir.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="aura\os\windows\windows_graphics.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
@@ -2701,8 +2704,10 @@
     <ClInclude Include="aura\os\os_time.h" />
     <ClInclude Include="aura\os\os_windowing.h" />
     <ClInclude Include="aura\os\windows\windows.h" />
+    <ClInclude Include="aura\os\windows\windows2.h" />
     <ClInclude Include="aura\os\windows\windows_comptr.h" />
     <ClInclude Include="aura\os\windows\windows_d2d1_1.h" />
+    <ClInclude Include="aura\os\windows\windows_dir.h" />
     <ClInclude Include="aura\os\windows\windows_file_watcher.h" />
     <ClInclude Include="aura\os\windows\windows_gdiplus.h" />
     <ClInclude Include="aura\os\windows\windows_implementation.h" />

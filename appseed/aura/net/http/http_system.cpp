@@ -1916,7 +1916,7 @@ retry_session:
       else if(iStatusCode == 0)
       {
          DWORD dwDelta = get_tick_count() - dwStart;
-         if (iTry <= 1 &&  dwDelta < iTimeoutTotalMs)
+         if (iTry <= 1 &&  ::comparison::lt(dwDelta, iTimeoutTotalMs))
          {
             Sleep(300);
             goto retry;
@@ -2259,9 +2259,9 @@ retry_session:
    {
 
       single_lock sl(m_pmutexDownload, true);
-      
+
       int32_t iStatusCode = 0;
-      
+
       try
       {
 
@@ -2307,13 +2307,13 @@ retry_session:
       }
       catch(...)
       {
-         
+
       }
 
       m_straExists.remove(pszUrl);
 
       return iStatusCode == 200;
-      
+
    }
 
 

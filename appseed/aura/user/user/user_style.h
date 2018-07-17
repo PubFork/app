@@ -40,7 +40,7 @@ namespace user
 
       virtual bool _001OnDrawMainFrameBackground(::draw2d::graphics * pgraphics,::user::frame * pframe) override;
 
-      virtual void DrawCheck(::check::e_check echeck, const RECT & rect, ::draw2d::graphics * pgraphics) override;
+      virtual bool draw_check(::check::e_check echeck, LPCRECT lpcrect, ::draw2d::graphics * pgraphics) override;
 
       virtual bool set_translucent();
 
@@ -58,7 +58,7 @@ namespace user
 
       //      virtual bool _001GetMainFrameTranslucency(::user::e_translucency & etranslucency) override;
 
-      virtual void _001DrawCheckBox(::draw2d::graphics * pgraphics, LPCRECT lpcrectClient, ::check::e_check echeck) override;
+      virtual bool _001DrawCheckBox(::draw2d::graphics * pgraphics, ::user::check_box * pcheckbox) override;
 
       virtual bool _001DrawToolbarItem(::draw2d::graphics * pgraphics, int32_t iItem, ::user::toolbar * ptoolbar) override;
 

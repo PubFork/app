@@ -123,6 +123,7 @@ namespace windows
 
    CLASS_DECL_AURA HINSTANCE   load_library(const char * lpsz);
    CLASS_DECL_AURA bool        shell_get_special_folder_path(oswindow oswindow,::file::path &str,int32_t csidl,bool fCreate);
+   CLASS_DECL_AURA ::file::path  shell_get_special_folder_path(int32_t csidl, bool fCreate = true, oswindow oswindow = NULL);
    CLASS_DECL_AURA DWORD       get_file_attributes(const char * lpFileName);
    CLASS_DECL_AURA bool        create_directory(const char * lpPathName,LPSECURITY_ATTRIBUTES lpSecurityAttributes);
    CLASS_DECL_AURA DWORD       get_current_directory(string & str);

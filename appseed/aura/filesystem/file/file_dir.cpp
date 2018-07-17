@@ -990,7 +990,7 @@ bool dir::mkdir(const ::file::path & path)
 
    hwstring path(MAX_PATH * 8);
 
-   if(!GetModuleFileNameW(NULL,path,path.size()))
+   if(!GetModuleFileNameW(NULL, path, (DWORD) path.size()))
    {
 
       return "";

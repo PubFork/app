@@ -9,19 +9,19 @@ namespace user
    {
 
       defer_create_mutex();
-      
+
       m_bComboList = true;
-      
+
       m_puiDeactivateTogether = NULL;
-      
+
       m_puiDeactivateTogetherSet = NULL;
-      
+
       m_pcombo = NULL;
-      
+
       m_iHover = -1;
-      
+
       m_iBorder = 6;
-      
+
    }
 
 
@@ -42,6 +42,8 @@ namespace user
       m_iHover = -1;
 
       m_iBorder = 6;
+
+      m_bMovingComboBox = false;
 
    }
 
@@ -227,18 +229,18 @@ namespace user
    void combo_list::query_full_size(LPSIZE lpsize)
    {
 
-      ShowWindow(SW_HIDE);
+      //ShowWindow(SW_HIDE);
 
-      int i = 0;
-      while (IsWindowVisible() && i < 10)
-      {
+      //int i = 0;
+      //while (IsWindowVisible() && i < 10)
+      //{
 
-         Sleep(5);
+      //   Sleep(5);
 
-         i++;
+      //   i++;
 
 
-      }
+      //}
 
       synch_lock sl(m_pmutex);
 
@@ -367,7 +369,7 @@ namespace user
 
          ShowWindow(SW_HIDE);
 
-         if (m_pcombo != NULL)
+         if (m_pcombo != NULL && m_pcombo->IsWindowVisible())
          {
 
             m_pcombo->SetFocus();
@@ -435,7 +437,14 @@ namespace user
 
       SCAST_PTR(::message::base, pbase, pobj);
 
-      post_message(WM_CLOSE);
+      //post_message(WM_CLOSE);
+
+      if (!m_bMovingComboBox)
+      {
+
+         ShowWindow(SW_HIDE);
+
+      }
 
       pbase->m_bRet = true;
 
@@ -631,7 +640,6 @@ namespace user
          if (eelement == element_item)
          {
 
-
             ::user::control_event ev;
 
             ev.m_puie = this;
@@ -642,6 +650,8 @@ namespace user
 
             ev.m_iItem = iItem;
 
+            ev.m_id = m_id;
+
             on_control_event(&ev);
 
          }
@@ -651,6 +661,7 @@ namespace user
       pobj->m_bRet = true;
 
    }
+
 
    void combo_list::_001OnMButtonDown(::message::message * pobj)
    {
@@ -671,12 +682,15 @@ namespace user
       }
       else
       {
+
          m_pcombo->_001ShowDropDown(false);
+
       }
 
       pobj->m_bRet = true;
 
    }
+
 
    void combo_list::_001OnRButtonDown(::message::message * pobj)
    {
@@ -697,7 +711,9 @@ namespace user
       }
       else
       {
+
          m_pcombo->_001ShowDropDown(false);
+
       }
 
       pobj->m_bRet = true;
@@ -834,7 +850,7 @@ namespace user
       rect rectList;
 
       rectList.left = rectWindow.left;
-      rectList.right = rectWindow.left + sizeFull.cx;
+      rectList.right = rectWindow.left + MAX(rectWindow.width(), sizeFull.cx);
       rectList.top = rectWindow.bottom;
       rectList.bottom = rectWindow.bottom + sizeFull.cy;
 
@@ -911,6 +927,7 @@ namespace user
 
       keyboard_set_focus();
 
+      set_need_redraw();
 
 //#endif
 

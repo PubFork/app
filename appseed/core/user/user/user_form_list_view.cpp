@@ -186,14 +186,50 @@ namespace user
 
    }
 
-   
+
    void form_list_view::on_control_event(::user::control_event * pevent)
    {
-      
+
       form_view::on_control_event(pevent);
-      
+
       list_view::on_control_event(pevent);
-      
+
+   }
+
+
+   void form_list_view::OnActivateView(bool bActivate, sp(::user::impact) pActivateView, sp(::user::impact) pviewDeactive)
+   {
+      //    UNUSED(pActivateView);   // unused in release builds
+
+      if (bActivate && m_pcontrolEdit.is_null())
+      {
+         //ASSERT(pActivateView == this);
+
+         // take the focus if this frame/::user::impact/pane is now active
+         if (IsTopParentActive())
+         {
+
+            SetFocus();
+
+         }
+
+      }
+
+   }
+
+
+   index form_list_view::_001GetCurItem()
+   {
+
+      if (m_pcontrolEdit.is_set())
+      {
+
+         return m_iEditItem;
+
+      }
+
+      return ::user::list_view::_001GetCurItem();
+
    }
 
 

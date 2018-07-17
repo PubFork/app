@@ -92,26 +92,32 @@ namespace user
    }
 
 
-   void style::DrawCheck(::check::e_check echeck, const RECT & rect, ::draw2d::graphics * pgraphics)
+   bool style::draw_check(::check::e_check echeck, LPCRECT lpcrect, ::draw2d::graphics * pgraphics)
    {
 
-      if (echeck == ::check::checked)
+      if (echeck == ::check::tristate || echeck == ::check::checked)
       {
 
-         point_array pta;
+         int w = ::width(lpcrect);
 
-         pta.add(point(2, 10));
-         pta.add(point(6, 14));
-         pta.add(point(14, 6));
-         pta.add(point(14, 2));
-         pta.add(point(6, 12));
-         pta.add(point(2, 8));
+         int h = ::height(lpcrect);
 
-         pta.offset(rect.left, rect.top);
+         ::draw2d::pen_sp pen(allocer());
 
-         pgraphics->polygon(pta);
+         pen->create_solid(1 * (w + h) / 30, echeck == ::check::checked ? ARGB(255, 0, 0, 0) : ARGB(255, 96, 96, 96));
+
+         pgraphics->SelectObject(pen);
+
+         pgraphics->move_to(2 * w / 15, 8 * h / 15);
+         pgraphics->line_to(6 * w / 15, 12 * h / 15);
+         pgraphics->line_to(13 * w / 15, 5 * h / 15);
+         pgraphics->move_to(2 * w / 15, 9 * h / 15);
+         pgraphics->line_to(6 * w / 15, 13 * h / 15);
+         pgraphics->line_to(13 * w / 15, 6 * h / 15);
 
       }
+
+      return true;
 
    }
 
@@ -933,57 +939,10 @@ namespace user
    //   }
 
 
-   void style::_001DrawCheckBox(::draw2d::graphics * pgraphics, LPCRECT lpcrectClient, ::check::e_check echeck)
+   bool style::_001DrawCheckBox(::draw2d::graphics * pgraphics, ::user::check_box * pcheckbox)
    {
 
-
-      int w = width(lpcrectClient);
-
-      int h = height(lpcrectClient);
-
-      if (w <= 0 || h <= 0)
-      {
-
-         return;
-
-      }
-
-      pgraphics->OffsetViewportOrg(lpcrectClient->left, lpcrectClient->top);
-
-      // if no image
-      {
-         rect rectCheckBox;
-         rectCheckBox.left = 0;
-         rectCheckBox.top = 0;
-         rectCheckBox.right = 15 * w / 15;
-         rectCheckBox.bottom = 15 * h / 15;
-         if (echeck == ::check::tristate)
-         {
-
-            pgraphics->fill_solid_rect(rectCheckBox, ARGB(255, 220, 220, 220));
-
-         }
-
-         pgraphics->draw3d_rect(rectCheckBox, ARGB(255, 128, 128, 128), ARGB(255, 128, 128, 128));
-
-         if (echeck == ::check::tristate || echeck == ::check::checked)
-         {
-
-            ::draw2d::pen_sp pen(allocer());
-
-            pen->create_solid(1 * (w + h) / 30, echeck == ::check::checked ? ARGB(255, 0, 0, 0) : ARGB(255, 96, 96, 96));
-            pgraphics->SelectObject(pen);
-            pgraphics->move_to(2 * w / 15, 8 * h / 15);
-            pgraphics->line_to(6 * w / 15, 12 * h / 15);
-            pgraphics->line_to(13 * w / 15, 5 * h / 15);
-            pgraphics->move_to(2 * w / 15, 9 * h / 15);
-            pgraphics->line_to(6 * w / 15, 13 * h / 15);
-            pgraphics->line_to(13 * w / 15, 6 * h / 15);
-         }
-
-      }
-
-      pgraphics->OffsetViewportOrg(-lpcrectClient->left, -lpcrectClient->top);
+      return false;
 
    }
 

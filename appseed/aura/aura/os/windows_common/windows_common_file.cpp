@@ -6,7 +6,7 @@
 
    hwstring hwPath(MAX_PATH * 16);
 
-   if (!GetModuleFileNameW(NULL, hwPath, hwPath.count()))
+   if (!GetModuleFileNameW(NULL, hwPath, (DWORD) hwPath.count()))
    {
 
       return "";

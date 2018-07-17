@@ -193,6 +193,9 @@ namespace file
 
       virtual bool transfer(::stream & os, ::stream & is);
 
+      virtual ::file::path dropbox_info_json(::aura::application * papp);
+
+
    };
 
 

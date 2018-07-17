@@ -1229,13 +1229,22 @@ namespace user
 
       m_columna.add(column);
 
+      m_columna.last().m_iColumn = m_columna.get_upper_bound();
+
+      _001OnAddColumn(&m_columna.last());
+
       column.m_bCustomDraw = false;
-      column.m_iControl = (UINT)-1;
-      column.m_uiSmallBitmap = (UINT)-1;
+      column.m_iControl = -1;
+      column.m_uiSmallBitmap = -1;
       column.m_bIcon = false;
       column.m_pil = NULL;
 
    }
+
+   void list::_001OnAddColumn(list_column * pcolumn)
+   {
+   }
+
 
 
    list_column::list_column()
@@ -1243,6 +1252,7 @@ namespace user
 
       m_uiSmallBitmap = (UINT)-1;
       m_iOrder = -1;
+      m_iColumn = -1;
       m_bVisible = true;
       m_pil = NULL;
       m_iControl = -1;
@@ -1347,6 +1357,7 @@ namespace user
 
       m_iOrder = column.m_iOrder;
       m_iSubItem = column.m_iSubItem;
+      m_iColumn = column.m_iColumn;
       m_uiText = column.m_uiText;
       m_iWidth = column.m_iWidth;
       m_uiSmallBitmap = column.m_uiSmallBitmap;
@@ -3918,30 +3929,85 @@ namespace user
    //   return *this;
    //}
 
+
    void list::_001GetSelection(range &range)
    {
+
       range = m_rangeSelection;
+
    }
 
-   void list::_001GetSelection(
-   ::database::id & key,
-   ::database::selection &selection)
+
+   index list::_001GetCurItem()
    {
-      if (!_001HasConfigId(key))
+
+      if (m_rangeSelection.get_item_count() != 1)
+      {
+
+         return -1;
+
+      }
+
+      return m_rangeSelection.ItemAt(0).m_iLowerBound;
+
+   }
+
+
+   void list::_001SelectItem(index iItem)
+   {
+
+      m_rangeSelection.clear();
+
+      if (iItem < 0 || iItem >= _001GetItemCount())
+      {
+
          return;
+
+      }
+
+      item_range itemrange;
+
+      itemrange.m_iLowerBound = iItem;
+      itemrange.m_iUpperBound = iItem;
+
+      m_rangeSelection.add_item(itemrange);
+
+   }
+
+
+   void list::_001GetSelection(::database::id & key, ::database::selection &selection)
+   {
+
+      if (!_001HasConfigId(key))
+      {
+
+         return;
+
+      }
+
       int_ptr iFilterSubItem = _001ConfigIdToColumnKey(key);
+
       range & range = m_rangeSelection;
+
       for (index i = 0; i < range.get_item_count(); i++)
       {
+
          item_range & itemrange = range.ItemAt(i);
+
          if (itemrange.has_sub_item(iFilterSubItem))
          {
+
             for (index iLine = itemrange.get_lower_bound(); iLine <= itemrange.get_upper_bound(); iLine++)
             {
+
                selection.add_item(key.m_id + "." + ::str::from(iLine));
+
             }
+
          }
+
       }
+
    }
 
 
@@ -3998,15 +4064,22 @@ namespace user
    //   return m_itemrangea.element_at(iItem);
    //}
 
+
    ::count list::_001GetSelectedItemCount()
    {
+
       return m_rangeSelection.get_item_count();
+
    }
 
-   ::count list::_001GetSelectedItems(index_array  & ia)
+
+   ::count list::_001GetSelectedItems(index_array & ia)
    {
+
       return m_rangeSelection.get_items(ia);
+
    }
+
 
    id list::_001GetColumnTextId(index iColumn)
    {
@@ -4014,21 +4087,27 @@ namespace user
       list_column * pcolumn = m_columna.get_visible(iColumn);
 
       if (pcolumn == NULL)
+      {
+
          return id();
+
+      }
 
       return pcolumn->m_uiText;
 
    }
 
+
    void list::_001OnLButtonDblClk(::message::message * pobj)
    {
+
       SCAST_PTR(::message::mouse, pmouse, pobj);
+
       m_iClick = 2;
 
       point pt = pmouse->m_pt;
 
       ScreenToClient(&pt);
-
 
       index iDisplayItem = -1;
 
@@ -4056,11 +4135,9 @@ namespace user
 
       }
 
-
       /* trans window_id wndidNotify = pwnd->GetOwner()->GetSafeoswindow_();
       if(wndidNotify == NULL)
       wndidNotify = pwnd->GetParent()->GetSafeoswindow_();*/
-
 
       LRESULT lresult = 0;
 
@@ -4103,24 +4180,36 @@ namespace user
 
    }
 
+
    index list::HeaderCtrlMapColumnToOrder(index iColumn)
    {
 
       if (m_plistheader == NULL)
+      {
+
          return iColumn;
+
+      }
 
       return m_plistheader->MapItemToOrder(iColumn);
 
    }
 
+
    bool list::_001OnHeaderCtrlEndDrag(WPARAM wparam, LPARAM lparam)
    {
+
       UNREFERENCED_PARAMETER(wparam);
+
       UNREFERENCED_PARAMETER(lparam);
+
       for (index iColumn = 0; iColumn < m_columna.VisibleGetCount(); iColumn++)
       {
+
          list_column * pcolumn = m_columna.get_visible(iColumn);
+
          pcolumn->m_iOrder = HeaderCtrlMapColumnToOrder(iColumn);
+
       }
 
       _001OnColumnChange();
@@ -4132,6 +4221,7 @@ namespace user
       return true;
 
    }
+
 
    /*LRESULT list::OnEndColumnHeaderDragMessage(WPARAM wparam, LPARAM lparam)
    {
@@ -4151,30 +4241,45 @@ namespace user
    return 0;
    }*/
 
+
    bool list::_001OnHeaderCtrlEndTrack(WPARAM wparam, LPARAM lparam)
    {
+
       UNREFERENCED_PARAMETER(wparam);
+
       UNREFERENCED_PARAMETER(lparam);
+
       _001OnHeaderCtrlTrack(0, 0);
 
       string str;
+
       index i;
+
       index width;
 
       for (i = 0; i < m_columna.get_count(); i++)
       {
+
          str.Format("list_column[%d].width", i);
+
          width = m_columna.element_at(i)->m_iWidth;
+
          data_set(str, width);
+
       }
 
       return true;
+
    }
+
 
    bool list::_001OnHeaderCtrlTrack(WPARAM wparam, LPARAM lparam)
    {
+
       UNREFERENCED_PARAMETER(wparam);
+
       UNREFERENCED_PARAMETER(lparam);
+
       //    for(index iColumn = 0; iColumn < m_columna.VisibleGetCount(); iColumn++)
       //  {
       //         list_column & column = m_columna.get_visible(iColumn);
@@ -4186,18 +4291,27 @@ namespace user
       Redraw();
 
       return true;
+
    }
+
 
    void list::_001ShowSubItem(index iSubItem, bool bShow)
    {
+
       string str;
+
       str.Format("SubItem[%d].Visible", iSubItem);
+
       data_set(str, bShow ? 1 : 0);
+
       m_columna.ShowSubItem(iSubItem, bShow);
+
       _001OnColumnChange();
-      Redraw();
+
+      set_need_redraw();
 
    }
+
 
    //list_column * list_column_array::_001GetByKey(index iKey)
    //{
@@ -4215,12 +4329,14 @@ namespace user
 
    //}
 
+
    ::index list_column_array::get_index(list_column * pcolumn)
    {
 
       return find_first(pcolumn);
 
    }
+
 
    ::index list_column_array::get_visible_index(list_column * pcolumn)
    {
@@ -4282,6 +4398,7 @@ namespace user
       return NULL;
 
    }
+
 
    list_column * list_column_array::get_by_index(index iIndex)
    {

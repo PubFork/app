@@ -39,14 +39,14 @@ namespace user
 
 
       virtual bool _001OnDrawMainFrameBackground(::draw2d::graphics * pgraphics,::user::frame * pframe) = 0;
-      virtual void DrawCheck(check::e_check echeck, const RECT & rect, ::draw2d::graphics * pgraphics) = 0;
+      virtual bool draw_check(::check::e_check echeck, LPCRECT lpcrect, ::draw2d::graphics * pgraphics) = 0;
       virtual bool simple_ui_draw_focus_rect(::user::interaction * pui,::draw2d::graphics * pgraphics) = 0;
       virtual bool on_ui_event(e_event eevent, e_object eobject, ::user::interaction * pui) = 0;
       virtual bool _001TabOnDrawSchema01(::draw2d::graphics * pgraphics,tab * ptab) = 0;
       virtual bool _001OnDrawMenuInteraction(::draw2d::graphics * pgraphics, menu_interaction * ptab) = 0;
       virtual void _001OnTabPaneDrawTitle(::user::tab_pane & pane,::user::tab * ptab,::draw2d::graphics * pgraphics,LPCRECT lpcrect,::draw2d::brush_sp & brushText) = 0;
       virtual bool _001OnTabLayout(::user::tab * ptab) = 0;
-      virtual void _001DrawCheckBox(::draw2d::graphics * pgraphics, LPCRECT lpcrectClient, ::check::e_check echeck) = 0;
+      virtual bool _001DrawCheckBox(::draw2d::graphics * pgraphics, ::user::check_box * pcheckbox) = 0;
       virtual bool _001DrawToolbarItem(::draw2d::graphics * pgraphics, int32_t iItem, ::user::toolbar * ptoolbar) = 0;
       virtual bool _001DrawSimpleScrollBar(::draw2d::graphics * pgraphics, simple_scroll_bar * pbar) = 0;
       virtual bool _001DrawScrollBar(::draw2d::graphics * pgraphics, ::user::scroll_bar * pbar) = 0;

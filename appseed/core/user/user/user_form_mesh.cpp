@@ -450,21 +450,37 @@ namespace user
 
       ::user::control::_000OnMouse(pmouse);
 
+      //if (pmouse->m_bRet)
+      //{
+
+      //   return;
+
+      //}
+
       //point pt = pmouse->m_pt;
+
       //ScreenToClient(&pt);
-      ///*      if(uiMessage == WM_LBUTTONDOWN)
+
+      //if(pmouse->m_id == WM_LBUTTONDOWN)
       //{
-      //int32_t iItem;
-      //int32_t iSubItem;
-      //range range;
-      //_001GetSelection(range);
-      //if(_001DisplayHitTest(pt, iItem, iSubItem))
-      //{
-      //class ::user::control_descriptor * pcontrol = m_controldescriptorset.get_by_sub_item(iSubItem);
-      //if(pcontrol != NULL
-      //&& pcontrol->m_pcontrol != NULL
-      //&& (pcontrol->m_etype == type_edit
-      //|| pcontrol->m_etype == type_edit_plain_text)
+      //
+      //   int32_t iItem;
+      //
+      //   int32_t iSubItem;
+      //
+      //   range range;
+      //
+      //   _001GetSelection(range);
+      //
+      //   if(_001DisplayHitTest(pt, iItem, iSubItem))
+      //   {
+      //
+      //      class ::user::control_descriptor * pcontrol = m_controldescriptorset.get_by_sub_item(iSubItem);
+      //
+      //      if(pcontrol != NULL
+      //      && pcontrol->m_pcontrol != NULL
+      //      && (pcontrol->m_etype == type_edit
+      //      || pcontrol->m_etype == type_edit_plain_text)
       //&& !range.has_sub_item(iItem, iSubItem))
       //{
       //_001HideEditingControls();
