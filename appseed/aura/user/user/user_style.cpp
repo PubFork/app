@@ -104,7 +104,20 @@ namespace user
 
          ::draw2d::pen_sp pen(allocer());
 
-         pen->create_solid(1 * (w + h) / 30, echeck == ::check::checked ? ARGB(255, 0, 0, 0) : ARGB(255, 96, 96, 96));
+         bool bHover = pgraphics->m_pdrawcontext != NULL && pgraphics->m_pdrawcontext->is_control_hover();
+
+         if (bHover)
+         {
+
+            pen->create_solid(1 * (w + h) / 30, echeck == ::check::checked ? ARGB(255, 50, 80, 160) : ARGB(255, 80, 120, 200));
+
+         }
+         else
+         {
+
+            pen->create_solid(1 * (w + h) / 30, echeck == ::check::checked ? ARGB(255, 0, 0, 0) : ARGB(255, 96, 96, 96));
+
+         }
 
          pgraphics->SelectObject(pen);
 

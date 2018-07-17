@@ -10,6 +10,8 @@ namespace user
       ::user::interaction(papp)
    {
 
+      m_iHover = -1;
+
       m_echeck = ::check::unchecked;
 
       m_estyle = style_normal;
@@ -48,22 +50,28 @@ namespace user
 
       ev.m_puie = this;
 
+      ev.m_id = m_id;
+
       ev.m_eevent = ::user::event_set_check;
 
       ev.m_actioncontext = actioncontext;
 
-      if(get_form() != NULL)
-      {
+      on_control_event(&ev);
 
-         get_form()->send_message(::message::message_event, 0, (LPARAM) &ev);
+      //if(get_form() != NULL)
+      //{
 
-      }
-      else
-      {
+      //   get_form()->send_message(::message::message_event, 0, (LPARAM) &ev);
 
-         GetParent()->send_message(::message::message_event, 0, (LPARAM) &ev);
+      //}
+      //else
+      //{
 
-      }
+      //   GetParent()->send_message(::message::message_event, 0, (LPARAM) &ev);
+
+      //}
+
+      set_need_redraw();
 
    }
 
@@ -105,6 +113,12 @@ namespace user
          style.next();
 
       }
+
+      ::aura::draw_context drawcontext;
+
+      drawcontext.m_bListItemHover = m_iHover >= 0;
+
+      keep < ::aura::draw_context * > keepDrawListItem(&pgraphics->m_pdrawcontext, &drawcontext, pgraphics->m_pdrawcontext, true);
 
       ::rect rectClient;
 
@@ -151,7 +165,18 @@ namespace user
 
          }
 
-         pgraphics->draw3d_rect(rectCheckBox, ARGB(255, 128, 128, 128), ARGB(255, 128, 128, 128));
+         if (drawcontext.m_bListItemHover)
+         {
+
+            pgraphics->draw3d_rect(rectCheckBox, ARGB(255, 60, 120, 200));
+
+         }
+         else
+         {
+
+            pgraphics->draw3d_rect(rectCheckBox, ARGB(255, 128, 128, 128));
+
+         }
 
          if (echeck == ::check::tristate || echeck == ::check::checked)
          {
@@ -168,7 +193,28 @@ namespace user
 
          get_window_text(strText);
 
-         int iDrawParams = _001GetInt(::user::int_edit_draw_text_flags);
+         int iDrawParams = _001GetInt(::user::int_edit_draw_text_flags, DT_LEFT | DT_VCENTER | DT_SINGLELINE);
+
+         ::draw2d::font_sp pfont = _001GetFont(::user::font_plain_edit);
+
+         pgraphics->selectFont(pfont);
+
+         COLORREF crText;
+
+         if (drawcontext.m_bListItemHover)
+         {
+
+            crText = _001GetColor(::user::color_text_hover);
+
+         }
+         else
+         {
+
+            crText = _001GetColor(::user::color_text);
+
+         }
+
+         pgraphics->set_text_color(crText);
 
          pgraphics->draw_text(strText, rectText, iDrawParams);
 
@@ -299,7 +345,25 @@ namespace user
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
 
-      pmouse->m_ecursor = ::visual::cursor_text_select;
+      if (m_iHover < 0)
+      {
+
+         m_iHover = 0;
+
+         set_need_redraw();
+
+         track_mouse_leave();
+
+      }
+
+   }
+
+   void check_box::_001OnMouseLeave(::message::message * pobj)
+   {
+
+      m_iHover = -1;
+
+      set_need_redraw();
 
 
    }
@@ -314,6 +378,7 @@ namespace user
       IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &check_box::_001OnLButtonDown);
       IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &check_box::_001OnLButtonUp);
       IGUI_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &check_box::_001OnMouseMove);
+      IGUI_MSG_LINK(WM_MOUSELEAVE, pinterface, this, &check_box::_001OnMouseLeave);
       IGUI_MSG_LINK(WM_CREATE, pinterface, this, &check_box::_001OnCreate);
 
    }
@@ -325,7 +390,7 @@ namespace user
 
       UNREFERENCED_PARAMETER(pobj);
 
-      m_puserstyle = Application.userstyle();
+      //m_puserstyle = Application.userstyle();
 
    }
 

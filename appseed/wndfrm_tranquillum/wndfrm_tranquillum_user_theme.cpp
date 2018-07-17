@@ -60,6 +60,7 @@ namespace wndfrm_tranquillum
       create_color(::user::color_text_selected, ARGB(255, 255, 255, 255));
       create_color(::user::color_text_selected_highlight, ARGB(255, 255, 255, 255));
       create_color(::user::color_text_highlight, ARGB(255, 255, 255, 255));
+      create_color(::user::color_text_hover, ARGB(255, 20, 55, 255));
       create_color(::user::color_background_selected, ARGB(255, 100, 150, 230));
       create_color(::user::color_background_selected_highlight, ARGB(255, 110, 180, 240));
       create_color(::user::color_background_highlight, ARGB(255, 120, 200, 250));
