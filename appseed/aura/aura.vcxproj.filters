@@ -4753,6 +4753,9 @@
     <ClCompile Include="aura\os\windows\windows_dir.cpp">
       <Filter>Source Files\aura\os\windows</Filter>
     </ClCompile>
+    <ClCompile Include="filesystem\file\file_cpp.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="multithreading\multithreading.inl">

@@ -3425,7 +3425,7 @@ string simple_frame_window::notification_area_extra_get_xml_menu()
             &pszAccelerator.m_p,
             &pszDescription.m_p, i);
 
-            string strLabel(pszLabel);
+            string strLabel(pszName);
 
             strLabel.replace("_", "");
 

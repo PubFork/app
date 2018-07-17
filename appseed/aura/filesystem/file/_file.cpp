@@ -7,6 +7,7 @@
 #include "file_c.cpp"
 #include "file_circular_buffer.cpp"
 #include "file_composite.cpp"
+#include "file_cpp.cpp"
 #include "file_dir.cpp"
 #include "file_dir2.cpp"
 #include "file_edit_file.cpp"

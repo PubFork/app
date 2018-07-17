@@ -53,6 +53,14 @@ namespace windows
 }
 
 
+::file::path dir::localconfig()
+{
+
+   return local() / "localconfig";
+
+}
+
+
 ::file::path dir::program_data()
 {
 

@@ -26,6 +26,7 @@ namespace dir
    CLASS_DECL_AURA ::file::path public_system();
    CLASS_DECL_AURA ::file::path system();
    CLASS_DECL_AURA ::file::path local();
+   CLASS_DECL_AURA ::file::path localconfig();
    CLASS_DECL_AURA ::file::path ca2config(); // writable root (non-bin, non-exe)
    CLASS_DECL_AURA ::file::path config();
    CLASS_DECL_AURA ::file::path program_data();
@@ -55,8 +56,8 @@ namespace dir
    CLASS_DECL_AURA ::file::path program_files_x86();
    CLASS_DECL_AURA ::file::path stage(string strAppId, string strPlatform, string strConfiguration);
    CLASS_DECL_AURA ::file::path sys_temp();
-
 } // namespace dir
+
 
 
 
