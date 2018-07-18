@@ -77,7 +77,7 @@ namespace database
 
       memory_reader reader(get_app());
 
-      if (!data_server_load(pclient, id, reader.memory(), puh))
+      if (!data_server_load(pclient, id, reader.get_memory(), puh))
       {
 
          return false;
@@ -176,7 +176,7 @@ namespace database
 
       }
 
-      if (!data_server_save(pclient, id, writer.memory(), puh))
+      if (!data_server_save(pclient, id, writer.get_memory(), puh))
       {
 
          return false;
@@ -290,7 +290,7 @@ namespace database
 
       memory_reader reader(get_app());
 
-      if (!data_server_load(pclient, id, reader.memory(), phint))
+      if (!data_server_load(pclient, id, reader.get_memory(), phint))
       {
 
          return var::type_null;
@@ -313,7 +313,7 @@ namespace database
 
       writer(var);
 
-      if (!data_server_load(pclient, id, writer.memory(), phint))
+      if (!data_server_load(pclient, id, writer.get_memory(), phint))
       {
 
          return false;

@@ -107,38 +107,31 @@ class x11data;
          const char * pszName) override;
 
       using ::user::interaction_impl::create_window;
+
       // for child windows, views, panes etc
       virtual bool create_window(
          ::user::interaction * pui,
          const char * lpszClassName,
-         const char * lpszWindowName, DWORD dwStyle,
+         const char * lpszWindowName,
+         DWORD dwStyle,
          const RECT& rect,
-         ::user::interaction * pParentWnd, id id,
-         sp(::create) pContext = NULL);
+         ::user::interaction * pParentWnd,
+         id id,
+         ::create * pContext = NULL) override;
 
       // advanced creation (allows access to extended styles)
       virtual bool create_window_ex(
          ::user::interaction * pui,
-         DWORD dwExStyle = 0,
-         const char * lpszClassName = NULL,
-         const char * lpszWindowName = NULL,
-         DWORD dwStyle = 0,
-         const RECT& rect = null_rect(),
+         ::user::create_struct & cs,
          ::user::interaction * pParentWnd = NULL,
-         id id = ::id(),
-         LPVOID lpParam = NULL) override;
+         id id = ::id()) override;
 
 
       virtual bool native_create_window_ex(
          ::user::interaction * pui,
-         DWORD dwExStyle = 0,
-         const char * lpszClassName = NULL,
-         const char * lpszWindowName = NULL,
-         DWORD dwStyle = 0,
-         const RECT& rect = null_rect(),
-         oswindow hwndParent = NULL,
-         id id = ::id(),
-         LPVOID lpParam = NULL);
+         ::user::create_struct & cs,
+         ::user::interaction * pParentWnd = NULL,
+         id id = ::id());
 
       virtual bool DestroyWindow();
 

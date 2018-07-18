@@ -257,93 +257,29 @@ namespace linux
    }
 
 
-   bool interaction_impl::create_window_ex(
-   ::user::interaction * pui,
-   DWORD dwExStyle,
-   const char * lpszClassName,
-   const char * lpszWindowName,
-   DWORD dwStyle,
-   const RECT& rect,
-   ::user::interaction * puiParent,
-   id id,
-   LPVOID lpParam /* = NULL */)
+   bool interaction_impl::create_window_ex(::user::interaction * pui, ::user::create_struct & cs, ::user::interaction * puiParent, ::id id)
    {
 
-      if(!native_create_window_ex(pui, dwExStyle, lpszClassName, lpszWindowName, dwStyle, rect, puiParent == NULL ? NULL : puiParent->get_safe_handle(), id, lpParam))
+      if(!native_create_window_ex(pui, cs, puiParent, id))
+      {
+
          return false;
+
+      }
 
       return true;
 
    }
 
 
-   bool interaction_impl::native_create_window_ex(
-   ::user::interaction * pui,
-   DWORD dwExStyle,
-   const char * lpszClassName,
-   const char * lpszWindowName,
-   DWORD dwStyle,
-   const RECT& rect,
-   oswindow hWndParent,
-   id id,
-   LPVOID lpParam)
+   bool interaction_impl::native_create_window_ex(::user::interaction * pui, ::user::create_struct & cs, ::user::interaction * puiParent, ::id id)
    {
 
       m_pui = pui;
 
       UNREFERENCED_PARAMETER(id);
 
-      ENSURE_ARG(lpszWindowName == NULL || __is_valid_string(lpszWindowName));
-
-      // allow modification of several common create parameters
-
-      ::user::create_struct cs;
-
-      cs.dwExStyle      = dwExStyle;
-      cs.lpszClass      = lpszClassName;
-      cs.lpszName       = lpszWindowName;
-      cs.style          = dwStyle;
-      cs                = rect;
-      cs.hwndParent     = hWndParent;
-      //cs.hMenu        = hWndParent == NULL ? NULL : nIDorHMenu;
-      cs.hMenu          = NULL;
-      //cs.hInstance    = System.m_hInstance;
-      cs.lpCreateParams = lpParam;
-
-
-      if(m_pui != NULL)
-      {
-
-         if(!m_pui->pre_create_window(cs))
-         {
-
-            PostNcDestroy();
-
-            return false;
-
-         }
-
-      }
-      else
-      {
-
-         if (!pre_create_window(cs))
-         {
-
-            PostNcDestroy();
-
-            return false;
-
-         }
-
-      }
-
-      if(cs.hwndParent == NULL)
-      {
-
-         cs.style &= ~WS_CHILD;
-
-      }
+      ENSURE_ARG(cs.lpszName == NULL || __is_valid_string(cs.lpszName));
 
       install_message_routing(this);
 
@@ -555,10 +491,10 @@ namespace linux
 
          m_bComposite = XGetSelectionOwner(m_oswindow->display(), XInternAtom(m_oswindow->display(), "_NET_WM_CM_S0", True));
 
-         if(lpszWindowName != NULL && strlen(lpszWindowName) > 0)
+         if(cs.lpszName != NULL && strlen(cs.lpszName) > 0)
          {
 
-            XStoreName(m_oswindow->display(), m_oswindow->window(), lpszWindowName);
+            XStoreName(m_oswindow->display(), m_oswindow->window(), cs.lpszName);
 
          }
 
@@ -630,21 +566,30 @@ namespace linux
 
 
    bool interaction_impl::create_window(
-   ::user::interaction * pui,
-   const char * lpszClassName,
-   const char * lpszWindowName,
-   DWORD dwStyle,
-   const RECT& rect,
-   ::user::interaction * pParentWnd,
-   id id,
-   sp(::create) pContext)
+    ::user::interaction * pui,
+    const char * lpszClassName,
+    const char * lpszWindowName,
+    DWORD dwStyle,
+    const RECT& rect,
+    ::user::interaction * pParentWnd,
+    id id,
+    ::create * pContext)
    {
+
       // can't use for desktop or pop-up windows (use CreateEx instead)
       ASSERT(pParentWnd != NULL);
       ASSERT((dwStyle & WS_POPUP) == 0);
 
-      if(!create_window_ex(pui, 0, lpszClassName, lpszWindowName,dwStyle | WS_CHILD, rect, pParentWnd, id, (LPVOID)pContext))
+      ::user::create_struct cs(0, lpszClassName, lpszWindowName, dwStyle, rect, pContext);
+
+      cs.hwndParent = pParentWnd->get_os_data();
+
+      if(!create_window_ex(pui, cs, pParentWnd, id))
+      {
+
          return false;
+
+      }
 
       return true;
 
@@ -663,7 +608,11 @@ namespace linux
       else
       {
 
-         if(!native_create_window_ex(pui, 0, NULL, pszName, WS_CHILD,null_rect(),MESSAGE_WINDOW_PARENT))
+         ::user::create_struct cs(0, NULL, pszName, WS_CHILD, null_rect());
+
+         cs.hwndParent = MESSAGE_WINDOW_PARENT;
+
+         if(!native_create_window_ex(pui, cs))
          {
 
             return false;

@@ -204,6 +204,8 @@ namespace draw2d_cairo
       //    point MoveTo(POINT point) override;
       bool line_to(LPCPOINTD ppt) override;
       //  bool LineTo(POINT point) override;
+      virtual bool draw_line(LPCPOINT ppt1, LPCPOINT ppt2, ::draw2d::pen * ppen) override;
+      virtual bool draw_line(LPCPOINTD ppt1, LPCPOINTD ppt2, ::draw2d::pen * ppen) override;
       bool Arc(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x3, int32_t y3, int32_t x4, int32_t y4) override;
       bool Arc(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4) override;
       bool Arc(double x, double y, double w, double h, double start, double extends) override;
@@ -512,6 +514,12 @@ namespace draw2d_cairo
       bool fill_and_draw();
       bool fill();
       bool draw();
+
+
+      virtual bool get(::draw2d::matrix & matrix);
+      virtual bool set(const ::draw2d::matrix & matrix);
+      virtual bool append(const ::draw2d::matrix & matrix);
+      virtual bool prepend(const ::draw2d::matrix & matrix);
 
 
       virtual bool flush();

@@ -299,6 +299,7 @@
 			<Option link="0" />
 		</Unit>
 		<Unit filename="aura/aura/aura_plex_heap.h" />
+		<Unit filename="aura/aura/aura_plex_heap1.cpp" />
 		<Unit filename="aura/aura/aura_plex_heap_impl.h" />
 		<Unit filename="aura/aura/aura_pointer.h" />
 		<Unit filename="aura/aura/aura_printer.h" />

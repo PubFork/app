@@ -255,7 +255,6 @@ DWORD thread::get_file_sharing_violation_timeout_total_milliseconds()
 
 
 thread::thread() :
-   ::object(get_app()),
    m_mutexUiPtra(get_app())
 {
 
@@ -264,7 +263,6 @@ thread::thread() :
    m_puiptra = NULL;
 
    memcnts_inc(this);
-
 
 }
 
@@ -278,6 +276,7 @@ thread::thread(::aura::application * papp) :
 
    construct();
 
+   m_puiptra = NULL;
 
    if(m_pauraapp != NULL && m_pauraapp->m_paurasession != NULL)
    {
@@ -297,10 +296,7 @@ thread::thread(::aura::application * papp, __THREADPROC pfnThreadProc, LPVOID pP
 {
 
    memcnts_inc(this);
-   //CommonConstruct();
 
-//   m_pthreadimpl.alloc(allocer());
-//   m_pthreadimpl->m_pthread = this;
    construct(pfnThreadProc, pParam);
 
    if(m_pauraapp != NULL && m_pauraapp->m_paurasession != NULL)
@@ -332,15 +328,18 @@ void thread::CommonConstruct()
 
    }
 
-   if (get_app() != NULL)
+   ::thread * pthreadApp = m_pauraapp;
+
+   ::thread * pthreadThis = this;
+
+   if (pthreadApp != NULL && pthreadApp != pthreadThis)
    {
 
-      m_bThreadToolsForIncreasedFps = get_app()->m_bThreadToolsForIncreasedFps;
+      m_bThreadToolsForIncreasedFps = pthreadApp->m_bThreadToolsForIncreasedFps;
 
    }
 
    m_dwThreadAffinityMask = 0;
-   //m_durationRunLock = ::duration::infinite();
 
    m_pinteractive = NULL;
 
@@ -3114,18 +3113,18 @@ bool thread::process_message(LPMESSAGE lpmessage)
 
                         if(!m_pauraapp->is_system() && m_pauraapp->is_session())
                         {
-                           
+
                            m_pauraapp->pre_translate_message(spbase);
-                           
+
                            if(spbase->m_bRet)
                               return true;
-                           
+
                         }
-                        
+
                      }
                      catch(...)
                      {
-                        
+
                      }
 
                   }

@@ -1104,6 +1104,8 @@ namespace linux
          if(is(stra[i], papp))
          {
 
+            i++;
+
             break;
 
          }

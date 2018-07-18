@@ -490,7 +490,7 @@ namespace linux
    }
 
 
-   bool copydesk::set_plain_text(const string & str)
+   bool copydesk::_set_plain_text(const string & str)
    {
 
       GtkClipboard * clipboard = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
@@ -502,7 +502,7 @@ namespace linux
    }
 
 
-   bool copydesk::get_plain_text(string & str)
+   bool copydesk::_get_plain_text(string & str)
    {
 
       sp(clipboard_data) pdata = canew(clipboard_data(get_app(), clipboard_get_plain_text));
@@ -511,7 +511,7 @@ namespace linux
 
       auto idle_source = g_idle_source_new();
 
-      g_source_set_callback(idle_source, &clipboard_image_received_func, pdata, NULL);
+      g_source_set_callback(idle_source, &clipboard_callback, pdata, NULL);
 
       g_source_attach(idle_source, gtk_main_context);
 
@@ -531,7 +531,7 @@ namespace linux
    }
 
 
-   bool copydesk::has_plain_text()
+   bool copydesk::_has_plain_text()
    {
 
       GtkClipboard* clipboard = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
@@ -541,7 +541,7 @@ namespace linux
    }
 
 
-   bool copydesk::has_filea()
+   bool copydesk::_has_filea()
    {
 
       sp(clipboard_data) pdata = canew(clipboard_data(get_app(), clipboard_get_file_target_count));
@@ -566,7 +566,7 @@ namespace linux
    }
 
 
-   bool copydesk::get_filea(::file::patha & patha, e_op & eop)
+   bool copydesk::_get_filea(::file::patha & patha, e_op & eop)
    {
 
       sp(clipboard_data) pdata = canew(clipboard_data(get_app(), clipboard_get_patha));
@@ -595,7 +595,7 @@ namespace linux
    }
 
 
-   bool copydesk::set_filea(const ::file::patha & patha, e_op eop)
+   bool copydesk::_set_filea(const ::file::patha & patha, e_op eop)
    {
 
       sp(clipboard_data) pdata = canew(clipboard_data(get_app(), clipboard_set_patha));
@@ -627,7 +627,7 @@ namespace linux
 
 
 
-   bool copydesk::desk_to_dib(::draw2d::dib * pdib)
+   bool copydesk::_desk_to_dib(::draw2d::dib * pdib)
    {
 
       sp(clipboard_data) pdata = canew(clipboard_data(get_app(), clipboard_get_dib));
@@ -656,7 +656,7 @@ namespace linux
    }
 
 
-   bool copydesk::dib_to_desk(::draw2d::dib * pdib)
+   bool copydesk::_dib_to_desk(::draw2d::dib * pdib)
    {
 
 
@@ -666,7 +666,7 @@ namespace linux
    }
 
 
-   bool copydesk::has_dib()
+   bool copydesk::_has_dib()
    {
 
       GtkClipboard* clipboard = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);

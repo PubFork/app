@@ -722,7 +722,7 @@ memory_reader::~memory_reader()
 }
 
 
-memory & memory_reader::memory()
+memory & memory_reader::get_memory()
 {
 
    return *m_spfile.cast < ::memory_file >()->get_primitive_memory();
@@ -757,7 +757,7 @@ memory_writer::~memory_writer()
 }
 
 
-memory & memory_writer::memory()
+memory & memory_writer::get_memory()
 {
 
    return *m_spfile.cast < ::memory_file >()->get_primitive_memory();

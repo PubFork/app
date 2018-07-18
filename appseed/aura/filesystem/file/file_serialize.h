@@ -177,7 +177,7 @@ public:
    virtual ~memory_reader();
 
 
-   memory & memory();
+   memory & get_memory();
 
 
 };
@@ -194,7 +194,7 @@ public:
    virtual ~memory_writer();
 
 
-   memory & memory();
+   memory & get_memory();
 
 
 };

@@ -2,6 +2,32 @@
 #include <math.h>
 
 
+void copy(cairo_matrix_t & cairomatrix, const ::draw2d::matrix & matrix)
+{
+
+   cairomatrix.xx = matrix.a1;
+   cairomatrix.yx = matrix.a2;
+   cairomatrix.xy = matrix.b1;
+   cairomatrix.yy = matrix.b2;
+   cairomatrix.x0 = matrix.c1;
+   cairomatrix.y0 = matrix.c2;
+
+}
+
+
+void copy(::draw2d::matrix & matrix, const cairo_matrix_t & cairomatrix)
+{
+
+   matrix.a1 = cairomatrix.xx;
+   matrix.a2 = cairomatrix.yx;
+   matrix.b1 = cairomatrix.xy;
+   matrix.b2 = cairomatrix.yy;
+   matrix.c1 = cairomatrix.x0;
+   matrix.c2 = cairomatrix.y0;
+
+}
+
+
 #if defined(LINUX)
 
 #include <fontconfig/fontconfig.h>
@@ -1529,7 +1555,7 @@ namespace draw2d_cairo
       if (nSrcWidth <= 0 || nSrcHeight <= 0 || nDstWidth <= 0 || nDstHeight <= 0)
          return false;
 
-      if (pgraphicsSrc == NULL)
+      if (pgraphicsSrc == NULL || pgraphicsSrc->get_os_data() == NULL)
          return false;
 
       cairo_surface_t * psurface = cairo_get_target((cairo_t *)pgraphicsSrc->get_os_data());
@@ -5179,6 +5205,42 @@ namespace draw2d_cairo
    }
 
 
+   bool graphics::draw_line(LPCPOINT ppt1, LPCPOINT ppt2, ::draw2d::pen * ppen)
+   {
+
+      synch_lock ml(cairo_mutex());
+
+      cairo_move_to(m_pdc, ppt1->x, ppt1->y);
+
+      cairo_line_to(m_pdc, ppt2->x, ppt2->y);
+
+      draw(ppen);
+
+      m_pt = *ppt2;
+
+      return true;
+
+   }
+
+
+   bool graphics::draw_line(LPCPOINTD ppt1, LPCPOINTD ppt2, ::draw2d::pen * ppen)
+   {
+
+      synch_lock ml(cairo_mutex());
+
+      cairo_move_to(m_pdc, ppt1->x, ppt1->y);
+
+      cairo_line_to(m_pdc, ppt2->x, ppt2->y);
+
+      draw(ppen);
+
+      m_pt = *ppt2;
+
+      return true;
+
+   }
+
+
    void graphics::set_alpha_mode(::draw2d::e_alpha_mode ealphamode)
    {
 
@@ -6300,6 +6362,49 @@ namespace draw2d_cairo
 
 
    }
+
+
+   bool graphics::get(::draw2d::matrix & matrix)
+   {
+
+      cairo_matrix_t cairomatrix;
+
+      cairo_get_matrix(m_pdc, &cairomatrix);
+
+      copy(matrix, cairomatrix);
+
+      return true;
+
+   }
+
+
+   bool graphics::set(const ::draw2d::matrix & matrix)
+   {
+
+      cairo_matrix_t cairomatrix;
+
+      copy(cairomatrix, matrix);
+
+      cairo_set_matrix(m_pdc, &cairomatrix);
+
+   }
+
+
+   bool graphics::append(const ::draw2d::matrix & matrix)
+   {
+
+      return ::draw2d::graphics::append(matrix);
+
+   }
+
+
+   bool graphics::prepend(const ::draw2d::matrix & matrix)
+   {
+
+      return ::draw2d::graphics::prepend(matrix);
+
+   }
+
 
 
 } // namespace draw2d_cairo

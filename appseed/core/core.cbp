@@ -615,6 +615,7 @@
 		<Unit filename="user/user/user_xfplayer_view_lines.cpp" />
 		<Unit filename="user/user/user_xfplayer_view_lines.h" />
 		<Unit filename="user/userex/userex.h" />
+		<Unit filename="user/userex/userex_color_view.cpp" />
 		<Unit filename="user/userex/userex_dialog.cpp" />
 		<Unit filename="user/userex/userex_dialog.h" />
 		<Unit filename="user/userex/userex_font_view.cpp" />

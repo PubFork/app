@@ -7,8 +7,8 @@
 
 #include "framework.h"
 #include "aura/net/net_sockets.h"
-#include "aura/aura_plex_heap1.h"
-#include "aura/aura_plex_heap_impl1.h"
+#include "aura/aura/aura_plex_heap1.h"
+#include "aura/aura/aura_plex_heap_impl1.h"
 extern mutex * g_pmutexThreadWaitClose;
 
 extern string_map < ::aura::PFN_GET_NEW_LIBRARY, ::aura::PFN_GET_NEW_LIBRARY  > * g_pmapLibrary;

@@ -151,15 +151,15 @@ namespace user
       }
 
       layout();
-      
+
       translate();
 
       do_show_flags();
-      
+
       clear_need_layout();
-      
+
       clear_need_translation();
-      
+
       clear_show_flags();
 
       return true;
@@ -247,9 +247,9 @@ namespace user
       translate();
 
       do_show_flags();
-      
+
       clear_need_translation();
-      
+
       clear_show_flags();
 
       return true;
@@ -461,10 +461,10 @@ namespace user
 
       }
 
-#elif !defined(WINDOWSEX) && !defined(MACOS)
+#elif !defined(WINDOWSEX) && !defined(MACOS) && !defined(LINUX)
 
 #error "error"
-      
+
 #endif
 
       return m_pparent;
@@ -718,17 +718,17 @@ restart:
                         oswindow oswindow = oswindow_remove(pimpl);
 
                         pimpl->m_pui = NULL;
-                        
+
                         try
                         {
-                        
+
                            pimpl->release();
-                           
+
                         }
                         catch(...)
                         {
-                           
-                           
+
+
                         }
 
                         if (oswindow != NULL)

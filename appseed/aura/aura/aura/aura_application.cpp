@@ -89,8 +89,6 @@ namespace aura
 
 
    application::application() :
-      ::object(this),
-      ::thread(this),
       m_allocer(this),
       m_mutexMatterLocator(this),
       m_mutexStr(this)

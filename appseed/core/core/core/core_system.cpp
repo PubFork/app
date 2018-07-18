@@ -27,10 +27,11 @@ namespace core
 
 
    system::system(::aura::application * papp, app_core * pappcore):
-      ::object(papp == NULL ? this : papp),
-      ::aura::system(papp == NULL ? this : papp, pappcore),
-      ::axis::system(papp == NULL ? this : papp, pappcore),
-      ::base::system(papp == NULL ? this : papp, pappcore),
+      ::object(papp),
+      ::thread(papp),
+      ::aura::system(papp, pappcore),
+      ::axis::system(papp, pappcore),
+      ::base::system(papp, pappcore),
       m_mutexDelete(this),
       m_mutex(this)
    {

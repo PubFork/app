@@ -85,7 +85,7 @@ namespace database
 
          writer(b);
 
-         return m_pdataserver->data_server_save(this, id, writer.memory(), phint);
+         return m_pdataserver->data_server_save(this, id, writer.get_memory(), phint);
 
       }
 
@@ -104,7 +104,7 @@ namespace database
 
          writer(var);
 
-         return m_pdataserver->data_server_save(this, id, writer.memory(), puh);
+         return m_pdataserver->data_server_save(this, id, writer.get_memory(), puh);
 
       }
 
@@ -123,7 +123,7 @@ namespace database
 
          writer(f);
 
-         return m_pdataserver->data_server_save(this, id, writer.memory(), puh);
+         return m_pdataserver->data_server_save(this, id, writer.get_memory(), puh);
 
       }
 
@@ -142,7 +142,7 @@ namespace database
 
          writer(i);
 
-         return m_pdataserver->data_server_save(this, id, writer.memory(), puh);
+         return m_pdataserver->data_server_save(this, id, writer.get_memory(), puh);
 
       }
 
@@ -161,7 +161,7 @@ namespace database
 
          writer(d);
 
-         return m_pdataserver->data_server_save(this, id, writer.memory(), puh);
+         return m_pdataserver->data_server_save(this, id, writer.get_memory(), puh);
 
       }
 
@@ -179,7 +179,7 @@ namespace database
 
          writer(i);
 
-         return m_pdataserver->data_server_save(this, id, writer.memory(), puh);
+         return m_pdataserver->data_server_save(this, id, writer.get_memory(), puh);
 
       }
 
@@ -196,12 +196,12 @@ namespace database
       {
 
          memory_writer writer(get_app());
-         
+
          i64 i = l;
 
          writer(i);
 
-         return m_pdataserver->data_server_save(this, id, writer.memory(), puh);
+         return m_pdataserver->data_server_save(this, id, writer.get_memory(), puh);
 
       }
 
@@ -219,12 +219,12 @@ namespace database
       {
 
          memory_writer writer(get_app());
-         
+
          string str(lpsz);
 
          writer(str);
 
-         return m_pdataserver->data_server_save(this, id, writer.memory(), puh);
+         return m_pdataserver->data_server_save(this, id, writer.get_memory(), puh);
 
       }
 
@@ -239,12 +239,12 @@ namespace database
       {
 
          memory_writer writer(get_app());
-         
+
          string str(lpwsz);
 
          writer(str);
 
-         return m_pdataserver->data_server_save(this, id, writer.memory(), puh);
+         return m_pdataserver->data_server_save(this, id, writer.get_memory(), puh);
 
       }
 
@@ -365,7 +365,7 @@ namespace database
 
          memory_reader reader(get_app());
 
-         if (!m_pdataserver->data_server_load(this, id, reader.memory()))
+         if (!m_pdataserver->data_server_load(this, id, reader.get_memory()))
          {
 
             return false;
@@ -391,7 +391,7 @@ namespace database
 
          memory_reader reader(get_app());
 
-         if (!m_pdataserver->data_server_load(this, id, reader.memory()))
+         if (!m_pdataserver->data_server_load(this, id, reader.get_memory()))
          {
 
             return false;
@@ -417,7 +417,7 @@ namespace database
 
          memory_reader reader(get_app());
 
-         if (!m_pdataserver->data_server_load(this, id, reader.memory()))
+         if (!m_pdataserver->data_server_load(this, id, reader.get_memory()))
          {
 
             return false;
@@ -443,7 +443,7 @@ namespace database
 
          memory_reader reader(get_app());
 
-         if (!m_pdataserver->data_server_load(this, id, reader.memory()))
+         if (!m_pdataserver->data_server_load(this, id, reader.get_memory()))
          {
 
             return false;
@@ -468,7 +468,7 @@ namespace database
 
          memory_reader reader(get_app());
 
-         if (!m_pdataserver->data_server_load(this, id, reader.memory()))
+         if (!m_pdataserver->data_server_load(this, id, reader.get_memory()))
          {
 
             return false;
@@ -494,7 +494,7 @@ namespace database
 
          memory_reader reader(get_app());
 
-         if (!m_pdataserver->data_server_load(this, id, reader.memory()))
+         if (!m_pdataserver->data_server_load(this, id, reader.get_memory()))
          {
 
             return false;
@@ -521,7 +521,7 @@ namespace database
 
          memory_reader reader(get_app());
 
-         if (!m_pdataserver->data_server_load(this, id, reader.memory()))
+         if (!m_pdataserver->data_server_load(this, id, reader.get_memory()))
          {
 
             return false;
@@ -529,9 +529,9 @@ namespace database
          }
 
          i64 i;
-         
+
          reader(i);
-         
+
          l = i;
 
          return true;
@@ -551,7 +551,7 @@ namespace database
 
          memory_reader reader(get_app());
 
-         if (!m_pdataserver->data_server_load(this, id, reader.memory()))
+         if (!m_pdataserver->data_server_load(this, id, reader.get_memory()))
          {
 
             return false;

@@ -362,7 +362,7 @@ namespace ansios
    }
 
 
-   void process::synch_elevated(const char * pszCmdLineParam,int iShow,const ::duration & durationTimeOut,bool * pbTimeOut)
+   bool process::synch_elevated(const char * pszCmdLineParam,int iShow,const ::duration & durationTimeOut,bool * pbTimeOut)
    {
 
       stringa straParam;
