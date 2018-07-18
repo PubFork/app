@@ -14,7 +14,9 @@ namespace file
 
 #else
 
-      return file_as_string_dup(::dir::localconfig() / "system_short_name.txt").trimmed();
+      ::file::path pathSystemShortName = ::dir::localconfig() / "system_short_name.txt";
+
+      return file_as_string_dup(pathSystemShortName).trimmed();
 
 #endif
 

@@ -818,6 +818,7 @@
 		<Unit filename="filesystem/file/file_circular_file.h" />
 		<Unit filename="filesystem/file/file_common.h" />
 		<Unit filename="filesystem/file/file_composite.h" />
+		<Unit filename="filesystem/file/file_cpp.h" />
 		<Unit filename="filesystem/file/file_dir.h" />
 		<Unit filename="filesystem/file/file_edit_file.h" />
 		<Unit filename="filesystem/file/file_exception.h" />
