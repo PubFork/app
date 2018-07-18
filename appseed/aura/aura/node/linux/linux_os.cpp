@@ -956,6 +956,30 @@ namespace linux
 
       string str = System.process().get_output("/bin/sh -c \"xdg-settings get default-web-browser\"");
 
+      str.trim();
+
+      if(str.ends_ci(".desktop"))
+      {
+
+         ::file::path pathDesktop = "/usr/share/applications";
+
+         pathDesktop /= str;
+
+         if(file_exists_dup(pathDesktop))
+         {
+
+            string strTarget;
+
+            string strDirectory;
+
+            resolve_link(strTarget, strDirectory, strParam, pathDesktop, NULL);
+
+            path = strTarget;
+
+         }
+
+      }
+
       //string str = System.process().get_output("xdg-settings get default-web-browser");
 
       if(str.find_ci("chrome") >= 0)
@@ -963,7 +987,12 @@ namespace linux
 
          strId = "chrome";
 
-         path = "google-chrome";
+         if(path.is_empty())
+         {
+
+            path = "google-chrome";
+
+         }
 
       }
       else

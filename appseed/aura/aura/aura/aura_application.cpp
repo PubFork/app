@@ -7362,17 +7362,22 @@ run:
    void application::add_matter_locator(string strApp)
    {
 
+      synch_lock sl(m_pmutex);
+
       string strMatterLocator = matter_locator(strApp);
 
       m_straMatterLocatorPriority.add(strMatterLocator);
 
       on_update_matter_locator();
 
+
    }
 
 
    void application::on_update_matter_locator()
    {
+
+      synch_lock sl(m_pmutex);
 
       m_straMatterLocator.remove_all();
 
@@ -7386,9 +7391,15 @@ run:
    void application::add_matter_locator(::aura::application * papp)
    {
 
-      string strMatterLocator = matter_locator(papp);
+      {
 
-      add_matter_locator(strMatterLocator);
+         synch_lock sl(m_pmutex);
+
+         string strMatterLocator = matter_locator(papp);
+
+         add_matter_locator(strMatterLocator);
+
+      }
 
    }
 

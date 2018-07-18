@@ -1224,65 +1224,6 @@ end:
       }
 
 
-      //stringa system::locale_schema_matter(::aura::application * papp, const string & strLocale, const string & strSchema)
-      //{
-
-      //   stringa stra;
-
-      //   papp->locale_schema_matter(stra, strLocale, strSchema);
-
-      //   for (auto & strMatterLocator : papp->m_straMatterLocator)
-      //   {
-
-      //      stra.add_unique(::file::path(strMatterLocator) / papp->get_locale_schema_dir(strLocale, strSchema));
-
-      //   }
-
-      //   ::aura::str_context * pcontext = Sess(papp).str_context();
-
-      //   for (int32_t i = 0; i < pcontext->localeschema().m_idaLocale.get_count(); i++)
-      //   {
-
-      //      string strLocale = pcontext->localeschema().m_idaLocale[i];
-
-      //      string strSchema = pcontext->localeschema().m_idaSchema[i];
-
-      //      for (auto & strMatterLocator : papp->m_straMatterLocator)
-      //      {
-
-      //         stra.add_unique(::file::path(strMatterLocator) / papp->get_locale_schema_dir(strLocale, strSchema));
-
-      //      }
-
-      //   }
-
-      //   string strLocale = pcontext->localeschema().m_idaLocale[i];
-
-      //   string strSchema = pcontext->localeschema().m_idaSchema[i];
-
-      //   for (auto & strMatterLocator : papp->m_straMatterLocator)
-      //   {
-
-      //      stra.add_unique(::file::path(strMatterLocator) / papp->get_locale_schema_dir(strLocale, strSchema));
-
-      //   }
-
-
-      //   string strLocale = pcontext->localeschema().m_idaLocale[i];
-
-      //   string strSchema = pcontext->localeschema().m_idaSchema[i];
-
-      //   for (auto & strMatterLocator : papp->m_straMatterLocator)
-      //   {
-
-      //      stra.add_unique(::file::path(strMatterLocator) / papp->get_locale_schema_dir(strLocale, strSchema));
-
-      //   }
-
-      //   return stra;
-
-      //}
-
 
       void system::matter_ls(::aura::application * papp, const ::file::path & path, ::file::patha & stra)
       {
@@ -1632,7 +1573,16 @@ ret:
       string system::matter(::aura::application * papp, const ::file::patha & patha, bool bDir)
       {
 
-         return matter_from_locator(papp, patha, papp->m_straMatterLocator, bDir);
+         stringa straMatterLocator;
+         {
+
+            synch_lock sl(m_pmutex);
+
+            straMatterLocator = papp->m_straMatterLocator;
+
+         }
+
+         return matter_from_locator(papp, patha, straMatterLocator, bDir);
 
       }
 
@@ -1640,7 +1590,16 @@ ret:
       string system::matter(::aura::application * papp, ::file::path path, bool bDir)
       {
 
-         return matter_from_locator(papp, path, papp->m_straMatterLocator, bDir);
+         stringa straMatterLocator;
+         {
+
+            synch_lock sl(m_pmutex);
+
+            straMatterLocator = papp->m_straMatterLocator;
+
+         }
+
+         return matter_from_locator(papp, path, straMatterLocator, bDir);
 
       }
 

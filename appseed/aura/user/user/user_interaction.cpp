@@ -1012,7 +1012,6 @@ restart:
          IGUI_MSG_LINK(WM_DESTROY, pinterface, this, &interaction::_001OnDestroy);
          IGUI_MSG_LINK(WM_SIZE, pinterface, this, &interaction::_001OnSize);
          IGUI_MSG_LINK(WM_MOVE, pinterface, this, &interaction::_001OnMove);
-         IGUI_MSG_LINK(WM_USER + 184, pinterface, this, &interaction::_001OnUser184);
          IGUI_MSG_LINK(WM_NCCALCSIZE, pinterface, this, &interaction::_001OnNcCalcSize);
          IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &interaction::_001OnShowWindow);
          IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &interaction::_001OnLButtonDown);
@@ -1425,14 +1424,9 @@ restart:
          TRACE("::user::interaction::_001OnSize instructed to m_bIgnoreSizeEvent");
 
       }
-      else
-      {
-
-         //layout();
-
-      }
 
    }
+
 
    void interaction::layout()
    {
@@ -5772,20 +5766,7 @@ restart:
       }
    }
 
-   void interaction::_001OnUser184(::message::message * pobj)
-   {
-      SCAST_PTR(::message::base, pbase, pobj);
-      if (pbase->m_wparam == 0 &&
-            pbase->m_lparam == 0)
-      {
-         class rect rect;
-         ::exception::throw_not_implemented(get_app());
-         /*         System.get_monitor_rect(0, &rect);
-         rect.deflate(rect.width() / 4, rect.height() / 4);
-         SetWindowPos(ZORDER_TOP, rect.left, rect.top, rect.width(), rect.height(), 0);
-         pbase->m_bRet = true;*/
-      }
-   }
+
 
    bool interaction::on_keyboard_focus(::user::elemental * pfocus)
    {

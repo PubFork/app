@@ -42,9 +42,9 @@ extern CLASS_DECL_CORE thread_int_ptr < DWORD_PTR > t_time1;
 manual_reset_event * simple_frame_window::helper_task::g_pevent = NULL;
 
 simple_frame_window::helper_task::helper_task(simple_frame_window * pframe) :
+   ::object(pframe->get_app()),
    ::thread(pframe->get_app()),
-   m_pframe(pframe) //,
-//m_ev(pframe->get_app())
+   m_pframe(pframe)
 {
 
    if(g_pevent == NULL)
@@ -65,32 +65,28 @@ void simple_frame_window::helper_task::run()
    while(thread_get_run())
    {
 
-      g_pevent->wait(millis(84));
+      g_pevent->wait(millis(100));
 
-      // the computer maybe blown here, where there is no code (when it is not running)... by falling into a curve in a road from a truck or by the multiverses bramas collapsing into a high energy dot.com... and bubble restarts when the spirtual world decides for restarting the virtual machine - with some pauses - as we does not detect change in time vector, as it is a non-readable, executable/paused/non existent only register in the parent handler... Imagine a overhaul upgrade with much more strings in the chords, why they mantain consitency between virtual machines versions... they like to hinder a lot!! strange, this is a hello 666... // and the time they have to overhaul is infinite, because they can pause our ticker... besides I hope no ones stops their tick counters...
-      if(m_pframe->m_bSizeMove) // not here, any error here (or am i wrong, the OpSys may not have started the FULLStack DevOp).... because it is lInUx... its not ADVENTURE_Clean_NoERRORs_may_be_old_tommorrow_just_EX_OS...
+      if(m_pframe->m_bPendingSaveWindowPlacement && m_pframe->m_bEnableSaveWindowRect)
       {
 
-         if( // slim and clean people (no drugs) do not like fatty acids double check in the bag( unless they are slim and clean?!?!?!)
-         ::get_tick_count() - m_pframe->m_dwLastSizeMove > 284)// the tester (without UPS) can loose a save specially here (where is the error, sixes or 666) // Halloween is coming
-            // this a reason for using manual_reset_event for every simple_frame_window, accepts the candy, and the trick? you get both, this the whole trick!!!
+         if(::get_tick_count() - m_pframe->m_dwLastSizeMove > 300)
          {
 
-            //::MessageBox(NULL, "Going to save window rect", "SaveWindowRect", MB_ICONEXCLAMATION);
-
-            m_pframe->m_bSizeMove = false;// the tester (without UPS) can loose a save here
+            m_pframe->m_bSizeMove = false;
 
             try
             {
 
-               TRACE("m_pframe->does_display_match() the tester is about to get close to get sad... (yes, he is mad...)");
-
-               if(m_pframe->does_display_match()) // the tester (without UPS) can loose a save even here
+               if(m_pframe->does_display_match())
                {
 
-                  TRACE("m_pframe->WindowDataSaveWindowRect() the tester is close to get sad... (yes, he is mad...)");
+                  if(m_pframe->WindowDataSaveWindowRect())
+                  {
 
-                  m_pframe->WindowDataSaveWindowRect(); // the tester (without UPS) can loose a save here
+                     m_pframe->m_bPendingSaveWindowPlacement = false;
+
+                  }
 
                }
 
@@ -103,8 +99,6 @@ void simple_frame_window::helper_task::run()
          }
 
       }
-
-      //Sleep(200); // the tester (without UPS) can loose a save here
 
    }
 
@@ -122,6 +116,8 @@ simple_frame_window::simple_frame_window(::aura::application * papp) :
    m_dibBk(allocer()),
    m_fastblur(allocer())
 {
+
+   m_bPendingSaveWindowPlacement = false;
 
    m_bDefaultCreateToolbar = true;
 
@@ -203,9 +199,9 @@ void simple_frame_window::install_message_routing(::message::sender * pinterface
    IGUI_MSG_LINK(WM_DESTROY, pinterface, this, &simple_frame_window::_001OnDestroy);
    IGUI_MSG_LINK(WM_CLOSE, pinterface, this, &simple_frame_window::_001OnClose);
    IGUI_MSG_LINK(WM_SIZE, pinterface, this, &simple_frame_window::_001OnSize);
+   IGUI_MSG_LINK(WM_MOVE, pinterface, this, &simple_frame_window::_001OnMove);
    IGUI_MSG_LINK(WM_SYSCOMMAND, pinterface, this, &simple_frame_window::_001OnSysCommand);
    IGUI_MSG_LINK(WM_GETMINMAXINFO, pinterface, this, &simple_frame_window::_001OnGetMinMaxInfo);
-   IGUI_MSG_LINK(WM_USER + 184, pinterface, this, &simple_frame_window::_001OnUser184);
    IGUI_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &simple_frame_window::_001OnMouseMove);
    IGUI_MSG_LINK(WM_DISPLAYCHANGE, pinterface, this, &simple_frame_window::_001OnDisplayChange);
    IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &simple_frame_window::_001OnShowWindow);
@@ -442,6 +438,7 @@ void simple_frame_window::_001OnCreate(::message::message * pobj)
 
    if (m_bWindowFrame)
    {
+
       sp(::user::wndfrm::frame::frame) pinteractionframe = NULL;
 
       try
@@ -511,6 +508,18 @@ void simple_frame_window::_001OnCreate(::message::message * pobj)
    defer_create_notification_icon();
 
    m_pimpl->show_task(m_bShowTask);
+
+   if(GetParent() == NULL)
+   {
+
+      if(m_phelpertask.is_null())
+      {
+
+         m_phelpertask = canew(helper_task(this));
+
+      }
+
+   }
 
    pcreate->m_bRet = false;
 
@@ -583,22 +592,21 @@ void simple_frame_window::_001OnSize(::message::message * pobj)
 
    UNREFERENCED_PARAMETER(pobj);
 
-   //if (does_display_match())
-   //{
+   m_dwLastSizeMove = get_tick_count();
 
-   //   WindowDataSaveWindowRect();
+   m_bPendingSaveWindowPlacement = true;
 
-   //}
-
-   //m_phelpertask->m_bSizeMove = true;
-
-   //m_phelpertask->defer_save_window_rect();
+}
 
 
+void simple_frame_window::_001OnMove(::message::message * pobj)
+{
 
-//   m_phelpertask->m_ev.set_event();
+   UNREFERENCED_PARAMETER(pobj);
 
-   //WindowDataSaveWindowRect();
+   m_dwLastSizeMove = get_tick_count();
+
+   m_bPendingSaveWindowPlacement = true;
 
 }
 
@@ -1875,6 +1883,33 @@ void simple_frame_window::on_set_parent(::user::interaction * puiParent)
       }
 
    }
+
+
+   if(puiParent == NULL)
+   {
+
+      if(m_phelpertask.is_null())
+      {
+
+         m_phelpertask = canew(helper_task(this));
+
+      }
+
+   }
+   else
+   {
+
+      if(m_phelpertask.is_set())
+      {
+
+         m_phelpertask->post_quit();
+
+         m_phelpertask.release();
+
+      }
+
+
+   }
    m_workset.m_pwndEvent = this;
 
    if (m_pupdowntarget != NULL && wfi_is_up_down())
@@ -2093,37 +2128,7 @@ void simple_frame_window::defer_create_notification_icon()
 }
 
 
-void simple_frame_window::_001OnUser184(::message::message * pobj)
-{
 
-   SCAST_PTR(::message::base, pbase, pobj);
-
-   if (pbase->m_wparam == 0 && pbase->m_lparam == 0)
-   {
-
-      InitialFramePosition(true);
-
-      pbase->m_bRet = true;
-
-   }
-   else if(pbase->m_wparam == 2)
-   {
-
-      _throw(simple_exception(get_app()));
-
-   }
-   else if(pbase->m_wparam == 123)
-   {
-      if(does_display_match())
-      {
-
-         WindowDataSaveWindowRect();
-
-      }
-
-
-   }
-}
 
 // persistent frame implemenation using updowntarget
 bool simple_frame_window::WndFrameworkDownUpGetUpEnable()
@@ -2786,18 +2791,6 @@ void simple_frame_window::draw_frame(::draw2d::graphics * pgraphics)
 bool simple_frame_window::WfiOnMove(bool bTracking)
 {
 
-   if (!bTracking)
-   {
-
-      fork([this]()
-      {
-
-         WindowDataSaveWindowRect();
-
-      });
-
-   }
-
    return true;
 
 }
@@ -2805,13 +2798,6 @@ bool simple_frame_window::WfiOnMove(bool bTracking)
 
 bool simple_frame_window::WfiOnSize(bool bTracking)
 {
-
-   if (!bTracking)
-   {
-
-      WindowDataSaveWindowRect();
-
-   }
 
    return true;
 

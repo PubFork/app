@@ -64,10 +64,10 @@ public:
 
    };
 
-
+   bool                                m_bPendingSaveWindowPlacement;
    bool                                m_bDefaultCreateToolbar;
    bool                                m_bTransparentFrameEnable;
-   helper_task *                       m_phelpertask;
+   sp(helper_task)                     m_phelpertask;
    bool                                m_bFullScreenAlt;
    bool                                m_bFullScreenCtrl;
    visual::dib_sp                      m_dibBk;
@@ -184,6 +184,7 @@ public:
    DECL_GEN_SIGNAL(_001OnDdeInitiate);
    DECL_GEN_SIGNAL(_001OnDestroy);
    DECL_GEN_SIGNAL(_001OnSize);
+   DECL_GEN_SIGNAL(_001OnMove);
    DECL_GEN_SIGNAL(_001OnClose);
    DECL_GEN_SIGNAL(_001OnShowWindow);
    DECL_GEN_SIGNAL(_001OnSysCommand);
@@ -195,7 +196,6 @@ public:
    DECL_GEN_SIGNAL(_001OnToggleTransparentFrame);
    DECL_GEN_SIGNAL(_001OnUpdateToggleTransparentFrame);
    DECL_GEN_SIGNAL(_001OnGetMinMaxInfo);
-   DECL_GEN_SIGNAL(_001OnUser184);
    DECL_GEN_SIGNAL(_001OnAppExit);
 
 

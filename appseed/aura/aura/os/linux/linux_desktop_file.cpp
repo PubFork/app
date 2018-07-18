@@ -296,7 +296,7 @@ namespace linux
       if(Application.file().exists(pathIcon))
       {
 
-         straLine._007SetLine("Icon", pathIcon);
+         straLine._007SetLine("Icon", System.defer_process_path(pathIcon, get_app()));
 
       }
 
