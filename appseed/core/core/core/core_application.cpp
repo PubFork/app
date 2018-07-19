@@ -258,81 +258,124 @@ namespace core
          string str;
          // if system locale has changed (compared to last recorded one by core)
          // use the system locale
-         if (data_get("&data_source=local&system_locale", str))
+         if (data_get({ "system_locale", true }, str))
          {
+
             if (str.has_char())
             {
+
                if (str != Session.get_locale())
                {
+
                   try
                   {
-                     data_set("&data_source=local&system_locale", Session.get_locale());
-                     data_set("&data_source=local&locale", Session.get_locale());
+
+                     data_set({ "system_locale", true }, Session.get_locale());
+
+                     data_set({ "locale", true }, Session.get_locale());
+
                   }
                   catch (...)
                   {
+
                   }
+
                }
+
             }
+
          }
          else
          {
-            data_set("&data_source=local&system_locale", Session.get_locale());
+
+            data_set({ "system_locale", true }, Session.get_locale());
+
          }
 
          if (handler()->m_varTopicQuery["locale"].get_count() > 0)
          {
+
             str = handler()->m_varTopicQuery["locale"].stra()[0];
-            data_set("&data_source=local&system_locale", str);
-            data_set("&data_source=local&locale", str);
+
+            data_set({ "system_locale", true }, str);
+
+            data_set({ "locale", true }, str);
+
             Session.set_locale(str, ::action::source::database());
+
          }
          else if (handler()->m_varTopicQuery["lang"].get_count() > 0)
          {
+
             str = handler()->m_varTopicQuery["lang"].stra()[0];
-            data_set("&data_source=local&system_locale", str);
-            data_set("&data_source=local&locale", str);
+
+            data_set({ "system_locale", true }, str);
+
+            data_set({ "locale", true }, str);
+
             Session.set_locale(str, ::action::source::database());
+
          }
-         else if (data_get("&data_source=local&locale", str))
+         else if (data_get({ "locale", true }, str))
          {
+
             if (str.has_char())
             {
+
                Session.set_locale(str, ::action::source::database());
+
             }
+
          }
          // if system schema has changed (compared to last recorded one by core)
          // use the system schema
-         if (data_get("&data_source=local&system_schema", str))
+         if (data_get({ "system_schema", true }, str))
          {
+
             if (str.has_char())
             {
+
                if (str != Session.get_schema())
                {
+
                   try
                   {
-                     data_set("&data_source=local&system_schema", Session.get_schema());
-                     data_set("&data_source=local&schema", Session.get_schema());
+
+                     data_set({ "system_schema", true }, Session.get_schema());
+
+                     data_set({ "schema", true }, Session.get_schema());
+
                   }
                   catch (...)
                   {
+
                   }
+
                }
+
             }
+
          }
          else
          {
-            data_set("&data_source=local&system_schema", Session.get_schema());
+
+            data_set({ "system_schema", true }, Session.get_schema());
+
          }
 
          if (handler()->m_varTopicQuery["schema"].get_count() > 0)
          {
+
             str = handler()->m_varTopicQuery["schema"].stra()[0];
-            data_set("&data_source=local&system_schema", str);
-            data_set("&data_source=local&schema", str);
+
+            data_set({ "system_schema", true }, str);
+
+            data_set({ "schema", true }, str);
+
             Session.set_schema(str, ::action::source::database());
+
          }
-         else if (data_get("&data_source=local&schema", str))
+         else if (data_get({ "schema", true }, str))
          {
             if (str.has_char())
             {
@@ -341,7 +384,7 @@ namespace core
          }
 
 
-         data_pulse_change("ca2&data_source=local&savings", NULL);
+         data_pulse_change({ "ca2.savings", true }, NULL);
 
          Sys(this).appa_load_string_table();
 

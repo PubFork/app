@@ -9,7 +9,9 @@ namespace user
       ::object(get_app())
    {
 
-      m_strWindowRectDataAddUp = "&data_source=local&";
+      m_datakeyWindowRect.m_strDataKey = "WindowRect";
+
+      m_datakeyWindowRect.m_bLocalData = true;
 
    }
 
@@ -101,9 +103,7 @@ namespace user
 
          defer_update_display();
 
-         string strKey = "WindowRect." + m_strDisplay;
-
-         bSave = SaveWindowRect_(strKey, this);
+         bSave = SaveWindowRect_(m_datakeyWindowRect + m_strDisplay, this);
 
       }
 
@@ -123,9 +123,7 @@ namespace user
 
       defer_update_display();
 
-      ::id idKey = "WindowRect." + m_strDisplay;
-
-      bLoad = LoadWindowRect_(idKey, this, bForceRestore, bInitialFramePosition);
+      bLoad = LoadWindowRect_(m_datakeyWindowRect + m_strDisplay, this, bForceRestore, bInitialFramePosition);
 
       if (!bLoad && (bForceRestore || bInitialFramePosition))
       {
@@ -395,7 +393,7 @@ namespace user
          }
          writer << rect;
 
-         int iControlBoxRightToLeft = oprop("control_box_right_to_right");
+         int iControlBoxRightToLeft = oprop("control_box_right_to_right").i32();
 
          writer << iControlBoxRightToLeft;
 

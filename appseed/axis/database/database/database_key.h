@@ -10,9 +10,9 @@ namespace database
    public:
 
 
-      string    m_strDataKey;
+      string      m_strDataKey;
 
-      bool      m_bLocalData;
+      bool        m_bLocalData;
 
 
       key()
@@ -22,6 +22,39 @@ namespace database
 
       }
 
+      key(std::initializer_list < var > list)
+      {
+
+         m_bLocalData = false;
+
+         auto it = list.begin();
+
+         if (it != list.end())
+         {
+
+            m_strDataKey = *it;
+
+            it++;
+
+            if (it != list.end())
+            {
+
+               m_bLocalData = (bool)(*it);
+
+               it++;
+
+               if (it != list.end())
+               {
+
+                  throw simple_exception(::get_app(), "unused parameters");
+
+               }
+
+            }
+
+         }
+
+      }
 
       key(string strDataKey, bool bLocalData = false)
       {
@@ -87,7 +120,7 @@ namespace database
       bool operator == (const key & key) const
       {
 
-          return m_strDataKey == key.m_strDataKey;
+         return m_strDataKey == key.m_strDataKey;
 
       }
 
@@ -95,18 +128,18 @@ namespace database
       key & operator +=(const key & key)
       {
 
-        if(m_strDataKey.is_empty())
-        {
+         if(m_strDataKey.is_empty())
+         {
 
             m_strDataKey = key.m_strDataKey;
 
-        }
-        else if(key.m_strDataKey.has_char())
-        {
+         }
+         else if(key.m_strDataKey.has_char())
+         {
 
             m_strDataKey += "/" + key.m_strDataKey;
 
-        }
+         }
 
          m_bLocalData = m_bLocalData || key.m_bLocalData;
 
@@ -121,6 +154,39 @@ namespace database
          ::database::key keyAdd(*this);
 
          keyAdd += key;
+
+         return keyAdd;
+
+      }
+
+
+      key & operator +=(const string & strDataKey)
+      {
+
+         if (m_strDataKey.is_empty())
+         {
+
+            m_strDataKey = strDataKey;
+
+         }
+         else if (strDataKey.has_char())
+         {
+
+            m_strDataKey += "/" + strDataKey;
+
+         }
+
+         return *this;
+
+      }
+
+
+      key operator + (const string & strDataKey) const
+      {
+
+         ::database::key keyAdd(*this);
+
+         keyAdd += strDataKey;
 
          return keyAdd;
 

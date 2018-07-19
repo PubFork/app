@@ -16,6 +16,8 @@ namespace user
          frame::frame(::aura::application * papp)
          {
 
+
+            m_bFirstLayoutDone = false;
 //            m_typeinfoControlBox = System.type_info < MetaControlBox >();
 
             m_rectControlBoxMarginFullScreen.set(0, 0, 0, 0);
@@ -554,15 +556,34 @@ namespace user
 
             i32 x;
 
-            m_bControlBoxAlignRight = prectControlBox->center().x > rectClient.center().x || rectClient.width() < prectControlBox->width();
-
-            if (bLayout && is_control_box_moveable())
+            if (!m_bFirstLayoutDone)
             {
 
-               if (m_bControlBoxAlignRight)
+               x = rectClient.right - m_iControlBoxRight - prectControlBox->width();
+
+               m_bFirstLayoutDone = true;
+
+            }
+            else
+            {
+
+               m_bControlBoxAlignRight = prectControlBox->center().x > rectClient.center().x || rectClient.width() < prectControlBox->width();
+
+               if (bLayout && is_control_box_moveable())
                {
 
-                  x = rectClient.right - m_iControlBoxRight - prectControlBox->width();
+                  if (m_bControlBoxAlignRight)
+                  {
+
+                     x = rectClient.right - m_iControlBoxRight - prectControlBox->width();
+
+                  }
+                  else
+                  {
+
+                     x = prectControlBox->left;
+
+                  }
 
                }
                else
@@ -571,12 +592,6 @@ namespace user
                   x = prectControlBox->left;
 
                }
-
-            }
-            else
-            {
-
-               x = prectControlBox->left;
 
             }
 
@@ -599,18 +614,18 @@ namespace user
             sp(::user::interaction) pwndDraw = get_draw_window();
 
             rect rectClient;
-            
+
             pwndDraw->GetWindowRect(rectClient);
-            
+
             if(rectClient.area() < 666)
             {
-               
+
                return 0;
-               
+
             }
 
             appearance * pappearance = m_pworkset->get_appearance();
-            
+
             rect * prectControlBoxMargin = get_control_box_margin_rect();
 
             rect * prectMargin = get_margin_rect();
@@ -620,6 +635,14 @@ namespace user
             int iControlBoxHeight = m_spcontrolbox->calc_control_box_height();
 
             rect rect;
+
+            ::rect rectWindow;
+
+            m_pworkset->GetWndDraw()->GetWindowRect(rectWindow);
+
+            ::rect rectParent(rectWindow);
+
+            m_pworkset->GetWndDraw()->ScreenToClient(rectParent);
 
             m_rectCaption.left = rectClient.left + prectMargin->left + prectControlBoxMargin->left;
             m_rectCaption.top = rectClient.top + prectMargin->top + prectControlBoxMargin->top;
@@ -656,8 +679,6 @@ namespace user
 
 
             ::rect * prectControlBox;
-
-            ::rect rectParent;
 
             int iControlBoxRightMargin;
 

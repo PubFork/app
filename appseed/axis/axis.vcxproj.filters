@@ -275,9 +275,6 @@
     <ClInclude Include="database\database\database_field_definition.h">
       <Filter>Header Files\database\database</Filter>
     </ClInclude>
-    <ClInclude Include="database\database\database_id.h">
-      <Filter>Header Files\database\database</Filter>
-    </ClInclude>
     <ClInclude Include="database\database\database_key.h">
       <Filter>Header Files\database\database</Filter>
     </ClInclude>

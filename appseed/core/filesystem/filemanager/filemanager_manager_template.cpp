@@ -47,22 +47,15 @@ namespace filemanager
       }
 
       pfilemanagerdata->m_pcallback = pcallback != NULL ? pcallback : &Session.filemanager();
+
       pfilemanagerdata->m_iTemplate = m_iTemplate;
+
       pfilemanagerdata->m_iDocument = m_iNextDocument++;
+
       pfilemanagerdata->m_bTransparentBackground = pcreate == NULL ? true : pcreate->m_bTransparentBackground;
 
-
-      {
-
-         ::database::key datakey;
-
-         datakey.m_strDataKey.Format("filemanager(%d)", pfilemanagerdata->m_iDocument);
-
-         pfilemanagerdata->m_datakey = m_datakey + "." + datakey;
-
-      }
-
       pfilemanagerdata->m_bFileSize = true;
+
       pfilemanagerdata->m_pmanagertemplate = this;
 
       return pfilemanagerdata;
@@ -749,8 +742,8 @@ namespace filemanager
       {
 
          pdoc->get_filemanager_data()->m_datakey.m_strDataKey.Format("%s(%d)",
-            Session.filemanager().m_idFileManager.str(),
-            pdoc->get_filemanager_data()->m_iDocument);
+               Session.filemanager().m_idFileManager.str(),
+               pdoc->get_filemanager_data()->m_iDocument);
 
       }
 

@@ -17,6 +17,8 @@ namespace axis
       aura::system(this, pappcore)
    {
 
+      m_datakey.m_bLocalData = true;
+
       m_paxissystem = this;
 
       g_pszCooperativeLevel = "axis";

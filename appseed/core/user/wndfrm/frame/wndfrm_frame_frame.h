@@ -65,6 +65,7 @@ namespace user
             ::rect                                       m_rectClient;
             ::rect                                       m_rectWindow;
             int                                          m_iControlBoxRight;
+            bool                                         m_bFirstLayoutDone;
             bool                                         m_bControlBoxAlignRight;
             bool                                         m_bInitialControlBoxPosition;
 

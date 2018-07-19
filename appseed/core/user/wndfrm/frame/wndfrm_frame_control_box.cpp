@@ -173,7 +173,9 @@ namespace user
 
             m_pworkset->m_pframeschema->m_iControlBoxRight = rectParent.right - ptClient.x - rectWindow.width();
 
-            oprop("control_box_right_to_right") = m_pworkset->m_pframeschema->m_iControlBoxRight;
+            int iControlBoxRight = m_pworkset->m_pframeschema->m_iControlBoxRight;
+
+            m_pworkset->GetWndDraw()->oprop("control_box_right_to_right") = iControlBoxRight;
 
             SetWindowPos(ZORDER_TOP, ptClient.x, ptClient.y, 0, 0, SWP_NOSIZE);
 
@@ -405,14 +407,16 @@ namespace user
 
             *m_pworkset->m_pframeschema->get_control_box_rect() = rect;
 
-            if (is_this_visible() &&
-                  m_pworkset->GetWndDraw()->oprop("control_box_right_to_right")
-                  != m_pworkset->m_pframeschema->m_iControlBoxRight)
-            {
+            //if (is_this_visible() &&
+            //      m_pworkset->GetWndDraw()->oprop("control_box_right_to_right")
+            //      != m_pworkset->m_pframeschema->m_iControlBoxRight)
+            //{
 
-               m_pworkset->GetWndDraw()->oprop("control_box_right_to_right") = m_pworkset->m_pframeschema->m_iControlBoxRight;
+            //   int iControlBoxRight = m_pworkset->GetWndDraw()->oprop("control_box_right_to_right");
 
-            }
+            //   m_pworkset->m_pframeschema->m_iControlBoxRight = iControlBoxRight;
+
+            //}
 
             reset_layout();
 
@@ -863,7 +867,9 @@ namespace user
 
             m_sizeButtonDefault = size(iDefaultButtonSize,iDefaultButtonSize);
 
-            m_pworkset->m_pframeschema->m_iControlBoxRight = oprop("control_box_right_to_right").i32();
+            int iControlBoxRight = m_pworkset->GetWndDraw()->oprop("control_box_right_to_right").i32();
+
+            m_pworkset->m_pframeschema->m_iControlBoxRight = iControlBoxRight;
 
          }
 
@@ -1029,6 +1035,16 @@ namespace user
 
             *m_pworkset->m_pframeschema->get_control_box_rect() = rect;
 
+            m_pworkset->GetWndDraw()->m_dwLastSizeMove = get_tick_count();
+
+            sp(simple_frame_window) pframe = m_pworkset->GetWndDraw();
+
+            if (pframe.is_set())
+            {
+
+               pframe->m_bPendingSaveWindowPlacement = true;
+
+            }
 
             //WindowDataSaveWindowRect();
 

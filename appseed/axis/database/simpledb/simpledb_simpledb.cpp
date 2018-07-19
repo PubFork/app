@@ -73,21 +73,33 @@ namespace simpledb
 
    void simpledb::on_set_locale(const char * lpcsz, ::action::context actioncontext)
    {
+
       if(actioncontext.is_user_source())
       {
-         data_set("&data_source=local&locale", lpcsz);
+
+         data_set({ "locale", true }, lpcsz);
+
       }
+
       m_pauraapp->m_paxissession->on_set_locale(lpcsz, actioncontext);
+
    }
+
 
    void simpledb::on_set_schema(const char * lpcsz, ::action::context actioncontext)
    {
+
       if(actioncontext.is_user_source())
       {
-         data_set("&data_source=local&schema", lpcsz);
+
+         data_set({ "schema", true }, lpcsz);
+
       }
+
       m_pauraapp->m_paxissession->on_set_schema(lpcsz,actioncontext);
+
    }
+
 
    bool simpledb::FinalizeDataCentral()
    {

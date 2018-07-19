@@ -13,6 +13,8 @@ namespace axis
       ::aura::session(papp)
    {
 
+      m_datakey.m_bLocalData = true;
+
       m_paxissession                = this;
 
       m_bMatterFromHttpCache        = m_paxissystem->m_bMatterFromHttpCache;

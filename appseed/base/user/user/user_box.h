@@ -15,38 +15,38 @@ namespace user
       virtual public ::simple_ui::interaction,
       virtual public ::database::client
    {
-      public:
+   public:
 
 
-         string         m_strDisplay;
-         string         m_strWindowRectDataAddUp;
+      string            m_strDisplay;
+      ::database::key   m_datakeyWindowRect;
 
-         box();
-         virtual ~box();
+      box();
+      virtual ~box();
 
-         void install_message_routing(::message::sender * pinterface) override;
+      void install_message_routing(::message::sender * pinterface) override;
 
-         DECL_GEN_SIGNAL(_001OnCreate);
-         DECL_GEN_SIGNAL(_001OnSize);
-         DECL_GEN_SIGNAL(_001OnShowWindow);
+      DECL_GEN_SIGNAL(_001OnCreate);
+      DECL_GEN_SIGNAL(_001OnSize);
+      DECL_GEN_SIGNAL(_001OnShowWindow);
 
-         virtual void _001WindowRestore() override;
+      virtual void _001WindowRestore() override;
 
-         virtual string calc_display();
-         virtual bool does_display_match();
-         virtual void defer_update_display();
+      virtual string calc_display();
+      virtual bool does_display_match();
+      virtual void defer_update_display();
 
-         virtual bool IsFullScreen();
-         void WindowDataEnableSaveWindowRect(bool bEnable);
-         bool WindowDataSaveWindowRect();
-         bool WindowDataLoadWindowRect(bool bForceRestore = false, bool bInitialFramePosition = false);
+      virtual bool IsFullScreen();
+      void WindowDataEnableSaveWindowRect(bool bEnable);
+      bool WindowDataSaveWindowRect();
+      bool WindowDataLoadWindowRect(bool bForceRestore = false, bool bInitialFramePosition = false);
 
-         virtual bool LoadWindowRect_(class ::database::key id, sp(::user::box) pwindow, bool bForceRestore = false, bool bInitialFramePosition = false);
-         virtual bool SaveWindowRect_(class ::database::key id, sp(::user::box) pwindow);
+      virtual bool LoadWindowRect_(class ::database::key id, sp(::user::box) pwindow, bool bForceRestore = false, bool bInitialFramePosition = false);
+      virtual bool SaveWindowRect_(class ::database::key id, sp(::user::box) pwindow);
 
 
-         virtual void on_simple_command(::message::simple_command * psimplecommand) override;
-         virtual void on_command(::user::command * pcommand) override;
+      virtual void on_simple_command(::message::simple_command * psimplecommand) override;
+      virtual void on_command(::user::command * pcommand) override;
 
 
       virtual void on_set_parent(::user::interaction * puiParent) override;
@@ -55,7 +55,7 @@ namespace user
 
       virtual bool parent_is_local_data();
       virtual bool is_local_data() override;
-      
+
 
    };
 
