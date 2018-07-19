@@ -855,7 +855,7 @@ namespace user
    }
 
 
-   bool split_layout::InsertPaneAt(index iIndex, sp(::user::interaction)pwnd, bool bFixedSize, class id id)
+   bool split_layout::InsertPaneAt(index iIndex, sp(::user::interaction)pwnd, bool bFixedSize, ::id id)
    {
 
       ::count iSplitBarCount = get_pane_count();

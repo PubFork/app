@@ -1,5 +1,4 @@
 #include "framework.h"
-#include "framework.h"
 
 
 namespace filemanager
@@ -382,6 +381,18 @@ namespace filemanager
    {
 
       return m_pmanagertemplate;
+
+   }
+
+   void data::defer_update_data_key()
+   {
+
+      if(m_datakey.is_empty())
+      {
+
+         m_datakey.m_strDataKey.Format("%s(%d)", Session.filemanager().m_idFileManager.str(), m_iDocument);
+
+      }
 
    }
 

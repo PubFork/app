@@ -41,8 +41,8 @@ namespace user
          bool WindowDataSaveWindowRect();
          bool WindowDataLoadWindowRect(bool bForceRestore = false, bool bInitialFramePosition = false);
 
-         virtual bool LoadWindowRect_(class ::database::id id, sp(::user::box) pwindow, bool bForceRestore = false, bool bInitialFramePosition = false);
-         virtual bool SaveWindowRect_(class ::database::id id, sp(::user::box) pwindow);
+         virtual bool LoadWindowRect_(class ::database::key id, sp(::user::box) pwindow, bool bForceRestore = false, bool bInitialFramePosition = false);
+         virtual bool SaveWindowRect_(class ::database::key id, sp(::user::box) pwindow);
 
 
          virtual void on_simple_command(::message::simple_command * psimplecommand) override;
@@ -53,10 +53,9 @@ namespace user
       virtual bool on_before_set_parent(::user::interaction * pinterface) override;
 
 
-      virtual string calc_data_id() override;
-
       virtual bool parent_is_local_data();
       virtual bool is_local_data() override;
+      
 
    };
 

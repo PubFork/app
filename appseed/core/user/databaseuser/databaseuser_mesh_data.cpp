@@ -21,15 +21,20 @@ namespace databaseuser
    void mesh_data::_001GetItemText(::user::mesh_item * pitem)
    {
 
-      ::database::id key1;
-      ::database::id key2;
+      ::database::key key1;
+
+      ::database::key key2;
 
       if(Map(pitem->m_pmesh, key1, key2, pitem->m_iItem, pitem->m_iSubItem, pitem->m_iListItem))
       {
-         if(data_get(key1.m_id + "." + key2.m_id, pitem->m_strText))
+
+         if(data_get(key1 + key2, pitem->m_strText))
          {
+
             return_(pitem->m_bOk, true);
+
          }
+
       }
 
       return_(pitem->m_bOk, false);
@@ -38,23 +43,25 @@ namespace databaseuser
 
    bool mesh_data::Map(
       ::user::mesh * pmesh,
-      ::database::id & key1,
-      ::database::id & key2,
+      ::database::key & key1,
+      ::database::key & key2,
       index iItem,
-      index iSubItem, 
+      index iSubItem,
       index iListItem)
    {
 
       UNREFERENCED_PARAMETER(pmesh);
+
       // default implementation
-      string str;
-      str.Format("%d", iSubItem);
-      key1 = str;
-      str.Format("%d.%d", iItem, iListItem);
-      key2 = str;
+
+      key1.m_strDataKey.Format("%d", iSubItem);
+
+      key2.m_strDataKey.Format("%d.%d", iItem, iListItem);
+
       return true;
 
    }
+
 
    ::count mesh_data::_001GetItemCount()
    {

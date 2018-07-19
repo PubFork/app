@@ -125,6 +125,8 @@ namespace user
 
 
    }
+
+
    tooltip *    interaction::get_tooltip()
    {
 
@@ -9457,22 +9459,6 @@ restart:
          pwnd->set_ipc_copy(bSet);
 
       }
-
-   }
-
-
-   id interaction::calc_user_interaction_id() const
-   {
-
-      return calc_default_user_interaction_id();
-
-   }
-
-
-   id interaction::calc_default_user_interaction_id() const
-   {
-
-      return calc_object_id();
 
    }
 

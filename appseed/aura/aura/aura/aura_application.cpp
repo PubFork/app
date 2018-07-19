@@ -316,7 +316,7 @@ namespace aura
    }
 
 
-   bool application::app_data_set(class id id, serialize & os)
+   bool application::app_data_set(::id id, serialize & os)
    {
 
       return false;
@@ -333,7 +333,7 @@ namespace aura
    }
 
 
-   bool application::app_data_get(class id id, serialize & is)
+   bool application::app_data_get(::id id, serialize & is)
    {
 
       return false;
@@ -341,7 +341,7 @@ namespace aura
    }
 
 
-   bool application::app_data_set(class id id, ::object & obj)
+   bool application::app_data_set(::id id, ::object & obj)
    {
 
       return false;
@@ -349,7 +349,7 @@ namespace aura
    }
 
 
-   bool application::app_data_get(class id id, ::object & obj)
+   bool application::app_data_get(::id id, ::object & obj)
    {
 
       return false;

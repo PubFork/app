@@ -3975,7 +3975,7 @@ namespace user
    }
 
 
-   void list::_001GetSelection(::database::id & key, ::database::selection &selection)
+   void list::_001GetSelection(::database::key & key, ::database::selection &selection)
    {
 
       if (!_001HasConfigId(key))
@@ -4000,7 +4000,7 @@ namespace user
             for (index iLine = itemrange.get_lower_bound(); iLine <= itemrange.get_upper_bound(); iLine++)
             {
 
-               selection.add_item(key.m_id + "." + ::str::from(iLine));
+               selection.add_item(key.m_strDataKey + "/" + ::str::from(iLine));
 
             }
 
@@ -5474,12 +5474,12 @@ namespace user
 
 
 
-   bool list::_001HasConfigId(const ::database::id & key)
+   bool list::_001HasConfigId(const ::database::key & key)
    {
       return _001ConfigIdToColumnKey(key) >= 0;
    }
 
-   index list::_001ConfigIdToSubItem(const ::database::id & key)
+   index list::_001ConfigIdToSubItem(const ::database::key & key)
    {
       list_column * column = m_columna.get_by_config_id(key);
       if (column == NULL)
@@ -5488,7 +5488,7 @@ namespace user
    }
 
 
-   index list::config_id_index(const ::database::id & key)
+   index list::config_id_index(const ::database::key & key)
    {
 
       return m_columna.config_id_index(key);
@@ -5496,7 +5496,7 @@ namespace user
    }
 
 
-   list_column * list_column_array::get_by_config_id(const ::database::id & key)
+   list_column * list_column_array::get_by_config_id(const ::database::key & key)
    {
       index iKey = config_id_index(key);
       if (iKey >= 0)
@@ -5507,7 +5507,7 @@ namespace user
    }
 
 
-   index list_column_array::config_id_index(const ::database::id & key)
+   index list_column_array::config_id_index(const ::database::key & key)
    {
 
       for (index iIndex = 0; iIndex < this->get_size(); iIndex++)
@@ -5527,7 +5527,7 @@ namespace user
    }
 
 
-   index list_column_array::config_id_visible_index(const ::database::id & key)
+   index list_column_array::config_id_visible_index(const ::database::key & key)
    {
 
       ::count cVisible = 0;

@@ -68,6 +68,7 @@ namespace database
       virtual int32_t drop() { return DB_COMMAND_OK; }
       virtual long nextid(const char* seq_name)=0;
 
+      virtual string escape(const char * psz);
       /* virtual methods for transaction */
 
       virtual void start_transaction() {};

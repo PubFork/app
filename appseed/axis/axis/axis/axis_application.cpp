@@ -1462,10 +1462,10 @@ InitFailure:
    }
 
 
-   string application::calc_data_id()
+   ::database::key application::calc_data_key()
    {
 
-      return "app://" + m_strAppName + "/" + m_strDataIdAddUp + ::str::has_char(get_data_key_modifier(), "/");
+      return ::database::key("app://" + m_strAppName, is_local_data());
 
    }
 
@@ -3746,7 +3746,7 @@ namespace axis
 
    }
 
-   bool application::app_data_set(class id id, serialize & serialize)
+   bool application::app_data_set(::id id, serialize & serialize)
    {
 
       return data_set(id, serialize);
@@ -3754,7 +3754,7 @@ namespace axis
    }
 
 
-   bool application::app_data_get(class id id, serialize & serialize)
+   bool application::app_data_get(::id id, serialize & serialize)
    {
 
       return data_get(id, serialize);
@@ -3762,7 +3762,7 @@ namespace axis
    }
 
 
-   bool application::app_data_set(class id id, ::object & obj)
+   bool application::app_data_set(::id id, ::object & obj)
    {
 
       return data_set(id, obj);
@@ -3770,7 +3770,7 @@ namespace axis
    }
 
 
-   bool application::app_data_get(class id id, ::object & obj)
+   bool application::app_data_get(::id id, ::object & obj)
    {
 
       return data_get(id, obj);
@@ -3813,7 +3813,7 @@ namespace axis
    bool application::is_local_data()
    {
 
-      return m_bLocalDataModifier;
+      return m_datakey.m_bLocalData;
 
    }
 

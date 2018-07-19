@@ -85,7 +85,7 @@ namespace user
       virtual bool _001OnClick(uint_ptr uiFlags,point point,index iItem,index iSubItem);
       void _001OnTimer(::timer * ptimer);
 
-      virtual void _001GetSelection(::database::id & key,::database::selection & selection);
+      virtual void _001GetSelection(::database::key & key,::database::selection & selection);
 
       DECL_GEN_SIGNAL(_001OnNotify);
       DECL_GEN_SIGNAL(_001OnMessageNotify);

@@ -38,15 +38,27 @@ namespace user
 
       UNREFERENCED_PARAMETER(pobj);
 
-      if (pobj->previous())
-         return;
-
-      initialize_data_client(&System.dataserver());
-
       if (m_id.is_empty())
       {
 
+#ifdef LINUX
+
+         m_id = demangle(typeid(*this).name());
+
+#else
+
          m_id = typeid(*this).name();
+
+#endif
+
+      }
+
+      initialize_data_client(&System.dataserver());
+
+      if (pobj->previous())
+      {
+
+         return;
 
       }
 
@@ -71,8 +83,11 @@ namespace user
 
    void box::WindowDataEnableSaveWindowRect(bool bEnable)
    {
+
       m_bEnableSaveWindowRect = bEnable;
+
    }
+
 
    bool box::WindowDataSaveWindowRect()
    {
@@ -86,14 +101,13 @@ namespace user
 
          defer_update_display();
 
-         ::id idKey = m_strWindowRectDataAddUp + get_data_id().m_id + ".WindowRect." + m_strDisplay;
+         string strKey = "WindowRect." + m_strDisplay;
 
-         //sl.unlock();
+         bSave = SaveWindowRect_(strKey, this);
 
-         bSave = SaveWindowRect_(idKey, this);
       }
 
-      return true;
+      return bSave;
 
    }
 
@@ -109,11 +123,7 @@ namespace user
 
       defer_update_display();
 
-      ::id idData = get_data_id().m_id;
-
-      ::id idKey = m_strWindowRectDataAddUp + idData + ".WindowRect." + m_strDisplay;
-
-      //sl.unlock();
+      ::id idKey = "WindowRect." + m_strDisplay;
 
       bLoad = LoadWindowRect_(idKey, this, bForceRestore, bInitialFramePosition);
 
@@ -148,7 +158,7 @@ namespace user
    }
 
 
-   bool box::LoadWindowRect_(::database::id id, sp(::user::box) pwindow, bool bForceRestore, bool bInitialFramePosition)
+   bool box::LoadWindowRect_(::database::key key, sp(::user::box) pwindow, bool bForceRestore, bool bInitialFramePosition)
    {
 
       try
@@ -162,7 +172,7 @@ namespace user
 
             writer writer(&file);
 
-            if (!data_get(id, writer))
+            if (!data_get(key, writer))
             {
 
                return false;
@@ -217,7 +227,7 @@ namespace user
             {
 
                return false;
-               
+
             }
 
             oprop("control_box_right_to_right") = iControlBoxRightToLeft;
@@ -301,7 +311,7 @@ namespace user
    }
 
 
-   bool box::SaveWindowRect_(::database::id id, sp(::user::box) pwindow)
+   bool box::SaveWindowRect_(::database::key key, sp(::user::box) pwindow)
    {
 
       memory_file fileGet(get_app());
@@ -312,7 +322,7 @@ namespace user
 
          writer writer(&fileGet);
 
-         bGet = data_get(id, writer);
+         bGet = data_get(key, writer);
 
       }
 
@@ -397,7 +407,7 @@ namespace user
 
          reader reader(&file);
 
-         return data_set(id, reader);
+         return data_set(key, reader);
 
       }
 
@@ -410,8 +420,6 @@ namespace user
       set_appearance(::user::appearance_normal);
 
       WindowDataLoadWindowRect(true);
-
-
 
    }
 
@@ -447,28 +455,11 @@ namespace user
 
    }
 
+
    void box::defer_update_display()
    {
 
-      if (m_strDisplay.is_empty())
-      {
-
-         if (!data_get(m_strWindowRectDataAddUp + get_data_id().m_id + ".lastdisplay", m_strDisplay) || m_strDisplay.is_empty())
-         {
-
-            m_strDisplay = calc_display();
-
-         }
-
-      }
-      else
-      {
-
-         m_strDisplay = calc_display();
-
-         data_set(m_strWindowRectDataAddUp + get_data_id().m_id + ".lastdisplay", m_strDisplay);
-
-      }
+      m_strDisplay = calc_display();
 
    }
 
@@ -542,60 +533,6 @@ namespace user
 
    }
 
-
-   string box::calc_data_id()
-   {
-
-      if(m_id.is_empty())
-      {
-
-         m_id = calc_user_interaction_id();
-
-         if(m_id.is_empty())
-         {
-
-            m_id = calc_default_user_interaction_id();
-
-            if(m_id.is_empty())
-            {
-
-               return "";
-
-            }
-
-         }
-
-      }
-
-      string str;
-
-      str = Application.get_data_id();
-
-      if (str.has_char())
-      {
-
-         str += ".";
-
-      }
-
-      str += m_id;
-
-      string strModifier = get_data_key_modifier();
-
-      if (strModifier.has_char())
-      {
-
-         str += "&";
-
-         str += strModifier;
-
-      }
-
-      return str;
-
-      return str + m_id + get_data_key_modifier();
-
-   }
 
 
    bool box::parent_is_local_data()

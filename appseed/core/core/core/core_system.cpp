@@ -214,6 +214,8 @@ namespace core
       fork([=]()
       {
 
+         add_ref();
+
          ::get_thread()->unregister_from_required_threads();
 
          g_pbasecore = dlopen("libbasecore.so", RTLD_LOCAL | RTLD_NOW);

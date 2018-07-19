@@ -291,14 +291,19 @@ namespace user
 
       if(pcontrol->descriptor().has_function(control_function_vms_data_edit))
       {
+
          ::database::selection selection;
-         _001GetSelection(pcontrol->descriptor().m_dataid,selection);
+
+         _001GetSelection(pcontrol->descriptor().m_datakey, selection);
 
          ::database::update_hint uh;
+
          uh.add_self(this);
 
          data_set(selection,var,&uh);
+
       }
+
       return true;
    }
 
@@ -377,7 +382,7 @@ namespace user
       int_ptr_array ia;
       try
       {
-         pcontrol->descriptor().m_ddx.m_pdbflags->m_key.m_pclient->data_load(pcontrol->descriptor().m_ddx.m_pdbflags->m_key.m_id,ia);
+         pcontrol->descriptor().get_data_client()->data_load(pcontrol->descriptor().m_datakey,ia);
       }
       catch(...)
       {
@@ -408,7 +413,7 @@ namespace user
          return;
       ASSERT(pcontrol->descriptor().get_control_type() == control_type_check_box);
       int32_t i;
-      if(data_get(pcontrol->descriptor().m_dataid,i))
+      if(data_get(pcontrol->descriptor().m_datakey,i))
       {
          /* linux      ::user::button * pbutton = (::user::button *) get_child_by_id(pcontrol->m_id);
          pbutton->SetCheck((i != 0) ? 1 : 0); */
@@ -450,7 +455,7 @@ namespace user
       {
          var var;
          ::database::selection selection;
-         _001GetSelection(pcontrol->descriptor().m_dataid,selection);
+         _001GetSelection(pcontrol->descriptor().m_datakey,selection);
          if(selection.get_item_count() > 0)
          {
             ::database::selection_item & item = selection.get_item(0);
@@ -465,7 +470,7 @@ namespace user
             }
             if(ptext == NULL)
                return;
-            if(data_get(pcontrol->descriptor().m_dataid.m_id + "." + item.m_id.m_id,var))
+            if(data_get(pcontrol->descriptor().m_datakey.m_strDataKey + "." + item.m_datakey.m_strDataKey,var))
             {
                switch(var.get_type())
                {
@@ -542,13 +547,24 @@ namespace user
 
    bool form_control::_001GetData(id uiId,bool &bData)
    {
+
       sp(control) pcontrol = m_controldescriptorset.get_control(this, uiId);
+
       if(pcontrol == NULL)
+      {
+
          return false;
 
+      }
+
       int32_t i;
-      if(!data_get(pcontrol->descriptor().m_dataid,i))
+
+      if(!data_get(pcontrol->descriptor().m_datakey,i))
+      {
+
          return false;
+
+      }
 
       bData = (i != 0) ? 1 : 0;
 
@@ -556,17 +572,27 @@ namespace user
 
    }
 
+
    bool form_control::_001SetData(id uiId,bool bData)
    {
+
       sp(control) pcontrol = m_controldescriptorset.get_control(this, uiId);
+
       if(pcontrol == NULL)
+      {
+
          return false;
 
+      }
+
       int32_t i = bData ? 1 : 0;
-      data_set(pcontrol->descriptor().m_dataid,i);
+
+      data_set(pcontrol->descriptor().m_datakey,i);
+
       return true;
 
    }
+
 
    void form_control::Update(bool bSave)
    {
@@ -602,7 +628,7 @@ namespace user
    }
 
 
-   void form_control::_001GetSelection(::database::id & id,::database::selection &selection)
+   void form_control::_001GetSelection(::database::key & id,::database::selection &selection)
    {
 
       selection.add_item(id);
@@ -707,7 +733,7 @@ namespace user
             _001UpdateDbFlags(pcontrol);
 
          }
-         else if(m_controldescriptorset[iControl]->m_dataid == pchange->m_key.m_id)
+         else if(m_controldescriptorset[iControl]->m_datakey == pchange->m_datakey)
          {
 
             _001Update(pcontrol);
@@ -1060,23 +1086,24 @@ namespace user
 
             int_ptr_array ia;
 
-            pdescriptor->m_ddx.m_pdbflags->m_key.m_pclient->data_load(
-            pdescriptor->m_ddx.m_pdbflags->m_key.m_id,
-            ia);
+            pdescriptor->get_data_client()->data_load(pdescriptor->m_datakey, ia);
 
             sp(check) pcheck = pevent->m_puie;
 
             if(pcheck->_001GetCheck() == ::check::checked)
             {
-               ia.add_unique(pdescriptor->m_ddx.m_pdbflags->m_value);
+
+               ia.add_unique(pdescriptor->m_iDataValue);
+
             }
             else
             {
-               ia.remove(pdescriptor->m_ddx.m_pdbflags->m_value);
+
+               ia.remove(pdescriptor->m_iDataValue);
+
             }
-            pdescriptor->m_ddx.m_pdbflags->m_key.m_pclient->data_load(
-            pdescriptor->m_ddx.m_pdbflags->m_key.m_id,
-            ia);
+
+            pdescriptor->get_data_client()->data_load(pdescriptor->m_datakey, ia);
 
          }
 

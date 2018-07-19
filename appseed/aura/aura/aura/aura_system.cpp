@@ -1261,7 +1261,7 @@ namespace aura
    }
 
 
-   object * system::alloc(::aura::application * papp,const class id & idType)
+   object * system::alloc(::aura::application * papp,const ::id & idType)
    {
 
       sp(::type) ptype = get_type_info(idType);

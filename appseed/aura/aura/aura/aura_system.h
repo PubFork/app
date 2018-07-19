@@ -65,7 +65,7 @@ namespace aura
       sp(::aura::str)                              m_puserstr;
 
 
-      static class id                              idEmpty;
+      static ::id                              idEmpty;
       sp(class ::str::base64)                      m_spbase64;
 
       ::string_to_string                           m_mapAppLibrary;
@@ -241,7 +241,7 @@ namespace aura
 
       using ::aura::application::alloc;
       virtual object * alloc(::aura::application * papp,::type * ptype);
-      virtual object * alloc(::aura::application * papp,const class id & idType);
+      virtual object * alloc(::aura::application * papp,const ::id & idType);
 
       virtual object * on_alloc(::aura::application * papp,::type * ptype);
       virtual object * clone() override;
@@ -268,7 +268,7 @@ namespace aura
 
       virtual ::type * get_type_info(const ::std_type_info & info);
 
-      ::type * get_type_info(const class id & idType)
+      ::type * get_type_info(const ::id & idType)
       {
 
          if(idType.is_empty())
@@ -315,13 +315,13 @@ namespace aura
 
 
 
-      static inline class id id(const ::std_type_info & info);
-      static inline class id id(const char * psz);
-      static inline class id id(const string & str);
-      static inline class id id(int64_t i);
-      static inline class id_space & id();
-      inline class id id(const var & var);
-      inline class id id(const property & prop);
+      static inline ::id id(const ::std_type_info & info);
+      static inline ::id id(const char * psz);
+      static inline ::id id(const string & str);
+      static inline ::id id(int64_t i);
+      static inline ::id_space & id();
+      inline ::id id(const var & var);
+      inline ::id id(const property & prop);
 
 
       virtual int32_t _001OnDebugReport(int32_t i1,const char * psz1,int32_t i2,const char * psz2,const char * psz3,va_list args);

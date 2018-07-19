@@ -16,7 +16,8 @@ namespace database
 
 
       server *          m_pserver;
-      key               m_key;
+      client *          m_pclient;
+      key               m_datakey;
       update_hint *     m_puh;
       bool              m_bOk;
       var *             m_pvar;

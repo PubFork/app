@@ -54,11 +54,11 @@ namespace filemanager
 
       {
 
-         string strDataKeyModifier;
+         ::database::key datakey;
 
-         strDataKeyModifier.Format("filemanager(%d)", pfilemanagerdata->m_iDocument);
+         datakey.m_strDataKey.Format("filemanager(%d)", pfilemanagerdata->m_iDocument);
 
-         pfilemanagerdata->m_strDataKeyModifier = m_strDataKeyModifier + "." + strDataKeyModifier;
+         pfilemanagerdata->m_datakey = m_datakey + "." + datakey;
 
       }
 
@@ -688,16 +688,9 @@ namespace filemanager
       sp(manager) pdoc = ::user::get_document(createcontext);
 
       if(pdoc == NULL)
-         return NULL;
-
-      if(pdoc->get_filemanager_data()->m_strDataKeyModifier.is_empty())
       {
 
-         string strDataKeyModifier;
-
-         strDataKeyModifier.Format("%s(%d)",Session.filemanager().m_idFileManager.str(),pdoc->get_filemanager_data()->m_iDocument);
-
-         pdoc->get_filemanager_data()->m_strDataKeyModifier = strDataKeyModifier;
+         return NULL;
 
       }
 
@@ -752,14 +745,12 @@ namespace filemanager
 
       pdoc->get_filemanager_data()->m_pmanagerMain = pdoc;
 
-      if(pdoc->get_filemanager_data()->m_strDataKeyModifier.is_empty())
+      if(pdoc->get_filemanager_data()->m_datakey.is_empty())
       {
 
-         string strDataKeyModifier;
-
-         strDataKeyModifier.Format("%s::(%d)",Session.filemanager().m_idFileManager.str(),pdoc->get_filemanager_data()->m_iDocument);
-
-         pdoc->get_filemanager_data()->m_strDataKeyModifier = strDataKeyModifier;
+         pdoc->get_filemanager_data()->m_datakey.m_strDataKey.Format("%s(%d)",
+            Session.filemanager().m_idFileManager.str(),
+            pdoc->get_filemanager_data()->m_iDocument);
 
       }
 
@@ -807,17 +798,6 @@ namespace filemanager
       pdoc->get_filemanager_data()->m_pmanager = pdoc;
 
       pdoc->get_filemanager_data()->m_pmanagerMain = pdoc;
-
-      if(pdoc->get_filemanager_data()->m_strDataKeyModifier.is_empty())
-      {
-
-         string strDataKeyModifier;
-
-         strDataKeyModifier.Format("%s(%d)",Session.filemanager().m_idFileManager.str(),pdoc->get_filemanager_data()->m_iDocument);
-
-         pdoc->get_filemanager_data()->m_strDataKeyModifier = strDataKeyModifier;
-
-      }
 
       pdoc->Initialize(bMakeVisible);
 

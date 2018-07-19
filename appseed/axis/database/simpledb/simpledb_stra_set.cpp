@@ -1,8 +1,8 @@
 #include "framework.h"
 
 
-db_stra_set::db_stra_set(db_server * pserver, ::database::id & id) :
-   m_id(id)
+db_stra_set::db_stra_set(db_server * pserver, ::database::key & key) :
+   m_key(key)
 {
 
    UNREFERENCED_PARAMETER(pserver);
@@ -15,7 +15,7 @@ db_stra_set::db_stra_set(db_server * pserver, ::database::id & id) :
 void db_stra_set::get_data(stringa & stra)
 {
 
-   data_load(m_id, stra);
+   data_load(m_key, stra);
 
 }
 
@@ -24,7 +24,7 @@ void db_stra_set::get_data(stringa & stra)
 ::count db_stra_set::set_data(stringa & stra)
 {
 
-   data_save(m_id, stra);
+   data_save(m_key, stra);
 
    return stra.get_size();
 

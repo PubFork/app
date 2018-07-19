@@ -34,7 +34,7 @@ namespace userex
 
 
       void set_new_pane_info(id id, const char * pszMatter);
-      void set_menu_info(id id, const char * pszMatter, class id idCommand);
+      void set_menu_info(id id, const char * pszMatter, ::id idCommand);
    
 
       virtual void on_command_probe(::user::command * pcommand) override;

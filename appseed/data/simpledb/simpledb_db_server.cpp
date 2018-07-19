@@ -28,23 +28,6 @@ db_server::~db_server()
 }
 
 
-string db_server::calc_data_key(::database::client * pclient,  ::database::id & id)
-{
-
-   if(pclient != NULL)
-   {
-
-      return pclient->calc_data_key(id);
-
-   }
-   else
-   {
-
-      return id.m_id;
-
-   }
-
-}
 
 
 bool db_server::initialize_user(mysql::database * pmysqldbUser, const char * pszUser)
@@ -235,93 +218,93 @@ void db_server::close()
 }
 
 
-bool db_server::data_server_load(::database::client * pclient, ::database::id id, ::file::output_stream & writable, ::database::update_hint * phint)
-{
+// bool db_server::data_server_load(::database::client * pclient, ::database::key id, ::file::output_stream & writable, ::database::update_hint * phint)
+// {
 
-   UNREFERENCED_PARAMETER(phint);
+//    UNREFERENCED_PARAMETER(phint);
 
-   if(!load(calc_data_key(pclient,id),writable))
-      return false;
+//    if(!load(calc_data_key(pclient,id),writable))
+//       return false;
 
-   return true;
+//    return true;
 
-}
-
-
-bool db_server::data_server_save(::database::client * pclient, ::database::id id, ::file::input_stream & readable, ::database::update_hint * phint)
-{
-
-   UNREFERENCED_PARAMETER(phint);
-
-   if(!save(calc_data_key(pclient,id),readable))
-      return false;
-
-   return true;
-
-}
+// }
 
 
-bool db_server::load(const char * lpcszKey, string & str)
-{
+// bool db_server::data_server_save(::database::client * pclient, ::database::key id, ::file::input_stream & readable, ::database::update_hint * phint)
+// {
 
-   if(get_db_str_set() == NULL)
-      return false;
+//    UNREFERENCED_PARAMETER(phint);
 
-   return get_db_str_set()->load(lpcszKey, str);
+//    if(!save(calc_data_key(pclient,id),readable))
+//       return false;
 
-}
+//    return true;
 
-
-
-bool db_server::load(const char * lpKey, ::file::output_stream & ostream)
-{
-
-   string str;
-
-   if(!load(lpKey, str))
-   {
-
-      return false;
-
-   }
-
-   ::file::byte_output_stream os(ostream);
-
-   os.write_from_hex(str);
-
-   return true;
-
-}
+// }
 
 
-bool db_server::save(const char * lpcszKey, const char * lpcsz)
-{
+// bool db_server::load(const char * lpcszKey, string & str)
+// {
 
-   if(get_db_str_set() == NULL)
-      return false;
+//    if(get_db_str_set() == NULL)
+//       return false;
 
-   return get_db_str_set()->save(lpcszKey, lpcsz);
+//    return get_db_str_set()->load(lpcszKey, str);
 
-}
+// }
 
 
-bool db_server::save(const char * lpKey, ::file::input_stream & istream)
-{
 
-   string str;
+// bool db_server::load(const char * lpKey, ::file::output_stream & ostream)
+// {
 
-   file::byte_input_stream is(istream);
+//    string str;
 
-   is.seek_to_begin();
+//    if(!load(lpKey, str))
+//    {
 
-   is.read_to_hex(str);
+//       return false;
 
-   if(!save(lpKey, str))
-      return false;
+//    }
 
-   return true;
+//    ::file::byte_output_stream os(ostream);
 
-}
+//    os.write_from_hex(str);
+
+//    return true;
+
+// }
+
+
+// bool db_server::save(const char * lpcszKey, const char * lpcsz)
+// {
+
+//    if(get_db_str_set() == NULL)
+//       return false;
+
+//    return get_db_str_set()->save(lpcszKey, lpcsz);
+
+// }
+
+
+// bool db_server::save(const char * lpKey, ::file::input_stream & istream)
+// {
+
+//    string str;
+
+//    file::byte_input_stream is(istream);
+
+//    is.seek_to_begin();
+
+//    is.read_to_hex(str);
+
+//    if(!save(lpKey, str))
+//       return false;
+
+//    return true;
+
+// }
 
 
 sp(::sqlite::base) db_server::get_database()
@@ -332,7 +315,7 @@ sp(::sqlite::base) db_server::get_database()
 }
 
 
-bool db_server::data_pulse_change(::database::client * pclient, ::database::id id, ::database::update_hint * puh)
+bool db_server::data_pulse_change(::database::client * pclient, ::database::key id, ::database::update_hint * puh)
 {
 
    return ::database::server::data_pulse_change(pclient, id, puh);

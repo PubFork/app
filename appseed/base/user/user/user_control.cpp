@@ -571,7 +571,7 @@ namespace user
 
    id control_cmd_ui::GetControlCommand(id id)
    {
-      class id idCommand;
+      ::id idCommand;
       if (m_mapControlCommand.Lookup(id, idCommand))
       {
          return id;

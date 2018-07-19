@@ -12,7 +12,7 @@ db_server::db_server(::aura::application * papp) :
 {
 
    m_pdb                = NULL;
-   m_plongset           = NULL;
+//   m_plongset           = NULL;
    m_pstrset            = NULL;
    m_bWorking           = false;
    m_pfilesystemsizeset = NULL;
@@ -32,19 +32,19 @@ db_server::~db_server()
 }
 
 
-string db_server::calc_data_key(::database::client * pclient,  ::database::id & id)
+::database::key db_server::calc_data_key(::database::client * pclient,  ::database::key & key)
 {
 
    if(pclient != NULL)
    {
 
-      return pclient->calc_data_key(id);
+      return pclient->calc_data_key(key);
 
    }
    else
    {
 
-      return id.m_id;
+      return key;
 
    }
 
@@ -62,7 +62,7 @@ bool db_server::initialize_user(::simpledb::database * pmysqldbUser, const char 
    m_psimpledbUser    = pmysqldbUser;
    m_strUser         = pszUser;
 
-   m_plongset        = canew(db_long_set(this));
+//   m_plongset        = canew(db_long_set(this));
    m_pstrset         = canew(db_str_set(this));
 
    if(!create_message_queue())
@@ -151,7 +151,7 @@ bool db_server::initialize()
 
    m_pdb->create_string_set("stringtable");
 
-   m_plongset     = canew(db_long_set(this));
+//   m_plongset     = canew(db_long_set(this));
 
    m_pstrset      = canew(db_str_set(this));
 
@@ -196,7 +196,7 @@ bool db_server::finalize()
 
    m_pstrset.release();
 
-   m_plongset.release();
+//   m_plongset.release();
 
    if(m_pdb != NULL)
    {
@@ -261,19 +261,19 @@ void db_server::close()
 
    m_pstrset.release();
 
-   m_plongset.release();
+//   m_plongset.release();
 
    m_bWorking = false;
 
 }
 
 
-bool db_server::data_server_load(::database::client * pclient, ::database::id id, memory & memory, ::database::update_hint * phint)
+bool db_server::data_server_load(::database::client * pclient, ::database::key key, memory & memory, ::database::update_hint * phint)
 {
 
    UNREFERENCED_PARAMETER(phint);
 
-   if (!load(calc_data_key(pclient, id), memory))
+   if (!load(calc_data_key(pclient, key), memory))
    {
 
       return false;
@@ -285,14 +285,14 @@ bool db_server::data_server_load(::database::client * pclient, ::database::id id
 }
 
 
-bool db_server::data_server_save(::database::client * pclient, ::database::id id, memory & memory, ::database::update_hint * phint)
+bool db_server::data_server_save(::database::client * pclient, ::database::key key, memory & memory, ::database::update_hint * phint)
 {
 
    synch_lock sl(m_pmutex);
 
    UNREFERENCED_PARAMETER(phint);
 
-   if (!save(calc_data_key(pclient, id), memory))
+   if (!save(calc_data_key(pclient, key), memory))
    {
 
       return false;
@@ -304,24 +304,28 @@ bool db_server::data_server_save(::database::client * pclient, ::database::id id
 }
 
 
-bool db_server::load(const char * lpcszKey, string & str)
+bool db_server::load(const ::database::key & key, string & str)
 {
 
    if(get_db_str_set() == NULL)
+   {
+
       return false;
 
-   return get_db_str_set()->load(lpcszKey, str);
+   }
+
+   return get_db_str_set()->load(key, str);
 
 }
 
 
 
-bool db_server::load(const char * lpKey, memory & mem)
+bool db_server::load(const ::database::key & key, memory & mem)
 {
 
    string str;
 
-   if(!load(lpKey, str))
+   if(!load(key, str))
    {
 
       return false;
@@ -346,20 +350,24 @@ bool db_server::load(const char * lpKey, memory & mem)
 }
 
 
-bool db_server::save(const char * lpcszKey, const char * lpcsz)
+bool db_server::save(const ::database::key & key, const char * lpcsz)
 {
 
    synch_lock sl(m_pmutex);
 
    if(get_db_str_set() == NULL)
+   {
+
       return false;
 
-   return get_db_str_set()->save(lpcszKey, lpcsz);
+   }
+
+   return get_db_str_set()->save(key, lpcsz);
 
 }
 
 
-bool db_server::save(const char * lpKey, memory & mem)
+bool db_server::save(const ::database::key & key, memory & mem)
 {
 
    synch_lock sl(m_pmutex);
@@ -368,8 +376,12 @@ bool db_server::save(const char * lpKey, memory & mem)
 
    mem.to_base64(str);
 
-   if(!save(lpKey, str))
+   if(!save(key, str))
+   {
+
       return false;
+
+   }
 
    return true;
 
@@ -384,7 +396,7 @@ sp(::sqlite::base) db_server::get_database()
 }
 
 
-bool db_server::data_pulse_change(::database::client * pclient, ::database::id id, ::database::update_hint * puh)
+bool db_server::data_pulse_change(::database::client * pclient, ::database::key id, ::database::update_hint * puh)
 {
 
    return ::database::server::data_pulse_change(pclient, id, puh);

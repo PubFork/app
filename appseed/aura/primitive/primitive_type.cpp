@@ -44,7 +44,7 @@ string demangle (const char* name)
 #endif
 
 
-type::type(const id & id, const class id & idFriendly)
+type::type(const id & id, const ::id & idFriendly)
 {
 
    m_pfactoryitem = NULL;

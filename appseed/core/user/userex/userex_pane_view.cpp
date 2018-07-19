@@ -99,7 +99,7 @@ namespace userex
       set_menu_info(id, pszMatter, "new_pane");
    }
 
-   void pane_view::set_menu_info(id id, const char * pszMatter, class id idCommand)
+   void pane_view::set_menu_info(id id, const char * pszMatter, ::id idCommand)
    {
 
       sp(menu) pmenu;

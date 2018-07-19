@@ -506,10 +506,10 @@ namespace user
       void _001EnsureVisible(index iItem,bool bRedraw = true);
       void _001EnsureVisible(index iItem,range & rangeRedraw);
       void _001ItemScroll(index iItem,bool bRedraw = true);
-      index _001ConfigIdToColumnKey(const ::database::id & key);
-      index _001ConfigIdToSubItem(const ::database::id & key);
-      virtual bool _001HasConfigId(const ::database::id & key);
-      void _001GetSelection(::database::id & key,::database::selection & selection);
+      index _001ConfigIdToColumnKey(const ::database::key & key);
+      index _001ConfigIdToSubItem(const ::database::key & key);
+      virtual bool _001HasConfigId(const ::database::key & key);
+      void _001GetSelection(::database::key & key,::database::selection & selection);
 
       //void _001SetSingleColumnMode(bool bHeaderCtrl);
 //      bool _001InsertColumn(::user::mesh_column & column);

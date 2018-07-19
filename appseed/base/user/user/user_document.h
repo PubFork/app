@@ -182,7 +182,7 @@ namespace user
          virtual void pre_close_frame(::user::frame_window * pframe);
 
 
-      
+
 
          // implementation helpers
          virtual bool on_filemanager_open(::filemanager::manager * pmanager, var varFile);
@@ -274,7 +274,7 @@ namespace user
          virtual bool open_document(var varFile);
 
 
-         virtual string calc_data_id() override;
+         virtual ::database::key calc_parent_data_key() override;
 
 
    };

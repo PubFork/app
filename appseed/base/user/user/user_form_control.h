@@ -52,7 +52,7 @@ namespace user
       virtual void on_command(::user::command * pcommand) override;
       DECL_GEN_SIGNAL(_001OnNotify);
       DECL_GEN_SIGNAL(_001OnMessageNotify);
-      virtual void _001GetSelection(::database::id & key,::database::selection & selection);
+      virtual void _001GetSelection(::database::key & key,::database::selection & selection);
       void Update(bool bSave);
       bool _001SetData(id uiId,bool bData);
       bool _001GetData(id uiId,bool & bData);

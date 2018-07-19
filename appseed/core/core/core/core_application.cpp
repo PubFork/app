@@ -3118,15 +3118,17 @@ namespace core
 
    void application::data_on_after_change(::message::message * pobj)
    {
+
       SCAST_PTR(::database::change_event, pchange, pobj);
-      if (pchange->m_key.m_id == "ca2.savings")
+
+      if (pchange->m_datakey.m_strDataKey == "ca2.savings")
       {
+
          pchange->data_get(Session.savings().m_eresourceflagsShouldSave);
+
       }
+
    }
-
-
-
 
 
    int32_t application::GetVisibleTopLevelFrameCountExcept(sp(::user::interaction) pwndExcept)

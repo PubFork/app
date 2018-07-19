@@ -76,7 +76,7 @@ namespace user
       m_iItem = control_descriptor.m_iItem;
       m_id = control_descriptor.m_id;
       m_econtroltype = control_descriptor.m_econtroltype;
-      m_dataid = control_descriptor.m_dataid;
+      m_datakey= control_descriptor.m_datakey;
       m_bTransparent = control_descriptor.m_bTransparent;
       m_flagsfunction = control_descriptor.m_flagsfunction;
       m_typeinfo = control_descriptor.m_typeinfo;
@@ -86,7 +86,6 @@ namespace user
       //m_pcontrol              = control_descriptor.m_pcontrol;
       m_controlmap.remove_all();
       m_eddx = control_descriptor.m_eddx;
-      m_ddx.m_pvoid = control_descriptor.m_ddx.m_pvoid;
       m_puiParent = control_descriptor.m_puiParent;
       m_iSubItem = control_descriptor.m_iSubItem;
       m_iColumn = control_descriptor.m_iColumn;
@@ -101,13 +100,25 @@ namespace user
    }
 
 
+::database::client * control_descriptor::get_data_client()
+{
+if(m_pui == NULL)
+{
+
+return NULL;
+
+}
+
+return dynamic_cast < ::database::client * > (m_pui);
+
+}
    bool control_descriptor::operator == (const control_descriptor & control_descriptor) const
    {
 
       return m_id == control_descriptor.m_id
              && m_econtroltype == control_descriptor.m_econtroltype
-             && m_dataid == control_descriptor.m_dataid
-             && m_puiParent == control_descriptor.m_puiParent;
+             && m_datakey == control_descriptor.m_datakey
+                          && m_puiParent == control_descriptor.m_puiParent;
 
    }
 
@@ -152,14 +163,16 @@ namespace user
    }
 
 
-   void control_descriptor::set_ddx_dbflags(::database::id id, int_ptr value)
+   void control_descriptor::set_ddx_dbflags(::database::key datakey, int_ptr value)
    {
 
       m_eddx = ::user::control_ddx_dbflags;
 
-      class ::database::key key(NULL, id);
+      m_datakey = datakey;
 
-      m_ddx.m_pdbflags = new class ::user::control_ddx_dbflags(key, value);
+      m_iDataValue = value;
+
+
 
 
    }

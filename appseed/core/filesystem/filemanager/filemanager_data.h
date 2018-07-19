@@ -20,7 +20,7 @@ namespace filemanager
       callback *                          m_pcallback;
       ::filemanager::manager_template *   m_pmanagertemplate;
       bool                                m_bTransparentBackground;
-      string                              m_strDataKeyModifier;
+      ::database::key                     m_datakey;
       ::user::place_holder *              m_pholderFileList;
       ::user::tree *                      m_ptreeFileTreeMerge;
       bool                                m_bSetBergedgeTopicFile;
@@ -64,6 +64,10 @@ namespace filemanager
 
 
       virtual sp(::filemanager::manager_template) get_filemanager_template();
+
+
+      virtual void defer_update_data_key();
+
 
    };
 

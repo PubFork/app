@@ -358,7 +358,7 @@ namespace user
 
 
       virtual id GetDlgCtrlId() const;
-      virtual id SetDlgCtrlId(class id id);
+      virtual id SetDlgCtrlId(::id id);
 
       virtual bool SetCapture(::user::interaction * pui = NULL);
       virtual bool ReleaseCapture();

@@ -3202,9 +3202,7 @@ namespace user
       range = m_rangeSelection;
    }
 
-   void mesh::_001GetSelection(
-   ::database::id & key,
-   ::database::selection &selection)
+   void mesh::_001GetSelection(::database::key & key, ::database::selection &selection)
    {
       if(!_001HasConfigId(key))
          return;
@@ -3217,7 +3215,7 @@ namespace user
          {
             for(index iLine = itemrange.get_lower_bound(); iLine <= itemrange.get_upper_bound(); iLine++)
             {
-               selection.add_item(key.m_id + "." + ::str::from(iLine));
+               selection.add_item(key.m_strDataKey + "/" + ::str::from(iLine));
             }
          }
       }
@@ -4669,12 +4667,12 @@ namespace user
 
 
 
-   bool mesh::_001HasConfigId(const ::database::id & key)
+   bool mesh::_001HasConfigId(const ::database::key & key)
    {
       return _001ConfigIdToColumnKey(key) >= 0;
    }
 
-   index mesh::_001ConfigIdToSubItem(const ::database::id & key)
+   index mesh::_001ConfigIdToSubItem(const ::database::key & key)
    {
       //mesh_column * column = m_columna._001GetByConfigId(key);
       //if(column == NULL)
@@ -4683,7 +4681,7 @@ namespace user
       return -1;
    }
 
-   index mesh::_001ConfigIdToColumnKey(const ::database::id & key)
+   index mesh::_001ConfigIdToColumnKey(const ::database::key & key)
    {
       //mesh_column * column = m_columna._001GetByConfigId(key);
       //if(column == NULL)
@@ -4692,7 +4690,7 @@ namespace user
       return -1;
    }
 
-   //mesh_column * mesh_column_array::_001GetByConfigId(const ::database::id & key)
+   //mesh_column * mesh_column_array::_001GetByConfigId(const ::database::key & key)
    //{
    //   //index iKey = MapConfigIdToKey(key);
    //   //if(iKey >= 0)
@@ -4704,7 +4702,7 @@ namespace user
 
    //}
 
-   //index mesh_column_array::MapConfigIdToKey(const ::database::id & key)
+   //index mesh_column_array::MapConfigIdToKey(const ::database::key & key)
    //{
    //   for(index iKey = 0; iKey < this->get_size(); iKey++)
    //   {

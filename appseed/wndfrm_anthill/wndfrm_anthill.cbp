@@ -106,7 +106,6 @@
 		<Unit filename="wndfrm_anthill_interaction.h" />
 		<Unit filename="wndfrm_anthill_library.cpp" />
 		<Unit filename="wndfrm_anthill_library.h" />
-		<Unit filename="wndfrm_anthill_user_style.cpp" />
 		<Unit filename="wndfrm_anthill_user_theme.cpp" />
 		<Unit filename="wndfrm_anthill_user_theme.h" />
 		<Extensions>

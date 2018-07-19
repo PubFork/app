@@ -25,10 +25,9 @@ namespace filemanager
 
       virtual void initialize(string strDataKeyModifier,bool bRecursive);
 
-
-      virtual string calc_data_id() override;
-
+      
       virtual void _001InsertColumns() override;
+
 
       bool add_unique(const stringa & stra);
       bool add_unique(const stringa & stra, bool_array & baRecursive);

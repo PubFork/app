@@ -107,7 +107,7 @@ namespace userfs
    }
 
    /*
-   bool tree::OnSetData(const ::database::id &key, int32_t iLine, int32_t iColumn, var & var, ::database::update_hint * puh)
+   bool tree::OnSetData(const ::database::key &key, int32_t iLine, int32_t iColumn, var & var, ::database::update_hint * puh)
    {
    if(key.get_value() == FILE_MANAGER_ID_FILE_NAME)
    {
@@ -122,7 +122,7 @@ namespace userfs
    */
 
    /*
-   bool tree::get_data(const ::database::id & key, int32_t iLine, int32_t iColumn, var & var)
+   bool tree::get_data(const ::database::key & key, int32_t iLine, int32_t iColumn, var & var)
    {
    string str;
    if(key.get_value() == FILE_MANAGER_ID_FILE_NAME)

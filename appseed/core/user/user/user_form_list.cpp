@@ -25,7 +25,7 @@ namespace user
    }
 
 
-   void form_list::_001GetSelection(::database::id & key,::database::selection &selection)
+   void form_list::_001GetSelection(::database::key & key,::database::selection &selection)
    {
 
       list::_001GetSelection(key,selection);

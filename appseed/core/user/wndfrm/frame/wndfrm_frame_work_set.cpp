@@ -350,8 +350,6 @@ namespace user
             if(!m_psystemmenumanager->update(this))
                return false;
 
-            m_psizemanager->SetMinSize(m_pframeschema->GetMinSize());
-
             install_message_routing(pwndEvent->m_pimpl);
 
             return true;

@@ -144,7 +144,7 @@ namespace prompt
             pdoc->get_filemanager_data()->m_bListText = true;
             pdoc->get_filemanager_data()->m_bListSelection = false;
             pdoc->get_filemanager_template()->m_strFilePopup = "filemanager\\file_popup.xml";
-            pdoc->get_filemanager_data()->m_strDataKeyModifier = "winactionarea_menu";
+            pdoc->get_filemanager_data()->m_datakey = "winactionarea_menu";
             pdoc->get_filemanager_data()->m_pcallback = this;
             pdoc->Initialize(true);
             pdoc->update_all_views(NULL, 1234);
@@ -183,7 +183,7 @@ namespace prompt
          sp(::filemanager::manager) pdoc = Session.filemanager()->open_child(false, true);
          if(pdoc != NULL)
          {
-            pdoc->get_filemanager_data()->m_strDataKeyModifier = "winactionarea_filemanager";
+            pdoc->get_filemanager_data()->m_datakey = "winactionarea_filemanager";
             pdoc->Initialize(true);
             pdoc->update_all_views(NULL, 1234);
             pdoc->update_all_views(NULL, 123458);
@@ -215,7 +215,7 @@ namespace prompt
             pdoc->get_filemanager_data()->m_bListText = false;
             pdoc->get_filemanager_data()->m_bListSelection = false;
             pdoc->get_filemanager_data()->m_pcallback = this;
-            pdoc->get_filemanager_data()->m_strDataKeyModifier = "winactionarea_3-action-launch";
+            pdoc->get_filemanager_data()->m_datakey = "winactionarea_3-action-launch";
             pdoc->Initialize(true);
             pdoc->update_all_views(NULL, 1234);
             pdoc->update_all_views(NULL, 123458);

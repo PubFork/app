@@ -83,7 +83,7 @@ public:
    bool                                m_bTransparentFrame;
 
    ::draw2d::dib_sp                    m_dibAlpha;
-   ::database::id                      m_datakeyFrame;
+   ::database::key                     m_datakeyFrame;
 
 
    sp(::user::wndfrm::frame::frame)    m_pframeschema;

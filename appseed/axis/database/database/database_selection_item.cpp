@@ -11,9 +11,11 @@ namespace database
    }
 
 
-   selection_item::selection_item(class id & id)
+   selection_item::selection_item(key & key)
    {
-      m_id       = id;
+
+      m_datakey       = key;
+
    }
 
 

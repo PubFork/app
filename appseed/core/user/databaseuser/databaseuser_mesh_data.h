@@ -10,8 +10,8 @@ namespace databaseuser
       public ::database::client
    {
    public:
-      
-      
+
+
       ::count m_iItemCount;
 
 
@@ -22,7 +22,7 @@ namespace databaseuser
 
       virtual count _001GetItemCount();
 
-      virtual bool Map(::user::mesh * pmesh, ::database::id & key1, ::database::id & key2, index iItem, index iSubItem, index iListItem);
+      virtual bool Map(::user::mesh * pmesh, ::database::key & key1, ::database::key & key2, index iItem, index iSubItem, index iListItem);
 
 
    private:

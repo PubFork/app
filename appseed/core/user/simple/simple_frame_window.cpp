@@ -37,22 +37,15 @@ static bool has_autohide_appbar(UINT edge, RECT mon) // Interface Update - Infin
 
 #define TEST 0
 
+
 extern CLASS_DECL_CORE thread_int_ptr < DWORD_PTR > t_time1;
 
-manual_reset_event * simple_frame_window::helper_task::g_pevent = NULL;
 
 simple_frame_window::helper_task::helper_task(simple_frame_window * pframe) :
    ::object(pframe->get_app()),
    ::thread(pframe->get_app()),
    m_pframe(pframe)
 {
-
-   if(g_pevent == NULL)
-   {
-
-      g_pevent = new manual_reset_event(pframe->get_app());
-
-   }
 
    begin();
 
@@ -65,7 +58,7 @@ void simple_frame_window::helper_task::run()
    while(thread_get_run())
    {
 
-      g_pevent->wait(millis(100));
+      Sleep(500);
 
       if(m_pframe->m_bPendingSaveWindowPlacement && m_pframe->m_bEnableSaveWindowRect)
       {
@@ -78,15 +71,10 @@ void simple_frame_window::helper_task::run()
             try
             {
 
-               if(m_pframe->does_display_match())
+               if(m_pframe->WindowDataSaveWindowRect())
                {
 
-                  if(m_pframe->WindowDataSaveWindowRect())
-                  {
-
-                     m_pframe->m_bPendingSaveWindowPlacement = false;
-
-                  }
+                  m_pframe->m_bPendingSaveWindowPlacement = false;
 
                }
 
@@ -421,8 +409,6 @@ void simple_frame_window::_001OnCreate(::message::message * pobj)
 
          fork([&]()
          {
-
-            ::database::id databaseid = get_data_id();
 
             data_get("transparent_frame", m_bTransparentFrame);
 
@@ -760,13 +746,7 @@ bool simple_frame_window::WfiToggleTransparentFrame()
 
    m_bTransparentFrame = !m_bTransparentFrame;
 
-   ::database::id databaseid = get_data_id();
-
    data_set("transparent_frame",m_bTransparentFrame);
-
-   //on_layout();
-
-   //_001UpdateWindow();
 
    set_need_layout();
 
@@ -1570,7 +1550,6 @@ void simple_frame_window::InitialFramePosition(bool bForceRestore)
          else
          {
 
-
             WindowDataLoadWindowRect(bForceRestore,true);
 
             WindowDataEnableSaveWindowRect(true);
@@ -1816,7 +1795,7 @@ void simple_frame_window::_001OnDraw(::draw2d::graphics * pgraphics)
          if(rectClient.get_size() != m_dibBk->size())
          {
             m_dibBk->create(rectClient.get_size());
-            m_dibBk->Fill(0,184,184,170);
+            m_dibBk->Fill(0,200,200,190);
             //HMODULE hmodule = ::LoadLibrary("ca2performance.dll");
             //::visual::fastblur *( *pfnNew )(sp(::aura::application)) = (::visual::fastblur *(*)(sp(::aura::application))) ::GetProcAddress(hmodule, "new_fastblur");
             m_fastblur.alloc(allocer());
@@ -2947,12 +2926,18 @@ bool simple_frame_window::calc_layered()
 
 void simple_frame_window::data_on_after_change(::message::message * pobj)
 {
+
    box::data_on_after_change(pobj);
+
    SCAST_PTR(database::change_event, phint, pobj);
-   if (phint->m_key.m_id == "ca2.savings")
+
+   if (phint->m_datakey == "ca2.savings")
    {
+
       defer_synch_layered();
+
    }
+
 }
 
 

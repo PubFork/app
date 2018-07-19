@@ -202,7 +202,6 @@
 		<Unit filename="database/database/database_field_definition.cpp" />
 		<Unit filename="database/database/database_field_definition.h" />
 		<Unit filename="database/database/database_id.cpp" />
-		<Unit filename="database/database/database_id.h" />
 		<Unit filename="database/database/database_key.cpp" />
 		<Unit filename="database/database/database_key.h" />
 		<Unit filename="database/database/database_selection.cpp" />

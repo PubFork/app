@@ -60,8 +60,6 @@ namespace filemanager
             if(puh->is_type_of(update_hint::TypeInitialize))
             {
 
-               set_data_key_modifier(get_filemanager_data()->m_strDataKeyModifier);
-
                if(get_filemanager_data()->m_bPassBk)
                {
 

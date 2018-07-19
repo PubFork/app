@@ -22,11 +22,11 @@ namespace file
 
 
       ::database::client *    m_pclient;
-      class ::database::id    m_id;
+      ::database::key         m_key;
 
 
       data_trigger_ostream(data_trigger_ostream && d);
-      data_trigger_ostream(::database::client * pclient, class ::database::id);
+      data_trigger_ostream(::database::client * pclient, class ::database::key);
       virtual ~data_trigger_ostream();
 
 
@@ -40,7 +40,7 @@ namespace file
 
 
       data_trigger_istream(data_trigger_istream && d);
-      data_trigger_istream(::database::client * pclient, class ::database::id);
+      data_trigger_istream(::database::client * pclient, class ::database::key );
       virtual ~data_trigger_istream();
 
    };
@@ -61,10 +61,11 @@ namespace database
    {
    protected:
 
-      id          m_dataid2;
-      string      m_strDataKeyModifier;
-      bool        m_bDataKeyModified;
-      bool        m_bLocalDataModifier;
+      /// Value to be add to data key on defer_update_data_id
+      ::database::key            m_datakeyModifier;
+      /// Cached Value from calc_data_id
+      ::database::key            m_datakey;
+
 
    public:
 
@@ -88,32 +89,30 @@ namespace database
       DECL_GEN_SIGNAL(data_on_before_change);
       DECL_GEN_SIGNAL(data_on_after_change);
 
-      virtual bool data_set(class id, bool b, update_hint * phint = NULL);
-      virtual bool data_set(class id, var & var, update_hint * puh = NULL);
-      virtual bool data_set(class id, int32_t i, update_hint * puh = NULL);
-      virtual bool data_set(class id, float f, update_hint * puh = NULL);
-      virtual bool data_set(class id, int64_t i, update_hint * puh = NULL);
-      virtual bool data_set(class id, double d, update_hint * puh = NULL);
+      virtual bool data_set(key key, bool b, update_hint * phint = NULL);
+      virtual bool data_set(key key, var & var, update_hint * puh = NULL);
+      virtual bool data_set(key key, int32_t i, update_hint * puh = NULL);
+      virtual bool data_set(key key, float f, update_hint * puh = NULL);
+      virtual bool data_set(key key, int64_t i, update_hint * puh = NULL);
+      virtual bool data_set(key key, double d, update_hint * puh = NULL);
 #ifdef APPLEOS
-      virtual bool data_set(class id, long l, update_hint * puh = NULL);
+      virtual bool data_set(key key, long l, update_hint * puh = NULL);
 #endif
-      virtual bool data_set(class id, const char * lpsz, update_hint * puh = NULL);
-      virtual bool data_set(class id, const unichar * lpsz, update_hint * puh = NULL);
-      virtual bool data_set(class id, ::file::file & obj, update_hint * puh = NULL);
-      virtual bool data_set(class id, object & obj, update_hint * puh = NULL);
-      virtual bool data_set(class id, serialize & serialize, update_hint * puh = NULL);
+      virtual bool data_set(key key, const char * lpsz, update_hint * puh = NULL);
+      virtual bool data_set(key key, const unichar * lpsz, update_hint * puh = NULL);
+      virtual bool data_set(key key, ::file::file & obj, update_hint * puh = NULL);
+      virtual bool data_set(key key, object & obj, update_hint * puh = NULL);
+      virtual bool data_set(key key, serialize & serialize, update_hint * puh = NULL);
       virtual bool data_set(selection & selection, const char * lpsz, update_hint * puh = NULL);
       virtual bool data_set(selection & selection, var & var, update_hint * puh = NULL);
 
-      //virtual bool data_set(class id dataid, class id,  const char * lpsz, update_hint * puh = NULL);
-
       template < typename T >
-      inline bool data_save(class id id, T & t)
+      inline bool data_save(key key, T & t)
       {
          try
          {
 
-            ::file::data_trigger_ostream os(this,id);
+            ::file::data_trigger_ostream os(this,key);
 
             os(t);
 
@@ -126,28 +125,28 @@ namespace database
       }
 
 
-      virtual bool data_get(class id,  bool & b);
-      virtual bool data_get(class id, var & var);
-      virtual bool data_get(class id, int32_t & i);
-      virtual bool data_get(class id, float & f);
-      virtual bool data_get(class id, int64_t & i);
-      virtual bool data_get(class id, double & d);
+      virtual bool data_get(key key,  bool & b);
+      virtual bool data_get(key key, var & var);
+      virtual bool data_get(key key, int32_t & i);
+      virtual bool data_get(key key, float & f);
+      virtual bool data_get(key key, int64_t & i);
+      virtual bool data_get(key key, double & d);
 #ifdef APPLEOS
-      virtual bool data_get(class id, long & l);
+      virtual bool data_get(key key, long & l);
 #endif
-      virtual bool data_get(class id, string & str);
-      virtual bool data_get(class id, ::file::file & obj);
-      virtual bool data_get(class id, object & obj);
-      virtual bool data_get(class id, serialize & obj);
+      virtual bool data_get(key key, string & str);
+      virtual bool data_get(key key, ::file::file & obj);
+      virtual bool data_get(key key, object & obj);
+      virtual bool data_get(key key, serialize & obj);
 
 
       template < typename T >
-      inline bool data_load(class id id,T & t)
+      inline bool data_load(key key,T & t)
       {
          try
          {
 
-            ::file::data_trigger_istream is(this,id);
+            ::file::data_trigger_istream is(this, key);
 
             is(t);
 
@@ -162,25 +161,23 @@ namespace database
          return true;
       }
 
-      virtual bool data_pulse_change(class id, update_hint * puh);
+      virtual bool data_pulse_change(key key, update_hint * puh);
 
 
+      virtual void set_data_key_modifier(::database::key key);
 
-      virtual string calc_data_key(::database::id & id);
 
-      virtual id get_data_id();
-      virtual string calc_data_id();
-      virtual string calc_default_data_id();
-      virtual void update_data_id();
-      virtual void set_data_key_modifier(string strDataKeyModifier);
-      virtual void add_up_data_key_modifier(string strAddUpDataKeyModifier);
-      virtual void set_local_data_key_modifier();
+      virtual key calc_data_key(key key);
+
+
+      virtual key calc_parent_data_key();
+      virtual key calc_data_key();
+      virtual void defer_update_data_key();
       virtual bool is_local_data();
-      virtual string get_data_key_modifier();
-
-
+      virtual void set_local_data(bool bLocalData = true);
 
    };
+
 
    class CLASS_DECL_AXIS client_array :
       public pointer_array < client * >

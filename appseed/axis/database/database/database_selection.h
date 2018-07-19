@@ -16,7 +16,7 @@ namespace database
       virtual ~selection();
 
 
-      void add_item(class id id);
+      void add_item(key key);
       selection_item & get_item(index iItem);
       ::count get_item_count();
 

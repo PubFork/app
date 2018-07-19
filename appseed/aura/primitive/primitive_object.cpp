@@ -447,18 +447,32 @@ bool sync_object::is_locked() const
 }
 
 
-::id object::calc_object_id() const
+void object::defer_update_object_id()
 {
 
-   return calc_default_object_id();
+   if(m_id.is_empty())
+   {
+
+      m_id = calc_default_object_id();
+
+   }
 
 }
+
+
+
 
 
 ::id object::calc_default_object_id() const
 {
 
    string strType = typeid(*this).name();
+
+   #ifndef WINDOWS
+
+   strType = demangle(strType);
+
+   #endif
 
    ::str::begins_eat_ci(strType, "class ");
 
@@ -1003,7 +1017,7 @@ void object::threadrefa_remove(::thread * pthread)
    }
 
    {
-      
+
    synch_lock slObject(m_pmutex);
 
    if (m_pthreadrefa == NULL)
@@ -1017,13 +1031,13 @@ void object::threadrefa_remove(::thread * pthread)
 
 
    m_pthreadrefa->remove(pthread);
-   
+
 }
 {
    synch_lock slThread(pthread->m_pmutex);
 
    pthread->m_objectptraDependent.remove(this);
-   
+
 }
 
 }

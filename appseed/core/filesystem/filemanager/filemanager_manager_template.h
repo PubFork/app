@@ -23,12 +23,12 @@ namespace filemanager
       string                     m_strFilePopupSubstId;
 
       string                     m_strFolderPopup;
-      string                     m_strDataKeyModifier;
+      ::database::key            m_datakey;
 
       id                         m_idExpandBox;
       id                         m_idCollapseBox;
 
-      ::database::id             m_dataidStatic;
+      ::database::key            m_dataidStatic;
 
 
       file_list_callback *       m_pfilelistcallback;

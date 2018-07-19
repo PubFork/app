@@ -18,14 +18,14 @@ namespace aura
       object(papp),
       ::thread(papp)
    {
-      
-      
+
+
       m_pauraapp = papp;
-      
+
       m_paurasession = this;
-      
+
       m_paurasystem = papp->m_paurasystem;
-      
+
       m_strAppId = "session";
 
       m_ecursorDefault = ::visual::cursor_arrow;
@@ -1335,48 +1335,48 @@ namespace aura
       }
       else
       {
-         
+
          ::visual::cursor::reset(this);
-         
+
       }
 
 
    }
 
-   
+
    void session::set_cursor(::visual::e_cursor ecursor)
    {
 
       m_ecursor = ecursor;
-      
+
 //      if(ecursor == ::visual::cursor_size_bottom_right
 //         || (ecursor == ::visual::cursor_default
 //             && m_ecursorDefault == ::visual::cursor_size_bottom_right))
 //      {
-//         
+//
 //         output_debug_string("\nbottom_right_cursor   ");
-//         
+//
 //      }
-//      else 
+//      else
 //      {
-//         
+//
 //         output_debug_string("\nNOT_bottom_right_cursor   ");
-//      
+//
 //      }
 
       ::visual::cursor * pcursor = get_cursor();
 
       if (pcursor != NULL)
       {
-         
+
          pcursor->set_current(this);
-         
+
       }
       else
       {
-         
+
          ::visual::cursor::reset(this);
-         
+
       }
 
    }
@@ -1983,12 +1983,12 @@ namespace aura
             return -1;
 
          }
-         
+
          if(lprect != NULL)
          {
 
             *lprect = m_rectaWkspace[iMainWkspace];
-            
+
          }
 
          return iMainWkspace;
@@ -2614,9 +2614,9 @@ namespace aura
 
          if(lprect != NULL)
          {
-            
+
             *lprect = rectMatch;
-            
+
          }
 
          return iMatchingWkspace;
@@ -2695,8 +2695,7 @@ namespace aura
 
       }
 
-      if (rectIntersect.width() < sizeMin.cx
-            || rectIntersect.height() < sizeMin.cy)
+      if (rectIntersect.width() < sizeMin.cx || rectIntersect.height() < sizeMin.cy)
       {
 
          if (rectMonitor.width() / 7 + MAX(sizeMin.cx, rectMonitor.width() * 2 / 5) > rectMonitor.width()

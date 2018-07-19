@@ -154,6 +154,21 @@ namespace filemanager
 
    }
 
+
+   ::database::key impact::calc_parent_data_key()
+   {
+
+      ::database::key key = ::user::impact::calc_parent_data_key();
+
+      get_filemanager_data()->defer_update_data_key();
+
+      key += get_filemanager_data()->m_datakey;
+
+      return key;
+
+   }
+
+
    void impact::knowledge(const string & strPath, ::action::context actioncontext)
    {
 

@@ -1,5 +1,10 @@
 #pragma once
 
+
+#include "comparison/comparison_equals.h"
+#include "comparison/comparison_hash.h"
+
+
 struct id_all
 {
 

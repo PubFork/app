@@ -240,7 +240,7 @@ namespace user
       virtual void walk_pre_translate_tree(::message::message * pobj,sp(::user::interaction) puiStop);
 
 
-      virtual string calc_data_id() override;
+      virtual ::database::key calc_parent_data_key() override;
 
       virtual bool is_local_data() override;
 
@@ -332,27 +332,27 @@ namespace user
          VIEW::_001OnDraw(pgraphics);
 
       }
-      
-      
+
+
       virtual void on_control_event(::user::control_event * pevent) override
       {
-       
+
          VIEW::on_control_event(pevent);
-         
+
          if(pevent->m_bRet)
          {
-          
+
             return;
-            
+
          }
-      
+
          if(m_puiViewNotify != NULL)
          {
-            
+
             m_puiViewNotify->on_control_event(pevent);
-            
+
          }
-      
+
       }
 
    };

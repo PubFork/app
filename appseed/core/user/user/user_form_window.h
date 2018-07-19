@@ -48,7 +48,7 @@ namespace user
       virtual void on_command(::user::command * pcommand);
       DECL_GEN_SIGNAL(_001OnNotify);
       DECL_GEN_SIGNAL(_001OnMessageNotify);
-      virtual void _001GetSelection(::database::id & key, ::database::selection & selection);
+      virtual void _001GetSelection(::database::key & key, ::database::selection & selection);
       virtual void Update(bool bSave);
       virtual bool _001SetData(id uiId, bool bData);
       virtual bool _001GetData(id uiId, bool & bData);

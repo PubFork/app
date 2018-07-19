@@ -150,8 +150,6 @@ namespace filemanager
 
                }
 
-               set_data_key_modifier(get_filemanager_data()->m_strDataKeyModifier);
-
                _001UpdateColumns();
 
                _001OnUpdateItemCount();
@@ -1424,7 +1422,7 @@ namespace filemanager
       }
 
       control.set_control_type(user::control_type_edit_plain_text);
-      control.m_dataid = "FILE_MANAGER_ID_FILE_NAME";
+      control.m_datakey = "FILE_MANAGER_ID_FILE_NAME";
       //pcontrol->descriptor().m_id = _vms::FILE_MANAGER_ID_FILE_NAME;
       control.set_data_type(user::control_data_type_string);
       control.add_function(user::control_function_vms_data_edit);

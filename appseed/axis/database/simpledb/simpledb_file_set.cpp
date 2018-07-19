@@ -27,7 +27,7 @@ namespace simpledb
 
       SCAST_PTR(::database::change_event, pchange, pobj);
 
-      if(pchange->m_key.m_id == m_dataid2)
+      if(pchange->m_datakey == m_datakey)
       {
 
          refresh();
@@ -46,7 +46,7 @@ namespace simpledb
 
       bool_array baRecursive;
 
-      if(!data_load(::aura::system::idEmpty, patha))
+      if(!data_load("", patha))
          return;
 
       data_load("recursive", baRecursive);

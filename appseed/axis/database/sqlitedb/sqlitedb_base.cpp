@@ -119,23 +119,29 @@ namespace sqlite
          char* err = NULL;
          if(setErr(sqlite3_exec((sqlite3 *) getHandle(),"PRAGMA empty_result_callbacks=ON",NULL,NULL,&err)) != SQLITE_OK)
          {
-            fprintf(stderr,"Error: %s",err);
+            TRACE("Error: %s",err);
             _throw(database::DbErrors(::get_app(),getErrorMsg()));
          }
          if (setErr(sqlite3_exec((sqlite3 *)getHandle(), "PRAGMA cache_size=-20000", NULL, NULL, &err)) != SQLITE_OK)
          {
-            fprintf(stderr, "Error: %s", err);
-            _throw(database::DbErrors(::get_app(),getErrorMsg()));
+            TRACE("Error: %s", err);
+            const char * pszErrorMessage = getErrorMsg();
+            if(pszErrorMessage != NULL)
+            {
+
+               output_debug_string(pszErrorMessage);
+            }
+            //_throw(database::DbErrors(::get_app(),getErrorMsg()));
          }
-         if (setErr(sqlite3_exec((sqlite3 *)getHandle(), "PRAGMA synchronous=OFF", NULL, NULL, &err)) != SQLITE_OK)
-         {
-            fprintf(stderr, "Error: %s", err);
-            _throw(database::DbErrors(::get_app(),getErrorMsg()));
-         }
+//         if (setErr(sqlite3_exec((sqlite3 *)getHandle(), "PRAGMA synchronous=OFF", NULL, NULL, &err)) != SQLITE_OK)
+//         {
+//            fprintf(stderr, "Error: %s", err);
+//            _throw(database::DbErrors(::get_app(),getErrorMsg()));
+//         }
          if (setErr(sqlite3_exec((sqlite3 *)getHandle(), "PRAGMA temp_store=MEMORY", NULL, NULL, &err)) != SQLITE_OK)
          {
-            fprintf(stderr, "Error: %s", err);
-            _throw(database::DbErrors(::get_app(),getErrorMsg()));
+            TRACE("Error: %s", err);
+            //_throw(database::DbErrors(::get_app(),getErrorMsg()));
          }
          active = true;
          return DB_CONNECTION_OK;

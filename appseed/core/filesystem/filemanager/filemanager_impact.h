@@ -35,6 +35,8 @@ namespace filemanager
       virtual void browse_sync(::action::context actioncontext);
       virtual void knowledge(const string & strPath, ::action::context actioncontext);
 
+      ::database::key calc_parent_data_key();
+
       virtual void _001Refresh();
 
       DECL_GEN_SIGNAL(_001OnEditPaste);

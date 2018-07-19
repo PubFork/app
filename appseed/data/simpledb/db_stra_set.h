@@ -8,10 +8,10 @@ public:
 
 
    int32_t         m_iMaximumCount;
-   ::database::id     m_id;
+   ::database::key     m_id;
 
 
-   db_stra_set(db_server * pdatacentral, ::database::id & id);
+   db_stra_set(db_server * pdatacentral, ::database::key & id);
    
    
    void get_data(stringa & stra);

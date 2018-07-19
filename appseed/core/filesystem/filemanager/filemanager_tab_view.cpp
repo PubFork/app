@@ -265,17 +265,6 @@ namespace filemanager
 
             pmanager->get_filemanager_data()->m_iDocument = Session.filemanager()->m_iNextDocument++;
 
-            if (pmanager->get_filemanager_template()->m_strDataKeyModifier.is_empty())
-            {
-
-               string strDataKeyModifier;
-
-               strDataKeyModifier.Format("filemanager(%d)", pmanager->get_filemanager_data()->m_iDocument);
-
-               pmanager->get_filemanager_template()->m_strDataKeyModifier = strDataKeyModifier;
-
-            }
-
             sp(::user::impact) pview = pmanager->get_view(0);
 
             sp(simple_frame_window) pwnd = (pview->GetParentFrame());

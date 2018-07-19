@@ -29,9 +29,6 @@ namespace axis
       string                                          m_strLicense;
 
 
-      string                                          m_strDataIdAddUp;
-
-
       bool                                            m_bUpdateMatterOnInstall;
 
 
@@ -62,11 +59,11 @@ namespace axis
       virtual void dump(dump_context & dumpcontext) const override;
 
 
-      virtual bool app_data_get(class id id, serialize & os) override;
-      virtual bool app_data_set(class id id, serialize & is) override;
+      virtual bool app_data_get(::id id, serialize & os) override;
+      virtual bool app_data_set(::id id, serialize & is) override;
 
-      virtual bool app_data_set(class id id, object & obj) override;
-      virtual bool app_data_get(class id id, object & obj) override;
+      virtual bool app_data_set(::id id, object & obj) override;
+      virtual bool app_data_get(::id id, object & obj) override;
 
 
       virtual string fontopus_get_cred(::aura::application * papp, const string & strRequestUrl, const RECT & rect, string & strUsername, string & strPassword, string strToken, string strTitle, bool bInteractive, ::user::interactive * pinteractive) override;
@@ -74,7 +71,7 @@ namespace axis
       virtual void set_cred(string strToken, const char * pszUsername, const char * pszPassword);
       virtual void set_cred_ok(string strToken, bool bOk);
 
-      virtual string calc_data_id() override;
+      virtual ::database::key calc_data_key() override;
 
       virtual string load_string(id id) override;
       virtual bool load_string(string & str, id id) override;

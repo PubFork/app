@@ -156,7 +156,6 @@ namespace user
       interaction_spa                     m_uiptraOwned;
       interaction_spa                     m_uiptraChild;
       string                              m_strName;
-      id                                  m_id;
       interaction *                       m_puiOwner;
       UINT                                m_nFlags;      // see WF_ flags above
       bool                                m_bCursorInside;
@@ -192,10 +191,6 @@ namespace user
       interaction();
       interaction(::aura::application * papp);
       virtual ~interaction();
-
-
-      virtual ::id calc_user_interaction_id() const;
-      virtual ::id calc_default_user_interaction_id() const;
 
 
       tooltip *         get_tooltip();
@@ -592,7 +587,7 @@ namespace user
       virtual bool is_custom_draw();
 
       virtual id GetDlgCtrlId() const override;
-      virtual id SetDlgCtrlId(class id id) override;
+      virtual id SetDlgCtrlId(::id id) override;
 
 
       virtual bool SetCapture(::user::interaction * pui = NULL) override;

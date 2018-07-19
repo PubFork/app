@@ -957,8 +957,6 @@ namespace filemanager
    void manager::Initialize(bool bMakeVisible, bool bInitialBrowsePath)
    {
 
-      set_data_key_modifier(get_filemanager_data()->m_strDataKeyModifier);
-
       CreateViews();
 
       update_hint uh;

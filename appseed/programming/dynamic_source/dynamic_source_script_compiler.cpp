@@ -1036,7 +1036,7 @@ namespace dynamic_source
       string strId;
       for(int32_t i = 0; i < straId.get_size(); i++)
       {
-         strId += "static class id lscript_id" + ::str::from(i) + "(\"" + straId[i] + "\");\r\n";
+         strId += "static ::id lscript_id" + ::str::from(i) + "(\"" + straId[i] + "\");\r\n";
       }
 
       strDest = strDest.Left(iPosId) + strId + strDest.Mid(iPosId);
@@ -1950,7 +1950,7 @@ namespace dynamic_source
       string strId;
       for(int32_t i = 0; i < straId.get_size(); i++)
       {
-         strId += "static class id lscript_id" + ::str::from(i) + "(\"" + straId[i] + "\");\r\n";
+         strId += "static ::id lscript_id" + ::str::from(i) + "(\"" + straId[i] + "\");\r\n";
       }
 
       strDest = strDest.Left(iPosId) + strId + strDest.Mid(iPosId);

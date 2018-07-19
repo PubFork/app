@@ -11,15 +11,6 @@ namespace user
    public:
 
 
-      union
-      {
-
-         void *                           m_pvoid;
-         class control_ddx_dbflags *      m_pdbflags;
-
-      } m_ddx;
-
-
       index                         m_iItem;
       ::user::interaction *         m_pui;
       ::user::interaction *         m_puiParent;
@@ -35,7 +26,8 @@ namespace user
       bool                          m_bCreated;
       bool                          m_bSubclassed;
       e_control_ddx                 m_eddx;
-      ::database::id                m_dataid;
+      ::database::key               m_datakey;
+      int                           m_iDataValue;
       flags < e_control_function >  m_flagsfunction;
       e_control_data_type           m_edatatype;
       rect                          m_rect;
@@ -60,10 +52,12 @@ namespace user
       bool has_function(e_control_function e_control_function);
       e_control_data_type get_data_type();
       void set_data_type(e_control_data_type e_control_data_type);
-      void set_ddx_dbflags(::database::id id, int_ptr value);
+      void set_ddx_dbflags(::database::key datakey, int_ptr value);
       control * get_control(::user::form * pform, index iItem = 0);
 
       index find_control(::user::interaction * pui);
+
+        ::database::client * get_data_client();
 
    };
 

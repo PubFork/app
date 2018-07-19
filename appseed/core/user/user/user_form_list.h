@@ -53,7 +53,7 @@ namespace user
       void _001OnTimer(::timer * ptimer) override;
 
       using list::_001GetSelection;
-      virtual void _001GetSelection(::database::id & key,::database::selection & selection) override;
+      virtual void _001GetSelection(::database::key & key,::database::selection & selection) override;
 
       DECL_GEN_SIGNAL(_001OnNotify);
       DECL_GEN_SIGNAL(_001OnMessageNotify);

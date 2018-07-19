@@ -22,11 +22,16 @@ namespace database
 
    bool change_event::data_get(::object & obj)
    {
+
       if(m_pserver != NULL)
       {
-         return m_key.m_pclient->data_get(m_key.m_id, obj);
+
+         return m_pclient->data_get(m_datakey, obj);
+
       }
+
       return false;
+
    }
 
 

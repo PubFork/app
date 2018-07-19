@@ -143,11 +143,11 @@ namespace aura
       virtual void dump(dump_context & dumpcontext) const override;
 
 
-      virtual bool app_data_set(class id id, serialize & os);
-      virtual bool app_data_get(class id id, serialize & is);
+      virtual bool app_data_set(::id id, serialize & os);
+      virtual bool app_data_get(::id id, serialize & is);
 
-      virtual bool app_data_set(class id id, ::object & obj);
-      virtual bool app_data_get(class id id, ::object & obj);
+      virtual bool app_data_set(::id id, ::object & obj);
+      virtual bool app_data_get(::id id, ::object & obj);
 
       virtual void install_message_routing(::message::sender * psender) override;
 

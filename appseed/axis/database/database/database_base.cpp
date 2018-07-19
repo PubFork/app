@@ -31,7 +31,12 @@ namespace database
       return connect();
    }
 
+   string base::escape(const char * psz)
+   {
 
+      return psz;
+
+   }
    int32_t base::init()
    {
 

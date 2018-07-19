@@ -46,7 +46,7 @@ namespace user
    ::user::document * server::create_subdocument(::user::view_creator_data * pcreatordata)
    {
 
-      return pcreatordata->m_pdoc = open_document_file(NULL, true, pcreatordata->m_pholder);
+      return pcreatordata->m_pdoc = open_document_file(var::type_null, true, pcreatordata->m_pholder);
 
    }
 

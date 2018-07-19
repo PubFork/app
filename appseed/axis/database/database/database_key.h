@@ -1,10 +1,8 @@
-#pragma once
+﻿#pragma once
 
 
 namespace database
 {
-
-   class client;
 
 
    class CLASS_DECL_AXIS key
@@ -12,50 +10,142 @@ namespace database
    public:
 
 
-      client *          m_pclient; // client may intefere in default key calculation
-      id                m_id;
+      string    m_strDataKey;
 
+      bool      m_bLocalData;
 
 
       key()
       {
-         m_pclient = NULL;
-      }
 
-      key(const key & key)
-      {
-         operator = (key);
+         m_bLocalData = false;
+
       }
 
 
-      key(client * pclient,::database::id id)
+      key(string strDataKey, bool bLocalData = false)
       {
 
-         m_pclient      = pclient;
-         m_id           = id;
+         m_strDataKey = strDataKey;
+
+         m_bLocalData = bLocalData;
 
       }
 
+
+      key(const char * pszDataKey, bool bLocalData = false)
+      {
+
+         m_strDataKey = pszDataKey;
+
+         m_bLocalData = bLocalData;
+
+      }
+
+      key(const id & idDataKey, bool bLocalData = false)
+      {
+
+         m_strDataKey = ::str::from(idDataKey);
+
+         m_bLocalData = bLocalData;
+
+      }
+
+
+      key(const key & key, bool bLocalData = false)
+      {
+
+         m_strDataKey = key.m_strDataKey;
+
+         m_bLocalData = key.m_bLocalData || bLocalData;
+
+      }
 
 
       key & operator = (const key & key)
       {
-         if(&key != this)
-         {
-            m_pclient      = key.m_pclient;
-            m_id           = key.m_id;
-         }
+
+         m_strDataKey = key.m_strDataKey;
+
+         m_bLocalData = key.m_bLocalData;
+
          return *this;
+
       }
 
+
+      key & operator = (const char * pszDataKey)
+      {
+
+         m_strDataKey = pszDataKey;
+
+         return *this;
+
+      }
+
+
+      bool operator == (const key & key) const
+      {
+
+          return m_strDataKey == key.m_strDataKey;
+
+      }
+
+
+      key & operator +=(const key & key)
+      {
+
+        if(m_strDataKey.is_empty())
+        {
+
+            m_strDataKey = key.m_strDataKey;
+
+        }
+        else if(key.m_strDataKey.has_char())
+        {
+
+            m_strDataKey += "/" + key.m_strDataKey;
+
+        }
+
+         m_bLocalData = m_bLocalData || key.m_bLocalData;
+
+         return *this;
+
+      }
+
+
+      key operator + (const key & key) const
+      {
+
+         ::database::key keyAdd(*this);
+
+         keyAdd += key;
+
+         return keyAdd;
+
+      }
+
+
+      bool is_empty() const
+      {
+
+         return m_strDataKey.is_empty();
+
+      }
+
+
+      void set_local_data(bool bLocalData = true)
+      {
+
+         m_bLocalData = bLocalData;
+
+      }
 
    };
 
 
-} // namespace database
-
-
-
+} // namespace dabase
 
 
 

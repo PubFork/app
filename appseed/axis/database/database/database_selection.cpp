@@ -17,7 +17,7 @@ namespace database
    }
 
 
-   void selection::add_item(class id id)
+   void selection::add_item(class key id)
    {
 
       selection_item item(id);

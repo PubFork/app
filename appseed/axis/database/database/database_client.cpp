@@ -8,7 +8,6 @@ namespace database
    client::client()
    {
 
-      m_bLocalDataModifier = false;
       m_pdataserver = NULL;
 
    }
@@ -66,16 +65,21 @@ namespace database
 
    void client::data_on_before_change(::message::message * pobj)
    {
+
       UNREFERENCED_PARAMETER(pobj);
+
    }
+
 
    void client::data_on_after_change(::message::message * pobj)
    {
+
       UNREFERENCED_PARAMETER(pobj);
+
    }
 
 
-   bool client::data_set(class id id, bool b, update_hint * phint)
+   bool client::data_set(key key, bool b, update_hint * phint)
    {
 
       if (m_pdataserver != NULL)
@@ -85,7 +89,7 @@ namespace database
 
          writer(b);
 
-         return m_pdataserver->data_server_save(this, id, writer.get_memory(), phint);
+         return m_pdataserver->data_server_save(this, key, writer.get_memory(), phint);
 
       }
 
@@ -94,7 +98,7 @@ namespace database
    }
 
 
-   bool client::data_set(class id id, var & var, update_hint * puh)
+   bool client::data_set(key id, var & var, update_hint * puh)
    {
 
       if(m_pdataserver != NULL)
@@ -113,7 +117,7 @@ namespace database
    }
 
 
-   bool client::data_set(class id id, float f, update_hint * puh)
+   bool client::data_set(key id, float f, update_hint * puh)
    {
 
       if (m_pdataserver != NULL)
@@ -132,7 +136,7 @@ namespace database
    }
 
 
-   bool client::data_set(class id id, int32_t i, update_hint * puh)
+   bool client::data_set(key id, int32_t i, update_hint * puh)
    {
 
       if(m_pdataserver != NULL)
@@ -151,7 +155,7 @@ namespace database
    }
 
 
-   bool client::data_set(class id id, double d, update_hint * puh)
+   bool client::data_set(key id, double d, update_hint * puh)
    {
 
       if (m_pdataserver != NULL)
@@ -169,7 +173,7 @@ namespace database
 
    }
 
-   bool client::data_set(class id id, int64_t i, update_hint * puh)
+   bool client::data_set(key id, int64_t i, update_hint * puh)
    {
 
       if (m_pdataserver != NULL)
@@ -189,7 +193,7 @@ namespace database
 
 #ifdef APPLEOS
 
-   bool client::data_set(class id id, long l, update_hint * puh)
+   bool client::data_set(key id, long l, update_hint * puh)
    {
 
       if (m_pdataserver != NULL)
@@ -212,7 +216,7 @@ namespace database
 #endif
 
 
-   bool client::data_set(class id id, const char * lpsz, update_hint * puh)
+   bool client::data_set(key id, const char * lpsz, update_hint * puh)
    {
 
       if (m_pdataserver != NULL)
@@ -232,7 +236,7 @@ namespace database
 
    }
 
-   bool client::data_set(class id id, const unichar * lpwsz, update_hint * puh)
+   bool client::data_set(key id, const unichar * lpwsz, update_hint * puh)
    {
 
       if (m_pdataserver != NULL)
@@ -265,7 +269,7 @@ namespace database
 
          selection_item & item = selection.get_item(iItem);
 
-         if(!data_set(item.m_id, lpsz, puh))
+         if(!data_set(item.m_datakey, lpsz, puh))
          {
 
             bOk = false;
@@ -291,7 +295,7 @@ namespace database
 
          selection_item & item = selection.get_item(iItem);
 
-         if(!data_set(item.m_id,var,puh))
+         if(!data_set(item.m_datakey,var,puh))
          {
 
             bOk = false;
@@ -305,7 +309,7 @@ namespace database
    }
 
 
-   bool client::data_set(class id id, ::file::file & readable, update_hint * puh)
+   bool client::data_set(key id, ::file::file & readable, update_hint * puh)
    {
 
       if(m_pdataserver != NULL)
@@ -320,7 +324,7 @@ namespace database
    }
 
 
-   bool client::data_set(class id id, ::object & obj, update_hint * puh)
+   bool client::data_set(key id, ::object & obj, update_hint * puh)
    {
 
       if(m_pdataserver != NULL)
@@ -342,7 +346,7 @@ namespace database
    }
 
 
-   bool client::data_set(class id id, serialize & serialize, update_hint * puh)
+   bool client::data_set(key id, serialize & serialize, update_hint * puh)
    {
 
       if(m_pdataserver != NULL)
@@ -357,7 +361,7 @@ namespace database
    }
 
 
-   bool client::data_get(class id id, bool & b)
+   bool client::data_get(key id, bool & b)
    {
 
       if (m_pdataserver != NULL)
@@ -383,7 +387,7 @@ namespace database
    }
 
 
-   bool client::data_get(class id id, var & var)
+   bool client::data_get(key id, var & var)
    {
 
       if (m_pdataserver != NULL)
@@ -409,7 +413,7 @@ namespace database
    }
 
 
-   bool client::data_get(class id id, float & f)
+   bool client::data_get(key id, float & f)
    {
 
       if (m_pdataserver != NULL)
@@ -434,8 +438,7 @@ namespace database
 
    }
 
-
-   bool client::data_get(class id id, int32_t & i)
+   bool client::data_get(key id, int32_t & i)
    {
 
       if (m_pdataserver != NULL)
@@ -460,7 +463,7 @@ namespace database
 
    }
 
-   bool client::data_get(class id id, double & d)
+   bool client::data_get(key id, double & d)
    {
 
       if (m_pdataserver != NULL)
@@ -486,7 +489,7 @@ namespace database
    }
 
 
-   bool client::data_get(class id id, int64_t & i)
+   bool client::data_get(key id, int64_t & i)
    {
 
       if (m_pdataserver != NULL)
@@ -513,7 +516,7 @@ namespace database
 
 #ifdef APPLEOS
 
-   bool client::data_get(class id id, long & l)
+   bool client::data_get(key id, long & l)
    {
 
       if (m_pdataserver != NULL)
@@ -543,7 +546,7 @@ namespace database
    }
 #endif
 
-   bool client::data_get(class id id, string & str)
+   bool client::data_get(key id, string & str)
    {
 
       if (m_pdataserver != NULL)
@@ -569,7 +572,7 @@ namespace database
    }
 
 
-   bool client::data_get(class id id, ::file::file & writable)
+   bool client::data_get(key id, ::file::file & writable)
    {
 
       if (m_pdataserver != NULL)
@@ -591,7 +594,7 @@ namespace database
    }
 
 
-   bool client::data_get(class id id, ::object & obj)
+   bool client::data_get(key id, ::object & obj)
    {
 
       if (m_pdataserver != NULL)
@@ -613,7 +616,7 @@ namespace database
    }
 
 
-   bool client::data_get(class id id, serialize & serialize)
+   bool client::data_get(key id, serialize & serialize)
    {
 
       if (m_pdataserver != NULL)
@@ -635,7 +638,7 @@ namespace database
    }
 
 
-   bool client::data_pulse_change(class id id, update_hint * puh)
+   bool client::data_pulse_change(key id, update_hint * puh)
    {
 
       if(m_pdataserver != NULL)
@@ -713,145 +716,57 @@ namespace database
    }
 
 
-   string client::calc_data_key(::database::id & id)
+   void client::set_data_key_modifier(::database::key key)
    {
 
-      string str;
+      m_datakeyModifier = key;
 
-      str = get_data_id();
-
-      str += ".";
-
-      str += ::str::from(id);
-
-      return str;
+      m_datakey.m_strDataKey.Empty();
 
    }
 
 
-   id client::get_data_id()
+   key client::calc_data_key(key datakey)
    {
 
-      if (m_dataid2.m_id.is_empty() || m_bDataKeyModified)
+      defer_update_data_key();
+
+      return m_datakey + datakey;
+
+   }
+
+
+   key client::calc_parent_data_key()
+   {
+
+      return Application.calc_data_key();
+
+   }
+
+
+   key client::calc_data_key()
+   {
+
+      ::database::key key(calc_parent_data_key(), is_local_data());
+
+      defer_update_object_id();
+
+      key.m_strDataKey += "/" + m_id;
+
+      return key;
+
+   }
+
+
+   void client::defer_update_data_key()
+   {
+
+      if(m_datakey.m_strDataKey.is_empty())
       {
 
-         update_data_id();
+         m_datakey = calc_data_key() + m_datakeyModifier;
 
       }
-
-      return m_dataid2;
-
-   }
-
-
-   string client::calc_data_id()
-   {
-
-      return calc_default_data_id();
-
-   }
-
-
-   void client::update_data_id()
-   {
-
-      string strDataKey = calc_data_id();
-
-      if (strDataKey.is_empty())
-      {
-
-         strDataKey = calc_default_data_id();
-
-      }
-
-      strDataKey += get_data_key_modifier();
-
-      m_dataid2 = strDataKey;
-
-      m_bDataKeyModified = false;
-
-   }
-
-
-   string client::calc_default_data_id()
-   {
-
-      string str;
-
-      str = Application.m_strAppName;
-
-      if (string(Application.get_data_id().m_id).find_ci("&data_source=local") >= 0)
-      {
-
-         str += "&data_source=local&";
-
-      }
-      else
-      {
-
-         str += "://";
-
-      }
-
-      str += calc_object_id();
-
-      if (m_strDataKeyModifier.has_char())
-      {
-
-         str += "/";
-
-         str += m_strDataKeyModifier;
-
-      }
-
-      return str;
-
-   }
-
-
-   void client::set_data_key_modifier(string strDataKeyModifier)
-   {
-
-      m_strDataKeyModifier = strDataKeyModifier;
-
-      m_bDataKeyModified = true;
-
-   }
-
-   string client::get_data_key_modifier()
-   {
-
-      string strModifier = m_strDataKeyModifier;
-
-      if (is_local_data())
-      {
-
-         strModifier += "&data_source=local&";
-
-      }
-
-      return strModifier;
-
-   }
-
-
-   void client::add_up_data_key_modifier(string strDataKeyModifier)
-   {
-
-      if (get_data_key_modifier().find_ci(strDataKeyModifier) < 0)
-      {
-
-         set_data_key_modifier(get_data_key_modifier() + strDataKeyModifier);
-
-      }
-
-   }
-
-
-   void client::set_local_data_key_modifier()
-   {
-
-      m_bLocalDataModifier = true;
 
    }
 
@@ -859,7 +774,15 @@ namespace database
    bool client::is_local_data()
    {
 
-      return m_bLocalDataModifier || Application.is_local_data();
+      return m_datakey.m_bLocalData;
+
+   }
+
+
+   void client::set_local_data(bool bLocalData)
+   {
+
+      return m_datakey.set_local_data(bLocalData);
 
    }
 
@@ -877,7 +800,7 @@ namespace file
       serialize(::move(d)),
       writer(::move(d)),
       memory_writer(::move(d)),
-      m_id(::move(d.m_id))
+      m_key(::move(d.m_key))
    {
 
       m_pclient = d.m_pclient;
@@ -886,14 +809,14 @@ namespace file
    }
 
 
-   data_trigger_ostream::data_trigger_ostream(::database::client * pclient,class ::database::id id) :
+   data_trigger_ostream::data_trigger_ostream(::database::client * pclient,class ::database::key key) :
       ::object(pclient->get_app()),
       ::serialize(pclient->get_app()),
       ::writer(pclient->get_app()),
       ::memory_writer(pclient->get_app())
    {
 
-      m_id = id;
+      m_key = key;
 
       m_pclient = pclient;
 
@@ -910,7 +833,7 @@ namespace file
 
          ::reader reader(m_spfile);
 
-         m_pclient->data_set(m_id, reader);
+         m_pclient->data_set(m_key, reader);
 
       }
 
@@ -927,7 +850,7 @@ namespace file
    }
 
 
-   data_trigger_istream::data_trigger_istream(::database::client * pclient,class ::database::id id) :
+   data_trigger_istream::data_trigger_istream(::database::client * pclient,class ::database::key key) :
       ::object(pclient->get_app()),
       ::serialize(pclient->get_app()),
       ::reader(pclient->get_app()),
@@ -938,7 +861,7 @@ namespace file
 
          ::writer writer(m_spfile);
 
-         pclient->data_get(id, writer);
+         pclient->data_get(key, writer);
 
       }
 

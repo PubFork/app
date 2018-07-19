@@ -1,6 +1,6 @@
 #include "framework.h"
 
-db_stra_set::db_stra_set(db_server * pserver, ::database::id & id) :
+db_stra_set::db_stra_set(db_server * pserver, ::database::key & id) :
    m_id(id)
 {
    UNREFERENCED_PARAMETER(pserver);

@@ -1343,75 +1343,14 @@ namespace user
    }
 
 
-   string document::calc_data_id()
+   ::database::key document::calc_parent_data_key()
    {
 
-      string str;
+      ::database::key key(Application.calc_data_key(), is_local_data());
 
-      str = Application.m_strAppName;
+      key.m_strDataKey += "/impactsystem:" + m_pimpactsystem->m_strMatter;
 
-      if (string(Application.get_data_id().m_id).find_ci("&data_source=local&") >= 0)
-      {
-
-         str += "&data_source=local&";
-
-      }
-      else
-      {
-
-         str += "://";
-
-      }
-
-      {
-
-         string strType;
-
-         strType = typeid(*m_pimpactsystem).name();
-
-         ::str::begins_eat_ci(strType, "class ");
-
-         str += strType;
-
-      }
-
-      str += "/";
-
-      str += m_pimpactsystem->m_strMatter;
-
-      {
-
-         str += "/";
-
-         string strType = typeid(*this).name();
-
-         ::str::begins_eat_ci(strType, "class ");
-
-         str += strType;
-
-      }
-
-      if (!m_id.is_empty())
-      {
-
-         str += "/";
-
-         str += m_id.m_psz;
-
-      }
-
-      string strModifier = get_data_key_modifier();
-
-      if (strModifier.has_char())
-      {
-
-         str += "&";
-
-         str += strModifier;
-
-      }
-
-      return str;
+      return key;
 
    }
 

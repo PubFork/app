@@ -377,7 +377,7 @@ namespace user
 
       id id = tab_id(_001GetSel());
 
-      class id idSplit;
+      ::id idSplit;
 
       rect rectTabClient = get_data()->m_rectTabClient;
 

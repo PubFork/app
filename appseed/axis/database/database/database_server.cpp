@@ -20,7 +20,7 @@ namespace database
    }
 
 
-   bool server::data_server_load(client * pclient, class id id, ::file::file & file, update_hint * puh)
+   bool server::data_server_load(client * pclient, key id, ::file::file & file, update_hint * puh)
    {
 
       memory mem;
@@ -39,7 +39,7 @@ namespace database
    }
 
 
-   bool server::data_server_load(client * pclient, class id id, memory & mem, update_hint * puh)
+   bool server::data_server_load(client * pclient, key id, memory & mem, update_hint * puh)
    {
 
 #if MEMDLEAK
@@ -53,10 +53,10 @@ namespace database
    }
 
 
-   bool server::data_server_load(client * pclient, class id id, serialize & serialize, update_hint * puh)
+   bool server::data_server_load(client * pclient, key id, serialize & serialize, update_hint * puh)
    {
 
-      memory mem;
+      memory mem(get_app());
 
       if (!data_server_load(pclient, id, mem, puh))
       {
@@ -72,7 +72,7 @@ namespace database
    }
 
 
-   bool server::data_server_load(client * pclient, class id id, ::object & obj, update_hint * puh)
+   bool server::data_server_load(client * pclient, key id, ::object & obj, update_hint * puh)
    {
 
       memory_reader reader(get_app());
@@ -102,7 +102,7 @@ namespace database
    }
 
 
-   bool server::data_server_save(client * pclient, class id id, ::file::file & file, update_hint * puh)
+   bool server::data_server_save(client * pclient, key id, ::file::file & file, update_hint * puh)
    {
 
       memory mem;
@@ -123,7 +123,7 @@ namespace database
    }
 
 
-   bool server::data_server_save(client * pclient, class id id, memory & mem, update_hint * puh)
+   bool server::data_server_save(client * pclient, key id, memory & mem, update_hint * puh)
    {
 
 #if MEMDLEAK
@@ -137,7 +137,7 @@ namespace database
    }
 
 
-   bool server::data_server_save(client * pclient, class id id, serialize & serialize, update_hint * puh)
+   bool server::data_server_save(client * pclient, key id, serialize & serialize, update_hint * puh)
    {
 
       memory mem;
@@ -158,7 +158,7 @@ namespace database
    }
 
 
-   bool server::data_server_save(client * pclient, class id id, ::object & obj, update_hint * puh)
+   bool server::data_server_save(client * pclient, key id, ::object & obj, update_hint * puh)
    {
 
       memory_writer writer(get_app());
@@ -188,18 +188,18 @@ namespace database
    }
 
 
-   bool server::data_pulse_change(client * pclient, class id id, update_hint * puh)
+   bool server::data_pulse_change(client * pclient, key id, update_hint * puh)
    {
       return on_after_data_change(pclient, id, puh);
    }
 
 
-   bool server::on_before_data_change(client * pclient, class id id, var & var, update_hint * puh)
+   bool server::on_before_data_change(client * pclient, key id, var & var, update_hint * puh)
    {
       ::database::change_event signal(var);
       signal.m_pserver = this;
-      signal.m_key.m_pclient = pclient;
-      signal.m_key.m_id = id;
+      signal.m_pclient = pclient;
+      signal.m_datakey = id;
       signal.m_puh = puh;
       for(int32_t i = 0; i < client_array::get_count(); i++)
       {
@@ -211,12 +211,12 @@ namespace database
       return true;
    }
 
-   bool server::on_after_data_change(client * pclient, class id id, update_hint * puh)
+   bool server::on_after_data_change(client * pclient, key id, update_hint * puh)
    {
       ::database::change_event signal;
       signal.m_pserver       = this;
-      signal.m_key.m_pclient     = pclient;
-      signal.m_key.m_id          = id;
+      signal.m_pclient     = pclient;
+      signal.m_datakey          = id;
       signal.m_puh = puh;
       for(int32_t i = 0; i < client_array::get_count(); i++)
       {
@@ -225,7 +225,7 @@ namespace database
       return true;
    }
 
-   //var server::data_load(client * pclient, class id id, update_hint * phint)
+   //var server::data_load(client * pclient, key id, update_hint * phint)
    //{
    //   var var;
    //   if(data_server_load(pclient, id, var, phint))
@@ -233,13 +233,13 @@ namespace database
    //   return ::var(::var::type_new);
    //}
 
-   //bool server::data_save(client * pclient, class id id, var var, update_hint * phint)
+   //bool server::data_save(client * pclient, key id, var var, update_hint * phint)
    //{
    //   return data_server_save(pclient, id, var, phint);
    //}
 
 
-   //bool server::var_load(client * pclient, class id id, serialize & serialize, update_hint * puh)
+   //bool server::var_load(client * pclient, key id, serialize & serialize, update_hint * puh)
    //{
 
    //   string str;
@@ -264,7 +264,7 @@ namespace database
    //}
 
 
-   //bool server::var_save(client * pclient, class id id, serialize & serialize, update_hint * puh)
+   //bool server::var_save(client * pclient, key id, serialize & serialize, update_hint * puh)
    //{
 
    //   var var;
@@ -285,7 +285,7 @@ namespace database
    //}
 
 
-   var server::data_load(client * pclient, class id id, update_hint * phint)
+   var server::data_load(client * pclient, key id, update_hint * phint)
    {
 
       memory_reader reader(get_app());
@@ -306,7 +306,7 @@ namespace database
    }
 
 
-   bool server::data_save(client * pclient, class id id, var & var, update_hint * phint)
+   bool server::data_save(client * pclient, key id, var & var, update_hint * phint)
    {
 
       memory_reader writer(get_app());

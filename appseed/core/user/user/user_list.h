@@ -64,7 +64,7 @@ namespace user
       // form list attributes
       bool                             m_bEditOnSecondClick;
       index                            m_iControl;
-      ::database::id                   m_datakey;
+      ::database::key                  m_datakey;
 
 
       list_column();
@@ -100,7 +100,7 @@ namespace user
 
 
       void Initialize(list * plist);
-      //index MapConfigIdToKey(const ::database::id & key);
+      //index MapConfigIdToKey(const ::database::key & key);
 
 
 
@@ -143,10 +143,10 @@ namespace user
       index order_index(index iOrder);
 
 //      index subitem_index(index iSubItem);
-      index config_id_index(const ::database::id & key);
+      index config_id_index(const ::database::key & key);
 
 //      index subitem_visible_index(index iSubItem);
-      index config_id_visible_index(const ::database::id & key);
+      index config_id_visible_index(const ::database::key & key);
       index visible_index(index iKeyVisible);
 
       ::index        get_index(list_column * pcolumn);
@@ -154,7 +154,7 @@ namespace user
       list_column *  get_visible(index iIndex);
       list_column *  get_by_index(index iIndex);
       list_column *  get_by_subitem(index iSubItem);
-      list_column *  get_by_config_id(const ::database::id & key);
+      list_column *  get_by_config_id(const ::database::key & key);
 
    };
 
@@ -312,10 +312,10 @@ namespace user
       void _001EnsureVisible(index iItem, e_align ealign = align_vertical_center, bool bRedraw = true);
       void _001EnsureVisible(index iItem, range & rangeRedraw);
       void _001ItemScroll(index iItem, bool bRedraw = true);
-      index config_id_index(const ::database::id & key);
-      index _001ConfigIdToSubItem(const ::database::id & key);
-      virtual bool _001HasConfigId(const ::database::id & key) override;
-      void _001GetSelection(::database::id & key, ::database::selection & selection);
+      index config_id_index(const ::database::key & key);
+      index _001ConfigIdToSubItem(const ::database::key & key);
+      virtual bool _001HasConfigId(const ::database::key & key) override;
+      void _001GetSelection(::database::key & key, ::database::selection & selection);
 
       void _001SetSingleColumnMode(bool bHeaderCtrl);
       bool _001InsertColumn(::user::list_column & column);

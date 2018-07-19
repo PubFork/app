@@ -1,6 +1,9 @@
 #pragma once
 
 
+#include "primitive_id.h"
+
+
 ////class CLASS_DECL_AURA ::object :
 //class CLASS_DECL_AURA mini_object
 //// virtual public element
@@ -196,6 +199,7 @@ public:
    mutex *                       m_pmutex;
    property_set *                m_psetObject;
    thread_ptra *                 m_pthreadrefa;
+   ::id                          m_id;
 
 
    object();
@@ -233,6 +237,8 @@ public:
 
 
    void defer_create_mutex();
+
+
 
 
    virtual void delete_this();
@@ -290,7 +296,7 @@ public:
    }
 
 
-   virtual ::id calc_object_id() const;
+   virtual void defer_update_object_id();
    virtual ::id calc_default_object_id() const;
 
 

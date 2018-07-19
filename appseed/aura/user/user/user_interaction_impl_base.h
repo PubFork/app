@@ -166,7 +166,7 @@ namespace user
       virtual LONG_PTR set_window_long_ptr(int32_t nIndex,LONG_PTR lValue) override;
 
       virtual id GetDlgCtrlId() const override;
-      virtual id SetDlgCtrlId(class id id) override;
+      virtual id SetDlgCtrlId(::id id) override;
 
       virtual ::user::interaction * first_child() override;
       virtual ::user::interaction * top_child() override;

@@ -24,7 +24,7 @@ namespace user
             EHitTest             m_ehittestCursor;
             point                m_ptCursorOrigin;
             rect                 m_rcWindowOrigin;
-            size                 m_minSize;
+            //size                 m_minSize;
             size                 m_minBorder;
             UINT                 m_uiSWPFlags;
             EGrip                  m_egripMask;
@@ -48,7 +48,7 @@ namespace user
             void SetGripMask(EGrip egrip);
             bool IsSizing();
             void SetSWPFlags(UINT uiFlags);
-            void SetMinSize(size size);
+            virtual ::size GetMinSize();
             ::visual::e_cursor translate(EHitTest ehittest);
             bool update(WorkSet * pset);
 

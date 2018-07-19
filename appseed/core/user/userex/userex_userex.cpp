@@ -54,12 +54,12 @@ namespace userex
       //   ::aura::del(m_ptemplatePlaceHolder);
 
       //}
-      
+
       for(auto & pair : m_mapimpactsystem)
       {
-         
+
          auto & psystem = pair.element2();
-         
+
          if (psystem != NULL)
          {
 
@@ -68,7 +68,7 @@ namespace userex
             psystem->release();
 
          }
-         
+
       }
 
    }
@@ -653,7 +653,7 @@ retry_license:
 
       SCAST_PTR(::database::change_event,pchange,pobj);
 
-      if(pchange->m_key.m_id == "ca2.savings")
+      if(pchange->m_datakey == "ca2.savings")
       {
 
          pchange->data_get(Session.savings().m_eresourceflagsShouldSave);
@@ -1901,23 +1901,23 @@ finished:
 
    void session::will_use_view_hint(::userex::e_view eview)
    {
-      
+
       switch(eview)
       {
-            
+
          case ::userex::view_color_sel:
          {
-            
+
             if(userex()->m_mapimpactsystem[::userex::view_color_sel] != NULL)
             {
-               
+
                return;
-               
+
             }
-            
+
             System.factory().creatable_small < ::userex::color_view >();
 
-            
+
             userex()->m_mapimpactsystem[::userex::view_color_sel] = new ::user::multiple_document_template(
                                                                                                            get_app(),
                                                                                                            "main",
@@ -1929,7 +1929,7 @@ finished:
          break;
          case ::userex::view_font_sel:
          {
-      
+
             if (m_pfontlist != NULL)
             {
 

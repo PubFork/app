@@ -9,7 +9,7 @@ namespace user
    {
 
       m_puiViewNotify = NULL;
-      
+
       m_pdocument = NULL;
 
       m_ulFlags |= object::flag_auto_delete;
@@ -1255,58 +1255,10 @@ namespace user
    }
 
 
-
-
-
-   string impact::calc_data_id()
+   ::database::key impact::calc_parent_data_key()
    {
 
-      string str;
-
-      if (get_document() != NULL)
-      {
-
-         str = get_document()->get_data_id().m_id;
-
-      }
-
-      {
-
-         str += "/";
-
-         string strType = typeid(*this).name();
-
-         ::str::begins_eat_ci(strType, "class ");
-
-         str += strType;
-
-      }
-
-      if (m_strDataKeyModifier.has_char())
-      {
-
-         str += "/";
-
-         str += m_strDataKeyModifier;
-
-      }
-
-      str += m_id;
-
-      string strModifier = get_data_key_modifier();
-
-      if (strModifier.has_char())
-      {
-
-         str += "&";
-
-         str += strModifier;
-
-      }
-
-      return str;
-
-      return str + m_id;
+      return get_document()->calc_data_key();
 
    }
 

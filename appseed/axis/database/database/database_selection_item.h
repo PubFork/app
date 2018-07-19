@@ -4,17 +4,17 @@
 namespace database
 {
 
-   
-   class CLASS_DECL_AXIS selection_item  
+
+   class CLASS_DECL_AXIS selection_item
    {
    public:
 
-      
-      id     m_id;
-      
-      
+
+      key     m_datakey;
+
+
       selection_item();
-      selection_item(id & key);
+      selection_item(key & key);
       virtual ~selection_item();
 
 

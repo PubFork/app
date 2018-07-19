@@ -14,7 +14,6 @@ namespace user
 
          SizeManager::SizeManager(WorkSet * pworkset) :
             object(pworkset->get_app()),
-            m_minSize(84, 84),
             m_minBorder(33, 33)
          {
 
@@ -288,11 +287,13 @@ namespace user
          }
 
 
-         void SizeManager::SetMinSize(size size)
+         ::size SizeManager::GetMinSize()
          {
-            m_minSize = size;
+
+            return m_pworkset->m_pframeschema->GetMinSize();
 
          }
+
 
          void SizeManager::SetSWPFlags(UINT uiFlags)
          {
@@ -317,6 +318,8 @@ namespace user
             int xPad = -4;
             int yPad = -4;
 
+            ::size sizeMin = GetMinSize();
+
             if(m_ehittestMode == HitTestSizingTopLeft)
             {
                rectWindow.top = pt.y + xPad;
@@ -325,13 +328,13 @@ namespace user
                rectWindow.right = m_rcWindowOrigin.right;
                bSize = rectWindow.width() > 0 &&
                        rectWindow.height() > 0;
-               if(rectWindow.width() < m_minSize.cx)
+               if(rectWindow.width() < sizeMin.cx)
                {
-                  rectWindow.left = m_rcWindowOrigin.right - m_minSize.cx;
+                  rectWindow.left = m_rcWindowOrigin.right - sizeMin.cx;
                }
-               if(rectWindow.height() < m_minSize.cy)
+               if(rectWindow.height() < sizeMin.cy)
                {
-                  rectWindow.top = m_rcWindowOrigin.bottom - m_minSize.cy;
+                  rectWindow.top = m_rcWindowOrigin.bottom - sizeMin.cy;
                }
                rectWindow.left = MIN(rectWindow.left, rectMonitor.right - m_minBorder.cx);
                rectWindow.top = MIN(rectWindow.top, rectMonitor.bottom - m_minBorder.cy);
@@ -342,9 +345,9 @@ namespace user
                rectWindow.left = m_rcWindowOrigin.left;
                rectWindow.bottom = m_rcWindowOrigin.bottom;
                rectWindow.right = m_rcWindowOrigin.right;
-               if(rectWindow.height() < m_minSize.cy)
+               if(rectWindow.height() < sizeMin.cy)
                {
-                  rectWindow.top = m_rcWindowOrigin.bottom - m_minSize.cy;
+                  rectWindow.top = m_rcWindowOrigin.bottom - sizeMin.cy;
                }
                rectWindow.top = MIN(rectWindow.top, rectMonitor.bottom - m_minBorder.cy);
                sp(WorkSetClientInterface) pinterface = m_pworkset->get_draw_window();
@@ -359,14 +362,14 @@ namespace user
                rectWindow.left = m_rcWindowOrigin.left;
                rectWindow.bottom = m_rcWindowOrigin.bottom;
                rectWindow.right = pt.x - xPad;
-               if(rectWindow.width() < m_minSize.cx)
+               if(rectWindow.width() < sizeMin.cx)
                {
-                  rectWindow.right = m_rcWindowOrigin.left + m_minSize.cx;
+                  rectWindow.right = m_rcWindowOrigin.left + sizeMin.cx;
 
                }
-               if(rectWindow.height() < m_minSize.cy)
+               if(rectWindow.height() < sizeMin.cy)
                {
-                  rectWindow.top = m_rcWindowOrigin.bottom - m_minSize.cy;
+                  rectWindow.top = m_rcWindowOrigin.bottom - sizeMin.cy;
                }
                rectWindow.right = MAX(rectWindow.right, rectMonitor.left + m_minBorder.cx);
                rectWindow.top = MIN(rectWindow.top, rectMonitor.bottom - m_minBorder.cy);
@@ -377,9 +380,9 @@ namespace user
                rectWindow.left = m_rcWindowOrigin.left;
                rectWindow.bottom = m_rcWindowOrigin.bottom;
                rectWindow.right = pt.x - xPad;
-               if(rectWindow.width() < m_minSize.cx)
+               if(rectWindow.width() < sizeMin.cx)
                {
-                  rectWindow.right = m_rcWindowOrigin.left + m_minSize.cx;
+                  rectWindow.right = m_rcWindowOrigin.left + sizeMin.cx;
 
                }
                rectWindow.right = MAX(rectWindow.right, rectMonitor.left + m_minBorder.cx);
@@ -390,14 +393,14 @@ namespace user
                rectWindow.left = m_rcWindowOrigin.left;
                rectWindow.bottom = pt.y - yPad;
                rectWindow.right = pt.x - xPad;
-               if(rectWindow.width() < m_minSize.cx)
+               if(rectWindow.width() < sizeMin.cx)
                {
-                  rectWindow.right = m_rcWindowOrigin.left + m_minSize.cx;
+                  rectWindow.right = m_rcWindowOrigin.left + sizeMin.cx;
 
                }
-               if(rectWindow.height() < m_minSize.cy)
+               if(rectWindow.height() < sizeMin.cy)
                {
-                  rectWindow.bottom = m_rcWindowOrigin.top + m_minSize.cy;
+                  rectWindow.bottom = m_rcWindowOrigin.top + sizeMin.cy;
                }
                rectWindow.right = MAX(rectWindow.right, rectMonitor.left + m_minBorder.cx);
                rectWindow.bottom = MAX(rectWindow.bottom, rectMonitor.top + m_minBorder.cy);
@@ -408,9 +411,9 @@ namespace user
                rectWindow.left = m_rcWindowOrigin.left;
                rectWindow.bottom = pt.y - yPad;
                rectWindow.right = m_rcWindowOrigin.right;
-               if(rectWindow.height() < m_minSize.cy)
+               if(rectWindow.height() < sizeMin.cy)
                {
-                  rectWindow.bottom = m_rcWindowOrigin.top + m_minSize.cy;
+                  rectWindow.bottom = m_rcWindowOrigin.top + sizeMin.cy;
                }
                rectWindow.bottom = MAX(rectWindow.bottom, rectMonitor.top + m_minBorder.cy);
                sp(WorkSetClientInterface) pinterface = m_pworkset->get_draw_window();
@@ -428,14 +431,14 @@ namespace user
                rectWindow.left = pt.x + xPad;
                rectWindow.bottom = pt.y - yPad;
                rectWindow.right = m_rcWindowOrigin.right;
-               if(rectWindow.width() < m_minSize.cx)
+               if(rectWindow.width() < sizeMin.cx)
                {
-                  rectWindow.left = m_rcWindowOrigin.right - m_minSize.cx;
+                  rectWindow.left = m_rcWindowOrigin.right - sizeMin.cx;
 
                }
-               if(rectWindow.height() < m_minSize.cy)
+               if(rectWindow.height() < sizeMin.cy)
                {
-                  rectWindow.bottom = m_rcWindowOrigin.top + m_minSize.cy;
+                  rectWindow.bottom = m_rcWindowOrigin.top + sizeMin.cy;
                }
                rectWindow.left = MIN(rectWindow.left, rectMonitor.right - m_minBorder.cx);
                rectWindow.bottom = MAX(rectWindow.bottom, rectMonitor.top + m_minBorder.cy);
@@ -446,9 +449,9 @@ namespace user
                rectWindow.left = pt.x + xPad;
                rectWindow.bottom = m_rcWindowOrigin.bottom;
                rectWindow.right = m_rcWindowOrigin.right;
-               if(rectWindow.width() < m_minSize.cx)
+               if(rectWindow.width() < sizeMin.cx)
                {
-                  rectWindow.left = m_rcWindowOrigin.right - m_minSize.cx;
+                  rectWindow.left = m_rcWindowOrigin.right - sizeMin.cx;
 
                }
                rectWindow.left = MIN(rectWindow.left, rectMonitor.right - m_minBorder.cx);
@@ -505,8 +508,10 @@ namespace user
 
             ::rect rectWindow = rect;
 
-            if(!(rectWindow.width() >= m_minSize.cx  &&
-                  rectWindow.height() >= m_minSize.cy))
+            ::size sizeMin = GetMinSize();
+
+            if(!(rectWindow.width() >= sizeMin.cx  &&
+                  rectWindow.height() >= sizeMin.cy))
                return;
 
 

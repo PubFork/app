@@ -19,7 +19,7 @@ public:
    type(const type & info);
    type(const std_type_info & info);
    type(const string & strName, const string & strFriendlyName);
-   type(const id & id, const class id & idFriendly);
+   type(const id & id, const ::id & idFriendly);
    virtual ~type();
 
 
