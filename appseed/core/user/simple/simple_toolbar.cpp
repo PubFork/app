@@ -1229,6 +1229,19 @@ return TRUE;
 void simple_toolbar::on_layout()
 {
 
+   rect rectClient;
+
+   GetClientRect(rectClient);
+
+   if (rectClient.area() <= 0)
+   {
+
+      set_need_layout();
+
+      return;
+
+   }
+
    m_sizePress.cx = _001GetInt(::user::int_button_press_shift_cx);
 
    m_sizePress.cy = _001GetInt(::user::int_button_press_shift_cy);
@@ -1260,10 +1273,6 @@ void simple_toolbar::on_layout()
    {
 
       output_debug_string("please_center_align");
-
-      rect rectClient;
-
-      GetClientRect(rectClient);
 
       if (m_itema.has_elements())
       {

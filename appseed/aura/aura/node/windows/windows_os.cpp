@@ -1737,6 +1737,8 @@ retry:
    bool os::file_open(::file::path path, string strParams, string strFolder)
    {
 
+      path = System.defer_process_path(path, ::get_app());
+
       fork([=]()
       {
 

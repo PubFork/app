@@ -162,7 +162,7 @@ namespace user
       sp(::user::frame_window) pFrame = GetParentFrame();
       if (pFrame != NULL && pFrame->GetActiveView() == this)
          pFrame->SetActiveView(NULL);    // deactivate during death
-
+      GetTopLevelFrame()->m_viewptraCommandHandlers.remove(this);
       if (m_pdocument != NULL)
       {
 

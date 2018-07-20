@@ -81,6 +81,9 @@ namespace user
    public:
 
 
+      pointer_array < ::user::impact * >          m_viewptraCommandHandlers;       // current active ::user::impact
+
+
       frame();
       virtual ~frame();
 

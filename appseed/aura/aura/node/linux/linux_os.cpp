@@ -155,25 +155,25 @@ namespace linux
 
    bool os::shutdown(bool bIfPowerOff)
    {
-/*      bool retval = true;
-      HANDLE hToken;
-      TOKEN_PRIVILEGES tkp;
-      if (!OpenProcessToken(GetCurrentProcess(),
-         TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &hToken))
-         return false;
-      LookupPrivilegeValue(NULL, SE_SHUTDOWN_NAME, &tkp.Privileges[0].Luid);
-      tkp.PrivilegeCount = 1;
-      tkp.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
-      AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES) NULL, 0);
-      if (bIfPowerOff)
-         retval = ExitWindowsEx(EWX_POWEROFF, 0) != FALSE;
-      else
-         retval = ExitWindowsEx(EWX_SHUTDOWN, 0) != FALSE;
+      /*      bool retval = true;
+            HANDLE hToken;
+            TOKEN_PRIVILEGES tkp;
+            if (!OpenProcessToken(GetCurrentProcess(),
+               TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &hToken))
+               return false;
+            LookupPrivilegeValue(NULL, SE_SHUTDOWN_NAME, &tkp.Privileges[0].Luid);
+            tkp.PrivilegeCount = 1;
+            tkp.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
+            AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES) NULL, 0);
+            if (bIfPowerOff)
+               retval = ExitWindowsEx(EWX_POWEROFF, 0) != FALSE;
+            else
+               retval = ExitWindowsEx(EWX_SHUTDOWN, 0) != FALSE;
 
-      //reset the previlages
-      tkp.Privileges[0].Attributes = 0;
-      AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES) NULL, 0);
-      return retval;*/
+            //reset the previlages
+            tkp.Privileges[0].Attributes = 0;
+            AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES) NULL, 0);
+            return retval;*/
 
       _throw(not_implemented(get_app()));
       return false;
@@ -182,64 +182,64 @@ namespace linux
 
    bool os::reboot()
    {
-/*      HANDLE hToken;
-      TOKEN_PRIVILEGES tkp;
-      if (!OpenProcessToken(GetCurrentProcess(),
-         TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &hToken))
-         return false;
-      if(!LookupPrivilegeValue(NULL, SE_SHUTDOWN_NAME, &tkp.Privileges[0].Luid))
-      {
-         TRACELASTERROR();
-         return false;
-      }
-      tkp.PrivilegeCount = 1;
-      tkp.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
-      if(!AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES) NULL, 0))
-      {
-         TRACELASTERROR();
-         return false;
-      }
-      if (get_last_error() == ERROR_NOT_ALL_ASSIGNED)
-      {
-         return false;
-      }
-      if(!LookupPrivilegeValue(NULL, SE_REMOTE_SHUTDOWN_NAME, &tkp.Privileges[0].Luid))
-      {
-         TRACELASTERROR();
-         return false;
-      }
-      tkp.PrivilegeCount = 1;
-      tkp.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
-      if(!AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES) NULL, 0))
-      {
-         TRACELASTERROR();
-         return false;
-      }
-      if (get_last_error() == ERROR_NOT_ALL_ASSIGNED)
-      {
-         return false;
-      }
+      /*      HANDLE hToken;
+            TOKEN_PRIVILEGES tkp;
+            if (!OpenProcessToken(GetCurrentProcess(),
+               TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &hToken))
+               return false;
+            if(!LookupPrivilegeValue(NULL, SE_SHUTDOWN_NAME, &tkp.Privileges[0].Luid))
+            {
+               TRACELASTERROR();
+               return false;
+            }
+            tkp.PrivilegeCount = 1;
+            tkp.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
+            if(!AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES) NULL, 0))
+            {
+               TRACELASTERROR();
+               return false;
+            }
+            if (get_last_error() == ERROR_NOT_ALL_ASSIGNED)
+            {
+               return false;
+            }
+            if(!LookupPrivilegeValue(NULL, SE_REMOTE_SHUTDOWN_NAME, &tkp.Privileges[0].Luid))
+            {
+               TRACELASTERROR();
+               return false;
+            }
+            tkp.PrivilegeCount = 1;
+            tkp.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
+            if(!AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES) NULL, 0))
+            {
+               TRACELASTERROR();
+               return false;
+            }
+            if (get_last_error() == ERROR_NOT_ALL_ASSIGNED)
+            {
+               return false;
+            }
 
 
-      if(!WTSShutdownSystem(WTS_CURRENT_SERVER_HANDLE, WTS_WSD_REBOOT))
-      {
-         TRACELASTERROR();
-         return false;
-      }
-//      if (!ExitWindowsEx(EWX_REBOOT | EWX_FORCE,
-//      SHTDN_REASON_MAJOR_SOFTWARE | SHTDN_REASON_MINOR_INSTALLATION))
-//      {
-//      DWORD dwLastError = ::get_last_error();
-//      return false;
-//      }
-      //reset the previlages
-//      tkp.Privileges[0].Attributes = 0;
-//      AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES) NULL, 0);
-//      return true;
-      _throw(not_implemented(get_app()));
-      return false;
+            if(!WTSShutdownSystem(WTS_CURRENT_SERVER_HANDLE, WTS_WSD_REBOOT))
+            {
+               TRACELASTERROR();
+               return false;
+            }
+      //      if (!ExitWindowsEx(EWX_REBOOT | EWX_FORCE,
+      //      SHTDN_REASON_MAJOR_SOFTWARE | SHTDN_REASON_MINOR_INSTALLATION))
+      //      {
+      //      DWORD dwLastError = ::get_last_error();
+      //      return false;
+      //      }
+            //reset the previlages
+      //      tkp.Privileges[0].Attributes = 0;
+      //      AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES) NULL, 0);
+      //      return true;
+            _throw(not_implemented(get_app()));
+            return false;
 
-   */
+         */
 
    }
 
@@ -249,30 +249,30 @@ namespace linux
       _throw(not_implemented(get_app()));
       return;
 
-/*      DWORD dwPid;
-      while(get_pid_by_title(pszName, dwPid))
-      {
-         HANDLE hProcess = OpenProcess( PROCESS_QUERY_INFORMATION |
-            PROCESS_VM_READ,
-            FALSE, dwPid );
-         TerminateProcess(hProcess, (UINT) -1);
-         CloseHandle(hProcess);
-         /*::EnumWindows((WNDENUMPROC)
-         CKillProcessHelper::TerminateAppEnum,
-         (LPARAM) dwId);
-         // Wait on the handle. If it signals, great.
+      /*      DWORD dwPid;
+            while(get_pid_by_title(pszName, dwPid))
+            {
+               HANDLE hProcess = OpenProcess( PROCESS_QUERY_INFORMATION |
+                  PROCESS_VM_READ,
+                  FALSE, dwPid );
+               TerminateProcess(hProcess, (UINT) -1);
+               CloseHandle(hProcess);
+               /*::EnumWindows((WNDENUMPROC)
+               CKillProcessHelper::TerminateAppEnum,
+               (LPARAM) dwId);
+               // Wait on the handle. If it signals, great.
 
-         //If it times out, then you kill it.
+               //If it times out, then you kill it.
 
-         if(WaitForSingleObject(hProcess, 5000)
-         !=WAIT_OBJECT_0)
-         bResult = TerminateProcess(hProcess,0);
-         else
-         bResult = TRUE;
-         CloseHandle(hProcess);
-         return bResult == TRUE;*/
+               if(WaitForSingleObject(hProcess, 5000)
+               !=WAIT_OBJECT_0)
+               bResult = TerminateProcess(hProcess,0);
+               else
+               bResult = TRUE;
+               CloseHandle(hProcess);
+               return bResult == TRUE;*/
 
-    //  }
+      //  }
    }
 
    bool os::get_pid_by_path(const char * pszName, DWORD & dwPid)
@@ -330,21 +330,21 @@ namespace linux
       _throw(not_implemented(get_app()));
       return;
 
-/*
-      dwa.set_size(0);
-      DWORD cbNeeded = 0;
-      while(cbNeeded == natural(dwa.get_count()))
-      {
-         dwa.set_size(dwa.get_count() + 1024);
-         if(!EnumProcesses(
-            dwa.get_data(),
-            (DWORD) (dwa.get_count() * sizeof(DWORD)),
-            &cbNeeded))
-         {
-            return;
-         }
-         dwa.set_size(cbNeeded / sizeof(DWORD));
-      }*/
+      /*
+            dwa.set_size(0);
+            DWORD cbNeeded = 0;
+            while(cbNeeded == natural(dwa.get_count()))
+            {
+               dwa.set_size(dwa.get_count() + 1024);
+               if(!EnumProcesses(
+                  dwa.get_data(),
+                  (DWORD) (dwa.get_count() * sizeof(DWORD)),
+                  &cbNeeded))
+               {
+                  return;
+               }
+               dwa.set_size(cbNeeded / sizeof(DWORD));
+            }*/
    }
 
    string os::get_module_path(HMODULE hmodule)
@@ -371,19 +371,19 @@ namespace linux
       //_throw(not_implemented(get_app()));
       return false;
 
-/*
-      registry::Key key1;
+      /*
+            registry::Key key1;
 
-      key1.OpenKey(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings\\Connections", false);
+            key1.OpenKey(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings\\Connections", false);
 
-      memory mem;
+            memory mem;
 
-      key1.QueryValue("DefaultConnectionSettings", mem);
+            key1.QueryValue("DefaultConnectionSettings", mem);
 
-      bool bAutoDetect = (((LPBYTE) mem.get_data())[8] & 0x08) != 0;
+            bool bAutoDetect = (((LPBYTE) mem.get_data())[8] & 0x08) != 0;
 
-      return bAutoDetect;
-*/
+            return bAutoDetect;
+      */
    }
 
 
@@ -393,17 +393,17 @@ namespace linux
 
       //_throw(not_implemented(get_app()));
       return "";
-/*
-      registry::Key key;
+      /*
+            registry::Key key;
 
-      key.OpenKey(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings", false);
+            key.OpenKey(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings", false);
 
-      string strUrl;
+            string strUrl;
 
-      key.QueryValue("AutoConfigURL", strUrl);
+            key.QueryValue("AutoConfigURL", strUrl);
 
-      return strUrl;
-*/
+            return strUrl;
+      */
    }
 
    bool os::local_machine_set_run(const char * pszKey, const char * pszCommand)
@@ -412,15 +412,15 @@ namespace linux
 //      _throw(not_implemented(get_app()));
       return false;
 
-/*
-      registry::Key keyKar(HKEY_LOcaL_MACHINE, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+      /*
+            registry::Key keyKar(HKEY_LOcaL_MACHINE, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
 
 
-      keyKar.SetValue(pszKey, pszCommand);
+            keyKar.SetValue(pszKey, pszCommand);
 
 
-      return true;
-*/
+            return true;
+      */
    }
 
 
@@ -428,13 +428,13 @@ namespace linux
    {
 
 
-        _throw(not_implemented(get_app()));
+      _throw(not_implemented(get_app()));
       return false;
-/*    registry::Key keyKar(HKEY_LOcaL_MACHINE, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\RunOnce", true);
+      /*    registry::Key keyKar(HKEY_LOcaL_MACHINE, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\RunOnce", true);
 
 
-      keyKar.SetValue(pszKey, pszCommand);
-*/
+            keyKar.SetValue(pszKey, pszCommand);
+      */
 
       return false;
 
@@ -446,12 +446,12 @@ namespace linux
       _throw(not_implemented(get_app()));
       return false;
 
-/*
-      registry::Key keyKar(HKEY_CURRENT_USER, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+      /*
+            registry::Key keyKar(HKEY_CURRENT_USER, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
 
 
-      keyKar.SetValue(pszKey, pszCommand);
-*/
+            keyKar.SetValue(pszKey, pszCommand);
+      */
 
       return false;
 
@@ -463,13 +463,13 @@ namespace linux
       _throw(not_implemented(get_app()));
       return false;
 
-/*
-      registry::Key keyKar(HKEY_CURRENT_USER, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\RunOnce", true);
+      /*
+            registry::Key keyKar(HKEY_CURRENT_USER, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\RunOnce", true);
 
 
-      keyKar.SetValue(pszKey, pszCommand);
+            keyKar.SetValue(pszKey, pszCommand);
 
-*/
+      */
       return false;
 
    }
@@ -477,41 +477,41 @@ namespace linux
 
    bool os::defer_register_ca2_plugin_for_mozilla()
    {
-    //  _throw(not_implemented(get_app()));
+      //  _throw(not_implemented(get_app()));
       return false;
 
-/*
-      registry::Key keyPlugins;
+      /*
+            registry::Key keyPlugins;
 
-      if(keyPlugins.OpenKey(HKEY_LOcaL_MACHINE, "SOFTWARE\\MozillaPlugins", true))
-      {
-
-         registry::Key keyPlugin;
-
-         if(keyPlugin.OpenKey(keyPlugins, "@ca2.cc/npca2", true))
-         {
-
-            keyPlugin.SetValue("Description", "ca2 plugin for NPAPI");
-            keyPlugin.SetValue("Path", System.m_strCa2Module("npca2.dll"));
-            keyPlugin.SetValue("ProductName", "ca2 plugin for NPAPI");
-            keyPlugin.SetValue("Vendor", "ca2 Desenvolvimento de Software Ltda.");
-            keyPlugin.SetValue("Version", Application.file_as_string(System.dir().ca2("appdata/x86/ca2_build.txt")));
-
-            registry::Key keyApplicationca2;
-
-            if(keyApplicationca2.OpenKey(keyPlugin, "application/ca2", true))
+            if(keyPlugins.OpenKey(HKEY_LOcaL_MACHINE, "SOFTWARE\\MozillaPlugins", true))
             {
 
-               keyApplicationca2.SetValue("Description", "ca2 Document");
+               registry::Key keyPlugin;
+
+               if(keyPlugin.OpenKey(keyPlugins, "@ca2.cc/npca2", true))
+               {
+
+                  keyPlugin.SetValue("Description", "ca2 plugin for NPAPI");
+                  keyPlugin.SetValue("Path", System.m_strCa2Module("npca2.dll"));
+                  keyPlugin.SetValue("ProductName", "ca2 plugin for NPAPI");
+                  keyPlugin.SetValue("Vendor", "ca2 Desenvolvimento de Software Ltda.");
+                  keyPlugin.SetValue("Version", Application.file_as_string(System.dir().ca2("appdata/x86/ca2_build.txt")));
+
+                  registry::Key keyApplicationca2;
+
+                  if(keyApplicationca2.OpenKey(keyPlugin, "application/ca2", true))
+                  {
+
+                     keyApplicationca2.SetValue("Description", "ca2 Document");
+
+                  }
+
+               }
 
             }
 
-         }
-
-      }
-
-      return true;
-*/
+            return true;
+      */
    }
 
    bool os::file_extension_get_open_with_list_keys(stringa & straKey, const char * pszExtension)
@@ -519,23 +519,23 @@ namespace linux
       _throw(not_implemented(get_app()));
       return false;
 
-/*
-      string strExt;
+      /*
+            string strExt;
 
-      strExt = ".";
-      strExt += pszExtension;
+            strExt = ".";
+            strExt += pszExtension;
 
-      string strOpenWithKey;
-      strOpenWithKey = strExt + "\\OpenWithList";
+            string strOpenWithKey;
+            strOpenWithKey = strExt + "\\OpenWithList";
 
-      registry::Key key;
+            registry::Key key;
 
-      key.OpenKey(HKEY_CLASSES_ROOT, strOpenWithKey, false);
+            key.OpenKey(HKEY_CLASSES_ROOT, strOpenWithKey, false);
 
-      key.EnumKey(straKey);
+            key.EnumKey(straKey);
 
-      return true;
-*/
+            return true;
+      */
    }
 
 
@@ -558,15 +558,15 @@ namespace linux
       _throw(not_implemented(get_app()));
       return false;
 
-/*
-      string strExtensionNamingClass(pszExtensionNamingClass);
+      /*
+            string strExtensionNamingClass(pszExtensionNamingClass);
 
-      registry::Key keyLink3(HKEY_CLASSES_ROOT, strExtensionNamingClass, true);
-      keyLink3.SetValue("DefaultIcon", pszIconPath);
+            registry::Key keyLink3(HKEY_CLASSES_ROOT, strExtensionNamingClass, true);
+            keyLink3.SetValue("DefaultIcon", pszIconPath);
 
 
-      return false;
-*/
+            return false;
+      */
    }
 
 
@@ -579,31 +579,31 @@ namespace linux
 
       return false;
 
-/*
-      string strExt;
+      /*
+            string strExt;
 
-      strExt = ".";
-      strExt += pszExtension;
+            strExt = ".";
+            strExt += pszExtension;
 
-      string strExtensionNamingClass(pszExtensionNamingClass);
+            string strExtensionNamingClass(pszExtensionNamingClass);
 
-      registry::Key key(HKEY_CLASSES_ROOT, strExt, true);
-      key.SetValue(NULL, strExtensionNamingClass);
+            registry::Key key(HKEY_CLASSES_ROOT, strExt, true);
+            key.SetValue(NULL, strExtensionNamingClass);
 
-      registry::Key keyLink3(HKEY_CLASSES_ROOT, strExtensionNamingClass + "\\shell", true);
-      keyLink3.SetValue(NULL, "open");
+            registry::Key keyLink3(HKEY_CLASSES_ROOT, strExtensionNamingClass + "\\shell", true);
+            keyLink3.SetValue(NULL, "open");
 
-      registry::Key keyLink2(keyLink3, "open", true);
-      keyLink2.SetValue(NULL, "&Abrir");
+            registry::Key keyLink2(keyLink3, "open", true);
+            keyLink2.SetValue(NULL, "&Abrir");
 
-      registry::Key keyLink1(keyLink2, "command", true);
+            registry::Key keyLink1(keyLink2, "command", true);
 
-      string strFormat;
-      strFormat.Format("\"%s\" \"%%L\" %s", pszCommand, pszParam);
-      keyLink1.SetValue(NULL, strFormat);
+            string strFormat;
+            strFormat.Format("\"%s\" \"%%L\" %s", pszCommand, pszParam);
+            keyLink1.SetValue(NULL, strFormat);
 
-      return true;
-*/
+            return true;
+      */
    }
 
    bool os::file_association_get_shell_open_command(const char * pszExtension, string & strExtensionNamingClass, string & strCommand, string & strParam)
@@ -611,90 +611,90 @@ namespace linux
       _throw(not_implemented(get_app()));
       return false;
 
-/*
-      string strExt;
+      /*
+            string strExt;
 
-      strExt = ".";
-      strExt += pszExtension;
+            strExt = ".";
+            strExt += pszExtension;
 
-      registry::Key key(HKEY_CLASSES_ROOT, strExt, false);
-      if(!key.QueryValue(NULL, strExtensionNamingClass))
-         return false;
+            registry::Key key(HKEY_CLASSES_ROOT, strExt, false);
+            if(!key.QueryValue(NULL, strExtensionNamingClass))
+               return false;
 
-      registry::Key keyLink(HKEY_CLASSES_ROOT, strExtensionNamingClass + "\\shell\\open\\command", false);
+            registry::Key keyLink(HKEY_CLASSES_ROOT, strExtensionNamingClass + "\\shell\\open\\command", false);
 
-      string strFormat;
-      if(keyLink.QueryValue(NULL, strFormat))
-      {
+            string strFormat;
+            if(keyLink.QueryValue(NULL, strFormat))
+            {
 
-         const char * psz = strFormat;
+               const char * psz = strFormat;
 
-         try
-         {
+               try
+               {
 
-            strCommand = ::str::consume_quoted_value(psz);
-            ::str::consume_spaces(psz);
-            ::str::consume(psz, "\"%L\"");
-            strParam = psz;
+                  strCommand = ::str::consume_quoted_value(psz);
+                  ::str::consume_spaces(psz);
+                  ::str::consume(psz, "\"%L\"");
+                  strParam = psz;
 
-         }
-         catch(...)
-         {
-         }
+               }
+               catch(...)
+               {
+               }
 
 
-      }
+            }
 
-      return true;
-*/
+            return true;
+      */
    }
 
    bool os::open_in_ie(const char * lpcsz)
    {
 
-        _throw(not_implemented(get_app()));
+      _throw(not_implemented(get_app()));
       return false;
 
-/*    registry reg;
-      string str;
-      string str2;
-      string strCommand;
-      registry::Key key;
-      if(key.OpenKey(HKEY_CLASSES_ROOT, ".html", false))
-      {
-         if(reg.RegQueryValue(key.m_hkey, "", str))
-         {
-            if(key.OpenKey(HKEY_CLASSES_ROOT, ".html\\shell\\opennew\\command", false))
+      /*    registry reg;
+            string str;
+            string str2;
+            string strCommand;
+            registry::Key key;
+            if(key.OpenKey(HKEY_CLASSES_ROOT, ".html", false))
             {
-               string str;
-               if(reg.RegQueryValue(HKEY_CLASSES_ROOT, str, str2))
+               if(reg.RegQueryValue(key.m_hkey, "", str))
                {
-                  string strCommand(str2);
-                  strCommand.replace("%1", lpcsz);
-                  WinExec(strCommand,SW_SHOW);
-               }
-            }
-            else
-            {
-               if(key.OpenKey(HKEY_CLASSES_ROOT, str, false))
-               {
-                  str += "\\shell\\opennew\\command";
-                  if(key.OpenKey(HKEY_CLASSES_ROOT, str, false))
+                  if(key.OpenKey(HKEY_CLASSES_ROOT, ".html\\shell\\opennew\\command", false))
                   {
-                     if(reg.RegQueryValue(key.m_hkey, "", str2))
+                     string str;
+                     if(reg.RegQueryValue(HKEY_CLASSES_ROOT, str, str2))
                      {
                         string strCommand(str2);
                         strCommand.replace("%1", lpcsz);
                         WinExec(strCommand,SW_SHOW);
                      }
                   }
+                  else
+                  {
+                     if(key.OpenKey(HKEY_CLASSES_ROOT, str, false))
+                     {
+                        str += "\\shell\\opennew\\command";
+                        if(key.OpenKey(HKEY_CLASSES_ROOT, str, false))
+                        {
+                           if(reg.RegQueryValue(key.m_hkey, "", str2))
+                           {
+                              string strCommand(str2);
+                              strCommand.replace("%1", lpcsz);
+                              WinExec(strCommand,SW_SHOW);
+                           }
+                        }
+                     }
+                  }
                }
             }
-         }
-      }
 
-      return true;
-*/
+            return true;
+      */
 
    }
 
@@ -704,49 +704,49 @@ namespace linux
       //_throw(not_implemented(get_app()));
       return true;
 
-/*
-      if(papp->m_strAppName.is_empty()
-      || papp->m_strAppName.compare_ci("bergedge") == 0
-      || !papp->is_serviceable())
-         return false;
+      /*
+            if(papp->m_strAppName.is_empty()
+            || papp->m_strAppName.compare_ci("bergedge") == 0
+            || !papp->is_serviceable())
+               return false;
 
-      SC_HANDLE hdlSCM = OpenSCManager(0, 0, SC_MANAGER_CREATE_SERVICE);
+            SC_HANDLE hdlSCM = OpenSCManager(0, 0, SC_MANAGER_CREATE_SERVICE);
 
-      string strcalling = papp->m_strModulePath + " : app=" + papp->m_strAppId + " service usehostlogin";
+            string strcalling = papp->m_strModulePath + " : app=" + papp->m_strAppId + " service usehostlogin";
 
-      if(hdlSCM == 0)
-      {
-         //::get_last_error()
-         return false;
-      }
+            if(hdlSCM == 0)
+            {
+               //::get_last_error()
+               return false;
+            }
 
-      SC_HANDLE hdlServ = ::CreateService(
-         hdlSCM,                    // SCManager database
-         "core-" + papp->m_strAppName,               // name of service
-         "ccvotagus ca2 fontopus " + papp->m_strAppName,        // service name to display
-         STANDARD_RIGHTS_REQUIRED,  // desired access
-         SERVICE_WIN32_OWN_PROCESS | SERVICE_INTERACTIVE_PROCESS, // service type
-         SERVICE_AUTO_START,      // start type
-         SERVICE_ERROR_NORMAL,      // error control type
-         strcalling,                   // service's binary Path name
-         0,                      // no load ordering group
-         0,                      // no tag identifier
-         0,                      // no dependencies
-         0,                      // LocalSystem account
-         0);                     // no password
+            SC_HANDLE hdlServ = ::CreateService(
+               hdlSCM,                    // SCManager database
+               "core-" + papp->m_strAppName,               // name of service
+               "ccvotagus ca2 fontopus " + papp->m_strAppName,        // service name to display
+               STANDARD_RIGHTS_REQUIRED,  // desired access
+               SERVICE_WIN32_OWN_PROCESS | SERVICE_INTERACTIVE_PROCESS, // service type
+               SERVICE_AUTO_START,      // start type
+               SERVICE_ERROR_NORMAL,      // error control type
+               strcalling,                   // service's binary Path name
+               0,                      // no load ordering group
+               0,                      // no tag identifier
+               0,                      // no dependencies
+               0,                      // LocalSystem account
+               0);                     // no password
 
-      if (!hdlServ)
-      {
-         CloseServiceHandle(hdlSCM);
-         //Ret = ::get_last_error();
-         return FALSE;
-      }
+            if (!hdlServ)
+            {
+               CloseServiceHandle(hdlSCM);
+               //Ret = ::get_last_error();
+               return FALSE;
+            }
 
-      CloseServiceHandle(hdlServ);
-      CloseServiceHandle(hdlSCM);
+            CloseServiceHandle(hdlServ);
+            CloseServiceHandle(hdlSCM);
 
-      return true;
-*/
+            return true;
+      */
 
    }
 
@@ -756,40 +756,40 @@ namespace linux
 //      _throw(not_implemented(get_app()));
       return false;
 
-/*
-      if(papp->m_strAppName.is_empty()
-      || papp->m_strAppName.compare_ci("bergedge") == 0
-      || !papp->is_serviceable())
-         return false;
+      /*
+            if(papp->m_strAppName.is_empty()
+            || papp->m_strAppName.compare_ci("bergedge") == 0
+            || !papp->is_serviceable())
+               return false;
 
-      SC_HANDLE hdlSCM = OpenSCManager(0, 0, SC_MANAGER_ALL_ACCESS);
+            SC_HANDLE hdlSCM = OpenSCManager(0, 0, SC_MANAGER_ALL_ACCESS);
 
-      if(hdlSCM == 0)
-      {
-         //::get_last_error();
-         return false;
-      }
+            if(hdlSCM == 0)
+            {
+               //::get_last_error();
+               return false;
+            }
 
-      SC_HANDLE hdlServ = ::OpenService(
-         hdlSCM,                    // SCManager database
-         "core-" + papp->m_strAppName,               // name of service
-         DELETE);                     // no password
+            SC_HANDLE hdlServ = ::OpenService(
+               hdlSCM,                    // SCManager database
+               "core-" + papp->m_strAppName,               // name of service
+               DELETE);                     // no password
 
-      if (!hdlServ)
-      {
-         // Ret = ::get_last_error();
-         CloseServiceHandle(hdlSCM);
-         return false;
-      }
+            if (!hdlServ)
+            {
+               // Ret = ::get_last_error();
+               CloseServiceHandle(hdlSCM);
+               return false;
+            }
 
-      ::DeleteService(hdlServ);
+            ::DeleteService(hdlServ);
 
-      CloseServiceHandle(hdlServ);
+            CloseServiceHandle(hdlServ);
 
-      CloseServiceHandle(hdlSCM);
+            CloseServiceHandle(hdlSCM);
 
-      return false;
-*/
+            return false;
+      */
    }
 
    bool os::start_service(::aura::application * papp)
@@ -797,40 +797,40 @@ namespace linux
       //_throw(not_implemented(get_app()));
       return false;
 
-/*
-      if(papp->m_strAppName.is_empty()
-      || papp->m_strAppName.compare_ci("bergedge") == 0
-      || !papp->is_serviceable())
-         return false;
+      /*
+            if(papp->m_strAppName.is_empty()
+            || papp->m_strAppName.compare_ci("bergedge") == 0
+            || !papp->is_serviceable())
+               return false;
 
-      SC_HANDLE hdlSCM = OpenSCManager(0, 0, SC_MANAGER_ALL_ACCESS);
+            SC_HANDLE hdlSCM = OpenSCManager(0, 0, SC_MANAGER_ALL_ACCESS);
 
-      if(hdlSCM == 0)
-      {
-         //::get_last_error();
-         return false;
-      }
+            if(hdlSCM == 0)
+            {
+               //::get_last_error();
+               return false;
+            }
 
-      SC_HANDLE hdlServ = ::OpenService(
-         hdlSCM,                    // SCManager database
-         "core-" + papp->m_strAppName,               // name of service
-         SERVICE_START);                     // no password
+            SC_HANDLE hdlServ = ::OpenService(
+               hdlSCM,                    // SCManager database
+               "core-" + papp->m_strAppName,               // name of service
+               SERVICE_START);                     // no password
 
 
-      if (!hdlServ)
-      {
-         CloseServiceHandle(hdlSCM);
-         //Ret = ::get_last_error();
-         return FALSE;
-      }
+            if (!hdlServ)
+            {
+               CloseServiceHandle(hdlSCM);
+               //Ret = ::get_last_error();
+               return FALSE;
+            }
 
-      bool bOk = StartService(hdlServ, 0, NULL) != FALSE;
+            bool bOk = StartService(hdlServ, 0, NULL) != FALSE;
 
-      CloseServiceHandle(hdlServ);
-      CloseServiceHandle(hdlSCM);
+            CloseServiceHandle(hdlServ);
+            CloseServiceHandle(hdlSCM);
 
-      return bOk != FALSE;
-      */
+            return bOk != FALSE;
+            */
    }
 
    bool os::stop_service(::aura::application * papp)
@@ -838,46 +838,46 @@ namespace linux
       _throw(not_implemented(get_app()));
       return false;
 
-/*
-      if(papp->m_strAppName.is_empty()
-      || papp->m_strAppName.compare_ci("bergedge") == 0
-      || !papp->is_serviceable())
-         return false;
+      /*
+            if(papp->m_strAppName.is_empty()
+            || papp->m_strAppName.compare_ci("bergedge") == 0
+            || !papp->is_serviceable())
+               return false;
 
-      SC_HANDLE hdlSCM = OpenSCManager(0, 0, SC_MANAGER_ALL_ACCESS);
+            SC_HANDLE hdlSCM = OpenSCManager(0, 0, SC_MANAGER_ALL_ACCESS);
 
-      if(hdlSCM == 0)
-      {
-         //::get_last_error();
-         return false;
-      }
+            if(hdlSCM == 0)
+            {
+               //::get_last_error();
+               return false;
+            }
 
-      SC_HANDLE hdlServ = ::OpenService(
-         hdlSCM,                    // SCManager database
-         "core-" + papp->m_strAppName,               // name of service
-         SERVICE_STOP);                     // no password
+            SC_HANDLE hdlServ = ::OpenService(
+               hdlSCM,                    // SCManager database
+               "core-" + papp->m_strAppName,               // name of service
+               SERVICE_STOP);                     // no password
 
-      if (!hdlServ)
-      {
-         // Ret = ::get_last_error();
-         CloseServiceHandle(hdlSCM);
-         return false;
-      }
+            if (!hdlServ)
+            {
+               // Ret = ::get_last_error();
+               CloseServiceHandle(hdlSCM);
+               return false;
+            }
 
-      SERVICE_STATUS ss;
+            SERVICE_STATUS ss;
 
-      memset(&ss, 0, sizeof(ss));
+            memset(&ss, 0, sizeof(ss));
 
-      bool bOk = ::ControlService(hdlServ, SERVICE_CONTROL_STOP, &ss) != FALSE;
+            bool bOk = ::ControlService(hdlServ, SERVICE_CONTROL_STOP, &ss) != FALSE;
 
-      ::DeleteService(hdlServ);
+            ::DeleteService(hdlServ);
 
-      CloseServiceHandle(hdlServ);
+            CloseServiceHandle(hdlServ);
 
-      CloseServiceHandle(hdlSCM);
+            CloseServiceHandle(hdlSCM);
 
-      return bOk != FALSE;
-*/
+            return bOk != FALSE;
+      */
    }
 
 
@@ -886,9 +886,9 @@ namespace linux
 
       _throw(not_implemented(get_app()));
       return;
-/*
-      RaiseException( dwExceptionCode, dwExceptionFlags, 0, NULL );
-      */
+      /*
+            RaiseException( dwExceptionCode, dwExceptionFlags, 0, NULL );
+            */
    }
 
    bool os::is_remote_session()
@@ -896,9 +896,9 @@ namespace linux
 
 //      _throw(not_implemented(get_app()));
       return false;
-/*
-      return GetSystemMetrics(SM_REMOTESESSION) != FALSE;
-*/
+      /*
+            return GetSystemMetrics(SM_REMOTESESSION) != FALSE;
+      */
    }
 
 
@@ -910,7 +910,7 @@ namespace linux
    }
 
 
-	int os::get_pid()
+   int os::get_pid()
    {
 
       return ::getpid();
@@ -1013,6 +1013,8 @@ namespace linux
    bool os::file_open(::file::path strTarget, string strParams, string strFolder)
    {
 
+      strTarget = System.defer_process_path(strTarget);
+
       if(linux_can_exec(strTarget))
       {
 
@@ -1020,7 +1022,7 @@ namespace linux
 
          //daemonize_process(strTarget, &iPid);
 
-          //::system("cd /; setsid \"" + strTarget + "\" </dev/null &>/dev/null");
+         //::system("cd /; setsid \"" + strTarget + "\" </dev/null &>/dev/null");
 
          //int32_t daemonize_process(const char * _cmd_line, int32_t * pprocessId)
 

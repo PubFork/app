@@ -442,6 +442,8 @@ namespace metrowin
 
       ::Windows::Storage::StorageFile ^ fileSrc = nullptr;
 
+      path = System.defer_process_path(path);
+
       try
       {
 

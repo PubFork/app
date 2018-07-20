@@ -2216,6 +2216,25 @@ void simple_frame_window::route_command_message(::user::command * pcommand)
 
    }
 
+   for (auto & pview : m_viewptraCommandHandlers)
+   {
+
+      if (pview != NULL && pview != GetActiveView())
+      {
+
+         pview->route_command_message(pcommand);
+
+         if (pcommand->m_bRet)
+         {
+
+            return;
+
+         }
+
+      }
+
+   }
+
    pview = get_child_by_id("pane_first");
 
    if (pview != NULL)
