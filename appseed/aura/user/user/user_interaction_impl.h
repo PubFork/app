@@ -88,6 +88,7 @@ namespace user
       ::user::interaction_ptra      m_guieptraMouseHover;
 
       sp(::thread)                  m_pthreadUpdateWindow;
+      bool                          m_bRedraw;
 
 
 
@@ -741,6 +742,7 @@ namespace user
 
       virtual interaction_impl * get_impl() const override;
 
+      virtual void _001UpdateWindow(bool bUpdateBuffer = true) override;
       virtual void _001UpdateScreen();
       virtual void _001UpdateBuffer();
 

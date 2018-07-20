@@ -16,9 +16,9 @@ namespace fontopus
 
       ASSERT(m_login.m_strRequestUrl.has_char());
 #ifdef METROWIN
-      m_bMayProDevian = true;
+      m_bProDevian = true;
 #else
-      m_bMayProDevian = false;
+      m_bProDevian = false;
 #endif
       m_etheme = ::user::theme_lite;
       m_bLButtonDown = false;
@@ -232,7 +232,7 @@ namespace fontopus
          }
          return "";
       }
-      
+
       ::user::create_struct cs(rectFontopus);
 
       if(!create_window_ex(cs, puiParent))

@@ -63,7 +63,16 @@ class thread_toolset;
 //class pred_set;
 //class replace_thread;
 
-class user_interaction_ptr_array;
+namespace user
+{
+
+
+   class interaction;
+
+
+} // namespace user
+
+using user_interaction_ptr_array = pointer_array < ::user::interaction * >;
 
 class thread_startup;
 

@@ -79,7 +79,6 @@ namespace user
       m_bHideOnTransparentFrame = false;
       m_puiThis = this;
 
-      m_bMayProDevian = true;
       m_eappearance = appearance_normal;
       m_eappearanceRequest = appearance_none;
       m_bCursorInside = false;
@@ -223,6 +222,13 @@ namespace user
       {
 
          m_pparent->set_need_redraw(true);
+
+      }
+
+      if (m_pimpl.is_set())
+      {
+
+         m_pimpl->set_need_redraw();
 
       }
 
@@ -2107,29 +2113,26 @@ restart:
    }
 
 
-   bool interaction::set_may_pro_devian(bool bSet)
+   bool interaction::set_pro_devian(bool bSet)
    {
 
-      m_bMayProDevian = bSet;
+      m_bProDevian = bSet;
+
+      on_set_pro_devian();
 
       return true;
 
    }
 
 
-   void interaction::on_set_may_pro_devian()
+   void interaction::on_set_pro_devian()
    {
 
-      if (!m_bMayProDevian && GetParent() == NULL)
+      if (m_pimpl.is_set())
       {
 
-         SetTimer(1984 + 77 + 3, 250, NULL);
+         m_pimpl->on_set_pro_devian();
 
-      }
-      else
-      {
-
-         KillTimer(1984 + 77 + 3);
       }
 
    }
@@ -2145,7 +2148,7 @@ restart:
       if (m_pauraapp == NULL)
          _throw(simple_exception(get_app(), "m_pauraapp cannot be null"));
 
-      on_set_may_pro_devian();
+      on_set_pro_devian();
 
       {
 
@@ -2719,20 +2722,6 @@ restart:
    void interaction::_001OnTimer(::timer * ptimer)
    {
 
-      if (ptimer->m_nIDEvent == 1984 + 77 + 3)
-      {
-
-         if (!m_bMayProDevian && GetParent() == NULL)
-         {
-
-            //TRACE("Redraw !m_bMayProDevian");
-
-            RedrawWindow();
-
-         }
-
-      }
-
    }
 
 
@@ -2994,6 +2983,12 @@ restart:
       {
 
          m_pimpl->ShowWindow(nCmdShow);
+
+      }
+      else
+      {
+
+         set_need_redraw();
 
       }
 
@@ -5124,6 +5119,8 @@ restart:
          return;
 
       m_pimpl->_001UpdateWindow(bUpdateBuffer);
+
+      on_after_graphical_update();
 
    }
 

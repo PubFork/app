@@ -118,7 +118,6 @@ namespace user
       bool                                m_bHideOnTransparentFrame;
       bool                                m_bMoving;
       bool                                m_bMoveWindow;
-      bool                                m_bMayProDevian;
       bool                                m_bProDevian;
       bool                                m_bVoidPaint;
       bool                                m_bRedrawing;
@@ -254,8 +253,8 @@ namespace user
 
       void set_timer(spa(::aura::timer_item) timera);
 
-      virtual bool set_may_pro_devian(bool bSet = true);
-      virtual void on_set_may_pro_devian();
+      virtual bool set_pro_devian(bool bSet = true);
+      virtual void on_set_pro_devian();
 
       virtual bool IsWindow() const override;
 
@@ -1162,6 +1161,46 @@ namespace user
 
       virtual void nextstyle(style_context * pcontext) override;
 
+      template < typename PRED >
+      void ui_post(PRED pred)
+      {
+
+         if (get_wnd() == NULL || get_wnd()->m_pthread == NULL
+               || get_wnd()->m_pthread == ::get_thread())
+         {
+
+            pred();
+
+         }
+         else
+         {
+
+            get_wnd()->m_pthread->post_pred(pred);
+
+         }
+
+      }
+
+      template < typename PRED >
+      void ui_send(PRED pred)
+      {
+
+         if (get_wnd() == NULL || get_wnd()->m_pthread == NULL
+               || get_wnd()->m_pthread == ::get_thread())
+         {
+
+            pred();
+
+         }
+         else
+         {
+
+            get_wnd()->m_pthread->send_pred(pred);
+
+         }
+
+      }
+
    };
 
 
@@ -1174,6 +1213,7 @@ inline ::user::interaction * timer_ui(::timer * ptimer)
    return (::user::interaction *) ptimer->m_pvoidData;
 
 }
+
 
 
 CLASS_DECL_AURA ::user::interaction * oswindow_interaction(oswindow oswindow);

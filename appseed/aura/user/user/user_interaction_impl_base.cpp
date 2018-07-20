@@ -143,7 +143,7 @@ namespace user
       m_rectParentClient = m_rectParentClientRequest;
 
       m_bShowFlags = false;
-      
+
       m_bShowWindow = false;
 
    }
@@ -230,7 +230,7 @@ namespace user
          }
 
       }
-      
+
       m_pui->message_call(WM_SIZE);
 
       m_pui->m_dwLastSizeMove = ::get_tick_count();
@@ -267,7 +267,7 @@ namespace user
    {
 
       if ((m_bShowFlags && (m_iShowFlags & SWP_SHOWWINDOW)) ||
-          (m_bShowWindow && (m_iShowWindow != SW_HIDE)))
+            (m_bShowWindow && (m_iShowWindow != SW_HIDE)))
       {
 
          m_pui->message_call(WM_SHOWWINDOW, 1);
@@ -1406,6 +1406,19 @@ namespace user
    }
 
 
+   void interaction_impl_base::on_set_pro_devian()
+   {
+
+
+   }
+
+
+   void interaction_impl_base::set_need_redraw()
+   {
+
+   }
+
+
    bool interaction_impl_base::DestroyWindow()
    {
 
@@ -1532,7 +1545,7 @@ namespace user
          m_iShowFlags |= SWP_HIDEWINDOW;
 
       }
-      
+
       m_bShowWindow = true;
       m_iShowWindow = nCmdShow;
 

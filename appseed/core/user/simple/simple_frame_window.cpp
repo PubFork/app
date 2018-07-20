@@ -1292,6 +1292,13 @@ void simple_frame_window::_001OnNcActivate(::message::message * pobj)
    if (!is_window_enabled())
       pncactivate->m_bActive = FALSE;
 
+   if (!pncactivate->m_bActive)
+   {
+
+      output_debug_string("test");
+
+   }
+
    /*if(m_bWindowFrame)
    {
    m_workset.SetActiveFlag(pncactivate->m_bActive);

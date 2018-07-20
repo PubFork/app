@@ -2423,12 +2423,12 @@ namespace user
       m_pui->defer_check_layout();
 
       windowing_output_debug_string("\n_001UpdateBuffer : N");
-      
+
       if(m_pui == NULL)
       {
-         
+
          return;
-         
+
       }
 
       m_pui->defer_check_zorder();
@@ -2493,7 +2493,7 @@ namespace user
 
             windowing_output_debug_string("\n_001UpdateBuffer : after check1");
 
-            if (m_pui->m_bMayProDevian)
+            if (m_pui->m_bProDevian)
             {
 
                if (!pgraphics->is_valid_update_window_thread())
@@ -2585,7 +2585,20 @@ namespace user
 
       }
 
-      //m_spgraphics->update_window();
+   }
+
+
+   void interaction_impl::_001UpdateWindow(bool bUpdateBuffer)
+   {
+
+      if (bUpdateBuffer)
+      {
+
+         _001UpdateBuffer();
+
+      }
+
+      _001UpdateScreen();
 
    }
 
@@ -2593,263 +2606,16 @@ namespace user
    void interaction_impl::_001UpdateScreen()
    {
 
-//      m_pui->defer_check_layout();
-//
-//      m_pui->defer_check_zorder();
-//
-//      update_graphics_resources();
-//
-//      if (m_spgraphics.is_null())
-//         return;
-//
-//      if (bUpdateBuffer)
-//      {
-//
-//         synch_lock sl(m_spgraphics->m_pmutex);
-//
-//         {
-//
-//            rect64 rectWindow;
-//
-//            m_pui->GetWindowRect(rectWindow);
-//
-//            ::draw2d::graphics * pgraphics = m_spgraphics->on_begin_draw();
-//
-//            ::draw2d::savedc savedc(pgraphics);
-//
-//            if (pgraphics == NULL || pgraphics->get_os_data() == NULL)
-//            {
-//
-//               return;
-//
-//            }
-//
-//            if (m_pui->m_bMayProDevian)
-//            {
-//
-//               if (!pgraphics->is_valid_update_window_thread())
-//               {
-//
-//                  return;
-//
-//               }
-//
-//            }
-//
-//            rect r;
-//
-//            r = rectWindow;
-//
-//            r.offset(-r.top_left());
-//
-//            pgraphics->set_alpha_mode(::draw2d::alpha_mode_set);
-//
-//            if (m_bComposite)
-//            {
-//
-//               pgraphics->fill_solid_rect(r, ARGB(0, 0, 0, 0));
-//
-//            }
-//            else
-//            {
-//
-//               pgraphics->fill_solid_rect(r, ARGB(255, 184, 184, 177));
-//
-//            }
-//
-//            //if(m_pui->IsWindowVisible())
-//            try
-//            {
-//
-//               _001Print(pgraphics);
-//
-//            }
-//            catch (...)
-//            {
-//
-//
-//            }
-//
-//#if HARD_DEBUG
-//
-//            ::draw2d::graphics_sp g(allocer());
-//
-//            g->debug();
-//
-//            m_size.cx = 0;
-//
-//            m_size.cy = 0;
-//
-//#endif
-//
-//         }
-//
-//      }
-//
+      m_bRedraw = false;
+
       if (m_spgraphics.is_set())
       {
+
          m_spgraphics->update_window();
 
       }
 
    }
-
-
-//   void interaction_impl::_001UpdateScreen(bool bUpdateBuffer)
-//   {
-//
-//      cslock sl(cs_display());
-//
-//
-//
-//      if(m_spdibBuffer.is_set() && m_spdibBuffer->get_graphics() != NULL)
-//      {
-//
-//         m_spdibBuffer->update_window(m_pui,NULL, bUpdateBuffer);
-//
-////         if(m_pui->m_bMoving && GetExStyle() && WS_EX_LAYERED)
-////         {
-////
-////            Session.m_ptCursor = m_pui->m_ptMoveCursor;
-////
-////#ifdef WINDOWSEX
-////
-////            ::SetCursorPos(m_pui->m_ptMoveCursor.x,m_pui->m_ptMoveCursor.y);
-////
-////
-////#endif
-////
-////         }
-//
-//      }
-//      else
-//      {
-////         TRACE("Failed to update Screen");
-//      }
-//
-//
-//   }
-
-
-//#define HARD_DEBUG 0
-//   void interaction_impl::_001UpdateBuffer()
-//   {
-//
-//      synch_lock sl1(m_pui->m_pmutex);
-//
-//      if(!m_pui->m_bMayProDevian)
-//      {
-//
-//         //TRACE("interaction_impl::_001UpdateBuffer going to update_graphics_resources");
-//
-//      }
-//
-//      update_graphics_resources();
-//
-//      if(!m_pui->m_bMayProDevian)
-//      {
-//
-//         //TRACE("interaction_impl::_001UpdateBuffer going to lock");
-//
-//      }
-//
-//      synch_lock sl(m_spmutexBuffer);
-//
-//      //if(!sl.lock())
-//        // return;
-//
-//      if(!m_pui->m_bMayProDevian)
-//      {
-//
-//         //TRACE("interaction_impl::_001UpdateBuffer locked");
-//
-//      }
-//
-//      if(m_spdibBuffer.is_null())
-//         return;
-//
-//      m_spdibBuffer->map();
-//
-//      if(m_spdibBuffer->get_data() == NULL)
-//         return;
-//
-//      rect64 rectWindow;
-//
-//      m_pui->GetWindowRect(rectWindow);
-//
-//      if(m_bComposite)
-//      {
-//         m_spdibBuffer->Fill(0,0,0,0);
-//      }
-//      else
-//      {
-//         m_spdibBuffer->Fill(255,184,184,177);
-//      }
-//
-//      //m_spdibBuffer->Fill(255,255,255,0);
-//
-//      //::draw2d::graphics * pgraphics = m_spdibBuffer->get_graphics();
-//
-//      //if(pgraphics == NULL)
-//        //return;
-//
-//      if (m_spdibBuffer.is_null())
-//      {
-//
-//         return;
-//
-//      }
-//
-//      if(!m_pui->m_bMayProDevian)
-//      {
-//
-//         //TRACE("Going to top print");
-//
-//      }
-//
-//      _001Print(m_spdibBuffer);
-//
-//
-//      cslock slDisplay(cs_display());
-//
-//      //if(m_spdibBuffer->get_data() == NULL || m_spdibBuffer->get_data() == NULL)
-//        // return;
-//
-//      m_spdibBuffer->BitBlt(rectWindow.width(), rectWindow.height(), m_spdibBuffer, 1);
-//
-//      m_spdibBuffer->m_bReduced = false;
-//
-//#if HARD_DEBUG
-//
-//      m_spdibBuffer->Destroy();
-//
-//      m_spdibBuffer->Destroy();
-//
-//      ::draw2d::graphics_sp g(allocer());
-//
-//      g->debug();
-//
-//      m_size.cx = 0;
-//      m_size.cy = 0;
-//
-//#endif
-//
-//      //       ::rect rectClient;
-//
-//      //       GetClientRect(rectClient);
-//
-//      //       g->BitBlt(0, 0, rectClient.width(), rectClient.height(), m_spdibBuffer->get_graphics(), 0, 0, SRCCOPY);
-//
-//      //       g->BitBlt(0, 0, m_spdibBuffer->m_size.cx, m_spdibBuffer->m_size.cy, m_spdibBuffer->get_graphics(), 0, 0, SRCCOPY);
-//
-//      //       pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
-//
-//      //       pgraphics->fill_solid_rect(rectClient, ARGB(128, 0, 255, 0));
-//      {
-//         //point pt;
-//         //::GetCursorPos(&pt);
-//      }
-//   }
 
 
    void interaction_impl::update_graphics_resources()

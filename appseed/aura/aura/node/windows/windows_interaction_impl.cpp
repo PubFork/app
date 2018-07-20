@@ -1,5 +1,6 @@
 ﻿#include "framework.h"
 #include "aura/aura/os/windows/windows_system_interaction_impl.h"
+#include "aura/aura/aura.h"
 
 
 // const GUID CLSID_TaskbarList = { 0x56FDF344, 0xFD6D, 0x11D0,{ 0x95, 0x8A, 0x00, 0x60, 0x97, 0xC9, 0xA0, 0x90 } };
@@ -461,6 +462,20 @@ namespace windows
 
       m_pui->m_pthread = ::get_thread();
 
+      if (m_pui->m_pthread != NULL)
+      {
+
+         if (m_pui->m_pthread->m_puiptra == NULL)
+         {
+
+            m_pui->m_pthread->m_puiptra = new user_interaction_ptr_array();
+
+         }
+
+         m_pui->m_pthread->m_puiptra->add(m_pui);
+
+      }
+
       if (oswindow == NULL)
       {
 
@@ -728,6 +743,13 @@ namespace windows
       UNREFERENCED_PARAMETER(pobj);
 
       ::multithreading::post_quit_and_wait(m_pthreadUpdateWindow, seconds(10));
+
+      if (m_pui->m_pthread != NULL)
+      {
+
+         m_pui->m_pthread->m_puiptra->remove(m_pui);
+
+      }
 
       Default();
 
@@ -1372,14 +1394,6 @@ namespace windows
 
    }
 
-
-   void interaction_impl::_002OnDraw(::draw2d::dib * pdib)
-   {
-
-      ::exception::throw_not_implemented(get_app());
-      //::CallWindowProc(*GetSuperWndProcAddr(), get_handle(), WM_PRINT, (WPARAM)((dynamic_cast<::windows::graphics * >(pgraphics))->get_handle()), (LPARAM)(PRF_CHILDREN | PRF_CLIENT));
-
-   }
 
 
    void interaction_impl::message_handler(::message::base * pbase)
@@ -2457,35 +2471,30 @@ namespace windows
    }
 
 
-   void interaction_impl::_001OnCreate(::message::message * pobj)
+   void interaction_impl::_002OnDraw(::draw2d::dib * pdib)
    {
 
-      SCAST_PTR(::message::create, pcreate, pobj);
+      ::exception::throw_not_implemented(get_app());
+      //::CallWindowProc(*GetSuperWndProcAddr(), get_handle(), WM_PRINT, (WPARAM)((dynamic_cast<::windows::graphics * >(pgraphics))->get_handle()), (LPARAM)(PRF_CHILDREN | PRF_CLIENT));
 
+   }
+
+
+   void interaction_impl::present()
+   {
+
+      _001UpdateWindow();
+
+   }
+
+
+   void interaction_impl::on_set_pro_devian()
+   {
+
+
+      if (m_pui->m_bProDevian)
       {
 
-         DEVMODE dm;
-
-         if (EnumDisplaySettings(NULL, ENUM_CURRENT_SETTINGS, &dm))
-         {
-
-            m_dFps = dm.dmDisplayFrequency;
-
-         }
-
-      }
-
-      Default();
-
-      if (m_pui->is_message_only_window()
-            || dynamic_cast <::user::system_interaction_impl *>(m_pui) != NULL)
-      {
-
-         TRACE("good : opt out!");
-
-      }
-      else
-      {
 
          if (m_pthreadUpdateWindow.is_null())
          {
@@ -2679,6 +2688,74 @@ namespace windows
             });
 
          }
+
+      }
+      else
+      {
+
+         if (m_pthreadUpdateWindow.is_set())
+         {
+
+            ::multithreading::post_quit(m_pthreadUpdateWindow);
+
+         }
+
+      }
+
+   }
+
+
+   void interaction_impl::set_need_redraw()
+   {
+
+      if (!m_pui->m_bProDevian)
+      {
+
+         if (m_pui->m_pthread != NULL)
+         {
+
+            if (!m_bRedraw)
+            {
+
+               m_bRedraw = true;
+
+               m_pui->m_pthread->post_message(WM_KICKIDLE);
+
+            }
+
+         }
+
+
+      }
+
+   }
+
+
+   void interaction_impl::_001OnCreate(::message::message * pobj)
+   {
+
+      SCAST_PTR(::message::create, pcreate, pobj);
+
+      {
+
+         DEVMODE dm;
+
+         if (EnumDisplaySettings(NULL, ENUM_CURRENT_SETTINGS, &dm))
+         {
+
+            m_dFps = dm.dmDisplayFrequency;
+
+         }
+
+      }
+
+      Default();
+
+      if (m_pui->is_message_only_window()
+            || dynamic_cast <::user::system_interaction_impl *>(m_pui) != NULL)
+      {
+
+         TRACE("good : opt out!");
 
       }
 
@@ -3984,13 +4061,24 @@ namespace windows
       else if (nCmdShow == SW_HIDE)
       {
 
-         m_iShowWindow = SW_HIDE;
+         if(!m_pui->m_bProDevian)
+         {
 
-         m_iShowFlags = SWP_HIDEWINDOW;
+            ::ShowWindow(get_handle(), nCmdShow);
 
-         m_bShowWindow = true;
+         }
+         else
+         {
 
-         m_bShowFlags = true;
+            m_iShowWindow = SW_HIDE;
+
+            m_iShowFlags = SWP_HIDEWINDOW;
+
+            m_bShowWindow = true;
+
+            m_bShowFlags = true;
+
+         }
 
       }
       else
@@ -3999,6 +4087,8 @@ namespace windows
          ::ShowWindow(get_handle(), nCmdShow);
 
       }
+
+      m_pui->set_need_redraw();
 
       return m_pui->IsWindowVisible();
 

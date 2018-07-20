@@ -382,6 +382,8 @@ void thread::CommonConstruct()
 
    m_nDisablePumpCount  = 0;
 
+   m_puiptra = NULL;
+
 }
 
 
@@ -618,6 +620,30 @@ bool thread::pump_message()
 
       process_message(&msg);
 
+      if (m_puiptra != NULL)
+      {
+
+         for (index i = 0; i < m_puiptra->get_count(); i++)
+         {
+
+            ::user::interaction * pui = m_puiptra->element_at(i);
+
+            if (!pui->m_bProDevian)
+            {
+
+               if (pui->has_pending_graphical_update())
+               {
+
+                  pui->_001UpdateWindow();
+
+               }
+
+            }
+
+         }
+
+      }
+
       return true;
 
    }
@@ -796,20 +822,10 @@ bool thread::defer_pump_message()
 
 bool thread::on_thread_on_idle(thread *pimpl, LONG lCount)
 {
+
    return true;
+
 }
-
-
-
-//void thread::set_auto_delete(bool bAutoDelete)
-//{
-//
-//   m_bAutoDelete = bAutoDelete;
-//
-//}
-
-
-
 
 
 ::user::primitive * thread::get_active_ui()

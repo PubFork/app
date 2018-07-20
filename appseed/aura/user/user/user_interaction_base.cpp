@@ -1952,8 +1952,6 @@ Restart:
    void interaction_base::_001UpdateWindow(bool bUpdateBuffer)
    {
 
-      UNREFERENCED_PARAMETER(bUpdateBuffer);
-
    }
 
 

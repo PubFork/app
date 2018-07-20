@@ -23,7 +23,6 @@ namespace simple_ui
    {
 
       m_evReady.ResetEvent();
-      m_bMayProDevian   = false;
       m_strMessage      = pszMessage;
       m_strTitle        = pszCaption;
       m_uiFlags         = uiFlags;
@@ -132,7 +131,7 @@ namespace simple_ui
       rectFontopus.right = rectFontopus.left + w;
 
       rectFontopus.bottom = rectFontopus.top + h;
-      
+
       ::user::create_struct cs(WS_EX_LAYERED, NULL, NULL, 0, rectFontopus);
 
       if(!create_window_ex(cs, puiParent))
@@ -438,20 +437,20 @@ namespace simple_ui
 
    }
 
-   
+
    i64 message_box::add_ref()
    {
-      
+
       return simple_ui::top::add_ref();
-      
+
    }
-   
-   
+
+
    i64 message_box::dec_ref()
    {
-      
+
       return simple_ui::top::dec_ref();
-      
+
    }
 
 //   void message::EndModalLoop(id nResult)

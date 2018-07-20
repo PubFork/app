@@ -42,6 +42,8 @@ namespace windows
       rect64                                    m_rectLastPos;
       DWORD                                     m_dwLastPos;
 
+
+
       interaction_impl();
       interaction_impl(::aura::application * papp);
       virtual ~interaction_impl();
@@ -102,6 +104,11 @@ namespace windows
       virtual void route_command_message(::user::command * pcommand) override;
 
       void _002OnDraw(::draw2d::dib * pdib);
+
+      virtual void present();
+
+      virtual void on_set_pro_devian();
+      virtual void set_need_redraw();
 
       DECL_GEN_SIGNAL(_001OnEraseBkgnd);
       DECL_GEN_SIGNAL(_001OnSize);

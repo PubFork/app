@@ -402,6 +402,7 @@ namespace user
       return TRUE;
    }
 
+
    void combo_list::_001OnShowWindow(::message::message * pobj)
    {
 
@@ -427,6 +428,12 @@ namespace user
          //keyboard_set_focus();
 
 #endif
+
+      }
+      else
+      {
+
+         output_debug_string("combo_list hide");
 
       }
 
@@ -640,6 +647,8 @@ namespace user
          if (eelement == element_item)
          {
 
+            m_pcombo->_001ShowDropDown(false);
+
             ::user::control_event ev;
 
             ev.m_puie = this;
@@ -734,9 +743,16 @@ namespace user
 
       e_element eelement;
 
-      m_iHover = hit_test(pt, eelement);
+      index iHover = hit_test(pt, eelement);
 
-      set_need_redraw();
+      if (iHover != m_iHover)
+      {
+
+         m_iHover = iHover;
+
+         set_need_redraw();
+
+      }
 
    }
 
@@ -835,7 +851,7 @@ namespace user
    bool combo_list::has_pending_graphical_update()
    {
 
-      return IsWindowVisible() || m_pimpl->m_iShowFlags != 0;
+      return m_bRedraw;
 
    }
 

@@ -797,7 +797,64 @@ namespace user
                else if (!pappearance->IsFullScreen() && !m_pworkset->GetWndDraw()->frame_is_transparent())
                {
 
-                  if (m_pworkset->GetWndDraw()->get_handle() == GetActiveWindow() && m_crActiveCaptionTextBk != 0)
+                  HWND hwndDraw = m_pworkset->GetWndDraw()->get_handle();
+
+                  HWND hwndActiveWindow = GetActiveWindow();
+
+                  HWND hwndActiveWindowOwner = ::GetWindow(hwndActiveWindow, GW_OWNER);
+
+                  HWND hwndActiveWindowParent = ::GetParent(hwndActiveWindow);
+
+                  ::user::interaction * puiInactive = m_pworkset->GetWndDraw();
+
+                  ::user::interaction * puiInactiveTopLevel = NULL;
+
+                  if (puiInactive != NULL)
+                  {
+
+                     puiInactiveTopLevel = puiInactive->GetTopLevelOwner();
+
+                     if (puiInactiveTopLevel == NULL)
+                     {
+
+                        puiInactiveTopLevel = puiInactive;
+
+                     }
+
+                  }
+
+                  ::user::interaction_impl * puiImplActive = oswindow_get(hwndActiveWindow);
+
+                  ::user::interaction * puiActive = NULL;
+
+                  ::user::interaction * puiActiveTopLevel = NULL;
+
+                  if (puiImplActive != NULL)
+                  {
+
+                     puiActive = puiImplActive->m_pui;
+
+                     if (puiActive != NULL)
+                     {
+
+                        puiActiveTopLevel = puiActive->GetTopLevelOwner();
+
+                        if (puiActiveTopLevel == NULL)
+                        {
+
+                           puiActiveTopLevel = puiActive;
+
+                        }
+
+                     }
+
+                  }
+
+                  if ((hwndDraw == hwndActiveWindow
+                        || hwndDraw == hwndActiveWindowOwner
+                        || hwndDraw == hwndActiveWindowParent
+                        || puiInactiveTopLevel == puiActiveTopLevel)
+                        && m_crActiveCaptionTextBk != 0)
                   {
 
                      pgraphics->fill_solid_rect(m_rectCaptionTextBk, m_crActiveCaptionTextBk);
@@ -805,6 +862,7 @@ namespace user
                   }
                   else
                   {
+
 
                      pgraphics->fill_solid_rect(m_rectCaptionTextBk, m_crCaptionTextBk);
 

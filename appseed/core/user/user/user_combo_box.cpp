@@ -726,29 +726,6 @@ namespace user
       if (!m_plist->IsWindow())
       {
 
-//#ifdef WINDOWS
-//
-//         GetTopLevel()->m_pthread->synch_pred([this]()
-//         {
-//
-//            if (!m_plist->create_window_ex(0, NULL, "combo_list", 0, rect(0, 0, 0, 0), GetTopLevel(), 0, NULL))
-//            {
-//
-//               m_plist.release();
-//
-//               _throw(resource_exception(get_app()));
-//
-//            }
-//
-//            ASSERT(m_plist->IsWindow());
-//
-//         });
-//
-//         ASSERT(!m_plist->IsWindowVisible());
-//
-//#else
-//
-
          ::user::create_struct cs(0, NULL, "combo_list");
 
          if (!m_plist->create_window_ex(cs))
@@ -762,27 +739,13 @@ namespace user
 
          m_plist->SetOwner(this);
 
-//#endif
-//
-//
-         sp(::user::interaction_impl) pimpl = m_plist->m_pimpl;
-
-         if (pimpl.is_set())
-         {
-            pimpl->m_dFps = 240.0;
-         }
-
-
       }
 
       rect rectClient;
 
       GetClientRect(rectClient);
 
-
       m_plist->m_iItemHeight = MIN(24, rectClient.height());
-
-
 
    }
 
@@ -1074,12 +1037,9 @@ namespace user
 
    }
 
+
    void combo_box::ShowDropDown(bool bShowIt)
    {
-
-      //ASSERT(IsWindow());
-
-      //send_message( CB_SHOWDROPDOWN, bShowIt, 0);
 
       _001ShowDropDown(bShowIt);
 
