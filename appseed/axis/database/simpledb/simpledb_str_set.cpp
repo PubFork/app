@@ -495,7 +495,8 @@ bool db_str_set::load(const ::database::key & key, string & strValue)
 
       }
 
-      string strKey = pdb->escape(key.m_strDataKey);
+      //string strKey = pdb->escape(key.m_strDataKey);
+      string strKey = key.m_strDataKey;
 
       int res = sqlite3_bind_text(pcore->m_pstmtSelect, pcore->m_iSelectId, strKey, int (strKey.get_length()), SQLITE_TRANSIENT);
 
@@ -614,9 +615,9 @@ bool db_str_set::save(const ::database::key & key, const string & strValue)
          {
 
             strSql.Format(
-               "UPDATE stringtable SET value = '%s' WHERE id = '%s'",
-               strEscapedValue,
-               strEscapedKey);
+            "UPDATE stringtable SET value = '%s' WHERE id = '%s'",
+            strEscapedValue,
+            strEscapedKey);
 
             m_pcore->db()->get_database()->start_transaction();
 
@@ -640,9 +641,9 @@ bool db_str_set::save(const ::database::key & key, const string & strValue)
          single_lock slDatabase(m_pcore->db()->get_database()->m_pmutex);
 
          strSql.Format(
-            "INSERT INTO stringtable (id, value) values ('%s', '%s');",
-            strEscapedKey,
-            strEscapedValue);
+         "INSERT INTO stringtable (id, value) values ('%s', '%s');",
+         strEscapedKey,
+         strEscapedValue);
 
          m_pcore->db()->get_database()->start_transaction();
 

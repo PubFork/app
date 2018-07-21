@@ -23,6 +23,7 @@
 #include "userex_top_toggle_view.cpp"
 #include "userex_top_view.cpp"
 #include "userex_userex.cpp"
+#include "userex_view_container.cpp"
 #include "userex_wait_message_dialog.cpp"
 
 

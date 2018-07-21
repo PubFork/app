@@ -98,7 +98,11 @@ public:
 
 
    simple_frame_window(::aura::application * papp);
+   simple_frame_window(::aura::application * papp, bool bProdevian, bool bTranslucent);
    virtual ~simple_frame_window();
+
+
+   void simple_frame_window_common_construct(bool bProdevian, bool bTranslucent);
 
 
    using ::user::frame_window::create_window;
@@ -317,6 +321,23 @@ public:
    virtual void nextstyle(::user::style_context * pcontext) override;
 
 };
+
+
+
+
+
+class CLASS_DECL_CORE prodevian_translucent_simple_frame_window :
+   virtual public simple_frame_window
+{
+public:
+
+
+   prodevian_translucent_simple_frame_window(::aura::application * papp);
+   virtual ~prodevian_translucent_simple_frame_window();
+
+
+};
+
 
 
 

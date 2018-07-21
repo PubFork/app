@@ -823,14 +823,24 @@ namespace user
    }
 
 
-//control_view_impl::control_view_impl() :
-//   m_commandui(NULL)
-//{
-//}
-
-
    void control::on_control_event(::user::control_event * pevent)
    {
+
+      ::user::interaction * puiBind = get_bind_ui();
+
+      if (puiBind != NULL)
+      {
+
+         puiBind->on_control_event(pevent);
+
+         if (pevent->m_bRet)
+         {
+
+            return;
+
+         }
+
+      }
 
       ::user::form * pform = get_form();
 
@@ -879,7 +889,6 @@ namespace user
          }
 
       }
-
 
    }
 

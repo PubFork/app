@@ -1,12 +1,8 @@
 #include "framework.h"
-#include "framework.h"
-
-
 
 
 namespace filemanager
 {
-
 
 
    frame::frame(::aura::application * papp) :
@@ -14,12 +10,16 @@ namespace filemanager
       simple_frame_window(papp)
    {
 
+      set_pro_devian();
+
    }
+
 
    frame::~frame()
    {
 
    }
+
 
    void  frame::_001OnCreate(::message::message * pobj)
    {
@@ -31,7 +31,7 @@ namespace filemanager
 
    bool  frame::on_create_bars()
    {
-      
+
       return simple_frame_window::on_create_bars();
 
    }

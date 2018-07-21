@@ -154,6 +154,7 @@ namespace userex
       System.factory().cloneable_small < ::user::split_bar >();
       System.factory().cloneable_small < split_view::Pane >();
       System.factory().cloneable_small < simple_frame_window >();
+      System.factory().cloneable_small < prodevian_translucent_simple_frame_window >();
       System.factory().creatable_small < ::user::button >();
       System.factory().creatable_small < ::user::menu_list_view >();
       System.factory().cloneable_small < simple_child_frame >();
@@ -1899,54 +1900,50 @@ finished:
    }
 
 
-   void session::will_use_view_hint(::userex::e_view eview)
+   void session::will_use_view_hint(string strView)
    {
 
-      switch(eview)
+      if(strView == "color_sel")
       {
 
-         case ::userex::view_color_sel:
+         if(userex()->m_mapimpactsystem["color_sel"] != NULL)
          {
 
-            if(userex()->m_mapimpactsystem[::userex::view_color_sel] != NULL)
-            {
-
-               return;
-
-            }
-
-            System.factory().creatable_small < ::userex::color_view >();
-
-
-            userex()->m_mapimpactsystem[::userex::view_color_sel] = new ::user::multiple_document_template(
-                                                                                                           get_app(),
-                                                                                                           "main",
-                                                                                                           System.type_info < ::user::document >(),
-                                                                                                           System.type_info < ::simple_frame_window >(),
-                                                                                                           System.type_info < ::userex::color_view >());
+            return;
 
          }
-         break;
-         case ::userex::view_font_sel:
+
+         System.factory().creatable_small < ::userex::color_view >();
+
+
+         userex()->m_mapimpactsystem["color_sel"] = new ::user::multiple_document_template(
+         get_app(),
+         "main",
+         System.type_info < ::user::document >(),
+         System.type_info < ::prodevian_translucent_simple_frame_window >(),
+         System.type_info < ::userex::color_view >());
+
+      }
+      else if(strView == "font_sel")
+      {
+
+         if (m_pfontlist != NULL)
          {
 
-            if (m_pfontlist != NULL)
-            {
+            return;
 
-               return;
+         }
 
-            }
+         System.factory().creatable_small < ::user::font_list >();
+         System.factory().creatable_small < ::user::font_list_view >();
+         System.factory().creatable_small < ::userex::font_view >();
 
-            System.factory().creatable_small < ::user::font_list >();
-            System.factory().creatable_small < ::user::font_list_view >();
-            System.factory().creatable_small < ::userex::font_view >();
-
-            userex()->m_mapimpactsystem[::userex::view_font_sel] = new ::user::multiple_document_template(
-                                       get_app(),
-"main",
-System.type_info < ::user::document >(),
-System.type_info < ::simple_frame_window >(),
-System.type_info < ::userex::font_view >());
+         userex()->m_mapimpactsystem["font_sel"] = new ::user::multiple_document_template(
+         get_app(),
+         "main",
+         System.type_info < ::user::document >(),
+         System.type_info < ::prodevian_translucent_simple_frame_window >(),
+         System.type_info < ::userex::font_view >());
 
 
          m_pfontlist = new ::visual::font_list(this);
@@ -1964,10 +1961,6 @@ System.type_info < ::userex::font_view >());
 
          });
 
-         }
-         break;
-      default:
-         break;
       }
 
    }

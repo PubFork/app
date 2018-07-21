@@ -131,7 +131,6 @@ namespace aura
       application_bias                                m_biasCalling;
 
 
-
       application();
       virtual ~application();
 
@@ -307,6 +306,9 @@ namespace aura
          return *dynamic_cast < APP * > (this);
 
       }
+
+
+
 
       virtual void _001CloseApplication();
 

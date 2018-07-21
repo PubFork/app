@@ -10,12 +10,16 @@ namespace filemanager
       object(papp),
       simple_frame_window(papp)
    {
+
+      set_pro_devian();
+
    }
+
 
    main_frame::~main_frame()
    {
-   }
 
+   }
 
 
    void main_frame::_001OnCreate(::message::message * pobj)
@@ -29,7 +33,7 @@ namespace filemanager
 
    bool main_frame::on_create_bars()
    {
-      
+
 
       sp(manager) pmanager = m_pdocumenttemplate->get_document();
 

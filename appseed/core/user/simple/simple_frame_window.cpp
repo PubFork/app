@@ -98,12 +98,52 @@ void simple_frame_window::helper_task::defer_save_window_rect()
 
 }
 
+prodevian_translucent_simple_frame_window::prodevian_translucent_simple_frame_window(::aura::application * papp) :
+   object(papp),
+   simple_frame_window(papp, true, true)
+{
+
+}
+
 
 simple_frame_window::simple_frame_window(::aura::application * papp) :
    object(papp),
    m_dibBk(allocer()),
    m_fastblur(allocer())
 {
+
+   simple_frame_window_common_construct(false, false);
+
+}
+
+
+simple_frame_window::simple_frame_window(::aura::application * papp, bool bProdevian, bool bTranslucent) :
+   object(papp),
+   m_dibBk(allocer()),
+   m_fastblur(allocer())
+{
+
+   simple_frame_window_common_construct(bProdevian, bTranslucent);
+
+}
+
+
+void simple_frame_window::simple_frame_window_common_construct(bool bProdevian, bool bTranslucent)
+{
+
+   if (bProdevian)
+   {
+
+      set_pro_devian();
+
+   }
+
+   if (bTranslucent)
+   {
+
+      set_translucent();
+
+   }
 
    m_bPendingSaveWindowPlacement = false;
 
@@ -158,6 +198,12 @@ simple_frame_window::~simple_frame_window()
    //m_phelpertask->m_pframe = NULL;
 
    //m_phelpertask->m_bRun = false;
+
+}
+
+
+prodevian_translucent_simple_frame_window::~prodevian_translucent_simple_frame_window()
+{
 
 }
 
@@ -3572,4 +3618,6 @@ void simple_frame_window::_001OnNcCalcSize(::message::message * pmessage)
 #endif
 
 }
+
+
 

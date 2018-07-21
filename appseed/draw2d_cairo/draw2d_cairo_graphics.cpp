@@ -6387,6 +6387,8 @@ namespace draw2d_cairo
 
       cairo_set_matrix(m_pdc, &cairomatrix);
 
+      return true;
+
    }
 
 

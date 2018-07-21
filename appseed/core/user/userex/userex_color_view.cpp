@@ -276,7 +276,7 @@ namespace flag
       for (index j = 0; j < h; j++)
       {
          double dL = 1.0 - ((double) j / dh);
-         
+
 #ifdef MACOS
          dL = 1.0 - dL;
 #endif
@@ -343,6 +343,8 @@ namespace userex
       m_dibLuminance(allocer())
    {
 
+      m_strView = "color_sel";
+
       m_bLButtonPressed = false;
 
    }
@@ -400,39 +402,6 @@ namespace userex
 
    void color_view::on_control_event(::user::control_event * pevent)
    {
-      
-      if(m_puiViewNotify != NULL)
-      {
-         
-         m_puiViewNotify->on_control_event(pevent);
-         
-      }
-
-//      if (pevent->m_eevent == ::user::event_after_change_cur_sel
-//            || pevent->m_eevent == ::user::event_after_change_cur_hover)
-//      {
-//
-//         if (this == pevent->m_puie)
-//         {
-//
-//            ::user::view_update_hint uh(get_app());
-//
-//            uh.m_ehint = ::user::view_update_hint::hint_control_event;
-//            uh.m_pusercontrolevent = pevent;
-//            uh.m_pui = this;
-//
-//            GetTypedParent<::userex::pane_tab_view>()->get_document()->update_all_views(this, 0, &uh);
-//
-//         }
-//
-//         if (pevent->m_bRet)
-//         {
-//
-//            return;
-//
-//         }
-//
-//      }
 
       ::user::impact::on_control_event(pevent);
 
@@ -443,13 +412,15 @@ namespace userex
    {
 
       pmessage->previous();
-      
+
       if(get_document()->m_pviewTopic == NULL)
       {
 
          get_document()->m_pviewTopic = this;
-         
+
       }
+
+      set_window_text("__CoLoR_");
 
    }
 
@@ -514,7 +485,7 @@ namespace userex
 
          ev.m_eevent = ::user::event_after_change_cur_hover;
 
-         ev.m_id = m_id;
+         ev.m_id = m_strView;
 
          ev.m_puie = this;
 
@@ -536,7 +507,7 @@ namespace userex
 
          ev.m_eevent = ::user::event_after_change_cur_hover;
 
-         ev.m_id = m_id;
+         ev.m_id = m_strView;
 
          ev.m_puie = this;
 
@@ -614,7 +585,7 @@ namespace userex
 
       ev.m_eevent = ::user::event_after_change_cur_sel;
 
-      ev.m_id = m_id;
+      ev.m_id = m_strView;
 
       ev.m_puie = this;
 

@@ -1112,6 +1112,9 @@
     <ClInclude Include="user\userex\userex_color_view.h">
       <Filter>Header Files\user\userex</Filter>
     </ClInclude>
+    <ClInclude Include="user\userex\userex_view_container.h">
+      <Filter>Header Files\user\userex</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="user\simple\simple_child_frame.cpp">
@@ -1970,6 +1973,9 @@
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
     <ClCompile Include="user\userex\userex_color_view.cpp">
+      <Filter>Source Files\user\userex</Filter>
+    </ClCompile>
+    <ClCompile Include="user\userex\userex_view_container.cpp">
       <Filter>Source Files\user\userex</Filter>
     </ClCompile>
   </ItemGroup>

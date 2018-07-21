@@ -1701,14 +1701,24 @@ namespace aura
          if (puiFocus->GetActiveWindow() != puiFocus->get_wnd())
          {
 
-            puiFocus->get_wnd()->SetActiveWindow();
+            if (puiFocus->get_wnd() != NULL)
+            {
+
+               puiFocus->get_wnd()->SetActiveWindow();
+
+            }
 
          }
 
          if (puiFocus->GetFocus() != puiFocus->get_wnd())
          {
 
-            puiFocus->get_wnd()->SetFocus();
+            if (puiFocus->get_wnd() != NULL)
+            {
+
+               puiFocus->get_wnd()->SetFocus();
+
+            }
 
          }
 
@@ -3202,6 +3212,21 @@ ret:
    {
 
       _throw(interface_only_exception(this));
+
+   }
+
+
+   void session::set_bound_ui(string strView, ::user::interaction * pui)
+   {
+
+      m_mapboundui.set_at(strView, pui);
+
+   }
+
+   ::user::interaction * session::get_bound_ui(string strView)
+   {
+
+      return m_mapboundui[strView];
 
    }
 

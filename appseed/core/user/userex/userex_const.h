@@ -8,21 +8,21 @@
 #pragma once
 
 
-namespace userex
-{
-
-   
-   enum e_view
-   {
-      
-      view_none,
-      view_color_sel,
-      view_font_sel,
-      
-   };
-
-
-} // namespace userex
+//namespace userex
+//{
+//
+//
+//   enum e_view
+//   {
+//
+//      view_none,
+//      view_color_sel,
+//      view_font_sel,
+//
+//   };
+//
+//
+//} // namespace userex
 
 
 

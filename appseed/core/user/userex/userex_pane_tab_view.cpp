@@ -417,10 +417,10 @@ namespace userex
       else if (::str::begins_ci(pcreatordata->m_id, "font_sel"))
       {
 
-         Session.will_use_view_hint(view_font_sel);
+         Session.will_use_view_hint("font_sel");
 
-         auto pdoc = Session.userex()->m_mapimpactsystem[::userex::view_font_sel]->open_document_file(::var::type_null, false, pcreatordata->m_pholder);
-         
+         auto pdoc = Session.userex()->m_mapimpactsystem["font_sel"]->open_document_file(::var::type_null, false, pcreatordata->m_pholder);
+
          m_pfontview = pdoc->get_typed_view < font_view >();
 
          pdoc->m_pviewTopic->m_puiViewNotify = this;
@@ -430,15 +430,15 @@ namespace userex
       }
       else if (::str::begins_ci(pcreatordata->m_id, "color_sel"))
       {
-         
-         Session.will_use_view_hint(view_color_sel);
 
-         auto pdoc = Session.userex()->m_mapimpactsystem[::userex::view_color_sel]->open_document_file(::var::type_null, false, pcreatordata->m_pholder);
+         Session.will_use_view_hint("color_sel");
+
+         auto pdoc = Session.userex()->m_mapimpactsystem["color_sel"]->open_document_file(::var::type_null, false, pcreatordata->m_pholder);
 
          m_pcolorview = pdoc->get_typed_view < color_view >();
-         
+
          pdoc->m_pviewTopic->m_puiViewNotify = this;
-         
+
          pcreatordata->m_pwnd = pdoc->m_pviewTopic;
 
       }
@@ -748,14 +748,14 @@ namespace userex
 
    }
 
-   
+
    void pane_tab_view::_001OnRemoveTab(::user::tab_pane * ptab)
    {
-      
+
       ::user::tab_view::_001OnRemoveTab(ptab);
-      
+
       m_viewmap.remove_key(ptab->m_id);
-      
+
    }
 
 } // namespace userex

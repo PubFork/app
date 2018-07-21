@@ -49,6 +49,8 @@ namespace user
    void interaction::user_interaction_common_construct()
    {
 
+      m_bDrawable = true;
+
       m_bProDevian = false;
 
       m_ecolorBackground = color_background;
@@ -449,6 +451,14 @@ namespace user
    }
 
 
+   ::user::interaction * interaction::get_bind_ui()
+   {
+
+      return Session.get_bound_ui(m_strView);
+
+   }
+
+
    elemental * interaction::get_parent() const
    {
 
@@ -727,24 +737,24 @@ restart:
 
                         pimpl->m_pui = NULL;
 
-                        try
-                        {
-
-                           pimpl->release();
-
-                        }
-                        catch(...)
-                        {
-
-
-                        }
-
                         if (oswindow != NULL)
                         {
 
                            ::DestroyWindow(oswindow);
 
                         }
+                        try
+                        {
+
+                           //pimpl->release();
+
+                        }
+                        catch (...)
+                        {
+
+
+                        }
+
 
                      }
                      catch (...)
@@ -4907,6 +4917,22 @@ restart:
 
    void interaction::on_control_event(control_event * pevent)
    {
+
+      ::user::interaction * pui = get_bind_ui();
+
+      if (pui != NULL)
+      {
+
+         pui->on_control_event(pevent);
+
+         if (pevent->m_bRet)
+         {
+
+            return;
+
+         }
+
+      }
 
       ::user::interaction * puiParent = GetParent();
 

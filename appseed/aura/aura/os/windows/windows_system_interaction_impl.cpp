@@ -1,15 +1,20 @@
 #include "framework.h"
 #include "windows_system_interaction_impl.h"
 
+
 namespace user
 {
+
 
    system_interaction_impl::system_interaction_impl(::aura::application * papp):
       ::object(papp),
       ::user::interaction(papp)
    {
 
+      m_bDrawable = false;
+
    }
+
 
    system_interaction_impl::~system_interaction_impl()
    {

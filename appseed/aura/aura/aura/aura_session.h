@@ -26,8 +26,6 @@ namespace aura
       ::map < ::user::e_key, ::user::e_key, bool, bool > *         m_pmapKeyPressed;
 
 
-
-
       ::user::elemental *                             m_pkeyboardfocusRequest;
       ::user::elemental *                             m_pkeyboardfocus;
       bool                                                     m_bSystemSynchronizedCursor;
@@ -87,6 +85,9 @@ namespace aura
       index                                                    m_iMainWkspace;
 
       sp(::user::window_map)        m_pwindowmap;
+
+      string_map < ::user::interaction * >            m_mapboundui;
+
 
 
 
@@ -292,6 +293,9 @@ namespace aura
 
 
       virtual void _001OnDefaultTabPaneDrawTitle(::user::tab_pane & pane, ::user::tab * ptab, ::draw2d::graphics * pgraphics, LPCRECT lpcrect, ::draw2d::brush_sp & brushText);
+
+      virtual void set_bound_ui(string strView, ::user::interaction * pui);
+      virtual ::user::interaction * get_bound_ui(string strView);
 
 
    };

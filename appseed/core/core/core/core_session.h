@@ -103,7 +103,7 @@ namespace core
 
       //virtual bool create_bergedge(::create * pcreate);
 
-      virtual void will_use_view_hint(::userex::e_view eview);
+      virtual void will_use_view_hint(string strView);
 
       virtual void on_app_request_bergedge_callback(::aura::application * papp);
 

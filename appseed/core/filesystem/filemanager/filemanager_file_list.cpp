@@ -1421,16 +1421,24 @@ namespace filemanager
          m_iSelectionSubItem = -1;
       }
 
-      control.set_control_type(user::control_type_edit_plain_text);
-      control.m_datakey = "FILE_MANAGER_ID_FILE_NAME";
-      //pcontrol->descriptor().m_id = _vms::FILE_MANAGER_ID_FILE_NAME;
-      control.set_data_type(user::control_data_type_string);
-      control.add_function(user::control_function_vms_data_edit);
-      control.m_typeinfo = System.type_info < ::user::plain_edit >();
-      //control.m_typeinfo = sp(type)();
-      control.m_iSubItem = i;
-      control.m_id = 1000 + i;
-      index iControl = _001AddControl(control);
+      bool bRenameEdit = false;
+
+      if (bRenameEdit)
+      {
+
+         control.set_control_type(user::control_type_edit_plain_text);
+         control.m_datakey = "FILE_MANAGER_ID_FILE_NAME";
+         //pcontrol->descriptor().m_id = _vms::FILE_MANAGER_ID_FILE_NAME;
+         control.set_data_type(user::control_data_type_string);
+         control.add_function(user::control_function_vms_data_edit);
+         control.m_typeinfo = System.type_info < ::user::plain_edit >();
+         //control.m_typeinfo = sp(type)();
+         control.m_iSubItem = i;
+         control.m_id = 1000 + i;
+         index iControl = _001AddControl(control);
+         column.m_iControl = iControl;
+
+      }
 
 
 
@@ -1451,7 +1459,6 @@ namespace filemanager
       //column.m_bIcon                = true;
       column.m_sizeIcon.cx = get_filemanager_data()->m_iIconSize;
       column.m_sizeIcon.cy = get_filemanager_data()->m_iIconSize;
-      column.m_iControl = iControl;
       column.m_uiText = "Name";
       column.m_datakey = "FILE_MANAGER_ID_FILE_NAME";
       column.m_bEditOnSecondClick = true;

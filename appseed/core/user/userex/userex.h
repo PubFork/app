@@ -67,6 +67,8 @@ namespace userex
 #include "userex_message_box.h"
 #include "userex_keyboard_layout.h"
 
+#include "userex_view_container.h"
+
 #include "userex_userex.h"
 
 

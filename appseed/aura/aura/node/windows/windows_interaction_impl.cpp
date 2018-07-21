@@ -476,6 +476,13 @@ namespace windows
 
       }
 
+      if (cs.hwndParent == HWND_MESSAGE)
+      {
+
+         m_pui->m_bDrawable = false;
+
+      }
+
       if (oswindow == NULL)
       {
 
@@ -6445,6 +6452,15 @@ void __term_windowing()
    }
    synch_lock slMap(pmap->m_pmutex);
 
-   return dynamic_cast <::user::interaction_impl *>(pmap->m_map[(int_ptr) hwnd]);
+   ::user::interaction_base * pbase = pmap->m_map[(int_ptr)hwnd];
+
+   if (pbase == NULL)
+   {
+
+      return NULL;
+
+   }
+
+   return dynamic_cast <::user::interaction_impl *>(pbase);
 
 }

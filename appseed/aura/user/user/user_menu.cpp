@@ -9,7 +9,10 @@ namespace user
       menu(get_app())
    {
 
+      set_pro_devian();
+
       m_econtroltype = control_type_menu;
+
       m_bCloseButton = true;
 
    }
@@ -19,6 +22,8 @@ namespace user
       ::object(papp),
       m_itemClose(papp)
    {
+
+      set_pro_devian();
 
       m_econtroltype = control_type_menu;
       m_bCloseButton = true;
@@ -45,6 +50,8 @@ namespace user
       ::object(papp),
       m_itemClose(papp)
    {
+
+      set_pro_devian();
 
       m_econtroltype = control_type_menu;
 
@@ -482,7 +489,7 @@ namespace user
       //SetWindowPos(0, 0, 0, rectClient.width(), rectClient.height(), SWP_SHOWWINDOW | SWP_NOZORDER);
 
       set_need_layout();
-      
+
       set_need_redraw();
 
       SetTimer(::user::timer_command_probe, 300, NULL);

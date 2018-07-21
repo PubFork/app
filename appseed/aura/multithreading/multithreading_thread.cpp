@@ -628,7 +628,7 @@ bool thread::pump_message()
 
             ::user::interaction * pui = m_puiptra->element_at(i);
 
-            if (!pui->m_bProDevian)
+            if (!pui->m_bProDevian && pui->m_bDrawable)
             {
 
                if (pui->has_pending_graphical_update())
@@ -673,27 +673,7 @@ bool thread::pump_message()
 
    return false;
 
-//   if(m_pthreadimpl.is_null())
-//   {
-//      if(dynamic_cast <::timer *> ((thread *) this) != NULL)
-//      {
-//         m_pthreadimpl.alloc(allocer());
-//         if(m_pthreadimpl.is_null())
-//         {
-//            return false;
-//         }
-//         m_pthreadimpl->m_pthread = this;
-//      }
-//      else
-//      {
-//         return false;
-//      }
-//   }
-//
-//   return m_pthreadimpl->pump_message();
-
 }
-
 
 
 bool thread::raw_pump_message()
@@ -748,25 +728,6 @@ bool thread::raw_pump_message()
 
    return false;
 
-   //   if(m_pthreadimpl.is_null())
-   //   {
-   //      if(dynamic_cast <::timer *> ((thread *) this) != NULL)
-   //      {
-   //         m_pthreadimpl.alloc(allocer());
-   //         if(m_pthreadimpl.is_null())
-   //         {
-   //            return false;
-   //         }
-   //         m_pthreadimpl->m_pthread = this;
-   //      }
-   //      else
-   //      {
-   //         return false;
-   //      }
-   //   }
-   //
-   //   return m_pthreadimpl->pump_message();
-
 }
 
 
@@ -775,45 +736,15 @@ bool thread::defer_pump_message()
 
    MESSAGE msg = {};
 
-   //while(::PeekMessage(&msg,NULL,0,0,PM_NOREMOVE) != FALSE)
+   if (!pump_message())
    {
 
-      // pump message, but quit on wm_quit
-      // if(!m_bRun || !pump_message())
-      if (!pump_message())
-      {
 
+      ::output_debug_string("\n\n\nthread::defer_pump_message (1) quitting (wm_quit? {PeekMessage->message : "+::str::from(msg.message == WM_QUIT?1:0)+"!}) : " + string(demangle(typeid(*this).name())) + " ("+::str::from((uint64_t)::GetCurrentThreadId())+")\n\n\n");
 
-         ::output_debug_string("\n\n\nthread::defer_pump_message (1) quitting (wm_quit? {PeekMessage->message : "+::str::from(msg.message == WM_QUIT?1:0)+"!}) : " + string(demangle(typeid(*this).name())) + " ("+::str::from((uint64_t)::GetCurrentThreadId())+")\n\n\n");
-
-         return false;
-
-      }
+      return false;
 
    }
-
-   // reset "no idle" state after pumping "normal" message
-   //if (is_idle_message(&m_msgCur))
-//   if(is_idle_message(&msg))
-//   {
-//
-//      //m_bIdle = true;
-//
-//      //m_lIdleCount = 0;
-//
-//   }
-
-   //if(!on_run_step())
-   //{
-
-   //   ::output_debug_string("defer_pump_message (2) quitting : " + string(demangle(typeid(*this).name())) + "\n\n");
-
-   //   return false;
-
-   //}
-
-
-   //on_idle(0);
 
    return true;
 
@@ -3026,20 +2957,12 @@ bool thread::process_message(LPMESSAGE lpmessage)
 
       }
 
-
-      //m_message = msg;
-      //m_p->m_message = msg;
-
       if(m_nDisablePumpCount != 0)
       {
 
          TRACE(::aura::trace::category_AppMsg,0,"Error: thread::pump_message called when not permitted.\n");
 
-//         ASSERT(FALSE);
-
       }
-
-      //__trace_message("pump_message",&msg);
 
       if(msg.message != WM_KICKIDLE)
       {

@@ -22,7 +22,9 @@ namespace userex
 
       map < ::type *, type *, ::user::impact_system *, ::user::impact_system * > m_mapTemplate;
 
-      map < e_view, e_view, ::user::impact_system * > m_mapimpactsystem;
+      string_map < ::user::impact_system * > m_mapimpactsystem;
+
+
 
 
       sp(::user::shell::shell)                  m_pshell;

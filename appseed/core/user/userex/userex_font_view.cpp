@@ -12,6 +12,8 @@ namespace userex
       place_holder_container(papp)
    {
 
+      m_id = "font_view";
+
       m_pview = NULL;
 
       m_ptopview = NULL;
@@ -39,26 +41,26 @@ namespace userex
       ::user::split_view::dump(dumpcontext);
 
    }
-   
-   
+
+
    void font_view::install_message_routing(::message::sender * psender)
    {
-   
+
       ::user::split_view::install_message_routing(psender);
-      
+
       IGUI_MSG_LINK(WM_CREATE, psender, this, &font_view::_001OnCreate);
-   
+
    }
 
-   
+
    void font_view::_001OnCreate(::message::message * pmessage)
    {
-      
+
       pmessage->previous();
-      
-      
+
+
    }
-   
+
 
    void font_view::on_update(::user::impact * pSender, LPARAM lHint, object* phint)
    {
@@ -118,7 +120,7 @@ namespace userex
 
       //SetPane(0,m_ptopview,false);
 
-      m_pview = create_view < ::user::font_list_view >(NULL, ::null_rect(), get_pane_holder(1), "font_list_view");
+      m_pview = create_view < ::user::font_list_view >(NULL, ::null_rect(), get_pane_holder(1), "font_sel");
 
       if (m_pview == NULL)
       {
@@ -126,12 +128,12 @@ namespace userex
          System.simple_message_box(NULL, "Could not create file list ::user::impact");
 
       }
-      
+
       if(get_document()->m_pviewTopic == NULL)
       {
-         
+
          get_document()->m_pviewTopic = m_pview;
-         
+
       }
 
 
@@ -141,13 +143,13 @@ namespace userex
    void font_view::on_control_event(::user::control_event * pevent)
    {
 
-      if(m_puiViewNotify != NULL)
-      {
-         
-         m_puiViewNotify->on_control_event(pevent);
-         
-      }
-      
+      //if(m_puiViewNotify != NULL)
+      //{
+
+      //   m_puiViewNotify->on_control_event(pevent);
+
+      //}
+
       ::user::impact::on_control_event(pevent);
 
 //      if (pevent->m_eevent == ::user::event_after_change_cur_sel
@@ -172,9 +174,9 @@ namespace userex
 //      }
 
    }
-   
-   
-   
+
+
+
 
 
 } // namespace userex

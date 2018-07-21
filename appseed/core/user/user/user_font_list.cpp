@@ -19,7 +19,7 @@ namespace user
 
    font_list::font_list(::aura::application * papp) :
       object(papp),
-   ::user::combo_list(papp),
+      ::user::combo_list(papp),
       ::user::interaction(papp)
    {
 
@@ -31,6 +31,7 @@ namespace user
    void font_list::font_list_common_construct()
    {
 
+      m_strView = "font_sel";
       m_layout.m_puserstyle = this;
       m_econtroltype = control_type_list;
       m_scrolldataVert.m_bScrollEnable = true;
@@ -87,6 +88,8 @@ namespace user
       update_data(false);
 
       SetTimer(timer_update_font, 10 * 1000, NULL);
+
+      set_window_text("Font");
 
    }
 
@@ -158,6 +161,8 @@ namespace user
 
          ev.m_iItem = iSel;
 
+         ev.m_id = m_strView;
+
          on_control_event(&ev);
 
          pmouse->set_lresult(0);
@@ -186,9 +191,14 @@ namespace user
          m_pfontlist->m_iHover = iHover;
 
          ::user::control_event ev;
+
          ev.m_puie = this;
+
          ev.m_eevent = ::user::event_after_change_cur_hover;
+
          ev.m_actioncontext = ::action::source_user;
+
+         ev.m_id = m_strView;
 
          on_control_event(&ev);
 

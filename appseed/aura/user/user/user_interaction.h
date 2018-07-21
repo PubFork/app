@@ -98,6 +98,8 @@ namespace user
       };
 
 
+      bool                                m_bDrawable;
+
       e_control_type                      m_econtroltype;
 
       flags < e_non_client >              m_flagNonClient;
@@ -107,6 +109,7 @@ namespace user
       bool                                m_bTransparentMouseEvents;
       bool                                m_bRedraw;
       DWORD                               m_dwLastRedraw;
+      string                              m_strView;
 
       ::user::form *                      m_pform;
       ::user::form *                      m_pformParent;
@@ -198,6 +201,8 @@ namespace user
       virtual ::user::form * get_form();
 
       virtual ::user::form * get_parent_form();
+
+      virtual ::user::interaction * get_bind_ui();
 
       void user_interaction_common_construct();
 
