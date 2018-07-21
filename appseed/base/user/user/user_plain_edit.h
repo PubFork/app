@@ -64,6 +64,8 @@ namespace user
       rect                          m_FullScreenWindowRect;
       //visual::fastblur              m_fastblur;
 
+      string_to_string              m_base64map;
+
       bool                          m_bPassword;
       bool                          m_bEnterKeyOnPaste;
       bool                          m_bLMouseDown;
@@ -113,6 +115,7 @@ namespace user
       array < double_array >        m_daExtent;
       ::file::edit_file::InsertItem *     m_pinsert;
       plain_text_set_sel_command *  m_psetsel;
+      bool                          m_bParseDataPacks;
 
       plain_edit();
       plain_edit(::aura::application * papp);

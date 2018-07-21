@@ -5,6 +5,85 @@
 
 extern CLASS_DECL_AURA thread_int_ptr < DWORD_PTR > t_time1;
 
+void _001AddPacks(string_to_string & base64map, string & str)
+{
+
+
+   int iPack = base64map.get_count();
+
+   strsize iData = -1;
+
+   while (true)
+   {
+
+      iData = str.find("data:", iData + 1);
+
+      if (iData < 0 || !(iData == 0 || !isalnum_dup(str[iData - 1])))
+      {
+
+         break;
+
+      }
+
+      strsize iMime = str.find(';', iData + 1);
+
+      if (iMime <= iData)
+      {
+
+         continue;
+
+      }
+
+      strsize iEncoding1 = str.find(',', iMime + 1);
+
+      strsize iEncoding2 = str.find(';', iMime + 1);
+
+      strsize iEncoding = min_non_neg(iEncoding1, iEncoding2);
+
+      if (iEncoding <= iMime)
+      {
+
+         continue;
+
+      }
+
+      string strEncoding = str.Mid(iMime + 1, iEncoding - iMime - 1);
+
+      if (strEncoding.compare_ci("base64") == 0)
+      {
+
+         ::str::base64 & b64 = System.base64();
+         index iBase64 = iEncoding + 1;
+         for (; iBase64 < str.get_length(); iBase64++)
+         {
+
+            if (!b64.is(str[iBase64]))
+            {
+
+               break;
+
+            }
+
+         }
+
+         string strBase64 = str.Mid(iEncoding + 1, iBase64 - iEncoding - 1);
+
+         string strPack = "%pack" + ::str::from(iPack + 1) + "%";
+
+         str = str.Left(iEncoding + 1) + strPack + str.Mid(iBase64);
+
+         base64map[strPack] = strBase64;
+
+         iPack++;
+
+      }
+
+
+   }
+
+}
+
+
 namespace user
 {
 
@@ -1218,6 +1297,16 @@ namespace user
 
       str.ReleaseBuffer();
 
+      for (auto & m : m_base64map)
+      {
+
+         string strPack = m.m_element1;
+
+         str.replace(strPack, m.m_element2);
+
+
+      }
+
    }
 
 
@@ -1995,6 +2084,8 @@ namespace user
 
       pgraphics->GetTextExtent(sizeUniText, wstr);
 
+      int iChW = sizeUniText.cy / wstr.length();
+
       m_iLineHeight = (int)sizeUniText.cy;
 
       m_scrolldataVert.m_iLine = m_iLineHeight;
@@ -2221,7 +2312,14 @@ namespace user
 
          strLineGraphics = strLine;
 
-         ::str::replace_tab(0, strLineGraphics, m_iTabWidth, &iaTab);
+         bool bTabs = strLine.find('\t') >= 0;
+
+         if (bTabs)
+         {
+
+            ::str::replace_tab(0, strLineGraphics, m_iTabWidth, &iaTab);
+
+         }
 
          const char * pszStart = strLine;
 
@@ -2234,6 +2332,10 @@ namespace user
          iPos = 0;
 
          const char * pszNext = pszStart;
+
+         ::size sizeLast(0, 0);
+
+         strsize iProtect;
 
          if (m_daExtent[m_iLineStart + i].get_size() <= 0)
          {
@@ -2264,6 +2366,23 @@ namespace user
                }
 
                size = pgraphics->GetTextExtent(strLineGraphics, strLineGraphics.get_length(), pszNext - pszStart + iAddUp);
+
+               if (size.cx > rectClient.width() + 200)
+               {
+
+                  while (*psz != '\0')
+                  {
+
+                     m_daExtent[m_iLineStart + i][(index)(psz - pszStart)] = -1;
+                     psz++;
+
+                  }
+
+                  break;
+
+               }
+
+               sizeLast.cx = size.cx;
 
                for (int j = 0; j < iLen; j++)
                {
@@ -4696,14 +4815,26 @@ finished_update:
 
 
 
-   void plain_edit::_001SetText(const string & str, ::action::context actioncontext)
+   void plain_edit::_001SetText(const string & strParam, ::action::context actioncontext)
    {
+
+      string str(strParam);
 
       {
 
          synch_lock sl(m_pmutex);
 
 
+
+
+         if (m_bParseDataPacks)
+         {
+
+            m_base64map.remove_all();
+
+            _001AddPacks(m_base64map, str);
+
+         }
 
          m_ptree->m_editfile.seek(0, ::file::seek_begin);
          m_ptree->m_editfile.Delete((memory_size_t)m_ptree->m_editfile.get_length());
@@ -5248,6 +5379,8 @@ finished_update:
    {
 
       synch_lock sl(m_pmutex);
+
+      _001AddPacks(m_base64map, strText);
 
       bool bFullUpdate = false;
 

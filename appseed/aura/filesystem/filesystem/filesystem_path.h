@@ -18,7 +18,8 @@ namespace file
    {
       path_none,
       path_file,
-      path_url
+      path_url,
+      path_data
    };
 
    CLASS_DECL_AURA e_path get_path_type(const string & str, e_path epathForce = path_none);

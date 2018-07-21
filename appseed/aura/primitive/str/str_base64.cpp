@@ -73,27 +73,34 @@ namespace str
    base64::base64(::aura::application * papp) :
       ::object(papp)
    {
-      int32_t i;
+      int32_t i, j;
 
       // etable
-      for(i= 0; i<9; i++)
+      for (j = 0; j < 3; j++)
       {
-         etable[i+N1_A]    = (uchar) ('A'+i);
-         etable[i+N1_J]    = (uchar) ('J'+i);
-         etable[i+N1_a]    = (uchar) ('a'+i);
-         etable[i+N1_j]    = (uchar) ('j'+i);
+         for (i = 0; i < 9; i++)
+         {
+            etable[j][i + N1_A] = (uchar)('A' + i);
+            etable[j][i + N1_J] = (uchar)('J' + i);
+            etable[j][i + N1_a] = (uchar)('a' + i);
+            etable[j][i + N1_j] = (uchar)('j' + i);
+         }
+         for (i = 0; i < 8; i++)
+         {
+            etable[j][i + N1_S] = (uchar)('S' + i);
+            etable[j][i + N1_s] = (uchar)('s' + i);
+         }
+         for(i= 0; i<10; i++)
+         {
+            etable[j][i+N1_0]    = (uchar) ('0'+i);
+         }
       }
-      for(i= 0; i<8; i++)
-      {
-         etable[i+N1_S]    = (uchar) ('S'+i);
-         etable[i+N1_s]    = (uchar) ('s'+i);
-      }
-      for(i= 0; i<10; i++)
-      {
-         etable[i+N1_0]    = (uchar) ('0'+i);
-      }
-      etable[N1_plus]      = (uchar) ('+');
-      etable[N1_slash]     = (uchar) ('/');
+      etable[mode_normal][N1_plus]      = (uchar) ('+');
+      etable[mode_normal][N1_slash]     = (uchar) ('/');
+      etable[mode_url_safe][N1_plus] = (uchar)('-');
+      etable[mode_url_safe][N1_slash] = (uchar)('_');
+      etable[mode_ex][N1_plus] = (uchar)('.');
+      etable[mode_ex][N1_slash] = (uchar)('_');
 
 
       // dtable
@@ -131,6 +138,9 @@ namespace str
       }
       dtable['+']= (uchar) (N1_plus);
       dtable['/']= (uchar) (N1_slash);
+      dtable['-'] = (uchar)(N1_plus);
+      dtable['_'] = (uchar)(N1_slash);
+      dtable['.'] = (uchar)(N1_plus);
       dtable['=']= (uchar) (0);
    }
 
@@ -141,13 +151,15 @@ namespace str
    }
 
 
-   void base64::encode(::stream & ostream, ::stream & istream)
+   void base64::encode(::stream & ostream, ::stream & istream, e_mode emode)
    {
 
       int32_t i,hiteof= FALSE;
       byte igroup[3],ogroup[4];
       int32_t n;
       char ch;
+
+      uchar * enc_table = this->etable[emode];
 
       while(!hiteof)
       {
@@ -163,10 +175,10 @@ namespace str
          }
          if(n> 0)
          {
-            ogroup[0]= etable[igroup[0]>>2];
-            ogroup[1]= etable[((igroup[0]&3)<<4)|(igroup[1]>>4)];
-            ogroup[2]= etable[((igroup[1]&0xF)<<2)|(igroup[2]>>6)];
-            ogroup[3]= etable[igroup[2]&0x3F];
+            ogroup[0]= enc_table[igroup[0]>>2];
+            ogroup[1]= enc_table[((igroup[0]&3)<<4)|(igroup[1]>>4)];
+            ogroup[2]= enc_table[((igroup[1]&0xF)<<2)|(igroup[2]>>6)];
+            ogroup[3]= enc_table[igroup[2]&0x3F];
             if(n<3)
             {
                ogroup[3]= '=';
@@ -184,7 +196,7 @@ namespace str
    }
 
 
-   void base64::decode(::stream & ostream, ::stream & istream)
+   bool base64::decode(::stream & ostream, ::stream & istream)
    {
       int32_t i;
       byte a[4],b[4],o[3];
@@ -198,10 +210,11 @@ namespace str
             {
                if( i > 0)
                {
-                  _throw(io_exception(get_app(), "Input file incomplete.\n"));
+                  //_throw(io_exception(get_app(), "Input file incomplete.\n"));
                   //ASSERT(FALSE);
+                  return false;
                }
-               return;
+               return true;
             }
             if(dtable[uch]&0x80)
             {
@@ -210,7 +223,8 @@ namespace str
 
                str.Format("Illegal character '%ca' in input spfile->\n", uch);
 
-               _throw(io_exception(get_app(), str));
+               //_throw(io_exception(get_app(), str));
+               return false;
 
 //               i--;
 //
@@ -230,7 +244,7 @@ namespace str
       }
    }
 
-   string base64::encode(const char * psz)
+   string base64::encode(const char * psz, e_mode emode)
    {
 
       memory storage;
@@ -241,11 +255,11 @@ namespace str
 
       memcpy(storage.get_data(), psz, iLen);
 
-      return encode(storage);
+      return encode(storage, emode);
 
    }
 
-   string base64::encode(byte * p, ::count ca)
+   string base64::encode(byte * p, ::count ca, e_mode emode)
    {
 
       memory storage;
@@ -254,11 +268,11 @@ namespace str
 
       memcpy(storage.get_data(), p, ca);
 
-      return encode(storage);
+      return encode(storage, emode);
 
    }
 
-   string base64::encode(primitive::memory_base & storageBinary)
+   string base64::encode(primitive::memory_base & storageBinary, e_mode emode)
    {
 
       ::memory_file buf(get_app(), &storageBinary);
@@ -269,7 +283,7 @@ namespace str
 
       ::file::plain_text_stream ostream(&file);
 
-      encode(ostream, istream);
+      encode(ostream, istream, emode);
 
       return file.m_str;
 
@@ -295,7 +309,7 @@ namespace str
 
    }
 
-   void base64::decode(::primitive::memory_base & storageBinary, const char * pszBase64, strsize s)
+   bool base64::decode(::primitive::memory_base & storageBinary, const char * pszBase64, strsize s)
    {
 
       string str(pszBase64, s);
@@ -308,11 +322,11 @@ namespace str
 
       serialize ostream(&bufOut);
 
-      decode(ostream, istream);
+      return decode(ostream, istream);
 
    }
 
-   string base64::encode(::object & object)
+   string base64::encode(::object & object, e_mode emode)
    {
 
       memory storageBinary;
@@ -331,14 +345,14 @@ namespace str
 
       ::file::plain_text_stream ostream(&file);
 
-      encode(ostream, reader);
+      encode(ostream, reader, emode);
 
       return file.m_str;
 
    }
 
 
-   void base64::decode(::object & object, const char * pszBase64)
+   bool base64::decode(::object & object, const char * pszBase64)
    {
 
       string str(pszBase64);
@@ -353,7 +367,10 @@ namespace str
 
       serialize stream(&buf);
 
-      decode(stream, istream);
+      if (!decode(stream, istream))
+      {
+         return false;
+      }
 
       buf.seek_to_begin();
 
@@ -361,8 +378,71 @@ namespace str
 
       reader(object);
 
+      return true;
+
    }
 
+   // https://stackoverflow.com/questions/13195143/range-of-valid-character-for-a-base-64-encoding
+
+   bool base64::is(int iChar)
+   {
+
+      if (iChar >= 'A' && iChar <= 'Z')
+      {
+
+         return true;
+
+      }
+      else if (iChar >= 'a' && iChar <= 'z')
+      {
+
+         return true;
+
+      }
+      else if (iChar >= '0' && iChar <= '9')
+      {
+
+         return true;
+
+      }
+      else if (iChar == '+')
+      {
+
+         return true;
+
+      }
+      else if (iChar == '/')
+      {
+
+         return true;
+
+      }
+      else if (iChar == '-')  // RFC 4648 (+)
+      {
+
+         return true;
+
+      }
+      else if (iChar == '_')// RFC 4648 (/)
+      {
+
+         return true;
+
+      }
+      else if (iChar == '=')
+      {
+
+         return true;
+
+      }
+      else
+      {
+
+         return false;
+
+      }
+
+   }
 
 } // namespace str
 

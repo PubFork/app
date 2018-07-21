@@ -595,7 +595,7 @@ namespace windows
                bi.bmiHeader.biClrUsed = 0;
                bi.bmiHeader.biClrImportant = 0;
 
-               GetDIBits(hdcMem, hbitmap, 0, bm.bmHeight, pdib->m_pcolorref, &bi, DIB_RGB_COLORS);
+               bOk = GetDIBits(hdcMem, hbitmap, 0, bm.bmHeight, pdib->m_pcolorref, &bi, DIB_RGB_COLORS) != FALSE;
 
                pdib->get_graphics()->release_os_data_ex(1, hdc);
 

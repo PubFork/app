@@ -2314,7 +2314,7 @@ restart:
       else if(varFile.get_type() == var::type_propset)
       {
 
-         if(varFile.has_property("url"))
+         if (varFile.has_property("url"))
          {
 
             strPath = varFile["url"];
@@ -2322,6 +2322,50 @@ restart:
             strPath = System.defer_process_path(strPath, papp);
 
             //strPath.trim("\"'");
+
+         }
+
+
+      }
+
+      if (strPath.begins_ci("data:"))
+      {
+
+         string strSanity = strPath.Left(4096);
+
+         strsize iFind = strSanity.find(";", 5);
+
+         if (iFind > 5)
+         {
+
+            strsize iEncoding1 = strSanity.find(",", iFind + 1);
+
+            strsize iEncoding2 = strSanity.find(";", iFind + 1);
+
+            strsize iEncoding = min_non_neg(iEncoding1, iEncoding2);
+
+            if(iFind > 5 && iEncoding > iFind)
+            {
+
+               string strMimeType = strPath.Mid(5, iFind - 5);
+
+               string strEncoding = strPath.Mid(iFind + 1, iEncoding - iFind - 1);
+
+               if (strEncoding.compare_ci("base64") == 0)
+               {
+
+                  sp(memory_file) f = canew(memory_file(get_app()));
+
+                  if (System.base64().decode(*f->get_primitive_memory(), strPath.Mid(iEncoding + 1)))
+                  {
+
+                     return f;
+
+                  }
+
+               }
+
+            }
 
          }
 

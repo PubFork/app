@@ -623,7 +623,7 @@ namespace file
 
       *((path_meta*)this) = path_meta();
 
-      m_epath = is_url_dup(str) ? path_url : path_file;
+      m_epath = get_path_type(str);
 
       stdstring < simple_string >::operator  = (normalize_path(str, m_epath));
 
@@ -790,6 +790,12 @@ namespace file
          return epathForce;
 
       }
+      else if (str.begins_ci("data:"))
+      {
+
+         return path_data;
+
+      }
       else if(is_url_dup(str))
       {
 
@@ -824,6 +830,13 @@ namespace file
       strsize iaSlash[512];
 
       int iSlashCount;
+
+      if (epath == path_data)
+      {
+
+         return true;
+
+      }
 
       bool bCertainlySyntathicallyDir = solve_relative_compressions_inline(strPath, bUrl, bOnlyNativeFileSep, iaSlash, &iSlashCount);
 

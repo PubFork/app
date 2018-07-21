@@ -60,6 +60,8 @@ namespace userex
 
       m_peditview = create_view < top_edit_view >(NULL, ::null_rect(), get_pane_holder(0), "top_edit_view");
 
+      m_peditview->m_bParseDataPacks = true;
+
       if (m_peditview == NULL)
       {
 

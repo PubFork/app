@@ -179,6 +179,35 @@ namespace user
 
       }
 
+      if (_has_dib())
+      {
+
+         ::visual::dib_sp dib(allocer());
+
+         if (_desk_to_dib(dib))
+         {
+
+            sp(memory_file) f = canew(memory_file(get_app()));
+
+            ::visual::save_image si;
+
+            si.m_eformat = ::visual::image::format_png;
+
+            if (dib.save_to_file(f, &si))
+            {
+
+               str = System.base64().encode(*f->get_primitive_memory());
+
+               str = "data:image/png;base64," + str;
+
+               return true;
+
+            }
+
+         }
+
+      }
+
       return false;
 
    }
@@ -224,30 +253,12 @@ namespace user
 
          if (get_plain_text(str))
          {
+
             var varFile;
 
-            sp(memory_file) f;
-
-            if (str::begins_eat_ci(str, "data:image/jpeg;base64,"))
-            {
-
-               f = canew(memory_file(get_app()));
-
-               System.base64().decode(*f->get_primitive_memory(), str);
-
-               varFile = f;
-
-            }
-            else
-            {
-
-               varFile["url"] = str;
-               varFile["http_set"]["raw_http"] = true;
-               varFile["http_set"]["disable_common_name_cert_check"] = true;
-
-
-            }
-
+            varFile["url"] = str;
+            varFile["http_set"]["raw_http"] = true;
+            varFile["http_set"]["disable_common_name_cert_check"] = true;
 
             if (!System.imaging().load_from_file(pdib, varFile))
             {

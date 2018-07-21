@@ -286,7 +286,22 @@ namespace file
 
          }
 
-         if (varFile.m_etype == ::var::type_string)
+         if (varFile.m_etype == ::var::type_element)
+         {
+
+            ::file::file_sp f = varFile.cast < ::file::file >();
+
+            if (f.is_set())
+            {
+
+               return f;
+
+            }
+
+
+
+         }
+         else if (varFile.m_etype == ::var::type_string)
          {
 
             varFile = System.defer_process_path(varFile.get_file_path(), m_pauraapp);

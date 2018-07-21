@@ -226,16 +226,18 @@ namespace file
 
             System.os().initialize_wallpaper_fileset(this, true);
 
+            ::file::set::refresh();
+
             if (m_straFile.is_empty())
             {
 
                System.os().::aura::os::initialize_wallpaper_fileset(this, bAddSearch);
 
+               ::file::set::refresh();
+
             }
 
          }
-
-         refresh();
 
       }
 

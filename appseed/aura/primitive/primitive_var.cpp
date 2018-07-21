@@ -4640,7 +4640,7 @@ void var::null()
    {
       if(has_property("url"))
       {
-         return ::file::path(operator[]("url").get_string(),::file::path_url);
+         return ::file::path(operator[]("url").get_string());
       }
       else if(has_property("path"))
       {
