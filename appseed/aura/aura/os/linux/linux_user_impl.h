@@ -186,3 +186,76 @@ void gdk_fork(PRED pred)
 
 }
 
+template < typename PRED >
+class gdk_sync_class :
+   virtual public runnable
+{
+public:
+
+   PRED  m_pred;
+
+   sp(manual_reset_event) m_pev;
+
+   gdk_sync_class(PRED pred, manual_reset_event * pev) :
+      m_pred(pred),
+      m_ev(::get_app()),
+      m_mutex(::get_app())
+   {
+
+m_pev = NULL;
+       m_bTimeout = false;
+
+       m_ev.ResetEvent();
+
+      auto idle_source = g_idle_source_new();
+
+      g_source_set_callback(idle_source, &gdk_callback_run_runnable, (::runnable *) this, NULL);
+
+      g_source_attach(idle_source, gtk_main_context);
+
+
+   }
+
+   ~gdk_sync_class()
+   {
+
+   }
+
+   virtual void run()
+   {
+
+      m_pred();
+      
+      manual_reset_event * pev = m_pev;
+      if(pev != NULL)
+      {
+          m_pev->SetEvent();
+
+      }
+
+      delete this;
+
+   }
+
+};
+
+template < typename PRED >
+void gdk_fork(PRED pred)
+{
+
+   gdk_fork_class < PRED > * gdkfork = new gdk_fork_class < PRED >(pred);
+
+}
+
+template < typename PRED >
+bool gdk_sync(PRED pred, const duration & durationTimeout)
+{
+
+   sp(manual_reset_event) pev(canew(manual_reset_event(::get_app()));
+
+   gdk_sync_class < PRED > * gdksync = new gdk_sync_class < PRED >(pred, pev);
+
+   return pev->wait(durationTimeout).succeeded();
+
+}
+
