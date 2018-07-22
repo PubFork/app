@@ -846,6 +846,10 @@
 		<Unit filename="filesystem/file/file_reader.h" />
 		<Unit filename="filesystem/file/file_seekable.h" />
 		<Unit filename="filesystem/file/file_serializable.h" />
+		<Unit filename="filesystem/file/file_set.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="filesystem/file/file_set.h" />
 		<Unit filename="filesystem/file/file_simple_binary_file.h" />
 		<Unit filename="filesystem/file/file_status.h" />
