@@ -96,7 +96,7 @@ namespace linux
       set_handle(NULL);
       m_bExposing    = false;
       m_bEnabled     = true;
-      m_pthreadDraw     = NULL;
+//      m_pthreadDraw     = NULL;
 
    }
 
@@ -118,7 +118,7 @@ namespace linux
       set_handle(NULL);
       m_bExposing    = false;
       m_bEnabled     = true;
-      m_pthreadDraw     = NULL;
+//      m_pthreadDraw     = NULL;
 
    }
 
@@ -126,6 +126,7 @@ namespace linux
    interaction_impl::~interaction_impl()
    {
 
+      ::multithreading::post_quit_and_wait(m_pthreadUpdateWindow, seconds(10));
 
    }
 
@@ -429,6 +430,22 @@ namespace linux
 
          }
 
+         m_pui->m_pthread = ::get_thread();
+
+         if (m_pui->m_pthread != NULL)
+         {
+
+            if (m_pui->m_pthread->m_puiptra == NULL)
+            {
+
+               m_pui->m_pthread->m_puiptra = new user_interaction_ptr_array();
+
+            }
+
+            m_pui->m_pthread->m_puiptra->add(m_pui);
+
+         }
+
          {
 
             XClassHint * phint = XAllocClassHint();
@@ -705,9 +722,16 @@ namespace linux
 
       UNREFERENCED_PARAMETER(pobj);
 
-      Default();
+      ::multithreading::post_quit_and_wait(m_pthreadUpdateWindow, seconds(10));
 
-      ::multithreading::post_quit_and_wait(m_pthreadDraw, seconds(10));
+      if (m_pui->m_pthread != NULL)
+      {
+
+         m_pui->m_pthread->m_puiptra->remove(m_pui);
+
+      }
+
+      Default();
 
    }
 
@@ -2924,24 +2948,33 @@ namespace linux
 //      return (int32_t)Default();
    }
 
-   void interaction_impl::_001OnCreate(::message::message * pobj)
+
+   void interaction_impl::present()
    {
 
-      UNREFERENCED_PARAMETER(pobj);
+      _001UpdateWindow();
 
-      Default();
+   }
 
-      if(m_pui->is_message_only_window())
+
+   void interaction_impl::on_set_pro_devian()
+   {
+
+      if (m_pui->m_bProDevian)
       {
 
-         TRACE("good : opt out!");
-
-      }
-      else
-      {
-
-         m_pthreadDraw = fork([&]()
+         if(m_pui->is_message_only_window())
          {
+
+            return;
+
+         }
+
+         if (m_pthreadUpdateWindow.is_null())
+         {
+
+            m_pthreadUpdateWindow = fork([&]()
+            {
 
             DWORD dwStart;
 
@@ -3000,10 +3033,77 @@ namespace linux
 
             }
 
-         });
+               m_pthreadUpdateWindow.release();
+
+            });
+
+         }
+
+      }
+      else
+      {
+
+         if (m_pthreadUpdateWindow.is_set())
+         {
+
+            ::multithreading::post_quit(m_pthreadUpdateWindow);
+
+         }
 
       }
 
+   }
+
+
+      void interaction_impl::set_need_redraw()
+   {
+
+      if (!m_pui->m_bProDevian)
+      {
+
+         if (m_pui->m_pthread != NULL)
+         {
+
+            if (!m_bRedraw)
+            {
+
+               m_bRedraw = true;
+
+               m_pui->m_pthread->post_message(WM_KICKIDLE);
+
+            }
+
+         }
+
+      }
+
+   }
+
+
+   void interaction_impl::_001OnCreate(::message::message * pobj)
+   {
+
+      UNREFERENCED_PARAMETER(pobj);
+
+      Default();
+
+//      if(m_pui->is_message_only_window())
+//      {
+//
+//         TRACE("good : opt out!");
+//
+//      }
+//      else
+//      {
+//
+//         m_pthreadDraw = fork([&]()
+//         {
+//
+//
+//         });
+//
+//      }
+//
    }
 
 
@@ -3769,7 +3869,16 @@ namespace linux
    bool interaction_impl::SetWindowPos(int_ptr z, int32_t x, int32_t y, int32_t cx, int32_t cy, UINT nFlags)
    {
 
-      return ::SetWindowPos(get_handle(), (oswindow) z, x, y, cx, cy, nFlags);
+      if(!::SetWindowPos(get_handle(), (oswindow) z, x, y, cx, cy, nFlags))
+      {
+
+         return false;
+
+      }
+
+      m_pui->set_need_redraw();
+
+      return true;
 
    }
 

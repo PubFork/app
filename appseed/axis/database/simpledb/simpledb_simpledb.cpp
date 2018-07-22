@@ -27,6 +27,8 @@ namespace simpledb
    bool simpledb::InitializeDataCentral()
    {
 
+      synch_lock sl(m_pmutex);
+
       if (m_bInitialized)
       {
 
@@ -103,6 +105,8 @@ namespace simpledb
 
    bool simpledb::FinalizeDataCentral()
    {
+
+      synch_lock sl(m_pmutex);
 
       if (!m_bInitialized)
       {

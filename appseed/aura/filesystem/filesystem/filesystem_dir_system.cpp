@@ -23,7 +23,7 @@ namespace file
    {
 
 
-      sp(system) system::g_pthis;
+      system * system::g_pthis = NULL;
 
 
       system::system(::aura::application * papp) :
@@ -32,7 +32,14 @@ namespace file
          ::file_watcher::file_watcher(papp)
       {
 
-         ::file::dir::system::g_pthis = this;
+         if(::file::dir::system::g_pthis == NULL)
+         {
+
+            ::file::dir::system::g_pthis = this;
+
+            add_ref();
+
+         }
 
          m_isdirmap.m_dwTimeOut = 180000;
 

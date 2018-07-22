@@ -4,7 +4,9 @@
 
 int32_t g_idbchange;
 
+
 #define new AURA_NEW
+
 
 db_server::db_server(::aura::application * papp) :
    ::object(papp),
@@ -12,12 +14,11 @@ db_server::db_server(::aura::application * papp) :
 {
 
    m_pdb                = NULL;
-//   m_plongset           = NULL;
    m_pstrset            = NULL;
    m_bWorking           = false;
    m_pfilesystemsizeset = NULL;
    m_bRemote            = true;
-   m_psimpledbUser       = NULL;
+   m_psimpledbUser      = NULL;
 
 }
 

@@ -32,12 +32,13 @@ namespace file_watcher
 	/// Implementation for Linux based on inotify.
 	/// @class os_file_watcher
 	class os_file_watcher :
-      virtual public file_watcher_impl,
-      virtual public thread
+      virtual public file_watcher_impl
 	{
 	public:
 		/// type for a map from id to watch_struct pointer
 		typedef map<id, id, watch_struct *, watch_struct*> WatchMap;
+
+		sp(::thread) m_pthread;
 
 	public:
 		///
@@ -60,7 +61,7 @@ namespace file_watcher
 
 		string watch_path(id watchid);
 
-		virtual void run() override;
+		virtual void run();
 
 		/// Updates the watcher. Must be called often.
 		bool step();

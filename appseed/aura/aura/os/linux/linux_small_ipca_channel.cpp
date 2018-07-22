@@ -268,6 +268,7 @@ namespace aura
 
       }
 
+
       bool rx::start_receiving()
       {
 
@@ -275,13 +276,10 @@ namespace aura
 
          m_bRun = true;
 
-         m_pthread = get_app()->fork([&]()
+         m_pthread = fork([&]()
          {
 
-
-
             receive();
-
 
          });
 
@@ -290,46 +288,22 @@ namespace aura
       }
 
 
-
-
-//         m_pthread->m_hthread, NULL, &rx::receive_proc, this) != 0)
-//         {
-//
-//            m_bRunning = false;
-//
-//            m_bRun = false;
-//
-//            return false;
-//
-//         }
-
-//         return true;
-
-//      }
-
-//      void * rx::receive_proc(void * param)
-//      {
-//
-//         rx * pchannel = (rx *)param;
-//
-//         return pchannel->receive();
-//
-//      }
-//
-//
-
       void rx::receiver::on_receive(rx * prx,const char * pszMessage)
       {
+
       }
+
 
       void rx::receiver::on_receive(rx * prx,int32_t message,void * pdata,memory_size_t len)
       {
+
       }
+
 
       void rx::receiver::on_post(rx * prx, int64_t a, int64_t b)
       {
-      }
 
+      }
 
 
       void * rx::on_receive(rx * prx,const char * pszMessage)
@@ -337,7 +311,9 @@ namespace aura
 
          if(m_preceiver != NULL)
          {
+
             m_preceiver->on_receive(prx,pszMessage);
+
          }
 
          // ODOW - on date of writing : return ignored by this windows implementation

@@ -25,10 +25,16 @@ namespace database
 
       memory mem;
 
-      if (!data_server_load(pclient, id, mem, puh))
       {
 
-         return false;
+    //     synch_lock sl(m_pmutex);
+
+         if (!data_server_load(pclient, id, mem, puh))
+         {
+
+            return false;
+
+         }
 
       }
 
@@ -58,10 +64,16 @@ namespace database
 
       memory mem(get_app());
 
-      if (!data_server_load(pclient, id, mem, puh))
       {
 
-         return false;
+  //       synch_lock sl(m_pmutex);
+
+         if (!data_server_load(pclient, id, mem, puh))
+         {
+
+            return false;
+
+         }
 
       }
 
@@ -77,10 +89,16 @@ namespace database
 
       memory_reader reader(get_app());
 
-      if (!data_server_load(pclient, id, reader.get_memory(), puh))
       {
 
-         return false;
+//         synch_lock sl(m_pmutex);
+
+         if (!data_server_load(pclient, id, reader.get_memory(), puh))
+         {
+
+            return false;
+
+         }
 
       }
 
@@ -111,10 +129,16 @@ namespace database
 
       file.read(mem.get_data(), mem.get_size());
 
-      if (!data_server_save(pclient, id, mem, puh))
       {
 
-         return false;
+        // synch_lock sl(m_pmutex);
+
+         if (!data_server_save(pclient, id, mem, puh))
+         {
+
+            return false;
+
+         }
 
       }
 
@@ -146,10 +170,16 @@ namespace database
 
       serialize.read(mem.get_data(), mem.get_size());
 
-      if (!data_server_save(pclient, id, mem, puh))
       {
 
-         return false;
+      //   synch_lock sl(m_pmutex);
+
+         if (!data_server_save(pclient, id, mem, puh))
+         {
+
+            return false;
+
+         }
 
       }
 
@@ -176,10 +206,16 @@ namespace database
 
       }
 
-      if (!data_server_save(pclient, id, writer.get_memory(), puh))
       {
 
-         return false;
+    //     synch_lock sl(m_pmutex);
+
+         if (!data_server_save(pclient, id, writer.get_memory(), puh))
+         {
+
+            return false;
+
+         }
 
       }
 
@@ -190,22 +226,33 @@ namespace database
 
    bool server::data_pulse_change(client * pclient, key id, update_hint * puh)
    {
+
       return on_after_data_change(pclient, id, puh);
+
    }
 
 
    bool server::on_before_data_change(client * pclient, key id, var & var, update_hint * puh)
    {
+
       ::database::change_event signal(var);
+
       signal.m_pserver = this;
       signal.m_pclient = pclient;
       signal.m_datakey = id;
       signal.m_puh = puh;
+
       for(int32_t i = 0; i < client_array::get_count(); i++)
       {
+
          client_array::element_at(i)->data_on_before_change(&signal);
+
          if(!signal.m_bOk)
+         {
+
             return false;
+
+         }
 
       }
       return true;
@@ -225,75 +272,22 @@ namespace database
       return true;
    }
 
-   //var server::data_load(client * pclient, key id, update_hint * phint)
-   //{
-   //   var var;
-   //   if(data_server_load(pclient, id, var, phint))
-   //      return var;
-   //   return ::var(::var::type_new);
-   //}
-
-   //bool server::data_save(client * pclient, key id, var var, update_hint * phint)
-   //{
-   //   return data_server_save(pclient, id, var, phint);
-   //}
-
-
-   //bool server::var_load(client * pclient, key id, serialize & serialize, update_hint * puh)
-   //{
-
-   //   string str;
-
-   //   if (!data_server_load(pclient, id, str, puh))
-   //   {
-
-   //      return false;
-
-   //   }
-
-   //   memory m;
-
-   //   System.
-
-   //   ASSERT(serialize.is_storing());
-
-   //   serialize(var);
-
-   //   return true;
-
-   //}
-
-
-   //bool server::var_save(client * pclient, key id, serialize & serialize, update_hint * puh)
-   //{
-
-   //   var var;
-
-   //   ASSERT(!serialize.is_storing());
-
-   //   serialize(var);
-
-   //   if (!data_server_save(pclient, id, var, puh))
-   //   {
-
-   //      return false;
-
-   //   }
-
-   //   return true;
-
-   //}
-
 
    var server::data_load(client * pclient, key id, update_hint * phint)
    {
 
       memory_reader reader(get_app());
 
-      if (!data_server_load(pclient, id, reader.get_memory(), phint))
       {
 
-         return var::type_null;
+  //       synch_lock sl(m_pmutex);
+
+         if (!data_server_load(pclient, id, reader.get_memory(), phint))
+         {
+
+            return var::type_null;
+
+         }
 
       }
 
@@ -313,10 +307,16 @@ namespace database
 
       writer(var);
 
-      if (!data_server_load(pclient, id, writer.get_memory(), phint))
       {
 
-         return false;
+//         synch_lock sl(m_pmutex);
+
+         if (!data_server_load(pclient, id, writer.get_memory(), phint))
+         {
+
+            return false;
+
+         }
 
       }
 
@@ -326,3 +326,6 @@ namespace database
 
 
 } // namespace database
+
+
+

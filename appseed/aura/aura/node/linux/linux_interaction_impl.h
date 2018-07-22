@@ -26,7 +26,7 @@ class x11data;
       int32_t                       m_iScreen;
       bool                          m_bEnabled;
 
-      ::thread *                    m_pthreadDraw;
+      //sp(::thread)                  m_pthreadDraw;
       ::rect64                      m_rectLastPos;
       uint32_t                      m_dwLastPos;
 
@@ -454,6 +454,10 @@ class x11data;
       void OnContextMenu(::user::interaction * pWnd, point pos);
       bool OnCopyData(::user::interaction * pWnd, COPYDATASTRUCT* pCopyDataStruct);
       DECL_GEN_SIGNAL(_001OnCreate);
+
+      virtual void on_set_pro_devian() override;
+      virtual void present();
+      virtual void set_need_redraw() override;
 
 
       HBRUSH OnCtlColor(::draw2d::graphics * pgraphics, ::user::interaction * pWnd, UINT nCtlColor);

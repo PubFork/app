@@ -1734,10 +1734,10 @@ retry:
 //#else
 
 
-   bool os::file_open(::file::path path, string strParams, string strFolder)
+   bool os::file_open(::aura::application * papp, ::file::path path, string strParams, string strFolder)
    {
 
-      path = System.defer_process_path(path, ::get_app());
+      path = System.defer_process_path(path, papp);
 
       fork([=]()
       {

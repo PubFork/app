@@ -54,8 +54,7 @@ namespace file_watcher
 
 	//--------
 	os_file_watcher::os_file_watcher(::aura::application * papp) :
-      object(papp),
-      thread(papp)
+      object(papp)
 	{
 
 		mFD = inotify_init();
@@ -63,12 +62,15 @@ namespace file_watcher
 		if (mFD < 0)
 			fprintf (stderr, "Error: %s\n", strerror(errno));
 
-		mTimeOut.tv_sec = 3;
+		mTimeOut.tv_sec = 1;
 		mTimeOut.tv_usec = 0;
 
 		FD_ZERO(&mDescriptorSet);
 
-		begin();
+		m_pthread = fork([this]()
+                   {
+                      run();
+                   });
 
 	}
 
@@ -76,7 +78,7 @@ namespace file_watcher
 	os_file_watcher::~os_file_watcher()
 	{
 
-      ::multithreading::post_quit_and_wait(seconds(15));
+	   ::multithreading::post_quit_and_wait(m_pthread, seconds(15));
 
 		WatchMap::pair * ppair = m_watchmap.PGetFirstAssoc();
 
@@ -214,7 +216,7 @@ namespace file_watcher
 	void os_file_watcher::run()
 	{
 
-      while(thread_get_run())
+      while(::get_thread_run())
       {
 
          step();

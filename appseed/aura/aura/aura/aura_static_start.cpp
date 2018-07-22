@@ -413,7 +413,6 @@ namespace aura
       CLASS_DECL_AURA void term()
       {
 
-
          del(g_pmapLibCall);
 
          //term_draw2d_mutex();
@@ -581,7 +580,11 @@ namespace aura
          //::aura::del(g_pplexheapallocarray);
 
 #if !defined(__MCRTDBG) && !MEMDLEAK
-         del(g_pheap);
+
+         auto pheap = g_pheap;
+
+         del(pheap);
+
 #endif
 #if MEMDLEAK
 

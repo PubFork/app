@@ -1,6 +1,6 @@
 #include "framework.h"
 #include "linux.h"
-
+#include "aura/aura/os/linux/linux_user_impl.h"
 
 #include <gtk/gtk.h>
 
@@ -534,9 +534,20 @@ namespace linux
    bool copydesk::_has_plain_text()
    {
 
-      GtkClipboard* clipboard = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
+      sp(ovar) var(canew(ovar));
 
-      return gtk_clipboard_wait_is_text_available (clipboard);
+      var->m_var = false;
+
+      gdk_sync(seconds(5), [=]()
+      {
+
+         GtkClipboard* clipboard = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
+
+         var->m_var = gtk_clipboard_wait_is_text_available (clipboard);
+
+      });
+
+      return var->m_var.operator bool();
 
    }
 

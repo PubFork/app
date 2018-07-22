@@ -414,15 +414,15 @@ GtkWidget * idle_basecore_app_indicator_init(indicator * pind, user_notify_icon_
 
       pi->notification_area_action_info(&pszName, &pszId, &pszLabel, &pszAccelerator, &pszDescription, i);
 
-      entries[i].name = pszName;
+      entries[i].name = pszLabel;
 
       strcat(ui_info, "    <menuitem action='");
-      strcat(ui_info, pszName);
+      strcat(ui_info, pszLabel);
       strcat(ui_info, "' />");
 
       entries[i].stock_id = pszId;
 
-      entries[i].label = pszLabel;
+      entries[i].label = pszName;
 
       entries[i].accelerator = pszAccelerator;
 

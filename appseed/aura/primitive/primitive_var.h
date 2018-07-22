@@ -976,3 +976,11 @@ inline void var::set_string(string && str)
 
 
 
+class CLASS_DECL_AURA ovar :
+   virtual public object
+{
+public:
+
+   var m_var;
+
+};

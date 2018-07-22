@@ -197,15 +197,12 @@ public:
    sp(manual_reset_event) m_pev;
 
    gdk_sync_class(PRED pred, manual_reset_event * pev) :
-      m_pred(pred),
-      m_ev(::get_app()),
-      m_mutex(::get_app())
-   {
+      m_pred(pred)
+      {
 
-m_pev = NULL;
-       m_bTimeout = false;
+      m_pev = pev;
 
-       m_ev.ResetEvent();
+       m_pev->ResetEvent();
 
       auto idle_source = g_idle_source_new();
 
@@ -225,7 +222,7 @@ m_pev = NULL;
    {
 
       m_pred();
-      
+
       manual_reset_event * pev = m_pev;
       if(pev != NULL)
       {
@@ -239,19 +236,12 @@ m_pev = NULL;
 
 };
 
-template < typename PRED >
-void gdk_fork(PRED pred)
-{
-
-   gdk_fork_class < PRED > * gdkfork = new gdk_fork_class < PRED >(pred);
-
-}
 
 template < typename PRED >
-bool gdk_sync(PRED pred, const duration & durationTimeout)
+bool gdk_sync(const duration & durationTimeout, PRED pred)
 {
 
-   sp(manual_reset_event) pev(canew(manual_reset_event(::get_app()));
+   sp(manual_reset_event) pev(canew(manual_reset_event(::get_app())));
 
    gdk_sync_class < PRED > * gdksync = new gdk_sync_class < PRED >(pred, pev);
 

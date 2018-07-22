@@ -1010,10 +1010,10 @@ namespace linux
    }
 
 
-   bool os::file_open(::file::path strTarget, string strParams, string strFolder)
+   bool os::file_open(::aura::application * papp, ::file::path strTarget, string strParams, string strFolder)
    {
 
-      strTarget = System.defer_process_path(strTarget);
+      strTarget = System.defer_process_path(strTarget, papp);
 
       if(linux_can_exec(strTarget))
       {

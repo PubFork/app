@@ -289,10 +289,12 @@ void simple_frame_window::_001OnDestroy(::message::message * pobj)
    try
    {
 
-      if (m_pnotifyicon != NULL)
+      if (m_pnotifyicon.is_set())
       {
 
          m_pnotifyicon->Destroy();
+
+         m_pnotifyicon.release();
 
       }
 
@@ -302,39 +304,14 @@ void simple_frame_window::_001OnDestroy(::message::message * pobj)
 
    }
 
+   if(m_phelpertask.is_set())
+   {
 
-   //try
-   //{
-   //   if (m_pauraapp != NULL && &Application != NULL)
-   //   {
-   //      Application.remove_frame(this);
-   //   }
-   //}
-   //catch (...)
-   //{
-   //}
+      ::multithreading::post_quit_and_wait(m_phelpertask, seconds(5));
 
-   //try
-   //{
-   //   if (&Session != NULL)
-   //   {
-   //      Session.remove_frame(this);
-   //   }
-   //}
-   //catch (...)
-   //{
-   //}
+      m_phelpertask.release();
 
-   //try
-   //{
-   //   if (m_pauraapp != NULL && m_pauraapp->m_pcoresystem != NULL && &System != NULL)
-   //   {
-   //      System.remove_frame(this);
-   //   }
-   //}
-   //catch (...)
-   //{
-   //}
+   }
 
 }
 
@@ -3468,11 +3445,11 @@ string simple_frame_window::notification_area_extra_get_xml_menu()
             &pszAccelerator.m_p,
             &pszDescription.m_p, i);
 
-            string strLabel(pszName);
+            string strName(pszName);
 
-            strLabel.replace("_", "");
+            strName.replace("_", "");
 
-            strXml += "<item id = \"" + string(pszId) + "\">" + strLabel + "</item>\r\n";
+            strXml += "<item id = \"" + string(pszId) + "\">" + strName + "</item>\r\n";
 
          }
 

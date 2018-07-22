@@ -202,6 +202,8 @@ void app_core::run()
 
    }
 
+   ::multithreading::post_quit_and_wait(m_psystem, one_minute());
+
 }
 
 

@@ -889,7 +889,7 @@ namespace filemanager
 
          ::file::path filepath = itema[0]->get_friendly_path();
 
-         System.os().file_open(filepath);
+         System.os().file_open(GetTopLevel()->get_app(), filepath);
 
          pcommand->m_bRet = true;
 

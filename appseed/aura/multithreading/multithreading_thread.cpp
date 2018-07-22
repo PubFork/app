@@ -996,13 +996,15 @@ void thread::wait_close_dependent_threads(const duration & duration)
 
          }
 
-         output_debug_string(string("-------------------------\n"));
+         string strReport;
+
+         strReport += "-------------------------\n";
 
          DWORD dwTime = ::get_tick_count() - dwStart;
 
          string strTime = ::str::from(dwTime);
 
-         output_debug_string(strTime + string("ms\n"));
+         strReport += strTime + string("ms\n");
 
          for(index i = 0; i < m_threadrefaDependent.get_count(); i++)
          {
@@ -1026,15 +1028,17 @@ void thread::wait_close_dependent_threads(const duration & duration)
 
             }
 
-            output_debug_string("---\n");
+            strReport += "---\n";
 
-            output_debug_string(strSupporter);
+            strReport += strSupporter;
 
-            output_debug_string(strDependent);
+            strReport += strDependent;
 
          }
 
-         output_debug_string(string("-------------------------\n\n"));
+         strReport += "-------------------------\n\n";
+
+         output_debug_string(strReport);
 
       }
 
@@ -1099,13 +1103,19 @@ void thread::unregister_from_required_threads()
 
    synch_lock sl(m_pmutex);
 
-   for(index i = m_threadrefaRequired.get_upper_bound(); i >= 0;)
+   thread_ptra threadrefaRequired;
+
+   threadrefaRequired = m_threadrefaRequired;
+
+   sl.unlock();
+
+   for(index i = threadrefaRequired.get_upper_bound(); i >= 0;)
    {
 
       try
       {
 
-         ::thread * pthread = m_threadrefaRequired[i];
+         ::thread * pthread = threadrefaRequired[i];
 
          if (pthread != this)
          {

@@ -484,7 +484,7 @@ namespace aura
    }
 
 
-   bool os::file_open(::file::path strSrc, string strParams, string strFolder)
+   bool os::file_open(::aura::application * papp, ::file::path strSrc, string strParams, string strFolder)
    {
 
       return false;

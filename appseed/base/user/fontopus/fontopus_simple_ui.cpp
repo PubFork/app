@@ -16,15 +16,22 @@ namespace fontopus
    {
 
       ASSERT(m_login.m_strRequestUrl.has_char());
-#ifdef METROWIN
-      m_bMayProDevian = true;
-#else
-      m_bMayProDevian = false;
-#endif
-//      m_eschema = ::user::schema_default;
-//      m_login.m_pstyle = this;
-      m_bFontopusSimpleUiLayout = false;
 
+#ifdef METROWIN
+
+      set_pro_devian();
+
+#else
+
+      set_pro_devian(false);
+
+#endif
+
+//    m_eschema = ::user::schema_default;
+
+//    m_login.m_pstyle = this;
+
+      m_bFontopusSimpleUiLayout = false;
 
    }
 
@@ -230,7 +237,7 @@ namespace fontopus
          }
          return "";
       }
-      
+
       ::user::create_struct cs(0, NULL, NULL, 0, rectFontopus);
 
       if(!create_window_ex(cs, puiParent))

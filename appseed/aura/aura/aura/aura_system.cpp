@@ -930,7 +930,16 @@ namespace aura
 
       m_spdir.release();
 
-      ::file::dir::system::g_pthis.release();
+      ::file::dir::system * pdirsystem = ::file::dir::system::g_pthis;
+
+      ::file::dir::system::g_pthis = NULL;
+
+      if(pdirsystem != NULL)
+      {
+
+         ::release(pdirsystem);
+
+      }
 
       m_plog.release();
 
@@ -1984,15 +1993,15 @@ RetryBuildNumber:
       }
       else if (::str::begins_eat_ci(path, "dropbox://"))
       {
-         
+
          path = App(papp).dir().dropbox() / path;
-         
+
       }
       else if (::str::begins_eat_ci(path, "usersystem://"))
       {
-         
+
          path = ::dir::system() / path;
-         
+
       }
 
 #endif

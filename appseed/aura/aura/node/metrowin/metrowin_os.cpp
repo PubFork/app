@@ -437,12 +437,12 @@ namespace metrowin
    }
 
 
-   bool os::file_open(::file::path path, string strParams, string strFolder)
+   bool os::file_open(::aura::application * papp, ::file::path path, string strParams, string strFolder)
    {
 
       ::Windows::Storage::StorageFile ^ fileSrc = nullptr;
 
-      path = System.defer_process_path(path);
+      path = System.defer_process_path(path, papp);
 
       try
       {

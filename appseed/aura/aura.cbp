@@ -294,10 +294,6 @@
 		<Unit filename="aura/aura/aura_os.h" />
 		<Unit filename="aura/aura/aura_os_alloc.h" />
 		<Unit filename="aura/aura/aura_plex.h" />
-		<Unit filename="aura/aura/aura_plex_heap.cpp">
-			<Option compile="0" />
-			<Option link="0" />
-		</Unit>
 		<Unit filename="aura/aura/aura_plex_heap.h" />
 		<Unit filename="aura/aura/aura_plex_heap1.cpp" />
 		<Unit filename="aura/aura/aura_plex_heap_impl.h" />
@@ -866,6 +862,10 @@
 		<Unit filename="filesystem/filesystem/filesystem.h" />
 		<Unit filename="filesystem/filesystem/filesystem_application.h" />
 		<Unit filename="filesystem/filesystem/filesystem_dir_application.h" />
+		<Unit filename="filesystem/filesystem/filesystem_dir_system.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="filesystem/filesystem/filesystem_dir_system.h" />
 		<Unit filename="filesystem/filesystem/filesystem_dir_system_heap.h" />
 		<Unit filename="filesystem/filesystem/filesystem_listing.h" />

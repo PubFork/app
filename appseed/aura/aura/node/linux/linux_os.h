@@ -66,7 +66,7 @@ namespace linux
 
       virtual bool get_default_browser(string & strId, ::file::path & path, string & strParam) override;
 
-      virtual bool file_open(::file::path strSrc, string strParams, string strFolder) override;
+      virtual bool file_open(::aura::application * papp, ::file::path strSrc, string strParams, string strFolder) override;
 
    };
 

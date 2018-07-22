@@ -51,7 +51,7 @@ namespace metrowin
 
 
       virtual bool open_in_ie(const char * lpcsz);
-      virtual bool file_open(::file::path path, string strParams, string strFolder) override;
+      virtual bool file_open(::aura::application * papp, ::file::path path, string strParams, string strFolder) override;
 
 
       virtual bool create_service(sp(::aura::application) papp);
