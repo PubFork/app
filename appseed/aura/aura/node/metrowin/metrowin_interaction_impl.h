@@ -119,11 +119,9 @@ namespace metrowin
       bool ExecuteDlgInit(const char * lpszResourceName);
       bool ExecuteDlgInit(LPVOID lpResource);
 
-      virtual bool create_window(const char * lpszClassName,
-                                 const char * lpszWindowName, uint32_t dwStyle,
-                                 const RECT& rect,
-                                 ::user::interaction * pParentWnd, id id,
-                                 ::create * pContext = NULL) override;
+      // for child windows, views, panes etc
+      virtual bool create_window(::user::interaction * pui, const char * lpszClassName,const char * lpszWindowName,uint32_t dwStyle,const RECT & rect,::user::interaction * pParentWnd,id id, ::create * pcreate = NULL) override;
+
 
       virtual bool CreateEx(uint32_t dwExStyle, const char * lpszClassName,
                             const char * lpszWindowName, uint32_t dwStyle,

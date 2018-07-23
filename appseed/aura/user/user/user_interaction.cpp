@@ -470,7 +470,7 @@ namespace user
    interaction * interaction::GetParent() const
    {
 
-#ifdef METROWIN
+#if defined(METROWIN) || defined(ANDROID)
 
       if (m_pparent == System.m_possystemwindow->m_pui)
       {
@@ -1802,10 +1802,9 @@ restart:
 
    }
 
+
    void interaction::on_viewport_offset(::draw2d::graphics * pgraphics)
    {
-
-
 
       point ptViewportOffset = get_viewport_offset();
 
@@ -1847,8 +1846,6 @@ restart:
          }
 
       }
-
-
 
    }
 
@@ -3300,7 +3297,6 @@ restart:
 #endif
 
 
-
    bool interaction::create_window(const RECT & rect, ::user::interaction * puiParent, id id)
    {
 
@@ -3357,7 +3353,6 @@ restart:
 
          }
 
-
 #if defined(APPLE_IOS) || defined(VSNORD) || defined(METROWIN)
 
          if (pParentWnd == NULL || pParentWnd == System.m_possystemwindow->m_pui)
@@ -3365,19 +3360,9 @@ restart:
 
             pParentWnd = System.m_possystemwindow->m_pui;
 
-            //if(!Application.defer_initialize_twf())
-            //{
-
-            //   //m_threadptra.remove_all();
-
-            //   return false;
-
-            //}
-
          }
 
 #endif
-
 
 #if defined(WINDOWSEX) || defined(LINUX)
 
@@ -3507,7 +3492,7 @@ restart:
          //   m_threadptra.add(get_app());
 
          //}
-#if !defined(METROWIN)
+#if !defined(METROWIN) && !defined(VSNORD)
 
          if ((WS_CHILD & cs.style) == 0)
          {

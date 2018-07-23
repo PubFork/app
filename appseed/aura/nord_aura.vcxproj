@@ -502,6 +502,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x86'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x86'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="aura\aura\aura_plex_heap1.cpp" />
     <ClCompile Include="aura\aura\aura_printer.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
@@ -3950,6 +3951,36 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x86'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x86'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="user\user\user_interaction.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x86'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x86'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_interaction_base.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x86'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x86'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_interaction_child.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x86'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x86'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_interaction_impl.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x86'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x86'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_interaction_impl_base.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x86'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x86'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="user\user\user_interactive.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
@@ -4695,6 +4726,8 @@
     <ClInclude Include="user\simple\simple_message_box.h" />
     <ClInclude Include="user\user.h" />
     <ClInclude Include="user\user\user_frame.h" />
+    <ClInclude Include="user\user\user_interaction.h" />
+    <ClInclude Include="user\user\user_interaction_impl.h" />
     <ClInclude Include="user\user\user_primitive.h" />
     <ClInclude Include="user\wndfrm\frame\wndfrm_frame_updowninterface.h" />
   </ItemGroup>

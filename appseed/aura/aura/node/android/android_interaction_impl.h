@@ -99,13 +99,13 @@ namespace android
       bool ExecuteDlgInit(LPVOID lpResource);
 
       // for child windows, views, panes etc
-      virtual bool create_window(::user::interaction * pui, const char * lpszClassName,const char * lpszWindowName,uint32_t dwStyle,const RECT & rect,::user::interaction * puiParent,id id, ::create * pcreate = NULL);
+      virtual bool create_window(::user::interaction * pui, const char * lpszClassName, const char * lpszWindowName, uint32_t dwStyle, const RECT & rect, ::user::interaction * pParentWnd, id id, ::create * pcreate = NULL) override;
 
       // advanced creation (allows access to extended styles)
-      virtual bool create_window_ex(::user::interaction * pui, DWORD dwExStyle,const char * lpszClassName,const char * lpszWindowName,uint32_t dwStyle,const RECT & rect,::user::interaction * puiParent,id id,LPVOID lpParam = NULL);
+      virtual bool create_window_ex(::user::interaction * pui, ::user::create_struct & cs, ::user::interaction * puiParent = NULL, ::id id = ::id()) override;
 
       // advanced creation (allows access to extended styles)
-      virtual bool native_create_window_ex(::user::interaction * pui, uint32_t dwExStyle,const char * lpszClassName,const char * lpszWindowName,uint32_t dwStyle,const RECT & rect,oswindow oswindowParent,id id,LPVOID lpParam = NULL);
+      virtual bool native_create_window_ex(::user::interaction * pui, ::user::create_struct & cs, ::user::interaction * puiParent = NULL, ::id id = ::id());
 
       virtual bool DestroyWindow();
 
@@ -152,10 +152,10 @@ namespace android
       //virtual void RedrawWindow(UINT nFlags = 0) override;
 
       // Window Text Functions
-      void SetWindowText(const char * lpszString);
-      strsize GetWindowText(LPTSTR lpszStringBuf,strsize nMaxCount);
-      void GetWindowText(string & rString);
-      strsize GetWindowTextLength();
+      virtual void set_window_text(const char * lpszString) override;
+      virtual strsize get_window_text(char * lpszStringBuf, strsize nMaxCount) override;
+      virtual void get_window_text(string & rString) override;
+      virtual strsize get_window_text_length() override;
 
 
       // Window size and position Functions
@@ -649,6 +649,9 @@ namespace android
       //string calc_window_class();
 
       void on_set_parent(::user::interaction * pui);
+      void set_need_redraw();
+
+
       ::user::interaction * FromHandlePermanent(oswindow oswindow);
 
       bool Attach(oswindow hWndNew);

@@ -1969,6 +1969,24 @@
     <ClCompile Include="aura\os\linux\linux_xinerama.cpp">
       <Filter>Source Files\aura\os\linux %28just for browsing%29</Filter>
     </ClCompile>
+    <ClCompile Include="aura\aura\aura_plex_heap1.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_interaction.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_interaction_base.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_interaction_child.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_interaction_impl.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_interaction_impl_base.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -4166,6 +4184,12 @@
     </ClInclude>
     <ClInclude Include="user\wndfrm\frame\wndfrm_frame_updowninterface.h">
       <Filter>Header Files\user\wndfrm\frame</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_interaction.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_interaction_impl.h">
+      <Filter>Header Files\user\user</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

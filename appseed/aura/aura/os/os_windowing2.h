@@ -43,6 +43,9 @@ public:
 
    oswindow                                     m_oswindow;
 
+   os_system_window();
+   ~os_system_window();
+
 };
 
 #else

@@ -378,7 +378,7 @@ int_bool WINAPI SetThreadPriority(HTHREAD hThread,int32_t nCa2Priority)
 int32_t get_os_thread_priority(int32_t iCa2Priority)
 {
 
-      return iCa2Priority;
+   return iCa2Priority;
 
 }
 
@@ -652,3 +652,26 @@ CLASS_DECL_AURA DWORD_PTR translate_processor_affinity(int iOrder)
    return 1 << iOrder;
 
 }
+
+
+
+namespace multithreading
+{
+
+
+   CLASS_DECL_AURA int32_t priority()
+   {
+
+      int32_t iPolicy = SCHED_OTHER;
+
+      sched_param schedparam = {};
+
+      pthread_getschedparam(pthread_self(), &iPolicy, &schedparam);
+
+      return thread_get_scheduling_priority(iPolicy, &schedparam);
+
+   }
+
+
+} // namespace multithreading
+

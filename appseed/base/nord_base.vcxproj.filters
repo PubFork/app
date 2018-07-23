@@ -163,9 +163,6 @@
     <ClCompile Include="base\os\ansios\ansios_file_std.cpp">
       <Filter>Source Files\base\os\ansios</Filter>
     </ClCompile>
-    <ClCompile Include="base\install\install_canvas.cpp">
-      <Filter>Source Files\base\install</Filter>
-    </ClCompile>
     <ClCompile Include="database\database\database_user_interaction.cpp">
       <Filter>Source Files\database\database</Filter>
     </ClCompile>
@@ -190,21 +187,6 @@
     <ClCompile Include="user\simple_ui\simple_ui_top.cpp">
       <Filter>Source Files\user\simple_ui</Filter>
     </ClCompile>
-    <ClCompile Include="user\install\install_plugin.cpp">
-      <Filter>Source Files\user\install</Filter>
-    </ClCompile>
-    <ClCompile Include="user\install\install_plugin_bare_paint_discreet.cpp">
-      <Filter>Source Files\user\install</Filter>
-    </ClCompile>
-    <ClCompile Include="user\install\install_plugin_bare_paint_full_screen.cpp">
-      <Filter>Source Files\user\install</Filter>
-    </ClCompile>
-    <ClCompile Include="user\install\install_plugin_bare_paint_veri_discreet.cpp">
-      <Filter>Source Files\user\install</Filter>
-    </ClCompile>
-    <ClCompile Include="user\install\install_starter_start.cpp">
-      <Filter>Source Files\user\install</Filter>
-    </ClCompile>
     <ClCompile Include="user\user\_user.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
@@ -213,6 +195,15 @@
     </ClCompile>
     <ClCompile Include="user\user\user_single_document_template.cpp">
       <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\hotplugin\hotplugin_bare_paint_discreet.cpp">
+      <Filter>Source Files\user\hotplugin</Filter>
+    </ClCompile>
+    <ClCompile Include="user\hotplugin\hotplugin_bare_paint_full_screen.cpp">
+      <Filter>Source Files\user\hotplugin</Filter>
+    </ClCompile>
+    <ClCompile Include="user\hotplugin\hotplugin_bare_paint_veri_discreet.cpp">
+      <Filter>Source Files\user\hotplugin</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -492,15 +483,6 @@
     <ClInclude Include="base\os\android\android_window_buffer.h">
       <Filter>Header Files\base\os\android</Filter>
     </ClInclude>
-    <ClInclude Include="user\install\install.h">
-      <Filter>Header Files\user\install</Filter>
-    </ClInclude>
-    <ClInclude Include="user\install\install_plugin.h">
-      <Filter>Header Files\user\install</Filter>
-    </ClInclude>
-    <ClInclude Include="user\install\install_starter_start.h">
-      <Filter>Header Files\user\install</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -611,20 +593,11 @@
     <Filter Include="Source Files\database">
       <UniqueIdentifier>{9ee81ee4-02f3-455f-9be5-9224c47911ed}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\base\install">
-      <UniqueIdentifier>{a4e327c2-1699-4c2b-bbfc-2ee74f6bfd77}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\database\simpledb">
       <UniqueIdentifier>{998629e8-1bc4-40df-a146-de6cbaff8a64}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\database\database">
       <UniqueIdentifier>{d317f03e-9ff6-4979-82b3-40a39ad53e2c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\user\install">
-      <UniqueIdentifier>{5434d184-4126-41d4-9476-6594f0c46482}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\user\install">
-      <UniqueIdentifier>{007f9f20-b6e9-4512-9c57-fe978b745768}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

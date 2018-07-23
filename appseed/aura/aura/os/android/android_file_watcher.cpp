@@ -47,7 +47,7 @@ namespace file_watcher
    {
 
       bool                          m_bRecursive;
-      file_watch_listener *         m_plistener;
+      listener *                    m_plistener;
       array < watch_struct_item >   m_itema;
       bool                          m_bOwn;
 
@@ -102,7 +102,7 @@ namespace file_watcher
    }
 
 
-   file_watch_id os_file_watcher::add_watch(const string & directory,  file_watch_listener * pwatcher, bool bRecursive, bool bOwn)
+   id os_file_watcher::add_watch(const string & directory,  listener * pwatcher, bool bRecursive, bool bOwn)
    {
 
       synch_lock sl(m_pmutex);
@@ -193,7 +193,7 @@ namespace file_watcher
    }
 
 
-   void os_file_watcher::remove_watch(file_watch_id watchid)
+   void os_file_watcher::remove_watch(id watchid)
    {
 
       synch_lock sl(m_pmutex);
@@ -216,7 +216,7 @@ namespace file_watcher
    }
 
 
-   string os_file_watcher::watch_path(file_watch_id id)
+   string os_file_watcher::watch_path(id id)
    {
 
       synch_lock sl(m_pmutex);

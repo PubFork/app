@@ -2718,5 +2718,7 @@ int xlib_error_handler(Display * d, XErrorEvent * e)
 
 i64 oswindow_id(oswindow w)
 {
-return w->window();
+      
+      return w->window();
+
 }

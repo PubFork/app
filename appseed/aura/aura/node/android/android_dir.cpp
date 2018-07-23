@@ -650,7 +650,7 @@ namespace android
          }
       }
 
-      bIsDir = ::dir::is(strPath);
+      bIsDir = ::dir::_is(strPath);
 
       m_isdirmap.set(lpcszPath, bIsDir, bIsDir ? 0 : ::get_last_error());
 
@@ -896,7 +896,7 @@ namespace android
          if (!is(stra[i], papp))
          {
 
-            if (!::dir::mk(stra[i]))
+            if (!::dir::_mk(stra[i]))
             {
                DWORD dwError = ::get_last_error();
                if (dwError == ERROR_ALREADY_EXISTS)

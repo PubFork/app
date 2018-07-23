@@ -258,7 +258,8 @@ namespace linux
    }
 
 
-   bool interaction_impl::create_window_ex(::user::interaction * pui, ::user::create_struct & cs, ::user::interaction * puiParent, ::id id)
+   // for child windows, views, panes etc  
+   bool interaction_impl::create_window(::user::interaction * pui, const char * lpszClassName,const char * lpszWindowName,uint32_t dwStyle,const RECT & rect,::user::interaction * pParentWnd,id id, ::create * pcreate)
    {
 
       if(!native_create_window_ex(pui, cs, puiParent, id))

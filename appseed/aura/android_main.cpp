@@ -129,3 +129,20 @@ void os_post_quit()
 
 }
 
+
+
+os_system_window::os_system_window()
+{
+
+
+}
+
+
+os_system_window::~os_system_window()
+{
+
+
+}
+
+
+

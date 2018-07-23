@@ -15,7 +15,7 @@ namespace fontopus
    {
 
       ASSERT(m_login.m_strRequestUrl.has_char());
-#ifdef METROWIN
+#if defined(METROWIN)
       m_bProDevian = true;
 #else
       m_bProDevian = false;
@@ -514,11 +514,11 @@ namespace fontopus
    void dialog::_000OnDraw(::draw2d::graphics * pgraphics)
    {
 
-      //pgraphics->fill_solid_rect(0, 0, 100, 100, ARGB(255, 255, 0, 0));
+      //pgraphics->fill_solid_rect_dim(0, 0, 100, 100, ARGB(255, 255, 0, 0));
 
       ::simple_ui::interaction::_000OnDraw(pgraphics);
 
-      //pgraphics->fill_solid_rect(100, 100, 100, 100, ARGB(255, 0, 255, 0));
+      //pgraphics->fill_solid_rect_dim(100, 100, 100, 100, ARGB(255, 0, 255, 0));
 
    }
 

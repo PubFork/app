@@ -1611,6 +1611,12 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x86'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x86'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="user\user\user_shell_windows.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x86'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x86'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="user\user\user_single_document_template.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>

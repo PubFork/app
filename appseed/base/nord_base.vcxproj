@@ -160,7 +160,6 @@
     <ClCompile Include="base\base\base_session.cpp" />
     <ClCompile Include="base\base\base_static_start.cpp" />
     <ClCompile Include="base\base\base_system.cpp" />
-    <ClCompile Include="base\install\install_canvas.cpp" />
     <ClCompile Include="base\node\android\android1.cpp" />
     <ClCompile Include="base\node\android\android2.cpp" />
     <ClCompile Include="base\node\android\android_android.cpp" />
@@ -179,16 +178,14 @@
     <ClCompile Include="user\fontopus\fontopus_login.cpp" />
     <ClCompile Include="user\fontopus\fontopus_simple_ui.cpp" />
     <ClCompile Include="user\hotplugin\hotplugin.cpp" />
+    <ClCompile Include="user\hotplugin\hotplugin_bare_paint_discreet.cpp" />
+    <ClCompile Include="user\hotplugin\hotplugin_bare_paint_full_screen.cpp" />
+    <ClCompile Include="user\hotplugin\hotplugin_bare_paint_veri_discreet.cpp" />
     <ClCompile Include="user\hotplugin\hotplugin_composer.cpp" />
     <ClCompile Include="user\hotplugin\hotplugin_container_launcher.cpp" />
     <ClCompile Include="user\hotplugin\hotplugin_host.cpp" />
     <ClCompile Include="user\hotplugin\hotplugin_plugin.cpp" />
     <ClCompile Include="user\hotplugin\hotplugin_windows.cpp" />
-    <ClCompile Include="user\install\install_plugin.cpp" />
-    <ClCompile Include="user\install\install_plugin_bare_paint_discreet.cpp" />
-    <ClCompile Include="user\install\install_plugin_bare_paint_full_screen.cpp" />
-    <ClCompile Include="user\install\install_plugin_bare_paint_veri_discreet.cpp" />
-    <ClCompile Include="user\install\install_starter_start.cpp" />
     <ClCompile Include="user\simple\simple_scroll_bar.cpp" />
     <ClCompile Include="user\simple_ui\simple_ui_edit_box.cpp" />
     <ClCompile Include="user\simple_ui\simple_ui_interaction.cpp" />
@@ -408,9 +405,6 @@
     <ClInclude Include="user\hotplugin\hotplugin_container_launcher.h" />
     <ClInclude Include="user\hotplugin\hotplugin_host.h" />
     <ClInclude Include="user\hotplugin\hotplugin_plugin.h" />
-    <ClInclude Include="user\install\install.h" />
-    <ClInclude Include="user\install\install_plugin.h" />
-    <ClInclude Include="user\install\install_starter_start.h" />
     <ClInclude Include="user\simple\simple.h" />
     <ClInclude Include="user\simple\simple_scroll_bar.h" />
     <ClInclude Include="user\simple_ui\simple_ui.h" />

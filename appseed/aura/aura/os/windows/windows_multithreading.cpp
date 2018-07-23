@@ -73,36 +73,6 @@ void attach_thread_input_to_main_thread(bool bAttach)
 }
 
 
-//uint32_t thread_layer::proc(void * lp)
-//{
-//
-//   thread_layer * player   = (thread_layer *)lp;
-//
-//   return player->run();
-//
-//}
-
-
-//namespace multithreading
-//{
-//
-//   bool set_priority(int32_t priority)
-//   {
-//
-//      return (::SetThreadPriority(::GetCurrentThread(),get_os_thread_priority(priority)) != 0);
-//   }
-//
-//   int32_t priority()
-//   {
-//      return ::GetThreadPriority(::GetCurrentThread());
-//   }
-//
-//
-//} // namespace core
-//
-//
-
-
 HTHREAD get_current_thread()
 {
 

@@ -331,7 +331,7 @@ namespace ansios
    }
 
 
-   void process::synch_elevated(const char * pszCmdLineParam,int iShow,const ::duration & durationTimeOut,bool * pbTimeOut)
+   bool process::synch_elevated(const char * pszCmdLineParam,int iShow,const ::duration & durationTimeOut,bool * pbTimeOut)
    {
 
 
@@ -346,7 +346,7 @@ namespace ansios
 
          ::simple_message_box(NULL,"gksu is not installed, please install gksu.","Please, install gksu.",MB_ICONINFORMATION);
 
-         return ;
+         return false;
 
       }
 
@@ -361,7 +361,7 @@ namespace ansios
       if(cmd_line == NULL)
       {
 
-         return;
+         return false;
 
       }
 
@@ -417,13 +417,13 @@ namespace ansios
          // in parent, but error
          m_iPid = 0;
          free(cmd_line);
-         return;
+         return false;
       }
 
       init_chldstatus(m_iPid);
 
       // in parent, success
-      //return 1;
+      return true;
 
    }
 

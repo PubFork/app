@@ -340,6 +340,9 @@
     <ClCompile Include="user\_user.cpp">
       <Filter>Source Files\user</Filter>
     </ClCompile>
+    <ClCompile Include="user\user\user_hotplugin.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">

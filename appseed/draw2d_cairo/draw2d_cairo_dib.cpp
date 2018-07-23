@@ -2789,7 +2789,7 @@ namespace draw2d_cairo
 
       map(false);
 
-      rect rect(rectWindow);
+      ::rect rect(rectWindow);
 
       //Application.window_graphics_update_window(pwnd->get_window_graphics(), pwnd->get_handle(), m_pcolorref, rect, m_size.cx, m_size.cy, m_iScan, bTransferBuffer);
 

@@ -865,6 +865,9 @@
     <ClCompile Include="core\node\android\android_simple_frame_window.cpp">
       <Filter>Source Files\core\node\android</Filter>
     </ClCompile>
+    <ClCompile Include="user\user\user_shell_windows.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="user\simple\simple_child_frame.h">

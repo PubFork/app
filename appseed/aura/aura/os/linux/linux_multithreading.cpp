@@ -35,25 +35,6 @@ namespace process
 } // namespace core
 
 
-namespace multithreading
-{
-
-   CLASS_DECL_AURA int32_t priority()
-	{
-
-      int32_t iPolicy = SCHED_OTHER;
-
-      sched_param schedparam = {};
-
-      pthread_getschedparam(pthread_self(), &iPolicy, &schedparam);
-
-      return thread_get_scheduling_priority(iPolicy, &schedparam);
-
-	}
-
-
-} // namespace multithreading
-
 
 
 

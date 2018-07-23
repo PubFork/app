@@ -208,20 +208,20 @@ namespace android
    }
 
 
-   bool interaction_impl::create_window_ex(::user::interaction * pui, uint32_t dwExStyle,const char * lpszClassName,const char * lpszWindowName,uint32_t dwStyle,const RECT & rect,::user::interaction * puiParent,id id,LPVOID lpParam)
+   bool interaction_impl::create_window_ex(::user::interaction * pui, ::user::create_struct & cs, ::user::interaction * puiParent, id id)
    {
 
       if(puiParent == NULL)
       {
 
-         if(!native_create_window_ex(pui, dwExStyle,lpszClassName,lpszWindowName,dwStyle,rect,NULL,id,lpParam))
+         if(!native_create_window_ex(pui, cs, puiParent, id))
             return false;
 
       }
       else
       {
 
-         if(!native_create_window_ex(pui, dwExStyle,lpszClassName,lpszWindowName,dwStyle,rect,puiParent->get_safe_handle(),id,lpParam))
+         if(!native_create_window_ex(pui, cs, puiParent, id))
             return false;
 
       }
@@ -231,58 +231,18 @@ namespace android
    }
 
 
-   bool interaction_impl::native_create_window_ex(::user::interaction * pui, uint32_t dwExStyle,const char * lpszClassName,const char * lpszWindowName,uint32_t dwStyle,const RECT & rect,oswindow oswindowParent,id id,LPVOID lpParam)
+   bool interaction_impl::native_create_window_ex(::user::interaction * pui, ::user::create_struct & cs, ::user::interaction * puiParent, id id)
    {
 
-      //::simple_message_box(NULL,"h1","h1",MB_OK);
-      UNREFERENCED_PARAMETER(id);
-      ENSURE_ARG(lpszWindowName == NULL || __is_valid_string(lpszWindowName));
+      _throw(not_implemented(get_app(), "no multiple native windows per application"));
 
+      return false;
+
+      UNREFERENCED_PARAMETER(id);
+
+      ENSURE_ARG(cs.lpszClass == NULL || __is_valid_string(cs.lpszClass));
 
       m_pui = pui;
-
-      // allow modification of several common create parameters
-      ::user::create_struct cs;
-      cs.dwExStyle = dwExStyle;
-
-
-      //string strClass = calc_window_class();
-      //cs.lpszClass = strClass.is_empty() ? NULL : (const char *)strClass;
-      cs.lpszClass = NULL;
-      cs.lpszName = lpszWindowName;
-      cs.style = dwStyle;
-
-      cs.x = rect.left;
-      cs.y = rect.top;
-      cs.cx = width(rect);
-      cs.cy = height(rect);
-
-      cs.hwndParent = oswindowParent;
-      //   cs.hMenu = oswindow_Parent == NULL ? NULL : nIDorHMenu;
-      cs.hMenu = NULL;
-      cs.hInstance = System.m_hinstance;
-      cs.lpCreateParams = lpParam;
-
-      if(!m_pui->pre_create_window(cs))
-      {
-
-         PostNcDestroy();
-
-         m_pui = NULL;
-
-         return false;
-
-      }
-
-      if(cs.hwndParent == NULL)
-      {
-
-         cs.style &= ~WS_CHILD;
-
-      }
-
-      //oswindow oswindow = ::CreateWindowEx(cs.dwExStyle,cs.lpszClass,cs.lpszName,cs.style,cs.x,cs.y,cs.cx,cs.cy,cs.hwndParent,cs.hMenu,cs.hInstance,cs.lpCreateParams);
-
 
       if (cs.hwndParent == HWND_MESSAGE)
       {
@@ -299,34 +259,14 @@ namespace android
 
          m_oswindow = oswindow_get(this);
 
-         //if (cs.style & WS_VISIBLE)
-         {
-
-            m_pui->ModifyStyle(0, WS_VISIBLE);
-
-         }
-         //else
-         //{
-
-         //   m_pui->ModifyStyle(WS_VISIBLE, 0);
-
-         //}
-
-         // m_pui->m_bVisible = true;
-
-         //m_oswindow->set_user_interaction(m_pui);
+         m_pui->ModifyStyle(0, WS_VISIBLE);
 
       }
 
-
       set_handle(m_oswindow);
-
-      //::simple_message_box(NULL,"h2","h2",MB_OK);
 
       if(m_oswindow == NULL)
       {
-
-         //::simple_message_box(NULL,"h3","h3",MB_OK);
 
          if (m_pauraapp == NULL)
          {
@@ -340,14 +280,16 @@ namespace android
          }
 
          uint32_t dwLastError = get_last_error();
+
          string strLastError = FormatMessageFromSystem(dwLastError);
+
          string strMessage;
+
          strMessage.Format("%s\n\nSystem Error Code: %d",strLastError,dwLastError);
 
+         TRACE(::aura::trace::category_AppMsg, 0, "Warning: Window creation failed: get_last_error returned:\n");
 
-         TRACE(::aura::trace::category_AppMsg,0,"Warning: Window creation failed: get_last_error returned:\n");
-
-         TRACE(::aura::trace::category_AppMsg,0,"%s\n",strMessage);
+         TRACE(::aura::trace::category_AppMsg, 0, "%s\n", strMessage);
 
          try
          {
@@ -384,30 +326,36 @@ namespace android
 
       }
 
+      install_message_routing(this);
+
+      m_pui->m_pthread = ::get_thread();
+
+      if (m_pui->m_pthread != NULL)
+      {
+
+         if (m_pui->m_pthread->m_puiptra == NULL)
+         {
+
+            m_pui->m_pthread->m_puiptra = new user_interaction_ptr_array();
+
+         }
+
+         m_pui->m_pthread->m_puiptra->add(m_pui);
+
+      }
+
       output_debug_string("android_interaction_impl send WM_CREATE");
 
-      send_message(WM_CREATE, 0, (LPARAM)&cs);
+      m_pui->send_message(WM_CREATE, 0, (LPARAM)&cs);
 
-      send_message(WM_SIZE);
+      m_pui->send_message(WM_SIZE);
 
-      //WNDCLASS wndcls;
-      //if(lpszClassName != NULL &&
-      //   GetClassInfo(System.m_hinstance,lpszClassName,&wndcls) &&
-      //   wndcls.hIcon != NULL)
-      //{
-      //   Application.set_icon(m_pui,new ::visual::icon(wndcls.hIcon),false);
-      //   Application.set_icon(m_pui,new ::visual::icon(wndcls.hIcon),true);
-      //}
-      //::simple_message_box(NULL,"h4","h4",MB_OK);
-      //      oswindow oswindowHandle = get_handle();
       if(m_oswindow != get_handle())
       {
-         //::simple_message_box(NULL,"h4.dame","h4.dame",MB_OK);
 
          ASSERT(FALSE); // should have been set in send msg hook
 
       }
-      //::simple_message_box(NULL,"h4.ok","h4.ok",MB_OK);
 
       return true;
 
@@ -416,14 +364,6 @@ namespace android
 
    bool interaction_impl::initialize_native_window(::user::native_window_initialize * pinitialize)
    {
-
-      //RECT rect;
-
-
-      //rect.origin.x = pinitialize->m_rect.left;
-      //rect.origin.y = pinitialize->m_rect.top;
-      //rect.size.width = width(pinitialize->m_rect);
-      //rect.size.height = height(pinitialize->m_rect);
 
       m_oswindow = oswindow_get(this);
 
@@ -435,15 +375,11 @@ namespace android
 
       m_pui->ModifyStyle(0, WS_VISIBLE);
 
-      //      m_pthread = dynamic_cast < ::thread * > (::get_thread());
-
       output_debug_string("android_interaction_impl m_spgraphics alloc");
 
       m_spgraphics.alloc(allocer());
 
       m_spgraphics->on_create_window(this);
-
-      //m_oswindow->set_impl(this);
 
       m_pui->ModifyStyle(0, WS_VISIBLE);
 
@@ -463,6 +399,7 @@ namespace android
 
    }
 
+
    // for child android
    bool interaction_impl::pre_create_window(::user::create_struct& cs)
    {
@@ -476,11 +413,24 @@ namespace android
    {
 
       // can't use for desktop or pop-up android (use create_window_ex instead)
+      // can't use for desktop or pop-up windows (use create_window_ex instead)
       ASSERT(pParentWnd != NULL);
       ASSERT((dwStyle & WS_POPUP) == 0);
 
-      return create_window_ex(pui, 0,lpszClassName,lpszWindowName,dwStyle | WS_CHILD,rect,pParentWnd,id,(LPVOID)pcreate);
+      ::user::create_struct cs;
 
+      cs.dwExStyle = 0;
+      cs.lpszClass = lpszClassName;
+      cs.lpszName = lpszWindowName;
+      cs.style = dwStyle | WS_CHILD;
+      cs.x = rect.left;
+      cs.y = rect.top;
+      cs.cx = width(rect);
+      cs.cy = height(rect);
+      cs.hwndParent = pParentWnd->get_safe_handle();
+      cs.lpCreateParams = (LPVOID)pcreate;
+
+      return create_window_ex(pui, cs, pParentWnd, id);
    }
 
 
@@ -494,7 +444,11 @@ namespace android
 
       }
 
-      if(!native_create_window_ex(pui, 0,NULL,pszName,WS_CHILD,null_rect(),HWND_MESSAGE,0,NULL))
+      ::user::create_struct cs(0, NULL, pszName, WS_CHILD, null_rect());
+
+      cs.hwndParent = HWND_MESSAGE;
+
+      if(!native_create_window_ex(pui, cs))
       {
 
          return false;
@@ -566,23 +520,19 @@ namespace android
 
       m_pt = rectWindow.top_left();
 
-      if(rectWindow.area() <= 0)
-         return;
-
-      if(m_size != rectWindow.size())
+      if (rectWindow.area() <= 0)
       {
 
-         //if(m_spdib.is_null())
-         //   m_spdib.alloc(allocer());
-
-         //m_spdib->create(rectWindow.size());
-
-         m_size = rectWindow.size();
+         return;
 
       }
 
+      if(m_size != rectWindow.get_size())
+      {
 
+         m_size = rectWindow.get_size();
 
+      }
 
    }
 
@@ -628,6 +578,15 @@ namespace android
    {
 
       UNREFERENCED_PARAMETER(pobj);
+
+      ::multithreading::post_quit_and_wait(m_pthreadUpdateWindow, seconds(10));
+
+      if (m_pui->m_pthread != NULL)
+      {
+
+         m_pui->m_pthread->m_puiptra->remove(m_pui);
+
+      }
 
       Default();
 
@@ -1460,7 +1419,9 @@ namespace android
       {
          if(m_pui != NULL)
          {
-            ((::user::control_event *) pmessage->m_lparam.m_lparam)->m_bRet = m_pui->on_control_event((::user::control_event *) pmessage->m_lparam.m_lparam);
+
+            m_pui->on_control_event((::user::control_event *) pmessage->m_lparam.m_lparam);
+
          }
          return;
       }
@@ -1492,7 +1453,7 @@ namespace android
    {
 
       ASSERT(pbase != NULL);
-      NMHDR* pNMHDR = (NMHDR*)pbase->m_lparam;
+      NMHDR* pNMHDR = (NMHDR*)pbase->m_lparam.m_lparam;
       oswindow oswindow_Ctrl = pNMHDR->hwndFrom;
 
       // get the child ID from the interaction_impl itself
@@ -2157,6 +2118,32 @@ namespace android
       //      // not handled - do default
       //      return (int32_t)Default();
    }
+
+
+   void interaction_impl::set_need_redraw()
+   {
+
+      if (!m_pui->m_bProDevian)
+      {
+
+         if (m_pui->m_pthread != NULL)
+         {
+
+            if (!m_bRedraw)
+            {
+
+               m_bRedraw = true;
+
+               m_pui->m_pthread->post_message(WM_KICKIDLE);
+
+            }
+
+         }
+
+      }
+
+   }
+
 
    void interaction_impl::_001OnCreate(::message::message * pobj)
    {
@@ -3742,7 +3729,9 @@ namespace android
    }
 
    */
-   void interaction_impl::SetWindowText(const char * lpszString)
+
+
+   void interaction_impl::set_window_text(const char * lpszString)
    {
 
       m_strWindowText = lpszString;
@@ -3750,36 +3739,28 @@ namespace android
    }
 
 
-   strsize interaction_impl::GetWindowText(LPTSTR lpszString, strsize nMaxCount)
+   strsize interaction_impl::get_window_text(char * lpszStringBuf, strsize nMaxCount)
    {
 
-      strncpy(lpszString, m_strWindowText, nMaxCount);
+      strncpy(lpszStringBuf, m_strWindowText, nMaxCount);
 
       return MIN(nMaxCount, m_strWindowText.get_length());
 
    }
 
 
-   strsize interaction_impl::GetWindowTextLength()
+   void interaction_impl::get_window_text(string & rString)
    {
 
-      _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow((oswindow) get_handle()));
-
-      //return ::GetWindowTextLength(get_handle());
+      m_strWindowText = rString;
 
    }
 
 
-
-   void interaction_impl::GetWindowText(string & rString)
+   strsize interaction_impl::get_window_text_length()
    {
-      /*ASSERT(::IsWindow((oswindow) get_handle()));
 
-      int32_t nLen = ::GetWindowTextLength(get_handle());
-      ::GetWindowText(get_handle(), rString.GetBufferSetLength(nLen), nLen+1);
-      rString.ReleaseBuffer();*/
-      rString = m_strWindowText;
+      return m_strWindowText.get_length();
 
    }
 
