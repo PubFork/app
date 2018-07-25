@@ -628,7 +628,8 @@ bool thread::pump_message()
 
             ::user::interaction * pui = m_puiptra->element_at(i);
 
-            if (!pui->m_bProDevian && pui->m_bDrawable && get_tick_count() - pui->m_pimpl->m_uiLastRedraw > 10)
+            ///if (!pui->m_bProDevian && pui->m_bDrawable && get_tick_count() - pui->m_pimpl->m_uiLastRedraw > 10)
+            if (!pui->m_bProDevian && pui->m_bDrawable)
             {
 
                if (pui->has_pending_graphical_update())

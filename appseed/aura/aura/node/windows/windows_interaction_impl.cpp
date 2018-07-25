@@ -3,7 +3,7 @@
 #include "aura/aura/aura.h"
 
 
-// const GUID CLSID_TaskbarList = { 0x56FDF344, 0xFD6D, 0x11D0,{ 0x95, 0x8A, 0x00, 0x60, 0x97, 0xC9, 0xA0, 0x90 } };
+//const GUID CLSID_TaskbarList = { 0x56FDF344, 0xFD6D, 0x11D0,{ 0x95, 0x8A, 0x00, 0x60, 0x97, 0xC9, 0xA0, 0x90 } };
 //const GUID IID_ITaskbarList = { 0x56FDF342, 0xFD6D, 0x11D0,{ 0x95, 0x8A, 0x00, 0x60, 0x97, 0xC9, 0xA0, 0x90 } };
 //const GUID IID_ITaskbarList2 = { 0x602D4995, 0xB13A, 0x429b,{ 0xA6, 0x6E, 0x19, 0x35, 0xE4, 0x4F, 0x43, 0x17 } };
 //const GUID IID_ITaskList3 = { 0xEA1AFB91, 0x9E28, 0x4B86,{ 0x90, 0xE9, 0x9E, 0x9F, 0x8A, 0x5E, 0xEF, 0xAF } };
@@ -2498,10 +2498,8 @@ namespace windows
    void interaction_impl::on_set_pro_devian()
    {
 
-
       if (m_pui->m_bProDevian)
       {
-
 
          if (m_pthreadUpdateWindow.is_null())
          {
@@ -2721,17 +2719,9 @@ namespace windows
          if (m_pui->m_pthread != NULL)
          {
 
-            if (!m_bRedraw)
-            {
-
-               m_bRedraw = true;
-
-               m_pui->m_pthread->post_message(WM_REDRAW);
-
-            }
+            m_pui->m_pthread->post_message(WM_REDRAW);
 
          }
-
 
       }
 
@@ -2775,17 +2765,6 @@ namespace windows
 
    }
 
-   /*   void interaction_impl::OnHScroll(UINT, UINT, CScrollBar* pScrollBar)
-   {
-   UNREFERENCED_PARAMETER(pScrollBar);
-   Default();
-   }
-
-   void interaction_impl::OnVScroll(UINT, UINT, CScrollBar* pScrollBar)
-   {
-   UNREFERENCED_PARAMETER(pScrollBar);
-   Default();
-   }*/
 
    BOOL CALLBACK GetAppsEnumWindowsProc(oswindow oswindow, LPARAM lParam);
 
@@ -2805,11 +2784,6 @@ namespace windows
    {
       EnumWindows(GetAppsEnumWindowsProc, (LPARAM)&wnda);
    }
-
-   /*   void interaction_impl::_001OnDeferPaintLayeredWindowBackground(::draw2d::dib * pdib)
-   {
-   _001DeferPaintLayeredWindowBackground(pgraphics);
-   }*/
 
 
    class print_window :
@@ -4039,7 +4013,11 @@ namespace windows
    {
 
       if (!::IsWindow(get_handle()))
+      {
+
          return false;
+
+      }
 
       if (nCmdShow == SW_MAXIMIZE)
       {
@@ -4074,7 +4052,8 @@ namespace windows
             ::ShowWindow(get_handle(), nCmdShow);
 
          }
-         else
+
+         if(GetExStyle() & WS_EX_LAYERED)
          {
 
             m_iShowWindow = SW_HIDE;
@@ -6464,3 +6443,6 @@ void __term_windowing()
    return dynamic_cast <::user::interaction_impl *>(pbase);
 
 }
+
+
+

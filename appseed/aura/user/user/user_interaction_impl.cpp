@@ -2606,8 +2606,6 @@ namespace user
    void interaction_impl::_001UpdateScreen()
    {
 
-      m_bRedraw = false;
-
       if (m_spgraphics.is_set())
       {
 

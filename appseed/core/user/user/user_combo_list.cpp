@@ -526,13 +526,8 @@ namespace user
 
       }
 
-
-
-      //m_pcombo->_001ShowDropDown(false);
-
-      //}
-
    }
+
 
    void combo_list::_001OnMouseActivate(::message::message * pobj)
    {
@@ -564,8 +559,6 @@ namespace user
       {
 
          m_pcombo->ShowDropDown(false);
-
-
 
       }
       else if (pkey->m_ekey == ::user::key_tab)
@@ -653,13 +646,13 @@ namespace user
 
             ev.m_puie = this;
 
+            ev.m_id = m_id;
+
             ev.m_eevent = ::user::event_after_change_cur_sel;
 
             ev.m_actioncontext = ::action::source_user;
 
             ev.m_iItem = iItem;
-
-            ev.m_id = m_id;
 
             on_control_event(&ev);
 
