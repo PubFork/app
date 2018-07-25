@@ -1703,7 +1703,7 @@ restart:
 
       }
 
-      ::draw2d::keep k(pgraphics);
+      ::draw2d::savedc k(pgraphics);
 
       try
       {
@@ -1783,7 +1783,7 @@ restart:
    void interaction::_008CallOnDraw(::draw2d::graphics * pgraphics)
    {
 
-      ::draw2d::keep k(pgraphics);
+      ::draw2d::savedc k(pgraphics);
 
       try
       {
@@ -1816,7 +1816,7 @@ restart:
    void interaction::_001DrawChildren(::draw2d::graphics * pgraphics)
    {
 
-      ::draw2d::keep k(pgraphics);
+      ::draw2d::savedc k(pgraphics);
 
       // while drawing layout can occur and change z-order.
       // keep this past z-order
@@ -1828,7 +1828,7 @@ restart:
          try
          {
 
-            ::draw2d::keep keep(pgraphics);
+            ::draw2d::savedc keep(pgraphics);
 
             if (pui.is_set() && !pui->is_custom_draw())
             {
@@ -1857,7 +1857,7 @@ restart:
 
       {
 
-         ::draw2d::keep k(pgraphics);
+         ::draw2d::savedc k(pgraphics);
 
          try
          {
@@ -1876,7 +1876,7 @@ restart:
 
       {
 
-         ::draw2d::keep k(pgraphics);
+         ::draw2d::savedc k(pgraphics);
 
          try
          {
@@ -1898,7 +1898,7 @@ restart:
 
          {
 
-            ::draw2d::keep k(pgraphics);
+            ::draw2d::savedc k(pgraphics);
 
             try
             {

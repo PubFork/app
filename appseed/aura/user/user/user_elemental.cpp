@@ -129,6 +129,28 @@ namespace user
    }
 
 
+   elemental * elemental::keyboard_set_focus_next(bool bSkipChild, bool bSkipSiblings, bool bSkipParent)
+   {
+
+      elemental * pelemental = keyboard_get_next_focusable(NULL, bSkipChild, bSkipSiblings, bSkipParent);
+
+      if (pelemental == NULL || pelemental == this)
+      {
+
+         Session.set_keyboard_focus(NULL);
+
+      }
+      else
+      {
+
+         pelemental->keyboard_set_focus();
+
+      }
+
+      return Session.get_keyboard_focus();
+
+   }
+
    elemental * elemental::keyboard_get_next_focusable(elemental * pfocus,bool bSkipChild,bool bSkipSiblings,bool bSkipParent)
    {
 

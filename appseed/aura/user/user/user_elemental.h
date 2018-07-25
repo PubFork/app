@@ -112,6 +112,7 @@ namespace user
       virtual void on_control_event(control_event * pevent);
       virtual elemental * keyboard_get_next_focusable(elemental * pfocus = NULL,bool bSkipChild = false,bool bSkipSiblings = false,bool bSkipParent = false);
       virtual bool keyboard_set_focus();
+      virtual elemental * keyboard_set_focus_next(bool bSkipChild = false, bool bSkipSiblings = false, bool bSkipParent = false);
 
       // focus
       virtual bool keyboard_focus_is_focusable();

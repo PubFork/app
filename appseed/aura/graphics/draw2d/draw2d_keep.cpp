@@ -5,102 +5,102 @@ namespace draw2d
 {
 
 
-   keep::keep(graphics * pgraphics, bool bSave)
-   {
+   //keep::keep(graphics * pgraphics, bool bSave)
+   //{
 
-      m_bSave = false;
+   //   m_bSave = false;
 
-      if (pgraphics == NULL)
-      {
+   //   if (pgraphics == NULL)
+   //   {
 
-         m_pgraphics = NULL;
+   //      m_pgraphics = NULL;
 
-         return;
+   //      return;
 
-      }
+   //   }
 
-      m_pgraphics = pgraphics;
+   //   m_pgraphics = pgraphics;
 
-      if (bSave)
-      {
+   //   if (bSave)
+   //   {
 
-         save();
+   //      save();
 
-      }
+   //   }
 
-   }
-
-
-   keep::~keep()
-   {
-
-      if(m_bSave)
-      {
-
-         restore();
-
-      }
-
-   }
+   //}
 
 
+   //keep::~keep()
+   //{
 
-   void keep::save()
-   {
+   //   if(m_bSave)
+   //   {
 
-      if(m_pgraphics == NULL)
-      {
+   //      restore();
 
-         return;
+   //   }
 
-      }
-
-      if(m_bSave)
-      {
-
-         return;
-
-      }
-
-      m_iSave = m_pgraphics->SaveDC();
-
-      m_bSave = true;
-
-   }
+   //}
 
 
-   void keep::restore()
-   {
 
-      if(m_pgraphics == NULL)
-      {
+   //void keep::save()
+   //{
 
-         return;
+   //   if(m_pgraphics == NULL)
+   //   {
 
-      }
+   //      return;
 
-      if(!m_bSave)
-      {
+   //   }
 
-         return;
+   //   if(m_bSave)
+   //   {
 
-      }
+   //      return;
 
-      m_pgraphics->RestoreDC(m_iSave);
+   //   }
 
-      m_bSave = false;
+   //   m_iSave = m_pgraphics->SaveDC();
 
-   }
+   //   m_bSave = true;
+
+   //}
 
 
-   void keep::pulse()
-   {
+   //void keep::restore()
+   //{
 
-      restore();
+   //   if(m_pgraphics == NULL)
+   //   {
 
-      save();
+   //      return;
 
-   }
+   //   }
+
+   //   if(!m_bSave)
+   //   {
+
+   //      return;
+
+   //   }
+
+   //   m_pgraphics->RestoreDC(m_iSave);
+
+   //   m_bSave = false;
+
+   //}
+
+
+   //void keep::pulse()
+   //{
+
+   //   restore();
+
+   //   save();
+
+   //}
 
 
 } // namespace draw2d

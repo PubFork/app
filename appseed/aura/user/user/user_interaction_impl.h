@@ -92,7 +92,6 @@ namespace user
 
 
 
-
       interaction_impl();
       virtual ~interaction_impl();
 

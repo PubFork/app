@@ -2712,7 +2712,7 @@ void simple_frame_window::draw_frame_and_control_box_over(::draw2d::graphics * p
 
    {
 
-      ::draw2d::keep k(pgraphics);
+      ::draw2d::savedc k(pgraphics);
 
       //if (0)
       {
@@ -2750,7 +2750,7 @@ void simple_frame_window::draw_frame_and_control_box_over(::draw2d::graphics * p
    if (!frame_is_transparent() || this == GetActiveWindow())
    {
 
-      ::draw2d::keep k(pgraphics);
+      ::draw2d::savedc k(pgraphics);
 
       try
       {

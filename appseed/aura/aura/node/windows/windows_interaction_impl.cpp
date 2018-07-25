@@ -2726,7 +2726,7 @@ namespace windows
 
                m_bRedraw = true;
 
-               m_pui->m_pthread->post_message(WM_KICKIDLE);
+               m_pui->m_pthread->post_message(WM_REDRAW);
 
             }
 

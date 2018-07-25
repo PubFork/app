@@ -9,7 +9,7 @@ namespace user
    {
 
       user_button_construct();
-      
+
    }
 
 
@@ -40,16 +40,16 @@ namespace user
 
    }
 
-   
+
    void button::user_button_construct()
    {
-     
+
       m_erectMargin = rect_button_margin;
       m_erectBorder = rect_button_border;
       m_erectPadding = rect_button_padding;
       m_eintTextAlign = int_button_draw_text_flags;
-      
-      
+
+
       m_estockicon = stock_icon_none;
       m_estyle = style_none;
       m_pbitmap = NULL;
@@ -57,9 +57,9 @@ namespace user
       m_iHover = -1;
       m_echeck = ::check::unchecked;
       m_iClick = 0;
-      
+
    }
-   
+
 
    void button::install_message_routing(::message::sender * pinterface)
    {
@@ -225,6 +225,8 @@ namespace user
             ::user::control_event ev;
 
             ev.m_puie = this;
+
+            ev.m_id = m_id;
 
             ev.m_eevent = ::user::event_button_clicked;
 

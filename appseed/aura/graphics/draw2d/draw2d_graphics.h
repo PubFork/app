@@ -33,7 +33,11 @@ namespace draw2d
       e_alpha_mode                  m_ealphamode;
       e_smooth_mode                 m_esmoothmode;
       e_text_rendering              m_etextrendering;
-      f64                        m_dFontFactor;
+      f64                           m_dFontFactor;
+
+      ::draw2d::matrix              m_matrixViewport;
+      ::draw2d::matrix              m_matrixTransform;
+
 
       bool                          m_bPrinting;
 
@@ -115,8 +119,6 @@ namespace draw2d
 
 
       // Device-Context Functions
-      virtual i32 SaveDC();
-      virtual bool RestoreDC(i32 nSavedDC);
       virtual i32 GetDeviceCaps(i32 nIndex);
       virtual UINT SetBoundsRect(const RECT & rectBounds,UINT flags);
       virtual UINT GetBoundsRect(LPRECT rectBounds,UINT flags);
@@ -196,6 +198,8 @@ namespace draw2d
       virtual bool ModifyWorldTransform(const XFORM* pXform,u32 iMode);
       virtual bool GetWorldTransform(XFORM* pXform);
 #endif
+
+      virtual void get_viewport_scale(::draw2d::matrix & matrix);
 
       // Mapping Functions
       virtual i32 GetMapMode();
@@ -636,6 +640,10 @@ namespace draw2d
       virtual bool set(const matrix & matrix);
       virtual bool append(const matrix & matrix);
       virtual bool prepend(const matrix & matrix);
+      virtual bool update_matrix();
+
+      virtual bool _get(matrix & matrix);
+      virtual bool _set(const matrix & matrix);
 
 
 
@@ -799,6 +807,12 @@ namespace draw2d
       inline bool draw_dim(i32 x, i32 y, i32 w, i32 h, ::draw2d::graphics * pgraphicsSrc, i32 xSrc = 0, i32 ySrc = 0, u32 dwRop = SRCCOPY) { return draw(rect_dim(x, y, w, h), pgraphicsSrc, point(xSrc, ySrc), dwRop); }
       inline bool BitBlt(i32 x, i32 y, i32 w, i32 h, ::draw2d::graphics * pgraphicsSrc, i32 xSrc = 0, i32 ySrc = 0, u32 dwRop = SRCCOPY) { return draw_dim(x, y, w, h, pgraphicsSrc, xSrc, ySrc, dwRop); }
 
+   protected:
+
+      friend class savedc;
+      virtual i32 SaveDC();
+      virtual bool RestoreDC(i32 nSavedDC);
+
    };
 
 
@@ -849,6 +863,9 @@ namespace draw2d
 
       graphics *     m_pgraphics;
       int            m_iSavedDC;
+
+      matrix         m_matrixViewport;
+      matrix         m_matrixTransform;
 
       savedc(graphics * pgraphics);
       ~savedc();

@@ -32,6 +32,9 @@ namespace user
       mutex                               m_mutexLongPtr;
       int_ptr_to_int_ptr                  m_longptr;
 
+      uint32_t                            m_uiLastRedraw;
+
+
 
       interaction_impl_base();
       virtual ~interaction_impl_base();

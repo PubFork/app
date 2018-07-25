@@ -120,6 +120,7 @@ namespace draw2d
 
    }
 
+
    // 6 (six) elements
    void matrix::SetElements(float * fa)
    {

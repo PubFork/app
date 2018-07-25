@@ -392,44 +392,55 @@ namespace draw2d
 
 #endif
 
+
    point graphics::GetViewportOrg()
    {
-      _throw(interface_only_exception(get_app()));
 
-      return null_point();
+      return ::point(m_matrixViewport.c1, m_matrixViewport.c2);
 
    }
+
 
    size graphics::GetViewportExt()
    {
+
       _throw(interface_only_exception(get_app()));
 
       return size(0, 0);
 
    }
+
 
    point graphics::GetWindowOrg()
    {
+
       _throw(interface_only_exception(get_app()));
 
       return null_point();
+
    }
+
 
    size graphics::GetWindowExt()
    {
+
       _throw(interface_only_exception(get_app()));
 
       return size(0, 0);
 
    }
 
-   // non-virtual helpers calling virtual mapping functions
+
    point graphics::SetViewportOrg(POINT point)
    {
 
-      UNREFERENCED_PARAMETER(point);
+      m_matrixViewport.c1 = point.x;
 
-      _throw(interface_only_exception(get_app()));
+      m_matrixViewport.c2 = point.y;
+
+      update_matrix();
+
+      return ::point(m_matrixViewport.c1, m_matrixViewport.c2);
 
    }
 
@@ -455,14 +466,18 @@ namespace draw2d
 
    }
 
+
    size graphics::SetWindowExt(SIZE size)
    {
+
       UNREFERENCED_PARAMETER(size);
+
       _throw(interface_only_exception(get_app()));
 
       return ::size(0, 0);
 
    }
+
 
    void graphics::DPtoLP(LPPOINT lpPoints,count nCount)
    {
@@ -2954,10 +2969,19 @@ namespace draw2d
    point graphics::SetViewportOrg(i32 x, i32 y)
    {
 
-      UNREFERENCED_PARAMETER(x);
-      UNREFERENCED_PARAMETER(y);
+      return SetViewportOrg(point(x, y));
 
-      _throw(interface_only_exception(get_app()));
+   }
+
+
+   void graphics::get_viewport_scale(::draw2d::matrix & matrix)
+   {
+
+      matrix = draw2d::matrix();
+
+      matrix.a1 = m_matrixViewport.a1;
+
+      matrix.b2 = m_matrixViewport.b2;
 
    }
 
@@ -2965,46 +2989,72 @@ namespace draw2d
    point graphics::OffsetViewportOrg(i32 nWidth, i32 nHeight)
    {
 
-      UNREFERENCED_PARAMETER(nWidth);
-      UNREFERENCED_PARAMETER(nHeight);
+      m_matrixViewport.c1 += nWidth;
 
-      _throw(interface_only_exception(get_app()));
+      m_matrixViewport.c2 += nHeight;
+
+      update_matrix();
+
+      return point(m_matrixViewport.c1, m_matrixViewport.c2);
 
    }
+
 
    size graphics::SetViewportExt(i32 x, i32 y)
    {
+
       UNREFERENCED_PARAMETER(x);
+
       UNREFERENCED_PARAMETER(y);
+
       _throw(interface_only_exception(get_app()));
+
       return size(0, 0);
+
    }
+
 
    size graphics::ScaleViewportExt(i32 xNum, i32 xDenom, i32 yNum, i32 yDenom)
    {
-      UNREFERENCED_PARAMETER(xNum);
-      UNREFERENCED_PARAMETER(xDenom);
-      UNREFERENCED_PARAMETER(yNum);
-      UNREFERENCED_PARAMETER(yDenom);
-      _throw(interface_only_exception(get_app()));
+
+      m_matrixViewport.a1 *= (double)xNum / (double)xDenom;
+
+      m_matrixViewport.b2 *= (double)yNum / (double)yDenom;
+
+      update_matrix();
+
       return size(0, 0);
+
    }
+
 
    point graphics::SetWindowOrg(i32 x, i32 y)
    {
+
       UNREFERENCED_PARAMETER(x);
+
       UNREFERENCED_PARAMETER(y);
+
       _throw(interface_only_exception(get_app()));
+
       return null_point();
+
    }
+
 
    point graphics::OffsetWindowOrg(i32 nWidth, i32 nHeight)
    {
+
       UNREFERENCED_PARAMETER(nWidth);
+
       UNREFERENCED_PARAMETER(nHeight);
+
       _throw(interface_only_exception(get_app()));
+
       return null_point();
+
    }
+
 
    size graphics::SetWindowExt(i32 x, i32 y)
    {
@@ -5407,13 +5457,17 @@ namespace draw2d
       //   glVertex2f(p[6], p[7]);
       //}
       //glEnd();
+
    }
+
 
    void graphics::nanosvg_drawframe(NSVGimage* pimage, int x, int y, int width, int height)
    {
 
       float view[4], cx, cy, hw, hh, aspect, px;
+
       NSVGshape* shape;
+
       NSVGpath* path;
 
       //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
@@ -5561,6 +5615,8 @@ namespace draw2d
       {
 
       }
+      m_matrixViewport = pgraphics->m_matrixViewport;
+      m_matrixTransform = pgraphics->m_matrixTransform;
    }
    savedc::~savedc()
    {
@@ -5575,6 +5631,23 @@ namespace draw2d
       {
 
       }
+      m_pgraphics->m_matrixViewport = m_matrixViewport;
+      m_pgraphics->m_matrixTransform = m_matrixTransform;
+
+   }
+
+   bool graphics::_get(matrix & matrix)
+   {
+
+      return false;
+
+   }
+
+
+   bool graphics::_set(const matrix & matrix)
+   {
+
+      return false;
 
    }
 
@@ -5582,7 +5655,9 @@ namespace draw2d
    bool graphics::get(matrix & matrix)
    {
 
-      return false;
+      matrix = m_matrixTransform;
+
+      return true;
 
    }
 
@@ -5590,26 +5665,33 @@ namespace draw2d
    bool graphics::set(const matrix & matrix)
    {
 
-      return false;
+      m_matrixTransform = matrix;
+
+      update_matrix();
+
+      return true;
 
    }
 
 
-   bool graphics::append(const matrix & matrix)
+   bool graphics::update_matrix()
    {
 
-      ::draw2d::matrix m;
+      matrix matrixViewport;
 
-      if (!get(m))
-      {
+      matrix matrixViewportScale;
 
-         return false;
+      matrix matrixViewportTranslate;
 
-      }
+      matrixViewportScale.a1 = m_matrixViewport.a1;
 
-      m.append(matrix);
+      matrixViewportScale.b2 = m_matrixViewport.b2;
 
-      if (!set(m))
+      matrixViewportTranslate.c1 = m_matrixViewport.c1;
+
+      matrixViewportTranslate.c2 = m_matrixViewport.c2;
+
+      if (!_set(matrixViewportScale * m_matrixTransform * matrixViewportTranslate))
       {
 
          return false;
@@ -5621,26 +5703,24 @@ namespace draw2d
    }
 
 
+   bool graphics::append(const matrix & matrix)
+   {
+
+      m_matrixTransform.append(matrix);
+
+      update_matrix();
+
+      return true;
+
+   }
+
+
    bool graphics::prepend(const matrix & matrix)
    {
 
-      ::draw2d::matrix m;
+      m_matrixTransform.prepend(matrix);
 
-      if (!get(m))
-      {
-
-         return false;
-
-      }
-
-      m.prepend(matrix);
-
-      if (!set(m))
-      {
-
-         return false;
-
-      }
+      update_matrix();
 
       return true;
 

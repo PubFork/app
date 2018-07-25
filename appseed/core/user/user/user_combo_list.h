@@ -39,7 +39,6 @@ namespace user
 
       virtual void install_message_routing(::message::sender * psender) override;
 
-      void _001OnShowWindow(::message::message * pobj);
       virtual void _001OnDraw(::draw2d::graphics * pgraphics) override;
 
       //virtual void _001OnDrawVerisimple(::draw2d::graphics * pgraphics);
@@ -59,6 +58,7 @@ namespace user
       virtual bool GetClientRect(RECT64 * lprect) override;
 
 
+      DECL_GEN_SIGNAL(_001OnShowWindow);
       DECL_GEN_SIGNAL(_001OnSetFocus);
       DECL_GEN_SIGNAL(_001OnKillFocus);
       DECL_GEN_SIGNAL(_001OnClose);
