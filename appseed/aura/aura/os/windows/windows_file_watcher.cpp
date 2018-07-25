@@ -44,7 +44,7 @@ namespace file_watcher
       bool                 m_bRecursive;
 
       /// Starts monitoring a directory.
-      watch_struct(LPCTSTR szDirectory, uint32_t m_dwNotify, bool bRecursive)
+      watch_struct(LPCTSTR szDirectory, uint32_t dwNotify, bool bRecursive)
       {
 
          ZERO(m_overlapped);
@@ -57,6 +57,29 @@ namespace file_watcher
                                     FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, NULL,
                                     OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OVERLAPPED, NULL);
 
+         DWORD dwLen = GetFinalPathNameByHandleW(m_hDirectory, NULL, 0, 0);
+
+         if (dwLen > 0)
+         {
+
+            wstring wstr;
+
+            auto * pwsz = wstr.alloc(dwLen + 1);
+
+            if (GetFinalPathNameByHandleW(m_hDirectory, pwsz, dwLen + 1, 0) > 0)
+            {
+
+               CloseHandle(m_hDirectory);
+
+               m_hDirectory = CreateFileW(pwsz, FILE_LIST_DIRECTORY,
+                                          FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, NULL,
+                                          OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OVERLAPPED, NULL);
+
+            }
+
+
+         }
+
          if (m_hDirectory == INVALID_HANDLE_VALUE)
          {
 
@@ -65,8 +88,8 @@ namespace file_watcher
          }
 
          m_overlapped.hEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
-
-         m_dwNotify = m_dwNotify;
+         m_overlapped.Pointer = this;
+         m_dwNotify = dwNotify;
          m_bRecursive = bRecursive;
          m_bStop = false;
          m_bRefresh = true;
@@ -110,7 +133,7 @@ namespace file_watcher
       {
          TCHAR szFile[MAX_PATH];
          PFILE_NOTIFY_INFORMATION pNotify;
-         watch_struct* pWatch = (watch_struct*)lpOverlapped;
+         watch_struct* pWatch = (watch_struct*)lpOverlapped->Pointer;
          size_t offset = 0;
 
          if(dwNumberOfBytesTransfered == 0)
