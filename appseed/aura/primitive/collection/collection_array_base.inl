@@ -9,9 +9,22 @@ array_base < TYPE, ARG_TYPE, ALLOCATOR >::array_base()
    m_pData = NULL;
    m_nSize = 0;
    m_nMaxSize = 0;
+   m_bOwn = true;
 
 }
 
+
+template < class TYPE, class ARG_TYPE, class ALLOCATOR >
+array_base < TYPE, ARG_TYPE, ALLOCATOR >::array_base(TYPE * pData, ::count c)
+{
+
+   m_nGrowBy = 0;
+   m_pData = pData;
+   m_nSize = c;
+   m_nMaxSize = c;
+   m_bOwn = false;
+
+}
 
 
 
@@ -58,8 +71,19 @@ index array_base < TYPE, ARG_TYPE, ALLOCATOR >::remove_at(index nIndex,::count n
 
    index nUpperBound = nIndex + nCount;
 
-   if(nIndex < 0 || nCount < 0 || (nUpperBound > m_nSize) || (nUpperBound < nIndex) || (nUpperBound < nCount))
+   if (nIndex < 0 || nCount < 0 || (nUpperBound > m_nSize) || (nUpperBound < nIndex) || (nUpperBound < nCount))
+   {
+
       _throw(invalid_argument_exception(get_app()));
+
+   }
+
+   if (!m_bOwn)
+   {
+
+      _throw(simple_exception(get_app(), "not shrinkable/growable array"));
+
+   }
 
    // just remove a range
    ::count nMoveCount = m_nSize - (nUpperBound);
@@ -557,6 +581,13 @@ template < class TYPE, class ARG_TYPE, class ALLOCATOR >
    {
 
       return m_nSize;
+
+   }
+
+   if (!m_bOwn)
+   {
+
+      throw simple_exception(::get_app(), "not growable/shrinkable array");
 
    }
 

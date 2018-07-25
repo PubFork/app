@@ -342,6 +342,14 @@ array < TYPE, ARG_TYPE, ALLOCATOR > ::array(::aura::application * papp, ::count 
 
 
 template < class TYPE, class ARG_TYPE, class ALLOCATOR >
+array < TYPE, ARG_TYPE, ALLOCATOR > ::array(TYPE * ptype, ::count c) :
+   ::array_base < TYPE, ARG_TYPE, ALLOCATOR >(ptype, c)
+{
+
+}
+
+
+template < class TYPE, class ARG_TYPE, class ALLOCATOR >
 array < TYPE, ARG_TYPE, ALLOCATOR > ::array(const array & a) :
    object(a)
 {
@@ -430,26 +438,26 @@ inline void array < TYPE, ARG_TYPE, ALLOCATOR > ::copy(const array& src)
 template < class TYPE, class ARG_TYPE, class ALLOCATOR >
 void array < TYPE, ARG_TYPE, ALLOCATOR > ::dump(dump_context & dumpcontext) const
 {
-   
+
    object::dump(dumpcontext);
 
    dumpcontext << "with ";
-   
+
    dumpcontext.write(this->m_nSize);
-   
+
    dumpcontext << " elements";
-   
+
    if (dumpcontext.GetDepth() > 0)
    {
-      
+
       dumpcontext << "\n";
-      
+
       dump_elements<TYPE>(dumpcontext, this->get_data(), this->m_nSize);
-      
+
    }
 
    dumpcontext << "\n";
-   
+
 }
 
 

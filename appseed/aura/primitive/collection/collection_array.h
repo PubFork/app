@@ -18,6 +18,7 @@ public:
 
 
    array(::aura::application * papp = NULL, ::count nGrowBy = 0);
+   array(TYPE * ptype, ::count c);
    array(const array & a);
    array(::std::initializer_list < TYPE > l);
    array(::count n);

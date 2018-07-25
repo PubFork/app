@@ -303,8 +303,10 @@ public:
    ::count        m_nSize;    // # of elements (upperBound - 1)
    ::count        m_nMaxSize; // MAX allocated
    ::count        m_nGrowBy;  // grow amount
+   bool           m_bOwn;
 
    array_base();
+   array_base(TYPE * pData, ::count c);
    virtual ~array_base();
 
 
