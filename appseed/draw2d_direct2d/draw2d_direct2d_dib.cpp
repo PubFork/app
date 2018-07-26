@@ -3022,7 +3022,7 @@ namespace draw2d_direct2d
          if(bSmallerSourceRegion)
          {
 
-            ::draw2d::keep k1(pgraphicsDst);
+            ::draw2d::savedc k1(pgraphicsDst);
 
             class rect rDst;
             rDst.left = ptDst.x;
