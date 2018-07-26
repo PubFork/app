@@ -12,6 +12,7 @@ namespace http
 
 
    stream::stream(::file::file * pbuffer) :
+      ::stream(pbuffer),
       ::file::plain_text_stream(pbuffer)
    {
 

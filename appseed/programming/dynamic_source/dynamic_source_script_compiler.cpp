@@ -320,7 +320,7 @@ namespace dynamic_source
       }
       else
       {
-         pscript->m_strSourcePath.Format(m_pmanager->m_strNetnodePath / "net\\%s",false,strName);
+         pscript->m_strSourcePath.Format(m_pmanager->m_strNetnodePath / "net\\%s",strName);
       }
       pscript->m_strSourceDir = pscript->m_strSourcePath.folder();
 
@@ -2192,7 +2192,7 @@ namespace dynamic_source
          }
          else if(bInVar)
          {
-            if(isdigit(ch) || isalpha(ch) || ch == '_')
+            if(isdigit_dup(ch) || isalpha_dup(ch) || ch == '_')
             {
                if(bLow)
                {
@@ -2240,7 +2240,7 @@ namespace dynamic_source
                }
                else
                {
-                  while(isspace(str[i]) && i < iLen)
+                  while(isspace_dup(str[i]) && i < iLen)
                   {
                      i++;
                   }
@@ -2254,13 +2254,13 @@ namespace dynamic_source
                   else if(ch == '-' && chNext == '>')
                   {
                      i+=2;
-                     while(isspace(str[i]) && i < iLen)
+                     while(isspace_dup(str[i]) && i < iLen)
                      {
                         i++;
                      }
                      ch = str[i];
                      string strToken;
-                     if(isalpha(ch) || ch == '_')
+                     if(isalpha_dup(ch) || ch == '_')
                      {
                         strToken += ch;
                         i++;
@@ -2271,14 +2271,14 @@ namespace dynamic_source
                         return strResult;
                      }
                      ch = str[i];
-                     while(isdigit(ch) || isalpha(ch) || ch == '_')
+                     while(isdigit_dup(ch) || isalpha_dup(ch) || ch == '_')
                      {
                         strToken += ch;
                         i++;
                         ch = str[i];
                      }
                      ch = str[i];
-                     while(isspace(ch))
+                     while(isspace_dup(ch))
                      {
                         i++;
                         ch = str[i];
@@ -2290,7 +2290,7 @@ namespace dynamic_source
                         iaFunctionParen.add(iOpenParen);
                         iOpenParen++;
                         straFunction.add(strToken);
-                        while(isspace(ch))
+                        while(isspace_dup(ch))
                         {
                            i++;
                            ch = str[i];
@@ -2335,7 +2335,7 @@ namespace dynamic_source
             }
             else
             {
-               if(ch == '$' && (isalpha(chNext) || chNext == '_'))
+               if(ch == '$' && (isalpha_dup(chNext) || chNext == '_'))
                {
                   bInVar = true;
                   //strResult += "\") + glowstr(\"";
@@ -2406,7 +2406,7 @@ namespace dynamic_source
             strResult += "'";
 
          }
-         else if(ch == '$' && (isalpha(chNext) || chNext == '_'))
+         else if(ch == '$' && (isalpha_dup(chNext) || chNext == '_'))
          {
             if(bInVar)
             {
