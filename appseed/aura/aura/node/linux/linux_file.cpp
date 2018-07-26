@@ -254,7 +254,7 @@ namespace linux
 
       // Win32s will not return an error all the time (usually DISK_FULL)
       //if (iWrite != nCount)
-         //vfxThrowFileException(get_app(), ::file::exception::diskFull, -1, m_strFileName);
+      //vfxThrowFileException(get_app(), ::file::exception::diskFull, -1, m_strFileName);
    }
 
    file_position_t file::seek(file_offset_t lOff, ::file::e_seek nFrom)
@@ -288,7 +288,7 @@ namespace linux
 //      LONG lHiOffset = 0;
 
       file_position_t pos = ::lseek64(m_iFile, lLoOffset, SEEK_CUR);
-  //    pos |= ((file_position_t)lHiOffset) << 32;
+      //    pos |= ((file_position_t)lHiOffset) << 32;
       if(pos  == (file_position_t)-1)
          file_exception::ThrowOsError(get_app(), (LONG)::get_last_error());
 
@@ -298,13 +298,13 @@ namespace linux
    void file::Flush()
    {
 
-/*      ::open
-      ::read
-      ::write
+      /*      ::open
+            ::read
+            ::write
 
-      access the system directly no buffering : direct I/O - efficient for large writes - innefficient for lots of single byte writes
+            access the system directly no buffering : direct I/O - efficient for large writes - innefficient for lots of single byte writes
 
-      */
+            */
 
 //      if (m_iFile == INVALID_FILE)
 //         return;
@@ -363,8 +363,8 @@ namespace linux
 
       ASSERT(m_iFile != INVALID_FILE);
 
-/*      if (!::UnlockFile((HANDLE)m_iFile,  LODWORD(dwPos), HIDWORD(dwPos), LODWORD(dwCount), HIDWORD(dwCount)))
-         file_exception::ThrowOsError(get_app(), (LONG)::get_last_error());*/
+      /*      if (!::UnlockFile((HANDLE)m_iFile,  LODWORD(dwPos), HIDWORD(dwPos), LODWORD(dwCount), HIDWORD(dwCount)))
+               file_exception::ThrowOsError(get_app(), (LONG)::get_last_error());*/
    }
 
    void file::set_length(file_size_t dwNewLen)
@@ -395,7 +395,7 @@ namespace linux
 
    // file does not support direct buffering (CMemFile does)
    uint64_t file::GetBufferPtr(UINT nCommand, uint64_t /*nCount*/,
-      void ** /*ppBufStart*/, void ** /*ppBufMax*/)
+                               void ** /*ppBufStart*/, void ** /*ppBufMax*/)
    {
       ASSERT(nCommand == bufferCheck);
       UNUSED(nCommand);    // not used in retail build
@@ -753,29 +753,29 @@ namespace linux
          rStatus.m_size = st.st_size;
 
          //if ((rStatus.m_size = ::GetFileSize((HANDLE)m_iFile, NULL)) == (DWORD)-1L)
-           // return FALSE;
+         // return FALSE;
 
 
          //if (m_strFileName.is_empty())
          // _throw(todo(get_app()));
-            rStatus.m_attribute = 0;
-/*         else
-         {
-            DWORD dwAttribute = ::GetFileAttributesW(::str::international::utf8_to_unicode(m_strFileName));
+         rStatus.m_attribute = 0;
+         /*         else
+                  {
+                     DWORD dwAttribute = ::GetFileAttributesW(::str::international::utf8_to_unicode(m_strFileName));
 
-            // don't return an error for this because previous versions of ca2 API didn't
-            if (dwAttribute == 0xFFFFFFFF)
-               rStatus.m_attribute = 0;
-            else
-            {
-               rStatus.m_attribute = (BYTE) dwAttribute;
-#ifdef DEBUG
-               // ca2 API BUG: m_attribute is only a BYTE wide
-               if (dwAttribute & ~0xFF)
-                  TRACE0("Warning: file::GetStatus() returns m_attribute without high-order flags.\n");
-#endif
-            }
-         }*/
+                     // don't return an error for this because previous versions of ca2 API didn't
+                     if (dwAttribute == 0xFFFFFFFF)
+                        rStatus.m_attribute = 0;
+                     else
+                     {
+                        rStatus.m_attribute = (BYTE) dwAttribute;
+         #ifdef DEBUG
+                        // ca2 API BUG: m_attribute is only a BYTE wide
+                        if (dwAttribute & ~0xFF)
+                           TRACE0("Warning: file::GetStatus() returns m_attribute without high-order flags.\n");
+         #endif
+                     }
+                  }*/
 
          // convert times as appropriate
          //rStatus.m_ctime = ::datetime::time(ftCreate);
@@ -1032,9 +1032,9 @@ namespace linux
 
 // turn a file, relative path or other into an absolute path
 bool CLASS_DECL_AURA vfxFullPath(wstring & wstrFullPath, const wstring & wstrPath)
-   // lpszPathOut = buffer of _MAX_PATH
-   // lpszFileIn = file, relative path or absolute path
-   // (both in ANSI character set)
+// lpszPathOut = buffer of _MAX_PATH
+// lpszFileIn = file, relative path or absolute path
+// (both in ANSI character set)
 {
 
 
@@ -1056,10 +1056,10 @@ bool CLASS_DECL_AURA vfxFullPath(wstring & wstrFullPath, const wstring & wstrPat
 
    if(dwLen == 0)
    {
-#ifdef DEBUG
+   #ifdef DEBUG
       //      if (lpszFileIn[0] != '\0')
       //       TRACE1("Warning: could not parse the path '%s'.\n", lpszFileIn);
-#endif
+   #endif
       wstrFullPath = wstrPath; // take it literally
       return FALSE;
    }
@@ -1072,10 +1072,10 @@ bool CLASS_DECL_AURA vfxFullPath(wstring & wstrFullPath, const wstring & wstrPat
 
       if(dwLen == 0 || dwLen > dwAllocLen)
       {
-#ifdef DEBUG
+   #ifdef DEBUG
          //      if (lpszFileIn[0] != '\0')
          //       TRACE1("Warning: could not parse the path '%s'.\n", lpszFileIn);
-#endif
+   #endif
          wstrFullPath = wstrPath; // take it literally
          return FALSE;
       }
@@ -1250,19 +1250,19 @@ CLASS_DECL_AURA void vfxGetModuleShortFileName(HINSTANCE hInst, string& strShort
    strShortName = plm->l_name;
 
 
-/*   WCHAR szLongPathName[_MAX_PATH];
-   wstring wstrShortName;
-   ::GetModuleFileNameW(hInst, szLongPathName, _MAX_PATH);
-   if(::GetShortPathNameW(szLongPathName, wstrShortName.alloc(_MAX_PATH * 4), _MAX_PATH * 4) == 0)
-   {
-      // rare failure case (especially on not-so-modern file systems)
-      ::str::international::unicode_to_utf8(strShortName, szLongPathName);
-   }
-   else
-   {
-      wstrShortName.release_buffer();
-      ::str::international::unicode_to_utf8(strShortName, wstrShortName);
-   }*/
+   /*   WCHAR szLongPathName[_MAX_PATH];
+      wstring wstrShortName;
+      ::GetModuleFileNameW(hInst, szLongPathName, _MAX_PATH);
+      if(::GetShortPathNameW(szLongPathName, wstrShortName.alloc(_MAX_PATH * 4), _MAX_PATH * 4) == 0)
+      {
+         // rare failure case (especially on not-so-modern file systems)
+         ::str::international::unicode_to_utf8(strShortName, szLongPathName);
+      }
+      else
+      {
+         wstrShortName.release_buffer();
+         ::str::international::unicode_to_utf8(strShortName, wstrShortName);
+      }*/
 }
 
 
@@ -1325,363 +1325,51 @@ CLASS_DECL_AURA bool vfxResolveShortcut(string & strTarget, const char * pszSour
 
    return true;
 
-/*
-
-   sp(::user::primitive) pui = puiMessageParentOptional;
-
-   wstring wstrFileOut;
-   wstring wstrFileIn = ::str::international::utf8_to_unicode(pszSource);
-
-   DWORD dwVersion = GetVersion();
-
-   // get the Windows version.
-
-   DWORD dwWindowsMajorVersion =  (DWORD)(LOBYTE(LOWORD(dwVersion)));
-   DWORD dwWindowsMinorVersion =  (DWORD)(HIBYTE(LOWORD(dwVersion)));
-
-   // get the build number.
-
-   DWORD dwBuild;
-
-   if (dwVersion < 0x80000000)              // Windows NT
-      dwBuild = (DWORD)(HIWORD(dwVersion));
-   else if (dwWindowsMajorVersion < 4)      // Win32s
-      dwBuild = (DWORD)(HIWORD(dwVersion) & ~0x8000);
-   else                                     // Windows Me/98/95
-      dwBuild =  0;
-
-   bool bNativeUnicode;
-   if (dwVersion < 0x80000000)              // Windows NT
-      bNativeUnicode = TRUE;
-   else if (dwWindowsMajorVersion < 4)      // Win32s
-      bNativeUnicode = FALSE;
-   else                                     // Windows Me/98/95
-      bNativeUnicode = FALSE;
 
 
-   //   __COM com;
-   IShellLinkW* psl;
-   wstrFileOut = L"";
-
-   SHFILEINFOW info;
-   if ((::win::shell::SHGetFileInfo(wstrFileIn, 0, &info, sizeof(info),
-      SHGFI_ATTRIBUTES) == 0) || !(info.dwAttributes & SFGAO_LINK))
-   {
-      return FALSE;
-   }
-
-   HRESULT hr ;
-   if (FAILED(hr = CoCreateInstance(CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER, IID_IShellLinkW,
-      (LPVOID*)&psl)))
-   {
-      return FALSE;
-   }
-
-   IPersistFile *ppf;
-   if (SUCCEEDED(psl->QueryInterface(IID_IPersistFile, (LPVOID*)&ppf)))
-   {
-      if (SUCCEEDED(ppf->Load(wstrFileIn, STGM_READ)))
-      {
-         // Resolve the link, this may post UI to find the link
-//         if (SUCCEEDED(psl->Resolve(pui == NULL ? NULL : (oswindow) pui->get_os_data(),
-//            SLR_ANY_MATCH | (pui == NULL ? (SLR_NO_UI | (8400 << 16)) : 0))))
-//         {
-//            wstrFileOut.alloc(MAX_PATH);
-//            bool bOk;
-//            if(SUCCEEDED(psl->GetPath(wstrFileOut, MAX_PATH, NULL, 0)))
-//            {
-//               bOk = true;
-//               wstrFileOut.release_buffer();
-//               strTarget = ::str::international::unicode_to_utf8((LPCWSTR) wstrFileOut);
-//            }
-//            else
-//            {
-//               bOk = false;
-//            }
-//            ppf->Release();
-//            psl->Release();
-//            return bOk;
-//         }
-//      }
-//      ppf->Release();
-//   }
-//   psl->Release();
-//   return FALSE;
-*/
-}
-
-// turn a file, relative path or other into an absolute path
-//bool CLASS_DECL_AURA vfxFullPath(unichar * lpszPathOut, const unichar * lpszFileIn)
-   // lpszPathOut = buffer of _MAX_PATH
-   // lpszFileIn = file, relative path or absolute path
-   // (both in ANSI character set)
-//{
-   /*
-   ASSERT(__is_valid_address(lpszPathOut, _MAX_PATH));
-
-   // first, fully qualify the path name
-   unichar * lpszFilePart;
-   if (!GetFullPathNameW(lpszFileIn, _MAX_PATH, lpszPathOut, &lpszFilePart))
+   void CLASS_DECL_AURA vfxThrowFileException(::aura::application * papp, ::file::exception::e_cause ecause, int lOsError, const char * lpszFileName /* == NULL */)
    {
 #ifdef DEBUG
-      //      if (lpszFileIn[0] != '\0')
-      //       TRACE1("Warning: could not parse the path '%s'.\n", lpszFileIn);
+      const char * lpsz;
+      if (ecause >= 0 && ecause < _countof(::linux::rgszFileExceptioncause))
+         lpsz = ::linux::rgszFileExceptioncause[ecause];
+      else
+         lpsz = ::linux::szUnknown;
+      //   TRACE3("file exception: %hs, file %s, App error information = %d.\n", lpsz, (lpszFileName == NULL) ? "Unknown" : lpszFileName, lOsError);
 #endif
-      lstrcpynW(lpszPathOut, lpszFileIn, _MAX_PATH); // take it literally
-      return FALSE;
+      _throw(::file::exception(papp, ecause, lOsError, lpszFileName));
    }
 
-   string strRoot;
-   // determine the root name of the volume
-   vfxGetRoot(lpszPathOut, strRoot);
-
-   // get file system information for the volume
-   DWORD dwFlags, dwDummy;
-   if (!GetVolumeInformationW(::str::international::utf8_to_unicode(strRoot), NULL, 0, NULL, &dwDummy, &dwFlags, NULL, 0))
+   namespace linux
    {
-      //      TRACE1("Warning: could not get volume information '%s'.\n", strRoot);
-      return FALSE;   // preserving case may not be correct
-   }
 
-   // not all characters have complete uppercase/lowercase
-   if (!(dwFlags & FS_caSE_IS_PRESERVED))
-      CharUpperW(lpszPathOut);
 
-   // assume non-UNICODE file systems, use OEM character set
-   if (!(dwFlags & FS_UNICODE_STORED_ON_DISK))
-   {
-      WIN32_FIND_DATAW data;
-      HANDLE h = FindFirstFileW(lpszFileIn, &data);
-      if (h != INVALID_HANDLE_VALUE)
+      ::file::exception::e_cause file_exception::ErrnoToException(int32_t nErrno)
       {
-         FindClose(h);
-         lstrcpyW(lpszFilePart, data.cFileName);
+         switch(nErrno)
+         {
+         case EPERM:
+         case EACCES:
+            return ::file::exception::accessDenied;
+         case EBADF:
+            return ::file::exception::invalidFile;
+         case EDEADLOCK:
+            return ::file::exception::sharingViolation;
+         case EMFILE:
+            return ::file::exception::tooManyOpenFiles;
+         case ENOENT:
+         case ENFILE:
+            return ::file::exception::fileNotFound;
+         case ENOSPC:
+            return ::file::exception::diskFull;
+         case EINVAL:
+         case EIO:
+            return ::file::exception::hardIO;
+         default:
+            return ::file::exception::type_generic;
+         }
       }
-   }
-   return TRUE;*/
-//}
 
 
-
-/*
-void CLASS_DECL_AURA vfxGetRoot(wstring & wstrRoot, const wstring & wstrPath)
-{
-   //   ASSERT(lpszPath != NULL);
-   // determine the root name of the volume
-   wstrRoot = wstrPath;
-   unichar * lpszRoot = wstrRoot;
-   unichar * lpsz;
-   for (lpsz = lpszRoot; *lpsz != L'\0'; lpsz = _wcsinc(lpsz))
-   {
-      // find first double slash and stop
-      if (IsDirSep(lpsz[0]) && IsDirSep(lpsz[1]))
-         break;
-   }
-   if (*lpsz != '\0')
-   {
-      // it is a UNC name, find second slash past '\\'
-      ASSERT(IsDirSep(lpsz[0]));
-      ASSERT(IsDirSep(lpsz[1]));
-      lpsz += 2;
-      while (*lpsz != '\0' && (!IsDirSep(*lpsz)))
-         lpsz = _wcsinc(lpsz);
-      if (*lpsz != '\0')
-         lpsz = _wcsinc(lpsz);
-      while (*lpsz != '\0' && (!IsDirSep(*lpsz)))
-         lpsz = _wcsinc(lpsz);
-      // terminate it just after the UNC root (ie. '\\server\share\')
-      if (*lpsz != '\0')
-         lpsz[1] = '\0';
-   }
-   else
-   {
-      // not a UNC, look for just the first slash
-      lpsz = lpszRoot;
-      while (*lpsz != '\0' && (!IsDirSep(*lpsz)))
-         lpsz = _wcsinc(lpsz);
-      // terminate it just after root (ie. 'x:\')
-      if (*lpsz != '\0')
-         lpsz[1] = '\0';
-   }
-   wstrRoot.release_buffer();
-}*/
-
-/*
-void CLASS_DECL_AURA vfxGetRoot(const unichar * lpszPath, string& strRoot)
-{
-   ASSERT(lpszPath != NULL);
-   wstring wstrRoot;
-   // determine the root name of the volume
-   unichar * lpszRoot = wstrRoot.alloc(_MAX_PATH * 4);
-   memset(lpszRoot, 0, _MAX_PATH * 4);
-   lstrcpynW(lpszRoot, lpszPath, _MAX_PATH * 4);
-   unichar * lpsz;
-   for (lpsz = lpszRoot; *lpsz != '\0'; lpsz = _wcsinc(lpsz))
-   {
-      // find first double slash and stop
-      if (IsDirSep(lpsz[0]) && IsDirSep(lpsz[1]))
-         break;
-   }
-   if (*lpsz != '\0')
-   {
-      // it is a UNC name, find second slash past '\\'
-      ASSERT(IsDirSep(lpsz[0]));
-      ASSERT(IsDirSep(lpsz[1]));
-      lpsz += 2;
-      while (*lpsz != '\0' && (!IsDirSep(*lpsz)))
-         lpsz = _wcsinc(lpsz);
-      if (*lpsz != '\0')
-         lpsz = _wcsinc(lpsz);
-      while (*lpsz != '\0' && (!IsDirSep(*lpsz)))
-         lpsz = _wcsinc(lpsz);
-      // terminate it just after the UNC root (ie. '\\server\share\')
-      if (*lpsz != '\0')
-         lpsz[1] = '\0';
-   }
-   else
-   {
-      // not a UNC, look for just the first slash
-      lpsz = lpszRoot;
-      while (*lpsz != '\0' && (!IsDirSep(*lpsz)))
-         lpsz = _wcsinc(lpsz);
-      // terminate it just after root (ie. 'x:\')
-      if (*lpsz != '\0')
-         lpsz[1] = '\0';
-   }
-   ::str::international::unicode_to_utf8(strRoot, wstrRoot);
-}
-*/
-
-
-/*bool CLASS_DECL_AURA vfxFullPath(char * lpszPathOut, const char * lpszFileIn)
-// lpszPathOut = buffer of _MAX_PATH
-// lpszFileIn = file, relative path or absolute path
-// (both in ANSI character set)
-{
-ASSERT(__is_valid_address(lpszPathOut, _MAX_PATH));
-
-// first, fully qualify the path name
-unichar * lpszFilePart;
-if (!shell::GetFullPathName(lpszFileIn, _MAX_PATH, lpszPathOut, &lpszFilePart))
-{
-#ifdef DEBUG
-if (lpszFileIn[0] != '\0')
-TRACE1("Warning: could not parse the path '%s'.\n", lpszFileIn);
-#endif
-lstrcpynW(lpszPathOut, lpszFileIn, _MAX_PATH); // take it literally
-return FALSE;
-}
-
-string wstrRoot;
-// determine the root name of the volume
-vfxGetRoot(lpszPathOut, wstrRoot);
-
-// get file system information for the volume
-DWORD dwFlags, dwDummy;
-if (!shell::GetVolumeInformation(wstrRoot, NULL, 0, NULL, &dwDummy, &dwFlags,
-NULL, 0))
-{
-TRACE1("Warning: could not get volume information '%S'.\n",
-(const char *)wstrRoot);
-return FALSE;   // preserving case may not be correct
-}
-
-// not all characters have complete uppercase/lowercase
-if (!(dwFlags & FS_caSE_IS_PRESERVED))
-CharUpperW(lpszPathOut);
-
-// assume non-UNICODE file systems, use OEM character set
-if (!(dwFlags & FS_UNICODE_STORED_ON_DISK))
-{
-WIN32_FIND_DATAW data;
-HANDLE h = shell::FindFirstFile(lpszFileIn, &data);
-if (h != INVALID_HANDLE_VALUE)
-{
-FindClose(h);
-wcscpy(lpszFilePart, data.cFileName);
-}
-}
-return TRUE;
-}*/
-
-
-
-
-/*CLASS_DECL_AURA UINT vfxGetFileName(const char * lpszPathName, char * lpszTitle, UINT nMax)
-{
-   ASSERT(lpszTitle == NULL ||
-      __is_valid_address(lpszTitle, _MAX_FNAME));
-   ASSERT(__is_valid_string(lpszPathName));
-
-   // always capture the complete file name including extension (if present)
-   const char * lpszTemp = (char *)lpszPathName;
-   for (const char * lpsz = lpszPathName; *lpsz != '\0'; lpsz = lpsz++)
-   {
-      // remember last directory/drive separator
-      if (*lpsz == '\\' || *lpsz == '/' || *lpsz == ':')
-         lpszTemp = lpsz++;
-   }
-
-   // lpszTitle can be NULL which just returns the number of bytes
-   if (lpszTitle == NULL)
-      return strlen_dup(lpszTemp)+1;
-
-   // otherwise copy it into the buffer provided
-   strncpy(lpszTitle, lpszTemp, nMax);
-   return 0;
-}*/
-
-
-
-
-
-
-/////////////////////////////////////////////////////////////////////////////
-// WinFileException helpers
-
-void CLASS_DECL_AURA vfxThrowFileException(::aura::application * papp, ::file::exception::e_cause ecause, int lOsError, const char * lpszFileName /* == NULL */)
-{
-#ifdef DEBUG
-   const char * lpsz;
-   if (ecause >= 0 && ecause < _countof(::linux::rgszFileExceptioncause))
-      lpsz = ::linux::rgszFileExceptioncause[ecause];
-   else
-      lpsz = ::linux::szUnknown;
-   //   TRACE3("file exception: %hs, file %s, App error information = %d.\n", lpsz, (lpszFileName == NULL) ? "Unknown" : lpszFileName, lOsError);
-#endif
-   _throw(::file::exception(papp, ecause, lOsError, lpszFileName));
-}
-
-namespace linux
-{
-
-
-    ::file::exception::e_cause file_exception::ErrnoToException(int32_t nErrno)
-    {
-       switch(nErrno)
-       {
-       case EPERM:
-       case EACCES:
-          return ::file::exception::accessDenied;
-       case EBADF:
-          return ::file::exception::invalidFile;
-       case EDEADLOCK:
-          return ::file::exception::sharingViolation;
-       case EMFILE:
-          return ::file::exception::tooManyOpenFiles;
-       case ENOENT:
-       case ENFILE:
-          return ::file::exception::fileNotFound;
-       case ENOSPC:
-          return ::file::exception::diskFull;
-       case EINVAL:
-       case EIO:
-          return ::file::exception::hardIO;
-       default:
-          return ::file::exception::type_generic;
-       }
-    }
-
-
-} // namespace linux
+   } // namespace linux
 

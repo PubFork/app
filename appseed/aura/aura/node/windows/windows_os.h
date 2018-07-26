@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 
+CLASS_DECL_AURA HRESULT os_create_link(::file::path pathObj, ::file::path pathLink, string strDesc, ::file::path pathIcon = "", int iIcon = 0);
 
 namespace windows
 {

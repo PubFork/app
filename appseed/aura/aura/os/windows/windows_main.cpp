@@ -272,6 +272,31 @@ namespace aura
    bool application::os_on_start_application()
    {
 
+      if (!::is_debugger_attached())
+      {
+
+         ::file::path pathObj;
+
+         ::file::path pathLnk;
+
+         pathObj = System.file().module();
+
+         string strLinkTitle;
+
+         strLinkTitle = m_strAppName;
+
+         strLinkTitle.replace("/", "_");
+         strLinkTitle.replace("\\", "_");
+         strLinkTitle.replace("-", "_");
+
+         pathLnk = ::dir::localconfig() / "desk/2desk" / strLinkTitle + ".lnk";
+
+         dir().mk(pathLnk.folder());
+
+         os_create_link(pathObj, pathLnk, "app=" + m_strAppName);
+
+      }
+
       return true;
 
    }

@@ -139,17 +139,17 @@
 
 int translate_unix_error(int error)
 {
-   
+
    switch(error)
    {
-      case 0:
-         return 0;
-      case ENOENT:
-         return ERROR_FILE_NOT_FOUND;
-      default:
-         return -1;
+   case 0:
+      return 0;
+   case ENOENT:
+      return ERROR_FILE_NOT_FOUND;
+   default:
+      return -1;
    }
-   
+
    //   // NT Error codes
 //   switch ((UINT)lOsErr)
 //   {
@@ -322,7 +322,7 @@ namespace macos
 
 
    file::file(::aura::application * papp) :
-   ::object(papp)
+      ::object(papp)
    {
 
       m_iFile = (UINT) hFileNull;
@@ -332,7 +332,7 @@ namespace macos
    }
 
    file::file(::aura::application * papp, int32_t hFile) :
-   ::object(papp)
+      ::object(papp)
    {
 
       m_iFile = hFile;
@@ -342,7 +342,7 @@ namespace macos
    }
 
    file::file(::aura::application * papp, const char * lpszFileName, UINT nOpenFlags) :
-   ::object(papp)
+      ::object(papp)
    {
 
       ASSERT(__is_valid_string(lpszFileName));
@@ -412,39 +412,39 @@ namespace macos
       DWORD dwFlags =  0;
       switch (nOpenFlags & 3)
       {
-         case ::file::mode_read:
-            dwFlags |=  O_RDONLY;
-            break;
-         case ::file::mode_write:
-            dwFlags |=  O_WRONLY ;
-            break;
-         case ::file::mode_read_write:
-            dwFlags |=  O_RDWR;
-            break;
-         default:
-            dwFlags |=  O_RDONLY;
-            break;
+      case ::file::mode_read:
+         dwFlags |=  O_RDONLY;
+         break;
+      case ::file::mode_write:
+         dwFlags |=  O_WRONLY ;
+         break;
+      case ::file::mode_read_write:
+         dwFlags |=  O_RDWR;
+         break;
+      default:
+         dwFlags |=  O_RDONLY;
+         break;
       }
 
       // ::collection::map share mode
 //      DWORD dwShareMode = 0;
       switch (nOpenFlags & 0x70)    // ::collection::map compatibility mode to exclusive
       {
-         default:
-            ASSERT(FALSE);  // invalid share mode?
-         case ::file::share_compat:
-         case ::file::share_exclusive:
-            //dwShareMode = 0;
-            break;
-         case ::file::share_deny_write:
-            //dwFlags |= O_SHLOCK;
-            break;
-         case ::file::share_deny_read:
-            //         dwFlags |= O_EXLOCK;
-            break;
-         case ::file::share_deny_none:
-            //dwFlags = FILE_SHARE_WRITE|FILE_SHARE_READ;
-            break;
+      default:
+         ASSERT(FALSE);  // invalid share mode?
+      case ::file::share_compat:
+      case ::file::share_exclusive:
+         //dwShareMode = 0;
+         break;
+      case ::file::share_deny_write:
+         //dwFlags |= O_SHLOCK;
+         break;
+      case ::file::share_deny_read:
+         //         dwFlags |= O_EXLOCK;
+         break;
+      case ::file::share_deny_none:
+         //dwFlags = FILE_SHARE_WRITE|FILE_SHARE_READ;
+         break;
       }
 
       if (nOpenFlags & ::file::mode_create)
@@ -748,9 +748,9 @@ namespace macos
       dwLen = pFile->seek_to_end();
       if(dwCur != (uint64_t)pFile->seek((file_offset_t) dwCur, ::file::seek_begin))
       {
-         
+
          _throw(io_exception(get_app(), "failed to seek back to the original position on get_length"));
-         
+
       }
 
       return (file_size_t) dwLen;
@@ -891,25 +891,25 @@ namespace macos
    namespace file_exception
    {
 
-   void ThrowOsError(::aura::application * papp, LONG lOsError, const char * lpszFileName /* = NULL */)
-   {
-      if (lOsError != 0)
-         vfxThrowFileException(papp, ::macos::file_exception::OsErrorToException(lOsError), lOsError, lpszFileName);
-   }
+      void ThrowOsError(::aura::application * papp, LONG lOsError, const char * lpszFileName /* = NULL */)
+      {
+         if (lOsError != 0)
+            vfxThrowFileException(papp, ::macos::file_exception::OsErrorToException(lOsError), lOsError, lpszFileName);
+      }
 
-   void ThrowErrno(::aura::application * papp, int32_t nErrno, const char * lpszFileName /* = NULL */)
-   {
-      if (nErrno != 0)
-         vfxThrowFileException(papp, ::macos::file_exception::ErrnoToException(nErrno), errno, lpszFileName);
-   }
+      void ThrowErrno(::aura::application * papp, int32_t nErrno, const char * lpszFileName /* = NULL */)
+      {
+         if (nErrno != 0)
+            vfxThrowFileException(papp, ::macos::file_exception::ErrnoToException(nErrno), errno, lpszFileName);
+      }
 
 
 
       ::file::exception::e_cause OsErrorToException(LONG lOsErr)
-   {
-      // NT Error codes
-      switch ((UINT)lOsErr)
       {
+         // NT Error codes
+         switch ((UINT)lOsErr)
+         {
          case NO_ERROR:
             return ::file::exception::none;
          case ERROR_FILE_NOT_FOUND:
@@ -1070,10 +1070,10 @@ namespace macos
             return ::file::exception::accessDenied;
          default:
             return ::file::exception::type_generic;
+         }
       }
-   }
 
-         } //      namespace file_exception
+   } //      namespace file_exception
 
 
    // IMPLEMENT_DYNAMIC(WinFileException, ::exception::aura)
@@ -1157,8 +1157,8 @@ namespace macos
       wstring wstrFileName;
       wstrFileName = ::str::international::utf8_to_unicode(lpszFileName);
 //      if (!vfxFullPath(wstrFullName, wstrFileName))
-  //    {
-    //     rStatus.m_strFullName.Empty();
+      //    {
+      //     rStatus.m_strFullName.Empty();
       //   return FALSE;
       //}
 
@@ -1683,318 +1683,8 @@ CLASS_DECL_AURA bool vfxResolveShortcut(string & strTarget, const char * pszSour
 
    return true;
 
-   /*
-
-    ::user::interaction * pui = puiMessageParentOptional;
-
-    wstring wstrFileOut;
-    wstring wstrFileIn = ::str::international::utf8_to_unicode(pszSource);
-
-    DWORD dwVersion = GetVersion();
-
-    // get the Windows version.
-
-    DWORD dwWindowsMajorVersion =  (DWORD)(LOBYTE(LOWORD(dwVersion)));
-    DWORD dwWindowsMinorVersion =  (DWORD)(HIBYTE(LOWORD(dwVersion)));
-
-    // get the build number.
-
-    DWORD dwBuild;
-
-    if (dwVersion < 0x80000000)              // Windows NT
-    dwBuild = (DWORD)(HIWORD(dwVersion));
-    else if (dwWindowsMajorVersion < 4)      // Win32s
-    dwBuild = (DWORD)(HIWORD(dwVersion) & ~0x8000);
-    else                                     // Windows Me/98/95
-    dwBuild =  0;
-
-    bool bNativeUnicode;
-    if (dwVersion < 0x80000000)              // Windows NT
-    bNativeUnicode = TRUE;
-    else if (dwWindowsMajorVersion < 4)      // Win32s
-    bNativeUnicode = FALSE;
-    else                                     // Windows Me/98/95
-    bNativeUnicode = FALSE;
-
-
-    //   __COM com;
-    IShellLinkW* psl;
-    wstrFileOut = L"";
-
-    SHFILEINFOW info;
-    if ((::win::shell::SHGetFileInfo(wstrFileIn, 0, &info, sizeof(info),
-    SHGFI_ATTRIBUTES) == 0) || !(info.dwAttributes & SFGAO_LINK))
-    {
-    return FALSE;
-    }
-
-    HRESULT hr ;
-    if (FAILED(hr = CoCreateInstance(CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER, IID_IShellLinkW,
-    (LPVOID*)&psl)))
-    {
-    return FALSE;
-    }
-
-    IPersistFile *ppf;
-    if (SUCCEEDED(psl->QueryInterface(IID_IPersistFile, (LPVOID*)&ppf)))
-    {
-    if (SUCCEEDED(ppf->Load(wstrFileIn, STGM_READ)))
-    {
-     Resolve the link, this may post UI to find the link */
-   /*       if (SUCCEEDED(psl->Resolve(pui == NULL ? NULL : (oswindow) pui->get_os_data(),
-    SLR_ANY_MATCH | (pui == NULL ? (SLR_NO_UI | (8400 << 16)) : 0))))
-    {
-    wstrFileOut.alloc(MAX_PATH);
-    bool bOk;
-    if(SUCCEEDED(psl->GetPath(wstrFileOut, MAX_PATH, NULL, 0)))
-    {
-    bOk = true;
-    wstrFileOut.release_buffer();
-    strTarget = ::str::international::unicode_to_utf8((LPCWSTR) wstrFileOut);
-    }
-    else
-    {
-    bOk = false;
-    }
-    ppf->Release();
-    psl->Release();
-    return bOk;
-    }
-    }
-    ppf->Release();
-    }
-    psl->Release();
-    return FALSE;*/
 }
 
-// turn a file, relative path or other into an absolute path
-//bool CLASS_DECL_AURA vfxFullPath(unichar * lpszPathOut, const unichar * lpszFileIn)
-// lpszPathOut = buffer of _MAX_PATH
-// lpszFileIn = file, relative path or absolute path
-// (both in ANSI character set)
-//{
-/*
- ASSERT(__is_valid_address(lpszPathOut, _MAX_PATH));
-
- // first, fully qualify the path name
- unichar * lpszFilePart;
- if (!GetFullPathNameW(lpszFileIn, _MAX_PATH, lpszPathOut, &lpszFilePart))
- {
- #ifdef DEBUG
- //      if (lpszFileIn[0] != '\0')
- //       TRACE1("Warning: could not parse the path '%s'.\n", lpszFileIn);
- #endif
- lstrcpynW(lpszPathOut, lpszFileIn, _MAX_PATH); // take it literally
- return FALSE;
- }
-
- string strRoot;
- // determine the root name of the volume
- vfxGetRoot(lpszPathOut, strRoot);
-
- // get file system information for the volume
- DWORD dwFlags, dwDummy;
- if (!GetVolumeInformationW(::str::international::utf8_to_unicode(strRoot), NULL, 0, NULL, &dwDummy, &dwFlags, NULL, 0))
- {
- //      TRACE1("Warning: could not get volume information '%s'.\n", strRoot);
- return FALSE;   // preserving case may not be correct
- }
-
- // not all characters have complete uppercase/lowercase
- if (!(dwFlags & FS_CASE_IS_PRESERVED))
- CharUpperW(lpszPathOut);
-
- // assume non-UNICODE file systems, use OEM character set
- if (!(dwFlags & FS_UNICODE_STORED_ON_DISK))
- {
- WIN32_FIND_DATAW data;
- HANDLE h = FindFirstFileW(lpszFileIn, &data);
- if (h != INVALID_HANDLE_VALUE)
- {
- FindClose(h);
- lstrcpyW(lpszFilePart, data.cFileName);
- }
- }
- return TRUE;*/
-//}
-
-
-
-/*
- void CLASS_DECL_AURA vfxGetRoot(wstring & wstrRoot, const wstring & wstrPath)
- {
- //   ASSERT(lpszPath != NULL);
- // determine the root name of the volume
- wstrRoot = wstrPath;
- unichar * lpszRoot = wstrRoot;
- unichar * lpsz;
- for (lpsz = lpszRoot; *lpsz != L'\0'; lpsz = _wcsinc(lpsz))
- {
- // find first double slash and stop
- if (IsDirSep(lpsz[0]) && IsDirSep(lpsz[1]))
- break;
- }
- if (*lpsz != '\0')
- {
- // it is a UNC name, find second slash past '\\'
- ASSERT(IsDirSep(lpsz[0]));
- ASSERT(IsDirSep(lpsz[1]));
- lpsz += 2;
- while (*lpsz != '\0' && (!IsDirSep(*lpsz)))
- lpsz = _wcsinc(lpsz);
- if (*lpsz != '\0')
- lpsz = _wcsinc(lpsz);
- while (*lpsz != '\0' && (!IsDirSep(*lpsz)))
- lpsz = _wcsinc(lpsz);
- // terminate it just after the UNC root (ie. '\\server\share\')
- if (*lpsz != '\0')
- lpsz[1] = '\0';
- }
- else
- {
- // not a UNC, look for just the first slash
- lpsz = lpszRoot;
- while (*lpsz != '\0' && (!IsDirSep(*lpsz)))
- lpsz = _wcsinc(lpsz);
- // terminate it just after root (ie. 'x:\')
- if (*lpsz != '\0')
- lpsz[1] = '\0';
- }
- wstrRoot.release_buffer();
- }*/
-
-/*
- void CLASS_DECL_AURA vfxGetRoot(const unichar * lpszPath, string& strRoot)
- {
- ASSERT(lpszPath != NULL);
- wstring wstrRoot;
- // determine the root name of the volume
- unichar * lpszRoot = wstrRoot.alloc(_MAX_PATH * 4);
- memset(lpszRoot, 0, _MAX_PATH * 4);
- lstrcpynW(lpszRoot, lpszPath, _MAX_PATH * 4);
- unichar * lpsz;
- for (lpsz = lpszRoot; *lpsz != '\0'; lpsz = _wcsinc(lpsz))
- {
- // find first double slash and stop
- if (IsDirSep(lpsz[0]) && IsDirSep(lpsz[1]))
- break;
- }
- if (*lpsz != '\0')
- {
- // it is a UNC name, find second slash past '\\'
- ASSERT(IsDirSep(lpsz[0]));
- ASSERT(IsDirSep(lpsz[1]));
- lpsz += 2;
- while (*lpsz != '\0' && (!IsDirSep(*lpsz)))
- lpsz = _wcsinc(lpsz);
- if (*lpsz != '\0')
- lpsz = _wcsinc(lpsz);
- while (*lpsz != '\0' && (!IsDirSep(*lpsz)))
- lpsz = _wcsinc(lpsz);
- // terminate it just after the UNC root (ie. '\\server\share\')
- if (*lpsz != '\0')
- lpsz[1] = '\0';
- }
- else
- {
- // not a UNC, look for just the first slash
- lpsz = lpszRoot;
- while (*lpsz != '\0' && (!IsDirSep(*lpsz)))
- lpsz = _wcsinc(lpsz);
- // terminate it just after root (ie. 'x:\')
- if (*lpsz != '\0')
- lpsz[1] = '\0';
- }
- ::str::international::unicode_to_utf8(strRoot, wstrRoot);
- }
- */
-
-
-/*bool CLASS_DECL_AURA vfxFullPath(char * lpszPathOut, const char * lpszFileIn)
- // lpszPathOut = buffer of _MAX_PATH
- // lpszFileIn = file, relative path or absolute path
- // (both in ANSI character set)
- {
- ASSERT(__is_valid_address(lpszPathOut, _MAX_PATH));
-
- // first, fully qualify the path name
- unichar * lpszFilePart;
- if (!shell::GetFullPathName(lpszFileIn, _MAX_PATH, lpszPathOut, &lpszFilePart))
- {
- #ifdef DEBUG
- if (lpszFileIn[0] != '\0')
- TRACE1("Warning: could not parse the path '%s'.\n", lpszFileIn);
- #endif
- lstrcpynW(lpszPathOut, lpszFileIn, _MAX_PATH); // take it literally
- return FALSE;
- }
-
- string wstrRoot;
- // determine the root name of the volume
- vfxGetRoot(lpszPathOut, wstrRoot);
-
- // get file system information for the volume
- DWORD dwFlags, dwDummy;
- if (!shell::GetVolumeInformation(wstrRoot, NULL, 0, NULL, &dwDummy, &dwFlags,
- NULL, 0))
- {
- TRACE1("Warning: could not get volume information '%S'.\n",
- (const char *)wstrRoot);
- return FALSE;   // preserving case may not be correct
- }
-
- // not all characters have complete uppercase/lowercase
- if (!(dwFlags & FS_CASE_IS_PRESERVED))
- CharUpperW(lpszPathOut);
-
- // assume non-UNICODE file systems, use OEM character set
- if (!(dwFlags & FS_UNICODE_STORED_ON_DISK))
- {
- WIN32_FIND_DATAW data;
- HANDLE h = shell::FindFirstFile(lpszFileIn, &data);
- if (h != INVALID_HANDLE_VALUE)
- {
- FindClose(h);
- wcscpy(lpszFilePart, data.cFileName);
- }
- }
- return TRUE;
- }*/
-
-
-
-
-/*CLASS_DECL_AURA UINT vfxGetFileName(const char * lpszPathName, char * lpszTitle, UINT nMax)
- {
- ASSERT(lpszTitle == NULL ||
- __is_valid_address(lpszTitle, _MAX_FNAME));
- ASSERT(__is_valid_string(lpszPathName));
-
- // always capture the complete file name including extension (if present)
- const char * lpszTemp = (char *)lpszPathName;
- for (const char * lpsz = lpszPathName; *lpsz != '\0'; lpsz = lpsz++)
- {
- // remember last directory/drive separator
- if (*lpsz == '\\' || *lpsz == '/' || *lpsz == ':')
- lpszTemp = lpsz++;
- }
-
- // lpszTitle can be NULL which just returns the number of bytes
- if (lpszTitle == NULL)
- return strlen_dup(lpszTemp)+1;
-
- // otherwise copy it into the buffer provided
- strncpy(lpszTitle, lpszTemp, nMax);
- return 0;
- }*/
-
-
-
-
-
-
-/////////////////////////////////////////////////////////////////////////////
-// WinFileException helpers
 
 void CLASS_DECL_AURA vfxThrowFileException(::aura::application * papp, ::file::exception::e_cause cause, LONG lOsError, const char * lpszFileName /* == NULL */)
 {
@@ -2019,9 +1709,9 @@ void CLASS_DECL_AURA vfxThrowFileException(::aura::application * papp, ::file::e
       lpsz = ::macos::szUnknown;
    //   TRACE3("file exception: %hs, file %s, App error information = %ld.\n", lpsz, (lpszFileName == NULL) ? "Unknown" : lpszFileName, lOsError);
 #endif
-   
+
    return new ::file::exception(papp, cause, lOsError, lpszFileName);
-   
+
 }
 
 namespace macos
@@ -2031,34 +1721,34 @@ namespace macos
    namespace file_exception
    {
 
-   ::file::exception::e_cause ErrnoToException(int32_t nErrno)
-{
-   switch(nErrno)
-   {
-      case EPERM:
-      case EACCES:
-         return ::file::exception::accessDenied;
-      case EBADF:
-         return ::file::exception::invalidFile;
+      ::file::exception::e_cause ErrnoToException(int32_t nErrno)
+      {
+         switch(nErrno)
+         {
+         case EPERM:
+         case EACCES:
+            return ::file::exception::accessDenied;
+         case EBADF:
+            return ::file::exception::invalidFile;
 //      case EDEADLOCK:
-  //       return ::file::exception::sharingViolation;
-      case EMFILE:
-         return ::file::exception::tooManyOpenFiles;
-      case ENOENT:
-      case ENFILE:
-         return ::file::exception::fileNotFound;
-      case ENOSPC:
-         return ::file::exception::diskFull;
-      case EINVAL:
-      case EIO:
-         return ::file::exception::hardIO;
-      default:
-         return ::file::exception::type_generic;
-   }
-}
+         //       return ::file::exception::sharingViolation;
+         case EMFILE:
+            return ::file::exception::tooManyOpenFiles;
+         case ENOENT:
+         case ENFILE:
+            return ::file::exception::fileNotFound;
+         case ENOSPC:
+            return ::file::exception::diskFull;
+         case EINVAL:
+         case EIO:
+            return ::file::exception::hardIO;
+         default:
+            return ::file::exception::type_generic;
+         }
+      }
 
 
 
-} // namespace file_exception
+   } // namespace file_exception
 
 } // namespace macos
