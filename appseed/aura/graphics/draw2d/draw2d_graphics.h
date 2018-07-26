@@ -26,7 +26,7 @@ namespace draw2d
       ::draw2d::brush_sp            m_spbrush;
       ::draw2d::font_sp             m_spfont;
       ::draw2d::region_sp           m_spregion;
-
+      bool                          m_bStoreThumbnails;
 
       pointd                        m_pt;
 

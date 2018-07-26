@@ -53,6 +53,38 @@ namespace lemon
       inline bool are_all_elements_equal(const spa(T) & a1, const spa(T) & a2);
 
 
+      // t1 candidate bigger
+      template < typename T1, typename  T2>
+      inline bool contains(const T1 & t1, const T2 & t2)
+      {
+
+         for (auto & t : t2)
+         {
+
+            if (!t1.contains(t))
+            {
+
+               return false;
+
+            }
+
+         }
+
+         return true;
+
+      }
+
+
+      template < typename T1, typename  T2>
+      inline bool equals_non_unique_unordered(const T1 & t1, const T2 & t2)
+      {
+
+         return ::lemon::array::contains(t1, t2) && ::lemon::array::contains(t2, t1);
+
+      }
+
+
+
       template < typename A, typename PA >
       void copy_points(A & a, const PA * pa, ::count c);
 

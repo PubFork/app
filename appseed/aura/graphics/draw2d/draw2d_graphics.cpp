@@ -31,6 +31,7 @@ namespace draw2d
       object(papp)
    {
 
+      m_bStoreThumbnails      = true;
       m_puistrcontext         = NULL;
       m_pdrawcontext          = NULL;
       m_pdibAlphaBlend        = NULL;

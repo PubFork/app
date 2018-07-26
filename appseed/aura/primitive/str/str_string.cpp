@@ -676,7 +676,7 @@ strsize __cdecl crt_char_traits::GetCharLen(const char* pch) NOTHROW
 
 uint32_t __cdecl crt_char_traits::GetEnvironmentVariable(const char * pszVar, char * pszBuffer,uint32_t dwSize )
 {
-   
+
 #ifdef METROWIN
 
    _throw(todo(get_app()));
@@ -1338,6 +1338,45 @@ bool string::contains(const string & str,strsize iStart,strsize nCount) const
 
 }
 
+bool string::contains_any(const stringa & stra) const
+{
+
+   for (auto & str : stra)
+   {
+
+      if (contains(str))
+      {
+
+         return true;
+
+      }
+
+   }
+
+   return false;
+
+}
+
+
+bool string::contains_all(const stringa & stra) const
+{
+
+   for (auto & str : stra)
+   {
+
+      if (!contains(str))
+      {
+
+         return false;
+
+      }
+
+   }
+
+   return true;
+
+}
+
 
 bool string::contains_ci(char ch,strsize iStart,strsize nCount) const
 {
@@ -1379,6 +1418,46 @@ bool string::contains_ci(const string & str,strsize iStart,strsize nCount) const
 }
 
 
+bool string::contains_any_ci(const stringa & stra) const
+{
+
+   for (auto & str : stra)
+   {
+
+      if (contains_ci(str))
+      {
+
+         return true;
+
+      }
+
+   }
+
+   return false;
+
+}
+
+
+bool string::contains_all_ci(const stringa & stra) const
+{
+
+   for (auto & str : stra)
+   {
+
+      if (!contains_ci(str))
+      {
+
+         return false;
+
+      }
+
+   }
+
+   return true;
+
+}
+
+
 bool string::contains_wci(unichar wch,strsize iStart,strsize nCount) const
 {
 
@@ -1410,6 +1489,44 @@ bool string::contains_wci(const string & str,strsize iStart,strsize nCount) cons
 
 }
 
+bool string::contains_any_wci(const stringa & stra) const
+{
+
+   for (auto & str : stra)
+   {
+
+      if (contains_wci(str))
+      {
+
+         return true;
+
+      }
+
+   }
+
+   return false;
+
+}
+
+
+bool string::contains_all_wci(const stringa & stra) const
+{
+
+   for (auto & str : stra)
+   {
+
+      if (!contains_wci(str))
+      {
+
+         return false;
+
+      }
+
+   }
+
+   return true;
+
+}
 
 string & string::erase(strsize iStart,strsize strsize)
 {

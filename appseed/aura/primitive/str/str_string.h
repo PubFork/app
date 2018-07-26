@@ -396,18 +396,24 @@ public:
    bool contains(int32_t i, strsize start = 0, strsize count = -1) const; // utf8 char index
    bool contains(const char * psz, strsize start = 0, strsize count = -1) const;
    bool contains(const string & str, strsize start = 0, strsize count = -1) const;
+   bool contains_any(const stringa & stra) const;
+   bool contains_all(const stringa & stra) const;
 
    bool contains_ci(char ch, strsize start = 0, strsize count = -1) const;
    bool contains_ci(unichar wch, strsize start = 0, strsize count = -1) const;
    bool contains_ci(int32_t i, strsize start = 0, strsize count = -1) const; // utf8 char index
    bool contains_ci(const char * psz, strsize start = 0, strsize count = -1) const;
    bool contains_ci(const string & str, strsize start = 0, strsize count = -1) const;
+   bool contains_any_ci(const stringa & stra) const;
+   bool contains_all_ci(const stringa & stra) const;
 
    bool contains_wci(char ch, strsize start = 0, strsize count = -1) const;
    bool contains_wci(unichar wch, strsize start = 0, strsize count = -1) const;
    bool contains_wci(int32_t i, strsize start = 0, strsize count = -1) const; // utf8 char index
    bool contains_wci(const char * psz, strsize start = 0, strsize count = -1) const;
    bool contains_wci(const string & str, strsize start = 0, strsize count = -1) const;
+   bool contains_any_wci(const stringa & stra) const;
+   bool contains_all_wci(const stringa & stra) const;
    // Advanced manipulation
 
 

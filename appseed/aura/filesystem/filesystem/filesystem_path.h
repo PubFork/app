@@ -7,6 +7,10 @@ namespace file
 
 inline bool is_url_dup(const string & strCandidate);
 
+
+CLASS_DECL_AURA bool __node_further_file_is_equal(const ::file::path & path1, const ::file::path & path2);
+
+
 namespace file
 {
 
@@ -122,7 +126,7 @@ namespace file
 
 #endif
 
-         return false;
+         return __node_further_file_is_equal(*this, path);
 
       }
 

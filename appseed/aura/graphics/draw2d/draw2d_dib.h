@@ -410,13 +410,13 @@ namespace draw2d
 
       inline int line(int line)
       {
-         
+
 #ifdef MACOS
          return m_size.cy - line - 1;
 #else
          return line;
 #endif
-         
+
       }
 
    };

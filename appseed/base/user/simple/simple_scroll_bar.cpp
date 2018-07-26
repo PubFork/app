@@ -198,13 +198,13 @@ void simple_scroll_bar::_001OnLButtonDown(::message::message * pobj)
 
       m_bTracking = true;
 
+      SetTimer(43212345, 10, NULL);
+
       m_ptTrack = pt;
 
       GetTrackRect(m_rectTrack);
 
       m_ptTrackOffset = m_ptTrack - m_rectTrack.top_left();
-
-      set_need_redraw();
 
    }
    else
@@ -241,7 +241,7 @@ void simple_scroll_bar::_001OnLButtonUp(::message::message * pobj)
    if((pcapture != NULL && pcapture == this) || m_bTracking)
    {
 
-
+      KillTimer(43212345);
 
       bool bWasTracking = m_bTracking;
 
@@ -778,6 +778,12 @@ void simple_scroll_bar::_001OnTimer(::timer * ptimer)
       }
 
    }
+   //else if (ptimer->m_nIDEvent == 43212345)
+   //{
+
+   //   set_need_redraw();
+
+   //}
 
 }
 
@@ -1322,170 +1328,168 @@ void simple_scroll_bar::_001OnVerisimpleDraw(::draw2d::graphics * pgraphics)
 
    pgraphics->fill_rect(rectTrack);
 
-   if (m_bTracking || (bool)oprop("tracking_on"))
-   {
+   //if (m_bTracking || (bool)oprop("tracking_on"))
+   //{
 
-      DWORD dwFadeIn = 300;
+   //   DWORD dwFadeIn = 300;
 
-      DWORD dwFadeOut = 300;
+   //   DWORD dwFadeOut = 300;
 
-      byte uchAlpha = MAX(0, MIN(255, oprop("tracking_alpha").u32()));
+   //   byte uchAlpha = MAX(0, MIN(255, oprop("tracking_alpha").u32()));
 
-      if (m_bTracking)
-      {
+   //   if (m_bTracking)
+   //   {
 
-         if (!(bool)oprop("tracking_on"))
-         {
+   //      if (!(bool)oprop("tracking_on"))
+   //      {
 
-            oprop("tracking_on") = true;
+   //         oprop("tracking_on") = true;
 
-            oprop("tracking_start") = (uint32_t)(get_tick_count() + uchAlpha * dwFadeIn / 255);
+   //         oprop("tracking_start") = (uint32_t)(get_tick_count() + uchAlpha * dwFadeIn / 255);
 
-            oprop("tracking_fade_in") = true;
+   //         oprop("tracking_fade_in") = true;
 
-            oprop("tracking_fade_out") = false;
+   //         oprop("tracking_fade_out") = false;
 
-            oprop("tracking_type") = System.math().RandRange(1, 2);
+   //         oprop("tracking_type") = System.math().RandRange(1, 2);
 
-            if (oprop("tracking_simple").i32() == 2)
-            {
+   //         if (oprop("tracking_simple").i32() == 2)
+   //         {
 
-               int iDeflate = rectTrack.get_size().get_normal(m_eorientation);
+   //            int iDeflate = rectTrack.get_size().get_normal(m_eorientation);
 
-               iDeflate /= 2;
+   //            iDeflate /= 2;
 
-               rect rectConstraint(m_rectTrack);
+   //            rect rectConstraint(m_rectTrack);
 
-               rectConstraint.deflate(iDeflate, iDeflate);
+   //            rectConstraint.deflate(iDeflate, iDeflate);
 
-               constraint(m_ptTrack, rectConstraint);
+   //            constraint(m_ptTrack, rectConstraint);
 
-               m_ptTrackOffset = m_ptTrack - m_rectTrack.top_left();
+   //            m_ptTrackOffset = m_ptTrack - m_rectTrack.top_left();
 
-            }
+   //         }
 
-         }
+   //      }
 
-      }
-      else
-      {
+   //   }
+   //   else
+   //   {
 
-         if (!(bool)oprop("tracking_fade_out"))
-         {
+   //      if (!(bool)oprop("tracking_fade_out"))
+   //      {
 
-            oprop("tracking_fade_in") = false;
+   //         oprop("tracking_fade_in") = false;
 
-            oprop("tracking_fade_out") = true;
+   //         oprop("tracking_fade_out") = true;
 
-            oprop("tracking_start") = (uint32_t)(get_tick_count() + (255 - uchAlpha) * dwFadeOut / 255);
+   //         oprop("tracking_start") = (uint32_t)(get_tick_count() + (255 - uchAlpha) * dwFadeOut / 255);
 
-         }
+   //      }
 
-      }
+   //   }
 
-      point pt1 = rectTrack.top_left() + m_ptTrackOffset;
+   //   point pt1 = rectTrack.top_left() + m_ptTrackOffset;
 
-      ClientToScreen(pt1);
+   //   ClientToScreen(pt1);
 
-      point pt2;
+   //   point pt2;
 
-      Session.get_cursor_pos(&pt2);
+   //   Session.get_cursor_pos(&pt2);
 
-      ClientToScreen(pt1);
+   //   ClientToScreen(pt1);
 
-      if ((bool)oprop("tracking_fade_in"))
-      {
+   //   if ((bool)oprop("tracking_fade_in"))
+   //   {
 
-         DWORD dwFade = get_tick_count() - oprop("tracking_start").u32();
+   //      DWORD dwFade = get_tick_count() - oprop("tracking_start").u32();
 
-         if (dwFade < dwFadeIn)
-         {
+   //      if (dwFade < dwFadeIn)
+   //      {
 
-            uchAlpha = (byte)MIN(255, MAX(0, (dwFade * 255 / dwFadeIn)));
+   //         uchAlpha = (byte)MIN(255, MAX(0, (dwFade * 255 / dwFadeIn)));
 
-         }
-         else
-         {
+   //      }
+   //      else
+   //      {
 
-            uchAlpha = 255;
+   //         uchAlpha = 255;
 
-            oprop("tracking_fade_in") = false;
+   //         oprop("tracking_fade_in") = false;
 
-         }
+   //      }
 
-      }
-      else if ((bool)oprop("tracking_fade_out"))
-      {
+   //   }
+   //   else if ((bool)oprop("tracking_fade_out"))
+   //   {
 
-         DWORD dwFade = get_tick_count() - oprop("tracking_start").u32();
+   //      DWORD dwFade = get_tick_count() - oprop("tracking_start").u32();
 
-         if (dwFade < dwFadeOut)
-         {
+   //      if (dwFade < dwFadeOut)
+   //      {
 
-            uchAlpha = (byte)(255 - MIN(255, MAX(0, (dwFade * 255 / dwFadeOut))));
+   //         uchAlpha = (byte)(255 - MIN(255, MAX(0, (dwFade * 255 / dwFadeOut))));
 
-         }
-         else
-         {
+   //      }
+   //      else
+   //      {
 
-            uchAlpha = 0;
+   //         uchAlpha = 0;
 
-            oprop("tracking_on") = false;
+   //         oprop("tracking_on") = false;
 
-            oprop("tracking_fade_out") = false;
+   //         oprop("tracking_fade_out") = false;
 
-         }
+   //      }
 
-      }
-      else
-      {
-         uchAlpha = 255;
-      }
+   //   }
+   //   else
+   //   {
+   //      uchAlpha = 255;
+   //   }
 
-      ::rect rectMachineThumb;
+   //   ::rect rectMachineThumb;
 
-      i32 iType = oprop("tracking_type").i32();
+   //   i32 iType = oprop("tracking_type").i32();
 
-      if (iType == 1)
-      {
+   //   if (iType == 1)
+   //   {
 
-         int iSize = rectTrack.get_size().get_normal(m_eorientation);
+   //      int iSize = rectTrack.get_size().get_normal(m_eorientation);
 
-         rectMachineThumb.top_left() = rectTrack.top_left() + m_ptTrackOffset - size(iSize / 2, iSize / 2);
+   //      rectMachineThumb.top_left() = rectTrack.top_left() + m_ptTrackOffset - size(iSize / 2, iSize / 2);
 
-         rectMachineThumb.bottom_right() = rectMachineThumb.top_left() + size(iSize, iSize);
+   //      rectMachineThumb.bottom_right() = rectMachineThumb.top_left() + size(iSize, iSize);
 
-         ::rect rectIntersect;
+   //      ::rect rectIntersect;
 
-         rectIntersect.intersect(rectMachineThumb, rectTrack);
+   //      rectIntersect.intersect(rectMachineThumb, rectTrack);
 
-         int32_t iArea = (int32_t)(MAX(1, rectIntersect.area()));
+   //      int32_t iArea = (int32_t)(MAX(1, rectIntersect.area()));
 
-         rectMachineThumb.inflate(1 + iSize * (iSize * iSize) * 4 / (iArea * 5), 1 + iSize * (iSize * iSize) * 2 / (iArea * 3));
+   //      rectMachineThumb.inflate(1 + iSize * (iSize * iSize) * 4 / (iArea * 5), 1 + iSize * (iSize * iSize) * 2 / (iArea * 3));
 
-         draw_mac_thumb_simple(pgraphics, rectMachineThumb, rectTrack, uchAlpha);
+   //      draw_mac_thumb_simple(pgraphics, rectMachineThumb, rectTrack, uchAlpha);
 
-      }
-      else
-      {
+   //   }
+   //   else
+   //   {
 
-         int iSize = rectTrack.get_size().get_normal(m_eorientation);
+   //      int iSize = rectTrack.get_size().get_normal(m_eorientation);
 
-         rectMachineThumb.top_left() = rectTrack.top_left() + m_ptTrackOffset - size(iSize / 2, iSize / 2);
+   //      rectMachineThumb.top_left() = rectTrack.top_left() + m_ptTrackOffset - size(iSize / 2, iSize / 2);
 
-         rectMachineThumb.set_size(iSize, iSize);
+   //      rectMachineThumb.set_size(iSize, iSize);
 
-         rectMachineThumb.assign_normal(rectTrack, m_eorientation);
+   //      rectMachineThumb.assign_normal(rectTrack, m_eorientation);
 
-         draw_mac_thumb_dots(pgraphics, rectMachineThumb, rectTrack, uchAlpha);
+   //      draw_mac_thumb_dots(pgraphics, rectMachineThumb, rectTrack, uchAlpha);
 
-      }
+   //   }
 
-      oprop("tracking_alpha") = uchAlpha;
+   //   oprop("tracking_alpha") = uchAlpha;
 
-      set_need_redraw();
-
-   }
+   //}
 
    COLORREF cr = scrollbar_color(::user::element_scrollbar_rectA);
 

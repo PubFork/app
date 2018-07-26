@@ -1536,20 +1536,26 @@ namespace user
          m_iShowFlags &= ~SWP_HIDEWINDOW;
          m_iShowFlags |= SWP_SHOWWINDOW;
 
+         m_bShowWindow = true;
+         m_iShowWindow = nCmdShow;
+
+         m_pui->set_need_redraw();
+
       }
-      else
+      else if(nCmdShow == SW_HIDE && is_this_visible())
       {
+
          m_bShowFlags = true;
 
          m_iShowFlags &= ~SWP_SHOWWINDOW;
          m_iShowFlags |= SWP_HIDEWINDOW;
 
+         m_bShowWindow = true;
+         m_iShowWindow = nCmdShow;
+
+         m_pui->set_need_redraw();
+
       }
-
-      m_bShowWindow = true;
-      m_iShowWindow = nCmdShow;
-
-      m_pui->set_need_redraw();
 
       return true;
 
