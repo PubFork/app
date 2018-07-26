@@ -26,14 +26,6 @@ namespace http
    }
 
 
-   /*void stream::write(const char * lpcsz)
-   {
-
-      write(lpcsz, strlen(lpcsz));
-
-      return *this;
-
-   }*/
 
    void stream::write (const string & str)
    {
@@ -56,37 +48,6 @@ namespace http
 
 
 
-   /*bool stream::read_string(string & str)
-   {
-      uint_ptr nRead;
-      char ch;
-      bool bR = false;
-      str.Empty();
-      while((nRead = read(&ch, sizeof(ch))) > 0)
-      {
-         str += ch;
-         if(bR)
-         {
-            if(ch == '\n')
-            {
-               break;
-            }
-            else
-            {
-               seek(-1, ::file::seek_current);
-            }
-         }
-         else if(ch == '\r')
-         {
-            bR = true;
-         }
-         else if(ch == '\n')
-         {
-            break;
-         }
-      }
-      return str.has_char();
-   }*/
 
    stream & stream::operator << (::file::file_sp spbuf)
    {
@@ -103,14 +64,5 @@ namespace http
       return *this;
    }
 
-
-   /*    void stream::to_string(string & str);
-         {
-
-            read(str.GetBufferSetLength((int32_t)get_length()), (int32_t)(get_length()));
-
-            str.ReleaseBuffer();
-
-         }*/
 
 } // namespace http
