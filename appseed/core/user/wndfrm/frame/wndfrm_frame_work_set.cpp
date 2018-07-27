@@ -1,6 +1,8 @@
 #include "framework.h"
 
+
 extern CLASS_DECL_CORE thread_int_ptr < DWORD_PTR > t_time1;
+
 
 namespace user
 {
@@ -18,24 +20,33 @@ namespace user
          {
 
             m_bMinimizeToTray = false;
+
             m_pframeschema = NULL;
 
             m_bSizingCapture = false;
+
             m_bEnableMouse = true;
 
             m_bFullScreenEnable = false;
 
             m_pwndRegion = NULL;
+
             m_pwndDraw = NULL;
+
             m_pwndEvent = NULL;
+
             m_pwndCommand = NULL;
 
             m_bHoverModeOn = false;
+
             m_bHoverActive = false;
 
             m_bDockingEnabled = true;
+
             m_bMovingEnabled = true;
+
             m_bSizingEnabled = true;
+
             m_bSysMenuEnabled = true;
 
             m_bEnable = true;
@@ -60,47 +71,39 @@ namespace user
 
          void WorkSet::relay_event(::message::message * pobj)
          {
+
             hover_relay_event(pobj);
-            if(pobj->m_bRet)
+
+            if (pobj->m_bRet)
+            {
+
                return;
+
+            }
 
             if(!m_pappearance->IsFullScreen() || !m_pappearance->IsZoomed())
             {
-               /*        if(IsSizingEnabled() &&
-                           m_psizemanager->relay_event(lpmsg))
-                           return TRUE;*/
 
-               /*if(IsMovingEnabled() &&
-                   m_pmovemanager->relay_event(lpmsg))
-                   return TRUE;*/
                if(!m_pappearance->IsFullScreen())
                {
+
                   if(IsSysMenuEnabled())
                   {
+
                      m_psystemmenumanager->relay_event(pobj);
-                     if(pobj->m_bRet)
+
+                     if (pobj->m_bRet)
+                     {
+
                         return;
+
+                     }
+
                   }
+
                }
+
             }
-
-
-            /*    if(IsAppearanceEnabled() &&
-                    m_pappearance->relay_event(lpmsg))
-                    return TRUE;*/
-
-            /*    if(lpmsg->message == WM_SIZE)
-                {
-                if(IsAppearanceEnabled())
-                {
-                UINT fwSizeType = lpmsg->wParam;      // resizing flag
-                int32_t nWidth = LOWORD(lpmsg->lParam);  // width of client area
-                int32_t nHeight = HIWORD(lpmsg->lParam);
-                OnSizeRegion(fwSizeType, nWidth, nHeight);
-                }
-                }*/
-
-
 
          }
 

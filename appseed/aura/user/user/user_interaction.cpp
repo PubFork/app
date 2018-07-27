@@ -1,8 +1,8 @@
 #include "framework.h"
 
 
-
 ::user::interaction * get_system_window_interaction(::os_system_window * psystemwindow);
+
 
 #ifdef WINDOWSEX
 #include "aura/os/windows/windows_windowing.h"
@@ -1038,15 +1038,17 @@ restart:
 
       IGUI_MSG_LINK(WM_COMMAND, pinterface, this, &interaction::_001OnCommand);
       MSG_TYPE_LINK(message_simple_command, pinterface, this, &interaction::_001OnSimpleCommand);
-      //      IGUI_MSG_LINK(message_set_schema,pinterface,this,&interaction::_001OnSetSchema);
-
 
    }
+
 
    void interaction::_001OnNcCalcSize(::message::message * pobj)
    {
+
       pobj->m_bRet = true; // avoid any Microsoft-Window-concept-of-non-client-area
+
    }
+
 
    void interaction::_001OnDestroy(::message::message * pobj)
    {
@@ -1057,8 +1059,8 @@ restart:
 
       pobj->previous();
 
-
    }
+
 
    void interaction::user_interaction_on_hide()
    {
@@ -1265,9 +1267,26 @@ restart:
 
       }
 
+      ::user::interaction * puiParent = GetParent();
 
+      if (puiParent != NULL)
+      {
+
+         try
+         {
+
+            puiParent->on_hide_child(this);
+
+         }
+         catch (...)
+         {
+
+         }
+
+      }
 
    }
+
 
    void interaction::_001GetXScrollInfo(scroll_info & info)
    {
@@ -1298,6 +1317,30 @@ restart:
 
 
    void interaction::layout_scroll_bar()
+   {
+
+   }
+
+
+   void interaction::on_remove_child(::user::interaction * pui)
+   {
+
+   }
+
+
+   void interaction::on_remove_place_holder_child(::user::interaction * pui)
+   {
+
+   }
+
+
+   void interaction::on_hide_child(::user::interaction * pui)
+   {
+
+   }
+
+
+   void interaction::on_hide_place_holder_child(::user::interaction * pui)
    {
 
    }
@@ -1381,43 +1424,6 @@ restart:
 
       }
 
-      if (GetParent() == NULL && !is_message_only_window())
-      {
-
-         try
-         {
-
-            Application.remove_frame(this); // guess this may be a frame, it doesn't hurt to remove if this is not there
-
-         }
-         catch (...)
-         {
-
-         }
-
-         try
-         {
-
-            Session.remove_frame(this); // guess this may be a frame, it doesn't hurt to remove if this is not there
-
-         }
-         catch (...)
-         {
-
-         }
-
-         try
-         {
-
-            System.remove_frame(this); // guess this may be a frame, it doesn't hurt to remove if this is not there
-
-         }
-         catch (...)
-         {
-
-         }
-
-      }
 
    }
 
@@ -4176,7 +4182,9 @@ restart:
    // for custom cleanup after WM_NCDESTROY
    void interaction::PostNcDestroy()
    {
+
       sp(::user::interaction) pui = this;
+
       {
 
          synch_lock sl(m_pmutex);
@@ -4194,30 +4202,65 @@ restart:
 
       }
 
+      ::user::interaction * puiParent = GetParent();
 
+      if (puiParent != NULL)
       {
 
-         ::user::interaction * puiParent = GetParent();
-
-         if (puiParent != NULL)
+         try
          {
 
-            try
-            {
+            single_lock sl(puiParent->m_pmutex, true);
 
-               single_lock sl(puiParent->m_pmutex, true);
+            puiParent->on_remove_child(this);
 
-               puiParent->m_uiptraChild.remove(this);
+            puiParent->m_uiptraChild.remove(this);
 
-            }
-            catch (...)
-            {
-
-            }
+         }
+         catch (...)
+         {
 
          }
 
       }
+      else if (!is_message_only_window())
+      {
+
+         try
+         {
+
+            Application.remove_frame(this); // guess this may be a frame, it doesn't hurt to remove if this is not there
+
+         }
+         catch (...)
+         {
+
+         }
+
+         try
+         {
+
+            Session.remove_frame(this); // guess this may be a frame, it doesn't hurt to remove if this is not there
+
+         }
+         catch (...)
+         {
+
+         }
+
+         try
+         {
+
+            System.remove_frame(this); // guess this may be a frame, it doesn't hurt to remove if this is not there
+
+         }
+         catch (...)
+         {
+
+         }
+
+      }
+
 
       {
 
@@ -8468,6 +8511,21 @@ restart:
          return;
 
       m_pimpl->set_focus_guie(pguie);
+
+   }
+
+
+   bool interaction::is_ascendant_of(::user::interaction * puiDescendantCandidate)
+   {
+
+      if (puiDescendantCandidate == NULL)
+      {
+
+         return false;
+
+      }
+
+      return puiDescendantCandidate->is_descendant_of(this);
 
    }
 

@@ -326,7 +326,7 @@ namespace user
       rect = pinterface->get_data()->m_rectTabClient;
 
       pinterface->ClientToScreen(&rect);
-      
+
       ::user::create_struct cs(WS_EX_LAYERED, NULL, NULL, 0, rect);
 
       m_pdroptargetwindow->create_window_ex(cs);
@@ -797,6 +797,16 @@ namespace user
    {
 
       return m_pviewdata;
+
+   }
+
+
+   void tab_view::on_remove_tab(index iPane)
+   {
+
+      id idTab = get_data()->m_panea[iPane]->m_id;
+
+      m_pviewcreator->m_viewmap.remove_key(idTab);
 
    }
 

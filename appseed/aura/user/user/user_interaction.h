@@ -989,6 +989,13 @@ namespace user
       virtual void user_interaction_on_hide();
 
 
+      virtual void on_remove_child(::user::interaction * pui);
+      virtual void on_remove_place_holder_child(::user::interaction * pui);
+      virtual void on_hide_child(::user::interaction * pui);
+      virtual void on_hide_place_holder_child(::user::interaction * pui);
+
+
+
       virtual void _001GetXScrollInfo(scroll_info & info);
       virtual void _001GetYScrollInfo(scroll_info & info);
       virtual void layout_scroll_bar();
@@ -1009,6 +1016,7 @@ namespace user
 
 
       virtual bool is_descendant_of(::user::interaction * puiAscendantCandidate);
+      virtual bool is_ascendant_of(::user::interaction * puiDescendantCandidate);
 
 
       virtual bool show_tooltip(const string & str,bool bError);

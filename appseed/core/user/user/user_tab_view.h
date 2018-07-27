@@ -46,6 +46,7 @@ namespace user
       virtual ::user::view_creator_data * get_view_creator_data();
       virtual ::user::document * get_view_document() override;
 
+      virtual void on_remove_tab(index iPane) override;
 
       void _000OnDraw(::draw2d::graphics * pgraphics) override;
 

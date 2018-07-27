@@ -95,6 +95,32 @@ namespace user
    }
 
 
+   void place_holder::on_remove_child(::user::interaction * pui)
+   {
+
+      if (GetParent() != NULL)
+      {
+
+         GetParent()->on_remove_place_holder_child(pui);
+
+      }
+
+   }
+
+
+   void place_holder::on_hide_child(::user::interaction * pui)
+   {
+
+      if (GetParent() != NULL)
+      {
+
+         GetParent()->on_hide_place_holder_child(pui);
+
+      }
+
+   }
+
+
    bool place_holder::hold(::user::interaction * pui)
    {
 

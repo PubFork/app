@@ -11,6 +11,7 @@
 namespace userex
 {
 
+
    view_container::view_container(::aura::application * papp) :
       ::object(papp)
    {
@@ -28,6 +29,7 @@ namespace userex
 
    }
 
+
    void view_container::assert_valid() const
    {
 
@@ -42,12 +44,15 @@ namespace userex
       ::user::impact::dump(dumpcontext);
 
    }
+
+
    void view_container::install_message_routing(::message::sender * psender)
    {
 
       ::user::impact::install_message_routing(psender);
 
    }
+
 
    void view_container::_001DefaultLayoutView(string strView)
    {

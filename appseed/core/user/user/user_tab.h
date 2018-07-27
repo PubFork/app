@@ -268,6 +268,16 @@ namespace user
       virtual ::count get_tab_count();
       virtual ::count get_pane_count();
 
+      virtual index find_child_pane(::user::interaction * pui);
+      virtual void defer_remove_child_pane(::user::interaction * pui);
+
+      virtual void on_remove_child(::user::interaction * pui) override;
+      virtual void on_remove_place_holder_child(::user::interaction * pui) override;
+
+      virtual void on_hide_child(::user::interaction * pui) override;
+      virtual void on_hide_place_holder_child(::user::interaction * pui) override;
+
+      virtual void on_remove_tab(index iPane);
 
       virtual ::index id_tab(id id);
       virtual id tab_id(::index iTab);

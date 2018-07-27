@@ -56,8 +56,9 @@ namespace userex
    void font_view::_001OnCreate(::message::message * pmessage)
    {
 
-      pmessage->previous();
+      GetParentFrame()->m_id += ".font_sel";
 
+      pmessage->previous();
 
    }
 

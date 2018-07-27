@@ -1100,24 +1100,34 @@ void simple_frame_window::_001OnClose(::message::message * pobj)
 
    }
 
-   bool bDestroyWindow = false;
+   bool bHideWindow = false;
 
    {
 
       {
+
          // Note: only queries the active document
          ::user::document * pdocument = GetActiveDocument();
+
          if (pdocument != NULL && !pdocument->can_close_frame(this))
          {
+
             // document can't close right now -- don't close it
             return;
+
          }
 
       }
 
       ::aura::application * papp = &Application;
 
-      if (papp->m_pcoreapp->is_system() || papp->m_pcoreapp->is_session())
+      if (GetParent() != NULL)
+      {
+
+         bHideWindow = true;
+
+      }
+      else if (papp->m_pcoreapp->is_system() || papp->m_pcoreapp->is_session())
       {
 
          // TODO: instead of closing all applications in process System.m_apptra, should close application that make part of
@@ -1149,15 +1159,17 @@ void simple_frame_window::_001OnClose(::message::message * pobj)
       }
       else
       {
-         bDestroyWindow = true;
+
+         bHideWindow = true;
+
       }
 
    }
 
-   if(bDestroyWindow)
+   if(bHideWindow)
    {
 
-      DestroyWindow();
+      ShowWindow(SW_HIDE);
 
    }
 

@@ -411,6 +411,8 @@ namespace userex
    void color_view::_001OnCreate(::message::message * pmessage)
    {
 
+      GetParentFrame()->m_id += ".color_sel";
+
       pmessage->previous();
 
       if(get_document()->m_pviewTopic == NULL)

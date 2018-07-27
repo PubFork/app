@@ -310,6 +310,7 @@ namespace user
             {
                if(iPane <= 0)
                {
+                  on_remove_tab(i);
                   get_data()->m_panea.remove_at(i);
                   on_change_pane_count();
                   break;
@@ -323,6 +324,7 @@ namespace user
       }
       else
       {
+         on_remove_tab(iPane);
          get_data()->m_panea.remove_at(iPane);
          on_change_pane_count();
       }
@@ -1758,10 +1760,82 @@ namespace user
 
    }
 
+
    ::count tab::get_tab_count()
    {
 
       return get_data()->m_panea.pred_get_count([](auto & pane) {return pane->m_bTabPaneVisible; });
+
+   }
+
+
+   index tab::find_child_pane(::user::interaction * pui)
+   {
+
+      index iPane = get_data()->m_panea.pred_find_first([=](auto & pane)
+      {
+
+         return pane->m_pholder.is_set()
+                &&
+                (pane->m_pholder == pui
+                 || pane->m_pholder->is_ascendant_of(pui));
+
+      });
+
+      return iPane;
+
+   }
+
+
+   void tab::defer_remove_child_pane(::user::interaction * pui)
+   {
+
+      index iPane = find_child_pane(pui);
+
+      if (iPane >= 0)
+      {
+
+         remove_tab(iPane, false);
+
+      }
+
+   }
+
+
+   void tab::on_remove_child(::user::interaction * pui)
+   {
+
+      defer_remove_child_pane(pui);
+
+   }
+
+
+   void tab::on_remove_place_holder_child(::user::interaction * pui)
+   {
+
+      defer_remove_child_pane(pui);
+
+   }
+
+
+   void tab::on_hide_child(::user::interaction * pui)
+   {
+
+      defer_remove_child_pane(pui);
+
+   }
+
+
+   void tab::on_hide_place_holder_child(::user::interaction * pui)
+   {
+
+      defer_remove_child_pane(pui);
+
+   }
+
+
+   void tab::on_remove_tab(index iPane)
+   {
 
    }
 
@@ -2029,14 +2103,14 @@ namespace user
 
    void tab_pane::set_title(const char * psz)
    {
-      
+
       mutex * pmutex = NULL;
-      
+
       if(m_ptab != NULL)
       {
-         
+
          pmutex = m_ptab->m_pmutex;
-         
+
       }
 
       synch_lock sl(pmutex);
