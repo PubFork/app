@@ -96,6 +96,7 @@ namespace user
       sp(scroll_bar)       m_pscrollbarVert;
       scroll_data          m_scrolldataVert;
       int16_t              m_iWheelDelta;
+      int16_t              m_iWheelDeltaScroll;
 
 
       scroll_y();
