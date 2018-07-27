@@ -9,7 +9,7 @@ namespace user
    ::user::document * server::open_new_document(::aura::application * pappOnBehalfOf)
    {
 
-      return open_document_file(pappOnBehalfOf, var::type_null);
+      return open_document_file(get_app(), pappOnBehalfOf, var::type_null);
 
    }
 

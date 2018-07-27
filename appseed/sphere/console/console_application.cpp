@@ -91,7 +91,7 @@ namespace console
 
          bCreate = true;
 
-         m_spprompt->m_pdoctemplate->open_document_file(NULL,false);
+         m_spprompt->m_pdoctemplate->open_document_file(this, NULL,false);
 
       }
 

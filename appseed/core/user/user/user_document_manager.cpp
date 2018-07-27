@@ -377,8 +377,8 @@ namespace user
          TRACE("removing document template not managed by document manager");
 
       }
-      
-      
+
+
    }
 
    ::count document_manager::get_template_count() const
@@ -518,7 +518,7 @@ namespace user
       pMainWnd->SetForegroundWindow(); */
 
       // then open the document
-      /*System.open_document_file(cmdInfo.m_varFile);
+      /*System.open_document_file(get_app(), cmdInfo.m_varFile);
 
 
       // next time, show the window as default
@@ -596,7 +596,7 @@ namespace user
       int32_t nOldCount; nOldCount = get_document_count();
 
       // open the document, then print it.
-      pDoc = System.open_document_file(cmdInfo.m_varFile);
+      pDoc = System.open_document_file(get_app(), cmdInfo.m_varFile);
       //System.m_pCmdInfo = &cmdInfo;
       System.m_puiMain->SendMessage(WM_COMMAND, ID_FILE_PRINT_DIRECT);
       //System.m_pCmdInfo = NULL;
@@ -636,7 +636,7 @@ namespace user
    ASSERT(ptemplate != NULL);
    ASSERT_KINDOF(impact_system, ptemplate);
 
-   ptemplate->open_document_file(NULL, TRUE, System.m_puiInitialPlaceHolderContainer);
+   ptemplate->open_document_file(get_app(), NULL, TRUE, System.m_puiInitialPlaceHolderContainer);
    // if returns NULL, the ::fontopus::user has already been alerted*/
    //   return TRUE;
    //}
@@ -936,15 +936,15 @@ namespace core
    }
 
 
-   ::user::document * application::open_document_file(const char * lpszFileName)
+   ::user::document * application::open_document_file(::aura::application * papp, const char * lpszFileName)
    {
-      
+
       ASSERT(Application.m_pdocmanager != NULL);
-      
+
       sp(::create) cc(allocer());
-      
+
       cc->m_spCommandLine->m_varFile = lpszFileName;
-      
+
       Application.document_manager()->request_create(cc);
 
       return ::user::get_document(cc);

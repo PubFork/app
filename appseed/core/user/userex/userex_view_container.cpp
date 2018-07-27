@@ -485,7 +485,7 @@ namespace userex
       if (pdoc.is_null())
       {
 
-         pdoc = Session.userex()->m_mapimpactsystem[strView]->open_document_file(get_app());
+         pdoc = Session.userex()->m_mapimpactsystem[strView]->open_document_file(get_app(), get_app());
 
          ASSERT(pdoc->m_pviewTopic != NULL);
 

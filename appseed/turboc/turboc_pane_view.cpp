@@ -71,7 +71,7 @@ namespace turboc
       {
       case PaneViewHelloMultiverse:
          {
-         Application.m_ptemplateHelloMultiverseView->open_document_file(NULL,true,pcreatordata->m_pholder);
+         Application.m_ptemplateHelloMultiverseView->open_document_file(get_app(), NULL,true,pcreatordata->m_pholder);
 
 
          }
@@ -81,7 +81,7 @@ namespace turboc
       case PaneViewHelloMultiverseSwitcher:
       {
 
-         Application.m_ptemplateHelloMultiverseSwitcher->open_document_file(NULL,true,pcreatordata->m_pholder);
+         Application.m_ptemplateHelloMultiverseSwitcher->open_document_file(get_app(), NULL,true,pcreatordata->m_pholder);
 
 
 

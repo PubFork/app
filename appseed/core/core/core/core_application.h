@@ -502,7 +502,7 @@ namespace core
 
       virtual void add_document_template(::user::impact_system * ptemplate);
 
-      virtual ::user::document * open_document_file(const char * lpszFileName);
+      virtual ::user::document * open_document_file(::aura::application * papp, const char * lpszFileName);
 
 
       virtual int32_t GetVisibleTopLevelFrameCountExcept(sp(::user::interaction) pwndExcept);
