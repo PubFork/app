@@ -407,22 +407,12 @@ namespace user
 
             *m_pworkset->m_pframeschema->get_control_box_rect() = rect;
 
-            //if (is_this_visible() &&
-            //      m_pworkset->GetWndDraw()->oprop("control_box_right_to_right")
-            //      != m_pworkset->m_pframeschema->m_iControlBoxRight)
-            //{
-
-            //   int iControlBoxRight = m_pworkset->GetWndDraw()->oprop("control_box_right_to_right");
-
-            //   m_pworkset->m_pframeschema->m_iControlBoxRight = iControlBoxRight;
-
-            //}
-
             reset_layout();
 
             appearance * pappearance = workset_get_appearance();
 
             size sizeButton = get_button_size(button_close);
+
             ::rect rectMargin = get_button_margin(button_close);
 
             ::rect rectClient;
@@ -431,13 +421,15 @@ namespace user
 
             int iWidth = rectClient.width();
 
-
             if(!has_button(button_close))
             {
+
                get_box_button(button_close)->ShowWindow(SW_HIDE);
+
             }
             else
             {
+
                rect.top = rectMargin.top;
                rect.bottom = sizeButton.cy + rect.top;
                rect.right = iWidth - rectMargin.right;
@@ -445,6 +437,7 @@ namespace user
                get_box_button(button_close)->::user::interaction::SetWindowPos(ZORDER_TOP,rect.left,rect.top,rect.width(),rect.height(),SWP_SHOWWINDOW);
                get_box_button(button_close)->UpdateWndRgn();
                rect.left -= rectMargin.left;
+
             }
 
 
@@ -791,30 +784,6 @@ namespace user
          {
 
             return (e_stock_icon)((int) ebutton - (int)button_begin + (int) stock_icon_control_box_begin);
-
-
-//            switch (ebutton)
-//            {
-//               case button_close:
-//                  return stock_icon_close;
-///*               case button_up:
-//                  return stock_icon_level_up;
-//               case button_down:
-//                  return stock_icon_level_up;
-//               case button_minimize:
-//                  return stock_icon_iconify;
-//               case button_maximize:
-//                  return stock_icon_maximize;
-//               case button_restore:
-//                  return stock_icon_restore;
-//               case button_notify_icon:
-//                  return stock_icon_notify;
-//               case button_dock:
-//                  return stock_icon_dock;
-//                  */
-//               default:
-//                  return stock_icon_none;
-//            }
 
          }
 

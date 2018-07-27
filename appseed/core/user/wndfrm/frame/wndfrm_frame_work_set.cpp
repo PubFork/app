@@ -417,16 +417,27 @@ namespace user
 
                sp(WorkSetClientInterface) pinterface = m_pwndCommand;
 
-               if(pinterface == NULL)
+               if (pinterface == NULL)
+               {
+
                   return;
+
+               }
+
                ASSERT(pinterface != NULL);
+
                e_button ebutton = m_pframeschema->get_control_box()->get_control_box_button_type(pevent->m_puie->GetDlgCtrlId());
+
                switch(ebutton)
                {
                case ::user::wndfrm::frame::button_close:
+
                   pinterface->WfiClose();
+
                   pevent->m_bRet = true;
+
                   return;
+
                case ::user::wndfrm::frame::button_minimize:
                   pinterface->WfiMinimize();
                   pevent->m_bRet = true;

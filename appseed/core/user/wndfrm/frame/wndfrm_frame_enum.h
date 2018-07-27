@@ -12,9 +12,9 @@ namespace user
       namespace frame
       {
 
-
          enum EHitTest
          {
+
             HitTestNone,
             HitTestClient,
             HitTestSizingLeft,
@@ -26,24 +26,26 @@ namespace user
             HitTestSizingBottom,
             HitTestSizingBottomLeft,
             HitTestMove,
+
          };
+
 
          enum e_button
          {
+
             button_none,
             button_begin,
-            // TO Begin - TIGHTLY ORDERED Begin (relations : e_stock_icon[button_close:stock_icon_close,...])
-            button_close = button_begin,
-            button_up,
-            button_down,
-            button_minimize,
-            button_restore,
-            button_maximize,
-            button_notify_icon,
-            button_transparent_frame,
-            button_dock,
-            // TO END - TIGHTLY ORDERED End
+            button_close = button_begin, // stock_icon_close
+            button_up, // stock_icon_level_up
+            button_down, // stock_icon_level_down
+            button_minimize, // stock_icon_iconify
+            button_restore, // stock_icon_restore
+            button_maximize, // stock_icon_maximize
+            button_notify_icon, // stock_icon_notify
+            button_transparent_frame, // stock_icon_transparent_frame
+            button_dock, // stock_icon_dock
             button_end = button_dock
+
          };
 
 
