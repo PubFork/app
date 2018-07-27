@@ -92,7 +92,7 @@ namespace user
    bool form_view::open_document(var varFile)
    {
 
-      if(!get_document()->open_document_file(varFile))
+      if(!get_document()->open_document_file(get_app(), varFile))
          return false;
 
       return true;

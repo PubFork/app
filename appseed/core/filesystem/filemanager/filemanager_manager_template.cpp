@@ -414,7 +414,7 @@ namespace filemanager
    }
 
 
-   sp(manager) manager_template::open_main(::id id, ::create * pcreate,::fs::data * pdata,::filemanager::data * pfilemanagerdata,callback * pcallback)
+   sp(manager) manager_template::open_main(::aura::application * pappOnBehalfOf, ::id id, ::create * pcreate,::fs::data * pdata,::filemanager::data * pfilemanagerdata,callback * pcallback)
    {
 
       ::file::path pathFolder;
@@ -422,7 +422,13 @@ namespace filemanager
       if (pcreate == NULL)
       {
 
-         pcreate = canew(::create(Application.handler()));
+         pcreate = canew(::create(pappOnBehalfOf->handler()));
+
+      }
+      else
+      {
+
+         pcreate->set_app(pappOnBehalfOf);
 
       }
 
@@ -537,7 +543,7 @@ namespace filemanager
    }
 
 
-   sp(manager) manager_template::open(id id, ::create * pcreateParam, ::fs::data * pdata, ::filemanager::data * pfilemanagerdata, callback * pcallback)
+   sp(manager) manager_template::open(::aura::application * pappOnBehalfOf, id id, ::create * pcreateParam, ::fs::data * pdata, ::filemanager::data * pfilemanagerdata, callback * pcallback)
    {
 
       ::file::path pathFolder;
@@ -547,7 +553,13 @@ namespace filemanager
       if (pcreate.is_null())
       {
 
-         pcreate = canew(::create(Application.handler()));
+         pcreate = canew(::create(pappOnBehalfOf->handler()));
+
+      }
+      else
+      {
+
+         pcreate->set_app(pappOnBehalfOf);
 
       }
 

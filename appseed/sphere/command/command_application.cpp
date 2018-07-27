@@ -36,8 +36,12 @@ namespace prompt
       System.factory().creatable_small < prompt::pane_view >();
       System.factory().creatable_small < prompt::primary_view >();
 
-      if(!::asphere::application::init_instance())
+      if (!::asphere::application::init_instance())
+      {
+
          return false;
+
+      }
 
       Session.filemanager()->m_strLevelUp = "levelup";
 
@@ -54,11 +58,12 @@ namespace prompt
          add_document_template(pDocTemplate);
          m_ptemplateCommandMain = pDocTemplate;
 
+         m_ptemplateCommandMain->open_new_document(this);
 
-         m_ptemplateCommandMain->open_new_document();
       }
 
       return true;
+
    }
 
 

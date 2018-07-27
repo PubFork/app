@@ -146,7 +146,7 @@ namespace filemanager
    }
 
 
-   bool filemanager::do_prompt_file_name(var & varFile, UINT nIDSTitle, uint32_t lFlags, bool bOpenFileDialog, ::user::impact_system * ptemplate, ::user::document * pdocument)
+   bool filemanager::do_prompt_file_name(::aura::application * pappOnBehalfOf, var & varFile, UINT nIDSTitle, uint32_t lFlags, bool bOpenFileDialog, ::user::impact_system * ptemplate, ::user::document * pdocument)
    {
 
       sp(::userex::pane_tab_view) ppanetabview = NULL;
@@ -168,7 +168,7 @@ namespace filemanager
       UNREFERENCED_PARAMETER(lFlags);
       UNREFERENCED_PARAMETER(ptemplate);
       ASSERT(bOpenFileDialog == FALSE);
-      sp(manager) pdoc =  (m_ptemplate->open());
+      sp(manager) pdoc =  (m_ptemplate->open(pappOnBehalfOf));
       tab_view * pview = pdoc->get_typed_view < tab_view >();
 
 #ifdef WINDOWSEX

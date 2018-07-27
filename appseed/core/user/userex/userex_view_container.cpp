@@ -231,7 +231,7 @@ namespace userex
 
          bCreateTab = true;
 
-         pdoc = m_ptemplateTab->open_document_file(::var::type_null, true, this);
+         pdoc = m_ptemplateTab->open_document_file(get_app(), ::var::type_null, true, this);
 
       }
 
@@ -485,7 +485,7 @@ namespace userex
       if (pdoc.is_null())
       {
 
-         pdoc = Session.userex()->m_mapimpactsystem[strView]->open_document_file();
+         pdoc = Session.userex()->m_mapimpactsystem[strView]->open_document_file(get_app());
 
          ASSERT(pdoc->m_pviewTopic != NULL);
 

@@ -1834,7 +1834,7 @@ finished:
 
       UNREFERENCED_PARAMETER(pdata);
 
-      m_pdocs->m_ptemplate_html->open_document_file(itema[0]->get_friendly_path());
+      m_pdocs->m_ptemplate_html->open_document_file(get_app(), itema[0]->get_friendly_path());
 
    }
 

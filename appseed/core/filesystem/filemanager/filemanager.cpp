@@ -10,7 +10,7 @@ namespace core
    {
       if (Session.m_pfilemanager != NULL)
       {
-         return Session.m_pfilemanager->do_prompt_file_name(varFile, nIDSTitle, lFlags, bOpenFileDialog, ptemplate, pdocument);
+         return Session.m_pfilemanager->do_prompt_file_name(this, varFile, nIDSTitle, lFlags, bOpenFileDialog, ptemplate, pdocument);
       }
       ENSURE(m_pdocmanager != NULL);
       /*      return document_manager()->do_prompt_file_name(fileName, nIDSTitle, lFlags,

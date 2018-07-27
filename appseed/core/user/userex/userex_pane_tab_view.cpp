@@ -419,7 +419,7 @@ namespace userex
 
          Session.will_use_view_hint("font_sel");
 
-         auto pdoc = Session.userex()->m_mapimpactsystem["font_sel"]->open_document_file(::var::type_null, false, pcreatordata->m_pholder);
+         auto pdoc = Session.userex()->m_mapimpactsystem["font_sel"]->open_document_file(get_app(), ::var::type_null, false, pcreatordata->m_pholder);
 
          m_pfontview = pdoc->get_typed_view < font_view >();
 
@@ -433,7 +433,7 @@ namespace userex
 
          Session.will_use_view_hint("color_sel");
 
-         auto pdoc = Session.userex()->m_mapimpactsystem["color_sel"]->open_document_file(::var::type_null, false, pcreatordata->m_pholder);
+         auto pdoc = Session.userex()->m_mapimpactsystem["color_sel"]->open_document_file(get_app(), ::var::type_null, false, pcreatordata->m_pholder);
 
          m_pcolorview = pdoc->get_typed_view < color_view >();
 
@@ -536,7 +536,7 @@ namespace userex
          cc->m_bMakeVisible               = true;
          cc->m_puiParent                  = pcreatordata->m_pholder;
 
-         sp(::filemanager::manager) pmanager = Session.filemanager()->open(-1, cc);
+         sp(::filemanager::manager) pmanager = Session.filemanager()->open(get_app(), -1, cc);
 
          if(pmanager != NULL)
          {

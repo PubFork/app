@@ -6,10 +6,10 @@ namespace user
 {
 
 
-   ::user::document * server::open_new_document()
+   ::user::document * server::open_new_document(::aura::application * pappOnBehalfOf)
    {
 
-      return open_document_file(var::type_null);
+      return open_document_file(pappOnBehalfOf, var::type_null);
 
    }
 
@@ -31,10 +31,10 @@ namespace user
    }
 
 
-   ::user::document * server::open_document_file(var varFile, bool bMakeVisible, ::user::interaction * puiParent)
+   ::user::document * server::open_document_file(::aura::application * pappOnBehalfOf, var varFile, bool bMakeVisible, ::user::interaction * puiParent)
    {
 
-      sp(::create) cc(canew(::create(Application.handler(), varFile, bMakeVisible, puiParent)));
+      sp(::create) cc(canew(::create(pappOnBehalfOf->handler(), varFile, bMakeVisible, puiParent)));
 
       request_create(cc);
 
@@ -46,7 +46,11 @@ namespace user
    ::user::document * server::create_subdocument(::user::view_creator_data * pcreatordata)
    {
 
-      return pcreatordata->m_pdoc = open_document_file(var::type_null, true, pcreatordata->m_pholder);
+      return pcreatordata->m_pdoc = open_document_file(
+                                    pcreatordata->m_pholder->get_app(),
+                                    var::type_null,
+                                    true,
+                                    pcreatordata->m_pholder);
 
    }
 

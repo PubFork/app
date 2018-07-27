@@ -66,8 +66,8 @@ namespace filemanager
       bool remove_manager(manager * pmanager);
 
 
-      sp(manager) open_main(::id id = -1, ::create * pcreate = NULL,::fs::data * pdata = NULL,data * pfilemanagerdata = NULL,callback * pcallback = NULL);
-      sp(manager) open(::id id = -1, ::create * pcreate = NULL, ::fs::data * pdata = NULL, data * pfilemanagerdata = NULL, callback * pcallback = NULL);
+      sp(manager) open_main(::aura::application * pappOnBehalfOf, ::id id = -1, ::create * pcreate = NULL,::fs::data * pdata = NULL,data * pfilemanagerdata = NULL,callback * pcallback = NULL);
+      sp(manager) open(::aura::application * pappOnBehalfOf, ::id id = -1, ::create * pcreate = NULL, ::fs::data * pdata = NULL, data * pfilemanagerdata = NULL, callback * pcallback = NULL);
       sp(manager) open_child(bool bMakeVisible = true,bool bTransparentBackground = false,sp(::user::interaction) pwndParent = NULL,data * pfilemanagerdata = NULL, callback * pcallback = NULL);
       sp(manager) open_child_list(bool bMakeVisible = true,bool bTransparentBackground = false,sp(::user::interaction) pwndParent = NULL,data * pfilemanagerdata = NULL,callback * pcallback = NULL);
       sp(manager) open_folder_selection_list(bool bMakeVisible = true,bool bTransparentBackground = false,sp(::user::interaction) pwndParent = NULL,data * pfilemanagerdata = NULL,callback * pcallback = NULL);
