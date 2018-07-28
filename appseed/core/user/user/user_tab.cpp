@@ -1821,7 +1821,12 @@ namespace user
    void tab::on_hide_child(::user::interaction * pui)
    {
 
-      defer_remove_child_pane(pui);
+      if (dynamic_cast <wndfrm::frame::WorkSetUpDownInterface*>(pui) != NULL)
+      {
+
+         defer_remove_child_pane(pui);
+
+      }
 
    }
 
@@ -1829,7 +1834,12 @@ namespace user
    void tab::on_hide_place_holder_child(::user::interaction * pui)
    {
 
-      defer_remove_child_pane(pui);
+      if (dynamic_cast <wndfrm::frame::WorkSetUpDownInterface*>(pui) != NULL)
+      {
+
+         defer_remove_child_pane(pui);
+
+      }
 
    }
 
