@@ -245,8 +245,17 @@ namespace windows
 
       bool bSetWindowPos = false;
 
-      if (m_rectLast != rectWindow || m_pimpl->m_bZ || m_pimpl->m_bShowFlags)
+      if (m_rectLast != rectWindow || m_pimpl->m_bZ || m_pimpl->m_bShowFlags || m_pimpl->m_bShowWindow)
       {
+
+         keep < bool > keepLockWindowUpdate(&m_pimpl->m_pui->m_bLockWindowUpdate, true, false, true);
+
+         keep < bool > keepIgnoreSizeEvent(&m_pimpl->m_bIgnoreSizeEvent, true, false, true);
+
+         keep < bool > keepIgnoreMoveEvent(&m_pimpl->m_bIgnoreMoveEvent, true, false, true);
+
+         keep < bool > keepDisableSaveWindowRect(&m_pimpl->m_pui->m_bEnableSaveWindowRect, false, m_pimpl->m_pui->m_bEnableSaveWindowRect, true);
+
 
          UINT uiFlags;
 
@@ -337,13 +346,13 @@ namespace windows
             try
             {
 
-               if (m_pimpl->m_iShowWindow == SW_HIDE)
+               if (m_pimpl->m_iShowWindow == SW_HIDE && m_pimpl->m_pui->is_this_visible())
                {
 
                   m_pimpl->m_pui->ModifyStyle(WS_VISIBLE, 0);
 
                }
-               else
+               else if (m_pimpl->m_iShowWindow != SW_HIDE && !m_pimpl->m_pui->is_this_visible())
                {
 
                   m_pimpl->m_pui->ModifyStyle(0, WS_VISIBLE);
@@ -365,7 +374,7 @@ namespace windows
 
       }
 
-      if (bLayered)
+      if (bLayered && m_pimpl->m_pui->IsWindowVisible())
       {
 
          POINT pt;

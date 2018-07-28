@@ -3835,13 +3835,6 @@ namespace windows
 
       }
 
-      if (m_bShowWindow)
-      {
-
-         ::ShowWindow(m_oswindow, m_iShowWindow);
-
-      }
-
    }
 
 
