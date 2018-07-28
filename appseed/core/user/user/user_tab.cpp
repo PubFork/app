@@ -1821,7 +1821,11 @@ namespace user
    void tab::on_hide_child(::user::interaction * pui)
    {
 
-      if (dynamic_cast <wndfrm::frame::WorkSetUpDownInterface*>(pui) != NULL)
+      sp(wndfrm::frame::WorkSetUpDownInterface) pupdown = pui;
+
+      if (pupdown.is_set()
+            && pupdown->m_eupdown != updown_normal_frame
+            && pupdown->m_eupdown != updown_none)
       {
 
          defer_remove_child_pane(pui);
@@ -1834,7 +1838,11 @@ namespace user
    void tab::on_hide_place_holder_child(::user::interaction * pui)
    {
 
-      if (dynamic_cast <wndfrm::frame::WorkSetUpDownInterface*>(pui) != NULL)
+      sp(wndfrm::frame::WorkSetUpDownInterface) pupdown = pui;
+
+      if (pupdown.is_set()
+            && pupdown->m_eupdown != updown_normal_frame
+            && pupdown->m_eupdown != updown_none)
       {
 
          defer_remove_child_pane(pui);
