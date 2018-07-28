@@ -71,6 +71,7 @@ namespace user
       IGUI_MSG_LINK(WM_SETFOCUS,psender,this,&combo_box::_001OnSetFocus);
       IGUI_MSG_LINK(WM_KILLFOCUS, psender, this, &combo_box::_001OnKillFocus);
       IGUI_MSG_LINK(WM_MOUSEMOVE, psender, this, &combo_box::_001OnMouseMove);
+      IGUI_MSG_LINK(WM_MOUSELEAVE, psender, this, &combo_box::_001OnMouseLeave);
       IGUI_MSG_LINK(WM_SHOWWINDOW, psender, this, &combo_box::_001OnShowWindow);
       IGUI_MSG_LINK(WM_MOVE, psender, this, &combo_box::_001OnMove);
 
@@ -98,7 +99,6 @@ namespace user
       rect rectClient;
 
       GetClientRect(rectClient);
-
       ::user::e_color colorText = color_text;
 
       if (m_pdrawcontext != NULL)
@@ -141,7 +141,7 @@ namespace user
 
       }
 
-      if(!select_text_color(pgraphics,colorText))
+      if(!select_text_color(pgraphics, colorText))
       {
 
          pgraphics->set_text_color(ARGB(255,0,0,0));
@@ -154,81 +154,12 @@ namespace user
 
       select_font(pgraphics, font_plain_edit);
 
-      //pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
-
       int iDrawTextFlags = _001GetInt(m_eintDrawTextFlags);
 
       pgraphics->draw_text(strText, rectText, iDrawTextFlags);
 
    }
 
-
-   //void combo_box::_001OnDrawVerisimple(::draw2d::graphics * pgraphics)
-   //{
-
-   //   pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
-
-   //   if(m_bEdit)
-   //   {
-
-   //      ::user::plain_edit::_001OnDraw(pgraphics);
-
-   //   }
-   //   else
-   //   {
-
-   //      _001OnDrawStaticText(pgraphics);
-
-   //   }
-
-   //   rect rectClient;
-
-   //   GetClientRect(rectClient);
-
-   //   ::draw2d::brush_sp br(allocer());
-
-   //   rect rectDropDown;
-
-   //   get_element_rect(rectDropDown, element_drop_down);
-
-   //   br->create_solid(ARGB(184, 255, 255, 255));
-
-   //   pgraphics->SelectObject(br);
-
-   //   pgraphics->fill_rect(rectDropDown);
-
-   //   ::draw2d::path_sp path(allocer());
-
-   //   point_array pointa;
-
-   //   get_simple_drop_down_open_arrow_polygon(pointa);
-
-   //   if(pointa.get_count() >= 3)
-   //   {
-
-   //      path->add_line(pointa[0], pointa[1]);
-
-   //      for(index i = 2; i < pointa.get_count(); i++)
-   //      {
-
-   //         path->add_line(pointa[i]);
-
-   //      }
-
-   //      path->add_line(pointa[0]);
-
-   //   }
-
-   //   //br->create_solid(ARGB(210, 77, 184, 49));
-   //   br->create_solid(_001GetColor(::user::color_background_selected));
-
-   //   pgraphics->SelectObject(br);
-
-   //   pgraphics->fill_path(path);
-
-
-
-   //}
 
    void combo_box::_001OnDrawCombo(::draw2d::graphics * pgraphics)
    {
@@ -262,7 +193,92 @@ namespace user
 
       rect rectDropIn(rectDropDown);
 
-      br->create_solid(ARGB(210, 230, 230, 230));
+      ::user::e_color colorDropDown = color_button_background_disabled;
+
+      if (m_pdrawcontext != NULL)
+      {
+
+         if (m_pdrawcontext->is_control_selected())
+         {
+
+            if (m_pdrawcontext->is_control_hover())
+            {
+
+               colorDropDown = color_action_hover_border_color;
+
+            }
+            else
+            {
+
+               colorDropDown = color_action_hover_border_color;
+
+            }
+
+         }
+         else
+         {
+
+            if (m_pdrawcontext->is_control_hover())
+            {
+
+               colorDropDown = color_action_hover_border_color;
+
+            }
+            else
+            {
+
+               colorDropDown = color_button_background_disabled;
+
+            }
+
+         }
+
+      }
+      else
+      {
+
+         if (Session.get_focus_ui() == this)
+         {
+
+            if (m_iHover >= 0)
+            {
+
+               colorDropDown = color_action_hover_border_color;
+
+            }
+            else
+            {
+
+               colorDropDown = color_action_hover_border_color;
+
+            }
+
+         }
+         else
+         {
+
+            if (m_iHover >= 0)
+            {
+
+               colorDropDown = color_action_hover_border_color;
+
+            }
+            else
+            {
+
+               colorDropDown = color_button_background_disabled;
+
+            }
+
+         }
+
+      }
+
+      color c(_001GetColor(colorDropDown, ARGB(210, 230, 230, 230)));
+
+      c.hls_rate(0.0, 0.5, 0.1);
+
+      br->create_solid(c);
 
       pgraphics->SelectObject(br);
 
@@ -280,7 +296,6 @@ namespace user
 
       pgraphics->fill_polygon(pointa);
 
-
    }
 
 
@@ -289,9 +304,7 @@ namespace user
 
       ::user::plain_edit::_000OnDraw(pgraphics);
 
-
    }
-
 
 
    void combo_box::_001OnDraw(::draw2d::graphics * pgraphics)
@@ -299,18 +312,7 @@ namespace user
 
       ::user::control::_001OnDraw(pgraphics);
 
-      //if(m_plist == NULL)
-      {
-
-         _001OnDrawCombo(pgraphics);
-
-      }
-      //else
-      //{
-
-      //   _001OnDrawVerisimple(pgraphics);
-
-      //}
+      _001OnDrawCombo(pgraphics);
 
    }
 
@@ -354,6 +356,7 @@ namespace user
       }
 
    }
+
 
    void combo_box::_001SetText(const string & str, ::action::context actioncontext)
    {
@@ -484,17 +487,32 @@ namespace user
 
       }
 
-      if(get_element_rect(rectElement, element_text))
+      rect rectClient;
+
+      GetClientRect(rectClient);
+
+      if (rectClient.contains(pt))
       {
 
-         if (rectElement.contains(pt))
-         {
-
-            return element_text;
-
-         }
+         return element_text;
 
       }
+
+      /*
+
+            if(get_element_rect(rectElement, element_text))
+            {
+
+               if (rectElement.contains(pt))
+               {
+
+                  return element_text;
+
+               }
+
+            }
+
+      */
 
       return element_none;
 
@@ -589,6 +607,7 @@ namespace user
 
    }
 
+
    void combo_box::_001OnMouseMove(::message::message * pobj)
    {
 
@@ -598,7 +617,20 @@ namespace user
 
       ScreenToClient(&pt);
 
-      if (!m_bEdit || hit_test(pt) == element_drop_down)
+      if (m_iHover < 0)
+      {
+
+         m_iHover = 0;
+
+         track_mouse_leave();
+
+         set_need_redraw();
+
+      }
+
+      ::user::e_element eelementHover = hit_test(pt);
+
+      if (!m_bEdit || eelementHover == element_drop_down)
       {
 
          pmouse->m_ecursor = ::visual::cursor_arrow;
@@ -607,7 +639,26 @@ namespace user
 
       }
 
+      if (m_eelementHover != eelementHover) // on purpose
+      {
 
+         m_eelementHover = eelementHover; // on purpose;
+
+         set_need_redraw();
+
+      }
+
+   }
+
+
+   void combo_box::_001OnMouseLeave(::message::message * pobj)
+   {
+
+      SCAST_PTR(::message::mouse, pmouse, pobj);
+
+      m_iHover = -1;
+
+      set_need_redraw();
 
    }
 
@@ -772,10 +823,16 @@ namespace user
 
          on_control_event(&ev);
 
+         set_need_redraw();
+
       }
 
-      if(!IsWindow())
+      if (!IsWindow())
+      {
+
          return;
+
+      }
 
       string strItem;
 
@@ -1591,6 +1648,10 @@ namespace user
             _001ShowDropDown(false);
 
             pevent->Ret();
+
+            set_need_redraw();
+
+            keyboard_set_focus_next();
 
             return;
 

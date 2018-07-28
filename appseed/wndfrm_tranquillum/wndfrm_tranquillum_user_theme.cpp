@@ -45,6 +45,7 @@ namespace wndfrm_tranquillum
       }
       create_point_font(::user::font_tab_big_bold, "Segoe UI", 13.0, 800);
 
+      create_rect_coord(::user::rect_edit_padding, 0.2, 0.2, 0.2, 0.2);
 
       create_double(::user::double_list_item_height_rate, 1.65);
 

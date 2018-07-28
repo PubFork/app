@@ -4028,13 +4028,6 @@ namespace windows
       else if (nCmdShow == SW_HIDE)
       {
 
-         if(!m_pui->m_bProDevian)
-         {
-
-            ::ShowWindow(get_handle(), nCmdShow);
-
-         }
-
          if(GetExStyle() & WS_EX_LAYERED)
          {
 
@@ -4047,6 +4040,13 @@ namespace windows
             m_bShowFlags = true;
 
          }
+         else
+         {
+
+            ::ShowWindow(get_handle(), nCmdShow);
+
+         }
+
 
       }
       else
