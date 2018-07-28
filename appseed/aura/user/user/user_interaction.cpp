@@ -7379,26 +7379,15 @@ restart:
             keep < bool > keepIgnoreMoveEvent(&m_pimpl->m_bIgnoreMoveEvent, true, false, true);
 
             keep < bool > keepDisableSaveWindowRect(&m_bEnableSaveWindowRect, false, m_bEnableSaveWindowRect, true);
-            uiSwpFlags &= ~SWP_NOZORDER;
+
             if (GetExStyle() & WS_EX_LAYERED)
             {
 
                m_pimpl->m_bShowWindow = true;
 
-               //if (uiSwpFlags & SWP_NOACTIVATE)
-               //{
-               //   uiSwpFlags &= ~SWP_FRAMECHANGED;
-               //   m_pimpl->m_iShowWindow = SW_SHOWMINNOACTIVE;
+               m_pimpl->m_iShowWindow = SW_MINIMIZE;
 
-               //}
-               //else
-               {
-                  uiSwpFlags &= ~SWP_FRAMECHANGED;
-                  uiSwpFlags &= ~SWP_NOACTIVATE;
-                  uiSwpFlags &= ~SWP_NOZORDER;
-                  m_pimpl->m_iShowWindow = SW_MINIMIZE;
-
-               }
+               set_need_redraw();
 
             }
             else
@@ -7410,32 +7399,13 @@ restart:
 
          }
 
-         //SetWindowPos(iZOrder,rectNew,uiSwpFlags);
-
-
-#elif defined WINDOWSEX
-
-         WINDOWPLACEMENT wp;
-
-         GetWindowPlacement(&wp);
-
-         wp.showCmd = SW_MINIMIZE;
-
-         wp.flags = WPF_SETMINPOSITION;
-
-         Session.monitor_to_wkspace(rect);
-
-         //wp.rcNormalPosition = rect;
-
-         wp.ptMinPosition = rect.top_left();
-
-         SetWindowPlacement(&wp);
-
 #elif defined(LINUX)
 
          ::ShowWindow(get_handle(), SW_MINIMIZE);
 
 #else
+
+         _throw(todo(get_app()));
 
          SetWindowPos(iZOrder, rectNew, uiSwpFlags);
 

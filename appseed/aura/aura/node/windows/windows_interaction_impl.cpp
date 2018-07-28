@@ -3835,23 +3835,12 @@ namespace windows
 
       }
 
-      //if (!(GetExStyle() & WS_EX_LAYERED))
-      //{
-      //
-      //   if (m_bShowFlags && (m_iShowFlags & SWP_SHOWWINDOW))
-      //   {
+      if (m_bShowWindow)
+      {
 
-      //      ShowWindow(SW_SHOW);
+         ::ShowWindow(m_oswindow, m_iShowWindow);
 
-      //   }
-      //   else if (m_bShowFlags && (m_iShowFlags & SWP_HIDEWINDOW))
-      //   {
-
-      //      ShowWindow(SW_HIDE);
-
-      //   }
-
-      //}
+      }
 
    }
 
