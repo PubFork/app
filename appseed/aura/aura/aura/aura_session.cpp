@@ -1536,9 +1536,6 @@ namespace aura
    ::user::elemental * session::get_keyboard_focus()
    {
 
-      //if (m_pauraapp == NULL)
-      // return NULL;
-
       oswindow oswindowFocus = ::GetFocus();
 
       if (oswindowFocus == NULL)
@@ -1548,17 +1545,37 @@ namespace aura
 
       }
 
-      ::user::interaction_impl * pimpl = ::oswindow_get(oswindowFocus);
+      oswindow oswindow = oswindowFocus;
 
-      if (pimpl->get_focus_elemental() != NULL)
+      while (oswindow != NULL)
       {
 
-         return pimpl->get_focus_elemental();
+         ::user::interaction_impl * pimpl = ::oswindow_get(oswindow);
+
+         if (pimpl != NULL)
+         {
+
+            if (pimpl->get_focus_elemental() != NULL)
+            {
+
+               return pimpl->get_focus_elemental();
+
+            }
+
+            return pimpl->m_pui;
+
+         }
+
+         oswindow = ::GetParent(oswindow);
+
+         if (oswindow != NULL)
+         {
+
+            oswindow = ::GetWindow(oswindow, GW_OWNER);
+
+         }
 
       }
-
-      return pimpl->m_pui;
-
 
       //if (m_pkeyboardfocus == NULL)
       //   return NULL;
