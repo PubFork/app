@@ -5049,7 +5049,30 @@ namespace windows
    void interaction_impl::_001OnKillFocus(::message::message * pobj)
    {
 
-      m_pelementalFocus = NULL;
+      SCAST_PTR(::message::kill_focus, pkillfocus, pobj);
+
+      if (pkillfocus->m_oswindowNew != m_oswindow)
+      {
+
+         if (m_pelementalFocus != NULL && m_pelementalFocus->m_puiThis != m_pui)
+         {
+
+            try
+            {
+
+               m_pelementalFocus->m_puiThis->send_message(WM_KILLFOCUS, pkillfocus->m_wparam, pkillfocus->m_lparam);
+
+            }
+            catch (...)
+            {
+
+            }
+
+         }
+
+         m_pelementalFocus = NULL;
+
+      }
 
    }
 

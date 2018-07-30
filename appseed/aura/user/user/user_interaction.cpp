@@ -49,6 +49,8 @@ namespace user
    void interaction::user_interaction_common_construct()
    {
 
+      m_puiThis = this;
+
       m_bDrawable = true;
 
       m_bProDevian = false;
@@ -4291,7 +4293,16 @@ restart:
       if (m_puiOwner != NULL)
       {
 
-         m_puiOwner->m_uiptraOwned.remove(this);
+         try
+         {
+
+            m_puiOwner->m_uiptraOwned.remove(this);
+
+         }
+         catch (...)
+         {
+
+         }
 
       }
 

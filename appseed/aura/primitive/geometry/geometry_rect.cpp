@@ -103,7 +103,7 @@ void rect::FitOnCenterOf(const RECT & rect,SIZE size)
 void rect::FitOnCenterOf(const RECT & rect)
 {
 
-   FitOnCenterOf(rect,size());
+   FitOnCenterOf(rect,get_size());
 
 }
 
@@ -126,7 +126,7 @@ void rect::CenterOf(const RECT & rect,SIZE size)
 void rect::CenterOf(const RECT & rect)
 {
 
-   CenterOf(rect,size());
+   CenterOf(rect,get_size());
 
 }
 
@@ -1544,8 +1544,23 @@ void rectd::set(double x1, double y1, double x2, double y2) NOTHROW
 { ::set_rect(this, x1, y1, x2, y2); }
 void rectd::set(POINTD topLeft, POINTD bottomRight) NOTHROW
 { ::set_rect(this, topLeft.x, topLeft.y, bottomRight.x, bottomRight.y); }
+
 void rectd::null() NOTHROW
-{ ::null(this); }
+{
+
+   ::null(this);
+
+}
+
+
+bool rectd::is_empty() const NOTHROW
+{
+
+   return left == right && top == bottom;
+
+}
+
+
 void rectd::copy(LPCRECTD lpSrcRect) NOTHROW
 { ::copy(this, lpSrcRect); }
 bool rectd::is_equal(LPCRECTD lpRect) const NOTHROW
@@ -1689,7 +1704,11 @@ rectd rectd::MulDiv(double nMultiplier, double nDivisor) const NOTHROW
 }
 
 double rectd::area()
-{ return size().area(); }
+{
+
+   return get_size().area();
+
+}
 
 
 void rectd::get_bounding_rect(const POINTD * lppoint, ::count count)

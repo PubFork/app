@@ -129,6 +129,7 @@ namespace user
    enum e_event
    {
       event_initialize_control,
+      event_action,
       event_button_down,
       event_button_clicked,
       event_m_button_down,
