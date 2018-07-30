@@ -30,14 +30,14 @@ namespace core
       m_pdocs = create_session_docs();
 
       m_pcoresession                      = this;
-      
+
       if(papp->is_system())
       {
-         
+
          m_pcoresystem = dynamic_cast< ::core::system * >(papp);
-         
+
       }
-      
+
       m_pcoresystem->m_pcoresession       = this;
 
       m_bLicense				               = false;

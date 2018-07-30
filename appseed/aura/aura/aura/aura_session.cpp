@@ -19,6 +19,7 @@ namespace aura
       ::thread(papp)
    {
 
+      m_pimplPendingSetFocus = NULL;
 
       m_pauraapp = papp;
 
@@ -1535,12 +1536,32 @@ namespace aura
    ::user::elemental * session::get_keyboard_focus()
    {
 
-      if (m_pauraapp == NULL)
+      //if (m_pauraapp == NULL)
+      // return NULL;
+
+      oswindow oswindowFocus = ::GetFocus();
+
+      if (oswindowFocus == NULL)
+      {
+
          return NULL;
 
+      }
 
-      if (m_pkeyboardfocus == NULL)
-         return NULL;
+      ::user::interaction_impl * pimpl = ::oswindow_get(oswindowFocus);
+
+      if (pimpl->get_focus_elemental() != NULL)
+      {
+
+         return pimpl->get_focus_elemental();
+
+      }
+
+      return pimpl->m_pui;
+
+
+      //if (m_pkeyboardfocus == NULL)
+      //   return NULL;
 
       //sp(::user::elemental) puieFocus;
 
@@ -1569,96 +1590,168 @@ namespace aura
 
       //if((bool)oprop("NativeWindowFocus") && puieFocus != m_pkeyboardfocus)
       //   return NULL;
-      return m_pkeyboardfocus;
+      //return m_pkeyboardfocus;
 
    }
 
 
-   void session::set_keyboard_focus(::user::elemental * pkeyboardfocus)
+   bool session::set_keyboard_focus(::user::elemental * pelemental)
    {
 
-      if (pkeyboardfocus == NULL)
+      if (pelemental == NULL)
       {
 
-         pkeyboardfocus = (::user::elemental *) (ulong_ptr) 1;
+         m_pimplPendingSetFocus = NULL;
+
+         ::SetFocus(NULL);
+
+         return false;
 
       }
 
-      if (m_pkeyboardfocus != NULL && m_pkeyboardfocus != pkeyboardfocus && m_pkeyboardfocusRequest != pkeyboardfocus)
+      ::user::interaction * pui = pelemental->get_wnd();
+
+      if (pui == NULL)
       {
 
-         ::user::elemental * pkeyboardfocusOld = m_pkeyboardfocus;
+         ASSERT(FALSE);
 
-         m_pkeyboardfocusRequest = pkeyboardfocus;
-
-         try
-         {
-
-            if (pkeyboardfocusOld != NULL)
-            {
-
-               output_debug_string("axis::session::set_keyboard_focus pkeyboardfocusOld->keyboard_focus_OnKillFocus()\n");
-
-               if (!pkeyboardfocusOld->keyboard_focus_OnKillFocus())
-               {
-
-                  return;
-
-               }
-
-               sp(::user::interaction) pui = pkeyboardfocusOld;
-
-               if (pui.is_set())
-               {
-
-                  pui->send_message(WM_KILLFOCUS);
-
-               }
-
-            }
-
-         }
-         catch (...)
-         {
-
-         }
+         return false;
 
       }
 
-      if (pkeyboardfocus == (::user::elemental *) (ulong_ptr) 1)
+      ::user::interaction * puiImpl = pui->get_wnd();
+
+      if (puiImpl == NULL)
       {
 
-         pkeyboardfocus = NULL;
+         ASSERT(FALSE);
+
+         return false;
 
       }
 
-      if (pkeyboardfocus != NULL)
+      ::user::interaction_impl * pimpl = puiImpl->m_pimpl.cast < ::user::interaction_impl > ();
+
+      if (pimpl == NULL)
       {
 
-         if (!pkeyboardfocus->keyboard_focus_OnSetFocus())
-         {
+         ASSERT(FALSE);
 
-            return;
-
-         }
-
-         if (pkeyboardfocus->get_wnd() != NULL)
-         {
-
-            if (!pkeyboardfocus->get_wnd_elemental()->on_keyboard_focus(pkeyboardfocus))
-            {
-
-               return;
-
-            }
-
-         }
+         return false;
 
       }
 
-      m_pkeyboardfocus = pkeyboardfocus;
+      if (!pimpl->set_focus_elemental(pelemental))
+      {
 
-      on_finally_focus_set(pkeyboardfocus);
+         return false;
+
+      }
+
+      if (!IsWindowVisible(pimpl->m_oswindow) || pui->GetExStyle() & WS_EX_LAYERED)
+      {
+
+         m_pimplPendingSetFocus = pimpl;
+
+      }
+      else
+      {
+
+         ::SetFocus(pimpl->m_oswindow);
+
+      }
+
+      return true;
+
+      //::user::elemental * pkeyboardfocusParam = pkeyboardfocus;
+
+      //if (pkeyboardfocus == NULL)
+      //{
+
+      //   pkeyboardfocus = (::user::elemental *) (ulong_ptr) 1;
+
+      //}
+
+      //if (m_pkeyboardfocus != NULL && m_pkeyboardfocus != pkeyboardfocus && m_pkeyboardfocusRequest != pkeyboardfocus)
+      //{
+
+      //   ::user::elemental * pkeyboardfocusOld = m_pkeyboardfocus;
+
+      //   m_pkeyboardfocusRequest = pkeyboardfocus;
+
+      //   try
+      //   {
+
+      //      if (pkeyboardfocusOld != NULL)
+      //      {
+
+      //         output_debug_string("axis::session::set_keyboard_focus pkeyboardfocusOld->keyboard_focus_OnKillFocus()\n");
+
+      //         if (!pkeyboardfocusOld->keyboard_focus_OnKillFocus( (pkeyboardfocus != NULL &&
+      //               pkeyboardfocus != (::user::elemental *) (ulong_ptr) 1) ?
+      //               pkeyboardfocus->get_safe_handle() : NULL))
+      //         {
+
+      //            return;
+
+      //         }
+
+      //         sp(::user::interaction) pui = pkeyboardfocusOld;
+
+      //         if (pui.is_set())
+      //         {
+
+      //            pui->send_message(WM_KILLFOCUS, (WPARAM) ( (pkeyboardfocus != NULL &&
+      //                              pkeyboardfocus != (::user::elemental *) (ulong_ptr) 1 )?
+      //                              pkeyboardfocus->get_safe_handle() : NULL));
+
+      //         }
+
+      //      }
+
+      //   }
+      //   catch (...)
+      //   {
+
+      //   }
+
+      //}
+
+      //if (pkeyboardfocus == (::user::elemental *) (ulong_ptr) 1)
+      //{
+
+      //   pkeyboardfocus = NULL;
+
+      //}
+
+      //if (pkeyboardfocus != NULL)
+      //{
+
+      //   if (!pkeyboardfocus->keyboard_focus_OnSetFocus())
+      //   {
+
+      //      return;
+
+      //   }
+
+      //   if (pkeyboardfocus->get_wnd() != NULL)
+      //   {
+
+      //      if (!pkeyboardfocus->get_wnd_elemental()->on_keyboard_focus(pkeyboardfocus))
+      //      {
+
+      //         return;
+
+      //      }
+
+      //   }
+
+      //}
+
+      //m_pkeyboardfocus = pkeyboardfocus;
+
+      //on_finally_focus_set(pkeyboardfocus);
 
    }
 

@@ -2756,6 +2756,9 @@
     <ClInclude Include="aura\os\windows\windows2.h">
       <Filter>Header Files\aura\os\windows</Filter>
     </ClInclude>
+    <ClInclude Include="aura\message\message_user.h">
+      <Filter>Header Files\aura\message</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="multithreading\multithreading_condition.cpp">

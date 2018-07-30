@@ -113,7 +113,7 @@ namespace user
    }
 
 
-   bool elemental::keyboard_focus_OnKillFocus()
+   bool elemental::keyboard_focus_OnKillFocus(oswindow oswindowNew)
    {
 
       return true;

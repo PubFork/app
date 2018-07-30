@@ -701,6 +701,7 @@ namespace user
       virtual ::user::interaction * EnsureParentTopLevel() override;
       virtual ::user::interaction * GetOwner() const override;
       virtual ::user::interaction * GetParentOwner() const override;
+      virtual ::user::interaction * GetParentOrOwner() const override;
       virtual ::user::interaction * GetTopLevelOwner() const override;
       virtual ::user::frame * GetFrame() const override;
       virtual ::user::frame * GetParentFrame() const override;
@@ -1004,20 +1005,22 @@ namespace user
       virtual void on_update(::user::impact * pSender,LPARAM lHint,::object* pHint);
 
       virtual void keyboard_focus_OnKeyDown(::message::message * pobj) override;
-      virtual bool keyboard_focus_OnKillFocus() override;
+      virtual bool keyboard_focus_OnKillFocus(oswindow oswindowNew) override;
       virtual bool keyboard_focus_OnChildKillFocus() override;
 
       virtual bool get_child(sp(::user::interaction) & pui);
       virtual bool rget_child(sp(::user::interaction) & pui);
 
 
-      virtual ::user::interaction * get_focus_ui();
-      virtual void set_focus_guie(::user::interaction * pguie);
+      virtual ::user::elemental * get_focus_elemental();
+      virtual bool set_focus_elemental(::user::elemental * pelemental);
 
 
-      virtual bool is_descendant_of(::user::interaction * puiAscendantCandidate);
-      virtual bool is_ascendant_of(::user::interaction * puiDescendantCandidate);
+      virtual bool is_descendant_of(::user::interaction * puiAscendantCandidate, bool bIncludeSelf);
+      virtual bool is_ascendant_of(::user::interaction * puiDescendantCandidate, bool bIncludeSelf);
 
+      virtual bool is_descendant_of_or_owned_by(::user::interaction * puiAscendantCandidate, bool bIncludeSelf);
+      virtual bool is_ascendant_or_owner_of(::user::interaction * puiDescendantCandidate, bool bIncludeSelf);
 
       virtual bool show_tooltip(const string & str,bool bError);
 

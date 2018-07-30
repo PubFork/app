@@ -92,7 +92,7 @@ namespace axis
       m_pcopydesk = NULL;
 
 
-      m_pkeyboardfocus  = NULL;
+      //m_pelementalFocus  = NULL;
       //      m_pshellimageset  = NULL;
       m_pkeyboard       = NULL;
       //    m_pufeschema      = NULL;

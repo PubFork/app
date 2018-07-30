@@ -602,50 +602,10 @@ namespace metrowin
 
    void interaction_impl::_001OnMove(::message::message * pobj)
    {
-      //_throw(todo(get_app()));
-      //UNREFERENCED_PARAMETER(pobj);
-      //if(!m_bRectOk && !(GetExStyle() & WS_EX_LAYERED))
-      //{
-      //   class rect rectWindow;
-      //   ::GetWindowRect(get_handle(), rectWindow);
-      //   m_pui->m_rectParentClient = rectWindow;
-      //   m_rectParentClient = rectWindow;
-      //}
    }
 
    void interaction_impl::_001OnSize(::message::message * pobj)
    {
-
-      //_throw(todo(get_app()));
-
-      //UNREFERENCED_PARAMETER(pobj);
-
-
-      //if(!m_bRectOk && !(GetExStyle() & WS_EX_LAYERED))
-      //{
-      //   class rect rectWindow;
-      //   ::GetWindowRect(get_handle(), rectWindow);
-      //   m_pui->m_rectParentClient = rectWindow;
-      //   m_rectParentClient = rectWindow;
-      //}
-
-      ///*      if(m_spdibMultAlphaWork.is_null())
-      //{
-      //m_spdibMultAlphaWork.create(get_app());
-      //}
-
-      //if(m_spdib.is_null())
-      //{
-      //m_spdib.create(get_app());
-      //}
-
-      //if(m_spdib.is_set() && m_rectParentClient.area() > 0)
-      //{
-      //m_spdib->create(m_rectParentClient.size());
-      //}*/
-
-      //m_pui->on_layout();
-
 
 
    }
@@ -3171,73 +3131,6 @@ return TRUE;
       //lock lock(m_pui, 1984);
       _throw(todo(get_app()));
 
-      //SCAST_PTR(::message::base, pbase, pobj);
-
-      //PAINTSTRUCT paint;
-      //memset(&paint, 0, sizeof(paint));
-      //HDC hdc = ::BeginPaint(get_handle(), &paint);
-      //::SelectClipRgn(hdc, NULL);
-
-      //try
-      //{
-
-      //   ::draw2d::dib_sp dib(get_app());
-
-      //   rect rectWindow;
-      //   GetWindowRect(rectWindow);
-
-      //   if(!dib->create(rectWindow.bottom_right()))
-      //      return;
-
-      //   ::draw2d::graphics * pgraphics = dib->get_graphics();
-
-      //   if((dynamic_cast<::metrowin::graphics * >(pgraphics))->get_os_data() == NULL
-      //      || (dynamic_cast<::metrowin::graphics * >(pgraphics))->get_handle2() == NULL)
-      //      return;
-
-      //   rect rectPaint;
-      //   rect rectUpdate;
-      //   rectPaint = paint.rcPaint;
-      //   if(rectPaint.is_null() || (GetExStyle() & WS_EX_LAYERED))
-      //   {
-      //      rectUpdate = rectWindow;
-      //      rectPaint = rectWindow;
-      //      ScreenToClient(rectPaint);
-      //   }
-      //   else
-      //   {
-      //      rectUpdate = rectPaint;
-      //      ClientToScreen(rectUpdate);
-      //   }
-      //   (dynamic_cast<::metrowin::graphics * >(pgraphics))->SelectClipRgn(NULL);
-      //   if(m_pui != NULL)
-      //   {
-      //      m_pui->_001OnDeferPaintLayeredWindowBackground(pgraphics);
-      //   }
-      //   else
-      //   {
-      //      _001OnDeferPaintLayeredWindowBackground(pgraphics);
-      //   }
-      //   (dynamic_cast<::metrowin::graphics * >(pgraphics))->SelectClipRgn(NULL);
-      //   (dynamic_cast<::metrowin::graphics * >(pgraphics))->SetViewportOrg(point(0, 0));
-      //   _000OnDraw(pgraphics);
-      //   (dynamic_cast<::metrowin::graphics * >(pgraphics))->SetViewportOrg(point(0, 0));
-      //   //(dynamic_cast<::metrowin::graphics * >(pgraphics))->FillSolidRect(rectUpdate.left, rectUpdate.top, 100, 100, 255);
-      //   (dynamic_cast<::metrowin::graphics * >(pgraphics))->SelectClipRgn(NULL);
-      //   (dynamic_cast<::metrowin::graphics * >(pgraphics))->SetViewportOrg(point(0, 0));
-      //   BitBlt(hdc, rectPaint.left, rectPaint.top,
-      //      rectPaint.width(), rectPaint.height(),
-      //      (HDC) pgraphics->get_os_data(), rectUpdate.left, rectUpdate.top,
-      //      SRCCOPY);
-
-      //}
-      //catch(...)
-      //{
-      //}
-
-      //::EndPaint(get_handle(), &paint);
-      //pobj->m_bRet = true;
-      //pbase->set_lresult(0);
    }
 
 
@@ -4047,63 +3940,6 @@ ExitModal:
             m_rectParentClient.bottom  = m_rectParentClient.top + cy;
          }
       }
-      //if(m_pui != this
-      //   && m_pui != NULL)
-      //{
-      //   m_pui->m_rectParentClient = m_rectParentClient;
-      //}
-
-      ////if(GetExStyle() & WS_EX_LAYERED)
-      //{
-      //   if(rectWindowOld.top_left() != m_rectParentClient.top_left())
-      //   {
-      //      send_message(WM_MOVE);
-      //   }
-      //   if(rectWindowOld.size() != m_rectParentClient.size())
-      //   {
-      //      send_message(WM_SIZE);
-      //   }
-
-      //}
-      //if(GetExStyle() & WS_EX_LAYERED)
-      //{
-      //   _throw(todo(get_app()));
-      //   //   nFlags |= SWP_NOCOPYBITS;
-      //   //   nFlags |= SWP_NOREDRAW;
-      //   //   nFlags |= SWP_NOMOVE;
-      //   //   nFlags |= SWP_NOSIZE;
-      //   //   //nFlags |= SWP_NOZORDER;
-      //   //   //nFlags |= SWP_FRAMECHANGED;
-      //   //   if(nFlags & SWP_SHOWWINDOW)
-      //   //   {
-      //   //      ::SetWindowPos(get_handle(), (oswindow) z, x, y, cx, cy, nFlags);
-      //   //      ShowWindow(SW_SHOW);
-      //   //   }
-      //   //   else
-      //   //   {
-      //   //      ::SetWindowPos(get_handle(), (oswindow) z, x, y, cx, cy, nFlags);
-      //   //   }
-      //   //   /*if(m_pui != NULL)
-      //   //   {
-      //   //   m_pui->oprop("pending_layout") = true;
-      //   //   m_pui->oprop("pending_zorder") = z;
-      //   //   }*/
-      //   //   /*if(&System != NULL && System.get_twf() != NULL)
-      //   //   {
-      //   //   System.get_twf()->synch_redraw();
-      //   //   }*/
-      //   //}
-      //   //else
-      //   //{
-      //   //   if(z == -3)
-      //   //   {
-      //   //      ::SetWindowPos(get_handle(), (oswindow) 0, x, y, cx, cy, nFlags);
-      //   //   }
-      //   //   else
-      //   //   {
-      //   //      ::SetWindowPos(get_handle(), (oswindow) z, x, y, cx, cy, nFlags);
-      //   //   }
-      //}
       return true;
 
    }
@@ -4420,27 +4256,6 @@ ExitModal:
    }
 
 
-   //bool interaction_impl::IsIconic()
-   //{
-
-   //   _throw(todo(get_app()));
-
-   //   //ASSERT(::WinIsWindow(get_handle()));
-   //   //if(GetExStyle() & WS_EX_LAYERED)
-   //   //{
-   //   //   return m_pui->m_eappearance == appearance_iconic;
-   //   //}
-   //   //else
-   //   //{
-   //   //   return ::IsIconic(get_handle()) != FALSE;
-   //   //}
-   //}
-
-   //bool interaction_impl::IsZoomed()
-   //{
-   //   ASSERT(::WinIsWindow(get_handle()));
-   //   //return m_pui->m_eappearance == appearance_zoomed;
-   //}
 
 
    ::user::interaction *  interaction_impl::GetParent()
@@ -7097,175 +6912,6 @@ bool CLASS_DECL_BASE __register_class(WNDCLASS* lpWndClass)
 namespace metrowin
 {
 
-   /*   void interaction_impl::_001DeferPaintLayeredWindowBackground(::draw2d::dib * pdib)
-   {
-
-
-   }*/
-
-   //void interaction_impl::_001UpdateWindow()
-   //{
-
-   //   _throw(todo(get_app()));
-
-
-   //   //rect rectWindow;
-
-   //   //GetWindowRect(rectWindow);
-
-   //   //if(rectWindow.area() <= 0)
-   //   //   return;
-
-
-   //   //POINT pt;
-   //   //SIZE sz;
-
-   //   //pt.x = rectWindow.left;
-   //   //pt.y = rectWindow.top;
-   //   //sz.cx = rectWindow.right - rectWindow.left;
-   //   //sz.cy = rectWindow.bottom - rectWindow.top;
-
-   //   //int cx = sz.cx;
-   //   //int cy = sz.cy;
-
-   //   //BITMAPINFO info;
-   //   //COLORREF * pcolorref;
-
-   //   //ZeroMemory(&info, sizeof (BITMAPINFO));
-
-   //   //info.bmiHeader.biSize          = sizeof (BITMAPINFOHEADER);
-   //   //info.bmiHeader.biWidth         = cx;
-   //   //info.bmiHeader.biHeight        = - cy;
-   //   //info.bmiHeader.biPlanes        = 1;
-   //   //info.bmiHeader.biBitCount      = 32;
-   //   //info.bmiHeader.biCompression   = BI_RGB;
-   //   //info.bmiHeader.biSizeImage     = cx * cy * 4;
-
-   //   //HBITMAP hbitmap = CreateDIBSection(NULL, &info, DIB_RGB_COLORS, (void **) &pcolorref, NULL, NULL);
-
-   //   //{
-
-   //   //   memset(pcolorref, 0, cx * cy * 4);
-
-   //   //   Gdiplus::Bitmap b(cx, cy, cx *4 , PixelFormat32bppARGB, (BYTE *) pcolorref);
-
-   //   //   ::draw2d::graphics_sp spg(get_app());
-
-   //   //   (dynamic_cast < ::metrowin::graphics * > (spg.m_p))->attach(new Gdiplus::Graphics(&b));
-
-   //   //   _001Print(spg);
-
-   //   //}
-
-   //   //if(GetExStyle() & WS_EX_LAYERED)
-   //   //{
-   //   //   BYTE *dst=(BYTE*)pcolorref;
-   //   //   int64_t size = cx * cy;
-
-
-   //   //   // >> 8 instead of / 255 subsequent alpha_blend operations say thanks on true_blend because (255) * (1/254) + (255) * (254/255) > 255
-
-
-   //   //   while (size >= 8)
-   //   //   {
-   //   //      dst[0] = LOBYTE(((int)dst[0] * (int)dst[3])>> 8);
-   //   //      dst[1] = LOBYTE(((int)dst[1] * (int)dst[3])>> 8);
-   //   //      dst[2] = LOBYTE(((int)dst[2] * (int)dst[3])>> 8);
-
-   //   //      dst[4+0] = LOBYTE(((int)dst[4+0] * (int)dst[4+3])>> 8);
-   //   //      dst[4+1] = LOBYTE(((int)dst[4+1] * (int)dst[4+3])>> 8);
-   //   //      dst[4+2] = LOBYTE(((int)dst[4+2] * (int)dst[4+3])>> 8);
-
-   //   //      dst[8+0] = LOBYTE(((int)dst[8+0] * (int)dst[8+3])>> 8);
-   //   //      dst[8+1] = LOBYTE(((int)dst[8+1] * (int)dst[8+3])>> 8);
-   //   //      dst[8+2] = LOBYTE(((int)dst[8+2] * (int)dst[8+3])>> 8);
-
-   //   //      dst[12+0] = LOBYTE(((int)dst[12+0] * (int)dst[12+3])>> 8);
-   //   //      dst[12+1] = LOBYTE(((int)dst[12+1] * (int)dst[12+3])>> 8);
-   //   //      dst[12+2] = LOBYTE(((int)dst[12+2] * (int)dst[12+3])>> 8);
-
-   //   //      dst[16+0] = LOBYTE(((int)dst[16+0] * (int)dst[16+3])>> 8);
-   //   //      dst[16+1] = LOBYTE(((int)dst[16+1] * (int)dst[16+3])>> 8);
-   //   //      dst[16+2] = LOBYTE(((int)dst[16+2] * (int)dst[16+3])>> 8);
-
-   //   //      dst[20+0] = LOBYTE(((int)dst[20+0] * (int)dst[20+3])>> 8);
-   //   //      dst[20+1] = LOBYTE(((int)dst[20+1] * (int)dst[20+3])>> 8);
-   //   //      dst[20+2] = LOBYTE(((int)dst[20+2] * (int)dst[20+3])>> 8);
-
-   //   //      dst[24+0] = LOBYTE(((int)dst[24+0] * (int)dst[24+3])>> 8);
-   //   //      dst[24+1] = LOBYTE(((int)dst[24+1] * (int)dst[24+3])>> 8);
-   //   //      dst[24+2] = LOBYTE(((int)dst[24+2] * (int)dst[24+3])>> 8);
-
-   //   //      dst[28+0] = LOBYTE(((int)dst[28+0] * (int)dst[28+3])>> 8);
-   //   //      dst[28+1] = LOBYTE(((int)dst[28+1] * (int)dst[28+3])>> 8);
-   //   //      dst[28+2] = LOBYTE(((int)dst[28+2] * (int)dst[28+3])>> 8);
-
-   //   //      dst += 4 * 8;
-   //   //      size -= 8;
-   //   //   }
-   //   //   while(size--)
-   //   //   {
-   //   //      dst[0] = LOBYTE(((int)dst[0] * (int)dst[3])>> 8);
-   //   //      dst[1] = LOBYTE(((int)dst[1] * (int)dst[3])>> 8);
-   //   //      dst[2] = LOBYTE(((int)dst[2] * (int)dst[3])>> 8);
-   //   //      dst += 4;
-   //   //   }
-
-
-   //   //   {
-   //   //      HDC hdcScreen = ::GetDC(get_handle());
-
-   //   //      HDC hdcMem = ::CreateCompatibleDC(NULL);
-
-   //   //      HBITMAP hbitmapOld = (HBITMAP) ::SelectObject(hdcMem, hbitmap);
-
-   //   //      BLENDFUNCTION blendPixelFunction = { AC_SRC_OVER, 0, 255, AC_SRC_ALPHA };
-
-   //   //      POINT ptZero = { 0 };
-
-   //   //      point ptSrc(0, 0);
-
-   //   //      bool bOk = ::UpdateLayeredWindow(get_handle(), hdcScreen, &pt, &sz, hdcMem, &ptSrc, RGB(0, 0, 0), &blendPixelFunction, ULW_ALPHA) != FALSE;
-
-   //   //      ::SelectObject(hdcMem, hbitmapOld);
-
-   //   //      ::DeleteDC(hdcMem);
-
-   //   //      ::ReleaseDC(get_handle(), hdcScreen);
-   //   //   }
-
-
-   //   //}
-   //   //else
-   //   //{
-
-   //   //   {
-   //   //      HDC hdcScreen = ::GetDC(get_handle());
-
-   //   //      HDC hdcMem = ::CreateCompatibleDC(NULL);
-
-   //   //      HBITMAP hbitmapOld = (HBITMAP) ::SelectObject(hdcMem, hbitmap);
-
-   //   //      BLENDFUNCTION blendPixelFunction = { AC_SRC_OVER, 0, 255, AC_SRC_ALPHA };
-
-   //   //      POINT ptZero = { 0 };
-
-   //   //      point ptSrc(0, 0);
-
-   //   //      ::BitBlt(hdcScreen, 0, 0, sz.cx, sz.cy, hdcMem, 0, 0, SRCCOPY);
-
-   //   //      ::SelectObject(hdcMem, hbitmapOld);
-
-   //   //      ::DeleteDC(hdcMem);
-
-   //   //      ::ReleaseDC(get_handle(), hdcScreen);
-   //   //   }
-
-   //   //}
-
-   //   //::DeleteObject(hbitmap);
-
-   //}
 
 
    ::user::interaction *  interaction_impl::get_wnd() const
@@ -7275,13 +6921,6 @@ namespace metrowin
 
    }
 
-
-   //::user::interaction_impl *  interaction_impl::get_impl() const
-   //{
-
-   //   return  this;
-
-   //}
 
    Agile<Windows::UI::Core::CoreWindow> interaction_impl::get_os_window()
    {

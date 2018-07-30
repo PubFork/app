@@ -438,6 +438,43 @@ namespace windows
 
       }
 
+      oswindow oswindowFocus = NULL;
+
+      oswindow oswindowImpl = NULL;
+
+      ::user::interaction_impl * pimplFocus = NULL;
+
+      if (m_pimpl->m_pui->IsWindowVisible())
+      {
+
+         if (Sess(m_pimpl->get_app()).m_pimplPendingSetFocus == m_pimpl)
+         {
+
+            Sess(m_pimpl->get_app()).m_pimplPendingSetFocus = NULL;
+
+            oswindowFocus = ::GetFocus();
+
+            oswindowImpl = m_pimpl->m_oswindow;
+
+            pimplFocus = oswindow_get(oswindowFocus);
+
+            if (oswindowFocus == oswindowImpl)
+            {
+
+               output_debug_string("optimized out a SetFocus");
+
+            }
+            else
+            {
+
+               ::SetFocus(m_pimpl->m_oswindow);
+
+            }
+
+         }
+
+      }
+
       if (m_pimpl->m_bIpcCopy)
       {
 

@@ -1198,6 +1198,14 @@ namespace user
    }
 
 
+   ::user::interaction * interaction_impl_base::GetParentOrOwner() const
+   {
+
+      return m_pui->GetParentOrOwner();
+
+   }
+
+
    ::user::interaction * interaction_impl_base::GetTopLevelOwner() const
    {
 
@@ -1501,7 +1509,7 @@ namespace user
    }
 
 
-   ::user::interaction * interaction_impl_base::get_focus_ui()
+   ::user::elemental * interaction_impl_base::get_focus_elemental()
    {
 
       return NULL;
@@ -1509,10 +1517,12 @@ namespace user
    }
 
 
-   void interaction_impl_base::set_focus_guie(::user::interaction * pguie)
+   bool interaction_impl_base::set_focus_elemental(::user::elemental * pelemental)
    {
 
-      UNREFERENCED_PARAMETER(pguie);
+      UNREFERENCED_PARAMETER(pelemental);
+
+      return false;
 
    }
 

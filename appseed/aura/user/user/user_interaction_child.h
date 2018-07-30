@@ -126,7 +126,7 @@ namespace user
       //virtual bool ScreenToClient(LPPOINT lppoint) override;
       //virtual bool ScreenToClient(POINT64 * lppoint) override;
 
-      virtual bool keyboard_focus_OnKillFocus() override;
+      virtual bool keyboard_focus_OnKillFocus(oswindow oswindowNew) override;
 
 
    };

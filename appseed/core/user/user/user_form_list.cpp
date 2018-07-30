@@ -559,10 +559,6 @@ namespace user
 
       item.m_iOrder = _001MapSubItemToOrder(item.m_iSubItem);
 
-      item.m_iListItem = -1;
-
-      item.m_iSubItemRectOrder = 0;
-
       _001GetElementRect(&item,::user::mesh::element_text);
 
       if(item.m_bOk)

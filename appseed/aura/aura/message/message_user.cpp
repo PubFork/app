@@ -284,6 +284,12 @@ namespace message
       m_nStatus = static_cast<UINT>(lparam);
    }
 
+   void kill_focus::set(::user::primitive * pwnd, UINT uiMessage, WPARAM wparam, ::lparam lparam, LRESULT & lresult)
+   {
+      base::set(pwnd, uiMessage, wparam, lparam, lresult);
+      m_oswindowNew = (oswindow) wparam;
+   }
+
    void set_focus::set(::user::primitive * pwnd,UINT uiMessage,WPARAM wparam,::lparam lparam,LRESULT & lresult)
    {
       base::set(pwnd,uiMessage,wparam,lparam,lresult);

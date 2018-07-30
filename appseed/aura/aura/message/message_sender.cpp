@@ -204,6 +204,8 @@ namespace message
       case WM_CTLCOLOR + WM_REFLECT_AXIS:
       return PrototypeCtlColorReflect;
       #endif*/
+      case WM_KILLFOCUS:
+         return PrototypeKillFocus;
       case WM_SETFOCUS:
          return PrototypeSetFocus;
       case WM_WINDOWPOSCHANGING:

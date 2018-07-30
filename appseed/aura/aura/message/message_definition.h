@@ -51,6 +51,7 @@ namespace message
       PrototypeUpdateCommandUserInterface,
       PrototypeCtlColor,
       PrototypeCtlColorReflect,
+      PrototypeKillFocus,
       PrototypeSetFocus,
       PrototypeCommand,
       PrototypeWindowPos,

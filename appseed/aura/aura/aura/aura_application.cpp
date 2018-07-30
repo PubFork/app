@@ -232,6 +232,13 @@ namespace aura
 
       ::thread::install_message_routing(psender);
 
+      if (!is_system() && !is_session())
+      {
+
+         connect_command("app_exit", &application::_001OnAppExit);
+
+      }
+
    }
 
 
@@ -7403,6 +7410,16 @@ run:
          add_matter_locator(strMatterLocator);
 
       }
+
+   }
+
+
+   void application::_001OnAppExit(::message::message * pmessage)
+   {
+
+      pmessage->m_bRet = true;
+
+      post_message(WM_QUIT);
 
    }
 

@@ -38,7 +38,7 @@ namespace user
       m_bComposite                           = true;
       m_bUpdateGraphics                      = false;
       m_oswindow                             = NULL;
-      m_puiFocus                             = NULL;
+      m_pelementalFocus                      = NULL;
 
 
 
@@ -109,6 +109,14 @@ namespace user
    {
 
       return m_pui->m_bNeedLayout || ::user::interaction_impl_base::check_need_layout();
+
+   }
+
+
+   bool interaction_impl::check_show_flags()
+   {
+
+      return Session.m_pimplPendingSetFocus == this || ::user::interaction_impl_base::check_show_flags();
 
    }
 
@@ -2766,45 +2774,60 @@ namespace user
    }
 
 
-   ::user::interaction * interaction_impl::get_focus_ui()
+   ::user::elemental * interaction_impl::get_focus_elemental()
    {
 
-      return m_puiFocus;
+      return m_pelementalFocus;
 
    }
 
 
-   void interaction_impl::set_focus_guie(::user::interaction * pguie)
+   bool interaction_impl::set_focus_elemental(::user::elemental * pelemental)
    {
 
-      if(pguie == NULL)
+      if(pelemental == NULL)
       {
 
-         m_puiFocus = NULL;
+         m_pelementalFocus = pelemental;
 
-         return;
+         return true;
 
       }
 
-      if(pguie == m_pui)
+      if(pelemental == m_pui || pelemental == this)
       {
 
-         m_puiFocus = m_pui;
+         m_pelementalFocus = m_pui;
 
-         return;
+         return true;
 
       }
 
-      if(pguie->is_descendant_of(m_pui))
+      ::user::interaction * pui = pelemental->get_wnd();
+
+      if (pui == NULL)
       {
 
-         m_puiFocus = pguie;
+         ASSERT(FALSE);
 
-         return;
+         return false;
 
       }
 
-      _throw(invalid_argument_exception(get_app(),"Focus of a window implementation should be set NULL, to itself or to a descendant window"));
+      if(m_pui->is_ascendant_of(pui, true))
+      {
+
+         m_pelementalFocus = pelemental;
+
+         return true;
+
+      }
+
+      //_throw(invalid_argument_exception(get_app(),"Focus of a window implementation should be set NULL, to itself or to a descendant window"));
+
+      ASSERT(FALSE);
+
+      return false;
 
    }
 

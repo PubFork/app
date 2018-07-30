@@ -1190,53 +1190,19 @@ restart:
       try
       {
 
-         if (m_pauraapp != NULL && m_pauraapp->m_paurasession != NULL && m_pauraapp->m_paurasession->m_pkeyboardfocus == this)
+         if (m_pauraapp != NULL && m_pauraapp->m_paurasession != NULL && m_pauraapp->m_paurasession->get_keyboard_focus() == this)
          {
 
             if (GetParent() == NULL || !IsWindowVisible())
             {
 
-               m_pauraapp->m_paurasession->m_pkeyboardfocus = NULL;
+               m_pauraapp->m_paurasession->set_keyboard_focus(NULL);
 
             }
             else
             {
 
-               ::user::elemental * pnext = NULL;
-
-               try
-               {
-
-                  pnext = keyboard_get_next_focusable();
-
-               }
-               catch (...)
-               {
-
-               }
-
-               if (pnext != NULL && pnext != this)
-               {
-
-                  try
-                  {
-
-                     pnext->keyboard_set_focus();
-
-                  }
-                  catch (...)
-                  {
-
-                  }
-
-               }
-
-               if (Session.m_pkeyboardfocus == this)
-               {
-
-                  Session.m_pkeyboardfocus = NULL;
-
-               }
+               keyboard_set_focus_next();
 
             }
 
@@ -4407,15 +4373,37 @@ restart:
 
    }
 
+
    ::user::interaction * interaction::GetParentOwner() const
    {
 
       sp(::user::interaction) puiParent = GetParent();
 
       if (puiParent.is_null())
+      {
+
          return NULL;
 
+      }
+
       return puiParent->GetOwner();
+
+   }
+
+
+   ::user::interaction * interaction::GetParentOrOwner() const
+   {
+
+      sp(::user::interaction) puiParent = GetParent();
+
+      if (puiParent.is_set())
+      {
+
+         return puiParent;
+
+      }
+
+      return GetOwner();
 
    }
 
@@ -5848,17 +5836,19 @@ restart:
    }
 
 
-   bool interaction::keyboard_focus_OnKillFocus()
+   bool interaction::keyboard_focus_OnKillFocus(oswindow oswindowNew)
    {
 
-
-      send_message(WM_KILLFOCUS);
+      send_message(WM_KILLFOCUS, (WPARAM) oswindowNew);
 
       if (m_pimpl == NULL)
+      {
+
          return true;
 
+      }
 
-      return m_pimpl->keyboard_focus_OnKillFocus();
+      return m_pimpl->keyboard_focus_OnKillFocus(oswindowNew);
 
    }
 
@@ -8245,6 +8235,11 @@ restart:
          pbase = canew(::message::set_focus(get_app()));
       }
       break;
+      case ::message::PrototypeKillFocus:
+      {
+         pbase = canew(::message::kill_focus(get_app()));
+      }
+      break;
 #if !defined(METROWIN) && !defined(LINUX) && !defined(APPLEOS)
       case ::message::PrototypeWindowPos:
       {
@@ -8478,30 +8473,37 @@ restart:
    }
 
 
-
-   ::user::interaction * interaction::get_focus_ui()
+   ::user::elemental * interaction::get_focus_elemental()
    {
 
       if (m_pimpl == NULL)
+      {
+
          return NULL;
 
-      return m_pimpl->get_focus_ui();
+      }
+
+      return m_pimpl->get_focus_elemental();
 
    }
 
 
-   void interaction::set_focus_guie(::user::interaction * pguie)
+   bool interaction::set_focus_elemental(::user::elemental * pelemental)
    {
 
       if (m_pimpl == NULL)
-         return;
+      {
 
-      m_pimpl->set_focus_guie(pguie);
+         return false;
+
+      }
+
+      return m_pimpl->set_focus_elemental(pelemental);
 
    }
 
 
-   bool interaction::is_ascendant_of(::user::interaction * puiDescendantCandidate)
+   bool interaction::is_ascendant_of(::user::interaction * puiDescendantCandidate, bool bIncludeSelf)
    {
 
       if (puiDescendantCandidate == NULL)
@@ -8511,15 +8513,15 @@ restart:
 
       }
 
-      return puiDescendantCandidate->is_descendant_of(this);
+      return puiDescendantCandidate->is_descendant_of(this, bIncludeSelf);
 
    }
 
 
-   bool interaction::is_descendant_of(::user::interaction * puiAscendantCandidate)
+   bool interaction::is_descendant_of(::user::interaction * puiAscendantCandidate, bool bIncludeSelf)
    {
 
-      ::user::interaction * pui = GetParent();
+      ::user::interaction * pui = bIncludeSelf ? this : GetParent();
 
       while (pui != NULL)
       {
@@ -8528,6 +8530,41 @@ restart:
             return true;
 
          pui = pui->GetParent();
+
+      }
+
+      return false;
+
+   }
+
+
+   bool interaction::is_ascendant_or_owner_of(::user::interaction * puiDescendantCandidate, bool bIncludeSelf)
+   {
+
+      if (puiDescendantCandidate == NULL)
+      {
+
+         return false;
+
+      }
+
+      return puiDescendantCandidate->is_descendant_of_or_owned_by(this, bIncludeSelf);
+
+   }
+
+
+   bool interaction::is_descendant_of_or_owned_by(::user::interaction * puiAscendantCandidate, bool bIncludeSelf)
+   {
+
+      ::user::interaction * pui = bIncludeSelf ? this : GetParentOrOwner();
+
+      while (pui != NULL)
+      {
+
+         if (pui == puiAscendantCandidate)
+            return true;
+
+         pui = pui->GetParentOrOwner();
 
       }
 

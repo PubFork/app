@@ -1174,7 +1174,7 @@ namespace user
    //}
 
 
-   bool interaction_child::keyboard_focus_OnKillFocus()
+   bool interaction_child::keyboard_focus_OnKillFocus(oswindow oswindowNew)
    {
 
       ::user::interaction * pui = get_wnd();

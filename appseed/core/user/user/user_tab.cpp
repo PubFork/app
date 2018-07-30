@@ -1775,10 +1775,7 @@ namespace user
       index iPane = get_data()->m_panea.pred_find_first([=](auto & pane)
       {
 
-         return pane->m_pholder.is_set()
-                &&
-                (pane->m_pholder == pui
-                 || pane->m_pholder->is_ascendant_of(pui));
+         return pane->m_pholder.is_set() && pane->m_pholder->is_ascendant_of(pui, true);
 
       });
 

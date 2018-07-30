@@ -449,10 +449,10 @@ namespace user
    }
 
 
-   bool control::keyboard_focus_OnKillFocus()
+   bool control::keyboard_focus_OnKillFocus(oswindow oswindowNew)
    {
 
-      ::user::box::keyboard_focus_OnKillFocus();
+      ::user::box::keyboard_focus_OnKillFocus(oswindowNew);
 
       ::user::control_event ev;
 

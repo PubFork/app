@@ -203,6 +203,7 @@ namespace user
       virtual ::user::interaction * EnsureParentTopLevel() override;
       virtual ::user::interaction * GetOwner() const override;
       virtual ::user::interaction * GetParentOwner() const override;
+      virtual ::user::interaction * GetParentOrOwner() const override;
       virtual ::user::interaction * GetTopLevelOwner() const override;
       virtual ::user::frame * GetFrame() const override;
       virtual ::user::frame * GetParentFrame() const override;
@@ -249,8 +250,8 @@ namespace user
       virtual void register_drop_target();
 
 
-      virtual ::user::interaction * get_focus_ui();
-      virtual void set_focus_guie(::user::interaction * pguie);
+      virtual ::user::elemental * get_focus_elemental();
+      virtual bool set_focus_elemental(::user::elemental * pelemental);
 
 
       virtual void PostNcDestroy() override;

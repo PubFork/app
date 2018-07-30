@@ -2788,7 +2788,7 @@ namespace user
 
       if (pdrawitem->m_iSubItemRectOrder < 0 || pdrawitem->m_iOrder == 0 || pdrawitem->m_iSubItemRectOrder > pdrawitem->m_iOrder)
       {
-         pdrawitem->m_iSubItemRectOrder = pdrawitem->m_iOrder;
+         pdrawitem->m_iSubItemRectOrder = 0;
          pdrawitem->m_rectSubItem.left = pdrawitem->m_rectItem.left;
          pdrawitem->m_iSubItemRectColumn = _001MapOrderToColumn(pdrawitem->m_iOrder);
          pdrawitem->m_iColumn = pdrawitem->m_iSubItemRectColumn;

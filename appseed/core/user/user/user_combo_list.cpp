@@ -361,7 +361,7 @@ namespace user
    }
 
 
-   bool combo_list::keyboard_focus_OnKillFocus()
+   bool combo_list::keyboard_focus_OnKillFocus(oswindow oswindowNew)
    {
 
       if (IsWindowVisible())
@@ -439,23 +439,27 @@ namespace user
 
    }
 
+
    void combo_list::_001OnKillFocus(::message::message * pobj)
    {
 
-      SCAST_PTR(::message::base, pbase, pobj);
+      SCAST_PTR(::message::kill_focus, pkillfocus, pobj);
 
-      //post_message(WM_CLOSE);
+      oswindow oswindowThis = get_safe_handle();
 
-      if (!m_bMovingComboBox)
+      oswindow oswindowNew = pkillfocus->m_oswindowNew;
+
+      if(oswindowThis != oswindowNew
+            && !m_bMovingComboBox)
       {
 
          ShowWindow(SW_HIDE);
 
       }
 
-      pbase->m_bRet = true;
+      pkillfocus->m_bRet = true;
 
-      pbase->set_lresult(0);
+      pkillfocus->set_lresult(0);
 
    }
 

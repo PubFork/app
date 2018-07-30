@@ -65,7 +65,7 @@ namespace user
 
       object_ptra                   m_ptraRedraw;
 
-      ::user::interaction *         m_puiFocus;
+      ::user::elemental *           m_pelementalFocus;
 
       sp(::user::interaction)       m_puiThis;
 
@@ -119,6 +119,8 @@ namespace user
       virtual bool check_need_layout() override;
       virtual void clear_need_layout() override;
       virtual void set_need_layout() override;
+
+      virtual bool check_show_flags() override;
 
       virtual bool create_message_queue(::user::interaction * pui, const char * pszName) override;
 
@@ -760,8 +762,8 @@ namespace user
       virtual bool is_composite() override;
 
 
-      virtual ::user::interaction * get_focus_ui() override;
-      virtual void set_focus_guie(::user::interaction * pguie) override;
+      virtual ::user::elemental * get_focus_elemental() override;
+      virtual bool set_focus_elemental(::user::elemental * pelemental) override;
 
       virtual void redraw_add(::object * p) override;
       virtual void redraw_remove(::object * p) override;

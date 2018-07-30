@@ -539,41 +539,6 @@ namespace android
 
 
 
-   //void interaction_impl::_001OnSize(::message::message * pobj)
-   //{
-
-   //   SCAST_PTR(::message::size,psize,pobj);
-
-   //   if(m_bIgnoreSizeEvent)
-   //   {
-
-   //      pobj->m_bRet = true;
-
-   //      return;
-
-   //   }
-   //   else if(!(GetExStyle() & WS_EX_LAYERED))
-   //   {
-
-   //      ::rect r;
-
-   //      ::GetWindowRect(get_handle(),r);
-
-   //      ::copy(m_rectParentClient,r);
-
-   //      if(GetParent() != NULL)
-   //      {
-
-   //         GetParent()->ScreenToClient(m_rectParentClient);
-
-   //      }
-
-   //   }
-
-
-   //}
-
-
    void interaction_impl::_001OnDestroy(::message::message * pobj)
    {
 
@@ -2302,159 +2267,7 @@ namespace android
       HRGN rgnUpdate = NULL;
 
       _throw(not_implemented(get_app()));
-      /*
-      rgnWindow = CreateRectRgn(0, 0, 0, 0);
-      rgnIntersect = CreateRectRgn(0, 0, 0, 0);
-      */
-      //      int32_t iCount = wndaApp.get_count();
 
-      _throw(not_implemented(get_app()));
-      //      try
-      //      {
-      //
-      //         if(GetWindowLong(GWL_EXSTYLE) & WS_EX_LAYERED)
-      //         {
-      //            rect rect5;
-      //            rect rect9;
-      //
-      //            rgnUpdate = CreateRectRgnIndirect(&rectUpdate);
-      //            oswindow hwndOrder = ::GetWindow(get_handle(), GW_HWNDNEXT);
-      //            for(;;)
-      //            {
-      //               //            char szText[1024];
-      //               //::GetWindowTextA(hwndOrder, szText, sizeof(szText));
-      //               if(hwndOrder == NULL ||
-      //                  !::IsWindow(hwndOrder))
-      //                  break;
-      //               if(!::IsWindowVisible(hwndOrder) ||
-      //                  ::IsIconic(hwndOrder) ||
-      //                  hwndOrder == get_handle()
-      //                  || wndaApp.contains(hwndOrder))
-      //               {
-      //                  if(hwndOrder == get_handle())
-      //                  {
-      //                     // add as bookmark - doesn't paint it
-      //                     wndaApp.add(hwndOrder);
-      //                  }
-      //               }
-      //               else
-      //               {
-      //                  rect rectWindow;
-      //                  ::GetWindowRect(hwndOrder, rectWindow);
-      //                  SetRectRgn(rgnWindow, rectWindow.left, rectWindow.top, rectWindow.right, rectWindow.bottom);
-      //                  SetRectRgn(rgnIntersect, 0, 0, 0, 0);
-      //                  CombineRgn(rgnIntersect, rgnUpdate, rgnWindow, RGN_AND);
-      //                  rect rectIntersectBox;
-      //                  GetRgnBox(rgnIntersect, rectIntersectBox);
-      //                  if(rectIntersectBox.is_empty())
-      //                  {
-      //                  }
-      //                  else
-      //                  {
-      //                     CombineRgn(rgnUpdate, rgnUpdate, rgnWindow, RGN_DIFF);
-      //                     rect rectDiffBox;
-      //                     GetRgnBox(rgnUpdate, rectDiffBox);
-      //                     wndaApp.add(hwndOrder);
-      //                     if(rectDiffBox.is_empty())
-      //                     {
-      //                        break;
-      //                     }
-      //                  }
-      //               }
-      //               hwndOrder = ::GetWindow(hwndOrder, GW_HWNDNEXT);
-      //
-      //
-      //            }
-      //            for(index j = wndaApp.get_upper_bound(); j >= 0; j--)
-      //            {
-      //               oswindow hWnd = wndaApp[j];
-      //               if(hWnd == get_handle())
-      //                  break;
-      //               if(!::IsWindowVisible(hWnd) || ::IsIconic(hWnd))
-      //                  continue;
-      //               ::GetWindowRect(hWnd, rect5);
-      //               rect9.intersect(rect5, rectUpdate);
-      //               if(rect9.width() >0 && rect9.height() > 0)
-      //               {
-      //                  /*::interaction_impl * pwnd =  (interaction_impl::FromHandlePermanent(hWnd));
-      //                  if(pwnd == NULL)
-      //                  {
-      //                  for(int32_t l = 0; l < wndpa.get_count(); l++)
-      //                  {
-      //                  if(wndpa[l]->get_safe_handle() == hWnd)
-      //                  {
-      //                  pwnd =  (wndpa[l]->m_pimpl);
-      //                  break;
-      //                  }
-      //                  }
-      //                  }
-      //                  if(pwnd != NULL)
-      //                  {
-      //                  pwnd->_001Print(pgraphics);
-      //                  }*/
-      //                  //if(::GetWindowLong(wndaApp[j], GWL_EXSTYLE) & WS_EX_LAYERED)
-      //                  if(true)
-      //                  {
-      //                     HDC hDCMem = CreateCompatibleDC(NULL);
-      //                     HBITMAP hBmp = NULL;
-      //                     {
-      //                        HDC hDC = ::GetWindowDC(hWnd);
-      //                        hBmp = CreateCompatibleBitmap(hDC, rect5.width(), rect5.height());
-      //                        ::ReleaseDC(hWnd, hDC);
-      //                     }
-      //                     HGDIOBJ hOld = SelectObject(hDCMem, hBmp);
-      //                     //print_window printwindow(get_app(), hWnd, hDCMem, 284);
-      //                     ::PrintWindow(hWnd, hDCMem, 0);
-      //                     ::BitBlt(
-      //                        hdc ,
-      //                        //rect5.left,
-      //                        //rect5.top,
-      //                        0, 0,
-      //                        rect5.width(), rect5.height(),
-      //                        hDCMem,
-      //                        rectUpdate.left - rect5.left,
-      //                        rectUpdate.top - rect5.top,
-      //                        SRCCOPY);
-      //                     ::SelectObject(hDCMem, hOld);
-      //                     ::DeleteObject(hDCMem);
-      //                     ::DeleteObject(hBmp);
-      //                  }
-      //                  else
-      //                  {
-      //                     SetViewportOrgEx(hdc, 0, 0, NULL);
-      //                     HDC hdcWindow = ::GetDCEx(wndaApp[j], NULL, DCX_WINDOW);
-      //                     if(hdcWindow == NULL)
-      //                        hdcWindow = ::GetDCEx(wndaApp[j], NULL, DCX_WINDOW | DCX_caCHE);
-      //                     if(hdcWindow != NULL)
-      //                     {
-      //                        ::BitBlt(
-      //                           hdc,
-      //                           rect5.left - rectUpdate.left,
-      //                           rect5.top - rectUpdate.top,
-      //                           rect5.width(), rect5.height(),
-      //                           hdcWindow,
-      //                           rect5.left - rect5.left,
-      //                           rect5.top - rect5.top,
-      //                           SRCCOPY);
-      //                        ::ReleaseDC(wndaApp[j], hdcWindow);
-      //                     }
-      //                     else
-      //                     {
-      //                        TRACE0("WARNING: failed to draw a background. this surface probably will be black.");
-      //                     }
-      //                  }
-      //               }
-      //            }
-      //         }
-      //      }
-      //      catch(...)
-      //      {
-      //
-      //      }
-      //
-      //      ::DeleteObject(rgnWindow);
-      //      ::DeleteObject(rgnIntersect);
-      //      ::DeleteObject(rgnUpdate);
    }
 
    void interaction_impl::_001OnProdevianSynch(::message::message * pobj)
@@ -2467,79 +2280,6 @@ namespace android
    void interaction_impl::_001OnPaint(::message::message * pobj)
    {
 
-      //_001Expose();
-
-      //lock lock(m_pui, 1984);
-
-      //_throw(not_implemented(get_app()));
-
-      //      SCAST_PTR(::message::base, pbase, pobj);
-      //
-      //      PAINTSTRUCT paint;
-      //      memset(&paint, 0, sizeof(paint));
-      //      HDC hdc = ::BeginPaint(get_handle(), &paint);
-      //      ::SelectClipRgn(hdc, NULL);
-      //
-      //      try
-      //      {
-      //
-      //         ::draw2d::dib_sp dib(get_app());
-      //
-      //         rect rectWindow;
-      //         GetWindowRect(rectWindow);
-      //
-      //         if(!dib->create(rectWindow.bottom_right()))
-      //            return;
-      //
-      //         ::draw2d::graphics * pgraphics = dib->get_graphics();
-      //
-      //         if((dynamic_cast<::android::graphics * >(pgraphics))->get_handle() == NULL
-      //            || (dynamic_cast<::android::graphics * >(pgraphics))->get_os_data2() == NULL)
-      //            return;
-      //
-      //         rect rectPaint;
-      //         rect rectUpdate;
-      //         rectPaint = paint.rcPaint;
-      //         if(rectPaint.is_null() || (GetExStyle() & WS_EX_LAYERED))
-      //         {
-      //            rectUpdate = rectWindow;
-      //            rectPaint = rectWindow;
-      //            ScreenToClient(rectPaint);
-      //         }
-      //         else
-      //         {
-      //            rectUpdate = rectPaint;
-      //            ClientToScreen(rectUpdate);
-      //         }
-      //         (dynamic_cast<::android::graphics * >(pgraphics))->SelectClipRgn(NULL);
-      //         if(m_pui != NULL && m_pui != this)
-      //         {
-      //            m_pui->_001OnDeferPaintLayeredWindowBackground(pgraphics);
-      //         }
-      //         else
-      //         {
-      //            _001OnDeferPaintLayeredWindowBackground(pgraphics);
-      //         }
-      //         (dynamic_cast<::android::graphics * >(pgraphics))->SelectClipRgn(NULL);
-      //         (dynamic_cast<::android::graphics * >(pgraphics))->SetViewportOrg(point(0, 0));
-      //         _000OnDraw(pgraphics);
-      //         (dynamic_cast<::android::graphics * >(pgraphics))->SetViewportOrg(point(0, 0));
-      //         //(dynamic_cast<::android::graphics * >(pgraphics))->FillSolidRect(rectUpdate.left, rectUpdate.top, 100, 100, 255);
-      //         (dynamic_cast<::android::graphics * >(pgraphics))->SelectClipRgn(NULL);
-      //         (dynamic_cast<::android::graphics * >(pgraphics))->SetViewportOrg(point(0, 0));
-      //         BitBlt(hdc, rectPaint.left, rectPaint.top,
-      //            rectPaint.width(), rectPaint.height(),
-      //            (HDC) pgraphics->get_handle(), rectUpdate.left, rectUpdate.top,
-      //            SRCCOPY);
-      //
-      //      }
-      //      catch(...)
-      //      {
-      //      }
-      //
-      //      ::EndPaint(get_handle(), &paint);
-      //      pobj->m_bRet = true;
-      //      pbase->set_lresult(0);
    }
 
 
@@ -3227,53 +2967,6 @@ namespace android
       }
 
 
-      /*
-      if(GetExStyle() & WS_EX_LAYERED)
-      {
-      if(rectWindowOld.top_left() != m_rectParentClient.top_left())
-      {
-      send_message(WM_MOVE, 0, 0);
-      }
-      if(rectWindowOld.size() != m_rectParentClient.size())
-      {
-      send_message(WM_SIZE, 0, 0);
-      }
-
-      }
-      if(GetExStyle() & WS_EX_LAYERED)
-      {
-      nFlags |= SWP_NOCOPYBITS;
-      nFlags |= SWP_NOREDRAW;
-      nFlags |= SWP_NOMOVE;
-      nFlags |= SWP_NOSIZE;
-      //nFlags |= SWP_NOZORDER;
-      //nFlags |= SWP_FRAMECHANGED;
-      if(nFlags & SWP_SHOWWINDOW)
-      {
-      ::SetWindowPos(get_handle(), (oswindow) z, x, y, cx, cy, nFlags);
-      ShowWindow(SW_SHOW);
-      }
-      else
-      {
-      ::SetWindowPos(get_handle(), (oswindow) z, x, y, cx, cy, nFlags);
-      }
-      /*if(m_pui != NULL)
-      {
-      m_pui->oprop("pending_layout") = true;
-      m_pui->oprop("pending_zorder") = z;
-      }*/
-      /*    }
-      else
-      {
-      if(z == -3)
-      {
-      ::SetWindowPos(get_handle(), (oswindow) 0, x, y, cx, cy, nFlags);
-      }
-      else
-      {
-      ::SetWindowPos(get_handle(), (oswindow) z, x, y, cx, cy, nFlags);
-      }
-      }*/
       return true;
 
    }
@@ -5368,7 +5061,7 @@ namespace android
    }
 
 
-   bool interaction_impl::keyboard_focus_OnKillFocus()
+   bool interaction_impl::keyboard_focus_OnKillFocus(oswindow oswindowNew)
    {
 
       output_debug_string("::android::interaction_impl::keyboard_focus_OnKillFocus() (1) \n");

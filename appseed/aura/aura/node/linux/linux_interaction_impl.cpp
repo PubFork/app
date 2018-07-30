@@ -258,7 +258,7 @@ namespace linux
    }
 
 
-   // for child windows, views, panes etc  
+   // for child windows, views, panes etc
    bool interaction_impl::create_window(::user::interaction * pui, const char * lpszClassName,const char * lpszWindowName,uint32_t dwStyle,const RECT & rect,::user::interaction * pParentWnd,id id, ::create * pcreate)
    {
 
@@ -584,14 +584,14 @@ namespace linux
 
 
    bool interaction_impl::create_window(
-    ::user::interaction * pui,
-    const char * lpszClassName,
-    const char * lpszWindowName,
-    DWORD dwStyle,
-    const RECT& rect,
-    ::user::interaction * pParentWnd,
-    id id,
-    ::create * pContext)
+   ::user::interaction * pui,
+   const char * lpszClassName,
+   const char * lpszWindowName,
+   DWORD dwStyle,
+   const RECT& rect,
+   ::user::interaction * pParentWnd,
+   id id,
+   ::create * pContext)
    {
 
       // can't use for desktop or pop-up windows (use CreateEx instead)
@@ -2977,62 +2977,62 @@ namespace linux
             m_pthreadUpdateWindow = fork([&]()
             {
 
-            DWORD dwStart;
+               DWORD dwStart;
 
-            while (::get_thread_run())
-            {
-
-               dwStart = ::get_tick_count();
-
-               bool bUpdateScreen = false;
-
-               if (!m_pui->m_bLockWindowUpdate)
+               while (::get_thread_run())
                {
 
-                  if (m_pui->has_pending_graphical_update() || m_pui->check_need_layout())
+                  dwStart = ::get_tick_count();
+
+                  bool bUpdateScreen = false;
+
+                  if (!m_pui->m_bLockWindowUpdate)
                   {
 
-                     _001UpdateBuffer();
+                     if (m_pui->has_pending_graphical_update() || m_pui->check_need_layout())
+                     {
 
-                     m_pui->on_after_graphical_update();
+                        _001UpdateBuffer();
 
-                     bUpdateScreen = true;
+                        m_pui->on_after_graphical_update();
+
+                        bUpdateScreen = true;
+
+                     }
+
+                  }
+                  else
+                  {
+
+                     output_debug_string("window is locked for drawing update");
+
+                     fflush(stdout);
 
                   }
 
-               }
-               else
-               {
+                  if(bUpdateScreen)
+                  {
 
-                  output_debug_string("window is locked for drawing update");
+                     windowing_output_debug_string("\nGoing to _001UpdateScreen");
 
-                  fflush(stdout);
+                     fflush(stdout);
 
-               }
+                     _001UpdateScreen();
 
-               if(bUpdateScreen)
-               {
+                  }
 
-                  windowing_output_debug_string("\nGoing to _001UpdateScreen");
+                  DWORD dwDiff = ::get_tick_count() - dwStart;
 
-                  fflush(stdout);
+                  if (dwDiff < 20)
+                  {
 
-                  _001UpdateScreen();
+                     Sleep(20 - dwDiff);
 
-               }
+                  }
 
-               DWORD dwDiff = ::get_tick_count() - dwStart;
-
-               if (dwDiff < 20)
-               {
-
-                  Sleep(20 - dwDiff);
+                  //Sleep(500);
 
                }
-
-               //Sleep(500);
-
-            }
 
                m_pthreadUpdateWindow.release();
 
@@ -3056,7 +3056,7 @@ namespace linux
    }
 
 
-      void interaction_impl::set_need_redraw()
+   void interaction_impl::set_need_redraw()
    {
 
       if (!m_pui->m_bProDevian)
@@ -3205,152 +3205,6 @@ namespace linux
       //      int32_t iCount = wndaApp.get_count();
 
       _throw(not_implemented(get_app()));
-//      try
-//      {
-//
-//         if(GetWindowLong(GWL_EXSTYLE) & WS_EX_LAYERED)
-//         {
-//            rect rect5;
-//            rect rect9;
-//
-//            rgnUpdate = CreateRectRgnIndirect(&rectUpdate);
-//            oswindow hwndOrder = ::GetWindow(get_handle(), GW_HWNDNEXT);
-//            for(;;)
-//            {
-//               //            char szText[1024];
-//               //::GetWindowTextA(hwndOrder, szText, sizeof(szText));
-//               if(hwndOrder == NULL ||
-//                  !::IsWindow(hwndOrder))
-//                  break;
-//               if(!::IsWindowVisible(hwndOrder) ||
-//                  ::IsIconic(hwndOrder) ||
-//                  hwndOrder == get_handle()
-//                  || wndaApp.contains(hwndOrder))
-//               {
-//                  if(hwndOrder == get_handle())
-//                  {
-//                     // add as bookmark - doesn't paint it
-//                     wndaApp.add(hwndOrder);
-//                  }
-//               }
-//               else
-//               {
-//                  rect rectWindow;
-//                  ::GetWindowRect(hwndOrder, rectWindow);
-//                  SetRectRgn(rgnWindow, rectWindow.left, rectWindow.top, rectWindow.right, rectWindow.bottom);
-//                  SetRectRgn(rgnIntersect, 0, 0, 0, 0);
-//                  CombineRgn(rgnIntersect, rgnUpdate, rgnWindow, RGN_AND);
-//                  rect rectIntersectBox;
-//                  GetRgnBox(rgnIntersect, rectIntersectBox);
-//                  if(rectIntersectBox.is_empty())
-//                  {
-//                  }
-//                  else
-//                  {
-//                     CombineRgn(rgnUpdate, rgnUpdate, rgnWindow, RGN_DIFF);
-//                     rect rectDiffBox;
-//                     GetRgnBox(rgnUpdate, rectDiffBox);
-//                     wndaApp.add(hwndOrder);
-//                     if(rectDiffBox.is_empty())
-//                     {
-//                        break;
-//                     }
-//                  }
-//               }
-//               hwndOrder = ::GetWindow(hwndOrder, GW_HWNDNEXT);
-//
-//
-//            }
-//            for(index j = wndaApp.get_upper_bound(); j >= 0; j--)
-//            {
-//               oswindow hWnd = wndaApp[j];
-//               if(hWnd == get_handle())
-//                  break;
-//               if(!::IsWindowVisible(hWnd) || ::IsIconic(hWnd))
-//                  continue;
-//               ::GetWindowRect(hWnd, rect5);
-//               rect9.intersect(rect5, rectUpdate);
-//               if(rect9.width() >0 && rect9.height() > 0)
-//               {
-//                  /*::interaction_impl * pwnd =  (interaction_impl::FromHandlePermanent(hWnd));
-//                  if(pwnd == NULL)
-//                  {
-//                  for(int32_t l = 0; l < wndpa.get_count(); l++)
-//                  {
-//                  if(wndpa[l]->get_safe_handle() == hWnd)
-//                  {
-//                  pwnd =  (wndpa[l]->m_pimpl);
-//                  break;
-//                  }
-//                  }
-//                  }
-//                  if(pwnd != NULL)
-//                  {
-//                  pwnd->_001Print(pgraphics);
-//                  }*/
-//                  //if(::GetWindowLong(wndaApp[j], GWL_EXSTYLE) & WS_EX_LAYERED)
-//                  if(true)
-//                  {
-//                     HDC hDCMem = CreateCompatibleDC(NULL);
-//                     HBITMAP hBmp = NULL;
-//                     {
-//                        HDC hDC = ::GetWindowDC(hWnd);
-//                        hBmp = CreateCompatibleBitmap(hDC, rect5.width(), rect5.height());
-//                        ::ReleaseDC(hWnd, hDC);
-//                     }
-//                     HGDIOBJ hOld = SelectObject(hDCMem, hBmp);
-//                     //print_window printwindow(get_app(), hWnd, hDCMem, 284);
-//                     ::PrintWindow(hWnd, hDCMem, 0);
-//                     ::BitBlt(
-//                        hdc ,
-//                        //rect5.left,
-//                        //rect5.top,
-//                        0, 0,
-//                        rect5.width(), rect5.height(),
-//                        hDCMem,
-//                        rectUpdate.left - rect5.left,
-//                        rectUpdate.top - rect5.top,
-//                        SRCCOPY);
-//                     ::SelectObject(hDCMem, hOld);
-//                     ::DeleteObject(hDCMem);
-//                     ::DeleteObject(hBmp);
-//                  }
-//                  else
-//                  {
-//                     SetViewportOrgEx(hdc, 0, 0, NULL);
-//                     HDC hdcWindow = ::GetDCEx(wndaApp[j], NULL, DCX_WINDOW);
-//                     if(hdcWindow == NULL)
-//                        hdcWindow = ::GetDCEx(wndaApp[j], NULL, DCX_WINDOW | DCX_caCHE);
-//                     if(hdcWindow != NULL)
-//                     {
-//                        ::BitBlt(
-//                           hdc,
-//                           rect5.left - rectUpdate.left,
-//                           rect5.top - rectUpdate.top,
-//                           rect5.width(), rect5.height(),
-//                           hdcWindow,
-//                           rect5.left - rect5.left,
-//                           rect5.top - rect5.top,
-//                           SRCCOPY);
-//                        ::ReleaseDC(wndaApp[j], hdcWindow);
-//                     }
-//                     else
-//                     {
-//                        TRACE0("WARNING: failed to draw a background. this surface probably will be black.");
-//                     }
-//                  }
-//               }
-//            }
-//         }
-//      }
-//      catch(...)
-//      {
-//
-//      }
-//
-//      ::DeleteObject(rgnWindow);
-//      ::DeleteObject(rgnIntersect);
-//      ::DeleteObject(rgnUpdate);
    }
 
    void interaction_impl::_001OnProdevianSynch(::message::message * pobj)
@@ -3895,7 +3749,7 @@ namespace linux
    pointd interaction_impl::client_to_screen()
    {
 
-    class rect64 rectWindow;
+      class rect64 rectWindow;
 
       if(!GetWindowRect(rectWindow))
       {

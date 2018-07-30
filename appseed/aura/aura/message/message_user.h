@@ -180,6 +180,18 @@ namespace message
 
    };
 
+   class CLASS_DECL_AURA kill_focus : public ::message::base
+   {
+   public:
+
+      oswindow       m_oswindowNew;
+
+      kill_focus(::aura::application * papp) : ::message::base(papp) {}
+      using ::message::base::set;
+      virtual void set(::user::primitive * pwnd, UINT uiMessage, WPARAM wparam, ::lparam lparam, LRESULT & lresult) override;
+
+   };
+
    class CLASS_DECL_AURA on_draw: public ::message::base
    {
    public:

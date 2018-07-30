@@ -712,8 +712,6 @@ namespace windows
    }
 
 
-
-
    void interaction_impl::_001OnSize(::message::message * pobj)
    {
 
@@ -734,10 +732,6 @@ namespace windows
          return;
 
       }
-
-
-
-
 
    }
 
@@ -1058,14 +1052,6 @@ namespace windows
    {
 
       SCAST_PTR(::message::base, pbase, pobj);
-
-      // no default processing
-
-      //if (pbase->m_id == WM_APP + 1933)
-      //{
-      //   //ModifyStyleEx(WS_EX_LAYERED, 0);
-      //   //ModifyStyleEx(0,WS_EX_LAYERED);
-      //}
 
    }
 
@@ -2841,239 +2827,6 @@ namespace windows
    void interaction_impl::_001DeferPaintLayeredWindowBackground(HDC hdc)
    {
 
-      rect rectClient;
-
-      GetClientRect(rectClient);
-
-
-      //pgraphics->fill_solid_rect(rectClient, 0x00000000);
-
-      //return;
-      rect rectUpdate;
-      GetWindowRect(rectUpdate);
-      SetViewportOrgEx(hdc, 0, 0, NULL);
-      rect rectPaint;
-      rectPaint = rectUpdate;
-      ScreenToClient(rectPaint);
-      user::oswindow_array wndaApp;
-
-
-      HRGN rgnWindow;
-      HRGN rgnIntersect;
-      HRGN rgnUpdate = NULL;
-
-
-      rgnWindow = CreateRectRgn(0, 0, 0, 0);
-      rgnIntersect = CreateRectRgn(0, 0, 0, 0);
-
-      //      int32_t iCount = wndaApp.get_count();
-
-      try
-      {
-
-         if (get_window_long(GWL_EXSTYLE) & WS_EX_LAYERED)
-         {
-            rect rect5;
-            rect rect9;
-
-            rgnUpdate = ::CreateRectRgnIndirect(&rectUpdate);
-            oswindow oswindowOrder = ::GetWindow(get_handle(), GW_HWNDNEXT);
-            for (;;)
-            {
-               //            char szText[1024];
-               //::GetWindowTextA(oswindowOrder, szText, sizeof(szText));
-               if (oswindowOrder == NULL || !::IsWindow(oswindowOrder))
-                  break;
-
-               if (!::IsWindowVisible(oswindowOrder) || ::IsIconic(oswindowOrder) || oswindowOrder == get_handle() || wndaApp.contains(oswindowOrder))
-               {
-
-                  if (oswindowOrder == get_handle())
-                  {
-
-                     // add as bookmark - doesn't paint it
-                     wndaApp.add(oswindowOrder);
-
-                  }
-
-               }
-               else
-               {
-
-                  rect rectWindow;
-
-                  ::GetWindowRect(oswindowOrder, rectWindow);
-
-                  SetRectRgn(rgnWindow, rectWindow.left, rectWindow.top, rectWindow.right, rectWindow.bottom);
-
-                  SetRectRgn(rgnIntersect, 0, 0, 0, 0);
-
-                  CombineRgn(rgnIntersect, rgnUpdate, rgnWindow, RGN_AND);
-
-                  rect rectIntersectBox;
-
-                  GetRgnBox(rgnIntersect, rectIntersectBox);
-
-                  if (rectIntersectBox.is_empty())
-                  {
-
-                  }
-                  else
-                  {
-
-                     CombineRgn(rgnUpdate, rgnUpdate, rgnWindow, ::draw2d::region::combine_exclude);
-
-                     rect rectDiffBox;
-
-                     GetRgnBox(rgnUpdate, rectDiffBox);
-
-                     wndaApp.add(oswindowOrder);
-
-                     if (rectDiffBox.is_empty())
-                     {
-
-                        break;
-
-                     }
-
-                  }
-
-               }
-
-               oswindowOrder = ::GetWindow(oswindowOrder, GW_HWNDNEXT);
-
-            }
-
-            for (index j = wndaApp.get_upper_bound(); j >= 0; j--)
-            {
-
-               oswindow oswindow = wndaApp[j];
-
-               if (oswindow == get_handle())
-                  break;
-
-               if (!::IsWindowVisible(oswindow) || ::IsIconic(oswindow))
-                  continue;
-
-               ::GetWindowRect(oswindow, rect5);
-
-               rect9.intersect(rect5, rectUpdate);
-
-               if (rect9.width() > 0 && rect9.height() > 0)
-               {
-
-                  /*::window_sp pwnd = (interaction_impl::FromHandlePermanent);
-
-                  if(pwnd == NULL)
-                  {
-
-                  for(int32_t l = 0; l < wndpa.get_count(); l++)
-                  {
-                  if(wndpa[l]->get_safe_handle() == oswindow)
-                  {
-                  pwnd = (wndpa[l]->m_pimpl);
-                  break;
-                  }
-                  }
-                  }
-                  if(pwnd != NULL)
-                  {
-                  pwnd->_001Print(pgraphics);
-                  }*/
-
-                  //if(::GetWindowLong(wndaApp[j], GWL_EXSTYLE) & WS_EX_LAYERED)
-
-                  if (true)
-                  {
-
-                     HDC hDCMem = CreateCompatibleDC(NULL);
-
-                     HBITMAP hBmp = NULL;
-
-                     {
-
-                        HDC hDC = ::GetWindowDC(oswindow);
-
-                        hBmp = CreateCompatibleBitmap(hDC, rect5.width(), rect5.height());
-
-                        ::ReleaseDC(oswindow, hDC);
-
-                     }
-
-                     HGDIOBJ hOld = SelectObject(hDCMem, hBmp);
-
-                     //print_window printwindow(get_app(), oswindow, hDCMem, 284);
-
-                     ::PrintWindow(oswindow, hDCMem, 0);
-
-                     ::BitBlt(
-                     hdc,
-                     //rect5.left,
-                     //rect5.top,
-                     0, 0,
-                     rect5.width(), rect5.height(),
-                     hDCMem,
-                     rectUpdate.left - rect5.left,
-                     rectUpdate.top - rect5.top,
-                     SRCCOPY);
-
-                     ::SelectObject(hDCMem, hOld);
-
-                     ::DeleteObject(hDCMem);
-
-                     ::DeleteObject(hBmp);
-
-                  }
-                  else
-                  {
-
-                     SetViewportOrgEx(hdc, 0, 0, NULL);
-
-                     HDC hdcWindow = ::GetDCEx(wndaApp[j], NULL, DCX_WINDOW);
-
-                     if (hdcWindow == NULL)
-                        hdcWindow = ::GetDCEx(wndaApp[j], NULL, DCX_WINDOW | DCX_CACHE);
-
-                     if (hdcWindow != NULL)
-                     {
-
-                        ::BitBlt(
-                        hdc,
-                        rect5.left - rectUpdate.left,
-                        rect5.top - rectUpdate.top,
-                        rect5.width(), rect5.height(),
-                        hdcWindow,
-                        rect5.left - rect5.left,
-                        rect5.top - rect5.top,
-                        SRCCOPY);
-
-                        ::ReleaseDC(wndaApp[j], hdcWindow);
-
-                     }
-                     else
-                     {
-
-                        TRACE("WARNING: failed to draw a background. this surface probably will be black.");
-
-                     }
-
-                  }
-
-               }
-
-            }
-
-         }
-
-      }
-      catch (...)
-      {
-
-      }
-
-      ::DeleteObject(rgnWindow);
-      ::DeleteObject(rgnIntersect);
-      ::DeleteObject(rgnUpdate);
    }
 
 
@@ -3081,13 +2834,6 @@ namespace windows
    {
 
       UNREFERENCED_PARAMETER(pobj);
-
-      //      System.get_event(m_pui->m_pthread)->SetEvent();
-
-      //    System.get_event(System.get_twf())->wait(millis(8400));
-
-      //ModifyStyleEx(WS_EX_LAYERED,0);
-      //ModifyStyleEx(0,WS_EX_LAYERED);
 
    }
 
@@ -5300,38 +5046,12 @@ namespace windows
    }
 
 
-
-
    void interaction_impl::_001OnKillFocus(::message::message * pobj)
    {
-      //   Default();
 
-      //Default();
-
-      if (GetParent() == NULL)
-      {
-
-         m_puiFocus = NULL;
-
-         sp(::user::interaction) puiKeyboardFocus = Session.get_keyboard_focus();
-
-         if (puiKeyboardFocus.is_set())
-         {
-
-            if (puiKeyboardFocus == m_pui
-                  || puiKeyboardFocus->is_descendant_of(m_pui))
-            {
-
-               Session.set_keyboard_focus(NULL);
-
-            }
-
-         }
-
-      }
+      m_pelementalFocus = NULL;
 
    }
-
 
 
    LRESULT interaction_impl::OnMenuChar(UINT, UINT, ::user::menu*)

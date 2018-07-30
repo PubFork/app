@@ -1476,6 +1476,16 @@ Restart:
    }
 
 
+   ::user::interaction * interaction_base::GetParentOrOwner() const
+   {
+
+      ::exception::throw_interface_only(get_app());
+
+      return NULL;
+
+   }
+
+
    ::user::interaction * interaction_base::GetTopLevelOwner() const
    {
 

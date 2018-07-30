@@ -77,7 +77,7 @@ namespace user
 
 
       virtual bool keyboard_focus_is_focusable() override;
-      virtual bool keyboard_focus_OnKillFocus() override;
+      virtual bool keyboard_focus_OnKillFocus(oswindow oswindowNew) override;
 
 
       virtual bool ShowWindow(int nCmdShow) override;

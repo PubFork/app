@@ -412,6 +412,7 @@ namespace user
       virtual ::user::interaction * EnsureParentTopLevel();
       virtual ::user::interaction * GetOwner() const;
       virtual ::user::interaction * GetParentOwner() const;
+      virtual ::user::interaction * GetParentOrOwner() const;
       virtual ::user::interaction * GetTopLevelOwner() const;
       virtual ::user::frame * GetFrame() const;
       virtual ::user::frame * GetParentFrame() const;

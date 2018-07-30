@@ -26,10 +26,12 @@ namespace aura
       ::map < ::user::e_key, ::user::e_key, bool, bool > *         m_pmapKeyPressed;
 
 
-      ::user::elemental *                             m_pkeyboardfocusRequest;
-      ::user::elemental *                             m_pkeyboardfocus;
+      //::user::elemental *                             m_pkeyboardfocusRequest;
+      //::user::elemental *                             m_pkeyboardfocus;
       bool                                                     m_bSystemSynchronizedCursor;
       point                                                    m_ptCursor;
+
+      ::user::interaction_impl *       m_pimplPendingSetFocus;
 
       ::visual::cursor *               m_pcursor;
       ::visual::cursor *               m_pcursorCursor;
@@ -215,7 +217,7 @@ namespace aura
       virtual void set_key_pressed(::user::e_key ekey, bool bPressed);
 
       virtual ::user::elemental * get_keyboard_focus();
-      virtual void set_keyboard_focus(::user::elemental * pkeyboardfocus);
+      virtual bool set_keyboard_focus(::user::elemental * pkeyboardfocus);
 
       virtual ::user::primitive * get_active_ui() override;
       virtual ::user::primitive * get_focus_ui();

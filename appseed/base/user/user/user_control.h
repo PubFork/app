@@ -107,7 +107,7 @@ namespace user
       //virtual void walk_pre_translate_tree(::message::message * pobj,sp(::user::interaction) puiStop);
 
       virtual bool keyboard_focus_OnSetFocus() override;
-      virtual bool keyboard_focus_OnKillFocus() override;
+      virtual bool keyboard_focus_OnKillFocus(oswindow oswindowNew) override;
 
    };
 

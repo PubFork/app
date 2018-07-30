@@ -192,19 +192,29 @@ namespace user
 
    void frame_window::defer_synch_layered()
    {
+
       bool bCalcLayered = calc_layered();
-      if (is_different((GetExStyle() & WS_EX_LAYERED) != 0, bCalcLayered) != FALSE)
+
+      if (is_different(GetExStyle() & WS_EX_LAYERED, bCalcLayered))
       {
+
          if (bCalcLayered)
          {
+
             ModifyStyleEx(0, WS_EX_LAYERED);
+
          }
          else
          {
+
             ModifyStyleEx(WS_EX_LAYERED, 0);
+
          }
+
          RedrawWindow();
+
       }
+
    }
 
 
@@ -716,11 +726,11 @@ namespace user
       }
 
       cs.style &= ~WS_VISIBLE;
-       
+
 #ifdef WINDOWSEX
 
       cs.style &= ~WS_CAPTION;
-       
+
 #endif
 
       return true;
@@ -2273,7 +2283,6 @@ namespace user
       else if (!Session.savings().is_trying_to_save(::aura::resource_processing)
                && !Session.savings().is_trying_to_save(::aura::resource_display_bandwidth)
                && !Session.savings().is_trying_to_save(::aura::resource_memory))
-         //&& (GetParent() != NULL || (this->GetExStyle() & WS_EX_LAYERED) != 0))
       {
 
 #if TEST

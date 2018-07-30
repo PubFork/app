@@ -542,6 +542,7 @@ namespace aura
       virtual ::file::listing & perform_file_listing(::file::listing & listing) override;
       virtual ::file::listing & perform_file_relative_name_listing(::file::listing & listing) override;
 
+      DECL_GEN_SIGNAL(_001OnAppExit);
       virtual bool _001OnAgreeExit();
       virtual void _001OnFranceExit();
       virtual void _001FranceExit();
