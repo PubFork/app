@@ -2337,7 +2337,7 @@ void simple_frame_window::route_command_message(::user::command * pcommand)
 
    sp(command_target) ptarget = Session.get_keyboard_focus();
 
-   if (ptarget != NULL)
+   if (ptarget != NULL && ptarget != this)
    {
 
       ptarget->route_command_message(pcommand);
