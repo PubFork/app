@@ -90,7 +90,7 @@ namespace visual
 
 
    //   FIMEMORY * pfm1 = FreeImage_OpenMemory();
-   //   FIBITMAP * pfi7 = App(m_p->m_pauraapp).imaging().dib_to_FI(m_p);
+   //   FIBITMAP * pfi7 = App(m_p->m_papp).imaging().dib_to_FI(m_p);
    //   FIBITMAP * pfi8 = NULL;
    //   bool bConv;
    //   if (b8)

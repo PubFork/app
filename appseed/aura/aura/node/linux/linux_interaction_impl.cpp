@@ -544,12 +544,12 @@ namespace linux
             {
 
 
-               if(m_pauraapp != NULL && m_pauraapp->m_pbasesession != NULL)
+               if(m_papp != NULL && m_papp->m_psession != NULL)
                {
 
                   point pt;
 
-                  m_pauraapp->m_paurasession->get_cursor_pos(pt);
+                  m_papp->m_psession->get_cursor_pos(pt);
 
                   m_rectParentClient.left = pt.x;
                   m_rectParentClient.top = pt.y;
@@ -741,7 +741,7 @@ namespace linux
    void interaction_impl::_001OnNcDestroy(::message::message * pobj)
    {
 
-      single_lock sl(m_pauraapp == NULL ? NULL : m_pauraapp->m_pmutex, TRUE);
+      single_lock sl(m_papp == NULL ? NULL : m_papp->m_pmutex, TRUE);
 
       pobj->m_bRet = true;
 
@@ -1392,15 +1392,15 @@ namespace linux
 
          Session.on_ui_mouse_message(pmouse);
 
-         if(m_pauraapp->m_paxissession != NULL)
+         if(m_papp->m_psession != NULL)
          {
             Session.m_ptCursor = pmouse->m_pt;
          }
 
-         if(m_pui != NULL && m_pui->m_pauraapp->m_paxissession != NULL && m_pui->m_pauraapp->m_paxissession != m_pauraapp->m_paxissession)
+         if(m_pui != NULL && m_pui->m_papp->m_psession != NULL && m_pui->m_papp->m_psession != m_papp->m_psession)
          {
 
-            Sess(m_pui->m_pauraapp->m_paurasession).m_ptCursor = pmouse->m_pt;
+            Sess(m_pui->m_papp->m_psession).m_ptCursor = pmouse->m_pt;
 
          }
 
@@ -2260,7 +2260,7 @@ namespace linux
    ::user::interaction * interaction_impl::GetDescendantWindow(::user::interaction * hWnd, id id)
    {
 
-      single_lock sl(hWnd->m_pauraapp->m_pmutex, TRUE);
+      single_lock sl(hWnd->m_papp->m_pmutex, TRUE);
 
       for(int32_t i = 0; i < hWnd->m_uiptraChild.get_count(); i++)
       {
@@ -4757,7 +4757,7 @@ namespace linux
 
 //        UNREFERENCED_PARAMETER(lpfnTimer);
 //
-//        m_pui->m_pauraapp->set_timer(m_pui, nIDEvent, nElapse);
+//        m_pui->m_papp->set_timer(m_pui, nIDEvent, nElapse);
 //
 //        return nIDEvent;
 
@@ -4773,7 +4773,7 @@ namespace linux
 
       return ::user::interaction_impl::KillTimer(nIDEvent);
 
-//       m_pui->m_pauraapp->unset_timer(m_pui, nIDEvent);
+//       m_pui->m_papp->unset_timer(m_pui, nIDEvent);
 
       //     return TRUE;
 

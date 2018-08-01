@@ -40,7 +40,7 @@ namespace turboc
 
 
 #undef App
-#define App(pcaapp) (pcaapp->cast_app < ::turboc::application > ())
+#define App(papp) (*papp->cast < ::turboc::application > ())
 
 
 #include "src/turboc.h"

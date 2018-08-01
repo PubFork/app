@@ -43,7 +43,7 @@ namespace helloaxis
    bool application::init_instance()
    {
 
-      ::core::session * pcoression = m_pauraapp->m_pcoresession;
+      ::core::session * pcoression = m_papp->m_psession;
 
       if (!::axis::application::init_instance())
       {

@@ -13,65 +13,12 @@ namespace axis
       m_psimpledb = canew(::simpledb::simpledb(this));
 
       m_bInitializeDataCentral = true;
-      if (m_paxissystem != NULL)
+
+      if (&System != NULL)
       {
-         m_bInitializeDataCentral = m_paxissystem->m_bInitializeDataCentral;
+         m_bInitializeDataCentral = System.m_bInitializeDataCentral;
 
       }
-      //m_peventReady = NULL;
-
-
-#ifdef WINDOWS
-
-      m_hinstance                = NULL;
-
-#endif
-
-      m_paxisapp              = this;
-
-      if(m_pauraapp != NULL)
-      {
-
-         m_paxissystem           = m_pauraapp->m_paxissystem;
-
-         if(m_pauraapp->m_paxissession == NULL && m_paxissystem != NULL)
-         {
-
-            m_paxissession       = m_paxissystem->m_paxissession;
-
-         }
-         else
-         {
-
-            m_paxissession       = m_pauraapp->m_paxissession;
-
-         }
-
-#ifdef WINDOWS
-
-         m_hinstance             = m_pauraapp->m_hinstance;
-
-#endif
-
-      }
-      else
-      {
-
-         m_paxissystem           = NULL;
-
-      }
-
-//      m_pcoreapp                 = NULL;
-
-
-
-
-
-      //m_psignal                  = canew(class signal());
-
-
-
-
 
       m_bAxisProcessInitialize         = false;
       m_bAxisProcessInitializeResult   = false;
@@ -1399,12 +1346,12 @@ InitFailure:
 
       }
 
-      if (m_paurasystem->m_phtml == NULL)
+      if (m_psystem->m_phtml == NULL)
       {
 
-         m_paurasystem->m_phtml = create_html();
+         m_psystem->m_phtml = create_html();
 
-         if (m_paurasystem->m_phtml == NULL)
+         if (m_psystem->m_phtml == NULL)
          {
 
             thisfail << 2;
@@ -1413,7 +1360,7 @@ InitFailure:
 
          }
 
-         m_paurasystem->m_phtml->construct(m_pauraapp);
+         m_psystem->m_phtml->construct(m_papp);
 
       }
 
@@ -1491,9 +1438,7 @@ InitFailure:
          if (!m_psimpledb->init2())
             return false;
 
-
          set_data_server(&Application.dataserver());
-
 
       }
 
@@ -1510,7 +1455,7 @@ InitFailure:
 
       }
 
-      if (!m_paurasystem->m_phtml->initialize())
+      if (!m_psystem->m_phtml->initialize())
       {
 
          return false;
@@ -1667,10 +1612,10 @@ InitFailure:
             try
             {
 
-               if(pair.m_element2->m_paxisapp == this)
+               if(pair.m_element2->m_papp == this)
                {
 
-                  pair.m_element2->m_paxisapp = NULL;
+                  pair.m_element2->m_papp = NULL;
 
                }
 
@@ -1792,12 +1737,12 @@ InitFailure:
       }
 
 
-      if (m_paurasystem->m_phtml != NULL)
+      if (m_psystem->m_phtml != NULL)
       {
 
-         ::aura::del(m_paurasystem->m_phtml);
+         ::aura::del(m_psystem->m_phtml);
 
-         m_paurasystem->m_phtml = NULL;
+         m_psystem->m_phtml = NULL;
 
       }
 
@@ -2214,7 +2159,7 @@ InitFailure:
 
       }
 
-      if(m_paxissession->fontopus()->get_user(true,pszRequestUrl) == NULL)
+      if(m_psession->fontopus()->get_user(true,pszRequestUrl) == NULL)
          //   _throw(exit_exception(get_app(),"You have not logged in!! db_str_set::load"));
          return false;
 
@@ -3568,7 +3513,7 @@ namespace axis
    {
 
 
-      if(get_app()->m_pbasesession == NULL)
+      if(get_app()->m_psession == NULL)
          return false;
 
       if(pszPath == NULL)
@@ -3734,7 +3679,7 @@ namespace axis
    ::html::html * application::create_html()
    {
 
-      return new ::html::html(m_pauraapp);
+      return new ::html::html(m_papp);
 
    }
 

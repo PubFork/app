@@ -350,7 +350,7 @@ CLASS_DECL_AURA void __dump(const object* pOb);
 #define THIS_FILE          __FILE__
 
 //#ifdef DEBUG
-#define TRACE ::aura::trace_add_file_and_line(m_pauraapp, __FILE__, __LINE__)
+#define TRACE ::aura::trace_add_file_and_line(m_papp, __FILE__, __LINE__)
 #define APPTRACE ::aura::trace_add_file_and_line(papp, __FILE__, __LINE__)
 //#else
 //#ifdef WINDOWS

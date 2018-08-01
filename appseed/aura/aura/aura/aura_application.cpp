@@ -94,12 +94,51 @@ namespace aura
       m_mutexStr(this)
    {
 
-      if(m_pauraapp == NULL)
+      if(m_papp == NULL)
       {
 
-         m_pauraapp = this;
+         m_papp = this;
 
       }
+
+#ifdef WINDOWS
+
+      m_hinstance = NULL;
+
+#endif
+
+      if (m_papp != NULL)
+      {
+
+         m_psystem = m_papp->m_psystem;
+
+         if (m_papp->m_psession == NULL && m_psystem != NULL)
+         {
+
+            m_psession = m_psystem->m_psession;
+
+         }
+         else
+         {
+
+            m_psession = m_papp->m_psession;
+
+         }
+
+#ifdef WINDOWS
+
+         m_hinstance = m_papp->m_hinstance;
+
+#endif
+
+      }
+      else
+      {
+
+         m_psystem = NULL;
+
+      }
+
 
       m_strBuild = "installed";
       m_strLocale = "_std";
@@ -125,25 +164,11 @@ namespace aura
       m_bAgreeExitOk = true;
       m_bFranceExit = true;
 
-      m_paurasystem = NULL;
-      m_paurasession = NULL;
-      m_paxisapp = NULL;
-      m_paxissystem = NULL;
-      m_paxissession = NULL;
-      m_pbaseapp = NULL;
-      m_pbasesystem = NULL;
-      m_pbasesession = NULL;
-      m_pcoreapp = NULL;
-      m_pcoresystem = NULL;
-      m_pcoresession = NULL;
+      m_psystem = NULL;
+      m_psession = NULL;
 
       m_pimaging = NULL;
 
-#ifdef WINDOWS
-
-      m_hinstance = NULL;
-
-#endif
 
       m_puiptraFrame = new ::user::interaction_spa();
 
@@ -3396,7 +3421,7 @@ retry_license:
 
 #else
 
-         if (m_paurasystem->m_pappcore == NULL)
+         if (m_psystem->m_pappcore == NULL)
          {
 
             set_has_installer(false);
@@ -3405,7 +3430,7 @@ retry_license:
          else
          {
 
-            set_has_installer(!m_paurasystem->m_pappcore->m_bAcidApp);
+            set_has_installer(!m_psystem->m_pappcore->m_bAcidApp);
 
          }
 
@@ -3429,10 +3454,10 @@ retry_license:
       if (!is_system())
       {
 
-         if (m_paurasystem != NULL)
+         if (m_psystem != NULL)
          {
 
-            m_bThreadToolsForIncreasedFps = m_paurasystem->m_bThreadToolsForIncreasedFps;
+            m_bThreadToolsForIncreasedFps = m_psystem->m_bThreadToolsForIncreasedFps;
 
          }
 
@@ -3531,10 +3556,10 @@ retry_license:
          if (!is_session() && !is_system())
          {
 
-            if (m_paurasystem != NULL && m_paurasystem->m_phandler.is_set())
+            if (m_psystem != NULL && m_psystem->m_phandler.is_set())
             {
 
-               m_paurasystem->m_phandler->handle(::command_check_exit);
+               m_psystem->m_phandler->handle(::command_check_exit);
 
             }
 
@@ -3680,7 +3705,7 @@ retry_license:
 
             thisfail << 0.2;
 
-            _throw(exit_exception(m_paurasession, ::exit_application));
+            _throw(exit_exception(m_psession, ::exit_application));
 
          }
 
@@ -5597,7 +5622,7 @@ retry_license:
       if (strAppId.compare_ci("session") == 0)
       {
 
-         papp = create_platform(m_pauraapp->m_paurasession);
+         papp = create_platform(m_papp->m_psession);
 
          papp->m_strAppId = "session";
 
@@ -5614,11 +5639,7 @@ retry_license:
 
          }
 
-         papp->m_paurasession = m_paurasession;
-
-         papp->m_paxissession = m_paxissession;
-
-         papp->m_pbasesession = m_pbasesession;
+         papp->m_psession = m_psession;
 
          if (papp != NULL)
          {
@@ -5640,10 +5661,6 @@ retry_license:
          }
 
       }
-
-      papp->m_pcoresystem = m_pcoresystem;
-
-      papp->m_pbasesystem = m_pbasesystem;
 
       papp->handler()->merge(System.handler());
 

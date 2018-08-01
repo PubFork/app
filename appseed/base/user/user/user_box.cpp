@@ -55,7 +55,7 @@ namespace user
 
       }
 
-      initialize_data_client(&System.dataserver());
+      initialize_data_client(&Application.dataserver());
 
       if (pobj->previous())
       {

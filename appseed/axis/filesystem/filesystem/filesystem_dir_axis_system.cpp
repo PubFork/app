@@ -717,7 +717,7 @@ namespace file
          //::file::path system::locale_schema(::aura::application * papp, const string & strLocale, const string & strSchema)
          //{
 
-         //   return papp->m_paxissession->get_locale_schema_dir(strLocale, strSchema);
+         //   return papp->m_psession->get_locale_schema_dir(strLocale, strSchema);
 
          //}
 
@@ -965,7 +965,7 @@ namespace file
 //
 //                     strLs = straLs[l];
 //
-//                     strFile = System.dir().cache() / papp->m_paxissession->get_locale_schema_dir(strLocale, strSchema) / stra.implode(",") + ".map_question";
+//                     strFile = System.dir().cache() / papp->m_psession->get_locale_schema_dir(strLocale, strSchema) / stra.implode(",") + ".map_question";
 //
 //                     strsize iFind = strFile.find(DIR_SEPARATOR);
 //
@@ -1166,7 +1166,7 @@ namespace file
 //               {
 //                  strLs = straLs[l];
 //
-//                  strFile = System.dir().cache() / papp->m_paxissession->get_locale_schema_dir(strLocale, strSchema) / stra.implode(",") + ".map_question";
+//                  strFile = System.dir().cache() / papp->m_psession->get_locale_schema_dir(strLocale, strSchema) / stra.implode(",") + ".map_question";
 //
 //                  strsize iFind = strFile.find(DIR_SEPARATOR);
 //
@@ -1345,10 +1345,10 @@ namespace file
 //            }
 //
 //
-//            if (papp->m_paxissession != NULL && papp->m_paxissession != papp &&
-//                  (sp(::aura::application)) papp->m_paxissystem != (sp(::aura::application)) papp)
+//            if (papp->m_psession != NULL && papp->m_psession != papp &&
+//                  (sp(::aura::application)) papp->m_psystem != (sp(::aura::application)) papp)
 //            {
-//               strPath = matter(papp->m_paxissession, stra, bDir);
+//               strPath = matter(papp->m_psession, stra, bDir);
 //               if (bDir)
 //               {
 //                  if (System.dir().is(strPath, get_app()))
@@ -1361,10 +1361,10 @@ namespace file
 //               }
 //            }
 //
-//            if (papp->m_paxissystem != NULL && papp->m_paxissystem != papp &&
-//                  (sp(::aura::application)) papp->m_paxissystem != (sp(::aura::application)) papp->m_paxissession)
+//            if (papp->m_psystem != NULL && papp->m_psystem != papp &&
+//                  (sp(::aura::application)) papp->m_psystem != (sp(::aura::application)) papp->m_psession)
 //            {
-//               strPath = matter(papp->m_paxissystem, stra, bDir);
+//               strPath = matter(papp->m_psystem, stra, bDir);
 //               if (bDir)
 //               {
 //                  if (System.dir().is(strPath, get_app()))
@@ -1440,7 +1440,7 @@ namespace file
 ////                  strSchema = pcontext->m_plocaleschema->m_idSchema;
 ////                  straLs = locale_schema_matter(papp, strLocale, strSchema, root, domain);
 ////
-////                  strFile = System.dir().cache() / papp->m_paxissession->get_locale_schema_dir(strLocale, strSchema) / str + ".map_question";
+////                  strFile = System.dir().cache() / papp->m_psession->get_locale_schema_dir(strLocale, strSchema) / str + ".map_question";
 ////
 ////                  strsize iFind = strFile.find(DIR_SEPARATOR);
 ////
@@ -1607,7 +1607,7 @@ namespace file
 ////               strSchema = pcontext->m_plocaleschema->m_idSchema;
 ////               straLs = locale_schema_matter(papp, strLocale, strSchema);
 ////
-////               strFile = System.dir().commonappdata() / "cache" / papp->m_paxissession->get_locale_schema_dir(strLocale, strSchema) / str + ".map_question";
+////               strFile = System.dir().commonappdata() / "cache" / papp->m_psession->get_locale_schema_dir(strLocale, strSchema) / str + ".map_question";
 ////
 ////               strsize iFind = strFile.find(DIR_SEPARATOR);
 ////
@@ -1769,11 +1769,11 @@ namespace file
 ////               }
 ////
 ////
-////               if (papp->m_paxissession != NULL && papp->m_paxissession != papp &&
-////                  (sp(::aura::application)) papp->m_paxissystem != (sp(::aura::application)) papp
-////                  && papp->m_paxissession->m_bAxisInitialize1)
+////               if (papp->m_psession != NULL && papp->m_psession != papp &&
+////                  (sp(::aura::application)) papp->m_psystem != (sp(::aura::application)) papp
+////                  && papp->m_psession->m_bAxisInitialize1)
 ////               {
-////                  strPath = matter(papp->m_paxissession, str, bDir);
+////                  strPath = matter(papp->m_psession, str, bDir);
 ////                  if (bDir)
 ////                  {
 ////                     if (System.dir().is(strPath, papp))
@@ -1790,11 +1790,11 @@ namespace file
 ////
 ////
 ////
-////            if (papp->m_paxissystem != NULL && papp->m_paxissystem != papp &&
-////               dynamic_cast < ::aura::application * >(papp->m_paxissystem) != dynamic_cast < ::aura::application * >(papp->m_paxissession)
-////               && papp->m_paxissystem->m_bAxisInitialize1)
+////            if (papp->m_psystem != NULL && papp->m_psystem != papp &&
+////               dynamic_cast < ::aura::application * >(papp->m_psystem) != dynamic_cast < ::aura::application * >(papp->m_psession)
+////               && papp->m_psystem->m_bAxisInitialize1)
 ////            {
-////               strPath = matter(papp->m_paxissystem, str, bDir);
+////               strPath = matter(papp->m_psystem, str, bDir);
 ////               if (bDir)
 ////               {
 ////                  if (System.dir().is(strPath, get_app()))

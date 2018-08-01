@@ -43,7 +43,7 @@ namespace simpledb
 
       }
 
-      if(m_pauraapp->is_system())
+      if(m_papp->is_system())
       {
 //#ifndef METROWIN
 //         /* initialize client library */
@@ -55,7 +55,7 @@ namespace simpledb
 //#endif
       }
 
-      m_pserver = new db_server(m_pauraapp);
+      m_pserver = new db_server(m_papp);
 
 
       m_pserver->add_client(this);
@@ -83,7 +83,7 @@ namespace simpledb
 
       }
 
-      m_pauraapp->m_paxissession->on_set_locale(lpcsz, actioncontext);
+      m_papp->m_psession->on_set_locale(lpcsz, actioncontext);
 
    }
 
@@ -98,7 +98,7 @@ namespace simpledb
 
       }
 
-      m_pauraapp->m_paxissession->on_set_schema(lpcsz,actioncontext);
+      m_papp->m_psession->on_set_schema(lpcsz,actioncontext);
 
    }
 
@@ -147,16 +147,16 @@ namespace simpledb
    bool simpledb::init2()
    {
 
-      if(m_pauraapp->handler()->m_varTopicQuery["locale"].get_count() > 0)
+      if(m_papp->handler()->m_varTopicQuery["locale"].get_count() > 0)
       {
-         string str = m_pauraapp->handler()->m_varTopicQuery["locale"].stra()[0];
-         m_pauraapp->m_paxissession->set_locale(str,::action::source::database());
+         string str = m_papp->handler()->m_varTopicQuery["locale"].stra()[0];
+         m_papp->m_psession->set_locale(str,::action::source::database());
       }
 
-      if(m_pauraapp->handler()->m_varTopicQuery["schema"].get_count() > 0)
+      if(m_papp->handler()->m_varTopicQuery["schema"].get_count() > 0)
       {
-         string str = m_pauraapp->handler()->m_varTopicQuery["schema"].stra()[0];
-         m_pauraapp->m_paxissession->set_schema(str,::action::source::database());
+         string str = m_papp->handler()->m_varTopicQuery["schema"].stra()[0];
+         m_papp->m_psession->set_schema(str,::action::source::database());
       }
 
 //      if(&AppUser(this) == NULL)
@@ -244,7 +244,7 @@ namespace simpledb
       if(actioncontext.is_user_source())
       {
 
-         if(Sess(m_pauraapp).safe_get_user() != NULL)
+         if(Sess(m_papp).safe_get_user() != NULL)
          {
 
             data_set("keyboard_layout", pszPath);

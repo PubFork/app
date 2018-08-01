@@ -39,7 +39,7 @@ object(papp),
 
    m_dwStopTimeout = 30 * 1000; // 30 seconds
 
-   papp->m_paurasystem->m_serviceptra.add(this);
+   papp->m_psystem->m_serviceptra.add(this);
 
 #ifdef WINDOWSEX
     m_status.dwServiceType = SERVICE_WIN32_OWN_PROCESS;
@@ -331,7 +331,7 @@ void service_base::call_server()
 
    m_bStopping = false;
 
-   ::set_thread(m_pauraapp);
+   ::set_thread(m_papp);
 
    serve();
 

@@ -22,7 +22,7 @@ namespace fs
    bool fs::initialize()
    {
 
-      if(m_pauraapp->is_system())
+      if(m_papp->is_system())
       {
 
 /*       

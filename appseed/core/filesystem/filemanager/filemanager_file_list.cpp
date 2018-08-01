@@ -132,8 +132,6 @@ namespace filemanager
             if (puh->is_type_of(update_hint::TypeInitialize))
             {
 
-               m_pauraapp = get_app()->m_pcoreapp;
-
                db_server * pcentral = dynamic_cast <db_server *> (&System.m_psimpledb->db());
 
                if (pcentral == NULL)
@@ -372,7 +370,7 @@ namespace filemanager
    UINT c_cdecl file_list::ThreadProcFileSize(LPVOID lpparam)
    {
       file_size * psize = (file_size *)lpparam;
-      db_server * pcentral = dynamic_cast <db_server *> (&App(psize->m_pview->m_pauraapp).simpledb().db());
+      db_server * pcentral = dynamic_cast <db_server *> (&App(psize->m_pview->m_papp).simpledb().db());
       if (pcentral == NULL)
          return 0;
       DBFileSystemSizeSet * pset = pcentral->m_pfilesystemsizeset;
@@ -411,7 +409,7 @@ namespace filemanager
          {
             int64_t i64Size;
             bool bPendingSize;
-            single_lock lock(m_pauraapp->m_pmutex);
+            single_lock lock(m_papp->m_pmutex);
             if (!lock.lock(millis(1984)))
                break;
             if (i >= get_fs_mesh_data()->m_itema.get_count())

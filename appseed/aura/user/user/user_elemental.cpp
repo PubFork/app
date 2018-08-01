@@ -168,7 +168,7 @@ namespace user
       if(puiThis == NULL)
          return NULL;
 
-      single_lock(puiThis->m_pauraapp->m_pmutex,TRUE);
+      single_lock(puiThis->m_papp->m_pmutex,TRUE);
 
       sp(elemental) pui;
 

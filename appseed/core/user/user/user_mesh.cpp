@@ -6219,7 +6219,7 @@ namespace user
             dib->get_graphics()->SelectObject(m_pfont);
             dib->get_graphics()->_DrawText(m_strText,rectCache,m_iDrawTextFlags);
 
-            ::aura::application * m_pauraapp = m_pmesh->get_app();
+            ::aura::application * m_papp = m_pmesh->get_app();
 
             Application.imaging().channel_spread_set_color(dib2->get_graphics(),null_point(),size,dib->get_graphics(),null_point(),0,2,ARGB(184,184,184,184));
             dib->Fill(0,0,0,0);

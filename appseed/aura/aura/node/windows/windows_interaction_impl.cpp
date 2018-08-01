@@ -437,7 +437,7 @@ namespace windows
 
       // if window is not created, it may destroy this object, so keep the app as local var
 
-      ::aura::application * papp = m_pauraapp;
+      ::aura::application * papp = m_papp;
 
       wstring wstrClassName(cs.lpszClass);
 
@@ -773,19 +773,19 @@ namespace windows
    void interaction_impl::_001OnNcDestroy(::message::message * pobj)
    {
 
-      single_lock sl(m_pui->m_pauraapp->m_pmutex, TRUE);
+      single_lock sl(m_pui->m_papp->m_pmutex, TRUE);
 
       //::window_sp pwindow;
 
-      //if(m_pui->m_pauraapp != NULL)
+      //if(m_pui->m_papp != NULL)
       //{
 
-      //   synch_lock sl(&m_pui->m_pauraapp->m_mutexUiPtra);
+      //   synch_lock sl(&m_pui->m_papp->m_mutexUiPtra);
 
-      //   if(m_pui->m_pauraapp->m_spuiptra.is_set())
+      //   if(m_pui->m_papp->m_spuiptra.is_set())
       //   {
 
-      //      m_pui->m_pauraapp->m_spuiptra->remove(m_pui);
+      //      m_pui->m_papp->m_spuiptra->remove(m_pui);
 
       //   }
 
@@ -1521,7 +1521,7 @@ namespace windows
 
       if (uiMessage == WM_TIMER)
       {
-         //         m_pui->m_pauraapp->step_timer();
+         //         m_pui->m_papp->step_timer();
       }
       else if (uiMessage == WM_LBUTTONDOWN)
       {
@@ -1875,7 +1875,7 @@ namespace windows
 
    ::user::interaction * interaction_impl::GetDescendantWindow(::user::interaction * pui, id id)
    {
-      single_lock sl(pui->m_pauraapp->m_pmutex, TRUE);
+      single_lock sl(pui->m_papp->m_pmutex, TRUE);
       // get_child_by_id recursive (return first found)
       // breadth-first for 1 level, then depth-first for next level
 
@@ -5922,14 +5922,14 @@ LRESULT CALLBACK __window_procedure(oswindow oswindow, UINT message, WPARAM wpar
 
    }
 
-   if (::aura::system::g_p->m_paurasystem == NULL)
+   if (::aura::system::g_p->m_psystem == NULL)
    {
 
       return 0;
 
    }
 
-   ::user::interaction * pui = ::aura::system::g_p->m_paurasystem->ui_from_handle(oswindow);
+   ::user::interaction * pui = ::aura::system::g_p->m_psystem->ui_from_handle(oswindow);
 
    //if(message == WM_SETCURSOR)
    //{
@@ -6139,7 +6139,7 @@ void __term_windowing()
 
    }
    synch_lock slSystem(psystem->m_pmutex);
-   auto psession = psystem->m_paurasession;
+   auto psession = psystem->m_psession;
    if (psession == NULL)
    {
 

@@ -82,7 +82,7 @@ namespace android
    interaction_impl::~interaction_impl()
    {
 
-      if(m_pauraapp != NULL &&  m_pauraapp->m_paurasession != NULL &&  m_pauraapp->m_paurasession)
+      if(m_papp != NULL &&  m_papp->m_psession != NULL &&  m_papp->m_psession)
       {
 
          if(Session.m_pwindowmap != NULL)
@@ -268,7 +268,7 @@ namespace android
       if(m_oswindow == NULL)
       {
 
-         if (m_pauraapp == NULL)
+         if (m_papp == NULL)
          {
 
             PostNcDestroy();
@@ -574,19 +574,19 @@ namespace android
    void interaction_impl::_001OnNcDestroy(::message::message * pobj)
    {
 
-      single_lock sl(m_pui->m_pauraapp->m_pmutex,TRUE);
+      single_lock sl(m_pui->m_papp->m_pmutex,TRUE);
 
       ::window_sp pwindow;
 
-      //if(m_pui->m_pauraapp != NULL && m_pui->m_pauraapp->m_pthreadimpl.is_set())
+      //if(m_pui->m_papp != NULL && m_pui->m_papp->m_pthreadimpl.is_set())
       //{
 
-      //   synch_lock sl(&m_pui->m_pauraapp->m_pthreadimpl->m_mutexUiPtra);
+      //   synch_lock sl(&m_pui->m_papp->m_pthreadimpl->m_mutexUiPtra);
 
-      //   if(m_pui->m_pauraapp->m_pthreadimpl->m_spuiptra.is_set())
+      //   if(m_pui->m_papp->m_pthreadimpl->m_spuiptra.is_set())
       //   {
 
-      //      m_pui->m_pauraapp->m_pthreadimpl->m_spuiptra->remove(m_pui);
+      //      m_pui->m_papp->m_pthreadimpl->m_spuiptra->remove(m_pui);
 
       //   }
 
@@ -1185,7 +1185,7 @@ namespace android
 
       if(pmessage->m_id == WM_TIMER)
       {
-//         m_pui->m_pauraapp->step_timer();
+//         m_pui->m_papp->step_timer();
       }
       else if(pmessage->m_id == WM_LBUTTONDOWN)
       {
@@ -1485,7 +1485,7 @@ namespace android
 
    ::user::interaction * interaction_impl::GetDescendantWindow(::user::interaction * pui,id id)
    {
-      single_lock sl(pui->m_pauraapp->m_pmutex,TRUE);
+      single_lock sl(pui->m_papp->m_pmutex,TRUE);
       // get_child_by_id recursive (return first found)
       // breadth-first for 1 level, then depth-first for next level
 
@@ -3871,7 +3871,7 @@ namespace android
 
       //UNREFERENCED_PARAMETER(lpfnTimer);
 
-      //m_pui->m_pauraapp->set_timer(m_pui, nIDEvent, nElapse);
+      //m_pui->m_papp->set_timer(m_pui, nIDEvent, nElapse);
 
       //return nIDEvent;
 
@@ -3887,7 +3887,7 @@ namespace android
 
       return ::user::interaction_impl::KillTimer(nIDEvent);
 
-      //m_pui->m_pauraapp->unset_timer(m_pui, nIDEvent);
+      //m_pui->m_papp->unset_timer(m_pui, nIDEvent);
 
       //return TRUE;
 

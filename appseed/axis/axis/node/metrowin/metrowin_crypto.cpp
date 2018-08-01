@@ -139,7 +139,7 @@ namespace metrowin
 //            bio_err = NULL;
 //            m_rand_size = 1024;
 //
-//            s_psystem = papp->m_paurasystem;
+//            s_psystem = papp->m_psystem;
 //
 //            /* An error write context */
 //            bio_err = BIO_new_fp(stderr,BIO_NOCLOSE);

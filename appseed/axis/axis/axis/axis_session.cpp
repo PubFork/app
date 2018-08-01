@@ -15,17 +15,12 @@ namespace axis
 
       m_datakey.m_bLocalData = true;
 
-      m_paxissession                = this;
-
-      m_bMatterFromHttpCache        = m_paxissystem->m_bMatterFromHttpCache;
-
-
 #ifdef WINDOWS
 
       if(m_hinstance == NULL)
       {
 
-         m_hinstance                = m_pauraapp->m_hinstance;
+         m_hinstance                = m_papp->m_hinstance;
 
       }
 
@@ -41,19 +36,8 @@ namespace axis
       m_puserstrcontext             = NULL;
 
 
-//      m_puserstyle                 = &m_schemasimple;
-
-      //    m_schemasimple.m_pfont.alloc(allocer());
-
-      //  m_schemasimple.m_pfont->create_pixel_font(FONT_SANS,16);
-
       m_puserpresence               = NULL;
 
-      m_bMatterFromHttpCache        = m_paxissystem->m_bMatterFromHttpCache;
-
-      m_bSystemSynchronizedCursor   = m_paxissystem->m_bSystemSynchronizedCursor;
-
-      m_bSystemSynchronizedScreen   = m_paxissystem->m_bSystemSynchronizedScreen;
 
       m_iMainMonitor                = -1;
 
@@ -62,7 +46,7 @@ namespace axis
       if(m_hinstance == NULL)
       {
 
-         m_hinstance                = m_pauraapp->m_hinstance;
+         m_hinstance                = m_papp->m_hinstance;
 
       }
 
@@ -87,7 +71,7 @@ namespace axis
 
       m_puserpresence = NULL;
 
-      //      m_paxissystem->m_basesessionptra.add_unique(this);
+      //      m_psystem->m_basesessionptra.add_unique(this);
 
       m_pcopydesk = NULL;
 
@@ -593,10 +577,10 @@ namespace axis
             try
             {
 
-               if(pair.m_element2->m_paxissession == this)
+               if(pair.m_element2->m_psession == this)
                {
 
-                  pair.m_element2->m_paxissession = NULL;
+                  pair.m_element2->m_psession = NULL;
 
                }
 
@@ -759,7 +743,7 @@ namespace axis
       if(m_pkeyboard == NULL)
       {
 
-         m_pkeyboard = new ::user::keyboard(m_pauraapp);
+         m_pkeyboard = new ::user::keyboard(m_papp);
 
          if(m_pkeyboard == NULL)
             _throw(simple_exception(get_app(),"Could not create keyboard"));

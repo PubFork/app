@@ -483,8 +483,8 @@ namespace metrowin
 
       m_psystem->startup_command(pcommand);
 
-//      m_psystem->m_paxisapp   = m_psystem;
-      //    m_psystem->m_psystem    = m_paxissystem;
+//      m_psystem->m_papp   = m_psystem;
+      //    m_psystem->m_psystem    = m_psystem;
 
 
 
@@ -787,7 +787,7 @@ namespace metrowin
 
                         memory m;
 
-                        papp->m_paurasystem->base64().decode(m, m_psystem->url().url_decode(str.Mid(iFind + 1)));
+                        papp->m_psystem->base64().decode(m, m_psystem->url().url_decode(str.Mid(iFind + 1)));
 
                         papp->m_pipi->on_receive(&papp->m_pipi->m_rx, message, m.get_data(), m.get_size());
 
@@ -1134,7 +1134,7 @@ namespace metrowin
    directx_application_source::directx_application_source(::aura::system * paxissystem, const string & strId)
    {
 
-      m_paurasystem     = paxissystem;
+      m_psystem     = paxissystem;
 
       m_strId           = strId;
 
@@ -1144,7 +1144,7 @@ namespace metrowin
    Windows::ApplicationModel::Core::IFrameworkView^ directx_application_source::CreateView()
    {
 
-      return ref new directx_application(m_paurasystem,m_strId);
+      return ref new directx_application(m_psystem,m_strId);
 
    }
 

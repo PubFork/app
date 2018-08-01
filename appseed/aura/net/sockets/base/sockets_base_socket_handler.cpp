@@ -43,10 +43,10 @@ namespace sockets
       if(plogger == NULL)
       {
 
-            if(papp != NULL && papp->m_paurasystem != NULL)
+            if(papp != NULL && papp->m_psystem != NULL)
             {
 
-                  m_splogger = &papp->m_paurasystem->log();
+                  m_splogger = &papp->m_psystem->log();
             
             }
             

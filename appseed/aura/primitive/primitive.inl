@@ -38,7 +38,7 @@ inline property_set & object::oprop_set()
 inline ::aura::allocatorsp & object::allocer()
 {
 
-   return m_pauraapp->m_allocer;
+   return m_papp->m_allocer;
 
 }
 
@@ -47,7 +47,7 @@ inline ::aura::allocatorsp & object::allocer()
 inline sp(::handler) object::handler()
 {
 
-   return m_pauraapp->handler();
+   return m_papp->handler();
 
 }
 

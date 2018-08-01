@@ -18,7 +18,7 @@ namespace user
 
             m_eupdown = updown_normal_frame;
 
-            m_workset.set_app(m_pauraapp);
+            m_workset.set_app(m_papp);
 
             m_pupdowntarget = NULL;
 

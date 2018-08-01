@@ -236,23 +236,14 @@ typedef smart_pointer < thread_impl > thread_impl_sp;
 
 
 
-#undef CaSys
-#define CaSys(pca) (*pca->m_pauraapp->m_pbasesystem)
 #undef Sys
-#define Sys(pauraapp) (*pauraapp->m_pbasesystem)
-//#define System (Sys(this->m_pauraapp))
-//#define threadSystem (System)
+#define Sys(papp) (*dynamic_cast < ::base::system *> (papp->m_psystem))
 
 #undef Sess
-#define Sess(pauraapp) (*pauraapp->m_pbasesession)
-//#define Session (Sess(m_pauraapp))
-//#define Sess(pauraapp) (*pauraapp->m_pcoresession)
-//#define Session (Sess(m_pauraapp))
-
+#define Sess(papp) (*dynamic_cast < ::base::session *> (papp->m_psession))
 
 #undef App
-#define App(pauraapp) (*pauraapp->m_pbaseapp)
-//#define Application (App(m_pauraapp))
+#define App(papp) (*dynamic_cast < ::base::application *> (papp))
 
 
 

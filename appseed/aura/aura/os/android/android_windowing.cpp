@@ -396,7 +396,7 @@ void oswindow_data::set_impl(::user::interaction_impl * pimpl)
 
    m_pimpl = pimpl;
 
-   m_hthread = m_pimpl->m_pui->m_pauraapp->get_os_handle();
+   m_hthread = m_pimpl->m_pui->m_papp->get_os_handle();
 
 }
 
@@ -1066,18 +1066,18 @@ void android_mouse(unsigned int message, float x, float y)
    if (::aura::system::g_p == NULL)
       return;
 
-   if (::aura::system::g_p->m_paurasystem == NULL)
+   if (::aura::system::g_p->m_psystem == NULL)
       return;
 
-   if (::aura::system::g_p->m_paurasystem->m_possystemwindow == NULL)
+   if (::aura::system::g_p->m_psystem->m_possystemwindow == NULL)
       return;
 
-   if (::aura::system::g_p->m_paurasystem->m_possystemwindow->m_pui == NULL)
+   if (::aura::system::g_p->m_psystem->m_possystemwindow->m_pui == NULL)
       return;
 
    MESSAGE msg;
 
-   msg.hwnd = ::aura::system::g_p->m_paurasystem->m_possystemwindow->m_pui->get_handle();
+   msg.hwnd = ::aura::system::g_p->m_psystem->m_possystemwindow->m_pui->get_handle();
 
    msg.message = message;
 
@@ -1089,7 +1089,7 @@ void android_mouse(unsigned int message, float x, float y)
 
    msg.pt.y = (long)y;
 
-   ::aura::system::g_p->m_paurasystem->m_possystemwindow->m_pui->message_handler(&msg);
+   ::aura::system::g_p->m_psystem->m_possystemwindow->m_pui->message_handler(&msg);
 
 
 }
@@ -1149,13 +1149,13 @@ void _android_key(unsigned int message, int keyCode, int iUni)
    if (::aura::system::g_p == NULL)
       return;
 
-   if (::aura::system::g_p->m_paurasystem == NULL)
+   if (::aura::system::g_p->m_psystem == NULL)
       return;
 
-   if (::aura::system::g_p->m_paurasystem->m_possystemwindow == NULL)
+   if (::aura::system::g_p->m_psystem->m_possystemwindow == NULL)
       return;
 
-   if (::aura::system::g_p->m_paurasystem->m_possystemwindow->m_pui == NULL)
+   if (::aura::system::g_p->m_psystem->m_possystemwindow->m_pui == NULL)
       return;
 
    sp(::message::key) pkey = canew(::message::key(get_app()));
@@ -1169,7 +1169,7 @@ void _android_key(unsigned int message, int keyCode, int iUni)
 
    }
 
-   ::aura::system::g_p->m_paurasystem->m_possystemwindow->m_pui->message_handler(pkey);
+   ::aura::system::g_p->m_psystem->m_possystemwindow->m_pui->message_handler(pkey);
 
 
 }

@@ -160,6 +160,11 @@ public:
    virtual void delete_this();
 
 
+   virtual void assert_valid() const;
+   virtual void dump(dump_context & dumpcontext) const;
+
+
+
    virtual int64_t add_ref();
    virtual int64_t dec_ref();
    virtual int64_t release();
@@ -195,7 +200,7 @@ public:
    uint64_t                      m_ulFlags;
    factory_item_base *           m_pfactoryitembase;
    void *                        m_pthis;
-   ::aura::application *         m_pauraapp;
+   ::aura::application *         m_papp;
    mutex *                       m_pmutex;
    property_set *                m_psetObject;
    thread_ptra *                 m_pthreadrefa;
@@ -208,10 +213,15 @@ public:
    virtual ~object();  // virtual destructors are necessary
 
 
-   virtual void assert_valid() const;
-   virtual void dump(dump_context & dumpcontext) const;
 
 
+   template < typename TYPE >
+   TYPE * cast()
+   {
+
+      return dynamic_cast < TYPE * > (this);
+
+   }
 
 
    template < typename PRED >
@@ -253,7 +263,7 @@ public:
 
    inline ::aura::allocatorsp & allocer() const { return ((object *)this)->allocer(); }
 
-   inline ::aura::application * get_app() const { return m_pauraapp; }
+   inline ::aura::application * get_app() const { return m_papp; }
 
    virtual void set_app(::aura::application * papp);
 

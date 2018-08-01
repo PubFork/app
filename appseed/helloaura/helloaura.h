@@ -20,7 +20,7 @@ namespace helloaura
 
 
 #undef App
-#define App(pbaseapp) (pbaseapp->m_pauraapp->cast_app < ::helloaura::application > ())
+#define App(pbaseapp) (pbaseapp->m_papp->cast_app < ::helloaura::application > ())
 
 
 #include "helloaura_render.h"

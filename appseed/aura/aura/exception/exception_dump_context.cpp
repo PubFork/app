@@ -333,7 +333,7 @@ dump_context & dump_context::hex_dump(uint64_t ui)
 }
 
 
-void dump_context::write(object * pobject)
+void dump_context::write(simple_object * pobject)
 {
 
    if (pobject == NULL)
@@ -352,7 +352,7 @@ void dump_context::write(object * pobject)
 }
 
 
-void dump_context::write(object & object)
+void dump_context::write(simple_object & object)
 {
 
    write(&object);

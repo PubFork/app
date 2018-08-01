@@ -23,7 +23,7 @@ namespace programming
 } // namespace netnode
 
 #undef App
-#define App(pcaapp) (pcaapp->cast_app < ::programming::application > ())
+#define App(papp) (*papp->cast < ::programming::application > ())
 
 
 #include "app/appseed/programming/dynamic_source/dynamic_source.h"

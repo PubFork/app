@@ -502,7 +502,7 @@ namespace userex
 
          }
 
-         sp(::filemanager::manager) pmanager = Session.filemanager()->open_child(true,pfilemanagerdata->m_bTransparentBackground,pcreatordata->m_pholder,pfilemanagerdata,get_app()->m_pcoreapp);
+         sp(::filemanager::manager) pmanager = Session.filemanager()->open_child(true,pfilemanagerdata->m_bTransparentBackground,pcreatordata->m_pholder,pfilemanagerdata,&App(get_app()));
 
          if(pmanager != NULL)
          {

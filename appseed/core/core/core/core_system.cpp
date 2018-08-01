@@ -46,7 +46,6 @@ namespace core
       m_window                                  = nullptr;
 #endif
 
-      m_pcoresystem                            = this;
       set_app(this);
 
 
@@ -59,7 +58,7 @@ namespace core
       else
       {
 
-         oprop("parent_system") = papp->m_pcoresystem;
+         oprop("parent_system") = papp->m_psystem;
 
       }
 
@@ -504,7 +503,7 @@ namespace core
       if (iEdge == 0)
       {
 
-         return System.m_pcoresession;
+         return dynamic_cast < session * > (System.m_psession);
 
       }
 

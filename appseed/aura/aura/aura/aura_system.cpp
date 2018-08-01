@@ -78,26 +78,26 @@ namespace aura
       if(papp == NULL)
       {
 
-         m_pauraapp = this;
+         m_papp = this;
 
-         m_paurasystem = this;
+         m_psystem = this;
 
       }
       else
       {
 
-         m_pauraapp = papp;
+         m_papp = papp;
 
          if(papp->is_system())
          {
 
-            m_paurasystem = dynamic_cast<::aura::system *>(papp);
+            m_psystem = dynamic_cast<::aura::system *>(papp);
 
          }
          else
          {
 
-            m_paurasystem = this;
+            m_psystem = this;
 
          }
 
@@ -649,9 +649,9 @@ namespace aura
       if (m_mapLibrary["draw2d"]->is_opened())
       {
 
-         m_paurasession->m_ptheme = canew(::user::theme(this));
+         m_psession->m_ptheme = canew(::user::theme(this));
 
-         m_paurasession->m_puserstyle = m_paurasession->m_ptheme;
+         m_psession->m_puserstyle = m_psession->m_ptheme;
 
       }
 
@@ -737,8 +737,8 @@ namespace aura
    bool system::init_application()
    {
 
-      //if(!m_paurasession->begin_synch(&m_iErrorCode))
-      if(!m_paurasession->begin_synch())
+      //if(!m_psession->begin_synch(&m_iErrorCode))
+      if(!m_psession->begin_synch())
       {
 
          return false;
@@ -802,10 +802,10 @@ namespace aura
             try
             {
 
-               if (pair.m_element2->m_paurasystem == this)
+               if (pair.m_element2->m_psystem == this)
                {
 
-                  pair.m_element2->m_paurasystem = NULL;
+                  pair.m_element2->m_psystem = NULL;
 
                }
 
@@ -1694,25 +1694,21 @@ namespace aura
    bool system::alloc_session()
    {
 
-      if (m_paurasession != NULL)
+      if (m_psession != NULL)
       {
 
          return true;
 
       }
 
-      ::aura::session * paurasession = on_create_session();
+      ::aura::session * psession = on_create_session();
 
-      if(paurasession == NULL)
+      if(psession == NULL)
          return false;
 
-      m_paurasession = paurasession;
+      m_psession = psession;
 
-      m_paxissession = paurasession->m_paxissession;
-
-      m_pbasesession = paurasession->m_pbasesession;
-
-      m_paurasession->construct(this,0);
+      m_psession->construct(this,0);
 
       return true;
 
@@ -1744,7 +1740,7 @@ namespace aura
 
          //paurasession = create_application("application","session",true,pbiasCreation);
 
-         paurasession = m_paurasession; // note (camilo) by the time, assigns always the session "0"
+         paurasession = m_psession; // note (camilo) by the time, assigns always the session "0"
 
          if(paurasession == NULL)
             return NULL;

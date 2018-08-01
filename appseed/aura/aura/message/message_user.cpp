@@ -198,13 +198,13 @@ namespace message
       try
       {
 
-         if(m_pcursor != NULL && m_pauraapp != NULL && m_pauraapp->m_pbasesession != NULL)
+         if(m_pcursor != NULL && m_papp != NULL && m_papp->m_psession != NULL)
          {
 
             Session.set_cursor(m_pcursor);
 
          }
-         else if(m_ecursor != ::visual::cursor_unmodified && m_pauraapp != NULL && m_pauraapp->m_pbasesession != NULL)
+         else if(m_ecursor != ::visual::cursor_unmodified && m_papp != NULL && m_papp->m_psession != NULL)
          {
 
             Session.set_cursor(m_ecursor);

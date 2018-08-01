@@ -29,17 +29,6 @@ namespace core
 
       m_pdocs = create_session_docs();
 
-      m_pcoresession                      = this;
-
-      if(papp->is_system())
-      {
-
-         m_pcoresystem = dynamic_cast< ::core::system * >(papp);
-
-      }
-
-      m_pcoresystem->m_pcoresession       = this;
-
       m_bLicense				               = false;
 
       m_strAppName                        = "bergedge";
@@ -404,7 +393,7 @@ namespace core
 
       }
 
-      papp->m_pcoreapp->::object::handle(pcreate);
+      papp->::object::handle(pcreate);
 
       return true;
 
@@ -414,7 +403,7 @@ namespace core
    session::run_application::run_application()
    {
 
-      m_pauraapp = NULL;
+      m_papp = NULL;
 
       m_puiParent = NULL;
 
@@ -707,7 +696,7 @@ namespace core
 
       ::aura::application * papp = NULL;
 
-      if(m_pbasesession->m_mapApplication.Lookup(string(pszAppId),papp))
+      if(m_psession->m_mapApplication.Lookup(string(pszAppId),papp))
       {
 
          return papp;
@@ -769,7 +758,7 @@ namespace core
 
          }
 
-         m_pbasesession->m_mapApplication.set_at(string(pszAppId), papp);
+         m_psession->m_mapApplication.set_at(string(pszAppId), papp);
 
          return papp;
 
@@ -842,7 +831,7 @@ namespace core
 
       ::aura::application * papp = NULL;
 
-      if(m_pbasesession->m_mapApplication.Lookup(string(pszAppId), papp) && papp != NULL)
+      if(m_psession->m_mapApplication.Lookup(string(pszAppId), papp) && papp != NULL)
       {
 
          //sp(::bergedge::pane_view) ppaneview = get_document()->get_typed_view < ::bergedge::pane_view >();
@@ -949,7 +938,7 @@ namespace core
    ::visual::cursor * session::get_default_cursor()
    {
 
-      return System.visual().get_cursor(m_pbasesession->m_ecursorDefault);
+      return System.visual().get_cursor(m_psession->m_ecursorDefault);
 
    }
 
@@ -967,7 +956,7 @@ namespace core
 
       retry_single_lock rsl(m_pmutex,millis(84),millis(84));
 
-      if(papp == NULL || papp->m_pcoreapp == NULL)
+      if(papp == NULL || is_null_ref(App(papp)))
          return;
 
       Session.m_appptra.add_unique(papp);

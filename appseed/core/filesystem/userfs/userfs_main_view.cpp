@@ -27,7 +27,7 @@ namespace userfs
          return;
 
 //      sp(application) papp =  (get_app());
-      //papp->m_pcoreapp->m_pmainview = this;
+      //papp->m_pmainview = this;
       
       SetPaneCount(2);
       

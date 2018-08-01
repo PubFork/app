@@ -30,7 +30,7 @@ namespace user
       System.factory().creatable_small < ::user::message_queue >();
       System.factory().creatable_small < ::user::simple_view >();
 
-      if(m_pauraapp->is_system())
+      if(m_papp->is_system())
       {
 
          System.factory().creatable_small < keyboard_layout >();
@@ -220,14 +220,14 @@ namespace user
 //
 //      }
 //
-//      if (papp->m_pbasesession == NULL)
+//      if (papp->m_psession == NULL)
 //      {
 //
 //         return NULL;
 //
 //      }
 //
-//      if (papp->m_pbasesession->m_puser == NULL)
+//      if (papp->m_psession->m_puser == NULL)
 //      {
 //
 //         return NULL;

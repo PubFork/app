@@ -568,10 +568,10 @@ namespace metrowin
    interaction_impl::~interaction_impl()
    {
 
-      if(m_pauraapp != NULL && m_pauraapp->m_paurasession != NULL && m_pauraapp->m_paurasession->m_pwindowmap != NULL)
+      if(m_papp != NULL && m_papp->m_psession != NULL && m_papp->m_psession->m_pwindowmap != NULL)
       {
 
-         m_pauraapp->m_paurasession->m_pwindowmap->m_map.remove_key((int_ptr)(void *)get_handle());
+         m_papp->m_psession->m_pwindowmap->m_map.remove_key((int_ptr)(void *)get_handle());
 
       }
 
@@ -1375,7 +1375,7 @@ namespace metrowin
 
       if(pbase->m_id == WM_TIMER)
       {
-//         m_pui->m_pauraapp->step_timer();
+//         m_pui->m_papp->step_timer();
       }
       else if(pbase->m_id == WM_LBUTTONDOWN)
       {
@@ -1410,17 +1410,17 @@ namespace metrowin
 
 
          //Application.m_ptCursor = pmouse->m_pt;
-         //if(m_paxisapp->m_pcoreapp->m_psession != NULL)
+         //if(m_papp->m_pcoreapp->m_psession != NULL)
          //{
          //   Session.m_ptCursor = pmouse->m_pt;
          //}
-         //if(m_pui != NULL && m_pui->m_paxisapp->m_pcoreapp->m_psession != NULL && m_pui->m_paxisapp->m_pcoreapp->m_psession != m_paxisapp->m_pcoreapp->m_psession)
+         //if(m_pui != NULL && m_pui->m_papp->m_pcoreapp->m_psession != NULL && m_pui->m_papp->m_pcoreapp->m_psession != m_papp->m_pcoreapp->m_psession)
          //{
-         //   Sess(m_pui->m_paxisapp->m_pcoreapp->m_psession).m_ptCursor = pmouse->m_pt;
+         //   Sess(m_pui->m_papp->m_pcoreapp->m_psession).m_ptCursor = pmouse->m_pt;
          //}
 
          //sp(base_session) psession;
-         //if(m_paxisapp->m_pcoreapp->is_system())
+         //if(m_papp->m_pcoreapp->is_system())
          //{
          //   psession = System.query_session(0);
          //   if(psession != NULL && psession->m_bSessionSynchronizedCursor)
@@ -1443,10 +1443,10 @@ namespace metrowin
             {
                m_pui->GetWindowRect(rectWindow);
             }
-            if(m_pauraapp->m_paurasystem->get_monitor_count() > 0)
+            if(m_papp->m_psystem->get_monitor_count() > 0)
             {
                rect rcMonitor;
-               m_pauraapp->m_paurasystem->get_monitor_rect(0,&rcMonitor);
+               m_papp->m_psystem->get_monitor_rect(0,&rcMonitor);
                if(rectWindow.left >= rcMonitor.left)
                   pmouse->m_pt.x += (LONG)rectWindow.left;
                if(rectWindow.top >= rcMonitor.top)
@@ -3619,8 +3619,8 @@ return TRUE;
       //  m_pui->m_iModalCount++;
 
       //m_pui->m_threadptraModal.add(::get_thread());
-      ::aura::application * pappThis1 = dynamic_cast <::aura::application *> (m_pauraapp);
-      ::aura::application * pappThis2 = dynamic_cast <::aura::application *> (m_pauraapp);
+      ::aura::application * pappThis1 = dynamic_cast <::aura::application *> (m_papp);
+      ::aura::application * pappThis2 = dynamic_cast <::aura::application *> (m_papp);
       // acquire and dispatch messages until the modal state is done
       MESSAGE msg;
       for(;;)
@@ -3722,9 +3722,9 @@ return TRUE;
          while(::PeekMessage(&msg,NULL,NULL,NULL,PM_NOREMOVE) != FALSE);
 
 
-         if(m_pauraapp != NULL)
+         if(m_papp != NULL)
          {
-//            m_pauraapp->step_timer();
+//            m_papp->step_timer();
          }
          if(!ContinueModal())
             goto ExitModal;
@@ -3907,8 +3907,8 @@ ExitModal:
    {
       /*bool b;
       bool * pb = &b;
-      if(m_paxisapp->m_pcoreapp->s_ptwf != NULL)
-      pb = &m_paxisapp->m_pcoreapp->s_ptwf->m_bProDevianMode;
+      if(m_papp->m_pcoreapp->s_ptwf != NULL)
+      pb = &m_papp->m_pcoreapp->s_ptwf->m_bProDevianMode;
       keeper < bool > keepOnDemandDraw(pb, false, *pb, true);
       */
       //ASSERT(::WinIsWindow(get_handle()));
@@ -6369,7 +6369,7 @@ lCallNextHook:
    void interaction_impl::_001BaseWndInterfaceMap()
    {
 
-      m_pauraapp->m_paurasession->m_pwindowmap->set((int_ptr)(void *)get_handle(),this);
+      m_papp->m_psession->m_pwindowmap->set((int_ptr)(void *)get_handle(),this);
 
    }
 

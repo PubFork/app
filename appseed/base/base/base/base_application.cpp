@@ -24,47 +24,6 @@ namespace base
 
 #endif
 
-      if(m_pauraapp != NULL)
-      {
-
-         m_paxisapp              = m_pauraapp->m_paxisapp;
-
-      }
-
-      m_pbaseapp                 = this;
-
-      if(m_pauraapp != NULL)
-      {
-
-         m_paxissystem           = m_pauraapp->m_paxissystem;
-
-         if(m_pauraapp->m_pbasesession == NULL && m_paxissystem != NULL)
-         {
-
-            m_pbasesession       = m_paxissystem->m_pbasesession;
-
-         }
-         else
-         {
-
-            m_pbasesession       = m_pauraapp->m_pbasesession;
-
-         }
-
-#ifdef WINDOWS
-
-         m_hinstance             = m_pauraapp->m_hinstance;
-
-#endif
-
-      }
-      else
-      {
-
-         m_paxissystem           = NULL;
-
-      }
-
       m_bBaseProcessInitialize         = false;
       m_bBaseProcessInitializeResult   = false;
 
@@ -508,14 +467,14 @@ namespace base
 //   ::user::style_base * application::userstyle()
 //   {
 //
-//      if (m_pbasesession->m_puserstyle == NULL)
+//      if (m_psession->m_puserstyle == NULL)
 //      {
 //
-//         m_pbasesession->defer_create_user_style(preferred_userschema());
+//         m_psession->defer_create_user_style(preferred_userschema());
 //
 //      }
 //
-//      return m_pbasesession->m_puserstyle;
+//      return m_psession->m_puserstyle;
 //
 //   }
 //
@@ -573,10 +532,10 @@ namespace base
             try
             {
 
-               if(pair.m_element2->m_pbaseapp == this)
+               if(pair.m_element2->m_papp == this)
                {
 
-                  pair.m_element2->m_pbaseapp = NULL;
+                  pair.m_element2->m_papp = NULL;
 
                }
 

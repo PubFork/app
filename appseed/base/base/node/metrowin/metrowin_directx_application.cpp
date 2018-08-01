@@ -450,9 +450,9 @@ namespace metrowin
 
       m_pdxi = new directx_interaction(m_psystem);
 
-      m_psystem->m_pbasesystem->m_possystemwindow->m_pui = m_pdxi;
+      m_psystem->m_psystem->m_possystemwindow->m_pui = m_pdxi;
 
-      m_psystem->m_pbasesystem->m_possystemwindow->m_pwindow = this;
+      m_psystem->m_psystem->m_possystemwindow->m_pwindow = this;
 
       m_papp = m_psystem;
 
@@ -471,8 +471,8 @@ namespace metrowin
 
       m_psystem->startup_command(pcommand);
 
-//      m_psystem->m_paxisapp   = m_psystem;
-      //    m_psystem->m_psystem    = m_paxissystem;
+//      m_psystem->m_papp   = m_psystem;
+      //    m_psystem->m_psystem    = m_psystem;
 
 
 
@@ -1088,7 +1088,7 @@ namespace metrowin
    directx_application_source::directx_application_source(::base::system * paxissystem, const string & strId)
    {
 
-      m_pbasesystem     = paxissystem;
+      m_psystem     = paxissystem;
 
       m_strId           = strId;
 
@@ -1098,7 +1098,7 @@ namespace metrowin
    Windows::ApplicationModel::Core::IFrameworkView^ directx_application_source::CreateView()
    {
 
-      return ref new directx_application(m_pbasesystem,m_strId);
+      return ref new directx_application(m_psystem,m_strId);
 
    }
 

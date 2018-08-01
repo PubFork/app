@@ -35,7 +35,7 @@ namespace helloworld
 
 
 #undef App
-#define App(pbaseapp) (pbaseapp->m_pcoreapp->cast_app < ::helloworld::application > ())
+#define App(papp) (*papp->cast < ::helloworld::application > ())
 
 
 #include "helloworld_render.h"

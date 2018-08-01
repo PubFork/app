@@ -74,22 +74,14 @@ typedef sp(::user::interaction_impl) window_sp;
 
 
 
-#undef CaSys
 #undef Sys
-#define CaSys(pca) (*pca->m_pauraapp->m_paxissystem)
-#define Sys(paxisapp) (*paxisapp->m_paxissystem)
-#define threadSystem (System)
+#define Sys(papp) (*dynamic_cast < ::axis::system *> (papp->m_psystem))
 
 #undef Sess
-#define Sess(paxisapp) (*paxisapp->m_paxissession)
-//#define Session (Sess(m_pauraapp))
-//#define Sess(paxisapp) (*paxisapp->m_pcoresession)
-//#define Session (Sess(m_pauraapp))
+#define Sess(papp) (*dynamic_cast < ::axis::session *> (papp->m_psession))
 
 #undef App
-#undef Application
-#define App(paxisapp) (*paxisapp->m_paxisapp)
-#define Application (App(m_pauraapp->m_paxisapp))
+#define App(papp) (*dynamic_cast < ::axis::application *> (papp))
 
 
 

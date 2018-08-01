@@ -81,7 +81,7 @@ namespace draw2d_direct2d
 CLASS_DECL_EXPORT void draw2d_factory_exchange(::aura::application * papp)
 {
 
-   papp->m_paurasystem->m_pDraw2dFactoryExchange = new ::draw2d_direct2d::factory_exchange(papp);
+   papp->m_psystem->m_pDraw2dFactoryExchange = new ::draw2d_direct2d::factory_exchange(papp);
 
 }
 
@@ -89,7 +89,7 @@ CLASS_DECL_EXPORT void draw2d_factory_exchange(::aura::application * papp)
 void ca2_factory_exchange(::aura::application * papp)
 {
 
-   papp->m_paurasystem->m_pDraw2dFactoryExchange = new ::draw2d_direct2d::factory_exchange(papp);
+   papp->m_psystem->m_pDraw2dFactoryExchange = new ::draw2d_direct2d::factory_exchange(papp);
 
 }
 

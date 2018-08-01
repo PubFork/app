@@ -32,7 +32,7 @@ namespace colorertake5
 
       istream >> str;
 
-      xml::document hbasedoc(m_pauraapp);
+      xml::document hbasedoc(m_papp);
 
       if(!hbasedoc.load(str))
       {

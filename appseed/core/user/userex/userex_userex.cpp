@@ -1743,10 +1743,10 @@ finished:
             try
             {
 
-               if(pair.m_element2->m_pcoresession == this)
+               if(pair.m_element2->m_psession == this)
                {
 
-                  pair.m_element2->m_pcoresession = NULL;
+                  pair.m_element2->m_psession = NULL;
 
                }
 

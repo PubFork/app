@@ -22,7 +22,7 @@ namespace helloaxis
 
 
 #undef App
-#define App(pbaseapp) (pbaseapp->m_paxisapp->cast_app < ::helloaxis::application > ())
+#define App(pbaseapp) (pbaseapp->m_papp->cast_app < ::helloaxis::application > ())
 
 
 #include "helloaxis_render.h"

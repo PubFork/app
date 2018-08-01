@@ -25,11 +25,11 @@ namespace simpledb
    bool simpledb::InitializeDataCentral()
    {
 
-      if(m_pauraapp->is_system())
+      if(m_papp->is_system())
       {
       }
 
-      m_pserver = new db_server(m_pauraapp);
+      m_pserver = new db_server(m_papp);
 
 
       m_pserver->add_client(this);
@@ -49,7 +49,7 @@ namespace simpledb
       {
          data_set("&data_source=local&locale", lpcsz);
       }
-      m_pauraapp->m_pbasesession->on_set_locale(lpcsz, actioncontext);
+      m_papp->m_psession->on_set_locale(lpcsz, actioncontext);
    }
 
    void simpledb::on_set_schema(const char * lpcsz, ::action::context actioncontext)
@@ -58,7 +58,7 @@ namespace simpledb
       {
          data_set("&data_source=local&schema", lpcsz);
       }
-      m_pauraapp->m_pbasesession->on_set_schema(lpcsz,actioncontext);
+      m_papp->m_psession->on_set_schema(lpcsz,actioncontext);
    }
 
    bool simpledb::FinalizeDataCentral()
@@ -80,7 +80,7 @@ namespace simpledb
       {
       }
 
-      if(m_pauraapp->is_system())
+      if(m_papp->is_system())
       {
 
          m_pserver = NULL;
@@ -92,16 +92,16 @@ namespace simpledb
    bool simpledb::init2()
    {
 
-      if(m_pauraapp->m_pcoreapp->handler()->m_varTopicQuery["locale"].get_count() > 0)
+      if(m_papp->m_pcoreapp->handler()->m_varTopicQuery["locale"].get_count() > 0)
       {
-         string str = m_pauraapp->m_pcoreapp->handler()->m_varTopicQuery["locale"].stra()[0];
-         m_pauraapp->m_pbasesession->set_locale(str,::action::source::database());
+         string str = m_papp->m_pcoreapp->handler()->m_varTopicQuery["locale"].stra()[0];
+         m_papp->m_psession->set_locale(str,::action::source::database());
       }
 
-      if(m_pauraapp->m_pcoreapp->handler()->m_varTopicQuery["schema"].get_count() > 0)
+      if(m_papp->m_pcoreapp->handler()->m_varTopicQuery["schema"].get_count() > 0)
       {
-         string str = m_pauraapp->m_pcoreapp->handler()->m_varTopicQuery["schema"].stra()[0];
-         m_pauraapp->m_pbasesession->set_schema(str,::action::source::database());
+         string str = m_papp->m_pcoreapp->handler()->m_varTopicQuery["schema"].stra()[0];
+         m_papp->m_psession->set_schema(str,::action::source::database());
       }
 
 //      if(&AppUser(this) == NULL)
@@ -109,7 +109,7 @@ namespace simpledb
 
       if(!InitializeDataCentral())
       {
-         m_pauraapp->m_pcoreapp->simple_message_box(NULL, "Could not initialize data central");
+         m_papp->m_pcoreapp->simple_message_box(NULL, "Could not initialize data central");
          return false;
       }
 
@@ -126,10 +126,10 @@ namespace simpledb
 //      ::core::application_request * prequest = System.get_application_request();
 
 
-      m_pauraapp->m_pbasesession->fill_locale_schema(*m_pauraapp->m_pbasesession->str_context()->m_plocaleschema);
+      m_papp->m_psession->fill_locale_schema(*m_papp->m_psession->str_context()->m_plocaleschema);
 
 
-      //if(!m_pauraapp->m_pcoreapp->is_installing() && !m_pauraapp->m_pcoreapp->is_unstalling() && !m_pauraapp->m_pcoreapp->is_system())
+      //if(!m_papp->m_pcoreapp->is_installing() && !m_papp->m_pcoreapp->is_unstalling() && !m_papp->m_pcoreapp->is_system())
       //{
 
       //   set_keyboard_layout(NULL, ::action::source::system());
@@ -216,7 +216,7 @@ namespace simpledb
       if(actioncontext.is_user_source())
       {
 
-         if(Sess(m_pauraapp).safe_get_user() != NULL)
+         if(Sess(m_papp).safe_get_user() != NULL)
          {
 
             data_set("keyboard_layout", pszPath);

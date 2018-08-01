@@ -115,7 +115,7 @@ namespace plugin
 
          psystem->m_bDoNotExitIfNoApplications = true;
 
-         m_phost->m_pauraapp = psystem;
+         m_phost->m_papp = psystem;
 
          mlSystem.unlock();
 

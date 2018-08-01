@@ -53,18 +53,18 @@ namespace http
       if ((bool)set["optional_ca2_sessid"])
       {
          if (Session.fontopus()->m_puser != NULL)
-            set["user"] = get_app()->m_paurasession->fontopus()->get_user(true,pszUrl);
+            set["user"] = get_app()->m_psession->fontopus()->get_user(true,pszUrl);
       }
       else if (get_app() == NULL ||
-               get_app()->m_paurasession == NULL
-               || get_app()->m_paurasession->fontopus() == NULL)
+               get_app()->m_psession == NULL
+               || get_app()->m_psession->fontopus() == NULL)
       {
 
          return set;
       }
       else
       {
-         set["user"] = get_app()->m_paurasession->fontopus()->get_user(true,pszUrl);
+         set["user"] = get_app()->m_psession->fontopus()->get_user(true,pszUrl);
       }
 
       return set;

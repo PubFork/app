@@ -43,7 +43,7 @@ namespace sphere
 
 
 #undef App
-#define App(pcaapp) (pcaapp->cast_app < ::sphere::application > ())
+#define App(papp) (*papp->cast < ::sphere::application > ())
 
 
 #include "app/appseed/sphere/charguess/charguess.h"

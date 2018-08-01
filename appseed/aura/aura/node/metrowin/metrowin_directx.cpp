@@ -16,7 +16,7 @@ namespace metrowin
 
 
    directx_base::directx_base(::aura::application * papp):
-      m_pauraapp(papp),
+      m_papp(papp),
       m_dpi(-1.0f),
       m_mutexDc(papp)
    {
@@ -74,7 +74,7 @@ namespace metrowin
 
       m_bInitialized = true;
 
-      //m_dib.alloc(m_pauraapp->allocer());
+      //m_dib.alloc(m_papp->allocer());
       //m_dib->create(1000, 1000);
 
 
@@ -242,7 +242,7 @@ namespace metrowin
       {
          OnChangeDpi(dpi);
 
-         //         ::aura::system::g_p->m_paurasystem->m_possystemwindow->m_bWindowSizeChange = true;
+         //         ::aura::system::g_p->m_psystem->m_possystemwindow->m_bWindowSizeChange = true;
 
       }));
 
@@ -279,7 +279,7 @@ namespace metrowin
       {
          OnWindowSizeChange();
 
-//         ::aura::system::g_p->m_paurasystem->m_possystemwindow->m_bWindowSizeChange = true;
+//         ::aura::system::g_p->m_psystem->m_possystemwindow->m_bWindowSizeChange = true;
 
       }));
 

@@ -189,21 +189,14 @@ namespace core
 
 
 
-#undef App
-#define App(pbaseapp) CoreApp(pbaseapp)
+#undef Sys
+#define Sys(papp) (*dynamic_cast < ::core::system *> (papp->m_psystem))
 
 #undef Sess
-#define Sess(pauraapp) (*pauraapp->m_pcoresession)
+#define Sess(papp) (*dynamic_cast < ::core::session *> (papp->m_psession))
 
-#undef CaSys
-#define CaSys(pca) (*pca->m_pauraapp->m_pcoresystem)
-
-#undef Sys
-#define Sys(pbaseapp) (*pbaseapp->m_pcoresystem)
-
-#define CoreApp(pbaseapp) (*pbaseapp->m_pcoreapp)
-#define CoreApplication (CoreApp(m_pauraapp))
-
+#undef App
+#define App(papp) (*dynamic_cast < ::core::application *> (papp))
 
 class job;
 

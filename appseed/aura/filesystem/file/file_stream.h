@@ -233,8 +233,8 @@ public:
    inline stream & operator << (var & var) { write(var); return *this; }
    inline stream & operator << (property & property) { write(property); return *this; }
    inline stream & operator << (string & str) { write(str); return *this; }
-   inline stream & operator << (object * pobject) { write(pobject); return *this; }
-   inline stream & operator << (object & object) { write(object); return *this; }
+   inline stream & operator << (simple_object * pobject) { write(pobject); return *this; }
+   inline stream & operator << (simple_object & object) { write(object); return *this; }
    inline stream & operator << (e_str_flag eflag) { m_estrflag = (e_str_flag)((int)m_estrflag | (int)eflag); return *this; }
    inline stream & operator << (::file::set_width & w)
    {
@@ -283,8 +283,8 @@ public:
    inline stream & operator >> (var             & var) { read(var); return *this; }
    inline stream & operator >> (property        & property) { read(property); return *this; }
    inline stream & operator >> (string          & str) { read(str); return *this; }
-   inline stream & operator >> (object * pobject) { read(pobject); return *this; }
-   inline stream & operator >> (object & object) { read(object); return *this; }
+   inline stream & operator >> (simple_object * pobject) { read(pobject); return *this; }
+   inline stream & operator >> (simple_object & object) { read(object); return *this; }
 
    template < typename TYPE >
    void blt(const TYPE & t)
@@ -367,8 +367,8 @@ public:
    virtual void write(var & var);
    virtual void write(property & property);
    virtual void write(string & str);
-   virtual void write(object * pobject);
-   virtual void write(object & object);
+   virtual void write(simple_object * pobject);
+   virtual void write(simple_object & object);
 
    inline file_position_t tellp();
    inline stream & seekp(file_position_t position);
@@ -408,8 +408,8 @@ public:
    virtual void read(var & var);
    virtual void read(property & property);
    virtual void read(string & str);
-   virtual void read(object * pobject);
-   virtual void read(object & object);
+   virtual void read(simple_object * pobject);
+   virtual void read(simple_object & object);
 
    virtual stream & getline(char * sz, strsize n);
    virtual int get();
@@ -455,17 +455,33 @@ public:
    virtual bool is_storing();
 
 
-   virtual void load(::file::path path, object & object, UINT nOpenFlags = ::file::type_binary | ::file::mode_read | ::file::share_deny_write);
+   virtual void load(::file::path path, simple_object & object, UINT nOpenFlags = ::file::type_binary | ::file::mode_read | ::file::share_deny_write);
 
-   virtual void save(::file::path path, object & object, UINT nOpenFlags = ::file::type_binary | ::file::mode_write | ::file::mode_truncate | ::file::mode_create | ::file::defer_create_directory | ::file::share_exclusive);
+   virtual void save(::file::path path, simple_object & object, UINT nOpenFlags = ::file::type_binary | ::file::mode_write | ::file::mode_truncate | ::file::mode_create | ::file::defer_create_directory | ::file::share_exclusive);
 
-   virtual void stream_object(object & object);
+   virtual void load();
 
-   virtual void stream_file(::file::path path, ::object & object);
+   virtual void save();
 
-   virtual void stream_link(string strLink, object & object);
+   virtual void load_file(::file::path path, simple_object & object, UINT nOpenFlags = ::file::type_binary | ::file::mode_read | ::file::share_deny_write);
 
-   virtual void stream_link(object & object);
+   virtual void save_file(::file::path path, simple_object & object, UINT nOpenFlags = ::file::type_binary | ::file::mode_write | ::file::mode_truncate | ::file::mode_create | ::file::defer_create_directory | ::file::share_exclusive);
+
+   virtual void load_file();
+
+   virtual void save_file();
+
+   virtual var get_var_file();
+
+   virtual ::file::path get_file_path();
+
+   virtual void stream_object(simple_object & object);
+
+   virtual void stream_file(::file::path path, ::simple_object & object);
+
+   virtual void stream_link(string strLink, ::object & object);
+
+   virtual void stream_link(::object & object);
 
    virtual ::file::path get_link_path(string strLink);
 
@@ -719,9 +735,9 @@ public:
 
    }
 
-   virtual void operator()(::object & object);
+   virtual void operator()(::simple_object & object);
 
-   virtual void operator()(::object * pserializable);
+   virtual void operator()(::simple_object * pserializable);
 
    virtual string get_object_type_id(::object * pelement);
    virtual ::object * create_object_from_type_id(string strType);

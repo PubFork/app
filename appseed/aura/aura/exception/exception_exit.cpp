@@ -89,7 +89,7 @@ bool exit_exception::post_quit(::thread * pthread)
       if(papp == NULL)
       {
 
-         papp = pthread->m_pauraapp;
+         papp = pthread->m_papp;
 
       }
 
@@ -114,7 +114,7 @@ bool exit_exception::post_quit(::thread * pthread)
       if(psession == NULL)
       {
 
-         psession = papp->m_paurasession;
+         psession = papp->m_psession;
 
       }
 
@@ -139,7 +139,7 @@ bool exit_exception::post_quit(::thread * pthread)
       if(psystem == NULL)
       {
 
-         psystem = papp->m_paurasystem;
+         psystem = papp->m_psystem;
 
       }
 

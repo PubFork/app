@@ -256,7 +256,7 @@ namespace user
    public:
 
       show() :
-      show(get_app())
+         show(get_app())
       {
 
       }
@@ -352,6 +352,24 @@ namespace user
             m_puiViewNotify->on_control_event(pevent);
 
          }
+
+         ::user::interaction * puiParent = GetParent();
+
+         if (puiParent != NULL)
+         {
+
+            puiParent->on_control_event(pevent);
+
+            if (pevent->m_bRet)
+            {
+
+               return;
+
+            }
+
+         }
+
+
 
       }
 

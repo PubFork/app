@@ -157,21 +157,21 @@ void db_str_sync_queue::run()
          {
 
 
-            if (m_pauraapp == NULL)
+            if (m_papp == NULL)
             {
 
                break;
 
             }
 
-            if (m_pauraapp->m_paurasession == NULL)
+            if (m_papp->m_psession == NULL)
             {
 
                break;
 
             }
 
-            if (m_pauraapp->m_paurasession->m_pfontopus == NULL)
+            if (m_papp->m_psession->m_pfontopus == NULL)
             {
 
                break;
@@ -335,6 +335,10 @@ bool db_str_set::load(const ::database::key & key, string & strValue)
 
    db_str_set_core * pcore = (db_str_set_core *)m_pcore->m_ptopthis;
 
+   string strKey = key.m_strDataKey;
+
+   strKey.replace("\\", "/");
+
    if (m_pcore->m_pdataserver == NULL)
    {
 
@@ -353,7 +357,7 @@ bool db_str_set::load(const ::database::key & key, string & strValue)
 
       sl.lock();
 
-      auto ppair = pcore->m_map.PLookup(key.m_strDataKey);
+      auto ppair = pcore->m_map.PLookup(strKey);
 
       if (ppair != NULL && ppair->m_element2.m_dwTimeout > get_tick_count())
       {
@@ -397,7 +401,7 @@ bool db_str_set::load(const ::database::key & key, string & strValue)
 
          strUrl = "https://ca2.cc/api/account/str_set_load?key=";
 
-         strUrl += System.url().url_encode(key.m_strDataKey);
+         strUrl += System.url().url_encode(strKey);
 
          set["user"] = &ApplicationUser;
          //set["timeout"] = 00;
@@ -428,7 +432,7 @@ bool db_str_set::load(const ::database::key & key, string & strValue)
 
          sl.lock();
 
-         pcore->m_map.set_at(key.m_strDataKey, stritem);
+         pcore->m_map.set_at(strKey, stritem);
 
       }
 
@@ -441,7 +445,7 @@ bool db_str_set::load(const ::database::key & key, string & strValue)
       try
       {
 
-         strValue = pcore->m_psimpledbUser->query_item("SELECT `value` FROM fun_user_str_set WHERE user = '" + pcore->m_strUser + "' AND `key` = '" + pcore->m_psimpledbUser->real_escape_string(key.m_strDataKey) + "'");
+         strValue = pcore->m_psimpledbUser->query_item("SELECT `value` FROM fun_user_str_set WHERE user = '" + pcore->m_strUser + "' AND `key` = '" + pcore->m_psimpledbUser->real_escape_string(strKey) + "'");
 
          return true;
 
@@ -476,7 +480,7 @@ bool db_str_set::load(const ::database::key & key, string & strValue)
 
          if (pdb->setErr(sqlite3_prepare_v2(
                          (sqlite3 *)pdb->getHandle(),
-                         "select value FROM stringtable WHERE id = :id;",
+                         "select `value` FROM `stringtable` WHERE `id` = :id;",
                          -1,
                          &pcore->m_pstmtSelect, NULL)) != SQLITE_OK)
          {
@@ -495,10 +499,9 @@ bool db_str_set::load(const ::database::key & key, string & strValue)
 
       }
 
-      //string strKey = pdb->escape(key.m_strDataKey);
-      string strKey = key.m_strDataKey;
+      int iLength = strKey.get_length();
 
-      int res = sqlite3_bind_text(pcore->m_pstmtSelect, pcore->m_iSelectId, strKey, int (strKey.get_length()), SQLITE_TRANSIENT);
+      int res = sqlite3_bind_text(pcore->m_pstmtSelect, pcore->m_iSelectId, strKey, iLength, SQLITE_TRANSIENT);
 
       if (res != SQLITE_OK)
       {
@@ -512,7 +515,12 @@ bool db_str_set::load(const ::database::key & key, string & strValue)
       if (res != SQLITE_ROW)
       {
 
-         return false;
+         var var = pdb->query_item("select `value` FROM stringvalue WHERE `id` = '" + pdb->escape(strKey) + "'");
+
+         if (!(bool)var)
+            return false;
+
+         return var.get_string();
 
       }
 
@@ -521,6 +529,8 @@ bool db_str_set::load(const ::database::key & key, string & strValue)
       strsize iLen = sqlite3_column_bytes(pcore->m_pstmtSelect, 0);
 
       strValue = string(psz, iLen);
+
+      sqlite3_reset(pcore->m_pstmtSelect);
 
    }
 
@@ -532,6 +542,10 @@ bool db_str_set::save(const ::database::key & key, const string & strValue)
 {
 
    db_str_set_core * pcore = (db_str_set_core *)m_pcore->m_ptopthis;
+
+   string strKey = key.m_strDataKey;
+
+   strKey.replace("\\", "/");
 
    if (m_pcore->m_pdataserver == NULL)
    {
@@ -562,7 +576,7 @@ bool db_str_set::save(const ::database::key & key, const string & strValue)
 
          synch_lock sl(m_pmutex);
 
-         pcore->m_map.PLookup(key.m_strDataKey);
+         pcore->m_map.PLookup(strKey);
 
       }
 
@@ -578,7 +592,7 @@ bool db_str_set::save(const ::database::key & key, const string & strValue)
 
          strEscapedValue = m_pcore->db()->get_database()->escape(strValue);
 
-         strEscapedKey = m_pcore->db()->get_database()->escape(key.m_strDataKey);
+         strEscapedKey = m_pcore->db()->get_database()->escape(strKey);
 
       }
 
@@ -670,7 +684,7 @@ bool db_str_set::save(const ::database::key & key, const string & strValue)
 
          synch_lock sl(m_pmutex);
 
-         pcore->m_map.set_at(key.m_strDataKey, stritem);
+         pcore->m_map.set_at(strKey, stritem);
 
       }
       else
@@ -687,7 +701,7 @@ bool db_str_set::save(const ::database::key & key, const string & strValue)
    else if (pcore->m_psimpledbUser != NULL)
    {
 
-      string strSql = "REPLACE INTO fun_user_str_set VALUE('" + pcore->m_strUser + "', '" + pcore->m_psimpledbUser->real_escape_string(key.m_strDataKey) + "', '" + pcore->m_psimpledbUser->real_escape_string(strValue) + "')";
+      string strSql = "REPLACE INTO fun_user_str_set VALUE('" + pcore->m_strUser + "', '" + pcore->m_psimpledbUser->real_escape_string(strKey) + "', '" + pcore->m_psimpledbUser->real_escape_string(strValue) + "')";
 
       TRACE(strSql);
 
@@ -709,7 +723,7 @@ bool db_str_set::save(const ::database::key & key, const string & strValue)
 
       }
 
-      pcore->m_pqueue->queue(key.m_strDataKey, strValue);
+      pcore->m_pqueue->queue(strKey, strValue);
 
       db_str_set_item stritem;
 
@@ -719,7 +733,7 @@ bool db_str_set::save(const ::database::key & key, const string & strValue)
 
       synch_lock sl(m_pmutex);
 
-      pcore->m_map.set_at(key.m_strDataKey, stritem);
+      pcore->m_map.set_at(strKey, stritem);
 
       return true;
 

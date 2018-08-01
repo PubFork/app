@@ -487,7 +487,7 @@ namespace visual
          output_debug_string(str2);
          output_debug_string("| \n");
 
-         ::aura::application * papp = m_p->m_pauraapp;
+         ::aura::application * papp = m_p->m_papp;
          APPTRACE("/--------------------------------");
          APPTRACE("| fastblur::blur");
          APPTRACE("| ");
@@ -600,7 +600,7 @@ namespace visual
             output_debug_string(str2);
             output_debug_string("| \n");
 
-            ::aura::application * papp = m_p->m_pauraapp;
+            ::aura::application * papp = m_p->m_papp;
             APPTRACE("/--------------------------------");
             APPTRACE("| fastblur::blur");
             APPTRACE("| ");
@@ -687,7 +687,7 @@ namespace visual
       output_debug_string(str2);
       output_debug_string("| \n");
 
-      ::aura::application * papp = m_p->m_pauraapp;
+      ::aura::application * papp = m_p->m_papp;
       APPTRACE("/--------------------------------");
       APPTRACE("| fastblur::blur");
       APPTRACE("| ");

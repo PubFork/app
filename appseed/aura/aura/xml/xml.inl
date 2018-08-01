@@ -50,7 +50,7 @@ namespace xml
   //
   //      System.dir().mk(System.dir().name(pszOutput),papp);
   //
-  //      ::file::file_sp fileOut = papp->m_paurasession->file_get_file(pszOutput,::file::mode_create | ::file::type_binary | ::file::mode_write);
+  //      ::file::file_sp fileOut = papp->m_psession->file_get_file(pszOutput,::file::mode_create | ::file::type_binary | ::file::mode_write);
   //
   //      if(fileOut.is_null())
   //         return false;
@@ -68,12 +68,12 @@ namespace xml
   //
   //      System.dir().mk(System.dir().name(pszOutput),papp);
   //
-  //      ::file::file_sp fileOut = papp->m_paurasession->file_get_file(pszOutput,::file::mode_create | ::file::type_binary | ::file::mode_write);
+  //      ::file::file_sp fileOut = papp->m_psession->file_get_file(pszOutput,::file::mode_create | ::file::type_binary | ::file::mode_write);
   //
   //      if(fileOut.is_null())
   //         return false;
   //
-  //      ::file::file_sp fileIn = papp->m_paurasession->file_get_file(lpszInput,::file::type_binary | ::file::mode_read);
+  //      ::file::file_sp fileIn = papp->m_psession->file_get_file(lpszInput,::file::type_binary | ::file::mode_read);
   //
   //      if(fileIn.is_null())
   //         return false;

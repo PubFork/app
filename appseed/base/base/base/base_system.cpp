@@ -123,7 +123,7 @@ namespace base
 
       set_app(this);
 
-      m_pbasesystem = this;
+      m_psystem = this;
 
       if (papp == NULL)
       {
@@ -134,7 +134,7 @@ namespace base
       else
       {
 
-         oprop("parent_system") = papp->m_paxissystem;
+         oprop("parent_system") = papp->m_psystem;
 
       }
 
@@ -759,7 +759,7 @@ error:
 
       sp(::user::interaction) pui;
 
-      ::base::session * psession = m_pbasesession;
+      sp(::base::session) psession = m_psession;
 
       if(psession == NULL)
       {

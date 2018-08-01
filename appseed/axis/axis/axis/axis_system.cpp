@@ -19,8 +19,6 @@ namespace axis
 
       m_datakey.m_bLocalData = true;
 
-      m_paxissystem = this;
-
       g_pszCooperativeLevel = "axis";
 
       m_pDraw2dFactoryExchange = NULL;
@@ -44,7 +42,7 @@ namespace axis
       else
       {
 
-         oprop("parent_system") = papp->m_paxissystem;
+         oprop("parent_system") = papp->m_psystem;
 
       }
 

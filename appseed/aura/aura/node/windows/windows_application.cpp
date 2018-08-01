@@ -73,7 +73,7 @@ namespace aura
    //
    //      //m_pthreadimpl->m_pthread = this;
    //
-   //      m_paurasystem                    =  papp->m_pauraapp->m_paurasystem;
+   //      m_psystem                    =  papp->m_papp->m_psystem;
    //
    //      m_atomApp = m_atomSystemTopic    = NULL;
    //
@@ -324,11 +324,11 @@ namespace aura
 
       // m_pmaininitdata = pauradata;
 
-      if (m_pcommand != NULL && m_pauraapp->is_system())
+      if (m_pcommand != NULL && m_papp->is_system())
       {
 
          ::command::command * pdata = m_pcommand.cast < ::command::command >();
-         if (!m_pauraapp->is_system())
+         if (!m_papp->is_system())
             return false;
 
          ASSERT(::app_core::s_pappcore->m_pmaindata->m_hPrevInstance == NULL);
@@ -341,9 +341,9 @@ namespace aura
          SetErrorMode(SetErrorMode(0) | SEM_FAILCRITICALERRORS | SEM_NOOPENFILEERRORBOX);
 
          m_hinstance = hinstance;
-         m_pauraapp->m_hinstance = hinstance;
+         m_papp->m_hinstance = hinstance;
          System.m_nCmdShow = nCmdShow;
-         m_pauraapp->SetCurrentHandles();
+         m_papp->SetCurrentHandles();
 
       }
 

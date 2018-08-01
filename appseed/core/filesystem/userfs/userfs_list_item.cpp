@@ -14,7 +14,7 @@ namespace userfs
    }
 
    list_item::list_item(const list_item & listitem) :
-      ::object(listitem.m_pauraapp),
+      ::object(listitem.m_papp),
       ::fs::item(listitem),
       m_strName(listitem.m_strName),
       //    m_iImage(listitem.m_iImage),
@@ -25,7 +25,7 @@ namespace userfs
    }
 
    list_item::list_item(const list_item & listitem, index iArrange) :
-      ::object(listitem.m_pauraapp),
+      ::object(listitem.m_papp),
       ::fs::item(listitem),
       m_strName(listitem.m_strName),
 //      m_iImage(listitem.m_iImage),
@@ -108,7 +108,7 @@ namespace userfs
       if(&item == this)
          return *this;
 
-      m_pauraapp  = item.m_pauraapp;
+      m_papp  = item.m_papp;
       m_filepath = item.m_filepath;
       m_filepathEx = item.m_filepathEx;
       m_strName   = item.m_strName;

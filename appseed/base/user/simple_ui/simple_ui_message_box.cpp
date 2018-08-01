@@ -527,9 +527,9 @@ int32_t simple_ui_message_box(oswindow interaction_impl,const char * lpText,cons
 
 #endif
 
-//   if(get_app() == NULL || get_app()->m_pbasesession == NULL
+//   if(get_app() == NULL || get_app()->m_psession == NULL
    //    || &System == NULL || System.get_twf() == NULL)
-   if(get_app() == NULL || get_app()->m_paxissession == NULL || ::user::g_pmapImpl == NULL)
+   if(get_app() == NULL || get_app()->m_psession == NULL || ::user::g_pmapImpl == NULL)
    {
 
       return system_message_box(interaction_impl,lpText,lpCaption,uiFlags);

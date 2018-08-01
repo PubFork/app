@@ -13,38 +13,9 @@ namespace base
       axis::session(papp)
    {
 
-      m_pbasesession = this;
-      
-      if(papp->is_system())
-      {
-         
-         m_pbasesystem = dynamic_cast< ::base::system * > (papp);
-         
-      }
-
-      m_bMatterFromHttpCache = m_pbasesystem->m_bMatterFromHttpCache;
-
-      m_bSystemSynchronizedCursor = m_pbasesystem->m_bSystemSynchronizedCursor;
-
-      m_bSystemSynchronizedScreen = m_pbasesystem->m_bSystemSynchronizedScreen;
-
       m_iMainMonitor = -1;
 
       m_puiCapture = NULL;
-
-#ifdef WINDOWS
-
-      if (m_hinstance == NULL)
-      {
-
-         m_hinstance = m_pauraapp->m_hinstance;
-
-      }
-
-#endif
-
-
-
 
       m_puiMouseMoveCapture = NULL;
 
@@ -62,7 +33,7 @@ namespace base
 
       m_puserstrcontext = NULL;
 
-      //m_paxissystem->m_basesessionptra.add_unique(this);
+      //m_psystem->m_basesessionptra.add_unique(this);
 
 //      m_puserstyle = NULL;
 
@@ -203,10 +174,10 @@ namespace base
             try
             {
 
-               if (pair.m_element2->m_pbasesession == this)
+               if (pair.m_element2->m_psession == this)
                {
 
-                  pair.m_element2->m_pbasesession = NULL;
+                  pair.m_element2->m_psession = NULL;
 
                }
 

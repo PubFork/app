@@ -47,7 +47,7 @@ namespace core
 
 
    application::application() :
-      ::object(this), // start m_pauraapp as this for constructor referencing this app
+      ::object(this), // start m_papp as this for constructor referencing this app
       thread(NULL)
    {
 
@@ -59,7 +59,7 @@ namespace core
 
       m_pmainpane = NULL;
 
-      if (m_pauraapp == NULL)
+      if (m_papp == NULL)
       {
          set_app(this);
       }
@@ -75,8 +75,6 @@ namespace core
       m_iResourceId = 8001;
 
       ::aura::profiler::initialize();
-
-      m_pcoreapp = this;
 
       m_pwndMain = NULL;
 
@@ -538,35 +536,6 @@ namespace core
    void application::term_application()
    {
 
-      try
-      {
-
-         for(auto & pair : System.m_appmap)
-         {
-
-            try
-            {
-
-               if(pair.m_element2->m_pcoreapp == this)
-               {
-
-                  pair.m_element2->m_pcoreapp = NULL;
-
-               }
-
-            }
-            catch(...)
-            {
-
-            }
-
-         }
-
-      }
-      catch(...)
-      {
-
-      }
 
       try
       {
@@ -1785,7 +1754,7 @@ namespace core
    application* papp = &System;
    if (papp != NULL)
    {
-   return papp->m_pcoreapp->DoMessageBox(lpszText, nType, nIDHelp);
+   return papp->DoMessageBox(lpszText, nType, nIDHelp);
    }
    else
    {
@@ -2254,9 +2223,9 @@ namespace core
          puiParent = dynamic_cast < ::user::interaction * > (pcreate->m_spApplicationBias->m_puiParent);
       }
 
-      //if(puiParent == NULL && m_pbasesession != NULL && m_pbasesession->m_pcoresession != NULL && !pcreate->m_bClientOnly
-      if (puiParent == NULL && m_pbasesession != NULL && m_pbasesession->m_pcoresession != NULL
-            && !pcreate->m_bOuterPopupAlertLike && m_pbasesession->m_pcoresession != this)
+      //if(puiParent == NULL && m_psession != NULL && m_psession->m_psession != NULL && !pcreate->m_bClientOnly
+      if (puiParent == NULL && m_psession != NULL && m_psession != NULL
+            && !pcreate->m_bOuterPopupAlertLike && m_psession != dynamic_cast < session * > (this))
       {
          puiParent = Session.get_request_parent_ui(pinteraction, pcreate);
       }
@@ -3001,7 +2970,7 @@ namespace core
 
    papp = System.m_appptra(i);
 
-   if(papp->m_pcoreapp->m_strAppName == pszAppId)
+   if(papp->m_strAppName == pszAppId)
    {
    bFound = true;
    break;
@@ -3023,7 +2992,7 @@ namespace core
 
    try
    {
-   if(papp->m_pcoreapp->is_running())
+   if(papp->is_running())
    {
    bRunning = true;
    }
@@ -3120,7 +3089,7 @@ namespace core
 
    //   ::aura::application * papp = (pbaseapp);
 
-   //   if(!papp->m_pcoreapp->start_application(bSynch,pbias))
+   //   if(!papp->start_application(bSynch,pbias))
    //   {
    //      try
    //      {

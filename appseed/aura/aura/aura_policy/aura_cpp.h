@@ -731,21 +731,17 @@ namespace html
 #define SCAST_REF(TYPE, rtarget, psource) TYPE & rtarget = *(dynamic_cast < TYPE * > (psource))
 
 
-#define CaSys(pca) (*pca->m_pauraapp->m_paurasystem)
-#define Sys(pauraapp) (*pauraapp->m_paurasystem)
+#define Sys(papp) (*papp->m_psystem)
 #define System (Sys(get_app()))
-#define threadSystem (System)
 
-
-#define Sess(pauraapp) (*pauraapp->m_paurasession)
+#define Sess(papp) (*papp->m_psession)
 #define Session (Sess(get_app()))
 
-
 #undef App
-#define App(pauraapp) (*pauraapp)
+#define App(papp) (*papp)
 #define Application (App(get_app()))
 
-#define AppUser(pauraapp) (*pauraapp->m_paurasession->fontopus()->get_user())
+#define AppUser(pauraapp) (*pauraapp->m_psession->fontopus()->get_user())
 #define ApplicationUser (AppUser(get_app()))
 
 

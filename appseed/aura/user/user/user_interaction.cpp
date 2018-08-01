@@ -1157,10 +1157,10 @@ restart:
       try
       {
 
-         if (m_pauraapp != NULL && m_pauraapp->m_paurasession != NULL)
+         if (m_papp != NULL && m_papp->m_psession != NULL)
          {
 
-            ::user::interaction * puiCapture = m_pauraapp->m_paurasession->GetCapture();
+            ::user::interaction * puiCapture = m_papp->m_psession->GetCapture();
 
             if (puiCapture != NULL && puiCapture == this)
             {
@@ -1192,13 +1192,13 @@ restart:
       try
       {
 
-         if (m_pauraapp != NULL && m_pauraapp->m_paurasession != NULL && m_pauraapp->m_paurasession->get_keyboard_focus() == this)
+         if (m_papp != NULL && m_papp->m_psession != NULL && m_papp->m_psession->get_keyboard_focus() == this)
          {
 
             if (GetParent() == NULL || !IsWindowVisible())
             {
 
-               m_pauraapp->m_paurasession->set_keyboard_focus(NULL);
+               m_papp->m_psession->set_keyboard_focus(NULL);
 
             }
             else
@@ -1224,7 +1224,7 @@ restart:
       }
 
 
-      if (m_pauraapp != NULL && &System != NULL && System.get_active_ui() == this)
+      if (m_papp != NULL && &System != NULL && System.get_active_ui() == this)
       {
 
 #if defined(METROWIN)
@@ -1385,7 +1385,7 @@ restart:
 
 
 
-      if (m_pauraapp == NULL)
+      if (m_papp == NULL)
       {
 
          return;
@@ -2141,14 +2141,14 @@ restart:
 
       m_bUserElementalOk = true;
 
-      if (m_pauraapp == NULL)
-         _throw(simple_exception(get_app(), "m_pauraapp cannot be null"));
+      if (m_papp == NULL)
+         _throw(simple_exception(get_app(), "m_papp cannot be null"));
 
       on_set_pro_devian();
 
       {
 
-         //m_pauraapp->add(this);
+         //m_papp->add(this);
          ::user::interaction * puiSystem = NULL;
 #if !defined(LINUX) && !defined(METROWIN) && !defined(APPLEOS) && !defined(VSNORD)
          puiSystem = dynamic_cast < ::user::interaction * > (System.m_psystemwindow);
@@ -2164,21 +2164,21 @@ restart:
 
             synch_lock sl(m_pmutex);
 
-            if (m_pauraapp->m_pbasesystem != NULL)
+            if (m_papp->m_psystem != NULL)
             {
 
                System.add_frame(this);
 
             }
 
-            if (m_pauraapp->m_paurasession != NULL)
+            if (m_papp->m_psession != NULL)
             {
 
                Session.add_frame(this);
 
             }
 
-            if (m_pauraapp != NULL)
+            if (m_papp != NULL)
             {
 
                Application.add_frame(this);
@@ -4998,7 +4998,7 @@ restart:
          else
          {
 
-            if (m_pauraapp != NULL)
+            if (m_papp != NULL)
             {
 
                Application.on_control_event(pevent);
@@ -6724,7 +6724,7 @@ restart:
    void interaction::keep_alive(::object * pliveobject)
    {
 
-      m_pauraapp->keep_alive();
+      m_papp->keep_alive();
 
       if (::get_thread() != NULL)
       {
@@ -9153,7 +9153,7 @@ restart:
    //void interaction::on_select_user_style()
    //{
 
-   //   if (get_app()->m_pcoresession == NULL)
+   //   if (get_app()->m_psession == NULL)
    //   {
 
    //      return;

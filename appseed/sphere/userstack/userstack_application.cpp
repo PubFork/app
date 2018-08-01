@@ -79,7 +79,7 @@ namespace userstack
 
          sp(::aura::application) papp = (pcaapp);
 
-         papp->m_pcoreapp->post_quit();
+         papp->post_quit();
 
       }
 

@@ -19,8 +19,8 @@ public:
 #endif
    virtual void write(string & str) override;
    virtual void write(const void * lp);
-   virtual void write(object * pobject) override;
-   virtual void write(object & object) override;
+   virtual void write(simple_object * pobject) override;
+   virtual void write(simple_object & object) override;
    virtual void write(char i) override;
    virtual void write(uchar ui) override;
    virtual void write(i16 i) override;

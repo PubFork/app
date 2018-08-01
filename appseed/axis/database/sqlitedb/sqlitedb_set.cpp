@@ -241,10 +241,14 @@ namespace sqlite
          m_strDatabaseErrorMessage = "No base Connection";
          return false;
       }
-      if(strncmp("select",query,6) != 0)
+
+      if(!::str::begins_ci(query, "select"))
       {
+
          TRACE("set::query: Must be select SQL");
+
          return false;
+
       }
 
       synch_lock sl(db->m_pmutex);

@@ -131,9 +131,9 @@ namespace fontopus
 
          if(m_puser.is_set()
                && !::str::begins(m_puser->m_strLogin, astr.strSystem)
-               && m_pauraapp->m_strAppId != "app-core/deepfish"
-               && !::str::begins(m_pauraapp->m_strAppName, astr.strAppCoreDeepfish)
-               && !m_pauraapp->is_serviceable())
+               && m_papp->m_strAppId != "app-core/deepfish"
+               && !::str::begins(m_papp->m_strAppName, astr.strAppCoreDeepfish)
+               && !m_papp->is_serviceable())
          {
 
             on_user_login(m_puser);
@@ -180,11 +180,11 @@ namespace fontopus
       /*::draw2d::fontopus * papp;
       if(m_puiInitialPlaceHolderContainer != NULL)
       {
-      papp = m_puiInitialPlaceHolderContainer->m_pauraapp;
+      papp = m_puiInitialPlaceHolderContainer->m_papp;
       }
       else if(System.m_puiInitialPlaceHolderContainer != NULL)
       {
-      papp = System.m_puiInitialPlaceHolderContainer->m_pauraapp;
+      papp = System.m_puiInitialPlaceHolderContainer->m_papp;
       }
       else
       {
@@ -245,7 +245,7 @@ namespace fontopus
    sp(user) fontopus::allocate_user()
    {
 
-      return canew(class user(m_pauraapp));
+      return canew(class user(m_papp));
 
    }
 

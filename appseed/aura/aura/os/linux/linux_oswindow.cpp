@@ -566,7 +566,7 @@ void oswindow_data::set_user_interaction(::user::interaction_impl * pimpl)
 
    m_pimpl = pimpl;
 
-   m_hthread = pimpl->m_pauraapp->get_os_handle();
+   m_hthread = pimpl->m_papp->get_os_handle();
 
    oswindow_assign(this, pimpl);
 

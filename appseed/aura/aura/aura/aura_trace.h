@@ -90,11 +90,11 @@ namespace aura
       {
       public:
 
-         ::aura::application * m_pauraapp;
+         ::aura::application * m_papp;
 
          trace(::aura::application * papp)
          {
-            m_pauraapp = papp;
+            m_papp = papp;
          }
 
          ~trace()

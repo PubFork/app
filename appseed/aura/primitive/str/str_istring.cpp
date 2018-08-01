@@ -4,7 +4,7 @@
 istring::istring(::aura::application * papp)
 {
 
-   m_pauraapp = papp;
+   m_papp = papp;
 
 }
       
@@ -16,7 +16,7 @@ istring::~istring()
 void istring::update_string()
 {
 
-   m_str = m_pauraapp->lstr(m_strTemplate, m_strTemplate);
+   m_str = m_papp->lstr(m_strTemplate, m_strTemplate);
 
 }
 

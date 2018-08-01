@@ -32,7 +32,7 @@ namespace metrowin
 
 
       bool                          m_b3D;
-      ::aura::application *         m_pauraapp;
+      ::aura::application *         m_papp;
       mutex                         m_mutexDc;
       size                          m_size;
       ::user::interaction_impl *    m_pimpl;
@@ -45,7 +45,7 @@ namespace metrowin
 
       ::aura::application * get_app() const
       {
-         return m_pauraapp;
+         return m_papp;
       }
 
       virtual bool defer_init();

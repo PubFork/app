@@ -31,7 +31,7 @@ namespace hellobase
 
 
 #undef App
-#define App(pbaseapp) (pbaseapp->m_pbaseapp->cast_app < ::hellobase::application > ())
+#define App(pbaseapp) (pbaseapp->m_papp->cast_app < ::hellobase::application > ())
 
 
 #include "hellobase_render.h"

@@ -289,7 +289,7 @@ void stream::io(void * p, memory_size_t s)
 
 }
 
-void stream::stream_object(object & object)
+void stream::stream_object(simple_object & object)
 {
 
    object.io(*this);
@@ -297,14 +297,14 @@ void stream::stream_object(object & object)
 }
 
 
-void stream::operator()(object & object)
+void stream::operator()(simple_object & object)
 {
 
    stream_object(object);
 
 }
 
-void stream::operator()(object * pserializable)
+void stream::operator()(simple_object * pserializable)
 {
 
    stream_object(*pserializable);
@@ -330,7 +330,7 @@ void simple_object::io(stream & stream)
 
 
 
-void stream::stream_file(::file::path path, ::object & object)
+void stream::stream_file(::file::path path, ::simple_object & object)
 {
 
    if (path.is_empty())
@@ -524,10 +524,61 @@ void stream::stream_link(string strLink, object & object)
 //
 //
 //
+void stream::load()
+{
+
+   load(get_var_file(), *this);
+
+}
+
+void stream::save()
+{
+
+   save(get_var_file(), *this);
+
+}
+
+void stream::load_file()
+{
+
+   load(get_file_path(), *this);
+
+}
+
+void stream::save_file()
+{
+
+   save(get_file_path(), *this);
+
+}
 
 
+var stream::get_var_file()
+{
 
-void stream::load(::file::path path, object & object, UINT nOpenFlags)
+   if (oprop("file").is_new())
+   {
+
+      oprop("file") = canew(memory_file(get_app()));
+
+   }
+
+   return oprop("file");
+
+}
+
+
+::file::path stream::get_file_path()
+{
+
+   _throw(interface_only_exception(get_app()));
+
+   return "";
+
+}
+
+
+void stream::load(::file::path path, simple_object & object, UINT nOpenFlags)
 {
 
    ::file::file_sp pfile = Application.file().get_file(path, nOpenFlags);
@@ -567,7 +618,7 @@ void stream::load(::file::path path, object & object, UINT nOpenFlags)
 }
 
 
-void stream::save(::file::path path, object & object, UINT nOpenFlags)
+void stream::save(::file::path path, simple_object & object, UINT nOpenFlags)
 {
 
    ::file::file_sp pfile = Application.file().get_file(path, nOpenFlags);
@@ -601,6 +652,94 @@ void stream::save(::file::path path, object & object, UINT nOpenFlags)
 
 
    }
+
+   m_spfile.release();
+
+}
+
+
+void stream::load_file(::file::path path, simple_object & object, UINT nOpenFlags)
+{
+
+   ::file::file_sp pfile = Application.file().get_file(path, nOpenFlags);
+
+   if (pfile.is_null())
+   {
+
+      return;
+
+   }
+
+   ASSERT(!pfile->has_write_mode());
+
+   if (pfile->has_write_mode())
+   {
+
+      return;
+
+   }
+
+   sp(::memory_file) pmemfile = canew(::memory_file(get_app()));
+
+   oprop("file") = pmemfile;
+
+   pmemfile->full_load(pfile);
+
+   m_spfile = pmemfile;
+
+   try
+   {
+
+      operator()(object);
+
+   }
+   catch (...)
+   {
+
+
+   }
+
+   m_spfile.release();
+
+   load();
+
+
+}
+
+
+void stream::save_file(::file::path path, simple_object & object, UINT nOpenFlags)
+{
+
+   ::file::file_sp pfile = Application.file().get_file(path, nOpenFlags);
+
+   if (pfile.is_null())
+   {
+
+      return;
+
+   }
+
+   ASSERT(pfile->has_write_mode());
+
+   if (!pfile->has_write_mode())
+   {
+
+      return;
+
+   }
+
+   sp(::memory_file) pmemfile = canew(::memory_file(get_app()));
+
+   oprop("file") = pmemfile;
+
+   m_spfile = pmemfile;
+
+   save();
+
+   serialize sdst(pfile);
+   serialize ssrc(pmemfile);
+
+   System.file().transfer(sdst, ssrc);
 
    m_spfile.release();
 
@@ -1070,7 +1209,7 @@ void stream::write(string & str)
 }
 
 
-void stream::write(object * pobject)
+void stream::write(simple_object * pobject)
 {
 
    pobject->io(*this);
@@ -1078,7 +1217,7 @@ void stream::write(object * pobject)
 }
 
 
-void stream::write(object & object)
+void stream::write(simple_object & object)
 {
 
    object.io(*this);
@@ -1339,7 +1478,7 @@ void stream::read(string & str)
 }
 
 
-void stream::read(object * pobject)
+void stream::read(simple_object * pobject)
 {
 
    pobject->io(*this);
@@ -1347,7 +1486,7 @@ void stream::read(object * pobject)
 }
 
 
-void stream::read(object & object)
+void stream::read(simple_object & object)
 {
 
    object.io(*this);

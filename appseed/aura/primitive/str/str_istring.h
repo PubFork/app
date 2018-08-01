@@ -6,7 +6,7 @@ class CLASS_DECL_AURA istring
 public:
 
 
-   ::aura::application *   m_pauraapp;
+   ::aura::application *   m_papp;
    string                  m_str;
    string                  m_strTemplate;
 

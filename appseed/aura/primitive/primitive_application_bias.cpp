@@ -7,7 +7,7 @@ void application_bias::callback::connect_to(::aura::application * papp)
    
    set_app(papp);
    
-   m_pauraapp->add_route(this, &callback::on_call_signal);
+   m_papp->add_route(this, &callback::on_call_signal);
 
 }
 

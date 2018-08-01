@@ -137,7 +137,7 @@ namespace visual
             || varFile.get_file_path().find_ci(".svg?") > 0)
       {
 
-         m_p->create_nanosvg(App(m_p->m_pauraapp).file().as_string(varFile));
+         m_p->create_nanosvg(App(m_p->m_papp).file().as_string(varFile));
 
          m_eload = load_ok;
 
@@ -156,9 +156,9 @@ namespace visual
             || varFile.get_file_path().find_ci(".gif?") > 0)
       {
 
-         m_sparray = canew(array(m_p->m_pauraapp));
+         m_sparray = canew(array(m_p->m_papp));
 
-         if (!App(m_p->m_pauraapp).imaging().load_from_file(m_sparray, varFile, bCache))
+         if (!App(m_p->m_papp).imaging().load_from_file(m_sparray, varFile, bCache))
          {
 
             m_sparray.release();
@@ -198,7 +198,7 @@ namespace visual
 
       }
 
-      if (!App(m_p->m_pauraapp).imaging().load_from_file(m_p, varFile, bCache))
+      if (!App(m_p->m_papp).imaging().load_from_file(m_p, varFile, bCache))
       {
 
          m_eload = load_fail;
@@ -226,11 +226,11 @@ namespace visual
    bool dib_sp::load_from_matter(const char * pszMatter, bool bCache, bool bCreateHelperMaps)
    {
 
-      ::file::path path = m_p->m_pauraapp->dir().matter(pszMatter);
+      ::file::path path = m_p->m_papp->dir().matter(pszMatter);
       
       ::draw2d::dib_sp dib(m_p->allocer());
 
-      if (!App(m_p->m_pauraapp).imaging().load_from_file(dib, path, bCache))
+      if (!App(m_p->m_papp).imaging().load_from_file(dib, path, bCache))
       {
 
          m_eload = load_fail;
@@ -258,7 +258,7 @@ namespace visual
    bool dib_sp::read_from_file(::file::file_sp spfile)
    {
 
-      if (!App(m_p->m_pauraapp).imaging().LoadImageFromFile(m_p, spfile))
+      if (!App(m_p->m_papp).imaging().LoadImageFromFile(m_p, spfile))
       {
 
          m_eload = load_fail;
@@ -323,7 +323,7 @@ namespace visual
 //   bool dib_sp::from(class draw2d::graphics * pgraphics, struct FIBITMAP * pfi, bool bUnload)
 //   {
 //
-//      return App(m_p->m_pauraapp).imaging().from(m_p, pgraphics, pfi, bUnload);
+//      return App(m_p->m_papp).imaging().from(m_p, pgraphics, pfi, bUnload);
 //
 //   }
 //

@@ -675,7 +675,7 @@ namespace ios
    void interaction_impl::_001OnNcDestroy(::message::message * pobj)
    {
 
-      single_lock sl(m_pauraapp == NULL ? NULL : m_pauraapp->m_pmutex, TRUE);
+      single_lock sl(m_papp == NULL ? NULL : m_papp->m_pmutex, TRUE);
 
       pobj->m_bRet = true;
 
@@ -833,7 +833,7 @@ namespace ios
    bool interaction_impl::DestroyWindow()
    {
 
-      single_lock sl(m_pauraapp == NULL ? NULL : m_pauraapp->m_pmutex, TRUE);
+      single_lock sl(m_papp == NULL ? NULL : m_papp->m_pmutex, TRUE);
 
       if(get_handle() == NULL)
          return false;
@@ -1181,7 +1181,7 @@ namespace ios
 
       if(pbase->m_id == WM_TIMER)
       {
-         //         m_pauraapp->m_pauraapp->step_timer();
+         //         m_papp->m_papp->step_timer();
       }
       else if(pbase->m_id == WM_LBUTTONDOWN)
       {
@@ -1237,17 +1237,17 @@ namespace ios
          Session.on_ui_mouse_message(pmouse);
 
 
-         if(m_pauraapp->m_paxissession != NULL)
+         if(m_papp->m_psession != NULL)
          {
 
             Session.m_ptCursor = pmouse->m_pt;
 
          }
 
-         /*         if(m_pui != NULL && m_pui != this && m_pui->m_pauraapp->m_paxissession != NULL && m_pui->m_pauraapp->m_paxissession != m_pauraapp->m_paxissession)
+         /*         if(m_pui != NULL && m_pui != this && m_pui->m_papp->m_psession != NULL && m_pui->m_papp->m_psession != m_papp->m_psession)
           {
 
-          BaseSess(m_pui->m_pauraapp->m_paxissession).m_ptCursor = pmouse->m_pt;
+          BaseSess(m_pui->m_papp->m_psession).m_ptCursor = pmouse->m_pt;
 
           }
           */
@@ -1635,7 +1635,7 @@ namespace ios
 
    ::user::interaction *  PASCAL interaction_impl::GetDescendantWindow(::user::interaction *  hWnd, id id)
    {
-      single_lock sl(hWnd->m_pauraapp->m_pmutex, TRUE);
+      single_lock sl(hWnd->m_papp->m_pmutex, TRUE);
       // GetDlgItem recursive (return first found)
       // breadth-first for 1 level, then depth-first for next level
 
@@ -3341,7 +3341,7 @@ namespace ios
 
 //      rect rect32;
 //
-//      if(m_pui == m_pauraapp->m_pbasesystem->m_possystemwindow->m_pui)
+//      if(m_pui == m_papp->m_psystem->m_possystemwindow->m_pui)
 //      {
 //
 //         if(!GetMainScreenRect(rect32))
@@ -3380,7 +3380,7 @@ namespace ios
 
       rect rect32;
 
-      if(m_pui == m_pauraapp->m_paurasystem->m_possystemwindow->m_pui)
+      if(m_pui == m_papp->m_psystem->m_possystemwindow->m_pui)
       {
 
          if(!GetMainScreenRect(rect32))
@@ -3599,9 +3599,9 @@ namespace ios
 
    bool interaction_impl::post_message(UINT message, WPARAM wparam, lparam lparam)
    {
-      if(m_pauraapp != NULL)
+      if(m_papp != NULL)
       {
-         return m_pauraapp->post_message(m_pui, message, wparam, lparam);
+         return m_papp->post_message(m_pui, message, wparam, lparam);
       }
       else
       {
@@ -3964,7 +3964,7 @@ namespace ios
       //      ASSERT(::IsWindow(get_handle()));
       //    return interaction_impl::GetDescendantWindow(this, id);
 
-      single_lock sl(m_pauraapp->m_pmutex, TRUE);
+      single_lock sl(m_papp->m_pmutex, TRUE);
       for(int32_t i = 0; i < m_pui->m_uiptraChild.get_count(); i++)
       {
          if(m_pui->m_uiptraChild[i]->GetDlgCtrlId() == id)
@@ -4118,7 +4118,7 @@ namespace ios
       /*
        UNREFERENCED_PARAMETER(lpfnTimer);
 
-       m_pui->m_pauraapp->set_timer(m_pui, nIDEvent, nElapse);
+       m_pui->m_papp->set_timer(m_pui, nIDEvent, nElapse);
 
        return nIDEvent;
 
@@ -4138,7 +4138,7 @@ namespace ios
        //ASSERT(::IsWindow(get_handle()));
        //return ::KillTimer(get_handle(), nIDEvent)  != FALSE;
 
-       m_pui->m_pauraapp->unset_timer(m_pui, nIDEvent);
+       m_pui->m_papp->unset_timer(m_pui, nIDEvent);
 
 
        return true;*/

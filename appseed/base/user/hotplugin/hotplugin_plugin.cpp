@@ -64,9 +64,9 @@ namespace hotplugin
 
       m_etheme = ::user::theme_lite;
 
-      m_pauraapp = this;
-      m_pauraapp->m_paxissession = this;
-      m_paxissession = this;
+      m_papp = this;
+      m_papp->m_psession = this;
+      ::aura::application::m_psession = this;
 
    }
 
@@ -1028,8 +1028,8 @@ namespace hotplugin
    {
 
       m_phost = phost;
-      m_pauraapp = m_phost;
-      m_paxissession = m_phost;
+      m_papp = m_phost;
+      ::aura::application::m_psession = m_phost;
 
       return true;
 

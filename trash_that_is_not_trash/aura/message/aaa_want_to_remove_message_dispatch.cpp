@@ -51,7 +51,7 @@ namespace message
    sp(::message::message) dispatch::get_base(LPMESSAGE lpmsg)
    {
 
-      return m_pauraapp->get_message_base(lpmsg);
+      return m_papp->get_message_base(lpmsg);
 
    }
 

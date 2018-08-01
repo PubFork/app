@@ -278,10 +278,10 @@ thread::thread(::aura::application * papp) :
 
    m_puiptra = NULL;
 
-   if(m_pauraapp != NULL && m_pauraapp->m_paurasession != NULL)
+   if(m_papp != NULL && m_papp->m_psession != NULL)
    {
 
-      m_bZipIsDir = m_pauraapp->m_paurasession->m_bZipIsDir;
+      m_bZipIsDir = m_papp->m_psession->m_bZipIsDir;
 
    }
 
@@ -299,10 +299,10 @@ thread::thread(::aura::application * papp, __THREADPROC pfnThreadProc, LPVOID pP
 
    construct(pfnThreadProc, pParam);
 
-   if(m_pauraapp != NULL && m_pauraapp->m_paurasession != NULL)
+   if(m_papp != NULL && m_papp->m_psession != NULL)
    {
 
-      m_bZipIsDir = m_pauraapp->m_paurasession->m_bZipIsDir;
+      m_bZipIsDir = m_papp->m_psession->m_bZipIsDir;
 
    }
 
@@ -328,7 +328,7 @@ void thread::CommonConstruct()
 
    }
 
-   ::thread * pthreadApp = m_pauraapp;
+   ::thread * pthreadApp = m_papp;
 
    ::thread * pthreadThis = this;
 
@@ -1567,10 +1567,10 @@ void thread::pre_translate_message(::message::message * pobj)
 
       try
       {
-         if(m_pauraapp->m_paurasession != NULL)
+         if(m_papp->m_psession != NULL)
          {
 
-            m_pauraapp->m_paurasession->frame_pre_translate_message(pobj);
+            m_papp->m_psession->frame_pre_translate_message(pobj);
          }
       }
       catch(ap(exit_exception) pe)
@@ -2984,7 +2984,7 @@ bool thread::process_message(LPMESSAGE lpmessage)
 
             smart_pointer < ::message::message > spbase;
 
-            spbase = m_pauraapp->get_message_base(&msg);
+            spbase = m_papp->get_message_base(&msg);
 
             if(spbase.is_set())
             {
@@ -3015,16 +3015,16 @@ bool thread::process_message(LPMESSAGE lpmessage)
                   try
                   {
 
-                     if(m_pauraapp != NULL)
+                     if(m_papp != NULL)
                      {
 
                         try
                         {
 
-                           if(m_pauraapp->m_paurasystem != NULL)
+                           if(m_papp->m_psystem != NULL)
                            {
 
-                              m_pauraapp->m_paurasystem->pre_translate_message(spbase);
+                              m_papp->m_psystem->pre_translate_message(spbase);
 
                               if(spbase->m_bRet)
                                  return true;
@@ -3038,13 +3038,13 @@ bool thread::process_message(LPMESSAGE lpmessage)
 
                         }
 
-                        if(m_pauraapp->m_paurasession != NULL)
+                        if(m_papp->m_psession != NULL)
                         {
 
                            try
                            {
 
-                              m_pauraapp->m_paurasession->pre_translate_message(spbase);
+                              m_papp->m_psession->pre_translate_message(spbase);
 
                               if(spbase->m_bRet)
                                  return true;
@@ -3063,10 +3063,10 @@ bool thread::process_message(LPMESSAGE lpmessage)
                      try
                      {
 
-                        if(!m_pauraapp->is_system() && m_pauraapp->is_session())
+                        if(!m_papp->is_system() && m_papp->is_session())
                         {
 
-                           m_pauraapp->pre_translate_message(spbase);
+                           m_papp->pre_translate_message(spbase);
 
                            if(spbase->m_bRet)
                               return true;
@@ -3139,7 +3139,7 @@ bool thread::raw_process_message(LPMESSAGE lpmessage)
 
       smart_pointer < ::message::message > spbase;
 
-      spbase = m_pauraapp->get_message_base(lpmessage);
+      spbase = m_papp->get_message_base(lpmessage);
 
       route_message(spbase);
 

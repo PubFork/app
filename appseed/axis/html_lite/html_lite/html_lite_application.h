@@ -15,7 +15,7 @@ namespace html_lite
       virtual ~application();
 
 
-      inline ::html::html * html() { return m_pauraapp->m_paurasystem->m_phtml; }
+      inline ::html::html * html() { return m_papp->m_psystem->m_phtml; }
 
       virtual ::html::html * create_html();
 

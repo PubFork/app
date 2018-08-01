@@ -188,10 +188,10 @@ int32_t                 cy)
    RECT                    rcText;
 
    if(crShadow == (COLORREF)-1)
-      crShadow = Sess(pgraphics->m_pauraapp).get_default_color(COLOR_BTNSHADOW);
+      crShadow = Sess(pgraphics->m_papp).get_default_color(COLOR_BTNSHADOW);
 
    if(crText == (COLORREF)-1)
-      crText = Sess(pgraphics->m_pauraapp).get_default_color(COLOR_BTNTEXT);
+      crText = Sess(pgraphics->m_papp).get_default_color(COLOR_BTNTEXT);
 
    /* setup the DC, saving off the old values
    */

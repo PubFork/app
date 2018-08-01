@@ -27,7 +27,7 @@ namespace core
          string                  m_strApp;
          string                  m_strQuery;
          sp(::core::session)      m_pbergedgeParent;
-         sp(::aura::application)   m_pauraapp;
+         sp(::aura::application)   m_papp;
          bool                    m_bMakeVisible;
          sp(::user::interaction) m_puiParent;
          property_set      m_setParameters;

@@ -7,13 +7,13 @@ void smart_pointer < T >::alloc(const ::aura::allocatorsp & spallocator)
 
    if(spallocator.is_null())
       return;
-   
-   ::id idType = CaSys(spallocator).type_info < T >()->m_id;
+
+   ::id idType = Sys(spallocator->get_app()).type_info < T >()->m_id;
 
    if(m_p != NULL)
       ::release(m_p);
 
-   object * pca = CaSys(spallocator).alloc(spallocator->m_pauraapp,idType);
+   object * pca = Sys(spallocator->get_app()).alloc(spallocator->m_papp,idType);
 
    if(pca != NULL)
    {

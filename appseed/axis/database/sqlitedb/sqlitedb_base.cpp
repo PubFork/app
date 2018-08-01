@@ -122,27 +122,27 @@ namespace sqlite
             TRACE("Error: %s",err);
             _throw(database::DbErrors(::get_app(),getErrorMsg()));
          }
-         if (setErr(sqlite3_exec((sqlite3 *)getHandle(), "PRAGMA cache_size=-20000", NULL, NULL, &err)) != SQLITE_OK)
-         {
-            TRACE("Error: %s", err);
-            const char * pszErrorMessage = getErrorMsg();
-            if(pszErrorMessage != NULL)
-            {
-
-               output_debug_string(pszErrorMessage);
-            }
-            //_throw(database::DbErrors(::get_app(),getErrorMsg()));
-         }
-//         if (setErr(sqlite3_exec((sqlite3 *)getHandle(), "PRAGMA synchronous=OFF", NULL, NULL, &err)) != SQLITE_OK)
+//         if (setErr(sqlite3_exec((sqlite3 *)getHandle(), "PRAGMA cache_size=-20000", NULL, NULL, &err)) != SQLITE_OK)
 //         {
-//            fprintf(stderr, "Error: %s", err);
-//            _throw(database::DbErrors(::get_app(),getErrorMsg()));
+//            TRACE("Error: %s", err);
+//            const char * pszErrorMessage = getErrorMsg();
+//            if(pszErrorMessage != NULL)
+//            {
+//
+//               output_debug_string(pszErrorMessage);
+//            }
+//            //_throw(database::DbErrors(::get_app(),getErrorMsg()));
 //         }
-         if (setErr(sqlite3_exec((sqlite3 *)getHandle(), "PRAGMA temp_store=MEMORY", NULL, NULL, &err)) != SQLITE_OK)
-         {
-            TRACE("Error: %s", err);
-            //_throw(database::DbErrors(::get_app(),getErrorMsg()));
-         }
+////         if (setErr(sqlite3_exec((sqlite3 *)getHandle(), "PRAGMA synchronous=OFF", NULL, NULL, &err)) != SQLITE_OK)
+////         {
+////            fprintf(stderr, "Error: %s", err);
+////            _throw(database::DbErrors(::get_app(),getErrorMsg()));
+////         }
+         //if (setErr(sqlite3_exec((sqlite3 *)getHandle(), "PRAGMA temp_store=MEMORY", NULL, NULL, &err)) != SQLITE_OK)
+         //{
+         //   TRACE("Error: %s", err);
+         //   //_throw(database::DbErrors(::get_app(),getErrorMsg()));
+         //}
          active = true;
          return DB_CONNECTION_OK;
       }
@@ -299,7 +299,7 @@ namespace sqlite
 
          set set(this);
 
-         start_transaction();
+         synch_lock sl(m_pmutex);
 
          set.query("select * from sqlite_master where type like 'table' and name like '" + strTable + "'");
 
@@ -309,13 +309,9 @@ namespace sqlite
             set.exec("create table '" + strTable + "' (id text primary key, value integer)");
          }
 
-         commit_transaction();
-
       }
       catch (...)
       {
-
-         rollback_transaction();
 
       }
 
@@ -329,7 +325,7 @@ namespace sqlite
 
          set set(this);
 
-         start_transaction();
+         synch_lock sl(m_pmutex);
 
          set.query("select * from sqlite_master where type like 'table' and name like '" + strTable + "'");
 
@@ -340,13 +336,9 @@ namespace sqlite
 
          }
 
-         commit_transaction();
-
       }
       catch(...)
       {
-
-         rollback_transaction();
 
       }
 

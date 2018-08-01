@@ -1135,7 +1135,7 @@ namespace user
       _001InitializeFormPreData();
       _001UpdateFunctionStatic();
       //   CVmsGuiApp * papp = (CVmsGuiApp *) &System;
-      //   papp->m_pcoreapp->TwfInitializeDescendants(pview->GetSafeoswindow_(), true);
+      //   papp->TwfInitializeDescendants(pview->GetSafeoswindow_(), true);
       for(int32_t i = 0; i < m_controldescriptorset.get_size(); i++)
       {
          sp(control) pcontrol = m_controldescriptorset[i]->get_control(this);

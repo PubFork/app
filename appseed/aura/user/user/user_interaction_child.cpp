@@ -556,7 +556,7 @@ namespace user
    ::user::interaction * interaction_child::GetDescendantWindow(id id) const
    {
 
-      single_lock sl(m_pui->m_pauraapp->m_pmutex,TRUE);
+      single_lock sl(m_pui->m_papp->m_pmutex,TRUE);
 
       for(int32_t i = 0; i < m_pui->m_uiptraChild.get_count(); i++)
       {
@@ -692,9 +692,9 @@ namespace user
    bool interaction_child::post_message(UINT uiMessage,WPARAM wparam,lparam lparam)
    {
 
-      if(m_pui->m_pauraapp != NULL)
+      if(m_pui->m_papp != NULL)
       {
-         return m_pui->m_pauraapp->post_message(m_pui,uiMessage,wparam,lparam);
+         return m_pui->m_papp->post_message(m_pui,uiMessage,wparam,lparam);
       }
       else
       {

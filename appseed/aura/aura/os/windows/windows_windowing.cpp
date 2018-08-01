@@ -88,7 +88,7 @@ wstring CLASS_DECL_AURA windows_get_user_interaction_window_class(::user::intera
    WNDCLASSW wndcls;
    memset(&wndcls, 0, sizeof(WNDCLASSW));   // start with NULL defaults
    wndcls.lpfnWndProc = DefWindowProcW;
-   wndcls.hInstance = pui->m_pauraapp->m_hinstance;
+   wndcls.hInstance = pui->m_papp->m_hinstance;
 
    INITCOMMONCONTROLSEX init;
    init.dwSize = sizeof(init);
@@ -142,7 +142,7 @@ CLASS_DECL_AURA const unichar * windows_register_window_class(::aura::applicatio
 
    // see if the class already exists
    WNDCLASSW wndcls;
-   if (::GetClassInfoW(papp->m_paurasystem->m_hinstance, lpszName, &wndcls))
+   if (::GetClassInfoW(papp->m_psystem->m_hinstance, lpszName, &wndcls))
    {
       // already registered, assert everything is good
       ASSERT(wndcls.style == nClassStyle);

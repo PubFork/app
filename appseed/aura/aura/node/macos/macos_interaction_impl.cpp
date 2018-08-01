@@ -553,7 +553,7 @@ namespace macos
    void interaction_impl::_001OnNcDestroy(::message::message * pobj)
    {
 
-      single_lock sl(m_pauraapp == NULL ? NULL : m_pauraapp->m_pmutex, TRUE);
+      single_lock sl(m_papp == NULL ? NULL : m_papp->m_pmutex, TRUE);
 
       pobj->m_bRet = true;
 
@@ -1099,7 +1099,7 @@ namespace macos
 
       if (pbase->m_id == WM_TIMER)
       {
-         //         m_pauraapp->m_pauraapp->step_timer();
+         //         m_papp->m_papp->step_timer();
       }
       else if (pbase->m_id == WM_LBUTTONDOWN)
       {
@@ -1150,7 +1150,7 @@ namespace macos
          Session.on_ui_mouse_message(pmouse);
 
 
-         if (m_pauraapp->m_paxissession != NULL)
+         if (m_papp->m_psession != NULL)
          {
 
             Session.m_ptCursor = pmouse->m_pt;
@@ -1386,7 +1386,7 @@ namespace macos
 
    ::user::interaction *  PASCAL interaction_impl::GetDescendantWindow(::user::interaction *  hWnd, id id)
    {
-      single_lock sl(hWnd->m_pauraapp->m_pmutex, TRUE);
+      single_lock sl(hWnd->m_papp->m_pmutex, TRUE);
       // GetDlgItem recursive (return first found)
       // breadth-first for 1 level, then depth-first for next level
 
@@ -2130,7 +2130,7 @@ namespace macos
    void interaction_impl::_001OnProdevianSynch(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
-      //      System.get_event(m_pauraapp->m_pauraapp)->SetEvent();
+      //      System.get_event(m_papp->m_papp)->SetEvent();
       //    System.get_event(System.get_twf())->wait(millis(8400));
    }
 
@@ -2810,10 +2810,10 @@ namespace macos
    bool interaction_impl::post_message(UINT message, WPARAM wparam, lparam lparam)
    {
 
-      if (m_pauraapp != NULL)
+      if (m_papp != NULL)
       {
 
-         return m_pauraapp->post_message((::user::primitive *) m_pui, message, wparam, lparam);
+         return m_papp->post_message((::user::primitive *) m_pui, message, wparam, lparam);
 
       }
       else
@@ -3139,7 +3139,7 @@ namespace macos
    ::user::interaction * interaction_impl::GetDescendantWindow(id id)
    {
 
-      single_lock sl(m_pauraapp->m_pmutex, TRUE);
+      single_lock sl(m_papp->m_pmutex, TRUE);
 
       for (int32_t i = 0; i < m_pui->m_uiptraChild.get_count(); i++)
       {

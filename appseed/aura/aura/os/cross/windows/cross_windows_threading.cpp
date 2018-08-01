@@ -720,7 +720,7 @@ CLASS_DECL_AURA int_bool PostMessageW(oswindow oswindow,UINT Msg,WPARAM wParam,L
    if(!pui->m_bUserElementalOk)
       return FALSE;
 
-   IDTHREAD idthread = pui->m_pauraapp->get_os_int();
+   IDTHREAD idthread = pui->m_papp->get_os_int();
 
    mq * pmq = __get_mq(idthread, oswindow != NULL || Msg != WM_QUIT);
 
@@ -770,10 +770,10 @@ CLASS_DECL_AURA int_bool mq_remove_window_from_all_queues(oswindow oswindow)
    if(pui == NULL)
       return FALSE;
 
-   if(pui->m_pauraapp == NULL)
+   if(pui->m_papp == NULL)
       return false;
 
-   IDTHREAD idthread = pui->m_pauraapp->get_os_int();
+   IDTHREAD idthread = pui->m_papp->get_os_int();
 
    mq * pmq = __get_mq(idthread, false);
 

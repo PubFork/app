@@ -17,7 +17,7 @@ namespace aura
    //   m_pthreadimpl.alloc(allocer());
    //   m_pthreadimpl->m_pthread = this;
 
-   //   m_paxissystem = papp->m_paxissystem;
+   //   m_psystem = papp->m_psystem;
 
    //   m_atomApp = m_atomSystemTopic = NULL;
 

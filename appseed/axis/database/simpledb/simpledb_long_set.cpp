@@ -128,21 +128,21 @@
 //         try
 //         {
 //
-//            if (m_pauraapp == NULL)
+//            if (m_papp == NULL)
 //            {
 //
 //               break;
 //
 //            }
 //
-//            if (m_pauraapp->m_paurasession == NULL)
+//            if (m_papp->m_psession == NULL)
 //            {
 //
 //               break;
 //
 //            }
 //
-//            if (m_pauraapp->m_paurasession->m_pfontopus == NULL)
+//            if (m_papp->m_psession->m_pfontopus == NULL)
 //            {
 //
 //               break;

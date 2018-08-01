@@ -33,7 +33,7 @@ namespace aura
    void department::connect_to_application_signal()
    {
 
-      m_pauraapp->add_route(this,&department::on_application_message);
+      m_papp->add_route(this,&department::on_application_message);
 
    }
 

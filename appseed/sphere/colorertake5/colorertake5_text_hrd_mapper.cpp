@@ -24,7 +24,7 @@ namespace colorertake5
       string str;
       is >> str;
 
-      sp(::xml::document) hbase = new xml::document(m_pauraapp);
+      sp(::xml::document) hbase = new xml::document(m_papp);
       hbase->load(str);
 
       if (hbase->get_name() != "hrd")

@@ -16,17 +16,8 @@ namespace aura
 
       // former ::aura::application_interface // moved on 2015-05-23 Sammstag while listening to RocketBeansTV (a German channel?) at TwitchTV
       class imaging *                                 m_pimaging;
-      ::aura::system *                                m_paurasystem;
-      ::aura::session *                               m_paurasession;
-      :: axis :: application *                        m_paxisapp; // can be used only from axis and upper
-      :: axis ::system *                              m_paxissystem; // can be used only from axis and upper
-      :: axis ::session *                             m_paxissession; // can be used only from axis and upper
-      :: base :: application *                        m_pbaseapp; // can be used only from base and upper
-      ::base::system *                                m_pbasesystem; // can be used only from base and upper
-      ::base::session *                               m_pbasesession; // can be used only from base and upper
-      ::core::application *                           m_pcoreapp; // can be used only from core and upper
-      ::core::system *                                m_pcoresystem; // can be used only from core and upper
-      ::core::session *                               m_pcoresession; // can be used only from core and upper
+      ::aura::system *                                m_psystem;
+      ::aura::session *                               m_psession;
 
 
       DWORD                                           m_dwInstallGoodToCheckAgain;
@@ -299,13 +290,6 @@ namespace aura
       virtual bool Ex2OnAppInstall();
       virtual bool Ex2OnAppUninstall();
 
-      template < class APP >
-      APP & cast_app()
-      {
-
-         return *dynamic_cast < APP * > (this);
-
-      }
 
 
 

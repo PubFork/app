@@ -1127,7 +1127,7 @@ void simple_frame_window::_001OnClose(::message::message * pobj)
          bHideWindow = true;
 
       }
-      else if (papp->m_pcoreapp->is_system() || papp->m_pcoreapp->is_session())
+      else if (papp->is_system() || papp->is_session())
       {
 
          // TODO: instead of closing all applications in process System.m_apptra, should close application that make part of
@@ -1140,7 +1140,7 @@ void simple_frame_window::_001OnClose(::message::message * pobj)
 
             sp(::aura::application) pappChild = appptra[i];
 
-            if (!pappChild->m_pcoreapp->_001CloseApplicationByUser(this))
+            if (!App(pappChild.m_p)._001CloseApplicationByUser(this))
                return;
 
          }
@@ -1149,7 +1149,7 @@ void simple_frame_window::_001OnClose(::message::message * pobj)
       else if(Application.GetVisibleTopLevelFrameCountExcept(this) <= 0)
       {
 
-         //if (!papp->m_pcoreapp->_001CloseApplicationByUser(this))
+         //if (!papp->_001CloseApplicationByUser(this))
          // return;
 
          post_message(WM_APPEXIT);
@@ -1644,9 +1644,9 @@ void simple_frame_window::InitialFramePosition(bool bForceRestore)
 void simple_frame_window::_001OnDeferPaintLayeredWindowBackground(::draw2d::graphics * pgraphics)
 {
 
-   if(m_pauraapp == NULL
-         || m_pauraapp->m_pcoresession == NULL
-         || m_pauraapp->m_pcoresession->m_psavings == NULL)
+   if(m_papp == NULL
+         || m_papp->m_psession == NULL
+         || m_papp->m_psession->m_psavings == NULL)
    {
 
       return;
@@ -2388,7 +2388,7 @@ bool simple_frame_window::OnQueryEndSession()
 {
    ::base::application* pApp = &System;
    if(pApp != NULL && pApp->m_puiMain == this)
-      return pApp->m_pcoreapp->save_all_modified();
+      return App(pApp).save_all_modified();
 
    return TRUE;
 }

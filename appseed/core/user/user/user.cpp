@@ -107,15 +107,15 @@ namespace core
       if (!is_system())
       {
 
-         if (m_pcoresession != NULL)
+         if (m_psession != NULL)
          {
 
-            if (m_pcoresession->m_pdocmanager != NULL)
+            if (Sess(m_psession).m_pdocmanager != NULL)
             {
 
-               m_pcoresession->document_manager()->close_all_documents(true);
+               Sess(m_psession).document_manager()->close_all_documents(true);
 
-               m_pcoresession->m_pdocmanager.release();
+               Sess(m_psession).m_pdocmanager.release();
 
             }
 
@@ -123,12 +123,12 @@ namespace core
 
       }
 
-      if (m_pcoresystem->m_pdocmanager != NULL)
+      if (Sys(m_psystem).m_pdocmanager != NULL)
       {
 
-         m_pcoresystem->document_manager()->close_all_documents(true);
+         Sys(m_psystem).document_manager()->close_all_documents(true);
 
-         m_pcoresystem->m_pdocmanager.release();
+         Sys(m_psystem).m_pdocmanager.release();
 
       }
 
@@ -137,9 +137,9 @@ namespace core
 
       try
       {
-         if (m_pcoresystem != NULL && m_pcoresystem->m_psystemwindow != NULL)
+         if (m_psystem != NULL && m_psystem->m_psystemwindow != NULL)
          {
-            m_pcoresystem->m_psystemwindow->DestroyWindow();
+            m_psystem->m_psystemwindow->DestroyWindow();
 
          }
 
@@ -172,9 +172,9 @@ namespace core
       try
       {
 
-         if (m_pcoresystem != NULL)
+         if (m_psystem != NULL)
          {
-            ::aura::del(m_pcoresystem->m_psystemwindow);
+            ::aura::del(m_psystem->m_psystemwindow);
 
          }
 
@@ -191,10 +191,10 @@ namespace core
       try
       {
 
-         if (m_paurasystem != NULL)
+         if (m_psystem != NULL)
          {
 
-            m_paurasystem->post_quit();
+            m_psystem->post_quit();
 
          }
 
@@ -312,11 +312,11 @@ namespace core
          //}
       }
 
-      if (Session.m_pappCurrent != NULL && Session.m_pappCurrent->m_pbasesession->m_pfontopus->m_puser != NULL)
+      if (Session.m_pappCurrent != NULL && Session.m_pappCurrent->m_psession->m_pfontopus->m_puser != NULL)
       {
          try
          {
-            get_view()->GetParentFrame()->set_window_text(Session.m_pappCurrent->m_pbasesession->m_pfontopus->m_puser->m_strLogin);
+            get_view()->GetParentFrame()->set_window_text(Session.m_pappCurrent->m_psession->m_pfontopus->m_puser->m_strLogin);
          }
          catch (...)
          {

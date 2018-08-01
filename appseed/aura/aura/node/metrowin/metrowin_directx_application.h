@@ -131,7 +131,7 @@ namespace metrowin
    {
    internal:
 
-      ::aura::system * m_paurasystem;
+      ::aura::system * m_psystem;
 
       string m_strId;
 

@@ -69,7 +69,7 @@ int64_t simple_object::release()
 
 }
 
-void object::assert_valid() const
+void simple_object::assert_valid() const
 {
 
    ASSERT(this != NULL);
@@ -84,7 +84,7 @@ object::object()
    m_pmutex = NULL;
    m_ulFlags = (uint32_t)flag_auto_clean;
    m_pfactoryitembase = NULL;
-   m_pauraapp = NULL;
+   m_papp = NULL;
    m_pthreadrefa = NULL;
 
 }
@@ -109,7 +109,7 @@ object::object(const object& objectSrc)
    if (objectSrc.m_pmutex != NULL)
    {
 
-      m_pmutex = new mutex(objectSrc.m_pauraapp);
+      m_pmutex = new mutex(objectSrc.m_papp);
 
    }
    else
@@ -122,7 +122,7 @@ object::object(const object& objectSrc)
    m_ulFlags = (uint32_t)flag_auto_clean;
    m_pfactoryitembase = NULL;
    m_countReference = 1;
-   m_pauraapp = objectSrc.m_pauraapp;
+   m_papp = objectSrc.m_papp;
    m_pthreadrefa = NULL;
 
 
@@ -137,7 +137,7 @@ object::object(::aura::application * papp)
    m_ulFlags = (uint32_t)flag_auto_clean;
    m_pfactoryitembase = NULL;
    m_countReference = 1;
-   m_pauraapp = papp;
+   m_papp = papp;
    m_pthreadrefa = NULL;
 
 }
@@ -159,7 +159,7 @@ object::~object()
 }
 
 
-void object::dump(dump_context & dumpcontext) const
+void simple_object::dump(dump_context & dumpcontext) const
 {
 
    dumpcontext << "a " << typeid(*this).name() << " at " << (void *)this << "\n";
@@ -468,11 +468,11 @@ void object::defer_update_object_id()
 
    string strType = typeid(*this).name();
 
-   #ifndef WINDOWS
+#ifndef WINDOWS
 
    strType = demangle(strType);
 
-   #endif
+#endif
 
    ::str::begins_eat_ci(strType, "class ");
 
@@ -770,7 +770,7 @@ void object::on_request(::create * pcreate)
 void object::set_app(::aura::application * papp)
 {
 
-   m_pauraapp = papp;
+   m_papp = papp;
 
 }
 
@@ -796,7 +796,7 @@ void object::delete_this()
    else if(m_ulFlags & flag_discard_to_factory)
    {
 
-      m_pauraapp->m_paurasystem->discard_to_factory(this);
+      m_papp->m_psystem->discard_to_factory(this);
 
    }
    else if(is_heap())
@@ -833,7 +833,7 @@ void object::defer_create_mutex()
 string object::lstr(id id, string strDefault)
 {
 
-   return m_pauraapp->lstr(id,strDefault);
+   return m_papp->lstr(id,strDefault);
 
 }
 
@@ -848,7 +848,7 @@ namespace aura
 
       allocator * pallocator = canew(allocator());
 
-      pallocator->m_pauraapp = papp;
+      pallocator->m_papp = papp;
 
       smart_pointer < allocator >::operator = (pallocator);
 
@@ -875,7 +875,7 @@ namespace aura
 void object::copy_this(const object & o)
 {
 
-   m_pauraapp = o.m_pauraapp;
+   m_papp = o.m_papp;
 
    ::aura::del(m_psetObject);
 
@@ -1018,27 +1018,27 @@ void object::threadrefa_remove(::thread * pthread)
 
    {
 
-   synch_lock slObject(m_pmutex);
+      synch_lock slObject(m_pmutex);
 
-   if (m_pthreadrefa == NULL)
-   {
+      if (m_pthreadrefa == NULL)
+      {
 
-      return;
+         return;
+
+      }
+
+      //synch_lock sl(m_pthreadrefa->m_pmutex);
+
+
+      m_pthreadrefa->remove(pthread);
 
    }
+   {
+      synch_lock slThread(pthread->m_pmutex);
 
-   //synch_lock sl(m_pthreadrefa->m_pmutex);
+      pthread->m_objectptraDependent.remove(this);
 
-
-   m_pthreadrefa->remove(pthread);
-
-}
-{
-   synch_lock slThread(pthread->m_pmutex);
-
-   pthread->m_objectptraDependent.remove(this);
-
-}
+   }
 
 }
 

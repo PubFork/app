@@ -9,7 +9,6 @@
 #endif
 
 
-
 namespace aura
 {
 
@@ -21,11 +20,22 @@ namespace aura
 
       m_pimplPendingSetFocus = NULL;
 
-      m_pauraapp = papp;
+      m_papp = papp;
 
-      m_paurasession = this;
+      m_psession = this;
 
-      m_paurasystem = papp->m_paurasystem;
+      m_psystem = papp->m_psystem;
+
+      if (m_psystem != NULL)
+      {
+
+         m_bMatterFromHttpCache = m_psystem->m_bMatterFromHttpCache;
+
+         m_bSystemSynchronizedCursor = m_psystem->m_bSystemSynchronizedCursor;
+
+         m_bSystemSynchronizedScreen = m_psystem->m_bSystemSynchronizedScreen;
+
+      }
 
       m_strAppId = "session";
 
@@ -41,8 +51,8 @@ namespace aura
 
       m_pappCurrent = NULL;
       m_psockets = NULL;
-      m_paurasession = this;
-      m_bMatterFromHttpCache = m_paurasystem->m_bMatterFromHttpCache;
+      m_psession = this;
+      m_bMatterFromHttpCache = m_psystem->m_bMatterFromHttpCache;
 
       m_puiLastLButtonDown = NULL;
 
@@ -52,7 +62,7 @@ namespace aura
       if (m_hinstance == NULL)
       {
 
-         m_hinstance = m_pauraapp->m_hinstance;
+         m_hinstance = m_papp->m_hinstance;
 
       }
 
@@ -338,10 +348,10 @@ namespace aura
             try
             {
 
-               if (pair.m_element2->m_paurasession == this)
+               if (pair.m_element2->m_psession == this)
                {
 
-                  pair.m_element2->m_paurasession = NULL;
+                  pair.m_element2->m_psession = NULL;
 
                }
 
@@ -727,7 +737,7 @@ namespace aura
 
       ::aura::application * papp = NULL;
 
-      if (m_paurasession->m_mapApplication.Lookup(string(pszAppId), papp))
+      if (m_psession->m_mapApplication.Lookup(string(pszAppId), papp))
       {
 
          return papp;
@@ -800,7 +810,7 @@ namespace aura
 
          }
 
-         m_paurasession->m_mapApplication.set_at(string(pszAppId), papp);
+         m_psession->m_mapApplication.set_at(string(pszAppId), papp);
 
          return papp;
 
@@ -1035,8 +1045,8 @@ namespace aura
          if (!papp->is_serviceable() || papp->is_user_service())
          {
 
-            System.m_spmutexUserAppData = canew(mutex(m_paurasystem, false, "Local\\ca2.UserAppData"));
-            System.m_spmutexSystemAppData = canew(mutex(m_paurasystem, false, "Local\\ca2.SystemAppData"));
+            System.m_spmutexUserAppData = canew(mutex(m_psystem, false, "Local\\ca2.UserAppData"));
+            System.m_spmutexSystemAppData = canew(mutex(m_psystem, false, "Local\\ca2.SystemAppData"));
 
          }
 
@@ -1051,7 +1061,7 @@ namespace aura
       ::output_debug_string("|\n");
       ::output_debug_string("|----");
 
-      sp(::aura::application) pgenapp = (papp);
+      sp(::aura::application) pgenapp = papp;
 
       if (pgenapp->m_strAppId.is_empty())
       {
@@ -1060,15 +1070,7 @@ namespace aura
 
       }
 
-      pgenapp->m_paurasystem = m_paurasystem;
-
-      pgenapp->m_paxissystem = m_paxissystem;
-
-      pgenapp->m_pbasesystem = m_pbasesystem;
-
-      pgenapp->m_pcoresystem = m_pcoresystem;
-
-      pgenapp->m_pcoresession = m_pcoresession;
+      pgenapp->m_psystem = m_psystem;
 
 #ifdef WINDOWS
 
@@ -1408,12 +1410,6 @@ namespace aura
       if (m_pcopydesk != NULL)
          return true;
 
-      if (m_pcoresession == NULL)
-      {
-         return true;
-
-      }
-
       alloc(m_pcopydesk);
 
       if (!m_pcopydesk->initialize())
@@ -1459,7 +1455,7 @@ namespace aura
    //::user::elemental * session::get_keyboard_focus()
    //{
 
-   //   if (m_pauraapp == NULL)
+   //   if (m_papp == NULL)
    //   {
 
    //      return NULL;
@@ -1510,13 +1506,13 @@ namespace aura
    //      return m_pkeyboardfocus;
 
    //   }
-   //   else if (Application.m_pbasesession != NULL)
+   //   else if (Application.m_psession != NULL)
    //   {
 
    //      return Session.get_keyboard_focus();
 
    //   }
-   //   else if (Application.m_pbasesystem != NULL)
+   //   else if (Application.m_psystem != NULL)
    //   {
 
    //      return Session.get_keyboard_focus();
@@ -1577,37 +1573,7 @@ namespace aura
 
       }
 
-      //if (m_pkeyboardfocus == NULL)
-      //   return NULL;
-
-      //sp(::user::elemental) puieFocus;
-
-      //try
-      //{
-
-      //   puieFocus = System.ui_.get_focus_ui();
-
-      //}
-      //catch(...)
-      //{
-
-      //}
-
-      //if(puieFocus == NULL)
-      //   return NULL;
-
-      //sp(::user::interaction) puiFocus = m_pkeyboardfocus;
-
-      //if(puiFocus.is_null())
-      //   return NULL;
-
-      //if(!puiFocus->is_descendant_of(puieFocus.cast < ::user::interaction >()))
-      //   return NULL;
-
-
-      //if((bool)oprop("NativeWindowFocus") && puieFocus != m_pkeyboardfocus)
-      //   return NULL;
-      //return m_pkeyboardfocus;
+      return NULL;
 
    }
 
@@ -2002,7 +1968,7 @@ namespace aura
    //::user::elemental * session::get_keyboard_focus()
    //{
 
-   //   if (m_pauraapp == NULL)
+   //   if (m_papp == NULL)
    //      return NULL;
 
 

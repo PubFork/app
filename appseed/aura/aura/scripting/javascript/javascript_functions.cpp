@@ -105,7 +105,7 @@ void scIsPlainHostName(CScriptVar *ca, void *data)
 {
 //	tinyjs *tinyJS = (tinyjs *)data;
 
-//   App(tinyJS->m_pauraapp);
+//   App(tinyJS->m_papp);
 
    string str = ca->getParameter("host")->getString();
 
@@ -142,7 +142,7 @@ void scMyIpAddress(CScriptVar *ca, void *data)
 {
 //	tinyjs *tinyJS = (tinyjs *)data;
 
-//   App(tinyJS->m_pauraapp);
+//   App(tinyJS->m_papp);
 
 
    ca->getReturnVar()->setString("127.0.0.1");
