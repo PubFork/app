@@ -1069,7 +1069,11 @@ namespace crypto
 
    sp(rsa) crypto::read_priv_pem(const string & strFile)
    {
-      FILE * f = fopen(strFile,"rb");
+#ifdef WINDOWSEX
+      FILE * f = _fsopen(strFile, "rb", _SH_DENYNO);
+#else
+      FILE * f = fopen(strFile, "rb");
+#endif
       sp(::crypto::rsa) rsa = canew(::crypto::rsa(get_app()));
       RSA * & prsa = rsa->m_prsa;
       PEM_read_RSAPrivateKey(f,&prsa,NULL,NULL);
