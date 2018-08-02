@@ -262,14 +262,24 @@ namespace linux
    bool interaction_impl::create_window(::user::interaction * pui, const char * lpszClassName,const char * lpszWindowName,uint32_t dwStyle,const RECT & rect,::user::interaction * pParentWnd,id id, ::create * pcreate)
    {
 
-      if(!native_create_window_ex(pui, cs, puiParent, id))
-      {
+      // can't use for desktop or pop-up windows (use create_window_ex instead)
+      ASSERT(pParentWnd != NULL);
+      ASSERT((dwStyle & WS_POPUP) == 0);
 
-         return false;
+      ::user::create_struct cs;
 
-      }
+      cs.dwExStyle = 0;
+      cs.lpszClass = lpszClassName;
+      cs.lpszName = lpszWindowName;
+      cs.style = dwStyle | WS_CHILD;
+      cs.x = rect.left;
+      cs.y = rect.top;
+      cs.cx = width(rect);
+      cs.cy = height(rect);
+      cs.hwndParent = pParentWnd->get_safe_handle();
+      cs.lpCreateParams = (LPVOID) pcreate;
 
-      return true;
+      return create_window_ex(pui, cs, pParentWnd, id);
 
    }
 
@@ -583,26 +593,10 @@ namespace linux
    }
 
 
-   bool interaction_impl::create_window(
-   ::user::interaction * pui,
-   const char * lpszClassName,
-   const char * lpszWindowName,
-   DWORD dwStyle,
-   const RECT& rect,
-   ::user::interaction * pParentWnd,
-   id id,
-   ::create * pContext)
+   bool interaction_impl::create_window_ex(::user::interaction * pui, ::user::create_struct & cs, ::user::interaction * pParentWnd, id id)
    {
 
-      // can't use for desktop or pop-up windows (use CreateEx instead)
-      ASSERT(pParentWnd != NULL);
-      ASSERT((dwStyle & WS_POPUP) == 0);
-
-      ::user::create_struct cs(0, lpszClassName, lpszWindowName, dwStyle, rect, pContext);
-
-      cs.hwndParent = pParentWnd->get_os_data();
-
-      if(!create_window_ex(pui, cs, pParentWnd, id))
+      if(!native_create_window_ex(pui, cs, pParentWnd, id))
       {
 
          return false;
@@ -3065,14 +3059,7 @@ namespace linux
          if (m_pui->m_pthread != NULL)
          {
 
-            if (!m_bRedraw)
-            {
-
-               m_bRedraw = true;
-
-               m_pui->m_pthread->post_message(WM_KICKIDLE);
-
-            }
+            m_pui->m_pthread->post_message(WM_REDRAW);
 
          }
 

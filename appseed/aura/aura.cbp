@@ -1487,7 +1487,10 @@
 		<Unit filename="user/user/user_create_struct.h" />
 		<Unit filename="user/user/user_elemental.h" />
 		<Unit filename="user/user/user_enum.h" />
-		<Unit filename="user/user/user_form.cpp" />
+		<Unit filename="user/user/user_form.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="user/user/user_form.h" />
 		<Unit filename="user/user/user_frame.cpp">
 			<Option compile="0" />
@@ -1525,7 +1528,10 @@
 		<Unit filename="user/user/user_key_enum.h" />
 		<Unit filename="user/user/user_menu.h" />
 		<Unit filename="user/user/user_menu_command.h" />
-		<Unit filename="user/user/user_menu_interaction.cpp" />
+		<Unit filename="user/user/user_menu_interaction.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="user/user/user_menu_item.h" />
 		<Unit filename="user/user/user_mouse.h" />
 		<Unit filename="user/user/user_place_holder.cpp">
@@ -1543,10 +1549,19 @@
 		<Unit filename="user/user/user_scroll_info.h" />
 		<Unit filename="user/user/user_style.h" />
 		<Unit filename="user/user/user_style_base.h" />
-		<Unit filename="user/user/user_style_composite.cpp" />
+		<Unit filename="user/user/user_style_composite.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="user/user/user_style_composite.h" />
-		<Unit filename="user/user/user_style_coord.cpp" />
-		<Unit filename="user/user/user_style_rect.cpp" />
+		<Unit filename="user/user/user_style_coord.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="user/user/user_style_rect.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="user/user/user_tooltip.h" />
 		<Unit filename="user/user/user_validate.h" />
 		<Unit filename="user/user/user_window_map.h" />

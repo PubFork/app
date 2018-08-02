@@ -1325,6 +1325,7 @@ CLASS_DECL_AURA bool vfxResolveShortcut(string & strTarget, const char * pszSour
 
    return true;
 
+   }
 
 
    void CLASS_DECL_AURA vfxThrowFileException(::aura::application * papp, ::file::exception::e_cause ecause, int lOsError, const char * lpszFileName /* == NULL */)
