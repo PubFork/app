@@ -69,8 +69,8 @@ namespace aura
 
 
    system::system(::aura::application * papp, app_core * pappcore):
-      ::object(papp == NULL ? this : papp),
-      ::thread(papp == NULL ? this : papp)
+      ::object(NULL),
+      ::thread(NULL)
    {
 
       m_pappcore = pappcore;

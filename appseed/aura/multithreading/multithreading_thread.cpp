@@ -328,16 +328,6 @@ void thread::CommonConstruct()
 
    }
 
-   ::thread * pthreadApp = m_papp;
-
-   ::thread * pthreadThis = this;
-
-   if (pthreadApp != NULL && pthreadApp != pthreadThis)
-   {
-
-      m_bThreadToolsForIncreasedFps = pthreadApp->m_bThreadToolsForIncreasedFps;
-
-   }
 
    m_dwThreadAffinityMask = 0;
 
