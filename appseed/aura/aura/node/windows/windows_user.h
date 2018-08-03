@@ -6,7 +6,7 @@
 
 CLASS_DECL_AURA const unichar * __register_window_class(::aura::application * papp, UINT nClassStyle, HCURSOR hCursor = 0, HBRUSH hbrBackground = 0, HICON hIcon = 0);
 
-CLASS_DECL_AURA bool __register_class(WNDCLASSW* lpWndClass);
+CLASS_DECL_AURA bool windows_register_class(WNDCLASSW* lpWndClass);
 
 CLASS_DECL_AURA LRESULT CALLBACK __window_procedure(oswindow oswindow, UINT nMsg, WPARAM wParam, LPARAM lParam);
 CLASS_DECL_AURA WNDPROC __get_window_procedure();

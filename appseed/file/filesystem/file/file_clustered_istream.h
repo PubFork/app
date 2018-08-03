@@ -8,13 +8,13 @@ namespace file
 
 
    class clustered_istream:
-      public istream
+      public stream
    {
       uint64_t _virtPos;
       uint64_t _physPos;
       uint64_t _curRem;
    public:
-      istream * Stream;
+      stream * Stream;
       uint64_t StartOffset;
       uint64_t Size;
       int32_t BlockSizeLog;

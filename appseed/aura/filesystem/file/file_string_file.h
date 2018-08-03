@@ -30,12 +30,12 @@ namespace file
 
       using ::file::reader::read;
       virtual memory_size_t read(void *lpBuf, memory_size_t nCount);
-      void read(istream & istream);
+      void read(stream & istream);
 
 
       using ::file::writer::write;
       virtual void write(const void *lpBuf, memory_size_t nCount);
-      void write(ostream & ostream);
+      void write(stream & ostream);
 
       ::string str() const;
 

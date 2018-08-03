@@ -562,7 +562,7 @@
     <ClInclude Include="graphics\visual\visual.h" />
     <ClInclude Include="graphics\visual\visual_calendar.h" />
     <ClInclude Include="graphics\visual\visual_clock.h" />
-    <ClInclude Include="time\time.h" />
+    <ClInclude Include="time\time_time.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="calculator\datetime_element.cpp" />

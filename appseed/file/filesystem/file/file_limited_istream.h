@@ -7,9 +7,9 @@ namespace file
 {
 
    class limited_istream:
-      public istream
+      public stream
    {
-      istream *    _stream;
+      stream *    _stream;
       uint64_t            _virtPos;
       uint64_t            _physPos;
       uint64_t            _size;
@@ -20,9 +20,12 @@ namespace file
          return _stream->seek((int_ptr) _physPos, seek_begin); 
       }
    public:
-      void SetStream(istream *stream)
+
+      void SetStream(stream *stream)
       { 
+         
          _stream = stream; 
+
       }
 
       //HRESULT InitAndSeek(uint64_t startOffset, uint64_t size)
@@ -40,7 +43,7 @@ namespace file
 
    };
 
-   reader * create_limited_istream(istream *inStream, uint64_t pos, uint64_t size);
+   reader * create_limited_istream(stream *inStream, uint64_t pos, uint64_t size);
 
 
 } // namespace file

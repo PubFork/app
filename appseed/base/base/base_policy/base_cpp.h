@@ -115,14 +115,13 @@ namespace draw2d
 
 } // namespace draw2d
 
+class stream;
 
 namespace file
 {
 
 
    class file;
-   class istream;
-   class ostream;
    class object;
 
 

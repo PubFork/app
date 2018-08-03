@@ -173,6 +173,7 @@ namespace database
       virtual key calc_parent_data_key();
       virtual key calc_data_key();
       virtual void defer_update_data_key();
+      virtual void update_data_key();
       virtual bool is_local_data();
       virtual void set_local_data(bool bLocalData = true);
 

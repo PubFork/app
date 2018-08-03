@@ -18,7 +18,6 @@ namespace file
    typedef sp(binary_file) binary_buffer_sp;
 
    class byte_stream;
-   class istream;
 
 } // namespace
 

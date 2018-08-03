@@ -46,7 +46,7 @@ namespace file
 
 
 
-   reader * create_limited_istream(istream *inStream, uint64_t pos, uint64_t size)
+   reader * create_limited_istream(stream *inStream, uint64_t pos, uint64_t size)
    {
       limited_istream *streamSpec = new limited_istream;
       streamSpec->SetStream(inStream);

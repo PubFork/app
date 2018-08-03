@@ -757,6 +757,12 @@ namespace database
 
    }
 
+   void client::update_data_key()
+   {
+
+      m_datakey = calc_data_key() + m_datakeyModifier;
+
+   }
 
    void client::defer_update_data_key()
    {
@@ -764,7 +770,7 @@ namespace database
       if(m_datakey.m_strDataKey.is_empty())
       {
 
-         m_datakey = calc_data_key() + m_datakeyModifier;
+         update_data_key();
 
       }
 

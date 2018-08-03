@@ -31,7 +31,7 @@ namespace file
          using ::file::system::time_square;
 
          template < class T >
-         string time_square(::aura::application * papp,T * p,bool (T::*lpfnOutput)(ostream &,const path &),const path & lpszSource)
+         string time_square(::aura::application * papp,T * p,bool (T::*lpfnOutput)(stream &,const path &),const path & lpszSource)
          {
             string strTime = this->time_square(papp);
             if(strTime.has_char())

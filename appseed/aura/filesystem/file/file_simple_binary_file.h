@@ -73,11 +73,11 @@ namespace file
 
 
          using ::file::binary_file::write;
-         void write(ostream & ostream);
+         void write(stream & ostream);
 
 
          using ::file::binary_file::read;
-         void read(istream & istream);
+         void read(stream & istream);
 
 
          //virtual bool read_string(string & str);

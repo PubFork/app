@@ -357,8 +357,6 @@ namespace file
    class path;
    typedef CLASS_DECL_AURA ::string_array < ::file::path,string > patha;
    class file;
-   class istream;
-   class ostream;
 
 
 } // namespace file

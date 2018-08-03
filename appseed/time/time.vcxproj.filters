@@ -41,9 +41,6 @@
     <ClInclude Include="framework.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="time\time.h">
-      <Filter>Header Files\time</Filter>
-    </ClInclude>
     <ClInclude Include="datetime\datetime.h">
       <Filter>Header Files\datetime</Filter>
     </ClInclude>
@@ -94,6 +91,9 @@
     </ClInclude>
     <ClInclude Include="graphics\visual\visual_clock.h">
       <Filter>Header Files\graphics\visual</Filter>
+    </ClInclude>
+    <ClInclude Include="time\time_time.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
