@@ -121,7 +121,7 @@ namespace multithreading
    CLASS_DECL_AURA uint32_t __on_thread_finally(thread * pthread);
 
    CLASS_DECL_AURA extern comparable_eq_array <IDTHREAD> * s_piaThread;
-   CLASS_DECL_AURA extern thread_ptra * s_pthreadptra;
+   CLASS_DECL_AURA extern pointer_array < ::thread * > * s_pthreadptra;
    CLASS_DECL_AURA extern mutex * s_pmutex;
 
 
