@@ -845,6 +845,8 @@ namespace file
 
          epath = path_url;
 
+         strPath.replace("\\", "/");
+
       }
       else
       {

@@ -194,10 +194,16 @@ namespace sockets
             }
             //inheader(__id(connection)) = "close";
          }
+
          inheader(__id(content_length)) = (int64_t) body.get_length();
 
+#if !defined(BSD_STYLE_SOCKETS)
+
          m_bExpectResponse = true;
+
          m_bExpectRequest = false;
+
+#endif
 
          SendRequest();
 
@@ -344,8 +350,13 @@ namespace sockets
       inheader(__id(content_type)) = "multipart/form-data; boundary=" + m_boundary;
       inheader(__id(content_length)) = (int64_t) length;
 
+#if !defined(BSD_STYLE_SOCKETS)
+
       m_bExpectResponse = true;
+
       m_bExpectRequest = false;
+
+#endif
 
       SendRequest();
 

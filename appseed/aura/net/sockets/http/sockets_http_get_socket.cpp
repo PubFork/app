@@ -17,7 +17,11 @@ namespace sockets
       http_client_socket(h)
    {
 
+#if !defined(BSD_STYLE_SOCKETS)
+
       m_bExpectRequest = true;
+
+#endif
 
    }
 
@@ -32,8 +36,12 @@ namespace sockets
       http_tunnel(h),
       http_client_socket(h, url_in)
    {
-      
+
+#if !defined(BSD_STYLE_SOCKETS)
+
       m_bExpectRequest = true;
+
+#endif
 
       m_emethod = http_method_get;
 
@@ -50,8 +58,12 @@ namespace sockets
       http_tunnel(h),
       http_client_socket(h, url_in)
    {
-      
+
+#if !defined(BSD_STYLE_SOCKETS)
+
       m_bExpectRequest = true;
+
+#endif
 
       m_emethod = http_method_get;
 
@@ -89,15 +101,23 @@ namespace sockets
       //inheader("Content-Length") = 0;
       //inheader("Cache-Controlngth") = 0;
 
-/*      if (GetUrlPort() != 80 && GetUrlPort() != 443)
-         inheader(__id(host)) = GetUrlHost() + ":" + ::str::from(GetUrlPort());
-      else
-         inheader(__id(host)) = GetUrlHost();*/
+      /*      if (GetUrlPort() != 80 && GetUrlPort() != 443)
+               inheader(__id(host)) = GetUrlHost() + ":" + ::str::from(GetUrlPort());
+            else
+               inheader(__id(host)) = GetUrlHost();*/
+
+#if !defined(BSD_STYLE_SOCKETS)
 
       m_bExpectResponse = true;
+
       m_bExpectRequest = false;
+
+#endif
+
       SendRequest();
+
    }
+
 
 } // namespace sockets
 

@@ -136,9 +136,9 @@ namespace sockets
       bool                    m_bNonBlocking;
       //    unsigned long           m_flags; ///< boolean flags, replacing old 'bool' members
 
-
+#if !defined(BSD_STYLE_SOCKETS)
       manual_reset_event      m_event;
-
+#endif
 
       bool                    m_bEnableSsl; ///< Enable SSL for this tcp_socket
       bool                    m_bSsl; ///< ssl negotiation mode (tcp_socket)
@@ -172,12 +172,12 @@ namespace sockets
       e_status                m_estatus;
       DWORD                   m_dwStart;
 
-
+#if !defined(BSD_STYLE_SOCKETS)
       bool                    m_bExpectResponse;
       bool                    m_bExpectRequest;
       bool                    m_bReading;
       bool                    m_bWriting;
-
+#endif
 
       /** base_socket mode flags. */
       /*

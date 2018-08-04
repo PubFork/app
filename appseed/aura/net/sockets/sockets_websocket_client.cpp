@@ -356,7 +356,11 @@ namespace sockets
 
       m_bTls = true;
 
+#if !defined(BSD_STYLE_SOCKETS)
+
       m_bExpectRequest = true;
+
+#endif
 
       m_eping = ping_none;
 
@@ -395,7 +399,11 @@ namespace sockets
 
       m_bTls = true;
 
+#if !defined(BSD_STYLE_SOCKETS)
+
       m_bExpectRequest = true;
+
+#endif
 
       m_emethod = http_method_get;
 
@@ -575,8 +583,14 @@ namespace sockets
          else
          inheader(__id(host)) = GetUrlHost();*/
 
+#if !defined(BSD_STYLE_SOCKETS)
+
          m_bExpectResponse = true;
+
          m_bExpectRequest = false;
+
+#endif
+
          m_bRequestSent = true;
          SendRequest();
       }
@@ -584,7 +598,7 @@ namespace sockets
       {
          //if (m_memPong.get_size() > 0 && (get_tick_count() - m_dwLastSpontaneousPong) > 10000)
          //{
-         // 
+         //
          //   write(m_memPong.get_data(), m_memPong.get_size());
 
          //   m_memPong.allocate(2);

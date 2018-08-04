@@ -79,8 +79,10 @@ namespace sockets
       ,m_slave_handler(NULL)
       // Line protocol
       ,m_bLineProtocol(false)
-      ,m_skip_c(false),
-      m_event(h.get_app())
+      ,m_skip_c(false)
+#if !defined(BSD_STYLE_SOCKETS)
+      ,m_event(h.get_app())
+#endif
    {
       m_pmemfileInput = NULL;
       m_psslcontext = new ssl_context;

@@ -173,46 +173,56 @@ namespace sockets
 
       m_memoryfile.Truncate(0);
 
-      if(m_content_length != ((size_t) (-1)))
+      if(m_content_length != ((memory_size_t) (-1)))
       {
          m_memoryfile.allocate_internal(m_content_length);
+
          if(outheader(__id(content_encoding)).compare_value_ci("gzip") != 0
                && (m_response.attr(__id(http_status_code)) < 300 || m_response.attr(__id(http_status_code)) >= 400))
          {
 
             m_iFinalSize = m_content_length;
+
          }
+
       }
 
       m_memoryfile.seek_to_begin();
 
-      if(::str::ends(m_strUrl, "arialuni.ttf"))
-      {
-         TRACE("Debug Here : arialuni.ttf");
-      }
+      //if(::str::ends(m_strUrl, "arialuni.ttf"))
+      //{
+      //   TRACE("Debug Here : arialuni.ttf");
+      //}
 
+#if !defined(BSD_STYLE_SOCKETS)
 
       if(m_content_length > 0)
       {
+
          m_event.ResetEvent();
+
          m_bExpectResponse = true;
+
       }
       else
       {
+
          m_bExpectResponse = false;
+
       }
 
-      if(::str::ends(m_strUrl, "en_us_international.xml"))
-      {
-         TRACE("Debug Here");
-      }
+#endif
+
+      //if(::str::ends(m_strUrl, "en_us_international.xml"))
+      //{
+      //   TRACE("Debug Here");
+      //}
 
 
-      if(::str::ends(m_strUrl, "text_select.xml"))
-      {
-         TRACE("Debug Here");
-      }
-
+      //if(::str::ends(m_strUrl, "text_select.xml"))
+      //{
+      //   TRACE("Debug Here");
+      //}
 
    }
 
@@ -247,9 +257,13 @@ namespace sockets
 
       }
 
+#if !defined(BSD_STYLE_SOCKETS)
+
       m_bExpectRequest = false;
 
       m_bExpectResponse = false;
+
+#endif
 
    }
 
@@ -294,9 +308,13 @@ namespace sockets
 
       increment_scalar(scalar_download_size, len);
 
+#if !defined(BSD_STYLE_SOCKETS)
+
       m_event.ResetEvent();
 
       m_bExpectResponse = true;
+
+#endif
 
    }
 
