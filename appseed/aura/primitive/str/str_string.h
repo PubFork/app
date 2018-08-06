@@ -194,7 +194,7 @@ class fixed_alloc_array;
 
 
 class CLASS_DECL_AURA string :
-   public stdstring < simple_string >
+   public simple_string
 #if defined(VARIADIC_TEMPLATE_FORMAT2)
    , public string_format_printer
 #endif
@@ -213,10 +213,8 @@ public:
    string(const string & strSrc);
 
    string(string && strSrc):
-      stdstring< simple_string>(for_moving())
+      simple_string(::move(strSrc))
    {
-      m_pszData = strSrc.m_pszData;
-      strSrc.m_pszData = NULL;
    }
 
 #ifdef METROWIN
@@ -230,34 +228,24 @@ public:
 
 
    string(e_context_switcher_null):
-      stdstring< simple_string>(string_trait::GetDefaultManager())
+      simple_string(string_trait::GetDefaultManager())
    {
    }
 
    string(e_context_switcher_empty):
-      stdstring< simple_string>(string_trait::GetDefaultManager())
-   {
-   }
-
-   string(const stdstring< simple_string> & strSrc):
-      stdstring< simple_string>(strSrc,string_trait::GetDefaultManager())
+      simple_string(string_trait::GetDefaultManager())
    {
    }
 
    string(const simple_string & strSrc):
-      stdstring< simple_string>(strSrc,string_trait::GetDefaultManager())
+      simple_string(strSrc,string_trait::GetDefaultManager())
    {
    }
 
-
-   string(const stdstring< verisimple_wstring> & strSrc):
-      stdstring< simple_string>(strSrc,string_trait::GetDefaultManager())
+   string(const wstring & wstrSrc) :
+      simple_string(string_trait::GetDefaultManager())
    {
-   }
-
-   string(const verisimple_wstring & strSrc):
-      stdstring< simple_string>(strSrc,string_trait::GetDefaultManager())
-   {
+      operator =(wstrSrc);
    }
 
    void construct() NOTHROW;
@@ -273,8 +261,8 @@ public:
    string(const unichar32 * pszSrc);
    string(const string & strSrc, strsize npos, strsize len = -1);
 
-   string(const hstring & hstr) : stdstring< simple_string>(hstr.operator const char *(),string_trait::GetDefaultManager()) {  }
-   string(const hwstring & hwstr) : stdstring< simple_string>(hwstr.operator const unichar *(),string_trait::GetDefaultManager()) {  }
+   string(const hstring & hstr) : simple_string(hstr.operator const char *(),string_trait::GetDefaultManager()) {  }
+   string(const hwstring & hwstr) : simple_string(string_trait::GetDefaultManager()) { operator=(hwstr.operator const unichar *()); }
 
    string(const istring & istr);
 
@@ -1248,7 +1236,7 @@ inline strsize string::utf8_length() const
 
 
 inline   string::string() NOTHROW :
-stdstring<simple_string>(string_trait::GetDefaultManager())
+simple_string(string_trait::GetDefaultManager())
 {
 }
 

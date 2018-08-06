@@ -402,9 +402,18 @@ public:
 
    typedef string_data data_type;
 
+   typedef string_file CStrBuf;
+
+   char * m_pszData;
 
    simple_string(for_moving)
    {
+   }
+
+   simple_string(simple_string && s)
+   {
+      m_pszData = s.m_pszData;
+      s.m_pszData = NULL;
    }
 
    explicit simple_string(string_manager * pstringmanager )
@@ -416,7 +425,7 @@ public:
    simple_string(const simple_string & strSrc, string_manager * pstringmanager  );
    simple_string(const string_data * pdata, string_manager * pstringmanager  );
    simple_string(const char * pszSrc,string_manager * pstringmanager );
-   simple_string(const unichar * pszSrc,string_manager * pstringmanager);
+   //simple_string(const unichar * pszSrc,string_manager * pstringmanager);
    simple_string(const byte * pszSrc,string_manager * pstringmanager);
    simple_string(const char* pchSrc,strsize nLength,string_manager * pstringmanager );
    ~simple_string() NOTHROW
@@ -986,10 +995,6 @@ protected:
       return( pNewData );
    }
 
-public :
-   typedef string_file CStrBuf;
-public:
-   char * m_pszData;
 
 };
 

@@ -600,6 +600,7 @@ void * plex_heap_alloc_array::_realloc(void * p, size_t size, size_t sizeOld, in
 
       }
 
+#if !MEMDLEAK
       if (align > 0)
       {
 
@@ -613,6 +614,7 @@ void * plex_heap_alloc_array::_realloc(void * p, size_t size, size_t sizeOld, in
 
       }
       else
+#endif
       {
 
          memcpy(pNew, p, MIN(sizeOld, size));
@@ -945,13 +947,13 @@ class CLASS_DECL_AURA plex_heap     // warning var length structure
 public:
    plex_heap* pNext;
    // BYTE data[maxNum*elementSize];
-   
+
    void * data() { return this+1; }
-   
+
    static plex_heap* create(plex_heap*& head, uint_ptr nMax, uint_ptr cbElement);
    // like 'calloc' but no zero fill
    // may _throw( memory exceptions
-   
+
    void FreeDataChain();       // free this one and links
 };
 
@@ -972,9 +974,9 @@ plex_heap * plex_heap::create(plex_heap*& pHead, uint_ptr nMax, uint_ptr cbEleme
    {
       _throw(invalid_argument_exception(get_app()));
    }
-   
+
    plex_heap* p = (plex_heap*) system_heap_alloc(sizeof(plex_heap) + nMax * cbElement);
-   
+
 #ifdef DEBUG
    Alloc_check_pointer_in_cpp(p);
 #endif
@@ -987,7 +989,7 @@ plex_heap * plex_heap::create(plex_heap*& pHead, uint_ptr nMax, uint_ptr cbEleme
 
 void plex_heap::FreeDataChain()     // free this one and links
 {
-   
+
    plex_heap* p = this;
    while (p != NULL)
    {
@@ -996,81 +998,81 @@ void plex_heap::FreeDataChain()     // free this one and links
       system_heap_free(bytes);
       p = pNext;
    }
-   
+
 }
 
 
 void plex_heap_alloc_sync::FreeAll()
 {
-   
+
    m_protect.lock();
-   
+
    try
    {
-      
+
       m_pBlocks->FreeDataChain();
-      
+
       m_pBlocks = NULL;
-      
+
       m_pnodeFree = NULL;
-      
+
    }
    catch(...)
    {
-      
+
    }
-   
+
    m_protect.unlock();
-   
+
 }
 
 
 void plex_heap_alloc_sync::NewBlock()
 {
-   
+
    if (m_pnodeFree == NULL)
    {
-      
+
 #ifdef DEBUG
-      
+
       UINT nAllocSize = 16 + sizeof(node *) + 16 + m_nAllocSize + 32;
-      
+
 #else
-      
+
       UINT nAllocSize = m_nAllocSize;
-      
+
 #endif
-      
+
       plex_heap * pnewblock = plex_heap::create(m_pBlocks, m_nBlockSize, nAllocSize);
-      
+
       node * pnode = (node *) pnewblock->data();
-      
+
       // free in reverse order to make it easier to debug
       ((BYTE*&)pnode) += (nAllocSize * m_nBlockSize) - nAllocSize;
-      
+
       for (int32_t i = m_nBlockSize - 1; i >= 0; i--, ((BYTE*&)pnode) -= nAllocSize)
       {
-         
+
 #ifdef DEBUG
-         
+
          setup_plex_heap_alloc_sync_node_palace_guard(pnode, m_nAllocSize);
-         
+
 #endif
-         
+
          pnode->m_pnext = m_pnodeFree;
-         
+
          m_pnodeFree = pnode;
-         
+
       }
-      
+
    }
-   
+
    ASSERT(m_pnodeFree != NULL);  // we must have something
-   
+
 #ifdef DEBUG
-   
+
    Free_check_pointer_in_cpp(m_pnodeFree);
-   
+
 #endif
-   
+
 }

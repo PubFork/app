@@ -423,7 +423,9 @@ namespace aura
       try
       {
 
-         if(p != NULL)
+         //Thank you Dunno_Aye for the is_null!!
+
+         if(is_null(p))
          {
 
             T * pdel = p;
@@ -819,7 +821,7 @@ template < typename TYPE >
 inline bool is_null(const TYPE * p)
 {
 
-   return is_null(p, ((sizeof(TYPE) + sizeof(void *)) * 2));
+   return is_null(p, MAX((sizeof(TYPE) + sizeof(void *)) * 2, 65535));
 
 }
 

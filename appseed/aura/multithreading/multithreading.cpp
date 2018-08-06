@@ -488,13 +488,13 @@ void thread_ptra::post_quit()
 
    for(index i = 0; i < spa(thread)::get_count(); i++)
    {
-      
+
       ::thread * pthreadItem = element_at(i);
 
       if(pthreadItem != pthread && pthreadItem != NULL)
       {
-         
-         TRACE("thread_ptra::get_count_except_current_thread %s", typeid(*pthreadItem).name());
+
+         TRACE("\nthread_ptra::get_count_except_current_thread %s", typeid(*pthreadItem).name());
 
          c++;
 

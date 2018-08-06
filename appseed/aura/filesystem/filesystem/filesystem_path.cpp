@@ -414,7 +414,7 @@ namespace file
 
       string strThis = *this;
 
-      stdstring < simple_string >::operator = (normalize_path(strThis + str, m_epath));
+      simple_string::operator = (normalize_path(strThis + str, m_epath));
 
       return *this;
 
@@ -591,7 +591,7 @@ namespace file
 
          m_epath = epath;
 
-         ::stdstring < simple_string >::operator = (normalize_path(*this, m_epath));
+         ::simple_string::operator = (normalize_path(*this, m_epath));
          ;
       }
 
@@ -625,7 +625,7 @@ namespace file
 
       m_epath = get_path_type(str);
 
-      stdstring < simple_string >::operator  = (normalize_path(str, m_epath));
+      simple_string::operator  = (normalize_path(str, m_epath));
 
       return *this;
 

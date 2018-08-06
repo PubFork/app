@@ -83,7 +83,7 @@ const int string::npos = -1;
 
 
 string::string(unichar ch,strsize nLength):
-   stdstring < simple_string >(string_trait::GetDefaultManager())
+   simple_string(string_trait::GetDefaultManager())
 {
    ASSERT(nLength >= 0);
    if(nLength > 0)
@@ -125,7 +125,7 @@ string::string(unichar ch,strsize nLength):
 }
 
 string::string(const unichar* pch,strsize nLength):
-   stdstring < simple_string >(string_trait::GetDefaultManager())
+   simple_string(string_trait::GetDefaultManager())
 {
    ASSERT(nLength >= 0);
    if(nLength > 0)
@@ -145,7 +145,7 @@ string::string(const unichar* pch,strsize nLength):
 
 
 string::string(const unichar32* pch,strsize nLength):
-   stdstring < simple_string >(string_trait::GetDefaultManager())
+   simple_string(string_trait::GetDefaultManager())
 {
    ASSERT(nLength >= 0);
    if(nLength > 0)
@@ -162,7 +162,7 @@ string::string(const unichar32* pch,strsize nLength):
 }
 
 string::string(const unichar* pch,strsize nLength,string_manager * pstringmanager):
-   stdstring < simple_string >(pstringmanager)
+   simple_string(pstringmanager)
 {
    ASSERT(nLength >= 0);
    if(nLength > 0)
@@ -776,7 +776,7 @@ void string::construct() NOTHROW
 
 
 string::string(string_manager * pstringmanager) NOTHROW:
-stdstring < simple_string >(pstringmanager)
+simple_string(pstringmanager)
 {
 }
 
@@ -789,17 +789,17 @@ void __cdecl string::Construct(class string * pstring)
 
 // copy constructor
 string::string(const string & strSrc):
-   stdstring < simple_string >(strSrc,string_trait::GetDefaultManager())
+   simple_string(strSrc,string_trait::GetDefaultManager())
 {
 }
 
 string::string(const string & strSrc,strsize npos,strsize len) :
-   stdstring < simple_string >(strSrc.Mid(npos,len),string_trait::GetDefaultManager())
+   simple_string(strSrc.Mid(npos,len),string_trait::GetDefaultManager())
 {
 }
 
 string::string(const char * pszSrc) :
-   stdstring < simple_string >(string_trait::GetDefaultManager())
+   simple_string(string_trait::GetDefaultManager())
 {
    //if(!CheckImplicitLoad(pszSrc))
    //{
@@ -810,7 +810,7 @@ string::string(const char * pszSrc) :
 
 
 //string::string(char * pszSrc):
-//stdstring < simple_string >(string_trait::GetDefaultManager())
+//simple_string(string_trait::GetDefaultManager())
 //{
 //   //if(!CheckImplicitLoad(pszSrc))
 //   //{
@@ -820,7 +820,7 @@ string::string(const char * pszSrc) :
 //}
 
 string::string(const char * pszSrc,string_manager * pstringmanager):
-   stdstring < simple_string >(pstringmanager)
+   simple_string(pstringmanager)
 {
    //      if( !CheckImplicitLoad( pszSrc ) )
    //      {
@@ -831,7 +831,7 @@ string::string(const char * pszSrc,string_manager * pstringmanager):
 
 
 string::string(const unichar* pszSrc):
-   stdstring < simple_string >(string_trait::GetDefaultManager())
+   simple_string(string_trait::GetDefaultManager())
 {
    //      if( !CheckImplicitLoad( pszSrc ) )
    //      {
@@ -840,7 +840,7 @@ string::string(const unichar* pszSrc):
 }
 
 string::string(const unichar32* pszSrc):
-   stdstring < simple_string >(string_trait::GetDefaultManager())
+   simple_string(string_trait::GetDefaultManager())
 {
    //      if( !CheckImplicitLoad( pszSrc ) )
    //      {
@@ -858,7 +858,7 @@ string::string(const unichar32* pszSrc):
 
 
 //string::string(const string_interface & str):
-//stdstring < simple_string >(string_trait::GetDefaultManager())
+//simple_string(string_trait::GetDefaultManager())
 //{
 //   char sz[256];
 //   strsize iLen = str.get_length();
@@ -878,7 +878,7 @@ string::string(const unichar32* pszSrc):
 
 
 string::string(const unichar * pszSrc,string_manager * pstringmanager):
-   stdstring < simple_string >(pstringmanager)
+   simple_string(pstringmanager)
 {
    //      if( !CheckImplicitLoad( pszSrc ) )
    //      {
@@ -889,7 +889,7 @@ string::string(const unichar * pszSrc,string_manager * pstringmanager):
 #ifdef METROWIN
 
 string::string(Array <byte > ^ a):
-   stdstring < simple_string >(string_trait::GetDefaultManager())
+   simple_string(string_trait::GetDefaultManager())
 {
    //      if( !CheckImplicitLoad( pszSrc ) )
    //      {
@@ -898,7 +898,7 @@ string::string(Array <byte > ^ a):
 }
 
 string::string(Object ^ o) :
-   stdstring < simple_string >(string_trait::GetDefaultManager())
+   simple_string(string_trait::GetDefaultManager())
 {
    //      if( !CheckImplicitLoad( pszSrc ) )
    //      {
@@ -907,7 +907,7 @@ string::string(Object ^ o) :
 }
 
 string::string(Object ^ o, string_manager * pstringmanager) :
-   stdstring < simple_string >(pstringmanager)
+   simple_string(pstringmanager)
 {
    //      if( !CheckImplicitLoad( pszSrc ) )
    //      {
@@ -918,7 +918,7 @@ string::string(Object ^ o, string_manager * pstringmanager) :
 #endif
 
 string::string(const uchar* pszSrc):
-   stdstring < simple_string >(string_trait::GetDefaultManager())
+   simple_string(string_trait::GetDefaultManager())
 {
    *this = reinterpret_cast<const char*>(pszSrc);
 }
@@ -934,7 +934,7 @@ const char *psz = reinterpret_cast< const char* >( pszSrc );
 }*/
 
 //string::string(uchar* pszSrc):
-//stdstring < simple_string >(string_trait::GetDefaultManager())
+//simple_string(string_trait::GetDefaultManager())
 //{
 //   const char *psz = reinterpret_cast<const char*>(pszSrc);
 //   //      if (!CheckImplicitLoad( psz ))
@@ -944,7 +944,7 @@ const char *psz = reinterpret_cast< const char* >( pszSrc );
 //}
 //
 //string::string(unichar* pszSrc):
-//stdstring < simple_string >(string_trait::GetDefaultManager())
+//simple_string(string_trait::GetDefaultManager())
 //{
 //   const unichar *psz = reinterpret_cast<const unichar*>(pszSrc);
 //   //if (!CheckImplicitLoad( psz ))
@@ -954,19 +954,19 @@ const char *psz = reinterpret_cast< const char* >( pszSrc );
 //}
 
 //string::string(const istring & istr):
-//stdstring < simple_string >(string_trait::GetDefaultManager())
+//simple_string(string_trait::GetDefaultManager())
 //{
 //   *this = (const char *)istr;
 //}
 
 string::string(const uchar* pszSrc,string_manager * pstringmanager):
-   stdstring < simple_string >(pstringmanager)
+   simple_string(pstringmanager)
 {
    *this = reinterpret_cast<const char*>(pszSrc);
 }
 
 string::string(char ch,strsize nLength):
-   stdstring < simple_string >(string_trait::GetDefaultManager())
+   simple_string(string_trait::GetDefaultManager())
 {
    ASSERT(nLength >= 0);
    if(nLength > 0)
@@ -978,7 +978,7 @@ string::string(char ch,strsize nLength):
 }
 
 string::string(strsize nLength,char ch):
-   stdstring < simple_string >(string_trait::GetDefaultManager())
+   simple_string(string_trait::GetDefaultManager())
 {
    ASSERT(nLength >= 0);
    if(nLength > 0)
@@ -992,12 +992,12 @@ string::string(strsize nLength,char ch):
 
 
 string::string(const char* pch,strsize nLength):
-   stdstring < simple_string >(pch,nLength,string_trait::GetDefaultManager())
+   simple_string(pch,nLength,string_trait::GetDefaultManager())
 {
 }
 
 string::string(const char* pch,strsize nLength,string_manager * pstringmanager) :
-   stdstring < simple_string >(pch,nLength,pstringmanager)
+   simple_string(pch,nLength,pstringmanager)
 {
 }
 

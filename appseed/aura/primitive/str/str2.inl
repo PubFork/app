@@ -2,14 +2,14 @@
 
 
 template < >
-inline void std_string_assign(stdstring < verisimple_wstring > & t, const bstring * pbstr)
+inline void std_string_assign(stdstring < wstring > & t, const bstring * pbstr)
 {
    t = ::str::international::utf8_to_unicode(string((const char *)pbstr->get_data(), MIN(pbstr->get_length(), natural(strlen_s_dup((const char *)pbstr->get_data(), pbstr->get_length())))));
 }
 
 
 template < >
-inline void std_string_assign(stdstring < simple_string > & t, const bstring * pbstr)
+inline void std_string_assign(simple_string & t, const bstring * pbstr)
 {
    t = string((const char *)pbstr->get_data(), MIN(pbstr->get_length(), natural(strlen_s_dup((const char *)pbstr->get_data(), pbstr->get_length()))));
 }

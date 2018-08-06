@@ -1,6 +1,6 @@
 #include "framework.h"
 
-const int verisimple_wstring::npos = -1;
+const int wstring::npos = -1;
 
 unichar * wstring_data::get_nil()
 {
@@ -11,8 +11,14 @@ unichar * wstring_data::get_nil()
 
 }
 
+wstring::wstring()
+{
 
-verisimple_wstring::verisimple_wstring(manager * pmanager)
+   m_pwsz = wstring_data::get_nil();
+
+}
+
+wstring::wstring(manager * pmanager)
 {
 
    UNREFERENCED_PARAMETER(pmanager);
@@ -21,7 +27,7 @@ verisimple_wstring::verisimple_wstring(manager * pmanager)
 
 }
 
-verisimple_wstring::verisimple_wstring(const char * psz,manager * pmanager)
+wstring::wstring(const char * psz,manager * pmanager)
 {
 
    UNREFERENCED_PARAMETER(pmanager);
@@ -33,7 +39,7 @@ verisimple_wstring::verisimple_wstring(const char * psz,manager * pmanager)
 }
 
 
-verisimple_wstring::verisimple_wstring(const byte * psz,manager * pmanager)
+wstring::wstring(const byte * psz,manager * pmanager)
 {
 
    UNREFERENCED_PARAMETER(pmanager);
@@ -45,7 +51,7 @@ verisimple_wstring::verisimple_wstring(const byte * psz,manager * pmanager)
 }
 
 
-verisimple_wstring::verisimple_wstring(const unichar * pwsz,strsize iCount,manager * pmanager)
+wstring::wstring(const unichar * pwsz,strsize iCount,manager * pmanager)
 {
 
    UNREFERENCED_PARAMETER(pmanager);
@@ -69,7 +75,7 @@ verisimple_wstring::verisimple_wstring(const unichar * pwsz,strsize iCount,manag
 }
 
 
-verisimple_wstring::verisimple_wstring(const unichar * pwsz,manager * pmanager)
+wstring::wstring(const unichar * pwsz,manager * pmanager)
 {
 
    UNREFERENCED_PARAMETER(pmanager);
@@ -92,7 +98,7 @@ verisimple_wstring::verisimple_wstring(const unichar * pwsz,manager * pmanager)
 }
 
 
-void verisimple_wstring::assign(const unichar * pwsz)
+void wstring::assign(const unichar * pwsz)
 {
 
    if(m_pwsz != NULL && m_pwsz != wstring_data::get_nil())
@@ -135,7 +141,7 @@ void verisimple_wstring::assign(const unichar * pwsz)
 }
 
 
-verisimple_wstring::verisimple_wstring(const verisimple_wstring & wstr,manager * pmanager)
+wstring::wstring(const wstring & wstr,manager * pmanager)
 {
 
    UNREFERENCED_PARAMETER(pmanager);
@@ -146,7 +152,7 @@ verisimple_wstring::verisimple_wstring(const verisimple_wstring & wstr,manager *
 
 }
 
-verisimple_wstring::~verisimple_wstring()
+wstring::~wstring()
 {
 
    wstring_data::_free(m_pwsz);
@@ -154,7 +160,7 @@ verisimple_wstring::~verisimple_wstring()
 
 }
 
-unichar * verisimple_wstring::alloc(::count iCount)
+unichar * wstring::alloc(::count iCount)
 {
 
    if(m_pwsz != NULL && iCount < get_data()->m_iAllocation)
@@ -169,7 +175,7 @@ unichar * verisimple_wstring::alloc(::count iCount)
 }
 
 
-verisimple_wstring & verisimple_wstring::operator = (const verisimple_wstring & wstr)
+wstring & wstring::operator = (const wstring & wstr)
 {
 
    if(this != &wstr)
@@ -218,7 +224,7 @@ verisimple_wstring & verisimple_wstring::operator = (const verisimple_wstring & 
 
 }
 
-verisimple_wstring & verisimple_wstring::operator = (const unichar * pwsz)
+wstring & wstring::operator = (const unichar * pwsz)
 {
 
    if(m_pwsz != pwsz)
@@ -229,7 +235,7 @@ verisimple_wstring & verisimple_wstring::operator = (const unichar * pwsz)
 
          wstring_data::_free(m_pwsz);
 
-         m_pwsz = NULL;
+         m_pwsz = wstring_data::get_nil();
 
       }
 
@@ -266,7 +272,7 @@ verisimple_wstring & verisimple_wstring::operator = (const unichar * pwsz)
 
 }
 
-verisimple_wstring & verisimple_wstring::operator = (const char * psz)
+wstring & wstring::operator = (const char * psz)
 {
 
    if(m_pwsz != NULL && m_pwsz != wstring_data::get_nil())
@@ -300,7 +306,7 @@ verisimple_wstring & verisimple_wstring::operator = (const char * psz)
 }
 
 
-void verisimple_wstring::assign(const char * psz)
+void wstring::assign(const char * psz)
 {
 
    if(m_pwsz != NULL && m_pwsz != wstring_data::get_nil())
@@ -334,7 +340,7 @@ void verisimple_wstring::assign(const char * psz)
 
 
 
-verisimple_wstring operator + (const verisimple_wstring & wstr1, const verisimple_wstring & wstr2)
+wstring operator + (const wstring & wstr1, const wstring & wstr2)
 {
 
    ::count iLen1 = wstr1.length();
@@ -356,14 +362,14 @@ verisimple_wstring operator + (const verisimple_wstring & wstr1, const verisimpl
 }
 
 
-verisimple_wstring operator + (const verisimple_wstring & wstr, const unichar * wpsz)
+wstring operator + (const wstring & wstr, const unichar * wpsz)
 {
-   return wstr + verisimple_wstring(wpsz);
+   return wstr + wstring(wpsz);
 }
 
-verisimple_wstring operator + (const unichar * wpsz, const verisimple_wstring & wstr)
+wstring operator + (const unichar * wpsz, const wstring & wstr)
 {
-   return verisimple_wstring(wpsz) + wstr;
+   return wstring(wpsz) + wstr;
 }
 
 
@@ -389,11 +395,11 @@ wstring gen_utf8_to_16(const char * psz)
 
 
 
-verisimple_wstring verisimple_wstring::substr(::index iStart, ::count count)
+wstring wstring::substr(::index iStart, ::count count)
 {
    if(m_pwsz == NULL)
    {
-      unichar push[]={0};
+      unichar push[]= {0};
       return push;
 
    }
@@ -412,7 +418,7 @@ verisimple_wstring verisimple_wstring::substr(::index iStart, ::count count)
 
       if(count <= 0)
       {
-         unichar push[]={0};
+         unichar push[]= {0};
          return push;
       }
 
@@ -425,7 +431,7 @@ verisimple_wstring verisimple_wstring::substr(::index iStart, ::count count)
 
 
 
-verisimple_wstring & verisimple_wstring::replace(::index iStart,::count c,const unichar * psz)
+wstring & wstring::replace(::index iStart,::count c,const unichar * psz)
 {
    if(c < 0)
    {
@@ -442,7 +448,7 @@ verisimple_wstring & verisimple_wstring::replace(::index iStart,::count c,const 
 
 
 // find the first occurrence of character 'ch', starting at strsize 'iStart'
-strsize verisimple_wstring::find(unichar ch,strsize iStart,strsize nCount) const RELEASENOTHROW
+strsize wstring::find(unichar ch,strsize iStart,strsize nCount) const RELEASENOTHROW
 {
    // iStart is in XCHARs
    ASSERT(iStart >= 0);
@@ -474,7 +480,7 @@ strsize verisimple_wstring::find(unichar ch,strsize iStart,strsize nCount) const
    return npos;
 }
 // find the first occurrence of string 'pszSub', starting at strsize 'iStart'
-strsize verisimple_wstring::find(const unichar * pszSub,strsize iStart,strsize nCount,const unichar ** pszTail) const RELEASENOTHROW
+strsize wstring::find(const unichar * pszSub,strsize iStart,strsize nCount,const unichar ** pszTail) const RELEASENOTHROW
 {
    // iStart is in XCHARs
    ASSERT(iStart >= 0);

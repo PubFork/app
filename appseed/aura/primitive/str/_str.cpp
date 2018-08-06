@@ -24,6 +24,7 @@
 #include "str_to_integer.cpp"
 #include "str_verisimple_wstring.cpp"
 #include "str_wtostring.cpp"
+#include "str_wstring.cpp"
 #include "str_x.cpp"
 
 

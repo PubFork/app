@@ -55,7 +55,7 @@ void * unaligned_memory_alloc(size_t size)
 
    void * p;
 
-   size_t nAllocSize = size + sizeof(memdleak_block);
+   size_t nAllocSize = sizeof(memdleak_block) + size;
 
    memdleak_block * pblock;
 

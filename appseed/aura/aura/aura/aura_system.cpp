@@ -103,6 +103,8 @@ namespace aura
 
       }
 
+      m_pDraw2dFactoryExchange = NULL;
+
       m_spbase64 = canew(::str::base64(this));
       m_spprocess = canew(::process::department(this));
       m_sphttpsystem = canew(::http::system(this));
@@ -293,6 +295,8 @@ namespace aura
 
    system::~system()
    {
+
+      ::aura::del(g_pmutexDib);
 
       try
       {

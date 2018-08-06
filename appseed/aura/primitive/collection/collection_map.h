@@ -1124,10 +1124,14 @@ void map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::remove_all()
 
       assoc * passoc;
 
-      for (passoc = m_passocHead; passoc != NULL; passoc = passoc->m_pnext)
+      assoc * passocNext = NULL;
+
+      for (passoc = m_passocHead; passoc != NULL; passoc = passocNext)
       {
 
-         passoc->assoc::~assoc();
+         passocNext = passoc->m_pnext;
+
+         delete passoc;
 
       }
 

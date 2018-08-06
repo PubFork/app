@@ -35,6 +35,7 @@ public:
    application_bias(::aura::application * papp);
    application_bias(const application_bias & bias);
    application_bias & operator = (const application_bias & bias);
+   virtual ~application_bias();
 
 };
 

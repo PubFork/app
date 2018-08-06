@@ -13,6 +13,9 @@
 #include "str_wstring.h"
 
 
+#include "str_bstring.h"
+
+
 #include "str_wtostring.h"
 
 

@@ -318,6 +318,14 @@ void var::unset()
    set_type(type_new, false);
 }
 
+void var::unset(const string & strPropertySetKey)
+{
+   if (get_type() == type_propset)
+   {
+      propset().remove_key(strPropertySetKey);
+   }
+}
+
 bool var::ok() const
 {
    return get_type() != type_parareturn || ::is_return_ok(m_parareturn);
@@ -4570,7 +4578,13 @@ string var::get_json(bool bNewLine) const
 string & var::get_json(string & str, bool bNewLine) const
 {
 
-   if (get_type() == var::type_propset)
+   if (is_null())
+   {
+
+      return str += "null";
+
+   }
+   else if (get_type() == var::type_propset)
    {
 
       return propset().get_json(str, bNewLine);
@@ -4604,6 +4618,12 @@ string & var::get_json(string & str, bool bNewLine) const
    {
 
       return str += get_string();
+
+   }
+   else if (get_type() == var::type_bool)
+   {
+
+      return str += operator bool() ? "true" : "false";
 
    }
    else

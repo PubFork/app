@@ -321,10 +321,10 @@ namespace aura
       }
 
 
-      for (auto i : m_mapLibrary)
+      for (auto & i : m_mapLibrary)
       {
 
-         for (auto j : i.m_element2)
+         for (auto & j : i.m_element2)
          {
 
             j.m_element2.release();
@@ -936,7 +936,9 @@ namespace aura
                if(papp.is_null() && plibrary == NULL)
                {
 
-                  plibrary = new ::aura::library(pappParent, 0, NULL);
+                  plibrary = canew(::aura::library(pappParent, 0, NULL));
+
+                  System.m_mapLibrary[string(pszAppId)] = plibrary;
 
                   string strLibrary = strAppId;
 

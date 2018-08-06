@@ -207,7 +207,7 @@
 namespace dami
 {
 
-   typedef memstring ID3String;
+   typedef bstring ID3String;
    typedef bstring BString;
    typedef wstring WString;
 

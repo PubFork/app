@@ -19,10 +19,10 @@ namespace aura
       ::aura::ipc::rx                        m_rx;
       stringa                                m_straModule;
 
-      
-      ipi(::aura::application * papp, const string & strApp);
 
-      
+      ipi(::aura::application * papp, const string & strApp);
+      virtual ~ipi();
+
       void defer_add_module(const string & strModule, int iPid);
 
       template<typename T, typename... Args>

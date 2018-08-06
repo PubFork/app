@@ -1,4 +1,7 @@
 ﻿
+
+
+
 namespace str
 {
 
@@ -397,60 +400,60 @@ inline bool string::ensure_ends_ci(const string & strSuffix)
 
 
 
-template < class BASE >
-strsize stdstring < BASE >::copy(typename BASE::value_type * s,strsize len,strsize pos) const
-{
-
-   strsize thislen = this->get_length();
-
-   if(pos < 0)
-   {
-
-      pos = thislen + pos + 1;
-
-   }
-
-   if(pos < 0)
-   {
-
-      len += pos;
-
-      pos = 0;
-
-   }
-
-   if(pos >= thislen)
-   {
-
-      return 0;
-
-   }
-
-   len = MIN(len,thislen - pos);
-
-   if(len <= 0)
-   {
-
-      return 0;
-
-   }
-
-   typedef typename BASE::value_type char_type;
-
-   typedef const char_type const_char_type;
-
-
-   memcpy(s,((const_char_type *)*this) + (pos * sizeof(char_type)),(len * sizeof(char_type)));
-
-   return len;
-
-}
-
-
+//template < class BASE >
+//strsize stdstring < BASE >::copy(typename BASE::value_type * s,strsize len,strsize pos) const
+//{
+//
+//   strsize thislen = this->get_length();
+//
+//   if(pos < 0)
+//   {
+//
+//      pos = thislen + pos + 1;
+//
+//   }
+//
+//   if(pos < 0)
+//   {
+//
+//      len += pos;
+//
+//      pos = 0;
+//
+//   }
+//
+//   if(pos >= thislen)
+//   {
+//
+//      return 0;
+//
+//   }
+//
+//   len = MIN(len,thislen - pos);
+//
+//   if(len <= 0)
+//   {
+//
+//      return 0;
+//
+//   }
+//
+//   typedef typename BASE::value_type char_type;
+//
+//   typedef const char_type const_char_type;
+//
+//
+//   memcpy(s,((const_char_type *)*this) + (pos * sizeof(char_type)),(len * sizeof(char_type)));
+//
+//   return len;
+//
+//}
 
 
 
-inline verisimple_wstring & verisimple_wstring::operator = (const string & str)
+
+
+inline wstring & wstring::operator = (const string & str)
 {
 
    operator = (::str::international::utf8_to_unicode(str));
@@ -478,120 +481,120 @@ inline strsize strlen_s_dup(const char * psz,strsize nsize)
 
 
 template < >
-inline void std_string_assign(stdstring < simple_string > & t,const char * psz)
+inline void std_string_assign(string & t,const char * psz)
 {
    t.assign(psz);
 }
 
 template < >
-inline void std_string_assign(stdstring < simple_string > & t,const unichar * psz)
+inline void std_string_assign(string & t,const unichar * psz)
 {
    t = ::str::international::unicode_to_utf8(psz);
 }
 
 template < >
-inline void std_string_bassign(stdstring < simple_string > & t,const byte * psz,strsize nsize)
+inline void std_string_bassign(string & t,const byte * psz,strsize nsize)
 {
    t = (const char *) string((const char *) psz, MIN(nsize, strlen_s_dup((const char *) psz, nsize)));
 }
 
 template < >
-inline void std_string_assign(stdstring < simple_string > & t,const string * pstr)
+inline void std_string_assign(string & t,const string * pstr)
 {
    t = *pstr;
 }
 
 template < >
-inline void std_string_assign(stdstring < simple_string > & t,const wstring * pwstr)
+inline void std_string_assign(string & t,const wstring * pwstr)
 {
    t = ::str::international::unicode_to_utf8(*pwstr);
 }
 
 template < >
-inline void std_string_assign(stdstring < simple_string > & t,const bstring * pbstr)
+inline void std_string_assign(string & t,const bstring * pbstr)
 {
    t = string((const char *)pbstr->get_data(),MIN(pbstr->get_length(),natural(strlen_s_dup((const char *)pbstr->get_data(),pbstr->get_length()))));
 }
 
-template < >
-inline void std_string_assign(stdstring < verisimple_wstring > & t,const char * psz)
-{
-   t.assign(psz);
-}
+//template < >
+//inline void std_string_assign(string & t,const char * psz)
+//{
+//   t.assign(psz);
+//}
+
+
+//template < >
+//inline void std_string_assign(string & t,const unichar * psz)
+//{
+//
+//   t.assign(psz);
+//
+//}
 
 
 template < >
-inline void std_string_assign(stdstring < verisimple_wstring > & t,const unichar * psz)
-{
-
-   t.assign(psz);
-
-}
-
-
-template < >
-inline void std_string_bassign(stdstring < verisimple_wstring > & t,const byte * psz,strsize nsize)
+inline void std_string_bassign(wstring & t,const byte * psz,strsize nsize)
 {
    t = ::str::international::utf8_to_unicode(string((const char *) psz,MIN(nsize,strlen_s_dup((const char *) psz,nsize))));
 }
 
 template < >
-inline void std_string_assign(stdstring < verisimple_wstring > & t,const string * pstr)
+inline void std_string_assign(wstring & t,const string * pstr)
 {
    t = ::str::international::utf8_to_unicode(*pstr);
 }
 
-template < >
-inline void std_string_assign(stdstring < verisimple_wstring > & t,const stdstring < simple_string > * pstr)
-{
-   t = ::str::international::utf8_to_unicode(*pstr);
-}
+//template < >
+//inline void std_string_assign(wstring & t,const string * pstr)
+//{
+//   t = ::str::international::utf8_to_unicode(*pstr);
+//}
 
 template < >
-inline void std_string_assign(stdstring < verisimple_wstring > & t,const wstring * pwstr)
+inline void std_string_assign(wstring & t,const wstring * pwstr)
 {
    t = *pwstr;
 }
 
 template < >
-inline void std_string_assign(stdstring < verisimple_wstring > & t,const bstring * pbstr)
+inline void std_string_assign(wstring & t,const bstring * pbstr)
 {
    t = ::str::international::utf8_to_unicode(string((const char *)pbstr->get_data(),MIN(pbstr->get_length(),natural(strlen_s_dup((const char *)pbstr->get_data(),pbstr->get_length())))));
 }
 
 
 template < >
-inline void std_string_assign(stdstring < memory > & t,const char * psz)
+inline void std_string_assign(bstring & t,const char * psz)
 {
    t.assign(psz);
 }
 
 template < >
-inline void std_string_assign(stdstring < memory > & t,const unichar * psz)
+inline void std_string_assign(bstring & t,const unichar * psz)
 {
    t.assign(::str::international::unicode_to_utf8(psz));
 }
 
 template < >
-inline void std_string_bassign(stdstring < memory > & t,const byte * psz,strsize nsize)
+inline void std_string_bassign(bstring & t,const byte * psz,strsize nsize)
 {
    t.assign(string((const char *)psz,MIN(nsize,strlen_s_dup((const char *)psz,nsize))));
 }
 
 template < >
-inline void std_string_assign(stdstring < memory > & t,const string * pstr)
+inline void std_string_assign(bstring & t,const string * pstr)
 {
    t = (const char *) *pstr;
 }
 
 template < >
-inline void std_string_assign(stdstring < memory > & t,const wstring * pwstr)
+inline void std_string_assign(bstring & t,const wstring * pwstr)
 {
    t = (const char *) ::str::international::unicode_to_utf8(*pwstr);
 }
 
 template < >
-inline void std_string_assign(stdstring < memory > & t,const bstring * pbstr)
+inline void std_string_assign(bstring & t,const bstring * pbstr)
 {
    t = *pbstr;
 }
@@ -823,7 +826,7 @@ extern CLASS_DECL_AURA aura_str_pool * s_paurastrpool;
 //
 //
 template < >
-inline void to_string(string & str, const verisimple_wstring & wstr)
+inline void to_string(string & str, const wstring & wstr)
 {
 
    ::str::international::unicode_to_utf8(str, wstr, wstr.get_length());
@@ -833,23 +836,23 @@ inline void to_string(string & str, const verisimple_wstring & wstr)
 
 
 
-template < >
-inline void to_string(string & str, const stdstring<verisimple_wstring> & wstr)
-{
-
-   ::str::international::unicode_to_utf8(str, wstr, wstr.get_length());
-
-}
+//template < >
+//inline void to_string(string & str, const wstring & wstr)
+//{
+//
+//   ::str::international::unicode_to_utf8(str, wstr, wstr.get_length());
+//
+//}
 
 
 
 //#ifdef __GNUC__
 
-inline string::string(const var & var):stdstring< simple_string> (string_trait::GetDefaultManager()) { var.to_string(*this);}
+inline string::string(const var & var):simple_string (string_trait::GetDefaultManager()) { var.to_string(*this);}
 #ifdef __GNUC__
-inline string::string(const property & prop):stdstring< simple_string> (string_trait::GetDefaultManager()) { prop.to_string(*this);}
+inline string::string(const property & prop):simple_string (string_trait::GetDefaultManager()) { prop.to_string(*this);}
 #endif
-inline string::string(const id & id):stdstring< simple_string> (string_trait::GetDefaultManager()) { id.to_string(*this);}
+inline string::string(const id & id):simple_string (string_trait::GetDefaultManager()) { id.to_string(*this);}
 
 
 //template < typename Type, typename RawType >
@@ -926,7 +929,7 @@ inline string::string(const id & id):stdstring< simple_string> (string_trait::Ge
 //}
 
 inline string::string(const istring & istr) :
-   stdstring< simple_string>(istr.m_str,string_trait::GetDefaultManager())
+   simple_string(istr.m_str,string_trait::GetDefaultManager())
 {
 
 }
@@ -1220,3 +1223,18 @@ inline strsize string::find(char ch, strsize iStart) const RELEASENOTHROW
    return psz == NULL ? npos : psz - m_pszData;
 
 }
+
+
+inline bool wstring::operator == (const wstring & wstr) const
+{
+   return Compare(wstr) == 0;
+}
+
+
+
+
+//inline simple_string::simple_string(const wchar_t * pwsz, string_manager * pmanager)
+//{
+//   operator = (pwsz);
+//
+//}

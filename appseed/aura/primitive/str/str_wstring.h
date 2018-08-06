@@ -1,16 +1,14 @@
 #pragma once
 
 
-class verisimple_wstring;
+class wstring;
 class string;
+class wstring;
 
 
-typedef stdstring < verisimple_wstring > wstring;
-
-
-CLASS_DECL_AURA verisimple_wstring operator + (const verisimple_wstring & wstr1, const verisimple_wstring & wstr2);
-CLASS_DECL_AURA verisimple_wstring operator + (const verisimple_wstring & str, const unichar * psz);
-CLASS_DECL_AURA verisimple_wstring operator + (const unichar * psz, const verisimple_wstring & str);
+CLASS_DECL_AURA wstring operator + (const wstring & wstr1, const wstring & wstr2);
+CLASS_DECL_AURA wstring operator + (const wstring & str, const unichar * psz);
+CLASS_DECL_AURA wstring operator + (const unichar * psz, const wstring & str);
 
 
 CLASS_DECL_AURA wstring gen_utf8_to_16(const char * psz);
@@ -21,7 +19,7 @@ class CLASS_DECL_AURA wstring_data
 protected:
 
 
-   friend class verisimple_wstring;
+   friend class wstring;
    friend class wtostring;
 
 
@@ -92,7 +90,7 @@ class wstring_manager;
 #define unilen wcslen_dup
 #endif
 
-class CLASS_DECL_AURA verisimple_wstring
+class CLASS_DECL_AURA wstring
 {
 public:
 
@@ -124,20 +122,21 @@ protected:
 
 public:
 
-   verisimple_wstring(for_moving){};
-   verisimple_wstring(manager * pstringmanager);
+   wstring();
+   wstring(for_moving) {};
+   wstring(manager * pstringmanager);
    void construct(manager * pstringmanager = NULL);
-   verisimple_wstring(const verisimple_wstring & strSrc,manager * pstringmanager = NULL);
-   verisimple_wstring(const char * pszSrc,manager * pstringmanager = NULL);
-   verisimple_wstring(const byte * pszSrc,manager * pstringmanager = NULL);
-   verisimple_wstring(const unichar * pchSrc, manager * pstringmanager = NULL);
-   verisimple_wstring(const unichar * pchSrc, strsize nLength,manager * pstringmanager = NULL);
-   inline verisimple_wstring(const wstring_data * pdata,manager * pstringmanager = NULL)
+   wstring(const wstring & strSrc,manager * pstringmanager = NULL);
+   wstring(const char * pszSrc,manager * pstringmanager = NULL);
+   wstring(const byte * pszSrc,manager * pstringmanager = NULL);
+   wstring(const unichar * pchSrc, manager * pstringmanager = NULL);
+   wstring(const unichar * pchSrc, strsize nLength,manager * pstringmanager = NULL);
+   inline wstring(const wstring_data * pdata,manager * pstringmanager = NULL)
    {
       UNREFERENCED_PARAMETER(pstringmanager);
       m_pwsz = (unichar *) &pdata->m_wchFirst;
    }
-   ~verisimple_wstring();
+   ~wstring();
 
 
    inline void attach(wstring_data * pdata)
@@ -159,9 +158,9 @@ public:
 
    void reserve(strsize n) { UNREFERENCED_PARAMETER(n); } // wstring does not prereserve
 
-   verisimple_wstring & operator = (const verisimple_wstring & wstr);
-   verisimple_wstring & operator = (const unichar * pwsz);
-   verisimple_wstring & operator = (const char * psz);
+   wstring & operator = (const wstring & wstr);
+   wstring & operator = (const unichar * pwsz);
+   wstring & operator = (const char * psz);
 
 
    inline operator const unichar * () const { return get_data()->m_iAllocation <= 0 ? wstring_data::get_nil() : m_pwsz; }
@@ -178,8 +177,8 @@ public:
    inline operator String ^ () { return ref new String(operator const unichar *()); }
 #endif
 
-   inline verisimple_wstring & operator += (unichar wch) { append(wch); return *this; }
-   inline verisimple_wstring & operator += (const unichar * pwsz) { append(pwsz); return *this; }
+   inline wstring & operator += (unichar wch) { append(wch); return *this; }
+   inline wstring & operator += (const unichar * pwsz) { append(pwsz); return *this; }
 
 
 
@@ -235,17 +234,14 @@ public:
       return Compare(pwsz) == 0;
    }
 
-   inline bool operator == (const wstring & wstr) const
-   {
-      return Compare(wstr) == 0;
-   }
+   inline bool operator == (const wstring & wstr) const;
 
    inline int32_t Compare(const unichar * psz) const
    {
       return wcscmp_dup(m_pwsz, psz);
    }
 
-   inline int32_t Compare(const verisimple_wstring &str) const
+   inline int32_t Compare(const wstring &str) const
    {
       return wcscmp_dup(m_pwsz, str);
    }
@@ -255,7 +251,7 @@ public:
       return wcsicmp_dup(m_pwsz, psz);
    }
 
-   inline int32_t CompareNoCase(const verisimple_wstring &str) const
+   inline int32_t CompareNoCase(const wstring &str) const
    {
       return wcsicmp_dup(m_pwsz, str);
    }
@@ -289,13 +285,13 @@ public:
    }
 
 
-   inline static verisimple_wstring empty_string()
+   inline static wstring empty_string()
    {
-      unichar push[]={0};
+      unichar push[]= {0};
       return push;
    }
 
-   inline verisimple_wstring & append(unichar wch)
+   inline wstring & append(unichar wch)
    {
 
       unichar wsz[2];
@@ -308,7 +304,7 @@ public:
 
    }
 
-   inline verisimple_wstring & append(unichar wch, ::count c)
+   inline wstring & append(unichar wch, ::count c)
    {
 
       while(c > 0)
@@ -324,13 +320,13 @@ public:
 
    }
 
-   inline verisimple_wstring & append(const unichar * pwsz) { assign(*this + pwsz); return *this; }
+   inline wstring & append(const unichar * pwsz) { assign(*this + pwsz); return *this; }
 
-   verisimple_wstring substr(::index iStart, ::count c = -1);
-   verisimple_wstring & replace(::index iStart,::count c, const unichar * psz);
+   wstring substr(::index iStart, ::count c = -1);
+   wstring & replace(::index iStart,::count c, const unichar * psz);
 
 
-   verisimple_wstring & operator = (const string & str);
+   wstring & operator = (const string & str);
 
    void assign(const unichar * pwsz);
    void assign(const char * psz);
@@ -343,5 +339,6 @@ public:
 
 
 };
+
 
 

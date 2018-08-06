@@ -621,7 +621,7 @@ namespace windows
 
       bool bIsDir = (dwAttrib != INVALID_FILE_ATTRIBUTES) && (dwAttrib & FILE_ATTRIBUTE_DIRECTORY);
 
-      m_isdirmap.set(lpcszPath, bIsDir, bIsDir ? 0 : ::get_last_error());
+//      m_isdirmap.set(lpcszPath, bIsDir, bIsDir ? 0 : ::get_last_error());
 
       return bIsDir;
 
@@ -715,24 +715,24 @@ namespace windows
 
       uint32_t uiLastError;
 
-      if(m_isdirmap.lookup(str, bIsDir, uiLastError, (int32_t) iLast))
-      {
+      //if(m_isdirmap.lookup(str, bIsDir, uiLastError, (int32_t) iLast))
+      //{
 
-         if(!bIsDir)
-         {
+      //   if(!bIsDir)
+      //   {
 
-            ::set_last_error(uiLastError);
+      //      ::set_last_error(uiLastError);
 
-         }
+      //   }
 
-         return bIsDir;
+      //   return bIsDir;
 
-      }
+      //}
 
       if(::get_thread() != NULL && ::get_thread()->m_bZipIsDir && iLast >= 3 && !strnicmp_dup(&((const char *)str)[iLast - 3],".zip",4))
       {
 
-         m_isdirmap.set(str.Left(iLast + 1), true, 0);
+         //m_isdirmap.set(str.Left(iLast + 1), true, 0);
 
          return true;
 
@@ -766,7 +766,7 @@ namespace windows
 
       bIsDir = (dwAttrib != INVALID_FILE_ATTRIBUTES) && (dwAttrib & FILE_ATTRIBUTE_DIRECTORY);
 
-      m_isdirmap.set(str.Left(iLast + 1), bIsDir, bIsDir ? 0 : ::get_last_error());
+//      m_isdirmap.set(str.Left(iLast + 1), bIsDir, bIsDir ? 0 : ::get_last_error());
 
       return bIsDir;
 
@@ -882,7 +882,7 @@ namespace windows
          if(::dir::mkdir(strDir))
          {
 
-            m_isdirmap.set(strDir, true, 0);
+//            m_isdirmap.set(strDir, true, 0);
 
          }
          else
@@ -928,13 +928,13 @@ namespace windows
                if (::dir::mkdir(strDir))
                {
 
-                  m_isdirmap.set(strDir, true, 0);
+//                  m_isdirmap.set(strDir, true, 0);
 
                   continue;
 
                }
 
-               m_isdirmap.set(strDir, false, 0);
+               //   m_isdirmap.set(strDir, false, 0);
 
                dwError = ::get_last_error();
 

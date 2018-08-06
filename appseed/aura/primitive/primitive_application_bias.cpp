@@ -4,9 +4,9 @@
 
 void application_bias::callback::connect_to(::aura::application * papp)
 {
-   
+
    set_app(papp);
-   
+
    m_papp->add_route(this, &callback::on_call_signal);
 
 }
@@ -14,7 +14,7 @@ void application_bias::callback::connect_to(::aura::application * papp)
 
 void application_bias::callback::on_call_signal(::message::message * pobj)
 {
-   
+
    SCAST_PTR(::aura::application_message, papplicationsignal, pobj);
 
    on_application_bias_callback_signal(papplicationsignal);
@@ -48,6 +48,12 @@ application_bias::application_bias(::aura::application * papp) :
 application_bias::application_bias(const application_bias & bias)
 {
    operator = (bias);
+}
+
+application_bias::~application_bias()
+{
+
+
 }
 
 application_bias & application_bias::operator = (const application_bias & bias)

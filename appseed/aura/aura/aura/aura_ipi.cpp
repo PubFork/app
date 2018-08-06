@@ -41,6 +41,13 @@ namespace aura
    }
 
 
+   ipi::~ipi()
+   {
+
+
+   }
+
+
    var ipi::call(const string & strApp,int iPid, const string & strObject,const string & strMember,var_array & va, duration duration)
    {
 

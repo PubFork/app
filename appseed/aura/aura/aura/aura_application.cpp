@@ -479,7 +479,7 @@ namespace aura
       try
       {
 
-         pcreate->m_spCommandLine->m_varQuery["document"].unset();
+         pcreate->m_spCommandLine->m_varQuery.unset("document");
 
       }
       catch (...)

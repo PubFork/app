@@ -41,7 +41,7 @@ namespace file
 
          }
 
-         m_isdirmap.m_dwTimeOut = 180000;
+//         m_isdirmap.m_dwTimeOut = 180000;
 
          m_pathInstall = ::dir::install();
 
@@ -539,18 +539,18 @@ namespace file
 
             uint32_t dwLastError;
 
-            if (m_isdirmap.lookup(lpcszPath, bHasSubFolder, dwLastError))
-            {
+            //if (m_isdirmap.lookup(lpcszPath, bHasSubFolder, dwLastError))
+            //{
 
-               bIs = bHasSubFolder;
+            //   bIs = bHasSubFolder;
 
-               return true;
+            //   return true;
 
-            }
+            //}
 
             bHasSubFolder = m_pziputil->has_sub_folder(papp, lpcszPath);
 
-            m_isdirmap.set(lpcszPath, bHasSubFolder, ::get_last_error());
+            //m_isdirmap.set(lpcszPath, bHasSubFolder, ::get_last_error());
 
             bIs = bHasSubFolder;
 
@@ -588,12 +588,12 @@ namespace file
 
          u32 dwLastError;
 
-         if (!m_isdirmap.lookup(lpcszPath, bHasSubFolder, dwLastError))
-         {
-            return false;
-         }
-         bIs = bHasSubFolder;
-         return true;
+         //if (!m_isdirmap.lookup(lpcszPath, bHasSubFolder, dwLastError))
+         //{
+         //   return false;
+         //}
+//         bIs = bHasSubFolder;
+         return false;
 
       }
 
@@ -652,7 +652,7 @@ namespace file
          if (::get_thread() != NULL && ::get_thread()->m_bZipIsDir && (::str::ends_ci(path, ".zip")))
          {
 
-            m_isdirmap.set(path, true, 0);
+            //m_isdirmap.set(path, true, 0);
 
             return true;
 
@@ -665,7 +665,7 @@ namespace file
 
             bHasSubFolder = m_pziputil->has_sub_folder(papp, path);
 
-            m_isdirmap.set(path, bHasSubFolder, get_last_error());
+//            m_isdirmap.set(path, bHasSubFolder, get_last_error());
 
             return bHasSubFolder;
 
@@ -682,17 +682,17 @@ namespace file
          //output_debug_string(strPath);
          if (::get_thread() != NULL && ::get_thread()->m_bZipIsDir && (::str::ends_ci(strPath, ".zip")))
          {
-            m_isdirmap.set(strPath, true, 0);
+//            m_isdirmap.set(strPath, true, 0);
             return true;
          }
          if (::get_thread() != NULL && ::get_thread()->m_bZipIsDir && (::str::find_file_extension("zip:", strPath) >= 0))
          {
             bool bHasSubFolder;
             uint32_t dwLastError;
-            if (m_isdirmap.lookup(strPath, bHasSubFolder, dwLastError))
-               return bHasSubFolder;
+            //if (m_isdirmap.lookup(strPath, bHasSubFolder, dwLastError))
+            //   return bHasSubFolder;
             bHasSubFolder = m_pziputil->has_sub_folder(papp, strPath);
-            m_isdirmap.set(strPath, bHasSubFolder, get_last_error());
+            //m_isdirmap.set(strPath, bHasSubFolder, get_last_error());
             return bHasSubFolder;
          }
          return false;
@@ -701,397 +701,397 @@ namespace file
       }
 
 
-      system::is_dir_map::is_dir_map()
-      {
-
-      }
-
-
-      bool system::is_dir_map::lookup(const ::file::path & path, bool &bIsDir, u32 & dwLastError)
-      {
-
-         return lookup(path, bIsDir, dwLastError, (i32) path.length());
-
-      }
-
-
-      bool system::is_dir_map::lookup(const ::file::path & path, bool &bIsDir, u32 &dwLastError, i32 iLastChar)
-      {
-
-         if (path.get_length() <= 0)
-         {
-
-            bIsDir = false;
-
-            return true;
-
-         }
-
-         if (iLastChar < 0)
-         {
-
-            bIsDir = true; // root_ones dir
-
-            return true;
-
-         }
-
-         cslock sl(&m_cs);
-
-         if (path.length() + 1 < 2048)
-         {
-
-            return lookup_small(path, bIsDir, dwLastError, iLastChar);
-
-         }
-         else
-         {
-
-            return lookup_dynamic(path, bIsDir, dwLastError, iLastChar);
-
-         }
-
-      }
-
-
-      bool system::is_dir_map::lookup_dynamic(const ::file::path & path, bool &bIsDir, u32 & dwLastError, i32 iLastChar)
-      {
-
-         is_dir * pdir = this;
-
-         is_dir find;
-
-         index iFind0 = 0;
-
-         index iFind3 = 0;
-
-         while (iFind3 >= 0 && iFind3 < iLastChar)
-         {
-
-            index iFind1 = path.find('/', iFind0);
-
-            index iFind2 = path.find('\\', iFind0);
-
-            iFind3 = min_non_neg(iFind1, iFind2);
-
-            if (iFind3 < 0)
-            {
-
-               find.m_str = path.Mid(iFind0);
-
-            }
-            else
-            {
-
-               find.m_str = path.Mid(iFind0, iFind3 - iFind0);
-
-            }
-
-            index iFind = pdir->pred_binary_search(&find, [&](auto & t1, auto & t2)
-            {
-
-               return t1->m_str.compare_ci(t2->m_str) < 0;
-
-            });
-
-            if (iFind < 0)
-            {
-
-               return false;
-
-            }
-
-            pdir = pdir->element_at(iFind);
-
-            iFind0 = iFind3 + 1;
-
-         }
-
-         if (::get_fast_tick_count() > pdir->m_dwLastCheck + m_dwTimeOut)
-         {
-
-            return false;
-
-         }
-
-         if (pdir->m_iIsDir < 0)
-         {
-
-            return false;
-
-         }
-
-         bIsDir = pdir->m_iIsDir == 1;
-
-         dwLastError = pdir->m_dwError;
-
-         return true;
-
-      }
-
-
-      bool system::is_dir_map::lookup_small(const ::file::path & path,bool &bIsDir,u32 &dwLastError, i32 iLastChar)
-      {
-
-         const char * pszEnd = path.c_str() + iLastChar;
-
-         char sz[2048];
-
-         is_dir_work find;
-
-         find.m_psz = sz;
-
-         strcpy(sz, path);
-
-         is_dir * pdir = this;
-
-         char * psz3 = find.m_psz;
-
-         while (psz3 != NULL && psz3 < pszEnd)
-         {
-
-            char * psz1 = strchr(find.m_psz, '/');
-
-            char * psz2 = strchr(find.m_psz, '\\');
-
-            psz3 = min_non_null(psz1, psz2);
-
-            if (psz3 != NULL)
-            {
-
-               *psz3 = '\0';
-
-            }
-
-            index iFind = pdir->pred_binary_search(&find, [&](auto & t1, auto & t2)
-            {
-
-               return stricmp(t1->c_str(), t2->c_str()) < 0;
-
-            });
-
-            if (iFind < 0)
-            {
-
-               return false;
-
-            }
-
-            pdir = pdir->element_at(iFind);
-
-            find.m_psz = psz3 + 1;
-
-            if (psz1 == NULL)
-            {
-
-               goto lookup_backslash;
-
-            }
-            else if (psz2 == NULL)
-            {
-
-               goto lookup_slash;
-
-            }
-
-         }
-
-         goto end;
-
-lookup_slash:
-
-         while (psz3 != NULL && psz3 < pszEnd)
-         {
-
-            psz3 = strchr(find.m_psz, '/');
-
-            if (psz3 != NULL)
-            {
-
-               *psz3 = '\0';
-
-            }
-
-            index iFind = pdir->pred_binary_search(&find, [&](auto & t1, auto & t2)
-            {
-
-               return stricmp(t1->c_str(), t2->c_str()) < 0;
-
-            });
-
-            if (iFind < 0)
-            {
-
-               return false;
-
-            }
-
-            pdir = pdir->element_at(iFind);
-
-            find.m_psz = psz3 + 1;
-
-         }
-
-         goto end;
-
-lookup_backslash:
-         while (psz3 != NULL && psz3 < pszEnd)
-         {
-
-            psz3 = strchr(find.m_psz, '\\');
-
-            if (psz3 != NULL)
-            {
-
-               *psz3 = '\0';
-
-            }
-
-            index iFind = pdir->pred_binary_search(&find, [&](auto & t1, auto & t2)
-            {
-
-               return stricmp(t1->c_str(), t2->c_str()) < 0;
-
-            });
-
-            if (iFind < 0)
-            {
-
-               return false;
-
-            }
-
-            pdir = pdir->element_at(iFind);
-
-            find.m_psz = psz3 + 1;
-
-         }
-
-end:
-         if (::get_fast_tick_count() > pdir->m_dwLastCheck + m_dwTimeOut)
-         {
-
-            return false;
-
-         }
-
-         if (pdir->m_iIsDir < 0)
-         {
-
-            return false;
-
-         }
-
-         bIsDir = pdir->m_iIsDir == 1;
-
-         dwLastError = pdir->m_dwError;
-
-         return true;
-
-      }
-
-
-      void system::is_dir_map::set(const ::file::path & path,bool bIsDir,uint32_t dwLastError)
-      {
-
-         cslock sl(&m_cs);
-
-         string strPath(path);
-
-         is_dir * pdir = this;
-
-         sp(is_dir) pfind(canew(is_dir));
-
-         index iFind0 = 0;
-         index iFind3 = 0;
-         while (iFind3 >= 0)
-         {
-
-            index iFind1 = strPath.find('/', iFind0);
-            index iFind2 = strPath.find('\\', iFind0);
-            iFind3 = min_non_neg(iFind1, iFind2);
-            if (iFind3 < 0)
-            {
-               pfind->m_str = strPath.Mid(iFind0);
-            }
-            else
-            {
-               pfind->m_str = strPath.Mid(iFind0, iFind3 - iFind0);
-            }
-
-            index iFind = pdir->pred_binary_search(pfind, [&](auto & t1, auto & t2)
-            {
-
-               return t1->m_str.compare_ci(t2->m_str) < 0;
-
-            });
-
-            if (iFind < 0)
-            {
-               while (true)
-               {
-
-
-                  index iFind1 = strPath.find('/', iFind0);
-                  index iFind2 = strPath.find('\\', iFind0);
-                  iFind3 = min_non_neg(iFind1, iFind2);
-                  if (iFind3 < 0)
-                  {
-                     pfind->m_str = strPath.Mid(iFind0);
-                  }
-                  else
-                  {
-                     pfind->m_str = strPath.Mid(iFind0, iFind3 - iFind0);
-                  }
-                  pfind->m_iIsDir = bIsDir ? 1 : (iFind3 >= 0 ? -1 : 0);
-
-                  pfind->m_dwError = dwLastError;
-
-                  pfind->m_dwLastCheck = ::get_fast_tick_count();
-
-                  pdir->add(pfind);
-
-                  pdir->pred_sort([&](auto & t1, auto & t2)
-                  {
-
-                     return t1->m_str.compare_ci(t2->m_str) < 0;
-
-                  });
-
-                  if (iFind3 < 0)
-                  {
-
-                     return;
-
-                  }
-
-                  pdir = pfind;
-
-                  pfind = canew(is_dir);
-                  iFind0 = iFind3 + 1;
-               }
-            }
-
-            pdir = pdir->element_at(iFind);
-
-            if (bIsDir)
-            {
-
-               pdir->m_iIsDir = 1;
-
-            }
-
-            pdir->m_dwLastCheck = ::get_fast_tick_count();
-            iFind0 = iFind3 + 1;
-         }
-
-
-         pdir->m_iIsDir = bIsDir ? 1 : 0;
-
-         pfind->m_dwError = dwLastError;
-
-      }
-
+//      system::is_dir_map::is_dir_map()
+//      {
+//
+//      }
+//
+//
+//      bool system::is_dir_map::lookup(const ::file::path & path, bool &bIsDir, u32 & dwLastError)
+//      {
+//
+//         return lookup(path, bIsDir, dwLastError, (i32) path.length());
+//
+//      }
+//
+//
+//      bool system::is_dir_map::lookup(const ::file::path & path, bool &bIsDir, u32 &dwLastError, i32 iLastChar)
+//      {
+//
+//         if (path.get_length() <= 0)
+//         {
+//
+//            bIsDir = false;
+//
+//            return true;
+//
+//         }
+//
+//         if (iLastChar < 0)
+//         {
+//
+//            bIsDir = true; // root_ones dir
+//
+//            return true;
+//
+//         }
+//
+//         cslock sl(&m_cs);
+//
+//         if (path.length() + 1 < 2048)
+//         {
+//
+//            return lookup_small(path, bIsDir, dwLastError, iLastChar);
+//
+//         }
+//         else
+//         {
+//
+//            return lookup_dynamic(path, bIsDir, dwLastError, iLastChar);
+//
+//         }
+//
+//      }
+//
+//
+//      bool system::is_dir_map::lookup_dynamic(const ::file::path & path, bool &bIsDir, u32 & dwLastError, i32 iLastChar)
+//      {
+//
+//         is_dir * pdir = this;
+//
+//         is_dir find;
+//
+//         index iFind0 = 0;
+//
+//         index iFind3 = 0;
+//
+//         while (iFind3 >= 0 && iFind3 < iLastChar)
+//         {
+//
+//            index iFind1 = path.find('/', iFind0);
+//
+//            index iFind2 = path.find('\\', iFind0);
+//
+//            iFind3 = min_non_neg(iFind1, iFind2);
+//
+//            if (iFind3 < 0)
+//            {
+//
+//               find.m_str = path.Mid(iFind0);
+//
+//            }
+//            else
+//            {
+//
+//               find.m_str = path.Mid(iFind0, iFind3 - iFind0);
+//
+//            }
+//
+//            index iFind = pdir->pred_binary_search(&find, [&](auto & t1, auto & t2)
+//            {
+//
+//               return t1->m_str.compare_ci(t2->m_str) < 0;
+//
+//            });
+//
+//            if (iFind < 0)
+//            {
+//
+//               return false;
+//
+//            }
+//
+//            pdir = pdir->element_at(iFind);
+//
+//            iFind0 = iFind3 + 1;
+//
+//         }
+//
+//         if (::get_fast_tick_count() > pdir->m_dwLastCheck + m_dwTimeOut)
+//         {
+//
+//            return false;
+//
+//         }
+//
+//         if (pdir->m_iIsDir < 0)
+//         {
+//
+//            return false;
+//
+//         }
+//
+//         bIsDir = pdir->m_iIsDir == 1;
+//
+//         dwLastError = pdir->m_dwError;
+//
+//         return true;
+//
+//      }
+//
+//
+//      bool system::is_dir_map::lookup_small(const ::file::path & path,bool &bIsDir,u32 &dwLastError, i32 iLastChar)
+//      {
+//
+//         const char * pszEnd = path.c_str() + iLastChar;
+//
+//         char sz[2048];
+//
+//         is_dir_work find;
+//
+//         find.m_psz = sz;
+//
+//         strcpy(sz, path);
+//
+//         is_dir * pdir = this;
+//
+//         char * psz3 = find.m_psz;
+//
+//         while (psz3 != NULL && psz3 < pszEnd)
+//         {
+//
+//            char * psz1 = strchr(find.m_psz, '/');
+//
+//            char * psz2 = strchr(find.m_psz, '\\');
+//
+//            psz3 = min_non_null(psz1, psz2);
+//
+//            if (psz3 != NULL)
+//            {
+//
+//               *psz3 = '\0';
+//
+//            }
+//
+//            index iFind = pdir->pred_binary_search(&find, [&](auto & t1, auto & t2)
+//            {
+//
+//               return stricmp(t1->c_str(), t2->c_str()) < 0;
+//
+//            });
+//
+//            if (iFind < 0)
+//            {
+//
+//               return false;
+//
+//            }
+//
+//            pdir = pdir->element_at(iFind);
+//
+//            find.m_psz = psz3 + 1;
+//
+//            if (psz1 == NULL)
+//            {
+//
+//               goto lookup_backslash;
+//
+//            }
+//            else if (psz2 == NULL)
+//            {
+//
+//               goto lookup_slash;
+//
+//            }
+//
+//         }
+//
+//         goto end;
+//
+//lookup_slash:
+//
+//         while (psz3 != NULL && psz3 < pszEnd)
+//         {
+//
+//            psz3 = strchr(find.m_psz, '/');
+//
+//            if (psz3 != NULL)
+//            {
+//
+//               *psz3 = '\0';
+//
+//            }
+//
+//            index iFind = pdir->pred_binary_search(&find, [&](auto & t1, auto & t2)
+//            {
+//
+//               return stricmp(t1->c_str(), t2->c_str()) < 0;
+//
+//            });
+//
+//            if (iFind < 0)
+//            {
+//
+//               return false;
+//
+//            }
+//
+//            pdir = pdir->element_at(iFind);
+//
+//            find.m_psz = psz3 + 1;
+//
+//         }
+//
+//         goto end;
+//
+//lookup_backslash:
+//         while (psz3 != NULL && psz3 < pszEnd)
+//         {
+//
+//            psz3 = strchr(find.m_psz, '\\');
+//
+//            if (psz3 != NULL)
+//            {
+//
+//               *psz3 = '\0';
+//
+//            }
+//
+//            index iFind = pdir->pred_binary_search(&find, [&](auto & t1, auto & t2)
+//            {
+//
+//               return stricmp(t1->c_str(), t2->c_str()) < 0;
+//
+//            });
+//
+//            if (iFind < 0)
+//            {
+//
+//               return false;
+//
+//            }
+//
+//            pdir = pdir->element_at(iFind);
+//
+//            find.m_psz = psz3 + 1;
+//
+//         }
+//
+//end:
+//         if (::get_fast_tick_count() > pdir->m_dwLastCheck + m_dwTimeOut)
+//         {
+//
+//            return false;
+//
+//         }
+//
+//         if (pdir->m_iIsDir < 0)
+//         {
+//
+//            return false;
+//
+//         }
+//
+//         bIsDir = pdir->m_iIsDir == 1;
+//
+//         dwLastError = pdir->m_dwError;
+//
+//         return true;
+//
+//      }
+//
+//
+//      void system::is_dir_map::set(const ::file::path & path,bool bIsDir,uint32_t dwLastError)
+//      {
+//
+//         cslock sl(&m_cs);
+//
+//         string strPath(path);
+//
+//         is_dir * pdir = this;
+//
+//         sp(is_dir) pfind(canew(is_dir));
+//
+//         index iFind0 = 0;
+//         index iFind3 = 0;
+//         while (iFind3 >= 0)
+//         {
+//
+//            index iFind1 = strPath.find('/', iFind0);
+//            index iFind2 = strPath.find('\\', iFind0);
+//            iFind3 = min_non_neg(iFind1, iFind2);
+//            if (iFind3 < 0)
+//            {
+//               pfind->m_str = strPath.Mid(iFind0);
+//            }
+//            else
+//            {
+//               pfind->m_str = strPath.Mid(iFind0, iFind3 - iFind0);
+//            }
+//
+//            index iFind = pdir->pred_binary_search(pfind, [&](auto & t1, auto & t2)
+//            {
+//
+//               return t1->m_str.compare_ci(t2->m_str) < 0;
+//
+//            });
+//
+//            if (iFind < 0)
+//            {
+//               while (true)
+//               {
+//
+//
+//                  index iFind1 = strPath.find('/', iFind0);
+//                  index iFind2 = strPath.find('\\', iFind0);
+//                  iFind3 = min_non_neg(iFind1, iFind2);
+//                  if (iFind3 < 0)
+//                  {
+//                     pfind->m_str = strPath.Mid(iFind0);
+//                  }
+//                  else
+//                  {
+//                     pfind->m_str = strPath.Mid(iFind0, iFind3 - iFind0);
+//                  }
+//                  pfind->m_iIsDir = bIsDir ? 1 : (iFind3 >= 0 ? -1 : 0);
+//
+//                  pfind->m_dwError = dwLastError;
+//
+//                  pfind->m_dwLastCheck = ::get_fast_tick_count();
+//
+//                  pdir->add(pfind);
+//
+//                  pdir->pred_sort([&](auto & t1, auto & t2)
+//                  {
+//
+//                     return t1->m_str.compare_ci(t2->m_str) < 0;
+//
+//                  });
+//
+//                  if (iFind3 < 0)
+//                  {
+//
+//                     return;
+//
+//                  }
+//
+//                  pdir = pfind;
+//
+//                  pfind = canew(is_dir);
+//                  iFind0 = iFind3 + 1;
+//               }
+//            }
+//
+//            pdir = pdir->element_at(iFind);
+//
+//            if (bIsDir)
+//            {
+//
+//               pdir->m_iIsDir = 1;
+//
+//            }
+//
+//            pdir->m_dwLastCheck = ::get_fast_tick_count();
+//            iFind0 = iFind3 + 1;
+//         }
+//
+//
+//         pdir->m_iIsDir = bIsDir ? 1 : 0;
+//
+//         pfind->m_dwError = dwLastError;
+//
+//      }
+//
 
       ::file::path system::time()
       {

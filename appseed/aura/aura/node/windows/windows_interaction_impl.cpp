@@ -6156,9 +6156,9 @@ void __term_windowing()
    }
    synch_lock slMap(pmap->m_pmutex);
 
-   ::user::interaction_base * pbase = pmap->m_map[(int_ptr)hwnd];
+   ::user::interaction_base * pbase;
 
-   if (pbase == NULL)
+   if (!pmap->m_map.Lookup((int_ptr)hwnd, pbase))
    {
 
       return NULL;

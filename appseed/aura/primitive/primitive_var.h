@@ -232,6 +232,7 @@ public:
    void           set_string(string && str);
    void           set_id(const id & id);
    void unset();
+   void unset(const string & strPropertySetKey);
 
    bool is_set() const;
    bool is_new() const;
