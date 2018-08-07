@@ -1,7 +1,7 @@
 #include "framework.h"
 
 
-
+extern mutex * g_pmutexLibrary;
 
 
 namespace aura
@@ -64,6 +64,8 @@ namespace aura
    bool library::open(const char * pszPath,bool bAutoClose,bool bCa2Path)
    {
 
+      synch_lock sl(g_pmutexLibrary);
+
       m_strMessage.Empty();
 
       auto pfn_get_new_library = get_library_factory(pszPath);
@@ -124,12 +126,16 @@ namespace aura
    bool library::open_ca2_library()
    {
 
+      synch_lock sl(g_pmutexLibrary);
+
       if(m_pca2library != NULL)
          return true;
 
       ::exception::engine().reset();
 
       PFN_GET_NEW_LIBRARY pfn_get_new_library = NULL;
+
+      int iPhase = 0;
 
       try
       {
@@ -139,16 +145,25 @@ namespace aura
          if (pfn_get_new_library == NULL)
          {
 
+            iPhase++;
+
             string strPath = m_strPath.title();
 
-            if ((pfn_get_new_library = get < PFN_GET_NEW_LIBRARY >(strPath + "_get_new_library")) == NULL)
+            pfn_get_new_library = get < PFN_GET_NEW_LIBRARY >(strPath + "_get_new_library");
+
+            if (pfn_get_new_library == NULL)
             {
+
+               iPhase++;
+
                if (::str::begins_eat(strPath, "lib"))
                {
 
                   pfn_get_new_library = get < PFN_GET_NEW_LIBRARY >(strPath + "_get_new_library");
 
                }
+
+               iPhase++;
 
                if (pfn_get_new_library == NULL)
                {
@@ -236,6 +251,8 @@ namespace aura
    string library::get_library_name()
    {
 
+      synch_lock sl(g_pmutexLibrary);
+
       if(m_pca2library != NULL)
       {
 
@@ -267,12 +284,20 @@ namespace aura
 
    }
 
+
    void * library::get_os_data()
    {
+
       return m_plibrary;
+
    }
+
+
    bool library::close()
    {
+
+      synch_lock sl(g_pmutexLibrary);
+
       try
       {
 
@@ -317,8 +342,11 @@ namespace aura
 
    }
 
+
    string library::get_app_id(const char * pszAppName)
    {
+
+      synch_lock sl(g_pmutexLibrary);
 
       if(!contains_app(pszAppName))
          return "";
@@ -368,8 +396,11 @@ namespace aura
 
    }
 
+
    string library::get_app_name(const char * pszAppId)
    {
+
+      synch_lock sl(g_pmutexLibrary);
 
       string strAppName(pszAppId);
 
@@ -429,6 +460,8 @@ namespace aura
    sp(::aura::application) library::get_new_application(const char * pszAppId)
    {
 
+      synch_lock sl(g_pmutexLibrary);
+
       try
       {
 
@@ -469,6 +502,8 @@ namespace aura
 
    void library::get_app_list(stringa & stra)
    {
+
+      synch_lock sl(g_pmutexLibrary);
 
       if(get_ca2_library() != NULL)
       {
@@ -522,6 +557,8 @@ namespace aura
    sp(::object) library::create_object(::aura::application * papp,const char * pszClassId, object * p)
    {
 
+      synch_lock sl(g_pmutexLibrary);
+
       if(get_ca2_library() == NULL)
          return NULL;
 
@@ -544,6 +581,8 @@ namespace aura
    bool library::has_object_class(const char * pszClassId)
    {
 
+      synch_lock sl(g_pmutexLibrary);
+
       if (get_ca2_library() == NULL)
       {
 
@@ -559,6 +598,8 @@ namespace aura
    bool library::contains_app(const char * pszAppId)
    {
 
+      synch_lock sl(g_pmutexLibrary);
+
       stringa stra;
 
       get_app_list(stra);
@@ -570,6 +611,8 @@ namespace aura
 
    string library::get_root()
    {
+
+      synch_lock sl(g_pmutexLibrary);
 
       if(m_pca2library != NULL)
       {
@@ -586,6 +629,8 @@ namespace aura
    void library::get_create_view_id_list(::array < id > & ida)
    {
 
+      synch_lock sl(g_pmutexLibrary);
+
       UNREFERENCED_PARAMETER(ida);
 
    }
@@ -593,6 +638,8 @@ namespace aura
 
    bool library::is_opened()
    {
+
+      synch_lock sl(g_pmutexLibrary);
 
       return m_plibrary != NULL;
 
@@ -609,6 +656,8 @@ namespace aura
 
    void * library::raw_get(const char * pszEntryName)
    {
+
+      synch_lock sl(g_pmutexLibrary);
 
       return __node_library_raw_get(m_plibrary,pszEntryName);
 

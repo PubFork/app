@@ -1911,6 +1911,7 @@ retry_session:
       int32_t iStatusCode = psocket->outattr("http_status_code");
 
       set["http_status_code"] = psocket->outattr("http_status_code");
+      set["http_status"] = psocket->outattr("http_status");
       iTry++;
       if(set.has_property("cancel") && set["cancel"].get_bool())
       {

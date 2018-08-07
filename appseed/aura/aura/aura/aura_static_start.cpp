@@ -13,6 +13,8 @@ extern mutex * g_pmutexThreadWaitClose;
 
 extern string_map < ::aura::PFN_GET_NEW_LIBRARY, ::aura::PFN_GET_NEW_LIBRARY  > * g_pmapLibrary;
 
+extern mutex * g_pmutexLibrary;
+
 CLASS_DECL_AURA critical_section * g_pcsGlobal = NULL;
 
 bool g_bOutputDebugString = true;
@@ -329,6 +331,8 @@ namespace aura
 
          ::str::international::g_pmapRTL = new ::map < ::id,const ::id &,::id,const ::id & >();
 
+         g_pmutexLibrary = new mutex;
+
          g_pmapLibrary = new string_map < ::aura::PFN_GET_NEW_LIBRARY, ::aura::PFN_GET_NEW_LIBRARY >();
 
          g_pmutexFactory = new mutex;
@@ -420,6 +424,8 @@ namespace aura
          del(g_pmutexFactory);
 
          del(g_pmapLibrary);
+
+         del(g_pmutexLibrary);
 
          del(::str::international::g_pmapRTL);
 

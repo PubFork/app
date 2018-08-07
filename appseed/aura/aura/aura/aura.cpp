@@ -89,6 +89,8 @@ void __post_quit_message(int32_t nExitCode)
 
 string_map < ::aura::PFN_GET_NEW_LIBRARY, ::aura::PFN_GET_NEW_LIBRARY  > * g_pmapLibrary = NULL;
 
+mutex * g_pmutexLibrary = NULL;
+
 extern "C"
 CLASS_DECL_AURA string_map < ::aura::PFN_GET_NEW_LIBRARY, ::aura::PFN_GET_NEW_LIBRARY  > & __library()
 {
@@ -98,16 +100,22 @@ CLASS_DECL_AURA string_map < ::aura::PFN_GET_NEW_LIBRARY, ::aura::PFN_GET_NEW_LI
 }
 
 extern "C"
-CLASS_DECL_AURA::aura::PFN_GET_NEW_LIBRARY get_library_factory(const char * psz)
+CLASS_DECL_AURA ::aura::PFN_GET_NEW_LIBRARY get_library_factory(const char * psz)
 {
+
+   synch_lock sl(g_pmutexLibrary);
 
    return __library()[psz];
 
 }
 
+
 extern "C"
 CLASS_DECL_AURA void register_library(const char * psz, ::aura::PFN_GET_NEW_LIBRARY p)
 {
+
+   synch_lock sl(g_pmutexLibrary);
+
    __library()[psz] = p;
 
 }

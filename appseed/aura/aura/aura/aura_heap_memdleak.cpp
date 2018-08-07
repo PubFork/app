@@ -104,9 +104,7 @@ void * unaligned_memory_alloc(size_t size)
 
    p = &pblock[1];
 
-
-
-   //zero(p, size);
+   zero(p, size);
 
    return p;
 
@@ -267,7 +265,12 @@ void * memory_realloc_dbg(void * pmemory, size_t size, int32_t nBlockUse, const 
    size_t * psizeNew = NULL;
 
    pblock = (memdleak_block *) ::system_heap_realloc(pblock, size + sizeof(memdleak_block));
+   if (nAllocSize > pblock->m_size)
+   {
 
+      zero(&((byte*)pblock)[pblock->m_size], nAllocSize - pblock->m_size);
+
+   }
    //pblock->m_iBlockUse = nBlockUse;
    //if (g_pexceptionengine == NULL)
    //{
