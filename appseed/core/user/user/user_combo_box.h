@@ -84,8 +84,6 @@ namespace user
       virtual bool get_element_rect(LPRECT lprect, e_element eelement);
       virtual e_element hit_test(point pt);
 
-      virtual void get_simple_drop_down_open_arrow_polygon(point_array & pointa);
-
 
       DECL_GEN_SIGNAL(_001OnLButtonDblClk);
       DECL_GEN_SIGNAL(_001OnLButtonDown);

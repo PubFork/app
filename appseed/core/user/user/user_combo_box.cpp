@@ -390,84 +390,38 @@ namespace user
    bool combo_box::get_element_rect(LPRECT lprect, e_element eelement)
    {
 
-      if(eelement == element_drop_down)
+      if(eelement == element_text)
       {
 
-         rect rectClient;
-
-         ((combo_box *) this)->GetClientRect(rectClient);
-
-         //int32_t iMargin = rectClient.height() / 8;
-         int32_t iMargin = 0;
-
-         rect rectDropDown;
-
-         rectDropDown = rectClient;
-
-         int32_t iW = rectClient.height() * 5 / 8;
-
-         rectDropDown.right      -= iMargin;
-         rectDropDown.bottom     -= iMargin;
-         rectDropDown.top        += iMargin;
-         rectDropDown.left       =  rectDropDown.right - iW;
-
-         *lprect = rectDropDown;
-
-         return true;
-
-      }
-      else if(eelement == element_text)
-      {
-
-         rect rectClient;
-
-         ((combo_box *) this)->GetClientRect(rectClient);
-
-         int32_t iMargin = rectClient.height() / 8;
-
-         int32_t iW = rectClient.height() * 5 / 8;
-
-         rect rectText = rectClient;
-
-         rectText.deflate(0, 0, iMargin, iMargin);
-
-         rectText.right -= (iW + iMargin);
-
-         rect rectPadding = _001GetRect(::user::rect_edit_padding);
-
-         rectText.deflate(rectPadding);
-
-         *lprect = rectText;
-
-         return true;
+         eelement = element_combo_edit;
 
       }
 
-      return false;
+      return control::get_element_rect(lprect, eelement);
 
    }
 
 
-   void combo_box::get_simple_drop_down_open_arrow_polygon(point_array & pointa)
-   {
+   //void combo_box::get_simple_drop_down_open_arrow_polygon(point_array & pointa)
+   //{
 
-      rect rectDropDown;
+   //   rect rectDropDown;
 
-      get_element_rect(rectDropDown, element_drop_down);
+   //   get_element_rect(rectDropDown, element_drop_down);
 
-      int32_t cx = rectDropDown.width() / 3;
+   //   int32_t cx = rectDropDown.width() / 3;
 
-      int32_t cy = cx * 2 / 3;
+   //   int32_t cy = cx * 2 / 3;
 
-      point ptCenter = rectDropDown.center();
+   //   point ptCenter = rectDropDown.center();
 
-      pointa.add(ptCenter.x - cx / 2, ptCenter.y - cy / 2);
+   //   pointa.add(ptCenter.x - cx / 2, ptCenter.y - cy / 2);
 
-      pointa.add(ptCenter.x + cx / 2, ptCenter.y - cy / 2);
+   //   pointa.add(ptCenter.x + cx / 2, ptCenter.y - cy / 2);
 
-      pointa.add(ptCenter.x, ptCenter.y + cy / 2);
+   //   pointa.add(ptCenter.x, ptCenter.y + cy / 2);
 
-   }
+   //}
 
 
    e_element combo_box::hit_test(point pt)

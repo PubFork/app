@@ -370,7 +370,28 @@ namespace user
    bool interaction_child::is_window_enabled()
    {
 
-      return m_bEnabled && ((m_pui == NULL || m_pui->GetParent() == NULL) ? true : m_pui->GetParent()->is_window_enabled());
+      if (!m_bEnabled)
+      {
+
+         return false;
+
+      }
+
+      if (m_pui == NULL)
+      {
+
+         return false;
+
+      }
+
+      if (m_pui->GetParent() == NULL)
+      {
+
+         return NULL;
+
+      }
+
+      return  m_pui->GetParent()->is_window_enabled();
 
    }
 
@@ -379,6 +400,8 @@ namespace user
    {
 
       m_bEnabled = bEnable;
+
+      send_message(WM_ENABLE, is_window_enabled() ? TRUE : FALSE);
 
       return is_window_enabled();
 

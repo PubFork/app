@@ -693,7 +693,20 @@ public:
       {
          ::count c = 0;
          operator()(c);
-         a.set_size(c);
+         if (c < 0)
+         {
+            setstate(::file::failbit);
+            return;
+         }
+         try
+         {
+            a.set_size(c);
+         }
+         catch (...)
+         {
+            setstate(::file::failbit);
+            return;
+         }
          for (auto & element : a)
          {
             string strType;

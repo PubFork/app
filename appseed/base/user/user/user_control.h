@@ -32,6 +32,8 @@ namespace user
       index                      m_iEditItem;
       form_callback *            m_pformcallback;
       bool                       m_bControlExCommandEnabled;
+      ::user::interaction *      m_puiLabel;
+
 
 
       control();
@@ -98,6 +100,7 @@ namespace user
       DECL_GEN_SIGNAL(_001OnMouseMove);
       DECL_GEN_SIGNAL(_001OnMouseLeave);
       DECL_GEN_SIGNAL(_001OnKeyDown);
+      DECL_GEN_SIGNAL(_001OnEnable);
 
 
       virtual void on_control_event(::user::control_event * pevent) override;
@@ -108,6 +111,11 @@ namespace user
 
       virtual bool keyboard_focus_OnSetFocus() override;
       virtual bool keyboard_focus_OnKillFocus(oswindow oswindowNew) override;
+
+
+      virtual bool get_element_rect(LPRECT lprect, e_element eelement);
+      virtual void get_simple_drop_down_open_arrow_polygon(point_array & pointa);
+
 
    };
 

@@ -32,6 +32,14 @@ namespace draw2d
 
       };
 
+      enum e_align
+      {
+
+         align_center,
+         align_inset,
+
+      };
+
 
       enum e_line_join
       {
@@ -48,6 +56,7 @@ namespace draw2d
       e_line_cap        m_elinecapBeg;
       e_line_cap        m_elinecapEnd;
       e_line_join       m_elinejoin;
+      e_align           m_ealign;
       double            m_dWidth;
       COLORREF          m_cr;
       sp(brush)         m_br;
@@ -108,7 +117,7 @@ namespace draw2d
       {
       }
 
-      pen_sp(::draw2d::graphics * pgraphics, double dWidth, COLORREF crColor);
+      pen_sp(const ::aura::allocatorsp & allocer, double dWidth, COLORREF crColor);
       /*
             pen_sp(::aura::application * papp, int32_t nPenStyle, int32_t nWidth, const LOGBRUSH* pLogBrush,
                int32_t nStyleCount = 0, const uint32_t* lpStyle = NULL) :

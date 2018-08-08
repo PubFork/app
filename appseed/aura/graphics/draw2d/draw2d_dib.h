@@ -74,22 +74,24 @@ namespace draw2d
 
       };
 
-      double            m_dIsotropicRate;
-      ::file::path      m_pathCache;
-      COLORREF *        m_pcolorref;
-      class ::size      m_size;
-      class ::size      m_sizeAlloc;
-      i32           m_iScan;
-      bool              m_bMapped; // optionally used by implementation
-      descriptor        m_descriptor;
-      bool              m_bReduced; // optionally used by implementation
-      point             m_pt;
-      double            m_dFontFactor;
-      e_alpha_mode      m_ealphamode;
-      bool              m_bOwn;
-      memory            m_memoryMap;
-      e_mipmap          m_emipmap;
-      sp(::draw2d::dib) m_pnext;
+      double                     m_dIsotropicRate;
+      ::file::path               m_pathCache;
+      COLORREF *                 m_pcolorref;
+      class ::size               m_size;
+      class ::size               m_sizeAlloc;
+      i32                        m_iScan;
+      bool                       m_bMapped; // optionally used by implementation
+      descriptor                 m_descriptor;
+      bool                       m_bReduced; // optionally used by implementation
+      point                      m_pt;
+      double                     m_dFontFactor;
+      e_alpha_mode               m_ealphamode;
+      bool                       m_bOwn;
+      memory                     m_memoryMap;
+      e_mipmap                   m_emipmap;
+      sp(::draw2d::dib)          m_pnext;
+      bool                       m_bColorMatrix;
+      ::draw2d::color_matrix     m_colormatrix;
 
 
 

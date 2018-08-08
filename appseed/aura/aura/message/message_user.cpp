@@ -309,19 +309,21 @@ namespace message
       m_pparams = reinterpret_cast<NCCALCSIZE_PARAMS*>(lparam.m_lparam);
    }
 
+
    bool nc_calc_size::GetCalcValidRects()
    {
+
       return m_wparam != FALSE;
+
    }
 
 
    bool enable::get_enable()
    {
+
       return m_wparam != 0;
+
    }
-
-
-
 
 
    UINT mouse_wheel::GetFlags()

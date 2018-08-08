@@ -120,6 +120,13 @@ namespace user
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
 
+      if (!is_window_enabled())
+      {
+
+         return;
+
+      }
+
       pobj->previous();
 
       e_element eelement;
@@ -200,6 +207,13 @@ namespace user
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
 
+      if (!is_window_enabled())
+      {
+
+         return;
+
+      }
+
       e_element eelement;
 
       point pt = pmouse->m_pt;
@@ -210,6 +224,7 @@ namespace user
       {
 
          Session.m_puiLastLButtonDown = NULL;
+
 
          pobj->m_bRet = _001OnClick(pmouse->m_nFlags, pt);
 
@@ -269,6 +284,13 @@ namespace user
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
+
+      if (!is_window_enabled())
+      {
+
+         return;
+
+      }
 
       e_element eelement;
 
@@ -1035,7 +1057,7 @@ namespace user
       rect.left = x1;
       rect.right = x2;
       rect.bottom = rect.top + 5;
-      ::draw2d::pen_sp pen(pgraphics,1,colorExt1TL);
+      ::draw2d::pen_sp pen(allocer(),1,colorExt1TL);
       pgraphics->SelectObject(pen);
       imaging.color_blend_3dRect(pgraphics,rect,colorExt1TL,220,colorExt1BR,220);
 

@@ -2762,6 +2762,9 @@
     <ClInclude Include="primitive\str\str_bstring.h">
       <Filter>Header Files\primitive\str</Filter>
     </ClInclude>
+    <ClInclude Include="graphics\draw2d\draw2d_color_matrix.h">
+      <Filter>Header Files\graphics\draw2d</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="multithreading\multithreading_condition.cpp">
@@ -4767,6 +4770,9 @@
     </ClCompile>
     <ClCompile Include="primitive\str\str_bstring.cpp">
       <Filter>Source Files\primitive\str</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\draw2d\draw2d_color_matrix.cpp">
+      <Filter>Source Files\graphics\draw2d</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

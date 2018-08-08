@@ -16,6 +16,7 @@ namespace user
 
          style_normal,
          style_red_green_circle,
+         style_toggle_switch,
 
       };
 
@@ -30,19 +31,21 @@ namespace user
 
 
       e_style              m_estyle;
+      u32                  m_dAnimationStart;
+      double               m_dPosition;
+      double               m_dPeriod;
 
 
-      check_box(::aura::application * papp);
+      check_box(::aura::application * papp, e_style estyle = style_normal);
       virtual ~check_box();
-
-
-   public:
 
 
       virtual void _001OnDraw(::draw2d::graphics * pgraphics) override;
       virtual void _001OnDrawNormal(::draw2d::graphics * pgraphics);
       virtual void _001OnDrawRedGreenCircle(::draw2d::graphics * pgraphics);
+      virtual void _001OnDrawToggleSwitch(::draw2d::graphics * pgraphics);
       virtual ::check::e_check _001GetCheck() override;
+      using ::user::control::_001SetCheck;
       virtual void _001SetCheck(::check::e_check check, ::action::context actioncontext) override;
 
       void install_message_routing(::message::sender * pinterface) override;
@@ -57,5 +60,8 @@ namespace user
       virtual void _001OnTimer(::timer * ptimer) override;
 
    };
+
+
+
 
 } // namespace user

@@ -1786,30 +1786,19 @@ namespace user
       return false;
    }
 
+
    bool interaction_impl::DrawCaption(::draw2d::graphics * pgraphics,LPCRECT lprc,UINT uFlags)
    {
+
       UNREFERENCED_PARAMETER(pgraphics);
       UNREFERENCED_PARAMETER(lprc);
       UNREFERENCED_PARAMETER(uFlags);
+
       ::exception::throw_interface_only(get_app());
+
       return false;
+
    }
-
-
-   //bool interaction_impl::SetTimer(uint_ptr nIDEvent,UINT nElapse)
-   //{
-
-   //   return ::aura::timer_array::SetTimer(nIDEvent, nElapse);
-
-   //}
-
-
-   //bool interaction_impl::KillTimer(uint_ptr nIDEvent)
-   //{
-
-   //   return ::aura::timer_array::KillTimer(nIDEvent);
-
-   //}
 
 
    bool interaction_impl::is_window_enabled()
@@ -1819,12 +1808,18 @@ namespace user
 
    }
 
+
    bool interaction_impl::enable_window(bool bEnable)
    {
+
       UNREFERENCED_PARAMETER(bEnable);
+
       ::exception::throw_interface_only(get_app());
+
       return false;
+
    }
+
 
    ::user::interaction * interaction_impl::GetActiveWindow()
    {

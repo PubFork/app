@@ -72,6 +72,7 @@ namespace draw2d
    void dib::draw2d_dib_common_construct()
    {
 
+      m_bColorMatrix = false;
       m_pcolorref = NULL;
       m_dIsotropicRate = 1.0;
       m_size = ::size(0, 0);

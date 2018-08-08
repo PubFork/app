@@ -57,6 +57,8 @@ namespace draw2d
       void draw_ca2_with_border2(int x,int y,int z,int bOut,int bIn,COLORREF crBk,COLORREF cr,COLORREF crBorderOut,COLORREF crIn);
 
 
+      void draw_border(LPCRECT lpcrect, COLORREF cr, int iWidth);
+
       virtual bool is_set();
 
       virtual void * get_os_data() const;
@@ -432,6 +434,10 @@ namespace draw2d
 
       virtual bool alpha_blend(i32 xDest, i32 yDest, i32 nDestWidth, i32 nDestHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, i32 nSrcWidth, i32 nSrcHeight, f64 dOpacity);
       virtual bool alpha_blend(point ptDst, size szDst,::draw2d::graphics * pgraphicsSrc, point ptSrc, size szSrc, f64 dOpacity);
+      inline bool alpha_blend(rect rDst, ::draw2d::graphics * pgraphicsSrc, rect rSrc, f64 dOpacity)
+      {
+         return alpha_blend(rDst.top_left(), rDst.get_size(), pgraphicsSrc, rSrc.top_left(), rSrc.get_size(), dOpacity);
+      }
       virtual bool alpha_blend(point ptDst, size sz,::draw2d::graphics * pgraphicsSrc, point ptSrc, f64 dOpacity);
       virtual bool alpha_blend(point ptDst, size sz,::draw2d::graphics * pgraphicsSrc, f64 dOpacity);
       virtual bool alpha_blend(rect & r, ::draw2d::graphics * pgraphicsSrc, f64 dOpacity);
@@ -644,8 +650,6 @@ namespace draw2d
 
       virtual bool _get(matrix & matrix);
       virtual bool _set(const matrix & matrix);
-
-
 
       //=============================================================================
       //

@@ -380,7 +380,7 @@ namespace simple_ui
 
          graphics2.DrawRectangle(&pen1, rectClient.left, rectClient.top, rectClient.width(), iBorderH * 2);*/
 
-         ::draw2d::pen_sp pen(pgraphics, 1.0, crBorderIn);
+         ::draw2d::pen_sp pen(allocer(), 1.0, crBorderIn);
 
          pgraphics->draw_rect(rect(rectClient.left + 1, rectClient.top + 1, rectClient.left + (int32_t)rectClient.width() - 2, rectClient.top + iBorderH * 2 - 2), pen);
 

@@ -1282,6 +1282,14 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="user\user\user_toggle_switch.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="user\user\_user.cpp" />
     <ClCompile Include="user\wndfrm\frame\wndfrm_frame_appearance.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>
@@ -1811,6 +1819,7 @@
     <ClInclude Include="user\user\user_tab_view_update_hint.h" />
     <ClInclude Include="user\user\user_template.h" />
     <ClInclude Include="user\user\user_thread.h" />
+    <ClInclude Include="user\user\user_toggle_switch.h" />
     <ClInclude Include="user\user\user_toolbar.h" />
     <ClInclude Include="user\user\user_toolbar_control.h" />
     <ClInclude Include="user\user\user_tool_command.h" />

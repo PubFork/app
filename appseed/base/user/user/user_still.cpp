@@ -122,7 +122,7 @@ namespace user
 
                pgraphics->fill_solid_rect(rectClient, _001GetColor(color_background_disabled));
 
-               pgraphics->set_text_color(_001GetColor(color_text_disabled));
+               pgraphics->set_text_color(_001GetColor(color_text_disabled, ARGB(255, 160, 160, 160)));
 
             }
             else if (should_hover() && (m_iHover == 0 || Session.m_puiLastLButtonDown == this))

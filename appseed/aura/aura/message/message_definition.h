@@ -45,6 +45,7 @@ namespace message
       PrototypeTimer,
       PrototypeMouseWheel,
       PrototypeInitMenuPopup,
+      PrototypeEnable,
       PrototypeNcHitTest,
       PrototypeKey,
       PrototypeNotify,

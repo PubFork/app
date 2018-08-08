@@ -14,7 +14,7 @@ namespace draw2d
       m_cr                    = ARGB(127, 0, 0, 0);
       m_etype                 = type_solid;
       m_dWidth                = 1.0;
-
+      m_ealign                = align_center;
    }
 
    pen::~pen()

@@ -1259,6 +1259,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="graphics\draw2d\draw2d_color_matrix.cpp" />
     <ClCompile Include="graphics\draw2d\draw2d_debug.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
@@ -3461,6 +3462,7 @@
     <ClInclude Include="graphics\draw2d\draw2d_path.h" />
     <ClInclude Include="graphics\draw2d\draw2d_pen.h" />
     <ClInclude Include="graphics\draw2d\draw2d_region.h" />
+    <ClInclude Include="graphics\draw2d\draw2d_color_matrix.h" />
     <ClInclude Include="graphics\draw3d\draw3d.h" />
     <ClInclude Include="graphics\draw3d\draw3d_ortho.h" />
     <ClInclude Include="graphics\graphics.h" />

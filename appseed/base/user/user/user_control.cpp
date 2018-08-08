@@ -8,6 +8,7 @@ namespace user
    control::control()
    {
 
+      m_puiLabel = NULL;
       m_pdrawcontext = NULL;
       m_pdescriptor = NULL;
       m_iHover = -1;
@@ -44,6 +45,8 @@ namespace user
 #endif
 
       IGUI_MSG_LINK(WM_KEYDOWN, psender, this, &::user::control::_001OnKeyDown);
+
+      IGUI_MSG_LINK(WM_ENABLE, psender, this, &::user::control::_001OnEnable);
 
    }
 
@@ -983,21 +986,104 @@ namespace user
    }
 
 
+   void control::_001OnEnable(::message::message * pobj)
+   {
+
+      SCAST_PTR(::message::enable, penable, pobj);
+
+      if (m_puiLabel != NULL)
+      {
+
+         m_puiLabel->enable_window(penable->get_enable());
+
+      }
+
+   }
+
+
+   bool control::get_element_rect(LPRECT lprect, e_element eelement)
+   {
+
+      if (eelement == element_drop_down)
+      {
+
+         rect rectClient;
+
+         ((control *)this)->GetClientRect(rectClient);
+
+         //int32_t iMargin = rectClient.height() / 8;
+         int32_t iMargin = 0;
+
+         rect rectDropDown;
+
+         rectDropDown = rectClient;
+
+         int32_t iW = rectClient.height() * 5 / 8;
+
+         rectDropDown.right -= iMargin;
+         rectDropDown.bottom -= iMargin;
+         rectDropDown.top += iMargin;
+         rectDropDown.left = rectDropDown.right - iW;
+
+         *lprect = rectDropDown;
+
+         return true;
+
+      }
+      else if (eelement == element_combo_edit)
+      {
+
+         rect rectClient;
+
+         GetClientRect(rectClient);
+
+         rect rectDropDown;
+
+         get_element_rect(rectDropDown, element_drop_down);
+
+         rect rectEdit = rectClient;
+
+         rectEdit.right = rectDropDown.left;
+
+         //rect rectPadding = _001GetRect(::user::rect_edit_padding);
+
+         //rectEdit.deflate(rectPadding);
+
+         *lprect = rectEdit;
+
+         return true;
+
+      }
+
+      return false;
+
+   }
+
+
+   void control::get_simple_drop_down_open_arrow_polygon(point_array & pointa)
+   {
+
+      rect rectDropDown;
+
+      get_element_rect(rectDropDown, element_drop_down);
+
+      int32_t cx = rectDropDown.width() / 3;
+
+      int32_t cy = cx * 2 / 3;
+
+      point ptCenter = rectDropDown.center();
+
+      pointa.add(ptCenter.x - cx / 2, ptCenter.y - cy / 2);
+
+      pointa.add(ptCenter.x + cx / 2, ptCenter.y - cy / 2);
+
+      pointa.add(ptCenter.x, ptCenter.y + cy / 2);
+
+   }
+
+
+
 } // namespace core
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

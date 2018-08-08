@@ -111,7 +111,7 @@ namespace hotplugin
 
       }
 
-      ::draw2d::pen_sp pen(pgraphics, 1.0f, ARGB(149, 149, 149, 142));
+      ::draw2d::pen_sp pen(::aura::system::g_p->allocer(), 1.0f, ARGB(149, 149, 149, 142));
 
       pgraphics->draw_rect(rectBar, pen);
 

@@ -5,6 +5,7 @@
 #include "draw2d_const.h"
 #include "draw2d_common.h"
 #include "draw2d_matrix.h"
+#include "draw2d_color_matrix.h"
 
 
 namespace draw2d
@@ -44,6 +45,8 @@ namespace draw2d
 
 #include "draw2d_dibmap.h"
 #include "draw2d_dibmap_ex1.h"
+
+
 
 
 namespace aura

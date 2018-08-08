@@ -22,7 +22,7 @@ namespace wndfrm_tranquillum
 
 //      m_fontEdit->create_point_font("MS Sans Serif", 9.0);
 
-      //    m_fontList->create_point_font("Tahoma", 10, FW_BOLD);
+      //    m_fontList->create_point_font("Segoe UI", 10, FW_BOLD);
 
       //theme_current_control(::user::control_none);
 
@@ -83,7 +83,7 @@ namespace wndfrm_tranquillum
       create_color(::user::color_button_background, ARGB(255, 80, 150, 220));
       create_color(::user::color_button_background_hover, ARGB(255, 110, 180, 240));
       create_color(::user::color_button_background_press, ARGB(255, 95, 165, 230));
-      create_color(::user::color_button_background_disabled, ARGB(255, 160, 170, 180));
+      create_color(::user::color_button_background_disabled, ARGB(255, 160, 160, 160));
       create_color(::user::color_button_text, ARGB(255, 255, 255, 255));
       create_color(::user::color_button_text_hover, ARGB(255, 255, 255, 255));
       create_color(::user::color_button_text_press, ARGB(255, 255, 255, 255));
@@ -990,7 +990,7 @@ namespace wndfrm_tranquillum
                if ((ptoolbar->m_dwCtrlStyle & TBSTYLE_FLAT) == TBSTYLE_FLAT)
                {
 
-                  ::draw2d::pen_sp pen(pgraphics, 1, ARGB(184, 92, 184, 92));
+                  ::draw2d::pen_sp pen(allocer(), 1, ARGB(184, 92, 184, 92));
                   ::draw2d::brush_sp brush(allocer(), ARGB(123, 177, 184, 255));
                   ::draw2d::pen * ppenOld = pgraphics->SelectObject(pen);
                   ::draw2d::brush * pbrushOld = pgraphics->SelectObject(brush);
@@ -1031,7 +1031,7 @@ namespace wndfrm_tranquillum
             if ((ptoolbar->m_dwCtrlStyle & TBSTYLE_FLAT) == TBSTYLE_FLAT)
             {
 
-               ::draw2d::pen_sp pen(pgraphics, 1, ARGB(255, 92, 92, 92));
+               ::draw2d::pen_sp pen(allocer(), 1, ARGB(255, 92, 92, 92));
                ::draw2d::brush_sp brush(allocer(), ARGB(255, 255, 255, 255));
                ::draw2d::pen * ppenOld = pgraphics->SelectObject(pen);
                ::draw2d::brush * pbrushOld = pgraphics->SelectObject(brush);
@@ -1287,7 +1287,7 @@ namespace wndfrm_tranquillum
                if ((ptoolbar->m_dwCtrlStyle & TBSTYLE_FLAT) == TBSTYLE_FLAT)
                {
 
-                  ::draw2d::pen_sp pen(pgraphics, 1, ptoolbar->_001GetColor(::user::color_button_background_hover));
+                  ::draw2d::pen_sp pen(allocer(), 1, ptoolbar->_001GetColor(::user::color_button_background_hover));
                   ::draw2d::brush_sp brush(allocer(), ptoolbar->_001GetColor(::user::color_button_background_hover));
                   ::draw2d::pen * ppenOld = pgraphics->SelectObject(pen);
                   ::draw2d::brush * pbrushOld = pgraphics->SelectObject(brush);
@@ -1328,7 +1328,7 @@ namespace wndfrm_tranquillum
             if ((ptoolbar->m_dwCtrlStyle & TBSTYLE_FLAT) == TBSTYLE_FLAT)
             {
 
-               ::draw2d::pen_sp pen(pgraphics, 1, ptoolbar->_001GetColor(::user::color_button_background_press));
+               ::draw2d::pen_sp pen(allocer(), 1, ptoolbar->_001GetColor(::user::color_button_background_press));
                ::draw2d::brush_sp brush(allocer(), ptoolbar->_001GetColor(::user::color_button_background_press));
                ::draw2d::pen * ppenOld = pgraphics->SelectObject(pen);
                ::draw2d::brush * pbrushOld = pgraphics->SelectObject(brush);
@@ -1378,7 +1378,7 @@ namespace wndfrm_tranquillum
             if ((ptoolbar->m_dwCtrlStyle & TBSTYLE_FLAT) == TBSTYLE_FLAT)
             {
 
-               ::draw2d::pen_sp pen(pgraphics, 1, ptoolbar->_001GetColor(
+               ::draw2d::pen_sp pen(allocer(), 1, ptoolbar->_001GetColor(
                                     (nStyle & TBBS_DISABLED) == 0 ?
                                     ::user::color_button_background :
                                     ::user::color_button_background_disabled));

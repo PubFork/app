@@ -11,8 +11,8 @@ namespace draw2d
 {
 
 
-   pen_sp::pen_sp(::draw2d::graphics * pgraphics,double dWidth,COLORREF crColor):
-      smart_pointer < pen >(pgraphics->allocer())
+   pen_sp::pen_sp(const ::aura::allocatorsp & allocer, double dWidth, COLORREF crColor) :
+      ::smart_pointer < pen >(allocer)
    {
 
       m_p->create_solid(dWidth,crColor);
@@ -4041,7 +4041,7 @@ namespace draw2d
 
       i32 dia = 2 * radius;
 
-      ::draw2d::pen_sp pen(this, 1.0, cr);
+      ::draw2d::pen_sp pen(allocer(), 1.0, cr);
 
       draw_round_rect(r, pen, radius);
 
@@ -4092,7 +4092,7 @@ namespace draw2d
 
       i32 dia = 2 * radius;
 
-      ::draw2d::pen_sp pen(this, 1.0, cr);
+      ::draw2d::pen_sp pen(allocer(), 1.0, cr);
 
       draw_round_top_left(r, pen, radius);
 
@@ -4143,7 +4143,7 @@ namespace draw2d
 
       i32 dia = 2 * radius;
 
-      ::draw2d::pen_sp pen(this, 1.0, cr);
+      ::draw2d::pen_sp pen(allocer(), 1.0, cr);
 
       draw_round_bottom_right(r, pen, radius);
 
@@ -5724,6 +5724,30 @@ namespace draw2d
       update_matrix();
 
       return true;
+
+   }
+
+
+   void graphics::draw_border(LPCRECT lpcrect, COLORREF cr, int iWidth)
+   {
+
+      rect r(lpcrect);
+
+      r.inflate(iWidth + 1, iWidth + 1);
+
+      sp(pen) p = m_sppen;
+
+      pen_sp p1(allocer());
+
+      p1->create_solid(iWidth, cr);
+
+      p1->m_ealign = ::draw2d::pen::align_inset;
+
+      SelectObject(p1);
+
+      draw_rect(r);
+
+      SelectObject(p);
 
    }
 

@@ -852,7 +852,7 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
             if ((m_dwCtrlStyle & TBSTYLE_FLAT) == TBSTYLE_FLAT)
             {
 
-               ::draw2d::pen_sp pen(pgraphics, 1, ARGB(184, 92, 184, 92));
+               ::draw2d::pen_sp pen(allocer(), 1, ARGB(184, 92, 184, 92));
 
                ::draw2d::brush_sp brush(allocer(), ARGB(123, 177, 184, 255));
 
@@ -900,7 +900,7 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
          if ((m_dwCtrlStyle & TBSTYLE_FLAT) == TBSTYLE_FLAT)
          {
 
-            ::draw2d::pen_sp pen(pgraphics, 1, ARGB(255, 92, 92, 92));
+            ::draw2d::pen_sp pen(allocer(), 1, ARGB(255, 92, 92, 92));
 
             ::draw2d::brush_sp brush(allocer(), ARGB(255, 255, 255, 255));
 

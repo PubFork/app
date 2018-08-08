@@ -103,8 +103,8 @@ protected:
 #include "user_combo_list.h"
 
 
-//#include "user_button.h"
 #include "user_check_box.h"
+#include "user_toggle_switch.h"
 
 
 //#include "user_document_interface.h"

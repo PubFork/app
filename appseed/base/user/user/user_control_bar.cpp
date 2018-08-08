@@ -887,7 +887,7 @@ namespace user
 
          if(dwStyle & CBRS_GRIPPER)
          {
-            ::draw2d::pen_sp pen(pgraphics, 1, clr);
+            ::draw2d::pen_sp pen(allocer(), 1, clr);
             ::draw2d::pen * ppenOld = pgraphics->SelectObject(pen);
             pgraphics->move_to(0, 7);
             pgraphics->line_to(7, 0);

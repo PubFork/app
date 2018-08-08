@@ -59,6 +59,7 @@
 #include "user_tab_callback.cpp"
 #include "user_tab_view.cpp"
 #include "user_tab_view_update_hint.cpp"
+#include "user_toggle_switch.cpp"
 #include "user_toolbar.cpp"
 #include "user_toolbar_ctrl.cpp"
 #include "user_tool_command.cpp"

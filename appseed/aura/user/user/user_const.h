@@ -105,6 +105,7 @@ namespace user
       element_client,
       element_area,
       element_drop_down,
+      element_combo_edit,
       element_item,
       element_search_edit,
       element_search_ok,

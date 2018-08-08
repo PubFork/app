@@ -1,20 +1,34 @@
 #include "framework.h"
 
 
+void scroll_x(LPRECT lprect, double dRateX, LPCRECT lpcrect)
+{
+
+   LONG w = ::width(lprect);
+
+   lprect->left = lpcrect->left + (::width(lpcrect) - w) * dRateX;
+
+   lprect->right = lprect->left + w;
+
+}
+
+
+
 namespace user
 {
 
-
-   check_box::check_box(::aura::application * papp) :
+   check_box::check_box(::aura::application * papp, e_style estyle) :
       object(papp),
       ::user::interaction(papp)
    {
+
+      m_dPeriod = 300.0;
 
       m_iHover = -1;
 
       m_echeck = ::check::unchecked;
 
-      m_estyle = style_normal;
+      m_estyle = estyle;
 
    }
 
@@ -79,7 +93,13 @@ namespace user
    void check_box::_001OnDraw(::draw2d::graphics * pgraphics)
    {
 
-      if (m_estyle == style_red_green_circle)
+      if (m_estyle == style_toggle_switch)
+      {
+
+         _001OnDrawToggleSwitch(pgraphics);
+
+      }
+      else if (m_estyle == style_red_green_circle)
       {
 
          _001OnDrawRedGreenCircle(pgraphics);
@@ -223,6 +243,260 @@ namespace user
    }
 
 
+   void check_box::_001OnDrawToggleSwitch(::draw2d::graphics * pgraphics)
+   {
+
+      style_context style(this);
+
+      while (style)
+      {
+
+         if (style->_001DrawCheckBox(pgraphics, this))
+         {
+
+            return;
+
+         }
+
+         style.next();
+
+      }
+
+      ::aura::draw_context drawcontext;
+
+      drawcontext.m_bListItemHover = m_iHover >= 0;
+
+      keep < ::aura::draw_context * > keepDrawListItem(&pgraphics->m_pdrawcontext, &drawcontext, pgraphics->m_pdrawcontext, true);
+
+      ::rect rectClient;
+
+      GetClientRect(rectClient);
+
+      int w = rectClient.width();
+
+      int h = rectClient.height();
+
+      w--;
+
+      h--;
+
+      if (w % 2 == 0)
+      {
+
+         w--;
+
+      }
+
+      if (h % 2 == 0)
+      {
+
+         h--;
+
+      }
+
+      if (w <= 0 || h <= 0)
+      {
+
+         return;
+
+      }
+
+      ::check::e_check echeck = _001GetCheck();
+
+      ::draw2d::savedc savedc(pgraphics);
+
+      if (w > h * 2)
+      {
+
+         w = h * 2;
+
+      }
+      else
+      {
+
+         h = w / 2;
+
+      }
+
+      rect r(0, 0, w, h);
+
+      rect rEllipse(0, 0, h, h);
+
+      double dNow = millis_now();
+
+      ::draw2d::path_sp p(allocer());
+
+      rect rL(0, 0, h, h);
+
+      rect rR = rect_dim(h, 0, h, h);
+
+      p->add_arc(rL, -90.0, -180.0);
+
+      p->add_line((rL.left + rL.right) / 2, rL.bottom);
+
+      p->add_line((rR.left + rR.right) / 2, rR.bottom);
+
+      p->add_arc(rR, 90.0, -180.0);
+
+      p->add_line((rR.left + rR.right) / 2, rR.top);
+
+      p->add_line((rL.left + rL.right) / 2, rL.top);
+
+      p->end_figure(true);
+
+      ::draw2d::pen_sp p1(allocer());
+
+      ::draw2d::pen_sp p0(allocer());
+
+      ::draw2d::brush_sp br1(allocer());
+
+      p1->create_solid(2.0, ARGB(255, 0, 0, 0));
+
+      p0->create_solid(2.0, ARGB(255, 90, 150, 255));
+
+      p1->m_ealign = draw2d::pen::align_center;
+
+      br1->create_solid(ARGB(255, 90, 150, 255));
+
+      pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
+
+      double dTime = dNow - m_dAnimationStart;
+
+      if (dTime < m_dPeriod)
+      {
+
+         double dFinal = 1.0;
+
+         bool bComplement;
+
+         if (_001GetCheck() == ::check::unchecked)
+         {
+
+            bComplement = true;
+
+         }
+         else
+         {
+
+            bComplement = false;
+
+         }
+
+         COLORREF cr = ARGB(255, 255, 255, 255);
+
+         ::draw2d::brush_sp br(allocer());
+
+         m_dPosition = ::sin((System.math().GetPi() / 2.0) * (dTime / m_dPeriod));
+
+         double dRate = m_dPosition;
+
+         if (bComplement)
+         {
+
+            dRate = 1.0 - dRate;
+
+         }
+
+         br1->m_cr = (br1->m_cr & 0xffffff) | ((BYTE(255.0 * dRate)) << 24);
+         br1->m_bUpdated = false;
+         p0->m_cr = br1->m_cr;
+         p0->m_bUpdated = false;
+
+         pgraphics->SelectObject(br1);
+         pgraphics->SelectObject(p0);
+
+         pgraphics->path(p);
+
+
+
+
+         br->create_solid(ARGB(255,
+                               (BYTE)((double) argb_get_r_value(cr) * dRate),
+                               (BYTE)((double) argb_get_g_value(cr) * dRate),
+                               (BYTE)((double) argb_get_b_value(cr) * dRate)));
+
+         ::scroll_x(rEllipse, dRate, r);
+
+         rEllipse.rate(0.6);
+
+         pgraphics->SelectObject(br);
+
+         pgraphics->FillEllipse(rEllipse);
+
+         BYTE bAlphaP1 = (BYTE) (255.0 * (1.0 - dRate));
+
+         COLORREF crP1 = ARGB(bAlphaP1, 0, 0, 0);
+
+         p1->create_solid(2.0, crP1);
+
+         p1->m_bUpdated = false;
+
+         pgraphics->SelectObject(p1);
+
+         pgraphics->set_smooth_mode(::draw2d::smooth_mode_high);
+
+         pgraphics->draw_path(p);
+
+
+      }
+      else
+      {
+         if (_001GetCheck() == ::check::unchecked)
+         {
+
+
+
+            rEllipse.Align(align_left | align_vertical_center, r);
+
+            rEllipse.rate(0.6);
+
+            ::draw2d::brush_sp br(allocer());
+
+            br->create_solid(ARGB(255, 0, 0, 0));
+
+            pgraphics->SelectObject(br);
+
+            pgraphics->FillEllipse(rEllipse);
+
+            p1->create_solid(2.0, ARGB(255, 0, 0, 0));
+
+            pgraphics->SelectObject(p1);
+
+            pgraphics->set_smooth_mode(::draw2d::smooth_mode_high);
+
+            pgraphics->draw_path(p);
+
+
+         }
+         else
+         {
+
+            pgraphics->SelectObject(br1);
+
+            pgraphics->SelectObject(p0);
+
+            pgraphics->path(p);
+
+
+            rEllipse.Align(align_right | align_vertical_center, r);
+
+            rEllipse.rate(0.6);
+
+            ::draw2d::brush_sp br(allocer());
+
+            br->create_solid(ARGB(255, 255, 255, 255));
+
+            pgraphics->SelectObject(br);
+
+            pgraphics->FillEllipse(rEllipse);
+
+         }
+
+      }
+
+   }
+
+
    void check_box::_001OnDrawRedGreenCircle(::draw2d::graphics * pgraphics)
    {
 
@@ -297,6 +571,19 @@ namespace user
    void check_box::_001OnTimer(::timer * ptimer)
    {
 
+      if (ptimer->m_nIDEvent == 127)
+      {
+
+         set_need_redraw();
+
+         if (millis_now() - m_dAnimationStart > m_dPeriod)
+         {
+
+            KillTimer(ptimer->m_nIDEvent);
+
+         }
+
+      }
       ::user::control::_001OnTimer(ptimer);
 
    }
@@ -331,9 +618,19 @@ namespace user
       SCAST_PTR(::message::mouse, pmouse, pobj);
       if(m_bMouseDown)
       {
+
+         m_dPosition = 0.0;
+
+         m_dAnimationStart = millis_now();
+
+         SetTimer(127, 12, NULL);
+
          _001ToggleCheck(::action::source_user);
+
          pobj->m_bRet = true;
+
          pmouse->set_lresult(1);
+
       }
       m_bMouseDown = false;
       //System.simple_message_box(m_strText);

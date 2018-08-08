@@ -48,6 +48,7 @@ namespace user
       create_color(color_edit_text, ARGB(255, 0, 0, 0));
       create_color(color_text, ARGB(255, 0, 0, 0));
       create_color(color_text_selected, ARGB(255, 255, 255, 255));
+      create_color(color_text_disabled, ARGB(255,160, 160, 160));
       create_color(color_background, ARGB(0, 0, 0, 0));
       create_color(color_background_selected, ARGB(127, 85, 115, 155));
       create_color(color_scrollbar, ARGB(127, 155, 155, 155));

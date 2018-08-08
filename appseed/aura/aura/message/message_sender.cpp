@@ -197,6 +197,8 @@ namespace message
          return PrototypeShowWindow;
       case WM_INITMENUPOPUP:
          return PrototypeInitMenuPopup;
+      case WM_ENABLE:
+         return PrototypeEnable;
       /*#ifdef WINDOWS
       case WM_CTLCOLOR:
       if(pba)

@@ -2995,10 +2995,16 @@ restart:
 
    bool interaction::is_window_enabled()
    {
+
       if (m_pimpl == NULL)
-         return FALSE;
-      else
-         return m_pimpl->is_window_enabled();
+      {
+
+         return false;
+
+      }
+
+      return m_pimpl->is_window_enabled();
+
    }
 
 
@@ -3850,6 +3856,8 @@ restart:
          m_pimpl->set_window_text(lpszString);
 
       }
+
+      set_need_redraw();
 
    }
 
@@ -8193,6 +8201,11 @@ restart:
       case ::message::PrototypeCreate:
       {
          pbase = canew(::message::create(get_app()));
+      }
+      break;
+      case ::message::PrototypeEnable:
+      {
+         pbase = canew(::message::enable(get_app()));
       }
       break;
       case ::message::PrototypeNcActivate:
