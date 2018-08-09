@@ -319,7 +319,7 @@ CLASS_DECL_AURA int_bool IsRectEmpty(const RECT & rect);
 
 
 
-inline CLASS_DECL_AURA RECTD & rectd_by_dimension(RECTD & rectd, f64 x, f64 y, f64 cx, f64 cy)
+inline CLASS_DECL_AURA RECTD & rectd_by_dimension(RECTD & rectd, double x, double y, double cx, double cy)
 {
    rectd.left = x;
    rectd.top = y;
@@ -328,68 +328,68 @@ inline CLASS_DECL_AURA RECTD & rectd_by_dimension(RECTD & rectd, f64 x, f64 y, f
    return rectd;
 }
 
-inline CLASS_DECL_AURA RECTD & rectd_dim(RECTD & rectd, f64 x, f64 y, f64 cx, f64 cy)
+inline CLASS_DECL_AURA RECTD & rectd_dim(RECTD & rectd, double x, double y, double cx, double cy)
 {
    return rectd_by_dimension(rectd, x, y, cx, cy);
 }
 
-inline CLASS_DECL_AURA LPRECTD rectd_by_dimension(LPRECTD lprectd, f64 x, f64 y, f64 cx, f64 cy)
+inline CLASS_DECL_AURA LPRECTD rectd_by_dimension(LPRECTD lprectd, double x, double y, double cx, double cy)
 {
    return &rectd_by_dimension(*lprectd, x, y, cx, cy);
 }
 
-inline CLASS_DECL_AURA LPRECTD rectd_dim(LPRECTD lprectd, f64 x, f64 y, f64 cx, f64 cy)
+inline CLASS_DECL_AURA LPRECTD rectd_dim(LPRECTD lprectd, double x, double y, double cx, double cy)
 {
    return rectd_by_dimension(lprectd, x, y, cx, cy);
 }
 
-inline CLASS_DECL_AURA::rectd rectd_by_dimension(f64 x, f64 y, f64 cx, f64 cy)
+inline CLASS_DECL_AURA::rectd rectd_by_dimension(double x, double y, double cx, double cy)
 {
    ::rectd r;
    return rectd_by_dimension(r, x, y, cx, cy);
 }
 
-inline CLASS_DECL_AURA::rectd rectd_dim(f64 x, f64 y, f64 cx, f64 cy)
+inline CLASS_DECL_AURA::rectd rectd_dim(double x, double y, double cx, double cy)
 {
    return rectd_by_dimension(x, y, cx, cy);
 }
 
 
-inline CLASS_DECL_AURA POINTD & pointd_by_coordinate(POINTD & p, f64 x, f64 y)
+inline CLASS_DECL_AURA POINTD & pointd_by_coordinate(POINTD & p, double x, double y)
 {
    p.x = x;
    p.y = y;
    return p;
 }
 
-inline CLASS_DECL_AURA POINTD & pointd_coord(POINTD & p, f64 x, f64 y)
+inline CLASS_DECL_AURA POINTD & pointd_coord(POINTD & p, double x, double y)
 {
    return pointd_by_coordinate(p, x, y);
 }
 
 
-inline CLASS_DECL_AURA LPPOINTD pointd_by_coordinate(LPPOINTD lppt, f64 x, f64 y)
+inline CLASS_DECL_AURA LPPOINTD pointd_by_coordinate(LPPOINTD lppt, double x, double y)
 {
    return &pointd_by_coordinate(*lppt, x, y);
 }
 
-inline CLASS_DECL_AURA LPPOINTD pointd_coord(LPPOINTD lppt, f64 x, f64 y)
+inline CLASS_DECL_AURA LPPOINTD pointd_coord(LPPOINTD lppt, double x, double y)
 {
    return pointd_by_coordinate(lppt, x, y);
 }
 
-inline CLASS_DECL_AURA POINTD pointd_by_coordinate(f64 x, f64 y)
+inline CLASS_DECL_AURA POINTD pointd_by_coordinate(double x, double y)
 {
    POINTD p;
    return pointd_by_coordinate(p, x, y);
 }
 
-inline CLASS_DECL_AURA POINTD pointd_coord(f64 x, f64 y)
+inline CLASS_DECL_AURA POINTD pointd_coord(double x, double y)
 {
    return pointd_by_coordinate(x, y);
 }
 
-inline CLASS_DECL_AURA POINTD & offset(POINTD & pt, f64 x, f64 y)
+inline CLASS_DECL_AURA POINTD & offset(POINTD & pt, double x, double y)
 {
    pt.x += x;
    pt.y += y;

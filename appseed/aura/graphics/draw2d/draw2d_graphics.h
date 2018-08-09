@@ -33,7 +33,7 @@ namespace draw2d
       e_alpha_mode                  m_ealphamode;
       e_smooth_mode                 m_esmoothmode;
       e_text_rendering              m_etextrendering;
-      f64                           m_dFontFactor;
+      double                           m_dFontFactor;
 
       ::draw2d::matrix              m_matrixViewport;
       ::draw2d::matrix              m_matrixTransform;
@@ -92,9 +92,9 @@ namespace draw2d
 
       virtual void set_text_rendering(e_text_rendering etextrendering);
 
-      virtual bool blur(bool bExpand, f64 dRadius, const RECT & rect);
+      virtual bool blur(bool bExpand, double dRadius, const RECT & rect);
 
-      virtual void set_solid_pen(f64 dWidth, COLORREF cr);
+      virtual void set_solid_pen(double dWidth, COLORREF cr);
 
       virtual bool IsPrinting();            // TRUE if being used for printing
 
@@ -160,8 +160,8 @@ namespace draw2d
       virtual i32 GetStretchBltMode();
 
 
-      virtual f64 get_dpix();
-      virtual f64 get_dpiy();
+      virtual double get_dpix();
+      virtual double get_dpiy();
 
       virtual i32 SetPolyFillMode(i32 nPolyFillMode);
       virtual i32 SetROP2(i32 nDrawMode);
@@ -291,15 +291,15 @@ namespace draw2d
 
       virtual bool Arc(i32 x1, i32 y1, i32 x2, i32 y2, i32 x3, i32 y3, i32 x4, i32 y4);
       virtual bool Arc(const RECT & rect,POINT ptStart,POINT ptEnd);
-      virtual bool Arc(i32 x1, i32 y1, i32 x2, i32 y2, f64 start, f64 extends);
-      virtual bool Arc(const RECT & rect,f64 start,f64 extends);
+      virtual bool Arc(i32 x1, i32 y1, i32 x2, i32 y2, double start, double extends);
+      virtual bool Arc(const RECT & rect,double start,double extends);
       virtual bool Polyline(const POINT* lpPoints,count nCount);
 
 
-      virtual bool Arc(f64 x1,f64 y1,f64 x2,f64 y2,f64 x3,f64 y3,f64 x4,f64 y4);
+      virtual bool Arc(double x1,double y1,double x2,double y2,double x3,double y3,double x4,double y4);
       virtual bool Arc(const RECTD & lpRect,POINTD ptStart,POINTD ptEnd);
-      virtual bool Arc(f64 x1,f64 y1,f64 x2,f64 y2,f64 start,f64 extends);
-      virtual bool Arc(const RECTD & lpRect,f64 start,f64 extends);
+      virtual bool Arc(double x1,double y1,double x2,double y2,double start,double extends);
+      virtual bool Arc(const RECTD & lpRect,double start,double extends);
 
       virtual bool AngleArc(i32 x, i32 y, i32 nRadius, float fStartAngle, float fSweepAngle);
       virtual bool ArcTo(i32 x1, i32 y1, i32 x2, i32 y2, i32 x3, i32 y3, i32 x4, i32 y4);
@@ -352,11 +352,11 @@ namespace draw2d
       virtual bool FillEllipse(const RECT &  lpRect);
 
 
-      virtual bool Ellipse(f64 x1,f64 y1,f64 x2,f64 y2);
+      virtual bool Ellipse(double x1,double y1,double x2,double y2);
       virtual bool Ellipse(const RECTD & lpRect);
-      virtual bool DrawEllipse(f64 x1,f64 y1,f64 x2,f64 y2);
+      virtual bool DrawEllipse(double x1,double y1,double x2,double y2);
       virtual bool DrawEllipse(const RECTD & lpRect);
-      virtual bool FillEllipse(f64 x1,f64 y1,f64 x2,f64 y2);
+      virtual bool FillEllipse(double x1,double y1,double x2,double y2);
       virtual bool FillEllipse(const RECTD & lpRect);
 
       virtual bool Pie(i32 x1, i32 y1, i32 x2, i32 y2, i32 x3, i32 y3, i32 x4, i32 y4);
@@ -444,8 +444,8 @@ namespace draw2d
       virtual bool alpha_blend(size sz,::draw2d::graphics * pgraphicsSrc, point ptSrc, f64 dOpacity);
       virtual bool alpha_blend(size sz,::draw2d::graphics * pgraphicsSrc, f64 dOpacity);
 
-      virtual bool alpha_blendRaw(i32 xDest, i32 yDest, i32 nDestWidth, i32 nDestHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, i32 nSrcWidth, i32 nSrcHeight, f64 dRate);
-      virtual bool alpha_blendAlphaBlend(i32 xDest, i32 yDest, i32 nDestWidth, i32 nDestHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, i32 nSrcWidth, i32 nSrcHeight, f64 dRate);
+      virtual bool alpha_blendRaw(i32 xDest, i32 yDest, i32 nDestWidth, i32 nDestHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, i32 nSrcWidth, i32 nSrcHeight, double dRate);
+      virtual bool alpha_blendAlphaBlend(i32 xDest, i32 yDest, i32 nDestWidth, i32 nDestHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, i32 nSrcWidth, i32 nSrcHeight, double dRate);
 
 
       /*      virtual bool alpha_blend(i32 xDest, i32 yDest, i32 nDestWidth, i32 nDestHeight,
@@ -460,16 +460,16 @@ namespace draw2d
       // Text Functions
       virtual bool text_out(i32 x, i32 y, const char * lpszString, strsize nCount);
       virtual bool text_out(i32 x, i32 y, const string & str);
-      virtual bool text_out(f64 x, f64 y, const char * lpszString, strsize nCount);
-      virtual bool text_out(f64 x, f64 y, const string & str);
+      virtual bool text_out(double x, double y, const char * lpszString, strsize nCount);
+      virtual bool text_out(double x, double y, const string & str);
       virtual bool ExtTextOut(i32 x, i32 y, UINT nOptions, const RECT &  lpRect, const char * lpszString, strsize nCount, LPINT lpDxWidths);
       virtual bool ExtTextOut(i32 x, i32 y, UINT nOptions, const RECT &  lpRect, const string & str, LPINT lpDxWidths);
       virtual size TabbedTextOut(i32 x, i32 y, const char * lpszString, strsize nCount, count nTabPositions, LPINT lpnTabStopPositions, i32 nTabOrigin);
       virtual size TabbedTextOut(i32 x, i32 y, const string & str, count nTabPositions, LPINT lpnTabStopPositions, i32 nTabOrigin);
 
 
-      virtual bool TextOutRaw(f64 x, f64 y, const char * lpszString, strsize nCount);
-      virtual bool TextOutAlphaBlend(f64 x, f64 y, const char * lpszString, strsize nCount);
+      virtual bool TextOutRaw(double x, double y, const char * lpszString, strsize nCount);
+      virtual bool TextOutAlphaBlend(double x, double y, const char * lpszString, strsize nCount);
 
 
       virtual bool draw_text(const char * lpszString,strsize nCount,const RECT & lpRect,UINT nFormat);
@@ -745,42 +745,42 @@ namespace draw2d
       virtual bool is_valid_update_window_thread();
 
       inline bool move_to(i32 x, i32 y) { return move_to(point(x, y)); }
-      inline bool move_to(f64 x, f64 y) { return move_to(pointd(x, y)); }
+      inline bool move_to(double x, double y) { return move_to(pointd(x, y)); }
 
       inline bool line_to(i32 x, i32 y) { return line_to(point(x, y)); }
-      inline bool line_to(f64 x, f64 y) { return line_to(pointd(x, y)); }
+      inline bool line_to(double x, double y) { return line_to(pointd(x, y)); }
 
       inline bool draw_line(i32 x1, i32 y1, i32 x2, i32 y2) { return draw_line(point(x1,y1), point(x2, y2)); }
       inline bool draw_line(i32 x1, i32 y1, i32 x2, i32 y2, ::draw2d::pen * ppen) { return draw_line(point(x1, y1), point(x2, y2), ppen); }
 
-      inline bool draw_line(f64 x1, f64 y1, f64 x2, f64 y2) { return draw_line(pointd(x1, y1), pointd(x2, y2)); }
-      inline bool draw_line(f64 x1, f64 y1, f64 x2, f64 y2, ::draw2d::pen * ppen) { return draw_line(pointd(x1, y1), pointd(x2, y2), ppen); }
+      inline bool draw_line(double x1, double y1, double x2, double y2) { return draw_line(pointd(x1, y1), pointd(x2, y2)); }
+      inline bool draw_line(double x1, double y1, double x2, double y2, ::draw2d::pen * ppen) { return draw_line(pointd(x1, y1), pointd(x2, y2), ppen); }
 
       inline bool rectangle_coord(i32 x1, i32 y1, i32 x2, i32 y2) { return rectangle(rect(x1, y1, x2, y2)); }
-      inline bool rectangle_coord(f64 x1, f64 y1, f64 x2, f64 y2) { return rectangle(rectd(x1, y1, x2, y2)); }
+      inline bool rectangle_coord(double x1, double y1, double x2, double y2) { return rectangle(rectd(x1, y1, x2, y2)); }
 
       inline bool rectangle_dim(i32 x, i32 y, i32 cx, i32 cy) { return rectangle(rect_dim(x, y, cx, cy)); }
-      inline bool rectangle_dim(f64 x, f64 y, f64 cx, f64 cy) { return rectangle(rectd_dim(x, y, cx, cy)); }
+      inline bool rectangle_dim(double x, double y, double cx, double cy) { return rectangle(rectd_dim(x, y, cx, cy)); }
 
       inline bool draw_rect_coord(i32 x1, i32 y1, i32 x2, i32 y2) { return draw_rect(rect(x1, y1, x2, y2)); }
       inline bool draw_rect_coord(i32 x1, i32 y1, i32 x2, i32 y2, ::draw2d::pen * ppen) { return draw_rect(rect(x1, y1, x2, y2), ppen); }
-      inline bool draw_rect_coord(f64 x1, f64 y1, f64 x2, f64 y2) { return draw_rect(rectd(x1, y1, x2, y2)); }
-      inline bool draw_rect_coord(f64 x1, f64 y1, f64 x2, f64 y2, ::draw2d::pen * ppen) { return draw_rect(rectd(x1, y1, x2, y2), ppen); }
+      inline bool draw_rect_coord(double x1, double y1, double x2, double y2) { return draw_rect(rectd(x1, y1, x2, y2)); }
+      inline bool draw_rect_coord(double x1, double y1, double x2, double y2, ::draw2d::pen * ppen) { return draw_rect(rectd(x1, y1, x2, y2), ppen); }
 
       inline bool draw_rect_dim(i32 x, i32 y, i32 cx, i32 cy) { return draw_rect(rect_dim(x, y, cx, cy)); }
       inline bool draw_rect_dim(i32 x, i32 y, i32 cx, i32 cy, ::draw2d::pen * ppen) { return draw_rect(rect_dim(x, y, cx, cy), ppen); }
-      inline bool draw_rect_dim(f64 x, f64 y, f64 cx, f64 cy) { return draw_rect(rectd_dim(x, y, cx, cy)); }
-      inline bool draw_rect_dim(f64 x, f64 y, f64 cx, f64 cy, ::draw2d::pen * ppen) { return draw_rect(rectd_dim(x, y, cx, cy), ppen); }
+      inline bool draw_rect_dim(double x, double y, double cx, double cy) { return draw_rect(rectd_dim(x, y, cx, cy)); }
+      inline bool draw_rect_dim(double x, double y, double cx, double cy, ::draw2d::pen * ppen) { return draw_rect(rectd_dim(x, y, cx, cy), ppen); }
 
       inline bool fill_rect_coord(i32 x1, i32 y1, i32 x2, i32 y2) { return fill_rect(rect(x1, y1, x2, y2)); }
       inline bool fill_rect_coord(i32 x1, i32 y1, i32 x2, i32 y2, ::draw2d::brush * pbrush) { return fill_rect(rect(x1, y1, x2, y2), pbrush); }
-      inline bool fill_rect_coord(f64 x1, f64 y1, f64 x2, f64 y2) { return fill_rect(rectd(x1, y1, x2, y2)); }
-      inline bool fill_rect_coord(f64 x1, f64 y1, f64 x2, f64 y2, ::draw2d::brush * pbrush) { return fill_rect(rectd(x1, y1, x2, y2), pbrush); }
+      inline bool fill_rect_coord(double x1, double y1, double x2, double y2) { return fill_rect(rectd(x1, y1, x2, y2)); }
+      inline bool fill_rect_coord(double x1, double y1, double x2, double y2, ::draw2d::brush * pbrush) { return fill_rect(rectd(x1, y1, x2, y2), pbrush); }
 
       inline bool fill_rect_dim(i32 x, i32 y, i32 cx, i32 cy) { return fill_rect(rect_dim(x, y, cx, cy)); }
       inline bool fill_rect_dim(i32 x, i32 y, i32 cx, i32 cy, ::draw2d::brush * pbrush) { return fill_rect(rect_dim(x, y, cx, cy), pbrush); }
-      inline bool fill_rect_dim(f64 x, f64 y, f64 cx, f64 cy) { return fill_rect(rectd_dim(x, y, cx, cy)); }
-      inline bool fill_rect_dim(f64 x, f64 y, f64 cx, f64 cy, ::draw2d::brush * pbrush) { return fill_rect(rectd_dim(x, y, cx, cy), pbrush); }
+      inline bool fill_rect_dim(double x, double y, double cx, double cy) { return fill_rect(rectd_dim(x, y, cx, cy)); }
+      inline bool fill_rect_dim(double x, double y, double cx, double cy, ::draw2d::brush * pbrush) { return fill_rect(rectd_dim(x, y, cx, cy), pbrush); }
 
       inline bool polygon(point_array & pta) { return polygon(pta.get_data(), pta.get_count()); }
       inline bool polygon(pointd_array & pta) { return polygon(pta.get_data(), pta.get_count()); }
@@ -790,20 +790,20 @@ namespace draw2d
       inline bool fill_polygon(pointd_array & pta) { return fill_polygon(pta.get_data(), pta.get_count()); }
 
       inline void fill_solid_rect_dim(i32 x, i32 y, i32 cx, i32 cy, COLORREF cr) { return fill_solid_rect(rect_dim(x, y, cx, cy), cr); }
-      inline void fill_solid_rect_dim(f64 x, f64 y, f64 cx, f64 cy, COLORREF cr) { return fill_solid_rect(rectd_dim(x, y, cx, cy), cr); }
+      inline void fill_solid_rect_dim(double x, double y, double cx, double cy, COLORREF cr) { return fill_solid_rect(rectd_dim(x, y, cx, cy), cr); }
 
       inline void fill_solid_rect_coord(i32 x1, i32 y1, i32 x2, i32 y2, COLORREF cr) { return fill_solid_rect(rect(x1, y1, x2, y2), cr); }
-      inline void fill_solid_rect_coord(f64 x1, f64 y1, f64 x2, f64 y2, COLORREF cr) { return fill_solid_rect(rectd(x1, y1, x2, y2), cr); }
+      inline void fill_solid_rect_coord(double x1, double y1, double x2, double y2, COLORREF cr) { return fill_solid_rect(rectd(x1, y1, x2, y2), cr); }
 
       inline void draw3d_rect_dim(i32 x, i32 y, i32 cx, i32 cy, COLORREF crTopLeft, COLORREF crBottomLeft) { return draw3d_rect(rect_dim(x, y, cx, cy), crTopLeft, crBottomLeft); }
-      inline void draw3d_rect_dim(f64 x, f64 y, f64 cx, f64 cy, COLORREF crTopLeft, COLORREF crBottomLeft) { return draw3d_rect(rectd_dim(x, y, cx, cy), crTopLeft, crBottomLeft); }
+      inline void draw3d_rect_dim(double x, double y, double cx, double cy, COLORREF crTopLeft, COLORREF crBottomLeft) { return draw3d_rect(rectd_dim(x, y, cx, cy), crTopLeft, crBottomLeft); }
       inline void draw3d_rect_dim(i32 x, i32 y, i32 cx, i32 cy, COLORREF cr) { return draw3d_rect(rect_dim(x, y, cx, cy), cr); }
-      inline void draw3d_rect_dim(f64 x, f64 y, f64 cx, f64 cy, COLORREF cr) { return draw3d_rect(rectd_dim(x, y, cx, cy), cr); }
+      inline void draw3d_rect_dim(double x, double y, double cx, double cy, COLORREF cr) { return draw3d_rect(rectd_dim(x, y, cx, cy), cr); }
 
       inline void draw3d_rect_coord(i32 x1, i32 y1, i32 x2, i32 y2, COLORREF crTopLeft, COLORREF crBottomLeft) { return draw3d_rect(rect(x1, y1, x2, y2), crTopLeft, crBottomLeft); }
-      inline void draw3d_rect_coord(f64 x1, f64 y1, f64 x2, f64 y2, COLORREF crTopLeft, COLORREF crBottomLeft) { return draw3d_rect(rectd(x1, y1, x2, y2), crTopLeft, crBottomLeft); }
+      inline void draw3d_rect_coord(double x1, double y1, double x2, double y2, COLORREF crTopLeft, COLORREF crBottomLeft) { return draw3d_rect(rectd(x1, y1, x2, y2), crTopLeft, crBottomLeft); }
       inline void draw3d_rect_coord(i32 x1, i32 y1, i32 x2, i32 y2, COLORREF cr) { return draw3d_rect(rect(x1, y1, x2, y2), cr); }
-      inline void draw3d_rect_coord(f64 x1, f64 y1, f64 x2, f64 y2, COLORREF cr) { return draw3d_rect(rectd(x1, y1, x2, y2), cr); }
+      inline void draw3d_rect_coord(double x1, double y1, double x2, double y2, COLORREF cr) { return draw3d_rect(rectd(x1, y1, x2, y2), cr); }
 
       inline bool draw(::draw2d::dib * pdib) { return draw(rect(pdib->m_size), pdib->get_graphics()); }
       inline bool draw(LPCPOINT lpptDst, LPCSIZE lpcsize, ::draw2d::graphics * pgraphicsSrc, LPCPOINT lpptSrc = ::null_point(), u32 dwRop = SRCCOPY) { return draw(rect(lpptDst, lpcsize), pgraphicsSrc, lpptSrc, dwRop); }

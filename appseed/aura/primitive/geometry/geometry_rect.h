@@ -496,7 +496,7 @@ public:
 
 
    rectd() NOTHROW {}
-   rectd(f64 l, f64 t, f64 r, f64 b) NOTHROW { left = l; top = t; right = r; bottom = b; }
+   rectd(double l, double t, double r, double b) NOTHROW { left = l; top = t; right = r; bottom = b; }
    rectd(const RECTD & rect) NOTHROW { *this = rect; }
 
 
