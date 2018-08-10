@@ -231,6 +231,7 @@ namespace draw2d
       virtual void tint(::draw2d::dib * pdib, i32 R, i32 G, i32 B);
       virtual void set_rgb_pre_alpha(i32 R, i32 G, i32 B, i32 A);
       virtual bool rgb_from(::draw2d::dib * pdib);
+      virtual void paint_rgb(color c);
 
 
       virtual void saturation(double dRate);

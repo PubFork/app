@@ -76,6 +76,9 @@ namespace draw2d
          double               m_y;
          string               m_strText;
          ::draw2d::font_sp    m_spfont;
+         ::rect               m_rect;
+         int                  m_iDrawTextFlags;
+         COLORREF             m_crForeground;
 
          string_path();
          string_path(const string_path & stringpath);
@@ -99,6 +102,7 @@ namespace draw2d
             type_line,
             type_move,
             type_string,
+            type_draw_text,
             type_rect,
             type_end
 
@@ -184,6 +188,7 @@ namespace draw2d
 
 
       virtual bool add_string(int32_t x,int32_t y,const string & strText,::draw2d::font_sp spfont);
+      virtual bool add_string(const string & strText, LPCRECT lpcrect, int iDrawTextFlags, ::draw2d::font_sp spfont, COLORREF crForeground);
 
       virtual void * detach();
 

@@ -448,6 +448,26 @@ namespace draw2d
    }
 
 
+   bool path::add_string(const string & strText, LPCRECT lpcrect, int iDrawTextFlags, ::draw2d::font_sp spfont, COLORREF crForeground)
+   {
+
+      sp(element) e;
+
+      e = canew(element);
+
+      e->m_etype = element::type_draw_text;
+      e->m_stringpath.m_rect = *lpcrect;
+      e->m_stringpath.m_strText = strText;
+      e->m_stringpath.m_spfont = spfont;
+      e->m_stringpath.m_iDrawTextFlags = iDrawTextFlags;
+      e->m_stringpath.m_crForeground = crForeground;
+
+      m_elementa.add(e);
+
+      return true;
+
+   }
+
 
    bool path::add_rect(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
    {

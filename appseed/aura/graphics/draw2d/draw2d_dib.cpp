@@ -11,6 +11,11 @@
 
 #include "aura/graphics/graphics_double_pass_scale.h"
 
+#define COLORREF_A 3
+#define COLORREF_R 2
+#define COLORREF_G 1
+#define COLORREF_B 0
+
 /*
 byte byte_clip(double d);
 
@@ -7454,6 +7459,34 @@ restart:
       //
    }
 
+   void dib::paint_rgb(color c)
+   {
+
+      int R = c.m_uchR;
+      int G = c.m_uchG;
+      int B = c.m_uchB;
+      int A;
+
+      byte * puch = (byte *)get_data();
+      int64_t iArea = scan_area();
+      while (iArea > 0)
+      {
+
+         A = puch[COLORREF_A];
+
+         puch[COLORREF_R] = R * A / 255;
+         puch[COLORREF_G] = G * A / 255;
+         puch[COLORREF_B] = B * A / 255;
+
+         puch += 4;
+
+         iArea--;
+
+      }
+
+
+   }
+
    bool dib::rgb_from(::draw2d::dib * pdib)
    {
       if (!create(pdib->size()))
@@ -7465,11 +7498,11 @@ restart:
          int64_t iArea = pdib->scan_area();
          while (iArea > 0)
          {
-            *puchDst++ = *puchSrc++;
-            *puchDst++ = *puchSrc++;
-            *puchDst++ = *puchSrc++;
-            puchDst++;
-            puchSrc++;
+            puchDst[0] = puchSrc[0];
+            puchDst[1] = puchSrc[1];
+            puchDst[2] = puchSrc[2];
+            puchDst+=4;
+            puchSrc+=4;
             iArea--;
          }
       }
