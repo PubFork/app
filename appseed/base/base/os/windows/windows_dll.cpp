@@ -11,7 +11,7 @@ END_EXTERN_C*/
 #endif
 BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 {
-   
+
    //Sleep(30000);
 
 //   ASSERT(FALSE);
@@ -28,15 +28,15 @@ BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
    if (dwReason == DLL_PROCESS_ATTACH)
    {
 
-      output_debug_string(L"base.dll initializing!\n");
+      output_debug_string(L"base.dll initializing.\n");
 
       xxdebug_box("base.dll DllMain", "box", MB_OK);
-      
+
    }
    else if (dwReason == DLL_PROCESS_DETACH)
    {
 
-      output_debug_string(L"base.dll terminating!\n");
+      output_debug_string(L"base.dll terminating.\n");
 
    }
 

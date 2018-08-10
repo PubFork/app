@@ -294,7 +294,9 @@ namespace filemanager
    bool manager::FileManagerBrowse(const char * lpcszPath, ::action::context actioncontext)
    {
 
-      FileManagerBrowse(canew(::fs::item(System.defer_process_path(lpcszPath, get_app()), lpcszPath)), actioncontext);
+      sp(::fs::item) pitem = canew(::fs::item(System.defer_process_path(lpcszPath, get_app()), lpcszPath));
+
+      FileManagerBrowse(pitem, actioncontext);
 
       return false;
 

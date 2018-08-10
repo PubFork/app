@@ -24,6 +24,22 @@ namespace database
    bool client::set_data_server(server * pserver)
    {
 
+      if (m_pdataserver == pserver)
+      {
+
+         return true;
+
+      }
+
+      if (m_pdataserver != NULL)
+      {
+
+         synch_lock sl(m_pdataserver->m_pmutex);
+
+         m_pdataserver->remove_client(this);
+
+      }
+
       if(pserver != NULL)
       {
 

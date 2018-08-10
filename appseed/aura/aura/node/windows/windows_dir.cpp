@@ -713,7 +713,7 @@ namespace windows
 
       bool bIsDir;
 
-      uint32_t uiLastError;
+      //uint32_t uiLastError;
 
       //if(m_isdirmap.lookup(str, bIsDir, uiLastError, (int32_t) iLast))
       //{

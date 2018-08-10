@@ -183,6 +183,12 @@
     <Filter Include="Source Files\user\user">
       <UniqueIdentifier>{7346c89e-20fb-4d09-b049-ab363570fff2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\core\os">
+      <UniqueIdentifier>{576dbec8-db24-4484-8d84-e01429441e26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\core\os\windows">
+      <UniqueIdentifier>{9a5d3c4c-7572-47b2-b104-495c680526c4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="user\simple\simple_child_frame.h">
@@ -1983,6 +1989,9 @@
     </ClCompile>
     <ClCompile Include="user\user\user_toggle_switch.cpp">
       <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="core\os\windows\windows_dll.cpp">
+      <Filter>Source Files\core\os\windows</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

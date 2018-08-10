@@ -12,8 +12,6 @@ namespace user
 
 } // namespace user
 
-//CLASS_DECL_AURA aura_str_pool * s_paurastrpool = NULL;
-
 
 ::aura::system * create_aura_system(app_core * pappcore)
 {
@@ -348,19 +346,6 @@ CLASS_DECL_AURA void c_function_call(void * )
 }
 
 END_EXTERN_C
-
-
-//template < >
-//CLASS_DECL_AURA void function_call(const ::object * p)
-//{
-//
-//   const char * psz = reinterpret_cast< const char * > (p);
-//
-//}
-
-
-
-
 
 
 CLASS_DECL_AURA int is_ptr_null(const void * p, size_t s)

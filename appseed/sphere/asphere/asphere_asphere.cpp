@@ -11,7 +11,7 @@ extern "C" int32_t WINAPI DllMain(HINSTANCE hInstance, uint32_t dwReason, LPVOID
    if (dwReason == DLL_PROCESS_ATTACH)
    {
 
-      ::output_debug_string(L"ca2.dll Initializing");
+      ::output_debug_string(L"sphere.dll initializing.\n");
 
    }
    else if (dwReason == DLL_THREAD_DETACH)
@@ -21,7 +21,7 @@ extern "C" int32_t WINAPI DllMain(HINSTANCE hInstance, uint32_t dwReason, LPVOID
    else if (dwReason == DLL_PROCESS_DETACH)
    {
 
-      ::output_debug_string(L"ca2.dll Terminating");
+      ::output_debug_string(L"sphere.dll terminating.\n");
 
    }
 
