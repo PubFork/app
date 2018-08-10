@@ -10,7 +10,7 @@ namespace userstack
    public:
       enum e_type
       {
-         TypeGetView,
+         type_get_view,
          TypeSetView,
          TypeOnShowKaraoke,
          TypeOnShowView,
@@ -23,7 +23,7 @@ namespace userstack
       pane_view_update_hint();
       virtual ~pane_view_update_hint();
 
-      EPaneView m_eview;
+      e_pane_view m_eview;
    protected:
       e_type m_etype;
 

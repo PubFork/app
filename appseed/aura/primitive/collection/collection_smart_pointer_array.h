@@ -191,25 +191,12 @@ public:
 
    }
 
-#if defined(MOVE_SEMANTICS)
 
-   smart_pointer_array(smart_pointer_array && a)
+   smart_pointer_array(smart_pointer_array && a) :
+      array < smart_pointer < T > >(::move(a))
    {
 
-      array < smart_pointer < T > >::operator = (a);
-
    }
-
-   inline smart_pointer_array & operator = (smart_pointer_array && a)
-   {
-
-      array < smart_pointer < T > >::operator = (a);
-
-      return *this;
-
-   }
-
-#endif
 
    smart_pointer_array(const smart_pointer_array & a) :
       array < smart_pointer < T > >(a)
@@ -218,16 +205,6 @@ public:
       array < smart_pointer < T > >::operator = (a);
 
    }
-
-   inline smart_pointer_array & operator = (const smart_pointer_array & a)
-   {
-
-      copy(a);
-
-      return *this;
-
-   }
-
 
    smart_pointer_array(::aura::application * papp) :
       object(papp),
@@ -887,6 +864,26 @@ public:
    ref_iterator ref_it(index iStart, ::count cCount) { return ref_iterator(iStart + (cCount < 0 ? this->get_count() + cCount + 1 : cCount),this); }
 
    ref_range refa(index iStart = 0, ::count cCount = -1) { return smart_pointer_range < ref_iterator >(ref_it(iStart),ref_it(iStart, cCount)); }
+
+
+   inline smart_pointer_array & operator = (const smart_pointer_array & a)
+   {
+
+      copy(a);
+
+      return *this;
+
+   }
+
+
+   inline smart_pointer_array & operator = (smart_pointer_array && a)
+   {
+
+      array < smart_pointer < T > >::operator = (::move(a));
+
+      return *this;
+
+   }
 
 };
 

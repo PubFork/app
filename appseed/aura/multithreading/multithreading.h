@@ -129,12 +129,16 @@ public:
 
 
    thread_ptra();
+   thread_ptra(const thread_ptra & ptra):spa(thread)(ptra) {}
+   thread_ptra(thread_ptra && ptra) :spa(thread)(::move(ptra)) {}
    virtual ~thread_ptra();
 
    virtual ::count get_count_except_current_thread();
    virtual void post_quit();
    virtual void wait(const duration & duration, ::synch_lock & sl);
 
+   thread_ptra & operator = (const thread_ptra & ptra) { spa(thread)::operator =(ptra); return *this; }
+   thread_ptra & operator = (thread_ptra && ptra) { spa(thread)::operator =(::move(ptra)); return *this; }
 
 };
 

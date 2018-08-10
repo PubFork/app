@@ -432,17 +432,17 @@ namespace draw2d
                                   ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, i32 nSrcWidth, i32 nSrcHeight,
                                   UINT clrTransparent);
 
-      virtual bool alpha_blend(i32 xDest, i32 yDest, i32 nDestWidth, i32 nDestHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, i32 nSrcWidth, i32 nSrcHeight, f64 dOpacity);
-      virtual bool alpha_blend(point ptDst, size szDst,::draw2d::graphics * pgraphicsSrc, point ptSrc, size szSrc, f64 dOpacity);
-      inline bool alpha_blend(rect rDst, ::draw2d::graphics * pgraphicsSrc, rect rSrc, f64 dOpacity)
+      virtual bool alpha_blend(i32 xDest, i32 yDest, i32 nDestWidth, i32 nDestHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, i32 nSrcWidth, i32 nSrcHeight, double dOpacity);
+      virtual bool alpha_blend(point ptDst, size szDst,::draw2d::graphics * pgraphicsSrc, point ptSrc, size szSrc, double dOpacity);
+      inline bool alpha_blend(rect rDst, ::draw2d::graphics * pgraphicsSrc, rect rSrc, double dOpacity)
       {
          return alpha_blend(rDst.top_left(), rDst.get_size(), pgraphicsSrc, rSrc.top_left(), rSrc.get_size(), dOpacity);
       }
-      virtual bool alpha_blend(point ptDst, size sz,::draw2d::graphics * pgraphicsSrc, point ptSrc, f64 dOpacity);
-      virtual bool alpha_blend(point ptDst, size sz,::draw2d::graphics * pgraphicsSrc, f64 dOpacity);
-      virtual bool alpha_blend(rect & r, ::draw2d::graphics * pgraphicsSrc, f64 dOpacity);
-      virtual bool alpha_blend(size sz,::draw2d::graphics * pgraphicsSrc, point ptSrc, f64 dOpacity);
-      virtual bool alpha_blend(size sz,::draw2d::graphics * pgraphicsSrc, f64 dOpacity);
+      virtual bool alpha_blend(point ptDst, size sz,::draw2d::graphics * pgraphicsSrc, point ptSrc, double dOpacity);
+      virtual bool alpha_blend(point ptDst, size sz,::draw2d::graphics * pgraphicsSrc, double dOpacity);
+      virtual bool alpha_blend(rect & r, ::draw2d::graphics * pgraphicsSrc, double dOpacity);
+      virtual bool alpha_blend(size sz,::draw2d::graphics * pgraphicsSrc, point ptSrc, double dOpacity);
+      virtual bool alpha_blend(size sz,::draw2d::graphics * pgraphicsSrc, double dOpacity);
 
       virtual bool alpha_blendRaw(i32 xDest, i32 yDest, i32 nDestWidth, i32 nDestHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, i32 nSrcWidth, i32 nSrcHeight, double dRate);
       virtual bool alpha_blendAlphaBlend(i32 xDest, i32 yDest, i32 nDestWidth, i32 nDestHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, i32 nSrcWidth, i32 nSrcHeight, double dRate);

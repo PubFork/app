@@ -25,14 +25,14 @@ namespace visual
 
       rect rect;
       GetRect(&rect,ElementClock);
-      ::draw2d::pen_sp pen(pgraphics,1,ARGB(255,0,0,0));
+      ::draw2d::pen_sp pen(allocer(),1,ARGB(255,0,0,0));
       pgraphics->SelectObject(pen);
       pgraphics->DrawEllipse(rect);
 
       point ptCenter(rect.center());
 
-      ::draw2d::pen_sp penHour(pgraphics,5,ARGB(255,0,0,0));
-      ::draw2d::pen_sp penMinute(pgraphics,1,ARGB(255,0,0,0));
+      ::draw2d::pen_sp penHour(allocer(),5,ARGB(255,0,0,0));
+      ::draw2d::pen_sp penMinute(allocer(),1,ARGB(255,0,0,0));
 
       double dRIntH = rect.width() * 57 / 128;
       double dRIntM = rect.width() * 59 / 128;
@@ -65,7 +65,7 @@ namespace visual
       double dRMinute = rect.width() * 15 / 32;
       double dRSecond = rect.width() * 16 / 32;
 
-      ::draw2d::pen_sp penHM(pgraphics,2,ARGB(255,0,0,0));
+      ::draw2d::pen_sp penHM(allocer(),2,ARGB(255,0,0,0));
       pgraphics->SelectObject(penHM);
 
       pgraphics->move_to(ptCenter);
@@ -82,7 +82,7 @@ namespace visual
          ptMinute.offset(ptCenter);
          pgraphics->line_to(ptMinute);
       }
-      ::draw2d::pen_sp penRed(pgraphics,1,ARGB(255,200,0,0));
+      ::draw2d::pen_sp penRed(allocer(),1,ARGB(255,200,0,0));
       pgraphics->SelectObject(penRed);
       pgraphics->move_to(ptCenter);
       {

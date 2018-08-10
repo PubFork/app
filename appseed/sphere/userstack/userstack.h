@@ -12,15 +12,14 @@ namespace userstack
    class document;
 
 
-   enum EPaneView
+   enum e_pane_view
    {
-      PaneViewNone,
-      PaneViewContextMenu,
-      PaneViewWinActionArea,
-      PaneViewFileManager,
-      PaneViewThreeActionLaunch,
-      PaneViewConfiguration,
-      PaneViewFileProperties,
+      pane_view_none,
+      pane_view_context_menu,
+      pane_view_winactionarea,
+      pane_view_three_action_launch,
+      pane_view_configuration,
+      pane_view_properties,
    };
 
 

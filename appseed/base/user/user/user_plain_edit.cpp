@@ -97,6 +97,9 @@ namespace user
       ::draw2d::brush_sp            m_brushTextSel;
       ::draw2d::brush_sp            m_brushTextEmpty;
 
+      plain_edit_internal();
+      ~plain_edit_internal();
+
       void update(plain_edit * pedit);
 
    };
@@ -5525,6 +5528,20 @@ finished_update:
       }
 
       RedrawWindow();
+
+   }
+
+
+   plain_edit_internal::plain_edit_internal()
+   {
+
+
+   }
+
+
+   plain_edit_internal::~plain_edit_internal()
+   {
+
 
    }
 

@@ -43,11 +43,11 @@ namespace prompt
       if(pobj->previous())
          return;
 
-      add_tab("3-action-launch", prompt::PaneViewThreeActionLaunch);
-      add_tab("menu", prompt::PaneViewContextMenu);
+      add_tab("3-action-launch", prompt::pane_view_three_action_launch);
+      add_tab("menu", prompt::pane_view_context_menu);
       add_tab("primary verbing", prompt::PaneViewPrimaryCommand);
-      add_tab("options", prompt::PaneViewConfiguration);
-      add_tab("file manager", prompt::PaneViewFileManager);
+      add_tab("options", prompt::pane_view_configuration);
+      add_tab("File Manager", "file_manager");
 
       set_cur_tab_by_id(prompt::PaneViewPrimaryCommand);
 
@@ -65,7 +65,7 @@ namespace prompt
          if(base_class <pane_view_update_hint >::bases(pHint))
          {
             pane_view_update_hint * puh = (pane_view_update_hint *) pHint;
-            if(puh->is_type_of(pane_view_update_hint::TypeGetView))
+            if(puh->is_type_of(pane_view_update_hint::type_get_view))
             {
             }
             else if(puh->is_type_of(pane_view_update_hint::TypeSetView))
@@ -98,15 +98,15 @@ namespace prompt
       ::userex::pane_tab_view::on_show_view();
       sp(frame) pframe = GetTypedParent < frame > ();
 
-      if(get_view_id() == prompt::PaneViewFileManager)
+      if(get_view_id() == "file_manager")
       {
          pframe->m_bAutoHideOnOutClick = false;
          pframe->ShowWindow(SW_MAXIMIZE);
       }
-      else if(get_view_id() == prompt::PaneViewContextMenu)
+      else if(get_view_id() == prompt::pane_view_context_menu)
       {
          sp(::filemanager::manager) pdoc =  (get_view_uie());
-         pdoc->FileManagerBrowse(System.dir().appdata()/ "command\\menu", ::action::source::system_default());
+         pdoc->FileManagerBrowse(System.dir().appdata()/ "command/menu", ::action::source::system_default());
       }
       else
       {
@@ -135,7 +135,7 @@ namespace prompt
    {
       switch(pcreatordata->m_id)
       {
-      case PaneViewContextMenu:
+      case pane_view_context_menu:
       {
          sp(::filemanager::manager) pdoc = Session.filemanager()->open_child_list(false, true);
          if(pdoc != NULL)
@@ -178,35 +178,35 @@ namespace prompt
          }
       }
       break;
-      case PaneViewFileManager:
-      {
-         sp(::filemanager::manager) pdoc = Session.filemanager()->open_child(false, true);
-         if(pdoc != NULL)
-         {
-            pdoc->get_filemanager_data()->m_datakey = "winactionarea_filemanager";
-            pdoc->Initialize(true);
-            pdoc->update_all_views(NULL, 1234);
-            pdoc->update_all_views(NULL, 123458);
-            sp(::user::impact) pview = pdoc->get_view();
-            if(pview != NULL)
-            {
-               sp(::user::frame_window) pframe =  (pview->GetParentFrame());
-               if(pframe != NULL)
-               {
-#ifdef WINDOWSEX
-                  pframe->ModifyStyle(WS_CAPTION, WS_CHILD, 0);
-#endif
-                  pframe->SetParent(this);
-                  pcreatordata->m_pdoc = pdoc;
-                  pcreatordata->m_pwnd = pframe;
-
-
-               }
-            }
-         }
-      }
-      break;
-      case PaneViewThreeActionLaunch:
+//      case "file_manager":
+//      {
+//         sp(::filemanager::manager) pdoc = Session.filemanager()->open_child(false, true);
+//         if(pdoc != NULL)
+//         {
+//            pdoc->get_filemanager_data()->m_datakey = "winactionarea_filemanager";
+//            pdoc->Initialize(true);
+//            pdoc->update_all_views(NULL, 1234);
+//            pdoc->update_all_views(NULL, 123458);
+//            sp(::user::impact) pview = pdoc->get_view();
+//            if(pview != NULL)
+//            {
+//               sp(::user::frame_window) pframe =  (pview->GetParentFrame());
+//               if(pframe != NULL)
+//               {
+//#ifdef WINDOWSEX
+//                  pframe->ModifyStyle(WS_CAPTION, WS_CHILD, 0);
+//#endif
+//                  pframe->SetParent(this);
+//                  pcreatordata->m_pdoc = pdoc;
+//                  pcreatordata->m_pwnd = pframe;
+//
+//
+//               }
+//            }
+//         }
+//      }
+//      break;
+      case pane_view_three_action_launch:
       {
          sp(::filemanager::manager) pdoc = Session.filemanager()->open_child_list(false, true);
          if(pdoc != NULL)
@@ -241,7 +241,7 @@ namespace prompt
          }
       }
       break;
-      case PaneViewConfiguration:
+      case pane_view_configuration:
       {
          sp(::user::document) pdoc = Application.create_form(this, this);
          if(pdoc == NULL)
@@ -271,16 +271,25 @@ namespace prompt
          ASSERT(FALSE);
          break;
       }
+
+      pane_tab_view::on_create_view(pcreatordata);
+
    }
+
 
    void pane_view::_001OnMenuMessage(::message::message * pobj)
    {
+
       UNREFERENCED_PARAMETER(pobj);
+
       set_cur_tab_by_id(m_pviewdataOld->m_id);
+
    }
+
 
    void pane_view::install_message_routing(::message::sender * pinterface)
    {
+
       ::user::impact::install_message_routing(pinterface);
 
       IGUI_MSG_LINK(WM_CREATE, pinterface, this, &pane_view::_001OnCreate);
@@ -289,25 +298,37 @@ namespace prompt
 
    }
 
+
    void pane_view::rotate()
    {
-      prompt::EPaneView eviewNew;
-      switch(get_view_id())
+
+      id idNew;
+
+      if (get_view_id() == "file_manager")
       {
-      case prompt::PaneViewContextMenu:
-         eviewNew = prompt::PaneViewPrimaryCommand;
-         break;
-      case prompt::PaneViewPrimaryCommand:
-         eviewNew = prompt::PaneViewFileManager;
-         break;
-      case prompt::PaneViewFileManager:
-         eviewNew = prompt::PaneViewContextMenu;
-         break;
-      default:
-         eviewNew = prompt::PaneViewPrimaryCommand;
+
+         idNew = prompt::pane_view_context_menu;
+
+      }
+      else
+      {
+
+         switch (get_view_id())
+         {
+         case prompt::pane_view_context_menu:
+            idNew = prompt::PaneViewPrimaryCommand;
+            break;
+         case prompt::PaneViewPrimaryCommand:
+            idNew = "file_manager";
+            break;
+         default:
+            idNew = prompt::PaneViewPrimaryCommand;
+         }
+
       }
 
-      set_cur_tab_by_id(eviewNew);
+      set_cur_tab_by_id(idNew);
+
    }
 
 

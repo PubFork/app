@@ -973,7 +973,7 @@ namespace wndfrm_anthill
                if ((ptoolbar->m_dwCtrlStyle & TBSTYLE_FLAT) == TBSTYLE_FLAT)
                {
 
-                  ::draw2d::pen_sp pen(pgraphics, 1, ARGB(184, 92, 184, 92));
+                  ::draw2d::pen_sp pen(allocer(), 1, ARGB(184, 92, 184, 92));
                   ::draw2d::brush_sp brush(allocer(), ARGB(123, 177, 184, 255));
                   ::draw2d::pen * ppenOld = pgraphics->SelectObject(pen);
                   ::draw2d::brush * pbrushOld = pgraphics->SelectObject(brush);
@@ -1014,7 +1014,7 @@ namespace wndfrm_anthill
             if ((ptoolbar->m_dwCtrlStyle & TBSTYLE_FLAT) == TBSTYLE_FLAT)
             {
 
-               ::draw2d::pen_sp pen(pgraphics, 1, ARGB(255, 92, 92, 92));
+               ::draw2d::pen_sp pen(allocer(), 1, ARGB(255, 92, 92, 92));
                ::draw2d::brush_sp brush(allocer(), ARGB(255, 255, 255, 255));
                ::draw2d::pen * ppenOld = pgraphics->SelectObject(pen);
                ::draw2d::brush * pbrushOld = pgraphics->SelectObject(brush);
@@ -1272,7 +1272,7 @@ namespace wndfrm_anthill
                if ((ptoolbar->m_dwCtrlStyle & TBSTYLE_FLAT) == TBSTYLE_FLAT)
                {
 
-                  ::draw2d::pen_sp pen(pgraphics, 1, ptoolbar->_001GetColor(::user::color_button_background_hover));
+                  ::draw2d::pen_sp pen(allocer(), 1, ptoolbar->_001GetColor(::user::color_button_background_hover));
                   ::draw2d::brush_sp brush(allocer(), ptoolbar->_001GetColor(::user::color_button_background_hover));
                   ::draw2d::pen * ppenOld = pgraphics->SelectObject(pen);
                   ::draw2d::brush * pbrushOld = pgraphics->SelectObject(brush);
@@ -1313,7 +1313,7 @@ namespace wndfrm_anthill
             if ((ptoolbar->m_dwCtrlStyle & TBSTYLE_FLAT) == TBSTYLE_FLAT)
             {
 
-               ::draw2d::pen_sp pen(pgraphics, 1, ptoolbar->_001GetColor(::user::color_button_background_press));
+               ::draw2d::pen_sp pen(allocer(), 1, ptoolbar->_001GetColor(::user::color_button_background_press));
                ::draw2d::brush_sp brush(allocer(), ptoolbar->_001GetColor(::user::color_button_background_press));
                ::draw2d::pen * ppenOld = pgraphics->SelectObject(pen);
                ::draw2d::brush * pbrushOld = pgraphics->SelectObject(brush);
@@ -1363,7 +1363,7 @@ namespace wndfrm_anthill
             if ((ptoolbar->m_dwCtrlStyle & TBSTYLE_FLAT) == TBSTYLE_FLAT)
             {
 
-               ::draw2d::pen_sp pen(pgraphics, 1, ptoolbar->_001GetColor(
+               ::draw2d::pen_sp pen(allocer(), 1, ptoolbar->_001GetColor(
                                     (nStyle & TBBS_DISABLED) == 0 ?
                                     ::user::color_button_background :
                                     ::user::color_button_background_disabled));
