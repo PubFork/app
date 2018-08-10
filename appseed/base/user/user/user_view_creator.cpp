@@ -22,6 +22,12 @@ namespace user
    }
 
 
+   view_creator_data::~view_creator_data()
+   {
+
+   }
+
+
    ::user::interaction * view_creator_data::get_wnd()
    {
 
@@ -47,31 +53,33 @@ namespace user
 
    view_creator_data * view_creator::get(id id)
    {
-      ::user::view_creator_data * pcreatordata;
-      if(m_viewmap.Lookup(id, pcreatordata))
-      {
-         return pcreatordata;
-      }
-      return NULL;
+
+      synch_lock sl(m_pmutex);
+
+      return m_viewmap[id];
+
    }
 
 
    view_creator::view_creator()
    {
+
       m_pviewcontainer           = NULL;
+
    }
+
 
    view_creator::~view_creator()
    {
-      for (auto & p : m_viewmap)
-      {
-         delete p.m_element2;
-      }
+
    }
+
 
    ::count view_creator::get_view_count()
    {
+
       return m_viewmap.get_count();
+
    }
 
 
@@ -95,7 +103,9 @@ namespace user
    view_creator_data * view_creator::new_creator_data(id id)
    {
 
-      view_creator_data * pcreatordata = new ::user::view_creator_data;
+      view_creator_data * pcreatordata = canew(::user::view_creator_data);
+
+      m_viewmap[id] = pcreatordata;
 
       pcreatordata->m_id = id;
 

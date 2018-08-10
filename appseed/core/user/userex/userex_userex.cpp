@@ -55,21 +55,21 @@ namespace userex
 
       //}
 
-      for(auto & pair : m_mapimpactsystem)
-      {
+      //for(auto & pair : m_mapimpactsystem)
+      //{
 
-         auto & psystem = pair.element2();
+      //   auto & psystem = pair.element2();
 
-         if (psystem != NULL)
-         {
+      //   if (psystem != NULL)
+      //   {
 
-            psystem->close_all_documents(false);
+      //      psystem->close_all_documents(false);
 
-            psystem->release();
+      //      psystem->release();
 
-         }
+      //   }
 
-      }
+      //}
 
    }
 
@@ -1915,13 +1915,14 @@ finished:
 
          System.factory().creatable_small < ::userex::color_view >();
 
+         userex()->m_mapimpactsystem["color_sel"] = canew(::user::multiple_document_template(
+               get_app(),
+               "main",
+               System.type_info < ::user::document >(),
+               System.type_info < ::prodevian_translucent_simple_frame_window >(),
+               System.type_info < ::userex::color_view >()));
 
-         userex()->m_mapimpactsystem["color_sel"] = new ::user::multiple_document_template(
-         get_app(),
-         "main",
-         System.type_info < ::user::document >(),
-         System.type_info < ::prodevian_translucent_simple_frame_window >(),
-         System.type_info < ::userex::color_view >());
+         add_document_template(userex()->m_mapimpactsystem["color_sel"]);
 
       }
       else if(strView == "font_sel")
@@ -1938,13 +1939,14 @@ finished:
          System.factory().creatable_small < ::user::font_list_view >();
          System.factory().creatable_small < ::userex::font_view >();
 
-         userex()->m_mapimpactsystem["font_sel"] = new ::user::multiple_document_template(
-         get_app(),
-         "main",
-         System.type_info < ::user::document >(),
-         System.type_info < ::prodevian_translucent_simple_frame_window >(),
-         System.type_info < ::userex::font_view >());
+         userex()->m_mapimpactsystem["font_sel"] = canew(::user::multiple_document_template(
+               get_app(),
+               "main",
+               System.type_info < ::user::document >(),
+               System.type_info < ::prodevian_translucent_simple_frame_window >(),
+               System.type_info < ::userex::font_view >()));
 
+         add_document_template(userex()->m_mapimpactsystem["font_sel"]);
 
          m_pfontlist = new ::visual::font_list(this);
 
@@ -1952,7 +1954,9 @@ finished:
 
          fork([&]()
          {
+
             ::multithreading::set_priority(::multithreading::priority_idle);
+
             System.visual().fonts().update_font_enumeration();
 
             m_pfontlist->update();

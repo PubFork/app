@@ -25,9 +25,10 @@ public:
 
    tool_thread(::thread_tools * ptools);
 
+
    virtual void run() override;
 
-   //bool set_tool(::thread_tool * ptool);
+
    bool set_pred(::pred_holder_base * ppred);
 
    void reset();
@@ -41,11 +42,15 @@ class CLASS_DECL_AURA thread_tool :
 {
 public:
 
+
    thread_toolset *     m_ptoolset;
    tool_thread *        m_pthread;
 
 
-   virtual void run() {}
+   thread_tool();
+   virtual ~thread_tool();
+
+   virtual void run();
 
 };
 
@@ -60,6 +65,8 @@ public:
 
 
    thread_toolset(::thread_tools * ptools);
+   virtual ~thread_toolset();
+
 
    bool add_tool(::thread_tool * ptool);
 
@@ -70,21 +77,6 @@ public:
    inline bool operator()();
 
 };
-
-
-//class pred_set :
-//   virtual public spa(pred_holder_base)
-//{
-//public:
-//
-//   thread_tools *    m_pthreadtools;
-//
-//
-//   pred_set(::thread_tools * ptools);
-//
-//   bool add_pred(::pred_holder_base * ppred);
-//
-//};
 
 
 class CLASS_DECL_AURA thread_tools :
@@ -146,7 +138,6 @@ public:
    }
 
    bool select_toolset(thread_toolset * pset);
-   //bool select_predset(pred_set * pset);
 
 
 };

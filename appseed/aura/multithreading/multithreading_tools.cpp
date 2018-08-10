@@ -15,8 +15,6 @@ thread_tools::thread_tools(::aura::application * papp, ::multithreading::e_prior
 
    int cOrder = get_current_process_affinity_order();
 
-   //cOrder = 1;
-
    while (m_threada.get_size() < cOrder)
    {
 
@@ -42,12 +40,8 @@ thread_tools::thread_tools(::aura::application * papp, ::multithreading::e_prior
          ptoolthread->begin(epriority);
 
       }
-      //ptoolthread->begin();
-      //ptoolthread->begin(::multithreading::priority_time_critical);
-//      ptoolthread->begin();
 
    }
-
 
 }
 
@@ -207,30 +201,6 @@ tool_thread::tool_thread(::thread_tools * ptools) :
 }
 
 
-//bool tool_thread::set_tool(::thread_tool * ptool)
-//{
-//
-//   try
-//   {
-//
-//      ptool->m_pthreadtool = this;
-//
-//      m_ptool = ptool;
-//
-//      return true;
-//
-//   }
-//   catch (...)
-//   {
-//
-//   }
-//
-//   return false;
-//
-//
-//}
-
-
 bool tool_thread::set_pred(::pred_holder_base * ppred)
 {
 
@@ -307,7 +277,6 @@ void tool_thread::start()
 }
 
 
-
 CLASS_DECL_AURA ::thread_tools * get_thread_tools(::multithreading::e_priority epriority)
 {
 
@@ -324,6 +293,23 @@ CLASS_DECL_AURA ::thread_toolset * get_thread_toolset(::thread::e_tool etool)
 }
 
 
+thread_tool::thread_tool()
+{
+
+}
+
+
+thread_tool::~thread_tool()
+{
+
+}
+
+
+void thread_tool::run()
+{
+
+}
+
 
 thread_toolset::thread_toolset(::thread_tools * ptools) :
    object(ptools->get_app()),
@@ -331,6 +317,14 @@ thread_toolset::thread_toolset(::thread_tools * ptools) :
 {
 
 }
+
+
+thread_toolset::~thread_toolset()
+{
+
+
+}
+
 
 bool thread_toolset::add_tool(::thread_tool * ptool)
 {

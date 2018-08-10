@@ -285,16 +285,15 @@ namespace aura
 
       ::draw2d::dib::static_initialize();
 
-      //      m_spinstall = canew(::install::install(this));
-
-
-      //m_peengine = new ::exception::engine(this);
-
    }
 
 
    system::~system()
    {
+
+      ::aura::del(m_purldepartment);
+
+      ::aura::del(m_pcompress);
 
       ::aura::del(g_pmutexDib);
 

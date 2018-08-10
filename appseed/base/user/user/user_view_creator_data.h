@@ -8,17 +8,18 @@ namespace user
    class place_holder;
 
 
-   class CLASS_DECL_BASE view_creator_data
+   class CLASS_DECL_BASE view_creator_data :
+      virtual public simple_object
    {
    public:
 
 
       enum eflag
       {
-         
+
          flag_hide_all_others_on_show,
          flag_strict_update,
-            
+
       };
 
 
@@ -36,6 +37,7 @@ namespace user
       bool                             m_bOk;
 
       view_creator_data();
+      virtual ~view_creator_data();
 
 
       ::user::interaction *   get_wnd();

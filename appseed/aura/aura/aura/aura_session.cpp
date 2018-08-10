@@ -3142,7 +3142,7 @@ ret:
       for (string strLibrary : straLibrary)
       {
 
-         ::aura::library * plibrary = new ::aura::library(papp, 0, NULL);
+         sp(::aura::library) plibrary = canew(::aura::library(papp, 0, NULL));
 
          strLibrary.replace("-", "_");
 
@@ -3160,8 +3160,6 @@ ret:
 
             thisinfo << "Failed to load " << strLibrary;
 
-            ::aura::del(plibrary);
-
             continue;
 
          }
@@ -3170,8 +3168,6 @@ ret:
          {
 
             thisinfo << "Failed to load (2) " << strLibrary;
-
-            ::aura::del(plibrary);
 
             continue;
 
@@ -3187,8 +3183,6 @@ ret:
             // a wndfrm OSLibrary should have one wndfrm
             thisinfo << "a wndfrm OSLibrary should have one wndfrm " << strLibrary;
 
-            ::aura::del(plibrary);
-
             continue;
 
          }
@@ -3201,8 +3195,6 @@ ret:
             // trivial validity check
             thisinfo << "app id should not be empty " << strLibrary;
 
-            ::aura::del(plibrary);
-
             continue;
 
          }
@@ -3214,11 +3206,11 @@ ret:
 
             thisinfo << "could not create user_style from " << strLibrary;
 
-            ::aura::del(plibrary);
-
             continue;
 
          }
+
+         System.m_mapLibrary[strLibrary] = plibrary;
 
          ptheme->m_plibrary = plibrary;
 

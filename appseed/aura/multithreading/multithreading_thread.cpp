@@ -399,32 +399,8 @@ thread::~thread()
    }
 
    memcnts_dec(this);
-   //try
-   //{
 
-   //   single_lock sl(&m_mutexUiPtra, TRUE);
-
-   //   if (m_spuiptra.is_set())
-   //   {
-
-   //      while (m_spuiptra->has_elements())
-   //      {
-
-   //         remove(m_spuiptra->element_at(0));
-
-   //      }
-
-   //      m_spuiptra.release();
-
-   //   }
-
-   //}
-   //catch (...)
-   //{
-
-   //}
-
-//   ::aura::del(m_pfileinfo);
+   ::aura::del(m_puiptra);
 
 }
 
@@ -3544,6 +3520,15 @@ CLASS_DECL_AURA void forking_count_thread_null_end(int iOrder)
    {
 
       m_toolmap[epriority] = canew(thread_tools(get_app(), epriority));
+
+      thread_tools * ptools = m_toolmap[epriority];
+
+      for (auto & pthread : ptools->m_threada)
+      {
+
+         register_dependent_thread(pthread);
+
+      }
 
    }
 

@@ -17,20 +17,14 @@ namespace user
             object(papp),
             ::aura::library(papp,0,"")
          {
+
          }
 
 
          library::~library()
          {
+
          }
-
-
-         //bool library::is_uinteraction_library()
-         //{
-
-         //   return true;
-
-         //}
 
 
          sp(::object) library::create_object(::aura::application * papp,const char * pszClass, object * p)
@@ -96,7 +90,9 @@ extern "C"
 extern "C"
 ::aura::library * get_new_library(::aura::application * papp)
 {
+
    return canew(::user::wndfrm::wndfrm_core::library (papp));
+
 }
 
 #endif

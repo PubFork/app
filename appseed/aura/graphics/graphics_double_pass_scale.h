@@ -138,6 +138,7 @@ LineContribType *
 C2PassScale<FilterClass>::
 CalcContributions (UINT uLineSize, UINT uSrcSize, double dScale)
 {
+
    ap(FilterClass) pCurFilter;
 
    if (m_dFilterWidth < 0.0)

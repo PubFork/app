@@ -425,7 +425,7 @@ namespace aura
 
          //Thank you Dunno_Aye for the is_null!!
 
-         if(is_null(p))
+         if(!is_null(p))
          {
 
             T * pdel = p;

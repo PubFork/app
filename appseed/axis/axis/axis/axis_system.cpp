@@ -62,9 +62,6 @@ namespace axis
    system::~system()
    {
 
-      ::aura::del(m_purldepartment);
-
-      ::aura::del(m_pcompress);
 
    }
 
