@@ -572,6 +572,7 @@ namespace user
       {
 
          IGUI_MSG_LINK(WM_CAPTURECHANGED, psender, this, &interaction_impl::_001OnCaptureChanged);
+         IGUI_MSG_LINK(WM_REDRAW, psender, this, &interaction_impl::_001OnRedraw);
 
       }
 
@@ -1772,25 +1773,14 @@ namespace user
    void interaction_impl::set_need_redraw()
    {
 
-      if (!m_bNeedRedraw)
+      if (!m_bPendingRedraw && !m_pui->m_bProDevian)
       {
 
-         if (!m_pui->m_bProDevian)
-         {
+         m_bPendingRedraw = true;
 
-            if (m_pui->m_pthread != NULL)
-            {
-
-               m_bNeedRedraw = true;
-
-               m_pui->post_message(WM_REDRAW);
-
-            }
-
-         }
+         m_pui->post_message(WM_REDRAW);
 
       }
-
 
    }
 
@@ -1805,12 +1795,14 @@ namespace user
          if (!m_pui->m_bProDevian && m_pui->m_bDrawable)
          {
 
-            if (m_pui->has_pending_graphical_update())
-            {
+            m_bPendingRedraw = false;
 
-               m_pui->_001UpdateWindow();
+            //if (m_pui->has_pending_graphical_update())
+            //{
 
-            }
+            m_pui->_001UpdateWindow();
+
+            //}
 
             m_pui->m_pimpl->m_uiLastRedraw = get_tick_count();
 

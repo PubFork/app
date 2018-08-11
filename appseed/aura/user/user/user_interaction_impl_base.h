@@ -32,7 +32,7 @@ namespace user
       mutex                               m_mutexLongPtr;
       int_ptr_to_int_ptr                  m_longptr;
 
-      bool                                m_bNeedRedraw;
+      bool                                m_bPendingRedraw;
       uint32_t                            m_uiLastRedraw;
 
 
