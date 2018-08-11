@@ -11,7 +11,7 @@ namespace userstack
       enum e_type
       {
          type_get_view,
-         TypeSetView,
+         type_set_view,
          TypeOnShowKaraoke,
          TypeOnShowView,
       };

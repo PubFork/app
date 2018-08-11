@@ -126,8 +126,9 @@ namespace aura
       virtual ~application();
 
 
+      ::visual::dib_sp & dib(::file::path path, bool bAsync = false);
 
-      ::draw2d::dib_sp get_matter_dib(string strMatter);
+      ::visual::dib_sp & matter_dib(string strMatter, bool bAsync = false);
 
       virtual void assert_valid() const override;
       virtual void dump(dump_context & dumpcontext) const override;

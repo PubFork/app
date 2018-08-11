@@ -3776,7 +3776,8 @@ success:
 
    }
 
-   ::draw2d::dib_sp system::get_dib(::file::path path)
+
+   ::visual::dib_sp & system::get_dib(::aura::application * papp, ::file::path path, bool bAsync)
    {
 
 #ifdef FILE_SYSTEM_CASE_INSENSITIVE
@@ -3792,56 +3793,65 @@ success:
       if (dib.is_null())
       {
 
-         dib.alloc(allocer());
+         dib.alloc(papp->allocer());
 
          /// temporary mutex for dib creation
          dib->defer_create_mutex();
 
-         synch_lock sl(dib->m_pmutex);
+         ::visual::dib_sp * pspdib = &dib;
 
          slSystem.unlock();
 
-         if (!dib.load_from_file(path, true))
+         pred_run(!bAsync, [=]()
          {
 
-            if (is_debugger_attached())
-            {
+            auto & dib = *pspdib;
 
-               simple_message_box("missing image from resource: \"" + path + "\"", MB_OK);
+            synch_lock sl(dib->m_pmutex);
 
-            }
-
-            if (!dib.load_from_matter("missing_image.png"))
+            if (!dib.load_from_file(path, true))
             {
 
                if (is_debugger_attached())
                {
 
-                  simple_message_box("missing framework image from system resource: \"matter://missing_image.png\"", MB_OK);
+                  simple_message_box("missing image from resource: \"" + path + "\"", MB_OK);
 
                }
 
-               dib->create(32, 48);
+               if (!dib.load_from_matter("missing_image.png"))
+               {
 
-               dib->Fill(255, 255, 255, 255);
+                  if (is_debugger_attached())
+                  {
 
-               dib->get_graphics()->set_text_color(ARGB(255, 255, 0, 0));
+                     simple_message_box("missing framework image from system resource: \"matter://missing_image.png\"", MB_OK);
 
-               dib->get_graphics()->draw3d_rect_coord(0, 0, 31, 47, ARGB(255, 128, 128, 128));
+                  }
 
-               dib->get_graphics()->draw_text("x", rect(0, 0, 32, 48), DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+                  dib->create(32, 48);
+
+                  dib->Fill(255, 255, 255, 255);
+
+                  dib->get_graphics()->set_text_color(ARGB(255, 255, 0, 0));
+
+                  dib->get_graphics()->draw3d_rect_coord(0, 0, 31, 47, ARGB(255, 128, 128, 128));
+
+                  dib->get_graphics()->draw_text("x", rect(0, 0, 32, 48), DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+
+               }
 
             }
 
-         }
+            mutex * pmutex = dib->m_pmutex;
 
-         mutex * pmutex = dib->m_pmutex;
+            dib->m_pmutex = g_pmutexDib;
 
-         dib->m_pmutex = g_pmutexDib;
+            sl.unlock();
 
-         sl.unlock();
+            ::aura::del(pmutex);
 
-         ::aura::del(pmutex);
+         });
 
       }
 
@@ -3851,7 +3861,6 @@ success:
 
 
 } // namespace aura
-
 
 
 

@@ -16,6 +16,7 @@ typedef struct
    ContributionType *ContribRow; // Row (or column) of contribution weights
    UINT WindowSize,              // Filter window size (of affecting source pixels)
         LineLength;              // Length of line (no. or rows / cols)
+   double * matrix;
 } LineContribType;               // Contribution information for an entire line (row or column)
 
 typedef WINBOOL (*ProgressAnbAbortCallBack)(BYTE bPercentComplete);
@@ -111,10 +112,11 @@ AllocContributions (UINT uLineLength, UINT uWindowSize)
    res->LineLength = uLineLength;
    // Allocate list of contributions
    res->ContribRow = new ContributionType[uLineLength];
+   res->matrix = new double[uWindowSize * uLineLength];
    for (UINT u = 0 ; u < uLineLength ; u++)
    {
       // Allocate contributions for every pixel
-      res->ContribRow[u].Weights = new double[uWindowSize];
+      res->ContribRow[u].Weights = &res->matrix[uWindowSize * u];
    }
    return res;
 }
@@ -124,11 +126,12 @@ void
 C2PassScale<FilterClass>::
 FreeContributions (LineContribType * p)
 {
-   for (UINT u = 0; u < p->LineLength; u++)
-   {
-      // Free contribs for every pixel
-      delete [] p->ContribRow[u].Weights;
-   }
+   //for (UINT u = 0; u < p->LineLength; u++)
+   //{
+   //   // Free contribs for every pixel
+   //   delete [] p->ContribRow[u].Weights;
+   //}
+   delete p->matrix;
    delete [] p->ContribRow;    // Free list of pixels contribs
    delete p;                   // Free contribs header
 }

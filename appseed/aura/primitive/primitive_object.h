@@ -4,98 +4,14 @@
 #include "primitive_id.h"
 
 
-////class CLASS_DECL_AURA ::object :
-//class CLASS_DECL_AURA mini_object
-//// virtual public element
-////class CLASS_DECL_AURA waitable :
-////class CLASS_DECL_AURA object
-////   virtual public ::object
-//{
-//public:
-//
-//
-//   int64_t m_countReference;
-//
-//   mini_object()
-//   {
-//      m_countReference = 1;
-//   }
-//   virtual ~mini_object()
-//   {
-//
-//   }
-//
-//   virtual int64_t add_ref()
-//   {
-//
-//#ifdef WINDOWS
-//
-//      return InterlockedIncrement64(&m_countReference);
-//
-//#elif defined(RASPBIAN) && defined(OS32BIT)
-//
-//      return __sync_add_and_fetch_4(&m_countReference,1);
-//
-//#else
-//
-//      return __sync_add_and_fetch(&m_countReference, 1);
-//
-//#endif
-//
-//   }
-//
-//
-//   int64_t dec_ref()
-//   {
-//
-//#ifdef WINDOWS
-//
-//      return InterlockedDecrement64(&m_countReference);
-//
-//#elif defined(RASPBIAN) && defined(OS32BIT)
-//
-//      return __sync_sub_and_fetch_4(&m_countReference,1);
-//
-//#else
-//
-//      return __sync_sub_and_fetch(&m_countReference, 1);
-//
-//#endif
-//
-//   }
-//
-//
-//   int64_t release()
-//   {
-//
-//      int64_t i = dec_ref();
-//
-//      if (i == 0)
-//      {
-//
-//         delete this;
-//
-//      }
-//
-//      return i;
-//
-//   }
-//
-//   inline void set_heap_alloc()
-//   {
-//
-//   }
-//
-//
-//};
-
 class var;
 class application_bias;
 class create;
 class command_line;
 class thread_ptra;
+
+
 #include "aura/multithreading/multithreading_wait_result.h"
-// Duplicated root here... element is essentially like root (Rute, Inha, Lenir) for templates, but not for polymorphism
 
 
 inline int64_t atomic_increment(int64_t * pi)
@@ -209,8 +125,8 @@ public:
 
    object();
    object(::aura::application * papp);
-   object(const object & objectSrc);              // no implementation
-   virtual ~object();  // virtual destructors are necessary
+   object(const object & objectSrc);
+   virtual ~object();
 
 
 
@@ -244,6 +160,9 @@ public:
       });
 
    }
+
+   template < typename PRED >
+   inline ::thread * pred_run(bool bSync, PRED pred);
 
 
    void defer_create_mutex();
@@ -319,7 +238,6 @@ public:
    virtual void add_fork_uri(const char * pszCommandLine,application_bias * pbiasCreate = NULL);
 
 
-   // semantics defined by the requested object - ::object implementator
    virtual void request_file(var & varFile);
    virtual void request_file_query(var & varFile,var & varQuery);
    virtual void request_command(command_line * pcommandline);
@@ -336,16 +254,10 @@ public:
    virtual void threadrefa_wait(duration duration);
    virtual void threadrefa_remove(::thread * pthread);
 
-   // main loosely coupled semantics :
-   // varFile   : empty, one file path, many file paths, one file object, one or more file objects, or Url, of cached, downloaded, dowloading or queuing files to be opened
-   // varQuery  : more ellaborated requests for the requested object - syntax and semantic defined by requested object - ::object implementator
-   // virtual void on_request(sp(command_line) pcommandline);
    virtual void on_request(::create * pcreate);
-
 
    virtual string lstr(id id, string strDefault = "");
 
-   //void common_construct();
 
    bool IsSerializable() const;
 

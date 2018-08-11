@@ -255,7 +255,7 @@ namespace aura
 
       }
 
-      ::draw2d::dib_sp get_dib(::file::path path);
+      ::visual::dib_sp & get_dib(::aura::application * papp, ::file::path path, bool bAsync = false);
 
       template < class T >
       ::type * type_info()

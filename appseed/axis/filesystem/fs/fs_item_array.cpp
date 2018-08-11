@@ -75,7 +75,7 @@ namespace fs
 
          class var var;
 
-         var["FileManagerItem_flags"] = new flags < e_flag >(this->element_at(0)->m_flags);
+         var["FileManagerItem_flags"] = canew(flags < e_flag >(this->element_at(0)->m_flags));
 
          return var;
 
@@ -90,7 +90,7 @@ namespace fs
 
             class var varPropSet;
 
-            varPropSet["FileManagerItem_flags"] = new flags < e_flag > (this->element_at(i)->m_flags);
+            varPropSet["FileManagerItem_flags"] = canew(flags < e_flag > (this->element_at(i)->m_flags));
 
             var.vara().add(varPropSet);
 

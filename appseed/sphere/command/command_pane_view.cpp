@@ -68,7 +68,7 @@ namespace prompt
             if(puh->is_type_of(pane_view_update_hint::type_get_view))
             {
             }
-            else if(puh->is_type_of(pane_view_update_hint::TypeSetView))
+            else if(puh->is_type_of(pane_view_update_hint::type_set_view))
             {
                set_cur_tab_by_id(puh->m_eview);
             }

@@ -122,7 +122,7 @@ namespace visual
 
       dib_sp();
       dib_sp(const ::aura::allocatorsp & allocer);
-      virtual ~dib_sp();
+      ~dib_sp();
 
       virtual bool dispose_current_frame();
       virtual bool overlay_frame(int iFrame);

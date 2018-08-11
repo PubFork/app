@@ -355,12 +355,21 @@ namespace aura
 
    }
 
-   ::draw2d::dib_sp application::get_matter_dib(string strMatter)
+
+   ::visual::dib_sp & application::dib(::file::path path, bool bAsync)
+   {
+
+      return System.get_dib(this, path, bAsync);
+
+   }
+
+
+   ::visual::dib_sp & application::matter_dib(string strMatter, bool bAsync)
    {
 
       ::file::path path = Application.dir().matter(strMatter);
 
-      return System.get_dib(path);
+      return dib(path, bAsync);
 
    }
 

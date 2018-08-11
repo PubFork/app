@@ -77,6 +77,7 @@ namespace visual
          }
 
       }
+      release();
    }
 
    bool dib_sp::load_thumbnail(var varFile, int w, int h)
@@ -107,8 +108,8 @@ namespace visual
 
 #endif
 
-
    }
+
 
    bool dib_sp::load_from_file(var varFile, bool bCache, bool bCreateHelperMaps)
    {
@@ -133,8 +134,16 @@ namespace visual
 
       }
 
-      if (varFile.get_file_path().extension().compare_ci("svg") == 0
-            || varFile.get_file_path().find_ci(".svg?") > 0)
+      ::file::path path = varFile.get_file_path();
+
+      if (path.has_char())
+      {
+
+         path = Sys(m_p->m_papp).defer_process_path(path, m_p->m_papp);
+
+      }
+
+      if (path.extension().compare_ci("svg") == 0 || path.find_ci(".svg?") > 0)
       {
 
          m_p->create_nanosvg(App(m_p->m_papp).file().as_string(varFile));
@@ -152,8 +161,7 @@ namespace visual
 
       }
 
-      if (varFile.get_file_path().extension().compare_ci("gif") == 0
-            || varFile.get_file_path().find_ci(".gif?") > 0)
+      if (path.extension().compare_ci("gif") == 0 || path.find_ci(".gif?") > 0)
       {
 
          m_sparray = canew(array(m_p->m_papp));
@@ -227,7 +235,7 @@ namespace visual
    {
 
       ::file::path path = m_p->m_papp->dir().matter(pszMatter);
-      
+
       ::draw2d::dib_sp dib(m_p->allocer());
 
       if (!App(m_p->m_papp).imaging().load_from_file(dib, path, bCache))
@@ -245,7 +253,7 @@ namespace visual
          dib->create_helper_map();
 
       }
-      
+
       operator = (dib);
 
       m_eload = load_ok;

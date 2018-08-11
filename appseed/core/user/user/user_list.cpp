@@ -151,6 +151,13 @@ namespace user
 
       ::user::interaction::_001OnDraw(pgraphics);
 
+      if (is_null(m_pmeshdata.m_p))
+      {
+
+         return;
+
+      }
+
       synch_lock sl(m_pmeshdata->m_pmutex);
 
       rect rectClient;

@@ -110,6 +110,28 @@ inline ::thread * object::fork(PRED pred)
 
 
 template < typename PRED >
+inline ::thread * object::pred_run(bool bSync, PRED pred)
+{
+
+   defer_create_mutex();
+
+   synch_lock sl(m_pmutex);
+
+   thread * pthread = ::pred_run(get_app(), bSync, pred, this);
+
+   if (pthread != NULL)
+   {
+
+      threadrefa_add(pthread);
+
+   }
+
+   return pthread;
+
+}
+
+
+template < typename PRED >
 inline ::thread * object::delay_fork(bool * pbExecuting, int64_t * piRequestCount, ::duration duration, PRED pred)
 {
 
@@ -696,5 +718,28 @@ spa(::thread) fork_proc(::aura::application * papp, PRED pred, index iCount = -1
 //   return pptra;
 //
 //}
+
+
+template < typename PRED >
+::thread * pred_run(::aura::application * papp, bool bSync, PRED pred, ::object * pobjectDependent = NULL)
+{
+
+   if (bSync)
+   {
+
+      pred();
+
+      return NULL;
+
+   }
+   else
+   {
+
+      return fork(papp, pred, pobjectDependent);
+
+   }
+
+}
+
 
 

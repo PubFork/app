@@ -138,13 +138,11 @@ namespace user
          if (strImage.has_char())
          {
 
-            m_dib = Application.get_matter_dib(strImage);
+            m_dib = Application.matter_dib(strImage);
 
          }
 
       }
-
-
 
       for (int32_t i = 0; i < iItemCount; i++)
       {
