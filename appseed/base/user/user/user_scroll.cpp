@@ -172,62 +172,45 @@ namespace user
 
       }
 
-      _001ConstrainXScrollPosition();
-
    }
 
 
-   void scroll_x::_001ConstrainXScrollPosition()
+   bool scroll_x::validate_viewport_offset(point & p)
    {
 
-      size sizeTotal = get_total_size();
-
-      pointd ptOffset = get_viewport_offset();
-
-//      if (ptOffset.y < 0)
-//      {
-//         ptOffset.y = 0;
-//      }
-//      else
-//      {
-//         if (ptOffset.y > sizeTotal.cy)
-//            ptOffset.y = sizeTotal.cy;
-//      }
-
-      if (ptOffset.x < 0)
+      if (p.x < 0)
       {
-         ptOffset.x = 0;
+
+         p.x = 0;
+
       }
       else
       {
-         if (ptOffset.x > sizeTotal.cx)
-            ptOffset.x = sizeTotal.cx;
+
+         size sizeTotal = get_total_size();
+
+         size sizePage = get_page_size();
+
+         if (p.x > MAX(0, sizeTotal.cx - sizePage.cx))
+         {
+
+            p.x = MAX(0, sizeTotal.cx - sizePage.cx);
+
+         }
+
       }
 
-      if (ptOffset.x != get_viewport_offset().x)
-      {
-
-         set_viewport_offset(ptOffset.x, ptOffset.y);
-
-      }
+      return true;
 
    }
-
-
-
-
 
 
    void scroll_x::install_message_routing(::message::sender * pinterface)
    {
 
-
       IGUI_MSG_LINK(WM_HSCROLL, pinterface, this, &scroll_x::_001OnHScroll);
 
    }
-
-   //
-   // void scroll_x::create_x_scroll_bar(const RECT & rect);
 
 
    void scroll_x::on_change_view_size()
@@ -281,11 +264,14 @@ namespace user
 
       m_scrolldataHorz.m_iPage = rectScroll.width();
 
-      _001ConstrainXScrollPosition();
+      if (validate_viewport_offset(m_ptScrollPassword1))
+      {
 
-      layout_scroll_bar();
+         layout_scroll_bar();
 
-      on_change_viewport_offset();
+         on_change_viewport_offset();
+
+      }
 
    }
 
@@ -476,8 +462,6 @@ namespace user
 
       }
 
-      _001ConstrainYScrollPosition();
-
    }
 
 
@@ -539,42 +523,32 @@ namespace user
    }
 
 
-
-   void scroll_y::_001ConstrainYScrollPosition()
+   bool scroll_y::validate_viewport_offset(point & p)
    {
 
-      size sizeTotal = get_total_size();
-
-      size sizePage = get_page_size();
-
-      pointd ptOffset = get_viewport_offset();
-
-      if (ptOffset.y < 0)
+      if (p.y < 0)
       {
-         ptOffset.y = 0;
+
+         p.y = 0;
+
       }
       else
       {
-         if (ptOffset.y > MAX(0, sizeTotal.cy - sizePage.cy))
-            ptOffset.y = sizeTotal.cy - sizePage.cy;
-      }
 
-      if (ptOffset.x < 0)
-      {
-         ptOffset.x = 0;
-      }
-      else
-      {
-         if (ptOffset.x > MAX(0, sizeTotal.cx - sizePage.cx))
-            ptOffset.x = sizeTotal.cx - sizePage.cx;
-      }
+         size sizeTotal = get_total_size();
 
-      if (ptOffset != get_viewport_offset())
-      {
+         size sizePage = get_page_size();
 
-         set_viewport_offset(ptOffset.x, ptOffset.y);
+         if (p.y > MAX(0, sizeTotal.cy - sizePage.cy))
+         {
+
+            p.y = MAX(0, sizeTotal.cy - sizePage.cy);
+
+         }
 
       }
+
+      return true;
 
    }
 
@@ -643,11 +617,14 @@ namespace user
 
       m_scrolldataVert.m_iPage = rectScroll.height();
 
-      _001ConstrainYScrollPosition();
+      if (validate_viewport_offset(m_ptScrollPassword1))
+      {
 
-      layout_scroll_bar();
+         layout_scroll_bar();
 
-      on_change_viewport_offset();
+         on_change_viewport_offset();
+
+      }
 
    }
 
@@ -698,6 +675,21 @@ namespace user
       scroll_y::on_change_viewport_offset();
       ::user::interaction::on_change_viewport_offset();
    }
+
+
+   bool scroll::validate_viewport_offset(point & p)
+   {
+
+      bool xValidated = scroll_x::validate_viewport_offset(p);
+
+      bool yValidated = scroll_y::validate_viewport_offset(p);
+
+      bool iValidated = ::user::interaction::validate_viewport_offset(p);
+
+      return (xValidated || yValidated) && iValidated;
+
+   }
+
 
    void scroll::layout_scroll_bar()
    {
@@ -787,13 +779,16 @@ namespace user
 
       m_scrolldataVert.m_iPage = rectScroll.height();
 
-      _001ConstrainXScrollPosition();
+      if (validate_viewport_offset(m_ptScrollPassword1))
+      {
 
-      _001ConstrainYScrollPosition();
+         layout_scroll_bar();
 
-      layout_scroll_bar();
+         on_change_viewport_offset();
 
-      //on_change_viewport_offset();
+      }
+
+
 
    }
 

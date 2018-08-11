@@ -192,7 +192,7 @@ namespace aura
       if(pmutex == NULL)
       {
 
-         pmutex = new mutex(get_app());
+         pmutex = canew(mutex(get_app()));
 
          m_mapAppMutex[strApp] = pmutex;
 

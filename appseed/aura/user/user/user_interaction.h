@@ -927,6 +927,7 @@ namespace user
       virtual void offset_viewport_offset_x(int x);
       virtual void offset_viewport_offset_y(int y);
       virtual void offset_viewport_offset(int x, int y);
+      virtual bool validate_viewport_offset(point & p);
       virtual void on_change_viewport_offset();
       virtual void on_viewport_offset(::draw2d::graphics * pgraphics);
       virtual pointd get_viewport_offset();

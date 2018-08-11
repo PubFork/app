@@ -7883,11 +7883,33 @@ restart:
    void interaction::set_viewport_offset(int x, int y)
    {
 
-      m_ptScrollPassword1.x = x;
+      point ptOffset(x, y);
 
-      m_ptScrollPassword1.y = y;
+      if(!validate_viewport_offset(ptOffset))
+      {
+
+         return;
+
+      }
+
+      m_ptScrollPassword1 = ptOffset;
 
       on_change_viewport_offset();
+
+   }
+
+
+   bool interaction::validate_viewport_offset(point & p)
+   {
+
+      if (p == m_ptScrollPassword1)
+      {
+
+         return false;
+
+      }
+
+      return true;
 
    }
 

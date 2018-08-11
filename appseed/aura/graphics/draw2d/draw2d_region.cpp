@@ -36,39 +36,47 @@ namespace draw2d
    region::~region()
    {
 
+      destroy();
+
    }
+
 
    bool region::destroy()
    {
 
-      e_type etype = m_etype;
+      ::aura::adel(m_lppoints);
+      ::aura::adel(m_lppolycounts);
+      m_pregion1.release();
+      m_pregion2.release();
 
-      m_etype = type_none;
+      //e_type etype = m_etype;
 
-      switch(etype)
-      {
-      case type_none:
-         return false;
-      case type_rect:
-         return true;
-      case type_oval:
-         return true;
-      case type_polygon:
-         ::aura::adel(m_lppoints);
-         return true;
-      case type_poly_polygon:
-         ::aura::adel(m_lppoints);
-         ::aura::adel(m_lppolycounts);
-         return true;
-      case type_round_rect:
-         return true;
-      case type_combine:
-         m_pregion1.release();
-         m_pregion2.release();
-         return true;
-      default:
-         ::exception::throw_not_implemented(get_app());
-      };
+      //m_etype = type_none;
+
+      //switch(etype)
+      //{
+      //case type_none:
+      //   return false;
+      //case type_rect:
+      //   return true;
+      //case type_oval:
+      //   return true;
+      //case type_polygon:
+      //   ::aura::adel(m_lppoints);
+      //   return true;
+      //case type_poly_polygon:
+      //   ::aura::adel(m_lppoints);
+      //   ::aura::adel(m_lppolycounts);
+      //   return true;
+      //case type_round_rect:
+      //   return true;
+      //case type_combine:
+      //   m_pregion1.release();
+      //   m_pregion2.release();
+      //   return true;
+      //default:
+      //   ::exception::throw_not_implemented(get_app());
+      //};
 
       return false;
 
@@ -409,6 +417,7 @@ namespace draw2d
       m_etype = type_polygon;
 
       m_nCount = nCount;
+      ::aura::del(m_lppoints);
       m_lppoints = new POINTD[m_nCount];
       memcpy(m_lppoints, lppoints, sizeof(POINTD) * m_nCount);
       m_efillmode = efillmode;

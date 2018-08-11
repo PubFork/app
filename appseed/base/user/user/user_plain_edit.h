@@ -296,9 +296,7 @@ namespace user
 
       virtual void on_change_viewport_offset() override;
 
-
       virtual size get_total_size() override;
-
 
       virtual var get_ex_value();
 
@@ -306,9 +304,7 @@ namespace user
 
       virtual void internal_edit_update(bool bFullUpdate, index iLineUpdate);
 
-
       virtual void _001EditDelete();
-
 
       virtual void _001OnNcDraw(::draw2d::graphics * pgraphics) override;
 

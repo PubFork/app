@@ -31,17 +31,52 @@ THE SOFTWARE.
 namespace file_watcher
 {
 
+   /// watch
+   struct CLASS_DECL_AURA  watch :
+      virtual simple_object
+   {
+
+      id                   m_id;
+      OVERLAPPED           m_overlapped;
+      HANDLE               m_hDirectory;
+      BYTE                 m_buffer[32 * 1024];
+      LPARAM               m_lparam;
+      uint32_t             m_dwNotify;
+      bool                 m_bRefresh;
+      bool                 m_bStop;
+      file_watcher_impl *  m_pwatcher;
+      listener *           m_plistener;
+      bool                 m_bOwn;
+      string               m_strDirName;
+      bool                 m_bRecursive;
+
+      /// Starts monitoring a directory.
+      watch();
+      virtual ~watch();
+
+      bool open(LPCTSTR szDirectory, uint32_t dwNotify, bool bRecursive);
+
+
+      /// Unpacks events and passes them to a user defined callback.
+      static void CALLBACK callback(DWORD dwErrorCode, DWORD dwNumberOfBytesTransfered, LPOVERLAPPED lpOverlapped);
+
+      /// Refreshes the directory monitoring.
+      bool refresh(bool bClear = false);
+
+      void defer_refresh();
+
+   };
 
    /// Implementation for Win32 based on ReadDirectoryChangesW.
    /// @class os_file_watcher
-   class os_file_watcher :
+   class CLASS_DECL_AURA os_file_watcher :
       virtual public file_watcher_impl
    {
    public:
 
 
       /// type for a map from id to watch_struct pointer
-      typedef map < id, id, watch_struct*,watch_struct*> watch_map;
+      typedef map < id, id, sp(watch),sp(watch)> watch_map;
 
       /// Map of id to watch_struct pointers
       watch_map            m_watchmap;

@@ -31,17 +31,17 @@ namespace file_watcher
 {
 
 #if defined METROWIN &&  defined(__cplusplus_winrt)
-   ref class watch_struct;
+   ref class watch;
    struct watch_holder
    {
-      watch_struct ^ w;
+      watch ^ w;
    };
 
 #else
-   struct watch_struct;
+   struct watch;
    struct watch_holder
    {
-      watch_struct * w;
+      watch * w;
    };
 #endif
 
@@ -59,7 +59,7 @@ namespace file_watcher
       public:
 
 
-         watch_struct ^ watch;
+         watch ^ watch;
          ::Windows::Storage::Search::IStorageQueryResultBase ^ r;
 
 
@@ -71,7 +71,7 @@ namespace file_watcher
       {
       public:
 
-         watch_struct * watch;
+         watch * watch;
          string filename;
          uint32_t ulOsAction;
 

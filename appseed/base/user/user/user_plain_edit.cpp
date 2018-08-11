@@ -1558,7 +1558,7 @@ namespace user
 
       _001OnCalcOffset();
 
-      RedrawWindow();
+      set_need_redraw();
 
    }
 

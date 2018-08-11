@@ -51,7 +51,7 @@ namespace user
       virtual void layout_scroll_bar();
       virtual void _001DeferCreateXScrollBar();
       virtual void _001OnDeferCreateXScrollBar();
-      virtual void _001ConstrainXScrollPosition();
+      virtual bool validate_viewport_offset(point & pt) override;
       virtual void scroll_left_line();
       virtual void scroll_right_line();
       virtual void scroll_left_page();
@@ -109,14 +109,14 @@ namespace user
 
 
       //virtual void GetScrollRect(LPRECT lprect);
-      virtual void on_change_view_size();
-      virtual void on_change_viewport_offset();
+      virtual void on_change_view_size() override;
+      virtual void on_change_viewport_offset() override;
       virtual int32_t get_wheel_scroll_delta();
       virtual void create_y_scroll_bar(const RECT & rect);
       virtual void layout_scroll_bar();
       virtual void _001DeferCreateYScrollBar();
       virtual void _001OnDeferCreateYScrollBar();
-      virtual void _001ConstrainYScrollPosition();
+      virtual bool validate_viewport_offset(point & p) override;
 
 
       DECL_GEN_SIGNAL(_001OnVScroll);
@@ -150,8 +150,9 @@ namespace user
 
 
 
-      void on_change_view_size();
-      void on_change_viewport_offset();
+      virtual void on_change_view_size() override;
+      virtual void on_change_viewport_offset() override;
+      virtual bool validate_viewport_offset(point & p) override;
       void layout_scroll_bar();
 
       virtual void install_message_routing(::message::sender * pinterface);
