@@ -157,7 +157,7 @@ inline bool smart_pointer < T > ::is_set() const
 }
 
 template < class T >
-inline smart_pointer < T > & smart_pointer < T > ::operator = (T * p)
+inline smart_pointer < T > & smart_pointer < T > ::reset (T * p)
 {
    if(m_p != p)
    {

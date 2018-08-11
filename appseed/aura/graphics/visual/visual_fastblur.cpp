@@ -189,6 +189,8 @@ namespace visual
 
 #endif // VECTOR3_SSE
 
+      release();
+
    }
 
 
@@ -458,14 +460,14 @@ namespace visual
          {
 
             b = do_boxblur(
-                   timage,
-                   w,
-                   h,
-                   m_iRadius,
-                   (uint32_t *)m_ucha.get_data(),
-                   m_uchaDiv.get_data(),
-                   w * 4,
-                   w,h,bottomup);
+                timage,
+                w,
+                h,
+                m_iRadius,
+                (uint32_t *)m_ucha.get_data(),
+                m_uchaDiv.get_data(),
+                w * 4,
+                w,h,bottomup);
 
          }
          catch(...)
@@ -568,14 +570,14 @@ namespace visual
          {
 
             b = do_stackblur(
-                   timage,
-                   w,
-                   h,
-                   m_iRadius,
-                   (uint32_t *)m_ucha.get_data(),
-                   m_uchaDiv.get_data(),
-                   wj,
-                   w,h,bottomup);
+                timage,
+                w,
+                h,
+                m_iRadius,
+                (uint32_t *)m_ucha.get_data(),
+                m_uchaDiv.get_data(),
+                wj,
+                w,h,bottomup);
 
          }
          catch(...)
@@ -656,14 +658,14 @@ namespace visual
          {
 
             b = do_fastblur(
-                   (uint32_t *)m_p->get_data(),
-                   m_size.cx,
-                   m_size.cy,
-                   m_iRadius,
-                   (uint32_t *)m_ucha.get_data(),
-                   m_uchaDiv.get_data(),
-                   m_p->m_iScan,
-                   cx,cy,bottomup);
+                (uint32_t *)m_p->get_data(),
+                m_size.cx,
+                m_size.cy,
+                m_iRadius,
+                (uint32_t *)m_ucha.get_data(),
+                m_uchaDiv.get_data(),
+                m_p->m_iScan,
+                cx,cy,bottomup);
 
          }
          catch(...)
@@ -692,7 +694,7 @@ namespace visual
       APPTRACE("| fastblur::blur");
       APPTRACE("| ");
       APPTRACE("| do_fastblur = %d ms",dw3);
-*/
+      */
 #endif
 
 #if defined(VSNORD)
@@ -1165,7 +1167,8 @@ namespace visual
 
 
       // blur horizontally, output to temporary buffer
-      for(int y=0; y<h; y++) {
+      for(int y=0; y<h; y++)
+      {
 
          vector4 insum(0.f);
          vector4 outsum(0.f);
@@ -1175,7 +1178,8 @@ namespace visual
          // pixels before the left edge of the image are
          // samples of [0] (max()).  min() handles
          // images which are smaller than the kernel.
-         for(int i=-radius; i <= radius; i++) {
+         for(int i=-radius; i <= radius; i++)
+         {
 
             // calcualte address of source pixel
             const vector4& p = pix[yi + MIN(wm,MAX(i,0))];
@@ -1189,10 +1193,12 @@ namespace visual
 
             // add pixel to accumulators
             sum += sir * (float) rbs;
-            if(i > 0) {
+            if(i > 0)
+            {
                insum  += sir;
             }
-            else {
+            else
+            {
                outsum += sir;
             }
          }
@@ -1204,7 +1210,8 @@ namespace visual
 
 
          // now start outputing pixels
-         for(int x=0; x<w; x++) {
+         for(int x=0; x<w; x++)
+         {
 
             // output a pixel
             tsurface[yi] = sum * divsum;
@@ -1254,7 +1261,8 @@ namespace visual
       // now blur vertically from the temporary
       // buffer, using the original image buffer
       // as the output
-      for(int x=0; x<w; x++) {
+      for(int x=0; x<w; x++)
+      {
 
          vector4 insum(0);
          vector4 outsum(0);
@@ -1262,7 +1270,8 @@ namespace visual
 
          //preload the stack
          int yp = -radius * wj;
-         for(int i = -radius; i <= radius; i++) {
+         for(int i = -radius; i <= radius; i++)
+         {
 
             vector4& sir = stack[i + radius];
 
@@ -1273,10 +1282,12 @@ namespace visual
 
             const int rbs = r1 - abs(i);
             sum += sir * (float) rbs;
-            if(i > 0) {
+            if(i > 0)
+            {
                insum  += sir;
             }
-            else {
+            else
+            {
                outsum += sir;
             }
 
@@ -1293,7 +1304,8 @@ namespace visual
          // this loop is the same as the y-loop,
          // except the src/dest offsets are calcuated differently
          yi = x;	// set starting output offset by column
-         for(int y=0; y<h; y++) {
+         for(int y=0; y<h; y++)
+         {
 
             pix[yi] = sum * divsum;
 

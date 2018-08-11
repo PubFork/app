@@ -121,7 +121,10 @@ public:
    }
 
 
-   inline smart_pointer & operator = (T * p);
+   inline smart_pointer & operator = (T * p)
+   {
+      return reset(p);
+   }
 
    template < class T2 >
    inline smart_pointer & operator = (const smart_pointer < T2 > & t)
@@ -175,6 +178,8 @@ public:
    {
       return cast < T2 > () != NULL;
    }
+
+   inline smart_pointer & reset(T * p);
 
 //      bool operator ==(const smart_pointer & p) const { return m_p == p.m_p; }
 //      bool operator !=(const smart_pointer & p) const { return m_p != p.m_p; }
