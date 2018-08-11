@@ -448,7 +448,6 @@ namespace aura
    template < typename T >
    inline void delobj(T * & p);
 
-
    template < typename T >
    inline void adel(T * & p)
    {
@@ -521,6 +520,26 @@ namespace aura
       {
 
       }
+
+   }
+
+   template < typename T >
+   inline T * reset(T * & p, T * pNew)
+   {
+
+      ::aura::del(p);
+
+      return p = pNew;
+
+   }
+
+   template < typename T >
+   inline T * reset(T * & p)
+   {
+
+      ::aura::del(p);
+
+      return p = new T;
 
    }
 
