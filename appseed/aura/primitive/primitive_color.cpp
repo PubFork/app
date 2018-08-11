@@ -4,30 +4,52 @@
 
 double primitive_color_round(double d);
 
+
 color::color()
 {
+
 }
+
 
 color::color(const color & color)
 {
+
    operator = (color);
+
 }
+
 
 color::color(COLORREF cr)
 {
+
    operator = (cr);
+
 }
 
 
-color::color(const hls & hls)
+color::color(e_color ecolor, double dAlpha)
 {
-   operator = (hls);
+
+   set_COLORREF(pure_color(ecolor));
+
+   m_uchA = dAlpha * 255.0;
+
+   m_dA = dAlpha;
+
 }
 
-//color::color(RGBQUAD quad)
-//{
-//   operator = (quad);
-//}
+
+color::color(const hls & hls, double dAlpha)
+{
+
+   operator = (hls);
+
+   m_uchA = dAlpha * 255.0;
+
+   m_dA = dAlpha;
+
+}
+
 
 color::~color()
 {
@@ -64,8 +86,7 @@ proc hls2rgb {h l s} {
 
   */
 
-void color::get_hls(
-double & h,double & l,double & s) const
+void color::get_hls(double & h,double & l,double & s) const
 {
 
    double r = m_dR;

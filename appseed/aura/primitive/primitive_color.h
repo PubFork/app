@@ -48,17 +48,15 @@ public:
 
    color();
    color(const color & color);
-   color(e_color ecolor);
-   color(const hls & hls);
+   color(e_color ecolor, double dAlpha = 1.0);
+   color(const hls & hls, double dAlpha = 1.0);
    color(COLORREF cr);
-//   color(RGBQUAD quad);
    virtual ~color();
 
    void hls_mult(double dRateH, double dRateL, double dRateS);
    void hls_rate(double dRateH, double dRateL, double dRateS);
    void set_rgb(COLORREF cr);
    void set_bgr(uint32_t dw);
-//   void set_rgbquad(RGBQUAD quad);
    void get_hls(
    double & dH,
    double & dL,
