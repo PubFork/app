@@ -219,14 +219,14 @@ namespace file_watcher
 
       ::multithreading::post_quit_and_wait(m_pthread, seconds(15));
 
-      watch_map::pair * ppair = m_watchmap.PGetFirstAssoc();
+      //watch_map::pair * ppair = m_watchmap.PGetFirstAssoc();
 
-      for(; ppair != NULL; ppair = m_watchmap.PGetNextAssoc(ppair))
-      {
+      //for(; ppair != NULL; ppair = m_watchmap.PGetNextAssoc(ppair))
+      //{
 
-         delete ppair->m_element2;
+      //   delete ppair->m_element2;
 
-      }
+      //}
 
       m_watchmap.clear();
 
@@ -235,6 +235,8 @@ namespace file_watcher
 
    id os_file_watcher::add_watch(const string & directory,listener* watcher,bool bRecursive, bool bOwn)
    {
+
+      sp(listener) pwatcher(watcher);
 
       if (m_pthread.is_null())
       {

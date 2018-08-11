@@ -460,22 +460,6 @@ namespace windows
 
       }
 
-      m_pui->m_pthread = ::get_thread();
-
-      if (m_pui->m_pthread != NULL)
-      {
-
-         if (m_pui->m_pthread->m_puiptra == NULL)
-         {
-
-            m_pui->m_pthread->m_puiptra = new user_interaction_ptr_array();
-
-         }
-
-         m_pui->m_pthread->m_puiptra->add(m_pui);
-
-      }
-
       if (cs.hwndParent == HWND_MESSAGE)
       {
 
@@ -2699,17 +2683,7 @@ namespace windows
    void interaction_impl::set_need_redraw()
    {
 
-      if (!m_pui->m_bProDevian)
-      {
-
-         if (m_pui->m_pthread != NULL)
-         {
-
-            m_pui->m_pthread->post_message(WM_REDRAW);
-
-         }
-
-      }
+      ::user::interaction_impl::set_need_redraw();
 
    }
 

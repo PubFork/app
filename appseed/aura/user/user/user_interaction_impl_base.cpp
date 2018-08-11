@@ -13,6 +13,7 @@ namespace user
       m_mutexLongPtr(get_app())
    {
 
+      m_bNeedRedraw = false;
       m_bZ                 = false;
       m_pui                = NULL;
       m_bIgnoreSizeEvent   = false;
@@ -1423,6 +1424,7 @@ namespace user
 
    void interaction_impl_base::set_need_redraw()
    {
+
 
    }
 

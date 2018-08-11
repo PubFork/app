@@ -586,33 +586,6 @@ bool thread::pump_message()
 
       process_message(&msg);
 
-      if (m_puiptra != NULL)
-      {
-
-         for (index i = 0; i < m_puiptra->get_count(); i++)
-         {
-
-            ::user::interaction * pui = m_puiptra->element_at(i);
-
-            ///if (!pui->m_bProDevian && pui->m_bDrawable && get_tick_count() - pui->m_pimpl->m_uiLastRedraw > 10)
-            if (!pui->m_bProDevian && pui->m_bDrawable)
-            {
-
-               if (pui->has_pending_graphical_update())
-               {
-
-                  pui->_001UpdateWindow();
-
-               }
-
-               pui->m_pimpl->m_uiLastRedraw = get_tick_count();
-
-            }
-
-         }
-
-      }
-
       return true;
 
    }
@@ -2722,6 +2695,15 @@ void thread::threadrefa_add(::thread * pthread)
 
 int32_t thread::thread_exit()
 {
+
+
+   {
+
+      synch_lock sl(m_pmutex);
+
+      ::aura::del(m_puiptra);
+
+   }
 
    try
    {

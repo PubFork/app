@@ -164,7 +164,7 @@ namespace file_watcher
       id pred_add_watch(const char * directory, PRED pred, bool bRecursive)
       {
 
-         return add_watch(directory, new pred_listener < PRED >(pred), bRecursive, true);
+         return add_watch(directory, canew(pred_listener < PRED >(pred)), bRecursive, true);
 
       }
 

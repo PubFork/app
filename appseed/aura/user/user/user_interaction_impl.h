@@ -119,6 +119,7 @@ namespace user
       virtual bool check_need_layout() override;
       virtual void clear_need_layout() override;
       virtual void set_need_layout() override;
+      virtual void set_need_redraw() override;
 
       virtual bool check_show_flags() override;
 
@@ -512,6 +513,8 @@ namespace user
 //      bool OnCopyData(::window_sp pwindow,COPYDATASTRUCT* pCopyDataStruct);
 //#endif
       DECL_GEN_SIGNAL(_001OnCreate);
+      DECL_GEN_SIGNAL(_001OnRedraw);
+
 
 
 //      void * OnCtlColor(::draw2d::graphics * pgraphics,::window_sp pwindow,UINT nCtlColor);

@@ -1769,6 +1769,64 @@ namespace user
    }
 
 
+   void interaction_impl::set_need_redraw()
+   {
+
+      if (!m_bNeedRedraw)
+      {
+
+         if (!m_pui->m_bProDevian)
+         {
+
+            if (m_pui->m_pthread != NULL)
+            {
+
+               m_bNeedRedraw = true;
+
+               m_pui->post_message(WM_REDRAW);
+
+            }
+
+         }
+
+      }
+
+
+   }
+
+
+   void interaction_impl::_001OnRedraw(::message::message * pmessage)
+   {
+
+      try
+      {
+
+         ///if (!pui->m_bProDevian && pui->m_bDrawable && get_tick_count() - pui->m_pimpl->m_uiLastRedraw > 10)
+         if (!m_pui->m_bProDevian && m_pui->m_bDrawable)
+         {
+
+            if (m_pui->has_pending_graphical_update())
+            {
+
+               m_pui->_001UpdateWindow();
+
+            }
+
+            m_pui->m_pimpl->m_uiLastRedraw = get_tick_count();
+
+         }
+
+      }
+      catch (...)
+      {
+      }
+
+
+
+   }
+
+
+
    bool interaction_impl::EnableScrollBar(int32_t nSBFlags,UINT nArrowFlags)
    {
       UNREFERENCED_PARAMETER(nSBFlags);
