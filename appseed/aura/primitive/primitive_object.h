@@ -168,7 +168,7 @@ public:
    void defer_create_mutex();
 
 
-
+   virtual void safe_pre_term();
 
    virtual void delete_this();
 
@@ -364,9 +364,6 @@ inline int64_t ref_count(c_derived * pca)
 
 
 #define canew(x) dereference_no_delete(new x)
-
-
-
 
 
 

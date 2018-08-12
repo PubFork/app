@@ -12,11 +12,13 @@ CLASS_DECL_AURA PPROC_SIMPLE g_axisontermthread = NULL;
 
 
 
-struct create_thread_data
+struct create_thread_data :
+   virtual public simple_object
 {
-   PFN_THREAD_FUNCTION     m_pfn;
-   void *                  m_pv;
 
+   PFN_THREAD_FUNCTION     m_pfn;
+
+   void *                  m_pv;
 
    create_thread_data(PFN_THREAD_FUNCTION pfn, void * pv)
    {
@@ -38,7 +40,8 @@ struct create_thread_data
 
    static int32_t proc(void * p)
    {
-      create_thread_data * pdata = (create_thread_data *)p;
+
+      sp(create_thread_data) pdata((const LPARAM &) p);
 
       if (g_axisoninitthread)
       {
@@ -70,16 +73,6 @@ struct create_thread_data
       {
       }
 
-      try
-      {
-
-         delete pdata;
-
-      }
-      catch (...)
-      {
-      }
-
       return iRet;
 
    }
@@ -95,11 +88,15 @@ CLASS_DECL_AURA HTHREAD create_thread(LPSECURITY_ATTRIBUTES lpsa,uint_ptr cbStac
 
    DWORD dwId = 0;
 
-   HTHREAD  hthread = CreateThread(lpsa,cbStack,&create_thread_data::os_thread_proc,new create_thread_data(pfn,pv),uiFlags,&dwId);
+   sp(::create_thread_data) posthreaddata = canew(create_thread_data(pfn, pv));
+
+   HTHREAD hthread = CreateThread(lpsa,cbStack,&create_thread_data::os_thread_proc, (LPVOID)(::lparam)posthreaddata, uiFlags, &dwId);
 
    if(hthread == NULL)
    {
+
       return NULL;
+
    }
 
    try

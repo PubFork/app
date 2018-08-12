@@ -331,7 +331,7 @@ namespace multimedia
 
          ASSERT((uiBufferSize % 2048) == 0);// Streaming size must be 2K aligned to use for async I/O
 
-
+         iBufferSampleCount = uiBufferSize / (m_pwaveformat->nChannels * 2);
 
 
 

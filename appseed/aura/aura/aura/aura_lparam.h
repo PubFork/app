@@ -28,6 +28,17 @@ public:
    inline lparam(::object * pobject);
 
 
+   template < typename T >
+   inline lparam(sp(T) & p)
+   {
+
+      p.add_ref();
+
+      m_lparam = (LPARAM)p.m_p;
+
+   }
+
+
    lparam(const lparam & lparam)
    {
 

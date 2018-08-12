@@ -53,6 +53,8 @@ void simple_object::delete_this()
 }
 
 
+
+
 int64_t simple_object::release()
 {
 
@@ -782,10 +784,20 @@ void object::system(const char * pszProjectName)
 
 }
 
+void object::safe_pre_term()
+{
+
+   threadrefa_post_quit();
+
+   threadrefa_wait(one_minute());
+
+}
 
 
 void object::delete_this()
 {
+
+   safe_pre_term();
 
    if(m_pfactoryitembase != NULL && m_pfactoryitembase->m_pallocator)
    {
@@ -830,6 +842,9 @@ void object::defer_create_mutex()
    }
 
 }
+
+
+
 string object::lstr(id id, string strDefault)
 {
 

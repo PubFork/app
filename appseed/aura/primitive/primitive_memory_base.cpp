@@ -366,7 +366,7 @@ namespace primitive
 
       m_pbComputed += iSize;
 
-      if(m_iOffset > m_iMaxOffset)
+      if(m_iOffset >= m_iMaxOffset || m_iOffset >= m_dwAllocation)
       {
 
          remove_offset();

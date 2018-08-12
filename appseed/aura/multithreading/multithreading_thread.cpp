@@ -3471,7 +3471,12 @@ CLASS_DECL_AURA void set_thread_off(IDTHREAD id)
 
    synch_lock sl(g_pmutexThreadOn);
 
-   g_pmapThreadOn->remove_key(id);
+   if (g_pmapThreadOn != NULL)
+   {
+
+      g_pmapThreadOn->remove_key(id);
+
+   }
 
 }
 
