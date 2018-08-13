@@ -2119,8 +2119,15 @@ RetryBuildNumber:
          }
          else
          {
+            
+            ::file::path pathResource = dir().install();
 
-            return dir().install() / strMatter;
+#ifdef APPLEOS
+            
+            pathResource = (pathResource + ".app") / "Contents/Resources";
+            
+#endif
+            return  pathResource / strMatter;
 
          }
 

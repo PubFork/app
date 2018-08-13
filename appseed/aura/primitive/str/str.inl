@@ -1,4 +1,4 @@
-﻿
+
 
 
 
@@ -1238,3 +1238,27 @@ inline bool wstring::operator == (const wstring & wstr) const
 //   operator = (pwsz);
 //
 //}
+
+
+namespace stra
+{
+
+      inline CLASS_DECL_AURA stringa from_strdup(char ** ppParam)
+      {
+
+            char ** pp = ppParam;
+
+            stringa stra;
+
+            while(*pp != NULL)
+            {
+                  stra.add(::str::from_strdup(*pp));
+            }
+
+            free(ppParam);
+
+            return stra;
+
+      }
+
+} // namespace stra

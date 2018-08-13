@@ -29,9 +29,7 @@
 		9A0CB69A1FEC16D80096D4CE /* wndfrm_tranquillum_frame_schema_001.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A0CB6791FEC16D10096D4CE /* wndfrm_tranquillum_frame_schema_001.cpp */; };
 		9A0CB69B1FEC16D80096D4CE /* wndfrm_tranquillum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A0CB67B1FEC16D10096D4CE /* wndfrm_tranquillum.cpp */; };
 		9A0CB69C1FEC16D80096D4CE /* wndfrm_tranquillum_frame_schema_011.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A0CB67C1FEC16D20096D4CE /* wndfrm_tranquillum_frame_schema_011.h */; };
-		9A0CB69D1FEC16D80096D4CE /* wndfrm_tranquillum_user_style.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A0CB6821FEC16D40096D4CE /* wndfrm_tranquillum_user_style.h */; };
 		9A0CB69E1FEC16D80096D4CE /* wndfrm_tranquillum_frame_schema_008.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A0CB6841FEC16D40096D4CE /* wndfrm_tranquillum_frame_schema_008.cpp */; };
-		9A0CB69F1FEC16D80096D4CE /* wndfrm_tranquillum_user_style.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A0CB6851FEC16D50096D4CE /* wndfrm_tranquillum_user_style.cpp */; };
 		9A0CB6A01FEC16D80096D4CE /* wndfrm_tranquillum_interaction.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A0CB6861FEC16D50096D4CE /* wndfrm_tranquillum_interaction.h */; };
 		9A0CB6A11FEC16D80096D4CE /* wndfrm_tranquillum_frame_schema_002.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A0CB6871FEC16D50096D4CE /* wndfrm_tranquillum_frame_schema_002.h */; };
 		9A0CB6A21FEC16D80096D4CE /* wndfrm_tranquillum_frame_schema_005.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A0CB6881FEC16D60096D4CE /* wndfrm_tranquillum_frame_schema_005.cpp */; };
@@ -45,6 +43,8 @@
 		9A6630571D210AF800664CE3 /* libios_axis.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A6630561D210AF800664CE3 /* libios_axis.dylib */; };
 		9A6630591D210B0200664CE3 /* libios_aura.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A6630581D210B0200664CE3 /* libios_aura.dylib */; };
 		9A8B50A919C90CD300E4F4D9 /* libcore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A9705C01915E3B500032B50 /* libcore.dylib */; };
+		9AB168442121D31300E84DDF /* wndfrm_tranquillum_user_theme.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB168422121D31300E84DDF /* wndfrm_tranquillum_user_theme.cpp */; };
+		9AB168452121D31300E84DDF /* wndfrm_tranquillum_user_theme.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AB168432121D31300E84DDF /* wndfrm_tranquillum_user_theme.h */; };
 		9AE24E6B1904CFE2001AEFFB /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AE24E6A1904CFE2001AEFFB /* XCTest.framework */; };
 		9AE24E6C1904CFE2001AEFFB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AE24E5C1904CFE2001AEFFB /* Foundation.framework */; };
 		9AE24E6E1904CFE2001AEFFB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AE24E6D1904CFE2001AEFFB /* UIKit.framework */; };
@@ -136,9 +136,7 @@
 		9A0CB6791FEC16D10096D4CE /* wndfrm_tranquillum_frame_schema_001.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = wndfrm_tranquillum_frame_schema_001.cpp; sourceTree = "<group>"; };
 		9A0CB67B1FEC16D10096D4CE /* wndfrm_tranquillum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = wndfrm_tranquillum.cpp; sourceTree = "<group>"; };
 		9A0CB67C1FEC16D20096D4CE /* wndfrm_tranquillum_frame_schema_011.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wndfrm_tranquillum_frame_schema_011.h; sourceTree = "<group>"; };
-		9A0CB6821FEC16D40096D4CE /* wndfrm_tranquillum_user_style.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wndfrm_tranquillum_user_style.h; sourceTree = "<group>"; };
 		9A0CB6841FEC16D40096D4CE /* wndfrm_tranquillum_frame_schema_008.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = wndfrm_tranquillum_frame_schema_008.cpp; sourceTree = "<group>"; };
-		9A0CB6851FEC16D50096D4CE /* wndfrm_tranquillum_user_style.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = wndfrm_tranquillum_user_style.cpp; sourceTree = "<group>"; };
 		9A0CB6861FEC16D50096D4CE /* wndfrm_tranquillum_interaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wndfrm_tranquillum_interaction.h; sourceTree = "<group>"; };
 		9A0CB6871FEC16D50096D4CE /* wndfrm_tranquillum_frame_schema_002.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wndfrm_tranquillum_frame_schema_002.h; sourceTree = "<group>"; };
 		9A0CB6881FEC16D60096D4CE /* wndfrm_tranquillum_frame_schema_005.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = wndfrm_tranquillum_frame_schema_005.cpp; sourceTree = "<group>"; };
@@ -155,6 +153,8 @@
 		9A6716861D15586E0069A961 /* libaxis.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libaxis.dylib; path = "../../../app/appseed/axis/build/Debug-iphoneos/libaxis.dylib"; sourceTree = "<group>"; };
 		9A6716881D1558770069A961 /* libaura.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libaura.dylib; path = "../../../../Users/camilo/Library/Developer/Xcode/DerivedData/all-ios-hcjyrbebieoraofrrypdpkveyzyc/Build/Products/Debug-iphonesimulator/libaura.dylib"; sourceTree = "<group>"; };
 		9A9705B81915E3B400032B50 /* core.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = core.xcodeproj; path = ../../../app/appseed/core/core.xcodeproj; sourceTree = "<group>"; };
+		9AB168422121D31300E84DDF /* wndfrm_tranquillum_user_theme.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = wndfrm_tranquillum_user_theme.cpp; sourceTree = "<group>"; };
+		9AB168432121D31300E84DDF /* wndfrm_tranquillum_user_theme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wndfrm_tranquillum_user_theme.h; sourceTree = "<group>"; };
 		9AE24E5A1904CFE2001AEFFB /* libwndfrm_tranquillum.dylib */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwndfrm_tranquillum.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AE24E5C1904CFE2001AEFFB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		9AE24E691904CFE2001AEFFB /* wndfrm_core_iosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = wndfrm_core_iosTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -282,6 +282,8 @@
 		9AEB75FB16F78F120085103B /* uinteraction */ = {
 			isa = PBXGroup;
 			children = (
+				9AB168422121D31300E84DDF /* wndfrm_tranquillum_user_theme.cpp */,
+				9AB168432121D31300E84DDF /* wndfrm_tranquillum_user_theme.h */,
 				9A0CB6791FEC16D10096D4CE /* wndfrm_tranquillum_frame_schema_001.cpp */,
 				9A0CB6681FEC16CC0096D4CE /* wndfrm_tranquillum_frame_schema_001.h */,
 				9A0CB6621FEC16CB0096D4CE /* wndfrm_tranquillum_frame_schema_002.cpp */,
@@ -302,8 +304,6 @@
 				9A0CB6861FEC16D50096D4CE /* wndfrm_tranquillum_interaction.h */,
 				9A0CB66C1FEC16CD0096D4CE /* wndfrm_tranquillum_library.cpp */,
 				9A0CB66E1FEC16CD0096D4CE /* wndfrm_tranquillum_library.h */,
-				9A0CB6851FEC16D50096D4CE /* wndfrm_tranquillum_user_style.cpp */,
-				9A0CB6821FEC16D40096D4CE /* wndfrm_tranquillum_user_style.h */,
 				9A0CB67B1FEC16D10096D4CE /* wndfrm_tranquillum.cpp */,
 				9A0CB6771FEC16D00096D4CE /* wndfrm_tranquillum.h */,
 				07A6FBDB1BA0E28F00D9C008 /* user_meta_button.cpp */,
@@ -325,6 +325,7 @@
 			files = (
 				07A6FBE01BA0E28F00D9C008 /* user_meta_button.h in Headers */,
 				9A0CB6961FEC16D80096D4CE /* wndfrm_tranquillum_frame_schema.h in Headers */,
+				9AB168452121D31300E84DDF /* wndfrm_tranquillum_user_theme.h in Headers */,
 				9A0CB6A01FEC16D80096D4CE /* wndfrm_tranquillum_interaction.h in Headers */,
 				9A0CB6981FEC16D80096D4CE /* wndfrm_tranquillum_frame_schema_005.h in Headers */,
 				9A0CB69C1FEC16D80096D4CE /* wndfrm_tranquillum_frame_schema_011.h in Headers */,
@@ -332,7 +333,6 @@
 				9A0CB6951FEC16D80096D4CE /* wndfrm_tranquillum_library.h in Headers */,
 				07A6FBE21BA0E28F00D9C008 /* user_meta_control_box.h in Headers */,
 				9A0CB6911FEC16D80096D4CE /* wndfrm_tranquillum_frame_schema_001.h in Headers */,
-				9A0CB69D1FEC16D80096D4CE /* wndfrm_tranquillum_user_style.h in Headers */,
 				9A0CB6A31FEC16D80096D4CE /* wndfrm_tranquillum_frame_schema_013.h in Headers */,
 				9A0CB6A11FEC16D80096D4CE /* wndfrm_tranquillum_frame_schema_002.h in Headers */,
 				9A0CB6921FEC16D80096D4CE /* wndfrm_tranquillum_frame_schema_008.h in Headers */,
@@ -505,8 +505,8 @@
 				9A0CB6A21FEC16D80096D4CE /* wndfrm_tranquillum_frame_schema_005.cpp in Sources */,
 				9A0CB68F1FEC16D80096D4CE /* wndfrm_tranquillum_frame_schema.cpp in Sources */,
 				9A0CB69E1FEC16D80096D4CE /* wndfrm_tranquillum_frame_schema_008.cpp in Sources */,
-				9A0CB69F1FEC16D80096D4CE /* wndfrm_tranquillum_user_style.cpp in Sources */,
 				9A0CB69A1FEC16D80096D4CE /* wndfrm_tranquillum_frame_schema_001.cpp in Sources */,
+				9AB168442121D31300E84DDF /* wndfrm_tranquillum_user_theme.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -41,3 +41,32 @@ WINBOOL GetCursorPos(LPPOINT lpptCursor)
    
 }
 
+
+
+
+
+
+char * mm_browse_folder(const char * pszStartDir);
+
+
+string apple_browse_folder(const char * pszStartDir)
+{
+   
+   return ::str::from_strdup(mm_browse_folder(pszStartDir));
+   
+}
+
+
+
+char** mm_browse_file_open(const char * pszStartDir, bool bMulti);
+
+
+
+stringa apple_browse_file_open(const char * pszStartDir, bool bMulti)
+{
+
+   
+   
+   return ::stra::from_strdup(mm_browse_file_open(pszStartDir, bMulti));
+   
+}

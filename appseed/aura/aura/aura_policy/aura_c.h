@@ -123,13 +123,6 @@ CLASS_DECL_AURA int is_ptr_null(const void * p, size_t s);
 
 #define void_ptr_is_null(p) (((UINT_PTR)(void *) p) < 4096)
 
-#ifdef __cpluplus
-template < typename T >
-inline int type_is_null(const T * p)
-{
-   return (((UINT_PTR)(void *)p) < MAX(4096, sizeof(T));
-}
-#endif
 
 #include "aura/primitive/math/math_mkint_c.h"
 

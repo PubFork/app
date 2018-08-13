@@ -658,6 +658,7 @@ CLASS_DECL_AURA DWORD_PTR translate_processor_affinity(int iOrder)
 namespace multithreading
 {
 
+#ifndef __APPLE__
 
    CLASS_DECL_AURA int32_t priority()
    {
@@ -672,6 +673,7 @@ namespace multithreading
 
    }
 
+#endif
 
 } // namespace multithreading
 

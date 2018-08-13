@@ -69,7 +69,7 @@ namespace file_watcher
 //		return strcmp(((EntryStruct*)(((KEvent*)(ke1))->udata))->m_strFileName, ((EntryStruct*)(((KEvent*)(ke2))->udata))->m_strFileName);
 //	}
 	
-   class watch_struct :
+   class watch :
       virtual public ::object
 	{
    public:
@@ -87,7 +87,7 @@ namespace file_watcher
       FSEventStreamRef m_stream;
 		//size_t m_iChangeCount;
 		
-      watch_struct(::aura::application * papp, id watchid, const char * dirname, listener * listener, bool bRecursive) :
+      watch(::aura::application * papp, id watchid, const char * dirname, listener * listener, bool bRecursive) :
       ::object(papp),
       m_id(watchid),
       m_strDirName(dirname),
@@ -99,7 +99,7 @@ namespace file_watcher
 			addAll();
 		}
       
-      ~watch_struct()
+      ~watch()
       {
          removeAll();
          
@@ -250,7 +250,7 @@ namespace file_watcher
       {
          int i;
          char **paths = (char **) eventPaths;
-         watch_struct * pstruct =(watch_struct *)clientCallBackInfo;
+         watch * pstruct =(watch *)clientCallBackInfo;
          // printf("Callback called\n");
          
          ::file::path pathFolder1;
@@ -524,8 +524,8 @@ namespace file_watcher
 			   0, (void*)"testing");
 */
 		
-		watch_struct* watch = new watch_struct(get_app(), ++mLastWatchID, directory, watcher, bRecursive);
-		m_watchmap.set_at(mLastWatchID, watch);
+		watch * pwatch = canew(watch(get_app(), ++mLastWatchID, directory, watcher, bRecursive));
+		m_watchmap.set_at(mLastWatchID, pwatch);
 		return mLastWatchID;
 	}
 
@@ -551,7 +551,7 @@ namespace file_watcher
 		if(ppair == NULL)
 			return;
 
-		watch_struct* watch = ppair->m_element2;
+		watch* watch = ppair->m_element2;
 		m_watchmap.remove_key(ppair->m_element1);
 	
 		//inotify_rm_watch(mFD, watchid);

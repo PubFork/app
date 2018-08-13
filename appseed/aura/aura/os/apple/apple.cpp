@@ -221,3 +221,9 @@ void window_copy(LPRECT lprect, const CGRect & rectSrc)
 
 
 
+
+bool __node_further_file_is_equal(file::path const&, file::path const&)
+{
+   return false;
+
+}

@@ -87,6 +87,35 @@ void main_synch_runnable(runnable * prunnable)
 
 @implementation mmos
 
+-(NSURL *)browse_folder : (NSURL *) startDir {
+   NSOpenPanel *panel = [NSOpenPanel openPanel];
+   [panel setAllowsMultipleSelection:NO];
+   [panel setCanChooseDirectories:YES];
+   [panel setCanChooseFiles:NO];
+   if(startDir != nil)
+   {
+      panel.directoryURL= startDir;
+   }
+   if ([panel runModal] != NSFileHandlingPanelOKButton) return nil;
+   return [[panel URLs] lastObject];
+}
+-(NSArray < NSURL *> *)browse_file_open : (NSURL **) startDir multi: (bool) b {
+   NSOpenPanel *panel = [NSOpenPanel openPanel];
+   [panel setAllowsMultipleSelection:b];
+   [panel setCanChooseDirectories:NO];
+   [panel setCanChooseFiles:YES];
+   if(startDir != nil && *startDir !=nil)
+   {
+      panel.directoryURL= *startDir;
+   }
+   if ([panel runModal] != NSFileHandlingPanelOKButton) return nil;
+   if(startDir != nil)
+   {
+      *startDir = panel.directoryURL;
+   }
+   return [panel URLs];
+}
+
 
 + (id)get
 {
@@ -373,6 +402,65 @@ void ns_log(const char * pszLog)
    NSString * strLog = [[NSString alloc]initWithUTF8String:pszLog];
    
    NSLog(@"%@", strLog);
+   
+}
+
+
+
+
+
+char * mm_browse_folder(const char * pszStartDir)
+{
+   
+   mmos * pos = [mmos get];
+   
+   NSURL * startDir = NULL;
+   
+   if(pszStartDir != NULL)
+   {
+      
+      NSString * str = [[NSString alloc] initWithUTF8String:pszStartDir];
+    
+      startDir = [[NSURL alloc]initWithString :str];
+      
+   }
+
+   NSURL * url = [pos browse_folder:startDir];
+            
+   return ns_string( [url absoluteString]);
+
+}
+
+
+char** mm_browse_file_open(const char * pszStartDir, bool bMulti)
+{
+   
+   mmos * pos = [mmos get];
+   
+   NSURL * startDir = NULL;
+   
+   if(pszStartDir != NULL)
+   {
+      
+      NSString * str = [[NSString alloc] initWithUTF8String:pszStartDir];
+      
+      startDir = [[NSURL alloc]initWithString :str];
+      
+   }
+   
+   NSArray < NSURL * > * urla = [pos browse_file_open:&startDir multi:bMulti];
+
+   char ** pp = (char **)malloc((urla.count + 1) * sizeof(char*));
+   int i = 0;
+   for(; i < urla.count; i++)
+   {
+      
+      pp[i] = ns_string([[urla objectAtIndex:i] absoluteString]);
+      
+   }
+   pp[i] = NULL;
+   
+   return pp;
    
 }
 

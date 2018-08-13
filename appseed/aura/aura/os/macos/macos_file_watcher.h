@@ -38,7 +38,7 @@ namespace file_watcher
 	{
 	public:
 		/// type for a map from id to watch_struct pointer
-		typedef map < id , id, watch_struct *, watch_struct*> watch_map;
+		typedef map < id , id, sp(watch), sp(watch)> watch_map;
 
 	public:
 		///

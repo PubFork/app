@@ -797,13 +797,13 @@ namespace user
                else if (!pappearance->IsFullScreen() && !m_pworkset->GetWndDraw()->frame_is_transparent())
                {
 
-                  HWND hwndDraw = m_pworkset->GetWndDraw()->get_handle();
+                  oswindow hwndDraw = m_pworkset->GetWndDraw()->get_handle();
 
-                  HWND hwndActiveWindow = GetActiveWindow();
+                  oswindow hwndActiveWindow = GetActiveWindow();
 
-                  HWND hwndActiveWindowOwner = ::GetWindow(hwndActiveWindow, GW_OWNER);
+                  oswindow hwndActiveWindowOwner = ::GetWindow(hwndActiveWindow, GW_OWNER);
 
-                  HWND hwndActiveWindowParent = ::GetParent(hwndActiveWindow);
+                  oswindow hwndActiveWindowParent = ::GetParent(hwndActiveWindow);
 
                   ::user::interaction * puiInactive = m_pworkset->GetWndDraw();
 

@@ -565,4 +565,9 @@ CLASS_DECL_AURA string normalize_wildcard_criteria(const string & strPattern);
 
 
 
+namespace stra
+{
 
+      CLASS_DECL_AURA stringa from_strdup(char ** ppParam);
+
+} // namespace stra

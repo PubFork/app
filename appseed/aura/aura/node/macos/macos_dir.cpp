@@ -204,7 +204,7 @@ namespace macos
 
       bIsDir = ::dir::_is(lpcszPath);
 
-      m_isdirmap.set(lpcszPath, bIsDir, bIsDir ? 0 : ::get_last_error());
+      //m_isdirmap.set(lpcszPath, bIsDir, bIsDir ? 0 : ::get_last_error());
 
       return bIsDir;
    }
@@ -296,13 +296,13 @@ namespace macos
 
       DWORD dwLastError;
 
-      if(m_isdirmap.lookup(str, bIsDir, dwLastError, (int32_t) iLast))
-         return bIsDir;
+      //if(m_isdirmap.lookup(str, bIsDir, dwLastError, (int32_t) iLast))
+        // return bIsDir;
 
 
       if(papp->m_bZipIsDir && iLast >= 3  && !strnicmp_dup(&((const char *) str)[iLast - 3], ".zip", 4))
       {
-         m_isdirmap.set(str.Left(iLast + 1), true, 0);
+         //m_isdirmap.set(str.Left(iLast + 1), true, 0);
          return true;
       }
 
@@ -330,7 +330,7 @@ namespace macos
 
       bIsDir = ::dir::is(::str::international::unicode_to_utf8(wstrPath));
 
-      m_isdirmap.set(str.Left(iLast + 1), bIsDir, bIsDir ? 0 : ::get_last_error());
+      //m_isdirmap.set(str.Left(iLast + 1), bIsDir, bIsDir ? //0 : ::get_last_error());
 
       return bIsDir;
    }
@@ -382,7 +382,7 @@ namespace macos
                   //if(::CreateDirectory(::str::international::utf8_to_unicode("\\\\?\\" + stra[i]), NULL))
                   if(::dir::mkdir(stra[i]))
                   {
-                     m_isdirmap.set(stra[i], true, 0);
+                     //m_isdirmap.set(stra[i], true, 0);
                      goto try1;
                   }
                   else
@@ -400,7 +400,7 @@ namespace macos
             }
             else
             {
-               m_isdirmap.set(stra[i], true, 0);
+               //m_isdirmap.set(stra[i], true, 0);
             }
          try1:
 

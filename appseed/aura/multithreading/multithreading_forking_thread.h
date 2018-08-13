@@ -1,5 +1,8 @@
 #pragma once
 
+template < typename PRED >
+::thread * pred_run(::aura::application * papp, bool bSync, PRED pred, ::object * pobjectDependent = NULL);
+
 
 CLASS_DECL_AURA int get_current_process_affinity_order();
 
@@ -721,7 +724,7 @@ spa(::thread) fork_proc(::aura::application * papp, PRED pred, index iCount = -1
 
 
 template < typename PRED >
-::thread * pred_run(::aura::application * papp, bool bSync, PRED pred, ::object * pobjectDependent = NULL)
+::thread * pred_run(::aura::application * papp, bool bSync, PRED pred, ::object * pobjectDependent)
 {
 
    if (bSync)

@@ -3666,16 +3666,18 @@ namespace draw2d_quartz2d
    point graphics::GetViewportOrg()
    {
       
-      synch_lock sl(m_pmutex);
-
-      CGAffineTransform affine = CGContextGetCTM(m_pdc);
-
-      return point(affine.tx, affine.ty);
+//      synch_lock sl(m_pmutex);
+//
+//      CGAffineTransform affine = CGContextGetCTM(m_pdc);
+//
+//      return point(affine.tx, affine.ty);
+      
+      return ::draw2d::graphics::GetViewportOrg();
 
    }
    
 
-   bool graphics::get(::draw2d::matrix & matrix)
+   bool graphics::_get(::draw2d::matrix & matrix)
    {
       
       synch_lock sl(m_pmutex);
@@ -3689,7 +3691,7 @@ namespace draw2d_quartz2d
    }
    
    
-   bool graphics::set(const ::draw2d::matrix & matrix)
+   bool graphics::_set(const ::draw2d::matrix & matrix)
    {
       
       synch_lock sl(m_pmutex);
@@ -3727,14 +3729,15 @@ namespace draw2d_quartz2d
 
    point graphics::SetViewportOrg(int32_t x, int32_t y)
    {
-      
-      synch_lock sl(m_pmutex);
 
-      CGAffineTransform affine = CGContextGetCTM(m_pdc);
-      
-      CGContextTranslateCTM(m_pdc, x - affine.tx, y - affine.ty);
-      
-      return point(affine.tx, affine.ty);
+      return ::draw2d::graphics::SetViewportOrg(point(x, y));
+//      synch_lock sl(m_pmutex);
+//
+//      CGAffineTransform affine = CGContextGetCTM(m_pdc);
+//
+//      CGContextTranslateCTM(m_pdc, x - affine.tx, y - affine.ty);
+//
+//      return point(affine.tx, affine.ty);
 
    }
 
@@ -3742,14 +3745,15 @@ namespace draw2d_quartz2d
    point graphics::OffsetViewportOrg(int32_t nWidth, int32_t nHeight)
    {
 
-      synch_lock sl(m_pmutex);
+//      synch_lock sl(m_pmutex);
+//
+//      CGAffineTransform affine = CGContextGetCTM(m_pdc);
+//
+//      CGContextTranslateCTM(m_pdc, nWidth, nHeight);
+//
+//      return point(affine.tx, affine.ty);
+      return ::draw2d::graphics::OffsetViewportOrg(nWidth, nHeight);
       
-      CGAffineTransform affine = CGContextGetCTM(m_pdc);
-      
-      CGContextTranslateCTM(m_pdc, nWidth, nHeight);
-      
-      return point(affine.tx, affine.ty);
-
    }
 
    size graphics::SetViewportExt(int32_t x, int32_t y)

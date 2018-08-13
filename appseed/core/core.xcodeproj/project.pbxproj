@@ -658,6 +658,8 @@
 		9A9D7F021F5D7678009EC103 /* user_menu_list_view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A7F2E7C1F41C014006F97CD /* user_menu_list_view.cpp */; };
 		9A9D7F031F5D7678009EC103 /* user_menu_list_window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A7F2E7D1F41C014006F97CD /* user_menu_list_window.cpp */; };
 		9A9F05B21D7F24A300ED6D8A /* libace.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A9F05B11D7F24A300ED6D8A /* libace.dylib */; };
+		9AB168032121C09500E84DDF /* user_toggle_switch.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AB168002121C09500E84DDF /* user_toggle_switch.h */; };
+		9AB168042121C09500E84DDF /* user_toggle_switch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB168022121C09500E84DDF /* user_toggle_switch.cpp */; };
 		9AB628431F3D3E930007966E /* filemanager_form.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AB628421F3D3E930007966E /* filemanager_form.h */; };
 		9AB8C8561EA988A7007670A6 /* user_mesh.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AB8C8551EA988A7007670A6 /* user_mesh.h */; };
 		9AC13CD31D20CF7B0026B367 /* hi5_twitter_authorization.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 074DA8121C8E61A400748EB7 /* hi5_twitter_authorization.cpp */; };
@@ -1326,6 +1328,8 @@
 		9AA1006C1997028F004F84BD /* plane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = plane.h; sourceTree = "<group>"; };
 		9AA1007919970889004F84BD /* user_tree_data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_tree_data.h; sourceTree = "<group>"; };
 		9AA6A3871907ACBE000A1F4A /* base.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = base.xcodeproj; path = ../base/base.xcodeproj; sourceTree = "<group>"; };
+		9AB168002121C09500E84DDF /* user_toggle_switch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_toggle_switch.h; sourceTree = "<group>"; };
+		9AB168022121C09500E84DDF /* user_toggle_switch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = user_toggle_switch.cpp; sourceTree = "<group>"; };
 		9AB628421F3D3E930007966E /* filemanager_form.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filemanager_form.h; sourceTree = "<group>"; };
 		9AB8C8551EA988A7007670A6 /* user_mesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_mesh.h; sourceTree = "<group>"; };
 		9AC20A8720998DE30077FEBF /* ios_main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_main.cpp; sourceTree = "<group>"; };
@@ -1983,6 +1987,8 @@
 		07F5B2E4184A4FA00092C3E1 /* user */ = {
 			isa = PBXGroup;
 			children = (
+				9AB168022121C09500E84DDF /* user_toggle_switch.cpp */,
+				9AB168002121C09500E84DDF /* user_toggle_switch.h */,
 				9AC20AA220998E3D0077FEBF /* user_form_window.cpp */,
 				9AC20AA320998E3D0077FEBF /* user_form_window.h */,
 				9A9D7CC61F5D7359009EC103 /* user_check_box.cpp */,
@@ -2379,6 +2385,7 @@
 				9AFF969120F7519A0053D9F4 /* userex_color_view.h in Headers */,
 				074DA89C1C8E61A500748EB7 /* html_impl_image.h in Headers */,
 				9A19A39B19C6F5940018DF7D /* wndfrm_frame_constants.h in Headers */,
+				9AB168032121C09500E84DDF /* user_toggle_switch.h in Headers */,
 				074DA83D1C8E61A500748EB7 /* html_elemental_elemental.h in Headers */,
 				9AE9BF081EA7D4A900E8A026 /* userhtml_frame.h in Headers */,
 				074DA91E1C8E678100748EB7 /* calculator_scanner.h in Headers */,
@@ -2897,6 +2904,7 @@
 				9A9D7DB81F5D742D009EC103 /* html_style.cpp in Sources */,
 				9A9D7E021F5D7490009EC103 /* calculator_plain_edit_view.cpp in Sources */,
 				9A9D7EB31F5D751C009EC103 /* core_session.cpp in Sources */,
+				9AB168042121C09500E84DDF /* user_toggle_switch.cpp in Sources */,
 				9A9D7E631F5D74B9009EC103 /* filemanager_fs_simple_list_view.cpp in Sources */,
 				9A9D7C671F5D72F2009EC103 /* wndfrm_frame_sys_menu_manager.cpp in Sources */,
 				9A9D7D5B1F5D735A009EC103 /* user_toolbar.cpp in Sources */,

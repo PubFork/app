@@ -389,12 +389,15 @@ namespace macos
    }
 
 
-   bool interaction_impl::create_window(::user::interaction * pui,
-                                        ::user::interaction *  pParentWnd, id id,::user::create_struct & cs,
-                                        sp(::create) pContext)
+   bool interaction_impl::create_window(::user::interaction * pui, const char * lpszClassName,const char * lpszWindowName,uint32_t dwStyle,const RECT & rect,::user::interaction * pParentWnd,id id, ::create * pcreate)
    {
       // can't use for desktop or pop-up windows (use CreateEx instead)
+      
       ASSERT(pParentWnd != NULL);
+
+      ::user::create_struct cs(0, lpszClassName, lpszWindowName,dwStyle, rect, pcreate);
+      
+      cs.hwndParent = pParentWnd->get_safe_handle();
       ASSERT((cs.style & WS_POPUP) == 0);
 
       return create_window_ex(pui, cs, pParentWnd, id);
@@ -3284,12 +3287,12 @@ namespace macos
          round_window_redraw();
 
       }
-      else
-      {
-
-         _001UpdateWindow();
-
-      }
+//      else
+//      {
+//
+//         _001UpdateWindow();
+//
+//      }
 
    }
 

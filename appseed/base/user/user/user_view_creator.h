@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 namespace user
@@ -78,7 +78,7 @@ namespace user
 
          T * pdoc;
 
-         ::user::view_creator_data * pcreatordata;
+         sp(::user::view_creator_data) pcreatordata;
 
          id key;
 

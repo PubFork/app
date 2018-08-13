@@ -381,6 +381,8 @@ bool macos_set_user_wallpaper(int iScreen, const char * psz)
 }
 
 
+long long mm_get_user_wallpaper(long long llScreen, char ** ppsz);
+
 
 long long mm_get_user_wallpaper(long long llScreen, char ** ppsz)
 {

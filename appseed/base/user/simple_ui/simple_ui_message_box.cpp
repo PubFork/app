@@ -515,9 +515,9 @@ UINT c_cdecl thread_proc_simple_ui_message_box(LPVOID lpvoid)
 
 }
 
+
 int32_t simple_ui_message_box(oswindow interaction_impl,const char * lpText,const char * lpCaption,uint32_t uiFlags)
 {
-
 
 #ifdef WINDOWSEX
 
@@ -527,8 +527,6 @@ int32_t simple_ui_message_box(oswindow interaction_impl,const char * lpText,cons
 
 #endif
 
-//   if(get_app() == NULL || get_app()->m_psession == NULL
-   //    || &System == NULL || System.get_twf() == NULL)
    if(get_app() == NULL || get_app()->m_psession == NULL || ::user::g_pmapImpl == NULL)
    {
 

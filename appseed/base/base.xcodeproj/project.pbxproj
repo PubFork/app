@@ -219,6 +219,8 @@
 		9A9D7C3A1F5D6DF2009EC103 /* base_system.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A91E92A1F42A2D5006D500E /* base_system.cpp */; };
 		9A9D7C431F5D6E9E009EC103 /* user_impact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A8384541F416F57005ED52C /* user_impact.cpp */; };
 		9A9D7C441F5D6E9F009EC103 /* user_impact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A8384541F416F57005ED52C /* user_impact.cpp */; };
+		9AB167F12121C00E00E84DDF /* user_still.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AB167ED2121C00E00E84DDF /* user_still.h */; };
+		9AB167F22121C00E00E84DDF /* user_still.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB167F02121C00E00E84DDF /* user_still.cpp */; };
 		9AC20A4B20998C1F0077FEBF /* user_form_control.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AC20A4920998C1E0077FEBF /* user_form_control.cpp */; };
 		9AC20A4C20998C1F0077FEBF /* user_form_control.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AC20A4A20998C1F0077FEBF /* user_form_control.h */; };
 		9AC20A5520998C660077FEBF /* user_simple_view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AC20A5120998C650077FEBF /* user_simple_view.cpp */; };
@@ -550,6 +552,8 @@
 		9A9D7C241F5D690D009EC103 /* user_schema_composite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_schema_composite.h; sourceTree = "<group>"; };
 		9A9D7C2F1F5D69B3009EC103 /* user_prelude.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_prelude.h; sourceTree = "<group>"; };
 		9A9F0A621D7F347C00ED6D8A /* axiswinpr.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = axiswinpr.xcodeproj; path = ../../../third/appseed/winpr/axiswinpr.xcodeproj; sourceTree = "<group>"; };
+		9AB167ED2121C00E00E84DDF /* user_still.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_still.h; sourceTree = "<group>"; };
+		9AB167F02121C00E00E84DDF /* user_still.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = user_still.cpp; sourceTree = "<group>"; };
 		9AC20A4920998C1E0077FEBF /* user_form_control.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = user_form_control.cpp; sourceTree = "<group>"; };
 		9AC20A4A20998C1F0077FEBF /* user_form_control.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_form_control.h; sourceTree = "<group>"; };
 		9AC20A5120998C650077FEBF /* user_simple_view.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = user_simple_view.cpp; sourceTree = "<group>"; };
@@ -862,6 +866,8 @@
 		07D9672E1B4C63E3004A3D2A /* user */ = {
 			isa = PBXGroup;
 			children = (
+				9AB167F02121C00E00E84DDF /* user_still.cpp */,
+				9AB167ED2121C00E00E84DDF /* user_still.h */,
 				9AC20A5320998C660077FEBF /* user_progress.cpp */,
 				9AC20A5420998C660077FEBF /* user_progress.h */,
 				9AC20A5120998C650077FEBF /* user_simple_view.cpp */,
@@ -1153,6 +1159,7 @@
 				07D968981B4C63E4004A3D2A /* user_user.h in Headers */,
 				07A36ED11B25D18F00E4F888 /* base_platform_interface.h in Headers */,
 				9A7F2E9D1F4238E7006F97CD /* user_schema_menu.h in Headers */,
+				9AB167F12121C00E00E84DDF /* user_still.h in Headers */,
 				9A8384731F416F57005ED52C /* user_box.h in Headers */,
 				07D968A01B4C63E4004A3D2A /* user_view_creator.h in Headers */,
 				07A36ED41B25D18F00E4F888 /* base_session.h in Headers */,
@@ -1365,6 +1372,7 @@
 				9A9D7BEF1F5D68FF009EC103 /* user_wait_cursor.cpp in Sources */,
 				9A9D7B871F5D6810009EC103 /* fontopus_login.cpp in Sources */,
 				9AC20A4B20998C1F0077FEBF /* user_form_control.cpp in Sources */,
+				9AB167F22121C00E00E84DDF /* user_still.cpp in Sources */,
 				9A9D7B931F5D682B009EC103 /* hotplugin_container_launcher.cpp in Sources */,
 				9ACBD1D51DDFC846004AF08F /* macos_factory_exchange.cpp in Sources */,
 				9A9D7C321F5D6DF1009EC103 /* base_application.cpp in Sources */,

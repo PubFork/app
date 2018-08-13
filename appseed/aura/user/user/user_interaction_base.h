@@ -321,7 +321,7 @@ namespace user
       virtual LRESULT send(::message::base * pbase);
       virtual bool post(::message::base * pbase);
 
-      virtual LRESULT send_message(UINT uiMessage, WPARAM wparam = 0, lparam lparam = 0);
+      virtual LRESULT send_message(UINT uiMessage, WPARAM wparam = 0, lparam lparam = 0) override;
       virtual LRESULT message_call(UINT uiMessage, WPARAM wparam = 0, lparam lparam = 0);
 
 #ifdef LINUX
@@ -330,7 +330,7 @@ namespace user
 
 #endif
 
-      virtual bool post_message(UINT message,WPARAM wParam = 0,lparam lParam = 0);
+      virtual bool post_message(UINT message,WPARAM wParam = 0,lparam lParam = 0) override;
       virtual bool post_simple_command(e_simple_command ecommand,lparam lParam = 0);
 
       virtual bool ModifyStyle(uint32_t dwRemove,uint32_t dwAdd,UINT nFlags = 0);

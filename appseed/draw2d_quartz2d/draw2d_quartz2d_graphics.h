@@ -347,8 +347,8 @@ namespace draw2d_quartz2d
        BLENDFUNCTION blend);*/
       
       
-      virtual bool get(::draw2d::matrix & matrix) override;
-      virtual bool set(const ::draw2d::matrix & matrix) override;
+      virtual bool _get(::draw2d::matrix & matrix) override;
+      virtual bool _set(const ::draw2d::matrix & matrix) override;
       
       // Text Functions
       virtual bool internal_show_text(double x, double y, double w, UINT nFormat, const char * lpszString, int32_t nCount, CGTextDrawingMode emode, bool bDraw = true, CGFloat * pascent = NULL, CGFloat * pdescent = NULL, CGFloat * pleading = NULL, CGFloat * pwidth = NULL, ::draw2d::pen * ppen=NULL, ::draw2d::brush * pbrush = NULL, ::draw2d::font * pfont = NULL);

@@ -396,10 +396,84 @@ namespace multimedia
 } // namespace multimedia
 
 
+
+
+
+
+
 #include "aura/aura/aura/aura_auto.h"
 #include "aura/primitive/comparison/comparison_compare.h"
 
 #include "aura/aura/aura/aura_pointer.h"
+
+
+inline bool is_null(const void * p, size_t s)
+{
+
+   return ((size_t)p) <= s;
+
+}
+
+
+
+template < typename TYPE >
+inline bool is_null(const TYPE * p)
+{
+
+   return is_null(p, MAX((sizeof(TYPE) + sizeof(void *)) * 2, 65535));
+
+}
+
+
+template < >
+inline bool is_null(const void * p)
+{
+
+   return is_null(p, 65536);
+
+}
+
+
+template < typename TYPE >
+inline bool is_set(const TYPE * p)
+{
+
+   return !is_null(p);
+
+}
+
+
+template < typename TYPE >
+inline bool is_null_ref(const TYPE & t)
+{
+
+   return is_null(&t);
+
+}
+
+
+template < typename TYPE >
+inline bool is_set_ref(const TYPE & t)
+{
+   return !is_null_ref(t);
+}
+
+
+template <class t>
+inline void delptr(t *& p)
+{
+   if(p != NULL)
+   {
+      delete p;
+      p = NULL;
+   }
+}
+
+template < typename T >
+inline int type_is_null(const T * p)
+{
+   return (((UINT_PTR)(void *)p) < MAX(4096, sizeof(T)));
+}
 
 namespace aura
 {
@@ -827,67 +901,7 @@ CLASS_DECL_AURA ::aura::application * get_app();
 #include "aura/aura/aura/aura_lparam.h"
 #include "aura/aura/aura/aura_muldiv64.h"
 
-inline bool is_null(const void * p, size_t s)
-{
 
-   return ((size_t)p) <= s;
-
-}
-
-
-
-template < typename TYPE >
-inline bool is_null(const TYPE * p)
-{
-
-   return is_null(p, MAX((sizeof(TYPE) + sizeof(void *)) * 2, 65535));
-
-}
-
-
-template < >
-inline bool is_null(const void * p)
-{
-
-   return is_null(p, 65536);
-
-}
-
-
-template < typename TYPE >
-inline bool is_set(const TYPE * p)
-{
-
-   return !is_null(p);
-
-}
-
-
-template < typename TYPE >
-inline bool is_null_ref(const TYPE & t)
-{
-
-   return is_null(&t);
-
-}
-
-
-template < typename TYPE >
-inline bool is_set_ref(const TYPE & t)
-{
-   return !is_null_ref(t);
-}
-
-
-template <class t>
-inline void delptr(t *& p)
-{
-   if(p != NULL)
-   {
-      delete p;
-      p = NULL;
-   }
-}
 
 
 #include "aura/aura/aura/aura_auto_pointer.h"

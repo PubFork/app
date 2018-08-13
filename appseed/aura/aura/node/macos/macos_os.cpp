@@ -11,6 +11,9 @@
 char * ns_get_default_browser_path();
 void ns_set_this_process_binary_default_browser();
 
+string apple_browse_folder(const char * pszStartDir);
+stringa apple_browse_file_open(const char * pszStartDir, bool bMulti);
+
 namespace macos
 {
 
@@ -1124,6 +1127,83 @@ namespace macos
       
    }
    
+   
+   bool os::browse_folder(oswindow oswindowOwner, property_set &set)
+   {
+      
+      const char *pszStartDir = NULL;
+      
+      string strStartDir;
+
+      if(set.has_property("folder"))
+      {
+         
+         strStartDir =set["folder"].get_value().get_file_path();
+         
+         pszStartDir = strStartDir;
+         
+      }
+      
+      string strFolder =apple_browse_folder(pszStartDir);
+      
+      if(strFolder.is_empty())
+      {
+         
+         return false;
+         
+      }
+      
+      set["folder"] = strFolder;
+      
+      return true;
+      
+   }
+   
+   
+   bool os::browse_file_open(oswindow oswindowOwner, property_set &set)
+   {
+      
+      const char *pszStartDir = NULL;
+      
+      string strStartDir;
+      
+      if(set.has_property("folder"))
+      {
+         
+         strStartDir =set["folder"].get_value().get_file_path();
+         
+         pszStartDir = strStartDir;
+         
+      }
+      
+      bool bMulti = set["allow_multiple_select"];
+      
+      stringa straFileName = apple_browse_file_open(pszStartDir, bMulti);
+      
+      if(straFileName.is_empty())
+      {
+         
+         return false;
+         
+      }
+      
+      
+      if(straFileName.get_count() == 1)
+      {
+      
+         set["file_name"] = straFileName[0];
+         
+      }
+      else
+      {
+
+         set["file_name"] = straFileName;
+
+      }
+      
+      return true;
+
+   }
    
 } // namespace macos
 

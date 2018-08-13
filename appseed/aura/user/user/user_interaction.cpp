@@ -1932,16 +1932,16 @@ restart:
 
       }
 
-      if (m_pimpl->m_bShowFlags && m_pimpl->m_iShowFlags == SWP_HIDEWINDOW
-            || m_pimpl->m_bShowWindow && m_pimpl->m_iShowWindow == SW_HIDE)
+      if ((m_pimpl->m_bShowFlags && m_pimpl->m_iShowFlags == SWP_HIDEWINDOW)
+            || (m_pimpl->m_bShowWindow && m_pimpl->m_iShowWindow == SW_HIDE))
       {
 
          return false;
 
       }
 
-      if (m_pimpl->m_bShowFlags && m_pimpl->m_iShowFlags == SWP_SHOWWINDOW
-            || m_pimpl->m_bShowWindow && m_pimpl->m_iShowWindow != SW_HIDE)
+      if ((m_pimpl->m_bShowFlags && m_pimpl->m_iShowFlags == SWP_SHOWWINDOW)
+            || (m_pimpl->m_bShowWindow && m_pimpl->m_iShowWindow != SW_HIDE))
       {
 
          return true;

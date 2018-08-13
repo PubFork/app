@@ -85,7 +85,9 @@ namespace macos
       virtual bool file_open(::aura::application * papp, ::file::path path, string strParams = "", string strFolder = "") override;
       
       virtual void set_file_status(const char * lpszFileName, const ::file::file_status& status) override;
-
+      
+      virtual bool browse_folder(oswindow oswindowOwner, property_set &set) override;
+      virtual bool browse_file_open(oswindow oswindowOwner, property_set &set) override;
       
    };
 

@@ -1968,12 +1968,13 @@
 		9A98A60A1771D67E000AE16E /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE931714155F1599005F90F6 /* Carbon.framework */; };
 		9A98A60B1771D67E000AE16E /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 073EDDE1164E968100818801 /* Security.framework */; };
 		9AA315591E462D4E009CF281 /* macos_file_watcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AA315581E462D4E009CF281 /* macos_file_watcher.cpp */; };
+		9AB167762121BCFB00E84DDF /* draw2d_color_matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB1676F2121BCFA00E84DDF /* draw2d_color_matrix.cpp */; };
+		9AB167772121BCFB00E84DDF /* draw2d_color_matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AB167752121BCFB00E84DDF /* draw2d_color_matrix.h */; };
 		9AB423B5203D20E600EA1483 /* apple_process.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB423AF203D20E500EA1483 /* apple_process.cpp */; };
 		9AB423B6203D20ED00EA1483 /* apple_process.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB423AF203D20E500EA1483 /* apple_process.cpp */; };
 		9AB8C85B1EA98EA0007670A6 /* netserver_socket_handler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB8C8581EA98EA0007670A6 /* netserver_socket_handler.cpp */; };
 		9AB8C85C1EA98EA0007670A6 /* netserver_socket_thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB8C8591EA98EA0007670A6 /* netserver_socket_thread.cpp */; };
 		9AB8C85D1EA98EA0007670A6 /* netserver_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB8C85A1EA98EA0007670A6 /* netserver_socket.cpp */; };
-		9AC20A4F20998C2F0077FEBF /* user_form.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AC20A4D20998C2E0077FEBF /* user_form.cpp */; };
 		9AC20A5020998C2F0077FEBF /* user_form.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AC20A4E20998C2F0077FEBF /* user_form.h */; };
 		9ACE46FF1D1FE56000A1E0AD /* libace.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A6716741D1553BF0069A961 /* libace.dylib */; };
 		9AD005321EB9AA2200B9FB48 /* compress_bz.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A0254EB1EA5927C003C82CF /* compress_bz.cpp */; };
@@ -2059,10 +2060,7 @@
 		9AE47F9B20D098E800648DFD /* user_prelude.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE47F8E20D098E500648DFD /* user_prelude.h */; };
 		9AE47F9C20D098E800648DFD /* user_message_queue_listener.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE47F8F20D098E500648DFD /* user_message_queue_listener.h */; };
 		9AE47F9D20D098E800648DFD /* user_style_rect.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE47F9020D098E600648DFD /* user_style_rect.h */; };
-		9AE47F9E20D098E800648DFD /* user_style_rect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AE47F9120D098E600648DFD /* user_style_rect.cpp */; };
 		9AE47F9F20D098E800648DFD /* user_theme.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE47F9220D098E600648DFD /* user_theme.h */; };
-		9AE47FA020D098E800648DFD /* user_menu_interaction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AE47F9320D098E600648DFD /* user_menu_interaction.cpp */; };
-		9AE47FA120D098E800648DFD /* user_style_coord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AE47F9420D098E700648DFD /* user_style_coord.cpp */; };
 		9AE47FA220D098E800648DFD /* user_message_queue.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE47F9520D098E700648DFD /* user_message_queue.h */; };
 		9AE47FA420D098E800648DFD /* user_edit_text.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE47F9720D098E700648DFD /* user_edit_text.h */; };
 		9AE47FA520D098E800648DFD /* user_menu_interaction.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE47F9820D098E700648DFD /* user_menu_interaction.h */; };
@@ -3975,6 +3973,8 @@
 		9AA315581E462D4E009CF281 /* macos_file_watcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = macos_file_watcher.cpp; sourceTree = "<group>"; };
 		9AAEAA292055D8DA0028CD77 /* graphics.inl */ = {isa = PBXFileReference; lastKnownFileType = text; path = graphics.inl; sourceTree = "<group>"; };
 		9AAEAA2F2055D9460028CD77 /* draw2d.inl */ = {isa = PBXFileReference; lastKnownFileType = text; path = draw2d.inl; sourceTree = "<group>"; };
+		9AB1676F2121BCFA00E84DDF /* draw2d_color_matrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = draw2d_color_matrix.cpp; sourceTree = "<group>"; };
+		9AB167752121BCFB00E84DDF /* draw2d_color_matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = draw2d_color_matrix.h; sourceTree = "<group>"; };
 		9AB423AF203D20E500EA1483 /* apple_process.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = apple_process.cpp; sourceTree = "<group>"; };
 		9AB8711B1F3E47F10007F324 /* primitive_handler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = primitive_handler.cpp; sourceTree = "<group>"; };
 		9AB8711D1F3E4D9B0007F324 /* primitive_object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = primitive_object.cpp; sourceTree = "<group>"; };
@@ -5916,6 +5916,8 @@
 		9A2A52FA1F1FEDFD001AB0F8 /* draw2d */ = {
 			isa = PBXGroup;
 			children = (
+				9AB1676F2121BCFA00E84DDF /* draw2d_color_matrix.cpp */,
+				9AB167752121BCFB00E84DDF /* draw2d_color_matrix.h */,
 				9AE47FAC20D09B0400648DFD /* draw2d_draw2d.cpp */,
 				9AE47FA820D09ACD00648DFD /* draw2d_matrix.cpp */,
 				9AE47FA920D09ACD00648DFD /* draw2d_matrix.h */,
@@ -7662,6 +7664,7 @@
 				9A41734720004E7A0056265A /* stack.h in Headers */,
 				9A1643A219C4A4CE00966C5E /* windows_base_tsd.h in Headers */,
 				9A6FAFD21F5C796800AF31B2 /* multithreading_synch_index_iterator.h in Headers */,
+				9AB167772121BCFB00E84DDF /* draw2d_color_matrix.h in Headers */,
 				9A02566C1EA593AC003C82CF /* net_address.h in Headers */,
 				07AAB14B1926B2C20050A443 /* multithreading_thread_impl.h in Headers */,
 				9A6FB0FE1F5C81EF00AF31B2 /* os_threading.h in Headers */,
@@ -9254,7 +9257,6 @@
 				9A6FAE441F5C772700AF31B2 /* geometry_box.cpp in Sources */,
 				9A6FACE01F5C71D600AF31B2 /* os_os.cpp in Sources */,
 				9A6FAE241F5C771400AF31B2 /* str_manager.cpp in Sources */,
-				9AE47FA020D098E800648DFD /* user_menu_interaction.cpp in Sources */,
 				9AD186401F9C30F0001CEA8E /* visual_apple_image.cpp in Sources */,
 				9AD186231F9C2983001CEA8E /* visual_glyph.cpp in Sources */,
 				9A6FAE491F5C772700AF31B2 /* geometry_size.cpp in Sources */,
@@ -9285,7 +9287,6 @@
 				9A6FABE41F5C70BE00AF31B2 /* exception_simple.cpp in Sources */,
 				9AF4C35A1F836F8300197385 /* aura_flags.cpp in Sources */,
 				9A6FACCA1F5C71AF00AF31B2 /* macos_library.cpp in Sources */,
-				9AC20A4F20998C2F0077FEBF /* user_form.cpp in Sources */,
 				9AF4C3811F836F8400197385 /* aura_machine_event_central.cpp in Sources */,
 				9A6FAE331F5C771400AF31B2 /* str_x.cpp in Sources */,
 				9A6FABC71F5C70BE00AF31B2 /* exception_debug.cpp in Sources */,
@@ -9334,6 +9335,7 @@
 				9AF4C36F1F836F8400197385 /* aura_ipi.cpp in Sources */,
 				9A6FB03C1F5C79CF00AF31B2 /* file_composite.cpp in Sources */,
 				9AE47F8D20D0987100648DFD /* visual_font_list.cpp in Sources */,
+				9AB167762121BCFB00E84DDF /* draw2d_color_matrix.cpp in Sources */,
 				9A6FADA41F5C768E00AF31B2 /* primitive_command.cpp in Sources */,
 				9A6FAFC61F5C796800AF31B2 /* multithreading_multi_lock.cpp in Sources */,
 				9A6FACC51F5C71AF00AF31B2 /* macos_cross_win.cpp in Sources */,
@@ -9345,7 +9347,6 @@
 				9A6FADAA1F5C768E00AF31B2 /* primitive_interlocked_long_pulse.cpp in Sources */,
 				9A6FADB71F5C768E00AF31B2 /* primitive_type.cpp in Sources */,
 				9A6FACDE1F5C71D600AF31B2 /* os_binreloc.cpp in Sources */,
-				9AE47FA120D098E800648DFD /* user_style_coord.cpp in Sources */,
 				9A6FACA41F5C719700AF31B2 /* cross_windows_crt.cpp in Sources */,
 				9A6FADB51F5C768E00AF31B2 /* primitive_request_signal.cpp in Sources */,
 				9A6FABD91F5C70BE00AF31B2 /* exception_not_installed.cpp in Sources */,
@@ -9585,7 +9586,6 @@
 				9A6FAFC51F5C796800AF31B2 /* multithreading_manual_reset_event.cpp in Sources */,
 				9A6FAFC71F5C796800AF31B2 /* multithreading_mutex.cpp in Sources */,
 				9AF4C33F1F836F8300197385 /* aura_cregexp_util.cpp in Sources */,
-				9AE47F9E20D098E800648DFD /* user_style_rect.cpp in Sources */,
 				9A6FAF931F5C794100AF31B2 /* ftp_output.cpp in Sources */,
 				9AF4C3181F836F8300197385 /* aura_allocate_x86_cache_oriented.cpp in Sources */,
 				9ADF8EA91F9BFE63003BEC4D /* RoundWindowFrameView.mm in Sources */,

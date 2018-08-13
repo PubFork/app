@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 
@@ -137,8 +137,10 @@ CLASS_DECL_AURA HTHREAD create_thread(LPSECURITY_ATTRIBUTES lpsa,uint_ptr cbStac
    //pthread_attr_setschedparam(&threadAttr,&schedparam);
 
    pthread_attr_setdetachstate(&threadAttr,PTHREAD_CREATE_DETACHED); // Set thread to detached state. No need for pthread_join
+   sp(::create_thread_data) posthreaddata = canew(create_thread_data(pfn, pv));
+   
 
-   pthread_create(&thread,&threadAttr,&create_thread_data::os_thread_proc,(LPVOID)new create_thread_data(pfn,pv)); // Create the thread
+   pthread_create(&thread,&threadAttr,&create_thread_data::os_thread_proc,(LPVOID)(::lparam)posthreaddata); // Create the thread
 
    if(puiId != NULL)
    {
