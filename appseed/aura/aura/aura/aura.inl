@@ -1,10 +1,13 @@
 #pragma once
 
 
-inline lparam::lparam(::object * p)
+inline lparam::lparam(::simple_object * p)
 {
+
    p->add_ref();
+
    m_lparam = (LPARAM)p;
+
 }
 
 

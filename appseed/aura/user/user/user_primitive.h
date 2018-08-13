@@ -41,6 +41,9 @@ namespace user
       //virtual void _001SetCheck(check::e_check echeck,::action::context);
       //virtual void _001SetText(const string & strText,::action::context);
 
+      virtual LRESULT send_message(UINT uiMessage, WPARAM wparam = 0, lparam lparam = 0);
+      virtual bool post_message(UINT message, WPARAM wParam = 0, lparam lParam = 0);
+
    };
 
 

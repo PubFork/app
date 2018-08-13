@@ -449,7 +449,10 @@ namespace axis
    void application::_001CloseApplication()
    {
 
-      _throw(todo(get_app()));
+      Sleep(500);
+
+      m_puiMain->post_message(WM_CLOSE);
+
 
    }
 

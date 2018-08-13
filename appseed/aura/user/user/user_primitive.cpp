@@ -88,26 +88,46 @@ namespace user
    //   m_threadptra.remove(pthread);
 
    //}
-   
+
    bool primitive::enable_window(bool bEnableWindow)
    {
-      
+
       return true;
-      
+
    }
-   
-   
+
+
+   LRESULT primitive::send_message(UINT uiMessage, WPARAM wparam, lparam lparam)
+   {
+
+      _throw(interface_only_exception(get_app()));
+
+      return 0;
+
+   }
+
+
+   bool primitive::post_message(UINT message, WPARAM wParam, lparam lParam)
+   {
+
+      _throw(interface_only_exception(get_app()));
+
+      return false;
+
+   }
+
+
 //   void check::_001SetCheck(::check::e_check echeck,::action::context)
 //   {
-//      
-//      
+//
+//
 //   }
-//   
-//   
-//   
+//
+//
+//
 //   void set_text::_001SetText(const string & strText,::action::context)
 //   {
-//      
+//
 //   }
 
 

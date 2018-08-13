@@ -1,7 +1,7 @@
 #pragma once
 
 
-class object;
+class simple_object;
 
 
 class CLASS_DECL_AURA lparam
@@ -25,17 +25,17 @@ public:
 
 #endif
 
-   inline lparam(::object * pobject);
+   /// catching/receiving object
+   inline lparam(void * p) { m_lparam = (LPARAM)p;  }
 
+   /// posting/sending object
+   inline lparam(::simple_object * pobject);
 
+   /// posting/sending object
    template < typename T >
-   inline lparam(sp(T) & p)
+   inline lparam(sp(T) & p) :
+      lparam((::simple_object *) p.m_p)
    {
-
-      p.add_ref();
-
-      m_lparam = (LPARAM)p.m_p;
-
    }
 
 
@@ -53,6 +53,28 @@ public:
       return m_lparam;
 
    }
+
+   operator LPARAM () const
+   {
+
+      return m_lparam;
+
+   }
+
+   operator void * &()
+   {
+
+      return (void * &) m_lparam;
+
+   }
+
+   operator void * () const
+   {
+
+      return (void *) m_lparam;
+
+   }
+
 
 
    template < typename T >

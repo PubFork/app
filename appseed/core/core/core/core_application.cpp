@@ -2533,7 +2533,7 @@ namespace core
    void application::_001CloseApplication()
    {
 
-      post_quit();
+      base::application::_001CloseApplication();
 
    }
 

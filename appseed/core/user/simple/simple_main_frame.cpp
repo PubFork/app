@@ -38,6 +38,8 @@ void simple_main_frame::install_message_routing(::message::sender * pinterface)
 void simple_main_frame::_001OnCreate(::message::message * pobj)
 {
 
+   Application.m_puiMain = this;
+
    //      SCAST_PTR(::message::create, pcreate, pobj);
 
    m_bWindowFrame = !Application.handler()->m_varTopicQuery.has_property("client_only");

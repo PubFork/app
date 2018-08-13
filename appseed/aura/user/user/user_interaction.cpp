@@ -1235,6 +1235,15 @@ restart:
 
       }
 
+
+      if (Application.m_puiActive == this)
+      {
+
+         Application.m_puiActive = NULL;
+
+      }
+
+
       ::user::interaction * puiParent = GetParent();
 
       if (puiParent != NULL)
@@ -1318,6 +1327,13 @@ restart:
    {
 
       user_interaction_on_hide();
+
+      if (Application.m_puiMain == this)
+      {
+
+         Application.m_puiMain = NULL;
+
+      }
 
       single_lock sl(get_wnd() == NULL || get_wnd()->m_pimpl.is_null()
                      || get_wnd()->m_pimpl.cast < ::user::interaction_impl >() == NULL ? NULL : get_wnd()->m_pimpl.cast < ::user::interaction_impl >()->draw_mutex(), true);
