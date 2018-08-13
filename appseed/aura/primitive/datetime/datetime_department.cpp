@@ -754,7 +754,7 @@ namespace datetime
          }
 
          if (m_cityTimeZone.Lookup((int_ptr)pcity->m_iId, timezone) && (now - timezone.m_time) < spanTimeout
-             && timezone.m_strZone.has_char())
+               && timezone.m_strZone.has_char())
          {
 
             dZone = timezone.m_dZone;
@@ -1493,16 +1493,20 @@ namespace datetime
          dTimeZoneOffset = -2.0;
 
       }
-      else if (!::math::convert_to_double(dTimeZoneOffset, str))
+      else if (::math::convert_to_double(dTimeZoneOffset, str))
       {
-
-         TRACE("ERROR !! Missing timezone offset information for \"%s\" - \"%s\"", str, strCountryCode);
 
       }
-      else if (!::math::convert_to_double(dTimeZoneOffset, strCountryCode))
+      else if (strCountryCode == "br")
       {
 
-         TRACE("ERROR !! Missing timezone offset information for \"%s\" - \"%s\"", str, strCountryCode);
+         dTimeZoneOffset = -3.0;
+
+      }
+      else if(!::math::convert_to_double(dTimeZoneOffset, strCountryCode))
+      {
+
+         TRACE("(2) ERROR !! Missing timezone offset information for \"%s\" - \"%s\"", str, strCountryCode);
 
       }
 
