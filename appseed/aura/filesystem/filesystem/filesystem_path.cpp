@@ -839,6 +839,17 @@ namespace file
       }
 
       bool bCertainlySyntathicallyDir = solve_relative_compressions_inline(strPath, bUrl, bOnlyNativeFileSep, iaSlash, &iSlashCount);
+      
+      if(bUrl && strPath.begins_ci("file:///"))
+      {
+         
+         bUrl = false;
+         
+         strPath = ::file::path(::aura::system::g_p->url().url_decode(strPath.Mid(7)));
+         
+         return true;
+         
+      }
 
       if(bUrl)
       {

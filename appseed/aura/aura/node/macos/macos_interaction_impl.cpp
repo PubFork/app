@@ -1876,6 +1876,138 @@ namespace macos
    }
 
 
+   
+   void interaction_impl::on_set_pro_devian()
+   {
+      
+      if (m_pui->m_bProDevian)
+      {
+         
+         if (m_pthreadUpdateWindow.is_null())
+         {
+            
+             m_pthreadUpdateWindow = fork([&]()
+                     {
+            
+                        DWORD dwStart;
+            
+                        bool bUpdateScreen = false;
+            
+                        while (::get_thread_run())
+                        {
+            
+                           try
+                           {
+            
+                              dwStart = ::get_tick_count();
+            
+                              if(m_pui == NULL)
+                              {
+            
+                                 break;
+            
+                              }
+            
+                              if(m_oswindow != NULL)
+                              {
+            
+                                 m_oswindow->m_bNsWindowRect = false;
+            
+                              }
+            
+                              if (!m_pui->m_bLockWindowUpdate)
+                              {
+            
+                                 bool bUpdateBuffer = m_pui->check_need_layout()
+                                                      || m_pui->check_need_zorder() || m_pui->check_show_flags();
+            
+                                 if(bUpdateBuffer)
+                                 {
+            
+                                 }
+                                 else if(m_pui->IsWindowVisible())
+                                 {
+            
+                                    bUpdateBuffer = m_pui->has_pending_graphical_update();
+            
+                                 }
+            
+                                 if(bUpdateBuffer)
+                                 {
+            
+                                    _001UpdateBuffer();
+            
+                                    if(m_pui == NULL)
+                                    {
+            
+                                       break;
+            
+                                    }
+            
+                                    m_pui->on_after_graphical_update();
+            
+                                    bUpdateScreen = true;
+            
+                                 }
+            
+                              }
+            
+                              if(bUpdateScreen)
+                              {
+            
+                                 bUpdateScreen = false;
+            
+                                 _001UpdateScreen();
+            
+                              }
+            
+            
+                              DWORD dwSpan = ::get_tick_count() - dwStart;
+            
+                              if (dwSpan < 50)
+                              {
+            
+                                 Sleep(50 - dwSpan);
+            
+                              }
+            
+                           }
+                           catch(...)
+                           {
+            
+                              break;
+            
+                           }
+            
+                        }
+            
+                        output_debug_string("m_pthreadDraw has finished!");
+            
+            //            m_pthreadUpdateWindow.release();
+            
+            //            release_graphics_resources();
+            
+            
+                     });
+
+         }
+         
+      }
+      else
+      {
+         
+         if (m_pthreadUpdateWindow.is_set())
+         {
+            
+            ::multithreading::post_quit(m_pthreadUpdateWindow);
+            
+         }
+         
+      }
+      
+   }
+
+   
    void interaction_impl::_001OnCreate(::message::message * pobj)
    {
 
@@ -1892,109 +2024,109 @@ namespace macos
       else
       {
 
-         m_pthreadUpdateWindow = fork([&]()
-         {
-
-            DWORD dwStart;
-
-            bool bUpdateScreen = false;
-
-            while (::get_thread_run())
-            {
-
-               try
-               {
-
-                  dwStart = ::get_tick_count();
-
-                  if(m_pui == NULL)
-                  {
-
-                     break;
-
-                  }
-
-                  if(m_oswindow != NULL)
-                  {
-
-                     m_oswindow->m_bNsWindowRect = false;
-
-                  }
-
-                  if (!m_pui->m_bLockWindowUpdate)
-                  {
-
-                     bool bUpdateBuffer = m_pui->check_need_layout()
-                                          || m_pui->check_need_zorder() || m_pui->check_show_flags();
-
-                     if(bUpdateBuffer)
-                     {
-
-                     }
-                     else if(m_pui->IsWindowVisible())
-                     {
-
-                        bUpdateBuffer = m_pui->has_pending_graphical_update();
-
-                     }
-
-                     if(bUpdateBuffer)
-                     {
-
-                        _001UpdateBuffer();
-
-                        if(m_pui == NULL)
-                        {
-
-                           break;
-
-                        }
-
-                        m_pui->on_after_graphical_update();
-
-                        bUpdateScreen = true;
-
-                     }
-
-                  }
-
-                  if(bUpdateScreen)
-                  {
-
-                     bUpdateScreen = false;
-
-                     _001UpdateScreen();
-
-                  }
-
-
-                  DWORD dwSpan = ::get_tick_count() - dwStart;
-
-                  if (dwSpan < 50)
-                  {
-
-                     Sleep(50 - dwSpan);
-
-                  }
-
-               }
-               catch(...)
-               {
-
-                  break;
-
-               }
-
-            }
-
-            output_debug_string("m_pthreadDraw has finished!");
-
-//            m_pthreadUpdateWindow.release();
-
-//            release_graphics_resources();
-
-
-         });
+//         m_pthreadUpdateWindow = fork([&]()
+//         {
+//
+//            DWORD dwStart;
+//
+//            bool bUpdateScreen = false;
+//
+//            while (::get_thread_run())
+//            {
+//
+//               try
+//               {
+//
+//                  dwStart = ::get_tick_count();
+//
+//                  if(m_pui == NULL)
+//                  {
+//
+//                     break;
+//
+//                  }
+//
+//                  if(m_oswindow != NULL)
+//                  {
+//
+//                     m_oswindow->m_bNsWindowRect = false;
+//
+//                  }
+//
+//                  if (!m_pui->m_bLockWindowUpdate)
+//                  {
+//
+//                     bool bUpdateBuffer = m_pui->check_need_layout()
+//                                          || m_pui->check_need_zorder() || m_pui->check_show_flags();
+//
+//                     if(bUpdateBuffer)
+//                     {
+//
+//                     }
+//                     else if(m_pui->IsWindowVisible())
+//                     {
+//
+//                        bUpdateBuffer = m_pui->has_pending_graphical_update();
+//
+//                     }
+//
+//                     if(bUpdateBuffer)
+//                     {
+//
+//                        _001UpdateBuffer();
+//
+//                        if(m_pui == NULL)
+//                        {
+//
+//                           break;
+//
+//                        }
+//
+//                        m_pui->on_after_graphical_update();
+//
+//                        bUpdateScreen = true;
+//
+//                     }
+//
+//                  }
+//
+//                  if(bUpdateScreen)
+//                  {
+//
+//                     bUpdateScreen = false;
+//
+//                     _001UpdateScreen();
+//
+//                  }
+//
+//
+//                  DWORD dwSpan = ::get_tick_count() - dwStart;
+//
+//                  if (dwSpan < 50)
+//                  {
+//
+//                     Sleep(50 - dwSpan);
+//
+//                  }
+//
+//               }
+//               catch(...)
+//               {
+//
+//                  break;
+//
+//               }
+//
+//            }
+//
+//            output_debug_string("m_pthreadDraw has finished!");
+//
+////            m_pthreadUpdateWindow.release();
+//
+////            release_graphics_resources();
+//
+//
+//         });
 
       }
 

@@ -29,8 +29,6 @@ namespace aura
       if (m_psystem != NULL)
       {
 
-         m_bMatterFromHttpCache = m_psystem->m_bMatterFromHttpCache;
-
          m_bSystemSynchronizedCursor = m_psystem->m_bSystemSynchronizedCursor;
 
          m_bSystemSynchronizedScreen = m_psystem->m_bSystemSynchronizedScreen;
@@ -52,7 +50,6 @@ namespace aura
       m_pappCurrent = NULL;
       m_psockets = NULL;
       m_psession = this;
-      m_bMatterFromHttpCache = m_psystem->m_bMatterFromHttpCache;
 
       m_puiLastLButtonDown = NULL;
 
@@ -1634,6 +1631,7 @@ namespace aura
 
       }
 
+#ifdef WINDOWSEX
       if (!IsWindowVisible(pimpl->m_oswindow) || pui->GetExStyle() & WS_EX_LAYERED)
       {
 
@@ -1641,6 +1639,7 @@ namespace aura
 
       }
       else
+#endif
       {
 
          ::SetFocus(pimpl->m_oswindow);

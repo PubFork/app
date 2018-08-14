@@ -1590,7 +1590,7 @@ namespace user
 
       }
 
-      RedrawWindow();
+      set_need_redraw();
 
       Session.set_keyboard_focus(this);
 

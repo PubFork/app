@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 typedef int_bool DEFER_INIT();
@@ -109,6 +109,7 @@ public:
    sp(aura_main_data)            m_pmaindata;
    ::aura::system *              m_psystem = NULL;
    string                        m_strAppId;
+   int                           m_iMatterFromHttpCache;
 
 
 

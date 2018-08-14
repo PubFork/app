@@ -81,7 +81,8 @@ namespace file
          ::file::path         m_pathHome;
          ::file::path         m_pathInstall;
 
-
+         bool                 m_bMatterFromHttpCache;
+         
 
          system(::aura::application * papp);
          virtual ~system();
@@ -104,8 +105,6 @@ namespace file
          virtual ::file::listing & root_ones(::file::listing & listing,::aura::application * papp);
          virtual bool  mk(const ::file::path & lpcsz,::aura::application * papp);
          virtual bool  rm(::aura::application * papp,const ::file::path & psz,bool bRecursive = true);
-
-         //virtual ::file::path name(const ::file::path & psz);
 
          virtual bool has_subdir(::aura::application * papp,const ::file::path & psz);
 

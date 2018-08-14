@@ -6,6 +6,7 @@
 #define FILE_SYSTEM_CASE_INSENSITIVE 0
 #endif
 
+
 void os_post_quit();
 
 
@@ -148,21 +149,7 @@ namespace aura
 
       g_pszCooperativeLevel = "aura";
 
-#ifdef MATTER_CACHE_FROM_HTTP_SERVER
-
-      m_bMatterFromHttpCache = true;
-
-#else
-
-      m_bMatterFromHttpCache = false;
-
-#endif
-
       set_app(this);
-
-      //#ifdef APPLEOS
-      //    translator::attach();
-      //#endif
 
       m_nSafetyPoolSize          = 512;        // default size
 
@@ -559,7 +546,6 @@ namespace aura
 
       }
 
-
       if(m_pmachineeventcentral == NULL)
       {
 
@@ -606,6 +592,23 @@ namespace aura
          return false;
 
       }
+      
+      bool bMatterFromHttpCache = false;
+      
+      if(m_pappcore->m_iMatterFromHttpCache == -1)
+      {
+         
+         bMatterFromHttpCache = !::dir::is(local_get_matter_cache_path("app/appmatter/main"));
+         
+      }
+      else
+      {
+         
+         bMatterFromHttpCache = m_pappcore->m_iMatterFromHttpCache != 0;
+         
+      }
+      
+      m_spdir->m_bMatterFromHttpCache = bMatterFromHttpCache;
 
       ::file::dir::system::g_pthis = m_spdir;
 
@@ -2045,16 +2048,31 @@ RetryBuildNumber:
       return strMatter;
 
    }
+   
+   
+   ::file::path system::local_get_matter_cache_path(string strMatter)
+   {
+      
+      ::file::path pathResource = dir().install();
+      
+#ifdef APPLEOS
+      
+      pathResource = (pathResource + ".app") / "Contents/Resources";
+      
+#endif
+      
+      return pathResource / strMatter;
+      
+   }
 
 
    ::file::path system::get_matter_cache_path(string strMatter)
    {
 
-
       if (::str::begins_eat_ci(strMatter, "appmatter://"))
       {
 
-         if (System.m_bMatterFromHttpCache)
+         if (dir().m_bMatterFromHttpCache)
          {
 
             ::file::path path = "https://server.ca2.cc/matter" / strMatter;
@@ -2120,14 +2138,7 @@ RetryBuildNumber:
          else
          {
             
-            ::file::path pathResource = dir().install();
-
-#ifdef APPLEOS
-            
-            pathResource = (pathResource + ".app") / "Contents/Resources";
-            
-#endif
-            return  pathResource / strMatter;
+            return local_get_matter_cache_path(strMatter);
 
          }
 

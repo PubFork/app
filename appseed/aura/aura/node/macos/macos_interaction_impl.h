@@ -710,6 +710,9 @@ namespace macos
 
       void _001OnTimer(::timer * ptimer) override;
 
+      virtual void on_set_pro_devian() override;
+
+      
    };
 
 

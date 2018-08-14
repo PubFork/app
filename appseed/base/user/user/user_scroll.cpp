@@ -693,9 +693,13 @@ namespace user
 
    void scroll::layout_scroll_bar()
    {
+      
       scroll_x::layout_scroll_bar();
+      
       scroll_y::layout_scroll_bar();
+      
    }
+   
 
    void scroll::on_change_view_size()
    {
@@ -703,8 +707,6 @@ namespace user
       m_scrolldataHorz.m_bScroll = false;
 
       m_scrolldataVert.m_bScroll = false;
-
-
 
       size sizeTotal = get_total_size();
 
@@ -787,8 +789,12 @@ namespace user
          on_change_viewport_offset();
 
       }
-
-
+      else
+      {
+         
+         layout_scroll_bar();
+         
+      }
 
    }
 

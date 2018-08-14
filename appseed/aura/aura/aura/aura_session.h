@@ -55,8 +55,6 @@ namespace aura
 
       ::ifs *                                                  m_pifs;
 
-      bool                                                     m_bMatterFromHttpCache;
-
       sp(::fontopus::fontopus)                                 m_pfontopus;
       sp(class ::fontopus::licensing)                          m_splicensing;
 

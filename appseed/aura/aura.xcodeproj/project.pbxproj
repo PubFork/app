@@ -1970,6 +1970,10 @@
 		9AA315591E462D4E009CF281 /* macos_file_watcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AA315581E462D4E009CF281 /* macos_file_watcher.cpp */; };
 		9AB167762121BCFB00E84DDF /* draw2d_color_matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB1676F2121BCFA00E84DDF /* draw2d_color_matrix.cpp */; };
 		9AB167772121BCFB00E84DDF /* draw2d_color_matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AB167752121BCFB00E84DDF /* draw2d_color_matrix.h */; };
+		9AB169CD212230FA00E84DDF /* str_bstring.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AB169C6212230F900E84DDF /* str_bstring.h */; };
+		9AB169CE212230FA00E84DDF /* str_bstring.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB169CC212230F900E84DDF /* str_bstring.cpp */; };
+		9AB169D421223B7600E84DDF /* file_cpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB169D221223B7500E84DDF /* file_cpp.cpp */; };
+		9AB169D521223B7600E84DDF /* file_cpp.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AB169D321223B7500E84DDF /* file_cpp.h */; };
 		9AB423B5203D20E600EA1483 /* apple_process.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB423AF203D20E500EA1483 /* apple_process.cpp */; };
 		9AB423B6203D20ED00EA1483 /* apple_process.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB423AF203D20E500EA1483 /* apple_process.cpp */; };
 		9AB8C85B1EA98EA0007670A6 /* netserver_socket_handler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB8C8581EA98EA0007670A6 /* netserver_socket_handler.cpp */; };
@@ -3975,6 +3979,10 @@
 		9AAEAA2F2055D9460028CD77 /* draw2d.inl */ = {isa = PBXFileReference; lastKnownFileType = text; path = draw2d.inl; sourceTree = "<group>"; };
 		9AB1676F2121BCFA00E84DDF /* draw2d_color_matrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = draw2d_color_matrix.cpp; sourceTree = "<group>"; };
 		9AB167752121BCFB00E84DDF /* draw2d_color_matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = draw2d_color_matrix.h; sourceTree = "<group>"; };
+		9AB169C6212230F900E84DDF /* str_bstring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = str_bstring.h; sourceTree = "<group>"; };
+		9AB169CC212230F900E84DDF /* str_bstring.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = str_bstring.cpp; sourceTree = "<group>"; };
+		9AB169D221223B7500E84DDF /* file_cpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = file_cpp.cpp; sourceTree = "<group>"; };
+		9AB169D321223B7500E84DDF /* file_cpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = file_cpp.h; sourceTree = "<group>"; };
 		9AB423AF203D20E500EA1483 /* apple_process.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = apple_process.cpp; sourceTree = "<group>"; };
 		9AB8711B1F3E47F10007F324 /* primitive_handler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = primitive_handler.cpp; sourceTree = "<group>"; };
 		9AB8711D1F3E4D9B0007F324 /* primitive_object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = primitive_object.cpp; sourceTree = "<group>"; };
@@ -4772,6 +4780,8 @@
 		07B0946E18495C2A007A0560 /* str */ = {
 			isa = PBXGroup;
 			children = (
+				9AB169CC212230F900E84DDF /* str_bstring.cpp */,
+				9AB169C6212230F900E84DDF /* str_bstring.h */,
 				9A6FAE0F1F5C771400AF31B2 /* x */,
 				9A6FADEF1F5C771300AF31B2 /* _str_pool.cpp */,
 				9A6FADF11F5C771300AF31B2 /* str_base64.cpp */,
@@ -5010,6 +5020,8 @@
 		07F5B12E184A3B420092C3E1 /* file */ = {
 			isa = PBXGroup;
 			children = (
+				9AB169D221223B7500E84DDF /* file_cpp.cpp */,
+				9AB169D321223B7500E84DDF /* file_cpp.h */,
 				9A6FAFE61F5C79CE00AF31B2 /* file_binary_buffer.cpp */,
 				9A6FAFE81F5C79CE00AF31B2 /* file_buffered_buffer.cpp */,
 				9A6FAFEF1F5C79CE00AF31B2 /* file_c.cpp */,
@@ -7796,6 +7808,7 @@
 				9A41732F20004E7A0056265A /* obj_mac.h in Headers */,
 				9A1643B519C4A4CF00966C5E /* windows_pshpack4.h in Headers */,
 				07B0954818495C2B007A0560 /* str_istring.h in Headers */,
+				9AB169D521223B7600E84DDF /* file_cpp.h in Headers */,
 				9A6FADE41F5C76BD00AF31B2 /* math_number_float.h in Headers */,
 				9A52EC441FFEC777001E1357 /* ios_interaction_impl.h in Headers */,
 				9A2A53501F1FEDFD001AB0F8 /* visual.h in Headers */,
@@ -8124,6 +8137,7 @@
 				9A41733020004E7A0056265A /* objects.h in Headers */,
 				07F5B1F5184A3B430092C3E1 /* file_writer.h in Headers */,
 				9A417150200033F50056265A /* ansios.h in Headers */,
+				9AB169CD212230FA00E84DDF /* str_bstring.h in Headers */,
 				9AE7258217E83B69003E47F9 /* primitive_var.h in Headers */,
 				9A6FAD9E1F5C768E00AF31B2 /* number.h in Headers */,
 				9A41732920004E7A0056265A /* lhash.h in Headers */,
@@ -9155,6 +9169,7 @@
 				9A6FAFBC1F5C796800AF31B2 /* multithreading_critical_section.cpp in Sources */,
 				9A6FABE01F5C70BE00AF31B2 /* exception_range_error.cpp in Sources */,
 				9A6FB0381F5C79CF00AF31B2 /* file_c.cpp in Sources */,
+				9AB169CE212230FA00E84DDF /* str_bstring.cpp in Sources */,
 				9A6FAF2C1F5C785C00AF31B2 /* sockets_http_socket.cpp in Sources */,
 				9A6FB1321F5C9D1800AF31B2 /* sockets_include.cpp in Sources */,
 				9A6FAE821F5C775100AF31B2 /* data_data.cpp in Sources */,
@@ -9169,6 +9184,7 @@
 				9AB8C85D1EA98EA0007670A6 /* netserver_socket.cpp in Sources */,
 				9AF4C3541F836F8300197385 /* aura_file_watcher_listener_thread.cpp in Sources */,
 				9A6FB1571F5C9DF800AF31B2 /* draw2d_bitmap.cpp in Sources */,
+				9AB169D421223B7600E84DDF /* file_cpp.cpp in Sources */,
 				9A6FB03D1F5C79CF00AF31B2 /* file_dir.cpp in Sources */,
 				0705619C1C4115F2004085DF /* exception_engine.cpp in Sources */,
 				9A6FAC3A1F5C712E00AF31B2 /* ansios_process.cpp in Sources */,

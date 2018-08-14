@@ -556,7 +556,7 @@ namespace file_watcher
 	
 		//inotify_rm_watch(mFD, watchid);
 		
-		delete watch;
+		//delete watch;
 		watch = 0;
 	}
    

@@ -361,6 +361,8 @@ WINBOOL ReleaseCapture()
 
 
 oswindow GetFocus();
+static oswindow g_oswindowFocus = NULL;
+
 
 
 oswindow SetFocus(oswindow window)
@@ -370,6 +372,9 @@ oswindow SetFocus(oswindow window)
       return NULL;
 
    oswindow windowOld = ::GetFocus();
+   
+   
+   g_oswindowFocus = window;
 
    return windowOld;
 
@@ -395,7 +400,7 @@ oswindow GetFocus()
    //  return NULL;
 
    //return oswindow::defer_get(window);
-   return NULL;
+   return g_oswindowFocus;
 
 }
 

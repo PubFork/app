@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 namespace userfs
@@ -13,8 +13,8 @@ namespace userfs
       m_iNameSubItem = -1;
       m_iIconSubItem = -1;
 
-      m_rectMargin.left = 23;
-      m_rectMargin.top = 8;
+      m_rectMargin.left = 0;
+      m_rectMargin.top = 0;
       m_rectMargin.bottom = 0;
       m_rectMargin.right = 0;
 

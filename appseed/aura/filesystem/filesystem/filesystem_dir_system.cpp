@@ -1237,7 +1237,7 @@ namespace file
 
          string strDir = matter(papp, path, true);
 
-         if (Sess(papp).m_bMatterFromHttpCache)
+         if (m_bMatterFromHttpCache)
          {
 
             string strMatter = strDir;
@@ -1340,7 +1340,7 @@ namespace file
 
          ::file::path strDir = matter(papp, str, true);
 
-         if(Sess(papp).m_bMatterFromHttpCache)
+         if(m_bMatterFromHttpCache)
          {
 
             property_set set(get_app());
@@ -1434,7 +1434,7 @@ namespace file
 
          ::file::path pathAppMatter;
 
-         if (Session.m_bMatterFromHttpCache)
+         if (m_bMatterFromHttpCache)
          {
 
             string strMd5;
@@ -1551,7 +1551,7 @@ namespace file
 
 ret:
 
-         if (Session.m_bMatterFromHttpCache)
+         if (m_bMatterFromHttpCache)
          {
 
             Application.file().put_contents(pathAppMatter, strMatter);
@@ -1888,7 +1888,7 @@ ret:
 
       bool system::initialize()
       {
-
+         
          if(!update_module_path())
          {
 

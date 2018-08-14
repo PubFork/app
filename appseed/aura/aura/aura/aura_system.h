@@ -22,18 +22,17 @@ namespace aura
 
       ::os_system_window *                   m_possystemwindow;
 
-
 #ifdef APPLE_IOS
 
-      plane_system *                        m_pplanesystem;
+      plane_system *                         m_pplanesystem;
 
 #endif
 
-      ::app_core *                                 m_pappcore;
+      ::app_core *                           m_pappcore;
 
 #ifdef DEBUG
 
-      ::dump_context *                             m_pdumpcontext;
+      ::dump_context *                       m_pdumpcontext;
 
 #endif
 
@@ -96,7 +95,7 @@ namespace aura
       mutex                                        m_mutexFactory;
 
 
-      bool                                         m_bMatterFromHttpCache;
+      //bool                                         m_bMatterFromHttpCache;
       bool                                         m_bGudoNetCache;
 
 
@@ -431,16 +430,12 @@ namespace aura
 
       virtual void * & ftlibrary();
 
-      //::install::install                           & install()
-      //{
-      //   return *m_spinstall;
-      //}
-
       virtual ::file::path defer_process_path(::file::path path, ::aura::application * papp);
 
       virtual ::file::path defer_process_matter_path(::file::path path, ::aura::application * papp);
       virtual ::file::path get_matter_path(string strMatter);
       virtual ::file::path get_matter_cache_path(string strMatter);
+      virtual ::file::path local_get_matter_cache_path(string strMatter);
 
       virtual bool find_applications_from_cache();
       virtual bool find_applications_to_cache(bool bSave = true);
@@ -454,7 +449,7 @@ namespace aura
       virtual ::aura::session * on_create_session();
 
 
-      virtual ::aura::session *             get_session(index iEdge,application_bias * pbiasCreation = NULL);
+      virtual ::aura::session * get_session(index iEdge,application_bias * pbiasCreation = NULL);
 
 
       virtual void on_request(::create * pcreate) override;

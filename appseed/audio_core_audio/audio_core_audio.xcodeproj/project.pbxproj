@@ -26,6 +26,7 @@
 		9A8EAF3B17C563A300C458D1 /* audio_core_audio_wave_out.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A8EAF3017C563A300C458D1 /* audio_core_audio_wave_out.h */; };
 		9A8EAF3C17C563A300C458D1 /* audio_core_audio.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A8EAF3217C563A300C458D1 /* audio_core_audio.h */; };
 		9AA1B44A176361950019E812 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AA1B449176361950019E812 /* Cocoa.framework */; };
+		9AB169D02122319B00E84DDF /* libcore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AB169CF2122319B00E84DDF /* libcore.dylib */; };
 		9AC9451C1828E7CE00AA7325 /* audio_core_aligned_pointer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AC9451A1828E7CE00AA7325 /* audio_core_aligned_pointer.cpp */; };
 		9AC9451D1828E7CE00AA7325 /* audio_core_aligned_pointer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AC9451B1828E7CE00AA7325 /* audio_core_aligned_pointer.h */; };
 		9AC9452018290B7700AA7325 /* audio_core_aligned.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AC9451E18290B7700AA7325 /* audio_core_aligned.cpp */; };
@@ -110,6 +111,7 @@
 		9A8EAF3017C563A300C458D1 /* audio_core_audio_wave_out.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_core_audio_wave_out.h; sourceTree = "<group>"; };
 		9A8EAF3217C563A300C458D1 /* audio_core_audio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_core_audio.h; sourceTree = "<group>"; };
 		9AA1B449176361950019E812 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		9AB169CF2122319B00E84DDF /* libcore.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libcore.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AC9451A1828E7CE00AA7325 /* audio_core_aligned_pointer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_core_aligned_pointer.cpp; sourceTree = "<group>"; };
 		9AC9451B1828E7CE00AA7325 /* audio_core_aligned_pointer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_core_aligned_pointer.h; sourceTree = "<group>"; };
 		9AC9451E18290B7700AA7325 /* audio_core_aligned.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_core_aligned.cpp; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9AB169D02122319B00E84DDF /* libcore.dylib in Frameworks */,
 				9A8C49411F606996004A5BA4 /* libace.dylib in Frameworks */,
 				9ACE473C1D1FE5E000A1E0AD /* libaura.dylib in Frameworks */,
 				07D4208C1B71F7820065510D /* libmultimedia.dylib in Frameworks */,
@@ -156,6 +159,7 @@
 		9A8C493F1F606995004A5BA4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9AB169CF2122319B00E84DDF /* libcore.dylib */,
 				9A8C49401F606996004A5BA4 /* libace.dylib */,
 			);
 			name = Frameworks;

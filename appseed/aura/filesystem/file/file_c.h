@@ -1,15 +1,6 @@
 ﻿#pragma once
 
 
-
-//#if defined(METROWIN) || defined(APPLEOS) || defined(CUBE) || defined(VSNORD)
-#if defined(METROWIN) || defined(CUBE) || defined(VSNORD)
-
-#define MATTER_CACHE_FROM_HTTP_SERVER
-
-#endif
-
-
 #ifndef WINDOWS
 
 #define _SH_DENYNO 0
