@@ -35,6 +35,7 @@ END_EXTERN_C
 
 CLASS_DECL_AURA int throw_assert_exception(const char * lpszFileName,int iLineNumber);
 
+
 #ifndef __cplusplus
 
 //#include <assert.h>
@@ -43,6 +44,8 @@ CLASS_DECL_AURA int throw_assert_exception(const char * lpszFileName,int iLineNu
 
 #else
 #ifdef DEBUG
+
+
 
 //#define ASSERT(f)          DEBUG_ONLY(() ((f) || !::__assert_failed_line(THIS_FILE, __LINE__) || (debug_break(), 0)))
 #define ASSERT(f)          ((void) ((f) || (is_debugger_attached() && !::__assert_failed_line(__FILE__, __LINE__) && (::debug_break(), 0)) || (!is_debugger_attached() && (throw_assert_exception(__FILE__, __LINE__), 0))))
@@ -126,8 +129,8 @@ CLASS_DECL_AURA int is_ptr_null(const void * p, size_t s);
 
 #include "aura/primitive/math/math_mkint_c.h"
 
-       // C-includes
-       #include "aura/aura/os/os.h"
+// C-includes
+#include "aura/aura/os/os.h"
 
 
 #undef MIN
@@ -174,7 +177,7 @@ CLASS_DECL_AURA int is_ptr_null(const void * p, size_t s);
 #define GET_Y_LPARAM64(lp)                        ((int32_t)(int16_t)HIDWORD(lp))
 
 
-       CLASS_DECL_AURA int get_aura_init();
+CLASS_DECL_AURA int get_aura_init();
 extern "C"
 CLASS_DECL_AURA int_bool defer_aura_init();
 extern "C"
@@ -228,8 +231,8 @@ LPBOOL  lpUsedDefaultChar);
 
 
 END_EXTERN_C
-           
-           
+
+
 #if !defined(APPLEOS) && !defined(LINUX) && !defined(ANDROID)
 int ftruncate(int file, file_size_t len);
 #endif

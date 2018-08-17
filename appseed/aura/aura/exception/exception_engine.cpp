@@ -205,7 +205,7 @@ size_t engine_symbol(char * sz, int n, DWORD * pdisplacement, DWORD dwAddress)
 #endif // VERIFY
 
 #ifdef DEBUG
-#define VERIFY(x) _ASSERTE(x)
+#define VERIFY(x) ASSERT(x)
 #else
 #define VERIFY(x) (x)
 #endif //DEBUG
@@ -1045,7 +1045,7 @@ namespace exception
       {
          DWORD dw = ::GetLastError();
          output_debug_string("Last Error = " + ::str::from(dw));
-         _ASSERTE(0);
+         ASSERT(0);
 
          //load_modules();
          return false;

@@ -5,10 +5,14 @@
 #define __AXIS_AXIS_DEBUG_H__
 
 
+#define _DEBUG_WIDE_(s) L ## s
+#define _DEBUG_WIDE(s) _DEBUG_WIDE_(s)
+
 
 
 
 #define _NORMAL_BLOCK 1
+
 
 
 CLASS_DECL_AURA int32_t DECL_C debug_report(
@@ -35,60 +39,60 @@ const wchar_t * _Format,
 //
 typedef void * _HFILE; /* file handle pointer */
 
-#define _CRT_WARN           0
-#define _CRT_ERROR          1
-#define _CRT_ASSERT         2
-#define _CRT_ERRCNT         3
+#define _DEBUG_WARN           0
+#define _DEBUG_ERROR          1
+#define _DEBUG_ASSERT         2
+#define _DEBUG_ERRCNT         3
 
-#define _CRTDBG_MODE_FILE      0x1
-#define _CRTDBG_MODE_DEBUG     0x2
-#define _CRTDBG_MODE_WNDW      0x4
-#define _CRTDBG_REPORT_MODE    -1
+#define _DEBUG_MODE_FILE      0x1
+#define _DEBUG_MODE_DEBUG     0x2
+#define _DEBUG_MODE_WNDW      0x4
+#define _DEBUG_REPORT_MODE    -1
 
 #ifndef WINDOWS
 
 #if defined(_M_IX86)
-#define _CRTDBG_INVALID_HFILE ((_HFILE)-1)
-#define _CRTDBG_HFILE_ERROR   ((_HFILE)-2)
-#define _CRTDBG_FILE_STDOUT   ((_HFILE)-4)
-#define _CRTDBG_FILE_STDERR   ((_HFILE)-5)
-#define _CRTDBG_REPORT_FILE   ((_HFILE)-6)
+#define _DEBUG_INVALID_HFILE ((_HFILE)-1)
+#define _DEBUG_HFILE_ERROR   ((_HFILE)-2)
+#define _DEBUG_FILE_STDOUT   ((_HFILE)-4)
+#define _DEBUG_FILE_STDERR   ((_HFILE)-5)
+#define _DEBUG_REPORT_FILE   ((_HFILE)-6)
 #else
-#define _CRTDBG_INVALID_HFILE ((_HFILE)(int64_t)-1)
-#define _CRTDBG_HFILE_ERROR   ((_HFILE)(int64_t)-2)
-#define _CRTDBG_FILE_STDOUT   ((_HFILE)(int64_t)-4)
-#define _CRTDBG_FILE_STDERR   ((_HFILE)(int64_t)-5)
-#define _CRTDBG_REPORT_FILE   ((_HFILE)(int64_t)-6)
+#define _DEBUG_INVALID_HFILE ((_HFILE)(int64_t)-1)
+#define _DEBUG_HFILE_ERROR   ((_HFILE)(int64_t)-2)
+#define _DEBUG_FILE_STDOUT   ((_HFILE)(int64_t)-4)
+#define _DEBUG_FILE_STDERR   ((_HFILE)(int64_t)-5)
+#define _DEBUG_REPORT_FILE   ((_HFILE)(int64_t)-6)
 #endif
 
 #endif
 
 
-#define _CRT_RPTHOOK_INSTALL  0
-#define _CRT_RPTHOOK_REMOVE   1
+#define _DEBUG_RPTHOOK_INSTALL  0
+#define _DEBUG_RPTHOOK_REMOVE   1
 
 
-#define _CRTDBG_ALLOC_MEM_DF        0x01  /* Turn on debug allocation */
-#define _CRTDBG_DELAY_FREE_MEM_DF   0x02  /* Don't actually free memory */
-#define _CRTDBG_CHECK_ALWAYS_DF     0x04  /* Check heap every alloc/dealloc */
-#define _CRTDBG_RESERVED_DF         0x08  /* Reserved - do not use */
-#define _CRTDBG_CHECK_CRT_DF        0x10  /* Leak check/diff CRT blocks */
-#define _CRTDBG_LEAK_CHECK_DF       0x20  /* Leak check at program exit */
+#define _DEBUG_ALLOC_MEM_DF        0x01  /* Turn on debug allocation */
+#define _DEBUG_DELAY_FREE_MEM_DF   0x02  /* Don't actually free memory */
+#define _DEBUG_CHECK_ALWAYS_DF     0x04  /* Check heap every alloc/dealloc */
+#define _DEBUG_RESERVED_DF         0x08  /* Reserved - do not use */
+#define _DEBUG_CHECK_DEBUG_DF        0x10  /* Leak check/diff DEBUG blocks */
+#define _DEBUG_LEAK_CHECK_DF       0x20  /* Leak check at program exit */
 
 /*
  * Some bit values for _crtDbgFlag which correspond to frequencies for checking
  * the the heap.
  */
-#define _CRTDBG_CHECK_EVERY_16_DF   0x00100000  /* check heap every 16 heap ops */
-#define _CRTDBG_CHECK_EVERY_128_DF  0x00800000  /* check heap every 128 heap ops */
-#define _CRTDBG_CHECK_EVERY_1024_DF 0x04000000  /* check heap every 1024 heap ops */
+#define _DEBUG_CHECK_EVERY_16_DF   0x00100000  /* check heap every 16 heap ops */
+#define _DEBUG_CHECK_EVERY_128_DF  0x00800000  /* check heap every 128 heap ops */
+#define _DEBUG_CHECK_EVERY_1024_DF 0x04000000  /* check heap every 1024 heap ops */
 /*
 We do not check the heap by default at this point because the cost was too high
 for some applications. You can still turn this feature on manually.
  */
-#define _CRTDBG_CHECK_DEFAULT_DF    0
+#define _DEBUG_CHECK_DEFAULT_DF    0
 
-#define _CRTDBG_REPORT_FLAG         -1    /* Query bitflag status */
+#define _DEBUG_REPORT_FLAG         -1    /* Query bitflag status */
 
 #define _BLOCK_TYPE(block)          (block & 0xFFFF)
 #define _BLOCK_SUBTYPE(block)       (block >> 16 & 0xFFFF)
@@ -103,7 +107,7 @@ for some applications. You can still turn this feature on manually.
 /* Memory block identification */
 #define _FREE_BLOCK      0
 #define _NORMAL_BLOCK    1
-#define _CRT_BLOCK       2
+#define _DEBUG_BLOCK       2
 #define _IGNORE_BLOCK    3
 #define _CLIENT_BLOCK    4
 #define _MAX_BLOCKS      5
@@ -169,7 +173,7 @@ typedef struct _MEMORY_STATE
 /////////////////////////////
 
 
-#elif !defined(__MCRTDBG) && !defined(__VLD)
+#elif !defined(__MDEBUG) && !defined(__VLD)
 
 
 /////////////////////////////
@@ -186,7 +190,7 @@ typedef struct _MEMORY_STATE
 #undef _ASSERT_EXPR
 #define _ASSERT_EXPR(expr, msg) \
         (void) ((!!(expr)) || \
-                (1 != debug_report(_CRT_ASSERT, _T(__FILE__), __LINE__, NULL, msg)) || \
+                (1 != debug_report(_DEBUG_ASSERT, _DEBUG_WIDE(__FILE__), __LINE__, NULL, msg)) || \
                 (debug_break(), 0))
 
 

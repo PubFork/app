@@ -310,18 +310,85 @@ CLASS_DECL_AURA const char * g_pszCooperativeLevel;
 CLASS_DECL_AURA int g_iDerivedApplication = 0;
 
 
-int __cdecl debug_report(int, char const *, int, char const *, char const *,...)
+string get_debug_report_type_text(int iType)
 {
+
+   string strType;
+
+   if (iType == _CRT_ASSERT)
+   {
+
+      strType = "ASSERT";
+
+   }
+   else
+   {
+
+      _throw(invalid_argument_exception(get_app()));
+
+   }
+
+   return strType;
+
+}
+
+
+int __cdecl debug_report(int iType, char const * psz, int iLine, char const * pszModuleName, char const * pszFormat,...)
+{
+
+   string strExtra;
+   va_list argList;
+   va_start(argList, pszFormat);
+   strExtra.FormatV(pszFormat, argList);
+   va_end(argList);
+
+   string strModule;
+
+   if (pszModuleName != NULL && *pszModuleName != '\0')
+   {
+
+      strModule.Format("%s: ", pszModuleName);
+
+   }
+
+   string strType = get_debug_report_type_text(iType);
+
+   output_debug_string(strType + ": file: " + string(psz) + " line:" + str::from(iLine) + strModule + strExtra);
 
    return 1;
 
 }
 
 
-int __cdecl debug_report(int, wchar_t const *, int, wchar_t const *, wchar_t const *, ...)
+int __cdecl debug_report(int iType, wchar_t const * pszFile, int iLine, wchar_t const * pszModuleName, wchar_t const * pszFormat, ...)
 {
 
+
+   string strExtra;
+   va_list argList;
+   va_start(argList, pszFormat);
+   string strFormat;
+   strFormat = pszFormat;
+   strFormat.replace("%s", "%S");
+   strExtra.FormatV(strFormat, argList);
+   va_end(argList);
+
+   string strModule;
+
+   string strType = get_debug_report_type_text(iType);
+
+   if (pszModuleName != NULL && *pszModuleName != '\0')
+   {
+
+      strModule.Format("%S: ", pszModuleName);
+
+   }
+
+
+   output_debug_string(strType + ": file: " + string(pszFile) + " line:" + str::from(iLine) + strModule + strExtra);
+
    return 1;
+
 
 }
 
