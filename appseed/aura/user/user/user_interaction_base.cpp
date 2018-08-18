@@ -254,8 +254,12 @@ Restart:
    bool interaction_base::Redraw(LPCRECT lprect, ::draw2d::region * prgn)
    {
 
-      if(get_wnd() == NULL)
+      if (get_wnd() == NULL)
+      {
+
          return false;
+
+      }
 
       return get_wnd()->RedrawWindow(lprect, prgn, RDW_INVALIDATE);
 
@@ -1071,7 +1075,7 @@ Restart:
    }
 
 
-   bool interaction_base::RedrawWindow(LPCRECT lpRectUpdate, ::draw2d::region* prgnUpdate, UINT flags)
+   bool interaction_base::set_need_redraw(LPCRECT lpRectUpdate, ::draw2d::region* prgnUpdate, UINT flags)
    {
 
       ::exception::throw_interface_only(get_app());
@@ -2249,7 +2253,7 @@ Restart:
    bool interaction_base::on_keyboard_focus(::user::elemental * pfocus)
    {
 
-      RedrawWindow();
+      set_need_redraw();
 
 
       return true;

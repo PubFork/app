@@ -56,6 +56,7 @@ namespace user
    public:
 
 
+      bool                          m_bFocus;
       bool                          m_bCursorRedraw;
       double                        m_dFps;
       double                        m_dUpdateScreenFps;
@@ -166,6 +167,8 @@ namespace user
       DECL_GEN_SIGNAL(_002OnDraw);
 
       DECL_GEN_SIGNAL(_001OnShowWindow);
+      DECL_GEN_SIGNAL(_001OnSetFocus);
+      DECL_GEN_SIGNAL(_001OnKillFocus);
 
 #if (WINVER >= 0x0500) && defined(WINDOWSEX)
 
@@ -291,7 +294,7 @@ namespace user
 
 #else
 
-      virtual bool RedrawWindow(LPCRECT lpRectUpdate = NULL,::draw2d::region* prgnUpdate = NULL,UINT flags = 0) override;
+      virtual bool set_need_RedrawWindowredraw(LPCRECT lpRectUpdate = NULL,::draw2d::region* prgnUpdate = NULL,UINT flags = 0) override;
 
 #endif
 
@@ -767,6 +770,7 @@ namespace user
 
       virtual ::user::elemental * get_focus_elemental() override;
       virtual bool set_focus_elemental(::user::elemental * pelemental) override;
+      virtual bool impl_set_focus_elemental(::user::elemental * pelemental);
 
       virtual void redraw_add(::object * p) override;
       virtual void redraw_remove(::object * p) override;

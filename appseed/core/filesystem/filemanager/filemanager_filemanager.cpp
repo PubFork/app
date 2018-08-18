@@ -184,7 +184,7 @@ namespace filemanager
 
 #endif
       pview->set_cur_tab_by_id(1);
-      pview->GetParentFrame()->RedrawWindow();
+      pview->GetParentFrame()->set_need_redraw();
       pview->GetParentFrame()->RunModalLoop();
       varFile = pdoc->m_strTopic;
       pview->GetParentFrame()->DestroyWindow();

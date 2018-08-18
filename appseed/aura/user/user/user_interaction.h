@@ -210,7 +210,7 @@ namespace user
       virtual bool check_need_layout();
       virtual void clear_need_layout();
       virtual void set_need_layout(bool bAscendants = true);
-      virtual void set_need_redraw(bool bAscendants = true);
+      virtual void set_need_redraw(bool bAscendants = true) override;
       virtual void layout();
 
       virtual bool defer_check_translation();
@@ -630,6 +630,7 @@ namespace user
       virtual void _000OnKey(::message::key * pkey);
       virtual void _000OnDrag(::message::drag_and_drop * pdrag);
       DECL_GEN_SIGNAL(_001OnLButtonDown);
+      DECL_GEN_SIGNAL(_001OnSetFocus);
       DECL_GEN_SIGNAL(_001OnShowWindow);
       DECL_GEN_SIGNAL(_001OnMouseMove);
       DECL_GEN_SIGNAL(_001OnMouseEnter);

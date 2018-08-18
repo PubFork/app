@@ -1618,7 +1618,7 @@ namespace user
 
       }
 
-      RedrawWindow();
+      set_need_redraw();
 
    }
 

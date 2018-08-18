@@ -965,7 +965,7 @@ void simple_frame_window::SetCustomFrame(bool bCustom)
    m_bWindowFrame = bCustom;
    m_workset.Enable(bCustom);
    on_layout();
-   RedrawWindow();
+   set_need_redraw();
 
 }
 
@@ -2693,7 +2693,7 @@ void simple_frame_window::guserbaseOnInitialUpdate(::message::message * pobj)
          pdoc->update_frame_counts();
       pframe->on_update_frame_title(TRUE);
 
-      RedrawWindow();
+      set_need_redraw();
    }
    pbase->set_lresult(0);
 }

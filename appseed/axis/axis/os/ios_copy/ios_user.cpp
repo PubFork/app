@@ -292,7 +292,7 @@ int MessageBoxANative(oswindow hwnd, const char * message, const char * header, 
 }
 
 
-WINBOOL RedrawWindow(oswindow hWnd, CONST RECT *lprcUpdate, HRGN hrgnUpdate, UINT flags)
+WINBOOL set_need_redraw(oswindow hWnd, CONST RECT *lprcUpdate, HRGN hrgnUpdate, UINT flags)
 {
    
    return TRUE;

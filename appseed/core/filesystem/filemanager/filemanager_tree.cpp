@@ -737,7 +737,7 @@ restart:
       case MessageMainPostCreateImageListItemRedraw:
       {
 
-         pbase->m_pwnd->m_puiThis->RedrawWindow();
+         pbase->m_pwnd->m_puiThis->set_need_redraw();
 
          pbase->m_pwnd->m_puiThis->KillTimer(123);
 
@@ -748,7 +748,7 @@ restart:
          {
          m_bCreateImageListRedraw = true;
          _001GetItemRect(iArrange, iArrange, rect);
-         RedrawWindow(rect);
+         set_need_redraw(rect);
          m_bCreateImageListRedraw = false;
          }*/
       }
@@ -1102,11 +1102,11 @@ restart:
             timer_ui(ptimer)->KillTimer(ptimer->m_nIDEvent);
 
          }
-         timer_ui(ptimer)->RedrawWindow();
+         timer_ui(ptimer)->set_need_redraw();
       }
       else if (ptimer->m_nIDEvent == 123)
       {
-         timer_ui(ptimer)->RedrawWindow();
+         timer_ui(ptimer)->set_need_redraw();
          m_bTimer123 = false;
          timer_ui(ptimer)->KillTimer(123);
       }

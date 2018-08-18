@@ -28,6 +28,7 @@ namespace user
    void interaction_impl::user_common_construct()
    {
 
+      m_bFocus = false;
       m_bCursorRedraw = false;
       m_dFps = 60.0;
       m_bIpcCopy = false;
@@ -340,6 +341,7 @@ namespace user
 
    }
 
+
    void interaction_impl::last_install_message_routing(::message::sender * pinterface)
    {
 
@@ -348,6 +350,8 @@ namespace user
       ::user::interaction_impl_base::last_install_message_routing(pinterface);
 
       IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &interaction_impl::_001OnShowWindow);
+      IGUI_MSG_LINK(WM_KILLFOCUS, pinterface, this, &interaction_impl::_001OnKillFocus);
+      IGUI_MSG_LINK(WM_SETFOCUS, pinterface, this, &interaction_impl::_001OnSetFocus);
 
    }
 
@@ -2827,13 +2831,169 @@ namespace user
    }
 
 
+   void interaction_impl::_001OnSetFocus(::message::message * pobj)
+   {
+
+      SCAST_PTR(::message::show_window, pshowwindow, pobj);
+
+      if (m_bFocus)
+      {
+
+         return;
+
+      }
+
+      m_bFocus = true;
+
+      if (m_pelementalFocus != NULL && m_pelementalFocus->m_puiThis != m_pui)
+      {
+
+         m_pelementalFocus->m_puiThis->send_message(WM_SETFOCUS);
+
+         m_pelementalFocus->set_need_redraw();
+
+      }
+
+      //   if (pelementalFocus.is_set())
+      //   {
+
+      //      sp(::user::interaction) puiFocus = pelementalFocus;
+
+      //      if (puiFocus.is_set())
+      //      {
+
+      //         puiFocus->keyboard_focus_OnSetFocus();
+
+      //      }
+
+      //      on_keyboard_focus(pelementalFocus);
+
+      //   }
+
+      //}
+
+
+   }
+
+
+   void interaction_impl::_001OnKillFocus(::message::message * pobj)
+   {
+
+      SCAST_PTR(::message::kill_focus, pkillfocus, pobj);
+
+
+      if (!m_bFocus)
+      {
+
+         return;
+
+      }
+
+      m_bFocus = false;
+
+      if (pkillfocus->m_oswindowNew != m_oswindow)
+      {
+
+         if (m_pelementalFocus != NULL && m_pelementalFocus->m_puiThis != m_pui)
+         {
+
+            try
+            {
+
+               m_pelementalFocus->m_puiThis->send_message(WM_KILLFOCUS, pkillfocus->m_wparam, pkillfocus->m_lparam);
+
+            }
+            catch (...)
+            {
+
+            }
+
+            try
+            {
+
+               m_pelementalFocus->set_need_redraw();
+
+            }
+            catch (...)
+            {
+
+            }
+
+
+         }
+
+      }
+
+
+      //if (m_pelementalFocus != NULL)
+      //{
+
+      //   ::user::elemental * pelementalFocusPrev = m_pelementalFocus;
+
+      //   m_pelementalFocus = NULL;
+
+      //   pelementalFocusPrev->send_message(WM_KILLFOCUS);
+
+      //   pelementalFocusPrev->set_need_redraw();
+
+      //}
+
+   }
+
+
+
+
+   bool interaction_impl::impl_set_focus_elemental(::user::elemental * pelementalFocusNew)
+   {
+
+      ::user::elemental * pelementalFocusPrev = m_pelementalFocus;
+
+      m_pelementalFocus = pelementalFocusNew;
+
+      if(pelementalFocusPrev != NULL)
+      {
+
+         if (::GetFocus() == pelementalFocusPrev->get_safe_handle()
+               && (pelementalFocusNew == NULL
+                   || pelementalFocusNew->get_safe_handle() == pelementalFocusPrev->get_safe_handle()))
+         {
+
+            pelementalFocusPrev->send_message(WM_KILLFOCUS);
+
+         }
+
+         pelementalFocusPrev->set_need_redraw();
+
+      }
+
+      if (pelementalFocusNew != NULL)
+      {
+
+         if (::GetFocus() == pelementalFocusNew->get_safe_handle()
+               && (pelementalFocusPrev == NULL
+                   || pelementalFocusNew->get_safe_handle() == pelementalFocusPrev->get_safe_handle()))
+         {
+
+            pelementalFocusNew->send_message(WM_SETFOCUS);
+
+         }
+
+         pelementalFocusNew->set_need_redraw();
+
+      }
+
+      return true;
+
+   }
+
+
    bool interaction_impl::set_focus_elemental(::user::elemental * pelemental)
    {
 
       if(pelemental == NULL)
       {
 
-         m_pelementalFocus = pelemental;
+         impl_set_focus_elemental(pelemental);
 
          return true;
 
@@ -2842,7 +3002,7 @@ namespace user
       if(pelemental == m_pui || pelemental == this)
       {
 
-         m_pelementalFocus = m_pui;
+         impl_set_focus_elemental(pelemental);
 
          return true;
 
@@ -2862,7 +3022,7 @@ namespace user
       if(m_pui->is_ascendant_of(pui, true))
       {
 
-         m_pelementalFocus = pelemental;
+         impl_set_focus_elemental(pelemental);
 
          return true;
 

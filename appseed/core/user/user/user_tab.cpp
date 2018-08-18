@@ -1440,7 +1440,7 @@ namespace user
 
          pholder->ShowWindow(SW_SHOW);
 
-         RedrawWindow();
+         set_need_redraw();
 
       }
 
@@ -1574,7 +1574,7 @@ namespace user
    {
       SCAST_PTR(::message::base, pbase, pobj);
       m_iHover = -1;
-      //GetParent()->RedrawWindow();
+      //GetParent()->set_need_redraw();
       pbase->set_lresult(0);
       pobj->m_bRet = true;
    }
@@ -2774,7 +2774,7 @@ namespace user
 
       m_spcreate = (sp(::create)) NULL;
 
-      RedrawWindow();
+      set_need_redraw();
 
       return true;
 

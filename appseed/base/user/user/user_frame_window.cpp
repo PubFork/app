@@ -211,7 +211,7 @@ namespace user
 
          }
 
-         RedrawWindow();
+         set_need_redraw();
 
       }
 
@@ -1217,7 +1217,7 @@ namespace user
          pActiveView->OnActivateFrame(pactivate->m_nState, this);
       }
 
-      RedrawWindow();
+      set_need_redraw();
 
    }
 

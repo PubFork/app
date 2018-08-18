@@ -2557,7 +2557,7 @@ namespace user
 
             //range.add_item(itemrange);
 
-            RedrawWindow();
+            set_need_redraw();
 
             _001OnSelectionChange();
          }
@@ -2894,7 +2894,7 @@ namespace user
 
       }
 
-      RedrawWindow();
+      set_need_redraw();
 
       pobj->m_bRet = true;
 
@@ -3037,7 +3037,7 @@ namespace user
                item_range itemrange;
                itemrange.set(iItem,iItem,0,m_nColumnCount - 1,- 1,-1);
                _001AddSelection(itemrange);
-               RedrawWindow();
+               set_need_redraw();
             }
          }
       }
@@ -4022,7 +4022,7 @@ namespace user
    //   DIDDXHeaderLayout(false);
    //   _001OnColumnChange();
    //   on_layout();
-   //   RedrawWindow(NULL,NULL,RDW_INVALIDATE | RDW_ERASE | RDW_ALLCHILDREN);
+   //   set_need_redraw(NULL,NULL,RDW_INVALIDATE | RDW_ERASE | RDW_ALLCHILDREN);
    //}
 
    //void mesh::_001InsertColumns()
@@ -4148,7 +4148,7 @@ namespace user
 
       if(IsWindowVisible())
       {
-         RedrawWindow();
+         set_need_redraw();
       }
 
       pobj->m_bRet = false;
@@ -4768,7 +4768,7 @@ namespace user
          if(bRedraw)
          {
 
-            RedrawWindow();
+            set_need_redraw();
 
          }
 
@@ -4790,7 +4790,7 @@ namespace user
          if(bRedraw)
          {
 
-            RedrawWindow();
+            set_need_redraw();
 
          }
 
@@ -4832,7 +4832,7 @@ namespace user
       m_rangeHighlight.add_item(itemrange);
       if(bRedraw)
       {
-         RedrawWindow();
+         set_need_redraw();
       }
    }
 
@@ -4850,7 +4850,7 @@ namespace user
       m_rangeSelection.OnRemoveItem(iItem);
       if(bRedraw)
       {
-         RedrawWindow();
+         set_need_redraw();
       }
       return true;
    }
@@ -4876,7 +4876,7 @@ namespace user
          _001GetSelection(range);
       }
 
-      RedrawWindow();
+      set_need_redraw();
    }
 
 
@@ -5002,7 +5002,7 @@ namespace user
 
       on_layout();
 
-      RedrawWindow();
+      set_need_redraw();
 
    }
 
@@ -5049,7 +5049,7 @@ namespace user
 
       on_layout();
 
-      RedrawWindow();
+      set_need_redraw();
 
    }
 
@@ -5190,7 +5190,7 @@ namespace user
 
       on_layout();
 
-      RedrawWindow();
+      set_need_redraw();
 
 
       dwOut = get_tick_count();
@@ -5500,7 +5500,7 @@ namespace user
    {
       m_iDisplayItemHover = -1;
       m_iSubItemHover = -1;
-      RedrawWindow();
+      set_need_redraw();
       pobj->m_bRet = true;
    }
 
@@ -5521,7 +5521,7 @@ namespace user
          {
             m_iDisplayItemHover = iItemHover;
             m_iSubItemHover = iSubItemHover;
-            RedrawWindow();
+            set_need_redraw();
          }
       }
 

@@ -166,7 +166,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
       if (wParam == 123)
       {
 
-         RedrawWindow(hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+         set_need_redraw(hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
       }
    }
    break

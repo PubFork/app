@@ -2151,7 +2151,7 @@ namespace macos
 //      if (ptimer->m_nIDEvent == 2049)
       //    {
 //
-      //       RedrawWindow();
+      //       set_need_redraw();
 //
       //    }
 
@@ -5028,7 +5028,7 @@ namespace macos
 
       }
 
-      m_pui->RedrawWindow();
+      m_pui->set_need_redraw();
 
    }
 
@@ -5045,7 +5045,7 @@ namespace macos
 
       }
 
-      m_pui->RedrawWindow();
+      m_pui->set_need_redraw();
 
    }
 

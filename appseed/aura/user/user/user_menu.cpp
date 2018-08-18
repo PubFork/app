@@ -979,7 +979,7 @@ namespace user
 
    //      update_::user::command(m_pitem);
 
-   //      RedrawWindow();
+   //      set_need_redraw();
 
    //   }
 

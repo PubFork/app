@@ -94,7 +94,7 @@ namespace filemanager
                   OnActivateFrame(WA_INACTIVE,((GetParentFrame())));
                   GetParentFrame()->ActivateFrame(SW_SHOW);
                   OnActivateView(TRUE,this,this);
-                  RedrawWindow();
+                  set_need_redraw();
                   sp(frame) pframe = ((::window_sp) GetParentFrame());
                   if(pframe != NULL)
                   {

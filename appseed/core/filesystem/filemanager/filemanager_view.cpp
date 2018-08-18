@@ -92,7 +92,7 @@ namespace filemanager
 
                   OnActivateView(TRUE, this, this);
 
-                  RedrawWindow();
+                  set_need_redraw();
 
                }
                else if(puh->is_type_of(update_hint::TypeCreateBars))

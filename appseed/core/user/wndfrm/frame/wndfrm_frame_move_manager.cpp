@@ -289,7 +289,7 @@ namespace user
             ::GetWindowRgn(oswindow, hrgn);
             //      HRGN hrgnNew = ::CreateRectRgn(0, 0, 0, 0);;
             /*      ::CombineRgn(hrgnNew, (HRGN)g_rgnTotal->get_os_data(), hrgn, RGN_AND);
-            ::RedrawWindow(oswindow, NULL, NULL, RDW_INVALIDATE);
+            ::set_need_redraw(oswindow, NULL, NULL, RDW_INVALIDATE);
             ::CombineRgn((HRGN)g_rgnTotal->get_os_data(),( HRGN)g_rgnTotal->get_os_data(), hrgnNew, ::draw2d::region::combine_exclude);
             ::DeleteObject(hrgn);
             ::DeleteObject(hrgnNew);*/

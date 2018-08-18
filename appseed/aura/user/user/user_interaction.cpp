@@ -1034,9 +1034,9 @@ restart:
          IGUI_MSG_LINK(WM_MOVE, pinterface, this, &interaction::_001OnMove);
          IGUI_MSG_LINK(WM_NCCALCSIZE, pinterface, this, &interaction::_001OnNcCalcSize);
          IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &interaction::_001OnShowWindow);
-         IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &interaction::_001OnLButtonDown);
+         IGUI_MSG_LINK(WM_SETFOCUS, pinterface, this, &interaction::_001OnSetFocus);
+      }  IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &interaction::_001OnLButtonDown);
 
-      }
 
       IGUI_MSG_LINK(WM_COMMAND, pinterface, this, &interaction::_001OnCommand);
       MSG_TYPE_LINK(message_simple_command, pinterface, this, &interaction::_001OnSimpleCommand);
@@ -8075,8 +8075,6 @@ restart:
 
    //}
 
-
-
    void interaction::_001OnShowWindow(::message::message * pobj)
    {
 
@@ -8092,6 +8090,24 @@ restart:
       set_need_redraw();
 
    }
+
+   void interaction::_001OnSetFocus(::message::message * pmessage)
+   {
+
+      SCAST_PTR(::message::set_focus, psetfocus, pmessage);
+
+      on_reset_focus_start_tick();
+
+      // get_keyboard_focus will return the control with focus
+
+
+      // return true to set focus to this control
+      Application.keyboard_focus_OnSetFocus(this);
+
+
+   }
+
+
 
 
    void interaction::_001OnLButtonDown(::message::message * pobj)
@@ -8988,7 +9004,7 @@ restart:
 
                send_message(WM_MOUSELEAVE);
 
-               RedrawWindow();
+               set_need_redraw();
 
             }
 

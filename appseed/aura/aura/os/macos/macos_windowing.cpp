@@ -882,7 +882,7 @@ bool oswindow_data::is_null() const
  }
  */
 
-WINBOOL RedrawWindow(oswindow hWnd, CONST RECT *lprcUpdate, HRGN hrgnUpdate, UINT flags)
+WINBOOL set_need_redraw(oswindow hWnd, CONST RECT *lprcUpdate, HRGN hrgnUpdate, UINT flags)
 {
    
    return TRUE;

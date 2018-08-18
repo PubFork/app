@@ -492,7 +492,7 @@ namespace userstack
                m_dibBk.From((HDC)pgraphics->get_os_data(), pfi, true);
 
                */
-         //RedrawWindow();
+         //set_need_redraw();
       }
 
       //m_dibBk.to(pgraphics, 0, 0, rectClient.right, rectClient.bottom);

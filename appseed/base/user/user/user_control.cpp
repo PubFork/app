@@ -47,6 +47,7 @@ namespace user
       IGUI_MSG_LINK(WM_KEYDOWN, psender, this, &::user::control::_001OnKeyDown);
 
       IGUI_MSG_LINK(WM_ENABLE, psender, this, &::user::control::_001OnEnable);
+      IGUI_MSG_LINK(WM_SETFOCUS, psender, this, &::user::control::_001OnSetFocus);
 
    }
 
@@ -421,7 +422,7 @@ namespace user
    void control::EnableControlCommand(bool bEnable)
    {
       m_bControlExCommandEnabled = bEnable;
-      ControlExGetWnd()->RedrawWindow();
+      ControlExGetWnd()->set_need_redraw();
    }
 
    ::user::interaction * control::ControlExGetWnd()
@@ -429,15 +430,16 @@ namespace user
       return this;
    }
 
-   bool control::keyboard_focus_OnSetFocus()
+
+   void control::_001OnSetFocus(::message::message * pmessage)
    {
 
-      if (!::user::box::keyboard_focus_OnSetFocus())
-      {
+      //if (!::user::box::keyboard_focus_OnSetFocus())
+      //{
 
-         return false;
+      //   return false;
 
-      }
+      //}
 
       ::user::control_event ev;
 
@@ -447,7 +449,7 @@ namespace user
 
       on_control_event(&ev);
 
-      return ev.m_bOk;
+      pmessage->m_bRet =  ev.m_bRet;
 
    }
 
@@ -731,7 +733,7 @@ namespace user
 
             pwnd->SetCapture();
 
-            pwnd->RedrawWindow();
+            pwnd->set_need_redraw();
 
          }
 
@@ -746,7 +748,7 @@ namespace user
 
             Session.ReleaseCapture();
 
-            pwnd->RedrawWindow();
+            pwnd->set_need_redraw();
 
          }
 
@@ -771,7 +773,7 @@ namespace user
             track_mouse_leave();
          }
 
-         RedrawWindow();
+         set_need_redraw();
 
       }
 

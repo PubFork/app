@@ -119,11 +119,12 @@ namespace simple_ui
       SCAST_PTR(::message::mouse,pmouse,pobj);
 
       pmouse->m_bRet = true;
+
       m_bMouseMove = true;
 
       track_mouse_hover();
 
-      RedrawWindow();
+      set_need_redraw();
 
 
    }
@@ -136,7 +137,7 @@ namespace simple_ui
       pobj->m_bRet = true;
       m_bMouseMove = false;
 
-      RedrawWindow();
+      set_need_redraw();
 
 
    }
@@ -480,10 +481,7 @@ namespace simple_ui
       else if (iKey == ::user::key_tab)
       {
 
-         sp(::user::interaction) pui = keyboard_get_next_focusable();
-
-         if(pui.is_set())
-            pui->keyboard_set_focus();
+         keyboard_set_focus_next();
 
          pkey->m_bRet = true;
 

@@ -610,7 +610,7 @@ namespace user
 //                  TRACE("union.top %d\n", rectParent.top);
 //                  TRACE("union.bottom %d\n", rectParent.bottom);
 //
-//                  pwnd->RedrawWindow();
+//                  pwnd->set_need_redraw();
 //               }
             }
 //            else

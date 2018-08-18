@@ -687,7 +687,7 @@ namespace ios
       
       void _001OnTimer(::timer * ptimer) override;
       
-      //void RedrawWindow();
+      //void set_need_redraw();
       virtual int round_window_get_x() override;
       virtual int round_window_get_y() override;
 

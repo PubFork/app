@@ -4345,7 +4345,7 @@ ExitModal:
       if (nFlags != 0)
       {
 
-         RedrawWindow();
+         set_need_redraw();
 
       }
 
@@ -4361,7 +4361,7 @@ ExitModal:
       if (nFlags != 0)
       {
 
-         RedrawWindow();
+         set_need_redraw();
 
       }
 
@@ -4852,7 +4852,7 @@ ExitModal:
 
       //ASSERT(::WinIsWindow(get_handle()));
 
-      //return ::RedrawWindow(get_handle(), lpRectUpdate, prgnUpdate == NULL ? NULL : (HRGN)prgnUpdate->get_os_data(), flags) != FALSE;
+      //return ::set_need_redraw(get_handle(), lpRectUpdate, prgnUpdate == NULL ? NULL : (HRGN)prgnUpdate->get_os_data(), flags) != FALSE;
 
       return true;
 

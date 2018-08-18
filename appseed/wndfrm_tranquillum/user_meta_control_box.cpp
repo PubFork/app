@@ -83,7 +83,7 @@ void MetaControlBox::_001OnLButtonUp(::message::message * pobj)
 
    UNREFERENCED_PARAMETER(pobj);
 
-   RedrawWindow();
+   set_need_redraw();
 
 }
 

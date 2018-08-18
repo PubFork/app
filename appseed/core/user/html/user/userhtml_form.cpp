@@ -106,7 +106,7 @@ void html_form::_001OnImageLoaded(::message::message * pobj)
 
          get_html_data()->on_layout(pdib->get_graphics());
 
-         RedrawWindow();
+         set_need_redraw();
 
       }
 
@@ -579,7 +579,7 @@ void html_form::defer_layout()
 
    get_html_data()->on_layout(pdib->get_graphics());
 
-   RedrawWindow();
+   set_need_redraw();
 
 }
 

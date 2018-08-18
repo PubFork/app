@@ -2558,17 +2558,17 @@ namespace ios
 //      if(ptimer->m_nIDEvent == 2049)
 //      {
 //
-//         RedrawWindow();
+//         set_need_redraw();
 //
 //      }
 
    }
 
 
-//   void interaction_impl::RedrawWindow()
+//   void interaction_impl::set_need_redraw()
 //   {
 
-   //RedrawWindow();
+   //set_need_redraw();
 
 //   }
 
@@ -5729,7 +5729,7 @@ namespace ios
 
       ::SetActiveWindow(get_handle());
 
-      m_pui->RedrawWindow();
+      m_pui->set_need_redraw();
 
    }
 
@@ -5739,7 +5739,7 @@ namespace ios
 
       ::DeactivateWindow(get_handle());
 
-      m_pui->RedrawWindow();
+      m_pui->set_need_redraw();
 
    }
 

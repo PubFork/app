@@ -97,6 +97,8 @@ namespace user
       virtual ::user::elemental * previous_elemental();
 
 
+      virtual void set_need_redraw(bool bAscendants = true);
+
       // keyboard focus
       virtual bool on_keyboard_focus(::user::elemental * pfocus);
       virtual void keyboard_focus_OnTimer(int32_t iTimer);
@@ -116,7 +118,6 @@ namespace user
 
       // focus
       virtual bool keyboard_focus_is_focusable();
-      virtual bool keyboard_focus_OnSetFocus();
       virtual bool keyboard_focus_OnKillFocus(oswindow oswindowNew);
       virtual bool keyboard_focus_OnChildKillFocus();
 

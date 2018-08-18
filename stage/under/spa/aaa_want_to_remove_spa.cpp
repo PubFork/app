@@ -1630,7 +1630,7 @@ void MainWindowRedraw()
 {
    if(!::IsIconic(g_hwnd) && IsWindowVisible(g_hwnd))
    {
-      ::RedrawWindow(g_hwnd, NULL, NULL, RDW_INVALIDATE);
+      ::set_need_redraw(g_hwnd, NULL, NULL, RDW_INVALIDATE);
    }
 }
 
@@ -2622,7 +2622,7 @@ void DragMainWindow()
       ::SetLayeredWindowAttributes(g_hwnd, 0, (255 * 100) / 100, LWA_ALPHA);
    }
    
-   ::RedrawWindow(g_hwnd, NULL, NULL, RDW_INVALIDATE);
+   ::set_need_redraw(g_hwnd, NULL, NULL, RDW_INVALIDATE);
 
 }
 

@@ -2067,7 +2067,7 @@ void xfplayer_view_line::UpdateHover(point &ptCursor)
 
          GetPlacement(rect);
 
-         get_interaction()->RedrawWindow();
+         get_interaction()->set_need_redraw();
 
       }
 
@@ -2084,7 +2084,7 @@ void xfplayer_view_line::UpdateHover(point &ptCursor)
 
          GetPlacement(rect);
 
-         get_interaction()->RedrawWindow();
+         get_interaction()->set_need_redraw();
 
       }
 

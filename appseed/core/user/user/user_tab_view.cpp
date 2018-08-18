@@ -342,7 +342,7 @@ namespace user
    void tab_view::_001DropTargetWindowRelay(::user::tab * pinterface)
    {
       UNREFERENCED_PARAMETER(pinterface);
-      RedrawWindow();
+      set_need_redraw();
    }
 
    void tab_view::_001DropTargetWindowFinalize(::user::tab * pinterface)

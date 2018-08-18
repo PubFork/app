@@ -380,7 +380,7 @@ namespace user
    void tree::_001OnMouseLeave(::message::message * pobj)
    {
       m_pitemHover = NULL;
-      RedrawWindow();
+      set_need_redraw();
       pobj->m_bRet = true;
    }
 
@@ -797,7 +797,7 @@ namespace user
       set_need_layout();
       if(bRedraw)
       {
-         RedrawWindow();
+         set_need_redraw();
       }
 
    }
@@ -1030,7 +1030,7 @@ namespace user
       if(pitem != m_pitemHover)
       {
          m_pitemHover = pitem;
-         RedrawWindow();
+         set_need_redraw();
       }
       /*if(pitem != NULL)
       {
@@ -1652,7 +1652,7 @@ namespace user
 
          on_layout();
 
-         RedrawWindow();
+         set_need_redraw();
 
       }
 

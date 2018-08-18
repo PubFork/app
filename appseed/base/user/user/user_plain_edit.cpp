@@ -802,7 +802,7 @@ namespace user
 
       }
 
-      RedrawWindow();
+      set_need_redraw();
 
       Session.set_keyboard_focus(this);
 
@@ -1045,10 +1045,13 @@ namespace user
             if(!ev.m_bRet && ev.m_bOk)
             {
 
-               sp(::user::interaction) pui = keyboard_get_next_focusable();
+               //sp(::user::interaction) pui = keyboard_get_next_focusable();
 
-               if (pui != NULL)
-                  pui->keyboard_set_focus();
+               //if (pui != NULL)
+               // pui->keyboard_set_focus();
+
+               keyboard_set_focus_next();
+
 
             }
 
@@ -1420,7 +1423,7 @@ namespace user
 
       _001OnUpdate(actioncontext);
 
-      RedrawWindow();
+      set_need_redraw();
 
    }
 
@@ -1464,7 +1467,7 @@ namespace user
 
 #ifndef      SEARCH_SCROLLING_PROFILING
 
-      RedrawWindow();
+      set_need_redraw();
 
 
 #endif
@@ -1484,7 +1487,7 @@ namespace user
 
 #ifndef      SEARCH_SCROLLING_PROFILING
 
-      RedrawWindow();
+      set_need_redraw();
 
 #endif
 
@@ -1544,7 +1547,7 @@ namespace user
 
 #ifndef SEARCH_SCROLLING_PROFILING
 
-      RedrawWindow();
+      set_need_redraw();
 
 #endif
 
@@ -1623,7 +1626,7 @@ namespace user
 
       }
 
-      RedrawWindow();
+      set_need_redraw();
 
       m_bLMouseDown = false;
 
@@ -3024,7 +3027,7 @@ end:
 
       m_bActionHover = true;
 
-      RedrawWindow();
+      set_need_redraw();
 
    }
 
@@ -3034,7 +3037,7 @@ end:
 
       m_bActionHover = false;
 
-      RedrawWindow();
+      set_need_redraw();
 
    }
 
@@ -4439,7 +4442,7 @@ finished_update:
          if (IsWindowVisible() && ::get_tick_count() - m_dwLastDraw > m_dwCaretTime / 2)
          {
 
-            RedrawWindow();
+            set_need_redraw();
 
          }
 
@@ -4447,8 +4450,8 @@ finished_update:
          //{
          //   m_dwFocusStart = get_tick_count();
          //   m_bCaretOn = !m_bCaretOn;
-         //   //RedrawWindow();
-         //   RedrawWindow();
+         //   //set_need_redraw();
+         //   set_need_redraw();
          //}
       }
    }
@@ -4616,7 +4619,7 @@ finished_update:
 
       }
 
-      RedrawWindow();
+      set_need_redraw();
 
    }
 
@@ -4678,7 +4681,7 @@ finished_update:
 
       }
 
-      RedrawWindow();
+      set_need_redraw();
 
    }
 
@@ -5090,17 +5093,17 @@ finished_update:
    }
 
 
-   bool plain_edit::keyboard_focus_OnSetFocus()
+   void plain_edit::_001OnSetFocus(::message::message * pmessage)
    {
 
-      if (!::user::control::keyboard_focus_OnSetFocus())
-      {
+      //if (!::user::control::keyboard_focus_OnSetFocus())
+      //{
 
-         return false;
+      //   return false;
 
-      }
+      //}
 
-      return true;
+      //return true;
 
    }
 
@@ -5527,7 +5530,7 @@ finished_update:
 
       }
 
-      RedrawWindow();
+      set_need_redraw();
 
    }
 

@@ -610,14 +610,14 @@ namespace user
             {
                TRACE("WorkSet::SetActiveFlag %d\n",fActive);
                m_pappearance->m_fActive = fActive;
-               //m_pappearance->get_draw_window()->RedrawWindow(NULL, NULL, RDW_INVALIDATE | RDW_FRAME);
+               //m_pappearance->get_draw_window()->set_need_redraw(NULL, NULL, RDW_INVALIDATE | RDW_FRAME);
                if(m_pframeschema != NULL)
                {
                   m_pframeschema->OnActivate();
                }
                if(get_draw_window() != NULL)
                {
-                  get_draw_window()->RedrawWindow();
+                  get_draw_window()->set_need_redraw();
                }
             }
          }
@@ -834,13 +834,13 @@ namespace user
                {
                   m_pappearance->Enable(true);
                   sp(::user::interaction) pwnd = GetWndRegion();
-                  pwnd->RedrawWindow();
+                  pwnd->set_need_redraw();
                }
                else
                {
                   m_pappearance->Enable(false);
                   sp(::user::interaction) pwnd = GetWndRegion();
-                  pwnd->RedrawWindow();
+                  pwnd->set_need_redraw();
                }
             }
 
@@ -1231,7 +1231,7 @@ namespace user
 
             }
 
-            GetWndDraw()->RedrawWindow();
+            GetWndDraw()->set_need_redraw();
 
          }
 

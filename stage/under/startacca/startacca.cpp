@@ -263,7 +263,7 @@ void OnTimer(UINT nIDEvent)
 {
    if(nIDEvent == 123)
    {
-      ::RedrawWindow(g_hwnd, NULL, NULL, RDW_UPDATENOW);
+      ::set_need_redraw(g_hwnd, NULL, NULL, RDW_UPDATENOW);
    }
 }
 

@@ -70,7 +70,7 @@ namespace user
 
       m_pscalar->set_rate(get_slide_rate(), scalar_slide);
 
-      RedrawWindow();
+      set_need_redraw();
 
       pmouse->m_bRet = true;
 
@@ -98,7 +98,7 @@ namespace user
 
          m_pscalar->set_rate(get_slide_rate(), scalar_set);
 
-         RedrawWindow();
+         set_need_redraw();
 
          pmouse->m_bRet = true;
 
@@ -119,7 +119,7 @@ namespace user
 
          m_pscalar->set_rate(get_slide_rate(), scalar_slide);
 
-         RedrawWindow();
+         set_need_redraw();
 
          pmouse->m_bRet = true;
 
@@ -178,7 +178,7 @@ namespace user
 
       m_pscalar->set_rate(dRate, scalar_set);
 
-      RedrawWindow();
+      set_need_redraw();
 
    }
 

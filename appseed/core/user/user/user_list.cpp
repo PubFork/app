@@ -3225,7 +3225,7 @@ namespace user
 
             range.add_item(itemrange);
 
-            RedrawWindow();
+            set_need_redraw();
 
             _001OnSelectionChange();
 
@@ -3791,7 +3791,7 @@ namespace user
                item_range itemrange;
                itemrange.set(iItem, iItem, 0, m_columna.get_count() - 1, -1, -1);
                m_rangeSelection.add_item(itemrange);
-               RedrawWindow();
+               set_need_redraw();
             }
          }
          m_uiRButtonUpFlags = (UINT)pmouse->m_nFlags;
@@ -5055,7 +5055,7 @@ namespace user
 
       _001OnColumnChange();
 
-      RedrawWindow();
+      set_need_redraw();
 
    }
 
@@ -5095,7 +5095,7 @@ namespace user
       if (IsWindowVisible())
       {
 
-         RedrawWindow();
+         set_need_redraw();
 
       }
 
@@ -5393,7 +5393,7 @@ namespace user
 
       _001InsertColumn(column);
 
-      RedrawWindow();
+      set_need_redraw();
 
    }
 
@@ -5651,7 +5651,7 @@ namespace user
          if (bRedraw)
          {
 
-            RedrawWindow();
+            set_need_redraw();
 
          }
 
@@ -5673,7 +5673,7 @@ namespace user
          on_change_viewport_offset();
          if (bRedraw)
          {
-            RedrawWindow();
+            set_need_redraw();
          }
       }
    }
@@ -5712,7 +5712,7 @@ namespace user
       m_rangeHighlight.add_item(itemrange);
       if (bRedraw)
       {
-         RedrawWindow();
+         set_need_redraw();
       }
       _001OnSelectionChange();
    }
@@ -5731,7 +5731,7 @@ namespace user
       m_rangeSelection.OnRemoveItem(iItem);
       if (bRedraw)
       {
-         RedrawWindow();
+         set_need_redraw();
       }
       return true;
    }
@@ -5757,7 +5757,7 @@ namespace user
          _001GetSelection(range);
       }
 
-      RedrawWindow();
+      set_need_redraw();
    }
 
 
@@ -6299,7 +6299,7 @@ namespace user
 
       ::user::control::on_change_viewport_offset();
 
-      RedrawWindow();
+      set_need_redraw();
 
    }
 
@@ -6330,7 +6330,7 @@ namespace user
    {
       m_iDisplayItemHover = -1;
       m_iSubItemHover = -1;
-      RedrawWindow();
+      set_need_redraw();
       pobj->m_bRet = true;
    }
 
@@ -6351,7 +6351,7 @@ namespace user
          {
             m_iDisplayItemHover = iItemHover;
             m_iSubItemHover = iSubItemHover;
-            RedrawWindow();
+            set_need_redraw();
          }
       }
       else
@@ -6731,7 +6731,7 @@ namespace user
             m_iconlayout.m_iaDisplayToStrict.set(iStrict, iStrict);
          }
 
-         RedrawWindow();
+         set_need_redraw();
 
       }
 
@@ -6794,7 +6794,7 @@ namespace user
 
       on_control_event(&ev);
 
-      RedrawWindow();
+      set_need_redraw();
 
    }
 

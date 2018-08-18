@@ -294,7 +294,7 @@ namespace filemanager
 
             m_cache._001Invalidate(this);
 
-            RedrawWindow();
+            set_need_redraw();
 
          }
 
@@ -531,7 +531,7 @@ namespace filemanager
                m_cache._001Invalidate(this);
                _001OnUpdateItemCount();
                on_layout();
-               RedrawWindow();
+               set_need_redraw();
                //FillTask * ptask = (FillTask *) lparam;
 
                //if(ptask != NULL)
@@ -546,7 +546,7 @@ namespace filemanager
             {
 
                m_cache._001Invalidate(this);
-               RedrawWindow();
+               set_need_redraw();
             }
             else if(pbase->m_wparam == 2)
             {

@@ -227,11 +227,11 @@ namespace userfs
             dynamic_cast < ::user::interaction * > (ptimer->m_pcallback)->KillTimer(ptimer->m_nIDEvent);
 
          }
-         dynamic_cast < ::user::interaction * > (ptimer->m_pcallback)->RedrawWindow();
+         dynamic_cast < ::user::interaction * > (ptimer->m_pcallback)->set_need_redraw();
       }
       else if (ptimer->m_nIDEvent == 123)
       {
-         dynamic_cast < ::user::interaction * > (ptimer->m_pcallback)->RedrawWindow();
+         dynamic_cast < ::user::interaction * > (ptimer->m_pcallback)->set_need_redraw();
          m_bTimer123 = false;
          dynamic_cast < ::user::interaction * > (ptimer->m_pcallback)->KillTimer(123);
       }

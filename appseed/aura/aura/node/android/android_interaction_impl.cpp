@@ -2141,7 +2141,7 @@ namespace android
                   if (m_pui->has_pending_graphical_update())
                   {
 
-                     RedrawWindow(NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW | RDW_NOERASE);
+                     set_need_redraw(NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW | RDW_NOERASE);
 
                      m_pui->on_after_graphical_update();
 

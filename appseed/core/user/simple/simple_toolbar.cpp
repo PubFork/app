@@ -1370,7 +1370,7 @@ void simple_toolbar::_001OnLButtonDown(::message::message * pobj)
 
    }
 
-   RedrawWindow();
+   set_need_redraw();
 
    pobj->previous();
 
@@ -1426,7 +1426,7 @@ void simple_toolbar::_001OnLButtonUp(::message::message * pobj)
 
       m_iButtonPressItem = -1;
 
-      RedrawWindow();
+      set_need_redraw();
 
       if (pobj->m_bRet)
       {
@@ -1512,7 +1512,7 @@ void simple_toolbar::_001Hover(point pt, bool bRedraw)
       if (bRedraw)
       {
 
-         RedrawWindow();
+         set_need_redraw();
 
       }
 
@@ -2537,7 +2537,7 @@ void simple_toolbar::_001OnMouseLeave(::message::message * pobj)
 
    OnUpdateHover();
 
-   RedrawWindow();
+   set_need_redraw();
 
    pbase->set_lresult(0);
 

@@ -100,17 +100,6 @@ namespace user
       return Application.keyboard_focus_is_focusable(this);
    }
 
-   bool elemental::keyboard_focus_OnSetFocus()
-   {
-
-      on_reset_focus_start_tick();
-
-      // get_keyboard_focus will return the control with focus
-
-
-      // return true to set focus to this control
-      return Application.keyboard_focus_OnSetFocus(this);
-   }
 
 
    bool elemental::keyboard_focus_OnKillFocus(oswindow oswindowNew)
@@ -263,12 +252,15 @@ namespace user
    }
 
 
-
    bool elemental::keyboard_set_focus()
    {
+
       Session.set_keyboard_focus((this));
+
       return true;
+
    }
+
 
    // mouse focus
 
@@ -547,6 +539,14 @@ namespace user
    {
 
       return m_bUserElementalOk;
+
+   }
+
+
+   void elemental::set_need_redraw(bool bAscendants)
+   {
+
+      UNREFERENCED_PARAMETER(bAscendants);
 
    }
 

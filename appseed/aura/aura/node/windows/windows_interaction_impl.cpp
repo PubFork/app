@@ -2680,12 +2680,12 @@ namespace windows
    }
 
 
-   void interaction_impl::set_need_redraw()
-   {
+   //void interaction_impl::set_need_redraw()
+   //{
 
-      ::user::interaction_impl::set_need_redraw();
+   //   ::user::interaction_impl::set_need_redraw();
 
-   }
+   //}
 
 
    void interaction_impl::_001OnCreate(::message::message * pobj)
@@ -4357,7 +4357,7 @@ namespace windows
 
          //   }
 
-         //   return ::RedrawWindow(get_handle(), lpRectUpdate, prgnUpdate == NULL ? NULL : (HRGN)prgnUpdate->get_os_data(),
+         //   return ::set_need_redraw(get_handle(), lpRectUpdate, prgnUpdate == NULL ? NULL : (HRGN)prgnUpdate->get_os_data(),
          //      flags | RDW_NOERASE | RDW_NOFRAME | RDW_INVALIDATE) != FALSE;
 
          //}
@@ -4994,28 +4994,6 @@ namespace windows
 
       Default();
 
-      if (GetParent() == NULL)
-      {
-
-         sp(::user::elemental) pelementalFocus = Session.get_keyboard_focus();
-
-         if (pelementalFocus.is_set())
-         {
-
-            sp(::user::interaction) puiFocus = pelementalFocus;
-
-            if (puiFocus.is_set())
-            {
-
-               puiFocus->keyboard_focus_OnSetFocus();
-
-            }
-
-            on_keyboard_focus(pelementalFocus);
-
-         }
-
-      }
 
    }
 
@@ -5023,30 +5001,6 @@ namespace windows
    void interaction_impl::_001OnKillFocus(::message::message * pobj)
    {
 
-      SCAST_PTR(::message::kill_focus, pkillfocus, pobj);
-
-      if (pkillfocus->m_oswindowNew != m_oswindow)
-      {
-
-         if (m_pelementalFocus != NULL && m_pelementalFocus->m_puiThis != m_pui)
-         {
-
-            try
-            {
-
-               m_pelementalFocus->m_puiThis->send_message(WM_KILLFOCUS, pkillfocus->m_wparam, pkillfocus->m_lparam);
-
-            }
-            catch (...)
-            {
-
-            }
-
-         }
-
-         m_pelementalFocus = NULL;
-
-      }
 
    }
 

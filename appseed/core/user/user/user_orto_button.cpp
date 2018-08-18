@@ -137,7 +137,7 @@ namespace user
 
       UNREFERENCED_PARAMETER(pobj);
 
-      //RedrawWindow();
+      //set_need_redraw();
 
    }
 
@@ -153,11 +153,11 @@ namespace user
 
          if (rectClient.contains(ptCursor))
          {
-            RedrawWindow();
+            set_need_redraw();
          }
          else
          {
-            RedrawWindow();
+            set_need_redraw();
          }
       }
       return 0;
@@ -190,7 +190,7 @@ namespace user
          {
          KillTimer(ptimer->m_nIDEvent);
          m_bFocus = false;
-         RedrawWindow();
+         set_need_redraw();
          }
          }
          else

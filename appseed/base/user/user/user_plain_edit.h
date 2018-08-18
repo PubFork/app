@@ -176,7 +176,7 @@ namespace user
       DECL_GEN_SIGNAL(keyboard_focus_OnChar) override;
 
       virtual bool keyboard_focus_is_focusable() override;
-      virtual bool keyboard_focus_OnSetFocus() override;
+      DECL_GEN_SIGNAL(_001OnSetFocus);
 
 
       virtual int32_t get_wheel_scroll_delta() override;

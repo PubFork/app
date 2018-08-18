@@ -220,7 +220,7 @@ namespace user
       Session.get_cursor_pos(&pt);
       ScreenToClient(&pt);
       m_iHover = hit_test(pt);
-      RedrawWindow();
+      set_need_redraw();
       rect rectClient;
       GetClientRect(rectClient);
       m_bHover = rectClient.contains(pt) != FALSE;

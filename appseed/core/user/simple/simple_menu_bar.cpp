@@ -163,7 +163,7 @@ bool simple_menu_bar::_track_popup_menu(int32_t iItem)
    TRACE("simple_menu_bar::_track_popup_menu % d\n", iItem);
    m_iTracking = iItem;
    m_iButtonPressItem = iItem;
-   RedrawWindow();
+   set_need_redraw();
    rect rect;
    _001GetElementRect(iItem, rect, element_item);
    ClientToScreen(rect);
@@ -780,7 +780,7 @@ size simple_menu_bar::CalcFixedLayout(bool bStretch, bool bHorz)
       {
          SetTimer(TIMER_HOVER, 50, NULL);
       }
-      RedrawWindow();
+      set_need_redraw();
    }
 }
 
@@ -860,6 +860,6 @@ int32_t simple_menu_bar::_001GetHoverItem()
 //   SCAST_PTR(::message::base, pbase, pobj);
 //   send_message(WM_CANCELMODE);
 //   LoadMenuBar(m_uiResourceID);
-//   RedrawWindow();
+//   set_need_redraw();
 //   pbase->m_bRet = false;
 //}

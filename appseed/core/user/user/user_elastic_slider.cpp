@@ -191,7 +191,7 @@ namespace user
       else if(dPos > 1.0)
          dPos = 1.0;
       m_dPosition = dPos;
-      RedrawWindow();
+      set_need_redraw();
    }
 
 
