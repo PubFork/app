@@ -16,9 +16,9 @@ namespace calculator
       {
       public:
 
-         virtual mutex * get_mutex() 
+         virtual sync_object * get_mutex()
          {
-            return m_pmutex; 
+            return m_pmutex;
          }
 
          virtual void set_expression(const char * pszExp)

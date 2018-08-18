@@ -133,7 +133,7 @@ string dumpBacktrace(void** buffer,size_t count)
 
 
 
-#define FAST_STACK_TRACE 1
+
 
 
 
@@ -331,15 +331,12 @@ namespace exception
 #endif
 
    engine::engine(::aura::application * papp) :
-      object(papp),
-      m_mutex(papp)
+      object(papp)
 #ifdef WINDOWSEX
       ,m_bOk(false)
       ,m_bInit(false)
 #endif
    {
-
-      m_pmutex = &m_mutex;
 
 #ifdef WINDOWSEX
       m_iHa = 0;
@@ -355,15 +352,6 @@ namespace exception
       clear();
 #endif
 
-      if (m_pmutex == &m_mutex)
-      {
-
-         m_pmutex = NULL;
-
-      }
-
-      //   if (m_bOk) guard::instance().clear();
-      //::aura::del(&m_mutex);
 
 
    }
@@ -510,7 +498,8 @@ namespace exception
    void engine::backtrace(DWORD64 *pui, int &c)
 #endif
    {
-      synch_lock sl(m_pmutex);
+      cslock csl(&m_cs);
+
 #if FAST_STACK_TRACE
 
       UINT32 maxframes = c;
@@ -980,12 +969,12 @@ namespace exception
       if (NotificationReason == LDR_DLL_NOTIFICATION_REASON_LOADED)
       {
 
-         ::WaitForSingleObjectEx(pengine->m_pmutex->m_object, INFINITE, FALSE);
+         cslock csl(&pengine->m_cs);
 
          HANDLE hprocess = SymGetProcessHandle();
+
          SymRefreshModuleList(hprocess);
 
-         ::ReleaseMutex(pengine->m_pmutex->m_object);
       }
 
    }
@@ -1026,7 +1015,7 @@ namespace exception
       //}
 
 
-      single_lock sl(m_pmutex, true);
+      cslock csl(&m_cs);
 
       if (m_bInit)
       {
@@ -1116,7 +1105,7 @@ namespace exception
    void engine::clear()
    {
 
-      single_lock sl(m_pmutex, true);
+      cslock csl(&m_cs);
 
       if (!m_bInit)
       {
@@ -1144,16 +1133,10 @@ namespace exception
    void engine::reset()
    {
 
-      //if(!::file_exists_dup("C:\\core\\exception_engine.txt"))
-      //{
-      //   return;
-      //}
-
-      single_lock sl(m_pmutex, true);
+      cslock csl(&m_cs);
 
 #ifdef WINDOWSEX
-      //clear();
-      //init();
+
       if (!m_bInit)
       {
 
@@ -1324,9 +1307,8 @@ namespace exception
 #endif
    {
 
+      cslock csl(&m_cs);
 
-
-      single_lock sl(m_pmutex, true);
       *_strS = '\0';
 
 #ifdef WINDOWSEX
@@ -1533,7 +1515,9 @@ namespace exception
    char * engine::stack_trace(DWORD64 * pui, int c, const char * pszFormat)
 #endif
    {
-      synch_lock sl(m_pmutex);
+
+      cslock csl(&m_cs);
+
       *_strS = '\0';
 
       memcpy(m_uia, pui, MIN(c*sizeof(*pui), sizeof(m_uia)));

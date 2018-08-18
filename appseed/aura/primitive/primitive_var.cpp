@@ -1,9 +1,4 @@
 ﻿#include "framework.h"
-//#include <math.h>
-
-
-//IMPLEMENT_AXIS_FIXED_ALLOC_STATIC(var);
-
 
 
 var::var(const char * psz)
@@ -4217,12 +4212,6 @@ const char * var::parse_json(const string & strJson)
 
 void var::parse_json(const char * & pszJson, const char * pszEnd)
 {
-   if(!::get_thread_run())
-   {
-
-      _throw(simple_exception(::get_app(), "thread is exiting"));
-
-   }
    ::str::consume_spaces(pszJson, 0, pszEnd);
    if(*pszJson == '{')
    {

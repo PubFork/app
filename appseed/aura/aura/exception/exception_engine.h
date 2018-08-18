@@ -29,6 +29,9 @@
 
 
 #ifdef WINDOWSEX
+
+#define FAST_STACK_TRACE 1
+
 #pragma warning(disable: 4091)
 #include <ImageHlp.h>
 
@@ -36,6 +39,10 @@
 typedef struct _tagSTACKFRAME64 STACKFRAME64,*LPSTACKFRAME64;
 typedef struct _IMAGEHLP_LINE64 IMAGEHLP_LINE64,*PIMAGEHLP_LINE64;
 //#include <imagehlp.h>
+
+#else
+
+#define FAST_STACK_TRACE 0
 
 #endif
 
@@ -51,10 +58,7 @@ namespace exception
    {
    public:
 
-      /// m_pmutex from ::object cannot be used for allocation, because new operator
-      /// is tricky during system initialization and exception::engine is ofter
-      /// instantiated at system initialization
-      mutex                m_mutex;
+      critical_section     m_cs;
 #ifdef WINDOWSEX
       bool                 m_bSkip;
 #if OSBIT == 32

@@ -515,7 +515,7 @@ namespace filemanager
    void tree::browse_sync(::action::context actioncontext)
    {
 
-      mutex *pm = m_treeptra.has_elements() ? m_treeptra[0]->m_pmutex : NULL;
+      sync_object *pm = m_treeptra.has_elements() ? m_treeptra[0]->m_pmutex : NULL;
 
       synch_lock sl(pm);
 
@@ -811,18 +811,18 @@ restart:
          LPITEMIDLIST lpidl;
 
          hr = SHGetSpecialFolderLocation(
-                 NULL,
-                 iCSIDL,
-                 &lpidl);
+              NULL,
+              iCSIDL,
+              &lpidl);
 
          if(FAILED(hr))
             return NULL;
 
          hr = psfDesktop->BindToObject(
-                 lpidl,
-                 NULL,
-                 IID_IShellFolder,
-                 (void **) &psf);
+              lpidl,
+              NULL,
+              IID_IShellFolder,
+              (void **) &psf);
 
          if(FAILED(hr))
             return NULL;

@@ -708,7 +708,11 @@ void memdleak_dump()
          output_debug_string("Size : ");
          output_debug_string(sz);
          output_debug_string("\n");
+#if FAST_STACK_TRACE
+         output_debug_string(::exception::engine().stack_trace(pblock->m_puiStack + 1, pblock->m_iStack));
+#else
          output_debug_string(::exception::engine().stack_trace(pblock->m_puiStack, pblock->m_iStack));
+#endif
       }
       pblock = pblock->m_pnext;
    }

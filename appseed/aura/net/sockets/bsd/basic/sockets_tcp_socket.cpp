@@ -1277,7 +1277,8 @@ namespace sockets
 
       //slMap.unlock();
 
-      if(m_psslcontext->m_pclientcontext.is_set() && m_psslcontext->m_pclientcontext->m_pcontext != NULL)
+      if(m_psslcontext->m_pclientcontext.is_set()
+            && m_psslcontext->m_pclientcontext->m_pcontext != NULL)
       {
 
          /* Connect the SSL socket */
@@ -1352,7 +1353,7 @@ namespace sockets
 
       {
          if(m_psslcontext->m_pclientcontext.is_set()
-            && m_psslcontext->m_pclientcontext->m_pcontext != NULL)
+               && m_psslcontext->m_pclientcontext->m_pcontext != NULL)
          {
             TRACE("SSL Context already initialized - closing socket\n");
             SetCloseAndDelete(true);
@@ -1743,7 +1744,7 @@ namespace sockets
       {
 
          m_psslcontext->m_pclientcontext = canew(ssl_client_context(get_app(),
-            meth_in != NULL ? meth_in : TLS_server_method()));
+                                                 meth_in != NULL ? meth_in : TLS_server_method()));
 
       }
 

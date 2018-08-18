@@ -2119,7 +2119,7 @@ namespace user
    void tab_pane::set_title(const char * psz)
    {
 
-      mutex * pmutex = NULL;
+      sync_object * pmutex = NULL;
 
       if(m_ptab != NULL)
       {

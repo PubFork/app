@@ -592,22 +592,22 @@ namespace aura
          return false;
 
       }
-      
+
       bool bMatterFromHttpCache = false;
-      
+
       if(m_pappcore->m_iMatterFromHttpCache == -1)
       {
-         
+
          bMatterFromHttpCache = !::dir::is(local_get_matter_cache_path("app/appmatter/main"));
-         
+
       }
       else
       {
-         
+
          bMatterFromHttpCache = m_pappcore->m_iMatterFromHttpCache != 0;
-         
+
       }
-      
+
       m_spdir->m_bMatterFromHttpCache = bMatterFromHttpCache;
 
       ::file::dir::system::g_pthis = m_spdir;
@@ -2048,21 +2048,21 @@ RetryBuildNumber:
       return strMatter;
 
    }
-   
-   
+
+
    ::file::path system::local_get_matter_cache_path(string strMatter)
    {
-      
+
       ::file::path pathResource = dir().install();
-      
+
 #ifdef APPLEOS
-      
+
       pathResource = (pathResource + ".app") / "Contents/Resources";
-      
+
 #endif
-      
+
       return pathResource / strMatter;
-      
+
    }
 
 
@@ -2137,7 +2137,7 @@ RetryBuildNumber:
          }
          else
          {
-            
+
             return local_get_matter_cache_path(strMatter);
 
          }
@@ -3861,7 +3861,7 @@ success:
 
             }
 
-            mutex * pmutex = dib->m_pmutex;
+            sync_object * pmutex = dib->m_pmutex;
 
             dib->m_pmutex = g_pmutexDib;
 

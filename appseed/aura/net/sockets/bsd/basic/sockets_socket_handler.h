@@ -62,7 +62,7 @@ namespace sockets
 
       bool call_on_connect();
 
-      mutex & GetMutex() const override;
+      sync_object & GetMutex() const override;
 
 
       /** add base_socket instance to base_socket map. Removal is always automatic. */

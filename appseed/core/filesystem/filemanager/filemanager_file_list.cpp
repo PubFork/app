@@ -1204,7 +1204,7 @@ namespace filemanager
 
       {
 
-         mutex *pm = get_fs_mesh_data()->m_pmutex;
+         sync_object *pm = get_fs_mesh_data()->m_pmutex;
 
          synch_lock lock(pm);
 

@@ -27,7 +27,7 @@ namespace user
       ::user::interaction *               m_pui;
       bool                                m_bIgnoreSizeEvent;
       bool                                m_bIgnoreMoveEvent;
-      sp(critical_section)                m_pcsDisplay;
+      ap(critical_section)                m_pcsDisplay;
 
       mutex                               m_mutexLongPtr;
       int_ptr_to_int_ptr                  m_longptr;

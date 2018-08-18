@@ -56,7 +56,7 @@ public:
 
 
 
-   timer(::aura::application * papp,uint_ptr uiTimer = 0,PFN_TIMER pfnTimer = NULL,void * pvoidData = NULL, mutex * pmutex = NULL);
+   timer(::aura::application * papp,uint_ptr uiTimer = 0,PFN_TIMER pfnTimer = NULL,void * pvoidData = NULL, sync_object * pmutex = NULL);
    virtual ~timer();
 
 

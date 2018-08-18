@@ -9,6 +9,7 @@ class application_bias;
 class create;
 class command_line;
 class thread_ptra;
+class sync_object;
 
 
 #include "aura/multithreading/multithreading_wait_result.h"
@@ -117,7 +118,7 @@ public:
    factory_item_base *           m_pfactoryitembase;
    void *                        m_pthis;
    ::aura::application *         m_papp;
-   mutex *                       m_pmutex;
+   sync_object *                 m_pmutex;
    property_set *                m_psetObject;
    thread_ptra *                 m_pthreadrefa;
    ::id                          m_id;

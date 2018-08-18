@@ -1,8 +1,7 @@
 #pragma once
 
 
-class CLASS_DECL_AURA critical_section :
-   virtual public simple_object
+class CLASS_DECL_AURA critical_section
 {
 public:
 
@@ -23,11 +22,13 @@ public:
    operator pthread_mutex_t ();
 #endif
 
-   inline void unlock();
    inline void lock();
+
+   inline void unlock();
 
 
 private:
+
    bool Init();
 
 };
@@ -37,30 +38,19 @@ private:
 
 inline void critical_section::lock()
 {
-   //try
-   {
-      ::EnterCriticalSection(&m_sect);
-   }
-   //catch(...)
-   //{
-   // _throw(resource_exception(get_app()));
-   //}
+
+   ::EnterCriticalSection(&m_sect);
+
 }
 
-
-//inline bool critical_section::lock(const duration & durationTimeout)
-//{
-//   ASSERT(durationTimeout.is_pos_infinity());
-//   (void)durationTimeout;
-//   lock();
-//   return true;
-//}
 
 inline void critical_section::unlock()
 {
+
    ::LeaveCriticalSection(&m_sect);
-   //return TRUE;
+
 }
+
 #else
 
 inline void critical_section::lock()

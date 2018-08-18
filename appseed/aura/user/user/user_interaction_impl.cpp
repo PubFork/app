@@ -2268,7 +2268,7 @@ namespace user
       if(!m_pui->m_bMessageWindow)
       {
 
-         m_pcsDisplay = canew(critical_section);
+         m_pcsDisplay = new(critical_section);
 
          output_debug_string("interaction_impl m_spgraphics alloc");
 

@@ -155,7 +155,7 @@ namespace sockets
    }
 
 
-   mutex& socket_handler::GetMutex() const
+   sync_object & socket_handler::GetMutex() const
    {
 
       return *m_pmutex;

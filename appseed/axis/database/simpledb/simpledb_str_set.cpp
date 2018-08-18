@@ -467,7 +467,7 @@ bool db_str_set::load(const ::database::key & key, string & strValue)
 
       //      ::sqlite::base * pdatabase = pdb->get_database();
 
-      mutex * pmutex = pdb->m_pmutex;
+      sync_object * pmutex = pdb->m_pmutex;
 
       sl.unlock();
 
