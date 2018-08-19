@@ -192,13 +192,6 @@ namespace filemanager
    manager::~manager()
    {
 
-      if (m_filewatcherid >= 0)
-      {
-
-         System.dir().remove_watch(m_filewatcherid);
-
-      }
-
    }
 
 

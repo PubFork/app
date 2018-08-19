@@ -294,6 +294,7 @@ namespace file_watcher
       pwatch->m_id = ++m_idLast;
       pwatch->m_pwatcher = this;
       pwatch->m_plistener = watcher;
+      watcher->m_pwatch = pwatch;
       pwatch->m_strDirName = directory;
       pwatch->m_bOwn = bOwn;
 
@@ -355,7 +356,7 @@ namespace file_watcher
 
       m_watchmap.remove_key(ppair->m_element1);
 
-      delete pwatch;
+//      delete pwatch;
 
    }
 
