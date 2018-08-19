@@ -131,7 +131,7 @@ app_core * app_core::s_pappcoreMain = NULL;
 
 app_core::app_core(aura_main_data * pdata)
 {
-   
+
    m_iMatterFromHttpCache = -1; // -1 = overridable
 
 #ifdef LINUX
@@ -1387,6 +1387,20 @@ void app_core::run()
    {
 
       on_result(-2004);
+
+   }
+
+
+   try
+   {
+
+      m_psystem->on_pos_run_thread();
+
+   }
+   catch (...)
+   {
+
+      on_result(-2700);
 
    }
 

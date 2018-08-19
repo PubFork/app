@@ -17,8 +17,6 @@ namespace aura
 
       m_plibrary = NULL;
 
-      m_pca2library = NULL;
-
       m_bAutoUnload = false;
 
    }
@@ -31,8 +29,6 @@ namespace aura
       m_bAutoUnload = false;
 
       m_plibrary = NULL;
-
-      m_pca2library = NULL;
 
       m_strCa2Name = pszRoot;
 
@@ -74,6 +70,8 @@ namespace aura
       {
 
          m_strPath = pszPath;
+
+         System.m_mapLibrary[m_strCa2Name] = this;
 
          return true;
 
@@ -118,6 +116,8 @@ namespace aura
 
       thisend << m_strMessage;
 
+      System.m_mapLibrary[m_strCa2Name] = this;
+
       return true;
 
    }
@@ -128,8 +128,12 @@ namespace aura
 
       synch_lock sl(g_pmutexLibrary);
 
-      if(m_pca2library != NULL)
+      if (m_pca2library.is_set())
+      {
+
          return true;
+
+      }
 
       ::exception::engine().reset();
 
@@ -204,15 +208,14 @@ namespace aura
       catch(...)
       {
 
-         m_pca2library = NULL;
+         m_pca2library.release();
 
       }
 
-      if(m_pca2library == NULL)
+      if(m_pca2library.is_null())
       {
 
          close();
-
 
          return false;
 

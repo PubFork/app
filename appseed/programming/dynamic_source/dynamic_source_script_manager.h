@@ -128,8 +128,8 @@ namespace dynamic_source
       strsp(::dynamic_source::session)          m_mapSession;
       mutex                                     m_mutexMusicDbPool;
       mutex                                     m_mutexWayDbPool;
-      script_cache *                            m_pcache;
-      script_compiler *                         m_pcompiler;
+      sp(script_cache)                          m_pcache;
+      sp(script_compiler)                       m_pcompiler;
       uint32_t                                  m_dwBuildTimeWindow;
       uint32_t                                  m_dwBuildTimeRandomWindow;
 

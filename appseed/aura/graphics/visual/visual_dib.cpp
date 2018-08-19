@@ -1,5 +1,6 @@
 #include "framework.h"
 
+
 #ifdef WINDOWS
 #include <wincodec.h>
 #include <ShCore.h>
@@ -8,11 +9,9 @@
 #endif
 
 
-
-
-
 namespace visual
 {
+
 
    dib_sp::pointer::pointer()
    {
@@ -20,6 +19,7 @@ namespace visual
       m_dwTime = 0;
 
    }
+
 
    dib_sp::pointer::~pointer()
    {
@@ -39,19 +39,19 @@ namespace visual
 
    }
 
+
    dib_sp::array::~array()
    {
 
    }
 
 
-
-
    dib_sp::dib_sp()
    {
-      m_eload = load_none;
-      m_dSpeed = 1.0;
 
+      m_eload = load_none;
+
+      m_dSpeed = 1.0;
 
    }
 
@@ -59,26 +59,21 @@ namespace visual
    dib_sp::dib_sp(const ::aura::allocatorsp & allocer) :
       ::draw2d::dib_sp(allocer)
    {
-      m_eload = load_none;
-      m_dSpeed = 1.0;
 
+      m_eload = load_none;
+
+      m_dSpeed = 1.0;
 
    }
 
 
    dib_sp::~dib_sp()
    {
-      if (m_sparray.is_set())
-      {
 
-         if (m_sparray->pred_find_first([&](auto & i) { return i->m_dib.m_p == m_p; }) >= 0)
-         {
-            m_p = NULL;
-         }
-
-      }
       release();
+
    }
+
 
    bool dib_sp::load_thumbnail(var varFile, int w, int h)
    {
@@ -87,7 +82,9 @@ namespace visual
 
       if (!m_p->create(w, h))
       {
+
          return false;
+
       }
 
       if (!m_p->load_thumbnail(varFile))
@@ -96,7 +93,6 @@ namespace visual
          return false;
 
       }
-
 
       return true;
 
@@ -361,7 +357,7 @@ namespace visual
          if (m_sparray->get_count() == 1)
          {
 
-            m_p = m_sparray->element_at(0)->m_dib.m_p;
+            operator = (m_sparray->element_at(0)->m_dib);
 
             return;
 
@@ -421,13 +417,14 @@ namespace visual
 
             m_sparray->m_iLastFrame = iCurrentFrame;
 
-            m_p = m_sparray->element_at(iCurrentFrame)->m_dib.m_p;
+            operator = (m_sparray->element_at(iCurrentFrame)->m_dib);
 
          }
 
       }
 
    }
+
 
    bool dib_sp::pointer::to(::draw2d::graphics * pgraphics)
    {
@@ -445,6 +442,7 @@ namespace visual
       return true;
 
    }
+
 
    bool dib_sp::dispose_current_frame()
    {
@@ -476,9 +474,6 @@ namespace visual
          return false;
 
       }
-
-      //bool bOk = true;
-
 
       switch (m_sparray->element_at(m_sparray->m_iLastFrame)->m_edisposal)
       {
@@ -514,7 +509,9 @@ namespace visual
       }
 
       return true;
+
    }
+
 
    bool dib_sp::overlay_frame(int iFrame)
    {
@@ -538,9 +535,6 @@ namespace visual
       m_p->get_graphics()->BitBlt(0, 0, m_p->m_size.cx, m_p->m_size.cy,
                                   m_sparray->m_dibCompose->get_graphics());
 
-
-
-
       return true;
 
    }
@@ -559,6 +553,7 @@ namespace visual
       return App(m_p->get_app()).imaging().save_image(varFile, m_p, psaveimage);
 
    }
+
 
 } // namespace visual
 
@@ -637,7 +632,6 @@ CLASS_DECL_AURA void draw_freetype_bitmap(::draw2d::dib * m_p, int32_t dx, int32
 }
 
 #endif
-
 
 
 

@@ -110,20 +110,6 @@ namespace dynamic_source
 
    script_manager::~script_manager()
    {
-      if(m_pcache != NULL)
-      {
-         delete m_pcache;
-         m_pcache  = NULL;
-      }
-
-      if(m_pcompiler != NULL)
-      {
-
-         delete m_pcompiler;
-
-         m_pcompiler = NULL;
-
-      }
 
    }
 
@@ -136,9 +122,9 @@ namespace dynamic_source
       if(m_bCompiler)
       {
 
-         m_pcache                   = new script_cache(get_app());
+         m_pcache                   = canew(script_cache(get_app()));
          m_pcache->m_pmanager       = this;
-         m_pcompiler                = new script_compiler(get_app());
+         m_pcompiler                = canew(script_compiler(get_app()));
          m_pcompiler->m_pmanager    = this;
          m_pcompiler->initialize();
 

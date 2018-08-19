@@ -10,6 +10,7 @@ namespace introjection
    {
    public:
 
+
       sp(::aura::library)                       m_plibrary;
       ::file::path                              m_pathScript;
       ::file::plain_text_stream_memory_file     m_memfileError;
@@ -30,11 +31,15 @@ namespace introjection
    {
    public:
 
+
 #ifdef WINDOWSEX
+
       string                                    m_strVs;
       string                                    m_strVsTools;
       string                                    m_strVCVersion;
+
 #endif
+
       ::file::path                              m_pathProjectDir;
       string                                    m_strDynamicSourceConfiguration;
       ::file::path                              m_strDynamicSourceStage;
@@ -43,11 +48,10 @@ namespace introjection
 
       string                                    m_strApp;
 
-      string      m_strLibPlatform;
+      string                                    m_strLibPlatform;
 
 
       stringa                                   m_straSync;
-      //      map_string_to_ptr                         m_mapLib;
       string                                    m_strLibsLibs;
       string                                    m_strEnv;
       string                                    m_strSdk1;
@@ -86,13 +90,17 @@ class xyz :
    virtual public ::object
 {
 public:
-   xyz(string strName)
-   {
-      m_strName = strName;
-   }
+
 
    string m_strName;
 
+
+   xyz(string strName)
+   {
+
+      m_strName = strName;
+
+   }
 
    virtual ::object *  create_object(::aura::application * papp,object * p) = 0;
 
@@ -105,13 +113,19 @@ class xy:
    virtual public xyz
 {
 public:
+
+
    xy(string strName):
       xyz(strName)
    {
+
    }
+
    virtual ::object *  create_object(::aura::application * papp,object * p)
    {
+
       return canew(T(papp,p));
+
    }
 
 };
@@ -141,9 +155,12 @@ BEGIN_EXTERN_C \
 ::aura::library * get_new_library(::aura::application * papp) \
 { \
 \
-   return new library(papp); \
+   return canew(library(papp)); \
  \
 } \
  \
  \
 END_EXTERN_C
+
+
+

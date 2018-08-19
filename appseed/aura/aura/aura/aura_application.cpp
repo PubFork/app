@@ -2542,6 +2542,8 @@ run:
    void application::on_pos_run_thread()
    {
 
+      ::thread::on_pos_run_thread();
+
    }
 
 

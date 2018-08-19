@@ -24,8 +24,6 @@ namespace introjection
       m_memfileError(papp)
    {
 
-
-
       ZERO(m_filetime);
 
    }
@@ -40,12 +38,7 @@ namespace introjection
 
    compiler::compiler(::aura::application * papp):
       ::object(papp),
-      //      m_memfileLibError(papp),
-      //    m_mutexLibrary(papp),
-      m_mutex(papp)//,
-      //      m_libraryLib(papp)
-
-
+      m_mutex(papp)
    {
 
 
@@ -93,7 +86,6 @@ namespace introjection
 
       m_pathProjectDir = path.folder();
 
-
 #if MEMDLEAK
 
       m_strDynamicSourceConfiguration = "basis";
@@ -111,13 +103,15 @@ namespace introjection
       m_strDynamicSourceStage = "profiler";
 
 #endif
-      m_strDynamicSourceStageFolder = System.dir().install() / m_strDynamicSourceStage;
 
+      m_strDynamicSourceStageFolder = System.dir().install() / m_strDynamicSourceStage;
 
    }
 
+
    compiler::~compiler()
    {
+
    }
 
 
@@ -127,11 +121,6 @@ namespace introjection
       m_strApp = pszApp;
 
       prepare_compile_and_link_environment();
-
-      //   folder_watch();
-      //      compile_library();
-      // run_persistent();
-      // parse_pstr_set();
 
    }
 
@@ -490,8 +479,6 @@ namespace introjection
 
       lib->m_pathScript = strName;
 
-      //lib->on_start_build();
-
 #ifdef WINDOWS
 
       strName.replace("/","\\");
@@ -501,20 +488,28 @@ namespace introjection
       string str;
 
       ::file::path strClog;
+
       ::file::path strLlog;
 
       ::file::path strScript;
+
       strScript = strName.title();
+
       ::file::path strTransformName = strName;
+
       if(Application.file().exists(strName))
       {
-         //         lib->m_strSourcePath = strName;
+
          strTransformName.replace(":","");
+
          ::str::ends_eat_ci(strTransformName,".cpp");
+
       }
       else
       {
+
          return lib->m_plibrary;
+
       }
 
 
@@ -868,15 +863,14 @@ namespace introjection
       Application.dir().mk(strL.folder());
       Application.dir().mk(m_strTime / "intermediate" / m_strPlatform / m_strDynamicSourceConfiguration / m_strApp / strTransformName);
 
-      //string strV(System.dir().install());
-      //strV.replace("\\","/");
-      //if(!::str::ends(strV,"/") && !::str::ends(strV,"\\"))
-      //   strV += "/";
-
       ::file::path pathN = m_pathProjectDir;
+
       pathN -= 3;
+
       string strN = pathN;
+
       strN.replace("\\", "/");
+
       strN += "/";
 
       string strBuildCmd;
@@ -918,34 +912,33 @@ namespace introjection
       str.replace("%CONFIGURATION%",m_strDynamicSourceConfiguration);
       str.replace("%PLATFORM%",m_strPlatform);
       str.replace("%STAGEPLATFORM%",m_strStagePlatform);
-      //      str.replace("%LIBPLATFORM%", m_strLibPlatform);
+
       str.replace("%SDK1%",m_strSdk1);
       string strT2 = lib->m_pathScript;
       strT2.replace("\\",".");
       strT2.replace("/",".");
       strT2.replace(":","_");
+
 #ifdef LINUX
+
       string strTargetPath =  System.dir().install() /"time" / m_strPlatform / m_strDynamicSourceConfiguration / lib->m_pathScript.title();
       ::str::ends_eat_ci(strTargetPath,".cpp");
       ::str::ends_eat_ci(strTargetPath,".so");
+
 #else
+
       string strTargetPath = System.dir().install() / "time" / m_strPlatform / m_strDynamicSourceConfiguration / strT2 ;
       ::str::ends_eat_ci(strTargetPath, ".cpp");
       ::str::ends_eat_ci(strTargetPath,".dll");
+
 #endif
+
       strTargetPath += "-"+strRndTitle;
+
       str.replace("%TARGET_PATH%",strTargetPath);
-      //strBuildCmd = lib->m_strBuildBat;
-      //Application.file().put_contents_utf8(strBuildCmd, str);
-
-      ///Application.file().put_contents(strBuildCmd,str);
-
-
-
 
       ::process::process_sp process(allocer());
 
-      //      ::multithreading::set_thread_priority(::multithreading::priority_highest);
 #ifdef LINUX
 
       file_put_contents_dup("/tmp/introj.bash", str);
@@ -963,15 +956,13 @@ namespace introjection
 #endif
 
       string strLog;
+
       bool bTimeout = false;
 
 #ifdef MACOS
 
-      //::process::process_sp process(allocer());
-
-      //process->create_child_process(strCmd,false,NULL,::multithreading::priority_highest);
-
       {
+
          ::chdir(strSrcFolder);
          strSrcFolder.trim();
          strSrcFolder.replace(" ", "\\ ");
@@ -985,37 +976,29 @@ namespace introjection
          str2.replace("%SRC_NAME%", strSrcName);
          Application.file().put_contents(strCmd + "2", str2);
 
-
-
-         //chmod(strCmd + "2", 0777);
-
-
          ::system(str2);
 
       }
 
-
-      //int err = errno;
       strLog= file_as_string_dup(strClog);
 
 #else
 
-
-
       uint32_t dwStart = ::get_tick_count();
 
       uint32_t dwExitCode;
-
-
-
 
       while(::get_thread_run())
       {
 
          strLog += process->read();
 
-         if(process->has_exited())
+         if (process->has_exited())
+         {
+
             break;
+
+         }
 
          Sleep(100);
 
@@ -1031,12 +1014,14 @@ namespace introjection
       }
 
       strLog += process->read();
+
       if(bTimeout)
       {
 
          process->kill();
 
       }
+
 #endif
 
 
@@ -1175,17 +1160,16 @@ namespace introjection
 
          }
 
-         //process->create_child_process(strLCmd,false,NULL,::multithreading::priority_highest);
 #endif
 
-         //uint32_t dwStart = ::get_tick_count();
-
-         //uint32_t dwExitCode;
-
          string strLog;
+
 #ifdef MACOS
+
          strLog= file_as_string_dup(strLlog);
+
 #else
+
          while(true)
          {
 
@@ -1227,9 +1211,13 @@ namespace introjection
 
             if(str.has_char())
             {
+
 #ifndef MACOS
+
                Application.file().put_contents_utf8(strLlog,strLog);
+
 #endif
+
                lib->m_memfileError << "Linking...\n";
                str.replace("\r\n","\n");
                lib->m_memfileError << str;
@@ -1248,29 +1236,20 @@ namespace introjection
 
 #ifndef LINUX
 
-      //try
-      //{
-      //   Application.file().del(strDVI);
-      //}
-      //catch(...)
-      //{
-      //}
 #ifndef MACOS
+
       try
       {
+
          Application.file().del(strDVP);
+
       }
       catch(...)
       {
+
       }
+
 #endif
-      //try
-      //{
-      //   Application.file().del(strDPC);
-      //}
-      //catch(...)
-      //{
-      //}
 
 #endif
 
@@ -1293,7 +1272,6 @@ namespace introjection
       return lib->m_plibrary;
 
    }
-
 
 }
 

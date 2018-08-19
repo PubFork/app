@@ -33,7 +33,15 @@ void check_bounds(byte * p)
 void * os_impl_alloc(size_t size)
 {
 
+#ifdef WINDOWS
+
+   return _malloc_base(size);
+
+#else
+
    return malloc(size);
+
+#endif
 
 }
 
@@ -41,7 +49,15 @@ void * os_impl_alloc(size_t size)
 void * os_impl_realloc(void * p, size_t size)
 {
 
+#ifdef WINDOWS
+
+   return _realloc_base(p, size);
+
+#else
+
    return realloc(p, size);
+
+#endif
 
 }
 
@@ -49,7 +65,15 @@ void * os_impl_realloc(void * p, size_t size)
 void os_impl_free(void * p)
 {
 
+#ifdef WINDOWS
+
+   return _free_base(p);
+
+#else
+
    free(p);
+
+#endif
 
 }
 

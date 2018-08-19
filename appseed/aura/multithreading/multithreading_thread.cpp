@@ -1122,7 +1122,8 @@ void thread::post_quit()
    try
    {
 
-      synch_lock sl(m_pmutex);
+      /// this is quite dangerous
+      //synch_lock sl(m_pmutex);
 
       string strName = demangle(typeid(*this).name());
 
@@ -1269,7 +1270,6 @@ void thread::shutdown(bool bPrompt)
    }
 
    post_quit(); // post implies switching to context.
-
 
 }
 

@@ -674,7 +674,7 @@ namespace user
 
                ASSERT_VALID(pview);
 
-               sp(::user::frame_window) pframe = pview->GetParentFrame();
+               ::user::frame_window * pframe = dynamic_cast < ::user::frame_window * > (pview->GetParentFrame());
 
                if (pframe != NULL)
                {

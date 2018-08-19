@@ -154,6 +154,28 @@ namespace visual
 
       }
 
+
+      inline dib_sp & operator = (const dib_sp & dib)
+      {
+
+         if (this != &dib)
+         {
+
+            ::draw2d::dib_sp::operator=(dib.m_p);
+
+            m_sparray = dib.m_sparray;
+
+            m_eload = dib.m_eload;
+
+            m_dSpeed = dib.m_dSpeed;
+
+         }
+
+         return *this;
+
+      }
+
+
 //#ifndef  WINDOWS
 //      virtual bool from(::draw2d::graphics * pgraphics, FIBITMAP * pfibitmap, bool bUnloadFI);
 //#endif

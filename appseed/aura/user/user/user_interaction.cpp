@@ -1342,6 +1342,8 @@ restart:
 
       threadrefa_post_quit();
 
+      threadrefa_wait(one_second());
+
       try
       {
 

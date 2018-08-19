@@ -454,7 +454,8 @@ void thread_ptra::post_quit()
          try
          {
 
-            synch_lock slThread(pthread->m_pmutex);
+            /// this is quite dangerous
+            //synch_lock slThread(pthread->m_pmutex);
 
             pthread->post_quit();
 

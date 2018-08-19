@@ -2162,9 +2162,26 @@ InitFailure:
 
       }
 
-      if(m_psession->fontopus()->get_user(true,pszRequestUrl) == NULL)
+      if (m_psession == NULL)
+      {
+
+         return false;
+
+      }
+
+      if (m_psession->fontopus() == NULL)
+      {
+
+         return false;
+
+      }
+
+      if (m_psession->fontopus()->get_user(true, pszRequestUrl) == NULL)
+      {
          //   _throw(exit_exception(get_app(),"You have not logged in!! db_str_set::load"));
          return false;
+
+      }
 
       return true;
 
