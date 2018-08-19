@@ -38,7 +38,7 @@ namespace file_watcher
    };
 
 #else
-   struct watch;
+   class watch;
    struct watch_holder
    {
       watch * w;
