@@ -83,11 +83,20 @@ namespace file_watcher
    listener::listener()
    {
 
+      m_pwatch = NULL;
+
    }
 
 
    listener::~listener()
    {
+
+      if (m_pwatch != NULL && m_pwatch->m_plistener == this)
+      {
+
+         m_pwatch->m_pwatcher->remove_watch(m_pwatch->m_id);
+
+      }
 
    }
 

@@ -32,6 +32,7 @@
 namespace file_watcher
 {
 
+   class watch;
    class file_watcher;
 
    /// Type for a watch id
@@ -41,7 +42,7 @@ namespace file_watcher
 
    // forward declarations
    class file_watcher_impl;
-   class listener;
+   struct listener;
 
    /// Base exception class
    /// @class Exception
@@ -92,6 +93,9 @@ namespace file_watcher
       virtual public ::object
    {
    public:
+
+
+      watch *        m_pwatch;
 
 
       listener();

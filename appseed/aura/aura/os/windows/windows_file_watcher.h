@@ -45,7 +45,7 @@ namespace file_watcher
       bool                 m_bRefresh;
       bool                 m_bStop;
       file_watcher_impl *  m_pwatcher;
-      sp(listener)         m_plistener;
+      listener             m_plistener;
       bool                 m_bOwn;
       string               m_strDirName;
       bool                 m_bRecursive;
