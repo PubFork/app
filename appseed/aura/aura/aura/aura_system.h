@@ -528,6 +528,7 @@ namespace aura
       virtual bool  get_desk_wkspace_rect(index iWkspace, LPRECT lprect);
       virtual index get_ui_wkspace(::user::interaction * pui);
 
+      virtual void on_extra(string str);
 
    };
 

@@ -3878,6 +3878,48 @@ success:
    }
 
 
+   void system::on_extra(string str)
+   {
+
+      string strProtocol = System.url().get_protocol(str);
+
+      if (strProtocol == "ca2project")
+      {
+
+         string strBase = System.url().get_server(str);
+
+         string strAppId = System.url().get_script(str);
+
+         ::str::begins_eat(strAppId, "/");
+
+         string strQuery = System.url().get_query(str);
+
+         string strMessage;
+
+         strMessage.Format("protocol: ca2project\nbase: %s\nAppId: %s\nquery: %s\n", strBase, strAppId, strQuery);
+
+         //simple_message_box(strMessage, MB_OK);
+
+         string strParams;
+
+         //strParams.Format("\"ca2project\" \"%s\" \"%s\" \"%s\"\n", strBase, strAppId, strQuery);
+
+         string strProj;
+
+         strProj = strAppId;
+
+         strProj.replace_ci("-", "_");
+         strProj.replace_ci("/", "_");
+
+         strParams.Format("\"openvsproject://%s\"", strProj);
+
+         int iRet = call_sync("C:\\bergedge\\time\\stage\\visual_studio_automation_2017.exe",strParams, "C:\\bergedge\\time\\stage\\", SW_HIDE, 30, 1000, NULL, 0);
+
+      }
+
+   }
+
+
 } // namespace aura
 
 
