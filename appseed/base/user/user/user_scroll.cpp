@@ -53,12 +53,14 @@ namespace user
             m_pscrollbarHorz->defer_set_window_pos(ZORDER_TOP, rectNewPos, ifswp);
 
          }
-         else if(m_pscrollbarHorz->is_this_visible())
+         else
          {
 
             m_pscrollbarHorz->ShowWindow(SW_HIDE);
 
          }
+         
+         set_need_redraw();
 
       }
 
@@ -347,6 +349,8 @@ namespace user
             m_pscrollbarVert->ShowWindow(SW_HIDE);
 
          }
+         
+         set_need_redraw();
 
       }
 
@@ -713,6 +717,13 @@ namespace user
       rect rectClient;
 
       GetClientRect(rectClient);
+      
+      if(rectClient.area() <= 0)
+      {
+         
+         return;
+         
+      }
 
       LONG iTotalHeight = sizeTotal.cy;
 
@@ -760,7 +771,7 @@ namespace user
       if (!m_scrolldataHorz.m_bScroll)
       {
 
-         set_viewport_offset_x(0);
+         m_ptScrollPassword1.x = 0;
 
       }
 
@@ -768,7 +779,7 @@ namespace user
       if (!m_scrolldataVert.m_bScroll)
       {
 
-         set_viewport_offset_y(0);
+         m_ptScrollPassword1.y = 0;
 
       }
 

@@ -58,11 +58,11 @@ string apple_browse_folder(const char * pszStartDir)
 
 
 
-char** mm_browse_file_open(const char * pszStartDir, bool bMulti);
+char** mm_browse_file_open(const char ** pszStartDir, bool bMulti);
 
 
 
-stringa apple_browse_file_open(const char * pszStartDir, bool bMulti)
+stringa apple_browse_file_open(const char ** pszStartDir, bool bMulti)
 {
 
    

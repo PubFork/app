@@ -12,7 +12,7 @@ char * ns_get_default_browser_path();
 void ns_set_this_process_binary_default_browser();
 
 string apple_browse_folder(const char * pszStartDir);
-stringa apple_browse_file_open(const char * pszStartDir, bool bMulti);
+stringa apple_browse_file_open(const char ** pszStartDir, bool bMulti);
 
 namespace macos
 {
@@ -1176,9 +1176,18 @@ namespace macos
          
       }
       
-      bool bMulti = set["allow_multiple_select"];
+      bool bMulti = set["allow_multi_select"];
       
-      stringa straFileName = apple_browse_file_open(pszStartDir, bMulti);
+      stringa straFileName = apple_browse_file_open(&pszStartDir, bMulti);
+      
+      if(pszStartDir != NULL && pszStartDir != strStartDir.c_str())
+      {
+         
+         ::file::path pathFolder = ::file::path(::str::from_strdup((char *) pszStartDir));
+         
+         set["folder"] = pathFolder;
+         
+      }
       
       if(straFileName.is_empty())
       {

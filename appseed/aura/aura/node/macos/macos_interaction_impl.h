@@ -26,6 +26,7 @@ namespace macos
       ::user::interaction_base *       m_pbasewnd;
       bool                             m_bNeedsUpdate;
       rect64                           m_rectLastOsPlacement;
+      bool                             m_bEnabled;
 
 
       interaction_impl();
@@ -308,7 +309,7 @@ namespace macos
 
         // oswindow State Functions
         virtual bool IsWindowEnabled();
-        virtual bool EnableWindow(bool bEnable = TRUE);
+        virtual bool enable_window(bool bEnable = TRUE) override;
 
        virtual ::user::interaction *  GetActiveWindow() override;
        virtual ::user::interaction *  SetActiveWindow() override;
@@ -480,6 +481,7 @@ namespace macos
       
       DECL_GEN_SIGNAL(_001OnCreate);
       DECL_GEN_SIGNAL(_001OnShowWindow);
+      DECL_GEN_SIGNAL(_001OnRedraw);
 
 
       HBRUSH OnCtlColor(::draw2d::graphics * pgraphics, ::user::interaction * pWnd, UINT nCtlColor);

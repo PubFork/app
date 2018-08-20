@@ -97,8 +97,10 @@ namespace simple_ui
          Session.get_main_monitor(rectDesktop);
 
       }
-
-      set_window_text(m_strTitle);
+      
+      string strTitle = m_strTitle;
+      
+      set_window_text(strTitle);
 
       rect rectFontopus;
 

@@ -40,15 +40,15 @@ namespace user
       virtual ~scroll_x();
 
 
-      virtual void install_message_routing(::message::sender * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface) override;
 
       virtual void send_xscroll_message(int nSBCode);
 
       //virtual void GetScrollRect(LPRECT lprect);
-      virtual void on_change_view_size();
-      virtual void on_change_viewport_offset();
+      virtual void on_change_view_size() override;
+      virtual void on_change_viewport_offset() override;
       virtual void create_x_scroll_bar(const RECT & rect);
-      virtual void layout_scroll_bar();
+      virtual void layout_scroll_bar() override;
       virtual void _001DeferCreateXScrollBar();
       virtual void _001OnDeferCreateXScrollBar();
       virtual bool validate_viewport_offset(point & pt) override;
@@ -61,7 +61,7 @@ namespace user
 
       DECL_GEN_SIGNAL(_001OnHScroll);
 
-      virtual int get_final_x_scroll_bar_width();
+      virtual int get_final_x_scroll_bar_width() override;
 
    };
 

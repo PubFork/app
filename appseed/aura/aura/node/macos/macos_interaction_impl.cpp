@@ -27,6 +27,7 @@ namespace macos
       ::aura::timer_array(get_app())
    {
 
+      m_bEnabled = true;
       set_handle(NULL);
 
    }
@@ -45,6 +46,7 @@ namespace macos
       ::aura::timer_array(papp)
    {
 
+      m_bEnabled = true;
       set_handle(NULL);
 
    }
@@ -444,6 +446,7 @@ namespace macos
       {
          IGUI_MSG_LINK(WM_PAINT, pinterface, this, &interaction_impl::_001OnPaint);
          IGUI_MSG_LINK(WM_PRINT, pinterface, this, &interaction_impl::_001OnPrint);
+         IGUI_MSG_LINK(WM_REDRAW, pinterface, this, &interaction_impl::_001OnRedraw);
       }
       m_pui->install_message_routing(pinterface);
       IGUI_MSG_LINK(WM_CREATE, pinterface, this, &interaction_impl::_001OnCreate);
@@ -2350,6 +2353,14 @@ namespace macos
       //      pobj->m_bRet = true;
       //      pbase->set_lresult(0);
    }
+   
+   
+   void interaction_impl::_001OnRedraw(::message::message * pobj)
+   {
+      
+   //      m_proundwindow
+   
+   }
 
 
    void interaction_impl::OnEnterIdle(UINT /*nWhy*/, ::user::interaction * /*pWho*/)
@@ -3469,9 +3480,11 @@ namespace macos
    }
 
 
-   bool interaction_impl::EnableWindow(bool bEnable)
+   bool interaction_impl::enable_window(bool bEnable)
    {
-
+      
+      m_bEnabled = bEnable;
+      
       return true;
 
    }
@@ -4690,7 +4703,7 @@ namespace macos
 
    void interaction_impl::round_window_mouse_down(int iButton, double x, double y)
    {
-
+      
       sp(::message::base) spbase;
 
       if (::GetActiveWindow() != get_handle())

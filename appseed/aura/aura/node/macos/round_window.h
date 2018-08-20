@@ -86,4 +86,7 @@ NSWindow * new_round_window(round_window * pwindow, CGRect rect);
 void ns_app_close();
 
 
+NSWindow * get_os_window_ns_window(oswindow hwnd);
+
+
 

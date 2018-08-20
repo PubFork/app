@@ -432,7 +432,7 @@ char * mm_browse_folder(const char * pszStartDir)
 }
 
 
-char** mm_browse_file_open(const char * pszStartDir, bool bMulti)
+char** mm_browse_file_open(const char ** pszStartDir, bool bMulti)
 {
    
    mmos * pos = [mmos get];
@@ -442,7 +442,7 @@ char** mm_browse_file_open(const char * pszStartDir, bool bMulti)
    if(pszStartDir != NULL)
    {
       
-      NSString * str = [[NSString alloc] initWithUTF8String:pszStartDir];
+      NSString * str = [[NSString alloc] initWithUTF8String:*pszStartDir];
       
       startDir = [[NSURL alloc]initWithString :str];
       
@@ -459,6 +459,8 @@ char** mm_browse_file_open(const char * pszStartDir, bool bMulti)
       
    }
    pp[i] = NULL;
+   
+   *pszStartDir = ns_string([startDir absoluteString]);
    
    return pp;
    

@@ -223,7 +223,7 @@ oswindow SetFocus(oswindow window);
 oswindow GetFocus();
 oswindow GetActiveWindow();
 oswindow SetActiveWindow(oswindow window);
-
+WINBOOL EnableWindow(oswindow hwnd, WINBOOL bEnable);
 
 //void GetMainScreenRect(LPRECT lprect);
 

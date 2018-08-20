@@ -13,6 +13,7 @@
 //
 #import "macos_mm.h"
 
+NSWindow * get_os_window_ns_window(oswindow hwnd);
 
 @implementation RoundWindow
 
@@ -352,3 +353,17 @@
 
 
 
+
+
+
+WINBOOL EnableWindow(oswindow hwnd, WINBOOL bEnable)
+{
+   
+   if(hwnd == NULL)
+      return FALSE;
+   
+   
+   
+   return TRUE;
+   
+}

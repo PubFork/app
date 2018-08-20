@@ -288,3 +288,10 @@ void nsapp_activate_ignoring_other_apps(int i)
 
 
 
+
+
+NSWindow * get_os_window_ns_window(oswindow hwnd)
+{
+   return hwnd->m_nswindow;
+   
+}

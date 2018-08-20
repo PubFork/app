@@ -4936,6 +4936,8 @@ restart:
 
    id interaction::RunModalLoop(uint32_t dwFlags)
    {
+      
+      set_need_redraw();
 
       return _001RunModalLoop(dwFlags);
 

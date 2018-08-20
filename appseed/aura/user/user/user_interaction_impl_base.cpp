@@ -728,6 +728,13 @@ namespace user
       m_rectParentClientRequest = rect;
 
       m_bShowFlags = bShowFlags;
+      
+      if(!m_pui->m_bProDevian)
+      {
+         
+         set_need_redraw();
+         
+      }
 
       set_need_redraw();
 

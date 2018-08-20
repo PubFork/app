@@ -1253,6 +1253,7 @@ namespace stra
             while(*pp != NULL)
             {
                   stra.add(::str::from_strdup(*pp));
+               pp++;
             }
 
             free(ppParam);

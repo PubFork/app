@@ -475,6 +475,16 @@ WINBOOL SetWindowRect(oswindow hwnd, LPRECT lprect)
 }
 
 
+WINBOOL EnableWindow(oswindow hwnd, WINBOOL bEnable)
+{
+   
+   if(hwnd == NULL)
+      return FALSE;
+   
+   return TRUE;
+   
+}
+
 
 
 
