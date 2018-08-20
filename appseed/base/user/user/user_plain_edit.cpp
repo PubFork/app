@@ -1,4 +1,4 @@
-#include "framework.h" // from "base/user/user.h"
+﻿#include "framework.h" // from "base/user/user.h"
 #include "aura/user/user/user_const.h"
 //#include "base/user/user.h"
 //include "aura/user/colorertake5/colorertake5.h"
@@ -1703,7 +1703,7 @@ namespace user
 
       pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
 
-      pgraphics->GetTextExtent(sizeUniText, unitext("gqYALﾍWMÍÎÄÃÄÅ"));
+      pgraphics->GetTextExtent(sizeUniText, unitext("gqYALÀWMÍÎÄÃÄÅ"));
 
       m_iLineHeight = (int)sizeUniText.cy;
 

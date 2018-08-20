@@ -729,6 +729,8 @@ namespace user
 
       m_bShowFlags = bShowFlags;
 
+      set_need_redraw();
+
       return true;
 
    }

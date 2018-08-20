@@ -1004,8 +1004,41 @@ restart:
 
       }
 
-      bool bOk = SetWindowPos(z, x, y, cx, cy, nFlags);
+      if ((nFlags & (SWP_NOSIZE | SWP_NOMOVE)) == (SWP_NOSIZE | SWP_NOMOVE))
+      {
 
+         if (nFlags & SWP_SHOWWINDOW)
+         {
+
+            if (is_this_visible())
+            {
+
+               return true;
+
+            }
+
+         }
+         else if (nFlags & SWP_SHOWWINDOW)
+         {
+
+            if (!is_this_visible())
+            {
+
+               return true;
+
+            }
+
+         }
+         else
+         {
+
+            return true;
+
+         }
+
+      }
+
+      bool bOk = SetWindowPos(z, x, y, cx, cy, nFlags);
 
       return bOk;
 
@@ -1934,7 +1967,7 @@ restart:
 
       }
 
-      if ((m_pimpl->m_bShowFlags && m_pimpl->m_iShowFlags == SWP_HIDEWINDOW)
+      if ((m_pimpl->m_bShowFlags && m_pimpl->m_iShowFlags & SWP_HIDEWINDOW)
             || (m_pimpl->m_bShowWindow && m_pimpl->m_iShowWindow == SW_HIDE))
       {
 
@@ -1942,7 +1975,7 @@ restart:
 
       }
 
-      if ((m_pimpl->m_bShowFlags && m_pimpl->m_iShowFlags == SWP_SHOWWINDOW)
+      if ((m_pimpl->m_bShowFlags && m_pimpl->m_iShowFlags & SWP_SHOWWINDOW)
             || (m_pimpl->m_bShowWindow && m_pimpl->m_iShowWindow != SW_HIDE))
       {
 

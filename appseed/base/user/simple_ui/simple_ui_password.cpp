@@ -1,4 +1,4 @@
-#include "framework.h"// from "base/user/user.h"
+﻿#include "framework.h"// from "base/user/user.h"
 //#include "base/user/user.h"
 //#include "aura/user/colorertake5/colorertake5.h"
 
@@ -188,7 +188,7 @@ namespace simple_ui
       sort::sort(iSelStart,iSelEnd);
       select_font(pgraphics, ::user::font_plain_edit);
       size size3;
-      size3 = pgraphics->GetTextExtent(unitext("gGYIﾍ"));
+      size3 = pgraphics->GetTextExtent(unitext("gGYIÁ"));
       int32_t iLineHeight = size3.cy;
 //      stringa & straLines = m_plines->lines;
       stringa & straLines = m_straLines;
