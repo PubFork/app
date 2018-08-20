@@ -29,6 +29,46 @@
 
 namespace file_watcher
 {
+   
+   
+   class watch :
+   virtual public ::object
+   {
+   public:
+      
+      
+      id                      m_id;
+      string                  m_strDirName;
+      listener *              m_plistener;
+      sp(thread)              m_pthread;
+      bool                    m_bRecursive;
+      file_watcher *          m_pwatcher;
+      
+      // index 0 is always the directory
+      //KEvent m_keventaChange[MAX_CHANGE_EVENT_SIZE];
+      
+      FSEventStreamRef m_stream;
+      //size_t m_iChangeCount;
+      
+      watch(::aura::application * papp, id watchid, const char * dirname, listener * listener, bool bRecursive);
+      virtual ~watch();
+      
+      void handle_action(const char * filename, e_action action);
+      
+      
+      static void myCallbackFunction(
+                                     ConstFSEventStreamRef streamRef,
+                                     void *clientCallBackInfo,
+                                     size_t numEvents,
+                                     void *eventPaths,
+                                     const FSEventStreamEventFlags eventFlags[],
+                                     const FSEventStreamEventId eventIds[]);
+      void addAll();
+      void removeAll();
+      
+      
+   };
+
 	/// Implementation for OSX based on kqueue.
 	/// @class os_file_watcher
 	class os_file_watcher :

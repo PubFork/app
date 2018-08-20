@@ -20,6 +20,13 @@
 
 BEGIN_EXTERN_C
 
+#ifndef WINDOWS
+
+#define _CRT_ASSERT 0
+
+#endif
+
+
 
 CLASS_DECL_AURA void windowing_output_debug_string(const char * pszDebugString);
 

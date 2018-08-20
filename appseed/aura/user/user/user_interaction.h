@@ -524,7 +524,7 @@ namespace user
 #else
       virtual bool RedrawWindow(LPCRECT lpRectUpdate = NULL,
                                 ::draw2d::region* prgnUpdate = NULL,
-                                UINT flags = 0) override;
+                                UINT flags = 0) ;
 #endif
 
 

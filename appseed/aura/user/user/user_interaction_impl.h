@@ -294,7 +294,7 @@ namespace user
 
 #else
 
-      virtual bool set_need_RedrawWindowredraw(LPCRECT lpRectUpdate = NULL,::draw2d::region* prgnUpdate = NULL,UINT flags = 0) override;
+      virtual bool RedrawWindow(LPCRECT lpRectUpdate = NULL,::draw2d::region* prgnUpdate = NULL,UINT flags = 0) override;
 
 #endif
 

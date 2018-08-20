@@ -69,25 +69,7 @@ namespace file_watcher
 //		return strcmp(((EntryStruct*)(((KEvent*)(ke1))->udata))->m_strFileName, ((EntryStruct*)(((KEvent*)(ke2))->udata))->m_strFileName);
 //	}
 	
-   class watch :
-      virtual public ::object
-	{
-   public:
-      
-      
-		id                      m_id;
-		string                  m_strDirName;
-		listener *              m_plistener;
-      sp(thread)              m_pthread;
-      bool                    m_bRecursive;
-		
-		// index 0 is always the directory
-		//KEvent m_keventaChange[MAX_CHANGE_EVENT_SIZE];
-      
-      FSEventStreamRef m_stream;
-		//size_t m_iChangeCount;
-		
-      watch(::aura::application * papp, id watchid, const char * dirname, listener * listener, bool bRecursive) :
+   watch::watch(::aura::application * papp, id watchid, const char * dirname, listener * listener, bool bRecursive) :
       ::object(papp),
       m_id(watchid),
       m_strDirName(dirname),
@@ -99,7 +81,7 @@ namespace file_watcher
 			addAll();
 		}
       
-      ~watch()
+      watch::~watch()
       {
          removeAll();
          
@@ -234,13 +216,13 @@ namespace file_watcher
 //			closedir(dir);
 //		};
 		
-		void handle_action(const char * filename, e_action action)
+		void watch::handle_action(const char * filename, e_action action)
 		{
          m_plistener->handle_file_action(m_id, ::file::path(filename).folder(), ::file::path(filename).name(), action);
 		}
 		
       
-      static void myCallbackFunction(
+      void watch::myCallbackFunction(
                       ConstFSEventStreamRef streamRef,
                       void *clientCallBackInfo,
                       size_t numEvents,
@@ -297,7 +279,7 @@ namespace file_watcher
             //eventIds[i], paths[i], eventFlags[i]);
          }
       }
-		void addAll()
+		void watch::addAll()
 		{
          
          
@@ -389,7 +371,7 @@ namespace file_watcher
 //			closedir(dir);
 		}
 		
-		void removeAll()
+		void watch::removeAll()
 		{
          
          FSEventStreamStop(m_stream);
@@ -417,7 +399,6 @@ namespace file_watcher
 		}
       
 
-	};
 	
 //   bool os_file_watcher::step()
 //   {
