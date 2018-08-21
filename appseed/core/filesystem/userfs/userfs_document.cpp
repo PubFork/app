@@ -32,6 +32,8 @@ namespace userfs
 
    bool document::browse(const char * pszFolder, ::action::context actioncontext)
    {
+      
+      ::file::path pathFolder(pszFolder);
 
       {
          
@@ -40,7 +42,7 @@ namespace userfs
          m_pathFolder = pszFolder;
 
       }
-
+      
       if(m_listingRoot.is_empty())
       {
 
@@ -71,7 +73,9 @@ namespace userfs
 
          ::file::listing listing(get_fs_data());
          
-         listing.ls(pszFolder);
+         pathFolder = System.defer_process_path(pathFolder, get_app());
+         
+         listing.ls(pathFolder);
 
          {
 

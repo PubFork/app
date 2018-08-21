@@ -1961,7 +1961,52 @@ RetryBuildNumber:
 
    }
 
-
+   
+   ::file::path system::defer_make_file_system_url(string str, ::aura::application * papp)
+   {
+      
+      auto & dir =Sys(papp).dir();
+      
+      if(::file::begins_eat_ci(str, dir.image()))
+      {
+         
+         return ::file::path("image://") / str;
+         
+      }
+      else if(::file::begins_eat_ci(str, dir.music()))
+      {
+         
+         return ::file::path("music://") / str;
+         
+      }
+      else if(::file::begins_eat_ci(str, dir.video()))
+      {
+         
+         return ::file::path("video://") / str;
+         
+      }
+      else if(::file::begins_eat_ci(str, dir.document()))
+      {
+         
+         return ::file::path("document://") / str;
+         
+      }
+      else if(::file::begins_eat_ci(str, dir.download()))
+      {
+         
+         return ::file::path("download://") / str;
+         
+      }
+      else
+      {
+         
+         return str;
+         
+      }
+      
+   }
+   
+   
    ::file::path system::defer_process_path(::file::path path, ::aura::application * papp)
    {
 

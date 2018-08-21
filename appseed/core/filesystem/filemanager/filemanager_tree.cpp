@@ -483,6 +483,8 @@ namespace filemanager
          //pitemChild->m_iImageSelected = -1;
 
          pitemChild->m_filepath = path;
+         
+         pitemChild->m_filepathEx = System.defer_make_file_system_url(path, get_app());
 
          pitemChild->m_strName = name;
 
@@ -585,6 +587,8 @@ namespace filemanager
                   pitemChild = canew(::userfs::item(this));
 
                   pitemChild->m_filepath = path;
+                  
+                  pitemChild->m_filepathEx = System.defer_make_file_system_url(path, get_app());
 
                   pitemChild->m_strName = pathName;
 

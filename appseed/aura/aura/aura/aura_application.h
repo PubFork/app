@@ -216,6 +216,9 @@ namespace aura
 
       virtual string get_title();
       virtual stringa get_categories();
+      
+      
+      virtual bool is_equal_file_path(const ::file::path & p1, const ::file::path & p2);
 
 
       virtual bool on_run_exception(::exception::exception * pe) override;

@@ -11,7 +11,7 @@
 #include "aura/aura/os/os.h"
 #include "aura/aura/os/os_os.h"
 
-
+char * ns_realpath(const char * pszPath);
 char * mm_ca2_command_line();
 
 
@@ -222,8 +222,18 @@ void window_copy(LPRECT lprect, const CGRect & rectSrc)
 
 
 
-bool __node_further_file_is_equal(file::path const&, file::path const&)
+bool __node_further_file_is_equal(file::path const & p1 , file::path const & p2)
 {
-   return false;
+   
+   return __node_full_file_path(p1).compare_ci(__node_full_file_path(p2)) == 0;
 
+}
+
+
+
+::file::path __node_full_file_path(file::path path)
+{
+   
+   return ::str::from_strdup(ns_realpath(path));
+   
 }

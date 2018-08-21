@@ -7450,6 +7450,26 @@ run:
       post_message(WM_QUIT);
 
    }
+   
+   
+   bool application::is_equal_file_path(const ::file::path & p1, const ::file::path & p2)
+   {
+      
+      ::file::path path1;
+      
+      ::file::path path2;
+      
+      path1 = System.defer_process_path(p1, this);
+      
+      path2 = System.defer_process_path(p2, this);
+      
+      path1 = __node_full_file_path(path1);
+      
+      path2 = __node_full_file_path(path2);
+      
+      return strcmp(path1, path2) == 0;
+      
+   }
 
 
 } // namespace aura

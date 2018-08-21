@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 namespace file
 {
@@ -359,6 +359,8 @@ namespace file
       return '\\';
 
    }
+   
+   CLASS_DECL_AURA bool begins_eat_ci(string & str, const char * lpcszPrefix);
 
 } // namespace file
 
@@ -382,6 +384,8 @@ inline UINT HashKey<const ::file::path &>(const ::file::path &  key)
 
 }
 
+
+CLASS_DECL_AURA ::file::path __node_full_file_path(file::path path);
 
 
 

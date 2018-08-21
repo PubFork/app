@@ -87,12 +87,12 @@ namespace filemanager
 
       _001GetText(strOld);
 
-      string strPath = get_filemanager_item()->m_filepath;
+      string strPath = get_filemanager_item()->get_friendly_path();
 
       if (strOld == strPath)
          return;
 
-      _001SetText(get_filemanager_item()->m_filepath, actioncontext);
+      _001SetText(get_filemanager_item()->get_friendly_path(), actioncontext);
 
    }
 

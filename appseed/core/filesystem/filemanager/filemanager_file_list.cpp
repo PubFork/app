@@ -1020,25 +1020,32 @@ namespace filemanager
                strFileCheck += pdata->m_itema.get_item(i).m_filepath + ",";
                strFileCheck += Application.file().length(pdata->m_itema.get_item(i).m_filepath).get_string() + ",";
                strFileCheck += Application.file().md5(pdata->m_itema.get_item(i).m_filepath) + "\n";
+               
             }
+            
          }
+         
       }
 
       ::datetime::time time = ::datetime::time::get_current_time();
 
       string strTime;
+      
       strTime.Format("%04d-%02d-%02d %02d-%02d",
                      time.GetYear(),
                      time.GetMonth(),
                      time.GetDay(),
                      time.GetHour(),
                      time.GetMinute());
+      
       string strBase = get_filemanager_item()->m_filepath / "spafy_";
+      
       string strList = strBase + "list_" + strTime + ".txt";
+      
       string strCheck = strBase + "check_" + strTime + ".txt";
 
-
       Application.file().put_contents(strList, strFileList);
+      
       Application.file().put_contents(strCheck, strFileCheck);
 
    }
@@ -1046,7 +1053,9 @@ namespace filemanager
 
    void file_list::_001OnAfterSort()
    {
+      
       data_set_DisplayToStrict();
+      
    }
 
 
@@ -1056,50 +1065,31 @@ namespace filemanager
       UNREFERENCED_PARAMETER(psz);
 
       if (!IsWindowVisible())
+      {
+         
          return;
+         
+      }
 
    }
 
 
    void file_list::_001OnShowWindow(::message::message * pobj)
    {
+      
       SCAST_PTR(::message::show_window, pshowwindow, pobj);
 
-      if (!pshowwindow->m_bShow)
-      {
-         //      System.simple_message_box("hide");
-      }
-
       UNREFERENCED_PARAMETER(pobj);
-      //      SCAST_PTR(::message::show_window, pshow, pobj);
-
-      db_server * pcentral = dynamic_cast <db_server *> (&System.m_psimpledb->db());
-      if (pcentral == NULL)
-         return;
-      //DBFileSystemSizeSet * pset = pcentral->m_pfilesystemsizeset;
-      /*if(pshow->m_bShow)
-      {
-      for(int32_t i = 0; i < m_itema.get_item_count(); i++)
-      {
-      pset->m_table.add_request(m_itema.get_item(i).m_strPath);
-      }
-      }
-      else
-      {
-      for(int32_t i = 0; i < m_itema.get_item_count(); i++)
-      {
-      pset->m_table.remove_request(m_itema.get_item(i).m_strPath);
-      }
-      }*/
 
    }
 
+   
    id file_list::data_get_current_list_layout_id()
    {
+      
       return get_filemanager_item()->m_filepath;
+      
    }
-
-
 
 
    void file_list::browse_sync(::action::context actioncontext)
@@ -1125,10 +1115,13 @@ namespace filemanager
 
             if (Application.dir().is(stra[i]))
             {
+               
                item.m_flags.signalize(::fs::FlagFolder);
+               
             }
             else
             {
+               
             }
 
             ::file::path strPath = stra[i];
@@ -1136,13 +1129,6 @@ namespace filemanager
             string strName = strPath.name();
 
             item.m_filepath = strPath;
-
-            //item.m_iImage = Session.userex()->shell()->get_image(
-            //   get_handle(),
-            //   item.filepath,
-            //   get_document()->get_fs_data()->is_dir(item.m_filepath) ?
-            //      ::user::shell::file_attribute_directory : ::user::shell::file_attribute_normal,
-            //      ::user::shell::icon_normal);
 
             item.m_strName = strName;
 
@@ -1158,17 +1144,23 @@ namespace filemanager
 
       if (get_filemanager_data()->m_bSetBergedgeTopicFile)
       {
+         
          SetTimer(888888, 230, NULL);
+         
       }
-
 
       stringa straStrictOrder;
 
       data_load(data_get_current_sort_id() + "." + data_get_current_list_layout_id() + ".straStrictOrder", straStrictOrder);
+      
       index_biunique iaDisplayToStrict;
+      
       icon_layout iconlayout;
+      
       data_get(data_get_current_sort_id() + "." + data_get_current_list_layout_id(), iconlayout);
+      
       iaDisplayToStrict = iconlayout.m_iaDisplayToStrict;
+      
       index_biunique iaDisplayToStrictNew;
 
       ::userfs::list_item item(get_app());
@@ -1177,26 +1169,22 @@ namespace filemanager
 
       ::file::path pathParentEx = get_filemanager_item()->get_friendly_path();
 
-      if (str::begins_eat_ci(pathParentEx, System.dir().music()))
-      {
-
-         pathParentEx = "music://" / pathParentEx;
-
-      }
+//      if (str::begins_eat_ci(pathParentEx, System.dir().music()))
+//      {
+//
+//         pathParentEx = "music://" / pathParentEx;
+//
+//      }
+      
+      pathParentEx = System.defer_make_file_system_url(pathParentEx, get_app());
 
       int32_t iMaxSize;
+      
       iMaxSize = 1000;
 
       int32_t iSize;
+      
       iSize = 0;
-
-      //{
-
-      //   synch_lock lock(get_fs_mesh_data()->m_pmutex);
-
-      //   get_fs_mesh_data()->m_itema.m_itema.remove_all();
-
-      //}
 
       m_pathaStrictOrder.remove_all();
 
@@ -1204,7 +1192,7 @@ namespace filemanager
 
       {
 
-         sync_object *pm = get_fs_mesh_data()->m_pmutex;
+         sync_object * pm = get_fs_mesh_data()->m_pmutex;
 
          synch_lock lock(pm);
 
@@ -1221,10 +1209,13 @@ namespace filemanager
 
             if (spitem.is_null())
             {
+               
                spitem.alloc(allocer());
+               
             }
             else
             {
+               
                spitem->m_flags.unsignalize_all();
 
             }
@@ -1248,14 +1239,20 @@ namespace filemanager
             }
 
             spitem->m_filepath = fullpath;
-            spitem->m_filepathEx = pathParentEx / fullpath.name();
-            //spitem->m_iImage = Session.userex()->shell()->get_image(
-            //   get_handle(),
-            //   path,
-            //   path.m_iDir == 1 ?
-            //   ::user::shell::file_attribute_directory : ::user::shell::file_attribute_normal,
-            //   ::user::shell::icon_normal);
-
+            
+            if(pathParentEx.is_empty())
+            {
+               
+               spitem->m_filepathEx = System.defer_make_file_system_url(fullpath, get_app());
+               
+            }
+            else
+            {
+               
+               spitem->m_filepathEx = pathParentEx / fullpath.name();
+               
+            }
+            
             spitem->m_strName = listing.name(i);
 
 

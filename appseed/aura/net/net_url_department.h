@@ -43,7 +43,7 @@ namespace url
       string object_get_query(const char *); // id=1
 
       bool is_url(const char * pszCandidate);
-
+      
       string object(const char * pszScript, const char * pszQuery);
       string object_set(const char * pszObject, const char * pszKey, var var);
 

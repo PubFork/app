@@ -478,11 +478,11 @@ namespace file_watcher
 	//--------
 	os_file_watcher::~os_file_watcher()
 	{
-		watch_map::pair * ppair = m_watchmap.PGetFirstAssoc();
-		for(; ppair != NULL; ppair = m_watchmap.PGetNextAssoc(ppair))
-		{
-			delete ppair->m_element2;
-		}
+//      watch_map::pair * ppair = m_watchmap.PGetFirstAssoc();
+//      for(; ppair != NULL; ppair = m_watchmap.PGetNextAssoc(ppair))
+//      {
+//         delete ppair->m_element2;
+//      }
 		m_watchmap.remove_all();
 		
 		close(mDescriptor);

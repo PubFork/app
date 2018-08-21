@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 namespace filemanager
@@ -270,7 +270,6 @@ namespace filemanager
             sp(simple_frame_window) pwnd = (pview->GetParentFrame());
 
             pwndTopLevel = (pview->GetTopLevelFrame());
-
 
             if (Application.dir().is(pathFolder))
             {

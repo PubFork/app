@@ -5,6 +5,8 @@
 //  Created by Camilo Sasuke Tsumanuma on 04/01/18. with tbs in <3
 //
 
+#import "NSString+SymlinksAndAliases.h"
+
 char * ns_string(NSString * str)
 {
    
@@ -74,3 +76,22 @@ char * mm_error_description(OSStatus status)
 
 
 
+
+
+char * ns_realpath(const char * pszPath)
+{
+   
+   NSString * str = [[NSString alloc] initWithUTF8String:pszPath];
+   
+   NSString * strFullPath = [str stringByResolvingSymlinksAndAliases];
+   
+   if(strFullPath == nil)
+   {
+    
+      return strdup(pszPath);
+      
+   }
+   
+   return ns_string(strFullPath);
+   
+}

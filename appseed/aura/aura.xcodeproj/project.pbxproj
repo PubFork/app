@@ -1306,7 +1306,6 @@
 		9A6FAF011F5C77F800AF31B2 /* aura.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A6FAEF61F5C77F800AF31B2 /* aura.h */; };
 		9A6FAF021F5C77F800AF31B2 /* factory.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A6FAEF71F5C77F800AF31B2 /* factory.h */; };
 		9A6FAF031F5C77F800AF31B2 /* filestream.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A6FAEF81F5C77F800AF31B2 /* filestream.h */; };
-		9A6FAF041F5C77F800AF31B2 /* geometry_quaternions.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A6FAEF91F5C77F800AF31B2 /* geometry_quaternions.h */; };
 		9A6FAF051F5C77F800AF31B2 /* version.config.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A6FAEFA1F5C77F800AF31B2 /* version.config.h */; };
 		9A6FAF061F5C77F800AF31B2 /* version.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAEFB1F5C77F800AF31B2 /* version.cpp */; };
 		9A6FAF071F5C77F800AF31B2 /* version.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A6FAEFC1F5C77F800AF31B2 /* version.h */; };
@@ -2143,6 +2142,8 @@
 		9AEB6A681F81E5C200F40B32 /* apple_exe_path.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB6A671F81E5C200F40B32 /* apple_exe_path.cpp */; };
 		9AEB6A691F81E5C700F40B32 /* apple_exe_path.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB6A671F81E5C200F40B32 /* apple_exe_path.cpp */; };
 		9AED553C209AEA5100F08971 /* macos_file.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9AED553B209AEA5100F08971 /* macos_file.mm */; };
+		9AEDECE2212C486A00952A06 /* NSString+SymlinksAndAliases.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AEDECE0212C486800952A06 /* NSString+SymlinksAndAliases.h */; };
+		9AEDECE3212C486A00952A06 /* NSString+SymlinksAndAliases.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9AEDECE1212C486900952A06 /* NSString+SymlinksAndAliases.mm */; };
 		9AEEADB619C4E10900866C9E /* simple_message_box.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AEEADB419C4E10900866C9E /* simple_message_box.h */; };
 		9AF4BEBF1F832FCC00197385 /* apple_main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4BEBE1F832FCC00197385 /* apple_main.cpp */; };
 		9AF4BEC11F83303800197385 /* apple_main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4BEBE1F832FCC00197385 /* apple_main.cpp */; };
@@ -3596,7 +3597,6 @@
 		9A6FAEF61F5C77F800AF31B2 /* aura.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura.h; sourceTree = "<group>"; };
 		9A6FAEF71F5C77F800AF31B2 /* factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = factory.h; sourceTree = "<group>"; };
 		9A6FAEF81F5C77F800AF31B2 /* filestream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filestream.h; sourceTree = "<group>"; };
-		9A6FAEF91F5C77F800AF31B2 /* geometry_quaternions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = geometry_quaternions.h; sourceTree = "<group>"; };
 		9A6FAEFA1F5C77F800AF31B2 /* version.config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = version.config.h; sourceTree = "<group>"; };
 		9A6FAEFB1F5C77F800AF31B2 /* version.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = version.cpp; sourceTree = "<group>"; };
 		9A6FAEFC1F5C77F800AF31B2 /* version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = version.h; sourceTree = "<group>"; };
@@ -4170,6 +4170,8 @@
 		9AEB6A051F81D91400F40B32 /* apple_time.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = apple_time.h; sourceTree = "<group>"; };
 		9AEB6A671F81E5C200F40B32 /* apple_exe_path.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = apple_exe_path.cpp; sourceTree = "<group>"; };
 		9AED553B209AEA5100F08971 /* macos_file.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = macos_file.mm; sourceTree = "<group>"; };
+		9AEDECE0212C486800952A06 /* NSString+SymlinksAndAliases.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SymlinksAndAliases.h"; sourceTree = "<group>"; };
+		9AEDECE1212C486900952A06 /* NSString+SymlinksAndAliases.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSString+SymlinksAndAliases.mm"; sourceTree = "<group>"; };
 		9AEEADB319C4E10900866C9E /* simple_message_box.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simple_message_box.cpp; sourceTree = "<group>"; };
 		9AEEADB419C4E10900866C9E /* simple_message_box.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simple_message_box.h; sourceTree = "<group>"; };
 		9AF4BEAA1F832BD600197385 /* libios_axisidn.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libios_axisidn.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4445,19 +4447,19 @@
 		07502C901B2490EE008D207C /* filesystem */ = {
 			isa = PBXGroup;
 			children = (
-				9A6FB0741F5C7A0C00AF31B2 /* filesystem_application.cpp */,
-				9A6FB0751F5C7A0C00AF31B2 /* filesystem_dir_application.cpp */,
-				9A6FB0771F5C7A0C00AF31B2 /* filesystem_dir_system.cpp */,
-				9A6FB0781F5C7A0C00AF31B2 /* filesystem_listing.cpp */,
-				9A6FB0791F5C7A0C00AF31B2 /* filesystem_path.cpp */,
-				9A6FB07A1F5C7A0C00AF31B2 /* filesystem_system.cpp */,
-				9A6FB0761F5C7A0C00AF31B2 /* filesystem_dir_system_heap.h */,
 				9A6FB07B1F5C7A0C00AF31B2 /* filesystem.h */,
+				9A6FB0741F5C7A0C00AF31B2 /* filesystem_application.cpp */,
 				07502C921B24911C008D207C /* filesystem_application.h */,
+				9A6FB0751F5C7A0C00AF31B2 /* filesystem_dir_application.cpp */,
 				07502C931B24911C008D207C /* filesystem_dir_application.h */,
+				9A6FB0771F5C7A0C00AF31B2 /* filesystem_dir_system.cpp */,
 				07502C941B24911C008D207C /* filesystem_dir_system.h */,
+				9A6FB0761F5C7A0C00AF31B2 /* filesystem_dir_system_heap.h */,
+				9A6FB0781F5C7A0C00AF31B2 /* filesystem_listing.cpp */,
 				07502C951B24911C008D207C /* filesystem_listing.h */,
+				9A6FB0791F5C7A0C00AF31B2 /* filesystem_path.cpp */,
 				07502C961B24911C008D207C /* filesystem_path.h */,
+				9A6FB07A1F5C7A0C00AF31B2 /* filesystem_system.cpp */,
 				07502C971B24911C008D207C /* filesystem_system.h */,
 			);
 			name = filesystem;
@@ -4470,36 +4472,35 @@
 				9A02550B1EA593AB003C82CF /* http */,
 				9A02554D1EA593AB003C82CF /* netserver */,
 				9A0255541EA593AB003C82CF /* sockets */,
-				9A6FAF081F5C783900AF31B2 /* net_address.cpp */,
-				9A6FAF091F5C783900AF31B2 /* net_email_address.cpp */,
-				9A6FAF0A1F5C783900AF31B2 /* net_email_department.cpp */,
-				9A6FAF0B1F5C783900AF31B2 /* net_email.cpp */,
-				9A6FAF0C1F5C783900AF31B2 /* net_ip_enum.cpp */,
-				9A6FAF0D1F5C783900AF31B2 /* net_net.cpp */,
-				9A6FAF0E1F5C783900AF31B2 /* net_port_forward.cpp */,
-				9A6FAF0F1F5C783900AF31B2 /* net_sockets.cpp */,
-				9A6FAF101F5C783900AF31B2 /* net_url_department.cpp */,
-				9A6FAF111F5C783900AF31B2 /* net_url_domain.cpp */,
-				07502CA41B251B0A008D207C /* net_url.cpp */,
 				9A6FAEF41F5C77F800AF31B2 /* all.h */,
 				9A6FAEF61F5C77F800AF31B2 /* aura.h */,
 				9A6FAEF71F5C77F800AF31B2 /* factory.h */,
 				9A6FAEF81F5C77F800AF31B2 /* filestream.h */,
-				9A6FAEF91F5C77F800AF31B2 /* geometry_quaternions.h */,
 				9A6FAEFA1F5C77F800AF31B2 /* version.config.h */,
 				9A6FAEFC1F5C77F800AF31B2 /* version.h */,
 				9A0255351EA593AB003C82CF /* net_address.h */,
+				9A6FAF081F5C783900AF31B2 /* net_address.cpp */,
 				9A0255361EA593AB003C82CF /* net_byte_order.h */,
+				9A6FAF091F5C783900AF31B2 /* net_email_address.cpp */,
 				9A0255381EA593AB003C82CF /* net_email_address.h */,
+				9A6FAF0A1F5C783900AF31B2 /* net_email_department.cpp */,
 				9A02553A1EA593AB003C82CF /* net_email_department.h */,
+				9A6FAF0B1F5C783900AF31B2 /* net_email.cpp */,
 				9A02553C1EA593AB003C82CF /* net_email.h */,
+				9A6FAF0C1F5C783900AF31B2 /* net_ip_enum.cpp */,
 				9A02553E1EA593AB003C82CF /* net_ip_enum.h */,
+				9A6FAF0D1F5C783900AF31B2 /* net_net.cpp */,
 				9A0255401EA593AB003C82CF /* net_net.h */,
 				9A0255411EA593AB003C82CF /* net_open_weather_city.h */,
+				9A6FAF0E1F5C783900AF31B2 /* net_port_forward.cpp */,
 				9A0255431EA593AB003C82CF /* net_port_forward.h */,
+				9A6FAF0F1F5C783900AF31B2 /* net_sockets.cpp */,
 				9A0255451EA593AB003C82CF /* net_sockets.h */,
+				9A6FAF101F5C783900AF31B2 /* net_url_department.cpp */,
 				9A0255471EA593AB003C82CF /* net_url_department.h */,
+				9A6FAF111F5C783900AF31B2 /* net_url_domain.cpp */,
 				9A0255491EA593AB003C82CF /* net_url_domain.h */,
+				07502CA41B251B0A008D207C /* net_url.cpp */,
 				9A02554A1EA593AB003C82CF /* net_url.h */,
 				9A02554B1EA593AB003C82CF /* net.h */,
 				9A02554C1EA593AB003C82CF /* net.inl */,
@@ -6354,6 +6355,8 @@
 				9A0974711F223D2E00CFA833 /* DDInvocationGrabber.mm */,
 				9A0974721F223D2E00CFA833 /* NSObject+DDExtensions.h */,
 				9A0974731F223D2E00CFA833 /* NSObject+DDExtensions.mm */,
+				9AEDECE0212C486800952A06 /* NSString+SymlinksAndAliases.h */,
+				9AEDECE1212C486900952A06 /* NSString+SymlinksAndAliases.mm */,
 				9A0974741F223D2E00CFA833 /* UncaughtExceptionHandler.h */,
 				9A0974751F223D2E00CFA833 /* UncaughtExceptionHandler.mm */,
 			);
@@ -7554,6 +7557,7 @@
 				9AF4C3531F836F8300197385 /* aura_file_watcher_impl.h in Headers */,
 				9AF4C3931F836F8400197385 /* aura_os.h in Headers */,
 				9AF4C3CF1F836F8400197385 /* aura_trace.h in Headers */,
+				9AEDECE2212C486A00952A06 /* NSString+SymlinksAndAliases.h in Headers */,
 				9A1641EC19C4A4CE00966C5E /* exception2.h in Headers */,
 				9A6FADBB1F5C768E00AF31B2 /* str.h in Headers */,
 				9A16422719C4A4CE00966C5E /* exception_os.h in Headers */,
@@ -8069,7 +8073,6 @@
 				9A16422519C4A4CE00966C5E /* exception_operation_canceled.h in Headers */,
 				9A1643B819C4A4CF00966C5E /* windows_thread.h in Headers */,
 				9AE47F9B20D098E800648DFD /* user_prelude.h in Headers */,
-				9A6FAF041F5C77F800AF31B2 /* geometry_quaternions.h in Headers */,
 				9AE7256717E83B69003E47F9 /* primitive_interlocked_long_pulse.h in Headers */,
 				9A16452519C4A4CF00966C5E /* xml_parse_info.h in Headers */,
 				07B094BA18495C2A007A0560 /* collection_comparable_primitive_array.h in Headers */,
@@ -9538,6 +9541,7 @@
 				9A6FAF681F5C78BC00AF31B2 /* sockets_tls_socket.cpp in Sources */,
 				9A6FAF921F5C794100AF31B2 /* ftp_output_stream.cpp in Sources */,
 				9A6FABDD1F5C70BE00AF31B2 /* exception_os.cpp in Sources */,
+				9AEDECE3212C486A00952A06 /* NSString+SymlinksAndAliases.mm in Sources */,
 				9A6FAF811F5C792B00AF31B2 /* http_ostream.cpp in Sources */,
 				9AF4C3A71F836F8400197385 /* aura_session.cpp in Sources */,
 				9A6FAE671F5C773700AF31B2 /* datetime_file_time.cpp in Sources */,

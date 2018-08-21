@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 
@@ -537,7 +537,7 @@ namespace filemanager
 
       }
 
-      ::fork(get_app(), [=]()
+      fork([=]()
       {
 
          full_browse(strPath, actioncontext);
@@ -575,10 +575,11 @@ namespace filemanager
 
    }
 
+   
    void manager::OnFileManagerBrowse(::action::context actioncontext)
    {
 
-      string strPath = m_item->m_filepath;
+      string strPath = System.defer_make_file_system_url(m_item->get_friendly_path(), get_app());
 
       start_full_browse(strPath, actioncontext);
 

@@ -242,7 +242,7 @@ namespace filemanager
 
          }
 
-         stra.add(pdoc->m_strManagerId + ":" + pdoc->get_filemanager_item()->m_filepath);
+         stra.add(pdoc->m_strManagerId + ":" + pdoc->get_filemanager_item()->m_filepathEx);
 
       }
 

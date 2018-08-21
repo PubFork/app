@@ -148,3 +148,16 @@ uint64_t flen_dup(FILE *str)
 
 
 
+#ifndef __APPLE__
+
+::file::path __node_full_file_path(file::path path)
+{
+   
+   return realpath(path);
+   
+}
+
+#endif
+
+
+

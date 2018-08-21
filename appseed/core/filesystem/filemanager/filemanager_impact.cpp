@@ -105,7 +105,7 @@ namespace filemanager
             }
             else if(puh->is_type_of(update_hint::TypeSynchronizePath))
             {
-               if(puh->m_filepath == get_filemanager_item()->m_filepath)
+               if(Application.is_equal_file_path(puh->m_filepath, get_filemanager_item()->m_filepath))
                {
 #define DBG_LOOP  1
                   for (index i = 0; i < DBG_LOOP; i++)

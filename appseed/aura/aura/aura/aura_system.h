@@ -429,7 +429,9 @@ namespace aura
       class ::crypto::crypto                       & crypto();
 
       virtual void * & ftlibrary();
-
+      
+      virtual ::file::path defer_make_file_system_url(string str, ::aura::application * papp);
+      
       virtual ::file::path defer_process_path(::file::path path, ::aura::application * papp);
 
       virtual ::file::path defer_process_matter_path(::file::path path, ::aura::application * papp);
