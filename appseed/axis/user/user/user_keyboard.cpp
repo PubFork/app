@@ -110,6 +110,18 @@ namespace user
       System.set_enum_name(key_numpad_8, "key_numpad_8");
       System.set_enum_name(key_numpad_9, "key_numpad_9");
       System.set_enum_name(key_print_screen,"key_print_screen");
+      System.set_enum_name(key_f1, "key_f1");
+      System.set_enum_name(key_f2, "key_f2");
+      System.set_enum_name(key_f3, "key_f3");
+      System.set_enum_name(key_f4, "key_f4");
+      System.set_enum_name(key_f5, "key_f5");
+      System.set_enum_name(key_f6, "key_f6");
+      System.set_enum_name(key_f7, "key_f7");
+      System.set_enum_name(key_f8, "key_f8");
+      System.set_enum_name(key_f9, "key_f9");
+      System.set_enum_name(key_f10, "key_f10");
+      System.set_enum_name(key_f11, "key_f11");
+      System.set_enum_name(key_f12, "key_f12");
 
    }
    keyboard::~keyboard()

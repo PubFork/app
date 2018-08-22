@@ -32,9 +32,11 @@ namespace file_watcher
 {
 
    /// watch
-   struct CLASS_DECL_AURA  watch :
-      virtual simple_object
+   class CLASS_DECL_AURA  watch :
+      virtual public simple_object
    {
+   public:
+
 
       id                   m_id;
       OVERLAPPED           m_overlapped;

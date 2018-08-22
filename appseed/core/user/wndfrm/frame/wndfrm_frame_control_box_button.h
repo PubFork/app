@@ -20,16 +20,19 @@ namespace user
 
 
             control_box *     m_pcontrolbox;
-            
-            
+
+
             control_box_button(::aura::application * papp);
             virtual ~control_box_button();
 
 
             virtual void UpdateWndRgn();
-            
-            
+
+
             void _001OnClip(::draw2d::graphics * pgraphics);
+
+
+            virtual bool keyboard_focus_is_focusable() override;
 
 
          };

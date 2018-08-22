@@ -4,7 +4,7 @@
 namespace user
 {
 
-   
+
    namespace wndfrm
    {
 
@@ -12,18 +12,18 @@ namespace user
       namespace frame
       {
 
-         
+
          control_box_button::control_box_button(::aura::application * papp) :
             object(papp),
             ::user::button(papp)
          {
-            
+
          }
-         
-         
+
+
          control_box_button::~control_box_button()
          {
-            
+
          }
 
 
@@ -132,6 +132,15 @@ namespace user
 
          }
 
+
+         bool control_box_button::keyboard_focus_is_focusable()
+         {
+
+            return false;
+
+         }
+
+
       } // namespace frame
 
 
@@ -139,21 +148,6 @@ namespace user
 
 
 } // namespace user
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

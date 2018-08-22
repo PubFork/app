@@ -105,3 +105,16 @@ namespace process
 
 
 } // namespace process
+
+
+
+::file::path __node_full_file_path(file::path path)
+{
+
+   WCHAR wszPath[8192];
+
+   DWORD dw = GetFullPathNameW(L"\\\\?\\"+wstring(path), sizeof(wszPath) / sizeof(WCHAR), wszPath, NULL);
+
+   return wszPath;
+
+}

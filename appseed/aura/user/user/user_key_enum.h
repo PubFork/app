@@ -10,11 +10,11 @@
 
 namespace user
 {
-   
-   
+
+
    enum e_key
    {
-      
+
       key_none,
       key_refer_to_text_member,
       key_0,
@@ -108,10 +108,22 @@ namespace user
       key_numpad_8,
       key_numpad_9,
       key_print_screen,
-      
+      key_f1,
+      key_f2,
+      key_f3,
+      key_f4,
+      key_f5,
+      key_f6,
+      key_f7,
+      key_f8,
+      key_f9,
+      key_f10,
+      key_f11,
+      key_f12,
+
    };
-   
-   
+
+
 } // namespace user
 
 

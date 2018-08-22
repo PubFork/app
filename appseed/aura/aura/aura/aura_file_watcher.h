@@ -42,7 +42,7 @@ namespace file_watcher
 
    // forward declarations
    class file_watcher_impl;
-   struct listener;
+   class listener;
 
    /// Base exception class
    /// @class Exception
