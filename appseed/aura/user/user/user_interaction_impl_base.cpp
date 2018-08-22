@@ -1282,8 +1282,15 @@ namespace user
    LRESULT interaction_impl_base::message_call(UINT uiMessage, WPARAM wparam, lparam lparam)
    {
 
-      smart_pointer < ::message::base > spbase;
+      if(m_pui == NULL)
+      {
+         
+         return 0;
+         
+      }
 
+      smart_pointer < ::message::base > spbase;
+      
       spbase = m_pui->get_message_base(uiMessage, wparam, lparam);
 
       if (m_pui->WfiIsMoving())

@@ -1074,12 +1074,12 @@ namespace filemanager
    }
 
 
-   void file_list::_001OnShowWindow(::message::message * pobj)
+   void file_list::_001OnShowWindow(::message::message * pmessage)
    {
       
-      SCAST_PTR(::message::show_window, pshowwindow, pobj);
+      //SCAST_PTR(::message::show_window, pshowwindow, pmessage);
 
-      UNREFERENCED_PARAMETER(pobj);
+      UNREFERENCED_PARAMETER(pmessage);
 
    }
 

@@ -81,7 +81,7 @@ namespace user
 
       virtual bool create_control(class control_descriptor * pdescriptor) override;
 
-      virtual bool get_element_rect(LPRECT lprect, e_element eelement);
+      virtual bool get_element_rect(LPRECT lprect, e_element eelement) override;
       virtual e_element hit_test(point pt);
 
 

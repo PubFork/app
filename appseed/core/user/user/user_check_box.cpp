@@ -301,7 +301,7 @@ namespace user
 
       }
 
-      ::check::e_check echeck = _001GetCheck();
+      //::check::e_check echeck = _001GetCheck();
 
       ::draw2d::savedc savedc(pgraphics);
 
@@ -365,7 +365,7 @@ namespace user
       if (dTime < m_dPeriod)
       {
 
-         double dFinal = 1.0;
+         //double dFinal = 1.0;
 
          bool bComplement;
 
@@ -637,10 +637,12 @@ namespace user
    }
 
 
-   void check_box::_001OnMouseMove(::message::message * pobj)
+   void check_box::_001OnMouseMove(::message::message * pmessage)
    {
 
-      SCAST_PTR(::message::mouse, pmouse, pobj);
+      //SCAST_PTR(::message::mouse, pmouse, pmessage);
+      
+      UNREFERENCED_PARAMETER(pmessage);
 
       if (m_iHover < 0)
       {

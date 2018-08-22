@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 namespace hotplugin
@@ -49,10 +49,9 @@ namespace hotplugin
       int x = v % rectBar.width();
 
       ::rect rectBrick(left + x, rectBar.top, left + x + w, rectBar.bottom);
+
       ::rect rectDraw;
 
-      int32_t cx = width(rect);
-      int32_t cy = height(rect);
       pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
       string str(strEntryHallText);

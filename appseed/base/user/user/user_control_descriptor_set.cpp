@@ -96,7 +96,7 @@ namespace user
    //}
 
 
-   class control_descriptor * control_descriptor_set::get_by_sub_item(int32_t iSubItem)
+   class control_descriptor * control_descriptor_set::get_by_sub_item(index iSubItem)
    {
 
       for (int32_t i = 0; i < this->get_size(); i++)

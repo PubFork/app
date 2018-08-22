@@ -105,7 +105,7 @@ namespace user
 
       virtual void send_yscroll_message(int nSBCode);
 
-      virtual void install_message_routing(::message::sender * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface) override;
 
 
       //virtual void GetScrollRect(LPRECT lprect);
@@ -113,7 +113,7 @@ namespace user
       virtual void on_change_viewport_offset() override;
       virtual int32_t get_wheel_scroll_delta();
       virtual void create_y_scroll_bar(const RECT & rect);
-      virtual void layout_scroll_bar();
+      virtual void layout_scroll_bar() override;
       virtual void _001DeferCreateYScrollBar();
       virtual void _001OnDeferCreateYScrollBar();
       virtual bool validate_viewport_offset(point & p) override;
@@ -123,7 +123,7 @@ namespace user
       DECL_GEN_SIGNAL(_001OnMouseWheel);
 
 
-      virtual int get_final_y_scroll_bar_width();
+      virtual int get_final_y_scroll_bar_width() override;
 
       virtual void scroll_up_line();
       virtual void scroll_down_line();
@@ -153,20 +153,20 @@ namespace user
       virtual void on_change_view_size() override;
       virtual void on_change_viewport_offset() override;
       virtual bool validate_viewport_offset(point & p) override;
-      void layout_scroll_bar();
+      void layout_scroll_bar() override;
 
-      virtual void install_message_routing(::message::sender * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface) override;
 
       //void GetScrollRect(LPRECT lprect);
 
-      virtual bool GetClientRect(LPRECT lprect);
+      virtual bool GetClientRect(LPRECT lprect) override;
 
       virtual bool GetActiveClientRect(LPRECT lprect);
 
       virtual bool GetFocusRect(LPRECT lprect);
 
 
-      virtual ::size get_total_size();
+      virtual ::size get_total_size() override;
 
       virtual void defer_draw_scroll_gap(::draw2d::graphics * pgraphics);
 

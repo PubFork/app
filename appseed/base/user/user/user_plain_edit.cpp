@@ -1,4 +1,4 @@
-﻿#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 #include "aura/user/user/user_const.h"
 //#include "base/user/user.h"
 //include "aura/user/colorertake5/colorertake5.h"
@@ -2090,7 +2090,7 @@ namespace user
 
       pgraphics->GetTextExtent(sizeUniText, wstr);
 
-      int iChW = sizeUniText.cy / wstr.length();
+      //int iChW = sizeUniText.cy / wstr.length();
 
       m_iLineHeight = (int)sizeUniText.cy;
 
@@ -2340,8 +2340,6 @@ namespace user
          const char * pszNext = pszStart;
 
          ::size sizeLast(0, 0);
-
-         strsize iProtect;
 
          if (m_daExtent[m_iLineStart + i].get_size() <= 0)
          {

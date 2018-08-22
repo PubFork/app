@@ -36,7 +36,7 @@ namespace user
 
       virtual void on_control_event(::user::control_event * pevent) override;
 
-      virtual void OnActivateView(bool bActivate, sp(::user::impact) pActivateView, sp(::user::impact) pviewDeactivate);
+      virtual void OnActivateView(bool bActivate, sp(::user::impact) pActivateView, sp(::user::impact) pviewDeactivate) override;
 
       virtual index _001GetCurItem() override;
 

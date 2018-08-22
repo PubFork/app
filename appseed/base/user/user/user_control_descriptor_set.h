@@ -16,7 +16,7 @@ namespace user
 
 
       sp(control) get_control(::user::form * pform, id id, int iItem = 0);
-      control_descriptor * get_by_sub_item(int32_t iSubItem);
+      control_descriptor * get_by_sub_item(index iSubItem);
 
       bool find_control(::user::interaction * pui, index & iItem, index & iSubItem);
 

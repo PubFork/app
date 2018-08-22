@@ -778,7 +778,7 @@ namespace macos
 
 //      _throw(not_implemented(get_app()));
       
-      strTarget = strSource;
+      strTarget = __node_full_file_path(strSource);
       
       return true;
 

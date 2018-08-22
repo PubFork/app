@@ -57,7 +57,7 @@ void ns_launch_app_at_url(NSURL * url, const char ** argv)
    
    NSWorkspace * workspace = [NSWorkspace sharedWorkspace];
    
-   NSMutableDictionary * dict = nil;
+   NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
    
    if(argv != NULL)
    {
@@ -73,15 +73,14 @@ void ns_launch_app_at_url(NSURL * url, const char ** argv)
          
       }
 
-      dict = [[NSMutableDictionary alloc] init];
-
       [dict setObject:array forKey:NSWorkspaceLaunchConfigurationArguments];
       
    }
    
    //NSWorkspaceLaunchWithoutActivation
    
-   [[workspace dd_invokeOnMainThread] launchApplicationAtURL:url options:NSWorkspaceLaunchDefault configuration:dict error:nil];
+   [workspace launchApplicationAtURL:url options:NSWorkspaceLaunchDefault configuration:dict error:nil];
+      
 
 }
 
@@ -91,7 +90,7 @@ void ns_launch_app(const char * psz, const char ** argv)
    
    NSString * path = [[NSString alloc] initWithUTF8String:psz];
    
-   NSURL * url = [NSURL fileURLWithPath:path isDirectory:NO];
+   NSURL * url = [NSURL fileURLWithPath:path isDirectory:YES];
    
    ns_launch_app_at_url(url, argv);
    

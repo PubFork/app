@@ -33,7 +33,7 @@ namespace user
 
       virtual bool _001IsPointInside(sp(control) pcontrol,point64 ptt) override;
 
-      virtual void _001OnAddColumn(list_column * pcolumn);
+      virtual void _001OnAddColumn(list_column * pcolumn) override;
 
       virtual void _001HideEditingControls();
       virtual void _001HideControl(sp(control) pcontrol);
@@ -42,7 +42,7 @@ namespace user
       void _001UpdateColumns() override;
       sp(control) _001GetEditControl();
       void _001SetEditControl(sp(control) pcontrol);
-      virtual index _001AddControl(class control_descriptor & descriptorParam);
+      virtual index _001AddControl(class control_descriptor & descriptorParam) override;
       virtual void _001PlaceControl(sp(control) pcontrol, index iEditItem, bool bClick = false, bool bOnlySizeAndPosition = false) override;
       virtual void _001OnShowControl(sp(control) pcontrol);
       sp(control) _001GetControl(index iItem, index iSubItem) override;

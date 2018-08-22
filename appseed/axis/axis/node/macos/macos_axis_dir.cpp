@@ -115,48 +115,28 @@ namespace macos
          
          bool bIsDir;
          
-         
-         uint32_t uiLastError;
-         
-//         if(m_isdirmap.lookup(str, bIsDir, uiLastError, (int32_t) iLast))
-//         {
-//            if(!bIsDir)
-//            {
-//               ::set_last_error(uiLastError);
-//            }
-//            return bIsDir;
-//         }
-         
-         
          if(::get_thread() != NULL && ::get_thread()->m_bZipIsDir && iLast >= 3 && !strnicmp_dup(&((const char *)str)[iLast - 3],".zip",4))
          {
-            //m_isdirmap.set(str.Left(iLast + 1), true, 0);
+
             return true;
+            
          }
          
          strsize iFind = ::str::find_ci(".zip:", str);
          
          if(::get_thread() != NULL && ::get_thread()->m_bZipIsDir && iFind >= 0 && iFind < iLast)
          {
+
             bool bHasSubFolder;
-//            if(m_isdirmap.lookup(str, bHasSubFolder, uiLastError))
-//            {
-//               if(!bHasSubFolder)
-//               {
-//                  ::set_last_error(uiLastError);
-//               }
-//               return bHasSubFolder;
-//            }
+            
             bHasSubFolder = m_pziputil->has_sub_folder(papp, str);
-//            m_isdirmap.set(str.Left(iLast + 1), bHasSubFolder, bHasSubFolder ? 0 : ::get_last_error());
+
             return bHasSubFolder;
+            
          }
-         
          
          bIsDir = ::dir::is(str.Left(iLast));
          
-//         m_isdirmap.set(str.Left(iLast + 1), bIsDir, bIsDir ? 0 : ::get_last_error());
-//         
          return bIsDir;
 
       }

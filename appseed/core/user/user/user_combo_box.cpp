@@ -605,10 +605,12 @@ namespace user
    }
 
 
-   void combo_box::_001OnMouseLeave(::message::message * pobj)
+   void combo_box::_001OnMouseLeave(::message::message * pmessage)
    {
 
-      SCAST_PTR(::message::mouse, pmouse, pobj);
+      //SCAST_PTR(::message::mouse, pmouse, pmessage);
+      
+      UNREFERENCED_PARAMETER(pmessage);
 
       m_iHover = -1;
 
