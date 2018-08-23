@@ -29,7 +29,7 @@ namespace user
             virtual void UpdateWndRgn();
 
 
-            void _001OnClip(::draw2d::graphics * pgraphics);
+            void _001OnClip(::draw2d::graphics * pgraphics) override;
 
 
             virtual bool keyboard_focus_is_focusable() override;

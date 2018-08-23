@@ -56,6 +56,7 @@ namespace user
    public:
 
 
+      bool                          m_bOfflineRender;
       bool                          m_bFocus;
       bool                          m_bCursorRedraw;
       double                        m_dFps;

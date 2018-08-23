@@ -1957,10 +1957,23 @@ namespace macos
             
                               if(bUpdateScreen)
                               {
+                                 
+                                 if((bool)oprop("pending_redraw"))
+                                 {
+                                    
+                                    output_debug_string("opt_out set need redraw");
+                                    
+                                 }
+                                 else
+                                 {
+                                 
+                                    oprop("pending_redraw") = true;
             
-                                 bUpdateScreen = false;
+                                    bUpdateScreen = false;
             
-                                 _001UpdateScreen();
+                                    _001UpdateScreen();
+                                    
+                                 }
             
                               }
             
@@ -4536,8 +4549,40 @@ namespace macos
 
    void interaction_impl::round_window_draw(CGContextRef cgc)
    {
-
+      
+      oprop("pending_redraw") = false;
+      
       m_uiLastUpdateBeg = get_nanos();
+
+      uint64_t delta = m_uiLastUpdateBeg - m_uiLastUpdateEnd;
+      
+      delta /= 1000 * 1000;
+      
+      if(delta < 10)
+      {
+         
+         output_debug_string("round_window_draw less than 10\n");
+         
+      }
+      else if(delta < 20)
+      {
+         
+         output_debug_string("round_window_draw less than 20\n");
+         
+      }
+      else if(delta < 50)
+      {
+         
+         output_debug_string("round_window_draw less than 20\n");
+         
+      }
+      else if(delta < 100)
+      {
+         
+         output_debug_string("round_window_draw less than 100\n");
+         
+      }
+
 
       if (m_bUpdateGraphics)
       {
@@ -4545,6 +4590,14 @@ namespace macos
          update_graphics_resources();
 
       }
+
+//      if(m_bOfflineRender)
+//      {
+//         
+//         return;
+//         
+//      }
+         
 
       cslock slDisplay(cs_display());
 
@@ -4558,8 +4611,6 @@ namespace macos
       }
 
       synch_lock sl1(pbuffer->m_pmutex);
-
-//      pbuffer->on_begin_draw();
 
       ::draw2d::dib_sp & spdibBuffer = pbuffer->get_buffer();
 
@@ -4584,6 +4635,8 @@ namespace macos
       ::rect rectClient;
 
       GetClientRect(rectClient);
+      
+      g->set_alpha_mode(::draw2d::alpha_mode_set);
 
       g->BitBlt(0, 0, spdibBuffer->m_size.cx, spdibBuffer->m_size.cy, spdibBuffer->get_graphics(), 0, 0, SRCCOPY);
 
