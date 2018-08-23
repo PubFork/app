@@ -34,7 +34,9 @@ CLASS_DECL_IMPORT void draw2d_factory_exchange(::aura::application * papp);
 #ifdef MACOS
 ::file::path macos_app_path(string strApp);
 void ns_app_terminate();
-void ns_launch_app(const char * psz, const char ** argv);
+// 0x00010000 NSWorkspaceLaunchAsync
+// 0x00080000 NSWorkspaceLaunchNewInstance
+void ns_launch_app(const char * psz, const char ** argv, int iFlags);
 #endif
 
 #if defined(LINUX)
@@ -1223,28 +1225,51 @@ namespace aura
 //            call_async(strApp, strParam, pathDir, SW_SHOWDEFAULT, false);
 //
 //         });
+         
+         
+         //strParam += " --user-data-dir=\"" + pathProfile + "\"";
+         
+         stringa sa;
+         
+         sa = get_c_args_for_c(strParam);
+         
+         sa.add("--user-data-dir=" + pathProfile + "");
+         
+         auto argv = sa.c_get();
 
-
-         ::file::path shell;
-
-         shell = "/bin/bash";
-
-         strParam += " --user-data-dir=\"" + pathProfile + "\"";
-
+         argv.add(NULL);
+         
          string strApp = System.url().url_decode(path);
+         
+         // 0x00010000 NSWorkspaceLaunchAsync
+         // 0x00080000 NSWorkspaceLaunchNewInstance
+         
+         ns_launch_app(strApp, argv.get_data(), 0x00010000 | 0x00080000);
+         
+         //ns_launch_app(strApp, argv.get_data(), 0x00010000 | 0x00080000);
 
-         strApp.trim("\"");
-
-         string strCmd = "open -na \"" + strApp + "\" --args " + strParam;
-
-         strParam = " -c '" + strCmd + "'";
-
-         main_async([=]()
-         {
-
-            call_async(shell, strParam, pathDir, SW_SHOWDEFAULT, false);
-
-         });
+         //::system("open -na \"" + System.url().url_decode(path) + "\" --args " + strParam);
+         
+//         ::file::path shell;
+//
+//         shell = "/bin/bash";
+//
+//         strParam += " ;
+//
+//         string strApp = System.url().url_decode(path);
+//
+//         strApp.trim("\"");
+//
+//         string strCmd = "open -na \"" + strApp + "\" --args " + strParam;
+//
+//         strParam = " -c '" + strCmd + "'";
+//
+//         main_async([=]()
+//         {
+//
+//            call_async(shell, strParam, pathDir, SW_SHOWDEFAULT, false);
+//
+//         });
 
 #else
 

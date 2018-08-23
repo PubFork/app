@@ -52,7 +52,7 @@ bool ns_open_file(const char * psz)
 }
 
 
-void ns_launch_app_at_url(NSURL * url, const char ** argv)
+void ns_launch_app_at_url(NSURL * url, const char ** argv, int iFlags)
 {
    
    NSWorkspace * workspace = [NSWorkspace sharedWorkspace];
@@ -78,21 +78,23 @@ void ns_launch_app_at_url(NSURL * url, const char ** argv)
    }
    
    //NSWorkspaceLaunchWithoutActivation
+   //NSWorkspaceLaunchNewInstance
+   //NSWorkspaceLaunchDefault
    
-   [workspace launchApplicationAtURL:url options:NSWorkspaceLaunchDefault configuration:dict error:nil];
-      
+   [workspace launchApplicationAtURL:url options: iFlags configuration:dict error:nil];
+   
 
 }
 
 
-void ns_launch_app(const char * psz, const char ** argv)
+void ns_launch_app(const char * psz, const char ** argv, int iFlags)
 {
    
    NSString * path = [[NSString alloc] initWithUTF8String:psz];
    
    NSURL * url = [NSURL fileURLWithPath:path isDirectory:YES];
    
-   ns_launch_app_at_url(url, argv);
+   ns_launch_app_at_url(url, argv, iFlags);
    
 }
 
@@ -104,7 +106,7 @@ void ns_launch_bundle(const char * pszBundle, const char ** argv)
    
    NSURL * url = [[NSWorkspace sharedWorkspace] URLForApplicationWithBundleIdentifier:bundle];
 
-   ns_launch_app_at_url(url, argv);
+   ns_launch_app_at_url(url, argv, 0);
                         
 }
 
