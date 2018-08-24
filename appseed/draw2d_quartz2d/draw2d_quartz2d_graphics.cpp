@@ -4899,7 +4899,34 @@ namespace draw2d_quartz2d
 
    bool graphics::fill(::draw2d::brush * pbrush)
    {
+      
+      CGContextRef pgraphics = m_pdc;
+      
+      CGContextSaveGState(pgraphics);
 
+      bool bOk = false;
+      
+      try
+      {
+      
+         bOk = _fill(pbrush, true);
+         
+      }
+      catch (...)
+      {
+         
+      }
+      
+      CGContextRestoreGState(pgraphics);
+      
+      return bOk;
+
+   }
+   
+   
+   bool graphics::_fill(::draw2d::brush * pbrush, bool bContextClip)
+   {
+      
       if(pbrush == NULL || pbrush->m_etype == ::draw2d::brush::type_null)
          return true;
       
@@ -4908,9 +4935,12 @@ namespace draw2d_quartz2d
       if(pbrush->m_etype == ::draw2d::brush::type_radial_gradient_color)
       {
          
-         CGContextSaveGState(pgraphics);
-         
-         CGContextClip(pgraphics);
+         if(bContextClip)
+         {
+            
+            CGContextClip(pgraphics);
+            
+         }
          
          clip(m_spregion);
          
@@ -4930,15 +4960,16 @@ namespace draw2d_quartz2d
          
          CGContextDrawRadialGradient(pgraphics, (CGGradientRef) pbrush->get_os_data(), myStartPoint, 0, myEndPoint, 1.0f, kCGGradientDrawsBeforeStartLocation);
          
-         CGContextRestoreGState(pgraphics);
-         
       }
       else if(pbrush->m_etype == ::draw2d::brush::type_linear_gradient_point_color)
       {
          
-         CGContextSaveGState(pgraphics);
-         
-         CGContextClip(pgraphics);
+         if(bContextClip)
+         {
+            
+            CGContextClip(pgraphics);
+            
+         }
 
          clip(m_spregion);
          
@@ -4954,21 +4985,22 @@ namespace draw2d_quartz2d
          
          CGContextDrawLinearGradient(pgraphics, (CGGradientRef) pbrush->get_os_data(), myStartPoint, myEndPoint, 0);
          
-         CGContextRestoreGState(pgraphics);
-         
       }
       else if(pbrush->m_etype == ::draw2d::brush::type_pattern)
       {
          
-         CGContextSaveGState(pgraphics);
-         
-         CGContextClip(pgraphics);
+         if(bContextClip)
+         {
+            
+            CGContextClip(pgraphics);
+            
+         }
 
          clip(m_spregion);
          
          BitBlt(0, 0, pbrush->m_dib->m_size.cx, pbrush->m_dib->m_size.cy, pbrush->m_dib->get_graphics(), 0,0, 0);
          
-         CGContextRestoreGState(pgraphics);
+         //CGContextRestoreGState(pgraphics);
          
       }
       else
@@ -4976,35 +5008,36 @@ namespace draw2d_quartz2d
          
          if(m_spregion.is_null())
          {
-
+            
             CGContextSetFillColorWithColor(pgraphics, (CGColorRef) pbrush->get_os_data());
-         
+            
             CGContextFillPath(pgraphics);
-         
+            
          }
          else
          {
+
             CGContextSetFillColorWithColor(pgraphics, (CGColorRef) pbrush->get_os_data());
             
-            CGContextSaveGState(pgraphics);
-            
-            CGContextClip(pgraphics);
-            
+            if(bContextClip)
+            {
+               
+               CGContextClip(pgraphics);
+               
+            }
+
             clip(m_spregion);
             
             CGContextAddRect(pgraphics, CGContextGetClipBoundingBox(pgraphics));
-                             
+            
             CGContextFillPath(pgraphics);
-                             
-            CGContextRestoreGState(pgraphics);
-                             
-                             
+            
          }
          
       }
-
+      
       return true;
-
+      
    }
 
 
@@ -5679,6 +5712,10 @@ namespace draw2d_quartz2d
                
                emode = kCGTextClip;
                
+//               bFill = true;
+//
+//               crFill = ARGB(255, 255, 255, 255);
+
             }
             else
             {
@@ -5969,16 +6006,26 @@ namespace draw2d_quartz2d
       
       CGContextRef pgraphics = m_pdc;
       
+//      CGContextSetTextMatrix(pgraphics, CGAffineTransformScale(CGAffineTransformMakeTranslation(x, y), 1.f, -1.f));
+
+      //CGContextTranslateCTM(pgraphics, x, y);
+      //CGContextScaleCTM(pgraphics, 1.0, -1.0);
+      
+      CGContextSetTextMatrix(pgraphics, CGAffineTransformIdentity);
+      CGContextTranslateCTM(pgraphics, x, y);
+      CGContextScaleCTM(pgraphics, 1.0, -1.0);
+//      CGContextSetTextMatrix(pgraphics, CGAffineTransformScale(CGAffineTransformMakeTranslation(x, y), 1.f, -1.f));
       CGContextSetTextDrawingMode(pgraphics, emode);
-   
-      CGContextSetTextMatrix(pgraphics, CGAffineTransformScale(CGAffineTransformMakeTranslation(x, y), 1.f, -1.f));
-   
+      
       CTLineDraw(line,pgraphics);
-   
+      
+      CGContextScaleCTM(pgraphics, 1.0, -1.0);
+      CGContextTranslateCTM(pgraphics, -x, -y);
+
       if(pbrush != NULL)
       {
       
-         fill(pbrush);
+         _fill(pbrush, false);
       
       }
 

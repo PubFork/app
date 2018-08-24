@@ -550,6 +550,7 @@ namespace draw2d_quartz2d
       bool draw_inline(const ::draw2d::path::string_path & stringpath, ::draw2d::pen * ppen);
       bool fill_and_draw(::draw2d::brush * pbrush, ::draw2d::pen * ppen);
       bool fill(::draw2d::brush * pbrush);
+      bool _fill(::draw2d::brush * pbrush, bool bClip);
       bool draw(::draw2d::brush * pbrush);
       bool draw(::draw2d::pen * ppen);
       bool fill_and_draw();

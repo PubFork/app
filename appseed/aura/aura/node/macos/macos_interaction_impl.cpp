@@ -1977,7 +1977,6 @@ namespace macos
             
                               }
             
-            
                               DWORD dwSpan = ::get_tick_count() - dwStart;
             
                               if (dwSpan < 50)
@@ -1998,11 +1997,6 @@ namespace macos
                         }
             
                         output_debug_string("m_pthreadDraw has finished!");
-            
-            //            m_pthreadUpdateWindow.release();
-            
-            //            release_graphics_resources();
-            
             
                      });
 
@@ -2040,112 +2034,7 @@ namespace macos
       else
       {
 
-//         m_pthreadUpdateWindow = fork([&]()
-//         {
-//
-//            DWORD dwStart;
-//
-//            bool bUpdateScreen = false;
-//
-//            while (::get_thread_run())
-//            {
-//
-//               try
-//               {
-//
-//                  dwStart = ::get_tick_count();
-//
-//                  if(m_pui == NULL)
-//                  {
-//
-//                     break;
-//
-//                  }
-//
-//                  if(m_oswindow != NULL)
-//                  {
-//
-//                     m_oswindow->m_bNsWindowRect = false;
-//
-//                  }
-//
-//                  if (!m_pui->m_bLockWindowUpdate)
-//                  {
-//
-//                     bool bUpdateBuffer = m_pui->check_need_layout()
-//                                          || m_pui->check_need_zorder() || m_pui->check_show_flags();
-//
-//                     if(bUpdateBuffer)
-//                     {
-//
-//                     }
-//                     else if(m_pui->IsWindowVisible())
-//                     {
-//
-//                        bUpdateBuffer = m_pui->has_pending_graphical_update();
-//
-//                     }
-//
-//                     if(bUpdateBuffer)
-//                     {
-//
-//                        _001UpdateBuffer();
-//
-//                        if(m_pui == NULL)
-//                        {
-//
-//                           break;
-//
-//                        }
-//
-//                        m_pui->on_after_graphical_update();
-//
-//                        bUpdateScreen = true;
-//
-//                     }
-//
-//                  }
-//
-//                  if(bUpdateScreen)
-//                  {
-//
-//                     bUpdateScreen = false;
-//
-//                     _001UpdateScreen();
-//
-//                  }
-//
-//
-//                  DWORD dwSpan = ::get_tick_count() - dwStart;
-//
-//                  if (dwSpan < 50)
-//                  {
-//
-//                     Sleep(50 - dwSpan);
-//
-//                  }
-//
-//               }
-//               catch(...)
-//               {
-//
-//                  break;
-//
-//               }
-//
-//            }
-//
-//            output_debug_string("m_pthreadDraw has finished!");
-//
-////            m_pthreadUpdateWindow.release();
-//
-////            release_graphics_resources();
-//
-//
-//         });
-
       }
-
 
    }
 
@@ -3443,12 +3332,6 @@ namespace macos
          round_window_redraw();
 
       }
-//      else
-//      {
-//
-//         _001UpdateWindow();
-//
-//      }
 
    }
 
@@ -4641,7 +4524,6 @@ namespace macos
       g->BitBlt(0, 0, spdibBuffer->m_size.cx, spdibBuffer->m_size.cy, spdibBuffer->get_graphics(), 0, 0, SRCCOPY);
 
       m_uiLastUpdateEnd = get_nanos();
-
 
    }
 
