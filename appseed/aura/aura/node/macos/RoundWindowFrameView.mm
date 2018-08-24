@@ -477,6 +477,28 @@ DWORD fixKeyCode(DWORD keyCode, unichar keyChar, enum APPLE_KEYBOARD_TYPE type)
 }
 
 
+- (void)scrollWheel:(NSEvent *)event
+{
+   
+   round_window * p = m_roundwindow->m_pwindow;
+   
+   if(p == NULL)
+      return;
+   
+   NSPoint point = [self screenLocationEx: event];
+   
+   int x = point.x;
+   
+   int y = point.y;
+   
+   double delta = event.deltaY;
+   
+   p->round_window_mouse_wheel(delta, x, y);
+   
+}
+
+
+
 - (BOOL) isFlipped
 {
    

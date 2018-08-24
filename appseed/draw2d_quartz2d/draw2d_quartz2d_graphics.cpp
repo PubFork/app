@@ -5065,7 +5065,7 @@ namespace draw2d_quartz2d
             CGContextReplacePathWithStrokedPath(m_pdc);
             
             // Turn the fillable path in to a clipping region.
-            CGContextClip(m_pdc);
+//            CGContextClip(m_pdc);
             
             fill(ppen->m_br);
 
@@ -5109,7 +5109,7 @@ namespace draw2d_quartz2d
             CGContextReplacePathWithStrokedPath(m_pdc);
             
             // Turn the fillable path in to a clipping region.
-            CGContextClip(m_pdc);
+            //CGContextClip(m_pdc);
             
             fill(pbrush);
             
@@ -5805,8 +5805,12 @@ namespace draw2d_quartz2d
             {
                
                m.align(x, y, wAlign, nFormat);
-                  
+               
+               CGContextSaveGState(pgraphics);
+               
                internal_draw_text(emode, x, y + m.ascent, line, pbrush);
+               
+               CGContextRestoreGState(pgraphics);
                
                m.get(pascent, pdescent, pleading, pwidth);
                                      

@@ -2827,6 +2827,7 @@
 		9A0255DB1EA593AB003C82CF /* sockets_trace_logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sockets_trace_logger.h; sourceTree = "<group>"; };
 		9A0255DD1EA593AB003C82CF /* sockets_transfer_socket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sockets_transfer_socket.h; sourceTree = "<group>"; };
 		9A0255DF1EA593AB003C82CF /* sockets_websocket_client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sockets_websocket_client.h; sourceTree = "<group>"; };
+		9A0385EC213095A3004C97FA /* windows_interaction_impl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = windows_interaction_impl.cpp; sourceTree = "<group>"; };
 		9A0974701F223D2E00CFA833 /* DDInvocationGrabber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDInvocationGrabber.h; sourceTree = "<group>"; };
 		9A0974711F223D2E00CFA833 /* DDInvocationGrabber.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDInvocationGrabber.mm; sourceTree = "<group>"; };
 		9A0974721F223D2E00CFA833 /* NSObject+DDExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+DDExtensions.h"; sourceTree = "<group>"; };
@@ -6468,6 +6469,7 @@
 		9A81DA111F448B500030C6E8 /* windows(just_for_browsing) */ = {
 			isa = PBXGroup;
 			children = (
+				9A0385EC213095A3004C97FA /* windows_interaction_impl.cpp */,
 				9A81DA121F448B500030C6E8 /* _windows_node.cpp */,
 				9A81DA131F448B500030C6E8 /* RoundWindowApp.h */,
 				9A81DA141F448B500030C6E8 /* RoundWindowApp.mm */,

@@ -1137,8 +1137,8 @@ namespace macos
             pbase->m_id == WM_RBUTTONDBLCLK ||
             pbase->m_id == WM_LBUTTONDBLCLK ||
             pbase->m_id == WM_MOUSEMOVE ||
-            pbase->m_id == WM_MOUSEMOVE)
-         //         pbase->m_id == WM_MOUSEWHEEL)
+            pbase->m_id == WM_MOUSEMOVE ||
+            pbase->m_id == WM_MOUSEWHEEL)
       {
 
          if (pbase->m_id == WM_LBUTTONDOWN)
@@ -4880,6 +4880,41 @@ namespace macos
 
       m_pui->send(spbase);
 
+   }
+
+
+   void interaction_impl::round_window_mouse_wheel(double deltaY, double x, double y)
+   {
+      
+      sp(::message::base) spbase;
+      
+      {
+         
+         ::message::mouse_wheel * pwheel = canew(::message::mouse_wheel(get_app()));
+         
+         pwheel->m_id = WM_MOUSEWHEEL;
+         
+         pwheel->m_pt.x = (LONG)x;
+         pwheel->m_pt.y = (LONG)y;
+         pwheel->m_bTranslated = true;
+         
+         short delta = deltaY * WHEEL_DELTA / 3.0;
+         
+         pwheel->m_wparam = delta << 16;
+         
+         spbase = pwheel;
+         
+         if(m_pui == NULL)
+         {
+            
+            return;
+            
+         }
+         
+         m_pui->send(spbase);
+         
+      }
+      
    }
 
 
