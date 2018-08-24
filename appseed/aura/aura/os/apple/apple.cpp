@@ -143,6 +143,25 @@ void apple_accumulate_on_open_file(const char ** psza, int iCount, const char * 
    
    stra.c_add((char **) psza, iCount);
    
+   for(index i = 0; i < stra.get_count(); i++)
+   {
+      
+      if(::str::begins_eat_ci(stra[i], "file://"))
+      {
+         
+         if(!::str::begins(stra[i], "/"))
+         {
+            
+            stra[i] = "/" + stra[i];
+            
+         }
+         
+         stra[i] = ::aura::system::g_p->url().url_decode(stra[i]);
+         
+      }
+      
+   }
+   
    ::aura::system::g_p->defer_accumulate_on_open_file(stra, pszExtra);
    
 }
