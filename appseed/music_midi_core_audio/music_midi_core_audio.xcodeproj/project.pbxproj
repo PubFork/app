@@ -13,6 +13,7 @@
 		07884EBA189866D300DC6CEB /* music_midi_core_audio_midi.h in Headers */ = {isa = PBXBuildFile; fileRef = 07884EB8189866D300DC6CEB /* music_midi_core_audio_midi.h */; };
 		07D6C9B218986C6E00CB8AA8 /* music_midi_core_audio_player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07D6C9AA18986C6E00CB8AA8 /* music_midi_core_audio_player.cpp */; };
 		07D6C9B318986C6E00CB8AA8 /* music_midi_core_audio_player.h in Headers */ = {isa = PBXBuildFile; fileRef = 07D6C9AB18986C6E00CB8AA8 /* music_midi_core_audio_player.h */; };
+		9A038D0621312610004C97FA /* libcore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A038D0521312610004C97FA /* libcore.dylib */; };
 		9A1B496416A494A600875A94 /* framework.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A1B496316A494A600875A94 /* framework.h */; };
 		9A1B496716A4A10100875A94 /* framework.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A1B496616A4A10100875A94 /* framework.cpp */; };
 		9A210CB51D81AB23000C4336 /* AudioUnitOutput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A210CB31D81AB23000C4336 /* AudioUnitOutput.cpp */; };
@@ -129,6 +130,7 @@
 		07884EB8189866D300DC6CEB /* music_midi_core_audio_midi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = music_midi_core_audio_midi.h; sourceTree = "<group>"; };
 		07D6C9AA18986C6E00CB8AA8 /* music_midi_core_audio_player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = music_midi_core_audio_player.cpp; sourceTree = "<group>"; };
 		07D6C9AB18986C6E00CB8AA8 /* music_midi_core_audio_player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = music_midi_core_audio_player.h; sourceTree = "<group>"; };
+		9A038D0521312610004C97FA /* libcore.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libcore.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A1B496316A494A600875A94 /* framework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = framework.h; sourceTree = "<group>"; };
 		9A1B496616A4A10100875A94 /* framework.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = framework.cpp; sourceTree = "<group>"; };
 		9A210CB31D81AB23000C4336 /* AudioUnitOutput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AudioUnitOutput.cpp; sourceTree = "<group>"; };
@@ -190,6 +192,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A038D0621312610004C97FA /* libcore.dylib in Frameworks */,
 				9AC1FB40204B699C00305BFF /* CoreAudio.framework in Frameworks */,
 				9A210CDB1D81ED91000C4336 /* CoreMIDI.framework in Frameworks */,
 				9A210CD91D81ED72000C4336 /* AudioToolbox.framework in Frameworks */,
@@ -225,6 +228,7 @@
 		9AC1FB3F204B699C00305BFF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9A038D0521312610004C97FA /* libcore.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

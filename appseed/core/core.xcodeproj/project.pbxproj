@@ -88,6 +88,8 @@
 		07703CA61B6FE7E7009026EA /* netuser.h in Headers */ = {isa = PBXBuildFile; fileRef = 07703C971B6FE7E7009026EA /* netuser.h */; };
 		07703CAB1B6FEBA4009026EA /* databaseuser_mesh_data.h in Headers */ = {isa = PBXBuildFile; fileRef = 07703CAA1B6FEBA4009026EA /* databaseuser_mesh_data.h */; };
 		078C36371921910B00354453 /* core.inl in Resources */ = {isa = PBXBuildFile; fileRef = 078C35E51921910B00354453 /* core.inl */; };
+		9A038E8721312C0D004C97FA /* userex_view_container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A038E8421312C0B004C97FA /* userex_view_container.cpp */; };
+		9A038E8821312C0D004C97FA /* userex_view_container.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A038E8621312C0C004C97FA /* userex_view_container.h */; };
 		9A19A39719C6F5940018DF7D /* wndfrm_frame.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A19A37219C6F5940018DF7D /* wndfrm_frame.h */; };
 		9A19A39919C6F5940018DF7D /* wndfrm_frame_appearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A19A37419C6F5940018DF7D /* wndfrm_frame_appearance.h */; };
 		9A19A39B19C6F5940018DF7D /* wndfrm_frame_constants.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A19A37619C6F5940018DF7D /* wndfrm_frame_constants.h */; };
@@ -998,6 +1000,8 @@
 		07F5B36F184A4FA00092C3E1 /* user_xfplayer_view_line_selection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_xfplayer_view_line_selection.h; sourceTree = "<group>"; };
 		07F5B371184A4FA00092C3E1 /* user_xfplayer_view_lines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_xfplayer_view_lines.h; sourceTree = "<group>"; };
 		07F5B400184A50E50092C3E1 /* userex_userex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = userex_userex.h; sourceTree = "<group>"; };
+		9A038E8421312C0B004C97FA /* userex_view_container.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = userex_view_container.cpp; sourceTree = "<group>"; };
+		9A038E8621312C0C004C97FA /* userex_view_container.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = userex_view_container.h; sourceTree = "<group>"; };
 		9A06FA4120FAE0E90024DA18 /* userex_const.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = userex_const.h; sourceTree = "<group>"; };
 		9A19A1A519C6F50B0018DF7D /* libcore.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libcore.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A19A37219C6F5940018DF7D /* wndfrm_frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wndfrm_frame.h; sourceTree = "<group>"; };
@@ -1929,6 +1933,8 @@
 		07A6D82B173C27EB009E6FB8 /* userex */ = {
 			isa = PBXGroup;
 			children = (
+				9A038E8421312C0B004C97FA /* userex_view_container.cpp */,
+				9A038E8621312C0C004C97FA /* userex_view_container.h */,
 				9AFF968D20F7519A0053D9F4 /* userex_color_view.cpp */,
 				9AFF968F20F7519A0053D9F4 /* userex_color_view.h */,
 				9A9D7C791F5D7315009EC103 /* userex_dialog.cpp */,
@@ -2366,6 +2372,7 @@
 				074DA8BB1C8E61A500748EB7 /* html_application.h in Headers */,
 				074DA8731C8E61A500748EB7 /* html_html.h in Headers */,
 				074DA85D1C8E61A500748EB7 /* html2.h in Headers */,
+				9A038E8821312C0D004C97FA /* userex_view_container.h in Headers */,
 				074DA8461C8E61A500748EB7 /* html_elemental_input_button.h in Headers */,
 				074DA89F1C8E61A500748EB7 /* html_impl_input_button.h in Headers */,
 				9AB8C8561EA988A7007670A6 /* user_mesh.h in Headers */,
@@ -2760,6 +2767,7 @@
 				9A9D7E1B1F5D74AA009EC103 /* userfs_item.cpp in Sources */,
 				9A9D7C9A1F5D7315009EC103 /* userex_form_view.cpp in Sources */,
 				9A9D7D881F5D73CF009EC103 /* simple_static.cpp in Sources */,
+				9A038E8721312C0D004C97FA /* userex_view_container.cpp in Sources */,
 				9A9D7D611F5D735A009EC103 /* user.cpp in Sources */,
 				9A9D7DE11F5D7459009EC103 /* html_elemental_cell.cpp in Sources */,
 				9A9D7C991F5D7315009EC103 /* userex_form_update_hint.cpp in Sources */,
