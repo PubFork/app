@@ -5684,6 +5684,13 @@ namespace draw2d_quartz2d
       
       synch_lock slFont(spfont->m_pmutex);
       
+      if(str.trimmed().is_empty())
+      {
+         
+         return true;
+         
+      }
+      
       bool bFill = false;
       
       bool bStroke = false;
