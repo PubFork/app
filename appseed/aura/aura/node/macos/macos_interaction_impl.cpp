@@ -22,6 +22,30 @@ WINBOOL GetMessage(LPMESSAGE lpMsg, oswindow hWnd, UINT wMsgFilterMin, UINT wMsg
 namespace macos
 {
 
+   class round_window_draw_life_time
+   {
+   public:
+      
+      
+      interaction_impl * m_pimpl;
+      
+      round_window_draw_life_time(interaction_impl * pimpl) :
+         m_pimpl(pimpl)
+      {
+
+         m_pimpl->m_uiLastUpdateBeg = get_nanos();
+         
+      }
+      
+      ~round_window_draw_life_time()
+      {
+         
+         m_pimpl->m_uiLastUpdateEnd = get_nanos();
+         
+      }
+
+   };
+
 
    interaction_impl::interaction_impl():
       ::aura::timer_array(get_app())
@@ -1960,11 +1984,13 @@ namespace macos
                                  
                                  u64 now = get_nanos();
                                  
-                                 u64 delta = now - m_uiLastUpdateBeg;
+                                 u64 delta1 = now - m_uiLastUpdateBeg;
+                                 
+                                 i64 delta2 = (i64) m_uiLastUpdateBeg - (i64) m_uiLastUpdateEnd;
                                  
                                  u64 frameNanos = 1000000000LL / m_dFps;
                                  
-                                 if(delta < frameNanos)
+                                 if(delta1 < frameNanos || (delta2 > 0 && delta2 < 10000000000LL))
                                  {
                                     
                                     output_debug_string("opt_out set need redraw");
@@ -4437,8 +4463,8 @@ namespace macos
    void interaction_impl::round_window_draw(CGContextRef cgc)
    {
       
-      m_uiLastUpdateBeg = get_nanos();
-
+      round_window_draw_life_time roundwindowdrawlifetime(this);
+      
       uint64_t delta = m_uiLastUpdateBeg - m_uiLastUpdateEnd;
       
       delta /= 1000 * 1000;
@@ -4478,9 +4504,9 @@ namespace macos
 
 //      if(m_bOfflineRender)
 //      {
-//         
+//
 //         return;
-//         
+//
 //      }
          
 
@@ -4524,8 +4550,6 @@ namespace macos
       g->set_alpha_mode(::draw2d::alpha_mode_set);
 
       g->BitBlt(0, 0, spdibBuffer->m_size.cx, spdibBuffer->m_size.cy, spdibBuffer->get_graphics(), 0, 0, SRCCOPY);
-
-      m_uiLastUpdateEnd = get_nanos();
 
    }
 
