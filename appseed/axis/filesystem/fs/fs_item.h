@@ -25,7 +25,7 @@ namespace fs
 
       virtual ::file::path get_friendly_path();
       virtual ::file::path get_absolute_path();
-
+      
 
    };
 

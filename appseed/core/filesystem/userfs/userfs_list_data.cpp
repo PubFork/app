@@ -1,6 +1,83 @@
 #include "framework.h"
 
 
+string _001FileSizeText(i64 i)
+{
+   
+   string str;
+   
+   double d = i;
+   
+   if(d < 1024.0)
+   {
+      
+      return ::str::from(i)  + "B";
+      
+   }
+   d /= 1024.0;
+   
+   if(d < 2)
+   {
+      
+      str.Format("%0.1fKB", d);
+      
+      return str;
+      
+   }
+   if(d < 1024.0)
+   {
+      
+      str.Format("%0.0fKB", d);
+      
+      return str;
+      
+   }
+   d /= 1024.0;
+   
+   if(d < 2)
+   {
+      
+      str.Format("%0.1fMB", d);
+      
+      return str;
+      
+   }
+   if(d < 1024.0)
+   {
+      
+      str.Format("%0.0fMB", d);
+      
+      return str;
+      
+   }
+   d /= 1024.0;
+   
+   if(d < 2)
+   {
+      
+      str.Format("%0.1fGB", d);
+      
+      return str;
+      
+   }
+   if(d < 1024.0)
+   {
+      
+      str.Format("%0.0fGB", d);
+      
+      return str;
+      
+   }
+
+   d /= 1024.0;
+   
+   str.Format("%0.0fTB", d);
+   
+   return str;
+   
+}
+
+
 namespace userfs
 {
 
@@ -83,7 +160,21 @@ namespace userfs
                   schedule_file_size(m_itema.get_item(iItem).m_strPath);
                   m_bPendingSize = true;
                }*/
-         pitem->m_bOk = false;
+         
+         try
+         {
+            
+            pitem->m_strText = _001FileSizeText(Application.file().length(m_itema.get_item(pitem->m_iItem).m_filepath));
+            
+         }
+         catch (...)
+         {
+            
+            pitem->m_bOk = false;
+            
+         }
+
+         pitem->m_bOk = true;
          return;
       }
       //else if(m_bStatic)

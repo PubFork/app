@@ -28,7 +28,6 @@ namespace userfs
 
       list_item & operator = (const list_item & item);
 
-      
 
    };
 

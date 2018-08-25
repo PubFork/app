@@ -18,7 +18,6 @@ namespace fs
       m_flags(item.m_flags)
    {
 
-
    }
 
 

@@ -1470,6 +1470,8 @@ namespace filemanager
          column.m_iWidth = 100;
          column.m_iSubItem = i;
          m_iSizeSubItem = i;
+         get_fs_mesh_data()->m_iSizeSubItem = m_iSizeSubItem;
+         column.m_uiText = "Size";
          column.m_sizeIcon.cx = 0;
          column.m_sizeIcon.cy = 0;
          column.m_pilHover = NULL;

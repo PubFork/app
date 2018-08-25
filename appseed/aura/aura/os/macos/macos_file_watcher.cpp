@@ -230,9 +230,13 @@ namespace file_watcher
                       const FSEventStreamEventFlags eventFlags[],
                       const FSEventStreamEventId eventIds[])
       {
+         
          int i;
+         
          char **paths = (char **) eventPaths;
+         
          watch * pstruct =(watch *)clientCallBackInfo;
+         
          // printf("Callback called\n");
          
          ::file::path pathFolder1;
@@ -261,10 +265,11 @@ namespace file_watcher
             }
             
             if(eventFlags[i] & kFSEventStreamEventFlagItemRenamed)
-               {
-                  pstruct->handle_action(path, action_modify);
+            {
+            
+               pstruct->handle_action(path, action_modify);
                   
-               }
+            }
             if(eventFlags[i] & kFSEventStreamEventFlagItemModified)
             {
                pstruct->handle_action(path, action_modify);
@@ -279,39 +284,41 @@ namespace file_watcher
             //eventIds[i], paths[i], eventFlags[i]);
          }
       }
-		void watch::addAll()
+		
+   
+      void watch::addAll()
 		{
          
-         
-         /* Define variables and create a CFArray object containing
-          CFString objects containing paths to watch.
-          */
-         CFStringRef mypath = CFStringCreateWithCString(kCFAllocatorDefault,
-                                                 m_strDirName,
-                                                 kCFStringEncodingUTF8);
-         CFArrayRef pathsToWatch = CFArrayCreate(NULL, (const void **)&mypath, 1, NULL);
-         void *callbackInfo = this; // could put stream-specific data here.
-         CFAbsoluteTime latency = 3.0; /* Latency in seconds */
-         FSEventStreamContext context;
-         context.version = 0;
-         context.info = (void*) this;
-         context.retain = NULL;
-         context.release = NULL;
-         context.copyDescription = NULL;
-         /* Create the stream, passing in a callback */
-         m_stream = FSEventStreamCreate(NULL,
-                                      &myCallbackFunction,
-                                     &context,
-                                      pathsToWatch,
-                                      kFSEventStreamEventIdSinceNow, /* Or a previous event ID */
-                                      latency,
-                                      kFSEventStreamCreateFlagFileEvents /* Flags explained in reference */
-                                      );
-         
-         CFRelease(mypath);
-         CFRelease(pathsToWatch);
          m_pthread = fork([&]()
          {
+            /* Define variables and create a CFArray object containing
+             CFString objects containing paths to watch.
+             */
+            CFStringRef mypath = CFStringCreateWithCString(kCFAllocatorDefault,
+                                                           m_strDirName,
+                                                           kCFStringEncodingUTF8);
+            CFArrayRef pathsToWatch = CFArrayCreate(NULL, (const void **)&mypath, 1, NULL);
+            void *callbackInfo = this; // could put stream-specific data here.
+            CFAbsoluteTime latency = 3.0; /* Latency in seconds */
+            FSEventStreamContext context;
+            context.version = 0;
+            context.info = (void*) this;
+            context.retain = NULL;
+            context.release = NULL;
+            context.copyDescription = NULL;
+            /* Create the stream, passing in a callback */
+            m_stream = FSEventStreamCreate(NULL,
+                                           &myCallbackFunction,
+                                           &context,
+                                           pathsToWatch,
+                                           kFSEventStreamEventIdSinceNow, /* Or a previous event ID */
+                                           latency,
+                                           kFSEventStreamCreateFlagFileEvents /* Flags explained in reference */
+                                           );
+            
+            CFRelease(mypath);
+            CFRelease(pathsToWatch);
+            
             FSEventStreamScheduleWithRunLoop(m_stream,CFRunLoopGetCurrent(),kCFRunLoopCommonModes);
             FSEventStreamStart(m_stream);
                                
