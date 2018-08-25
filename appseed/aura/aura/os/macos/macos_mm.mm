@@ -106,7 +106,7 @@ void ns_launch_bundle(const char * pszBundle, const char ** argv)
    
    NSURL * url = [[NSWorkspace sharedWorkspace] URLForApplicationWithBundleIdentifier:bundle];
 
-   ns_launch_app_at_url(url, argv, 0);
+   ns_launch_app_at_url(url, argv, 0x00010000 | 0x00080000);
                         
 }
 
