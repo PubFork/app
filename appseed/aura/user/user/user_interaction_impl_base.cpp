@@ -1440,6 +1440,13 @@ namespace user
 
    void interaction_impl_base::set_need_redraw()
    {
+      
+      if(get_wnd() == NULL)
+      {
+         
+         return;
+         
+      }
 
       get_wnd()->set_need_redraw();
 

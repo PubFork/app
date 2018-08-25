@@ -1958,7 +1958,13 @@ namespace macos
                               if(bUpdateScreen)
                               {
                                  
-                                 if((bool)oprop("pending_redraw"))
+                                 u64 now = get_nanos();
+                                 
+                                 u64 delta = now - m_uiLastUpdateBeg;
+                                 
+                                 u64 frameNanos = 1000000000LL / m_dFps;
+                                 
+                                 if(delta < frameNanos)
                                  {
                                     
                                     output_debug_string("opt_out set need redraw");
@@ -1967,8 +1973,6 @@ namespace macos
                                  else
                                  {
                                  
-                                    oprop("pending_redraw") = true;
-            
                                     bUpdateScreen = false;
             
                                     _001UpdateScreen();
@@ -4432,8 +4436,6 @@ namespace macos
 
    void interaction_impl::round_window_draw(CGContextRef cgc)
    {
-      
-      oprop("pending_redraw") = false;
       
       m_uiLastUpdateBeg = get_nanos();
 
