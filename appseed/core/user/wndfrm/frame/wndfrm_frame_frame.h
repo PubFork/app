@@ -30,7 +30,10 @@ namespace user
 
             };
 
-
+            bool                    m_bHollow;
+            string                                       m_strLibrary;
+            string                                       m_strName;
+            string                                       m_strStyle;
             rect                                         m_rectCaption;
             rect                                         m_rectCaptionTextBk;
             rect                                         m_rectWindowText;

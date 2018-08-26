@@ -16,7 +16,7 @@ namespace user
          frame::frame(::aura::application * papp)
          {
 
-
+            m_bHollow = true;
             m_bFirstLayoutDone = false;
 //            m_typeinfoControlBox = System.type_info < MetaControlBox >();
 
@@ -51,7 +51,7 @@ namespace user
          void frame::set_style(const char * pszStyle)
          {
 
-            UNREFERENCED_PARAMETER(pszStyle);
+            m_strStyle = pszStyle;
 
          }
 

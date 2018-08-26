@@ -7034,7 +7034,10 @@ restart:
             return;
          }
          if (!create(widthAlloc, heightAlloc))
-            _throw(simple_exception(get_app(), "dib::read"));
+         {
+            serialize.setstate(::file::badbit);
+            return;
+         }
          map();
          if (iScan == m_iScan)
          {

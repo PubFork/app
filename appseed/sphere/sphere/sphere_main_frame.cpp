@@ -7,7 +7,8 @@ namespace sphere
 
    main_frame::main_frame(::aura::application * papp) :
       ::object(papp),
-      simple_frame_window(papp)
+      simple_frame_window(papp),
+   simple_main_frame(papp)
    {
 
       WfiEnableFullScreen();

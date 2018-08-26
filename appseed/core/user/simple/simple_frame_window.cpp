@@ -325,6 +325,43 @@ sp(::user::wndfrm::frame::frame) simple_frame_window::create_frame_schema()
       return NULL;
 
    }
+   
+   if(Application.m_puiMain != NULL)
+   {
+      
+      sp(::simple_frame_window) pframe = Application.m_puiMain;
+      
+      if(pframe.is_set())
+      {
+         
+         auto pschemaRef = pframe->m_workset.m_pframeschema;
+         
+         if(pschemaRef.is_set())
+         {
+         
+            sp(::user::wndfrm::frame::frame) pschema = Application.wndfrm()->get_frame_schema(pschemaRef->m_strLibrary, pschemaRef->m_strName);
+         
+            if(pschema.is_set())
+            {
+               
+               if(GetExStyle() & WS_EX_TOOLWINDOW)
+               {
+                  
+                  //pschema->m_bHollow = false;
+                  
+               }
+            
+               pschema->set_style(pschemaRef->m_strStyle);
+            
+               return pschema;
+            
+            }
+            
+         }
+         
+      }
+      
+   }
 
    sp(::user::wndfrm::frame::frame) pschema = Application.wndfrm()->get_frame_schema(m_varFrame["wndfrm"], m_varFrame["schema"]);
 
@@ -444,7 +481,7 @@ void simple_frame_window::_001OnCreate(::message::message * pobj)
       }
 
    }
-
+   
    if (m_bWindowFrame)
    {
 

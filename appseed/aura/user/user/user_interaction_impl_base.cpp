@@ -271,6 +271,8 @@ namespace user
             (m_bShowWindow && (m_iShowWindow != SW_HIDE)))
       {
 
+         ModifyStyle(0, WS_VISIBLE);
+         
          m_pui->message_call(WM_SHOWWINDOW, 1);
 
       }
@@ -278,6 +280,8 @@ namespace user
                (m_bShowWindow && (m_iShowWindow == SW_HIDE)))
       {
 
+         ModifyStyle(WS_VISIBLE, 0);
+         
          m_pui->message_call(WM_SHOWWINDOW, 0);
 
       }
@@ -1600,6 +1604,7 @@ namespace user
 
       }
 
+
       return true;
 
    }
@@ -1610,43 +1615,6 @@ namespace user
 
       SCAST_PTR(::message::show_window, pshowwindow, pobj);
 
-      if (pshowwindow->m_bShow)
-      {
-
-         m_pui->ModifyStyle(0, WS_VISIBLE, 0);
-
-         if (m_bShowFlags)
-         {
-
-            if (m_iShowFlags & SWP_HIDEWINDOW)
-            {
-
-               m_iShowFlags &= ~SWP_HIDEWINDOW;
-               m_iShowFlags |= SWP_SHOWWINDOW;
-
-            }
-
-         }
-
-      }
-      else
-      {
-
-         m_pui->ModifyStyle(WS_VISIBLE, 0, 0);
-         if (m_bShowFlags)
-         {
-
-            if (m_iShowFlags & SWP_SHOWWINDOW)
-            {
-
-               m_iShowFlags &= ~SWP_SHOWWINDOW;
-               m_iShowFlags |= SWP_HIDEWINDOW;
-
-            }
-
-         }
-
-      }
 
       set_need_redraw();
 

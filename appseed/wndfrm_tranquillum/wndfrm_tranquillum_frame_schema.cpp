@@ -393,6 +393,8 @@ namespace user
 
             void frame_schema::set_style(const char * pszStyle)
             {
+               
+               ::user::wndfrm::frame::frame::set_style(pszStyle);
 
                string strStyle(pszStyle);
 

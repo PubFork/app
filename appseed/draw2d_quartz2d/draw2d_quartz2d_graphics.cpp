@@ -3773,22 +3773,14 @@ namespace draw2d_quartz2d
        */
    }
 
+   
    size graphics::ScaleViewportExt(int32_t xNum, int32_t xDenom, int32_t yNum, int32_t yDenom)
    {
 
-      _throw(not_implemented(get_app()));
-      return ::size(0, 0);
-
-      /*
-       size size(0, 0);
-       if(get_handle1() != NULL && get_handle1() != get_handle2())
-       ::ScaleViewportExtEx(get_handle1(), xNum, xDenom, yNum, yDenom, &size);
-       if(get_handle2() != NULL)
-       ::ScaleViewportExtEx(get_handle2(), xNum, xDenom, yNum, yDenom, &size);
-       return size;
-       */
+      return ::draw2d::graphics::ScaleViewportExt(xNum, xDenom, yNum, yDenom);
 
    }
+   
 
    point graphics::SetWindowOrg(int32_t x, int32_t y)
    {

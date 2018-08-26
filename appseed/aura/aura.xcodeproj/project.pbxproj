@@ -5431,6 +5431,7 @@
 				077C2A18190F143F00A1F6B0 /* framework_c.h */,
 				077C2A19190F143F00A1F6B0 /* framework.cpp */,
 				077C2A1A190F144000A1F6B0 /* framework.h */,
+				9A6FAEFB1F5C77F800AF31B2 /* version.cpp */,
 			);
 			path = aura;
 			sourceTree = "<group>";
@@ -7041,7 +7042,6 @@
 				07502CA81B251B15008D207C /* net */,
 				9AE722BF17E83B69003E47F9 /* primitive */,
 				9AE7233517E83B69003E47F9 /* user */,
-				9A6FAEFB1F5C77F800AF31B2 /* version.cpp */,
 				9A4E846F1D1FD3A7008A419B /* Products */,
 				9A9799131DAC3C2B001CD6D9 /* Frameworks */,
 			);

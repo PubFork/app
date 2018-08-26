@@ -46,27 +46,6 @@ namespace draw2d_quartz2d
       virtual ~graphics();
       
       
-      /* xxx      Gdiplus::Graphics & g()
-       {
-       if(m_pgraphics == NULL)
-       {
-       m_pgraphics = ::Gdiplus::Graphics::FromHDC(get_handle1());
-       }
-       return *m_pgraphics;
-       }*/
-      
-      //::user::window * GetWindow() const;
-      
-      //static ::draw2d::graphics * PASCAL from_handle(HDC hDC);
-      //static void PASCAL DeleteTempMap();
-      //bool Attach(HDC hdc);   // Attach/Detach affects only the Output DC
-      //HDC Detach();
-      
-      //virtual void SetAttribDC(HDC hDC);  // Set the Attribute DC
-      //virtual void SetOutputDC(HDC hDC);  // Set the Output DC
-      //virtual void ReleaseAttribDC();     // Release the Attribute DC
-      //virtual void ReleaseOutputDC();     // Release the Output DC
-      
       bool IsPrinting() override;            // TRUE if being used for printing
       
       ::draw2d::pen_sp get_current_pen() override;
@@ -75,10 +54,6 @@ namespace draw2d_quartz2d
       ::draw2d::font_sp get_current_font() override;
       ::draw2d::bitmap_sp get_current_bitmap() override;
       
-      
-      //pen *       COCOA_pen();
-      //brush *     COCOA_brush();
-      //font *      COCOA_font();
       
       // for bidi and mirrored localization
       DWORD GetLayout() override;

@@ -23,9 +23,6 @@ namespace user
             public:
 
 
-               bool     m_bHollow;
-
-
                FrameSchemaHardCoded008(::aura::application * papp);
                virtual ~FrameSchemaHardCoded008();
 

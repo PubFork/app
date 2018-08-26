@@ -13,10 +13,10 @@ void scroll_x(LPRECT lprect, double dRateX, LPCRECT lpcrect)
 }
 
 
-
 namespace user
 {
 
+   
    check_box::check_box(::aura::application * papp, e_style estyle) :
       object(papp),
       ::user::interaction(papp)
@@ -35,6 +35,7 @@ namespace user
 
    check_box::~check_box()
    {
+      
    }
 
 
@@ -318,17 +319,17 @@ namespace user
 
       }
 
-      rect r(0, 0, w, h);
+      rect r(1, 1, w-2, h-2);
 
-      rect rEllipse(0, 0, h, h);
+      rect rEllipse(1, 1, h-2, h-2);
 
       double dNow = millis_now();
 
       ::draw2d::path_sp p(allocer());
 
-      rect rL(0, 0, h, h);
+      rect rL(1, 1, h-2, h-2);
 
-      rect rR = rect_dim(h, 0, h, h);
+      rect rR = rect_dim(h-2, 1, h-2, h-2);
 
       p->add_arc(rL, -90.0, -180.0);
 

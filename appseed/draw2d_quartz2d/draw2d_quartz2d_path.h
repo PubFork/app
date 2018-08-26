@@ -16,13 +16,13 @@ namespace draw2d_quartz2d
       bool                    m_bBegin;
       
       
-      path(sp(::aura::application) papp);
+      path(::aura::application * papp);
       virtual ~path();
       
       
       virtual bool internal_begin_figure(bool bFill, ::draw2d::e_fill_mode efillmode);
       virtual bool internal_end_figure(bool bClose);
-      virtual bool internal_add_arc(const RECT & rect, double dStart, double dAngle);
+      virtual bool internal_add_arc(const RECT & rect, double dStart, double dAngle, bool bClockwise);
       virtual bool internal_add_line(int x1, int y1, int x2, int y2);
       virtual bool internal_add_line(int x, int y);
       virtual bool internal_add_move(int x, int y);

@@ -3262,7 +3262,7 @@ namespace macos
    void interaction_impl::on_do_show_flags()
    {
 
-//      ::user::interaction_impl::on_do_show_flags();
+      ::user::interaction_impl::on_do_show_flags();
 
       if((m_bShowFlags && (m_iShowFlags & SWP_SHOWWINDOW))
             || (m_bShowWindow && (m_iShowWindow != SW_HIDE)))
@@ -4592,7 +4592,7 @@ namespace macos
 
       }
 
-      m_pui->send(spbase);
+      m_pui->post(spbase);
 
       return spbase->m_bRet;
 
@@ -4619,7 +4619,7 @@ namespace macos
 
       }
 
-      m_pui->send(spbase);
+      m_pui->post(spbase);
 
       return spbase->m_bRet;
 
@@ -4646,7 +4646,7 @@ namespace macos
 
       }
 
-      m_pui->send(spbase);
+      m_pui->post(spbase);
 
       return spbase->m_bRet;
 
@@ -4673,7 +4673,7 @@ namespace macos
 
       }
 
-      m_pui->send(spbase);
+      m_pui->post(spbase);
 
       return spbase->m_bRet;
 
@@ -4760,7 +4760,7 @@ namespace macos
 
          }
 
-         m_pui->send(spbase);
+         m_pui->post(spbase);
 
       }
 
@@ -4800,7 +4800,7 @@ namespace macos
 
       }
 
-      m_pui->send(spbase);
+      m_pui->post(spbase);
 
    }
 
@@ -4838,7 +4838,7 @@ namespace macos
 
       }
 
-      m_pui->send(spbase);
+      m_pui->post(spbase);
 
    }
 
@@ -4880,7 +4880,7 @@ namespace macos
 
       }
 
-      m_pui->send(spbase);
+      m_pui->post(spbase);
 
    }
 
@@ -4922,7 +4922,7 @@ namespace macos
 
       }
 
-      m_pui->send(spbase);
+      m_pui->post(spbase);
 
    }
 
@@ -4955,7 +4955,7 @@ namespace macos
             
          }
          
-         m_pui->send(spbase);
+         m_pui->post(spbase);
          
       }
       
@@ -5038,7 +5038,7 @@ namespace macos
 
       }
 
-      m_pui->send_message(WM_MOVE, 0, pt.lparam());
+      m_pui->post_message(WM_MOVE, 0, pt.lparam());
 
    }
 

@@ -9,7 +9,7 @@ namespace user
       menu(get_app())
    {
 
-      set_pro_devian();
+      //set_pro_devian();
 
       m_econtroltype = control_type_menu;
 

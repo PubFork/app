@@ -3,7 +3,7 @@
 
 void macos_desktop_image_changed();
 
-
+void ns_main_sync(dispatch_block_t block);
 bool mm2_get_file_image(unsigned int * pcr, int cx, int cy, int iScan, const char * psz);
 
 
@@ -87,33 +87,73 @@ void main_synch_runnable(runnable * prunnable)
 
 @implementation mmos
 
--(NSURL *)browse_folder : (NSURL *) startDir {
-   NSOpenPanel *panel = [NSOpenPanel openPanel];
-   [panel setAllowsMultipleSelection:NO];
-   [panel setCanChooseDirectories:YES];
-   [panel setCanChooseFiles:NO];
-   if(startDir != nil)
-   {
-      panel.directoryURL= startDir;
-   }
-   if ([panel runModal] != NSFileHandlingPanelOKButton) return nil;
+-(NSURL *)browse_folder : (NSURL *) startDir
+{
+   
+   NSOpenPanel * panel = [NSOpenPanel openPanel];
+   
+      [panel setAllowsMultipleSelection:NO];
+   
+      [panel setCanChooseDirectories:YES];
+   
+      [panel setCanChooseFiles:NO];
+   
+      if(startDir != nil)
+      {
+
+         panel.directoryURL= startDir;
+   
+      }
+   
+      if ([panel runModal] != NSFileHandlingPanelOKButton)
+      {
+         
+         return NULL;
+         
+      }
+
+
    return [[panel URLs] lastObject];
+   
 }
--(NSArray < NSURL *> *)browse_file_open : (NSURL **) startDir multi: (bool) b {
+
+-(NSArray < NSURL *> *)browse_file_open : (NSURL **) startDir multi: (bool) b
+{
+   
    NSOpenPanel *panel = [NSOpenPanel openPanel];
-   [panel setAllowsMultipleSelection:b];
-   [panel setCanChooseDirectories:NO];
-   [panel setCanChooseFiles:YES];
-   if(startDir != nil && *startDir !=nil)
-   {
-      panel.directoryURL= *startDir;
-   }
-   if ([panel runModal] != NSFileHandlingPanelOKButton) return nil;
-   if(startDir != nil)
-   {
-      *startDir = panel.directoryURL;
-   }
+   
+      [panel setAllowsMultipleSelection:b];
+   
+      [panel setCanChooseDirectories:NO];
+   
+      [panel setCanChooseFiles:YES];
+   
+      if(startDir != nil && *startDir !=nil)
+      {
+         
+         panel.directoryURL= *startDir;
+   
+      }
+   
+      NSInteger result = [panel runModal];
+      
+      if(startDir != nil)
+      {
+         
+         *startDir = panel.directoryURL;
+         
+      }
+      
+      if(result != NSFileHandlingPanelOKButton)
+      {
+         
+         return NULL;
+         
+      }
+
+
    return [panel URLs];
+   
 }
 
 
@@ -435,6 +475,11 @@ char * mm_browse_folder(const char * pszStartDir)
 char** mm_browse_file_open(const char ** pszStartDir, bool bMulti)
 {
    
+   __block char ** pp = NULL;
+   
+   ns_main_sync(^
+                {
+   
    mmos * pos = [mmos get];
    
    NSURL * startDir = NULL;
@@ -450,7 +495,7 @@ char** mm_browse_file_open(const char ** pszStartDir, bool bMulti)
    
    NSArray < NSURL * > * urla = [pos browse_file_open:&startDir multi:bMulti];
 
-   char ** pp = (char **)malloc((urla.count + 1) * sizeof(char*));
+   pp = (char **)malloc((urla.count + 1) * sizeof(char*));
    int i = 0;
    for(; i < urla.count; i++)
    {
@@ -461,6 +506,8 @@ char** mm_browse_file_open(const char ** pszStartDir, bool bMulti)
    pp[i] = NULL;
    
    *pszStartDir = ns_string([startDir absoluteString]);
+                   
+                });
    
    return pp;
    

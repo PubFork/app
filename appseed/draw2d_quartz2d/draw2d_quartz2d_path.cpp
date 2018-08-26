@@ -9,7 +9,7 @@ namespace draw2d_quartz2d
 {
    
    
-   path::path(sp(::aura::application) papp) :
+   path::path(::aura::application * papp) :
       ::object(papp)
    {
       
@@ -53,7 +53,8 @@ namespace draw2d_quartz2d
       
    }
    
-   bool path::internal_add_arc(const RECT & rect, double dBeg, double dEnd)
+   
+   bool path::internal_add_arc(const RECT & rect, double dBeg, double dEnd, bool bClockwise)
    {
       
       CGFloat d1 = rect.right - rect.left;
@@ -67,12 +68,14 @@ namespace draw2d_quartz2d
          return true;
       
       CGAffineTransform t = CGAffineTransformMakeScale(1.0, d2 / d1);
+      
       CGFloat x = (rect.right + rect.left) / 2.0;
+      
       CGFloat y = (rect.bottom + rect.top) / 2.0;
-      CGFloat x1 = x + d1 * sin(dBeg * MATH_PI / 180.0f);
-      CGFloat y1 = y + d1 * cos(dBeg * MATH_PI / 180.0f);
-      //CGFloat x2 = x + d1 * sin(dEnd * MATH_PI / 180.0f);
-      //CGFloat y2 = y + d1 * cos(dEnd * MATH_PI / 180.0f);
+      
+      CGFloat x1 = x + d1 * cos(dBeg);
+      
+      CGFloat y1 = y + d1 * sin(dBeg);
       
       if(CGPathIsEmpty(m_path))
       {
@@ -81,7 +84,7 @@ namespace draw2d_quartz2d
          
       }
       
-      CGPathAddArc(m_path, &t, x, y, d1/2.0, dBeg, dEnd, 0);
+      CGPathAddArc(m_path, &t, x, y, d1/2.0, dBeg, dEnd, bClockwise ? 1 : 0);
       
       return true;
       
@@ -247,13 +250,13 @@ namespace draw2d_quartz2d
    bool path::set(const ::draw2d::path::arc & arc)
    {
    
-       ::rect rect;
+      ::rect rect;
       rect.left = arc.m_xCenter - arc.m_dRadiusX;
       rect.right = arc.m_xCenter + arc.m_dRadiusX;
       rect.top = arc.m_yCenter - arc.m_dRadiusY;
       rect.bottom = arc.m_yCenter + arc.m_dRadiusY;
       
-      return internal_add_arc(rect, arc.m_dAngle1, arc.m_dAngle2);
+      return internal_add_arc(rect, arc.m_dAngle1, arc.m_dAngle2, arc.m_dAngle < 0.0);
       
    }
    

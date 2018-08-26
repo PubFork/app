@@ -62,6 +62,8 @@ namespace user
       int32_t                    m_iFrameData;
       ::id                       m_idHelp;         // xxx mrs
       ::user::impact_system *    m_pdocumenttemplate;
+      
+      size                       m_sizeMinimum;
 
       int32_t                    m_nWindow;  // general purpose interaction_impl number - display as ":n"
       // -1 => unknown, 0 => only interaction_impl viewing ::user::document

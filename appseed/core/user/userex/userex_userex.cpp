@@ -663,6 +663,64 @@ retry_license:
 
    }
 
+   
+   bool userex::modal_get_color(::aura::application *papp, ::color::hls & hls)
+   {
+      
+#ifdef WINDOWSEX
+   
+      CHOOSECOLOR cc;
+      COLORREF crCustColors[16];
+      
+      // init-int this array did not affect the mouse problem
+      // uint idx ;
+      // for (idx=0; idx<16; idx++) {
+      // crCustColors[idx] = RGB(idx, idx, idx) ;
+      // }
+      
+      ::color c(hls);
+      
+      ZeroMemory(&cc, sizeof(cc));
+      cc.lStructSize = sizeof(CHOOSECOLOR);
+      cc.rgbResult = c.get_rgb();
+      cc.lpCustColors = crCustColors;
+      cc.Flags = CC_RGBINIT | CC_FULLOPEN;
+      cc.hwndOwner = get_safe_handle(); // this hangs parent, as well as me
+      
+      if (::ChooseColor(&cc))
+      {
+         
+         c.set_COLORREF(cc.rgbResult | (255 << 24));
+         
+         c.get_hls(hls);
+         
+         return true;
+         
+      }
+      
+      return false;
+      
+#else
+      
+      Session.will_use_view_hint("color_sel");
+      
+      auto pdoc = m_mapimpactsystem["color_sel"]->open_document_file(papp, ::var::type_null, true);
+      
+      sp(color_view) pview = pdoc->get_typed_view < color_view >();
+      
+      sp(::user::frame_window) pframe = pview->GetTopLevelFrame();
+      
+      pframe->_001RunModalLoop();
+      
+      hls = pview->m_hls;
+      
+      return true;
+      
+#endif
+      
+   
+}
+
 
 
    //void userex::SendMessageToWindows(UINT message,WPARAM wparam,LPARAM lparam)

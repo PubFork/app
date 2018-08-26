@@ -337,6 +337,8 @@ namespace file
 
       ::file::listing & system::ls(::aura::application * papp, listing & l)
       {
+         
+         l.m_path = System.defer_process_path(l.m_path, papp);
 
          if (l.m_path.begins_ci("matter://"))
          {
@@ -606,7 +608,7 @@ namespace file
          if (pathParam.begins_ci("appmatter://"))
          {
 
-            path = install() / path.Mid(12);
+            path = System.local_get_matter_cache_path(path.Mid(12));
 
          }
          else
@@ -1103,16 +1105,23 @@ namespace file
          _throw(interface_only_exception(get_app(), "this is an interface"));
       }
 
+      
       ::file::path system::stageapp()
       {
+         
          _throw(interface_only_exception(get_app(), "this is an interface"));
+         
       }
 
+      
       ::file::path system::netseed()
       {
+         
          _throw(interface_only_exception(get_app(), "this is an interface"));
+         
       }
 
+      
       ::file::path system::install()
       {
 
@@ -1121,6 +1130,7 @@ namespace file
          return m_pathInstall;
 
       }
+      
 
       ::file::path system::config()
       {
@@ -1517,7 +1527,7 @@ namespace file
                   if (bDir)
                   {
 
-                     if (System.dir().is(install() / strMatter, get_app()))
+                     if (System.dir().is(System.local_get_matter_cache_path(strMatter), get_app()))
                      {
 
                         strMatter = "appmatter://" + strMatter;
@@ -1530,7 +1540,7 @@ namespace file
                   else
                   {
 
-                     if (System.file().exists(install() / strMatter, get_app()))
+                     if(System.file().exists(System.local_get_matter_cache_path(strMatter), get_app()))
                      {
 
                         strMatter = "appmatter://" + strMatter;
@@ -1614,8 +1624,6 @@ ret:
       ::file::path system::appmatter(string strApp, ::file::path pathRel)
       {
 
-         ::file::path e = install();
-
          strsize iFind = strApp.find('/');
 
          string strRepo;
@@ -1668,7 +1676,8 @@ ret:
 
          }
 
-         ::file::path p = e / strRepo / "appmatter" / strApp / "_std" / "_std" / pathRel;
+         ::file::path p = System.local_get_matter_cache_path(
+                                                             ::file::path(strRepo) / "appmatter" / strApp / "_std" / "_std" / pathRel);
 
          return p;
 

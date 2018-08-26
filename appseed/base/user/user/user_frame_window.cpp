@@ -1988,6 +1988,8 @@ namespace user
    {
       // trans ASSERT(get_handle() == NULL);
 
+      m_sizeMinimum.cx = 0;
+      m_sizeMinimum.cy = 0;
       m_nWindow = -1;                 // unknown interaction_impl ID
       m_bAutoMenuEnable = TRUE;       // auto enable on by default
 //      m_lpfnCloseProc = NULL;
@@ -2381,7 +2383,13 @@ namespace user
    size frame_window::get_window_minimum_size()
    {
 
-      if (get_appearance() == ::user::appearance_minimal)
+      if(m_sizeMinimum.area() > 0)
+      {
+         
+         return m_sizeMinimum;
+         
+      }
+      else if (get_appearance() == ::user::appearance_minimal)
       {
 
          return size(8, 8);

@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 namespace user
@@ -256,6 +256,8 @@ namespace user
          straLibrary.add("wndfrm_core");
 
          sp(::user::wndfrm::interaction) pinteraction;
+         
+         string strLib;
 
          for(string strLibrary : straLibrary)
          {
@@ -264,6 +266,8 @@ namespace user
 
             if (pinteraction.is_set())
             {
+               
+               strLib = strLibrary;
 
                break;
 
@@ -290,6 +294,10 @@ namespace user
          }
 
          pframe->m_pinteraction = pinteraction;
+         
+         pframe->m_strLibrary = strLib;
+         
+         pframe->m_strName = pszFrameSchemaName;
 
          return pframe;
 

@@ -11,6 +11,18 @@ namespace user
 
       try
       {
+         
+         if(m_uiMessage == MESSAGE_POST_MESSAGE &&
+            m_wparam == 1)
+         {
+            
+            sp(::message::base) pbase(m_lparam);
+            
+            
+            return m_pui->send(pbase);
+            
+            
+         }
 
          return m_pui->send_message(m_uiMessage,m_wparam,m_lparam);
 

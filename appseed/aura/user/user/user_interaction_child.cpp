@@ -314,20 +314,6 @@ namespace user
 
       SCAST_PTR(::message::show_window, pshowwindow, pobj);
 
-      if (pshowwindow->m_bShow)
-      {
-
-         ModifyStyle(0, WS_VISIBLE);
-
-      }
-      else
-      {
-
-         ModifyStyle(WS_VISIBLE, 0);
-
-      }
-
-
    }
 
 
@@ -570,6 +556,7 @@ namespace user
          return false;
 
       }
+      
 
       return true;
 

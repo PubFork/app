@@ -10,6 +10,7 @@ namespace userex
    {
    public:
 
+      bool                             m_bCompact;
       bool                             m_bLButtonPressed;
       ::user::plain_edit_view          m_editRed;
       ::user::plain_edit_view          m_editGreen;
