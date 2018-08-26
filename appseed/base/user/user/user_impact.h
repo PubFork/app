@@ -255,22 +255,23 @@ namespace user
    {
    public:
 
-      show() :
-         show(get_app())
+      
+      show()
       {
 
       }
 
 
-      show(::aura::application * papp):
-         object(papp)
+      show(::aura::application * papp) :
+         ::object(papp)
       {
-
+         
       }
-
-
+      
+      
       virtual ~show()
       {
+         
       }
 
 

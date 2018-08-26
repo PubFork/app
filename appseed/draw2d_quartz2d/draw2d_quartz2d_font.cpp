@@ -23,32 +23,8 @@ namespace draw2d_quartz2d
    font::~font()
    {
       
-      if(m_fontName != NULL)
-      {
-         
-         CFRelease(m_fontName);
-         
-         m_fontName = NULL;
-         
-      }
       
-      if(m_fontD != NULL)
-      {
-         
-         CFRelease(m_fontD);
-         
-         m_fontD = NULL;
-         
-      }
-      
-      if(m_font != NULL)
-      {
-      
-         CFRelease(m_font);
-         
-         m_font = NULL;
-         
-      }
+      destroy();
 
    }
    
@@ -71,6 +47,43 @@ namespace draw2d_quartz2d
       
       return NULL;
       
+   }
+   
+   
+   bool font::destroy()
+   {
+   
+      if(m_fontName != NULL)
+      {
+         
+         CFRelease(m_fontName);
+         
+         m_fontName = NULL;
+         
+      }
+      
+      if(m_fontD != NULL)
+      {
+         
+         CFRelease(m_fontD);
+         
+         m_fontD = NULL;
+         
+      }
+      
+      if(m_font != NULL)
+      {
+         
+         CFRelease(m_font);
+         
+         m_font = NULL;
+         
+      }
+      
+      m_mapMetrics.remove_all();
+
+      return true;
+
    }
    
    

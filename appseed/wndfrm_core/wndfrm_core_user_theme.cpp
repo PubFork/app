@@ -109,6 +109,8 @@ namespace wndfrm_core
 
          if(!ptab->get_element_rect(iTab,rectClient, ::user::element_client))
             continue;
+         
+         bool bTextRect = ptab->get_element_rect(iTab, rectText, ::user::element_text);
 
          if(ptab->get_data()->m_bVertical)
          {
@@ -117,6 +119,7 @@ namespace wndfrm_core
             {
 
                pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
+               
                pane.m_dib->bitmap_blend(pgraphics,rectIcon);
 
             }
@@ -126,12 +129,12 @@ namespace wndfrm_core
             if(ptab->get_data()->m_idaSel.contains(pane.m_id))
             {
 
-               //path->start_figure();
-
                path->add_line(rectBorder.right,rectBorder.bottom,rectBorder.left + 1,rectBorder.bottom);
-               //path->add_line(rectClient.right, rectBorder.top);
+               
                path->add_line(rectBorder.left,rectBorder.top - (rectBorder.left - rectClient.left));
+               
                path->add_line(rectClient.left,rectBorder.top);
+               
                path->add_line(rectBorder.right,rectBorder.top);
 
                path->end_figure(false);
@@ -169,7 +172,7 @@ namespace wndfrm_core
 
                path->add_line(rectBorder.right,rectBorder.bottom,rectBorder.left + 1,rectBorder.bottom);
                path->add_line(rectBorder.left,rectBorder.top - (rectBorder.left - rectClient.left));
-               path->add_line(rectText.left,rectBorder.top);
+               path->add_line(bTextRect ? rectText.left : rectBorder.left,rectBorder.top);
                path->add_line(rectBorder.right,rectBorder.top);
                path->add_line(rectBorder.right,rectBorder.bottom);
 
@@ -326,13 +329,12 @@ namespace wndfrm_core
 
          }
 
-         if(ptab->get_element_rect(iTab,rectText, ::user::element_text))
+         if(bTextRect)
          {
 
             _001OnTabPaneDrawTitle(pane,ptab,pgraphics,rectText,brushText);
 
          }
-
 
          if(ptab->get_element_rect(iTab,rectClose, ::user::element_close_tab_button))
          {

@@ -64,6 +64,8 @@
 		9AA1007F19971AF5004F84BD /* cgcontextcreate.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AA1007E19971AF5004F84BD /* cgcontextcreate.h */; };
 		9AA1B44A176361950019E812 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AA1B449176361950019E812 /* Cocoa.framework */; };
 		9AA2192B1DC6B04B00C06987 /* draw2d_mm_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9AA2192A1DC6B04B00C06987 /* draw2d_mm_ios.mm */; };
+		9AB287E721320E8A002A0AFF /* draw2d_mm_apple.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9AB287E621320E8A002A0AFF /* draw2d_mm_apple.mm */; };
+		9AB287E921320F30002A0AFF /* draw2d_mm_apple.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9AB287E621320E8A002A0AFF /* draw2d_mm_apple.mm */; };
 		9AE24E231904CF99001AEFFB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9AE24E211904CF99001AEFFB /* InfoPlist.strings */; };
 		9AEAFBD21DC1B4B00035AD42 /* draw2d_mm_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9AEAFBD11DC1B4B00035AD42 /* draw2d_mm_mac.mm */; };
 		9AF8E7721F9FE13D003CBDB4 /* libaura.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A8ED56A1F204554007DB75C /* libaura.dylib */; };
@@ -142,6 +144,7 @@
 		9AA1B449176361950019E812 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		9AA2192A1DC6B04B00C06987 /* draw2d_mm_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = draw2d_mm_ios.mm; sourceTree = "<group>"; };
 		9AA2192D1DC6B1A300C06987 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		9AB287E621320E8A002A0AFF /* draw2d_mm_apple.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = draw2d_mm_apple.mm; sourceTree = "<group>"; };
 		9AE24E151904CF99001AEFFB /* draw2d_quartz2d_iosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = draw2d_quartz2d_iosTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AE24E201904CF99001AEFFB /* draw2d_quartz2d_iosTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "draw2d_quartz2d_iosTests-Info.plist"; sourceTree = "<group>"; };
 		9AE24E221904CF99001AEFFB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -278,6 +281,7 @@
 				9A1B496616A4A10100875A94 /* framework.cpp */,
 				9AEAFBD11DC1B4B00035AD42 /* draw2d_mm_mac.mm */,
 				9AA2192A1DC6B04B00C06987 /* draw2d_mm_ios.mm */,
+				9AB287E621320E8A002A0AFF /* draw2d_mm_apple.mm */,
 			);
 			name = draw2d_quartz2d;
 			sourceTree = "<group>";
@@ -471,6 +475,7 @@
 				07E25F331B4FFC2100752DE1 /* draw2d_quartz2d_graphics.cpp in Sources */,
 				07E25F341B4FFC2100752DE1 /* draw2d_quartz2d_object.cpp in Sources */,
 				07E25F351B4FFC2100752DE1 /* draw2d_quartz2d_palette.cpp in Sources */,
+				9AB287E921320F30002A0AFF /* draw2d_mm_apple.mm in Sources */,
 				9AA2192B1DC6B04B00C06987 /* draw2d_mm_ios.mm in Sources */,
 				07E25F361B4FFC2100752DE1 /* draw2d_quartz2d_path.cpp in Sources */,
 				07E25F371B4FFC2100752DE1 /* draw2d_quartz2d_pen.cpp in Sources */,
@@ -499,6 +504,7 @@
 				9A6B40EE17BBE291008391AD /* draw2d_quartz2d_graphics.cpp in Sources */,
 				9A6B40F017BBE291008391AD /* draw2d_quartz2d_object.cpp in Sources */,
 				9A6B40F217BBE291008391AD /* draw2d_quartz2d_palette.cpp in Sources */,
+				9AB287E721320E8A002A0AFF /* draw2d_mm_apple.mm in Sources */,
 				9AEAFBD21DC1B4B00035AD42 /* draw2d_mm_mac.mm in Sources */,
 				9A6B40F417BBE291008391AD /* draw2d_quartz2d_path.cpp in Sources */,
 				9A6B40F617BBE291008391AD /* draw2d_quartz2d_pen.cpp in Sources */,

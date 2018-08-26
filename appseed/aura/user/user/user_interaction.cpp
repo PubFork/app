@@ -5083,10 +5083,14 @@ restart:
    bool interaction::post_message(UINT uiMessage, WPARAM wparam, lparam lparam)
    {
 
-      if (m_pimpl == NULL)
-         return FALSE;
-      else
-         return m_pimpl->post_message(uiMessage, wparam, lparam);
+      if (m_pimpl.is_null())
+      {
+         
+         return false;
+         
+      }
+
+      return m_pimpl->post_message(uiMessage, wparam, lparam);
 
    }
 

@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 #define TIMER_HOVER 321654
 
@@ -958,10 +958,22 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
 
             rect rect;
 
-            _001GetElementRect(iItem, rect, element_image);
+            if(_001GetElementRect(iItem, rect, element_image))
+            {
+            
+//            if(rect.width() > 10000)
+  //          {
+               
+    //           output_debug_string("width > 10000");
+               
+      //         _001GetElementRect(iItem, rect, element_image);
+               
+        //    }
 
-            Application.imaging().color_blend(pgraphics, rect.top_left(), rect.get_size(), item.m_spdib->get_graphics(), null_point(), 0.23);
+               Application.imaging().color_blend(pgraphics, rect.top_left(), rect.get_size(), item.m_spdib->get_graphics(), null_point(), 0.23);
 
+            }
+            
          }
          else if (uiImage != 0xffffffff)
          {

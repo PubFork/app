@@ -44,7 +44,7 @@ namespace draw2d_quartz2d
       
       
    
-      
+      virtual bool destroy() override;
       
       virtual void * get_os_data() const;
       

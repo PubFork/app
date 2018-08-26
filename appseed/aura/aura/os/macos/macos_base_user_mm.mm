@@ -203,6 +203,76 @@ WINBOOL order_front_nswindow(oswindow hwnd)
 }
 
 
+WINBOOL nswindow_set_level_main_menu(oswindow hwnd)
+{
+   
+   ns_main_async(^
+                 {
+                    
+                    [hwnd->window() setLevel: NSMainMenuWindowLevel];
+                    
+                 });
+   
+   return 1;
+   
+}
+
+
+WINBOOL nswindow_set_level_floating(oswindow hwnd)
+{
+   
+   ns_main_async(^
+                 {
+                    
+                    [hwnd->window() setLevel: NSFloatingWindowLevel];
+                    
+                 });
+   
+   return 1;
+   
+}
+
+
+WINBOOL nswindow_set_level_normal(oswindow hwnd)
+{
+   
+   ns_main_async(^
+                 {
+                    
+                    [hwnd->window() setLevel: NSNormalWindowLevel];
+                    
+                 });
+   
+   return 1;
+   
+}
+
+
+WINBOOL nswindow_is_level_main_menu(oswindow hwnd)
+{
+   
+   return hwnd->window().level == NSMainMenuWindowLevel;
+   
+}
+
+
+WINBOOL nswindow_is_level_floating(oswindow hwnd)
+{
+   
+   return hwnd->window().level == NSFloatingWindowLevel;
+   
+}
+
+
+WINBOOL nswindow_is_level_normal(oswindow hwnd)
+{
+   
+   return hwnd->window().level == NSNormalWindowLevel;
+   
+}
+
+
+
 //CLASS_DECL_THREAD NSAutoreleasePool * g_ns_pool = NULL;
 //
 //
@@ -313,10 +383,28 @@ WINBOOL SetWindowPos(oswindow hwnd, oswindow hwndInsertAfter, int x, int y, int 
       
       int_ptr iInsertAfter = (int_ptr) hwndInsertAfter;
       
-      if(iInsertAfter == ZORDER_TOP || iInsertAfter == ZORDER_TOPMOST)
+      if(iInsertAfter == ZORDER_TOPMOST)
       {
          
-         order_front_nswindow(hwnd);
+         if(nswindow_is_level_floating(hwnd))
+         {
+            
+            order_front_nswindow(hwnd);
+            
+         }
+         else
+         {
+         
+            nswindow_set_level_floating(hwnd);
+            
+         }
+         
+      }
+      else if(iInsertAfter == ZORDER_TOP)
+      {
+         
+         nswindow_set_level_normal(hwnd);
+         //order_front_nswindow(hwnd);
          
       }
       

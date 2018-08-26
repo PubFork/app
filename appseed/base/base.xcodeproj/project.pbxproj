@@ -842,22 +842,22 @@
 		07D9671E1B4C63E3004A3D2A /* simple_ui */ = {
 			isa = PBXGroup;
 			children = (
-				9A9D7BB11F5D6887009EC103 /* simple_ui_edit_box.cpp */,
-				9A9D7BB21F5D6887009EC103 /* simple_ui_interaction.cpp */,
-				9A9D7BB31F5D6887009EC103 /* simple_ui_label.cpp */,
-				9A9D7BB41F5D6887009EC103 /* simple_ui_message_box.cpp */,
-				9A9D7BB51F5D6887009EC103 /* simple_ui_password.cpp */,
-				9A9D7BB61F5D6887009EC103 /* simple_ui_style.cpp */,
-				9A9D7BB71F5D6887009EC103 /* simple_ui_tap.cpp */,
-				9A9D7BB81F5D6887009EC103 /* simple_ui_top.cpp */,
 				07D9671F1B4C63E3004A3D2A /* simple_ui.h */,
+				9A9D7BB11F5D6887009EC103 /* simple_ui_edit_box.cpp */,
 				07D967211B4C63E3004A3D2A /* simple_ui_edit_box.h */,
+				9A9D7BB21F5D6887009EC103 /* simple_ui_interaction.cpp */,
 				07D967231B4C63E3004A3D2A /* simple_ui_interaction.h */,
+				9A9D7BB31F5D6887009EC103 /* simple_ui_label.cpp */,
 				07D967251B4C63E3004A3D2A /* simple_ui_label.h */,
+				9A9D7BB41F5D6887009EC103 /* simple_ui_message_box.cpp */,
 				07D967271B4C63E3004A3D2A /* simple_ui_message_box.h */,
+				9A9D7BB51F5D6887009EC103 /* simple_ui_password.cpp */,
 				07D967291B4C63E3004A3D2A /* simple_ui_password.h */,
+				9A9D7BB61F5D6887009EC103 /* simple_ui_style.cpp */,
 				07D9672B1B4C63E3004A3D2A /* simple_ui_style.h */,
+				9A9D7BB71F5D6887009EC103 /* simple_ui_tap.cpp */,
 				07D9672D1B4C63E3004A3D2A /* simple_ui_tap.h */,
+				9A9D7BB81F5D6887009EC103 /* simple_ui_top.cpp */,
 				9A9D7BB91F5D6887009EC103 /* simple_ui_top.h */,
 			);
 			path = simple_ui;

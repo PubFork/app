@@ -313,7 +313,6 @@ namespace macos
       //      cs.hInstance = System.m_hInstance;
       //cs.lpCreateParams = lpParam;
 
-
       install_message_routing(this);
 
       hook_window_create(m_pui);
@@ -339,6 +338,8 @@ namespace macos
       {
 
          m_oswindow = oswindow_get(new_round_window(this, rect));
+         
+         m_pui->m_pthread = ::get_thread();
 
          ::copy(&m_rectParentClient, &rectParam);
 
@@ -361,7 +362,6 @@ namespace macos
 
             ShowWindow(SW_HIDE);
 
-
          }
 
       }
@@ -378,20 +378,12 @@ namespace macos
          threadrefa_post_quit();
 
          threadrefa_wait(one_minute());
-         //::multithreading::post_quit_and_wait(m_pthreadUpdateWindow, seconds(5));
-
-         //::multithreading::post_quit_and_wait(m_queuethread, seconds(5));
-
-         //for(auto & pthread : m_mapqueue)
-         {
-
-            //    ::multithreading::post_quit_and_wait(pthread.element2(), millis(200));
-
-         }
 
          PostNcDestroy();        // cleanup if CreateWindowEx fails too soon
 
       }
+      
+      m_pui->set_need_layout();
 
       m_pui->add_ref();
 
@@ -2888,18 +2880,14 @@ namespace macos
    bool interaction_impl::post_message(UINT message, WPARAM wparam, lparam lparam)
    {
 
-      if (m_papp != NULL)
+      if (m_pui->m_pthread == NULL)
       {
-
-         return m_papp->post_message((::user::primitive *) m_pui, message, wparam, lparam);
-
-      }
-      else
-      {
-
+         
          return false;
-
+         
       }
+
+      return m_pui->m_pthread->post_message((::user::primitive *) m_pui, message, wparam, lparam);
 
    }
 
@@ -3294,19 +3282,49 @@ namespace macos
    }
 
 
+   void interaction_impl::on_zorder()
+   {
+      
+      if (m_bZ)
+      {
+         
+         ::SetWindowPos(m_oswindow, (oswindow) m_iZ,
+                        0,
+                        0,
+                        0,
+                        0,
+                        SWP_NOSIZE
+                        | SWP_NOMOVE
+                        | (m_bZ ? 0 : SWP_NOZORDER)
+                        | SWP_NOREDRAW
+                        | SWP_NOCOPYBITS
+                        | SWP_NOACTIVATE
+                        | SWP_NOOWNERZORDER
+                        | SWP_NOSENDCHANGING
+                        | SWP_DEFERERASE);
+         
+         m_bZ = false;
+         
+      }
+      
+      //::user::interaction_impl::on_translate();
+      
+   }
+
+   
    void interaction_impl::on_translate()
    {
 
       if (m_rectLastOsPlacement.top_left() != m_rectParentClientRequest.top_left())
       {
 
-         ::SetWindowPos(m_oswindow, NULL,
+         ::SetWindowPos(m_oswindow, (oswindow) m_iZ,
                         (int) m_rectParentClientRequest.left,
                         (int) m_rectParentClientRequest.top,
                         0,
                         0,
                         SWP_NOSIZE
-                        | SWP_NOZORDER
+                        | (m_bZ ? 0 : SWP_NOZORDER)
                         | SWP_NOREDRAW
                         | SWP_NOCOPYBITS
                         | SWP_NOACTIVATE
@@ -3329,12 +3347,12 @@ namespace macos
       if (m_rectLastOsPlacement != m_rectParentClientRequest)
       {
 
-         ::SetWindowPos(m_oswindow, NULL,
+         ::SetWindowPos(m_oswindow, (oswindow) m_iZ,
                         (int) m_rectParentClientRequest.left,
                         (int) m_rectParentClientRequest.top,
                         (int) m_rectParentClientRequest.width(),
                         (int) m_rectParentClientRequest.height(),
-                        SWP_NOZORDER
+                        (m_bZ ? 0 : SWP_NOZORDER)
                         | SWP_NOREDRAW
                         | SWP_NOCOPYBITS
                         | SWP_NOACTIVATE
@@ -4986,12 +5004,12 @@ namespace macos
 
       }
 
-      m_pui->send_message(WM_SIZE, 0, sz.lparam());
+      m_pui->post_message(WM_SIZE, 0, sz.lparam());
 
       if (bMove)
       {
 
-         m_pui->send_message(WM_MOVE, 0, pt.lparam());
+         m_pui->post_message(WM_MOVE, 0, pt.lparam());
 
       }
 

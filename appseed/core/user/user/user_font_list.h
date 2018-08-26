@@ -13,6 +13,7 @@ namespace user
    {
    public:
 
+      
       enum timer
       {
 
@@ -20,6 +21,7 @@ namespace user
 
       };
 
+      
       ::visual::font_list::layout      m_layout;
       rect                             m_rectMargin;
       int                              m_iSel;

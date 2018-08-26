@@ -5,7 +5,7 @@
 //  Created by Camilo Sasuke Tsumanuma on 25/08/18.
 //  Copyright © 2018 ca2 Desenvolvimento de Sofware Ltda. All rights reserved.
 //
-
+#include "framework.h"
 #import <Foundation/Foundation.h>
 
 #ifdef MACOS
@@ -47,66 +47,69 @@
 //#define FW_HEAVY            900
 
 
-CGFloat nsfont_get_ctweight(int iWeight)
+double nsfont_get_ctweight(int iWeight)
 {
    
-   float fCoreTextWeight = kCTFontWeightRegular;
+   double dCoreTextWeight = kCTFontWeightRegular;
    
-   if (iWeight < FontSelectionValue(150))
+   if (iWeight < FW_THIN + 50)
    {
       
-      fCoreTextWeight = kCTFontWeightUltraLight;
+      dCoreTextWeight = kCTFontWeightUltraLight;
       
    }
-   else if (iWeight < FontSelectionValue(250))
+   else if (iWeight < FW_EXTRALIGHT + 50)
    {
       
-      fCoreTextWeight = kCTFontWeightThin;
+      dCoreTextWeight = kCTFontWeightThin;
       
    }
-   else if (iWeight < FontSelectionValue(350))
+   else if (iWeight < FW_LIGHT + 50)
    {
 
-      fCoreTextWeight = kCTFontWeightLight;
+      dCoreTextWeight = kCTFontWeightLight;
       
    }
-   else if (iWeight < FontSelectionValue(450))
+   else if (iWeight < FW_NORMAL + 50)
    {
 
-      fCoreTextWeight = kCTFontWeightRegular;
+      dCoreTextWeight = kCTFontWeightRegular;
       
    }
-   else if (iWeight < FontSelectionValue(550))
+   else if (iWeight < FW_MEDIUM + 50)
    {
 
-      fCoreTextWeight = kCTFontWeightMedium;
+      dCoreTextWeight = kCTFontWeightMedium;
       
    }
-   else if (iWeight < FontSelectionValue(650))
+   else if (iWeight < FW_SEMIBOLD + 50)
    {
 
-      fCoreTextWeight = kCTFontWeightSemibold;
+      dCoreTextWeight = kCTFontWeightSemibold;
       
    }
-   else if (iWeight < FontSelectionValue(750))
+   else if (iWeight < FW_BOLD + 50)
    {
       
-      fCoreTextWeight = kCTFontWeightBold;
+      dCoreTextWeight = kCTFontWeightBold;
       
    }
-   else if (iWeight < FontSelectionValue(850))
+   else if (iWeight < FW_EXTRABOLD + 50)
    {
 
-      fCoreTextWeight = kCTFontWeightHeavy;
+      dCoreTextWeight = kCTFontWeightHeavy;
       
    }
    else
    {
 
-      fCoreTextWeight = kCTFontWeightBlack;
+      dCoreTextWeight = kCTFontWeightBlack;
       
    }
 
-   return fCoreTextWeight;
+   return dCoreTextWeight;
 
 }
+
+
+

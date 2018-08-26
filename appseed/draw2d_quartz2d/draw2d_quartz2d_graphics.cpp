@@ -6,6 +6,7 @@
 
 //extern "C"
 unsigned long apple_get_fonts(char *** p);
+double nsfont_get_ctweight(int iWeight);
 
 void copy(CGRect &r, LPCRECTD pr)
 {
@@ -5719,10 +5720,6 @@ namespace draw2d_quartz2d
                
                emode = kCGTextClip;
                
-//               bFill = true;
-//
-//               crFill = ARGB(255, 255, 255, 255);
-
             }
             else
             {
@@ -5749,34 +5746,7 @@ namespace draw2d_quartz2d
       if(!f->m_bUpdated)
       {
          
-         if(f->m_fontName != NULL)
-         {
-            
-            CFRelease(f->m_fontName);
-            
-            f->m_fontName = NULL;
-            
-         }
-         
-         if(f->m_fontD != NULL)
-         {
-            
-            CFRelease(f->m_fontD);
-         
-            f->m_fontD = NULL;
-            
-         }
-         
-         if(f->m_font != NULL)
-         {
-         
-            CFRelease(f->m_font);
-         
-            f->m_font = NULL;
-            
-         }
-         
-         f->m_mapMetrics.remove_all();
+         f->destroy();
          
       }
       else if(!bDraw)
@@ -5854,19 +5824,161 @@ namespace draw2d_quartz2d
       }
 
       CGContextSaveGState(pgraphics);
+      
+      
+      array < CFTypeRef >  pkeys;
+      
+      array < CFTypeRef >  pvals;
+      
+      array < CFTypeRef >  cfrel;
+      
+      array < CGColorRef > crrel;
 
       if(f->m_fontName == NULL)
       {
 
          f->m_fontName = CFStringCreateWithCString(kCFAllocatorDefault, f->m_strFontFamilyName, kCFStringEncodingUTF8);
-      
+         
       }
    
       if(f->m_fontD == NULL)
       {
+         
+         array < CFTypeRef >  pkeyTraits;
+         
+         array < CFTypeRef >  pvalTraits;
+         
+         array < CFTypeRef >  pkeyAttrs;
+         
+         array < CFTypeRef >  pvalAttrs;
+         
+         CTFontSymbolicTraits symValue = 0;
+         
+         CTFontSymbolicTraits symMask = 0;
+   
+         int iWeight = f->m_iFontWeight;
+         
+         double dCoreTextWeight = nsfont_get_ctweight(iWeight);
+         
+         if(dCoreTextWeight != 0.0)
+         {
 
-         f->m_fontD = CTFontDescriptorCreateWithNameAndSize(f->m_fontName, 0.f);
-      
+            CFNumberRef dFontWeight = CFNumberCreate(kCFAllocatorDefault, kCFNumberDoubleType, &dCoreTextWeight);
+            
+            cfrel.add(dFontWeight);
+            
+            pkeyTraits.add(kCTFontWeightTrait);
+            
+            pvalTraits.add(dFontWeight);
+
+            if(dCoreTextWeight > 0.0)
+            {
+               
+               symValue |= kCTFontTraitBold;
+               
+               symMask |= kCTFontTraitBold;
+               
+            }
+
+         }
+         
+         if(f->m_bItalic)
+         {
+            
+            symValue |= kCTFontTraitItalic;
+            
+            symMask |= kCTFontTraitItalic;
+            
+         }
+         
+         CFDictionaryRef traits1 = NULL;
+         
+         if(pkeyTraits.has_elements())
+         {
+            
+            traits1 = CFDictionaryCreate(
+                                             kCFAllocatorDefault,
+                                             pkeyTraits.get_data(),
+                                             pvalTraits.get_data(),
+                                             pkeyTraits.get_size(),
+                                             &kCFTypeDictionaryKeyCallBacks,
+                                             &kCFTypeDictionaryValueCallBacks);
+            
+            pkeyAttrs.add(kCTFontTraitsAttribute);
+            
+            pvalAttrs.add(traits1);
+            
+            cfrel.add(traits1);
+            
+         }
+
+         CFDictionaryRef attributes1 = NULL;
+         
+         if(pkeyAttrs.has_elements())
+         {
+            
+            attributes1 = CFDictionaryCreate(
+                                                          kCFAllocatorDefault,
+                                                          pkeyAttrs.get_data(),
+                                                          pvalAttrs.get_data(),
+                                                          pkeyAttrs.get_size(),
+                                                          &kCFTypeDictionaryKeyCallBacks,
+                                                          &kCFTypeDictionaryValueCallBacks);
+            
+            pkeyAttrs.add(kCTFontTraitsAttribute);
+            
+            pvalAttrs.add(traits1);
+
+            
+            cfrel.add(attributes1);
+            
+         }
+
+         CTFontDescriptorRef fontdesc = CTFontDescriptorCreateWithNameAndSize(f->m_fontName, 48.f);
+         
+         if(symMask != 0)
+         {
+         
+            CTFontDescriptorRef fontdescSym = CTFontDescriptorCreateCopyWithSymbolicTraits(fontdesc, symValue, symMask);
+            
+            if(fontdescSym != NULL)
+            {
+               
+               CFRelease(fontdesc);
+               
+               fontdesc = fontdescSym;
+               
+            }
+            
+         }
+         
+         if(attributes1 != NULL)
+         {
+         
+            
+            f->m_fontD = CTFontDescriptorCreateCopyWithAttributes(fontdesc, attributes1);
+            
+            if(f->m_fontD != NULL)
+            {
+               
+               f->m_fontD = fontdesc;
+               
+            }
+            else
+            {
+         
+               CFRelease(fontdesc);
+               
+            }
+            
+         }
+         else
+         {
+            
+            f->m_fontD = fontdesc;
+            
+         }
+         
       }
    
       double dFontSize;
@@ -5891,13 +6003,24 @@ namespace draw2d_quartz2d
       
       }
 
-      array < const void * >  pkeys;
-      array < const void * >  pvals;
-      array < CFTypeRef >     cfrel;
-      array < CGColorRef >    crrel;
-
-      pkeys.add((const void *) kCTFontAttributeName);
-      pvals.add((const void *) f->m_font);
+      pkeys.add(kCTFontAttributeName);
+      
+      pvals.add(f->m_font);
+      
+      if(f->m_bUnderline)
+      {
+         
+         int iUnderlineStyle = kCTUnderlineStyleSingle;
+         
+         CFNumberRef num = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &iUnderlineStyle);
+         
+         cfrel.add(num);
+         
+         pkeys.add(kCTUnderlineStyleAttributeName);
+         
+         pvals.add(num);
+         
+      }
 
       if(emode != kCGTextInvisible && bDraw)
       {
@@ -5914,7 +6037,7 @@ namespace draw2d_quartz2d
             components[2] = argb_get_b_value(crFill) / 255.f;
             components[3] = argb_get_a_value(crFill) / 255.f;
 
-            pkeys.add((const void *) kCTForegroundColorAttributeName);
+            pkeys.add(kCTForegroundColorAttributeName);
             pvals.add(CGColorCreate(rgbColorSpace, components));
             crrel.add((CGColorRef)pvals.last());
 
@@ -5925,8 +6048,8 @@ namespace draw2d_quartz2d
 
             double dStroke = sppen.is_null() ? 3.0 : sppen->m_dWidth * 100.0 / dFontSize;
 
-            pkeys.add((const void *) kCTStrokeWidthAttributeName);
-            pvals.add((const void *) CFNumberCreate(kCFAllocatorDefault, kCFNumberDoubleType, &dStroke));
+            pkeys.add(kCTStrokeWidthAttributeName);
+            pvals.add(CFNumberCreate(kCFAllocatorDefault, kCFNumberDoubleType, &dStroke));
             cfrel.add(pvals.last());
 
             components[0] = argb_get_r_value(crStroke) / 255.f;
@@ -5934,8 +6057,8 @@ namespace draw2d_quartz2d
             components[2] = argb_get_b_value(crStroke) / 255.f;
             components[3] = argb_get_a_value(crStroke) / 255.f;
 
-            pkeys.add((const void *) kCTStrokeColorAttributeName);
-            pvals.add((const void *) CGColorCreate(rgbColorSpace, components));
+            pkeys.add(kCTStrokeColorAttributeName);
+            pvals.add(CGColorCreate(rgbColorSpace, components));
             crrel.add((CGColorRef)pvals.last());
 
          }

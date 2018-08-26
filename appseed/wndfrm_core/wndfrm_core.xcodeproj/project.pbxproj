@@ -325,8 +325,6 @@
 		9AEB75FB16F78F120085103B /* wndfrm_core */ = {
 			isa = PBXGroup;
 			children = (
-				9ACB7A5D20D23BF500C1C857 /* wndfrm_core_user_theme.cpp */,
-				9ACB7A5C20D23BF400C1C857 /* wndfrm_core_user_theme.h */,
 				07A6FBDB1BA0E28F00D9C008 /* user_meta_button.cpp */,
 				07A6FBDC1BA0E28F00D9C008 /* user_meta_button.h */,
 				07A6FBDD1BA0E28F00D9C008 /* user_meta_control_box.cpp */,
@@ -351,6 +349,8 @@
 				9A1EDC3B19C900FE00F5CCE8 /* wndfrm_core_interaction.h */,
 				9A1EDC3C19C900FE00F5CCE8 /* wndfrm_core_library.cpp */,
 				9A1EDC3D19C900FE00F5CCE8 /* wndfrm_core_library.h */,
+				9ACB7A5D20D23BF500C1C857 /* wndfrm_core_user_theme.cpp */,
+				9ACB7A5C20D23BF400C1C857 /* wndfrm_core_user_theme.h */,
 				9A1EDC3E19C900FE00F5CCE8 /* wndfrm_core.h */,
 				9AEB760016F78F120085103B /* framework.cpp */,
 				9AEB760116F78F120085103B /* framework.h */,

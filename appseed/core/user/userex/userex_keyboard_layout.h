@@ -8,10 +8,9 @@ namespace userex
    class CLASS_DECL_CORE keyboard_layout :
       virtual public ::user::split_view,
       virtual public ::user::form_callback,
-      public ::user::list_data
+      virtual public ::user::list_data
    {
    public:
-
 
 
       sp(::user::document)                m_pdoc;
@@ -32,19 +31,6 @@ namespace userex
       virtual void _001GetItemText(::user::mesh_item * pitem);
 
       virtual int_ptr _001GetItemCount();
-
-
-   private:
-
-
-      keyboard_layout(const keyboard_layout & ) :
-         ::user::place_holder_container(NULL),
-         ::user::split_layout(NULL),
-         ::user::split_view(NULL),
-         ::user::mesh_data(NULL),
-         ::user::list_data(NULL)
-      {
-      }
 
 
    };

@@ -4437,8 +4437,10 @@ finished_update:
       if (iTimer == 0)
       {
 
-         if (IsWindowVisible() && ::get_tick_count() - m_dwLastDraw > m_dwCaretTime / 2)
+         if (IsWindowVisible() && ::get_tick_count() - m_dwLastDraw > m_dwCaretTime)
          {
+            
+            m_dwLastDraw = get_tick_count();
 
             set_need_redraw();
 

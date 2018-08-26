@@ -58,7 +58,9 @@ namespace simple_ui
    {
 
       sp(::simple_ui::tap) ptap = canew(::simple_ui::tap(get_app()));
-      ptap->create_window(null_rect(), this,id);
+      
+      ptap->create_window(null_rect(), this, id);
+      
       ptap->set_window_text(pszText);
 
       tapa.add(ptap);
@@ -68,8 +70,6 @@ namespace simple_ui
 
    int32_t message_box::show()
    {
-
-
 
       ::rect rectDesktop;
 
@@ -106,7 +106,7 @@ namespace simple_ui
 
       int stdw = 800;
 
-      int stdh = 184 + 23 + 184;
+      int stdh = 400;
 
       int w = stdw;
 
@@ -137,9 +137,14 @@ namespace simple_ui
       ::user::create_struct cs(WS_EX_LAYERED, NULL, NULL, 0, rectFontopus);
 
       if(!create_window_ex(cs, puiParent))
+      {
+         
          _throw(simple_exception(get_app(),"not excepted! Failing Message box!!"));
+         
+      }
 
       TRACE("(1) Just after create_window_ex for simple_message_box (m_pimpl.m_p) : %d",m_pimpl.m_p);
+      
       TRACE("(2) Just after create_window_ex for simple_message_box (m_pimpl->m_pui) : %d",m_pimpl->m_pui);
 
       uint32_t uiType = m_uiFlags & MB_TYPEMASK;
@@ -179,10 +184,8 @@ namespace simple_ui
       }
 
       TRACE("(3) Just after create_window_ex for simple_message_box (m_pimpl.m_p) : %d",m_pimpl.m_p);
+      
       TRACE("(4) Just after create_window_ex for simple_message_box (m_pimpl->m_pui) : %d",m_pimpl->m_pui);
-
-
-      //on_layout();
 
       SetWindowPos(ZORDER_TOP,rectFontopus,SWP_SHOWWINDOW);
 
@@ -201,8 +204,6 @@ namespace simple_ui
 
    void message_box::_001OnDraw(::draw2d::graphics * pgraphics)
    {
-
-
 
       rect rectClient;
 
@@ -237,12 +238,7 @@ namespace simple_ui
 
       pgraphics->get_text_metrics(&tm);
 
-      //int iHeight = tm.tmHeight;
-
-      //int y = 10;
-
       COLORREF crText;
-
 
       if (timeNow.GetHour() >= 6 && timeNow.GetHour() <= 17)
       {
@@ -257,7 +253,6 @@ namespace simple_ui
 
       }
 
-
       pgraphics->set_text_color(crText);
 
       string strMessage = m_stra.implode("\n");
@@ -267,16 +262,6 @@ namespace simple_ui
       r.deflate(10, 10);
 
       pgraphics->draw_text(strMessage,r,DT_LEFT | DT_TOP | DT_EXPANDTABS);
-
-      //for(int i = 0; i < m_stra.get_size(); i++)
-      //{
-
-      //   pgraphics->text_out(10,y,m_stra[i]);
-
-      //   y+= iHeight;
-
-      //}
-
 
    }
 
@@ -288,13 +273,15 @@ namespace simple_ui
 
       GetClientRect(rectClient);
 
-      // DESKTOP sizing
-      int cx = (84 + 77) * 2 / 3;
-      int cy = 49 / 2;
-      int margin = 10;
-      int x = rectClient.left + margin;
-      int y = rectClient.bottom - cy - margin;
+      int cx = 100;
 
+      int cy = 25;
+
+      int margin = 10;
+
+      int x = rectClient.left + margin;
+
+      int y = rectClient.bottom - cy - margin;
 
       for(index i = 0; i < m_tapaA.get_count(); i++)
       {
@@ -319,7 +306,6 @@ namespace simple_ui
          x -= cx + margin;
 
       }
-
 
    }
 

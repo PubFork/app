@@ -40,7 +40,7 @@ namespace user
       m_bUpdateGraphics                      = false;
       m_oswindow                             = NULL;
       m_pelementalFocus                      = NULL;
-
+      m_bPendingRedraw                       = false;
 
 
 
@@ -1090,7 +1090,9 @@ namespace user
 
    bool interaction_impl::update_data(bool bSaveAndValidate)
    {
+      
       UNREFERENCED_PARAMETER(bSaveAndValidate);
+      
       ::exception::throw_interface_only(get_app());
 
       return false;
@@ -1102,12 +1104,13 @@ namespace user
 
    void interaction_impl::CenterWindow(::user::interaction * pAlternateOwner)
    {
+      
       UNREFERENCED_PARAMETER(pAlternateOwner);
+   
       ::exception::throw_interface_only(get_app());
 
-
-
    }
+   
 
    bool interaction_impl::CheckAutoCenter()
    {
@@ -1780,9 +1783,7 @@ namespace user
       if (!m_bPendingRedraw && !m_pui->m_bProDevian)
       {
 
-         m_bPendingRedraw = true;
-
-         m_pui->post_message(WM_REDRAW);
+         m_bPendingRedraw = m_pui->post_message(WM_REDRAW);
 
       }
 
@@ -2947,6 +2948,13 @@ namespace user
    {
 
       ::user::elemental * pelementalFocusPrev = m_pelementalFocus;
+      
+      if(pelementalFocusPrev == pelementalFocusNew)
+      {
+         
+         return true;
+         
+      }
 
       m_pelementalFocus = pelementalFocusNew;
 
@@ -3021,7 +3029,7 @@ namespace user
 
       if(m_pui->is_ascendant_of(pui, true))
       {
-
+         
          impl_set_focus_elemental(pelemental);
 
          return true;

@@ -652,6 +652,13 @@ namespace user
 
    bool interaction_impl_base::SetWindowPos(int_ptr z,int32_t x,int32_t y,int32_t cx,int32_t cy,UINT nFlags)
    {
+      
+      if(is_null(m_pui))
+      {
+         
+         return false;
+         
+      }
 
       synch_lock sl(m_pui->m_pmutex);
 
@@ -1448,7 +1455,7 @@ namespace user
          
       }
 
-      get_wnd()->set_need_redraw();
+      //get_wnd()->set_need_redraw();
 
    }
 

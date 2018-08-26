@@ -31,8 +31,6 @@ namespace user
       };
 
 
-
-
       size                       m_sizeFull;
       index                      m_iSel;
       string                     m_strText;
@@ -50,11 +48,13 @@ namespace user
       stringa                    m_straValue;
 
 
-
       combo_box();
       combo_box(::aura::application * papp);
       virtual ~combo_box();
 
+      
+      void user_combo_box_common_construct();
+      
 
       virtual void install_message_routing(::message::sender * psender) override;
 

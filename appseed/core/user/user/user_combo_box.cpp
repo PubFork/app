@@ -4,27 +4,37 @@
 namespace user
 {
 
-
-   combo_box::combo_box() :
-      ::user::combo_box(get_app())
+   
+   combo_box::combo_box()
    {
-
+      
+      user_combo_box_common_construct();
+      
    }
-
+   
 
    combo_box::combo_box(::aura::application * papp) :
       object(papp),
       ::user::plain_edit(papp)
    {
 
+      user_combo_box_common_construct();
+
+   }
+   
+   
+   void combo_box::user_combo_box_common_construct()
+   {
+      
       m_iSel                  = -1;
       m_bCaseSensitiveMatch   = false;
       m_typeComboList         = System.type_info < ::user::combo_list > ();
       m_estyle                = style_simply;
       m_bEdit                 = true;
       m_edatamode             = data_mode_opaque;
-
+      
    }
+   
 
    combo_box::~combo_box()
    {
@@ -42,9 +52,6 @@ namespace user
       }
 
    }
-
-
-
 
 
    void combo_box::install_message_routing(::message::sender * psender)
