@@ -139,6 +139,7 @@ namespace draw2d
       ::draw2d::e_fill_mode            m_efillmode;
       bool                             m_bHasPoint;
       pointd                           m_pt;
+      pointd                           m_ptStart;
 
 
       path();

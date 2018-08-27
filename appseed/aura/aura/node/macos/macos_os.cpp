@@ -11,8 +11,8 @@
 char * ns_get_default_browser_path();
 void ns_set_this_process_binary_default_browser();
 
-string apple_browse_folder(const char * pszStartDir);
-stringa apple_browse_file_open(const char ** pszStartDir, bool bMulti);
+string apple_browse_folder(const char * pszStartDir, bool bCanCreateDirectories);
+stringa apple_browse_file_open(const char ** pszStartDir, bool bAllowsMultipleSelection);
 
 namespace macos
 {
@@ -1138,13 +1138,13 @@ namespace macos
       if(set.has_property("folder"))
       {
          
-         strStartDir =set["folder"].get_value().get_file_path();
+         strStartDir = set["folder"].get_value().get_file_path();
          
          pszStartDir = strStartDir;
          
       }
       
-      string strFolder =apple_browse_folder(pszStartDir);
+      string strFolder =apple_browse_folder(pszStartDir, true);
       
       if(strFolder.is_empty())
       {

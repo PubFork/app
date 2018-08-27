@@ -41,7 +41,16 @@ namespace draw2d_quartz2d
       
       CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
       
-      m_mem.allocate(cy * iScan);
+      try
+      {
+      
+         m_mem.allocate(cy * iScan);
+         
+      }
+      catch(...)
+      {
+         
+      }
       
       if(m_mem.get_data() == NULL)
       {

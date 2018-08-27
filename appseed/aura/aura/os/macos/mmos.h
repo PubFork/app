@@ -33,7 +33,7 @@
 
 -(void)runRunnable:(runnable *)prunnable;
 
--(NSURL *)browse_folder: (NSURL *) startDir;
+-(NSURL *)browse_folder : (NSURL *) directoryURL canCreateDirectories: (bool) bCanCreateDirectories;
 -(NSArray < NSURL * > *)browse_file_open : (NSURL **) startDir multi: (bool) b;
 @end
 

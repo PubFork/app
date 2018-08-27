@@ -148,12 +148,21 @@ namespace draw2d
       e->u.m_arc.m_dRadiusX    = (double) rect.right - e->u.m_arc.m_xCenter;
       e->u.m_arc.m_dRadiusY    = (double) rect.bottom - e->u.m_arc.m_yCenter;
       e->u.m_arc.m_dAngle1     = dStart * g_dPi / 180.0;
-      e->u.m_arc.m_dAngle2     = e->u.m_arc.m_dAngle1 + dAngle * g_dPi / 180.0;
       e->u.m_arc.m_dAngle      = dAngle * g_dPi / 180.0;
+      e->u.m_arc.m_dAngle2     = e->u.m_arc.m_dAngle1 + e->u.m_arc.m_dAngle;
       e->u.m_arc.m_ptStart.x   = e->u.m_arc.m_xCenter + e->u.m_arc.m_dRadiusX * cos(e->u.m_arc.m_dAngle1);
       e->u.m_arc.m_ptStart.y   = e->u.m_arc.m_yCenter + e->u.m_arc.m_dRadiusY * sin(e->u.m_arc.m_dAngle1);
       e->u.m_arc.m_ptEnd.x     = e->u.m_arc.m_xCenter + e->u.m_arc.m_dRadiusX * cos(e->u.m_arc.m_dAngle2);
       e->u.m_arc.m_ptEnd.y     = e->u.m_arc.m_yCenter + e->u.m_arc.m_dRadiusY * sin(e->u.m_arc.m_dAngle2);
+      
+      
+      if(m_bHasPoint)
+      {
+         
+         m_ptStart = e->u.m_arc.m_ptStart;
+         
+         
+      }
 
       m_elementa.add(e);
 
@@ -835,7 +844,7 @@ namespace draw2d
       add_arc(Corner, 0, 90);
 
       // bottom left
-      Corner.left -= (width(r) - dia - 1);
+      Corner.left = r.left;
       Corner.right = Corner.left + dia;
       add_arc(Corner, 90, 90);
 

@@ -46,13 +46,13 @@ WINBOOL GetCursorPos(LPPOINT lpptCursor)
 
 
 
-char * mm_browse_folder(const char * pszStartDir);
+char * mm_browse_folder(const char * pszStartDir, bool bCanCreateDirectories);
 
 
-string apple_browse_folder(const char * pszStartDir)
+string apple_browse_folder(const char * pszStartDir, bool bCanCreateDirectories)
 {
    
-   return ::str::from_strdup(mm_browse_folder(pszStartDir));
+   return ::str::from_strdup(mm_browse_folder(pszStartDir, bCanCreateDirectories));
    
 }
 

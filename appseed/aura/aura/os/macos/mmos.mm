@@ -87,35 +87,37 @@ void main_synch_runnable(runnable * prunnable)
 
 @implementation mmos
 
--(NSURL *)browse_folder : (NSURL *) startDir
+-(NSURL *)browse_folder : (NSURL *) directoryURL canCreateDirectories: (bool) bCanCreateDirectories
 {
    
    NSOpenPanel * panel = [NSOpenPanel openPanel];
    
-      [panel setAllowsMultipleSelection:NO];
-   
-      [panel setCanChooseDirectories:YES];
-   
-      [panel setCanChooseFiles:NO];
-   
-      if(startDir != nil)
-      {
+   [panel setCanCreateDirectories: bCanCreateDirectories];
 
-         panel.directoryURL= startDir;
+   [panel setAllowsMultipleSelection: NO];
    
-      }
+   [panel setCanChooseDirectories:YES];
    
-      if ([panel runModal] != NSFileHandlingPanelOKButton)
-      {
-         
-         return NULL;
-         
-      }
+   [panel setCanChooseFiles:NO];
+   
+   if(directoryURL != nil)
+   {
 
+      panel.directoryURL = directoryURL;
+   
+   }
+   
+   if ([panel runModal] != NSFileHandlingPanelOKButton)
+   {
+      
+      return NULL;
+      
+   }
 
    return [[panel URLs] lastObject];
    
 }
+
 
 -(NSArray < NSURL *> *)browse_file_open : (NSURL **) startDir multi: (bool) b
 {
@@ -449,25 +451,34 @@ void ns_log(const char * pszLog)
 
 
 
-char * mm_browse_folder(const char * pszStartDir)
+char * mm_browse_folder(const char * pszStartDir, bool bCanCreateDirectories)
 {
    
-   mmos * pos = [mmos get];
+   __block char * p = NULL;
    
-   NSURL * startDir = NULL;
-   
-   if(pszStartDir != NULL)
+   ns_main_sync(^
    {
       
-      NSString * str = [[NSString alloc] initWithUTF8String:pszStartDir];
-    
-      startDir = [[NSURL alloc]initWithString :str];
+      mmos * pos = [mmos get];
       
-   }
+      NSURL * startDir = NULL;
+      
+      if(pszStartDir != NULL)
+      {
+         
+         NSString * str = [[NSString alloc] initWithUTF8String:pszStartDir];
+       
+         startDir = [[NSURL alloc]initWithString :str];
+         
+      }
 
-   NSURL * url = [pos browse_folder:startDir];
+      NSURL * url = [pos browse_folder:startDir canCreateDirectories:bCanCreateDirectories];
+      
+      p = ns_string( [url absoluteString]);
+      
+   });
             
-   return ns_string( [url absoluteString]);
+   return p;
 
 }
 
@@ -478,36 +489,39 @@ char** mm_browse_file_open(const char ** pszStartDir, bool bMulti)
    __block char ** pp = NULL;
    
    ns_main_sync(^
-                {
-   
-   mmos * pos = [mmos get];
-   
-   NSURL * startDir = NULL;
-   
-   if(pszStartDir != NULL)
    {
-      
-      NSString * str = [[NSString alloc] initWithUTF8String:*pszStartDir];
-      
-      startDir = [[NSURL alloc]initWithString :str];
-      
-   }
    
-   NSArray < NSURL * > * urla = [pos browse_file_open:&startDir multi:bMulti];
+      mmos * pos = [mmos get];
+      
+      NSURL * startDir = NULL;
+      
+      if(pszStartDir != NULL && *pszStartDir != NULL)
+      {
+         
+         NSString * str = [[NSString alloc] initWithUTF8String:*pszStartDir];
+         
+         startDir = [[NSURL alloc]initWithString :str];
+         
+      }
+      
+      NSArray < NSURL * > * urla = [pos browse_file_open:&startDir multi:bMulti];
 
-   pp = (char **)malloc((urla.count + 1) * sizeof(char*));
-   int i = 0;
-   for(; i < urla.count; i++)
-   {
+      pp = (char **)malloc((urla.count + 1) * sizeof(char*));
       
-      pp[i] = ns_string([[urla objectAtIndex:i] absoluteString]);
+      int i = 0;
       
-   }
-   pp[i] = NULL;
-   
-   *pszStartDir = ns_string([startDir absoluteString]);
+      for(; i < urla.count; i++)
+      {
+         
+         pp[i] = ns_string([[urla objectAtIndex:i] absoluteString]);
+         
+      }
+      
+      pp[i] = NULL;
+      
+      *pszStartDir = ns_string([startDir absoluteString]);
                    
-                });
+   });
    
    return pp;
    

@@ -73,16 +73,16 @@ namespace draw2d_quartz2d
       
       CGFloat y = (rect.bottom + rect.top) / 2.0;
       
-      CGFloat x1 = x + d1 * cos(dBeg);
+//      CGFloat x1 = x + d1 * cos(dBeg);
+//      
+//      CGFloat y1 = y + d1 * sin(dBeg);
       
-      CGFloat y1 = y + d1 * sin(dBeg);
-      
-      if(CGPathIsEmpty(m_path))
-      {
-
-         internal_add_move(x1, y1);
-         
-      }
+//      if(CGPathIsEmpty(m_path))
+//      {
+//
+//         internal_add_move(x1, y1);
+//
+//      }
       
       CGPathAddArc(m_path, &t, x, y, d1/2.0, dBeg, dEnd, bClockwise ? 1 : 0);
       
