@@ -1,23 +1,16 @@
 #include "framework.h"
-//#include "draw2d_object.h"
 
 
 namespace draw2d
 {
-
-   void object::dump(dump_context & dumpcontext) const
+   
+   
+   object::object()
    {
-
-      UNREFERENCED_PARAMETER(dumpcontext);
-
-      ::exception::throw_interface_only(get_app());
-
+      
+      
    }
-
-   void object::assert_valid() const
-   {
-      ::exception::throw_interface_only(get_app());
-   }
+   
 
    object::~object()
    {
@@ -26,28 +19,20 @@ namespace draw2d
 
    }
 
-   /*
-      int32_t object::___FUNCNAME(GetObject)(int32_t nCount, LPVOID lpObject) const
-      {
-         UNREFERENCED_PARAMETER(nCount);
-         UNREFERENCED_PARAMETER(lpObject);
-         ::exception::throw_interface_only(get_app());
-      }
-   */
-
-   /*
-
-      #pragma push_macro("GetObject")
-      #undef GetObject
-
-      int32_t object::GetObject(int32_t nCount, LPVOID lpObject) const
-      {
-         return ___FUNCNAME(GetObject)(nCount, lpObject);
-      }
-
-      #pragma pop_macro("GetObject")
-
-   */
+   void object::dump(dump_context & dumpcontext) const
+   {
+      
+      UNREFERENCED_PARAMETER(dumpcontext);
+      
+      ::exception::throw_interface_only(get_app());
+      
+   }
+   
+   void object::assert_valid() const
+   {
+      ::exception::throw_interface_only(get_app());
+   }
+   
 
    bool object::CreateStockObject(int32_t nIndex)
    {

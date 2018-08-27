@@ -66,8 +66,7 @@ namespace draw2d
 
    }
 
-
-
+   
    dib::~dib()
    {
 
@@ -7234,30 +7233,37 @@ restart:
    {
 
       map();
-
-      BYTE *dst = (BYTE*)m_pcolorref;
+      
+      byte * dst = (byte *) m_pcolorref;
+      
       int64_t size = scan_area();
 
       int iDiv = 255 * 255;
+      
       int iMul = (int)(dRate * (double)iDiv);
-
-      //      i32 i = 0;;
 
       while (size > 0)
       {
-         //dst[3] = dst[i];
+
          int iMax = MAX(MAX(dst[0], dst[1]), dst[2]);
+
          int iMin = MIN(MIN(dst[0], dst[1]), dst[2]);
+
          int iMid = (iMax + iMin) / 2;
+         
          dst[0] = ((dst[0] - iMid) * iMul / iDiv) + iMid;
+         
          dst[1] = ((dst[1] - iMid) * iMul / iDiv) + iMid;
+         
          dst[2] = ((dst[2] - iMid) * iMul / iDiv) + iMid;
+         
          dst += 4;
+         
          size--;
+         
       }
 
    }
-
 
 
    void dib::set_rgb_pre_alpha(i32 R, i32 G, i32 B, i32 A)

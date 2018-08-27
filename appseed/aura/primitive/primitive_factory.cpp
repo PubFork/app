@@ -179,7 +179,7 @@ object * factory_item_base::create()
 
 }
 
-object * factory_item_base::clone(sp(object) pobject)
+object * factory_item_base::clone(object * pobject)
 {
 
    UNREFERENCED_PARAMETER(pobject);

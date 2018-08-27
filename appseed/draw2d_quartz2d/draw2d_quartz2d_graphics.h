@@ -19,7 +19,6 @@ namespace draw2d_quartz2d
    {
    public:
 
-      
       int                           m_iSaveDC;
       bool                          m_bOwnDC;
       CGContextRef                  m_pdc;

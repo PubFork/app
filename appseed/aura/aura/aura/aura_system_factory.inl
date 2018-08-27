@@ -43,7 +43,7 @@ object * creatable_factory_item < CREATABLE_TYPE > ::create(::aura::application 
 
 
 template < class CREATABLE_TYPE >
-object * creatable_factory_item < CREATABLE_TYPE > ::clone(sp(object) pobject)
+object * creatable_factory_item < CREATABLE_TYPE > ::clone(object * pobject)
 {
 
    UNREFERENCED_PARAMETER(pobject);
@@ -56,10 +56,10 @@ object * creatable_factory_item < CREATABLE_TYPE > ::clone(sp(object) pobject)
 
 
 template < class CLONEABLE_TYPE >
-object * cloneable_factory_item < CLONEABLE_TYPE > ::clone(sp(object) pobject)
+object * cloneable_factory_item < CLONEABLE_TYPE > ::clone(object * pobject)
 {
 
-   const CLONEABLE_TYPE * ptSrc = dynamic_cast < const CLONEABLE_TYPE * > (pobject.m_p);
+   const CLONEABLE_TYPE * ptSrc = dynamic_cast < const CLONEABLE_TYPE * > (pobject);
 
    void * pv = NULL;
 

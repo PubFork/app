@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 struct NSVGimage;
@@ -12,6 +12,7 @@ namespace draw2d
    {
    public:
 
+      bool                          m_bPat;
 
       ::aura::str_context *         m_puistrcontext;
       ::aura::draw_context *        m_pdrawcontext;

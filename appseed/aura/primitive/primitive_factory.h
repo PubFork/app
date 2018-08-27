@@ -124,9 +124,10 @@ public:
    virtual object *  create(::aura::application * papp);
    virtual object *  create();
    
-   virtual object * clone(sp(object) pobject);
+   virtual object * clone(object * pobject);
 
 };
+
 
 template < class CREATABLE_TYPE >
 class creatable_factory_item :
@@ -140,7 +141,7 @@ public:
    virtual object * create(::aura::application * papp);
 
    using ::factory_item_base::clone;
-   virtual object * clone(sp(object) pobject);
+   virtual object * clone(object * pobject);
 
 };
 
@@ -154,7 +155,7 @@ public:
 
    
    using creatable_factory_item < CLONEABLE_TYPE >::clone;
-   virtual object * clone(sp(object) pobject);
+   virtual object * clone(object * pobject);
 
 };
 

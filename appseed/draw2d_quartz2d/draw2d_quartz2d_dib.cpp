@@ -28,56 +28,32 @@ namespace draw2d_quartz2d
    double dib::dPi;*/
    
    
-   dib::dib(sp(::aura::application) papp) :
+   dib::dib(::aura::application * papp) :
       object(papp),
       m_spbitmap(allocer()),
       m_spgraphics(allocer())
    {
+    
       m_bMapped            = false;
+      
    }
    
-   COLORREF * dib::get_data() const
+   dib::dib(const dib & dib) :
+      object(dib.get_app()),
+      m_spbitmap(allocer()),
+      m_spgraphics(allocer())
    {
-      return m_pcolorref;
-   }
-   ::draw2d::bitmap_sp dib::get_bitmap() const
-   {
-      return m_spbitmap;
-   }
-   
-   ::draw2d::bitmap_sp dib::detach_bitmap()
-   {
-      return m_spbitmap.detach();
-   }
-   
-   
-/*   CLASS_DECL_DRAW2D_QUARTZ2D void dib::s_initialize()
-   {
-      double dCos;
-      double dSin;
-      double d32 = (1U << 31);
-      dPi = atan(1.0) * 4.0;;
-      int32_t i;
-      for ( i=0; i<360; i++ )
+      
+      m_bMapped            = false;
+      
+      if(dib.area() > 0)
       {
-         dCos = ::cos ( i/180.0*dPi );
-         dSin = ::sin ( i/180.0*dPi );
-         Cosines[i]=float(dCos);
-         Sines[i]=float(dSin);
-         CosN[i] = (int64_t) (dCos * d32);
-         SinN[i] = (int64_t) (dSin * d32);
+      
+         ::draw2d::dib::from(&dib);
+         
       }
-      d32 = (1U << 31);
-      d32 *= 8;
-      for(i = 0; i < 10; i++)
-      {
-         dCos = ::cos ( i/180.0*dPi );
-         dSin = ::sin ( i/180.0*dPi );
-         Cos10N[i] = (int64_t) (dCos * d32);
-         Sin10N[i] = (int64_t) (dSin * d32);
-      }
-   }*/
-   
+      
+   }
    
    void    dib::construct (int32_t cx,  int32_t cy)
    {
@@ -97,6 +73,21 @@ namespace draw2d_quartz2d
       
       Destroy ();
       
+   }
+
+   
+   COLORREF * dib::get_data() const
+   {
+      return m_pcolorref;
+   }
+   ::draw2d::bitmap_sp dib::get_bitmap() const
+   {
+      return m_spbitmap;
+   }
+   
+   ::draw2d::bitmap_sp dib::detach_bitmap()
+   {
+      return m_spbitmap.detach();
    }
    
    
@@ -403,14 +394,14 @@ namespace draw2d_quartz2d
    void dib::unmap() const
    {
       
-      if(((dib *) this)->m_spgraphics.is_set())
-      {
-      
-         ((dib *) this)->m_spgraphics->SelectObject(((dib *) this)->m_spbitmap);
-         
-         ((dib *) this)->m_spgraphics->m_pdibDraw2dGraphics = (dib *) this;
-         
-      }
+//      if(((dib *) this)->m_spgraphics.is_set())
+//      {
+//      
+//         ((dib *) this)->m_spgraphics->SelectObject(((dib *) this)->m_spbitmap);
+//         
+//         ((dib *) this)->m_spgraphics->m_pdibDraw2dGraphics = (dib *) this;
+//         
+//      }
       
       ((dib *) this)->m_bMapped = false;
       

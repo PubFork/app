@@ -824,10 +824,14 @@ void object::delete_this()
 object * object::clone()
 {
 
-   if(m_pfactoryitembase != NULL)
-      return m_pfactoryitembase->clone(this);
-
-   return NULL;
+   if(m_pfactoryitembase == NULL)
+   {
+      
+      return NULL;
+      
+   }
+   
+   return m_pfactoryitembase->clone(this);
 
 }
 

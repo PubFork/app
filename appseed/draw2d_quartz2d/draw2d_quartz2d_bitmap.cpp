@@ -5,11 +5,10 @@ namespace draw2d_quartz2d
 {
    
    
-   bitmap::bitmap(sp(::aura::application) papp) :
+   bitmap::bitmap(::aura::application * papp) :
       ::object(papp)
    {
       
-      m_pdata = NULL;
       m_size.cx = 0;
       m_size.cy = 0;
       m_pdc = NULL;
@@ -42,7 +41,16 @@ namespace draw2d_quartz2d
       
       CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
       
-      m_pdc = CGBitmapContextCreate(NULL, cx, cy, 8, iScan, colorspace, kCGImageAlphaPremultipliedLast);
+      m_mem.allocate(cy * iScan);
+      
+      if(m_mem.get_data() == NULL)
+      {
+         
+         return false;
+         
+      }
+      
+      m_pdc = CGBitmapContextCreate(m_mem.get_data(), cx, cy, 8, iScan, colorspace, kCGImageAlphaPremultipliedLast);
       
       CGColorSpaceRelease(colorspace);
       
@@ -57,9 +65,7 @@ namespace draw2d_quartz2d
       
       m_iScan = (int) CGBitmapContextGetBytesPerRow(m_pdc);
       
-      m_pdata = (COLORREF *) CGBitmapContextGetData(m_pdc);
-      
-      if(m_pdata == NULL || m_iScan <= 0)
+      if(m_iScan <= 0)
       {
          
          destroy();
@@ -71,7 +77,7 @@ namespace draw2d_quartz2d
       if(pdata != NULL)
       {
       
-         memcpy(m_pdata, pdata, cy * iScan);
+         memcpy(m_mem.get_data(), pdata, cy * iScan);
          
       }
       
@@ -105,7 +111,7 @@ namespace draw2d_quartz2d
       if(ppdata != NULL)
       {
          
-         *ppdata = m_pdata;
+         *ppdata = m_mem.get_data();
          
       }
       
@@ -256,6 +262,8 @@ namespace draw2d_quartz2d
    bool bitmap::Attach(void * pbitmapcontext)
    {
       
+      throw interface_only_exception(get_app());
+      
       destroy();
       
       m_pdc       = (CGContextRef) pbitmapcontext;
@@ -266,7 +274,7 @@ namespace draw2d_quartz2d
       
       m_iScan     = (int) CGBitmapContextGetBytesPerRow(m_pdc);
       
-      m_pdata     = (COLORREF *) CGBitmapContextGetData(m_pdc);
+      //m_pdata     = (COLORREF *) CGBitmapContextGetData(m_pdc);
       
       return true;
       
@@ -285,7 +293,7 @@ namespace draw2d_quartz2d
          
       }
       
-      m_pdata = NULL;
+      //m_pdata = NULL;
       
       m_size.cx = 0;
       

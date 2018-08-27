@@ -1512,29 +1512,30 @@ namespace draw2d_quartz2d
          if(m_spregion.is_null())
          {
          
-         if(xSrc == 0 && ySrc == 0 && nWidth == SrcW && nHeight == SrcH )
-         {
-         
-            CGContextDrawImage(m_pdc, rect, image);
+            if(xSrc == 0 && ySrc == 0 && nWidth == SrcW && nHeight == SrcH)
+            {
             
-         }
-         else
-         {
-         
-            CGContextSaveGState(m_pdc);
-         
-            CGContextClipToRect(m_pdc, rect);
-
-            rect.origin.x -= xSrc;
-            rect.origin.y -= ySrc;
-            rect.size.width = SrcW;
-            rect.size.height =  SrcH;
-         
-            CGContextDrawImage(m_pdc, rect, image);
+               CGContextDrawImage(m_pdc, rect, image);
+               
+            }
+            else
+            {
             
-            CGContextRestoreGState(m_pdc);
+               CGContextSaveGState(m_pdc);
+            
+               CGContextClipToRect(m_pdc, rect);
 
-         }
+               rect.origin.x -= xSrc;
+               rect.origin.y -= ySrc;
+               rect.size.width = SrcW;
+               rect.size.height =  SrcH;
+               
+               CGContextDrawImage(m_pdc, rect, image);
+               
+               CGContextRestoreGState(m_pdc);
+
+            }
+            
          }
          else
          {
@@ -1549,12 +1550,14 @@ namespace draw2d_quartz2d
             }
             else
             {
+               
                CGContextClipToRect(m_pdc, rect);
                
                rect.origin.x -= xSrc;
                rect.origin.y -= ySrc;
                rect.size.width = SrcW;
                rect.size.height =  SrcH;
+               
             }
             
             
@@ -4991,7 +4994,11 @@ namespace draw2d_quartz2d
 
          clip(m_spregion);
          
-         BitBlt(0, 0, pbrush->m_dib->m_size.cx, pbrush->m_dib->m_size.cy, pbrush->m_dib->get_graphics(), 0,0, 0);
+         keep < bool > keepPat(&m_bPat, true, m_bPat, true);
+         
+         CGRect r = CGContextGetClipBoundingBox(pgraphics);
+
+         BitBlt(r.origin.x, r.origin.y, r.size.width, r.size.height, pbrush->m_dib->get_graphics(), 0,0, 0);
          
          //CGContextRestoreGState(pgraphics);
          

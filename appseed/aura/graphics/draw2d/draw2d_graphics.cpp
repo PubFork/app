@@ -31,6 +31,7 @@ namespace draw2d
       object(papp)
    {
 
+      m_bPat = false;
       m_bStoreThumbnails      = true;
       m_puistrcontext         = NULL;
       m_pdrawcontext          = NULL;
@@ -1439,13 +1440,103 @@ namespace draw2d
 
    bool graphics::draw(LPCRECT lpcrect, ::draw2d::graphics * pgraphicsSrc, LPCPOINT ppt, u32 dwRop)
    {
-
+      
+      
       i32 x = lpcrect->left;
       i32 y = lpcrect->top;
-      i32 nWidth = ::width(lpcrect);
-      i32 nHeight = ::height(lpcrect);
       i32 xSrc = ppt->x;
       i32 ySrc = ppt->y;
+      i32 nWidth = ::width(lpcrect);
+      i32 nHeight = ::height(lpcrect);
+
+      if(m_bPat)
+      {
+         
+         if(pgraphicsSrc->m_pdibDraw2dGraphics != NULL)
+         {
+            
+            if(pgraphicsSrc->m_pdibDraw2dGraphics->area() > 0)
+            {
+               
+               int xs = 0;
+               
+               int ys = 0;
+               
+               i32 w1 = pgraphicsSrc->m_pdibDraw2dGraphics->m_size.cx;
+               
+               i32 h1 = pgraphicsSrc->m_pdibDraw2dGraphics->m_size.cy;
+               
+               i32 w0 = w1 - xSrc;
+               
+               i32 h0 = h1 - ySrc;
+               
+               int w = w0;
+               
+               int h = h0;
+               
+               for(int i = 0; i < nWidth; i += w)
+               {
+                  
+                  if(i == 0)
+                  {
+                     
+                     w = w0;
+                     
+                     xs = xSrc;
+                     
+                  }
+                  else
+                  {
+                   
+                     w = w1;
+                     
+                     xs = 0;
+                     
+                  }
+                  
+                  for(int j = 0; j < nHeight; j += h)
+                  {
+                     
+                     if(j == 0)
+                     {
+                        
+                        h = h0;
+                        
+                        ys = ySrc;
+                        
+                     }
+                     else
+                     {
+                        
+                        h = h1;
+                        
+                        ys = 0;
+                        
+                     }
+
+                     if (!BitBltAlphaBlend(x + i, y + j, w, h, pgraphicsSrc, xs, ys, dwRop))
+                     {
+                        
+                        if (!BitBltRaw(x + i, y + j, w, h, pgraphicsSrc, xs, ys, dwRop))
+                        {
+                        
+                        }
+                        
+                     }
+
+                     
+                  }
+                  
+               }
+               
+               return true;
+               
+            }
+            
+         }
+            
+      }
+
 
       if (BitBltAlphaBlend(x, y, nWidth, nHeight, pgraphicsSrc, xSrc, ySrc, dwRop))
       {

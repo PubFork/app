@@ -14,30 +14,13 @@ namespace draw2d_quartz2d
    {
    public:
 
-/*      static float Cosines[360];
-      static float Sines[360];
-      static int64_t CosN[360]; // * 1 << 31
-      static int64_t SinN[360];
-      static int64_t Cos10N[10]; // until 10 degress
-      static int64_t Sin10N[10]; // more precision * 1 << 34
-      static double dPi;*/
-      
-      //BITMAPINFO                 m_info;
+
       ::draw2d::bitmap_sp        m_spbitmap;
       ::draw2d::graphics_sp      m_spgraphics;
-//      class size               m_size;
- //     bool                       m_bMapped;
-      //HBITMAP                  m_hbitmapOriginal;
+
       
-      
-      
-      
-      
-      
-      
-      
-      
-      dib(sp(::aura::application) papp);
+      dib(::aura::application * papp);
+      dib(const dib & dib);
       virtual void construct(int32_t cx, int32_t cy) override;
       virtual ~dib();
       

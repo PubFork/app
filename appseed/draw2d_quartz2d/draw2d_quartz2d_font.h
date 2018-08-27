@@ -46,11 +46,11 @@ namespace draw2d_quartz2d
    
       virtual bool destroy() override;
       
-      virtual void * get_os_data() const;
+      virtual void * get_os_data() const override;
       
 #ifdef DEBUG
 
-      virtual void dump(dump_context & dumpcontext) const;
+      virtual void dump(dump_context & dumpcontext) const override;
 #endif
 
       
