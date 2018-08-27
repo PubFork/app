@@ -621,7 +621,7 @@ namespace draw2d_quartz2d
    bool graphics::Arc(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x3, int32_t y3, int32_t x4, int32_t y4)
    {
 
-      return ::draw2d::graphics::Arc(x1, y1, x2, y2, x3, y3, x4, y4);
+      return ::draw2d::graphics::Arc((double)x1, (double)y1, (double)x2, (double)y2, (double)x3, (double)y3, (double)x4, (double)y4);
 
    }
    
@@ -629,7 +629,15 @@ namespace draw2d_quartz2d
    bool graphics::Arc(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4)
    {
       
-      return ::draw2d::graphics::Arc(x1, y1, x2, y2, x3, y3, x4, y4);
+      return ::draw2d::graphics::Arc((i32) x1, (i32) y1, (i32) x2, (i32) y2, (i32) x3, (i32) y3, (i32) x4, (i32) y4);
+      
+   }
+   
+   
+   bool graphics::Arc(i32 x1, i32 y1, i32 w, i32 h, double start, double extends)
+   {
+   
+      return Arc((double) x1, (double)y1, (double) w, (double) h, start, extends);
       
    }
    
@@ -645,7 +653,7 @@ namespace draw2d_quartz2d
       
       CGContextScaleCTM(m_pdc, w/2.0, h/2.0);
       
-      CGContextAddArc(m_pdc, 0.f, 0.f, 1.0f, start * 3.1415 / 180.0, end * 3.1415 / 180.0, end < 0.0);
+      CGContextAddArc(m_pdc, 0.f, 0.f, 1.0f, start * 3.1415 / 180.0, end * 3.1415 / 180.0, extends < 0.0);
       
       CGContextRestoreGState(m_pdc);
       

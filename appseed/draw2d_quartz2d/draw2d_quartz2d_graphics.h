@@ -208,6 +208,7 @@ namespace draw2d_quartz2d
       //    point MoveTo(POINT point);
       virtual bool line_to(LPCPOINTD lppt) override;
       //  bool LineTo(POINT point);
+      virtual bool Arc(i32 x1, i32 y1, i32 w, i32 h, double start, double extends) override;
       virtual bool Arc(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x3, int32_t y3, int32_t x4, int32_t y4) override;
       virtual bool Arc(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4) override;
       virtual bool Arc(double x, double y, double w, double h, double start, double end) override;
