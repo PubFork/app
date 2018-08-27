@@ -667,3 +667,10 @@ CLASS_DECL_AURA mutex * get_cred_mutex()
 aura_level * aura_level::s_plevel = NULL;
 
 aura_level auralevelAura(::aura_level::level_aura, &defer_aura_init);
+
+
+
+CLASS_DECL_AURA COLORREF dk_red() // <3 tbs
+{
+   return ARGB(255, 200, 16, 46);
+}

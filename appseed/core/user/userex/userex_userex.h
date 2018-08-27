@@ -64,9 +64,7 @@ namespace userex
 
       class keyboard & keyboard();
 
-      virtual bool modal_get_color(::aura::application * pappOnBehalfOf, ::color::hls & hls);
-
-      //virtual void SendMessageToWindows(UINT message, WPARAM wParam, LPARAM lParam);
+      virtual bool modal_get_color(::user::interaction * puiOwner, ::color::hls & hls);
 
       virtual void AddToRecentFileList(const char * lpszPathName);
 

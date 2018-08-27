@@ -19,6 +19,7 @@
 namespace flag
 {
 
+
    void dk(::draw2d::graphics * pgraphics, double x, double y, double w, double h)
    {
 
@@ -342,7 +343,7 @@ namespace userex
       m_dibTemplate(allocer()),
       m_dibLuminance(allocer())
    {
-      
+
       m_bCompact = true;
 
       m_strView = "color_sel";
@@ -428,11 +429,11 @@ namespace userex
 
       if(GetTopLevelFrame() != NULL)
       {
-       
+
          GetTopLevelFrame()->ModifyStyleEx(0, WS_EX_TOOLWINDOW);
-         
+
       }
-      
+
    }
 
 
@@ -641,7 +642,7 @@ namespace userex
       rect rectColors;
 
       GetClientRect(rectColors);
-      
+
       if(!m_bCompact)
       {
 
@@ -649,7 +650,7 @@ namespace userex
          rectColors.bottom = rectClient.center().y;
 
          rectColors.deflate(rectClient.width() / 16, rectClient.height() / 16);
-      
+
       }
 
       m_rectColors = rectColors;

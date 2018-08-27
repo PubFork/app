@@ -2,6 +2,10 @@
 
 
 #ifdef WINDOWSEX
+#include <Commdlg.h>
+#endif
+
+#ifdef WINDOWSEX
 CLASS_DECL_AURA void attach_thread_input_to_main_thread(bool bAttach);
 #endif
 
@@ -663,86 +667,65 @@ retry_license:
 
    }
 
-   
-   bool userex::modal_get_color(::aura::application *papp, ::color::hls & hls)
+
+   bool userex::modal_get_color(::user::interaction * puiOwner, ::color::hls & hls)
    {
-      
+
 #ifdef WINDOWSEX
-   
+
       CHOOSECOLOR cc;
       COLORREF crCustColors[16];
-      
+
       // init-int this array did not affect the mouse problem
       // uint idx ;
       // for (idx=0; idx<16; idx++) {
       // crCustColors[idx] = RGB(idx, idx, idx) ;
       // }
-      
+
       ::color c(hls);
-      
+
       ZeroMemory(&cc, sizeof(cc));
       cc.lStructSize = sizeof(CHOOSECOLOR);
       cc.rgbResult = c.get_rgb();
       cc.lpCustColors = crCustColors;
       cc.Flags = CC_RGBINIT | CC_FULLOPEN;
-      cc.hwndOwner = get_safe_handle(); // this hangs parent, as well as me
-      
+      cc.hwndOwner = puiOwner->get_safe_handle(); // this hangs parent, as well as me
+
       if (::ChooseColor(&cc))
       {
-         
+
          c.set_COLORREF(cc.rgbResult | (255 << 24));
-         
+
          c.get_hls(hls);
-         
+
          return true;
-         
+
       }
-      
+
       return false;
-      
+
 #else
-      
+
       Session.will_use_view_hint("color_sel");
-      
-      auto pdoc = m_mapimpactsystem["color_sel"]->open_document_file(papp, ::var::type_null, true);
-      
+
+      auto pdoc = m_mapimpactsystem["color_sel"]->open_document_file(puiOwner->get_app(), ::var::type_null, true);
+
       sp(color_view) pview = pdoc->get_typed_view < color_view >();
-      
+
       sp(::user::frame_window) pframe = pview->GetTopLevelFrame();
-      
+
+      pframe->SetOwner(puiOwner);
+
       pframe->_001RunModalLoop();
-      
+
       hls = pview->m_hls;
-      
+
       return true;
-      
+
 #endif
-      
-   
-}
 
 
-
-   //void userex::SendMessageToWindows(UINT message,WPARAM wparam,LPARAM lparam)
-   //{
-
-   //   sp(::user::interaction) pwnd;
-
-   //   while(Application.get_frame(pwnd))
-   //   {
-
-   //      if(pwnd != NULL && pwnd->IsWindow())
-   //      {
-
-   //         pwnd->send_message(message,wparam,lparam);
-
-   //         pwnd->send_message_to_descendants(message,wparam,lparam);
-
-   //      }
-
-   //   }
-
-   //}
+   }
 
 
    void  userex::AddToRecentFileList(const char * lpszPathName)
@@ -751,8 +734,6 @@ retry_license:
       UNREFERENCED_PARAMETER(lpszPathName);
 
    }
-
-
 
 
    void userex::_001OnFileNew()
