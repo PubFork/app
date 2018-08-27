@@ -5701,14 +5701,14 @@ namespace draw2d
          if (m_pgraphics != NULL)
          {
             m_iSavedDC = m_pgraphics->SaveDC();
+            m_matrixViewport = pgraphics->m_matrixViewport;
+            m_matrixTransform = pgraphics->m_matrixTransform;
          }
       }
       catch (...)
       {
 
       }
-      m_matrixViewport = pgraphics->m_matrixViewport;
-      m_matrixTransform = pgraphics->m_matrixTransform;
    }
    savedc::~savedc()
    {
@@ -5717,15 +5717,15 @@ namespace draw2d
          if (m_pgraphics != NULL)
          {
             m_pgraphics->RestoreDC(m_iSavedDC);
-         }
+            m_pgraphics->m_matrixViewport = m_matrixViewport;
+            m_pgraphics->m_matrixTransform = m_matrixTransform;
+   }
       }
       catch (...)
       {
 
       }
-      m_pgraphics->m_matrixViewport = m_matrixViewport;
-      m_pgraphics->m_matrixTransform = m_matrixTransform;
-
+      
    }
 
    bool graphics::_get(matrix & matrix)

@@ -6004,45 +6004,45 @@ bool imaging::load_from_file(::visual::dib_sp::array * pdiba, var varFile, bool 
 bool imaging::load_from_file(::draw2d::dib * pdib,var varFile,bool bCache)
 {
 
-   ::file::path pathDib;
-
-   if(bCache && varFile.get_type() == var::type_string)
-   {
-
-      pathDib = varFile.get_file_path();
-
-      ::str::begins_eat_ci(pathDib, "appmatter://");
-
-      pathDib.replace(":/","/_");
-
-      pathDib.replace(":\\","/_/");
-
-      pathDib = System.dir().cache() / pathDib;
-
-      pathDib += ".dib";
-
-      if (Session.file().exists(pathDib))
-      {
-         
-         try
-         {
-
-            if (pdib->load_from_dib(pathDib))
-            {
-
-               return true;
-
-            }
-            
-         }
-         catch(...)
-         {
-            
-         }
-
-      }
-
-   }
+//   ::file::path pathDib;
+//
+//   if(bCache && varFile.get_type() == var::type_string)
+//   {
+//
+//      pathDib = varFile.get_file_path();
+//
+//      ::str::begins_eat_ci(pathDib, "appmatter://");
+//
+//      pathDib.replace(":/","/_");
+//
+//      pathDib.replace(":\\","/_/");
+//
+//      pathDib = System.dir().cache() / pathDib;
+//
+//      pathDib += ".dib";
+//
+//      if (Session.file().exists(pathDib))
+//      {
+//
+//         try
+//         {
+//
+//            if (pdib->load_from_dib(pathDib))
+//            {
+//
+//               return true;
+//
+//            }
+//
+//         }
+//         catch(...)
+//         {
+//
+//         }
+//
+//      }
+//
+//   }
 
    try
    {
@@ -6062,14 +6062,14 @@ bool imaging::load_from_file(::draw2d::dib * pdib,var varFile,bool bCache)
 
    }
 
-   if (bCache && pathDib.has_char())
-   {
-
-      pdib->m_pathCache = pathDib;
-
-      pdib->defer_save_to_cache();
-
-   }
+//   if (bCache && pathDib.has_char())
+//   {
+//
+//      pdib->m_pathCache = pathDib;
+//
+//      pdib->defer_save_to_cache();
+//
+//   }
 
    return true;
 
