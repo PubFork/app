@@ -586,7 +586,7 @@ namespace visual
       int32_t iFilterHalfW = iFilterW / 2;
       int32_t iFilterHalfH = iFilterH / 2;
       int32_t iFilterArea = iFilterW * iFilterH;
-      int32_t divisor = iFilterW * iFilterH;
+      int32_t divisor;
       BYTE *lpbSource;
       BYTE *lpbSource_1;
       BYTE *lpbSource_2;

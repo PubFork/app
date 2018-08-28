@@ -36,8 +36,6 @@ bool detect_8bit_borders(::draw2d::dib * pdibCompose, ::visual::dib_sp::array * 
 
       bTransparent = true;
 
-      cr = 0;
-
       for (index x = 0; x < pointer->m_dib->m_size.cx; x++)
       {
 
@@ -94,8 +92,6 @@ bool detect_8bit_borders(::draw2d::dib * pdibCompose, ::visual::dib_sp::array * 
             else
             {
 
-               cr = cra[iIndex];
-
                continue;
 
             }
@@ -120,8 +116,6 @@ bool detect_8bit_borders(::draw2d::dib * pdibCompose, ::visual::dib_sp::array * 
    {
 
       bTransparent = true;
-
-      cr = 0;
 
       for (index y = 0; y < pointer->m_dib->m_size.cy; y++)
       {
@@ -176,8 +170,6 @@ bool detect_8bit_borders(::draw2d::dib * pdibCompose, ::visual::dib_sp::array * 
             }
             else
             {
-
-               cr = cra[iIndex];
 
                continue;
 

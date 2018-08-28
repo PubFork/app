@@ -43,20 +43,31 @@ namespace aura
       {
 
          CFDataRef data;
-         SInt32 messageID = 0x1111; // Arbitrary
-         CFTimeInterval timeout = 10.0;
-         CFStringRef kungfuck = CFStringCreateWithCString(NULL,  (string("com.ca2.app.port.server.") + pszChannel), kCFStringEncodingUTF8);
-         m_port =        CFMessagePortCreateRemote(nil,kungfuck);
          
+         SInt32 messageID = 0x1111; // Arbitrary
+         
+         CFTimeInterval timeout = 10.0;
+         
+         CFStringRef name = CFStringCreateWithCString(NULL,  (string("com.ca2.app.port.server.") + pszChannel), kCFStringEncodingUTF8);
+      
+         m_port =        CFMessagePortCreateRemote(nil,name);
+         
+         CFRelease(name);
 
          return true;
+         
       }
+      
 
       bool tx::close()
       {
 
          if(m_port == NULL)
+         {
+            
             return true;
+            
+         }
 
          CFRelease(m_port);
 

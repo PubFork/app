@@ -242,8 +242,8 @@ namespace draw2d
       double a = (pt.x - e->u.m_arc.m_xCenter) / cos(t);
       double x = pt.x - e->u.m_arc.m_xCenter;
       double b = 0;
-      double y = b * b  *w / (4.0* tan(dAngle));
-      y = 0;
+      //double y = b * b  *w / (4.0* tan(dAngle));
+      double y = 0;
       b = sqrt((a*a*y*y) / (a*a-x *x));
 
       e->u.m_arc.m_dRadiusX = a;
