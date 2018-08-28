@@ -612,7 +612,7 @@ namespace wndfrm_tranquillum
 
                   pgraphics->draw_path(path);
 
-                  if (iTab == ptab->m_iHover && ptab->m_eelementHover != ::user::element_close_tab_button && ptab->m_eelementHover < ::user::element_split || ptab->m_eelementHover >(::user::element_split + 100))
+                  if (iTab == ptab->m_iHover && ptab->m_eelementHover != ::user::element_close_tab_button && (ptab->m_eelementHover < ::user::element_split || ptab->m_eelementHover >(::user::element_split + 100)))
                   {
 
                      pgraphics->set_font(ptab->_001GetFont(::user::font_tab_sel_hover));
