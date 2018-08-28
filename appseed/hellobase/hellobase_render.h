@@ -62,7 +62,7 @@ namespace hellobase
             double                           m_dMinRadius;
             double                           m_dMaxRadius;
 
-            string                           m_strHelloMultiverse;
+            string                           m_strHelloBase;
 
             rect                             m_rectClient;
       */
@@ -99,7 +99,7 @@ namespace hellobase
       virtual ~render();
 
 
-      string get_helloaura() { synch_lock slText(m_pmutexText);  string str(m_strHelloMultiverse.c_str()); return str; }
+      string get_helloaura() { synch_lock slText(m_pmutexText);  string str(m_strHelloBase.c_str()); return str; }
 
 
       virtual int32_t run();
@@ -124,7 +124,7 @@ namespace hellobase
       //::visual::dib_sp & dib23(string strDib) override;
 
       //virtual bool in_anime() override;
-      //virtual void helloaura_fast_render(const string & strHelloMultiverse) override;
+      //virtual void helloaura_fast_render(const string & strHelloBase) override;
 
 
    };

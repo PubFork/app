@@ -128,7 +128,7 @@ namespace hellobase
 
          synch_lock slText(&m_mutexText);
 
-         if(m_strNewHelloMultiverse.is_empty())
+         if(m_strNewHelloBase.is_empty())
          {
 
             if(m_prender->m_bFastOnEmpty)
@@ -342,14 +342,14 @@ namespace hellobase
 
       synch_lock sl(&m_mutexText);
 
-      if(m_strHelloMultiverse != m_strNewHelloMultiverse)
+      if(m_strHelloBase != m_strNewHelloBase)
       {
 
-         m_strHelloMultiverse = m_strNewHelloMultiverse;
+         m_strHelloBase = m_strNewHelloBase;
 
       }
 
-      if(m_strHelloMultiverse.is_empty())
+      if(m_strHelloBase.is_empty())
       {
 
          if(m_prender->m_bAlternate)
@@ -357,11 +357,11 @@ namespace hellobase
 
             if(m_dFps != 0.0)
             {
-               return "Rolling " + Application.m_strAlternateHelloMultiverse;
+               return "Rolling " + Application.m_strAlternateHelloBase;
             }
             else
             {
-               return Application.m_strAlternateHelloMultiverse;
+               return Application.m_strAlternateHelloBase;
             }
 
 
@@ -371,11 +371,11 @@ namespace hellobase
 
             if(m_dFps != 0.0)
             {
-               return "Rolling " + Application.m_strHelloMultiverse;
+               return "Rolling " + Application.m_strHelloBase;
             }
             else
             {
-               return Application.m_strHelloMultiverse;
+               return Application.m_strHelloBase;
             }
 
 
@@ -385,7 +385,7 @@ namespace hellobase
       else
       {
 
-         return m_strHelloMultiverse;
+         return m_strHelloBase;
 
       }
 
@@ -400,10 +400,10 @@ namespace hellobase
 
          synch_lock sl(&m_mutexText);
 
-         if (get_processed_hellobase() != m_prender->m_strHelloMultiverse)
+         if (get_processed_hellobase() != m_prender->m_strHelloBase)
          {
 
-            m_prender->m_strHelloMultiverse = get_processed_hellobase().c_str(); // rationale : string allocation fork *for multithreading*
+            m_prender->m_strHelloBase = get_processed_hellobase().c_str(); // rationale : string allocation fork *for multithreading*
 
             sl.unlock();
 

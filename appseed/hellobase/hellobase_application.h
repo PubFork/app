@@ -14,7 +14,7 @@ namespace hellobase
 
 
       ::user::document *                     m_pdocMenu;
-      ::user::single_document_template *     m_ptemplateHelloMultiverseMain;
+      ::user::single_document_template *     m_ptemplateHelloBaseMain;
 
 
 

@@ -437,19 +437,19 @@ namespace hellobase
 //
 //      ::size size;
 //
-//      string strHelloMultiverse;
+//      string strHelloBase;
 //
 //      {
 //
 //         synch_lock slText(m_pmutexText);
 //
-//         strHelloMultiverse = get_helloaura().c_str(); // rationale : string allocation fork *for multithreading*
+//         strHelloBase = get_helloaura().c_str(); // rationale : string allocation fork *for multithreading*
 //
 //      }
 //
 //      pgraphics->set_font(m_font);
 //
-//      size = pgraphics->GetTextExtent(strHelloMultiverse);
+//      size = pgraphics->GetTextExtent(strHelloBase);
 //
 //      m_cxTarget = int (size.cx * 1.2);
 //      m_cyTarget = int (size.cy * 1.2);
@@ -491,7 +491,7 @@ namespace hellobase
 //
 //                  m_dib->get_graphics()->SelectObject(brushText);
 //
-//                  m_dib->get_graphics()->text_out((m_cxCache1 - size.cx) / 2, (m_cyCache1 - size.cy) / 2, strHelloMultiverse);
+//                  m_dib->get_graphics()->text_out((m_cxCache1 - size.cx) / 2, (m_cyCache1 - size.cy) / 2, strHelloBase);
 //
 //                  m_dib->map();
 //
@@ -517,7 +517,7 @@ namespace hellobase
 //
 //         synch_lock slText(m_pmutexText);
 //
-//         if (strHelloMultiverse != get_helloaura() || m_cxCache1 != m_cxTarget || m_cyCache1 != m_cyTarget || m_dibTemplate->area() <= 0)
+//         if (strHelloBase != get_helloaura() || m_cxCache1 != m_cxTarget || m_cyCache1 != m_cyTarget || m_dibTemplate->area() <= 0)
 //            return;
 //
 //      }
@@ -608,7 +608,7 @@ namespace hellobase
 //      //if(!m_bAlternate)
 //      {
 //
-//         pgraphics->text_out((m_cx - size.cx) / 2, (m_cy - size.cy) / 2, strHelloMultiverse);
+//         pgraphics->text_out((m_cx - size.cx) / 2, (m_cy - size.cy) / 2, strHelloBase);
 //
 //      }
 //      //      pgraphics->FillSolidRect(200,00,100,100,ARGB(128,128,128,255));
@@ -620,7 +620,7 @@ namespace hellobase
 //
 //         synch_lock slText(m_pmutexText);
 //
-//         if (strHelloMultiverse == get_helloaura() && m_cxCache1 == m_cxTarget && m_cyCache1 == m_cyTarget)
+//         if (strHelloBase == get_helloaura() && m_cxCache1 == m_cxTarget && m_cyCache1 == m_cyTarget)
 //         {
 //
 //            m_bFirstDone = true;
@@ -720,9 +720,9 @@ namespace hellobase
 //
 //      pgraphics->set_font(m_font);
 //
-//      string strHelloMultiverse = get_helloaura();
+//      string strHelloBase = get_helloaura();
 //
-//      ::size size = pgraphics->GetTextExtent(strHelloMultiverse);
+//      ::size size = pgraphics->GetTextExtent(strHelloBase);
 //
 //      m_cxTarget = int(size.cx * 1.2);
 //      m_cyTarget = int(size.cy * 1.2);
@@ -761,7 +761,7 @@ namespace hellobase
 //
 //            m_dib->get_graphics()->set_font(m_font);
 //
-//            m_dib->get_graphics()->text_out((m_cx - size.cx) / 2, (m_cy - size.cy) / 2, strHelloMultiverse);
+//            m_dib->get_graphics()->text_out((m_cx - size.cx) / 2, (m_cy - size.cy) / 2, strHelloBase);
 //
 //            if (m_dMinRadius > 3.0)
 //            {
@@ -828,7 +828,7 @@ namespace hellobase
 //
 //      pgraphics->SelectObject(brushText);
 //
-//      pgraphics->text_out((m_cx - size.cx) / 2, (m_cy - size.cy) / 2, strHelloMultiverse);
+//      pgraphics->text_out((m_cx - size.cx) / 2, (m_cy - size.cy) / 2, strHelloBase);
 //
 //      byte a, R, g, b;
 //
@@ -962,7 +962,7 @@ namespace hellobase
 //
 //#endif
 //
-//      if (strHelloMultiverse == get_helloaura() && m_cx == m_rectClient.width() && m_cy == m_rectClient.height())
+//      if (strHelloBase == get_helloaura() && m_cx == m_rectClient.width() && m_cy == m_rectClient.height())
 //      {
 //
 //         m_bFirstDone = true;
@@ -1111,13 +1111,13 @@ namespace hellobase
 
       //   {
 
-      //      string strHelloMultiverse;
+      //      string strHelloBase;
 
       //      {
 
       //         synch_lock slText(&m_pview->m_mutexText);
 
-      //         strHelloMultiverse = m_pview->get_processed_helloaura().c_str();
+      //         strHelloBase = m_pview->get_processed_helloaura().c_str();
 
       //      }
 
@@ -1134,7 +1134,7 @@ namespace hellobase
 
       //         pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
 
-      //         class size size = pgraphics->GetTextExtent(strHelloMultiverse);
+      //         class size size = pgraphics->GetTextExtent(strHelloBase);
 
       //         double ratey = fHeight * 0.84 / size.cy;
 
@@ -1164,9 +1164,9 @@ namespace hellobase
 
       //      pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
 
-      //      ::size size = pgraphics->GetTextExtent(strHelloMultiverse);
+      //      ::size size = pgraphics->GetTextExtent(strHelloBase);
 
-      //      pgraphics->text_out((m_cx - size.cx) / 2, (m_cy - size.cy) / 2, strHelloMultiverse);
+      //      pgraphics->text_out((m_cx - size.cx) / 2, (m_cy - size.cy) / 2, strHelloBase);
 
       //      return;
 
@@ -1352,7 +1352,7 @@ namespace hellobase
    //   return false;
    //}
 
-   //void render::helloaura_fast_render(const string & strHelloMultiverse)
+   //void render::helloaura_fast_render(const string & strHelloBase)
    //{
 
    //   if (m_cx <= 0 || m_cy <= 0)
@@ -1385,7 +1385,7 @@ namespace hellobase
 
    //   pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
 
-   //   class size size = pgraphics->GetTextExtent(strHelloMultiverse);
+   //   class size size = pgraphics->GetTextExtent(strHelloBase);
 
    //   double ratey = fHeight * 0.84 / size.cy;
 
@@ -1399,13 +1399,13 @@ namespace hellobase
 
    //   pgraphics->set_font(m_font);
 
-   //   size = pgraphics->GetTextExtent(strHelloMultiverse);
+   //   size = pgraphics->GetTextExtent(strHelloBase);
 
    //   ::draw2d::path_sp path(allocer());
 
    //   path->m_bFill = false;
 
-   //   path->add_string((m_cx - size.cx) / 2, (m_cy - size.cy) / 2, strHelloMultiverse, m_font);
+   //   path->add_string((m_cx - size.cx) / 2, (m_cy - size.cy) / 2, strHelloBase, m_font);
 
    //   ::draw2d::pen_sp pen(allocer());
 

@@ -22,7 +22,7 @@
 #include "app/appseed/core/core/os/ios/ios_main.h"
 
 
-DEF_CORE_APP(app_core_hellomultiverse);
+DEF_CORE_APP(app_core_hellobase);
 
 
 /*

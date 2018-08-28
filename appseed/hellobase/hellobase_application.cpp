@@ -8,7 +8,7 @@ namespace hellobase
    application::application()
    {
 
-      m_ptemplateHelloMultiverseMain = NULL;
+      m_ptemplateHelloBaseMain = NULL;
 
       m_strAppName = "app/hellobase";
       m_strLibraryName = "app/hellobase";
@@ -17,8 +17,8 @@ namespace hellobase
 
       m_etype = type_normal;
 
-      m_strHelloMultiverseDefault = "Hello Base!!";
-      m_strAlternateHelloMultiverseDefault = "Hi Base!!";
+      m_strHelloBaseDefault = "Hello Base!!";
+      m_strAlternateHelloBaseDefault = "Hi Base!!";
 
 
    }
@@ -56,7 +56,7 @@ namespace hellobase
       if (str.has_char())
       {
 
-         m_strHelloMultiverse = str;
+         m_strHelloBase = str;
 
       }
 
@@ -71,7 +71,7 @@ namespace hellobase
                            System.type_info < document >(),
                            System.type_info < main_frame >(),
                            System.type_info < view >()));
-      m_ptemplateHelloMultiverseMain = pDocTemplate;
+      m_ptemplateHelloBaseMain = pDocTemplate;
 
 
       return true;
@@ -110,10 +110,10 @@ namespace hellobase
 
 #endif
 
-      if (m_ptemplateHelloMultiverseMain->get_document_count() == 0)
+      if (m_ptemplateHelloBaseMain->get_document_count() == 0)
       {
 
-         m_ptemplateHelloMultiverseMain->request_create(pcreate);
+         m_ptemplateHelloBaseMain->request_create(pcreate);
 
       }
 

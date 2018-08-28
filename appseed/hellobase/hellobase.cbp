@@ -2,17 +2,17 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="app_core_hellomultiverse" />
+		<Option title="app_core_hellobase" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="basis">
-				<Option output="../../../time/x64/basis/libapp_core_hellomultiverse.so" prefix_auto="0" extension_auto="0" />
+				<Option output="../../../time/x64/basis/libapp_core_hellobase.so" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="../../../time/x64/basis/" />
-				<Option object_output="../../../time/intermediate/app/app_core_hellomultiverse" />
+				<Option object_output="../../../time/intermediate/app/app_core_hellobase" />
 				<Option type="3" />
 				<Option compiler="gcc" />
-				<Option parameters=": app=app-core/hellomultiverse build_number=basis  locale=_std schema=_std" />
+				<Option parameters=": app=app-core/hellobase build_number=basis  locale=_std schema=_std" />
 				<Option host_application="../../../time/x64/basis/app" />
 				<Option run_host_application_in_terminal="0" />
 				<Option createDefFile="1" />
@@ -23,12 +23,12 @@
 				</Compiler>
 			</Target>
 			<Target title="install">
-				<Option output="../../../time/x64/basis/libapp_core_hellomultiverse.so" prefix_auto="0" extension_auto="0" />
+				<Option output="../../../time/x64/basis/libapp_core_hellobase.so" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="../../../time/x64/basis/" />
-				<Option object_output="../../../time/intermediate/app/app_core_hellomultiverse" />
+				<Option object_output="../../../time/intermediate/app/app_core_hellobase" />
 				<Option type="3" />
 				<Option compiler="gcc" />
-				<Option parameters=": app=app-core/hellomultiverse build_number=basis locale=_std schema=_std install" />
+				<Option parameters=": app=app-core/hellobase build_number=basis locale=_std schema=_std install" />
 				<Option host_application="../../../time/x64/basis/app" />
 				<Option run_host_application_in_terminal="0" />
 				<Option createDefFile="1" />
@@ -93,30 +93,30 @@
 			<Option compile="1" />
 			<Option weight="0" />
 		</Unit>
-		<Unit filename="hellomultiverse.h" />
-		<Unit filename="hellomultiverse_application.cpp" />
-		<Unit filename="hellomultiverse_application.h" />
-		<Unit filename="hellomultiverse_document.cpp" />
-		<Unit filename="hellomultiverse_frame.cpp" />
-		<Unit filename="hellomultiverse_frame.h" />
-		<Unit filename="hellomultiverse_gcom.cpp" />
-		<Unit filename="hellomultiverse_gcom.h" />
-		<Unit filename="hellomultiverse_main_frame.cpp" />
-		<Unit filename="hellomultiverse_main_frame.h" />
-		<Unit filename="hellomultiverse_main_view.cpp" />
-		<Unit filename="hellomultiverse_main_view.h" />
-		<Unit filename="hellomultiverse_pane_view.cpp" />
-		<Unit filename="hellomultiverse_pane_view.h" />
-		<Unit filename="hellomultiverse_pane_view_update_hint.cpp" />
-		<Unit filename="hellomultiverse_pane_view_update_hint.h" />
-		<Unit filename="hellomultiverse_render.cpp" />
-		<Unit filename="hellomultiverse_render.h" />
-		<Unit filename="hellomultiverse_switcher_view.cpp" />
-		<Unit filename="hellomultiverse_switcher_view.h" />
-		<Unit filename="hellomultiverse_view.cpp" />
-		<Unit filename="hellomultiverse_view.h" />
-		<Unit filename="hellomultiverse_view_base.cpp" />
-		<Unit filename="hellomultiverse_view_base.h" />
+		<Unit filename="hellobase.h" />
+		<Unit filename="hellobase_application.cpp" />
+		<Unit filename="hellobase_application.h" />
+		<Unit filename="hellobase_document.cpp" />
+		<Unit filename="hellobase_frame.cpp" />
+		<Unit filename="hellobase_frame.h" />
+		<Unit filename="hellobase_gcom.cpp" />
+		<Unit filename="hellobase_gcom.h" />
+		<Unit filename="hellobase_main_frame.cpp" />
+		<Unit filename="hellobase_main_frame.h" />
+		<Unit filename="hellobase_main_view.cpp" />
+		<Unit filename="hellobase_main_view.h" />
+		<Unit filename="hellobase_pane_view.cpp" />
+		<Unit filename="hellobase_pane_view.h" />
+		<Unit filename="hellobase_pane_view_update_hint.cpp" />
+		<Unit filename="hellobase_pane_view_update_hint.h" />
+		<Unit filename="hellobase_render.cpp" />
+		<Unit filename="hellobase_render.h" />
+		<Unit filename="hellobase_switcher_view.cpp" />
+		<Unit filename="hellobase_switcher_view.h" />
+		<Unit filename="hellobase_view.cpp" />
+		<Unit filename="hellobase_view.h" />
+		<Unit filename="hellobase_view_base.cpp" />
+		<Unit filename="hellobase_view_base.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />

@@ -10,95 +10,95 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="hellomultiverse.cpp">
+    <ClCompile Include="hellobase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="framework.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include=".\hellomultiverse_application.cpp">
+    <ClCompile Include=".\hellobase_application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include=".\hellomultiverse_document.cpp">
+    <ClCompile Include=".\hellobase_document.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include=".\hellomultiverse_frame.cpp">
+    <ClCompile Include=".\hellobase_frame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include=".\hellomultiverse_pane_view.cpp">
+    <ClCompile Include=".\hellobase_pane_view.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include=".\hellomultiverse_pane_view_update_hint.cpp">
+    <ClCompile Include=".\hellobase_pane_view_update_hint.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include=".\hellomultiverse_view.cpp">
+    <ClCompile Include=".\hellobase_view.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hellomultiverse_main_view.cpp">
+    <ClCompile Include="hellobase_main_view.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hellomultiverse_switcher_view.cpp">
+    <ClCompile Include="hellobase_switcher_view.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hellomultiverse_render.cpp">
+    <ClCompile Include="hellobase_render.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hellomultiverse_view_base.cpp">
+    <ClCompile Include="hellobase_view_base.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hellomultiverse_gcom.cpp">
+    <ClCompile Include="hellobase_gcom.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hellomultiverse_main_frame.cpp">
+    <ClCompile Include="hellobase_main_frame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="hellomultiverse.h">
+    <ClInclude Include="hellobase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="framework.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse_application.h">
+    <ClInclude Include="hellobase_application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse_document.h">
+    <ClInclude Include="hellobase_document.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse_frame.h">
+    <ClInclude Include="hellobase_frame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse_pane_view.h">
+    <ClInclude Include="hellobase_pane_view.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse_pane_view_update_hint.h">
+    <ClInclude Include="hellobase_pane_view_update_hint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse_view.h">
+    <ClInclude Include="hellobase_view.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse_main_view.h">
+    <ClInclude Include="hellobase_main_view.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse_switcher_view.h">
+    <ClInclude Include="hellobase_switcher_view.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse_render.h">
+    <ClInclude Include="hellobase_render.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse_view_base.h">
+    <ClInclude Include="hellobase_view_base.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse_gcom.h">
+    <ClInclude Include="hellobase_gcom.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse_main_frame.h">
+    <ClInclude Include="hellobase_main_frame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include=".\app_core_hellomultiverse.def">
+    <None Include=".\app_core_hellobase.def">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>

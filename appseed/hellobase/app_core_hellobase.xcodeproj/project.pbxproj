@@ -8,56 +8,56 @@
 
 /* Begin PBXBuildFile section */
 		070533EF1C90B2CF00F31B3F /* libgcom.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 070533E61C90B2A100F31B3F /* libgcom.dylib */; };
-		07473E601B5050B8004688C5 /* hellomultiverse_switcher_view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 076D09F11A3FC72C007432B6 /* hellomultiverse_switcher_view.cpp */; };
-		07473E641B5050B8004688C5 /* hellomultiverse_main_view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AA1008C19971FCE004F84BD /* hellomultiverse_main_view.cpp */; };
-		076D09FB1A3FC72C007432B6 /* hellomultiverse_switcher_view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 076D09F11A3FC72C007432B6 /* hellomultiverse_switcher_view.cpp */; };
-		076D09FC1A3FC72C007432B6 /* hellomultiverse_switcher_view.h in Headers */ = {isa = PBXBuildFile; fileRef = 076D09F21A3FC72C007432B6 /* hellomultiverse_switcher_view.h */; };
-		07A4B1371B76469200DA5C57 /* hellomultiverse_render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FB1AA21B744E8800F3FCC1 /* hellomultiverse_render.cpp */; };
-		07A684EC17F0E06700C41DE6 /* hellomultiverse_application.h in Headers */ = {isa = PBXBuildFile; fileRef = 07A684E617F0E06700C41DE6 /* hellomultiverse_application.h */; };
-		07A684ED17F0E06700C41DE6 /* hellomultiverse_document.h in Headers */ = {isa = PBXBuildFile; fileRef = 07A684E717F0E06700C41DE6 /* hellomultiverse_document.h */; };
-		07A684EE17F0E06700C41DE6 /* hellomultiverse_frame.h in Headers */ = {isa = PBXBuildFile; fileRef = 07A684E817F0E06700C41DE6 /* hellomultiverse_frame.h */; };
-		07A684EF17F0E06700C41DE6 /* hellomultiverse_pane_view_update_hint.h in Headers */ = {isa = PBXBuildFile; fileRef = 07A684E917F0E06700C41DE6 /* hellomultiverse_pane_view_update_hint.h */; };
-		07A684F017F0E06700C41DE6 /* hellomultiverse_pane_view.h in Headers */ = {isa = PBXBuildFile; fileRef = 07A684EA17F0E06700C41DE6 /* hellomultiverse_pane_view.h */; };
-		07A684F117F0E06700C41DE6 /* hellomultiverse_view.h in Headers */ = {isa = PBXBuildFile; fileRef = 07A684EB17F0E06700C41DE6 /* hellomultiverse_view.h */; };
-		07AE494E1CC7A83F00959A6F /* hellomultiverse_gcom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07AE494A1CC7A83F00959A6F /* hellomultiverse_gcom.cpp */; };
-		07AE494F1CC7A83F00959A6F /* hellomultiverse_gcom.h in Headers */ = {isa = PBXBuildFile; fileRef = 07AE494B1CC7A83F00959A6F /* hellomultiverse_gcom.h */; };
-		07AE49501CC7A83F00959A6F /* hellomultiverse_view_base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07AE494C1CC7A83F00959A6F /* hellomultiverse_view_base.cpp */; };
-		07AE49511CC7A83F00959A6F /* hellomultiverse_view_base.h in Headers */ = {isa = PBXBuildFile; fileRef = 07AE494D1CC7A83F00959A6F /* hellomultiverse_view_base.h */; };
+		07473E601B5050B8004688C5 /* hellobase_switcher_view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 076D09F11A3FC72C007432B6 /* hellobase_switcher_view.cpp */; };
+		07473E641B5050B8004688C5 /* hellobase_main_view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AA1008C19971FCE004F84BD /* hellobase_main_view.cpp */; };
+		076D09FB1A3FC72C007432B6 /* hellobase_switcher_view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 076D09F11A3FC72C007432B6 /* hellobase_switcher_view.cpp */; };
+		076D09FC1A3FC72C007432B6 /* hellobase_switcher_view.h in Headers */ = {isa = PBXBuildFile; fileRef = 076D09F21A3FC72C007432B6 /* hellobase_switcher_view.h */; };
+		07A4B1371B76469200DA5C57 /* hellobase_render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FB1AA21B744E8800F3FCC1 /* hellobase_render.cpp */; };
+		07A684EC17F0E06700C41DE6 /* hellobase_application.h in Headers */ = {isa = PBXBuildFile; fileRef = 07A684E617F0E06700C41DE6 /* hellobase_application.h */; };
+		07A684ED17F0E06700C41DE6 /* hellobase_document.h in Headers */ = {isa = PBXBuildFile; fileRef = 07A684E717F0E06700C41DE6 /* hellobase_document.h */; };
+		07A684EE17F0E06700C41DE6 /* hellobase_frame.h in Headers */ = {isa = PBXBuildFile; fileRef = 07A684E817F0E06700C41DE6 /* hellobase_frame.h */; };
+		07A684EF17F0E06700C41DE6 /* hellobase_pane_view_update_hint.h in Headers */ = {isa = PBXBuildFile; fileRef = 07A684E917F0E06700C41DE6 /* hellobase_pane_view_update_hint.h */; };
+		07A684F017F0E06700C41DE6 /* hellobase_pane_view.h in Headers */ = {isa = PBXBuildFile; fileRef = 07A684EA17F0E06700C41DE6 /* hellobase_pane_view.h */; };
+		07A684F117F0E06700C41DE6 /* hellobase_view.h in Headers */ = {isa = PBXBuildFile; fileRef = 07A684EB17F0E06700C41DE6 /* hellobase_view.h */; };
+		07AE494E1CC7A83F00959A6F /* hellobase_gcom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07AE494A1CC7A83F00959A6F /* hellobase_gcom.cpp */; };
+		07AE494F1CC7A83F00959A6F /* hellobase_gcom.h in Headers */ = {isa = PBXBuildFile; fileRef = 07AE494B1CC7A83F00959A6F /* hellobase_gcom.h */; };
+		07AE49501CC7A83F00959A6F /* hellobase_view_base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07AE494C1CC7A83F00959A6F /* hellobase_view_base.cpp */; };
+		07AE49511CC7A83F00959A6F /* hellobase_view_base.h in Headers */ = {isa = PBXBuildFile; fileRef = 07AE494D1CC7A83F00959A6F /* hellobase_view_base.h */; };
 		07B65520190F3001002DAADE /* framework.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB75BE16F78E600085103B /* framework.cpp */; };
-		07B65521190F3001002DAADE /* hellomultiverse_application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB75C916F78E600085103B /* hellomultiverse_application.cpp */; };
-		07B65522190F3001002DAADE /* hellomultiverse_document.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB75CA16F78E600085103B /* hellomultiverse_document.cpp */; };
-		07B65523190F3001002DAADE /* hellomultiverse_frame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB75CB16F78E600085103B /* hellomultiverse_frame.cpp */; };
-		07B65524190F3001002DAADE /* hellomultiverse_pane_view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB75CC16F78E600085103B /* hellomultiverse_pane_view.cpp */; };
-		07B65525190F3001002DAADE /* hellomultiverse_pane_view_update_hint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB75CD16F78E600085103B /* hellomultiverse_pane_view_update_hint.cpp */; };
-		07B65526190F3001002DAADE /* hellomultiverse_view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB75CE16F78E600085103B /* hellomultiverse_view.cpp */; };
-		07FB1AA41B744E8800F3FCC1 /* hellomultiverse_render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FB1AA21B744E8800F3FCC1 /* hellomultiverse_render.cpp */; };
-		07FB1AA51B744E8800F3FCC1 /* hellomultiverse_render.h in Headers */ = {isa = PBXBuildFile; fileRef = 07FB1AA31B744E8800F3FCC1 /* hellomultiverse_render.h */; };
-		9A6716B61D155B860069A961 /* hellomultiverse_main_frame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A72594A1D1403E6001F56B4 /* hellomultiverse_main_frame.cpp */; };
-		9A6716B71D155B860069A961 /* hellomultiverse_gcom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07AE494A1CC7A83F00959A6F /* hellomultiverse_gcom.cpp */; };
-		9A6716B81D155B860069A961 /* hellomultiverse_view_base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07AE494C1CC7A83F00959A6F /* hellomultiverse_view_base.cpp */; };
-		9A72594C1D1403E6001F56B4 /* hellomultiverse_main_frame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A72594A1D1403E6001F56B4 /* hellomultiverse_main_frame.cpp */; };
-		9A72594D1D1403E6001F56B4 /* hellomultiverse_main_frame.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A72594B1D1403E6001F56B4 /* hellomultiverse_main_frame.h */; };
+		07B65521190F3001002DAADE /* hellobase_application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB75C916F78E600085103B /* hellobase_application.cpp */; };
+		07B65522190F3001002DAADE /* hellobase_document.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB75CA16F78E600085103B /* hellobase_document.cpp */; };
+		07B65523190F3001002DAADE /* hellobase_frame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB75CB16F78E600085103B /* hellobase_frame.cpp */; };
+		07B65524190F3001002DAADE /* hellobase_pane_view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB75CC16F78E600085103B /* hellobase_pane_view.cpp */; };
+		07B65525190F3001002DAADE /* hellobase_pane_view_update_hint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB75CD16F78E600085103B /* hellobase_pane_view_update_hint.cpp */; };
+		07B65526190F3001002DAADE /* hellobase_view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB75CE16F78E600085103B /* hellobase_view.cpp */; };
+		07FB1AA41B744E8800F3FCC1 /* hellobase_render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FB1AA21B744E8800F3FCC1 /* hellobase_render.cpp */; };
+		07FB1AA51B744E8800F3FCC1 /* hellobase_render.h in Headers */ = {isa = PBXBuildFile; fileRef = 07FB1AA31B744E8800F3FCC1 /* hellobase_render.h */; };
+		9A6716B61D155B860069A961 /* hellobase_main_frame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A72594A1D1403E6001F56B4 /* hellobase_main_frame.cpp */; };
+		9A6716B71D155B860069A961 /* hellobase_gcom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07AE494A1CC7A83F00959A6F /* hellobase_gcom.cpp */; };
+		9A6716B81D155B860069A961 /* hellobase_view_base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07AE494C1CC7A83F00959A6F /* hellobase_view_base.cpp */; };
+		9A72594C1D1403E6001F56B4 /* hellobase_main_frame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A72594A1D1403E6001F56B4 /* hellobase_main_frame.cpp */; };
+		9A72594D1D1403E6001F56B4 /* hellobase_main_frame.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A72594B1D1403E6001F56B4 /* hellobase_main_frame.h */; };
 		9A8C49451F6069A8004A5BA4 /* libace.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A8C49441F6069A8004A5BA4 /* libace.dylib */; };
 		9A920FD81F3BF68500CD9D94 /* libcore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A920FD71F3BF68500CD9D94 /* libcore.dylib */; };
 		9A920FDC1F3BF69300CD9D94 /* libsphere.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A920FDB1F3BF69300CD9D94 /* libsphere.dylib */; };
-		9AA1009019971FCE004F84BD /* hellomultiverse_main_view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AA1008C19971FCE004F84BD /* hellomultiverse_main_view.cpp */; };
-		9AA1009119971FCE004F84BD /* hellomultiverse_main_view.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AA1008D19971FCE004F84BD /* hellomultiverse_main_view.h */; };
+		9AA1009019971FCE004F84BD /* hellobase_main_view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AA1008C19971FCE004F84BD /* hellobase_main_view.cpp */; };
+		9AA1009119971FCE004F84BD /* hellobase_main_view.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AA1008D19971FCE004F84BD /* hellobase_main_view.h */; };
 		9ACE47D61D2041A300A1E0AD /* libaura.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ACE47D51D2041A300A1E0AD /* libaura.dylib */; };
 		9ACE47DA1D2041AE00A1E0AD /* libaxis.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ACE47D91D2041AE00A1E0AD /* libaxis.dylib */; };
 		9ACE47DC1D2041B800A1E0AD /* libbase.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ACE47DB1D2041B800A1E0AD /* libbase.dylib */; };
 		9ACE47DE1D2041E400A1E0AD /* libpcre.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ACE47DD1D2041E400A1E0AD /* libpcre.dylib */; };
-		9AE24EA11904CFFD001AEFFB /* libapp_core_hellomultiverse.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AE24E8A1904CFFD001AEFFB /* libapp_core_hellomultiverse.a */; };
+		9AE24EA11904CFFD001AEFFB /* libapp_core_hellobase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AE24E8A1904CFFD001AEFFB /* libapp_core_hellobase.a */; };
 		9AE24EA71904CFFD001AEFFB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9AE24EA51904CFFD001AEFFB /* InfoPlist.strings */; };
-		9AE24EA91904CFFD001AEFFB /* app_core_hellomultiverse_iosTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE24EA81904CFFD001AEFFB /* app_core_hellomultiverse_iosTests.m */; };
+		9AE24EA91904CFFD001AEFFB /* app_core_hellobase_iosTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE24EA81904CFFD001AEFFB /* app_core_hellobase_iosTests.m */; };
 		9AEB75DD16F78E600085103B /* framework.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB75BE16F78E600085103B /* framework.cpp */; };
 		9AEB75DE16F78E600085103B /* framework.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AEB75BF16F78E600085103B /* framework.h */; };
-		9AEB75E016F78E600085103B /* hellomultiverse.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AEB75C316F78E600085103B /* hellomultiverse.h */; };
-		9AEB75E116F78E600085103B /* hellomultiverse_application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB75C916F78E600085103B /* hellomultiverse_application.cpp */; };
-		9AEB75E216F78E600085103B /* hellomultiverse_document.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB75CA16F78E600085103B /* hellomultiverse_document.cpp */; };
-		9AEB75E316F78E600085103B /* hellomultiverse_frame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB75CB16F78E600085103B /* hellomultiverse_frame.cpp */; };
-		9AEB75E416F78E600085103B /* hellomultiverse_pane_view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB75CC16F78E600085103B /* hellomultiverse_pane_view.cpp */; };
-		9AEB75E516F78E600085103B /* hellomultiverse_pane_view_update_hint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB75CD16F78E600085103B /* hellomultiverse_pane_view_update_hint.cpp */; };
-		9AEB75E616F78E600085103B /* hellomultiverse_view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB75CE16F78E600085103B /* hellomultiverse_view.cpp */; };
+		9AEB75E016F78E600085103B /* hellobase.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AEB75C316F78E600085103B /* hellobase.h */; };
+		9AEB75E116F78E600085103B /* hellobase_application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB75C916F78E600085103B /* hellobase_application.cpp */; };
+		9AEB75E216F78E600085103B /* hellobase_document.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB75CA16F78E600085103B /* hellobase_document.cpp */; };
+		9AEB75E316F78E600085103B /* hellobase_frame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB75CB16F78E600085103B /* hellobase_frame.cpp */; };
+		9AEB75E416F78E600085103B /* hellobase_pane_view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB75CC16F78E600085103B /* hellobase_pane_view.cpp */; };
+		9AEB75E516F78E600085103B /* hellobase_pane_view_update_hint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB75CD16F78E600085103B /* hellobase_pane_view_update_hint.cpp */; };
+		9AEB75E616F78E600085103B /* hellobase_view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB75CE16F78E600085103B /* hellobase_view.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,7 +136,7 @@
 			containerPortal = 9AEB759B16F78DF10085103B /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 9AE24E891904CFFD001AEFFB;
-			remoteInfo = app_core_hellomultiverse_ios;
+			remoteInfo = app_core_hellobase_ios;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -154,22 +154,22 @@
 
 /* Begin PBXFileReference section */
 		070533CB1C90B2A100F31B3F /* gcom.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = gcom.xcodeproj; path = ../gcom/gcom.xcodeproj; sourceTree = "<group>"; };
-		076D09F11A3FC72C007432B6 /* hellomultiverse_switcher_view.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hellomultiverse_switcher_view.cpp; sourceTree = "<group>"; };
-		076D09F21A3FC72C007432B6 /* hellomultiverse_switcher_view.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hellomultiverse_switcher_view.h; sourceTree = "<group>"; };
-		07A684E617F0E06700C41DE6 /* hellomultiverse_application.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hellomultiverse_application.h; sourceTree = "<group>"; };
-		07A684E717F0E06700C41DE6 /* hellomultiverse_document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hellomultiverse_document.h; sourceTree = "<group>"; };
-		07A684E817F0E06700C41DE6 /* hellomultiverse_frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hellomultiverse_frame.h; sourceTree = "<group>"; };
-		07A684E917F0E06700C41DE6 /* hellomultiverse_pane_view_update_hint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hellomultiverse_pane_view_update_hint.h; sourceTree = "<group>"; };
-		07A684EA17F0E06700C41DE6 /* hellomultiverse_pane_view.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hellomultiverse_pane_view.h; sourceTree = "<group>"; };
-		07A684EB17F0E06700C41DE6 /* hellomultiverse_view.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hellomultiverse_view.h; sourceTree = "<group>"; };
-		07AE494A1CC7A83F00959A6F /* hellomultiverse_gcom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hellomultiverse_gcom.cpp; sourceTree = "<group>"; };
-		07AE494B1CC7A83F00959A6F /* hellomultiverse_gcom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hellomultiverse_gcom.h; sourceTree = "<group>"; };
-		07AE494C1CC7A83F00959A6F /* hellomultiverse_view_base.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hellomultiverse_view_base.cpp; sourceTree = "<group>"; };
-		07AE494D1CC7A83F00959A6F /* hellomultiverse_view_base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hellomultiverse_view_base.h; sourceTree = "<group>"; };
-		07FB1AA21B744E8800F3FCC1 /* hellomultiverse_render.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hellomultiverse_render.cpp; sourceTree = "<group>"; };
-		07FB1AA31B744E8800F3FCC1 /* hellomultiverse_render.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hellomultiverse_render.h; sourceTree = "<group>"; };
-		9A72594A1D1403E6001F56B4 /* hellomultiverse_main_frame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hellomultiverse_main_frame.cpp; sourceTree = "<group>"; };
-		9A72594B1D1403E6001F56B4 /* hellomultiverse_main_frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hellomultiverse_main_frame.h; sourceTree = "<group>"; };
+		076D09F11A3FC72C007432B6 /* hellobase_switcher_view.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hellobase_switcher_view.cpp; sourceTree = "<group>"; };
+		076D09F21A3FC72C007432B6 /* hellobase_switcher_view.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hellobase_switcher_view.h; sourceTree = "<group>"; };
+		07A684E617F0E06700C41DE6 /* hellobase_application.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hellobase_application.h; sourceTree = "<group>"; };
+		07A684E717F0E06700C41DE6 /* hellobase_document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hellobase_document.h; sourceTree = "<group>"; };
+		07A684E817F0E06700C41DE6 /* hellobase_frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hellobase_frame.h; sourceTree = "<group>"; };
+		07A684E917F0E06700C41DE6 /* hellobase_pane_view_update_hint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hellobase_pane_view_update_hint.h; sourceTree = "<group>"; };
+		07A684EA17F0E06700C41DE6 /* hellobase_pane_view.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hellobase_pane_view.h; sourceTree = "<group>"; };
+		07A684EB17F0E06700C41DE6 /* hellobase_view.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hellobase_view.h; sourceTree = "<group>"; };
+		07AE494A1CC7A83F00959A6F /* hellobase_gcom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hellobase_gcom.cpp; sourceTree = "<group>"; };
+		07AE494B1CC7A83F00959A6F /* hellobase_gcom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hellobase_gcom.h; sourceTree = "<group>"; };
+		07AE494C1CC7A83F00959A6F /* hellobase_view_base.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hellobase_view_base.cpp; sourceTree = "<group>"; };
+		07AE494D1CC7A83F00959A6F /* hellobase_view_base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hellobase_view_base.h; sourceTree = "<group>"; };
+		07FB1AA21B744E8800F3FCC1 /* hellobase_render.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hellobase_render.cpp; sourceTree = "<group>"; };
+		07FB1AA31B744E8800F3FCC1 /* hellobase_render.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hellobase_render.h; sourceTree = "<group>"; };
+		9A72594A1D1403E6001F56B4 /* hellobase_main_frame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hellobase_main_frame.cpp; sourceTree = "<group>"; };
+		9A72594B1D1403E6001F56B4 /* hellobase_main_frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hellobase_main_frame.h; sourceTree = "<group>"; };
 		9A8C49441F6069A8004A5BA4 /* libace.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libace.dylib; path = ../../../../Volumes/apple/archive/Xcode/DerivedData/Build/Products/Debug/libace.dylib; sourceTree = "<group>"; };
 		9A920FD71F3BF68500CD9D94 /* libcore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcore.dylib; path = ../../../../Volumes/apple/archive/Xcode/DerivedData/Build/Products/Debug/libcore.dylib; sourceTree = "<group>"; };
 		9A920FD91F3BF68B00CD9D94 /* libmultimedia.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmultimedia.dylib; path = ../../../../Volumes/apple/archive/Xcode/DerivedData/Build/Products/Debug/libmultimedia.dylib; sourceTree = "<group>"; };
@@ -178,8 +178,8 @@
 		9A986CDE1D22629C001F4C04 /* libios_base.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libios_base.dylib; path = "../../../app/appseed/base/build/Debug-iphoneos/libios_base.dylib"; sourceTree = "<group>"; };
 		9A986CE01D2262BA001F4C04 /* libios_axis.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libios_axis.dylib; path = "../../../app/appseed/axis/build/Debug-iphoneos/libios_axis.dylib"; sourceTree = "<group>"; };
 		9A986CE21D2262CB001F4C04 /* libios_aura.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libios_aura.dylib; path = "../../../app/appseed/aura/build/Debug-iphoneos/libios_aura.dylib"; sourceTree = "<group>"; };
-		9AA1008C19971FCE004F84BD /* hellomultiverse_main_view.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hellomultiverse_main_view.cpp; sourceTree = "<group>"; };
-		9AA1008D19971FCE004F84BD /* hellomultiverse_main_view.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hellomultiverse_main_view.h; sourceTree = "<group>"; };
+		9AA1008C19971FCE004F84BD /* hellobase_main_view.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hellobase_main_view.cpp; sourceTree = "<group>"; };
+		9AA1008D19971FCE004F84BD /* hellobase_main_view.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hellobase_main_view.h; sourceTree = "<group>"; };
 		9AC62E941D20C12200A4AC0A /* libaura.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libaura.dylib; path = "../../../../Users/camilo/Library/Developer/Xcode/DerivedData/basic-ios-bmuegusfgbffmoeixicbxhlnbzop/Build/Products/Debug-iphonesimulator/libaura.dylib"; sourceTree = "<group>"; };
 		9AC62E981D20C12800A4AC0A /* libaxis.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libaxis.dylib; path = "../../../app/appseed/axis/build/Debug-iphoneos/libaxis.dylib"; sourceTree = "<group>"; };
 		9AC62E9A1D20C12F00A4AC0A /* libbase.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbase.dylib; path = "../../../app/appseed/base/build/Debug-iphoneos/libbase.dylib"; sourceTree = "<group>"; };
@@ -188,21 +188,21 @@
 		9ACE47D91D2041AE00A1E0AD /* libaxis.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libaxis.dylib; path = ../../../app/appseed/axis/build/Debug/libaxis.dylib; sourceTree = "<group>"; };
 		9ACE47DB1D2041B800A1E0AD /* libbase.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbase.dylib; path = ../../../app/appseed/base/build/Debug/libbase.dylib; sourceTree = "<group>"; };
 		9ACE47DD1D2041E400A1E0AD /* libpcre.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpcre.dylib; path = "../../../../Users/camilo/Library/Developer/Xcode/DerivedData/core-mac-ekqwiewkpeyhdudtxguywfqohhby/Build/Products/Debug/libpcre.dylib"; sourceTree = "<group>"; };
-		9AE24E8A1904CFFD001AEFFB /* libapp_core_hellomultiverse.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libapp_core_hellomultiverse.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		9AE24E991904CFFD001AEFFB /* app_core_hellomultiverse_iosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = app_core_hellomultiverse_iosTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		9AE24EA41904CFFD001AEFFB /* app_core_hellomultiverse_iosTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "app_core_hellomultiverse_iosTests-Info.plist"; sourceTree = "<group>"; };
+		9AE24E8A1904CFFD001AEFFB /* libapp_core_hellobase.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libapp_core_hellobase.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		9AE24E991904CFFD001AEFFB /* app_core_hellobase_iosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = app_core_hellobase_iosTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9AE24EA41904CFFD001AEFFB /* app_core_hellobase_iosTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "app_core_hellobase_iosTests-Info.plist"; sourceTree = "<group>"; };
 		9AE24EA61904CFFD001AEFFB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		9AE24EA81904CFFD001AEFFB /* app_core_hellomultiverse_iosTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = app_core_hellomultiverse_iosTests.m; sourceTree = "<group>"; };
-		9AEB75A316F78DF10085103B /* libapp_core_hellomultiverse.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libapp_core_hellomultiverse.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		9AE24EA81904CFFD001AEFFB /* app_core_hellobase_iosTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = app_core_hellobase_iosTests.m; sourceTree = "<group>"; };
+		9AEB75A316F78DF10085103B /* libapp_core_hellobase.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libapp_core_hellobase.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AEB75BE16F78E600085103B /* framework.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = framework.cpp; sourceTree = "<group>"; };
 		9AEB75BF16F78E600085103B /* framework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = framework.h; sourceTree = "<group>"; };
-		9AEB75C316F78E600085103B /* hellomultiverse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hellomultiverse.h; sourceTree = "<group>"; };
-		9AEB75C916F78E600085103B /* hellomultiverse_application.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hellomultiverse_application.cpp; sourceTree = "<group>"; };
-		9AEB75CA16F78E600085103B /* hellomultiverse_document.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hellomultiverse_document.cpp; sourceTree = "<group>"; };
-		9AEB75CB16F78E600085103B /* hellomultiverse_frame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hellomultiverse_frame.cpp; sourceTree = "<group>"; };
-		9AEB75CC16F78E600085103B /* hellomultiverse_pane_view.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hellomultiverse_pane_view.cpp; sourceTree = "<group>"; };
-		9AEB75CD16F78E600085103B /* hellomultiverse_pane_view_update_hint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hellomultiverse_pane_view_update_hint.cpp; sourceTree = "<group>"; };
-		9AEB75CE16F78E600085103B /* hellomultiverse_view.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hellomultiverse_view.cpp; sourceTree = "<group>"; };
+		9AEB75C316F78E600085103B /* hellobase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hellobase.h; sourceTree = "<group>"; };
+		9AEB75C916F78E600085103B /* hellobase_application.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hellobase_application.cpp; sourceTree = "<group>"; };
+		9AEB75CA16F78E600085103B /* hellobase_document.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hellobase_document.cpp; sourceTree = "<group>"; };
+		9AEB75CB16F78E600085103B /* hellobase_frame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hellobase_frame.cpp; sourceTree = "<group>"; };
+		9AEB75CC16F78E600085103B /* hellobase_pane_view.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hellobase_pane_view.cpp; sourceTree = "<group>"; };
+		9AEB75CD16F78E600085103B /* hellobase_pane_view_update_hint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hellobase_pane_view_update_hint.cpp; sourceTree = "<group>"; };
+		9AEB75CE16F78E600085103B /* hellobase_view.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hellobase_view.cpp; sourceTree = "<group>"; };
 		9AF75DEF1F83EBA100FDE7CC /* libios_aura.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libios_aura.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AF75DF31F83EBAA00FDE7CC /* libios_axis.dylib */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libios_axis.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AF75DF51F83EBB300FDE7CC /* libios_base.dylib */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libios_base.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -221,7 +221,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9AE24EA11904CFFD001AEFFB /* libapp_core_hellomultiverse.a in Frameworks */,
+				9AE24EA11904CFFD001AEFFB /* libapp_core_hellobase.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,19 +278,19 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		9AE24EA21904CFFD001AEFFB /* app_core_hellomultiverse_iosTests */ = {
+		9AE24EA21904CFFD001AEFFB /* app_core_hellobase_iosTests */ = {
 			isa = PBXGroup;
 			children = (
-				9AE24EA81904CFFD001AEFFB /* app_core_hellomultiverse_iosTests.m */,
+				9AE24EA81904CFFD001AEFFB /* app_core_hellobase_iosTests.m */,
 				9AE24EA31904CFFD001AEFFB /* Supporting Files */,
 			);
-			path = app_core_hellomultiverse_iosTests;
+			path = app_core_hellobase_iosTests;
 			sourceTree = "<group>";
 		};
 		9AE24EA31904CFFD001AEFFB /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				9AE24EA41904CFFD001AEFFB /* app_core_hellomultiverse_iosTests-Info.plist */,
+				9AE24EA41904CFFD001AEFFB /* app_core_hellobase_iosTests-Info.plist */,
 				9AE24EA51904CFFD001AEFFB /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
@@ -312,8 +312,8 @@
 				9ACE47DB1D2041B800A1E0AD /* libbase.dylib */,
 				9ACE47D91D2041AE00A1E0AD /* libaxis.dylib */,
 				9ACE47D51D2041A300A1E0AD /* libaura.dylib */,
-				9AEB75AA16F78E600085103B /* hellomultiverse */,
-				9AE24EA21904CFFD001AEFFB /* app_core_hellomultiverse_iosTests */,
+				9AEB75AA16F78E600085103B /* hellobase */,
+				9AE24EA21904CFFD001AEFFB /* app_core_hellobase_iosTests */,
 				9AEB75A416F78DF10085103B /* Products */,
 				9A920FD61F3BF68400CD9D94 /* Frameworks */,
 			);
@@ -322,45 +322,45 @@
 		9AEB75A416F78DF10085103B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9AEB75A316F78DF10085103B /* libapp_core_hellomultiverse.dylib */,
-				9AE24E8A1904CFFD001AEFFB /* libapp_core_hellomultiverse.a */,
-				9AE24E991904CFFD001AEFFB /* app_core_hellomultiverse_iosTests.xctest */,
+				9AEB75A316F78DF10085103B /* libapp_core_hellobase.dylib */,
+				9AE24E8A1904CFFD001AEFFB /* libapp_core_hellobase.a */,
+				9AE24E991904CFFD001AEFFB /* app_core_hellobase_iosTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		9AEB75AA16F78E600085103B /* hellomultiverse */ = {
+		9AEB75AA16F78E600085103B /* hellobase */ = {
 			isa = PBXGroup;
 			children = (
-				9AEB75C316F78E600085103B /* hellomultiverse.h */,
+				9AEB75C316F78E600085103B /* hellobase.h */,
 				9AEB75BE16F78E600085103B /* framework.cpp */,
 				9AEB75BF16F78E600085103B /* framework.h */,
-				9AEB75C916F78E600085103B /* hellomultiverse_application.cpp */,
-				07A684E617F0E06700C41DE6 /* hellomultiverse_application.h */,
-				9AEB75CA16F78E600085103B /* hellomultiverse_document.cpp */,
-				07A684E717F0E06700C41DE6 /* hellomultiverse_document.h */,
-				9AEB75CB16F78E600085103B /* hellomultiverse_frame.cpp */,
-				07A684E817F0E06700C41DE6 /* hellomultiverse_frame.h */,
-				07AE494A1CC7A83F00959A6F /* hellomultiverse_gcom.cpp */,
-				07AE494B1CC7A83F00959A6F /* hellomultiverse_gcom.h */,
-				9A72594A1D1403E6001F56B4 /* hellomultiverse_main_frame.cpp */,
-				9A72594B1D1403E6001F56B4 /* hellomultiverse_main_frame.h */,
-				9AA1008C19971FCE004F84BD /* hellomultiverse_main_view.cpp */,
-				9AA1008D19971FCE004F84BD /* hellomultiverse_main_view.h */,
-				9AEB75CC16F78E600085103B /* hellomultiverse_pane_view.cpp */,
-				07A684EA17F0E06700C41DE6 /* hellomultiverse_pane_view.h */,
-				9AEB75CD16F78E600085103B /* hellomultiverse_pane_view_update_hint.cpp */,
-				07A684E917F0E06700C41DE6 /* hellomultiverse_pane_view_update_hint.h */,
-				07FB1AA21B744E8800F3FCC1 /* hellomultiverse_render.cpp */,
-				07FB1AA31B744E8800F3FCC1 /* hellomultiverse_render.h */,
-				076D09F11A3FC72C007432B6 /* hellomultiverse_switcher_view.cpp */,
-				076D09F21A3FC72C007432B6 /* hellomultiverse_switcher_view.h */,
-				07AE494C1CC7A83F00959A6F /* hellomultiverse_view_base.cpp */,
-				07AE494D1CC7A83F00959A6F /* hellomultiverse_view_base.h */,
-				9AEB75CE16F78E600085103B /* hellomultiverse_view.cpp */,
-				07A684EB17F0E06700C41DE6 /* hellomultiverse_view.h */,
+				9AEB75C916F78E600085103B /* hellobase_application.cpp */,
+				07A684E617F0E06700C41DE6 /* hellobase_application.h */,
+				9AEB75CA16F78E600085103B /* hellobase_document.cpp */,
+				07A684E717F0E06700C41DE6 /* hellobase_document.h */,
+				9AEB75CB16F78E600085103B /* hellobase_frame.cpp */,
+				07A684E817F0E06700C41DE6 /* hellobase_frame.h */,
+				07AE494A1CC7A83F00959A6F /* hellobase_gcom.cpp */,
+				07AE494B1CC7A83F00959A6F /* hellobase_gcom.h */,
+				9A72594A1D1403E6001F56B4 /* hellobase_main_frame.cpp */,
+				9A72594B1D1403E6001F56B4 /* hellobase_main_frame.h */,
+				9AA1008C19971FCE004F84BD /* hellobase_main_view.cpp */,
+				9AA1008D19971FCE004F84BD /* hellobase_main_view.h */,
+				9AEB75CC16F78E600085103B /* hellobase_pane_view.cpp */,
+				07A684EA17F0E06700C41DE6 /* hellobase_pane_view.h */,
+				9AEB75CD16F78E600085103B /* hellobase_pane_view_update_hint.cpp */,
+				07A684E917F0E06700C41DE6 /* hellobase_pane_view_update_hint.h */,
+				07FB1AA21B744E8800F3FCC1 /* hellobase_render.cpp */,
+				07FB1AA31B744E8800F3FCC1 /* hellobase_render.h */,
+				076D09F11A3FC72C007432B6 /* hellobase_switcher_view.cpp */,
+				076D09F21A3FC72C007432B6 /* hellobase_switcher_view.h */,
+				07AE494C1CC7A83F00959A6F /* hellobase_view_base.cpp */,
+				07AE494D1CC7A83F00959A6F /* hellobase_view_base.h */,
+				9AEB75CE16F78E600085103B /* hellobase_view.cpp */,
+				07A684EB17F0E06700C41DE6 /* hellobase_view.h */,
 			);
-			name = hellomultiverse;
+			name = hellobase;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -371,28 +371,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				9AEB75DE16F78E600085103B /* framework.h in Headers */,
-				07FB1AA51B744E8800F3FCC1 /* hellomultiverse_render.h in Headers */,
-				9AEB75E016F78E600085103B /* hellomultiverse.h in Headers */,
-				07A684F117F0E06700C41DE6 /* hellomultiverse_view.h in Headers */,
-				9AA1009119971FCE004F84BD /* hellomultiverse_main_view.h in Headers */,
-				07AE49511CC7A83F00959A6F /* hellomultiverse_view_base.h in Headers */,
-				9A72594D1D1403E6001F56B4 /* hellomultiverse_main_frame.h in Headers */,
-				07A684EF17F0E06700C41DE6 /* hellomultiverse_pane_view_update_hint.h in Headers */,
-				07A684ED17F0E06700C41DE6 /* hellomultiverse_document.h in Headers */,
-				07A684F017F0E06700C41DE6 /* hellomultiverse_pane_view.h in Headers */,
-				07AE494F1CC7A83F00959A6F /* hellomultiverse_gcom.h in Headers */,
-				07A684EE17F0E06700C41DE6 /* hellomultiverse_frame.h in Headers */,
-				076D09FC1A3FC72C007432B6 /* hellomultiverse_switcher_view.h in Headers */,
-				07A684EC17F0E06700C41DE6 /* hellomultiverse_application.h in Headers */,
+				07FB1AA51B744E8800F3FCC1 /* hellobase_render.h in Headers */,
+				9AEB75E016F78E600085103B /* hellobase.h in Headers */,
+				07A684F117F0E06700C41DE6 /* hellobase_view.h in Headers */,
+				9AA1009119971FCE004F84BD /* hellobase_main_view.h in Headers */,
+				07AE49511CC7A83F00959A6F /* hellobase_view_base.h in Headers */,
+				9A72594D1D1403E6001F56B4 /* hellobase_main_frame.h in Headers */,
+				07A684EF17F0E06700C41DE6 /* hellobase_pane_view_update_hint.h in Headers */,
+				07A684ED17F0E06700C41DE6 /* hellobase_document.h in Headers */,
+				07A684F017F0E06700C41DE6 /* hellobase_pane_view.h in Headers */,
+				07AE494F1CC7A83F00959A6F /* hellobase_gcom.h in Headers */,
+				07A684EE17F0E06700C41DE6 /* hellobase_frame.h in Headers */,
+				076D09FC1A3FC72C007432B6 /* hellobase_switcher_view.h in Headers */,
+				07A684EC17F0E06700C41DE6 /* hellobase_application.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		9AE24E891904CFFD001AEFFB /* ios_app_core_hellomultiverse */ = {
+		9AE24E891904CFFD001AEFFB /* ios_app_core_hellobase */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9AE24EBA1904CFFD001AEFFB /* Build configuration list for PBXNativeTarget "ios_app_core_hellomultiverse" */;
+			buildConfigurationList = 9AE24EBA1904CFFD001AEFFB /* Build configuration list for PBXNativeTarget "ios_app_core_hellobase" */;
 			buildPhases = (
 				9AE24E861904CFFD001AEFFB /* Sources */,
 				9AE24E871904CFFD001AEFFB /* Frameworks */,
@@ -404,14 +404,14 @@
 				9A9578551F62218E00623508 /* PBXTargetDependency */,
 				9A259E1D1D25D9B40044727D /* PBXTargetDependency */,
 			);
-			name = ios_app_core_hellomultiverse;
-			productName = app_core_hellomultiverse_ios;
-			productReference = 9AE24E8A1904CFFD001AEFFB /* libapp_core_hellomultiverse.a */;
+			name = ios_app_core_hellobase;
+			productName = app_core_hellobase_ios;
+			productReference = 9AE24E8A1904CFFD001AEFFB /* libapp_core_hellobase.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		9AE24E981904CFFD001AEFFB /* app_core_hellomultiverse_iosTests */ = {
+		9AE24E981904CFFD001AEFFB /* app_core_hellobase_iosTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9AE24EBB1904CFFD001AEFFB /* Build configuration list for PBXNativeTarget "app_core_hellomultiverse_iosTests" */;
+			buildConfigurationList = 9AE24EBB1904CFFD001AEFFB /* Build configuration list for PBXNativeTarget "app_core_hellobase_iosTests" */;
 			buildPhases = (
 				9AE24E951904CFFD001AEFFB /* Sources */,
 				9AE24E961904CFFD001AEFFB /* Frameworks */,
@@ -422,14 +422,14 @@
 			dependencies = (
 				9AE24EA01904CFFD001AEFFB /* PBXTargetDependency */,
 			);
-			name = app_core_hellomultiverse_iosTests;
-			productName = app_core_hellomultiverse_iosTests;
-			productReference = 9AE24E991904CFFD001AEFFB /* app_core_hellomultiverse_iosTests.xctest */;
+			name = app_core_hellobase_iosTests;
+			productName = app_core_hellobase_iosTests;
+			productReference = 9AE24E991904CFFD001AEFFB /* app_core_hellobase_iosTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		9AEB75A216F78DF10085103B /* app_core_hellomultiverse */ = {
+		9AEB75A216F78DF10085103B /* app_core_hellobase */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9AEB75A716F78DF10085103B /* Build configuration list for PBXNativeTarget "app_core_hellomultiverse" */;
+			buildConfigurationList = 9AEB75A716F78DF10085103B /* Build configuration list for PBXNativeTarget "app_core_hellobase" */;
 			buildPhases = (
 				9AEB759F16F78DF10085103B /* Sources */,
 				9AEB75A016F78DF10085103B /* Frameworks */,
@@ -441,9 +441,9 @@
 				9A9578571F62219700623508 /* PBXTargetDependency */,
 				070533EE1C90B2B900F31B3F /* PBXTargetDependency */,
 			);
-			name = app_core_hellomultiverse;
-			productName = app_core_hellomultiverse;
-			productReference = 9AEB75A316F78DF10085103B /* libapp_core_hellomultiverse.dylib */;
+			name = app_core_hellobase;
+			productName = app_core_hellobase;
+			productReference = 9AEB75A316F78DF10085103B /* libapp_core_hellobase.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 /* End PBXNativeTarget section */
@@ -460,7 +460,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 9AEB759E16F78DF10085103B /* Build configuration list for PBXProject "app_core_hellomultiverse" */;
+			buildConfigurationList = 9AEB759E16F78DF10085103B /* Build configuration list for PBXProject "app_core_hellobase" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -482,9 +482,9 @@
 			);
 			projectRoot = "";
 			targets = (
-				9AEB75A216F78DF10085103B /* app_core_hellomultiverse */,
-				9AE24E891904CFFD001AEFFB /* ios_app_core_hellomultiverse */,
-				9AE24E981904CFFD001AEFFB /* app_core_hellomultiverse_iosTests */,
+				9AEB75A216F78DF10085103B /* app_core_hellobase */,
+				9AE24E891904CFFD001AEFFB /* ios_app_core_hellobase */,
+				9AE24E981904CFFD001AEFFB /* app_core_hellobase_iosTests */,
 			);
 		};
 /* End PBXProject section */
@@ -550,19 +550,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A6716B61D155B860069A961 /* hellomultiverse_main_frame.cpp in Sources */,
-				9A6716B71D155B860069A961 /* hellomultiverse_gcom.cpp in Sources */,
-				9A6716B81D155B860069A961 /* hellomultiverse_view_base.cpp in Sources */,
-				07A4B1371B76469200DA5C57 /* hellomultiverse_render.cpp in Sources */,
-				07473E641B5050B8004688C5 /* hellomultiverse_main_view.cpp in Sources */,
-				07473E601B5050B8004688C5 /* hellomultiverse_switcher_view.cpp in Sources */,
+				9A6716B61D155B860069A961 /* hellobase_main_frame.cpp in Sources */,
+				9A6716B71D155B860069A961 /* hellobase_gcom.cpp in Sources */,
+				9A6716B81D155B860069A961 /* hellobase_view_base.cpp in Sources */,
+				07A4B1371B76469200DA5C57 /* hellobase_render.cpp in Sources */,
+				07473E641B5050B8004688C5 /* hellobase_main_view.cpp in Sources */,
+				07473E601B5050B8004688C5 /* hellobase_switcher_view.cpp in Sources */,
 				07B65520190F3001002DAADE /* framework.cpp in Sources */,
-				07B65521190F3001002DAADE /* hellomultiverse_application.cpp in Sources */,
-				07B65522190F3001002DAADE /* hellomultiverse_document.cpp in Sources */,
-				07B65523190F3001002DAADE /* hellomultiverse_frame.cpp in Sources */,
-				07B65524190F3001002DAADE /* hellomultiverse_pane_view.cpp in Sources */,
-				07B65525190F3001002DAADE /* hellomultiverse_pane_view_update_hint.cpp in Sources */,
-				07B65526190F3001002DAADE /* hellomultiverse_view.cpp in Sources */,
+				07B65521190F3001002DAADE /* hellobase_application.cpp in Sources */,
+				07B65522190F3001002DAADE /* hellobase_document.cpp in Sources */,
+				07B65523190F3001002DAADE /* hellobase_frame.cpp in Sources */,
+				07B65524190F3001002DAADE /* hellobase_pane_view.cpp in Sources */,
+				07B65525190F3001002DAADE /* hellobase_pane_view_update_hint.cpp in Sources */,
+				07B65526190F3001002DAADE /* hellobase_view.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -570,7 +570,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9AE24EA91904CFFD001AEFFB /* app_core_hellomultiverse_iosTests.m in Sources */,
+				9AE24EA91904CFFD001AEFFB /* app_core_hellobase_iosTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -578,19 +578,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9AA1009019971FCE004F84BD /* hellomultiverse_main_view.cpp in Sources */,
+				9AA1009019971FCE004F84BD /* hellobase_main_view.cpp in Sources */,
 				9AEB75DD16F78E600085103B /* framework.cpp in Sources */,
-				07AE494E1CC7A83F00959A6F /* hellomultiverse_gcom.cpp in Sources */,
-				9A72594C1D1403E6001F56B4 /* hellomultiverse_main_frame.cpp in Sources */,
-				076D09FB1A3FC72C007432B6 /* hellomultiverse_switcher_view.cpp in Sources */,
-				07FB1AA41B744E8800F3FCC1 /* hellomultiverse_render.cpp in Sources */,
-				9AEB75E116F78E600085103B /* hellomultiverse_application.cpp in Sources */,
-				07AE49501CC7A83F00959A6F /* hellomultiverse_view_base.cpp in Sources */,
-				9AEB75E216F78E600085103B /* hellomultiverse_document.cpp in Sources */,
-				9AEB75E316F78E600085103B /* hellomultiverse_frame.cpp in Sources */,
-				9AEB75E416F78E600085103B /* hellomultiverse_pane_view.cpp in Sources */,
-				9AEB75E516F78E600085103B /* hellomultiverse_pane_view_update_hint.cpp in Sources */,
-				9AEB75E616F78E600085103B /* hellomultiverse_view.cpp in Sources */,
+				07AE494E1CC7A83F00959A6F /* hellobase_gcom.cpp in Sources */,
+				9A72594C1D1403E6001F56B4 /* hellobase_main_frame.cpp in Sources */,
+				076D09FB1A3FC72C007432B6 /* hellobase_switcher_view.cpp in Sources */,
+				07FB1AA41B744E8800F3FCC1 /* hellobase_render.cpp in Sources */,
+				9AEB75E116F78E600085103B /* hellobase_application.cpp in Sources */,
+				07AE49501CC7A83F00959A6F /* hellobase_view_base.cpp in Sources */,
+				9AEB75E216F78E600085103B /* hellobase_document.cpp in Sources */,
+				9AEB75E316F78E600085103B /* hellobase_frame.cpp in Sources */,
+				9AEB75E416F78E600085103B /* hellobase_pane_view.cpp in Sources */,
+				9AEB75E516F78E600085103B /* hellobase_pane_view_update_hint.cpp in Sources */,
+				9AEB75E616F78E600085103B /* hellobase_view.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -619,7 +619,7 @@
 		};
 		9AE24EA01904CFFD001AEFFB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 9AE24E891904CFFD001AEFFB /* ios_app_core_hellomultiverse */;
+			target = 9AE24E891904CFFD001AEFFB /* ios_app_core_hellobase */;
 			targetProxy = 9AE24E9F1904CFFD001AEFFB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -660,7 +660,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/libapp_core_hellomultiverse.dylib";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/libapp_core_hellobase.dylib";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -673,7 +673,7 @@
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "app_core_hellomultiverse_ios/app_core_hellomultiverse_ios-Prefix.pch";
+				GCC_PREFIX_HEADER = "app_core_hellobase_ios/app_core_hellobase_ios-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -682,7 +682,7 @@
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
-				INFOPLIST_FILE = "app_core_hellomultiverse_iosTests/app_core_hellomultiverse_iosTests-Info.plist";
+				INFOPLIST_FILE = "app_core_hellobase_iosTests/app_core_hellobase_iosTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "ca2.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -696,7 +696,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/libapp_core_hellomultiverse.dylib";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/libapp_core_hellobase.dylib";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -710,12 +710,12 @@
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "app_core_hellomultiverse_ios/app_core_hellomultiverse_ios-Prefix.pch";
+				GCC_PREFIX_HEADER = "app_core_hellobase_ios/app_core_hellobase_ios-Prefix.pch";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
-				INFOPLIST_FILE = "app_core_hellomultiverse_iosTests/app_core_hellomultiverse_iosTests-Info.plist";
+				INFOPLIST_FILE = "app_core_hellobase_iosTests/app_core_hellobase_iosTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "ca2.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -875,7 +875,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9AE24EBA1904CFFD001AEFFB /* Build configuration list for PBXNativeTarget "ios_app_core_hellomultiverse" */ = {
+		9AE24EBA1904CFFD001AEFFB /* Build configuration list for PBXNativeTarget "ios_app_core_hellobase" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9AE24EAA1904CFFD001AEFFB /* Debug */,
@@ -884,7 +884,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9AE24EBB1904CFFD001AEFFB /* Build configuration list for PBXNativeTarget "app_core_hellomultiverse_iosTests" */ = {
+		9AE24EBB1904CFFD001AEFFB /* Build configuration list for PBXNativeTarget "app_core_hellobase_iosTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9AE24EAC1904CFFD001AEFFB /* Debug */,
@@ -893,7 +893,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9AEB759E16F78DF10085103B /* Build configuration list for PBXProject "app_core_hellomultiverse" */ = {
+		9AEB759E16F78DF10085103B /* Build configuration list for PBXProject "app_core_hellobase" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9AEB75A516F78DF10085103B /* Debug */,
@@ -902,7 +902,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9AEB75A716F78DF10085103B /* Build configuration list for PBXNativeTarget "app_core_hellomultiverse" */ = {
+		9AEB75A716F78DF10085103B /* Build configuration list for PBXNativeTarget "app_core_hellobase" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9AEB75A816F78DF10085103B /* Debug */,
