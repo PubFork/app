@@ -1,8 +1,8 @@
-; app_hellomultiverse.def
+; app_helloaxis.def
 
-LIBRARY  "app_core_hellomultiverse"
+LIBRARY  "app_core_helloaxis"
 ; For Win32 DLLs, only EXPORTs really required.
 
 EXPORTS
-app_core_hellomultiverse_get_new_library
+app_core_helloaxis_get_new_library
 

@@ -1,4 +1,4 @@
-//
+﻿//
 //  helloaxis_render.h
 //  app_core_helloaxis
 //
@@ -76,7 +76,7 @@ namespace helloaxis
          double                           m_dMinRadius;
          double                           m_dMaxRadius;
 
-         string                           m_strHelloMultiverse;
+         string                           m_strHelloAxis;
 
          rect                             m_rectClient;
 
@@ -110,7 +110,7 @@ namespace helloaxis
          virtual ~render();
 
 
-         string get_helloaxis() { synch_lock slText(m_pmutexText);  string str(m_strHelloMultiverse.c_str()); return str; }
+         string get_helloaxis() { synch_lock slText(m_pmutexText);  string str(m_strHelloAxis.c_str()); return str; }
 
 
          virtual int32_t run();
@@ -135,7 +135,7 @@ namespace helloaxis
          ::visual::dib_sp & dib23(string strDib);
 
          virtual bool in_anime();
-         virtual void helloaxis_fast_render(const string & strHelloMultiverse);
+         virtual void helloaxis_fast_render(const string & strHelloAxis);
 
 
    };

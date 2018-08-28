@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 
@@ -21,12 +21,12 @@ namespace helloaxis
          };
 
          e_type                                 m_etype;
-         string                                 m_strHelloMultiverse;
-         string                                 m_strHelloMultiverseDefault;
-         string                                 m_strAlternateHelloMultiverse;
-         string                                 m_strAlternateHelloMultiverseDefault;
+         string                                 m_strHelloAxis;
+         string                                 m_strHelloAxisDefault;
+         string                                 m_strAlternateHelloAxis;
+         string                                 m_strAlternateHelloAxisDefault;
 
-         bool                                   m_bMultiverseChat;
+         bool                                   m_bAxisChat;
 
          ::user::document *                     m_pdocMenu;
 
