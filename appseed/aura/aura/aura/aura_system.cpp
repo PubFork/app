@@ -3928,6 +3928,8 @@ success:
 
       string strProtocol = System.url().get_protocol(str);
 
+#ifdef WINDOWSEX
+      
       if (strProtocol == "ca2project")
       {
 
@@ -3961,7 +3963,34 @@ success:
          int iRet = call_sync("C:\\bergedge\\time\\stage\\visual_studio_automation_2017.exe",strParams, "C:\\bergedge\\time\\stage\\", SW_HIDE, 30, 1000, NULL, 0);
 
       }
+#elif defined MACOS
+      if (strProtocol == "ca2project")
+      {
+         
+         string strBase = System.url().get_server(str);
+         
+         string strScheme = System.url().get_script(str);
 
+         ::str::begins_eat(strScheme, "/");
+         
+         if(strBase == "scheme")
+         {
+         
+//         int iRet = call_sync("C:\\bergedge\\time\\stage\\visual_studio_automation_2017.exe",strParams, "C:\\bergedge\\time\\stage\\", SW_HIDE, 30, 1000, NULL, 0);
+            
+            ::system("osascript /bergedge/lemon/macos/script/xcode_set_active_scheme.scpt \"" + strScheme + "\"");
+            
+         }
+         else if(strBase == "archive")
+         {
+
+            ::system("xcodebuild -scheme \"" + strScheme + "\" archive");
+
+         }
+         
+      }
+#endif
+      
    }
 
 

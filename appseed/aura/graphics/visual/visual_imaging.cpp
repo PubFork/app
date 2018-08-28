@@ -6037,7 +6037,7 @@ bool imaging::load_from_file(::draw2d::dib * pdib,var varFile,bool bCache)
 //         }
 //         catch(...)
 //         {
-//
+
 //         }
 //
 //      }
