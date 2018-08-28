@@ -76,7 +76,7 @@ namespace helloworld
       //double                           m_dMinRadius;
       //double                           m_dMaxRadius;
 
-      //string                           m_strHelloMultiverse;
+      //string                           m_strHelloWorld;
 
       //rect                             m_rectClient;
 
@@ -115,7 +115,7 @@ namespace helloworld
 
       virtual string get_helloaura() override;
 
-      // { synch_lock slText(m_pmutexText);  string str(m_strHelloMultiverse.c_str()); return str; }
+      // { synch_lock slText(m_pmutexText);  string str(m_strHelloWorld.c_str()); return str; }
 
 
       virtual int32_t run();
@@ -140,7 +140,7 @@ namespace helloworld
       //::visual::dib_sp & dib23(string strDib);
 
       //virtual bool in_anime();
-      //virtual void helloaura_fast_render(const string & strHelloMultiverse);
+      //virtual void helloaura_fast_render(const string & strHelloWorld);
 
 
 //      virtual string get_helloaura() override;

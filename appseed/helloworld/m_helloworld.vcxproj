@@ -16,11 +16,11 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{AA5C6E24-9DF1-4EC1-A907-E298FEAE1990}</ProjectGuid>
-    <RootNamespace>app_core_hellomultiverse</RootNamespace>
+    <RootNamespace>app_core_helloworld</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
-    <ProjectName>app_core_hellomultiverse</ProjectName>
+    <ProjectName>app_core_helloworld</ProjectName>
     <ApplicationType>Windows Store</ApplicationType>
     <ApplicationTypeRevision>8.1</ApplicationTypeRevision>
   </PropertyGroup>
@@ -97,7 +97,7 @@
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)framework.pch</PrecompiledHeaderOutputFile>
       <AdditionalIncludeDirectories>$(SolutionDir)../../../include;$(SolutionDir)../../../app/include;.;$(ProjectDir)framework;$(SolutionDir)../../../;$(SolutionDir)../../../app;$(SolutionDir)../../../app/base/include;$(SolutionDir)../../../app/base/appseed;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../../app/appseed/core;$(SolutionDir)../../../app/appseed/base;$(SolutionDir)../../../app/appseed/axis;$(SolutionDir)../../../app/appseed/aura;$(SolutionDir)../../../app/axis;$(SolutionDir)../../../nodeapp/thirdparty/appseed;$(SolutionDir)../../;$(ProjectDir)../../appseed;$(ProjectDir)../../;$(ProjectDir)../;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">_APP_CORE_HELLOMULTIVERSE_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">_APP_CORE_HELLOWORLD_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">/bigobj %(AdditionalOptions)</AdditionalOptions>
       <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">Async</ExceptionHandling>
       <DebugInformationFormat Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">ProgramDatabase</DebugInformationFormat>
@@ -114,8 +114,8 @@
       <FloatingPointExceptions Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">false</FloatingPointExceptions>
       <CreateHotpatchableImage Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">false</CreateHotpatchableImage>
       <OpenMPSupport Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">false</OpenMPSupport>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">_APP_CORE_HELLOMULTIVERSE_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='basis|x64'">_APP_CORE_HELLOMULTIVERSE_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">_APP_CORE_HELLOWORLD_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='basis|x64'">_APP_CORE_HELLOWORLD_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='basis|x64'">/bigobj %(AdditionalOptions)</AdditionalOptions>
       <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='basis|x64'">Async</ExceptionHandling>
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='basis|x64'">false</CompileAsManaged>
@@ -127,20 +127,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
-    <ClInclude Include="hellomultiverse.h" />
-    <ClInclude Include="hellomultiverse_application.h" />
-    <ClInclude Include="hellomultiverse_document.h" />
-    <ClInclude Include="hellomultiverse_edit_view.h" />
-    <ClInclude Include="hellomultiverse_frame.h" />
-    <ClInclude Include="hellomultiverse_full_view.h" />
-    <ClInclude Include="hellomultiverse_lite_view.h" />
-    <ClInclude Include="hellomultiverse_main_view.h" />
-    <ClInclude Include="hellomultiverse_pane_view.h" />
-    <ClInclude Include="hellomultiverse_pane_view_update_hint.h" />
-    <ClInclude Include="hellomultiverse_switcher_view.h" />
-    <ClInclude Include="hellomultiverse_toggle_view.h" />
-    <ClInclude Include="hellomultiverse_top_view.h" />
-    <ClInclude Include="hellomultiverse_view.h" />
+    <ClInclude Include="helloworld.h" />
+    <ClInclude Include="helloworld_application.h" />
+    <ClInclude Include="helloworld_document.h" />
+    <ClInclude Include="helloworld_edit_view.h" />
+    <ClInclude Include="helloworld_frame.h" />
+    <ClInclude Include="helloworld_full_view.h" />
+    <ClInclude Include="helloworld_lite_view.h" />
+    <ClInclude Include="helloworld_main_view.h" />
+    <ClInclude Include="helloworld_pane_view.h" />
+    <ClInclude Include="helloworld_pane_view_update_hint.h" />
+    <ClInclude Include="helloworld_switcher_view.h" />
+    <ClInclude Include="helloworld_toggle_view.h" />
+    <ClInclude Include="helloworld_top_view.h" />
+    <ClInclude Include="helloworld_view.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="framework.cpp">
@@ -148,20 +148,20 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="hellomultiverse.cpp" />
-    <ClCompile Include="hellomultiverse_application.cpp" />
-    <ClCompile Include="hellomultiverse_document.cpp" />
-    <ClCompile Include="hellomultiverse_edit_view.cpp" />
-    <ClCompile Include="hellomultiverse_frame.cpp" />
-    <ClCompile Include="hellomultiverse_full_view.cpp" />
-    <ClCompile Include="hellomultiverse_lite_view.cpp" />
-    <ClCompile Include="hellomultiverse_main_view.cpp" />
-    <ClCompile Include="hellomultiverse_pane_view.cpp" />
-    <ClCompile Include="hellomultiverse_pane_view_update_hint.cpp" />
-    <ClCompile Include="hellomultiverse_switcher_view.cpp" />
-    <ClCompile Include="hellomultiverse_toggle_view.cpp" />
-    <ClCompile Include="hellomultiverse_top_view.cpp" />
-    <ClCompile Include="hellomultiverse_view.cpp" />
+    <ClCompile Include="helloworld.cpp" />
+    <ClCompile Include="helloworld_application.cpp" />
+    <ClCompile Include="helloworld_document.cpp" />
+    <ClCompile Include="helloworld_edit_view.cpp" />
+    <ClCompile Include="helloworld_frame.cpp" />
+    <ClCompile Include="helloworld_full_view.cpp" />
+    <ClCompile Include="helloworld_lite_view.cpp" />
+    <ClCompile Include="helloworld_main_view.cpp" />
+    <ClCompile Include="helloworld_pane_view.cpp" />
+    <ClCompile Include="helloworld_pane_view_update_hint.cpp" />
+    <ClCompile Include="helloworld_switcher_view.cpp" />
+    <ClCompile Include="helloworld_toggle_view.cpp" />
+    <ClCompile Include="helloworld_top_view.cpp" />
+    <ClCompile Include="helloworld_view.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\app\appseed\aura\m_aura.vcxproj">
@@ -178,7 +178,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app_core_hellomultiverse.def" />
+    <None Include="app_core_helloworld.def" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

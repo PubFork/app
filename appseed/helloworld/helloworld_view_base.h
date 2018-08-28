@@ -33,8 +33,8 @@ namespace helloworld
 
 
       mutex                   m_mutexText;
-      string                  m_strNewHelloMultiverse;
-      string                  m_strHelloMultiverse;
+      string                  m_strNewHelloWorld;
+      string                  m_strHelloWorld;
 
 
       ::draw2d::dib_sp        m_dibPost;

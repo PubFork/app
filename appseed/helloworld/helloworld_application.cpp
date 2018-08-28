@@ -9,9 +9,9 @@ namespace helloworld
       m_mutexAiFont(this)
    {
 
-      m_ptemplateHelloMultiverseMain = NULL;
-      m_ptemplateHelloMultiverseView = NULL;
-      m_ptemplateHelloMultiverseSwitcher = NULL;
+      m_ptemplateHelloWorldMain = NULL;
+      m_ptemplateHelloWorldView = NULL;
+      m_ptemplateHelloWorldSwitcher = NULL;
 
       m_strAppName = "app/helloworld";
       m_strLibraryName = "app/helloworld";
@@ -20,11 +20,11 @@ namespace helloworld
 
       m_etype = type_normal;
 
-      m_strHelloMultiverseDefault = "Hello Multiverse!!";
-      m_strAlternateHelloMultiverseDefault = "Hello!!";
+      m_strHelloWorldDefault = "Hello World!!";
+      m_strAlternateHelloWorldDefault = "Hello!!";
 
-      m_strHelloMultiverse = m_strHelloMultiverseDefault;
-      m_strAlternateHelloMultiverse = m_strAlternateHelloMultiverseDefault;
+      m_strHelloWorld = m_strHelloWorldDefault;
+      m_strAlternateHelloWorld = m_strAlternateHelloWorldDefault;
 
       m_iErrorAiFont = -1;
 
@@ -32,7 +32,7 @@ namespace helloworld
 
       m_faceAi = NULL; // FT_Face m_faceAi;
 
-      m_bMultiverseChat = true;
+      m_bWorldChat = true;
 
 
 
@@ -72,7 +72,7 @@ namespace helloworld
       if (str.has_char())
       {
 
-         m_strHelloMultiverse = str;
+         m_strHelloWorld = str;
 
       }
 
@@ -87,7 +87,7 @@ namespace helloworld
                               System.type_info < document >(),
                               System.type_info < main_frame >(),
                               System.type_info < pane_view >()));
-      m_ptemplateHelloMultiverseMain = pDocTemplate;
+      m_ptemplateHelloWorldMain = pDocTemplate;
       add_document_template(pDocTemplate);
 
 
@@ -97,7 +97,7 @@ namespace helloworld
                               System.type_info < document >(),
                               System.type_info < frame >(),
                               System.type_info < main_view >()));
-      m_ptemplateHelloMultiverseView = pDocTemplate;
+      m_ptemplateHelloWorldView = pDocTemplate;
       add_document_template(pDocTemplate);
 
 
@@ -107,7 +107,7 @@ namespace helloworld
                               System.type_info < document >(),
                               System.type_info < frame >(),
                               System.type_info < switcher_view >()));
-      m_ptemplateHelloMultiverseSwitcher = pDocTemplate;
+      m_ptemplateHelloWorldSwitcher = pDocTemplate;
       add_document_template(pDocTemplate);
 
 
@@ -145,19 +145,19 @@ namespace helloworld
 
 #endif
 
-      m_bMultiverseChat = !handler()->m_varTopicQuery["no_hello_edit"].is_set();
+      m_bWorldChat = !handler()->m_varTopicQuery["no_hello_edit"].is_set();
 
-      if (m_ptemplateHelloMultiverseMain->get_document_count() == 0)
+      if (m_ptemplateHelloWorldMain->get_document_count() == 0)
       {
 
-         m_ptemplateHelloMultiverseMain->request_create(pcreate);
+         m_ptemplateHelloWorldMain->request_create(pcreate);
 
       }
 
       if (pcreate->m_spCommandLine->m_varFile.has_char())
       {
 
-         m_ptemplateHelloMultiverseView->request_create(pcreate);
+         m_ptemplateHelloWorldView->request_create(pcreate);
 
       }
 

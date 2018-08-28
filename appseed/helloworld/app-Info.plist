@@ -46,6 +46,6 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>ca2_command_line</key>
-	<string>app : app=app-core/hellomultiverse</string>
+	<string>app : app=app-core/helloworld</string>
 </dict>
 </plist>

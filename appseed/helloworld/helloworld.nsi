@@ -8,18 +8,18 @@
 ;--------------------------------
 
 ; The name of the installer
-Name "Hello Multiverse!!"
+Name "Hello World!!"
 
 ; The default installation directory
-InstallDir "$PROGRAMFILES\app_core_hellomultiverse"
+InstallDir "$PROGRAMFILES\app_core_helloworld"
 
 ; The file to write
-OutFile "C:\ca2\time\HelloMultiverseInstaller.exe"
+OutFile "C:\ca2\time\HelloWorldInstaller.exe"
 
 
 ; Registry key to check for directory (so if you install again, it will 
 ; overwrite the old one automatically)
-InstallDirRegKey HKLM "Software\ca2\app-core\hellomultiverse" "Install_Dir"
+InstallDirRegKey HKLM "Software\ca2\app-core\helloworld" "Install_Dir"
 
 ; Request application privileges for Windows Vista
 RequestExecutionLevel admin
@@ -37,7 +37,7 @@ UninstPage instfiles
 ;--------------------------------
 
 ; The stuff to install
-Section "HelloMultiverse (required)"
+Section "HelloWorld (required)"
 
   SectionIn RO
 
@@ -48,10 +48,10 @@ Section "HelloMultiverse (required)"
   File /r "C:\ca2\app\appmatter\main\"
   
   ; Set output path to the installation directory.
-  SetOutPath "$INSTDIR\app-core\appmatter\hellomultiverse"
+  SetOutPath "$INSTDIR\app-core\appmatter\helloworld"
   
   ; Put file there
-  File /r "C:\ca2\app-core\appmatter\hellomultiverse\"
+  File /r "C:\ca2\app-core\appmatter\helloworld\"
 
   ; Set output path to the installation directory.
   SetOutPath "$INSTDIR\time\x64\stage"
@@ -78,20 +78,20 @@ Section "HelloMultiverse (required)"
   File "C:\ca2\time\x64\stage\zlib.dll"
   File "C:\ca2\time\x64\stage\bzip2.dll"
   File "C:\ca2\time\x64\stage\app_core.dll"
-  File "C:\ca2\time\x64\stage\app_core_hellomultiverse.dll"
-  File "C:\ca2\time\x64\stage\app_core_hellomultiverse.exe"
+  File "C:\ca2\time\x64\stage\app_core_helloworld.dll"
+  File "C:\ca2\time\x64\stage\app_core_helloworld.exe"
   
   
-  ExecWait '"$INSTDIR\time\x64\stage\app_core_hellomultiverse.exe" : install' $0
+  ExecWait '"$INSTDIR\time\x64\stage\app_core_helloworld.exe" : install' $0
   
   ; Write the installation path into the registry
-  WriteRegStr HKLM "SOFTWARE\ca2\app-core\hellomultiverse" "Install_Dir" "$INSTDIR"
+  WriteRegStr HKLM "SOFTWARE\ca2\app-core\helloworld" "Install_Dir" "$INSTDIR"
   
   ; Write the uninstall keys for Windows
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\app_core_hellomultiverse" "DisplayName" "Hello Multiverse!!"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\app_core_hellomultiverse" "UninstallString" '"$INSTDIR\uninstall.exe"'
-  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\app_core_hellomultiverse" "NoModify" 1
-  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\app_core_hellomultiverse" "NoRepair" 1
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\app_core_helloworld" "DisplayName" "Hello World!!"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\app_core_helloworld" "UninstallString" '"$INSTDIR\uninstall.exe"'
+  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\app_core_helloworld" "NoModify" 1
+  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\app_core_helloworld" "NoRepair" 1
   WriteUninstaller "uninstall.exe"
   
 SectionEnd
@@ -99,9 +99,9 @@ SectionEnd
 ; Optional section (can be disabled by the user)
 Section "Start Menu Shortcuts"
 
-  CreateDirectory "$SMPROGRAMS\Hello Multiverse!!"
-  CreateShortcut "$SMPROGRAMS\Hello Multiverse!!\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
-  CreateShortcut "$SMPROGRAMS\Hello Multiverse!!\Hello Multiverse!!.lnk" "$INSTDIR\time\x64\stage\app_core_hellomultiverse.exe" "" "$INSTDIR\time\x64\stage\app_core_hellomultiverse.exe" 0
+  CreateDirectory "$SMPROGRAMS\Hello World!!"
+  CreateShortcut "$SMPROGRAMS\Hello World!!\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
+  CreateShortcut "$SMPROGRAMS\Hello World!!\Hello World!!.lnk" "$INSTDIR\time\x64\stage\app_core_helloworld.exe" "" "$INSTDIR\time\x64\stage\app_core_helloworld.exe" 0
   
 SectionEnd
 
@@ -112,18 +112,18 @@ SectionEnd
 Section "Uninstall"
   
   ; Remove registry keys
-  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\app_core_hellomultiverse"
-  DeleteRegKey HKLM "SOFTWARE\ca2\app-core\hellomultiverse"
+  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\app_core_helloworld"
+  DeleteRegKey HKLM "SOFTWARE\ca2\app-core\helloworld"
 
   ; Remove files and uninstaller
-  Delete "$INSTDIR\app_core_hellomultiverse.nsi"
+  Delete "$INSTDIR\app_core_helloworld.nsi"
   Delete "$INSTDIR\uninstall.exe"
 
   ; Remove shortcuts, if any
-  Delete "$SMPROGRAMS\app_core_hellomultiverse\*.*"
+  Delete "$SMPROGRAMS\app_core_helloworld\*.*"
 
   ; Remove directories used
-  RMDir "$SMPROGRAMS\app_core_hellomultiverse"
+  RMDir "$SMPROGRAMS\app_core_helloworld"
   RMDir /r "$INSTDIR/time"
   RMDir "$INSTDIR"
 

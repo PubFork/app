@@ -6,7 +6,7 @@
 int main(Array<String^>^)
 {
 
-   return app_core_main("m_app.exe : app=app-core/hellomultiverse wndfrm=rootkiller client_only");
+   return app_core_main("m_app.exe : app=app-core/helloworld wndfrm=rootkiller client_only");
 
 }
 

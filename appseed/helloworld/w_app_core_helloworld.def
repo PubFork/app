@@ -1,8 +1,8 @@
-; app_hellomultiverse.def
+; app_helloworld.def
 
-LIBRARY  "app_core_hellomultiverse"
+LIBRARY  "app_core_helloworld"
 ; For Win32 DLLs, only EXPORTs really required.
 
 EXPORTS
-app_core_hellomultiverse_get_new_library
+app_core_helloworld_get_new_library
 

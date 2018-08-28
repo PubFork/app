@@ -22,19 +22,19 @@ namespace helloworld
       };
 
       e_type                                 m_etype;
-      string                                 m_strHelloMultiverse;
-      string                                 m_strHelloMultiverseDefault;
-      string                                 m_strAlternateHelloMultiverse;
-      string                                 m_strAlternateHelloMultiverseDefault;
+      string                                 m_strHelloWorld;
+      string                                 m_strHelloWorldDefault;
+      string                                 m_strAlternateHelloWorld;
+      string                                 m_strAlternateHelloWorldDefault;
 
-      bool                                   m_bMultiverseChat;
+      bool                                   m_bWorldChat;
 
       ::user::document *                     m_pdocMenu;
 //      ::calculator::plain_edit_view *        m_prollfps;
       ::user::plain_edit_view *              m_prollfps;
-      ::user::single_document_template *     m_ptemplateHelloMultiverseMain;
-      ::user::single_document_template *     m_ptemplateHelloMultiverseView;
-      ::user::single_document_template *     m_ptemplateHelloMultiverseSwitcher;
+      ::user::single_document_template *     m_ptemplateHelloWorldMain;
+      ::user::single_document_template *     m_ptemplateHelloWorldView;
+      ::user::single_document_template *     m_ptemplateHelloWorldSwitcher;
 
 
       //::user::split_view *                             m_ptopviewLast;

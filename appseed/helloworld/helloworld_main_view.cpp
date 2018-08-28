@@ -57,7 +57,7 @@ namespace helloworld
 
       int iPane;
 
-      if (Application.m_bMultiverseChat)
+      if (Application.m_bWorldChat)
       {
 
          SetPaneCount(2);

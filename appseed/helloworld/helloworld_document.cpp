@@ -78,7 +78,7 @@ namespace helloworld
 
             synch_lock slText(get_typed_view < view >() != NULL  ? &get_typed_view < view >()->m_mutexText : NULL);
 
-            get_typed_view < view >()->m_strHelloMultiverse = "image:" + get_typed_view < view >()->m_strImage + "," + get_typed_view < view >()->m_strHelloMultiverse;
+            get_typed_view < view >()->m_strHelloWorld = "image:" + get_typed_view < view >()->m_strImage + "," + get_typed_view < view >()->m_strHelloWorld;
 
             get_typed_view < view >()->set_need_layout(true);
 
@@ -96,7 +96,7 @@ namespace helloworld
       else if(get_typed_view < ::userex::pane_tab_view >() != NULL)
       {
 
-         get_typed_view < ::userex::pane_tab_view >()->set_cur_tab_by_id(::helloworld::PaneViewHelloMultiverse);
+         get_typed_view < ::userex::pane_tab_view >()->set_cur_tab_by_id(::helloworld::PaneViewHelloWorld);
 
       }
 

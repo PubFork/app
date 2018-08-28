@@ -1,6 +1,6 @@
 //
-//  Hello_Multiverse__Tests.m
-//  Hello Multiverse!!Tests
+//  Hello_World__Tests.m
+//  Hello World!!Tests
 //
 //  Created by Camilo Sasuke Tsumanuma on 8/2/15.
 //  Copyright (c) 2015 ca2 Desenvolvimento de Software Ltdal. All rights reserved.
@@ -9,11 +9,11 @@
 #import <Cocoa/Cocoa.h>
 #import <XCTest/XCTest.h>
 
-@interface Hello_Multiverse__Tests : XCTestCase
+@interface Hello_World__Tests : XCTestCase
 
 @end
 
-@implementation Hello_Multiverse__Tests
+@implementation Hello_World__Tests
 
 - (void)setUp {
     [super setUp];

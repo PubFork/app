@@ -58,15 +58,15 @@ namespace helloworld
          return;
 
       set_tab("Menu",::helloworld::PaneViewMenu);
-      set_tab("helloworld", ::helloworld::PaneViewHelloMultiverse);
-      set_tab("switcher",::helloworld::PaneViewHelloMultiverseSwitcher);
+      set_tab("helloworld", ::helloworld::PaneViewHelloWorld);
+      set_tab("switcher",::helloworld::PaneViewHelloWorldSwitcher);
       set_tab("Font","font_sel");
 #if 1
       set_tab("Open", "file_manager");
 #endif
 
       //set_cur_tab_by_id(::helloworld::PaneViewGcom);
-      set_cur_tab_by_id(::helloworld::PaneViewHelloMultiverse);
+      set_cur_tab_by_id(::helloworld::PaneViewHelloWorld);
 
 
 
@@ -108,10 +108,10 @@ namespace helloworld
 
       }
 
-      if(get_view_id() == ::helloworld::PaneViewHelloMultiverse
-            || get_view_id() == ::helloworld::PaneViewHelloMultiverseSwitcher
-            || stra.contains(::str::from((int)::helloworld::PaneViewHelloMultiverse))
-            || stra.contains(::str::from((int)::helloworld::PaneViewHelloMultiverseSwitcher)))
+      if(get_view_id() == ::helloworld::PaneViewHelloWorld
+            || get_view_id() == ::helloworld::PaneViewHelloWorldSwitcher
+            || stra.contains(::str::from((int)::helloworld::PaneViewHelloWorld))
+            || stra.contains(::str::from((int)::helloworld::PaneViewHelloWorldSwitcher)))
       {
 
 
@@ -135,24 +135,24 @@ namespace helloworld
 
 
 
-         if(get_view_id() == ::helloworld::PaneViewHelloMultiverse)
+         if(get_view_id() == ::helloworld::PaneViewHelloWorld)
          {
 
-            m_pviewLast = dynamic_cast < view_base * > (get_pane_by_id(::helloworld::PaneViewHelloMultiverse)->m_pholder->get_child_by_id("helloworld_view"));
-            m_pviewLastBilbo = dynamic_cast < view * > (get_pane_by_id(::helloworld::PaneViewHelloMultiverse)->m_pholder->get_child_by_id("helloworld_view"));
+            m_pviewLast = dynamic_cast < view_base * > (get_pane_by_id(::helloworld::PaneViewHelloWorld)->m_pholder->get_child_by_id("helloworld_view"));
+            m_pviewLastBilbo = dynamic_cast < view * > (get_pane_by_id(::helloworld::PaneViewHelloWorld)->m_pholder->get_child_by_id("helloworld_view"));
             m_pviewLast->set_need_layout();
             m_pviewdataTopic = m_pviewdata;
-            m_strTopicTitle = get_pane_by_id(::helloworld::PaneViewHelloMultiverse)->m_straTitle.implode(" ");
+            m_strTopicTitle = get_pane_by_id(::helloworld::PaneViewHelloWorld)->m_straTitle.implode(" ");
 
          }
-         else if (get_view_id() == ::helloworld::PaneViewHelloMultiverseSwitcher)
+         else if (get_view_id() == ::helloworld::PaneViewHelloWorldSwitcher)
          {
 
-            m_pviewLast = dynamic_cast < view_base * > (get_pane_by_id(::helloworld::PaneViewHelloMultiverseSwitcher)->m_pholder->get_child_by_id("helloworld_view"));
-            m_pviewLastBilbo = dynamic_cast < view * > (get_pane_by_id(::helloworld::PaneViewHelloMultiverseSwitcher)->m_pholder->get_child_by_id("helloworld_view"));
+            m_pviewLast = dynamic_cast < view_base * > (get_pane_by_id(::helloworld::PaneViewHelloWorldSwitcher)->m_pholder->get_child_by_id("helloworld_view"));
+            m_pviewLastBilbo = dynamic_cast < view * > (get_pane_by_id(::helloworld::PaneViewHelloWorldSwitcher)->m_pholder->get_child_by_id("helloworld_view"));
             m_pviewLast->set_need_layout();
             m_pviewdataTopic = m_pviewdata;
-            m_strTopicTitle = get_pane_by_id(::helloworld::PaneViewHelloMultiverseSwitcher)->m_straTitle.implode(" ");
+            m_strTopicTitle = get_pane_by_id(::helloworld::PaneViewHelloWorldSwitcher)->m_straTitle.implode(" ");
 
          }
 
@@ -276,17 +276,17 @@ namespace helloworld
 
       }
       break;
-      case PaneViewHelloMultiverse:
+      case PaneViewHelloWorld:
       {
 
-         Application.m_ptemplateHelloMultiverseView->create_subdocument(pcreatordata);
+         Application.m_ptemplateHelloWorldView->create_subdocument(pcreatordata);
 
       }
       break;
-      case PaneViewHelloMultiverseSwitcher:
+      case PaneViewHelloWorldSwitcher:
       {
 
-         Application.m_ptemplateHelloMultiverseSwitcher->create_subdocument(pcreatordata);
+         Application.m_ptemplateHelloWorldSwitcher->create_subdocument(pcreatordata);
 
       }
       break;
@@ -481,13 +481,13 @@ namespace helloworld
       if (m_strTopicTitle.has_char())
       {
 
-         str.replace("Hellomultiverse!!", m_strTopicTitle);
+         str.replace("Helloworld!!", m_strTopicTitle);
 
       }
       else
       {
 
-         str.replace("Hellomultiverse!!", "");
+         str.replace("Helloworld!!", "");
 
       }
 

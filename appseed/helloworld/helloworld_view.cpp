@@ -146,7 +146,7 @@ namespace helloworld
 
          synch_lock slText(&m_mutexText);
 
-         if(m_strNewHelloMultiverse.is_empty())
+         if(m_strNewHelloWorld.is_empty())
          {
 
             if(m_prender->m_bFastOnEmpty)
@@ -206,7 +206,7 @@ namespace helloworld
 
                peditview->_001GetText(strText);
 
-               m_strNewHelloMultiverse = strText;
+               m_strNewHelloWorld = strText;
 
                data_set("cur_text", strText);
 
@@ -400,14 +400,14 @@ namespace helloworld
 
       synch_lock sl(&m_mutexText);
 
-      if(m_strHelloMultiverse != m_strNewHelloMultiverse)
+      if(m_strHelloWorld != m_strNewHelloWorld)
       {
 
-         m_strHelloMultiverse = m_strNewHelloMultiverse;
+         m_strHelloWorld = m_strNewHelloWorld;
 
       }
 
-      if(m_strHelloMultiverse.is_empty())
+      if(m_strHelloWorld.is_empty())
       {
 
          if(m_prender->m_bAlternate)
@@ -415,11 +415,11 @@ namespace helloworld
 
             if(m_dFps != 0.0)
             {
-               return "Rolling " + Application.m_strAlternateHelloMultiverse;
+               return "Rolling " + Application.m_strAlternateHelloWorld;
             }
             else
             {
-               return Application.m_strAlternateHelloMultiverse;
+               return Application.m_strAlternateHelloWorld;
             }
 
 
@@ -429,11 +429,11 @@ namespace helloworld
 
             if(m_dFps != 0.0)
             {
-               return "Rolling " + Application.m_strHelloMultiverse;
+               return "Rolling " + Application.m_strHelloWorld;
             }
             else
             {
-               return Application.m_strHelloMultiverse;
+               return Application.m_strHelloWorld;
             }
 
 
@@ -443,7 +443,7 @@ namespace helloworld
       else
       {
 
-         return m_strHelloMultiverse;
+         return m_strHelloWorld;
 
       }
 
@@ -458,10 +458,10 @@ namespace helloworld
 
          synch_lock sl(&m_mutexText);
 
-         if (get_processed_helloworld() != m_prender->m_strHelloMultiverse)
+         if (get_processed_helloworld() != m_prender->m_strHelloWorld)
          {
 
-            m_prender->m_strHelloMultiverse = get_processed_helloworld().c_str(); // rationale : string allocation fork *for multithreading*
+            m_prender->m_strHelloWorld = get_processed_helloworld().c_str(); // rationale : string allocation fork *for multithreading*
 
             sl.unlock();
 

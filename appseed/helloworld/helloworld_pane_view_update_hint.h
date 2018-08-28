@@ -9,8 +9,8 @@ namespace helloworld
    {
       PaneViewNone,
       PaneViewMenu,
-      PaneViewHelloMultiverse,
-      PaneViewHelloMultiverseSwitcher,
+      PaneViewHelloWorld,
+      PaneViewHelloWorldSwitcher,
       PaneViewFileManager
    };
 
