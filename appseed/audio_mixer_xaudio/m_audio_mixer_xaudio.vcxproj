@@ -291,13 +291,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='memdleak|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="hellomultiverse.cpp" />
-    <ClCompile Include="hellomultiverse_application.cpp" />
-    <ClCompile Include="hellomultiverse_document.cpp" />
-    <ClCompile Include="hellomultiverse_frame.cpp" />
-    <ClCompile Include="hellomultiverse_pane_view.cpp" />
-    <ClCompile Include="hellomultiverse_pane_view_update_hint.cpp" />
-    <ClCompile Include="hellomultiverse_view.cpp" />
     <ClCompile Include="ikaraoke\ikaraoke_data.cpp" />
     <ClCompile Include="ikaraoke\ikaraoke_data_container.cpp" />
     <ClCompile Include="ikaraoke\ikaraoke_dynamic_data.cpp" />
