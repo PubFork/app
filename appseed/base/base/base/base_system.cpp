@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 
@@ -783,13 +783,17 @@ error:
    bool system::process_init()
    {
 
-#ifndef WINDOWS
+#if !defined(WINDOWS) && !defined(MACOS)
 
       int32_t error = FT_Init_FreeType((FT_Library *)&m_ftlibrary);
+      
       if (error)
       {
+         
          TRACE("an error occurred during Free Type library initialization");
+         
          return false;
+         
       }
 
 #endif

@@ -28,19 +28,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
-    <ClInclude Include="hellomultiverse.h" />
-    <ClInclude Include="hellomultiverse_application.h" />
-    <ClInclude Include="hellomultiverse_document.h" />
-    <ClInclude Include="hellomultiverse_frame.h" />
-    <ClInclude Include="hellomultiverse_gcom.h" />
-    <ClInclude Include="hellomultiverse_main_frame.h" />
-    <ClInclude Include="hellomultiverse_main_view.h" />
-    <ClInclude Include="hellomultiverse_pane_view.h" />
-    <ClInclude Include="hellomultiverse_pane_view_update_hint.h" />
-    <ClInclude Include="hellomultiverse_render.h" />
-    <ClInclude Include="hellomultiverse_switcher_view.h" />
-    <ClInclude Include="hellomultiverse_view.h" />
-    <ClInclude Include="hellomultiverse_view_base.h" />
+    <ClInclude Include="helloaxis.h" />
+    <ClInclude Include="helloaxis_application.h" />
+    <ClInclude Include="helloaxis_document.h" />
+    <ClInclude Include="helloaxis_frame.h" />
+    <ClInclude Include="helloaxis_gcom.h" />
+    <ClInclude Include="helloaxis_main_frame.h" />
+    <ClInclude Include="helloaxis_main_view.h" />
+    <ClInclude Include="helloaxis_pane_view.h" />
+    <ClInclude Include="helloaxis_pane_view_update_hint.h" />
+    <ClInclude Include="helloaxis_render.h" />
+    <ClInclude Include="helloaxis_switcher_view.h" />
+    <ClInclude Include="helloaxis_view.h" />
+    <ClInclude Include="helloaxis_view_base.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="framework.cpp">
@@ -51,22 +51,22 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='stage|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="hellomultiverse.cpp" />
-    <ClCompile Include="hellomultiverse_application.cpp" />
-    <ClCompile Include="hellomultiverse_document.cpp" />
-    <ClCompile Include="hellomultiverse_frame.cpp" />
-    <ClCompile Include="hellomultiverse_gcom.cpp" />
-    <ClCompile Include="hellomultiverse_main_frame.cpp" />
-    <ClCompile Include="hellomultiverse_main_view.cpp" />
-    <ClCompile Include="hellomultiverse_pane_view.cpp" />
-    <ClCompile Include="hellomultiverse_pane_view_update_hint.cpp" />
-    <ClCompile Include="hellomultiverse_render.cpp" />
-    <ClCompile Include="hellomultiverse_switcher_view.cpp" />
-    <ClCompile Include="hellomultiverse_view.cpp" />
-    <ClCompile Include="hellomultiverse_view_base.cpp" />
+    <ClCompile Include="helloaxis.cpp" />
+    <ClCompile Include="helloaxis_application.cpp" />
+    <ClCompile Include="helloaxis_document.cpp" />
+    <ClCompile Include="helloaxis_frame.cpp" />
+    <ClCompile Include="helloaxis_gcom.cpp" />
+    <ClCompile Include="helloaxis_main_frame.cpp" />
+    <ClCompile Include="helloaxis_main_view.cpp" />
+    <ClCompile Include="helloaxis_pane_view.cpp" />
+    <ClCompile Include="helloaxis_pane_view_update_hint.cpp" />
+    <ClCompile Include="helloaxis_render.cpp" />
+    <ClCompile Include="helloaxis_switcher_view.cpp" />
+    <ClCompile Include="helloaxis_view.cpp" />
+    <ClCompile Include="helloaxis_view_base.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app_core_hellomultiverse.def" />
+    <None Include="app_core_helloaxis.def" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\app\appseed\ace\w_ace.vcxproj">
@@ -100,8 +100,8 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B7AFCEFA-3079-4B23-8F97-4543BB980265}</ProjectGuid>
     <Keyword>DynamicLibrary</Keyword>
-    <ProjectName>app_core_hellomultiverse</ProjectName>
-    <RootNamespace>app_core_hellomultiverse</RootNamespace>
+    <ProjectName>app_core_helloaxis</ProjectName>
+    <RootNamespace>app_core_helloaxis</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
@@ -209,7 +209,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
-      <PreprocessorDefinitions>_APP_CORE_HELLOMULTIVERSE_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_APP_CORE_HELLOAXIS_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)../../../include;$(SolutionDir)../../../nodeapp/$(PlatformName)/include;$(SolutionDir)../../../nodeapp/include;$(SolutionDir)../../../app/include;.;$(ProjectDir)framework;$(IntDir);$(SolutionDir)../../../;$(SolutionDir)../../../app;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../../app/appseed/core;$(SolutionDir)../../../app/appseed/base;$(SolutionDir)../../../app/appseed/axis;$(SolutionDir)../../../app/appseed/aura;$(SolutionDir)../../;$(ProjectDir)../../appseed;$(ProjectDir)../../;$(ProjectDir)../;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
@@ -238,7 +238,7 @@
       <ExceptionHandling>Async</ExceptionHandling>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)framework.pch</PrecompiledHeaderOutputFile>
-      <PreprocessorDefinitions>_APP_CORE_HELLOMULTIVERSE_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_APP_CORE_HELLOAXIS_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CompileAsManaged>false</CompileAsManaged>
       <ObjectFileName>$(IntDir)%(Directory)</ObjectFileName>
     </ClCompile>
@@ -271,7 +271,7 @@
       <ExceptionHandling>Async</ExceptionHandling>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)framework.pch</PrecompiledHeaderOutputFile>
-      <PreprocessorDefinitions>_APP_CORE_HELLOMULTIVERSE_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_APP_CORE_HELLOAXIS_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)%(Directory)</ObjectFileName>
     </ClCompile>
     <Link>
@@ -292,7 +292,7 @@
       <ExceptionHandling>Async</ExceptionHandling>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)framework.pch</PrecompiledHeaderOutputFile>
-      <PreprocessorDefinitions>_APP_CORE_HELLOMULTIVERSE_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_APP_CORE_HELLOAXIS_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CompileAsManaged>false</CompileAsManaged>
       <ObjectFileName>$(IntDir)%(Directory)</ObjectFileName>
     </ClCompile>
@@ -315,7 +315,7 @@
       <ExceptionHandling>Async</ExceptionHandling>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)framework.pch</PrecompiledHeaderOutputFile>
-      <PreprocessorDefinitions>_APP_CORE_HELLOMULTIVERSE_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_APP_CORE_HELLOAXIS_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)%(Directory)</ObjectFileName>
     </ClCompile>
     <Link>
@@ -336,7 +336,7 @@
       <ExceptionHandling>Async</ExceptionHandling>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)framework.pch</PrecompiledHeaderOutputFile>
-      <PreprocessorDefinitions>_APP_CORE_HELLOMULTIVERSE_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_APP_CORE_HELLOAXIS_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CompileAsManaged>false</CompileAsManaged>
       <ObjectFileName>$(IntDir)%(Directory)</ObjectFileName>
     </ClCompile>

@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 namespace lemon
@@ -204,7 +204,7 @@ namespace lemon
       ::count predominant_column_count(A & a)
       {
 
-         int_to_int column_count;
+         index_to_index column_count;
 
          for (index i = 0; i < a.get_size(); i++)
          {
