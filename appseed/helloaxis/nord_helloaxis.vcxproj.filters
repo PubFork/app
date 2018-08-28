@@ -4,43 +4,43 @@
     <ClCompile Include="framework.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hellomultiverse_application.cpp">
+    <ClCompile Include="helloaxis_application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hellomultiverse_document.cpp">
+    <ClCompile Include="helloaxis_document.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hellomultiverse_edit_view.cpp">
+    <ClCompile Include="helloaxis_edit_view.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hellomultiverse_frame.cpp">
+    <ClCompile Include="helloaxis_frame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hellomultiverse_full_view.cpp">
+    <ClCompile Include="helloaxis_full_view.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hellomultiverse_lite_view.cpp">
+    <ClCompile Include="helloaxis_lite_view.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hellomultiverse_main_view.cpp">
+    <ClCompile Include="helloaxis_main_view.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hellomultiverse_pane_view.cpp">
+    <ClCompile Include="helloaxis_pane_view.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hellomultiverse_pane_view_update_hint.cpp">
+    <ClCompile Include="helloaxis_pane_view_update_hint.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hellomultiverse_switcher_view.cpp">
+    <ClCompile Include="helloaxis_switcher_view.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hellomultiverse_toggle_view.cpp">
+    <ClCompile Include="helloaxis_toggle_view.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hellomultiverse_top_view.cpp">
+    <ClCompile Include="helloaxis_top_view.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hellomultiverse_view.cpp">
+    <ClCompile Include="helloaxis_view.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,46 +56,46 @@
     <ClInclude Include="framework.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse.h">
+    <ClInclude Include="helloaxis.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse_application.h">
+    <ClInclude Include="helloaxis_application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse_document.h">
+    <ClInclude Include="helloaxis_document.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse_edit_view.h">
+    <ClInclude Include="helloaxis_edit_view.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse_frame.h">
+    <ClInclude Include="helloaxis_frame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse_full_view.h">
+    <ClInclude Include="helloaxis_full_view.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse_lite_view.h">
+    <ClInclude Include="helloaxis_lite_view.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse_main_view.h">
+    <ClInclude Include="helloaxis_main_view.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse_pane_view.h">
+    <ClInclude Include="helloaxis_pane_view.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse_pane_view_update_hint.h">
+    <ClInclude Include="helloaxis_pane_view_update_hint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse_switcher_view.h">
+    <ClInclude Include="helloaxis_switcher_view.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse_toggle_view.h">
+    <ClInclude Include="helloaxis_toggle_view.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse_top_view.h">
+    <ClInclude Include="helloaxis_top_view.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse_view.h">
+    <ClInclude Include="helloaxis_view.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

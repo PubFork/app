@@ -19,10 +19,10 @@
     <None Include="..\..\..\nodeapp\thirdparty\binary\x64\vcomp120d.dll">
       <Filter>Library</Filter>
     </None>
-    <None Include=".\winmetro_hellomultiverse.pfx">
+    <None Include=".\winmetro_helloaxis.pfx">
       <Filter>Metrowin</Filter>
     </None>
-    <None Include="winmetro_app_core_hellomultiverse_TemporaryKey.pfx" />
+    <None Include="winmetro_app_core_helloaxis_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Library">
@@ -39,25 +39,25 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="assets\HelloMultiverse30.png">
+    <Image Include="assets\HelloAxis30.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="assets\HelloMultiverse50.png">
+    <Image Include="assets\HelloAxis50.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="assets\HelloMultiverse70.png">
+    <Image Include="assets\HelloAxis70.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="assets\HelloMultiverse150.png">
+    <Image Include="assets\HelloAxis150.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="assets\HelloMultiverse310.png">
+    <Image Include="assets\HelloAxis310.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="assets\HelloMultiverse310-150.png">
+    <Image Include="assets\HelloAxis310-150.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="assets\HelloMultiverse620-300.png">
+    <Image Include="assets\HelloAxis620-300.png">
       <Filter>Assets</Filter>
     </Image>
   </ItemGroup>
@@ -67,7 +67,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="winmetro_hellomultiverse.cpp">
+    <ClCompile Include="winmetro_helloaxis.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -15,11 +15,11 @@ namespace helloaxis
 
       //m_etype = type_normal;
 
-      m_strHelloMultiverseDefault = "Hello Axis!!";
-      m_strAlternateHelloMultiverseDefault = "Hi Axis!!";
+      m_strHelloAxisDefault = "Hello Axis!!";
+      m_strAlternateHelloAxisDefault = "Hi Axis!!";
 
-      m_strHelloMultiverse = m_strHelloMultiverseDefault;
-      m_strAlternateHelloMultiverse = m_strAlternateHelloMultiverseDefault;
+      m_strHelloAxis = m_strHelloAxisDefault;
+      m_strAlternateHelloAxis = m_strAlternateHelloAxisDefault;
 
       //m_iErrorAiFont = -1;
 
@@ -27,7 +27,7 @@ namespace helloaxis
 
       //m_faceAi = NULL; // FT_Face m_faceAi;
 
-      //m_bMultiverseChat = true;
+      //m_bAxisChat = true;
 
 
 
@@ -94,7 +94,7 @@ namespace helloaxis
 
 #endif
 
-//      m_bMultiverseChat = !handler()->m_varTopicQuery["no_hello_edit"].is_set();
+//      m_bAxisChat = !handler()->m_varTopicQuery["no_hello_edit"].is_set();
 
       output_debug_string("\nfinished helloaxis::on_request");
 

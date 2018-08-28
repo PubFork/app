@@ -63,7 +63,7 @@ namespace helloaxis
                double                           m_dMinRadius;
                double                           m_dMaxRadius;
 
-               string                           m_strHelloMultiverse;
+               string                           m_strHelloAxis;
 
                rect                             m_rectClient;
 
@@ -97,7 +97,7 @@ namespace helloaxis
       virtual ~render();
 
 
-      string get_helloaura() { synch_lock slText(m_pmutexText);  string str(m_strHelloMultiverse.c_str()); return str; }
+      string get_helloaura() { synch_lock slText(m_pmutexText);  string str(m_strHelloAxis.c_str()); return str; }
 
 
       virtual void run() override;
@@ -122,7 +122,7 @@ namespace helloaxis
       ::visual::dib_sp & dib23(string strDib) override;
 
       virtual bool in_anime() override;
-      virtual void helloaura_fast_render(const string & strHelloMultiverse) override;
+      virtual void helloaura_fast_render(const string & strHelloAxis) override;
 
 
    };
