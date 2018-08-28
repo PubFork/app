@@ -453,19 +453,19 @@ namespace helloaura
 
       ::size size;
 
-      string strHelloMultiverse;
+      string strHelloAura;
 
       {
 
          synch_lock slText(m_pmutexText);
 
-         strHelloMultiverse = get_helloaura().c_str(); // rationale : string allocation fork *for multithreading*
+         strHelloAura = get_helloaura().c_str(); // rationale : string allocation fork *for multithreading*
 
       }
 
       pgraphics->set_font(m_font);
 
-      size = pgraphics->GetTextExtent(strHelloMultiverse);
+      size = pgraphics->GetTextExtent(strHelloAura);
 
       m_cxTarget = int (size.cx * 1.2);
       m_cyTarget = int (size.cy * 1.2);
@@ -507,7 +507,7 @@ namespace helloaura
 
                   m_dib->get_graphics()->SelectObject(brushText);
 
-                  m_dib->get_graphics()->text_out((m_cxCache1 - size.cx) / 2, (m_cyCache1 - size.cy) / 2, strHelloMultiverse);
+                  m_dib->get_graphics()->text_out((m_cxCache1 - size.cx) / 2, (m_cyCache1 - size.cy) / 2, strHelloAura);
 
                   m_dib->map();
 
@@ -533,7 +533,7 @@ namespace helloaura
 
          synch_lock slText(m_pmutexText);
 
-         if (strHelloMultiverse != get_helloaura() || m_cxCache1 != m_cxTarget || m_cyCache1 != m_cyTarget || m_dibTemplate->area() <= 0)
+         if (strHelloAura != get_helloaura() || m_cxCache1 != m_cxTarget || m_cyCache1 != m_cyTarget || m_dibTemplate->area() <= 0)
             return;
 
       }
@@ -625,7 +625,7 @@ namespace helloaura
       //if(!m_bAlternate)
       {
 
-         pgraphics->text_out((m_rectClient.width() - size.cx) / 2, (m_rectClient.height() - size.cy) / 2, strHelloMultiverse);
+         pgraphics->text_out((m_rectClient.width() - size.cx) / 2, (m_rectClient.height() - size.cy) / 2, strHelloAura);
 
       }
       //      pgraphics->FillSolidRect(200,00,100,100,ARGB(128,128,128,255));
@@ -637,7 +637,7 @@ namespace helloaura
 
          synch_lock slText(m_pmutexText);
 
-         if (strHelloMultiverse == get_helloaura() && m_cxCache1 == m_cxTarget && m_cyCache1 == m_cyTarget)
+         if (strHelloAura == get_helloaura() && m_cxCache1 == m_cxTarget && m_cyCache1 == m_cyTarget)
          {
 
             m_bFirstDone = true;
@@ -735,9 +735,9 @@ namespace helloaura
 
       pgraphics->set_font(m_font);
 
-      string strHelloMultiverse = get_helloaura();
+      string strHelloAura = get_helloaura();
 
-      ::size size = pgraphics->GetTextExtent(strHelloMultiverse);
+      ::size size = pgraphics->GetTextExtent(strHelloAura);
 
       m_cxTarget = int(size.cx * 1.2);
       m_cyTarget = int(size.cy * 1.2);
@@ -776,7 +776,7 @@ namespace helloaura
 
             m_dib->get_graphics()->set_font(m_font);
 
-            m_dib->get_graphics()->text_out((m_rectClient.width() - size.cx) / 2, (m_rectClient.height() - size.cy) / 2, strHelloMultiverse);
+            m_dib->get_graphics()->text_out((m_rectClient.width() - size.cx) / 2, (m_rectClient.height() - size.cy) / 2, strHelloAura);
 
             if (m_dMinRadius > 3.0)
             {
@@ -843,7 +843,7 @@ namespace helloaura
 
       pgraphics->SelectObject(brushText);
 
-      pgraphics->text_out((m_rectClient.width() - size.cx) / 2, (m_rectClient.height() - size.cy) / 2, strHelloMultiverse);
+      pgraphics->text_out((m_rectClient.width() - size.cx) / 2, (m_rectClient.height() - size.cy) / 2, strHelloAura);
 
       byte a, R, g, b;
 
@@ -977,7 +977,7 @@ namespace helloaura
 
 #endif
 
-      if (strHelloMultiverse == get_helloaura() && m_rectClient.width() == m_rectClient.width() && m_rectClient.height() == m_rectClient.height())
+      if (strHelloAura == get_helloaura() && m_rectClient.width() == m_rectClient.width() && m_rectClient.height() == m_rectClient.height())
       {
 
          m_bFirstDone = true;
@@ -1124,11 +1124,11 @@ namespace helloaura
 
          {
 
-            string strHelloMultiverse;
+            string strHelloAura;
 
             {
 
-               strHelloMultiverse = get_helloaura();
+               strHelloAura = get_helloaura();
 
             }
 
@@ -1145,7 +1145,7 @@ namespace helloaura
 
                pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
 
-               class size size = pgraphics->GetTextExtent(strHelloMultiverse);
+               class size size = pgraphics->GetTextExtent(strHelloAura);
 
                double ratey = fHeight * 0.84 / size.cy;
 
@@ -1175,9 +1175,9 @@ namespace helloaura
 
             pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
 
-            ::size size = pgraphics->GetTextExtent(strHelloMultiverse);
+            ::size size = pgraphics->GetTextExtent(strHelloAura);
 
-            pgraphics->text_out((m_rectClient.width() - size.cx) / 2, (m_rectClient.height() - size.cy) / 2, strHelloMultiverse);
+            pgraphics->text_out((m_rectClient.width() - size.cx) / 2, (m_rectClient.height() - size.cy) / 2, strHelloAura);
 
             return;
 
@@ -1363,7 +1363,7 @@ namespace helloaura
       return false;
    }
 
-   void render::helloaura_fast_render(const string & strHelloMultiverse)
+   void render::helloaura_fast_render(const string & strHelloAura)
    {
 
       if (m_rectClient.width() <= 0 || m_rectClient.height() <= 0)
@@ -1396,7 +1396,7 @@ namespace helloaura
 
       pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
 
-      class size size = pgraphics->GetTextExtent(strHelloMultiverse);
+      class size size = pgraphics->GetTextExtent(strHelloAura);
 
       double ratey = fHeight * 0.84 / size.cy;
 
@@ -1410,13 +1410,13 @@ namespace helloaura
 
       pgraphics->set_font(m_font);
 
-      size = pgraphics->GetTextExtent(strHelloMultiverse);
+      size = pgraphics->GetTextExtent(strHelloAura);
 
       ::draw2d::path_sp path(allocer());
 
       path->m_bFill = false;
 
-      path->add_string((m_rectClient.width() - size.cx) / 2, (m_rectClient.height() - size.cy) / 2, strHelloMultiverse, m_font);
+      path->add_string((m_rectClient.width() - size.cx) / 2, (m_rectClient.height() - size.cy) / 2, strHelloAura, m_font);
 
       ::draw2d::pen_sp pen(allocer());
 

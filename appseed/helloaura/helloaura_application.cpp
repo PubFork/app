@@ -41,11 +41,11 @@ namespace helloaura
 
       m_etype = type_normal;
 
-      m_strHelloMultiverseDefault = "Hello Aura!!";
-      m_strAlternateHelloMultiverseDefault = "Hello Aura!!";
+      m_strHelloAuraDefault = "Hello Aura!!";
+      m_strAlternateHelloAuraDefault = "Hello Aura!!";
 
-      m_strHelloMultiverse = m_strHelloMultiverseDefault;
-      m_strAlternateHelloMultiverse = m_strAlternateHelloMultiverseDefault;
+      m_strHelloAura = m_strHelloAuraDefault;
+      m_strAlternateHelloAura = m_strAlternateHelloAuraDefault;
 
 //      m_iErrorAiFont = -1;
 
@@ -53,7 +53,7 @@ namespace helloaura
 
       //  m_faceAi = NULL; // FT_Face m_faceAi;
 
-//      m_bMultiverseChat = true;
+//      m_bAuraChat = true;
 
 
 
@@ -86,7 +86,7 @@ namespace helloaura
       if (str.has_char())
       {
 
-         m_strHelloMultiverse = str;
+         m_strHelloAura = str;
 
       }
 
@@ -129,7 +129,7 @@ namespace helloaura
 #endif
 
 
-//      m_bMultiverseChat = !handler()->m_varTopicQuery["no_hello_edit"].is_set();
+//      m_bAuraChat = !handler()->m_varTopicQuery["no_hello_edit"].is_set();
 
       output_debug_string("\nfinished helloaura::on_request");
 

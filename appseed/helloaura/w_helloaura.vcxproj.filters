@@ -9,46 +9,46 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="hellomultiverse_application.h">
+    <ClInclude Include="helloaura_application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse_document.h">
+    <ClInclude Include="helloaura_document.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse_frame.h">
+    <ClInclude Include="helloaura_frame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse_main_view.h">
+    <ClInclude Include="helloaura_main_view.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse_pane_view.h">
+    <ClInclude Include="helloaura_pane_view.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse_pane_view_update_hint.h">
+    <ClInclude Include="helloaura_pane_view_update_hint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse_switcher_view.h">
+    <ClInclude Include="helloaura_switcher_view.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse_view.h">
+    <ClInclude Include="helloaura_view.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse_render.h">
+    <ClInclude Include="helloaura_render.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse_gcom.h">
+    <ClInclude Include="helloaura_gcom.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse_view_base.h">
+    <ClInclude Include="helloaura_view_base.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse_main_frame.h">
+    <ClInclude Include="helloaura_main_frame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="framework.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hellomultiverse.h">
+    <ClInclude Include="helloaura.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -56,48 +56,48 @@
     <ClCompile Include="framework.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hellomultiverse.cpp">
+    <ClCompile Include="helloaura.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hellomultiverse_application.cpp">
+    <ClCompile Include="helloaura_application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hellomultiverse_document.cpp">
+    <ClCompile Include="helloaura_document.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hellomultiverse_frame.cpp">
+    <ClCompile Include="helloaura_frame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hellomultiverse_main_view.cpp">
+    <ClCompile Include="helloaura_main_view.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hellomultiverse_pane_view.cpp">
+    <ClCompile Include="helloaura_pane_view.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hellomultiverse_pane_view_update_hint.cpp">
+    <ClCompile Include="helloaura_pane_view_update_hint.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hellomultiverse_switcher_view.cpp">
+    <ClCompile Include="helloaura_switcher_view.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hellomultiverse_view.cpp">
+    <ClCompile Include="helloaura_view.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hellomultiverse_render.cpp">
+    <ClCompile Include="helloaura_render.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hellomultiverse_gcom.cpp">
+    <ClCompile Include="helloaura_gcom.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hellomultiverse_view_base.cpp">
+    <ClCompile Include="helloaura_view_base.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hellomultiverse_main_frame.cpp">
+    <ClCompile Include="helloaura_main_frame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app_core_hellomultiverse.def">
+    <None Include="app_core_helloaura.def">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>

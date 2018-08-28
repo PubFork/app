@@ -22,12 +22,12 @@ namespace helloaura
 
       double                                 m_dFps;
       e_type                                 m_etype;
-      string                                 m_strHelloMultiverse;
-      string                                 m_strHelloMultiverseDefault;
-      string                                 m_strAlternateHelloMultiverse;
-      string                                 m_strAlternateHelloMultiverseDefault;
+      string                                 m_strHelloAura;
+      string                                 m_strHelloAuraDefault;
+      string                                 m_strAlternateHelloAura;
+      string                                 m_strAlternateHelloAuraDefault;
 
-      //bool                                   m_bMultiverseChat;
+      //bool                                   m_bAuraChat;
 
       //::user::document *                     m_pdocMenu;
 

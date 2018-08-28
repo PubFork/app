@@ -2,7 +2,7 @@
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="Globals">
     <ProjectGuid>{4f5f745e-ccc2-4d90-8923-f5ba47a125c0}</ProjectGuid>
-    <RootNamespace>winmetro_app_core_hellomultiverse</RootNamespace>
+    <RootNamespace>winmetro_app_core_helloaura</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
@@ -11,7 +11,7 @@
     <WindowsTargetPlatformMinVersion>10.0.15063.0</WindowsTargetPlatformMinVersion>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
-    <ProjectName>winmetro_app_core_hellomultiverse</ProjectName>
+    <ProjectName>winmetro_app_core_helloaura</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <ItemGroup Label="ProjectConfigurations">
@@ -99,7 +99,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <PackageCertificateKeyFile>winmetro_app_core_hellomultiverse_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>winmetro_app_core_helloaura_TemporaryKey.pfx</PackageCertificateKeyFile>
     <PackageCertificateThumbprint>471092A99A891166D9C417A341F5BA01637F8904</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
@@ -287,10 +287,10 @@
     <None Include="..\..\..\nodeapp\thirdparty\binary\Win32\basis\zlib.pdb">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="winmetro_app_core_hellomultiverse_TemporaryKey.pfx" />
+    <None Include="winmetro_app_core_helloaura_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="winmetro_hellomultiverse.cpp" />
+    <ClCompile Include="winmetro_helloaura.cpp" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package10.appxmanifest">
@@ -368,7 +368,7 @@
     <ProjectReference Include="..\wndfrm_core\w_wndfrm_core.vcxproj">
       <Project>{b2d7833b-9b59-4826-bbdf-c270a2115e86}</Project>
     </ProjectReference>
-    <ProjectReference Include="w_hellomultiverse.vcxproj">
+    <ProjectReference Include="w_helloaura.vcxproj">
       <Project>{b7afcefa-3079-4b23-8f97-4543bb980265}</Project>
     </ProjectReference>
   </ItemGroup>

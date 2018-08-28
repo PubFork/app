@@ -16,11 +16,11 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{BE11EBA6-C53A-4370-8F72-C6407FD72002}</ProjectGuid>
-    <RootNamespace>winmetro_app_core_hellomultiverse</RootNamespace>
+    <RootNamespace>winmetro_app_core_helloaura</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
-    <ProjectName>winmetro_app_core_hellomultiverse</ProjectName>
+    <ProjectName>winmetro_app_core_helloaura</ProjectName>
     <ApplicationType>Windows Store</ApplicationType>
     <ApplicationTypeRevision>8.1</ApplicationTypeRevision>
   </PropertyGroup>
@@ -57,7 +57,7 @@
     <IncludePath>$(VCInstallDir)include;$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup>
-    <PackageCertificateKeyFile>winmetro_app_core_hellomultiverse_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>winmetro_app_core_helloaura_TemporaryKey.pfx</PackageCertificateKeyFile>
     <PackageCertificateThumbprint>AEFCCC9B786F5E741A8504E435DDE525A4B5615E</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundlePlatforms>x86</AppxBundlePlatforms>
@@ -145,11 +145,11 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</DeploymentContent>
     </None>
     <None Include="..\..\..\stage\x86\wndfrm_core.dll" />
-    <None Include=".\winmetro_hellomultiverse.pfx" />
-    <None Include="winmetro_app_core_hellomultiverse_TemporaryKey.pfx" />
+    <None Include=".\winmetro_helloaura.pfx" />
+    <None Include="winmetro_app_core_helloaura_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="winmetro_hellomultiverse.cpp" />
+    <ClCompile Include="winmetro_helloaura.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\app\aura\charguess\m_auracharguess.vcxproj">
@@ -169,13 +169,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="assets\HelloMultiverse150.png" />
-    <Image Include="assets\HelloMultiverse30.png" />
-    <Image Include="assets\HelloMultiverse310-150.png" />
-    <Image Include="assets\HelloMultiverse310.png" />
-    <Image Include="assets\HelloMultiverse50.png" />
-    <Image Include="assets\HelloMultiverse620-300.png" />
-    <Image Include="assets\HelloMultiverse70.png" />
+    <Image Include="assets\HelloAura150.png" />
+    <Image Include="assets\HelloAura30.png" />
+    <Image Include="assets\HelloAura310-150.png" />
+    <Image Include="assets\HelloAura310.png" />
+    <Image Include="assets\HelloAura50.png" />
+    <Image Include="assets\HelloAura620-300.png" />
+    <Image Include="assets\HelloAura70.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

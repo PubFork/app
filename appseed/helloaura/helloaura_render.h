@@ -80,7 +80,7 @@ namespace helloaura
       double                           m_dMinRadius;
       double                           m_dMaxRadius;
 
-      string                           m_strHelloMultiverse;
+      string                           m_strHelloAura;
 
       rect                             m_rectClient;
 
@@ -142,7 +142,7 @@ namespace helloaura
       virtual ::visual::dib_sp & dib23(string strDib);
 
       virtual bool in_anime();
-      virtual void helloaura_fast_render(const string & strHelloMultiverse);
+      virtual void helloaura_fast_render(const string & strHelloAura);
 
 
    };
