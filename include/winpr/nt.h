@@ -28,7 +28,7 @@
 
 /* Defined in winnt.h, do not redefine */
 
-#define STATUS_WAIT_0				((NTSTATUS)0x00000000L) 
+#define STATUS_WAIT_0				((NTSTATUS)0x00000000L)
 #define STATUS_ABANDONED_WAIT_0			((NTSTATUS)0x00000080L)
 #define STATUS_USER_APC				((NTSTATUS)0x000000C0L)
 #define STATUS_TIMEOUT				((NTSTATUS)0x00000102L)
@@ -78,9 +78,9 @@
 #define STATUS_DLL_INIT_FAILED			((NTSTATUS)0xC0000142L)
 #define STATUS_FLOAT_MULTIPLE_FAULTS		((NTSTATUS)0xC00002B4L)
 #define STATUS_FLOAT_MULTIPLE_TRAPS		((NTSTATUS)0xC00002B5L)
-#define STATUS_REG_NAT_CONSUMPTION		((NTSTATUS)0xC00002C9L)    
-#define STATUS_STACK_BUFFER_OVERRUN		((NTSTATUS)0xC0000409L)    
-#define STATUS_INVALID_CRUNTIME_PARAMETER	((NTSTATUS)0xC0000417L)    
+#define STATUS_REG_NAT_CONSUMPTION		((NTSTATUS)0xC00002C9L)
+#define STATUS_STACK_BUFFER_OVERRUN		((NTSTATUS)0xC0000409L)
+#define STATUS_INVALID_CRUNTIME_PARAMETER	((NTSTATUS)0xC0000417L)
 #define STATUS_ASSERTION_FAILURE		((NTSTATUS)0xC0000420L)
 #define STATUS_SXS_EARLY_DEACTIVATION		((NTSTATUS)0xC015000FL)
 #define STATUS_SXS_INVALID_DEACTIVATION		((NTSTATUS)0xC0150010L)
@@ -377,12 +377,16 @@
 #define STATUS_NO_IMPERSONATION_TOKEN					((NTSTATUS)0xC000005C)
 #define STATUS_CANT_DISABLE_MANDATORY					((NTSTATUS)0xC000005D)
 #define STATUS_NO_LOGON_SERVERS						((NTSTATUS)0xC000005E)
+#ifndef STATUS_NO_SUCH_LOGON_SESSION
 #define STATUS_NO_SUCH_LOGON_SESSION					((NTSTATUS)0xC000005F)
+#endif
 #define STATUS_NO_SUCH_PRIVILEGE					((NTSTATUS)0xC0000060)
 #define STATUS_PRIVILEGE_NOT_HELD					((NTSTATUS)0xC0000061)
 #define STATUS_INVALID_ACCOUNT_NAME					((NTSTATUS)0xC0000062)
 #define STATUS_USER_EXISTS						((NTSTATUS)0xC0000063)
+#ifndef STATUS_NO_SUCH_USER
 #define STATUS_NO_SUCH_USER						((NTSTATUS)0xC0000064)
+#endif
 #define STATUS_GROUP_EXISTS						((NTSTATUS)0xC0000065)
 #define STATUS_NO_SUCH_GROUP						((NTSTATUS)0xC0000066)
 #define STATUS_MEMBER_IN_GROUP						((NTSTATUS)0xC0000067)
@@ -1259,7 +1263,7 @@
 #if !defined(NTSTATUS_FROM_WIN32) && !defined(INLINE_NTSTATUS_FROM_WIN32)
 static INLINE NTSTATUS NTSTATUS_FROM_WIN32(long x)
 {
-	return x <= 0 ? (NTSTATUS)x : (NTSTATUS) (((x) & 0x0000FFFF) | (0x7 << 16) | 0xC0000000);
+   return x <= 0 ? (NTSTATUS)x : (NTSTATUS) (((x) & 0x0000FFFF) | (0x7 << 16) | 0xC0000000);
 }
 #endif
 
@@ -1269,7 +1273,7 @@ static INLINE NTSTATUS NTSTATUS_FROM_WIN32(long x)
  * winternl.h contains an incomplete definition of enum FILE_INFORMATION_CLASS
  * avoid conflict by prefixing the winternl.h definition by _WINTERNL_ and then
  * make a complete definition of enum FILE_INFORMATION_CLASS ourselves.
- * 
+ *
  * For more information, refer to [MS-FSCC]: File System Control Codes:
  * http://msdn.microsoft.com/en-us/library/cc231987.aspx
  */
@@ -1288,46 +1292,46 @@ static INLINE NTSTATUS NTSTATUS_FROM_WIN32(long x)
 
 typedef enum _FILE_INFORMATION_CLASS
 {
-	FileDirectoryInformation = 1,
-	FileFullDirectoryInformation,
-	FileBothDirectoryInformation,
-	FileBasicInformation,
-	FileStandardInformation,
-	FileInternalInformation,
-	FileEaInformation,
-	FileAccessInformation,
-	FileNameInformation,
-	FileRenameInformation,
-	FileLinkInformation,
-	FileNamesInformation,
-	FileDispositionInformation,
-	FilePositionInformation,
-	FileFullEaInformation,
-	FileModeInformation,
-	FileAlignmentInformation,
-	FileAllInformation,
-	FileAllocationInformation,
-	FileEndOfFileInformation,
-	FileAlternateNameInformation,
-	FileStreamInformation,
-	FilePipeInformation,
-	FilePipeLocalInformation,
-	FilePipeRemoteInformation,
-	FileMailslotQueryInformation,
-	FileMailslotSetInformation,
-	FileCompressionInformation,
-	FileObjectIdInformation,
-	FileUnknownInformation1,
-	FileMoveClusterInformation,
-	FileQuotaInformation,
-	FileReparsePointInformation,
-	FileNetworkOpenInformation,
-	FileAttributeTagInformation,
-	FileTrackingInformation,
-	FileIdBothDirectoryInformation,
-	FileIdFullDirectoryInformation,
-	FileValidDataLengthInformation,
-	FileShortNameInformation
+   FileDirectoryInformation = 1,
+   FileFullDirectoryInformation,
+   FileBothDirectoryInformation,
+   FileBasicInformation,
+   FileStandardInformation,
+   FileInternalInformation,
+   FileEaInformation,
+   FileAccessInformation,
+   FileNameInformation,
+   FileRenameInformation,
+   FileLinkInformation,
+   FileNamesInformation,
+   FileDispositionInformation,
+   FilePositionInformation,
+   FileFullEaInformation,
+   FileModeInformation,
+   FileAlignmentInformation,
+   FileAllInformation,
+   FileAllocationInformation,
+   FileEndOfFileInformation,
+   FileAlternateNameInformation,
+   FileStreamInformation,
+   FilePipeInformation,
+   FilePipeLocalInformation,
+   FilePipeRemoteInformation,
+   FileMailslotQueryInformation,
+   FileMailslotSetInformation,
+   FileCompressionInformation,
+   FileObjectIdInformation,
+   FileUnknownInformation1,
+   FileMoveClusterInformation,
+   FileQuotaInformation,
+   FileReparsePointInformation,
+   FileNetworkOpenInformation,
+   FileAttributeTagInformation,
+   FileTrackingInformation,
+   FileIdBothDirectoryInformation,
+   FileIdFullDirectoryInformation,
+   FileValidDataLengthInformation,
+   FileShortNameInformation
 } FILE_INFORMATION_CLASS;
 
 #if !defined(_WIN32) || defined(_UWP)
@@ -1383,9 +1387,9 @@ typedef CONST char *PCSZ;
 
 typedef struct _STRING
 {
-	USHORT Length;
-	USHORT MaximumLength;
-	PCHAR Buffer;
+   USHORT Length;
+   USHORT MaximumLength;
+   PCHAR Buffer;
 } STRING;
 typedef STRING *PSTRING;
 
@@ -1399,9 +1403,9 @@ typedef CONST STRING* PCOEM_STRING;
 
 typedef struct _LSA_UNICODE_STRING
 {
-	USHORT Length;
-	USHORT MaximumLength;
-	PWSTR Buffer;
+   USHORT Length;
+   USHORT MaximumLength;
+   PWSTR Buffer;
 } LSA_UNICODE_STRING, *PLSA_UNICODE_STRING, UNICODE_STRING, *PUNICODE_STRING;
 
 #define OBJ_INHERIT				0x00000002L
@@ -1416,27 +1420,27 @@ typedef struct _LSA_UNICODE_STRING
 
 typedef struct _OBJECT_ATTRIBUTES
 {
-	ULONG Length;
-	HANDLE RootDirectory;
-	PUNICODE_STRING ObjectName;
-	ULONG Attributes;
-	PVOID SecurityDescriptor;
-	PVOID SecurityQualityOfService;
+   ULONG Length;
+   HANDLE RootDirectory;
+   PUNICODE_STRING ObjectName;
+   ULONG Attributes;
+   PVOID SecurityDescriptor;
+   PVOID SecurityQualityOfService;
 } OBJECT_ATTRIBUTES;
 typedef OBJECT_ATTRIBUTES *POBJECT_ATTRIBUTES;
 
 typedef struct _IO_STATUS_BLOCK
 {
-	union
-	{
+   union
+   {
 #ifdef _WIN32
-		NTSTATUS Status;
+      NTSTATUS Status;
 #else
-		NTSTATUS status;
+      NTSTATUS status;
 #endif
-		PVOID Pointer;
-	};
-	ULONG_PTR Information;
+      PVOID Pointer;
+   };
+   ULONG_PTR Information;
 } IO_STATUS_BLOCK, *PIO_STATUS_BLOCK;
 
 typedef VOID (*PIO_APC_ROUTINE)(PVOID ApcContext, PIO_STATUS_BLOCK IoStatusBlock, ULONG Reserved);
@@ -1457,16 +1461,16 @@ typedef struct _TEB* PTEB;
 
 struct _THREAD_BLOCK_ID
 {
-	DWORD ThreadId;
-	TEB* ThreadEnvironmentBlock;
+   DWORD ThreadId;
+   TEB* ThreadEnvironmentBlock;
 };
 typedef struct _THREAD_BLOCK_ID THREAD_BLOCK_ID;
 
 struct _PEB
 {
-	DWORD ThreadCount;
-	DWORD ThreadArraySize;
-	THREAD_BLOCK_ID* Threads;
+   DWORD ThreadCount;
+   DWORD ThreadArraySize;
+   THREAD_BLOCK_ID* Threads;
 };
 
 /*
@@ -1475,10 +1479,10 @@ struct _PEB
 
 struct _TEB
 {
-	PEB* ProcessEnvironmentBlock;
+   PEB* ProcessEnvironmentBlock;
 
-	DWORD LastErrorValue;
-	PVOID TlsSlots[64];
+   DWORD LastErrorValue;
+   PVOID TlsSlots[64];
 };
 
 #define GENERIC_READ				0x80000000
@@ -1548,35 +1552,35 @@ WINPR_API VOID _RtlInitAnsiString(PANSI_STRING DestinationString, PCSZ SourceStr
 WINPR_API VOID _RtlInitUnicodeString(PUNICODE_STRING DestinationString, PCWSTR SourceString);
 
 WINPR_API NTSTATUS _RtlAnsiStringToUnicodeString(PUNICODE_STRING DestinationString,
-		PCANSI_STRING SourceString, BOOLEAN AllocateDestinationString);
+      PCANSI_STRING SourceString, BOOLEAN AllocateDestinationString);
 
 WINPR_API VOID _RtlFreeUnicodeString(PUNICODE_STRING UnicodeString);
 
 WINPR_API ULONG _RtlNtStatusToDosError(NTSTATUS status);
 
 WINPR_API VOID _InitializeObjectAttributes(POBJECT_ATTRIBUTES InitializedAttributes,
-		PUNICODE_STRING ObjectName, ULONG Attributes, HANDLE RootDirectory,
-		PSECURITY_DESCRIPTOR SecurityDescriptor);
+      PUNICODE_STRING ObjectName, ULONG Attributes, HANDLE RootDirectory,
+      PSECURITY_DESCRIPTOR SecurityDescriptor);
 
 WINPR_API NTSTATUS _NtCreateFile(PHANDLE FileHandle, ACCESS_MASK DesiredAccess,
-		POBJECT_ATTRIBUTES ObjectAttributes, PIO_STATUS_BLOCK IoStatusBlock,
-		PLARGE_INTEGER AllocationSize, ULONG FileAttributes, ULONG ShareAccess,
-		ULONG CreateDisposition, ULONG CreateOptions, PVOID EaBuffer, ULONG EaLength);
+                                 POBJECT_ATTRIBUTES ObjectAttributes, PIO_STATUS_BLOCK IoStatusBlock,
+                                 PLARGE_INTEGER AllocationSize, ULONG FileAttributes, ULONG ShareAccess,
+                                 ULONG CreateDisposition, ULONG CreateOptions, PVOID EaBuffer, ULONG EaLength);
 
 WINPR_API NTSTATUS _NtOpenFile(PHANDLE FileHandle, ACCESS_MASK DesiredAccess,
-		POBJECT_ATTRIBUTES ObjectAttributes, PIO_STATUS_BLOCK IoStatusBlock,
-		ULONG ShareAccess, ULONG OpenOptions);
+                               POBJECT_ATTRIBUTES ObjectAttributes, PIO_STATUS_BLOCK IoStatusBlock,
+                               ULONG ShareAccess, ULONG OpenOptions);
 
 WINPR_API NTSTATUS _NtReadFile(HANDLE FileHandle, HANDLE Event, PIO_APC_ROUTINE ApcRoutine, PVOID ApcContext,
-		PIO_STATUS_BLOCK IoStatusBlock, PVOID Buffer, ULONG Length, PLARGE_INTEGER ByteOffset, PULONG Key);
+                               PIO_STATUS_BLOCK IoStatusBlock, PVOID Buffer, ULONG Length, PLARGE_INTEGER ByteOffset, PULONG Key);
 
 WINPR_API NTSTATUS _NtWriteFile(HANDLE FileHandle, HANDLE Event, PIO_APC_ROUTINE ApcRoutine, PVOID ApcContext,
-		PIO_STATUS_BLOCK IoStatusBlock, PVOID Buffer, ULONG Length, PLARGE_INTEGER ByteOffset, PULONG Key);
+                                PIO_STATUS_BLOCK IoStatusBlock, PVOID Buffer, ULONG Length, PLARGE_INTEGER ByteOffset, PULONG Key);
 
 WINPR_API NTSTATUS _NtDeviceIoControlFile(HANDLE FileHandle, HANDLE Event,
-		PIO_APC_ROUTINE ApcRoutine, PVOID ApcContext, PIO_STATUS_BLOCK IoStatusBlock,
-		ULONG IoControlCode, PVOID InputBuffer, ULONG InputBufferLength,
-		PVOID OutputBuffer, ULONG OutputBufferLength);
+      PIO_APC_ROUTINE ApcRoutine, PVOID ApcContext, PIO_STATUS_BLOCK IoStatusBlock,
+      ULONG IoControlCode, PVOID InputBuffer, ULONG InputBufferLength,
+      PVOID OutputBuffer, ULONG OutputBufferLength);
 
 WINPR_API NTSTATUS _NtClose(HANDLE Handle);
 

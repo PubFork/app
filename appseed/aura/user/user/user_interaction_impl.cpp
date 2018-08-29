@@ -652,109 +652,64 @@ namespace user
 
    void interaction_impl::GetWindowText(string & rString)
    {
+
       UNREFERENCED_PARAMETER(rString);
+
       ::exception::throw_interface_only(get_app());
+
    }
+
 
    int32_t interaction_impl::GetChildByIdText(int32_t nID,string & rString) const
    {
+
       UNREFERENCED_PARAMETER(nID);
+
       UNREFERENCED_PARAMETER(rString);
+
       ::exception::throw_interface_only(get_app());
 
       return 0;
+
    }
+
 
 #ifdef WINDOWSEX
 
+
    bool interaction_impl::GetWindowPlacement(WINDOWPLACEMENT* lpwndpl)
    {
+
       UNREFERENCED_PARAMETER(lpwndpl);
+
       ::exception::throw_interface_only(get_app());
 
       return false;
+
    }
+
 
    bool interaction_impl::SetWindowPlacement(const WINDOWPLACEMENT* lpwndpl)
    {
+
       UNREFERENCED_PARAMETER(lpwndpl);
+
       ::exception::throw_interface_only(get_app());
 
       return false;
+
    }
+
 
 #endif
 
-   /////////////////////////////////////////////////////////////////////////////
-   // interaction_impl will delegate owner draw messages to self drawing controls
-//#ifdef WINDOWSEX
-//   // Drawing: for all 4 control types
-//   void interaction_impl::OnDrawItem(int32_t /*nIDCtl*/,LPDRAWITEMSTRUCT lpDrawItemStruct)
-//   {
-//      UNREFERENCED_PARAMETER(lpDrawItemStruct);
-//      ::exception::throw_interface_only(get_app());
-//   }
-//
-//   // Drawing: for all 4 control types
-//   int32_t interaction_impl::OnCompareItem(int32_t /*nIDCtl*/,LPCOMPAREITEMSTRUCT lpCompareItemStruct)
-//   {
-//      UNREFERENCED_PARAMETER(lpCompareItemStruct);
-//      ::exception::throw_interface_only(get_app());
-//   }
-//
-//   void interaction_impl::OnDeleteItem(int32_t /*nIDCtl*/,LPDELETEITEMSTRUCT lpDeleteItemStruct)
-//   {
-//      UNREFERENCED_PARAMETER(lpDeleteItemStruct);
-//      ::exception::throw_interface_only(get_app());
-//   }
-//
-//   // Measure item implementation relies on unique control/menu IDs
-//   void interaction_impl::OnMeasureItem(int32_t /*nIDCtl*/,LPMEASUREITEMSTRUCT lpMeasureItemStruct)
-//   {
-//      UNREFERENCED_PARAMETER(lpMeasureItemStruct);
-//      ::exception::throw_interface_only(get_app());
-//   }
-//#endif
 
-
-//   LRESULT interaction_impl::OnNTCtlColor(WPARAM wParam,LPARAM lParam)
-//   {
-//      UNREFERENCED_PARAMETER(wParam);
-//      UNREFERENCED_PARAMETER(lParam);
-//      ::exception::throw_interface_only(get_app());
-//   }
-//
-//#ifdef WINDOWSEX
-//   /////////////////////////////////////////////////////////////////////////////
-//   // interaction_impl extensions for help support
-//   void interaction_impl::WinHelp(uint_ptr dwData,UINT nCmd)
-//   {
-//      UNREFERENCED_PARAMETER(dwData);
-//      UNREFERENCED_PARAMETER(nCmd);
-//      ::exception::throw_interface_only(get_app());
-//   }
-//
-//   void interaction_impl::HtmlHelp(uint_ptr dwData,UINT nCmd)
-//   {
-//      UNREFERENCED_PARAMETER(dwData);
-//      UNREFERENCED_PARAMETER(nCmd);
-//      ::exception::throw_interface_only(get_app());
-//   }
-//#endif
-//
    void interaction_impl::PrepareForHelp()
    {
+
       ::exception::throw_interface_only(get_app());
+
    }
-//
-//#ifdef WINDOWSEX
-//   void interaction_impl::WinHelpInternal(uint_ptr dwData,UINT nCmd)
-//   {
-//      UNREFERENCED_PARAMETER(dwData);
-//      UNREFERENCED_PARAMETER(nCmd);
-//      ::exception::throw_interface_only(get_app());
-//   }
-//#endif
 
 
    void interaction_impl::route_command_message(::user::command * pcommand)
@@ -763,8 +718,6 @@ namespace user
       UNREFERENCED_PARAMETER(pcommand);
 
       ::exception::throw_interface_only(get_app());
-
-//      return false;
 
    }
 
@@ -1090,9 +1043,9 @@ namespace user
 
    bool interaction_impl::update_data(bool bSaveAndValidate)
    {
-      
+
       UNREFERENCED_PARAMETER(bSaveAndValidate);
-      
+
       ::exception::throw_interface_only(get_app());
 
       return false;
@@ -1104,13 +1057,13 @@ namespace user
 
    void interaction_impl::CenterWindow(::user::interaction * pAlternateOwner)
    {
-      
+
       UNREFERENCED_PARAMETER(pAlternateOwner);
-   
+
       ::exception::throw_interface_only(get_app());
 
    }
-   
+
 
    bool interaction_impl::CheckAutoCenter()
    {
@@ -1780,7 +1733,17 @@ namespace user
    void interaction_impl::set_need_redraw()
    {
 
-      if (!m_bPendingRedraw && !m_pui->m_bProDevian)
+      u64 now = get_nanos();
+
+      u64 delta1 = now - m_uiLastUpdateBeg;
+
+      i64 delta2 = (i64) m_uiLastUpdateBeg - (i64) m_uiLastUpdateEnd;
+
+      u64 frameNanos = 1000000000LL / m_dFps;
+
+      if ((!m_bPendingRedraw ||
+            (delta1 > frameNanos && (delta2 < 0 || delta2 > 10000000000LL)))
+            && !m_pui->m_bProDevian)
       {
 
          m_bPendingRedraw = m_pui->post_message(WM_REDRAW);
@@ -1793,21 +1756,19 @@ namespace user
    void interaction_impl::_001OnRedraw(::message::message * pmessage)
    {
 
+      m_bPendingRedraw = false;
+
       try
       {
 
-         ///if (!pui->m_bProDevian && pui->m_bDrawable && get_tick_count() - pui->m_pimpl->m_uiLastRedraw > 10)
          if (!m_pui->m_bProDevian && m_pui->m_bDrawable)
          {
 
-            m_bPendingRedraw = false;
-
-            //if (m_pui->has_pending_graphical_update())
-            //{
+            m_uiLastUpdateBeg = get_nanos();
 
             m_pui->_001UpdateWindow();
 
-            //}
+            m_uiLastUpdateEnd = get_nanos();
 
             m_pui->m_pimpl->m_uiLastRedraw = get_tick_count();
 
@@ -2470,6 +2431,8 @@ namespace user
    void interaction_impl::_001UpdateBuffer()
    {
 
+      ::get_thread()->m_bFastPath = true;
+
       m_pui->m_bRedraw = false;
 
       windowing_output_debug_string("\n_001UpdateBuffer : before draw2d::lock");
@@ -2948,12 +2911,12 @@ namespace user
    {
 
       ::user::elemental * pelementalFocusPrev = m_pelementalFocus;
-      
+
       if(pelementalFocusPrev == pelementalFocusNew)
       {
-         
+
          return true;
-         
+
       }
 
       m_pelementalFocus = pelementalFocusNew;
@@ -3029,7 +2992,7 @@ namespace user
 
       if(m_pui->is_ascendant_of(pui, true))
       {
-         
+
          impl_set_focus_elemental(pelemental);
 
          return true;

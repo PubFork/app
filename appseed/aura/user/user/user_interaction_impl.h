@@ -91,6 +91,9 @@ namespace user
 
       sp(::thread)                  m_pthreadUpdateWindow;
 
+      u64                           m_uiLastUpdateBeg;
+      u64                           m_uiLastUpdateEnd;
+
 
 
       interaction_impl();

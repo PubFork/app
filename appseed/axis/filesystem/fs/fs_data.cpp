@@ -13,12 +13,16 @@ namespace fs
 
    }
 
-   
+
    bool data::has_subdir(const ::file::path & pszPath)
    {
+
       UNREFERENCED_PARAMETER(pszPath);
+
       return false;
+
    }
+
 
    bool data::fast_has_subdir(const ::file::path & pszPath)
    {
@@ -50,7 +54,7 @@ namespace fs
 
    bool data::tree_show_subdir(const ::file::path & pszPath)
    {
-      
+
       return true;
 
    }
@@ -124,9 +128,9 @@ namespace fs
 
    ::file::listing & data::root_ones(::file::listing & listing)
    {
-      
+
       return listing = failure;
-      
+
    }
 
    //void data::get_ascendants_path(const ::file::path & lpcsz,::file::patha & straParam)
@@ -171,14 +175,14 @@ namespace fs
 
    ::file::file_sp data::get_file(const ::file::path & varFile,UINT nOpenFlags,cres * pfesp)
    {
-      
+
       if(pfesp != NULL)
       {
-         
+
          (*pfesp)->add(fesp(failure));
 
       }
-      
+
       UNREFERENCED_PARAMETER(varFile);
 
       UNREFERENCED_PARAMETER(nOpenFlags);
@@ -187,14 +191,14 @@ namespace fs
 
    }
 
-   
+
    bool data::file_exists(const ::file::path & path)
    {
-      
+
       ::file::listing listing(this);
-      
+
       listing.ls(path.folder());
-      
+
       return listing.contains_ci(path.name());
 
    }
@@ -202,11 +206,11 @@ namespace fs
 
    var data::file_length(const ::file::path & path)
    {
-      
+
       ::file::listing listing(this);
 
       listing.ls(path.folder());
-      
+
       index iFind = listing.find_first_ci(path.name());
 
       if (iFind < 0)

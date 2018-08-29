@@ -1971,6 +1971,8 @@ restart:
             || (m_pimpl->m_bShowWindow && m_pimpl->m_iShowWindow == SW_HIDE))
       {
 
+         set_need_redraw();
+
          return false;
 
       }
@@ -1978,6 +1980,8 @@ restart:
       if ((m_pimpl->m_bShowFlags && m_pimpl->m_iShowFlags & SWP_SHOWWINDOW)
             || (m_pimpl->m_bShowWindow && m_pimpl->m_iShowWindow != SW_HIDE))
       {
+
+         set_need_redraw();
 
          return true;
 
@@ -4936,7 +4940,7 @@ restart:
 
    id interaction::RunModalLoop(uint32_t dwFlags)
    {
-      
+
       set_need_redraw();
 
       return _001RunModalLoop(dwFlags);
@@ -5085,9 +5089,9 @@ restart:
 
       if (m_pimpl.is_null())
       {
-         
+
          return false;
-         
+
       }
 
       return m_pimpl->post_message(uiMessage, wparam, lparam);

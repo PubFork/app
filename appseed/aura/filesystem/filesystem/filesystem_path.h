@@ -111,7 +111,7 @@ namespace file
 
       path & operator = (const string & str);
 
-      bool is_equal(const path & path) const
+      bool is_equal_full(const path & path) const
       {
 
 #ifdef WINDOWS
@@ -130,11 +130,30 @@ namespace file
 
       }
 
+      bool is_equal_fast(const path & path) const
+      {
+
+#ifdef WINDOWS
+
+         if (_stricmp(c_str(), path.c_str()) == 0) // undoubtely eaqual...
+            return true;
+
+#else
+
+         if (strcmp(c_str(), path.c_str()) == 0) // undoubtely eaqual...
+            return true;
+
+#endif
+
+         return false;
+
+      }
+
 
       bool operator == (const path & path) const
       {
 
-         return is_equal(path);
+         return is_equal_fast(path);
 
       }
 
@@ -157,7 +176,7 @@ namespace file
       bool operator != (const path & path) const
       {
 
-         return !is_equal(path);
+         return !operator==(path);
 
       }
 
@@ -359,7 +378,7 @@ namespace file
       return '\\';
 
    }
-   
+
    CLASS_DECL_AURA bool begins_eat_ci(string & str, const char * lpcszPrefix);
 
 } // namespace file

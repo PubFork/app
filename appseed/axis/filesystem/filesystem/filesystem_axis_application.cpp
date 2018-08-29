@@ -109,6 +109,13 @@ namespace file
          if (::str::begins_ci(pszPath, "uifs://"))
          {
 
+            if (::get_thread()->m_bFastPath)
+            {
+
+               return var::type_null;
+
+            }
+
             return AppUser(m_papp).m_pifs->file_length(pszPath);
 
          }

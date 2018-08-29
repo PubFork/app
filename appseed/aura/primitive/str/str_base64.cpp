@@ -202,7 +202,7 @@ namespace str
       byte a[4],b[4],o[3];
       uchar uch;
 
-      while(TRUE)
+      while(true)
       {
          for(i= 0; i<4; i++)
          {
@@ -239,10 +239,20 @@ namespace str
          o[2]= (b[2]<<6)|b[3];
          i= a[2]=='='?1:(a[3]=='='?2:3);
          ostream.write(o, i);
-         if(i<3)
+
+         if (i < 3)
+         {
+
             break;
+
+         }
+
       }
+
+      return true;
+
    }
+
 
    string base64::encode(const char * psz, e_mode emode)
    {

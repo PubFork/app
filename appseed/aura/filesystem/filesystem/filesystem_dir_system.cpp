@@ -337,7 +337,7 @@ namespace file
 
       ::file::listing & system::ls(::aura::application * papp, listing & l)
       {
-         
+
          l.m_path = System.defer_process_path(l.m_path, papp);
 
          if (l.m_path.begins_ci("matter://"))
@@ -539,7 +539,7 @@ namespace file
 
             bool bHasSubFolder;
 
-            uint32_t dwLastError;
+//            uint32_t dwLastError;
 
             //if (m_isdirmap.lookup(lpcszPath, bHasSubFolder, dwLastError))
             //{
@@ -586,9 +586,9 @@ namespace file
 //#endif
 //#endif
 
-         bool bHasSubFolder;
+//         bool bHasSubFolder;
 
-         u32 dwLastError;
+//         u32 dwLastError;
 
          //if (!m_isdirmap.lookup(lpcszPath, bHasSubFolder, dwLastError))
          //{
@@ -690,7 +690,7 @@ namespace file
          if (::get_thread() != NULL && ::get_thread()->m_bZipIsDir && (::str::find_file_extension("zip:", strPath) >= 0))
          {
             bool bHasSubFolder;
-            uint32_t dwLastError;
+//            uint32_t dwLastError;
             //if (m_isdirmap.lookup(strPath, bHasSubFolder, dwLastError))
             //   return bHasSubFolder;
             bHasSubFolder = m_pziputil->has_sub_folder(papp, strPath);
@@ -1105,23 +1105,23 @@ namespace file
          _throw(interface_only_exception(get_app(), "this is an interface"));
       }
 
-      
+
       ::file::path system::stageapp()
       {
-         
+
          _throw(interface_only_exception(get_app(), "this is an interface"));
-         
+
       }
 
-      
+
       ::file::path system::netseed()
       {
-         
+
          _throw(interface_only_exception(get_app(), "this is an interface"));
-         
+
       }
 
-      
+
       ::file::path system::install()
       {
 
@@ -1130,7 +1130,7 @@ namespace file
          return m_pathInstall;
 
       }
-      
+
 
       ::file::path system::config()
       {
@@ -1677,7 +1677,7 @@ ret:
          }
 
          ::file::path p = System.local_get_matter_cache_path(
-                                                             ::file::path(strRepo) / "appmatter" / strApp / "_std" / "_std" / pathRel);
+                          ::file::path(strRepo) / "appmatter" / strApp / "_std" / "_std" / pathRel);
 
          return p;
 
@@ -1897,7 +1897,7 @@ ret:
 
       bool system::initialize()
       {
-         
+
          if(!update_module_path())
          {
 

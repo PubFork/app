@@ -10,10 +10,10 @@ namespace filemanager
       ::data::data(papp)
    {
 
+      m_bFileSize                = true;
       m_iIconSize                = 16;
       m_bListText                = true;
       m_bListSelection           = true;
-      m_bFileSize                = false;
       m_bPassBk                  = false;
       m_bIconView                = false;
       m_pholderFileList          = NULL;

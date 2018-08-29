@@ -112,8 +112,15 @@ namespace file
    }
 
 
-   var system::length(const ::file::path & strPath,var * pvarQuery,::aura::application * papp)
+   var system::length(const ::file::path & path,var * pvarQuery,::aura::application * papp)
    {
+
+      if (path.m_iSize != -1)
+      {
+
+         return MAX(0, path.m_iSize);
+
+      }
 
       var varRet;
 
@@ -121,16 +128,20 @@ namespace file
 
       WIN32_FILE_ATTRIBUTE_DATA data;
 
-      if(!GetFileAttributesExW(::str::international::utf8_to_unicode(strPath), GetFileExInfoStandard, &data))
+      if(!GetFileAttributesExW(::str::international::utf8_to_unicode(path), GetFileExInfoStandard, &data))
       {
 
          varRet.set_type(var::type_null);
+
+         ((::file::path &) path).m_iSize = -2;
 
       }
       else
       {
 
-         varRet = (uint32_t) data.nFileSizeLow;
+         varRet = (uint64_t)(data.nFileSizeHigh << 32) | (uint64_t) data.nFileSizeLow;
+
+         ((::file::path &)path).m_iSize = varRet.m_i64;
 
       }
 
@@ -143,11 +154,15 @@ namespace file
 
          varRet.set_type(var::type_null);
 
+         ((::file::path &) path).m_iSize = -2;
+
       }
       else
       {
 
          varRet = (int_ptr)stat.st_size;
+
+         ((::file::path &)path).m_iSize = varRet.m_i64;
 
       }
 

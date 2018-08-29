@@ -3,78 +3,78 @@
 
 string _001FileSizeText(i64 i)
 {
-   
+
    string str;
-   
+
    double d = i;
-   
+
    if(d < 1024.0)
    {
-      
+
       return ::str::from(i)  + "B";
-      
+
    }
    d /= 1024.0;
-   
+
    if(d < 2)
    {
-      
+
       str.Format("%0.1fKB", d);
-      
+
       return str;
-      
+
    }
    if(d < 1024.0)
    {
-      
+
       str.Format("%0.0fKB", d);
-      
+
       return str;
-      
+
    }
    d /= 1024.0;
-   
+
    if(d < 2)
    {
-      
+
       str.Format("%0.1fMB", d);
-      
+
       return str;
-      
+
    }
    if(d < 1024.0)
    {
-      
+
       str.Format("%0.0fMB", d);
-      
+
       return str;
-      
+
    }
    d /= 1024.0;
-   
+
    if(d < 2)
    {
-      
+
       str.Format("%0.1fGB", d);
-      
+
       return str;
-      
+
    }
    if(d < 1024.0)
    {
-      
+
       str.Format("%0.0fGB", d);
-      
+
       return str;
-      
+
    }
 
    d /= 1024.0;
-   
+
    str.Format("%0.0fTB", d);
-   
+
    return str;
-   
+
 }
 
 
@@ -88,7 +88,17 @@ namespace userfs
       ::user::list_data(papp),
       m_itema(papp)
    {
-      
+
+      m_iNameSubItem = -1;
+
+      m_iNameSubItemText = -1;
+
+      m_iSizeSubItem = -1;
+
+      m_iSelectionSubItem = -1;
+
+      m_bPendingSize = false;
+
       defer_create_mutex();
 
    }
@@ -102,15 +112,15 @@ namespace userfs
 
    void list_data::_001GetItemText(::user::mesh_item * pitem)
    {
-      
+
       synch_lock sl(m_pmutex);
-      
+
 //      if(is_locked())
 //         return;
 
       if(pitem->m_iSubItem == m_iNameSubItemText)
       {
-         
+
          if (pitem->m_iItem < 0 || pitem->m_iItem >= m_itema.get_size())
          {
 
@@ -160,18 +170,18 @@ namespace userfs
                   schedule_file_size(m_itema.get_item(iItem).m_strPath);
                   m_bPendingSize = true;
                }*/
-         
+
          try
          {
-            
+
             pitem->m_strText = _001FileSizeText(Application.file().length(m_itema.get_item(pitem->m_iItem).m_filepath));
-            
+
          }
          catch (...)
          {
-            
+
             pitem->m_bOk = false;
-            
+
          }
 
          pitem->m_bOk = true;
@@ -197,7 +207,7 @@ namespace userfs
 
    void list_data::_001GetItemImage(::user::mesh_item * pitem)
    {
-      
+
       synch_lock sl(m_pmutex);
 //      if(is_locked())
       //return;
@@ -217,14 +227,14 @@ namespace userfs
 
          try
          {
-            
-            
+
+
             //pitem->m_iImage = m_itema.get_item(pitem->m_iItem).m_iImage;
             pitem->m_iImage = Session.userex()->shell()->get_image(
-               pitem->m_pmesh->get_handle(),
-               m_itema.get_item(pitem->m_iItem).m_filepath,
-               m_itema.get_item(pitem->m_iItem).m_filepath.m_iDir == 1 ? ::user::shell::file_attribute_directory : ::user::shell::file_attribute_normal,
-               ::user::shell::icon_normal);
+                              pitem->m_pmesh->get_handle(),
+                              m_itema.get_item(pitem->m_iItem).m_filepath,
+                              m_itema.get_item(pitem->m_iItem).m_filepath.m_iDir == 1 ? ::user::shell::file_attribute_directory : ::user::shell::file_attribute_normal,
+                              ::user::shell::icon_normal);
 
          }
          catch (...)
@@ -233,7 +243,7 @@ namespace userfs
             pitem->m_bOk = false;
 
          }
-         
+
          return;
 
       }

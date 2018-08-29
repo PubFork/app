@@ -34,8 +34,11 @@ namespace filemanager
    {
 
       impact::install_message_routing(pinterface);
+
       ::user::form_list::install_message_routing(pinterface);
+
       ::userfs::list::install_message_routing(pinterface);
+
       IGUI_MSG_LINK(MessageMainPost, pinterface, this, &file_list::_001OnMainPostMessage);
       IGUI_MSG_LINK(WM_HSCROLL, pinterface, this, &file_list::_001OnHScroll);
       IGUI_MSG_LINK(WM_VSCROLL, pinterface, this, &file_list::_001OnVScroll);
@@ -56,21 +59,23 @@ namespace filemanager
       connect_command_probe("file_rename", &file_list::_001OnUpdateFileRename);
       connect_command("file_rename", &file_list::_001OnFileRename);
 
-
    }
-
 
 
    void file_list::assert_valid() const
    {
+
       ::user::impact::assert_valid();
+
    }
+
 
    void file_list::dump(dump_context & dumpcontext) const
    {
-      ::user::impact::dump(dumpcontext);
-   }
 
+      ::user::impact::dump(dumpcontext);
+
+   }
 
 
    void file_list::on_update(::user::impact * pSender, LPARAM lHint, object* phint)
@@ -110,15 +115,21 @@ namespace filemanager
       }
       else if (lHint == 123458)
       {
+
          _001SetView(view_list);
+
       }
       else if (lHint == 1234511)
       {
+
          _001SetView(view_report);
+
       }
       else if (lHint == 1234525)
       {
+
          _001SetView(view_icon);
+
       }
 
       if (phint != NULL)
@@ -156,60 +167,96 @@ namespace filemanager
             else if (!m_bStatic && puh->is_type_of(update_hint::TypeSynchronizePath))
             {
 
-               if (puh->m_filepath != get_filemanager_item()->m_filepath)
+               if(puh->m_filepath != get_filemanager_item()->m_filepath)
+               {
+
                   return;
+
+               }
 
                if (get_filemanager_data()->m_pholderFileList != NULL)
                {
+
                   if (get_filemanager_data()->m_pholderFileList->m_uiptraChild.get_size() > 0)
                   {
+
                      get_filemanager_data()->m_pholderFileList->m_uiptraChild[0]->ShowWindow(SW_HIDE);
+
                   }
+
                   get_filemanager_data()->m_pholderFileList->hold(this);
+
                   get_filemanager_data()->m_pholderFileList->on_layout();
+
                }
 
                data_get_DisplayToStrict();
+
                _001OnUpdateItemCount();
+
             }
             else if (puh->is_type_of(update_hint::TypeFilter))
             {
+
                if (puh->m_wstrFilter.is_empty())
                {
+
                   FilterClose();
+
                }
                else
                {
+
                   FilterBegin();
+
                   Filter1(puh->m_wstrFilter);
-                  //                  FilterApply();
+
                }
+
             }
             else if (puh->is_type_of(update_hint::TypeGetActiveViewSelection))
             {
+
                if (GetParentFrame()->GetActiveView() == (this))
                {
+
                   GetSelected(puh->m_itemaSelected);
+
                }
+
             }
+
          }
          else if (base_class < form_update_hint > ::bases(phint))
          {
+
             form_update_hint * puh = dynamic_cast<form_update_hint *> (phint);
+
             if (puh->m_etype == form_update_hint::type_after_browse)
             {
+
                if (puh->m_strForm == "filemanager\\replace_name_in_file_system.xhtml")
                {
+
                   //html::elemental * pelemental = dynamic_cast < html::elemental * > (puh->m_pformview->get_html_data()->get_element_by_name("encontrar"));
+
                   //html::impl::input_text * pinput = dynamic_cast < html::impl::input_text * > (pelemental->m_pimpl);
+
                   sp(::user::edit_text) pedit = puh->m_pform->get_child_by_id("encontrar");
+
                   range range;
+
                   _001GetSelection(range);
+
                   if (range.get_item_count() > 0)
                   {
+
                      pedit->_001SetText(get_fs_mesh_data()->m_itema.get_item(range.ItemAt(0).get_lower_bound()).m_strName, puh->m_actioncontext);
+
                   }
+
                }
+
             }
 
             form_update_hint * pmanageruh = dynamic_cast<form_update_hint *> (phint);
@@ -226,8 +273,6 @@ namespace filemanager
                      ::file::path pathFolder = get_filemanager_item()->get_friendly_path();
 
                      Application.file().replace(pathFolder, pmanageruh->m_strFind, pmanageruh->m_strReplace);
-
-
 
                   }
 
@@ -251,25 +296,34 @@ namespace filemanager
          }
 
       }
+
    }
 
 
    bool file_list::_001OnClick(uint_ptr nFlags, point point)
    {
+
       UNREFERENCED_PARAMETER(nFlags);
+
       index iItem;
+
       index iSubItem;
+
       if (_001HitTest_(point, iItem, iSubItem))
       {
+
          if (iSubItem == m_iNameSubItem || (m_eview == view_list && iSubItem == 0))
          {
+
             _017OpenSelected(true, ::action::source_user);
+
          }
+
          return true;
+
       }
 
       return ::user::list::_001OnClick(nFlags, point);
-
 
    }
 
@@ -278,17 +332,26 @@ namespace filemanager
    {
 
       UNREFERENCED_PARAMETER(nFlags);
+
       index iItem;
+
       index iSubItem;
+
       if (_001HitTest_(point, iItem, iSubItem))
       {
+
          _017OpenContextMenuSelected(::action::source_user);
+
       }
       else
       {
+
          _017OpenContextMenu(::action::source_user);
+
       }
+
       return true;
+
    }
 
 
@@ -311,35 +374,28 @@ namespace filemanager
    void file_list::_001OnContextMenu(::message::message * pobj)
    {
 
-
-      //SCAST_PTR(::message::context_menu, pcontextmenu, pobj);
       SCAST_PTR(::message::mouse, pcontextmenu, pobj);
 
       synch_lock sl(get_fs_mesh_data()->m_pmutex);
 
       index iItem;
-      //      HRESULT hr;
+
       point point = pcontextmenu->m_pt;
+
       class point ptClient = point;
+
       ::user::list::ScreenToClient(&ptClient);
+
       if (_001HitTest_(ptClient, iItem))
       {
+
          ::user::menu menu(get_app());
+
          if (get_fs_mesh_data()->m_itema.get_item(iItem).IsFolder())
          {
+
             _017OpenContextMenuFolder(canew(::fs::item(get_fs_mesh_data()->m_itema.get_item(iItem))), ::action::source_user);
-            /*if (menu.LoadXmlMenu(get_filemanager_template()->m_strFolderPopup))
-            {
-               ::user::menu menuPopup(get_app(), menu.GetSubMenu(0));
-               //SimpleMenu* pPopup = (SimpleMenu *) menu.GetSubMenu(0);
-               //ASSERT(pPopup != NULL);
-               sp(::user::frame_window) pframe = ( (GetParentFrame()));
-               pframe->SetActiveView(this);
-               menuPopup.set_app(get_app());
-               menuPopup.track_popup_menu(
-                  point.x, point.y,
-                  pframe);
-            }*/
+
          }
          else
          {
@@ -365,55 +421,106 @@ namespace filemanager
       cs.style |= WS_CLIPCHILDREN;
 
       return ::user::impact::pre_create_window(cs);
+
    }
+
 
    UINT c_cdecl file_list::ThreadProcFileSize(LPVOID lpparam)
    {
+
       file_size * psize = (file_size *)lpparam;
+
       db_server * pcentral = dynamic_cast <db_server *> (&App(psize->m_pview->m_papp).simpledb().db());
+
       if (pcentral == NULL)
+      {
+
          return 0;
+
+      }
+
       DBFileSystemSizeSet * pset = pcentral->m_pfilesystemsizeset;
+
       bool bPendingSize;
+
       int64_t i64Size;
+
       while (true)
       {
+
          bPendingSize = false;
+
          pset->get_fs_size(i64Size, psize->m_str, bPendingSize);
+
          if (!bPendingSize)
+         {
+
             break;
+
+         }
+
       }
-      //psize->m_pview->set_need_redraw();
+
       delete psize;
-      //file_list * pview = (file_list *) lpparam;
-      //pview->FileSize();
+
       return 0;
+
    }
+
 
    void file_list::FileSize()
    {
+
       if (m_bFileSize)
+      {
+
          return;
+
+      }
+
       m_bFileSize = true;
 
       db_server * pcentral = dynamic_cast <db_server *> (&System.m_psimpledb->db());
+
       if (pcentral == NULL)
+      {
+
          return;
+
+      }
+
       DBFileSystemSizeSet * pset = pcentral->m_pfilesystemsizeset;
 
       int32_t i;
+
       while (::get_thread_run())
       {
+
          i = 0;
+
          while (i < get_fs_mesh_data()->m_itema.get_count() || IsWindowVisible())
          {
+
             int64_t i64Size;
+
             bool bPendingSize;
+
             single_lock lock(m_papp->m_pmutex);
+
             if (!lock.lock(millis(1984)))
+            {
+
                break;
+
+            }
+
             if (i >= get_fs_mesh_data()->m_itema.get_count())
+            {
+
                i = 0;
+
+            }
+
             bPendingSize = false;
 
             try
@@ -428,12 +535,19 @@ namespace filemanager
             }
 
             lock.unlock();
+
             i++;
+
             Sleep(23);
+
          }
+
          Sleep(100);
+
       }
+
       m_bFileSize = false;
+
    }
 
 
@@ -1020,32 +1134,32 @@ namespace filemanager
                strFileCheck += pdata->m_itema.get_item(i).m_filepath + ",";
                strFileCheck += Application.file().length(pdata->m_itema.get_item(i).m_filepath).get_string() + ",";
                strFileCheck += Application.file().md5(pdata->m_itema.get_item(i).m_filepath) + "\n";
-               
+
             }
-            
+
          }
-         
+
       }
 
       ::datetime::time time = ::datetime::time::get_current_time();
 
       string strTime;
-      
+
       strTime.Format("%04d-%02d-%02d %02d-%02d",
                      time.GetYear(),
                      time.GetMonth(),
                      time.GetDay(),
                      time.GetHour(),
                      time.GetMinute());
-      
+
       string strBase = get_filemanager_item()->m_filepath / "spafy_";
-      
+
       string strList = strBase + "list_" + strTime + ".txt";
-      
+
       string strCheck = strBase + "check_" + strTime + ".txt";
 
       Application.file().put_contents(strList, strFileList);
-      
+
       Application.file().put_contents(strCheck, strFileCheck);
 
    }
@@ -1053,9 +1167,9 @@ namespace filemanager
 
    void file_list::_001OnAfterSort()
    {
-      
+
       data_set_DisplayToStrict();
-      
+
    }
 
 
@@ -1066,9 +1180,9 @@ namespace filemanager
 
       if (!IsWindowVisible())
       {
-         
+
          return;
-         
+
       }
 
    }
@@ -1076,19 +1190,19 @@ namespace filemanager
 
    void file_list::_001OnShowWindow(::message::message * pmessage)
    {
-      
+
       //SCAST_PTR(::message::show_window, pshowwindow, pmessage);
 
       UNREFERENCED_PARAMETER(pmessage);
 
    }
 
-   
+
    id file_list::data_get_current_list_layout_id()
    {
-      
+
       return get_filemanager_item()->m_filepath;
-      
+
    }
 
 
@@ -1115,13 +1229,13 @@ namespace filemanager
 
             if (Application.dir().is(stra[i]))
             {
-               
+
                item.m_flags.signalize(::fs::FlagFolder);
-               
+
             }
             else
             {
-               
+
             }
 
             ::file::path strPath = stra[i];
@@ -1144,23 +1258,23 @@ namespace filemanager
 
       if (get_filemanager_data()->m_bSetBergedgeTopicFile)
       {
-         
+
          SetTimer(888888, 230, NULL);
-         
+
       }
 
       stringa straStrictOrder;
 
       data_load(data_get_current_sort_id() + "." + data_get_current_list_layout_id() + ".straStrictOrder", straStrictOrder);
-      
+
       index_biunique iaDisplayToStrict;
-      
+
       icon_layout iconlayout;
-      
+
       data_get(data_get_current_sort_id() + "." + data_get_current_list_layout_id(), iconlayout);
-      
+
       iaDisplayToStrict = iconlayout.m_iaDisplayToStrict;
-      
+
       index_biunique iaDisplayToStrictNew;
 
       ::userfs::list_item item(get_app());
@@ -1175,15 +1289,15 @@ namespace filemanager
 //         pathParentEx = "music://" / pathParentEx;
 //
 //      }
-      
+
       pathParentEx = System.defer_make_file_system_url(pathParentEx, get_app());
 
       int32_t iMaxSize;
-      
+
       iMaxSize = 1000;
 
       int32_t iSize;
-      
+
       iSize = 0;
 
       m_pathaStrictOrder.remove_all();
@@ -1209,13 +1323,13 @@ namespace filemanager
 
             if (spitem.is_null())
             {
-               
+
                spitem.alloc(allocer());
-               
+
             }
             else
             {
-               
+
                spitem->m_flags.unsignalize_all();
 
             }
@@ -1239,20 +1353,20 @@ namespace filemanager
             }
 
             spitem->m_filepath = fullpath;
-            
+
             if(pathParentEx.is_empty())
             {
-               
+
                spitem->m_filepathEx = System.defer_make_file_system_url(fullpath, get_app());
-               
+
             }
             else
             {
-               
+
                spitem->m_filepathEx = pathParentEx / fullpath.name();
-               
+
             }
-            
+
             spitem->m_strName = listing.name(i);
 
 
@@ -1353,7 +1467,9 @@ namespace filemanager
 
       if (get_filemanager_data()->m_bIconView)
       {
+
          m_eview = view_icon;
+
       }
 
       ::user::list_column column;
@@ -1466,17 +1582,27 @@ namespace filemanager
 
       if (get_filemanager_data()->m_bFileSize)
       {
-         // file/directory size
+
          column.m_iWidth = 100;
+
          column.m_iSubItem = i;
+
          m_iSizeSubItem = i;
+
          get_fs_mesh_data()->m_iSizeSubItem = m_iSizeSubItem;
+
          column.m_uiText = "Size";
+
          column.m_sizeIcon.cx = 0;
+
          column.m_sizeIcon.cy = 0;
+
          column.m_pilHover = NULL;
+
          column.m_pil = NULL;
+
          _001AddColumn(column);
+
       }
 
    }

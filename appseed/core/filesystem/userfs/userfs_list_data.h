@@ -6,7 +6,7 @@ namespace userfs
 
 
    class CLASS_DECL_CORE list_data :
-         public ::user::list_data
+      public ::user::list_data
    {
    public:
 
@@ -15,9 +15,9 @@ namespace userfs
       index                      m_iSelectionSubItem;
       index                      m_iSizeSubItem;
       bool                       m_bPendingSize;
-      uint32_t                      m_dwLastFileSizeGet;
+      uint32_t                   m_dwLastFileSizeGet;
 
-      list_item_array            m_itema; 
+      list_item_array            m_itema;
 
 
 

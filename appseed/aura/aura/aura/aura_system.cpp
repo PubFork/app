@@ -1961,52 +1961,52 @@ RetryBuildNumber:
 
    }
 
-   
+
    ::file::path system::defer_make_file_system_url(string str, ::aura::application * papp)
    {
-      
+
       auto & dir =Sys(papp).dir();
-      
+
       if(::file::begins_eat_ci(str, dir.image()))
       {
-         
+
          return ::file::path("image://") / str;
-         
+
       }
       else if(::file::begins_eat_ci(str, dir.music()))
       {
-         
+
          return ::file::path("music://") / str;
-         
+
       }
       else if(::file::begins_eat_ci(str, dir.video()))
       {
-         
+
          return ::file::path("video://") / str;
-         
+
       }
       else if(::file::begins_eat_ci(str, dir.document()))
       {
-         
+
          return ::file::path("document://") / str;
-         
+
       }
       else if(::file::begins_eat_ci(str, dir.download()))
       {
-         
+
          return ::file::path("download://") / str;
-         
+
       }
       else
       {
-         
+
          return str;
-         
+
       }
-      
+
    }
-   
-   
+
+
    ::file::path system::defer_process_path(::file::path path, ::aura::application * papp)
    {
 
@@ -2042,6 +2042,12 @@ RetryBuildNumber:
       {
 
          path = App(papp).dir().dropbox() / path;
+
+      }
+      else if (::str::begins_eat_ci(path, "download://"))
+      {
+
+         path = System.dir().download() / path;
 
       }
       else if (::str::begins_eat_ci(path, "usersystem://"))
@@ -3929,7 +3935,7 @@ success:
       string strProtocol = System.url().get_protocol(str);
 
 #ifdef WINDOWSEX
-      
+
       if (strProtocol == "ca2project")
       {
 
@@ -3966,20 +3972,20 @@ success:
 #elif defined MACOS
       if (strProtocol == "ca2project")
       {
-         
+
          string strBase = System.url().get_server(str);
-         
+
          string strScheme = System.url().get_script(str);
 
          ::str::begins_eat(strScheme, "/");
-         
+
          if(strBase == "scheme")
          {
-         
+
 //         int iRet = call_sync("C:\\bergedge\\time\\stage\\visual_studio_automation_2017.exe",strParams, "C:\\bergedge\\time\\stage\\", SW_HIDE, 30, 1000, NULL, 0);
-            
+
             ::system("osascript /bergedge/lemon/macos/script/xcode_set_active_scheme.scpt \"" + strScheme + "\"");
-            
+
          }
          else if(strBase == "archive")
          {
@@ -3987,10 +3993,10 @@ success:
             ::system("xcodebuild -scheme \"" + strScheme + "\" archive");
 
          }
-         
+
       }
 #endif
-      
+
    }
 
 

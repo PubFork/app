@@ -99,6 +99,7 @@ public:
    static bool                            s_bAllocReady;
 
    object_ptra                            m_objectptraDependent;
+   bool                                   m_bFastPath;
 
    //mutex *                              m_pmutex;
 

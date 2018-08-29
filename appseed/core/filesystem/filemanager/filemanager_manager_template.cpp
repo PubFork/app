@@ -285,7 +285,7 @@ namespace filemanager
 
          }
 
-         if (pdoc->get_filemanager_item()->m_filepath.is_equal(varFile))
+         if (pdoc->get_filemanager_item()->m_filepath.is_equal_fast(varFile))
          {
 
             return pdoc;
