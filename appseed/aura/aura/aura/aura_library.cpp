@@ -123,7 +123,7 @@ namespace aura
    }
 
 
-   bool library::open_ca2_library()
+   bool library::open_ca2_library(string strTitle)
    {
 
       synch_lock sl(g_pmutexLibrary);
@@ -151,32 +151,46 @@ namespace aura
 
             iPhase++;
 
-            string strPath = m_strPath.title();
-
-            pfn_get_new_library = get < PFN_GET_NEW_LIBRARY >(strPath + "_get_new_library");
-
-            if (pfn_get_new_library == NULL)
+            if (strTitle.has_char())
             {
 
-               iPhase++;
-
-               if (::str::begins_eat(strPath, "lib"))
-               {
-
-                  pfn_get_new_library = get < PFN_GET_NEW_LIBRARY >(strPath + "_get_new_library");
-
-               }
-
-               iPhase++;
-
-               if (pfn_get_new_library == NULL)
-               {
-
-                  pfn_get_new_library = get < PFN_GET_NEW_LIBRARY >("get_new_library");
-
-               }
+               pfn_get_new_library = get < PFN_GET_NEW_LIBRARY >(strTitle + "_get_new_library");
 
             }
+
+         }
+
+         if (pfn_get_new_library == NULL)
+         {
+
+            iPhase++;
+
+            strTitle = m_strPath.title();
+
+            pfn_get_new_library = get < PFN_GET_NEW_LIBRARY >(strTitle + "_get_new_library");
+
+         }
+
+         if (pfn_get_new_library == NULL)
+         {
+
+            iPhase++;
+
+            if (::str::begins_eat(strTitle, "lib"))
+            {
+
+               pfn_get_new_library = get < PFN_GET_NEW_LIBRARY >(strTitle + "_get_new_library");
+
+            }
+
+         }
+
+         if (pfn_get_new_library == NULL)
+         {
+
+            iPhase++;
+
+            pfn_get_new_library = get < PFN_GET_NEW_LIBRARY >("get_new_library");
 
          }
 

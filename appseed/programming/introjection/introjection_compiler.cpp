@@ -512,6 +512,7 @@ namespace introjection
 
       }
 
+      string strLibTitle = lib->m_pathScript.title();
 
 #ifdef MACOS
 
@@ -1267,7 +1268,7 @@ namespace introjection
 
 #endif
 
-      lib->m_plibrary->open_ca2_library();
+      lib->m_plibrary->open_ca2_library(strLibTitle);
 
       return lib->m_plibrary;
 

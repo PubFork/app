@@ -152,7 +152,7 @@ spa(xyz) m_xyzptra; library(::aura::application * papp) : object(papp), ::aura::
 #define END_ONLY_FACT(libname) END_CREATE_OBJECT \
  END_LIBRARY \
 BEGIN_EXTERN_C \
-::aura::library * libname ## _ ## get_new_library(::aura::application * papp) \
+CLASS_DECL_EXPORT ::aura::library * libname ## _ ## get_new_library(::aura::application * papp) \
 { \
 \
    return canew(library(papp)); \

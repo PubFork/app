@@ -27,7 +27,7 @@ namespace aura
 
       virtual bool open(const char * pszPath,bool bAutoClose = true,bool bCa2Path = false);
 
-      virtual bool open_ca2_library();
+      virtual bool open_ca2_library(string strTitle = "");
 
       library * get_ca2_library();
 
